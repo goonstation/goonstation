@@ -8,6 +8,7 @@
 import { BooleanLike } from 'common/react';
 import {
   Button,
+  Input,
   Modal,
   Section,
   Stack,
@@ -26,13 +27,14 @@ interface ArmoryAuthorizationData {
   authorization_bioholders: string[];
   authorization_names: string[];
   authed: BooleanLike;
+  auth_reason: string | undefined;
   user_access_level: number;
 }
 
 export const ArmoryAuthorization = () => {
   const { act, data } = useBackend<ArmoryAuthorizationData>();
   return (
-    <Window width={400} height={230}>
+    <Window width={400} height={300}>
       <Window.Content>
         {data.cooldown > 0 && (
           <Modal textAlign="center" fontSize={2} p="10px">
@@ -63,6 +65,19 @@ export const ArmoryAuthorization = () => {
               >
                 {data.authed ? 'Revoke with Disk' : 'Emergency Authorization'}
               </Button>
+            </Section>
+          </Stack.Item>
+          <Stack.Item>
+            <Section
+              title={data.authed ? 'Revokation Reason' : 'Authorization Reason'}
+            >
+              <Input
+                fluid
+                maxLength={200}
+                onBlur={(reason) => act('set_auth_reason', { value: reason })}
+                placeholder="Type something..."
+                value={data.auth_reason}
+              />
             </Section>
           </Stack.Item>
           <Stack.Item grow>

@@ -370,28 +370,7 @@
 			created_organ.donor = owner
 			owner.organHolder.receive_organ(created_organ, created_organ.organ_holder_name)
 
-/datum/trait/stinky
-	name = "Stinky"
-	desc = "Your body has exceedingly sensitive sweat glands that overproduce, causing you to become stinky unless frequently showered."
-	id = "stinky"
-	icon_state = "stinky"
-	category = list("body")
-	points = 1
 
-	onAdd(var/mob/owner)
-		if(ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if (!H.sims)
-				H.sims = new /datum/simsHolder(H)
-			H.sims.addMotive(/datum/simsMotive/hygiene)
-			H.sims.add_hud() // ensure hud has hygiene motive
-
-	onRemove(var/mob/owner)
-		if(ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if (!H.sims)
-				H.sims = new /datum/simsHolder(H)
-			H.sims.removeMotive("Hygiene")
 
 // LANGUAGE - Yellow Border
 /datum/trait/swedish
@@ -685,6 +664,45 @@
 	category = list("trinkets")
 	points = 0
 
+/datum/trait/cane
+	name = "Cane"
+	desc = "After an awful accident, you were given a cane. You weren't injured, just an old guy in said accident. Free stick though!"
+	id = "cane"
+	icon_state = "cane"
+	category = list("trinkets")
+	points = 0
+
+/datum/trait/artisan
+	name = "Artisan"
+	desc = "Your trinket is made from a random material."
+	id = "artisan"
+	icon_state = "artisan"
+	category = list()
+	points = -1
+
+	proc/apply_trinket_material(var/mob/user, var/atom/trinket)
+		var/atom/artisan_target = trinket
+		if(prob(10) && istype(trinket, /obj/item/pet_carrier)) // Small chance to give the material to the pet instead
+			var/obj/item/pet_carrier/carrier = trinket
+			if(length(carrier.carrier_occupants) > 0)
+				artisan_target = carrier.carrier_occupants[1]
+				artisan_target.mat_changedesc = TRUE // Make sure people can tell what the pet is made out of.
+
+		var/datum/material/artisan_material = src.choose_trinket_material(artisan_target.default_material)
+		artisan_target.setMaterial(artisan_material)
+
+	proc/choose_trinket_material(var/datum/material/default_material)
+		RETURN_TYPE(/datum/material)
+		var/list/potential_mats = list()
+		for(var/mat_id in material_cache)
+			var/datum/material/trinket_material = getMaterial(mat_id)
+			if(trinket_material.artisan_trait_weight > 0)
+				potential_mats[mat_id] = trinket_material.artisan_trait_weight
+		if(default_material)
+			potential_mats[default_material] = 0
+		return getMaterial(weighted_pick(potential_mats))
+
+
 // Skill - White Border
 
 /datum/trait/smoothtalker
@@ -846,6 +864,12 @@ ABSTRACT_TYPE(/datum/trait/job)
 	name = "Professional Drinker"
 	desc = "Sometimes you drink on the job, sometimes drinking is the job."
 	id = "training_drinker"
+
+	onAdd(mob/owner)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_ALCOHOL_RESIST, src, 100)
+
+	onRemove(mob/owner)
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_ALCOHOL_RESIST, src)
 
 /datum/trait/job/clown
 	name = "Clown Training"
@@ -1529,6 +1553,15 @@ TYPEINFO(/datum/trait/partyanimal)
 	category = list("species", "nopug", "nohair")
 	mutantRace = /datum/mutantrace/pug
 
+/datum/trait/amphibian
+	name = "Amphibian"
+	icon_state = "amphibianT"
+	desc = "It's not easy being green. ...Or yellow, or blue, or vaguely reddish."
+	id = "frog"
+	points = -3
+	category = list("species")
+	mutantRace = /datum/mutantrace/frog/amphibian
+
 /datum/trait/random_species
 	name = "Random Species"
 	icon_state = "randomspecies"
@@ -1616,6 +1649,28 @@ TYPEINFO(/datum/trait/partyanimal)
 	onRemove(mob/owner)
 		owner.bioHolder.RemoveEffect("hair_growth")
 
+// Move Stinky Trait
+/datum/trait/stinky
+	name = "Stinky"
+	desc = "Your body has exceedingly sensitive sweat glands that overproduce, causing you to become stinky unless frequently showered."
+	id = "stinky"
+	icon_state = "stinky"
+	points = 1
+
+	onAdd(var/mob/owner)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (!H.sims)
+				H.sims = new /datum/simsHolder(H)
+			H.sims.addMotive(/datum/simsMotive/hygiene)
+			H.sims.add_hud() // ensure hud has hygiene motive
+
+	onRemove(var/mob/owner)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (!H.sims)
+				H.sims = new /datum/simsHolder(H)
+			H.sims.removeMotive("Hygiene")
 //Infernal Contract Traits
 /datum/trait/hair
 	name = "Wickedly Good Hair"

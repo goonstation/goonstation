@@ -43,7 +43,6 @@
 
 	meteorhit(obj/O as obj)
 		src.ArtifactStimulus("force", 60)
-		..()
 
 	examine()
 		. = list("You have no idea what this thing is!")
@@ -165,7 +164,6 @@
 
 	meteorhit(obj/O as obj)
 		src.ArtifactStimulus("force", 60)
-		..()
 
 	ex_act(severity)
 		switch(severity)

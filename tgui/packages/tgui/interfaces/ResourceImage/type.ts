@@ -1,10 +1,8 @@
-import { BooleanLike } from 'tgui-core/react';
-
 export interface ResourceImageProps {
   title: string;
   path: string;
   fixed_size: ImgSize;
-  scaled?: BooleanLike;
+  scale_dir: number;
 }
 
 export interface ImgSize {

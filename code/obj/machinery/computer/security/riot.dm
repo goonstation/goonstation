@@ -21,6 +21,8 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 	var/radiorange = 3
 	/// Was the armory authorized via authdisk?
 	var/authdisk_authorized = FALSE
+	/// Specified string inputted by user as to why the authorization (or revokation) was issued
+	var/auth_reason = null
 	desc = "Use this computer to authorize security access to the Armory. You need an ID with security access to do so."
 
 	light_r =1
@@ -44,6 +46,18 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 	disposing()
 		STOP_TRACKING
 		..()
+
+	/// Check if we're authorized to do full packet operations and modify the returnsignal with an error code if not
+	proc/packet_check(datum/signal/signal, datum/signal/returnsignal)
+		if(!IN_RANGE(signal.source, src, radiorange))
+			returnsignal.data["command"] = "nack"
+			returnsignal.data["data"] = "outofrange"
+			return FALSE
+		if (signal.data["acc_code"] != netpass_heads)
+			returnsignal.data["command"] = "nack"
+			returnsignal.data["data"] = "badpass"
+			return FALSE
+		return TRUE
 
 	receive_signal(datum/signal/signal)
 		if(!signal || signal.encryption || signal.transmission_method != TRANSMISSION_RADIO)
@@ -73,7 +87,7 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 			if ("help")
 				if (!signal.data["topic"])
 					returnsignal.data["description"] = "Armory Authorization Computer - allows for lowering of armory access level to SECURITY. Wireless authorization requires NETPASS_HEADS"
-					returnsignal.data["topics"] = "authorize,unauthorize"
+					returnsignal.data["topics"] = "authorize,unauthorize,set_reason"
 				else
 					returnsignal.data["topic"] = signal.data["topic"]
 					switch (lowertext(signal.data["topic"]))
@@ -83,32 +97,28 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 						if ("unauthorize")
 							returnsignal.data["description"] = "Unauthorizes armory access. Requires NETPASS_HEADS. Requires close range transmission."
 							returnsignal.data["args"] = "acc_code"
+						if ("set_reason")
+							returnsignal.data["description"] = "Sets the auth/unauth reason to the value specified by arg \"reason\". Requires NETPASS_HEADS. Requires close range transmission."
+							returnsignal.data["args"] = "acc_code"
 						else
 							returnsignal.data["description"] = "ERROR: UNKNOWN TOPIC"
 			if ("authorize")
-				if(!IN_RANGE(signal.source, src, radiorange))
-					returnsignal.data["command"] = "nack"
-					returnsignal.data["data"] = "outofrange"
-				else if (signal.data["acc_code"] == netpass_heads)
+				if (src.packet_check(signal, returnsignal))
 					returnsignal.data["command"] = "ack"
 					returnsignal.data["acc_code"] = netpass_security
 					returnsignal.data["data"] = "authorize"
 					authorize()
-				else
-					returnsignal.data["command"] = "nack"
-					returnsignal.data["data"] = "badpass"
 			if ("unauthorize")
-				if(!IN_RANGE(signal.source, src, radiorange))
-					returnsignal.data["command"] = "nack"
-					returnsignal.data["data"] = "outofrange"
-				else if (signal.data["acc_code"] == netpass_heads)
+				if (src.packet_check(signal, returnsignal))
 					returnsignal.data["command"] = "ack"
 					returnsignal.data["acc_code"] = netpass_security
 					returnsignal.data["data"] = "unauthorize"
 					unauthorize()
-				else
-					returnsignal.data["command"] = "nack"
-					returnsignal.data["data"] = "badpass"
+			if ("set_reason")
+				if (src.packet_check(signal, returnsignal))
+					returnsignal.data["command"] = "ack"
+					returnsignal.data["data"] = "set_reason"
+					src.auth_reason = signal.data["reason"]
 			else
 				return //COMMAND NOT RECOGNIZED
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, returnsignal, radiorange)
@@ -137,12 +147,13 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 		var/ircmsg[] = new()
 		ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
 		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
-		ircmsg["msg"] = "authorized the armory."
+		ircmsg["msg"] = "authorized the armory. Reason: [src.auth_reason || "None"]"
 		ircbot.export_async("admin", ircmsg)
 
-		logTheThing(LOG_STATION, usr, "authorized armory access")
+		logTheThing(LOG_STATION, usr, "authorized armory access. Reason: [src.auth_reason || "None"]")
 		message_ghosts("<b>Armory authorized [log_loc(src.loc, ghostjump=TRUE)].")
-		command_announcement("<b>[SPAN_ALERT("Armory weapons access has been authorized for all security personnel.")]</b>", "Security Level Increased", 'sound/misc/announcement_1.ogg', alert_origin=ALERT_STATION)
+		var/reason_text = src.auth_reason ? "<br>[SPAN_BOLD("Reason:")] [src.auth_reason]" : null
+		command_announcement("<b>[SPAN_ALERT("Armory weapons access has been authorized for all security personnel.")]</b>[reason_text]", "Security Level Increased", 'sound/misc/announcement_1.ogg', alert_origin=ALERT_STATION)
 		authed = 1
 		src.ClearSpecificOverlays("screen_image")
 		src.icon_state = "drawbr-alert"
@@ -151,6 +162,7 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 		ON_COOLDOWN(src, "unauth", 5 MINUTES)
 
 		src.clear_authorizations()
+		src.auth_reason = null
 
 		SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_ARMORY_AUTH)
 
@@ -173,11 +185,12 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 		var/ircmsg[] = new()
 		ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
 		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
-		ircmsg["msg"] = "(UN)authorized the armory."
+		ircmsg["msg"] = "(UN)authorized the armory. Reason: [src.auth_reason || "None"]"
 		ircbot.export_async("admin", ircmsg)
 
-		logTheThing(LOG_STATION, usr, "unauthorized armory access")
-		command_announcement("<b>[SPAN_ALERT("Armory weapons access has been revoked from all security personnel. All crew are advised to hand in riot gear to the Head of Security.")]</b>", "Security Level Decreased", "sound/misc/announcement_1.ogg", alert_origin=ALERT_STATION)
+		logTheThing(LOG_STATION, usr, "unauthorized armory access. Reason: [src.auth_reason || "None"]")
+		var/reason_text = src.auth_reason ? "<br>[SPAN_BOLD("Reason:")] [src.auth_reason]" : null
+		command_announcement("<b>[SPAN_ALERT("Armory weapons access has been revoked from all security personnel. All crew are advised to hand in riot gear to the Head of Security.")]</b>[reason_text]", "Security Level Decreased", "sound/misc/announcement_1.ogg", alert_origin=ALERT_STATION)
 		playsound(src.loc, 'sound/machines/chime.ogg', 10, 1)
 		authed = 0
 		src.ClearSpecificOverlays("screen_image")
@@ -185,6 +198,7 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 		src.UpdateIcon()
 
 		src.clear_authorizations()
+		src.auth_reason = null
 
 		SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_ARMORY_UNAUTH)
 
@@ -236,6 +250,7 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 				.["authorization_bioholders"] += auth
 		.["authorization_names"] = src.authorized_registered
 		.["authed"] = src.authed
+		.["auth_reason"] = src.auth_reason
 		.["user_access_level"] = src.check_access_level(user)
 
 #define CAN_STILL_USE_CHECK (in_interact_range(src, user) && !GET_COOLDOWN(src, "unauth"))
@@ -271,6 +286,12 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 					if(emergency_auth == "Emergency Authorization" && istype(user.equipped(), /obj/item/disk/data/floppy/read_only/authentication) && CAN_STILL_USE_CHECK)
 						src.authdisk_authorized = TRUE
 						src.authorize()
+			if("set_auth_reason")
+				var/new_reason = strip_html(params["value"])
+				if(src.auth_reason == new_reason)
+					return
+				src.auth_reason = new_reason
+				logTheThing(LOG_STATION, user, "set the armory auth reason to [new_reason]")
 			if("repeal_all")
 				if(src.check_access_level(user) < ARMORY_ACCESS_LEVEL_UNRESTRICTED)
 					boutput(user, SPAN_ALERT("You do not have the access to repeal all authorizations!"))
@@ -279,6 +300,10 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 				logTheThing(LOG_STATION, user, "repealed all approvals for [src.authed? "un":""]authorizing the armory using [id_card]. [length(src.authorized)] total approvals.")
 				src.clear_authorizations()
 			if("auth") //Handles both Authorization and Revokation depending on src.authed
+				if (!src.authed && !length(src.auth_reason))
+					boutput(user, SPAN_ALERT("ERROR: missing or empty authorization reason."))
+					playsound(src, 'sound/machines/buzz-two.ogg', 50, 1)
+					return
 				var/auths_left = (src.check_access_level(user) == ARMORY_ACCESS_LEVEL_UNRESTRICTED ? 0 : src.auth_need - length(src.authorized))
 				var/auth_or_revoke = src.authed ? "revoke" : "authorize"
 				var/choice = tgui_alert(user, "Would you like to [auth_or_revoke] access to riot gear? [auths_left ? "[auths_left] approval\s are still needed." : null]", src.name, list(capitalize(auth_or_revoke), "Cancel"))

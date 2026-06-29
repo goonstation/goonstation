@@ -72,7 +72,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_poc1 = list(/obj/item/pen/crayon/white)
 	slot_poc2 = list(/obj/item/paper)
-	items_in_backpack = list(/obj/item/baguette, /obj/item/instrument/whistle/janitor)
+	items_in_backpack = list(/obj/item/baguette, /obj/item/instrument/whistle/janitor, /obj/item/stamp/mime)
 	change_name_on_spawn = TRUE
 	wiki_link = "https://wiki.ss13.co/Mime"
 	email_group = MGD_CIVILIAN
@@ -542,7 +542,7 @@ ABSTRACT_TYPE(/datum/job/daily)
 									/datum/mutantrace/skeleton::name  = /datum/mutantrace/skeleton,
 									/datum/mutantrace/ithillid::name = /datum/mutantrace/ithillid,
 									/datum/mutantrace/martian::name = /datum/mutantrace/martian,
-									/datum/mutantrace/amphibian::name = /datum/mutantrace/amphibian,
+									/datum/mutantrace/frog/abzunian::name = /datum/mutantrace/frog/abzunian,
 									/datum/mutantrace/blob::name  = /datum/mutantrace/blob,
 									/datum/mutantrace/cow::name = /datum/mutantrace/cow)
 

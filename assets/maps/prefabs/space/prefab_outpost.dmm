@@ -384,7 +384,7 @@
 "bq" = (
 /obj/decal/cleanable/cobweb,
 /obj/storage/secure/closet/engineering/mining,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/mining/miningoutpost)
 "br" = (
 /turf/simulated/floor/stairs{
@@ -424,7 +424,7 @@
 /area/mining/miningoutpost)
 "by" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/mining/miningoutpost)
 "bz" = (
 /obj/decal/cleanable/dirt,
@@ -456,14 +456,14 @@
 /obj/table/auto,
 /obj/item/tank/oxygen,
 /obj/item/clothing/mask/breath,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/mining/miningoutpost)
 "bE" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg,
 /obj/item/clothing/head/emerg,
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/mining/miningoutpost)
 "bF" = (
 /obj/machinery/door/airlock/pyro/external,
@@ -567,7 +567,7 @@
 /area/mining/miningoutpost)
 "bU" = (
 /obj/storage/secure/closet/engineering/mining,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/mining/miningoutpost)
 "bV" = (
 /obj/cable{

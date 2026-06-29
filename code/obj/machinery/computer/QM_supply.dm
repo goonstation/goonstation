@@ -670,7 +670,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 				return
 
 			src.in_dialogue_box = 1
-			var/howmany = input("How many units do you want to purchase?", "Trader Purchase", null, null) as num
+			var/howmany = round(input("How many units do you want to purchase?", "Trader Purchase", null, null) as num, 1)
 			if (howmany < 1)
 				src.in_dialogue_box = 0
 				return
@@ -762,7 +762,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 
 			var/howmany = 1
 			if (C.amount > 1)
-				howmany = input("Remove how many units?", "Remove from Cart", null, null) as num
+				howmany = round(input("Remove how many units?", "Remove from Cart", null, null) as num, 1)
 				if (howmany < 1)
 					return
 			howmany = clamp(howmany, 0, C.amount)
