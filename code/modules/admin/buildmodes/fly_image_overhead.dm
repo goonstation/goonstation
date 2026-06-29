@@ -86,7 +86,6 @@ Shift + LMB off of buildmode button    = Spawn flying object<br>
 
 	proc/aim_pilot() // Spawn pilot at edge of zlevel then redirect to target
 		var/turf/start
-		var/random_dir = pick(NORTH, SOUTH, EAST, WEST)
 		var/new_dir
 		if (!src.target_loc || !src.dir_input)
 			boutput(usr, "No target location and/or direction input found.")
@@ -98,7 +97,7 @@ Shift + LMB off of buildmode button    = Spawn flying object<br>
 		if (src.dir_input == "Dir (UNLOCKED)")
 			new_dir = usr.dir
 		else if (src.dir_input == "Random Direction")
-			new_dir = random_dir
+			new_dir = pick(NORTH, SOUTH, EAST, WEST)
 		else
 			new_dir = src.dir_input
 
