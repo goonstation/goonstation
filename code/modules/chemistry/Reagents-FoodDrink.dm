@@ -4850,6 +4850,15 @@ datum
 			energy_value = 0.04
 			var/list/flushed_reagents = list("cholesterol")
 
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
+				if (!M)
+					M = holder.my_atom
+				if(istype(M, /mob/living/carbon/human))
+					var/mob/living/carbon/human/H = M
+					if (H.bioHolder.age < 57 && H.bioHolder.age > 41)
+						boutput(H, SPAN_NOTICE("This drink reminds you of your past"))
+
 			on_mob_life(var/mob/M, var/mult = 1)
 				flush(holder, 3 * mult, flushed_reagents)
 				..()
@@ -4924,6 +4933,15 @@ datum
 			taste = list("earthy", "sweet")
 			thirst_value = 1
 			caffeine_content = 0.6
+
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
+				if (!M)
+					M = holder.my_atom
+				if(istype(M, /mob/living/carbon/human))
+					var/mob/living/carbon/human/H = M
+					if (H.bioHolder.age < 73 && H.bioHolder.age > 56)
+						boutput(H, SPAN_NOTICE("This drink reminds you of your past"))
 
 		fooddrink/lavender_essence
 			name = "lavender essence"
