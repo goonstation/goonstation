@@ -13,7 +13,7 @@ RMB on buildmode button                = Set image and ending effect<br>
 Ctrl  + RMB on buildmode button        = Set audio<br>
 Alt   + RMB off of buildmode button    = Set optional obj/mob spawns<br>
 Shift + RMB off of buildmode button    = Set direction and speed<br>
-Shift + RMB off of buildmode button    = Spawn flying object<br>
+Shift + LMB off of buildmode button    = Spawn flying object<br>
 ***********************************************************"}
 	// settings. behold my vars
 	icon_state = "flyoverhead"
@@ -57,9 +57,11 @@ Shift + RMB off of buildmode button    = Spawn flying object<br>
 
 	click_right(atom/object, var/ctrl, var/alt, var/shift)
 		if (shift)
-			src.dir_input = tgui_input_list(usr, "Pick starting direction", "Direction", list(NORTH, SOUTH, EAST, WEST, "Random"))
-			var/choice = tgui_input_list(usr, "Choose a set speed or random values", "Choose", list("Set", "Clear"))
-			var/choice2 = tgui_input_list(usr, "Start from edge of zlevel or nearby? (About 2 screens away)", "Choose", list("Edge", "Nearby"))
+			src.dir_input = tgui_alert(usr, "Unlocked dir checks YOUR dir whenever you send the pilot, locked dir stays as the dir you have right now", "Direction Choice", list("Dir (LOCKED)", "Dir (UNLOCKED)", "Random Direction"))
+			var/choice = tgui_alert(usr, "Choose a set speed or random values", "Choose", list("Set", "Clear"))
+			var/choice2 = tgui_alert(usr, "Start from edge of zlevel or nearby? (About 2 screens away)", "Choose", list("Edge", "Nearby"))
+			if (src.dir_input == "Dir (LOCKED)")
+				src.dir_input = usr.dir
 			if (choice == "Set")
 				src.move_delay = tgui_input_number(usr, "Enter speed value of image", "Higher is slower, gets very slow by 5", 1)
 			else
@@ -93,7 +95,9 @@ Shift + RMB off of buildmode button    = Spawn flying object<br>
 			boutput(usr, "No audio or image file found.")
 			return
 
-		if (src.dir_input == "Random")
+		if (src.dir_input == "Dir (UNLOCKED)")
+			new_dir = usr.dir
+		else if (src.dir_input == "Random Direction")
 			new_dir = random_dir
 		else
 			new_dir = src.dir_input
