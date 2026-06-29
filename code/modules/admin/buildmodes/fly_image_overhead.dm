@@ -48,7 +48,7 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 			if (src.image)
 				logTheThing(LOG_ADMIN, usr, "uploaded an image [src.image] to use with Fly Object Overhead buildmode")
 			src.end_effect = tgui_input_list(usr, "Pick ending effect", "End Effect", list(LEAVE, EXPLODE, FADE, RUN))
-			src.plane_choice = (tgui_alert(usr, "Layer above blackness?", "Blackness layer", list("Yes", "No")) == "Yes")
+			src.image_layers_over_blackness = (tgui_alert(usr, "Layer above blackness?", "Blackness layer", list("Yes", "No")) == "Yes")
 
 		if (ctrl)
 			src.audio = input(usr, "Upload a file:", "Uploader - Long files WILL lag people out, sound will play once at destination", null) as null|sound
@@ -118,7 +118,7 @@ Shift + Left Mouse Button              = Spawn flying object<br>
 		pilot.set_loc(startloc)
 		animate(pilot, transform = matrix(), alpha = src.alphainput, time = 0.8 SECONDS)
 
-		if (src.plane_choice)
+		if (src.image_layers_over_blackness)
 			pilot.plane = PLANE_ABOVE_BLACKNESS
 		else
 			pilot.plane = PLANE_DEFAULT
