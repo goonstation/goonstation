@@ -443,7 +443,6 @@
 	close_sound = 'sound/misc/safe_close.ogg'
 	_max_health = LOCKER_HEALTH_STRONG
 	_health = LOCKER_HEALTH_STRONG
-	reinforced = TRUE
 	bolted = TRUE
 	spawn_contents = list(/obj/item/item_box/contraband)
 	radiation_protection = 20
