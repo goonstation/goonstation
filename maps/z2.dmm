@@ -8090,10 +8090,8 @@
 	},
 /area/upper_arctic/exterior/surface)
 "aNd" = (
-/obj/machinery/light_switch{
-	name = "W light switch";
-	on = 0;
-	pixel_x = -24
+/obj/machinery/light_switch/directional/west{
+	on = 0
 	},
 /turf/unsimulated/floor/carpet/grime,
 /area/upper_arctic/pod2)
@@ -8130,10 +8128,7 @@
 /turf/unsimulated/floor/white,
 /area/upper_arctic/pod2)
 "aNl" = (
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24
-	},
+/obj/machinery/light_switch/directional/east,
 /obj/machinery/sleep_console{
 	dir = 8
 	},
@@ -9029,10 +9024,8 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/upper_arctic/pod2)
 "aQc" = (
-/obj/machinery/light_switch{
-	name = "W light switch";
-	on = 0;
-	pixel_x = -24
+/obj/machinery/light_switch/directional/west{
+	on = 0
 	},
 /obj/machinery/vending/coffee,
 /turf/unsimulated/floor/specialroom/bar,
@@ -9264,10 +9257,7 @@
 /turf/unsimulated/floor/grime,
 /area/lower_arctic/mining)
 "aRc" = (
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
-	},
+/obj/machinery/light_switch/directional/west,
 /turf/unsimulated/floor/stairs{
 	dir = 1
 	},
@@ -9368,10 +9358,7 @@
 	},
 /area/crater/biodome/north)
 "aRo" = (
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24
-	},
+/obj/machinery/light_switch/directional/east,
 /turf/unsimulated/floor/stairs{
 	dir = 1
 	},
@@ -10255,10 +10242,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/light_switch{
-	name = "N light switch";
-	on = 0;
-	pixel_y = 24
+/obj/machinery/light_switch/directional/north{
+	on = 0
 	},
 /turf/unsimulated/floor/neutral/side{
 	dir = 1
@@ -10485,10 +10470,8 @@
 /turf/unsimulated/floor/specialroom/freezer,
 /area/upper_arctic/hall)
 "aVf" = (
-/obj/machinery/light_switch{
-	name = "W light switch";
-	on = 0;
-	pixel_x = -24
+/obj/machinery/light_switch/directional/west{
+	on = 0
 	},
 /obj/decal/cleanable/blood/tracks,
 /turf/unsimulated/floor,
@@ -10548,10 +10531,7 @@
 /turf/unsimulated/floor/neutral/side,
 /area/crater/biodome/crew)
 "aVo" = (
-/obj/machinery/light_switch{
-	name = "S light switch";
-	pixel_y = -24
-	},
+/obj/machinery/light_switch/directional/south,
 /turf/unsimulated/floor/neutral/side,
 /area/crater/biodome/crew)
 "aVp" = (
@@ -10594,10 +10574,7 @@
 /turf/unsimulated/floor/neutral/side,
 /area/crater/biodome/maint)
 "aVy" = (
-/obj/machinery/light_switch{
-	name = "S light switch";
-	pixel_y = -24
-	},
+/obj/machinery/light_switch/directional/south,
 /turf/unsimulated/floor/neutral/side,
 /area/crater/biodome/maint)
 "aVA" = (
@@ -11399,10 +11376,8 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/upper_arctic/pod1)
 "aYg" = (
-/obj/machinery/light_switch{
-	name = "N light switch";
-	on = 0;
-	pixel_y = 24
+/obj/machinery/light_switch/directional/north{
+	on = 0
 	},
 /obj/storage/secure/closet/research/uniform,
 /turf/unsimulated/floor/white,
@@ -11512,10 +11487,7 @@
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "aYx" = (
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
-	},
+/obj/machinery/light_switch/directional/west,
 /turf/unsimulated/floor/stairs,
 /area/crater/biodome/south)
 "aYy" = (
@@ -11548,10 +11520,7 @@
 /turf/unsimulated/floor/stairs,
 /area/crater/biodome/south)
 "aYF" = (
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24
-	},
+/obj/machinery/light_switch/directional/east,
 /turf/unsimulated/floor/stairs,
 /area/crater/biodome/south)
 "aYH" = (
@@ -12552,10 +12521,7 @@
 /turf/unsimulated/floor/arctic/abyss,
 /area/upper_arctic/exterior/surface)
 "bci" = (
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
-	},
+/obj/machinery/light_switch/directional/west,
 /obj/table/auto,
 /obj/item/cigpacket,
 /turf/unsimulated/floor/grime,
@@ -13067,10 +13033,7 @@
 	},
 /area/crater/biodome/entry)
 "bdH" = (
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24
-	},
+/obj/machinery/light_switch/directional/east,
 /turf/unsimulated/floor/caution/west,
 /area/crater/biodome/entry)
 "bdL" = (
@@ -24580,11 +24543,11 @@
 /turf/unsimulated/floor/wood/three,
 /area/afterlife/heaven/hydroponics)
 "bTB" = (
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/directional/west,
 /turf/unsimulated/floor/wood/three,
 /area/afterlife/heaven/hydroponics)
 "bTC" = (
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /turf/unsimulated/floor/wood/three,
 /area/afterlife/heaven/hydroponics)
 "bTD" = (
@@ -26816,10 +26779,7 @@
 /turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "ccq" = (
-/obj/machinery/light_switch{
-	name = "S light switch";
-	pixel_y = -24
-	},
+/obj/machinery/light_switch/directional/south,
 /turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "ccr" = (
@@ -28460,10 +28420,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/light_switch{
-	name = "E light switch";
-	pixel_x = 24
-	},
+/obj/machinery/light_switch/directional/east,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -32454,7 +32411,7 @@
 	icon_state = "datamedb";
 	name = "smashed computer"
 	},
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/directional/west,
 /turf/unsimulated/floor/blackwhite{
 	dir = 8
 	},
@@ -33528,7 +33485,7 @@
 "cAF" = (
 /obj/table/reinforced/auto,
 /obj/item/pen/fancy,
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /obj/item/paper/image/businesscard,
 /turf/unsimulated/floor/white,
 /area/owlery/lab)
@@ -34698,7 +34655,7 @@
 /turf/unsimulated/floor/sanitary/white,
 /area/owlery/staffhall)
 "cEd" = (
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /turf/unsimulated/floor/redblack{
 	dir = 4
 	},
@@ -36124,7 +36081,7 @@
 	},
 /area/owlery/office)
 "cIE" = (
-/obj/machinery/light_switch/east{
+/obj/machinery/light_switch/directional/east{
 	pixel_y = -8
 	},
 /turf/unsimulated/floor/wizard/carpet/edge{
@@ -39459,7 +39416,7 @@
 	desc = "A common utility sink.";
 	name = "rusty sink"
 	},
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/directional/west,
 /obj/item/storage/wall/random,
 /turf/unsimulated/floor/specialroom/arcade,
 /area/owlery/owllock)
@@ -39795,7 +39752,7 @@
 /turf/unsimulated/floor/yellowblack,
 /area/owlery/gangzone)
 "cSW" = (
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /turf/unsimulated/floor/yellowblack,
 /area/owlery/gangzone)
 "cSX" = (
@@ -40473,7 +40430,7 @@
 /obj/table/reinforced/bar/auto,
 /obj/item/paper_bin,
 /obj/item/device/light/flashlight/penlight,
-/obj/machinery/light_switch/west{
+/obj/machinery/light_switch/directional/west{
 	on = 0
 	},
 /obj/machinery/light{
@@ -40712,7 +40669,7 @@
 	pixel_x = -2;
 	pixel_y = 8
 	},
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /obj/machinery/light/emergency{
 	dir = 1
 	},
@@ -42093,7 +42050,7 @@
 /turf/unsimulated/floor/pool/no_animate,
 /area/owlery/Owlmait2)
 "cZb" = (
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /obj/machinery/light/emergency{
 	dir = 1;
 	pixel_y = 16
@@ -44304,7 +44261,7 @@
 /area/afterlife/bar)
 "dge" = (
 /obj/decal/cleanable/dirt,
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for custodial purposes.";
 	dir = 8;
@@ -78803,7 +78760,7 @@
 /obj/fakeobject/lightbulb_broken{
 	dir = 8
 	},
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /obj/machinery/light/emergency{
 	dir = 1
 	},
@@ -80241,10 +80198,8 @@
 /area/hospital/samostrel)
 "xKC" = (
 /obj/rack,
-/obj/machinery/light_switch{
-	name = "W light switch";
-	on = 0;
-	pixel_x = -24
+/obj/machinery/light_switch/directional/west{
+	on = 0
 	},
 /obj/item/clothing/suit/snow,
 /obj/item/clothing/suit/snow,
