@@ -117,7 +117,7 @@
 		/obj/item/spraybottle/detective{pixel_x=2; pixel_y=-4} = 1,
 		/obj/item/reagent_containers/applicator/brush/silver_nitrate{pixel_x=-1;pixel_y=1} = 1,
 		/obj/item/reagent_containers/applicator/brush/silver_nitrate{pixel_x=-3;pixel_y=3} = 1,
-		/obj/item/sec_tape = 1,
+		/obj/item/sec_tape/vended = 1,
 	)
 
 /obj/storage/cart/forensic/security
@@ -132,7 +132,7 @@
 		/obj/item/clothing/gloves/latex/random{pixel_x=-6; pixel_y=2} = 1,
 		/obj/item/clothing/mask/surgical{pixel_x=-6; pixel_y=8} = 1,
 		/obj/item/reagent_containers/applicator/brush/silver_nitrate{pixel_x=-1;pixel_y=1} = 1,
-		/obj/item/sec_tape{pixel_x=-6; pixel_y=8} = 1,
+		/obj/item/sec_tape/vended{pixel_x=-6; pixel_y=8} = 1,
 	)
 
 /obj/storage/cart/forensic/bomb_disposal
