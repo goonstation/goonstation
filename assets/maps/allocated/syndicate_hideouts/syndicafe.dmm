@@ -1,172 +1,12 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"cM" = (
-/obj/storage/crate,
-/obj/item/clothing/gloves/black,
-/obj/item/clothing/shoes/swat{
-	pixel_x = -2;
-	pixel_y = -7
-	},
-/obj/machinery/light/incandescent/warm{
-	pixel_x = -4
-	},
-/turf/simulated/floor/redblack,
-/area/syndicate_station/hideout)
-"dM" = (
-/obj/machinery/computer/camera_viewer{
-	dir = 4
-	},
-/obj/machinery/light/incandescent/warm{
-	dir = 8
-	},
-/turf/unsimulated/floor/carpet/red/fancy/edge/nw,
-/area/syndicate_station/hideout)
-"eq" = (
-/obj/table/syndicate/auto,
-/obj/item/reagent_containers/food/drinks/drinkingglass/oldf{
-	pixel_y = 9
-	},
-/turf/simulated/floor/redblack{
-	dir = 1
-	},
-/area/syndicate_station/hideout)
-"gs" = (
-/obj/machinery/light/incandescent/warm{
-	dir = 1
-	},
-/turf/unsimulated/floor/carpet/red/fancy/edge/north,
-/area/syndicate_station/hideout)
-"gE" = (
-/turf/unsimulated/wall/auto/lead/gray,
-/area/syndicate_station/hideout)
-"ic" = (
-/obj/table/syndicate/auto,
-/turf/simulated/floor/redblack{
-	dir = 1
-	},
-/area/syndicate_station/hideout)
-"jE" = (
-/turf/simulated/floor/redblack{
-	dir = 8
-	},
-/area/syndicate_station/hideout)
-"jR" = (
-/obj/machinery/door/airlock/pyro/alt{
-	dir = 4;
-	id = "n_bathroom1"
-	},
-/turf/simulated/floor/sanitary,
-/area/syndicate_station/hideout)
-"kj" = (
-/obj/table/monodesk/auto,
-/obj/machinery/microwave,
-/turf/simulated/floor/redblack,
-/area/syndicate_station/hideout)
-"kD" = (
-/turf/cordon,
-/area/syndicate_station/hideout)
-"lr" = (
-/obj/machinery/light/small/floor/frostedred,
-/turf/simulated/floor/wood,
-/area/syndicate_station/hideout)
-"lz" = (
-/obj/mic_stand,
-/turf/simulated/floor/wood,
-/area/syndicate_station/hideout)
-"mn" = (
-/obj/machinery/light/incandescent/warm{
-	dir = 8
-	},
-/turf/simulated/floor/redblack{
-	dir = 10
-	},
-/area/syndicate_station/hideout)
-"mX" = (
-/obj/machinery/vending/pizza,
-/obj/machinery/light/incandescent/warm{
-	pixel_x = -4
-	},
-/turf/simulated/floor/redblack,
-/area/syndicate_station/hideout)
-"nn" = (
-/turf/unsimulated/floor/carpet/red/fancy/edge/south,
-/area/syndicate_station/hideout)
-"nL" = (
-/obj/machinery/light/small/floor/netural,
-/turf/simulated/floor/sanitary,
-/area/syndicate_station/hideout)
-"nZ" = (
-/obj/machinery/light/incandescent/warm{
-	dir = 4
-	},
-/turf/unsimulated/floor/carpet/red/fancy/edge/ne,
-/area/syndicate_station/hideout)
-"ol" = (
-/obj/machinery/chem_dispenser/alcohol,
-/turf/simulated/floor/redblack,
-/area/syndicate_station/hideout)
-"ow" = (
-/obj/machinery/phone/wall,
-/turf/unsimulated/wall/auto/lead/gray,
-/area/syndicate_station/hideout)
-"ps" = (
+"a" = (
 /obj/decal/stage_edge{
-	dir = 4
+	layer = 2.8
 	},
-/obj/dartboard{
-	pixel_y = 26
-	},
-/turf/simulated/floor/redblack{
-	dir = 5
-	},
+/obj/machinery/loudspeaker,
+/turf/simulated/floor/wood,
 /area/syndicate_station/hideout)
-"rR" = (
-/turf/unsimulated/floor/carpet/red/fancy/edge/se,
-/area/syndicate_station/hideout)
-"sN" = (
-/obj/item/storage/toilet,
-/obj/item/cloth/towel/black,
-/obj/item/cash_briefcase/syndicate{
-	pixel_y = 5
-	},
-/obj/machinery/light/incandescent/warm{
-	dir = 8
-	},
-/turf/simulated/floor/sanitary,
-/area/syndicate_station/hideout)
-"vi" = (
-/obj/table/syndicate/auto,
-/turf/simulated/floor/redblack,
-/area/syndicate_station/hideout)
-"vQ" = (
-/obj/machinery/light/incandescent/warm{
-	dir = 4
-	},
-/obj/machinery/computer/arcade,
-/turf/simulated/floor/redblack{
-	dir = 6
-	},
-/area/syndicate_station/hideout)
-"wn" = (
-/turf/simulated/floor/redblack{
-	dir = 5
-	},
-/area/syndicate_station/hideout)
-"ws" = (
-/turf/simulated/floor/airless/stairs/wood,
-/area/syndicate_station/hideout)
-"yc" = (
-/obj/machinery/shower{
-	dir = 1;
-	pixel_y = 20
-	},
-/obj/machinery/light/small/floor/netural,
-/turf/simulated/floor/sanitary,
-/area/syndicate_station/hideout)
-"yv" = (
-/obj/machinery/door/unpowered/wood/stall,
-/turf/simulated/floor/sanitary,
-/area/syndicate_station/hideout)
-"DY" = (
+"b" = (
 /obj/table/monodesk/auto,
 /obj/machinery/espresso_machine{
 	pixel_y = 3
@@ -178,33 +18,152 @@
 	dir = 10
 	},
 /area/syndicate_station/hideout)
-"El" = (
-/turf/simulated/floor/redblack{
-	dir = 4
-	},
-/area/syndicate_station/hideout)
-"FX" = (
+"c" = (
+/obj/mic_stand,
 /turf/simulated/floor/wood,
 /area/syndicate_station/hideout)
-"GF" = (
+"d" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 1;
+	name = "Bar"
+	},
+/turf/simulated/floor/redblack{
+	dir = 9
+	},
+/area/syndicate_station/hideout)
+"e" = (
+/turf/unsimulated/wall/auto/lead/white,
+/area/syndicate_station/hideout)
+"f" = (
 /obj/decal/stage_edge{
 	dir = 4
 	},
 /turf/simulated/floor/redblack{
-	dir = 6
+	dir = 4
 	},
 /area/syndicate_station/hideout)
-"HM" = (
-/obj/table/syndicate/auto,
-/obj/item/reagent_containers/food/drinks/drinkingglass/oldf{
-	pixel_y = 9
-	},
-/turf/simulated/floor/black,
+"g" = (
+/turf/cordon,
 /area/syndicate_station/hideout)
-"Il" = (
+"h" = (
+/obj/decal/stage_edge{
+	layer = 2.8
+	},
+/obj/item/instrument/large/jukebox,
+/turf/simulated/floor/wood,
+/area/syndicate_station/hideout)
+"i" = (
+/obj/table/monodesk/auto,
+/obj/item/kitchen/utensil/knife{
+	pixel_x = 6;
+	pixel_y = 7
+	},
+/obj/item/storage/box/donkpocket_kit{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/food/drinks/espressocup,
+/turf/simulated/floor/redblack,
+/area/syndicate_station/hideout)
+"j" = (
+/obj/machinery/drainage/big,
+/obj/machinery/shower{
+	dir = 1;
+	pixel_y = 20
+	},
+/turf/simulated/floor/sanitary,
+/area/syndicate_station/hideout)
+"k" = (
+/obj/machinery/sink/slim{
+	pixel_y = 6
+	},
+/turf/unsimulated/wall/auto/lead/white,
+/area/syndicate_station/hideout)
+"l" = (
+/obj/storage/crate,
+/obj/item/clothing/gloves/black,
+/obj/item/clothing/shoes/swat{
+	pixel_x = -2;
+	pixel_y = -7
+	},
+/obj/machinery/light/incandescent/warm{
+	pixel_x = -4
+	},
+/turf/simulated/floor/redblack,
+/area/syndicate_station/hideout)
+"m" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 8
+	},
+/turf/simulated/floor/redblack{
+	dir = 9
+	},
+/area/syndicate_station/hideout)
+"n" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 1
+	},
 /turf/unsimulated/floor/carpet/red/fancy/edge/north,
-/area/space)
-"IB" = (
+/area/syndicate_station/hideout)
+"o" = (
+/turf/unsimulated/floor/carpet/red/fancy/edge/se,
+/area/syndicate_station/hideout)
+"p" = (
+/turf/simulated/floor/airless/stairs/wood,
+/area/syndicate_station/hideout)
+"r" = (
+/obj/machinery/shower{
+	dir = 1;
+	pixel_y = 20
+	},
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/sanitary,
+/area/syndicate_station/hideout)
+"s" = (
+/turf/unsimulated/floor/carpet/red/fancy/edge/north,
+/area/syndicate_station/hideout)
+"t" = (
+/obj/machinery/phone/wall,
+/turf/unsimulated/wall/auto/lead/gray,
+/area/syndicate_station/hideout)
+"u" = (
+/obj/item/storage/toilet,
+/obj/item/cloth/towel/black,
+/obj/item/cash_briefcase/syndicate{
+	pixel_y = 5
+	},
+/obj/machinery/light/incandescent/warm{
+	dir = 8
+	},
+/turf/simulated/floor/sanitary,
+/area/syndicate_station/hideout)
+"v" = (
+/obj/table/syndicate/auto,
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/syndicate_station/hideout)
+"w" = (
+/obj/table/syndicate/auto,
+/turf/simulated/floor/redblack,
+/area/syndicate_station/hideout)
+"x" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 8
+	},
+/turf/simulated/floor/redblack{
+	dir = 10
+	},
+/area/syndicate_station/hideout)
+"y" = (
+/turf/simulated/floor/wood,
+/area/syndicate_station/hideout)
+"z" = (
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/syndicate_station/hideout)
+"A" = (
 /obj/table/syndicate/auto,
 /obj/item_dispenser/icedispenser{
 	pixel_x = -6;
@@ -217,95 +176,69 @@
 	dir = 1
 	},
 /area/syndicate_station/hideout)
-"JT" = (
-/turf/unsimulated/wall/auto/lead/white,
+"B" = (
+/obj/table/monodesk/auto,
+/obj/machinery/microwave,
+/turf/simulated/floor/redblack,
 /area/syndicate_station/hideout)
-"KH" = (
+"C" = (
+/obj/machinery/vending/pizza,
+/obj/machinery/light/incandescent/warm{
+	pixel_x = -4
+	},
+/turf/simulated/floor/redblack,
+/area/syndicate_station/hideout)
+"D" = (
+/obj/machinery/door/unpowered/wood/stall,
+/turf/simulated/floor/sanitary,
+/area/syndicate_station/hideout)
+"E" = (
 /turf/unsimulated/floor/carpet/red/fancy/edge/sw,
 /area/syndicate_station/hideout)
-"KY" = (
-/obj/decal/stage_edge{
-	layer = 2.8
-	},
-/obj/machinery/loudspeaker,
-/turf/simulated/floor/wood,
+"F" = (
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/sanitary,
 /area/syndicate_station/hideout)
-"LG" = (
+"G" = (
+/obj/decal/stage_edge{
+	dir = 4
+	},
+/turf/simulated/floor/redblack{
+	dir = 6
+	},
+/area/syndicate_station/hideout)
+"H" = (
+/turf/simulated/floor/redblack{
+	dir = 5
+	},
+/area/syndicate_station/hideout)
+"I" = (
 /obj/stool/sleek,
 /turf/unsimulated/floor/carpet/red/fancy/edge/south,
 /area/syndicate_station/hideout)
-"Ol" = (
-/turf/simulated/floor/wood,
-/area/station/crew_quarters/lounge/backstage)
-"OW" = (
-/obj/machinery/vending/cola/red,
+"J" = (
+/obj/machinery/chem_dispenser/alcohol,
 /turf/simulated/floor/redblack,
 /area/syndicate_station/hideout)
-"Rv" = (
-/obj/decal/stage_edge{
-	layer = 2.8
-	},
-/obj/item/instrument/large/jukebox,
-/turf/simulated/floor/wood,
-/area/syndicate_station/hideout)
-"RU" = (
-/obj/machinery/sink/slim{
-	pixel_y = 6
-	},
-/turf/unsimulated/wall/auto/lead/white,
-/area/syndicate_station/hideout)
-"Tr" = (
-/obj/decal/stage_edge{
-	dir = 4
-	},
-/turf/simulated/floor/redblack{
-	dir = 4
-	},
-/area/syndicate_station/hideout)
-"Ur" = (
-/obj/machinery/drainage/big,
-/obj/machinery/shower{
-	dir = 1;
-	pixel_y = 20
-	},
-/turf/simulated/floor/sanitary,
-/area/syndicate_station/hideout)
-"Uz" = (
-/turf/unsimulated/floor/carpet/red/fancy/edge/north,
-/area/syndicate_station/hideout)
-"UX" = (
+"K" = (
 /obj/machinery/illuminated_sign/open_neon,
 /turf/unsimulated/wall/auto/lead/white,
 /area/syndicate_station/hideout)
-"Vl" = (
-/obj/machinery/door/unpowered/wood/pyro{
-	dir = 1;
-	name = "Bar"
+"L" = (
+/obj/table/syndicate/auto,
+/obj/item/reagent_containers/food/drinks/drinkingglass/oldf{
+	pixel_y = 9
 	},
-/turf/simulated/floor/redblack{
-	dir = 9
-	},
-/area/syndicate_station/hideout)
-"Vz" = (
 /turf/simulated/floor/black,
 /area/syndicate_station/hideout)
-"WU" = (
-/obj/decal/stage_edge{
-	dir = 4
+"M" = (
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4;
+	id = "n_bathroom1"
 	},
-/turf/simulated/floor/redblack{
-	dir = 4
-	},
-/area/station/crew_quarters/lounge/backstage)
-"Xq" = (
-/obj/machinery/light/incandescent/warm{
-	dir = 8
-	},
-/turf/simulated/floor/redblack{
-	dir = 9
-	},
+/turf/simulated/floor/sanitary,
 /area/syndicate_station/hideout)
-"Zz" = (
+"N" = (
 /obj/machinery/disposal/extradimensional/exit{
 	pixel_y = 3
 	},
@@ -314,211 +247,316 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/syndicate_station/hideout)
-"ZC" = (
-/obj/table/monodesk/auto,
-/obj/item/kitchen/utensil/knife{
-	pixel_x = 6;
-	pixel_y = 7
-	},
-/obj/item/storage/box/donkpocket_kit{
-	pixel_x = -6;
+"O" = (
+/obj/table/syndicate/auto,
+/obj/item/implant/projectile/body_visible/dart/bardart{
+	dir = 8;
+	pixel_x = -1;
 	pixel_y = 8
 	},
+/obj/item/implant/projectile/body_visible/dart/bardart{
+	dir = 8;
+	pixel_x = -1;
+	pixel_y = 8
+	},
+/obj/item/implant/projectile/body_visible/dart/bardart{
+	dir = 8;
+	pixel_x = -1;
+	pixel_y = 8
+	},
+/obj/item/implant/projectile/body_visible/dart/bardart{
+	dir = 8;
+	pixel_x = -1;
+	pixel_y = 8
+	},
+/obj/item/implant/projectile/body_visible/dart/bardart{
+	dir = 8;
+	pixel_x = -1;
+	pixel_y = 8
+	},
+/obj/item/implant/projectile/body_visible/dart/bardart{
+	dir = 8;
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/implant/projectile/body_visible/dart/bardart{
+	dir = 8;
+	pixel_x = 2;
+	pixel_y = 1
+	},
+/obj/item/implant/projectile/body_visible/dart/bardart{
+	dir = 8;
+	pixel_x = 3;
+	pixel_y = 6
+	},
+/obj/item/implant/projectile/body_visible/dart/bardart{
+	dir = 8;
+	pixel_x = -4;
+	pixel_y = 11
+	},
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/syndicate_station/hideout)
+"P" = (
+/obj/machinery/computer/camera_viewer{
+	dir = 4
+	},
+/obj/machinery/light/incandescent/warm{
+	dir = 8
+	},
+/turf/unsimulated/floor/carpet/red/fancy/edge/nw,
+/area/syndicate_station/hideout)
+"Q" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 4
+	},
+/obj/machinery/computer/arcade,
+/turf/simulated/floor/redblack{
+	dir = 6
+	},
+/area/syndicate_station/hideout)
+"R" = (
+/turf/simulated/floor/black,
+/area/syndicate_station/hideout)
+"S" = (
+/obj/machinery/vending/cola/red,
 /turf/simulated/floor/redblack,
+/area/syndicate_station/hideout)
+"T" = (
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/syndicate_station/hideout)
+"U" = (
+/turf/unsimulated/floor/carpet/red/fancy/edge/south,
+/area/syndicate_station/hideout)
+"V" = (
+/turf/unsimulated/wall/auto/lead/gray,
+/area/syndicate_station/hideout)
+"W" = (
+/obj/machinery/light/small/floor/frostedred,
+/turf/simulated/floor/wood,
+/area/syndicate_station/hideout)
+"X" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 4
+	},
+/turf/unsimulated/floor/carpet/red/fancy/edge/ne,
+/area/syndicate_station/hideout)
+"Y" = (
+/obj/table/syndicate/auto,
+/obj/item/reagent_containers/food/drinks/drinkingglass/oldf{
+	pixel_y = 9
+	},
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/syndicate_station/hideout)
+"Z" = (
+/obj/decal/stage_edge{
+	dir = 4
+	},
+/obj/dartboard{
+	pixel_y = 26
+	},
+/turf/simulated/floor/redblack{
+	dir = 5
+	},
 /area/syndicate_station/hideout)
 
 (1,1,1) = {"
-kD
-kD
-kD
-kD
-kD
-kD
-kD
-kD
-kD
-kD
-kD
-kD
-kD
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
 "}
 (2,1,1) = {"
-kD
-JT
-JT
-JT
-JT
-JT
-gE
-gE
-gE
-gE
-gE
-gE
-kD
+g
+e
+e
+e
+e
+e
+V
+V
+V
+V
+V
+V
+g
 "}
 (3,1,1) = {"
-kD
-JT
-Zz
-yv
-yc
-RU
-dM
-KH
-Vl
-jE
-DY
-gE
-kD
+g
+e
+N
+D
+r
+k
+P
+E
+d
+z
+b
+V
+g
 "}
 (4,1,1) = {"
-kD
-JT
-JT
-gE
-Ur
-UX
-Il
-nn
-ow
-Vz
-ZC
-gE
-kD
+g
+e
+e
+V
+j
+K
+s
+U
+t
+R
+i
+V
+g
 "}
 (5,1,1) = {"
-kD
-JT
-sN
-yv
-nL
-RU
-gs
-LG
-IB
-Vz
-kj
-gE
-kD
+g
+e
+u
+D
+F
+k
+n
+I
+A
+R
+B
+V
+g
 "}
 (6,1,1) = {"
-kD
-JT
-JT
-JT
-jR
-JT
-Uz
-LG
-ic
-Vz
-mX
-gE
-kD
+g
+e
+e
+e
+M
+e
+s
+I
+v
+R
+C
+V
+g
 "}
 (7,1,1) = {"
-kD
-gE
-Xq
-jE
-jE
-mn
-Uz
-LG
-eq
-Vz
-ol
-gE
-kD
+g
+V
+m
+z
+z
+x
+s
+I
+Y
+R
+J
+V
+g
 "}
 (8,1,1) = {"
-kD
-gE
-ps
-WU
-Tr
-GF
-Uz
-LG
-ic
-Vz
-OW
-gE
-kD
+g
+V
+Z
+f
+f
+G
+s
+I
+O
+R
+S
+V
+g
 "}
 (9,1,1) = {"
-kD
-gE
-lr
-Ol
-lr
-Rv
-Uz
-LG
-eq
-Vz
-cM
-gE
-kD
+g
+V
+W
+y
+W
+h
+s
+I
+Y
+R
+l
+V
+g
 "}
 (10,1,1) = {"
-kD
-gE
-FX
-lz
-FX
-ws
-Uz
-nn
-ic
-HM
-vi
-gE
-kD
+g
+V
+y
+c
+y
+p
+s
+U
+v
+L
+w
+V
+g
 "}
 (11,1,1) = {"
-kD
-gE
-lr
-FX
-lr
-KY
-nZ
-rR
-wn
-El
-vQ
-gE
-kD
+g
+V
+W
+y
+W
+a
+X
+o
+H
+T
+Q
+V
+g
 "}
 (12,1,1) = {"
-kD
-gE
-gE
-gE
-gE
-gE
-gE
-gE
-gE
-gE
-gE
-gE
-kD
+g
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+g
 "}
 (13,1,1) = {"
-kD
-kD
-kD
-kD
-kD
-kD
-kD
-kD
-kD
-kD
-kD
-kD
-kD
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
+g
 "}
