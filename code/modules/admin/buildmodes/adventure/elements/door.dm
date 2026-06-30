@@ -20,7 +20,8 @@
 			var/obj/adventurepuzzle/triggerable/door/door = new /obj/adventurepuzzle/triggerable/door(T)
 			door.name = door_name
 			door.icon_state = "door_[door_type]_closed"
-			door.set_dir(holder.dir)
+			if(holder.dir)
+				door.set_dir(holder.dir)
 			door.door_type = door_type
 			if (door_type == "glass" || door_type == "runes")
 				door.set_opacity(0)

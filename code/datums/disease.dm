@@ -478,7 +478,7 @@
 		if (!istype(A,/datum/ailment/))
 			return 0
 
-		if (src.resistances.Find(A.type))
+		if (src.has_ailment_resistance(A.type))
 			return 0
 
 		if (A.affected_species.len)
@@ -585,7 +585,7 @@
 		return 0
 
 	if (prob(strain.resistance_prob))
-		src.resistances += strain.master.type
+		src.add_ailment_resistance(strain.master.type, strain.master.type)
 	if (src.ailments) //ZeWaka: Fix for null.ailments
 		src.ailments -= strain
 	strain.master.on_remove(src,strain)
@@ -598,7 +598,7 @@
 			continue
 		if (strain.master.type == ailment_path)
 			if (prob(strain.resistance_prob))
-				src.resistances += strain.master.type
+				src.add_ailment_resistance(strain.master.type, strain.master.type)
 			src.ailments -= strain
 			strain.master.on_remove(src,strain)
 			qdel(strain)

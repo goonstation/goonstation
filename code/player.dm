@@ -112,6 +112,9 @@ var/global/list/players = list()
 		src.login_queue = null
 		SPAWN(0)
 			src.cloudSaves.fetch()
+			var/datum/fish_collection/collection = get_singleton(/datum/fish_collection)
+			if (src.has_medal(collection.medal_name))
+				collection.verify_fish_medal(src)
 
 	/// Record a player login via the API. Sets player ID field for future API use
 	proc/record_login()

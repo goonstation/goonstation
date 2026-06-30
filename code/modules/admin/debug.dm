@@ -489,7 +489,7 @@ var/global/debug_messages = 0
 		var/station_only = alert("Only delete from the station Z?",,"Yes" ,"No")
 		var/numdeleted = 0
 		for(var/atom/O as anything in find_all_by_type(hsbitem, lagcheck=(background == "yes")))
-			if ((station_only == "Yes") && O.z != Z_LEVEL_STATION)
+			if ((station_only == "Yes") && get_z(O) != Z_LEVEL_STATION)
 				continue
 			qdel(O)
 			numdeleted++
@@ -536,7 +536,7 @@ var/global/debug_messages = 0
 		var/numdeleted = 0
 		var/numtotal = 0
 		for(var/atom/O as anything in find_all_by_type(hsbitem, lagcheck=(background == "yes")))
-			if ((station_only == "Yes") && O.z != Z_LEVEL_STATION)
+			if ((station_only == "Yes") && get_z(O) != Z_LEVEL_STATION)
 				continue
 			numtotal++
 			if(prob(50))

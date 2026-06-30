@@ -187,8 +187,10 @@ const CommodityEntry = (props: CommodityProps) => {
   return (
     <Table.Row className="candystripe">
       <Table.Cell py="5px">
-        <Box mb="5px" bold>
-          {commodity.name}
+        <Box mb="5px">
+          <b>{commodity.name}</b>{' '}
+          {commodity.amount_left !== -1 &&
+            '— ' + commodity.amount_left + ' Left!'}
         </Box>
         <BlockQuote>{commodity.description}</BlockQuote>
       </Table.Cell>
@@ -197,6 +199,7 @@ const CommodityEntry = (props: CommodityProps) => {
           <Stack.Item>
             <Button
               icon={view_type === 'selling' ? 'cart-shopping' : 'coins'}
+              disabled={commodity.amount_left === 0}
               onClick={() =>
                 act(view_type === 'selling' ? 'purchase' : 'sell', {
                   ref: commodity.ref,
@@ -218,11 +221,6 @@ const CommodityEntry = (props: CommodityProps) => {
             >
               Haggle
             </Button>
-          </Stack.Item>
-          <Stack.Item>
-            {view_type === 'selling' && commodity.amount_left && (
-              <Box> {commodity.amount_left} Left!</Box>
-            )}
           </Stack.Item>
         </Stack>
       </Table.Cell>

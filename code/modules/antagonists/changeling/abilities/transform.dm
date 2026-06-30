@@ -1,74 +1,3 @@
-/datum/targetable/changeling/monkey
-	name = "Lesser Form"
-	desc = "Become something much less powerful."
-	icon_state = "lesser"
-	cooldown = 50
-	targeted = 0
-	target_anything = 0
-	can_use_in_container = 1
-	var/last_used_name = null
-
-	onAttach(var/datum/abilityHolder/H)
-		..()
-		if (H?.owner) //Wire note: Fix for Cannot read null.real_name
-			last_used_name = H.owner.real_name
-
-	cast(atom/target)
-		if (..())
-			return 1
-
-		var/mob/living/carbon/human/H = holder.owner
-		if(!istype(H))
-			return 1
-		if(src.headless_skeleton_warning()) // Headless skeletons die if they use this.
-			return 1
-		if (ismonkey(H))
-			if (!istype(H.default_mutantrace, /datum/mutantrace/monkey))
-				if (tgui_alert(H,"Are we sure?","Exit this lesser form?",list("Yes","No")) != "Yes")
-					return 1
-				doCooldown()
-
-				H.transforming = 1
-				H.canmove = 0
-				H.icon = null
-				APPLY_ATOM_PROPERTY(H, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
-				var/atom/movable/overlay/animation = new /atom/movable/overlay( usr.loc )
-				animation.icon_state = "blank"
-				animation.icon = 'icons/mob/mob.dmi'
-				animation.master = src
-				FLICK("monkey2h", animation)
-				sleep(1 SECOND)
-				qdel(animation)
-				if (ispath(H.default_mutantrace, /datum/mutantrace/monkey))
-					H.bioHolder.AddEffect("human")
-				else
-					H.set_mutantrace(null)
-				H.transforming = 0
-				H.canmove = 1
-				H.icon = initial(H.icon)
-				REMOVE_ATOM_PROPERTY(H, PROP_MOB_INVISIBILITY, "transform")
-				H.update_face()
-				H.update_body()
-				H.update_clothing()
-				H.real_name = last_used_name
-				H.abilityHolder.updateButtons()
-				logTheThing(LOG_COMBAT, H, "leaves lesser form as a changeling, [log_loc(H)].")
-				return 0
-			else
-				boutput(H, "We cannot leave this form in this way.")
-				return 1
-		else
-			if (tgui_alert(H,"Are we sure?","Assume lesser form?",list("Yes","No")) != "Yes")
-				return 1
-			last_used_name = H.real_name
-			if (H.hasStatus("handcuffed"))
-				H.handcuffs.drop_handcuffs(H)
-			H.delStatus("pinned") // slip out of the grab
-			H.monkeyize()
-			H.abilityHolder.updateButtons()
-			logTheThing(LOG_COMBAT, H, "enters lesser form as a changeling, [log_loc(H)].")
-			return 0
-
 /datum/targetable/changeling/transform
 	name = "Transform"
 	desc = "Become someone else!"
@@ -76,7 +5,6 @@
 	cooldown = 0
 	targeted = 0
 	target_anything = 0
-	human_only = 1
 	can_use_in_container = 1
 	lock_holder = FALSE
 
@@ -101,7 +29,8 @@
 			boutput(holder.owner, SPAN_NOTICE("We change our mind."))
 			return 1
 
-		if (target_name == src.holder.owner.real_name)
+		var/datum/absorbedIdentity/current_ident = H.current_ident
+		if (target_name == src.holder.owner.real_name && !current_ident.always_switch)
 			return 1
 
 		holder.owner.visible_message(SPAN_ALERT("<B>[holder.owner] transforms!</B>"))
@@ -109,6 +38,13 @@
 		var/mob/living/carbon/human/C = holder.owner
 		var/datum/absorbedIdentity/face = H.absorbed_dna[target_name]
 		//re-store the current identity, it may have been modified
-		H.absorbed_dna[src.holder.owner.real_name] = new /datum/absorbedIdentity(src.holder.owner)
+		if (!current_ident.do_not_store && !face.do_not_store)
+			current_ident.set_up_from(C)
+			H.absorbed_dna[src.holder.owner.real_name] = current_ident
 		face.apply_to(C)
+		if (istype(face, /datum/absorbedIdentity/monkey) || face.bioHolder.HasEffect("monkey"))
+			if (C.hasStatus("handcuffed"))
+				C.handcuffs.drop_handcuffs(C)
+			C.delStatus("pinned") // slip out of the grab
+		H.current_ident = face
 		return 0
