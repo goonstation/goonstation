@@ -2451,8 +2451,8 @@ TYPEINFO(/mob/living/silicon/robot)
 				src.freemodule = 0
 				src.set_module(new /obj/item/robot_module/medical(src))
 				if(length(src.upgrades) < src.max_upgrades)
-					src.upgrades += new /obj/item/roboupgrade/repairpack(src)
-					boutput(src, SPAN_NOTICE("You chose the Medical module. It comes with a free Repair Pack Upgrade."))
+					src.upgrades += new /obj/item/roboupgrade/rechargepack(src)
+					boutput(src, SPAN_NOTICE("You chose the Medical module. It comes with a free recharge pack."))
 			if("Mining")
 				src.freemodule = 0
 				src.set_module(new /obj/item/robot_module/mining(src))
