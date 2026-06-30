@@ -245,10 +245,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/light_switch/auto,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/light_switch/south,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "abu" = (
@@ -442,7 +442,6 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/machinery/light_switch/auto,
 /obj/machinery/camera/directional/north{
 	pixel_x = 10
 	},
@@ -1202,10 +1201,10 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "afg" = (
-/obj/machinery/light_switch/auto,
 /obj/stool/chair/blue{
 	dir = 4
 	},
+/obj/machinery/light_switch/south,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "afj" = (
@@ -1557,9 +1556,7 @@
 /obj/machinery/camera/directional/west{
 	pixel_y = 10
 	},
-/obj/machinery/light_switch/auto{
-	dir = 8
-	},
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
@@ -1616,7 +1613,6 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "ahQ" = (
-/obj/machinery/light_switch/auto,
 /obj/rack,
 /obj/item/bandage,
 /obj/item/bandage,
@@ -1624,6 +1620,7 @@
 /obj/item/reagent_containers/patch/mini/synthflesh,
 /obj/item/reagent_containers/mender_refill_cartridge/brute,
 /obj/item/reagent_containers/mender_refill_cartridge/burn,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -2484,7 +2481,7 @@
 /turf/simulated/floor/purple,
 /area/station/teleporter)
 "aob" = (
-/obj/machinery/light_switch/auto,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fblue2"
@@ -2667,7 +2664,7 @@
 	},
 /area/station/teleporter)
 "apC" = (
-/obj/machinery/light_switch/auto,
+/obj/machinery/light_switch/south,
 /turf/simulated/floor/purpleblack,
 /area/station/teleporter)
 "apE" = (
@@ -2763,7 +2760,7 @@
 /area/station/medical/medbay)
 "aqz" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/obj/machinery/light_switch/auto,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/caution,
 /area/station/storage/eva)
 "aqA" = (
@@ -2996,7 +2993,7 @@
 /obj/submachine/seed_manipulator{
 	dir = 4
 	},
-/obj/machinery/light_switch/auto,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/green/side{
 	dir = 9
 	},
@@ -3523,7 +3520,7 @@
 	},
 /area/station/bridge)
 "avb" = (
-/obj/machinery/light_switch/auto,
+/obj/machinery/light_switch/south,
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -3541,11 +3538,11 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/light_switch/auto,
 /obj/disposalpipe/segment{
 	dir = 4;
 	level = -1
 	},
+/obj/machinery/light_switch/south,
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -4828,7 +4825,7 @@
 /area/station/medical/medbay)
 "aCJ" = (
 /obj/machinery/genetics_scanner,
-/obj/machinery/light_switch/auto,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/white/checker2{
 	dir = 5
 	},
@@ -5254,11 +5251,11 @@
 /area/station/janitor/office)
 "aEX" = (
 /obj/storage/cart/trash,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/purple,
 /area/station/janitor/office)
 "aEY" = (
 /obj/storage/closet/biohazard,
-/obj/machinery/light_switch/auto,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
@@ -5357,8 +5354,8 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/mining/refinery)
 "aFG" = (
-/obj/machinery/light_switch/auto,
 /obj/machinery/portable_reclaimer,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "aFH" = (
@@ -7018,7 +7015,6 @@
 	},
 /area/station/medical/medbay)
 "aSW" = (
-/obj/machinery/light_switch/auto,
 /obj/machinery/alarm/directional/north,
 /obj/stool/chair/office/blue,
 /turf/simulated/floor/wood/two,
@@ -7430,7 +7426,7 @@
 /obj/decal/tile_edge/stripe/big{
 	dir = 8
 	},
-/obj/machinery/light_switch/auto,
+/obj/machinery/light_switch/south,
 /turf/simulated/floor/darkblue,
 /area/station/medical/morgue)
 "aWo" = (
@@ -7474,6 +7470,7 @@
 	pixel_x = 10
 	},
 /obj/stool/chair/office/blue,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/wood/two,
 /area/station/bridge/united_command)
 "aWA" = (
@@ -7719,7 +7716,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/light_switch/auto,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/bluewhite{
 	dir = 9
 	},
@@ -7768,7 +7765,7 @@
 /area/station/storage/tech)
 "aZd" = (
 /obj/stool/bench/red,
-/obj/machinery/light_switch/auto,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/caution,
 /area/station/hangar/arrivals)
 "aZf" = (
@@ -9827,6 +9824,13 @@
 "dTw" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hangar/engine)
+"dTK" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/light_switch/north,
+/turf/simulated/floor,
+/area/station/hallway/primary/east)
 "dUQ" = (
 /obj/stool/chair/office/purple{
 	pixel_y = 0;
@@ -10509,7 +10513,6 @@
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "fcL" = (
-/obj/machinery/light_switch/auto,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
@@ -11020,8 +11023,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/light_switch/auto,
 /obj/railing,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "fNz" = (
@@ -12092,9 +12095,9 @@
 	pixel_y = 24
 	},
 /obj/machinery/vending/chapel,
-/obj/machinery/light_switch/auto{
+/obj/machinery/light_switch/north{
 	pixel_x = -4;
-	pixel_y = 28
+	pixel_y = 24
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
@@ -13473,7 +13476,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/light_switch/auto,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/stairs/wide{
 	dir = 4
 	},
@@ -14554,7 +14557,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/ptl)
 "kUP" = (
-/obj/machinery/light_switch/auto,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fgreen2"
@@ -16473,6 +16476,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/white/checker,
 /area/station/hallway/secondary/exit)
 "nGt" = (
@@ -18750,7 +18754,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/light_switch/auto,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "rCw" = (
@@ -19776,11 +19780,6 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "tcR" = (
-/obj/machinery/light_switch/auto{
-	dir = 8;
-	pixel_x = -25;
-	pixel_y = 6
-	},
 /obj/submachine/ice_cream_dispenser,
 /obj/machinery/door_control{
 	id = "creamery_shutter";
@@ -19788,6 +19787,10 @@
 	pixel_x = -24;
 	pixel_y = -6;
 	dir = 8
+	},
+/obj/machinery/light_switch/west{
+	pixel_x = -24;
+	pixel_y = 6
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
@@ -20692,7 +20695,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/light_switch/auto,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "umO" = (
@@ -20779,11 +20782,11 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/light_switch/auto,
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 8
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "urK" = (
@@ -22096,7 +22099,6 @@
 	},
 /area/station/garden/owlery)
 "wrZ" = (
-/obj/machinery/light_switch/auto,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -22105,6 +22107,7 @@
 /obj/machinery/light{
 	layer = 3
 	},
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
 "wtg" = (
@@ -22913,7 +22916,6 @@
 	},
 /area/station/science/storage)
 "xGi" = (
-/obj/machinery/light_switch/auto,
 /obj/item/reagent_containers/food/fish/bass,
 /obj/item/reagent_containers/food/fish/bass,
 /obj/item/reagent_containers/food/fish/carp,
@@ -22927,6 +22929,7 @@
 /obj/item/raw_material/ice,
 /obj/item/raw_material/ice,
 /obj/storage/crate/bloody,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "xGP" = (
@@ -23188,7 +23191,7 @@
 	requires_power = 0
 	})
 "yeC" = (
-/obj/machinery/light_switch/auto,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
 	},
@@ -67793,7 +67796,7 @@ aba
 aba
 atV
 aAD
-aBo
+dTK
 wBL
 avQ
 aDV

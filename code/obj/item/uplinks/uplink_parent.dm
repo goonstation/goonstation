@@ -206,6 +206,7 @@
 
 			src.items_telecrystal = sortList(sort5, /proc/cmp_text_asc)
 
+		src.update_static_data_for_all_viewers() //In case someone pulls up the UI in the second before New() calls setup()
 		return
 
 	proc/vr_check(var/mob/user)
