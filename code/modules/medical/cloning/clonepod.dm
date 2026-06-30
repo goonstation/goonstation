@@ -233,7 +233,7 @@ TYPEINFO(/obj/machinery/clonepod)
 		if (src.occupant)
 			// If we already have an occupant then we don't really need to start it, do we?
 			return 1
-		if (autogenerate)
+		if (auto_generate)
 			if (src.meat_level < (MEAT_NEEDED_TO_CLONE + MINIMUM_MEAT_USED))
 				return 0 // auto-generated clones need a tiny bit of additional meat to form
 		else
