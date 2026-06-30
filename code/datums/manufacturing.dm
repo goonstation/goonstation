@@ -2221,7 +2221,9 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 /datum/manufacture/robup_healthgoggles
 	name = "ProDoc Healthgoggle Upgrade"
 	item_requirements = list("crystal" = 4,
-							 "conductive" = 6)
+							 "conductive" = 6,
+							 "metal_superdense" = 5,
+							 "viscerite" = 10)
 	item_outputs = list(/obj/item/roboupgrade/healthgoggles)
 	create = 1
 	time = 90 SECONDS

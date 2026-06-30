@@ -155,6 +155,7 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 		/datum/manufacture/visor,
 		/datum/manufacture/deafhs,
 		/datum/manufacture/robup_jetpack,
+		/datum/manufacture/robup_healthgoggles,
 		/datum/manufacture/robup_sechudgoggles,
 		/datum/manufacture/robup_spectro,
 		/datum/manufacture/robup_recharge,
