@@ -645,7 +645,12 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 	network = LANDMARK_VR_BOMBTEST
 
 TYPEINFO(/obj/item/clothing/glasses/healthgoggles)
-	analyser_flags = ANALYSER_BLACKLIST
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
+	mats = list("crystal" = 4,
+				"conductive" = 6,
+				"metal_superdense" = 5,
+				"viscerite" = 10)
+
 /obj/item/clothing/glasses/healthgoggles
 	name = "\improper ProDoc Healthgoggles"
 	desc = "Fitted with an advanced miniature sensor array that allows the user to quickly determine the physical condition of others."
