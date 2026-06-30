@@ -535,7 +535,7 @@
 	item_outputs = list(/obj/item/pinpointer/category/apcs)
 	create = 1
 	time = 7 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/weldingmask
 	name = "Welding Mask"
