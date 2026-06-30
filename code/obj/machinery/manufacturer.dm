@@ -100,7 +100,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/stored_previous_blueprint_data = "" //! JSON-encoded string of the blueprint data. used for comparisons in get_producibility_for_blueprints
 
 	/* Production options */
-	/// A list of valid categories the manufacturer will use. Any invalid provided categories are assigned "Miscellaneous". Defined in New()
+	/// A list of valid categories the manufacturer will use. Any invalid provided categories are assigned MANUFACTURER::CATEGORY::MISCELLANEOUS. Defined in New()
 	var/list/categories = null
 	var/accept_blueprints = TRUE //! Whether or not we accept blueprints from the ruk kit into this manufacturer.
 
@@ -241,9 +241,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		if (src.time_left_electrified > 0)
 			src.time_left_electrified--
-
-	proc/get_categories()
-		return MANUFACTURER.CATEGORY._get_namespace_constants()
 
 	proc/finish_work()
 		if(length(src.queue))
