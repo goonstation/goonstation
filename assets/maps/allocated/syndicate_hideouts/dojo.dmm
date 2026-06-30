@@ -49,7 +49,10 @@
 /area/syndicate_station/hideout)
 "n" = (
 /obj/machinery/light/small/floor,
-/obj/fakeobject/bookcase,
+/obj/table/wood/auto/desk,
+/obj/machinery/weapon_stand/katana_stand{
+	icon_state = "swordstand0"
+	},
 /turf/simulated/floor/bamboo,
 /area/syndicate_station/hideout)
 "o" = (
