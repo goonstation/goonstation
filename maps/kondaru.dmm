@@ -46207,8 +46207,6 @@
 /area/station/security/brig/solitary)
 "pYe" = (
 /obj/table/auto,
-/obj/item/shipcomponent/secondary_system/tractor_beam,
-/obj/item/shipcomponent/secondary_system/tractor_beam,
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "pZc" = (
