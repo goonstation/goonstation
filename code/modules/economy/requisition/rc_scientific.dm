@@ -26,8 +26,21 @@ ABSTRACT_TYPE(/datum/req_contract/scientific)
 		src.flavor_desc = "An affiliated research group is [pick(desc_begins)] a [pick(desc_whatstudy)] of [organic.name] [pick(desc_whystudy)]"
 		src.flavor_desc += " and requires genetically-human specimens in adequate condition."
 		src.payout += rand(0,40) * 20
-		src.item_rewarders += new /datum/rc_itemreward/prodoc_glasses
-		src.item_rewarders += new /datum/rc_itemreward/prodoc_silicon
+		switch(rand(1,4))
+			if(1)
+				src.item_rewarders += new /datum/rc_itemreward/prodoc_glasses
+				src.item_rewarders += new /datum/rc_itemreward/prodoc_silicon
+			if(2)
+				src.item_rewarders += new /datum/rc_itemreward/prodoc_glasses
+				src.item_rewarders += new /datum/rc_itemreward/prodoc_glasses
+			if(3)
+				src.item_rewarders += new /datum/rc_itemreward/prodoc_silicon
+				src.item_rewarders += new /datum/rc_itemreward/prodoc_silicon
+			if(4)
+				src.item_rewarders += new /datum/rc_itemreward/prodoc_glasses
+				src.item_rewarders += new /datum/rc_itemreward/prodoc_glasses
+				src.item_rewarders += new /datum/rc_itemreward/prodoc_silicon
+				src.item_rewarders += new /datum/rc_itemreward/prodoc_silicon
 		..()
 
 ABSTRACT_TYPE(/datum/rc_entry/item/organ)
@@ -91,8 +104,21 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		src.flavor_desc = "[pick(desc_wherestudy)] seeking [pick(desc_whatstudy)] for [pick(desc_whystudy)].[pick(desc_bonusflavor)]"
 		src.flavor_desc += "<br><br><i>REQHUB ADVISORY: Parameters from contract issuer indicate the following NT-recognized reagents to be compositionally adequate</i>"
 		src.flavor_desc += "<br>SYNTHFLESH | BEFF | PEPPERONI | MEAT SLURRY"
-		src.item_rewarders += new /datum/rc_itemreward/prodoc_glasses
-		src.item_rewarders += new /datum/rc_itemreward/prodoc_silicon
+		switch(rand(1,4))
+			if(1)
+				src.item_rewarders += new /datum/rc_itemreward/prodoc_glasses
+				src.item_rewarders += new /datum/rc_itemreward/prodoc_silicon
+			if(2)
+				src.item_rewarders += new /datum/rc_itemreward/prodoc_glasses
+				src.item_rewarders += new /datum/rc_itemreward/prodoc_glasses
+			if(3)
+				src.item_rewarders += new /datum/rc_itemreward/prodoc_silicon
+				src.item_rewarders += new /datum/rc_itemreward/prodoc_silicon
+			if(4)
+				src.item_rewarders += new /datum/rc_itemreward/prodoc_glasses
+				src.item_rewarders += new /datum/rc_itemreward/prodoc_glasses
+				src.item_rewarders += new /datum/rc_itemreward/prodoc_silicon
+				src.item_rewarders += new /datum/rc_itemreward/prodoc_silicon
 
 		src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/clonejuice,rand(8,15)*20)
 		..()
@@ -1096,7 +1122,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		return theitem
 
 /datum/rc_itemreward/prodoc_silicon
-	name = "ProDoc scanner upgrade"
+	name = "ProDoc cyborg scanner upgrade"
 	build_reward()
 		var/theitem = new /obj/item/roboupgrade/healthgoggles
 		return theitem
