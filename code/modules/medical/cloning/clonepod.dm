@@ -202,8 +202,8 @@ TYPEINFO(/obj/machinery/clonepod)
 
 		if (src.meat_level <= 1)
 			. += "<br>[SPAN_ALERT("Alert: Biomatter reserves depleted.")]"
-		else if (src.meat_level <= MEAT_LOW_LEVEL)
-			. += "<br>[SPAN_ALERT("Alert: Biomatter reserves are low ([meat_pct]% full).")]"
+		else if (src.meat_level < MEAT_NEEDED_TO_CLONE)
+			. += "<br>[SPAN_ALERT("Alert: Biomatter reserves are too low to clone ([meat_pct]% full)")]"
 		else
 			. += "<br>Biomatter reserves are [meat_pct]% full."
 
@@ -221,10 +221,10 @@ TYPEINFO(/obj/machinery/clonepod)
 		if (src.mess)
 			src.icon_state = "pod_g"
 		else
-			src.icon_state = "pod_[src.occupant ? "1" : "0"][src.meat_level ? "" : "_lowmeat"][src.clonehack ? "_mindhack" : "" ][src.connected?.mindwipe ? "_mindwipe" : ""]"
+			src.icon_state = "pod_[src.occupant ? "1" : "0"][src.meat_level >= MEAT_NEEDED_TO_CLONE ? "" : "_lowmeat"][src.clonehack ? "_mindhack" : "" ][src.connected?.mindwipe ? "_mindwipe" : ""]"
 
 
-	proc/start_clone(force = 0)
+	proc/start_clone(auto_generate=FALSE)
 		// Returns 1 if we started a clone or 0 if we couldn't due to meat reasons
 
 		// Reset the time until the next automatic start.
@@ -233,12 +233,12 @@ TYPEINFO(/obj/machinery/clonepod)
 		if (src.occupant)
 			// If we already have an occupant then we don't really need to start it, do we?
 			return 1
-		if ((force && src.meat_level < MEAT_NEEDED_TO_CLONE) || (!force && src.meat_level < initial(meat_level)))
-			// Don't actually start cloning if we don't have enough meat.
-			// For forced clones, this is the minimum needed to start (as usual)
-			// For auto-generated clones, it's the initial meat level (25%)
-			// Reason? Mostly just keeping it from beeping about low biomatter...
-			return 0
+		if (autogenerate)
+			if (src.meat_level < (MEAT_NEEDED_TO_CLONE + MINIMUM_MEAT_USED))
+				return 0 // auto-generated clones need a tiny bit of additional meat to form
+		else
+			if (src.meat_level < MEAT_NEEDED_TO_CLONE)
+				return 0
 
 		// Create a new human and grow it while we wait for a mind
 		src.occupant = new /mob/living/carbon/human/clone(src)
@@ -278,8 +278,8 @@ TYPEINFO(/obj/machinery/clonepod)
 			return 0
 
 		//if (src.meat_level < MEAT_NEEDED_TO_CLONE)
-		if (!src.start_clone(1))
-			src.connected_message("Insufficient biomatter to begin.", "warning")
+		if (!src.start_clone())
+			src.connected_message("Insufficient biomatter to begin, regenerating base biomass.", "warning")
 			return 0
 
 		src.attempting = 1 //One at a time!!
@@ -620,6 +620,8 @@ TYPEINFO(/obj/machinery/clonepod)
 				return ..()
 
 		else
+			if (src.meat_level < MEAT_NEEDED_TO_CLONE)
+				src.meat_level += FREE_MEAT_RATE // slow regeneration to minimum stable clone
 			src.occupant = null
 			src.operating = 0
 			src.attempting = 0
@@ -635,7 +637,7 @@ TYPEINFO(/obj/machinery/clonepod)
 				// Attempt to start a new clone (if possible)
 				src.auto_delay -= mult
 				if (src.auto_delay < 0)
-					src.start_clone()
+					src.start_clone(auto_generate=TRUE)
 			#endif
 
 			return ..()

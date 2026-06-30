@@ -25,7 +25,7 @@ TYPEINFO(/obj/machinery/clonegrinder)
 	var/max_meat = 5 //To be honest, I added the meat reclamation thing in part because I wanted a "max_meat" var.
 	var/grind_level = GRIND_NOTHING
 	var/upgraded = 0 // upgrade card makes the reclaimer more efficient
-	HELP_MESSAGE_OVERRIDE("Add organs, limbs, and meat to process by <b>clicking</b> with the <b>item</b> in-hand.<br>Turn the reclaimer on by <b>clicking</b> with an <b>open hand</b>.")
+	HELP_MESSAGE_OVERRIDE("Add organs and limbs to process by <b>clicking</b> with the <b>item</b> in-hand.<br>Turn the reclaimer on by <b>clicking</b> with an <b>open hand</b>.")
 
 	New()
 		..()
