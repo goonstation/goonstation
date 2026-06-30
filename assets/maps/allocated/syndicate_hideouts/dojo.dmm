@@ -51,7 +51,8 @@
 /obj/machinery/light/small/floor,
 /obj/table/wood/auto/desk,
 /obj/machinery/weapon_stand/katana_stand{
-	icon_state = "swordstand0"
+	icon_state = "swordstand0";
+	amount = 0
 	},
 /turf/simulated/floor/bamboo,
 /area/syndicate_station/hideout)
