@@ -48,9 +48,8 @@
 /turf/simulated/floor/bamboo,
 /area/syndicate_station/hideout)
 "n" = (
-/obj/table/wood/auto/desk,
-/obj/machinery/weapon_stand/katana_stand,
 /obj/machinery/light/small/floor,
+/obj/fakeobject/bookcase,
 /turf/simulated/floor/bamboo,
 /area/syndicate_station/hideout)
 "o" = (
@@ -221,7 +220,7 @@ h
 h
 h
 h
-T
+h
 T
 T
 T
@@ -236,7 +235,7 @@ J
 h
 w
 H
-T
+h
 y
 A
 g
@@ -251,7 +250,7 @@ I
 h
 Q
 D
-T
+h
 r
 A
 v
@@ -341,7 +340,7 @@ I
 L
 h
 I
-T
+h
 r
 A
 c
@@ -356,7 +355,7 @@ I
 I
 d
 I
-T
+h
 y
 A
 q
@@ -371,7 +370,7 @@ h
 h
 h
 h
-T
+h
 T
 T
 T
