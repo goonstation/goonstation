@@ -1,5 +1,71 @@
-
+(t)mon jun 29 26
+(u)LeahTheTech
+(+)Frog tongues can now catch and eat small insects, as well as other kinds of food.
+(t)sun jun 28 26
+(u)SnugglyCactus, Skeletonman0, PiratePop, swinglow20, glowbold, LeahTheTech
+(p)26993
+(e)🎨🔊👽💪|C-Sprites, C-Sound, A-Mutantraces, A-Traits
+(*)Adds a 3-point amphibian trait to character select that allows players to be human amphibians, separate from nonhuman Abzunians and shelterfrogs. The frogs are coming.
+(u)LeahTheTech
+(*)The armory now REQUIRES an authorization reason.
+(+)New packet command "set_reason" for armory computers.
+(u)Cheekybrdy
+(p)26857
+(e)🎨⚗|C-Sprites, A-Chemistry
+(+)Adds swordfish.
 (t)fri jun 26 26
+(u)RubiCubie and ANNmaggedon
+(p)26909
+(e)🎨💊💪📨|C-Sprites, A-Medical, A-Traits, A-Logistics
+(*)Added new canes that help your lack of a leg or a lack of youth! Completely removing slowdown from a missing leg.
+(+)Canes can be acquired via trinket trait, traders, crafting, cargo or medbay.
+(u)leafedlizord
+(p)27008
+(e)🎨💪|C-Sprites, A-Traits
+(+)Removed the body category from the Stinky trait.
+(+)Adjusted the sprite for the Stinky trait to match the other Uncategorized traits.
+(u)CalliopeSoups
+(p)26858
+(e)🌠|A-Events
+(+)Certain unruly monkeys can now be played through the Sudden Sapience event.
+(u)Nexusuxen
+(p)26918
+(e)🗺|A-Mapping
+(*)Oshan's AI Upload/Net Cafe has swapped places with the Sauna room. The Captain's quarters now also provides critical quick access to the Sauna from the Captain's new private bathroom.
+(+)Several areas around the AI Upload/Net Cafe have been altered to make room for the changes, primarily merging the fishing room with Hydroponics proper (A couple trays had to be moved into maintenance.)
+(u)Bartimeus973
+(p)26928
+(e)💅🔨|C-QoL, A-Player-Actions
+(+)Ghostdrones can now see and pickup mentormice
+(u)JORJ949
+(p)26846
+(e)🔎💅📄🧛|C-Code-Quality, C-QoL, A-UI, A-Gamemodes
+(*)Non-PDA syndicate uplinks (including headrev and nukeop) now use TGUI. Presently cannot view syndicate intelligence, this will come in a future update.
+(u)Walnut356
+(p)26999
+(e)🛠️|A-Engineering
+(+)When stepping, Movement Component now outputs a signal with the result of the step.
+(u)JORJ949
+(p)26956
+(e)🆕📨|C-Feature, A-Logistics
+(*)Cargo can now print carts at their manufacturer
+(u)Asterion0
+(p)26983
+(e)|
+(+)Mender refill cartridges can be refilled with whitelisted chemicals, and empty cartridges can now be printed at medical fabricators.
+(u)LorrMaster
+(p)26979
+(e)🆕🎨🧱⏰💪|C-Feature, C-Sprites, A-Materials, A-Status-Effects, A-Traits
+(*)Added the Artisan Trait, a new trait that gives your trinket a random material.
+(u)LeahTheTech
+(p)27004
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Vampire bite now instantly kills the victim when they are fully drained of blood.
+(u)glowbold
+(p)26905
+(e)🆕🗺⛔🚗|C-Feature, A-Mapping, C-Removal, A-Vehicles
+(*)Pod Tractor Beam secondary components have been removed from Security podbays.
+(*)Armory Pod Weapons Crate gets 2 Stasis Charger pod weapons
 (u)Zeabus
 (p)26990
 (e)🔬|A-Science

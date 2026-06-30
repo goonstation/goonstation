@@ -1204,6 +1204,20 @@
 	time = 5 SECONDS
 	category = "Tool"
 
+/datum/manufacture/cane
+	name = "Cane"
+	item_requirements = list("metal" = 1)
+	item_outputs = list(/obj/item/cane/metal)
+	create = 1
+	time = 3 SECONDS
+	category = "Tool"
+
+	fourlegged
+		item_outputs = list(/obj/item/cane/metal/fourlegged)
+
+	tennisball
+		item_outputs = list(/obj/item/cane/metal/tennisball)
+
 /datum/manufacture/deafhs
 	name = "Auditory Headset"
 	item_requirements = list("conductive" = 3,
@@ -2605,6 +2619,15 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	time = 30 SECONDS
 	category = "Resource"
 
+/datum/manufacture/mender_refill_cartridge
+	name = "Mender Refill Cartridge"
+	item_requirements = list("metal" = 1,
+							"conductive" = 1)
+	item_outputs = list(/obj/item/reagent_containers/mender_refill_cartridge)
+	create = 1
+	time = 3 SECONDS
+	category = "Resource"
+
 /datum/manufacture/penlight
 	name = "Penlight"
 	item_requirements = list("metal" = 1,
@@ -3737,6 +3760,36 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 /datum/manufacture/crate/secure/syndicate
 	name = "Unmarked Syndicate Crate"
 	item_outputs = list(/obj/storage/secure/crate/gear/syndicate)
+
+/******************** Carts *******************/
+
+/datum/manufacture/cart
+	name = "Cart"
+	item_requirements = list("metal" = 1)
+	item_outputs = list(/obj/storage/cart)
+	create = 1
+	time = 10 SECONDS
+	category = "Miscellaneous"
+
+/datum/manufacture/cart/forensic
+	name = "Forensics Cart"
+	item_outputs = list(/obj/storage/cart/forensic)
+
+/datum/manufacture/cart/mechanic
+	name = "Mechanics Cart"
+	item_outputs = list(/obj/storage/cart/mechcart)
+
+/datum/manufacture/cart/medical
+	name = "Medical Cart"
+	item_outputs = list(/obj/storage/cart/medcart)
+
+/datum/manufacture/cart/trash
+	name = "Trash Cart"
+	item_outputs = list(/obj/storage/cart/trash)
+
+/datum/manufacture/cart/hotdog
+	name = "Hotdog Cart"
+	item_outputs = list(/obj/storage/cart/hotdog)
 
 /******************** GUNS *******************/
 

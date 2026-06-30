@@ -51681,14 +51681,10 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "dPe" = (
-/obj/machinery/light_switch/north{
-	dir = 4;
-	pixel_x = 22;
-	pixel_y = 0
-	},
 /obj/machinery/computer/announcement/station/security/department{
 	dir = 8
 	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
@@ -64212,14 +64208,6 @@
 	pixel_x = -10
 	},
 /obj/storage/crate,
-/obj/item/shipcomponent/secondary_system/tractor_beam{
-	pixel_x = 7;
-	pixel_y = -5
-	},
-/obj/item/shipcomponent/secondary_system/tractor_beam{
-	pixel_x = -6;
-	pixel_y = -5
-	},
 /obj/item/shipcomponent/mainweapon/taser{
 	pixel_x = -6;
 	pixel_y = 2
@@ -70575,14 +70563,6 @@
 /area/station/routing/depot)
 "tTw" = (
 /obj/storage/crate,
-/obj/item/shipcomponent/secondary_system/tractor_beam{
-	pixel_x = 7;
-	pixel_y = -5
-	},
-/obj/item/shipcomponent/secondary_system/tractor_beam{
-	pixel_x = -6;
-	pixel_y = -5
-	},
 /obj/item/shipcomponent/mainweapon/taser{
 	pixel_x = -6;
 	pixel_y = 2

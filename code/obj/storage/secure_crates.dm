@@ -78,6 +78,7 @@
 			name = "pod weapons crate"
 			spawn_contents = list(/obj/item/shipcomponent/mainweapon/disruptor_light = 2,\
 			/obj/item/shipcomponent/mainweapon/laser = 2,\
+			/obj/item/shipcomponent/mainweapon/stasis = 2,\
 			/obj/item/storage/box/missile_launcher)
 
 /obj/storage/secure/crate/plasma
