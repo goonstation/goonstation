@@ -49986,10 +49986,9 @@
 	name = "Northeast Breach Hull"
 	})
 "wjr" = (
-/obj/machinery/light_switch/west{
+/obj/machinery/light_switch/north{
 	pixel_x = -8;
-	pixel_y = 24;
-	dir = 1
+	pixel_y = 24
 	},
 /turf/simulated/floor/engine/caution/corner{
 	dir = 8

@@ -1455,46 +1455,46 @@
 	partlistPart = "foot_right"
 	step_image_state = "footprintsR"
 
-//// AMPHIBIAN LIMBS ////
+//// ABZUNIAN LIMBS ////
 //////  PARENT  //////
 
-/obj/item/parts/human_parts/arm/mutant/amphibian
-	icon = 'icons/mob/amphibian.dmi'
-	partIcon = 'icons/mob/amphibian.dmi'
+/obj/item/parts/human_parts/arm/mutant/abzunian
+	icon = 'icons/mob/abzunian.dmi'
+	partIcon = 'icons/mob/abzunian.dmi'
 
-/obj/item/parts/human_parts/leg/mutant/amphibian
-	icon = 'icons/mob/amphibian.dmi'
-	partIcon = 'icons/mob/amphibian.dmi'
+/obj/item/parts/human_parts/leg/mutant/abzunian
+	icon = 'icons/mob/abzunian.dmi'
+	partIcon = 'icons/mob/abzunian.dmi'
 
-////// ACTUAL AMPHIBIAN LIMBS //////
-/obj/item/parts/human_parts/arm/mutant/amphibian/left
-	name = "left amphibian arm"
-	desc = "An amphibian's left arm. Croak."
+////// ACTUAL ABZUNIAN LIMBS //////
+/obj/item/parts/human_parts/arm/mutant/abzunian/left
+	name = "left abzunian arm"
+	desc = "An Abzunian's left arm. Croak."
 	icon_state = "arm_left"
 	slot = "l_arm"
 	side = "left"
 	handlistPart = "hand_left"
 
-/obj/item/parts/human_parts/arm/mutant/amphibian/right
-	name = "right amphibian arm"
-	desc = "An amphibian's right arm. Froak."
+/obj/item/parts/human_parts/arm/mutant/abzunian/right
+	name = "right abzunian arm"
+	desc = "An Abzunian's right arm. Froak."
 	icon_state = "arm_right"
 	slot = "r_arm"
 	side = "right"
 	handlistPart = "hand_right"
 
-/obj/item/parts/human_parts/leg/mutant/amphibian/left
-	name = "left amphibian leg"
-	desc = "An amphibian's left leg. Croak."
+/obj/item/parts/human_parts/leg/mutant/abzunian/left
+	name = "left abzunian leg"
+	desc = "An Abzunian's left leg. Croak."
 	icon_state = "leg_left"
 	slot = "l_leg"
 	side = "left"
 	partlistPart = "foot_left"
 	step_image_state = "footprintsL"
 
-/obj/item/parts/human_parts/leg/mutant/amphibian/right
-	name = "right amphibian leg"
-	desc = "An amphibian's right leg. Froak"
+/obj/item/parts/human_parts/leg/mutant/abzunian/right
+	name = "right abzunian leg"
+	desc = "An Abzunian's right leg. Froak"
 	icon_state = "leg_right"
 	slot = "r_leg"
 	side = "right"
@@ -1541,6 +1541,52 @@
 /obj/item/parts/human_parts/leg/mutant/shelterfrog/right
 	name = "right shelterfrog leg"
 	desc = "A shelterfrog's right leg. FroOoak"
+	icon_state = "leg_right"
+	slot = "r_leg"
+	side = "right"
+	partlistPart = "foot_right"
+	step_image_state = "footprintsR"
+
+//// AMPHIBIAN LIMBS ////
+//////  PARENT  //////
+
+/obj/item/parts/human_parts/arm/mutant/amphibian
+	icon = 'icons/mob/amphibian/frog.dmi'
+	partIcon = 'icons/mob/amphibian/frog.dmi'
+
+/obj/item/parts/human_parts/leg/mutant/amphibian
+	icon = 'icons/mob/amphibian/frog.dmi'
+	partIcon = 'icons/mob/amphibian/frog.dmi'
+
+////// ACTUAL AMPHIBIAN LIMBS //////
+/obj/item/parts/human_parts/arm/mutant/amphibian/left
+	name = "left frog arm"
+	desc = "A frog's left arm. Ribbit."
+	icon_state = "arm_left"
+	slot = "l_arm"
+	side = "left"
+	handlistPart = "hand_left"
+
+/obj/item/parts/human_parts/arm/mutant/amphibian/right
+	name = "right frog arm"
+	desc = "A frog's right arm. Fribbit."
+	icon_state = "arm_right"
+	slot = "r_arm"
+	side = "right"
+	handlistPart = "hand_right"
+
+/obj/item/parts/human_parts/leg/mutant/amphibian/left
+	name = "left frog leg"
+	desc = "A frog's left leg. Ribbit."
+	icon_state = "leg_left"
+	slot = "l_leg"
+	side = "left"
+	partlistPart = "foot_left"
+	step_image_state = "footprintsL"
+
+/obj/item/parts/human_parts/leg/mutant/amphibian/right
+	name = "right frog leg"
+	desc = "A frog's right leg. Fribbit"
 	icon_state = "leg_right"
 	slot = "r_leg"
 	side = "right"
