@@ -389,6 +389,12 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		P.special_data["target_turf"] = get_turf(P.targets[1])
 		owner.AddComponent(/datum/component/cord, P, base_offset_x = 0, base_offset_y = 8, range=INFINITY, cord_line = "tongue", cord_cap = "tongue_end", behind_parent = TRUE)
 
+	on_hit(atom/hit, direction, obj/projectile/P)
+		if (istype(hit, /mob/living/critter/small_animal))
+			var/mob/living/critter/small_animal/cool_bug = hit
+			if (cool_bug.edible_insect)
+				src.do_throw(cool_bug, P.special_data["owner"])
+
 	//Figure out which turf in our crossing list contains the target
 	post_setup(obj/projectile/P)
 		//the target is out of range, so retarget at the furthest crossing turf *in* our range
@@ -429,12 +435,17 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		if (P.curr_t >= P.special_data["end_index"] && get_turf(target_object) == P.special_data["target_turf"])
 			// P.set_loc(P.special_data["target_turf"])
 			if (isitem(target_object) && dist <= src.max_range)
-				target_object.visible_message(SPAN_NOTICE("The tongue sticks to [target_object] and reels it back!"))
-				playsound(target_object, 'sound/impact_sounds/Generic_Snap_1.ogg', 40, TRUE)
-				var/obj/item/item_target = target_object
-				item_target.throw_at(tongue_owner, 10, min(0.5, dist))
+				src.do_throw(target_object, tongue_owner)
 		..()
 
+	proc/do_throw(atom/movable/prize, mob/tongue_owner)
+		prize.visible_message(SPAN_NOTICE("The tongue sticks to [prize] and reels it back!"))
+		playsound(prize, 'sound/impact_sounds/Generic_Snap_1.ogg', 40, TRUE)
+		var/component_type = /datum/component/throw_eat
+		if (isfrog(tongue_owner) || !ishuman(tongue_owner))
+			component_type = /datum/component/throw_eat/insects
+		prize.AddComponent(component_type, tongue_owner)
+		prize.throw_at(tongue_owner, 10, min(0.5, GET_DIST(tongue_owner, prize)))
 
 /datum/targetable/geneticsAbility/stickytongue
 	name = "Sticky Tongue"

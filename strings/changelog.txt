@@ -1,4 +1,13 @@
 
+(t)tue jun 30 26
+(u)phoi
+(p)26980
+(e)🗺|A-Mapping
+(+)Widened Visitation window and Interrogation window on Cogmap 1
+(+)Changed the area of hootys domain to actually be Visitation on Cogmap 1
+(t)mon jun 29 26
+(u)LeahTheTech
+(+)Frog tongues can now catch and eat small insects, as well as other kinds of food.
 (t)sun jun 28 26
 (u)SnugglyCactus, Skeletonman0, PiratePop, swinglow20, glowbold, LeahTheTech
 (p)26993
