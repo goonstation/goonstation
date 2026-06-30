@@ -348,7 +348,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
 "BR" = (
-/obj/item/paper/printout/emerg1,
+/obj/item/paper/image/sstv/emerg1,
 /obj/item/disk/data/cartridge/captain,
 /obj/item/disk/data/cartridge/captain{
 	pixel_x = 3;

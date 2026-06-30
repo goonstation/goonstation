@@ -1553,6 +1553,15 @@ TYPEINFO(/datum/trait/partyanimal)
 	category = list("species", "nopug", "nohair")
 	mutantRace = /datum/mutantrace/pug
 
+/datum/trait/amphibian
+	name = "Amphibian"
+	icon_state = "amphibianT"
+	desc = "It's not easy being green. ...Or yellow, or blue, or vaguely reddish."
+	id = "frog"
+	points = -3
+	category = list("species")
+	mutantRace = /datum/mutantrace/frog/amphibian
+
 /datum/trait/random_species
 	name = "Random Species"
 	icon_state = "randomspecies"

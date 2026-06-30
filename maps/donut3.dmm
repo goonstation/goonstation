@@ -23072,15 +23072,6 @@
 /obj/random_item_spawner/tableware/one_or_zero,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
-"hgX" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/light_switch/auto,
-/turf/simulated/floor/yellowblack{
-	dir = 1
-	},
-/area/station/engine/inner)
 "hgY" = (
 /obj/decal/stripe_delivery,
 /obj/machinery/door/airlock/pyro/maintenance{
@@ -142590,7 +142581,7 @@ roL
 xoj
 dbP
 dbP
-hgX
+jbI
 ocE
 ocE
 oWs

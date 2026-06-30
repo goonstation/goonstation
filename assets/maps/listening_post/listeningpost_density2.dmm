@@ -413,7 +413,7 @@
 	dir = 5
 	},
 /obj/item/paper_bin,
-/obj/item/paper/printout/emerg1,
+/obj/item/paper/image/sstv/emerg1,
 /obj/item/paper/pipebombs{
 	pixel_x = 11;
 	pixel_y = 5
