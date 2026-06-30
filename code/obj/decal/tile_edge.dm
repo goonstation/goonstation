@@ -120,6 +120,10 @@
 		color = "#6CA3BB"
 	purple
 		color = "#AB8CB0"
+	darkpurple
+		color = "#695079"
+	darkblue
+		color = "#415386"
 
 /obj/decal/tile_edge/check
 	icon = 'icons/obj/hazard_stripes.dmi'
@@ -144,6 +148,10 @@
 		color = "#6CA3BB"
 	purple
 		color = "#AB8CB0"
+	darkpurple
+		color = "#695079"
+	darkblue
+		color = "#415386"
 
 /obj/decal/tile_edge/carpet
 	name = "carpet"

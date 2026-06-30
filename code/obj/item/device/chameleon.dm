@@ -142,7 +142,6 @@ TYPEINFO(/obj/item/device/chameleon)
 				cham = new(src)
 				cham.master = src
 
-			playsound(src, 'sound/weapons/flash.ogg', 100, TRUE, 1)
 			boutput(user, SPAN_NOTICE("Scanned [target]."))
 			cham.name = target.name
 			cham.real_name = target.name

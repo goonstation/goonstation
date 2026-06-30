@@ -340,6 +340,7 @@
 /obj/item/paper/pipebombs{
 	pixel_y = 4
 	},
+/obj/item/stamp/syndicate,
 /turf/simulated/floor/black,
 /area/listeningpost/break_room)
 "nh" = (

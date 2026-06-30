@@ -178,7 +178,10 @@
 			body += debug_variable(V, global.vars[V], D, 0, 10)
 	else
 		for (var/V in names)
-			body += debug_variable(V, D.vars[V], D, 0)
+			try
+				body += debug_variable(V, D.vars[V], D, 0)
+			catch(var/exception/e)
+				body += debug_variable_read_error(V, e)
 		//body += debug_variable_link(V, D, (istype(D.vars[V], /datum) && src.holder.level >= LEVEL_CODER) ? 1 : 0)
 
 	body += "</tbody></table>"
@@ -289,6 +292,15 @@
 			<a href='byond://?src=\ref[src];Vars=\ref[D];varToEdit=[V]'>Edit</a> &middot;
 		</div>
 		"}
+
+/client/proc/debug_variable_read_error(name, var/exception/e)
+	return {"
+	<tr>
+		<td></td>
+		<th>\[[name]\]</th>
+		<td><em class='value'>Error: [html_encode(e?.name || "unknown error")]</em></td>
+	</tr>
+	"}
 	//Really, move this out to a .css file or something, too lazy and don't know how offhand
 /proc/Make_view_variabls_style()
 	return {"	<style>

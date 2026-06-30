@@ -779,11 +779,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 						else
 							src.credit -= product.product_cost
 						if (!player_list || !vMachine.owneraccount)
-							wagesystem.budgets[BUDGET_CAT_SHIPPING] += round(product.product_cost * profit) // cogwerks - maybe money shouldn't just vanish into the aether idk
+							wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] += round(product.product_cost * profit) // cogwerks - maybe money shouldn't just vanish into the aether idk
 						else
 							//Players get 90% of profit from player vending machines QMs get 10%
 							vMachine.owneraccount["current_money"] += round(product.product_cost * profit)
-							wagesystem.budgets[BUDGET_CAT_SHIPPING] += round(product.product_cost * (1 - profit))
+							wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] += round(product.product_cost * (1 - profit))
 					src.currently_vending = null
 					update_static_data(usr)
 				if(product.logged_on_vend)
@@ -908,12 +908,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 				else
 					src.credit -= R.product_cost
 				if (!isplayer)
-					wagesystem.budgets[BUDGET_CAT_SHIPPING] += round(R.product_cost * profit) // cogwerks - maybe money shouldn't just vanish into the aether idk
+					wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] += round(R.product_cost * profit) // cogwerks - maybe money shouldn't just vanish into the aether idk
 				else
 					//Players get 90% of profit from player vending machines QMs get 10%
 					var/obj/machinery/vending/player/T = src
 					T.owneraccount["current_money"] += round(R.product_cost * profit)
-					wagesystem.budgets[BUDGET_CAT_SHIPPING] += round(R.product_cost * (1 - profit))
+					wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] += round(R.product_cost * (1 - profit))
 				if(R.product_amount <= 0 && !isplayer == 0)
 					src.player_list -= R
 			//Gotta do this before the SPAWN
@@ -3452,6 +3452,7 @@ TYPEINFO(/obj/machinery/vending/janitor)
 
 	create_products(restocked)
 		..()
+		product_list += new/datum/data/vending_product(/obj/item/stamp/chap, 1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/light_robes, 1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/lighthat, 1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/burned_robes, 1)
@@ -3491,6 +3492,7 @@ TYPEINFO(/obj/machinery/vending/janitor)
 		product_list += new/datum/data/vending_product(/obj/item/scripture/redwhitehb, 1 )
 		product_list += new/datum/data/vending_product(/obj/item/scripture/skeletonhb, 1 )
 		product_list += new/datum/data/vending_product(/obj/item/scripture/xhb, 1 )
+		product_list += new/datum/data/vending_product(/obj/item/paper/book/charms, 1)
 
 		product_list += new/datum/data/vending_product(/obj/item/scripture/reddarkhb, 1, hidden=1 )
 		product_list += new/datum/data/vending_product(/obj/item/scripture/cluwnehb, 1, hidden=1,)

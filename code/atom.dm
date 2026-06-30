@@ -667,8 +667,7 @@ TYPEINFO(/obj/item/disk)
 		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, A, direct)
 		src.last_move = get_dir(A, src.loc)
 		if (length(src.attached_objs))
-			for (var/atom/movable/M as anything in attached_objs)
-				M.set_loc(src.loc)
+			src.move_attached_objs()
 		if (islist(src.tracked_blood))
 			src.track_blood()
 		actions.interrupt(src, INTERRUPT_MOVE)
@@ -708,6 +707,12 @@ TYPEINFO(/obj/item/disk)
   * called via pulls and mob steps
 	*/
 /atom/movable/proc/OnMove(source = null)
+
+/// Moves attached objects with this atom, keeping their glide_size in sync.
+/atom/movable/proc/move_attached_objs()
+	for (var/atom/movable/M as anything in src.attached_objs)
+		M.glide_size = src.glide_size
+		M.set_loc(src.loc)
 
 /// Base pull proc, returns 1 if the various checks for pulling fail, so that it can be overriden to add extra functionality without rewriting all the conditions.
 /atom/movable/proc/pull(mob/user)
@@ -1096,8 +1101,7 @@ TYPEINFO(/obj/item/disk)
 		new_area.Entered(src, oldloc)
 
 	if (islist(src.attached_objs) && length(attached_objs))
-		for (var/atom/movable/M in src.attached_objs)
-			M.set_loc(src.loc)
+		src.move_attached_objs()
 	else
 		last_turf = null
 
