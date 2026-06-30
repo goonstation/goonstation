@@ -881,6 +881,9 @@
 	/obj/item/paper/book/from_file/hydroponicsguide,
 	/obj/item/device/appraisal)
 
+/obj/storage/secure/closet/civilian/hydro/empty
+	spawn_contents = list()
+
 /obj/storage/secure/closet/civilian/ranch
 	name = "\improper Rancher supplies locker"
 	req_access = list(access_ranch)
@@ -1113,3 +1116,7 @@
 	reinforced = TRUE
 	icon_state = "nanotrasen"
 	icon_closed = "nanotrasen"
+
+/obj/storage/secure/closet/command/nanotrasen/weak
+	req_access = list()
+	reinforced = FALSE
