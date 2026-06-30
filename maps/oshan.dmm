@@ -34765,7 +34765,6 @@
 /obj/item/storage/belt/medical,
 /obj/item/clothing/suit/hazard/paramedic,
 /obj/item/storage/belt/medical,
-/obj/machinery/light_switch/auto,
 /obj/machinery/light_switch/east,
 /turf/simulated/floor/redwhite{
 	dir = 4
