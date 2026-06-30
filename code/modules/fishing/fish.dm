@@ -35,11 +35,11 @@ Ocean saltwater fish:
 		Barracuda
 		Sailfish
 		Glassfish
+		Swordfish
 	Unimplemented:
 		Blue Marlin
 		Red Snapper
 		Ocean Sunfish
-		Swordfish
 
 Aquarium saltwater fish:
 	Implemented:
@@ -58,9 +58,11 @@ Aquarium saltwater fish:
 
 Alien/mutant/other fish:
 	Implemented:
+		Literal Swordfish
 		Meat mutant
 		Eye fish
 		Void fish
+		Code worm
 		Sun fish
 		Blobfish
 		Lava fish
@@ -171,7 +173,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 /obj/item/reagent_containers/food/fish/proc/make_reagents()
 	src.reagents.add_reagent("fishoil", 20)
 	return
-
 
 // Freshwater fish
 TYPEINFO(/obj/item/reagent_containers/food/fish/bass)
@@ -684,7 +685,52 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/betta)
 	category = FISH_CATEGORY_AQUARIUM
 	rarity = ITEM_RARITY_COMMON
 
+TYPEINFO(/obj/item/reagent_containers/food/fish/swordfish)
+	appears_in_fish_collection = TRUE
+/obj/item/reagent_containers/food/fish/swordfish
+	name = "swordfish"
+	desc = "The swordfish, also known as the broadbill in some countries, are large, highly migratory predatory fish characterized by a long, flat, sword-like, pointed bill."
+	icon = 'icons/obj/foodNdrink/food_fish_48x32.dmi'
+	icon_state = "swordfish"
+	inhand_color = "#908088"
+	attack_verbs = "stabs"
+	category = FISH_CATEGORY_OCEAN
+	rarity = ITEM_RARITY_RARE
+	force = 6
+	hit_type = DAMAGE_STAB
+
+	New()
+		..()
+		REMOVE_FLAG(src.flags, SUPPRESSATTACK)
+		BLOCK_SETUP(BLOCK_KNIFE)
+		setItemSpecial(/datum/item_special/jab)
+
 // adventure zone special fish
+
+TYPEINFO(/obj/item/reagent_containers/food/fish/literal_swordfish)
+	appears_in_fish_collection = TRUE
+/obj/item/reagent_containers/food/fish/literal_swordfish
+	name = " literal swordfish"
+	desc = "Reforged through fire and flounder, the swordfish now resembles its namesake."
+	icon = 'icons/obj/foodNdrink/food_fish_48x32.dmi'
+	icon_state = "literal_swordfish"
+	inhand_color = "#535353"
+	attack_verbs = "stabs"
+	rarity = ITEM_RARITY_LEGENDARY
+	force = 13
+	hit_type = DAMAGE_CUT
+	contraband = 3
+	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
+	slice_product = /obj/item/material_piece/steel
+
+	New()
+		..()
+		REMOVE_FLAG(src.flags, SUPPRESSATTACK)
+		BLOCK_SETUP(BLOCK_SWORD)
+		src.setItemSpecial(/datum/item_special/rangestab) //more of a stab than a swing cuz its a sword you stab with
+
+	get_scent_color()
+		return "steel grey"
 
 //meatzone
 TYPEINFO(/obj/item/reagent_containers/food/fish/meat_mutant)

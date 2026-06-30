@@ -47052,8 +47052,6 @@
 /obj/storage/crate,
 /obj/item/shipcomponent/mainweapon/taser,
 /obj/item/shipcomponent/mainweapon/taser,
-/obj/item/shipcomponent/secondary_system/tractor_beam,
-/obj/item/shipcomponent/secondary_system/tractor_beam,
 /obj/machinery/light/emergency{
 	dir = 1
 	},

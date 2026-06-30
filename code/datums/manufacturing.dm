@@ -19,7 +19,7 @@
 	/// How many seconds it takes to complete the blueprint
 	var/time = 5 SECONDS
 	/// Named category which the blueprint will reside in for manufacturers. See manufacturer.dm for list.
-	/// If a blueprint has an invalid category, it will be assigned "Miscellaneous".
+	/// If a blueprint has an invalid category, it will be assigned MANUFACTURER::CATEGORY::MISCELLANEOUS.
 	var/category = null
 	/// Whether or not to apply a material onto the object upon completion. By default, this is the material used
 	/// For the first material requirement specified.
@@ -178,7 +178,7 @@
 							"metal_superdense" = 30,
 							"koshmarite" = 30,
 							"energy_high" = 40,)
-	category = "Machinery"
+	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/mechanics/gravity_tether_area
 	name = "Local Gravity Tether"
@@ -189,7 +189,7 @@
 							 "metal_superdense" = 10,
 							 "koshmarite" = 15,
 							 "energy_high" = 10,)
-	category = "Machinery"
+	category = MANUFACTURER::CATEGORY::MACHINERY
 
 
 
@@ -237,7 +237,7 @@
 	item_outputs = list("reagent-iron")
 	create = 10
 	time = 1 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 	// purely a test
 */
 
@@ -247,7 +247,7 @@
 	item_outputs = list(/obj/item/crowbar/green)
 	create = 1
 	time = 5 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/crowbar/purple
 	item_outputs = list(/obj/item/crowbar/purple)
@@ -258,7 +258,7 @@
 	item_outputs = list(/obj/item/screwdriver/green)
 	create = 1
 	time = 5 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/wirecutters
 	name = "Wirecutters"
@@ -266,7 +266,7 @@
 	item_outputs = list(/obj/item/wirecutters/green)
 	create = 1
 	time = 5 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/wrench
 	name = "Wrench"
@@ -274,7 +274,7 @@
 	item_outputs = list(/obj/item/wrench/green)
 	create = 1
 	time = 5 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/wrench/purple
 	item_outputs = list(/obj/item/wrench/purple)
@@ -285,7 +285,7 @@
 	item_outputs = list(/obj/item/crowbar/yellow)
 	create = 1
 	time = 5 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/screwdriver/yellow
 	name = "Screwdriver"
@@ -293,7 +293,7 @@
 	item_outputs = list(/obj/item/screwdriver/yellow)
 	create = 1
 	time = 5 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/wirecutters/yellow
 	name = "Wirecutters"
@@ -301,7 +301,7 @@
 	item_outputs = list(/obj/item/wirecutters/yellow)
 	create = 1
 	time = 5 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/wrench/yellow
 	name = "Wrench"
@@ -309,7 +309,7 @@
 	item_outputs = list(/obj/item/wrench/yellow)
 	create = 1
 	time = 5 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/flashlight
 	name = "Flashlight"
@@ -319,7 +319,7 @@
 	item_outputs = list(/obj/item/device/light/flashlight)
 	create = 1
 	time = 5 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 
 /datum/manufacture/lantern
@@ -330,7 +330,7 @@
 	item_outputs = list(/obj/item/device/light/lantern)
 	create = 1
 	time = 5 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/vuvuzela
 	name = "Vuvuzela"
@@ -338,7 +338,7 @@
 	item_outputs = list(/obj/item/instrument/vuvuzela)
 	create = 1
 	time = 5 SECONDS
-	category = "Miscellaneous"
+	category = MANUFACTURER::CATEGORY::MISCELLANEOUS
 
 /datum/manufacture/harmonica
 	name = "Harmonica"
@@ -346,7 +346,7 @@
 	item_outputs = list(/obj/item/instrument/harmonica)
 	create = 1
 	time = 5 SECONDS
-	category = "Miscellaneous"
+	category = MANUFACTURER::CATEGORY::MISCELLANEOUS
 
 /datum/manufacture/bottle
 	name = "Glass Bottle"
@@ -354,7 +354,7 @@
 	item_outputs = list(/obj/item/reagent_containers/food/drinks/bottle/soda)
 	create = 1
 	time = 4 SECONDS
-	category = "Miscellaneous"
+	category = MANUFACTURER::CATEGORY::MISCELLANEOUS
 
 /datum/manufacture/saxophone
 	name = "Saxophone"
@@ -362,7 +362,7 @@
 	item_outputs = list(/obj/item/instrument/saxophone)
 	create = 1
 	time = 7 SECONDS
-	category = "Miscellaneous"
+	category = MANUFACTURER::CATEGORY::MISCELLANEOUS
 
 /datum/manufacture/whistle
 	name = "Whistle"
@@ -370,7 +370,7 @@
 	item_outputs = list(/obj/item/instrument/whistle)
 	create = 1
 	time = 3 SECONDS
-	category = "Miscellaneous"
+	category = MANUFACTURER::CATEGORY::MISCELLANEOUS
 
 /datum/manufacture/trumpet
 	name = "Trumpet"
@@ -378,7 +378,7 @@
 	item_outputs = list(/obj/item/instrument/trumpet)
 	create = 1
 	time = 6 SECONDS
-	category = "Miscellaneous"
+	category = MANUFACTURER::CATEGORY::MISCELLANEOUS
 
 /datum/manufacture/bagpipe
 	name = "Bagpipe"
@@ -387,7 +387,7 @@
 	item_outputs = list(/obj/item/instrument/bagpipe)
 	create = 1
 	time = 5 SECONDS
-	category = "Miscellaneous"
+	category = MANUFACTURER::CATEGORY::MISCELLANEOUS
 
 /datum/manufacture/fiddle
 	name = "Fiddle"
@@ -396,7 +396,7 @@
 	item_outputs = list(/obj/item/instrument/fiddle)
 	create = 1
 	time = 5 SECONDS
-	category = "Miscellaneous"
+	category = MANUFACTURER::CATEGORY::MISCELLANEOUS
 
 /datum/manufacture/bikehorn
 	name = "Bicycle Horn"
@@ -404,7 +404,7 @@
 	item_outputs = list(/obj/item/instrument/bikehorn)
 	create = 1
 	time = 5 SECONDS
-	category = "Miscellaneous"
+	category = MANUFACTURER::CATEGORY::MISCELLANEOUS
 
 /datum/manufacture/stunrounds
 	name = ".38 Stunner Rounds"
@@ -414,7 +414,7 @@
 	item_outputs = list(/obj/item/ammo/bullets/a38/stun)
 	create = 1
 	time = 20 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/bullet_22
 	name = ".22 Bullets"
@@ -423,7 +423,7 @@
 	item_outputs = list(/obj/item/ammo/bullets/bullet_22)
 	create = 1
 	time = 30 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/bullet_9mm_frangible
 	name = "9mm Frangible Rounds"
@@ -434,7 +434,7 @@
 	item_outputs = list(/obj/item/ammo/bullets/nine_mm_NATO)
 	create = 1
 	time = 15 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/bullet_12g_nail
 	name = "12 gauge nailshot"
@@ -443,7 +443,7 @@
 	item_outputs = list(/obj/item/ammo/bullets/nails)
 	create = 1
 	time = 30 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/bullet_smoke
 	name = "40mm Smoke Grenade"
@@ -452,7 +452,7 @@
 	item_outputs = list(/obj/item/ammo/bullets/smoke)
 	create = 1
 	time = 35 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/extinguisher
 	name = "Fire Extinguisher"
@@ -461,7 +461,7 @@
 	item_outputs = list(/obj/item/extinguisher)
 	create = 1
 	time = 8 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/welder
 	name = "Welding Tool"
@@ -470,7 +470,7 @@
 	item_outputs = list(/obj/item/weldingtool/green)
 	create = 1
 	time = 8 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/welder/yellow
 	name = "Welding Tool"
@@ -479,7 +479,7 @@
 	item_outputs = list(/obj/item/weldingtool/yellow)
 	create = 1
 	time = 8 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/welder/purple
 	item_outputs = list(/obj/item/weldingtool/purple)
@@ -491,7 +491,7 @@
 	item_outputs = list(/obj/item/electronics/soldering)
 	create = 1
 	time = 8 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/stapler
 	name = "Staple Gun"
@@ -500,58 +500,56 @@
 	item_outputs = list(/obj/item/staple_gun)
 	create = 1
 	time = 10 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/multitool
 	name = "Multi Tool"
 	item_outputs = list(/obj/item/device/multitool)
 	create = 1
 	time = 8 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/t_scanner
 	name = "T-ray scanner"
 	item_outputs = list(/obj/item/device/t_scanner)
 	create = 1
 	time = 8 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/gravity_scanner
 	name = "G-force scanner"
 	item_outputs = list(/obj/item/device/analyzer/gravity_scanner)
 	create = 1
 	time = 8 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/dowsing_rod
 	name = "Dowsing Rod"
 	item_outputs = list(/obj/item/heat_dowsing)
 	create = 1
 	time = 8 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/capture_unit
 	name = "Unbuilt Vent Capture Unit"
 	item_outputs = list(/obj/item/vent_capture_unbuilt)
 	create = 1
 	time = 12 SECONDS
-	category = "Machinery"
+	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/powered_shovel
 	name = "Power Shovel"
 	item_outputs = list(/obj/item/mining_tool/powered/shovel)
 	create = 1
 	time = 10 SECONDS
-	category = "Tool"
-
-
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/accessgun
 	name = "Access Lite"
 	item_outputs = list(/obj/item/device/accessgun/lite)
 	create = 1
 	time = 7 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/weldingmask
 	name = "Welding Mask"
@@ -560,7 +558,7 @@
 	item_outputs = list(/obj/item/clothing/head/helmet/welding)
 	create = 1
 	time = 10 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/light_bulb
 	name = "Light Bulb Box"
@@ -568,7 +566,7 @@
 	item_outputs = list(/obj/item/storage/box/lightbox/bulbs)
 	create = 1
 	time = 4 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/red_bulb
 	name = "Red Light Bulb Box"
@@ -577,7 +575,7 @@
 	item_outputs = list(/obj/item/storage/box/lightbox/bulbs/red)
 	create = 1
 	time = 8 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/yellow_bulb
 	name = "Yellow Light Bulb Box"
@@ -586,7 +584,7 @@
 	item_outputs = list(/obj/item/storage/box/lightbox/bulbs/yellow)
 	create = 1
 	time = 8 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/green_bulb
 	name = "Green Light Bulb Box"
@@ -595,7 +593,7 @@
 	item_outputs = list(/obj/item/storage/box/lightbox/bulbs/green)
 	create = 1
 	time = 8 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/cyan_bulb
 	name = "Cyan Light Bulb Box"
@@ -604,7 +602,7 @@
 	item_outputs = list(/obj/item/storage/box/lightbox/bulbs/cyan)
 	create = 1
 	time = 8 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/blue_bulb
 	name = "Blue Light Bulb Box"
@@ -613,7 +611,7 @@
 	item_outputs = list(/obj/item/storage/box/lightbox/bulbs/blue)
 	create = 1
 	time = 8 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/purple_bulb
 	name = "Purple Light Bulb Box"
@@ -622,7 +620,7 @@
 	item_outputs = list(/obj/item/storage/box/lightbox/bulbs/purple)
 	create = 1
 	time = 8 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/blacklight_bulb
 	name = "Blacklight Bulb Box"
@@ -631,7 +629,7 @@
 	item_outputs = list(/obj/item/storage/box/lightbox/bulbs/blacklight)
 	create = 1
 	time = 8 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/light_tube
 	name = "Light Tube Box"
@@ -639,7 +637,7 @@
 	item_outputs = list(/obj/item/storage/box/lightbox/tubes)
 	create = 1
 	time = 4 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/red_tube
 	name = "Red Light Tube Box"
@@ -648,7 +646,7 @@
 	item_outputs = list(/obj/item/storage/box/lightbox/tubes/red)
 	create = 1
 	time = 8 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/yellow_tube
 	name = "Yellow Light Tube Box"
@@ -657,7 +655,7 @@
 	item_outputs = list(/obj/item/storage/box/lightbox/tubes/yellow)
 	create = 1
 	time = 8 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/green_tube
 	name = "Green Light Tube Box"
@@ -666,7 +664,7 @@
 	item_outputs = list(/obj/item/storage/box/lightbox/tubes/green)
 	create = 1
 	time = 8 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/cyan_tube
 	name = "Cyan Light Tube Box"
@@ -675,7 +673,7 @@
 	item_outputs = list(/obj/item/storage/box/lightbox/tubes/cyan)
 	create = 1
 	time = 8 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/blue_tube
 	name = "Blue Light Tube Box"
@@ -684,7 +682,7 @@
 	item_outputs = list(/obj/item/storage/box/lightbox/tubes/blue)
 	create = 1
 	time = 8 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/purple_tube
 	name = "Purple Light Tube Box"
@@ -693,7 +691,7 @@
 	item_outputs = list(/obj/item/storage/box/lightbox/tubes/purple)
 	create = 1
 	time = 8 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/blacklight_tube
 	name = "Blacklight Tube Box"
@@ -702,7 +700,7 @@
 	item_outputs = list(/obj/item/storage/box/lightbox/tubes/blacklight)
 	create = 1
 	time = 8 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/table_folding
 	name = "Folding Table"
@@ -711,7 +709,7 @@
 	item_outputs = list(/obj/item/furniture_parts/table/folding)
 	create = 1
 	time = 20 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/metal
 	name = "Metal Sheet"
@@ -719,7 +717,7 @@
 	item_outputs = list(/obj/item/sheet)
 	create = 1
 	time = 2 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 	apply_material = TRUE
 
 /datum/manufacture/metal/bulk
@@ -734,7 +732,7 @@
 	item_outputs = list(/obj/item/sheet)
 	create = 1
 	time = 12 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 	apply_material = TRUE
 
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
@@ -755,7 +753,7 @@
 	item_outputs = list(/obj/item/sheet/glass)
 	create = 1
 	time = 2 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 	apply_material = TRUE
 
 /datum/manufacture/glass/bulk
@@ -771,7 +769,7 @@
 	item_outputs = list(/obj/item/sheet/glass/reinforced)
 	create = 1
 	time = 12 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 	apply_material = TRUE
 
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A, var/list/materials)
@@ -793,7 +791,7 @@
 	item_requirements = list("metal_or_wood_dense" = 1)
 	item_outputs = list(/obj/item/rods)
 	time = 3 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 	apply_material = TRUE
 
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A)
@@ -808,7 +806,7 @@
 	item_outputs = list(/obj/machinery/portable_atmospherics/canister)
 	create = 1
 	time = 10 SECONDS
-	category = "Machinery"
+	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/fluidcanister
 	name = "Fluid Canister"
@@ -816,7 +814,7 @@
 	item_outputs = list(/obj/machinery/fluid_canister)
 	create = 1
 	time = 10 SECONDS
-	category = "Machinery"
+	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/chembarrel
 	name = "Chemical Barrel"
@@ -825,7 +823,7 @@
 	item_outputs = list(/obj/reagent_dispensers/chemicalbarrel)
 	create = 1
 	time = 30 SECONDS
-	category = "Machinery"
+	category = MANUFACTURER::CATEGORY::MACHINERY
 
 	red
 		item_outputs = list(/obj/reagent_dispensers/chemicalbarrel/red)
@@ -841,7 +839,7 @@
 	item_outputs = list(/obj/machinery/shieldgenerator/energy_shield/nocell)
 	create = 1
 	time = 60 SECONDS
-	category = "Machinery"
+	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/doorshieldgen
 	name = "Door-Shield Gen."
@@ -850,7 +848,7 @@
 	item_outputs = list(/obj/machinery/shieldgenerator/energy_shield/doorlink/nocell)
 	create = 1
 	time = 60 SECONDS
-	category = "Machinery"
+	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/meteorshieldgen
 	name = "Meteor-Shield Gen."
@@ -860,7 +858,7 @@
 	item_outputs = list(/obj/machinery/shieldgenerator/meteorshield/nocell)
 	create = 1
 	time = 30 SECONDS
-	category = "Machinery"
+	category = MANUFACTURER::CATEGORY::MACHINERY
 
 //// cogwerks - gas extraction stuff
 
@@ -873,7 +871,7 @@
 	item_outputs = list(/obj/machinery/portable_atmospherics/canister/air)
 	create = 1
 	time = 50 SECONDS
-	category = "Machinery"
+	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/air_can/large
 	name = "High-Volume Air Canister"
@@ -883,7 +881,7 @@
 	item_outputs = list(/obj/machinery/portable_atmospherics/canister/air/large)
 	create = 1
 	time = 100 SECONDS
-	category = "Machinery"
+	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/co2_can
 	name = "CO2 Canister"
@@ -892,7 +890,7 @@
 	item_outputs = list(/obj/machinery/portable_atmospherics/canister/carbon_dioxide)
 	create = 1
 	time = 100 SECONDS
-	category = "Machinery"
+	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/o2_can
 	name = "O2 Canister"
@@ -901,7 +899,7 @@
 	item_outputs = list(/obj/machinery/portable_atmospherics/canister/oxygen)
 	create = 1
 	time = 100 SECONDS
-	category = "Machinery"
+	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/plasma_can
 	name = "Plasma Canister"
@@ -910,7 +908,7 @@
 	item_outputs = list(/obj/machinery/portable_atmospherics/canister/toxins)
 	create = 1
 	time = 100 SECONDS
-	category = "Machinery"
+	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/n2_can
 	name = "N2 Canister"
@@ -919,7 +917,7 @@
 	item_outputs = list(/obj/machinery/portable_atmospherics/canister/nitrogen)
 	create = 1
 	time = 100 SECONDS
-	category = "Machinery"
+	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/n2o_can
 	name = "N2O Canister"
@@ -928,7 +926,7 @@
 	item_outputs = list(/obj/machinery/portable_atmospherics/canister/sleeping_agent)
 	create = 1
 	time = 100 SECONDS
-	category = "Machinery"
+	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/red_o2_grenade
 	name = "Red Oxygen Grenade"
@@ -939,7 +937,7 @@
 	item_outputs = list(/obj/item/old_grenade/oxygen)
 	create = 1
 	time = 10 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/engivac
 	name = "Material Vacuum"
@@ -949,7 +947,7 @@
 	item_outputs = list(/obj/item/engivac)
 	create = 1
 	time = 5 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/lampmanufacturer
 	name = "Lamp Manufacturer"
@@ -959,7 +957,7 @@
 	item_outputs = list(/obj/item/lamp_manufacturer/organic)
 	create = 1
 	time = 5 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/condenser
 	name = "Chemical Condenser"
@@ -967,7 +965,7 @@
 	item_outputs = list(/obj/item/reagent_containers/glass/plumbing/condenser)
 	create = 1
 	time = 5 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/fractionalcondenser
 	name = "Fractional Condenser"
@@ -975,7 +973,7 @@
 	item_outputs = list(/obj/item/reagent_containers/glass/plumbing/condenser/fractional)
 	create = 1
 	time = 5 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/dropper_funnel
 	name = "Dropper Funnel"
@@ -983,7 +981,7 @@
 	item_outputs = list(/obj/item/reagent_containers/glass/plumbing/dropper)
 	create = 1
 	time = 5 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/portable_dispenser
 	name = "Portable Dispenser"
@@ -993,7 +991,7 @@
 	item_outputs = list(/obj/item/reagent_containers/glass/plumbing/dispenser)
 	create = 1
 	time = 5 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/beaker_lid_box
 	name = "Beaker Lid Box"
@@ -1001,7 +999,7 @@
 	item_outputs = list(/obj/item/storage/box/beaker_lids)
 	create = 1
 	time = 5 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 
 /datum/manufacture/bunsen_burner
@@ -1010,7 +1008,7 @@
 	item_outputs = list(/obj/item/bunsen_burner)
 	create = 1
 	time = 5 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 ////////////////////////////////
 
@@ -1020,7 +1018,7 @@
 	item_outputs = list(/obj/item/machineboard/vending/player)
 	create = 1
 	time = 5 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/cable
 	name = "Electrical Cable Coil"
@@ -1029,7 +1027,7 @@
 	item_outputs = list(/obj/item/cable_coil)
 	create = 1
 	time = 3 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 	apply_material = FALSE
 
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A,var/list/materials)
@@ -1057,7 +1055,7 @@
 	item_outputs = list(/obj/item/rcd)
 	create = 1
 	time = 90 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/places_pipes
 	name = "Handheld Pipe Dispenser"
@@ -1068,7 +1066,7 @@
 	item_outputs = list(/obj/item/places_pipes)
 	create = 1
 	time = 90 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/places_pipes/science
 	item_outputs = list(/obj/item/places_pipes/research)
@@ -1079,7 +1077,7 @@
 	item_outputs = list(/obj/item/rcd_ammo)
 	create = 1
 	time = 10 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/RCDammomedium
 	name = "Medium Compressed Matter Cartridge"
@@ -1087,7 +1085,7 @@
 	item_outputs = list(/obj/item/rcd_ammo/medium)
 	create = 1
 	time = 20 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/RCDammolarge
 	name = "Large Compressed Matter Cartridge"
@@ -1095,7 +1093,7 @@
 	item_outputs = list(/obj/item/rcd_ammo/big)
 	create = 1
 	time = 30 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/sds
 	name = "Syndicate Destruction System"
@@ -1105,7 +1103,7 @@
 	item_outputs = list(/obj/item/syndicate_destruction_system)
 	create = 1
 	time = 90 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/civilian_headset
 	name = "Civilian Headset"
@@ -1114,7 +1112,7 @@
 	item_outputs = list(/obj/item/device/radio/headset)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/jumpsuit_assistant
 	name = "Staff Assistant Jumpsuit"
@@ -1122,7 +1120,7 @@
 	item_outputs = list(/obj/item/clothing/under/rank/assistant)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/jumpsuit
 	name = "Grey Jumpsuit"
@@ -1130,7 +1128,7 @@
 	item_outputs = list(/obj/item/clothing/under/color/grey)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/shoes
 	name = "Black Shoes"
@@ -1138,7 +1136,7 @@
 	item_outputs = list(/obj/item/clothing/shoes/black)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/shoes_white
 	name = "White Shoes"
@@ -1146,7 +1144,7 @@
 	item_outputs = list(/obj/item/clothing/shoes/white)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/flippers
 	name = "Flippers"
@@ -1154,7 +1152,7 @@
 	item_outputs = list(/obj/item/clothing/shoes/flippers)
 	create = 1
 	time = 8 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/cleaner_grenade
 	name = "Cleaner Grenade"
@@ -1165,7 +1163,7 @@
 	item_outputs = list(/obj/item/chem_grenade/cleaner)
 	create = 1
 	time = 5 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/pocketoxyex
 	name = "Extended Capacity Pocket Oxygen Tank"
@@ -1175,7 +1173,7 @@
 	item_outputs = list(/obj/item/tank/pocket/extended/empty)
 	create = 1
 	time = 5 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /******************** Medical **************************/
 
@@ -1185,7 +1183,7 @@
 	item_outputs = list(/obj/item/scalpel)
 	create = 1
 	time = 5 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/circular_saw
 	name = "Circular Saw"
@@ -1193,7 +1191,7 @@
 	item_outputs = list(/obj/item/circular_saw)
 	create = 1
 	time = 5 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/surgical_scissors
 	name = "Surgical Scissors"
@@ -1201,7 +1199,7 @@
 	item_outputs = list(/obj/item/scissors/surgical_scissors)
 	create = 1
 	time = 5 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/hemostat
 	name = "Hemostat"
@@ -1209,7 +1207,7 @@
 	item_outputs = list(/obj/item/hemostat)
 	create = 1
 	time = 5 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/surgical_spoon
 	name = "Enucleation Spoon"
@@ -1217,7 +1215,7 @@
 	item_outputs = list(/obj/item/surgical_spoon)
 	create = 1
 	time = 5 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/suture
 	name = "Suture"
@@ -1225,7 +1223,21 @@
 	item_outputs = list(/obj/item/suture)
 	create = 1
 	time = 5 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
+
+/datum/manufacture/cane
+	name = "Cane"
+	item_requirements = list("metal" = 1)
+	item_outputs = list(/obj/item/cane/metal)
+	create = 1
+	time = 3 SECONDS
+	category = MANUFACTURER::CATEGORY::TOOL
+
+	fourlegged
+		item_outputs = list(/obj/item/cane/metal/fourlegged)
+
+	tennisball
+		item_outputs = list(/obj/item/cane/metal/tennisball)
 
 /datum/manufacture/deafhs
 	name = "Auditory Headset"
@@ -1234,7 +1246,7 @@
 	item_outputs = list(/obj/item/device/radio/headset/deaf)
 	create = 1
 	time = 40 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/visor
 	name = "VISOR Prosthesis"
@@ -1243,7 +1255,7 @@
 	item_outputs = list(/obj/item/clothing/glasses/visor)
 	create = 1
 	time = 40 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/glasses
 	name = "Prescription Glasses"
@@ -1252,7 +1264,7 @@
 	item_outputs = list(/obj/item/clothing/glasses/regular)
 	create = 1
 	time = 20 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/wheelchair
 	name = "Wheelchair Parts"
@@ -1261,7 +1273,7 @@
 	item_outputs = list(/obj/item/furniture_parts/wheelchair)
 	create = 1
 	time = 30 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/roller_bed
 	name = "Roller Bed Parts"
@@ -1269,7 +1281,7 @@
 	item_outputs = list(/obj/item/furniture_parts/bed/roller)
 	create = 1
 	time = 20 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/iv_stand
 	name = "IV Stand Parts"
@@ -1277,7 +1289,7 @@
 	item_outputs = list(/obj/item/furniture_parts/IVstand)
 	create = 1
 	time = 15 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/hypospray
 	name = "Hypospray"
@@ -1287,7 +1299,7 @@
 	item_outputs = list(/obj/item/reagent_containers/hypospray)
 	create = 1
 	time = 40 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/prodocs
 	name = "ProDoc Healthgoggles"
@@ -1296,7 +1308,7 @@
 	item_outputs = list(/obj/item/clothing/glasses/healthgoggles)
 	create = 1
 	time = 20 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/latex_gloves
 	name = "Latex Gloves"
@@ -1304,7 +1316,7 @@
 	item_outputs = list(/obj/item/clothing/gloves/latex)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/body_bag
 	name = "Body Bag"
@@ -1312,7 +1324,7 @@
 	item_outputs = list(/obj/item/body_bag)
 	create = 1
 	time = 15 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/cyberheart
 	name = "Cyberheart"
@@ -1322,7 +1334,7 @@
 	item_outputs = list(/obj/item/organ/heart/cyber)
 	create = 1
 	time = 25 SECONDS
-	category = "Organ"
+	category = MANUFACTURER::CATEGORY::ORGAN
 
 /datum/manufacture/cyberbutt
 	name = "Cyberbutt"
@@ -1332,7 +1344,7 @@
 	item_outputs = list(/obj/item/clothing/head/butt/cyberbutt)
 	create = 1
 	time = 15 SECONDS
-	category = "Organ"
+	category = MANUFACTURER::CATEGORY::ORGAN
 
 /datum/manufacture/cardboard_ai
 	name = "Cardboard 'AI'"
@@ -1340,7 +1352,7 @@
 	item_outputs = list(/obj/item/clothing/suit/cardboard_box/ai)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/cyberappendix
 	name = "Cyberappendix"
@@ -1350,7 +1362,7 @@
 	item_outputs = list(/obj/item/organ/appendix/cyber)
 	create = 1
 	time = 15 SECONDS
-	category = "Organ"
+	category = MANUFACTURER::CATEGORY::ORGAN
 
 /datum/manufacture/cyberpancreas
 	name = "Cyberpancreas"
@@ -1360,7 +1372,7 @@
 	item_outputs = list(/obj/item/organ/pancreas/cyber)
 	create = 1
 	time = 15 SECONDS
-	category = "Organ"
+	category = MANUFACTURER::CATEGORY::ORGAN
 
 /datum/manufacture/cyberspleen
 	name = "Cyberspleen"
@@ -1370,7 +1382,7 @@
 	item_outputs = list(/obj/item/organ/spleen/cyber)
 	create = 1
 	time = 15 SECONDS
-	category = "Organ"
+	category = MANUFACTURER::CATEGORY::ORGAN
 
 /datum/manufacture/cyberintestines
 	name = "Cyberintestines"
@@ -1380,7 +1392,7 @@
 	item_outputs = list(/obj/item/organ/intestines/cyber)
 	create = 1
 	time = 15 SECONDS
-	category = "Organ"
+	category = MANUFACTURER::CATEGORY::ORGAN
 
 /datum/manufacture/cyberstomach
 	name = "Cyberstomach"
@@ -1390,7 +1402,7 @@
 	item_outputs = list(/obj/item/organ/stomach/cyber)
 	create = 1
 	time = 15 SECONDS
-	category = "Organ"
+	category = MANUFACTURER::CATEGORY::ORGAN
 
 /datum/manufacture/cyberkidney
 	name = "Cyberkidney"
@@ -1400,7 +1412,7 @@
 	item_outputs = list(/obj/item/organ/kidney/cyber)
 	create = 1
 	time = 15 SECONDS
-	category = "Organ"
+	category = MANUFACTURER::CATEGORY::ORGAN
 
 /datum/manufacture/cyberliver
 	name = "Cyberliver"
@@ -1410,7 +1422,7 @@
 	item_outputs = list(/obj/item/organ/liver/cyber)
 	create = 1
 	time = 15 SECONDS
-	category = "Organ"
+	category = MANUFACTURER::CATEGORY::ORGAN
 
 /datum/manufacture/cyberlung_left
 	name = "Left Cyberlung"
@@ -1420,7 +1432,7 @@
 	item_outputs = list(/obj/item/organ/lung/cyber/left)
 	create = 1
 	time = 15 SECONDS
-	category = "Organ"
+	category = MANUFACTURER::CATEGORY::ORGAN
 
 /datum/manufacture/cyberlung_right
 	name = "Right Cyberlung"
@@ -1430,7 +1442,7 @@
 	item_outputs = list(/obj/item/organ/lung/cyber/right)
 	create = 1
 	time = 15 SECONDS
-	category = "Organ"
+	category = MANUFACTURER::CATEGORY::ORGAN
 
 /datum/manufacture/cybereye
 	name = "Cybereye"
@@ -1441,7 +1453,7 @@
 	item_outputs = list(/obj/item/organ/eye/cyber/configurable)
 	create = 1
 	time = 20 SECONDS
-	category = "Organ"
+	category = MANUFACTURER::CATEGORY::ORGAN
 
 /datum/manufacture/cybereye_sunglass
 	name = "Polarized Cybereye"
@@ -1452,7 +1464,7 @@
 	item_outputs = list(/obj/item/organ/eye/cyber/sunglass)
 	create = 1
 	time = 25 SECONDS
-	category = "Organ"
+	category = MANUFACTURER::CATEGORY::ORGAN
 
 /datum/manufacture/cybereye_sechud
 	name = "Security HUD Cybereye"
@@ -1463,7 +1475,7 @@
 	item_outputs = list(/obj/item/organ/eye/cyber/sechud)
 	create = 1
 	time = 25 SECONDS
-	category = "Organ"
+	category = MANUFACTURER::CATEGORY::ORGAN
 
 /datum/manufacture/cybereye_thermal
 	name = "Thermal Imager Cybereye"
@@ -1474,7 +1486,7 @@
 	item_outputs = list(/obj/item/organ/eye/cyber/thermal)
 	create = 1
 	time = 25 SECONDS
-	category = "Organ"
+	category = MANUFACTURER::CATEGORY::ORGAN
 
 /datum/manufacture/cybereye_meson
 	name = "Mesonic Imager Cybereye"
@@ -1485,7 +1497,7 @@
 	item_outputs = list(/obj/item/organ/eye/cyber/meson)
 	create = 1
 	time = 25 SECONDS
-	category = "Organ"
+	category = MANUFACTURER::CATEGORY::ORGAN
 
 /datum/manufacture/cybereye_spectro
 	name = "Spectroscopic Imager Cybereye"
@@ -1496,7 +1508,7 @@
 	item_outputs = list(/obj/item/organ/eye/cyber/spectro)
 	create = 1
 	time = 25 SECONDS
-	category = "Organ"
+	category = MANUFACTURER::CATEGORY::ORGAN
 
 /datum/manufacture/cybereye_prodoc
 	name = "ProDoc Healthview Cybereye"
@@ -1507,7 +1519,7 @@
 	item_outputs = list(/obj/item/organ/eye/cyber/prodoc)
 	create = 1
 	time = 25 SECONDS
-	category = "Organ"
+	category = MANUFACTURER::CATEGORY::ORGAN
 
 /datum/manufacture/cybereye_camera
 	name = "Camera Cybereye"
@@ -1518,7 +1530,7 @@
 	item_outputs = list(/obj/item/organ/eye/cyber/camera)
 	create = 1
 	time = 25 SECONDS
-	category = "Organ"
+	category = MANUFACTURER::CATEGORY::ORGAN
 
 /datum/manufacture/cybereye_monitor
 	name = "Monitor Cybereye"
@@ -1529,7 +1541,7 @@
 	item_outputs = list(/obj/item/organ/eye/cyber/monitor)
 	create = 1
 	time = 25 SECONDS
-	category = "Organ"
+	category = MANUFACTURER::CATEGORY::ORGAN
 
 /datum/manufacture/cybereye_laser
 	name = "Laser Cybereye"
@@ -1541,7 +1553,7 @@
 	item_outputs = list(/obj/item/organ/eye/cyber/laser)
 	create = 1
 	time = 40 SECONDS
-	category = "Organ"
+	category = MANUFACTURER::CATEGORY::ORGAN
 
 /datum/manufacture/implant_health
 	name = "Health Monitor Implant"
@@ -1550,7 +1562,7 @@
 	item_outputs = list(/obj/item/implantcase/health)
 	create = 1
 	time = 40 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/implant_antirot
 	name = "Rotbusttec Implant"
@@ -1559,7 +1571,7 @@
 	item_outputs = list(/obj/item/implantcase/antirot)
 	create = 1
 	time = 30 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/medicalalertbutton
 	name = "Medical Alert Button"
@@ -1568,7 +1580,7 @@
 	item_outputs = list(/obj/item/device/panicbutton/medicalalert)
 	create = 1
 	time = 3 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/empty_autoinjector
 	name = "Empty Auto-Injector"
@@ -1576,7 +1588,7 @@
 	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty)
 	create = 1
 	time = 3 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/empty_autoinjector/orange
 	name = "Empty Auto-Injector"
@@ -1584,7 +1596,7 @@
 	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/orange)
 	create = 1
 	time = 3 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/empty_autoinjector/red
 	name = "Empty Auto-Injector"
@@ -1592,7 +1604,7 @@
 	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/red)
 	create = 1
 	time = 3 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/empty_autoinjector/blue
 	name = "Empty Auto-Injector"
@@ -1600,7 +1612,7 @@
 	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/blue)
 	create = 1
 	time = 3 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/empty_autoinjector/green
 	name = "Empty Auto-Injector"
@@ -1608,7 +1620,7 @@
 	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/green)
 	create = 1
 	time = 3 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/empty_autoinjector/yellow
 	name = "Empty Auto-Injector"
@@ -1616,7 +1628,7 @@
 	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/yellow)
 	create = 1
 	time = 3 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/empty_autoinjector/purple
 	name = "Empty Auto-Injector"
@@ -1624,7 +1636,7 @@
 	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/purple)
 	create = 1
 	time = 3 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/empty_autoinjector/black
 	name = "Empty Auto-Injector"
@@ -1632,7 +1644,7 @@
 	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/black)
 	create = 1
 	time = 3 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/empty_autoinjector/white
 	name = "Empty Auto-Injector"
@@ -1640,7 +1652,7 @@
 	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/white)
 	create = 1
 	time = 3 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/gene_booth_frame
 	name = "Genetics Booth Deployer"
@@ -1660,7 +1672,7 @@
 	item_outputs = list(/obj/nav_sat)
 	create = 1
 	time = 45 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 #endif
 /datum/manufacture/stress_ball
@@ -1669,7 +1681,7 @@
 	item_outputs = list(/obj/item/toy/plush/small/stress_ball)
 	create = 1
 	time = 5 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/floppydisk //Cloning disks
 	name = "Floppy Disk"
@@ -1678,7 +1690,7 @@
 	item_outputs = list(/obj/item/disk/data/floppy)
 	create = 1
 	time = 5 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /******************** Robotics **************************/
 
@@ -1688,7 +1700,7 @@
 	item_outputs = list(/obj/item/parts/robot_parts/robot_frame)
 	create = 1
 	time = 45 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 	apply_material = TRUE
 
 /datum/manufacture/full_cyborg_standard
@@ -1699,7 +1711,7 @@
 						/obj/item/parts/robot_parts/leg/right/standard,/obj/item/parts/robot_parts/leg/left/standard)
 	time = 120 SECONDS
 	create = 1
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 	apply_material = TRUE
 	var/datum/forensic_id/roboprint = null // Give robo arms the same fingerprints
 
@@ -1720,7 +1732,7 @@
 /obj/item/parts/robot_parts/leg/right/light,/obj/item/parts/robot_parts/leg/left/light)
 	time = 62 SECONDS
 	create = 1
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 	apply_material = TRUE
 	var/datum/forensic_id/roboprint = null // Give robo arms the same fingerprints
 
@@ -1739,7 +1751,7 @@
 	item_outputs = list(/obj/item/parts/robot_parts/chest/standard)
 	create = 1
 	time = 30 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 	apply_material = TRUE
 
 /datum/manufacture/robo_chest_light
@@ -1748,7 +1760,7 @@
 	item_outputs = list(/obj/item/parts/robot_parts/chest/light)
 	create = 1
 	time = 15 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 	apply_material = TRUE
 
 /datum/manufacture/robo_head
@@ -1757,7 +1769,7 @@
 	item_outputs = list(/obj/item/parts/robot_parts/head/standard)
 	create = 1
 	time = 30 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 	apply_material = TRUE
 
 /datum/manufacture/robo_head_screen
@@ -1768,7 +1780,7 @@
 	item_outputs = list(/obj/item/parts/robot_parts/head/screen)
 	create = 1
 	time = 24 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 	apply_material = TRUE
 
 /datum/manufacture/robo_head_light
@@ -1777,7 +1789,7 @@
 	item_outputs = list(/obj/item/parts/robot_parts/head/light)
 	create = 1
 	time = 15 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 	apply_material = TRUE
 
 /datum/manufacture/robo_arm_r
@@ -1786,7 +1798,7 @@
 	item_outputs = list(/obj/item/parts/robot_parts/arm/right/standard)
 	create = 1
 	time = 15 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 	apply_material = TRUE
 
 /datum/manufacture/robo_arm_r_light
@@ -1795,7 +1807,7 @@
 	item_outputs = list(/obj/item/parts/robot_parts/arm/right/light)
 	create = 1
 	time = 8 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 	apply_material = TRUE
 
 /datum/manufacture/robo_arm_l
@@ -1804,7 +1816,7 @@
 	item_outputs = list(/obj/item/parts/robot_parts/arm/left/standard)
 	create = 1
 	time = 15 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 	apply_material = TRUE
 
 /datum/manufacture/robo_arm_l_light
@@ -1813,7 +1825,7 @@
 	item_outputs = list(/obj/item/parts/robot_parts/arm/left/light)
 	create = 1
 	time = 8 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 	apply_material = TRUE
 
 /datum/manufacture/robo_leg_r
@@ -1822,7 +1834,7 @@
 	item_outputs = list(/obj/item/parts/robot_parts/leg/right/standard)
 	create = 1
 	time = 15 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 	apply_material = TRUE
 
 /datum/manufacture/robo_leg_r_light
@@ -1831,7 +1843,7 @@
 	item_outputs = list(/obj/item/parts/robot_parts/leg/right/light)
 	create = 1
 	time = 8 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 	apply_material = TRUE
 
 /datum/manufacture/robo_leg_l
@@ -1840,7 +1852,7 @@
 	item_outputs = list(/obj/item/parts/robot_parts/leg/left/standard)
 	create = 1
 	time = 15 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 	apply_material = TRUE
 
 /datum/manufacture/robo_leg_l_light
@@ -1849,7 +1861,7 @@
 	item_outputs = list(/obj/item/parts/robot_parts/leg/left/light)
 	create = 1
 	time = 8 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 	apply_material = TRUE
 
 /datum/manufacture/robo_leg_treads
@@ -1859,7 +1871,7 @@
 	item_outputs = list(/obj/item/parts/robot_parts/leg/left/treads, /obj/item/parts/robot_parts/leg/right/treads)
 	create = 1
 	time = 15 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 	apply_material = TRUE
 
 /datum/manufacture/robo_module
@@ -1869,7 +1881,7 @@
 	item_outputs = list(/obj/item/robot_module)
 	create = 1
 	time = 40 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/powercell
 	name = "Power Cell"
@@ -1879,7 +1891,7 @@
 	item_outputs = list(/obj/item/cell/supercell)
 	create = 1
 	time = 30 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/powercellE
 	name = "Erebite Power Cell"
@@ -1889,7 +1901,7 @@
 	item_outputs = list(/obj/item/cell/erebite)
 	create = 1
 	time = 45 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/powercellC
 	name = "Cerenkite Power Cell"
@@ -1899,7 +1911,7 @@
 	item_outputs = list(/obj/item/cell/cerenkite)
 	create = 1
 	time = 45 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/powercellH
 	name = "Hyper Capacity Power Cell"
@@ -1909,7 +1921,7 @@
 	item_outputs = list(/obj/item/cell/hypercell)
 	create = 1
 	time = 120 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/core_frame
 	name = "AI Core Frame"
@@ -1917,7 +1929,7 @@
 	item_outputs = list(/obj/ai_core_frame)
 	create = 1
 	time = 50 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/clone_rack
 	name = "Clone Rack"
@@ -1932,7 +1944,7 @@
 	item_outputs = list(/obj/item/shell_frame)
 	create = 1
 	time = 25 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/ai_interface
 	name = "AI Interface Board"
@@ -1942,7 +1954,7 @@
 	item_outputs = list(/obj/item/ai_interface)
 	create = 1
 	time = 35 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/latejoin_brain
 	name = "Spontaneous Intelligence Creation Core"
@@ -1952,7 +1964,7 @@
 	item_outputs = list(/obj/item/organ/brain/latejoin)
 	create = 1
 	time = 35 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/shell_cell
 	name = "AI Shell Power Cell"
@@ -1962,7 +1974,7 @@
 	item_outputs = list(/obj/item/cell/shell_cell)
 	create = 1
 	time = 20 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/flash
 	name = "Flash"
@@ -1972,7 +1984,7 @@
 	item_outputs = list(/obj/item/device/flash)
 	create = 1
 	time = 15 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/borg_linker
 	name = "AI Linker"
@@ -1982,7 +1994,7 @@
 	item_outputs = list(/obj/item/device/borg_linker)
 	create = 1
 	time = 15 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/asimov_laws
 	name = "Standard Asimov Law Module Set"
@@ -1990,7 +2002,7 @@
 	item_outputs = list(/obj/item/aiModule/asimov1,/obj/item/aiModule/asimov2,/obj/item/aiModule/asimov3)
 	create = 1
 	time = 60 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/corporate_laws
 	name = "Nanotrasen Law Module Set"
@@ -1998,7 +2010,7 @@
 	item_outputs = list(/obj/item/aiModule/nanotrasen1,/obj/item/aiModule/nanotrasen2,/obj/item/aiModule/nanotrasen3)
 	create = 1
 	time = 60 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/robocop_laws
 	name = "RoboCop Law Module Set"
@@ -2006,7 +2018,7 @@
 	item_outputs = list(/obj/item/aiModule/robocop1,/obj/item/aiModule/robocop2,/obj/item/aiModule/robocop3,/obj/item/aiModule/robocop4)
 	create = 1
 	time = 60 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/syndicate_laws
 	name = "Syndicate Law Module Set"
@@ -2014,7 +2026,7 @@
 	item_outputs = list(/obj/item/aiModule/syndicate/law1, /obj/item/aiModule/syndicate/law2, /obj/item/aiModule/syndicate/law3, /obj/item/aiModule/syndicate/law4)
 	create = 1
 	time = 60 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 ABSTRACT_TYPE(/datum/manufacture/aiModule)
 /datum/manufacture/aiModule
@@ -2023,7 +2035,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/aiModule/asimov1)
 	create = 1
 	time = 20 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 	makeCaptain
 		name = "AI Law Module - 'MakeCaptain'"
@@ -2058,7 +2070,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/implanter)
 	create = 1
 	time = 3 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/floorbot
 	name = "Construction Drone"
@@ -2068,7 +2080,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/machinery/bot/floorbot)
 	create = 1
 	time = 60 SECONDS
-	category = "Machinery"
+	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/medbot
 	name = "Medical Drone"
@@ -2078,7 +2090,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/machinery/bot/medbot)
 	create = 1
 	time = 90 SECONDS
-	category = "Machinery"
+	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/firebot
 	name = "Firefighting Drone"
@@ -2088,7 +2100,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/machinery/bot/firebot)
 	create = 1
 	time = 60 SECONDS
-	category = "Machinery"
+	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/cleanbot
 	name = "Sanitation Drone"
@@ -2098,7 +2110,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/machinery/bot/cleanbot)
 	create = 1
 	time = 60 SECONDS
-	category = "Machinery"
+	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/digbot
 	name = "Mining Drone"
@@ -2109,7 +2121,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/machinery/bot/mining)
 	create = 1
 	time = 10 SECONDS
-	category = "Machinery"
+	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/robup_jetpack
 	name = "Propulsion Upgrade"
@@ -2118,7 +2130,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/jetpack)
 	create = 1
 	time = 60 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/robup_speed
 	name = "Speed Upgrade"
@@ -2127,7 +2139,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/speed)
 	create = 1
 	time = 60 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/robup_mag
 	name = "Magnetic Traction Upgrade"
@@ -2136,7 +2148,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/magboot)
 	create = 1
 	time = 60 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/robup_recharge
 	name = "Recharge Pack"
@@ -2144,7 +2156,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/rechargepack)
 	create = 1
 	time = 60 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/robup_repairpack
 	name = "Repair Pack"
@@ -2152,7 +2164,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/repairpack)
 	create = 1
 	time = 60 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/robup_physshield
 	name = "Force Shield Upgrade"
@@ -2162,7 +2174,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/physshield)
 	create = 1
 	time = 90 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/robup_fireshield
 	name = "Heat Shield Upgrade"
@@ -2171,7 +2183,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/fireshield)
 	create = 1
 	time = 90 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/robup_aware
 	name = "Recovery Upgrade"
@@ -2181,7 +2193,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/aware)
 	create = 1
 	time = 90 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/robup_efficiency
 	name = "Efficiency Upgrade"
@@ -2190,7 +2202,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/efficiency)
 	create = 1
 	time = 120 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/robup_repair
 	name = "Self-Repair Upgrade"
@@ -2199,7 +2211,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/repair)
 	create = 1
 	time = 120 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/robup_teleport
 	name = "Teleport Upgrade"
@@ -2209,7 +2221,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/teleport)
 	create = 1
 	time = 120 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/robup_expand
 	name = "Expansion Upgrade"
@@ -2218,7 +2230,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/expand)
 	create = 1
 	time = 120 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/robup_meson
 	name = "Optical Meson Upgrade"
@@ -2227,7 +2239,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/opticmeson)
 	create = 1
 	time = 90 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/robup_pressure
 	name = "Pressure Visualizer Upgrade"
@@ -2236,7 +2248,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/pressure_visualizer)
 	create = 1
 	time = 90 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /* shit done be broked
 /datum/manufacture/robup_thermal
@@ -2246,7 +2258,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/opticthermal)
 	create = 1
 	time = 90 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 */
 /datum/manufacture/robup_healthgoggles
 	name = "ProDoc Healthgoggle Upgrade"
@@ -2255,7 +2267,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/healthgoggles)
 	create = 1
 	time = 90 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/robup_sechudgoggles
 	name = "Security HUD Upgrade"
@@ -2264,7 +2276,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/sechudgoggles)
 	create = 1
 	time = 90 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/robup_spectro
 	name = "Spectroscopic Scanner Upgrade"
@@ -2273,7 +2285,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/spectro)
 	create = 1
 	time = 90 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/robup_visualizer
 	name = "Construction Visualizer"
@@ -2282,7 +2294,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/visualizer)
 	create = 1
 	time = 90 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/scream_synth
 	name = "Scream Synthesizer"
@@ -2290,7 +2302,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/instrument/roboscream)
 	create = 1
 	time = 30 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/implant_robotalk
 	name = "Machine Translator Implant"
@@ -2299,7 +2311,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/implantcase/robotalk)
 	create = 1
 	time = 40 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 
 /datum/manufacture/sbradio
@@ -2309,7 +2321,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/device/radio)
 	create = 1
 	time = 20 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/thrusters
 	name = "Alastor Pattern Thrusters"
@@ -2317,7 +2329,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/parts/robot_parts/leg/right/thruster,/obj/item/parts/robot_parts/leg/left/thruster)
 	create = 1
 	time = 120 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 	apply_material = TRUE
 
 /******************** Science **************************/
@@ -2329,7 +2341,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/suit/hazard/bio_suit,/obj/item/clothing/head/bio_hood)
 	create = 1
 	time = 10 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/spectrogoggles
 	name = "Spectroscopic Scanner Goggles"
@@ -2338,7 +2350,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/glasses/spectro)
 	create = 1
 	time = 20 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/gasmask
 	name = "Gas Mask"
@@ -2348,7 +2360,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/mask/gas)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/dropper
 	name = "Dropper"
@@ -2357,7 +2369,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/reagent_containers/dropper)
 	create = 1
 	time = 5 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/mechdropper
 	name = "Mechanical Dropper"
@@ -2366,7 +2378,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/reagent_containers/dropper/mechanical)
 	create = 1
 	time = 5 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/gps
 	name = "Space GPS"
@@ -2375,7 +2387,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/device/gps)
 	create = 1
 	time = 5 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/reagentscanner
 	name = "Reagent Scanner"
@@ -2385,7 +2397,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/device/reagentscanner)
 	create = 1
 	time = 5 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/artifactforms
 	name = "Artifact Analysis Forms"
@@ -2394,7 +2406,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/paper_bin/artifact_paper)
 	create = 1
 	time = 10 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/audiotape
 	name = "Audio Tape"
@@ -2402,7 +2414,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/audio_tape)
 	create = 1
 	time = 4 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/audiolog
 	name = "Audio Log"
@@ -2411,7 +2423,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/device/audio_log)
 	create = 1
 	time = 5 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 // Mining Gear
 #ifndef UNDERWATER_MAP
@@ -2423,7 +2435,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/magnet_parts)
 	create = 1
 	time = 120 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 #endif
 
 /datum/manufacture/pick
@@ -2432,7 +2444,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/mining_tool)
 	create = 1
 	time = 5 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/powerpick
 	name = "Powered Pick"
@@ -2441,7 +2453,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/mining_tool/powered/pickaxe)
 	create = 1
 	time = 10 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/blastchargeslite
 	name = "Low-Yield Mining Explosives (x5)"
@@ -2451,7 +2463,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/breaching_charge/mining/light)
 	create = 5
 	time = 40 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/blastcharges
 	name = "Mining Explosives (x5)"
@@ -2461,7 +2473,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/breaching_charge/mining)
 	create = 5
 	time = 60 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/powerhammer
 	name = "Power Hammer"
@@ -2471,7 +2483,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/mining_tool/powered/hammer)
 	create = 1
 	time = 70 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/drill
 	name = "Laser Drill"
@@ -2480,7 +2492,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/mining_tool/powered/drill)
 	create = 1
 	time = 90 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/conc_gloves
 	name = "Concussive Gauntlets"
@@ -2490,7 +2502,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/gloves/concussive)
 	create = 1
 	time = 120 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/ore_accumulator
 	name = "Mineral Accumulator"
@@ -2500,7 +2512,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/machinery/oreaccumulator)
 	create = 1
 	time = 120 SECONDS
-	category = "Machinery"
+	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/eyes_meson
 	name = "Optical Meson Scanner"
@@ -2509,7 +2521,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/glasses/toggleable/meson)
 	create = 1
 	time = 10 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/atmos_goggles
 	name = "Pressure Visualization Goggles"
@@ -2518,7 +2530,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/glasses/toggleable/atmos)
 	create = 1
 	time = 10 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/geoscanner
 	name = "Geological Scanner"
@@ -2528,7 +2540,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/oreprospector)
 	create = 1
 	time = 8 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/ore_scoop
 	name = "Ore Scoop"
@@ -2539,7 +2551,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_names = list("Metal","Conductive Material","Crystal")
 	create = 1
 	time = 5 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/geigercounter
 	name = "Geiger Counter"
@@ -2549,7 +2561,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/device/geiger)
 	create = 1
 	time = 8 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/industrialarmor
 	name = "Industrial Space Armor Set"
@@ -2559,14 +2571,14 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/suit/space/industrial,/obj/item/clothing/head/helmet/space/industrial)
 	create = 1
 	time = 90 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/industrialboots
 	name = "Mechanised Boots"
 	item_outputs = list(/obj/item/clothing/shoes/industrial)
 	create = 1
 	time = 40 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/jetpackmkII
 	name = "Jetpack MKII"
@@ -2576,7 +2588,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/tank/jetpack/jetpackmk2)
 	create = 1
 	time = 40 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/breathmask
 	name = "Breath Mask"
@@ -2584,7 +2596,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/mask/breath)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/gastank
 	name = "Gas tank"
@@ -2592,7 +2604,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/tank/empty)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/miniplasmatank
 	name = "Mini plasma tank"
@@ -2600,7 +2612,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/tank/mini/plasma/empty)
 	create = 1
 	time = 5 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/minioxygentank
 	name = "Mini oxygen tank"
@@ -2608,7 +2620,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/tank/mini/oxygen/empty)
 	create = 1
 	time = 5 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/patch
 	name = "Chemical Patch"
@@ -2616,7 +2628,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/reagent_containers/patch)
 	create = 2
 	time = 5 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/mender
 	name = "Auto Mender (x2)"
@@ -2626,7 +2638,16 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/reagent_containers/mender)
 	create = 2
 	time = 30 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
+
+/datum/manufacture/mender_refill_cartridge
+	name = "Mender Refill Cartridge"
+	item_requirements = list("metal" = 1,
+							"conductive" = 1)
+	item_outputs = list(/obj/item/reagent_containers/mender_refill_cartridge)
+	create = 1
+	time = 3 SECONDS
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/penlight
 	name = "Penlight"
@@ -2635,7 +2656,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/device/light/flashlight/penlight)
 	create = 1
 	time = 2 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/stethoscope
 	name = "Stethoscope"
@@ -2644,7 +2665,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/medicaldiagnosis/stethoscope)
 	create = 1
 	time = 5 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/spacesuit
 	name = "Space Suit Set"
@@ -2654,7 +2675,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/suit/space,/obj/item/clothing/head/helmet/space)
 	create = 1
 	time = 15 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/engspacesuit
 	name = "Engineering Space Suit Set"
@@ -2664,7 +2685,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/suit/space/engineer,/obj/item/clothing/head/helmet/space/engineer)
 	create = 1
 	time = 15 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/engdivesuit
 	name = "Engineering Diving Suit Set"
@@ -2674,7 +2695,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/suit/space/diving/engineering,/obj/item/clothing/head/helmet/space/engineer/diving/engineering)
 	create = 1
 	time = 15 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/lightengspacesuit
 	name = "Light Engineering Space Suit Set"
@@ -2685,7 +2706,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/suit/space/light/engineer,/obj/item/clothing/head/helmet/space/light/engineer)
 	create = 1
 	time = 15 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/oresatchel
 	name = "Ore Satchel"
@@ -2693,7 +2714,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/satchel/mining)
 	create = 1
 	time = 5 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/oresatchelL
 	name = "Large Ore Satchel"
@@ -2702,7 +2723,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/satchel/mining/large)
 	create = 1
 	time = 15 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/breach_pouch
 	name = "Mining charge pouch"
@@ -2711,7 +2732,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/storage/breach_pouch)
 	create = 1
 	time = 15 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/jetpack
 	name = "Jetpack"
@@ -2720,7 +2741,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/tank/jetpack)
 	create = 1
 	time = 60 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/microjetpack
 	name = "Micro Jetpack"
@@ -2729,7 +2750,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/tank/jetpack/micro)
 	create = 1
 	time = 30 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /// Ship Items -- OLD COMPONENTS
 
@@ -2740,7 +2761,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/shipcomponent/engine/scout)
 	create = 1
 	time = 5 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/engine
 	name = "Warp-1 Engine"
@@ -2749,7 +2770,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/shipcomponent/engine)
 	create = 1
 	time = 10 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/engine2
 	name = "Helios Mark-II Engine"
@@ -2759,7 +2780,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/shipcomponent/engine/helios)
 	create = 1
 	time = 90 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/engine3
 	name = "Hermes 3.0 Engine"
@@ -2769,7 +2790,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/shipcomponent/engine/hermes)
 	create = 1
 	time = 120 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 
 /datum/manufacture/podgps
@@ -2779,7 +2800,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/shipcomponent/secondary_system/gps)
 	create = 1
 	time = 12 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/cargohold
 	name = "Cargo Hold"
@@ -2787,7 +2808,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/shipcomponent/secondary_system/cargo)
 	create = 1
 	time = 12 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/storagehold
 	name = "Storage Hold"
@@ -2795,7 +2816,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/shipcomponent/secondary_system/storage)
 	create = 1
 	time = 12 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/orescoop
 	name = "Alloyed Solutions Ore Scoop/Hold"
@@ -2804,7 +2825,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/shipcomponent/secondary_system/orescoop)
 	create = 1
 	time = 12 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/communications
 	name = "Robustco Communication Array"
@@ -2813,7 +2834,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/shipcomponent/communications)
 	create = 1
 	time = 12 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/communications/mining
 	name = "NT Magnet Link Array"
@@ -2822,7 +2843,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/shipcomponent/communications/mining)
 	create = 1
 	time = 12 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/conclave
 	name = "Conclave A-1984 Sensor System"
@@ -2832,7 +2853,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/shipcomponent/sensor/mining)
 	create = 1
 	time = 5 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/shipRCD
 	name = "Duracorp Construction Device"
@@ -2842,7 +2863,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/shipcomponent/secondary_system/cargo)
 	create = 1
 	time = 90 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 //  cogwerks - clothing manufacturer datums
 
@@ -2852,7 +2873,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/storage/backpack)
 	create = 1
 	time = 10 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/backpack_red
 	name = "Red Backpack"
@@ -2860,7 +2881,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/storage/backpack/empty/red)
 	create = 1
 	time = 10 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/backpack_green
 	name = "Green Backpack"
@@ -2868,7 +2889,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/storage/backpack/empty/green)
 	create = 1
 	time = 10 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/backpack_blue
 	name = "Blue Backpack"
@@ -2876,7 +2897,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/storage/backpack/empty/blue)
 	create = 1
 	time = 10 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/backpack_brown
 	name = "Brown Backpack"
@@ -2884,7 +2905,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/storage/backpack/empty/brown)
 	create = 1
 	time = 10 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/satchel
 	name = "Satchel"
@@ -2892,7 +2913,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/storage/backpack/satchel/empty)
 	create = 1
 	time = 10 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/satchel_red
 	name = "Red Satchel"
@@ -2900,7 +2921,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/storage/backpack/satchel/empty/red)
 	create = 1
 	time = 10 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/satchel_green
 	name = "Green Satchel"
@@ -2908,7 +2929,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/storage/backpack/satchel/empty/green)
 	create = 1
 	time = 10 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/satchel_blue
 	name = "Blue Satchel"
@@ -2916,7 +2937,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/storage/backpack/satchel/empty/blue)
 	create = 1
 	time = 10 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/satchel_brown
 	name = "Brown Satchel"
@@ -2924,7 +2945,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/storage/backpack/satchel/empty/brown)
 	create = 1
 	time = 10 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/shoes_brown
 	name = "Brown Shoes"
@@ -2932,7 +2953,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/shoes/brown)
 	create = 1
 	time = 2 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/hat_white
 	name = "White Hat"
@@ -2940,7 +2961,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/head/white)
 	create = 1
 	time = 2 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/hat_black
 	name = "Black Hat"
@@ -2948,7 +2969,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/head/black)
 	create = 1
 	time = 2 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/hat_blue
 	name = "Blue Hat"
@@ -2956,7 +2977,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/head/blue)
 	create = 1
 	time = 2 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/hat_red
 	name = "Red Hat"
@@ -2964,7 +2985,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/head/red)
 	create = 1
 	time = 2 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/hat_green
 	name = "Green Hat"
@@ -2972,7 +2993,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/head/green)
 	create = 1
 	time = 2 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/hat_yellow
 	name = "Yellow Hat"
@@ -2980,7 +3001,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/head/yellow)
 	create = 1
 	time = 2 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/hat_pink
 	name = "Pink Hat"
@@ -2988,7 +3009,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/head/pink)
 	create = 1
 	time = 2 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/hat_orange
 	name = "Orange Hat"
@@ -2996,7 +3017,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/head/orange)
 	create = 1
 	time = 2 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/hat_purple
 	name = "Purple Hat"
@@ -3004,7 +3025,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/head/purple)
 	create = 1
 	time = 2 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/hat_tophat
 	name = "Top Hat"
@@ -3012,7 +3033,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/head/that)
 	create = 1
 	time = 3 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/hat_ltophat
 	name = "Large Top Hat"
@@ -3020,7 +3041,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/head/longtophat)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/jumpsuit_white
 	name = "White Jumpsuit"
@@ -3028,7 +3049,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/under/color/white)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/jumpsuit_red
 	name = "Red Jumpsuit"
@@ -3036,7 +3057,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/under/color/red)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/jumpsuit_yellow
 	name = "Yellow Jumpsuit"
@@ -3044,7 +3065,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/under/color/yellow)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/jumpsuit_green
 	name = "Green Jumpsuit"
@@ -3052,7 +3073,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/under/color/green)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/jumpsuit_pink
 	name = "Pink Jumpsuit"
@@ -3060,7 +3081,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/under/color/pink)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/jumpsuit_blue
 	name = "Blue Jumpsuit"
@@ -3068,7 +3089,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/under/color/blue)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 
 /datum/manufacture/jumpsuit_purple
@@ -3077,7 +3098,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/under/color/purple)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/jumpsuit_brown
 	name = "Brown Jumpsuit"
@@ -3085,7 +3106,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/under/color/brown)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/jumpsuit_black
 	name = "Black Jumpsuit"
@@ -3093,7 +3114,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/under/color)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/jumpsuit_orange
 	name = "Orange Jumpsuit"
@@ -3101,7 +3122,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/under/color/orange)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/tricolor
 	name = "Tricolor Jumpsuit"
@@ -3109,7 +3130,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/under/misc/tricolor)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/pride_lgbt
 	name = "LGBT Pride Jumpsuit"
@@ -3117,7 +3138,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/under/pride)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/pride_ace
 	name = "Asexual Pride Jumpsuit"
@@ -3125,7 +3146,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/under/pride/ace)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/pride_aro
 	name = "Aromantic Pride Jumpsuit"
@@ -3133,7 +3154,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/under/pride/aro)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/pride_bi
 	name = "Bisexual Pride Jumpsuit"
@@ -3141,7 +3162,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/under/pride/bi)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/pride_inter
 	name = "Intersex Pride Jumpsuit"
@@ -3149,7 +3170,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/under/pride/inter)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/pride_lesb
 	name = "Lesbian Pride Jumpsuit"
@@ -3157,7 +3178,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/under/pride/lesb)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/pride_gay
 	name = "Gay Pride Jumpsuit"
@@ -3165,7 +3186,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/under/pride/gaymasc)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/pride_nb
 	name = "Non-binary Pride Jumpsuit"
@@ -3173,7 +3194,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/under/pride/nb)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/pride_pan
 	name = "Pansexual Pride Jumpsuit"
@@ -3181,7 +3202,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/under/pride/pan)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/pride_poly
 	name = "Polysexual Pride Jumpsuit"
@@ -3189,7 +3210,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/under/pride/poly)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/pride_trans
 	name = "Trans Pride Jumpsuit"
@@ -3197,7 +3218,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/under/pride/trans)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/suit_black
 	name = "Fancy Black Suit"
@@ -3205,7 +3226,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/under/suit/black)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/dress_black
 	name = "Fancy Black Dress"
@@ -3213,7 +3234,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/under/suit/black/dress)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/labcoat
 	name = "Labcoat"
@@ -3221,7 +3242,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/suit/labcoat)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/scrubs_white
 	name = "White Scrubs"
@@ -3229,7 +3250,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/under/scrub)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/scrubs_teal
 	name = "Teal Scrubs"
@@ -3237,7 +3258,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/under/scrub/teal)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/scrubs_maroon
 	name = "Maroon Scrubs"
@@ -3245,7 +3266,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/under/scrub/maroon)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/scrubs_blue
 	name = "Navy Scrubs"
@@ -3253,7 +3274,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/under/scrub/blue)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/scrubs_purple
 	name = "Violet Scrubs"
@@ -3261,7 +3282,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/under/scrub/purple)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/scrubs_orange
 	name = "Orange Scrubs"
@@ -3269,7 +3290,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/under/scrub/orange)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/scrubs_pink
 	name = "Hot Pink Scrubs"
@@ -3277,7 +3298,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/under/scrub/pink)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/medical_backpack
 	name = "Medical Backpack"
@@ -3285,7 +3306,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/storage/backpack/medic)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/patient_gown
 	name = "Gown"
@@ -3293,7 +3314,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/under/patient_gown)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/surgical_mask
 	name = "Sterile Mask"
@@ -3301,7 +3322,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/mask/surgical)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/surgical_shield
 	name = "Surgical Face Shield"
@@ -3309,7 +3330,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/mask/surgical_shield)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/eyepatch
 	name = "Medical Eyepatch"
@@ -3317,7 +3338,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/glasses/eyepatch)
 	create = 1
 	time = 15 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/blindfold
 	name = "Blindfold"
@@ -3325,7 +3346,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/glasses/blindfold)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/muzzle
 	name = "Muzzle"
@@ -3334,7 +3355,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/mask/muzzle)
 	create = 1
 	time = 5 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/hermes
 	name = "Offering to the Fabricator Gods"
@@ -3347,7 +3368,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/clothing/shoes/hermes)
 	create = 3 //because a shoe god has to have acolytes
 	time = 120 //suspense
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/towel
 	name = "Towel"
@@ -3355,7 +3376,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/cloth/towel/white)
 	create = 1
 	time = 8 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/handkerchief
 	name = "Handkerchief"
@@ -3363,7 +3384,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/cloth/handkerchief/colored/white)
 	create = 1
 	time = 4 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /////// pod construction components
 
@@ -3374,7 +3395,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/podarmor/armor_light)
 	create = 1
 	time = 20 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/pod/armor_heavy
 	name = "Heavy Pod Armor"
@@ -3383,7 +3404,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/podarmor/armor_heavy)
 	create = 1
 	time = 30 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/pod/armor_industrial
 	name = "Industrial Pod Armor"
@@ -3393,7 +3414,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/podarmor/armor_industrial)
 	create = 1
 	time = 50 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/pod/preassembeled_parts
 	name = "Preassembled Pod Frame Kit"
@@ -3403,7 +3424,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/preassembled_frame_box/pod)
 	create = 1
 	time = 50 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 ABSTRACT_TYPE(/datum/manufacture/sub)
 /datum/manufacture/sub/preassembeled_parts
@@ -3414,7 +3435,7 @@ ABSTRACT_TYPE(/datum/manufacture/sub)
 	item_outputs = list(/obj/item/preassembled_frame_box/sub)
 	create = 1
 	time = 25 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 ABSTRACT_TYPE(/datum/manufacture/putt)
 /datum/manufacture/putt/preassembeled_parts
@@ -3425,7 +3446,7 @@ ABSTRACT_TYPE(/datum/manufacture/putt)
 	item_outputs = list(/obj/item/preassembled_frame_box/putt)
 	create = 1
 	time = 25 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 //// pod addons
 
@@ -3441,7 +3462,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/bad_mining)
 	create = 1
 	time = 20 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/pod/weapon/mining
 	name = "Plasma Cutter System"
@@ -3451,7 +3472,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/mining)
 	create = 1
 	time = 20 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/pod/weapon/mining/drill
 	name = "Rock Drilling Rig"
@@ -3461,7 +3482,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/rockdrills)
 	create = 1
 	time = 20 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/pod/weapon/ltlaser
 	name = "Mk.1.5 Light Phasers"
@@ -3471,7 +3492,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/phaser)
 	create = 1
 	time = 20 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/pod/weapon/burst_ltlaser
 	name = "Mk.1.5e Burst Phasers"
@@ -3481,7 +3502,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/phaser/burst_phaser)
 	create = 1
 	time = 25 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/pod/weapon/efif1
 	name = "EFIF-1 Construction System"
@@ -3491,7 +3512,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/constructor)
 	create = 1
 	time = 60 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/pod/lock
 	name = "Pod Locking Mechanism"
@@ -3500,7 +3521,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	item_outputs = list(/obj/item/shipcomponent/secondary_system/lock)
 	create = 1
 	time = 10 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 
 /datum/manufacture/pod/lateral_thrusters
@@ -3511,7 +3532,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	item_outputs = list(/obj/item/shipcomponent/secondary_system/thrusters/lateral)
 	create = 1
 	time = 12 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/pod/afterburner
 	name = "Afterburner"
@@ -3521,7 +3542,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	item_outputs = list(/obj/item/shipcomponent/secondary_system/thrusters/afterburner)
 	create = 1
 	time = 12 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/pod/light_shielding
 	name = "Light Shielding System"
@@ -3531,7 +3552,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	item_outputs = list(/obj/item/shipcomponent/secondary_system/shielding/light)
 	create = 1
 	time = 15 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/pod/heavy_shielding
 	name = "High Impact Shielding System"
@@ -3542,7 +3563,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	item_outputs = list(/obj/item/shipcomponent/secondary_system/shielding/heavy)
 	create = 1
 	time = 25 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/pod/auto_repair_kit
 	name = "Automatic Repair System"
@@ -3552,7 +3573,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	item_outputs = list(/obj/item/shipcomponent/secondary_system/auto_repair_kit)
 	create = 1
 	time = 10 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/pod/weapons_loader
 	name = "Weapons Loader"
@@ -3561,7 +3582,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	item_outputs = list(/obj/item/shipcomponent/secondary_system/weapons_loader)
 	create = 1
 	time = 17 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/pod/gunner_support
 	name = "Gunner Module"
@@ -3570,7 +3591,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	item_outputs = list(/obj/item/shipcomponent/secondary_system/gunner_support)
 	create = 1
 	time = 17 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/pod/sps
 	name = "Syndicate Purge System"
@@ -3580,7 +3601,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/syndicate_purge_system)
 	create = 1
 	time = 90 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/pod/srs
 	name = "Syndicate Rewind System"
@@ -3590,7 +3611,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	item_outputs = list(/obj/item/shipcomponent/secondary_system/syndicate_rewind_system)
 	create = 1
 	time = 90 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 //// deployable warp beacon
 
 /datum/manufacture/beaconkit
@@ -3602,7 +3623,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	item_names = list("Crystal","Conductive Material","Sturdy Metal")
 	create = 1
 	time = 30 SECONDS
-	category = "Machinery"
+	category = MANUFACTURER::CATEGORY::MACHINERY
 
 
 /******************** HOP *******************/
@@ -3614,7 +3635,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	item_outputs = list(/obj/item/card/id)
 	create = 1
 	time = 5 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/id_card_gold
 	name = "Gold ID card"
@@ -3624,7 +3645,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	item_outputs = list(/obj/item/card/id/gold)
 	create = 1
 	time = 30 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/implant_access
 	name = "Electronic Access Implant (8 Access Charges)"
@@ -3633,7 +3654,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	item_outputs = list(/obj/item/implantcase/access)
 	create = 1
 	time = 20 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/acesscase
 	name = "ID Briefcase"
@@ -3644,7 +3665,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	item_outputs = list(/obj/machinery/computer/card/portable)
 	create = 1
 	time = 75 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /datum/manufacture/implant_access_infinite
 	name = "Electronic Access Implant (Unlimited Charge)"
@@ -3653,7 +3674,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	item_outputs = list(/obj/item/implantcase/access/unlimited)
 	create = 1
 	time = 60 SECONDS
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 /datum/manufacture/radio_upgrade
@@ -3663,7 +3684,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	item_outputs = list(/obj/item/device/radio_upgrade/station/civilian)
 	create = 1
 	time = 20 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/radio_upgrade/command
 	name = "Command Radio Upgrade"
@@ -3697,7 +3718,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	item_outputs = list(/obj/storage/crate)
 	create = 1
 	time = 10 SECONDS
-	category = "Miscellaneous"
+	category = MANUFACTURER::CATEGORY::MISCELLANEOUS
 
 /datum/manufacture/crate/wooden
 	name = "Wooden Crate"
@@ -3761,6 +3782,36 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	name = "Unmarked Syndicate Crate"
 	item_outputs = list(/obj/storage/secure/crate/gear/syndicate)
 
+/******************** Carts *******************/
+
+/datum/manufacture/cart
+	name = "Cart"
+	item_requirements = list("metal" = 1)
+	item_outputs = list(/obj/storage/cart)
+	create = 1
+	time = 10 SECONDS
+	category = MANUFACTURER::CATEGORY::MISCELLANEOUS
+
+/datum/manufacture/cart/forensic
+	name = "Forensics Cart"
+	item_outputs = list(/obj/storage/cart/forensic)
+
+/datum/manufacture/cart/mechanic
+	name = "Mechanics Cart"
+	item_outputs = list(/obj/storage/cart/mechcart)
+
+/datum/manufacture/cart/medical
+	name = "Medical Cart"
+	item_outputs = list(/obj/storage/cart/medcart)
+
+/datum/manufacture/cart/trash
+	name = "Trash Cart"
+	item_outputs = list(/obj/storage/cart/trash)
+
+/datum/manufacture/cart/hotdog
+	name = "Hotdog Cart"
+	item_outputs = list(/obj/storage/cart/hotdog)
+
 /******************** GUNS *******************/
 
 /datum/manufacture/alastor
@@ -3772,7 +3823,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	item_outputs = list(/obj/item/gun/energy/alastor)
 	create = 1
 	time = 30 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /************ INTERDICTOR STUFF ************/
 
@@ -3782,7 +3833,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	item_outputs = list(/obj/item/interdictor_kit)
 	create = 1
 	time = 10 SECONDS
-	category = "Machinery"
+	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/interdictor_board_standard
 	name = "Standard Interdictor Mainboard"
@@ -3790,7 +3841,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	item_outputs = list(/obj/item/interdictor_board)
 	create = 1
 	time = 5 SECONDS
-	category = "Machinery"
+	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/interdictor_board_nimbus
 	name = "Nimbus Interdictor Mainboard"
@@ -3800,7 +3851,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	item_outputs = list(/obj/item/interdictor_board/nimbus)
 	create = 1
 	time = 10 SECONDS
-	category = "Machinery"
+	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/interdictor_board_zephyr
 	name = "Zephyr Interdictor Mainboard"
@@ -3809,7 +3860,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	item_outputs = list(/obj/item/interdictor_board/zephyr)
 	create = 1
 	time = 10 SECONDS
-	category = "Machinery"
+	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/interdictor_board_devera
 	name = "Devera Interdictor Mainboard"
@@ -3819,7 +3870,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	item_outputs = list(/obj/item/interdictor_board/devera)
 	create = 1
 	time = 10 SECONDS
-	category = "Machinery"
+	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/interdictor_rod_lambda
 	name = "Lambda Phase-Control Rod"
@@ -3830,7 +3881,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	item_outputs = list(/obj/item/interdictor_rod)
 	create = 1
 	time = 12 SECONDS
-	category = "Machinery"
+	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/interdictor_rod_sigma
 	name = "Sigma Phase-Control Rod"
@@ -3841,7 +3892,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	item_outputs = list(/obj/item/interdictor_rod/sigma)
 	create = 1
 	time = 15 SECONDS
-	category = "Machinery"
+	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/interdictor_rod_epsilon
 	name = "Epsilon Phase-Control Rod"
@@ -3852,7 +3903,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	item_outputs = list(/obj/item/interdictor_rod/epsilon)
 	create = 1
 	time = 20 SECONDS
-	category = "Machinery"
+	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/interdictor_rod_phi
 	name = "Phi Phase-Control Rod"
@@ -3862,7 +3913,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	item_outputs = list(/obj/item/interdictor_rod/phi)
 	create = 1
 	time = 15 SECONDS
-	category = "Machinery"
+	category = MANUFACTURER::CATEGORY::MACHINERY
 
 
 /************ NADIR RESONATORS ************/
@@ -3876,7 +3927,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	item_outputs = list(/obj/machinery/siphon/resonator)
 	create = 1
 	time = 30 SECONDS
-	category = "Machinery"
+	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/resonator_type_sm
 	name = "Type-SM Resonator"
@@ -3887,7 +3938,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	item_outputs = list(/obj/machinery/siphon/resonator/stabilizer)
 	create = 1
 	time = 30 SECONDS
-	category = "Machinery"
+	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/resonator_type_fq
 	name = "Type-FQ Resonator"
@@ -3898,7 +3949,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	item_outputs = list(/obj/machinery/siphon/resonator/field_dilation)
 	create = 1
 	time = 30 SECONDS
-	category = "Machinery"
+	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /************ NADIR GEAR ************/
 
@@ -3911,7 +3962,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	item_outputs = list(/obj/item/device/nanoloom)
 	create = 1
 	time = 15 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/nanoloom_cart
 	name = "Nanoloom Cartridge"
@@ -3921,7 +3972,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	item_outputs = list(/obj/item/nanoloom_cartridge)
 	create = 1
 	time = 8 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 //////////////////////UBER-EXTREME SURVIVAL////////////////////////////////
 /datum/manufacture/armor_vest	//
@@ -3930,7 +3981,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	item_outputs = list(/obj/item/clothing/suit/armor/vest)
 	create = 1
 	time = 30 SECONDS
-	category = "Weapon"
+	category = MANUFACTURER::CATEGORY::WEAPON
 
 /datum/manufacture/saa	//
 	name = "Colt SAA"
@@ -3938,28 +3989,28 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	item_outputs = list(/obj/item/gun/kinetic/single_action/colt_saa)
 	create = 1
 	time = 30 SECONDS
-	category = "Weapon"
+	category = MANUFACTURER::CATEGORY::WEAPON
 /datum/manufacture/saa_ammo	//
 	name = "Colt Ammo"
 	item_requirements = list("metal" = 1)
 	item_outputs = list(/obj/item/ammo/bullets/c_45)
 	create = 1
 	time = 7 SECONDS
-	category = "ammo"
+	category = MANUFACTURER::CATEGORY::AMMO
 /datum/manufacture/clock	//
 	name = "Clock 188"
 	item_requirements = list("metal" = 10)
 	item_outputs = list(/obj/item/gun/kinetic/clock_188)
 	create = 1
 	time = 10 SECONDS
-	category = "Weapon"
+	category = MANUFACTURER::CATEGORY::WEAPON
 /datum/manufacture/clock_ammo	//
 	name = "Clock ammo"
 	item_requirements = list("metal" = 3)
 	item_outputs = list(/obj/item/ammo/bullets/nine_mm_NATO)
 	create = 1
 	time = 7 SECONDS
-	category = "ammo"
+	category = MANUFACTURER::CATEGORY::AMMO
 
 /datum/manufacture/riot_shotgun	//
 	name = "Riot Shotgun"
@@ -3967,14 +4018,14 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	item_outputs = list(/obj/item/gun/kinetic/pumpweapon/riotgun)
 	create = 1
 	time = 20 SECONDS
-	category = "Weapon"
+	category = MANUFACTURER::CATEGORY::WEAPON
 /datum/manufacture/riot_shotgun_ammo	//
 	name = "Rubber Bullet ammo"
 	item_requirements = list("metal" = 10)
 	item_outputs = list(/obj/item/ammo/bullets/abg)
 	create = 1
 	time = 7 SECONDS
-	category = "ammo"
+	category = MANUFACTURER::CATEGORY::AMMO
 
 /datum/manufacture/riot_launcher	//
 	name = "Riot Launcher"
@@ -3982,7 +4033,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	item_outputs = list(/obj/item/gun/kinetic/riot40mm)
 	create = 1
 	time = 10 SECONDS
-	category = "Weapon"
+	category = MANUFACTURER::CATEGORY::WEAPON
 /datum/manufacture/riot_launcher_ammo_pbr	//
 	name = "Launcher PBR Ammo"
 	item_requirements = list("metal" = 2,
@@ -3991,7 +4042,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	item_outputs = list(/obj/item/ammo/bullets/pbr)
 	create = 1
 	time = 10 SECONDS
-	category = "ammo"
+	category = MANUFACTURER::CATEGORY::AMMO
 /datum/manufacture/riot_launcher_ammo_flashbang	//
 	name = "Launcher Flashbang Box"
 	item_requirements = list("metal" = 2,
@@ -3999,7 +4050,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	item_outputs = list(/obj/item/storage/box/flashbang_kit)
 	create = 1
 	time = 10 SECONDS
-	category = "ammo"
+	category = MANUFACTURER::CATEGORY::AMMO
 /datum/manufacture/riot_launcher_ammo_tactical	//
 	name = "Launcher Tactical Box"
 	item_requirements = list("metal_dense" = 5,
@@ -4008,7 +4059,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	item_outputs = list(/obj/item/storage/box/tactical_kit)
 	create = 1
 	time = 10 SECONDS
-	category = "ammo"
+	category = MANUFACTURER::CATEGORY::AMMO
 
 /datum/manufacture/sniper	//
 	name = "Sniper"
@@ -4019,14 +4070,14 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	item_outputs = list(/obj/item/gun/kinetic/sniper)
 	create = 1
 	time = 25 SECONDS
-	category = "Weapon"
+	category = MANUFACTURER::CATEGORY::WEAPON
 /datum/manufacture/sniper_ammo	//
 	name = "Sniper Ammo"
 	item_requirements = list("metal_superdense" = 6)
 	item_outputs = list(/obj/item/ammo/bullets/rifle_762_NATO)
 	create = 1
 	time = 10 SECONDS
-	category = "ammo"
+	category = MANUFACTURER::CATEGORY::AMMO
 /datum/manufacture/tac_shotgun	//
 	name = "Tactical Shotgun"
 	item_requirements = list("metal_superdense" = 15,
@@ -4034,14 +4085,14 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	item_outputs = list(/obj/item/gun/kinetic/tactical_shotgun)
 	create = 1
 	time = 20 SECONDS
-	category = "Weapon"
+	category = MANUFACTURER::CATEGORY::WEAPON
 /datum/manufacture/tac_shotgun_ammo	//
 	name = "Tactical Shotgun Ammo"
 	item_requirements = list("metal_superdense" = 5)
 	item_outputs = list(/obj/item/ammo/bullets/buckshot_burst)
 	create = 1
 	time = 7 SECONDS
-	category = "ammo"
+	category = MANUFACTURER::CATEGORY::AMMO
 /datum/manufacture/gyrojet	//
 	name = "Gyrojet"
 	item_requirements = list("dense" = 5,
@@ -4050,7 +4101,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	item_outputs = list(/obj/item/gun/kinetic/gyrojet)
 	create = 1
 	time = 30 SECONDS
-	category = "Weapon"
+	category = MANUFACTURER::CATEGORY::WEAPON
 /datum/manufacture/gyrojet_ammo	//
 	name = "Gyrojet Ammo"
 	item_requirements = list("metal_superdense" = 5,
@@ -4058,14 +4109,14 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	item_outputs = list(/obj/item/ammo/bullets/gyrojet)
 	create = 1
 	time = 7 SECONDS
-	category = "Ammo"
+	category = MANUFACTURER::CATEGORY::AMMO
 /datum/manufacture/plank	//
 	name = "Barricade Planks"
 	item_requirements = list("wood" = 1)
 	item_outputs = list(/obj/item/sheet/wood/zwood)
 	create = 1
 	time = 1 SECOND
-	category = "Medicine"
+	category = MANUFACTURER::CATEGORY::MEDICINE
 /datum/manufacture/brute_kit	//
 	name = "Brute Kit"
 	item_requirements = list("metal" = 2,
@@ -4073,7 +4124,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	item_outputs = list(/obj/item/storage/firstaid/brute)
 	create = 1
 	time = 10 SECONDS
-	category = "Medicine"
+	category = MANUFACTURER::CATEGORY::MEDICINE
 /datum/manufacture/burn_kit	//
 	name = "Burn Kit"
 	item_requirements = list("metal" = 2,
@@ -4081,7 +4132,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	item_outputs = list(/obj/item/storage/firstaid/fire)
 	create = 1
 	time = 10 SECONDS
-	category = "Medicine"
+	category = MANUFACTURER::CATEGORY::MEDICINE
 /datum/manufacture/crit_kit //
 	name = "Crit Kit"
 	item_requirements = list("metal" = 2,
@@ -4089,14 +4140,14 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	item_outputs = list(/obj/item/storage/firstaid/crit)
 	create = 1
 	time = 9 SECONDS
-	category = "Medicine"
+	category = MANUFACTURER::CATEGORY::MEDICINE
 /datum/manufacture/empty_kit
 	name = "Empty First Aid Kit"
 	item_requirements = list("metal" = 1)
 	item_outputs = list(/obj/item/storage/firstaid/regular/empty)
 	create = 1
 	time = 4 SECONDS
-	category = "Medicine"
+	category = MANUFACTURER::CATEGORY::MEDICINE
 /datum/manufacture/spacecillin	//
 	name = "Spacecillin"
 	item_requirements = list("metal" = 3,
@@ -4104,28 +4155,28 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	item_outputs = list(/obj/item/reagent_containers/syringe/antiviral)
 	create = 1
 	time = 10 SECONDS
-	category = "Medicine"
+	category = MANUFACTURER::CATEGORY::MEDICINE
 /datum/manufacture/bat	//
 	name = "Baseball Bat"
 	item_requirements = list("metal_dense" = 15)
 	item_outputs = list(/obj/item/bat)
 	create = 1
 	time = 20 SECONDS
-	category = "Miscellaneous"
+	category = MANUFACTURER::CATEGORY::MISCELLANEOUS
 /datum/manufacture/quarterstaff	//
 	name = "Quarterstaff"
 	item_requirements = list("metal_dense" = 10)
 	item_outputs = list(/obj/item/quarterstaff)
 	create = 1
 	time = 10 SECONDS
-	category = "Miscellaneous"
+	category = MANUFACTURER::CATEGORY::MISCELLANEOUS
 /datum/manufacture/cleaver	//
 	name = "Cleaver"
 	item_requirements = list("metal" = 20)
 	item_outputs = list(/obj/item/kitchen/utensil/knife/cleaver)
 	create = 1
 	time = 16 SECONDS
-	category = "Miscellaneous"
+	category = MANUFACTURER::CATEGORY::MISCELLANEOUS
 /datum/manufacture/dsaber	//
 	name = "D-Saber"
 	item_requirements = list("metal_dense" = 20,
@@ -4133,7 +4184,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	item_outputs = list(/obj/item/sword/discount)
 	create = 1
 	time = 20 SECONDS
-	category = "Miscellaneous"
+	category = MANUFACTURER::CATEGORY::MISCELLANEOUS
 /datum/manufacture/fireaxe	//
 	name = "Fireaxe"
 	item_requirements = list("metal_superdense" = 20,
@@ -4141,7 +4192,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	item_outputs = list(/obj/item/fireaxe)
 	create = 1
 	time = 20 SECONDS
-	category = "Miscellaneous"
+	category = MANUFACTURER::CATEGORY::MISCELLANEOUS
 /datum/manufacture/shovel	//
 	name = "Shovel"
 	item_requirements = list("metal_superdense" = 25,
@@ -4149,14 +4200,14 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	item_outputs = list(/obj/item/shovel)	//this is powerful)
 	create = 1
 	time = 40 SECONDS
-	category = "Miscellaneous"
+	category = MANUFACTURER::CATEGORY::MISCELLANEOUS
 
 /datum/manufacture/floodlight
 	name = "Floodlight"
 	item_outputs = list(/obj/item/device/light/floodlight)
 	create = 1
 	time = 8 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/heavy_firesuit
 	name = "Heavy Firesuit"
@@ -4166,14 +4217,14 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	)
 	create = 1
 	item_outputs = list(/obj/item/clothing/suit/hazard/fire/heavy)
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/magnetic_shoes
 	name = "Magnetic Shoes"
 	create = 1
 	item_outputs = list(/obj/item/clothing/shoes/magnetic)
 	time = 6 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/turbine_shaft
 	name = "Turbine Shaft"
@@ -4181,7 +4232,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	create = 1
 	item_outputs = list(/obj/turbine_shaft)
 	time = 30 SECONDS
-	category = "Machinery"
+	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/current_turbine
 	name = "Current Turbine"
@@ -4189,6 +4240,6 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	create = 1
 	item_outputs = list(/obj/turbine_shaft/turbine)
 	time = 50 SECONDS
-	category = "Machinery"
+	category = MANUFACTURER::CATEGORY::MACHINERY
 
 #undef JUMPSUIT_COST

@@ -710,7 +710,7 @@
 /obj/table/wood/auto,
 /obj/item/paper_bin,
 /obj/item/pen,
-/obj/item/paper/printout/emerg1,
+/obj/item/paper/image/sstv/emerg1,
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
 "Lu" = (
