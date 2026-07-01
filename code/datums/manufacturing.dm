@@ -1679,7 +1679,7 @@
 	item_outputs = list(/obj/item/parts/robot_parts/robot_frame)
 	create = 1
 	time = 45 SECONDS
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_PARTS
 	apply_material = TRUE
 
 /datum/manufacture/full_cyborg_standard
@@ -1690,7 +1690,7 @@
 						/obj/item/parts/robot_parts/leg/right/standard,/obj/item/parts/robot_parts/leg/left/standard)
 	time = 120 SECONDS
 	create = 1
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_PARTS
 	apply_material = TRUE
 	var/datum/forensic_id/roboprint = null // Give robo arms the same fingerprints
 
@@ -1711,7 +1711,7 @@
 /obj/item/parts/robot_parts/leg/right/light,/obj/item/parts/robot_parts/leg/left/light)
 	time = 62 SECONDS
 	create = 1
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_PARTS
 	apply_material = TRUE
 	var/datum/forensic_id/roboprint = null // Give robo arms the same fingerprints
 
@@ -1730,7 +1730,7 @@
 	item_outputs = list(/obj/item/parts/robot_parts/chest/standard)
 	create = 1
 	time = 30 SECONDS
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_PARTS
 	apply_material = TRUE
 
 /datum/manufacture/robo_chest_light
@@ -1739,7 +1739,7 @@
 	item_outputs = list(/obj/item/parts/robot_parts/chest/light)
 	create = 1
 	time = 15 SECONDS
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_PARTS
 	apply_material = TRUE
 
 /datum/manufacture/robo_head
@@ -1748,7 +1748,7 @@
 	item_outputs = list(/obj/item/parts/robot_parts/head/standard)
 	create = 1
 	time = 30 SECONDS
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_PARTS
 	apply_material = TRUE
 
 /datum/manufacture/robo_head_screen
@@ -1759,7 +1759,7 @@
 	item_outputs = list(/obj/item/parts/robot_parts/head/screen)
 	create = 1
 	time = 24 SECONDS
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_PARTS
 	apply_material = TRUE
 
 /datum/manufacture/robo_head_light
@@ -1768,7 +1768,7 @@
 	item_outputs = list(/obj/item/parts/robot_parts/head/light)
 	create = 1
 	time = 15 SECONDS
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_PARTS
 	apply_material = TRUE
 
 /datum/manufacture/robo_arm_r
@@ -1777,7 +1777,7 @@
 	item_outputs = list(/obj/item/parts/robot_parts/arm/right/standard)
 	create = 1
 	time = 15 SECONDS
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_PARTS
 	apply_material = TRUE
 
 /datum/manufacture/robo_arm_r_light
@@ -1786,7 +1786,7 @@
 	item_outputs = list(/obj/item/parts/robot_parts/arm/right/light)
 	create = 1
 	time = 8 SECONDS
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_PARTS
 	apply_material = TRUE
 
 /datum/manufacture/robo_arm_l
@@ -1795,7 +1795,7 @@
 	item_outputs = list(/obj/item/parts/robot_parts/arm/left/standard)
 	create = 1
 	time = 15 SECONDS
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_PARTS
 	apply_material = TRUE
 
 /datum/manufacture/robo_arm_l_light
@@ -1804,7 +1804,7 @@
 	item_outputs = list(/obj/item/parts/robot_parts/arm/left/light)
 	create = 1
 	time = 8 SECONDS
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_PARTS
 	apply_material = TRUE
 
 /datum/manufacture/robo_leg_r
@@ -1813,7 +1813,7 @@
 	item_outputs = list(/obj/item/parts/robot_parts/leg/right/standard)
 	create = 1
 	time = 15 SECONDS
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_PARTS
 	apply_material = TRUE
 
 /datum/manufacture/robo_leg_r_light
@@ -1822,7 +1822,7 @@
 	item_outputs = list(/obj/item/parts/robot_parts/leg/right/light)
 	create = 1
 	time = 8 SECONDS
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_PARTS
 	apply_material = TRUE
 
 /datum/manufacture/robo_leg_l
@@ -1831,7 +1831,7 @@
 	item_outputs = list(/obj/item/parts/robot_parts/leg/left/standard)
 	create = 1
 	time = 15 SECONDS
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_PARTS
 	apply_material = TRUE
 
 /datum/manufacture/robo_leg_l_light
@@ -1840,7 +1840,7 @@
 	item_outputs = list(/obj/item/parts/robot_parts/leg/left/light)
 	create = 1
 	time = 8 SECONDS
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_PARTS
 	apply_material = TRUE
 
 /datum/manufacture/robo_leg_treads
@@ -1850,7 +1850,7 @@
 	item_outputs = list(/obj/item/parts/robot_parts/leg/left/treads, /obj/item/parts/robot_parts/leg/right/treads)
 	create = 1
 	time = 15 SECONDS
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_PARTS
 	apply_material = TRUE
 
 /datum/manufacture/robo_module
@@ -1908,7 +1908,7 @@
 	item_outputs = list(/obj/ai_core_frame)
 	create = 1
 	time = 50 SECONDS
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_PARTS
 
 /datum/manufacture/clone_rack
 	name = "Clone Rack"
@@ -2308,7 +2308,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/parts/robot_parts/leg/right/thruster,/obj/item/parts/robot_parts/leg/left/thruster)
 	create = 1
 	time = 120 SECONDS
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_PARTS
 	apply_material = TRUE
 
 /******************** Science **************************/
