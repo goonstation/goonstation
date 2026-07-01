@@ -1957,7 +1957,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 		src.item_state = "dinosaur[src.hcolor ? "-[hcolor]" : null]"
 		src.icon_state = "dinosaur[src.hcolor ? "-[hcolor]" : null]"
 		src.name = "[src.hcolor] dinosaur pajamas"
-		if(src.hcolor == "yellow")
+		if(src.hcolor == "yellow" && prob(25))
 			if(prob(25))
 				src.name = "bananasaur pajamas"
 				src.desc = "It has a little banana-scented hood you can flip up an down. In fact, the whole thing smells like bananas."
