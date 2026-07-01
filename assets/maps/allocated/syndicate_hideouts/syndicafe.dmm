@@ -44,7 +44,7 @@
 /area/syndicate_station/hideout)
 "g" = (
 /turf/cordon,
-/area/syndicate_station/hideout)
+/area/cordon/dark)
 "h" = (
 /obj/decal/stage_edge{
 	layer = 2.8
@@ -72,12 +72,6 @@
 	pixel_y = 20
 	},
 /turf/simulated/floor/sanitary,
-/area/syndicate_station/hideout)
-"k" = (
-/obj/machinery/sink/slim{
-	pixel_y = 6
-	},
-/turf/unsimulated/wall/auto/lead/white,
 /area/syndicate_station/hideout)
 "l" = (
 /obj/storage/crate,
@@ -111,20 +105,28 @@
 "p" = (
 /turf/simulated/floor/airless/stairs/wood,
 /area/syndicate_station/hideout)
+"q" = (
+/obj/machinery/phone/wall{
+	pixel_y = 31;
+	stripe_color = "#FF0000";
+	unlisted = 1
+	},
+/turf/simulated/floor/black,
+/area/syndicate_station/hideout)
 "r" = (
 /obj/machinery/shower{
 	dir = 1;
 	pixel_y = 20
 	},
 /obj/machinery/light/small/floor/netural,
+/obj/machinery/sink/slim{
+	dir = 1;
+	tag = "icon-sink (NORTH)"
+	},
 /turf/simulated/floor/sanitary,
 /area/syndicate_station/hideout)
 "s" = (
 /turf/unsimulated/floor/carpet/red/fancy/edge/north,
-/area/syndicate_station/hideout)
-"t" = (
-/obj/machinery/phone/wall,
-/turf/unsimulated/wall/auto/lead/gray,
 /area/syndicate_station/hideout)
 "u" = (
 /obj/item/storage/toilet,
@@ -197,12 +199,13 @@
 /area/syndicate_station/hideout)
 "F" = (
 /obj/machinery/light/small/floor/netural,
+/obj/machinery/sink/slim{
+	dir = 1;
+	tag = "icon-sink (NORTH)"
+	},
 /turf/simulated/floor/sanitary,
 /area/syndicate_station/hideout)
 "G" = (
-/obj/decal/stage_edge{
-	dir = 4
-	},
 /turf/simulated/floor/redblack{
 	dir = 6
 	},
@@ -401,7 +404,7 @@ e
 N
 D
 r
-k
+e
 P
 E
 d
@@ -419,8 +422,8 @@ j
 K
 s
 U
-t
-R
+V
+q
 i
 V
 g
@@ -431,7 +434,7 @@ e
 u
 D
 F
-k
+e
 n
 I
 A
