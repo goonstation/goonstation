@@ -2034,7 +2034,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	set category = "Local"
 
 	if (isfrog(src))
-		var/datum/mutantrace/amphibian/amphibian_datum = src.mutantrace
+		var/datum/mutantrace/frog/amphibian/amphibian_datum = src.mutantrace
 		amphibian_datum.clothes_filters_active = !amphibian_datum.clothes_filters_active
 		boutput(src, SPAN_ALERT("Amphibian filters toggled."))
 

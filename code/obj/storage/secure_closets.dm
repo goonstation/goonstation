@@ -2,7 +2,7 @@
 	name = "secure locker"
 	desc = "A card-locked storage locker."
 	icon = 'icons/obj/storage/locker.dmi'
-	object_flags = NO_GHOSTCRITTER
+	object_flags = parent_type::object_flags | NO_GHOSTCRITTER
 	soundproofing = SOUNDPROOFING_INSIDE
 	can_flip_bust = 1
 	p_class = 3

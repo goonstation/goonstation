@@ -287,6 +287,7 @@
 #include "code\datums\components\teleport_on_enter.dm"
 #include "code\datums\components\temp_reagent_holder.dm"
 #include "code\datums\components\therapy.dm"
+#include "code\datums\components\throw_eat.dm"
 #include "code\datums\components\toggle_coat.dm"
 #include "code\datums\components\toggle_hood.dm"
 #include "code\datums\components\tracker_hud.dm"

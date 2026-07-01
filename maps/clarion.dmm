@@ -829,9 +829,7 @@
 	},
 /area/station/mining/staff_room)
 "afP" = (
-/obj/machinery/light_switch/south{
-	pixel_y = 28
-	},
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/grass/random/alt,
 /area/station/garden/aviary)
 "afQ" = (
@@ -13748,9 +13746,7 @@
 	icon_state = "chair_couch-blue";
 	name = "ratty blue couch"
 	},
-/obj/machinery/light_switch/south{
-	pixel_y = 28
-	},
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/black/side{
 	dir = 1
 	},
@@ -16781,13 +16777,11 @@
 	pixel_y = 4;
 	switchon = 1
 	},
-/obj/machinery/light_switch/east{
-	dir = 8;
+/obj/machinery/light_switch/west{
 	pixel_x = -24;
 	pixel_y = 5
 	},
-/obj/blind_switch/area/east{
-	dir = 8;
+/obj/blind_switch/area/west{
 	pixel_x = -24;
 	pixel_y = -5
 	},
@@ -19216,16 +19210,12 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/light_switch/south{
-	dir = 4;
-	pixel_x = 24;
-	pixel_y = 0
-	},
 /obj/item/instrument/large/piano{
 	anchored = 0;
 	name = "old piano"
 	},
 /obj/item/screwdriver,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office{
 	name = "Chaplain's Office"
@@ -32033,12 +32023,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/light_switch/south{
-	pixel_y = 28
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "rDn" = (
