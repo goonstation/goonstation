@@ -1,5 +1,23 @@
 
+(t)wed jul 01 26
+(u)phoi
+(p)27049
+(e)🗺|A-Mapping
+(+)De-thindowed, medbay lobby, chemistry emergency shower, toxin storage, robotisict ai eye thing, and maints bathroom on cogmap 1
+(+)The maints bathroom between med and escape can bolt its doors now on cogmap 1
 (t)tue jun 30 26
+(u)Michael Warren
+(p)27013
+(e)🗺|A-Mapping
+(*)Added Syndicate hideout variant to the syndicate disposals hijacker. Now with a vibe befitting the wandering ronin you were always meant to be!
+(u)Sandwichi
+(p)26716
+(e)🆕💪|C-Feature, A-Traits
+(+)The Lunchbox trinket trait can now come packed with a Picky Eater's favourite foods.
+(u)Brainrot
+(p)27018
+(e)🗺|A-Mapping
+(*)Added a new hideout variant for Syndicates who need a more relaxing place away from the NT crew to plan their crimes.
 (u)phoi
 (p)26980
 (e)🗺|A-Mapping
