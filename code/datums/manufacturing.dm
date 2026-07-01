@@ -2109,7 +2109,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/jetpack)
 	create = 1
 	time = 60 SECONDS
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_UPGRADES
 
 /datum/manufacture/robup_speed
 	name = "Speed Upgrade"
@@ -2118,7 +2118,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/speed)
 	create = 1
 	time = 60 SECONDS
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_UPGRADES
 
 /datum/manufacture/robup_mag
 	name = "Magnetic Traction Upgrade"
@@ -2127,7 +2127,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/magboot)
 	create = 1
 	time = 60 SECONDS
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_UPGRADES
 
 /datum/manufacture/robup_recharge
 	name = "Recharge Pack"
@@ -2135,7 +2135,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/rechargepack)
 	create = 1
 	time = 60 SECONDS
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_UPGRADES
 
 /datum/manufacture/robup_repairpack
 	name = "Repair Pack"
@@ -2143,7 +2143,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/repairpack)
 	create = 1
 	time = 60 SECONDS
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_UPGRADES
 
 /datum/manufacture/robup_physshield
 	name = "Force Shield Upgrade"
@@ -2153,7 +2153,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/physshield)
 	create = 1
 	time = 90 SECONDS
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_UPGRADES
 
 /datum/manufacture/robup_fireshield
 	name = "Heat Shield Upgrade"
@@ -2162,7 +2162,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/fireshield)
 	create = 1
 	time = 90 SECONDS
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_UPGRADES
 
 /datum/manufacture/robup_aware
 	name = "Recovery Upgrade"
@@ -2172,7 +2172,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/aware)
 	create = 1
 	time = 90 SECONDS
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_UPGRADES
 
 /datum/manufacture/robup_efficiency
 	name = "Efficiency Upgrade"
@@ -2181,7 +2181,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/efficiency)
 	create = 1
 	time = 120 SECONDS
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_UPGRADES
 
 /datum/manufacture/robup_repair
 	name = "Self-Repair Upgrade"
@@ -2190,7 +2190,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/repair)
 	create = 1
 	time = 120 SECONDS
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_UPGRADES
 
 /datum/manufacture/robup_teleport
 	name = "Teleport Upgrade"
@@ -2200,7 +2200,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/teleport)
 	create = 1
 	time = 120 SECONDS
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_UPGRADES
 
 /datum/manufacture/robup_expand
 	name = "Expansion Upgrade"
@@ -2209,7 +2209,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/expand)
 	create = 1
 	time = 120 SECONDS
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_UPGRADES
 
 /datum/manufacture/robup_meson
 	name = "Optical Meson Upgrade"
@@ -2218,7 +2218,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/opticmeson)
 	create = 1
 	time = 90 SECONDS
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_UPGRADES
 
 /datum/manufacture/robup_pressure
 	name = "Pressure Visualizer Upgrade"
@@ -2227,7 +2227,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/pressure_visualizer)
 	create = 1
 	time = 90 SECONDS
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_UPGRADES
 
 /* shit done be broked
 /datum/manufacture/robup_thermal
@@ -2237,7 +2237,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/opticthermal)
 	create = 1
 	time = 90 SECONDS
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_UPGRADES
 */
 /datum/manufacture/robup_healthgoggles
 	name = "ProDoc Healthgoggle Upgrade"
@@ -2246,7 +2246,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/healthgoggles)
 	create = 1
 	time = 90 SECONDS
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_UPGRADES
 
 /datum/manufacture/robup_sechudgoggles
 	name = "Security HUD Upgrade"
@@ -2255,7 +2255,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/sechudgoggles)
 	create = 1
 	time = 90 SECONDS
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_UPGRADES
 
 /datum/manufacture/robup_spectro
 	name = "Spectroscopic Scanner Upgrade"
@@ -2264,7 +2264,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/spectro)
 	create = 1
 	time = 90 SECONDS
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_UPGRADES
 
 /datum/manufacture/robup_visualizer
 	name = "Construction Visualizer"
@@ -2273,7 +2273,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/roboupgrade/visualizer)
 	create = 1
 	time = 90 SECONDS
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_UPGRADES
 
 /datum/manufacture/scream_synth
 	name = "Scream Synthesizer"
@@ -2281,7 +2281,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/instrument/roboscream)
 	create = 1
 	time = 30 SECONDS
-	category = MANUFACTURER::CATEGORY::COMPONENT
+	category = MANUFACTURER::CATEGORY::CYBORG_UPGRADES
 
 /datum/manufacture/implant_robotalk
 	name = "Machine Translator Implant"
