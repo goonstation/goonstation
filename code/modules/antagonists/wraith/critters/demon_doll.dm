@@ -26,8 +26,9 @@ TYPEINFO(/mob/living/critter/wraith/demon_doll)
 			if (isnull(M.summons))
 				M.summons = list()
 			M.summons += src
-		animate_shake(src)
+		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/demon_doll, src.type)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
+		src.setStatus("dark_affinity")
 
 	setup_healths()
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
@@ -62,3 +63,53 @@ TYPEINFO(/mob/living/critter/wraith/demon_doll)
 		SPAWN(3 SECONDS)
 			src.gib()
 		return ..()
+
+/datum/statusEffect/dark_affinity
+	id = "dark_affinity"
+	name = "Dark Affinity"
+	desc = "Darkness restores your form and grants you haste."
+	icon_state = "person"
+	duration = INFINITE_STATUS
+	maxDuration = null
+	unique = 1
+	var/lastlight_check = TRUE
+	var/counter = 0
+	var/count_max = 10
+
+	onUpdate(timePassed)
+		counter += timePassed
+		if (counter >= count_max)
+			var/turf/T = get_turf(owner)
+			var/current_light
+			if (!isturf(T) || T.is_lit())
+				current_light = TRUE
+			else
+				current_light = FALSE
+
+			if (lastlight_check != current_light)
+				edit_status(current_light)
+
+			lastlight_check = current_light
+
+		. = ..(timePassed)
+
+	proc/edit_status(var/light)
+		var/mob/living/living_owner = owner
+		if (light)
+			src.icon_state = "person"
+			living_owner.alpha = 255
+			if (istype(living_owner, /mob/living/critter/wraith/demon_doll))
+				REMOVE_MOVEMENT_MODIFIER(living_owner, /datum/movement_modifier/dark_affinity_strong, src.type)
+			else
+				REMOVE_MOVEMENT_MODIFIER(living_owner, /datum/movement_modifier/dark_affinity, src.type)
+		else
+			src.icon_state = "fire1"
+			living_owner.alpha = 160
+			if (istype(living_owner, /mob/living/critter/wraith/demon_doll))
+				APPLY_MOVEMENT_MODIFIER(living_owner, /datum/movement_modifier/dark_affinity_strong, src.type)
+			else
+				APPLY_MOVEMENT_MODIFIER(living_owner, /datum/movement_modifier/dark_affinity, src.type)
+
+
+
+
