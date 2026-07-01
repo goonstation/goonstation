@@ -62,6 +62,11 @@
 	priority = SPEECH_OUTPUT_PRIORITY_HIGH
 	role = "Poltergeist"
 
+/datum/speech_module/output/wraithchat/demon_doll
+	id = SPEECH_OUTPUT_WRAITHCHAT_DEMON_DOLL
+	priority = SPEECH_OUTPUT_PRIORITY_HIGH
+	role = "Doll"
+
 
 /datum/speech_module/output/wraithchat/plague_rat
 	id = SPEECH_OUTPUT_WRAITHCHAT_PLAGUE_RAT
