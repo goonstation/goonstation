@@ -416,15 +416,16 @@ TYPEINFO(/datum/component/equipment_fault)
 		var/wattage = 0
 		if (istype(src.parent, /obj/machinery/power/smes))
 			var/obj/machinery/power/smes/smes = src.parent
-			wattage = smes.charge / 10
-			smes.charge -= wattage
+			if (smes.charge)
+				wattage = smes.charge / 20
+				smes.charge -= max(smes.charge, wattage)
 		else if (istype(src.parent, /obj/machinery/power/apc))
 			var/obj/machinery/power/apc/apc = src.parent
 			var/raw_wattage = apc.cell.amount / 10
 			wattage = raw_wattage / CELLRATE
 			apc.use_power(raw_wattage)
 		else
-			wattage = rand(10000,50000)
+			wattage = rand(5000,30000)
 
 		if (wattage > 0)
 			var/target = pick(targets)

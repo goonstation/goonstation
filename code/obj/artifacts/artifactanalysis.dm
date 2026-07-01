@@ -54,7 +54,7 @@
 		// start with obscured name
 		src.artifactName = O.real_name
 		// get an instance of the artifact origin
-		for(var/datum/artifact_origin/origin as() in artifact_controls.artifact_origins)
+		for(var/datum/artifact_origin/origin as anything in artifact_controls.artifact_origins)
 			if(origin.type_name == src.artifactOrigin)
 				// have we already generated a name for that origin?
 				// the actual name with the actual origin should be in the list by default

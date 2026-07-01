@@ -4,7 +4,7 @@
 ABSTRACT_TYPE(/datum/job/special/clown)
 /datum/job/special/clown
 	job_category = JOB_CLOWN
-	wages = PAY_DUMBCLOWN
+	wages = PAY::DUMBCLOWN
 	trait_list = list("training_clown")
 	access_string = "Clown"
 	ui_colour = TGUI_COLOUR_PINK

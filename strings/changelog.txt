@@ -1,4 +1,278 @@
 
+(t)wed jul 01 26
+(u)phoi
+(p)27049
+(e)🗺|A-Mapping
+(+)De-thindowed, medbay lobby, chemistry emergency shower, toxin storage, robotisict ai eye thing, and maints bathroom on cogmap 1
+(+)The maints bathroom between med and escape can bolt its doors now on cogmap 1
+(t)tue jun 30 26
+(u)Michael Warren
+(p)27013
+(e)🗺|A-Mapping
+(*)Added Syndicate hideout variant to the syndicate disposals hijacker. Now with a vibe befitting the wandering ronin you were always meant to be!
+(u)Sandwichi
+(p)26716
+(e)🆕💪|C-Feature, A-Traits
+(+)The Lunchbox trinket trait can now come packed with a Picky Eater's favourite foods.
+(u)Brainrot
+(p)27018
+(e)🗺|A-Mapping
+(*)Added a new hideout variant for Syndicates who need a more relaxing place away from the NT crew to plan their crimes.
+(u)phoi
+(p)26980
+(e)🗺|A-Mapping
+(+)Widened Visitation window and Interrogation window on Cogmap 1
+(+)Changed the area of hootys domain to actually be Visitation on Cogmap 1
+(t)mon jun 29 26
+(u)LeahTheTech
+(+)Frog tongues can now catch and eat small insects, as well as other kinds of food.
+(t)sun jun 28 26
+(u)SnugglyCactus, Skeletonman0, PiratePop, swinglow20, glowbold, LeahTheTech
+(p)26993
+(e)🎨🔊👽💪|C-Sprites, C-Sound, A-Mutantraces, A-Traits
+(*)Adds a 3-point amphibian trait to character select that allows players to be human amphibians, separate from nonhuman Abzunians and shelterfrogs. The frogs are coming.
+(u)LeahTheTech
+(*)The armory now REQUIRES an authorization reason.
+(+)New packet command "set_reason" for armory computers.
+(u)Cheekybrdy
+(p)26857
+(e)🎨⚗|C-Sprites, A-Chemistry
+(+)Adds swordfish.
+(t)fri jun 26 26
+(u)RubiCubie and ANNmaggedon
+(p)26909
+(e)🎨💊💪📨|C-Sprites, A-Medical, A-Traits, A-Logistics
+(*)Added new canes that help your lack of a leg or a lack of youth! Completely removing slowdown from a missing leg.
+(+)Canes can be acquired via trinket trait, traders, crafting, cargo or medbay.
+(u)leafedlizord
+(p)27008
+(e)🎨💪|C-Sprites, A-Traits
+(+)Removed the body category from the Stinky trait.
+(+)Adjusted the sprite for the Stinky trait to match the other Uncategorized traits.
+(u)CalliopeSoups
+(p)26858
+(e)🌠|A-Events
+(+)Certain unruly monkeys can now be played through the Sudden Sapience event.
+(u)Nexusuxen
+(p)26918
+(e)🗺|A-Mapping
+(*)Oshan's AI Upload/Net Cafe has swapped places with the Sauna room. The Captain's quarters now also provides critical quick access to the Sauna from the Captain's new private bathroom.
+(+)Several areas around the AI Upload/Net Cafe have been altered to make room for the changes, primarily merging the fishing room with Hydroponics proper (A couple trays had to be moved into maintenance.)
+(u)Bartimeus973
+(p)26928
+(e)💅🔨|C-QoL, A-Player-Actions
+(+)Ghostdrones can now see and pickup mentormice
+(u)JORJ949
+(p)26846
+(e)🔎💅📄🧛|C-Code-Quality, C-QoL, A-UI, A-Gamemodes
+(*)Non-PDA syndicate uplinks (including headrev and nukeop) now use TGUI. Presently cannot view syndicate intelligence, this will come in a future update.
+(u)Walnut356
+(p)26999
+(e)🛠️|A-Engineering
+(+)When stepping, Movement Component now outputs a signal with the result of the step.
+(u)JORJ949
+(p)26956
+(e)🆕📨|C-Feature, A-Logistics
+(*)Cargo can now print carts at their manufacturer
+(u)Asterion0
+(p)26983
+(e)|
+(+)Mender refill cartridges can be refilled with whitelisted chemicals, and empty cartridges can now be printed at medical fabricators.
+(u)LorrMaster
+(p)26979
+(e)🆕🎨🧱⏰💪|C-Feature, C-Sprites, A-Materials, A-Status-Effects, A-Traits
+(*)Added the Artisan Trait, a new trait that gives your trinket a random material.
+(u)LeahTheTech
+(p)27004
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Vampire bite now instantly kills the victim when they are fully drained of blood.
+(u)glowbold
+(p)26905
+(e)🆕🗺⛔🚗|C-Feature, A-Mapping, C-Removal, A-Vehicles
+(*)Pod Tractor Beam secondary components have been removed from Security podbays.
+(*)Armory Pod Weapons Crate gets 2 Stasis Charger pod weapons
+(u)Zeabus
+(p)26990
+(e)🔬|A-Science
+(+)Artifacts will no longer get immediately obliterated by meteors.
+(t)thu jun 25 26
+(u)ANNmagedon
+(p)26875
+(e)🗺|A-Mapping
+(*)The great stampening has returned! many unused / hard to get stamps will show up in the world.
+(+)Chaplains may find their stamps in the Deus Ex Machina & their office.
+(+)Security staff may find their stamps in their clothing vendor & their department.
+(+)Quatermasters may find their stamps in their lockers & around cargo.
+(+)Syndicate agents may find their stamps in the listening post or at the Cairngorm.
+(+)Mimes may find their stamp on their person.
+(t)mon jun 22 26
+(u)LorrMaster
+(p)26821
+(e)🆕🎨🛠️📨|C-Feature, C-Sprites, A-Engineering, A-Logistics
+(*)Fossils now have a chance to be found in "weak rock" anomalies. Mining them requires scanning them directly with the geological scanner and using the required tool.
+(t)sun jun 21 26
+(u)LorrMaster
+(p)26866
+(e)🪲🧱|C-Bug, A-Materials
+(+)Radiation and neutron radiation can now both exist on the same object simultaneously.
+(u)SebaceousSasquatch
+(p)26917
+(e)|
+(+)Custom injectors now have the reagent's name specified on them too.
+(u)LorrMaster
+(p)26598
+(e)💅🧱|C-QoL, A-Materials
+(*)Portable reclaimer now outputs leftover material as sheets.
+(u)Gomp
+(p)26750
+(e)🎨|C-Sprites
+(+)The segway has a new look.
+(u)JORJ949
+(p)26919
+(e)🆕🗺📦|C-Feature, A-Mapping, A-Game-Objects
+(*)The syndicate disposals hijacker can now be used in hand to choose your hideout's style!
+(+)Added the "Trash Pit" style to the syndicate disposals hideout options.
+(t)sat jun 20 26
+(u)LeahTheTech + sprites by Xenomni + ideas by Rayne
+(p)26881
+(e)🆕🎨🧛⏰📦⚗💪🐁|C-Feature, C-Sprites, A-Gamemodes, A-Status-Effects, A-Game-Objects, A-Chemistry, A-Traits, A-Critters
+(*)Added folded paper charms that can be made by a chaplain and strung with wire to be worn around the neck.
+(+)Charms can be stained with any reagent, with some reagents providing specific effects. The blood of a curse victim, for example, will provide limited use protection against curses when worn.
+(+)A short book on charm effects can be found in the chaplain's vending machine.
+(u)ANNmagedon
+(p)26859
+(e)🆕🛠️|C-Feature, A-Engineering
+(+)Added Access Lite to the Engineering Specialist Manufacturer.
+(t)wed jun 17 26
+(u)LeahTheTech
+(+)Welders and igniters now more consistently triggers thermite.
+(t)mon jun 15 26
+(u)JORJ949
+(p)26785
+(e)🆕📄👮|C-Feature, A-UI, A-Security
+(*)The armory authorisation computer now has an inputtable reason that will be announced alongside authorisation.
+(u)glowbold
+(p)26747
+(e)🗺🔄🤖|A-Mapping, C-Rework, A-Silicons
+(*)Robotic Control consoles have recieved a major rework, details in minor notes.
+(+)Humans with valid ID can issue a cyborg lockdown at Robotics Control consoles.
+(+)Silicons cannot use screwing tools on robotics consoles. They can still blow them up or otherwise deny access.
+(+)Robotics labs on every map have a Robotics Control console that cannot issue or see lockdowns or killswitches.
+(+)Robotics Control console displays whether a silicon has an active, inactive, or missing brain unit.
+(+)Robotics Control consoles can be emagged to remove access requirements and ensure lockdown/killswitch availability. It still requires sliding an ID card of any access.
+(u)glowbold
+(p)26845
+(e)🆕🎨🔄💊📨|C-Feature, C-Sprites, C-Rework, A-Medical, A-Logistics
+(*)Medical masks can have a mini-tank attached, instantly turn on internals when equipped, do not work in low pressure environments, and automatically turn off when out of gas.
+(*)Anesthetic storage lockers contain 2 medical masks with pre-installed anesthetic mini-tanks, 2 anesthetic tanks, and 5 anesthetic mini-tanks. Morphine contents unchanged.
+(*)N2O knocks you over and prevents movement at lower volumes instead of instantly making you unconscious.
+(+)Cargo can now order a medical-equipment locked Anesthetic Crate to restock medical's anesthetic supplies.
+(t)sun jun 14 26
+(u)TekoTheTeapot
+(p)26831
+(e)|
+(+)Makes Blobfish available in RP and Starstonefish available and present in the Fish Collection.
+(u)Mr. Moriarty
+(p)26778
+(f)https://forum.ss13.co/
+(e)🆕📄⚙|C-Feature, A-UI, A-Internal
+(*)The changelog may now display PR feedback threads. Click the above "Feedback" link to be redirected to the forums! Going forward, PRs with a feedback thread will be linked here.
+(t)sat jun 13 26
+(u)glowbold
+(e)⚖💊|C-Balance, A-Medical
+(*)Operating tables always show output for mobs on top, regardless of laying or standing status.
+(u)JORJ949
+(e)⚖|C-Balance
+(+)All briefcases can now hold normal size items. The RD's toxins briefcase can no longer hold bulky items.
+(u)JORJ949 + ANNmagedon
+(p)26878
+(e)🎨👮|C-Sprites, A-Security
+(+)Resprited the stamp of the security stamp.
+(u)Sovexe
+(p)26883
+(e)🪲|C-Bug
+(+)Objects that are attached to one another (e.g. roller beds and bed sheets) should no longer come apart visually while moving.
+(t)fri jun 12 26
+(u)glowbold
+(e)⚖💊|C-Balance, A-Medical
+(*)Only medically trained crew can get an accurate assessment of how damaged someone is.
+(+)Toxin damage is no longer available on examine.
+(t)thu jun 11 26
+(u)JORJ949
+(p)26839
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Salvagers now get random uniforms, suits and hats, pulling from the same pool that stowaways do. They also start with a gas mask.
+(t)wed jun 10 26
+(u)LeahTheTech
+(+)Chameleon projectors no longer make an obnoxious flash sound when scanning something.
+(+)Cloaking field generators now cost 2TC, down from 3, and start at max range.
+(p)21572
+(e)🆕🎨🔨|C-Feature, C-Sprites, A-Player-Actions
+(*)Changelings now have the ability to swap bodies with those they absorb, leaving their old body as a husk. The old absorb behaviour remains as a different button.
+(u)LeahTheTech
+(p)26852
+(e)💅⛔🧛|C-QoL, C-Removal, A-Gamemodes
+(+)Removed changeling lesser form button and moved it to the transform menu.
+(t)tue jun 09 26
+(u)Gomp
+(p)26809
+(e)🎨|C-Sprites
+(+)Some clown cars have been found missing, with only insane laughter heard in the distance.
+(t)mon jun 08 26
+(u)LeahTheTech
+(p)26814
+(e)⚖⛔🧛|C-Balance, C-Removal, A-Gamemodes
+(+)Salvager pods no longer have a unique tint. Pods built using the manufacturable salvager pod armour retain the tint.
+(u)LeahTheTech
+(p)26830
+(e)🆕📡🍝🐁|C-Feature, A-AI, A-Catering, A-Critters
+(+)Remy will now wander back to the kitchen if he strays too far.
+(u)CalliopeSoups
+(p)26599
+(e)🆕🌠|C-Feature, A-Events
+(+)Sudden Sapience Disease random event that spawns an observer as a random station monkey.
+(u)JORJ949
+(p)26763
+(e)⚖🤖💡|C-Balance, A-Silicons, A-Station-Systems
+(*)EMPing an AI turret will now prevent it from firing for 30-45 seconds, instead of just turning it off.
+(u)RubberRats
+(p)26824
+(e)🪲📄📨|C-Bug, A-UI, A-Logistics
+(+)The martian trader now properly displays trades with limited stock
+(t)fri jun 05 26
+(u)Valtsu0
+(p)26769
+(e)🆕📄🌱|C-Feature, A-UI, A-Hydroponics
+(*)A collection of all the types of fish that you have fished across rounds can be found by using the Fish Collection verb
+(u)LeahTheTech
+(+)Finishing the fish collection will reward you with a fancy fishing rod.
+(p)26784
+(e)🆕🔨|C-Feature, A-Player-Actions
+(+)Razors hidden in flat caps can now be used to blind people. Requires an aggressive grab and head targeting, blocked by anything that covers the eyes.
+(+)Gang crates can now contain flat caps with razors hidden in them.
+(u)TemThrush & Yelloworlemons
+(p)26797
+(e)🎨|C-Sprites
+(+)Interacting with hairbows while holding them will let you re-tie them into new styles.
+(u)bamlord
+(p)26799
+(e)|
+(+)Gorillas have learned how to rip off all your limbs.
+(u)LorrMaster
+(p)26684
+(e)🎨🧱|C-Sprites, A-Materials
+(*)Custom space suit reinforcement material impacts suit appearance.
+(t)thu jun 04 26
+(u)LeahTheTech
+(+)Slugs and snails now eat plants out of hydroponics trays. Grief botany today!
+(t)wed jun 03 26
+(u)Driftered
+(p)26748
+(e)|
+(*)Cyborgs may now choose their crayon color instead of swapping until they get what they want.
+(t)wed jun 3 26
+(u)LeahTheTech
+(+)Syndie chainsaw butchering now has a 3 second action bar to prevent accidental gibbings (whole bodies make better plant food)
 (t)sun may 31 26
 (u)Pirate-Rob
 (p)26087
@@ -43,7 +317,7 @@
 (u)LeahTheTech
 (p)26521
 (e)🗺⚖🧛|A-Mapping, C-Balance, A-Gamemodes
-(*)The listening post barracks are now locked until the syndicate codereader has scanned an authentication disk. The barracks contain the syndicate apparel vendor, 2TC, and a syndicate announcement computer.
+(*)The listening post barracks are now locked until the syndicate codereader has scanned an authentication disk. The barracks contain the syndicate apparel vendor, 2TC, and a deployable turret.
 (u)Lord_Earthfire
 (p)26266
 (e)🆕⚗|C-Feature, A-Chemistry

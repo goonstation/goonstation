@@ -2569,7 +2569,7 @@ var/global/noir = 0
 					if ("brick_radios")
 						if (src.level >= LEVEL_PA)
 							if (tgui_alert(usr, "Really brick all radios for all time?", "Are you sure?", list("Yes", "Oops misclick")) == "Yes")
-								no_more_radio()
+								RADIO.no_more_radio()
 								message_admins("[key_name(usr)] bricked all radios forever")
 								logTheThing(LOG_ADMIN, usr, "bricked all radios forever")
 								logTheThing(LOG_DIARY, usr, "bricked all radios forever", "admin")

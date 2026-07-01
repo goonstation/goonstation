@@ -596,7 +596,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 
 	var/mob/selfmob = src
 	src = null
-	var/mob/living/critter/C = selfmob.make_critter(/mob/living/critter/small_animal/mouse/weak/mentor/admin, spawnpoint, ghost_spawned=TRUE)
+	var/mob/living/critter/C = selfmob.make_critter(/mob/living/critter/small_animal/mouse/weak/mentor/admin, spawnpoint, ghost_spawned=FALSE)
 	C.mind.assigned_role = "Animal"
 	C.literate = 1
 	C.original_name = selfmob.real_name

@@ -5,7 +5,7 @@
 #define istraitor(x) (istype(x, /mob/living/carbon/human) && x:mind && (x:mind:get_antagonist(ROLE_TRAITOR) || x:mind:get_antagonist(ROLE_HARDMODE_TRAITOR)))
 #define isnukeop(x) (istype(x, /mob/living/carbon/human) && x:mind && (x:mind:get_antagonist(ROLE_NUKEOP) || x:mind:get_antagonist(ROLE_NUKEOP_COMMANDER)))
 #define issleeperagent(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:get_antagonist(ROLE_SLEEPER_AGENT))
-#define issyndicateagent(x) (istype(x, /mob/living/carbon/human) && x:mind && (x:mind:get_antagonist(ROLE_SYNDICATE_AGENT) || x:mind:get_antagonist(ROLE_SYNDICATE_COMMANDER)))
+#define issyndicateagent(x) (istype(x, /mob/living/carbon/human) && x:mind && (x:mind:get_antagonist(ROLE_SYNDICATE_AGENT) || x:mind:get_antagonist(ROLE_SYNDICATE_COMMANDER) || x:mind:get_antagonist(ROLE_SYNDICATE_MONKEY)))
 #define isnukeopgunbot(x) (istype(x, /mob/living/critter/robotic/gunbot/syndicate) && x:mind && x:mind:get_antagonist(ROLE_NUKEOP_GUNBOT))
 #define istrainedsyndie(x) (istraitor(x) || isnukeop(x) || issleeperagent(x) || issyndicateagent(x) || isnukeopgunbot(x) || isomnitraitor(x))
 
@@ -15,6 +15,8 @@
 #define isconspirator(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:get_antagonist(ROLE_CONSPIRATOR))
 #define ischangeling(x) (istype(x, /mob/living/carbon/human) && x:get_ability_holder(/datum/abilityHolder/changeling) != null)
 #define isabomination(x) (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/abomination))
+#define ischangelingcritter(x) (istype(x, /mob/living/critter/changeling))
+#define ischangelingORlingcritter(x) (ischangeling(x) || ischangelingcritter(x))
 #define isvampire(x) ((istype(x, /mob/living/carbon/human) || istype(x, /mob/living/critter)) && x:get_ability_holder(/datum/abilityHolder/vampire) != null)
 #define isvampiricthrall(x) (istype(x, /mob/living/carbon/human) && x:get_ability_holder(/datum/abilityHolder/vampiric_thrall) != null)
 #define iswizard(x) ((istype(x, /mob/living/carbon/human) || istype(x, /mob/living/critter)) && x:get_ability_holder(/datum/abilityHolder/wizard) != null)

@@ -108,7 +108,7 @@
 			var/obj/item/renf = getObjectByPartName("Reinforcement")
 
 			suit.set_custom_mats(fabr.material, renf.material)
-			helm.set_custom_mats(fabr.material, visr.material)
+			helm.set_custom_mats(fabr.material, visr.material, renf.material)
 
 			suit.set_loc(getOutputLocation(owner))
 			helm.set_loc(getOutputLocation(owner))

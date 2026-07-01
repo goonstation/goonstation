@@ -430,7 +430,7 @@ ABSTRACT_TYPE(/datum/random_law/random_element/specific_crewmember)
             if (get_z(H) != Z_LEVEL_STATION) continue //Exclude anyone azoning or nukeops/salvs not on station
             if (H.client && !isVRghost(H) && isalive(H) && !inafterlife(H))
                 potential_victims += H
-        var/mob/victim = pick(potential_victims)
+        var/mob/victim = length(potential_victims) ? pick(potential_victims) : null
         var/victim_name = victim?.name || "Monsieur Stirstir" //fallback in case nobody matches the above criteria
         . = replacetext(., "$RANDOM_CREWMEMBER", victim_name)
 

@@ -34,7 +34,7 @@
 
 	for (var/prefix in radio.secure_frequencies)
 		var/frequency = radio.secure_frequencies[prefix]
-		var/channel_name = global.headset_channel_lookup["[frequency]"] || "???"
+		var/channel_name = RADIO.frequencies_to_names[frequency] || "???"
 		var/channel_frequency = global.format_frequency(frequency)
 		.["[channel_name]: \[[channel_frequency]\]"] = ":[prefix]"
 
@@ -51,6 +51,6 @@
 
 	. = list()
 
-	var/general_channel_name = global.headset_channel_lookup["[radio.frequency]"] || "???"
+	var/general_channel_name = RADIO.frequencies_to_names[radio.frequency] || "???"
 	var/general_channel_frequency = global.format_frequency(radio.frequency)
 	.["[general_channel_name]: \[[general_channel_frequency]\]"] = ";"
