@@ -84,3 +84,25 @@
 			if (HH == src.holder.owner)
 				continue
 			HH.apply_sonic_stun(0, 0, 30, 0, 5, 4, 6)
+
+/datum/targetable/critter/demon_doll/fearful_song
+	name = "Fearful Song"
+	desc = "Hum a tune in a panic to blink to your destination, terrifying those close to where you appear."
+	icon_state = "song_shrieking"
+	cooldown = 60 SECONDS
+	targeted = 1
+	target_anything = 1
+
+	cast(atom/target)
+		if (..())
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+
+		var/turf/destination = target
+		var/mob/living/critter = src.holder.owner
+
+		animate_blink(critter)
+		critter.set_loc(destination)
+
+
+
+
