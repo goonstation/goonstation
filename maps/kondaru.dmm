@@ -42110,11 +42110,11 @@
 /area/station/turret_protected/Zeta)
 "mZQ" = (
 /obj/table/reinforced/auto,
-/obj/item/gun/kinetic/riot40mm{
+/obj/item/firearm/kinetic/riot40mm{
 	pixel_x = -1;
 	pixel_y = 8
 	},
-/obj/item/gun/kinetic/riot40mm{
+/obj/item/firearm/kinetic/riot40mm{
 	pixel_x = 2
 	},
 /obj/machinery/light{
@@ -45024,8 +45024,8 @@
 /obj/rack,
 /obj/item/ammo/bullets/smoke,
 /obj/item/ammo/bullets/smoke,
-/obj/item/gun/kinetic/riot40mm,
-/obj/item/gun/kinetic/riot40mm,
+/obj/item/firearm/kinetic/riot40mm,
+/obj/item/firearm/kinetic/riot40mm,
 /obj/item/crowbar,
 /obj/item/storage/wall{
 	dir = 4;

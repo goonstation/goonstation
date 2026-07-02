@@ -1,4 +1,4 @@
-/obj/item/gun/russianrevolver
+/obj/item/firearm/russianrevolver
 	desc = "Fun for the whole family!"
 	name = "\improper Russian revolver"
 	icon = 'icons/obj/items/guns/kinetic.dmi'
@@ -70,7 +70,7 @@
 		inventory_counter.update_number(1)
 
 
-/obj/item/gun/russianrevolver/fake357
+/obj/item/firearm/russianrevolver/fake357
 	name = "\improper Revolver" // Automatically copies the real gun name in New()
 	desc = "A slightly shabby looking combat revolver developed by somebody. Uses .357 caliber rounds."
 	force = MELEE_DMG_REVOLVER
@@ -79,7 +79,7 @@
 	var/fakeshots = 0
 
 	New()
-		src.name = /obj/item/gun/kinetic/revolver::name
+		src.name = /obj/item/firearm/kinetic/revolver::name
 		fakeshots = rand(2, 7)
 		set_current_projectile(new/datum/projectile/bullet/revolver_357)
 		..()
@@ -96,7 +96,7 @@
 		if(!shotsLeft)
 			..()
 
-/obj/item/gun/russianrevolver/jk47
+/obj/item/firearm/russianrevolver/jk47
 	name = "\improper JK-47 rifle"
 	desc = "The cold-war classic!  Well, um, a model.  Probably?"
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'

@@ -210,12 +210,12 @@
 	New()
 		..()
 /*
-		new /obj/item/gun/fiveseven/hjam(src)
+		new /obj/item/firearm/fiveseven/hjam(src)
 		new /obj/item/ammo/a57(src)
 		new /obj/item/ammo/a57(src)
 		new /obj/item/ammo/a57(src)
 
-/obj/item/gun/fiveseven/hjam
+/obj/item/firearm/fiveseven/hjam
 	name = "SMRZ Six-seveN"
 	desc = "A cheap Martian knock-off of a SM 0RZ Six-seveN. Uses 5.7mm rounds."
 	weapon_lock = 0

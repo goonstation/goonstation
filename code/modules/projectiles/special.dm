@@ -1282,7 +1282,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	implanted= null
 	casing = null
 	impact_image_state = null
-	typetospawn = /obj/item/gun/kinetic/derringer
+	typetospawn = /obj/item/firearm/kinetic/derringer
 
 
 /datum/projectile/special/spawner/wasp //shoot wasps

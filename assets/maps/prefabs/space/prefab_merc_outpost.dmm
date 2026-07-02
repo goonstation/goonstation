@@ -467,7 +467,7 @@
 "Lo" = (
 /obj/mapping_helper/mob_spawn/corpse/human/merc,
 /obj/decal/cleanable/blood/splatter,
-/obj/item/gun/kinetic/draco/empty,
+/obj/item/firearm/kinetic/draco/empty,
 /turf/simulated/floor,
 /area/prefab/merc_outpost)
 "Lz" = (
@@ -619,7 +619,7 @@
 /obj/item/clipboard,
 /obj/item/storage/firstaid/regular,
 /obj/item/storage/belt/security/shoulder_holster/small,
-/obj/item/gun/kinetic/pistol/empty,
+/obj/item/firearm/kinetic/pistol/empty,
 /turf/simulated/floor,
 /area/prefab/merc_outpost)
 "UY" = (

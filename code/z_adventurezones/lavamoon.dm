@@ -529,7 +529,7 @@ var/sound/iomoon_alarm_sound = null
 	New()
 		..()
 		SPAWN(1 SECOND)
-			var/spawntype = pick(/obj/item/artifact/activator_key, /obj/item/gun/energy/artifact, /obj/item/ammo/power_cell/self_charging/artifact, /obj/item/artifact/forcewall_wand)
+			var/spawntype = pick(/obj/item/artifact/activator_key, /obj/item/firearm/energy/artifact, /obj/item/ammo/power_cell/self_charging/artifact, /obj/item/artifact/forcewall_wand)
 			new spawntype(src.loc, "ancient")
 
 			qdel(src)

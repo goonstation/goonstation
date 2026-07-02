@@ -1876,10 +1876,10 @@
 
 		var/datum/antagonist/antag_datum = user.mind.get_antagonist(ROLE_GANG_MEMBER) || user.mind.get_antagonist(ROLE_GANG_LEADER)
 		if (!(antag_datum in src.gang.free_gun_owners))
-			var/gun_type = pick(/obj/item/gun/kinetic/lopoint, /obj/item/gun/energy/lasergat)
+			var/gun_type = pick(/obj/item/firearm/kinetic/lopoint, /obj/item/firearm/energy/lasergat)
 			user.stow_in_available(new gun_type(user.loc), FALSE)
 			if (antag_datum.id == ROLE_GANG_LEADER)
-				if (gun_type == /obj/item/gun/kinetic/lopoint)
+				if (gun_type == /obj/item/firearm/kinetic/lopoint)
 					user.stow_in_available(new /obj/item/ammo/bullets/bullet_9mm/lopoint)
 				else
 					user.stow_in_available(new /obj/item/ammo/power_cell/lasergat)
@@ -1960,13 +1960,13 @@
 			stored_cash += cash.amount
 
 		//gun score
-		else if (istype(item, /obj/item/gun))
-			if(istype(item, /obj/item/gun/kinetic/foamdartgun))
+		else if (istype(item, /obj/item/firearm))
+			if(istype(item, /obj/item/firearm/kinetic/foamdartgun))
 				boutput(user, SPAN_ALERT("<b>You cant stash toy guns in the locker</b>"))
 
 				return
 
-			if(istype(item, /obj/item/gun/kinetic/slamgun) || istype(item, /obj/item/gun/kinetic/zipgun))
+			if(istype(item, /obj/item/firearm/kinetic/slamgun) || istype(item, /obj/item/firearm/kinetic/zipgun))
 				boutput(user, SPAN_ALERT("<b>This shoddy firearm isn't worth selling.</b>"))
 				return
 			else
@@ -2180,7 +2180,7 @@
 	proc/gun_amount()
 		var/number = 0
 
-		for(var/obj/item/gun/G in contents)
+		for(var/obj/item/firearm/G in contents)
 			number ++
 
 		return round(number) //no point rounding it really but fuck it
@@ -2189,7 +2189,7 @@
 		if (W.cant_drop)
 			return
 
-		if (istype(W,/obj/item/plant/herb/cannabis) || istype(W,/obj/item/gun) || istype(W,/obj/item/currency/spacecash) || istype(W,/obj/item/device/transfer_valve)|| istype(W,/obj/item/storage/pill_bottle))
+		if (istype(W,/obj/item/plant/herb/cannabis) || istype(W,/obj/item/firearm) || istype(W,/obj/item/currency/spacecash) || istype(W,/obj/item/device/transfer_valve)|| istype(W,/obj/item/storage/pill_bottle))
 			if (insert_item(W,user))
 				user.visible_message(SPAN_NOTICE("[user] puts [W] into [src]!"))
 			return
@@ -2580,13 +2580,13 @@
 	desc = "It shoots phasers."
 	class2 = "weapon"
 	price = 1300
-	item_path = /obj/item/gun/energy/phaser_gun
+	item_path = /obj/item/firearm/energy/phaser_gun
 /datum/gang_item/space/laser_gun
 	name = "Laser Gun"
 	desc = "It shoots lasers."
 	class2 = "weapon"
 	price = 20000
-	item_path = /obj/item/gun/energy/laser_gun
+	item_path = /obj/item/firearm/energy/laser_gun
 /datum/gang_item/space/stims
 	name = "Janktank III"
 	desc = "An abhorrent miscreation from the people behind JankTank I, to create the ultimate melee drug addict."
@@ -2601,7 +2601,7 @@
 	desc = "It shoots bullets."
 	class2 = "weapon"
 	price = 7000
-	item_path = /obj/item/gun/kinetic/single_action/colt_saa
+	item_path = /obj/item/firearm/kinetic/single_action/colt_saa
 /datum/gang_item/country_western/colt_45_bullet
 	name = "Colt .45 Speedloader"
 	desc = "A speedloader containing 7 rounds of Colt .45 ammunition.."

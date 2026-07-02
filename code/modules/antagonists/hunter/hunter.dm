@@ -376,7 +376,7 @@
 	src.equip_if_possible(new /obj/item/tank/pocket/extended/oxygen(src), SLOT_L_STORE)
 	src.equip_if_possible(new /obj/item/cloaking_device/hunter(src), SLOT_R_STORE)
 	src.equip_if_possible(new /obj/item/knife/butcher/hunterspear(src), SLOT_IN_BACKPACK)
-	src.equip_if_possible(new /obj/item/gun/energy/plasma_gun/hunter(src), SLOT_IN_BACKPACK)
+	src.equip_if_possible(new /obj/item/firearm/energy/plasma_gun/hunter(src), SLOT_IN_BACKPACK)
 
 	src.set_face_icon_dirty()
 	src.set_body_icon_dirty()

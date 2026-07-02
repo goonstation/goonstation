@@ -1,9 +1,9 @@
 ///////////////////////////////////////Hunter
-TYPEINFO(/obj/item/gun/energy/plasma_gun)
+TYPEINFO(/obj/item/firearm/energy/plasma_gun)
 	mats = list("metal_superdense" = 7,
 				"crystal" = 13,
 				"energy_high" = 10)
-/obj/item/gun/energy/plasma_gun/ // Made use of a spare sprite here (Convair880).
+/obj/item/firearm/energy/plasma_gun/ // Made use of a spare sprite here (Convair880).
 	name = "plasma rifle"
 	desc = "This advanced bullpup rifle contains a self-recharging power cell."
 	icon_state = "bullpup"
@@ -20,7 +20,7 @@ TYPEINFO(/obj/item/gun/energy/plasma_gun)
 		projectiles = list(new/datum/projectile/laser/plasma)
 		..()
 
-/obj/item/gun/energy/plasma_gun/vr
+/obj/item/firearm/energy/plasma_gun/vr
 	name = "advanced laser gun"
 	icon = 'icons/effects/VR.dmi'
 	icon_state = "wavegun"
@@ -28,10 +28,10 @@ TYPEINFO(/obj/item/gun/energy/plasma_gun)
 	uses_charge_overlay = TRUE
 	charge_icon_state = "wavegun"
 
-TYPEINFO(/obj/item/gun/energy/plasma_gun/hunter)
+TYPEINFO(/obj/item/firearm/energy/plasma_gun/hunter)
 	analyser_flags = ANALYSER_BLACKLIST
 
-/obj/item/gun/energy/plasma_gun/hunter
+/obj/item/firearm/energy/plasma_gun/hunter
 	name = "Hunter's plasma rifle"
 	desc = "This unusual looking rifle contains a self-recharging power cell."
 	icon_state = "hunter"
@@ -58,7 +58,7 @@ TYPEINFO(/obj/item/gun/energy/plasma_gun/hunter)
 
 // HOWIZTER GUN
 // dumb meme admin item. not remotely fair, will probably kill person firing it.
-/obj/item/gun/energy/howitzer
+/obj/item/firearm/energy/howitzer
 	name = "man-portable plasma howitzer"
 	desc = "How can you even lift this?"
 	icon_state = "bfg"
@@ -74,7 +74,7 @@ TYPEINFO(/obj/item/gun/energy/plasma_gun/hunter)
 		set_current_projectile(new/datum/projectile/special/howitzer)
 		projectiles = list(new/datum/projectile/special/howitzer )
 
-TYPEINFO(/obj/item/gun/energy/optio1)
+TYPEINFO(/obj/item/firearm/energy/optio1)
 	mats = list("iridiumalloy" = 30,
 				"plutonium" = 15,
 				"electrum" = 25)

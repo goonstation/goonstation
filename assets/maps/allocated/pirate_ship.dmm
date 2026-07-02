@@ -1937,7 +1937,7 @@
 /area/pirate_ship)
 "Pt" = (
 /obj/table/nanotrasen/auto,
-/obj/item/gun/kinetic/single_action/flintlock/mortar{
+/obj/item/firearm/kinetic/single_action/flintlock/mortar{
 	pixel_x = -10;
 	pixel_y = 6
 	},

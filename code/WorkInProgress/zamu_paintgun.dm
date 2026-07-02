@@ -1,6 +1,6 @@
 // painball gun
 // it's a gun that shoots paint
-/obj/item/gun/paintball
+/obj/item/firearm/paintball
 	name = "paintball gun"
 	desc = "It's a gun that shoots balls. Balls of paint. Paint balls."
 	icon = 'icons/obj/items/guns/kinetic.dmi'

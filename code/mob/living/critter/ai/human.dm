@@ -37,7 +37,7 @@
 	get_targets()
 		var/list/targets = list()
 		if(holder.owner)
-			for(var/obj/item/gun/G in view(target_range, holder.owner))
+			for(var/obj/item/firearm/G in view(target_range, holder.owner))
 				if(G.canshoot(holder.owner))
 					targets += G
 			if(!targets.len)

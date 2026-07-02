@@ -7,7 +7,7 @@
 /turf/variableTurf/clear,
 /area/allowGenerate)
 "V" = (
-/obj/item/gun/kinetic/pistol/empty,
+/obj/item/firearm/kinetic/pistol/empty,
 /obj/dialogueobj/syndiecorpse2,
 /turf/variableTurf/clear,
 /area/allowGenerate)

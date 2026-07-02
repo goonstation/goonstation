@@ -65,7 +65,7 @@ ABSTRACT_TYPE(/datum/job/security)
 		slot_head = list(/obj/item/clothing/head/helmet/swat)
 		slot_glov = list(/obj/item/clothing/gloves/fingerless)
 		slot_back = list(/obj/item/storage/backpack/NT)
-		slot_belt = list(/obj/item/gun/energy/laser_gun)
+		slot_belt = list(/obj/item/firearm/energy/laser_gun)
 		slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
 		items_in_backpack = list(/obj/item/crowbar,/obj/item/device/light/flashlight,/obj/item/baton,/obj/item/breaching_charge,/obj/item/breaching_charge)
 		special_spawn_location = LANDMARK_HTR_TEAM

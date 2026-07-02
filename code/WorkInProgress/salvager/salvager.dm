@@ -553,7 +553,7 @@
 	stamina_damage = 60
 	stamina_cost = 25
 
-/obj/item/gun/kinetic/pumpweapon/riotgun/salvager
+/obj/item/firearm/kinetic/pumpweapon/riotgun/salvager
 	name = "reclaimed shotgun"
 	desc = "A pump action shotgun."
 	gildable = FALSE
@@ -565,7 +565,7 @@
 		ammo.amount_left = 0
 
 
-/obj/item/gun/energy/makeshift/basic_salvager // for salvagers
+/obj/item/firearm/energy/makeshift/basic_salvager // for salvagers
 
 	New()
 		..()

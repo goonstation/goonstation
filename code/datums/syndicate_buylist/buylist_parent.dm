@@ -72,7 +72,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist)
 
 	run_on_spawn(obj/item/the_thing, mob/living/owner, in_surplus_crate)
 		if(in_surplus_crate)
-			new /obj/item/gun/kinetic/zipgun(the_thing.loc)
+			new /obj/item/firearm/kinetic/zipgun(the_thing.loc)
 			return
 		..()
 
@@ -86,7 +86,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist)
 
 	run_on_spawn(obj/item/the_thing, mob/living/owner, in_surplus_crate)
 		if(in_surplus_crate)
-			new /obj/item/gun/kinetic/zipgun(the_thing.loc)
+			new /obj/item/firearm/kinetic/zipgun(the_thing.loc)
 			return
 		..()
 

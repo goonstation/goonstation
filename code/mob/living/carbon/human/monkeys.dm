@@ -529,7 +529,7 @@ TYPEINFO(/mob/living/carbon/human/npc/monkey)
 			if (!H.l_hand && !H.r_hand)
 				continue
 			possible_targets += H
-			if(H.equipped() && IS_NPC_HATED_ITEM(H.equipped()) || istype(H.equipped(), /obj/item/gun) && prob(60))
+			if(H.equipped() && IS_NPC_HATED_ITEM(H.equipped()) || istype(H.equipped(), /obj/item/firearm) && prob(60))
 				priority_targets += H
 		if(length(possible_targets) == 0 && length(priority_targets) == 0)
 			return
@@ -770,7 +770,7 @@ TYPEINFO(/mob/living/carbon/human/npc/monkey)
 		..()
 		SPAWN(1 SECOND)
 			src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses, SLOT_GLASSES)
-			src.equip_new_if_possible(/obj/item/gun/kinetic/detectiverevolver, SLOT_L_HAND)
+			src.equip_new_if_possible(/obj/item/firearm/kinetic/detectiverevolver, SLOT_L_HAND)
 			src.equip_new_if_possible(/obj/item/clothing/under/misc/mobster/alt, SLOT_W_UNIFORM)
 
 /mob/living/carbon/human/npc/monkey/sea/rich

@@ -381,7 +381,7 @@
 						src.set_a_intent(INTENT_GRAB)
 						src.ai_attack_target(ai_target, null)
 
-				if(prob(75) && distance > 1 && (world.timeofday - ai_attacked) > 100 && ai_validpath() && ((istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot(src)) || src.bioHolder.HasOneOfTheseEffects("eyebeams", "cryokinesis", "jumpy")) && !A?.sanctuary)
+				if(prob(75) && distance > 1 && (world.timeofday - ai_attacked) > 100 && ai_validpath() && ((istype(src.r_hand,/obj/item/firearm) && src.r_hand:canshoot(src)) || src.bioHolder.HasOneOfTheseEffects("eyebeams", "cryokinesis", "jumpy")) && !A?.sanctuary)
 					//I can attack someone! =D
 					ai_target_old.Cut()
 					var/datum/bioEffect/power/eyebeams/eyebeams = src.bioHolder.GetEffect("eyebeams")
@@ -394,7 +394,7 @@
 					else if (jumpy && (jumpy.ability.last_cast < world.time))
 						jumpy?.ability.handleCast(target)
 					else
-						var/obj/item/gun/W = src.r_hand
+						var/obj/item/firearm/W = src.r_hand
 						if(istype(W))
 							W.Shoot(carbon_target, get_turf(src), src, 0, 0, called_target = carbon_target)
 							if(src.bioHolder.HasEffect("coprolalia") && prob(10))
@@ -404,7 +404,7 @@
 									if(2)
 										src.say(pick("BANG!", "POW!", "Eat lead, [carbon_target.name]!", "Suck it down, [carbon_target.name]!"))
 
-				if((prob(33) || ai_throw) && (distance > 1 || A?.sanctuary) && ai_validpath() && src.equipped() && !(istype(src.equipped(),/obj/item/gun) && src.equipped():canshoot(src) && !A?.sanctuary))
+				if((prob(33) || ai_throw) && (distance > 1 || A?.sanctuary) && ai_validpath() && src.equipped() && !(istype(src.equipped(),/obj/item/firearm) && src.equipped():canshoot(src) && !A?.sanctuary))
 					//I can attack someone! =D
 					ai_target_old.Cut()
 					src.adjust_throw(src.throw_item(ai_target, list("npc_throw")))
@@ -427,7 +427,7 @@
 				else if(src.hand && prob(50))
 					src.swap_hand()
 
-				if(istype(src.equipped(),/obj/item/gun))
+				if(istype(src.equipped(),/obj/item/firearm))
 					src.swap_hand()
 
 				src.set_a_intent(INTENT_HARM)
@@ -771,11 +771,11 @@
 			src.set_clothing_icon_dirty()
 
 /mob/living/carbon/human/proc/ai_pickupweapon()
-	if(istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot(src))
+	if(istype(src.r_hand,/obj/item/firearm) && src.r_hand:canshoot(src))
 		return
 
-	if(istype(src.r_hand,/obj/item/gun/kinetic) && !src.r_hand:canshoot(src))
-		var/obj/item/gun/kinetic/GN = src.r_hand
+	if(istype(src.r_hand,/obj/item/firearm/kinetic) && !src.r_hand:canshoot(src))
+		var/obj/item/firearm/kinetic/GN = src.r_hand
 		for(var/obj/item/ammo/bullets/BB in src.contents)
 			src.l_hand = BB
 			GN:Attackby(BB,src)
@@ -790,8 +790,8 @@
 	if(src.r_hand?.cant_drop)
 		return
 
-	if(istype(src.r_hand, /obj/item/gun) && !src.r_hand:canshoot(src))
-		var/obj/item/gun/GN = src.r_hand
+	if(istype(src.r_hand, /obj/item/firearm) && !src.r_hand:canshoot(src))
+		var/obj/item/firearm/GN = src.r_hand
 		src.drop_item()
 		if(src.w_uniform && !src.belt)
 			GN:set_loc(src)
@@ -804,7 +804,7 @@
 
 	for(var/obj/item/G in src.contents)
 		if(G.throwing) continue
-		if((istype(G,/obj/item/gun) && G:canshoot(src)) && src.r_hand != G)
+		if((istype(G,/obj/item/firearm) && G:canshoot(src)) && src.r_hand != G)
 			pickup = G
 			src.u_equip(G)
 			break
@@ -813,7 +813,7 @@
 		for (var/obj/item/G in view(1,src))
 			if(G.throwing) continue
 			if(!istype(G.loc, /turf) || G.anchored) continue
-			if((istype(G,/obj/item/gun) && G:canshoot(src)))
+			if((istype(G,/obj/item/firearm) && G:canshoot(src)))
 				pickup = G
 				break
 			else if(!src.r_hand && !pickup && G.force > 3)

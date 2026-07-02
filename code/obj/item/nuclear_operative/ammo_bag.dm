@@ -8,8 +8,8 @@
 	caliber = null
 	var/list/valid_calibers = list() //supports lists and single, set to "All" for any gun
 
-	attackby(obj/item/gun/kinetic/W, mob/user)
-		if(istype(W, /obj/item/gun/kinetic))
+	attackby(obj/item/firearm/kinetic/W, mob/user)
+		if(istype(W, /obj/item/firearm/kinetic))
 			if((islist(valid_calibers) && (initial(W.caliber) in valid_calibers) || (!islist(valid_calibers) && valid_calibers == initial(W.caliber)) || valid_calibers == "All"))
 				new W.default_magazine(get_turf(src))
 				var/obj/O = W.default_magazine
@@ -69,7 +69,7 @@
 		sleep(1 DECI SECOND)
 		Attackhand(user)
 
-	attackby(obj/item/gun/kinetic/W, mob/user)
+	attackby(obj/item/firearm/kinetic/W, mob/user)
 		if(!deployed)
 			boutput(user, SPAN_ALERT("The [src] isn't unfolded!"))
 			return
@@ -143,8 +143,8 @@
 		..()
 
 	attackby(obj/item/I, mob/user)
-		if(istype(I, /obj/item/gun/kinetic))
-			var/obj/item/gun/kinetic/K = I
+		if(istype(I, /obj/item/firearm/kinetic))
+			var/obj/item/firearm/kinetic/K = I
 			if(!K.ammo.refillable)
 				boutput(user, SPAN_ALERT("The ammobag grumps unhappily. What?"))
 				return

@@ -303,8 +303,8 @@ mob/verb/checkrewards()
 	claimable = 1
 	claimPerRound = 1
 	icon_state = "?"
-	var/sacrifice_path = /obj/item/gun/energy/egun 		//Don't go lower than obj/item/gun/energy/egun
-	var/reward_path = /obj/item/gun/energy/lawbringer
+	var/sacrifice_path = /obj/item/firearm/energy/egun 		//Don't go lower than obj/item/firearm/energy/egun
+	var/reward_path = /obj/item/firearm/energy/lawbringer
 	var/sacrifice_name = "E-Gun"
 
 	activate(var/client/C)
@@ -313,7 +313,7 @@ mob/verb/checkrewards()
 		var/found = 0
 		var/O = locate(sacrifice_path) in C.mob.contents
 		if (istype(O, sacrifice_path))
-			var/obj/item/gun/energy/E = O
+			var/obj/item/firearm/energy/E = O
 			var/list/ret = list()
 			if(SEND_SIGNAL(E, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
 				charge = ret["charge"]
@@ -328,7 +328,7 @@ mob/verb/checkrewards()
 			src.claimedNumbers[usr.key] --
 			return
 
-		var/obj/item/gun/energy/lawbringer/LG = new reward_path()
+		var/obj/item/firearm/energy/lawbringer/LG = new reward_path()
 		var/obj/item/paper/lawbringer_pamphlet/LGP = new/obj/item/paper/lawbringer_pamphlet()
 		if (!istype(LG))
 			boutput(C.mob, "Something terribly went wrong. The reward path got screwed up somehow. call 1-800-CODER. But you're an HoS! You don't need no stinkin' guns anyway!")
@@ -354,7 +354,7 @@ mob/verb/checkrewards()
 	claimable = 1
 	claimPerRound = 1
 	icon_state = "?"
-	var/sacrifice_path = /obj/item/gun/energy/egun
+	var/sacrifice_path = /obj/item/firearm/energy/egun
 	var/reward_path = /obj/item/swords_sheaths/captain
 	var/sacrifice_name = "E-Gun"
 
@@ -362,7 +362,7 @@ mob/verb/checkrewards()
 		var/found = 0
 		var/O = locate(sacrifice_path) in C.mob.contents
 		if (istype(O, sacrifice_path))
-			var/obj/item/gun/energy/egun/K = O
+			var/obj/item/firearm/energy/egun/K = O
 			if (K.nojobreward) // Checks to see if it was scanned by a device analyzer
 				boutput(C.mob, "This [sacrifice_name] has forever been ruined by a device analyzer's magnets. It can't turn into a sword ever again!!")
 				src.claimedNumbers[usr.key] --
@@ -406,8 +406,8 @@ mob/verb/checkrewards()
 	claimable = 1
 	claimPerRound = 1
 	icon_state = "?"
-	var/sacrifice_path = /obj/item/gun/kinetic/detectiverevolver
-	var/reward_path = /obj/item/gun/kinetic/single_action/colt_saa/detective
+	var/sacrifice_path = /obj/item/firearm/kinetic/detectiverevolver
+	var/reward_path = /obj/item/firearm/kinetic/single_action/colt_saa/detective
 	var/sacrifice_name = ".38 revolver"
 
 	activate(var/client/C)
@@ -417,7 +417,7 @@ mob/verb/checkrewards()
 
 		var/O = locate(sacrifice_path) in C.mob.contents
 		if (istype(O, sacrifice_path))
-			var/obj/item/gun/kinetic/K = O
+			var/obj/item/firearm/kinetic/K = O
 			tmp_ammo = K.ammo
 			tmp_current_projectile = K.current_projectile
 			C.mob.remove_item(K)
@@ -430,7 +430,7 @@ mob/verb/checkrewards()
 			src.claimedNumbers[usr.key] --
 			return
 
-		var/obj/item/gun/kinetic/single_action/colt_saa/colt = new reward_path()
+		var/obj/item/firearm/kinetic/single_action/colt_saa/colt = new reward_path()
 		if (!istype(colt))
 			boutput(C.mob, "Something terribly went wrong. The reward path got screwed up somehow. call 1-800-CODER. But you're a detective! You don't need no stinkin' guns anyway!")
 			src.claimedNumbers[usr.key] --

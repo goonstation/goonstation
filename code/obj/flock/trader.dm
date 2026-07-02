@@ -445,7 +445,7 @@ TYPEINFO(/obj/flock_screen)
 	/obj/item/material_piece/gnesis = "flocklore_gnesis_bar",
 	/obj/item/material_piece/gnesisglass = "flocklore_gnesisglass_bar",
 	/obj/item/reagent_containers/gnesis = "flocklore_fluid_container",
-	/obj/item/gun/energy/flock = "flocklore_handheld_incapacitor",
+	/obj/item/firearm/energy/flock = "flocklore_handheld_incapacitor",
 	/obj/item/artifact = "flocklore_handheld_artifact",
 	/obj/item/feather = "flocklore_feather"
 )

@@ -330,7 +330,7 @@
 		var/list/masks = list(/obj/item/clothing/mask/batman, /obj/item/clothing/mask/clown_hat, /obj/item/clothing/mask/horse_mask, /obj/item/clothing/mask/moustache, /obj/item/clothing/mask/gas/swat, /obj/item/clothing/mask/owl_mask, /obj/item/clothing/mask/hunter, /obj/item/clothing/mask/skull, /obj/item/clothing/mask/spiderman)
 		var/masktype = pick(masks)
 		new masktype(target)
-		new /obj/item/gun/energy/laser_gun/virtual(target)
+		new /obj/item/firearm/energy/laser_gun/virtual(target)
 		new /obj/item/extinguisher/virtual(target)
 		new /obj/item/card/id/gauntlet(target, forwhom)
 		var/obj/item/artifact/activator_key/A = new /obj/item/artifact/activator_key(target)
@@ -593,7 +593,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 	artifact
 		name = "A Handheld Artifact"
 		minimum_level = 35
-		supplies = list(/obj/item/gun/energy/artifact)
+		supplies = list(/obj/item/firearm/energy/artifact)
 		doDrop()
 			var/ST = supplies[1]
 			var/T = pick(gauntlet_controller.spawnturfs)
@@ -647,7 +647,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		point_cost = -3
 		minimum_level = 20
 		probability =  20
-		supplies = list(/obj/item/chem_grenade/very_incendiary/vr, /obj/item/gun/kinetic/spes, /obj/item/gun/energy/laser_gun/virtual)
+		supplies = list(/obj/item/chem_grenade/very_incendiary/vr, /obj/item/firearm/kinetic/spes, /obj/item/firearm/energy/laser_gun/virtual)
 
 	welding
 		name = "Welders"
@@ -663,7 +663,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		minimum_level = 15
 		min_percent = 0.25
 		max_percent = 0.5
-		supplies = list(/obj/item/gun/kinetic/revolver/vr)
+		supplies = list(/obj/item/firearm/kinetic/revolver/vr)
 
 	spes
 		name = "SPES-12s"
@@ -671,7 +671,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		minimum_level = 25
 		min_percent = 0.25
 		max_percent = 0.5
-		supplies = list(/obj/item/gun/kinetic/spes)
+		supplies = list(/obj/item/firearm/kinetic/spes)
 
 	rifle
 		name = "Hunting Rifles"
@@ -679,7 +679,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		minimum_level = 25
 		min_percent = 0.25
 		max_percent = 0.5
-		supplies = list(/obj/item/gun/kinetic/hunting_rifle)
+		supplies = list(/obj/item/firearm/kinetic/hunting_rifle)
 
 	ak47
 		name = "An AKM"
@@ -688,7 +688,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		min_percent = 0.25
 		max_percent = 0.5
 		max_amount = 1
-		supplies = list(/obj/item/gun/kinetic/akm)
+		supplies = list(/obj/item/firearm/kinetic/akm)
 
 	bfg
 		name = "The BFG"
@@ -698,7 +698,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		max_percent = 0.5
 		max_amount = 1
 		only_once = 1
-		supplies = list(/obj/item/gun/energy/bfg/vr)
+		supplies = list(/obj/item/firearm/energy/bfg/vr)
 
 	laser
 		name = "Laser Guns"
@@ -707,7 +707,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		minimum_level = 15
 		min_percent = 0.25
 		max_percent = 0.5
-		supplies = list(/obj/item/gun/energy/laser_gun/virtual)
+		supplies = list(/obj/item/firearm/energy/laser_gun/virtual)
 
 	predlaser
 		name = "Advanced Laser Guns"
@@ -715,7 +715,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		minimum_level = 25
 		min_percent = 0.25
 		max_percent = 0.5
-		supplies = list(/obj/item/gun/energy/plasma_gun/vr)
+		supplies = list(/obj/item/firearm/energy/plasma_gun/vr)
 
 	axe
 		name = "Energy Axes"

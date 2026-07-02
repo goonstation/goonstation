@@ -27930,8 +27930,8 @@
 /obj/rack,
 /obj/item/ammo/bullets/smoke,
 /obj/item/ammo/bullets/smoke,
-/obj/item/gun/kinetic/riot40mm,
-/obj/item/gun/kinetic/riot40mm,
+/obj/item/firearm/kinetic/riot40mm,
+/obj/item/firearm/kinetic/riot40mm,
 /obj/item/crowbar,
 /obj/machinery/light{
 	dir = 8;
@@ -53059,7 +53059,7 @@
 /area/station/crew_quarters/radio/lab)
 "xFk" = (
 /obj/table/auto,
-/obj/item/gun/russianrevolver{
+/obj/item/firearm/russianrevolver{
 	pixel_y = 6
 	},
 /obj/machinery/phone/wall{

@@ -1,8 +1,8 @@
 ///////////////////////////////////////PW Blasters
-TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
+TYPEINFO(/obj/item/firearm/energy/blaster_pod_wars)
 	analyser_flags = ANALYSER_BLACKLIST
 
-/obj/item/gun/energy/blaster_pod_wars
+/obj/item/firearm/energy/blaster_pod_wars
 	name = "blaster pistol"
 	desc = "A dangerous-looking blaster pistol. It's self-charging by a radioactive power cell."
 	icon_state = "pw_pistol"
@@ -94,7 +94,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 		initial_proj = /datum/projectile/laser/blaster/pod_pilot/red_SY
 		team_num = 2
 
-/obj/item/gun/energy/blaster_pod_wars/smg
+/obj/item/firearm/energy/blaster_pod_wars/smg
 	name = "blaster smg"
 	desc = "A dangerous-looking blaster smg. It's self-charging by a radioactive power cell."
 	icon_state = "pw_smg"
@@ -125,7 +125,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 
 
 
-/obj/item/gun/energy/blaster_pod_wars/shotgun
+/obj/item/firearm/energy/blaster_pod_wars/shotgun
 	name = "blaster shotgun"
 	desc = "A dangerous-looking blaster shotgun. It's self-charging by a radioactive power cell."
 	icon_state = "pw_shotgun"

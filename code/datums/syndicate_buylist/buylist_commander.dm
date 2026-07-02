@@ -51,7 +51,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/commander)
 
 /datum/syndicate_buylist/commander/mrl
 	name = "Fomalhaut MRL"
-	items = list(/obj/item/gun/kinetic/mrl/loaded)
+	items = list(/obj/item/firearm/kinetic/mrl/loaded)
 	cost = 3
 	desc = "A  6-barrel multiple rocket launcher armed with guided micro-missiles. Warning: Can and will target other Operatives."
 	category = "Main"

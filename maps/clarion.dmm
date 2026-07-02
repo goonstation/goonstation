@@ -5017,7 +5017,7 @@
 	dir = 4;
 	pixel_y = 23
 	},
-/obj/item/gun/russianrevolver,
+/obj/item/firearm/russianrevolver,
 /obj/machinery/partyalarm{
 	dir = 8;
 	pixel_x = 24;
@@ -16739,7 +16739,7 @@
 	icon_state = "bedsheet-green"
 	},
 /obj/landmark/start/job/assistant,
-/obj/item/gun/russianrevolver,
+/obj/item/firearm/russianrevolver,
 /obj/item/storage/secure/ssafe{
 	pixel_x = -28
 	},
@@ -34361,11 +34361,11 @@
 /area/station/hallway/primary/south)
 "tbZ" = (
 /obj/table/auto,
-/obj/item/gun/kinetic/riot40mm{
+/obj/item/firearm/kinetic/riot40mm{
 	pixel_x = 2;
 	pixel_y = -5
 	},
-/obj/item/gun/kinetic/riot40mm{
+/obj/item/firearm/kinetic/riot40mm{
 	pixel_y = 2
 	},
 /obj/item/ammo/bullets/smoke{

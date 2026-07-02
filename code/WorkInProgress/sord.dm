@@ -83,7 +83,7 @@
 	spawn_contents = list(/obj/item/device/panicbutton/medicalalert = 7)
 
 //dazzler. moved to own file. probably wont do anything with this
-/obj/item/gun/energy/dazzler
+/obj/item/firearm/energy/dazzler
 	name = "dazzler"
 	icon_state = "taser" // wtb 1 sprite
 	item_state = "taser"
@@ -119,7 +119,7 @@
 	color_blue = 1
 	disruption = 8
 
-/obj/item/gun/energy/stasis
+/obj/item/firearm/energy/stasis
 	name = "stasis rifle"
 	icon = 'icons/obj/items/guns/energy48x32.dmi'
 	icon_state = "stasis"
@@ -276,7 +276,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 		HH.can_hold_items = FALSE
 		HH.can_attack = TRUE
 		HH.can_range_attack = TRUE
-		HH.object_for_inhand = /obj/item/gun/kinetic/draco
+		HH.object_for_inhand = /obj/item/firearm/kinetic/draco
 
 /obj/item/paper/mercmanifest1
 	name = "Shipping Manifest"
@@ -581,8 +581,8 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 			message_ghosts("A <b>baby weblaying spider</b> has been born at [log_loc(B, ghostjump = TRUE)].")
 			boutput(W, SPAN_NOTICE("The egg you planted at [spawnturf] has hatched into a new spider!"))
 
-ABSTRACT_TYPE(/obj/item/gun/kinetic/breakaction)
-/obj/item/gun/kinetic/breakaction
+ABSTRACT_TYPE(/obj/item/firearm/kinetic/breakaction)
+/obj/item/firearm/kinetic/breakaction
 	var/broke_open = FALSE
 	var/shells_to_eject = 0
 	var/can_spin_closed = FALSE
@@ -640,7 +640,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/breakaction)
 
 		UpdateIcon()
 
-/obj/item/gun/kinetic/breakaction/singleshotrifle
+/obj/item/firearm/kinetic/breakaction/singleshotrifle
 	name = "\improper single shot rifle"
 	desc = "A break-barrel style single shot .308 rifle. Nasty."
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'

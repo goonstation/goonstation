@@ -292,7 +292,7 @@
 			boutput(user, SPAN_NOTICE("You stamp the lock. Stop. Stop now. Please. Stop."))
 			steps_until_pressable--
 			return
-		if (istype(W,/obj/item/gun/russianrevolver) && steps_until_pressable == 9)
+		if (istype(W,/obj/item/firearm/russianrevolver) && steps_until_pressable == 9)
 			boutput(user, SPAN_NOTICE("You stick the revolver in the lock. No, seriously. Stop. This isn't worth it."))
 			steps_until_pressable--
 			return

@@ -788,7 +788,7 @@
 
 
 
-/obj/item/gun/try_grab(var/mob/living/target, var/mob/living/user)
+/obj/item/firearm/try_grab(var/mob/living/target, var/mob/living/user)
 	src.hide_attack = ATTACK_FULLY_HIDDEN
 
 	if (..())
@@ -833,7 +833,7 @@
 		return
 
 /obj/item/grab/threat/gunpoint
-	kill(obj/item/gun/gun)
+	kill(obj/item/firearm/gun)
 		gun.ShootPointBlank(src.affecting,src.assailant,1) //don't shoot an offhand gun
 
 /obj/item/grab/block

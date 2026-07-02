@@ -813,7 +813,7 @@ ABSTRACT_TYPE(/obj/loot_spawner/short)
 
 	ks23
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			spawn_item(C,I,/obj/item/gun/kinetic/pumpweapon/ks23,off_x=-8,scale_x=0.8,scale_y=0.8)
+			spawn_item(C,I,/obj/item/firearm/kinetic/pumpweapon/ks23,off_x=-8,scale_x=0.8,scale_y=0.8)
 
 // The random loot master checks all definitions of loot_spawner/random when it's first created.
 // To define new random loot, simply create a new child of the appropriate size and tier, and it will be automatically picked up.
@@ -911,7 +911,7 @@ ABSTRACT_TYPE(/obj/loot_spawner/random/short)
 		weight=10
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/webley,scale_x=0.65,scale_y=0.65)
+			var/obj/item/firearm/kinetic/gun = spawn_item(C,I,/obj/item/firearm/kinetic/webley,scale_x=0.65,scale_y=0.65)
 			I.parent?.tag_list("Ammo_Allowed", gun.default_magazine)
 	small_nades
 		weight=2
@@ -1017,18 +1017,18 @@ ABSTRACT_TYPE(/obj/loot_spawner/random/medium)
 	lopoint
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/lopoint,scale_x=0.75,scale_y=0.75)
+			var/obj/item/firearm/kinetic/gun = spawn_item(C,I,/obj/item/firearm/kinetic/lopoint,scale_x=0.75,scale_y=0.75)
 			I.parent?.tag_list("Ammo_Allowed", gun.default_magazine)
 	lasergat
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			spawn_item(C,I,/obj/item/gun/energy/lasergat,scale_y=0.61,scale_x=0.61)
+			spawn_item(C,I,/obj/item/firearm/energy/lasergat,scale_y=0.61,scale_x=0.61)
 			I.parent?.tag_list("Ammo_Allowed", /obj/item/ammo/power_cell/lasergat )
 
 	saa
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/single_action/colt_saa,scale_x=0.7,scale_y=0.7)
+			var/obj/item/firearm/kinetic/gun = spawn_item(C,I,/obj/item/firearm/kinetic/single_action/colt_saa,scale_x=0.7,scale_y=0.7)
 			I.parent?.tag_list("Ammo_Allowed", gun.default_magazine)
 
 	dagger
@@ -1134,13 +1134,13 @@ ABSTRACT_TYPE(/obj/loot_spawner/random/long)
 		weight = 15
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/striker,off_x=-8,off_y=1,scale_x=0.6,scale_y=0.8)
+			var/obj/item/firearm/kinetic/gun = spawn_item(C,I,/obj/item/firearm/kinetic/striker,off_x=-8,off_y=1,scale_x=0.6,scale_y=0.8)
 			I.parent?.tag_list("Ammo_Allowed", gun.default_magazine)
 
 	gl
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/riot40mm,scale_x=0.8,scale_y=0.8)
+			var/obj/item/firearm/kinetic/gun = spawn_item(C,I,/obj/item/firearm/kinetic/riot40mm,scale_x=0.8,scale_y=0.8)
 			I.parent?.tag_list("Ammo_Allowed", gun.default_magazine)
 
 			spawn_item(C,I,/obj/item/chem_grenade/flashbang,off_x=5,off_y=-4,rot=90,scale_x=0.8,scale_y=0.8)
@@ -1182,13 +1182,13 @@ ABSTRACT_TYPE(/obj/loot_spawner/random/xlong)
 	riotgun
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/pumpweapon/riotgun,off_x=-8,off_y=0)
+			var/obj/item/firearm/kinetic/gun = spawn_item(C,I,/obj/item/firearm/kinetic/pumpweapon/riotgun,off_x=-8,off_y=0)
 			I.parent?.tag_list("Ammo_Allowed", gun.default_magazine)
 
 	m16
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/m16,off_x=-8,off_y=0,scale_x=0.7,scale_y=0.7)
+			var/obj/item/firearm/kinetic/gun = spawn_item(C,I,/obj/item/firearm/kinetic/m16,off_x=-8,off_y=0,scale_x=0.7,scale_y=0.7)
 			I.parent?.tag_list("Ammo_Allowed", gun.default_magazine)
 
 	// LOW
@@ -1208,7 +1208,7 @@ ABSTRACT_TYPE(/obj/loot_spawner/random/short_tall)
 	lasergat
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			spawn_item(C,I,/obj/item/gun/energy/lasergat,rot=90,scale_y=0.61,scale_x=0.61)
+			spawn_item(C,I,/obj/item/firearm/energy/lasergat,rot=90,scale_y=0.61,scale_x=0.61)
 			I.parent?.tag_list("Ammo_Allowed", /obj/item/ammo/power_cell/lasergat )
 
 	// GANG_CRATE_GEAR
@@ -1270,7 +1270,7 @@ ABSTRACT_TYPE(/obj/loot_spawner/random/medium_tall)
 		weight = 15
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/uzi,scale_x=0.75,scale_y=0.75)
+			var/obj/item/firearm/kinetic/gun = spawn_item(C,I,/obj/item/firearm/kinetic/uzi,scale_x=0.75,scale_y=0.75)
 			I.parent?.tag_list("Ammo_Allowed", gun.default_magazine)
 
 	frags
@@ -1366,7 +1366,7 @@ ABSTRACT_TYPE(/obj/loot_spawner/random/long_tall)
 		weight = 1
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/single_action/flintlock,off_x=-3,off_y=-3,scale_x=0.8,scale_y=0.8)
+			var/obj/item/firearm/kinetic/gun = spawn_item(C,I,/obj/item/firearm/kinetic/single_action/flintlock,off_x=-3,off_y=-3,scale_x=0.8,scale_y=0.8)
 			I.parent?.tag_list("Ammo_Allowed", gun.default_magazine)
 
 			var/obj/item/ammo/bullets/A = spawn_item(C,I,/obj/item/ammo/bullets/flintlock,rot=-135,off_x=3,off_y=2,scale_x=0.8,scale_y=0.8)
@@ -1376,7 +1376,7 @@ ABSTRACT_TYPE(/obj/loot_spawner/random/long_tall)
 	sawnoff
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			spawn_item(C,I,/obj/item/gun/kinetic/sawnoff/birdshot,off_y=3,scale_x=0.8,scale_y=0.8)
+			spawn_item(C,I,/obj/item/firearm/kinetic/sawnoff/birdshot,off_y=3,scale_x=0.8,scale_y=0.8)
 			I.parent?.tag_list("Ammo_Allowed", /obj/item/ammo/bullets/a12/bird)
 
 			var/obj/item/ammo/bullets/A = spawn_item(C,I,/obj/item/ammo/bullets/a12/bird,off_x=3,off_y=-2,scale_x=0.6,scale_y=0.8)
@@ -1386,13 +1386,13 @@ ABSTRACT_TYPE(/obj/loot_spawner/random/long_tall)
 	draco
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			spawn_item(C,I,/obj/item/gun/kinetic/draco,off_x=-7,scale_x=0.8,scale_y=0.8)
+			spawn_item(C,I,/obj/item/firearm/kinetic/draco,off_x=-7,scale_x=0.8,scale_y=0.8)
 			//no mags for you! that would be crazy!
 
 	greasegun
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			var/obj/item/gun/kinetic/gun = spawn_item(C,I,/obj/item/gun/kinetic/greasegun,off_x=-7,scale_x=0.65,scale_y=0.65)
+			var/obj/item/firearm/kinetic/gun = spawn_item(C,I,/obj/item/firearm/kinetic/greasegun,off_x=-7,scale_x=0.65,scale_y=0.65)
 			I.parent?.tag_list("Ammo_Allowed", gun.default_magazine)
 
 	// GANG_CRATE_GEAR
@@ -1443,11 +1443,11 @@ ABSTRACT_TYPE(/obj/loot_spawner/random/xlong_tall)
 	a180
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			spawn_item(C,I,/obj/item/gun/kinetic/american180,off_x=-8,scale_x=0.8,scale_y=0.8)
+			spawn_item(C,I,/obj/item/firearm/kinetic/american180,off_x=-8,scale_x=0.8,scale_y=0.8)
 	ks23
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			spawn_item(C,I,/obj/item/gun/kinetic/pumpweapon/ks23,off_x=-8,scale_x=0.8,scale_y=0.8)
+			spawn_item(C,I,/obj/item/firearm/kinetic/pumpweapon/ks23,off_x=-8,scale_x=0.8,scale_y=0.8)
 			spawn_item(C,I,/obj/item/ammo/bullets/kuvalda/slug,off_x=-7,off_y=-4,scale_x=0.5,scale_y=0.5)
 			spawn_item(C,I,/obj/item/ammo/bullets/kuvalda,off_x=7,off_y=-4,scale_x=0.5,scale_y=0.5)
 

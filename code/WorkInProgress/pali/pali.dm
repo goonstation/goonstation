@@ -29,7 +29,7 @@
 	icon_short = "lmg_ammo"
 	icon_empty = "lmg_ammo-0"
 
-/obj/item/gun/kinetic/beepsky
+/obj/item/firearm/kinetic/beepsky
 	name = "\improper Loose Cannon"
 	desc = "Gets the job done."
 	icon = 'icons/obj/items/guns/toy.dmi'
@@ -69,7 +69,7 @@
 		else
 			..()
 
-/obj/item/gun/kinetic/beepsky/one_bullet
+/obj/item/firearm/kinetic/beepsky/one_bullet
 	New()
 		. = ..()
 		src.ammo.amount_left = 1

@@ -964,9 +964,9 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 	var/list/possible_rewards = list(/obj/item/shipcomponent/mainweapon/mining,
 		/obj/item/shipcomponent/mainweapon/laser,
 		/obj/item/shipcomponent/mainweapon/taser,
-		/obj/item/gun/energy/phaser_small,
-		/obj/item/gun/energy/taser_gun,
-		/obj/item/gun/energy/egun_jr,
+		/obj/item/firearm/energy/phaser_small,
+		/obj/item/firearm/energy/taser_gun,
+		/obj/item/firearm/energy/egun_jr,
 		/obj/machinery/emitter,
 		/obj/item/interdictor_rod/epsilon,
 		/obj/item/interdictor_rod/sigma

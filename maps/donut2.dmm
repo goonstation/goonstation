@@ -17288,7 +17288,7 @@
 /area/station/hangar/sec)
 "dOD" = (
 /obj/table/reinforced/industrial/auto,
-/obj/item/gun/kinetic/antisingularity{
+/obj/item/firearm/kinetic/antisingularity{
 	pixel_x = -14
 	},
 /obj/item/ammo/bullets/antisingularity{
@@ -25413,11 +25413,11 @@
 /area/station/crew_quarters/pool)
 "iDQ" = (
 /obj/rack,
-/obj/item/gun/kinetic/riot40mm{
+/obj/item/firearm/kinetic/riot40mm{
 	pixel_x = -4;
 	pixel_y = 10
 	},
-/obj/item/gun/kinetic/riot40mm{
+/obj/item/firearm/kinetic/riot40mm{
 	pixel_x = -2;
 	pixel_y = 5
 	},
@@ -25433,7 +25433,7 @@
 	pixel_x = 6;
 	pixel_y = -9
 	},
-/obj/item/gun/implanter{
+/obj/item/firearm/implanter{
 	pixel_x = 7;
 	pixel_y = -7
 	},
@@ -27953,7 +27953,7 @@
 /area/station/hallway/primary/north)
 "kdn" = (
 /obj/storage/cart,
-/obj/item/gun/russianrevolver,
+/obj/item/firearm/russianrevolver,
 /obj/item/clothing/suit/bedsheet,
 /obj/item/clothing/suit/bedsheet,
 /obj/decal/cleanable/rust/jen,

@@ -55,9 +55,9 @@
 ////////////////
 // INCAPACITOR
 ////////////////
-TYPEINFO(/obj/item/gun/energy/flock)
+TYPEINFO(/obj/item/firearm/energy/flock)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY // it's less that this is a syndicate weapon and more that replicating it isn't trivial
-/obj/item/gun/energy/flock
+/obj/item/firearm/energy/flock
 	name = "incapacitor"
 	desc = "A clunky projectile weapon of alien machine origin. It appears to have been based off of a couple pictures of regular human guns, but with no clear understanding of ergonomics."
 	icon_state = "incapacitor"
@@ -71,12 +71,12 @@ TYPEINFO(/obj/item/gun/energy/flock)
 	projectiles = null
 	custom_cell_max_capacity = 100
 
-/obj/item/gun/energy/flock/New()
+/obj/item/firearm/energy/flock/New()
 	set_current_projectile(new/datum/projectile/energy_bolt/flockdrone)
 	projectiles = list(current_projectile)
 	..()
 
-/obj/item/gun/energy/flock/special_desc(dist, mob/user)
+/obj/item/firearm/energy/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
 	var/list/ret = list()

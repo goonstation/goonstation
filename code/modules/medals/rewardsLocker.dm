@@ -997,10 +997,10 @@
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
 			var/mob/living/carbon/human/H = activator
-			var/obj/item/gun/kinetic/gunmod
-			if (istype(H.l_hand, /obj/item/gun/kinetic))
+			var/obj/item/firearm/kinetic/gunmod
+			if (istype(H.l_hand, /obj/item/firearm/kinetic))
 				gunmod = H.l_hand
-			else if (istype(H.r_hand, /obj/item/gun/kinetic))
+			else if (istype(H.r_hand, /obj/item/firearm/kinetic))
 				gunmod = H.r_hand
 			if (!gunmod)
 				boutput(activator, SPAN_ALERT("You can't be the man with the golden gun if you ain't got a got dang gun!"))

@@ -137,7 +137,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/syndicate)
 		HH.can_hold_items = FALSE
 		HH.can_attack = TRUE
 		HH.can_range_attack = TRUE
-		HH.object_for_inhand = /obj/item/gun/kinetic/assault_rifle
+		HH.object_for_inhand = /obj/item/firearm/kinetic/assault_rifle
 
 ABSTRACT_TYPE(/mob/living/critter/human/cultist)
 /mob/living/critter/human/cultist
@@ -211,7 +211,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/cultist)
 			HH.can_hold_items = FALSE
 			HH.can_attack = TRUE
 			HH.can_range_attack = TRUE
-			HH.object_for_inhand = /obj/item/gun/kinetic/silenced_22
+			HH.object_for_inhand = /obj/item/firearm/kinetic/silenced_22
 
 			HH = hands[2]
 			HH.icon = 'icons/mob/hud_human.dmi'
@@ -267,7 +267,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/cultist)
 			HH.can_hold_items = FALSE
 			HH.can_attack = TRUE
 			HH.can_range_attack = TRUE
-			HH.object_for_inhand = /obj/item/gun/kinetic/silenced_22
+			HH.object_for_inhand = /obj/item/firearm/kinetic/silenced_22
 
 			HH = hands[2]
 			HH.icon = 'icons/mob/hud_human.dmi'
@@ -323,7 +323,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/cultist)
 			HH.can_hold_items = FALSE
 			HH.can_attack = TRUE
 			HH.can_range_attack = TRUE
-			HH.object_for_inhand = /obj/item/gun/kinetic/silenced_22
+			HH.object_for_inhand = /obj/item/firearm/kinetic/silenced_22
 
 			HH = hands[2]
 			HH.icon = 'icons/mob/hud_human.dmi'
@@ -406,7 +406,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/cultist)
 			HH.can_hold_items = FALSE
 			HH.can_attack = TRUE
 			HH.can_range_attack = TRUE
-			HH.object_for_inhand = /obj/item/gun/kinetic/silenced_22
+			HH.object_for_inhand = /obj/item/firearm/kinetic/silenced_22
 
 			HH = hands[2]
 			HH.icon = 'icons/mob/hud_human.dmi'

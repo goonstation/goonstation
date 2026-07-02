@@ -209,7 +209,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_belt = list(/obj/item/device/pda2)
 	slot_poc1 = list(/obj/item/magnifying_glass)
 	slot_poc2 = list(/obj/item/reagent_containers/applicator/condiment/shaker/salt)
-	items_in_backpack = list(/obj/item/device/camera_viewer/security, /obj/item/device/audio_log, /obj/item/gun/energy/ghost)
+	items_in_backpack = list(/obj/item/device/camera_viewer/security, /obj/item/device/audio_log, /obj/item/firearm/energy/ghost)
 	alt_names = list("Paranormal Activities Investigator", "Spooks Specialist")
 	change_name_on_spawn = TRUE
 

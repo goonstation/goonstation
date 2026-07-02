@@ -23,7 +23,7 @@ A Flamethrower in various states of assembly
 
 #define MODE_TO_STRING(mode) mode == FLAMER_MODE_AUTO ? "auto" : mode == FLAMER_MODE_BURST ? "burst" :  mode == FLAMER_MODE_SINGLE ? "single" :  mode == FLAMER_MODE_BACKTANK ? "backtank" : "error"
 
-/obj/item/gun/flamethrower
+/obj/item/firearm/flamethrower
 	name = "flamethrower"
 	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
@@ -174,10 +174,10 @@ A Flamethrower in various states of assembly
 				P_special_data["chem_pct_app_tile"] = 0.15
 		inventory_counter?.update_percent(src.fueltank?.reagents?.total_volume, src.fueltank?.reagents?.maximum_volume)
 
-/obj/item/gun/flamethrower/return_air(direct = FALSE)
+/obj/item/firearm/flamethrower/return_air(direct = FALSE)
 	return src.gastank?.return_air()
 
-/obj/item/gun/flamethrower/assembled
+/obj/item/firearm/flamethrower/assembled
 	name = "flamethrower"
 	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
@@ -205,7 +205,7 @@ A Flamethrower in various states of assembly
 	desc = "A back mounted fueltank/jetpack system for use with a tactical flamethrower."
 	flags = TABLEPASS | CONDUCT | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
 	c_flags = ONBACK
-	var/obj/item/gun/flamethrower/backtank/linkedflamer
+	var/obj/item/firearm/flamethrower/backtank/linkedflamer
 	inventory_counter_enabled = 1
 	move_triggered = 1
 
@@ -229,11 +229,11 @@ A Flamethrower in various states of assembly
 			. += "<br>\A [linkedflamer] is stowed away neatly in a compartment."
 
 	attackby(obj/item/W, mob/user)
-		if (src.loc == user && W != linkedflamer && istype(W, /obj/item/gun/flamethrower/backtank))
+		if (src.loc == user && W != linkedflamer && istype(W, /obj/item/firearm/flamethrower/backtank))
 			if (linkedflamer && (linkedflamer in src.contents))
 				boutput(user, SPAN_NOTICE("There already a flamethrower stowed in your [src.name]."))
 			else
-				var/obj/item/gun/flamethrower/backtank/flamer = W
+				var/obj/item/firearm/flamethrower/backtank/flamer = W
 				if (flamer.fueltank != null)
 					var/obj/item/tank/jetpack/backtank/B = flamer.fueltank
 					B.linkedflamer = null
@@ -248,7 +248,7 @@ A Flamethrower in various states of assembly
 		else
 			..()
 
-	proc/insert_flamer(var/obj/item/gun/flamethrower/backtank/flamer, var/mob/user)
+	proc/insert_flamer(var/obj/item/firearm/flamethrower/backtank/flamer, var/mob/user)
 		boutput(user, SPAN_NOTICE("You stow [flamer] into your [src.name]."))
 		user.u_equip(flamer)
 		flamer.set_loc(src)
@@ -305,8 +305,8 @@ A Flamethrower in various states of assembly
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
-ABSTRACT_TYPE(/obj/item/gun/flamethrower/backtank)
-/obj/item/gun/flamethrower/backtank
+ABSTRACT_TYPE(/obj/item/firearm/flamethrower/backtank)
+/obj/item/firearm/flamethrower/backtank
 	name = "\improper Vega flamethrower"
 	desc = "A military-grade flamethrower, supplied with fuel and propellant from a back-mounted fuelpack. Developed by Almagest Weapons Fabrication."
 	icon_state = "syndthrower_0"
@@ -356,12 +356,12 @@ ABSTRACT_TYPE(/obj/item/gun/flamethrower/backtank)
 			user.back.Attackby(src, user)
 			return TRUE
 
-/obj/item/gun/flamethrower/backtank/napalm
+/obj/item/firearm/flamethrower/backtank/napalm
 	New()
 		..()
 		gastank.reagents.add_reagent("syndicate_napalm", 4000)
 
-/obj/item/gun/flamethrower/assembled/New()
+/obj/item/firearm/flamethrower/assembled/New()
 	..()
 	welder = new /obj/item/weldingtool
 	rod = new /obj/item/rods
@@ -369,7 +369,7 @@ ABSTRACT_TYPE(/obj/item/gun/flamethrower/backtank)
 	if (fueltank)
 		inventory_counter.update_percent(src.fueltank.reagents.total_volume, src.fueltank.reagents.maximum_volume)
 
-/obj/item/gun/flamethrower/assembled/disposing()
+/obj/item/firearm/flamethrower/assembled/disposing()
 
 	qdel(src.welder)
 	qdel(src.rod)
@@ -379,7 +379,7 @@ ABSTRACT_TYPE(/obj/item/gun/flamethrower/backtank)
 	..()
 	return
 
-/obj/item/gun/flamethrower/assembled/loaded
+/obj/item/firearm/flamethrower/assembled/loaded
 	icon_state = "flamethrower_oxy_fuel"
 
 	New()
@@ -388,7 +388,7 @@ ABSTRACT_TYPE(/obj/item/gun/flamethrower/backtank)
 		gastank = new /obj/item/tank/oxygen(src)
 		..()
 
-/obj/item/gun/flamethrower/assembled/loaded/napalm
+/obj/item/firearm/flamethrower/assembled/loaded/napalm
 	icon_state = "flamethrower_oxy_fuel"
 
 	New()
@@ -498,7 +498,7 @@ ABSTRACT_TYPE(/obj/item/gun/flamethrower/backtank)
 /obj/item/flamethrower_construction/proc/completition(var/atom/to_combine_atom, var/mob/user)
 	boutput(user, SPAN_NOTICE("The igniter is now secured."))
 	user.u_equip(src)
-	var/obj/item/gun/flamethrower/assembled/new_flamethrower = new/obj/item/gun/flamethrower/assembled
+	var/obj/item/firearm/flamethrower/assembled/new_flamethrower = new/obj/item/firearm/flamethrower/assembled
 	for(var/obj/item/chosen_item in src.assembly_contents)
 		switch(chosen_item.type)
 			if(/obj/item/weldingtool)
@@ -517,7 +517,7 @@ ABSTRACT_TYPE(/obj/item/gun/flamethrower/backtank)
 
 // ----------------------- -------------- -----------------------
 
-/obj/item/gun/flamethrower/process()
+/obj/item/firearm/flamethrower/process()
 	if(!lit)
 		processing_items.Remove(src)
 		return null
@@ -532,7 +532,7 @@ ABSTRACT_TYPE(/obj/item/gun/flamethrower/backtank)
 		location.hotspot_expose(700, 2)
 
 /// Swaps out the fuel tank
-/obj/item/gun/flamethrower/proc/swap_any(obj/item/F, mob/user as mob)
+/obj/item/firearm/flamethrower/proc/swap_any(obj/item/F, mob/user as mob)
 	if(!istype(F) || !F)
 		boutput(user, SPAN_ALERT("The thing you want to load into \the [src] doesn't seem to exist! Huh. That's odd. Maybe call 1-800-IM-CODER!"))
 		return FALSE
@@ -573,7 +573,7 @@ ABSTRACT_TYPE(/obj/item/gun/flamethrower/backtank)
 		playsound(src, 'sound/effects/valve_creak.ogg', 40, TRUE)
 	return TRUE
 
-/obj/item/gun/flamethrower/assembled/attackby(obj/item/W, mob/user as mob)
+/obj/item/firearm/flamethrower/assembled/attackby(obj/item/W, mob/user as mob)
 	if (!W || user.stat || user.restrained() || user.lying)
 		return
 
@@ -587,7 +587,7 @@ ABSTRACT_TYPE(/obj/item/gun/flamethrower/backtank)
 
 	// PantsNote: Flamethrower disassmbly.
 	else if (isscrewingtool(W))
-		var/obj/item/gun/flamethrower/assembled/S = src
+		var/obj/item/firearm/flamethrower/assembled/S = src
 		if (( S.gastank || S.fueltank ))
 			boutput(user, SPAN_ALERT("You can't disassemble [src] while it has an attached tank!"))
 			return
@@ -603,7 +603,7 @@ ABSTRACT_TYPE(/obj/item/gun/flamethrower/backtank)
 	else
 		return	..()
 
-/obj/item/gun/flamethrower/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/obj/item/firearm/flamethrower/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	var/mob/user
 	if(ismob(usr))
@@ -726,12 +726,12 @@ ABSTRACT_TYPE(/obj/item/gun/flamethrower/backtank)
 	inventory_counter?.update_percent(src.fueltank?.reagents?.total_volume, src.fueltank?.reagents?.maximum_volume)
 	return TRUE
 
-/obj/item/gun/flamethrower/assembled/attack_self(mob/user as mob)
+/obj/item/firearm/flamethrower/assembled/attack_self(mob/user as mob)
 	if(user.stat || user.restrained() || user.lying)
 		return
 	src.ui_interact(user)
 
-/obj/item/gun/flamethrower/backtank/attack_self(mob/user as mob)
+/obj/item/firearm/flamethrower/backtank/attack_self(mob/user as mob)
 	if(user.stat || user.restrained() || user.lying)
 		return
 	src.lit = !src.lit
@@ -752,7 +752,7 @@ ABSTRACT_TYPE(/obj/item/gun/flamethrower/backtank)
 		boutput(user, SPAN_NOTICE("You extinguish \the [src]'s pilot light!"))
 	return
 
-/obj/item/gun/flamethrower/ui_interact(mob/user, datum/tgui/ui)
+/obj/item/firearm/flamethrower/ui_interact(mob/user, datum/tgui/ui)
 	if (src.fueltank)
 		SEND_SIGNAL(src.fueltank.reagents, COMSIG_REAGENTS_ANALYZED, user)
 	ui = tgui_process.try_update_ui(user, src, ui)
@@ -760,7 +760,7 @@ ABSTRACT_TYPE(/obj/item/gun/flamethrower/backtank)
 		ui = new(user, src, "Flamethrower")
 		ui.open()
 
-/obj/item/gun/flamethrower/ui_data(mob/user)
+/obj/item/firearm/flamethrower/ui_data(mob/user)
 	. = list(
 		"lit" = src.lit,
 		"maxTemp" = src.max_temperature,
@@ -787,7 +787,7 @@ ABSTRACT_TYPE(/obj/item/gun/flamethrower/backtank)
 		if (FLAMER_MODE_SINGLE)
 			.["mode"] = "semi_auto"
 
-/obj/item/gun/flamethrower/move_trigger(var/mob/M, kindof)
+/obj/item/firearm/flamethrower/move_trigger(var/mob/M, kindof)
 	if (..())
 		for (var/obj/O in src.contents)
 			if (O.move_triggered)

@@ -29,10 +29,10 @@ TYPEINFO(/datum/component/holdertargeting/windup)
 				src.duration = _duration
 
 	Initialize(duration = 1 SECOND)
-		if(..() == COMPONENT_INCOMPATIBLE || !istype(parent, /obj/item/gun))
+		if(..() == COMPONENT_INCOMPATIBLE || !istype(parent, /obj/item/firearm))
 			return COMPONENT_INCOMPATIBLE
 		else
-			var/obj/item/gun/G = parent
+			var/obj/item/firearm/G = parent
 			src.duration = duration
 
 
@@ -178,7 +178,7 @@ TYPEINFO(/datum/component/holdertargeting/windup)
 
 /datum/component/holdertargeting/windup/proc/do_windup(mob/living/L)
 	set waitfor = 0
-	var/obj/item/gun/G = parent
+	var/obj/item/firearm/G = parent
 	winder = new/datum/action/bar/icon/windup/infinite(G, duration)
 	actions.start(winder, L)
 
@@ -225,7 +225,7 @@ TYPEINFO(/datum/component/holdertargeting/windup)
 		. = 1
 
 	if(.)
-		var/obj/item/gun/G = parent
+		var/obj/item/firearm/G = parent
 		winder = new/datum/action/bar/icon/windup(G, duration)
 		winder.target = target
 		actions.start(winder, shooter)
@@ -237,7 +237,7 @@ TYPEINFO(/datum/component/holdertargeting/windup)
 		. = 1
 
 	if(.)
-		var/obj/item/gun/G = parent
+		var/obj/item/firearm/G = parent
 		winder = new/datum/action/bar/icon/windup(G, duration, TRUE)
 		winder.target = target
 		actions.start(winder, user)
@@ -247,7 +247,7 @@ TYPEINFO(/datum/component/holdertargeting/windup)
 	interrupt_flags = INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	icon = 'icons/obj/items/tools/screwdriver.dmi'
 	icon_state = "screwdriver"
-	var/obj/item/gun/ownerGun
+	var/obj/item/firearm/ownerGun
 	var/mob/user
 	var/pox = 0
 	var/poy = 0

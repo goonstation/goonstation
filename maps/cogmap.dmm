@@ -14617,7 +14617,7 @@
 "baH" = (
 /obj/table/auto,
 /obj/decal/cleanable/cobweb2,
-/obj/item/gun/kinetic/zipgun{
+/obj/item/firearm/kinetic/zipgun{
 	pixel_x = -4;
 	pixel_y = 6
 	},
@@ -15951,11 +15951,11 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
-/obj/item/gun/kinetic/riot40mm{
+/obj/item/firearm/kinetic/riot40mm{
 	pixel_x = -4;
 	pixel_y = 10
 	},
-/obj/item/gun/kinetic/riot40mm{
+/obj/item/firearm/kinetic/riot40mm{
 	pixel_x = -2;
 	pixel_y = 5
 	},
@@ -15975,7 +15975,7 @@
 	pixel_x = -4;
 	pixel_y = -3
 	},
-/obj/item/gun/implanter{
+/obj/item/firearm/implanter{
 	pixel_x = 7;
 	pixel_y = -7
 	},
@@ -36638,7 +36638,7 @@
 	pixel_y = 24
 	},
 /obj/table/wood/auto/desk,
-/obj/item/gun/russianrevolver{
+/obj/item/firearm/russianrevolver{
 	pixel_x = -1;
 	pixel_y = 6
 	},
@@ -53361,7 +53361,7 @@
 /area/station/security/main)
 "qcv" = (
 /obj/rack,
-/obj/item/gun/kinetic/foamdartgun,
+/obj/item/firearm/kinetic/foamdartgun,
 /obj/item/ammo/bullets/foamdarts{
 	pixel_y = -5;
 	pixel_x = 5
@@ -64285,7 +64285,7 @@
 	dir = 4
 	},
 /obj/storage/secure/crate/plasma/armory/anti_biological,
-/obj/item/gun/flamethrower/assembled/loaded,
+/obj/item/firearm/flamethrower/assembled/loaded,
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "xOJ" = (

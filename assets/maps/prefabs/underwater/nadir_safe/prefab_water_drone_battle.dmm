@@ -58,7 +58,7 @@
 /obj/item/raw_material/plasmastone,
 /obj/item/raw_material/plasmastone,
 /obj/storage/crate/bloody,
-/obj/item/gun/russianrevolver/fake357,
+/obj/item/firearm/russianrevolver/fake357,
 /obj/item/sea_ladder,
 /turf/variableTurf/clear,
 /area/noGenerate)
@@ -73,7 +73,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "r" = (
-/obj/item/gun/energy/phaser_gun,
+/obj/item/firearm/energy/phaser_gun,
 /turf/variableTurf/clear,
 /area/noGenerate)
 "s" = (

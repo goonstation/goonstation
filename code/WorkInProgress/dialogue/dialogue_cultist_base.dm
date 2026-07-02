@@ -190,7 +190,7 @@
 		. = ..()
 		if (istype(W, /obj/item/siren_orb))
 			var/obj/item/siren_orb/C = W
-			var/obj/item/gun/energy/resonator/G = new /obj/item/gun/energy/resonator
+			var/obj/item/firearm/energy/resonator/G = new /obj/item/firearm/energy/resonator
 			boutput(user, "The orb begins to hover in place in the prongs of the device, before the whole item crackles to life with energy.")
 			user.put_in_hand_or_drop(G)
 			qdel(C)

@@ -1005,7 +1005,7 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 	New()
 		. = ..()
 		new /obj/item/baton/power_pack(src.loc)
-		new /obj/item/gun/energy/taser_gun/power_pack(src.loc)
+		new /obj/item/firearm/energy/taser_gun/power_pack(src.loc)
 
 /obj/item/ammo/power_cell/redirect/power_pack
 	desc = "A passthrough power cell that has cables to hook directly into a power pack."
@@ -1016,7 +1016,7 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 	cell_type = /obj/item/ammo/power_cell/redirect/power_pack
 	can_swap_cell = FALSE
 
-/obj/item/gun/energy/taser_gun/power_pack
+/obj/item/firearm/energy/taser_gun/power_pack
 	cell_type = /obj/item/ammo/power_cell/redirect/power_pack
 	can_swap_cell = FALSE
 

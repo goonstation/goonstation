@@ -433,7 +433,7 @@
 /area/prefab/slimy_honk)
 "bA" = (
 /obj/stool/chair,
-/obj/item/gun/reagent/syringe/love,
+/obj/item/firearm/reagent/syringe/love,
 /obj/item/clothing/under/misc/clown/pink,
 /turf/simulated/floor/grass{
 	name = "astroturf"
@@ -776,7 +776,7 @@
 /area/prefab/slimy_honk)
 "cQ" = (
 /obj/table/round/auto,
-/obj/item/gun/bling_blaster,
+/obj/item/firearm/bling_blaster,
 /obj/item/paper{
 	icon_state = "paper";
 	info = "BALL PIT RULES>br>- no vomiting.<br>seriously, do NOT let anyone who's eaten the food come in here";

@@ -2,11 +2,11 @@
 /* ------------------------- Implant Gun ------------------------- */
 /* =============================================================== */
 
-TYPEINFO(/obj/item/gun/implanter)
+TYPEINFO(/obj/item/firearm/implanter)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 8
 
-/obj/item/gun/implanter
+/obj/item/firearm/implanter
 	name = "implant gun"
 	desc = "A gun that accepts an implant, that you can then shoot into other people! Or a wall, which certainly wouldn't be too big of a waste, since you'd only be using this to shoot people with things like health monitor or rotbusttec implants. Right?"
 	icon = 'icons/obj/items/guns/kinetic.dmi'
@@ -89,10 +89,10 @@ TYPEINFO(/obj/item/gun/implanter)
 		my_implant = null
 		tooltip_rebuild = TRUE
 
-ADMIN_INTERACT_PROCS(/obj/item/gun/implanter/infinite, proc/set_implant_type)
-TYPEINFO(/obj/item/gun/implanter/infinite)
+ADMIN_INTERACT_PROCS(/obj/item/firearm/implanter/infinite, proc/set_implant_type)
+TYPEINFO(/obj/item/firearm/implanter/infinite)
 	mats=null
-/obj/item/gun/implanter/infinite
+/obj/item/firearm/implanter/infinite
 	name = "implant gun deluxe"
 	desc = "This auto-regenerating implant gun is illegal in several Earth countries. Not that it matters here in space."
 
@@ -145,7 +145,7 @@ TYPEINFO(/obj/item/gun/implanter/infinite)
 		if (ismob(src.loc))
 			my_datum.implant_master = src.loc
 
-/obj/item/gun/implanter/infinite/minigun
+/obj/item/firearm/implanter/infinite/minigun
 	name = "implant gun deluxe championship edition turbo"
 	desc = "You feel a vague sense of terror just looking at this thing."
 	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
@@ -168,12 +168,12 @@ TYPEINFO(/obj/item/gun/implanter/infinite)
 		..()
 		setProperty("carried_movespeed", 1.5) //the addative slow down does not play nice with the full auto so you get this instead
 
-/obj/item/gun/implanter/infinite/minigun/confetti_cannon
+/obj/item/firearm/implanter/infinite/minigun/confetti_cannon
 	name = "confetti cannon!!!"
 	desc = "You feel a vague sense of terror just looking at this thing. Honk."
 	implant_typepath = /obj/item/implant/confetti
 
-/obj/item/gun/implanter/infinite/minigun/microbomb_cannon
+/obj/item/firearm/implanter/infinite/minigun/microbomb_cannon
 	name = "microbomb mass implanter"
 	desc = "You feel the yearning maw of the void grip you tightly. It comes."
 	implant_typepath = /obj/item/implant/revenge/microbomb

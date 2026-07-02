@@ -171,7 +171,7 @@
 
 /datum/syndicate_buylist/traitor/wasp_crossbow
 	name = "Wasp Crossbow"
-	items = list(/obj/item/gun/energy/wasp)
+	items = list(/obj/item/firearm/energy/wasp)
 	cost = 6
 	desc = "Become the member of the Space Cobra Unit you always wanted to be! Spread pain and fear far and wide using this scattershot wasp egg launcher! Through the power of sheer wasp-y fury, this crossbow will slowly recharge between shots and is guaranteed to light up your day with maniacal joy and to bring your enemies no end of sorrow."
 	vr_allowed = FALSE
@@ -258,7 +258,7 @@
 
 /datum/syndicate_buylist/traitor/syringegun
 	name = "Syringe Gun"
-	items = list(/obj/item/gun/reagent/syringe)
+	items = list(/obj/item/firearm/reagent/syringe)
 	cost = 3
 	desc = "This stainless-steel, revolving wonder fires needles. Perfect for today's safari-loving Syndicate doctor! Loaded by transferring reagents to the gun's internal reservoir."
 	job = list(ALL_DOCTORS, ALL_RESEARCH, "Bartender")
@@ -339,7 +339,7 @@
 
 	run_on_spawn(obj/item, mob/living/owner, in_surplus_crate)
 		if(in_surplus_crate)
-			new /obj/item/gun/kinetic/dart_rifle(item.loc)
+			new /obj/item/firearm/kinetic/dart_rifle(item.loc)
 			new /obj/item/ammo/bullets/tranq_darts(item.loc)
 			return
 		..()
@@ -409,7 +409,7 @@
 
 /datum/syndicate_buylist/traitor/vuvuzelagun
 	name = "Vuvuzela Gun"
-	items = list(/obj/item/gun/energy/vuvuzela_gun)
+	items = list(/obj/item/firearm/energy/vuvuzela_gun)
 	cost = 3
 	desc = "<b>BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ</b>"
 	job = list("Staff Assistant", ALL_CLOWNS)
@@ -458,7 +458,7 @@
 
 /datum/syndicate_buylist/traitor/telegun
 	name = "Teleport Gun"
-	items = list(/obj/item/gun/energy/teleport)
+	items = list(/obj/item/firearm/energy/teleport)
 	cost = 7
 	vr_allowed = FALSE
 	desc = "An experimental hybrid between a hand teleporter and a directed-energy weapon. Probably a very bad idea. Note -- Only works in conjunction with a stationary teleporter."

@@ -39,7 +39,7 @@
 	pixel_x = 9;
 	pixel_y = 10
 	},
-/obj/item/gun/kinetic/sawnoff/long_barrel{
+/obj/item/firearm/kinetic/sawnoff/long_barrel{
 	pixel_x = -7;
 	pixel_y = 5
 	},

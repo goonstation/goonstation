@@ -58,8 +58,8 @@
 		var/spear_found = FALSE
 		var/cloak_found = FALSE
 		for(var/HG in by_cat[TR_CAT_HUNTER_GEAR])
-			if (istype(HG, /obj/item/gun/energy/plasma_gun/hunter))
-				var/obj/item/gun/energy/plasma_gun/hunter/PG = HG
+			if (istype(HG, /obj/item/firearm/energy/plasma_gun/hunter))
+				var/obj/item/firearm/energy/plasma_gun/hunter/PG = HG
 				if (M.mind?.key == PG.hunter_key)
 					if (get_turf(M.loc) == get_turf(PG.loc))
 						gun_found = TRUE

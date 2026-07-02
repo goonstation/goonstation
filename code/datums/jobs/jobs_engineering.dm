@@ -36,7 +36,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 		slot_head = list(/obj/item/clothing/head/helmet/welding)
 		slot_belt = list(/obj/item/tank/pocket/oxygen)
 		slot_mask = list(/obj/item/clothing/mask/breath)
-		items_in_backpack = list(/obj/item/crowbar,/obj/item/device/light/flashlight,/obj/item/device/light/glowstick,/obj/item/gun/kinetic/flaregun,/obj/item/ammo/bullets/flare,/obj/item/cell/cerenkite)
+		items_in_backpack = list(/obj/item/crowbar,/obj/item/device/light/flashlight,/obj/item/device/light/glowstick,/obj/item/firearm/kinetic/flaregun,/obj/item/ammo/bullets/flare,/obj/item/cell/cerenkite)
 		special_spawn_location = LANDMARK_HTR_TEAM
 
 		special_setup(var/mob/living/carbon/human/M)

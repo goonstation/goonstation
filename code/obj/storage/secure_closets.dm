@@ -166,7 +166,7 @@
 /obj/storage/secure/closet/command/captain
 	name = "\improper Captain's locker"
 	req_access = list(access_captain)
-	spawn_contents = list(/obj/item/gun/energy/egun/captain,
+	spawn_contents = list(/obj/item/firearm/energy/egun/captain,
 	/obj/item/storage/box/id_kit,
 	/obj/item/storage/box/clothing/captain,
 	/obj/item/clothing/suit/armor/capcoat,
@@ -210,7 +210,7 @@
 	/obj/item/clothing/suit/armor/vest,
 	/obj/item/clothing/head/helmet/hardhat/security/hos,
 	/obj/item/clothing/glasses/sunglasses/sechud,
-	/obj/item/gun/energy/egun/head_of_security,
+	/obj/item/firearm/energy/egun/head_of_security,
 	/obj/item/device/radio/headset/security,
 	/obj/item/clothing/glasses/thermal,
 	/obj/item/stamp/hos,
@@ -279,10 +279,10 @@
 	/obj/item/disk/data/floppy/manudrive/gene_booth,
 	/obj/item/storage/box/clothing/medical_director,
 	/obj/item/clothing/shoes/brown,
-	/obj/item/gun/implanter,
-	/obj/item/gun/reagent/syringe/NT,
+	/obj/item/firearm/implanter,
+	/obj/item/firearm/reagent/syringe/NT,
 	/obj/item/reagent_containers/mender/both,
-	/obj/item/gun/kinetic/dart_rifle,
+	/obj/item/firearm/kinetic/dart_rifle,
 	/obj/item/ammo/bullets/tranq_darts,
 	/obj/item/ammo/bullets/tranq_darts/anti_mutant,
 	/obj/item/robodefibrillator,
@@ -394,7 +394,7 @@
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
 			if (prob(15))
-				new /obj/item/gun/kinetic/riot40mm(src)
+				new /obj/item/firearm/kinetic/riot40mm(src)
 			else
 				new /obj/item/chem_grenade/flashbang(src)
 			return 1
@@ -912,7 +912,7 @@
 /obj/storage/secure/closet/civilian/bartender
 	name = "\improper Mixology supplies locker"
 	req_access = list(access_bar)
-	spawn_contents = list(/obj/item/gun/russianrevolver,\
+	spawn_contents = list(/obj/item/firearm/russianrevolver,\
 	/obj/item/reagent_containers/food/drinks/bottle/vintage,\
 	/obj/item/storage/box/glassbox,\
 	/obj/item/reagent_containers/food/drinks/juicer)

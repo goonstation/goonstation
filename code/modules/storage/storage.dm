@@ -417,7 +417,7 @@
 	src.linked_item.add_fingerprint(user)
 	if (visible)
 		animate_storage_rustle(src.linked_item)
-		if (!src.sneaky && !istype(I, /obj/item/gun/energy/crossbow))
+		if (!src.sneaky && !istype(I, /obj/item/firearm/energy/crossbow))
 			user.visible_message(SPAN_NOTICE("[user] has added [I] to [src.linked_item]!"),
 				SPAN_NOTICE("You have added [I] to [src.linked_item]."))
 		if (src.open_sound)

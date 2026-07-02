@@ -1,8 +1,8 @@
-TYPEINFO(/obj/item/gun/energy)
+TYPEINFO(/obj/item/firearm/energy)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 32
 
-/obj/item/gun/energy
+/obj/item/firearm/energy
 	name = "energy weapon"
 	icon = 'icons/obj/items/guns/energy.dmi'
 	item_state = "gun"

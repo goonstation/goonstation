@@ -61,17 +61,17 @@
 
 		tranquilizer
 			name = "tranquilizer crate"
-			spawn_contents = list(/obj/item/gun/kinetic/dart_rifle = 2,\
+			spawn_contents = list(/obj/item/firearm/kinetic/dart_rifle = 2,\
 			/obj/item/ammo/bullets/tranq_darts = 2,\
 			/obj/item/ammo/bullets/tranq_darts/anti_mutant)
 
 		phaser
 			name = "phaser crate"
-			spawn_contents = list(/obj/item/gun/energy/phaser_gun = 4)
+			spawn_contents = list(/obj/item/firearm/energy/phaser_gun = 4)
 
 		shotgun
 			name = "shotgun crate"
-			spawn_contents = list(/obj/item/gun/kinetic/pumpweapon/riotgun = 4,\
+			spawn_contents = list(/obj/item/firearm/kinetic/pumpweapon/riotgun = 4,\
 			/obj/item/ammo/bullets/abg = 4)
 
 		pod_weapons
@@ -100,7 +100,7 @@
 		anti_biological
 			name = "anti-biological crate"
 			spawn_contents = list(/obj/item/storage/box/flaregun = 2,\
-			/obj/item/gun/flamethrower/assembled/loaded = 2)
+			/obj/item/firearm/flamethrower/assembled/loaded = 2)
 
 /obj/storage/secure/crate/gear
 	desc = "A secure gear crate."
@@ -154,7 +154,7 @@
 	spawn_contents = list(/obj/item/requisition_token/security = 2,
 	/obj/item/requisition_token/security/assistant = 2,
 	/obj/item/turret_deployer/riot = 2,
-	/obj/item/gun/energy/stasis,
+	/obj/item/firearm/energy/stasis,
 	/obj/random_item_spawner/armoryweapon/one)
 
 /obj/storage/secure/crate/gear/armory/equipment/looted

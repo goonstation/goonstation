@@ -151,39 +151,39 @@
 
 	////////////////////// GUN STUFF -V
 	// Lifted from secbot!
-	var/global/list/budgun_whitelist = list(/obj/item/gun/energy/tasershotgun,\
-											/obj/item/gun/energy/taser_gun,\
-											/obj/item/gun/energy/vuvuzela_gun,\
-											/obj/item/gun/energy/wavegun,\
-											/obj/item/gun/energy/pulse_rifle,
-											/obj/item/gun/bling_blaster,\
+	var/global/list/budgun_whitelist = list(/obj/item/firearm/energy/tasershotgun,\
+											/obj/item/firearm/energy/taser_gun,\
+											/obj/item/firearm/energy/vuvuzela_gun,\
+											/obj/item/firearm/energy/wavegun,\
+											/obj/item/firearm/energy/pulse_rifle,
+											/obj/item/firearm/bling_blaster,\
 											/obj/item/bang_gun,\
-											/obj/item/gun/kinetic/meowitzer/inert,\
-											/obj/item/gun/russianrevolver,\
-											/obj/item/gun/energy/egun,\
-											/obj/item/gun/energy/ghost,\
-											/obj/item/gun/energy/owl_safe,\
-											/obj/item/gun/energy/frog,\
-											/obj/item/gun/energy/shrinkray,\
-											/obj/item/gun/energy/glitch_gun,\
-											/obj/item/gun/energy/lawbringer)
+											/obj/item/firearm/kinetic/meowitzer/inert,\
+											/obj/item/firearm/russianrevolver,\
+											/obj/item/firearm/energy/egun,\
+											/obj/item/firearm/energy/ghost,\
+											/obj/item/firearm/energy/owl_safe,\
+											/obj/item/firearm/energy/frog,\
+											/obj/item/firearm/energy/shrinkray,\
+											/obj/item/firearm/energy/glitch_gun,\
+											/obj/item/firearm/energy/lawbringer)
 	// List of guns that arent wierd gimmicks or traitor weapons
-	var/global/list/budgun_actualguns = list(/obj/item/gun/energy/tasershotgun,\
-											/obj/item/gun/energy/taser_gun,\
-											/obj/item/gun/energy/wavegun,\
-											/obj/item/gun/energy/pulse_rifle,\
-											/obj/item/gun/energy/egun,\
+	var/global/list/budgun_actualguns = list(/obj/item/firearm/energy/tasershotgun,\
+											/obj/item/firearm/energy/taser_gun,\
+											/obj/item/firearm/energy/wavegun,\
+											/obj/item/firearm/energy/pulse_rifle,\
+											/obj/item/firearm/energy/egun,\
 											/obj/item/bang_gun,\
-											/obj/item/gun/energy/lawbringer)
+											/obj/item/firearm/energy/lawbringer)
 	var/shotcount = 1		// Number of times it shoots when it should, modded by emag state
 	var/gun = null			// What's the name of our robot's gun? Used in the chat window!
 	var/obeygunlaw = 1		// Does our bot follow the gun whitelist?
-	var/obj/item/gun/budgun = null	// the gun, actually important
+	var/obj/item/firearm/budgun = null	// the gun, actually important
 	var/hasgun = 0			// So our robot only gets one gun
 	var/toollock = 1		// Gotta unlock the tool port to swap it
 	var/gunlocklock = 0		// Traitor mods prevent guntheft
 	var/ammofab = 0			// Is the Ammofabricator installed?
-	var/obj/item/gun/setup_gun = null	// Lets spawn with a gun
+	var/obj/item/firearm/setup_gun = null	// Lets spawn with a gun
 	var/gunt = new /obj/item/device/guardbot_tool/gun	// We give this to Buddies lacking a module so they don't get self-conscious about lacking a module
 	var/arrest_target = null	// uhh
 	var/lethal = 0				// uhhh
@@ -252,7 +252,7 @@
 		desc = "What happens when you put an assault rifle in the microwave."
 		setup_charge_maximum = 100000
 		setup_charge_percentage = 100
-		setup_gun = /obj/item/gun/kinetic/akm
+		setup_gun = /obj/item/firearm/kinetic/akm
 		health = 100
 		ammofab = 1
 		shotcount = 3 // Never stop firing, never start spawning
@@ -372,9 +372,9 @@
 				src.hasgun = 1
 				src.gun = budgun.name
 				UpdateIcon()
-				if(istype(src.budgun, /obj/item/gun/energy/lawbringer))
+				if(istype(src.budgun, /obj/item/firearm/energy/lawbringer))
 					BeTheLaw(src.emagged, 0, src.lawbringer_alwaysbigshot)
-				else if(istype(src.budgun, /obj/item/gun/energy/egun))
+				else if(istype(src.budgun, /obj/item/firearm/energy/egun))
 					CheckSafety(src.budgun, src.emagged, null)
 
 			src.net_id = generate_net_id(src)
@@ -438,9 +438,9 @@
 				SPAWN(1 SECOND)
 					boutput(user, "[src] looks confused for a moment.")
 		if (src.budgun)
-			if(istype(src.budgun, /obj/item/gun/energy/lawbringer))
+			if(istype(src.budgun, /obj/item/firearm/energy/lawbringer))
 				BeTheLaw(1, 0, src.lawbringer_alwaysbigshot)
-			if(istype(src.budgun, /obj/item/gun/energy/egun))
+			if(istype(src.budgun, /obj/item/firearm/energy/egun))
 				CheckSafety(src.budgun, 1, user)
 		return 1
 
@@ -509,7 +509,7 @@
 		else if (istype(W, /obj/item/device/guardbot_module/ammofab))
 			IllegalBotMod("ammofab", W, user)
 
-		else if (istype(W, /obj/item/device/guardbot_tool) || (istype(W, /obj/item/gun) || istype(W, /obj/item/bang_gun)))
+		else if (istype(W, /obj/item/device/guardbot_tool) || (istype(W, /obj/item/firearm) || istype(W, /obj/item/bang_gun)))
 			GrabTheThing(W, user) // Most of the checks for if they actually *do* grab the thing are in here
 
 		else if (ispryingtool(W))
@@ -539,8 +539,8 @@
 				src.task.attack_response(user)
 			..()
 
-	proc/CheckSafety(var/obj/item/gun/energy/W, var/unsafe = 0, var/user = null)
-		if (!istype(W, /obj/item/gun/energy/egun))
+	proc/CheckSafety(var/obj/item/firearm/energy/W, var/unsafe = 0, var/user = null)
+		if (!istype(W, /obj/item/firearm/energy/egun))
 			return	// Eguns only, please!
 		if (!src.on || src.idle)
 			src.slept_through_laser_class = 1	// y'know, whenever you get a chance
@@ -611,7 +611,7 @@
 			src.slept_through_laser_class = 0
 
 	proc/BeTheLaw(var/loose = 0, var/changemode = 0, var/bigshot = 0)
-		if (!istype(src.budgun, /obj/item/gun/energy/lawbringer))
+		if (!istype(src.budgun, /obj/item/firearm/energy/lawbringer))
 			src.slept_through_becoming_the_law = 0 // If we were going to be the law before, we ain't now.
 			return
 		if (!src.on || src.idle)	// Let's not wake em up just to say some dumb shit
@@ -619,7 +619,7 @@
 			return
 		set_emotion("smug")
 		var/law_prints = null
-		var/obj/item/gun/energy/lawbringer/prints = src.budgun
+		var/obj/item/firearm/energy/lawbringer/prints = src.budgun
 		if (prints.owner_prints && !loose)
 			var/search = lowertext(prints.owner_prints)
 			for (var/datum/db_record/R as anything in data_core.general.records)
@@ -762,7 +762,7 @@
 				src.obeygunlaw = 0
 				src.gunlocklock = 1
 
-		if (src.budgun && src.ammofab && istype(src.budgun, /obj/item/gun/kinetic)) // Should also be called whenever they are given a gun
+		if (src.budgun && src.ammofab && istype(src.budgun, /obj/item/firearm/kinetic)) // Should also be called whenever they are given a gun
 			src.locked = 1
 			if (user)
 				boutput(user, SPAN_ALERT("The BulletBuddy snakes a metallic tendril up [src]'s arm, tightening itself around their hand!"))
@@ -1004,9 +1004,9 @@
 				user.u_equip(Q)
 				UpdateIcon()
 				IllegalBotMod(null, user)	// Time to see if our mods want to do anything with this gun
-				if(istype(Q, /obj/item/gun/energy/lawbringer))
+				if(istype(Q, /obj/item/firearm/energy/lawbringer))
 					BeTheLaw(src.emagged, 0, src.lawbringer_alwaysbigshot)
-				else if(istype(Q, /obj/item/gun/energy/egun))
+				else if(istype(Q, /obj/item/firearm/energy/egun))
 					CheckSafety(src.budgun, src.emagged, user)
 
 			if ("tool")
@@ -1048,11 +1048,11 @@
 		return
 
 	proc/BarGun()
-		if (!istype(src.budgun, /obj/item/gun/russianrevolver))
+		if (!istype(src.budgun, /obj/item/firearm/russianrevolver))
 			return // silly suicide shooters only
 
 		var/turf/TdurgBar = get_turf(src)
-		var/obj/item/gun/russianrevolver/bar_gun = src.budgun
+		var/obj/item/firearm/russianrevolver/bar_gun = src.budgun
 		if(bar_gun.shotsLeft == 1 || src.ammofab)
 			bar_gun.shotsLeft = 0
 			if(src.hat)
@@ -1087,8 +1087,8 @@
 		if(!src.budgun || !src.ammofab || !src.cell)
 			return 0 // uhh
 
-		if (istype(src.budgun, /obj/item/gun/kinetic))
-			var/obj/item/gun/kinetic/shootgun = src.budgun	// first check if we have enough charge to reload
+		if (istype(src.budgun, /obj/item/firearm/kinetic))
+			var/obj/item/firearm/kinetic/shootgun = src.budgun	// first check if we have enough charge to reload
 			if (src?.cell?.charge >= GUARDBOT_LOWPOWER_ALERT_LEVEL && ((cell.charge - ((shootgun.ammo.max_amount - shootgun.ammo.amount_left) * (shootgun.ammo.ammo_type.power * shootgun.ammo.ammo_type.ks_ratio * 0.75))) > (GUARDBOT_LOWPOWER_ALERT_LEVEL)))	// *scream
 				cell.use((shootgun.ammo.max_amount - shootgun.ammo.amount_left) * (shootgun.ammo.ammo_type.power * shootgun.ammo.ammo_type.ks_ratio * 0.75))
 				shootgun.ammo.amount_left = shootgun.ammo.max_amount
@@ -1097,8 +1097,8 @@
 				return 1 // still good2shoot!
 			else
 				return DischargeAndTakeANap()
-		else if (istype(src.budgun, /obj/item/gun/bling_blaster) && ammofab)	// Ammo is ammo, even if its money
-			var/obj/item/gun/bling_blaster/funds = src.budgun	// not sure why you'd do this, but it's an option, so functionality
+		else if (istype(src.budgun, /obj/item/firearm/bling_blaster) && ammofab)	// Ammo is ammo, even if its money
+			var/obj/item/firearm/bling_blaster/funds = src.budgun	// not sure why you'd do this, but it's an option, so functionality
 			if (cell.charge && (cell.charge >= GUARDBOT_LOWPOWER_ALERT_LEVEL)) // I mean you can't even make much (if any) money off of this
 				cell.use(funds.cash_max - funds.cash_amt)	// maybe you'd get lucky and the buddy'll shoot some diamonds
 				funds.cash_amt = funds.cash_max		// but on average, the payout is crap and takes forever and you have to keep charging the bot
@@ -1114,13 +1114,13 @@
 		if(!src.budgun || !src.cell)
 			return 0 // fingerguns arent good2shoot yet
 
-		if (istype(src.budgun, /obj/item/gun/kinetic/meowitzer/inert)) // cats4days
-			var/obj/item/gun/kinetic/meowgun = src.budgun
+		if (istype(src.budgun, /obj/item/firearm/kinetic/meowitzer/inert)) // cats4days
+			var/obj/item/firearm/kinetic/meowgun = src.budgun
 			meowgun.ammo.amount_left = meowgun.ammo.max_amount
 			return 1 // mew2meow!
 
-		if (istype(src.budgun, /obj/item/gun/bling_blaster))
-			var/obj/item/gun/bling_blaster/cash_gun = src.budgun
+		if (istype(src.budgun, /obj/item/firearm/bling_blaster))
+			var/obj/item/firearm/bling_blaster/cash_gun = src.budgun
 			if (cash_gun.cash_max)
 				if (cash_gun.cash_amt >= cash_gun.shot_cost)
 					return 1 // totally cash!
@@ -1129,8 +1129,8 @@
 			else // i blame haine
 				return 0
 
-		if (istype(src.budgun, /obj/item/gun/kinetic))
-			var/obj/item/gun/kinetic/shootgun = src.budgun
+		if (istype(src.budgun, /obj/item/firearm/kinetic))
+			var/obj/item/firearm/kinetic/shootgun = src.budgun
 			if (shootgun.ammo) // is our gun even loaded with anything?
 				if (shootgun.ammo.amount_left >= shootgun.current_projectile.cost)
 					return 1 // good2shoot!
@@ -1139,11 +1139,11 @@
 			else // no?
 				return 0 // huh
 
-		else if (istype(src.budgun, /obj/item/gun/energy))
+		else if (istype(src.budgun, /obj/item/firearm/energy))
 			if(SEND_SIGNAL(budgun, COMSIG_CELL_CHECK_CHARGE, budgun.current_projectile.cost) & CELL_SUFFICIENT_CHARGE) // did we remember to load our energygun?
 				return 1
 			else if(SEND_SIGNAL(budgun, COMSIG_CELL_CAN_CHARGE) & CELL_UNCHARGEABLE) // oh no we cant, but can we recharge it?
-				if(istype(src.budgun, /obj/item/gun/energy/lawbringer)) // is it one of those funky guns with multiple settings?
+				if(istype(src.budgun, /obj/item/firearm/energy/lawbringer)) // is it one of those funky guns with multiple settings?
 					BeTheLaw(src.emagged, 1, src.lawbringer_alwaysbigshot) // see if we can change modes and try again
 					return 0 // then try again later
 				else
@@ -1152,10 +1152,10 @@
 				return 0
 
 	proc/ChargeUrLaser()
-		if(!src.budgun || !src.cell || !istype(src.budgun, /obj/item/gun/energy))
+		if(!src.budgun || !src.cell || !istype(src.budgun, /obj/item/firearm/energy))
 			return 0 // keep your fingers out of the charger
 
-		if (istype(src.budgun, /obj/item/gun/energy))
+		if (istype(src.budgun, /obj/item/firearm/energy))
 			if(!(SEND_SIGNAL(budgun, COMSIG_CELL_CAN_CHARGE) & CELL_CHARGEABLE)) // Oh a non-rechargable gun? Or no cell at all?
 				return 0 // cant touch that, sorry
 			else
@@ -1206,8 +1206,8 @@
 
 		var/burst = shotcount	// TODO: Make rapidfire exist, then work.
 		while(burst > 0 && target)
-			if(istype(budgun, /obj/item/gun/kinetic/pumpweapon))
-				var/obj/item/gun/kinetic/pumpweapon/pumpy = budgun
+			if(istype(budgun, /obj/item/firearm/kinetic/pumpweapon))
+				var/obj/item/firearm/kinetic/pumpweapon/pumpy = budgun
 				pumpy.rack(src)
 			if((BOUNDS_DIST(target, src) == 0))
 				budgun.ShootPointBlank(target, src)
@@ -1383,9 +1383,9 @@
 			src.obeygunlaw = 0
 			src.set_emotion("look")
 
-		if(istype(src.budgun, /obj/item/gun/energy/lawbringer))
+		if(istype(src.budgun, /obj/item/firearm/energy/lawbringer))
 			BeTheLaw(src.emagged, 0, src.lawbringer_alwaysbigshot)
-		if(istype(src.budgun, /obj/item/gun/energy/egun))
+		if(istype(src.budgun, /obj/item/firearm/energy/egun))
 			CheckSafety(src.budgun, 1)
 		return
 
@@ -1575,7 +1575,7 @@
 				if (istype(src.budgun, /obj/item/bang_gun))
 					src.budgun.pixelaction(target, null, src, null) // dang it
 					GunSux()
-				else if(istype(src.budgun, /obj/item/gun/russianrevolver))
+				else if(istype(src.budgun, /obj/item/firearm/russianrevolver))
 					BarGun()
 				else if(src.budgun)
 					if(GET_COOLDOWN(src, "buddy_refire_delay"))
@@ -1801,7 +1801,7 @@
 		if (src.budgun)
 			gun_overlay = image(src.budgun.icon, "[src.budgun.icon_state]", layer = 10, pixel_x = src.gun_x_offset, pixel_y = src.gun_y_offset)
 
-			if (istype(src.budgun, /obj/item/gun/energy/lawbringer))
+			if (istype(src.budgun, /obj/item/firearm/energy/lawbringer))
 				var/image/lawbringer_lights = image('icons/obj/items/guns/energy.dmi', "lawbringer-d100", 11, pixel_x = src.gun_x_offset, pixel_y = src.gun_y_offset)
 				switch(lawbringer_state)
 					if ("clown")
@@ -4133,14 +4133,14 @@ TYPEINFO(/obj/item/device/guardbot_module)
 					if(weapon_access in worn_id.access)
 						return 0
 
-				if(istype(potentialThreat.l_hand, /obj/item/gun) || istype(potentialThreat.l_hand, /obj/item/baton) || istype(potentialThreat.l_hand, /obj/item/sword))
+				if(istype(potentialThreat.l_hand, /obj/item/firearm) || istype(potentialThreat.l_hand, /obj/item/baton) || istype(potentialThreat.l_hand, /obj/item/sword))
 					threatcount += 4
 
-				if(istype(potentialThreat.r_hand, /obj/item/gun) || istype(potentialThreat.r_hand, /obj/item/baton) || istype(potentialThreat.r_hand, /obj/item/sword))
+				if(istype(potentialThreat.r_hand, /obj/item/firearm) || istype(potentialThreat.r_hand, /obj/item/baton) || istype(potentialThreat.r_hand, /obj/item/sword))
 					threatcount += 4
 
 				if (ishuman(potentialThreat))
-					if(istype(potentialThreat:belt, /obj/item/gun) || istype(potentialThreat:belt, /obj/item/baton) || istype(potentialThreat:belt, /obj/item/sword))
+					if(istype(potentialThreat:belt, /obj/item/firearm) || istype(potentialThreat:belt, /obj/item/baton) || istype(potentialThreat:belt, /obj/item/sword))
 						threatcount += 2
 
 					if(istype(potentialThreat:wear_suit, /obj/item/clothing/suit/wizrobe))

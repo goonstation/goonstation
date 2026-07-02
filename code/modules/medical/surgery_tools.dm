@@ -317,7 +317,7 @@ CONTAINS:
 			src.ammo += 1
 			qdel(I)
 			return
-		if (istype(I, /obj/item/gun/kinetic/zipgun))
+		if (istype(I, /obj/item/firearm/kinetic/zipgun))
 			I.Attackby(src, user)
 			return
 		. = ..()

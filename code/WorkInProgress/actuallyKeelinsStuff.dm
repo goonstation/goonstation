@@ -2599,12 +2599,12 @@ Returns:
 			new/obj/item/sheet/wood(T)
 			new/obj/item/sheet/wood(T)
 		else if(prob(1) && prob(40))
-			new/obj/item/gun/kinetic/spes(T)
+			new/obj/item/firearm/kinetic/spes(T)
 			new/obj/item/ammo/bullets/a12(T)
 			new/obj/item/ammo/bullets/a12(T)
 
 		else if(prob(1) && prob(40))
-			new/obj/item/gun/kinetic/flaregun(T)
+			new/obj/item/firearm/kinetic/flaregun(T)
 			new/obj/item/ammo/bullets/flare(T)
 			new/obj/item/ammo/bullets/flare(T)
 

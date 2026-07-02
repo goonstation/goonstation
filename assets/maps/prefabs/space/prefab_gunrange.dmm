@@ -80,7 +80,7 @@
 /area/prefab/shooting_range)
 "dz" = (
 /obj/rack,
-/obj/item/gun/laser_pistol/prototype,
+/obj/item/firearm/laser_pistol/prototype,
 /turf/simulated/floor/wood/three,
 /area/prefab/shooting_range)
 "dA" = (
@@ -171,7 +171,7 @@
 /area/prefab/shooting_range)
 "hm" = (
 /obj/rack,
-/obj/item/gun/laser_pistol,
+/obj/item/firearm/laser_pistol,
 /turf/simulated/floor/wood/three,
 /area/prefab/shooting_range)
 "ic" = (
@@ -500,7 +500,7 @@
 /area/prefab/shooting_range)
 "JQ" = (
 /obj/table/reinforced,
-/obj/item/gun/kinetic/foamdartgun,
+/obj/item/firearm/kinetic/foamdartgun,
 /obj/decal/tile_edge/stripe{
 	icon_state = "xtra_bigstripe-edge"
 	},

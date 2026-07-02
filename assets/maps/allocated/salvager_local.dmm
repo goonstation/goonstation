@@ -743,10 +743,10 @@
 /obj/machinery/light/small/sticky/cool{
 	dir = 8
 	},
-/obj/item/gun/kinetic/slamgun{
+/obj/item/firearm/kinetic/slamgun{
 	pixel_y = -1
 	},
-/obj/item/gun/kinetic/slamgun{
+/obj/item/firearm/kinetic/slamgun{
 	pixel_x = 1;
 	pixel_y = 7
 	},
@@ -935,14 +935,14 @@
 	pixel_x = -6;
 	pixel_y = -5
 	},
-/obj/item/gun/kinetic/zipgun{
+/obj/item/firearm/kinetic/zipgun{
 	pixel_x = -14;
 	pixel_y = 6
 	},
-/obj/item/gun/kinetic/zipgun{
+/obj/item/firearm/kinetic/zipgun{
 	pixel_x = -8
 	},
-/obj/item/gun/kinetic/zipgun{
+/obj/item/firearm/kinetic/zipgun{
 	pixel_x = -3;
 	pixel_y = -6
 	},

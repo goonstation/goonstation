@@ -1,8 +1,8 @@
-TYPEINFO(/obj/item/gun/reagent)
+TYPEINFO(/obj/item/firearm/reagent)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = 16
 
-/obj/item/gun/reagent
+/obj/item/firearm/reagent
 	name = "reagent gun"
 	item_state = "gun"
 	m_amt = 2000
@@ -113,11 +113,11 @@ TYPEINFO(/obj/item/gun/reagent)
 
 		return ..()
 
-TYPEINFO(/obj/item/gun/reagent/syringe)
+TYPEINFO(/obj/item/firearm/reagent/syringe)
 	analyser_flags = parent_type::analyser_flags & ~ANALYSER_SYNDIE_ONLY // Gonna let mechanics scan these, even without the syndicate scanner. THIS MAY BE A BAD IDEA.
 	mats = 12 // These are some of the few syndicate items that would be genuinely useful to non-antagonists when scanned.
 
-/obj/item/gun/reagent/syringe
+/obj/item/firearm/reagent/syringe
 	name = "syringe gun"
 	icon = 'icons/obj/items/guns/syringe.dmi'
 	icon_state = "syringegun"
@@ -154,7 +154,7 @@ TYPEINFO(/obj/item/gun/reagent/syringe)
 			P.create_reagents()
 
 
-/obj/item/gun/reagent/syringe/NT
+/obj/item/firearm/reagent/syringe/NT
 	name = "NT syringe gun"
 	icon_state = "syringegun-NT"
 	item_state = "syringegun-NT"
@@ -181,13 +181,13 @@ TYPEINFO(/obj/item/gun/reagent/syringe)
 		src.UpdateOverlays(magged, "emagged")
 		return 1
 
-/obj/item/gun/reagent/syringe/NT/emagged
+/obj/item/firearm/reagent/syringe/NT/emagged
 	New()
 		..()
 		src.emag_act()
 
 
-/obj/item/gun/reagent/syringe/love
+/obj/item/firearm/reagent/syringe/love
 	name = "Love Gun"
 	icon_state = "syringegun-love"
 	item_state = "syringegun-love"
@@ -202,11 +202,11 @@ TYPEINFO(/obj/item/gun/reagent/syringe)
 		src.reagents.add_reagent("love", src.reagents.maximum_volume)
 
 
-/obj/item/gun/reagent/syringe/love/plus // Sometimes you just need more love in your life.
+/obj/item/firearm/reagent/syringe/love/plus // Sometimes you just need more love in your life.
 	name = "Love Gun Plus"
 	capacity = 1000
 
-/obj/item/gun/reagent/ecto
+/obj/item/firearm/reagent/ecto
 	name = "ectoblaster"
 	desc = "A weapon that launches concentrated ectoplasm. Harmless to humans, deadly to ghosts."
 	icon = 'icons/obj/items/guns/energy.dmi'

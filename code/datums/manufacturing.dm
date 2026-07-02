@@ -3746,7 +3746,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 							 "metal_superdense" = 10,
 							 "conductive" = 20,
 							 "crystal" = 20)
-	item_outputs = list(/obj/item/gun/energy/alastor)
+	item_outputs = list(/obj/item/firearm/energy/alastor)
 	create = 1
 	time = 30 SECONDS
 	category = "Tool"
@@ -3912,7 +3912,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 /datum/manufacture/saa	//
 	name = "Colt SAA"
 	item_requirements = list("metal_dense" = 7)
-	item_outputs = list(/obj/item/gun/kinetic/single_action/colt_saa)
+	item_outputs = list(/obj/item/firearm/kinetic/single_action/colt_saa)
 	create = 1
 	time = 30 SECONDS
 	category = "Weapon"
@@ -3926,7 +3926,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 /datum/manufacture/clock	//
 	name = "Clock 188"
 	item_requirements = list("metal" = 10)
-	item_outputs = list(/obj/item/gun/kinetic/clock_188)
+	item_outputs = list(/obj/item/firearm/kinetic/clock_188)
 	create = 1
 	time = 10 SECONDS
 	category = "Weapon"
@@ -3941,7 +3941,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 /datum/manufacture/riot_shotgun	//
 	name = "Riot Shotgun"
 	item_requirements = list("metal" = 20)
-	item_outputs = list(/obj/item/gun/kinetic/pumpweapon/riotgun)
+	item_outputs = list(/obj/item/firearm/kinetic/pumpweapon/riotgun)
 	create = 1
 	time = 20 SECONDS
 	category = "Weapon"
@@ -3956,7 +3956,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 /datum/manufacture/riot_launcher	//
 	name = "Riot Launcher"
 	item_requirements = list("metal" = 12)
-	item_outputs = list(/obj/item/gun/kinetic/riot40mm)
+	item_outputs = list(/obj/item/firearm/kinetic/riot40mm)
 	create = 1
 	time = 10 SECONDS
 	category = "Weapon"
@@ -3993,7 +3993,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 							 "metal_superdense" = 15,
 							 "conductive" = 4,
 							 "crystal" = 3)
-	item_outputs = list(/obj/item/gun/kinetic/sniper)
+	item_outputs = list(/obj/item/firearm/kinetic/sniper)
 	create = 1
 	time = 25 SECONDS
 	category = "Weapon"
@@ -4008,7 +4008,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	name = "Tactical Shotgun"
 	item_requirements = list("metal_superdense" = 15,
 							 "conductive" = 5)
-	item_outputs = list(/obj/item/gun/kinetic/tactical_shotgun)
+	item_outputs = list(/obj/item/firearm/kinetic/tactical_shotgun)
 	create = 1
 	time = 20 SECONDS
 	category = "Weapon"
@@ -4024,7 +4024,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	item_requirements = list("dense" = 5,
 							 "metal_superdense" = 10,
 							 "conductive_high" = 6)
-	item_outputs = list(/obj/item/gun/kinetic/gyrojet)
+	item_outputs = list(/obj/item/firearm/kinetic/gyrojet)
 	create = 1
 	time = 30 SECONDS
 	category = "Weapon"

@@ -63,7 +63,7 @@
 		amount = 4
 		max_amount = 4
 		stand_type = "taser_rack"
-		contained_weapon = /obj/item/gun/energy/taser_gun
+		contained_weapon = /obj/item/firearm/energy/taser_gun
 		contained_weapon_name = "taser gun"
 		req_access = list(access_security)
 
@@ -78,10 +78,10 @@
 			recharges_contents = 1
 
 			valid_item(obj/item/I)
-				return(istype(I, /obj/item/gun/energy/taser_gun) ||\
-				istype(I, /obj/item/gun/energy/tasershotgun) ||\
-				istype(I, /obj/item/gun/energy/tasersmg) ||\
-				istype(I, /obj/item/gun/energy/wavegun)
+				return(istype(I, /obj/item/firearm/energy/taser_gun) ||\
+				istype(I, /obj/item/firearm/energy/tasershotgun) ||\
+				istype(I, /obj/item/firearm/energy/tasersmg) ||\
+				istype(I, /obj/item/firearm/energy/wavegun)
 				)
 
 			empty
@@ -95,7 +95,7 @@
 		max_amount = 4
 		icon_state = "egun_rack"
 		stand_type = "egun_rack"
-		contained_weapon = /obj/item/gun/energy/egun
+		contained_weapon = /obj/item/firearm/energy/egun
 		contained_weapon_name = "energy gun"
 		req_access = list(access_security)
 
@@ -115,7 +115,7 @@
 		amount = 3
 		max_amount = 3
 		stand_type = "shotgun_rack"
-		contained_weapon = /obj/item/gun/kinetic/pumpweapon/riotgun
+		contained_weapon = /obj/item/firearm/kinetic/pumpweapon/riotgun
 		contained_weapon_name = "riot shotgun"
 		req_access = list(access_security)
 
@@ -126,7 +126,7 @@
 		amount = 3
 		max_amount = 3
 		stand_type = "pulserifle_rack"
-		contained_weapon = /obj/item/gun/energy/pulse_rifle
+		contained_weapon = /obj/item/firearm/energy/pulse_rifle
 		contained_weapon_name = "pulse rifle"
 		req_access = list(access_armory)
 
@@ -140,13 +140,13 @@
 		amount = 3
 		max_amount = 3
 		stand_type = "phaser_rack"
-		contained_weapon = /obj/item/gun/energy/phaser_gun/extended_mag
+		contained_weapon = /obj/item/firearm/energy/phaser_gun/extended_mag
 		contained_weapon_name = "phaser"
 		req_access = list(access_armory)
 		recharges_contents = TRUE
 
 		valid_item(obj/item/I)
-			return istype(I, /obj/item/gun/energy/phaser_gun)
+			return istype(I, /obj/item/firearm/energy/phaser_gun)
 
 	phaser_smg_rack
 		name = "phaser smg rack"
@@ -155,13 +155,13 @@
 		amount = 3
 		max_amount = 3
 		stand_type = "phaser_rack"
-		contained_weapon = /obj/item/gun/energy/phaser_smg/extended_mag
+		contained_weapon = /obj/item/firearm/energy/phaser_smg/extended_mag
 		contained_weapon_name = "phaser"
 		req_access = list(access_armory)
 		recharges_contents = TRUE
 
 		valid_item(obj/item/I)
-			return istype(I, /obj/item/gun/energy/phaser_smg)
+			return istype(I, /obj/item/firearm/energy/phaser_smg)
 
 
 	New()

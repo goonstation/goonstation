@@ -34,7 +34,7 @@
 		istype(x, /obj/item/body_bag) && x.w_class >= W_CLASS_BULKY \
 	)
 
-#define cangunpoint(x) (istype(x, /obj/item/gun) || istype(x, /obj/item/bang_gun))
+#define cangunpoint(x) (istype(x, /obj/item/firearm) || istype(x, /obj/item/bang_gun))
 
 /// Randomizes an item's pixel offset within the given range
 #define RANDOMIZE_PIXEL_OFFSET(item, range) \

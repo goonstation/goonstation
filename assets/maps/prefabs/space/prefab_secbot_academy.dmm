@@ -194,11 +194,11 @@
 /area/prefab/secbot_academy)
 "hW" = (
 /obj/storage/secure/crate,
-/obj/item/gun/kinetic/foamdartgun,
-/obj/item/gun/kinetic/foamdartgun,
-/obj/item/gun/kinetic/foamdartrevolver,
-/obj/item/gun/kinetic/foamdartrevolver,
-/obj/item/gun/kinetic/foamdartshotgun,
+/obj/item/firearm/kinetic/foamdartgun,
+/obj/item/firearm/kinetic/foamdartgun,
+/obj/item/firearm/kinetic/foamdartrevolver,
+/obj/item/firearm/kinetic/foamdartrevolver,
+/obj/item/firearm/kinetic/foamdartshotgun,
 /turf/simulated/floor/redblack{
 	dir = 9
 	},

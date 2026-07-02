@@ -1,10 +1,10 @@
 ///////////////////////////////////////Rad Crossbow
-TYPEINFO(/obj/item/gun/energy/crossbow)
+TYPEINFO(/obj/item/firearm/energy/crossbow)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal" = 5,
 				"conductive_high" = 5,
 				"energy_high" = 10)
-/obj/item/gun/energy/crossbow
+/obj/item/firearm/energy/crossbow
 	name = "\improper Wenshen mini rad-poison-crossbow"
 	desc = "The XIANG|GIESEL Wenshen (瘟神) crossbow favored by many of the Syndicate's stealth specialists, which does damage over time using a slow-acting radioactive poison. Utilizes a self-recharging atomic power cell from Giesel Radiofabrik."
 	icon_state = "crossbow"

@@ -1170,7 +1170,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	base_state = "biobag"
 	clothing_type = /obj/item/clothing/under/gimmick/trashsinglet/biohazard
 
-/obj/item/gun/sprayer
+/obj/item/firearm/sprayer
 	name = "\improper WA-V3 Cleaning Device" //name and desc suggested by tekotheteapot
 	desc = "The Wide Area V3 Cleaning Device, holy grail of space janitorial hardware.<br>\
 		Must ONLY be used with Nanotrasen™ licensed WA-V3 back tanks."
@@ -1317,12 +1317,12 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 
 	equipped(mob/user, slot)
 		. = ..()
-		var/obj/item/gun/sprayer/sprayer = user.find_type_in_hand(/obj/item/gun/sprayer)
+		var/obj/item/firearm/sprayer/sprayer = user.find_type_in_hand(/obj/item/firearm/sprayer)
 		sprayer?.connect(user)
 
 	unequipped(mob/user)
 		. = ..()
-		var/obj/item/gun/sprayer/sprayer = user.find_type_in_hand(/obj/item/gun/sprayer)
+		var/obj/item/firearm/sprayer/sprayer = user.find_type_in_hand(/obj/item/firearm/sprayer)
 		sprayer?.disconnect(user)
 
 	attackby(obj/item/W, mob/user, params)

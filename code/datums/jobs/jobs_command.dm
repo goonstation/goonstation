@@ -62,7 +62,7 @@ ABSTRACT_TYPE(/datum/job/command)
 		slot_back = list(/obj/item/storage/backpack/NT)
 		slot_mask = list(/obj/item/clothing/mask/gas)
 		slot_eyes = list(/obj/item/clothing/glasses/thermal)
-		items_in_backpack = list(/obj/item/crowbar,/obj/item/device/light/flashlight,/obj/item/camera,/obj/item/gun/energy/egun)
+		items_in_backpack = list(/obj/item/crowbar,/obj/item/device/light/flashlight,/obj/item/camera,/obj/item/firearm/energy/egun)
 		special_spawn_location = LANDMARK_HTR_TEAM
 
 		special_setup(var/mob/living/carbon/human/M)
@@ -131,7 +131,7 @@ ABSTRACT_TYPE(/datum/job/command)
 		slot_glov = list(/obj/item/clothing/gloves/latex)
 		slot_back = list(/obj/item/storage/backpack/NT)
 		slot_eyes = list(/obj/item/clothing/glasses/thermal)
-		items_in_backpack = list(/obj/item/crowbar,/obj/item/device/light/flashlight,/obj/item/breaching_charge,/obj/item/breaching_charge,/obj/item/gun/energy/plasma_gun)
+		items_in_backpack = list(/obj/item/crowbar,/obj/item/device/light/flashlight,/obj/item/breaching_charge,/obj/item/breaching_charge,/obj/item/firearm/energy/plasma_gun)
 		special_spawn_location = LANDMARK_HTR_TEAM
 
 		special_setup(var/mob/living/carbon/human/M)

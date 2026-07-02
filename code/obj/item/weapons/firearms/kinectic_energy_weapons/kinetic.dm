@@ -1,5 +1,5 @@
-ABSTRACT_TYPE(/obj/item/gun/kinetic)
-/obj/item/gun/kinetic
+ABSTRACT_TYPE(/obj/item/firearm/kinetic)
+/obj/item/firearm/kinetic
 	name = "kinetic weapon"
 	icon = 'icons/obj/items/guns/kinetic.dmi'
 	item_state = "gun"
@@ -285,8 +285,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			return 0
 		return 1
 
-ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
-/obj/item/gun/kinetic/single_action
+ABSTRACT_TYPE(/obj/item/firearm/kinetic/single_action)
+/obj/item/firearm/kinetic/single_action
 	// We need a separate uncocked state if a gun has a fire animation
 	var/has_uncocked_state = FALSE
 	var/hammer_cocked = FALSE
@@ -477,7 +477,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 				playsound(src.loc, "sound/weapons/casings/casing-xl-0[rand(1,6)].ogg", 15, 0.1)
 
 
-/obj/item/casing/New(loc, obj/item/gun/firearm)
+/obj/item/casing/New(loc, obj/item/firearm/firearm)
 	. = ..()
 	src.pixel_y += rand(-12,12)
 	src.pixel_x += rand(-12,12)
@@ -494,7 +494,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		. += SPAN_NOTICE("<br>Your forensic intuition tells you it was fired by \an [src.fired_by].")
 
 //no caliber and ALL
-/obj/item/gun/kinetic/vgun
+/obj/item/firearm/kinetic/vgun
 	name = "virtual pistol"
 	desc = "This thing would be better if it wasn't such a piece of shit."
 	icon = 'icons/obj/items/guns/energy.dmi'
@@ -518,7 +518,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		else
 			..()
 
-/obj/item/gun/kinetic/zipgun
+/obj/item/firearm/kinetic/zipgun
 	name = "zip gun"
 	desc = "An improvised and unreliable gun."
 	icon_state = "zipgun"
@@ -590,7 +590,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 		return
 
-/obj/item/gun/kinetic/survival_rifle
+/obj/item/firearm/kinetic/survival_rifle
 	name = "\improper Efnysien survival rifle"
 	desc = "A semi-automatic rifle, renowned for it's easily convertible caliber, developed by Mabinogi Firearms Company. Popular with pilots and scouts."
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
@@ -636,7 +636,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		// Swap the barrel objs
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		user.visible_message("[user] begins swapping the barrel on [his_or_her(user)] [src].", "You begin swapping the barrel on \the [src].")
-		SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/item/gun/kinetic/survival_rifle/proc/swap_barrel, list(user, new_barrel, holding_barrel), src.icon, src.icon_state,"[user] finishes swapping the barrel on [his_or_her(user)] [src].", null)
+		SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/item/firearm/kinetic/survival_rifle/proc/swap_barrel, list(user, new_barrel, holding_barrel), src.icon, src.icon_state,"[user] finishes swapping the barrel on [his_or_her(user)] [src].", null)
 		return
 
 	proc/swap_barrel(var/mob/user, var/obj/item/survival_rifle_barrel/new_barrel, var/holding_barrel)
@@ -662,11 +662,11 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		src.desc = desc = "A semi-automatic rifle, renowned for it's easily convertible caliber, developed by Mabinogi Firearms Company. It's currently fitted with a [src.barrel.name]."
 		src.tooltip_rebuild = TRUE
 
-/obj/item/gun/kinetic/revolver/vr
+/obj/item/firearm/kinetic/revolver/vr
 	icon = 'icons/effects/VR.dmi'
 
 //0.22
-/obj/item/gun/kinetic/faith
+/obj/item/firearm/kinetic/faith
 	name = "Faith"
 	desc = "'Cause ya gotta have Faith. A custom upgrade to the Auklet .22 pocket pistol from Cormorant Precision Arms."
 	icon_state = "faith"
@@ -686,7 +686,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		set_current_projectile(new/datum/projectile/bullet/bullet_22)
 		..()
 
-/obj/item/gun/kinetic/silenced_22
+/obj/item/firearm/kinetic/silenced_22
 	name = "\improper Orion silenced pistol"
 	desc = "A small pistol with an integrated flash and noise suppressor, bearing the emblem of Sceptre Tactical Laboratories. Uses .22 rounds."
 	icon_state = "silenced"
@@ -718,7 +718,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		src.current_projectile.shot_sound = 'sound/weapons/suppressed_22.ogg'
 		src.current_projectile.shot_volume = 30
 
-/obj/item/gun/kinetic/capella
+/obj/item/firearm/kinetic/capella
 	name = "\improper Capella Mk. 8 competition pistol"
 	desc = "A match-grade competition pistol, expertly machined for extreme accuracy and speed. Produced by Almagest Weapons Fabrication."
 	icon_state = "capella"
@@ -748,7 +748,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 
 //0.308
-/obj/item/gun/kinetic/minigun // it is now STRONK
+/obj/item/firearm/kinetic/minigun // it is now STRONK
 	name = "\improper Alpha Hydrae minigun"
 	desc = "The Almagest M134 Alpha Hydrae is a six-barrel rotary machine gun chambered in 7.62×51mm NATO. The nuclear option for suppressive fire."
 	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
@@ -781,7 +781,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 		setProperty("carried_movespeed", 1.5) //the addative slow down does not play nice with the full auto so you get this instead
 
-/obj/item/gun/kinetic/akm
+/obj/item/firearm/kinetic/akm
 	name = "\improper AKM Assault Rifle"
 	desc = "An old Cold War relic chambered in 7.62x39. Rusted, but not busted. Vast numbers were brought back into service for the Martian war."
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
@@ -813,7 +813,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 
 
-/obj/item/gun/kinetic/hunting_rifle
+/obj/item/firearm/kinetic/hunting_rifle
 	name = "old hunting rifle"
 	desc = "The Kittiwake .308 from Cormorant Precision Arms, a classic high-powered hunting and police rifle, reliable in almost any environment. The scope is in fine condition."
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
@@ -847,7 +847,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 
 
-/obj/item/gun/kinetic/dart_rifle
+/obj/item/firearm/kinetic/dart_rifle
 	name = "tranquilizer rifle"
 	desc = "A veterinary tranquilizer rifle chambered in .308 caliber. This rifle can only accept .308 tranquilizer darts."
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
@@ -875,7 +875,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 
 //9mm/0.355
-/obj/item/gun/kinetic/clock_188
+/obj/item/firearm/kinetic/clock_188
 	desc = "A NATO-surplus 9mm sidearm, still popular with Frontier military-police and peacekeeping forces. Highly customizable, often issued with frangible rounds for use in pressurized compartments."
 	name = "\improper Clock 188"
 	icon_state = "glock"
@@ -920,7 +920,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			spread_angle = 0
 			shoot_delay = 2
 
-/obj/item/gun/kinetic/clock_188/boomerang
+/obj/item/firearm/kinetic/clock_188/boomerang
 	desc = "Jokingly called a \"Gunarang\" in some circles. Uses 9mm NATO rounds."
 	name = "\improper Clock 180"
 	force = MELEE_DMG_PISTOL
@@ -973,7 +973,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			projectiles = list(current_projectile)
 			UpdateIcon()
 
-/obj/item/gun/kinetic/uzi
+/obj/item/firearm/kinetic/uzi
 	desc = "A stamped metal PDW, produced to respond to Mortian raids. A favorite of armed bodyguards, hired muscle, henchmen, and gangsters."
 	name = "\improper MOR-30"
 	icon_state = "uzi"
@@ -1034,7 +1034,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 					set_current_projectile(new/datum/projectile/bullet/bullet_9mm/smg)
 					projectiles = list(current_projectile, new/datum/projectile/bullet/bullet_9mm/smg/auto)
 
-/obj/item/gun/kinetic/greasegun
+/obj/item/firearm/kinetic/greasegun
 	name = "\improper Grease Gun"
 	desc = "A really clunky stamped-metal SMG. Tons of these were mass-produced in Mars colony machine shops during the War, and many have ended up in the Frontier."
 	icon_state = "grease"
@@ -1116,7 +1116,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			. = clamp(. + rand(-8,8),10,26)
 		. /= 10
 
-/obj/item/gun/kinetic/draco
+/obj/item/firearm/kinetic/draco
 	name = "\improper Draco Pistol"
 	desc = "A full size 7.62x39mm 'Pistol'. With no stock. You should shoot this in bursts."
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
@@ -1152,14 +1152,14 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		AddComponent(/datum/component/holdertargeting/fullauto, 1.6)
 		..()
 
-/obj/item/gun/kinetic/draco/empty
+/obj/item/firearm/kinetic/draco/empty
 
 	New()
 		..()
 		ammo.amount_left = 0
 		UpdateIcon()
 
-/obj/item/gun/kinetic/webley
+/obj/item/firearm/kinetic/webley
 	name = "Webley 'Holdout' Snubnose"
 	desc = "A cut down Webley break-action revolver. There's some extra weight in the grip for spinning action."
 	icon_state = "webleysnub"
@@ -1266,7 +1266,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 
 
-/obj/item/gun/kinetic/american180
+/obj/item/firearm/kinetic/american180
 	name = "\improper Razorbill-180"
 	desc = "A .22 submachine gun from Cormorant Precision Arms loaded with a huge pancake magazine, marketed towards max-security prison guards and security forces facing massed wave attacks."
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
@@ -1296,7 +1296,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		AddComponent(/datum/component/holdertargeting/fullauto, 0.6)
 		..()
 
-/obj/item/gun/kinetic/makarov
+/obj/item/firearm/kinetic/makarov
 	name = "\improper PM Pistol"
 	desc = "A time-proven semi-automatic, 9x18mm caliber service pistol, still produced by the Zvezda Design Bureau."
 	icon_state = "makarov"
@@ -1319,7 +1319,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 
 //medic primary
-/obj/item/gun/kinetic/veritate
+/obj/item/firearm/kinetic/veritate
 	desc = "A personal defence weapon, developed by Almagest Weapons Fabrication."
 	name = "\improper Veritate PDW"
 	icon_state = "vector"
@@ -1357,7 +1357,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			spread_angle = 0
 			shoot_delay = 2 DECI SECONDS
 
-/obj/item/gun/kinetic/lopoint
+/obj/item/firearm/kinetic/lopoint
 	desc = "Cheap and disposable, having a Lo-Point is the first step towards a life of crime. Just remember to throw it away when you're done."
 	name = "Lo-Point"
 	icon_state = "hipoint"
@@ -1395,7 +1395,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		qdel(src)
 
 
-/obj/item/gun/kinetic/SMG_briefcase
+/obj/item/firearm/kinetic/SMG_briefcase
 	name = "secure briefcase"
 	icon = 'icons/obj/items/storage.dmi'
 	icon_state = "secure"
@@ -1478,7 +1478,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			icon_state="secure"
 
 //0.357
-/obj/item/gun/kinetic/revolver
+/obj/item/firearm/kinetic/revolver
 	name = "\improper Kestrel revolver"
 	desc = "A hefty combat revolver developed by Cormorant Precision Arms. Uses .357 caliber rounds."
 	icon_state = "revolver"
@@ -1498,7 +1498,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 
 //0.38
-/obj/item/gun/kinetic/detectiverevolver
+/obj/item/firearm/kinetic/detectiverevolver
 	name = "\improper Piper .38 revolver"
 	desc = "A snubnosed police-issue revolver developed by Cormorant Precision Arms. Uses .38-Special rounds. A favorite of the Detective's Union, always reliable in times of strife."
 	icon_state = "detective"
@@ -1515,17 +1515,17 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/revolver_38/stunners)
-		src.verbs -= /obj/item/gun/kinetic/detectiverevolver/verb/claim_colt
+		src.verbs -= /obj/item/firearm/kinetic/detectiverevolver/verb/claim_colt
 		..()
 
 	pickup(mob/user)
 		. = ..()
 		if (user.mind?.assigned_role == "Detective")
-			src.verbs |= /obj/item/gun/kinetic/detectiverevolver/verb/claim_colt
+			src.verbs |= /obj/item/firearm/kinetic/detectiverevolver/verb/claim_colt
 
 	dropped(mob/user)
 		. = ..()
-		src.verbs -= /obj/item/gun/kinetic/detectiverevolver/verb/claim_colt
+		src.verbs -= /obj/item/firearm/kinetic/detectiverevolver/verb/claim_colt
 
 	verb/claim_colt()
 		set src in usr
@@ -1536,7 +1536,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		reward.try_claim(usr, FALSE)
 
 //0.393
-/obj/item/gun/kinetic/foamdartgun
+/obj/item/firearm/kinetic/foamdartgun
 	name = "\improper Super! Gun Friend"
 	desc = "A toy gun that fires foam darts. Keep out of reach of clowns, staff assistants and scientists."
 	icon = 'icons/obj/items/guns/toy.dmi'
@@ -1598,7 +1598,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		pulled = FALSE
 		UpdateIcon()
 
-/obj/item/gun/kinetic/foamdartgun/borg
+/obj/item/firearm/kinetic/foamdartgun/borg
 	name = "cybernetic foam dart gun"
 	desc = "A law enforcement weapon that fires foam darts. Synthesizes darts directly from the battery and includes new auto-load technology."
 	icon_state="foamdartgun-pull"
@@ -1637,7 +1637,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		return TRUE
 
 
-/obj/item/gun/kinetic/foamdartrevolver
+/obj/item/firearm/kinetic/foamdartrevolver
 	name = "\improper Super! Revolver Friend"
 	desc = "An advanced dart gun for experienced pros. Just holding it imbues you with a sense of great power."
 	icon = 'icons/obj/items/guns/toy.dmi'
@@ -1658,7 +1658,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/foamdart)
 		..()
-/obj/item/gun/kinetic/foamdartshotgun
+/obj/item/firearm/kinetic/foamdartshotgun
 	name = "\improper Super! Shotgun Friend"
 	desc = "An even more powerful, bigger brother of the dart gun. Kicks like a horse, a foam horse. A horse made of foam."
 	icon = 'icons/obj/items/guns/toy.dmi'
@@ -1685,7 +1685,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 
 //0.40
-/obj/item/gun/kinetic/blowgun
+/obj/item/firearm/kinetic/blowgun
 	name = "flute"
 	desc = "Wait, this isn't a flute. It's a blowgun!"
 	icon = 'icons/obj/items/guns/syringe.dmi'
@@ -1713,7 +1713,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 
 //0.41
-/obj/item/gun/kinetic/derringer
+/obj/item/firearm/kinetic/derringer
 	name = "derringer"
 	desc = "The Deadlock .41, a small and easy-to-hide gun from Cormorant Precision Arms. Loaded with 2 shots, brutal at close range."
 	icon_state = "derringer"
@@ -1751,7 +1751,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		set_current_projectile(new/datum/projectile/bullet/derringer)
 		..()
 
-/obj/item/gun/kinetic/derringer/empty
+/obj/item/firearm/kinetic/derringer/empty
 	New()
 		..()
 		ammo.amount_left = 0
@@ -1759,7 +1759,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 //0.45
 
-/obj/item/gun/kinetic/single_action/colt_saa
+/obj/item/firearm/kinetic/single_action/colt_saa
 	name = "single action army revolver"
 	desc = "A nearly adequate replica of a nearly ancient single action revolver. Used by war reenactors for the last hundred years or so."
 	icon_state = "colt_saa"
@@ -1793,7 +1793,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 //0.50
 
-/obj/item/gun/kinetic/bigiron
+/obj/item/firearm/kinetic/bigiron
 	name = "Maelor 500 magnum"
 	desc = "An immense revolver from Mabinogi Firearms Company. You could probably stop a charging space bear with this thing. Or a bus."
 	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
@@ -1814,7 +1814,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 
 //0.58
-/obj/item/gun/kinetic/single_action/flintlock
+/obj/item/firearm/kinetic/single_action/flintlock
 	name = "flintlock pistol"
 	desc = "In recent years, flintlocks have again become increasingly popular among space privateers due to the replacement of the gun flint with a shaped plasma crystal, resulting in a significantly higher firepower."
 	icon_state = "flintlock"
@@ -1845,7 +1845,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		. = ..()
 
 //0.72
-/obj/item/gun/kinetic/spes
+/obj/item/firearm/kinetic/spes
 	name = "SPES-12"
 	desc = "An expensive imported combat shotgun, popular with frontier militias and private military operators."
 	icon_state = "spas"
@@ -1897,7 +1897,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			set_current_projectile(new/datum/projectile/bullet/a12/weak)
 
 
-/obj/item/gun/kinetic/pumpweapon
+/obj/item/firearm/kinetic/pumpweapon
 	/// Whether this shotgun needs an action to pump in each direction
 	var/is_heavy = FALSE
 	/// Whether this shotgun's action is open (pump is pulled backwards)
@@ -1998,7 +1998,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 						UpdateIcon() // Slide already open? Just close the slide
 				boutput(mob_user, SPAN_NOTICE("You rack the slide of the shotgun!"))
 
-/obj/item/gun/kinetic/pumpweapon/riotgun
+/obj/item/firearm/kinetic/pumpweapon/riotgun
 	name = "\improper Guillemot riot shotgun"
 	desc = "A police-issue shotgun from Cormorant Precision Arms, customized for riot suppression and prison guard duty."
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
@@ -2028,7 +2028,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		set_current_projectile(new/datum/projectile/bullet/abg)
 		..()
 
-/obj/item/gun/kinetic/pumpweapon/ks23
+/obj/item/firearm/kinetic/pumpweapon/ks23
 	name = "Kuvalda Carbine"
 	desc = "A *huge* 4-gauge shotgun built with a repurposed 23mm cannon barrel. It's unlikely there's any moral justification for using this against humans."
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
@@ -2067,7 +2067,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 
 
-/obj/item/gun/kinetic/single_action/mts_255
+/obj/item/firearm/kinetic/single_action/mts_255
 	name = "\improper MTs-255 Revolver Shotgun"
 	desc = "A single-action revolving cylinder shotgun, popular with Soviet hunters, produced by the Zvezda Design Bureau."
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
@@ -2096,7 +2096,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		set_current_projectile(new/datum/projectile/special/spreader/uniform_burst/bird12)
 		..()
 
-/obj/item/gun/kinetic/striker
+/obj/item/firearm/kinetic/striker
 	name = "\improper Striker-7"
 	desc = "A terrifying looking drum shotgun, legally declared as a 'destructive device'."
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
@@ -2159,7 +2159,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			is_loading = TRUE
 			src.transform = src.transform.Turn(45)
 
-/obj/item/gun/kinetic/flaregun
+/obj/item/firearm/kinetic/flaregun
 	desc = "A 12-gauge signal launcher from Cormorant Precision Arms. A perennial lifesaver at sea, on land, and in space."
 	name = "\improper Pelican flare gun"
 	icon_state = "flare"
@@ -2178,7 +2178,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		set_current_projectile(new/datum/projectile/bullet/flare)
 		..()
 
-/obj/item/gun/kinetic/slamgun
+/obj/item/firearm/kinetic/slamgun
 	name = "slamgun"
 	desc = "A 12 gauge shotgun. Apparently. It's just two pipes stacked together."
 	icon = 'icons/obj/slamgun.dmi'
@@ -2284,7 +2284,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 #define ALL_BARRELS 4
 #define MAX_USES 9
 
-/obj/item/gun/kinetic/sawnoff/quadbarrel //for salvagers
+/obj/item/firearm/kinetic/sawnoff/quadbarrel //for salvagers
 
 	name = "\improper Four Letter Word"
 	desc = "For when you REALLY need to get the point across."
@@ -2380,7 +2380,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 					user.put_in_hand_or_drop(broken)
 					qdel(src)
 
-	proc/repairdamage(obj/item/gun/kinetic/sawnoff/quadbarrel/Q, mob/user)
+	proc/repairdamage(obj/item/firearm/kinetic/sawnoff/quadbarrel/Q, mob/user)
 		if(guaranteed_uses < MAX_USES)
 			Q.guaranteed_uses ++
 
@@ -2414,7 +2414,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 				//create the action bar
 				var/positions = src.get_welding_positions()
 				action_bar = new /datum/action/bar/private/welding/loop(user, src, 1.5 SECONDS, \
-				proc_path = /obj/item/gun/kinetic/sawnoff/quadbarrel/proc/repairdamage, \
+				proc_path = /obj/item/firearm/kinetic/sawnoff/quadbarrel/proc/repairdamage, \
 				proc_args=list(src, user), \
 				start = positions[1], \
 				stop = positions[2], \
@@ -2454,7 +2454,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 
 		// give an OPEN slamgun
-		var/obj/item/gun/kinetic/slamgun/newgun = new /obj/item/gun/kinetic/slamgun
+		var/obj/item/firearm/kinetic/slamgun/newgun = new /obj/item/firearm/kinetic/slamgun
 		user.put_in_hand_or_drop(newgun)
 		newgun.AttackSelf(user)
 
@@ -2487,7 +2487,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		qdel(src)
 
 //0.75
-/obj/item/gun/kinetic/single_action/flintlock/rifle
+/obj/item/firearm/kinetic/single_action/flintlock/rifle
 	name = "flintlock rifle"
 	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
@@ -2507,7 +2507,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		set_current_projectile(new/datum/projectile/bullet/flintlock/rifle)
 
 //1.0
-/obj/item/gun/kinetic/coilgun_TEST
+/obj/item/firearm/kinetic/coilgun_TEST
 	name = "coil gun"
 	icon = 'icons/obj/items/assemblies.dmi'
 	icon_state = "coilgun_2"
@@ -2523,7 +2523,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		set_current_projectile(new/datum/projectile/bullet/rod)
 		..()
 
-/obj/item/gun/kinetic/four_bore_albatross
+/obj/item/firearm/kinetic/four_bore_albatross
 	name = "\improper Albatross four-bore rifle"
 	desc = "A behemoth of a scoped rifle developed by Cormorant Precision Arms. Intended for suppression or elimination of monstrous targets."
 	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
@@ -2559,7 +2559,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		setProperty("carried_movespeed", 0.6)
 
 //1.57
-/obj/item/gun/kinetic/riot40mm
+/obj/item/firearm/kinetic/riot40mm
 	desc = "A classic 40mm riot-control launcher from Cormorant Precision Arms. It can accept standard 40mm rounds and hand-thrown grenades."
 	name = "\improper Puffin 40mm riot launcher"
 	icon_state = "40mm"
@@ -2602,7 +2602,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			set_current_projectile(new/datum/projectile/bullet/breach_flashbang)
 
 //1.58
-/obj/item/gun/kinetic/missile_launcher
+/obj/item/firearm/kinetic/missile_launcher
 	name = "pod-targeting missile launcher"
 	desc = "A collapsible, infantry portable, pod-targeting missile launcher."
 	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
@@ -2724,7 +2724,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 
 // Ported from old, non-gun RPG-7 object class (Convair880).
-/obj/item/gun/kinetic/rpg7
+/obj/item/firearm/kinetic/rpg7
 	desc = "A rocket-propelled grenade launcher licensed by the Space Irish Republican Army."
 	name = "\improper MPRT-7"
 	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
@@ -2779,7 +2779,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			src.UpdateIcon()
 			return
 
-/obj/item/gun/kinetic/mrl
+/obj/item/firearm/kinetic/mrl
 	desc = "A 6-barrel multiple rocket launcher armed with guided micro-missiles."
 	name = "Fomalhaut MRL"
 	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
@@ -2823,7 +2823,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			UpdateIcon()
 			return
 
-/obj/item/gun/kinetic/antisingularity
+/obj/item/firearm/kinetic/antisingularity
 	desc = "An experimental rocket launcher designed to deliver various payloads in rocket format."
 	name = "\improper Singularity Buster rocket launcher"
 	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
@@ -2856,7 +2856,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		setProperty("carried_movespeed", 0.8)
 
 //2.5
-/obj/item/gun/kinetic/single_action/flintlock/mortar
+/obj/item/firearm/kinetic/single_action/flintlock/mortar
 	name = "hand mortar"
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "hand_mortar"
@@ -2872,7 +2872,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		set_current_projectile(new/datum/projectile/bullet/flintlock/mortar)
 
 //3.0
-/obj/item/gun/kinetic/gungun //meesa jarjar binks
+/obj/item/firearm/kinetic/gungun //meesa jarjar binks
 	name = "\improper Gun"
 	desc = "A gun that shoots... something. It looks like a modified grenade launcher."
 	icon_state = "gungun"
@@ -2890,7 +2890,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 
 //4.6
-/obj/item/gun/kinetic/airzooka //This is technically kinetic? I guess?
+/obj/item/firearm/kinetic/airzooka //This is technically kinetic? I guess?
 	name = "Super! Bazooka Friend"
 	desc = "The new double action air projection device from Super! Friend."
 	icon = 'icons/obj/items/guns/toy.dmi'
@@ -2907,7 +2907,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 
 //20.0
-/obj/item/gun/kinetic/meowitzer
+/obj/item/firearm/kinetic/meowitzer
 	name = "\improper Meowitzer"
 	desc = "It purrs gently in your hands."
 	icon = 'icons/obj/items/mining.dmi'
@@ -2943,7 +2943,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		else
 			..()
 
-/obj/item/gun/kinetic/meowitzer/inert
+/obj/item/firearm/kinetic/meowitzer/inert
 	default_magazine = /obj/item/ammo/bullets/meowitzer
 	New()
 		..()
@@ -2954,7 +2954,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 //  <([['v') - Gannets Nuke Ops Class Guns - ('u']])>  //
 
 // agent
-/obj/item/gun/kinetic/pistol
+/obj/item/firearm/kinetic/pistol
 	name = "\improper Branwen pistol"
 	desc = "A semi-automatic, 9mm caliber service pistol, developed by Mabinogi Firearms Company."
 	icon_state = "9mm_pistol"
@@ -2976,14 +2976,14 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		set_current_projectile(new/datum/projectile/bullet/bullet_9mm)
 		..()
 
-/obj/item/gun/kinetic/pistol/empty
+/obj/item/firearm/kinetic/pistol/empty
 
 	New()
 		..()
 		ammo.amount_left = 0
 		UpdateIcon()
 
-/obj/item/gun/kinetic/pistol/smart/mkII
+/obj/item/firearm/kinetic/pistol/smart/mkII
 	name = "\improper Hydra smart pistol"
 	desc = "A pistol capable of locking onto multiple targets and firing on them in rapid sequence. \"Anderson Para-Munitions\" is engraved on the slide."
 	icon_state = "smartgun"
@@ -3003,7 +3003,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 /datum/component/holdertargeting/smartgun/nukeop/is_valid_target(mob/user, mob/M)
 	return ..() && !(istype(M.get_id(), /obj/item/card/id/syndicate) || isnukeopgunbot(M) || istype(M, /mob/living/critter/robotic/sawfly))
 
-/obj/item/gun/kinetic/smg
+/obj/item/firearm/kinetic/smg
 	name = "\improper Bellatrix submachine gun"
 	desc = "A semi-automatic, 9mm submachine gun, developed by Almagest Weapons Fabrication."
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
@@ -3050,14 +3050,14 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 					recoil_strength = 5
 		..()
 
-/obj/item/gun/kinetic/smg/empty
+/obj/item/firearm/kinetic/smg/empty
 
 	New()
 		..()
 		ammo.amount_left = 0
 		UpdateIcon()
 
-/obj/item/gun/kinetic/tranq_pistol
+/obj/item/firearm/kinetic/tranq_pistol
 	name = "\improper Ceridwen tranquilizer pistol"
 	desc = "A silenced 9mm tranquilizer pistol, developed by Mabinogi Firearms Company."
 	icon_state = "tranq_pistol"
@@ -3082,7 +3082,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 
 // scout
-/obj/item/gun/kinetic/tactical_shotgun //just a reskin, unused currently
+/obj/item/firearm/kinetic/tactical_shotgun //just a reskin, unused currently
 	name = "\improper Pryderi tactical shotgun"
 	desc = "A compact multi-purpose shotgun from Mabinogi Firearms Company, standard-issue for Hafgan's mine guards and convoy security throughout the Martian War."
 	icon_state = "tactical_shotgun"
@@ -3107,7 +3107,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 
 // assault
-/obj/item/gun/kinetic/assault_rifle
+/obj/item/firearm/kinetic/assault_rifle
 	name = "\improper Sirius assault rifle"
 	desc = "A bullpup assault rifle capable of semi-automatic and burst fire modes, developed by Almagest Weapons Fabrication."
 	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
@@ -3174,7 +3174,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 
 // assault
-/obj/item/gun/kinetic/m16
+/obj/item/firearm/kinetic/m16
 	name = "\improper M16"
 	desc = "This gun's seen a lot of conflict! And you're probably going to make it see more. Uses 5.56 rounds."
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
@@ -3240,7 +3240,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 
 // heavy
-/obj/item/gun/kinetic/light_machine_gun
+/obj/item/firearm/kinetic/light_machine_gun
 	name = "\improper Antares light machine gun"
 	desc = "A 100 round light machine gun, developed by Almagest Weapons Fabrication."
 	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
@@ -3293,7 +3293,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		setProperty("carried_movespeed", 1)
 
 
-/obj/item/gun/kinetic/cannon
+/obj/item/firearm/kinetic/cannon
 	name = "\improper Alphard 20mm cannon"
 	desc = "A 20mm anti-materiel recoiling cannon from Almagest. Slow but enormously powerful."
 	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
@@ -3343,7 +3343,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 		setProperty("carried_movespeed", 0.5)
 
-/obj/item/gun/kinetic/recoilless
+/obj/item/firearm/kinetic/recoilless
 	name = "\improper Carinae RCL/120"
 	desc = "An absurdly destructive 120mm recoilless gun-mortar, the largest man-portable weapon in the Almagest line."
 	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
@@ -3389,7 +3389,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		setProperty("carried_movespeed", 0.2)
 
 // demo
-/obj/item/gun/kinetic/grenade_launcher
+/obj/item/firearm/kinetic/grenade_launcher
 	name = "\improper Rigil grenade launcher"
 	desc = "A 40mm hand-held grenade launcher, developed by Almagest Weapons Fabrication."
 	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
@@ -3446,7 +3446,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		src.Attackby(TO_LOAD, user)
 
 // sniper
-/obj/item/gun/kinetic/sniper
+/obj/item/firearm/kinetic/sniper
 	name = "\improper Betelgeuse sniper rifle"
 	desc = "A semi-automatic bullpup sniper rifle, developed by Almagest Weapons Fabrication."
 	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
@@ -3490,7 +3490,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		setProperty("carried_movespeed", 0.8)
 
 // WIP //////////////////////////////////
-/obj/item/gun/kinetic/antiair
+/obj/item/firearm/kinetic/antiair
 	name = "MORS-X anti-air rifle"
 	desc = "A ruthlessly powerful rifle firing .50 caliber frag rounds. Built to swat down UFOs out of the sky."
 	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
@@ -3534,7 +3534,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 		setProperty("carried_movespeed", 1)
 
-/obj/item/gun/kinetic/sawnoff
+/obj/item/firearm/kinetic/sawnoff
 	name = "\improper Fulmar 1881 coach gun"
 	desc = "A stylish historic-reproduction short-barreled shotgun from Cormorant Precision Arms, a favorite of the Bartender's Guild."
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
@@ -3628,7 +3628,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 		UpdateIcon()
 
-/obj/item/gun/kinetic/sawnoff/long_barrel
+/obj/item/firearm/kinetic/sawnoff/long_barrel
 	name = "\improper Double Barrel Shotgun"
 	desc = "A bloody and worn double barreled shotgun. Details indicate recent usage in a last stand fight."
 	item_state = "double_barrel"

@@ -859,21 +859,21 @@ ABSTRACT_TYPE(/datum/commodity/magpie/sell)
 	improved_zipgun
 		comname = "Customized Zip gun"
 		desc = "An improvised firearm made from other firearms.  Modified for field repair."
-		comtype = /obj/item/gun/kinetic/zipgun/salvager
+		comtype = /obj/item/firearm/kinetic/zipgun/salvager
 		price = 350
 #endif
 
 	shotgun
 		comname = "Pump action shotgun"
 		desc = "A salvaged and rebuilt pump action shotgun."
-		comtype = /obj/item/gun/kinetic/pumpweapon/riotgun/salvager
+		comtype = /obj/item/firearm/kinetic/pumpweapon/riotgun/salvager
 		price = 1200
 		amount = 6
 
 	quadbarrel
 		comname = "Four Letter Word"
 		desc = "Built around a shotgun that couldn't be reclaimed, this weapon trades stability for versatility."
-		comtype = /obj/item/gun/kinetic/sawnoff/quadbarrel
+		comtype = /obj/item/firearm/kinetic/sawnoff/quadbarrel
 		price = 1200
 		amount = 4
 
@@ -886,14 +886,14 @@ ABSTRACT_TYPE(/datum/commodity/magpie/sell)
 	makeshift_laser
 		comname = "Makeshift Laser Rifle"
 		desc = "A makeshift laser rifle outfitted with a tube and cell."
-		comtype = /obj/item/gun/energy/makeshift/basic_salvager
+		comtype = /obj/item/firearm/energy/makeshift/basic_salvager
 		price = 650
 		amount = 4
 
 	rifle
 		comname = "Survival Rifle"
 		desc = "Semi-automatic rifle with easily convertible caliber. Starts in .22 caliber."
-		comtype = /obj/item/gun/kinetic/survival_rifle
+		comtype = /obj/item/firearm/kinetic/survival_rifle
 		price = 1000
 
 	bullets_22
@@ -1095,14 +1095,14 @@ ABSTRACT_TYPE(/datum/commodity/magpie/special/sell/arms)
 	pistol
 		comname = "9mm pistol"
 		desc = "A rare semi-automatic 9mm pistol that was collected from a military vessel."
-		comtype = /obj/item/gun/kinetic/pistol
+		comtype = /obj/item/firearm/kinetic/pistol
 		price = 1650
 		amount = 4
 
 	pulse_rifle
 		comname = "Pulse Rifle"
 		desc = "A sleek energy rifle. Often kept under lock and key at nanotrasen facilities."
-		comtype = /obj/item/gun/energy/pulse_rifle
+		comtype = /obj/item/firearm/energy/pulse_rifle
 		price = 1800
 		amount = 6
 

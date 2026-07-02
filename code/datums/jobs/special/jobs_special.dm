@@ -357,7 +357,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	can_roll_antag = FALSE
 	add_to_manifest = FALSE
 
-	slot_back = list(/obj/item/gun/energy/blaster_cannon)
+	slot_back = list(/obj/item/firearm/energy/blaster_cannon)
 	slot_belt = list(/obj/item/storage/fanny)
 	//more
 
@@ -819,8 +819,8 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 
 	items_in_belt = list(
 		/obj/item/dagger/silver,
-		/obj/item/gun/bow/crossbow/wooden,
-		/obj/item/gun/bow/crossbow/wooden,
+		/obj/item/firearm/bow/crossbow/wooden,
+		/obj/item/firearm/bow/crossbow/wooden,
 		/obj/item/handcuffs/silver,
 		/obj/item/handcuffs/silver,
 	)

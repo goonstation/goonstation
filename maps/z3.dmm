@@ -81,7 +81,7 @@
 	info = "Ok Boris, you know what? Until you can spell your own fucking name right we're not going to let you make tactical decisions regarding the loot. I've put code locks on these things anyway, it'll be fine. Pickup is next week. And for fucks sake, read a book. - Daniel";
 	name = "hastily scribbled note"
 	},
-/obj/item/gun/kinetic/zipgun,
+/obj/item/firearm/kinetic/zipgun,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aaw" = (
@@ -19312,7 +19312,7 @@
 /area/h7/lab)
 "lkB" = (
 /obj/storage/crate,
-/obj/item/gun/energy/phaser_gun,
+/obj/item/firearm/energy/phaser_gun,
 /obj/item/clothing/under/misc/syndicate,
 /obj/item/clothing/shoes/black,
 /turf/simulated/floor,
@@ -22085,7 +22085,7 @@
 /turf/simulated/floor/wood/two,
 /area/radiostation/studio)
 "rLE" = (
-/obj/item/gun/energy/phaser_gun,
+/obj/item/firearm/energy/phaser_gun,
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
 "rNi" = (

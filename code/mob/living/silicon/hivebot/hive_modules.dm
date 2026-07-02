@@ -25,7 +25,7 @@
 	..()
 	src.tools += new /obj/item/baton/secbot(src)
 	src.tools += new /obj/item/extinguisher(src)
-//	var/obj/item/gun/mp5/M = new /obj/item/gun/mp5(src)
+//	var/obj/item/firearm/mp5/M = new /obj/item/firearm/mp5(src)
 
 
 /obj/item/hive_module/mining/New()
@@ -78,5 +78,5 @@
 ///obj/item/hive_module/security/New()
 //	..()
 //	src.tools += new /obj/item/baton/secbot(src)
-//	src.tools += new /obj/item/gun/energy/laser_gun(src)
+//	src.tools += new /obj/item/firearm/energy/laser_gun(src)
 

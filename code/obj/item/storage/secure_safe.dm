@@ -346,12 +346,12 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 					S.setup(src, try_add_to_storage = TRUE)
 			if (6)
 				for (var/i=2, i>0, i--)
-					src.storage.add_contents(new /obj/item/gun/energy/laser_gun(src))
+					src.storage.add_contents(new /obj/item/firearm/energy/laser_gun(src))
 				for (var/i=3, i>0, i--)
 					var/obj/item/currency/spacecash/thousand/S = new /obj/item/currency/spacecash/thousand
 					S.setup(src, try_add_to_storage = TRUE)
 			if (7)
-				src.storage.add_contents(new /obj/item/gun/kinetic/single_action/mts_255(src))
+				src.storage.add_contents(new /obj/item/firearm/kinetic/single_action/mts_255(src))
 				src.storage.add_contents(new /obj/item/ammo/bullets/a12/bird/five(src))
 				for (var/i=3, i>0, i--)
 					var/obj/item/currency/spacecash/thousand/S = new /obj/item/currency/spacecash/thousand
@@ -380,11 +380,11 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 				/obj/item/raw_material/miracle,\
 				/obj/item/raw_material/uqill,\
 				/obj/item/rcd = /obj/item/rcd_ammo/big,\
-				/obj/item/gun/kinetic/single_action/mts_255 = /obj/item/ammo/bullets/a12/bird/five,\
-				/obj/item/gun/energy/taser_gun,\
-				/obj/item/gun/energy/phaser_gun,\
-				/obj/item/gun/energy/egun_jr,\
-				/obj/item/gun/energy/laser_gun,\
+				/obj/item/firearm/kinetic/single_action/mts_255 = /obj/item/ammo/bullets/a12/bird/five,\
+				/obj/item/firearm/energy/taser_gun,\
+				/obj/item/firearm/energy/phaser_gun,\
+				/obj/item/firearm/energy/egun_jr,\
+				/obj/item/firearm/energy/laser_gun,\
 				/obj/item/device/key/random,\
 				/obj/item/storage/firstaid/old,\
 				/obj/item/storage/firstaid/crit,\
@@ -522,7 +522,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 			if (1)
 				src.storage.add_contents(new /obj/item/storage/pill_bottle/cyberpunk(src))
 				src.storage.add_contents(new /obj/item/storage/pill_bottle/ipecac(src))
-				src.storage.add_contents(new /obj/item/gun/kinetic/clock_188/boomerang(src))
+				src.storage.add_contents(new /obj/item/firearm/kinetic/clock_188/boomerang(src))
 				src.storage.add_contents(new /obj/item/paper/orangeroomsafe(src))
 			if (2)
 				src.storage.add_contents(new /obj/item/storage/pill_bottle/bathsalts(src))
@@ -569,7 +569,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 				var/obj/item/currency/spacecash/tourist/S = new /obj/item/currency/spacecash/tourist
 				S.setup(src, try_add_to_storage = TRUE)
 			if (3)
-				src.storage.add_contents(new /obj/item/gun/kinetic/single_action/mts_255(src))
+				src.storage.add_contents(new /obj/item/firearm/kinetic/single_action/mts_255(src))
 				src.storage.add_contents(new /obj/item/ammo/bullets/a12/bird/five(src))
 			if (4)
 				src.storage.add_contents(new /obj/item/paper/freeze(src))
@@ -595,7 +595,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 /obj/item/storage/secure/ssafe/icemoon
 	configure_mode = FALSE
 	random_code = TRUE
-	spawn_contents = list(/obj/item/gun/kinetic/revolver,
+	spawn_contents = list(/obj/item/firearm/kinetic/revolver,
 	/obj/item/chilly_orb, // a thing to confuse people
 	/obj/item/currency/spacecash/thousand = 3)
 
@@ -604,13 +604,13 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 	random_code = TRUE
 	spawn_contents = list(/obj/item/robot_foodsynthesizer,\
 	/obj/item/currency/spacecash/thousand,\
-	/obj/item/gun/kinetic/derringer/empty)
+	/obj/item/firearm/kinetic/derringer/empty)
 
 /obj/item/storage/secure/ssafe/shooting_range //prefab safe
 	configure_mode = FALSE
 	random_code = TRUE
 	spawn_contents = list(/obj/item/currency/spacecash/thousand,\
-	/obj/item/gun/energy/raygun,\
+	/obj/item/firearm/energy/raygun,\
 	/obj/item/paper/shooting_range_note2)
 
 /obj/item/storage/secure/ssafe/marsvault

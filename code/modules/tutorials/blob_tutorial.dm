@@ -551,7 +551,7 @@ proc/AddBlobSteps(var/datum/tutorial_base/regional/blob/T)
 	desc = "Some dork with a flamethrower."
 	icon = 'icons/mob/human.dmi'
 	icon_state = "body_f"
-	var/obj/item/gun/flamethrower/assembled/loaded/L = new
+	var/obj/item/firearm/flamethrower/assembled/loaded/L = new
 
 	New()
 		..()

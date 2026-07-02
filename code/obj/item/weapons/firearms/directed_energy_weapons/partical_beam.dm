@@ -1,4 +1,4 @@
-/obj/item/gun/energy/heavyion
+/obj/item/firearm/energy/heavyion
 	name = "\improper Tianfei heavy ion blaster"
 	icon = 'icons/obj/items/guns/energy48x32.dmi'
 	icon_state = "heavyion"

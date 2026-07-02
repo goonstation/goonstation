@@ -37,7 +37,7 @@ ABSTRACT_TYPE(/datum/job/special/syndicate)
 
 /datum/job/special/syndicate/weak
 	name = "Junior Syndicate Operative"
-	slot_belt = list(/obj/item/gun/kinetic/pistol)
+	slot_belt = list(/obj/item/firearm/kinetic/pistol)
 	slot_ears = list() //No Headset
 	slot_card = null //No Access
 	slot_poc1 = list(/obj/item/storage/pouch/bullet_9mm)
@@ -77,7 +77,7 @@ ABSTRACT_TYPE(/datum/job/special/syndicate/specialist)
 	slot_head = list(/obj/item/clothing/head/helmet/space/syndicate/specialist)
 	slot_suit = list(/obj/item/clothing/suit/space/syndicate/specialist/grenadier)
 	slot_poc1 = list(/obj/item/storage/pouch/grenade_round)
-	items_in_backpack = list(/obj/item/gun/kinetic/grenade_launcher,
+	items_in_backpack = list(/obj/item/firearm/kinetic/grenade_launcher,
 		/obj/item/storage/grenade_pouch/mixed_explosive)
 
 /datum/job/special/syndicate/specialist/heavy
@@ -85,7 +85,7 @@ ABSTRACT_TYPE(/datum/job/special/syndicate/specialist)
 	slot_head = list(/obj/item/clothing/head/helmet/space/syndicate/specialist)
 	slot_suit = list(/obj/item/clothing/suit/space/syndicate/specialist/heavy)
 	slot_poc1 = list(/obj/item/storage/pouch/lmg)
-	slot_back = list(/obj/item/gun/kinetic/light_machine_gun)
+	slot_back = list(/obj/item/firearm/kinetic/light_machine_gun)
 	slot_belt = list(/obj/item/storage/fanny/syndie/large)
 	items_in_belt = list(/obj/item/storage/grenade_pouch/high_explosive)
 
@@ -94,7 +94,7 @@ ABSTRACT_TYPE(/datum/job/special/syndicate/specialist)
 	slot_head = list(/obj/item/clothing/head/helmet/space/syndicate/specialist)
 	slot_suit = list(/obj/item/clothing/suit/space/syndicate/specialist)
 	slot_poc1 = list(/obj/item/storage/pouch/assault_rifle/mixed)
-	items_in_backpack = list(/obj/item/gun/kinetic/assault_rifle,
+	items_in_backpack = list(/obj/item/firearm/kinetic/assault_rifle,
 		/obj/item/storage/grenade_pouch/mixed_standard,
 		/obj/item/breaching_charge,
 		/obj/item/breaching_charge)
@@ -107,7 +107,7 @@ ABSTRACT_TYPE(/datum/job/special/syndicate/specialist)
 	slot_poc1 = list(/obj/item/storage/pouch/tranq_pistol_dart)
 	slot_back = list(/obj/item/storage/backpack/chameleon/no_belt)
 	slot_belt = list(/obj/item/storage/belt/chameleon/tactical)
-	items_in_belt = list(/obj/item/gun/kinetic/tranq_pistol,
+	items_in_belt = list(/obj/item/firearm/kinetic/tranq_pistol,
 		/obj/item/dna_scrambler,
 		/obj/item/voice_changer,
 		/obj/item/card/emag,
@@ -127,7 +127,7 @@ ABSTRACT_TYPE(/datum/job/special/syndicate/specialist)
 	slot_suit = list(/obj/item/clothing/suit/space/syndicate/specialist/infiltrator)
 	slot_eyes = list(/obj/item/clothing/glasses/nightvision)
 	slot_poc1 = list(/obj/item/storage/pouch/bullet_9mm/smg)
-	items_in_backpack = list(/obj/item/gun/kinetic/smg,
+	items_in_backpack = list(/obj/item/firearm/kinetic/smg,
 		/obj/item/card/emag,
 		/obj/item/cloaking_device,
 		/obj/item/lightbreaker)
@@ -138,7 +138,7 @@ ABSTRACT_TYPE(/datum/job/special/syndicate/specialist)
 	slot_suit = list(/obj/item/clothing/suit/space/syndicate/specialist/medic)
 	slot_poc1 = list(/obj/item/storage/pouch/veritate)
 	slot_belt = list(/obj/item/storage/belt/syndicate_medic_belt)
-	items_in_backpack = list(/obj/item/gun/kinetic/veritate,
+	items_in_backpack = list(/obj/item/firearm/kinetic/veritate,
 		/obj/item/storage/medical_pouch,
 		/obj/item/device/analyzer/healthanalyzer/upgraded,
 		/obj/item/robodefibrillator,
@@ -150,7 +150,7 @@ ABSTRACT_TYPE(/datum/job/special/syndicate/specialist)
 	slot_suit = list(/obj/item/clothing/suit/space/syndicate/specialist/engineer)
 	slot_poc1 = list(/obj/item/storage/pouch/shotgun/weak)
 	slot_belt = list(/obj/item/storage/belt/utility/prepared)
-	items_in_backpack = list(/obj/item/gun/kinetic/spes/engineer,
+	items_in_backpack = list(/obj/item/firearm/kinetic/spes/engineer,
 		/obj/item/turret_deployer/syndicate,
 		/obj/item/paper/nast_manual,
 		/obj/item/wrench/battle,
@@ -169,7 +169,7 @@ ABSTRACT_TYPE(/datum/job/special/syndicate/specialist)
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
-		var/obj/item/gun/flamethrower/backtank/flamethrower = new /obj/item/gun/flamethrower/backtank/napalm(M)
+		var/obj/item/firearm/flamethrower/backtank/flamethrower = new /obj/item/firearm/flamethrower/backtank/napalm(M)
 		var/obj/item/tank/jetpack/backtank/our_tank = flamethrower.fueltank
 		our_tank.insert_flamer(flamethrower, M)
 		M.equip_if_possible(our_tank, SLOT_BACK)
@@ -180,7 +180,7 @@ ABSTRACT_TYPE(/datum/job/special/syndicate/specialist)
 	slot_suit = list(/obj/item/clothing/suit/space/syndicate/specialist/sniper)
 	slot_poc1 = list(/obj/item/storage/pouch/sniper)
 	slot_eyes = list(/obj/item/clothing/glasses/thermal/traitor)
-	slot_back = list(/obj/item/gun/kinetic/sniper)
+	slot_back = list(/obj/item/firearm/kinetic/sniper)
 	slot_belt = list(/obj/item/storage/fanny/syndie/large)
 	items_in_belt = list(/obj/item/storage/grenade_pouch/smoke)
 

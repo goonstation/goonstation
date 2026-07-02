@@ -38,7 +38,7 @@
 
 			src.equip_new_if_possible(/obj/item/tool/omnitool, SLOT_IN_BELT)
 			src.equip_new_if_possible(/obj/item/clothing/glasses/thermal, SLOT_IN_BELT)
-			src.equip_new_if_possible(/obj/item/gun/energy/pickpocket, SLOT_IN_BELT)
+			src.equip_new_if_possible(/obj/item/firearm/energy/pickpocket, SLOT_IN_BELT)
 
 			src.verbs += /mob/proc/batsmoke
 			src.verbs += /mob/proc/batarang

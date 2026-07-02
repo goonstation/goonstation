@@ -15,7 +15,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 
 /datum/syndicate_buylist/surplus/advanced_laser
 	name = "Laser Rifle"
-	items = list(/obj/item/gun/energy/plasma_gun)
+	items = list(/obj/item/firearm/energy/plasma_gun)
 	cost = 6
 	desc = "An experimental laser design with a self-charging cerenkite battery."
 	br_allowed = TRUE
@@ -55,7 +55,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 
 /datum/syndicate_buylist/surplus/akm
 	name = "AKM Assault Rifle"
-	items = list(/obj/item/gun/kinetic/akm)
+	items = list(/obj/item/firearm/kinetic/akm)
 	cost = 12
 	desc = "A Cold War relic, loaded with thirty rounds of 7.62x39."
 	can_buy = null
@@ -176,5 +176,5 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 /datum/syndicate_buylist/surplus/lasershotgun
 	name = "Laser shotgun"
 	cost = 5 //it does a lot of damage but overheats very fast and has limited charge
-	items = list(/obj/item/gun/energy/lasershotgun)
+	items = list(/obj/item/firearm/energy/lasershotgun)
 	desc = "A very large laser shotgun with bouncing projectiles and a tendency to overheat."

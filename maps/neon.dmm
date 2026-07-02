@@ -7356,7 +7356,7 @@
 /obj/item/device/detective_scanner{
 	pixel_x = -3
 	},
-/obj/item/gun/implanter{
+/obj/item/firearm/implanter{
 	pixel_x = 8
 	},
 /obj/disposalpipe/segment/horizontal,
@@ -21859,10 +21859,10 @@
 /area/station/medical/medbay/restroom)
 "phC" = (
 /obj/storage/secure/crate/weapon/sec_weapons,
-/obj/item/gun/kinetic/riot40mm{
+/obj/item/firearm/kinetic/riot40mm{
 	pixel_y = 8
 	},
-/obj/item/gun/kinetic/riot40mm,
+/obj/item/firearm/kinetic/riot40mm,
 /obj/item/ammo/bullets/smoke{
 	pixel_x = 2;
 	pixel_y = -3

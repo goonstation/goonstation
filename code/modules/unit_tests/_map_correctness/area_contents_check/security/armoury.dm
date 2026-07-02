@@ -16,7 +16,7 @@
 				CONTENTS_GT(/obj/storage/secure/crate/weapon/armory/tranquilizer, 0),
 			),
 			list(
-				CONTENTS_GT(/obj/item/gun/kinetic/dart_rifle, 1),
+				CONTENTS_GT(/obj/item/firearm/kinetic/dart_rifle, 1),
 				CONTENTS_GT(/obj/item/ammo/bullets/tranq_darts, 1),
 				CONTENTS_GT(/obj/item/ammo/bullets/tranq_darts/anti_mutant, 0),
 			),

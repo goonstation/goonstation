@@ -29,7 +29,7 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 			src.maxlocks = _maxlocks
 
 	Initialize(_maxlocks = 3)
-		if(..() == COMPONENT_INCOMPATIBLE || !istype(parent, /obj/item/gun))
+		if(..() == COMPONENT_INCOMPATIBLE || !istype(parent, /obj/item/firearm))
 			return COMPONENT_INCOMPATIBLE
 		else
 			var/obj/item/G = parent
@@ -231,7 +231,7 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 		if (((aimer.check_key(KEY_THROW)) || C.in_throw_mode) && C.can_throw)
 			C.throw_item(src.mouse_target)
 			return
-	var/obj/item/gun/G = parent
+	var/obj/item/firearm/G = parent
 	var/list/local_targets = tracked_targets.Copy()
 	shooting = 1
 	spawn(0)
@@ -268,11 +268,11 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 /datum/component/holdertargeting/smartgun/proc/is_valid_target(mob/user, mob/M)
 	return (istype(M) && M != user && !isdead(M))
 
-/datum/component/holdertargeting/smartgun/proc/checkshots(obj/item/gun/G, mob/user)
+/datum/component/holdertargeting/smartgun/proc/checkshots(obj/item/firearm/F, mob/user)
 	var/list/ret = list()
-	if(istype(G, /obj/item/gun/kinetic))
-		var/obj/item/gun/kinetic/K = G
+	if(istype(F, /obj/item/firearm/kinetic))
+		var/obj/item/firearm/kinetic/K = F
 		return round(K.ammo.amount_left * K.current_projectile.cost)
-	else if(SEND_SIGNAL(G, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
-		return round(ret["charge"] / G.current_projectile.cost)
-	else return G.canshoot(user) * INFINITY //idk, just let it happen
+	else if(SEND_SIGNAL(F, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+		return round(ret["charge"] / F.current_projectile.cost)
+	else return F.canshoot(user) * INFINITY //idk, just let it happen

@@ -1680,7 +1680,7 @@ obj/decoration/gibberBroken
 
 //fake guns for shooting range prefab
 
-/obj/item/gun/laser_pistol
+/obj/item/firearm/laser_pistol
 	name = "laser pistol"
 	icon = 'icons/obj/decoration.dmi'
 	desc = "A terribly cheap and discontinued old model of laser pistol."
@@ -1699,7 +1699,7 @@ obj/decoration/gibberBroken
 		else
 			return ..()
 
-/obj/item/gun/laser_pistol/prototype
+/obj/item/firearm/laser_pistol/prototype
 	name = "prototype laser pistol"
 	icon = 'icons/obj/decoration.dmi'
 	desc = "You've never heard of this pistol before... who made it?"

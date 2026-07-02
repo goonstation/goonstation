@@ -356,7 +356,7 @@ ABSTRACT_TYPE(/obj/item)
 
 	..()
 	if (src.contraband > 0)
-		if (istype(src, /obj/item/gun))
+		if (istype(src, /obj/item/firearm))
 			AddComponent(/datum/component/contraband, 0, src.contraband)
 		else
 			AddComponent(/datum/component/contraband, src.contraband, 0)

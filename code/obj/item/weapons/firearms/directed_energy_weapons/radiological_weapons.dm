@@ -1,8 +1,8 @@
 ///////////////////////////////////////Particle Blasters
-TYPEINFO(/obj/item/gun/energy/blaster_pistol)
+TYPEINFO(/obj/item/firearm/energy/blaster_pistol)
 	analyser_flags = ANALYSER_BLACKLIST
 
-/obj/item/gun/energy/blaster_pistol
+/obj/item/firearm/energy/blaster_pistol
 	name = "GRF Zap-Pistole"
 	desc = "A dangerous-looking particle blaster pistol from Giesel Radiofabrik. It's self-charging by a radioactive power cell. Beware of Bremsstrahlung backscatter."
 	icon = 'icons/obj/items/guns/energy.dmi'
@@ -64,10 +64,10 @@ TYPEINFO(/obj/item/gun/energy/blaster_pistol)
 		if(converter_mod)
 			src.overlays += icon('icons/obj/items/gun_mod.dmi',converter_mod.overlay_name)*/
 
-TYPEINFO(/obj/item/gun/energy/blaster_smg)
+TYPEINFO(/obj/item/firearm/energy/blaster_smg)
 	analyser_flags = ANALYSER_BLACKLIST
 
-/obj/item/gun/energy/blaster_smg
+/obj/item/firearm/energy/blaster_smg
 	name = "GRF Zap-Maschine"
 	desc = "A special issue particle blaster from Giesel Radiofabrik, designed for burst fire. It's self-charging by a radioactive power cell. Beware of Bremsstrahlung backscatter."
 	icon = 'icons/obj/items/guns/energy.dmi'
@@ -88,7 +88,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 		AddComponent(/datum/component/holdertargeting/fullauto, 1.2)
 		..()
 
-/obj/item/gun/energy/blaster_carbine
+/obj/item/firearm/energy/blaster_carbine
 	name = "GRF Zap-Karabiner"
 	desc = "A blaster carbine from Giesel Radiofabrik, designed for longer range engagements. It's self-charging by a radioactive power cell. Beware of Bremsstrahulung backscatter."
 	icon = 'icons/obj/items/guns/energy48x32.dmi'
@@ -110,7 +110,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 		projectiles = list(current_projectile)
 		..()
 
-/obj/item/gun/energy/blaster_cannon
+/obj/item/firearm/energy/blaster_cannon
 	name = "GRF Zap-Kanone"
 	desc = "A heavy particle blaster from Giesel Radiofabrik, designed for high damage. It's self-charging by a larger radioactive power cell. Beware of Bremsstrahlung backscatter."
 	icon = 'icons/obj/items/guns/energy.dmi'
@@ -199,9 +199,9 @@ TYPEINFO(/obj/item/gun_parts)
 
 ///Crossbow that fires irradiating neutron projectiles like the nuclear reactor
 ///DEBUG ITEM - don't actually use this for things. Unless you really want to, or it might be funny.
-TYPEINFO(/obj/item/gun/energy/neutron)
+TYPEINFO(/obj/item/firearm/energy/neutron)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
-/obj/item/gun/energy/neutron
+/obj/item/firearm/energy/neutron
 	name = "mini neutron-crossbow"
 	desc = "A weapon that fires irradiating neutrons. Because it makes sense that a crossbow can fire subatomic particles at relativistic speeds."
 	icon_state = "crossbow"

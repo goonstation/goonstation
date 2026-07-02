@@ -25,7 +25,7 @@
 	window_pass = 0
 	no_hit_message = 1
 	var/firer = "unknown"
-	var/obj/item/gun/energy/pickpocket/linkedGun = null
+	var/obj/item/firearm/energy/pickpocket/linkedGun = null
 	var/targetZone = null
 
 /datum/projectile/pickpocket/steal

@@ -405,7 +405,7 @@
 				if(!(SEND_SIGNAL(pack_item, COMSIG_CELL_CAN_CHARGE) & CELL_CHARGEABLE)) //does the item have a chargeable cell?
 					continue
 				else
-					if(istype(pack_item,/obj/item/gun/energy) && src.safety_regulator) //disallow gun charging unless pack is tampered with
+					if(istype(pack_item,/obj/item/firearm/energy) && src.safety_regulator) //disallow gun charging unless pack is tampered with
 						continue
 					var/list/ret = list()
 					if(SEND_SIGNAL(pack_item, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST) //ensure we can fetch cell data
@@ -661,8 +661,8 @@
 	desc = "A thick, wearable container made of leather, suitable for storing ammunition and other essential equipment for the operation of flintlock weaponry."
 	icon_state = "satchelbr"
 	item_state = "satchelbr"
-	spawn_contents = list(/obj/item/gun/kinetic/single_action/flintlock,
-						/obj/item/gun/kinetic/single_action/flintlock,
+	spawn_contents = list(/obj/item/firearm/kinetic/single_action/flintlock,
+						/obj/item/firearm/kinetic/single_action/flintlock,
 						/obj/item/ammo/bullets/flintlock)
 
 /obj/item/storage/backpack/satchel/flintlock_rifle_satchel
@@ -671,8 +671,8 @@
 	icon_state = "flintlock_satchel"
 	item_state = "flintlock_satchel"
 	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
-	can_hold = list(/obj/item/gun/kinetic/single_action/flintlock/rifle)
-	spawn_contents = list(/obj/item/gun/kinetic/single_action/flintlock/rifle, /obj/item/ammo/bullets/flintlock/rifle)
+	can_hold = list(/obj/item/firearm/kinetic/single_action/flintlock/rifle)
+	spawn_contents = list(/obj/item/firearm/kinetic/single_action/flintlock/rifle, /obj/item/ammo/bullets/flintlock/rifle)
 	slots = 4
 
 	New()
@@ -682,7 +682,7 @@
 
 	Entered(Obj, OldLoc)
 		..()
-		if (istype(Obj, /obj/item/gun/kinetic/single_action/flintlock/rifle))
+		if (istype(Obj, /obj/item/firearm/kinetic/single_action/flintlock/rifle))
 			icon_state = initial(icon_state) + "-1"
 			item_state = initial(item_state) + "-1"
 
@@ -694,7 +694,7 @@
 
 	Exited(Obj, newloc)
 		..()
-		if (istype(Obj, /obj/item/gun/kinetic/single_action/flintlock/rifle))
+		if (istype(Obj, /obj/item/firearm/kinetic/single_action/flintlock/rifle))
 			icon_state = initial(icon_state)
 			item_state = initial(item_state)
 
@@ -1014,7 +1014,7 @@
 		desc = "Yeehaw pardner."
 		icon_state = "hunterbelt"
 		item_state = "hunter"
-		spawn_contents = list(/obj/item/gun/kinetic/foamdartrevolver,
+		spawn_contents = list(/obj/item/firearm/kinetic/foamdartrevolver,
 		/obj/item/ammo/bullets/foamdarts,
 		/obj/item/ammo/bullets/foamdarts,
 		/obj/item/ammo/bullets/foamdarts,)
@@ -1034,7 +1034,7 @@
 	item_state = "hunter"
 	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 	can_hold = list(
-		/obj/item/gun/bow/crossbow,
+		/obj/item/firearm/bow/crossbow,
 		/obj/item/plant/herb/aconite,
 	)
 
@@ -1044,21 +1044,21 @@
 	icon_state = "secbelt"
 	item_state = "secbelt"
 	can_hold = list(/obj/item/baton, // not included in this list are guns that are already small enough to fit (like the detective's gun)
-	/obj/item/gun/energy/taser_gun,
-	/obj/item/gun/energy/phaser_gun,
-	/obj/item/gun/energy/laser_gun,
-	/obj/item/gun/energy/egun,
-	/obj/item/gun/energy/lawbringer,
-	/obj/item/gun/energy/wavegun,
-	/obj/item/gun/kinetic/revolver,
-	/obj/item/gun/kinetic/zipgun,
+	/obj/item/firearm/energy/taser_gun,
+	/obj/item/firearm/energy/phaser_gun,
+	/obj/item/firearm/energy/laser_gun,
+	/obj/item/firearm/energy/egun,
+	/obj/item/firearm/energy/lawbringer,
+	/obj/item/firearm/energy/wavegun,
+	/obj/item/firearm/kinetic/revolver,
+	/obj/item/firearm/kinetic/zipgun,
 	/obj/item/clothing/mask/gas/NTSO, //added so the NTSO mask can be clipped to the belt, maybe good to do with all gas masks?
-	/obj/item/gun/energy/tasersmg,
-	/obj/item/gun/energy/signifer2,
+	/obj/item/firearm/energy/tasersmg,
+	/obj/item/firearm/energy/signifer2,
 	/obj/item/device/prisoner_scanner,
-	/obj/item/gun/energy/ntgun,
-	/obj/item/gun/energy/cornicen3,
-	/obj/item/gun/kinetic/missile_launcher,
+	/obj/item/firearm/energy/ntgun,
+	/obj/item/firearm/energy/cornicen3,
+	/obj/item/firearm/kinetic/missile_launcher,
 	/obj/item/ammo/bullets/pod_seeking_missile)
 	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 
@@ -1077,12 +1077,12 @@
 
 
 	standard
-		spawn_contents = list(/obj/item/gun/energy/taser_gun,
+		spawn_contents = list(/obj/item/firearm/energy/taser_gun,
 		/obj/item/baton,
 		/obj/item/barrier/collapsible/security)
 
 	offense
-		spawn_contents = list(/obj/item/gun/energy/wavegun,
+		spawn_contents = list(/obj/item/firearm/energy/wavegun,
 		/obj/item/baton,
 		/obj/item/barrier/collapsible/security)
 
@@ -1092,12 +1092,12 @@
 		/obj/item/reagent_containers/emergency_injector/morphine = 4)
 
 	control
-		spawn_contents = list(/obj/item/gun/energy/tasershotgun,
+		spawn_contents = list(/obj/item/firearm/energy/tasershotgun,
 		/obj/item/baton,
 		/obj/item/barrier/collapsible/security)
 		New()
 			..()
-			can_hold += /obj/item/gun/energy/tasershotgun
+			can_hold += /obj/item/firearm/energy/tasershotgun
 
 	assistant
 		spawn_contents = list(/obj/item/barrier/collapsible/security,
@@ -1105,7 +1105,7 @@
 		/obj/item/device/ticket_writer)
 
 	ntsc //secbelt subtype that only spawns on NTSC, not in vendor
-		spawn_contents = list(/obj/item/gun/energy/signifer2,
+		spawn_contents = list(/obj/item/firearm/energy/signifer2,
 		/obj/item/baton/ntso,
 		/obj/item/clothing/head/helmet/space/ntso,
 		/obj/item/cloth/handkerchief/nt,
@@ -1113,7 +1113,7 @@
 		/obj/item/reagent_containers/food/snacks/candy/candyheart)
 
 	ntso
-		spawn_contents = list(/obj/item/gun/energy/cornicen3,
+		spawn_contents = list(/obj/item/firearm/energy/cornicen3,
 		/obj/item/old_grenade/energy_frag = 2,
 		/obj/item/old_grenade/energy_concussion = 2,
 		/obj/item/tank/pocket/extended/oxygen,
@@ -1126,7 +1126,7 @@
 		/obj/item/requisition_token/security/utility)
 
 	tasersmg
-		spawn_contents = list(/obj/item/gun/energy/tasersmg,
+		spawn_contents = list(/obj/item/firearm/energy/tasersmg,
 		/obj/item/baton,
 		/obj/item/barrier/collapsible/security)
 
@@ -1173,9 +1173,9 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 	icon_state = "revolver_belt"
 	item_state = "revolver_belt"
 	slots = 6
-	gun_type = /obj/item/gun/kinetic/revolver
-	can_hold = list(/obj/item/gun/kinetic/revolver)
-	spawn_contents = list(/obj/item/gun/kinetic/revolver, /obj/item/ammo/bullets/a357 = 2, /obj/item/ammo/bullets/a357/AP)
+	gun_type = /obj/item/firearm/kinetic/revolver
+	can_hold = list(/obj/item/firearm/kinetic/revolver)
+	spawn_contents = list(/obj/item/firearm/kinetic/revolver, /obj/item/ammo/bullets/a357 = 2, /obj/item/ammo/bullets/a357/AP)
 
 /obj/item/storage/belt/gun/pistol
 	name = "pistol belt"
@@ -1183,9 +1183,9 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 	icon_state = "pistol_belt"
 	item_state = "pistol_belt"
 	slots = 6
-	gun_type = /obj/item/gun/kinetic/pistol
-	can_hold = list(/obj/item/gun/kinetic/pistol)
-	spawn_contents = list(/obj/item/gun/kinetic/pistol, /obj/item/ammo/bullets/bullet_9mm = 4)
+	gun_type = /obj/item/firearm/kinetic/pistol
+	can_hold = list(/obj/item/firearm/kinetic/pistol)
+	spawn_contents = list(/obj/item/firearm/kinetic/pistol, /obj/item/ammo/bullets/bullet_9mm = 4)
 
 /obj/item/storage/belt/gun/smartgun
 	name = "smartpistol belt"
@@ -1193,9 +1193,9 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 	icon_state = "smartgun_belt"
 	item_state = "smartgun_belt"
 	slots = 6
-	gun_type = /obj/item/gun/kinetic/pistol/smart/mkII
-	can_hold = list(/obj/item/gun/kinetic/pistol/smart/mkII)
-	spawn_contents = list(/obj/item/gun/kinetic/pistol/smart/mkII, /obj/item/ammo/bullets/bullet_22/smartgun = 4)
+	gun_type = /obj/item/firearm/kinetic/pistol/smart/mkII
+	can_hold = list(/obj/item/firearm/kinetic/pistol/smart/mkII)
+	spawn_contents = list(/obj/item/firearm/kinetic/pistol/smart/mkII, /obj/item/ammo/bullets/bullet_22/smartgun = 4)
 
 
 // fancy shoulder sling for grenades
@@ -1318,38 +1318,38 @@ TYPEINFO(/obj/item/inner_tube)
 	desc = "A small sidearm holster with a clip for your standard issue melee weapon and a small pouch that attaches to your jumpsuit's belt loops."
 	icon_state = "inspector_holster"
 	item_state = "inspector_holster"
-	can_hold = list(/obj/item/gun/energy/blaster_pod_wars,
+	can_hold = list(/obj/item/firearm/energy/blaster_pod_wars,
 	/obj/item/survival_machete,
 	/obj/item/survival_axe) // how it holds an axe doesn't make sense, but we're doing it anyways. shut up
 	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 	slots = 3
 
 /obj/item/storage/belt/podwars/pistol
-	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars)
+	spawn_contents = list(/obj/item/firearm/energy/blaster_pod_wars)
 
 /obj/item/storage/belt/podwars/NTpistol
-	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/nanotrasen)
+	spawn_contents = list(/obj/item/firearm/energy/blaster_pod_wars/nanotrasen)
 
 /obj/item/storage/belt/podwars/SYpistol
-	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/syndicate)
+	spawn_contents = list(/obj/item/firearm/energy/blaster_pod_wars/syndicate)
 
 /obj/item/storage/belt/podwars/smg
-	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/smg)
+	spawn_contents = list(/obj/item/firearm/energy/blaster_pod_wars/smg)
 
 /obj/item/storage/belt/podwars/NTsmg
-	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/smg/nanotrasen)
+	spawn_contents = list(/obj/item/firearm/energy/blaster_pod_wars/smg/nanotrasen)
 
 /obj/item/storage/belt/podwars/SYsmg
-	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/smg/syndicate)
+	spawn_contents = list(/obj/item/firearm/energy/blaster_pod_wars/smg/syndicate)
 
 /obj/item/storage/belt/podwars/shotgun
-	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/shotgun)
+	spawn_contents = list(/obj/item/firearm/energy/blaster_pod_wars/shotgun)
 
 /obj/item/storage/belt/podwars/NTshotgun
-	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/shotgun/nanotrasen)
+	spawn_contents = list(/obj/item/firearm/energy/blaster_pod_wars/shotgun/nanotrasen)
 
 /obj/item/storage/belt/podwars/SYshotgun
-	spawn_contents = list(/obj/item/gun/energy/blaster_pod_wars/shotgun/syndicate)
+	spawn_contents = list(/obj/item/firearm/energy/blaster_pod_wars/shotgun/syndicate)
 
 /obj/item/storage/belt/podwars/advanced
 	name = "tactical belt"

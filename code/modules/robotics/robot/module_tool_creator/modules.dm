@@ -30,7 +30,7 @@
 		/obj/item/device/light/zippo/borg,
 		/obj/item/instrument/whistle,
 		/obj/item/c_tube, // TODO: make slightly buffed version?
-		/obj/item/gun/kinetic/foamdartgun/borg,
+		/obj/item/firearm/kinetic/foamdartgun/borg,
 		/obj/item/item_box/assorted/stickers/robot,
 		/obj/item/device/camera_viewer/security,
 		/obj/item/device/prisoner_scanner,

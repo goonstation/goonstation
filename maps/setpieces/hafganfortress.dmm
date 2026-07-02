@@ -209,7 +209,7 @@
 /obj/item/shovel{
 	name = "trench shovel"
 	},
-/obj/item/gun/kinetic/tactical_shotgun,
+/obj/item/firearm/kinetic/tactical_shotgun,
 /turf/unsimulated/floor/industrial,
 /area/adventure{
 	name = "Caer Vedwyd";
@@ -378,7 +378,7 @@
 	},
 /obj/table/reinforced/industrial/auto,
 /obj/machinery/recharger,
-/obj/item/gun/energy/alastor{
+/obj/item/firearm/energy/alastor{
 	pixel_x = -4;
 	pixel_y = -4
 	},
@@ -391,7 +391,7 @@
 	})
 "bg" = (
 /obj/table/wood/auto/desk,
-/obj/item/gun/kinetic/bigiron{
+/obj/item/firearm/kinetic/bigiron{
 	pixel_y = 4;
 	pixel_x = 1
 	},
@@ -932,7 +932,7 @@
 	})
 "cG" = (
 /obj/table/reinforced/industrial/auto,
-/obj/item/gun/energy/lasergat,
+/obj/item/firearm/energy/lasergat,
 /turf/unsimulated/floor/twotone/black,
 /area/adventure{
 	name = "Caer Vedwyd";
@@ -1372,11 +1372,11 @@
 	pixel_y = 5;
 	pixel_x = 6
 	},
-/obj/item/gun/kinetic/veritate{
+/obj/item/firearm/kinetic/veritate{
 	pixel_y = 34;
 	pixel_x = -13
 	},
-/obj/item/gun/kinetic/veritate{
+/obj/item/firearm/kinetic/veritate{
 	pixel_y = 29;
 	pixel_x = 3
 	},
@@ -1971,7 +1971,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "office counter"
 	},
-/obj/item/gun/laser_pistol/prototype{
+/obj/item/firearm/laser_pistol/prototype{
 	pixel_y = 5;
 	pixel_x = -1
 	},
@@ -1980,8 +1980,8 @@
 	name = "Executive Wing"
 	})
 "fR" = (
-/obj/item/gun/kinetic/capella,
-/obj/item/gun/kinetic/capella{
+/obj/item/firearm/kinetic/capella,
+/obj/item/firearm/kinetic/capella{
 	pixel_y = -8
 	},
 /turf/unsimulated/wall/auto/lead/gray{
@@ -2857,10 +2857,10 @@
 	})
 "ih" = (
 /obj/table/reinforced/industrial/auto,
-/obj/item/gun/kinetic/gyrojet{
+/obj/item/firearm/kinetic/gyrojet{
 	pixel_y = 5
 	},
-/obj/item/gun/kinetic/gyrojet,
+/obj/item/firearm/kinetic/gyrojet,
 /obj/item/ammo/bullets/gyrojet,
 /obj/item/ammo/bullets/gyrojet{
 	pixel_x = 5
@@ -3189,7 +3189,7 @@
 	pixel_y = 18
 	},
 /obj/machinery/recharger,
-/obj/item/gun/energy/laser_gun,
+/obj/item/firearm/energy/laser_gun,
 /turf/unsimulated/floor/twotone/black,
 /area/adventure{
 	name = "Caer Vedwyd";
@@ -3370,7 +3370,7 @@
 	})
 "jx" = (
 /obj/machinery/light/emergencyflashing,
-/obj/item/gun/kinetic/minigun,
+/obj/item/firearm/kinetic/minigun,
 /obj/table/syndicate/auto,
 /turf/unsimulated/floor/engine/glow,
 /area/prefab/safehouse{
@@ -4665,13 +4665,13 @@
 /obj/item/storage/pouch/shotgun,
 /obj/item/storage/pouch/shotgun,
 /obj/item/storage/pouch/shotgun,
-/obj/item/gun/kinetic/tactical_shotgun{
+/obj/item/firearm/kinetic/tactical_shotgun{
 	pixel_y = -6
 	},
-/obj/item/gun/kinetic/tactical_shotgun{
+/obj/item/firearm/kinetic/tactical_shotgun{
 	pixel_y = 6
 	},
-/obj/item/gun/kinetic/tactical_shotgun,
+/obj/item/firearm/kinetic/tactical_shotgun,
 /obj/item/storage/box/crowdgrenades,
 /turf/unsimulated/floor/wood/two,
 /area/adventure{
@@ -4899,7 +4899,7 @@
 	dir = 4
 	},
 /obj/machinery/recharger,
-/obj/item/gun/energy/lasergat,
+/obj/item/firearm/energy/lasergat,
 /turf/unsimulated/floor/industrial,
 /area/adventure{
 	name = "Caer Vedwyd";
@@ -5393,7 +5393,7 @@
 	})
 "ox" = (
 /obj/table/reinforced/industrial/auto,
-/obj/item/gun/energy/lasergat,
+/obj/item/firearm/energy/lasergat,
 /obj/machinery/light/incandescent/warm{
 	dir = 1;
 	pixel_y = 18
@@ -5555,15 +5555,15 @@
 	name = "military container";
 	color = "#33ffaa"
 	},
-/obj/item/gun/energy/phaser_huge{
+/obj/item/firearm/energy/phaser_huge{
 	pixel_y = -2;
 	pixel_x = -4
 	},
-/obj/item/gun/energy/phaser_huge{
+/obj/item/firearm/energy/phaser_huge{
 	pixel_y = 16;
 	pixel_x = -4
 	},
-/obj/item/gun/energy/phaser_huge{
+/obj/item/firearm/energy/phaser_huge{
 	pixel_y = 7;
 	pixel_x = -4
 	},
@@ -5950,7 +5950,7 @@
 "pT" = (
 /obj/table/reinforced/industrial/auto,
 /obj/machinery/recharger,
-/obj/item/gun/energy/laser_gun,
+/obj/item/firearm/energy/laser_gun,
 /turf/unsimulated/floor/concrete,
 /area/adventure{
 	name = "Caer Vedwyd";
@@ -6575,12 +6575,12 @@
 /obj/item/material_piece/mauxite,
 /obj/item/material_piece/mauxite,
 /obj/item/material_piece/mauxite,
-/obj/item/gun/energy/phaser_small,
-/obj/item/gun/energy/phaser_small,
-/obj/item/gun/energy/phaser_small,
-/obj/item/gun/energy/phaser_small,
-/obj/item/gun/energy/phaser_small,
-/obj/item/gun/energy/phaser_small,
+/obj/item/firearm/energy/phaser_small,
+/obj/item/firearm/energy/phaser_small,
+/obj/item/firearm/energy/phaser_small,
+/obj/item/firearm/energy/phaser_small,
+/obj/item/firearm/energy/phaser_small,
+/obj/item/firearm/energy/phaser_small,
 /obj/item/material_piece/copper,
 /obj/item/material_piece/copper,
 /obj/item/material_piece/copper,
@@ -8068,7 +8068,7 @@
 	dir = 4
 	},
 /obj/machinery/recharger,
-/obj/item/gun/energy/lasergat,
+/obj/item/firearm/energy/lasergat,
 /obj/machinery/door_control{
 	id = "vedwyd_bunkerhall";
 	pixel_y = 24;
@@ -8421,8 +8421,8 @@
 /obj/item/clothing/head/helmet/space/donk,
 /obj/item/clothing/head/helmet/space/donk,
 /obj/item/clothing/head/helmet/space/donk,
-/obj/item/gun/energy/phaser_huge,
-/obj/item/gun/energy/phaser_huge,
+/obj/item/firearm/energy/phaser_huge,
+/obj/item/firearm/energy/phaser_huge,
 /obj/item/extinguisher/large,
 /obj/item/extinguisher/large,
 /obj/item/extinguisher/large,
@@ -8646,7 +8646,7 @@
 "wK" = (
 /obj/table/reinforced/industrial/auto,
 /obj/machinery/recharger,
-/obj/item/gun/energy/laser_gun,
+/obj/item/firearm/energy/laser_gun,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
@@ -9249,7 +9249,7 @@
 	pixel_x = 10
 	},
 /obj/machinery/recharger,
-/obj/item/gun/energy/alastor{
+/obj/item/firearm/energy/alastor{
 	pixel_x = -4;
 	pixel_y = -4
 	},
@@ -9455,7 +9455,7 @@
 	})
 "yV" = (
 /obj/stool/chair/red,
-/obj/item/gun/energy/alastor{
+/obj/item/firearm/energy/alastor{
 	name = "Guard commander's rifle";
 	rarity = 4
 	},
@@ -10004,7 +10004,7 @@
 /obj/item/decoration/ashtray,
 /obj/item/cigbutt,
 /obj/item/cigbutt,
-/obj/item/gun/kinetic/four_bore_albatross{
+/obj/item/firearm/kinetic/four_bore_albatross{
 	pixel_y = 8;
 	pixel_x = -14
 	},
@@ -10035,7 +10035,7 @@
 	})
 "Ap" = (
 /obj/shrub,
-/obj/item/gun/kinetic/sniper,
+/obj/item/firearm/kinetic/sniper,
 /turf/unsimulated/floor/cave,
 /area/adventure{
 	name = "Caer Vedwyd";
@@ -11127,7 +11127,7 @@
 	dir = 8;
 	pixel_x = -10
 	},
-/obj/item/gun/kinetic/survival_rifle{
+/obj/item/firearm/kinetic/survival_rifle{
 	pixel_y = -1;
 	pixel_x = 1
 	},
@@ -11226,7 +11226,7 @@
 /obj/item/clothing/glasses/nightvision{
 	pixel_y = 9
 	},
-/obj/item/gun/kinetic/survival_rifle{
+/obj/item/firearm/kinetic/survival_rifle{
 	pixel_y = -1;
 	pixel_x = 1
 	},
@@ -12103,7 +12103,7 @@
 /obj/table/reinforced/industrial/auto,
 /obj/machinery/light/incandescent/warm,
 /obj/machinery/recharger,
-/obj/item/gun/energy/laser_gun,
+/obj/item/firearm/energy/laser_gun,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
@@ -12143,7 +12143,7 @@
 	},
 /obj/table/reinforced/industrial/auto,
 /obj/machinery/recharger,
-/obj/item/gun/energy/lasershotgun{
+/obj/item/firearm/energy/lasershotgun{
 	pixel_x = -4
 	},
 /turf/unsimulated/floor/industrial,
@@ -12237,8 +12237,8 @@
 	},
 /obj/table/reinforced/industrial/auto,
 /obj/item/clothing/suit/armor/tacticalvest/light,
-/obj/item/gun/kinetic/pistol,
-/obj/item/gun/kinetic/pistol{
+/obj/item/firearm/kinetic/pistol,
+/obj/item/firearm/kinetic/pistol{
 	pixel_y = 7
 	},
 /turf/unsimulated/floor/industrial,
@@ -12257,7 +12257,7 @@
 "Gi" = (
 /obj/table/reinforced/industrial/auto,
 /obj/machinery/recharger,
-/obj/item/gun/energy/laser_gun,
+/obj/item/firearm/energy/laser_gun,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
@@ -13348,7 +13348,7 @@
 "IU" = (
 /obj/table/reinforced/industrial/auto,
 /obj/machinery/recharger,
-/obj/item/gun/energy/alastor{
+/obj/item/firearm/energy/alastor{
 	pixel_x = -4;
 	pixel_y = -4
 	},
@@ -13415,7 +13415,7 @@
 /obj/item/golf_ball,
 /obj/item/quarterstaff,
 /obj/item/reagent_containers/glass/bottle/syringe_canister/curare,
-/obj/item/gun/reagent/syringe,
+/obj/item/firearm/reagent/syringe,
 /turf/unsimulated/floor/carpet/red,
 /area/adventure{
 	name = "Caer Vedwyd";
@@ -13635,7 +13635,7 @@
 	})
 "Jw" = (
 /obj/table/wood/auto/desk,
-/obj/item/gun/kinetic/tranq_pistol{
+/obj/item/firearm/kinetic/tranq_pistol{
 	pixel_y = 8
 	},
 /obj/item/ammo/bullets/tranq_darts/syndicate/pistol{
@@ -13650,7 +13650,7 @@
 /obj/item/ammo/bullets/tranq_darts/syndicate/pistol{
 	pixel_x = 1
 	},
-/obj/item/gun/kinetic/tranq_pistol{
+/obj/item/firearm/kinetic/tranq_pistol{
 	pixel_y = 2
 	},
 /obj/window/bulletproof/north,
@@ -13925,8 +13925,8 @@
 "Kd" = (
 /obj/table/reinforced/industrial/auto,
 /obj/item/clothing/suit/armor/tacticalvest/light,
-/obj/item/gun/kinetic/pistol,
-/obj/item/gun/kinetic/pistol{
+/obj/item/firearm/kinetic/pistol,
+/obj/item/firearm/kinetic/pistol{
 	pixel_y = 7
 	},
 /turf/unsimulated/floor/industrial,
@@ -15137,7 +15137,7 @@
 	},
 /obj/machinery/light/incandescent/warm,
 /obj/machinery/recharger,
-/obj/item/gun/energy/alastor{
+/obj/item/firearm/energy/alastor{
 	pixel_x = -4;
 	pixel_y = -4
 	},
@@ -15337,7 +15337,7 @@
 /obj/item/clothing/suit/gimmick/guncoat{
 	pixel_y = 8
 	},
-/obj/item/gun/kinetic/sawnoff/long_barrel{
+/obj/item/firearm/kinetic/sawnoff/long_barrel{
 	pixel_x = -13;
 	pixel_y = 5
 	},
@@ -15505,11 +15505,11 @@
 	})
 "OA" = (
 /obj/rack,
-/obj/item/gun/energy/stasis{
+/obj/item/firearm/energy/stasis{
 	pixel_y = 1;
 	pixel_x = -7
 	},
-/obj/item/gun/energy/stasis{
+/obj/item/firearm/energy/stasis{
 	pixel_y = -7;
 	pixel_x = -7
 	},
@@ -16319,11 +16319,11 @@
 	pixel_y = 5;
 	pixel_x = 4
 	},
-/obj/item/gun/kinetic/veritate{
+/obj/item/firearm/kinetic/veritate{
 	pixel_y = 34;
 	pixel_x = -13
 	},
-/obj/item/gun/kinetic/veritate{
+/obj/item/firearm/kinetic/veritate{
 	pixel_y = 29;
 	pixel_x = 3
 	},
@@ -16940,7 +16940,7 @@
 	},
 /obj/item/device/radio/headset/syndicate/comtac,
 /obj/item/swords_sheaths/nukeop,
-/obj/item/gun/energy/blaster_pod_wars/syndicate{
+/obj/item/firearm/energy/blaster_pod_wars/syndicate{
 	name = "Artillery commmander's sidearm";
 	rarity = 4
 	},
@@ -17941,7 +17941,7 @@
 	},
 /obj/machinery/light/incandescent/warm,
 /obj/machinery/recharger,
-/obj/item/gun/energy/lasershotgun{
+/obj/item/firearm/energy/lasershotgun{
 	pixel_x = -4
 	},
 /turf/unsimulated/floor/industrial,
@@ -18477,11 +18477,11 @@
 "VC" = (
 /obj/storage/closet/mantacontainerred,
 /obj/random_item_spawner/hat/lots,
-/obj/item/gun/kinetic/breakaction/singleshotrifle,
-/obj/item/gun/kinetic/breakaction/singleshotrifle{
+/obj/item/firearm/kinetic/breakaction/singleshotrifle,
+/obj/item/firearm/kinetic/breakaction/singleshotrifle{
 	pixel_y = 19
 	},
-/obj/item/gun/kinetic/breakaction/singleshotrifle{
+/obj/item/firearm/kinetic/breakaction/singleshotrifle{
 	pixel_y = 8
 	},
 /turf/unsimulated/floor/concrete,
@@ -18608,7 +18608,7 @@
 	pixel_x = 1
 	},
 /obj/rack,
-/obj/item/gun/energy/antique{
+/obj/item/firearm/energy/antique{
 	name = "Trade commander's sidearm";
 	rarity = 4
 	},
@@ -18830,7 +18830,7 @@
 /obj/item/shovel{
 	name = "trench shovel"
 	},
-/obj/item/gun/kinetic/tactical_shotgun,
+/obj/item/firearm/kinetic/tactical_shotgun,
 /turf/unsimulated/floor/industrial,
 /area/adventure{
 	name = "Caer Vedwyd";
@@ -18854,7 +18854,7 @@
 	},
 /obj/table/reinforced/industrial/auto,
 /obj/machinery/recharger,
-/obj/item/gun/energy/lasershotgun{
+/obj/item/firearm/energy/lasershotgun{
 	pixel_x = -4
 	},
 /turf/unsimulated/floor/industrial,
@@ -19590,16 +19590,16 @@
 	color = "#33ffaa";
 	name = "military container"
 	},
-/obj/item/gun/energy/phaser_smg/extended_mag{
+/obj/item/firearm/energy/phaser_smg/extended_mag{
 	pixel_y = -4
 	},
-/obj/item/gun/energy/phaser_smg/extended_mag{
+/obj/item/firearm/energy/phaser_smg/extended_mag{
 	pixel_y = 20
 	},
-/obj/item/gun/energy/phaser_smg/extended_mag{
+/obj/item/firearm/energy/phaser_smg/extended_mag{
 	pixel_y = 4
 	},
-/obj/item/gun/energy/phaser_smg/extended_mag{
+/obj/item/firearm/energy/phaser_smg/extended_mag{
 	pixel_y = 12
 	},
 /turf/unsimulated/floor/concrete,
@@ -19926,7 +19926,7 @@
 	teleport_blocked = 1
 	})
 "ZP" = (
-/obj/item/gun/kinetic/ag3_rifle,
+/obj/item/firearm/kinetic/ag3_rifle,
 /turf/unsimulated/wall/auto/lead/gray{
 	name = "plated wall"
 	},

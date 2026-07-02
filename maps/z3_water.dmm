@@ -1281,15 +1281,15 @@
 /obj/storage/crate/classcrate{
 	name = "secure crate"
 	},
-/obj/item/gun/energy/alastor{
+/obj/item/firearm/energy/alastor{
 	pixel_x = -4;
 	pixel_y = 4
 	},
-/obj/item/gun/energy/alastor{
+/obj/item/firearm/energy/alastor{
 	pixel_x = 4;
 	pixel_y = 4
 	},
-/obj/item/gun/energy/alastor{
+/obj/item/firearm/energy/alastor{
 	pixel_y = 6
 	},
 /turf/unsimulated/floor/black,
@@ -3195,7 +3195,7 @@
 "mj" = (
 /obj/table/wood/auto,
 /obj/machinery/light/small/floor/greenish,
-/obj/item/gun/kinetic/webley,
+/obj/item/firearm/kinetic/webley,
 /turf/unsimulated/floor,
 /area/cult_base/leader)
 "mk" = (

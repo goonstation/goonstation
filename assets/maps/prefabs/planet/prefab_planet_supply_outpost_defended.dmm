@@ -180,7 +180,7 @@
 "P" = (
 /obj/storage/secure/closet/personal/empty,
 /obj/item/clothing/under/misc/merc01,
-/obj/item/gun/kinetic/pistol,
+/obj/item/firearm/kinetic/pistol,
 /obj/item/storage/backpack/brown,
 /obj/random_item_spawner/med_kit/one_or_zero,
 /turf/unsimulated/outdoors/concrete,

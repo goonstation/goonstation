@@ -57,7 +57,7 @@
 			return 0
 
 	attackby(obj/b, mob/user)
-		if(istype(b, /obj/item/gun/kinetic) && b:allowReverseReload)
+		if(istype(b, /obj/item/firearm/kinetic) && b:allowReverseReload)
 			b.Attackby(src, user)
 		else if(b.type == src.type)
 			var/obj/item/ammo/bullets/A = b
@@ -88,7 +88,7 @@
 				return // Full reload or ammo left over.
 		else return ..()
 
-	swap(var/obj/item/ammo/bullets/A, var/obj/item/gun/kinetic/K)
+	swap(var/obj/item/ammo/bullets/A, var/obj/item/firearm/kinetic/K)
 		// I tweaked this for improved user feedback and to support zip guns (Convair880).
 		var/check = 0
 		if (!A || !K)
@@ -159,7 +159,7 @@
 
 			return 1
 
-	proc/loadammo(var/obj/item/ammo/bullets/A, var/obj/item/gun/kinetic/K)
+	proc/loadammo(var/obj/item/ammo/bullets/A, var/obj/item/firearm/kinetic/K)
 		// Also see attackby() in kinetic.dm.
 		if (!A || !K)
 			return 0 // Error message.

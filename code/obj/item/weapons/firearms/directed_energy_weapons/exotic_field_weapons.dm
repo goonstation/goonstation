@@ -1,10 +1,10 @@
 ////////////////////////////////////VUVUV
-TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
+TYPEINFO(/obj/item/firearm/energy/vuvuzela_gun)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal" = 5,
 				"conductive_high" = 5,
 				"energy_high" = 10)
-/obj/item/gun/energy/vuvuzela_gun
+/obj/item/firearm/energy/vuvuzela_gun
 	name = "amplified vuvuzela"
 	icon_state = "vuvuzela"
 	item_state = "bike_horn"
@@ -19,9 +19,9 @@ TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
 		..()
 
 //////////////////////////////////////Crabgun
-TYPEINFO(/obj/item/gun/energy/crabgun)
+TYPEINFO(/obj/item/firearm/energy/crabgun)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
-/obj/item/gun/energy/crabgun
+/obj/item/firearm/energy/crabgun
 	name = "a strange crab"
 	desc = "Years of extreme genetic tinkering have finally led to the feared combination of crab and gun."
 	icon = 'icons/obj/crabgun.dmi'
@@ -53,7 +53,7 @@ TYPEINFO(/obj/item/gun/energy/crabgun)
 		. = ..()
 
 ////////////////////////////////////Wave Gun
-/obj/item/gun/energy/wavegun
+/obj/item/firearm/energy/wavegun
 	name = "\improper Sancai wave gun"
 	desc = "The versatile XIANG|GIESEL model '三�' with three nonlethal functions: inverse '炎�', transverse '地皇' and reflective '天皇' ."
 	icon_state = "wavegun"
@@ -94,7 +94,7 @@ TYPEINFO(/obj/item/gun/energy/crabgun)
 		user.update_inhands()
 
 ////////////////////////////////////BFG
-/obj/item/gun/energy/bfg
+/obj/item/firearm/energy/bfg
 	name = "\improper BFG 9000"
 	icon_state = "bfg"
 	m_amt = 4000
@@ -119,14 +119,14 @@ TYPEINFO(/obj/item/gun/energy/crabgun)
 			sleep(0.9 SECONDS)
 		return ..(target, start, user)
 
-/obj/item/gun/energy/bfg/vr
+/obj/item/firearm/energy/bfg/vr
 	icon = 'icons/effects/VR.dmi'
 
 ///////////////////////////////////////Telegun
-TYPEINFO(/obj/item/gun/energy/teleport)
+TYPEINFO(/obj/item/firearm/energy/teleport)
 	analyser_flags = ANALYSER_BLACKLIST
 
-/obj/item/gun/energy/teleport
+/obj/item/firearm/energy/teleport
 	name = "teleport gun"
 	desc = "A hacked together combination of a taser gun and a handheld teleportation unit."
 	icon_state = "teleport"
@@ -258,10 +258,10 @@ TYPEINFO(/obj/item/gun/energy/teleport)
 		return index
 
 ///////////////////////////////////////Ghost Gun
-TYPEINFO(/obj/item/gun/energy/ghost)
+TYPEINFO(/obj/item/firearm/energy/ghost)
 	analyser_flags = ANALYSER_BLACKLIST
 
-/obj/item/gun/energy/ghost
+/obj/item/firearm/energy/ghost
 	name = "ectoplasmic destabilizer"
 	desc = "If this had streams, it would be inadvisable to cross them. But no, it fires bolts instead.  Don't throw it into a stream, I guess?"
 	icon_state = "ghost"
@@ -281,7 +281,7 @@ TYPEINFO(/obj/item/gun/energy/ghost)
 		..()
 
 ///////////////////////////////////////Owl Gun
-/obj/item/gun/energy/owl
+/obj/item/firearm/energy/owl
 	name = "owl gun"
 	desc = "Its a gun that has two modes, Owl and Owler"
 	item_state = "gun"
@@ -296,7 +296,7 @@ TYPEINFO(/obj/item/gun/energy/ghost)
 		projectiles = list(current_projectile,new/datum/projectile/owl/owlate)
 		..()
 
-/obj/item/gun/energy/owl_safe
+/obj/item/firearm/energy/owl_safe
 	name = "owl gun"
 	desc = "Hoot!"
 	item_state = "gun"
@@ -312,7 +312,7 @@ TYPEINFO(/obj/item/gun/energy/ghost)
 		..()
 
 ///////////////////////////////////////Frog Gun (Shoots :getin: and :getout:)
-/obj/item/gun/energy/frog
+/obj/item/firearm/energy/frog
 	name = "frog gun"
 	desc = "It appears to be shivering and croaking in your hand. How creepy." //it must be unhoppy :^)
 	icon = 'icons/obj/items/guns/gimmick.dmi'
@@ -329,7 +329,7 @@ TYPEINFO(/obj/item/gun/energy/ghost)
 		..()
 
 ///////////////////////////////////////Shrink Ray
-/obj/item/gun/energy/shrinkray
+/obj/item/firearm/energy/shrinkray
 	name = "shrink ray"
 	item_state = "gun"
 	force = 5
@@ -343,7 +343,7 @@ TYPEINFO(/obj/item/gun/energy/ghost)
 		projectiles = list(current_projectile)
 		..()
 
-/obj/item/gun/energy/shrinkray/growray
+/obj/item/firearm/energy/shrinkray/growray
 	name = "grow ray"
 	New()
 		..()
@@ -351,7 +351,7 @@ TYPEINFO(/obj/item/gun/energy/ghost)
 		projectiles = list(current_projectile)
 
 // stinky ray
-/obj/item/gun/energy/stinkray
+/obj/item/firearm/energy/stinkray
 	name = "stink ray"
 	item_state = "gun"
 	force = 5
@@ -367,7 +367,7 @@ TYPEINFO(/obj/item/gun/energy/ghost)
 
 
 ///////////////////////////////////////Glitch Gun
-/obj/item/gun/energy/glitch_gun
+/obj/item/firearm/energy/glitch_gun
 	name = "glitch gun"
 	desc = "It's humming with some sort of disturbing energy. Do you really wanna hold this?"
 	icon = 'icons/obj/items/guns/toy.dmi'
@@ -388,12 +388,12 @@ TYPEINFO(/obj/item/gun/energy/ghost)
 		return ..(target, start, user)
 
 /////////////////////////////////////// Pickpocket Grapple, Grayshift's grif gun
-TYPEINFO(/obj/item/gun/energy/pickpocket)
+TYPEINFO(/obj/item/firearm/energy/pickpocket)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal" = 5,
 				"conductive_high" = 5,
 				"energy_high" = 10)
-/obj/item/gun/energy/pickpocket
+/obj/item/firearm/energy/pickpocket
 	name = "\improper Super! Grapple Friend" // like foam dart guns
 	desc = "A complicated, camoflaged claw device on a tether capable of complex and stealthy interactions. It's definitely not just a repurposed janky toy that steals shit."
 	icon_state = "pickpocket"
@@ -496,11 +496,11 @@ TYPEINFO(/obj/item/gun/energy/pickpocket)
 		shot.firer = user.key
 		return ..(target, start, user)
 
-/obj/item/gun/energy/pickpocket/testing // has a beefier cell in it
+/obj/item/firearm/energy/pickpocket/testing // has a beefier cell in it
 	cell_type = /obj/item/ammo/power_cell/self_charging/big
 
 ///////////////////////////////////////////////////
-TYPEINFO(/obj/item/gun/energy/lawbringer)
+TYPEINFO(/obj/item/firearm/energy/lawbringer)
 	mats = list("metal" = 15,
 				"conductive_high" = 5,
 				"energy_high" = 5)
@@ -509,7 +509,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD_RANGE_0, LISTEN_INPUT_EQUIPPED, LISTEN_INPUT_DEADCHAT)
 	start_listen_languages = list(LANGUAGE_ENGLISH)
 
-/obj/item/gun/energy/lawbringer
+/obj/item/firearm/energy/lawbringer
 	name = "\improper Lawbringer"
 	item_state = "lawg-detain"
 	icon_state = "lawbringer0"
@@ -756,7 +756,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 				playsound(get_turf(src), 'sound/weapons/ACgun1.ogg', 50, pitch = 1.2)
 		return ..(target, start, user)
 
-/obj/item/gun/energy/lawbringer/emag_act(var/mob/user, var/obj/item/card/emag/E)
+/obj/item/firearm/energy/lawbringer/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if (user)
 		src.emagged = TRUE
 		boutput(user, SPAN_ALERT("Anyone can use this gun now. Be careful! (use it in-hand to register your fingerprints)"))
@@ -764,7 +764,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 		return TRUE
 
 //stolen from firebreath in powers.dm
-/obj/item/gun/energy/lawbringer/proc/shoot_fire_hotspots(var/target,var/start,var/mob/user)
+/obj/item/firearm/energy/lawbringer/proc/shoot_fire_hotspots(var/target,var/start,var/mob/user)
 	var/list/affected_turfs = getline(get_turf(start), get_turf(target))
 	var/range = 6
 	playsound(user.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
@@ -785,7 +785,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 
 // Pulse Rifle //
 // An energy gun that uses the lawbringer's Pulse setting, to beef up the current armory.
-/obj/item/gun/energy/pulse_rifle
+/obj/item/firearm/energy/pulse_rifle
 	name = "pulse rifle"
 	desc = "A sleek energy rifle with two different pulse settings: Kinetic and Electromagnetic."
 	icon_state = "pulse_rifle"
@@ -804,12 +804,12 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 		projectiles = list(new/datum/projectile/energy_bolt/pulse, new/datum/projectile/energy_bolt/electromagnetic_pulse)
 
 ///////////////////////////////////////Wasp Gun
-TYPEINFO(/obj/item/gun/energy/wasp)
+TYPEINFO(/obj/item/firearm/energy/wasp)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal" = 5,
 				"conductive_high" = 5,
 				"energy_high" = 10)
-/obj/item/gun/energy/wasp
+/obj/item/firearm/energy/wasp
 	name = "mini wasp-egg-crossbow"
 	desc = "A weapon favored by many of the syndicate's stealth apiarists, which does damage over time using swarms of angry wasps. Utilizes a self-recharging atomic power cell to synthesize more wasp eggs. Somehow."
 	icon_state = "crossbow" //placeholder, would prefer a custom wasp themed icon
@@ -847,19 +847,19 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 		set_current_projectile(new bubble_type)
 		projectiles = list(current_projectile)
 
-/obj/item/gun/energy/bubble_gun/bomb
+/obj/item/firearm/energy/bubble_gun/bomb
 	name = "Bubble Bomb Max ULTRAimpact"
 	desc = "Looks to be a modified Bubble Max XSTREAM. There appears to be a warning label on the side, \"Fire at a distance.\""
 	var/bubble_type = /datum/projectile/special/bubble/bomb
 	shoot_delay = 50
 
-/obj/item/gun/energy/bubble_gun/bomb/turf_safe
+/obj/item/firearm/energy/bubble_gun/bomb/turf_safe
 	bubble_type = /datum/projectile/special/bubble/bomb/turf_safe
 
 #undef HEAT_REMOVED_PER_PROCESS
 #undef FIRE_THRESHOLD
 
-/obj/item/gun/energy/resonator
+/obj/item/firearm/energy/resonator
 	name = "Resonator"
 	cell_type = /obj/item/ammo/power_cell/siren_orb
 	icon = 'icons/obj/items/guns/energy.dmi'

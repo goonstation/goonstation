@@ -2,7 +2,7 @@
 	if(shooting)
 		return
 	shooting = TRUE
-	var/obj/item/gun/G = parent
+	var/obj/item/firearm/G = parent
 	var/list/local_targets = tracked_targets.Copy()
 	SPAWN(0)
 		if(length(local_targets))

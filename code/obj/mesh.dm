@@ -386,8 +386,8 @@ TYPEINFO_NEW(/obj/mesh/grille)
 			return
 
 	//gun
-	if (istype(I, /obj/item/gun))
-		var/obj/item/gun/gun = I
+	if (istype(I, /obj/item/firearm))
+		var/obj/item/firearm/gun = I
 		gun.ShootPointBlank(src, user)
 		return
 

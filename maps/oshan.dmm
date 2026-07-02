@@ -1897,11 +1897,11 @@
 /area/station/maintenance/north)
 "aiX" = (
 /obj/rack,
-/obj/item/gun/kinetic/riot40mm{
+/obj/item/firearm/kinetic/riot40mm{
 	pixel_x = -2;
 	pixel_y = 8
 	},
-/obj/item/gun/kinetic/riot40mm{
+/obj/item/firearm/kinetic/riot40mm{
 	pixel_y = 8
 	},
 /obj/item/ammo/bullets/smoke{
@@ -1912,7 +1912,7 @@
 	pixel_x = -2;
 	pixel_y = -3
 	},
-/obj/item/gun/implanter{
+/obj/item/firearm/implanter{
 	pixel_x = -3
 	},
 /turf/simulated/floor/red/side{
@@ -20701,10 +20701,10 @@
 /obj/storage/secure/crate/plasma/armory/anti_biological{
 	req_access = null
 	},
-/obj/item/gun/kinetic/flaregun,
+/obj/item/firearm/kinetic/flaregun,
 /obj/item/ammo/bullets/flare,
 /obj/item/ammo/bullets/flare,
-/obj/item/gun/flamethrower/assembled/loaded,
+/obj/item/firearm/flamethrower/assembled/loaded,
 /turf/simulated/floor/redblack{
 	dir = 10
 	},
@@ -26516,7 +26516,7 @@
 	icon_state = "bedsheet-red"
 	},
 /obj/machinery/bot/secbot/beepsky,
-/obj/item/gun/energy/phaser_small{
+/obj/item/firearm/energy/phaser_small{
 	pixel_x = -6;
 	pixel_y = -2
 	},
@@ -37362,7 +37362,7 @@
 	},
 /area/station/engine/engineering)
 "nvG" = (
-/obj/item/gun/kinetic/zipgun,
+/obj/item/firearm/kinetic/zipgun,
 /turf/simulated/floor/red,
 /area/sunken_asteroid)
 "nvJ" = (
@@ -38442,7 +38442,7 @@
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/remote/porter/port_a_nanomed,
-/obj/item/gun/implanter,
+/obj/item/firearm/implanter,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -48452,7 +48452,7 @@
 "xir" = (
 /obj/table/wood/auto,
 /obj/item/storage/toolbox/emergency,
-/obj/item/gun/russianrevolver,
+/obj/item/firearm/russianrevolver,
 /obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/baroffice)

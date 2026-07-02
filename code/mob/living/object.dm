@@ -468,22 +468,22 @@
 				spooker.self_interact() // turn that sword on
 			spooker.set_a_intent(INTENT_HARM)
 
-		else if (istype(item, /obj/item/gun))
+		else if (istype(item, /obj/item/firearm))
 			//oough parallel inheritance moment
-			if (istype(item, /obj/item/gun/kinetic/pumpweapon))
-				var/obj/item/gun/kinetic/pumpweapon/pumpweapon = item
+			if (istype(item, /obj/item/firearm/kinetic/pumpweapon))
+				var/obj/item/firearm/kinetic/pumpweapon/pumpweapon = item
 				if (pumpweapon.pump_back)
 					item.AttackSelf(src.holder.owner)
 					//don't pump and shoot in the same AI tick
 					ON_COOLDOWN(holder.owner, "livingobj_click_delay", holder.owner.combat_click_delay)
 					return
-			else if (istype(item, /obj/item/gun/kinetic/single_action))
-				var/obj/item/gun/kinetic/single_action/single_action = item
+			else if (istype(item, /obj/item/firearm/kinetic/single_action))
+				var/obj/item/firearm/kinetic/single_action/single_action = item
 				if (!single_action.hammer_cocked)
 					item.AttackSelf(src.holder.owner)
 					ON_COOLDOWN(holder.owner, "livingobj_click_delay", holder.owner.combat_click_delay)
 					return
-			var/obj/item/gun/pew = item
+			var/obj/item/firearm/pew = item
 			if (pew.canshoot(holder.owner))
 				spooker.set_a_intent(INTENT_HARM) // we can shoot, so... shoot
 			else

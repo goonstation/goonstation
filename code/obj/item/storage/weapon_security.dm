@@ -46,7 +46,7 @@
 	name = "revolver box"
 	icon_state = "hard_case"
 	desc = "A box containing a syndicate revolver and ammo."
-	spawn_contents = list(/obj/item/gun/kinetic/revolver,\
+	spawn_contents = list(/obj/item/firearm/kinetic/revolver,\
 	/obj/item/ammo/bullets/a357 = 3,\
 	/obj/item/ammo/bullets/a357/AP = 2)
 
@@ -55,7 +55,7 @@
 	icon_state = "hard_case"
 	desc = "A box containing a .38 caliber revolver and ammunition."
 	// Reduced the amount of ammo. The detective had four lethal and five stun speedloaders total in his closet, perhaps a bit too much (Convair880).
-	spawn_contents = list(/obj/item/gun/kinetic/detectiverevolver,\
+	spawn_contents = list(/obj/item/firearm/kinetic/detectiverevolver,\
 	/obj/item/ammo/bullets/a38 = 2,\
 	/obj/item/ammo/bullets/a38/stun = 2)
 
@@ -63,14 +63,14 @@
 	name = "AKM box"
 	icon_state = "hard_case"
 	desc = "A box containing a surplus AKM and 3 magazines."
-	spawn_contents = list(/obj/item/gun/kinetic/akm,\
+	spawn_contents = list(/obj/item/firearm/kinetic/akm,\
 	/obj/item/ammo/bullets/akm = 2)
 
 /obj/item/storage/box/pistol
 	name = "suppressed pistol box"
 	icon_state = "hard_case"
 	desc = "A box containing a sneaky pistol and some ammo."
-	spawn_contents = list(/obj/item/gun/kinetic/silenced_22,\
+	spawn_contents = list(/obj/item/firearm/kinetic/silenced_22,\
 	/obj/item/ammo/bullets/bullet_22HP = 3)
 
 /obj/item/storage/box/capella
@@ -79,21 +79,21 @@
 	color = "red"
 	slots = 3
 	desc = "A box containing an extremely accurate sport pistol and some match-grade ammo."
-	spawn_contents = list(/obj/item/gun/kinetic/capella,\
+	spawn_contents = list(/obj/item/firearm/kinetic/capella,\
 	/obj/item/ammo/bullets/bullet_22match = 2)
 
 /obj/item/storage/box/derringer
 	name = "derringer box"
 	icon_state = "hard_case"
 	desc = "A box containing a derringer and some ammo."
-	spawn_contents = list(/obj/item/gun/kinetic/derringer,\
+	spawn_contents = list(/obj/item/firearm/kinetic/derringer,\
 	/obj/item/ammo/bullets/derringer = 4)
 
 /obj/item/storage/box/shotgun
 	name = "shotgun box"
 	icon_state = "hard_case"
 	desc = "A box containing a high-powered shotgun and some ammo."
-	spawn_contents = list(/obj/item/gun/kinetic/spes,\
+	spawn_contents = list(/obj/item/firearm/kinetic/spes,\
 	/obj/item/ammo/bullets/a12 = 4)
 
 /obj/item/storage/box/revolver_ammo
@@ -124,7 +124,7 @@
 	name = "flare gun box"
 	icon_state = "revolver"
 	desc = "A box containing a flare gun and spare ammo."
-	spawn_contents = list(/obj/item/gun/kinetic/flaregun,\
+	spawn_contents = list(/obj/item/firearm/kinetic/flaregun,\
 	/obj/item/ammo/bullets/flare)
 
 /obj/item/storage/box/hunting_rifle
@@ -133,9 +133,9 @@
 	desc = "A box containing an old hunting rifle and some ammo."
 	slots = 3
 	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
-	can_hold = list(/obj/item/gun/kinetic/hunting_rifle,\
+	can_hold = list(/obj/item/firearm/kinetic/hunting_rifle,\
 	/obj/item/ammo/bullets/rifle_3006)
-	spawn_contents = list(/obj/item/gun/kinetic/hunting_rifle,\
+	spawn_contents = list(/obj/item/firearm/kinetic/hunting_rifle,\
 	/obj/item/ammo/bullets/rifle_3006 = 2)
 
 /obj/item/storage/box/missile_launcher
@@ -144,9 +144,9 @@
 	desc = "A box containing a pod-targeting missile launcher and ammunition."
 	slots = 5
 	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
-	can_hold = list(/obj/item/gun/kinetic/missile_launcher,\
+	can_hold = list(/obj/item/firearm/kinetic/missile_launcher,\
 	/obj/item/ammo/bullets/pod_seeking_missile)
-	spawn_contents = list(/obj/item/gun/kinetic/missile_launcher,\
+	spawn_contents = list(/obj/item/firearm/kinetic/missile_launcher,\
 	/obj/item/ammo/bullets/pod_seeking_missile = 4)
 
 /obj/item/storage/box/alphard
@@ -156,9 +156,9 @@
 	desc = "A box containing a collapsible recoiling cannon and some 20mm ammo."
 	slots = 3
 	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
-	can_hold = list(/obj/item/gun/kinetic/cannon,\
+	can_hold = list(/obj/item/firearm/kinetic/cannon,\
 	/obj/item/ammo/bullets/cannon)
-	spawn_contents = list(/obj/item/gun/kinetic/cannon,\
+	spawn_contents = list(/obj/item/firearm/kinetic/cannon,\
 	/obj/item/ammo/bullets/cannon = 2)
 
 /obj/item/storage/box/antiair
@@ -168,9 +168,9 @@
 	desc = "A box containing a massive antiair rifle and some .50 frag ammo."
 	slots = 3
 	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
-	can_hold = list(/obj/item/gun/kinetic/antiair,\
+	can_hold = list(/obj/item/firearm/kinetic/antiair,\
 	/obj/item/ammo/bullets/antiair)
-	spawn_contents = list(/obj/item/gun/kinetic/antiair,\
+	spawn_contents = list(/obj/item/firearm/kinetic/antiair,\
 	/obj/item/ammo/bullets/antiair = 2)
 
 /obj/item/storage/box/bigiron
@@ -179,9 +179,9 @@
 	desc = "A box containing an absurdly large revolver and some .500 magnum ammo."
 	slots = 3
 	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
-	can_hold = list(/obj/item/gun/kinetic/bigiron,\
+	can_hold = list(/obj/item/firearm/kinetic/bigiron,\
 	/obj/item/ammo/bullets/fivehundred)
-	spawn_contents = list(/obj/item/gun/kinetic/bigiron,\
+	spawn_contents = list(/obj/item/firearm/kinetic/bigiron,\
 	/obj/item/ammo/bullets/fivehundred = 2)
 
 /* -------------------- Grenades -------------------- */
@@ -385,7 +385,7 @@
 	name = "\improper Russian surplus munitions box"
 	icon_state = "fakerevolver"
 	desc = "A box containing an old SSSSR-manufactured revolver."
-	spawn_contents = list(/obj/item/gun/russianrevolver/fake357,\
+	spawn_contents = list(/obj/item/firearm/russianrevolver/fake357,\
 	/obj/item/paper/fakerevolver)
 
 /obj/item/paper/fakerevolver
@@ -437,11 +437,11 @@
 	/obj/item/instrument/glockenspiel)
 
 /obj/item/storage/briefcase/instruments/blowgun
-	spawn_contents = list(/obj/item/gun/kinetic/blowgun,\
+	spawn_contents = list(/obj/item/firearm/kinetic/blowgun,\
 	/obj/item/storage/pouch/poison_dart = 2)
 
 /obj/item/storage/briefcase/instruments/blowgun/tranq
-	spawn_contents = list(/obj/item/gun/kinetic/blowgun/tranq, /obj/item/ammo/bullets/tranq_darts/blow_darts/thio = 2)
+	spawn_contents = list(/obj/item/firearm/kinetic/blowgun/tranq, /obj/item/ammo/bullets/tranq_darts/blow_darts/thio = 2)
 
 /obj/item/storage/box/chameleonbomb
 	name = "chameleon bomb case"

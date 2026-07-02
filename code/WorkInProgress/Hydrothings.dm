@@ -350,7 +350,7 @@
 	icon_state = "gnelf"
 	item_state = "gnome"
 
-/obj/item/gun/russianhootolver
+/obj/item/firearm/russianhootolver
 	desc = "Rootin hootin tootin fun for the whole family!"
 	name = "Russian Hootolver"
 	icon = 'icons/obj/items/guns/kinetic.dmi'
@@ -624,7 +624,7 @@
 				M.equip_if_possible(owlmask, SLOT_WEAR_MASK)
 				M.set_clothing_icon_dirty()
 
-/obj/item/gun/energy/wonkgun
+/obj/item/firearm/energy/wonkgun
 	name = "Prototype W.0-NK Laser Rifle"
 	desc = "Wonk!"
 	item_state = "gun"

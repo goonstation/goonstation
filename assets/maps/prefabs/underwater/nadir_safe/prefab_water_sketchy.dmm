@@ -276,11 +276,11 @@
 /area/prefab/sea_sketch)
 "bj" = (
 /obj/table/wood/auto,
-/obj/item/gun/energy/phaser_gun,
+/obj/item/firearm/energy/phaser_gun,
 /turf/simulated/floor/plating/random,
 /area/prefab/sea_sketch)
 "bk" = (
-/obj/item/gun/implanter,
+/obj/item/firearm/implanter,
 /turf/simulated/floor/plating/scorched,
 /area/prefab/sea_sketch)
 "bl" = (

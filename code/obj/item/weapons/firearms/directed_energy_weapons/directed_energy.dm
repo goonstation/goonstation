@@ -1,5 +1,5 @@
 /////////////////////////////////////LASERGUN
-/obj/item/gun/energy/laser_gun
+/obj/item/firearm/energy/laser_gun
 	name = "laser gun"
 	icon_state = "laser"
 	item_state = "laser"
@@ -25,9 +25,9 @@
 
 
 ////////////////////////////////////// Antique laser gun
-TYPEINFO(/obj/item/gun/energy/antique)
+TYPEINFO(/obj/item/firearm/energy/antique)
 	analyser_flags = ANALYSER_BLACKLIST
-/obj/item/gun/energy/antique
+/obj/item/firearm/energy/antique
 	HELP_MESSAGE_OVERRIDE("You can use a <b>screwdriver</b> to open or close the maintenance panel. While the panel is open, you can insert lens and small coil to upgrade the weapon.")
 	name = "antique laser gun"
 	icon_state = "caplaser"
@@ -141,7 +141,7 @@ TYPEINFO(/obj/item/gun/energy/antique)
 				return 0
 
 ////////////////////////////////////TASERGUN
-/obj/item/gun/energy/taser_gun
+/obj/item/firearm/energy/taser_gun
 	name = "taser gun"
 	icon_state = "taser"
 	item_state = "taser"
@@ -160,7 +160,7 @@ TYPEINFO(/obj/item/gun/energy/antique)
 	borg
 		cell_type = /obj/item/ammo/power_cell/self_charging/disruptor
 
-/obj/item/gun/energy/taser_gun/bouncy
+/obj/item/firearm/energy/taser_gun/bouncy
 	name = "richochet taser gun"
 	desc = "A modified Five Points Armory taser gun. This one appears to be capable of firing ricochet stun charges."
 
@@ -170,7 +170,7 @@ TYPEINFO(/obj/item/gun/energy/antique)
 		projectiles = list(current_projectile)
 
 //////////////////////////////////////// Phaser
-/obj/item/gun/energy/phaser_gun
+/obj/item/firearm/energy/phaser_gun
 	name = "RP-4 phaser gun"
 	icon_state = "phaser"
 	item_state = "phaser"
@@ -186,13 +186,13 @@ TYPEINFO(/obj/item/gun/energy/antique)
 		projectiles = list(current_projectile)
 		..()
 
-/obj/item/gun/energy/phaser_gun/extended_mag
+/obj/item/firearm/energy/phaser_gun/extended_mag
 	cell_type = /obj/item/ammo/power_cell/med_plus_power
 
-TYPEINFO(/obj/item/gun/energy/phaser_small)
+TYPEINFO(/obj/item/firearm/energy/phaser_small)
 	mats = 20
 
-/obj/item/gun/energy/phaser_small
+/obj/item/firearm/energy/phaser_small
 	name = "RP-3 micro phaser"
 	icon_state = "phaser-tiny"
 	item_state = "phaser"
@@ -209,13 +209,13 @@ TYPEINFO(/obj/item/gun/energy/phaser_small)
 		projectiles = list(current_projectile)
 		..()
 
-TYPEINFO(/obj/item/gun/energy/phaser_huge)
+TYPEINFO(/obj/item/firearm/energy/phaser_huge)
 	mats = list("metal" = 15,
 				"metal_dense" = 10,
 				"conductive_high" = 10,
 				"energy_high" = 15,
 				"crystal" = 10)
-/obj/item/gun/energy/phaser_huge
+/obj/item/firearm/energy/phaser_huge
 	name = "RP-5 macro phaser"
 	icon_state = "phaser-xl"
 	item_state = "phaser_xl"
@@ -237,7 +237,7 @@ TYPEINFO(/obj/item/gun/energy/phaser_huge)
 		AddComponent(/datum/component/holdertargeting/windup, 1 SECOND)
 		..()
 
-/obj/item/gun/energy/phaser_smg
+/obj/item/firearm/energy/phaser_smg
 	name = "RP-4S phaser smg"
 	icon_state = "phaser-smg"
 	item_state = "phaser"
@@ -255,15 +255,15 @@ TYPEINFO(/obj/item/gun/energy/phaser_huge)
 		AddComponent(/datum/component/holdertargeting/fullauto, 1.2)
 		..()
 
-/obj/item/gun/energy/phaser_smg/extended_mag
+/obj/item/firearm/energy/phaser_smg/extended_mag
 	cell_type = /obj/item/ammo/power_cell/med_plus_power
 
 ////////////////////////////////////////EGun
-TYPEINFO(/obj/item/gun/energy/egun)
+TYPEINFO(/obj/item/firearm/energy/egun)
 	mats = list("metal" = 15,
 				"conductive" = 5,
 				"energy" = 5)
-/obj/item/gun/energy/egun
+/obj/item/firearm/energy/egun
 	name = "energy gun"
 	icon_state = "energy"
 	cell_type = /obj/item/ammo/power_cell/med_plus_power
@@ -279,8 +279,8 @@ TYPEINFO(/obj/item/gun/energy/egun)
 		set_current_projectile(new/datum/projectile/energy_bolt)
 		projectiles = list(current_projectile,new/datum/projectile/laser)
 		RegisterSignal(src, COMSIG_ATOM_ANALYZE, PROC_REF(noreward))
-		src.verbs -= /obj/item/gun/energy/egun/verb/claim_lawbringer
-		src.verbs -= /obj/item/gun/energy/egun/verb/claim_sword
+		src.verbs -= /obj/item/firearm/energy/egun/verb/claim_lawbringer
+		src.verbs -= /obj/item/firearm/energy/egun/verb/claim_sword
 		..()
 	update_icon()
 		if (current_projectile.type == /datum/projectile/laser)
@@ -300,14 +300,14 @@ TYPEINFO(/obj/item/gun/energy/egun)
 	pickup(mob/user)
 		. = ..()
 		if (user.mind?.assigned_role == "Head of Security")
-			src.verbs |= /obj/item/gun/energy/egun/verb/claim_lawbringer
+			src.verbs |= /obj/item/firearm/energy/egun/verb/claim_lawbringer
 		else if (user.mind?.assigned_role == "Captain")
-			src.verbs |= /obj/item/gun/energy/egun/verb/claim_sword
+			src.verbs |= /obj/item/firearm/energy/egun/verb/claim_sword
 
 	dropped(mob/user)
 		. = ..()
-		src.verbs -= /obj/item/gun/energy/egun/verb/claim_lawbringer
-		src.verbs -= /obj/item/gun/energy/egun/verb/claim_sword
+		src.verbs -= /obj/item/firearm/energy/egun/verb/claim_lawbringer
+		src.verbs -= /obj/item/firearm/energy/egun/verb/claim_sword
 
 	verb/claim_lawbringer()
 		set src in usr
@@ -338,12 +338,12 @@ TYPEINFO(/obj/item/gun/energy/egun)
 
 		New()
 			. = ..()
-			src.verbs -= /obj/item/gun/energy/egun/verb/claim_sword
+			src.verbs -= /obj/item/firearm/energy/egun/verb/claim_sword
 
-TYPEINFO(/obj/item/gun/energy/egun_jr)
+TYPEINFO(/obj/item/firearm/energy/egun_jr)
 	analyser_flags = ANALYSER_BLACKLIST
 
-/obj/item/gun/energy/egun_jr
+/obj/item/firearm/energy/egun_jr
 	name = "energy gun junior"
 	icon_state = "egun-jr"
 	cell_type = /obj/item/ammo/power_cell/med_minus_power
@@ -380,7 +380,7 @@ TYPEINFO(/obj/item/gun/energy/egun_jr)
 
 //////////////////////// nanotrasen gun
 //Azungar's Nanotrasen inspired Laser Assault Rifle for RP gimmicks
-/obj/item/gun/energy/ntgun
+/obj/item/firearm/energy/ntgun
 	name = "laser assault rifle"
 	icon_state = "nt"
 	desc = "Rather futuristic assault rifle with two firing modes."
@@ -410,7 +410,7 @@ TYPEINFO(/obj/item/gun/energy/egun_jr)
 
 //////////////////////// Taser Shotgun
 //Azungar's Improved, more beefy weapon for security that can only be acquired via QM.
-/obj/item/gun/energy/tasershotgun
+/obj/item/firearm/energy/tasershotgun
 	name = "taser shotgun"
 	icon_state = "tasershotgun"
 	desc = "The Five Points Armory Taser Mk.II, a shotgun-format weapon that produces a spreading electrical charge to stuns its targets."
@@ -431,12 +431,12 @@ TYPEINFO(/obj/item/gun/energy/egun_jr)
 
 //////////////////////// Alastor
 
-TYPEINFO(/obj/item/gun/energy/alastor)
+TYPEINFO(/obj/item/firearm/energy/alastor)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal_dense" = 15,
 				"conductive_high" = 10,
 				"energy_high" = 10)
-/obj/item/gun/energy/alastor
+/obj/item/firearm/energy/alastor
 	name = "\improper Alastor pattern laser rifle"
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	icon_state = "alastor100"
@@ -463,7 +463,7 @@ TYPEINFO(/obj/item/gun/energy/alastor)
 			src.icon_state = "alastor[ratio]"
 			return
 
-/obj/item/gun/energy/optio1
+/obj/item/firearm/energy/optio1
 	name = "\improper Optio I"
 	desc = "It's a laser gun? Or a handgun? Yeah, you're pretty sure it's a handgun."
 	w_class = W_CLASS_SMALL
@@ -478,11 +478,11 @@ TYPEINFO(/obj/item/gun/energy/alastor)
 		projectiles = list(current_projectile, new/datum/projectile/bullet/optio/hitscan)
 		..()
 
-TYPEINFO(/obj/item/gun/energy/signifer2)
+TYPEINFO(/obj/item/firearm/energy/signifer2)
 	mats = list("energy_high" = 15,
 				"conductive_high" = 15,
 				"metal_superdense" = 20)
-/obj/item/gun/energy/signifer2
+/obj/item/firearm/energy/signifer2
 	name = "\improper Signifer II"
 	desc = "It's a handgun? Or an smg? You can't tell."
 	icon_state = "signifer_2"
@@ -542,13 +542,13 @@ TYPEINFO(/obj/item/gun/energy/signifer2)
 		shotcount = 0
 		. = ..()
 
-TYPEINFO(/obj/item/gun/energy/cornicen3)
+TYPEINFO(/obj/item/firearm/energy/cornicen3)
 	mats = list("iridiumalloy" = 50,
 				"starstone" = 30,
 				"plutonium" = 25,
 				"electrum" = 50,
 				"exoweave" = 5)
-/obj/item/gun/energy/cornicen3
+/obj/item/firearm/energy/cornicen3
 	name = "\improper Cornicen III"
 	desc = "Formal enough for the boardroom. Rugged enough for the battlefield."
 	icon = 'icons/obj/items/guns/energy48x32.dmi'
@@ -597,14 +597,14 @@ TYPEINFO(/obj/item/gun/energy/cornicen3)
 			FLICK("cornicen_open", src)
 		M.update_inhands()
 
-TYPEINFO(/obj/item/gun/energy/vexillifer4)
+TYPEINFO(/obj/item/firearm/energy/vexillifer4)
 	mats = list("iridiumalloy" = 50,
 				"starstone" = 10,
 				"metal_superdense" = 150,
 				"crystal_dense" = 100,
 				"conductive_high" = 100,
 				"energy_extreme" = 50)
-/obj/item/gun/energy/vexillifer4
+/obj/item/firearm/energy/vexillifer4
 	name = "Vexillifer IV"
 	desc = "It's a cannon? A laser gun? You can't tell."
 	icon = 'icons/obj/items/guns/energy64x32.dmi'
@@ -666,7 +666,7 @@ TYPEINFO(/obj/item/gun/energy/vexillifer4)
 				FLICK("lasercannon-fire", src)
 			. = ..()
 
-/obj/item/gun/energy/tasersmg
+/obj/item/firearm/energy/tasersmg
 	name = "taser SMG"
 	icon_state = "tasersmg"
 	desc = "The Five Points Armory Taser Mk.III. A weapon that produces a cohesive electrical charge to stun its target, capable of firing in two shot burst or full auto configurations."
@@ -702,7 +702,7 @@ TYPEINFO(/obj/item/gun/energy/vexillifer4)
 		UpdateIcon()
 
 ///////////////////////////////////////Ray Gun
-/obj/item/gun/energy/raygun
+/obj/item/firearm/energy/raygun
 	name = "experimental ray gun"
 	desc = "A weapon that looks vaguely like a cheap toy and is definitely unsafe."
 	icon = 'icons/obj/items/guns/gimmick.dmi'
@@ -731,10 +731,10 @@ TYPEINFO(/obj/item/gun/energy/vexillifer4)
 // Makeshift Laser Rifle
 #define HEAT_REMOVED_PER_PROCESS 30
 #define FIRE_THRESHOLD 125
-TYPEINFO(/obj/item/gun/energy/makeshift)
+TYPEINFO(/obj/item/firearm/energy/makeshift)
 	analyser_flags = ANALYSER_BLACKLIST
 
-/obj/item/gun/energy/makeshift
+/obj/item/firearm/energy/makeshift
 	name = "makeshift laser rifle"
 	icon = 'icons/obj/items/guns/energy64x32.dmi'
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
@@ -881,7 +881,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 					return
 				else if (istype(W, /obj/item/cable_coil) && heat_repair == 2)
 					if (W.amount >= 10)
-						SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/item/gun/energy/makeshift/proc/finish_repairs,\
+						SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/item/firearm/energy/makeshift/proc/finish_repairs,\
 						list(W,user), W.icon, W.icon_state, SPAN_NOTICE("[user] replaces the burnt wiring within [src]."), null)
 					else
 						boutput(user,SPAN_NOTICE("You need at least 10 wire to repair the wiring."))
@@ -998,7 +998,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 			our_cell?.use(current_projectile.cost)
 		return ..(target, start, user)
 
-/obj/item/gun/energy/makeshift/spawnable // for testing purposes
+/obj/item/firearm/energy/makeshift/spawnable // for testing purposes
 
 	New()
 		..()
@@ -1009,7 +1009,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		src.attach_light(T)
 
 
-/obj/item/gun/energy/lasergat
+/obj/item/firearm/energy/lasergat
 	name = "\improper HAFGAN Mod.93R Repeating Laser"
 	rechargeable = 0
 	icon_state = "burst_laser_idle"
@@ -1054,9 +1054,9 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		UpdateIcon()
 		M.update_inhands()
 
-TYPEINFO(/obj/item/gun/energy/lasershotgun)
+TYPEINFO(/obj/item/firearm/energy/lasershotgun)
 	analyser_flags = ANALYSER_BLACKLIST
-/obj/item/gun/energy/lasershotgun
+/obj/item/firearm/energy/lasershotgun
 	name = "Mod. 77 'Nosaxa'"
 	cell_type = /obj/item/ammo/power_cell/high_power
 	icon = 'icons/obj/items/guns/energy48x32.dmi'

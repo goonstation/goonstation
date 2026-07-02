@@ -117,7 +117,7 @@
 /obj/storage/crate/wooden{
 	icon_state = "packingcrate12"
 	},
-/obj/item/gun/kinetic/makarov,
+/obj/item/firearm/kinetic/makarov,
 /obj/item/ammo/bullets/nine_mm_soviet,
 /obj/item/ammo/bullets/nine_mm_soviet,
 /turf/simulated/floor/concrete,

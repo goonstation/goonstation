@@ -281,7 +281,7 @@
 	station_bounties[/obj/item/football] = 1
 	station_bounties[/obj/item/basketball] = 1
 	station_bounties[/obj/item/clothing/head/cakehat] = 1
-	station_bounties[/obj/item/gun/russianrevolver] = 1
+	station_bounties[/obj/item/firearm/russianrevolver] = 1
 	station_bounties[/obj/item/clothing/suit/johnny_coat] = 1
 	station_bounties[/obj/item/clothing/shoes/flippers] = 1
 	station_bounties[/obj/item/clothing/head/apprentice] = 1
@@ -352,14 +352,14 @@
 	station_bounties[/obj/item/rcd/construction/chiefEngineer] = 3
 
 	station_bounties[/obj/item/baton] = 2
-	station_bounties[/obj/item/gun/kinetic/riot40mm] = 2
-	station_bounties[/obj/item/gun/kinetic/dart_rifle] = 3
-	station_bounties[/obj/item/gun/kinetic/detectiverevolver] = 3
-	station_bounties[/obj/item/gun/energy/antique] = 3
-	station_bounties[/obj/item/gun/energy/taser_gun] = 2
-	station_bounties[/obj/item/gun/energy/egun] = 3
-	station_bounties[/obj/item/gun/energy/pulse_rifle] = 3
-	station_bounties[/obj/item/gun/kinetic/pumpweapon/riotgun] = 3
+	station_bounties[/obj/item/firearm/kinetic/riot40mm] = 2
+	station_bounties[/obj/item/firearm/kinetic/dart_rifle] = 3
+	station_bounties[/obj/item/firearm/kinetic/detectiverevolver] = 3
+	station_bounties[/obj/item/firearm/energy/antique] = 3
+	station_bounties[/obj/item/firearm/energy/taser_gun] = 2
+	station_bounties[/obj/item/firearm/energy/egun] = 3
+	station_bounties[/obj/item/firearm/energy/pulse_rifle] = 3
+	station_bounties[/obj/item/firearm/kinetic/pumpweapon/riotgun] = 3
 
 
 	station_bounties[/obj/item/kitchen/utensil] = 1

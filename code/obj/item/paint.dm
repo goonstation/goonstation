@@ -367,7 +367,7 @@ var/list/cached_colors = new/list()
 		return TRUE
 
 	attackby(obj/item/W, mob/user, params)
-		if (istype(W, /obj/item/gun/paintball))
+		if (istype(W, /obj/item/firearm/paintball))
 			W.Attackby(src, user)
 			return
 

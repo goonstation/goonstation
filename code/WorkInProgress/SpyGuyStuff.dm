@@ -208,7 +208,7 @@ proc/Create_Tommyname()
 
 ///////////////////////////////////////Tommy Gun
 
-/obj/item/gun/energy/tommy_gun
+/obj/item/firearm/energy/tommy_gun
 	name = "Tommy Gun"
 	icon = 'icons/obj/items/guns/kinetic.dmi'
 	icon_state = "tommygun"
@@ -397,7 +397,7 @@ proc/Create_Tommyname()
 				H.force_equip(W, SLOT_HEAD)
 				H.update_colorful_parts()
 
-/obj/item/gun/energy/dtrumpet
+/obj/item/firearm/energy/dtrumpet
 	name = "Donald Trumpet"
 	desc = "You can tell this gun has been fired!"
 	icon = 'icons/obj/instruments.dmi'

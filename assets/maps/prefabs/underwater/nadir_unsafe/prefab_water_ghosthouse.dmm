@@ -545,7 +545,7 @@
 /area/prefab/ghost_house)
 "ci" = (
 /obj/fakeobject/skeleton/decomposed_corpse,
-/obj/item/gun/energy/ghost,
+/obj/item/firearm/energy/ghost,
 /turf/simulated/floor/carpet/purple/fancy,
 /area/prefab/ghost_house)
 "cj" = (

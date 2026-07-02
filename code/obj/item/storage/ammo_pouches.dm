@@ -44,7 +44,7 @@
 	poison_dart
 		name = "poison dart pouch"
 		icon_state = "ammopouch-double"
-		can_hold = list(/obj/item/gun/kinetic/blowgun, /obj/item/ammo/bullets/tranq_darts)
+		can_hold = list(/obj/item/firearm/kinetic/blowgun, /obj/item/ammo/bullets/tranq_darts)
 		spawn_contents = list(/obj/item/ammo/bullets/tranq_darts/blow_darts = 2, /obj/item/ammo/bullets/tranq_darts/blow_darts/madness = 1, /obj/item/ammo/bullets/tranq_darts/blow_darts/ls_bee = 1)
 
 	det_38
@@ -222,7 +222,7 @@
 
 
 	ntso
-		spawn_contents = list(/obj/item/gun/kinetic/clock_188/boomerang/ntso,
+		spawn_contents = list(/obj/item/firearm/kinetic/clock_188/boomerang/ntso,
 		/obj/item/ammo/bullets/bullet_9mm = 4)
 
 /obj/item/storage/breach_pouch

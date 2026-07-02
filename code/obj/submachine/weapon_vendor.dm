@@ -142,7 +142,7 @@
 		if (istype(A,/obj/item/storage/belt/security))
 			var/list/tracklist = list()
 			for(var/atom/C in A.storage.get_contents())
-				if (istype(C,/obj/item/gun) || istype(C,/obj/item/baton))
+				if (istype(C,/obj/item/firearm) || istype(C,/obj/item/baton))
 					tracklist += C
 
 			if (length(tracklist))

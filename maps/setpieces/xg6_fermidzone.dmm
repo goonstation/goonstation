@@ -359,7 +359,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
-/obj/item/gun/energy/blaster_cannon{
+/obj/item/firearm/energy/blaster_cannon{
 	rarity = 5
 	},
 /turf/unsimulated/floor/plating{
@@ -402,7 +402,7 @@
 	dir = 1;
 	pixel_y = 16
 	},
-/obj/item/gun/bling_blaster{
+/obj/item/firearm/bling_blaster{
 	name = "Jinshen prototype";
 	rarity = 5
 	},
@@ -835,7 +835,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "du" = (
-/obj/item/gun/kinetic/detectiverevolver{
+/obj/item/firearm/kinetic/detectiverevolver{
 	name = "\improper Piper .38 revolver";
 	rarity = 3
 	},
@@ -1759,11 +1759,11 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/item/gun/energy/blaster_carbine{
+/obj/item/firearm/energy/blaster_carbine{
 	pixel_x = 7;
 	pixel_y = 11
 	},
-/obj/item/gun/energy/blaster_carbine{
+/obj/item/firearm/energy/blaster_carbine{
 	pixel_x = 6
 	},
 /turf/unsimulated/floor/black,
@@ -3840,7 +3840,7 @@
 	icon_state = "drip5"
 	},
 /obj/decal/cleanable/blood/tracks,
-/obj/item/gun/kinetic/sawnoff{
+/obj/item/firearm/kinetic/sawnoff{
 	desc = "A double-barreled sawn-off break-action shotgun by Cormorant Precision Arms, mostly used by people who think it looks cool.";
 	name = "Fulmar '81 shotgun";
 	rarity = 3
@@ -4260,7 +4260,7 @@
 /obj/cable/conduit{
 	dir = 4
 	},
-/obj/item/gun/energy/blaster_pistol{
+/obj/item/firearm/energy/blaster_pistol{
 	rarity = 3
 	},
 /turf/unsimulated/floor/plating{
@@ -5036,7 +5036,7 @@
 	pixel_x = 15;
 	pixel_y = 8
 	},
-/obj/item/gun/energy/wavegun{
+/obj/item/firearm/energy/wavegun{
 	pixel_x = 18;
 	pixel_y = 8
 	},
@@ -6405,7 +6405,7 @@
 	},
 /obj/decal/cleanable/blood/drip,
 /obj/mapping_helper/mob_spawn/corpse/human/owlery_security/assistant,
-/obj/item/gun/energy/blaster_pistol{
+/obj/item/firearm/energy/blaster_pistol{
 	rarity = 3
 	},
 /turf/unsimulated/floor/marble/black,
@@ -6479,7 +6479,7 @@
 	icon_state = "drip5"
 	},
 /obj/reagent_dispensers/cleanable/ants,
-/obj/item/gun/energy/blaster_smg{
+/obj/item/firearm/energy/blaster_smg{
 	rarity = 4
 	},
 /turf/unsimulated/floor/plating{
@@ -6911,7 +6911,7 @@
 	pixel_x = 15;
 	pixel_y = 8
 	},
-/obj/item/gun/energy/heavyion{
+/obj/item/firearm/energy/heavyion{
 	pixel_x = 6;
 	pixel_y = 10
 	},
@@ -8171,7 +8171,7 @@
 /obj/railing/yellow/reinforced{
 	dir = 8
 	},
-/obj/item/gun/kinetic/faith{
+/obj/item/firearm/kinetic/faith{
 	desc = "A compact little sidearm for personal protection. It's inscribed with the name OTTO.";
 	name = "Auklet .22";
 	pixel_x = 6;
@@ -8399,7 +8399,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "Iz" = (
-/obj/item/gun/kinetic/clock_188,
+/obj/item/firearm/kinetic/clock_188,
 /turf/unsimulated/floor/plating{
 	icon_state = "plating_jen"
 	},
@@ -10535,7 +10535,7 @@
 "Rx" = (
 /obj/table/reinforced/industrial/auto,
 /obj/machinery/light/small/cool,
-/obj/item/gun/energy/stinkray{
+/obj/item/firearm/energy/stinkray{
 	desc = "The hell does this even do?";
 	name = "Doushen prototype";
 	rarity = 5
@@ -10633,7 +10633,7 @@
 	})
 "RM" = (
 /obj/reagent_dispensers/cleanable/ants,
-/obj/item/gun/energy/blaster_pistol{
+/obj/item/firearm/energy/blaster_pistol{
 	rarity = 3
 	},
 /turf/unsimulated/floor/wood/eight{
@@ -11571,7 +11571,7 @@
 	})
 "Vw" = (
 /obj/table/reinforced/industrial/auto,
-/obj/item/gun/energy/ghost{
+/obj/item/firearm/energy/ghost{
 	color = "";
 	name = "Zhong Kui prototype";
 	rarity = 5
@@ -12284,7 +12284,7 @@
 	})
 "YG" = (
 /obj/storage/closet/dresser/random,
-/obj/item/gun/kinetic/beepsky/one_bullet,
+/obj/item/firearm/kinetic/beepsky/one_bullet,
 /turf/unsimulated/floor/redblack{
 	dir = 6
 	},
@@ -12436,7 +12436,7 @@
 	pixel_x = 6;
 	pixel_y = -14
 	},
-/obj/item/gun/energy/blaster_pistol{
+/obj/item/firearm/energy/blaster_pistol{
 	rarity = 3
 	},
 /turf/unsimulated/floor/wood/eight{

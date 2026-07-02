@@ -350,7 +350,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=PAINTBALL=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 /* '~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~' */
 /*
-/obj/item/gun/kinetic/paintball
+/obj/item/firearm/kinetic/paintball
 	name = "kinetic weapon"
 	item_state = "paintball-"
 	m_amt = 2000
@@ -906,7 +906,7 @@ TYPEINFO(/obj/submachine/blackjack)
 			src.equip_new_if_possible(/obj/item/clothing/under/rank/bartender, SLOT_W_UNIFORM)
 			src.equip_new_if_possible(/obj/item/clothing/suit/wcoat, SLOT_WEAR_SUIT)
 			src.equip_if_possible(new /obj/item/clothing/glasses/thermal/orange, SLOT_GLASSES)
-			src.equip_new_if_possible(/obj/item/gun/kinetic/pumpweapon/riotgun, SLOT_IN_BACKPACK)
+			src.equip_new_if_possible(/obj/item/firearm/kinetic/pumpweapon/riotgun, SLOT_IN_BACKPACK)
 			src.equip_new_if_possible(/obj/item/storage/box/glassbox, SLOT_IN_BACKPACK)
 			for (var/obj/item/reagent_containers/food/drinks/drinkingglass/glass in src)
 				src.glassware += glass
@@ -1336,9 +1336,9 @@ TYPEINFO(/obj/submachine/blackjack)
 				user.suiciding = 0
 		return 1
 
-TYPEINFO(/obj/item/gun/bling_blaster)
+TYPEINFO(/obj/item/firearm/bling_blaster)
 	mat_appearances_to_ignore = list("gold") // we already look fine ty
-/obj/item/gun/bling_blaster
+/obj/item/firearm/bling_blaster
 	name = "fancy bling blaster"
 	desc = "A big old gun with a slot on the side of it to insert cash. It seems to be made of gold, but isn't gold pretty soft? Is this safe?"
 	icon = 'icons/obj/items/guns/gimmick.dmi'
@@ -1422,7 +1422,7 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 			qdel(C)
 		boutput(user, SPAN_SUCCESS("\The [src] beeps, \"That's the good stuff!\""))
 
-/obj/item/gun/bling_blaster/cheapo
+/obj/item/firearm/bling_blaster/cheapo
 	name = "bling blaster"
 	possible_bling_rare = null
 

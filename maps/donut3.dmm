@@ -2879,7 +2879,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "aQh" = (
-/obj/item/gun/kinetic/antisingularity{
+/obj/item/firearm/kinetic/antisingularity{
 	pixel_x = -6;
 	pixel_y = 1
 	},
@@ -36783,7 +36783,7 @@
 "lxV" = (
 /obj/table/auto,
 /obj/decal/cleanable/dirt/jen,
-/obj/item/gun/russianrevolver,
+/obj/item/firearm/russianrevolver,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "lxW" = (
@@ -43613,7 +43613,7 @@
 	pixel_x = 8;
 	pixel_y = 3
 	},
-/obj/item/gun/implanter{
+/obj/item/firearm/implanter{
 	pixel_x = -3;
 	pixel_y = 6
 	},
@@ -45419,11 +45419,11 @@
 	},
 /area/station/engine/inner)
 "ohf" = (
-/obj/item/gun/kinetic/dart_rifle{
+/obj/item/firearm/kinetic/dart_rifle{
 	pixel_x = 2;
 	pixel_y = 10
 	},
-/obj/item/gun/kinetic/dart_rifle{
+/obj/item/firearm/kinetic/dart_rifle{
 	pixel_x = 2;
 	pixel_y = 4
 	},
@@ -74555,11 +74555,11 @@
 	pixel_x = 4;
 	pixel_y = -8
 	},
-/obj/item/gun/kinetic/riot40mm{
+/obj/item/firearm/kinetic/riot40mm{
 	pixel_x = -2;
 	pixel_y = 10
 	},
-/obj/item/gun/kinetic/riot40mm{
+/obj/item/firearm/kinetic/riot40mm{
 	pixel_x = -2;
 	pixel_y = -4
 	},
@@ -79202,7 +79202,7 @@
 /area/station/maintenance/outer/nw)
 "ykm" = (
 /obj/table/auto,
-/obj/item/gun/russianrevolver{
+/obj/item/firearm/russianrevolver{
 	pixel_y = 8
 	},
 /obj/machinery/camera/directional/north{

@@ -52,7 +52,7 @@
 		return . && isliving(M) && !isintangible(M)
 
 //much of this shamelessly copy-pasted from the pod-seeker
-/obj/item/gun/kinetic/glatisant
+/obj/item/firearm/kinetic/glatisant
 	name = "\improper Glatisant cluster missile launcher"
 	desc = "A platform for launching high-tech cluster munitions. \"Anderson Para-Munitions\" is printed on the sighting module."
 	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
@@ -260,7 +260,7 @@
 	desc = "..."
 	ammo_type = new/datum/projectile/bullet/rifle_3006/rakshasa
 
-/obj/item/gun/kinetic/g11
+/obj/item/firearm/kinetic/g11
 	name = "\improper Manticore assault rifle"
 	desc = "An assault rifle capable of firing single precise bursts. The magazine holders are embossed with \"Anderson Para-Munitions\""
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
@@ -360,7 +360,7 @@
 			explosion_new(O, get_turf(hit), 2)
 
 
-/obj/item/gun/kinetic/pistol/autoaim
+/obj/item/firearm/kinetic/pistol/autoaim
 	name = "\improper Catoblepas pistol"
 	desc = "A semi-smart pistol with moderate aim-correction. The manufacterer markings read \"Anderson Para-Munitions\"."
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null) //checks clicked turf first, so you can choose a target if need be
@@ -371,7 +371,7 @@
 		..()
 
 
-/obj/item/gun/kinetic/pistol/smart
+/obj/item/firearm/kinetic/pistol/smart
 	name = "\improper Hydra smart pistol"
 	desc = "A silenced pistol capable of locking onto multiple targets and firing on them in rapid sequence. \"Anderson Para-Munitions\" is engraved on the slide."
 	silenced = 1
@@ -382,7 +382,7 @@
 		AddComponent(/datum/component/holdertargeting/smartgun/nukeop, 3)
 
 //smart extinguisher
-/obj/item/gun/flamethrower/extinguisher
+/obj/item/firearm/flamethrower/extinguisher
 	name = "smart fire extinguisher"
 	desc = "An advanced fire extinguisher that locks onto nearby burning personnel and sprays them down with fire-fighting foam."
 	icon = 'icons/obj/items/items.dmi'
@@ -406,7 +406,7 @@
 /datum/component/holdertargeting/smartgun/extinguisher/is_valid_target(mob/user, mob/M)
 	return (M.hasStatus("burning"))
 
-/obj/item/gun/kinetic/gyrojet
+/obj/item/firearm/kinetic/gyrojet
 	name = "Amaethon gyrojet pistol"
 	desc = "A semi-automatic handgun that fires rocket-propelled bullets, developed by Mabinogi Firearms Company."
 	icon_state = "gyrojet"
@@ -452,7 +452,7 @@
 		return 15 + (P.internal_speed * 0.66)
 
 //desert eagle. The biggest, baddest handgun
-/obj/item/gun/kinetic/deagle
+/obj/item/firearm/kinetic/deagle
 	name = "\improper Simurgh heavy pistol"
 	desc = "The heaviest handgun you've ever seen. The grip is stamped \"Anderson Para-Munitions\""
 	icon_state = "deag"
@@ -1015,7 +1015,7 @@ TYPEINFO(/obj/item/device/geiger)
 	echoMob = null
 
 
-/obj/item/gun/energy/timegun
+/obj/item/firearm/energy/timegun
 	name = "\improper Time Gun"
 	desc = "Hey look! A Time Gun!"
 	w_class = W_CLASS_SMALL

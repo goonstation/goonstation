@@ -9283,7 +9283,7 @@
 /area/upper_arctic/comms)
 "aQU" = (
 /obj/table/auto,
-/obj/item/gun/kinetic/flaregun,
+/obj/item/firearm/kinetic/flaregun,
 /obj/item/disk/data/floppy/lrt/icemoon2,
 /turf/unsimulated/floor/arctic/plating,
 /area/upper_arctic/comms)
@@ -13923,7 +13923,7 @@
 "bgk" = (
 /obj/fakeobject/skeleton,
 /obj/decal/cleanable/blood,
-/obj/item/gun/kinetic/flaregun,
+/obj/item/firearm/kinetic/flaregun,
 /obj/decal/cleanable/blood/tracks,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
@@ -15065,7 +15065,7 @@
 "bjM" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
-/obj/item/gun/kinetic/gyrojet,
+/obj/item/firearm/kinetic/gyrojet,
 /turf/unsimulated/floor/carpet/grime,
 /area/drone/crew_quarters)
 "bjN" = (
@@ -15810,7 +15810,7 @@
 /obj/decal/cleanable/blood/tracks{
 	dir = 6
 	},
-/obj/item/gun/kinetic/hunting_rifle,
+/obj/item/firearm/kinetic/hunting_rifle,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "blK" = (
@@ -16862,7 +16862,7 @@
 /obj/decal/cleanable/blood/tracks{
 	dir = 4
 	},
-/obj/item/gun/kinetic/pumpweapon/riotgun,
+/obj/item/firearm/kinetic/pumpweapon/riotgun,
 /obj/decal/cleanable/blood/gibs,
 /turf/unsimulated/floor/green,
 /area/owlery/owllock)
@@ -23536,7 +23536,7 @@
 /area/afterlife/heaven/hydroponics)
 "bPC" = (
 /obj/table/auto,
-/obj/item/gun/russianrevolver,
+/obj/item/firearm/russianrevolver,
 /obj/window/cubicle{
 	dir = 2
 	},
@@ -25171,7 +25171,7 @@
 /area/crypt/sigma/crew)
 "bVJ" = (
 /obj/table/auto,
-/obj/item/gun/energy/ghost,
+/obj/item/firearm/energy/ghost,
 /obj/item/clothing/glasses/regular/ecto/goggles,
 /turf/unsimulated/floor/white,
 /area/crunch)
@@ -27259,7 +27259,7 @@
 /area/meat_derelict/guts)
 "cdJ" = (
 /obj/table/auto,
-/obj/item/gun/russianrevolver,
+/obj/item/firearm/russianrevolver,
 /turf/unsimulated/floor,
 /area/meat_derelict/guts)
 "cdL" = (
@@ -28366,7 +28366,7 @@
 /turf/unsimulated/floor,
 /area/meat_derelict/main)
 "cig" = (
-/obj/item/gun/gibgun,
+/obj/item/firearm/gibgun,
 /turf/unsimulated/floor,
 /area/meat_derelict/boss)
 "cih" = (
@@ -31236,7 +31236,7 @@
 /area/crunch/wtc)
 "csb" = (
 /obj/table/reinforced/auto,
-/obj/item/gun/bling_blaster,
+/obj/item/firearm/bling_blaster,
 /turf/unsimulated/floor/grey,
 /area/crunch/wtc)
 "csc" = (
@@ -32036,9 +32036,9 @@
 /area/afterlife/arena)
 "cvC" = (
 /obj/rack,
-/obj/item/gun/kinetic/single_action/colt_saa,
-/obj/item/gun/kinetic/single_action/colt_saa,
-/obj/item/gun/kinetic/single_action/colt_saa,
+/obj/item/firearm/kinetic/single_action/colt_saa,
+/obj/item/firearm/kinetic/single_action/colt_saa,
+/obj/item/firearm/kinetic/single_action/colt_saa,
 /obj/map/light/dimred,
 /turf/unsimulated/iomoon/floor/arena,
 /area/afterlife/arena)
@@ -35091,7 +35091,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/Owlmait)
 "cEX" = (
-/obj/item/gun/flamethrower/assembled/loaded,
+/obj/item/firearm/flamethrower/assembled/loaded,
 /obj/item/clothing/suit/hazard/fire/armored,
 /obj/item/clothing/head/helmet/welding,
 /obj/machinery/light/emergency{
@@ -35150,7 +35150,7 @@
 	name = "table"
 	},
 /obj/item/gimmickbomb/owlclothes,
-/obj/item/gun/energy/wonkgun,
+/obj/item/firearm/energy/wonkgun,
 /obj/item/gimmickbomb/owlclothes,
 /turf/unsimulated/floor/black,
 /area/owlery/lab)
@@ -37414,7 +37414,7 @@
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
 "cMj" = (
-/obj/item/gun/russianhootolver{
+/obj/item/firearm/russianhootolver{
 	layer = 4
 	},
 /obj/table,
@@ -41912,7 +41912,7 @@
 	icon_state = "frug1"
 	},
 /obj/pedestal,
-/obj/item/gun/energy/wonkgun{
+/obj/item/firearm/energy/wonkgun{
 	pixel_y = 7
 	},
 /obj/decal/tile_edge/carpet{
@@ -54139,7 +54139,7 @@
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
 "dXN" = (
-/obj/item/gun/kinetic/meowitzer/inert{
+/obj/item/firearm/kinetic/meowitzer/inert{
 	pixel_y = 6
 	},
 /obj/table/nanotrasen/auto,
@@ -57710,7 +57710,7 @@
 /area/sim/gunsim/lobby)
 "gIx" = (
 /obj/table,
-/obj/item/gun/russianrevolver/jk47,
+/obj/item/firearm/russianrevolver/jk47,
 /turf/unsimulated/floor/escape{
 	dir = 1
 	},
@@ -59802,8 +59802,8 @@
 /area/centcom/offices/adhara)
 "iss" = (
 /obj/table/auto,
-/obj/item/gun/kinetic/flaregun,
-/obj/item/gun/kinetic/flaregun,
+/obj/item/firearm/kinetic/flaregun,
+/obj/item/firearm/kinetic/flaregun,
 /obj/item/sword,
 /obj/item/sword,
 /turf/unsimulated/floor/plating,
@@ -63684,7 +63684,7 @@
 	icon_state = "delivery2"
 	},
 /obj/table/auto,
-/obj/item/gun/kinetic/rpg7,
+/obj/item/firearm/kinetic/rpg7,
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
 "lhT" = (
@@ -63705,8 +63705,8 @@
 /area/syndicate_station/battlecruiser)
 "liz" = (
 /obj/table/auto,
-/obj/item/gun/kinetic/flaregun,
-/obj/item/gun/kinetic/flaregun,
+/obj/item/firearm/kinetic/flaregun,
+/obj/item/firearm/kinetic/flaregun,
 /obj/item/sword,
 /obj/item/sword,
 /turf/unsimulated/floor/plating,
@@ -65777,11 +65777,11 @@
 	pixel_y = 32
 	},
 /obj/item/quiver/leather/stocked,
-/obj/item/gun/bow/crossbow/wooden{
+/obj/item/firearm/bow/crossbow/wooden{
 	pixel_y = -3;
 	pixel_x = 3
 	},
-/obj/item/gun/bow/crossbow/wooden{
+/obj/item/firearm/bow/crossbow/wooden{
 	pixel_y = 9;
 	pixel_x = -5
 	},
@@ -67007,7 +67007,7 @@
 	pixel_x = 7;
 	pixel_y = 15
 	},
-/obj/item/gun/reagent/syringe/love/plus{
+/obj/item/firearm/reagent/syringe/love/plus{
 	pixel_x = 2;
 	pixel_y = -6
 	},
@@ -71628,7 +71628,7 @@
 /area/iomoon)
 "rqw" = (
 /obj/pedestal,
-/obj/item/gun/kinetic/beepsky/one_bullet{
+/obj/item/firearm/kinetic/beepsky/one_bullet{
 	pixel_y = 7
 	},
 /turf/unsimulated/floor,
@@ -71913,7 +71913,7 @@
 /area/hospital/samostrel)
 "rzJ" = (
 /obj/table/wood/round,
-/obj/item/gun/kinetic/makarov{
+/obj/item/firearm/kinetic/makarov{
 	pixel_x = -2;
 	pixel_y = 4
 	},
@@ -73916,7 +73916,7 @@
 	},
 /area/crunch/wtc)
 "tcv" = (
-/obj/item/gun/energy/stasis{
+/obj/item/firearm/energy/stasis{
 	pixel_y = -28;
 	pixel_x = 12
 	},
@@ -75248,7 +75248,7 @@
 /turf/unsimulated/outdoors/grass,
 /area/centcom/outside)
 "uoX" = (
-/obj/item/gun/kinetic/breakaction/singleshotrifle{
+/obj/item/firearm/kinetic/breakaction/singleshotrifle{
 	pixel_y = 32;
 	pixel_x = 12
 	},
@@ -75733,7 +75733,7 @@
 /area/adventure/channel/flingy)
 "uFD" = (
 /obj/table/wood/round/auto,
-/obj/item/gun/russianrevolver/fake357,
+/obj/item/firearm/russianrevolver/fake357,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/hufflaw)
 "uGo" = (
@@ -77683,8 +77683,8 @@
 	desc = "The round-ending ones are a lot more powerful than this.";
 	name = "microbomb implant"
 	},
-/obj/item/gun/energy/shrinkray,
-/obj/item/gun/energy/shrinkray/growray,
+/obj/item/firearm/energy/shrinkray,
+/obj/item/firearm/energy/shrinkray/growray,
 /obj/item/plant/herb/cannabis/white/spawnable,
 /obj/item/plant/herb/cannabis/white/spawnable,
 /obj/item/plant/herb/cannabis/white/spawnable,
@@ -78307,10 +78307,10 @@
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/entry)
 "wwD" = (
-/obj/item/gun/energy/dazzler,
+/obj/item/firearm/energy/dazzler,
 /obj/table/reinforced/industrial/auto,
 /obj/machinery/computer3/generic/personal,
-/obj/item/gun/energy/tasersmg{
+/obj/item/firearm/energy/tasersmg{
 	pixel_y = 28
 	},
 /turf/unsimulated/floor/wood/two{
@@ -79195,7 +79195,7 @@
 	name = "Well used zippo lighter"
 	},
 /obj/item/clothing/gloves/swat/NT,
-/obj/item/gun/kinetic/lopoint,
+/obj/item/firearm/kinetic/lopoint,
 /obj/item/storage/belt/security/shoulder_holster/inspector,
 /obj/item/clothing/shoes/swat,
 /obj/item/clothing/glasses/sunglasses,
@@ -80419,7 +80419,7 @@
 	pixel_x = -10;
 	pixel_y = 24
 	},
-/obj/item/gun/kinetic/pumpweapon/riotgun{
+/obj/item/firearm/kinetic/pumpweapon/riotgun{
 	desc = "A police-issue shotgun meant fo- dear god why does it smell like it was lubricated with hotdog water?";
 	pixel_x = -6;
 	pixel_y = 32

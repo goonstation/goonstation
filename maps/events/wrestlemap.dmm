@@ -214,9 +214,9 @@
 /obj/rack,
 /obj/item/wrench,
 /obj/item/wrench,
-/obj/item/gun/implanter,
-/obj/item/gun/kinetic/riot40mm,
-/obj/item/gun/kinetic/riot40mm,
+/obj/item/firearm/implanter,
+/obj/item/firearm/kinetic/riot40mm,
+/obj/item/firearm/kinetic/riot40mm,
 /obj/item/ammo/bullets/smoke,
 /obj/item/ammo/bullets/smoke,
 /obj/decal/tile_edge/stripe{
@@ -10777,7 +10777,7 @@
 /area/station/mining/staff_room)
 "ePv" = (
 /obj/table/wood/auto,
-/obj/item/gun/kinetic/antisingularity,
+/obj/item/firearm/kinetic/antisingularity,
 /obj/item/paper/antisingularity,
 /obj/machinery/camera/directional/north{
 	pixel_x = -10
@@ -18725,7 +18725,7 @@
 /obj/storage/crate,
 /obj/item/device/reagentscanner,
 /obj/item/reagent_containers/dropper,
-/obj/item/gun/russianrevolver,
+/obj/item/firearm/russianrevolver,
 /obj/item/storage/box/cutlery,
 /obj/item/storage/box/fruit_wedges,
 /obj/item/clothing/under/gimmick/macho,
@@ -48854,7 +48854,7 @@
 /obj/machinery/firealarm/directional/west,
 /obj/table/auto,
 /obj/item/remote/porter/port_a_medbay,
-/obj/item/gun/implanter,
+/obj/item/firearm/implanter,
 /obj/machinery/camera/directional/south{
 	pixel_x = -10
 	},

@@ -389,7 +389,7 @@ ABSTRACT_TYPE(/datum/objective/crew/bartender)
 /datum/objective/crew/bartender/shotgun
 	explanation_text = "Don't lose your shotgun!"
 	check_completion()
-		if(owner.current?.check_contents_for(/obj/item/gun/kinetic/sawnoff))
+		if(owner.current?.check_contents_for(/obj/item/firearm/kinetic/sawnoff))
 			return TRUE
 		else
 			return FALSE

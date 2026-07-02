@@ -16567,11 +16567,11 @@
 	pixel_y = 28
 	},
 /obj/rack,
-/obj/item/gun/kinetic/riot40mm{
+/obj/item/firearm/kinetic/riot40mm{
 	pixel_x = -4;
 	pixel_y = 10
 	},
-/obj/item/gun/kinetic/riot40mm{
+/obj/item/firearm/kinetic/riot40mm{
 	pixel_x = -2;
 	pixel_y = 5
 	},
@@ -16591,7 +16591,7 @@
 	pixel_x = -4;
 	pixel_y = -3
 	},
-/obj/item/gun/implanter{
+/obj/item/firearm/implanter{
 	pixel_x = 7;
 	pixel_y = -7
 	},

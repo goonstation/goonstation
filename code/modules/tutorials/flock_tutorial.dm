@@ -454,7 +454,7 @@
 /mob/living/carbon/human/normal/chef/shoot_gun_person
 	New()
 		..()
-		var/obj/item/gun/kinetic/zipgun/gun = new(src)
+		var/obj/item/firearm/kinetic/zipgun/gun = new(src)
 		gun.failure_chance = 0
 		src.put_in_hand(gun)
 		SPAWN(0)

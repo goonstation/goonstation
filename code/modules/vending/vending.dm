@@ -3511,37 +3511,37 @@ TYPEINFO(/obj/machinery/vending/murderbox_gang)
 	can_fall = FALSE
 	create_products(restocked)
 		..()
-		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/pumpweapon/ks23, 1, infinite=TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/firearm/kinetic/pumpweapon/ks23, 1, infinite=TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/kuvalda, 1, infinite=TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/kuvalda/slug, 1, infinite=TRUE)
 
-		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/american180, 1, infinite=TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/firearm/kinetic/american180, 1, infinite=TRUE)
 
-		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/draco, 1, infinite=TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/firearm/kinetic/draco, 1, infinite=TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/akm/draco, 1, infinite=TRUE)
 
-		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/m16, 1, infinite=TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/firearm/kinetic/m16, 1, infinite=TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/assault_rifle/remington, 1, infinite=TRUE)
 
-		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/striker, 1, infinite=TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/firearm/kinetic/striker, 1, infinite=TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a12/bird/seven, 1, infinite=TRUE)
 
-		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/greasegun, 1, infinite=TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/firearm/kinetic/greasegun, 1, infinite=TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/nine_mm_surplus/mag_grease, 1, infinite=TRUE)
 
-		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/uzi, 1, infinite=TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/firearm/kinetic/uzi, 1, infinite=TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/nine_mm_surplus/mag_mor, 1, infinite=TRUE)
 
-		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/lopoint, 1, infinite=TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/firearm/kinetic/lopoint, 1, infinite=TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/bullet_9mm/lopoint, 1, infinite=TRUE)
 
-		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/webley, 1, infinite=TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/firearm/kinetic/webley, 1, infinite=TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/webley, 1, infinite=TRUE)
 
-		product_list += new/datum/data/vending_product(/obj/item/gun/energy/lasergat, 1, infinite=TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/firearm/energy/lasergat, 1, infinite=TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/power_cell/lasergat, 1, infinite=TRUE)
 
-		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/single_action/colt_saa, 1, infinite=TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/firearm/kinetic/single_action/colt_saa, 1, infinite=TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/c_45, 1, infinite=TRUE)
 
 		product_list += new/datum/data/vending_product(/obj/item/switchblade, 1, infinite=TRUE)
@@ -3564,38 +3564,38 @@ TYPEINFO(/obj/machinery/vending/murderbox_armory)
 
 	create_products(restocked)
 		..()
-		product_list += new/datum/data/vending_product(/obj/item/gun/energy/stasis, 1, infinite = TRUE)
-		product_list += new/datum/data/vending_product(/obj/item/gun/energy/egun, 1, infinite = TRUE)
-		product_list += new/datum/data/vending_product(/obj/item/gun/energy/egun_jr, 1, infinite = TRUE)
-		product_list += new/datum/data/vending_product(/obj/item/gun/energy/lawbringer, 1, infinite = TRUE)
-		product_list += new/datum/data/vending_product(/obj/item/gun/energy/pulse_rifle, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/firearm/energy/stasis, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/firearm/energy/egun, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/firearm/energy/egun_jr, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/firearm/energy/lawbringer, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/firearm/energy/pulse_rifle, 1, infinite = TRUE)
 
-		product_list += new/datum/data/vending_product(/obj/item/gun/energy/phaser_small, 1, infinite = TRUE)
-		product_list += new/datum/data/vending_product(/obj/item/gun/energy/phaser_gun, 1, infinite = TRUE)
-		product_list += new/datum/data/vending_product(/obj/item/gun/energy/phaser_smg, 1, infinite = TRUE)
-		product_list += new/datum/data/vending_product(/obj/item/gun/energy/phaser_huge, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/firearm/energy/phaser_small, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/firearm/energy/phaser_gun, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/firearm/energy/phaser_smg, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/firearm/energy/phaser_huge, 1, infinite = TRUE)
 
-		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/pumpweapon/riotgun, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/firearm/kinetic/pumpweapon/riotgun, 1, infinite = TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/abg, 1, infinite = TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a12/weak, 1, infinite = TRUE)
 
-		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/detectiverevolver, 1, infinite = TRUE)
-		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/single_action/colt_saa/detective, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/firearm/kinetic/detectiverevolver, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/firearm/kinetic/single_action/colt_saa/detective, 1, infinite = TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38, 1, infinite = TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/a38/stun, 1, infinite = TRUE)
 
-		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/clock_188/boomerang, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/firearm/kinetic/clock_188/boomerang, 1, infinite = TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/nine_mm_NATO, 1, infinite = TRUE)
 
-		product_list += new/datum/data/vending_product(/obj/item/gun/flamethrower/assembled/loaded, 1, infinite = TRUE)
-		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/flaregun, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/firearm/flamethrower/assembled/loaded, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/firearm/kinetic/flaregun, 1, infinite = TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/flare, 1, infinite = TRUE)
 
-		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/riot40mm, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/firearm/kinetic/riot40mm, 1, infinite = TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/smoke, 1, infinite = TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/pbr, 1, infinite = TRUE)
 
-		product_list += new/datum/data/vending_product(/obj/item/gun/kinetic/dart_rifle, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/firearm/kinetic/dart_rifle, 1, infinite = TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts, 1, infinite = TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts/anti_mutant, 1, infinite = TRUE)
 

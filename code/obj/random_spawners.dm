@@ -1835,7 +1835,7 @@
 
 /obj/random_item_spawner/kineticgun/fullrandom // used in the 4th of july admin button.
 	New()
-		items2spawn = concrete_typesof(/obj/item/gun/kinetic) - /obj/item/gun/kinetic/meowitzer //No, just no
+		items2spawn = concrete_typesof(/obj/item/firearm/kinetic) - /obj/item/firearm/kinetic/meowitzer //No, just no
 		. = ..()
 
 	one_or_zero
@@ -1847,41 +1847,41 @@
 	icon_state = "rand_gun"
 	min_amt2spawn = 1
 	max_amt2spawn = 4
-	items2spawn = list(/obj/item/gun/kinetic/clock_188,
-	/obj/item/gun/kinetic/clock_188,
-	/obj/item/gun/kinetic/clock_188/boomerang,
-	/obj/item/gun/kinetic/derringer,
-	/obj/item/gun/kinetic/detectiverevolver,
-	/obj/item/gun/kinetic/pistol,
-	/obj/item/gun/kinetic/riot40mm,
-	/obj/item/gun/kinetic/pumpweapon/riotgun,
-	/obj/item/gun/kinetic/pumpweapon/riotgun,
-	/obj/item/gun/kinetic/pumpweapon/riotgun,
-	/obj/item/gun/kinetic/sawnoff,
-	/obj/item/gun/kinetic/sawnoff,
-	/obj/item/gun/kinetic/single_action/colt_saa,
-	/obj/item/gun/kinetic/single_action/flintlock,
-	/obj/item/gun/kinetic/zipgun,
-	/obj/item/gun/kinetic/makarov,
-	/obj/item/gun/kinetic/single_action/mts_255,
-	/obj/item/gun/kinetic/survival_rifle,
-	/obj/item/gun/kinetic/survival_rifle,
-	/obj/item/gun/kinetic/m16,
-	/obj/item/gun/kinetic/m16,
-	/obj/item/gun/kinetic/pumpweapon/ks23,
-	/obj/item/gun/kinetic/striker,
-	/obj/item/gun/kinetic/striker,
-	/obj/item/gun/kinetic/webley,
-	/obj/item/gun/kinetic/webley,
-	/obj/item/gun/kinetic/webley,
-	/obj/item/gun/kinetic/lopoint,
-	/obj/item/gun/kinetic/uzi,
-	/obj/item/gun/kinetic/uzi,
-	/obj/item/gun/kinetic/greasegun,
-	/obj/item/gun/kinetic/greasegun,
-	/obj/item/gun/kinetic/breakaction/singleshotrifle,
-	/obj/item/gun/kinetic/draco,
-	/obj/item/gun/kinetic/revolver
+	items2spawn = list(/obj/item/firearm/kinetic/clock_188,
+	/obj/item/firearm/kinetic/clock_188,
+	/obj/item/firearm/kinetic/clock_188/boomerang,
+	/obj/item/firearm/kinetic/derringer,
+	/obj/item/firearm/kinetic/detectiverevolver,
+	/obj/item/firearm/kinetic/pistol,
+	/obj/item/firearm/kinetic/riot40mm,
+	/obj/item/firearm/kinetic/pumpweapon/riotgun,
+	/obj/item/firearm/kinetic/pumpweapon/riotgun,
+	/obj/item/firearm/kinetic/pumpweapon/riotgun,
+	/obj/item/firearm/kinetic/sawnoff,
+	/obj/item/firearm/kinetic/sawnoff,
+	/obj/item/firearm/kinetic/single_action/colt_saa,
+	/obj/item/firearm/kinetic/single_action/flintlock,
+	/obj/item/firearm/kinetic/zipgun,
+	/obj/item/firearm/kinetic/makarov,
+	/obj/item/firearm/kinetic/single_action/mts_255,
+	/obj/item/firearm/kinetic/survival_rifle,
+	/obj/item/firearm/kinetic/survival_rifle,
+	/obj/item/firearm/kinetic/m16,
+	/obj/item/firearm/kinetic/m16,
+	/obj/item/firearm/kinetic/pumpweapon/ks23,
+	/obj/item/firearm/kinetic/striker,
+	/obj/item/firearm/kinetic/striker,
+	/obj/item/firearm/kinetic/webley,
+	/obj/item/firearm/kinetic/webley,
+	/obj/item/firearm/kinetic/webley,
+	/obj/item/firearm/kinetic/lopoint,
+	/obj/item/firearm/kinetic/uzi,
+	/obj/item/firearm/kinetic/uzi,
+	/obj/item/firearm/kinetic/greasegun,
+	/obj/item/firearm/kinetic/greasegun,
+	/obj/item/firearm/kinetic/breakaction/singleshotrifle,
+	/obj/item/firearm/kinetic/draco,
+	/obj/item/firearm/kinetic/revolver
 	)
 
 	one
@@ -1916,11 +1916,11 @@
 	icon_state = "rand_gun"
 	amt2spawn = 1
 
-	items2spawn = list(/obj/item/gun/energy/egun,
-	/obj/item/gun/energy/egun,
-	/obj/item/gun/energy/egun,
-	/obj/item/gun/energy/egun_jr,
-	/obj/item/gun/energy/phaser_huge)
+	items2spawn = list(/obj/item/firearm/energy/egun,
+	/obj/item/firearm/energy/egun,
+	/obj/item/firearm/energy/egun,
+	/obj/item/firearm/energy/egun_jr,
+	/obj/item/firearm/energy/phaser_huge)
 
 	one
 		amt2spawn = 1
@@ -2059,7 +2059,7 @@
 			pixel_x = -1;
 			pixel_y = 1
 		}(src.loc)
-		new /obj/item/gun/kinetic/riot40mm/breach{
+		new /obj/item/firearm/kinetic/riot40mm/breach{
 			pixel_x = -5;
 			pixel_y = 8
 		}(src.loc)

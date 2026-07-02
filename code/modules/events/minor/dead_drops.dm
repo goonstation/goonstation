@@ -310,7 +310,7 @@ ABSTRACT_TYPE(/datum/dead_drop)
 /datum/dead_drop/infil
 	items_max = 4
 	items = list(/obj/item/card/id/syndicate=100,
-				/obj/item/gun/kinetic/pistol=25,
+				/obj/item/firearm/kinetic/pistol=25,
 				/obj/item/radiojammer=25,
 				/obj/item/tool/omnitool=10,
 				/obj/item/assembly/flash_cell=5,
@@ -323,14 +323,14 @@ ABSTRACT_TYPE(/datum/dead_drop)
 				/obj/item/implanter/uplink_microbomb=25,
 				/obj/item/breaching_charge/thermite=50,
 				/obj/item/breaching_charge=50,
-				/obj/item/gun/kinetic/pistol=10,
+				/obj/item/firearm/kinetic/pistol=10,
 				/obj/item/storage/landmine_pouch=10,
 				/obj/item/tool/omnitool=5
 				)
 
 /datum/dead_drop/assassin
 	items = list(/obj/item/card/id/syndicate=100,
-				/obj/item/gun/kinetic/silenced_22=25,
+				/obj/item/firearm/kinetic/silenced_22=25,
 				/obj/item/pen/sleepypen=25,
 				/obj/item/dagger/syndicate=10,
 				/obj/item/reagent_containers/glass/bottle/poison=10,
@@ -340,7 +340,7 @@ ABSTRACT_TYPE(/datum/dead_drop)
 /datum/dead_drop/chaos
 	items_max = 5
 	items = list(/obj/item/card/id/syndicate=100,
-			/obj/item/gun/kinetic/pistol=25,
+			/obj/item/firearm/kinetic/pistol=25,
 			/obj/item/assembly/flash_cell=5
 			)
 

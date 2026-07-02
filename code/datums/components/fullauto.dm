@@ -50,11 +50,11 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 
 
 	Initialize(delaystart = 1.5 DECI SECONDS)
-		if(..() == COMPONENT_INCOMPATIBLE || !istype(parent, /obj/item/gun))
+		if(..() == COMPONENT_INCOMPATIBLE || !istype(parent, /obj/item/firearm))
 			return COMPONENT_INCOMPATIBLE
 		else
 			src.toggle = toggle
-			var/obj/item/gun/G = parent
+			var/obj/item/firearm/G = parent
 			src.delaystart = delaystart
 
 			var/atom/movable/screen/fullautoAimHUD/hudSquare
@@ -106,7 +106,7 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 
 
 	on_pickup(datum/source, mob/user)
-		var/obj/item/gun/G = parent
+		var/obj/item/firearm/G = parent
 		. = ..()
 		if(G?.current_projectile?.fullauto_valid)
 			if(toggle)
@@ -136,7 +136,7 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 		return
 
 /datum/component/holdertargeting/fullauto/proc/toggle_fullauto_firemode(datum/source, datum/projectile/newProj)
-	var/obj/item/gun/G = parent
+	var/obj/item/firearm/G = parent
 	if(current_user && newProj.fullauto_valid != toggle)
 		toggle = !toggle
 
@@ -238,7 +238,7 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 	if(shooting)
 		return
 
-	var/obj/item/gun/G = parent
+	var/obj/item/firearm/G = parent
 	shooting = 1
 
 	delay = delaystart
@@ -256,7 +256,7 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 
 /datum/component/holdertargeting/fullauto/proc/end_shootloop(mob/living/user)
 	//loop ended - reset values
-	var/obj/item/gun/G = parent
+	var/obj/item/firearm/G = parent
 	G.suppress_fire_msg = initial(G.suppress_fire_msg)
 	UnregisterSignal(user, COMSIG_FULLAUTO_MOUSEDRAG)
 	UnregisterSignal(user, COMSIG_MOB_MOUSEUP)

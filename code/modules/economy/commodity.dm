@@ -248,7 +248,7 @@
 
 /datum/commodity/laser_gun
 	comname = "Laser Gun"
-	comtype =  /obj/item/gun/energy/laser_gun
+	comtype =  /obj/item/firearm/energy/laser_gun
 	onmarket = 0
 	desc = "A laser gun. Pew pew."
 	price = PAY::EXECUTIVE
@@ -674,7 +674,7 @@ datum/commodity/drugs/sell/poppies
 
 /datum/commodity/contraband/egun
 	comname = "Energy Gun"
-	comtype = /obj/item/gun/energy/egun
+	comtype = /obj/item/firearm/energy/egun
 	desc = "A standard-issue NT energy gun."
 	price = PAY::EMBEZZLED
 
@@ -1641,7 +1641,7 @@ datum/commodity/drugs/sell/poppies
 
 /datum/commodity/toygun
 	comname = "Toy Gun"
-	comtype = /obj/item/gun/kinetic/foamdartgun
+	comtype = /obj/item/firearm/kinetic/foamdartgun
 	desc = "A toy gun that fires foam darts."
 	onmarket = 0
 	price = PAY::UNTRAINED/2
@@ -1824,7 +1824,7 @@ datum/commodity/drugs/sell/poppies
 
 /datum/commodity/flock/tech/incapacitor
 	comname = "Incapacitor"
-	comtype = /obj/item/gun/energy/flock
+	comtype = /obj/item/firearm/energy/flock
 	desc = "We have tried to replicate our pacification technology in a form your kind can use. There may be some issues."
 	price = PAY::DONTBUYIT
 
@@ -1988,7 +1988,7 @@ datum/commodity/drugs/sell/poppies
 ///////////////////greg///////////////////////////////
 /datum/commodity/airzooka
 	comname = "Donk Co. brand Airzooka"
-	comtype = /obj/item/gun/kinetic/airzooka
+	comtype = /obj/item/firearm/kinetic/airzooka
 	desc = "A high tech air deploying and transportation device produced by Donk Co!"
 	onmarket = 0
 	price = PAY::EXECUTIVE

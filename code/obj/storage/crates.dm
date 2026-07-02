@@ -178,7 +178,7 @@
 
 /obj/storage/crate/freezer/milk
 	spawn_contents = list(/obj/item/reagent_containers/food/drinks/milk = 10, \
-	/obj/item/gun/russianrevolver)
+	/obj/item/firearm/russianrevolver)
 
 /obj/storage/crate/bin
 	name = "large bin"
@@ -520,7 +520,7 @@ TYPEINFO(/obj/storage/crate/chest)
 	demo
 		name = "Class Crate - Grenadier"
 		desc = "A crate containing a Specialist Operative loadout. This one features a hand-held grenade launcher and a pile of ordnance."
-		spawn_contents = list(/obj/item/gun/kinetic/grenade_launcher,
+		spawn_contents = list(/obj/item/firearm/kinetic/grenade_launcher,
 		/obj/item/storage/pouch/grenade_round,
 		/obj/item/storage/grenade_pouch/mixed_explosive,
 		/obj/item/clothing/suit/space/syndicate/specialist/grenadier,
@@ -529,7 +529,7 @@ TYPEINFO(/obj/storage/crate/chest)
 	heavy
 		name = "Class Crate - Heavy Weapons Specialist"
 		desc = "A crate containing a Specialist Operative loadout. This one features a light machine gun, several belts of ammunition and a pouch of grenades."
-		spawn_contents = list(/obj/item/gun/kinetic/light_machine_gun,
+		spawn_contents = list(/obj/item/firearm/kinetic/light_machine_gun,
 		/obj/item/storage/pouch/lmg,
 		/obj/item/storage/grenade_pouch/high_explosive,
 		/obj/item/storage/fanny/syndie/large,
@@ -539,7 +539,7 @@ TYPEINFO(/obj/storage/crate/chest)
 	assault
 		name = "Class Crate - Assault Trooper"
 		desc = "A crate containing a Specialist Operative loadout. This one includes a customized assault rifle, several additional magazines as well as an assortment of breach and clear grenades."
-		spawn_contents = list(/obj/item/gun/kinetic/assault_rifle,
+		spawn_contents = list(/obj/item/firearm/kinetic/assault_rifle,
 		/obj/item/storage/pouch/assault_rifle/mixed,
 		/obj/item/storage/grenade_pouch/mixed_standard,
 		/obj/item/breaching_charge = 2,
@@ -549,7 +549,7 @@ TYPEINFO(/obj/storage/crate/chest)
 	agent // not avaliable for purchase
 		name = "Class Crate - Infiltrator"
 		desc = "A crate containing a Specialist Operative loadout. This one includes a pair of semi-automatic pistols, a combat knife, an electromagnetic card (EMAG) and a cloaking device."
-		spawn_contents = list(/obj/item/gun/kinetic/pistol = 2,
+		spawn_contents = list(/obj/item/firearm/kinetic/pistol = 2,
 		/obj/item/storage/pouch/bullet_9mm,
 		/obj/item/clothing/glasses/nightvision,
 		/obj/item/cloaking_device,
@@ -562,7 +562,7 @@ TYPEINFO(/obj/storage/crate/chest)
 	infiltrator
 		name = "Class Crate - Infiltrator" // for actually fitting in among the crew.
 		desc = "A crate containing a Specialist Operative loadout. Includes a tranquilizer pistol, chameleon outfit, chameleon projector and a DNA scrambler."
-		spawn_contents = list(/obj/item/gun/kinetic/tranq_pistol,
+		spawn_contents = list(/obj/item/firearm/kinetic/tranq_pistol,
 		/obj/item/storage/pouch/tranq_pistol_dart,
 		/obj/item/pinpointer/disk,
 		/obj/item/dna_scrambler,
@@ -576,7 +576,7 @@ TYPEINFO(/obj/storage/crate/chest)
 	scout
 		name = "Class Crate - Scout" // sneaky invisible flanker
 		desc = "A crate containing a Specialist Operative loadout. Includes a submachine gun, a cloaking device and an electromagnetic card (EMAG)."
-		spawn_contents = list(/obj/item/gun/kinetic/smg,
+		spawn_contents = list(/obj/item/firearm/kinetic/smg,
 		/obj/item/storage/pouch/bullet_9mm/smg,
 		/obj/item/clothing/glasses/nightvision,
 		/obj/item/pinpointer/disk,
@@ -589,7 +589,7 @@ TYPEINFO(/obj/storage/crate/chest)
 	medic
 		name = "Class Crate - Combat Medic"
 		desc = "A crate containing a Specialist Operative loadout. This one is packed with medical supplies, some poison and a syringe gun delivery system."
-		spawn_contents = list(/obj/item/gun/reagent/syringe,
+		spawn_contents = list(/obj/item/firearm/reagent/syringe,
 		/obj/item/reagent_containers/glass/bottle/syringe_canister/neurotoxin = 2,
 		/obj/item/reagent_containers/emergency_injector/high_capacity/juggernaut,
 		/obj/item/reagent_containers/emergency_injector/high_capacity/donk_injector,
@@ -604,7 +604,7 @@ TYPEINFO(/obj/storage/crate/chest)
 	medic_rework
 		name = "Class Crate - Field Medic"
 		desc = "A crate containing a Specialist Operative loadout. This one is packed with medical supplies and a personal defense sub-machine gun."
-		spawn_contents = list(/obj/item/gun/kinetic/veritate,
+		spawn_contents = list(/obj/item/firearm/kinetic/veritate,
 		/obj/item/storage/pouch/veritate,
 		/obj/item/device/analyzer/healthanalyzer/upgraded,
 		/obj/item/storage/medical_pouch,
@@ -619,7 +619,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		spawn_contents = list(/obj/item/paper/nast_manual,
 		/obj/item/turret_deployer/syndicate,
 		/obj/item/wrench/battle,
-		/obj/item/gun/kinetic/spes/engineer,
+		/obj/item/firearm/kinetic/spes/engineer,
 		/obj/item/storage/pouch/shotgun/weak,
 		/obj/item/weldingtool/high_cap,
 		/obj/item/storage/belt/utility/prepared,
@@ -629,7 +629,7 @@ TYPEINFO(/obj/storage/crate/chest)
 	pyro
 		name = "Class Crate - Firebrand"
 		desc = "A crate containing a Specialist Operative loadout. This one contains a fire axe, a napalm-filled flamethrower and fireproof armor."
-		spawn_contents = list(/obj/item/gun/flamethrower/backtank/napalm,
+		spawn_contents = list(/obj/item/firearm/flamethrower/backtank/napalm,
 		/obj/item/fireaxe,
 		/obj/item/storage/grenade_pouch/napalm,
 		/obj/item/storage/grenade_pouch/incendiary,
@@ -640,7 +640,7 @@ TYPEINFO(/obj/storage/crate/chest)
 	sniper
 		name = "Class Crate - Marksman"
 		desc = "A crate containing a Specialist Operative loadout. Features a wall-piercing sniper rifle and high-grade thermal optical goggles."
-		spawn_contents = list(/obj/item/gun/kinetic/sniper,
+		spawn_contents = list(/obj/item/firearm/kinetic/sniper,
 		/obj/item/storage/pouch/sniper,
 		/obj/item/storage/grenade_pouch/smoke,
 		/obj/item/storage/fanny/syndie/large,
@@ -801,12 +801,12 @@ TYPEINFO(/obj/storage/crate/chest)
 		/obj/item/cell/erebite/charged)
 
 	weapons
-		spawn_contents = list(/obj/item/gun/energy/phaser_gun,
+		spawn_contents = list(/obj/item/firearm/energy/phaser_gun,
 		/obj/item/old_grenade/stinger = 2,
 		/obj/item/ammo/power_cell/med_power)
 
 	weapons2
-		spawn_contents = list(/obj/item/gun/energy/laser_gun,
+		spawn_contents = list(/obj/item/firearm/energy/laser_gun,
 		/obj/item/chem_grenade/cryo = 4)
 
 	weapons3
@@ -814,7 +814,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		/obj/item/chem_grenade/shock = 2)
 
 	weapons4
-		spawn_contents = list(/obj/item/gun/kinetic/zipgun,
+		spawn_contents = list(/obj/item/firearm/kinetic/zipgun,
 		/obj/item/ammo/bullets/a38 = 2)
 
 	cargonia

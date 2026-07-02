@@ -2178,7 +2178,7 @@
 	pixel_y = 28;
 	pixel_x = 15
 	},
-/obj/item/gun/kinetic/single_action/colt_saa/detective{
+/obj/item/firearm/kinetic/single_action/colt_saa/detective{
 	pixel_y = 6;
 	pixel_x = 4
 	},
@@ -6552,7 +6552,7 @@
 	ambient_light = "#331111"
 	})
 "awZ" = (
-/obj/item/gun/kinetic/single_action/flintlock{
+/obj/item/firearm/kinetic/single_action/flintlock{
 	desc = "A rare antique firearm from the 16th century. Fancy.";
 	name = "\improper Wheellock Pistol, 1566 CE, Silesian, steel, silver and walnut";
 	rarity = 5
@@ -13006,7 +13006,7 @@
 	})
 "aRO" = (
 /obj/table/glass/reinforced/auto,
-/obj/item/gun/kinetic/SMG_briefcase{
+/obj/item/firearm/kinetic/SMG_briefcase{
 	pixel_y = 4
 	},
 /turf/unsimulated/floor/shiny/white,
@@ -15946,7 +15946,7 @@
 	})
 "cfV" = (
 /obj/rack,
-/obj/item/gun/kinetic/foamdartgun,
+/obj/item/firearm/kinetic/foamdartgun,
 /turf/unsimulated/floor/minitiles/black,
 /area/moon/underground/hemera{
 	icon_state = "red";
@@ -18053,7 +18053,7 @@
 	})
 "gro" = (
 /obj/table/glass/reinforced/auto,
-/obj/item/gun/energy/alastor,
+/obj/item/firearm/energy/alastor,
 /obj/decal/tile_edge/line/black{
 	dir = 4;
 	icon_state = "line1"
@@ -18595,7 +18595,7 @@
 	})
 "hEM" = (
 /obj/table/glass/reinforced/auto,
-/obj/item/gun/energy/alastor,
+/obj/item/firearm/energy/alastor,
 /obj/decal/tile_edge/line/black{
 	dir = 8;
 	icon_state = "line1"
@@ -19795,7 +19795,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/item/gun/energy/alastor,
+/obj/item/firearm/energy/alastor,
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
@@ -20359,7 +20359,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/item/gun/energy/alastor,
+/obj/item/firearm/energy/alastor,
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
@@ -20772,7 +20772,7 @@
 "moi" = (
 /obj/machinery/light/small/cool,
 /obj/rack,
-/obj/item/gun/kinetic/foamdartshotgun,
+/obj/item/firearm/kinetic/foamdartshotgun,
 /turf/unsimulated/floor/minitiles/black,
 /area/moon/underground/hemera{
 	icon_state = "red";
@@ -26349,10 +26349,10 @@
 /obj/rack{
 	pixel_y = 31
 	},
-/obj/item/gun/kinetic/silenced_22{
+/obj/item/firearm/kinetic/silenced_22{
 	pixel_y = 29
 	},
-/obj/item/gun/kinetic/silenced_22{
+/obj/item/firearm/kinetic/silenced_22{
 	pixel_y = 23
 	},
 /turf/unsimulated/floor/shiny/white,

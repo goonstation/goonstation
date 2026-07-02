@@ -102,7 +102,7 @@
 	var/list/item_class_1 = list(/obj/item/crowbar, /obj/item/weldingtool, /obj/item/screwdriver, /obj/item/wrench, /obj/item/device/multitool, /obj/item/tank/air) + amounted
 	var/list/item_class_2 = list(/obj/item/storage/toolbox/mechanical, /obj/item/storage/toolbox/electrical, /obj/item/storage/toolbox/emergency, /obj/item/tank/oxygen) + amounted
 	var/list/item_class_3 = list(/obj/machinery/portable_atmospherics/canister/air, /obj/reagent_dispensers/fueltank, /obj/reagent_dispensers/foamtank, /obj/item/tank/jetpack, /obj/item/rcd_ammo) + amounted
-	var/list/item_class_4 = list(/obj/machinery/portable_atmospherics/canister/oxygen, /obj/item/tank/jetpack, /obj/item/rcd_ammo/big, /obj/item/gun/energy/laser_gun) + amounted
+	var/list/item_class_4 = list(/obj/machinery/portable_atmospherics/canister/oxygen, /obj/item/tank/jetpack, /obj/item/rcd_ammo/big, /obj/item/firearm/energy/laser_gun) + amounted
 	var/picks = 0
 	for (var/cx = bx, cx <= bx + 10, cx++)
 		for (var/cy = by, cy <= by + 10, cy++)

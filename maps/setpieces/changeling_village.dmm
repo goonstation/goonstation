@@ -1378,8 +1378,8 @@
 	})
 "Bw" = (
 /obj/table/wood/auto,
-/obj/item/gun/bow,
-/obj/item/gun/bow,
+/obj/item/firearm/bow,
+/obj/item/firearm/bow,
 /turf/simulated/floor/wood/five,
 /area/prefab{
 	name = "Equipements du Chasse";

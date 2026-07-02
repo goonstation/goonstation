@@ -3464,11 +3464,11 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	can_rotate = 1
 	cooldown_time = 1 SECOND
 	mechanically_copyable = FALSE
-	var/obj/item/gun/Gun = null
-	var/list/compatible_guns = list(/obj/item/gun/kinetic, /obj/item/gun/flamethrower, /obj/item/gun/reagent, /obj/item/gun/paintball)
+	var/obj/item/firearm/Gun = null
+	var/list/compatible_guns = list(/obj/item/firearm/kinetic, /obj/item/firearm/flamethrower, /obj/item/firearm/reagent, /obj/item/firearm/paintball)
 	cabinet_banned = TRUE // non-functional thankfully
 	get_desc()
-		. += "<br>[SPAN_NOTICE("Current Gun: [Gun ? "[Gun] [Gun.canshoot(null) ? "(ready to fire)" : "(out of [istype(Gun, /obj/item/gun/energy) ? "charge)" : "ammo)"]"]" : "None"]")]"
+		. += "<br>[SPAN_NOTICE("Current Gun: [Gun ? "[Gun] [Gun.canshoot(null) ? "(ready to fire)" : "(out of [istype(Gun, /obj/item/firearm/energy) ? "charge)" : "ammo)"]"]" : "None"]")]"
 
 	New()
 		..()
@@ -3531,7 +3531,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 				if(target)
 					Gun.Shoot(get_turf(target), get_turf(src), src, called_target = target)
 			else
-				src.say("The [Gun.name] has no [istype(Gun, /obj/item/gun/energy) ? "charge" : "ammo"] remaining.")
+				src.say("The [Gun.name] has no [istype(Gun, /obj/item/firearm/energy) ? "charge" : "ammo"] remaining.")
 				playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 		else
 			src.say("No gun installed.")
@@ -3546,7 +3546,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	desc = ""
 	icon_state = "comp_gun2"
 	density = 0
-	compatible_guns = list(/obj/item/gun/energy)
+	compatible_guns = list(/obj/item/firearm/energy)
 	mechanically_copyable = FALSE
 	var/charging = 0
 
@@ -3570,10 +3570,10 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			tooltip_rebuild = TRUE
 			UpdateIcon()
 
-		if(!istype(Gun, /obj/item/gun/energy) || !charging)
+		if(!istype(Gun, /obj/item/firearm/energy) || !charging)
 			return
 
-		var/obj/item/gun/energy/E = Gun
+		var/obj/item/firearm/energy/E = Gun
 
 		// Can't recharge the crossbow. Same as the other recharger.
 		if (!(SEND_SIGNAL(E, COMSIG_CELL_CAN_CHARGE) & CELL_CHARGEABLE))
@@ -3594,7 +3594,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	proc/recharge(var/datum/mechanicsMessage/input)
 		if(charging || !Gun || level == OVERFLOOR)
 			return
-		if(!istype(Gun, /obj/item/gun/energy))
+		if(!istype(Gun, /obj/item/firearm/energy))
 			return
 		charging = 1
 		tooltip_rebuild = TRUE

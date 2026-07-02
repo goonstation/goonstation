@@ -2851,28 +2851,28 @@ var/global/force_radio_maptext = FALSE
 	button_1.desc = "Find some meat!"
 	button_1.cant_other_remove = 1
 
-	var/obj/item/gun/kinetic/pistol/button_2 = new()
+	var/obj/item/firearm/kinetic/pistol/button_2 = new()
 	button_2.name = "pistol"
 	button_2.desc = "To defeat the spacemans, shoot him until he dies."
 	button_2.max_ammo_capacity = 400
 	button_2.ammo.amount_left = 400
 	button_2.cant_other_remove = 1
 
-	var/obj/item/gun/kinetic/spes/button_3 = new()
+	var/obj/item/firearm/kinetic/spes/button_3 = new()
 	button_3.name = "shotgun"
 	button_3.desc = "Somehow fits 100 shells."
 	button_3.max_ammo_capacity = 100	// this is a backpack, after all
 	button_3.ammo.amount_left = 100
 	button_3.cant_other_remove = 1
 
-	var/obj/item/gun/kinetic/minigun/button_4 = new()
+	var/obj/item/firearm/kinetic/minigun/button_4 = new()
 	button_4.name = "chaingun"
 	button_4.desc = "Chainguns direct heavy firepower into your opponent, making them do the chaingun cha-cha."
 	button_4.max_ammo_capacity = 400	// boolet
 	button_4.ammo.amount_left = 400
 	button_4.cant_other_remove = 1
 
-	var/obj/item/gun/kinetic/rpg7/loaded/button_5 = new()
+	var/obj/item/firearm/kinetic/rpg7/loaded/button_5 = new()
 	button_5.name = "rocket launcher"
 	button_5.desc = "Splash damage zone!"
 	button_5.ammo.amount_left = 100
@@ -2887,7 +2887,7 @@ var/global/force_radio_maptext = FALSE
 	button_6.click_delay = 0
 	button_6.cant_other_remove = 1
 
-	var/obj/item/gun/energy/bfg/button_7 = new()
+	var/obj/item/firearm/energy/bfg/button_7 = new()
 	// button_7.cell.max_charge = 1500	// 100shot/300max (SS13) vs 40shot/600ammo (D) = 1500 max
 	// button_7.cell.charge = 1500
 	// i have no idea how component cells work and i cannot be bothered

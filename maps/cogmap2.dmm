@@ -3368,7 +3368,7 @@
 "alO" = (
 /obj/decal/cleanable/cobweb2,
 /obj/storage/closet/coffin,
-/obj/item/gun/kinetic/zipgun,
+/obj/item/firearm/kinetic/zipgun,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/scorched,
 /area/station/maintenance/north)
@@ -24914,12 +24914,12 @@
 	pixel_x = 10
 	},
 /obj/table/reinforced/auto,
-/obj/item/gun/kinetic/riot40mm{
+/obj/item/firearm/kinetic/riot40mm{
 	pixel_y = 10
 	},
 /obj/item/ammo/bullets/smoke,
 /obj/item/ammo/bullets/smoke,
-/obj/item/gun/kinetic/riot40mm,
+/obj/item/firearm/kinetic/riot40mm,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "bCa" = (
@@ -54848,7 +54848,7 @@
 /obj/item/reagent_containers/hypospray,
 /obj/item/reagent_containers/hypospray,
 /obj/item/staple_gun,
-/obj/item/gun/implanter,
+/obj/item/firearm/implanter,
 /obj/item/storage/box/health_upgrade_kit,
 /obj/item/device/radio/headset/medical,
 /turf/simulated/floor/carpet/arcade,
@@ -60308,9 +60308,9 @@
 "lco" = (
 /obj/table/auto,
 /obj/item/clothing/mask/gas,
-/obj/item/gun/kinetic/riot40mm,
+/obj/item/firearm/kinetic/riot40mm,
 /obj/disposalpipe/segment/mail/vertical,
-/obj/item/gun/implanter,
+/obj/item/firearm/implanter,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/security/main)
@@ -62822,7 +62822,7 @@
 /obj/table/auto,
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/device/analyzer/healthanalyzer,
-/obj/item/gun/implanter,
+/obj/item/firearm/implanter,
 /obj/item/reagent_containers/dropper/mechanical,
 /obj/item/reagent_containers/dropper/mechanical,
 /obj/disposalpipe/segment/mail/bent/west,

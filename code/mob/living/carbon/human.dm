@@ -2601,8 +2601,8 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		if(istype(A, /obj/item/device/light)) //i hate this
 			var/obj/item/device/light/L = A
 			L.light?.attach(L)
-		if (istype(A, /obj/item/gun) && prob(80)) //prob(80)
-			var/obj/item/gun/gun = A
+		if (istype(A, /obj/item/firearm) && prob(80)) //prob(80)
+			var/obj/item/firearm/gun = A
 			gun.shoot(get_turf(pick(view(10, src))), get_turf(src), src, 16, 16)
 		else if (prob(40)) //bombs might land funny
 			if (istype(A, /obj/item/chem_grenade) || istype(A, /obj/item/old_grenade))
@@ -2978,7 +2978,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 
 	//STEP SOUND HANDLING OVER
 
-	if (prob(5)) // Handling tied or cut shoelaces courtesy of /obj/item/gun/energy/pickpocket
+	if (prob(5)) // Handling tied or cut shoelaces courtesy of /obj/item/firearm/energy/pickpocket
 		if (src.shoes && src.m_intent == "run" && src.shoes.laces != LACES_NORMAL)
 			if (src.shoes.laces == LACES_TIED) // Laces tied
 				boutput(src, "You stumble and fall headlong to the ground. Your shoelaces are a huge knot! [SPAN_ALERT("FUCK!")]")

@@ -238,22 +238,22 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 
 	tasers
 		text = "tasers"
-		path = /obj/item/gun/energy/taser_gun
+		path = /obj/item/firearm/energy/taser_gun
 		amt_high = 2
 
 	phasers
 		text = "phasers of any size"
-		path = /obj/item/gun/energy/phaser_gun
+		path = /obj/item/firearm/energy/phaser_gun
 		amt_low = 2
 		amt_high = 3
 
 	eguns
 		text = "energy guns"
-		path = /obj/item/gun/energy/egun
+		path = /obj/item/firearm/energy/egun
 
 	riot_shotguns
 		text = "riot shotguns"
-		path = /obj/item/gun/kinetic/pumpweapon/riotgun
+		path = /obj/item/firearm/kinetic/pumpweapon/riotgun
 		amt_high = 3
 	cards
 		text = "ID cards"

@@ -1936,7 +1936,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 		user.u_equip(to_combine_atom)
 		user.u_equip(src)
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
-		var/obj/item/gun/kinetic/zipgun/new_gun = new/obj/item/gun/kinetic/zipgun
+		var/obj/item/firearm/kinetic/zipgun/new_gun = new/obj/item/firearm/kinetic/zipgun
 		logTheThing(LOG_STATION, user, "crafts a zipgun at [log_loc(user)]")
 		user.put_in_hand_or_drop(new_gun)
 		SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, new_gun, user)
@@ -1950,7 +1950,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 			user.u_equip(src)
 			user.u_equip(to_combine_atom)
 			playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
-			var/obj/item/gun/kinetic/slamgun/S = new/obj/item/gun/kinetic/slamgun
+			var/obj/item/firearm/kinetic/slamgun/S = new/obj/item/firearm/kinetic/slamgun
 			logTheThing(LOG_STATION, user, "crafts a slamgun at [log_loc(user)]")
 			user.put_in_hand_or_drop(S)
 			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, S, user)

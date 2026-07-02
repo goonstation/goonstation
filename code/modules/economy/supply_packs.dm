@@ -534,7 +534,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "WA-V3 Crate"
 	cost = PAY::TRADESMAN * 15 //pricy
 	contains = list(
-		/obj/item/gun/sprayer,
+		/obj/item/firearm/sprayer,
 		/obj/item/reagent_containers/glass/backtank
 	)
 
@@ -614,11 +614,11 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Experimental Security Equipment (Locked \[Security Equipment])"
 	desc = "x1 Clock 180, x1 Elite Security Helmet, x1 Lethal Grenade Kit, x1 Experimental Grenade Kit, x1 Stasis Rifle."
 	category = "Security"
-	contains = list(/obj/item/gun/kinetic/clock_188/boomerang,
+	contains = list(/obj/item/firearm/kinetic/clock_188/boomerang,
 					/obj/item/storage/box/QM_grenadekit_security,
 					/obj/item/storage/box/QM_grenadekit_experimentalweapons,
 					/obj/item/clothing/head/helmet/hardhat/security/improved,
-					/obj/item/gun/energy/stasis)
+					/obj/item/firearm/energy/stasis)
 	cost = PAY::EXECUTIVE*2
 	containertype = /obj/storage/secure/crate/weapon
 	containername = "Experimental Security Equipment (Locked \[Security Equipment])"
@@ -639,7 +639,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Weapons Crate - Phasers (Locked \[Security Equipment])"
 	desc = "x2 Phaser Guns."
 	category = "Security"
-	contains = list(/obj/item/gun/energy/phaser_gun = 2)
+	contains = list(/obj/item/firearm/energy/phaser_gun = 2)
 	cost = PAY::IMPORTANT*2
 	containertype = /obj/storage/secure/crate/weapon/sec_weapons
 	containername = "Weapons Crate - Phasers (Locked \[Security Equipment])"
@@ -649,7 +649,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Weapons Crate - Micro Phasers (Locked \[Security Equipment])"
 	desc = "x4 Micro Phaser Guns."
 	category = "Security"
-	contains = list(/obj/item/gun/energy/phaser_small = 4)
+	contains = list(/obj/item/firearm/energy/phaser_small = 4)
 	cost = PAY::IMPORTANT*2
 	containertype = /obj/storage/secure/crate/weapon/sec_weapons
 	containername = "Weapons Crate - Micro Phasers (Locked \[Security Equipment])"
@@ -659,7 +659,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Weapons Crate - Macro Phaser (Locked \[Armory Equipment])"
 	desc = "x1 Macro Phaser Gun."
 	category = "Security"
-	contains = list(/obj/item/gun/energy/phaser_huge = 1)
+	contains = list(/obj/item/firearm/energy/phaser_huge = 1)
 	cost = PAY::EXECUTIVE*2
 	containertype = /obj/storage/secure/crate/weapon/armory
 	containername = "Weapons Crate - Macro Phaser (Locked \[Armory Equipment])"
@@ -669,7 +669,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Weapons Crate - Phaser SMGs (Locked \[Security Equipment])"
 	desc = "x2 Phaser SMGs."
 	category = "Security"
-	contains = list(/obj/item/gun/energy/phaser_smg = 2)
+	contains = list(/obj/item/firearm/energy/phaser_smg = 2)
 	cost = PAY::IMPORTANT*2
 	containertype = /obj/storage/secure/crate/weapon/sec_weapons
 	containername = "Weapons Crate - Phasers (Locked \[Security Equipment])"
@@ -1562,7 +1562,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Anti-Singularity Pack"
 	desc = "x1 Singularity Buster Rocket Launcher, x5 Singularity Buster Rockets, x1 Singularity Buster Instructions. Everything that the crew needs to take down a rogue singularity."
 	category = "Engineering"
-	contains = list(/obj/item/paper/antisingularity,/obj/item/ammo/bullets/antisingularity = 5,/obj/item/gun/kinetic/antisingularity)
+	contains = list(/obj/item/paper/antisingularity,/obj/item/ammo/bullets/antisingularity = 5,/obj/item/firearm/kinetic/antisingularity)
 	cost = PAY::TRADESMAN*10
 	containertype = /obj/storage/crate/classcrate/qm
 	containername = "Anti-Singularity Supply Pack"

@@ -342,7 +342,7 @@
 /area/prefab/radshuttle)
 "aL" = (
 /obj/decal/cleanable/dirt/dirt4,
-/obj/item/gun/kinetic/zipgun,
+/obj/item/firearm/kinetic/zipgun,
 /obj/item/casing/shotgun/red,
 /obj/item/casing/shotgun/red{
 	pixel_x = -5

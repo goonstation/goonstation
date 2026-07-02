@@ -207,9 +207,9 @@ datum/special_respawn
 				user.equip_if_possible(new /obj/item/clothing/suit/armor/turd(user), SLOT_WEAR_SUIT)
 				user.equip_if_possible(new /obj/item/clothing/under/misc/turds(user), SLOT_W_UNIFORM)
 				user.equip_if_possible(new /obj/item/storage/backpack(user), SLOT_BACK)
-//				user.equip_if_possible(new /obj/item/gun/fiveseven(user), SLOT_IN_BACKPACK)
-//				user.equip_if_possible(new /obj/item/gun/shotgun(user), SLOT_R_HAND)
-//				user.equip_if_possible(new /obj/item/gun/mp5(user), SLOT_L_HAND)
+//				user.equip_if_possible(new /obj/item/firearm/fiveseven(user), SLOT_IN_BACKPACK)
+//				user.equip_if_possible(new /obj/item/firearm/shotgun(user), SLOT_R_HAND)
+//				user.equip_if_possible(new /obj/item/firearm/mp5(user), SLOT_L_HAND)
 //				user.equip_if_possible(new /obj/item/ammo/a57(user), SLOT_IN_BACKPACK)
 				//var/obj/item/implant/sec/S = new /obj/item/implant/sec(user)
 				//S.implanted = 1

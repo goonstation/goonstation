@@ -1,5 +1,5 @@
 // Sprite by Blackrep
-/obj/item/gun/kinetic/ag3_rifle
+/obj/item/firearm/kinetic/ag3_rifle
 	name = "AG3 battle rifle"
 	desc = "A modern semi-automatic battle rifle manufactured by Almagest Weapons Fabrication. Rarely seen in space operations due to their bulk."
 	icon = 'icons/obj/items/guns/kinetic64x32.dmi'

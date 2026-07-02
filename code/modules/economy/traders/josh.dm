@@ -191,7 +191,7 @@
 
 /datum/commodity/trader/josh/foamgun
 	comname = "Totally Cool Foam Flingin' Tool"
-	comtype = /obj/item/gun/kinetic/foamdartrevolver
+	comtype = /obj/item/firearm/kinetic/foamdartrevolver
 	price_boundary = list(PAY::UNTRAINED,PAY::TRADESMAN)
 	possible_names = list("Bro, this thing can shoot sooo fast! You gotta have one.",
 	"You could have such a sick battle if you had enough of these.",
@@ -199,7 +199,7 @@
 
 /datum/commodity/trader/josh/paintgun
 	comname = "Portable Paint Popper"
-	comtype = /obj/item/gun/paintball
+	comtype = /obj/item/firearm/paintball
 	price_boundary = list(PAY::IMPORTANT,PAY::EXECUTIVE)
 	possible_names = list("This'll let you paint the town red! Or any other color!",
 	"Load this bad boy up with some paint and you'll be seeing colors!",

@@ -113,7 +113,7 @@
 	},
 /obj/item/ammo/bullets/breach_flashbang,
 /obj/item/ammo/bullets/breach_flashbang,
-/obj/item/gun/kinetic/riot40mm/breach{
+/obj/item/firearm/kinetic/riot40mm/breach{
 	pixel_y = 6
 	},
 /obj/item/storage/concussion_grenade_pouch,
@@ -195,19 +195,19 @@
 	pixel_y = 1;
 	pixel_x = -11
 	},
-/obj/item/gun/energy/optio1{
+/obj/item/firearm/energy/optio1{
 	rarity = 4
 	},
-/obj/item/gun/energy/optio1{
+/obj/item/firearm/energy/optio1{
 	rarity = 4;
 	pixel_y = -4
 	},
-/obj/item/gun/energy/vexillifer4{
+/obj/item/firearm/energy/vexillifer4{
 	pixel_y = 32;
 	rarity = 4;
 	pixel_x = 30
 	},
-/obj/item/gun/energy/vexillifer4{
+/obj/item/firearm/energy/vexillifer4{
 	pixel_y = 23;
 	rarity = 4;
 	pixel_x = 30
@@ -227,13 +227,13 @@
 /area/space)
 "jh" = (
 /obj/table/sleek/auto,
-/obj/item/gun/energy/blaster_pod_wars/shotgun/nanotrasen{
+/obj/item/firearm/energy/blaster_pod_wars/shotgun/nanotrasen{
 	pixel_y = 8
 	},
-/obj/item/gun/energy/blaster_pod_wars/shotgun/nanotrasen{
+/obj/item/firearm/energy/blaster_pod_wars/shotgun/nanotrasen{
 	pixel_y = 2
 	},
-/obj/item/gun/energy/blaster_pod_wars/shotgun/nanotrasen{
+/obj/item/firearm/energy/blaster_pod_wars/shotgun/nanotrasen{
 	pixel_y = -4
 	},
 /turf/unsimulated/floor/engine/glow/blue,
@@ -655,10 +655,10 @@
 /area/space)
 "EG" = (
 /obj/table/sleek/auto,
-/obj/item/gun/kinetic/four_bore_albatross{
+/obj/item/firearm/kinetic/four_bore_albatross{
 	pixel_y = -2
 	},
-/obj/item/gun/kinetic/riot40mm/breach{
+/obj/item/firearm/kinetic/riot40mm/breach{
 	pixel_y = 12
 	},
 /turf/unsimulated/floor/engine/glow/blue,
@@ -871,13 +871,13 @@
 /area/space)
 "Nz" = (
 /obj/table/sleek/auto,
-/obj/item/gun/energy/blaster_pod_wars/smg/nanotrasen{
+/obj/item/firearm/energy/blaster_pod_wars/smg/nanotrasen{
 	pixel_y = 8
 	},
-/obj/item/gun/energy/blaster_pod_wars/smg/nanotrasen{
+/obj/item/firearm/energy/blaster_pod_wars/smg/nanotrasen{
 	pixel_y = 2
 	},
-/obj/item/gun/energy/blaster_pod_wars/smg/nanotrasen{
+/obj/item/firearm/energy/blaster_pod_wars/smg/nanotrasen{
 	pixel_y = -4
 	},
 /obj/machinery/light/emergencyflashing{
@@ -983,7 +983,7 @@
 /obj/storage/crate/classcrate{
 	name = "siege gear"
 	},
-/obj/item/gun/kinetic/striker{
+/obj/item/firearm/kinetic/striker{
 	pixel_x = -9;
 	pixel_y = -4
 	},

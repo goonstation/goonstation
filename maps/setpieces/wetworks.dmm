@@ -1336,10 +1336,10 @@
 /obj/storage/crate/classcrate{
 	name = "blasters"
 	},
-/obj/item/gun/energy/blaster_smg,
-/obj/item/gun/energy/blaster_smg,
-/obj/item/gun/energy/blaster_smg,
-/obj/item/gun/energy/blaster_smg,
+/obj/item/firearm/energy/blaster_smg,
+/obj/item/firearm/energy/blaster_smg,
+/obj/item/firearm/energy/blaster_smg,
+/obj/item/firearm/energy/blaster_smg,
 /turf/simulated/floor/twotone/black,
 /area/syndicate_station{
 	name = "Decirprevo Tanker";
@@ -6089,7 +6089,7 @@
 /obj/item/ammo/bullets/bullet_22HP,
 /obj/item/ammo/bullets/bullet_22HP,
 /obj/item/ammo/bullets/bullet_22HP,
-/obj/item/gun/kinetic/silenced_22,
+/obj/item/firearm/kinetic/silenced_22,
 /turf/unsimulated/floor/shiny{
 	color = "aqua"
 	},

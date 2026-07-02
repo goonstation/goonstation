@@ -1,6 +1,6 @@
-TYPEINFO(/obj/item/gun/energy/artifact)
+TYPEINFO(/obj/item/firearm/energy/artifact)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
-/obj/item/gun/energy/artifact
+/obj/item/firearm/energy/artifact
 	// an energy gun, it shoots things as you might expect
 	name = "artifact energy gun"
 	icon = 'icons/obj/artifacts/artifactsitem.dmi'
@@ -98,7 +98,7 @@ TYPEINFO(/obj/item/gun/energy/artifact)
 		AddComponent(/datum/component/cell_holder, swappable = FALSE)
 
 /datum/artifact/energygun
-	associated_object = /obj/item/gun/energy/artifact
+	associated_object = /obj/item/firearm/energy/artifact
 	type_name = "Energy Gun"
 	type_size = ARTIFACT_SIZE_MEDIUM
 	rarity_weight = 350

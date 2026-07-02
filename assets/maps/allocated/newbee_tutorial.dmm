@@ -553,7 +553,7 @@
 /area/tutorial/newbee/room_12)
 "um" = (
 /obj/machinery/light/incandescent,
-/obj/item/gun/energy/phaser_gun{
+/obj/item/firearm/energy/phaser_gun{
 	pixel_x = -3;
 	pixel_y = 2
 	},

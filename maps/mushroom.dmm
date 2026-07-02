@@ -6121,7 +6121,7 @@
 	pixel_x = -3;
 	pixel_y = -4
 	},
-/obj/item/gun/kinetic/antisingularity{
+/obj/item/firearm/kinetic/antisingularity{
 	pixel_x = -6;
 	pixel_y = 9
 	},
@@ -8245,7 +8245,7 @@
 /obj/rack,
 /obj/item/ammo/bullets/foamdarts,
 /obj/item/ammo/bullets/foamdarts,
-/obj/item/gun/kinetic/foamdartrevolver,
+/obj/item/firearm/kinetic/foamdartrevolver,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "cHm" = (
@@ -10105,8 +10105,8 @@
 "dYr" = (
 /obj/table/auto,
 /obj/machinery/recharger,
-/obj/item/gun/kinetic/riot40mm,
-/obj/item/gun/kinetic/riot40mm,
+/obj/item/firearm/kinetic/riot40mm,
+/obj/item/firearm/kinetic/riot40mm,
 /obj/item/storage/box/panic_buttons,
 /turf/simulated/floor,
 /area/station/security/main)
@@ -29606,7 +29606,7 @@
 /area/station/ranch)
 "rBy" = (
 /obj/table/auto,
-/obj/item/gun/russianrevolver,
+/obj/item/firearm/russianrevolver,
 /obj/item/storage/box/donkpocket_kit,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
@@ -29775,11 +29775,11 @@
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/arcade)
 "rHz" = (
-/obj/item/gun/kinetic/riot40mm{
+/obj/item/firearm/kinetic/riot40mm{
 	pixel_x = -3;
 	pixel_y = 11
 	},
-/obj/item/gun/kinetic/riot40mm{
+/obj/item/firearm/kinetic/riot40mm{
 	pixel_y = 6
 	},
 /obj/item/ammo/bullets/smoke{

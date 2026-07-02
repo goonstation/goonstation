@@ -1376,7 +1376,7 @@ TYPEINFO(/obj/critter/monster_door/meat_head)
 		handlistPart = "r_hand_mutated"
 
 //Gib gun.  Maybe a prize??? except for the whole "firing your internal organs as projectiles is not healthy" thing.
-/obj/item/gun/gibgun
+/obj/item/firearm/gibgun
 	name = "grody gizmo"
 	desc = "Some kind of weirdo metal-laden meat tube.  Oh gosh, what would Freud say about this?"
 	icon = 'icons/obj/items/guns/gimmick.dmi'

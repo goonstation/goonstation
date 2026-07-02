@@ -70,8 +70,8 @@ TYPEINFO(/obj/machinery/sink)
 				src.drain_fluid(fluid, fluid.total_volume)
 				qdel(fluid)
 				GRAB.affecting.lastgasp(grunt = pick("GLUB", "blblbl", "BLUH", "BLURGH")) // --BLUH
-	else if (istype(W, /obj/item/gun/sprayer))
-		var/obj/item/gun/sprayer/sprayer = W
+	else if (istype(W, /obj/item/firearm/sprayer))
+		var/obj/item/firearm/sprayer/sprayer = W
 		sprayer.clogged = FALSE
 		playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 		boutput(user, SPAN_NOTICE("You clean out [W]'s nozzle."))

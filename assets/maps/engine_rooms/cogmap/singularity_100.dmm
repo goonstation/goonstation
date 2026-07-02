@@ -395,7 +395,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "Pq" = (
-/obj/item/gun/kinetic/antisingularity{
+/obj/item/firearm/kinetic/antisingularity{
 	pixel_x = -16
 	},
 /obj/item/ammo/bullets/antisingularity,

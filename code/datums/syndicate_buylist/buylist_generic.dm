@@ -42,7 +42,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 
 /datum/syndicate_buylist/generic/radbow
 	name = "Rad Poison Crossbow"
-	items = list(/obj/item/gun/energy/crossbow)
+	items = list(/obj/item/firearm/energy/crossbow)
 	cost = 3
 	desc = "Crossbow Model C - Now with safer Niobium core. This ranged weapon is great for hitting someone in a dark corridor! They'll never know what hit em! Will slowly recharge between shots."
 
@@ -202,7 +202,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 
 /datum/syndicate_buylist/generic/derringer
 	name = "Derringer"
-	items = list(/obj/item/gun/kinetic/derringer)
+	items = list(/obj/item/firearm/kinetic/derringer)
 	cost = 2
 	desc = "A small pistol that can be hidden inside worn clothes and retrieved using the wink emote. Comes with two shots and does extreme damage at close range."
 	br_allowed = TRUE
@@ -404,7 +404,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 
 /datum/syndicate_buylist/traitor/pickpocket
 	name = "Pickpocket Gun"
-	items = list(/obj/item/gun/energy/pickpocket)
+	items = list(/obj/item/firearm/energy/pickpocket)
 	cost = 3
 	vr_allowed = FALSE
 	desc = "A stealthy claw gun capable of stealing and planting items, and severely messing with people."

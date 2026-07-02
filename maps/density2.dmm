@@ -731,7 +731,7 @@
 	pixel_x = 6;
 	pixel_y = 10
 	},
-/obj/item/gun/kinetic/antisingularity{
+/obj/item/firearm/kinetic/antisingularity{
 	pixel_x = -14
 	},
 /obj/item/clothing/head/rad_hood,
@@ -2336,8 +2336,8 @@
 	pixel_y = -6
 	},
 /obj/item/clothing/glasses/thermal,
-/obj/item/gun/energy/pulse_rifle,
-/obj/item/gun/kinetic/pumpweapon/riotgun,
+/obj/item/firearm/energy/pulse_rifle,
+/obj/item/firearm/kinetic/pumpweapon/riotgun,
 /obj/item/clothing/suit/armor/heavy,
 /obj/item/clothing/suit/armor/EOD,
 /obj/item/clothing/head/helmet/EOD,

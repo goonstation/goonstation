@@ -498,7 +498,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		health = 250
 		maxhealth = 250
 		score = 50
-		droploot = /obj/item/gun/energy/phaser_gun
+		droploot = /obj/item/firearm/energy/phaser_gun
 		projectile_type = /datum/projectile/disruptor/high
 		current_projectile = new/datum/projectile/disruptor/high
 		attack_cooldown = 40

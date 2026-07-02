@@ -241,12 +241,12 @@
 // Aiming bow action.
 /datum/action/bar/aim
 	duration = -1
-	var/obj/item/gun/bow/bow = null
+	var/obj/item/firearm/bow/bow = null
 	var/draw_target = 3
 	var/progress = 0
 	var/moved = 0
 
-	New(var/mob/M, var/obj/item/gun/bow/B, max_draw)
+	New(var/mob/M, var/obj/item/firearm/bow/B, max_draw)
 		owner = M
 		bow = B
 		draw_target = max_draw
@@ -358,8 +358,8 @@
 			var/obj/item/quiver/quiver = W
 			quiver.loadArrow(src, user)
 			return
-		if(istype(W, /obj/item/gun/bow))
-			var/obj/item/gun/bow/bow = W
+		if(istype(W, /obj/item/firearm/bow))
+			var/obj/item/firearm/bow/bow = W
 			if(isnull(bow.loaded))
 				bow.loadArrow(src, user)
 			return
@@ -515,8 +515,8 @@
 		if (istype(I, /obj/item/arrow))
 			src.loadArrow(I, user)
 			return
-		if (istype(I, /obj/item/gun/bow))
-			var/obj/item/gun/bow/bow = I
+		if (istype(I, /obj/item/firearm/bow))
+			var/obj/item/firearm/bow/bow = I
 			if (isnull(bow.loaded))
 				var/obj/item/arrow = src.getArrow(user)
 				if (isnull(arrow))
@@ -638,7 +638,7 @@
 			take_bleeding_damage(A, null, round(src.power / 2), src.hit_type)
 
 
-/obj/item/gun/bow
+/obj/item/firearm/bow
 	name = "bow"
 	icon = 'icons/obj/items/items.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
@@ -852,7 +852,7 @@
 		src.loadArrow(I, user)
 
 // not obtainable through normal means
-/obj/item/gun/bow/crossbow
+/obj/item/firearm/bow/crossbow
 	name = "crossbow"
 	desc = "Though old in make, it's remarkably well cared for."
 	icon = 'icons/obj/items/guns/energy.dmi'
@@ -862,10 +862,10 @@
 	force = MELEE_DMG_PISTOL
 	can_dual_wield = TRUE // :getin:
 
-/obj/item/gun/bow/crossbow/update_icon(draw_fraction)
+/obj/item/firearm/bow/crossbow/update_icon(draw_fraction)
 	// do not call parent
 
-/obj/item/gun/bow/crossbow/wooden
-/obj/item/gun/bow/crossbow/wooden/New()
+/obj/item/firearm/bow/crossbow/wooden
+/obj/item/firearm/bow/crossbow/wooden/New()
 	. = ..()
 	src.setMaterial(getMaterial("wood"))
