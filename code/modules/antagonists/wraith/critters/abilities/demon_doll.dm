@@ -1,11 +1,21 @@
+/datum/targetable/critter/demon_doll
+	name = "???"
+	desc = "You shouldn't be seeing this."
+	var/border_icon = 'icons/mob/wraith_ui.dmi'
+	var/border_state = "trickster_frame"
+
+	onAttach(datum/abilityHolder/holder)
+		..()
+
+		var/atom/movable/screen/ability/topBar/B = src.object
+		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
+
 /datum/targetable/critter/demon_doll/devious_song
 	name = "Devious Song"
 	desc = "Mutter a magical chant that places a random rune trap below you"
-	icon_state = "devious_song"
+	icon_state = "song_devious"
 	cooldown = 40 SECONDS
 	targeted = 0
-	var/border_icon = 'icons/mob/wraith_ui.dmi'
-	var/border_state = "trickster_frame"
 	var/max_traps = 3
 	var/traps_laid = 0
 	var/list/trap_types = list(
@@ -57,8 +67,20 @@
 		new chosen_trap(T, src.holder.owner, src.holder.owner)
 		src.traps_laid++
 
-	onAttach(datum/abilityHolder/holder)
-		..()
+/datum/targetable/critter/demon_doll/shrieking_song
+	name = "Shrieking Song"
+	desc = "Let loose an anguished cry that shatters lights and disrupts victims."
+	icon_state = "song_shrieking"
+	cooldown = 30 SECONDS
+	targeted = 0
 
-		var/atom/movable/screen/ability/topBar/B = src.object
-		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
+	cast()
+		if (..())
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+
+		playsound(src.holder.owner.loc, 'sound/voice/creepyshriek.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
+		sonic_attack_environmental_effect(usr, 5, list("light"))
+		for (var/mob/living/HH in hearers(src.holder.owner, null))
+			if (HH == src.holder.owner)
+				continue
+			HH.apply_sonic_stun(0, 0, 30, 0, 5, 4, 6)
