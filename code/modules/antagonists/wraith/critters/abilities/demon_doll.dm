@@ -1,7 +1,7 @@
 /datum/targetable/critter/demon_doll/devious_song
 	name = "Devious Song"
 	desc = "Mutter a magical chant that places a random rune trap below you"
-	icon_state = "cloak"
+	icon_state = "devious_song"
 	cooldown = 40 SECONDS
 	targeted = 0
 	var/border_icon = 'icons/mob/wraith_ui.dmi'
@@ -56,3 +56,9 @@
 
 		new chosen_trap(T, src.holder.owner, src.holder.owner)
 		src.traps_laid++
+
+	onAttach(datum/abilityHolder/holder)
+		..()
+
+		var/atom/movable/screen/ability/topBar/B = src.object
+		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
