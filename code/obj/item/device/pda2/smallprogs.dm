@@ -96,7 +96,7 @@
 				return 1
 		return 0
 
-	proc/send_funds(mob/usr) // finds recipients bank and sends funds
+	proc/send_funds(mob/user) // finds recipients bank and sends funds
 		if(!src.locate_bank_record())
 			src.message = "Error: No bank acount located for [src.master.owner]."
 			return
@@ -109,7 +109,7 @@
 			src.message = "Error: You must wait ten seconds between transfers"
 			return
 
-		var/recipient_name  = tgui_input_text(usr, "Recipient name:", "Transfer Credits")
+		var/recipient_name  = tgui_input_text(user, "Recipient name:", "Transfer Credits")
 		if(!recipient_name)
 			return
 
@@ -121,7 +121,7 @@
 			src.message = "Error: You cannot transfer credits to yourself."
 			return
 
-		var/amount = tgui_input_number(usr, "How many credits do you want to send to [recipient["name"]]?", "Transfer Credits", 0, src.bank_record["current_money"], 0)
+		var/amount = tgui_input_number(user, "How many credits do you want to send to [recipient["name"]]?", "Transfer Credits", 0, src.bank_record["current_money"], 0)
 		if(!amount || amount <= 0) // transferring negative credits is a financial CRIME
 			return
 		// checking everything is fine again since pop ups started
@@ -140,7 +140,7 @@
 		recipient["current_money"] += amount
 		src.last_transfer = world.time
 
-		logTheThing(LOG_STATION, usr, "used BankBuddy to transfer [amount] credits from [src.bank_record["name"]] to [recipient["name"]]")
+		logTheThing(LOG_STATION, user, "used BankBuddy to transfer [amount] credits from [src.bank_record["name"]] to [recipient["name"]]")
 
 		if (recipient["pda_net_id"])
 			var/datum/signal/signal = get_free_signal()
