@@ -1,6 +1,6 @@
 //Assorted small programs not worthy of their own file
 //CONTENTS:
-//~*~Banking Software~*~
+//Banking Software
 //Crew Manifest viewer
 //Status display controller
 //Remote signaling program
@@ -26,8 +26,11 @@
 /datum/computer/file/pda_program/banking
 	name = "BankBuddy"
 	size = 8
-
 	var/tmp/datum/db_record/bank_record = null
+	var/tmp/message = null
+	var/tmp/last_transfer = 0
+	var/tmp/transfer_history = null
+	var/tmp/mode = 0
 
 	return_text()
 		if (..())
@@ -35,11 +38,55 @@
 
 		var/dat = src.return_text_header()
 
-		//todo
+		dat += "<h4>BankBuddy</h4>"
+
+		switch(src.mode)
+			if(1)
+				dat += "<br><a href='byond://?src=\ref[src];back=1'>Back</a><br>"
+				dat += "<h4>Transfer History</h4><hr>"
+				dat += src.transfer_history
+
+				return dat
+
+		if(!src.locate_bank_record())
+			dat += "<br><b>Error:</b> No bank account found for [src.master.owner].<br>"
+			return dat
+
+		dat += "<br>Account Holder: [src.bank_record["name"]]"
+		dat += "<br>Current Balance: [src.bank_record["current_money"]][CREDIT_SIGN]<br>"
+		dat += "<br><a href='byond://?src=\ref[src];transfer=1'>Transfer Credits</a>"
+		dat += "<br><a href='byond://?src=\ref[src];history=1'>Transfer History</a>"
+
+		if(src.message)
+			dat += "<br><br>[src.message]<br><br>"
+			dat += "<a href='byond://?src=\ref[src];ok=1'>Ok</a>"
 
 		return dat
 
-	proc/locate_bank_record()
+	Topic(href, href_list)
+		if(..())
+			return
+
+		if(href_list["ok"])
+			src.message = null
+
+		else if(href_list["transfer"])
+			src.send_funds(usr)
+
+		else if(href_list["history"])
+			src.mode = 1
+
+		else if(href_list["back"])
+			src.mode = 0
+
+		src.master.add_fingerprint(usr)
+		src.master.updateSelfDialog()
+		return
+
+	proc/locate_bank_record() // locates users bank
+		if(src.bank_record && data_core.bank.has_record(src.bank_record))
+			return 1
+		src.bank_record = null
 		if (!src.master || !src.master.owner)
 			return 0
 
@@ -48,6 +95,64 @@
 				src.bank_record = B
 				return 1
 		return 0
+
+	proc/send_funds(mob/usr) // finds recipients bank and sends funds
+		if(!src.locate_bank_record())
+			src.message = "Error: No bank acount located for [src.master.owner]."
+			return
+
+		if(src.bank_record["name"] in FrozenAccounts)
+			src.message = "Error: Your account has been frozen and cannot send transfers"
+			return
+
+		if(src.last_transfer && world.time < (src.last_transfer + 10 SECONDS))
+			src.message = "Error: You must wait ten seconds between transfers"
+			return
+
+		var/recipient_name  = tgui_input_text(usr, "Recipient name:", "Transfer Credits")
+		if(!recipient_name)
+			return
+
+		var/datum/db_record/recipient = data_core.bank.find_record("name", recipient_name)
+		if(!recipient)
+			src.message = "Error: No account found for [recipient_name]"
+			return
+		if(recipient == src.bank_record) // Nice try
+			src.message = "Error: You cannot transfer credits to yourself."
+			return
+
+		var/amount = tgui_input_number(usr, "How many credits do you want to send to [recipient["name"]]?", "Transfer Credits", 0, src.bank_record["current_money"], 0)
+		if(!amount || amount <= 0) // transferring negative credits is a financial CRIME
+			return
+		// checking everything is fine again since pop ups started
+		if(!src.locate_bank_record() || !data_core.bank.has_record(recipient))
+			src.message = "Error: One or more accounts involved no longer exists."
+			return
+
+		if(src.bank_record["name"] in FrozenAccounts)
+			src.message = "Error: Your account has been frozen and cannot send transfers"
+			return
+
+		if(amount > src.bank_record["current_money"])
+			src.message = "Error: Insufficient funds"
+			return
+		src.bank_record["current_money"] -= amount
+		recipient["current_money"] += amount
+		src.last_transfer = world.time
+
+		logTheThing(LOG_STATION, usr, "used BankBuddy to transfer [amount] credits from [src.bank_record["name"]] to [recipient["name"]]")
+
+		if (recipient["pda_net_id"])
+			var/datum/signal/signal = get_free_signal()
+			signal.data["sender"] = "00000000"
+			signal.data["command"] = "text_message"
+			signal.data["sender_name"] = "BANKBUDDY"
+			signal.data["address_1"] = recipient["pda_net_id"]
+			signal.data["message"] = "[amount] credits received from [src.bank_record["name"]]. You have [recipient["current_money"]] credits total."
+			radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(signal)
+
+		src.message = "Transfer Succesful!"
+		src.transfer_history += "Transferred <b>[amount]</b> to <b>[src.bank_record["name"]]</b><br>"
 
 
 //Manifest

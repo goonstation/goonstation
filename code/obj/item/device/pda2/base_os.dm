@@ -1050,7 +1050,7 @@
 				if (!isnull(src.master.ID_card))
 					. += "<a href='byond://?src=\ref[src.master];eject_id_card=1'>Eject [src.master.ID_card]</a><br>"
 					if (src.master.accessed_record)
-						. += "Account balance: [src.master.accessed_record["current_money"]] credits - <a href='byond://?src=\ref[src.master];eject_cash=1'>Withdraw</a><br>"
+						. += "Account balance: [src.master.accessed_record["current_money"]] credits<br>"
 
 
 		pda_message(var/target_id, var/target_name, var/message, var/is_department_message)

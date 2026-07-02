@@ -456,6 +456,7 @@
 		src.hd.root.add_file(new /datum/computer/file/pda_program/emergency_alert)
 		src.hd.root.add_file(new /datum/computer/file/pda_program/gps)
 		src.hd.root.add_file(new /datum/computer/file/pda_program/cargo_request(src))
+		src.hd.root.add_file(new/datum/computer/file/pda_program/banking)
 		if(length(src.default_muted_mailgroups))
 			src.host_program.muted_mailgroups = src.default_muted_mailgroups
 		if(ismob(src.loc))
@@ -641,8 +642,6 @@
 		else if (href_list["eject_id_card"])
 			src.eject_id_card(usr ? usr : null)
 
-		else if (href_list["eject_cash"])
-			src.eject_cash(usr ? usr : null)
 
 		else if (href_list["refresh"])
 			var/obj/item/uplink/integrated/pda/uplink = src.uplink
@@ -926,25 +925,6 @@
 
 		return
 
-	proc/eject_cash(var/mob/user as mob)
-		if (src.loc == user && src.ID_card && src.accessed_record)
-			var/amount = tgui_input_number(usr, "How much would you like to withdraw?", "Withdrawal", 0, src.accessed_record["current_money"], 0)
-			if (src.loc != user || !src.ID_card || !src.accessed_record)
-				// no withdrawing after you're gone
-				return
-			if (amount < 1)
-				boutput(usr, SPAN_ALERT("Invalid amount!"))
-				return
-			if(amount > src.accessed_record["current_money"])
-				boutput(usr, SPAN_ALERT("Insufficient funds in account."))
-			else
-				src.accessed_record["current_money"] -= amount
-				var/obj/item/currency/spacecash/S = new /obj/item/currency/spacecash
-				S.setup(src.loc, amount)
-				usr.put_in_hand_or_drop(S)
-				boutput(user, SPAN_NOTICE("Withdrawal successful. Your account now has [src.accessed_record["current_money"]] credits."))
-				playsound(src.loc, 'sound/machines/printer_cargo.ogg', 50, 1)
-		return
 
 	proc/insert_cash(var/obj/item/currency/spacecash/cash as obj, var/mob/user as mob)
 		if (src.ID_card && src.accessed_record)
