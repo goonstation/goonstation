@@ -6270,7 +6270,7 @@
 /area/abandonedship)
 "aIw" = (
 /obj/fakeobject/skeleton,
-/obj/item/paper/printout/emerg1,
+/obj/item/paper/image/sstv/emerg1,
 /turf/simulated/floor/airless/plating/damaged3,
 /area/space)
 "aIx" = (

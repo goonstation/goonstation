@@ -55,7 +55,7 @@
 	item_outputs = list(/obj/item/shipcomponent/locomotion/treads)
 	create = 1
 	time = 5 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/sub/wheels
 	name = "Vehicle Wheels"
@@ -64,7 +64,7 @@
 	item_outputs = list(/obj/item/shipcomponent/locomotion/wheels)
 	create = 1
 	time = 5 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 
 /obj/machinery/plantpot/bareplant/swamp_flora

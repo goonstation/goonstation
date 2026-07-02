@@ -413,10 +413,14 @@
 	dir = 5
 	},
 /obj/item/paper_bin,
-/obj/item/paper/printout/emerg1,
+/obj/item/paper/image/sstv/emerg1,
 /obj/item/paper/pipebombs{
 	pixel_x = 11;
 	pixel_y = 5
+	},
+/obj/item/stamp/syndicate{
+	pixel_x = -5;
+	pixel_y = 7
 	},
 /turf/simulated/floor/black,
 /area/listeningpost/general)

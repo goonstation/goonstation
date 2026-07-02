@@ -16,13 +16,13 @@ TYPEINFO(/obj/item/device/radio_upgrade)
 		name = "wiretap radio upgrade"
 		desc = "An illegal device capable of picking up and sending all secure station radio signals, along with a secure Syndicate frequency. Can be installed in a radio headset. Does not actually work by wiretapping."
 		secure_frequencies = list(
-			"h" = R_FREQ_COMMAND,
-			"g" = R_FREQ_SECURITY,
-			"e" = R_FREQ_ENGINEERING,
-			"r" = R_FREQ_RESEARCH,
-			"m" = R_FREQ_MEDICAL,
-			"c" = R_FREQ_CIVILIAN,
-			"z" = R_FREQ_SYNDICATE,
+			"h" = RADIO::FREQ::COMMAND,
+			"g" = RADIO::FREQ::SECURITY,
+			"e" = RADIO::FREQ::ENGINEERING,
+			"r" = RADIO::FREQ::RESEARCH,
+			"m" = RADIO::FREQ::MEDICAL,
+			"c" = RADIO::FREQ::CIVILIAN,
+			"z" = RADIO::FREQ::SYNDICATE,
 			)
 
 	conspirator
@@ -37,7 +37,7 @@ TYPEINFO(/obj/item/device/radio_upgrade)
 			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/conspiracy))
 				C = ticker.mode
 			src.secure_frequencies = list("z" = C.agent_radiofreq)
-			src.secure_classes = list("z" = RADIOCL_SYNDICATE)
+			src.secure_classes = list("z" = RADIO::CSS::SYNDICATE)
 
 	gang
 		name = "private radio channel upgrade"
@@ -51,21 +51,21 @@ TYPEINFO(/obj/item/device/radio_upgrade)
 				return
 
 			src.secure_frequencies = list("z" = frequency)
-			src.secure_classes = list("z" = RADIOCL_SYNDICATE)
+			src.secure_classes = list("z" = RADIO::CSS::SYNDICATE)
 
 	// Crimers gotta crime
 	syndicatechannel
 		name = "syndicate radio channel upgrade"
 		desc = "A device capable of upgrading a headset to allow access over the syndicate radio channel"
 		icon_state = "syndicate"
-		secure_frequencies = list("z" = R_FREQ_SYNDICATE)
+		secure_frequencies = list("z" = RADIO::FREQ::SYNDICATE)
 
 	// For the super crimers (admin shenanigans)
 	nanotrasen
 		name = "nanotrasen radio channel upgrade"
 		desc = "A device capable of upgrading a headset to allow access over the Nanotrasen radio channel"
 		icon_state = "nanotrasen"
-		secure_frequencies = list("n" = R_FREQ_NANOTRASEN)
+		secure_frequencies = list("n" = RADIO::FREQ::NANOTRASEN)
 
 ABSTRACT_TYPE(/obj/item/device/radio_upgrade/station)
 TYPEINFO(/obj/item/device/radio_upgrade/station)
@@ -80,34 +80,34 @@ TYPEINFO(/obj/item/device/radio_upgrade/station)
 	name = "command radio upgrade"
 	desc = "A device capable of upgrading a headset to allow access over the Command radio channel. Can be installed in a radio headset."
 	icon_state = "command"
-	secure_frequencies = list("h" = R_FREQ_COMMAND)
+	secure_frequencies = list("h" = RADIO::FREQ::COMMAND)
 
 /obj/item/device/radio_upgrade/station/security
 	name = "security radio upgrade"
 	desc = "A device capable of upgrading a headset to allow access over the Security radio channel. Can be installed in a radio headset."
 	icon_state = "security"
-	secure_frequencies = list("g" = R_FREQ_SECURITY)
+	secure_frequencies = list("g" = RADIO::FREQ::SECURITY)
 
 /obj/item/device/radio_upgrade/station/engineering
 	name = "engineering radio upgrade"
 	desc = "A device capable of upgrading a headset to allow access over the Engineering radio channel. Can be installed in a radio headset."
 	icon_state = "engineering"
-	secure_frequencies = list("e" = R_FREQ_ENGINEERING)
+	secure_frequencies = list("e" = RADIO::FREQ::ENGINEERING)
 
 /obj/item/device/radio_upgrade/station/research
 	name = "research radio upgrade"
 	desc = "A device capable of upgrading a headset to allow access over the Research radio channel. Can be installed in a radio headset."
 	icon_state = "research"
-	secure_frequencies = list("r" = R_FREQ_RESEARCH)
+	secure_frequencies = list("r" = RADIO::FREQ::RESEARCH)
 
 /obj/item/device/radio_upgrade/station/medical
 	name = "medical radio upgrade"
 	desc = "A device capable of upgrading a headset to allow access over the Medical radio channel. Can be installed in a radio headset."
 	icon_state = "medical"
-	secure_frequencies = list("m" = R_FREQ_MEDICAL)
+	secure_frequencies = list("m" = RADIO::FREQ::MEDICAL)
 
 /obj/item/device/radio_upgrade/station/civilian
 	name = "civilian radio upgrade"
 	desc = "A device capable of upgrading a headset to allow access over the Civilian radio channel. Can be installed in a radio headset."
 	icon_state = "civilian"
-	secure_frequencies = list("c" = R_FREQ_CIVILIAN)
+	secure_frequencies = list("c" = RADIO::FREQ::CIVILIAN)

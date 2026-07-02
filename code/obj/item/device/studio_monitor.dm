@@ -13,8 +13,8 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 	speaker_range = 7
 	initial_microphone_enabled = FALSE
 	initial_speaker_enabled = FALSE
-	chat_class = RADIOCL_INTERCOM
-	frequency = R_FREQ_LOUDSPEAKERS
+	chat_class = RADIO::CSS::INTERCOM
+	frequency = RADIO::FREQ::LOUDSPEAKERS
 	locked_frequency = TRUE
 	rand_pos = 0
 	flags = TABLEPASS | CONDUCT
@@ -28,7 +28,7 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 		pixel_y = 0
 		effect = new
 		src.vis_contents += effect
-		headset_channel_lookup["[R_FREQ_LOUDSPEAKERS]"] = "Loudspeakers"
+		RADIO.frequencies_to_names[RADIO::FREQ::LOUDSPEAKERS] = "Loudspeakers"
 
 	receive_signal()
 		. = ..()

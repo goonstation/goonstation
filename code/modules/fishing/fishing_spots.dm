@@ -117,6 +117,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/shrimp = 15,\
 	/mob/living/carbon/human/npc/monkey/sea = 5,\
 	/obj/item/reagent_containers/food/fish/barracuda = 5,\
+	/obj/item/reagent_containers/food/fish/swordfish = 10,\
 	/obj/item/reagent_containers/food/fish/sailfish = 2,\
 	/obj/item/reagent_containers/food/fish/sardine = 20,
 	/obj/item/reagent_containers/food/fish/anchovy = 10)
@@ -234,6 +235,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/mahimahi = 10,\
 	/obj/item/reagent_containers/food/fish/shrimp = 15,\
 	/obj/item/reagent_containers/food/fish/barracuda = 5,\
+	/obj/item/reagent_containers/food/fish/swordfish = 10,\
 	/obj/item/reagent_containers/food/fish/sailfish = 2,\
 	/obj/item/reagent_containers/food/fish/sardine = 20,\
 	/obj/item/reagent_containers/food/fish/anchovy = 10)
@@ -356,6 +358,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/mahimahi = 10,\
 	/obj/item/reagent_containers/food/fish/shrimp = 15,\
 	/obj/item/reagent_containers/food/fish/sardine = 20,\
+	/obj/item/reagent_containers/food/fish/swordfish = 10,\
 	/obj/item/reagent_containers/food/fish/barracuda = 5,\
 	/obj/item/reagent_containers/food/fish/sailfish = 2,\
 	/obj/item/clothing/head/chefhat = 10,\
@@ -377,6 +380,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/flounder = 10,\
 	/obj/item/reagent_containers/food/fish/mahimahi = 10,\
 	/obj/item/reagent_containers/food/fish/shrimp = 15,\
+	/obj/item/reagent_containers/food/fish/swordfish = 10,\
 	/obj/item/reagent_containers/food/fish/barracuda = 5,\
 	/obj/item/reagent_containers/food/fish/sailfish = 2,\
 	/obj/item/reagent_containers/food/fish/sardine = 20,\
@@ -826,6 +830,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	..()
 	src.fishing_lootpools += new /datum/fishing_lootpool/lava_fish(src)
 	src.fishing_lootpools += new /datum/fishing_lootpool/igneous_fish(src)
+	src.fishing_lootpools += new /datum/fishing_lootpool/literal_swordfish(src)
 
 //golden toilet
 datum/fishing_spot/golden_toilet

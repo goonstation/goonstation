@@ -92,7 +92,7 @@ var/datum/magpie_manager/magpie_man = new
 	item_outputs = list(/obj/item/podarmor/salvager)
 	create = 1
 	time = 20 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /obj/item/podarmor/salvager
 	name = "Salvager Pod Armor"
@@ -108,7 +108,7 @@ var/datum/magpie_manager/magpie_man = new
 	item_outputs = list(/obj/item/shipcomponent/communications/salvager)
 	time = 12 SECONDS
 	create = 1
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /obj/item/shipcomponent/communications/salvager
 	name = "Salvager Communication Array"

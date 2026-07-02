@@ -15,9 +15,7 @@
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
 "aq" = (
-/obj/machinery/light_switch/auto{
-	pixel_x = 20
-	},
+/obj/machinery/light_switch/east,
 /turf/unsimulated/floor,
 /area/cult_base/acolyte/bedrooms)
 "at" = (
@@ -398,10 +396,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
-/obj/machinery/light_switch/auto{
-	last_throw_y = 0;
-	pixel_y = -24
-	},
+/obj/machinery/light_switch/south,
 /turf/simulated/floor/carpet{
 	dir = 2;
 	icon_state = "fblue2"
@@ -439,10 +434,7 @@
 /obj/stool/chair/comfy/blue{
 	dir = 8
 	},
-/obj/machinery/light_switch/auto{
-	last_throw_y = 0;
-	pixel_y = -24
-	},
+/obj/machinery/light_switch/south,
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris)
 "cj" = (
@@ -462,10 +454,7 @@
 "cm" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/captain,
-/obj/machinery/light_switch/auto{
-	last_throw_y = 0;
-	pixel_y = -24
-	},
+/obj/machinery/light_switch/south,
 /turf/unsimulated/floor/carpet/arcade,
 /area/wrecknsspolaris)
 "cn" = (
@@ -3670,9 +3659,7 @@
 /turf/unsimulated/floor/carpet/darkcarpet,
 /area/cult_base/leader)
 "uz" = (
-/obj/machinery/light_switch/auto{
-	pixel_y = 22
-	},
+/obj/machinery/light_switch/north,
 /turf/unsimulated/floor,
 /area/cult_base/acolyte)
 "uC" = (
@@ -4138,9 +4125,7 @@
 "DW" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/hop,
-/obj/machinery/light_switch/auto{
-	pixel_y = 22
-	},
+/obj/machinery/light_switch/north,
 /turf/unsimulated/floor,
 /area/cult_base/leader)
 "Eb" = (
@@ -5052,9 +5037,7 @@
 /turf/space/fluid/noexplosion,
 /area/cult_base/leader/outdoors)
 "Yl" = (
-/obj/machinery/light_switch/auto{
-	pixel_y = 22
-	},
+/obj/machinery/light_switch/north,
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
 "Yn" = (

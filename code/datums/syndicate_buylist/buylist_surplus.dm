@@ -44,12 +44,12 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 	name = "Old Hunting Rifle"
 	items = list(/obj/item/storage/box/hunting_rifle)
 	cost = 6
+	vr_allowed = FALSE // The generic buylist entry handles it showing up there
 	desc = "An old hunting rifle, comes with a scope and eight bullets. Use them wisely."
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP
 
 	spy
 		cost = 5
-		vr_allowed = FALSE
 		not_in_crates = TRUE
 		can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_NUKE_OP
 

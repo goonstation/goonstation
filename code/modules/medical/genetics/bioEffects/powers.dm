@@ -354,6 +354,145 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/datum/bioEffect/power/stickytongue
+	name = "Sticky Tongue"
+	desc = "Pull an object towards you with your tongue!"
+	id = "stickytongue"
+	icon_state = "sticky_tongue"
+	msgGain = "You feel like catching flies."
+	msgLose = "you tongue fall out"
+	cooldown = 100
+	probability = 66
+	blockCount = 3
+	blockGaps = 2
+	stability_loss = 10
+	ability_path = /datum/targetable/geneticsAbility/stickytongue
+	var/target_path = /obj/item
+
+/datum/projectile/special/tongue // do i really want this here
+	name = "tongue"
+	max_range = 4
+	dissipation_rate = 0
+	projectile_speed = 32
+	icon_state = ""
+	damage = 0
+	hit_ground_chance = 0
+	smashes_glasses = FALSE
+	shot_sound = 'sound/impact_sounds/Slimy_Hit_3.ogg'
+
+	on_launch(var/obj/projectile/P)
+		..()
+		if (!("owner" in P.special_data))
+			P.die()
+			return
+		var/mob/owner = P.special_data["owner"]
+		P.special_data["target_turf"] = get_turf(P.targets[1])
+		owner.AddComponent(/datum/component/cord, P, base_offset_x = 0, base_offset_y = 8, range=INFINITY, cord_line = "tongue", cord_cap = "tongue_end", behind_parent = TRUE)
+
+	on_hit(atom/hit, direction, obj/projectile/P)
+		if (istype(hit, /mob/living/critter/small_animal))
+			var/mob/living/critter/small_animal/cool_bug = hit
+			if (cool_bug.edible_insect)
+				src.do_throw(cool_bug, P.special_data["owner"])
+
+	//Figure out which turf in our crossing list contains the target
+	post_setup(obj/projectile/P)
+		//the target is out of range, so retarget at the furthest crossing turf *in* our range
+		if (GET_DIST(P.targets[1], P.special_data["owner"]) > src.max_range)
+			if (length(P.crossing) >= src.max_range)
+				P.special_data["target_turf"] = P.crossing[src.max_range]
+			else
+				P.special_data["target_turf"] = P.crossing[length(P.crossing)]
+		//the target is in range, figure out where we need to stop to hit it
+		var/i = 0
+		for (var/turf/T in P.crossing)
+			i++
+			if (T == get_turf(P.targets[1]))
+				P.special_data["end_index"] = i
+				return
+		P.special_data["end_index"] = INFINITY
+
+	//Die when we reach that turf
+	tick(obj/projectile/P)
+		if (P.curr_t >= P.special_data["end_index"])
+			P.die()
+
+	on_end(var/obj/projectile/P)
+		if (!("owner" in P.special_data)) // somehow the projectile data got removed?
+			return ..()
+
+		var/mob/tongue_owner = P.special_data["owner"]
+		//Leave it for a little bit so it can be seen
+		SPAWN(2 DECI SECONDS)
+			tongue_owner.RemoveComponentsOfType(/datum/component/cord)
+
+		var/atom/target_object = P.targets[1]
+		// make sure everyone's still here
+		if (!istype(target_object) || QDELETED(target_object) || !istype(tongue_owner) || QDELETED(tongue_owner))
+			return ..()
+		var/dist = GET_DIST(tongue_owner, target_object)
+		// we got to the end
+		if (P.curr_t >= P.special_data["end_index"] && get_turf(target_object) == P.special_data["target_turf"])
+			// P.set_loc(P.special_data["target_turf"])
+			if (isitem(target_object) && dist <= src.max_range)
+				src.do_throw(target_object, tongue_owner)
+		..()
+
+	proc/do_throw(atom/movable/prize, mob/tongue_owner)
+		prize.visible_message(SPAN_NOTICE("The tongue sticks to [prize] and reels it back!"))
+		playsound(prize, 'sound/impact_sounds/Generic_Snap_1.ogg', 40, TRUE)
+		var/component_type = /datum/component/throw_eat
+		if (isfrog(tongue_owner) || !ishuman(tongue_owner))
+			component_type = /datum/component/throw_eat/insects
+		prize.AddComponent(component_type, tongue_owner)
+		prize.throw_at(tongue_owner, 10, min(0.5, GET_DIST(tongue_owner, prize)))
+
+/datum/targetable/geneticsAbility/stickytongue
+	name = "Sticky Tongue"
+	desc = "Pull an object towards you with your tongue!"
+	icon_state = "sticky_tongue"
+	cooldown = 10 SECONDS
+	needs_hands = FALSE
+	targeted = 1
+	target_anything = 1
+
+	cast_genetics(atom/target, misfire)
+		if (..())
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+
+		var/obj/projectile/proj = initialize_projectile_pixel_spread(holder.owner, new/datum/projectile/special/tongue, get_turf(target), poy = 8)
+
+		src.owner.set_dir(get_dir_accurate(owner, target))
+
+		if (ishuman(holder.owner))
+			var/mob/living/carbon/human/H = owner
+			var/obj/item/I
+			if (istype(H.wear_mask) && H.wear_mask.c_flags & COVERSMOUTH)
+				I = H.wear_mask
+			else if (istype(H.head) && H.head.c_flags & COVERSMOUTH)
+				I = H.head
+			if (istype(I)) // or it might go
+				holder.owner.visible_message(SPAN_COMBAT("[holder.owner]'s tongue is blocked by the [I.name]!"),\
+				SPAN_COMBAT("<b>Your tongue sticks to the [I.name]!"))
+				return CAST_ATTEMPT_FAIL_DO_COOLDOWN
+
+		proj.special_data["owner"] = holder.owner
+		proj.targets = list(target)
+
+		proj.launch()
+		holder.owner.setStatus("slowed", 2 SECONDS)
+
+		if (misfire)
+			cast_mis(target)
+
+	proc/cast_mis(atom/target)
+		boutput(src.owner, SPAN_ALERT("Your tongue misses the object and smacks you in the face!"))
+		return CAST_ATTEMPT_SUCCESS
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /datum/bioEffect/power/xray
 	name = "X-Ray Vision"
 	desc = "Enhances the subject's optic nerves, allowing them to see on x-ray wavelengths."

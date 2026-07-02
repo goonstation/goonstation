@@ -237,6 +237,15 @@
 	icon_state = "disruptor-l"
 	muzzle_flash = "muzzle_flash_plaser"
 
+/obj/item/shipcomponent/mainweapon/stasis
+	name = "Stasis Charger"
+	desc = "An energy projectile weapon that holds a target in place for a limited amount of time."
+	weapon_score = 0.6
+	firerate = 25
+	current_projectile = new/datum/projectile/energy_bolt/stasis
+	icon_state = "assult-laser"
+	muzzle_flash = "muzzle_flash_plaser"
+
 /obj/item/shipcomponent/mainweapon/precursor
 	name = "IRIDIUM Spheroid Projector"
 	desc = "****CLASSIFIED: THANOTECH APPLIED RESEARCH DIVISION, Y-LEVEL CLEARANCE REQUIRED****."

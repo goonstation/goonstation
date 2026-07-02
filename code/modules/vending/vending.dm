@@ -3452,6 +3452,7 @@ TYPEINFO(/obj/machinery/vending/janitor)
 
 	create_products(restocked)
 		..()
+		product_list += new/datum/data/vending_product(/obj/item/stamp/chap, 1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/light_robes, 1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/lighthat, 1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/burned_robes, 1)

@@ -212,14 +212,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 	dir = WEST
 	pixel_x = -24
 
-/obj/machinery/light_switch/auto
-	name = "light switch"
-
-	New()
-		SPAWN(1 DECI SECOND)
-			src.autoposition()
-		..()
-
 #undef SWITCH_SPAM_TIMEOUT
 #undef SWITCH_SPAM_START_THRESHOLD
 #undef SWITCH_SPAM_MAJOR_THRESHOLD

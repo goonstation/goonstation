@@ -1660,6 +1660,27 @@ datum/commodity/drugs/sell/poppies
 	onmarket = 0
 	price = PAY::UNTRAINED
 
+/datum/commodity/cane/silly/clown
+	comname = "A really funny cane"
+	comtype = /obj/item/cane/silly/clown
+	desc = "This one will help you walk if you broke your funny bone."
+	onmarket = 0
+	price = PAY::UNTRAINED*2
+
+/datum/commodity/cane/silly/mime
+	comname = "Mime cane"
+	comtype = /obj/item/cane/silly/mime
+	desc = "I would say to let the cane do the talking, but this one can't!"
+	onmarket = 0
+	price = PAY::UNTRAINED*2
+
+/datum/commodity/cane/silly/princess
+	comname = "Sparkly girly cane"
+	comtype = /obj/item/cane/silly/princess
+	desc = "So much glitter!"
+	onmarket = 0
+	price = PAY::UNTRAINED*2
+
 /datum/commodity/clown_nose
 	comname = "Clown Nose"
 	comtype = /obj/item/clothing/mask/clown_nose

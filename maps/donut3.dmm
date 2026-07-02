@@ -16900,6 +16900,10 @@
 /obj/item/clothing/gloves/latex{
 	pixel_y = -3
 	},
+/obj/item/stamp/law{
+	pixel_x = -6;
+	pixel_y = 7
+	},
 /turf/simulated/floor/redblack{
 	dir = 6
 	},
@@ -17547,14 +17551,6 @@
 "fvd" = (
 /obj/machinery/light/incandescent/warm,
 /obj/storage/crate,
-/obj/item/shipcomponent/secondary_system/tractor_beam{
-	pixel_x = -10;
-	pixel_y = -5
-	},
-/obj/item/shipcomponent/secondary_system/tractor_beam{
-	pixel_x = 7;
-	pixel_y = -5
-	},
 /obj/item/shipcomponent/mainweapon/taser{
 	pixel_x = 6;
 	pixel_y = 7
@@ -23076,15 +23072,6 @@
 /obj/random_item_spawner/tableware/one_or_zero,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
-"hgX" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/light_switch/auto,
-/turf/simulated/floor/yellowblack{
-	dir = 1
-	},
-/area/station/engine/inner)
 "hgY" = (
 /obj/decal/stripe_delivery,
 /obj/machinery/door/airlock/pyro/maintenance{
@@ -46842,6 +46829,7 @@
 /obj/window_blinds/cog2/middle{
 	dir = 4
 	},
+/obj/item/stamp/qm,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "oDl" = (
@@ -55442,6 +55430,7 @@
 	pixel_x = -5;
 	pixel_y = 6
 	},
+/obj/item/stamp/law,
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -67517,14 +67506,6 @@
 	},
 /obj/machinery/firealarm/directional/north,
 /obj/storage/crate,
-/obj/item/shipcomponent/secondary_system/tractor_beam{
-	pixel_x = -10;
-	pixel_y = -5
-	},
-/obj/item/shipcomponent/secondary_system/tractor_beam{
-	pixel_x = 7;
-	pixel_y = -5
-	},
 /obj/item/shipcomponent/mainweapon/taser{
 	pixel_x = 6;
 	pixel_y = 7
@@ -68746,6 +68727,7 @@
 /obj/table/round/auto,
 /obj/random_item_spawner/desk_stuff/few,
 /obj/item/storage/wall/office,
+/obj/item/stamp/qm,
 /turf/simulated/floor/carpet/red/fancy/narrow/north,
 /area/station/quartermaster/office)
 "vnN" = (
@@ -74802,6 +74784,7 @@
 	name = "table"
 	},
 /obj/item/paper_bin,
+/obj/item/stamp/chap,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
 	},
@@ -142598,7 +142581,7 @@ roL
 xoj
 dbP
 dbP
-hgX
+jbI
 ocE
 ocE
 oWs

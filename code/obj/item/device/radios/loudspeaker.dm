@@ -8,7 +8,7 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker)
 	icon_state = "transmitter"
 	anchored = ANCHORED
 	speaker_range = 1
-	chat_class = RADIOCL_INTERCOM
+	chat_class = RADIO::CSS::INTERCOM
 	locked_frequency = TRUE
 	microphone_listen_input = LISTEN_INPUT_OUTLOUD_RANGE_1
 	initial_microphone_enabled = FALSE
@@ -16,7 +16,7 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker)
 	density = 1
 	rand_pos = 0
 	desc = "A HAM radio transmitter...Basically...It only transmits to loudspeakers on a secure frequency."
-	frequency = R_FREQ_LOUDSPEAKERS
+	frequency = RADIO::FREQ::LOUDSPEAKERS
 
 /obj/item/device/radio/intercom/loudspeaker/initialize()
 	src.set_frequency(frequency)
@@ -54,8 +54,8 @@ TYPEINFO(/obj/item/device/radio/intercom/loudspeaker/speaker)
 	voice_sound_override = 'sound/misc/talk/speak_1.ogg'
 	initial_microphone_enabled = FALSE
 	initial_speaker_enabled = TRUE
-	chat_class = RADIOCL_INTERCOM
-	frequency = R_FREQ_LOUDSPEAKERS
+	chat_class = RADIO::CSS::INTERCOM
+	frequency = RADIO::FREQ::LOUDSPEAKERS
 	locked_frequency = TRUE
 	rand_pos = 0
 	density = 0

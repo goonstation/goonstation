@@ -150,7 +150,7 @@
 	B["current_money"] = 100
 	B["pda_net_id"] = pda_net_id
 	// management isn't in the union (they're going to steal it anyway)
-	if (H.traitHolder?.hasTrait("unionized") && (J?.job_category == JOB_COMMAND || istype(J, /datum/job/special/random/vip)))
+	if (H.traitHolder?.hasTrait("unionized") && !(J?.job_category == JOB_COMMAND || istype(J, /datum/job/special/random/vip)))
 		B["unionized"] = "Yes"
 	else
 		B["unionized"] = "No"
