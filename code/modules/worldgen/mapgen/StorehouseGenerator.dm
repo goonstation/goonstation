@@ -363,9 +363,9 @@
 
 					switch(rarity)
 						if(1 to 8)
-							selected_biome.fauna_hashmap?.register_hashmap_entry(new /obj/item/mine/gibs/armed(T))
+							selected_biome.fauna_hashmap?.register_hashmap_entry(new /obj/item/explosive/mine/gibs/armed(T))
 						if(10 to 20)
-							selected_biome.fauna_hashmap?.register_hashmap_entry(new /obj/item/mine/gibs(T))
+							selected_biome.fauna_hashmap?.register_hashmap_entry(new /obj/item/explosive/mine/gibs(T))
 						else
 							make_cleanable(/obj/decal/cleanable/blood/gibs, T)
 
@@ -433,8 +433,8 @@
 						/mob/living/critter/changeling/legworm/ai_controlled=5,
 						/mob/living/critter/changeling/handspider/ai_controlled=5,
 #endif
-						/obj/item/mine/gibs/armed=8,
-						/obj/item/mine/gibs=5)
+						/obj/item/explosive/mine/gibs/armed=8,
+						/obj/item/explosive/mine/gibs=5)
 	fauna_density = 1
 	minimum_fauna_distance = 5
 

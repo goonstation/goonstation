@@ -67,7 +67,7 @@ ABSTRACT_TYPE(/datum/job/special/syndicate/specialist)
 	slot_suit = list(/obj/item/clothing/suit/space/syndicate/specialist/commissar_greatcoat)
 	slot_poc1 = list(/obj/item/pinpointer/disk)
 	slot_ears = list(/obj/item/device/radio/headset/syndicate/leader)
-	slot_belt = list(/obj/item/swords_sheaths/nukeop)
+	slot_belt = list(/obj/item/melee/swords_sheaths/nukeop)
 	slot_card = /obj/item/card/id/syndicate/commander
 	items_in_backpack = list(/obj/item/storage/box/capella,
 							/obj/item/dagger/syndicate)
@@ -151,7 +151,7 @@ ABSTRACT_TYPE(/datum/job/special/syndicate/specialist)
 	slot_poc1 = list(/obj/item/storage/pouch/shotgun/weak)
 	slot_belt = list(/obj/item/storage/belt/utility/prepared)
 	items_in_backpack = list(/obj/item/firearm/kinetic/spes/engineer,
-		/obj/item/turret_deployer/syndicate,
+		/obj/item/deployable/turret_deployer/syndicate,
 		/obj/item/paper/nast_manual,
 		/obj/item/wrench/battle,
 		/obj/item/weldingtool/high_cap)

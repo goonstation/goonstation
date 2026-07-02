@@ -308,8 +308,8 @@
 			src.visible_message(SPAN_ALERT("[user.name] shocks \the [src] with \the [R]!"))
 		return 0
 
-	if(istype(W,/obj/item/baton))
-		var/obj/item/baton/BAT = W
+	if(istype(W,/obj/item/melee/baton))
+		var/obj/item/melee/baton/BAT = W
 		if (BAT.can_stun(1, user) == 1)
 			src.ArtifactStimulus("force", BAT.force)
 			src.ArtifactStimulus("elec", 1500)

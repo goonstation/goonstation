@@ -509,7 +509,7 @@
 /area/listeningpost/landing_bay)
 "Dp" = (
 /obj/table/wood/auto,
-/obj/item/turret_deployer/syndicate,
+/obj/item/deployable/turret_deployer/syndicate,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost/barracks)
 "DE" = (

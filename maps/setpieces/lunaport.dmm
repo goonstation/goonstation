@@ -13425,7 +13425,7 @@
 	pixel_y = 16;
 	pixel_x = 17
 	},
-/obj/item/swords/fragile_sword{
+/obj/item/melee/swords/fragile_sword{
 	pixel_y = 15;
 	pixel_x = 1
 	},
@@ -25681,7 +25681,7 @@
 	})
 "xey" = (
 /obj/table/reinforced/auto,
-/obj/item/baton/classic,
+/obj/item/melee/baton/classic,
 /obj/item/syndicate_barrier,
 /obj/item/clothing/head/helmet/bobby,
 /turf/unsimulated/floor/wood/six,

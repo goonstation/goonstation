@@ -917,9 +917,9 @@ ABSTRACT_TYPE(/obj/loot_spawner/random/short)
 		weight=2
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			spawn_item(C,I,/obj/item/old_grenade/stinger/frag,off_y=0,scale_x=0.6,scale_y=0.6)
-			spawn_item(C,I,/obj/item/old_grenade/stinger/frag,off_y=0,scale_x=0.6,scale_y=0.6)
-			spawn_item(C,I,/obj/item/old_grenade/stinger/frag,off_y=0,scale_x=0.6,scale_y=0.6)
+			spawn_item(C,I,/obj/item/explosive/old_grenade/stinger/frag,off_y=0,scale_x=0.6,scale_y=0.6)
+			spawn_item(C,I,/obj/item/explosive/old_grenade/stinger/frag,off_y=0,scale_x=0.6,scale_y=0.6)
+			spawn_item(C,I,/obj/item/explosive/old_grenade/stinger/frag,off_y=0,scale_x=0.6,scale_y=0.6)
 
 	// GANG_CRATE_GEAR
 	spraypaint
@@ -1276,19 +1276,19 @@ ABSTRACT_TYPE(/obj/loot_spawner/random/medium_tall)
 	frags
 		tier = GANG_CRATE_GUN
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			spawn_item(C,I,	/obj/item/old_grenade/stinger/frag,off_x=-4,off_y=5,scale_x=0.8,scale_y=0.8)
-			spawn_item(C,I,	/obj/item/old_grenade/stinger/frag,off_x=4, off_y=5,scale_x=0.8,scale_y=0.8)
-			spawn_item(C,I,	/obj/item/mine/stun,off_x=-4, off_y=-5,scale_x=0.8,scale_y=0.8)
-			spawn_item(C,I,	/obj/item/mine/stun,off_x=4, off_y=-5,scale_x=0.8,scale_y=0.8)
+			spawn_item(C,I,	/obj/item/explosive/old_grenade/stinger/frag,off_x=-4,off_y=5,scale_x=0.8,scale_y=0.8)
+			spawn_item(C,I,	/obj/item/explosive/old_grenade/stinger/frag,off_x=4, off_y=5,scale_x=0.8,scale_y=0.8)
+			spawn_item(C,I,	/obj/item/explosive/mine/stun,off_x=-4, off_y=-5,scale_x=0.8,scale_y=0.8)
+			spawn_item(C,I,	/obj/item/explosive/mine/stun,off_x=4, off_y=-5,scale_x=0.8,scale_y=0.8)
 
 	// GANG_CRATE_GEAR
 	concussions
 		tier = GANG_CRATE_GEAR
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			spawn_item(C,I,/obj/item/old_grenade/energy_concussion,off_x=-6,scale_x=0.8,scale_y=0.8)
-			spawn_item(C,I,/obj/item/old_grenade/energy_concussion,off_x=2,scale_x=0.8,scale_y=0.8)
-			spawn_item(C,I,/obj/item/old_grenade/energy_concussion,off_x=-2,rot=180,scale_x=0.8,scale_y=0.8)
-			spawn_item(C,I,/obj/item/old_grenade/energy_concussion,off_x=6,rot=180,scale_x=0.8,scale_y=0.8)
+			spawn_item(C,I,/obj/item/explosive/old_grenade/energy_concussion,off_x=-6,scale_x=0.8,scale_y=0.8)
+			spawn_item(C,I,/obj/item/explosive/old_grenade/energy_concussion,off_x=2,scale_x=0.8,scale_y=0.8)
+			spawn_item(C,I,/obj/item/explosive/old_grenade/energy_concussion,off_x=-2,rot=180,scale_x=0.8,scale_y=0.8)
+			spawn_item(C,I,/obj/item/explosive/old_grenade/energy_concussion,off_x=6,rot=180,scale_x=0.8,scale_y=0.8)
 	gold
 		tier = GANG_CRATE_GEAR
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
@@ -1399,12 +1399,12 @@ ABSTRACT_TYPE(/obj/loot_spawner/random/long_tall)
 	grenades
 		tier = GANG_CRATE_GEAR
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			spawn_item(C,I,/obj/item/old_grenade/smoke,off_x=-6,off_y=-4)
-			spawn_item(C,I,/obj/item/old_grenade/smoke,off_x=-6,off_y=4)
+			spawn_item(C,I,/obj/item/explosive/old_grenade/smoke,off_x=-6,off_y=-4)
+			spawn_item(C,I,/obj/item/explosive/old_grenade/smoke,off_x=-6,off_y=4)
 			spawn_item(C,I,/obj/item/chem_grenade/flashbang,off_x=6,off_y=4)
 			spawn_item(C,I,/obj/item/chem_grenade/flashbang,off_x=6,off_y=-4)
-			spawn_item(C,I,/obj/item/old_grenade/stinger,off_y=-4)
-			spawn_item(C,I,/obj/item/old_grenade/stinger,off_y=4)
+			spawn_item(C,I,/obj/item/explosive/old_grenade/stinger,off_y=-4)
+			spawn_item(C,I,/obj/item/explosive/old_grenade/stinger,off_y=4)
 	// GIMMICKS
 	money
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
@@ -1456,10 +1456,10 @@ ABSTRACT_TYPE(/obj/loot_spawner/random/xlong_tall)
 	explosives_jackpot
 		tier = GANG_CRATE_GEAR
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			spawn_item(C,I,	/obj/item/mine/blast,off_x=-10, off_y=-2,scale_x=0.8,scale_y=0.8)
-			spawn_item(C,I,	/obj/item/mine/blast,off_x=-10, off_y=2,scale_x=0.8,scale_y=0.8)
-			spawn_item(C,I,	/obj/item/mine/incendiary,off_x=-2, off_y=-2,scale_x=0.8,scale_y=0.8)
-			spawn_item(C,I,	/obj/item/mine/incendiary,off_x=-2, off_y=2,scale_x=0.8,scale_y=0.8)
+			spawn_item(C,I,	/obj/item/explosive/mine/blast,off_x=-10, off_y=-2,scale_x=0.8,scale_y=0.8)
+			spawn_item(C,I,	/obj/item/explosive/mine/blast,off_x=-10, off_y=2,scale_x=0.8,scale_y=0.8)
+			spawn_item(C,I,	/obj/item/explosive/mine/incendiary,off_x=-2, off_y=-2,scale_x=0.8,scale_y=0.8)
+			spawn_item(C,I,	/obj/item/explosive/mine/incendiary,off_x=-2, off_y=2,scale_x=0.8,scale_y=0.8)
 			spawn_item(C,I,/obj/item/chem_grenade/shock,off_x=2,off_y=2,scale_y=0.8)
 			spawn_item(C,I,/obj/item/chem_grenade/incendiary,off_x=2,off_y=2,scale_y=0.8)
 			spawn_item(C,I,/obj/item/chem_grenade/flashbang,off_x=2,off_y=2,scale_y=0.8)

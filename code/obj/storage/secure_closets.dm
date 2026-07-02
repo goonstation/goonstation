@@ -812,7 +812,7 @@
 	/obj/item/clothing/shoes/stomp_boots,
 #endif
 	/obj/item/engivac/complete,
-	/obj/item/old_grenade/oxygen,
+	/obj/item/explosive/old_grenade/oxygen,
 	/obj/item/clothing/glasses/toggleable/meson,
 	/obj/item/clothing/glasses/toggleable/atmos,
 	/obj/item/pen/infrared,

@@ -267,7 +267,7 @@ ABSTRACT_TYPE(/datum/multigrab_target)
 		amt_high = 4
 	batons
 		text = "stun batons"
-		path = /obj/item/baton
+		path = /obj/item/melee/baton
 		amt_high = 2
 	sec_helmets
 		text = "security helmets"

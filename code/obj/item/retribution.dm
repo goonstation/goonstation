@@ -1,6 +1,6 @@
-TYPEINFO(/obj/item/sword_core)
+TYPEINFO(/obj/item/melee/sword_core)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
-/obj/item/sword_core
+/obj/item/melee/sword_core
 	name = "SWORD core"
 	desc = "An incredibly advanced power core created by the Syndicate."
 	icon = 'icons/misc/retribution/SWORD_loot.dmi'
@@ -60,7 +60,7 @@ TYPEINFO(/obj/item/syndicate_destruction_system)
 	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W) && core_inserted)
 			core_inserted = FALSE
-			user.put_in_hand_or_drop(new /obj/item/sword_core)
+			user.put_in_hand_or_drop(new /obj/item/melee/sword_core)
 			icon = 'icons/misc/retribution/SWORD_loot.dmi'
 			src.icon_state = "SDS_empty"
 			src.item_state = "SDS_empty_inhands"
@@ -77,7 +77,7 @@ TYPEINFO(/obj/item/syndicate_destruction_system)
 			desc = "After a delay, scans nearby tiles, damaging walls and enemies. The core is missing."
 			tooltip_rebuild = TRUE
 			return
-		else if ((istype(W,/obj/item/sword_core) && !core_inserted))
+		else if ((istype(W,/obj/item/melee/sword_core) && !core_inserted))
 			core_inserted = TRUE
 			qdel(W)
 			icon = 'icons/misc/retribution/48x32.dmi'

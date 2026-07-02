@@ -1043,7 +1043,7 @@
 	desc = "For the trend-setting officer on the go. Has a place on it to clip a baton and a holster for a small gun."
 	icon_state = "secbelt"
 	item_state = "secbelt"
-	can_hold = list(/obj/item/baton, // not included in this list are guns that are already small enough to fit (like the detective's gun)
+	can_hold = list(/obj/item/melee/baton, // not included in this list are guns that are already small enough to fit (like the detective's gun)
 	/obj/item/firearm/energy/taser_gun,
 	/obj/item/firearm/energy/phaser_gun,
 	/obj/item/firearm/energy/laser_gun,
@@ -1078,22 +1078,22 @@
 
 	standard
 		spawn_contents = list(/obj/item/firearm/energy/taser_gun,
-		/obj/item/baton,
+		/obj/item/melee/baton,
 		/obj/item/barrier/collapsible/security)
 
 	offense
 		spawn_contents = list(/obj/item/firearm/energy/wavegun,
-		/obj/item/baton,
+		/obj/item/melee/baton,
 		/obj/item/barrier/collapsible/security)
 
 	support
-		spawn_contents = list(/obj/item/baton,
+		spawn_contents = list(/obj/item/melee/baton,
 		/obj/item/reagent_containers/food/snacks/donut/custom/robust = 2,
 		/obj/item/reagent_containers/emergency_injector/morphine = 4)
 
 	control
 		spawn_contents = list(/obj/item/firearm/energy/tasershotgun,
-		/obj/item/baton,
+		/obj/item/melee/baton,
 		/obj/item/barrier/collapsible/security)
 		New()
 			..()
@@ -1106,7 +1106,7 @@
 
 	ntsc //secbelt subtype that only spawns on NTSC, not in vendor
 		spawn_contents = list(/obj/item/firearm/energy/signifer2,
-		/obj/item/baton/ntso,
+		/obj/item/melee/baton/ntso,
 		/obj/item/clothing/head/helmet/space/ntso,
 		/obj/item/cloth/handkerchief/nt,
 		/obj/item/barrier/collapsible/security,
@@ -1114,20 +1114,20 @@
 
 	ntso
 		spawn_contents = list(/obj/item/firearm/energy/cornicen3,
-		/obj/item/old_grenade/energy_frag = 2,
-		/obj/item/old_grenade/energy_concussion = 2,
+		/obj/item/explosive/old_grenade/energy_frag = 2,
+		/obj/item/explosive/old_grenade/energy_concussion = 2,
 		/obj/item/tank/pocket/extended/oxygen,
 		/obj/item/reagent_containers/food/snacks/donkpocket/warm)
 
 	baton
-		spawn_contents = list(/obj/item/baton,
+		spawn_contents = list(/obj/item/melee/baton,
 		/obj/item/ammo/bullets/stunbaton,
 		/obj/item/barrier/collapsible/security,
 		/obj/item/requisition_token/security/utility)
 
 	tasersmg
 		spawn_contents = list(/obj/item/firearm/energy/tasersmg,
-		/obj/item/baton,
+		/obj/item/melee/baton,
 		/obj/item/barrier/collapsible/security)
 
 //////////////////////////////
@@ -1206,7 +1206,7 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 	icon_state = "grenade_bandolier"
 	item_state = "grenade_bandolier"
 	satchel_variant = null
-	can_hold = list(/obj/item/old_grenade,
+	can_hold = list(/obj/item/explosive/old_grenade,
 	/obj/item/chem_grenade,
 	/obj/item/storage/grenade_pouch,
 	/obj/item/ammo/bullets/grenade_round)

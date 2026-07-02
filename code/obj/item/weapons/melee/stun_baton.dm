@@ -1,14 +1,26 @@
+////////////////////////////////////////// Stun baton parent //////////////////////////////////////////////////
+// To be completed refactores file location for weapons pre-2026-era code here. All weapons code parents should be placed inside the primary folders as primary directives.
+// All files secondary to such must be placed in a new secondary folder within the primary folder. This is to ensure that all weapons code is properly-
+// organized and as easy to navigate for future development and maintenance. Ensure they are named appropriately.
+//
+// Contains:
+// - Primary Folder
+// -- example_parent.dm
+// -- Secondary Folder
+// --- example_child.dm
+//
+
 // Contains:
 // - Baton parent
 // - Subtypes
 
 ////////////////////////////////////////// Stun baton parent //////////////////////////////////////////////////
 // Completely refactored the ca. 2009-era code here. Powered batons also use power cells now (Convair880).
-TYPEINFO(/obj/item/baton)
+TYPEINFO(/obj/item/melee/baton)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal_superdense" = 10,
 				"conductive_high" = 10)
-/obj/item/baton
+/obj/item/melee/baton
 	name = "stun baton"
 	desc = "A standard issue baton for stunning people with."
 	icon = 'icons/obj/items/weapons.dmi'
@@ -154,8 +166,8 @@ TYPEINFO(/obj/item/baton)
 					else
 						user.show_text("The [src.name] is now out of charge!", "red")
 						src.is_active = FALSE
-						if (istype(src, /obj/item/baton/ntso)) //since ntso batons have some extra stuff, we need to set their state var to the correct value to make this work
-							var/obj/item/baton/ntso/B = src
+						if (istype(src, /obj/item/melee/baton/ntso)) //since ntso batons have some extra stuff, we need to set their state var to the correct value to make this work
+							var/obj/item/melee/baton/ntso/B = src
 							B.set_state(EXTENDO_BATON_OPEN_AND_OFF, user)
 		else if (amount > 0)
 			SEND_SIGNAL(src, COMSIG_CELL_CHARGE, src.cost_normal * amount)
@@ -339,25 +351,25 @@ TYPEINFO(/obj/item/baton)
 
 /////////////////////////////////////////////// Subtypes //////////////////////////////////////////////////////
 
-/obj/item/baton/secbot
+/obj/item/melee/baton/secbot
 	cost_normal = 0
 
-TYPEINFO(/obj/item/baton/beepsky)
+TYPEINFO(/obj/item/melee/baton/beepsky)
 	analyser_flags = ANALYSER_BLACKLIST //no
 
-/obj/item/baton/beepsky
+/obj/item/melee/baton/beepsky
 	name = "securitron stun baton"
 	desc = "A stun baton that's been modified to be used more effectively by security robots. There's a small parallel port on the bottom of the handle."
 	can_swap_cell = 0
 	rechargable = 0
 	cell_type = /obj/item/ammo/power_cell
 
-TYPEINFO(/obj/item/baton/cane)
+TYPEINFO(/obj/item/melee/baton/cane)
 	mats = list("metal_superdense" = 10,
 				"conductive_high" = 10,
 				"gemstone" = 10,
 				"gold" = 1)
-/obj/item/baton/cane
+/obj/item/melee/baton/cane
 	name = "stun cane"
 	desc = "A stun baton built into the casing of a cane."
 	icon_state = "stuncane"
@@ -371,10 +383,10 @@ TYPEINFO(/obj/item/baton/cane)
 	can_swap_cell = 0
 	rechargable = 0
 
-TYPEINFO(/obj/item/baton/classic)
+TYPEINFO(/obj/item/melee/baton/classic)
 	analyser_flags = ANALYSER_BLACKLIST
 
-/obj/item/baton/classic
+/obj/item/melee/baton/classic
 	name = "police baton"
 	desc = "YOU SHOULD NOT SEE THIS"
 	icon_state = "baton"
@@ -403,11 +415,11 @@ TYPEINFO(/obj/item/baton/classic)
 			user.remove_stamina(src.stamina_cost)
 
 
-TYPEINFO(/obj/item/baton/ntso)
+TYPEINFO(/obj/item/melee/baton/ntso)
 	mats = list("metal_superdense" = 10,
 				"conductive_high" = 10,
 				"energy" = 5)
-/obj/item/baton/ntso
+/obj/item/melee/baton/ntso
 	name = "extendable stun baton"
 	desc = "An extendable stun baton for NT Security Consultants in sleek NanoTrasen blue."
 	icon_state = "ntso-baton-a-1"
@@ -521,9 +533,9 @@ TYPEINFO(/obj/item/baton/ntso)
 
 
 
-TYPEINFO(/obj/item/baton/windup)
+TYPEINFO(/obj/item/melee/baton/windup)
 	analyser_flags = ANALYSER_BLACKLIST
-/obj/item/baton/windup
+/obj/item/melee/baton/windup
 	name = "Mod. 41 'Izar' baton"
 	desc = "An experimental but powerful stun baton. Requires a brief charge-up window to activate."
 	is_active = FALSE

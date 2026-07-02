@@ -2531,14 +2531,14 @@
 	desc = "A discount japanese sword. Only folded 2 times. The blade is on the wrong side..."
 	class2 = "weapon"
 	price = 10000
-	item_path = /obj/item/swords_sheaths/katana/reverse
+	item_path = /obj/item/melee/swords_sheaths/katana/reverse
 
 /datum/gang_item/weapon/katana
 	name = "Katana"
 	desc = "It's the real McCoy. Folded so many times."
 	class2 = "weapon"
 	price = 25000
-	item_path = /obj/item/swords_sheaths/katana
+	item_path = /obj/item/melee/swords_sheaths/katana
 
 /datum/gang_item/weapon/shuriken
 	name = "Shuriken"
@@ -2568,13 +2568,13 @@
 	desc = "It's not a c-saber, it's something from the discount rack. Some kinda kooky laser stick. It looks pretty dangerous."
 	class2 = "weapon"
 	price = 10000
-	item_path = /obj/item/sword/discount/gang
+	item_path = /obj/item/melee/sword/discount/gang
 /datum/gang_item/space/csaber
 	name = "C-Saber"
 	desc = "It's not a lightsaber."
 	class2 = "weapon"
 	price = 30000
-	item_path = /obj/item/sword
+	item_path = /obj/item/melee/sword
 /datum/gang_item/space/phaser_gun
 	name = "Phaser Gun"
 	desc = "It shoots phasers."

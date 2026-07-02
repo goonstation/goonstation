@@ -1226,12 +1226,12 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 		if (isscrewingtool(W) && core_inserted)
 			core_inserted = FALSE
 			set_icon_state("SPS_empty")
-			user.put_in_hand_or_drop(new /obj/item/sword_core)
+			user.put_in_hand_or_drop(new /obj/item/melee/sword_core)
 			user.show_message(SPAN_NOTICE("You remove the SWORD core from the Syndicate Purge System!"), 1)
 			desc = "After a delay, fires a destructive beam capable of penetrating walls. The core is missing."
 			tooltip_rebuild = TRUE
 			return
-		else if ((istype(W,/obj/item/sword_core) && !core_inserted))
+		else if ((istype(W,/obj/item/melee/sword_core) && !core_inserted))
 			core_inserted = TRUE
 			qdel(W)
 			set_icon_state("SPS")

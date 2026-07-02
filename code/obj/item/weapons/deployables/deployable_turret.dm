@@ -2,8 +2,8 @@
 //      Deployer Code      //
 /////////////////////////////
 
-ABSTRACT_TYPE(/obj/item/turret_deployer)
-/obj/item/turret_deployer
+ABSTRACT_TYPE(/obj/item/deployable/turret_deployer)
+/obj/item/deployable/turret_deployer
 	name = "fucked up turret deployer that you shouldn't see"
 	desc = "this isn't going to spawn anything and will also probably yell errors at you"
 	icon = 'icons/obj/deployableturret.dmi'
@@ -63,7 +63,7 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 			turret.quick_deploy()
 			qdel(src)
 
-/obj/item/turret_deployer/syndicate
+/obj/item/deployable/turret_deployer/syndicate
 	name = "NAS-T Deployer"
 	desc = "A Syndicate Sentry Turret Deployer."
 	turret_health = 250
@@ -81,13 +81,13 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
-TYPEINFO(/obj/item/turret_deployer/riot)
+TYPEINFO(/obj/item/deployable/turret_deployer/riot)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("insulated" = 10,
 				"conductive" = 10,
 				"crystal" = 3,
 				"metal_dense" = 2)
-/obj/item/turret_deployer/riot
+/obj/item/deployable/turret_deployer/riot
 	name = "N.A.R.C.S. Deployer"
 	desc = "A Nanotrasen Automatic Riot Control System Deployer. Use it in your hand to deploy."
 	turret_health = 125
@@ -97,7 +97,7 @@ TYPEINFO(/obj/item/turret_deployer/riot)
 	associated_turret = /obj/deployable_turret/riot
 	HELP_MESSAGE_OVERRIDE("Use in-hand to deploy.")
 
-/obj/item/turret_deployer/outpost
+/obj/item/deployable/turret_deployer/outpost
 	name = "Perimeter Turret Deployer"
 	desc = "A standard issue perimeter security turret deployer used on the frontier. Use it in your hand to deploy."
 	turret_health = 125
@@ -397,7 +397,7 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 		qdel(src)
 
 	proc/spawn_deployer()
-		var/obj/item/turret_deployer/deployer = new src.associated_deployer(src.loc, src.forensic_ID)
+		var/obj/item/deployable/turret_deployer/deployer = new src.associated_deployer(src.loc, src.forensic_ID)
 		deployer.turret_health = src.health // NO FREE REPAIRS, ASSHOLES
 		deployer.damage_words = src.damage_words
 		deployer.quick_deploy_fuel = src.quick_deploy_fuel
@@ -539,7 +539,7 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 	desc = "A Nuclear Agent Sentry Turret."
 	projectile_type = /datum/projectile/bullet/akm
 	icon_tag = "st"
-	associated_deployer = /obj/item/turret_deployer/syndicate
+	associated_deployer = /obj/item/deployable/turret_deployer/syndicate
 
 	New(loc, direction)
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -571,7 +571,7 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 	angle_arc_size = 60
 	icon_tag = "nt"
 	quick_deploy_fuel = 0
-	associated_deployer = /obj/item/turret_deployer/riot
+	associated_deployer = /obj/item/deployable/turret_deployer/riot
 
 	is_friend(var/mob/living/C)
 		var/obj/item/card/id/I = C.get_id()
@@ -598,7 +598,7 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 	angle_arc_size = 60
 	icon_tag = "op"
 	quick_deploy_fuel = 0
-	associated_deployer = /obj/item/turret_deployer/outpost
+	associated_deployer = /obj/item/deployable/turret_deployer/outpost
 
 	is_friend(var/mob/living/C)
 		return (FACTION_MERCENARY in C.faction)

@@ -1,4 +1,4 @@
-/obj/item/beartrap
+/obj/item/trap/beartrap
 	name = "beartrap"
 	desc = "Caution: This device cannot distinguish bears from other humanoids."
 	icon = 'icons/obj/items/weapons.dmi'
@@ -33,7 +33,7 @@
 				SPAN_ALERT("<B>You accidentally trigger the beartrap on your hand! Yowch!</B>"))
 				return
 			M.visible_message("[M] starts disarming [src]...")
-			var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(M, src, 3 SECONDS, /obj/item/beartrap/proc/disarm,\
+			var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(M, src, 3 SECONDS, /obj/item/trap/beartrap/proc/disarm,\
 			list(M), src.icon, src.icon_state, "[M] finishes disarming [src]")
 			actions.start(action_bar, M)
 		else
@@ -43,12 +43,12 @@
 		if (!src.armed)
 			var/turf/T = M.loc
 			if (isturf(T))
-				for(var/obj/item/beartrap/B in T)
+				for(var/obj/item/trap/beartrap/B in T)
 					if (B.armed)
 						M.show_text("There is already an armed beartrap here!", "red")
 						return
 				M.show_text("You start to arm the beartrap...", "blue")
-				var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(M, src, 2 SECONDS, /obj/item/beartrap/proc/arm,\
+				var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(M, src, 2 SECONDS, /obj/item/trap/beartrap/proc/arm,\
 				list(M), src.icon, src.icon_state, "[M] finishes arming [src]")
 				actions.start(action_bar, M)
 			else

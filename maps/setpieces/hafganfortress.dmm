@@ -3096,7 +3096,7 @@
 	pixel_y = -8
 	},
 /obj/item/clothing/suit/space/syndicate/specialist/commissar_greatcoat,
-/obj/item/swords_sheaths/nukeop,
+/obj/item/melee/swords_sheaths/nukeop,
 /obj/storage/closet/dresser,
 /obj/machinery/light/incandescent/warm{
 	dir = 1;
@@ -3822,7 +3822,7 @@
 	})
 "kC" = (
 /obj/item/clothing/head/clown_autumn_hat,
-/obj/item/swords_sheaths/clown,
+/obj/item/melee/swords_sheaths/clown,
 /obj/item/clothing/under/misc/clown/fancy,
 /obj/storage/closet/dresser,
 /obj/item/clothing/shoes/clown_shoes/military{
@@ -11821,12 +11821,12 @@
 	teleport_blocked = 1
 	})
 "Fp" = (
-/obj/item/baton/windup,
-/obj/item/baton/windup,
-/obj/item/baton/windup{
+/obj/item/melee/baton/windup,
+/obj/item/melee/baton/windup,
+/obj/item/melee/baton/windup{
 	pixel_y = -6
 	},
-/obj/item/baton/windup{
+/obj/item/melee/baton/windup{
 	pixel_y = 6
 	},
 /obj/rack,
@@ -12797,12 +12797,12 @@
 	dir = 1;
 	pixel_y = 18
 	},
-/obj/item/swords_sheaths/katana,
+/obj/item/melee/swords_sheaths/katana,
 /obj/item/clothing/suit/armor/death_commando{
 	pixel_y = 2;
 	pixel_x = 2
 	},
-/obj/item/sword/red{
+/obj/item/melee/sword/red{
 	pixel_y = 8;
 	pixel_x = 5
 	},
@@ -16939,7 +16939,7 @@
 	pixel_x = -2
 	},
 /obj/item/device/radio/headset/syndicate/comtac,
-/obj/item/swords_sheaths/nukeop,
+/obj/item/melee/swords_sheaths/nukeop,
 /obj/item/firearm/energy/blaster_pod_wars/syndicate{
 	name = "Artillery commmander's sidearm";
 	rarity = 4

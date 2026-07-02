@@ -659,7 +659,7 @@
 		modify_christmas_cheer(-7)
 
 
-	if(src.traitHolder?.hasTrait("martyrdom") && (istype(src.equipped(), /obj/item/old_grenade) || istype(src.equipped(), /obj/item/chem_grenade)))
+	if(src.traitHolder?.hasTrait("martyrdom") && (istype(src.equipped(), /obj/item/explosive/old_grenade) || istype(src.equipped(), /obj/item/chem_grenade)))
 		src.equipped():AttackSelf(src)
 
 	src.canmove = FALSE
@@ -2605,7 +2605,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 			var/obj/item/firearm/gun = A
 			gun.shoot(get_turf(pick(view(10, src))), get_turf(src), src, 16, 16)
 		else if (prob(40)) //bombs might land funny
-			if (istype(A, /obj/item/chem_grenade) || istype(A, /obj/item/old_grenade))
+			if (istype(A, /obj/item/chem_grenade) || istype(A, /obj/item/explosive/old_grenade))
 				var/obj/item/explosive = A
 				explosive.AttackSelf(src)
 			else if (istype(A, /obj/item/device/transfer_valve))
@@ -2824,8 +2824,8 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 			var/cutOffButt = 0
 			if (src.chest_item.hit_type == DAMAGE_CUT || src.chest_item.hit_type == DAMAGE_STAB)
 				cutOffButt = 1
-			if (istype(src.chest_item, /obj/item/sword/))
-				var/obj/item/sword/c_saber = src.chest_item
+			if (istype(src.chest_item, /obj/item/melee/sword/))
+				var/obj/item/melee/sword/c_saber = src.chest_item
 				if(c_saber.active)
 					cutOffButt = 1
 			if (cutOffButt)

@@ -27254,7 +27254,7 @@
 	},
 /area/station/medical/robotics)
 "jFy" = (
-/obj/item/mine/stun/armed,
+/obj/item/explosive/mine/stun/armed,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
 "jFV" = (
@@ -32416,7 +32416,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "mBe" = (
-/obj/item/mine/stun/armed,
+/obj/item/explosive/mine/stun/armed,
 /obj/item/reagent_containers/food/snacks/snack_cake/golden,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)

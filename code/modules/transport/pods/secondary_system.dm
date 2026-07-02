@@ -1419,12 +1419,12 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 		if (isscrewingtool(W) && core_inserted)
 			core_inserted = FALSE
 			set_icon_state("SRS_empty")
-			user.put_in_hand_or_drop(new /obj/item/sword_core)
+			user.put_in_hand_or_drop(new /obj/item/melee/sword_core)
 			user.show_message(SPAN_NOTICE("You remove the SWORD core from the Syndicate Rewind System!"), 1)
 			desc = "After a delay, rewinds the ship's integrity to the state it was in at the moment of activation. The core is missing."
 			tooltip_rebuild = TRUE
 			return
-		else if ((istype(W,/obj/item/sword_core) && !core_inserted))
+		else if ((istype(W,/obj/item/melee/sword_core) && !core_inserted))
 			core_inserted = TRUE
 			qdel(W)
 			set_icon_state("SRS")

@@ -130,7 +130,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_eyes = list(/obj/item/clothing/glasses/monocle)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_lhan = list(/obj/item/storage/secure/sbriefcase)
-	items_in_backpack = list(/obj/item/baton/cane)
+	items_in_backpack = list(/obj/item/melee/baton/cane)
 	alt_names = list("Senator", "President", "Board Member", "Mayor", "Vice-President", "Governor")
 	wiki_link = "https://wiki.ss13.co/VIP"
 

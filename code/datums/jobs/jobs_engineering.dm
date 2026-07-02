@@ -25,7 +25,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 #ifdef HOTSPOTS_ENABLED
 	items_in_backpack = list(/obj/item/paper/book/from_file/pocketguide/engineering, /obj/item/clothing/shoes/stomp_boots)
 #else
-	items_in_backpack = list(/obj/item/paper/book/from_file/pocketguide/engineering, /obj/item/old_grenade/oxygen)
+	items_in_backpack = list(/obj/item/paper/book/from_file/pocketguide/engineering, /obj/item/explosive/old_grenade/oxygen)
 #endif
 	wiki_link = "https://wiki.ss13.co/Engineer"
 

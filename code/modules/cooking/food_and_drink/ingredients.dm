@@ -579,8 +579,8 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 			user.put_in_hand_or_drop(F)
 			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, F, user)
 			qdel(src)
-		else if (istype(W, /obj/item/baton))
-			var/obj/item/baton/baton = W
+		else if (istype(W, /obj/item/melee/baton))
+			var/obj/item/melee/baton/baton = W
 			if (baton.is_active) //baton is on
 				if (user.a_intent != "harm")
 					if (user.traitHolder.hasTrait("training_security"))

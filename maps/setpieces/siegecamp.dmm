@@ -212,10 +212,10 @@
 	rarity = 4;
 	pixel_x = 30
 	},
-/obj/item/swords_sheaths/captain/blue{
+/obj/item/melee/swords_sheaths/captain/blue{
 	pixel_x = 5
 	},
-/obj/item/swords_sheaths/captain/blue{
+/obj/item/melee/swords_sheaths/captain/blue{
 	pixel_x = -8
 	},
 /obj/machinery/light/emergencyflashing{

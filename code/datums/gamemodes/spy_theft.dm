@@ -351,7 +351,7 @@
 	station_bounties[/obj/item/rcd] = 2
 	station_bounties[/obj/item/rcd/construction/chiefEngineer] = 3
 
-	station_bounties[/obj/item/baton] = 2
+	station_bounties[/obj/item/melee/baton] = 2
 	station_bounties[/obj/item/firearm/kinetic/riot40mm] = 2
 	station_bounties[/obj/item/firearm/kinetic/dart_rifle] = 3
 	station_bounties[/obj/item/firearm/kinetic/detectiverevolver] = 3

@@ -117,57 +117,57 @@
 	health = 6
 	w_class = W_CLASS_TINY
 	slots = 6
-	can_hold = list(/obj/item/old_grenade, /obj/item/chem_grenade)
+	can_hold = list(/obj/item/explosive/old_grenade, /obj/item/chem_grenade)
 	opens_if_worn = TRUE
 	prevent_holding = list(/obj/item/storage)
 
 	frag
 		name = "frag grenade pouch"
-		spawn_contents = list(/obj/item/old_grenade/stinger/frag = 6)
+		spawn_contents = list(/obj/item/explosive/old_grenade/stinger/frag = 6)
 
 	stinger
 		name = "stinger grenade pouch"
-		spawn_contents = list(/obj/item/old_grenade/stinger = 6)
+		spawn_contents = list(/obj/item/explosive/old_grenade/stinger = 6)
 
 	incendiary
 		name = "incendiary supplies pouch"
-		can_hold = list(/obj/item/old_grenade, /obj/item/chem_grenade, /obj/item/firebot_deployer)
+		can_hold = list(/obj/item/explosive/old_grenade, /obj/item/chem_grenade, /obj/item/firebot_deployer)
 		spawn_contents = list(/obj/item/chem_grenade/incendiary = 3,
 		/obj/item/chem_grenade/very_incendiary = 2,
 		/obj/item/firebot_deployer = 1)
 
 	high_explosive
 		name = "high explosive grenade pouch"
-		spawn_contents = list(/obj/item/old_grenade/high_explosive = 6)
+		spawn_contents = list(/obj/item/explosive/old_grenade/high_explosive = 6)
 
 	smoke
 		name = "smoke grenade pouch"
-		spawn_contents = list(/obj/item/old_grenade/smoke = 6)
+		spawn_contents = list(/obj/item/explosive/old_grenade/smoke = 6)
 
 	mixed_standard
 		name = "mixed grenade pouch"
 		spawn_contents = list(/obj/item/chem_grenade/flashbang = 2,
-		/obj/item/old_grenade/stinger/frag = 2,
-		/obj/item/old_grenade/stinger = 2)
+		/obj/item/explosive/old_grenade/stinger/frag = 2,
+		/obj/item/explosive/old_grenade/stinger = 2)
 
 	mixed_explosive
 		name = "mixed grenade pouch"
-		spawn_contents = list(/obj/item/old_grenade/stinger/frag = 3,
-		/obj/item/old_grenade/stinger = 3)
+		spawn_contents = list(/obj/item/explosive/old_grenade/stinger/frag = 3,
+		/obj/item/explosive/old_grenade/stinger = 3)
 	napalm
 		name = "napalm smoke grenade pouch"
 		spawn_contents = list(/obj/item/chem_grenade/napalm = 6)
 
 	oxygen
 		name = "oxygen grenade pouch"
-		spawn_contents = list(/obj/item/old_grenade/oxygen = 6)
+		spawn_contents = list(/obj/item/explosive/old_grenade/oxygen = 6)
 
 	metal_foam
 		name = "metal foam grenade pouch"
 		spawn_contents = list(/obj/item/chem_grenade/metalfoam = 6)
 	repair
 		name = "repair grenade pouch"
-		spawn_contents = list(/obj/item/old_grenade/oxygen = 3,
+		spawn_contents = list(/obj/item/explosive/old_grenade/oxygen = 3,
 		/obj/item/chem_grenade/metalfoam = 3)
 
 // dumb idiot gannets shouldn't have called these "ammo_pouches" if he was gonna make pouches for non-ammo things. wow.
@@ -247,7 +247,7 @@
 	slots = 5
 	opens_if_worn = TRUE
 	prevent_holding = list(/obj/item/storage)
-	spawn_contents = list(/obj/item/old_grenade/emp = 5)
+	spawn_contents = list(/obj/item/explosive/old_grenade/emp = 5)
 
 /obj/item/storage/wasp_grenade_pouch
 	name = "experimental biological grenade pouch"
@@ -258,7 +258,7 @@
 	slots = 5
 	opens_if_worn = TRUE
 	prevent_holding = list(/obj/item/storage)
-	spawn_contents = list(/obj/item/old_grenade/spawner/wasp = 5)
+	spawn_contents = list(/obj/item/explosive/old_grenade/spawner/wasp = 5)
 
 /obj/item/storage/custom_chem_grenade_pouch
 	name = "chemical grenade pouch"
@@ -283,10 +283,10 @@
 	prevent_holding = list(/obj/item/storage)
 	spawn_contents = list(/obj/item/chem_grenade/incendiary = 2,\
 	/obj/item/chem_grenade/shock,\
-	/obj/item/old_grenade/smoke = 1,\
-	/obj/item/old_grenade/stinger/frag,\
+	/obj/item/explosive/old_grenade/smoke = 1,\
+	/obj/item/explosive/old_grenade/stinger/frag,\
 	/obj/item/chem_grenade/flashbang,\
-	/obj/item/old_grenade/graviton)
+	/obj/item/explosive/old_grenade/graviton)
 
 /obj/item/storage/sonic_grenade_pouch
 	name = "sonic grenade pouch"
@@ -297,7 +297,7 @@
 	slots = 6
 	opens_if_worn = TRUE
 	prevent_holding = list(/obj/item/storage)
-	spawn_contents = list(/obj/item/old_grenade/sonic = 5,\
+	spawn_contents = list(/obj/item/explosive/old_grenade/sonic = 5,\
 	/obj/item/clothing/ears/earmuffs/earplugs)
 
 /obj/item/storage/concussion_grenade_pouch
@@ -309,7 +309,7 @@
 	slots = 6
 	opens_if_worn = TRUE
 	prevent_holding = list(/obj/item/storage)
-	spawn_contents = list(/obj/item/old_grenade/energy_concussion = 5)
+	spawn_contents = list(/obj/item/explosive/old_grenade/energy_concussion = 5)
 
 /obj/item/storage/banana_grenade_pouch
 	name = "banana grenade pouch"
@@ -320,7 +320,7 @@
 	slots = 7 //bonus two slots for the banana grenade kit
 	opens_if_worn = TRUE
 	prevent_holding = list(/obj/item/storage)
-	spawn_contents = list(/obj/item/old_grenade/spawner/banana = 5)
+	spawn_contents = list(/obj/item/explosive/old_grenade/spawner/banana = 5)
 
 /obj/item/storage/beartrap_pouch
 	name = "beartrap pouch"
@@ -330,7 +330,7 @@
 	slots = 4
 	opens_if_worn = TRUE
 	prevent_holding = list(/obj/item/storage)
-	spawn_contents = list(/obj/item/beartrap = 4)
+	spawn_contents = list(/obj/item/trap/beartrap = 4)
 
 /obj/item/storage/landmine_pouch
 	name = "landmine pouch"
@@ -340,12 +340,12 @@
 	slots = 3
 	opens_if_worn = TRUE
 	prevent_holding = list(/obj/item/storage)
-	can_hold = list(/obj/item/mine)
-	var/static/list/possible_contents = list(/obj/item/mine/radiation, /obj/item/mine/incendiary, /obj/item/mine/stun, /obj/item/mine/blast)
+	can_hold = list(/obj/item/explosive/mine)
+	var/static/list/possible_contents = list(/obj/item/explosive/mine/radiation, /obj/item/explosive/mine/incendiary, /obj/item/explosive/mine/stun, /obj/item/explosive/mine/blast)
 
 	make_my_stuff()
 		..()
-		var/obj/item/mine/random_mine
+		var/obj/item/explosive/mine/random_mine
 		for (var/i = 1 to src.slots)
 			random_mine = pick(src.possible_contents)
 			src.storage.add_contents(new random_mine(src))
@@ -357,7 +357,7 @@
 	w_class = W_CLASS_SMALL
 	slots = 6
 	opens_if_worn = TRUE
-	can_hold = list(/obj/item/ammo, /obj/item/old_grenade, /obj/item/chem_grenade, /obj/item/reagent_containers, /obj/item/deployer/barricade, /obj/item/tool, /obj/item/breaching_charge, /obj/item/pinpointer, /obj/item/mine, /obj/item/remote, /obj/item/device/)
+	can_hold = list(/obj/item/ammo, /obj/item/explosive/old_grenade, /obj/item/chem_grenade, /obj/item/reagent_containers, /obj/item/deployer/barricade, /obj/item/tool, /obj/item/breaching_charge, /obj/item/pinpointer, /obj/item/explosive/mine, /obj/item/remote, /obj/item/device/)
 	midcap //! weaker pouch for gangs
 		desc = "A moderately sized pouch for carrying multiple miscellaneous things at once."
 		slots = 4
@@ -372,7 +372,7 @@
 	opens_if_worn = TRUE
 	prevent_holding = list(/obj/item/storage)
 	spawn_contents = list(
-		/obj/item/old_grenade/sawfly/firsttime = 3,
+		/obj/item/explosive/old_grenade/sawfly/firsttime = 3,
 		/obj/item/remote/sawflyremote
 	)
 
@@ -386,8 +386,8 @@
 	opens_if_worn = TRUE
 	prevent_holding = list(/obj/item/storage)
 	spawn_contents = list(
-		/obj/item/old_grenade/thing_thrower/aconite = 2,
-		/obj/item/old_grenade/thing_thrower/garlic
+		/obj/item/explosive/old_grenade/thing_thrower/aconite = 2,
+		/obj/item/explosive/old_grenade/thing_thrower/garlic
 	)
 
 // Pod wars pouches

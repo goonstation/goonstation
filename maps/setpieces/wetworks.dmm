@@ -183,7 +183,7 @@
 	})
 "bi" = (
 /obj/table/sleek/auto,
-/obj/item/baton/cane,
+/obj/item/melee/baton/cane,
 /turf/simulated/floor/red/redblackchecker,
 /area/syndicate_station{
 	name = "Decirprevo Tanker";
@@ -5397,7 +5397,7 @@
 	})
 "Ls" = (
 /obj/table/sleek/auto,
-/obj/item/baton/cane,
+/obj/item/melee/baton/cane,
 /obj/machinery/light,
 /turf/simulated/floor/red/redblackchecker,
 /area/syndicate_station{
@@ -5729,7 +5729,7 @@
 	pixel_y = 26
 	},
 /obj/table/sleek/auto,
-/obj/item/baton/cane,
+/obj/item/melee/baton/cane,
 /turf/simulated/floor/red/redblackchecker,
 /area/syndicate_station{
 	name = "Decirprevo Tanker";

@@ -355,7 +355,7 @@ mob/verb/checkrewards()
 	claimPerRound = 1
 	icon_state = "?"
 	var/sacrifice_path = /obj/item/firearm/energy/egun
-	var/reward_path = /obj/item/swords_sheaths/captain
+	var/reward_path = /obj/item/melee/swords_sheaths/captain
 	var/sacrifice_name = "E-Gun"
 
 	activate(var/client/C)
@@ -387,7 +387,7 @@ mob/verb/checkrewards()
 			found = 1
 			qdel(K)
 			boutput(C.mob, "Your energy gun morphs into a sword! What the fuck!")
-			var/obj/item/swords_sheaths/captain/T = new/obj/item/swords_sheaths/captain()
+			var/obj/item/melee/swords_sheaths/captain/T = new/obj/item/melee/swords_sheaths/captain()
 			T.set_loc(get_turf(C.mob))
 			C.mob.put_in_hand(T)
 			return
@@ -559,7 +559,7 @@ mob/verb/checkrewards()
 		boutput(C, "You get a \"banana\"!")
 		var/obj/item/banana = null
 		if (prob(1))
-			banana = new/obj/item/old_grenade/spawner/banana()
+			banana = new/obj/item/explosive/old_grenade/spawner/banana()
 		else
 			banana = new/obj/item/reagent_containers/food/snacks/plant/banana()
 		banana.set_loc(get_turf(C.mob))

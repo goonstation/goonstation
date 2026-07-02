@@ -181,7 +181,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/noGenerate)
 "DL" = (
-/obj/item/mine/stun/armed,
+/obj/item/explosive/mine/stun/armed,
 /turf/variableTurf/clear,
 /area/noGenerate)
 "DR" = (

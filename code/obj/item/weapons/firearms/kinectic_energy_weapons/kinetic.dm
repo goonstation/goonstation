@@ -1,3 +1,15 @@
+////////////////////////////////////////// Kinetic parent //////////////////////////////////////////////////
+// To be completed refactores file location for weapons pre-2026-era code here. All weapons code parents should be placed inside the primary folders as primary directives.
+// All files secondary to such must be placed in a new secondary folder within the primary folder. This is to ensure that all weapons code is properly-
+// organized and as easy to navigate for future development and maintenance. Ensure they are named appropriately.
+//
+// Contains:
+// - Primary Folder
+// -- example_parent.dm
+// -- Secondary Folder
+// --- example_child.dm
+//
+
 ABSTRACT_TYPE(/obj/item/firearm/kinetic)
 /obj/item/firearm/kinetic
 	name = "kinetic weapon"
@@ -2579,7 +2591,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 
 	attackby(obj/item/b, mob/user)
-		if (istype(b, /obj/item/chem_grenade) || istype(b, /obj/item/old_grenade))
+		if (istype(b, /obj/item/chem_grenade) || istype(b, /obj/item/explosive/old_grenade))
 			if(src.ammo.amount_left > 0)
 				boutput(user, SPAN_ALERT("The [src.name] already has something in it! You can't use the conversion chamber right now! You'll have to manually unload the [src.name]!"))
 				return
@@ -3421,7 +3433,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 
 	attackby(obj/item/b, mob/user)
-		if (istype(b, /obj/item/chem_grenade) || istype(b, /obj/item/old_grenade))
+		if (istype(b, /obj/item/chem_grenade) || istype(b, /obj/item/explosive/old_grenade))
 			if((src.ammo.amount_left > 0 && !istype(current_projectile, /datum/projectile/bullet/grenade_shell)) || src.ammo.amount_left >= src.max_ammo_capacity)
 				boutput(user, SPAN_ALERT("The [src.name] already has something in it! You can't use the conversion chamber right now! You'll have to manually unload the [src.name]!"))
 				return

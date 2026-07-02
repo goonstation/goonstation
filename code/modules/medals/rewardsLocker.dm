@@ -715,10 +715,10 @@
 
 			if (H.belt)
 				var/obj/item/M = H.belt
-				if (istype(M, /obj/item/swords_sheaths/captain))
+				if (istype(M, /obj/item/melee/swords_sheaths/captain))
 					if (M.item_state == "scabbard-cap1" || M.item_state == "red_scabbard-cap1")
 						qdel(M)
-						H.equip_if_possible(new /obj/item/swords_sheaths/captain/blue(H), SLOT_BELT)
+						H.equip_if_possible(new /obj/item/melee/swords_sheaths/captain/blue(H), SLOT_BELT)
 						succ = TRUE
 
 			if (H.back)
@@ -889,10 +889,10 @@
 
 			if (H.belt)
 				var/obj/item/M = H.belt
-				if (istype(M, /obj/item/swords_sheaths/captain))
+				if (istype(M, /obj/item/melee/swords_sheaths/captain))
 					if (M.item_state == "scabbard-cap1" || M.item_state == "blue_scabbard-cap1")
 						qdel(M)
-						H.equip_if_possible(new /obj/item/swords_sheaths/captain/red(H), SLOT_BELT)
+						H.equip_if_possible(new /obj/item/melee/swords_sheaths/captain/red(H), SLOT_BELT)
 						succ = TRUE
 
 			if (H.back)

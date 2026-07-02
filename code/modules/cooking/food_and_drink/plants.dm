@@ -118,7 +118,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		if (src.midair_slice_check(hit_atom, thr))
 			//The check above checks if the user is wielding a sword and is in fact a mob
 			var/mob/target = hit_atom
-			var/obj/item/swords/wielded_sword = target.equipped()
+			var/obj/item/melee/swords/wielded_sword = target.equipped()
 			//We remove a little bit of stamina
 			target.remove_stamina(wielded_sword.midair_fruit_slice_stamina_cost)
 			src.already_burst = TRUE
@@ -147,8 +147,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	proc/midair_slice_check(atom/hit_atom, datum/thrown_thing/thr)
 		if (hit_atom && ismob(hit_atom) && src.sliceable && !src.already_burst)
 			var/mob/target = hit_atom
-			if (target.hasStatus("blocking") && target.equipped() && istype(target.equipped(),/obj/item/swords))
-				var/obj/item/swords/wielded_sword = target.equipped()
+			if (target.hasStatus("blocking") && target.equipped() && istype(target.equipped(),/obj/item/melee/swords))
+				var/obj/item/melee/swords/wielded_sword = target.equipped()
 				if (wielded_sword.midair_fruit_slice)
 					return TRUE
 
@@ -1433,8 +1433,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		if (hit_atom && ismob(hit_atom) && !src.already_burst)
 			var/mob/target = hit_atom
-			if (target.hasStatus("blocking") && target.equipped() && istype(target.equipped(),/obj/item/swords))
-				var/obj/item/swords/wielded_sword = target.equipped()
+			if (target.hasStatus("blocking") && target.equipped() && istype(target.equipped(),/obj/item/melee/swords))
+				var/obj/item/melee/swords/wielded_sword = target.equipped()
 				if (wielded_sword.midair_fruit_slice)
 					target.remove_stamina(wielded_sword.midair_fruit_slice_stamina_cost)
 					src.already_burst = TRUE

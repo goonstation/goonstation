@@ -1,9 +1,9 @@
 // Cleaned up the ancient code that used to be here (Convair880).
-TYPEINFO(/obj/item/mine)
+TYPEINFO(/obj/item/explosive/mine)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 6
 
-/obj/item/mine
+/obj/item/explosive/mine
 	name = "land mine (parent)"
 	desc = "You shouldn't be able to see this!"
 	w_class = W_CLASS_NORMAL
@@ -196,7 +196,7 @@ TYPEINFO(/obj/item/mine)
 		var/logtarget = (T && ismob(T) ? T : null)
 		logTheThing(LOG_BOMBING, M && ismob(M) ? M : null, "The [src.name] was triggered at [log_loc(src)][T && ismob(T) ? ", affecting [constructTarget(logtarget,"bombing")]." : "."] Last touched by: [replace_if_false(src.get_last_ckey(), "None")]")
 
-/obj/item/mine/radiation
+/obj/item/explosive/mine/radiation
 	name = "radiation land mine"
 	desc = "An anti-personnel mine designed to heavily irradiate its target."
 	icon_state = "mine_radiation"
@@ -221,7 +221,7 @@ TYPEINFO(/obj/item/mine)
 		playsound(src.loc, 'sound/weapons/ACgun2.ogg', 50, 1)
 		return
 
-/obj/item/mine/incendiary
+/obj/item/explosive/mine/incendiary
 	name = "incendiary land mine"
 	desc = "An anti-personnel mine equipped with an incendiary payload."
 	icon_state = "mine_incendiary"
@@ -236,7 +236,7 @@ TYPEINFO(/obj/item/mine)
 		fireflash_melting(get_turf(src), 3, 3000, 500, chemfire = CHEM_FIRE_RED)
 		playsound(src.loc, 'sound/effects/bamf.ogg', 50, 1)
 
-/obj/item/mine/stun
+/obj/item/explosive/mine/stun
 	name = "stun land mine"
 	desc = "An anti-personnel mine designed to stun its victim nonlethally."
 	icon_state = "mine_stun"
@@ -266,7 +266,7 @@ TYPEINFO(/obj/item/mine)
 
 		playsound(src.loc, 'sound/weapons/flashbang.ogg', 50, 1)
 
-/obj/item/mine/blast
+/obj/item/explosive/mine/blast
 	name = "high explosive land mine"
 	desc = "An anti-personnel mine rigged with explosives."
 
@@ -279,10 +279,10 @@ TYPEINFO(/obj/item/mine)
 
 		explosion(src, src.loc, 0, 1, 2, 3)
 
-TYPEINFO(/obj/item/mine/gibs)
+TYPEINFO(/obj/item/explosive/mine/gibs)
 	analyser_flags = ANALYSER_BLACKLIST
 
-/obj/item/mine/gibs
+/obj/item/explosive/mine/gibs
 	name = "pustule"
 	desc = "Some kind of weird little meat balloon."
 	icon = 'icons/misc/meatland.dmi'

@@ -23,7 +23,7 @@
 
 /obj/item/hive_module/standard/New()
 	..()
-	src.tools += new /obj/item/baton/secbot(src)
+	src.tools += new /obj/item/melee/baton/secbot(src)
 	src.tools += new /obj/item/extinguisher(src)
 //	var/obj/item/firearm/mp5/M = new /obj/item/firearm/mp5(src)
 
@@ -77,6 +77,6 @@
 
 ///obj/item/hive_module/security/New()
 //	..()
-//	src.tools += new /obj/item/baton/secbot(src)
+//	src.tools += new /obj/item/melee/baton/secbot(src)
 //	src.tools += new /obj/item/firearm/energy/laser_gun(src)
 

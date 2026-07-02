@@ -1,3 +1,15 @@
+////////////////////////////////////////// Bullets parent //////////////////////////////////////////////////
+// To be completed refactores file location for weapons pre-2026-era code here. All weapons code parents should be placed inside the primary folders as primary directives.
+// All files secondary to such must be placed in a new secondary folder within the primary folder. This is to ensure that all weapons code is properly-
+// organized and as easy to navigate for future development and maintenance. Ensure they are named appropriately.
+//
+// Contains:
+// - Primary Folder
+// -- example_parent.dm
+// -- Secondary Folder
+// --- example_child.dm
+//
+
 /////////////////////////////// Bullets for kinetic firearms /////////////////////////////////
 
 	// caliber list: update as needed
@@ -1289,7 +1301,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 		var/datum/projectile/bullet/grenade_shell/AMMO = src.ammo_type
 		if(!W || !user)
 			return
-		if (istype(W, /obj/item/chem_grenade) || istype(W, /obj/item/old_grenade))
+		if (istype(W, /obj/item/chem_grenade) || istype(W, /obj/item/explosive/old_grenade))
 			if (AMMO.has_grenade == 0)
 				AMMO.load_nade(W)
 				user.u_equip(W)

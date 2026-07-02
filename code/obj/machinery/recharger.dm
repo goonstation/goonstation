@@ -41,7 +41,7 @@ TYPEINFO(/obj/machinery/recharger)
 	var/sprite_error = "recharger3"
 
 	var/accepted_types = list( /obj/item/firearm/energy, \
-								/obj/item/baton, \
+								/obj/item/melee/baton, \
 								/obj/item/cargotele, \
 								/obj/item/mining_tool/powered, \
 								/obj/item/ammo/power_cell, \

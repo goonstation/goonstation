@@ -553,7 +553,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		/obj/item/storage/pouch/bullet_9mm,
 		/obj/item/clothing/glasses/nightvision,
 		/obj/item/cloaking_device,
-		/obj/item/old_grenade/smoke = 2,
+		/obj/item/explosive/old_grenade/smoke = 2,
 		/obj/item/dagger/specialist,
 		/obj/item/card/emag,
 		/obj/item/clothing/suit/space/syndicate/specialist/infiltrator,
@@ -617,7 +617,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		name = "Class Crate - Combat Engineer"
 		desc = "A crate containing a Specialist Operative loadout. This one contains a SPES-12, NAS-T Turret and tools for fixing a nuclear bomb."
 		spawn_contents = list(/obj/item/paper/nast_manual,
-		/obj/item/turret_deployer/syndicate,
+		/obj/item/deployable/turret_deployer/syndicate,
 		/obj/item/wrench/battle,
 		/obj/item/firearm/kinetic/spes/engineer,
 		/obj/item/storage/pouch/shotgun/weak,
@@ -747,7 +747,7 @@ TYPEINFO(/obj/storage/crate/chest)
 
 	rad
 		spawn_contents = list(/obj/item/clothing/suit/hazard/rad,
-		/obj/item/mine/radiation = 5,
+		/obj/item/explosive/mine/radiation = 5,
 		/obj/item/clothing/head/rad_hood,
 		/obj/item/storage/pill_bottle/antirad,
 		/obj/item/storage/pill_bottle/antitox,
@@ -802,7 +802,7 @@ TYPEINFO(/obj/storage/crate/chest)
 
 	weapons
 		spawn_contents = list(/obj/item/firearm/energy/phaser_gun,
-		/obj/item/old_grenade/stinger = 2,
+		/obj/item/explosive/old_grenade/stinger = 2,
 		/obj/item/ammo/power_cell/med_power)
 
 	weapons2

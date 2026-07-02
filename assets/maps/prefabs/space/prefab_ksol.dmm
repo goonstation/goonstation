@@ -721,7 +721,7 @@
 /turf/simulated/floor/airless/engine,
 /area/noGenerate)
 "bQ" = (
-/obj/item/mine/incendiary/armed,
+/obj/item/explosive/mine/incendiary/armed,
 /turf/simulated/floor/airless/engine,
 /area/noGenerate)
 "bR" = (
@@ -953,7 +953,7 @@
 	dir = 10;
 	icon_state = "lattice-dir"
 	},
-/obj/item/old_grenade/graviton,
+/obj/item/explosive/old_grenade/graviton,
 /turf/variableTurf/floor,
 /area/noGenerate)
 "cx" = (

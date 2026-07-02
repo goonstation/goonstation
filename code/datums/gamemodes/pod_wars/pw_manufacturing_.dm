@@ -474,7 +474,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 	item_requirements = list("metal" = 5,
 							 "conductive" = 5,
 							 "telecrystal" = 5)
-	item_outputs = list(/obj/item/old_grenade/energy_concussion)
+	item_outputs = list(/obj/item/explosive/old_grenade/energy_concussion)
 	create = 1
 	time = 1 SECONDS
 	category = "Weapon"
@@ -485,7 +485,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 	item_requirements = list("metal_dense" = 5,
 							 "conductive_high" = 5,
 							 "telecrystal" = 5)
-	item_outputs = list(/obj/item/old_grenade/energy_frag)
+	item_outputs = list(/obj/item/explosive/old_grenade/energy_frag)
 	create = 1
 	time = 1 SECONDS
 	category = "Weapon"

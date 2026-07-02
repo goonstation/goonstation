@@ -19551,7 +19551,7 @@
 /area/station/security/beepsky)
 "bkx" = (
 /obj/storage/secure/closet/brig,
-/obj/item/swords/clown{
+/obj/item/melee/swords/clown{
 	pixel_y = 0
 	},
 /obj/item/broken_egun,
@@ -51836,11 +51836,11 @@
 /obj/item/storage/toolbox/emergency,
 /obj/item/chem_grenade/metalfoam,
 /obj/item/chem_grenade/metalfoam,
-/obj/item/old_grenade/oxygen{
+/obj/item/explosive/old_grenade/oxygen{
 	pixel_x = 6;
 	pixel_y = 10
 	},
-/obj/item/old_grenade/oxygen{
+/obj/item/explosive/old_grenade/oxygen{
 	pixel_x = 5;
 	pixel_y = 5
 	},

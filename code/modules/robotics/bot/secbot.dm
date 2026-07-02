@@ -65,7 +65,7 @@
 	req_access = list(access_security)
 	var/weapon_access = access_carrypermit
 	var/contraband_access = access_contrabandpermit
-	var/obj/item/baton/secbot/our_baton // Our baton
+	var/obj/item/melee/baton/secbot/our_baton // Our baton
 
 	on = 1
 	locked = 1 //Behavior Controls lock
@@ -87,7 +87,7 @@
 	var/is_beepsky = IS_NOT_BEEPSKY_AND_HAS_SOME_GENERIC_BATON	// How Beepsky are we?
 	access_lookup = "Head of Security"
 	var/hat = null //Add an overlay from bots/aibots.dmi with this state.  hats.
-	var/our_baton_type = /obj/item/baton/secbot
+	var/our_baton_type = /obj/item/melee/baton/secbot
 	var/loot_baton_type = /obj/item/scrap
 	var/stun_type = "stun"
 	var/mode = 0
@@ -176,7 +176,7 @@
 	auto_patrol = 1
 	report_arrests = 1
 	move_arrest_step_delay = ARREST_SPEED * 0.9 // beepsky has some experience chasing crimers
-	loot_baton_type = /obj/item/baton/beepsky
+	loot_baton_type = /obj/item/melee/baton/beepsky
 	is_beepsky = IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON
 	baton_charge_duration = BATON_CHARGE_DURATION_BEEPSKY
 	hat = "nt"
@@ -220,7 +220,7 @@
 /obj/machinery/bot/secbot/brute
 	name = "Komisarz Beepinarska"
 	desc = "This little security robot seems to have a particularly large chip on its... shoulder? ...head?"
-	our_baton_type = /obj/item/baton/classic
+	our_baton_type = /obj/item/melee/baton/classic
 	loot_baton_type = null
 	stun_type = "harm_classic"
 	emagged = 2
@@ -567,8 +567,8 @@ TYPEINFO(/obj/machinery/bot/secbot)
 		new /obj/item/device/prox_sensor(Tsec)
 
 		// Not charged when dropped (ran on Beepsky's internal battery or whatever).
-		if (istype(loot_baton_type, /obj/item/baton)) // Now we can drop *any* baton!
-			var/obj/item/baton/B = new loot_baton_type(Tsec)
+		if (istype(loot_baton_type, /obj/item/melee/baton)) // Now we can drop *any* baton!
+			var/obj/item/melee/baton/B = new loot_baton_type(Tsec)
 			B.is_active = FALSE
 			B.process_charges(-INFINITY)
 			if (src.is_beepsky == IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON || src.is_beepsky == IS_NOT_BEEPSKY_BUT_HAS_HIS_SPECIAL_BATON)	// Holding Beepsky's baton doesnt make you him, but it does mean you're holding his baton
@@ -1422,9 +1422,9 @@ TYPEINFO(/obj/machinery/bot/secbot)
 		user.u_equip(W)
 		qdel(W)
 
-	else if (istype(W, /obj/item/baton/) && src.build_step >= 3)
-		if (istype(W, /obj/item/baton/beepsky))	// If we used Beepsky's dropped baton
-			var/obj/item/baton/Y = W
+	else if (istype(W, /obj/item/melee/baton/) && src.build_step >= 3)
+		if (istype(W, /obj/item/melee/baton/beepsky))	// If we used Beepsky's dropped baton
+			var/obj/item/melee/baton/Y = W
 			if (src.is_dead_beepsky)							// on Beepsky's corpse
 				boutput(user, "You return Officer Beepsky his trusty baton, reassembling the Securitron! Beep boop.")
 				new /obj/machinery/bot/secbot/beepsky(get_turf(src))

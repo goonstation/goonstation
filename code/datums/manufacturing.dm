@@ -913,7 +913,7 @@
 							 "conductive" = 2,
 							 "molitz" = 10,
 							 "char" = 1)
-	item_outputs = list(/obj/item/old_grenade/oxygen)
+	item_outputs = list(/obj/item/explosive/old_grenade/oxygen)
 	create = 1
 	time = 10 SECONDS
 	category = "Tool"
@@ -4107,7 +4107,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	name = "D-Saber"
 	item_requirements = list("metal_dense" = 20,
 							 "conductive" = 10)
-	item_outputs = list(/obj/item/sword/discount)
+	item_outputs = list(/obj/item/melee/sword/discount)
 	create = 1
 	time = 20 SECONDS
 	category = "Miscellaneous"

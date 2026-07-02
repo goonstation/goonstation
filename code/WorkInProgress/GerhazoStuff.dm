@@ -2,7 +2,7 @@
 
 /mob/living/carbon/human/cyalume_knight
 	gender = "male"
-	var/obj/item/sword/my_sword
+	var/obj/item/melee/sword/my_sword
 	New()
 		..()
 
@@ -24,7 +24,7 @@
 
 		src.equip_new_if_possible(/obj/item/tank/pocket/oxygen, SLOT_R_STORE)
 
-		my_sword = new /obj/item/sword(src)
+		my_sword = new /obj/item/melee/sword(src)
 		my_sword.bladecolor = "P"
 		src.equip_if_possible(my_sword, SLOT_L_STORE)
 
@@ -46,10 +46,10 @@
 		. = ..()
 
 	bullet_act(obj/projectile/P, mob/meatshield) // deflect energy projectiles, cut bullets
-		var/obj/item/sword/deflecting_sword
-		if(istype(src.r_hand, /obj/item/sword))
+		var/obj/item/melee/sword/deflecting_sword
+		if(istype(src.r_hand, /obj/item/melee/sword))
 			deflecting_sword = src.r_hand
-		else if(istype(src.l_hand, /obj/item/sword))
+		else if(istype(src.l_hand, /obj/item/melee/sword))
 			deflecting_sword = src.l_hand
 
 		if(deflecting_sword)
@@ -178,7 +178,7 @@
 	targeted = 0
 	cooldown = 6 SECONDS
 	pointCost = 0
-	var/obj/item/sword/sword = null
+	var/obj/item/melee/sword/sword = null
 
 	onAttach(datum/abilityHolder/holder)
 		..(holder)
@@ -204,8 +204,8 @@
 		var/mob/living/my_mob = holder.owner
 		if(!src.sword)
 			boutput(my_mob, SPAN_ALERT("Your sword appears to have been banished from the physical realm!"))
-			var/obj/item/R = my_mob.find_type_in_hand(/obj/item/sword, "right") // same with grabs
-			var/obj/item/L = my_mob.find_type_in_hand(/obj/item/sword, "left") // same for the other hand
+			var/obj/item/R = my_mob.find_type_in_hand(/obj/item/melee/sword, "right") // same with grabs
+			var/obj/item/L = my_mob.find_type_in_hand(/obj/item/melee/sword, "left") // same for the other hand
 			if (R)
 				src.sword = R
 				if (istype(my_mob, /mob/living/carbon/human/cyalume_knight))

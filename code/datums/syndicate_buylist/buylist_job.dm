@@ -417,7 +417,7 @@
 
 /datum/syndicate_buylist/traitor/moustache_grenade
 	name = "Moustache Grenade"
-	items = list(/obj/item/old_grenade/moustache)
+	items = list(/obj/item/explosive/old_grenade/moustache)
 	cost = 1
 	desc = "A disturbingly hairy grenade."
 	job = list("Staff Assistant", ALL_CLOWNS)
@@ -534,7 +534,7 @@
 
 /datum/syndicate_buylist/traitor/chicken_grenade
 	name = "Chicken Grenade"
-	items = list(/obj/item/old_grenade/chicken)
+	items = list(/obj/item/explosive/old_grenade/chicken)
 	cost = 1
 	vr_allowed = FALSE
 	desc = "A grenade that holds up to 5 chicken eggs. Uses syndicate brainwashing to turn the chickens into hardened warriors immediately on detonation. Normally passive chickens will become aggressive. Use a wrench to unload it."

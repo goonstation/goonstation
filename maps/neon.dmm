@@ -5463,18 +5463,18 @@
 /area/station/maintenance/northeast)
 "dTD" = (
 /obj/rack,
-/obj/item/old_grenade/oxygen{
+/obj/item/explosive/old_grenade/oxygen{
 	pixel_x = -10;
 	pixel_y = 6
 	},
-/obj/item/old_grenade/oxygen{
+/obj/item/explosive/old_grenade/oxygen{
 	pixel_x = -10;
 	pixel_y = 3
 	},
-/obj/item/old_grenade/oxygen{
+/obj/item/explosive/old_grenade/oxygen{
 	pixel_x = -10
 	},
-/obj/item/old_grenade/oxygen{
+/obj/item/explosive/old_grenade/oxygen{
 	pixel_x = -10;
 	pixel_y = -3
 	},
@@ -7491,7 +7491,7 @@
 /turf/simulated/floor/grime,
 /area/heated_pool)
 "fhs" = (
-/obj/item/mine/stun/armed,
+/obj/item/explosive/mine/stun/armed,
 /obj/forcefield/energyshield/perma,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
@@ -12749,9 +12749,9 @@
 /turf/simulated/floor/grime,
 /area/heated_pool)
 "iPB" = (
-/obj/item/old_grenade/spawner/banana,
+/obj/item/explosive/old_grenade/spawner/banana,
 /obj/item/bananapeel,
-/obj/item/old_grenade/spawner/banana,
+/obj/item/explosive/old_grenade/spawner/banana,
 /obj/storage/cart/trash,
 /obj/lattice,
 /turf/simulated/floor/martian,
@@ -19961,7 +19961,7 @@
 /turf/space/fluid,
 /area/space)
 "nRD" = (
-/obj/item/mine/stun/armed,
+/obj/item/explosive/mine/stun/armed,
 /turf/space/fluid,
 /area/space/plasma_reef)
 "nRZ" = (
@@ -25781,26 +25781,26 @@
 	})
 "sbO" = (
 /obj/table/auto,
-/obj/item/old_grenade/oxygen{
+/obj/item/explosive/old_grenade/oxygen{
 	pixel_x = 8;
 	pixel_y = 8
 	},
-/obj/item/old_grenade/oxygen{
+/obj/item/explosive/old_grenade/oxygen{
 	pixel_x = 8;
 	pixel_y = 8
 	},
-/obj/item/old_grenade/oxygen{
+/obj/item/explosive/old_grenade/oxygen{
 	pixel_x = 8;
 	pixel_y = 4
 	},
-/obj/item/old_grenade/oxygen{
+/obj/item/explosive/old_grenade/oxygen{
 	pixel_x = 8;
 	pixel_y = 4
 	},
-/obj/item/old_grenade/oxygen{
+/obj/item/explosive/old_grenade/oxygen{
 	pixel_x = 8
 	},
-/obj/item/old_grenade/oxygen{
+/obj/item/explosive/old_grenade/oxygen{
 	pixel_x = 8
 	},
 /obj/item/storage/toolbox/mechanical{

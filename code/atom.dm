@@ -741,7 +741,7 @@ TYPEINFO(/obj/item/disk)
 	if (iscarbon(user) || issilicon(user))
 		add_fingerprint(user)
 
-	if (istype(src,/obj/item/old_grenade/light_gimmick))
+	if (istype(src,/obj/item/explosive/old_grenade/light_gimmick))
 		boutput(user, SPAN_NOTICE("You feel your hand reach out and clasp the grenade."))
 		src.Attackhand(user)
 		return 1

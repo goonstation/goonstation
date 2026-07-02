@@ -163,7 +163,7 @@ TYPEINFO(/obj/item/device/timer)
 				logTheThing(LOG_BOMBING, usr, "[timing ? "initiated" : "defused"] a timer on a transfer valve at [log_loc(src.master)].")
 				message_admins("[key_name(usr)] [timing ? "initiated" : "defused"] a timer on a transfer valve at [log_loc(src.master)].")
 				SEND_SIGNAL(src.master, "[timing ? COMSIG_ITEM_BOMB_SIGNAL_START : COMSIG_ITEM_BOMB_SIGNAL_CANCEL]")
-			else if (istype(src.master, /obj/item/mine)) // Land mine.
+			else if (istype(src.master, /obj/item/explosive/mine)) // Land mine.
 				logTheThing(LOG_BOMBING, usr, "[timing ? "initiated" : "defused"] a timer on a [src.master.name] at [log_loc(src.master)].")
 				SEND_SIGNAL(src.master, "[timing ? COMSIG_ITEM_BOMB_SIGNAL_START : COMSIG_ITEM_BOMB_SIGNAL_CANCEL]")
 			. = TRUE

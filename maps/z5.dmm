@@ -1212,9 +1212,9 @@
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/crew)
 "pO" = (
-/obj/item/old_grenade/spawner/banana,
+/obj/item/explosive/old_grenade/spawner/banana,
 /obj/item/bananapeel,
-/obj/item/old_grenade/spawner/banana,
+/obj/item/explosive/old_grenade/spawner/banana,
 /obj/storage/cart/trash,
 /obj/lattice,
 /turf/simulated/floor/martian,

@@ -576,7 +576,7 @@
 		src.attach_light(T)
 
 /obj/item/storage/grenade_pouch/salvager_distract
-	spawn_contents = list(/obj/item/old_grenade/smoke=3,/obj/item/chem_grenade/flashbang = 2)
+	spawn_contents = list(/obj/item/explosive/old_grenade/smoke=3,/obj/item/chem_grenade/flashbang = 2)
 
 TYPEINFO(/obj/item/salvager_hand_tele)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC

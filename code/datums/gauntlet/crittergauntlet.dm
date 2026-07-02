@@ -732,7 +732,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		minimum_level = 25
 		min_percent = 0.25
 		max_percent = 0.5
-		supplies = list(/obj/item/sword/vr)
+		supplies = list(/obj/item/melee/sword/vr)
 
 	saw
 		name = "Red Chainsaws"

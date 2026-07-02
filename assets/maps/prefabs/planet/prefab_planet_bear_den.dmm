@@ -7,7 +7,7 @@
 /turf/variableTurf/clear,
 /area/allowGenerate)
 "N" = (
-/obj/item/beartrap/armed,
+/obj/item/trap/beartrap/armed,
 /turf/variableTurf/clear,
 /area/allowGenerate)
 "Q" = (

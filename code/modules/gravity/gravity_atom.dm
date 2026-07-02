@@ -133,8 +133,8 @@
 /obj/fake_attacker/floats_in_zero_g = TRUE
 
 // Cross-triggered things that work in zero-G need to indicate they're still dangerous
-/obj/item/beartrap/floats_in_zero_g = TRUE
-/obj/item/mine/floats_in_zero_g = TRUE
+/obj/item/trap/beartrap/floats_in_zero_g = TRUE
+/obj/item/explosive/mine/floats_in_zero_g = TRUE
 
 // fluid icons change in Zero-G
 /obj/fluid/New(atom/location)

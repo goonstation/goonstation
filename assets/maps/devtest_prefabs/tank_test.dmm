@@ -140,7 +140,7 @@
 /area/station/devzone)
 "DA" = (
 /obj/item/shipcomponent/mainweapon/syndicate_purge_system,
-/obj/item/sword_core,
+/obj/item/melee/sword_core,
 /turf/simulated/floor,
 /area/station/devzone)
 "DF" = (
@@ -221,7 +221,7 @@
 /area/station/devzone)
 "QA" = (
 /obj/item/shipcomponent/secondary_system/syndicate_rewind_system,
-/obj/item/sword_core,
+/obj/item/melee/sword_core,
 /turf/simulated/floor,
 /area/station/devzone)
 "RF" = (

@@ -433,7 +433,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Station Pressurization Crate"
 	desc = "x4 Red Oxygen Grenades, x4 Metal Foam Grenades."
 	category = "Engineering"
-	contains = list(/obj/item/old_grenade/oxygen = 4, /obj/item/chem_grenade/metalfoam = 4)
+	contains = list(/obj/item/explosive/old_grenade/oxygen = 4, /obj/item/chem_grenade/metalfoam = 4)
 	cost = PAY::TRADESMAN*2
 	containertype = /obj/storage/crate
 	containername = "Station Pressurization Crate"
@@ -1531,7 +1531,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 /datum/supply_packs/baton
 	name = "Stun Baton"
 	desc = "x1 Stun Baton."
-	contains = list(/obj/item/baton)
+	contains = list(/obj/item/melee/baton)
 	cost = PAY::IMPORTANT
 	category = "Security"
 	hidden = 1

@@ -22015,7 +22015,7 @@
 	icon_state = "bloodydoor";
 	name = "broken airlock"
 	},
-/obj/item/mine/radiation/armed,
+/obj/item/explosive/mine/radiation/armed,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedship)
 "bJn" = (
@@ -37176,14 +37176,14 @@
 	pixel_x = -8;
 	pixel_y = 11
 	},
-/obj/item/old_grenade/oxygen{
+/obj/item/explosive/old_grenade/oxygen{
 	pixel_x = 4;
 	pixel_y = 7
 	},
-/obj/item/old_grenade/oxygen{
+/obj/item/explosive/old_grenade/oxygen{
 	pixel_x = 7
 	},
-/obj/item/old_grenade/oxygen{
+/obj/item/explosive/old_grenade/oxygen{
 	pixel_x = 4;
 	pixel_y = -7
 	},
@@ -44501,7 +44501,7 @@
 /area/station/crew_quarters/quartersB)
 "jMC" = (
 /obj/shrub,
-/obj/item/old_grenade/spawner/banana,
+/obj/item/explosive/old_grenade/spawner/banana,
 /turf/simulated/floor/caution/side{
 	dir = 5
 	},

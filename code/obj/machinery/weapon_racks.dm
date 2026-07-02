@@ -23,7 +23,7 @@
 	density = 1
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	var/stand_type = "katanastand"
-	var/contained_weapon = /obj/item/swords_sheaths/katana
+	var/contained_weapon = /obj/item/melee/swords_sheaths/katana
 	var/contained_weapon_name = "katana"
 	var/recharges_contents = 0
 	var/max_amount = 1
@@ -50,7 +50,7 @@
 		desc = "A stand that can hold a cyalume saber."
 		icon_state = "swordstand1"
 		stand_type = "csaberstand"
-		contained_weapon = /obj/item/sword
+		contained_weapon = /obj/item/melee/sword
 		contained_weapon_name = "cyalume saber"
 */
 

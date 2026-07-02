@@ -238,7 +238,7 @@
 /area/prefab/deserted_outpost)
 "S" = (
 /obj/table/auto,
-/obj/item/old_grenade/smoke,
+/obj/item/explosive/old_grenade/smoke,
 /turf/simulated/floor/grey,
 /area/prefab/deserted_outpost)
 "T" = (

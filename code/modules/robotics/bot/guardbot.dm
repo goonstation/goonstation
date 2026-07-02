@@ -4133,14 +4133,14 @@ TYPEINFO(/obj/item/device/guardbot_module)
 					if(weapon_access in worn_id.access)
 						return 0
 
-				if(istype(potentialThreat.l_hand, /obj/item/firearm) || istype(potentialThreat.l_hand, /obj/item/baton) || istype(potentialThreat.l_hand, /obj/item/sword))
+				if(istype(potentialThreat.l_hand, /obj/item/firearm) || istype(potentialThreat.l_hand, /obj/item/melee/baton) || istype(potentialThreat.l_hand, /obj/item/melee/sword))
 					threatcount += 4
 
-				if(istype(potentialThreat.r_hand, /obj/item/firearm) || istype(potentialThreat.r_hand, /obj/item/baton) || istype(potentialThreat.r_hand, /obj/item/sword))
+				if(istype(potentialThreat.r_hand, /obj/item/firearm) || istype(potentialThreat.r_hand, /obj/item/melee/baton) || istype(potentialThreat.r_hand, /obj/item/melee/sword))
 					threatcount += 4
 
 				if (ishuman(potentialThreat))
-					if(istype(potentialThreat:belt, /obj/item/firearm) || istype(potentialThreat:belt, /obj/item/baton) || istype(potentialThreat:belt, /obj/item/sword))
+					if(istype(potentialThreat:belt, /obj/item/firearm) || istype(potentialThreat:belt, /obj/item/melee/baton) || istype(potentialThreat:belt, /obj/item/melee/sword))
 						threatcount += 2
 
 					if(istype(potentialThreat:wear_suit, /obj/item/clothing/suit/wizrobe))

@@ -17496,11 +17496,11 @@
 /obj/storage/crate/bloody{
 	welded = 1
 	},
-/obj/item/mine/stun,
-/obj/item/mine/stun,
-/obj/item/mine/stun,
-/obj/item/mine/stun,
-/obj/item/mine/stun,
+/obj/item/explosive/mine/stun,
+/obj/item/explosive/mine/stun,
+/obj/item/explosive/mine/stun,
+/obj/item/explosive/mine/stun,
+/obj/item/explosive/mine/stun,
 /turf/space/fluid,
 /area/space)
 "bFT" = (
@@ -17530,7 +17530,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bFY" = (
-/obj/item/mine/stun/armed,
+/obj/item/explosive/mine/stun/armed,
 /turf/space/fluid,
 /area/space)
 "bFZ" = (
@@ -23491,7 +23491,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/incandescent/warm,
-/obj/item/old_grenade/spawner/banana,
+/obj/item/explosive/old_grenade/spawner/banana,
 /turf/simulated/floor/darkblue{
 	dir = 10
 	},
@@ -35747,9 +35747,9 @@
 /turf/simulated/floor/red/side,
 /area/station/security/interrogation)
 "mcM" = (
-/obj/item/old_grenade/spawner/banana,
+/obj/item/explosive/old_grenade/spawner/banana,
 /obj/item/bananapeel,
-/obj/item/old_grenade/spawner/banana,
+/obj/item/explosive/old_grenade/spawner/banana,
 /obj/storage/cart/trash,
 /obj/lattice,
 /turf/simulated/floor/martian,
@@ -36289,8 +36289,8 @@
 /obj/item/chem_grenade/metalfoam{
 	pixel_x = 3
 	},
-/obj/item/old_grenade/oxygen,
-/obj/item/old_grenade/oxygen,
+/obj/item/explosive/old_grenade/oxygen,
+/obj/item/explosive/old_grenade/oxygen,
 /obj/item/device/radio,
 /obj/item/device/gps,
 /obj/machinery/camera/directional/north{
@@ -37141,7 +37141,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
 "nlu" = (
-/obj/item/scrapweapons/weapons/dagger/glass,
+/obj/item/scrapweapons/weapons/melee/dagger/glass,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "nlv" = (
@@ -39475,15 +39475,15 @@
 	amount = 50;
 	pixel_y = 6
 	},
-/obj/item/old_grenade/oxygen{
+/obj/item/explosive/old_grenade/oxygen{
 	pixel_x = 4;
 	pixel_y = 14
 	},
-/obj/item/old_grenade/oxygen{
+/obj/item/explosive/old_grenade/oxygen{
 	pixel_x = -4;
 	pixel_y = 14
 	},
-/obj/item/old_grenade/oxygen{
+/obj/item/explosive/old_grenade/oxygen{
 	pixel_y = 11
 	},
 /obj/item/clothing/ears/earmuffs{

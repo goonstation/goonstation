@@ -35,8 +35,8 @@ TYPEINFO(/obj/submachine/slot_machine/item)
 		/obj/item/device/light/flashlight,
 		/obj/item/kitchen/utensil/knife,
 		/obj/item/staple_gun,
-		/obj/item/old_grenade/spawner/cheese_sandwich,
-		/obj/item/old_grenade/spawner/banana_corndog,
+		/obj/item/explosive/old_grenade/spawner/cheese_sandwich,
+		/obj/item/explosive/old_grenade/spawner/banana_corndog,
 		/obj/item/rubberduck,
 		/obj/item/clothing/gloves/yellow/unsulated
 	)

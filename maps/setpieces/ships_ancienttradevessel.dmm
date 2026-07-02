@@ -1840,7 +1840,7 @@
 	name = "plague armor";
 	pixel_y = -4
 	},
-/obj/item/baton/cane,
+/obj/item/melee/baton/cane,
 /turf/unsimulated/iomoon/ancient_floor{
 	icon_state = "ancientfloor2"
 	},

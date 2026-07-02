@@ -3545,9 +3545,9 @@ TYPEINFO(/obj/machinery/vending/murderbox_gang)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/c_45, 1, infinite=TRUE)
 
 		product_list += new/datum/data/vending_product(/obj/item/switchblade, 1, infinite=TRUE)
-		product_list += new/datum/data/vending_product(/obj/item/sword/discount/gang, 1, infinite=TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/melee/sword/discount/gang, 1, infinite=TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/gang_machete, 1, infinite=TRUE)
-		product_list += new/datum/data/vending_product(/obj/item/swords/katana/reverse, 1, infinite=TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/melee/swords/katana/reverse, 1, infinite=TRUE)
 
 TYPEINFO(/obj/machinery/vending/murderbox_armory)
 	analyser_flags = ANALYSER_BLACKLIST
@@ -3600,8 +3600,8 @@ TYPEINFO(/obj/machinery/vending/murderbox_armory)
 		product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/tranq_darts/anti_mutant, 1, infinite = TRUE)
 
 		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/pepper, 1, infinite = TRUE)
-		product_list += new/datum/data/vending_product(/obj/item/old_grenade/smoke, 1, infinite = TRUE)
-		product_list += new/datum/data/vending_product(/obj/item/old_grenade/stinger, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/explosive/old_grenade/smoke, 1, infinite = TRUE)
+		product_list += new/datum/data/vending_product(/obj/item/explosive/old_grenade/stinger, 1, infinite = TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/flashbang, 1, infinite = TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/shock, 1, infinite = TRUE)
 		product_list += new/datum/data/vending_product(/obj/item/chem_grenade/very_incendiary, 1, infinite = TRUE)

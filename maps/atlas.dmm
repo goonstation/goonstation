@@ -5005,10 +5005,10 @@
 /area/station/mining/refinery)
 "aDA" = (
 /obj/table/auto,
-/obj/item/old_grenade/oxygen{
+/obj/item/explosive/old_grenade/oxygen{
 	pixel_y = 8
 	},
-/obj/item/old_grenade/oxygen{
+/obj/item/explosive/old_grenade/oxygen{
 	pixel_y = 8
 	},
 /obj/item/tank/jetpack/micro,
@@ -20250,14 +20250,14 @@
 	pixel_x = -8;
 	pixel_y = 11
 	},
-/obj/item/old_grenade/oxygen{
+/obj/item/explosive/old_grenade/oxygen{
 	pixel_x = 4;
 	pixel_y = 7
 	},
-/obj/item/old_grenade/oxygen{
+/obj/item/explosive/old_grenade/oxygen{
 	pixel_x = 7
 	},
-/obj/item/old_grenade/oxygen{
+/obj/item/explosive/old_grenade/oxygen{
 	pixel_x = 4;
 	pixel_y = -7
 	},

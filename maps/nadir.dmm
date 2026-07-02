@@ -18849,14 +18849,14 @@
 	})
 "ihU" = (
 /obj/table/reinforced/auto,
-/obj/item/old_grenade/oxygen{
+/obj/item/explosive/old_grenade/oxygen{
 	pixel_x = 7;
 	pixel_y = 9
 	},
-/obj/item/old_grenade/oxygen{
+/obj/item/explosive/old_grenade/oxygen{
 	pixel_y = 9
 	},
-/obj/item/old_grenade/oxygen{
+/obj/item/explosive/old_grenade/oxygen{
 	pixel_x = -7;
 	pixel_y = 9
 	},
@@ -19429,7 +19429,7 @@
 /obj/item/storage/box/cablesbox{
 	pixel_y = 7
 	},
-/obj/item/old_grenade/oxygen{
+/obj/item/explosive/old_grenade/oxygen{
 	pixel_x = 13;
 	pixel_y = 3
 	},

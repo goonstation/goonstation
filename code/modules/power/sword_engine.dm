@@ -102,11 +102,11 @@
 		if (src.online)
 			src.online = 0
 		core_inserted = FALSE
-		user.put_in_hand_or_drop(new /obj/item/sword_core)
+		user.put_in_hand_or_drop(new /obj/item/melee/sword_core)
 		user.show_message(SPAN_NOTICE("You remove the SWORD core from the SWORD Engine!"), 1)
 		desc = "The remains of the SWORD's Engine, salvaged to work as a better SMES unit. The core is missing."
 		UpdateIcon()
-	else if (integrity_state == 2 && (istype(W,/obj/item/sword_core) && !core_inserted))
+	else if (integrity_state == 2 && (istype(W,/obj/item/melee/sword_core) && !core_inserted))
 		core_inserted = TRUE
 		qdel(W)
 		user.show_message(SPAN_NOTICE("You insert the SWORD core into the SWORD Engine!"), 1)

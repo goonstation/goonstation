@@ -181,7 +181,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 
 /datum/syndicate_buylist/generic/sawfly
 	name = "Compact Sawfly"
-	items = list(/obj/item/old_grenade/sawfly/firsttime/withremote)
+	items = list(/obj/item/explosive/old_grenade/sawfly/firsttime/withremote)
 	cost = 1
 	vr_allowed = FALSE
 	desc = "A small antipersonnel robot that will not attack anyone of syndicate affiliation. It can be folded up after use."
@@ -189,7 +189,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 
 /datum/syndicate_buylist/generic/sawflymany
 	name = "Cluster Sawfly deployer"
-	items = list(/obj/item/old_grenade/spawner/sawflycluster)
+	items = list(/obj/item/explosive/old_grenade/spawner/sawflycluster)
 	cost = 5
 	vr_allowed = FALSE
 	desc = "An assembly of five antipersonnel robots that will not attack anyone of syndicate affiliation. They can be individually folded up after use."
@@ -215,13 +215,13 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 
 /datum/syndicate_buylist/generic/esword
 	name = "Cyalume Saber"
-	items = list(/obj/item/sword)
+	items = list(/obj/item/melee/sword)
 	cost = 7
 	desc = "A powerful melee weapon, crafted using the latest in applied photonics! When inactive, it is small enough to fit in a pocket!"
 	not_in_crates = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP
 
-	run_on_spawn(obj/item/sword/stabby, mob/living/owner, in_surplus_crate=FALSE) //Nukies get red ones
+	run_on_spawn(obj/item/melee/sword/stabby, mob/living/owner, in_surplus_crate=FALSE) //Nukies get red ones
 		if (isnukeop(owner) || isnukeopgunbot(owner))
 			stabby.light_c.set_color(255, 0, 0)
 			stabby.bladecolor = "R"
@@ -229,7 +229,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 
 /datum/syndicate_buylist/generic/katana
 	name = "Katana"
-	items = list(/obj/item/swords_sheaths/katana)
+	items = list(/obj/item/melee/swords_sheaths/katana)
 	cost = 7
 	desc = "A Japanese sword created in the fire of a dying star. Comes with a sheath for easier storage"
 	not_in_crates = TRUE

@@ -188,7 +188,7 @@ datum/special_respawn
 				user.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses, SLOT_GLASSES)
 				user.equip_new_if_possible(/obj/item/handcuffs, SLOT_IN_BACKPACK)
 				user.equip_new_if_possible(/obj/item/handcuffs, SLOT_IN_BACKPACK)
-				user.equip_new_if_possible(/obj/item/baton, SLOT_BELT)
+				user.equip_new_if_possible(/obj/item/melee/baton, SLOT_BELT)
 				user.equip_new_if_possible(/obj/item/device/flash, SLOT_L_STORE)
 				user.equip_new_if_possible(/obj/item/device/radio/headset/security, SLOT_EARS)
 				//var/obj/item/implant/sec/S = new /obj/item/implant/sec(user)

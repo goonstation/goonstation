@@ -350,7 +350,7 @@ TYPEINFO(/obj/item/firearm/energy/blaster_pod_wars)
 	item_state = "surv_axe_sy"
 
 //basically like stinger in that it shoots projectiles, but has no explosions, different icon
-/obj/item/old_grenade/energy_frag
+/obj/item/explosive/old_grenade/energy_frag
 	name = "blast grenade"
 	desc = "It is set to detonate in 3 seconds."
 	icon_state = "energy_stinger"
@@ -391,9 +391,9 @@ TYPEINFO(/obj/item/firearm/energy/blaster_pod_wars)
 	name = "\improper blast grenade box"
 	desc = "A box with 5 blast grenade."
 	icon_state = "flashbang"
-	spawn_contents = list(/obj/item/old_grenade/energy_frag = 5)
+	spawn_contents = list(/obj/item/explosive/old_grenade/energy_frag = 5)
 
-/obj/item/old_grenade/energy_concussion
+/obj/item/explosive/old_grenade/energy_concussion
 	name = "concussion grenade"
 	desc = "It is set to detonate in 3 seconds."
 	icon_state = "concussion"
@@ -445,4 +445,4 @@ TYPEINFO(/obj/item/firearm/energy/blaster_pod_wars)
 	name = "\improper concussion grenade box"
 	desc = "A box with 5 concussion grenade."
 	icon_state = "flashbang"
-	spawn_contents = list(/obj/item/old_grenade/energy_concussion = 5)
+	spawn_contents = list(/obj/item/explosive/old_grenade/energy_concussion = 5)

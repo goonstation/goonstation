@@ -1,3 +1,15 @@
+////////////////////////////////////////// Melee weapons parent //////////////////////////////////////////////////
+// To be completed refactores file location for weapons pre-2026-era code here. All weapons code parents should be placed inside the primary folders as primary directives.
+// All files secondary to such must be placed in a new secondary folder within the primary folder. This is to ensure that all weapons code is properly-
+// organized and as easy to navigate for future development and maintenance. Ensure they are named appropriately.
+//
+// Contains:
+// - Primary Folder
+// -- example_parent.dm
+// -- Secondary Folder
+// --- example_child.dm
+//
+
 // Contains:
 //
 // - Esword
@@ -17,12 +29,12 @@
 
 
 /// Cyalume saber/esword, famed traitor item
-TYPEINFO(/obj/item/sword)
+TYPEINFO(/obj/item/melee/sword)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal" = 5,
 				"conductive_high" = 5,
 				"energy_extreme" = 10)
-/obj/item/sword
+/obj/item/melee/sword
 	name = "cyalume saber"
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "sword0"
@@ -111,13 +123,13 @@ TYPEINFO(/obj/item/sword)
 		AddComponent(/datum/component/itemblock/reflect/saberblock, PROC_REF(can_reflect), PROC_REF(get_reflect_color))
 		BLOCK_SETUP(BLOCK_SWORD)
 
-/obj/item/sword/proc/can_reflect()
+/obj/item/melee/sword/proc/can_reflect()
 	return src.active
 
-/obj/item/sword/proc/get_reflect_color()
+/obj/item/melee/sword/proc/get_reflect_color()
 	return get_hex_color_from_blade(src.bladecolor)
 
-/obj/item/sword/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+/obj/item/melee/sword/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if(active)
 		if (handle_parry(target, user))
 			return 1
@@ -143,7 +155,7 @@ TYPEINFO(/obj/item/sword)
 		else
 			..()
 
-/obj/item/sword/proc/get_hex_color_from_blade(var/C as text)
+/obj/item/melee/sword/proc/get_hex_color_from_blade(var/C as text)
 	switch(C)
 		if("R")
 			return "#FF0000"
@@ -165,12 +177,12 @@ TYPEINFO(/obj/item/sword)
 			return "#EBE6EB"
 	return "RAND"
 
-/obj/item/sword/proc/handle_parry(mob/target, mob/user)
+/obj/item/melee/sword/proc/handle_parry(mob/target, mob/user)
 	if (target != user && ishuman(target))
 		var/mob/living/carbon/human/H = target
-		var/obj/item/sword/S = H.find_type_in_hand(/obj/item/sword, "right")
+		var/obj/item/melee/sword/S = H.find_type_in_hand(/obj/item/melee/sword, "right")
 		if (!S)
-			S = H.find_type_in_hand(/obj/item/sword, "left")
+			S = H.find_type_in_hand(/obj/item/melee/sword, "left")
 		if (S && S.active && !(H.lying || isdead(H) || H.hasStatus(list("stunned", "knockdown", "unconscious"))))
 			var/obj/itemspecialeffect/clash/C = new /obj/itemspecialeffect/clash
 			if(target.gender == MALE) playsound(target, pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 0, 5, clamp(1.0 + (30 - H.bioHolder.age)/60, 0.7, 1.2))
@@ -193,7 +205,7 @@ TYPEINFO(/obj/item/sword)
 	return 0
 
 
-/obj/item/sword/attack_self(mob/user as mob)
+/obj/item/melee/sword/attack_self(mob/user as mob)
 	if (use_glowstick)
 		if (open)
 			return
@@ -250,8 +262,8 @@ TYPEINFO(/obj/item/sword)
 	src.add_fingerprint(user)
 	..()
 
-/obj/item/sword/custom_suicide = 1
-/obj/item/sword/suicide(var/mob/user as mob)
+/obj/item/melee/sword/custom_suicide = 1
+/obj/item/melee/sword/suicide(var/mob/user as mob)
 	if (!src.user_can_suicide(user))
 		return 0
 	if (!src.active)
@@ -265,7 +277,7 @@ TYPEINFO(/obj/item/sword)
 			user.suiciding = 0
 	return 1
 
-/obj/item/sword/attackby(obj/item/W, mob/user, params)
+/obj/item/melee/sword/attackby(obj/item/W, mob/user, params)
 	if (!use_glowstick)
 		return ..()
 
@@ -342,7 +354,7 @@ TYPEINFO(/obj/item/sword)
 	else
 		return ..()
 
-/obj/item/sword/attack_hand(mob/user)
+/obj/item/melee/sword/attack_hand(mob/user)
 	if (src.open && src.loc == user)
 		if (src.loaded_glowstick && src.use_glowstick)
 			user.put_in_hand(loaded_glowstick)
@@ -352,7 +364,7 @@ TYPEINFO(/obj/item/sword)
 			return
 	..()
 
-/obj/item/sword/update_icon()
+/obj/item/melee/sword/update_icon()
 	. = ..()
 	var/datum/component/loctargeting/simple_light/light_c = src.GetComponent(/datum/component/loctargeting/simple_light)
 	if (src.active)
@@ -375,7 +387,7 @@ TYPEINFO(/obj/item/sword)
 			FLICK("sword_retract-[src.bladecolor]", src)
 		light_c.update(FALSE)
 
-/obj/item/sword/red
+/obj/item/melee/sword/red
 	bladecolor = "R"
 
 	enakai
@@ -395,30 +407,30 @@ TYPEINFO(/obj/item/sword)
 				boutput(user, SPAN_NOTICE("You feel that it was too soon for this..."))
 			. = ..()
 
-/obj/item/sword/orange
+/obj/item/melee/sword/orange
 	bladecolor = "O"
 
-/obj/item/sword/yellow
+/obj/item/melee/sword/yellow
 	bladecolor = "Y"
 
-/obj/item/sword/green
+/obj/item/melee/sword/green
 	bladecolor = "G"
 
-/obj/item/sword/cyan
+/obj/item/melee/sword/cyan
 	bladecolor = "C"
 
-/obj/item/sword/blue
+/obj/item/melee/sword/blue
 	bladecolor = "B"
 
-/obj/item/sword/purple
+/obj/item/melee/sword/purple
 	bladecolor = "P"
 
-/obj/item/sword/pink
+/obj/item/melee/sword/pink
 	bladecolor = "Pi"
 
-TYPEINFO(/obj/item/sword/pink/angel)
+TYPEINFO(/obj/item/melee/sword/pink/angel)
 	analyser_flags = ANALYSER_BLACKLIST
-/obj/item/sword/pink/angel
+/obj/item/melee/sword/pink/angel
 	name = "The Nyasaber"
 	desc = "A strange colour of saber, for a sith. You sense the dark side of the nya within it..."
 	active = TRUE
@@ -462,23 +474,23 @@ TYPEINFO(/obj/item/sword/pink/angel)
 			usr.make_critter(/mob/living/critter/small_animal/cat)
 			playsound(usr.loc, 'sound/voice/animal/cat.ogg', 50, 1)
 
-/obj/item/sword/white
+/obj/item/melee/sword/white
 	bladecolor = "W"
 
-/obj/item/sword/rainbow
+/obj/item/melee/sword/rainbow
 	bladecolor = null
 
-/obj/item/sword/vr
+/obj/item/melee/sword/vr
 	icon = 'icons/effects/VR.dmi'
 	inhand_image_icon = 'icons/effects/VR_csaber_inhand.dmi'
 	valid_colors = list("R","Y","G","C","B","P","W","Bl")
 	use_glowstick = 0
 
-/obj/item/sword/old
+/obj/item/melee/sword/old
 	icon = 'icons/obj/items/oldsaber.dmi'
 	use_glowstick = 0
 
-/obj/item/sword/discount
+/obj/item/melee/sword/discount
 	name = "d-saber"
 	desc = "A discount cyalume saber. Commonly called a d-saber."
 	state_name = "d_sword"
@@ -506,7 +518,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 		..()
 		. += "It is set to [src.active ? "on" : "off"]."
 
-/obj/item/sword/discount/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+/obj/item/melee/sword/discount/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	//returns TRUE if parried. So stop here
 	if (..())
 		return
@@ -1201,9 +1213,9 @@ TYPEINFO(/obj/item/bat)
 
 /////////////////////////////////////////////////// Swords ////////////////////////////////////////////
 //You probably want to spawn the sheath in instead of this.
-TYPEINFO(/obj/item/swords)
+TYPEINFO(/obj/item/melee/swords)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
-/obj/item/swords
+/obj/item/melee/swords
 	name = "youshouldntseeme sword"
 	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
@@ -1224,15 +1236,15 @@ TYPEINFO(/obj/item/swords)
 	var/midair_fruit_slice_stamina_cost = 7 //! The amount of stamina it costs to slice food midair
 	custom_suicide = 1
 
-/obj/item/swords/New()
+/obj/item/melee/swords/New()
 	src.AddComponent(/datum/component/bloodflick)
 	src.AddComponent(/datum/component/log_item_pickup, first_time_only=FALSE, authorized_job=null, message_admins_too=FALSE)
 	..()
 
-/obj/item/swords/proc/handle_parry(mob/target, mob/user)
+/obj/item/melee/swords/proc/handle_parry(mob/target, mob/user)
 	if (target != user && ishuman(target))
 		var/mob/living/carbon/human/H = target
-		if (H.find_type_in_hand(/obj/item/swords, "right") || H.find_type_in_hand(/obj/item/swords, "left"))
+		if (H.find_type_in_hand(/obj/item/melee/swords, "right") || H.find_type_in_hand(/obj/item/melee/swords, "left"))
 			var/obj/itemspecialeffect/clash/C = new /obj/itemspecialeffect/clash
 			playsound(target, pick('sound/effects/sword_clash1.ogg','sound/effects/sword_clash2.ogg','sound/effects/sword_clash3.ogg'), 70, 0, 0)
 			C.setup(H.loc)
@@ -1252,7 +1264,7 @@ TYPEINFO(/obj/item/swords)
 			return 1
 	return 0
 
-/obj/item/swords/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+/obj/item/melee/swords/attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 	if(!ishuman(target)) //only humans can currently be dismembered
 		return ..()
 	if (check_target_immunity(target=target, ignore_everything_but_nodamage=FALSE, source=user))
@@ -1290,7 +1302,7 @@ TYPEINFO(/obj/item/swords)
 			return ..()
 	..()
 
-/obj/item/swords/suicide(var/mob/living/carbon/human/user as mob) //you stab out a random organ
+/obj/item/melee/swords/suicide(var/mob/living/carbon/human/user as mob) //you stab out a random organ
 	if (!istype(user) || !user.organHolder || !src.user_can_suicide(user))
 		return 0
 	else
@@ -1305,30 +1317,30 @@ TYPEINFO(/obj/item/swords)
 		return 1
 
 /// Checks if the target is facing in some way away from the user. Or they're lying down
-/obj/item/swords/proc/SeverButtStuff(var/mob/living/carbon/human/target, var/mob/user)
+/obj/item/melee/swords/proc/SeverButtStuff(var/mob/living/carbon/human/target, var/mob/user)
 	if(ismob(target) && (BOUNDS_DIST(target, user) == 0) && (target.dir == user.dir || target.lying))
 		if(target.organHolder?.tail)
 			target.organHolder.drop_and_throw_organ("tail", dist = 5, speed = 1, showtext = 1)
 		else if(target.organHolder?.butt)
 			target.organHolder.drop_and_throw_organ("butt", dist = 5, speed = 1, showtext = 1)
 
-/obj/item/swords/try_specific_equip(mob/living/carbon/human/user)
+/obj/item/melee/swords/try_specific_equip(mob/living/carbon/human/user)
 	. = FALSE
 	if (!istype(user))
 		return
-	if (!istype(user.belt, /obj/item/swords_sheaths))
+	if (!istype(user.belt, /obj/item/melee/swords_sheaths))
 		return
-	var/obj/item/swords_sheaths/sheath = user.belt
+	var/obj/item/melee/swords_sheaths/sheath = user.belt
 	if (!sheath.sword_inside && sheath.sword_path == src.type && !src.cant_drop)
 		sheath.Attackby(src, user)
 		return TRUE
 
 //PS the description can be shortened if you find it annoying and you are a jerk.
-TYPEINFO(/obj/item/swords/katana)
+TYPEINFO(/obj/item/melee/swords/katana)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = list("metal_superdense" = 20,
 				"fabric" = 5)
-/obj/item/swords/katana
+/obj/item/melee/swords/katana
 	name = "katana"
 	desc = "That's it. I'm sick of all this 'Masterwork Cyalume Saber' bullshit that's going on in the SS13 system right now. Katanas deserve much better than that. Much, much better than that. I should know what I'm talking about. I myself commissioned a genuine katana in Space Japan for 2,400,000 Nuyen (that's about 20,000 credits) and have been practicing with it for almost 2 years now. I can even cut slabs of solid mauxite with my katana. Space Japanese smiths spend light-years working on a single katana and fold it up to a million times to produce the finest blades known to space mankind. Katanas are thrice as sharp as Syndicate sabers and thrice as hard for that matter too. Anything a c-saber can cut through, a katana can cut through better. I'm pretty sure a katana could easily bisect a drunk captain wearing full captain's armor with a simple tap. Ever wonder why the Syndicate never bothered conquering Space Japan? That's right, they were too scared to fight the disciplined Space Samurai and their space katanas of destruction. Even in World War 72, Nanotrasen soldiers targeted the men with the katanas first because their killing power was feared and respected."
 	icon_state = "katana"
@@ -1384,7 +1396,7 @@ TYPEINFO(/obj/item/swords/katana)
 			else
 				boutput(user, SPAN_ALERT("You cannot coat the [src] in this!"))
 
-/obj/item/swords/katana/suicide(var/mob/user as mob)
+/obj/item/melee/swords/katana/suicide(var/mob/user as mob)
 	user.visible_message(SPAN_ALERT("<b>[user] thrusts [src] through their stomach!</b>"))
 	var/say = pick("Kono shi wa watashinokazoku ni meiyo o ataeru","Haji no mae no shi", "Watashi wa kyo nagura reta.", "Teki ga katta", "Shinjiketo ga modotte kuru")
 	user.say(say)
@@ -1395,7 +1407,7 @@ TYPEINFO(/obj/item/swords/katana)
 			user.suiciding = 0
 	return 1
 
-/obj/item/swords/katana/self_destructing // for the dojo ronin to wield
+/obj/item/melee/swords/katana/self_destructing // for the dojo ronin to wield
 	force = 30
 
 	dropped(mob/user)
@@ -1403,7 +1415,7 @@ TYPEINFO(/obj/item/swords/katana)
 		if (isturf(src.loc))
 			qdel(src)
 
-/obj/item/swords/katana/reverse
+/obj/item/melee/swords/katana/reverse
 	icon_state = "katana_reverse"
 	name = "reverse blade katana"
 	desc = "A sword whose blade is on the wrong side. Crafted by a master who grew to hate the death his weapons caused; which was weird since Oppenheimer has him beat by several orders of magnitude. Considered worthless by many, only a true virtuoso can unleash it's potential."
@@ -1417,7 +1429,7 @@ TYPEINFO(/obj/item/swords/katana)
 		..()
 		src.setItemSpecial(/datum/item_special/katana_dash/reverse)
 
-/obj/item/swords/katana/thundering
+/obj/item/melee/swords/katana/thundering
 	name = "thundering katana"
 	icon_state = "katana_thundering"
 	rarity = ITEM_RARITY_LEGENDARY
@@ -1427,10 +1439,10 @@ TYPEINFO(/obj/item/swords/katana)
 		..()
 		src.setItemSpecial(/datum/item_special/katana_dash/thundering)
 
-TYPEINFO(/obj/item/swords/captain)
+TYPEINFO(/obj/item/melee/swords/captain)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = list("metal_dense" = 15)
-/obj/item/swords/captain
+/obj/item/melee/swords/captain
 	icon_state = "cap_sword"
 	name = "Commander's Sabre"
 	desc = ""
@@ -1454,7 +1466,7 @@ TYPEINFO(/obj/item/swords/captain)
 	red
 		icon_state = "red_cap_sword"
 
-/obj/item/swords/nukeop
+/obj/item/melee/swords/nukeop
 	icon_state = "syndie_sword"
 	name = "Syndicate Commander's Sabre"
 	desc = "A sharp sabre for the most trusted and competent syndicate operatives. Commissioned from Iron Belle Bladeworks."
@@ -1466,7 +1478,7 @@ TYPEINFO(/obj/item/swords/captain)
 		..()
 		src.setItemSpecial(/datum/item_special/rangestab)
 
-/obj/item/swords/ntboss
+/obj/item/melee/swords/ntboss
 	icon_state = "ntboss_sword"
 	name = "NanoTrasen Commander's Sabre"
 	desc = "A sharp sabre for the most trusted and competent NanoTrasen Commanders. The blue paint is peeling a bit..."
@@ -1477,7 +1489,7 @@ TYPEINFO(/obj/item/swords/captain)
 		..()
 		src.setItemSpecial(/datum/item_special/rangestab)
 
-/obj/item/swords/nukeop/suicide(var/mob/living/carbon/human/user as mob)
+/obj/item/melee/swords/nukeop/suicide(var/mob/living/carbon/human/user as mob)
 	if (!istype(user) || !user.organHolder || !src.user_can_suicide(user))
 		return 0
 	else
@@ -1485,7 +1497,7 @@ TYPEINFO(/obj/item/swords/captain)
 		user.organHolder.drop_and_throw_organ("head", dist = 5, speed = 1, showtext = 1)
 		playsound(src.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
 
-/obj/item/swords/pirate
+/obj/item/melee/swords/pirate
 	icon_state = "pirate_sword"
 	name = "Pirate's Sabre"
 	desc = "A sharp sabre for the most feared of all space pirates. Commissioned from Iron Belle Bladeworks."
@@ -1497,7 +1509,7 @@ TYPEINFO(/obj/item/swords/captain)
 		..()
 		src.setItemSpecial(/datum/item_special/rangestab)
 
-/obj/item/swords/clown // this is the worst thing I've ever created
+/obj/item/melee/swords/clown // this is the worst thing I've ever created
 	icon_state = "clown_sword"
 	name = "Clowns's Sabre"
 	desc = "A sharp sab- is that a bike horn that's been cut in half duct taped to a sword? What the hell? How does that even work???"
@@ -1519,7 +1531,7 @@ TYPEINFO(/obj/item/swords/captain)
 			playsound(src, pick('sound/musical_instruments/Bikehorn_bonk1.ogg', 'sound/musical_instruments/Bikehorn_bonk2.ogg', 'sound/musical_instruments/Bikehorn_bonk3.ogg'), 50, 1, -1)
 		..()
 
-/obj/item/swords/clown/suicide(var/mob/living/carbon/human/user as mob)
+/obj/item/melee/swords/clown/suicide(var/mob/living/carbon/human/user as mob)
 	if (!istype(user) || !user.organHolder || !src.user_can_suicide(user))
 		return 0
 	else
@@ -1533,9 +1545,9 @@ TYPEINFO(/obj/item/swords/captain)
 				user.death()
 
 
-TYPEINFO(/obj/item/swords_sheaths)
+TYPEINFO(/obj/item/melee/swords_sheaths)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
-/obj/item/swords_sheaths //blegh, keeping naming consistent
+/obj/item/melee/swords_sheaths //blegh, keeping naming consistent
 	name = "youshouldntseemieum sheath"
 	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
@@ -1548,16 +1560,16 @@ TYPEINFO(/obj/item/swords_sheaths)
 	w_class = W_CLASS_NORMAL
 	flags = TABLEPASS | NOSHIELD | USEDELAY
 	c_flags = ONBELT
-	var/obj/item/swords/sword_inside = 1
+	var/obj/item/melee/swords/sword_inside = 1
 	var/sheathed_state = "katana_sheathed"
 	var/sheath_state = "katana_sheath"
 	var/ih_sheathed_state = "sheathedhand"
 	var/ih_sheath_state = "sheathhand"
-	var/sword_path = /obj/item/swords
+	var/sword_path = /obj/item/melee/swords
 
 	New()
 		..()
-		var/obj/item/swords/K = new sword_path()
+		var/obj/item/melee/swords/K = new sword_path()
 		sword_inside = K
 		K.set_loc(src)
 		BLOCK_SETUP(BLOCK_ROD)
@@ -1579,7 +1591,7 @@ TYPEINFO(/obj/item/swords_sheaths)
 		if (!istype(W, sword_path))
 			boutput(user, SPAN_ALERT("[W] can't fit into [src]."))
 			return
-		if (istype(W, /obj/item/swords) && !src.sword_inside && !W.cant_drop == 1)
+		if (istype(W, /obj/item/melee/swords) && !src.sword_inside && !W.cant_drop == 1)
 			icon_state = sheathed_state
 			item_state = ih_sheathed_state
 			user.u_equip(W)
@@ -1609,7 +1621,7 @@ TYPEINFO(/obj/item/swords_sheaths)
 							usr.u_equip(src)
 							usr.put_in_hand_or_drop(src, 1)
 
-/obj/item/swords_sheaths/proc/draw_sword(mob/living/carbon/human/user)
+/obj/item/melee/swords_sheaths/proc/draw_sword(mob/living/carbon/human/user)
 	if(src.sword_inside) //Checks if a sword is inside
 		if (!user.r_hand || !user.l_hand)
 			sword_inside.clean_forensic()
@@ -1623,7 +1635,7 @@ TYPEINFO(/obj/item/swords_sheaths)
 		else
 			boutput(user, "You don't have a free hand to draw with!")
 
-/obj/item/swords_sheaths/katana
+/obj/item/melee/swords_sheaths/katana
 	name = "katana sheath"
 	desc = "It can clean a bloodied katana, and also allows for easier storage of a katana"
 	icon_state = "katana_sheathed"
@@ -1634,9 +1646,9 @@ TYPEINFO(/obj/item/swords_sheaths)
 
 	ih_sheathed_state = "sheathedhand"
 	ih_sheath_state = "sheathhand"
-	sword_path = /obj/item/swords/katana
+	sword_path = /obj/item/melee/swords/katana
 
-/obj/item/swords_sheaths/katana/reverse
+/obj/item/melee/swords_sheaths/katana/reverse
 	name = "reverse-blade katana sheath"
 	desc = "It can clean a bloodied katana, and also allows for easier storage of a katana"
 	icon_state = "sheath_reverse1"
@@ -1646,9 +1658,9 @@ TYPEINFO(/obj/item/swords_sheaths)
 	sheath_state = "sheath_reverse0"
 	ih_sheathed_state = "sheath_reverse1"
 	ih_sheath_state = "sheath_reverse0"
-	sword_path = /obj/item/swords/katana/reverse
+	sword_path = /obj/item/melee/swords/katana/reverse
 
-/obj/item/swords_sheaths/captain
+/obj/item/melee/swords_sheaths/captain
 	name = "Commander's Scabbard"
 	desc = null
 	icon_state = "cap_sword_scabbard"
@@ -1658,7 +1670,7 @@ TYPEINFO(/obj/item/swords_sheaths)
 	sheath_state = "cap_scabbard"
 	ih_sheathed_state = "scabbard-cap1"
 	ih_sheath_state = "scabbard-cap0"
-	sword_path = /obj/item/swords/captain
+	sword_path = /obj/item/melee/swords/captain
 	tooltip_flags = REBUILD_USER
 
 	get_desc(var/dist, var/mob/user)
@@ -1675,7 +1687,7 @@ TYPEINFO(/obj/item/swords_sheaths)
 		sheath_state = "blue_cap_scabbard"
 		ih_sheathed_state = "blue_scabbard-cap1"
 		ih_sheath_state = "blue_scabbard-cap0"
-		sword_path = /obj/item/swords/captain/blue
+		sword_path = /obj/item/melee/swords/captain/blue
 
 	red //for brown pants medal reward
 		icon_state = "red_cap_sword_scabbard"
@@ -1685,9 +1697,9 @@ TYPEINFO(/obj/item/swords_sheaths)
 		sheath_state = "red_cap_scabbard"
 		ih_sheathed_state = "red_scabbard-cap1"
 		ih_sheath_state = "red_scabbard-cap0"
-		sword_path = /obj/item/swords/captain/red
+		sword_path = /obj/item/melee/swords/captain/red
 
-/obj/item/swords_sheaths/nukeop
+/obj/item/melee/swords_sheaths/nukeop
 	name = "Syndicate Commander's Scabbard"
 	desc = "A nifty container for an evil sword. Given to the most trusted syndicate operatives. The scabbard bears the insignia 'I.B.B'."
 	icon_state = "syndie_sword_scabbard"
@@ -1697,9 +1709,9 @@ TYPEINFO(/obj/item/swords_sheaths)
 	sheath_state = "syndie_scabbard"
 	ih_sheathed_state = "scabbard-syndie1"
 	ih_sheath_state = "scabbard-syndie0"
-	sword_path = /obj/item/swords/nukeop
+	sword_path = /obj/item/melee/swords/nukeop
 
-/obj/item/swords_sheaths/ntboss
+/obj/item/melee/swords_sheaths/ntboss
 	name = "Nanotrasen Commander's Scabbard"
 	desc = "A nifty container for a mighty sword. Given to Nanotrasen's most trusted commanders. The blue paint is peeling a bit..."
 	icon_state = "ntboss_sword_scabbard"
@@ -1709,9 +1721,9 @@ TYPEINFO(/obj/item/swords_sheaths)
 	sheath_state = "ntboss_scabbard"
 	ih_sheathed_state = "scabbard-ntboss1"
 	ih_sheath_state = "scabbard-ntboss0"
-	sword_path = /obj/item/swords/ntboss
+	sword_path = /obj/item/melee/swords/ntboss
 
-/obj/item/swords_sheaths/pirate
+/obj/item/melee/swords_sheaths/pirate
 	name = "Pirate's Scabbard"
 	desc = "A nifty container for a ruthless sword. Given to the most feared space pirates, or stolen from the previous most feared space pirate. The scabbard bears the insignia 'I.B.B'."
 	icon_state = "pirate_sword_scabbard"
@@ -1721,9 +1733,9 @@ TYPEINFO(/obj/item/swords_sheaths)
 	sheath_state = "pirate_scabbard"
 	ih_sheathed_state = "scabbard-pirate1"
 	ih_sheath_state = "scabbard-pirate0"
-	sword_path = /obj/item/swords/pirate
+	sword_path = /obj/item/melee/swords/pirate
 
-/obj/item/swords_sheaths/clown
+/obj/item/melee/swords_sheaths/clown
 	name = "Clown's Scabbard"
 	desc = "A nifty container for a... is that just a magnet to hold a sword to it? Oh god."
 	icon_state = "clown_sword_scabbard"
@@ -1733,7 +1745,7 @@ TYPEINFO(/obj/item/swords_sheaths)
 	sheath_state = "clown_scabbard"
 	ih_sheathed_state = "scabbard-clown1"
 	ih_sheath_state = "scabbard-clown0"
-	sword_path = /obj/item/swords/clown
+	sword_path = /obj/item/melee/swords/clown
 
 	New()
 		. = ..()
@@ -1746,7 +1758,7 @@ TYPEINFO(/obj/item/swords_sheaths)
  * Kinda just proof-of-concepts + me learning about numbers. ~ Gannets
 */
 
-/obj/item/swords/bloodthirsty_blade
+/obj/item/melee/swords/bloodthirsty_blade
 	name = "Bloodthirsty Blade"
 	desc = "A mysterious blade that hungers for blood & revels in strife. Grows stronger when used for malicious means."
 	icon = 'icons/obj/items/weapons.dmi'
@@ -1775,7 +1787,7 @@ TYPEINFO(/obj/item/swords_sheaths)
 		BLOCK_SETUP(BLOCK_SWORD)
 
 
-/obj/item/swords/bloodthirsty_blade/attack(target, mob/user)
+/obj/item/melee/swords/bloodthirsty_blade/attack(target, mob/user)
 	playsound(target, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 60, TRUE)
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
@@ -1785,14 +1797,14 @@ TYPEINFO(/obj/item/swords_sheaths)
 			take_bleeding_damage(C, user, 5, DAMAGE_STAB)
 	..()
 
-/obj/item/swords/bloodthirsty_blade/dropped(mob/user)
+/obj/item/melee/swords/bloodthirsty_blade/dropped(mob/user)
 	..()
 	if (isturf(src.loc))
 		user.visible_message(SPAN_ALERT("As the [src] falls from [user]'s hands, it seems to become duller!"))
 		force = 5
 		return
 
-obj/item/swords/fragile_sword
+obj/item/melee/swords/fragile_sword
 	name = "fragile sword"
 	desc = "This great blade has seen many battles, as such it dulls quickly when used."
 	icon = 'icons/obj/items/weapons.dmi'

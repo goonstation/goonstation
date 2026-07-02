@@ -164,9 +164,9 @@
 		impact_image_effect(ie_type, hit)
 		return
 
-TYPEINFO(/obj/item/swords/sord)
+TYPEINFO(/obj/item/melee/swords/sord)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
-/obj/item/swords/sord
+/obj/item/melee/swords/sord
 	name = "gross sord"
 	desc = "oh no"
 	icon = 'icons/obj/items/weapons.dmi'

@@ -469,8 +469,8 @@
 						src.set_a_intent(INTENT_GRAB)
 					src.ai_attack_target(ai_target, null)
 				else // With a weapon
-					if(istype(src.equipped(), /obj/item/sword) && prob(80))
-						var/obj/item/sword/csaber = src.equipped()
+					if(istype(src.equipped(), /obj/item/melee/sword) && prob(80))
+						var/obj/item/melee/sword/csaber = src.equipped()
 						if(!csaber.open)
 							src.ai_attack_target(csaber, null)
 					src.ai_attack_target(ai_target, src.equipped())
@@ -726,7 +726,7 @@
 		var/score = 0
 		if(G.loc == src && !G.equipped_in_slot) // probably organs
 			continue
-		if(istype(G, /obj/item/chem_grenade) || istype(G, /obj/item/old_grenade))
+		if(istype(G, /obj/item/chem_grenade) || istype(G, /obj/item/explosive/old_grenade))
 			score += 6
 		if(IS_NPC_CLOTHING(G) && (G.loc != src || prob(2)) && !ON_COOLDOWN(src, "pickup clothing", 30 SECONDS))
 			score += 10
@@ -824,7 +824,7 @@
 				if(src:r_hand:force < G.force) pickup = G
 			else if(src.r_hand && pickup && G.force > 3)
 				if(pickup.force < G.force) pickup = G
-			else if(istype(G, /obj/item/sword))
+			else if(istype(G, /obj/item/melee/sword))
 				pickup = G
 				break
 

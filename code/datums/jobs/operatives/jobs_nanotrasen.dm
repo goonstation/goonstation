@@ -40,7 +40,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	receives_miranda = TRUE
 	receives_disk = /obj/item/disk/data/floppy/sec_command
 
-	slot_belt = list(/obj/item/swords_sheaths/ntboss)
+	slot_belt = list(/obj/item/melee/swords_sheaths/ntboss)
 	slot_jump = list(/obj/item/clothing/under/misc/NT)
 	slot_suit = list(/obj/item/clothing/suit/space/nanotrasen/pilot/commander)
 	slot_head = list(/obj/item/clothing/head/NTberet/commander)

@@ -1836,7 +1836,7 @@ datum/projectile/bullet/autocannon
 
 	var/has_grenade = 0
 	var/obj/item/chem_grenade/CHEM = null
-	var/obj/item/old_grenade/OLD = null
+	var/obj/item/explosive/old_grenade/OLD = null
 	var/has_det = 0 //have we detonated a grenade yet?
 
 	proc/get_nade()
@@ -1859,7 +1859,7 @@ datum/projectile/bullet/autocannon
 					src.damage = CHEM.launcher_damage
 					src.has_grenade = 1
 					return 1
-				else if (istype(W, /obj/item/old_grenade))
+				else if (istype(W, /obj/item/explosive/old_grenade))
 					src.OLD = W
 					src.damage = OLD.launcher_damage
 					src.has_grenade = 1
@@ -1901,7 +1901,7 @@ datum/projectile/bullet/autocannon
 					C.explode()
 				return
 			else if (src.OLD != null)
-				var/obj/item/old_grenade/O = OLD.launcher_clone()
+				var/obj/item/explosive/old_grenade/O = OLD.launcher_clone()
 				O.invisibility = INVIS_ALWAYS
 				O.set_loc(T)
 				src.has_det = 1

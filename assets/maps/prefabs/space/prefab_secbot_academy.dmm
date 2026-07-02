@@ -122,10 +122,10 @@
 /area/prefab/secbot_academy)
 "gn" = (
 /obj/table/reinforced/industrial/auto,
-/obj/item/old_grenade/smoke{
+/obj/item/explosive/old_grenade/smoke{
 	pixel_x = 5
 	},
-/obj/item/old_grenade/smoke{
+/obj/item/explosive/old_grenade/smoke{
 	pixel_x = -9
 	},
 /turf/simulated/floor/redblack{

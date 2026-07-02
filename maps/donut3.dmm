@@ -1652,11 +1652,11 @@
 	},
 /area/station/security/equipment)
 "axt" = (
-/obj/item/old_grenade/oxygen{
+/obj/item/explosive/old_grenade/oxygen{
 	pixel_x = 11;
 	pixel_y = 12
 	},
-/obj/item/old_grenade/oxygen{
+/obj/item/explosive/old_grenade/oxygen{
 	pixel_x = -7;
 	pixel_y = 12
 	},
@@ -1667,7 +1667,7 @@
 /obj/item/clothing/ears/earmuffs{
 	pixel_x = 7
 	},
-/obj/item/old_grenade/oxygen{
+/obj/item/explosive/old_grenade/oxygen{
 	pixel_x = 2;
 	pixel_y = 12
 	},
@@ -35518,11 +35518,11 @@
 	pixel_x = 5;
 	pixel_y = 11
 	},
-/obj/item/old_grenade/oxygen{
+/obj/item/explosive/old_grenade/oxygen{
 	pixel_x = -7;
 	pixel_y = 4
 	},
-/obj/item/old_grenade/oxygen{
+/obj/item/explosive/old_grenade/oxygen{
 	pixel_x = 3;
 	pixel_y = 4
 	},

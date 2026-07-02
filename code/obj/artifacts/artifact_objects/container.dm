@@ -57,7 +57,7 @@
 				else
 					new/obj/item/gimmickbomb/owlclothes(src.holder)
 			if(4)
-				new/obj/item/old_grenade/light_gimmick(src.holder)
+				new/obj/item/explosive/old_grenade/light_gimmick(src.holder)
 
 	effect_touch(var/obj/O,var/mob/living/user)
 		. = ..()

@@ -376,7 +376,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/mob/living/carbon/human/normal/chiefengineer = 0.1,
 			/mob/living/carbon/human/npc/monkey/mr_rathen = 0.5,
 			/obj/item/clothing/glasses/toggleable/meson = 0.5,
-			/obj/item/old_grenade/graviton = 0.2,
+			/obj/item/explosive/old_grenade/graviton = 0.2,
 			/obj/gravity_well_generator = 0.5,
 			/obj/item/raw_material/scrap_metal = 4,
 			/obj/item/raw_material/shard/glass = 5,
@@ -400,17 +400,17 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/barricade = 1,
 			/obj/item/deployer/barricade = 0.5,
 			/mob/living/carbon/human/npc/monkey/oppenheimer = 0.5,
-			/obj/item/mine/blast/armed = 1,
-			/obj/item/mine/incendiary/armed = 1,
-			/obj/item/mine/radiation/armed = 1,
-			/obj/item/mine/stun/armed = 1,
-			/obj/item/old_grenade/stinger/frag = 1,
-			/obj/item/old_grenade/stinger = 1,
+			/obj/item/explosive/mine/blast/armed = 1,
+			/obj/item/explosive/mine/incendiary/armed = 1,
+			/obj/item/explosive/mine/radiation/armed = 1,
+			/obj/item/explosive/mine/stun/armed = 1,
+			/obj/item/explosive/old_grenade/stinger/frag = 1,
+			/obj/item/explosive/old_grenade/stinger = 1,
 			/obj/item/chem_grenade/very_incendiary = 0.5,
 			/obj/item/chem_grenade/incendiary = 1,
 			/obj/stool/chair/office/syndie = 1,
 			/obj/item/paper/book/from_file/syndies_guide = 0.5,
-			/obj/item/beartrap/armed = 1,
+			/obj/item/trap/beartrap/armed = 1,
 			/datum/reagent/harmful/saxitoxin = 0.1,
 			/datum/reagent/blood = 1,
 			/mob/living/critter/robotic/sawfly = 2,
@@ -1268,8 +1268,8 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			SPAWN(rand(10 SECONDS, 2 MINUTES))
 				if(!QDELETED(hotspot))
 					qdel(hotspot)
-		else if(istype(., /obj/item/old_grenade))
-			var/obj/item/old_grenade/grenade = .
+		else if(istype(., /obj/item/explosive/old_grenade))
+			var/obj/item/explosive/old_grenade/grenade = .
 			if(prob(50))
 				SPAWN(rand(1 SECOND, 10 SECONDS))
 					grenade.detonate()

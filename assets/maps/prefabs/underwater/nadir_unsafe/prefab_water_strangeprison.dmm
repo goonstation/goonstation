@@ -229,7 +229,7 @@
 "aQ" = (
 /obj/table/auto,
 /obj/item/storage/belt/security,
-/obj/item/baton,
+/obj/item/melee/baton,
 /obj/disposalpipe/segment{
 	dir = 4;
 	level = -1;

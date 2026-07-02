@@ -53,7 +53,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/noGenerate)
 "n" = (
-/obj/item/mine/stun/armed,
+/obj/item/explosive/mine/stun/armed,
 /turf/variableTurf/clear,
 /area/noGenerate)
 "o" = (
@@ -71,7 +71,7 @@
 "s" = (
 /obj/storage/crate,
 /obj/random_item_spawner/kineticgun/safer/one,
-/obj/item/mine/blast/armed,
+/obj/item/explosive/mine/blast/armed,
 /turf/variableTurf/clear,
 /area/noGenerate)
 "t" = (

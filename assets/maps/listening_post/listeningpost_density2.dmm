@@ -221,7 +221,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost/general)
 "AO" = (
-/obj/item/turret_deployer/syndicate,
+/obj/item/deployable/turret_deployer/syndicate,
 /turf/simulated/floor/black,
 /area/listeningpost/barracks)
 "Bf" = (

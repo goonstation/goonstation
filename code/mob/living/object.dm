@@ -439,8 +439,8 @@
 	var/obj/item/item = spooker.equipped()
 
 	if (!istype(item, /obj/item/attackdummy)) // marginally more performant- don't bother if we're a possessed non item
-		if (istype(item, /obj/item/baton))
-			var/obj/item/baton/bat = item
+		if (istype(item, /obj/item/melee/baton))
+			var/obj/item/melee/baton/bat = item
 			// they're down, hiding, or we're out of juice - let's harm baton
 			if (is_incapacitated(src.holder.target) || !isturf(src.holder.target.loc) || !(SEND_SIGNAL(bat, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE))
 				if (bat.is_active) // uh oh, we're on. turn off
@@ -451,8 +451,8 @@
 
 			else // they're up and we have charge, let's try to stun
 				if (!bat.is_active)
-					if (istype(bat, /obj/item/baton/ntso))
-						var/obj/item/baton/ntso/NTbat = bat
+					if (istype(bat, /obj/item/melee/baton/ntso))
+						var/obj/item/melee/baton/ntso/NTbat = bat
 						if (NTbat.state == EXTENDO_BATON_OPEN_AND_OFF) // need 2 taps to get to 'on' in this case
 							spooker.self_interact()
 					spooker.self_interact()
@@ -462,8 +462,8 @@
 				bat.flipped = FALSE
 			bat.UpdateIcon()
 
-		else if (istype(item, /obj/item/sword))
-			var/obj/item/sword/saber = item
+		else if (istype(item, /obj/item/melee/sword))
+			var/obj/item/melee/sword/saber = item
 			if (!saber.active)
 				spooker.self_interact() // turn that sword on
 			spooker.set_a_intent(INTENT_HARM)
@@ -489,10 +489,10 @@
 			else
 				spooker.set_a_intent(INTENT_HELP) // otherwise go on help for gun whipping
 
-		else if (istype(item, /obj/item/old_grenade) || istype(item, /obj/item/chem_grenade || istype(item, /obj/item/pipebomb))) //cool paths tHANKS
+		else if (istype(item, /obj/item/explosive/old_grenade) || istype(item, /obj/item/chem_grenade || istype(item, /obj/item/pipebomb))) //cool paths tHANKS
 			spooker.self_interact() // arm grenades
 
-		else if (istype(item, /obj/item/swords)) 		// this will also apply for non-limb-slicey katanas but it shouldn't really matter
+		else if (istype(item, /obj/item/melee/swords)) 		// this will also apply for non-limb-slicey katanas but it shouldn't really matter
 			if (ishuman(holder.target))
 				var/mob/living/carbon/human/H = holder.target
 				var/limbless = TRUE

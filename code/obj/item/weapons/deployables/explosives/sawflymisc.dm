@@ -11,13 +11,13 @@
 */
 
 // -------------------grenades-------------
-TYPEINFO(/obj/item/old_grenade/sawfly)
+TYPEINFO(/obj/item/explosive/old_grenade/sawfly)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal_dense" = 7,
 				"conductive" = 7,
 				"energy" = 5)
 
-/obj/item/old_grenade/sawfly
+/obj/item/explosive/old_grenade/sawfly
 	name = "Compact sawfly"
 	desc = "A self-deploying antipersonnel robot. It's folded up and offline..."
 	det_time = 1.5 SECONDS
@@ -53,9 +53,9 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 
 		qdel(src)
 
-TYPEINFO(/obj/item/old_grenade/sawfly/firsttime)
-	manufactured_type = /obj/item/old_grenade/sawfly/firsttime //For subtype, prevents remote clutter if you're making an army
-/obj/item/old_grenade/sawfly/firsttime //super important- traitor uplinks and sawfly pouches use this specific version
+TYPEINFO(/obj/item/explosive/old_grenade/sawfly/firsttime)
+	manufactured_type = /obj/item/explosive/old_grenade/sawfly/firsttime //For subtype, prevents remote clutter if you're making an army
+/obj/item/explosive/old_grenade/sawfly/firsttime //super important- traitor uplinks and sawfly pouches use this specific version
 	New()
 
 		heldfly = new /mob/living/critter/robotic/sawfly(src.loc)
@@ -64,14 +64,14 @@ TYPEINFO(/obj/item/old_grenade/sawfly/firsttime)
 		..()
 
 
-/obj/item/old_grenade/sawfly/firsttime/withremote // for traitor menu
+/obj/item/explosive/old_grenade/sawfly/firsttime/withremote // for traitor menu
 	New()
 		new /obj/item/remote/sawflyremote(src.loc)
 		..()
 
-TYPEINFO(/obj/item/old_grenade/spawner/sawflycluster)
+TYPEINFO(/obj/item/explosive/old_grenade/spawner/sawflycluster)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
-/obj/item/old_grenade/spawner/sawflycluster
+/obj/item/explosive/old_grenade/spawner/sawflycluster
 	name = "Cluster sawfly"
 	desc = "A whole lot of little angry robots at the end of the stick, ready to shred whoever stands in their way."
 	det_time = 2 SECONDS // more reasonable reaction time
@@ -120,20 +120,20 @@ TYPEINFO(/obj/item/remote/sawflyremote)
 		for (var/mob/living/critter/robotic/sawfly/S in range(get_turf(src), 5)) // folds active sawflies
 			SPAWN(0.1 SECONDS)
 				S.foldself()
-		for (var/obj/item/old_grenade/S in range(get_turf(src), 5)) // unfolds passive sawflies
+		for (var/obj/item/explosive/old_grenade/S in range(get_turf(src), 5)) // unfolds passive sawflies
 			var/area/A = get_area(S)
 			if (A.sanctuary == TRUE && !istype(A, /area/syndicate_station/battlecruiser)) // salvager vessel, vr, THE SHAMECUBE, but not the battlecruiser
 				continue
 			if (!S.issawfly) //check if we're allowed to prime the grenade
 				continue
-			if (istype(S, /obj/item/old_grenade/sawfly) && !S.armed)
+			if (istype(S, /obj/item/explosive/old_grenade/sawfly) && !S.armed)
 				S.visible_message(SPAN_ALERT("[S] suddenly springs open as its engine purrs to a start!"))
 				S.icon_state = "sawflyunfolding"
 				S.armed = TRUE
 				SPAWN(S.det_time)
 					S?.detonate()
 
-			if (istype(S, /obj/item/old_grenade/spawner/sawflycluster) && !S.armed)
+			if (istype(S, /obj/item/explosive/old_grenade/spawner/sawflycluster) && !S.armed)
 				S.visible_message(SPAN_ALERT("The [S] suddenly begins beeping as it is primed!"))
 				if (S.icon_state=="clusterflyA")
 					S.icon_state = "clusterflyA1"

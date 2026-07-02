@@ -756,7 +756,7 @@
 
 		onAdd()
 			if(master)
-				var/obj/item/sword/saber = master
+				var/obj/item/melee/sword/saber = master
 				if (istype(saber))
 					swipe_color = get_hex_color_from_blade(saber.bladecolor)
 			return
@@ -1223,12 +1223,12 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 /datum/item_special/spark/baton
 	pixelaction(atom/target, params, mob/user, reach)
 		if(user.a_intent != INTENT_DISARM) return //only want this to deploy on disarm intent
-		if(!istype(master, /obj/item/baton) || get_dist_pixel_squared(user, target, params) <= ITEMSPECIAL_PIXELDIST_SQUARED) return
+		if(!istype(master, /obj/item/melee/baton) || get_dist_pixel_squared(user, target, params) <= ITEMSPECIAL_PIXELDIST_SQUARED) return
 		if(!master:can_stun())
 			playsound(master, 'sound/weapons/Gunclick.ogg', 50, FALSE, 0.1, 2)
 			return
 		..()
-		if(master && istype(master, /obj/item/baton))
+		if(master && istype(master, /obj/item/melee/baton))
 			master:process_charges(-1, user)
 
 
@@ -1548,7 +1548,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			var/obj/itemspecialeffect/E = null
 
 			//sorry about this, it's so I don't unpool a simple effect twice by mistake
-			if(istype(master, /obj/item/baton))
+			if(istype(master, /obj/item/melee/baton))
 				if (!master:can_stun())
 					E = new /obj/itemspecialeffect/simple
 				else
@@ -1585,7 +1585,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	usable(var/mob/user)
 		if (!..())
 			return 0
-		if(istype(master, /obj/item/baton/ntso))
+		if(istype(master, /obj/item/melee/baton/ntso))
 			if (master:state == 1)
 				return 0
 		return 1
@@ -1617,11 +1617,11 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 
 	var/secondhit_delay = 1
 	var/stamina_damage = 80
-	var/obj/item/swords/katana/K
+	var/obj/item/melee/swords/katana/K
 	var/reversed = 0
 
 	onAdd()
-		if(istype(master, /obj/item/swords/katana))
+		if(istype(master, /obj/item/melee/swords/katana))
 			K = master
 		return
 

@@ -162,7 +162,7 @@
 			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
 				src.light(user, SPAN_ALERT("<b>[user]</b> casually lights [src] with [W], what a badass."))
 				return
-			else if (istype(W, /obj/item/sword) && W:active)
+			else if (istype(W, /obj/item/melee/sword) && W:active)
 				src.light(user, SPAN_ALERT("<b>[user]</b> swishes [W] alarmingly close to [his_or_her(user)] face and lights [src] ablaze."))
 				return
 			else if (istype(W, /obj/item/clothing/head/cakehat) && W:on)

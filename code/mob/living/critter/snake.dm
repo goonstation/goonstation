@@ -148,7 +148,7 @@
 			do_stick_overlay = 1
 		else if(istype(stick, /obj/critter/domestic_bee))
 			src.icon_state = "snake_bee"
-		else if(istype(stick, /obj/item/baton))
+		else if(istype(stick, /obj/item/melee/baton))
 			src.icon_state = "snake_baton"
 		else if(istype(stick, /obj/item/staff/cthulhu))
 			src.icon_state = "snake_cthulhu"

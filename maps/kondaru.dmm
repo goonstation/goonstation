@@ -34242,15 +34242,15 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/item/old_grenade/oxygen{
+/obj/item/explosive/old_grenade/oxygen{
 	pixel_x = -16;
 	pixel_y = 10
 	},
-/obj/item/old_grenade/oxygen{
+/obj/item/explosive/old_grenade/oxygen{
 	pixel_x = -14;
 	pixel_y = 5
 	},
-/obj/item/old_grenade/oxygen{
+/obj/item/explosive/old_grenade/oxygen{
 	pixel_x = -11
 	},
 /turf/simulated/floor/black,
@@ -41845,8 +41845,8 @@
 	pixel_x = 7;
 	pixel_y = 13
 	},
-/obj/item/old_grenade/oxygen,
-/obj/item/old_grenade/oxygen,
+/obj/item/explosive/old_grenade/oxygen,
+/obj/item/explosive/old_grenade/oxygen,
 /turf/simulated/floor/darkblue,
 /area/station/storage/eva)
 "mNU" = (

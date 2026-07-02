@@ -354,7 +354,7 @@ var/global/mail_types_by_job = list(
 	/datum/job/command/chief_engineer = list(
 		/obj/item/rcd_ammo = 10,
 		/obj/item/chem_grenade/firefighting = 5,
-		/obj/item/old_grenade/oxygen = 7,
+		/obj/item/explosive/old_grenade/oxygen = 7,
 		/obj/item/chem_grenade/metalfoam = 4,
 		/obj/item/cable_coil = 3,
 		/obj/item/lamp_manufacturer/organic = 5,
@@ -491,7 +491,7 @@ var/global/mail_types_by_job = list(
 
 	/datum/job/engineering/engineer = list(
 		/obj/item/chem_grenade/firefighting = 5,
-		/obj/item/old_grenade/oxygen = 7,
+		/obj/item/explosive/old_grenade/oxygen = 7,
 		/obj/item/chem_grenade/metalfoam = 4,
 		/obj/item/cable_coil = 6,
 		/obj/item/lamp_manufacturer/organic = 5,

@@ -1140,7 +1140,7 @@ ABSTRACT_TYPE(/datum/commodity/magpie/special/sell/pirate)
 	sabre
 		comname = "Replica Pirate's Sabre"
 		desc = "A sharp sabre for the most feared of all space pirates. Being you of course."
-		comtype = /obj/item/swords_sheaths/pirate
+		comtype = /obj/item/melee/swords_sheaths/pirate
 		price = 650
 		amount = 3
 

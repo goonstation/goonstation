@@ -37,7 +37,7 @@
 /obj/decal/tile_edge/check/white{
 	icon_state = "check1"
 	},
-/obj/item/old_grenade/spawner/banana,
+/obj/item/explosive/old_grenade/spawner/banana,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -94,7 +94,7 @@
 	icon_state = "check2";
 	dir = 10
 	},
-/obj/item/old_grenade/spawner/banana,
+/obj/item/explosive/old_grenade/spawner/banana,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -297,7 +297,7 @@
 	icon_state = "check1";
 	dir = 4
 	},
-/obj/item/old_grenade/spawner/banana,
+/obj/item/explosive/old_grenade/spawner/banana,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -478,7 +478,7 @@
 	icon_state = "check1";
 	dir = 4
 	},
-/obj/item/old_grenade/spawner/banana,
+/obj/item/explosive/old_grenade/spawner/banana,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -488,7 +488,7 @@
 	icon_state = "shrub";
 	dir = 10
 	},
-/obj/item/old_grenade/spawner/cheese_sandwich,
+/obj/item/explosive/old_grenade/spawner/cheese_sandwich,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -498,7 +498,7 @@
 	icon_state = "shrub";
 	dir = 1
 	},
-/obj/item/old_grenade/spawner/banana,
+/obj/item/explosive/old_grenade/spawner/banana,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -577,7 +577,7 @@
 	icon_state = "check1";
 	dir = 9
 	},
-/obj/item/old_grenade/spawner/banana,
+/obj/item/explosive/old_grenade/spawner/banana,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -604,7 +604,7 @@
 	icon_state = "check1";
 	dir = 1
 	},
-/obj/item/old_grenade/spawner/banana,
+/obj/item/explosive/old_grenade/spawner/banana,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -658,7 +658,7 @@
 	dir = 8
 	},
 /obj/shrub,
-/obj/item/old_grenade/spawner/banana,
+/obj/item/explosive/old_grenade/spawner/banana,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},

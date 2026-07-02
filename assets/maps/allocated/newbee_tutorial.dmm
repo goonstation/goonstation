@@ -292,7 +292,7 @@
 /turf/unsimulated/floor/plating,
 /area/tutorial/newbee/room_8)
 "kK" = (
-/obj/item/scrapweapons/weapons/spear/glass,
+/obj/item/scrapweapons/weapons/melee/spear/glass,
 /turf/unsimulated/floor,
 /area/tutorial/newbee/room_16)
 "kW" = (
@@ -791,7 +791,7 @@
 	},
 /area/tutorial/newbee/room_3)
 "Ec" = (
-/obj/item/scrapweapons/weapons/dagger,
+/obj/item/scrapweapons/weapons/melee/dagger,
 /turf/unsimulated/floor,
 /area/tutorial/newbee/room_16)
 "Ei" = (
@@ -1131,7 +1131,7 @@
 /area/tutorial/newbee/room_2)
 "SE" = (
 /obj/machinery/light/incandescent,
-/obj/item/swords_sheaths/captain/blue{
+/obj/item/melee/swords_sheaths/captain/blue{
 	pixel_x = -14
 	},
 /turf/unsimulated/floor/darkblueblack,
@@ -1203,7 +1203,7 @@
 	},
 /area/tutorial/newbee/room_4)
 "Vh" = (
-/obj/item/baton{
+/obj/item/melee/baton{
 	pixel_x = -14
 	},
 /turf/unsimulated/floor/redblack{

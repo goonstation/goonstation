@@ -1082,7 +1082,7 @@
 	},
 /area/listeningpost/tech_room)
 "UV" = (
-/obj/item/turret_deployer/syndicate,
+/obj/item/deployable/turret_deployer/syndicate,
 /obj/table/syndicate/auto,
 /turf/simulated/floor/black,
 /area/listeningpost/barracks)

@@ -26,10 +26,10 @@
 		/obj/item/balloon_animal/random=5,
 		/obj/item/brick=10,
 		/obj/item/chilly_orb=50, //weird, mysterious, useless
-		/obj/item/mine/radiation/armed=100, //haha mean
-		/obj/item/mine/stun/armed=80,
+		/obj/item/explosive/mine/radiation/armed=100, //haha mean
+		/obj/item/explosive/mine/stun/armed=80,
 		/obj/item/nuclear_waste=50,
-		/obj/item/old_grenade/light_gimmick=200,
+		/obj/item/explosive/old_grenade/light_gimmick=200,
 		/obj/item/rubberduck=15, //quack
 		/obj/item/seed/alien=100,
 		/mob/living/critter/robotic/repairbot=100,

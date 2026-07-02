@@ -1655,7 +1655,7 @@ datum/commodity/drugs/sell/poppies
 
 /datum/commodity/clownsabre
 	comname = "C-Sabre"
-	comtype = /obj/item/swords_sheaths/clown
+	comtype = /obj/item/melee/swords_sheaths/clown
 	desc = "A high quality sabre."
 	onmarket = 0
 	price = PAY::UNTRAINED
@@ -1932,26 +1932,26 @@ datum/commodity/drugs/sell/poppies
 
 /datum/commodity/banana_grenade
 	comname = "Banana grenade"
-	comtype = /obj/item/old_grenade/spawner/banana
+	comtype = /obj/item/explosive/old_grenade/spawner/banana
 	desc = "Perfect for magic tricks and slips, and some clown's birthday present."
 	price = PAY::TRADESMAN*2
 
 /datum/commodity/foam_dart_grenade
 	comname = "Foam Dart Grenade"
-	comtype = /obj/item/old_grenade/foam_dart
+	comtype = /obj/item/explosive/old_grenade/foam_dart
 	desc = "Goes great with foam dart guns!"
 	price = PAY::UNTRAINED
 
 /datum/commodity/cheese_grenade
 	comname = "Cheese Sandwich grenade"
-	comtype = /obj/item/old_grenade/spawner/cheese_sandwich
+	comtype = /obj/item/explosive/old_grenade/spawner/cheese_sandwich
 	desc = "Contains only one type of cheese, unfortunately."
 	onmarket = 0
 	price = PAY::UNTRAINED*2
 
 /datum/commodity/corndog_grenade
 	comname = "Banana Corndog grenade"
-	comtype = /obj/item/old_grenade/spawner/banana_corndog
+	comtype = /obj/item/explosive/old_grenade/spawner/banana_corndog
 	desc = "A very space efficient party pleaser. No ketchup or mustard included."
 	onmarket = 0
 	price = PAY::UNTRAINED*2

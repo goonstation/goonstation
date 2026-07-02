@@ -155,7 +155,7 @@
 /turf/space,
 /area/space)
 "aaG" = (
-/obj/item/mine/stun/armed,
+/obj/item/explosive/mine/stun/armed,
 /turf/space,
 /area/space)
 "aaH" = (

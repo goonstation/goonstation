@@ -77,11 +77,11 @@ TYPEINFO(/mob/living/critter/aberration)
 		return
 
 	attackby(obj/item/I, mob/M)
-		if (!istype(I, /obj/item/baton))
+		if (!istype(I, /obj/item/melee/baton))
 			boutput(M, SPAN_COMBAT("<b>[I] passes right through!</b>"))
 			return
 
-		var/obj/item/baton/B = I
+		var/obj/item/melee/baton/B = I
 		if (!B.can_stun(1, M))
 			return
 		M.visible_message(SPAN_COMBAT("<b>[M] shocks the [src.name] with [I]!</b>"),

@@ -308,7 +308,7 @@
 			boutput(user, SPAN_NOTICE("You cut the wires. This is a very, VERY bad idea. You won't be able to undo this."))
 			steps_until_pressable--
 			return
-		if (istype(W,/obj/item/baton) && steps_until_pressable == 5)
+		if (istype(W,/obj/item/melee/baton) && steps_until_pressable == 5)
 			boutput(user, SPAN_NOTICE("You stun the button. Look, honestly, your persistence is NOT doing you any favors here."))
 			steps_until_pressable--
 			return

@@ -237,8 +237,8 @@
 	team_num = 2
 	color = "#FF6666"
 
-ABSTRACT_TYPE(/obj/item/turret_deployer/pod_wars)
-/obj/item/turret_deployer/pod_wars
+ABSTRACT_TYPE(/obj/item/deployable/turret_deployer/pod_wars)
+/obj/item/deployable/turret_deployer/pod_wars
 	name = "turret deployer"
 	desc = "A turret deployment thingy. Use it in your hand to deploy."
 	icon_state = "st_deployer"
@@ -264,7 +264,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	fire_rate = 3 // rate of fire in shots per second
 	angle_arc_size = 180
 	quick_deploy_fuel = 2
-	associated_deployer = /obj/item/turret_deployer/pod_wars
+	associated_deployer = /obj/item/deployable/turret_deployer/pod_wars
 	can_toggle_activation = FALSE
 	var/destroyed = 0
 	var/reconstruction_time = 5 MINUTES
@@ -299,12 +299,12 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	// 	else
 	// 		return 0
 
-/obj/item/turret_deployer/pod_wars/nt
+/obj/item/deployable/turret_deployer/pod_wars/nt
 	icon_tag = "nt"
 	associated_turret = /obj/deployable_turret/pod_wars/nt
 
 /obj/deployable_turret/pod_wars/nt
-	associated_deployer = /obj/item/turret_deployer/pod_wars/nt
+	associated_deployer = /obj/item/deployable/turret_deployer/pod_wars/nt
 	projectile_type = /datum/projectile/laser/blaster/pod_pilot/blue_NT/turret
 	icon_tag = "nt"
 
@@ -331,12 +331,12 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		dir=WEST
 
 
-/obj/item/turret_deployer/pod_wars/sy
+/obj/item/deployable/turret_deployer/pod_wars/sy
 	icon_tag = "st"
 	associated_turret = /obj/deployable_turret/pod_wars/sy
 
 /obj/deployable_turret/pod_wars/sy
-	associated_deployer = /obj/item/turret_deployer/pod_wars/sy
+	associated_deployer = /obj/item/deployable/turret_deployer/pod_wars/sy
 	projectile_type = /datum/projectile/laser/blaster/pod_pilot/red_SY/turret
 	icon_tag = "st"
 

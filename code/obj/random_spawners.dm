@@ -897,10 +897,10 @@
 	name = "random land mine spawner"
 	min_amt2spawn = 1
 	max_amt2spawn = 1
-	items2spawn = list(/obj/item/mine/radiation/armed,
-	/obj/item/mine/incendiary/armed,
-	/obj/item/mine/stun/armed,
-	/obj/item/mine/blast/armed)
+	items2spawn = list(/obj/item/explosive/mine/radiation/armed,
+	/obj/item/explosive/mine/incendiary/armed,
+	/obj/item/explosive/mine/stun/armed,
+	/obj/item/explosive/mine/blast/armed)
 
 // Loot Crate picker.
 /obj/random_item_spawner/loot_crate/surplus

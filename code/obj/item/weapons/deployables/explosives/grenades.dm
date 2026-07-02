@@ -9,13 +9,13 @@ PIPE BOMBS + CONSTRUCTION
 
 ////////////////////////////// Old-style grenades ///////////////////////////////////////
 
-TYPEINFO(/obj/item/old_grenade)
+TYPEINFO(/obj/item/explosive/old_grenade)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = 6
 
-ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
+ADMIN_INTERACT_PROCS(/obj/item/explosive/old_grenade, proc/detonate)
 
-/obj/item/old_grenade
+/obj/item/explosive/old_grenade
 	desc = "You shouldn't be able to see this!"
 	name = "old grenade"
 	var/armed = FALSE
@@ -161,10 +161,10 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 				message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing(LOG_COMBAT, user, "primes a grenade ([src.type]) at [log_loc(user)].")
 
-TYPEINFO(/obj/item/old_grenade/spawner)
+TYPEINFO(/obj/item/explosive/old_grenade/spawner)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
-ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
-/obj/item/old_grenade/spawner
+ABSTRACT_TYPE(/obj/item/explosive/old_grenade/spawner)
+/obj/item/explosive/old_grenade/spawner
 	desc = "It is set to detonate in 3 seconds."
 	det_time = 3 SECONDS
 	org_det_time = 3 SECONDS
@@ -197,42 +197,42 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		qdel(src)
 
 	launcher_clone() //for varedit shenanigans
-		var/obj/item/old_grenade/spawner/out = ..()
+		var/obj/item/explosive/old_grenade/spawner/out = ..()
 		out.payload = src.payload
 		out.amount_to_spawn = src.amount_to_spawn
 		return out
 
-/obj/item/old_grenade/spawner/banana
+/obj/item/explosive/old_grenade/spawner/banana
 	name = "banana grenade"
 	icon_state = "banana"
 	icon_state_armed = "banana1"
 	payload = /obj/item/bananapeel
 	launcher_damage = 10
 
-/obj/item/old_grenade/spawner/cheese_sandwich
+/obj/item/explosive/old_grenade/spawner/cheese_sandwich
 	name = "cheese sandwich grenade"
 	icon_state = "banana-old"
 	icon_state_armed = "banana1-old"
 	payload = /obj/item/reagent_containers/food/snacks/sandwich/cheese
 	launcher_damage = 10
 
-/obj/item/old_grenade/spawner/banana_corndog
+/obj/item/explosive/old_grenade/spawner/banana_corndog
 	name = "banana corndog grenade"
 	icon_state = "banana-old"
 	icon_state_armed = "banana1-old"
 	payload = /obj/item/reagent_containers/food/snacks/corndog/banana
 	launcher_damage = 10
 
-/obj/item/old_grenade/spawner/wasp
+/obj/item/explosive/old_grenade/spawner/wasp
 	name = "suspicious looking grenade"
 	icon_state = "wasp"
 	icon_state_armed = "wasp1"
 	payload =/mob/living/critter/small_animal/wasp/angry
 	is_dangerous = TRUE
 
-TYPEINFO(/obj/item/old_grenade/thing_thrower)
+TYPEINFO(/obj/item/explosive/old_grenade/thing_thrower)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
-/obj/item/old_grenade/thing_thrower
+/obj/item/explosive/old_grenade/thing_thrower
 	desc = "It is set to detonate in 3 seconds."
 	name = "banana grenade"
 	det_time = 3 SECONDS
@@ -262,7 +262,7 @@ TYPEINFO(/obj/item/old_grenade/thing_thrower)
 
 
 	launcher_clone() //for varedit shenanigans
-		var/obj/item/old_grenade/thing_thrower/out = ..()
+		var/obj/item/explosive/old_grenade/thing_thrower/out = ..()
 		out.payload = src.payload
 		out.count = src.count
 		return out
@@ -270,7 +270,7 @@ TYPEINFO(/obj/item/old_grenade/thing_thrower)
 	proc/before_throwing(var/thing, var/turf/target)
 		return
 
-/obj/item/old_grenade/thing_thrower/aconite
+/obj/item/explosive/old_grenade/thing_thrower/aconite
 	desc = "It is set to detonate in 3 seconds."
 	name = "aconite grenade"
 	icon_state = "aconite"
@@ -279,7 +279,7 @@ TYPEINFO(/obj/item/old_grenade/thing_thrower)
 	payload = /obj/item/plant/herb/aconite
 	count = 8
 
-/obj/item/old_grenade/thing_thrower/garlic
+/obj/item/explosive/old_grenade/thing_thrower/garlic
 	desc = "It is set to detonate in 3 seconds."
 	name = "garlic grenade"
 	icon_state = "garlic"
@@ -288,17 +288,17 @@ TYPEINFO(/obj/item/old_grenade/thing_thrower)
 	payload = /obj/item/reagent_containers/food/snacks/plant/garlic
 	count = 16
 
-/obj/item/old_grenade/thing_thrower/csword
+/obj/item/explosive/old_grenade/thing_thrower/csword
 	desc = "It is set to detonate in 3 seconds."
 	name = "cyalume saber grenade"
 	icon_state = "fragnade"
 	icon_state_armed = "fragnade"
-	payload = /obj/item/sword
+	payload = /obj/item/melee/sword
 	count = 12
 
 	before_throwing(var/thing, var/turf/target)
-		if (istype(thing, /obj/item/sword))
-			var/obj/item/sword/sword = thing
+		if (istype(thing, /obj/item/melee/sword))
+			var/obj/item/melee/sword/sword = thing
 			sword.active = TRUE
 			sword.UpdateIcon()
 			// SET_BLOCKS(BLOCK_ALL)
@@ -317,7 +317,7 @@ TYPEINFO(/obj/item/old_grenade/thing_thrower)
 
 		return
 
-/obj/item/old_grenade/thing_thrower/pie
+/obj/item/explosive/old_grenade/thing_thrower/pie
 	desc = "It is set to detonate in 3 seconds."
 	name = "pie grenade"
 	icon_state = "fragnade"
@@ -327,7 +327,7 @@ TYPEINFO(/obj/item/old_grenade/thing_thrower)
 	count = 20
 
 
-/obj/item/old_grenade/thing_thrower/shuriken
+/obj/item/explosive/old_grenade/thing_thrower/shuriken
 	desc = "It is set to detonate in 3 seconds."
 	name = "shuriken grenade"
 	icon_state = "fragnade"
@@ -336,11 +336,11 @@ TYPEINFO(/obj/item/old_grenade/thing_thrower)
 	payload = /obj/item/implant/projectile/shuriken
 	count = 12
 
-TYPEINFO(/obj/item/old_grenade/graviton)
+TYPEINFO(/obj/item/explosive/old_grenade/graviton)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 12
 
-/obj/item/old_grenade/graviton //ITS SPELT GRAVITON
+/obj/item/explosive/old_grenade/graviton //ITS SPELT GRAVITON
 	desc = "It is set to detonate in 10 seconds."
 	name = "graviton grenade"
 	det_time = 10 SECONDS
@@ -404,11 +404,11 @@ TYPEINFO(/obj/item/old_grenade/graviton)
 		qdel(src)
 		return
 
-TYPEINFO(/obj/item/old_grenade/singularity)
+TYPEINFO(/obj/item/explosive/old_grenade/singularity)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 12
 
-/obj/item/old_grenade/singularity
+/obj/item/explosive/old_grenade/singularity
 	desc = "It is set to detonate in 10 seconds."
 	name = "singularity grenade"
 	det_time = 10 SECONDS
@@ -473,10 +473,10 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 			icon_state = "Field_Gen +a"
 		qdel(src)
 
-TYPEINFO(/obj/item/old_grenade/smoke)
+TYPEINFO(/obj/item/explosive/old_grenade/smoke)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 
-/obj/item/old_grenade/smoke
+/obj/item/explosive/old_grenade/smoke
 	desc = "It is set to detonate in 2 seconds."
 	name = "smoke grenade"
 	icon_state = "smoke"
@@ -497,37 +497,37 @@ TYPEINFO(/obj/item/old_grenade/smoke)
 	detonate()
 		var/turf/T = ..()
 		if (T)
-			var/obj/item/old_grenade/smoke/mustard/M = null
-			if (istype(src, /obj/item/old_grenade/smoke/mustard))
+			var/obj/item/explosive/old_grenade/smoke/mustard/M = null
+			if (istype(src, /obj/item/explosive/old_grenade/smoke/mustard))
 				M = src
 			playsound(T, 'sound/effects/smoke.ogg', 50, TRUE, -3)
 
 			SPAWN(0)
 				if (src)
-					if (M && istype(M, /obj/item/old_grenade/smoke/mustard))
+					if (M && istype(M, /obj/item/explosive/old_grenade/smoke/mustard))
 						M.mustard_gas.start()
 					else
 						src.smoke.start()
 
 					sleep(1 SECOND)
-					if (M && istype(M, /obj/item/old_grenade/smoke/mustard))
+					if (M && istype(M, /obj/item/explosive/old_grenade/smoke/mustard))
 						M.mustard_gas.start()
 					else
 						src.smoke.start()
 
 					sleep(1 SECOND)
-					if (M && istype(M, /obj/item/old_grenade/smoke/mustard))
+					if (M && istype(M, /obj/item/explosive/old_grenade/smoke/mustard))
 						M.mustard_gas.start()
 					else
 						src.smoke.start()
 
 					sleep(1 SECOND)
-					if (M && istype(M, /obj/item/old_grenade/smoke/mustard))
+					if (M && istype(M, /obj/item/explosive/old_grenade/smoke/mustard))
 						M.mustard_gas.start()
 					else
 						src.smoke.start()
 
-					if (M && istype(M, /obj/item/old_grenade/smoke/mustard))
+					if (M && istype(M, /obj/item/explosive/old_grenade/smoke/mustard))
 						qdel(M)
 					else
 						qdel(src)
@@ -535,7 +535,7 @@ TYPEINFO(/obj/item/old_grenade/smoke)
 			qdel(src)
 		return
 
-/obj/item/old_grenade/smoke/mustard
+/obj/item/explosive/old_grenade/smoke/mustard
 	name = "mustard gas grenade"
 	var/datum/effects/system/mustard_gas_spread/mustard_gas
 	icon_state = "mustard"
@@ -548,7 +548,7 @@ TYPEINFO(/obj/item/old_grenade/smoke)
 			src.mustard_gas.attach(src)
 			src.mustard_gas.set_up(5, 0, usr.loc)
 
-/obj/item/old_grenade/stinger
+/obj/item/explosive/old_grenade/stinger
 	name = "stinger grenade"
 	desc = "It is set to detonate in 3 seconds."
 	icon_state = "fragnade"
@@ -578,8 +578,8 @@ TYPEINFO(/obj/item/old_grenade/smoke)
 			O.layer = NOLIGHT_EFFECTS_LAYER_BASE
 			O.icon = 'icons/effects/64x64.dmi'
 			O.icon_state = "explo_fiery"
-			var/obj/item/old_grenade/stinger/frag/F = null
-			if (istype(src, /obj/item/old_grenade/stinger/frag))
+			var/obj/item/explosive/old_grenade/stinger/frag/F = null
+			if (istype(src, /obj/item/explosive/old_grenade/stinger/frag))
 				F = src
 			if (F)
 				playsound(T, 'sound/effects/smoke.ogg', 20, TRUE, -2)
@@ -606,12 +606,12 @@ TYPEINFO(/obj/item/old_grenade/smoke)
 
 
 	launcher_clone() //for varedit shenanigans
-		var/obj/item/old_grenade/stinger/out = ..()
+		var/obj/item/explosive/old_grenade/stinger/out = ..()
 		out.custom_projectile_type = src.custom_projectile_type
 		out.pellets_to_fire = src.pellets_to_fire
 		return out
 
-/obj/item/old_grenade/stinger/frag
+/obj/item/explosive/old_grenade/stinger/frag
 	name = "frag grenade"
 	icon_state = "fragnade-alt"
 	icon_state_armed = "fragnade-alt1"
@@ -625,7 +625,7 @@ TYPEINFO(/obj/item/old_grenade/smoke)
 		src.smoke.attach(src)
 		src.smoke.set_up(7, 1, src.loc)
 
-/obj/item/old_grenade/high_explosive
+/obj/item/explosive/old_grenade/high_explosive
 	name = "HE grenade"
 	desc = "A high-explosive grenade. It is set to detonate in 3 seconds."
 	icon_state = "fragnade-alt"
@@ -660,9 +660,9 @@ TYPEINFO(/obj/item/old_grenade/smoke)
 			qdel(src)
 		return
 
-TYPEINFO(/obj/item/old_grenade/sonic)
+TYPEINFO(/obj/item/explosive/old_grenade/sonic)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
-/obj/item/old_grenade/sonic
+/obj/item/explosive/old_grenade/sonic
 	name = "sonic grenade"
 	desc = "It is set to detonate in 3 seconds."
 	icon_state = "sonic"
@@ -709,7 +709,7 @@ TYPEINFO(/obj/item/old_grenade/sonic)
 		qdel(src)
 		return
 
-/obj/item/old_grenade/foam_dart
+/obj/item/explosive/old_grenade/foam_dart
 	name = "foam dart grenade"
 	desc = "You can make great fights with these and foam dart guns."
 	icon_state = "foam-dart"
@@ -741,14 +741,14 @@ TYPEINFO(/obj/item/old_grenade/sonic)
 			qdel(src)
 
 	launcher_clone() //for varedit shenanigans
-		var/obj/item/old_grenade/foam_dart/out = ..()
+		var/obj/item/explosive/old_grenade/foam_dart/out = ..()
 		out.custom_projectile_type = src.custom_projectile_type
 		out.pellets_to_fire = src.pellets_to_fire
 		return out
 
-TYPEINFO(/obj/item/old_grenade/emp)
+TYPEINFO(/obj/item/explosive/old_grenade/emp)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
-/obj/item/old_grenade/emp
+/obj/item/explosive/old_grenade/emp
 	desc = "It is set to detonate in 5 seconds."
 	name = "emp grenade"
 	det_time = 5 SECONDS
@@ -800,12 +800,12 @@ TYPEINFO(/obj/item/old_grenade/emp)
 			qdel(src)
 		return
 
-TYPEINFO(/obj/item/old_grenade/oxygen)
+TYPEINFO(/obj/item/explosive/old_grenade/oxygen)
 	mats = list("metal_dense" = 2,
 				"conductive" = 2,
 				"molitz" = 10,
 				"char" = 1)
-/obj/item/old_grenade/oxygen
+/obj/item/explosive/old_grenade/oxygen
 	name = "red oxygen grenade"
 	desc = "It is set to detonate in 3 seconds."
 	det_time = 3 SECONDS
@@ -876,9 +876,9 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 		qdel(src)
 		return
 
-TYPEINFO(/obj/item/old_grenade/moustache)
+TYPEINFO(/obj/item/explosive/old_grenade/moustache)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
-/obj/item/old_grenade/moustache
+/obj/item/explosive/old_grenade/moustache
 	name = "moustache grenade"
 	desc = "It is set to detonate in 3 seconds."
 	det_time = 3 SECONDS
@@ -917,7 +917,7 @@ TYPEINFO(/obj/item/old_grenade/moustache)
 		qdel(src)
 		return
 
-/obj/item/old_grenade/light_gimmick
+/obj/item/explosive/old_grenade/light_gimmick
 	name = "light grenade"
 	icon_state = "lightgrenade"
 	icon = 'icons/obj/items/weapons.dmi'
@@ -984,7 +984,7 @@ TYPEINFO(/obj/item/old_grenade/moustache)
 								W.set_loc(user.loc)
 								W.dropped(user)
 								W.layer = initial(user.layer)
-						else if (istype(W,/obj/item/old_grenade/light_gimmick))
+						else if (istype(W,/obj/item/explosive/old_grenade/light_gimmick))
 							user.u_equip(W)
 							if (W)
 								W.set_loc(user.loc)
