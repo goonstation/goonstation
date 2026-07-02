@@ -11,10 +11,15 @@
 	var/visible = FALSE
 	var/armed = FALSE
 	var/mob/living/intangible/wraith/wraith_trickster/master = null
+	var/mob/living/critter/critter = null
 
-	New(turf/T, mob/living/intangible/wraith/wraith_trickster/W = null, mob/placing_mob)
+	New(turf/T, mob/living/W = null, mob/placing_mob)
 		..()
-		master = W
+		if (istype(W, /mob/living/intangible/wraith/wraith_trickster))
+			master = W
+		else
+			critter = W
+
 		SPAWN(5 SECONDS)
 			if (!QDELETED(src))
 				var/turf/local_turf = get_turf(src)
@@ -47,6 +52,9 @@
 	disposing()
 		if (master != null)
 			master.traps_laid--
+		else
+			var/datum/targetable/critter/demon_doll/devious_song/abil = critter.getAbility(/datum/targetable/critter/demon_doll/devious_song)
+			abil.traps_laid--
 		. = ..()
 
 	Crossed(atom/movable/AM)

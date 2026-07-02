@@ -1067,6 +1067,7 @@
 #include "code\modules\antagonists\wraith\critters\spiker.dm"
 #include "code\modules\antagonists\wraith\critters\trickster_puppet.dm"
 #include "code\modules\antagonists\wraith\critters\voidhound.dm"
+#include "code\modules\antagonists\wraith\critters\abilities\demon_doll.dm"
 #include "code\modules\antagonists\wraith\critters\abilities\nascent.dm"
 #include "code\modules\antagonists\wraith\critters\abilities\plaguerat.dm"
 #include "code\modules\antagonists\wraith\critters\abilities\skeleton_commander.dm"

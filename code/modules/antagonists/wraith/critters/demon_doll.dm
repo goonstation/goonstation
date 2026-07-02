@@ -17,6 +17,7 @@ TYPEINFO(/mob/living/critter/wraith/demon_doll)
 	faction = list(FACTION_WRAITH)
 	name_generator_path = /datum/wraith_name_generator/wraith_summon/doll
 	var/mob/living/intangible/wraith/master = null
+	var/traps_laid = 0
 
 	New(var/turf/T, var/mob/living/intangible/wraith/M = null)
 		..(T)
@@ -26,8 +27,11 @@ TYPEINFO(/mob/living/critter/wraith/demon_doll)
 			if (isnull(M.summons))
 				M.summons = list()
 			M.summons += src
+		src.see_invisible = INVIS_SPOOKY
+		src.addAbility(/datum/targetable/critter/demon_doll/devious_song)
 		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/demon_doll, src.type)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
+
 		src.setStatus("dark_affinity")
 
 	setup_healths()
@@ -61,7 +65,15 @@ TYPEINFO(/mob/living/critter/wraith/demon_doll)
 
 		animate(src, 3 SECONDS, pixel_y = 40)
 		SPAWN(3 SECONDS)
+			new/obj/item/clothing/gloves/ring/gold/spooky()
 			src.gib()
+		return ..()
+
+	gib()
+		var/turf/T = get_turf(src)
+		if (T)
+			new/obj/item/clothing/gloves/ring/gold/spooky(T)
+			playsound(T, 'sound/items/coindrop.ogg', 30, 1)
 		return ..()
 
 /datum/statusEffect/dark_affinity
