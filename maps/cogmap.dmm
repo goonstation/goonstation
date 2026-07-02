@@ -22416,7 +22416,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/station/engine/storage)
+/area/station/engine/coldloop)
 "bKT" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk{
@@ -34091,11 +34091,6 @@
 	dir = 8
 	},
 /area/station/medical/medbay/surgery)
-"cCV" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/obj/mapping_helper/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/hallway/secondary/exit)
 "cCW" = (
 /obj/storage/crate,
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine{
@@ -111408,7 +111403,7 @@ aaw
 uLB
 cCR
 bMm
-cCV
+cdu
 qvx
 cjL
 cmC
