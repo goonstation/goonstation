@@ -107,6 +107,8 @@
 	if (!istype(user))
 		src.login_user(termid, "TEMP")
 		return
+	else
+		src.log_command(user, data)
 
 	if (is_break)
 		user.current_prog.receive_progsignal(1, list("command" = DWAINE_COMMAND_BREAK, "user" = termid))
@@ -122,6 +124,7 @@
 			user.current_prog = src.master.run_program(src.get_file_name(src.setup_progname_shell, src.sys_folder), user, src)
 		else
 			user.current_prog = src.master.run_program(src.get_file_name(src.setup_progname_login, src.sys_folder), user, src)
+
 
 // Called by the mainframe object when a new terminal connection datum is ready for us to handle.
 /datum/computer/file/mainframe_program/os/kernel/new_connection(datum/terminal_connection/conn, datum/computer/file/connect_file)
@@ -400,6 +403,28 @@
 	if (!home_folder.add_file(new_home))
 		new_home.dispose()
 		return TRUE
+
+	var/datum/computer/file/new_history = new /datum/computer/file/record()
+	new_history.name = "_shell_history"
+	new_history.metadata["owner"] = user_record.fields["name"]
+	new_history.metadata["permission"] = COMP_ROWNER | COMP_WOWNER | COMP_DOWNER
+
+	if(!new_home.add_file(new_history)) // non-critical
+		new_history.dispose()
+
+	return FALSE
+
+/// log the command to the user's history file (/home/<user/_history) if possible
+/datum/computer/file/mainframe_program/os/kernel/proc/log_command(datum/mainframe2_user_data/user, command)
+	if(isnull(user) || !istype(user) || !command)
+		return TRUE
+
+	var/datum/computer/file/record/history = src.parse_file_directory("[setup_filepath_users_home]/[user.user_filename]/_shell_history", src.holder.root, FALSE, user)
+
+	if(isnull(history) || !istype(history))
+		return TRUE
+
+	history.fields[time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")] = command
 
 	return FALSE
 
