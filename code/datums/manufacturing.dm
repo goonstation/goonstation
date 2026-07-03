@@ -414,7 +414,7 @@
 	item_outputs = list(/obj/item/ammo/bullets/a38/stun)
 	create = 1
 	time = 20 SECONDS
-	category = MANUFACTURER::CATEGORY::RESOURCE
+	category = MANUFACTURER::CATEGORY::AMMO
 
 /datum/manufacture/bullet_22
 	name = ".22 Bullets"
@@ -423,7 +423,7 @@
 	item_outputs = list(/obj/item/ammo/bullets/bullet_22)
 	create = 1
 	time = 30 SECONDS
-	category = MANUFACTURER::CATEGORY::RESOURCE
+	category = MANUFACTURER::CATEGORY::AMMO
 
 /datum/manufacture/bullet_9mm_frangible
 	name = "9mm Frangible Rounds"
@@ -434,7 +434,7 @@
 	item_outputs = list(/obj/item/ammo/bullets/nine_mm_NATO)
 	create = 1
 	time = 15 SECONDS
-	category = MANUFACTURER::CATEGORY::RESOURCE
+	category = MANUFACTURER::CATEGORY::AMMO
 
 /datum/manufacture/bullet_12g_nail
 	name = "12 gauge nailshot"
@@ -443,7 +443,7 @@
 	item_outputs = list(/obj/item/ammo/bullets/nails)
 	create = 1
 	time = 30 SECONDS
-	category = MANUFACTURER::CATEGORY::RESOURCE
+	category = MANUFACTURER::CATEGORY::AMMO
 
 /datum/manufacture/bullet_smoke
 	name = "40mm Smoke Grenade"
@@ -452,7 +452,7 @@
 	item_outputs = list(/obj/item/ammo/bullets/smoke)
 	create = 1
 	time = 35 SECONDS
-	category = MANUFACTURER::CATEGORY::RESOURCE
+	category = MANUFACTURER::CATEGORY::AMMO
 
 /datum/manufacture/extinguisher
 	name = "Fire Extinguisher"
@@ -1056,7 +1056,7 @@
 	item_outputs = list(/obj/item/rcd_ammo)
 	create = 1
 	time = 10 SECONDS
-	category = MANUFACTURER::CATEGORY::RESOURCE
+	category = MANUFACTURER::CATEGORY::AMMO
 
 /datum/manufacture/RCDammomedium
 	name = "Medium Compressed Matter Cartridge"
@@ -1064,7 +1064,7 @@
 	item_outputs = list(/obj/item/rcd_ammo/medium)
 	create = 1
 	time = 20 SECONDS
-	category = MANUFACTURER::CATEGORY::RESOURCE
+	category = MANUFACTURER::CATEGORY::AMMO
 
 /datum/manufacture/RCDammolarge
 	name = "Large Compressed Matter Cartridge"
@@ -1072,7 +1072,7 @@
 	item_outputs = list(/obj/item/rcd_ammo/big)
 	create = 1
 	time = 30 SECONDS
-	category = MANUFACTURER::CATEGORY::RESOURCE
+	category = MANUFACTURER::CATEGORY::AMMO
 
 /datum/manufacture/sds
 	name = "Syndicate Destruction System"
