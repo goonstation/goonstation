@@ -3798,7 +3798,7 @@ ABSTRACT_TYPE(/datum/manufacture/locker) //Regular lockers are built using steel
 	item_requirements = list("metal" = 3)
 	create = 1
 	time = 10 SECONDS
-	category = "Miscellaneous"
+	category = MANUFACTURER::CATEGORY::LOCKERS
 
 	modify_output(obj/machinery/manufacturer/M, atom/A, list/materials)
 		. = ..()
