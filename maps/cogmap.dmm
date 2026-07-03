@@ -1989,7 +1989,7 @@
 	pixel_x = 5;
 	pixel_y = 5
 	},
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fred2"
@@ -2063,17 +2063,6 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
-"aiy" = (
-/obj/machinery/conveyor/NS{
-	id = "cargo"
-	},
-/obj/machinery/light_switch/directional/west,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/quartermaster/office)
 "aiz" = (
 /obj/machinery/atmospherics/unary/outlet_injector/active{
 	dir = 4
@@ -2576,7 +2565,7 @@
 	name = "Research Storage APC";
 	pixel_y = 24
 	},
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/plating,
 /area/station/science/gen_storage)
 "akz" = (
@@ -5365,7 +5354,10 @@
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "axp" = (
-/obj/machinery/light_switch/directional/south,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
 /obj/stool/chair/office{
 	dir = 4
 	},
@@ -14720,7 +14712,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "bcV" = (
@@ -15945,7 +15937,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/light_switch/east,
 /obj/table/auto,
 /obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
 /obj/item/storage/firstaid/brain{
@@ -21116,7 +21108,7 @@
 	dir = 8;
 	pixel_y = 1
 	},
-/obj/machinery/light_switch/directional/west{
+/obj/machinery/light_switch/west{
 	pixel_y = -10
 	},
 /turf/simulated/floor/white,
@@ -22472,7 +22464,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/light_switch/east,
 /obj/machinery/drainage,
 /turf/simulated/floor/bluewhite{
 	dir = 4
@@ -23262,7 +23254,10 @@
 /turf/simulated/floor,
 /area/station/routing/airbridge)
 "bQf" = (
-/obj/machinery/light_switch/directional/south,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
 /turf/simulated/floor/grey,
 /area/station/engine/inner)
 "bQg" = (
@@ -23373,7 +23368,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/neutral/side,
 /area/station/quartermaster/office)
 "bQH" = (
@@ -23397,7 +23392,7 @@
 	pixel_x = -9;
 	pixel_y = 1
 	},
-/obj/machinery/light_switch/directional/west,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor,
 /area/station/hangar/qm)
 "bQI" = (
@@ -25190,8 +25185,10 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/supplylobby)
 "bXm" = (
-/obj/machinery/light_switch/directional/north{
-	on = 0
+/obj/machinery/light_switch{
+	name = "N light switch";
+	on = 0;
+	pixel_y = 24
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -33243,7 +33240,7 @@
 /area/station/solar/north)
 "cGB" = (
 /obj/machinery/computer/ordercomp,
-/obj/machinery/light_switch/directional/west,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor,
 /area/station/routing/eva)
 "cHu" = (
@@ -33481,7 +33478,7 @@
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant"
 	},
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
 	},
@@ -33538,7 +33535,10 @@
 	pixel_x = -10
 	},
 /obj/machinery/light,
-/obj/machinery/light_switch/directional/south,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
 /obj/disposalpipe/segment{
 	dir = 8
 	},
@@ -33749,7 +33749,7 @@
 	},
 /obj/machinery/firealarm/directional/north,
 /obj/reagent_dispensers/beerkeg,
-/obj/machinery/light_switch/directional/west,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "dco" = (
@@ -33787,7 +33787,9 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/light_switch/directional/north{
+/obj/machinery/light_switch{
+	name = "N light switch";
+	pixel_y = 24;
 	pixel_x = -5
 	},
 /obj/machinery/power/apc/autoname_east,
@@ -34005,7 +34007,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/grime,
 /area/station/hallway/primary/east)
 "dkF" = (
@@ -34141,7 +34143,10 @@
 /obj/machinery/computer3/generic/secure_data{
 	dir = 8
 	},
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch{
+	name = "N light switch";
+	pixel_y = 24
+	},
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/red/side{
 	dir = 1
@@ -34285,7 +34290,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/plating/jen,
 /area/station/engine/elect)
 "dtK" = (
@@ -34505,7 +34510,10 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch{
+	name = "N light switch";
+	pixel_y = 24
+	},
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "dAx" = (
@@ -34620,7 +34628,10 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "dFm" = (
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch{
+	name = "N light switch";
+	pixel_y = 24
+	},
 /obj/stool/chair/couch{
 	dir = 8
 	},
@@ -34729,7 +34740,10 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/light_switch/directional/south,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "fred2"
@@ -34837,7 +34851,10 @@
 /turf/simulated/floor/plating,
 /area/station/hangar/main)
 "dMR" = (
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch{
+	name = "N light switch";
+	pixel_y = 24
+	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -34935,7 +34952,10 @@
 	codes_txt = "delivery;dir=4";
 	location = "Tool Storage"
 	},
-/obj/machinery/light_switch/directional/south,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/storage/auxillary{
@@ -35211,7 +35231,10 @@
 	},
 /area/station/security/main)
 "dXu" = (
-/obj/machinery/light_switch/directional/south,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
 /obj/machinery/light,
 /obj/table/wood/auto,
 /obj/machinery/recharger,
@@ -35428,7 +35451,10 @@
 /turf/simulated/floor/plating,
 /area/station/security/secwing)
 "ehf" = (
-/obj/machinery/light_switch/directional/south,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
 /turf/simulated/floor,
 /area/station/routing/airbridge)
 "ehv" = (
@@ -35773,7 +35799,7 @@
 /obj/disposalpipe/segment{
 	dir = 1
 	},
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
 "erD" = (
@@ -35820,7 +35846,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "esW" = (
-/obj/machinery/light_switch/directional/east{
+/obj/machinery/light_switch/east{
 	pixel_y = 5
 	},
 /obj/blind_switch/area/east{
@@ -36197,7 +36223,7 @@
 /obj/stool/chair{
 	dir = 8
 	},
-/obj/machinery/light_switch/directional/east{
+/obj/machinery/light_switch/east{
 	pixel_y = 5
 	},
 /turf/simulated/floor/greenwhite/other{
@@ -36707,7 +36733,10 @@
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "eWz" = (
-/obj/machinery/light_switch/directional/south,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
 /obj/disposalpipe/segment/produce{
 	dir = 4
 	},
@@ -36919,7 +36948,7 @@
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload_foyer)
 "ffi" = (
-/obj/machinery/light_switch/directional/south,
+/obj/machinery/light_switch/south,
 /turf/simulated/floor/neutral/side,
 /area/station/crew_quarters/locker)
 "ffm" = (
@@ -36963,7 +36992,10 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/light_switch/directional/south,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
@@ -37452,7 +37484,10 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/elect)
 "fud" = (
-/obj/machinery/light_switch/directional/south,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
 /turf/simulated/floor/grime,
 /area/station/mining/magnet)
 "fuv" = (
@@ -37472,7 +37507,10 @@
 /turf/simulated/floor,
 /area/station/engine/elect)
 "fuL" = (
-/obj/machinery/light_switch/directional/south,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
@@ -37617,7 +37655,7 @@
 /turf/space,
 /area/space)
 "fyI" = (
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch/north,
 /obj/blind_switch/area/north{
 	pixel_x = 8
 	},
@@ -37663,13 +37701,6 @@
 /turf/simulated/floor/grime,
 /area/station/routing/depot)
 "fBc" = (
-/obj/machinery/light_switch/directional/north{
-	on = 0
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},
@@ -37892,7 +37923,10 @@
 /area/station/crew_quarters/fitness)
 "fLQ" = (
 /obj/cable,
-/obj/machinery/light_switch/directional/south,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
 /obj/table/wood/auto,
 /obj/machinery/computer3/generic/personal,
 /obj/item/paper/engine,
@@ -37977,7 +38011,7 @@
 /turf/space,
 /area/space)
 "fPk" = (
-/obj/machinery/light_switch/directional/west,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "fPv" = (
@@ -38202,7 +38236,7 @@
 	icon_state = "1-2"
 	},
 /obj/laser_sink/mirror,
-/obj/machinery/light_switch/directional/west,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor,
 /area/station/engine/ptl)
 "fUp" = (
@@ -38262,7 +38296,10 @@
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "fWK" = (
-/obj/machinery/light_switch/directional/south,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
@@ -38515,7 +38552,10 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch{
+	name = "N light switch";
+	pixel_y = 24
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/juryroom)
 "gfX" = (
@@ -38546,7 +38586,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
@@ -39228,7 +39268,7 @@
 	pixel_x = -2;
 	pixel_y = -3
 	},
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "gGL" = (
@@ -39462,7 +39502,7 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -39530,7 +39570,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor,
 /area/station/routing/engine)
 "gPy" = (
@@ -39619,7 +39659,10 @@
 /turf/simulated/floor/red,
 /area/station/engine/hotloop)
 "gUF" = (
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch{
+	name = "N light switch";
+	pixel_y = 24
+	},
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
@@ -39713,7 +39756,7 @@
 	pixel_x = -4;
 	pixel_y = 9
 	},
-/obj/machinery/light_switch/directional/west,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "gWV" = (
@@ -39969,15 +40012,6 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "heN" = (
-/obj/machinery/computer/stockexchange{
-	dir = 8
-	},
-/obj/machinery/alarm/directional/north,
-/obj/machinery/light_switch/directional/east,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/stool/chair{
 	dir = 4
 	},
@@ -40248,7 +40282,10 @@
 /area/station/ranch)
 "hpS" = (
 /obj/table/reinforced/auto,
-/obj/machinery/light_switch/directional/south,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
 /obj/item/paper/book/from_file/pharmacopia{
 	pixel_x = 8;
 	pixel_y = 6
@@ -40383,7 +40420,7 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 6
 	},
-/obj/machinery/light_switch/directional/west,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "huq" = (
@@ -40696,9 +40733,12 @@
 /turf/simulated/floor/black,
 /area/station/engine/coldloop)
 "hFc" = (
-/obj/machinery/light_switch/directional/west{
+/obj/machinery/light_switch{
 	layer = 9;
-	on = 0
+	name = "W light switch";
+	on = 0;
+	pixel_x = -24;
+	dir = 8
 	},
 /obj/table/wood/auto,
 /obj/machinery/computer3/generic/personal,
@@ -40838,7 +40878,7 @@
 "hIZ" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /obj/decal/stripe_caution,
-/obj/machinery/light_switch/directional/west,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor,
 /area/station/engine/gas)
 "hJc" = (
@@ -41530,7 +41570,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
 "iky" = (
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/white,
 /area/station/science/artifact)
 "ikP" = (
@@ -41780,13 +41820,13 @@
 	dir = 8;
 	pixel_y = -5
 	},
-/obj/machinery/light_switch/directional/west{
+/obj/machinery/light_switch/west{
 	pixel_y = 5
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/power)
 "irb" = (
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/black,
 /area/station/teleporter)
 "ire" = (
@@ -42272,17 +42312,6 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
-"iLh" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/machinery/light_switch/directional/west,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/checkpoint/cargo)
 "iLY" = (
 /obj/machinery/firealarm/directional/south,
 /turf/simulated/floor/carpet{
@@ -42388,7 +42417,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/light_switch/directional/west{
+/obj/machinery/light_switch/west{
 	pixel_y = 8
 	},
 /turf/simulated/floor/specialroom/chapel,
@@ -42799,7 +42828,10 @@
 /obj/machinery/camera/directional/north{
 	pixel_x = 10
 	},
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch{
+	name = "N light switch";
+	pixel_y = 24
+	},
 /turf/simulated/floor/red/side{
 	dir = 9
 	},
@@ -42969,7 +43001,10 @@
 /area/station/hangar/main)
 "jof" = (
 /obj/table/auto,
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch{
+	name = "N light switch";
+	pixel_y = 24
+	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
@@ -43183,34 +43218,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
-"juM" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/table/reinforced/auto,
-/obj/item/clothing/under/rank/mechanic{
-	pixel_x = -8;
-	pixel_y = 8
-	},
-/obj/item/clothing/under/rank/mechanic{
-	pixel_x = -8;
-	pixel_y = 3
-	},
-/obj/item/weldingtool{
-	pixel_x = 8;
-	pixel_y = 5
-	},
-/obj/item/clothing/gloves/yellow/unsulated{
-	pixel_x = -9;
-	pixel_y = 1
-	},
-/obj/machinery/light_switch/directional/west,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/hangar/qm)
 "jvf" = (
 /mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/plating,
@@ -43795,8 +43802,10 @@
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
 "jOk" = (
-/obj/machinery/light_switch/directional/south{
-	pixel_x = -9
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_x = -9;
+	pixel_y = -24
 	},
 /obj/machinery/firealarm/directional/south,
 /turf/simulated/floor/stairs{
@@ -43810,7 +43819,7 @@
 /obj/window/cubicle{
 	dir = 4
 	},
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/blue,
 /area/station/crew_quarters/quartersB)
 "jOD" = (
@@ -44180,7 +44189,10 @@
 /turf/simulated/floor/plating,
 /area/station/atmos/hookups/east)
 "jXZ" = (
-/obj/machinery/light_switch/directional/south,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
 /obj/machinery/light/emergency{
 	dir = 4
 	},
@@ -44282,7 +44294,7 @@
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4
 	},
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/plating,
 /area/station/atmos/hookups/east)
 "kca" = (
@@ -44766,7 +44778,10 @@
 /area/station/medical/dome)
 "kuq" = (
 /obj/machinery/chem_master,
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch{
+	name = "N light switch";
+	pixel_y = 24
+	},
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
@@ -44929,8 +44944,10 @@
 /area/station/storage/tech)
 "kyP" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/light_switch/directional/north{
-	pixel_x = -7
+/obj/machinery/light_switch{
+	name = "N light switch";
+	pixel_x = -7;
+	pixel_y = 24
 	},
 /obj/filing_cabinet,
 /obj/cable{
@@ -44962,7 +44979,10 @@
 /turf/simulated/floor/plating,
 /area/station/security/main)
 "kAf" = (
-/obj/machinery/light_switch/directional/south,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
 /obj/machinery/light/small,
 /obj/cable{
 	icon_state = "4-8"
@@ -45062,7 +45082,7 @@
 /obj/blind_switch/area/north{
 	pixel_x = -8
 	},
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch/north,
 /obj/machinery/door_control/bolter/new_walls/north{
 	pixel_x = 9;
 	id = "quarters_hop";
@@ -45100,7 +45120,7 @@
 /area/space)
 "kFk" = (
 /obj/reagent_dispensers/still,
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "kFm" = (
@@ -45169,7 +45189,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "kHH" = (
-/obj/machinery/light_switch/directional/west,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -45272,7 +45292,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/research)
 "kLE" = (
@@ -45689,7 +45709,7 @@
 /area/station/medical/medbay/treatment)
 "lby" = (
 /obj/machinery/turret,
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "lce" = (
@@ -45715,7 +45735,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "lcI" = (
@@ -45908,7 +45928,7 @@
 	},
 /obj/table/reinforced/industrial/auto,
 /obj/decal/cleanable/rust/jen,
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor,
 /area/station/routing/sortingRoom)
 "lmG" = (
@@ -46086,7 +46106,7 @@
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/storage/crate,
-/obj/machinery/light_switch/directional/west,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/plating/scorched,
 /area/station/maintenance/disposal)
 "luE" = (
@@ -46143,7 +46163,10 @@
 /area/station/crew_quarters/cafeteria)
 "lwi" = (
 /obj/machinery/vending/cigarette,
-/obj/machinery/light_switch/directional/south,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
 /turf/simulated/floor/red/side,
 /area/station/security/secwing)
 "lww" = (
@@ -46456,7 +46479,7 @@
 /obj/window/cubicle{
 	dir = 4
 	},
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/purple,
 /area/station/crew_quarters/quartersA)
 "lIk" = (
@@ -46652,7 +46675,7 @@
 /obj/item/hand_labeler{
 	pixel_x = 4
 	},
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "lOH" = (
@@ -46741,7 +46764,10 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/fitness)
 "lSA" = (
-/obj/machinery/light_switch/directional/south,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/barber_shop)
 "lSN" = (
@@ -46906,35 +46932,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/market)
-"lXE" = (
-/obj/table/auto,
-/obj/item/sheet/steel{
-	amount = 50
-	},
-/obj/item/sheet/steel{
-	amount = 50
-	},
-/obj/item/sheet/steel{
-	amount = 50;
-	pixel_x = 2;
-	pixel_y = -1
-	},
-/obj/item/sheet/steel{
-	amount = 50;
-	pixel_x = -1;
-	pixel_y = 2
-	},
-/obj/item/storage/box/cablesbox{
-	pixel_x = -2;
-	pixel_y = 2
-	},
-/obj/machinery/light_switch/directional/east,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/turf/simulated/floor/yellow,
-/area/station/engine/storage)
 "lXN" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -47014,7 +47011,7 @@
 	id = "Hot Loop Sauna Pump";
 	target_pressure = 2000
 	},
-/obj/machinery/light_switch/directional/west,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/grey/side,
 /area/station/engine/inner)
 "maI" = (
@@ -47078,7 +47075,7 @@
 	invisibility = 101;
 	name = "glow - WHITE"
 	},
-/obj/machinery/light_switch/directional/west,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/airless/plating/scorched,
 /area/station/wreckage)
 "mda" = (
@@ -47219,7 +47216,7 @@
 	pixel_x = 4;
 	pixel_y = 10
 	},
-/obj/machinery/light_switch/directional/west,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor,
 /area/station/hangar/engine)
 "mhN" = (
@@ -47348,7 +47345,10 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "mmn" = (
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch{
+	name = "N light switch";
+	pixel_y = 24
+	},
 /turf/simulated/floor/stairs{
 	dir = 8
 	},
@@ -47640,16 +47640,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "mvR" = (
-/obj/machinery/light_switch/directional/north{
-	on = 0
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -47779,7 +47769,7 @@
 	pixel_x = -4;
 	pixel_y = -6
 	},
-/obj/machinery/light_switch/directional/west,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/catering)
 "mAp" = (
@@ -47852,7 +47842,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/light_switch/directional/west,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "mBW" = (
@@ -48085,7 +48075,7 @@
 /obj/machinery/conveyor/NS{
 	id = "cargo"
 	},
-/obj/machinery/light_switch/directional/west,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "mJe" = (
@@ -48460,8 +48450,10 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "mXK" = (
-/obj/machinery/light_switch/directional/north{
-	on = 0
+/obj/machinery/light_switch{
+	name = "N light switch";
+	on = 0;
+	pixel_y = 24
 	},
 /obj/disposalpipe/segment{
 	dir = 4
@@ -48527,7 +48519,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "mZw" = (
-/obj/machinery/light_switch/directional/south,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
 /obj/storage/crate/robotparts,
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
@@ -48855,7 +48850,7 @@
 	},
 /area/station/crew_quarters/quarters)
 "nln" = (
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "nlB" = (
@@ -48917,7 +48912,7 @@
 /obj/item/clothing/head/fedora{
 	pixel_y = 11
 	},
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "nnW" = (
@@ -49397,7 +49392,10 @@
 	},
 /area/station/medical/medbay)
 "nHa" = (
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch{
+	name = "N light switch";
+	pixel_y = 24
+	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -49591,7 +49589,7 @@
 	dir = 8;
 	tag = ""
 	},
-/obj/machinery/light_switch/directional/west,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "nPn" = (
@@ -50364,7 +50362,10 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "old" = (
-/obj/machinery/light_switch/directional/south,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
 /obj/table/reinforced/auto,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
@@ -50418,7 +50419,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/psychiatrist)
 "onv" = (
@@ -50582,7 +50583,10 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch{
+	name = "N light switch";
+	pixel_y = 24
+	},
 /obj/item/storage/box/lightbox/tubes{
 	pixel_x = -7;
 	pixel_y = 9
@@ -50724,7 +50728,10 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/light_switch/directional/south,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
@@ -50771,7 +50778,10 @@
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "oBQ" = (
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch{
+	name = "N light switch";
+	pixel_y = 24
+	},
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
@@ -51118,7 +51128,10 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/arcade)
 "oRA" = (
-/obj/machinery/light_switch/directional/south,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
 /obj/disposalpipe/segment/mail{
 	dir = 1;
 	icon_state = "pipe-c"
@@ -51313,7 +51326,10 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "oVA" = (
-/obj/machinery/light_switch/directional/south,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -51377,7 +51393,10 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/light_switch/directional/south,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "oXH" = (
@@ -51414,7 +51433,7 @@
 /area/station/engine/monitoring)
 "oYc" = (
 /obj/disposalpipe/segment,
-/obj/machinery/light_switch/directional/west,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor,
 /area/station/security/main)
 "oYj" = (
@@ -51532,7 +51551,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/machinery/light_switch/directional/west,
+/obj/machinery/light_switch/west,
 /obj/machinery/atmospherics/binary/valve{
 	name = "cold inlet valve"
 	},
@@ -52292,7 +52311,7 @@
 /obj/stool/chair{
 	dir = 4
 	},
-/obj/machinery/light_switch/directional/west{
+/obj/machinery/light_switch/west{
 	pixel_y = 5
 	},
 /turf/simulated/floor/greenwhite/other{
@@ -52469,7 +52488,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/light_switch/directional/west,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor,
 /area/station/routing/security)
 "pHX" = (
@@ -52740,7 +52759,7 @@
 /obj/machinery/camera/directional/west{
 	pixel_y = 10
 	},
-/obj/machinery/light_switch/directional/west,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "pSl" = (
@@ -52947,7 +52966,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
 "pYv" = (
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "pYK" = (
@@ -53622,8 +53641,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/light_switch/directional/north{
-	pixel_x = -6
+/obj/machinery/light_switch{
+	name = "N light switch";
+	pixel_x = -6;
+	pixel_y = 24
 	},
 /obj/blind_switch/area/north{
 	pixel_x = 6
@@ -53715,7 +53736,10 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "qAr" = (
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch{
+	name = "N light switch";
+	pixel_y = 24
+	},
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
@@ -53827,7 +53851,7 @@
 /obj/machinery/camera/directional/east{
 	pixel_y = -10
 	},
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/red,
 /area/station/medical/medbay/surgery)
 "qDX" = (
@@ -53922,7 +53946,10 @@
 	},
 /area/space)
 "qGP" = (
-/obj/machinery/light_switch/directional/south,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
 /obj/table/reinforced/auto,
 /obj/item/device/matanalyzer{
 	pixel_x = -7;
@@ -54011,13 +54038,13 @@
 /area/station/maintenance/inner/central)
 "qIA" = (
 /obj/storage/crate,
-/obj/machinery/light_switch/directional/west,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/plating,
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
 "qJk" = (
-/obj/machinery/light_switch/directional/west,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "qJr" = (
@@ -54215,7 +54242,10 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/light_switch/directional/south,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
 /turf/simulated/floor/red/side{
 	dir = 10
 	},
@@ -54829,7 +54859,7 @@
 	pixel_x = -2;
 	pixel_y = 2
 	},
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/yellow,
 /area/station/engine/storage)
 "rnn" = (
@@ -54909,7 +54939,7 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
-/obj/machinery/light_switch/directional/west,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
 "rrI" = (
@@ -54968,7 +54998,7 @@
 /obj/disposalpipe/junction{
 	dir = 8
 	},
-/obj/machinery/light_switch/directional/south{
+/obj/machinery/light_switch/south{
 	pixel_x = -8
 	},
 /turf/simulated/floor/black,
@@ -54978,7 +55008,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/obj/machinery/light_switch/directional/west,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "ruJ" = (
@@ -55128,7 +55158,10 @@
 /turf/simulated/floor/grime,
 /area/station/hallway/primary/east)
 "rCW" = (
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch{
+	name = "N light switch";
+	pixel_y = 24
+	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -55363,7 +55396,7 @@
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "rJO" = (
-/obj/machinery/light_switch/directional/west,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)
 "rJZ" = (
@@ -55464,8 +55497,11 @@
 /area/station/medical/staff)
 "rMB" = (
 /obj/stool/bed,
-/obj/machinery/light_switch/directional/east{
-	pixel_y = -6
+/obj/machinery/light_switch{
+	name = "E light switch";
+	pixel_x = 24;
+	pixel_y = -6;
+	dir = 4
 	},
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "black";
@@ -56331,7 +56367,7 @@
 	pixel_x = 10;
 	pixel_y = -9
 	},
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/light_switch/east,
 /obj/table/auto{
 	icon_state = "1"
 	},
@@ -56477,7 +56513,7 @@
 /obj/blind_switch/area/east{
 	pixel_y = -6
 	},
-/obj/machinery/light_switch/directional/east{
+/obj/machinery/light_switch/east{
 	pixel_y = 6
 	},
 /obj/machinery/atmospherics/pipe/simple{
@@ -57209,18 +57245,6 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "sRa" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer/supplycomp{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/light_switch/directional/east,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
 /obj/landmark/start/job/quartermaster,
 /obj/stool/chair/yellow,
 /obj/cable{
@@ -57350,7 +57374,7 @@
 /obj/machinery/chem_master{
 	dir = 8
 	},
-/obj/machinery/light_switch/directional/east{
+/obj/machinery/light_switch/east{
 	pixel_y = 8
 	},
 /turf/simulated/floor/black,
@@ -57586,7 +57610,10 @@
 	},
 /area/space)
 "tlf" = (
-/obj/machinery/light_switch/directional/south,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
 /obj/submachine/chem_extractor{
 	pixel_x = -4
 	},
@@ -58080,7 +58107,7 @@
 /area/station/crew_quarters/fitness)
 "tDC" = (
 /obj/disposalpipe/segment/mail,
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/neutral/side{
 	dir = 4
 	},
@@ -58375,7 +58402,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/machinery/light_switch/directional/west,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor,
 /area/station/security/main)
 "tQq" = (
@@ -58524,7 +58551,7 @@
 /turf/simulated/floor,
 /area/station/science/chemistry)
 "tTG" = (
-/obj/machinery/light_switch/directional/west,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/neutral/side{
 	dir = 8
 	},
@@ -59219,7 +59246,7 @@
 /area/station/bridge)
 "uoF" = (
 /mob/living/carbon/human/npc/monkey,
-/obj/machinery/light_switch/directional/west{
+/obj/machinery/light_switch/west{
 	pixel_y = -4
 	},
 /turf/simulated/floor/grass{
@@ -59578,7 +59605,10 @@
 /area/station/crew_quarters/market)
 "uBY" = (
 /obj/table/auto,
-/obj/machinery/light_switch/directional/south,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
 /obj/item/device/camera_viewer/telesci{
 	pixel_x = -14;
 	pixel_y = 16
@@ -59728,7 +59758,7 @@
 /area/station/crew_quarters/quarters)
 "uDV" = (
 /obj/disposalpipe/segment/mail,
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
@@ -60350,7 +60380,11 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/wreckage)
 "vcB" = (
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/light_switch{
+	name = "E light switch";
+	pixel_x = 24;
+	dir = 4
+	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
 	},
@@ -60393,7 +60427,7 @@
 /turf/simulated/floor,
 /area/station/engine/elect)
 "vdO" = (
-/obj/machinery/light_switch/directional/west,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
 "vdP" = (
@@ -60413,7 +60447,10 @@
 	},
 /area/station/crew_quarters/jazz)
 "vfa" = (
-/obj/machinery/light_switch/directional/south,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
 /turf/simulated/floor/grey/side,
 /area/station/hallway/primary/central)
 "vfb" = (
@@ -60787,7 +60824,7 @@
 /turf/simulated/floor,
 /area/station/engine/elect)
 "vtI" = (
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/pylon)
 "vtP" = (
@@ -60980,7 +61017,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "vAv" = (
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch{
+	name = "N light switch";
+	pixel_y = 24
+	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -60989,7 +61029,10 @@
 	},
 /area/station/science/lobby)
 "vAC" = (
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch{
+	name = "N light switch";
+	pixel_y = 24
+	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -61021,7 +61064,10 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hop)
 "vBM" = (
-/obj/machinery/light_switch/directional/south,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
 /obj/landmark/spawner/artifact,
 /obj/item/device/radio/intercom/cargo{
 	dir = 8
@@ -61626,7 +61672,10 @@
 	},
 /area/mining/magnet)
 "vXx" = (
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch{
+	name = "N light switch";
+	pixel_y = 24
+	},
 /obj/machinery/camera/directional/north{
 	pixel_x = -10
 	},
@@ -61958,7 +62007,10 @@
 	dir = 4
 	},
 /obj/machinery/light,
-/obj/machinery/light_switch/directional/south,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/hydroponics/lobby)
@@ -62022,7 +62074,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail,
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "wlk" = (
@@ -62045,7 +62097,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/light_switch/directional/west,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/cargo)
 "wmK" = (
@@ -62099,7 +62151,10 @@
 	codes_txt = "delivery;dir=4";
 	location = "Chapel"
 	},
-/obj/machinery/light_switch/directional/south,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
@@ -62221,7 +62276,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
 "wqK" = (
-/obj/machinery/light_switch/directional/west,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -62576,7 +62631,7 @@
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/purple/side{
 	dir = 6
 	},
@@ -62597,7 +62652,7 @@
 /turf/space,
 /area/space)
 "wzY" = (
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "wAC" = (
@@ -62613,7 +62668,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
 "wBa" = (
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch{
+	name = "N light switch";
+	pixel_y = 24
+	},
 /obj/storage/crate,
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -62926,7 +62984,7 @@
 /obj/machinery/sink/slim{
 	pixel_y = 8
 	},
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "wPV" = (
@@ -63401,8 +63459,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/light_switch/directional/north{
-	on = 0
+/obj/machinery/light_switch{
+	name = "N light switch";
+	on = 0;
+	pixel_y = 24
 	},
 /obj/machinery/camera/directional/north{
 	pixel_x = -10
@@ -63827,7 +63887,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
@@ -63847,7 +63907,10 @@
 /turf/simulated/floor,
 /area/station/engine/monitoring)
 "xBd" = (
-/obj/machinery/light_switch/directional/south,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
 /obj/storage/crate,
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/bay)
@@ -63963,7 +64026,7 @@
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "xEU" = (
-/obj/machinery/light_switch/directional/west,
+/obj/machinery/light_switch/west,
 /turf/simulated/floor/black,
 /area/station/engine/coldloop)
 "xEV" = (
@@ -64402,7 +64465,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "xWg" = (
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch{
+	name = "N light switch";
+	pixel_y = 24
+	},
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
@@ -64507,7 +64573,7 @@
 /turf/space,
 /area/space)
 "xZT" = (
-/obj/machinery/light_switch/directional/west{
+/obj/machinery/light_switch/west{
 	pixel_y = 6
 	},
 /turf/simulated/floor/grime,
@@ -64564,7 +64630,7 @@
 	dir = 8
 	},
 /obj/machinery/alarm/directional/north,
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/light_switch/east,
 /turf/simulated/floor,
 /area/station/quartermaster/cargooffice)
 "ycl" = (
@@ -64646,7 +64712,7 @@
 /obj/stool/chair/couch{
 	dir = 8
 	},
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/visitation)
 "yfc" = (
@@ -64787,7 +64853,10 @@
 /area/station/security/main)
 "yid" = (
 /obj/machinery/computer/barcode,
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/light_switch{
+	name = "N light switch";
+	pixel_y = 24
+	},
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/routing/catering)
@@ -64881,7 +64950,10 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/light_switch/directional/south,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/bathroom)
 "yku" = (
@@ -117058,7 +117130,7 @@ bIC
 dOa
 bKJ
 bKJ
-lXE
+bKJ
 bKJ
 uSJ
 rPq
@@ -120380,7 +120452,7 @@ bzY
 bzY
 bzY
 bzY
-aiy
+bzY
 bzY
 mtN
 bzY
@@ -121901,7 +121973,7 @@ bUU
 bUU
 bZS
 cbq
-iLh
+ccy
 ccy
 ccy
 ccy
@@ -123402,7 +123474,7 @@ bKZ
 bKZ
 bKZ
 uVK
-juM
+bFr
 bFr
 bTD
 bUZ
