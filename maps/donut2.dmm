@@ -38143,10 +38143,9 @@
 /obj/machinery/camera/directional/west{
 	pixel_y = -11
 	},
-/obj/blind_switch/area/west{
+/obj/blind_switch/area/west/on{
 	pixel_y = -2;
-	on = 1;
-	icon_state = "blind0"
+	
 	},
 /obj/decal/cleanable/dirt/dirt2,
 /obj/machinery/chem_dispenser/chemical,
@@ -42513,10 +42512,9 @@
 	dir = 1
 	},
 /obj/machinery/disposal,
-/obj/blind_switch/area/south{
+/obj/blind_switch/area/south/on{
 	pixel_x = 1;
-	icon_state = "blind0";
-	on = 1
+	
 	},
 /obj/item/storage/wall{
 	dir = 8;
