@@ -3003,7 +3003,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/blind_switch/north{
+/obj/blind_switch/directional/north{
 	id = "ranchblinds"
 	},
 /turf/simulated/floor/auto/grass/leafy,
@@ -4735,7 +4735,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/blind_switch/south{
+/obj/blind_switch/directional/south{
 	id = "ranchblinds"
 	},
 /turf/simulated/floor/carpet/red/fancy/narrow/sw,

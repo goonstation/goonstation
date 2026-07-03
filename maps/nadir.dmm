@@ -2439,7 +2439,7 @@
 /obj/machinery/light_switch/directional/south{
 	pixel_x = -3
 	},
-/obj/blind_switch/area/south{
+/obj/blind_switch/directional/south{
 	pixel_x = 5
 	},
 /turf/simulated/floor/red,
@@ -3685,7 +3685,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/obj/blind_switch/area/north{
+/obj/blind_switch/directional/north{
 	pixel_x = -8
 	},
 /obj/machinery/firealarm/directional/north{
@@ -4000,7 +4000,7 @@
 /obj/item/reagent_containers/iv_drip/saline{
 	pixel_x = -15
 	},
-/obj/blind_switch/area/east,
+/obj/blind_switch/directional/east,
 /turf/simulated/floor/redblack/corner{
 	dir = 1
 	},
@@ -7628,7 +7628,7 @@
 /obj/machinery/light_switch/directional/east{
 	pixel_y = -6
 	},
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	pixel_y = 6
 	},
 /turf/simulated/floor/blackwhite{
@@ -9358,7 +9358,7 @@
 /obj/stool/chair/comfy{
 	dir = 8
 	},
-/obj/blind_switch/area/east,
+/obj/blind_switch/directional/east,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -9862,7 +9862,7 @@
 "eyF" = (
 /obj/table/reinforced/auto,
 /obj/machinery/phone,
-/obj/blind_switch/area/west,
+/obj/blind_switch/directional/west,
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "ezi" = (
@@ -9908,9 +9908,8 @@
 /area/station/medical/medbay/cloner)
 "ezP" = (
 /obj/machinery/light,
-/obj/blind_switch/area/east{
-	pixel_y = 6;
-	pixel_x = 23
+/obj/blind_switch/directional/east{
+	pixel_y = 6
 	},
 /obj/storage/secure/closet/brig_automatic/solitary2,
 /obj/machinery/door_control{
@@ -13763,7 +13762,7 @@
 /area/station/crew_quarters/quarters_east)
 "gkG" = (
 /obj/machinery/photocopier,
-/obj/blind_switch/area/west,
+/obj/blind_switch/directional/west,
 /turf/simulated/floor/wood/two,
 /area/station/chapel/office)
 "gkJ" = (
@@ -15737,7 +15736,7 @@
 /obj/machinery/light_switch/directional/east{
 	pixel_y = -6
 	},
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	pixel_y = 6
 	},
 /turf/simulated/floor/blackwhite{
@@ -16893,7 +16892,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/blind_switch/area/north,
+/obj/blind_switch/directional/north,
 /obj/item/device/analyzer/atmosanalyzer_upgrade{
 	pixel_x = -14;
 	rand_pos = 0
@@ -18719,7 +18718,7 @@
 /obj/machinery/firealarm/directional/west{
 	pixel_y = 4
 	},
-/obj/blind_switch/area/west{
+/obj/blind_switch/directional/west{
 	pixel_y = -8
 	},
 /turf/simulated/floor/blackwhite{
@@ -19055,7 +19054,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "imD" = (
-/obj/blind_switch/area/west,
+/obj/blind_switch/directional/west,
 /obj/disposalpipe/segment/brig{
 	dir = 1
 	},
@@ -19555,7 +19554,7 @@
 	dir = 4;
 	pixel_x = 12
 	},
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	pixel_y = 12
 	},
 /turf/simulated/floor/grey/blackgrime,
@@ -25037,7 +25036,7 @@
 /obj/item/storage/box/syringes,
 /obj/item/device/reagentscanner,
 /obj/item/clothing/glasses/spectro,
-/obj/blind_switch/area/east,
+/obj/blind_switch/directional/east,
 /turf/simulated/floor/greenblack{
 	dir = 4
 	},
@@ -25194,7 +25193,7 @@
 	icon_state = "bedsheet-pink"
 	},
 /obj/landmark/start/job/research_director,
-/obj/blind_switch/area/west,
+/obj/blind_switch/directional/west,
 /turf/simulated/floor/black,
 /area/station/science/research_director)
 "kUs" = (
@@ -32507,7 +32506,7 @@
 "oaR" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/blue,
-/obj/blind_switch/area/east,
+/obj/blind_switch/directional/east,
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
@@ -33592,7 +33591,7 @@
 	pixel_x = 7;
 	pixel_y = 23
 	},
-/obj/blind_switch/area/north{
+/obj/blind_switch/directional/north{
 	pixel_x = -6
 	},
 /turf/simulated/floor/redblack{
@@ -38166,7 +38165,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "qGD" = (
-/obj/blind_switch/area/north,
+/obj/blind_switch/directional/north,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
@@ -38887,7 +38886,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/blind_switch/area/west,
+/obj/blind_switch/directional/west,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hop)
 "rcw" = (
@@ -40050,7 +40049,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/blind_switch/area/west,
+/obj/blind_switch/directional/west,
 /turf/simulated/floor/black/grime,
 /area/station/storage/hydroponics)
 "rGm" = (
@@ -41769,7 +41768,7 @@
 	id = "det_entry";
 	pixel_y = 24
 	},
-/obj/blind_switch/area/north{
+/obj/blind_switch/directional/north{
 	pixel_x = -11
 	},
 /obj/machinery/computer/television,
@@ -45298,7 +45297,7 @@
 	name = "wooden table"
 	},
 /obj/machinery/phone,
-/obj/blind_switch/area/east,
+/obj/blind_switch/directional/east,
 /obj/item/stamp/cap{
 	pixel_x = 6
 	},

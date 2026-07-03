@@ -1765,7 +1765,7 @@
 	c_tag = "Genetics Research Morgue";
 	pixel_y = 10
 	},
-/obj/blind_switch/area/east,
+/obj/blind_switch/directional/east,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "amR" = (
@@ -6119,7 +6119,7 @@
 /obj/item/device/radio/intercom/engineering{
 	dir = 1
 	},
-/obj/blind_switch/area/south{
+/obj/blind_switch/directional/south{
 	pixel_x = 11;
 	id = "CE"
 	},
@@ -7914,7 +7914,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/blind_switch/east{
+/obj/blind_switch/directional/east{
 	id = "HOP";
 	pixel_y = 8
 	},
@@ -10460,7 +10460,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/blind_switch/area/south,
+/obj/blind_switch/directional/south,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "eln" = (
@@ -14641,7 +14641,7 @@
 /obj/machinery/light_switch/directional/west{
 	pixel_y = 8
 	},
-/obj/blind_switch/area/west{
+/obj/blind_switch/directional/west{
 	pixel_y = -8;
 	id = "RD"
 	},
@@ -23200,7 +23200,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/inner)
 "nKd" = (
-/obj/blind_switch/area/west{
+/obj/blind_switch/directional/west{
 	id = "HOS"
 	},
 /obj/machinery/computer/card/department/security{
@@ -23658,7 +23658,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/blind_switch/area/south{
+/obj/blind_switch/directional/south{
 	id = "capoffice"
 	},
 /turf/simulated/floor/blueblack,
@@ -37984,7 +37984,7 @@
 /obj/item/reagent_containers/food/drinks/tea{
 	pixel_x = -5
 	},
-/obj/blind_switch/area/west{
+/obj/blind_switch/directional/west{
 	pixel_y = 5
 	},
 /obj/machinery/light_switch/directional/west{

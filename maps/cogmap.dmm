@@ -9611,7 +9611,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/blind_switch/area/north,
+/obj/blind_switch/directional/north,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "aNS" = (
@@ -13167,7 +13167,7 @@
 /area/station/security/detectives_office)
 "aYC" = (
 /obj/machinery/computer/secure_data/detective_computer,
-/obj/blind_switch/area/west,
+/obj/blind_switch/directional/west,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aYE" = (
@@ -21564,7 +21564,7 @@
 /obj/machinery/camera/directional/north{
 	pixel_x = -10
 	},
-/obj/blind_switch/area/north,
+/obj/blind_switch/directional/north,
 /obj/stool/chair/purple{
 	dir = 8
 	},
@@ -22775,7 +22775,7 @@
 /obj/machinery/networked/printer{
 	print_id = "RD"
 	},
-/obj/blind_switch/area/west,
+/obj/blind_switch/directional/west,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
 "bPE" = (
@@ -28972,8 +28972,7 @@
 /obj/item/pen,
 /obj/item/stamp,
 /obj/item/decoration/ashtray,
-/obj/blind_switch/area/west{
-	pixel_x = -24;
+/obj/blind_switch/directional/west{
 	pixel_y = -6
 	},
 /obj/item/remote/porter/port_a_medbay,
@@ -34949,7 +34948,7 @@
 /area/space)
 "dYm" = (
 /obj/storage/secure/closet/command/chief_engineer,
-/obj/blind_switch/area/east,
+/obj/blind_switch/directional/east,
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
@@ -35237,7 +35236,7 @@
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	id = "baroffice"
 	},
 /turf/simulated/floor/carpet/grime,
@@ -35562,7 +35561,7 @@
 /obj/machinery/light_switch/directional/east{
 	pixel_y = 5
 	},
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	pixel_y = -5
 	},
 /turf/simulated/floor/redblack{
@@ -37433,7 +37432,7 @@
 /area/space)
 "fyI" = (
 /obj/machinery/light_switch/directional/north,
-/obj/blind_switch/area/north{
+/obj/blind_switch/directional/north{
 	pixel_x = 8
 	},
 /turf/simulated/floor/black,
@@ -41655,8 +41654,7 @@
 /obj/machinery/light_switch/directional/west{
 	pixel_y = 5
 	},
-/obj/blind_switch/west{
-	pixel_x = -24;
+/obj/blind_switch/directional/west{
 	pixel_y = -5
 	},
 /turf/simulated/floor/plating/jen,
@@ -44856,7 +44854,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/blind_switch/area/north{
+/obj/blind_switch/directional/north{
 	pixel_x = -8
 	},
 /obj/machinery/light_switch/directional/north,
@@ -53346,7 +53344,7 @@
 /obj/machinery/light_switch/directional/north{
 	pixel_x = -6
 	},
-/obj/blind_switch/area/north{
+/obj/blind_switch/directional/north{
 	pixel_x = 6
 	},
 /turf/simulated/floor/carpet/arcade,
@@ -56173,7 +56171,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "srS" = (
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	pixel_y = -6
 	},
 /obj/machinery/light_switch/directional/east{

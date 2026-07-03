@@ -417,7 +417,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "acc" = (
-/obj/blind_switch/area/south,
+/obj/blind_switch/directional/south,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "acd" = (
@@ -11742,7 +11742,7 @@
 /obj/machinery/light_switch/directional/east{
 	pixel_y = 5
 	},
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	pixel_y = -5
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge{
@@ -14377,7 +14377,7 @@
 /turf/simulated/floor/airless/plating/catwalk/auto,
 /area/space)
 "kKT" = (
-/obj/blind_switch/area/north{
+/obj/blind_switch/directional/north{
 	pixel_x = 5
 	},
 /obj/machinery/light_switch/directional/north{
@@ -14589,7 +14589,7 @@
 /obj/cable,
 /obj/machinery/bot/guardbot/ranger,
 /obj/machinery/power/data_terminal,
-/obj/blind_switch/area/south,
+/obj/blind_switch/directional/south,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "laS" = (
@@ -17171,7 +17171,7 @@
 /obj/machinery/camera/directional/east{
 	pixel_y = 10
 	},
-/obj/blind_switch/area/east,
+/obj/blind_switch/directional/east,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -17605,7 +17605,7 @@
 /obj/drink_rack/mug{
 	pixel_y = 28
 	},
-/obj/blind_switch/area/east,
+/obj/blind_switch/directional/east,
 /turf/simulated/floor/yellowblack{
 	dir = 5
 	},
@@ -19417,7 +19417,7 @@
 /obj/machinery/light_switch/directional/west{
 	pixel_y = 5
 	},
-/obj/blind_switch/area/west{
+/obj/blind_switch/directional/west{
 	pixel_y = -5
 	},
 /turf/simulated/floor/red/redblackchecker,
@@ -20484,7 +20484,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/blind_switch/area/west,
+/obj/blind_switch/directional/west,
 /obj/machinery/computer3/generic/radio{
 	dir = 4
 	},
@@ -22211,7 +22211,7 @@
 /obj/machinery/light_switch/directional/east{
 	pixel_y = 4
 	},
-/obj/blind_switch/east{
+/obj/blind_switch/directional/east{
 	pixel_y = -6
 	},
 /turf/simulated/floor/black,
