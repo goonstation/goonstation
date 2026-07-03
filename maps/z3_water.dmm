@@ -15,7 +15,7 @@
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
 "aq" = (
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /turf/unsimulated/floor,
 /area/cult_base/acolyte/bedrooms)
 "at" = (
@@ -396,7 +396,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
-/obj/machinery/light_switch/south,
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor/carpet{
 	dir = 2;
 	icon_state = "fblue2"
@@ -434,7 +434,7 @@
 /obj/stool/chair/comfy/blue{
 	dir = 8
 	},
-/obj/machinery/light_switch/south,
+/obj/machinery/light_switch/directional/south,
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris)
 "cj" = (
@@ -454,7 +454,7 @@
 "cm" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/captain,
-/obj/machinery/light_switch/south,
+/obj/machinery/light_switch/directional/south,
 /turf/unsimulated/floor/carpet/arcade,
 /area/wrecknsspolaris)
 "cn" = (
@@ -2623,7 +2623,7 @@
 /obj/decal/cleanable/dirt/jen,
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/black,
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/directional/west,
 /turf/unsimulated/floor/grime,
 /area/dank_trench)
 "hI" = (
@@ -3659,7 +3659,7 @@
 /turf/unsimulated/floor/carpet/darkcarpet,
 /area/cult_base/leader)
 "uz" = (
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /turf/unsimulated/floor,
 /area/cult_base/acolyte)
 "uC" = (
@@ -4125,7 +4125,7 @@
 "DW" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/hop,
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /turf/unsimulated/floor,
 /area/cult_base/leader)
 "Eb" = (
@@ -5037,7 +5037,7 @@
 /turf/space/fluid/noexplosion,
 /area/cult_base/leader/outdoors)
 "Yl" = (
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
 "Yn" = (

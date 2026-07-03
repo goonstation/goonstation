@@ -201,6 +201,7 @@
 #include "namespaces\radio.dm"
 #include "namespaces\RCD.dm"
 #include "namespaces\soulguard.dm"
+#include "namespaces\manufacturer.dm"
 #include "color.dm"
 #include "compare.dm"
 #include "copy.dm"

@@ -100,8 +100,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/stored_previous_blueprint_data = "" //! JSON-encoded string of the blueprint data. used for comparisons in get_producibility_for_blueprints
 
 	/* Production options */
-	/// A list of valid categories the manufacturer will use. Any invalid provided categories are assigned "Miscellaneous".
-	var/list/categories = list("Tool", "Clothing", "Resource", "Component", "Organ", "Machinery", "Medicine", "Miscellaneous", "Downloaded")
+	/// A list of valid categories the manufacturer will use. Any invalid provided categories are assigned MANUFACTURER::CATEGORY::MISCELLANEOUS. Defined in New()
+	var/list/categories = null
 	var/accept_blueprints = TRUE //! Whether or not we accept blueprints from the ruk kit into this manufacturer.
 
 	var/list/available = list() //! A list of every manufacture datum typepath available in this unit subtype by default
@@ -130,6 +130,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	New()
 		START_TRACKING
+		categories = MANUFACTURER.CATEGORY._get_namespace_constants()
+
 		if (src.share_id)
 			var/tracking_id = TR_CAT_MANUFACTURER_LINK + src.share_id
 			for (var/obj/machinery/manufacturer/other as anything in by_cat[tracking_id])
@@ -443,7 +445,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		var/list/as_list = list()
 		for (var/datum/manufacture/M as anything in L)
 			if (isnull(M.category) || !(M.category in src.categories)) // fix for not displaying blueprints/manudrives
-				M.category = "Miscellaneous"
+				M.category = MANUFACTURER::CATEGORY::MISCELLANEOUS
 				logTheThing(LOG_DEBUG, src, "Manufacturing blueprint [M] has category [M.category], which is not on the list of categories for [src]!")
 			if (length(as_list[M.category]) == 0)
 				as_list[M.category] = list()
