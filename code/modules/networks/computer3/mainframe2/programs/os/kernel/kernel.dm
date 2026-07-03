@@ -424,7 +424,7 @@
 	if(isnull(history) || !istype(history))
 		return TRUE
 
-	history.fields[time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")] = command
+	history.fields[toIso8601InCharacter(world.timeofday)] = command
 
 	return FALSE
 
