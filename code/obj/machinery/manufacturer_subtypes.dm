@@ -595,6 +595,7 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 		/datum/manufacture/locker/secure,
 		/datum/manufacture/locker/secure/command,
 		/datum/manufacture/locker/secure/security,
+		/datum/manufacture/locker/secure/contraband,
 		/datum/manufacture/locker/secure/research,
 		/datum/manufacture/locker/secure/engineering,
 		/datum/manufacture/locker/secure/medical,

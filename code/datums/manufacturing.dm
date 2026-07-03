@@ -3805,6 +3805,7 @@ ABSTRACT_TYPE(/datum/manufacture/locker) //Regular lockers are built using steel
 		var/obj/storage/secure/closet/closet = A
 		if(!istype(closet)) return
 		closet.anchored = UNANCHORED
+		closet.bolted = FALSE
 
 /datum/manufacture/locker/secure
 	name = "Secure Locker (Access: None)"
@@ -3818,6 +3819,10 @@ ABSTRACT_TYPE(/datum/manufacture/locker) //Regular lockers are built using steel
 /datum/manufacture/locker/secure/security
 	name = "Security Locker"
 	item_outputs = list(/obj/storage/secure/closet/security)
+
+/datum/manufacture/locker/secure/contraband
+	name = "Contraband Locker"
+	item_outputs = list(/obj/storage/secure/closet/brig/empty)
 
 /datum/manufacture/locker/secure/research
 	name = "Research Locker"

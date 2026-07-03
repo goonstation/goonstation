@@ -447,6 +447,9 @@
 	spawn_contents = list(/obj/item/item_box/contraband)
 	radiation_protection = 20
 
+/obj/storage/secure/closet/brig/empty
+	spawn_contents = list()
+
 // Old Mushroom-era feature I fixed up (Convair880).
 /obj/storage/secure/closet/brig_automatic
 	name = "\improper Automatic Locker"
