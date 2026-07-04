@@ -36633,9 +36633,6 @@
 /area/station/crew_quarters/market)
 "fdQ" = (
 /obj/table/auto,
-/obj/machinery/door/window/westleft{
-	name = "Hydroponics Lobby"
-	},
 /obj/machinery/cashreg,
 /obj/disposalpipe/segment/produce{
 	dir = 4
@@ -62814,6 +62811,7 @@
 /obj/machinery/sink/slim{
 	pixel_y = 8
 	},
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "wPV" = (
