@@ -46599,10 +46599,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/fitness)
 "lSA" = (
-/obj/machinery/light_switch{
-	name = "S light switch";
-	pixel_y = -24
-	},
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/barber_shop)
 "lSN" = (
