@@ -1873,6 +1873,7 @@
 #include "code\modules\networks\computer3\mainframe2\programs\os\shell\shell_builtins\unset.dm"
 #include "code\modules\networks\computer3\mainframe2\programs\os\shell\shell_builtins\while.dm"
 #include "code\modules\networks\computer3\mainframe2\programs\os\shell\shell_builtins\who.dm"
+#include "code\modules\networks\computer3\mainframe2\programs\os\shell\shell_builtins\history.dm"
 #include "code\modules\networks\computer3\mainframe2\programs\os\shell\shell_script_operators\_shell_script_operator.dm"
 #include "code\modules\networks\computer3\mainframe2\programs\os\shell\shell_script_operators\arithmetic\add.dm"
 #include "code\modules\networks\computer3\mainframe2\programs\os\shell\shell_script_operators\arithmetic\divide.dm"
