@@ -37305,11 +37305,8 @@
 /turf/simulated/floor,
 /area/station/engine/elect)
 "fuL" = (
-/obj/machinery/light_switch{
-	name = "S light switch";
-	pixel_y = -24
-	},
 /obj/decal/stripe_delivery,
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
 "fuZ" = (
@@ -64775,10 +64772,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/light_switch{
-	name = "S light switch";
-	pixel_y = -24
-	},
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/bathroom)
 "yku" = (
