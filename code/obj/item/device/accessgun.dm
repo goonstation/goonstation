@@ -75,7 +75,7 @@ TYPEINFO(/obj/item/device/accessgun)
 
 		.["accesses_by_area"] = list(
 			list(name = "Command", color = /datum/job/command::ui_colour, accesses = command_access),
-			list(name = "Maximum Security - Cannot be reprogrammed", color = TGUI_COLOUR_CRIMSON, accesses = maxsec_access),
+			list(name = "Maximum Security - Cannot be reprogrammed without access", color = TGUI_COLOUR_CRIMSON, accesses = maxsec_access),
 			list(name = "Security", color = /datum/job/security::ui_colour, accesses = security_access),
 			list(name = "Science", color = /datum/job/research::ui_colour, accesses = research_access),
 			list(name = "Medical", color = /datum/job/medical::ui_colour, accesses = medical_access),
@@ -138,7 +138,13 @@ TYPEINFO(/obj/item/device/accessgun)
 
 		var/obj/O = target
 		for(var/access in O.req_access)
-			if (!(access in src.allowed_access_list))
+			if(access in src.maxsec_access_list)
+				var/user_access = user.get_id()?.access
+				if(!(length(user_access) && (access in user_access)))
+					playsound(src, 'sound/machines/airlock_deny.ogg', 35, TRUE, 0, 2)
+					boutput(user, SPAN_NOTICE("You must have access to [O] to reprogram it."))
+					return
+			else if (!(access in src.allowed_access_list))
 				playsound(src, 'sound/machines/airlock_deny.ogg', 35, TRUE, 0, 2)
 				boutput(user, SPAN_NOTICE("[src] doesn't have the access to reprogram [O]."))
 				return
