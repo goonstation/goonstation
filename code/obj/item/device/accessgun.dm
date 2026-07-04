@@ -142,7 +142,7 @@ TYPEINFO(/obj/item/device/accessgun)
 				var/user_access = user.get_id()?.access
 				if(!(length(user_access) && (access in user_access)))
 					playsound(src, 'sound/machines/airlock_deny.ogg', 35, TRUE, 0, 2)
-					boutput(user, SPAN_NOTICE("You must have access to [O] to reprogram it."))
+					boutput(user, SPAN_NOTICE("You must have [get_access_desc(access)] access to reprogram [O]."))
 					return
 			else if (!(access in src.allowed_access_list))
 				playsound(src, 'sound/machines/airlock_deny.ogg', 35, TRUE, 0, 2)
