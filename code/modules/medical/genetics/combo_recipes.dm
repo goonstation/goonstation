@@ -1,7 +1,7 @@
 ABSTRACT_TYPE(/datum/geneticsrecipe)
 /datum/geneticsrecipe
 	var/list/required_effects = list()
-	var/datum/bioEffect/result = null
+	var/result = null
 
 // Beneficial
 
