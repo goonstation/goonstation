@@ -57335,9 +57335,6 @@
 "tlP" = (
 /obj/table/auto,
 /obj/disposalpipe/segment,
-/obj/machinery/door/window/southright{
-	name = "Hydroponics Lobby"
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
