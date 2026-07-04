@@ -3003,9 +3003,8 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/blind_switch{
-	id = "ranchblinds";
-	pixel_y = 24
+/obj/blind_switch/north{
+	id = "ranchblinds"
 	},
 /turf/simulated/floor/auto/grass/leafy,
 /area/station/ranch)
@@ -4736,9 +4735,8 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/blind_switch{
-	id = "ranchblinds";
-	pixel_y = -24
+/obj/blind_switch/south{
+	id = "ranchblinds"
 	},
 /turf/simulated/floor/carpet/red/fancy/narrow/sw,
 /area/station/bridge)

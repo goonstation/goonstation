@@ -691,9 +691,7 @@
 /area/radiostation/hallway)
 "acm" = (
 /obj/table/auto,
-/obj/machinery/light_switch/west{
-	pixel_x = -22
-	},
+/obj/machinery/light_switch/directional/west,
 /obj/fakeobject{
 	desc = "It looks like it was never even plugged in. Did this ever work?!";
 	icon = 'icons/obj/networked.dmi';
@@ -1278,9 +1276,7 @@
 /area/radiostation/podbay)
 "adZ" = (
 /obj/machinery/vehicle/miniputt,
-/obj/machinery/light_switch/north{
-	pixel_y = 30
-	},
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/shuttlebay,
 /area/radiostation/podbay)
 "aea" = (
@@ -1381,9 +1377,7 @@
 /area/radiostation/podbay)
 "aes" = (
 /obj/decal/cleanable/oil/streak,
-/obj/machinery/light_switch/north{
-	pixel_y = 30
-	},
+/obj/machinery/light_switch/directional/north,
 /obj/machinery/macrofab/emergency_pod,
 /turf/simulated/floor/shuttlebay,
 /area/radiostation/podbay)
@@ -2967,9 +2961,7 @@
 "aoa" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/decal/cleanable/cobweb2,
-/obj/machinery/light_switch/north{
-	pixel_y = 30
-	},
+/obj/machinery/light_switch/directional/north,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/radiostation/engineering)
@@ -3611,9 +3603,7 @@
 /turf/simulated/floor/plating,
 /area/buddyfactory)
 "arb" = (
-/obj/machinery/light_switch/east{
-	dir = 4
-	},
+/obj/machinery/light_switch/directional/east,
 /obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
@@ -6488,10 +6478,7 @@
 	},
 /area/abandonedmedicalship)
 "aJf" = (
-/obj/machinery/light_switch{
-	name = "S light switch";
-	pixel_y = -24
-	},
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor,
 /area/h7/control)
 "aJg" = (
@@ -8565,10 +8552,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light/worn,
-/obj/machinery/light_switch{
-	name = "S light switch";
-	pixel_y = -24
-	},
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor,
 /area/h7/storage)
 "aPT" = (
@@ -9085,9 +9069,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedship)
 "aRL" = (
-/obj/machinery/light_switch/west{
-	pixel_x = -22
-	},
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/sanitary,
 /area/radiostation/bedroom)
 "aRM" = (
@@ -9460,10 +9442,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/light_switch{
-	name = "N light switch";
-	pixel_y = 24
-	},
+/obj/machinery/light_switch/directional/north,
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -9832,10 +9811,7 @@
 /turf/space,
 /area/iss)
 "aTT" = (
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
-	},
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor,
 /area/h7)
 "aTV" = (
@@ -10392,10 +10368,7 @@
 /obj/machinery/light/worn{
 	dir = 4
 	},
-/obj/machinery/light_switch{
-	name = "S light switch";
-	pixel_y = -24
-	},
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor/purple/corner,
 /area/h7)
 "aVA" = (
@@ -15785,7 +15758,7 @@
 /obj/blind_switch/area/north{
 	pixel_x = 4
 	},
-/obj/machinery/light_switch/north{
+/obj/machinery/light_switch/directional/north{
 	pixel_x = -4
 	},
 /turf/simulated/floor,
@@ -16832,9 +16805,7 @@
 /turf/simulated/floor/black,
 /area/helldrone/core)
 "fzx" = (
-/obj/machinery/light_switch/north{
-	pixel_y = 30
-	},
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/wood/two,
 /area/radiostation/bedroom)
 "fAh" = (
@@ -16923,7 +16894,7 @@
 	dir = 1
 	},
 /obj/blind_switch/area/south,
-/obj/machinery/light_switch/south{
+/obj/machinery/light_switch/directional/south{
 	pixel_x = 8
 	},
 /obj/landmark/latejoin_job/radio_show_host,
@@ -19537,7 +19508,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
 "lLM" = (
-/obj/machinery/light_switch/south{
+/obj/machinery/light_switch/directional/south{
 	pixel_x = -8
 	},
 /obj/blind_switch/area/south,
@@ -20019,7 +19990,7 @@
 /turf/simulated/floor/industrial,
 /area/space)
 "mOC" = (
-/obj/machinery/light_switch/west{
+/obj/machinery/light_switch/directional/west{
 	pixel_y = -4
 	},
 /obj/cable{
@@ -21701,7 +21672,7 @@
 	},
 /area/space_hive)
 "qNz" = (
-/obj/machinery/light_switch/east{
+/obj/machinery/light_switch/directional/east{
 	pixel_y = 5
 	},
 /obj/blind_switch/area/east{
