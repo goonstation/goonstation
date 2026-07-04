@@ -3,6 +3,8 @@
 	var/list/atom/movable/loc_chain = null
 	/// The number of concurrent requests for this component to listen for `COMSIG_MOVABLE_MOVED` signals on the outermost movable.
 	var/track_movable_moved_requests = 0
+	/// The previous turf of the outermost movable, tracked to prevent signals from firing twice.
+	var/turf/previous_turf = null
 
 /datum/component/complexsignal/outermost_movable/proc/get_outermost_movable()
 	RETURN_TYPE(/atom/movable)
@@ -52,8 +54,10 @@
 /datum/component/complexsignal/outermost_movable/proc/on_turf_change(atom/movable/thing, atom/previous_loc)
 	var/atom/movable/outermost_movable = src.get_outermost_movable()
 
-	var/turf/old_turf = get_turf(previous_loc)
+	var/turf/old_turf = src.previous_turf
 	var/turf/new_turf = get_turf(outermost_movable)
+	src.previous_turf = new_turf
+
 	if (old_turf != new_turf)
 		SEND_COMPLEX_SIGNAL(src, XSIG_MOVABLE_TURF_CHANGED, old_turf, new_turf)
 
@@ -72,6 +76,7 @@
 		return COMPONENT_INCOMPATIBLE
 	src.RegisterSignal(src.parent, COMSIG_MOVABLE_SET_LOC, PROC_REF(on_loc_change))
 	src.loc_chain = list(src.parent)
+	src.previous_turf = get_turf(src.parent)
 	src.on_loc_change()
 	. = ..()
 
@@ -80,6 +85,7 @@
 		src.UnregisterSignal(AM, COMSIG_MOVABLE_SET_LOC)
 		src.UnregisterSignal(AM, COMSIG_MOVABLE_MOVED)
 	src.loc_chain.len = 0
+	src.previous_turf = null
 	. = ..()
 
 /datum/component/complexsignal/outermost_movable/_register(datum/listener, datum/xsig/outermost_movable/xsignal, proctype, override = FALSE, ...)
