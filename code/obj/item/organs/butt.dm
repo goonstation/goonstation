@@ -255,26 +255,32 @@ TYPEINFO(/obj/item/clothing/head/butt)
 			src.visible_message(SPAN_ALERT("[src] falls unhindered from \the [targetDoor], farting sadly upon hitting the floor.")) //butts have emotions
 			playsound(src, (src.sound_fart ? src.sound_fart : pick(random_fart_sounds)), 50, TRUE)
 			return
-		else
-			logTheThing(LOG_COMBAT, AM, "Victim of butt-door-prank on [targetDoor]")
-			if(ishuman(AM))
-				var/mob/living/carbon/human/H = AM
-				if(isnull(H.head))
-					src.set_loc(get_turf(H))
-					H.equip_if_possible(src, SLOT_HEAD)
-					H.set_clothing_icon_dirty()
-					H.visible_message(SPAN_ALERT("[src] falls from \the [targetDoor], landing on [H]'s head with a gleeful fart! [pick("Butthead!", "Nerd!", "What a dork!")]"), \
-								SPAN_ALERT("[src] falls from \the [targetDoor], landing on your head with a gleeful fart!"))
-					playsound(H, (src.sound_fart ? src.sound_fart : pick(random_fart_sounds)), 50, TRUE)
-				else
-					src.set_loc(get_turf(H))
-					H.visible_message(SPAN_ALERT("[src] falls from \the [targetDoor], bouncing off [H]'s hat and landing on the floor with an indignant fart!"), \
+
+		logTheThing(LOG_COMBAT, AM, "Victim of butt-door-prank on [targetDoor]")
+
+		if(!ishuman(AM))
+			src.set_loc(get_turf(targetDoor))
+			targetDoor.visible_message(SPAN_ALERT("[src] falls from \the [targetDoor], bouncing off [AM] and landing on the floor with a disappointed fart."))
+			playsound(src, (src.sound_fart ? src.sound_fart : pick(random_fart_sounds)), 50, TRUE)
+			return
+
+		var/mob/living/carbon/human/H = AM
+
+		if(H.head)
+			src.set_loc(get_turf(H))
+			H.visible_message(SPAN_ALERT("[src] falls from \the [targetDoor], bouncing off [H]'s hat and landing on the floor with an indignant fart!"), \
 								SPAN_ALERT("[src] falls from \the [targetDoor], bouncing off your hat and landing on the floor with an indignant fart!"))
-					playsound(H, (src.sound_fart ? src.sound_fart : pick(random_fart_sounds)), 50, TRUE)
-			else
-				src.set_loc(get_turf(targetDoor))
-				targetDoor.visible_message(SPAN_ALERT("[src] falls from \the [targetDoor], bouncing off [AM] and landing on the floor with a disappointed fart."))
-				playsound(src, (src.sound_fart ? src.sound_fart : pick(random_fart_sounds)), 50, TRUE)
+			playsound(H, (src.sound_fart ? src.sound_fart : pick(random_fart_sounds)), 50, TRUE)
+			return
+
+
+		src.set_loc(get_turf(H))
+		H.equip_if_possible(src, SLOT_HEAD)
+		H.set_clothing_icon_dirty()
+		H.visible_message(SPAN_ALERT("[src] falls from \the [targetDoor], landing on [H]'s head with a gleeful fart! [pick("Butthead!", "Nerd!", "What a dork!")]"), \
+							SPAN_ALERT("[src] falls from \the [targetDoor], landing on your head with a gleeful fart!"))
+		playsound(H, (src.sound_fart ? src.sound_fart : pick(random_fart_sounds)), 50, TRUE)
+
 
 	afterattack(obj/target, mob/user, flag)
 		if(!istype(target, /obj/machinery/door/unpowered/wood))
