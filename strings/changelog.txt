@@ -1,4 +1,23 @@
 
+(t)fri jul 03 26
+(u)KolIsDumb, DeadMan164
+(p)27019
+(e)🎨|C-Sprites
+(+)Added 8 color variants of the dinosaur pajamas found within the clothing booth
+(u)A.I.TheArtificialIdiot
+(p)27034
+(e)⚗|A-Chemistry
+(+)Most chocolate drinks now poison pugs and decay into sugar.
+(u)ANNmagedon
+(p)27072
+(e)|
+(+)RCD Charges now show up as ammo in manufacturers
+(+)Ammo found in hacked general manufacturers will now be correctly categorized
+(t)thu jul 02 26
+(u)ANNmagedon
+(p)27058
+(e)💅🤖|C-QoL, A-Silicons
+(+)Moved Cyborg Parts & Cyborg Upgrades to new respective categories in the robotics manufacturers.
 (t)wed jul 01 26
 (u)grasswitch
 (p)27041

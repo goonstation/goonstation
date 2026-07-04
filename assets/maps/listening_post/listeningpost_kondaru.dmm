@@ -269,7 +269,7 @@
 "oD" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost/barracks)
 "oO" = (
@@ -465,10 +465,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/light_switch{
-	name = "S light switch";
-	pixel_y = -24
-	},
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor/black,
 /area/listeningpost/general)
 "Bd" = (
@@ -774,7 +771,7 @@
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "Om" = (
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /obj/machinery/computer/camera_viewer,
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
@@ -879,7 +876,7 @@
 /obj/item/device/radio/intercom/security{
 	dir = 8
 	},
-/obj/machinery/light_switch/east{
+/obj/machinery/light_switch/directional/east{
 	pixel_y = -16
 	},
 /turf/simulated/floor/black,
