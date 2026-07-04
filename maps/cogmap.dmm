@@ -2075,9 +2075,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 9
-	},
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -35462,10 +35459,12 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple,
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
+	},
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 9
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
