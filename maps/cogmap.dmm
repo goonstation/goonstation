@@ -847,17 +847,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "adT" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 6;
-	level = 2
-	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/crew_quarters/clown)
-"adU" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 9;
-	level = 2
-	},
+/obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/clown)
 "adW" = (
@@ -64570,9 +64560,6 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "yfe" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
@@ -106017,7 +106004,7 @@ acG
 adh
 adR
 afi
-adR
+afi
 afi
 afi
 afi
@@ -106923,7 +106910,7 @@ acF
 tQq
 aof
 acG
-adU
+adW
 aeE
 gWD
 tYY
