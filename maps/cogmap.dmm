@@ -1507,6 +1507,9 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
 "agO" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/blue,
 /area/station/crew_quarters/quartersB)
 "agQ" = (
@@ -1735,11 +1738,8 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/obj/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
 /obj/shrub,
+/obj/disposalpipe/segment,
 /turf/simulated/floor/blue/corner,
 /area/station/crew_quarters/quarters)
 "ahG" = (
@@ -2081,6 +2081,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "aiF" = (
@@ -2429,15 +2430,15 @@
 	},
 /area/station/crew_quarters/quarters)
 "ajM" = (
-/obj/cable{
-	icon_state = "1-2"
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
 	},
 /obj/disposalpipe/segment{
-	dir = 2;
+	dir = 1;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/northwest)
+/turf/simulated/floor/blue,
+/area/station/crew_quarters/quartersB)
 "ajN" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/disposalpipe/segment,
@@ -19441,9 +19442,6 @@
 	dir = 4
 	},
 /obj/mapping_helper/wingrille_spawn/auto,
-/obj/disposalpipe/segment{
-	dir = 4
-	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/quarters)
 "bAS" = (
@@ -35460,6 +35458,17 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/ai_monitored/storage/eva)
+"epO" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple,
+/obj/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/northwest)
 "eqa" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/machinery/firealarm/directional/north,
@@ -51478,6 +51487,13 @@
 	},
 /turf/simulated/grimycarpet,
 /area/station/crew_quarters/quartersB)
+"peK" = (
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/quarters)
 "pfM" = (
 /obj/table/glass/auto,
 /obj/item/paper_bin,
@@ -54795,9 +54811,6 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/light{
 	dir = 8
 	},
@@ -55321,6 +55334,13 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/storage)
+"rNG" = (
+/obj/disposalpipe/segment{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/blue,
+/area/station/crew_quarters/quartersB)
 "rNW" = (
 /obj/railing/orange/reinforced{
 	dir = 1
@@ -64558,6 +64578,9 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
 /turf/simulated/floor/blue,
 /area/station/crew_quarters/quarters)
 "yfo" = (
@@ -104187,7 +104210,7 @@ nMb
 jly
 aga
 qTx
-acz
+peK
 ahF
 ajL
 ajG
@@ -105093,8 +105116,8 @@ peF
 afP
 afP
 xuE
-agO
-lsC
+rNG
+ajM
 ahE
 ajf
 mVQ
@@ -106000,9 +106023,9 @@ afi
 afi
 afi
 afi
-afi
+epO
 aiE
-ajM
+akN
 akN
 akN
 amE
