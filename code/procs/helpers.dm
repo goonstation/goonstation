@@ -617,7 +617,7 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
  */
 /proc/sanitize_frequency(var/f)
 	. = round(f)
-	. = clamp(., R_FREQ_MINIMUM, R_FREQ_MAXIMUM) // 144.1 -148.9
+	. = clamp(., RADIO::FREQ::MINIMUM, RADIO::FREQ::MAXIMUM) // 144.1 -148.9
 	. |= 1 // enforces the number being odd (rightmost bit being 1)
 
 /proc/format_frequency(var/f)

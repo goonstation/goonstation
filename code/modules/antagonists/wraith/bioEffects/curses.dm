@@ -1,6 +1,7 @@
 ////////////////////
 //Wraith curses
 ////////////////////
+ABSTRACT_TYPE(/datum/bioEffect/curse)
 /datum/bioEffect/curse
 	OnAdd()
 		. = ..()

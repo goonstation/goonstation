@@ -2,7 +2,7 @@
 	name = "secure locker"
 	desc = "A card-locked storage locker."
 	icon = 'icons/obj/storage/locker.dmi'
-	object_flags = NO_GHOSTCRITTER
+	object_flags = parent_type::object_flags | NO_GHOSTCRITTER
 	soundproofing = SOUNDPROOFING_INSIDE
 	can_flip_bust = 1
 	p_class = 3
@@ -443,7 +443,6 @@
 	close_sound = 'sound/misc/safe_close.ogg'
 	_max_health = LOCKER_HEALTH_STRONG
 	_health = LOCKER_HEALTH_STRONG
-	reinforced = TRUE
 	bolted = TRUE
 	spawn_contents = list(/obj/item/item_box/contraband)
 	radiation_protection = 20
@@ -847,7 +846,8 @@
 	/obj/item/clipboard,
 	/obj/item/hand_labeler,
 	/obj/item/cargotele,
-	/obj/item/device/appraisal)
+	/obj/item/device/appraisal,
+	/obj/item/stamp/qm)
 
 /* ==================== */
 /* ----- Civilian ----- */

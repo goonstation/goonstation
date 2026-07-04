@@ -383,7 +383,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 		src.radio2.name = "AI Intercom Monitor"
 		src.radio2.icon_tooltip = "Artificial Intelligence"
 		src.radio2.device_color = "#7F7FE2"
-		src.radio2.set_frequency(R_FREQ_INTERCOM_AI)
+		src.radio2.set_frequency(RADIO::FREQ::INTERCOM::AI)
 		src.radio2.toggle_microphone(FALSE)
 		src.radio2.toggle_speaker(FALSE)
 		src.radio3.name = "Secure Channels Monitor"

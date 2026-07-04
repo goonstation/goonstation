@@ -206,7 +206,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 									/datum/mutantrace/skeleton::name  = /datum/mutantrace/skeleton,
 									/datum/mutantrace/ithillid::name = /datum/mutantrace/ithillid,
 									/datum/mutantrace/martian::name = /datum/mutantrace/martian,
-									/datum/mutantrace/amphibian::name = /datum/mutantrace/amphibian,
+									/datum/mutantrace/frog/abzunian::name = /datum/mutantrace/frog/abzunian,
 									/datum/mutantrace/blob::name  = /datum/mutantrace/blob,
 									/datum/mutantrace/cow::name = /datum/mutantrace/cow)
 
@@ -270,7 +270,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 			return
 
 		if(prob(33))
-			var/morph = pick(/datum/mutantrace/lizard,/datum/mutantrace/skeleton,/datum/mutantrace/ithillid,/datum/mutantrace/martian,/datum/mutantrace/amphibian)
+			var/morph = pick(/datum/mutantrace/lizard,/datum/mutantrace/skeleton,/datum/mutantrace/ithillid,/datum/mutantrace/martian,/datum/mutantrace/frog/abzunian)
 			M.set_mutantrace(morph)
 
 		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase)

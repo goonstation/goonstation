@@ -374,8 +374,25 @@
 		if (!src.reagents || !src.reagents.total_volume)
 			var/zone = user.zone_sel.selecting
 			if (zone == "head")
-				user.visible_message("<span class='alert'><b>[user] crushes \the [src] against their forehead!! [pick("Bro!", "Epic!", "Damn!", "Gnarly!", "Sick!",\
-				"Crazy!", "Nice!", "Hot!", "What a monster!", "How sick is that?", "That's slick as shit, bro!")]", "You crush the can against your forehead! You feel super cool.")
+				if (ishuman(user))
+					var/missing_head = FALSE
+					var/mob/living/carbon/human/H = user
+					if (!H.organHolder.head)
+						missing_head = TRUE
+					else if (isskeleton(H))
+						var/datum/mutantrace/skeleton/skeleton = H.mutantrace
+						if (isnull(skeleton.head_tracker))
+							missing_head = TRUE
+					if (missing_head)
+						src.set_loc(get_turf(H))
+						H.u_equip(src)
+						var/target = get_steps(H, turn(H.dir, 180), 3)
+						src.throw_at(target, 7, 1)
+						H.visible_message(SPAN_ALERT("[user] attempts to crush the can on [his_or_her(H)] head... <b>but it isn't there!</b>"))
+						return
+
+				user.visible_message(SPAN_ALERT("<b>[user] crushes \the [src] against [his_or_her(user)] forehead!! [pick("Epic!", "Damn!", "Gnarly!", "Sick!",\
+				"Crazy!", "Nice!", "Hot!", "What a monster!", "How sick is that?", "That's slick as shit!")]"), "You crush the can against your forehead! You feel super cool.")
 				drop_this_shit = 1
 			else
 				user.visible_message("[user] crushes \the [src][pick(" one-handed!", ".", ".", ".")] [pick("Lame.", "Eh.", "Meh.", "Whatevs.", "Weirdo.")]", "You crush the can!")
