@@ -20,6 +20,7 @@ Fish lists:
 		Rosefin Shiner
 		Catfish
 		Tiger Oscar
+		Long pike
 
 Ocean saltwater fish:
 	Implemented:
@@ -286,10 +287,10 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/pike)
 	rarity = ITEM_RARITY_RARE
 
 TYPEINFO(/obj/item/reagent_containers/food/fish/long_pike)
-	appears_in_fish_collection = TRUE
+	appears_in_fish_collection = FALSE
 /obj/item/reagent_containers/food/fish/long_pike
 	name = "long pike"
-	desc = "Named after the long and pointy weapon of war, the pike features in the Finnish Kalevala, where it's jawbone is turned in to a magical kantele. This one is really long, for God knows why."
+	desc = "Named after the long and pointy weapon of war, this one for sure fits the 'long', but not the 'pointy'. Jeez, this thing is long."
 	icon = 'icons/obj/foodNdrink/food_fish_96x32.dmi'
 	icon_state = "pike_long"
 	inhand_color = "#24d10d"
