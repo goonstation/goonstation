@@ -13653,7 +13653,6 @@
 /turf/space,
 /area/space)
 "bas" = (
-/obj/machinery/door/window/southright,
 /obj/submachine/ATM{
 	pixel_y = 32
 	},
@@ -27060,7 +27059,6 @@
 /obj/submachine/ATM{
 	pixel_x = -32
 	},
-/obj/machinery/door/window/eastright,
 /turf/simulated/floor/blue/side{
 	dir = 4
 	},
