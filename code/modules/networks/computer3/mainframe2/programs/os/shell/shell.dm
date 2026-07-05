@@ -63,6 +63,8 @@
 	if (..() || !src.useracc)
 		return
 
+	// src.init_histfile_if_not_exist(src.useracc)
+
 	src.shell_builtins = list()
 	for (var/shell_builtin_type as anything in concrete_typesof(/datum/dwaine_shell_builtin))
 		var/datum/dwaine_shell_builtin/shell_builtin = new shell_builtin_type(src)
@@ -465,7 +467,7 @@
 	if(isnull(useracc) || !istype(useracc) || !command)
 		return TRUE
 
-	var/user_history_path =  "[setup_filepath_users_home]/[useracc.user_filename]/[src::histfile_name]"
+	var/user_history_path =  src.histfile_full_path(useracc.user_filename)
 
 	var/datum/computer/file/record/history =  src.signal_program(1, list("command"=DWAINE_COMMAND_FGET, "path" = user_history_path))
 
@@ -475,3 +477,16 @@
 	history.fields[toIso8601InCharacter(world.timeofday)] = command
 
 	return FALSE
+
+// /// creates the history file if not exists. TECHNICALLY history files on disk get written when your shell session ends but we do not seperate ram histfile and disk histfile
+// /datum/computer/file/mainframe_program/shell/proc/init_histfile_if_not_exist(datum/mainframe2_user_data/useracc)
+// 	if(isnull(useracc) || !istype(useracc))
+// 		return TRUE
+
+// 	var/user_history_path =  histfile_full_path(useracc.user_filename)
+
+// 	return src.signal_program(1, list("command" = DWAINE_COMMAND_FWRITE, "path" = user_history_path, "replace" = FALSE), new /datum/computer/file/record())
+
+
+/datum/computer/file/mainframe_program/shell/proc/histfile_full_path(username)
+	return "[setup_filepath_users_home]/[useracc.user_filename]/[src::histfile_name]"
