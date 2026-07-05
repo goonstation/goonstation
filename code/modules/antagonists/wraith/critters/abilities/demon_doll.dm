@@ -87,21 +87,67 @@
 
 /datum/targetable/critter/demon_doll/fearful_song
 	name = "Fearful Song"
-	desc = "Hum a tune in a panic to blink to your destination, terrifying those close to where you appear."
-	icon_state = "song_shrieking"
-	cooldown = 60 SECONDS
+	desc = "Fire a cursed trap tune that richochets in the dark, hitting lights will break them and give you another bounce."
+	cooldown = 30 SECONDS
 	targeted = 1
 	target_anything = 1
+	var/current_projectile
+
+	New()
+		. = ..()
+		src.current_projectile = new/datum/projectile/musical_note
 
 	cast(atom/target)
 		if (..())
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+		var/obj/projectile/note = shoot_projectile_ST_pixel_spread(src.holder.owner, src.current_projectile, target)
+		if (!note)
+			return
+		src.holder.owner.visible_message(SPAN_ALERT("<b>[src.holder.owner] throws its voice!</b>"))
 
-		var/turf/destination = target
-		var/mob/living/critter = src.holder.owner
 
-		animate_blink(critter)
-		critter.set_loc(destination)
+/datum/projectile/musical_note
+	name = "musical note"
+	icon_state = "note1"
+	has_impact_particles = TRUE
+	projectile_speed = 24
+	is_magical = TRUE
+	window_pass = 0
+	dissipation_delay = 50
+	var/max_bounces = 4
+	var/broke_lamp = FALSE
+
+	on_launch(obj/projectile/P)
+		SPAWN(0 SECONDS)
+			src.broke_lamp = FALSE
+
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		if (ismob(hit))
+			return
+		var/turf/proj_loc = get_turf(proj)
+
+		for (var/obj/machinery/light/fixture in view(1, proj))
+			if (fixture.current_lamp.light_status == LIGHT_OK || fixture.current_lamp.light_status == LIGHT_BURNED)
+				src.broke_lamp = TRUE
+			fixture.broken(explode_rigged=TRUE)
+
+		if (src.broke_lamp)
+			proj.reflectcount--
+		else if (proj_loc.is_lit())
+			proj.reflectcount++
+
+		if (proj.reflectcount >= src.max_bounces)
+			proj.die()
+		else
+			shot_volume = 0
+			shoot_reflected_bounce(proj, hit, src.max_bounces, PROJ_RAPID_HEADON_BOUNCE)
+			shot_volume = 100
+
+		return
+
+
+
+
 
 
 
