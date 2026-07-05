@@ -30429,7 +30429,7 @@
 	pixel_y = -5;
 	pixel_x = -24
 	},
-/obj/blind_switch/area/west{
+/obj/blind_switch/directional/west{
 	pixel_y = 5;
 	id = "crewq_a1"
 	},
@@ -35347,7 +35347,7 @@
 	pixel_x = 24;
 	pixel_y = -5
 	},
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	pixel_y = 5;
 	id = "crewq_b2"
 	},
@@ -43588,7 +43588,7 @@
 	pixel_y = -5;
 	pixel_x = -24
 	},
-/obj/blind_switch/area/west{
+/obj/blind_switch/directional/west{
 	pixel_y = 5;
 	id = "crewq_b1"
 	},
@@ -45056,7 +45056,7 @@
 	pixel_y = -5;
 	pixel_x = 24
 	},
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	pixel_y = 5;
 	id = "crewq_a2"
 	},
