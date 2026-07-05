@@ -7479,6 +7479,11 @@
 	dir = 5
 	},
 /area/station/hydroponics/bay)
+"aGr" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/plating,
+/area/station/chapel/sanctuary)
 "aGt" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -122326,7 +122331,7 @@ aJV
 aJV
 aRN
 otx
-mEg
+aGr
 qpG
 aWw
 aWw
