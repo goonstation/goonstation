@@ -30,7 +30,7 @@ TYPEINFO(/mob/living/critter/wraith/demon_doll)
 		src.see_invisible = INVIS_SPOOKY
 		src.addAbility(/datum/targetable/critter/demon_doll/devious_song)
 		src.addAbility(/datum/targetable/critter/demon_doll/shrieking_song)
-		src.addAbility(/datum/targetable/critter/demon_doll/fearful_song)
+		src.addAbility(/datum/targetable/critter/demon_doll/bouncy_song)
 		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/demon_doll, src.type)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_THERMALVISION, src)
