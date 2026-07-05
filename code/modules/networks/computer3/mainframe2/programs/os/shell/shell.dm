@@ -35,6 +35,8 @@
 	var/tmp/list/scriptvars = null
 	/// Shell scripts are stack-oriented; this is the stack used by the shell script being processed.
 	var/tmp/list/stack = null
+	/// The name of the history log file that exists per user.
+	var/static/histfile_name = "_shell_history"
 
 /datum/computer/file/mainframe_program/shell/disposing()
 	for (var/name as anything in src.shell_builtins)
@@ -121,6 +123,8 @@
 /datum/computer/file/mainframe_program/shell/input_text(text)
 	if (..() || !src.useracc)
 		return TRUE
+
+	src.log_command(src.useracc, text)
 
 	var/list/subcommands = list()
 	var/list/piped_list = global.command2list(text, "^", src.scriptvars, subcommands)
@@ -455,3 +459,19 @@
 			return FALSE
 
 	return SCRIPT_SUCCESS
+
+/// attempts to log command to the user's histfile
+/datum/computer/file/mainframe_program/shell/proc/log_command(datum/mainframe2_user_data/useracc, command)
+	if(isnull(useracc) || !istype(useracc) || !command)
+		return TRUE
+
+	var/user_history_path =  "[setup_filepath_users_home]/[useracc.user_filename]/[src::histfile_name]"
+
+	var/datum/computer/file/record/history =  src.signal_program(1, list("command"=DWAINE_COMMAND_FGET, "path" = user_history_path))
+
+	if(isnull(history) || !istype(history))
+		return TRUE
+
+	history.fields[toIso8601InCharacter(world.timeofday)] = command
+
+	return FALSE

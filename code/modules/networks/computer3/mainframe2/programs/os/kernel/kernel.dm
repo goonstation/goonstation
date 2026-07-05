@@ -107,8 +107,6 @@
 	if (!istype(user))
 		src.login_user(termid, "TEMP")
 		return
-	else
-		src.log_command(user, data)
 
 	if (is_break)
 		user.current_prog.receive_progsignal(1, list("command" = DWAINE_COMMAND_BREAK, "user" = termid))
@@ -411,20 +409,6 @@
 
 	if(!new_home.add_file(new_history)) // non-critical
 		new_history.dispose()
-
-	return FALSE
-
-/// log the command to the user's history file (/home/<user/_history) if possible
-/datum/computer/file/mainframe_program/os/kernel/proc/log_command(datum/mainframe2_user_data/user, command)
-	if(isnull(user) || !istype(user) || !command)
-		return TRUE
-
-	var/datum/computer/file/record/history = src.parse_file_directory("[setup_filepath_users_home]/[user.user_filename]/_shell_history", src.holder.root, FALSE, user)
-
-	if(isnull(history) || !istype(history))
-		return TRUE
-
-	history.fields[toIso8601InCharacter(world.timeofday)] = command
 
 	return FALSE
 

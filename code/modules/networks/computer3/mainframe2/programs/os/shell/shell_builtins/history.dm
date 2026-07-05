@@ -1,6 +1,5 @@
 /datum/dwaine_shell_builtin/history
 	name = "history"
-	var/static/histfile_name = "_shell_history"
 
 /datum/dwaine_shell_builtin/history/execute(list/command_list, list/piped_list)
 	var/datum/mainframe2_user_data/user = src.shell.useracc
@@ -9,7 +8,7 @@
 		src.shell.message_user("Error: Executing user not found.")
 		return BUILTIN_BREAK
 
-	var/user_history_path =  "[setup_filepath_users_home]/[user.user_filename]/[src.histfile_name]"
+	var/user_history_path =  "[setup_filepath_users_home]/[user.user_filename]/[src.shell::histfile_name]"
 
 	var/datum/computer/file/record/history_file =  src.shell.signal_program(1, list("command"=DWAINE_COMMAND_FGET, "path" = user_history_path))
 
