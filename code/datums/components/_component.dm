@@ -227,16 +227,16 @@ var/datum/signal_holder/global_signal_holder
 	target_procs[signal_type] = proctype
 	var/list/looked_up = lookup[signal_type]
 
-	// Nothing has registered here yet.
+	// If nothing has been registered here yet, register the reference.
 	if (isnull(looked_up))
 		lookup[signal_type] = src
-	// We're already registered here.
+	// If we're already registered here, return.
 	else if (looked_up == src)
 		return
-	// One other thing has registered here.
+	// If only one other thing has been registered here, replace the reference with a list.
 	else if (!length(looked_up))
 		lookup[signal_type] = list((looked_up) = TRUE, (src) = TRUE)
-	// Many other things have registered here
+	// If many other things have been registered here, add us to the list.
 	else
 		looked_up[src] = TRUE
 
