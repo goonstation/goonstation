@@ -192,6 +192,7 @@
 		text += "</small></span>"
 		return text
 
+	/// Get cure methods of a given disease in a string
 	proc/get_cure_method()
 		. = "Suggested Remedy: "
 		if (src.cure_flags & CURE_INCURABLE)
@@ -216,6 +217,7 @@
 				cures += "Heart transplant"
 			. += english_list(cures, and_text=" or ")
 
+	/// Package disease data for use in TGUI health interfaces
 	proc/ui_disease_data()
 		. = list(
 			"disease_ref" = "\ref[src]",

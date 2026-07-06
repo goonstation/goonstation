@@ -1,13 +1,13 @@
-/// Get TGUI data for health interfaces
+/// Get health data for TGUI interfaces
 ///
 /// Arguments:
 /// * include_organs (boolean: FALSE) - include organ data
 /// * include_reagents (boolean: FALSE) - include reagent data
 /// * include_genetics (boolean: FALSE) - include genetic defect / clone generation data
 /// * include_diseases (boolean: FALSE) - include disease information
-/// * syndicate (boolean: FALSE) - include syndicate implant information
-/// * admin (boolean: FALSE) - include information without obfuscation
-/mob/living/carbon/human/proc/ui_health_data(include_organs=FALSE, include_reagents=FALSE, include_genetics=FALSE, include_diseases=FALSE, syndicate=FALSE, admin=FALSE)
+/// * syndicate_scan (boolean: FALSE) - include syndicate implant information
+/// * admin_scan (boolean: FALSE) - include all implant information
+/mob/living/carbon/human/proc/ui_health_data(include_organs=FALSE, include_reagents=FALSE, include_genetics=FALSE, include_diseases=FALSE, syndicate_scan=FALSE, admin_scan=FALSE)
 	. = list()
 
 	.["patient_name"] = src.name
@@ -62,7 +62,7 @@
 
 	if (include_organs && src.organHolder)
 		.["organ_status"] = src.ui_organ_data()
-		.["embedded_objects"] = src.ui_embedded_objects(syndicate, admin)
+		.["embedded_objects"] = src.ui_embedded_objects(syndicate_scan, admin_scan)
 		if (src.organHolder.brain)
 			.["brain_damage"] = src.organHolder.brain.get_damage()
 		else
@@ -177,7 +177,7 @@
 
 	return limb_data
 
-/// Get brain damage information formatted for TGUI windows
+/// Get brain damage information formatted for TGUI
 /mob/living/carbon/human/proc/ui_brain_damage()
 	var/brain = src.get_organ("brain")
 	if (!brain)
@@ -230,6 +230,7 @@
 		"color" = "gray"
 	)
 
+/// Get embedded objects/implants for TGUI
 /mob/living/carbon/human/proc/ui_embedded_objects(syndicate_scan=FALSE, admin_scan=FALSE)
 	var/foreign_object_count = 0
 	var/has_chest_object = FALSE
@@ -277,6 +278,7 @@
 		"has_chest_object" = has_chest_object,
 	)
 
+// Return info on all organs for use in TGUI
 /mob/living/carbon/human/proc/ui_organ_data()
 	. = list()
 
@@ -308,6 +310,7 @@
 			"max_health"= organ ? organ.max_damage : 0,
 		))
 
+/// Return info on all diseases for TGUI
 /mob/living/carbon/human/proc/ui_disease_data()
 	. = list()
 	for (var/datum/ailment_data/A in src.ailments)
