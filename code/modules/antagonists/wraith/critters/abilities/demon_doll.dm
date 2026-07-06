@@ -70,6 +70,7 @@
 /datum/targetable/critter/demon_doll/bouncy_song
 	name = "Bouncy Song"
 	desc = "Throw your voice, knocking people back after a bounce and laying a trap after two. Bounces more in the dark and when hitting lights!"
+	icon_state = "song_bouncing"
 	cooldown = 1 SECONDS
 	targeted = 1
 	target_anything = 1
@@ -85,7 +86,6 @@
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		var/obj/projectile/note = shoot_projectile_ST_pixel_spread(src.holder.owner, src.current_projectile, target)
 		muzzle_flash_attack_particle(src.holder.owner, src.holder.owner.loc, target, src.muzzle_flash)
-		note.special_data["owner"] = src.holder.owner
 		if (!note)
 			return
 		src.holder.owner.visible_message(SPAN_ALERT("<b>[src.holder.owner] throws its voice!</b>"))
@@ -151,7 +151,7 @@
 			shot_volume = 100
 		return
 
-	proc/powered_shot(var/mob/hit, var/obj/projectile/proj, var/dir)
+	proc/powered_shot(var/mob/hit, var/obj/projectile/proj, var/dir, var/projowner)
 		if (proj.reflectcount < 1 || !isliving(hit))
 			return
 
@@ -160,13 +160,11 @@
 		victim.do_disorient(15, knockdown = 40)
 		victim.throw_at(target, 5, 3, throw_type = THROW_GUNIMPACT)
 
-		if (proj.reflectcount < 2)
+		if (proj.reflectcount < 2 || iscritter(hit) || istype(hit, /mob/living/critter/wraith/demon_doll))
 			return
 
 		var/chosen_trap = pick(concrete_typesof(/obj/machinery/wraith/runetrap/))
-		var/projowner = proj.special_data["owner"]
-		var/obj/machinery/wraith/runetrap/trap = new chosen_trap(hit.loc, projowner)
-		trap.arming_time = 1 SECONDS // reward double bounce hits, is funny
+		var/obj/machinery/wraith/runetrap/trap = new chosen_trap(hit.loc, projowner, arming_time = 1 SECONDS)
 		trap.free_trap = TRUE
 
 		playsound(hit, "sound/voice/wraith/wraithspook[rand(1, 2)].ogg", 60, 1, channel=VOLUME_CHANNEL_EMOTE)

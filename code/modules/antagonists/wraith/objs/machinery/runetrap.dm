@@ -10,19 +10,18 @@
 	anchored = ANCHORED
 	var/visible = FALSE
 	var/armed = FALSE
-	var/arming_time = 5 SECONDS
 	var/free_trap = FALSE
 	var/mob/living/intangible/wraith/wraith_trickster/master = null
 	var/mob/living/critter/critter = null
 
-	New(turf/T, mob/living/W = null, mob/placing_mob)
+	New(turf/T, mob/living/W = null, mob/placing_mob, var/arming_time = 5 SECONDS)
 		..()
 		if (istype(W, /mob/living/intangible/wraith/wraith_trickster))
 			master = W
 		else
 			critter = W
 
-		SPAWN(src.arming_time)
+		SPAWN(arming_time)
 			if (!QDELETED(src))
 				var/turf/local_turf = get_turf(src)
 				if (local_turf.RL_GetBrightness() < 0.3)
