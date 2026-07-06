@@ -151,7 +151,7 @@
 			shot_volume = 100
 		return
 
-	proc/powered_shot(var/mob/hit, var/obj/projectile/proj, var/dir, var/projowner)
+	proc/powered_shot(var/mob/hit, var/obj/projectile/proj, var/dir)
 		if (proj.reflectcount < 1 || !isliving(hit))
 			return
 
@@ -160,12 +160,8 @@
 		victim.do_disorient(15, knockdown = 40)
 		victim.throw_at(target, 5, 3, throw_type = THROW_GUNIMPACT)
 
-		if (proj.reflectcount < 2 || iscritter(hit) || istype(hit, /mob/living/critter/wraith/demon_doll))
+		if (proj.reflectcount < 2 || iscritter(hit))
 			return
-
-		var/chosen_trap = pick(concrete_typesof(/obj/machinery/wraith/runetrap/))
-		var/obj/machinery/wraith/runetrap/trap = new chosen_trap(hit.loc, projowner, arming_time = 1 SECONDS)
-		trap.free_trap = TRUE
 
 		playsound(hit, "sound/voice/wraith/wraithspook[rand(1, 2)].ogg", 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 		sonic_attack_environmental_effect(hit, 3, list("light"))
@@ -173,6 +169,13 @@
 			if (HH == hit)
 				continue
 			HH.apply_sonic_stun(0, 0, 20, 0, 3, 4, 6)
+
+		if (istype(hit, /mob/living/critter/wraith/demon_doll))
+			return
+
+		var/chosen_trap = pick(concrete_typesof(/obj/machinery/wraith/runetrap/))
+		var/obj/machinery/wraith/runetrap/trap = new chosen_trap(hit.loc, projowner, arming_time = 1 SECONDS)
+		trap.free_trap = TRUE
 
 
 
