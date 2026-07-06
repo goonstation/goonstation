@@ -327,7 +327,7 @@
 	},
 /area/station/hallway/secondary/shuttle)
 "YY" = (
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/neutral/side{
 	dir = 1
 	},

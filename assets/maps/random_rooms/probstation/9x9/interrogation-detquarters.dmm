@@ -135,7 +135,7 @@
 /turf/simulated/floor/redblack,
 /area/station/security/interrogation)
 "of" = (
-/obj/machinery/light_switch/south,
+/obj/machinery/light_switch/directional/south,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -177,7 +177,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "to" = (
-/obj/blind_switch/west{
+/obj/blind_switch/directional/west{
 	id = "det_interro";
 	pixel_y = 6
 	},
@@ -213,7 +213,7 @@
 /turf/simulated/floor,
 /area/station/security/interrogation)
 "zZ" = (
-/obj/machinery/light_switch/east{
+/obj/machinery/light_switch/directional/east{
 	pixel_y = -4
 	},
 /obj/cable{
@@ -469,11 +469,11 @@
 	},
 /area/station/security/interrogation)
 "Zj" = (
-/obj/blind_switch/south{
+/obj/blind_switch/directional/south{
 	id = "det_interro";
 	pixel_x = 6
 	},
-/obj/blind_switch/south{
+/obj/blind_switch/directional/south{
 	pixel_x = -6
 	},
 /obj/machinery/computer/television,

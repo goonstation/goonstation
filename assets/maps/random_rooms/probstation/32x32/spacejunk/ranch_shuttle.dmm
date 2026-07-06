@@ -505,7 +505,7 @@
 /turf/space,
 /area/space)
 "NG" = (
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /obj/cable{
 	icon_state = "1-2"
 	},

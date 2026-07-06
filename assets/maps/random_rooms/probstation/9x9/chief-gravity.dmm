@@ -105,14 +105,14 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/light_switch/north{
+/obj/machinery/light_switch/directional/north{
 	pixel_x = -4
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/computer/announcement/station/engineering{
 	dir = 8
 	},
-/obj/blind_switch/area/north{
+/obj/blind_switch/directional/north{
 	pixel_x = 5
 	},
 /turf/simulated/floor/wood/five,

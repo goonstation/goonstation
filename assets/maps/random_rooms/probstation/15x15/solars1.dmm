@@ -282,7 +282,7 @@
 /obj/stool/chair/yellow{
 	dir = 8
 	},
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/alpha)
 "X" = (

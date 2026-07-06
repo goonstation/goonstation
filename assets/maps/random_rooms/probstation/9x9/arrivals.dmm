@@ -6,7 +6,7 @@
 /obj/machinery/camera/directional/west{
 	pixel_y = -8
 	},
-/obj/machinery/light_switch/west{
+/obj/machinery/light_switch/directional/west{
 	pixel_y = 6
 	},
 /obj/storage/secure/closet/personal,

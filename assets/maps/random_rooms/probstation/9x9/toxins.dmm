@@ -166,7 +166,7 @@
 	dir = 5
 	},
 /obj/machinery/meter,
-/obj/machinery/light_switch/west{
+/obj/machinery/light_switch/directional/west{
 	pixel_y = 8
 	},
 /obj/machinery/dispenser,
@@ -391,7 +391,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "FV" = (
-/obj/blind_switch/area/south,
+/obj/blind_switch/directional/south,
 /obj/machinery/atmospherics/unary/tank{
 	dir = 8
 	},

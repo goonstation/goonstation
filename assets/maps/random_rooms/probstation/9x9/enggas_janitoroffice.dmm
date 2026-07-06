@@ -21,10 +21,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/blind_switch/west{
+/obj/blind_switch/directional/west{
 	pixel_y = 6
 	},
-/obj/machinery/light_switch/west{
+/obj/machinery/light_switch/directional/west{
 	pixel_y = -5
 	},
 /turf/simulated/floor/darkblue,
@@ -203,7 +203,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/engine/gas)
 "J" = (
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/black/grime,
 /area/station/engine/gas)
 "K" = (

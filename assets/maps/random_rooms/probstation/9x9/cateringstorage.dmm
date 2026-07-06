@@ -147,11 +147,11 @@
 /obj/item/hand_labeler,
 /obj/item/reagent_containers/food/drinks/bottle/soda,
 /obj/item/storage/firstaid/toxin,
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "y" = (
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/catering)
 "z" = (
@@ -264,7 +264,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "X" = (
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /obj/cable{
 	icon_state = "1-2"
 	},

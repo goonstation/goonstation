@@ -89,7 +89,7 @@
 /obj/machinery/computer/camera_viewer{
 	dir = 8
 	},
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/redblack{
 	dir = 5
 	},
@@ -262,7 +262,7 @@
 "J" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/orange,
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/black,
 /area/station/security/brig/solitary2)
 "K" = (
@@ -360,7 +360,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/black,
 /area/station/security/brig/solitary)
 "Z" = (

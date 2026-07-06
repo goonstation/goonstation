@@ -361,7 +361,7 @@
 	pixel_x = 8;
 	pixel_y = 14
 	},
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /obj/machinery/camera/directional/north{
 	pixel_x = -8
 	},
@@ -585,7 +585,7 @@
 /turf/simulated/floor/black,
 /area/station/ai_monitored/storage/eva)
 "Y" = (
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},

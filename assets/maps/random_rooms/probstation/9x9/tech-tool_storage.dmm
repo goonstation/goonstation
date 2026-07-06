@@ -311,7 +311,7 @@
 	name = "Tool Storage"
 	})
 "E" = (
-/obj/blind_switch/area/east,
+/obj/blind_switch/directional/east,
 /obj/rack/organized/techstorage_eng/transception,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
@@ -490,7 +490,7 @@
 	name = "Tool Storage"
 	})
 "V" = (
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/directional/west,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-4"
@@ -516,11 +516,10 @@
 /area/station/storage/tech)
 "Z" = (
 /obj/storage/closet/office,
-/obj/blind_switch/area/west{
-	pixel_x = -24;
+/obj/blind_switch/directional/west{
 	pixel_y = -5
 	},
-/obj/machinery/light_switch/west{
+/obj/machinery/light_switch/directional/west{
 	pixel_y = 5
 	},
 /turf/simulated/floor/yellow/side{

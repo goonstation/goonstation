@@ -310,7 +310,7 @@
 	},
 /area/station/security/evidence)
 "GQ" = (
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /obj/storage/closet/janitor,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/supply)
@@ -427,13 +427,13 @@
 /obj/machinery/camera/directional/north{
 	pixel_x = -10
 	},
-/obj/blind_switch/area/north{
+/obj/blind_switch/directional/north{
 	pixel_x = 4
 	},
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/light_switch/north{
+/obj/machinery/light_switch/directional/north{
 	pixel_x = -4
 	},
 /turf/simulated/floor/redblack{

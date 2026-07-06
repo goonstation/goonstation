@@ -152,7 +152,7 @@
 /turf/simulated/floor/yellow/side,
 /area/station/mining/staff_room)
 "t" = (
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -189,7 +189,7 @@
 	},
 /area/station/mining/staff_room)
 "x" = (
-/obj/machinery/light_switch/south,
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor/yellow/side,
 /area/station/mining/staff_room)
 "y" = (
@@ -450,7 +450,7 @@
 	pixel_x = 4;
 	pixel_y = 10
 	},
-/obj/blind_switch/west,
+/obj/blind_switch/directional/west,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},

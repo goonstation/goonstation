@@ -31,7 +31,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction)
 "k" = (
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction)
 "l" = (
@@ -87,7 +87,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction)
 "E" = (
-/obj/blind_switch/area/east,
+/obj/blind_switch/directional/east,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction)
 "H" = (

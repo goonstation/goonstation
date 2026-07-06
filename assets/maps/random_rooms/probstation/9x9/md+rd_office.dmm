@@ -173,7 +173,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/head)
 "wy" = (
-/obj/machinery/light_switch/west{
+/obj/machinery/light_switch/directional/west{
 	pixel_y = -6
 	},
 /obj/machinery/power/data_terminal,
@@ -184,7 +184,7 @@
 	dir = 4;
 	setup_os_string = "ZETA_MAINFRAME"
 	},
-/obj/blind_switch/area/west{
+/obj/blind_switch/directional/west{
 	pixel_y = 6
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/west,
@@ -311,7 +311,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/hor)
 "CZ" = (
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	id = "jointdirectorblinds";
 	name = "joint blind switch";
 	pixel_y = -10
@@ -399,7 +399,7 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/medical/head)
 "Nn" = (
-/obj/machinery/light_switch/east{
+/obj/machinery/light_switch/directional/east{
 	pixel_y = 6
 	},
 /obj/cable{
@@ -409,7 +409,7 @@
 /obj/machinery/computer3/generic/med_data{
 	dir = 8
 	},
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	pixel_y = -6
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
@@ -501,7 +501,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/hor)
 "UE" = (
-/obj/blind_switch/area/west/on{
+/obj/blind_switch/on/directional/west{
 	id = "jointdirectorblinds";
 	name = "joint blind switch";
 	pixel_y = 10

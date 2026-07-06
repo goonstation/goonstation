@@ -225,7 +225,7 @@
 /obj/machinery/camera/directional/east{
 	pixel_y = 6
 	},
-/obj/machinery/light_switch/east{
+/obj/machinery/light_switch/directional/east{
 	pixel_y = -6
 	},
 /turf/simulated/floor/white,

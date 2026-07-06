@@ -564,7 +564,7 @@
 	pixel_x = 10;
 	pixel_y = -6
 	},
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -627,7 +627,7 @@
 /area/station/engine/storage)
 "XM" = (
 /obj/machinery/vending/standard,
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/yellow/checker{
 	dir = 4
 	},

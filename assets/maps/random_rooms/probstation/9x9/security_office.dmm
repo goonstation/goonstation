@@ -20,10 +20,10 @@
 /turf/simulated/floor/red/redblackchecker,
 /area/station/security/equipment)
 "dJ" = (
-/obj/machinery/light_switch/north{
+/obj/machinery/light_switch/directional/north{
 	pixel_x = -5
 	},
-/obj/blind_switch/area/north{
+/obj/blind_switch/directional/north{
 	pixel_x = 6
 	},
 /obj/cable{

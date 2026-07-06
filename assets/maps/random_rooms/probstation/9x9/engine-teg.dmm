@@ -368,10 +368,10 @@
 /obj/cable/orange{
 	icon_state = "0-2"
 	},
-/obj/blind_switch/area/north{
+/obj/blind_switch/directional/north{
 	pixel_x = -8
 	},
-/obj/machinery/light_switch/north{
+/obj/machinery/light_switch/directional/north{
 	pixel_x = 8
 	},
 /obj/item/device/multitool,

@@ -72,7 +72,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/medbay/psychiatrist)
 "m" = (
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "n" = (
@@ -230,10 +230,10 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/psychiatrist)
 "E" = (
-/obj/blind_switch/area/south{
+/obj/blind_switch/directional/south{
 	pixel_x = -8
 	},
-/obj/machinery/light_switch/south{
+/obj/machinery/light_switch/directional/south{
 	pixel_x = 8
 	},
 /obj/cable{

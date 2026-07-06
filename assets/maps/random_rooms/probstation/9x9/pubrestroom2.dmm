@@ -4,7 +4,7 @@
 /turf/simulated/floor/blue,
 /area/station/crew_quarters/showers)
 "c" = (
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -27,7 +27,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/showers)
 "g" = (
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /obj/cable{
 	icon_state = "4-8"
 	},

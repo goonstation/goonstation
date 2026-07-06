@@ -321,10 +321,10 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	pixel_y = -4
 	},
-/obj/machinery/light_switch/east{
+/obj/machinery/light_switch/directional/east{
 	pixel_y = 6
 	},
 /turf/simulated/floor/greenblack{

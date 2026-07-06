@@ -69,7 +69,7 @@
 /area/station/medical/medbay/pharmacy)
 "i" = (
 /obj/machinery/manufacturer/medical,
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/directional/west,
 /obj/machinery/camera/directional/west{
 	pixel_y = 10
 	},
@@ -135,7 +135,7 @@
 	pixel_x = 28;
 	pixel_y = 4
 	},
-/obj/machinery/light_switch/south{
+/obj/machinery/light_switch/directional/south{
 	pixel_x = -11
 	},
 /obj/mapping_helper/glassware_spawn,

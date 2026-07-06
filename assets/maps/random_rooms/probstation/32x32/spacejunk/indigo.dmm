@@ -120,7 +120,7 @@
 	pixel_x = 12
 	},
 /obj/item/device/multitool,
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/carpet/purple/fancy/edge/ne,
 /area/research_outpost/indigo_rye)
 "dx" = (
@@ -763,7 +763,7 @@
 /turf/simulated/floor/purplewhite,
 /area/research_outpost/indigo_rye)
 "MM" = (
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},

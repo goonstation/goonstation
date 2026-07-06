@@ -27,7 +27,7 @@
 /area/station/ai_monitored/armory)
 "d" = (
 /obj/machinery/vending/security_ammo,
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/redblack{
 	dir = 6
 	},
@@ -309,7 +309,7 @@
 /area/station/security/secwing)
 "K" = (
 /obj/storage/cart/forensic/bomb_disposal,
-/obj/machinery/light_switch/east{
+/obj/machinery/light_switch/directional/east{
 	pixel_y = 3
 	},
 /obj/disposalpipe/segment/bent/west,
@@ -366,10 +366,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	pixel_y = -4
 	},
-/obj/machinery/light_switch/east{
+/obj/machinery/light_switch/directional/east{
 	pixel_y = 6
 	},
 /obj/disposalpipe/segment,

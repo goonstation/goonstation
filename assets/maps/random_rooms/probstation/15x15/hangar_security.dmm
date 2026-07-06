@@ -79,7 +79,7 @@
 	dir = 8
 	},
 /obj/storage/closet/welding_supply,
-/obj/machinery/light_switch/south,
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "io" = (
@@ -109,7 +109,7 @@
 /area/station/security/checkpoint/podbay)
 "jh" = (
 /obj/submachine/weapon_vendor/security,
-/obj/machinery/light_switch/south{
+/obj/machinery/light_switch/directional/south{
 	pixel_x = -8
 	},
 /obj/machinery/firealarm/directional/south{

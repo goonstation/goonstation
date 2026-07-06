@@ -108,10 +108,10 @@
 /obj/item/card/id/gold/captains_spare,
 /obj/item/pinpointer/disk,
 /obj/item/hand_tele,
-/obj/machinery/light_switch/east{
+/obj/machinery/light_switch/directional/east{
 	pixel_y = 8
 	},
-/obj/blind_switch/east{
+/obj/blind_switch/directional/east{
 	pixel_y = -8
 	},
 /obj/cable{
@@ -168,7 +168,7 @@
 /obj/decal/poster/wallsign/framed_award/firstbill{
 	pixel_y = 28
 	},
-/obj/machinery/light_switch/west{
+/obj/machinery/light_switch/directional/west{
 	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/nw,
@@ -348,7 +348,7 @@
 /turf/simulated/wall/auto/supernorn/colored/blue,
 /area/station/bridge/execrestroom)
 "Im" = (
-/obj/blind_switch/west,
+/obj/blind_switch/directional/west,
 /turf/simulated/floor/carpet/green/fancy/edge/west,
 /area/station/crew_quarters/hop)
 "Jx" = (
@@ -380,7 +380,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hop)
 "Oo" = (
-/obj/machinery/light_switch/south,
+/obj/machinery/light_switch/directional/south,
 /obj/disposalpipe/junction/left/west,
 /obj/cable{
 	icon_state = "1-8"

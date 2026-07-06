@@ -19,7 +19,7 @@
 "d" = (
 /obj/table/reinforced/chemistry/auto/firstaid,
 /obj/item/storage/toolbox/mechanical,
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
 "e" = (

@@ -155,7 +155,7 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/asylum)
 "dQ" = (
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/wood/five,
 /area/station/medical/asylum/main)
 "eg" = (
@@ -513,7 +513,7 @@
 	},
 /area/station/medical/asylum/kitchen)
 "rT" = (
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/carpet/arcade,
 /area/station/medical/asylum/rec)
 "sh" = (
@@ -589,7 +589,7 @@
 	},
 /area/station/medical/asylum/kitchen)
 "uq" = (
-/obj/machinery/light_switch/south,
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor/white/checker2{
 	dir = 1
 	},
@@ -723,7 +723,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/black/grime,
 /area/station/medical/asylum/maintenance)
 "xw" = (
@@ -1125,7 +1125,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/medical/asylum/maintenance)
 "Jc" = (
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/white,
 /area/station/medical/asylum/main)
 "JA" = (
@@ -1502,7 +1502,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/sanitary/blue,
 /area/station/medical/asylum/bathroom)
 "Xb" = (
@@ -1586,7 +1586,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/carpet/grime,
 /area/station/medical/asylum/computer)
 "XY" = (
@@ -1602,7 +1602,7 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 1
 	},
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/white,
 /area/station/medical/asylum/main)
 "Yu" = (

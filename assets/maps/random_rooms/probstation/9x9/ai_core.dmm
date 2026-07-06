@@ -142,7 +142,7 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "s" = (
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "u" = (

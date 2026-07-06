@@ -357,7 +357,7 @@
 /area/station/science/teleporter)
 "EQ" = (
 /obj/cable,
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /obj/machinery/power/apc/autoname_south,
 /obj/machinery/camera/directional/east{
 	pixel_y = 10
@@ -449,7 +449,7 @@
 /turf/simulated/floor/purple,
 /area/station/science/teleporter)
 "KM" = (
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /obj/storage/closet/port_a_sci,
 /turf/simulated/floor/white,
 /area/station/science/teleporter)

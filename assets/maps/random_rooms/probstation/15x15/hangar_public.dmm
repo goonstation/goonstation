@@ -243,7 +243,7 @@
 /area/station/hangar/main)
 "GH" = (
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/machinery/light_switch/south,
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor/engine,
 /area/station/hangar/main)
 "Hq" = (
@@ -301,7 +301,7 @@
 /obj/machinery/camera/directional/north{
 	pixel_x = 10
 	},
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor,
 /area/station/hangar/main)
 "NW" = (

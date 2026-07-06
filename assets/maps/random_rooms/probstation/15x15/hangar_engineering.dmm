@@ -22,7 +22,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 4
 	},
 /area/station/hangar/engine)
@@ -35,7 +35,7 @@
 /area/station/hangar/engine)
 "fF" = (
 /obj/decal/tile_edge/stripe/extra_big,
-/turf/simulated/floor/orangeblack/side,
+/turf/simulated/floor/caution/side,
 /area/station/hangar/engine)
 "fT" = (
 /obj/machinery/portable_reclaimer,
@@ -46,7 +46,7 @@
 "fV" = (
 /obj/machinery/vending/air_vendor/plasma,
 /obj/machinery/light/incandescent,
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 4
 	},
 /area/station/hangar/engine)
@@ -98,7 +98,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 4
 	},
 /area/station/hangar/engine)
@@ -129,12 +129,12 @@
 	dir = 4
 	},
 /obj/machinery/light/incandescent,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/station/hangar/engine)
 "pT" = (
 /obj/reagent_dispensers/foamtank,
 /obj/machinery/light/incandescent,
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 4
 	},
 /area/station/hangar/engine)
@@ -147,7 +147,7 @@
 /area/space)
 "qN" = (
 /obj/table/reinforced/auto,
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 4
 	},
 /area/station/hangar/engine)
@@ -164,8 +164,8 @@
 	icon_state = "2-8"
 	},
 /obj/disposalpipe/segment/bent/south,
-/obj/machinery/light_switch/east,
-/turf/simulated/floor/orangeblack/side{
+/obj/machinery/light_switch/directional/east,
+/turf/simulated/floor/caution/side{
 	dir = 6
 	},
 /area/station/hangar/engine)
@@ -177,7 +177,7 @@
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 5
 	},
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 9
 	},
 /area/station/hangar/engine)
@@ -223,7 +223,7 @@
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 6
 	},
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 10
 	},
 /area/station/hangar/engine)
@@ -251,7 +251,7 @@
 	pixel_y = -6;
 	id = "podbay_eng4"
 	},
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 8
 	},
 /area/station/hangar/engine)
@@ -285,7 +285,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 1
 	},
 /area/station/hangar/engine)
@@ -330,7 +330,7 @@
 	icon_state = "1-4"
 	},
 /obj/disposalpipe/segment/bent/north,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/station/hangar/engine)
 "EE" = (
 /obj/cable{
@@ -357,7 +357,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 1
 	},
 /area/station/hangar/engine)
@@ -366,7 +366,7 @@
 	dir = 9
 	},
 /obj/decal/tile_edge/stripe/extra_big,
-/turf/simulated/floor/orangeblack/side,
+/turf/simulated/floor/caution/side,
 /area/station/hangar/engine)
 "Gm" = (
 /obj/cable{
@@ -418,7 +418,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 1
 	},
 /area/station/hangar/engine)
@@ -430,7 +430,7 @@
 /area/station/hangar/engine)
 "Md" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 4
 	},
 /area/station/hangar/engine)
@@ -477,7 +477,7 @@
 	pixel_y = 6;
 	id = "podbay_eng1"
 	},
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 8
 	},
 /area/station/hangar/engine)
@@ -487,7 +487,7 @@
 	icon_state = "1-4"
 	},
 /obj/disposalpipe/segment/bent/north,
-/turf/simulated/floor/orangeblack/side,
+/turf/simulated/floor/caution/side,
 /area/station/hangar/engine)
 "QC" = (
 /obj/lattice{
@@ -536,14 +536,14 @@
 	},
 /obj/cable,
 /obj/machinery/camera/directional/east,
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 5
 	},
 /area/station/hangar/engine)
 "YQ" = (
 /obj/storage/secure/closet/engineering/welding,
 /obj/machinery/light/incandescent,
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 4
 	},
 /area/station/hangar/engine)
@@ -553,7 +553,7 @@
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/machinery/light/incandescent,
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 4
 	},
 /area/station/hangar/engine)

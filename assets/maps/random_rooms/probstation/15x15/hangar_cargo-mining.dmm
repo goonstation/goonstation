@@ -39,7 +39,7 @@
 /turf/simulated/floor,
 /area/station/hangar/qm)
 "fX" = (
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/simulated/floor,
 /area/station/hangar/qm)
@@ -164,7 +164,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/qm)
 "nQ" = (
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor,
 /area/station/hangar/qm)
 "oo" = (

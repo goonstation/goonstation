@@ -185,7 +185,7 @@
 /area/station/turret_protected/ai_upload)
 "Q" = (
 /obj/machinery/camera/directional/east,
-/obj/machinery/light_switch/east{
+/obj/machinery/light_switch/directional/east{
 	pixel_y = 14
 	},
 /turf/simulated/floor/circuit,

@@ -168,7 +168,7 @@
 /area/station/medical/dome)
 "M" = (
 /obj/fakeobject/palmtree,
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "N" = (

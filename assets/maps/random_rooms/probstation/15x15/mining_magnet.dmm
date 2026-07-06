@@ -226,10 +226,8 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/obj/machinery/light_switch{
-	name = "N light switch";
-	on = 0;
-	pixel_y = 24
+/obj/machinery/light_switch/directional/north{
+	on = 0
 	},
 /obj/machinery/bot/cleanbot,
 /turf/simulated/floor,
@@ -645,7 +643,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/light_switch/south,
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor/yellow/side,
 /area/station/mining/magnet)
 "Qb" = (

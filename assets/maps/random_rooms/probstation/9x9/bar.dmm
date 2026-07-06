@@ -82,11 +82,11 @@
 /area/station/crew_quarters/bar)
 "l" = (
 /obj/stool/chair/comfy/purple,
-/obj/blind_switch/area/west{
+/obj/blind_switch/directional/west{
 	pixel_y = -5
 	},
 /obj/landmark/start/job/assistant,
-/obj/machinery/light_switch/west{
+/obj/machinery/light_switch/directional/west{
 	pixel_y = 7
 	},
 /turf/simulated/floor/wood/two,
@@ -270,7 +270,7 @@
 /area/station/crew_quarters/bar)
 "O" = (
 /obj/stool/bar,
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/bar)
 "P" = (

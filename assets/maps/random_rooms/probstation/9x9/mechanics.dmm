@@ -28,7 +28,7 @@
 /area/station/engine/elect)
 "dc" = (
 /obj/machinery/portable_reclaimer,
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -50,7 +50,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/blind_switch/area/south,
+/obj/blind_switch/directional/south,
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},

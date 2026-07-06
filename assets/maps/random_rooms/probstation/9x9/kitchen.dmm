@@ -212,7 +212,7 @@
 /obj/machinery/sink{
 	dir = 4
 	},
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/white/checker2{
 	dir = 1
 	},

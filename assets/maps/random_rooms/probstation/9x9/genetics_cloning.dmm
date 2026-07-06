@@ -176,7 +176,7 @@
 /area/station/medical/medbay/cloner)
 "A" = (
 /obj/monkeyplant,
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/greenblack{
 	dir = 1
 	},
@@ -266,7 +266,7 @@
 	pixel_x = 1;
 	pixel_y = -2
 	},
-/obj/blind_switch/north{
+/obj/blind_switch/directional/north{
 	id = "genetics"
 	},
 /obj/machinery/phone{
@@ -362,7 +362,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/incandescent/netural,
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/directional/west,
 /obj/cable{
 	icon_state = "1-2"
 	},

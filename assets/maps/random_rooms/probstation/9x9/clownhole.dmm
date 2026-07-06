@@ -192,7 +192,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn/colored,
 /area/station/crew_quarters/clown)
 "L" = (
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /obj/landmark/start/job/clown,
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/captain,

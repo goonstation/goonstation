@@ -152,7 +152,7 @@
 /area/station/crew_quarters/toilets)
 "D" = (
 /obj/storage/secure/closet/personal,
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor,
 /area/station/crew_quarters/toilets)
 "E" = (

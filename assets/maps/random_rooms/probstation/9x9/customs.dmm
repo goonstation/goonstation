@@ -210,7 +210,7 @@
 /area/station/bridge/customs)
 "B" = (
 /obj/machinery/manufacturer/uniform,
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/carpet/green/standard/edge/north,
 /area/station/bridge/customs)
 "C" = (

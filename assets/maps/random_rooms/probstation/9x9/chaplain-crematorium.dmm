@@ -167,7 +167,7 @@
 /obj/item/body_bag,
 /obj/item/spraybottle/cleaner,
 /obj/item/reagent_containers/emergency_injector/spaceacillin,
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "w" = (
@@ -245,7 +245,7 @@
 	dir = 4;
 	pixel_x = 12
 	},
-/obj/blind_switch/area/south,
+/obj/blind_switch/directional/south,
 /turf/simulated/floor/wood/two,
 /area/station/chapel/office)
 "F" = (
@@ -305,7 +305,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/wood/two,
 /area/station/chapel/office)
 "O" = (

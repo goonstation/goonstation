@@ -71,7 +71,7 @@
 /area/station/crew_quarters/sauna)
 "j" = (
 /obj/machinery/atmospherics/pipe/simple/junction,
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/directional/west,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -185,12 +185,12 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/specialroom/freezer/blue,
 /area/station/crew_quarters/kitchen/freezer)
 "x" = (
 /obj/machinery/atmospherics/unary/tank/carbon_dioxide,
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /obj/machinery/camera/directional/north,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/storage)
