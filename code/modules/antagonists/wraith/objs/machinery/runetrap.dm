@@ -79,7 +79,7 @@
 			return
 		if(!isliving(AM))
 			return
-		if(istype(AM, /mob/living/critter/wraith/trickster_puppet))
+		if(istype(AM, /mob/living/critter/wraith))
 			return
 		if(isintangible(AM))
 			return
