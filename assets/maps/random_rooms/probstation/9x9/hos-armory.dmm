@@ -105,7 +105,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/ai_monitored/armory)
 "m" = (
 /obj/machinery/power/apc/autoname_west,
@@ -129,7 +129,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/ai_monitored/armory)
 "p" = (
 /obj/machinery/door/airlock/pyro/command/alt{
@@ -153,7 +153,7 @@
 	},
 /area/station/security/secwing)
 "r" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/secwing)
 "s" = (
 /obj/cable{
@@ -346,7 +346,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/ai_monitored/armory)
 "O" = (
 /obj/cable{
@@ -388,7 +388,7 @@
 	},
 /area/station/ai_monitored/armory)
 "R" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/ai_monitored/armory)
 "S" = (
 /obj/cable{
@@ -409,7 +409,7 @@
 	},
 /area/station/ai_monitored/armory)
 "U" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/hos)
 "V" = (
 /obj/cable{

@@ -333,7 +333,7 @@
 /turf/simulated/floor/red,
 /area/station/security/brig/genpop)
 "Cf" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/brig/genpop)
 "CP" = (
 /turf/simulated/wall/auto/supernorn/colored/red,

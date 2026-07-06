@@ -73,7 +73,7 @@
 	},
 /area/station/security/brig/cell_block_control)
 "h" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/brig/solitary)
 "k" = (
 /obj/storage/closet/wardrobe/orange,
@@ -111,7 +111,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/brig/solitary2)
 "p" = (
 /turf/simulated/floor/black,
@@ -237,7 +237,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/brig/solitary)
 "H" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
@@ -308,7 +308,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/brig,
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/brig/solitary)
 "R" = (
 /obj/machinery/camera/directional/west,
@@ -342,10 +342,10 @@
 	icon_state = "1-8"
 	},
 /obj/disposalpipe/junction/middle/north,
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/brig/solitary)
 "V" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/brig/solitary2)
 "W" = (
 /obj/cable{
@@ -364,7 +364,7 @@
 /turf/simulated/floor/black,
 /area/station/security/brig/solitary)
 "Z" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/brig/cell_block_control)
 
 (1,1,1) = {"

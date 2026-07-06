@@ -185,7 +185,7 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "yI" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/main)
 "zZ" = (
 /obj/table/reinforced/auto,
@@ -212,7 +212,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/equipment)
 "Bw" = (
 /obj/machinery/vending/security,
@@ -220,7 +220,7 @@
 /turf/simulated/floor/red/redblackchecker,
 /area/station/security/equipment)
 "Ce" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/equipment)
 "CP" = (
 /obj/machinery/door/airlock/pyro/glass/security{
@@ -421,7 +421,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/security/main)
 "Wh" = (
 /obj/machinery/firealarm/directional/west,
