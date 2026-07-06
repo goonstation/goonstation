@@ -1,16 +1,15 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "an" = (
 /obj/table/round/auto,
-/obj/machinery/computer3/generic/personal{
-	desc = "This workstation appears to be outfitted with non-standard equipment.";
-	name = "modified computer";
-	setup_starting_peripheral2 = /datum/computer/file/terminal_program/communications;
-	setup_starting_program = null
-	},
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/personal{
+	desc = "This workstation appears to be outfitted with non-standard equipment.";
+	name = "modified computer";
+	setup_starting_program = /datum/computer/file/terminal_program/communications
+	},
 /turf/simulated/floor/purpleblack,
 /area/research_outpost/indigo_rye)
 "ao" = (
@@ -130,14 +129,14 @@
 /turf/simulated/floor/purpleblack,
 /area/research_outpost/indigo_rye)
 "dF" = (
-/obj/machinery/computer3/terminal/zeta{
-	dir = 8;
-	setup_os_string = "ZETA_MAINFRAME"
-	},
 /obj/cable{
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer3/terminal/zeta{
+	dir = 8;
+	setup_os_string = "ZETA_MAINFRAME"
+	},
 /turf/simulated/floor/carpet/purple/fancy/edge/se,
 /area/research_outpost/indigo_rye)
 "ed" = (

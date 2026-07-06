@@ -237,7 +237,7 @@
 	},
 /area/station/chapel/sanctuary)
 "K" = (
-/obj/machinery/light_switch/auto,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
