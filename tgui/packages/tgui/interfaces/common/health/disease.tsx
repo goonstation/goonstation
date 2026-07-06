@@ -25,7 +25,7 @@ export const DisplayDiseases = (props: DisplayDiseasesProps) => {
     >
       <Section>
         {!occupied && <Box>No Patient Detected.</Box>}
-        {!!occupied && (!!diseases || diseases === null) && (
+        {!!occupied && (diseases === null || diseases.length === 0) && (
           <Box>No diseases detected.</Box>
         )}
         {!!occupied &&

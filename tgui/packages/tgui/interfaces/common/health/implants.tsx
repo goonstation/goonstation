@@ -17,7 +17,7 @@ export const DisplayImplants = (props: DisplayImplantsProps) => {
   const { occupied, implants } = props;
   return (
     <Collapsible
-      title="Emedded Implants"
+      title="Embedded Implants"
       fontSize={1.2}
       open
       color={!occupied && 'grey'}
