@@ -19,29 +19,27 @@
 	/// Whether the component should qdel itself when the number of registered signals drops to zero
 	var/qdel_when_unneeded = TRUE
 
-/datum/component/complexsignal/proc/register(datum/listener, sig_type, proctype, override = FALSE, ...)
+/datum/component/complexsignal/proc/register(datum/listener, datum/xsig/xsignal, proctype, override = FALSE, ...)
 	SHOULD_NOT_OVERRIDE(TRUE)
-	src.registered_signals += sig_type
+	src.registered_signals += xsignal::id
 	. = src._register(arglist(args))
 
 /**
  * Override this to add code which happens when a complex signal is registered. If RegisterSignal is passed additional arguments those get passed
  * after `override`. Other arguments are the same as for .RegisterSignal.
- * Complex signal definitions are of the form list(component_path, string_id). The `sig_type` var will in this case contain only the `string_id` and
- * not the full two-element list.
  */
-/datum/component/complexsignal/proc/_register(datum/listener, sig_type, proctype, override = FALSE, ...)
-	listener.RegisterSignal(src, sig_type, proctype, override)
+/datum/component/complexsignal/proc/_register(datum/listener, datum/xsig/xsignal, proctype, override = FALSE, ...)
+	listener.RegisterSignal(src, xsignal::id, proctype, override)
 
-/datum/component/complexsignal/proc/unregister(datum/listener, sig_type)
+/datum/component/complexsignal/proc/unregister(datum/listener, datum/xsig/xsignal)
 	SHOULD_NOT_OVERRIDE(TRUE)
-	. = src._unregister(listener, sig_type)
-	src.registered_signals -= sig_type
+	. = src._unregister(listener, xsignal)
+	src.registered_signals -= xsignal::id
 	if(length(registered_signals) <= 0 && qdel_when_unneeded)
 		qdel(src)
 
 /**
  * Override to add code which happens on unregistering a signal.
  */
-/datum/component/complexsignal/proc/_unregister(datum/listener, sig_type)
-	listener.UnregisterSignal(src, sig_type)
+/datum/component/complexsignal/proc/_unregister(datum/listener, datum/xsig/xsignal)
+	listener.UnregisterSignal(src, xsignal::id)
