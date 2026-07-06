@@ -15,6 +15,7 @@ TYPEINFO(/mob/living/critter/wraith/demon_doll)
 	health_burn = 50
 	health_burn_vuln = 0.8
 	faction = list(FACTION_WRAITH)
+	can_use_say = FALSE
 	name_generator_path = /datum/wraith_name_generator/wraith_summon/doll
 	var/mob/living/intangible/wraith/master = null
 	var/traps_laid = 0
@@ -36,6 +37,12 @@ TYPEINFO(/mob/living/critter/wraith/demon_doll)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_THERMALVISION, src)
 
 		src.setStatus("dark_affinity")
+
+	say_verb()
+		if (!ON_COOLDOWN(src, "playsound", 10 SECONDS))
+			playsound(src, 'sound/voice/wraith/doll_laugh.ogg', 60, 1)
+			src.emote("giggle", TRUE)
+		return
 
 	setup_healths()
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
