@@ -75,14 +75,14 @@ TYPEINFO(/mob/living/critter/wraith/demon_doll)
 
 		animate(src, 3 SECONDS, pixel_y = 40)
 		SPAWN(3 SECONDS)
-			new/obj/item/clothing/gloves/ring/gold/spooky()
+			new/obj/item/clothing/gloves/ring/gold()
 			src.gib()
 		return ..()
 
 	gib()
 		var/turf/T = get_turf(src)
 		if (T)
-			new/obj/item/clothing/gloves/ring/gold/spooky(T)
+			new/obj/item/clothing/gloves/ring/gold(T)
 			playsound(T, 'sound/items/coindrop.ogg', 30, 1)
 		return ..()
 
