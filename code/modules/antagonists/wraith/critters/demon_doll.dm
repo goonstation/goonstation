@@ -32,7 +32,6 @@ TYPEINFO(/mob/living/critter/wraith/demon_doll)
 		src.addAbility(/datum/targetable/critter/demon_doll/devious_song)
 		src.addAbility(/datum/targetable/critter/demon_doll/shrieking_song)
 		src.addAbility(/datum/targetable/critter/demon_doll/bouncy_song)
-		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/demon_doll, src.type)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_THERMALVISION, src)
 
@@ -90,47 +89,50 @@ TYPEINFO(/mob/living/critter/wraith/demon_doll)
 	id = "dark_affinity"
 	name = "Dark Affinity"
 	desc = "Darkness restores your form and grants you haste."
-	icon_state = "person"
+	icon_state = "eye"
 	duration = INFINITE_STATUS
 	maxDuration = null
 	unique = 1
-	var/lastlight_check = TRUE
+	var/last_check = TRUE // TRUE = lights on
 	var/counter = 0
-	var/count_max = 10
+
+	onAdd()
+		light_check(TRUE)
+		..()
 
 	onUpdate(timePassed)
 		counter += timePassed
-		if (counter >= count_max)
-			var/turf/T = get_turf(owner)
-			var/current_light
-			if (!isturf(T) || T.is_lit())
-				current_light = TRUE
-			else
-				current_light = FALSE
-
-			if (lastlight_check != current_light)
-				edit_status(current_light)
-
-			lastlight_check = current_light
-
+		if (counter >= 20)
+			light_check()
 		. = ..(timePassed)
 
-	proc/edit_status(var/light)
+	proc/light_check(var/check_bypass=FALSE)
+		var/current_check
+		var/turf/T = src.owner.loc
+		if (T?.is_lit())
+			current_check = TRUE
+		else
+			current_check = FALSE
+		if (check_bypass || (current_check != src.last_check)) // only toggle effects when you need to, or when telling it to
+			src.last_check = current_check
+			toggle_status(current_check)
+
+	proc/toggle_status(var/light)
 		var/mob/living/living_owner = owner
 		if (light)
-			src.icon_state = "person"
+			src.icon_state = "eye_closed"
+			src.desc = "Darkness will restore your body and grant you haste."
 			living_owner.alpha = 255
-			if (istype(living_owner, /mob/living/critter/wraith/demon_doll))
-				REMOVE_MOVEMENT_MODIFIER(living_owner, /datum/movement_modifier/dark_affinity_strong, src.type)
-			else
-				REMOVE_MOVEMENT_MODIFIER(living_owner, /datum/movement_modifier/dark_affinity, src.type)
+			living_owner.bioHolder.RemoveEffect("regenerator")
+			REMOVE_MOVEMENT_MODIFIER(living_owner, /datum/movement_modifier/dark_affinity_on, src.type)
+			APPLY_MOVEMENT_MODIFIER(living_owner, /datum/movement_modifier/dark_affinity_off, src.type)
 		else
-			src.icon_state = "fire1"
+			src.icon_state = "eye"
+			src.desc = "Darkness is restoring your body and granting you haste."
 			living_owner.alpha = 160
-			if (istype(living_owner, /mob/living/critter/wraith/demon_doll))
-				APPLY_MOVEMENT_MODIFIER(living_owner, /datum/movement_modifier/dark_affinity_strong, src.type)
-			else
-				APPLY_MOVEMENT_MODIFIER(living_owner, /datum/movement_modifier/dark_affinity, src.type)
+			living_owner.bioHolder.AddEffect("regenerator", magical = 1)
+			REMOVE_MOVEMENT_MODIFIER(living_owner, /datum/movement_modifier/dark_affinity_off, src.type)
+			APPLY_MOVEMENT_MODIFIER(living_owner, /datum/movement_modifier/dark_affinity_on, src.type)
 
 
 
