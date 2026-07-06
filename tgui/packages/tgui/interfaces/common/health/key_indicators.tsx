@@ -1,15 +1,36 @@
-import { Box, Table } from 'tgui-core/components';
+/**
+ * @file
+ * @copyright 2026
+ * @author glowbold (https://github.com/pgmzeta)
+ * @license MIT
+ */
+import { Box, Icon, Section, Table } from 'tgui-core/components';
 import { pluralize } from 'tgui-core/string';
 
-import {
-  BrainDamageData,
-  DisplayBloodPressureProps,
-  DisplayOccupiedProps,
-  DisplayTemperatureProps,
-  DisplayTempImplantRowProps,
-} from './type';
+import { BrainDamage, DisplayOccupiedProps, EmbeddedObjects } from './type';
 
-export const KeyHealthIndicators = (props) => {
+const BRAIN_DAMAGE_MINOR: number = 20;
+const BRAIN_DAMAGE_MODERATE: number = 40;
+const BRAIN_DAMAGE_MAJOR: number = 60;
+const BRAIN_DAMAGE_SEVERE: number = 80;
+const BRAIN_DAMAGE_LETHAL: number = 100;
+const BRAIN_DAMAGE_DEATH: number = 120;
+
+interface KeyHealthIndicatorsProps extends DisplayOccupiedProps {
+  patient_status: number;
+  blood_pressure_rendered: string | null;
+  blood_pressure_status: string | null;
+  blood_volume: number | null;
+  bleeding: number | null;
+  body_temp: number | string;
+  optimal_temp: number | string;
+  rad_stage: number;
+  rad_dose: number;
+  brain_damage: BrainDamage;
+  embedded_objects: EmbeddedObjects | null;
+}
+
+export const KeyHealthIndicators = (props: KeyHealthIndicatorsProps) => {
   const {
     occupied,
     patient_status,
@@ -18,14 +39,15 @@ export const KeyHealthIndicators = (props) => {
     blood_volume,
     body_temp,
     optimal_temp,
+    bleeding,
     embedded_objects,
     rad_stage,
     rad_dose,
     brain_damage,
-  } = props.mobData;
+  } = props;
 
   return (
-    <>
+    <Section title="Key Health Indicators">
       <Table>
         <DisplayBloodPressure
           occupied={occupied}
@@ -34,23 +56,28 @@ export const KeyHealthIndicators = (props) => {
           blood_pressure_status={blood_pressure_status}
           blood_volume={blood_volume}
         />
-        <DisplayTempImplantRow
+        <DisplayTemperatureBleedingRow
           occupied={occupied}
           body_temp={body_temp}
           optimal_temp={optimal_temp}
-          embedded_objects={embedded_objects}
+          bleeding={bleeding}
         />
-        {!!occupied && (
-          <DisplayRads rad_stage={rad_stage} rad_dose={rad_dose} />
-        )}
-        <DisplayBrain occupied={occupied} status={brain_damage} />
+        <DisplayRads rad_stage={rad_stage} rad_dose={rad_dose} />
+        <DisplayBrain occupied={occupied} brain_damage={brain_damage} />
       </Table>
       {!!occupied && (
         <DisplayEmbeddedObjects embedded_objects={embedded_objects} />
       )}
-    </>
+    </Section>
   );
 };
+
+interface DisplayBloodPressureProps extends DisplayOccupiedProps {
+  patient_status: number;
+  blood_pressure_rendered: string | null;
+  blood_pressure_status: string | null;
+  blood_volume: number | null;
+}
 
 const DisplayBloodPressure = (props: DisplayBloodPressureProps) => {
   const {
@@ -62,7 +89,8 @@ const DisplayBloodPressure = (props: DisplayBloodPressureProps) => {
   } = props;
   let pressure_color = 'grey';
   if (occupied) {
-    if (blood_volume <= 299) {
+    if (blood_volume === null) {
+    } else if (blood_volume <= 299) {
       pressure_color = 'red';
     } else if (blood_volume <= 414) {
       pressure_color = 'yellow';
@@ -92,16 +120,23 @@ const DisplayBloodPressure = (props: DisplayBloodPressureProps) => {
       </Table.Cell>
       <Table.Cell width={10} color={pressure_color}>
         {typeof blood_volume === 'number' && (
-          <>{occupied ? blood_volume.toString() : '--'} units</>
+          <>{occupied ? blood_volume.toString() : '--'}u</>
         )}
       </Table.Cell>
     </Table.Row>
   );
 };
 
-const DisplayTempImplantRow = (props: DisplayTempImplantRowProps) => {
-  const { occupied, body_temp, optimal_temp, embedded_objects } = props;
+interface DisplayTemperatureBleedingRowProps extends DisplayOccupiedProps {
+  body_temp: number | string;
+  optimal_temp: number | string;
+  bleeding: number | null;
+}
 
+const DisplayTemperatureBleedingRow = (
+  props: DisplayTemperatureBleedingRowProps,
+) => {
+  const { occupied, body_temp, optimal_temp, bleeding } = props;
   return (
     <Table.Row>
       <DisplayTemperature
@@ -109,28 +144,42 @@ const DisplayTempImplantRow = (props: DisplayTempImplantRowProps) => {
         body_temp={body_temp}
         optimal_temp={optimal_temp}
       />
-      <DisplayImplants
-        occupied={occupied}
-        embedded_objects={embedded_objects}
-      />
+      <DisplayBleeding occupied={occupied} bleeding={bleeding} />
     </Table.Row>
   );
 };
 
+interface DisplayTemperatureProps extends DisplayOccupiedProps {
+  body_temp: number | string;
+  optimal_temp: number | string;
+}
+
 const DisplayTemperature = (props: DisplayTemperatureProps) => {
   const { occupied, body_temp, optimal_temp } = props;
   let font_color = 'grey';
+  let icon = '';
   if (occupied) {
-    if (body_temp >= optimal_temp + 60) {
+    if (body_temp === null) {
+    } else if (
+      'string' === typeof body_temp ||
+      'string' === typeof optimal_temp
+    ) {
+      icon = 'question';
+    } else if (body_temp >= optimal_temp + 60) {
       font_color = 'red';
+      icon = 'temperature-arrow-up';
     } else if (body_temp >= optimal_temp + 30) {
       font_color = 'yellow';
+      icon = 'temperature-high';
     } else if (body_temp <= optimal_temp - 60) {
       font_color = 'purple';
+      icon = 'temperature-arrow-down';
     } else if (body_temp <= optimal_temp - 30) {
       font_color = 'blue';
+      icon = 'temperature-low';
     } else {
       font_color = 'green';
+      icon = 'temperature-quarter';
     }
   }
 
@@ -139,28 +188,37 @@ const DisplayTemperature = (props: DisplayTemperatureProps) => {
       <Table.Cell header textAlign="right">
         Temperature:
       </Table.Cell>
+
       <Table.Cell color={font_color} nowrap>
-        {!!occupied &&
-          (body_temp - 273.15).toPrecision(4) +
-            '°C / ' +
-            ((body_temp - 273.15) * 1.8 + 32).toPrecision(4) +
-            '°F'}
+        <Icon name={icon} />
         {!occupied && '--°C / --°F'}
+        {!!occupied &&
+          'string' === typeof body_temp &&
+          `${body_temp} (${optimal_temp})`}
+        {!!occupied &&
+          'string' !== typeof body_temp &&
+          (body_temp - 273.15).toPrecision(4) +
+            '°C (' +
+            ((body_temp - 273.15) * 1.8 + 32).toPrecision(4) +
+            '°F)'}
       </Table.Cell>
     </>
   );
 };
 
-const DisplayImplants = (props) => {
-  const { embedded_objects, occupied } = props;
+interface DisplayBloodLossProps extends DisplayOccupiedProps {
+  bleeding: number | null;
+}
+
+const DisplayBleeding = (props: DisplayBloodLossProps) => {
+  const { bleeding, occupied } = props;
   return (
     <>
       <Table.Cell header textAlign="right">
-        Implants:
+        Blood Loss:
       </Table.Cell>
       <Table.Cell color={occupied ? 'white' : 'grey'}>
-        {!!occupied &&
-          `${embedded_objects['implant_count']} ${pluralize('implant', embedded_objects['implant_count'])}`}
+        {!!occupied && `${bleeding}u`}
         {!occupied && '--'}
       </Table.Cell>
     </>
@@ -169,17 +227,16 @@ const DisplayImplants = (props) => {
 
 interface DisplayRadsProps {
   rad_stage: number;
-  rad_dose;
+  rad_dose: number;
 }
 
 const DisplayRads = (props: DisplayRadsProps) => {
   const { rad_stage, rad_dose } = props;
   let color: string | undefined;
   let bold = false;
-  if (!rad_stage) {
-    return null;
-  }
   switch (rad_stage) {
+    case 0:
+      return null; // only show if they have enough radiation to be stage 1
     case 1:
       color = 'yellow';
       break;
@@ -211,43 +268,92 @@ const DisplayRads = (props: DisplayRadsProps) => {
         Effective Dose:
       </Table.Cell>
       <Table.Cell width={10} nowrap>
-        {rad_dose.toPrecision(6)} Sv
+        {rad_dose.toPrecision(4)} Sv
       </Table.Cell>
     </Table.Row>
   );
 };
 
 interface DisplayBrainProps extends DisplayOccupiedProps {
-  status: BrainDamageData;
+  brain_damage: BrainDamage;
 }
 
 const DisplayBrain = (props: DisplayBrainProps) => {
-  const { occupied, status } = props;
-  if (!occupied) {
+  const { occupied, brain_damage } = props;
+  if (!occupied || brain_damage === null) {
     return null;
   }
+  let brain_text = 'Missing';
+  let brain_color = 'red';
+
+  if (brain_damage === 'Missing') {
+    return (
+      <Table.Row>
+        <Table.Cell header textAlign="right" color="pink" width={10}>
+          Brain Damage:
+        </Table.Cell>
+        <Table.Cell width={10} color={brain_color}>
+          {brain_text}
+        </Table.Cell>
+        <Table.Cell header textAlign="right" width={10} nowrap>
+          Neuron Cohesion:
+        </Table.Cell>
+        <Table.Cell>N/A</Table.Cell>
+      </Table.Row>
+    );
+  }
+
+  const brain_damage_amount = Number(brain_damage);
+  if (brain_damage_amount === 0) {
+    return null; // only show if there is any brain damage
+  } else if (brain_damage_amount > BRAIN_DAMAGE_LETHAL) {
+    brain_text = 'Braindead';
+  } else if (brain_damage_amount > BRAIN_DAMAGE_SEVERE) {
+    brain_text = 'Severe';
+  } else if (brain_damage_amount >= BRAIN_DAMAGE_MAJOR) {
+    brain_color = 'yellow';
+    brain_text = 'Major';
+  } else if (brain_damage_amount >= BRAIN_DAMAGE_MODERATE) {
+    brain_color = 'orange';
+    brain_text = 'Moderate';
+  } else if (brain_damage_amount >= BRAIN_DAMAGE_MINOR) {
+    brain_color = 'yellow';
+    brain_text = 'Minor';
+  } else if (brain_damage_amount > 0) {
+    brain_color = 'green';
+    brain_text = 'Okay';
+  }
+
   return (
     <Table.Row>
       <Table.Cell header textAlign="right" color="pink" width={10}>
         Brain Damage:
       </Table.Cell>
-      <Table.Cell width={10} color={status.color}>
-        {status.desc}
+      <Table.Cell width={10} color={brain_color}>
+        {brain_text}
       </Table.Cell>
       <Table.Cell header textAlign="right" width={10} nowrap>
         Neuron Cohesion:
       </Table.Cell>
       <Table.Cell>
-        {status.desc !== 'Missing' &&
-          (((120 - status.value) / 120) * 100).toFixed(2) + '%'}
-        {status.desc === 'Missing' && 'N/A'}
+        {(
+          ((BRAIN_DAMAGE_DEATH - brain_damage_amount) / BRAIN_DAMAGE_DEATH) *
+          100
+        ).toFixed(2) + '%'}
       </Table.Cell>
     </Table.Row>
   );
 };
 
-const DisplayEmbeddedObjects = (props) => {
+interface DisplayEmbeddedObjectsProps {
+  embedded_objects: EmbeddedObjects | null;
+}
+
+const DisplayEmbeddedObjects = (props: DisplayEmbeddedObjectsProps) => {
   const { embedded_objects } = props;
+  if (embedded_objects === null) {
+    return null; // only appears if an object is detected
+  }
   return (
     <Box textAlign="center">
       {!!embedded_objects['has_chest_object'] && (

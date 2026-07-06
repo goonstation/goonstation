@@ -188,13 +188,18 @@
 			text += "Info: [src.info]<br>"
 		if (istype(src.master,/datum/ailment/disease) && src.spread)
 			text += "Spread: [src.spread]<br>"
-		var/cure_method = "Suggested Remedy: "
+		text += src.get_cure_method()
+		text += "</small></span>"
+		return text
+
+	proc/get_cure_method()
+		. = "Suggested Remedy: "
 		if (src.cure_flags & CURE_INCURABLE)
-			cure_method = "Infection is incurable. Suggest quarantine measures."
+			return "Infection is incurable. Suggest quarantine measures."
 		else if (src.cure_flags & CURE_UNKNOWN)
-			cure_method = "No suggested remedies."
+			return "No suggested remedies."
 		else if (src.cure_flags & CURE_CUSTOM)
-			cure_method += src.cure_desc
+			. += src.cure_desc
 		else
 			var/list/cures = list()
 			if (src.cure_flags & CURE_TIME)
@@ -209,18 +214,20 @@
 				cures += "Sleep"
 			if (src.cure_flags & CURE_HEART_TRANSPLANT)
 				cures += "Heart transplant"
+			. += english_list(cures, and_text=" or ")
 
-			if (length(cures) == 1)
-				cure_method += cures[1]
-			else if (length(cures) == 2)
-				cure_method += "[cures[1]] or [cures[2]]"
-			else
-				for (var/i in 1 to (length(cures) - 1))
-					cure_method += cures[i] + ", "
-				cure_method += " or [cures[length(cures)]]"
-		text += cure_method
-		text += "</small></span>"
-		return text
+	proc/ui_disease_data()
+		. = list(
+			"disease_ref" = "\ref[src]",
+			"state" = src.state,
+			"disease" = src.name ? src.name : src.master.name,
+			"scantype" = src.scantype ? src.scantype : src.master.scantype,
+			"spread" = src.spread,
+			"info" = src.info,
+			"stage" = src.stage,
+			"max_stage" = src.master.max_stages,
+			"cure_method" = src.get_cure_method()
+		)
 
 	proc/on_infection()
 		master.on_infection(affected_mob, src)

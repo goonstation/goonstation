@@ -15,8 +15,9 @@
 		animate_scanning(M, "#0AEFEF")
 
 	var/death_state = M.stat
-	if (M.bioHolder && M.bioHolder.HasEffect("dead_scan"))
-		death_state = 2
+	var/datum/abilityHolder/changeling/changeling_ability_holder = M.get_ability_holder(/datum/abilityHolder/changeling)
+	if (!admin && (M.bioHolder && M.bioHolder.HasEffect("dead_scan") || changeling_ability_holder?.in_fakedeath))
+		death_state = STAT_DEAD
 
 	var/health_percent = round(100 * M.health / (M.max_health||1))
 
@@ -122,13 +123,18 @@
 						bad_stuff++
 						continue
 					if (I.scan_category == IMPLANT_SCAN_CATEGORY_NOT_SHOWN)
+						if (admin)
+							implant_list[capitalize(I.name)]++
 						continue
 					if (I.scan_category != IMPLANT_SCAN_CATEGORY_SYNDICATE)
 						if (I.scan_category != IMPLANT_SCAN_CATEGORY_UNKNOWN)
 							implant_list[capitalize(I.name)]++
 						else
-							implant_list["Unknown implant"]++
-					else if (syndicate)
+							if (admin)
+								implant_list[capitalize(I.name)]++
+							else
+								implant_list["Unknown implant"]++
+					else if (syndicate | admin)
 						implant_list[capitalize(I.name)]++
 
 				if (length(implant_list))
@@ -333,6 +339,7 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 	var/last_scan_data = null
 	var/last_scan_timestamp = null
 	var/mob/living/carbon/human/victim = null
+	var/clumsy_scan = FALSE
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
 	New()
@@ -395,19 +402,19 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if ((user.bioHolder.HasEffect("clumsy") || user.get_brain_damage() >= BRAIN_DAMAGE_MAJOR) && prob(50))
 			user.visible_message(SPAN_ALERT("<b>[user]</b> slips and drops [src]'s sensors on the floor!"))
-			user.show_message("Analyzing Results for [SPAN_NOTICE("The floor:<br>&emsp; Overall Status: Healthy")]", 1)
-			user.show_message("&emsp; Damage Specifics: <font color='#1F75D1'>[0]</font> - <font color='#138015'>[0]</font> - <font color='#CC7A1D'>[0]</font> - <font color='red'>[0]</font>", 1)
-			user.show_message("&emsp; Key: <font color='#1F75D1'>Suffocation</font>/<font color='#138015'>Toxin</font>/<font color='#CC7A1D'>Burns</font>/<font color='red'>Brute</font>", 1)
-			user.show_message(SPAN_NOTICE("Body Temperature: ???"), 1)
 			JOB_XP(user, "Clown", 1)
+			src.clumsy_scan = TRUE
+			src.victim = null
+			src.ui_interact(user)
 			return
 
+		src.clumsy_scan = FALSE
 		user.visible_message(SPAN_ALERT("<b>[user]</b> has analyzed [target]'s vitals."),\
 		SPAN_ALERT("You have analyzed [target]'s vitals."))
 		playsound(src.loc , 'sound/items/med_scanner.ogg', 20, 0)
 		src.last_scan_data = scan_health(target, src.reagent_scan, src.disease_detection, src.organ_scan, visible = 1)
 		src.last_scan_timestamp = time2text(world.timeofday, "DD MMM [CURRENT_SPACE_YEAR], hh:mm:ss")
-		boutput(user, src.last_scan_data)
+
 		if (istype(target, /mob/living))
 			src.victim = target
 			global.processing_items |= src
@@ -440,54 +447,11 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 	ui_data(mob/user)
 		. = list()
 		.["occupied"] = istype(src.victim)
-		.["organ_scan"] = src.organ_scan
-		.["reagent_scan"] = src.reagent_scan
-		if(!src.victim)
-			return
-
-		var/datum/statusEffect/simpledot/radiation/R = src.victim.hasStatus("radiation")
-		if (R?.stage)
-			.["rad_stage"] = R.stage
-			.["rad_dose"] = src.victim.radiation_dose
-		else
-			.["rad_stage"] = 0
-			.["rad_dose"] = 0
-
-		.["patient_name"] = src.victim.real_name
-
-		var/death_state = src.victim.stat
-		var/changeling_fakedeath = FALSE
-		var/datum/abilityHolder/changeling/C = src.victim.get_ability_holder(/datum/abilityHolder/changeling)
-		if (C?.in_fakedeath)
-			changeling_fakedeath = TRUE
-		if (src.victim.bioHolder?.HasEffect("dead_scan") || changeling_fakedeath)
-			death_state = 2
-		.["patient_status"] = death_state
-
-		.["body_temp"] = src.victim.bodytemperature
-		.["optimal_temp"] = src.victim.base_body_temp
-
-		.["max_health"] = round(src.victim.max_health)
-		.["current_health"] = round(src.victim.health)
-		.["brute"] = round(src.victim.get_brute_damage())
-		.["burn"] = round(src.victim.get_burn_damage())
-		.["toxin"] = round(src.victim.get_toxin_damage())
-		.["oxygen"] = round(src.victim.get_oxygen_deprivation())
-
-		.["blood_volume"] = src.victim.blood_pressure["total"]
-		.["blood_pressure_status"] = src.victim.blood_pressure["status"]
-		.["blood_pressure_rendered"] = src.victim.blood_pressure["rendered"]
-
-		.["brain_damage"] = src.victim.get_tgui_brain_damage()
-
-		.["embedded_objects"] = check_embedded_objects(src.victim)
-
-		if (src.organ_scan && src.victim.organHolder)
-			.["organ_status"] = src.victim.organHolder.get_tgui_organ_data()
-		.["limb_status"] = src.victim.get_tgui_limb_data()
-
-		if (src.reagent_scan)
-			.["reagent_container"] = ui_describe_reagents(src.victim)
+		.["clumsy_scan"] = src.clumsy_scan
+		.["organ_scan_upgrade"] = src.organ_scan
+		.["reagent_scan_upgrade"] = src.reagent_scan
+		if (src.victim)
+			. += src.victim.ui_health_data(include_organs=src.organ_scan, include_reagents=src.reagent_scan, include_diseases=TRUE)
 
 	process()
 		if (!src.victim || QDELETED(src.victim))
@@ -514,103 +478,6 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 			P.info = src.last_scan_data + "<br>--------------------------------<br>Taken At: [src.last_scan_timestamp]"
 			user.put_in_hand_or_eject(P)
 			playsound(src, 'sound/machines/printer_thermal.ogg', 25, TRUE)
-
-/obj/item/device/analyzer/healthanalyzer/proc/calc_brain_damage_severity(var/mob/living/carbon/human/H)
-	var/brain = H.get_organ("brain")
-	if (!brain)
-		return list("Missing", "red")
-	var/brain_damage = H.get_brain_damage()
-	if(brain_damage >= BRAIN_DAMAGE_LETHAL)
-		return list("Braindead", "red")
-	if(brain_damage >= BRAIN_DAMAGE_SEVERE)
-		return list("Severe", "red")
-	if(brain_damage >= BRAIN_DAMAGE_MAJOR)
-		return list("Major", "red")
-	if(brain_damage >= BRAIN_DAMAGE_MODERATE)
-		return list("Moderate", "orange")
-	if(brain_damage >= BRAIN_DAMAGE_MINOR)
-		return list("Minor", "yellow")
-	return list("Okay", "green")
-
-/obj/item/device/analyzer/healthanalyzer/proc/calc_organ_damage_severity(var/obj/item/organ/O)
-	var/damage = O.get_damage()
-	if (damage >= O.max_damage)
-		return list("Dead", "red")
-	if (damage >= O.max_damage*0.9)
-		return list("Critical", "orange")
-	if (damage >= O.max_damage*0.65)
-		return list("Significant", "orange")
-	if (damage >= O.max_damage*0.3)
-		return list("Moderate", "yellow")
-	if (damage > 0)
-		return list("Minor", "green")
-	return list("Okay", "green")
-
-/obj/item/device/analyzer/healthanalyzer/proc/check_embedded_objects(var/mob/living/L)
-	var/foreign_object_count = 0
-	var/implant_count = 0
-	var/has_chest_object = FALSE
-	if (length(L.implant))
-		for (var/obj/item/implant/I in L.implant)
-			if (istype(I, /obj/item/implant/projectile))
-				foreign_object_count++
-				continue
-			if (I.scan_category == IMPLANT_SCAN_CATEGORY_NOT_SHOWN)
-				continue
-			if (I.scan_category != IMPLANT_SCAN_CATEGORY_SYNDICATE)
-				implant_count++
-
-	if (ishuman(L))
-		var/mob/living/carbon/human/H = L
-		if(H.chest_item != null)
-			foreign_object_count++
-			has_chest_object = TRUE
-
-	return list(
-		"foreign_object_count" = foreign_object_count,
-		"implant_count" = implant_count,
-		"has_chest_object" = has_chest_object,
-	)
-
-/obj/item/device/analyzer/healthanalyzer/proc/generate_organ_data(var/mob/living/carbon/human/H)
-	var/list/organ_data = list()
-
-	if (isvampire(H))
-		return organ_data
-	if (!H.organHolder)
-		return organ_data
-
-	var/list/organs_to_check = list("heart", "left_eye", "right_eye", "left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
-	if(H.organHolder.tail || H.mob_flags & SHOULD_HAVE_A_TAIL)
-		organs_to_check += "tail"
-
-	for (var/organ_name in organs_to_check)
-		var/obj/item/organ/O = H.get_organ(organ_name)
-		var/damage = ""
-		var/color = "grey"
-		var/special = ""
-		if (O == 0 || !O)
-			damage = "Missing"
-			color = "Red"
-		else
-			if (O.robotic)
-				special = "Cybernetic"
-			if (O.synthetic)
-				special = "Synthetic"
-			if (O.unusual)
-				special = "Unusual"
-			var/list/organ_calc = O.get_tgui_damage_severity()
-			damage = organ_calc[1]
-			color = organ_calc[2]
-
-		organ_data += list(list(
-			"organ" = organ_name,
-			"state" = damage,
-			"color" = color,
-			"special" = special,
-		))
-
-	return organ_data
 
 /obj/item/device/analyzer/healthanalyzer/upgraded
 	icon_state = "health"
@@ -658,6 +525,7 @@ TYPEINFO(/obj/health_scanner)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("conductive" = 5,
 				"crystal" = 2)
+ABSTRACT_TYPE(/obj/health_scanner)
 /obj/health_scanner
 	icon = 'icons/obj/items/device.dmi'
 	anchored = ANCHORED

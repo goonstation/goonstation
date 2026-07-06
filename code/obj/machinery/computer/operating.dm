@@ -81,71 +81,8 @@
 	.["occupied"] = istype(src.victim)
 	if(!src.victim)
 		return
-	var/datum/color/blood_color_value = new()
-	blood_color_value.from_hex(src.victim.blood_color)
-
-	// hack for hemoglyph b/c we don't tint blood color properly
-	if(src.victim.bioHolder.GetEffect("roach"))
-		blood_color_value.from_hex("#009E81") // commented out blood color in `mutantraces.dm`. yep.
-
-	var/datum/statusEffect/simpledot/radiation/R = src.victim.hasStatus("radiation")
-	if (R?.stage)
-		.["rad_stage"] = R.stage
-		.["rad_dose"] = src.victim.radiation_dose
-	else
-		.["rad_stage"] = 0
-		.["rad_dose"] = 0
-
-	.["patient_name"] = src.victim.real_name
-
-	var/death_state = src.victim.stat
-	if (src.victim.bioHolder && src.victim.bioHolder.HasEffect("dead_scan"))
-		death_state = 2
-	.["patient_status"] = death_state
-
-	.["body_temp"] = src.victim.bodytemperature
-	.["optimal_temp"] = src.victim.base_body_temp
-
+	. += src.victim.ui_health_data(TRUE, TRUE, TRUE, TRUE)
 	.["patient_data"] = src.victim_data
-
-	.["max_health"] = round(src.victim.max_health)
-	.["current_health"] = round(src.victim.health)
-	.["brute"] = round(src.victim.get_brute_damage())
-	.["burn"] = round(src.victim.get_burn_damage())
-	.["toxin"] = round(src.victim.get_toxin_damage())
-	.["oxygen"] = round(src.victim.get_oxygen_deprivation())
-
-	.["blood_volume"] = src.victim.blood_pressure["total"]
-	.["blood_pressure_status"] = src.victim.blood_pressure["status"]
-	.["blood_pressure_rendered"] = src.victim.blood_pressure["rendered"]
-
-	var/list/brain_damage = calc_brain_damage_severity(src.victim)
-	.["brain_damage"] = list (
-		"value" = src.victim.get_brain_damage(),
-		"desc" = brain_damage[1],
-		"color" = brain_damage[2],
-	)
-
-	.["embedded_objects"] = check_embedded_objects(src.victim)
-
-	.["organ_status"] = generate_organ_data(src.victim)
-	.["limb_status"] = generate_limb_data(src.victim)
-
-	.["age"] = src.victim.bioHolder.age
-	.["blood_type"] = src.victim.bioHolder.bloodType
-	.["blood_color_name"] = get_nearest_color(blood_color_value)
-	.["blood_color_value"] = blood_color_value.to_rgb()
-	.["clone_generation"] = src.victim.bioHolder.clone_generation
-	.["genetic_stability"] = src.victim.bioHolder.genetic_stability
-
-	.["cloner_defect_count"] = 0
-	if (src.victim.cloner_defects)
-		var/datum/cloner_defect_holder/cloner_defects = src.victim.cloner_defects
-		var/list/datum/cloner_defect/active_cloner_defects = cloner_defects.active_cloner_defects
-		.["cloner_defect_count"] = length(active_cloner_defects)
-
-	.["reagent_container"] = ui_describe_reagents(src.victim)
-
 
 /obj/machinery/computer/operating/proc/generate_organ_data(var/mob/living/carbon/human/H)
 	var/list/organ_data = list()
@@ -299,31 +236,6 @@
 
 	return limb_data
 
-/obj/machinery/computer/operating/proc/check_embedded_objects(var/mob/living/L)
-	var/foreign_object_count = 0
-	var/implant_count = 0
-	var/has_chest_object = FALSE
-	if (length(L.implant))
-		for (var/obj/item/implant/I in L.implant)
-			if (istype(I, /obj/item/implant/projectile))
-				foreign_object_count++
-				continue
-			if (I.scan_category == IMPLANT_SCAN_CATEGORY_NOT_SHOWN)
-				continue
-			if (I.scan_category != IMPLANT_SCAN_CATEGORY_SYNDICATE)
-				implant_count++
-
-	if (ishuman(L))
-		var/mob/living/carbon/human/H = L
-		if(H.chest_item != null)
-			foreign_object_count++
-			has_chest_object = TRUE
-
-	return list(
-		"foreign_object_count" = foreign_object_count,
-		"implant_count" = implant_count,
-		"has_chest_object" = has_chest_object,
-	)
 
 /obj/machinery/computer/operating/small
 	density = 0
