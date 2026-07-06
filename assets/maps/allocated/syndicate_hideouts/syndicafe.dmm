@@ -206,6 +206,9 @@
 /turf/simulated/floor/sanitary,
 /area/syndicate_station/hideout)
 "G" = (
+/obj/decal/stage_edge{
+	dir = 5
+	},
 /turf/simulated/floor/redblack{
 	dir = 6
 	},
