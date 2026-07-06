@@ -266,7 +266,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "ranchship";
 	name = "Ranch Ship"
 	},
@@ -555,7 +555,7 @@
 	name = "Permanent Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "ranchship";
 	name = "Ranch Ship"
 	},

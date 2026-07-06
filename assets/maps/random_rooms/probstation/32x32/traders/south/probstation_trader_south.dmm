@@ -100,7 +100,7 @@
 /area/station/crew_quarters/stockex)
 "sl" = (
 /obj/machinery/door/airlock/pyro/external,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "merchanta";
 	name = "Merchant Shuttle Dock Alpha"
 	},
@@ -171,7 +171,7 @@
 /area/station/crew_quarters/stockex)
 "AG" = (
 /obj/machinery/door/airlock/pyro/external,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "merchanta";
 	name = "Merchant Shuttle Dock Alpha"
 	},

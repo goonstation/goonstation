@@ -94,7 +94,7 @@
 	dir = 4;
 	name = "Owl Zone Access"
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "owlrey";
 	name = "Owlrey"
 	},
@@ -104,7 +104,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	name = "Owl Zone Access"
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "owlrey";
 	name = "Owlrey"
 	},

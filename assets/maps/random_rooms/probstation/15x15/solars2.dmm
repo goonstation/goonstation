@@ -61,7 +61,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "solars2ext";
 	name = "Solars 2"
 	},
@@ -75,7 +75,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/access/engineering_power,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "solars2int";
 	name = "Solars 2"
 	},

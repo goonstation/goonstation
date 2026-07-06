@@ -692,7 +692,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "westmiddle";
 	name = "West Middle Airlock"
 	},
@@ -728,7 +728,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "southeastairlock";
 	enter_id = "outer";
 	name = "Southeast Airlock"
@@ -1508,7 +1508,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "northwestmaint";
 	name = "Northwest Maintenance"
 	},
@@ -1559,7 +1559,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "floating_hallway_ext";
 	name = "Floating Hallway Airlock"
 	},
@@ -1948,7 +1948,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "eastmaint";
 	name = "East Maintenance"
 	},
@@ -1995,7 +1995,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "floating_hallway_int";
 	name = "Floating Hallway Airlock"
 	},
@@ -3243,7 +3243,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "westmiddle";
 	name = "West Middle Airlock"
 	},
@@ -4102,7 +4102,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "floating_hallway_int";
 	name = "Floating Hallway Airlock"
 	},
@@ -5248,7 +5248,7 @@
 /area/station/maintenance/outer/west)
 "tX" = (
 /obj/machinery/door/airlock/pyro/external,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "northeastmaint";
 	name = "North East Maintenance"
 	},
@@ -5430,7 +5430,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "floating_hallway_ext";
 	name = "Floating Hallway Airlock"
 	},
@@ -8693,7 +8693,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "northwestmaint";
 	name = "Northwest Maintenance"
 	},
@@ -9827,7 +9827,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "southeastairlock";
 	enter_id = "inner";
 	name = "Southeast Airlock"

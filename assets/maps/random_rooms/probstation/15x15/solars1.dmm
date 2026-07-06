@@ -41,7 +41,7 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/access/engineering_power,
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "solars1int";
 	name = "Solars 1"
 	},
@@ -299,7 +299,7 @@
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/airlock/cycler{
+/obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "solars1ext";
 	name = "Solars 1"
 	},
