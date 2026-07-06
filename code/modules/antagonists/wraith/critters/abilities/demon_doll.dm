@@ -160,7 +160,7 @@
 		victim.do_disorient(15, knockdown = 40)
 		victim.throw_at(target, 5, 3, throw_type = THROW_GUNIMPACT)
 
-		if (proj.reflectcount < 2 || iscritter(hit))
+		if (proj.reflectcount < 2)
 			return
 
 		playsound(hit, "sound/voice/wraith/wraithspook[rand(1, 2)].ogg", 60, 1, channel=VOLUME_CHANNEL_EMOTE)
@@ -170,7 +170,7 @@
 				continue
 			HH.apply_sonic_stun(0, 0, 20, 0, 3, 4, 6)
 
-		if (istype(hit, /mob/living/critter/wraith/demon_doll))
+		if (istype(hit, /mob/living/critter/wraith/demon_doll) || iscritter(hit))
 			return
 
 		var/chosen_trap = pick(concrete_typesof(/obj/machinery/wraith/runetrap/))
