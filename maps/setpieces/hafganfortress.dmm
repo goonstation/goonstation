@@ -4183,7 +4183,7 @@
 	teleport_blocked = 1
 	})
 "lB" = (
-/obj/machinery/disposal/small/south,
+/obj/machinery/disposal/small/directional/south,
 /obj/disposalpipe/trunk/west,
 /turf/unsimulated/floor/minitiles/black,
 /area/prefab/synd_lab{

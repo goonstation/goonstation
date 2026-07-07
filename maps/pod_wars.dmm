@@ -528,7 +528,7 @@
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 6
 	},
-/obj/machinery/disposal/small/west,
+/obj/machinery/disposal/small/directional/east,
 /obj/disposalpipe/trunk,
 /turf/unsimulated/floor/blueblack{
 	dir = 8
@@ -1489,7 +1489,7 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "ft" = (
-/obj/machinery/disposal/small/east,
+/obj/machinery/disposal/small/directional/west,
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
@@ -2036,9 +2036,7 @@
 	},
 /area/pod_wars/team2/mining)
 "hx" = (
-/obj/machinery/disposal/small/north{
-	pixel_y = 32
-	},
+/obj/machinery/disposal/small/directional/north,
 /obj/disposalpipe/trunk,
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation/crewquarters)
@@ -2064,7 +2062,7 @@
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team1/bar)
 "hE" = (
-/obj/machinery/disposal/small/east,
+/obj/machinery/disposal/small/directional/west,
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
@@ -2351,7 +2349,7 @@
 /turf/unsimulated/floor/blue,
 /area/pod_wars/team1/bridge)
 "iF" = (
-/obj/machinery/disposal/small/east,
+/obj/machinery/disposal/small/directional/west,
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
@@ -3414,7 +3412,7 @@
 /turf/simulated/floor/caution/east,
 /area/pod_wars/spacejunk/fstation/secdock)
 "mv" = (
-/obj/machinery/disposal/small/south,
+/obj/machinery/disposal/small/directional/south,
 /obj/disposalpipe/trunk{
 	dir = 1
 	},
@@ -4603,7 +4601,7 @@
 /turf/space,
 /area/space)
 "qJ" = (
-/obj/machinery/disposal/small/east,
+/obj/machinery/disposal/small/directional/west,
 /obj/disposalpipe/trunk{
 	dir = 1
 	},
@@ -4728,7 +4726,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/secdock)
 "rf" = (
-/obj/machinery/disposal/small/west,
+/obj/machinery/disposal/small/directional/east,
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
@@ -4818,7 +4816,7 @@
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation)
 "rx" = (
-/obj/machinery/disposal/small/east,
+/obj/machinery/disposal/small/directional/west,
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
@@ -5016,9 +5014,7 @@
 	},
 /area/pod_wars/spacejunk/miningoutpost)
 "sr" = (
-/obj/machinery/disposal/small/north{
-	pixel_y = 32
-	},
+/obj/machinery/disposal/small/directional/north,
 /obj/disposalpipe/trunk,
 /turf/unsimulated/floor/red/side{
 	dir = 5
@@ -5085,7 +5081,7 @@
 /area/pod_wars/spacejunk/fstation/command)
 "sD" = (
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/machinery/disposal/small/west,
+/obj/machinery/disposal/small/directional/east,
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
@@ -5675,7 +5671,7 @@
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/powergen)
 "uR" = (
-/obj/machinery/disposal/small/west,
+/obj/machinery/disposal/small/directional/east,
 /obj/disposalpipe/trunk,
 /turf/simulated/floor/engine,
 /area/pod_wars/team1/powergen)
@@ -6067,7 +6063,7 @@
 	},
 /area/pod_wars/spacejunk/miningoutpost)
 "wr" = (
-/obj/machinery/disposal/small/south,
+/obj/machinery/disposal/small/directional/south,
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
@@ -6672,7 +6668,7 @@
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation)
 "yz" = (
-/obj/machinery/disposal/small/west,
+/obj/machinery/disposal/small/directional/east,
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
@@ -7997,7 +7993,7 @@
 /area/pod_wars/spacejunk/fstation/power)
 "CT" = (
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/machinery/disposal/small/east,
+/obj/machinery/disposal/small/directional/west,
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
@@ -8720,9 +8716,7 @@
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/fstation)
 "Ft" = (
-/obj/machinery/disposal/small/north{
-	pixel_y = 32
-	},
+/obj/machinery/disposal/small/directional/north,
 /obj/disposalpipe/trunk,
 /turf/simulated/floor/red/side{
 	dir = 1
@@ -8794,7 +8788,7 @@
 /turf/simulated/floor/airless/plating,
 /area/pod_wars/spacejunk/nancy/warehouse)
 "FJ" = (
-/obj/machinery/disposal/small/east,
+/obj/machinery/disposal/small/directional/west,
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
@@ -9189,7 +9183,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/disposal/small/south,
+/obj/machinery/disposal/small/directional/south,
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
@@ -9582,7 +9576,7 @@
 /turf/simulated/floor/blue/side,
 /area/pod_wars/spacejunk/fstation)
 "IF" = (
-/obj/machinery/disposal/small/west,
+/obj/machinery/disposal/small/directional/east,
 /obj/disposalpipe/trunk,
 /turf/unsimulated/floor/blue/side{
 	dir = 4
@@ -10490,7 +10484,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/crewquarters)
 "LP" = (
-/obj/machinery/disposal/small/east,
+/obj/machinery/disposal/small/directional/west,
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
@@ -11369,7 +11363,7 @@
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/reliant)
 "Pm" = (
-/obj/machinery/disposal/small/west,
+/obj/machinery/disposal/small/directional/east,
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
@@ -12044,7 +12038,7 @@
 /turf/simulated/floor/sanitary,
 /area/pod_wars/spacejunk/fstation/crewquarters)
 "RQ" = (
-/obj/machinery/disposal/small/west,
+/obj/machinery/disposal/small/directional/east,
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
@@ -12418,7 +12412,7 @@
 /obj/item/device/gps{
 	pixel_x = 4
 	},
-/obj/machinery/disposal/small/east,
+/obj/machinery/disposal/small/directional/west,
 /obj/disposalpipe/trunk{
 	dir = 1
 	},
@@ -12663,7 +12657,7 @@
 /turf/unsimulated/floor/wood/seven,
 /area/pod_wars/spacejunk/fstation/bar)
 "TP" = (
-/obj/machinery/disposal/small/west,
+/obj/machinery/disposal/small/directional/east,
 /obj/disposalpipe/trunk,
 /obj/cable{
 	icon_state = "1-2"
@@ -12983,7 +12977,7 @@
 /obj/window/cubicle{
 	dir = 2
 	},
-/obj/machinery/disposal/small/west,
+/obj/machinery/disposal/small/directional/east,
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
@@ -13015,7 +13009,7 @@
 /obj/machinery/recharger{
 	pixel_y = 3
 	},
-/obj/machinery/disposal/small/west,
+/obj/machinery/disposal/small/directional/east,
 /obj/disposalpipe/trunk,
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -13338,7 +13332,7 @@
 	},
 /area/pod_wars/team1/hangar)
 "Wv" = (
-/obj/machinery/disposal/small/east,
+/obj/machinery/disposal/small/directional/west,
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
@@ -13571,7 +13565,7 @@
 /area/space)
 "Xh" = (
 /obj/disposalpipe/trunk,
-/obj/machinery/disposal/small/west,
+/obj/machinery/disposal/small/directional/east,
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation/crewquarters)
 "Xi" = (
@@ -13955,7 +13949,7 @@
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team2/bar)
 "Yx" = (
-/obj/machinery/disposal/small/east,
+/obj/machinery/disposal/small/directional/west,
 /obj/disposalpipe/trunk{
 	dir = 4
 	},

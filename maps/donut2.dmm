@@ -1790,9 +1790,7 @@
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
-/obj/machinery/disposal/small/east{
-	pixel_x = -8
-	},
+/obj/machinery/disposal/small/directional/west,
 /turf/simulated/floor/grey/checker{
 	dir = 4
 	},
@@ -3661,7 +3659,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "axw" = (
-/obj/machinery/disposal/small/west,
+/obj/machinery/disposal/small/directional/east,
 /obj/disposalpipe/trunk,
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
@@ -7557,7 +7555,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "aTn" = (
-/obj/machinery/disposal/small/south,
+/obj/machinery/disposal/small/directional/south,
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
@@ -7872,9 +7870,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "aVi" = (
-/obj/machinery/disposal/small{
-	dir = 8
-	},
+/obj/machinery/disposal/small/directional/east,
 /obj/cable{
 	icon_state = "2-8"
 	},
@@ -8205,7 +8201,7 @@
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/machinery/disposal/small/west,
+/obj/machinery/disposal/small/directional/east,
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/pharmacy)
 "aWW" = (
@@ -12849,9 +12845,7 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 2
 	},
-/obj/machinery/disposal/mail/small/autoname/kitchen/west{
-	pixel_x = 8
-	},
+/obj/machinery/disposal/mail/small/autoname/kitchen/directional/east,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "bBH" = (
@@ -13386,7 +13380,7 @@
 "bEY" = (
 /obj/machinery/shieldgenerator/meteorshield,
 /obj/machinery/shieldgenerator/meteorshield,
-/obj/machinery/disposal/small/east,
+/obj/machinery/disposal/small/directional/west,
 /obj/disposalpipe/trunk/east,
 /turf/simulated/floor/grime,
 /area/station/storage/tools)
@@ -15402,9 +15396,7 @@
 /obj/decal/cleanable/rust{
 	pixel_y = 34
 	},
-/obj/machinery/disposal/small/north{
-	pixel_y = 28
-	},
+/obj/machinery/disposal/small/directional/north,
 /obj/disposalpipe/trunk,
 /obj/cable{
 	icon_state = "4-8"
@@ -20125,7 +20117,7 @@
 /obj/table/auto,
 /obj/machinery/light/lamp/green,
 /obj/disposalpipe/trunk/west,
-/obj/machinery/disposal/small/west,
+/obj/machinery/disposal/small/directional/east,
 /obj/item/device/camera_viewer/outpost/science,
 /turf/simulated/floor/purple/side{
 	dir = 5
@@ -21620,7 +21612,7 @@
 /area/station/science/gen_storage)
 "gvF" = (
 /obj/disposalpipe/trunk/south,
-/obj/machinery/disposal/small/east,
+/obj/machinery/disposal/small/directional/west,
 /turf/simulated/floor,
 /area/station/science/hall)
 "gvH" = (
@@ -23988,7 +23980,7 @@
 /turf/simulated/floor/wood/seven,
 /area/station/chapel/office)
 "hRa" = (
-/obj/machinery/disposal/small/south,
+/obj/machinery/disposal/small/directional/south,
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
@@ -29081,10 +29073,7 @@
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
-/obj/machinery/disposal/small{
-	dir = 4;
-	pixel_x = -5
-	},
+/obj/machinery/disposal/small/directional/west,
 /turf/simulated/floor/greenwhite/other{
 	dir = 8
 	},
@@ -29387,12 +29376,10 @@
 /obj/storage/crate/rcd/CE,
 /obj/machinery/light/incandescent,
 /obj/disposalpipe/trunk/mail,
-/obj/machinery/disposal/mail/small{
-	dir = 1;
+/obj/machinery/disposal/mail/small/directional/north{
 	mail_tag = "chief_engineer";
 	mailgroup = "command";
-	mailgroup2 = "engineer";
-	pixel_y = 32
+	mailgroup2 = "engineer"
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/north,
 /area/station/crew_quarters/ce)
@@ -29465,7 +29452,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/disposal/small/south,
+/obj/machinery/disposal/small/directional/south,
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
@@ -32839,7 +32826,7 @@
 /turf/simulated/floor,
 /area/station/science/testchamber/bombchamber)
 "mNh" = (
-/obj/machinery/disposal/small/west,
+/obj/machinery/disposal/small/directional/east,
 /obj/disposalpipe/trunk/west,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
@@ -34107,8 +34094,7 @@
 /area/station/medical/medbay/psychiatrist)
 "nsY" = (
 /obj/storage/secure/closet/command/captain,
-/obj/machinery/disposal/mail/small{
-	dir = 8;
+/obj/machinery/disposal/mail/small/directional/east{
 	mail_tag = "captain";
 	mailgroup = "command"
 	},
@@ -38877,7 +38863,7 @@
 	},
 /area/station/hallway/primary/south)
 "pYI" = (
-/obj/machinery/disposal/small/east,
+/obj/machinery/disposal/small/directional/west,
 /obj/disposalpipe/trunk{
 	dir = 1
 	},
@@ -38891,7 +38877,7 @@
 /obj/machinery/light_switch/directional/east{
 	pixel_y = 6
 	},
-/obj/machinery/disposal/small/west,
+/obj/machinery/disposal/small/directional/east,
 /obj/disposalpipe/trunk/north,
 /obj/blind_switch/directional/east{
 	pixel_y = -6
@@ -40426,9 +40412,7 @@
 /turf/space,
 /area/space)
 "qRG" = (
-/obj/machinery/disposal/mail/small/autoname/hydroponics/north{
-	pixel_y = 23
-	},
+/obj/machinery/disposal/mail/small/autoname/hydroponics/directional/north,
 /obj/disposalpipe/trunk/mail{
 	dir = 4
 	},
@@ -42330,7 +42314,7 @@
 	dir = 5
 	},
 /obj/disposalpipe/trunk/north,
-/obj/machinery/disposal/small/east,
+/obj/machinery/disposal/small/directional/west,
 /turf/simulated/floor/grime,
 /area/station/quartermaster/refinery)
 "sco" = (
@@ -42470,8 +42454,7 @@
 	dir = 1
 	},
 /obj/submachine/chef_oven,
-/obj/machinery/disposal/small/north{
-	pixel_y = 32;
+/obj/machinery/disposal/small/directional/north{
 	name = "Lay-Z Chef Prison Food Chute"
 	},
 /obj/disposalpipe/trunk/food,
@@ -42855,9 +42838,7 @@
 /area/station/hangar/sec)
 "sqQ" = (
 /obj/disposalpipe/trunk/west,
-/obj/machinery/disposal/small/north{
-	pixel_y = 28
-	},
+/obj/machinery/disposal/small/directional/north,
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "sqS" = (
@@ -43388,7 +43369,7 @@
 /turf/simulated/floor/grime,
 /area/station/hangar/main)
 "sFC" = (
-/obj/machinery/disposal/small/east,
+/obj/machinery/disposal/small/directional/west,
 /obj/disposalpipe/trunk/east,
 /turf/simulated/floor/yellow/side{
 	dir = 8
@@ -44132,9 +44113,7 @@
 	},
 /area/station/crew_quarters/stockex)
 "teF" = (
-/obj/machinery/disposal/small/east{
-	pixel_x = -8
-	},
+/obj/machinery/disposal/small/directional/west,
 /obj/machinery/sink/slim{
 	pixel_y = 12
 	},
@@ -47235,8 +47214,7 @@
 /area/station/science/gen_storage)
 "uUP" = (
 /obj/table/auto,
-/obj/machinery/disposal/mail/small{
-	dir = 8;
+/obj/machinery/disposal/mail/small/directional/east{
 	mail_tag = "research_director";
 	mailgroup = "command";
 	mailgroup2 = "science"
@@ -47751,7 +47729,7 @@
 	dir = 6;
 	icon_state = "xtra_bigstripe-corner2"
 	},
-/obj/machinery/disposal/small/west,
+/obj/machinery/disposal/small/directional/east,
 /obj/machinery/light_switch/directional/east,
 /obj/disposalpipe/trunk{
 	dir = 1
@@ -50325,7 +50303,7 @@
 /area/station/crew_quarters/fitness)
 "wIu" = (
 /obj/disposalpipe/segment/mail,
-/obj/machinery/disposal/small/west,
+/obj/machinery/disposal/small/directional/east,
 /obj/machinery/firealarm/directional/east,
 /obj/disposalpipe/trunk/west,
 /turf/simulated/floor/greenwhite/other{
@@ -51207,7 +51185,7 @@
 /area/station/crew_quarters/fitness)
 "xpe" = (
 /obj/disposalpipe/trunk/west,
-/obj/machinery/disposal/small/west,
+/obj/machinery/disposal/small/directional/east,
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
@@ -51484,7 +51462,7 @@
 /turf/space,
 /area/space)
 "xxa" = (
-/obj/machinery/disposal/small/west,
+/obj/machinery/disposal/small/directional/east,
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
@@ -51494,7 +51472,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
 "xxj" = (
-/obj/machinery/disposal/mail/small/autoname,
+/obj/machinery/disposal/mail/small/autoname/directional/south,
 /obj/disposalpipe/trunk/mail/east,
 /turf/simulated/floor/black/side{
 	dir = 1

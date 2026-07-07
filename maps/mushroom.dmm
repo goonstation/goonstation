@@ -8593,7 +8593,7 @@
 /turf/simulated/floor/industrial,
 /area/station/mining/magnet)
 "cXF" = (
-/obj/machinery/disposal/small,
+/obj/machinery/disposal/small/directional/south,
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
@@ -9746,7 +9746,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "dMU" = (
-/obj/machinery/disposal/small/west,
+/obj/machinery/disposal/small/directional/east,
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
@@ -14341,7 +14341,7 @@
 	icon_state = "0-4"
 	},
 /obj/cable,
-/obj/machinery/disposal/small,
+/obj/machinery/disposal/small/directional/south,
 /obj/disposalpipe/trunk{
 	dir = 1
 	},
@@ -16547,9 +16547,7 @@
 /turf/space,
 /area/space)
 "iNE" = (
-/obj/machinery/disposal/small{
-	dir = 4
-	},
+/obj/machinery/disposal/small/directional/west,
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
@@ -17803,10 +17801,7 @@
 	},
 /area/station/chapel/office)
 "jKz" = (
-/obj/machinery/disposal/small{
-	dir = 1;
-	pixel_y = 24
-	},
+/obj/machinery/disposal/small/directional/north,
 /obj/disposalpipe/trunk,
 /turf/simulated/floor,
 /area/station/science/artifact)
@@ -18557,9 +18552,7 @@
 /turf/space,
 /area/station/engine/proto)
 "kja" = (
-/obj/machinery/disposal/small{
-	dir = 8
-	},
+/obj/machinery/disposal/small/directional/east,
 /obj/disposalpipe/trunk/north,
 /obj/cable{
 	icon_state = "1-2"
@@ -19143,9 +19136,7 @@
 	pixel_x = 10;
 	pixel_y = 24
 	},
-/obj/machinery/disposal/mail/small/autoname/research/chemistry/north{
-	pixel_x = -4
-	},
+/obj/machinery/disposal/mail/small/autoname/research/chemistry/directional/north,
 /obj/disposalpipe/trunk/mail/south,
 /obj/machinery/vending/chemistry,
 /turf/simulated/floor/purplewhite{
@@ -19898,7 +19889,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/proto)
 "lny" = (
-/obj/machinery/disposal/mail/small/autoname/research/telescience/east,
+/obj/machinery/disposal/mail/small/autoname/research/telescience/directional/west,
 /obj/disposalpipe/trunk/mail/east,
 /turf/simulated/floor/purple,
 /area/station/science/teleporter)
@@ -26683,7 +26674,7 @@
 	icon_state = "1-8"
 	},
 /obj/disposalpipe/trunk/mail/north,
-/obj/machinery/disposal/mail/small/autoname/security/detective/west,
+/obj/machinery/disposal/mail/small/autoname/security/detective/directional/east,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "pRU" = (
@@ -31289,7 +31280,7 @@
 /obj/disposalpipe/trunk{
 	dir = 1
 	},
-/obj/machinery/disposal/small/east,
+/obj/machinery/disposal/small/directional/west,
 /turf/simulated/floor/purple/side{
 	dir = 10
 	},
@@ -32680,7 +32671,7 @@
 /obj/disposalpipe/trunk{
 	dir = 1
 	},
-/obj/machinery/disposal/small,
+/obj/machinery/disposal/small/directional/south,
 /turf/simulated/floor/purple,
 /area/station/science/hall)
 "tAQ" = (
@@ -32747,7 +32738,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "tDf" = (
-/obj/machinery/disposal/mail/small/autoname/research,
+/obj/machinery/disposal/mail/small/autoname/research/directional/south,
 /obj/disposalpipe/trunk/mail/north,
 /turf/simulated/floor/purple,
 /area/station/science/hall)
@@ -33651,9 +33642,7 @@
 /turf/space,
 /area/station/solar/aisat)
 "ujl" = (
-/obj/machinery/disposal/small{
-	dir = 8
-	},
+/obj/machinery/disposal/small/directional/east,
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
@@ -38076,8 +38065,7 @@
 /area/station/security/hos)
 "xnN" = (
 /obj/disposalpipe/trunk/mail/south,
-/obj/machinery/disposal/mail/small/autoname{
-	dir = 8;
+/obj/machinery/disposal/mail/small/autoname/directional/east{
 	mail_tag = "ranch";
 	mailgroup = "botany"
 	},
@@ -38665,8 +38653,7 @@
 	},
 /obj/machinery/hydro_growlamp,
 /obj/disposalpipe/trunk/mail/east,
-/obj/machinery/disposal/mail/small/autoname{
-	dir = 4;
+/obj/machinery/disposal/mail/small/autoname/directional/west{
 	mail_tag = "ranch";
 	mailgroup = "botany"
 	},

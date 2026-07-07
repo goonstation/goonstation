@@ -176,7 +176,7 @@
 	},
 /area/space)
 "gM" = (
-/obj/machinery/disposal/small/east,
+/obj/machinery/disposal/small/directional/west,
 /turf/unsimulated/floor/airless/minitiles,
 /area/space)
 "hj" = (

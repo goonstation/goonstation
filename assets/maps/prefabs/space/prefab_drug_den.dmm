@@ -505,7 +505,7 @@
 	},
 /area/prefab/drug_den/party)
 "HM" = (
-/obj/machinery/disposal/small,
+/obj/machinery/disposal/small/directional/south,
 /obj/disposalpipe/trunk{
 	dir = 4
 	},

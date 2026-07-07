@@ -11824,7 +11824,7 @@
 	dir = 4
 	},
 /obj/machinery/vending/jobclothing/catering,
-/obj/machinery/disposal/small/east,
+/obj/machinery/disposal/small/directional/west,
 /turf/simulated/floor/white/checker2,
 /area/station/crew_quarters/kitchen)
 "fmC" = (
@@ -13904,7 +13904,7 @@
 /area/station/bridge)
 "gkj" = (
 /obj/disposalpipe/trunk/west,
-/obj/machinery/disposal/small/east,
+/obj/machinery/disposal/small/directional/west,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "gkr" = (

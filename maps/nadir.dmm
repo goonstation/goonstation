@@ -40810,7 +40810,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/arcade/dungeon)
 "rYV" = (
-/obj/machinery/disposal/mail/small/autoname/hydroponics/west,
+/obj/machinery/disposal/mail/small/autoname/hydroponics/directional/east,
 /obj/disposalpipe/trunk/mail/south,
 /turf/simulated/floor/greenblack{
 	dir = 9
@@ -42025,7 +42025,7 @@
 /area/station/science/teleporter)
 "sEG" = (
 /obj/machinery/light/small/warm/very,
-/obj/machinery/disposal/small/east,
+/obj/machinery/disposal/small/directional/west,
 /obj/disposalpipe/trunk/west,
 /turf/simulated/floor/engine/caution/corner,
 /area/station/science/chemistry)

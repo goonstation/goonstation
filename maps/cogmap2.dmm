@@ -3273,7 +3273,7 @@
 	pixel_y = 21
 	},
 /obj/disposalpipe/trunk/mail/south,
-/obj/machinery/disposal/mail/small/autoname/chapel/north,
+/obj/machinery/disposal/mail/small/autoname/chapel/directional/north,
 /mob/living/critter/small_animal/opossum/morty,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
@@ -9630,7 +9630,7 @@
 /obj/machinery/camera/directional/west{
 	pixel_y = 10
 	},
-/obj/machinery/disposal/mail/small/autoname/public/cafeteria/east,
+/obj/machinery/disposal/mail/small/autoname/public/cafeteria/directional/west,
 /obj/disposalpipe/trunk/mail/south,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
@@ -13082,7 +13082,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/trunk/mail/south,
-/obj/machinery/disposal/mail/small/autoname/medbay/booth/north,
+/obj/machinery/disposal/mail/small/autoname/medbay/booth/directional/north,
 /turf/simulated/floor/bluewhite{
 	dir = 5
 	},
@@ -15883,7 +15883,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/trunk/mail/west,
-/obj/machinery/disposal/mail/small/autoname/checkpoint/arrivals/south,
+/obj/machinery/disposal/mail/small/autoname/checkpoint/arrivals/directional/south,
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/arrivals)
 "aZl" = (
@@ -16665,7 +16665,7 @@
 /obj/stool/chair/office/red{
 	dir = 8
 	},
-/obj/machinery/disposal/mail/small/autoname/checkpoint/chapel/north{
+/obj/machinery/disposal/mail/small/autoname/checkpoint/chapel/directional/north{
 	layer = 3.1
 	},
 /obj/cable{
@@ -34319,7 +34319,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/machinery/disposal/mail/small/autoname/research/telescience/east,
+/obj/machinery/disposal/mail/small/autoname/research/telescience/directional/west,
 /obj/disposalpipe/trunk/mail/south,
 /turf/simulated/floor/caution/corner/nw,
 /area/station/science/teleporter)
@@ -36655,7 +36655,7 @@
 /area/station/hallway/primary/southwest)
 "cqm" = (
 /obj/disposalpipe/trunk/west,
-/obj/machinery/disposal/mail/small/autoname/public/medbay_lobby/west,
+/obj/machinery/disposal/mail/small/autoname/public/medbay_lobby/directional/east,
 /turf/simulated/floor/blue/side{
 	dir = 4
 	},
@@ -36900,7 +36900,7 @@
 "crb" = (
 /obj/mopbucket,
 /obj/disposalpipe/trunk/mail/south,
-/obj/machinery/disposal/mail/small/autoname/janitor/north,
+/obj/machinery/disposal/mail/small/autoname/janitor/directional/north,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "crc" = (
@@ -37051,7 +37051,7 @@
 /area/station/security/checkpoint/escape)
 "crF" = (
 /obj/disposalpipe/trunk/mail/north,
-/obj/machinery/disposal/mail/small/autoname/checkpoint/escape/south,
+/obj/machinery/disposal/mail/small/autoname/checkpoint/escape/directional/south,
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/escape)
 "crG" = (
@@ -38061,8 +38061,7 @@
 	},
 /area/station/medical/robotics)
 "cuQ" = (
-/obj/machinery/disposal/mail/small{
-	dir = 1;
+/obj/machinery/disposal/mail/small/directional/north{
 	mail_tag = "robotics";
 	mailgroup = "robotics";
 	mailgroup2 = null;
@@ -38508,10 +38507,8 @@
 /area/station/medical/robotics)
 "cwu" = (
 /obj/disposalpipe/trunk,
-/obj/machinery/disposal/small{
-	dir = 1;
-	layer = 32;
-	pixel_y = 32
+/obj/machinery/disposal/small/directional/north{
+	layer = 32
 	},
 /turf/simulated/floor/blueblack{
 	dir = 1
@@ -39581,7 +39578,7 @@
 /area/station/security/checkpoint/cargo)
 "czL" = (
 /obj/disposalpipe/trunk/mail/south,
-/obj/machinery/disposal/mail/small/autoname/checkpoint/cargo/west,
+/obj/machinery/disposal/mail/small/autoname/checkpoint/cargo/directional/east,
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/cargo)
 "czM" = (
@@ -40274,7 +40271,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/testchamber)
 "cCa" = (
-/obj/machinery/disposal/mail/small/autoname/checkpoint/podbay/south,
+/obj/machinery/disposal/mail/small/autoname/checkpoint/podbay/directional/south,
 /obj/disposalpipe/trunk/mail/north,
 /turf/simulated/floor,
 /area/station/security/checkpoint/podbay)
@@ -40516,7 +40513,7 @@
 /area/research_outpost)
 "cCM" = (
 /obj/disposalpipe/trunk/mail/south,
-/obj/machinery/disposal/mail/small/autoname/public/escape/east,
+/obj/machinery/disposal/mail/small/autoname/public/escape/directional/west,
 /turf/simulated/floor/arrival{
 	dir = 8
 	},
@@ -42931,7 +42928,7 @@
 /area/station/mining/staff_room)
 "cLT" = (
 /obj/disposalpipe/trunk/mail/west,
-/obj/machinery/disposal/mail/small/autoname/mining/west,
+/obj/machinery/disposal/mail/small/autoname/mining/directional/east,
 /turf/simulated/floor/caution/south,
 /area/station/mining/staff_room)
 "cLV" = (
@@ -43851,7 +43848,7 @@
 	pixel_x = 10
 	},
 /obj/disposalpipe/trunk/mail/west,
-/obj/machinery/disposal/mail/small/autoname/research/chemistry/west,
+/obj/machinery/disposal/mail/small/autoname/research/chemistry/directional/east,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "cPg" = (
@@ -52358,13 +52355,11 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/trunk/mail/south,
-/obj/machinery/disposal/mail/small{
-	dir = 1;
+/obj/machinery/disposal/mail/small/directional/north{
 	mail_tag = "medical director";
 	mailgroup = "command";
 	mailgroup2 = "medbay";
-	name = "mail chute-'Medical Director'";
-	pixel_y = 32
+	name = "mail chute-'Medical Director'"
 	},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/north,
 /area/station/medical/head)
@@ -61939,7 +61934,7 @@
 /area/station/mining/magnet)
 "mZe" = (
 /obj/disposalpipe/trunk/mail/east,
-/obj/machinery/disposal/mail/small/autoname/checkpoint/customs/east,
+/obj/machinery/disposal/mail/small/autoname/checkpoint/customs/directional/west,
 /obj/machinery/phone/wall{
 	pixel_x = -28;
 	pixel_y = 6

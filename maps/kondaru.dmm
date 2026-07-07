@@ -6172,7 +6172,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "azN" = (
-/obj/machinery/disposal/mail/small/autoname/security/detective/north,
+/obj/machinery/disposal/mail/small/autoname/security/detective/directional/north,
 /obj/decal/cleanable/dirt,
 /obj/disposalpipe/trunk/mail/east,
 /obj/cable{

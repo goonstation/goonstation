@@ -323,7 +323,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/disposal/small,
+/obj/machinery/disposal/small/directional/south,
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
@@ -1024,10 +1024,8 @@
 	},
 /area/station/quartermaster/office)
 "aeg" = (
-/obj/machinery/disposal/small{
-	dir = 1;
-	layer = 32;
-	pixel_y = 32
+/obj/machinery/disposal/small/directional/north{
+	layer = 32
 	},
 /obj/disposalpipe/trunk{
 	dir = 4;
@@ -2350,10 +2348,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/machinery/disposal/small{
-	dir = 1;
-	pixel_y = 32
-	},
+/obj/machinery/disposal/small/directional/north,
 /obj/disposalpipe/trunk,
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/blue/checker{
@@ -2578,9 +2573,7 @@
 /turf/simulated/floor/black,
 /area/station/teleporter)
 "aoQ" = (
-/obj/machinery/disposal/small{
-	dir = 8
-	},
+/obj/machinery/disposal/small/directional/east,
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
@@ -2924,9 +2917,7 @@
 /turf/simulated/floor/blueblack,
 /area/station/bridge)
 "arK" = (
-/obj/machinery/disposal/small{
-	dir = 4
-	},
+/obj/machinery/disposal/small/directional/west,
 /obj/disposalpipe/trunk,
 /turf/simulated/floor/arrival{
 	dir = 9
@@ -4096,9 +4087,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/medbay/surgery)
 "ayE" = (
-/obj/machinery/disposal/small{
-	dir = 4
-	},
+/obj/machinery/disposal/small/directional/west,
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
@@ -4528,9 +4517,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/lounge)
 "aAW" = (
-/obj/machinery/disposal/small{
-	dir = 4
-	},
+/obj/machinery/disposal/small/directional/west,
 /obj/disposalpipe/trunk{
 	dir = 4;
 	name = "factory pipe"
@@ -5027,10 +5014,7 @@
 "aDE" = (
 /obj/machinery/plantpot,
 /obj/disposalpipe/trunk,
-/obj/machinery/disposal/small{
-	dir = 1;
-	pixel_y = 32
-	},
+/obj/machinery/disposal/small/directional/north,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "aDG" = (
@@ -5591,9 +5575,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 6
 	},
-/obj/machinery/disposal/small{
-	dir = 4
-	},
+/obj/machinery/disposal/small/directional/west,
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
@@ -8578,9 +8560,7 @@
 /turf/simulated/floor/blue,
 /area/station/bridge)
 "bYm" = (
-/obj/machinery/disposal/small{
-	dir = 8
-	},
+/obj/machinery/disposal/small/directional/east,
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
@@ -10229,9 +10209,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/disposal/small{
-	dir = 8
-	},
+/obj/machinery/disposal/small/directional/east,
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
@@ -11931,10 +11909,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/disposal/small{
-	dir = 8;
-	pixel_x = 4
-	},
+/obj/machinery/disposal/small/directional/east,
 /obj/disposalpipe/trunk{
 	dir = 8;
 	name = "factory pipe"
@@ -12140,9 +12115,7 @@
 	},
 /area/station/solar/north)
 "hMW" = (
-/obj/machinery/disposal/small{
-	dir = 4
-	},
+/obj/machinery/disposal/small/directional/west,
 /obj/disposalpipe/trunk/east,
 /obj/cable{
 	icon_state = "1-2"
@@ -16983,9 +16956,7 @@
 	},
 /area/station/chapel/sanctuary)
 "opt" = (
-/obj/machinery/disposal/small{
-	dir = 8
-	},
+/obj/machinery/disposal/small/directional/east,
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
@@ -17746,9 +17717,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/disposal/small{
-	dir = 8
-	},
+/obj/machinery/disposal/small/directional/east,
 /obj/disposalpipe/trunk{
 	dir = 1
 	},
@@ -18227,9 +18196,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/trunk,
-/obj/machinery/disposal/small{
-	dir = 4
-	},
+/obj/machinery/disposal/small/directional/west,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "qHR" = (
@@ -19234,10 +19201,8 @@
 /turf/simulated/floor/airless/plating/catwalk/auto,
 /area/ghostdrone_factory)
 "suv" = (
-/obj/machinery/disposal/small{
-	dir = 1;
-	layer = 32;
-	pixel_y = 32
+/obj/machinery/disposal/small/directional/north{
+	layer = 32
 	},
 /obj/disposalpipe/trunk,
 /turf/simulated/floor/black,
@@ -20064,7 +20029,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/disposal/small,
+/obj/machinery/disposal/small/directional/south,
 /obj/disposalpipe/trunk{
 	dir = 4;
 	name = "factory pipe"
@@ -20755,9 +20720,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/light/incandescent,
-/obj/machinery/disposal/small{
-	dir = 8
-	},
+/obj/machinery/disposal/small/directional/east,
 /obj/machinery/navbeacon/mule/medbay_north/south,
 /obj/decal/mule/beacon,
 /obj/disposalpipe/trunk{
@@ -21799,9 +21762,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "vUA" = (
-/obj/machinery/disposal/small{
-	dir = 4
-	},
+/obj/machinery/disposal/small/directional/west,
 /obj/disposalpipe/trunk,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)

@@ -4094,7 +4094,7 @@
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
 "atU" = (
-/obj/machinery/disposal/mail/small{
+/obj/machinery/disposal/mail/small/directional/south{
 	mail_tag = "ranch";
 	mailgroup = "botany";
 	message = "1";
@@ -22847,7 +22847,7 @@
 /area/station/engine/elect)
 "bRB" = (
 /obj/disposalpipe/trunk,
-/obj/machinery/disposal/small/south,
+/obj/machinery/disposal/small/directional/south,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/elect)
 "bRC" = (
@@ -33304,7 +33304,7 @@
 /obj/railing/orange/reinforced{
 	dir = 4
 	},
-/obj/machinery/disposal/small,
+/obj/machinery/disposal/small/directional/south,
 /obj/disposalpipe/trunk{
 	dir = 1
 	},
@@ -49287,7 +49287,7 @@
 /obj/disposalpipe/trunk{
 	dir = 1
 	},
-/obj/machinery/disposal/small/west,
+/obj/machinery/disposal/small/directional/east,
 /turf/simulated/floor/stairs/wood/wide{
 	dir = 6
 	},
@@ -51544,7 +51544,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "pkH" = (
-/obj/machinery/disposal/mail/small/autoname/mechanics/south,
+/obj/machinery/disposal/mail/small/autoname/mechanics/directional/south,
 /obj/disposalpipe/trunk/mail{
 	dir = 4
 	},
