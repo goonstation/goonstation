@@ -132,11 +132,6 @@
 	var/static/image/spider_image = image('icons/mob/human.dmi', "layer" = EFFECTS_LAYER_UNDER_1-1)
 	var/static/image/makeup_image = image('icons/mob/human.dmi') // yeah this is just getting stupider
 
-	var/list/juggling = list()
-	var/can_juggle = 0
-	///A dummy object that juggled objects go in the vis_contents of, so they can be scaled visually without affecting their actual scale
-	var/obj/dummy/juggle_dummy = null
-
 	// preloaded sounds moved up to /mob/living
 
 	var/list/sound_list_scream = null
@@ -558,8 +553,6 @@
 	QDEL_NULL(src.cloner_defects)
 	QDEL_NULL(src.inventory)
 
-	src.juggle_dummy = null
-
 	..()
 
 	//blah, this might not be effective for ref clearing but ghost observers inside me NEED this list to be populated in base mob/disposing
@@ -614,8 +607,6 @@
 	src.jitteriness = 0
 
 	src.update_health_monitor_icon()
-
-	src.drop_juggle()
 
 #ifdef DATALOGGER
 	game_stats.Increment("deaths")
@@ -2584,102 +2575,6 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	if (wearing_football_gear())
 		src.tackle(AM)
 	..()
-
-/mob/living/carbon/human/proc/juggling()
-	if (islist(src.juggling) && length(src.juggling))
-		return TRUE
-	return FALSE
-
-/mob/living/carbon/human/proc/drop_juggle()
-	set waitfor = FALSE // remove if you want to see 3,500 SHOULD_NOT_SLEEP errors because anything that ever causes a person to die can't sleep anymore
-
-	if (!src.juggling())
-		return
-	src.visible_message(SPAN_ALERT("<b>[src]</b> drops everything [he_or_she(src)] [were_or_was(src)] juggling!"))
-	for (var/atom/movable/A in src.juggling)
-		src.remove_juggle(A)
-		if(istype(A, /obj/item/device/light)) //i hate this
-			var/obj/item/device/light/L = A
-			L.light?.attach(L)
-		if (istype(A, /obj/item/gun) && prob(80)) //prob(80)
-			var/obj/item/gun/gun = A
-			gun.shoot(get_turf(pick(view(10, src))), get_turf(src), src, 16, 16)
-		else if (prob(40)) //bombs might land funny
-			if (istype(A, /obj/item/chem_grenade) || istype(A, /obj/item/old_grenade))
-				var/obj/item/explosive = A
-				explosive.AttackSelf(src)
-			else if (istype(A, /obj/item/device/transfer_valve))
-				var/obj/item/device/transfer_valve/ttv = A
-				ttv.toggle_valve()
-				logTheThing(LOG_BOMBING, src, "accidentally [ttv.valve_open ? "opened" : "closed"] the valve on a TTV tank transfer valve by failing to juggle at [log_loc(src)].")
-				message_admins("[key_name(usr)] accidentally [ttv.valve_open ? "opened" : "closed"] the valve on a TTV tank transfer valve by failing to juggle at [log_loc(src)].")
-			else if (istype(A, /obj/item/assembly))
-				var/obj/item/assembly/dropped_assembly = A
-				if(!dropped_assembly.secured)
-					// You're not evading death that easily, clown
-					dropped_assembly.secured = TRUE
-					dropped_assembly.add_fingerprint(src)
-					dropped_assembly.UpdateIcon()
-					dropped_assembly.last_armer = src
-				dropped_assembly.AttackSelf(src)
-		A.set_loc(get_turf(src)) //I give up trying to make this work with src.loc
-		if (prob(25))
-			A.throw_at(get_step(src, pick(alldirs)), 1, 1)
-	src.drop_from_slot(src.r_hand)
-	src.drop_from_slot(src.l_hand)
-	src.update_body()
-	logTheThing(LOG_STATION, src, "drops the items they were juggling")
-
-/mob/living/carbon/human/proc/remove_juggle(atom/movable/thing)
-	UnregisterSignal(thing, COMSIG_MOVABLE_SET_LOC)
-	thing.layer = initial(thing.layer)
-	src.juggle_dummy.vis_contents -= thing
-	animate_spin(thing, parallel = FALSE, looping = 0)
-	thing.pixel_x = initial(thing.pixel_x)
-	thing.pixel_y = initial(thing.pixel_y)
-	thing.layer = initial(thing.layer)
-	src.juggling -= thing
-
-/mob/living/carbon/human/proc/add_juggle(atom/movable/thing)
-	if (!thing || src.stat)
-		return
-	if (istype(thing, /obj/item/grab))
-		return
-	src.u_equip(thing)
-	if (thing.loc != src)
-		thing.set_loc(src)
-	if (src.juggling())
-		var/items = ""
-		var/count = 0
-		for (var/atom/movable/juggled in src.juggling)
-			count++
-			if (length(src.juggling) > 1 && count == src.juggling.len)
-				items += " and [juggled]"
-			else
-				items += ", [juggled]"
-		items = copytext(items, 3)
-		src.visible_message("<b>[src]</b> adds [thing] to the [items] [he_or_she(src)] [were_or_was(src)] already juggling!")
-	else
-		src.visible_message("<b>[src]</b> starts juggling [thing]!")
-	src.juggling += thing
-	if(isnull(src.juggle_dummy))
-		src.juggle_dummy = new(null)
-		src.juggle_dummy.name = null
-		src.juggle_dummy.mouse_opacity = FALSE
-		src.juggle_dummy.Scale(2/3, 2/3)
-		src.juggle_dummy.layer = src.layer + 0.1
-		src.juggle_dummy.appearance_flags |= RESET_COLOR | RESET_ALPHA
-		src.vis_contents += src.juggle_dummy
-	src.juggle_dummy.vis_contents += thing
-	thing.layer = src.layer + 0.1
-	animate_juggle(thing)
-	RegisterSignal(thing, COMSIG_MOVABLE_SET_LOC, PROC_REF(remove_juggle)) //there are so many ways juggled things can be stolen I'm just doing this
-	JOB_XP(src, "Clown", 1)
-	if (isitem(thing))
-		var/obj/item/i = thing
-		i.on_spin_emote(src)
-	src.update_body()
-	logTheThing(LOG_STATION, src, "starts juggling [thing].")
 
 /mob/living/carbon/human/relaymove(mob/user, direction, delay, running)
 	if ((user in src.juggling) && !ON_COOLDOWN(user, "resist_juggle", 1 SECOND))

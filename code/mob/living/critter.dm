@@ -917,6 +917,13 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		logTheThing(LOG_COMBAT, src, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"]).")
 	if(thr?.user)
 		src.was_harmed(thr.user, AM)
+	if(!isobj(AM) && !src.juggling()) // nabbed from mob's hitby
+		return
+	if (prob(src.juggling.len * 5))
+		src.drop_juggle()
+	else
+		SPAWN(0)
+			src.add_juggle(AM)
 
 /mob/living/critter/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	if (src.nodamage || QDELETED(src))
@@ -1086,6 +1093,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 			I.set_loc(src.loc)
 			I.layer = initial(I.layer)
 			u_equip(I)
+	if (src.juggling())
+		src.drop_juggle()
 
 /mob/living/critter/proc/drop_equipment()
 	for (var/datum/equipmentHolder/EH in equipment)
@@ -1193,6 +1202,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 					else
 						message = "<b>[src]</B> does a flip!"
 						animate_spin(src, pick("L", "R"), 1, 0)
+				src.drop_juggle()
 
 	if (!message)
 		return
