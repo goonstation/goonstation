@@ -447,7 +447,7 @@
 			"type": "select",
 			"valueIsDefine": true,
 			"options": [
-				{ "value": "", "label": "None (normal map rotation)" },
+				{ "value": "", "label": "Default" },
 				{ "value": "MAP_OVERRIDE_DEVTEST", "label": "Devtest (by cringe)" },
 				{ "value": "MAP_OVERRIDE_CONSTRUCTION", "label": "Construction" },
 				{ "value": "MAP_OVERRIDE_POD_WARS", "label": "Pod Wars (500x500)" },
