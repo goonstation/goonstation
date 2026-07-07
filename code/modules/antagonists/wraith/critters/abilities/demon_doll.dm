@@ -67,11 +67,21 @@
 				continue
 			HH.apply_sonic_stun(0, 0, 30, 0, 5, 4, 6)
 
+/datum/targetable/critter/demon_doll/gravity_song
+	name = "Gravity Song"
+	desc = "Hum a tune to levitate-juggle anything that isn't bolted to the floor."
+	targeted = 1
+	target_anything = 1
+
+	cast(atom/target)
+
+
+
 /datum/targetable/critter/demon_doll/bouncy_song
 	name = "Bouncy Song"
 	desc = "Throw your voice, knocking people back after a bounce and laying a trap after two. Bounces more in the dark and when hitting lights!"
 	icon_state = "song_bouncing"
-	cooldown = 1 SECONDS
+	cooldown = 8 SECONDS
 	targeted = 1
 	target_anything = 1
 	var/muzzle_flash = "muzzle_flash_launch"
@@ -174,7 +184,7 @@
 			return
 
 		var/chosen_trap = pick(concrete_typesof(/obj/machinery/wraith/runetrap/))
-		var/obj/machinery/wraith/runetrap/trap = new chosen_trap(hit.loc, projowner, arming_time = 1 SECONDS)
+		var/obj/machinery/wraith/runetrap/trap = new chosen_trap(hit.loc, arming_time = 1 SECONDS)
 		trap.free_trap = TRUE
 
 

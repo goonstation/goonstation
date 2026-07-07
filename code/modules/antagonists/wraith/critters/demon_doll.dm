@@ -16,6 +16,7 @@ TYPEINFO(/mob/living/critter/wraith/demon_doll)
 	health_burn_vuln = 0.8
 	faction = list(FACTION_WRAITH)
 	can_use_say = FALSE
+	can_juggle = TRUE
 	name_generator_path = /datum/wraith_name_generator/wraith_summon/doll
 	var/mob/living/intangible/wraith/master = null
 	var/traps_laid = 0
