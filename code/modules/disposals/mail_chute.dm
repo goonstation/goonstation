@@ -356,31 +356,11 @@
 		mailgroup = "janitor"
 		message = 1
 
-		north
-			dir = NORTH
-			pixel_y = 32
-		east
-			dir = EAST
-		south
-			dir = SOUTH
-		west
-			dir = WEST
-
 	kitchen
 		name = "Kitchen"
 		mail_tag = "kitchen"
 		mailgroup = MGT_CATERING
 		message = 1
-
-		north
-			dir = NORTH
-			pixel_y = 32
-		east
-			dir = EAST
-		south
-			dir = SOUTH
-		west
-			dir = WEST
 
 	bar
 		name = "Bar"
@@ -388,31 +368,11 @@
 		mailgroup = MGT_CATERING
 		message = 1
 
-		north
-			dir = NORTH
-			pixel_y = 32
-		east
-			dir = EAST
-		south
-			dir = SOUTH
-		west
-			dir = WEST
-
 	hydroponics
 		name = "Hydroponics"
 		mail_tag = "hydroponics"
 		mailgroup = MGT_HYDROPONICS
 		message = 1
-
-		north
-			dir = NORTH
-			pixel_y = 32
-		east
-			dir = EAST
-		south
-			dir = SOUTH
-		west
-			dir = WEST
 
 	security
 		name = "Security"
@@ -420,43 +380,13 @@
 		mailgroup = MGD_SECURITY
 		message = 1
 
-		north
-			dir = NORTH
-			pixel_y = 32
-		east
-			dir = EAST
-		south
-			dir = SOUTH
-		west
-			dir = WEST
-
 		brig
 			name = "Brig"
 			mail_tag = "brig"
 
-			north
-				dir = NORTH
-				pixel_y = 32
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
-
 		detective
 			name = "Detective"
 			mail_tag = "detective"
-
-			north
-				dir = NORTH
-				pixel_y = 32
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
 
 	bridge
 		name = "Bridge"
@@ -464,31 +394,11 @@
 		mailgroup = MGD_COMMAND
 		message = 1
 
-		north
-			dir = NORTH
-			pixel_y = 32
-		east
-			dir = EAST
-		south
-			dir = SOUTH
-		west
-			dir = WEST
-
 	chapel
 		name = "Chapel"
 		mail_tag = "chapel"
 		mailgroup = MGT_SPIRITUALAFFAIRS
 		message = 1
-
-		north
-			dir = NORTH
-			pixel_y = 32
-		east
-			dir = EAST
-		south
-			dir = SOUTH
-		west
-			dir = WEST
 
 	engineering
 		name = "Engineering"
@@ -496,31 +406,11 @@
 		mailgroup = MGD_ENGINEER
 		message = 1
 
-		north
-			dir = NORTH
-			pixel_y = 32
-		east
-			dir = EAST
-		south
-			dir = SOUTH
-		west
-			dir = WEST
-
 	mechanics
 		name = "Mechanics"
 		mail_tag = "mechanics"
 		mailgroup = MGD_ENGINEER
 		message = 1
-
-		north
-			dir = NORTH
-			pixel_y = 32
-		east
-			dir = EAST
-		south
-			dir = SOUTH
-		west
-			dir = WEST
 
 	mining
 		name = "Mining"
@@ -528,45 +418,15 @@
 		mailgroup = MGT_MINING
 		message = 1
 
-		north
-			dir = NORTH
-			pixel_y = 32
-		east
-			dir = EAST
-		south
-			dir = SOUTH
-		west
-			dir = WEST
-
 	qm
 		name = "QM"
 		mail_tag = "QM"
 		mailgroup = MGT_CARGO
 		message = 1
 
-		north
-			dir = NORTH
-			pixel_y = 32
-		east
-			dir = EAST
-		south
-			dir = SOUTH
-		west
-			dir = WEST
-
 		refinery
 			name = "Refinery"
 			mail_tag = "refinery"
-
-			north
-				dir = NORTH
-				pixel_y = 32
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
 
 	research
 		name = "Research"
@@ -574,57 +434,17 @@
 		mailgroup = MGD_RESEARCH
 		message = 1
 
-		north
-			dir = NORTH
-			pixel_y = 32
-		east
-			dir = EAST
-		south
-			dir = SOUTH
-		west
-			dir = WEST
-
 		telescience
 			name = "Telescience"
 			mail_tag = "telescience"
-
-			north
-				dir = NORTH
-				pixel_y = 32
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
 
 		chemistry
 			name = "Chemistry"
 			mail_tag = "chemistry"
 
-			north
-				dir = NORTH
-				pixel_y = 32
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
-
 		testchamber
 			name = "Test Chamber"
 			mail_tag = "testchamber"
-
-			north
-				dir = NORTH
-				pixel_y = 32
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
 
 	medbay
 		name = "Medbay"
@@ -632,87 +452,27 @@
 		mailgroup = MGD_MEDICAL
 		message = 1
 
-		north
-			dir = NORTH
-			pixel_y = 32
-		east
-			dir = EAST
-		south
-			dir = SOUTH
-		west
-			dir = WEST
-
 		robotics
 			name = "Robotics"
 			mail_tag = "robotics"
 			mailgroup = MGT_ROBOTICS
-
-			north
-				dir = NORTH
-				pixel_y = 32
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
 
 		genetics
 			name = "Genetics"
 			mail_tag = "genetics"
 			mailgroup = MGT_GENETICS
 
-			north
-				dir = NORTH
-				pixel_y = 32
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
-
 		pathology
 			name = "Pathology"
 			mail_tag = "pathology"
-
-			north
-				dir = NORTH
-				pixel_y = 32
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
 
 		morgue
 			name = "Morgue"
 			mail_tag = "morgue"
 
-			north
-				dir = NORTH
-				pixel_y = 32
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
-
 		booth
 			name = "Medical Booth"
 			mail_tag = "medical booth"
-
-			north
-				dir = NORTH
-				pixel_y = 32
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
 
 	checkpoint
 		name = "Don't spawn me"
@@ -724,127 +484,37 @@
 			name = "Arrivals Checkpoint"
 			mail_tag = "arrivals checkpoint"
 
-			north
-				dir = NORTH
-				pixel_y = 32
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
-
 		escape
 			name = "Escape Hallway Checkpoint"
 			mail_tag = "escape checkpoint"
-
-			north
-				dir = NORTH
-				pixel_y = 32
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
 
 		customs
 			name = "Customs Checkpoint"
 			mail_tag = "customs checkpoint"
 
-			north
-				dir = NORTH
-				pixel_y = 32
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
-
 		sec_foyer
 			name = "Security Foyer Checkpoint"
 			mail_tag = "sec foyer checkpoint"
-
-			north
-				dir = NORTH
-				pixel_y = 32
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
 
 		podbay
 			name = "Pod Bay Checkpoint"
 			mail_tag = "podbay checkpoint"
 
-			north
-				dir = NORTH
-				pixel_y = 32
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
-
 		chapel
 			name = "Chapel Checkpoint"
 			mail_tag = "chapel checkpoint"
-
-			north
-				dir = NORTH
-				pixel_y = 32
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
 
 		cargo
 			name = "Cargo Checkpoint"
 			mail_tag = "cargo checkpoint"
 
-			north
-				dir = NORTH
-				pixel_y = 32
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
-
 		west
 			name = "West Hallway Checkpoint"
 			mail_tag = "west hallway checkpoint"
 
-			north
-				dir = NORTH
-				pixel_y = 32
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
-
 		east
 			name = "East Hallway Checkpoint"
 			mail_tag = "east hallway checkpoint"
-
-			north
-				dir = NORTH
-				pixel_y = 32
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
 
 	public
 		name = "Don't spawn me"
@@ -853,141 +523,42 @@
 			name = "Crew Quarters"
 			mail_tag = "crew"
 
-			north
-				dir = NORTH
-				pixel_y = 32
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
-
 		crewA
 			name = "Crew A"
 			mail_tag = "crewA"
-
-			north
-				dir = NORTH
-				pixel_y = 32
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
 
 		crewB
 			name = "Crew B"
 			mail_tag = "crewB"
 
-			north
-				dir = NORTH
-				pixel_y = 32
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
-
 		arcade
 			name = "Arcade"
 			mail_tag = "arcade"
-
-			north
-				dir = NORTH
-				pixel_y = 32
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
 
 		market
 			name = "Market"
 			mail_tag = "market"
 
-			north
-				dir = NORTH
-				pixel_y = 32
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
-
 		cafeteria
 			name = "Cafeteria"
 			mail_tag = "cafeteria"
-
-			north
-				dir = NORTH
-				pixel_y = 32
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
 
 		arrivals
 			name = "Arrivals"
 			mail_tag = "arrivals hallway"
 
-			north
-				dir = NORTH
-				pixel_y = 32
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
-
 		escape
 			name = "Escape"
 			mail_tag = "escape hallway"
-
-			north
-				dir = NORTH
-				pixel_y = 32
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
 
 		medbay_lobby
 			name = "Medbay Lobby"
 			mail_tag = "medbay lobby"
 
-			north
-				dir = NORTH
-				pixel_y = 32
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
-
 		podbay
 			name = "Pod Bay"
 			mail_tag = "podbay"
 
-			north
-				dir = NORTH
-				pixel_y = 32
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
 /// special mail chutes for the cargo bay
 /obj/machinery/disposal/mail/qm
 	icon_state = "qm_mailchute"
@@ -1001,3 +572,50 @@
 
 	autoname
 		autoname = TRUE
+
+
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/janitor, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/kitchen, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/bar, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/hydroponics, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/security, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/security/brig, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/security/detective, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/bridge, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/chapel, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/engineering, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/mechanics, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/mining, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/qm, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/qm/refinery, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/research, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/research/telescience, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/research/chemistry, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/research/testchamber, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/medbay, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/medbay/robotics, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/medbay/genetics, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/medbay/pathology, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/medbay/morgue, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/medbay/booth, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/checkpoint/arrivals, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/checkpoint/escape, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/checkpoint/customs, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/checkpoint/sec_foyer, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/checkpoint/podbay, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/checkpoint/chapel, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/checkpoint/cargo, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/checkpoint/west, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/checkpoint/east, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/public/crew, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/public/crewA, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/public/crewB, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/public/arcade, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/public/market, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/public/cafeteria, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/public/arrivals, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/public/escape, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/public/medbay_lobby, OFFSETS_DISPOSALCHUTE)
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/mail/small/autoname/public/podbay, OFFSETS_DISPOSALCHUTE)

@@ -50,10 +50,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	// find the attached trunk (if present) and init gas resvr.
 	New()
 		..()
-		if((src.pixel_x == 0) && (src.dir == WEST))
-			src.pixel_x += 5
-		if((src.pixel_x == 0) && (src.dir == EAST))
-			src.pixel_x += -5
 
 		START_TRACKING
 		src.AddComponent(/datum/component/obj_projectile_damage)
@@ -675,14 +671,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	density = 0
 	provides_grip = FALSE
 
-	north
-		dir = NORTH
-	east
-		dir = EAST
-	south
-		dir = SOUTH
-	west
-		dir = WEST
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/small, OFFSETS_DISPOSALCHUTE)
 
 /obj/machinery/disposal/brig
 	name = "brig chute"
@@ -696,14 +685,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	density = 0
 	provides_grip = FALSE
 
-	north
-		dir = NORTH
-	east
-		dir = EAST
-	south
-		dir = SOUTH
-	west
-		dir = WEST
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/brig/small, OFFSETS_DISPOSALCHUTE)
 
 /obj/machinery/disposal/morgue
 	name = "morgue chute"
@@ -735,14 +717,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	density = 0
 	provides_grip = FALSE
 
-	north
-		dir = NORTH
-	east
-		dir = EAST
-	south
-		dir = SOUTH
-	west
-		dir = WEST
+SET_UP_DIRECTIONALS(/obj/machinery/disposal/ore/small, OFFSETS_DISPOSALCHUTE)
 
 /obj/machinery/disposal/alert_a_chump
 	var/message = null

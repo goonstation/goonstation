@@ -1,0 +1,29 @@
+# Reminder:
+#	1: NORTH	2: SOUTH	4: EAST		8: WEST
+
+# If they exist, new directionals can't be remapped at the same time as old ones due to a E/W dir mismatch.
+/obj/machinery/disposal/@SUBTYPES/small/@SUBTYPES/directional/north	: /obj/machinery/disposal/@SUBTYPES_1/small/@SUBTYPES_2{@OLD; dir = 1}
+/obj/machinery/disposal/@SUBTYPES/small/@SUBTYPES/directional/south	: /obj/machinery/disposal/@SUBTYPES_1/small/@SUBTYPES_2{@OLD; dir = 2}
+/obj/machinery/disposal/@SUBTYPES/small/@SUBTYPES/directional/east	: /obj/machinery/disposal/@SUBTYPES_1/small/@SUBTYPES_2{@OLD; dir = 8}
+/obj/machinery/disposal/@SUBTYPES/small/@SUBTYPES/directional/west	: /obj/machinery/disposal/@SUBTYPES_1/small/@SUBTYPES_2{@OLD; dir = 4}
+
+# Remove old directional subtypes.
+/obj/machinery/disposal/@SUBTYPES/small/@SUBTYPES/north	: /obj/machinery/disposal/@SUBTYPES_1/small/@SUBTYPES_2{@OLD; dir = 1}
+/obj/machinery/disposal/@SUBTYPES/small/@SUBTYPES/south	: /obj/machinery/disposal/@SUBTYPES_1/small/@SUBTYPES_2{@OLD; dir = 2}
+/obj/machinery/disposal/@SUBTYPES/small/@SUBTYPES/east	: /obj/machinery/disposal/@SUBTYPES_1/small/@SUBTYPES_2{@OLD; dir = 4}
+/obj/machinery/disposal/@SUBTYPES/small/@SUBTYPES/west	: /obj/machinery/disposal/@SUBTYPES_1/small/@SUBTYPES_2{@OLD; dir = 8}
+
+# Repath, flip E/W directionals, and clean up pixel offsets. Uses a temporary repath to avoid repathing the same paths multiple times.
+# NORTH
+/obj/machinery/disposal/@SUBTYPES/small/@SUBTYPES{dir = 1}		: /temporary_chute_repath/@SUBTYPES_1/small/@SUBTYPES_2/directional/north{@OLD; dir = @SKIP; pixel_x = @SKIP; pixel_y = @SKIP}
+# SOUTH
+/obj/machinery/disposal/@SUBTYPES/small/@SUBTYPES{dir = @UNSET}	: /temporary_chute_repath/@SUBTYPES_1/small/@SUBTYPES_2/directional/south{@OLD; dir = @SKIP; pixel_x = @SKIP; pixel_y = @SKIP}
+/obj/machinery/disposal/@SUBTYPES/small/@SUBTYPES{dir = 0}		: /temporary_chute_repath/@SUBTYPES_1/small/@SUBTYPES_2/directional/south{@OLD; dir = @SKIP; pixel_x = @SKIP; pixel_y = @SKIP}
+/obj/machinery/disposal/@SUBTYPES/small/@SUBTYPES{dir = 2}		: /temporary_chute_repath/@SUBTYPES_1/small/@SUBTYPES_2/directional/south{@OLD; dir = @SKIP; pixel_x = @SKIP; pixel_y = @SKIP}
+# EAST
+/obj/machinery/disposal/@SUBTYPES/small/@SUBTYPES{dir = 4}		: /temporary_chute_repath/@SUBTYPES_1/small/@SUBTYPES_2/directional/west{@OLD; dir = @SKIP; pixel_x = @SKIP; pixel_y = @SKIP}
+# WEST
+/obj/machinery/disposal/@SUBTYPES/small/@SUBTYPES{dir = 8}		: /temporary_chute_repath/@SUBTYPES_1/small/@SUBTYPES_2/directional/east{@OLD; dir = @SKIP; pixel_x = @SKIP; pixel_y = @SKIP}
+
+# Revert the temporary repath.
+/temporary_chute_repath/@SUBTYPES : /obj/machinery/disposal/@SUBTYPES{@OLD}
