@@ -402,14 +402,6 @@
 		new_home.dispose()
 		return TRUE
 
-	var/datum/computer/file/new_history = new /datum/computer/file/record()
-	new_history.name = "_shell_history"
-	new_history.metadata["owner"] = user_record.fields["name"]
-	new_history.metadata["permission"] = COMP_ROWNER | COMP_WOWNER | COMP_DOWNER
-
-	if(!new_home.add_file(new_history)) // non-critical
-		new_history.dispose()
-
 	return FALSE
 
 /// Log a user out, terminating any running programs, and removing the user's record file.
