@@ -5234,7 +5234,7 @@
 	dir = 8;
 	tag = "icon-showerhead (WEST)"
 	},
-/obj/sign_switch/west{
+/obj/sign_switch/directional/west{
 	id = "mushstall2"
 	},
 /turf/simulated/floor/sanitary,
@@ -8473,7 +8473,7 @@
 	dir = 8;
 	pixel_x = 6
 	},
-/obj/sign_switch/north{
+/obj/sign_switch/directional/north{
 	id = "mushstall3"
 	},
 /turf/simulated/floor/sanitary,
@@ -20494,7 +20494,7 @@
 	dir = 8;
 	pixel_x = 6
 	},
-/obj/sign_switch/south{
+/obj/sign_switch/directional/south{
 	id = "mushstall4"
 	},
 /turf/simulated/floor/sanitary,
@@ -32541,7 +32541,7 @@
 /obj/table/auto,
 /obj/item/clothing/head/plunger,
 /obj/item/paper_bin,
-/obj/sign_switch/east{
+/obj/sign_switch/directional/east{
 	id = "mushstall1"
 	},
 /turf/simulated/floor/sanitary,

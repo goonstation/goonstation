@@ -28535,9 +28535,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/sign_switch/east{
-	id = "nadiradio";
-	dir = 4
+/obj/sign_switch/directional/east{
+	id = "nadiradio"
 	},
 /turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
@@ -30011,9 +30010,8 @@
 /obj/disposalpipe/trunk/food{
 	dir = 8
 	},
-/obj/sign_switch/east{
-	id = "kitchenopen";
-	dir = 4
+/obj/sign_switch/directional/east{
+	id = "kitchenopen"
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)

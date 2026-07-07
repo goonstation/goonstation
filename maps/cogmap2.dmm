@@ -65342,7 +65342,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/sign_switch/north{
+/obj/sign_switch/directional/north{
 	pixel_x = 10
 	},
 /obj/machinery/shower{
