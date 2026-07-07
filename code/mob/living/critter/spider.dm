@@ -32,6 +32,7 @@
 	can_throw = 1
 	can_grab = 1
 	can_disarm = 1
+	can_juggle = 1
 	var/good_grip = 1
 
 	butcherable = BUTCHER_ALLOWED
