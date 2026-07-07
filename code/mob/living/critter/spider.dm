@@ -436,6 +436,7 @@
 	venom2 = "rainbow fluid"
 	good_grip = 1
 	encase_in_web = 2
+	can_juggle = 1
 	stepsound = "clownstep"
 	death_text = "%src% explodes into technicolor gore!"
 	add_abilities = list(/datum/targetable/critter/clownspider_trample,
