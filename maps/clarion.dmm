@@ -40486,11 +40486,11 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
-/obj/machinery/disposal/mail/small/autoname/medbay/robotics/directional/west,
 /obj/disposalpipe/trunk/mail{
 	dir = 1
 	},
 /obj/landmark/start/job/cyborg,
+/obj/machinery/disposal/mail/small/autoname/medbay/robotics/directional/south,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "xlC" = (

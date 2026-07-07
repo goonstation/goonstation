@@ -38060,16 +38060,6 @@
 	dir = 4
 	},
 /area/station/medical/robotics)
-"cuQ" = (
-/obj/machinery/disposal/mail/small/directional/north{
-	mail_tag = "robotics";
-	mailgroup = "robotics";
-	mailgroup2 = null;
-	message = "1";
-	name = "mail chute-'Robotics'"
-	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/medical/robotics)
 "cuS" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -38501,6 +38491,13 @@
 /area/station/medical/robotics)
 "cwt" = (
 /obj/disposalpipe/trunk/mail/south,
+/obj/machinery/disposal/mail/small/directional/north{
+	mail_tag = "robotics";
+	mailgroup = "robotics";
+	mailgroup2 = null;
+	message = "1";
+	name = "mail chute-'Robotics'"
+	},
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -113347,7 +113344,7 @@ coE
 cqu
 csh
 ctx
-cuQ
+coE
 cwt
 ltA
 czt
