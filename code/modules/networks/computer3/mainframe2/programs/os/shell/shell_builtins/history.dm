@@ -45,9 +45,6 @@
 
 	return BUILTIN_SUCCESS
 
-
-
-
 /datum/dwaine_shell_builtin/history/proc/history_file_to_text(list/history, last_n_entries)
 	var/start_idx = max(1, length(history) - last_n_entries + 1)
 
