@@ -125,7 +125,8 @@
 	if (..() || !src.useracc)
 		return TRUE
 
-	src.log_command(src.useracc, text)
+	if(!length(src.shscript)) // skip logging the script content
+		src.log_command(src.useracc, text)
 
 	var/list/subcommands = list()
 	var/list/piped_list = global.command2list(text, "^", src.scriptvars, subcommands)

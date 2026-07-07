@@ -123,7 +123,6 @@
 		else
 			user.current_prog = src.master.run_program(src.get_file_name(src.setup_progname_login, src.sys_folder), user, src)
 
-
 // Called by the mainframe object when a new terminal connection datum is ready for us to handle.
 /datum/computer/file/mainframe_program/os/kernel/new_connection(datum/terminal_connection/conn, datum/computer/file/connect_file)
 	if (!conn)
