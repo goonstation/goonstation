@@ -468,7 +468,6 @@
 		return TRUE
 
 	var/datum/computer/file/record/history =  src.signal_program(1, list("command"=DWAINE_COMMAND_FGET, "path" =  src.histfile_full_path(useracc.user_filename)))
-
 	if(isnull(history) || !istype(history))
 		return TRUE
 
@@ -492,7 +491,6 @@
 		src.message_user("Warning: Could not initialize user's history file.")
 
 		return TRUE
-
 
 /datum/computer/file/mainframe_program/shell/proc/histfile_full_path(username)
 	return "[setup_filepath_users_home]/[useracc.user_filename]/[src::histfile_name]"

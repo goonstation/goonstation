@@ -11,7 +11,6 @@
 		return BUILTIN_BREAK
 
 	var/user_history_path = src.shell.histfile_full_path(user.user_filename)
-
 	var/datum/computer/file/record/history_file =  src.shell.signal_program(1, list("command"=DWAINE_COMMAND_FGET, "path" = user_history_path))
 
 	if (isnull(history_file) || history_file == ESIG_NOFILE)
@@ -23,7 +22,6 @@
 		return BUILTIN_BREAK
 
 	// actual command functionality:
-
 	if (length(command_list) > 0 && command_list[1] == "-c")
 		src.shell.message_user("History file cleared")
 		history_file.fields.Cut()
