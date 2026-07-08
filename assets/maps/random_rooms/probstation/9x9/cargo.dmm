@@ -31,6 +31,15 @@
 	},
 /obj/mapping_helper/access/cargo,
 /obj/mapping_helper/firedoor_spawn,
+/obj/item/stamp/qm{
+	pixel_x = -5
+	},
+/obj/item/clipboard/with_pen{
+	pixel_x = 12
+	},
+/obj/item/pen{
+	pixel_x = 10
+	},
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay{
 	name = "Cargo Primary Endpoint"
@@ -85,6 +94,18 @@
 	})
 "j" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor,
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
+"k" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 1
+	},
+/obj/mapping_helper/access/cargo,
+/obj/mapping_helper/firedoor_spawn,
+/obj/item/paper_bin,
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay{
 	name = "Cargo Primary Endpoint"
@@ -553,7 +574,7 @@ o
 Z
 C
 V
-d
+k
 t
 S
 E

@@ -40,14 +40,15 @@
 /area/station/medical/robotics)
 "d" = (
 /obj/machinery/firealarm/directional/east,
-/obj/machinery/computer3/generic/med_data{
-	dir = 8
-	},
 /obj/machinery/power/data_terminal,
 /obj/cable,
+/obj/machinery/computer/robotics/lab{
+	dir = 8
+	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "e" = (
+/obj/iv_stand,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
 "g" = (
@@ -96,31 +97,11 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "k" = (
-/obj/surgery_tray,
-/obj/item/hemostat{
-	pixel_x = 3;
-	pixel_y = -5
-	},
-/obj/item/suture{
-	pixel_y = 5
-	},
-/obj/item/scalpel{
-	pixel_x = 3;
-	pixel_y = 2
-	},
-/obj/item/circular_saw{
-	pixel_y = 11
-	},
-/obj/item/staple_gun{
-	pixel_x = 4;
-	pixel_y = 9
-	},
-/obj/item/scissors/surgical_scissors{
-	pixel_x = 5;
-	pixel_y = 5
-	},
 /obj/machinery/computer/operating/small{
 	id = "robotics"
+	},
+/obj/storage/secure/closet/medical/anesthetic{
+	pixel_x = 7
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
@@ -140,7 +121,11 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "m" = (
-/obj/storage/secure/closet/medical/anesthetic,
+/obj/machinery/computer3/generic/med_data{
+	dir = 1
+	},
+/obj/cable,
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "n" = (
@@ -238,6 +223,9 @@
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
+	},
+/obj/cable{
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
@@ -362,7 +350,29 @@
 /area/station/medical/robotics)
 "K" = (
 /obj/machinery/camera/directional/east,
-/obj/iv_stand,
+/obj/surgery_tray,
+/obj/item/scalpel{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/hemostat{
+	pixel_x = 3;
+	pixel_y = -5
+	},
+/obj/item/staple_gun{
+	pixel_x = 4;
+	pixel_y = 9
+	},
+/obj/item/circular_saw{
+	pixel_y = 11
+	},
+/obj/item/suture{
+	pixel_y = 5
+	},
+/obj/item/scissors/surgical_scissors{
+	pixel_x = 5;
+	pixel_y = 5
+	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
 "L" = (
@@ -385,6 +395,9 @@
 	dir = 8
 	},
 /obj/landmark/start/job/roboticist,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "O" = (
@@ -477,6 +490,9 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "W" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "Y" = (

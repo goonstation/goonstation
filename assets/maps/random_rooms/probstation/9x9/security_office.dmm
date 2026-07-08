@@ -64,6 +64,12 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/security,
 /obj/table/reinforced/auto,
+/obj/item/paper_bin{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/obj/item/stamp/law,
+/obj/item/pen,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},

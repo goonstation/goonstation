@@ -109,12 +109,13 @@
 	autoclose = 0;
 	dir = 4
 	},
-/obj/machinery/phone,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/head_of_personnel,
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/simulated/floor/blue,
 /area/station/bridge/customs)
 "r" = (
@@ -168,6 +169,9 @@
 /obj/machinery/light/incandescent/warm,
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/machinery/phone/wall{
+	pixel_y = 31
 	},
 /turf/simulated/floor/carpet/green/standard/edge/ne,
 /area/station/bridge/customs)
@@ -300,8 +304,8 @@
 	},
 /area/station/bridge/customs)
 "O" = (
-/obj/filing_cabinet,
 /obj/machinery/light/incandescent/warm,
+/obj/machinery/shredder,
 /turf/simulated/floor/carpet/green/standard/edge/south,
 /area/station/bridge/customs)
 "P" = (
@@ -388,6 +392,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/head_of_personnel,
+/obj/item/stamp,
 /turf/simulated/floor/blue,
 /area/station/bridge/customs)
 "Z" = (

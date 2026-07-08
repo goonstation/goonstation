@@ -264,6 +264,10 @@
 	pixel_x = 12;
 	pixel_y = 5
 	},
+/obj/item/stamp/chap{
+	pixel_x = 4;
+	pixel_y = 9
+	},
 /turf/simulated/floor/wood/two,
 /area/station/chapel/office)
 "G" = (

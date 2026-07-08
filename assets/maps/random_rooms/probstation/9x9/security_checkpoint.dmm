@@ -203,7 +203,10 @@
 /area/station/security/checkpoint/generic)
 "sp" = (
 /obj/table/reinforced/auto,
-/obj/item/paper_bin,
+/obj/item/paper_bin{
+	pixel_x = 7;
+	pixel_y = 5
+	},
 /obj/item/pen,
 /obj/machinery/camera/directional/west{
 	pixel_y = 15
@@ -213,6 +216,9 @@
 	},
 /obj/blind_switch/directional/west{
 	pixel_y = -6
+	},
+/obj/item/stamp/law{
+	pixel_x = -5
 	},
 /turf/simulated/floor/red/side{
 	dir = 8
