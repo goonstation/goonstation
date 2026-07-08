@@ -277,7 +277,7 @@
 /area/station/medical/head)
 "abW" = (
 /obj/disposalpipe/segment/morgue,
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	pixel_y = 10
 	},
 /obj/machinery/light_switch/directional/east{
@@ -1328,7 +1328,7 @@
 /obj/machinery/light_switch/directional/north{
 	pixel_x = -4
 	},
-/obj/blind_switch/area/north{
+/obj/blind_switch/directional/north{
 	pixel_x = 4
 	},
 /turf/simulated/floor/blueblack{
@@ -1569,7 +1569,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "awc" = (
-/obj/blind_switch/south{
+/obj/blind_switch/directional/south{
 	id = "chemistry";
 	pixel_x = 4
 	},
@@ -2179,7 +2179,7 @@
 /obj/machinery/light_switch/directional/south{
 	pixel_x = -4
 	},
-/obj/blind_switch/area/south{
+/obj/blind_switch/directional/south{
 	pixel_x = 4
 	},
 /turf/simulated/floor/white,
@@ -2600,7 +2600,7 @@
 /obj/machinery/light_switch/directional/north{
 	pixel_x = -4
 	},
-/obj/blind_switch/area/north{
+/obj/blind_switch/directional/north{
 	pixel_x = 4
 	},
 /turf/simulated/floor/specialroom/freezer,
@@ -6928,7 +6928,7 @@
 /obj/machinery/light_switch/directional/south{
 	pixel_x = -4
 	},
-/obj/blind_switch/area/south{
+/obj/blind_switch/directional/south{
 	pixel_x = 4
 	},
 /turf/simulated/floor/twotone/darkblue,
@@ -7494,7 +7494,7 @@
 /obj/machinery/light_switch/directional/east{
 	pixel_y = 5
 	},
-/obj/blind_switch/east{
+/obj/blind_switch/directional/east{
 	pixel_y = -4;
 	id = "mining"
 	},
@@ -7670,7 +7670,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/blind_switch/area/north{
+/obj/blind_switch/directional/north{
 	pixel_x = 4
 	},
 /obj/machinery/light_switch/directional/north{
@@ -10137,7 +10137,7 @@
 "cZn" = (
 /obj/machinery/power/apc/autoname_south,
 /obj/cable,
-/obj/blind_switch/area/west{
+/obj/blind_switch/directional/west{
 	pixel_y = -6
 	},
 /obj/machinery/light_switch/directional/west{
@@ -17709,7 +17709,7 @@
 /obj/machinery/light_switch/directional/east{
 	pixel_y = -4
 	},
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	pixel_y = 4
 	},
 /turf/simulated/floor/white,
@@ -20362,7 +20362,7 @@
 /obj/machinery/light_switch/directional/east{
 	pixel_y = -4
 	},
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	pixel_y = 4
 	},
 /turf/simulated/floor/wood{
@@ -20495,7 +20495,7 @@
 /area/station/crew_quarters/cafeteria)
 "gqO" = (
 /obj/storage/secure/closet/civilian/ranch,
-/obj/blind_switch/area/west{
+/obj/blind_switch/directional/west{
 	pixel_y = 4
 	},
 /obj/machinery/light_switch/directional/west{
@@ -21712,7 +21712,7 @@
 	pixel_x = -4
 	},
 /obj/reagent_dispensers/watertank/fountain,
-/obj/blind_switch/area/south{
+/obj/blind_switch/directional/south{
 	pixel_x = 4
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
@@ -22956,9 +22956,8 @@
 /obj/machinery/camera/directional/north{
 	pixel_x = -10
 	},
-/obj/blind_switch/north{
-	pixel_x = -1;
-	pixel_y = 24
+/obj/blind_switch/directional/north{
+	pixel_x = -1
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
@@ -23846,7 +23845,7 @@
 /obj/machinery/light_switch/directional/north{
 	pixel_x = -4
 	},
-/obj/blind_switch/area/north{
+/obj/blind_switch/directional/north{
 	pixel_x = 4
 	},
 /turf/simulated/floor/industrial,
@@ -27681,7 +27680,7 @@
 /obj/machinery/light_switch/directional/east{
 	pixel_y = -4
 	},
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	pixel_y = 6
 	},
 /turf/simulated/floor/carpet{
@@ -27747,7 +27746,7 @@
 	pixel_y = 1
 	},
 /obj/random_item_spawner/desk_stuff,
-/obj/blind_switch/area/west,
+/obj/blind_switch/directional/west,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hop)
 "iIw" = (
@@ -29761,7 +29760,7 @@
 /obj/machinery/light_switch/directional/north{
 	pixel_x = -4
 	},
-/obj/blind_switch/north{
+/obj/blind_switch/directional/north{
 	id = "genetics";
 	pixel_x = 4
 	},
@@ -31227,7 +31226,7 @@
 /obj/machinery/camera/directional/east{
 	pixel_y = 10
 	},
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	pixel_y = -6
 	},
 /turf/simulated/floor/carpet/red/fancy/edge{
@@ -34754,9 +34753,8 @@
 /obj/machinery/camera/directional/north{
 	pixel_x = -10
 	},
-/obj/blind_switch/north{
-	pixel_x = 12;
-	pixel_y = 24
+/obj/blind_switch/directional/north{
+	pixel_x = 12
 	},
 /turf/simulated/floor/wood/six,
 /area/station/library/reading2)
@@ -35753,7 +35751,7 @@
 "lgl" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
-/obj/blind_switch/area/east,
+/obj/blind_switch/directional/east,
 /turf/simulated/floor/specialroom/bar,
 /area/station/wreckage{
 	name = "Restricted Area"
@@ -38627,7 +38625,7 @@
 /obj/machinery/light_switch/directional/north{
 	pixel_x = -4
 	},
-/obj/blind_switch/area/north{
+/obj/blind_switch/directional/north{
 	pixel_x = 4
 	},
 /turf/simulated/floor/stairs/wide{
@@ -40574,7 +40572,7 @@
 /obj/machinery/light_switch/directional/east{
 	pixel_y = -4
 	},
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	pixel_y = 4
 	},
 /turf/simulated/floor,
@@ -41866,7 +41864,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/blind_switch/area/west,
+/obj/blind_switch/directional/west,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/arcade/dungeon)
@@ -42619,7 +42617,7 @@
 /obj/machinery/light_switch/directional/south{
 	pixel_x = -4
 	},
-/obj/blind_switch/area/south{
+/obj/blind_switch/directional/south{
 	pixel_x = 4
 	},
 /turf/simulated/floor/caution,
@@ -45348,7 +45346,7 @@
 /obj/machinery/light_switch/directional/south{
 	pixel_x = -4
 	},
-/obj/blind_switch/area/south{
+/obj/blind_switch/directional/south{
 	pixel_x = 4
 	},
 /turf/simulated/floor/specialroom/arcade,
@@ -47302,7 +47300,7 @@
 	pixel_x = 7;
 	pixel_y = -3
 	},
-/obj/blind_switch/area/north{
+/obj/blind_switch/directional/north{
 	pixel_x = 5
 	},
 /obj/machinery/light_switch/directional/north{
@@ -54095,7 +54093,7 @@
 /obj/machinery/light_switch/directional/east{
 	pixel_y = -4
 	},
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	pixel_y = 4
 	},
 /turf/simulated/floor/grass/random,
@@ -55065,7 +55063,7 @@
 /obj/machinery/light_switch/directional/east{
 	pixel_y = -4
 	},
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	pixel_y = 4
 	},
 /turf/simulated/floor,
@@ -57848,7 +57846,7 @@
 /area/station/security/brig/south_side)
 "rXe" = (
 /obj/machinery/light/incandescent/netural,
-/obj/blind_switch/area/west,
+/obj/blind_switch/directional/west,
 /turf/simulated/floor/circuit/purple,
 /area/station/crew_quarters/hor)
 "rXi" = (
@@ -64597,9 +64595,8 @@
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
 	},
-/obj/blind_switch/area/west{
-	pixel_y = 5;
-	pixel_x = -27
+/obj/blind_switch/directional/west{
+	pixel_y = 5
 	},
 /obj/machinery/light_switch/directional/west{
 	pixel_y = -6
@@ -71266,7 +71263,7 @@
 /obj/machinery/light_switch/directional/south{
 	pixel_x = -4
 	},
-/obj/blind_switch/area/south{
+/obj/blind_switch/directional/south{
 	pixel_x = 4
 	},
 /obj/machinery/drainage,
@@ -72536,7 +72533,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "wty" = (
-/obj/blind_switch/area/west,
+/obj/blind_switch/directional/west,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/bathroom{
 	name = "South Bathroom"
@@ -74054,9 +74051,8 @@
 /obj/machinery/camera/directional/north{
 	pixel_x = -10
 	},
-/obj/blind_switch/north{
-	pixel_x = 12;
-	pixel_y = 24
+/obj/blind_switch/directional/north{
+	pixel_x = 12
 	},
 /turf/simulated/floor/wood/six,
 /area/station/library/reading1)
@@ -77663,7 +77659,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "xQg" = (
-/obj/blind_switch/area/south{
+/obj/blind_switch/directional/south{
 	pixel_x = 4
 	},
 /obj/machinery/light_switch/directional/south{
@@ -78202,7 +78198,7 @@
 /obj/machinery/phone/wall{
 	pixel_x = 24
 	},
-/obj/blind_switch/area/north{
+/obj/blind_switch/directional/north{
 	pixel_x = 4
 	},
 /obj/machinery/light_switch/directional/north{
@@ -78965,7 +78961,7 @@
 "yid" = (
 /obj/machinery/manufacturer/uniform,
 /obj/disposalpipe/segment/mail,
-/obj/blind_switch/area/west,
+/obj/blind_switch/directional/west,
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/cloner)
 "yie" = (

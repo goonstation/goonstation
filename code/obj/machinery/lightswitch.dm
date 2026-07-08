@@ -14,8 +14,8 @@ TYPEINFO(/obj/machinery/light_switch)
 				"conductive" = 15)
 ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 /obj/machinery/light_switch
+	name = "light switch"
 	desc = "A light switch"
-	name = null
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light1"
 	anchored = ANCHORED
@@ -43,9 +43,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 
 		src.id = src.area.name
 		ADD_SWITCHED_OBJ(SWOB_LIGHTS)
-
-		if(!name || name == "N light switch" || name == "E light switch" || name == "S light switch" || name == "W light switch")
-			name = "light switch"
 
 		src.on = src.area.lightswitch
 		UpdateIcon()

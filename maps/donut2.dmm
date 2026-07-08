@@ -254,7 +254,7 @@
 /obj/machinery/light_switch/directional/east{
 	pixel_y = 6
 	},
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	pixel_y = -6
 	},
 /turf/simulated/floor/purplewhite{
@@ -582,7 +582,7 @@
 /obj/machinery/light_switch/directional/west{
 	pixel_y = 6
 	},
-/obj/blind_switch/area/west{
+/obj/blind_switch/directional/west{
 	pixel_y = -6
 	},
 /obj/machinery/chem_heater/chemistry,
@@ -3469,7 +3469,7 @@
 /obj/machinery/optable{
 	name = "Autopsy Table"
 	},
-/obj/blind_switch/area/west{
+/obj/blind_switch/directional/west{
 	pixel_y = 6
 	},
 /obj/machinery/light_switch/directional/west{
@@ -4029,9 +4029,8 @@
 /area/station/chapel/sanctuary)
 "azq" = (
 /obj/stool/chair/comfy,
-/obj/blind_switch/area/north{
-	pixel_x = 8;
-	pixel_y = 26
+/obj/blind_switch/directional/north{
+	pixel_x = 8
 	},
 /obj/landmark/start/job/chaplain,
 /obj/machinery/light_switch/directional/north{
@@ -9076,7 +9075,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/blind_switch/area/west{
+/obj/blind_switch/directional/west{
 	pixel_y = 14
 	},
 /obj/machinery/light_switch/directional/west{
@@ -14727,7 +14726,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable,
-/obj/blind_switch/area/south{
+/obj/blind_switch/directional/south{
 	pixel_x = -6
 	},
 /obj/machinery/light_switch/directional/south{
@@ -21889,7 +21888,7 @@
 /obj/machinery/light_switch/directional/west{
 	pixel_y = -8
 	},
-/obj/blind_switch/area/west,
+/obj/blind_switch/directional/west,
 /turf/simulated/floor/wood,
 /area/station/medical/head)
 "gDE" = (
@@ -25266,7 +25265,7 @@
 	dir = 8
 	},
 /obj/landmark/gps_waypoint,
-/obj/blind_switch/area/south{
+/obj/blind_switch/directional/south{
 	pixel_x = -6
 	},
 /obj/machinery/light_switch/directional/south{
@@ -27153,7 +27152,7 @@
 /obj/machinery/light_switch/directional/west{
 	pixel_y = -4
 	},
-/obj/blind_switch/area/west{
+/obj/blind_switch/directional/west{
 	pixel_y = 5
 	},
 /turf/simulated/floor/carpet/grime,
@@ -28622,7 +28621,7 @@
 /obj/machinery/light_switch/directional/east{
 	pixel_y = 7
 	},
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	pixel_y = -2
 	},
 /obj/decal/cleanable/dirt/dirt2,
@@ -33668,7 +33667,7 @@
 	pixel_y = 6
 	},
 /obj/displaycase/captain,
-/obj/blind_switch/area/west{
+/obj/blind_switch/directional/west{
 	pixel_y = -6
 	},
 /turf/simulated/floor/carpet/arcade,
@@ -35907,7 +35906,7 @@
 "otc" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/yellow,
-/obj/blind_switch/area/west{
+/obj/blind_switch/directional/west{
 	pixel_y = -6
 	},
 /obj/machinery/light_switch/directional/west{
@@ -38143,10 +38142,8 @@
 /obj/machinery/camera/directional/west{
 	pixel_y = -11
 	},
-/obj/blind_switch/area/west{
-	pixel_y = -2;
-	on = 1;
-	icon_state = "blind0"
+/obj/blind_switch/on/directional/west{
+	pixel_y = -2
 	},
 /obj/decal/cleanable/dirt/dirt2,
 /obj/machinery/chem_dispenser/chemical,
@@ -38896,7 +38893,7 @@
 	},
 /obj/machinery/disposal/small/west,
 /obj/disposalpipe/trunk/north,
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	pixel_y = -6
 	},
 /turf/simulated/floor/caution/white{
@@ -41282,7 +41279,7 @@
 /obj/machinery/light/incandescent{
 	dir = 1
 	},
-/obj/blind_switch/area/north{
+/obj/blind_switch/directional/north{
 	pixel_x = -5
 	},
 /obj/machinery/light_switch/directional/north{
@@ -42513,10 +42510,8 @@
 	dir = 1
 	},
 /obj/machinery/disposal,
-/obj/blind_switch/area/south{
-	pixel_x = 1;
-	icon_state = "blind0";
-	on = 1
+/obj/blind_switch/on/directional/south{
+	pixel_x = 1
 	},
 /obj/item/storage/wall{
 	dir = 8;
@@ -42552,7 +42547,7 @@
 /obj/machinery/light_switch/directional/south{
 	pixel_x = -6
 	},
-/obj/blind_switch/area/south{
+/obj/blind_switch/directional/south{
 	pixel_x = 6
 	},
 /turf/simulated/floor/carpet{
@@ -45808,7 +45803,7 @@
 	dir = 1
 	},
 /obj/machinery/firealarm/directional/south,
-/obj/blind_switch/area/west{
+/obj/blind_switch/directional/west{
 	pixel_y = -6
 	},
 /obj/machinery/light_switch/directional/west{
@@ -47222,7 +47217,7 @@
 	icon_state = "1-4"
 	},
 /obj/landmark/start/job/cyborg,
-/obj/blind_switch/area/south{
+/obj/blind_switch/directional/south{
 	pixel_x = 4
 	},
 /turf/simulated/floor/black/side,
@@ -47262,7 +47257,7 @@
 /obj/machinery/light_switch/directional/east{
 	pixel_y = 6
 	},
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	pixel_y = -6
 	},
 /turf/simulated/floor/purple/side{
@@ -51107,7 +51102,7 @@
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	pixel_y = -6
 	},
 /obj/machinery/light_switch/directional/east{
@@ -51515,7 +51510,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/vending/pizza,
-/obj/blind_switch/area/north,
+/obj/blind_switch/directional/north,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "xxD" = (

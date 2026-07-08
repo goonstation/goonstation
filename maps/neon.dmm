@@ -898,7 +898,7 @@
 /obj/machinery/light_switch/directional/north{
 	pixel_x = -6
 	},
-/obj/blind_switch/area/north{
+/obj/blind_switch/directional/north{
 	pixel_x = 6
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/north,
@@ -2431,7 +2431,7 @@
 /area/station/ranch)
 "bQR" = (
 /obj/storage/secure/closet/civilian/janitor,
-/obj/blind_switch/area/south,
+/obj/blind_switch/directional/south,
 /obj/item/crowbar,
 /obj/item/crowbar,
 /turf/simulated/floor/specialroom/arcade,
@@ -4754,7 +4754,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/blind_switch/area/north{
+/obj/blind_switch/directional/north{
 	pixel_x = 6
 	},
 /obj/machinery/light_switch/directional/north{
@@ -6615,7 +6615,7 @@
 	pixel_y = -10
 	},
 /obj/item/camera,
-/obj/blind_switch/north{
+/obj/blind_switch/directional/north{
 	pixel_x = -6
 	},
 /obj/machinery/camera/directional/north{
@@ -6698,7 +6698,7 @@
 /obj/machinery/light_switch/directional/west{
 	pixel_y = 6
 	},
-/obj/blind_switch/west{
+/obj/blind_switch/directional/west{
 	pixel_y = -6;
 	id = "surgery"
 	},
@@ -11022,7 +11022,7 @@
 /area/station/science/artifact)
 "hIQ" = (
 /obj/machinery/optable,
-/obj/blind_switch/north{
+/obj/blind_switch/directional/north{
 	pixel_x = 6;
 	id = "robotics"
 	},
@@ -12899,7 +12899,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "iTZ" = (
-/obj/blind_switch/area/south,
+/obj/blind_switch/directional/south,
 /obj/machinery/door_control{
 	id = "kitchen_shutter";
 	name = "Kitchen Shutter Control";
@@ -14251,7 +14251,7 @@
 /obj/machinery/light_switch/directional/east{
 	pixel_y = 6
 	},
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	pixel_y = -6
 	},
 /obj/item/device/radio/intercom/AI{
@@ -14307,7 +14307,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "jNi" = (
-/obj/blind_switch/area/south{
+/obj/blind_switch/directional/south{
 	pixel_x = -6
 	},
 /obj/machinery/light_switch/directional/south{
@@ -15053,7 +15053,7 @@
 /obj/machinery/light_switch/directional/north{
 	pixel_x = 10
 	},
-/obj/blind_switch/area/north,
+/obj/blind_switch/directional/north,
 /turf/simulated/floor/grasstodirt{
 	dir = 8
 	},
@@ -15285,7 +15285,7 @@
 /obj/machinery/light_switch/directional/south{
 	pixel_x = -6
 	},
-/obj/blind_switch/south{
+/obj/blind_switch/directional/south{
 	pixel_x = 6
 	},
 /obj/item/device/radio/intercom/bridge{
@@ -16448,7 +16448,7 @@
 /obj/machinery/light_switch/directional/south{
 	pixel_x = 5
 	},
-/obj/blind_switch/area/south{
+/obj/blind_switch/directional/south{
 	pixel_x = -5
 	},
 /turf/simulated/floor/carpet/grime,
@@ -20679,7 +20679,7 @@
 /obj/machinery/light_switch/directional/east{
 	pixel_y = -6
 	},
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	pixel_y = 6
 	},
 /obj/decal/poster/wallsign/framed_award/mdlicense{
@@ -21099,7 +21099,7 @@
 	},
 /area/station/medical/robotics)
 "oHo" = (
-/obj/blind_switch/area/south{
+/obj/blind_switch/directional/south{
 	pixel_x = 8
 	},
 /obj/machinery/light_switch/directional/south{
@@ -24965,7 +24965,7 @@
 	pixel_y = -8
 	},
 /obj/machinery/vending/security,
-/obj/blind_switch/west{
+/obj/blind_switch/directional/west{
 	pixel_y = 8;
 	id = "brig"
 	},
@@ -25403,7 +25403,7 @@
 /area/radiostation/studio)
 "rNN" = (
 /obj/filing_cabinet,
-/obj/blind_switch/east{
+/obj/blind_switch/directional/east{
 	pixel_y = 12;
 	id = "mentalroom"
 	},
@@ -26450,7 +26450,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/manufacturer/science,
-/obj/blind_switch/area/west{
+/obj/blind_switch/directional/west{
 	pixel_y = 8
 	},
 /turf/simulated/floor/purple,
@@ -27326,7 +27326,7 @@
 	dir = 4
 	},
 /obj/item/cloneModule/genepowermodule,
-/obj/blind_switch/area/south{
+/obj/blind_switch/directional/south{
 	name = "broken blind switch";
 	working = 0
 	},
@@ -29720,7 +29720,7 @@
 /obj/machinery/light_switch/directional/east{
 	pixel_y = 6
 	},
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	pixel_y = -6
 	},
 /turf/simulated/floor/darkblueblack{
@@ -31728,7 +31728,7 @@
 /area/station/hangar/main)
 "wfI" = (
 /obj/machinery/vending/chapel,
-/obj/blind_switch/west,
+/obj/blind_switch/directional/west,
 /obj/machinery/door_control/bolter/new_walls/north{
 	id = "chapeloffice";
 	dir = 2
@@ -31902,7 +31902,7 @@
 /turf/space/fluid,
 /area/space/plasma_reef)
 "wlf" = (
-/obj/blind_switch/area/west,
+/obj/blind_switch/directional/west,
 /obj/machinery/camera/directional/west{
 	pixel_y = 10
 	},

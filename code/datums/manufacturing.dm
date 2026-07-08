@@ -3791,6 +3791,59 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	name = "Hotdog Cart"
 	item_outputs = list(/obj/storage/cart/hotdog)
 
+/******************** Lockers *******************/
+ABSTRACT_TYPE(/datum/manufacture/locker) //Regular lockers are built using steel in hand, not via fabricator
+/datum/manufacture/locker
+	name = "Abstract Locker"
+	item_requirements = list("metal" = 3)
+	create = 1
+	time = 10 SECONDS
+	category = MANUFACTURER::CATEGORY::LOCKERS
+
+	modify_output(obj/machinery/manufacturer/M, atom/A, list/materials)
+		. = ..()
+		var/obj/storage/secure/closet/closet = A
+		if(!istype(closet)) return
+		closet.anchored = UNANCHORED
+		closet.bolted = FALSE
+
+/datum/manufacture/locker/secure
+	name = "Secure Locker (Access: None)"
+	item_requirements = list("metal" = 3, "conductive" = 4)
+	item_outputs = list(/obj/storage/secure/closet)
+
+/datum/manufacture/locker/secure/command
+	name = "Command Locker"
+	item_outputs = list(/obj/storage/secure/closet/command)
+
+/datum/manufacture/locker/secure/security
+	name = "Security Locker"
+	item_outputs = list(/obj/storage/secure/closet/security)
+
+/datum/manufacture/locker/secure/contraband
+	name = "Contraband Locker"
+	item_outputs = list(/obj/storage/secure/closet/brig/empty)
+
+/datum/manufacture/locker/secure/research
+	name = "Research Locker"
+	item_outputs = list(/obj/storage/secure/closet/research)
+
+/datum/manufacture/locker/secure/engineering
+	name = "Engineering Locker"
+	item_outputs = list(/obj/storage/secure/closet/engineering)
+
+/datum/manufacture/locker/secure/medical
+	name = "Medical Locker"
+	item_outputs = list(/obj/storage/secure/closet/medical)
+
+/datum/manufacture/locker/secure/hydroponics
+	name = "Hydroponics Locker"
+	item_outputs = list(/obj/storage/secure/closet/civilian/hydro/empty)
+
+/datum/manufacture/locker/secure/nanotrasen
+	name = "Nanotrasen Locker (Access: None)"
+	item_outputs = list(/obj/storage/secure/closet/command/nanotrasen/weak)
+
 /******************** GUNS *******************/
 
 /datum/manufacture/alastor

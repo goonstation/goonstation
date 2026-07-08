@@ -1356,7 +1356,7 @@
 	name = "Cafe et Couette"
 	})
 "Bc" = (
-/obj/blind_switch/north,
+/obj/blind_switch/directional/north,
 /turf/simulated/floor/wood/five,
 /area/prefab{
 	requires_power = 1;
@@ -1680,7 +1680,7 @@
 "IN" = (
 /obj/table/auto,
 /obj/machinery/light/lamp/black,
-/obj/blind_switch/south,
+/obj/blind_switch/directional/south,
 /obj/item/kitchen/utensil/knife{
 	pixel_x = -7
 	},

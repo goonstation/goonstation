@@ -1,4 +1,21 @@
 
+(t)sun jul 05 26
+(u)JORJ949
+(p)26968
+(e)🆕📦🧑‍✈️|C-Feature, A-Game-Objects, A-Command
+(*)The AccessPro can now set (but not edit devices set to) Armory and HoS access.
+(u)Bartimeus973
+(p)26957
+(e)🪲⚖|C-Bug, C-Balance
+(+)Making buttbots out of a changeling's butt, such as one from a dead buttcrab, no longer doxes their real name.
+(u)j3kchad
+(p)26978
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Added a door butt prank based on the door bucket prank
+(u)JORJ949
+(p)27047
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Cargo can now print several different styles of secure locker from their manufacturer
 (t)sat jul 04 26
 (u)A.I.The Artificial Idiot
 (p)27044
