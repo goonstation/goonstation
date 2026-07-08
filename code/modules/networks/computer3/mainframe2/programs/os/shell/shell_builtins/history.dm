@@ -6,7 +6,7 @@
 
 	var/datum/mainframe2_user_data/user = src.shell.useracc
 
-	if (isnull(user) || !istype(user))
+	if (!istype(user))
 		src.shell.message_user("Error: Executing user not found.")
 		return BUILTIN_BREAK
 
