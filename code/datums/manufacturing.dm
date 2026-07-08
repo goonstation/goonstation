@@ -414,7 +414,7 @@
 	item_outputs = list(/obj/item/ammo/bullets/a38/stun)
 	create = 1
 	time = 20 SECONDS
-	category = MANUFACTURER::CATEGORY::RESOURCE
+	category = MANUFACTURER::CATEGORY::AMMO
 
 /datum/manufacture/bullet_22
 	name = ".22 Bullets"
@@ -423,7 +423,7 @@
 	item_outputs = list(/obj/item/ammo/bullets/bullet_22)
 	create = 1
 	time = 30 SECONDS
-	category = MANUFACTURER::CATEGORY::RESOURCE
+	category = MANUFACTURER::CATEGORY::AMMO
 
 /datum/manufacture/bullet_9mm_frangible
 	name = "9mm Frangible Rounds"
@@ -434,7 +434,7 @@
 	item_outputs = list(/obj/item/ammo/bullets/nine_mm_NATO)
 	create = 1
 	time = 15 SECONDS
-	category = MANUFACTURER::CATEGORY::RESOURCE
+	category = MANUFACTURER::CATEGORY::AMMO
 
 /datum/manufacture/bullet_12g_nail
 	name = "12 gauge nailshot"
@@ -443,7 +443,7 @@
 	item_outputs = list(/obj/item/ammo/bullets/nails)
 	create = 1
 	time = 30 SECONDS
-	category = MANUFACTURER::CATEGORY::RESOURCE
+	category = MANUFACTURER::CATEGORY::AMMO
 
 /datum/manufacture/bullet_smoke
 	name = "40mm Smoke Grenade"
@@ -452,7 +452,7 @@
 	item_outputs = list(/obj/item/ammo/bullets/smoke)
 	create = 1
 	time = 35 SECONDS
-	category = MANUFACTURER::CATEGORY::RESOURCE
+	category = MANUFACTURER::CATEGORY::AMMO
 
 /datum/manufacture/extinguisher
 	name = "Fire Extinguisher"
@@ -1056,7 +1056,7 @@
 	item_outputs = list(/obj/item/rcd_ammo)
 	create = 1
 	time = 10 SECONDS
-	category = MANUFACTURER::CATEGORY::RESOURCE
+	category = MANUFACTURER::CATEGORY::AMMO
 
 /datum/manufacture/RCDammomedium
 	name = "Medium Compressed Matter Cartridge"
@@ -1064,7 +1064,7 @@
 	item_outputs = list(/obj/item/rcd_ammo/medium)
 	create = 1
 	time = 20 SECONDS
-	category = MANUFACTURER::CATEGORY::RESOURCE
+	category = MANUFACTURER::CATEGORY::AMMO
 
 /datum/manufacture/RCDammolarge
 	name = "Large Compressed Matter Cartridge"
@@ -1072,7 +1072,7 @@
 	item_outputs = list(/obj/item/rcd_ammo/big)
 	create = 1
 	time = 30 SECONDS
-	category = MANUFACTURER::CATEGORY::RESOURCE
+	category = MANUFACTURER::CATEGORY::AMMO
 
 /datum/manufacture/sds
 	name = "Syndicate Destruction System"
@@ -3697,7 +3697,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	item_outputs = list(/obj/storage/crate)
 	create = 1
 	time = 10 SECONDS
-	category = MANUFACTURER::CATEGORY::MISCELLANEOUS
+	category = MANUFACTURER::CATEGORY::CRATES
 
 /datum/manufacture/crate/wooden
 	name = "Wooden Crate"
@@ -3769,7 +3769,7 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 	item_outputs = list(/obj/storage/cart)
 	create = 1
 	time = 10 SECONDS
-	category = MANUFACTURER::CATEGORY::MISCELLANEOUS
+	category = MANUFACTURER::CATEGORY::CARTS
 
 /datum/manufacture/cart/forensic
 	name = "Forensics Cart"
@@ -3790,6 +3790,59 @@ ABSTRACT_TYPE(/datum/manufacture/radio_upgrade)
 /datum/manufacture/cart/hotdog
 	name = "Hotdog Cart"
 	item_outputs = list(/obj/storage/cart/hotdog)
+
+/******************** Lockers *******************/
+ABSTRACT_TYPE(/datum/manufacture/locker) //Regular lockers are built using steel in hand, not via fabricator
+/datum/manufacture/locker
+	name = "Abstract Locker"
+	item_requirements = list("metal" = 3)
+	create = 1
+	time = 10 SECONDS
+	category = MANUFACTURER::CATEGORY::LOCKERS
+
+	modify_output(obj/machinery/manufacturer/M, atom/A, list/materials)
+		. = ..()
+		var/obj/storage/secure/closet/closet = A
+		if(!istype(closet)) return
+		closet.anchored = UNANCHORED
+		closet.bolted = FALSE
+
+/datum/manufacture/locker/secure
+	name = "Secure Locker (Access: None)"
+	item_requirements = list("metal" = 3, "conductive" = 4)
+	item_outputs = list(/obj/storage/secure/closet)
+
+/datum/manufacture/locker/secure/command
+	name = "Command Locker"
+	item_outputs = list(/obj/storage/secure/closet/command)
+
+/datum/manufacture/locker/secure/security
+	name = "Security Locker"
+	item_outputs = list(/obj/storage/secure/closet/security)
+
+/datum/manufacture/locker/secure/contraband
+	name = "Contraband Locker"
+	item_outputs = list(/obj/storage/secure/closet/brig/empty)
+
+/datum/manufacture/locker/secure/research
+	name = "Research Locker"
+	item_outputs = list(/obj/storage/secure/closet/research)
+
+/datum/manufacture/locker/secure/engineering
+	name = "Engineering Locker"
+	item_outputs = list(/obj/storage/secure/closet/engineering)
+
+/datum/manufacture/locker/secure/medical
+	name = "Medical Locker"
+	item_outputs = list(/obj/storage/secure/closet/medical)
+
+/datum/manufacture/locker/secure/hydroponics
+	name = "Hydroponics Locker"
+	item_outputs = list(/obj/storage/secure/closet/civilian/hydro/empty)
+
+/datum/manufacture/locker/secure/nanotrasen
+	name = "Nanotrasen Locker (Access: None)"
+	item_outputs = list(/obj/storage/secure/closet/command/nanotrasen/weak)
 
 /******************** GUNS *******************/
 

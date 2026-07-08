@@ -1810,7 +1810,7 @@ TYPEINFO(/datum/mutantrace/premature_clone)
 				src.mob.changeStatus("knockdown", 15 SECONDS)
 				src.mob.make_jittery(1000)
 				sleep(rand(40, 120))
-				src.mob.gib()
+				src.mob?.gib()
 
 	disposing()
 		REMOVE_ATOM_PROPERTY(src.mob, PROP_HUMAN_DROP_BRAIN_ON_GIB, "puritan")

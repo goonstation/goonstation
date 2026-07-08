@@ -5,7 +5,18 @@
 	)
 
 /datum/clothingbooth_grouping/dinosaur_pajamas
-	item_paths = list(/datum/clothingbooth_item/wear_suit/dinosaur_pajamas)
+	name = "Dinosaur Pajamas"
+	item_paths = list(
+		/datum/clothingbooth_item/wear_suit/dinosaur_pajamas/green,
+		/datum/clothingbooth_item/wear_suit/dinosaur_pajamas/yellow,
+		/datum/clothingbooth_item/wear_suit/dinosaur_pajamas/red,
+		/datum/clothingbooth_item/wear_suit/dinosaur_pajamas/blue,
+		/datum/clothingbooth_item/wear_suit/dinosaur_pajamas/orange,
+		/datum/clothingbooth_item/wear_suit/dinosaur_pajamas/pink,
+		/datum/clothingbooth_item/wear_suit/dinosaur_pajamas/purple,
+		/datum/clothingbooth_item/wear_suit/dinosaur_pajamas/white,
+		/datum/clothingbooth_item/wear_suit/dinosaur_pajamas/black
+	)
 	grouping_tags = list(
 		/datum/clothingbooth_grouping_tag/formality/costume,
 	)
