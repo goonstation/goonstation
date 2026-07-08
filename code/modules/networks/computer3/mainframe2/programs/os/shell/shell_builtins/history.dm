@@ -18,7 +18,7 @@
 		return BUILTIN_BREAK
 
 	if (!istype(history_file))
-		src.shell.message_user("Error: User's history file is of the wrong type (expected record, got [history_file.extension])..")
+		src.shell.message_user("Error: User's history file is of the wrong type (expected record, got [history_file.extension]).")
 		return BUILTIN_BREAK
 
 	// actual command functionality:
