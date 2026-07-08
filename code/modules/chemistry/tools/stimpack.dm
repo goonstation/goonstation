@@ -19,7 +19,7 @@
 		if(empty)
 			boutput(user, SPAN_ALERT("This stimpack is empty!"))
 			return
-		if(!isliving(target) || issilicon(target) || isintangible(target))
+		if(!isliving(target) || issilicon(target) || isintangible(target) || isrobocritter(target))
 			boutput(user, SPAN_ALERT("You can't use this item on that!"))
 			return
 		if(user == target)
