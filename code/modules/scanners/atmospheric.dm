@@ -95,6 +95,7 @@ TYPEINFO(/obj/item/device/analyzer/atmospheric)
 	var/hudarrow_color = "#0df0f0"
 	///We keep track of the airgroup so we can acquire a new breach after the old one is patched, even if the user is standing on space at the time
 	var/datum/air_group/tracking_airgroup = null
+	var/emagged = 0
 
 	// Distance upgrade action code
 	pixelaction(atom/target, params, mob/user, reach)
@@ -200,6 +201,26 @@ TYPEINFO(/obj/item/device/analyzer/atmospheric)
 				SPAWN(0)
 					det.detonate()
 		return
+
+	emag_act(var/mob/user, var/obj/item/card/emag/E)
+		if (!src.emagged)
+			if (user)
+				boutput(user, SPAN_NOTICE("You have de-standardized the results provided by the analyzer."))
+			logTheThing(LOG_COMBAT, user, "emagged [src] at [log_loc(src)].")
+			emagged = 1
+			return 1
+		else
+			if (user)
+				boutput(user, "The analyzer is already unstandardized.")
+			return 0
+
+	demag(var/mob/user)
+		if (!src.emagged)
+			return 0
+		emagged = 0
+		if (user)
+			boutput(user, SPAN_NOTICE("You reconfigure the analyzer to provide standardized readings."))
+		return 1
 
 /obj/item/device/analyzer/atmospheric/upgraded //for borgs because JESUS FUCK
 	analyzer_upgrade = 1
