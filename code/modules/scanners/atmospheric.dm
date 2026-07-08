@@ -3,7 +3,7 @@
 // handheld atmos scanner & upgrade chip
 
 // Made this a global proc instead of 10 or so instances of duplicate code spread across the codebase (Convair880).
-/proc/scan_atmospheric(var/atom/A as turf|obj, var/pda_readout = 0, var/simple_output = 0, var/visible = 0, var/alert_output = 0)
+/proc/scan_atmospheric(var/atom/A as turf|obj, var/pda_readout = 0, var/simple_output = 0, var/visible = 0, var/alert_output = 0, var/emagged_analyzer = 0)
 	if (istype(A, /obj/ability_button))
 		return
 	if (!A)
@@ -55,7 +55,7 @@
 			[SPAN_NOTICE("Atmospheric analysis of <b>[A]</b>")]<br>\
 			<br>\
 			Pressure: [round(pressure, 0.1)] kPa<br>\
-			Temperature: [round(check_me.temperature)] K<br>"
+			Temperature: [emagged_analyzer ? "[round(((check_me.temperature - 273.15) * 9 / 5) + 32, 0.1)] °F" : "[round(check_me.temperature)] K"]<br>"
 			//realistically bubbles should have a constantly changing volume based on their pressure but it doesn't really matter so let's just not report it
 			if (!istype(A, /obj/bubble))
 				data += "Volume: [check_me.volume] L<br>"
@@ -102,7 +102,7 @@ TYPEINFO(/obj/item/device/analyzer/atmospheric)
 		var/turf/T = get_turf(target)
 		if ((analyzer_upgrade == 1) && (BOUNDS_DIST(user, T) > 0))
 			user.visible_message(SPAN_NOTICE("<b>[user]</b> takes a distant atmospheric reading of [T]."))
-			boutput(user, scan_atmospheric(T, visible = 1))
+			boutput(user, scan_atmospheric(T, visible = 1, emagged_analyzer = emagged))
 			src.add_fingerprint(user)
 			return
 
@@ -183,7 +183,7 @@ TYPEINFO(/obj/item/device/analyzer/atmospheric)
 
 		if (istype(A, /obj) || isturf(A))
 			user.visible_message(SPAN_NOTICE("<b>[user]</b> takes an atmospheric reading of [A]."))
-			boutput(user, scan_atmospheric(A, visible = 1))
+			boutput(user, scan_atmospheric(A, visible = 1, emagged_analyzer = emagged))
 		src.add_fingerprint(user)
 		return
 
