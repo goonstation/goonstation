@@ -55,7 +55,7 @@
 			[SPAN_NOTICE("Atmospheric analysis of <b>[A]</b>")]<br>\
 			<br>\
 			Pressure: [round(pressure, 0.1)] kPa<br>\
-			Temperature: [emagged_analyzer ? "[round(((check_me.temperature - 273.15) * 9 / 5) + 32)] °F" : "[round(check_me.temperature)] K"]<br>"
+			Temperature: [emagged_analyzer ? "[round(TO_FAHRENHEIT(check_me.temperature))] °F" : "[round(check_me.temperature)] K"]<br>"
 			//realistically bubbles should have a constantly changing volume based on their pressure but it doesn't really matter so let's just not report it
 			if (!istype(A, /obj/bubble))
 				data += "Volume: [emagged_analyzer ? "[round(check_me.volume * 0.264172)] gal" : "[check_me.volume] L"]<br>"
@@ -95,7 +95,7 @@ TYPEINFO(/obj/item/device/analyzer/atmospheric)
 	var/hudarrow_color = "#0df0f0"
 	///We keep track of the airgroup so we can acquire a new breach after the old one is patched, even if the user is standing on space at the time
 	var/datum/air_group/tracking_airgroup = null
-	var/emagged = 0
+	var/emagged = FALSE
 
 	// Distance upgrade action code
 	pixelaction(atom/target, params, mob/user, reach)
@@ -207,20 +207,20 @@ TYPEINFO(/obj/item/device/analyzer/atmospheric)
 			if (user)
 				boutput(user, SPAN_NOTICE("You have de-standardized the results provided by the analyzer."))
 			logTheThing(LOG_COMBAT, user, "emagged [src] at [log_loc(src)].")
-			emagged = 1
-			return 1
+			emagged = TRUE
+			return TRUE
 		else
 			if (user)
-				boutput(user, "The analyzer is already unstandardized.")
-			return 0
+				boutput(user, "The analyzer is already de-standardized.")
+			return FALSE
 
 	demag(var/mob/user)
 		if (!src.emagged)
-			return 0
-		emagged = 0
+			return FALSE
+		emagged = FALSE
 		if (user)
 			boutput(user, SPAN_NOTICE("You reconfigure the analyzer to provide standardized readings."))
-		return 1
+		return TRUE
 
 /obj/item/device/analyzer/atmospheric/upgraded //for borgs because JESUS FUCK
 	analyzer_upgrade = 1
