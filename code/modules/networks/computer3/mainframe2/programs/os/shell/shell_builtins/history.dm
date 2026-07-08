@@ -31,7 +31,7 @@
 	var/arg_as_num = length(command_list) > 0 ? text2num(command_list[1]) : length(history_file.fields)
 
 	if(isnan(arg_as_num) || isnull(arg_as_num) || arg_as_num < 0)
-		src.shell.message_user("Error: Invalid argument [command_list[1]]")
+		src.shell.message_user("Error: Invalid argument [command_list[1]].")
 		return BUILTIN_BREAK
 
 	var/history_output = src.history_file_to_text(history_file.fields, arg_as_num)
