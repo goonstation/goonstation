@@ -23,10 +23,7 @@
 			boutput(user, SPAN_ALERT("You can't use this item on that!"))
 			return
 		if(user == target)
-			target.changeStatus("stimulants", src.duration)
-			src.empty = TRUE
-			src.icon_state = "stims0"
-			boutput(user, SPAN_NOTICE("Ah! That's the stuff!"))
+			stimulant_action(user, target)
 			return
 		else
 			actions.start(new/datum/action/bar/icon/stimulant(target, src, src.icon, src.icon_state), user)
@@ -34,6 +31,14 @@
 
 	large_dose
 		duration = 15 MINUTES
+
+	proc/stimulant_action(mob/user, mob/target)
+		target.changeStatus("stimulants", src.duration)
+		src.empty = TRUE
+		src.icon_state = "stims0"
+		logTheThing(LOG_COMBAT, user, "injects [constructTarget(target,"combat")] with stimulants at [log_loc(user)].")
+		user.visible_message(SPAN_ALERT("[user.name] injects [target.name] with [src.name]!"))
+		boutput(target, SPAN_NOTICE("Ah! That's the stuff!"))
 
 /datum/action/bar/icon/stimulant
 	duration = 3 SECONDS
@@ -79,9 +84,4 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (!isnull(S) && !S.empty)
-			target.changeStatus("stimulants", S.duration)
-			S.empty = TRUE
-			S.icon_state = "stims0"
-			logTheThing(LOG_COMBAT, owner, "injects [constructTarget(target,"combat")] with stimulants at [log_loc(owner)].")
-			owner.visible_message(SPAN_ALERT("[owner.name] injects [target.name] with [S.name]!"))
-			boutput(target, SPAN_NOTICE("Ah! That's the stuff!"))
+			S.stimulant_action(owner, target)
