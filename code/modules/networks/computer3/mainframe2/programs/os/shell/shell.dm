@@ -468,7 +468,7 @@
 		return TRUE
 
 	var/datum/computer/file/record/history =  src.signal_program(1, list("command"=DWAINE_COMMAND_FGET, "path" =  src.histfile_full_path(useracc.user_filename)))
-	if(isnull(history) || !istype(history))
+	if (!istype(history))
 		return TRUE
 
 	history.fields[toIso8601InCharacter(world.timeofday)] = command
