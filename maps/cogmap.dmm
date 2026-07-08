@@ -28150,6 +28150,7 @@
 /obj/machinery/optable{
 	name = "Autopsy Table"
 	},
+/obj/item/storage/box/biohazard_bags,
 /obj/item/storage/box/body_bag,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)

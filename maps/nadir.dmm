@@ -11550,8 +11550,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "fmj" = (
-/obj/machinery/vending/monkey,
-/obj/mapping_helper/access/medical,
+/obj/machinery/vending/monkey/genetics,
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "fmy" = (
