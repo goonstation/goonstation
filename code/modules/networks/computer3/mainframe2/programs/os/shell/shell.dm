@@ -464,7 +464,7 @@
 
 /// attempts to log command to the user's histfile
 /datum/computer/file/mainframe_program/shell/proc/log_command(datum/mainframe2_user_data/useracc, command)
-	if(isnull(useracc) || !istype(useracc) || !command)
+	if (!istype(useracc) || !command)
 		return TRUE
 
 	var/datum/computer/file/record/history =  src.signal_program(1, list("command"=DWAINE_COMMAND_FGET, "path" =  src.histfile_full_path(useracc.user_filename)))
