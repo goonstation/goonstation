@@ -16694,6 +16694,7 @@
 	pixel_x = 4;
 	pixel_y = 9
 	},
+/obj/item/surgical_spoon,
 /obj/item/scissors/surgical_scissors{
 	pixel_x = 5;
 	pixel_y = 5
@@ -17522,6 +17523,7 @@
 /obj/item/suture{
 	pixel_y = 8
 	},
+/obj/item/surgical_spoon,
 /obj/item/scalpel{
 	pixel_x = -1;
 	pixel_y = 4
@@ -28349,6 +28351,7 @@
 	pixel_x = 4;
 	pixel_y = 9
 	},
+/obj/item/surgical_spoon,
 /obj/item/scissors/surgical_scissors{
 	pixel_x = 5;
 	pixel_y = 5

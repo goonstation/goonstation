@@ -13015,6 +13015,7 @@
 /obj/item/hemostat,
 /obj/item/staple_gun,
 /obj/machinery/alarm/directional/north,
+/obj/item/surgical_spoon,
 /obj/item/scissors/surgical_scissors,
 /turf/simulated/floor/redwhite{
 	dir = 1
@@ -23299,6 +23300,9 @@
 	pixel_y = 12
 	},
 /obj/item/scalpel,
+/obj/item/staple_gun,
+/obj/item/surgical_spoon,
+/obj/item/scissors/surgical_scissors,
 /obj/item/hand_labeler{
 	pixel_y = 5
 	},
@@ -23355,6 +23359,7 @@
 	dir = 4;
 	pixel_x = 12
 	},
+/obj/item/storage/box/biohazard_bags,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "cce" = (

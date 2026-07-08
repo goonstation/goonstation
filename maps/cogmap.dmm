@@ -28190,6 +28190,9 @@
 	pixel_x = 7;
 	pixel_y = -3
 	},
+/obj/item/scissors/surgical_scissors,
+/obj/item/surgical_spoon,
+/obj/item/staple_gun,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "clo" = (
@@ -30684,6 +30687,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/iv_stand,
+/obj/item/reagent_containers/iv_drip/saline,
 /turf/simulated/floor,
 /area/station/medical/medbay/surgery)
 "cuo" = (
@@ -31172,6 +31176,7 @@
 	},
 /obj/disposalpipe/segment,
 /obj/iv_stand,
+/obj/item/reagent_containers/iv_drip/saline,
 /turf/simulated/floor,
 /area/station/medical/medbay/surgery)
 "cwe" = (
@@ -31203,6 +31208,7 @@
 	pixel_x = 4;
 	pixel_y = 9
 	},
+/obj/item/surgical_spoon,
 /obj/item/suture{
 	pixel_y = 5
 	},

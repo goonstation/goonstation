@@ -42563,6 +42563,7 @@
 /obj/item/clothing/mask/surgical_shield,
 /obj/item/hemostat,
 /obj/item/staple_gun,
+/obj/item/surgical_spoon,
 /obj/item/scissors/surgical_scissors,
 /obj/machinery/light{
 	dir = 8;
@@ -43384,6 +43385,12 @@
 	pixel_y = 12
 	},
 /obj/item/scalpel,
+/obj/item/surgical_spoon{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/scissors/surgical_scissors,
+/obj/item/staple_gun,
 /obj/item/hand_labeler{
 	pixel_y = 5
 	},
@@ -46273,6 +46280,10 @@
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical{
 	pixel_y = 6
+	},
+/obj/item/storage/box/biohazard_bags{
+	pixel_x = -14;
+	pixel_y = 9
 	},
 /turf/simulated/floor/blackwhite,
 /area/station/medical/morgue)
