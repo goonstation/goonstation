@@ -1,7 +1,7 @@
 /datum/map_correctness_check/area_contents/morgue
 	check_name = "Morgue Contents Check"
 	target_areas = list(
-		/area/station/medical/medbay/morgue,
+		/area/station/medical/morgue,
 	)
 	expected_contents = list(
 		// General
