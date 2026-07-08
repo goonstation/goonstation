@@ -475,7 +475,7 @@
 
 	return FALSE
 
-// /// creates the history file if not exists. TECHNICALLY history files on disk get written when your shell session ends but we do not seperate ram histfile and disk histfile
+/// creates the history file if not exists. TECHNICALLY history files on disk get written when your shell session ends but we do not seperate ram histfile and disk histfile
 /datum/computer/file/mainframe_program/shell/proc/init_histfile_if_not_exist(datum/mainframe2_user_data/useracc)
 	if(isnull(useracc) || !istype(useracc))
 		return TRUE
