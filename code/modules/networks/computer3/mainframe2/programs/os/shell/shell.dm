@@ -477,7 +477,7 @@
 
 /// creates the history file if not exists. TECHNICALLY history files on disk get written when your shell session ends but we do not seperate ram histfile and disk histfile
 /datum/computer/file/mainframe_program/shell/proc/init_histfile_if_not_exist(datum/mainframe2_user_data/useracc)
-	if(isnull(useracc) || !istype(useracc))
+	if (!istype(useracc))
 		return TRUE
 
 	if(!src.signal_program(1, list("command"=DWAINE_COMMAND_FGET, "path" = src.histfile_full_path(useracc.user_filename))))
