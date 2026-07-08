@@ -55,10 +55,10 @@
 			[SPAN_NOTICE("Atmospheric analysis of <b>[A]</b>")]<br>\
 			<br>\
 			Pressure: [round(pressure, 0.1)] kPa<br>\
-			Temperature: [emagged_analyzer ? "[round(((check_me.temperature - 273.15) * 9 / 5) + 32, 0.1)] °F" : "[round(check_me.temperature)] K"]<br>"
+			Temperature: [emagged_analyzer ? "[round(((check_me.temperature - 273.15) * 9 / 5) + 32)] °F" : "[round(check_me.temperature)] K"]<br>"
 			//realistically bubbles should have a constantly changing volume based on their pressure but it doesn't really matter so let's just not report it
 			if (!istype(A, /obj/bubble))
-				data += "Volume: [check_me.volume] L<br>"
+				data += "Volume: [emagged_analyzer ? "[round(check_me.volume * 0.264172)] gal" : "[check_me.volume] L"]<br>"
 			data +=	"[SIMPLE_CONCENTRATION_REPORT(check_me, "<br>")]"
 
 	else
