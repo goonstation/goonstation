@@ -21,12 +21,8 @@
 		CONTENTS_GT(/obj/item/scissors/surgical_scissors, 0),
 		CONTENTS_GT(/obj/item/surgical_spoon, 0),
 		CONTENTS_OR(
-			list(
-				CONTENTS_GT(/obj/item/suture, 0),
-			),
-			list(
-				CONTENTS_GT(/obj/item/staple_gun, 0),
-			),
+			list(CONTENTS_GT(/obj/item/suture, 0)),
+			list(CONTENTS_GT(/obj/item/staple_gun, 0)),
 		),
 		// Supplies
 		CONTENTS_GT(/obj/item/device/detective_scanner, 0),
@@ -36,12 +32,8 @@
 		CONTENTS_GT(/obj/item/hand_labeler, 0),
 		CONTENTS_GT(/obj/item/storage/box/biohazard_bags, 0),
 		CONTENTS_OR(
-			list(
-				CONTENTS_GT(/obj/item/storage/box/body_bag, 0),
-			),
-			list(
-				CONTENTS_GT(/obj/item/body_bag, 2),
-			),
+			list(CONTENTS_GT(/obj/item/storage/box/body_bag, 0)),
+			list(CONTENTS_GT(/obj/item/body_bag, 2)),
 		),
 	)
 
@@ -63,12 +55,8 @@
 		CONTENTS_GT(/obj/item/scissors/surgical_scissors, 0),
 		CONTENTS_GT(/obj/item/surgical_spoon, 0),
 		CONTENTS_OR(
-			list(
-				CONTENTS_GT(/obj/item/suture, 0),
-			),
-			list(
-				CONTENTS_GT(/obj/item/staple_gun, 0),
-			),
+			list(CONTENTS_GT(/obj/item/suture, 0)),
+			list(CONTENTS_GT(/obj/item/staple_gun, 0)),
 		),
 		// Supplies
 		CONTENTS_GT(/obj/item/device/detective_scanner, 0),
@@ -78,11 +66,7 @@
 		CONTENTS_GT(/obj/item/hand_labeler, 0),
 		CONTENTS_GT(/obj/item/storage/box/biohazard_bags, 0),
 		CONTENTS_OR(
-			list(
-				CONTENTS_GT(/obj/item/storage/box/body_bag, 0),
-			),
-			list(
-				CONTENTS_GT(/obj/item/body_bag, 2),
-			),
+			list(CONTENTS_GT(/obj/item/storage/box/body_bag, 0)),
+			list(CONTENTS_GT(/obj/item/body_bag, 2)),
 		),
 	)
