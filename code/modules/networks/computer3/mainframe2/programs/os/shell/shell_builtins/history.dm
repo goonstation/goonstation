@@ -23,7 +23,7 @@
 
 	// actual command functionality:
 	if (length(command_list) > 0 && command_list[1] == "-c")
-		src.shell.message_user("History file cleared")
+		src.shell.message_user("History file cleared.")
 		history_file.fields.Cut()
 
 		return BUILTIN_SUCCESS
