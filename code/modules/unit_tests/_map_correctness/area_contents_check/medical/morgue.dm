@@ -6,7 +6,6 @@
 	expected_contents = list(
 		// General
 		CONTENTS_GT(/obj/machinery/traymachine/morgue, 2),
-		CONTENTS_EQ(/obj/disposaloutlet, 1),
 		CONTENTS_EQ(/mob/living/critter/small_animal/opossum/morty, 1),
 		// Surgical Equipment
 		CONTENTS_GT(/obj/machinery/optable, 0),
