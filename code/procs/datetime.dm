@@ -46,9 +46,9 @@ proc/toIso8601(timeInByondFormat)
 	var/list/parts = splittext(timeString, " ")
 	return parts[1] + "T" + parts[2] + "Z"
 
-/// Convert BYOND time format to ISO 8601 but in the "in character" year (2053)
+/// Convert BYOND time format to ISO 8601 but in the "in character" year
 proc/toIso8601InCharacter(timeInByondFormat)
-	var/timeString = time2text(timeInByondFormat, "2053-MM-DD hh:mm:ss")
+	var/timeString = time2text(timeInByondFormat, "[CURRENT_SPACE_YEAR]-MM-DD hh:mm:ss")
 	var/list/parts = splittext(timeString, " ")
 	return parts[1] + "T" + parts[2] + "Z"
 
