@@ -7,7 +7,7 @@
 #define CLONER_DEFECT_PROB_MAJOR 25
 
 #define MEAT_NEEDED_TO_CLONE	20
-#define MAXIMUM_MEAT_LEVEL		160
+#define MAXIMUM_MEAT_LEVEL		200
 #define DEFAULT_MEAT_USED_PER_TICK 0.6
 #define FREE_MEAT_RATE 0.2 //! Amount of free meat per tick if the cloner is too empty
 #define DEFAULT_SPEED_BONUS 1

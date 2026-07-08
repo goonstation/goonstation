@@ -22,7 +22,7 @@ TYPEINFO(/obj/machinery/clonegrinder)
 	var/process_per_tick = 0	// how much shit it will output per tick
 	var/mob/living/occupant = null
 	var/list/meats = list() //Meat that we want to reclaim.
-	var/max_meat = 5 //To be honest, I added the meat reclamation thing in part because I wanted a "max_meat" var.
+	var/max_meat = 11 //To be honest, I added the meat reclamation thing in part because I wanted a "max_meat" var. 11 so you can fit all the organs of a person inside.
 	var/grind_level = GRIND_NOTHING
 	var/upgraded = 0 // upgrade card makes the reclaimer more efficient
 	HELP_MESSAGE_OVERRIDE("Add organs and limbs to process by <b>clicking</b> with the <b>item</b> in-hand.<br>Turn the reclaimer on by <b>clicking</b> with an <b>open hand</b>.")
@@ -263,19 +263,9 @@ TYPEINFO(/obj/machinery/clonegrinder)
 				src.meats -= theMeat
 				if (theMeat.reagents)
 					theMeat.reagents.trans_to(src, src.upgraded ? 10 : 5)
-				if (istype(theMeat, /obj/item/parts/human_parts))
-					src.reagents.add_reagent("meat_slurry", 5)
-					src.reagents.add_reagent("synthflesh", 5)
-				else if (istype(theMeat, /obj/item/clothing/head/butt))
-					src.reagents.add_reagent("meat_slurry", 5)
-					src.reagents.add_reagent("beff", 5)
-				else if (istype(theMeat, /obj/item/organ))
-					if (prob(50))
-						src.reagents.add_reagent("meat_slurry", 10)
-					else
-						src.reagents.add_reagent("synthflesh", 10)
+
 				qdel(theMeat)
-				process_total += 4
+				process_total += 2
 
 			src.meats.len = 0
 
