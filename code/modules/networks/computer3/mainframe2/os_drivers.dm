@@ -45,16 +45,16 @@
 
 		message_device(var/data, var/datum/computer/file/file)
 			if (!initialized || (length(src.name) != 8))
-				return ESIG_NOTARGET
+				return DWAINE::ERR::SIG::NOTARGET
 
-			return signal_program(1, list("command"=DWAINE_COMMAND_MSG_TERM, "data" = data, "term" = src.name), file)
+			return signal_program(1, list("command"= DWAINE::SYSCALL::MSG_TERM, "data" = data, "term" = src.name), file)
 
 /datum/computer/file/mainframe_program/driver/mountable
 	var/tmp/list/contents_mirror = list()
 	var/tmp/list/to_remove = list()
 	var/tmp/list/to_add = list()
 	var/tmp/list/mountpoints = list()
-	var/default_permission = COMP_ALLACC & ~(COMP_DOTHER|COMP_DGROUP)
+	var/default_permission = DWAINE::PERM::DEFAULT::ALLACCESS & ~(DWAINE::PERM::BIT::OTHER_EXECUTE | DWAINE::PERM::BIT::GROUP_EXECUTE)
 
 	/* new disposing() pattern should handle this. -singh
 	disposing()
@@ -138,7 +138,7 @@
 		if (..())
 			return
 
-		signal_program(1, list("command"=DWAINE_COMMAND_MOUNT, "id"=src.name, "link"="term"))
+		signal_program(1, list("command"= DWAINE::SYSCALL::MOUNT, "id"=src.name, "link"="term"))
 		return
 
 	add_file(var/datum/computer/file/a_file, var/datum/mainframe2_user_data/user)
@@ -158,7 +158,7 @@
 		. = a_file.copy_file()
 		a_file.dispose()
 
-		return (signal_program(1, list("command"=DWAINE_COMMAND_MSG_TERM,"term"="[user.user_id]"), .) == ESIG_SUCCESS)
+		return (signal_program(1, list("command"= DWAINE::SYSCALL::MSG_TERM,"term"="[user.user_id]"), .) == DWAINE::ERR::SIG::SUCCESS)
 
 
 /datum/computer/file/mainframe_program/driver/mountable/databank
@@ -172,7 +172,7 @@
 			return
 
 		if (bank_name)
-			signal_program(1, list("command"=DWAINE_COMMAND_MOUNT, "id"=src.name, "link"=lowertext(src.bank_name)))
+			signal_program(1, list("command"= DWAINE::SYSCALL::MOUNT, "id"=src.name, "link"=lowertext(src.bank_name)))
 		return
 
 	terminal_input(var/data, var/datum/computer/file/file)
@@ -188,7 +188,7 @@
 
 				if (datalist["data"] != src.bank_name)
 					src.bank_name = datalist["data"]
-					signal_program(1, list("command"=DWAINE_COMMAND_MOUNT, "id"=src.name, "link"=lowertext(src.bank_name)))
+					signal_program(1, list("command"= DWAINE::SYSCALL::MOUNT, "id"=src.name, "link"=lowertext(src.bank_name)))
 					message_device("command=sync")
 
 			if ("sync")
@@ -436,7 +436,7 @@
 			return
 
 		if (printer_name)
-			signal_program(1, list("command"=DWAINE_COMMAND_MOUNT, "id"=src.name, "link"="lp-[lowertext(src.printer_name)]"))
+			signal_program(1, list("command"= DWAINE::SYSCALL::MOUNT, "id"=src.name, "link"="lp-[lowertext(src.printer_name)]"))
 
 		if (!statusfile)
 			for (var/datum/computer/R in src.contents_mirror)
@@ -528,7 +528,7 @@
 
 				if (datalist["data"] != src.printer_name)
 					src.printer_name = datalist["data"]
-					signal_program(1, list("command"=DWAINE_COMMAND_MOUNT, "id"=src.name, link="lp-[lowertext(src.printer_name)]"))
+					signal_program(1, list("command"= DWAINE::SYSCALL::MOUNT, "id"=src.name, link="lp-[lowertext(src.printer_name)]"))
 
 			if ("status")
 				var/status = lowertext(datalist["status"])
@@ -632,26 +632,26 @@
 
 	receive_progsignal(var/sendid, var/list/data, var/datum/computer/file/file)
 		if (..())
-			return ESIG_GENERIC
+			return DWAINE::ERR::SIG::GENERIC
 
 		if (!data["command"])
-			return ESIG_GENERIC
+			return DWAINE::ERR::SIG::GENERIC
 
 		switch (lowertext(data["command"]))
 			if ("set_coords")
 				var/new_x = text2num_safe(data["x"])
 				if (!isnum(new_x))
-					return ESIG_USR1
+					return DWAINE::ERR::SIG::USR1
 				new_x = round(new_x, 0.01)
 
 				var/new_y = text2num_safe(data["y"])
 				if (!isnum(new_y))
-					return ESIG_USR1
+					return DWAINE::ERR::SIG::USR1
 				new_y = round(new_y, 0.01)
 
 				var/new_z = text2num_safe(data["z"])
 				if (!isnum(new_z))
-					return ESIG_USR1
+					return DWAINE::ERR::SIG::USR1
 				new_z = round(new_z, 0.01)
 
 				var/datum/computer/file/coords/new_coords = new /datum/computer/file/coords
@@ -661,7 +661,7 @@
 //				boutput(world, "[XMULTIPLY] [XSUBTRACT]  [YMULTIPLY] [YSUBTRACT]  [ZSUBTRACT]")
 
 				var/sessionid = "[world.timeofday%100][rand(0,9)]"
-				sessions[sessionid] = ESIG_USR1
+				sessions[sessionid] = DWAINE::ERR::SIG::USR1
 
 				message_device("command=set_coords&session=[sessionid]", new_coords)
 				sleep(0.6 SECONDS)
@@ -672,32 +672,32 @@
 			if ("relay") //sshh
 				var/source_x = text2num_safe(data["x1"])
 				if (!isnum(source_x))
-					return ESIG_USR1
+					return DWAINE::ERR::SIG::USR1
 				source_x = round(source_x, 0.01)
 
 				var/source_y = text2num_safe(data["y1"])
 				if (!isnum(source_y))
-					return ESIG_USR1
+					return DWAINE::ERR::SIG::USR1
 				source_y = round(source_y, 0.01)
 
 				var/source_z = text2num_safe(data["z1"])
 				if (!isnum(source_z))
-					return ESIG_USR1
+					return DWAINE::ERR::SIG::USR1
 				source_z = round(source_z, 0.01)
 
 				var/dest_x = text2num_safe(data["x2"])
 				if (!isnum(dest_x))
-					return ESIG_USR1
+					return DWAINE::ERR::SIG::USR1
 				dest_x = round(dest_x, 0.01)
 
 				var/dest_y = text2num_safe(data["y2"])
 				if (!isnum(dest_y))
-					return ESIG_USR1
+					return DWAINE::ERR::SIG::USR1
 				dest_y = round(dest_y, 0.01)
 
 				var/dest_z = text2num_safe(data["z2"])
 				if (!isnum(dest_z))
-					return ESIG_USR1
+					return DWAINE::ERR::SIG::USR1
 				dest_z = round(dest_z, 0.01)
 
 				var/datum/computer/file/coords/new_coords = new /datum/computer/file/coords
@@ -710,13 +710,13 @@
 				new_coords.origz = source_z - ZSUBTRACT
 
 				var/sessionid = "[world.timeofday%100][rand(0,9)]"
-				sessions[sessionid] = ESIG_USR1
+				sessions[sessionid] = DWAINE::ERR::SIG::USR1
 
 				message_device("command=relay&session=[sessionid]", new_coords)
 
 			if ("lrt")
 				var/sessionid = "[world.timeofday%100][rand(0,9)]"
-				sessions[sessionid] = ESIG_USR1
+				sessions[sessionid] = DWAINE::ERR::SIG::USR1
 				message_device("command=[lowertext(data["command"])]&session=[sessionid]&action=[lowertext(data["action"])]&place=[data["place"]]")
 				sleep(0.6 SECONDS)
 				. = sessions[sessionid]
@@ -725,7 +725,7 @@
 
 			if ("send", "receive", "portal", "scan")
 				var/sessionid = "[world.timeofday%100][rand(0,9)]"
-				sessions[sessionid] = ESIG_USR1
+				sessions[sessionid] = DWAINE::ERR::SIG::USR1
 				message_device("command=[lowertext(data["command"])]&session=[sessionid]")
 				sleep(0.6 SECONDS)
 				. = sessions[sessionid]
@@ -733,7 +733,7 @@
 				return .
 
 			else
-				return ESIG_BADCOMMAND
+				return DWAINE::ERR::SIG::BADCOMMAND
 
 	terminal_input(var/data, var/datum/computer/file/file)
 		if (..() || !initialized)
@@ -746,21 +746,21 @@
 
 		switch(lowertext(datalist["command"]))
 			if ("ack")
-				sessions[session] = ESIG_SUCCESS
+				sessions[session] = DWAINE::ERR::SIG::SUCCESS
 
 			if ("nack")
 				switch ( lowertext(datalist["cause"]) )
 					if ("interference")
-						sessions[session] = ESIG_USR2
+						sessions[session] = DWAINE::ERR::SIG::USR2
 					if ("badxyz","badx","bady","badz","badxy","badxz","badyz")
-						//sessions[session] = ESIG_USR3
+						//sessions[session] = DWAINE::ERR::SIG::USR3
 						sessions[session] = copytext(uppertext(datalist["cause"]), 4)
 					if ("recharge")
-						sessions[session] = ESIG_USR4
+						sessions[session] = DWAINE::ERR::SIG::USR4
 
 			if ("scan_reply")
 				if (datalist["cause"] == "noatmos")
-					sessions[session] = ESIG_USR2
+					sessions[session] = DWAINE::ERR::SIG::USR2
 				else
 					datalist -= "command"
 					datalist -= "session"
@@ -783,19 +783,19 @@
 			mainframe_prog_exit
 			return
 
-		var/driver_id = signal_program(1, list("command"=DWAINE_COMMAND_DGET, "dtag"="s_telepad"))
-		if (!(driver_id & ESIG_DATABIT))
+		var/driver_id = signal_program(1, list("command"= DWAINE::SYSCALL::DGET, "dtag"="s_telepad"))
+		if (!(driver_id & DWAINE::ERR::SIG::DATABIT))
 			message_user("Error: Could not detect driver.")
 			mainframe_prog_exit
 			return
 
-		driver_id &= ~ESIG_DATABIT
+		driver_id &= ~DWAINE::ERR::SIG::DATABIT
 		var/command = lowertext(initlist[1])
 		if (cmptext(command, "-p") && length(initlist) > 2)
 			. = text2num_safe(initlist[2])
 			if (isnum(.))
 				. = clamp(round(.), 0, 64)
-				var/list/possibleDrivers = signal_program(1, list("command"=DWAINE_COMMAND_DLIST, "dtag"="s_telepad"))
+				var/list/possibleDrivers = signal_program(1, list("command"= DWAINE::SYSCALL::DLIST, "dtag"="s_telepad"))
 				if (istype(possibleDrivers))
 					for (var/x = 1, x <= possibleDrivers.len, x++)
 						if (possibleDrivers[x])
@@ -882,11 +882,11 @@
 					if (!isnum(new_x) || !isnum(new_y) || !isnum(new_z))
 						message_user("Invalid[!isnum(new_x) ? " x" : null][!isnum(new_y) ? " y" : null][!isnum(new_z) ? " z" : null]")
 					else
-						var/success = signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=driver_id, "dcommand"="set_coords", "x"=new_x, "y"=new_y, "z"=new_z))
+						var/success = signal_program(1, list("command"= DWAINE::SYSCALL::DMSG, "target"=driver_id, "dcommand"="set_coords", "x"=new_x, "y"=new_y, "z"=new_z))
 						switch (success)
-							if (ESIG_SUCCESS)
+							if (DWAINE::ERR::SIG::SUCCESS)
 								message_user("OK")
-							//if (ESIG_USR3)
+							//if (DWAINE::ERR::SIG::USR3)
 							//	message_user("Invalid coordinates.")
 							else
 								if (istext(success))
@@ -901,15 +901,15 @@
 				if (length(initlist) >= 3)
 					var/action = initlist[2]
 					var/place = findtext(initlist[3], "place=") && copytext(initlist[3], 7)
-					var/success = signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=driver_id, "dcommand"="lrt", "action"=action, "place"=place))
+					var/success = signal_program(1, list("command"= DWAINE::SYSCALL::DMSG, "target"=driver_id, "dcommand"="lrt", "action"=action, "place"=place))
 					switch (success)
-						if (ESIG_SUCCESS)
+						if (DWAINE::ERR::SIG::SUCCESS)
 							message_user("OK")
-						if (ESIG_USR2)
+						if (DWAINE::ERR::SIG::USR2)
 							message_user("Teleportation prevented by interference.")
-						//if (ESIG_USR3)
+						//if (DWAINE::ERR::SIG::USR3)
 						//	message_user("Invalid coordinates.")
-						if (ESIG_USR4)
+						if (DWAINE::ERR::SIG::USR4)
 							message_user("Telepad is recharging.")
 						else
 							if (istext(success))
@@ -960,11 +960,11 @@
 					if (!isnum(start_x) || !isnum(start_y) || !isnum(start_z)  ||  !isnum(end_x) || !isnum(end_y) || !isnum(end_z))
 						message_user("Invalid[!isnum(start_x) ? " x1" : null][!isnum(start_y) ? " y1" : null][!isnum(start_z) ? " z1" : null][!isnum(end_x) ? " x2" : null][!isnum(end_y) ? " y2" : null][!isnum(end_z) ? " z2" : null]")
 					else
-						var/success = signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=driver_id, "dcommand"="relay", "x1"=start_x, "y1"=start_y, "z1"=start_z, "x2" = end_x, "y2" = end_y, "z2" = end_z))
+						var/success = signal_program(1, list("command"= DWAINE::SYSCALL::DMSG, "target"=driver_id, "dcommand"="relay", "x1"=start_x, "y1"=start_y, "z1"=start_z, "x2" = end_x, "y2" = end_y, "z2" = end_z))
 						switch (success)
-							if (ESIG_SUCCESS)
+							if (DWAINE::ERR::SIG::SUCCESS)
 								message_user("OK")
-							//if (ESIG_USR3)
+							//if (DWAINE::ERR::SIG::USR3)
 							//	message_user("Invalid coordinates.")
 							else
 								if (istext(success))
@@ -976,15 +976,15 @@
 					message_user("Insufficient arguments (Need x1 y1 z1, x2 y2 z2).")
 
 			if ("send", "receive", "portal")
-				var/success = signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=driver_id, "dcommand"=command))
+				var/success = signal_program(1, list("command"= DWAINE::SYSCALL::DMSG, "target"=driver_id, "dcommand"=command))
 				switch (success)
-					if (ESIG_SUCCESS)
+					if (DWAINE::ERR::SIG::SUCCESS)
 						message_user("OK")
-					if (ESIG_USR2)
+					if (DWAINE::ERR::SIG::USR2)
 						message_user("Teleportation prevented by interference.")
-					//if (ESIG_USR3)
+					//if (DWAINE::ERR::SIG::USR3)
 					//	message_user("Invalid coordinates.")
-					if (ESIG_USR4)
+					if (DWAINE::ERR::SIG::USR4)
 						message_user("Telepad is recharging.")
 
 					else
@@ -994,7 +994,7 @@
 							message_user("Unable to interface with telepad.")
 
 			if ("scan")
-				var/list/success = signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=driver_id, "dcommand"="scan"))
+				var/list/success = signal_program(1, list("command"= DWAINE::SYSCALL::DMSG, "target"=driver_id, "dcommand"="scan"))
 				if (istype(success))
 					#define _TELESCI_ATMOS_SCAN(GAS, _, NAME, ...) "[NAME]: [success[#GAS]], " +
 					message_user("Scan Results:|nAtmosphere: [APPLY_TO_GASES(_TELESCI_ATMOS_SCAN) " "][success["temp"]] Kelvin, [success["pressure"]] kPa[(success["burning"])?(", BURNING"):(null)]","multiline")
@@ -1041,10 +1041,10 @@
 
 	receive_progsignal(var/sendid, var/list/data, var/datum/computer/file/file)
 		if (..())
-			return ESIG_GENERIC
+			return DWAINE::ERR::SIG::GENERIC
 
 		if (!data["command"])
-			return ESIG_GENERIC
+			return DWAINE::ERR::SIG::GENERIC
 
 		switch (lowertext(data["command"]))
 			if ("report_status")
@@ -1053,47 +1053,47 @@
 
 			if ("auth")
 				if (length(auths) >= setup_auths_needed)
-					return ESIG_USR2
+					return DWAINE::ERR::SIG::USR2
 
 				var/datum/computer/file/record/usdat = file
 				if (!istype(usdat) || !usdat.fields["registered"] || !usdat.fields["assignment"])
-					return ESIG_GENERIC
+					return DWAINE::ERR::SIG::GENERIC
 
 				var/list/accessList = splittext(usdat.fields["access"], ";")
 				if (!("[setup_auth_access]" in accessList))
-					return ESIG_NOUSR
+					return DWAINE::ERR::SIG::NOUSR
 
 				var/userhash = md5("[usdat.fields["registered"]]+[usdat.fields["assignment"]]")
 				if (!userhash)
-					return ESIG_NOUSR
+					return DWAINE::ERR::SIG::NOUSR
 
 				if (userhash in auths)
-					return ESIG_USR3
+					return DWAINE::ERR::SIG::USR3
 				else
 					auths += userhash
 					if (length(auths) >= setup_auths_needed)
-						return ESIG_USR2
+						return DWAINE::ERR::SIG::USR2
 					else
-						return ESIG_USR1
+						return DWAINE::ERR::SIG::USR1
 
 			if ("deauth")
 				var/datum/computer/file/record/usdat = file
 				if (!istype(usdat))
-					return ESIG_NOUSR
+					return DWAINE::ERR::SIG::NOUSR
 
 				var/list/accessList = splittext(usdat.fields["access"], ";")
 				if (!("[setup_auth_access]" in accessList))
-					return ESIG_NOUSR
+					return DWAINE::ERR::SIG::NOUSR
 
 				src.auths.len = 0
-				return ESIG_SUCCESS
+				return DWAINE::ERR::SIG::SUCCESS
 
 			if ("settime")
 				if (nuke_active)
-					return ESIG_USR1
+					return DWAINE::ERR::SIG::USR1
 
 				if (!isnum(data["time"]))
-					return ESIG_GENERIC
+					return DWAINE::ERR::SIG::GENERIC
 
 				var/newtime = clamp(data["time"], MIN_NUKE_TIME, MAX_NUKE_TIME)
 
@@ -1101,33 +1101,33 @@
 				message_device("command=settime&time=[newtime]&session=[sessionid]")
 				sessions[sessionid] = SESSION_TIMER
 				sessiondata[sessionid] = newtime
-				return ESIG_SUCCESS
+				return DWAINE::ERR::SIG::SUCCESS
 
 			if ("arm")
 				if (length(auths) < setup_auths_needed)
-					return ESIG_USR1
+					return DWAINE::ERR::SIG::USR1
 
 				if (nuke_active)
-					return ESIG_USR2
+					return DWAINE::ERR::SIG::USR2
 
 				var/sessionid = "[world.timeofday%100][rand(0,9)]"
 				message_device("command=act&auth=[netpass_heads]&session=[sessionid]")
 				sessions[sessionid] = SESSION_ARM
-				return ESIG_SUCCESS
+				return DWAINE::ERR::SIG::SUCCESS
 
 			if ("disarm")
 				if (length(auths) < setup_auths_needed)
-					return ESIG_USR1
+					return DWAINE::ERR::SIG::USR1
 
 				if (!nuke_active)
-					return ESIG_USR2
+					return DWAINE::ERR::SIG::USR2
 
 				var/sessionid = "[world.timeofday%100][rand(0,9)]"
 				message_device("command=deact&auth=[netpass_heads]&session=[sessionid]")
 				sessions[sessionid] = SESSION_DISARM
-				return ESIG_SUCCESS
+				return DWAINE::ERR::SIG::SUCCESS
 
-		return ESIG_GENERIC
+		return DWAINE::ERR::SIG::GENERIC
 
 	process()
 		if (..())
@@ -1212,17 +1212,17 @@
 			mainframe_prog_exit
 			return
 
-		var/driver_id = signal_program(1, list("command"=DWAINE_COMMAND_DGET, "dtag"="nuccharge"))
-		if (!(driver_id & ESIG_DATABIT))
+		var/driver_id = signal_program(1, list("command"= DWAINE::SYSCALL::DGET, "dtag"="nuccharge"))
+		if (!(driver_id & DWAINE::ERR::SIG::DATABIT))
 			message_user("Error: Could not detect charge driver.")
 			mainframe_prog_exit
 			return
 
-		driver_id &= ~ESIG_DATABIT
+		driver_id &= ~DWAINE::ERR::SIG::DATABIT
 		var/command = lowertext(initlist[1])
 		switch(command)
 			if ("status", "stat")
-				var/list/nuke_status = signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=driver_id, "dcommand"="report_status"))
+				var/list/nuke_status = signal_program(1, list("command"= DWAINE::SYSCALL::DMSG, "target"=driver_id, "dcommand"="report_status"))
 				if (istype(nuke_status) && (length(nuke_status) >= 4))
 					message_user("Detonator Status:|n ACTIVE: [(nuke_status[2] == 1) ? "YES" : "NO"]|n TIMER: [nuke_status[1]] second(s)|n AUTHS: ([nuke_status[3]]/[nuke_status[4]])","multiline")
 				else
@@ -1239,9 +1239,9 @@
 				return
 
 			if ("activate", "n_act")
-				var/success = signal_program(1, list("command"=DWAINE_COMMAND_DMSG,"target"=driver_id,"dcommand"="arm"))
+				var/success = signal_program(1, list("command"= DWAINE::SYSCALL::DMSG,"target"=driver_id,"dcommand"="arm"))
 				switch(success)
-					if (ESIG_SUCCESS)
+					if (DWAINE::ERR::SIG::SUCCESS)
 
 						var/logUser = "unknown user!"
 						var/obj/callobj = null
@@ -1261,17 +1261,17 @@
 						logTheThing(LOG_COMBAT, logUser, "Activated the Research Sector nuclear charge.")
 
 						message_user("!Transmitting Activation Code!")
-					if (ESIG_USR1)
+					if (DWAINE::ERR::SIG::USR1)
 						message_user("Error: Insufficient Authorizations.")
-					if (ESIG_USR2)
+					if (DWAINE::ERR::SIG::USR2)
 						message_user("Error: Charge already active.")
 					else
 						message_user("Error: Could not associate with charge driver.")
 
 			if ("abort", "deactivate", "disarm", "n_dis")
-				var/success = signal_program(1, list("command"=DWAINE_COMMAND_DMSG,"target"=driver_id,"dcommand"="disarm"))
+				var/success = signal_program(1, list("command"= DWAINE::SYSCALL::DMSG,"target"=driver_id,"dcommand"="disarm"))
 				switch(success)
-					if (ESIG_SUCCESS)
+					if (DWAINE::ERR::SIG::SUCCESS)
 
 						var/logUser = "unknown user!"
 						var/obj/callobj = null
@@ -1290,9 +1290,9 @@
 						message_admins("NUKE: Research Sector nuclear charge deactivated by [key_name(logUser)].")
 						logTheThing(LOG_COMBAT, logUser, "Deactivated the Research Sector nuclear charge.")
 						message_user("Transmitting Deactivation Code...")
-					if (ESIG_USR1)
+					if (DWAINE::ERR::SIG::USR1)
 						message_user("Error: Insufficient Authorizations.")
-					if (ESIG_USR2)
+					if (DWAINE::ERR::SIG::USR2)
 						message_user("Error: Charge not active.")
 					else
 						message_user("Error: Could not associate with charge driver.")
@@ -1304,11 +1304,11 @@
 				if (length(initlist) >= 2)
 					var/newtime = text2num_safe(initlist[2])
 					if (isnum(newtime) && (newtime <= MAX_NUKE_TIME) && (newtime >= MIN_NUKE_TIME))
-						var/success = signal_program( 1, list("command"=DWAINE_COMMAND_DMSG,"target"=driver_id,"dcommand"="settime","time"=newtime))
+						var/success = signal_program( 1, list("command"= DWAINE::SYSCALL::DMSG,"target"=driver_id,"dcommand"="settime","time"=newtime))
 						switch(success)
-							if (ESIG_SUCCESS)
+							if (DWAINE::ERR::SIG::SUCCESS)
 								message_user("New time set.")
-							if (ESIG_USR1)
+							if (DWAINE::ERR::SIG::USR1)
 								message_user("Error: Could not set time: Charge currently active.")
 							else
 								message_user("Error: Could not associate with charge driver.")
@@ -1326,38 +1326,38 @@
 		return
 
 	receive_progsignal(var/sendid, var/list/data, var/datum/computer/file/file)
-		if (..() || (data["command"] != DWAINE_COMMAND_RECVFILE) || !istype(file, /datum/computer/file/record))
-			return ESIG_GENERIC
+		if (..() || (data["command"] != DWAINE::SYSCALL::RECVFILE) || !istype(file, /datum/computer/file/record))
+			return DWAINE::ERR::SIG::GENERIC
 
 		if (!src.useracc)
-			return ESIG_NOUSR
+			return DWAINE::ERR::SIG::NOUSR
 
 		var/datum/computer/file/record/usdat = file
 		if (!usdat.fields["registered"] || !usdat.fields["assignment"])
-			return ESIG_GENERIC
+			return DWAINE::ERR::SIG::GENERIC
 
-		var/driver_id = signal_program(1, list("command"=DWAINE_COMMAND_DGET, "dtag"="nuccharge"))
-		if (driver_id & ESIG_DATABIT)
-			driver_id &= ~ESIG_DATABIT
+		var/driver_id = signal_program(1, list("command"= DWAINE::SYSCALL::DGET, "dtag"="nuccharge"))
+		if (driver_id & DWAINE::ERR::SIG::DATABIT)
+			driver_id &= ~DWAINE::ERR::SIG::DATABIT
 			var/result_msg = "Error communicating with charge driver."
 			if (authmode)
-				var/success = signal_program(1, list("command"=DWAINE_COMMAND_DMSG,"target"=driver_id,"dcommand"="deauth"), file)
+				var/success = signal_program(1, list("command"= DWAINE::SYSCALL::DMSG,"target"=driver_id,"dcommand"="deauth"), file)
 				switch(success)
-					if (ESIG_SUCCESS)
+					if (DWAINE::ERR::SIG::SUCCESS)
 						result_msg = "All authorizations have been revoked."
-					if (ESIG_NOUSR)
+					if (DWAINE::ERR::SIG::NOUSR)
 						result_msg = "Error: Insufficient credentials."
 
 			else
-				var/success = signal_program(1, list("command"=DWAINE_COMMAND_DMSG,"target"=driver_id,"dcommand"="auth"), file)
+				var/success = signal_program(1, list("command"= DWAINE::SYSCALL::DMSG,"target"=driver_id,"dcommand"="auth"), file)
 				switch(success)
-					if (ESIG_USR1)
+					if (DWAINE::ERR::SIG::USR1)
 						result_msg = "User authorized."
-					if (ESIG_USR2)
+					if (DWAINE::ERR::SIG::USR2)
 						result_msg = "!All authorizations acquired!"
-					if (ESIG_USR3)
+					if (DWAINE::ERR::SIG::USR3)
 						result_msg = "User already authorized."
-					if (ESIG_NOUSR)
+					if (DWAINE::ERR::SIG::NOUSR)
 						result_msg = "Error: Insufficient credentials."
 
 			message_user(result_msg)
@@ -1392,7 +1392,7 @@
 		if (..())
 			return
 
-		signal_program(1, list("command"=DWAINE_COMMAND_MOUNT, "id"=src.name))
+		signal_program(1, list("command"= DWAINE::SYSCALL::MOUNT, "id"=src.name))
 		if (!statusfile)
 			for (var/datum/computer/R in src.contents_mirror)
 				if (R.name == setup_statusfile_name)
@@ -1402,7 +1402,7 @@
 
 			statusfile = new /datum/computer/file/record(  )
 			statusfile.name = setup_statusfile_name
-			statusfile.metadata["permission"] = COMP_ROTHER
+			statusfile.metadata["permission"] = DWAINE::PERM::BIT::OTHER_READ
 			src.contents_mirror += statusfile
 
 		return
@@ -1557,7 +1557,7 @@
 
 				statusfile = new /datum/computer/file/record(  )
 				statusfile.name = setup_statusfile_name
-				statusfile.metadata["permission"] = COMP_ROTHER
+				statusfile.metadata["permission"] = DWAINE::PERM::BIT::OTHER_READ
 				src.contents_mirror += statusfile
 
 			statusfile.fields.len = 0
@@ -1633,7 +1633,7 @@
 			mainframe_prog_exit
 			return
 
-		var/list/driverlist = signal_program(1, list("command"=DWAINE_COMMAND_DLIST, "dtag"="pr6_charg", "mode"=1))
+		var/list/driverlist = signal_program(1, list("command"= DWAINE::SYSCALL::DLIST, "dtag"="pr6_charg", "mode"=1))
 		if (!istype(driverlist) || !length(driverlist))
 			message_user("Error: Could not detect PR-6 driver(s).")
 			mainframe_prog_exit
@@ -1655,7 +1655,7 @@
 					mainframe_prog_exit
 					return
 
-				var/datum/computer/file/record/statrec = signal_program(1, list("command"=DWAINE_COMMAND_FGET,"path"="/mnt/_[lowertext(initlist[2])]/status"))
+				var/datum/computer/file/record/statrec = signal_program(1, list("command"= DWAINE::SYSCALL::FGET,"path"="/mnt/_[lowertext(initlist[2])]/status"))
 				if (!istype(statrec))
 					message_user("Error: Unable to fetch unit status.")
 					mainframe_prog_exit
@@ -1698,12 +1698,12 @@
 				else if (!dd_hasprefix(initlist[3], "/"))
 					initlist[3] = "[current]" + (current == "/" ? null : "/") + initlist[3]
 
-				var/datum/computer/file/guardbot_task/task = signal_program(1, list("command"=DWAINE_COMMAND_FGET,"path"=initlist[3]))
+				var/datum/computer/file/guardbot_task/task = signal_program(1, list("command"= DWAINE::SYSCALL::FGET,"path"=initlist[3]))
 				if (istype(task))
 					//If we're uploading a task, first we need to hand the driver a copy of that task!
 					var/datum/computer/file/guardbot_task/taskCopy = task.copy_file()
 					taskCopy.name = "uploadtmp"
-					if (signal_program(1, list("command"=DWAINE_COMMAND_FWRITE,"path"="/mnt/_[lowertext(initlist[2])]", "replace"=1), taskCopy) != ESIG_SUCCESS)
+					if (signal_program(1, list("command"= DWAINE::SYSCALL::FWRITE,"path"="/mnt/_[lowertext(initlist[2])]", "replace"=1), taskCopy) != DWAINE::ERR::SIG::SUCCESS)
 						message_user("Error: Unable to pass task to dock driver. Code 0xF5")
 						//qdel(taskCopy)
 						taskCopy.dispose()
@@ -1726,7 +1726,7 @@
 							else if (!dd_hasprefix(initlist[4], "/"))
 								initlist[5] = "[current]" + (current == "/" ? null : "/") + initlist[5]
 
-							var/datum/computer/file/record/configfile = signal_program(1, list("command"=DWAINE_COMMAND_FGET,"path"=initlist[5]))
+							var/datum/computer/file/record/configfile = signal_program(1, list("command"= DWAINE::SYSCALL::FGET,"path"=initlist[5]))
 							if (istype(configfile))
 								commandRec.fields += configfile.fields
 							else
@@ -1741,7 +1741,7 @@
 
 
 					//Now give the driver the actual command record.
-					if (signal_program(1, list("command"=DWAINE_COMMAND_FWRITE,"path"="/mnt/_[lowertext(initlist[2])]","replace"=1), commandRec) != ESIG_SUCCESS)
+					if (signal_program(1, list("command"= DWAINE::SYSCALL::FWRITE,"path"="/mnt/_[lowertext(initlist[2])]","replace"=1), commandRec) != DWAINE::ERR::SIG::SUCCESS)
 						message_user("Error: Unable to pass configuration to dock driver. Code 0xF7")
 						//qdel(commandRec)
 						if (commandRec)
@@ -1765,7 +1765,7 @@
 				commandRec.name = "command"
 				commandRec.fields += "command=wipe"
 
-				if(signal_program(1, list("command"=DWAINE_COMMAND_FWRITE,"path"="/mnt/_[lowertext(initlist[2])]","replace"=1), commandRec) != ESIG_SUCCESS)
+				if(signal_program(1, list("command"= DWAINE::SYSCALL::FWRITE,"path"="/mnt/_[lowertext(initlist[2])]","replace"=1), commandRec) != DWAINE::ERR::SIG::SUCCESS)
 					message_user("Error: Unable to interface with dock driver. Code 0xF7")
 					//qdel(commandRec)
 					if (commandRec)
@@ -1785,7 +1785,7 @@
 				commandRec.name = "command"
 				commandRec.fields += "command=wake"
 
-				if(signal_program(1, list("command"=DWAINE_COMMAND_FWRITE,"path"="/mnt/_[lowertext(initlist[2])]","replace"=1), commandRec) != ESIG_SUCCESS)
+				if(signal_program(1, list("command"= DWAINE::SYSCALL::FWRITE,"path"="/mnt/_[lowertext(initlist[2])]","replace"=1), commandRec) != DWAINE::ERR::SIG::SUCCESS)
 					message_user("Error: Unable to interface with dock driver.")
 					//qdel(commandRec)
 					if (commandRec)
@@ -1806,15 +1806,15 @@
 					mainframe_prog_exit
 					return
 
-				var/radioDriver = signal_program(1, list("command"=DWAINE_COMMAND_DGET, "dtag"="pr6_radio"))
-				if (radioDriver & ESIG_DATABIT)
-					radioDriver &= ~ESIG_DATABIT
+				var/radioDriver = signal_program(1, list("command"= DWAINE::SYSCALL::DGET, "dtag"="pr6_radio"))
+				if (radioDriver & DWAINE::ERR::SIG::DATABIT)
+					radioDriver &= ~DWAINE::ERR::SIG::DATABIT
 					//signal_program(1, list("command"="dmsg", "target"=radioDriver, "dcommand"="transmit", "data"="[targetID == "all" ? "acc_code=[netpass_heads]" : "address_1=[targetID]"];command=dock_return;_freq=[buddyFreq]"))
 
 					var/datum/computer/file/record/sigFile = new
 					sigFile.name = "[ascii2text( rand(65,91) )][time2text(world.realtime, "MMDDhhmmss")]"
 					sigFile.fields = list(targetID == "all" ? "acc_code=[netpass_heads]" : "address_1=[targetID]", "command=dock_return")
-					signal_program(1, list("command"=DWAINE_COMMAND_FWRITE, "path"="/mnt/radio/[buddyFreq]","replace"=1,"mkdir"=1), sigFile)
+					signal_program(1, list("command"= DWAINE::SYSCALL::FWRITE, "path"="/mnt/radio/[buddyFreq]","replace"=1,"mkdir"=1), sigFile)
 
 				else
 					message_user("Error: Could not detect radio driver.")
@@ -1837,7 +1837,7 @@
 		if (..())
 			return
 
-		signal_program(1, list("command"=DWAINE_COMMAND_MOUNT, "id"=src.name, "link"="radio"))
+		signal_program(1, list("command"= DWAINE::SYSCALL::MOUNT, "id"=src.name, "link"="radio"))
 		return
 
 	process()
@@ -1847,7 +1847,7 @@
 		for (var/a_user_id in radio_users)
 			var/list/id_stuff = radio_users[a_user_id]
 			if (istype(id_stuff) && length(id_stuff))
-				signal_program(1, list("command"=DWAINE_COMMAND_TKILL, "target"=id_stuff[1]))
+				signal_program(1, list("command"= DWAINE::SYSCALL::TKILL, "target"=id_stuff[1]))
 
 		if (radio_users)
 			radio_users.len = 0
@@ -1880,7 +1880,7 @@
 					if(dataList["data"] != "noreply")
 						message_device("_freq=[ dataList["_freq"] ]&address_1=[ . ]&command=term_connect&data=noreply")
 
-					if (signal_program(1, list("command"=DWAINE_COMMAND_ULOGIN, "data"=., "name"="TEMP")) != ESIG_SUCCESS)
+					if (signal_program(1, list("command"= DWAINE::SYSCALL::ULOGIN, "data"=., "name"="TEMP")) != DWAINE::ERR::SIG::SUCCESS)
 						radio_users -= .
 						return 1
 
@@ -1891,7 +1891,7 @@
 						return 1
 					if (!(. in radio_users))
 						return 1
-					return signal_program(1, list("command"=DWAINE_COMMAND_UINPUT, "data" = dataList["data"], "term" = .), theFile) != ESIG_SUCCESS
+					return signal_program(1, list("command"= DWAINE::SYSCALL::UINPUT, "data" = dataList["data"], "term" = .), theFile) != DWAINE::ERR::SIG::SUCCESS
 
 				if("term_ping")
 					if (!dataList["address_1"] || !dataList["_freq"])
@@ -1944,31 +1944,31 @@
 
 	receive_progsignal(var/sendid, var/list/data, var/datum/computer/file/file)
 		if (..())
-			return ESIG_GENERIC
+			return DWAINE::ERR::SIG::GENERIC
 
 		if (!data["command"])
-			return ESIG_GENERIC
+			return DWAINE::ERR::SIG::GENERIC
 
 		switch (data["command"])
 			if ("transmit","TRANSMIT")
 				if (!data["data"])
-					return ESIG_GENERIC
+					return DWAINE::ERR::SIG::GENERIC
 
 				message_device(data["data"], file)
-				return ESIG_SUCCESS
+				return DWAINE::ERR::SIG::SUCCESS
 
-			if (DWAINE_COMMAND_MSG_TERM)
+			if (DWAINE::SYSCALL::MSG_TERM)
 				if (!data["term"] || !data["data"])
-					return ESIG_NOTARGET
+					return DWAINE::ERR::SIG::NOTARGET
 
 				. = radio_users[ "[data["term"]]" ]
 				if (!istype(., /list))
-					return ESIG_NOTARGET
+					return DWAINE::ERR::SIG::NOTARGET
 
 				message_device("_freq=[.[1]]&address_1=[ data["term"] ]&command=term_message&data=[ data["data"] ]&render=[ data["render"] ]")
-				return ESIG_SUCCESS
+				return DWAINE::ERR::SIG::SUCCESS
 
-		return ESIG_GENERIC
+		return DWAINE::ERR::SIG::GENERIC
 
 	add_file(var/datum/computer/file/theFile, var/freq)
 		if (!initialized)
@@ -2069,34 +2069,34 @@
 
 	receive_progsignal(var/sendid, var/list/data, var/datum/computer/file/file)
 		if (..())
-			return ESIG_GENERIC
+			return DWAINE::ERR::SIG::GENERIC
 
 		if (!data["command"])
-			return ESIG_GENERIC
+			return DWAINE::ERR::SIG::GENERIC
 
 		switch (lowertext(data["command"]))
 			if ("report_status")
 				switch(knownState)
 					if (STATE_OFF)
-						return ESIG_USR1
+						return DWAINE::ERR::SIG::USR1
 					if (STATE_IDLE)
-						return ESIG_USR2
+						return DWAINE::ERR::SIG::USR2
 					if (STATE_ONGUARD)
-						return ESIG_USR3
+						return DWAINE::ERR::SIG::USR3
 					if (STATE_ALERTED)
-						return ESIG_USR4
+						return DWAINE::ERR::SIG::USR4
 					else
-						return ESIG_IOERR
+						return DWAINE::ERR::SIG::IOERR
 
 			if ("activate")
 				//todo
-				return ESIG_SUCCESS
+				return DWAINE::ERR::SIG::SUCCESS
 
 			if ("deactivate")
 				//todo
-				return ESIG_SUCCESS
+				return DWAINE::ERR::SIG::SUCCESS
 
-		return ESIG_GENERIC
+		return DWAINE::ERR::SIG::GENERIC
 
 	terminal_input(var/data, var/datum/computer/file/file)
 		if (..())
@@ -2152,10 +2152,10 @@
 
 	receive_progsignal(var/sendid, var/list/data, var/datum/computer/file/file)
 		if (..())
-			return ESIG_GENERIC
+			return DWAINE::ERR::SIG::GENERIC
 
 		if (!data["command"])
-			return ESIG_GENERIC
+			return DWAINE::ERR::SIG::GENERIC
 
 		if (lowertext(data["command"]) == "setmode")
 			var/commandString = null
@@ -2179,9 +2179,9 @@
 			if (commandString)
 				message_device("command=setmode[commandString]")
 
-			return ESIG_SUCCESS
+			return DWAINE::ERR::SIG::SUCCESS
 
-		return ESIG_GENERIC
+		return DWAINE::ERR::SIG::GENERIC
 
 	terminal_input(var/data, var/datum/computer/file/file)
 		if (..())
@@ -2246,30 +2246,30 @@
 
 	receive_progsignal(var/sendid, var/list/data, var/datum/computer/file/file)
 		if (..())
-			return ESIG_GENERIC
+			return DWAINE::ERR::SIG::GENERIC
 
 		if (!data["command"])
-			return ESIG_GENERIC
+			return DWAINE::ERR::SIG::GENERIC
 
 		switch (lowertext(data["command"]))
 			if ("report_status")
 				if (status)
-					return ESIG_USR1
+					return DWAINE::ERR::SIG::USR1
 				else
-					return ESIG_USR2
+					return DWAINE::ERR::SIG::USR2
 
 			if ("activate")
 				message_device("command=activate")
 
-				return ESIG_SUCCESS
+				return DWAINE::ERR::SIG::SUCCESS
 
 			if ("deactivate")
 				message_device("command=deactivate")
 
-				return ESIG_SUCCESS
+				return DWAINE::ERR::SIG::SUCCESS
 
 
-		return ESIG_GENERIC
+		return DWAINE::ERR::SIG::GENERIC
 
 //A very simple interface program for the HEPT emitter.
 /datum/computer/file/mainframe_program/hept_interface
@@ -2287,38 +2287,38 @@
 			mainframe_prog_exit
 			return
 
-		var/driver_id = signal_program(1, list("command"=DWAINE_COMMAND_DGET, "dtag"="hept_emit"))
-		if (!(driver_id & ESIG_DATABIT))
+		var/driver_id = signal_program(1, list("command"= DWAINE::SYSCALL::DGET, "dtag"="hept_emit"))
+		if (!(driver_id & DWAINE::ERR::SIG::DATABIT))
 			message_user("Error: Could not detect emitter driver.")
 			mainframe_prog_exit
 			return
 
-		driver_id &= ~ESIG_DATABIT
+		driver_id &= ~DWAINE::ERR::SIG::DATABIT
 		var/command = lowertext(initlist[1])
 		switch(command)
 			if ("status")
-				var/statReport = signal_program( 1, list("command"=DWAINE_COMMAND_DMSG,"target"=driver_id,"dcommand"="report_status"))
+				var/statReport = signal_program( 1, list("command"= DWAINE::SYSCALL::DMSG,"target"=driver_id,"dcommand"="report_status"))
 				switch (statReport)
-					if (ESIG_USR1)
+					if (DWAINE::ERR::SIG::USR1)
 						message_user("Emitter status: Active")
 
-					if (ESIG_USR2)
+					if (DWAINE::ERR::SIG::USR2)
 						message_user("Emitter status: Inactive")
 
 					else
 						message_user("Error: Unknown status code from driver.")
 
 			if ("activate")
-				var/success = signal_program( 1, list("command"=DWAINE_COMMAND_DMSG,"target"=driver_id,"dcommand"="activate"))
-				if (success == ESIG_SUCCESS)
+				var/success = signal_program( 1, list("command"= DWAINE::SYSCALL::DMSG,"target"=driver_id,"dcommand"="activate"))
+				if (success == DWAINE::ERR::SIG::SUCCESS)
 					message_user("Transmitting activation signal...")
 				else
 					message_user("Error: Could not associate with driver.")
 
 
 			if ("deactivate")
-				var/success = signal_program( 1, list("command"=DWAINE_COMMAND_DMSG,"target"=driver_id,"dcommand"="deactivate"))
-				if (success == ESIG_SUCCESS)
+				var/success = signal_program( 1, list("command"= DWAINE::SYSCALL::DMSG,"target"=driver_id,"dcommand"="deactivate"))
+				if (success == DWAINE::ERR::SIG::SUCCESS)
 					message_user("Transmitting deactivation signal...")
 				else
 					message_user("Error: Could not associate with driver.")
@@ -2354,7 +2354,7 @@
 		process_delay_divider = initial(process_delay_divider)
 
 		if (!security_state)
-			var/list/secDrivers = signal_program(1, list("command"=DWAINE_COMMAND_DLIST, "dtag"="ir_detect"))
+			var/list/secDrivers = signal_program(1, list("command"= DWAINE::SYSCALL::DLIST, "dtag"="ir_detect"))
 			if (!istype(secDrivers))
 				return
 
@@ -2380,20 +2380,20 @@
 		return
 
 	proc/activateAPCs()
-		var/list/apcDrivers = signal_program(1, list("command"=DWAINE_COMMAND_DLIST, "dtag"="pwr_cntrl"))
+		var/list/apcDrivers = signal_program(1, list("command"= DWAINE::SYSCALL::DLIST, "dtag"="pwr_cntrl"))
 		if (!istype(apcDrivers))
 			return
 		for (var/drivID = 1, drivID <= apcDrivers.len, drivID++)
 			if (isnull(apcDrivers[drivID]))
 				continue
 
-			signal_program(1, list("command"=DWAINE_COMMAND_DMSG,"target"=drivID,"dcommand"="setmode","equip"=3,"light"=3,"environ"=3))
+			signal_program(1, list("command"= DWAINE::SYSCALL::DMSG,"target"=drivID,"dcommand"="setmode","equip"=3,"light"=3,"environ"=3))
 			continue
 
 		return
 
 	proc/dispatchGuards()
-		var/list/guardDrivers = signal_program(1, list("command"=DWAINE_COMMAND_DLIST, "dtag"="pr6_charg", "mode"=1))
+		var/list/guardDrivers = signal_program(1, list("command"= DWAINE::SYSCALL::DLIST, "dtag"="pr6_charg", "mode"=1))
 		if (!istype(guardDrivers))
 			return
 		for (var/drivID = 1, drivID <= guardDrivers.len, drivID++)
@@ -2405,8 +2405,8 @@
 			commandRec.name = "command"
 			commandRec.fields = list("command=wake")
 
-			var/result = signal_program(1, list("command"=DWAINE_COMMAND_FWRITE,"path"="/mnt/_[lowertext(guardDrivers[drivID])]"), commandRec)
-			if(result != ESIG_SUCCESS)
+			var/result = signal_program(1, list("command"= DWAINE::SYSCALL::FWRITE,"path"="/mnt/_[lowertext(guardDrivers[drivID])]"), commandRec)
+			if(result != DWAINE::ERR::SIG::SUCCESS)
 				//qdel(commandRec)
 				commandRec.dispose()
 			continue
@@ -2433,10 +2433,10 @@
 
 	receive_progsignal(var/sendid, var/list/data, var/datum/computer/file/file)
 		if (..())
-			return ESIG_GENERIC
+			return DWAINE::ERR::SIG::GENERIC
 
 		if (!data["command"])
-			return ESIG_GENERIC
+			return DWAINE::ERR::SIG::GENERIC
 
 		var/old_last_action = last_action
 		last_action = lowertext(data["command"])
@@ -2446,11 +2446,11 @@
 				sessions["[sessionid]"] = sendid
 
 				message_device("command=info&session=[sessionid]")
-				return ESIG_SUCCESS
+				return DWAINE::ERR::SIG::SUCCESS
 
 			if ("status") //Request current state of device, whether it is active, etc
 				message_device("command=status")
-				return ESIG_SUCCESS
+				return DWAINE::ERR::SIG::SUCCESS
 
 			if ("poke") //Set an arbitrary (device-specific) configuration value on the device.
 				if (!isnull(data["field"]) && !isnull(data["value"]))
@@ -2460,23 +2460,23 @@
 					var/sessionid = "[world.timeofday%100][rand(0,9)]"
 					sessions["[sessionid]"] = sendid
 					message_device("command=poke&field=[data["field"]]&value=[data["value"]]&session=[sessionid]")
-					return ESIG_SUCCESS
+					return DWAINE::ERR::SIG::SUCCESS
 
-				return ESIG_BADCOMMAND
+				return DWAINE::ERR::SIG::BADCOMMAND
 
 			if ("peek") //Read the value of configuration value on device.
 				if (!isnull(data["field"]))
 					var/sessionid = "[world.timeofday%100][rand(0,9)]"
 					sessions["[sessionid]"] = sendid
 					message_device("command=peek&field=[data["field"]]&session=[sessionid]")
-					return ESIG_SUCCESS
+					return DWAINE::ERR::SIG::SUCCESS
 
-				return ESIG_BADCOMMAND
+				return DWAINE::ERR::SIG::BADCOMMAND
 
 //Enactor Specific Commands
 			if ("pulse") //Send pulse command & duration
 				if (!isEnactor)
-					return ESIG_BADCOMMAND
+					return DWAINE::ERR::SIG::BADCOMMAND
 
 				var/pulseDuration = data["duration"]
 				if (!isnum(pulseDuration))
@@ -2484,43 +2484,43 @@
 
 				pulseDuration = clamp(pulseDuration, 1, 255)
 				message_device("command=pulse&duration=[pulseDuration]")
-				return ESIG_SUCCESS
+				return DWAINE::ERR::SIG::SUCCESS
 
 			if ("activate") //Send activation command, if enactor.
 				if (isEnactor)
 					message_device("command=activate")
-					return ESIG_SUCCESS
+					return DWAINE::ERR::SIG::SUCCESS
 
-				return ESIG_BADCOMMAND
+				return DWAINE::ERR::SIG::BADCOMMAND
 
 			if ("deactivate") //Send deactivation commmand, if enactor.
 				if (isEnactor)
 					message_device("command=deactivate")
-					return ESIG_SUCCESS
+					return DWAINE::ERR::SIG::SUCCESS
 
-				return ESIG_BADCOMMAND
+				return DWAINE::ERR::SIG::BADCOMMAND
 
 //Sensor Specific Commands
 			if ("sense") //Send sense command, if sensor.
 				if (isSensor)
 					message_device("command=sense")
-					return ESIG_SUCCESS
+					return DWAINE::ERR::SIG::SUCCESS
 
-				return ESIG_BADCOMMAND
+				return DWAINE::ERR::SIG::BADCOMMAND
 
 			if ("read") //Send read command, if sensor.
 				if (isSensor)
 					var/sessionid = "[world.timeofday%100][rand(0,9)]"
 					sessions["[sessionid]"] = sendid
 					message_device("command=read&session=[sessionid]")
-					return ESIG_SUCCESS
+					return DWAINE::ERR::SIG::SUCCESS
 
-				return ESIG_BADCOMMAND
+				return DWAINE::ERR::SIG::BADCOMMAND
 
 		//This isn't a valid new last_action, set it back
 		last_action = old_last_action
 
-		return ESIG_GENERIC
+		return DWAINE::ERR::SIG::GENERIC
 
 	terminal_input(var/data, var/datum/computer/file/file)
 		if (..())
@@ -2572,7 +2572,7 @@
 						if (!isnum(waitID))
 							return
 
-						signal_program(waitID, list("command"=DWAINE_COMMAND_REPLY,"data"="SUCCESS"))
+						signal_program(waitID, list("command"= DWAINE::SYSCALL::REPLY,"data"="SUCCESS"))
 						return
 
 			if ("peeked")
@@ -2585,8 +2585,8 @@
 				if (!isnum(waitID))
 					return
 
-				signal_program(waitID, list("command"=DWAINE_COMMAND_REPLY, "data"="[isnull(datalist["field"]) ? "NULL" : "[datalist["field"]]"]-[isnull(datalist["value"]) ? "NULL" : "[datalist["value"]]"]", "format"="field"))
-				//signal_program(waitID, list("command"=DWAINE_COMMAND_REPLY,"data"="Value: \[[isnull(datalist["value"]) ? "NULL" : "[datalist["value"]]"]]"))
+				signal_program(waitID, list("command"= DWAINE::SYSCALL::REPLY, "data"="[isnull(datalist["field"]) ? "NULL" : "[datalist["field"]]"]-[isnull(datalist["value"]) ? "NULL" : "[datalist["value"]]"]", "format"="field"))
+				//signal_program(waitID, list("command"= DWAINE::SYSCALL::REPLY,"data"="Value: \[[isnull(datalist["value"]) ? "NULL" : "[datalist["value"]]"]]"))
 				return
 
 			if ("nack")
@@ -2601,7 +2601,7 @@
 						if (!isnum(waitID))
 							return
 
-						signal_program(waitID, list("command"=DWAINE_COMMAND_REPLY,"data"="Error: Invalid Field or Value."))
+						signal_program(waitID, list("command"= DWAINE::SYSCALL::REPLY,"data"="Error: Invalid Field or Value."))
 						return
 
 					if ("peek")
@@ -2614,7 +2614,7 @@
 						if (!isnum(waitID))
 							return
 
-						signal_program(waitID, list("command"=DWAINE_COMMAND_REPLY,"data"="Error: Invalid Field."))
+						signal_program(waitID, list("command"= DWAINE::SYSCALL::REPLY,"data"="Error: Invalid Field."))
 						return
 
 					if ("read")
@@ -2627,7 +2627,7 @@
 						if (!isnum(waitID))
 							return
 
-						signal_program(waitID, list("command"=DWAINE_COMMAND_REPLY,"data"="No sense data to read!"))
+						signal_program(waitID, list("command"= DWAINE::SYSCALL::REPLY,"data"="No sense data to read!"))
 						return
 
 			if ("info")
@@ -2684,7 +2684,7 @@
 				if (datalist["valuelist"])
 					infotext += ",[datalist["valuelist"]]"
 
-				signal_program(waitID, list("command"=DWAINE_COMMAND_REPLY, "data"=infotext, "format"="info"))
+				signal_program(waitID, list("command"= DWAINE::SYSCALL::REPLY, "data"=infotext, "format"="info"))
 				return
 
 			if ("read")
@@ -2712,7 +2712,7 @@
 
 					readDataString += "[knownReadingFields[i]] [knownReadings[i]] [knownReadingFields[ knownReadingFields[i] ]]"
 
-				signal_program(waitID, list("command"=DWAINE_COMMAND_REPLY,"data"="[readDataString]","format"="values"))
+				signal_program(waitID, list("command"= DWAINE::SYSCALL::REPLY,"data"="[readDataString]","format"="values"))
 
 
 			if ("status")
@@ -2747,7 +2747,7 @@
 
 	disposing()
 		if (service_id)
-			signal_program(1, list("command"=DWAINE_COMMAND_TKILL, "target"=service_id))
+			signal_program(1, list("command"= DWAINE::SYSCALL::TKILL, "target"=service_id))
 
 		userid = null
 		..()
@@ -2767,16 +2767,16 @@
 		srvUser.user_id = userid
 		srvUser.current_prog = src
 
-		if (signal_program(1, list("command"=DWAINE_COMMAND_ULOGIN, "name"="SRV[userid]", "service"=1, "sysop"=1)) != ESIG_SUCCESS)
+		if (signal_program(1, list("command"= DWAINE::SYSCALL::ULOGIN, "name"="SRV[userid]", "service"=1, "sysop"=1)) != DWAINE::ERR::SIG::SUCCESS)
 			//qdel(srvUser)
 			srvUser.dispose()
 			return
 
-		signal_program(1, list("command"=DWAINE_COMMAND_MOUNT, "id"=src.name))
+		signal_program(1, list("command"= DWAINE::SYSCALL::MOUNT, "id"=src.name))
 		if (initRec.fields["service"])
-			var/datum/computer/file/mainframe_program/exec = signal_program(1, list("command"=DWAINE_COMMAND_FGET, "path"="/sys/srv/[initRec.fields["service"]]"))
+			var/datum/computer/file/mainframe_program/exec = signal_program(1, list("command"= DWAINE::SYSCALL::FGET, "path"="/sys/srv/[initRec.fields["service"]]"))
 			if (istype(exec))
-				var/list/siglist = list("command"=DWAINE_COMMAND_TSPAWN, "passusr"=1, "path"="/sys/srv/[initRec.fields["service"]]")
+				var/list/siglist = list("command"= DWAINE::SYSCALL::TSPAWN, "passusr"=1, "path"="/sys/srv/[initRec.fields["service"]]")
 				if (initRec.fields["args"])
 					siglist["args"] = strip_html(initRec.fields["args"])
 
@@ -2800,12 +2800,12 @@
 		if (!command)
 			return
 
-		if (service_id && (signal_program(1, list("command"=DWAINE_COMMAND_TKILL, "target"=service_id)) == ESIG_GENERIC))
+		if (service_id && (signal_program(1, list("command"= DWAINE::SYSCALL::TKILL, "target"=service_id)) == DWAINE::ERR::SIG::GENERIC))
 			service_id = null
 
-		var/datum/computer/file/mainframe_program/exec = signal_program(1, list("command"=DWAINE_COMMAND_FGET, "path"="/sys/srv/[command]"))
+		var/datum/computer/file/mainframe_program/exec = signal_program(1, list("command"= DWAINE::SYSCALL::FGET, "path"="/sys/srv/[command]"))
 		if (istype(exec))
-			var/list/siglist = list("command"=DWAINE_COMMAND_TSPAWN, "passusr"=1, "path"="/sys/srv/[command]")
+			var/list/siglist = list("command"= DWAINE::SYSCALL::TSPAWN, "passusr"=1, "path"="/sys/srv/[command]")
 			if (datalist["args"])
 				siglist["args"] = strip_html(datalist["args"])
 
@@ -2832,12 +2832,12 @@
 
 	receive_progsignal(var/sendid, var/list/data = null, var/datum/computer/file/file)
 		if (..())
-			return ESIG_GENERIC
+			return DWAINE::ERR::SIG::GENERIC
 
 		if (!data["command"])
-			return ESIG_GENERIC
+			return DWAINE::ERR::SIG::GENERIC
 
-		if (data["command"]  == DWAINE_COMMAND_MSG_TERM)
+		if (data["command"]  == DWAINE::SYSCALL::MSG_TERM)
 			if (findtext(data["render"],"record"))
 				var/list/dataList = splittext(data["data"],"|n")
 				var/dataMessage = ""
@@ -2854,7 +2854,7 @@
 			else
 				message_device("command=[data["data"]]", file)
 
-		else if (data["command"] == DWAINE_COMMAND_EXIT || data["command"] == DWAINE_COMMAND_TEXIT)
+		else if (data["command"] == DWAINE::SYSCALL::EXIT || data["command"] == DWAINE::SYSCALL::TEXIT)
 			src.service_id = 0
 			status = "IDLE"
 
@@ -2879,7 +2879,7 @@
 		switch (command)
 			if ("index")
 				//locate mounted printers
-				var/datum/computer/folder/mount = signal_program(1, list("command"=DWAINE_COMMAND_FGET,"path"="/mnt"))
+				var/datum/computer/folder/mount = signal_program(1, list("command"= DWAINE::SYSCALL::FGET,"path"="/mnt"))
 				if (istype(mount))
 					var/response = "print_index"
 					for (var/datum/computer/potentialPrinter in mount.contents)
@@ -2894,7 +2894,7 @@
 				//Retrieve printer status value from the little record it keeps for exactly those purposes.
 				if (length(initlist) > 1)
 					var/printerName = copytext(ckeyEx(initlist[2]), 1,33)
-					var/datum/computer/file/record/printerStatus = signal_program(1, list("command"=DWAINE_COMMAND_FGET,"path"="/mnt/lp-[printerName]/status"))
+					var/datum/computer/file/record/printerStatus = signal_program(1, list("command"= DWAINE::SYSCALL::FGET,"path"="/mnt/lp-[printerName]/status"))
 					var/theStatus = "???"
 					if (istype(printerStatus) && printerStatus.fields && length(printerStatus.fields))
 						theStatus = "[printerStatus.fields[1]]"
@@ -2907,9 +2907,9 @@
 					if (!dd_hasprefix(toPrintPath, "/"))
 						toPrintPath = "/[toPrintPath]"
 
-					var/datum/computer/file/record/toPrintFile = signal_program(1, list("command"=DWAINE_COMMAND_FGET,"path"=toPrintPath))
+					var/datum/computer/file/record/toPrintFile = signal_program(1, list("command"= DWAINE::SYSCALL::FGET,"path"=toPrintPath))
 					if (istype(toPrintFile))
-						if (signal_program(1, list("command"=DWAINE_COMMAND_FWRITE,"path"="/mnt/lp-[printerName]"), toPrintFile) == ESIG_SUCCESS)
+						if (signal_program(1, list("command"= DWAINE::SYSCALL::FWRITE,"path"="/mnt/lp-[printerName]"), toPrintFile) == DWAINE::ERR::SIG::SUCCESS)
 							message_user("ack")
 						else
 							message_user("nack")
@@ -2922,18 +2922,18 @@
 					if (!dd_hasprefix(toPrintPath, "/"))
 						toPrintPath = "/[toPrintPath]"
 
-					var/datum/computer/file/record/toPrintFile = signal_program(1, list("command"=DWAINE_COMMAND_FGET,"path"=toPrintPath))
+					var/datum/computer/file/record/toPrintFile = signal_program(1, list("command"= DWAINE::SYSCALL::FGET,"path"=toPrintPath))
 					if (istype(toPrintFile))
-						var/datum/computer/folder/mnt = signal_program(1, list("command"=DWAINE_COMMAND_FGET,"path"="/mnt"))
+						var/datum/computer/folder/mnt = signal_program(1, list("command"= DWAINE::SYSCALL::FGET,"path"="/mnt"))
 						if (istype(mnt))
 							var/failure = 0
 							for (var/datum/computer/folder/printFolder in mnt.contents)
 								if (copytext(printFolder.name, 1, 4) != "lp-")
 									continue
 
-								signal_program(1, list("command"=DWAINE_COMMAND_FWRITE,"path"="/mnt/[printFolder.name]"), toPrintFile.copy_file())
+								signal_program(1, list("command"= DWAINE::SYSCALL::FWRITE,"path"="/mnt/[printFolder.name]"), toPrintFile.copy_file())
 /*
-								if (signal_program(1, list("command"="fwrite","path"="/mnt/[printFolder.name]"), toPrintFile.copy_file()) != ESIG_SUCCESS)
+								if (signal_program(1, list("command"="fwrite","path"="/mnt/[printFolder.name]"), toPrintFile.copy_file()) != DWAINE::ERR::SIG::SUCCESS)
 									failure = 1
 									break
 */
@@ -3024,7 +3024,7 @@
 				recfile.holder = src.holder
 
 				recfile = recfile.copy_file() //A copy for a printer, too
-				signal_program(1, list("command"=DWAINE_COMMAND_FWRITE,"path"="/mnt/lp-[bridge_printer_id]"), recfile)
+				signal_program(1, list("command"= DWAINE::SYSCALL::FWRITE,"path"="/mnt/lp-[bridge_printer_id]"), recfile)
 
 				return
 

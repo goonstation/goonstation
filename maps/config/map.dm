@@ -91,6 +91,9 @@
 #elif defined(MAP_OVERRIDE_DENSITY2)
 #include "density2.dm"
 
+#elif defined(MAP_OVERRIDE_PROBSTATION)
+#include "probstation.dm"
+
 #elif defined(MAP_OVERRIDE_OZYMANDIAS)
 #include "ozymandias.dm"
 

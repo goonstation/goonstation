@@ -31,7 +31,7 @@
 		return
 
 	src.opt_data = null
-	if (src.signal_program(1, list("command" = DWAINE_COMMAND_TSPAWN, "passusr" = TRUE, "path" = "/bin/getopt", "args" = "cf:klqtvx [initparams]")) == ESIG_NOTARGET)
+	if (src.signal_program(1, list("command" = DWAINE::SYSCALL::TSPAWN, "passusr" = TRUE, "path" = "/bin/getopt", "args" = "cf:klqtvx [initparams]")) == DWAINE::ERR::SIG::NOTARGET)
 		src.message_user("getopt: command not found.")
 		mainframe_prog_exit
 		return
@@ -93,7 +93,7 @@
 
 	// List the contents of an archive file.
 	if (src.opt_list)
-		var/datum/computer/file/archive/archive = src.signal_program(1, list("command" = DWAINE_COMMAND_FGET, "path" = archive_path))
+		var/datum/computer/file/archive/archive = src.signal_program(1, list("command" = DWAINE::SYSCALL::FGET, "path" = archive_path))
 		if (!istype(archive))
 			src.message_user("tar: Cannot locate archive [src.opt_file]")
 			mainframe_prog_exit
@@ -104,7 +104,7 @@
 
 	// Extract the contents of an archive file.
 	else if (src.opt_extract)
-		var/datum/computer/file/archive/archive = src.signal_program(1, list("command" = DWAINE_COMMAND_FGET, "path" = archive_path))
+		var/datum/computer/file/archive/archive = src.signal_program(1, list("command" = DWAINE::SYSCALL::FGET, "path" = archive_path))
 		if (!istype(archive))
 			src.message_user("tar: Cannot locate archive [src.opt_file]")
 			mainframe_prog_exit
@@ -116,7 +116,7 @@
 		else
 			target_path = current
 
-		if (!istype(src.signal_program(1, list("command" = DWAINE_COMMAND_FGET, "path" = target_path)), /datum/computer/folder))
+		if (!istype(src.signal_program(1, list("command" = DWAINE::SYSCALL::FGET, "path" = target_path)), /datum/computer/folder))
 			src.message_user("tar: cannot read target directory [target_path]")
 			mainframe_prog_exit
 			return
@@ -136,7 +136,7 @@
 
 		var/datum/computer/file/archive/archive = new()
 		for (var/path as anything in unaffected)
-			var/datum/computer/C = src.signal_program(1, list("command" = DWAINE_COMMAND_FGET, "path" = ABSOLUTE_PATH(path, current)))
+			var/datum/computer/C = src.signal_program(1, list("command" = DWAINE::SYSCALL::FGET, "path" = ABSOLUTE_PATH(path, current)))
 			if (!istype(C))
 				src.message_user("tar: File [path] does not exist.")
 				mainframe_prog_exit
@@ -157,12 +157,12 @@
 
 		var/new_path = jointext(separated_filepath, "/") || "/"
 
-		switch (src.signal_program(1, list("command" = DWAINE_COMMAND_FWRITE, "path" = new_path, "mkdir" = TRUE, "replace" = TRUE), archive))
-			if (ESIG_NOWRITE)
+		switch (src.signal_program(1, list("command" = DWAINE::SYSCALL::FWRITE, "path" = new_path, "mkdir" = TRUE, "replace" = TRUE), archive))
+			if (DWAINE::ERR::SIG::NOWRITE)
 				src.message_user("tar: Cannot write destination [src.opt_file]")
-			if (ESIG_NOTARGET)
+			if (DWAINE::ERR::SIG::NOTARGET)
 				src.message_user("tar: Error creating path to archive.")
-			if (ESIG_GENERIC)
+			if (DWAINE::ERR::SIG::GENERIC)
 				src.message_user("tar: Error while creating archive.")
 
 		if (src.opt_temporary)
@@ -172,23 +172,23 @@
 
 /datum/computer/file/mainframe_program/utility/tar/receive_progsignal(sendid, list/data, datum/computer/file/file)
 	if (..())
-		return ESIG_GENERIC
+		return DWAINE::ERR::SIG::GENERIC
 
 	switch (data["command"])
-		if (DWAINE_COMMAND_REPLY)
+		if (DWAINE::SYSCALL::REPLY)
 			if (data["sender_tag"] == "getopt")
 				src.opt_data = data["data"]
-				return ESIG_USR4
+				return DWAINE::ERR::SIG::USR4
 			else
-				return ESIG_GENERIC
+				return DWAINE::ERR::SIG::GENERIC
 
-		if (DWAINE_COMMAND_MSG_TERM)
+		if (DWAINE::SYSCALL::MSG_TERM)
 			src.message_user(data["data"])
 
 		else
-			return ESIG_GENERIC
+			return DWAINE::ERR::SIG::GENERIC
 
-	return ESIG_SUCCESS
+	return DWAINE::ERR::SIG::SUCCESS
 
 /datum/computer/file/mainframe_program/utility/tar/message_user(msg, render, file)
 	if (src.opt_quiet)
@@ -203,11 +203,11 @@
 	src.message_user("[name] -l -f ARCHIVE")
 
 /datum/computer/file/mainframe_program/utility/tar/proc/message_reply_and_user(message)
-	var/list/data = list("command" = DWAINE_COMMAND_REPLY, "data" = message, "sender_tag" = "tar")
+	var/list/data = list("command" = DWAINE::SYSCALL::REPLY, "data" = message, "sender_tag" = "tar")
 	if (src.useracc)
 		data["term"] = src.useracc.user_id
 
-	if (src.signal_program(src.parent_task.progid, data) != ESIG_USR4)
+	if (src.signal_program(src.parent_task.progid, data) != DWAINE::ERR::SIG::USR4)
 		src.message_user(message)
 
 /datum/computer/file/mainframe_program/utility/tar/proc/temp_file_name()
@@ -235,16 +235,16 @@
 		src.message_user("tar: Stack overflow.")
 		return
 
-	var/datum/computer/T = src.signal_program(1, list("command" = DWAINE_COMMAND_FGET, "path" = "[target_path][to_extract.name]"))
+	var/datum/computer/T = src.signal_program(1, list("command" = DWAINE::SYSCALL::FGET, "path" = "[target_path][to_extract.name]"))
 	if (src.opt_verbose)
 		src.message_reply_and_user("[current_path][to_extract.name]")
 
 	if (istype(to_extract, /datum/computer/folder))
 		if (!istype(T))
-			if (src.signal_program(1, list("command" = DWAINE_COMMAND_TSPAWN, "passusr" = TRUE, "path" = "/bin/mkdir", "args" = "[target_path][to_extract.name]")) == ESIG_NOTARGET)
+			if (src.signal_program(1, list("command" = DWAINE::SYSCALL::TSPAWN, "passusr" = TRUE, "path" = "/bin/mkdir", "args" = "[target_path][to_extract.name]")) == DWAINE::ERR::SIG::NOTARGET)
 				src.message_user("mkdir: command not found.")
 
-			if (!istype(src.signal_program(1, list("command" = DWAINE_COMMAND_FGET, "path" = "[target_path][to_extract.name]")), /datum/computer/folder))
+			if (!istype(src.signal_program(1, list("command" = DWAINE::SYSCALL::FGET, "path" = "[target_path][to_extract.name]")), /datum/computer/folder))
 				src.message_user("tar: Failed to create directory [to_extract.name]")
 
 			var/datum/computer/folder/folder = to_extract
@@ -258,13 +258,13 @@
 
 	else if (istype(to_extract, /datum/computer/file))
 		if (!istype(T) || !src.opt_skip)
-			var/outcome = src.signal_program(1, list("command" = DWAINE_COMMAND_FWRITE, "path" = "[target_path]", "mkdir" = TRUE, "replace" = TRUE), to_extract)
+			var/outcome = src.signal_program(1, list("command" = DWAINE::SYSCALL::FWRITE, "path" = "[target_path]", "mkdir" = TRUE, "replace" = TRUE), to_extract)
 			switch (outcome)
-				if (ESIG_NOWRITE)
+				if (DWAINE::ERR::SIG::NOWRITE)
 					src.message_user("tar: [target_path][to_extract.name]: permission denied.")
-				if (ESIG_GENERIC)
+				if (DWAINE::ERR::SIG::GENERIC)
 					src.message_user("tar: Error extracting [target_path][to_extract.name]")
-				if (ESIG_NOTARGET)
+				if (DWAINE::ERR::SIG::NOTARGET)
 					src.message_user("tar: Bad path: [target_path] for file [to_extract.name]")
 
 		else

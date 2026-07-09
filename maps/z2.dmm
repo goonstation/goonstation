@@ -35458,7 +35458,7 @@
 	icon_state = "offbroken";
 	name = "broken computer"
 	},
-/obj/blind_switch/north{
+/obj/blind_switch/directional/north{
 	id = "owl"
 	},
 /turf/unsimulated/floor/wood/two,
@@ -55322,7 +55322,7 @@
 	},
 /area/precursor)
 "eWY" = (
-/obj/blind_switch/area/north,
+/obj/blind_switch/directional/north,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices{
 	icon_state = "blue"
@@ -60848,7 +60848,7 @@
 	},
 /area/void_diner)
 "jiS" = (
-/obj/blind_switch/area/north,
+/obj/blind_switch/directional/north,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/lobby)
 "jiZ" = (

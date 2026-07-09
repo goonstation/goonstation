@@ -1186,7 +1186,7 @@
 /obj/machinery/light_switch/directional/east{
 	pixel_y = -4
 	},
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	pixel_y = 4
 	},
 /obj/disposalpipe/segment{
@@ -6541,7 +6541,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southwest)
 "bla" = (
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	pixel_y = 4
 	},
 /obj/machinery/light_switch/directional/east{
@@ -9601,7 +9601,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	pixel_y = 4
 	},
 /obj/machinery/light_switch/directional/east{
@@ -9874,7 +9874,7 @@
 /obj/machinery/camera/directional/east{
 	pixel_y = 10
 	},
-/obj/blind_switch/area/east,
+/obj/blind_switch/directional/east,
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
@@ -10047,7 +10047,7 @@
 /obj/machinery/light_switch/directional/west{
 	pixel_y = 10
 	},
-/obj/blind_switch/area/west,
+/obj/blind_switch/directional/west,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "ctP" = (
@@ -11271,7 +11271,7 @@
 	},
 /area/station/medical/medbay)
 "dsw" = (
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	pixel_y = 4
 	},
 /obj/machinery/light_switch/directional/east{
@@ -14740,7 +14740,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/blind_switch/north{
+/obj/blind_switch/directional/north{
 	pixel_x = -6
 	},
 /obj/machinery/light_switch/directional/north{
@@ -16694,6 +16694,7 @@
 	pixel_x = 4;
 	pixel_y = 9
 	},
+/obj/item/surgical_spoon,
 /obj/item/scissors/surgical_scissors{
 	pixel_x = 5;
 	pixel_y = 5
@@ -16762,8 +16763,7 @@
 /obj/machinery/light_switch/directional/west{
 	pixel_y = 5
 	},
-/obj/blind_switch/area/west{
-	pixel_x = -24;
+/obj/blind_switch/directional/west{
 	pixel_y = -5
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/west,
@@ -17523,6 +17523,7 @@
 /obj/item/suture{
 	pixel_y = 8
 	},
+/obj/item/surgical_spoon,
 /obj/item/scalpel{
 	pixel_x = -1;
 	pixel_y = 4
@@ -17966,9 +17967,8 @@
 	dir = 1
 	},
 /obj/storage/crate/rcd/CE,
-/obj/blind_switch/area/south{
-	pixel_x = -6;
-	pixel_y = -24
+/obj/blind_switch/directional/south{
+	pixel_x = -6
 	},
 /obj/machinery/light_switch/directional/south{
 	pixel_x = 5
@@ -19434,7 +19434,7 @@
 /obj/machinery/camera/directional/west{
 	pixel_y = -10
 	},
-/obj/blind_switch/area/west,
+/obj/blind_switch/directional/west,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office{
 	name = "Chaplain's Office"
@@ -22567,7 +22567,7 @@
 /obj/machinery/camera/directional/east{
 	pixel_y = 10
 	},
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	pixel_y = 4
 	},
 /obj/machinery/light_switch/directional/east{
@@ -25322,7 +25322,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters_west)
 "mVU" = (
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	pixel_y = 4
 	},
 /obj/machinery/light_switch/directional/east{
@@ -25758,7 +25758,7 @@
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	pixel_y = 4
 	},
 /obj/machinery/light_switch/directional/east{
@@ -26310,7 +26310,7 @@
 /area/space)
 "nCr" = (
 /obj/machinery/computer/tetris,
-/obj/blind_switch/area/west{
+/obj/blind_switch/directional/west{
 	pixel_y = 4
 	},
 /obj/machinery/light_switch/directional/west{
@@ -26592,7 +26592,7 @@
 /obj/machinery/light_switch/directional/north{
 	pixel_x = -6
 	},
-/obj/blind_switch/area/north{
+/obj/blind_switch/directional/north{
 	pixel_x = 6
 	},
 /obj/machinery/camera/directional/north{
@@ -27934,7 +27934,7 @@
 /obj/machinery/camera/directional/east{
 	pixel_y = 10
 	},
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	pixel_y = 4
 	},
 /turf/simulated/floor/black,
@@ -28351,6 +28351,7 @@
 	pixel_x = 4;
 	pixel_y = 9
 	},
+/obj/item/surgical_spoon,
 /obj/item/scissors/surgical_scissors{
 	pixel_x = 5;
 	pixel_y = 5
@@ -33503,7 +33504,7 @@
 /obj/machinery/light_switch/directional/east{
 	pixel_y = -10
 	},
-/obj/blind_switch/east{
+/obj/blind_switch/directional/east{
 	pixel_y = -2
 	},
 /turf/simulated/floor/black,
@@ -33528,8 +33529,7 @@
 	pixel_y = 5
 	},
 /obj/reagent_dispensers/watertank/fountain,
-/obj/blind_switch/area/west{
-	pixel_x = -25;
+/obj/blind_switch/directional/west{
 	pixel_y = -4
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/west,
@@ -34254,9 +34254,7 @@
 /obj/machinery/camera/directional/east{
 	pixel_y = 11
 	},
-/obj/blind_switch/area/east{
-	dir = 4;
-	pixel_x = 24;
+/obj/blind_switch/directional/east{
 	pixel_y = 2
 	},
 /obj/machinery/chem_heater/chemistry,
@@ -35313,8 +35311,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/blind_switch/area/west{
-	pixel_x = -25;
+/obj/blind_switch/directional/west{
 	pixel_y = -4
 	},
 /turf/simulated/floor,
@@ -36766,8 +36763,7 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 4
 	},
-/obj/blind_switch/area/west{
-	pixel_x = -25;
+/obj/blind_switch/directional/west{
 	pixel_y = -4
 	},
 /turf/simulated/floor,
@@ -38082,8 +38078,7 @@
 	dir = 4
 	},
 /obj/machinery/portable_atmospherics/canister/air,
-/obj/blind_switch/area/west{
-	pixel_x = -25;
+/obj/blind_switch/directional/west{
 	pixel_y = -4
 	},
 /turf/simulated/floor/caution/white{
