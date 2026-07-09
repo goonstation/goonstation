@@ -49522,6 +49522,8 @@
 	pixel_x = -8;
 	pixel_y = 1
 	},
+/obj/table/reinforced/chemistry/auto/auxsup,
+/obj/table/reinforced/chemistry/auto/auxsup,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "oaO" = (
@@ -57986,7 +57988,6 @@
 	},
 /area/station/engine/engineering/ce)
 "tLu" = (
-/obj/table/auto,
 /obj/item/reagent_containers/iv_drip/saline{
 	pixel_x = -5;
 	pixel_y = 4
@@ -57998,6 +57999,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/table/reinforced/chemistry/auto/basicsup,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -60245,11 +60247,11 @@
 /turf/simulated/floor,
 /area/station/medical/research)
 "vfi" = (
-/obj/table/auto,
 /obj/machinery/glass_recycler,
 /obj/item/hand_labeler{
 	pixel_y = -9
 	},
+/obj/table/reinforced/chemistry/auto/auxsup,
 /turf/simulated/floor/bluewhite{
 	dir = 6
 	},
