@@ -128,11 +128,11 @@
 		S["notes"] = sec_note
 
 	if (H.traitHolder?.hasTrait("training_clown"))
-		S["criminal"] = SECURITY::ARREST_STATE::CLOWN
+		S["criminal"] = SECURITY::ARREST::STATE::CLOWN
 		S["mi_crim"] = "Clown"
 		H.update_arrest_icon()
 	else
-		S["criminal"] = SECURITY::ARREST_STATE::NONE
+		S["criminal"] = SECURITY::ARREST::STATE::NONE
 		S["mi_crim"] = "None"
 
 	S["mi_crim_d"] = "No minor crime convictions."
