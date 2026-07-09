@@ -181,7 +181,7 @@
 			if (DWAINE::ERR::SHELL::EXEC::SUCCESS)
 				continue
 			if (DWAINE::ERR::SHELL::EXEC::SCRIPT_ERROR)
-				src.message_user("Error: Unable to execute script.")
+				src.message_user("Error: Unable to execute script. TEST")
 				return TRUE
 			if (DWAINE::ERR::SHELL::EXEC::STACK_OVERFLOW)
 				src.message_user("Error: Stack overflow.")
