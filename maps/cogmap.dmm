@@ -49522,8 +49522,6 @@
 	pixel_x = -8;
 	pixel_y = 1
 	},
-/obj/table/reinforced/chemistry/auto/auxsup,
-/obj/table/reinforced/chemistry/auto/auxsup,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "oaO" = (
@@ -49606,6 +49604,7 @@
 "odJ" = (
 /obj/storage/secure/closet/research/chemical,
 /obj/machinery/firealarm/directional/north,
+/obj/table/reinforced/chemistry/auto/auxsup,
 /turf/simulated/floor/purplewhite{
 	dir = 9
 	},
