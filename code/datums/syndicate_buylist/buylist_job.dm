@@ -184,6 +184,15 @@
 			return
 		..()
 
+/datum/syndicate_buylist/traitor/wasp_implanter
+	name = "Wasp Implanter"
+	items = list(/obj/item/implanter/wasp)
+	cost = 6
+	desc = "Enemies being a buzzkill? This implant will release a swarm of angry wasps upon your death, and make them really feel the sting! More implants mean more wasps, and while you are implanted wasps will be friendly to you."
+	vr_allowed = FALSE
+	job = list("Botanist", "Apiculturist")
+	can_buy = UPLINK_TRAITOR
+
 /datum/syndicate_buylist/traitor/fakegrenade
 	name = "Fake Cleaner Grenades"
 	items = list(/obj/item/storage/box/f_grenade_kit)
