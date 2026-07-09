@@ -1,0 +1,449 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/crew_quarters/bar)
+"b" = (
+/obj/stool/chair/comfy/red{
+	dir = 1
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "fred6"
+	},
+/area/station/crew_quarters/jazz)
+"c" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/carpet{
+	dir = 1;
+	icon_state = "fred6"
+	},
+/area/station/crew_quarters/jazz)
+"d" = (
+/obj/stool/bar,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/bar)
+"e" = (
+/turf/simulated/floor/carpet{
+	icon_state = "fred6"
+	},
+/area/station/crew_quarters/jazz)
+"f" = (
+/obj/table/reinforced/bar/auto,
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/bar)
+"g" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/bar)
+"h" = (
+/obj/machinery/firealarm/directional/north,
+/obj/machinery/vending/alcohol/with_ammo,
+/obj/machinery/light/incandescent/netural{
+	dir = 8
+	},
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/bar)
+"i" = (
+/turf/simulated/floor/carpet{
+	dir = 1;
+	icon_state = "fred6"
+	},
+/area/station/crew_quarters/jazz)
+"j" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 4
+	},
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/bar)
+"k" = (
+/obj/machinery/door/airlock/pyro/alt,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/access/bar,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/bar)
+"l" = (
+/obj/stool/chair/comfy/purple,
+/obj/blind_switch/directional/west{
+	pixel_y = -5
+	},
+/obj/landmark/start/job/assistant,
+/obj/machinery/light_switch/directional/west{
+	pixel_y = 7
+	},
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/jazz)
+"m" = (
+/obj/table/reinforced/bar/auto,
+/obj/disposalpipe/segment,
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/bar)
+"n" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/espresso_machine{
+	pixel_y = 6
+	},
+/obj/drink_rack/cup{
+	pixel_y = 28
+	},
+/obj/item/reagent_containers/food/drinks/espressocup{
+	pixel_y = 2;
+	pixel_x = 8
+	},
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/bar)
+"o" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/bent/west,
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/bar)
+"p" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/jazz)
+"q" = (
+/obj/table/wood/round/auto,
+/obj/item/device/light/candle/small,
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/jazz)
+"r" = (
+/obj/stool/bar,
+/obj/machinery/camera/directional/west,
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/bar)
+"s" = (
+/obj/machinery/chem_dispenser/alcohol/bar,
+/obj/item/storage/wall{
+	spawn_contents = list(/obj/item/storage/box/fruit_wedges,/obj/item/storage/box/cocktail_doodads,/obj/item/storage/box/cocktail_umbrellas,/obj/item/storage/box/glassbox,/obj/item/hand_labeler,/obj/item/storage/firstaid/toxin,/obj/item/device/reagentscanner,/obj/item/reagent_containers/dropper,/obj/item/reagent_containers/dropper/mechanical,/obj/item/storage/box/ic_cones=2,/obj/item/storage/toolbox/emergency);
+	pixel_y = 32
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/bar)
+"t" = (
+/obj/stool/chair/comfy/red{
+	dir = 4
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/carpet{
+	dir = 1;
+	icon_state = "fred6"
+	},
+/area/station/crew_quarters/jazz)
+"u" = (
+/obj/stool/bar,
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/bar)
+"v" = (
+/obj/machinery/door/airlock/pyro/alt,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/disposalpipe/segment,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/jazz)
+"w" = (
+/obj/machinery/door/airlock/pyro/alt,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/disposalpipe/segment,
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/jazz)
+"x" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/jazz)
+"y" = (
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/crew_quarters/jazz)
+"z" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/phone,
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/bar)
+"A" = (
+/obj/table/wood/round/auto,
+/obj/item/device/light/candle/small,
+/obj/item/matchbook{
+	pixel_x = 9;
+	pixel_y = 8
+	},
+/turf/simulated/floor/carpet{
+	dir = 5;
+	icon_state = "fred6"
+	},
+/area/station/crew_quarters/jazz)
+"B" = (
+/obj/machinery/firealarm/directional/east,
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/jazz)
+"C" = (
+/obj/table/reinforced/bar/auto,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/bar)
+"D" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/bar)
+"F" = (
+/obj/stool/chair/comfy/purple{
+	dir = 8
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "fred6"
+	},
+/area/station/crew_quarters/jazz)
+"G" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/bar)
+"H" = (
+/obj/machinery/light/small/floor/warm,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/junction/right/south,
+/turf/simulated/floor/carpet{
+	icon_state = "fred6"
+	},
+/area/station/crew_quarters/jazz)
+"I" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/jazz)
+"J" = (
+/obj/machinery/chem_dispenser/chemical,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/bar)
+"L" = (
+/obj/item/instrument/large/jukebox,
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/jazz)
+"M" = (
+/obj/landmark/start/job/bartender,
+/obj/machinery/light/small/floor/netural,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/bar)
+"N" = (
+/turf/simulated/floor/black,
+/area/station/crew_quarters/bar)
+"O" = (
+/obj/stool/bar,
+/obj/machinery/light_switch/directional/east,
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/bar)
+"P" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/glass_recycler/bar{
+	pixel_y = 5;
+	pixel_x = -3
+	},
+/obj/machinery/disposal/small/north{
+	pixel_y = 28
+	},
+/obj/disposalpipe/trunk,
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/bar)
+"Q" = (
+/obj/stool/bar,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/bar)
+"S" = (
+/obj/stool/bar,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/camera/directional/east,
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/bar)
+"T" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/noticeboard/persistent/bar/directional/north,
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/bar)
+"U" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/disposalpipe/segment/bent/east,
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/bar)
+"V" = (
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "fred6"
+	},
+/area/station/crew_quarters/jazz)
+"W" = (
+/obj/table/reinforced/bar/auto,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/bar)
+"X" = (
+/obj/machinery/light/small/floor/netural,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/bar)
+"Y" = (
+/obj/machinery/disposal/small/south,
+/obj/disposalpipe/trunk/west,
+/turf/simulated/floor/carpet{
+	icon_state = "fred6"
+	},
+/area/station/crew_quarters/jazz)
+
+(1,1,1) = {"
+a
+a
+a
+a
+T
+y
+y
+y
+y
+"}
+(2,1,1) = {"
+a
+h
+r
+u
+X
+I
+l
+q
+y
+"}
+(3,1,1) = {"
+a
+n
+f
+f
+D
+p
+V
+F
+y
+"}
+(4,1,1) = {"
+a
+J
+N
+z
+Q
+x
+i
+e
+y
+"}
+(5,1,1) = {"
+k
+G
+M
+W
+U
+v
+c
+H
+w
+"}
+(6,1,1) = {"
+a
+s
+g
+f
+d
+I
+t
+Y
+y
+"}
+(7,1,1) = {"
+a
+P
+C
+m
+o
+p
+A
+b
+y
+"}
+(8,1,1) = {"
+a
+j
+S
+O
+X
+x
+L
+B
+y
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+D
+y
+y
+y
+y
+"}

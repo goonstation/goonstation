@@ -3274,7 +3274,6 @@
 	},
 /obj/disposalpipe/trunk/mail/south,
 /obj/machinery/disposal/mail/small/autoname/chapel/north,
-/mob/living/critter/small_animal/opossum/morty,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
 "alF" = (
@@ -53259,6 +53258,7 @@
 /obj/item/reagent_containers/glass/bottle/formaldehyde,
 /obj/item/reagent_containers/syringe,
 /obj/item/hand_labeler,
+/obj/item/scissors/surgical_scissors,
 /turf/simulated/floor/sanitary/blue,
 /area/station/medical/morgue)
 "gqn" = (
@@ -53732,6 +53732,8 @@
 /obj/item/clothing/suit/apron,
 /obj/item/surgical_spoon,
 /obj/item/spraybottle/cleaner,
+/obj/item/storage/box/biohazard_bags,
+/obj/item/storage/box/body_bag,
 /turf/simulated/floor/sanitary/blue,
 /area/station/medical/morgue)
 "gGV" = (
@@ -65893,6 +65895,10 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/solar/north)
+"qum" = (
+/mob/living/critter/small_animal/opossum/morty,
+/turf/simulated/floor/sanitary/blue,
+/area/station/medical/morgue)
 "quD" = (
 /obj/machinery/door/airlock/pyro/glass/med{
 	dir = 4
@@ -113379,7 +113385,7 @@ rhR
 cIi
 sZT
 gOd
-gOd
+qum
 kVf
 isw
 fvr

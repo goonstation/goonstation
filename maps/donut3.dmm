@@ -10217,11 +10217,14 @@
 	},
 /area/station/crew_quarters/kitchen)
 "daZ" = (
-/obj/machinery/power/apc/autoname_west,
-/obj/cable{
-	icon_state = "0-4"
-	},
 /obj/machinery/vending/port_a_nanomed,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/sink/slim{
+	dir = 4;
+	pixel_x = -9
+	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/treatment)
 "dbc" = (
@@ -42197,10 +42200,12 @@
 /obj/disposalpipe/segment/morgue{
 	name = "kitchen freezer pipe"
 	},
+/obj/item/surgical_spoon,
 /obj/item/scissors/surgical_scissors{
 	pixel_x = -14;
 	pixel_y = 5
 	},
+/obj/item/storage/box/biohazard_bags,
 /obj/item/storage/box/body_bag,
 /obj/item/device/detective_scanner{
 	pixel_x = -4;
@@ -42210,6 +42215,9 @@
 	pixel_x = 7;
 	pixel_y = 7
 	},
+/obj/item/reagent_containers/syringe,
+/obj/item/spraybottle/cleaner,
+/obj/item/hand_labeler,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "ngn" = (
@@ -53810,6 +53818,10 @@
 	pixel_y = 2
 	},
 /obj/machinery/light_switch/directional/west,
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/treatment)
 "qLW" = (

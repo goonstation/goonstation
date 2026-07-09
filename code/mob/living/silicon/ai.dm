@@ -1,3 +1,9 @@
+#define AI_DISMANTLE_STAGE_LOCKED 0
+#define AI_DISMANTLE_STAGE_UNLOCKED 1
+#define AI_DISMANTLE_STAGE_COVER_OPEN 2
+#define AI_DISMANTLE_STAGE_CPU_BOLTS_LOOSE 3
+#define AI_DISMANTLE_STAGE_BRAINLESS 4
+
 var/global/list/available_ai_shells = list()
 var/atom/movable/minimap_ui_handler/ai_minimap_ui
 var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
@@ -135,7 +141,7 @@ TYPEINFO(/mob/living/silicon/ai)
 	var/bought_hat = FALSE
 	var/last_announcement = -INFINITY
 	var/announcement_cooldown = 1200
-	var/dismantle_stage = 0
+	var/dismantle_stage = AI_DISMANTLE_STAGE_LOCKED
 	var/datum/light/light
 	//var/death_timer = 100
 	var/power_mode = 0
@@ -272,17 +278,17 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 
 /mob/living/silicon/ai/get_help_message(dist, mob/user)
 	switch(src.dismantle_stage)
-		if(0)
+		if(AI_DISMANTLE_STAGE_LOCKED)
 			. = "You can swipe an <b>ID card</b> to unlock the cover."
-		if(1)
+		if(AI_DISMANTLE_STAGE_UNLOCKED)
 			. = "You can use a <b>crowbar</b> to pry open the cover, or swipe an <b>ID card</b> to lock it."
-		if(2)
+		if(AI_DISMANTLE_STAGE_COVER_OPEN)
 			. = "You can use a <b>wrench</b> to undo the CPU bolts, <b>cable coil</b> to repair damage, or a <b>crowbar</b> to close the cover."
-		if(3)
+		if(AI_DISMANTLE_STAGE_CPU_BOLTS_LOOSE)
 			. = "You can use a <b>wrench</b> to tighten the CPU bolts, or an <b>empty hand</b> to remove the CPU unit."
-		if(4)
+		if(AI_DISMANTLE_STAGE_BRAINLESS)
 			. = "You can insert a <b>brain</b> to activate the AI."
-	if(src.dismantle_stage < 4 && isdead(src))
+	if(src.dismantle_stage < AI_DISMANTLE_STAGE_BRAINLESS && isdead(src))
 		. += " You can use an <b>empty hand</b> to reboot the AI."
 	. += " You can also use a <b>screwdriver</b> to [src.anchored ? "unscrew" : "screw down"] the floor bolts."
 
@@ -464,7 +470,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 /mob/living/silicon/ai/attackby(obj/item/W, mob/user)
 	if (istype(W,/obj/item/device/borg_linker) && !isghostdrone(user))
 		var/obj/item/device/borg_linker/linker = W
-		if(src.dismantle_stage<2)
+		if(src.dismantle_stage < AI_DISMANTLE_STAGE_COVER_OPEN)
 			boutput(user, "You need to open [src.name]'s cover before you can change [his_or_her(src)] law rack link.")
 			return
 
@@ -493,24 +499,24 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 		src.update_terminal()
 
 	else if (ispryingtool(W))
-		if (src.dismantle_stage == 1)
+		if (src.dismantle_stage == AI_DISMANTLE_STAGE_UNLOCKED)
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			src.visible_message(SPAN_ALERT("<b>[user.name]</b> opens [src.name]'s chassis cover."))
 			src.locking = 0
-			src.dismantle_stage = 2
-		else if (src.dismantle_stage == 2)
+			src.dismantle_stage = AI_DISMANTLE_STAGE_COVER_OPEN
+		else if (src.dismantle_stage == AI_DISMANTLE_STAGE_COVER_OPEN)
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			src.visible_message(SPAN_ALERT("<b>[user.name]</b> closes [src.name]'s chassis cover."))
-			src.dismantle_stage = 1
+			src.dismantle_stage = AI_DISMANTLE_STAGE_UNLOCKED
 		else ..()
 
 	else if (iswrenchingtool(W))
-		if (src.dismantle_stage == 2)
+		if (src.dismantle_stage == AI_DISMANTLE_STAGE_COVER_OPEN)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			src.visible_message(SPAN_ALERT("<b>[user.name]</b> begins undoing [src.name]'s CPU bolts."))
 			SETUP_GENERIC_ACTIONBAR(user, src, 6 SECONDS, PROC_REF(toggle_CPU_bolts), list(user), W.icon, W.icon_state, null,\
 				INTERRUPT_MOVE | INTERRUPT_ACTION | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACT)
-		else if (src.dismantle_stage == 3)
+		else if (src.dismantle_stage == AI_DISMANTLE_STAGE_CPU_BOLTS_LOOSE)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			src.visible_message(SPAN_ALERT("<b>[user.name]</b> begins affixing [src.name]'s CPU bolts."))
 			SETUP_GENERIC_ACTIONBAR(user, src, 6 SECONDS, PROC_REF(toggle_CPU_bolts), list(user), W.icon, W.icon_state, null,\
@@ -525,7 +531,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 				src.visible_message(SPAN_ALERT("<b>[user.name]</b> repairs some of the damage to [src.name]'s chassis."))
 		else boutput(user, SPAN_ALERT("There's no structural damage on [src.name] to mend."))
 
-	else if(istype(W, /obj/item/cable_coil) && dismantle_stage >= 2)
+	else if(istype(W, /obj/item/cable_coil) && dismantle_stage >= AI_DISMANTLE_STAGE_COVER_OPEN)
 		var/obj/item/cable_coil/coil = W
 		src.add_fingerprint(user)
 		if(src.fireloss)
@@ -536,19 +542,19 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 		else boutput(user, SPAN_ALERT("There's no burn damage on [src.name]'s wiring to mend."))
 
 	else if (istype(get_id_card(W), /obj/item/card/id))
-		if (src.dismantle_stage >= 2)
+		if (src.dismantle_stage >= AI_DISMANTLE_STAGE_COVER_OPEN)
 			boutput(user, SPAN_ALERT("You must close the cover to swipe an ID card."))
 		else
 			if(src.allowed(user))
-				if (src.dismantle_stage == 1)
-					src.dismantle_stage = 0
+				if (src.dismantle_stage == AI_DISMANTLE_STAGE_UNLOCKED)
+					src.dismantle_stage = AI_DISMANTLE_STAGE_LOCKED
 				else
-					src.dismantle_stage = 1
+					src.dismantle_stage = AI_DISMANTLE_STAGE_UNLOCKED
 				src.locking = 0
 				user.visible_message(SPAN_ALERT("<b>[user.name]</b> [src.dismantle_stage ? "unlocks" : "locks"] [src.name]'s cover lock."))
 			else boutput(user, SPAN_ALERT("Access denied."))
 
-	else if (istype(W, /obj/item/organ/brain/) && src.dismantle_stage == 4)
+	else if (istype(W, /obj/item/organ/brain/) && src.dismantle_stage == AI_DISMANTLE_STAGE_BRAINLESS)
 		if (src.brain)
 			boutput(user, SPAN_ALERT("There's already a brain in there!"))
 		else
@@ -569,7 +575,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 					src.make_syndicate("brain added by [user]")
 			W.set_loc(src)
 			src.brain = W
-			src.dismantle_stage = 3
+			src.dismantle_stage = AI_DISMANTLE_STAGE_CPU_BOLTS_LOOSE
 			if (!src.emagged && !src.syndicate) // The antagonist proc does that too.
 				src.show_text("<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
 				src.show_text("<B>To look at other parts of the station, double-click yourself to get a camera menu.</B>")
@@ -610,7 +616,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 		if (src.moustache_mode == 0)
 			src.moustache_mode = 1
 			user.visible_message(SPAN_ALERT("<b>[user.name]</b> uploads a moustache to [src.name]!"))
-		else if (src.dismantle_stage == 4 || isdead(src))
+		else if (src.dismantle_stage == AI_DISMANTLE_STAGE_BRAINLESS || isdead(src))
 			boutput(user, SPAN_ALERT("Using this on a deactivated AI would be silly."))
 		return
 	else if(istype(W,/obj/item/ai_plating_kit))
@@ -653,7 +659,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 		C.apply_keybind("robot_tg")
 
 /mob/living/silicon/ai/proc/eject_brain(var/mob/user, var/fling = FALSE)
-	src.dismantle_stage = 4
+	src.dismantle_stage = AI_DISMANTLE_STAGE_BRAINLESS
 	if (user)
 		src.visible_message(SPAN_ALERT("<b>[user.name]</b> removes [src.name]'s CPU unit!"))
 		logTheThing(LOG_COMBAT, user, "removes [constructTarget(src,"combat")]'s brain at [log_loc(src)].") // Should be logged, really (Convair880).
@@ -722,19 +728,19 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 /// for dismantle action bar
 /mob/living/silicon/ai/proc/toggle_CPU_bolts(mob/user)
 	switch(src.dismantle_stage)
-		if(2)
+		if(AI_DISMANTLE_STAGE_COVER_OPEN)
 			src.visible_message(SPAN_ALERT("<b>[user.name]</b> removes [src.name]'s CPU bolts."))
-			src.dismantle_stage = 3
-		if(3)
+			src.dismantle_stage = AI_DISMANTLE_STAGE_CPU_BOLTS_LOOSE
+		if(AI_DISMANTLE_STAGE_CPU_BOLTS_LOOSE)
 			src.visible_message(SPAN_ALERT("<b>[user.name]</b> puts [src.name]'s CPU bolts into place."))
-			src.dismantle_stage = 2
+			src.dismantle_stage = AI_DISMANTLE_STAGE_COVER_OPEN
 
 /mob/living/silicon/ai/attack_hand(mob/user)
 	var/list/actions = list("Do Nothing")
 
-	if (src.dismantle_stage == 3)
+	if (src.dismantle_stage == AI_DISMANTLE_STAGE_CPU_BOLTS_LOOSE)
 		actions += "Remove CPU Unit"
-	if (src.dismantle_stage < 4 && isdead(src))
+	if (src.dismantle_stage < AI_DISMANTLE_STAGE_BRAINLESS && isdead(src))
 		actions += "Restart AI"
 
 	if (length(actions) > 1)
@@ -1798,24 +1804,24 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 	set category = "AI Commands"
 	set name = "Toggle Cover Lock"
 
-	if (src.dismantle_stage >= 2)
+	if (src.dismantle_stage >= AI_DISMANTLE_STAGE_COVER_OPEN)
 		boutput(src, SPAN_ALERT("You can't lock your cover when it's open!"))
 	else
 		if (src.locking)
 			boutput(src, SPAN_ALERT("Your cover is currently locking, please be patient."))
-		else if (src.dismantle_stage == 1)
+		else if (src.dismantle_stage == AI_DISMANTLE_STAGE_UNLOCKED)
 			src.locking = 1
 			boutput(src, SPAN_ALERT("Locking cover..."))
 			SPAWN(12 SECONDS)
 				if (!src.locking)
 					boutput(src, SPAN_ALERT("The lock was interrupted before it could finish!"))
 				else
-					src.dismantle_stage = 0
+					src.dismantle_stage = AI_DISMANTLE_STAGE_LOCKED
 					src.locking = 0
 					boutput(src, SPAN_ALERT("You lock your cover lock."))
 
 		else
-			src.dismantle_stage = 1
+			src.dismantle_stage = AI_DISMANTLE_STAGE_UNLOCKED
 			boutput(src, SPAN_ALERT("You unlock your cover lock."))
 
 /mob/living/silicon/ai/proc/eye_view()
@@ -2262,7 +2268,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 			src.UpdateOverlays(null, "moustache")
 
 // ------ IF ADDING NEW CORE FRAMES PLEASE DEFINE WHICH OPEN OVERLAY TO USE HERE ------ //
-	if (src.dismantle_stage > 1)
+	if (src.dismantle_stage >= AI_DISMANTLE_STAGE_COVER_OPEN)
 		if(coreSkin == "default" || coreSkin == "science" || coreSkin == "medical" || coreSkin == "syndicate" || coreSkin == "ntold" || coreSkin == "bee" || coreSkin == "shock"|| coreSkin == "pumpkin")
 			src.AddOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_default"), "top")
 		else if(coreSkin == "gold" || coreSkin == "engineering" || coreSkin == "soviet")
@@ -2792,7 +2798,7 @@ proc/get_mobs_trackable_by_AI()
 				src.cell.set_loc(A)
 				src.cell = null
 			A.anchored = UNANCHORED
-			A.dismantle_stage = 4
+			A.dismantle_stage = AI_DISMANTLE_STAGE_BRAINLESS
 			A.update_appearance()
 			qdel(src)
 			return
@@ -2886,3 +2892,8 @@ proc/get_mobs_trackable_by_AI()
 			src.ai.brain.take_damage(20, 20)
 			src.ai.TakeDamage(null, src.ai.health, src.ai.fire_res_on_core ? 0 : src.ai.health)
 			src.ai.eject_brain()
+#undef AI_DISMANTLE_STAGE_LOCKED
+#undef AI_DISMANTLE_STAGE_UNLOCKED
+#undef AI_DISMANTLE_STAGE_COVER_OPEN
+#undef AI_DISMANTLE_STAGE_CPU_BOLTS_LOOSE
+#undef AI_DISMANTLE_STAGE_BRAINLESS

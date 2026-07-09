@@ -1,0 +1,662 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ai" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/yellow/checker{
+	dir = 4
+	},
+/area/station/engine/elect)
+"br" = (
+/obj/machinery/vending/mechanics,
+/turf/simulated/floor/yellow/side{
+	dir = 5
+	},
+/area/station/engine/elect)
+"cd" = (
+/obj/table/auto,
+/obj/machinery/power/apc/autoname_west,
+/obj/item/storage/belt/utility,
+/obj/item/storage/toolbox/electrical,
+/obj/item/electronics/soldering,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/engine/elect)
+"dc" = (
+/obj/machinery/portable_reclaimer,
+/obj/machinery/light_switch/directional/west,
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/engine/elect)
+"dN" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/elect)
+"eJ" = (
+/obj/landmark/start/job/engineer,
+/turf/simulated/floor/yellow/checker{
+	dir = 4
+	},
+/area/station/engine/elect)
+"ff" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/blind_switch/directional/south,
+/turf/simulated/floor/yellow/side{
+	dir = 6
+	},
+/area/station/engine/elect)
+"fY" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/decal/tile_edge/line/yellow{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/yellow/checker{
+	dir = 4
+	},
+/area/station/engine/elect)
+"gx" = (
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	dir = 4
+	},
+/obj/mapping_helper/access/engineering_mechanic,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/yellow/checker{
+	dir = 4
+	},
+/area/station/engine/elect)
+"gB" = (
+/obj/machinery/door/airlock/pyro/engineering/alt,
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/engineering_mechanic,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/yellow,
+/area/station/engine/elect)
+"hi" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle{
+	layer = 2.9;
+	pixel_y = 13
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/elect)
+"hI" = (
+/obj/storage/cart/mechcart/tools,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/engine/elect)
+"iL" = (
+/obj/decal/tile_edge/line/yellow{
+	dir = 4;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/yellow/checker{
+	dir = 4
+	},
+/area/station/engine/elect)
+"jV" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/yellow/side{
+	dir = 6
+	},
+/area/station/engine/elect)
+"ky" = (
+/obj/machinery/computer3/terminal/zeta{
+	dir = 8;
+	setup_os_string = "ZETA_MAINFRAME"
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/light/incandescent,
+/obj/disposalpipe/segment,
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/station/engine/elect)
+"kM" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/yellow/checker{
+	dir = 4
+	},
+/area/station/engine/elect)
+"lY" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/yellow/checker{
+	dir = 4
+	},
+/area/station/engine/elect)
+"nw" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	layer = 2.9;
+	pixel_y = 13
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/elect)
+"pd" = (
+/obj/stool/chair/yellow{
+	dir = 1
+	},
+/obj/landmark/start/job/engineer,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/engine/elect)
+"pJ" = (
+/obj/machinery/manufacturer/mechanic,
+/obj/machinery/light/incandescent,
+/obj/disposalpipe/trunk/east,
+/obj/machinery/disposal/small/east,
+/turf/simulated/floor/yellow/side{
+	dir = 9
+	},
+/area/station/engine/elect)
+"pL" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/submachine/cargopad/mechanics,
+/obj/disposalpipe/segment,
+/turf/simulated/floor/yellow/checker{
+	dir = 4
+	},
+/area/station/engine/elect)
+"qg" = (
+/obj/decal/tile_edge/line/yellow{
+	dir = 6;
+	icon_state = "line1"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/engine/elect)
+"qU" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/line/yellow{
+	icon_state = "line1"
+	},
+/obj/disposalpipe/segment/bent/south,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/engine/elect)
+"qY" = (
+/obj/machinery/door/airlock/pyro/engineering/alt,
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/engineering_mechanic,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/yellow,
+/area/station/engine/elect)
+"tz" = (
+/obj/table/reinforced/auto,
+/obj/machinery/cashreg,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 1
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/engineering_mechanic,
+/obj/window_blinds/cog2/middle{
+	layer = 2.9;
+	pixel_y = 13
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/yellow,
+/area/station/engine/elect)
+"tZ" = (
+/obj/storage/secure/closet/engineering/mechanic,
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/station/engine/elect)
+"ul" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 1
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/engineering_mechanic,
+/obj/window_blinds/cog2/middle{
+	layer = 2.9;
+	pixel_y = 13
+	},
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/yellow,
+/area/station/engine/elect)
+"uJ" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/engine/elect)
+"vR" = (
+/obj/machinery/manufacturer/mechanic,
+/obj/item/device/radio/intercom/engineering{
+	dir = 1
+	},
+/turf/simulated/floor/yellow/side,
+/area/station/engine/elect)
+"yQ" = (
+/obj/table/auto,
+/obj/item/screwdriver/yellow{
+	pixel_y = 6
+	},
+/obj/machinery/camera/directional/south,
+/obj/item/deconstructor{
+	pixel_y = 4
+	},
+/obj/item/disk/data/cartridge/diagnostics,
+/turf/simulated/floor/yellow/side,
+/area/station/engine/elect)
+"yU" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/yellow/checker{
+	dir = 4
+	},
+/area/station/engine/elect)
+"AT" = (
+/turf/simulated/floor/yellow/checker{
+	dir = 4
+	},
+/area/station/engine/elect)
+"CK" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/yellow/checker{
+	dir = 4
+	},
+/area/station/engine/elect)
+"DB" = (
+/obj/machinery/rkit,
+/turf/simulated/floor/yellow/side,
+/area/station/engine/elect)
+"EJ" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/yellow/side,
+/area/station/engine/elect)
+"HL" = (
+/obj/table/auto,
+/obj/machinery/light/incandescent,
+/obj/machinery/phone,
+/turf/simulated/floor/yellow/side{
+	dir = 10
+	},
+/area/station/engine/elect)
+"LP" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/yellow/checker{
+	dir = 4
+	},
+/area/station/engine/elect)
+"Mt" = (
+/obj/table/auto,
+/obj/item/storage/belt/utility,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/electronics/soldering,
+/obj/machinery/firealarm/directional/west,
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/engine/elect)
+"NZ" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left{
+	layer = 2.9;
+	pixel_y = 13
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/elect)
+"QQ" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/line/yellow{
+	dir = 9;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/yellow/checker{
+	dir = 4
+	},
+/area/station/engine/elect)
+"QT" = (
+/obj/table/auto,
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/printer{
+	name = "Printer - Mechanics";
+	pixel_y = 5;
+	print_id = "Mechanics"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/disposalpipe/segment,
+/obj/item/device/t_scanner{
+	pixel_x = 9
+	},
+/obj/item/device/t_scanner{
+	pixel_y = 4;
+	pixel_x = 9
+	},
+/turf/simulated/floor/yellow/corner,
+/area/station/engine/elect)
+"Rs" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/decal/tile_edge/line/yellow{
+	dir = 5;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/yellow/checker{
+	dir = 4
+	},
+/area/station/engine/elect)
+"RV" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/engine/elect)
+"TF" = (
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/engineering_mechanic,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/yellow,
+/area/station/engine/elect)
+"TY" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/engine/elect)
+"UP" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/firealarm/directional/east,
+/obj/disposalpipe/segment,
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/station/engine/elect)
+"WK" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/elect)
+"WT" = (
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/engineering_mechanic,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/yellow,
+/area/station/engine/elect)
+"XF" = (
+/obj/decal/tile_edge/line/yellow{
+	dir = 8;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/yellow/checker{
+	dir = 4
+	},
+/area/station/engine/elect)
+"XL" = (
+/obj/decal/tile_edge/line/yellow{
+	dir = 10;
+	icon_state = "line1"
+	},
+/obj/machinery/computer/general_alert,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/engine/elect)
+"XV" = (
+/turf/simulated/wall/auto/supernorn/colored/yellow,
+/area/station/engine/elect)
+"YU" = (
+/obj/table/auto,
+/obj/machinery/cell_charger,
+/obj/item/cell/supercell/charged,
+/obj/item/cell/supercell/charged,
+/obj/item/cell/supercell/charged,
+/obj/item/cell/supercell/charged,
+/obj/machinery/camera/directional/west,
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/engine/elect)
+"ZF" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/yellow/checker{
+	dir = 4
+	},
+/area/station/engine/elect)
+
+(1,1,1) = {"
+XV
+XV
+XV
+XV
+TF
+XV
+XV
+XV
+XV
+"}
+(2,1,1) = {"
+NZ
+pJ
+Mt
+cd
+TY
+dc
+YU
+HL
+XV
+"}
+(3,1,1) = {"
+tz
+pd
+AT
+AT
+ai
+eJ
+AT
+DB
+XV
+"}
+(4,1,1) = {"
+ul
+qg
+iL
+Rs
+ZF
+LP
+kM
+vR
+XV
+"}
+(5,1,1) = {"
+gB
+qU
+pL
+fY
+QT
+ky
+UP
+jV
+qY
+"}
+(6,1,1) = {"
+hi
+XL
+XF
+QQ
+yQ
+XV
+XV
+gx
+XV
+"}
+(7,1,1) = {"
+hi
+hI
+AT
+lY
+EJ
+XV
+yU
+CK
+XV
+"}
+(8,1,1) = {"
+nw
+br
+tZ
+tZ
+ff
+XV
+dN
+dN
+XV
+"}
+(9,1,1) = {"
+XV
+WK
+uJ
+RV
+WT
+XV
+XV
+XV
+XV
+"}

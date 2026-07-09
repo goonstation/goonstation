@@ -42897,6 +42897,9 @@
 	pixel_x = 10;
 	pixel_y = 9
 	},
+/obj/item/scissors/surgical_scissors,
+/obj/item/surgical_spoon,
+/obj/item/staple_gun,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "spx" = (
