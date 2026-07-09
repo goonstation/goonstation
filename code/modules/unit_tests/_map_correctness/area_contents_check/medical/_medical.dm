@@ -8,6 +8,8 @@
 		CONTENTS_GT(/obj/health_scanner/floor, 0),
 		CONTENTS_GT(/obj/machinery/sleeper/compact, 0),
 		CONTENTS_GT(/obj/machinery/computer3/generic/med_data, 0),
+		CONTENTS_GT(/obj/machinery/recharger/defibrillator, 1),
+		CONTENTS_GT(/obj/machinery/phone, 0),
 		// Cryo Cells
 		CONTENTS_EQ(/obj/machinery/atmospherics/unary/cryo_cell, 2),
 		CONTENTS_EQ(/obj/machinery/portable_atmospherics/canister/oxygen, 1),
@@ -21,7 +23,7 @@
 		CONTENTS_EQ(/obj/item/remote/porter/port_a_medbay, 1),
 		CONTENTS_EQ(/obj/item/remote/porter/port_a_nanomed, 1),
 		// Supplies
-		CONTENTS_GT(/obj/machinery/manufacturer/medical, 1),
+		CONTENTS_GT(/obj/machinery/manufacturer/medical, 0),
 		CONTENTS_EQ(/obj/storage/secure/closet/medical/chemical, 1),
 		CONTENTS_GT(/obj/storage/secure/closet/medical/medicine, 0),
 		CONTENTS_GT(/obj/storage/secure/closet/medical/medkit, 0),
@@ -32,6 +34,11 @@
 		CONTENTS_GT(/obj/item/storage/box/health_upgrade_kit, 0),
 		CONTENTS_GT(/obj/storage/cart/medcart/crash, 0),
 		CONTENTS_GT(/obj/stool/chair/comfy/wheelchair, 1),
+		CONTENTS_GT(/obj/item_dispenser/latex_gloves, 0),
+		CONTENTS_GT(/obj/item_dispenser/medical_mask, 0),
+		CONTENTS_GT(/obj/item/storage/box/stma_kit, 0),
+		CONTENTS_GT(/obj/item/storage/box/lglo_kit, 0),
+		CONTENTS_GT(/obj/item/storage/box/gl_kit, 0),
 		// Reserve Tanks
 		CONTENTS_GT(/obj/item/reagent_containers/glass/beaker/large/antitox, 0),
 		CONTENTS_GT(/obj/item/reagent_containers/glass/beaker/large/brute, 0),
@@ -41,4 +48,9 @@
 		CONTENTS_GT(/obj/machinery/vending/jobclothing/medical, 0),
 		CONTENTS_GT(/obj/item/clothing/suit/hazard/paramedic, 1),
 		CONTENTS_GT(/obj/item/storage/belt/medical, 1),
+		// Break Room
+		CONTENTS_GT(/obj/machinery/coffeemaker/medbay, 0),
+		CONTENTS_GT(/obj/drink_rack/mug, 0),
+		CONTENTS_GT(/obj/item/reagent_containers/food/drinks/creamer, 0),
+		CONTENTS_GT(/obj/item/kitchen/food_box/sugar_box, 0),
 	)
