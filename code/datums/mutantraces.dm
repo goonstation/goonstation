@@ -534,8 +534,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			if ("reset")
 				// And the other way around (Convair880).
 				if (src.r_limb_arm_type_mutantrace)
-					if ((L.limbs.r_arm && !(L.limbs.r_arm.limb_is_transplanted || L.limbs.r_arm.limb_is_unnatural)) \
-						|| src.ignore_missing_limbs == 1 || !(L.limbs.r_arm in L))
+					if ((L.limbs.r_arm && !(L.limbs.r_arm.limb_is_transplanted || L.limbs.r_arm.limb_is_unnatural || !(L.limbs.r_arm in L))) \
+						|| src.ignore_missing_limbs == 1 )
 						var/obj/item/parts/human_parts/arm/limb = new /obj/item/parts/human_parts/arm/right(L)
 						if (istype(limb))
 							qdel(L.limbs.r_arm)
@@ -545,8 +545,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 							limb.remove_stage = 0
 
 				if (src.l_limb_arm_type_mutantrace)
-					if ((L.limbs.l_arm && !(L.limbs.l_arm.limb_is_transplanted || L.limbs.l_arm.limb_is_unnatural)) \
-						|| src.ignore_missing_limbs == 1 || !(L.limbs.l_arm in L))
+					if ((L.limbs.l_arm && !(L.limbs.l_arm.limb_is_transplanted || L.limbs.l_arm.limb_is_unnatural || !(L.limbs.l_arm in L))) \
+						|| src.ignore_missing_limbs == 1)
 						var/obj/item/parts/human_parts/arm/limb = new /obj/item/parts/human_parts/arm/left(L)
 						if (istype(limb))
 							qdel(L.limbs.l_arm)
@@ -557,8 +557,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 				//////////////LEGS//////////////////
 				if (src.r_limb_leg_type_mutantrace)
-					if ((L.limbs.r_leg && !(L.limbs.r_leg.limb_is_transplanted || L.limbs.r_leg.limb_is_unnatural)) \
-						|| src.ignore_missing_limbs == 1 || !(L.limbs.r_leg in L))
+					if ((L.limbs.r_leg && !(L.limbs.r_leg.limb_is_transplanted || L.limbs.r_leg.limb_is_unnatural || !(L.limbs.r_leg in L))) \
+						|| src.ignore_missing_limbs == 1)
 						var/obj/item/parts/human_parts/leg/limb = new /obj/item/parts/human_parts/leg/right(L)
 						if (istype(limb))
 							qdel(L.limbs.r_leg)
@@ -568,8 +568,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 							limb.remove_stage = 0
 
 				if (src.l_limb_leg_type_mutantrace)
-					if ((L.limbs.l_leg && !(L.limbs.l_leg.limb_is_transplanted || L.limbs.l_leg.limb_is_unnatural)) \
-						|| src.ignore_missing_limbs == 1 || !(L.limbs.l_leg in L))
+					if ((L.limbs.l_leg && !(L.limbs.l_leg.limb_is_transplanted || L.limbs.l_leg.limb_is_unnatural || !(L.limbs.l_leg in L))) \
+						|| src.ignore_missing_limbs == 1)
 						var/obj/item/parts/human_parts/leg/limb = new /obj/item/parts/human_parts/leg/left(L)
 						if (istype(limb))
 							qdel(L.limbs.l_leg)
