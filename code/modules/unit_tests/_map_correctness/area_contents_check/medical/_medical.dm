@@ -1,4 +1,4 @@
-/datum/map_correctness_check/area_contents/genetics
+/datum/map_correctness_check/area_contents/medical
 	check_name = "Medbay Contents Check"
 	target_areas = list(
 		/area/station/medical,
