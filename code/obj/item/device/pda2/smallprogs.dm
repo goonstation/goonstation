@@ -1010,16 +1010,16 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 	var/message = null
 
 	proc/get_ticket_level()
-		. = SECURITY::TICKET::LEVEL::NONE
+		. = SEC::TICKET::LEVEL::NONE
 		var/obj/item/card/id/ID = src.master.ID_card
 		if(!ID || !istype(ID))
-			return SECURITY::TICKET::LEVEL::NONE
+			return SEC::TICKET::LEVEL::NONE
 		if(access_ticket in ID.access)
-			. = SECURITY::TICKET::LEVEL::TICKET
+			. = SEC::TICKET::LEVEL::TICKET
 		if(access_fine_small in ID.access)
-			. = SECURITY::TICKET::LEVEL::FINE_SMALL
+			. = SEC::TICKET::LEVEL::FINE_SMALL
 		if(access_fine_large in ID.access)
-			. = SECURITY::TICKET::LEVEL::FINE_LARGE
+			. = SEC::TICKET::LEVEL::FINE_LARGE
 
 	return_text()
 		if(..())
@@ -1066,7 +1066,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 					for (var/datum/fine/F in data_core.fines)
 						if(!F.approver)
 							dat += "[F.target]: [F.amount] credits<br>Reason: [F.reason]<br>Requested by: [F.issuer] - [F.issuer_job]"
-							if((ticket_level >= SECURITY::TICKET::LEVEL::FINE_LARGE) || ((ticket_level >= SECURITY::TICKET::LEVEL::FINE_SMALL) && F.amount <= SECURITY::TICKET::MAX_FINE_NO_APPROVAL)) dat += "<br><a href='byond://?src=\ref[src];approve=\ref[F]'>Approve Fine</a>"
+							if((ticket_level >= SEC::TICKET::LEVEL::FINE_LARGE) || ((ticket_level >= SEC::TICKET::LEVEL::FINE_SMALL) && F.amount <= SEC::TICKET::MAX_FINE_NO_APPROVAL)) dat += "<br><a href='byond://?src=\ref[src];approve=\ref[F]'>Approve Fine</a>"
 							dat += "<br><br>"
 
 				if(3) //unpaid fines
@@ -1172,7 +1172,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			var/ticket_level = src.get_ticket_level()
 
 			logTheThing(LOG_ADMIN, usr, "requested a fine using [PDAowner]([PDAownerjob])'s PDA. It is a [fine_amount] credit fine on <b>[ticket_target]</b> with the reason: [ticket_reason].")
-			if((fine_amount <= SECURITY::TICKET::MAX_FINE_NO_APPROVAL && (ticket_level >= SECURITY::TICKET::LEVEL::FINE_SMALL)) || (ticket_level >= SECURITY::TICKET::LEVEL::FINE_LARGE))
+			if((fine_amount <= SEC::TICKET::MAX_FINE_NO_APPROVAL && (ticket_level >= SEC::TICKET::LEVEL::FINE_SMALL)) || (ticket_level >= SEC::TICKET::LEVEL::FINE_LARGE))
 				var/ticket_text = "[ticket_target] has been fined [fine_amount] credits by Nanotrasen Corporate Security for [ticket_reason] on [time2text(world.realtime, "DD/MM/53")].<br>Issued and approved by: [PDAowner] - [PDAownerjob]<br>"
 				playsound(src.master, 'sound/machines/printer_thermal.ogg', 50, 1)
 				SPAWN(3 SECONDS)
@@ -1183,7 +1183,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 					p.info = ticket_text
 					p.icon_state = "paper_caution"
 
-			else if(fine_amount <= SECURITY::TICKET::MAX_FINE_NO_APPROVAL)
+			else if(fine_amount <= SEC::TICKET::MAX_FINE_NO_APPROVAL)
 				message = "Fine request created, awaiting approval for a small fine."
 			else
 				message = "Fine request created, awaiting approval for a large fine."

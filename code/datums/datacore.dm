@@ -128,11 +128,11 @@
 		S["notes"] = sec_note
 
 	if (H.traitHolder?.hasTrait("training_clown"))
-		S["criminal"] = SECURITY::ARREST::STATE::CLOWN
+		S["criminal"] = SEC::ARREST::STATE::CLOWN
 		S["mi_crim"] = "Clown"
 		H.update_arrest_icon()
 	else
-		S["criminal"] = SECURITY::ARREST::STATE::NONE
+		S["criminal"] = SEC::ARREST::STATE::NONE
 		S["mi_crim"] = "None"
 
 	S["mi_crim_d"] = "No minor crime convictions."
@@ -370,8 +370,8 @@
 
 /datum/fine/proc/approve(var/approved_by,var/their_job,var/ticket_level)
 	if(approver || paid) return
-	if (amount > SECURITY::TICKET::MAX_FINE_NO_APPROVAL && !(ticket_level >= SECURITY::TICKET::LEVEL::FINE_LARGE)) return
-	if (ticket_level < SECURITY::TICKET::LEVEL::FINE_SMALL) return
+	if (amount > SEC::TICKET::MAX_FINE_NO_APPROVAL && !(ticket_level >= SEC::TICKET::LEVEL::FINE_LARGE)) return
+	if (ticket_level < SEC::TICKET::LEVEL::FINE_SMALL) return
 
 	approver = approved_by
 	approver_job = their_job

@@ -281,7 +281,7 @@
 						R["name"] = src.active_general["name"]
 						R["full_name"] = src.active_general["full_name"]
 						R["id"] = src.active_general["id"]
-						R["criminal"] = SECURITY::ARREST::STATE::NONE
+						R["criminal"] = SEC::ARREST::STATE::NONE
 						R["sec_flag"] = "None"
 						R["mi_crim"] = "None"
 						R["mi_crim_d"] = "No minor crime convictions."
@@ -336,7 +336,7 @@
 						return
 
 					if (FIELDNUM_SECFLAG)
-						src.print_text("Please enter new value ([SECURITY::ARREST::SECHUD_FLAG_MAX_CHARS] characters max), or \"None\".")
+						src.print_text("Please enter new value ([SEC::ARREST::SECHUD_FLAG_MAX_CHARS] characters max), or \"None\".")
 						src.menu = MENU_FIELD_INPUT
 						return
 
@@ -447,7 +447,7 @@
 							return
 
 						if (lowertext(command) == "clown")
-							src.active_secure["criminal"] = SECURITY::ARREST::STATE::CLOWN
+							src.active_secure["criminal"] = SEC::ARREST::STATE::CLOWN
 
 							var/target_name = src.active_general["name"]
 
@@ -458,24 +458,24 @@
 
 						switch (round( max( text2num_safe(command), 0) ))
 							if (1)
-								if (src.active_secure["criminal"] != SECURITY::ARREST::STATE::ARREST)
-									src.report_status(src.active_general["name"], SECURITY::ARREST::STATE::ARREST)
-								src.active_secure["criminal"] = SECURITY::ARREST::STATE::ARREST
+								if (src.active_secure["criminal"] != SEC::ARREST::STATE::ARREST)
+									src.report_status(src.active_general["name"], SEC::ARREST::STATE::ARREST)
+								src.active_secure["criminal"] = SEC::ARREST::STATE::ARREST
 							if (2)
-								if (src.active_secure["criminal"] != SECURITY::ARREST::STATE::DETAIN)
-									src.report_status(src.active_general["name"], SECURITY::ARREST::STATE::DETAIN)
-								src.active_secure["criminal"] = SECURITY::ARREST::STATE::DETAIN
+								if (src.active_secure["criminal"] != SEC::ARREST::STATE::DETAIN)
+									src.report_status(src.active_general["name"], SEC::ARREST::STATE::DETAIN)
+								src.active_secure["criminal"] = SEC::ARREST::STATE::DETAIN
 							if (3)
-								src.active_secure["criminal"] = SECURITY::ARREST::STATE::NONE
+								src.active_secure["criminal"] = SEC::ARREST::STATE::NONE
 								src.active_secure["sec_flag"] = "None"
 							if (4)
-								src.active_secure["criminal"] = SECURITY::ARREST::STATE::SUSPECT
+								src.active_secure["criminal"] = SEC::ARREST::STATE::SUSPECT
 							if (5)
-								src.active_secure["criminal"] = SECURITY::ARREST::STATE::INCARCERATED
+								src.active_secure["criminal"] = SEC::ARREST::STATE::INCARCERATED
 							if (6)
-								src.active_secure["criminal"] = SECURITY::ARREST::STATE::PAROLE
+								src.active_secure["criminal"] = SEC::ARREST::STATE::PAROLE
 							if (7)
-								src.active_secure["criminal"] = SECURITY::ARREST::STATE::RELEASED
+								src.active_secure["criminal"] = SEC::ARREST::STATE::RELEASED
 							if (0)
 								src.menu = MENU_IN_RECORD
 								return
@@ -495,7 +495,7 @@
 							return
 
 						if (ckey(inputText))
-							src.active_secure["sec_flag"] = copytext(inputText, 1, SECURITY::ARREST::SECHUD_FLAG_MAX_CHARS + 1)
+							src.active_secure["sec_flag"] = copytext(inputText, 1, SEC::ARREST::SECHUD_FLAG_MAX_CHARS + 1)
 						else
 							return
 

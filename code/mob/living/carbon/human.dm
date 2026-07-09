@@ -3296,9 +3296,9 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	var/datum/db_record/sec_record = data_core.security.find_record("name", target_name)
 	if(!sec_record)
 		return
-	if(sec_record["criminal"] == SECURITY::ARREST::STATE::ARREST)
+	if(sec_record["criminal"] == SEC::ARREST::STATE::ARREST)
 		return
-	sec_record["criminal"] = SECURITY::ARREST::STATE::ARREST
+	sec_record["criminal"] = SEC::ARREST::STATE::ARREST
 	sec_record[crime_field] = reason
 	if(details)
 		sec_record["[crime_field]_d"] = details
@@ -3317,19 +3317,19 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 	var/datum/db_record/record = data_core.security.find_record("name", visibleName)
 	if(record)
 		var/criminal = record["criminal"]
-		if(criminal == SECURITY::ARREST::STATE::ARREST || criminal == SECURITY::ARREST::STATE::DETAIN || criminal == SECURITY::ARREST::STATE::SUSPECT || criminal == SECURITY::ARREST::STATE::PAROLE || criminal ==SECURITY::ARREST::STATE::INCARCERATED || criminal == SECURITY::ARREST::STATE::RELEASED || \
-				criminal == SECURITY::ARREST::STATE::CLOWN)
+		if(criminal == SEC::ARREST::STATE::ARREST || criminal == SEC::ARREST::STATE::DETAIN || criminal == SEC::ARREST::STATE::SUSPECT || criminal == SEC::ARREST::STATE::PAROLE || criminal ==SEC::ARREST::STATE::INCARCERATED || criminal == SEC::ARREST::STATE::RELEASED || \
+				criminal == SEC::ARREST::STATE::CLOWN)
 			arrestState = criminal
-	if (arrestState != SECURITY::ARREST::STATE::ARREST) // Contraband overrides non-arrest statuses, now check for contraband
+	if (arrestState != SEC::ARREST::STATE::ARREST) // Contraband overrides non-arrest statuses, now check for contraband
 		var/obj/item/implant/counterrev/implant = locate() in src.implant
 		if (implant?.online)
 			var/mob/M = ckey_to_mob_maybe_disconnected(src.last_ckey)
 			if (M?.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
-				arrestState = SECURITY::ARREST::STATE::REVHEAD
+				arrestState = SEC::ARREST::STATE::REVHEAD
 			else if (M?.mind?.get_antagonist(ROLE_REVOLUTIONARY))
-				arrestState = SECURITY::ARREST::STATE::LOYAL_IN_PROGRESS
+				arrestState = SEC::ARREST::STATE::LOYAL_IN_PROGRESS
 			else
-				arrestState = SECURITY::ARREST::STATE::LOYAL
+				arrestState = SEC::ARREST::STATE::LOYAL
 		else
 			var/obj/item/card/id/myID = 0
 			//mbc : its faster to check if the item in either hand has a registered owner than doing istype on equipped()
@@ -3346,7 +3346,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 				has_contraband_permit = (access_contrabandpermit in myID.access)
 				has_carry_permit = (access_carrypermit in myID.access)
 			if ((!has_contraband_permit && GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_CONTRABAND) > 0) || (!has_carry_permit && GET_ATOM_PROPERTY(src,PROP_MOVABLE_VISIBLE_GUNS) > 0))
-				arrestState = SECURITY::ARREST::STATE::CONTRABAND
+				arrestState = SEC::ARREST::STATE::CONTRABAND
 	src.arrestIcon.icon_state = arrestState
 
 /mob/living/carbon/human/get_genetic_traits()
