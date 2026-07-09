@@ -25240,7 +25240,6 @@
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
 "kVJ" = (
-/obj/table/reinforced/chemistry/auto,
 /obj/item/storage/box/beakerbox{
 	pixel_x = -3;
 	pixel_y = 4
@@ -25253,6 +25252,7 @@
 	pixel_x = 14
 	},
 /obj/machinery/firealarm/directional/north,
+/obj/table/reinforced/chemistry/auto/auxsup,
 /turf/simulated/floor/blueblack,
 /area/station/medical/medbay/pharmacy)
 "kVX" = (
@@ -43439,7 +43439,6 @@
 	},
 /area/pasiphae)
 "tiT" = (
-/obj/table/reinforced/chemistry/auto,
 /obj/machinery/glass_recycler{
 	pixel_y = 4
 	},
@@ -43447,6 +43446,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/table/reinforced/chemistry/auto/basicsup,
 /turf/simulated/floor/blueblack/corner{
 	dir = 4
 	},

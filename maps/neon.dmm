@@ -5281,7 +5281,6 @@
 /area/station/chapel/sanctuary)
 "dMk" = (
 /obj/machinery/light_switch/directional/west,
-/obj/table/reinforced/chemistry/auto,
 /obj/machinery/glass_recycler{
 	pixel_y = 9;
 	pixel_x = -1
@@ -5289,6 +5288,7 @@
 /obj/item/clothing/glasses/spectro{
 	pixel_y = -3
 	},
+/obj/table/reinforced/chemistry/auto/basicsup,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "dMp" = (
@@ -34618,7 +34618,6 @@
 /turf/simulated/floor/blue/side,
 /area/station/hallway/primary/north)
 "yhm" = (
-/obj/table/reinforced/chemistry/auto,
 /obj/item/storage/box/beakerbox{
 	pixel_y = 10;
 	pixel_x = -4
@@ -34638,6 +34637,7 @@
 	pixel_y = -4;
 	pixel_x = 2
 	},
+/obj/table/reinforced/chemistry/auto/auxsup,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "yhx" = (

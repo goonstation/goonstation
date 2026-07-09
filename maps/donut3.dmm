@@ -36155,6 +36155,9 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment/mail,
+/obj/item/storage/box/beakerbox{
+	pixel_x = 6
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/pharmacy)
 "lon" = (
@@ -63487,7 +63490,6 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/table/reinforced/chemistry/auto/beakers,
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
@@ -63495,6 +63497,7 @@
 	pixel_x = 12;
 	pixel_y = 4
 	},
+/obj/table/reinforced/chemistry/auto/auxsup,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},

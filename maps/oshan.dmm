@@ -1874,7 +1874,6 @@
 	},
 /area/station/security/main)
 "aiY" = (
-/obj/table/reinforced/chemistry/auto,
 /obj/item/storage/box/syringes,
 /obj/item/storage/box/beakerbox{
 	pixel_y = 4
@@ -1882,6 +1881,7 @@
 /obj/item/hand_labeler{
 	pixel_y = -9
 	},
+/obj/table/reinforced/chemistry/auto/basicsup,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "aiZ" = (
@@ -9264,12 +9264,12 @@
 /turf/simulated/floor/plating,
 /area/iss)
 "aUO" = (
-/obj/table/reinforced/chemistry/auto,
 /obj/item/reagent_containers/dropper,
 /obj/item/reagent_containers/dropper/mechanical,
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
+/obj/table/reinforced/chemistry/auto/auxsup,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "aUP" = (

@@ -19062,7 +19062,6 @@
 /turf/simulated/floor/circuit/red,
 /area/station/turret_protected/ai)
 "eQz" = (
-/obj/table/auto,
 /obj/item/storage/box/beakerbox{
 	pixel_x = 6
 	},
@@ -19072,6 +19071,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/table/reinforced/chemistry/auto/auxsup,
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/pharmacy)
 "eQI" = (
@@ -44826,13 +44826,13 @@
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
 "tAh" = (
-/obj/table/auto,
 /obj/item/decoration/flower_vase/vase7,
 /obj/item/storage/box/syringes,
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/table/reinforced/chemistry/auto/basicsup,
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/pharmacy)
 "tAo" = (

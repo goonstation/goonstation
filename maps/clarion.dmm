@@ -34594,7 +34594,6 @@
 	},
 /area/station/crew_quarters/market)
 "tmU" = (
-/obj/table/auto,
 /obj/item/storage/firstaid/brute{
 	pixel_x = -6;
 	pixel_y = 12
@@ -34620,6 +34619,7 @@
 /obj/machinery/camera/directional/south{
 	pixel_x = 10
 	},
+/obj/table/reinforced/chemistry/auto/auxsup,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/reception)
 "tnw" = (
@@ -35962,7 +35962,6 @@
 	},
 /area/station/science/lobby)
 "ueK" = (
-/obj/table/auto,
 /obj/item/reagent_containers/glass/beaker/large/brute{
 	pixel_x = -6;
 	pixel_y = 12
@@ -35992,6 +35991,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/table/reinforced/chemistry/auto/basicsup,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/reception)
 "ueT" = (

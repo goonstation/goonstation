@@ -50934,7 +50934,6 @@
 /area/station/storage/emergency2)
 "ehM" = (
 /obj/machinery/light/incandescent,
-/obj/table/reinforced/chemistry/auto,
 /obj/machinery/glass_recycler,
 /obj/item/storage/box/beakerbox{
 	pixel_y = 4
@@ -50943,6 +50942,7 @@
 /obj/item/paper/book/from_file/pharmacopia{
 	pixel_x = -8
 	},
+/obj/table/reinforced/chemistry/auto/auxsup,
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
