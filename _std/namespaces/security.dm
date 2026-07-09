@@ -27,12 +27,3 @@ ADD_TO_NAMESPACE(SECURITY, ARREST_STATE)(var/const/LOYAL_IN_PROGRESS = "Loyal_Pr
 ADD_TO_NAMESPACE(SECURITY, ARREST_STATE)(var/const/LOYAL = "Loyal")
 ADD_TO_NAMESPACE(SECURITY, ARREST_STATE)(var/const/REVHEAD = "RevHead")
 ADD_TO_NAMESPACE(SECURITY, ARREST_STATE)(var/const/CLOWN = "Clown")
-
-
-// // state names
-
-// #define ARREST_STATE_SUSPECT "Suspect"
-// #define ARREST_STATE_LOYAL_IN_PROGRESS "Loyal_Progress"
-// #define ARREST_STATE_LOYAL "Loyal"
-// #define ARREST_STATE_REVHEAD "RevHead"
-// #define ARREST_STATE_CLOWN "Clown"
