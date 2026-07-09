@@ -35,8 +35,6 @@
 	var/tmp/list/scriptvars = null
 	/// Shell scripts are stack-oriented; this is the stack used by the shell script being processed.
 	var/tmp/list/stack = null
-	/// The name of the history log file that exists per user.
-	var/static/histfile_name = "_shell_history"
 
 /datum/computer/file/mainframe_program/shell/disposing()
 	for (var/name as anything in src.shell_builtins)
@@ -484,7 +482,7 @@
 		return FALSE
 
 	var/datum/computer/file/record/new_histfile = new /datum/computer/file/record()
-	new_histfile.name = src::histfile_name
+	new_histfile.name = DWAINE::FILE::HISTORY
 
 	if(src.signal_program(1, list("command" = DWAINE::SYSCALL::FWRITE, "path" = "[DWAINE::DIRECTORY::HOME]/[useracc.user_filename]"), new_histfile))
 		new_histfile.dispose()
@@ -493,4 +491,4 @@
 		return TRUE
 
 /datum/computer/file/mainframe_program/shell/proc/histfile_full_path(username)
-	return "[DWAINE::DIRECTORY::HOME]/[username]/[src::histfile_name]"
+	return "[DWAINE::DIRECTORY::HOME]/[username]/[DWAINE::FILE::HISTORY]"
