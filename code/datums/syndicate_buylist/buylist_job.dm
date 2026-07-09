@@ -187,7 +187,7 @@
 /datum/syndicate_buylist/traitor/wasp_implanter
 	name = "Wasp Implanter"
 	items = list(/obj/item/implanter/wasp)
-	cost = 6
+	cost = 2
 	desc = "Enemies being a buzzkill? This implant will release a swarm of angry wasps upon your death, and make them really feel the sting! More implants mean more wasps, and while you are implanted wasps will be friendly to you."
 	vr_allowed = FALSE
 	job = list("Botanist", "Apiculturist")
