@@ -204,6 +204,7 @@
 #include "namespaces\RCD.dm"
 #include "namespaces\soulguard.dm"
 #include "namespaces\manufacturer.dm"
+#include "namespaces\uplink.dm"
 #include "color.dm"
 #include "compare.dm"
 #include "copy.dm"
