@@ -56,6 +56,15 @@
 	job = list(ALL_CLOWNS)
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
+/datum/syndicate_buylist/traitor/clownspider_implant
+	name = "Clownspider Implant"
+	items = list(/obj/item/implanter/clownspider)
+	cost = 2
+	desc = "Strike me down and I shall become funnier than you could possibly imagine. Whoever is implanted with this will explode into a bunch of clownspiders on death and be considered friendly to clownspiders. CAUTION: Spider bites may result in contraction of known disease \"Clowning Around\"."
+	vr_allowed = FALSE
+	job = list(ALL_CLOWNS)
+	can_buy = UPLINK_TRAITOR
+
 /datum/syndicate_buylist/traitor/chambomb
 	name = "Chameleon Bomb Case"
 	items = list(/obj/item/storage/box/chameleonbomb)
