@@ -1585,7 +1585,14 @@ TYPEINFO(/mob/living)
 			src.add_juggle(AM)
 	..()
 
-
+/mob/living/relaymove(mob/user, direction, delay, running)
+	..()
+	if ((user in src.juggling) && !ON_COOLDOWN(user, "resist_juggle", 1 SECOND))
+		boutput(user, SPAN_ALERT("You attempt to wriggle free from the unending juggling."))
+		playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
+		if (prob(15))
+			src.remove_juggle(user)
+			user.set_loc(src.loc)
 
 // can stumble or flip while drunk
 /mob/living/proc/can_drunk_act()

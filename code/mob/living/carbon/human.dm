@@ -2576,14 +2576,6 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		src.tackle(AM)
 	..()
 
-/mob/living/carbon/human/relaymove(mob/user, direction, delay, running)
-	if ((user in src.juggling) && !ON_COOLDOWN(user, "resist_juggle", 1 SECOND))
-		boutput(user, SPAN_ALERT("You attempt to wriggle free from the unending juggling."))
-		playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1)
-		if (prob(15))
-			src.remove_juggle(user)
-			user.set_loc(src.loc)
-
 /mob/living/carbon/human/return_air(direct = FALSE)
 	if (!direct)
 		return src.loc?.return_air()
