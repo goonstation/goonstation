@@ -9299,6 +9299,7 @@
 /area/station/engine/elect)
 "gsk" = (
 /obj/machinery/optable,
+/obj/machinery/drainage,
 /turf/simulated/floor/red/checker,
 /area/station/medical/medbay/surgery)
 "gtg" = (
@@ -29149,6 +29150,7 @@
 /obj/item/clothing/mask/surgical_shield,
 /obj/item/staple_gun,
 /obj/item/surgical_spoon,
+/obj/item/scissors/surgical_scissors,
 /obj/item/spraybottle/cleaner,
 /obj/item/hand_labeler,
 /obj/item/storage/box/biohazard_bags,
@@ -32827,6 +32829,7 @@
 /area/station/maintenance/disposal)
 "wSH" = (
 /obj/disposalpipe/segment/horizontal,
+/mob/living/critter/small_animal/opossum/morty,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "wSJ" = (
@@ -33014,6 +33017,8 @@
 /area/station/science/teleporter)
 "wXK" = (
 /obj/disposalpipe/segment/bent/north,
+/obj/iv_stand,
+/obj/item/reagent_containers/iv_drip/saline,
 /turf/simulated/floor/red/checker,
 /area/station/medical/medbay/surgery)
 "wXO" = (

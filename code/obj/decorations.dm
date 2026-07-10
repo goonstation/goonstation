@@ -871,8 +871,6 @@ SET_UP_DIRECTIONALS(/obj/blind_switch/on, OFFSETS_LIGHTSWITCH)
 				src.initialize()
 
 	initialize()
-		if (!src.name || (src.name in list("N sign switch", "E sign switch", "S sign switch", "W sign switch")))
-			src.name = "sign switch"
 		if (!src.id)
 			var/area/sign_area = get_area(src)
 			src.id = sign_area.name
@@ -909,21 +907,8 @@ SET_UP_DIRECTIONALS(/obj/blind_switch/on, OFFSETS_LIGHTSWITCH)
 	attackby(obj/item/W, mob/user)
 		src.toggle_group()
 
-/obj/sign_switch/north
-	name = "N sign switch"
-	pixel_y = 24
+SET_UP_DIRECTIONALS(/obj/sign_switch, OFFSETS_LIGHTSWITCH)
 
-/obj/sign_switch/east
-	name = "E sign switch"
-	pixel_x = 24
-
-/obj/sign_switch/south
-	name = "S sign switch"
-	pixel_y = -24
-
-/obj/sign_switch/west
-	name = "W sign switch"
-	pixel_x = -24
 
 /obj/machinery/illuminated_sign
 	name = "illuminated sign"

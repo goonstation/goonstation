@@ -11550,8 +11550,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "fmj" = (
-/obj/machinery/vending/monkey,
-/obj/mapping_helper/access/medical,
+/obj/machinery/vending/monkey/genetics,
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "fmy" = (
@@ -28535,9 +28534,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/sign_switch/east{
-	id = "nadiradio";
-	dir = 4
+/obj/sign_switch/directional/east{
+	id = "nadiradio"
 	},
 /turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
@@ -30011,9 +30009,8 @@
 /obj/disposalpipe/trunk/food{
 	dir = 8
 	},
-/obj/sign_switch/east{
-	id = "kitchenopen";
-	dir = 4
+/obj/sign_switch/directional/east{
+	id = "kitchenopen"
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -42565,6 +42562,7 @@
 /obj/item/clothing/mask/surgical_shield,
 /obj/item/hemostat,
 /obj/item/staple_gun,
+/obj/item/surgical_spoon,
 /obj/item/scissors/surgical_scissors,
 /obj/machinery/light{
 	dir = 8;
@@ -43386,6 +43384,12 @@
 	pixel_y = 12
 	},
 /obj/item/scalpel,
+/obj/item/surgical_spoon{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/scissors/surgical_scissors,
+/obj/item/staple_gun,
 /obj/item/hand_labeler{
 	pixel_y = 5
 	},
@@ -46275,6 +46279,10 @@
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical{
 	pixel_y = 6
+	},
+/obj/item/storage/box/biohazard_bags{
+	pixel_x = -14;
+	pixel_y = 9
 	},
 /turf/simulated/floor/blackwhite,
 /area/station/medical/morgue)

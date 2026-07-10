@@ -292,8 +292,7 @@ TYPEINFO(/obj/item/pinpointer/idtracker)
 					if(ckey(I.registered) == ckey(A.targetname))
 						targets[I] = I
 				LAGCHECK(LAG_LOW)
-			target = null
-			target = input(user, "Which ID do you wish to track?", "Target Locator", null) in targets
+			target = tgui_input_list(user, "Which ID do you wish to track?", "Target Locator", targets)
 			if(!target)
 				boutput(user, SPAN_NOTICE("You activate the target locator. No available targets!"))
 			else

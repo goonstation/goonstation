@@ -2982,6 +2982,25 @@ TYPEINFO(/obj/machinery/vending/hydroponics/mean_solarium_bullshit)
 			..()
 			product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/abg/punchy, 2, cost=PAY::TRADESMAN, hidden=1)
 
+/obj/machinery/vending/alcohol/paid
+	create_products(restocked)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/beer, 6, cost=PAY::UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/fancy_beer, 6, cost=PAY::UNTRAINED)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/vodka, 4, cost=PAY::UNTRAINED)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/tequila, 4, cost=PAY::UNTRAINED)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/wine, 4, cost=PAY::UNTRAINED/2)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/wine/white, 4, cost=PAY::UNTRAINED/2)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/cider, 4, cost=PAY::UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/mead, 4, cost=PAY::UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/gin, 4, cost=PAY::UNTRAINED)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/rum, 4, cost=PAY::UNTRAINED)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/champagne, 4, cost=PAY::UNTRAINED*2)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/curacao, 4, cost=PAY::UNTRAINED)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/bojackson, 1, cost=PAY::TRADESMAN)
+
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/hobo_wine, 2, cost=PAY::TRADESMAN, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff, 1, cost=PAY::TRADESMAN, hidden=1)
+
 TYPEINFO(/obj/machinery/vending/chem)
 	analyser_flags = ANALYSER_BLACKLIST
 	start_speech_modifiers = list(SPEECH_MODIFIER_VENDING_MACHINE, SPEECH_MODIFIER_ACCENT_VOID)

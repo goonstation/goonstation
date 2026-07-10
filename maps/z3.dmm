@@ -16898,7 +16898,7 @@
 	pixel_x = 8
 	},
 /obj/landmark/latejoin_job/radio_show_host,
-/obj/sign_switch/south{
+/obj/sign_switch/directional/south{
 	id = "radio_onair";
 	pixel_x = -8
 	},
@@ -19515,7 +19515,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/sign_switch/south{
+/obj/sign_switch/directional/south{
 	id = "tv_onair";
 	pixel_x = 8
 	},
