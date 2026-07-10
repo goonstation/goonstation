@@ -556,6 +556,16 @@ ABSTRACT_TYPE(/datum/pipe_recipe/atmos/machine/binary)
 		path = /obj/machinery/atmospherics/binary/heat_exchanger
 		icon_state = "heatexchanger"
 		desc = "Not to be confused with the Heat exchanging pipe, this exchanges heat between pipes without mixing."
+	thermostatic_gate
+		name = "Thermostatic Gate"
+		path = /obj/machinery/atmospherics/binary/thermostatic_gate
+		icon_state = "thermostatic"
+		desc = "This gate opens at a set temperature and closes at another temperature depending on the red side. When open, tries to equalise the sides."
+	thermostatic_gate_inverted
+		name = "Inverted Thermostatic Gate"
+		path = /obj/machinery/atmospherics/binary/thermostatic_gate/inverted
+		icon_state = "thermostatic_inverted"
+		desc = "This gate opens at a set temperature and closes at another temperature depending on the red side. When open, tries to equalise the sides. This one inverts when it opens and closes."
 
 ABSTRACT_TYPE(/datum/pipe_recipe/atmos/machine/trinary)
 /datum/pipe_recipe/atmos/machine/trinary
