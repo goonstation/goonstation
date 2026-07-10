@@ -59,6 +59,8 @@
 	#define COMSIG_CORD_RETRACT "cord_retract"
 	/// sent to the signal jamming thing when it successfully blocks a signal (signal)
 	#define COMSIG_SIGNAL_JAMMED "signal_jammed"
+	/// sent when something was build out of a frame (thing, user, newly_build)
+	#define COMSIG_BUILD_FROM_FRAME "build_from_frame"
 
 // ---- minimap ----
 
@@ -84,6 +86,15 @@
 
 /// When this piece of machinery calls its process function
 #define COMSIG_MACHINERY_PROCESS "machinery_process"
+/// When the HPD wants to check if this machine has a node it can remove (thing, used_HPD). returns TRUE is it is the case.
+#define COMSIG_MACHINERY_HAS_REMOVEABLE_FLUID_NODE "machinery_has_removeable_fluid_node"
+/// When the HPD wants to check if this machine could potentionally have a node (thing, used_HPD). returns TRUE is it is the case.
+#define COMSIG_MACHINERY_CAN_RECEIVE_FLUID_NODE "machinery_can_receive_fluid_node"
+/// When the HPD tries to order the object to remove their internal fluid node (thing, used_HPD). returns TRUE if sucessfull.
+#define COMSIG_MACHINERY_REMOVE_FLUID_NODE "machinery_remove_fluid_node"
+/// sent when the fluid pipe gets initialized (thing)
+#define COMSIG_FLUID_PIPE_ON_INIT "fluid_pipe_on_init"
+
 
 // ---- atom/movable signals ----
 
@@ -110,17 +121,6 @@
 	/// when an AM is revealed from under a floor tile (turf revealed from)
 	#define COMSIG_MOVABLE_FLOOR_REVEALED "mov_floor_revealed"
 
-	// ---- complex ----
-
-	/// when the outermost movable in the .loc chain changes (thing, old_outermost_movable, new_outermost_movable)
-	#define XSIG_OUTERMOST_MOVABLE_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_outermost_changed")
-	/// When the outermost movable in the .loc chain moves to a new area. (thing, old_area, new_area)
-	#define XSIG_MOVABLE_AREA_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_area_changed")
-	/// When the outermost movable in the .loc chain moves to a new turf. (thing, old_turf, new_turf)
-	#define XSIG_MOVABLE_TURF_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_turf_changed")
-	/// when the z-level of a movable changes (works in nested contents) (thing, old_z_level, new_z_level)
-	#define XSIG_MOVABLE_Z_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_z-level_changed")
-
 // ---- turf signals ----
 	/// when an atom inside the turfs contents changes opacity (turf, previous_opacity, thing)
 	#define COMSIG_TURF_CONTENTS_SET_OPACITY "turf_contents_set_opacity"
@@ -130,6 +130,10 @@
 	#define COMSIG_TURF_REPLACED "turf_replaced"
 	/// when an atom inside the turfs contents changes density (turf, previous_density, thing)
 	#define COMSIG_TURF_CONTENTS_SET_DENSITY "turf_contents_set_density"
+	/// when a fluid port is created on this turf
+	#define COMSIG_TURF_FLUID_PORT_CREATED "turf_fluid_port_created"
+	/// this is used to receive a list with all fluid ports on a tile (thing, list_for_pipes)
+	#define COMSIG_TURF_FLUID_PORT_PING "turf_fluid_fluid_port_ping"
 
 // ---- obj signals ----
 

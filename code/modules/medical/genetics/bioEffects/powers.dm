@@ -354,6 +354,311 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/datum/bioEffect/power/stickytongue
+	name = "Sticky Tongue"
+	desc = "Pull an object towards you with your tongue!"
+	id = "stickytongue"
+	icon_state = "sticky_tongue"
+	msgGain = "You feel like catching flies."
+	msgLose = "you tongue fall out"
+	cooldown = 100
+	probability = 66
+	blockCount = 3
+	blockGaps = 2
+	stability_loss = 10
+	ability_path = /datum/targetable/geneticsAbility/stickytongue
+	var/target_path = /obj/item
+
+/datum/projectile/special/tongue // do i really want this here
+	name = "tongue"
+	max_range = 4
+	dissipation_rate = 0
+	projectile_speed = 32
+	icon_state = ""
+	damage = 0
+	hit_ground_chance = 0
+	smashes_glasses = FALSE
+	shot_sound = 'sound/impact_sounds/Slimy_Hit_3.ogg'
+	shot_volume = 40
+
+	on_launch(obj/projectile/P)
+		..()
+		if (!("owner" in P.special_data))
+			P.die()
+			return
+		P.special_data["target_turf"] = get_turf(P.targets[1])
+		var/mob/owner = P.special_data["owner"]
+		owner.AddComponent(/datum/component/cord, P, base_offset_x = 0, base_offset_y = P.special_data["head_offset"], range=INFINITY, cord_line = "tongue", cord_cap = "tongue_end", behind_parent = TRUE)
+
+	on_hit(atom/hit, direction, obj/projectile/P)
+		if (istype(hit, /mob/living/critter/small_animal))
+			var/mob/living/critter/small_animal/cool_bug = hit
+			if (cool_bug.edible_insect)
+				src.do_throw(cool_bug, P.special_data["owner"])
+
+	//Figure out which turf in our crossing list contains the target
+	post_setup(obj/projectile/P)
+		//the target is out of range, so retarget at the furthest crossing turf *in* our range
+		if (GET_DIST(P.targets[1], P.special_data["owner"]) > src.max_range)
+			if (length(P.crossing) >= src.max_range)
+				P.special_data["target_turf"] = P.crossing[src.max_range]
+			else
+				P.special_data["target_turf"] = P.crossing[length(P.crossing)]
+		//the target is in range, figure out where we need to stop to hit it
+		var/i = 0
+		for (var/turf/T in P.crossing)
+			i++
+			if (T == get_turf(P.targets[1]))
+				P.special_data["end_index"] = i
+				return
+		P.special_data["end_index"] = INFINITY
+
+	//Die when we reach that turf
+	tick(obj/projectile/P)
+		if (P.curr_t >= P.special_data["end_index"])
+			P.die()
+
+	on_end(var/obj/projectile/P)
+		if (!("owner" in P.special_data)) // somehow the projectile data got removed?
+			return ..()
+
+		var/mob/tongue_owner = P.special_data["owner"]
+		//Leave it for a little bit so it can be seen
+		SPAWN(2 DECI SECONDS)
+			tongue_owner.RemoveComponentsOfType(/datum/component/cord)
+
+		var/atom/target_object = P.targets[1]
+		// make sure everyone's still here
+		if (!istype(target_object) || QDELETED(target_object) || !istype(tongue_owner) || QDELETED(tongue_owner))
+			return ..()
+		var/dist = GET_DIST(tongue_owner, target_object)
+		// we got to the end
+		if (P.curr_t >= P.special_data["end_index"] && get_turf(target_object) == P.special_data["target_turf"])
+			// P.set_loc(P.special_data["target_turf"])
+			if (isitem(target_object) && dist <= src.max_range)
+				src.do_throw(target_object, tongue_owner)
+		..()
+
+	proc/do_throw(atom/movable/prize, mob/tongue_owner)
+		prize.visible_message(SPAN_NOTICE("The tongue sticks to [prize] and reels it back!"))
+		playsound(prize, 'sound/impact_sounds/Generic_Snap_1.ogg', 40, TRUE)
+		var/component_type = /datum/component/throw_eat
+		if (isfrog(tongue_owner) || !ishuman(tongue_owner))
+			component_type = /datum/component/throw_eat/insects
+		prize.AddComponent(component_type, tongue_owner)
+		prize.throw_at(tongue_owner, 10, min(0.5, GET_DIST(tongue_owner, prize)))
+
+/datum/targetable/geneticsAbility/stickytongue
+	name = "Sticky Tongue"
+	desc = "Pull an object towards you with your tongue!"
+	icon_state = "sticky_tongue"
+	cooldown = 10 SECONDS
+	needs_hands = FALSE
+	targeted = 1
+	target_anything = 1
+
+	cast_genetics(atom/target, misfire)
+		if (..())
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+		var/head_offset = 0
+		if (ishuman(holder.owner))
+			var/mob/living/carbon/human/H = holder.owner
+			head_offset = 8
+			if (H.mutantrace)
+				head_offset += H.mutantrace.head_offset
+		var/obj/projectile/proj = initialize_projectile_pixel_spread(holder.owner, new/datum/projectile/special/tongue, get_turf(target), poy = head_offset)
+
+		src.owner.set_dir(get_dir_accurate(owner, target))
+
+		if (ishuman(holder.owner))
+			var/mob/living/carbon/human/H = owner
+			if (!H.organHolder.head)
+				boutput(holder.owner, SPAN_ALERT("You don't have a head!"))
+				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+			var/obj/item/I
+			if (istype(H.wear_mask) && H.wear_mask.c_flags & COVERSMOUTH)
+				I = H.wear_mask
+			else if (istype(H.head) && H.head.c_flags & COVERSMOUTH)
+				I = H.head
+			if (istype(I)) // or it might go
+				holder.owner.visible_message(SPAN_COMBAT("[holder.owner]'s tongue is blocked by the [I.name]!"),\
+				SPAN_COMBAT("<b>Your tongue sticks to the [I.name]!"))
+				return CAST_ATTEMPT_FAIL_DO_COOLDOWN
+
+		proj.special_data["owner"] = holder.owner
+		proj.special_data["head_offset"] = head_offset
+		proj.targets = list(target)
+
+		proj.launch()
+		holder.owner.setStatus("slowed", 2 SECONDS)
+
+		if (misfire)
+			cast_mis(target)
+
+	proc/cast_mis(atom/target)
+		boutput(src.owner, SPAN_ALERT("Your tongue misses the object and smacks you in the face!"))
+		return CAST_ATTEMPT_SUCCESS
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/datum/bioEffect/power/xray
+	name = "X-Ray Vision"
+	desc = "Enhances the subject's optic nerves, allowing them to see on x-ray wavelengths."
+	id = "xray"
+	effectType = EFFECT_TYPE_POWER
+	probability = 33
+	blockCount = 3
+	blockGaps = 5
+	reclaim_mats = 40
+	msgGain = "You suddenly seem to be able to see through everything."
+	msgLose = "Your vision fades back to normal."
+	lockProb = 40
+	lockedGaps = 1
+	lockedDiff = 3
+	lockedChars = list("G","C","A","T")
+	lockedTries = 8
+	stability_loss = 20
+	degrade_to = "bad_eyesight"
+	icon_state  = "eye"
+	effect_group = "vision"
+	cooldown = 30 SECONDS
+	ability_path = /datum/targetable/geneticsAbility/xray
+	/// How wide is the arc swept by the vision cone (degrees)
+	var/arc_width = 30
+
+	onPowerChange(oldval, newval)
+		if (newval)
+			src.arc_width = 60
+		else
+			src.arc_width = 30
+
+/datum/targetable/geneticsAbility/xray
+	name = "X-Ray Vision"
+	desc = "See through walls!"
+	icon_state = "eye"
+	/// The blackout images currently obscuring the owner's vision
+	var/list/image/images = list()
+	/// The mutable appearance we use to quickly copy over the blackout images
+	var/mutable_appearance/blackout_ma = null
+
+	New(datum/abilityHolder/holder)
+		. = ..()
+		//tech 100% stolen from AI static code
+		src.blackout_ma = new(image('icons/misc/static.dmi', icon_state = "static"))
+		src.blackout_ma.plane = PLANE_HUD
+		src.blackout_ma.layer = 102 // fucking action bars are 101 guh????????
+		src.blackout_ma.color = "#000000"
+		src.blackout_ma.appearance_flags = TILE_BOUND | KEEP_APART | RESET_TRANSFORM | RESET_ALPHA | RESET_COLOR | PIXEL_SCALE
+		src.blackout_ma.name = " "
+
+	proc/blackout_turf(turf/T)
+		var/image/blackout = new //https://www.youtube.com/watch?v=jAClFRUer38
+		blackout.appearance = src.blackout_ma
+		blackout.loc = T
+		blackout.override = TRUE
+		src.images += blackout
+		src.holder.owner.client.images += blackout
+
+	///Returns true if a turf blocks xray vision in some way
+	proc/blocks_xray(turf/T)
+		if (T.density && T.material?.hasTrigger(TRIGGERS_ON_ADD, /datum/materialProc/radiation_immune_add))
+			return TRUE
+		for (var/obj/O in T)
+			if (O.density && O.material?.hasTrigger(TRIGGERS_ON_ADD, /datum/materialProc/radiation_immune_add))
+				return TRUE
+		return FALSE
+
+	cast_genetics(atom/target, misfire)
+		if (..())
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+		if (!src.holder.owner.client || length(src.images))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+
+		var/image/eye_overlay = image('icons/effects/genetics.dmi', "xray")
+		eye_overlay.plane = PLANE_SELFILLUM
+		src.owner.AddOverlays(eye_overlay, "xray_eyes")
+
+		var/datum/bioEffect/power/xray/parent_bioeffect = src.linked_power
+
+		//tech mildly stolen from robustlight code
+		var/center_angle = arctan(target.x - src.holder.owner.x, target.y - src.holder.owner.y)
+		var/min_angle = center_angle - parent_bioeffect.arc_width / 2
+		var/max_angle = center_angle + parent_bioeffect.arc_width / 2
+
+		src.owner.set_dir(get_dir_accurate(src.owner, target))
+		src.owner.visible_message(SPAN_ALERT("[src.owner]'s eyes emit a weak blue glow."))
+
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_XRAYVISION, "xray_gene")
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_CANTMOVE, "xray_gene")
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_CANTTURN, "xray_gene")
+
+		var/turf/owner_turf = get_turf(src.holder.owner)
+		//oouuughHHH, see AI static code
+		var/v_width = 12
+		var/v_height = 9
+		var/list/turf/turfs_in_view = block(owner_turf.x - v_width, owner_turf.y - v_height, owner_turf.z, owner_turf.x + v_width, owner_turf.y + v_height, owner_turf.z)
+		var/list/turf/unblocked_turfs = list()
+		var/list/turf/blocked_turfs = list()
+		for (var/turf/T in turfs_in_view)
+			//in our vision cone?
+			if (angle_inbetween(arctan(T.x - src.holder.owner.x, T.y - src.holder.owner.y), min_angle, max_angle))
+				if (prob(5))
+					T.AddComponent(/datum/component/radioactive, 20, TRUE, FALSE, 0)
+				unblocked_turfs += T
+				continue
+			src.blackout_turf(T)
+			blocked_turfs += T
+
+		//batiline blocking! Not quite the most efficient way to implement this but not bad either
+		for (var/turf/unblocked_turf as anything in unblocked_turfs)
+			//we already blocked this one, don't bother raytracing
+			if (unblocked_turf in blocked_turfs)
+				continue
+			//turfs this raytrace has scanned so far
+			var/list/turf/scanned_turfs = list()
+			//now scan back down the raytrace towards the user
+			for (var/turf/scan_turf as anything in getline(unblocked_turf, src.owner))
+				if (src.blocks_xray(scan_turf))
+					//we found a blocker, now blackout all the rest of the raytrace because we know it'll be behind this blocker
+					for (var/turf/turf_to_block as anything in scanned_turfs)
+						if (turf_to_block in blocked_turfs)
+							continue
+						src.blackout_turf(turf_to_block)
+						blocked_turfs |= turf_to_block
+				scanned_turfs += scan_turf
+
+		//in case of forced movements, teleports, random gibbings etc.
+		RegisterSignal(src.holder.owner, COMSIG_MOVABLE_SET_LOC, PROC_REF(remove_effects))
+		//can't rely on still being attached to the holder
+		var/mob/user = src.holder.owner
+		SPAWN(3 SECONDS)
+			//effects have already been removed
+			if (!length(src.images))
+				return
+			//safety in case they disconnected in those three seconds
+			if (!user.client && !user.last_client)
+				RegisterSignal(user, COMSIG_MOB_LOGIN, PROC_REF(remove_effects))
+				return
+			src.remove_effects(user)
+
+	proc/remove_effects(mob/user)
+		UnregisterSignal(user, COMSIG_MOVABLE_SET_LOC)
+		REMOVE_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "xray_gene")
+		REMOVE_ATOM_PROPERTY(user, PROP_MOB_XRAYVISION, "xray_gene")
+		REMOVE_ATOM_PROPERTY(user, PROP_MOB_CANTTURN, "xray_gene")
+		user.ClearSpecificOverlays("xray_eyes")
+		var/client/client = user.client || user.last_client
+		for (var/image/blackout in images)
+			client.images -= blackout
+			src.images -= blackout
+		UnregisterSignal(user, COMSIG_MOB_LOGIN)
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /datum/bioEffect/power/polymorphism
 	name = "Polymorphism"
 	desc = "Enables the subject to reconfigure their appearance to mimic that of others."

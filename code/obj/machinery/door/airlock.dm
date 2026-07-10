@@ -933,6 +933,26 @@ var/global/list/cycling_airlocks = list()
 			..()
 	return
 
+/obj/machinery/door/airlock/proc/bolt_open(senderid = null)
+	set waitfor = FALSE
+
+	if(src.locked && !src.density)
+		sleep(src.operation_time)
+		if (senderid)
+			src.send_status(,senderid)
+		return
+	if(src.locked && !src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
+		src.set_unlocked()
+
+	src.open(surpress_send = 1)
+	sleep(0.5 SECONDS)
+
+	if(!src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
+		src.set_locked()
+	sleep(src.operation_time)
+	if (senderid)
+		src.send_status(,senderid)
+
 // ========== mechcomp duplicate code ============
 
 TYPEINFO(/obj/machinery/door/airlock)
@@ -1045,21 +1065,7 @@ TYPEINFO(/obj/machinery/door/airlock)
 				src.send_status()
 
 			if("secure_open")
-				SPAWN(0)
-					if(src.locked && !src.density)
-						sleep(src.operation_time)
-						send_status(,senderid)
-						return
-					if(src.locked && !src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
-						src.set_unlocked()
-
-					src.open(surpress_send = 1)
-					sleep(0.5 SECONDS)
-
-					if(!src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
-						src.set_locked()
-					sleep(src.operation_time)
-					src.send_status(,senderid)
+				src.bolt_open(senderid)
 
 			if("secure_close")
 				SPAWN(0)
@@ -1191,6 +1197,7 @@ TYPEINFO(/obj/machinery/door/airlock)
 	if (prob(20) && (src.density && src.cant_emag != 1 && src.isblocked() != 1))
 		src.open()
 		src.operating = -1
+		src.deconstruct_flags |= DECON_NO_ACCESS
 	if(prob(40))
 		if(src.secondsElectrified == 0)
 			src.secondsElectrified = -1

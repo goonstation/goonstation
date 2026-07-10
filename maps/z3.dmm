@@ -691,9 +691,7 @@
 /area/radiostation/hallway)
 "acm" = (
 /obj/table/auto,
-/obj/machinery/light_switch/west{
-	pixel_x = -22
-	},
+/obj/machinery/light_switch/directional/west,
 /obj/fakeobject{
 	desc = "It looks like it was never even plugged in. Did this ever work?!";
 	icon = 'icons/obj/networked.dmi';
@@ -1278,9 +1276,7 @@
 /area/radiostation/podbay)
 "adZ" = (
 /obj/machinery/vehicle/miniputt,
-/obj/machinery/light_switch/north{
-	pixel_y = 30
-	},
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/shuttlebay,
 /area/radiostation/podbay)
 "aea" = (
@@ -1381,9 +1377,7 @@
 /area/radiostation/podbay)
 "aes" = (
 /obj/decal/cleanable/oil/streak,
-/obj/machinery/light_switch/north{
-	pixel_y = 30
-	},
+/obj/machinery/light_switch/directional/north,
 /obj/machinery/macrofab/emergency_pod,
 /turf/simulated/floor/shuttlebay,
 /area/radiostation/podbay)
@@ -1724,7 +1718,7 @@
 "afY" = (
 /obj/table/wood/round/auto,
 /obj/machinery/light/lamp/black/bright,
-/obj/item/paper/businesscard/cosmicacres{
+/obj/item/paper/image/businesscard/cosmicacres{
 	pixel_y = -4
 	},
 /turf/simulated/floor/carpet/grime,
@@ -2139,7 +2133,7 @@
 	},
 /obj/storage/secure/closet/personal,
 /obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
-/obj/item/paper/businesscard/clowntown,
+/obj/item/paper/image/businesscard/clowntown,
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
 "ajQ" = (
@@ -2967,9 +2961,7 @@
 "aoa" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/decal/cleanable/cobweb2,
-/obj/machinery/light_switch/north{
-	pixel_y = 30
-	},
+/obj/machinery/light_switch/directional/north,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/radiostation/engineering)
@@ -3104,11 +3096,11 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/paper/businesscard/josh{
+/obj/item/paper/image/businesscard/josh{
 	pixel_x = 8;
 	pixel_y = 21
 	},
-/obj/item/paper/businesscard{
+/obj/item/paper/image/businesscard{
 	pixel_y = 32
 	},
 /turf/simulated/floor/grime,
@@ -3611,9 +3603,7 @@
 /turf/simulated/floor/plating,
 /area/buddyfactory)
 "arb" = (
-/obj/machinery/light_switch/east{
-	dir = 4
-	},
+/obj/machinery/light_switch/directional/east,
 /obj/fakeobject{
 	anchored = 1;
 	desc = "Like conventional cables, but more burly.";
@@ -4127,14 +4117,14 @@
 	dir = 1;
 	input_stage = 2
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/buddyfactory)
 "asK" = (
 /obj/machinery/buddyfactory{
 	dir = 1;
 	input_stage = 3
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/buddyfactory)
 "asL" = (
 /obj/rack,
@@ -4160,7 +4150,7 @@
 	icon_state = "fab_robot";
 	name = "janky machine"
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/buddyfactory)
 "asN" = (
 /obj/decal{
@@ -4236,13 +4226,13 @@
 	icon_state = "factory_arm_broken";
 	name = "broken robot arm"
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/buddyfactory)
 "atf" = (
 /obj/machinery/buddyfactory{
 	input_stage = 2
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/buddyfactory)
 "atg" = (
 /obj/rack,
@@ -4251,7 +4241,7 @@
 /turf/simulated/floor,
 /area/buddyfactory)
 "ath" = (
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/buddyfactory)
 "ati" = (
 /obj/cable{
@@ -4468,7 +4458,7 @@
 	icon_state = "factory_arm_broken";
 	name = "broken robot arm"
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/buddyfactory)
 "atV" = (
 /obj/machinery/light{
@@ -4489,7 +4479,7 @@
 /area/buddyfactory)
 "atZ" = (
 /obj/machinery/buddyfactory,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/buddyfactory)
 "aua" = (
 /obj/fakeobject{
@@ -4602,7 +4592,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 8
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/buddyfactory)
 "auA" = (
 /obj/fakeobject/flock/antenna/broken{
@@ -5687,7 +5677,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aGi" = (
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 8
 	},
 /area/h7/storage)
@@ -6021,7 +6011,7 @@
 /area/abandonedmedicalship)
 "aHH" = (
 /obj/shieldgen,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/h7/storage)
 "aHI" = (
 /turf/simulated/floor/airless/grime,
@@ -6270,7 +6260,7 @@
 /area/abandonedship)
 "aIw" = (
 /obj/fakeobject/skeleton,
-/obj/item/paper/printout/emerg1,
+/obj/item/paper/image/sstv/emerg1,
 /turf/simulated/floor/airless/plating/damaged3,
 /area/space)
 "aIx" = (
@@ -6488,10 +6478,7 @@
 	},
 /area/abandonedmedicalship)
 "aJf" = (
-/obj/machinery/light_switch{
-	name = "S light switch";
-	pixel_y = -24
-	},
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor,
 /area/h7/control)
 "aJg" = (
@@ -6622,7 +6609,7 @@
 /obj/item/sheet/steel{
 	amount = 10
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/h7/storage)
 "aJG" = (
 /obj/fakeobject/airlock_broken/firelock{
@@ -7139,15 +7126,15 @@
 /obj/storage/crate/medical,
 /obj/item/storage/firstaid/regular,
 /obj/item/storage/firstaid/toxin,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/h7/storage)
 "aLv" = (
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 10
 	},
 /area/h7/storage)
 "aLw" = (
-/turf/simulated/floor/orangeblack/corner{
+/turf/simulated/floor/caution/corner{
 	dir = 8
 	},
 /area/h7/storage)
@@ -7248,7 +7235,7 @@
 /turf/simulated/floor,
 /area/h7/computer_core)
 "aLN" = (
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 4
 	},
 /area/h7/computer_core)
@@ -7381,7 +7368,7 @@
 	name = "Remote W APC";
 	pixel_x = -24
 	},
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 8
 	},
 /area/h7/storage)
@@ -7499,7 +7486,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 4
 	},
 /area/h7/computer_core)
@@ -7625,7 +7612,7 @@
 "aMU" = (
 /obj/machinery/manufacturer/mechanic,
 /obj/decal/cleanable/cobweb,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/derelict_ai_sat)
 "aMV" = (
 /obj/fakeobject/airmonitor_broken{
@@ -7633,7 +7620,7 @@
 	dir = 1
 	},
 /obj/machinery/rkit,
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 9
 	},
 /area/derelict_ai_sat)
@@ -7641,7 +7628,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 8
 	},
 /area/derelict_ai_sat)
@@ -7699,10 +7686,10 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/derelict_ai_sat)
 "aNg" = (
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 9
 	},
 /area/derelict_ai_sat)
@@ -7770,7 +7757,7 @@
 	pixel_x = -32;
 	pixel_y = 0
 	},
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 9
 	},
 /area/derelict_ai_sat)
@@ -7787,10 +7774,10 @@
 "aNA" = (
 /obj/storage/crate,
 /obj/item/rcd_ammo,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/h7/storage)
 "aNB" = (
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/derelict_ai_sat)
 "aND" = (
 /obj/cable{
@@ -7802,7 +7789,7 @@
 /obj/storage/crate,
 /obj/item/extinguisher,
 /obj/item/extinguisher,
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 9
 	},
 /area/h7/storage)
@@ -7822,7 +7809,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/orangeblack/corner{
+/turf/simulated/floor/caution/corner{
 	dir = 1
 	},
 /area/h7/storage)
@@ -7842,7 +7829,7 @@
 "aNL" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/derelict_ai_sat)
 "aNM" = (
 /obj/storage/crate,
@@ -7851,7 +7838,7 @@
 	},
 /obj/item/staple_gun,
 /obj/item/furniture_parts/table,
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 9
 	},
 /area/derelict_ai_sat)
@@ -7985,7 +7972,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 4
 	},
 /area/h7/computer_core)
@@ -8021,7 +8008,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/h7/computer_core)
 "aOn" = (
 /obj/machinery/door/airlock/pyro/glass/med{
@@ -8070,7 +8057,7 @@
 	desc = "Caution! Science is present!";
 	name = "research caution sign"
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/h7/storage)
 "aOv" = (
 /obj/fakeobject/skeleton{
@@ -8153,7 +8140,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/h7/computer_core)
 "aOK" = (
 /turf/simulated/floor/caution/south,
@@ -8237,7 +8224,7 @@
 "aOW" = (
 /obj/storage/crate,
 /obj/item/cable_coil,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/h7/storage)
 "aOX" = (
 /obj/fakeobject/pipe{
@@ -8368,7 +8355,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/orangeblack/side,
+/turf/simulated/floor/caution/side,
 /area/h7/computer_core)
 "aPn" = (
 /obj/cable{
@@ -8377,7 +8364,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/orangeblack/side,
+/turf/simulated/floor/caution/side,
 /area/h7/computer_core)
 "aPo" = (
 /obj/cable{
@@ -8389,7 +8376,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 6
 	},
 /area/h7/computer_core)
@@ -8565,10 +8552,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light/worn,
-/obj/machinery/light_switch{
-	name = "S light switch";
-	pixel_y = -24
-	},
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor,
 /area/h7/storage)
 "aPT" = (
@@ -9085,9 +9069,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedship)
 "aRL" = (
-/obj/machinery/light_switch/west{
-	pixel_x = -22
-	},
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/sanitary,
 /area/radiostation/bedroom)
 "aRM" = (
@@ -9460,10 +9442,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/light_switch{
-	name = "N light switch";
-	pixel_y = 24
-	},
+/obj/machinery/light_switch/directional/north,
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -9832,10 +9811,7 @@
 /turf/space,
 /area/iss)
 "aTT" = (
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24
-	},
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor,
 /area/h7)
 "aTV" = (
@@ -10392,10 +10368,7 @@
 /obj/machinery/light/worn{
 	dir = 4
 	},
-/obj/machinery/light_switch{
-	name = "S light switch";
-	pixel_y = -24
-	},
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor/purple/corner,
 /area/h7)
 "aVA" = (
@@ -12371,7 +12344,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/orangeblack/side,
+/turf/simulated/floor/caution/side,
 /area/h7/lab)
 "bcu" = (
 /obj/cable{
@@ -12380,20 +12353,20 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/orangeblack/side,
+/turf/simulated/floor/caution/side,
 /area/h7/lab)
 "bcv" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/orangeblack/side,
+/turf/simulated/floor/caution/side,
 /area/h7/lab)
 "bcw" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/fakeobject/lighttube_broken,
-/turf/simulated/floor/orangeblack/side,
+/turf/simulated/floor/caution/side,
 /area/h7/lab)
 "bcx" = (
 /obj/item/raw_material/shard/glass,
@@ -12440,13 +12413,13 @@
 	icon_state = "4-8"
 	},
 /obj/decal/cleanable/ash,
-/turf/simulated/floor/orangeblack/side,
+/turf/simulated/floor/caution/side,
 /area/h7/lab)
 "bcF" = (
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/orangeblack/side,
+/turf/simulated/floor/caution/side,
 /area/h7/lab)
 "bcG" = (
 /obj/cable{
@@ -13418,7 +13391,7 @@
 /turf/simulated/wall/auto/old,
 /area/space)
 "bhd" = (
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 8
 	},
 /area/derelict_ai_sat)
@@ -15396,11 +15369,11 @@
 /area/bee_trader)
 "bLQ" = (
 /obj/machinery/computer/arcade,
-/obj/item/paper/businesscard/bonktek{
+/obj/item/paper/image/businesscard/bonktek{
 	pixel_x = 10;
 	pixel_y = 30
 	},
-/obj/item/paper/businesscard{
+/obj/item/paper/image/businesscard{
 	pixel_x = -1;
 	pixel_y = 25
 	},
@@ -15782,10 +15755,10 @@
 	},
 /area/diner/jucer_trader)
 "cKy" = (
-/obj/blind_switch/area/north{
+/obj/blind_switch/directional/north{
 	pixel_x = 4
 	},
-/obj/machinery/light_switch/north{
+/obj/machinery/light_switch/directional/north{
 	pixel_x = -4
 	},
 /turf/simulated/floor,
@@ -15809,7 +15782,7 @@
 	dir = 5;
 	icon_state = "xtra_bigstripe-corner2"
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/radiostation/teleporter)
 "cMo" = (
 /obj/table/reinforced/bar/auto,
@@ -16448,7 +16421,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/radiostation/teleporter)
 "enX" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -16478,7 +16451,7 @@
 /obj/machinery/door/airlock/pyro{
 	name = "Printing Press"
 	},
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 1
 	},
 /area/radiostation/press)
@@ -16635,7 +16608,7 @@
 /turf/simulated/floor/airless/black,
 /area/space)
 "eYy" = (
-/obj/item/paper/businesscard/bonktek{
+/obj/item/paper/image/businesscard/bonktek{
 	pixel_x = 5;
 	pixel_y = 25
 	},
@@ -16715,15 +16688,15 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/paper/businesscard/taxi{
+/obj/item/paper/image/businesscard/taxi{
 	pixel_x = 6;
 	pixel_y = 24
 	},
-/obj/item/paper/businesscard/skulls{
+/obj/item/paper/image/businesscard/skulls{
 	pixel_x = -11;
 	pixel_y = 27
 	},
-/obj/item/paper/businesscard/biteylou{
+/obj/item/paper/image/businesscard/biteylou{
 	pixel_y = 30
 	},
 /turf/simulated/floor/stairs/wide/other{
@@ -16739,10 +16712,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/paper/businesscard/taxi{
+/obj/item/paper/image/businesscard/taxi{
 	pixel_y = 24
 	},
-/obj/item/paper/businesscard/biteylou{
+/obj/item/paper/image/businesscard/biteylou{
 	pixel_x = 15;
 	pixel_y = 29
 	},
@@ -16832,9 +16805,7 @@
 /turf/simulated/floor/black,
 /area/helldrone/core)
 "fzx" = (
-/obj/machinery/light_switch/north{
-	pixel_y = 30
-	},
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/wood/two,
 /area/radiostation/bedroom)
 "fAh" = (
@@ -16922,12 +16893,12 @@
 /obj/stool/chair/office/red{
 	dir = 1
 	},
-/obj/blind_switch/area/south,
-/obj/machinery/light_switch/south{
+/obj/blind_switch/directional/south,
+/obj/machinery/light_switch/directional/south{
 	pixel_x = 8
 	},
 /obj/landmark/latejoin_job/radio_show_host,
-/obj/sign_switch/south{
+/obj/sign_switch/directional/south{
 	id = "radio_onair";
 	pixel_x = -8
 	},
@@ -16957,7 +16928,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/paper/businesscard/lawyers{
+/obj/item/paper/image/businesscard/lawyers{
 	pixel_x = -8;
 	pixel_y = 30
 	},
@@ -17347,7 +17318,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/radiostation/teleporter)
 "gAT" = (
 /obj/table/endtable_honey,
@@ -17425,7 +17396,7 @@
 	name = "Drone Computer Core"
 	},
 /obj/mapping_helper/airlock/aiDisabler,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/helldrone)
 "gNH" = (
 /obj/fakeobject/pipe{
@@ -17458,7 +17429,7 @@
 /area/diner/hangar)
 "gVs" = (
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/item/paper/businesscard/biteylou{
+/obj/item/paper/image/businesscard/biteylou{
 	pixel_y = 24
 	},
 /turf/simulated/floor/grime,
@@ -17796,8 +17767,8 @@
 /area/radiostation/bedroom)
 "hKm" = (
 /obj/table/wood/round/auto,
-/obj/item/paper/businesscard/gragg2,
-/obj/item/paper/businesscard/gragg1,
+/obj/item/paper/image/businesscard/gragg2,
+/obj/item/paper/image/businesscard/gragg1,
 /turf/simulated/floor/carpet/green/fancy,
 /area/diner/motel/observatory)
 "hLK" = (
@@ -18005,9 +17976,9 @@
 /area/timewarp/ship)
 "ilB" = (
 /obj/table/wood/auto,
-/obj/item/paper/businesscard/cosmicacres,
-/obj/item/paper/businesscard/lawyers,
-/obj/item/paper/businesscard/vurdulak,
+/obj/item/paper/image/businesscard/cosmicacres,
+/obj/item/paper/image/businesscard/lawyers,
+/obj/item/paper/image/businesscard/vurdulak,
 /turf/simulated/floor/green/checker,
 /area/diner/arcade)
 "ilN" = (
@@ -18390,7 +18361,7 @@
 /obj/item/plate,
 /obj/decal/cleanable/dirt,
 /obj/item/kitchen/utensil/fork,
-/obj/item/paper/businesscard/gragg2{
+/obj/item/paper/image/businesscard/gragg2{
 	pixel_y = 24
 	},
 /turf/simulated/floor/carpet{
@@ -18988,7 +18959,7 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 4
 	},
-/obj/item/paper/businesscard/clowntown{
+/obj/item/paper/image/businesscard/clowntown{
 	pixel_x = -6;
 	pixel_y = 29
 	},
@@ -19239,7 +19210,7 @@
 /obj/machinery/light/incandescent/warm/very{
 	dir = 1
 	},
-/obj/item/paper/businesscard/taxi{
+/obj/item/paper/image/businesscard/taxi{
 	pixel_x = 6;
 	pixel_y = 26
 	},
@@ -19281,7 +19252,7 @@
 	},
 /obj/table/auto,
 /obj/item/cable_coil,
-/obj/item/paper/businesscard/hemera_rcd,
+/obj/item/paper/image/businesscard/hemera_rcd,
 /turf/simulated/floor,
 /area/h7/control)
 "lgD" = (
@@ -19355,7 +19326,7 @@
 	name = "Drone Computer Core"
 	},
 /obj/mapping_helper/airlock/aiDisabler,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/helldrone/core)
 "luF" = (
 /obj/lattice{
@@ -19371,10 +19342,10 @@
 /area/space)
 "lvW" = (
 /obj/decal/cleanable/dirt,
-/obj/item/paper/businesscard/banjo{
+/obj/item/paper/image/businesscard/banjo{
 	pixel_y = 24
 	},
-/obj/item/paper/businesscard/ezekian{
+/obj/item/paper/image/businesscard/ezekian{
 	pixel_x = -6;
 	pixel_y = 29
 	},
@@ -19537,14 +19508,14 @@
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
 "lLM" = (
-/obj/machinery/light_switch/south{
+/obj/machinery/light_switch/directional/south{
 	pixel_x = -8
 	},
-/obj/blind_switch/area/south,
+/obj/blind_switch/directional/south,
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/sign_switch/south{
+/obj/sign_switch/directional/south{
 	id = "tv_onair";
 	pixel_x = 8
 	},
@@ -20019,13 +19990,13 @@
 /turf/simulated/floor/industrial,
 /area/space)
 "mOC" = (
-/obj/machinery/light_switch/west{
+/obj/machinery/light_switch/directional/west{
 	pixel_y = -4
 	},
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/blind_switch/area/west{
+/obj/blind_switch/directional/west{
 	pixel_y = 4
 	},
 /obj/decal/tile_edge/stripe/extra_big{
@@ -20035,7 +20006,7 @@
 	dir = 9;
 	icon_state = "xtra_bigstripe-corner2"
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/radiostation/teleporter)
 "mOG" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -20899,7 +20870,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/item/paper/businesscard/taxi{
+/obj/item/paper/image/businesscard/taxi{
 	pixel_x = 6;
 	pixel_y = 26
 	},
@@ -21040,10 +21011,10 @@
 "piW" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass,
-/obj/item/paper/businesscard/gragg1{
+/obj/item/paper/image/businesscard/gragg1{
 	pixel_y = 24
 	},
-/obj/item/paper/businesscard/cosmicacres{
+/obj/item/paper/image/businesscard/cosmicacres{
 	pixel_x = 16;
 	pixel_y = 32
 	},
@@ -21701,10 +21672,10 @@
 	},
 /area/space_hive)
 "qNz" = (
-/obj/machinery/light_switch/east{
+/obj/machinery/light_switch/directional/east{
 	pixel_y = 5
 	},
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	pixel_y = -4
 	},
 /turf/simulated/floor/green/checker,
@@ -22234,7 +22205,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/radiostation/teleporter)
 "sao" = (
 /obj/fakeobject{
@@ -23505,7 +23476,7 @@
 /area/radiostation/hallway)
 "uSs" = (
 /obj/machinery/computer/tetris,
-/obj/item/paper/businesscard/skulls{
+/obj/item/paper/image/businesscard/skulls{
 	pixel_x = -6;
 	pixel_y = 27
 	},
@@ -23760,7 +23731,7 @@
 /obj/machinery/light/lamp/black{
 	pixel_y = 6
 	},
-/turf/simulated/floor/orangeblack/side{
+/turf/simulated/floor/caution/side{
 	dir = 9
 	},
 /area/derelict_ai_sat)
@@ -23921,7 +23892,7 @@
 /turf/simulated/floor/grime,
 /area/diner/arcade)
 "vVN" = (
-/obj/item/paper/businesscard/gragg1{
+/obj/item/paper/image/businesscard/gragg1{
 	pixel_x = 5;
 	pixel_y = 25
 	},
@@ -23953,11 +23924,11 @@
 /area/diner/jucer_trader)
 "vZn" = (
 /obj/map/light/dimred,
-/obj/item/paper/businesscard/josh{
+/obj/item/paper/image/businesscard/josh{
 	pixel_x = 4;
 	pixel_y = 25
 	},
-/obj/item/paper/businesscard/ezekian{
+/obj/item/paper/image/businesscard/ezekian{
 	pixel_x = -4;
 	pixel_y = 29
 	},
@@ -24110,7 +24081,7 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
-/obj/item/paper/businesscard/josh{
+/obj/item/paper/image/businesscard/josh{
 	pixel_x = 6;
 	pixel_y = 27
 	},
@@ -24149,7 +24120,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/paper/businesscard/vurdulak{
+/obj/item/paper/image/businesscard/vurdulak{
 	pixel_y = 26
 	},
 /turf/simulated/floor/scorched2,
@@ -24458,7 +24429,7 @@
 /turf/space,
 /area/abandonedmedicalship)
 "xpM" = (
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/radiostation/teleporter)
 "xpZ" = (
 /turf/unsimulated/floor/white,
@@ -24584,7 +24555,7 @@
 /area/diner/hangar)
 "xHN" = (
 /obj/machinery/door/airlock/pyro/external,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/buddyfactory)
 "xIj" = (
 /obj/item/tile/steel,
@@ -24690,8 +24661,8 @@
 /area/buddyfactory)
 "xYY" = (
 /obj/table/wood/auto,
-/obj/item/paper/businesscard/taxi,
-/obj/item/paper/businesscard,
+/obj/item/paper/image/businesscard/taxi,
+/obj/item/paper/image/businesscard,
 /turf/simulated/floor/green/checker,
 /area/diner/arcade)
 "xZo" = (

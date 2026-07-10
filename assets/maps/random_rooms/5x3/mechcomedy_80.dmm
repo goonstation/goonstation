@@ -43,7 +43,7 @@
 /area/dmm_suite/clear_area)
 "E" = (
 /obj/fitness/speedbag/clown,
-/obj/item/paper/businesscard/clowntown{
+/obj/item/paper/image/businesscard/clowntown{
 	pixel_x = -12;
 	pixel_y = 4
 	},

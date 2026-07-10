@@ -22,7 +22,7 @@
 		boost = parrot.signing_learn_boost
 
 	if (prob(parrot.learn_words_chance + boost))
-		parrot.learn_stuff(message.content)
+		parrot.learn_stuff(message.get_content_parsable())
 
 	if (prob(parrot.learn_phrase_chance + boost))
-		parrot.learn_stuff(message.content, TRUE)
+		parrot.learn_stuff(message.get_content_parsable(), TRUE)

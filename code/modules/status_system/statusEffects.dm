@@ -3147,11 +3147,16 @@
 		if (!ishuman(A))
 			return FALSE
 
-	onAdd(optional)
+	onAdd(datum/artifact/curser/optional)
 		..()
 		if (src.outputs_desc)
 			boutput(src.owner, SPAN_ALERT(src.desc))
-		src.linked_curser = optional
+		if (istype(optional))
+			src.linked_curser = optional
+		if (isliving(src.owner))
+			var/mob/living/M = src.owner
+			if (M.bioHolder)
+				M.bioHolder.cursed = TRUE
 
 	onRemove()
 		if (QDELETED(src.owner))
@@ -3161,8 +3166,8 @@
 			boutput(L, SPAN_NOTICE(src.removal_msg))
 		if(id != "art_curser_displaced_soul")
 			src.linked_curser.active_cursees -= L
-		if(!length(src.linked_curser.active_cursees))
-			src.linked_curser.curse_cleanup()
+			if(!length(src.linked_curser.active_cursees))
+				src.linked_curser.curse_cleanup()
 		src.linked_curser = null
 		..()
 
@@ -3353,7 +3358,7 @@
 
 		onAdd()
 			..()
-			src.soul = new src.soul(get_turf(src.owner), src.owner)
+			src.soul = new(get_turf(src.owner), src.owner)
 			var/mob/living/carbon/human/H = src.owner
 			H.mind.transfer_to(soul)
 			src.original_body = H
@@ -3996,6 +4001,37 @@
 	desc = "This place is calming and supportive. Speaking with someone here will help with any addictions."
 	icon_state = "therapy_zone"
 	effect_quality = STATUS_QUALITY_POSITIVE
+
+/datum/statusEffect/radiation_protection
+	id = "radiation_protection"
+	name = "Radiation Protection"
+	desc = "You have some insulation from the outside world."
+	icon_state = "rad_resist"
+	effect_quality = STATUS_QUALITY_POSITIVE
+	var/obj/storage/prot_source = null
+	var/protection_amount = 0
+
+	getTooltip()
+		. = "[src.prot_source] is providing [src.protection_amount] Ohms of protection."
+
+	onAdd(var/obj/storage/source)
+		. = ..()
+		src.prot_source = source
+		src.protection_amount = src.prot_source.radiation_protection
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_RADPROT_EXT, src, src.protection_amount)
+
+	onRemove()
+		. = ..()
+		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_RADPROT_EXT, src)
+
+	onChange(var/obj/storage/source)
+		. = ..()
+		if(!source.radiation_protection)
+			src.remove_self()
+		src.prot_source = source
+		src.protection_amount = src.prot_source.radiation_protection
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_RADPROT_EXT, src, src.protection_amount)
+
 
 /datum/statusEffect/camera_awareness
 	id = "camera_awareness"

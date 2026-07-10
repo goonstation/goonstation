@@ -138,25 +138,25 @@
 						access_forensics_lockers, access_armory, access_ticket, access_tox, access_tox_storage, access_chemistry, access_medical,
 						access_morgue, access_change_ids, access_eva, access_heads, access_medical_lockers, access_medlab, access_pharmacy,
 						access_crematorium, access_kitchen, access_robotics, access_cargo, access_money,
-						access_research, access_dwaine_superuser, access_hydro, access_ranch, access_ai_upload,
+						access_research, access_sysadmin, access_hydro, access_ranch, access_ai_upload,
 						access_tech_storage, access_maint_tunnels, access_bar, access_janitor, access_fine_small, access_fine_large,
 						access_engineering, access_teleporter, access_engineering_engine, access_engineering_control,
 						access_mining, access_researchfoyer, access_chapel_office, access_telesci,
 						access_engineering_storage, access_engineering_mechanic)
 		if("Research Director")
-			return list(access_research, access_research_director, access_dwaine_superuser,
+			return list(access_research, access_research_director, access_sysadmin,
 						access_tech_storage, access_maint_tunnels, access_heads, access_eva, access_tox,
 						access_tox_storage, access_chemistry, access_teleporter, access_ai_upload, access_researchfoyer, access_telesci,
 						access_artlab, access_robotdepot,
 						)
 		if("Medical Director")
 			return list(access_robotics, access_medical, access_morgue,
-						access_maint_tunnels, access_tech_storage, access_medical_lockers, access_pharmacy,
+						access_maint_tunnels, access_tech_storage, access_sysadmin, access_medical_lockers, access_pharmacy,
 						access_medlab, access_heads, access_eva, access_medical_director, access_ai_upload, access_teleporter
 						)
 		if("Chief Engineer")
 			return list(access_engineering, access_maint_tunnels,
-						access_tech_storage, access_engineering_storage, access_engineering_atmos,
+						access_tech_storage, access_sysadmin, access_engineering_storage, access_engineering_atmos,
 						access_engineering_power, access_engineering_engine,
 						access_engineering_control, access_engineering_mechanic, access_engineering_chief, access_mining, access_mining_outpost,
 						access_heads, access_ai_upload, access_eva, access_cargo, access_supply_console, access_teleporter)
@@ -187,14 +187,13 @@
 		if("Medical Doctor", "Medical Trainee")
 			return list(access_medical, access_medical_lockers, access_morgue, access_maint_tunnels)
 		if("Geneticist")
-			return list(access_medical, access_medical_lockers, access_morgue, access_medlab, access_maint_tunnels)
+			return list(access_medical, access_medical_lockers, access_morgue, access_medlab)
 		if("Roboticist")
-			return list(access_robotics, access_tech_storage, access_medical, access_medical_lockers, access_morgue, access_maint_tunnels)
+			return list(access_maint_tunnels, access_robotics, access_tech_storage, access_medical, access_medical_lockers, access_morgue)
 		if("Pharmacist")
-			return list(access_maint_tunnels, access_pharmacy,
-						access_medical_lockers, access_medical, access_morgue)
+			return list(access_pharmacy, access_medical_lockers, access_medical, access_morgue)
 		if("Psychiatrist")
-			return list(access_medical, access_maint_tunnels)
+			return list(access_medical)
 		if("Medical Specialist")
 			return list(access_robotics, access_medical, access_morgue,
 						access_maint_tunnels, access_tech_storage, access_medical_lockers,
@@ -230,9 +229,9 @@
 		if("Janitor")
 			return list(access_janitor, access_maint_tunnels, access_medical, access_morgue, access_crematorium)
 		if("Botanist", "Apiculturist")
-			return list(access_maint_tunnels, access_hydro)
+			return list(access_hydro, access_maint_tunnels)
 		if("Rancher")
-			return list(access_maint_tunnels, access_hydro, access_ranch)
+			return list(access_hydro, access_ranch, access_maint_tunnels)
 		if("Chef", "Sous-Chef")
 			return list(access_kitchen)
 		if("Bartender")
@@ -263,7 +262,7 @@
 		if("Hall Monitor")
 			return list(access_ticket)
 		if("Computer Operator")
-			return list(access_maint_tunnels, access_tech_storage, access_dwaine_superuser, access_research, access_researchfoyer, access_robotdepot)
+			return list(access_maint_tunnels, access_tech_storage, access_sysadmin, access_research, access_researchfoyer, access_robotdepot)
 		if("Admin")
 			return access_all_actually
 		else
@@ -284,7 +283,7 @@
 				access_tech_storage, access_engineering_storage,
 				access_engineering_power, access_engineering_engine,
 				access_engineering_control, access_engineering_mechanic, access_engineering_chief, access_mining, access_mining_outpost,
-				access_research, access_research_director, access_dwaine_superuser, access_engineering_atmos, access_medical_director,
+				access_research, access_research_director, access_sysadmin, access_engineering_atmos, access_medical_director,
 				access_researchfoyer, access_telesci, access_artlab, access_robotdepot, access_money, access_pharmacy)
 #endif
 
@@ -304,7 +303,7 @@ var/list/access_all_actually = null
 		return
 
 	access_name_lookup = list()
-	var/list/accesses = get_all_accesses()
+	var/list/accesses = get_all_accesses() | access_armory | access_maxsec
 	for (var/accessNum in accesses)
 		access_name_lookup += "[get_access_desc(accessNum)]"
 
@@ -409,8 +408,8 @@ var/list/access_all_actually = null
 			return "Robotics"
 		if(access_head_of_personnel)
 			return "Head of Personnel's Office"
-		if(access_dwaine_superuser)
-			return "DWAINE Superuser"
+		if(access_sysadmin)
+			return "Systems Administrator"
 		if(access_researchfoyer)
 			return "Research Foyer"
 		if(access_artlab)

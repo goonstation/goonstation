@@ -75,6 +75,10 @@
 	var/wx = 0
 	var/wy = 0
 
+	/// Offset we're animating towards during the current step
+	var/next_wx = 0
+	var/next_wy = 0
+
 	/// The list of precalculated turfs this projectile will try to cross, along with the tick count(?) when each turf should be crossed.
 	/// The structure of this list is pure Byond demon magic: it's an indexed list of key-value pairs that can be accessed like:
 	/// `var/turf/T = crossed[i]` OR `var/value = crossed[T]` where `T` is a turf in the list and `value` is the aforesaid tick count.
@@ -560,16 +564,17 @@
 		var/dy = loc.y - orig_turf.y
 		var/pixel_dx = dx * 32
 		var/pixel_dy = dy * 32
-
+		src.next_wx = wx - pixel_dx
+		src.next_wy = wy - pixel_dy
 		if (!dx && !dy) 	//smooth movement within a tile
-			animate(src,pixel_x = wx-pixel_dx, pixel_y = wy-pixel_dy, time = 1 DECI SECOND, flags = ANIMATION_END_NOW)
+			animate(src,pixel_x = src.next_wx, pixel_y = src.next_wy, time = 1 DECI SECOND, flags = ANIMATION_END_NOW)
 		else
 			if ((loc.x - curr_turf.x))
 				pixel_x += 32 * -(loc.x - curr_turf.x)
 			if ((loc.y - curr_turf.y))
 				pixel_y += 32 * -(loc.y - curr_turf.y)
 
-			animate(src,pixel_x = wx-pixel_dx, pixel_y = wy-pixel_dy, time = 1 DECI SECOND, flags = ANIMATION_END_NOW) //todo figure out later
+			animate(src,pixel_x = src.next_wx, pixel_y = src.next_wy, time = 1 DECI SECOND, flags = ANIMATION_END_NOW) //todo figure out later
 
 	track_blood()
 		src.tracked_blood = null

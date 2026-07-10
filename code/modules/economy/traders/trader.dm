@@ -8,6 +8,7 @@
 	var/hidden = 0              // Makes the trader not show up on the QM console
 	var/chance_leave = 35       // Chance for a trader to go hidden during a market shift
 	var/chance_arrive = 45      // Chance for a trader to stop hiding during a market shift
+	var/chance_restock = 35		// Chance for a trader to restock goods (per good) during a market shift
 	var/asshole = 0 // will accept wrong-direction haggles
 
 	///A business card or other item type to occasionally include with orders
@@ -208,7 +209,7 @@
 
 		invoice.info += "<br>Final Cost of Goods: [total_price] credits."
 
-		wagesystem.budgets[BUDGET_CAT_SHIPPING] -= total_price
+		wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] -= total_price
 
 		src.wipe_cart(1) //This tells wipe_cart to not increase the amount in stock when clearing it out.
 		src.currently_selling = 0 //At this point the shopping cart has been processed

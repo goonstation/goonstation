@@ -84,6 +84,8 @@
 		/datum/manufacture/fiddle,
 		/datum/manufacture/whistle)
 
+TYPEINFO(/obj/machinery/manufacturer/general/grody)
+	manufactured_type = /obj/machinery/manufacturer/general
 /obj/machinery/manufacturer/general/grody
 	name = "grody manufacturer"
 	desc = "It's covered in more gunk than a truck stop ashtray. Is this thing even safe?"
@@ -91,7 +93,6 @@
 	free_resources = list()
 	malfunction = TRUE
 	wires = 15 & ~(1 << 3) // This cuts the malfunction wire, so the fab malfunctions immediately
-	mechanics_type_override = /obj/machinery/manufacturer/general
 
 /obj/machinery/manufacturer/robotics
 	name = "robotics fabricator"
@@ -162,6 +163,7 @@
 		/datum/manufacture/robup_speed,
 		/datum/manufacture/robup_mag,
 		/datum/manufacture/robup_meson,
+		/datum/manufacture/robup_pressure,
 		/datum/manufacture/robup_aware,
 		/datum/manufacture/robup_physshield,
 		/datum/manufacture/robup_fireshield,
@@ -225,6 +227,7 @@
 		/datum/manufacture/hypospray,
 		/datum/manufacture/patch,
 		/datum/manufacture/mender,
+		/datum/manufacture/mender_refill_cartridge,
 		/datum/manufacture/penlight,
 		/datum/manufacture/stethoscope,
 		/datum/manufacture/empty_autoinjector/orange,
@@ -265,6 +268,9 @@
 		/datum/manufacture/rods2,
 		/datum/manufacture/metal,
 		/datum/manufacture/glass,
+		/datum/manufacture/cane,
+		/datum/manufacture/cane/fourlegged,
+		/datum/manufacture/cane/tennisball
 	)
 
 	hidden = list()
@@ -581,9 +587,27 @@
 		/datum/manufacture/crate/secure/engineering,
 		/datum/manufacture/crate/secure/medical,
 		/datum/manufacture/crate/secure/hydroponics,
+		/datum/manufacture/cart,
+		/datum/manufacture/cart/forensic,
+		/datum/manufacture/cart/mechanic,
+		/datum/manufacture/cart/medical,
+		/datum/manufacture/cart/trash,
+		/datum/manufacture/locker/secure,
+		/datum/manufacture/locker/secure/command,
+		/datum/manufacture/locker/secure/security,
+		/datum/manufacture/locker/secure/contraband,
+		/datum/manufacture/locker/secure/research,
+		/datum/manufacture/locker/secure/engineering,
+		/datum/manufacture/locker/secure/medical,
+		/datum/manufacture/locker/secure/hydroponics,
 		)
 
-	hidden = list(/datum/manufacture/crate/class, /datum/manufacture/crate/secure/syndicate)
+	hidden = list(
+		/datum/manufacture/crate/class,
+		/datum/manufacture/crate/secure/syndicate,
+		/datum/manufacture/cart/hotdog,
+		/datum/manufacture/locker/secure/nanotrasen,
+		)
 
 /obj/machinery/manufacturer/zombie_survival
 	name = "\improper Uber-Extreme Survival Manufacturer"
@@ -649,6 +673,7 @@
 		/datum/manufacture/soldering,
 		/datum/manufacture/multitool,
 		/datum/manufacture/t_scanner,
+		/datum/manufacture/accessgun,
 		/datum/manufacture/gravity_scanner,
 		/datum/manufacture/RCD,
 		/datum/manufacture/places_pipes,
@@ -656,6 +681,7 @@
 		/datum/manufacture/RCDammomedium,
 		/datum/manufacture/RCDammolarge,
 		/datum/manufacture/atmos_goggles,
+		/datum/manufacture/eyes_meson,
 		/datum/manufacture/engivac,
 		/datum/manufacture/lampmanufacturer,
 		/datum/manufacture/pod/weapon/efif1,

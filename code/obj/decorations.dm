@@ -434,10 +434,11 @@
 
 //It'll show up on multitools
 TYPEINFO(/obj/shrub/syndicateplant)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 2
 /obj/shrub/syndicateplant
 	var/net_id
-	is_syndicate = TRUE
+
 	SYNDICATE_STEALTH_DESCRIPTION("The latest in syndicate spy technology.", "Is that an antenna?")
 
 	New()
@@ -816,8 +817,6 @@ TYPEINFO(/obj/shrub/syndicateplant)
 				src.initialize()
 
 	initialize()
-		if (!src.name || (src.name in list("N blind switch", "E blind switch", "S blind switch", "W blind switch")))//== "N light switch" || name == "E light switch" || name == "S light switch" || name == "W light switch")
-			src.name = "blind switch"
 		if (!src.id)
 			var/area/blind_area = get_area(src)
 			src.id = blind_area.name
@@ -856,80 +855,14 @@ TYPEINFO(/obj/shrub/syndicateplant)
 		. = ..()
 		src.toggle_group()
 
-/obj/blind_switch/north
-	name = "N blind switch"
-	dir = NORTH
-	pixel_y = 24
+SET_UP_DIRECTIONALS(/obj/blind_switch, OFFSETS_LIGHTSWITCH)
 
-	on
-		on = 1
-		icon_state = "blind0"
+/obj/blind_switch/on
+	icon_state = "blind0"
+	on = TRUE
 
-/obj/blind_switch/east
-	name = "E blind switch"
-	dir = EAST
-	pixel_x = 24
+SET_UP_DIRECTIONALS(/obj/blind_switch/on, OFFSETS_LIGHTSWITCH)
 
-	on
-		on = 1
-		icon_state = "blind0"
-
-/obj/blind_switch/south
-	name = "S blind switch"
-	dir = SOUTH
-	pixel_y = -24
-
-	on
-		on = 1
-		icon_state = "blind0"
-
-/obj/blind_switch/west
-	name = "W blind switch"
-	dir = WEST
-	pixel_x = -24
-
-	on
-		on = 1
-		icon_state = "blind0"
-
-// left in for existing map compatibility; subsequent update could unify blind and sign switches codewise, and eliminate this subtype
-/obj/blind_switch/area
-
-/obj/blind_switch/area/north
-	name = "N blind switch"
-	dir = NORTH
-	pixel_y = 24
-
-	on
-		on = 1
-		icon_state = "blind0"
-
-/obj/blind_switch/area/east
-	name = "E blind switch"
-	dir = EAST
-	pixel_x = 24
-
-	on
-		on = 1
-		icon_state = "blind0"
-
-/obj/blind_switch/area/south
-	name = "S blind switch"
-	dir = SOUTH
-	pixel_y = -24
-
-	on
-		on = 1
-		icon_state = "blind0"
-
-/obj/blind_switch/area/west
-	name = "W blind switch"
-	dir = WEST
-	pixel_x = -24
-
-	on
-		on = 1
-		icon_state = "blind0"
 
 /obj/sign_switch
 	name = "sign switch"
@@ -948,8 +881,6 @@ TYPEINFO(/obj/shrub/syndicateplant)
 				src.initialize()
 
 	initialize()
-		if (!src.name || (src.name in list("N sign switch", "E sign switch", "S sign switch", "W sign switch")))
-			src.name = "sign switch"
 		if (!src.id)
 			var/area/sign_area = get_area(src)
 			src.id = sign_area.name
@@ -986,21 +917,8 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	attackby(obj/item/W, mob/user)
 		src.toggle_group()
 
-/obj/sign_switch/north
-	name = "N sign switch"
-	pixel_y = 24
+SET_UP_DIRECTIONALS(/obj/sign_switch, OFFSETS_LIGHTSWITCH)
 
-/obj/sign_switch/east
-	name = "E sign switch"
-	pixel_x = 24
-
-/obj/sign_switch/south
-	name = "S sign switch"
-	pixel_y = -24
-
-/obj/sign_switch/west
-	name = "W sign switch"
-	pixel_x = -24
 
 /obj/machinery/illuminated_sign
 	name = "illuminated sign"

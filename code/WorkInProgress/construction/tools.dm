@@ -169,6 +169,7 @@
 			aTurret.setState(enabled, lethal)
 
 TYPEINFO(/obj/item/room_marker)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/room_marker
@@ -276,6 +277,7 @@ TYPEINFO(/obj/item/room_marker)
 		return affected
 
 TYPEINFO(/obj/item/clothing/glasses/construction)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/clothing/glasses/construction
@@ -299,6 +301,7 @@ TYPEINFO(/obj/item/clothing/glasses/construction)
 		inventory_counter.update_number(metal_ammo)
 
 TYPEINFO(/obj/item/material_shaper)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/material_shaper
@@ -498,8 +501,10 @@ TYPEINFO(/obj/item/material_shaper)
 #define ROOM_PLANNER_WALLS "walls"
 #define ROOM_PLANNER_RESTORE "restore original"
 #define ROOM_PLANNER_CHARGES_PER_MATERIAL 20
+#define ROOM_PLANNER_CYBORG_CELL_USAGE 50
 
 TYPEINFO(/obj/item/room_planner)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/room_planner
@@ -528,6 +533,8 @@ TYPEINFO(/obj/item/room_planner)
 	var/charges = 100
 	/// maximum amount of stored "ammo"
 	var/max_charges = 1000
+	/// Cyborg battery cost charge per use
+	var/charge_cost = ROOM_PLANNER_CYBORG_CELL_USAGE
 
 	var/list/wallicons = list(
 		"diner" = 'icons/turf/walls/derelict.dmi',
@@ -590,9 +597,12 @@ TYPEINFO(/obj/item/room_planner)
 
 	New()
 		. = ..()
-		src.inventory_counter.update_number(src.charges)
+		if(src.inventory_counter_enabled)
+			src.inventory_counter.update_number(src.charges)
 
 	attackby(obj/item/I, mob/user, params)
+		if (!istype_exact(src, /obj/item/room_planner))
+			return ..()
 		if (istype(I, /obj/item/material_piece) && (I.material.getMaterialFlags() & MATERIAL_CLOTH))
 			if(src.charges + ROOM_PLANNER_CHARGES_PER_MATERIAL > src.max_charges)
 				boutput(user, SPAN_NOTICE("\The [src] refuses \the [I.material.getName()] as it is too full."))
@@ -606,10 +616,6 @@ TYPEINFO(/obj/item/room_planner)
 		. = ..()
 
 	attack_self(mob/user as mob)
-		// This seems to not actually stop anything from working so just axing it.
-		//if (!(ticker?.mode && istype(ticker.mode, /datum/game_mode/construction)))
-		//	boutput(user, SPAN_ALERT("You can only use this tool in construction mode."))
-
 		if (selecting)
 			return
 
@@ -686,19 +692,14 @@ TYPEINFO(/obj/item/room_planner)
 					W.update_neighbors()
 			return
 
-		if (src.charges <= 0)
-			boutput(user, SPAN_ALERT("\The [src] requires more cloth to continue decorating!"))
-			user.playsound_local(src, 'sound/machines/buzz-sigh.ogg', 40, 1)
-			return
-
 		var/obj/plan_marker/old = null
 		for (var/obj/plan_marker/K in T)
 			if (istype(K, /obj/plan_marker/floor) || istype(K, /obj/plan_marker/wall))
 				old = K
 				break
 		if (old)
-			old.Attackby(src, user)
-			src.charges -= 1
+			if (src.consume_charge(user))
+				old.Attackby(src, user)
 		else if (!isnull(selectedtype))
 			if (iswall(T) && mode != ROOM_PLANNER_WALLS)
 				boutput(user, SPAN_NOTICE("Currently in [mode] mode, cannot change walls."))
@@ -707,21 +708,44 @@ TYPEINFO(/obj/item/room_planner)
 				boutput(user, SPAN_NOTICE("Currently in [mode] mode, cannot change floors."))
 				return
 			var/class = marker_class[mode]
-			src.charges -= 1
-			old = new class(T, selectedicon, selectedtype, mode)
-			old.set_dir(get_dir(user, T))
-			old.turf_op = turf_op
-			old:check(selectedmod)
+			if (src.consume_charge(user))
+				old = new class(T, selectedicon, selectedtype, mode)
+				old.set_dir(get_dir(user, T))
+				old.turf_op = turf_op
+				old:check(selectedmod)
 		else
 			boutput(user, SPAN_ALERT("No type selected for current mode!"))
 			return 0
-		src.inventory_counter.update_number(src.charges)
+		if(src.inventory_counter_enabled)
+			src.inventory_counter.update_number(src.charges)
 		return 1
+
+	/// Check if the designer has enough ammo (carbon) or charge (silicon) to be used
+	proc/consume_charge(mob/user)
+		if (issilicon(user))
+			var/mob/living/silicon/S = user
+			if (S.cell && S.cell.charge >= src.charge_cost)
+				S.cell.use(src.charge_cost)
+				return TRUE
+			boutput(user, SPAN_ALERT("\The [src] requires more power to continue decorating!"))
+			user.playsound_local(src, 'sound/machines/buzz-sigh.ogg', 40, 1)
+			return FALSE
+		else
+			if (src.charges > 0)
+				src.charges -= 1
+				return TRUE
+			boutput(user, SPAN_ALERT("\The [src] requires more cloth to continue decorating!"))
+			user.playsound_local(src, 'sound/machines/buzz-sigh.ogg', 40, 1)
+			return FALSE
+
+/obj/item/room_planner/cyborg
+	inventory_counter_enabled = FALSE
 
 #undef ROOM_PLANNER_FLOORS
 #undef ROOM_PLANNER_WALLS
 #undef ROOM_PLANNER_RESTORE
 #undef ROOM_PLANNER_CHARGES_PER_MATERIAL
+#undef ROOM_PLANNER_CYBORG_CELL_USAGE
 
 /obj/plan_marker
 	name = "\improper Plan Marker"

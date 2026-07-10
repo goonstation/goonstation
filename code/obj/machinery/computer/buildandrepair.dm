@@ -22,6 +22,7 @@
 
 ABSTRACT_TYPE(/obj/item/circuitboard)
 TYPEINFO(/obj/item/circuitboard)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/circuitboard
@@ -133,6 +134,10 @@ TYPEINFO(/obj/item/circuitboard)
 /obj/item/circuitboard/robotics
 	name = "circuit board (robotics control)"
 	computertype = /obj/machinery/computer/robotics
+/obj/item/circuitboard/robotics_lab
+	name = "circuit board (robotics monitoring)"
+	computertype = /obj/machinery/computer/robotics/lab
+	icon_state = "circuit_medical"
 /obj/item/circuitboard/robot_module_rewriter
 	name = "circuit board (cyborg module rewriter)"
 	computertype = /obj/machinery/computer/robot_module_rewriter
@@ -224,7 +229,7 @@ TYPEINFO(/obj/item/circuitboard)
 	computertype = /obj/machinery/computer/announcement/station
 
 TYPEINFO(/obj/item/circuitboard/announcement/bridge)
-	mats = 0 //no spamming arrival messages please
+	analyser_flags = ANALYSER_BLACKLIST //no spamming arrival messages please
 
 /obj/item/circuitboard/announcement/bridge
 	name = "circuit board (bridge/arrival announcement computer)"
@@ -273,14 +278,15 @@ TYPEINFO(/obj/item/circuitboard/announcement/bridge)
 	computertype = /obj/machinery/computer/announcement/station/catering
 	icon_state = "circuit_civilian"
 
+TYPEINFO(/obj/item/circuitboard/announcement/syndicate)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/circuitboard/announcement/syndicate
 	name = "circuit board (syndicate announcement computer)"
 	computertype = /obj/machinery/computer/announcement/syndicate
 	icon_state = "circuit_security"
-	is_syndicate = TRUE
 
 TYPEINFO(/obj/item/circuitboard/announcement/clown)
-	mats = null
+	analyser_flags = ANALYSER_BLACKLIST
 /obj/item/circuitboard/announcement/clown
 	name = "circuit board (clown announcement computer)"
 	computertype = /obj/machinery/computer/announcement/clown

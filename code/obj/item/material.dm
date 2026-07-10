@@ -519,6 +519,21 @@
 	w_class = W_CLASS_POCKET_SIZED // Should fit in your pocket, since it is so dense.
 	dense = 2
 
+/obj/item/raw_material/batiline
+	name = "batiline ore"
+	desc = "A chunk of batiline. A dense but brittle ore often used in radiation shielding."
+	icon = 'icons/obj/items/materials/batiline.dmi'
+	material_name = "Batiline"
+	default_material = "batiline"
+	dense = 2
+
+	update_icon()
+		if(src.icon_stack_value == 1)
+			var/ore_state = pick("ore1", "ore1b", "ore1c")
+			src.icon_state = "[ore_state]_$$[src.default_material]"
+		else
+			src.icon_state = "ore[src.icon_stack_value]_$$[src.default_material]"
+
 /obj/item/raw_material/fibrilith
 	name = "fibrilith chunk"
 	desc = "A compressed chunk of Fibrilith, an odd mineral known for its high tensile strength."
@@ -919,24 +934,21 @@
 			if (istype(M, /obj/item/wizard_crystal))
 				var/obj/item/wizard_crystal/wc = M
 				wc.setMaterial(getMaterial(wc.assoc_material),0,0,1,0)
-
 			if (!istype(M.material))
 				M.set_loc(src.loc)
 				src.reject = 1
 				continue
-
 			else if (istype(M, /obj/item/cable_coil))
 				var/obj/item/cable_coil/C = M
 				reclaim_materials(C.material, C.material_amt * C.amount)
 				reclaim_materials(C.conductor, C.material_amt * C.amount)
 				qdel(C)
-
 			else
 				reclaim_materials(M.material, M.material_amt * M.amount)
 				qdel(M)
-
 			sleep(smelt_interval)
 
+		output_sheets()
 		if (reject)
 			src.reject = 0
 			src.visible_message("<b>[src]</b> emits an angry buzz and rejects some unsuitable materials!")
@@ -956,11 +968,9 @@
 		leftovers[material_id] = material_amount - num_of_bars
 		output_bar(material_reclaim, num_of_bars)
 
-	proc/output_bar(material, amount)
-
+	proc/output_bar(var/datum/material/material, var/amount)
 		if(amount <= 0)
 			return
-
 		var/datum/material/MAT = material
 		if (!istype(MAT))
 			MAT = getMaterial(material)
@@ -985,8 +995,36 @@
 				if (BAR.material.isSameMaterial(other_bar.material))
 					if (other_bar.stack_item(BAR))
 						break
-
 		playsound(src.loc, sound_process, 40, 1)
+
+	proc/output_sheets()
+		// Dump leftover materials as scrap when finished
+		var/atom/output_location = src.get_output_location()
+		if (istype(output_location, /obj/machinery/manufacturer))
+			output_location = get_turf(src)
+
+		var/obj/item/sheet/dummy = new() // Just here to get the material_amt for scrap metal
+		for(var/leftover_id in leftovers)
+			if(leftovers[leftover_id] < dummy.material_amt)
+				continue
+			var/datum/material/material_reclaim = getMaterial(leftover_id)
+			if(!material_reclaim)
+				continue
+			var/material_amount = leftovers[leftover_id]
+			var/num_of_sheet = floor(material_amount * 10)
+			leftovers[leftover_id] = material_amount - (num_of_sheet * 0.1)
+
+			var/obj/item/sheet/sheet = new()
+			sheet.setMaterial(material_reclaim)
+			sheet.set_stack_amount(num_of_sheet)
+			sheet.set_loc(output_location)
+			for (var/obj/item/sheet/other_sheet in output_location.contents)
+				if (other_sheet == sheet)
+					continue
+				if (sheet.material.isSameMaterial(other_sheet.material))
+					if (other_sheet.stack_item(sheet))
+						break
+			playsound(src.loc, sound_process, 40, 1)
 
 	proc/load_reclaim(obj/item/W as obj, mob/user as mob)
 		. = FALSE

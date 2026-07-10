@@ -25,6 +25,34 @@ TYPEINFO(/obj/machinery/power/tracker)
 	var/sun_angle = 0		// sun angle as set by sun datum
 	var/obj/machinery/computer/solar_control/control
 
+	north
+		id = "north"
+	south
+		id = "south"
+	alt
+		id = "alt"
+	east
+		id = "east"
+	west
+		id = "west"
+	small_backup1
+		id = "small_backup1"
+	small_backup2
+		id = "small_backup2"
+	small_backup3
+		id = "small_backup3"
+	small_backup4
+		id = "small_backup4"
+	asylum
+		id = "asylum"
+	diner
+		id = "diner"
+	silverglass
+		id = "silverglass"
+	zeta
+		id = "zeta"
+	aisat
+		id = "aisat"
 	New()
 		..()
 		SPAWN(1 SECOND)
@@ -85,6 +113,37 @@ TYPEINFO(/obj/machinery/power/solar)
 	var/ndir = SOUTH
 	var/turn_angle = 0
 	var/obj/machinery/computer/solar_control/control
+
+
+	north
+		id = "north"
+	south
+		id = "south"
+	alt
+		id = "alt"
+	east
+		id = "east"
+	west
+		id = "west"
+	small_backup1
+		id = "small_backup1"
+	small_backup2
+		id = "small_backup2"
+	small_backup3
+		id = "small_backup3"
+	small_backup4
+		id = "small_backup4"
+	asylum
+		id = "asylum"
+	diner
+		id = "diner"
+	silverglass
+		id = "silverglass"
+	zeta
+		id = "zeta"
+	aisat
+		id = "aisat"
+
 
 /obj/machinery/power/solar/New()
 	..()
@@ -212,6 +271,35 @@ TYPEINFO(/obj/machinery/power/solar)
 	var/lastgen = 0
 	var/active = TRUE
 	var/obj/machinery/power/tracker/tracker
+
+	north
+		solar_id = "north"
+	south
+		solar_id = "south"
+	alt
+		solar_id = "alt"
+	east
+		solar_id = "east"
+	west
+		solar_id = "west"
+	small_backup1
+		solar_id = "small_backup1"
+	small_backup2
+		solar_id = "small_backup2"
+	small_backup3
+		solar_id = "small_backup3"
+	small_backup4
+		solar_id = "small_backup4"
+	asylum
+		id = "asylum"
+	diner
+		solar_id = "diner"
+	silverglass
+		solar_id = "silverglass"
+	zeta
+		solar_id = "zeta"
+	aisat
+		solar_id = "aisat"
 
 /obj/machinery/computer/solar_control/New()
 	..()
@@ -343,7 +431,7 @@ TYPEINFO(/obj/machinery/power/solar)
 // solar panels which ignore occlusion
 
 TYPEINFO(/obj/machinery/power/solar/owl_cheat)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/machinery/power/solar/owl_cheat
 	id = "owl"

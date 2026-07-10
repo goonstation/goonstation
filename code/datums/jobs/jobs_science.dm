@@ -10,7 +10,7 @@ ABSTRACT_TYPE(/datum/job/research)
 /datum/job/research/scientist
 	name = "Scientist"
 	limit = 5
-	wages = PAY_DOCTORATE
+	wages = PAY::DOCTORATE
 	trait_list = list("training_scientist")
 	access_string = "Scientist"
 	slot_back = list(/obj/item/storage/backpack/research)
@@ -28,7 +28,7 @@ ABSTRACT_TYPE(/datum/job/research)
 /datum/job/research/research_assistant
 	name = "Research Trainee"
 	limit = 2
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	trait_list = list("training_scientist")
 	access_string = "Scientist"
 	rounds_allowed_to_play = ROUNDS_MAX_RESASS
