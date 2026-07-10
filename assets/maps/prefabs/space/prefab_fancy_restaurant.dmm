@@ -657,7 +657,7 @@
 /turf/simulated/floor/minitiles/white,
 /area/prefab/fancy_restaurant)
 "Oy" = (
-/obj/blind_switch/area/east,
+/obj/blind_switch/directional/east,
 /turf/simulated/floor/white/checker2,
 /area/prefab/fancy_restaurant)
 "Pd" = (
