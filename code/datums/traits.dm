@@ -880,6 +880,10 @@ ABSTRACT_TYPE(/datum/trait/job)
 		owner.AddComponent(/datum/component/death_confetti)
 		owner.bioHolder?.AddEffect("accent_comic", innate = TRUE)
 		owner.bioHolder?.AddEffect("clumsy", innate = TRUE)
+		owner.can_juggle = TRUE
+
+	onRemove(var/mob/owner)
+		owner.can_juggle = FALSE
 
 /datum/trait/job/mime
 	name = "Mime Training"
@@ -889,6 +893,10 @@ ABSTRACT_TYPE(/datum/trait/job)
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("mute", innate = TRUE)
 		owner.bioHolder?.AddEffect("blankman", innate = TRUE)
+		owner.can_juggle = TRUE
+
+	onRemove(var/mob/owner)
+		owner.can_juggle = FALSE
 
 /datum/trait/job/miner
 	name = "Miner Training"
