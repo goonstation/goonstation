@@ -4,9 +4,8 @@
  * @author glowbold (https://github.com/pgmzeta)
  * @license MIT
  */
-import { Collapsible, Section, Stack, Table } from 'tgui-core/components';
+import { Collapsible, LabeledList, Section } from 'tgui-core/components';
 
-import { capitalize, spaceUnderscores } from '../stringUtils';
 import { DisplayOccupiedProps, ImplantData } from './type';
 
 type DisplayImplantsProps = DisplayOccupiedProps & {
@@ -25,17 +24,17 @@ export const DisplayImplants = (props: DisplayImplantsProps) => {
       <Section>
         {!occupied && 'No Patient Detected.'}
         {!!occupied && (
-          <Stack.Item width={20}>
+          <>
             {!implants && 'No Implants Detected.'}
             {!!implants && implants.length === 0 && 'No Implants Detected.'}
             {!!implants && implants.length > 0 && (
-              <Table>
+              <LabeledList>
                 {implants.map((implant_data: ImplantData) => {
                   return <DisplayImplant implant={implant_data} />;
                 })}
-              </Table>
+              </LabeledList>
             )}
-          </Stack.Item>
+          </>
         )}
       </Section>
     </Collapsible>
@@ -49,11 +48,8 @@ interface DisplayImplantProps {
 export const DisplayImplant = (props: DisplayImplantProps) => {
   const { implant } = props;
   return (
-    <Table.Row>
-      <Table.Cell textAlign="right">{implant.implant_count}x</Table.Cell>
-      <Table.Cell>
-        {capitalize(spaceUnderscores(implant.implant_name))}
-      </Table.Cell>
-    </Table.Row>
+    <LabeledList.Item label={implant.implant_name}>
+      {implant.implant_count}
+    </LabeledList.Item>
   );
 };
