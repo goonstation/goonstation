@@ -152,13 +152,9 @@
 /turf/simulated/floor/wood/six,
 /area/prefab/fancy_restaurant)
 "ki" = (
-/obj/railing/reinforced{
-	dir = 8
+/obj/forcefield/energyshield/perma{
+	dir = 6
 	},
-/obj/railing/reinforced{
-	dir = 1
-	},
-/obj/forcefield/energyshield/perma,
 /turf/simulated/floor/wood/seven,
 /area/prefab/fancy_restaurant)
 "kM" = (
@@ -213,7 +209,7 @@
 	dir = 8
 	},
 /obj/forcefield/energyshield/perma{
-	dir = 5
+	dir = 8
 	},
 /turf/simulated/floor/wood/seven,
 /area/prefab/fancy_restaurant)
@@ -249,13 +245,9 @@
 /turf/simulated/floor/wood/six,
 /area/prefab/fancy_restaurant)
 "oc" = (
-/obj/railing/reinforced{
-	dir = 1
+/obj/forcefield/energyshield/perma{
+	dir = 10
 	},
-/obj/railing/reinforced{
-	dir = 4
-	},
-/obj/forcefield/energyshield/perma,
 /turf/simulated/floor/wood/seven,
 /area/prefab/fancy_restaurant)
 "oG" = (
@@ -563,7 +555,7 @@
 	dir = 1
 	},
 /obj/forcefield/energyshield/perma{
-	dir = 5
+	dir = 9
 	},
 /turf/simulated/floor/wood/seven,
 /area/prefab/fancy_restaurant)
@@ -852,7 +844,7 @@
 	dir = 4
 	},
 /obj/forcefield/energyshield/perma{
-	dir = 5
+	dir = 8
 	},
 /turf/simulated/floor/wood/seven,
 /area/prefab/fancy_restaurant)
@@ -1214,9 +1206,9 @@ HZ
 cH
 cH
 cH
-cH
-cH
-Wo
+JF
+lY
+lY
 wW
 ah
 cu
@@ -1238,10 +1230,10 @@ HZ
 (13,1,1) = {"
 cH
 cH
-cH
 JF
-lY
-lY
+ki
+zk
+zk
 wW
 wW
 Di
@@ -1262,7 +1254,7 @@ cH
 "}
 (14,1,1) = {"
 cH
-cH
+JF
 ki
 AZ
 Yk
@@ -1287,7 +1279,7 @@ cH
 "}
 (15,1,1) = {"
 cH
-ki
+dp
 Tc
 Rw
 Ct
@@ -1362,7 +1354,7 @@ cN
 "}
 (18,1,1) = {"
 cH
-oc
+dp
 Tc
 ln
 Ct
@@ -1387,7 +1379,7 @@ cH
 "}
 (19,1,1) = {"
 cH
-cH
+SI
 oc
 gF
 Yk
@@ -1413,11 +1405,11 @@ cH
 (20,1,1) = {"
 cH
 cH
-cH
 SI
-Uz
-Uz
-Uz
+oc
+zk
+zk
+gF
 wW
 wW
 wW
@@ -1439,11 +1431,11 @@ HZ
 cH
 cH
 cH
-cH
-cH
-cH
-cH
-Wo
+SI
+Uz
+Uz
+Uz
+wW
 wW
 Vq
 cu
