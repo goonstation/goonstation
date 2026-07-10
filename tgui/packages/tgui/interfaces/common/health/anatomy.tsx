@@ -56,8 +56,8 @@ export const DisplayLimbs = (props: DisplayLimbsProps) => {
           <Table.Cell header>Status</Table.Cell>
         </Table.Row>
         {limbs &&
-          limbs.map((limb_data: LimbData) => {
-            return <DisplayLimb limb={limb_data} />;
+          limbs.map((limb_data: LimbData, index) => {
+            return <DisplayLimb key={index} limb={limb_data} />;
           })}
       </Table>
     </Stack.Item>
@@ -106,8 +106,8 @@ export const DisplayOrgans = (props: DisplayOrgansProps) => {
         </Table.Row>
         {occupied &&
           organs &&
-          organs.map((organ_data: OrganData) => {
-            return <DisplayOrgan organ={organ_data} />;
+          organs.map((organ_data: OrganData, index) => {
+            return <DisplayOrgan key={index} organ={organ_data} />;
           })}
       </Table>
     </Stack.Item>

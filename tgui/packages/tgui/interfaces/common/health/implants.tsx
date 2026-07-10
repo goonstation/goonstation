@@ -29,8 +29,8 @@ export const DisplayImplants = (props: DisplayImplantsProps) => {
             {!!implants && implants.length === 0 && 'No Implants Detected.'}
             {!!implants && implants.length > 0 && (
               <LabeledList>
-                {implants.map((implant_data: ImplantData) => {
-                  return <DisplayImplant implant={implant_data} />;
+                {implants.map((implant_data: ImplantData, index) => {
+                  return <DisplayImplant key={index} implant={implant_data} />;
                 })}
               </LabeledList>
             )}

@@ -4,13 +4,7 @@
  * @author glowbold (https://github.com/pgmzeta)
  * @license MIT
  */
-import {
-  Collapsible,
-  LabeledList,
-  Section,
-  Stack,
-  Table,
-} from 'tgui-core/components';
+import { Collapsible, LabeledList, Section } from 'tgui-core/components';
 
 import { DisplayOccupiedProps } from './type';
 

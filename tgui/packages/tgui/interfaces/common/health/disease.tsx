@@ -29,8 +29,8 @@ export const DisplayDiseases = (props: DisplayDiseasesProps) => {
         )}
         {!!occupied &&
           diseases &&
-          diseases.map((disease_data: DiseaseData) => {
-            return <DisplayDisease disease={disease_data} />;
+          diseases.map((disease_data: DiseaseData, index) => {
+            return <DisplayDisease key={index} disease={disease_data} />;
           })}
       </Section>
     </Collapsible>

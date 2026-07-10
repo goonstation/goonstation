@@ -16,6 +16,11 @@ const BRAIN_DAMAGE_SEVERE: number = 80;
 const BRAIN_DAMAGE_LETHAL: number = 100;
 const BRAIN_DAMAGE_DEATH: number = 120;
 
+const BLOOD_VOLUME_VERY_LOW: number = 299;
+const BLOOD_VOLUME_LOW: number = 414;
+const BLOOD_VOLUME_HIGH: number = 584;
+const BLOOD_VOLUME_VERY_HIGH: number = 665;
+
 type KeyHealthIndicatorsProps = DisplayOccupiedProps & {
   patient_status: number;
   blood_pressure_rendered: string | null;
@@ -90,13 +95,13 @@ const DisplayBloodPressure = (props: DisplayBloodPressureProps) => {
   let pressure_color = 'grey';
   if (occupied) {
     if (blood_volume === null) {
-    } else if (blood_volume <= 299) {
+    } else if (blood_volume <= BLOOD_VOLUME_VERY_LOW) {
       pressure_color = 'red';
-    } else if (blood_volume <= 414) {
+    } else if (blood_volume <= BLOOD_VOLUME_LOW) {
       pressure_color = 'yellow';
-    } else if (blood_volume <= 584) {
+    } else if (blood_volume <= BLOOD_VOLUME_HIGH) {
       pressure_color = 'green';
-    } else if (blood_volume <= 665) {
+    } else if (blood_volume <= BLOOD_VOLUME_VERY_HIGH) {
       pressure_color = 'yellow';
     } else {
       pressure_color = 'red';
