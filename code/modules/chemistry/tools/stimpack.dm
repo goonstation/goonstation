@@ -23,7 +23,7 @@
 			boutput(user, SPAN_ALERT("You can't use this item on that!"))
 			return
 		if(user == target)
-			stimulant_action(user, target)
+			src.stimulant_action(user, target)
 			return
 		else
 			actions.start(new/datum/action/bar/icon/stimulant(target, src, src.icon, src.icon_state), user)
