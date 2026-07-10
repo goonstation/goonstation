@@ -1002,10 +1002,13 @@
 /area/listeningpost/tech_room)
 "AG" = (
 /obj/table/syndicate/auto,
-/obj/item/aiModule/hologram_expansion/syndicate{
-	pixel_y = 8
+/obj/machinery/codereader/syndicate{
+	pixel_y = 12
 	},
-/obj/machinery/codereader/syndicate,
+/obj/item/aiModule/hologram_expansion/syndicate{
+	pixel_x = -2;
+	pixel_y = -2
+	},
 /turf/simulated/floor/minitiles/black,
 /area/listeningpost/tech_room)
 "AH" = (
@@ -1018,9 +1021,6 @@
 	name = "Friendly Fired Donuts";
 	pixel_y = 14;
 	pixel_x = 6
-	},
-/obj/item/paper/printout/emerg1{
-	pixel_x = 11
 	},
 /obj/item/paper/telecrystal_update{
 	pixel_x = -6
