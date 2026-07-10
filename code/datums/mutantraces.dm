@@ -1934,7 +1934,7 @@ TYPEINFO(/datum/mutantrace/cat/bingus)
 	dna_mutagen_banned = FALSE
 	genetics_removable = FALSE
 	aquaphobic = TRUE
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | HAS_NO_HEAD | USES_STATIC_ICON)
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_EYES | HEAD_HAS_OWN_COLORS | BUILT_FROM_PIECES | WEARS_UNDERPANTS)
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cat/bingus/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cat/bingus/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/bingus/right

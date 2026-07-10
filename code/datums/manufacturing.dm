@@ -530,6 +530,13 @@
 	time = 7 SECONDS
 	category = MANUFACTURER::CATEGORY::TOOL
 
+/datum/manufacture/pinpointer_apc
+	name = "APC pinpointer"
+	item_outputs = list(/obj/item/pinpointer/category/apcs)
+	create = 1
+	time = 7 SECONDS
+	category = MANUFACTURER::CATEGORY::TOOL
+
 /datum/manufacture/weldingmask
 	name = "Welding Mask"
 	item_requirements = list("metal_dense" = 2,

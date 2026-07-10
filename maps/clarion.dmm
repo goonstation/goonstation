@@ -22856,7 +22856,20 @@
 "lmX" = (
 /obj/table/auto,
 /obj/item/kitchen/food_box/donut_box{
-	pixel_y = 4
+	pixel_y = -6;
+	pixel_x = 0
+	},
+/obj/item/storage/box/gl_kit{
+	pixel_x = -3;
+	pixel_y = 11
+	},
+/obj/item/storage/box/stma_kit{
+	pixel_x = 0;
+	pixel_y = 11
+	},
+/obj/item/storage/box/lglo_kit{
+	pixel_x = 4;
+	pixel_y = 11
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
@@ -23557,6 +23570,10 @@
 	},
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/item/remote/porter/port_a_medbay{
+	pixel_x = -12;
+	pixel_y = 3
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
@@ -41063,6 +41080,9 @@
 	pixel_y = 9
 	},
 /obj/machinery/light,
+/obj/drink_rack/mug{
+	pixel_y = -24
+	},
 /turf/simulated/floor/wood/two,
 /area/station/medical/staff)
 "xBG" = (
