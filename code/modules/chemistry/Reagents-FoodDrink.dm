@@ -5007,3 +5007,15 @@ datum
 			fluid_g = 255
 			transparency = 255
 			taste = "sweet, way too sweet"
+
+		fooddrink/caffeinated/cafebombon
+			name = "café bombón"
+			id = "cafebombon"
+			fluid_r = 125
+			fluid_g = 83
+			fluid_b = 45
+			description = "A deceptively simple coffee with a sweet side."
+			reagent_state = LIQUID
+			taste = "like a little too much sugar, somehow in a good way"
+			thirst_value = 1
+			caffeine_content = 0.8

@@ -5588,3 +5588,12 @@
 		result_amount = 1
 		mix_phrase = "The mixture thickens in the heat as water evaporates."
 		drinkrecipe = TRUE
+
+	cafebombon
+		name = "Café Bombón"
+		id = "cafebombon"
+		result = "cafebombon"
+		required_reagents = list("sweetcondensedmilk"=1, "espresso"= 1)
+		result_amount = 2
+		mix_phrase = "The mixture slowly separates into two distinct layers."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
