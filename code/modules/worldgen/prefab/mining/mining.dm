@@ -279,7 +279,7 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining/space)
 
 	fancy_restaurant // CelineTheYeen's top of the line pretentious space restaurant
 		maxNum = 1
-		probability = 100
+		probability = 20
 		prefabPath = "assets/maps/prefabs/space/prefab_fancy_restaurant.dmm"
 		prefabSizeX = 26
 		prefabSizeY = 23
