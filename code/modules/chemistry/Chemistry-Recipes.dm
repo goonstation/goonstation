@@ -718,7 +718,7 @@
 		id = "milk_powder"
 		result = "milk_powder"
 		required_reagents = list("milk" = 1)
-		inhibitors = list("water")
+		inhibitors = list("water", "sugar")
 		result_amount = 1
 		min_temperature = T0C + 100
 		mix_phrase = "The water boils away, leaving behind a white condensed powder."
@@ -5579,3 +5579,12 @@
 		mix_phrase = "The mixture coalesces into a dark red liquid."
 		result_amount = 5
 
+	sweetcondensedmilk
+		name = "Sweet Condensed Milk"
+		id = "sweetcondensedmilk"
+		result = "sweetcondensedmilk"
+		required_reagents = list("sugar" = 1, "milk" = 1)
+		min_temperature = T0C + 90
+		result_amount = 1
+		mix_phrase = "The mixture thickens in the heat as water evaporates."
+		drinkrecipe = TRUE

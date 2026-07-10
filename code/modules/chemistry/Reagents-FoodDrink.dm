@@ -4996,3 +4996,14 @@ datum
 			taste = "like living in a cottage in the countryside"
 			thirst_value = 1
 			caffeine_content = 0.6
+
+		fooddrink/sweetcondensedmilk
+			name = "sweet condensed milk"
+			id = "sweetcondensedmilk"
+			description = "A thick, sweet condensed milk."
+			reagent_state = LIQUID
+			fluid_r = 255
+			fluid_b = 255
+			fluid_g = 255
+			transparency = 255
+			taste = "sweet, way too sweet"
