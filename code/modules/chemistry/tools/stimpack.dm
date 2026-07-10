@@ -37,7 +37,10 @@
 		src.empty = TRUE
 		src.icon_state = "stims0"
 		logTheThing(LOG_COMBAT, user, "injects [constructTarget(target,"combat")] with stimulants at [log_loc(user)].")
-		user.visible_message(SPAN_ALERT("[user.name] injects [target.name] with [src.name]!"))
+		if(user == target)
+			user.visible_message(SPAN_ALERT("[user.name] injects themselves with the [src.name]!"))
+		else
+			user.visible_message(SPAN_ALERT("[user.name] injects [target.name] with the [src.name]!"))
 		boutput(target, SPAN_NOTICE("Ah! That's the stuff!"))
 
 /datum/action/bar/icon/stimulant
