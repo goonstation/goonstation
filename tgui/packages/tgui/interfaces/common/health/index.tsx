@@ -13,10 +13,10 @@ const STAT_ALIVE: number = 0;
 const STAT_UNCONSCIOUS: number = 1;
 const STAT_DEAD: number = 2;
 
-interface PatientSummaryProps extends DisplayOccupiedProps {
+type PatientSummaryProps = DisplayOccupiedProps & {
   patient_status: number;
   isCrit: boolean;
-}
+};
 
 export const PatientSummary = (props: PatientSummaryProps) => {
   const { occupied, patient_status, isCrit } = props;
@@ -39,7 +39,7 @@ export const PatientSummary = (props: PatientSummaryProps) => {
   }
   return (
     <Stack.Item width={20} textAlign="right">
-      <Box fontSize={1}>Status</Box>
+      <Box>Status</Box>
       <Box fontSize={1.5}>
         <Box color={color}>{text}</Box>
       </Box>
@@ -57,7 +57,7 @@ export const HealthSummary = (props: HealthSummaryProps) => {
 
   return (
     <Stack.Item width={25} textAlign="right">
-      <Box fontSize={1}>Overall Health</Box>
+      <Box>Overall Health</Box>
       <Box fontSize={1.5}>
         <Box color={health_color}>
           {health_text}
@@ -70,12 +70,12 @@ export const HealthSummary = (props: HealthSummaryProps) => {
   );
 };
 
-export interface DisplayPatientTitleProps extends DisplayOccupiedProps {
+type DisplayPatientTitleProps = DisplayOccupiedProps & {
   patient_name: string;
   patient_health: number;
   patient_max_health: number;
   patient_status: number;
-}
+};
 
 export const DisplayPatientTitle = (props: DisplayPatientTitleProps) => {
   const {
@@ -113,7 +113,7 @@ export const DisplayPatientTitle = (props: DisplayPatientTitleProps) => {
     <Section>
       <Stack>
         <Stack.Item width={60}>
-          <Box fontSize={1}>Patient</Box>
+          <Box>Patient</Box>
           <Box fontSize={1.5} color={patient_name_color}>
             {occupied ? patient_name : 'No Patient Detected'}
           </Box>
@@ -132,10 +132,10 @@ export const DisplayPatientTitle = (props: DisplayPatientTitleProps) => {
   );
 };
 
-interface DisplayBloodstreamContentProps extends DisplayOccupiedProps {
+type DisplayBloodstreamContentProps = DisplayOccupiedProps & {
   reagent_container: ReagentContainer | null;
   show_type: 'graph' | 'list' | 'both';
-}
+};
 
 export const DisplayBloodstreamContent = (
   props: DisplayBloodstreamContentProps,
@@ -144,7 +144,6 @@ export const DisplayBloodstreamContent = (
   return (
     <Collapsible
       sideIcon="flask"
-      fontSize={1.2}
       open
       title="Bloodstream Contents"
       color={!occupied && 'grey'}

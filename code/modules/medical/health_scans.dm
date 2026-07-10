@@ -97,137 +97,39 @@
 
 /// Get information about limbs for TGUI ui_data
 /mob/living/carbon/human/proc/ui_limb_data()
-	var/list/limb_data = list()
-	var/current_status = ""
-	var/current_limb = ""
-	if (src.limbs)
-		current_limb = "Left Arm"
-		current_status = "Okay"
-		if (!src.limbs.l_arm)
-			current_status = "Missing"
-		else
-			if (istype(src.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item))
-				var/obj/item/parts/human_parts/arm/left/item/I = src.limbs.l_arm
-				current_status = I.remove_object
-			else if (istype(src.limbs.l_arm, /obj/item/parts/robot_parts/arm/left/))
-				current_status = "Cybernetic"
-			else if (istype(src.limbs.l_arm, /obj/item/parts/artifact_parts/arm/))
-				current_status = "UNKNOWN"
-		limb_data += list(list(
-			"limb" = current_limb,
-			"status" = current_status,
-		))
+	. = list()
 
-		current_limb = "Right Arm"
-		current_status = "Okay"
-		if (!src.limbs.r_arm)
-			current_status = "Missing"
-		else
-			if (istype(src.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item))
-				var/obj/item/parts/human_parts/arm/right/item/I = src.limbs.r_arm
-				current_status = I.remove_object
-			else if (istype(src.limbs.r_arm, /obj/item/parts/robot_parts/arm/right))
-				current_status = "Cybernetic"
-			else if (istype(src.limbs.r_arm, /obj/item/parts/artifact_parts/arm/))
-				current_status = "UNKNOWN"
-		limb_data += list(list(
-			"limb" = current_limb,
-			"status" = current_status,
-		))
+	. += list(ui_per_limb_data("Left Arm", src.limbs?.l_arm))
+	. += list(ui_per_limb_data("Right Arm", src.limbs?.r_arm))
+	. += list(ui_per_limb_data("Left Leg", src.limbs?.l_leg))
+	. += list(ui_per_limb_data("Right Leg", src.limbs?.r_leg))
 
-		current_limb = "Left Leg"
-		current_status = "Okay"
-		if (!src.limbs.l_leg)
-			current_status = "Missing"
-		else
-			if (istype(src.limbs.l_leg, /obj/item/parts/robot_parts/leg/left))
-				current_status = "Cybernetic"
-			else if (istype(src.limbs.l_leg, /obj/item/parts/artifact_parts/leg/))
-				current_status = "UNKNOWN"
-		limb_data += list(list(
-			"limb" = current_limb,
-			"status" = current_status,
-		))
-
-		current_limb = "Right Leg"
-		current_status = "Okay"
-		if (!src.limbs.r_leg)
-			current_status = "Missing"
-		else
-			if (istype(src.limbs.r_leg, /obj/item/parts/robot_parts/leg/right))
-				current_status = "Cybernetic"
-			else if (istype(src.limbs.r_leg, /obj/item/parts/artifact_parts/leg/))
-				current_status = "UNKNOWN"
-		limb_data += list(list(
-			"limb" = current_limb,
-			"status" = current_status,
-		))
-
-		current_limb = "Butt" // look. okay. where else do i put it?
-		current_status = "Okay"
-		if(!src.organHolder?.butt)
-			current_status = "Missing"
-		else
-			if (istype(src.organHolder.butt, /obj/item/clothing/head/butt/cyberbutt))
-				current_status = "Cybernetic"
-		limb_data += list(list(
-			"limb" = current_limb,
-			"status" = current_status,
-		))
-
-	return limb_data
-
-/// Get brain damage information formatted for TGUI
-/mob/living/carbon/human/proc/ui_brain_damage()
-	var/brain = src.get_organ("brain")
-	if (!brain)
-		return list(
-			"value" = 0,
-			"desc" = "Missing",
-			"color" = "red"
-		)
+	var/butt_status = "Okay"
+	if(!src.organHolder || !src.organHolder.butt)
+		butt_status = "Missing"
 	else
-		var/brain_damage = src.get_brain_damage()
-		if(brain_damage < BRAIN_DAMAGE_MINOR)
-			return list(
-				"value" = brain_damage,
-				"desc" = "Okay",
-				"color" = "green"
-			)
-		if(brain_damage >= BRAIN_DAMAGE_LETHAL)
-			return list(
-				"value" = brain_damage,
-				"desc" = "Braindead",
-				"color" = "red"
-			)
-		if(brain_damage >= BRAIN_DAMAGE_SEVERE)
-			return list(
-				"value" = brain_damage,
-				"desc" = "Severe",
-				"color" = "red"
-			)
-		if(brain_damage >= BRAIN_DAMAGE_MAJOR)
-			return list(
-				"value" = brain_damage,
-				"desc" = "Major",
-				"color" = "red"
-			)
-		if(brain_damage >= BRAIN_DAMAGE_MODERATE)
-			return list(
-				"value" = brain_damage,
-				"desc" = "Moderate",
-				"color" = "orange"
-			)
-		if(brain_damage >= BRAIN_DAMAGE_MINOR)
-			return list(
-				"value" = brain_damage,
-				"desc" = "Minor",
-				"color" = "yellow"
-			)
-	return list(
-		"value" = 0,
-		"desc" = "???",
-		"color" = "gray"
+		if (istype(src.organHolder.butt, /obj/item/clothing/head/butt/cyberbutt))
+			butt_status = "Cybernetic"
+	. += list(list(
+		"limb_name" = "Butt",
+		"status" = butt_status,
+	))
+
+/// Get the per-limb data for TGUI ui_data
+/mob/living/carbon/human/proc/ui_per_limb_data(limb_name, obj/item/parts/given_limb)
+	// this doesn't need to be a proc on human but i don't wanna pollute the global namespace. anonymous functions pls :(
+	var/limb_status = "Okay"
+	if (!given_limb)
+		limb_status = "Missing"
+	else if (isitemlimb(given_limb))
+		limb_status = given_limb.remove_object
+	else if (isrobolimb(given_limb))
+		limb_status = "Cybernetic"
+	else if (isartifactlimb(given_limb))
+		limb_status = "UNKNOWN"
+	. = list(
+		"limb_name" = limb_name,
+		"status" = limb_status
 	)
 
 /// Get embedded objects/implants for TGUI
@@ -282,7 +184,7 @@
 /mob/living/carbon/human/proc/ui_organ_data()
 	. = list()
 
-	if (isvampire(src))
+	if (isvampire(src)) //Don't give organ readings for Vamps.
 		return
 	if (!src.organHolder)
 		return
@@ -304,7 +206,7 @@
 			if (organ.unusual)
 				special = "Unusual"
 		. += list(list(
-			"organ" = organ_name,
+			"organ_name" = organ_name,
 			"special" = special,
 			"damage" = organ ? organ.get_damage() : 0,
 			"max_health"= organ ? organ.max_damage : 0,

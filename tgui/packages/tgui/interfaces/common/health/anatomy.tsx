@@ -8,12 +8,12 @@
 import { Box, Collapsible, Section, Stack, Table } from 'tgui-core/components';
 
 import { capitalize, spaceUnderscores } from '../stringUtils';
-import { DisplayOccupiedProps, LimbData, OrganData } from './type';
+import { DisplayOccupiedProps, LimbData, LimbStatus, OrganData } from './type';
 
-interface DisplayAnatomicalAnomaliesProps extends DisplayOccupiedProps {
+type DisplayAnatomicalAnomaliesProps = DisplayOccupiedProps & {
   organs: OrganData[] | null;
   limbs: LimbData[] | null;
-}
+};
 
 export const DisplayAnatomicalAnomalies = (
   props: DisplayAnatomicalAnomaliesProps,
@@ -21,7 +21,6 @@ export const DisplayAnatomicalAnomalies = (
   const { occupied, organs, limbs } = props;
   return (
     <Collapsible
-      fontSize={1.2}
       open
       sideIcon="lungs"
       title="Anatomical Anomalies"
@@ -38,9 +37,9 @@ export const DisplayAnatomicalAnomalies = (
   );
 };
 
-interface DisplayLimbsProps extends DisplayOccupiedProps {
+type DisplayLimbsProps = DisplayOccupiedProps & {
   limbs: LimbData[] | null;
-}
+};
 
 export const DisplayLimbs = (props: DisplayLimbsProps) => {
   const { occupied, limbs } = props;
@@ -58,13 +57,7 @@ export const DisplayLimbs = (props: DisplayLimbsProps) => {
         </Table.Row>
         {limbs &&
           limbs.map((limb_data: LimbData) => {
-            return (
-              <DisplayLimb
-                key={limb_data['limb']}
-                limb={limb_data['limb']}
-                status={limb_data['status']}
-              />
-            );
+            return <DisplayLimb limb={limb_data} />;
           })}
       </Table>
     </Stack.Item>
@@ -72,34 +65,33 @@ export const DisplayLimbs = (props: DisplayLimbsProps) => {
 };
 
 interface DisplayLimbProps {
-  limb: string;
-  status: string;
+  limb: LimbData;
 }
 
 const DisplayLimb = (props: DisplayLimbProps) => {
-  const { limb, status } = props;
-  if (status === 'Okay') {
+  const { limb } = props;
+  if (limb.status === LimbStatus.Okay) {
     return null;
   }
   return (
     <Table.Row>
       <Table.Cell header textAlign="right" width={10}>
-        {capitalize(spaceUnderscores(limb))}:
+        {capitalize(spaceUnderscores(limb.limb_name))}:
       </Table.Cell>
       <Table.Cell
         width={10}
-        color={status === 'Missing' ? 'red' : 'white'}
-        bold={status === 'Missing'}
+        color={limb.status === LimbStatus.Missing ? 'red' : 'white'}
+        bold={limb.status === LimbStatus.Missing}
       >
-        {status}
+        {limb.status}
       </Table.Cell>
     </Table.Row>
   );
 };
 
-interface DisplayOrgansProps extends DisplayOccupiedProps {
+type DisplayOrgansProps = DisplayOccupiedProps & {
   organs: OrganData[] | null;
-}
+};
 
 export const DisplayOrgans = (props: DisplayOrgansProps) => {
   const { occupied, organs } = props;
@@ -115,34 +107,30 @@ export const DisplayOrgans = (props: DisplayOrgansProps) => {
         {occupied &&
           organs &&
           organs.map((organ_data: OrganData) => {
-            return (
-              <DisplayOrgan
-                key={organ_data['organ']}
-                organ={organ_data['organ']}
-                damage={organ_data['damage']}
-                max_health={organ_data['max_health']}
-                special={organ_data['special']}
-              />
-            );
+            return <DisplayOrgan organ={organ_data} />;
           })}
       </Table>
     </Stack.Item>
   );
 };
 
-const DisplayOrgan = (props: OrganData) => {
-  const { organ, damage, max_health, special } = props;
-  if (damage === 0 && special === '') {
+interface DisplayOrganProps {
+  organ: OrganData;
+}
+
+const DisplayOrgan = (props: DisplayOrganProps) => {
+  const { organ } = props;
+  if (organ.damage === 0 && organ.special === '') {
     return null; // only appears if damaged or special/missing
   }
   let color = 'grey';
   let state = '???';
   let bold = false;
-  if (special === 'Missing') {
+  if (organ.special === 'Missing') {
     color = 'red';
     state = 'Missing';
   } else {
-    const pct = damage / max_health;
+    const pct = organ.damage / organ.max_health;
     if (pct > 1) {
       color = 'red';
       state = 'Dead';
@@ -169,11 +157,13 @@ const DisplayOrgan = (props: OrganData) => {
   return (
     <Table.Row>
       <Table.Cell header textAlign="right" width={10}>
-        {capitalize(spaceUnderscores(organ))}:
+        {capitalize(spaceUnderscores(organ.organ_name))}:
       </Table.Cell>
       <Table.Cell width={10} color={color} bold={bold}>
         {state !== 'Okay' && state}
-        {special && special !== 'Missing' && <Box color="white">{special}</Box>}
+        {organ.special && organ.special !== 'Missing' && (
+          <Box color="white">{organ.special}</Box>
+        )}
       </Table.Cell>
     </Table.Row>
   );

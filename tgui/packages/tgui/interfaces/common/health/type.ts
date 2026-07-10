@@ -60,10 +60,10 @@ export interface HealthData {
 export interface HealthGraphData extends HealthData {
   patient_data: [
     {
-      brute: [number];
-      burn: [number];
-      toxin: [number];
-      oxygen: [number];
+      brute: number[][];
+      burn: number[][];
+      toxin: number[][];
+      oxygen: number[][];
     },
   ];
 }
@@ -84,27 +84,41 @@ export interface DisplayOccupiedProps {
   occupied: BooleanLike;
 }
 
+export enum OrganSpecial {
+  None = '',
+  Missing = 'Missing',
+  Cybernetic = 'Cybernetic',
+  Synthetic = 'Synthetic',
+  Unusual = 'Unusual',
+}
+
 export interface OrganData {
-  organ: string;
-  special: string;
+  organ_name: string;
+  special: OrganSpecial;
   damage: number;
   max_health: number;
 }
 
-export interface LimbData {
-  limb: string;
-  status: string;
+export enum LimbStatus {
+  Missing = 'Missing',
+  Okay = 'Okay',
+  Cybernetic = 'Cybernetic',
+  UNKNOWN = 'UNKNOWN',
 }
 
-export type BrainDamage = number | string | null;
+export interface LimbData {
+  limb_name: string;
+  status: LimbStatus;
+}
+
+export type BrainDamage = 'Missing' | number | string | null;
 
 export interface DiseaseData {
-  disease_ref: string;
   scantype: string;
   state: string;
   spread: string;
   info: string;
-  disease: string;
+  disease_name: string;
   stage: number;
   max_stage: number;
   cure_method: string;

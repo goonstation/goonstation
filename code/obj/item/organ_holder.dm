@@ -1511,7 +1511,7 @@
 				O.unbreakme()
 
 	/// Get TGUI ui_data for all organs
-	proc/get_tgui_organ_data()
+	proc/ui_organs_data()
 		var/list/organ_data = list()
 		if (isvampire(src.donor))
 			return organ_data
@@ -1522,29 +1522,16 @@
 
 		for (var/organ_name in organs_to_check)
 			var/obj/item/organ/O = src.get_organ(organ_name)
-			var/damage = ""
-			var/color = "grey"
-			var/special = ""
-			if (O == 0 || !O)
-				damage = "Missing"
-				color = "Red"
-			else
-				if (O.robotic)
-					special = "Cybernetic"
-				if (O.synthetic)
-					special = "Synthetic"
-				if (O.unusual)
-					special = "Unusual"
-				var/list/organ_calc = O.get_tgui_damage_severity()
-				damage = organ_calc[1]
-				color = organ_calc[2]
-
-			organ_data += list(list(
+			var/list/this_organ_data = list(list(
 				"organ" = organ_name,
-				"state" = damage,
-				"color" = color,
-				"special" = special,
 			))
+			if (!istype(O))
+				this_organ_data += list(list(
+					"special" = "missing",
+				))
+			else
+				this_organ_data += list(O.ui_organ_data())
+			organ_data += list(this_organ_data)
 
 		return organ_data
 

@@ -12,12 +12,17 @@ import { Box, Chart, Section, Stack } from 'tgui-core/components';
 import { getStatsMax, processStatsData } from '../graphUtils';
 import { DisplayOccupiedProps, HealthGraphData } from './type';
 
+type DamageTypes = 'oxy' | 'toxin' | 'burn' | 'brute';
+
+type ProcessedHealthStats = Record<DamageTypes, number[][]>;
+
 export const DisplayVitalsGraph = () => {
   const { data } = useBackend<HealthGraphData>();
-  const processedData = processStatsData(data.patient_data);
+  const processedData = processStatsData(
+    data.patient_data,
+  ) as ProcessedHealthStats;
   const oxy = data.occupied ? Math.floor(data.oxygen).toString() : '--';
-  const oxy_data =
-    data.occupied && processedData ? processedData['oxygen'] : [];
+  const oxy_data = data.occupied && processedData ? processedData['oxy'] : [];
   const toxin = data.occupied ? Math.floor(data.toxin).toString() : '--';
   const toxin_data =
     data.occupied && processedData ? processedData['toxin'] : [];
@@ -59,12 +64,12 @@ export const DisplayVitalsGraph = () => {
   );
 };
 
-export interface DisplayVitalsProps extends DisplayOccupiedProps {
+type DisplayVitalsProps = DisplayOccupiedProps & {
   oxygen: number;
   toxin: number;
   burn: number;
   brute: number;
-}
+};
 
 export const DisplayVitals = (props: DisplayVitalsProps) => {
   const { occupied, oxygen, toxin, burn, brute } = props;
@@ -84,21 +89,27 @@ export const DisplayVitals = (props: DisplayVitalsProps) => {
   );
 };
 
-const HealthNumber = (props) => {
+interface HealthNumberProps {
+  metric: DamageTypes;
+  title: string;
+  value: string | number;
+}
+
+const HealthNumber = (props: HealthNumberProps) => {
   const { metric, value, title } = props;
   return (
     <Stack.Item width={25}>
       <HealthStat type={metric}>
         {title}
         <br />
-        <Box fontSize={4}>{value}</Box>
+        <Box fontSize={3}>{value}</Box>
       </HealthStat>
     </Stack.Item>
   );
 };
 
 interface HealthGraphProps {
-  metric: 'oxy' | 'toxin' | 'burn' | 'brute';
+  metric: DamageTypes;
   title: string;
   value: string;
   metric_data: number[][];
@@ -113,15 +124,17 @@ const HealthGraph = (props: HealthGraphProps) => {
         <br />
         <Box fontSize={4}>{value}</Box>
         <Box>
-          <Chart.Line
-            mt="5px"
-            height="5em"
-            data={metric_data}
-            rangeX={[0, metric_data.length - 1]}
-            rangeY={[0, Math.max(100, getStatsMax(metric_data))]}
-            strokeColor={COLORS.damageType[metric]}
-            fillColor={COLORS.damageTypeFill[metric]}
-          />
+          {metric_data && (
+            <Chart.Line
+              mt="5px"
+              height="5em"
+              data={metric_data}
+              rangeX={[0, metric_data.length - 1]}
+              rangeY={[0, Math.max(100, getStatsMax(metric_data))]}
+              strokeColor={COLORS.damageType[metric]}
+              fillColor={COLORS.damageTypeFill[metric]}
+            />
+          )}
         </Box>
       </HealthStat>
     </Stack.Item>

@@ -7,19 +7,18 @@
 import {
   Collapsible,
   ColorBox,
+  LabeledList,
   Section,
-  Stack,
-  Table,
 } from 'tgui-core/components';
 
 import { DisplayOccupiedProps } from './type';
 
-interface DisplayMiscellaneousDetailsProps extends DisplayOccupiedProps {
+type DisplayMiscellaneousDetailsProps = DisplayOccupiedProps & {
   age: number;
   blood_type: string;
   blood_color_value: string;
   blood_color_name: string;
-}
+};
 
 export const DisplayMiscellaneousDetails = (
   props: DisplayMiscellaneousDetailsProps,
@@ -31,40 +30,20 @@ export const DisplayMiscellaneousDetails = (
     <Collapsible
       open
       sideIcon="question"
-      fontSize={1.2}
       title="Miscellaneous Information"
       color={!occupied && 'grey'}
     >
       <Section>
         {!occupied && 'No Patient Detected.'}
         {!!occupied && (
-          <Stack>
-            <Stack.Item width={20}>
-              <Table>
-                <Table.Row>
-                  <Table.Cell header textAlign="right">
-                    Age:
-                  </Table.Cell>
-                  <Table.Cell>{age}</Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell header textAlign="right">
-                    Blood Type:
-                  </Table.Cell>
-                  <Table.Cell>{blood_type}</Table.Cell>
-                </Table.Row>
-                <Table.Row>
-                  <Table.Cell header textAlign="right">
-                    Blood Color:
-                  </Table.Cell>
-                  <Table.Cell>
-                    <ColorBox color={blood_color_value} content=" " />{' '}
-                    <span>{blood_color_name}</span>
-                  </Table.Cell>
-                </Table.Row>
-              </Table>
-            </Stack.Item>
-          </Stack>
+          <LabeledList>
+            <LabeledList.Item label="Age">{age}</LabeledList.Item>
+            <LabeledList.Item label="Blood Type">{blood_type}</LabeledList.Item>
+            <LabeledList.Item label="Blood Color">
+              <ColorBox color={blood_color_value} content=" " />{' '}
+              <span>{blood_color_name}</span>
+            </LabeledList.Item>
+          </LabeledList>
         )}
       </Section>
     </Collapsible>

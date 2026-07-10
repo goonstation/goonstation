@@ -16,7 +16,7 @@ const BRAIN_DAMAGE_SEVERE: number = 80;
 const BRAIN_DAMAGE_LETHAL: number = 100;
 const BRAIN_DAMAGE_DEATH: number = 120;
 
-interface KeyHealthIndicatorsProps extends DisplayOccupiedProps {
+type KeyHealthIndicatorsProps = DisplayOccupiedProps & {
   patient_status: number;
   blood_pressure_rendered: string | null;
   blood_pressure_status: string | null;
@@ -28,7 +28,7 @@ interface KeyHealthIndicatorsProps extends DisplayOccupiedProps {
   rad_dose: number;
   brain_damage: BrainDamage;
   embedded_objects: EmbeddedObjects | null;
-}
+};
 
 export const KeyHealthIndicators = (props: KeyHealthIndicatorsProps) => {
   const {
@@ -72,12 +72,12 @@ export const KeyHealthIndicators = (props: KeyHealthIndicatorsProps) => {
   );
 };
 
-interface DisplayBloodPressureProps extends DisplayOccupiedProps {
+type DisplayBloodPressureProps = DisplayOccupiedProps & {
   patient_status: number;
   blood_pressure_rendered: string | null;
   blood_pressure_status: string | null;
   blood_volume: number | null;
-}
+};
 
 const DisplayBloodPressure = (props: DisplayBloodPressureProps) => {
   const {
@@ -127,11 +127,11 @@ const DisplayBloodPressure = (props: DisplayBloodPressureProps) => {
   );
 };
 
-interface DisplayTemperatureBleedingRowProps extends DisplayOccupiedProps {
+type DisplayTemperatureBleedingRowProps = DisplayOccupiedProps & {
   body_temp: number | string;
   optimal_temp: number | string;
   bleeding: number | null;
-}
+};
 
 const DisplayTemperatureBleedingRow = (
   props: DisplayTemperatureBleedingRowProps,
@@ -149,10 +149,10 @@ const DisplayTemperatureBleedingRow = (
   );
 };
 
-interface DisplayTemperatureProps extends DisplayOccupiedProps {
+type DisplayTemperatureProps = DisplayOccupiedProps & {
   body_temp: number | string;
   optimal_temp: number | string;
-}
+};
 
 const DisplayTemperature = (props: DisplayTemperatureProps) => {
   const { occupied, body_temp, optimal_temp } = props;
@@ -206,9 +206,9 @@ const DisplayTemperature = (props: DisplayTemperatureProps) => {
   );
 };
 
-interface DisplayBloodLossProps extends DisplayOccupiedProps {
+type DisplayBloodLossProps = DisplayOccupiedProps & {
   bleeding: number | null;
-}
+};
 
 const DisplayBleeding = (props: DisplayBloodLossProps) => {
   const { bleeding, occupied } = props;
@@ -234,7 +234,11 @@ const DisplayRads = (props: DisplayRadsProps) => {
   const { rad_stage, rad_dose } = props;
   let color: string | undefined;
   let bold = false;
+  if (!rad_dose || rad_dose === 0 || rad_dose === null) {
+    return null;
+  }
   switch (rad_stage) {
+    case null:
     case 0:
       return null; // only show if they have enough radiation to be stage 1
     case 1:
@@ -268,15 +272,15 @@ const DisplayRads = (props: DisplayRadsProps) => {
         Effective Dose:
       </Table.Cell>
       <Table.Cell width={10} nowrap>
-        {rad_dose.toPrecision(4)} Sv
+        {rad_dose ? rad_dose.toPrecision(4) : 0} Sv
       </Table.Cell>
     </Table.Row>
   );
 };
 
-interface DisplayBrainProps extends DisplayOccupiedProps {
+type DisplayBrainProps = DisplayOccupiedProps & {
   brain_damage: BrainDamage;
-}
+};
 
 const DisplayBrain = (props: DisplayBrainProps) => {
   const { occupied, brain_damage } = props;

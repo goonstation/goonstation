@@ -220,9 +220,8 @@
 	/// Package disease data for use in TGUI health interfaces
 	proc/ui_disease_data()
 		. = list(
-			"disease_ref" = "\ref[src]",
 			"state" = src.state,
-			"disease" = src.name ? src.name : src.master.name,
+			"disease_name" = src.name ? src.name : src.master.name,
 			"scantype" = src.scantype ? src.scantype : src.master.scantype,
 			"spread" = src.spread,
 			"info" = src.info,

@@ -9,15 +9,15 @@ import { Section } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
-import { DisplayAnatomicalAnomalies } from '../common/health/anatomy';
-import { DisplayDiseases } from '../common/health/disease';
-import { DisplayImplants } from '../common/health/implants';
+import { DisplayAnatomicalAnomalies } from '../common/Health/anatomy';
+import { DisplayDiseases } from '../common/Health/disease';
+import { DisplayImplants } from '../common/Health/implants';
 import {
   DisplayBloodstreamContent,
   DisplayPatientTitle,
-} from '../common/health/index';
-import { KeyHealthIndicators } from '../common/health/key_indicators';
-import { DisplayVitals } from '../common/health/vitals';
+} from '../common/Health/index';
+import { KeyHealthIndicators } from '../common/Health/key_indicators';
+import { DisplayVitals } from '../common/Health/vitals';
 import { HealthAnalyzerData } from './type';
 
 export const HealthAnalyzer = () => {

@@ -9,16 +9,15 @@ import { Collapsible, Section, Stack, Table } from 'tgui-core/components';
 import { capitalize, spaceUnderscores } from '../stringUtils';
 import { DisplayOccupiedProps, ImplantData } from './type';
 
-interface DisplayImplantsProps extends DisplayOccupiedProps {
+type DisplayImplantsProps = DisplayOccupiedProps & {
   implants: ImplantData[] | null;
-}
+};
 
 export const DisplayImplants = (props: DisplayImplantsProps) => {
   const { occupied, implants } = props;
   return (
     <Collapsible
       title="Embedded Implants"
-      fontSize={1.2}
       open
       color={!occupied && 'grey'}
       sideIcon="thermometer"
@@ -31,20 +30,8 @@ export const DisplayImplants = (props: DisplayImplantsProps) => {
             {!!implants && implants.length === 0 && 'No Implants Detected.'}
             {!!implants && implants.length > 0 && (
               <Table>
-                <Table.Row>
-                  <Table.Cell header textAlign="right">
-                    Count
-                  </Table.Cell>
-                  <Table.Cell header>Implant Name</Table.Cell>
-                </Table.Row>
                 {implants.map((implant_data: ImplantData) => {
-                  return (
-                    <DisplayImplant
-                      key={implant_data['implant_name']}
-                      implant_name={implant_data['implant_name']}
-                      implant_count={implant_data['implant_count']}
-                    />
-                  );
+                  return <DisplayImplant implant={implant_data} />;
                 })}
               </Table>
             )}
@@ -55,12 +42,18 @@ export const DisplayImplants = (props: DisplayImplantsProps) => {
   );
 };
 
-export const DisplayImplant = (props: ImplantData) => {
-  const { implant_name, implant_count } = props;
+interface DisplayImplantProps {
+  implant: ImplantData;
+}
+
+export const DisplayImplant = (props: DisplayImplantProps) => {
+  const { implant } = props;
   return (
     <Table.Row>
-      <Table.Cell textAlign="right">{implant_count}x</Table.Cell>
-      <Table.Cell>{capitalize(spaceUnderscores(implant_name))}</Table.Cell>
+      <Table.Cell textAlign="right">{implant.implant_count}x</Table.Cell>
+      <Table.Cell>
+        {capitalize(spaceUnderscores(implant.implant_name))}
+      </Table.Cell>
     </Table.Row>
   );
 };
