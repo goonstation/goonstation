@@ -2,7 +2,7 @@
 	icon = 'icons/obj/atmospherics/thermostatic.dmi'
 	icon_state = "off-map"
 	name = "thermostatic gate"
-	desc = "A valve that automatically opens and closes when the red side reaches the set temperatures."
+	desc = "A gate that automatically opens and closes when the red side reaches the set temperatures."
 	layer = PIPE_MACHINE_LAYER
 	plane = PLANE_NOSHADOW_BELOW
 
