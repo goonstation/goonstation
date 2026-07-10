@@ -936,6 +936,8 @@ TYPEINFO(/mob/living)
 	return 0
 
 /mob/living/proc/empty_hands()
+	if (src.juggling())
+		src.drop_juggle()
 	. = 0
 
 /mob/living/proc/update_lying()
@@ -1574,6 +1576,13 @@ TYPEINFO(/mob/living)
 				src.was_harmed(thr.user, AM)
 	if (AM.throwforce > 5) //number
 		src.changeStatus("staggered", 5 SECONDS)
+	if(!isobj(AM) && !src.juggling()) // nabbed from mob's hitby
+		return
+	if (prob(src.juggling.len * 5))
+		src.drop_juggle()
+	else
+		SPAWN(0)
+			src.add_juggle(AM)
 	..()
 
 
@@ -1815,6 +1824,24 @@ TYPEINFO(/mob/living)
 				var/obj/storage/crate/crate = new
 				new /obj/item/disk/data/floppy/read_only/authentication(crate)
 				shippingmarket.receive_crate(crate)
+
+/mob/living/proc/juggle_emote()
+	if (!src.restrained())
+		if (src.can_juggle)
+			var/obj/item/thing = src.equipped()
+			if (!thing)
+				if (src.l_hand)
+					thing = src.l_hand
+				else if (src.r_hand)
+					thing = src.r_hand
+			if (thing && !thing.cant_drop)
+				if (src.juggling())
+					if (prob(src.juggling.len * 5)) // might drop stuff while already juggling things
+						src.drop_juggle()
+					else
+						src.add_juggle(thing)
+				else
+					src.add_juggle(thing)
 
 /mob/living/proc/juggling()
 	if (islist(src.juggling) && length(src.juggling))

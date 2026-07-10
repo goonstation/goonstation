@@ -917,13 +917,6 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 		logTheThing(LOG_COMBAT, src, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"]).")
 	if(thr?.user)
 		src.was_harmed(thr.user, AM)
-	if(!isobj(AM) && !src.juggling()) // nabbed from mob's hitby
-		return
-	if (prob(src.juggling.len * 5))
-		src.drop_juggle()
-	else
-		SPAWN(0)
-			src.add_juggle(AM)
 
 /mob/living/critter/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	if (src.nodamage || QDELETED(src))
@@ -1093,8 +1086,6 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 			I.set_loc(src.loc)
 			I.layer = initial(I.layer)
 			u_equip(I)
-	if (src.juggling())
-		src.drop_juggle()
 
 /mob/living/critter/proc/drop_equipment()
 	for (var/datum/equipmentHolder/EH in equipment)
@@ -1204,28 +1195,11 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 						animate_spin(src, pick("L", "R"), 1, 0)
 				src.drop_juggle()
 			if ("juggle")
-				if (!src.restrained())
-					if (src.emote_check(voluntary, 25))
-						m_type = 1
-						if (src.can_juggle)
-							var/obj/item/thing = src.equipped()
-							if (!thing)
-								if (src.l_hand)
-									thing = src.l_hand
-								else if (src.r_hand)
-									thing = src.r_hand
-							if (thing && !thing.cant_drop)
-								if (src.juggling())
-									if (prob(src.juggling.len * 5)) // might drop stuff while already juggling things
-										src.drop_juggle()
-									else
-										src.add_juggle(thing)
-								else
-									src.add_juggle(thing)
-							else
-								message = "<B>[src]</B> wiggles [his_or_her(src)] fingers a bit.[prob(10) ? " Weird." : null]"
-								maptext_out = "<I>wiggles [his_or_her(src)] fingers a bit.</I>"
-
+				if (src.emote_check(voluntary, 25))
+					src.juggle_emote()
+					m_type = 1
+					message = "<B>[src]</B> wiggles [his_or_her(src)] fingers a bit.[prob(10) ? " Weird." : null]"
+					maptext_out = "<I>wiggles [his_or_her(src)] fingers a bit.</I>"
 	if (!message)
 		return
 
