@@ -2916,14 +2916,13 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		return FALSE
 
 /mob/living/carbon/human/empty_hands()
+	..()
 	var/h = src.hand
 	src.hand = 0
 	drop_item()
 	src.hand = 1
 	drop_item()
 	src.hand = h
-	if (src.juggling())
-		src.drop_juggle()
 
 /mob/living/carbon/human/special_movedelay_mod(delay,space_movement,aquatic_movement)
 	.= delay

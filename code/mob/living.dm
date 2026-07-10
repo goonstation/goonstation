@@ -936,9 +936,9 @@ TYPEINFO(/mob/living)
 	return 0
 
 /mob/living/proc/empty_hands()
+	. = 0
 	if (src.juggling())
 		src.drop_juggle()
-	. = 0
 
 /mob/living/proc/update_lying()
 	if (src.lying != src.lying_old)

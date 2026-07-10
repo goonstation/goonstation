@@ -1077,6 +1077,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 			u_equip(I)
 
 /mob/living/critter/empty_hands()
+	..()
 	for (var/datum/handHolder/HH in hands)
 		if (HH.item)
 			if (!HH.item.qdeled && !HH.item.disposed && istype(HH.item, /obj/item/grab))
