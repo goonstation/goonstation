@@ -4040,7 +4040,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 0
 	},
-/turf/simulated/floor/airless/orangeblack,
+/turf/simulated/floor/airless/caution,
 /area/space)
 "qb" = (
 /turf/simulated/wall/auto/jen{
@@ -6672,7 +6672,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 8
 	},
-/turf/simulated/floor/airless/orangeblack,
+/turf/simulated/floor/airless/caution,
 /area/space)
 "At" = (
 /turf/simulated/wall/auto/jen/dark3{
@@ -7194,7 +7194,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 1
 	},
-/turf/simulated/floor/airless/orangeblack,
+/turf/simulated/floor/airless/caution,
 /area/space)
 "CH" = (
 /turf/simulated/floor/carpet/red/fancy/narrow/sw,
@@ -11868,7 +11868,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 4
 	},
-/turf/simulated/floor/airless/orangeblack,
+/turf/simulated/floor/airless/caution,
 /area/space)
 "Vv" = (
 /obj/shrub{

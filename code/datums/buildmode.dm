@@ -89,7 +89,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 	var/list/hotkey_bar
 
 	var/tmp/is_active = 0
-	var/tmp/dir = SOUTH
+	var/tmp/dir = 0 // If set, will override the direction of any placed objects.
 
 	New(var/client/C)
 		..()
@@ -279,6 +279,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 	layer = HUD_LAYER + 1
 	plane = PLANE_HUD
 	dir = SOUTH
+	var/no_dir = TRUE //Don't override direction of spawned objects
 	icon = 'icons/misc/buildmode.dmi'
 	icon_state = "direction"
 	screen_loc = "NORTH,WEST"
@@ -287,10 +288,19 @@ ABSTRACT_TYPE(/datum/buildmode)
 	New(L, H)
 		..()
 		holder = H
+		src.UpdateIcon()
+
+	update_icon(...)
+		. = ..()
+		if(src.no_dir)
+			src.icon_state = "direction_none"
+		else
+			src.icon_state = "direction"
 
 	clicked(list/paramList)
 		var/icon_x = text2num(paramList["icon-x"])
 		var/icon_y = text2num(paramList["icon-y"])
+		src.no_dir = FALSE
 
 		if (icon_y <= 11)
 			if (icon_x <= 11)
@@ -306,12 +316,18 @@ ABSTRACT_TYPE(/datum/buildmode)
 				dir = NORTHEAST
 			else
 				dir = NORTH
-		else if (icon_x <= 16)
+		else if (icon_x <= 11)
 			dir = WEST
-		else
+		else if (icon_x >= 22)
 			dir = EAST
+		else
+			src.no_dir = TRUE
 
-		holder.dir = dir
+		if(src.no_dir)
+			holder.dir = null
+		else
+			holder.dir = src.dir
+		src.UpdateIcon()
 
 /atom/movable/screen/buildmode/buildhelp
 	name = "Click for help"

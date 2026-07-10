@@ -33,10 +33,61 @@
 			return 1
 		gem_type = pick(parent.gems)
 
-	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
+	onExcavate(var/turf/simulated/wall/auto/asteroid/AST, var/mob/user, var/mining_type)
 		if (..())
 			return
 		var/obj/item/I = new gem_type
+		I.set_loc(AST)
+
+/datum/ore/event/fossil
+	analysis_string = "Lifeform remnent detected."
+	excavation_string = "A fossil is unearthed from the collapsing rock!"
+	mining_alert_string = "Excavated fossil."
+	excavation_alert_sound = 'sound/effects/gem_drop.ogg'
+	scan_decal = "scan-soft"
+	hardness_mod = -1 // Excavation tool designed for fossil hunting is weaker than other mining tools
+	weight = 100
+	var/fossil_type = null
+	var/excavation_type // Type of tool required to get the fossil
+
+	onGenerate(var/turf/simulated/wall/auto/asteroid/AST)
+		if (..())
+			return
+		AST.hardness += hardness_mod
+		excavation_type = pick(MINING_DMG_PICKAXE, MINING_DMG_DRILL, MINING_DMG_HAMMER, MINING_DMG_SHOVEL, MINING_DMG_LASER, MINING_DMG_CONCUSSIVE)
+		switch(excavation_type)
+			if(MINING_DMG_PICKAXE)
+				src.analysis_string = "Lifeform remnent detected. Pickaxe required for retrieval."
+				src.mining_alert_string = "The pickaxe pulls out a loose fossil!"
+			if(MINING_DMG_DRILL)
+				src.analysis_string = "Lifeform remnent detected. Drilling required for retrieval."
+				src.mining_alert_string = "The drill digs through a dense rock, exposing a fossil!"
+			if(MINING_DMG_HAMMER)
+				src.analysis_string = "Lifeform remnent detected. Hammer required for retrieval."
+				src.mining_alert_string = "The hammer breaks open a dense rock, revealing a fossil!"
+			if(MINING_DMG_SHOVEL)
+				src.analysis_string = "Lifeform remnent detected. Shovel required for retrieval."
+				src.mining_alert_string = "The shovel digs out a patch of lose rock to uncover a buried fossil!"
+			if(MINING_DMG_LASER)
+				src.analysis_string = "Lifeform remnent detected. Laser excavation required for retrieval."
+				src.mining_alert_string = "The laser burns away some secondary material, unveiling a fossil!"
+			if(MINING_DMG_CONCUSSIVE)
+				src.analysis_string = "Lifeform remnent detected. Concussive excavation required for retrieval."
+				src.mining_alert_string = "The concussive force breaks apart a weak crack in the stone, exposing a hidden fossil!"
+
+		src.fossil_type = /obj/item/fossil/stone
+		if(AST.ore && length(AST.ore.fossils) >= 1)
+			src.fossil_type = pick(AST.ore.fossils)
+
+	onExcavate(var/turf/simulated/wall/auto/asteroid/AST, var/mob/user, var/mining_type)
+		if (..())
+			return
+		if(!HAS_ANY_FLAGS(mining_type, src.excavation_type) && src.excavation_type)
+			excavation_string = null
+			mining_alert_string = null
+			excavation_alert_sound = null // Fossil is silently destroyed
+			return
+		var/obj/item/fossil/I = new fossil_type
 		I.set_loc(AST)
 
 /datum/ore/event/rare_metal
@@ -50,7 +101,7 @@
 										  /obj/item/raw_material/yuranite = 25
 										 )
 
-	onExcavate(turf/simulated/wall/auto/asteroid/AST)
+	onExcavate(turf/simulated/wall/auto/asteroid/AST, var/mob/user, var/mining_type)
 		if (..())
 			return
 		var/metal_to_drop = weighted_pick(src.metals_to_pick)
@@ -66,7 +117,7 @@
 	var/static/list/fluid_geode_types = list()
 	var/static/list/crystal_geode_types = list()
 
-	onExcavate(turf/simulated/wall/auto/asteroid/AST)
+	onExcavate(turf/simulated/wall/auto/asteroid/AST, var/mob/user, var/mining_type)
 		if (..())
 			return
 		//horrible weighted caching zone
@@ -97,7 +148,7 @@
 			return
 		gem_type = /obj/item/raw_material/molitz_beta
 
-	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
+	onExcavate(var/turf/simulated/wall/auto/asteroid/AST, var/mob/user, var/mining_type)
 		var/quantity = rand(2,3)
 		for(var/i in 1 to quantity)
 			..()
@@ -109,7 +160,7 @@
 	scan_decal = "scan-object"
 	restrict_to_turf_type = /turf/simulated/wall/auto/asteroid
 
-	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
+	onExcavate(var/turf/simulated/wall/auto/asteroid/AST, var/mob/user, var/mining_type)
 		if (..())
 			return
 		new /mob/living/critter/rockworm(AST)
@@ -120,7 +171,7 @@
 	scan_decal = "scan-object"
 	weight = 10
 
-	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
+	onExcavate(var/turf/simulated/wall/auto/asteroid/AST, var/mob/user, var/mining_type)
 		if (..())
 			return
 		new /obj/storage/crate/loot(AST)
@@ -130,7 +181,7 @@
 	excavation_string = "An artifact was unearthed!"
 	scan_decal = "scan-object"
 
-	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
+	onExcavate(var/turf/simulated/wall/auto/asteroid/AST, var/mob/user, var/mining_type)
 		if (..())
 			return
 		Artifact_Spawn(AST)
@@ -146,6 +197,11 @@
 	onGenerate(var/turf/simulated/wall/auto/asteroid/AST)
 		if (..())
 			return
+		if(prob(5)) // Small chance to have a fossil instead
+			var/datum/ore/event/fossil/fossil_event = new()
+			fossil_event.set_up()
+			AST.event = fossil_event
+			fossil_event.onGenerate(AST)
 		AST.hardness += hardness_mod
 
 /datum/ore/event/hard_rock
@@ -196,7 +252,7 @@
 		for (var/mob/living/L in range(1,AST))
 			L.take_radiation_dose(0.05 SIEVERTS)
 
-	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
+	onExcavate(var/turf/simulated/wall/auto/asteroid/AST, var/mob/user, var/mining_type)
 		if (..())
 			return
 		for (var/mob/living/L in range(1,AST))

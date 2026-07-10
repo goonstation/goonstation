@@ -39,6 +39,17 @@
 		return rgb(L[1], L[2], L[3])
 	return rgb(22, 210, 22)
 
+/proc/light_colors(var/hex) // Clamps lightness value to 50 or above, useful for overlays
+	if(length(hex) != 7)
+		hex = fix_hex(hex)
+	var/list/L = hex_to_hsl_list(hex)
+	if(isnull(L))
+		return rgb(255, 255, 255)
+	L[3] = clamp(L[3],50,100)
+	if (length(L) == 3)
+		return hsl2rgb(L[1], L[2], L[3])
+	return rgb(255, 255, 255)
+
 /proc/fix_hex(hex)
 	return copytext((startswith(hex, "#") ? hex : "#") + "000000", 1, 8)
 

@@ -227,6 +227,7 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 		/datum/manufacture/hypospray,
 		/datum/manufacture/patch,
 		/datum/manufacture/mender,
+		/datum/manufacture/mender_refill_cartridge,
 		/datum/manufacture/penlight,
 		/datum/manufacture/stethoscope,
 		/datum/manufacture/empty_autoinjector/orange,
@@ -267,6 +268,9 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 		/datum/manufacture/rods2,
 		/datum/manufacture/metal,
 		/datum/manufacture/glass,
+		/datum/manufacture/cane,
+		/datum/manufacture/cane/fourlegged,
+		/datum/manufacture/cane/tennisball
 	)
 
 	hidden = list()
@@ -583,9 +587,27 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 		/datum/manufacture/crate/secure/engineering,
 		/datum/manufacture/crate/secure/medical,
 		/datum/manufacture/crate/secure/hydroponics,
+		/datum/manufacture/cart,
+		/datum/manufacture/cart/forensic,
+		/datum/manufacture/cart/mechanic,
+		/datum/manufacture/cart/medical,
+		/datum/manufacture/cart/trash,
+		/datum/manufacture/locker/secure,
+		/datum/manufacture/locker/secure/command,
+		/datum/manufacture/locker/secure/security,
+		/datum/manufacture/locker/secure/contraband,
+		/datum/manufacture/locker/secure/research,
+		/datum/manufacture/locker/secure/engineering,
+		/datum/manufacture/locker/secure/medical,
+		/datum/manufacture/locker/secure/hydroponics,
 		)
 
-	hidden = list(/datum/manufacture/crate/class, /datum/manufacture/crate/secure/syndicate)
+	hidden = list(
+		/datum/manufacture/crate/class,
+		/datum/manufacture/crate/secure/syndicate,
+		/datum/manufacture/cart/hotdog,
+		/datum/manufacture/locker/secure/nanotrasen,
+		)
 
 /obj/machinery/manufacturer/zombie_survival
 	name = "\improper Uber-Extreme Survival Manufacturer"
@@ -651,6 +673,7 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 		/datum/manufacture/soldering,
 		/datum/manufacture/multitool,
 		/datum/manufacture/t_scanner,
+		/datum/manufacture/accessgun,
 		/datum/manufacture/gravity_scanner,
 		/datum/manufacture/RCD,
 		/datum/manufacture/places_pipes,

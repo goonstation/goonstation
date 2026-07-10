@@ -243,7 +243,7 @@ TYPEINFO_NEW(/obj/table)
 			qdel(W)
 			return
 
-		else if (istype(W,/obj/item/sheet/wood))
+		else if (istype(W,/obj/item/sheet) && (W.material?.getMaterialFlags() & MATERIAL_WOOD))
 			if (istype(src, /obj/table/reinforced/bar)) //why must you be so confusing
 				return ..()
 			if (status != STATUS_STRONG || !istype(src, /obj/table/reinforced/auto))
