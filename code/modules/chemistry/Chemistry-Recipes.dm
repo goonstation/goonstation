@@ -5586,7 +5586,7 @@
 		required_reagents = list("sugar" = 1, "milk" = 1)
 		min_temperature = T0C + 90
 		result_amount = 1
-		mix_phrase = "The mixture thickens in the heat as water evaporates."
+		mix_phrase = "The mixture bubbles gently before thickening considerably."
 		drinkrecipe = TRUE
 
 	cafebombon

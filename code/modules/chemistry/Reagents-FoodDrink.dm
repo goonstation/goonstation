@@ -5000,7 +5000,7 @@ datum
 		fooddrink/sweetcondensedmilk
 			name = "sweet condensed milk"
 			id = "sweetcondensedmilk"
-			description = "A thick, sweet condensed milk."
+			description = "A thick, sweet, condensed milk."
 			reagent_state = LIQUID
 			fluid_r = 255
 			fluid_b = 255
@@ -5016,6 +5016,6 @@ datum
 			fluid_b = 45
 			description = "A deceptively simple coffee with a sweet side."
 			reagent_state = LIQUID
-			taste = "like a little too much sugar, somehow in a good way"
+			taste = "a bit too sweet, but in a good way, somehow"
 			thirst_value = 1
 			caffeine_content = 0.8
