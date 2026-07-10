@@ -592,9 +592,22 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 		/datum/manufacture/cart/mechanic,
 		/datum/manufacture/cart/medical,
 		/datum/manufacture/cart/trash,
+		/datum/manufacture/locker/secure,
+		/datum/manufacture/locker/secure/command,
+		/datum/manufacture/locker/secure/security,
+		/datum/manufacture/locker/secure/contraband,
+		/datum/manufacture/locker/secure/research,
+		/datum/manufacture/locker/secure/engineering,
+		/datum/manufacture/locker/secure/medical,
+		/datum/manufacture/locker/secure/hydroponics,
 		)
 
-	hidden = list(/datum/manufacture/crate/class, /datum/manufacture/crate/secure/syndicate, /datum/manufacture/cart/hotdog)
+	hidden = list(
+		/datum/manufacture/crate/class,
+		/datum/manufacture/crate/secure/syndicate,
+		/datum/manufacture/cart/hotdog,
+		/datum/manufacture/locker/secure/nanotrasen,
+		)
 
 /obj/machinery/manufacturer/zombie_survival
 	name = "\improper Uber-Extreme Survival Manufacturer"

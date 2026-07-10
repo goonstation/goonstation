@@ -1,0 +1,1073 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"bC" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/mining/magnet)
+"bY" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/fluid_canister,
+/turf/simulated/floor,
+/area/mining/refinery)
+"cZ" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 6
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/station/mining/magnet)
+"dI" = (
+/obj/submachine/cargopad/magnet,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/station/mining/magnet)
+"eg" = (
+/obj/mesh/catwalk,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 1;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 8;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 10;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning sign. I guess this area is dangerous.";
+	icon_state = "magwarning2";
+	name = "ACTIVE MAGNET AREA"
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/mining/magnet)
+"fh" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/mining/refinery)
+"fv" = (
+/turf/simulated/wall/auto/supernorn/colored,
+/area/mining/refinery)
+"fI" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/mining/refinery)
+"gy" = (
+/obj/table/reinforced/auto,
+/obj/item/device/matanalyzer{
+	pixel_x = -7;
+	pixel_y = 7
+	},
+/obj/item/device/matanalyzer{
+	pixel_x = 1;
+	pixel_y = 7
+	},
+/obj/item/device/matanalyzer{
+	pixel_x = 9;
+	pixel_y = 7
+	},
+/obj/random_item_spawner/tools,
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor/grime,
+/area/mining/refinery)
+"hD" = (
+/obj/landmark/gps_waypoint,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/mining/magnet)
+"hJ" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/mining/refinery)
+"hY" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/mining/magnet)
+"iD" = (
+/turf/simulated/wall/auto/reinforced/supernorn/colored/orange,
+/area/station/mining/magnet)
+"jb" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor,
+/area/mining/refinery)
+"jd" = (
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor/yellow,
+/area/station/mining/magnet)
+"jZ" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/mining/refinery)
+"kL" = (
+/obj/mesh/catwalk,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/mining/magnet)
+"ld" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/mining/refinery)
+"lV" = (
+/obj/machinery/manufacturer/general,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/mining/refinery)
+"mc" = (
+/obj/machinery/arc_electroplater{
+	dir = 4
+	},
+/obj/machinery/camera/directional/north,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/mining/refinery)
+"mj" = (
+/obj/disposalpipe/segment/horizontal,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor,
+/area/mining/refinery)
+"mH" = (
+/obj/machinery/portable_reclaimer,
+/obj/machinery/camera/directional/east{
+	pixel_y = -7
+	},
+/obj/machinery/phone/wall{
+	pixel_x = 22;
+	pixel_y = 12
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 6
+	},
+/area/station/mining/magnet)
+"mU" = (
+/obj/machinery/computer/magnet{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/item/magnetizer{
+	loaded = 1
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/mining/magnet)
+"oT" = (
+/obj/machinery/manufacturer/qm,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/mining/refinery)
+"px" = (
+/obj/item/slag_shovel,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/mining/refinery)
+"qm" = (
+/turf/simulated/wall/auto/supernorn/colored/orange,
+/area/station/mining/magnet)
+"qn" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/machinery/light_switch/directional/north{
+	on = 0
+	},
+/obj/machinery/bot/cleanbot,
+/turf/simulated/floor,
+/area/mining/refinery)
+"qr" = (
+/obj/machinery/neosmelter,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/mining/refinery)
+"sd" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 5
+	},
+/area/station/mining/magnet)
+"sx" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/power/apc/autoname_east,
+/obj/cable,
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/station/mining/magnet)
+"te" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/station/mining/magnet)
+"tl" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor/plating,
+/area/station/mining/magnet)
+"xt" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
+	},
+/turf/simulated/floor,
+/area/mining/refinery)
+"xv" = (
+/obj/table/auto,
+/obj/machinery/recharger,
+/obj/item/cargotele{
+	pixel_x = -1;
+	pixel_y = 8
+	},
+/obj/machinery/firealarm/directional/west,
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/mining/magnet)
+"xz" = (
+/turf/simulated/wall/auto/reinforced/supernorn/colored,
+/area/mining/refinery)
+"xF" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/mining/magnet)
+"ye" = (
+/obj/disposalpipe/junction/middle/east,
+/obj/machinery/firealarm/directional/west,
+/turf/simulated/floor,
+/area/mining/refinery)
+"yq" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/mining/magnet)
+"yT" = (
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk/east,
+/turf/simulated/floor,
+/area/mining/refinery)
+"yW" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/mining/magnet)
+"zd" = (
+/obj/machinery/ore_cloud_storage_container,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/yellow/side{
+	dir = 10
+	},
+/area/station/mining/magnet)
+"ze" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/mining/magnet)
+"zl" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor,
+/area/mining/refinery)
+"zp" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/bent/south,
+/turf/simulated/floor,
+/area/mining/refinery)
+"zq" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/mining/refinery)
+"zt" = (
+/obj/mesh/catwalk,
+/obj/machinery/magnet_chassis{
+	dir = 8
+	},
+/obj/machinery/mining_magnet/construction/small{
+	dir = 8
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/station/mining/magnet)
+"zx" = (
+/obj/landmark/gps_waypoint,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/mining/refinery)
+"zF" = (
+/obj/machinery/recharge_station,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/mining/refinery)
+"Ay" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/table/reinforced/auto,
+/obj/item/storage/belt/utility{
+	pixel_x = 6;
+	pixel_y = 7
+	},
+/obj/item/storage/belt/utility,
+/obj/item/mining_tool{
+	pixel_x = 5
+	},
+/turf/simulated/floor,
+/area/mining/refinery)
+"AU" = (
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/mining/magnet)
+"BC" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/mining/refinery)
+"En" = (
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/station/mining/magnet)
+"Fs" = (
+/obj/mesh/catwalk,
+/obj/storage/closet/welding_supply,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/station/mining/magnet)
+"FZ" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/mining/magnet)
+"Hb" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/mining/refinery)
+"Ia" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/mining/magnet)
+"Ib" = (
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/station/mining/magnet)
+"In" = (
+/obj/machinery/computer/barcode{
+	dir = 4
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/mining/magnet)
+"Iu" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 8;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/mining/magnet)
+"IJ" = (
+/obj/mesh/catwalk,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 1;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 4;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 9;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning sign. I guess this area is dangerous.";
+	icon_state = "magwarning2";
+	name = "ACTIVE MAGNET AREA"
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/mining/magnet)
+"Jo" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/machinery/space_heater,
+/turf/simulated/floor,
+/area/mining/refinery)
+"Jt" = (
+/obj/mesh/catwalk,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 8;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 6;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning sign. I guess this area is dangerous.";
+	icon_state = "magwarning2";
+	name = "ACTIVE MAGNET AREA"
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/mining/magnet)
+"JO" = (
+/obj/machinery/portable_reclaimer,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/mining/refinery)
+"JU" = (
+/obj/machinery/nanofab/refining,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/mining/refinery)
+"Kj" = (
+/obj/mesh/catwalk,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 1;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/mining/magnet)
+"KM" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/mining/refinery)
+"Lx" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/mining/refinery)
+"LN" = (
+/obj/machinery/disposal_pipedispenser/mobile,
+/turf/simulated/floor,
+/area/mining/refinery)
+"LZ" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 4;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/mining/magnet)
+"Mt" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor,
+/area/mining/refinery)
+"Nk" = (
+/obj/machinery/door/airlock/pyro/glass/mining{
+	dir = 4
+	},
+/obj/mapping_helper/access/mining,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/yellow,
+/area/station/mining/magnet)
+"Nm" = (
+/obj/machinery/disposal/small/east,
+/obj/disposalpipe/trunk/north,
+/turf/simulated/floor/yellow/side{
+	dir = 9
+	},
+/area/station/mining/magnet)
+"Nr" = (
+/obj/machinery/manufacturer/mining,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/light_switch/directional/south,
+/turf/simulated/floor/yellow/side,
+/area/station/mining/magnet)
+"Qb" = (
+/obj/machinery/door/airlock/pyro/glass/mining,
+/obj/mapping_helper/access/mining,
+/obj/mapping_helper/firedoor_spawn,
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor/yellow,
+/area/station/mining/magnet)
+"Rf" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/mining/refinery)
+"Sc" = (
+/obj/mesh/catwalk,
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 4;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning that demarcates where the magnetic area begins.";
+	dir = 5;
+	icon_state = "magwarning";
+	name = "Magnet Area Boundary"
+	},
+/obj/securearea{
+	desc = "A warning sign. I guess this area is dangerous.";
+	icon_state = "magwarning2";
+	name = "ACTIVE MAGNET AREA"
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/mining/magnet)
+"Sl" = (
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/mining/refinery)
+"Tp" = (
+/turf/space,
+/area/mining/magnet)
+"TE" = (
+/obj/decal/poster/miners_almanac{
+	pixel_y = 28
+	},
+/obj/machinery/oreaccumulator,
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/station/mining/magnet)
+"TY" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/disposalpipe/segment/bent/north,
+/turf/simulated/floor/plating,
+/area/station/mining/magnet)
+"UW" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
+	},
+/obj/machinery/firealarm/directional/west,
+/obj/machinery/camera/directional/south,
+/obj/storage/cart,
+/turf/simulated/floor,
+/area/mining/refinery)
+"WW" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light/incandescent,
+/obj/machinery/space_heater,
+/turf/simulated/floor,
+/area/mining/refinery)
+"Xe" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/mapping_helper/access/mining,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/yellow,
+/area/station/mining/magnet)
+"XH" = (
+/obj/disposalpipe/segment/bent/south,
+/turf/simulated/floor,
+/area/mining/refinery)
+"XM" = (
+/obj/machinery/alarm/directional/north,
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/mining/magnet)
+"Yr" = (
+/turf/space,
+/area/space)
+"Zg" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor,
+/area/mining/refinery)
+"Zj" = (
+/obj/machinery/sheet_extruder,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/mining/refinery)
+"Zk" = (
+/obj/mesh/catwalk,
+/obj/table/auto,
+/obj/item/paper/book/from_file/matsci_guide{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/obj/item/device/matanalyzer{
+	pixel_x = -2;
+	pixel_y = 8
+	},
+/obj/item/device/matanalyzer{
+	pixel_x = 2;
+	pixel_y = 6
+	},
+/obj/item/device/matanalyzer{
+	pixel_y = 4
+	},
+/obj/item/storage/firstaid/regular{
+	pixel_x = -7;
+	pixel_y = 6
+	},
+/obj/item/storage/firstaid/regular{
+	pixel_x = -7;
+	pixel_y = -2
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/station/mining/magnet)
+"ZH" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/mining/refinery)
+
+(1,1,1) = {"
+Yr
+Yr
+Yr
+Yr
+Yr
+Yr
+IJ
+Kj
+Kj
+Kj
+Kj
+Kj
+Kj
+Kj
+eg
+"}
+(2,1,1) = {"
+Yr
+Yr
+Yr
+Yr
+Yr
+Yr
+LZ
+Tp
+Tp
+Tp
+Tp
+Tp
+Tp
+Tp
+Iu
+"}
+(3,1,1) = {"
+fv
+fv
+Hb
+Hb
+xz
+xz
+LZ
+Tp
+Tp
+Tp
+Tp
+Tp
+Tp
+Tp
+Iu
+"}
+(4,1,1) = {"
+fv
+Sl
+qr
+Sl
+UW
+xz
+LZ
+Tp
+Tp
+Tp
+Tp
+Tp
+Tp
+Tp
+Iu
+"}
+(5,1,1) = {"
+fv
+Sl
+Sl
+px
+Jo
+jZ
+LZ
+Tp
+Tp
+Tp
+Tp
+Tp
+Tp
+Tp
+Iu
+"}
+(6,1,1) = {"
+fv
+Sl
+Sl
+Sl
+hJ
+fI
+LZ
+Tp
+Tp
+Tp
+Tp
+Tp
+Tp
+Tp
+Iu
+"}
+(7,1,1) = {"
+fv
+zF
+Sl
+Sl
+hJ
+fI
+LZ
+Tp
+Tp
+Tp
+Tp
+Tp
+Tp
+Tp
+Iu
+"}
+(8,1,1) = {"
+fv
+Ay
+xt
+zl
+WW
+KM
+LZ
+Tp
+Tp
+Tp
+Tp
+Tp
+Tp
+Tp
+Iu
+"}
+(9,1,1) = {"
+fv
+JU
+hJ
+zx
+LN
+xz
+Sc
+kL
+kL
+kL
+kL
+kL
+kL
+kL
+Jt
+"}
+(10,1,1) = {"
+fv
+Zj
+hJ
+BC
+yT
+xz
+TE
+Ib
+Fs
+Ib
+zt
+Zk
+Ib
+Ib
+Ib
+"}
+(11,1,1) = {"
+fv
+mc
+hJ
+BC
+gy
+xz
+iD
+Xe
+iD
+xF
+ze
+iD
+Xe
+Ia
+iD
+"}
+(12,1,1) = {"
+fv
+bY
+Rf
+ld
+XH
+ye
+Qb
+jd
+Nm
+mU
+In
+xv
+AU
+zd
+qm
+"}
+(13,1,1) = {"
+fv
+qn
+fh
+Lx
+Mt
+mj
+qm
+qm
+XM
+cZ
+hD
+yq
+bC
+Nr
+qm
+"}
+(14,1,1) = {"
+fv
+lV
+JO
+oT
+zq
+zp
+jb
+TY
+sd
+sx
+dI
+te
+En
+mH
+qm
+"}
+(15,1,1) = {"
+fv
+fv
+ZH
+ZH
+ZH
+fv
+Zg
+tl
+Nk
+qm
+FZ
+yW
+hY
+qm
+qm
+"}

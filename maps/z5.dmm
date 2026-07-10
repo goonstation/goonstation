@@ -20,7 +20,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/machinery/light_switch/south,
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor/yellow/side,
 /area/mining/dock)
 "at" = (
@@ -32,7 +32,7 @@
 /area/noGenerate)
 "ax" = (
 /obj/machinery/vending/air_vendor/plasma,
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/caution/side{
 	dir = 1
 	},
@@ -2589,7 +2589,7 @@
 /turf/simulated/floor/red/side,
 /area/evilreaver/security)
 "za" = (
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/plating/damaged3,
 /area/spyshack)
 "zb" = (
@@ -2701,7 +2701,7 @@
 /turf/simulated/floor/caution/east,
 /area/mining/hangar)
 "zL" = (
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/grime,
 /area/mining/manufacturing)
 "zP" = (
@@ -2776,7 +2776,7 @@
 	pixel_x = 15;
 	pixel_y = 27
 	},
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/grime,
 /area/tech_outpost)
 "Am" = (
@@ -3432,7 +3432,7 @@
 	icon_state = "4-8"
 	},
 /obj/decal/stripe_delivery,
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor,
 /area/mining/miningoutpost)
 "EM" = (
@@ -3540,7 +3540,7 @@
 	pixel_y = 10
 	},
 /obj/random_item_spawner/junk/one_or_zero,
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
 "Fr" = (
@@ -4179,7 +4179,7 @@
 /turf/simulated/floor/grime,
 /area/mining/refinery)
 "JB" = (
-/obj/machinery/light_switch/south,
+/obj/machinery/light_switch/directional/south,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/damaged2,
 /area/mining/refinery)
@@ -4276,7 +4276,7 @@
 /turf/simulated/floor/carpet/office,
 /area/mining/hangar)
 "Kh" = (
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/grime,
 /area/mining/miningoutpost)
 "Kk" = (
@@ -4416,7 +4416,7 @@
 	desc = "Caution! Construction Zone!";
 	name = "caution sign"
 	},
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
@@ -4517,7 +4517,7 @@
 /obj/item/rods/steel,
 /obj/item/rods/steel,
 /obj/random_item_spawner/junk/one_or_zero,
-/obj/machinery/light_switch/south,
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor/grime,
 /area/mining/comms)
 "LL" = (
@@ -5042,7 +5042,7 @@
 /turf/simulated/floor/damaged2,
 /area/mining/magnet_control)
 "Px" = (
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/directional/west,
 /obj/decal/cleanable/dirt,
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/decal/tile_edge/stripe/corner/extra_big2{
@@ -5333,7 +5333,7 @@
 	icon_state = "4-8"
 	},
 /obj/decal/stripe_delivery,
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor,
 /area/mining/magnet_control)
 "RJ" = (
@@ -5492,7 +5492,7 @@
 /area/mining/hangar)
 "SN" = (
 /obj/machinery/bot/medbot,
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/caution/south,
 /area/mining/manufacturing)
 "SP" = (
@@ -5555,7 +5555,7 @@
 /turf/simulated/floor/black,
 /area/mining/quarters)
 "Th" = (
-/obj/machinery/light_switch/south,
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor/caution/east,
 /area/mining/quarters)
 "Tj" = (
@@ -6420,7 +6420,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/light_switch/south,
+/obj/machinery/light_switch/directional/south,
 /obj/decal/cleanable/dirt,
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/grime,

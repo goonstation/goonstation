@@ -198,7 +198,7 @@
 	dir = 5;
 	icon_state = "line2"
 	},
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/black,
 /area/listeningpost/general)
 "jQ" = (
@@ -410,7 +410,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/black,
 /area/listeningpost/break_room)
 "vt" = (
@@ -498,7 +498,7 @@
 /obj/item/paper/pipebombs{
 	pixel_y = 5
 	},
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/directional/west,
 /obj/item/tank/pocket/extended/oxygen,
 /turf/simulated/floor/carpet/red/fancy/narrow/T_west,
 /area/listeningpost/barracks)
@@ -655,7 +655,7 @@
 /area/listeningpost/barracks)
 "EC" = (
 /obj/storage/crate/furnacefuel,
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "ES" = (
@@ -671,11 +671,7 @@
 	dir = 9;
 	icon_state = "line1"
 	},
-/obj/machinery/light_switch{
-	name = "W light switch";
-	pixel_x = -24;
-	dir = 8
-	},
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/black,
 /area/listeningpost/syndicate_teleporter)
 "Fa" = (

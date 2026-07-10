@@ -48,7 +48,7 @@
 /obj/item/tank/oxygen,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/mask/breath,
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -156,7 +156,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/listeningpost/comm_dish)
 "gb" = (
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /obj/table/reinforced/auto,
 /obj/item/pinpointer/disk{
 	pixel_y = -6;
@@ -249,7 +249,7 @@
 /area/listeningpost/barracks)
 "mz" = (
 /obj/machinery/bathtub,
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/sanitary,
 /area/listeningpost/break_room)
 "nV" = (
@@ -264,7 +264,7 @@
 	},
 /area/listeningpost/syndicate_teleporter)
 "nY" = (
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /obj/cable{
 	icon_state = "2-8"
 	},
@@ -433,7 +433,7 @@
 /turf/simulated/wall/auto/asteroid,
 /area/space)
 "Cy" = (
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/directional/west,
 /turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
@@ -684,7 +684,7 @@
 	},
 /area/listeningpost/syndicate_teleporter)
 "SH" = (
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /obj/machinery/vending/jobclothing/syndicate,
 /turf/simulated/floor/black,
 /area/listeningpost/barracks)
