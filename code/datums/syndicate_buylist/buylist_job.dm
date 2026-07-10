@@ -188,10 +188,10 @@
 	name = "Wasp Implanter"
 	items = list(/obj/item/implanter/wasp)
 	cost = 2
-	desc = "Enemies being a buzzkill? This implant will release a swarm of angry wasps upon your death, and make them really feel the sting! More implants mean more wasps, and while you are implanted wasps will be friendly to you."
+	desc = "Enemies being a buzzkill? This implant will release a swarm of angry wasps upon your death, and make them really feel the sting! More implants mean more wasps. If a target is implanted, wasps will be friendly to them as if they are a botanist or apiculturalist."
 	vr_allowed = FALSE
 	job = list("Botanist", "Apiculturist")
-	can_buy = UPLINK_TRAITOR
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/fakegrenade
 	name = "Fake Cleaner Grenades"

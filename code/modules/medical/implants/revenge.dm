@@ -136,12 +136,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		..()
 		if (istype(M) && src.faction)
 			LAZYLISTADDUNIQUE(M.faction, src.faction)
-		if (M == I)
-			M.mind.store_memory("Your implanted [src] will release wasps upon unintentional death.", 0, 0)
-			boutput(M, "The implanted [src] will release wasps upon unintentional death. (Suiciding will likely fail to trigger it, but succumbing while in crit will trigger it.)")
-		else if (istype(I))
-			boutput(I, "The implanted [src] will release wasps upon [M]'s unintentional death.")
-
 
 	on_remove(mob/M)
 		..()
@@ -164,4 +158,3 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		SPAWN(1)
 			src.owner?.gib()
 		. = ..()
-
