@@ -10053,6 +10053,9 @@
 /obj/blind_switch/directional/north{
 	pixel_x = -5
 	},
+/obj/machinery/light_switch/directional/north{
+	pixel_x = 5
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/hydroponics/staff)
 "cvs" = (
@@ -54786,6 +54789,9 @@
 	icon_state = "line2"
 	},
 /obj/shrub,
+/obj/machinery/light_switch/directional/north{
+	pixel_x = 5
+	},
 /turf/simulated/floor/grass/random/walp,
 /area/station/chapel/sanctuary)
 "mCZ" = (
@@ -57561,6 +57567,7 @@
 /obj/item/hand_labeler,
 /obj/item/pen/marker/blue,
 /obj/item/pen/marker/red,
+/obj/item/storage/box/biohazard_bags,
 /obj/item/stamp,
 /turf/simulated/floor/minitiles/black,
 /area/station/medical/morgue)
@@ -63802,6 +63809,7 @@
 /area/station/mining/magnet_platform)
 "oML" = (
 /obj/machinery/computer/secure_data/detective_computer,
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -74922,6 +74930,7 @@
 	pixel_y = 8
 	},
 /obj/machinery/light_switch/directional/east,
+/obj/item/surgical_spoon,
 /turf/simulated/floor/minitiles/black,
 /area/station/medical/morgue)
 "ruI" = (
@@ -92385,9 +92394,6 @@
 /obj/machinery/light/incandescent,
 /obj/machinery/camera/directional/east{
 	pixel_y = -4
-	},
-/obj/machinery/light_switch/directional/north{
-	pixel_x = 23
 	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
