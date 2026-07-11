@@ -651,11 +651,11 @@
 					src.show_text("You just don't feel kawaii enough to uguu right now!", "red")
 					return
 			if ("juggle")
-				if (src.emote_check(voluntary, 25))
-					src.juggle_emote()
-					m_type = 1
-					message = "<B>[src]</B> wiggles [his_or_her(src)] fingers a bit.[prob(10) ? " Weird." : null]"
-					maptext_out = "<I>wiggles [his_or_her(src)] fingers a bit.</I>"
+				if (src.can_juggle && src.emote_check(voluntary, 25))
+					if(!src.juggle_emote())
+						m_type = 1
+						message = "<B>[src]</B> wiggles [his_or_her(src)] fingers a bit.[prob(10) ? " Weird." : null]"
+						maptext_out = "<I>wiggles [his_or_her(src)] fingers a bit.</I>"
 			if ("twirl", "spin")
 				if (!src.restrained())
 					if (src.emote_check(voluntary, 25))

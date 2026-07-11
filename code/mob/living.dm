@@ -1832,23 +1832,30 @@ TYPEINFO(/mob/living)
 				new /obj/item/disk/data/floppy/read_only/authentication(crate)
 				shippingmarket.receive_crate(crate)
 
+/// Checks if a mob can juggle and if so starts juggling their held item.
+///
+/// Returns TRUE if the mob is able to juggle.
 /mob/living/proc/juggle_emote()
-	if (!src.restrained())
-		if (src.can_juggle)
-			var/obj/item/thing = src.equipped()
-			if (!thing)
-				if (src.l_hand)
-					thing = src.l_hand
-				else if (src.r_hand)
-					thing = src.r_hand
-			if (thing && !thing.cant_drop)
-				if (src.juggling())
-					if (prob(src.juggling.len * 5)) // might drop stuff while already juggling things
-						src.drop_juggle()
-					else
-						src.add_juggle(thing)
-				else
-					src.add_juggle(thing)
+	if (src.restrained())
+		return FALSE
+	if (!src.can_juggle)
+		return FALSE
+
+	var/obj/item/thing = src.equipped()
+	if (!thing)
+		if (src.l_hand)
+			thing = src.l_hand
+		else if (src.r_hand)
+			thing = src.r_hand
+	if (thing && !thing.cant_drop)
+		if (src.juggling())
+			if (prob(src.juggling.len * 5)) // might drop stuff while already juggling things
+				src.drop_juggle()
+			else
+				src.add_juggle(thing)
+		else
+			src.add_juggle(thing)
+	return TRUE
 
 /mob/living/proc/juggling()
 	if (islist(src.juggling) && length(src.juggling))
