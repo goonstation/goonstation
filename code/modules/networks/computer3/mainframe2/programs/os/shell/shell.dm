@@ -124,12 +124,12 @@
 
 	var/list/subcommands = list()
 	var/list/piped_list = global.command2list(text, "^", src.scriptvars, subcommands)
-	piped_list.len = min(length(piped_list), MAX_PIPED_COMMANDS)
+	piped_list.len = min(length(piped_list), DWAINE::SHELL::CONSTS::MAX_PIPED_COMMANDS)
 	src.piping = length(piped_list)
 	src.pipetemp = ""
 
 	var/script_counter = 0
-	while (length(piped_list) && (script_counter < MAX_SCRIPT_COMPLEXITY))
+	while (length(piped_list) && (script_counter < DWAINE::SHELL::CONSTS::MAX_SCRIPT_COMPLEXITY))
 		script_counter++
 
 		text = piped_list[1]
@@ -178,12 +178,12 @@
 		// Attempt to locate the command in the current working directory.
 		var/current = src.read_user_field("curpath")
 		switch (src.execpath("[current]/[dd_hasprefix(command, "/") ? copytext(command, 1) : command]", command_list, src.script_iteration))
-			if (EXEC_SUCCESS)
+			if (DWAINE::ERR::SHELL::EXEC::SUCCESS)
 				continue
-			if (EXEC_SCRIPT_ERROR)
+			if (DWAINE::ERR::SHELL::EXEC::SCRIPT_ERROR)
 				src.message_user("Error: Unable to execute script.")
 				return TRUE
-			if (EXEC_STACK_OVERFLOW)
+			if (DWAINE::ERR::SHELL::EXEC::STACK_OVERFLOW)
 				src.message_user("Error: Stack overflow.")
 				return TRUE
 
@@ -192,11 +192,11 @@
 		if (istype(shell_builtin))
 			var/outcome = shell_builtin.execute(command_list, piped_list)
 			switch (outcome)
-				if (BUILTIN_SUCCESS)
+				if (DWAINE::ERR::SHELL::BUILTIN::SUCCESS)
 					continue
-				if (BUILTIN_BREAK)
+				if (DWAINE::ERR::SHELL::BUILTIN::BREAK)
 					return TRUE
-				if (BUILTIN_CONTINUE)
+				if (DWAINE::ERR::SHELL::BUILTIN::CONTINUE)
 					return FALSE
 				else
 					CRASH("Unexpected return value ([outcome]) from DWAINE shell builtin ([shell_builtin.type]).")
@@ -225,9 +225,9 @@
 			record.fields = splittext(src.pipetemp, "|n")
 			record.name = record_name
 			record.metadata["owner"] = read_user_field("name")
-			record.metadata["permission"] = COMP_ALLACC
+			record.metadata["permission"] = DWAINE::PERM::DEFAULT::ALLACCESS
 
-			if (src.signal_program(1, list("command" = DWAINE_COMMAND_FWRITE, "path" = command, "append" = TRUE), record) != ESIG_SUCCESS)
+			if (src.signal_program(1, list("command" = DWAINE::SYSCALL::FWRITE, "path" = command, "append" = TRUE), record) != DWAINE::ERR::SIG::SUCCESS)
 				src.message_user("Unable to pipe stream to file.")
 				record.dispose()
 				break
@@ -242,56 +242,56 @@
 
 /datum/computer/file/mainframe_program/shell/receive_progsignal(sendid, list/data, datum/computer/file/file)
 	if (..() || !data["command"])
-		return ESIG_GENERIC
+		return DWAINE::ERR::SIG::GENERIC
 
 	switch (data["command"])
-		if (DWAINE_COMMAND_MSG_TERM)
+		if (DWAINE::SYSCALL::MSG_TERM)
 			if (src.piping)
 				src.pipetemp += data["data"]
 			else
 				return src.message_user(data["data"], data["render"])
 
-		if (DWAINE_COMMAND_BREAK)
+		if (DWAINE::SYSCALL::BREAK)
 			if (length(src.shscript))
 				src.message_user("Break at line [src.scriptline + 1]")
 				src.shscript.Cut()
 				src.scriptline = 0
 				return
 
-		if (DWAINE_COMMAND_TEXIT)
+		if (DWAINE::SYSCALL::TEXIT)
 			src.scriptprocess = 0
 			return
 
-		if (DWAINE_COMMAND_RECVFILE)
+		if (DWAINE::SYSCALL::RECVFILE)
 			var/current_path = src.read_user_field("curpath")
 			if (!current_path)
-				return ESIG_GENERIC
+				return DWAINE::ERR::SIG::GENERIC
 
 			if (!istype(file))
-				return ESIG_NOFILE
+				return DWAINE::ERR::SIG::NOFILE
 
-			return src.signal_program(1, list("command" = DWAINE_COMMAND_FWRITE, "path" = current_path, "replace" = TRUE, "mkdir" = FALSE), file)
+			return src.signal_program(1, list("command" = DWAINE::SYSCALL::FWRITE, "path" = current_path, "replace" = TRUE, "mkdir" = FALSE), file)
 
 /datum/computer/file/mainframe_program/shell/message_user(msg, render, file)
 	if (!src.useracc)
-		return ESIG_NOTARGET
+		return DWAINE::ERR::SIG::NOTARGET
 
 	if (src.suppress_out)
 		if (dd_hassuffix(msg, "|n"))
 			msg = copytext(msg, 1, -2)
 
 		src.previous_pipeout += replacetext(msg, "|n", " ")
-		return ESIG_SUCCESS
+		return DWAINE::ERR::SIG::SUCCESS
 
 	src.previous_pipeout += msg
 	if (render)
-		return src.signal_program(src.parent_task.progid, list("command" = DWAINE_COMMAND_MSG_TERM, "data" = msg, "term" = src.useracc.user_id, "render" = render))
+		return src.signal_program(src.parent_task.progid, list("command" = DWAINE::SYSCALL::MSG_TERM, "data" = msg, "term" = src.useracc.user_id, "render" = render))
 	else
-		return src.signal_program(src.parent_task.progid, list("command" = DWAINE_COMMAND_MSG_TERM, "data" = msg, "term" = src.useracc.user_id))
+		return src.signal_program(src.parent_task.progid, list("command" = DWAINE::SYSCALL::MSG_TERM, "data" = msg, "term" = src.useracc.user_id))
 
 /// Attempt to locate and execute a mainframe program or shell script at the provided filepath.
 /datum/computer/file/mainframe_program/shell/proc/execpath(file_path, list/command_list, scripting = 0)
-	var/datum/computer/file/record/exec = src.signal_program(1, list("command" = DWAINE_COMMAND_FGET, "path" = file_path))
+	var/datum/computer/file/record/exec = src.signal_program(1, list("command" = DWAINE::SYSCALL::FGET, "path" = file_path))
 
 	// If the executable is a mainframe program.
 	if (istype(exec, /datum/computer/file/mainframe_program))
@@ -301,7 +301,7 @@
 
 		src.pipetemp = ""
 
-		var/list/siglist = list("command" = DWAINE_COMMAND_TSPAWN, "passusr" = TRUE, "path" = file_path)
+		var/list/siglist = list("command" = DWAINE::SYSCALL::TSPAWN, "passusr" = TRUE, "path" = file_path)
 		if (length(command_list))
 			siglist["args"] = strip_html(jointext(command_list, " "))
 
@@ -309,12 +309,12 @@
 		if (istype(to_run) && !QDELETED(to_run))
 			src.scriptprocess = to_run.progid
 
-		return EXEC_SUCCESS
+		return DWAINE::ERR::SHELL::EXEC::SUCCESS
 
 	// If the executable is a shell script.
 	if ((!src.pipetemp || scripting) && istype(exec) && (length(exec.fields) > 1) && dd_hasprefix(exec.fields[1], "#!"))
-		if (src.script_iteration + 1 >= MAX_SCRIPT_ITERATIONS)
-			return EXEC_STACK_OVERFLOW
+		if (src.script_iteration + 1 >= DWAINE::SHELL::CONSTS::MAX_SCRIPT_ITERATIONS)
+			return DWAINE::ERR::SHELL::EXEC::STACK_OVERFLOW
 
 		var/list/scriptvars_to_pass = list(
 			"$" = src.progid,
@@ -328,15 +328,15 @@
 
 		var/list/child_script = src.script_format(exec.fields.Copy())
 
-		src.scriptprocess = src.signal_program(1, list("command" = DWAINE_COMMAND_TFORK, "args" = list(src.script_iteration + 1, scriptvars_to_pass, child_script)))
-		if (src.scriptprocess & ESIG_DATABIT)
-			src.scriptprocess &= ~ESIG_DATABIT
-			return EXEC_SUCCESS
+		src.scriptprocess = src.signal_program(1, list("command" = DWAINE::SYSCALL::TFORK, "args" = list(src.script_iteration + 1, scriptvars_to_pass, child_script)))
+		if (src.scriptprocess & DWAINE::ERR::SIG::DATABIT)
+			src.scriptprocess &= ~DWAINE::ERR::SIG::DATABIT
+			return DWAINE::ERR::SHELL::EXEC::SUCCESS
 
 		src.scriptprocess = 0
-		return EXEC_SCRIPT_ERROR
+		return DWAINE::ERR::SHELL::EXEC::SCRIPT_ERROR
 
-	return EXEC_FAILURE
+	return DWAINE::ERR::SHELL::EXEC::FAILURE
 
 /// Process the currently running shell script.
 /datum/computer/file/mainframe_program/shell/proc/script_process()
@@ -347,7 +347,7 @@
 			src.message_user("Break at line [src.scriptline + 1]")
 
 			if (src.scriptprocess)
-				src.signal_program(1, list("command" = DWAINE_COMMAND_TKILL, "target" = src.scriptprocess))
+				src.signal_program(1, list("command" = DWAINE::SYSCALL::TKILL, "target" = src.scriptprocess))
 				src.scriptprocess = 0
 
 			if (src.parent_id && src.pipetemp)
@@ -356,9 +356,9 @@
 			mainframe_prog_exit
 			return TRUE
 
-		// Disable the `SCRIPT_IN_LOOP` flag after the line is finished processing.
-		if (src.scriptstat & SCRIPT_IN_LOOP)
-			src.scriptstat &= ~SCRIPT_IN_LOOP
+		// Disable the `DWAINE::SHELL::SCRIPT::IN_LOOP` flag after the line is finished processing.
+		if (src.scriptstat & DWAINE::SHELL::SCRIPT::IN_LOOP)
+			src.scriptstat &= ~DWAINE::SHELL::SCRIPT::IN_LOOP
 			continue
 
 		// Remove the processed line.
@@ -421,8 +421,8 @@
 
 		// If the current token is a number, add it to the stack.
 		if (isnum(current_token))
-			if (length(src.stack) > MAX_STACK_DEPTH)
-				return SCRIPT_STACK_OVERFLOW
+			if (length(src.stack) > DWAINE::SHELL::CONSTS::MAX_STACK_DEPTH)
+				return DWAINE::ERR::SHELL::SCRIPT::STACK_OVERFLOW
 
 			src.stack.Add(SCRIPT_CLAMPVALUE(current_token))
 			continue
@@ -432,9 +432,9 @@
 		if (istype(shell_script_operator))
 			var/outcome = shell_script_operator.execute(token_stream)
 			switch (outcome)
-				if (SCRIPT_SUCCESS)
+				if (DWAINE::ERR::SHELL::SCRIPT::SUCCESS)
 					continue
-				if (SCRIPT_STACK_OVERFLOW, SCRIPT_STACK_UNDERFLOW, SCRIPT_UNDEFINED)
+				if (DWAINE::ERR::SHELL::SCRIPT::STACK_OVERFLOW, DWAINE::ERR::SHELL::SCRIPT::STACK_UNDERFLOW, DWAINE::ERR::SHELL::SCRIPT::UNDEFINED)
 					return outcome
 				else
 					CRASH("Unexpected return value ([outcome]) from DWAINE shell script operator ([shell_script_operator.type]).")
@@ -454,4 +454,4 @@
 		else
 			return FALSE
 
-	return SCRIPT_SUCCESS
+	return DWAINE::ERR::SHELL::SCRIPT::SUCCESS

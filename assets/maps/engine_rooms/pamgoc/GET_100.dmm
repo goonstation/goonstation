@@ -620,10 +620,7 @@
 /turf/simulated/floor/grey/side,
 /area/station/engine/inner)
 "bq" = (
-/obj/machinery/light_switch{
-	name = "N light switch";
-	pixel_y = 24
-	},
+/obj/machinery/light_switch/directional/north,
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
 	dir = 10

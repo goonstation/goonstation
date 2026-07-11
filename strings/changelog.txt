@@ -1,4 +1,111 @@
 
+(t)sat jul 11 26
+(u)CalliopeSoups
+(p)27112
+(e)🆕💪🌱🐁|C-Feature, A-Traits, A-Hydroponics, A-Critters
+(+)Queen clownspiders, martians and more can juggle now, beware.
+(u)Cheekybrdy
+(p)26947
+(e)🗺🎨|A-Mapping, C-Sprites
+(+)Orange tiles now actually look orange.
+(t)fri jul 10 26
+(u)ANNmagedon
+(p)27003
+(e)|
+(+)Added the APC Pinpointer to the engineering manufacturer
+(u)swinglow20
+(p)26843
+(e)🎨🐁|C-Sprites, A-Critters
+(+)Reworked the icons for the fermid species. Watch out, mining!
+(u)bamlord
+(p)26723
+(e)🌠|A-Events
+(*)Wizards can now appear midround on RP servers via ghost role.
+(u)Walnut356
+(p)26998
+(e)🛠️|A-Engineering
+(+)Fixed Control Unit execution jumping to offset 6 when outputting a signal
+(u)TekoTheTeapot
+(p)27011
+(e)|
+(*)Makes the Blood Fish actually fishable and adds behavior to it
+(u)JORJ949
+(p)27125
+(e)🪲⚖🧛|C-Bug, C-Balance, A-Gamemodes
+(*)Fixed objective-specific uplink items not appearing in uplinks. Note this now allows traitors/headrevs with kill objectives (Headrevs get kill objectives for ALL command) to buy ID pinpointers.
+(u)nova2053
+(p)27123
+(e)|
+(+)Airlocks which have been forced open by EMPs no longer require access to deconstruct.
+(u)bamlord
+(p)26954
+(e)💡|A-Station-Systems
+(*)The Chaplain can now bless the TEG with their bible
+(t)thu jul 09 26
+(u)Astarthoc
+(p)27117
+(e)|
+(+)You can now emag atmospheric analyzers, causing them to display temperature and volume usint imperial units instead of metric.
+(u)ANNmagedon
+(p)27118
+(e)🗺|A-Mapping
+(+)Added a cell recharger to atlas' listening post.
+(t)wed jul 08 26
+(u)JORJ949, LeahTheTech, Glowbold and Sord
+(p)27102
+(e)🗺🎨🧛💡|A-Mapping, C-Sprites, A-Gamemodes, A-Station-Systems
+(*)Probstation (the map from this april fools event) can now be selected by admins. Panic.
+(t)sun jul 05 26
+(u)JORJ949
+(p)26968
+(e)🆕📦🧑‍✈️|C-Feature, A-Game-Objects, A-Command
+(*)The AccessPro can now set (but not edit devices set to) Armory and HoS access.
+(u)Bartimeus973
+(p)26957
+(e)🪲⚖|C-Bug, C-Balance
+(+)Making buttbots out of a changeling's butt, such as one from a dead buttcrab, no longer doxes their real name.
+(u)j3kchad
+(p)26978
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Added a door butt prank based on the door bucket prank
+(u)JORJ949
+(p)27047
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Cargo can now print several different styles of secure locker from their manufacturer
+(t)sat jul 04 26
+(u)A.I.The Artificial Idiot
+(p)27044
+(e)⚗|A-Chemistry
+(+)Makes pineapple iced matcha heal people in the generation z age range by 1 TOX on ingest.
+(t)fri jul 03 26
+(u)KolIsDumb, DeadMan164
+(p)27019
+(e)🎨|C-Sprites
+(+)Added 8 color variants of the dinosaur pajamas found within the clothing booth
+(u)A.I.TheArtificialIdiot
+(p)27034
+(e)⚗|A-Chemistry
+(+)Most chocolate drinks now poison pugs and decay into sugar.
+(u)ANNmagedon
+(p)27072
+(e)|
+(+)RCD Charges now show up as ammo in manufacturers
+(+)Ammo found in hacked general manufacturers will now be correctly categorized
+(t)thu jul 02 26
+(u)ANNmagedon
+(p)27058
+(e)💅🤖|C-QoL, A-Silicons
+(+)Moved Cyborg Parts & Cyborg Upgrades to new respective categories in the robotics manufacturers.
+(t)wed jul 01 26
+(u)grasswitch
+(p)27041
+(e)|
+(*)Contraband lockers are now easier to break open. They were made by the lowest bidder, after all...
+(u)phoi
+(p)27049
+(e)🗺|A-Mapping
+(+)De-thindowed, medbay lobby, chemistry emergency shower, toxin storage, robotisict ai eye thing, and maints bathroom on cogmap 1
+(+)The maints bathroom between med and escape can bolt its doors now on cogmap 1
 (t)tue jun 30 26
 (u)Michael Warren
 (p)27013
