@@ -14,120 +14,103 @@
 			"id": "gotta_go_fast_zlevels",
 			"define": "GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1",
 			"label": "Only load Devtest map",
-			"category": "Go Fast",
-			"description": "Only include the tiny map Devtest, no other zlevels. Boots way faster."
+			"category": "Go Fast"
 		},
 		{
 			"id": "im_in_a_hurry",
 			"define": "IM_REALLY_IN_A_FUCKING_HURRY_HERE 1",
 			"label": "I'm really in a hurry",
-			"category": "Go Fast",
-			"description": "All of the below: skips FEA/mining/planet/camera setup, skips changelogs, and auto-readies up."
+			"category": "Go Fast"
 		},
 		{
 			"id": "skip_fea_setup",
 			"define": "SKIP_FEA_SETUP",
 			"label": "Skip atmos setup",
-			"category": "Go Fast",
-			"description": "Skip setting up atmospheric system."
+			"category": "Go Fast"
 		},
 		{
 			"id": "skip_z5_setup",
 			"define": "SKIP_Z5_SETUP",
 			"label": "Skip mining level setup",
-			"category": "Go Fast",
-			"description": "Skip generation of mining level."
+			"category": "Go Fast"
 		},
 		{
 			"id": "skip_planets_setup",
 			"define": "SKIP_PLANETS_SETUP",
 			"label": "Skip planet setup",
-			"category": "Go Fast",
-			"description": "Skip planet generation (for Artemis)."
+			"category": "Go Fast"
 		},
 		{
 			"id": "skip_camera_coverage",
 			"define": "SKIP_CAMERA_COVERAGE",
 			"label": "Skip camera coverage",
-			"category": "Go Fast",
-			"description": "Skip calculating security camera coverage."
+			"category": "Go Fast"
 		},
 		{
 			"id": "skip_changelogs",
 			"define": "IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME",
 			"label": "Skip changelogs",
-			"category": "Go Fast",
-			"description": "Skip changelogs."
+			"category": "Go Fast"
 		},
 		{
 			"id": "auto_ready",
 			"define": "I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO",
 			"label": "Auto-ready up",
-			"category": "Go Fast",
-			"description": "Automatically ready up and start the game ASAP. No input required."
+			"category": "Go Fast"
 		},
 		{
 			"id": "disable_devfile",
 			"define": "DISABLE_DEVFILE",
 			"label": "Disable _std/__build.local.dm",
-			"category": "Convenience / Testing",
-			"description": "Don't load things defined in _std/__build.local.dm. Use if you have some breaking changes in there or whatnot. Note: this build-flags picker writes its selections into __build.local.dm, so enabling this flag will suppress every other flag you've selected here."
+			"category": "Convenience / Testing"
 		},
 		{
 			"id": "captain_ids",
 			"define": "DEBUG_EVERYONE_GETS_CAPTAIN_ID",
 			"label": "Everyone gets captain ID",
-			"category": "Convenience / Testing",
-			"description": "All IDs are captain rank, kept separate from below options to avoid disrupting access-related tests."
+			"category": "Convenience / Testing"
 		},
 		{
 			"id": "all_access",
 			"define": "I_MEAN_ALL_ACCESS",
 			"label": "Captain IDs get all access",
-			"category": "Convenience / Testing",
-			"description": "Captain level ID's have EVERY access."
+			"category": "Convenience / Testing"
 		},
 		{
 			"id": "no_cooldowns",
 			"define": "NO_COOLDOWNS",
 			"label": "No targetable cooldowns",
-			"category": "Convenience / Testing",
-			"description": "Disables all /datum/targetable cooldowns."
+			"category": "Convenience / Testing"
 		},
 		{
 			"id": "bonus_points",
 			"define": "BONUS_POINTS",
 			"label": "Bonus points",
-			"category": "Convenience / Testing",
-			"description": "Gives a bunch of starting points to various abilities/uplinks/weapon vendors."
+			"category": "Convenience / Testing"
 		},
 		{
 			"id": "medals",
 			"define": "SHUT_UP_AND_GIVE_ME_MEDAL_STUFF",
 			"label": "Force medal grants",
-			"category": "Convenience / Testing",
-			"description": "Causes has_medal to always return true - good for testing medal rewards etc."
+			"category": "Convenience / Testing"
 		},
 		{
 			"id": "status_effects",
 			"define": "SHOW_ME_STATUSES",
 			"label": "Show status effects",
-			"category": "Convenience / Testing",
-			"description": "Incredibly hacky visible status effects."
+			"category": "Convenience / Testing"
 		},
 		{
 			"id": "alt_accounts",
 			"define": "ME_AND_MY_40_ALT_ACCOUNTS",
 			"label": "Ignore player minimums",
-			"category": "Convenience / Testing",
-			"description": "Override game mode minimum player requirements for testing revs, nukies etc."
+			"category": "Convenience / Testing"
 		},
 		{
 			"id": "wanna_be_job",
 			"define": "I_WANNA_BE_THE_JOB",
 			"label": "Spawn as a specific job",
 			"category": "Convenience / Testing",
-			"description": "Spawn as the given job name. default \"IMCODER\" Gives helpful tools for debugging.",
 			"type": "text",
 			"valueFormat": "quoted",
 			"default": "IMCODER"
@@ -137,7 +120,6 @@
 			"define": "I_WANNA_DO_CRIME",
 			"label": "Spawn as an antagonist",
 			"category": "Convenience / Testing",
-			"description": "Spawn as the matching antagonist role as defined in _std/defines/roles.dm.",
 			"type": "text",
 			"valueFormat": "raw",
 			"default": "ROLE_TRAITOR"
@@ -146,176 +128,151 @@
 			"id": "no_admin_speech",
 			"define": "NO_ADMIN_SPEECH_MODULES",
 			"label": "No admin speech modules",
-			"category": "Convenience / Testing",
-			"description": "Loads the admin speech and listen module trees without any modules."
+			"category": "Convenience / Testing"
 		},
 		{
 			"id": "no_pregame_html",
 			"define": "NO_PREGAME_HTML",
 			"label": "No pregame HTML lobby",
-			"category": "Convenience / Testing",
-			"description": "Don't spawn the HTML pregame browser lobby screen."
+			"category": "Convenience / Testing"
 		},
 		{
 			"id": "gene_cheat",
 			"define": "I_HATE_WAITING_FOR_GENES",
 			"label": "Gene research cheat",
-			"category": "Convenience / Testing",
-			"description": "Marks nearly all genes as researched, gives chromosomes/materials/autodecryptors, increases gene storage cap, and removes time/cost limitations on the gene console."
+			"category": "Convenience / Testing"
 		},
 		{
 			"id": "z_log",
 			"define": "Z_LOG_ENABLE 1",
 			"label": "Enable Z log",
-			"category": "Convenience / Testing",
-			"description": "Enable additional world.log logging."
+			"category": "Convenience / Testing"
 		},
 		{
 			"id": "stop_distracting_me",
 			"define": "STOP_DISTRACTING_ME",
 			"label": "Stop distracting me",
-			"category": "Stop Distracting Me",
-			"description": "All of the below: no secbots/guardbuddies/bots, no monkeys, no clone prebake, instant clones, low security, no critters, no random rooms/events, no shuttle calls, hackerman, more runtime checks, quick mob deletion, no wage/mail/ghostdrone messages, unbreakable lights, no antag popups."
+			"category": "Stop Distracting Me"
 		},
 		{
 			"id": "no_secbots",
 			"define": "I_AM_ABOVE_THE_LAW",
 			"label": "No secbots/guardbuddies",
-			"category": "Stop Distracting Me",
-			"description": "Prevents all secbots and guardbuddies from spawning, useful for gun testing."
+			"category": "Stop Distracting Me"
 		},
 		{
 			"id": "no_bots",
 			"define": "ALL_ROBOT_AND_COMPUTERS_MUST_SHUT_THE_HELL_UP",
 			"label": "No bots",
-			"category": "Stop Distracting Me",
-			"description": "Prevents ALL bots from spawning (not cyborgs)."
+			"category": "Stop Distracting Me"
 		},
 		{
 			"id": "no_monkeys",
 			"define": "BAD_MONKEY_NO_BANANA",
 			"label": "No landmark monkeys",
-			"category": "Stop Distracting Me",
-			"description": "Prevents landmark monkeys from spawning - monkeys can still be vended etc."
+			"category": "Stop Distracting Me"
 		},
 		{
 			"id": "no_clone_prebake",
 			"define": "CLONING_IS_A_SIN",
 			"label": "No clone prebake",
-			"category": "Stop Distracting Me",
-			"description": "Don't prebake clones."
+			"category": "Stop Distracting Me"
 		},
 		{
 			"id": "instant_clone",
 			"define": "CLONING_IS_INSTANT",
 			"label": "Instant clones",
-			"category": "Stop Distracting Me",
-			"description": "Clonepods fully heal the clone instantly."
+			"category": "Stop Distracting Me"
 		},
 		{
 			"id": "low_security",
 			"define": "LOW_SECURITY",
 			"label": "Low security",
-			"category": "Stop Distracting Me",
-			"description": "Deletes turrets."
+			"category": "Stop Distracting Me"
 		},
 		{
 			"id": "no_critters",
 			"define": "NO_CRITTERS",
 			"label": "No critters",
-			"category": "Stop Distracting Me",
-			"description": "Deletes mob critters."
+			"category": "Stop Distracting Me"
 		},
 		{
 			"id": "no_random_rooms",
 			"define": "NO_RANDOM_ROOMS",
 			"label": "No random rooms",
-			"category": "Stop Distracting Me",
-			"description": "Don't generate random rooms. Random room areas will be left blank and the landmark will be visible."
+			"category": "Stop Distracting Me"
 		},
 		{
 			"id": "no_random_events",
 			"define": "NO_RANDOM_EVENTS",
 			"label": "No random events",
-			"category": "Stop Distracting Me",
-			"description": "Don't spawn random events."
+			"category": "Stop Distracting Me"
 		},
 		{
 			"id": "no_shuttle_calls",
 			"define": "NO_SHUTTLE_CALLS",
 			"label": "No shuttle calls",
-			"category": "Stop Distracting Me",
-			"description": "Don't autocall the shuttle."
+			"category": "Stop Distracting Me"
 		},
 		{
 			"id": "hackerman",
 			"define": "I_AM_HACKERMAN",
 			"label": "Hackerman varedit",
-			"category": "Stop Distracting Me",
-			"description": "Lets you varedit things you normally couldn't (admin holders, server config)."
+			"category": "Stop Distracting Me"
 		},
 		{
 			"id": "check_more_runtimes",
 			"define": "CHECK_MORE_RUNTIMES",
 			"label": "Check more runtimes",
-			"category": "Stop Distracting Me",
-			"description": "Enables checking for some additional errors which might be too costly on live server. Also implied by CI_RUNTIME_CHECKING in CI."
+			"category": "Stop Distracting Me"
 		},
 		{
 			"id": "quick_mob_deletion",
 			"define": "QUICK_MOB_DELETION",
 			"label": "Quick mob deletion",
-			"category": "Stop Distracting Me",
-			"description": "Enables deleting mobs with build mode right click on obj place mode."
+			"category": "Stop Distracting Me"
 		},
 		{
 			"id": "no_wages",
 			"define": "SHUT_UP_ABOUT_MY_PAY",
 			"label": "No wage PDA messages",
-			"category": "Stop Distracting Me",
-			"description": "Disables PDA messages from the wage system."
+			"category": "Stop Distracting Me"
 		},
 		{
 			"id": "no_mail",
 			"define": "FUCK_OFF_WITH_THE_MAIL",
 			"label": "No crew mail",
-			"category": "Stop Distracting Me",
-			"description": "Disables random crew mail system."
+			"category": "Stop Distracting Me"
 		},
 		{
 			"id": "no_ghostdrone_factories",
 			"define": "GHOSTDRONES_ON_STRIKE",
 			"label": "No ghostdrone factories",
-			"category": "Stop Distracting Me",
-			"description": "Prevents ghostdrone factory objs from doing stuff."
+			"category": "Stop Distracting Me"
 		},
 		{
 			"id": "no_broken_lights",
 			"define": "STOP_BREAKING_THE_FUCKING_LIGHTS_I_WANT_TO_SEE_SHIT",
 			"label": "Unbreakable lights",
-			"category": "Stop Distracting Me",
-			"description": "Stops lights from breaking or burning out when spawning or turning on/off."
+			"category": "Stop Distracting Me"
 		},
 		{
 			"id": "no_antag_popups",
 			"define": "NO_ANTAG_POPUPS_I_DONT_CARE",
 			"label": "No antag popups",
-			"category": "Stop Distracting Me",
-			"description": "Stops antag popups from coming up at the start of every game."
+			"category": "Stop Distracting Me"
 		},
 		{
 			"id": "tracy_hook",
 			"define": "TRACY_PROFILER_HOOK",
 			"label": "Tracy profiler hook",
-			"category": "Profiling",
-			"description": "Enables the hook for the DM Tracy profiler in world/init(), read the code guide."
+			"category": "Profiling"
 		},
 		{
 			"id": "profile_full_round",
 			"define": "SERVER_SIDE_PROFILING_FULL_ROUND 1",
 			"label": "Profile full round",
 			"category": "Profiling",
-			"description": "Generate and save profiler data for the entire round.",
 			"conflictsWith": [
 				"profile_pregame",
 				"profile_ingame_only"
@@ -326,7 +283,6 @@
 			"define": "SERVER_SIDE_PROFILING_PREGAME 1",
 			"label": "Profile pregame",
 			"category": "Profiling",
-			"description": "Generate and save profiler data for pregame work (before \"Welcome to pregame lobby\").",
 			"conflictsWith": [
 				"profile_full_round"
 			]
@@ -336,7 +292,6 @@
 			"define": "SERVER_SIDE_PROFILING_INGAME_ONLY 1",
 			"label": "Profile in-game only",
 			"category": "Profiling",
-			"description": "Generate and save profiler data for post-pregame work.",
 			"conflictsWith": [
 				"profile_full_round"
 			]
@@ -345,57 +300,49 @@
 			"id": "delete_queue_debug",
 			"define": "DELETE_QUEUE_DEBUG",
 			"label": "Delete queue debug",
-			"category": "Debugging Toggles",
-			"description": "This is expensive. Don't turn it on on the server unless you want things to be bad and slow."
+			"category": "Debugging Toggles"
 		},
 		{
 			"id": "update_queue_debug",
 			"define": "UPDATE_QUEUE_DEBUG",
 			"label": "Update queue debug",
-			"category": "Debugging Toggles",
-			"description": "Probably don't turn it on on a real server but also I have no idea what an update queue is vOv."
+			"category": "Debugging Toggles"
 		},
 		{
 			"id": "image_del_debug",
 			"define": "IMAGE_DEL_DEBUG",
 			"label": "Image deletion debug",
-			"category": "Debugging Toggles",
-			"description": "DO NOT ENABLE THIS ON THE SERVER FOR FUCKS SAKE."
+			"category": "Debugging Toggles"
 		},
 		{
 			"id": "machine_processing_debug",
 			"define": "MACHINE_PROCESSING_DEBUG",
 			"label": "Machine processing debug",
-			"category": "Debugging Toggles",
-			"description": "Apparently not that hefty but still."
+			"category": "Debugging Toggles"
 		},
 		{
 			"id": "queue_stat_debug",
 			"define": "QUEUE_STAT_DEBUG",
 			"label": "Queue worker statistics",
-			"category": "Debugging Toggles",
-			"description": "Probably hefty."
+			"category": "Debugging Toggles"
 		},
 		{
 			"id": "test_auth",
 			"define": "TEST_AUTH",
 			"label": "Local test auth",
-			"category": "Debugging Toggles",
-			"description": "Enable local authentication using a dummy version of the goonhub authentication process."
+			"category": "Debugging Toggles"
 		},
 		{
 			"id": "dont_admin_me",
 			"define": "DONT_ADMIN_MEE",
 			"label": "Don't auto-admin",
-			"category": "Debugging Toggles",
-			"description": "Don't automatically grant admin to all localhost connections."
+			"category": "Debugging Toggles"
 		},
 		{
 			"id": "abstract_violation_crash",
 			"define": "ABSTRACT_VIOLATION_CRASH",
 			"label": "Abstract violation: crash",
 			"category": "Debugging Toggles",
-			"description": "Makes the code crash when an abstract type is instantiated. See _std/types.dm:32 for details.",
 			"conflictsWith": [
 				"abstract_violation_warn"
 			]
@@ -405,7 +352,6 @@
 			"define": "ABSTRACT_VIOLATION_WARN",
 			"label": "Abstract violation: warn",
 			"category": "Debugging Toggles",
-			"description": "Makes the code log a warning when an abstract type is instantiated. See _std/types.dm:37 for details.",
 			"conflictsWith": [
 				"abstract_violation_crash"
 			]
@@ -414,29 +360,25 @@
 			"id": "log_hard_delete_refs",
 			"define": "LOG_HARD_DELETE_REFERENCES",
 			"label": "Log hard delete references",
-			"category": "Debugging Toggles",
-			"description": "Makes the delete queue go through every single datum in the game when a hard del happens. It gets reported to the debug log. This process takes about 4 minutes per hard deletion (during that time the server will be frozen)."
+			"category": "Debugging Toggles"
 		},
 		{
 			"id": "log_hard_delete_refs_2",
 			"define": "LOG_HARD_DELETE_REFERENCES_2_ELECTRIC_BOOGALOO",
 			"label": "Log hard delete references, electric boogaloo",
-			"category": "Debugging Toggles",
-			"description": "Same as Log hard delete references, electric boogaloo."
+			"category": "Debugging Toggles"
 		},
 		{
 			"id": "dispose_is_qdel",
 			"define": "DISPOSE_IS_QDEL",
 			"label": "dispose() is qdel()",
-			"category": "Debugging Toggles",
-			"description": "Toggle this to turn .dispose() into qdel(). Useful for trying to find lingering references locally."
+			"category": "Debugging Toggles"
 		},
 		{
 			"id": "perspective_walls",
 			"define": "USE_PERSPECTIVE_EDITOR_WALLS",
 			"label": "Perspective editor walls",
-			"category": "Debugging Toggles",
-			"description": "Toggle this to enable perspective wall icons in .dmm-compatible map editors. By default, icons in the editor will be flat."
+			"category": "Debugging Toggles"
 		},
 		{
 			"id": "map_override",
@@ -472,22 +414,19 @@
 			"id": "generate_goonhub_map",
 			"define": "GENERATE_GOONHUB_MAP",
 			"label": "Generate goonhub map screenshots",
-			"category": "Map Overrides",
-			"description": "Generate map screenshots for goonhub map viewer (NOT USED NORMALLY). Use together with a map override above."
+			"category": "Map Overrides"
 		},
 		{
 			"id": "unit_tests",
 			"define": "UNIT_TESTS",
 			"label": "Enable unit tests",
-			"category": "Unit Test Framework",
-			"description": "Enable the unit test framework."
+			"category": "Unit Test Framework"
 		},
 		{
 			"id": "unit_tests_run_till_completion",
 			"define": "UNIT_TESTS_RUN_TILL_COMPLETION",
 			"label": "Bypass 10 second limit",
 			"category": "Unit Test Framework",
-			"description": "Bypass 10 Second Limit.",
 			"requires": [
 				"unit_tests"
 			]
@@ -497,7 +436,6 @@
 			"define": "UNIT_TESTS_REGRESSION_ONLY",
 			"label": "Regression tests only",
 			"category": "Unit Test Framework",
-			"description": "Only run /datum/unit_test/regression subtypes.",
 			"requires": [
 				"unit_tests"
 			]
@@ -506,15 +444,13 @@
 			"id": "rp_mode",
 			"define": "RP_MODE 1",
 			"label": "RP mode",
-			"category": "Holidays & Seasons",
-			"description": "Roleplay mode toggle."
+			"category": "Holidays & Seasons"
 		},
 		{
 			"id": "halloween",
 			"define": "HALLOWEEN 1",
 			"label": "Halloween",
-			"category": "Holidays & Seasons",
-			"description": "Halloween event toggle."
+			"category": "Holidays & Seasons"
 		},
 		{
 			"id": "season_override",
@@ -536,36 +472,31 @@
 			"id": "xmas",
 			"define": "XMAS 1",
 			"label": "Christmas",
-			"category": "Holidays & Seasons",
-			"description": "Christmas event toggle."
+			"category": "Holidays & Seasons"
 		},
 		{
 			"id": "canada_day",
 			"define": "CANADADAY 1",
 			"label": "Canada Day",
-			"category": "Holidays & Seasons",
-			"description": "Canada Day event toggle."
+			"category": "Holidays & Seasons"
 		},
 		{
 			"id": "football_mode",
 			"define": "FOOTBALL_MODE 1",
 			"label": "Football mode",
-			"category": "Holidays & Seasons",
-			"description": "Football mode toggle."
+			"category": "Holidays & Seasons"
 		},
 		{
 			"id": "enable_artemis",
 			"define": "ENABLE_ARTEMIS",
 			"label": "Enable Artemis",
-			"category": "Holidays & Seasons",
-			"description": "Enables artemis for development."
+			"category": "Holidays & Seasons"
 		},
 		{
 			"id": "midsummer",
 			"define": "MIDSUMMER 1",
 			"label": "Midsummer",
-			"category": "Holidays & Seasons",
-			"description": "Midsummer event toggle."
+			"category": "Holidays & Seasons"
 		}
 	],
 	"presets": [
