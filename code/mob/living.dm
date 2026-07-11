@@ -1576,7 +1576,7 @@ TYPEINFO(/mob/living)
 				src.was_harmed(thr.user, AM)
 	if (AM.throwforce > 5) //number
 		src.changeStatus("staggered", 5 SECONDS)
-	if((!src.can_juggle || !isobj(AM) || !src.juggling())) // nabbed from mob's hitby
+	if((!src.can_juggle || !isitem(AM) || !src.juggling())) // nabbed from mob's hitby
 		return
 	if (prob(src.juggling.len * 5))
 		src.drop_juggle()
