@@ -131,7 +131,7 @@
 		playsound(src, 'sound/machines/chime.ogg', 25)
 
 /obj/machinery/atmospherics/binary/thermostatic_gate/inverted
-	icon = 'icons/obj/atmospherics/thermostatic.dmi'
+	icon = 'icons/obj/atmospherics/thermostatic_inverted.dmi'
 	icon_state = "off-map"
 	name = "inverted thermostatic gate"
 	open_temp = T20C
