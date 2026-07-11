@@ -24,13 +24,13 @@
 		open = FALSE
 		src.UpdateIcon()
 		logTheThing(LOG_STATION, null, "[log_object(src)] just closed due to hitting [src.close_temp] Kelvin at [log_loc(src)]")
-		return TRUE
 
-	if (src.air1.temperature >= src.open_temp)
+	else if (src.air1.temperature >= src.open_temp)
 		open = TRUE
 		src.UpdateIcon()
 		logTheThing(LOG_STATION, null, "[log_object(src)] just opened due to hitting [src.open_temp] Kelvin at [log_loc(src)]")
-		return TRUE
+
+	return open
 
 /obj/machinery/atmospherics/binary/thermostatic_gate/New()
 	..()
@@ -55,9 +55,6 @@
 		return
 
 	if (!check_temperature())
-		return
-
-	if (!open)
 		return
 
 	var/datum/gas_mixture/temp = src.air1.remove_ratio(1)
@@ -147,13 +144,13 @@
 		open = FALSE
 		src.UpdateIcon()
 		logTheThing(LOG_STATION, null, "[log_object(src)] just closed due to hitting [src.close_temp] Kelvin at [log_loc(src)]")
-		return TRUE
 
-	if (src.air1.temperature <= src.open_temp)
+	else if (src.air1.temperature <= src.open_temp)
 		open = TRUE
 		src.UpdateIcon()
 		logTheThing(LOG_STATION, null, "[log_object(src)] just opened due to hitting [src.open_temp] Kelvin at [log_loc(src)]")
-		return TRUE
+
+	return open
 
 
 /datum/thermostatic_gate_ui
