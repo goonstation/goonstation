@@ -4884,6 +4884,16 @@ datum
 			description = "Tangy, yet refreshingly earthy."
 			reagent_state = LIQUID
 
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
+				if (!M)
+					M = holder.my_atom
+				if(istype(M, /mob/living/carbon/human))
+					var/mob/living/carbon/human/H = M
+					if (H.bioHolder.age < 57 && H.bioHolder.age > 41)
+						H.take_toxin_damage(-1)
+
+
 		fooddrink/caffeinated/thaicoffee
 			name = "Thai iced coffee"
 			id = "thaiicedcoffee"

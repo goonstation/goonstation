@@ -16823,7 +16823,7 @@
 "hEe" = (
 /obj/table/wood/round,
 /obj/item/deconstructor,
-/obj/blind_switch/area/south,
+/obj/blind_switch/directional/south,
 /turf/simulated/floor/carpet/green/fancy/edge/se,
 /area/station/engine/engineering/ce)
 "hEh" = (
@@ -18563,7 +18563,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/horizontal,
-/obj/blind_switch/west,
+/obj/blind_switch/directional/west,
 /turf/simulated/floor/orange,
 /area/station/engine/storage)
 "ivg" = (
@@ -20692,7 +20692,7 @@
 	name = "Ringside Hallway"
 	})
 "jkP" = (
-/obj/blind_switch/area/east,
+/obj/blind_switch/directional/east,
 /turf/simulated/floor/wood/six,
 /area/station/security/hos)
 "jkR" = (
@@ -23456,7 +23456,7 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/horizontal,
-/obj/blind_switch/east,
+/obj/blind_switch/directional/east,
 /turf/simulated/floor/orange,
 /area/station/engine/engineering/breakroom)
 "kyV" = (
@@ -25712,7 +25712,7 @@
 	name = "The Cage Arena"
 	})
 "lAN" = (
-/obj/blind_switch/area/west,
+/obj/blind_switch/directional/west,
 /obj/decoration/clock{
 	pixel_y = 30
 	},
@@ -25728,7 +25728,7 @@
 /turf/simulated/floor,
 /area/research_outpost/protest)
 "lBt" = (
-/obj/blind_switch/area/east,
+/obj/blind_switch/directional/east,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "lBx" = (
@@ -48342,7 +48342,7 @@
 /obj/item/clothing/suit/bedsheet/blue,
 /obj/disposalpipe/segment/mail/vertical,
 /obj/item/toy/plush/small/monkey/assistant,
-/obj/blind_switch/area/east,
+/obj/blind_switch/directional/east,
 /turf/simulated/floor/wood,
 /area/station/medical/head)
 "vYo" = (
@@ -48365,7 +48365,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/blind_switch/area/north,
+/obj/blind_switch/directional/north,
 /turf/simulated/floor/grey,
 /area/station/science/research_director)
 "vZl" = (

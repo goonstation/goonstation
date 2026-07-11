@@ -379,15 +379,16 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	hit_ground_chance = 0
 	smashes_glasses = FALSE
 	shot_sound = 'sound/impact_sounds/Slimy_Hit_3.ogg'
+	shot_volume = 40
 
-	on_launch(var/obj/projectile/P)
+	on_launch(obj/projectile/P)
 		..()
 		if (!("owner" in P.special_data))
 			P.die()
 			return
-		var/mob/owner = P.special_data["owner"]
 		P.special_data["target_turf"] = get_turf(P.targets[1])
-		owner.AddComponent(/datum/component/cord, P, base_offset_x = 0, base_offset_y = 8, range=INFINITY, cord_line = "tongue", cord_cap = "tongue_end", behind_parent = TRUE)
+		var/mob/owner = P.special_data["owner"]
+		owner.AddComponent(/datum/component/cord, P, base_offset_x = 0, base_offset_y = P.special_data["head_offset"], range=INFINITY, cord_line = "tongue", cord_cap = "tongue_end", behind_parent = TRUE)
 
 	on_hit(atom/hit, direction, obj/projectile/P)
 		if (istype(hit, /mob/living/critter/small_animal))
@@ -459,13 +460,21 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	cast_genetics(atom/target, misfire)
 		if (..())
 			return CAST_ATTEMPT_FAIL_CAST_FAILURE
-
-		var/obj/projectile/proj = initialize_projectile_pixel_spread(holder.owner, new/datum/projectile/special/tongue, get_turf(target), poy = 8)
+		var/head_offset = 0
+		if (ishuman(holder.owner))
+			var/mob/living/carbon/human/H = holder.owner
+			head_offset = 8
+			if (H.mutantrace)
+				head_offset += H.mutantrace.head_offset
+		var/obj/projectile/proj = initialize_projectile_pixel_spread(holder.owner, new/datum/projectile/special/tongue, get_turf(target), poy = head_offset)
 
 		src.owner.set_dir(get_dir_accurate(owner, target))
 
 		if (ishuman(holder.owner))
 			var/mob/living/carbon/human/H = owner
+			if (!H.organHolder.head)
+				boutput(holder.owner, SPAN_ALERT("You don't have a head!"))
+				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 			var/obj/item/I
 			if (istype(H.wear_mask) && H.wear_mask.c_flags & COVERSMOUTH)
 				I = H.wear_mask
@@ -477,6 +486,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 				return CAST_ATTEMPT_FAIL_DO_COOLDOWN
 
 		proj.special_data["owner"] = holder.owner
+		proj.special_data["head_offset"] = head_offset
 		proj.targets = list(target)
 
 		proj.launch()

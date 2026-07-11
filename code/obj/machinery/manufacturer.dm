@@ -1834,12 +1834,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if (ispath(product))
 			if (istype(M,/datum/manufacture/))
 				A = new product(src)
-				if (isitem(A))
-					var/obj/item/I = A
-					M.modify_output(src, I, materials_used)
-					I.set_loc(src.get_output_location(I))
-				else
-					A.set_loc(src.get_output_location(A))
+				M.modify_output(src, A, materials_used)
+				A.set_loc(src.get_output_location(A))
 			else
 				A = new product(get_output_location())
 

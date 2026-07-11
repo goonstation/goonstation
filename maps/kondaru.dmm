@@ -2911,7 +2911,7 @@
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/reagent_containers/glass/bottle/formaldehyde,
 /obj/item/reagent_containers/syringe,
-/obj/blind_switch/area/north,
+/obj/blind_switch/directional/north,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -11334,7 +11334,7 @@
 /obj/stool/chair/comfy{
 	dir = 8
 	},
-/obj/blind_switch/area/east,
+/obj/blind_switch/directional/east,
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
@@ -13015,6 +13015,7 @@
 /obj/item/hemostat,
 /obj/item/staple_gun,
 /obj/machinery/alarm/directional/north,
+/obj/item/surgical_spoon,
 /obj/item/scissors/surgical_scissors,
 /turf/simulated/floor/redwhite{
 	dir = 1
@@ -15531,7 +15532,7 @@
 /obj/stool/chair/blue{
 	dir = 4
 	},
-/obj/blind_switch/area/west{
+/obj/blind_switch/directional/west{
 	pixel_y = 8
 	},
 /obj/machinery/light_switch/directional/west,
@@ -19731,7 +19732,7 @@
 /obj/item/storage/toilet{
 	dir = 4
 	},
-/obj/blind_switch/area/south,
+/obj/blind_switch/directional/south,
 /obj/decal/tile_edge/line/black{
 	dir = 1;
 	icon_state = "line1"
@@ -23299,6 +23300,9 @@
 	pixel_y = 12
 	},
 /obj/item/scalpel,
+/obj/item/staple_gun,
+/obj/item/surgical_spoon,
+/obj/item/scissors/surgical_scissors,
 /obj/item/hand_labeler{
 	pixel_y = 5
 	},
@@ -23355,6 +23359,7 @@
 	dir = 4;
 	pixel_x = 12
 	},
+/obj/item/storage/box/biohazard_bags,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "cce" = (
@@ -28365,7 +28370,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "dFk" = (
-/obj/blind_switch/area/north,
+/obj/blind_switch/directional/north,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/radio/news_office)
 "dFn" = (
@@ -28706,7 +28711,7 @@
 "dPr" = (
 /obj/machinery/portable_reclaimer,
 /obj/machinery/light_switch/directional/east,
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	pixel_y = 8
 	},
 /turf/simulated/floor/black,
@@ -31103,7 +31108,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/blind_switch/area/south,
+/obj/blind_switch/directional/south,
 /turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "ftp" = (
@@ -34455,7 +34460,7 @@
 /turf/simulated/floor/red/side,
 /area/station/hallway/primary/south)
 "hIi" = (
-/obj/blind_switch/area/west,
+/obj/blind_switch/directional/west,
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -35401,7 +35406,7 @@
 /obj/machinery/light_switch/directional/north{
 	pixel_x = -10
 	},
-/obj/blind_switch/area/north{
+/obj/blind_switch/directional/north{
 	pixel_x = 11
 	},
 /obj/machinery/firealarm/directional/north,
@@ -37430,7 +37435,7 @@
 	dir = 1;
 	pixel_y = 26
 	},
-/obj/blind_switch/area/east,
+/obj/blind_switch/directional/east,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -38300,7 +38305,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/alarm/directional/west,
-/obj/blind_switch/area/south,
+/obj/blind_switch/directional/south,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/hop)
 "kuN" = (
@@ -38435,7 +38440,7 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/machinery/firealarm/directional/north,
-/obj/blind_switch/area/north{
+/obj/blind_switch/directional/north{
 	pixel_x = -13
 	},
 /obj/machinery/light_switch/directional/north{
@@ -38712,7 +38717,7 @@
 /obj/item/clothing/head/fedora{
 	pixel_y = 11
 	},
-/obj/blind_switch/area/west,
+/obj/blind_switch/directional/west,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "kGp" = (
@@ -42559,7 +42564,7 @@
 	icon_state = "bedsheet-captain";
 	name = "special bedsheet"
 	},
-/obj/blind_switch/area/north,
+/obj/blind_switch/directional/north,
 /turf/simulated/floor/carpet/arcade,
 /area/station/bridge/captain)
 "noI" = (
@@ -44050,7 +44055,7 @@
 /turf/simulated/floor/engine,
 /area/station/security/secwing)
 "ouQ" = (
-/obj/blind_switch/area/north,
+/obj/blind_switch/directional/north,
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "ovi" = (
@@ -45560,7 +45565,7 @@
 /obj/item/storage/toilet{
 	dir = 4
 	},
-/obj/blind_switch/area/south,
+/obj/blind_switch/directional/south,
 /obj/decal/tile_edge/line/black{
 	dir = 1;
 	icon_state = "line1"
@@ -53067,7 +53072,7 @@
 /obj/machinery/light_switch/directional/north{
 	pixel_x = -10
 	},
-/obj/blind_switch/area/north{
+/obj/blind_switch/directional/north{
 	pixel_x = 11
 	},
 /obj/machinery/firealarm/directional/north,
@@ -57581,7 +57586,7 @@
 /obj/item/storage/toilet{
 	dir = 4
 	},
-/obj/blind_switch/area/south,
+/obj/blind_switch/directional/south,
 /obj/decal/tile_edge/line/black{
 	dir = 1;
 	icon_state = "line1"

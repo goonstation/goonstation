@@ -25,11 +25,11 @@
 		return
 
 	var/current = src.read_user_field("curpath")
-	switch (src.signal_program(1, list("command" = DWAINE_COMMAND_FMODE, "path" = ABSOLUTE_PATH(initlist[2], current), "permission" = new_permissions)))
-		if (ESIG_NOFILE, ESIG_NOTARGET)
+	switch (src.signal_program(1, list("command" = DWAINE::SYSCALL::FMODE, "path" = ABSOLUTE_PATH(initlist[2], current), "permission" = new_permissions)))
+		if (DWAINE::ERR::SIG::NOFILE, DWAINE::ERR::SIG::NOTARGET)
 			src.message_user("Error: Invalid target path.")
 
-		if (ESIG_GENERIC)
+		if (DWAINE::ERR::SIG::GENERIC)
 			src.message_user("Error: Access denied.")
 
 	mainframe_prog_exit
@@ -46,22 +46,22 @@
 
 	. = 0
 	if (otherperm & 4)
-		. |= COMP_ROTHER
+		. |= DWAINE::PERM::BIT::OTHER_READ
 	if (otherperm & 2)
-		. |= COMP_WOTHER
+		. |= DWAINE::PERM::BIT::OTHER_WRITE
 	if (otherperm & 1)
-		. |= COMP_DOTHER
+		. |= DWAINE::PERM::BIT::OTHER_EXECUTE
 
 	if (groupperm & 4)
-		. |= COMP_RGROUP
+		. |= DWAINE::PERM::BIT::GROUP_READ
 	if (groupperm & 2)
-		. |= COMP_WGROUP
+		. |= DWAINE::PERM::BIT::GROUP_WRITE
 	if (groupperm & 1)
-		. |= COMP_DGROUP
+		. |= DWAINE::PERM::BIT::GROUP_EXECUTE
 
 	if (ownerperm & 4)
-		. |= COMP_ROWNER
+		. |= DWAINE::PERM::BIT::OWNER_READ
 	if (ownerperm & 2)
-		. |= COMP_WOWNER
+		. |= DWAINE::PERM::BIT::OWNER_WRITE
 	if (ownerperm & 1)
-		. |= COMP_DOWNER
+		. |= DWAINE::PERM::BIT::OWNER_EXECUTE

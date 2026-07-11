@@ -2769,7 +2769,7 @@
 /area/station/security/detectives_office)
 "akb" = (
 /obj/disposalpipe/segment/mail/vertical,
-/obj/blind_switch/east,
+/obj/blind_switch/directional/east,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "akc" = (
@@ -3274,7 +3274,6 @@
 	},
 /obj/disposalpipe/trunk/mail/south,
 /obj/machinery/disposal/mail/small/autoname/chapel/north,
-/mob/living/critter/small_animal/opossum/morty,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
 "alF" = (
@@ -4204,7 +4203,7 @@
 	},
 /area/station/security/detectives_office)
 "aoJ" = (
-/obj/blind_switch/north,
+/obj/blind_switch/directional/north,
 /turf/simulated/floor/carpet{
 	icon_state = "carpetNE"
 	},
@@ -19171,8 +19170,7 @@
 /obj/disposalpipe/segment/transport,
 /obj/item/device/radio/intercom/brig,
 /obj/machinery/phone,
-/obj/blind_switch/area/west{
-	pixel_x = -23;
+/obj/blind_switch/directional/west{
 	pixel_y = 5
 	},
 /turf/simulated/floor/carpet/grime,
@@ -22421,9 +22419,8 @@
 /obj/stool/chair/red{
 	dir = 4
 	},
-/obj/blind_switch/north{
-	pixel_x = 13;
-	pixel_y = 24
+/obj/blind_switch/directional/north{
+	pixel_x = 13
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/main)
@@ -30861,8 +30858,7 @@
 	dir = 8
 	},
 /obj/item/stamp/cap,
-/obj/blind_switch/west{
-	pixel_x = -24;
+/obj/blind_switch/directional/west{
 	pixel_y = -6
 	},
 /turf/simulated/floor/carpet/arcade,
@@ -36565,7 +36561,7 @@
 	icon_state = "0-8"
 	},
 /obj/item/reagent_containers/food/drinks/tea,
-/obj/blind_switch/east,
+/obj/blind_switch/directional/east,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
 "cqa" = (
@@ -42277,7 +42273,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/blind_switch/area/north,
+/obj/blind_switch/directional/north,
 /obj/machinery/door_control/bolter/new_walls/west{
 	id = "quarters_mdir";
 	pixel_x = -23;
@@ -43912,7 +43908,7 @@
 "cPA" = (
 /obj/stool/chair/comfy,
 /obj/item/clothing/suit/cardboard_box/head_surgeon,
-/obj/blind_switch/area/west,
+/obj/blind_switch/directional/west,
 /turf/simulated/floor/carpet/arcade,
 /area/station/medical/staff)
 "cPE" = (
@@ -44178,7 +44174,7 @@
 /area/station/medical/medbay/lobby)
 "cQK" = (
 /obj/machinery/light/incandescent,
-/obj/storage/secure/closet/medical/medkit,
+/obj/storage/secure/closet/medical/medicine,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/reception)
 "cQM" = (
@@ -53262,6 +53258,7 @@
 /obj/item/reagent_containers/glass/bottle/formaldehyde,
 /obj/item/reagent_containers/syringe,
 /obj/item/hand_labeler,
+/obj/item/scissors/surgical_scissors,
 /turf/simulated/floor/sanitary/blue,
 /area/station/medical/morgue)
 "gqn" = (
@@ -53735,6 +53732,8 @@
 /obj/item/clothing/suit/apron,
 /obj/item/surgical_spoon,
 /obj/item/spraybottle/cleaner,
+/obj/item/storage/box/biohazard_bags,
+/obj/item/storage/box/body_bag,
 /turf/simulated/floor/sanitary/blue,
 /area/station/medical/morgue)
 "gGV" = (
@@ -55185,7 +55184,7 @@
 "hPF" = (
 /obj/machinery/portable_reclaimer,
 /obj/machinery/light_switch/directional/east,
-/obj/blind_switch/area/east{
+/obj/blind_switch/directional/east{
 	pixel_y = 8
 	},
 /turf/simulated/floor/blueblack{
@@ -56254,7 +56253,7 @@
 "iEI" = (
 /obj/table/wood/auto,
 /obj/random_item_spawner/desk_stuff,
-/obj/blind_switch/west,
+/obj/blind_switch/directional/west,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hop)
 "iEL" = (
@@ -62574,7 +62573,7 @@
 /obj/machinery/computer3/generic/med_data{
 	dir = 4
 	},
-/obj/blind_switch/area/west,
+/obj/blind_switch/directional/west,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -65345,7 +65344,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/sign_switch/north{
+/obj/sign_switch/directional/north{
 	pixel_x = 10
 	},
 /obj/machinery/shower{
@@ -65896,6 +65895,10 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/solar/north)
+"qum" = (
+/mob/living/critter/small_animal/opossum/morty,
+/turf/simulated/floor/sanitary/blue,
+/area/station/medical/morgue)
 "quD" = (
 /obj/machinery/door/airlock/pyro/glass/med{
 	dir = 4
@@ -69649,7 +69652,7 @@
 	},
 /obj/disposalpipe/segment/mail/vertical,
 /obj/item/device/radio/intercom/engineering,
-/obj/blind_switch/east,
+/obj/blind_switch/directional/east,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/ce)
 "tsV" = (
@@ -70339,7 +70342,7 @@
 /obj/machinery/camera/directional/west{
 	pixel_y = 10
 	},
-/obj/blind_switch/area/west{
+/obj/blind_switch/directional/west{
 	pixel_y = 3
 	},
 /obj/machinery/light_switch/directional/west{
@@ -73482,7 +73485,12 @@
 	pixel_x = 11
 	},
 /obj/item/storage/box/stma_kit{
-	pixel_x = -8
+	pixel_x = -12;
+	pixel_y = 7
+	},
+/obj/item/storage/box/lglo_kit{
+	pixel_x = -8;
+	pixel_y = 3
 	},
 /obj/item/storage/wall/medical{
 	dir = 1;
@@ -113382,7 +113390,7 @@ rhR
 cIi
 sZT
 gOd
-gOd
+qum
 kVf
 isw
 fvr
