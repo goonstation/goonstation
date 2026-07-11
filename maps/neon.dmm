@@ -10663,6 +10663,14 @@
 	pixel_x = 3;
 	pixel_y = -2
 	},
+/obj/item/reagent_containers/glass/beaker/cryoxadone{
+	pixel_x = -2;
+	pixel_y = -2
+	},
+/obj/item/remote/porter/port_a_nanomed{
+	pixel_x = 12;
+	pixel_y = 6
+	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "htl" = (
@@ -11045,7 +11053,7 @@
 /area/heated_pool)
 "hJb" = (
 /obj/machinery/light/incandescent/cool,
-/obj/storage/cart/medcart/crash,
+/obj/storage/secure/closet/medical/medicine,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 8
 	},
@@ -14804,6 +14812,7 @@
 "keB" = (
 /obj/storage/secure/closet/medical/chemical,
 /obj/machinery/firealarm/directional/west,
+/obj/item_dispenser/medical_mask,
 /turf/simulated/floor/bluewhite{
 	dir = 9
 	},
@@ -18327,6 +18336,10 @@
 	id = "medbaymain";
 	name = "Medbay Door Control"
 	},
+/obj/item/remote/porter/port_a_medbay{
+	pixel_x = -7;
+	pixel_y = 1
+	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "mCw" = (
@@ -19820,8 +19833,9 @@
 /area/station/bridge/execrestroom)
 "nJM" = (
 /obj/table/auto,
-/obj/item/storage/box/stma_kit{
-	pixel_x = -5
+/obj/item/storage/box/gl_kit{
+	pixel_x = -5;
+	pixel_y = 0
 	},
 /obj/item/storage/box/patchbox{
 	pixel_x = 5

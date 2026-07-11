@@ -660,6 +660,10 @@
 	dir = 4;
 	pixel_x = 10
 	},
+/obj/item/remote/porter/port_a_nanomed{
+	pixel_x = 11;
+	pixel_y = 7
+	},
 /turf/simulated/floor/blueblack/corner{
 	dir = 1
 	},
@@ -27943,6 +27947,7 @@
 /area/station/storage/hydroponics)
 "mby" = (
 /obj/storage/secure/closet/fridge/blood,
+/obj/item_dispenser/latex_gloves,
 /turf/simulated/floor/redblack,
 /area/station/medical/medbay/surgery)
 "mbF" = (
@@ -31347,6 +31352,10 @@
 	},
 /obj/item/reagent_containers/glass/beaker/cryoxadone{
 	pixel_x = 6;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/glass/beaker/cryoxadone{
+	pixel_x = 6;
 	pixel_y = 5
 	},
 /obj/item/reagent_containers/glass/beaker/cryoxadone{
@@ -32219,6 +32228,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/item_dispenser/medical_mask,
 /turf/simulated/floor/redblack,
 /area/station/medical/medbay/surgery)
 "nTq" = (
@@ -46470,6 +46480,10 @@
 	dir = 4;
 	pixel_x = 10
 	},
+/obj/item/storage/firstaid/fire{
+	pixel_x = -4;
+	pixel_y = 11
+	},
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
@@ -48233,16 +48247,9 @@
 	dir = 8;
 	pixel_x = -10
 	},
-/obj/table/reinforced/auto,
-/obj/item/reagent_containers/patch/burn{
-	pixel_x = 1;
-	pixel_y = 2
+/obj/machinery/computer/chem_requester/medical{
+	dir = 4
 	},
-/obj/item/storage/firstaid/fire{
-	pixel_x = -4;
-	pixel_y = 11
-	},
-/obj/item/reagent_containers/emergency_injector/saline,
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
@@ -53628,6 +53635,10 @@
 	pixel_x = 23;
 	dir = 4;
 	pixel_y = 0
+	},
+/obj/item/storage/box/lglo_kit{
+	pixel_x = 0;
+	pixel_y = 9
 	},
 /turf/simulated/floor/blueblack/corner{
 	dir = 1

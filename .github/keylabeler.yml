@@ -96,6 +96,7 @@ labelMappings:
     "[SILICONS]": a-silicons
     "[BORGS]": a-silicons
     "[STATION SYSTEMS]": a-station-systems
+    "[COMPUTERS]": a-computers
     "[STATUS EFFECTS]": a-status-effects
     "[EVENTS]": a-events
     "[RP]": a-rp

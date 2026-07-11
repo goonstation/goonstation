@@ -2236,6 +2236,7 @@
 	pixel_x = 12;
 	pixel_y = 1
 	},
+/obj/item_dispenser/medical_mask,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "akN" = (
@@ -2827,17 +2828,25 @@
 /obj/table/auto,
 /obj/item/reagent_containers/glass/beaker/cryoxadone{
 	pixel_x = 4;
-	pixel_y = 5
+	pixel_y = 8
 	},
 /obj/item/reagent_containers/glass/beaker/cryoxadone{
 	pixel_x = -4;
-	pixel_y = 5
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/glass/beaker/cryoxadone{
+	pixel_x = 0;
+	pixel_y = 2
+	},
+/obj/item/paper/cryo{
+	pixel_x = 8;
+	pixel_y = -1
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "anu" = (
-/obj/machinery/vending/jobclothing/medical,
 /obj/machinery/light/incandescent/cool,
+/obj/storage/secure/closet/medical/medkit,
 /turf/simulated/floor/redwhite{
 	dir = 10
 	},
@@ -2968,15 +2977,11 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/head)
 "aoh" = (
-/obj/shrub{
-	dir = 4;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
-	},
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/machinery/vending/jobclothing/medical,
 /turf/simulated/floor/redwhite{
 	dir = 6
 	},
@@ -4741,6 +4746,7 @@
 "awg" = (
 /obj/table/auto,
 /obj/random_item_spawner/medicine,
+/obj/item/storage/box/gl_kit,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "awi" = (
@@ -30822,6 +30828,7 @@
 	pixel_x = -11;
 	pixel_y = 8
 	},
+/obj/item_dispenser/latex_gloves,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "itY" = (
@@ -40650,7 +40657,7 @@
 	pixel_x = 32;
 	pixel_y = 0
 	},
-/obj/stool/chair/comfy/wheelchair,
+/obj/storage/cart/medcart/crash,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},

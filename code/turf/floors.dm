@@ -736,6 +736,17 @@
 
 /////////////////////////////////////////
 
+/turf/simulated/floor/lightyellow
+	icon_state = "fulllyellow"
+
+/turf/simulated/floor/lightyellow/side
+	icon_state = "lyellow"
+
+/turf/simulated/floor/lightyellow/corner
+	icon_state = "lyellowcorner"
+
+/////////////////////////////////////////
+
 /turf/simulated/floor/orange
 	icon_state = "fullorange"
 
@@ -744,6 +755,23 @@
 
 /turf/simulated/floor/orange/corner
 	icon_state = "orangecorner"
+
+/turf/simulated/floor/orange/checker
+	icon_state = "orangechecker"
+
+
+/turf/simulated/floor/orangeblack
+	icon_state = "orangeblack"
+
+/turf/simulated/floor/orangeblack/corner
+	icon_state = "orangeblackcorner"
+
+
+/turf/simulated/floor/orangewhite
+	icon_state = "orangewhite"
+
+/turf/simulated/floor/orangewhite/corner
+	icon_state = "orangewhitecorner"
 
 /////////////////////////////////////////
 
@@ -953,17 +981,20 @@ DEFINE_FLOORS(twotone/blue,
 DEFINE_FLOORS(twotone/yellow,
 	icon_state = "twotone_yellow")
 
+DEFINE_FLOORS(twotone/orange,
+	icon_state = "twotone_orange")
+
 DEFINE_FLOORS(twotone/white,
 	icon_state = "twotone_white")
 
 DEFINE_FLOORS(twotone/black,
 	icon_state = "twotone_black")
 
-DEFINE_FLOORS(twotone/darkpurple,
-	icon_state = "twotone_dpurple")
-
 DEFINE_FLOORS(twotone/darkblue,
 	icon_state = "twotone_dblue")
+
+DEFINE_FLOORS(twotone/darkpurple,
+	icon_state = "twotone_dpurple")
 
 /////////////////////////////////////////
 
