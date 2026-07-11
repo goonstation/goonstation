@@ -9,18 +9,18 @@ import { Section } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
-import { DisplayAnatomicalAnomalies } from '../common/Health/anatomy';
-import { DisplayDiseases } from '../common/Health/disease';
-import { DisplayGeneticAnalysis } from '../common/Health/genetics';
-import { DisplayImplants } from '../common/Health/implants';
+import { DisplayAnatomicalAnomalies } from '../common/health/anatomy';
+import { DisplayDiseases } from '../common/health/disease';
+import { DisplayGeneticAnalysis } from '../common/health/genetics';
+import { DisplayImplants } from '../common/health/implants';
 import {
   DisplayBloodstreamContent,
   DisplayPatientTitle,
-} from '../common/Health/index';
-import { KeyHealthIndicators } from '../common/Health/key_indicators';
-import { DisplayMiscellaneousDetails } from '../common/Health/misc';
-import { HealthGraphData } from '../common/Health/type';
-import { DisplayVitalsGraph } from '../common/Health/vitals';
+} from '../common/health/index';
+import { KeyHealthIndicators } from '../common/health/key_indicators';
+import { DisplayMiscellaneousDetails } from '../common/health/misc';
+import { HealthGraphData } from '../common/health/type';
+import { DisplayVitalsGraph } from '../common/health/vitals';
 
 export const OperatingComputer = () => {
   const { data } = useBackend<HealthGraphData>();

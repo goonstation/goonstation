@@ -21,9 +21,9 @@ import { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { damageNum, HealthStat } from '../components/goonstation/HealthStat';
 import { Window } from '../layouts';
-import { DisplayBloodstreamContent } from './common/Health';
-import { KeyHealthIndicators } from './common/Health/key_indicators';
-import { HealthData } from './common/Health/type';
+import { DisplayBloodstreamContent } from './common/health';
+import { KeyHealthIndicators } from './common/health/key_indicators';
+import { HealthData } from './common/health/type';
 import { MobStatuses } from './common/MobStatus';
 import {
   ReagentContainer,
