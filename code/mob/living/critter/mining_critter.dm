@@ -231,6 +231,7 @@
 	New()
 		..()
 		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/big_fermid, src)
+		src.pixel_x -= 16
 
 /mob/living/critter/fermid/hulk
 	name = "fermid hulk"
@@ -247,7 +248,7 @@
 	New()
 		..()
 		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/big_fermid, src)
-
+		src.pixel_x -= 16
 	purple
 		recolor = "#b90fab"
 

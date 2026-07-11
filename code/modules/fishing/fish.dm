@@ -61,6 +61,7 @@ Alien/mutant/other fish:
 		Literal Swordfish
 		Meat mutant
 		Eye fish
+		Blood fish
 		Void fish
 		Code worm
 		Sun fish
@@ -73,8 +74,6 @@ Alien/mutant/other fish:
 		Origami fish
 		Cardboard fish
 		Starstonefish
-	Unimplemented:
-		Blood fish
 */
 
 // These catagories aren't used currently.
@@ -745,14 +744,26 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/meat_mutant)
 
 	get_scent_color()
 		return "blood red"
-/*
+
+TYPEINFO(/obj/item/reagent_containers/food/fish/blood_fish)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/blood_fish
 	name = "blood fish"
 	desc = "A viscous, gory mass of congealed blood. You're really stretching the definition of fish here."
-	icon_state = "bass_old"
-	inhand_color = "#af2323"
+	icon_state = "blood_fish"
+	inhand_color = "#9c0000"
 	rarity = ITEM_RARITY_RARE
-*/
+	slice_product = /obj/item/reagent_containers/food/snacks/condiment/ketchup
+	slice_amount = 2
+	brew_result = list("blood"=20)
+
+	get_scent_color()
+		return "blood red"
+
+	make_reagents()
+		src.reagents.add_reagent("blood", 20)
+		return
+
 TYPEINFO(/obj/item/reagent_containers/food/fish/eye_mutant)
 	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/eye_mutant

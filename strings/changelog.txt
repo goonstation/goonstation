@@ -1,5 +1,30 @@
 
+(t)sat jul 11 26
+(u)Cheekybrdy
+(p)26947
+(e)🗺🎨|A-Mapping, C-Sprites
+(+)Orange tiles now actually look orange.
 (t)fri jul 10 26
+(u)ANNmagedon
+(p)27003
+(e)|
+(+)Added the APC Pinpointer to the engineering manufacturer
+(u)swinglow20
+(p)26843
+(e)🎨🐁|C-Sprites, A-Critters
+(+)Reworked the icons for the fermid species. Watch out, mining!
+(u)bamlord
+(p)26723
+(e)🌠|A-Events
+(*)Wizards can now appear midround on RP servers via ghost role.
+(u)Walnut356
+(p)26998
+(e)🛠️|A-Engineering
+(+)Fixed Control Unit execution jumping to offset 6 when outputting a signal
+(u)TekoTheTeapot
+(p)27011
+(e)|
+(*)Makes the Blood Fish actually fishable and adds behavior to it
 (u)JORJ949
 (p)27125
 (e)🪲⚖🧛|C-Bug, C-Balance, A-Gamemodes

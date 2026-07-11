@@ -16548,6 +16548,16 @@
 	},
 /turf/simulated/floor/airless/plating,
 /area/diner/solar)
+"eIt" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 8;
+	name = "Cargo Intake"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/lightyellow,
+/area/radiostation/teleporter)
 "eLA" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/radiostation/green)
@@ -16837,6 +16847,14 @@
 /obj/machinery/light/runway_light/delay3,
 /turf/space,
 /area/diner/jucer_trader)
+"fBZ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/lightyellow/side{
+	dir = 4
+	},
+/area/radiostation/hallway)
 "fEX" = (
 /obj/lattice{
 	dir = 9;
@@ -16889,21 +16907,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/mining/diner)
-"fNA" = (
-/obj/stool/chair/office/red{
-	dir = 1
-	},
-/obj/blind_switch/directional/south,
-/obj/machinery/light_switch/directional/south{
-	pixel_x = 8
-	},
-/obj/landmark/latejoin_job/radio_show_host,
-/obj/sign_switch/directional/south{
-	id = "radio_onair";
-	pixel_x = -8
-	},
-/turf/simulated/floor/carpet/grime,
-/area/radiostation/studio)
 "fNG" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/structure/woodwall,
@@ -17001,20 +17004,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/diner/dining)
-"fXB" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/orange/side{
-	dir = 4
-	},
-/area/radiostation/hallway)
 "fZa" = (
 /mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/grime,
@@ -17584,16 +17573,6 @@
 /obj/decal/poster/wallsign/space,
 /turf/simulated/wall/auto/reinforced/old,
 /area/diner/hallway)
-"hmV" = (
-/obj/machinery/door/airlock/pyro{
-	dir = 8;
-	name = "Cargo Intake"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/orange,
-/area/radiostation/teleporter)
 "hnx" = (
 /obj/fakeobject/pipe{
 	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
@@ -19507,20 +19486,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
-"lLM" = (
-/obj/machinery/light_switch/directional/south{
-	pixel_x = -8
-	},
-/obj/blind_switch/directional/south,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/sign_switch/directional/south{
-	id = "tv_onair";
-	pixel_x = 8
-	},
-/turf/simulated/floor/wood/two,
-/area/radiostation/tv_set)
 "lMt" = (
 /obj/storage/closet/wardrobe/black,
 /turf/simulated/floor/carpet{
@@ -21295,6 +21260,21 @@
 	dir = 4
 	},
 /area/space)
+"pQn" = (
+/obj/stool/chair/office/red{
+	dir = 1
+	},
+/obj/blind_switch/directional/south,
+/obj/machinery/light_switch/directional/south{
+	pixel_x = 8
+	},
+/obj/landmark/latejoin_job/radio_show_host,
+/obj/sign_switch/directional/south{
+	id = "radio_onair";
+	pixel_x = -8
+	},
+/turf/simulated/floor/carpet/grime,
+/area/radiostation/studio)
 "pQo" = (
 /obj/machinery/door/poddoor/blast{
 	autoclose = 1;
@@ -21322,14 +21302,6 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/diner/motel)
-"pWw" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/orange/side{
-	dir = 4
-	},
-/area/radiostation/hallway)
 "pXr" = (
 /obj/decal/cleanable/dirt,
 /obj/cable{
@@ -22888,6 +22860,20 @@
 	},
 /turf/simulated/floor/plating/scorched,
 /area/diner/kitchen)
+"tDH" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/lightyellow/side{
+	dir = 4
+	},
+/area/radiostation/hallway)
 "tEh" = (
 /obj/stool/chair/office,
 /turf/simulated/floor/shuttle{
@@ -23627,6 +23613,20 @@
 "vnG" = (
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
+"vnI" = (
+/obj/machinery/light_switch/directional/south{
+	pixel_x = -8
+	},
+/obj/blind_switch/directional/south,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/sign_switch/directional/south{
+	id = "tv_onair";
+	pixel_x = 8
+	},
+/turf/simulated/floor/wood/two,
+/area/radiostation/tv_set)
 "vpl" = (
 /obj/machinery/chem_dispenser/alcohol,
 /obj/decal/cleanable/dirt,
@@ -108178,7 +108178,7 @@ adx
 adK
 adW
 aen
-fNA
+pQn
 adg
 agb
 aon
@@ -108771,7 +108771,7 @@ xcG
 abB
 xcG
 lCC
-lLM
+vnI
 xlo
 cDc
 kWr
@@ -109679,9 +109679,9 @@ wbC
 wbC
 wbC
 stO
-pWw
-fXB
-pWw
+fBZ
+tDH
+fBZ
 adP
 wbC
 wbC
@@ -109982,7 +109982,7 @@ uSr
 dll
 dll
 dll
-hmV
+eIt
 pNC
 pNC
 pNC
