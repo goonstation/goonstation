@@ -674,6 +674,7 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 		/datum/manufacture/multitool,
 		/datum/manufacture/t_scanner,
 		/datum/manufacture/accessgun,
+		/datum/manufacture/pinpointer_apc,
 		/datum/manufacture/gravity_scanner,
 		/datum/manufacture/RCD,
 		/datum/manufacture/places_pipes,

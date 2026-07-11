@@ -44174,7 +44174,7 @@
 /area/station/medical/medbay/lobby)
 "cQK" = (
 /obj/machinery/light/incandescent,
-/obj/storage/secure/closet/medical/medkit,
+/obj/storage/secure/closet/medical/medicine,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/reception)
 "cQM" = (
@@ -73485,7 +73485,12 @@
 	pixel_x = 11
 	},
 /obj/item/storage/box/stma_kit{
-	pixel_x = -8
+	pixel_x = -12;
+	pixel_y = 7
+	},
+/obj/item/storage/box/lglo_kit{
+	pixel_x = -8;
+	pixel_y = 3
 	},
 /obj/item/storage/wall/medical{
 	dir = 1;
