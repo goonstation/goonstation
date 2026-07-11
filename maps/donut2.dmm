@@ -9618,6 +9618,7 @@
 	pixel_y = 4
 	},
 /obj/item/scalpel,
+/obj/item/scissors/surgical_scissors,
 /obj/item/suture,
 /obj/item/device/radio/intercom/medical,
 /turf/simulated/floor/sanitary/white,

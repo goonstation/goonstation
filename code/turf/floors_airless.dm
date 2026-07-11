@@ -525,12 +525,22 @@
 /turf/simulated/floor/airless/yellowblack/corner
 	icon_state = "yellowblackcorner"
 
-
 /turf/simulated/floor/airless/yellowwhite
 	icon_state = "yellowwhite"
 
 /turf/simulated/floor/airless/yellowwhite/corner
 	icon_state = "yellowwhitecorner"
+
+/////////////////////////////////////////
+
+/turf/simulated/floor/airless/lightyellow
+	icon_state = "fulllyellow"
+
+/turf/simulated/floor/airless/lightyellow/side
+	icon_state = "lyellow"
+
+/turf/simulated/floor/airless/lightyellow/corner
+	icon_state = "lyellowcorner"
 
 /////////////////////////////////////////
 
@@ -542,6 +552,21 @@
 
 /turf/simulated/floor/airless/orange/corner
 	icon_state = "orangecorner"
+
+/turf/simulated/floor/airless/orange/checker
+	icon_state = "orangechecker"
+
+/turf/simulated/floor/airless/orangeblack
+	icon_state = "orangeblack"
+
+/turf/simulated/floor/airless/orangeblack/corner
+	icon_state = "orangeblackcorner"
+
+/turf/simulated/floor/airless/orangewhite
+	icon_state = "orangewhite"
+
+/turf/simulated/floor/airless/orangewhite/corner
+	icon_state = "orangewhitecorner"
 
 /////////////////////////////////////////
 

@@ -1,28 +1,28 @@
 /datum/dwaine_syscall/fwrite
-	id = DWAINE_COMMAND_FWRITE
+	id = DWAINE::SYSCALL::FWRITE
 
 /datum/dwaine_syscall/fwrite/execute(sendid, list/data, datum/computer/file/file)
 	if (!sendid)
-		return ESIG_GENERIC
+		return DWAINE::ERR::SIG::GENERIC
 
 	var/datum/computer/file/mainframe_program/caller_prog = src.kernel.master.processing[sendid]
 	if (!file || !data["path"] || !caller_prog)
-		return ESIG_NOTARGET
+		return DWAINE::ERR::SIG::NOTARGET
 
 	if (src.kernel.is_name_invalid(file.name))
-		return ESIG_GENERIC
+		return DWAINE::ERR::SIG::GENERIC
 
 	var/datum/mainframe2_user_data/user = caller_prog.useracc
 	var/datum/computer/folder/destination = src.kernel.parse_directory(data["path"], src.kernel.holder.root, (data["mkdir"] == 1), user)
 	if (!destination || (destination == src.kernel.master.runfolder))
-		return ESIG_NOTARGET
+		return DWAINE::ERR::SIG::NOTARGET
 
 	var/datum/computer/file/record/destfile = src.kernel.get_computer_datum(file.name, destination)
 	if (istype(destfile, /datum/computer/folder))
 		destination = destfile
 
 	if (user && !src.kernel.check_write_permission(destination, user))
-		return ESIG_NOWRITE
+		return DWAINE::ERR::SIG::NOWRITE
 
 	var/delete_dest = FALSE
 	if (destfile)
@@ -34,13 +34,13 @@
 			delete_dest = TRUE
 
 		else if (istype(destfile, /datum/computer/file))
-			return ESIG_GENERIC
+			return DWAINE::ERR::SIG::GENERIC
 
 	if (!destination.can_add_file(file, user))
-		return ESIG_GENERIC
+		return DWAINE::ERR::SIG::GENERIC
 
 	if (delete_dest && destfile)
 		destfile.dispose()
 
 	destination.add_file(file, user)
-	return ESIG_SUCCESS
+	return DWAINE::ERR::SIG::SUCCESS

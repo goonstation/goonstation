@@ -22,7 +22,7 @@
 
 	New()
 		..()
-		metadata = list("date" = world.realtime, "owner"=null,"group"=null, "permission"=COMP_ALLACC)
+		metadata = list("date" = world.realtime, "owner"=null,"group"=null, "permission"=DWAINE::PERM::DEFAULT::ALLACCESS)
 
 	folder
 		name = "Folder"
@@ -64,7 +64,7 @@
 							R.metadata["owner"] = src.metadata["owner"]
 						if (isnull(R.metadata["group"]))
 							R.metadata["group"] = src.metadata["group"]
-						if (isnull(R.metadata["permission"]) || R.metadata["permission"] == COMP_ALLACC)
+						if (isnull(R.metadata["permission"]) || R.metadata["permission"] == DWAINE::PERM::DEFAULT::ALLACCESS)
 							R.metadata["permission"] = src.metadata["permission"]
 					src.holder.file_used -= src.size
 					src.size += R.size
