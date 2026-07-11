@@ -1077,6 +1077,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 			u_equip(I)
 
 /mob/living/critter/empty_hands()
+	..()
 	for (var/datum/handHolder/HH in hands)
 		if (HH.item)
 			if (!HH.item.qdeled && !HH.item.disposed && istype(HH.item, /obj/item/grab))
@@ -1193,7 +1194,13 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 					else
 						message = "<b>[src]</B> does a flip!"
 						animate_spin(src, pick("L", "R"), 1, 0)
-
+				src.drop_juggle()
+			if ("juggle")
+				if (src.emote_check(voluntary, 25))
+					src.juggle_emote()
+					m_type = 1
+					message = "<B>[src]</B> wiggles [his_or_her(src)] fingers a bit.[prob(10) ? " Weird." : null]"
+					maptext_out = "<I>wiggles [his_or_her(src)] fingers a bit.</I>"
 	if (!message)
 		return
 

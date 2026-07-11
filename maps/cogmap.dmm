@@ -30182,12 +30182,14 @@
 /area/station/medical/medbay/surgery)
 "csC" = (
 /obj/storage/secure/closet/fridge/blood,
+/obj/item_dispenser/medical_mask,
 /turf/simulated/floor/redwhite{
 	dir = 9
 	},
 /area/station/medical/medbay/surgery)
 "csD" = (
 /obj/disposalpipe/segment/mail,
+/obj/item_dispenser/latex_gloves,
 /turf/simulated/floor/redwhite{
 	dir = 5
 	},
@@ -33612,6 +33614,10 @@
 /obj/item/device/reagentscanner{
 	pixel_x = -15;
 	pixel_y = 10
+	},
+/obj/item/storage/box/gl_kit{
+	pixel_x = 2;
+	pixel_y = 0
 	},
 /turf/simulated/floor/redwhite{
 	dir = 6
@@ -50469,7 +50475,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/storage/cart/medcart,
+/obj/storage/cart/medcart/crash,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -55124,6 +55130,9 @@
 /obj/machinery/coffeemaker/medbay,
 /obj/machinery/camera/directional/east{
 	pixel_y = -10
+	},
+/obj/drink_rack/mug{
+	pixel_y = -26
 	},
 /turf/simulated/floor/wood/two,
 /area/station/medical/staff)
