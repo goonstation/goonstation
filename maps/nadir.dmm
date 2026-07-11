@@ -660,10 +660,6 @@
 	dir = 4;
 	pixel_x = 10
 	},
-/obj/item/remote/porter/port_a_nanomed{
-	pixel_x = 11;
-	pixel_y = 7
-	},
 /turf/simulated/floor/blueblack/corner{
 	dir = 1
 	},
