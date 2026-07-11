@@ -1576,7 +1576,7 @@ TYPEINFO(/mob/living)
 				src.was_harmed(thr.user, AM)
 	if (AM.throwforce > 5) //number
 		src.changeStatus("staggered", 5 SECONDS)
-	if((!isobj(AM) && !src.juggling()) || !src.can_juggle) // nabbed from mob's hitby
+	if((!src.can_juggle || !isobj(AM) || !src.juggling())) // nabbed from mob's hitby
 		return
 	if (prob(src.juggling.len * 5))
 		src.drop_juggle()
@@ -1938,7 +1938,7 @@ TYPEINFO(/mob/living)
 	src.juggle_dummy.vis_contents += thing
 	thing.layer = src.layer + 0.1
 	animate_juggle(thing)
-	RegisterSignal(thing, COMSIG_MOVABLE_SET_LOC, PROC_REF(remove_juggle)) //there are so many ways juggled things can be stolen I'm just doing this
+	RegisterSignal(thing, COMSIG_MOVABLE_SET_LOC, PROC_REF(remove_juggle), override = TRUE) //there are so many ways juggled things can be stolen I'm just doing this
 	JOB_XP(src, "Clown", 1)
 	if (isitem(thing))
 		var/obj/item/i = thing
