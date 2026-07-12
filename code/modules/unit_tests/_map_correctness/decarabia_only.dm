@@ -13,9 +13,10 @@
 		/obj/machinery/door/airlock/walp,
 	)
 
+	var/is_decarabia = istype(global.map_settings, /datum/map_settings/decarabia)
 	for (var/type as anything in blacklist_types)
 		for (var/atom/A as anything in global.by_type[type])
-			if ((A.z == Z_LEVEL_STATION) && istype(global.map_settings, /datum/map_settings/decarabia))
+			if ((A.z == Z_LEVEL_STATION) && is_decarabia)
 				continue
 
 			. += src.format_position(A)
