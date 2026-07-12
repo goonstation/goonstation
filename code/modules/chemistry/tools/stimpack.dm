@@ -29,9 +29,6 @@
 			actions.start(new/datum/action/bar/icon/stimulant(target, src, src.icon, src.icon_state), user)
 			return
 
-	large_dose
-		duration = 15 MINUTES
-
 	proc/stimulant_action(mob/user, mob/target)
 		target.changeStatus("stimulants", src.duration)
 		src.empty = TRUE
@@ -42,6 +39,10 @@
 		else
 			user.visible_message(SPAN_ALERT("[user.name] injects [target.name] with the [src.name]!"))
 		boutput(target, SPAN_NOTICE("Ah! That's the stuff!"))
+
+
+/obj/item/stimpack/large_dose
+	duration = 15 MINUTES
 
 /datum/action/bar/icon/stimulant
 	duration = 3 SECONDS
