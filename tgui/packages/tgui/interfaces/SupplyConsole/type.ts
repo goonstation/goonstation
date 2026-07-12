@@ -59,9 +59,13 @@ interface SupplyTraderData {
   ref: string;
   picture: string;
   current_message: string;
+  patience: number;
   goods_sell: CommodityData[];
   goods_buy: CommodityData[];
   cart: CommodityData[];
+  cart_count: number;
+  cart_max: number;
+  cart_cost: number;
 }
 
 interface RequisitionData {

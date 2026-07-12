@@ -120,11 +120,21 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 	for (var/datum/trader/trader in shippingmarket.active_traders)
 		if (trader.hidden)
 			continue
+		var/cart_cost = 0
+		var/total_cart_amount = 0
+		var/buy_cap = global.shippingmarket.max_buy_items_at_once || 99
+		for (var/datum/commodity/cart_commodity in trader.shopping_cart)
+			cart_cost += cart_commodity.price * cart_commodity.amount
+			total_cart_amount += cart_commodity.amount
 		.+= list(list(
 			"name" = trader.name,
 			"ref" = ref(trader),
 			"picture" = trader.picture,
 			"current_message" = trader.current_message,
+			"patience" = trader.patience,
+			"cart_count" = total_cart_amount,
+			"cart_max" = buy_cap,
+			"cart_cost" = cart_cost,
 			"goods_sell" = trader.fetch_commodities_data(trader.goods_sell),
 			"goods_buy" = trader.fetch_commodities_data(trader.goods_buy),
 			"cart" = trader.fetch_commodities_data(trader.shopping_cart),

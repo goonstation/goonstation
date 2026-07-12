@@ -114,9 +114,6 @@ const MarketInformation = () => {
       <Stack.Item>
         Market updates in <b>{data.market_reset_timer}</b>
       </Stack.Item>
-      <Stack.Item>
-        Signal Interference: <b>{data.signal_loss}%</b>
-      </Stack.Item>
     </Stack>
   );
 };

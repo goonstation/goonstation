@@ -8,7 +8,9 @@
 import {
   BlockQuote,
   Button,
+  Icon,
   Image,
+  Modal,
   Section,
   Stack,
   Table,
@@ -16,6 +18,7 @@ import {
 } from 'tgui-core/components';
 
 import { useBackend, useSharedState } from '../../backend';
+import { formatMoney } from '../../format';
 import { resource } from '../../goonstation/cdn';
 import { CommodityEntry } from '../Trader/index';
 import { capitalize } from './../common/stringUtils';
@@ -41,6 +44,12 @@ export const SupplyConsoleTradersTab = () => {
         )
       }
     >
+      {data.signal_loss >= 75 && (
+        <Modal textAlign="center" fontSize={2} p="10px">
+          <Icon name="wifi" /> Severe signal interference is preventing a
+          connection with trader vessels.
+        </Modal>
+      )}
       {viewing_trader >= 0 && <TraderView traderIndex={viewing_trader} />}
       {viewing_trader < 0 && (
         <Stack scrollable wrap="wrap">
@@ -75,6 +84,11 @@ const TraderView = (props) => {
   const [traderTab, setTraderTab] = useSharedState('traderTab', 'sell');
   return (
     <Stack vertical fill>
+      {trader.patience <= 0 && (
+        <Modal textAlign="center" fontSize={2} p="10px">
+          {trader.name} has left.
+        </Modal>
+      )}
       <Stack.Item>
         <SupplyTraderInfo trader={trader} />
       </Stack.Item>
@@ -177,7 +191,10 @@ const SupplyTraderInfo = (props) => {
         <Section title={trader.name} fill>
           <Stack vertical fill>
             <Stack.Item>
-              <b>Items in cart:</b> {trader.cart.length}
+              <b>Items in cart:</b> {trader.cart_count} / {trader.cart_max}
+            </Stack.Item>
+            <Stack.Item>
+              <b>Cost of cart:</b> {formatMoney(trader.cart_cost)}⪽
             </Stack.Item>
             <Stack.Item>
               <Button

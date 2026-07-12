@@ -9,6 +9,8 @@ import {
   BlockQuote,
   Box,
   Button,
+  Divider,
+  Icon,
   NoticeBox,
   Section,
   Stack,
@@ -21,17 +23,34 @@ import { SupplyConsoleData } from './type';
 
 export const SupplyConsoleRequisitionsTab = () => {
   const { data } = useBackend<SupplyConsoleData>();
+  const interference = data.signal_loss >= 75;
   return (
     <Section title="Open Requisition Contracts" scrollable fill>
       <Stack vertical fill>
         <Stack.Item>
           <RequisitionGuide />
         </Stack.Item>
-        <Stack.Item>
-          {data.requisition_data.map((requisition, index) => (
-            <RequisitionEntry requisition={requisition} key={index} />
-          ))}
-        </Stack.Item>
+        {interference && (
+          <Stack.Item>
+            <Divider />
+            <Box textAlign="center" fontSize={2}>
+              <Icon name="wifi" /> Severe signal interference is preventing a
+              connection to requisition hub.
+            </Box>
+            <Divider />
+          </Stack.Item>
+        )}
+        {!interference && (
+          <Stack.Item>
+            {data.requisition_data.map((requisition, index) => (
+              <RequisitionEntry
+                requisition={requisition}
+                interference={interference}
+                key={index}
+              />
+            ))}
+          </Stack.Item>
+        )}
       </Stack>
     </Section>
   );
