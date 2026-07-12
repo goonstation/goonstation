@@ -5779,18 +5779,6 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
-"aCo" = (
-/obj/fakeobject/airlock_broken/firelock{
-	dir = 4;
-	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "fdoor0"
-	},
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4;
-	name = "Surface Airlock"
-	},
-/turf/unsimulated/floor/orange,
-/area/iomoon/base)
 "aCr" = (
 /turf/unsimulated/floor/plating/scorched,
 /area/hospital/underground)
@@ -6370,6 +6358,10 @@
 /obj/machinery/vending/cola/red,
 /turf/unsimulated/floor/grey/checker,
 /area/moon/museum)
+"aFo" = (
+/obj/blind_switch/directional/north,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/lobby)
 "aFx" = (
 /obj/landmark/viscontents_spawn{
 	targetZ = 4
@@ -35448,21 +35440,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/owlery/office)
-"cGG" = (
-/obj/fakeobject{
-	anchored = 1;
-	density = 1;
-	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
-	dir = 8;
-	icon = 'icons/obj/computer.dmi';
-	icon_state = "offbroken";
-	name = "broken computer"
-	},
-/obj/blind_switch/directional/north{
-	id = "owl"
-	},
-/turf/unsimulated/floor/wood/two,
-/area/owlery/office)
 "cGH" = (
 /obj/stool/chair/office{
 	dir = 8
@@ -47721,6 +47698,12 @@
 	},
 /turf/unsimulated/floor/carpet/office,
 /area/centcom/offices/gerhazo)
+"dyg" = (
+/obj/blind_switch/directional/north,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "dyh" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/cal)
@@ -48172,6 +48155,9 @@
 /obj/critter/domestic_bee/fancy,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/aibm)
+"dzZ" = (
+/turf/unsimulated/floor/lightyellow,
+/area/iomoon/base)
 "dAb" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 4;
@@ -55321,12 +55307,6 @@
 	dir = 8
 	},
 /area/precursor)
-"eWY" = (
-/obj/blind_switch/directional/north,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices{
-	icon_state = "blue"
-	})
 "eXf" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -55340,10 +55320,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
-"eXz" = (
-/obj/fakeobject/lightbulb_broken,
-/turf/unsimulated/floor/orange,
-/area/iomoon/base)
 "eYl" = (
 /obj/stool/chair/comfy/red{
 	dir = 8
@@ -56018,6 +55994,18 @@
 /turf/unsimulated/floor/logo_xg{
 	icon_state = "logo_xg7"
 	},
+/area/iomoon/base)
+"fBP" = (
+/obj/fakeobject{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 4;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/unsimulated/floor/lightyellow,
 /area/iomoon/base)
 "fBX" = (
 /obj/item/cigbutt{
@@ -60847,10 +60835,6 @@
 	icon_state = "red2"
 	},
 /area/void_diner)
-"jiS" = (
-/obj/blind_switch/directional/north,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/lobby)
 "jiZ" = (
 /obj/fakeobject{
 	anchored = 1;
@@ -63044,6 +63028,27 @@
 /mob/living/critter/zombie/scientist,
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/lab)
+"kNF" = (
+/obj/fakeobject{
+	anchored = 1;
+	density = 1;
+	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
+	dir = 8;
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "offbroken";
+	name = "broken computer"
+	},
+/obj/blind_switch/directional/north{
+	id = "owl"
+	},
+/turf/unsimulated/floor/wood/two,
+/area/owlery/office)
+"kNK" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4
+	},
+/turf/unsimulated/floor/lightyellow,
+/area/iomoon/base)
 "kNP" = (
 /obj/fakeobject/lightbulb_broken{
 	dir = 8
@@ -65216,6 +65221,18 @@
 	},
 /turf/space,
 /area/wizard_station_space)
+"mAW" = (
+/obj/fakeobject/airlock_broken/firelock{
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
+	},
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4;
+	name = "Surface Airlock"
+	},
+/turf/unsimulated/floor/lightyellow,
+/area/iomoon/base)
 "mCX" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
@@ -67545,12 +67562,6 @@
 	dir = 8
 	},
 /area/precursor)
-"onI" = (
-/obj/ladder{
-	id = "iomoon"
-	},
-/turf/unsimulated/floor/orange,
-/area/iomoon/base)
 "onV" = (
 /obj/stool/chair/dining/regal{
 	anchored = 1;
@@ -69586,18 +69597,6 @@
 /obj/reagent_dispensers/watertank/fountain,
 /turf/unsimulated/floor/wood/seven,
 /area/sim/gunsim/lobby)
-"pQI" = (
-/obj/fakeobject{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 4;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
-	},
-/turf/unsimulated/floor/orange,
-/area/iomoon/base)
 "pQJ" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -74058,12 +74057,6 @@
 /mob/living/carbon/human/npc/monkey/oppenheimer,
 /turf/unsimulated/floor/black,
 /area/syndicate_station/battlecruiser)
-"tlI" = (
-/obj/machinery/door/airlock/pyro{
-	dir = 4
-	},
-/turf/unsimulated/floor/orange,
-/area/iomoon/base)
 "tma" = (
 /obj/storage/crate/bin{
 	dir = 8
@@ -76544,6 +76537,12 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/watchful_eye_sensor)
+"voa" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/lightyellow,
+/area/iomoon/base)
 "vod" = (
 /obj/rack,
 /obj/item/storage/toolbox/mechanical,
@@ -76657,6 +76656,12 @@
 	},
 /turf/unsimulated/floor/wood/seven,
 /area/sim/gunsim/lobby)
+"vqB" = (
+/obj/ladder{
+	id = "iomoon"
+	},
+/turf/unsimulated/floor/lightyellow,
+/area/iomoon/base)
 "vqK" = (
 /obj/mesh/catwalk,
 /obj/mesh/catwalk,
@@ -78783,9 +78788,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
-"wOp" = (
-/turf/unsimulated/floor/orange,
-/area/iomoon/base)
 "wOC" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
@@ -80387,6 +80389,10 @@
 	opacity = 0
 	},
 /area/centcom/gallery)
+"xRP" = (
+/obj/fakeobject/lightbulb_broken,
+/turf/unsimulated/floor/lightyellow,
+/area/iomoon/base)
 "xSb" = (
 /obj/lattice{
 	dir = 4;
@@ -80558,12 +80564,6 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
-"xXq" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/unsimulated/floor/orange,
-/area/iomoon/base)
 "xXx" = (
 /obj/storage/closet/coffin,
 /obj/item/alchemy/symbol/proj,
@@ -88431,7 +88431,7 @@ bvk
 bvM
 izT
 izT
-aCo
+mAW
 izT
 bzk
 boV
@@ -88733,7 +88733,7 @@ bvl
 btR
 izT
 xnq
-wOp
+dzZ
 izT
 bql
 boV
@@ -89035,7 +89035,7 @@ bqZ
 bsX
 izT
 diC
-eXz
+xRP
 izT
 bvM
 bzK
@@ -89337,7 +89337,7 @@ izT
 izT
 izT
 diC
-wOp
+dzZ
 izT
 btR
 bqZ
@@ -89639,7 +89639,7 @@ gdS
 xwW
 izT
 diC
-wOp
+dzZ
 izT
 bsX
 bpD
@@ -89941,7 +89941,7 @@ oJz
 uqj
 bxq
 diC
-wOp
+dzZ
 izT
 izT
 izT
@@ -90243,7 +90243,7 @@ qBF
 vUu
 izT
 diC
-wOp
+dzZ
 izT
 izT
 izT
@@ -90545,7 +90545,7 @@ twn
 gUJ
 izT
 nlC
-wOp
+dzZ
 jqz
 buK
 doQ
@@ -90840,14 +90840,14 @@ bsg
 bsG
 bxq
 pOy
-onI
-wOp
-wOp
-wOp
-wOp
-wOp
-wOp
-wOp
+vqB
+dzZ
+dzZ
+dzZ
+dzZ
+dzZ
+dzZ
+dzZ
 sZf
 xqr
 vOL
@@ -91149,14 +91149,14 @@ vxT
 vxT
 vxT
 nEi
-wOp
-wOp
-wOp
-pQI
-wOp
-wOp
-wOp
-wOp
+dzZ
+dzZ
+dzZ
+fBP
+dzZ
+dzZ
+dzZ
+dzZ
 izT
 izT
 izT
@@ -91451,7 +91451,7 @@ bxm
 buK
 buK
 diC
-wOp
+dzZ
 fQk
 vxT
 sQP
@@ -91753,7 +91753,7 @@ izT
 bvR
 izT
 jBW
-wOp
+dzZ
 jqz
 buK
 doQ
@@ -92055,7 +92055,7 @@ buK
 buK
 izT
 aPA
-wOp
+dzZ
 jqz
 izT
 izT
@@ -92357,7 +92357,7 @@ ghc
 izT
 izT
 bwC
-tlI
+kNK
 bwC
 izT
 bzM
@@ -92659,7 +92659,7 @@ izT
 izT
 mLm
 txc
-wOp
+dzZ
 wfm
 izT
 izT
@@ -92800,7 +92800,7 @@ cYv
 cYv
 cUL
 cYI
-cGG
+kNF
 cGf
 cGF
 cGF
@@ -92961,7 +92961,7 @@ izT
 bvS
 bwu
 diC
-wOp
+dzZ
 jqz
 buK
 hUO
@@ -93263,7 +93263,7 @@ eMD
 bvT
 rhp
 eUA
-wOp
+dzZ
 jqz
 buK
 eYW
@@ -93565,7 +93565,7 @@ jyd
 buK
 bww
 gjN
-xXq
+voa
 jgR
 bAC
 bzP
@@ -93867,7 +93867,7 @@ bvq
 buK
 fmt
 vrn
-wOp
+dzZ
 jqz
 bxm
 bzQ
@@ -94169,7 +94169,7 @@ bvr
 bvV
 jXl
 psH
-wOp
+dzZ
 jqz
 buK
 bzR
@@ -94471,7 +94471,7 @@ izT
 pKM
 bwy
 diC
-wOp
+dzZ
 jqz
 buK
 eJo
@@ -94773,7 +94773,7 @@ izT
 izT
 qZP
 xdA
-wOp
+dzZ
 pXE
 izT
 izT
@@ -95075,7 +95075,7 @@ vKW
 izT
 izT
 bwC
-tlI
+kNK
 bwC
 izT
 bzT
@@ -95377,7 +95377,7 @@ bum
 izT
 bwA
 txc
-wOp
+dzZ
 fjp
 izT
 bwv
@@ -95679,7 +95679,7 @@ bvs
 izT
 bwB
 diC
-wOp
+dzZ
 jqz
 bxq
 bwv
@@ -95981,7 +95981,7 @@ buK
 buK
 buK
 diC
-wOp
+dzZ
 vMW
 bzm
 bzV
@@ -96283,7 +96283,7 @@ buK
 buK
 buK
 diC
-wOp
+dzZ
 fyt
 izT
 izT
@@ -96585,7 +96585,7 @@ izT
 mwF
 bwC
 izT
-wOp
+dzZ
 iGD
 izT
 izT
@@ -99304,7 +99304,7 @@ wpP
 oUu
 izT
 nEi
-wOp
+dzZ
 izT
 izT
 bAJ
@@ -99606,7 +99606,7 @@ oko
 izT
 izT
 diC
-wOp
+dzZ
 izT
 izT
 izT
@@ -99908,7 +99908,7 @@ izT
 izT
 bxs
 diC
-wOp
+dzZ
 xLa
 jbK
 oJz
@@ -100210,7 +100210,7 @@ izT
 izT
 izT
 diC
-wOp
+dzZ
 izT
 oJz
 oJz
@@ -157476,7 +157476,7 @@ aES
 aES
 aES
 sWb
-jiS
+aFo
 dMj
 dMM
 dMM
@@ -159351,7 +159351,7 @@ dRD
 dEQ
 vij
 wel
-eWY
+dyg
 dvW
 dFj
 wel

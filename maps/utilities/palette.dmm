@@ -3363,7 +3363,7 @@
 /turf/simulated/floor,
 /area/space)
 "nq" = (
-/turf/simulated/floor/airless/orange,
+/turf/simulated/floor/airless/lightyellow,
 /area/space)
 "ns" = (
 /turf/simulated/floor/carpet/green/fancy/junction/nw_s,
