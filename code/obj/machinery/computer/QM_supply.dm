@@ -56,7 +56,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 		shippingmarket.launch_distance = 200 // dastardly
 		src.hacked = 1
 		src.req_access = list()
-		tgui_process.update_uis(src)
+		src.update_static_data_for_all_viewers()
 		return 1
 	return 0
 
@@ -67,6 +67,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 		boutput(user, SPAN_NOTICE("Treacherous supplies removed."))
 	src.req_access = initial(src.req_access)
 	src.hacked = 0
+	src.update_static_data_for_all_viewers()
 	return 1
 
 /obj/machinery/computer/supplycomp/attackby(I, mob/user)
