@@ -96,7 +96,7 @@ const SupplyEntry = (props) => {
               icon="cart-shopping"
               disabled={data.shipping_budget < entry.cost}
               onClick={() =>
-                act('purchase', {
+                act('place_order', {
                   ref: entry.ref,
                 })
               }

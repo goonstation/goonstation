@@ -122,7 +122,7 @@ const MarketInformation = () => {
 };
 
 const RockboxControls = () => {
-  const { data } = useBackend<SupplyConsoleData>();
+  const { data, act } = useBackend<SupplyConsoleData>();
   return (
     <Stack vertical fill>
       <Stack.Item>
@@ -139,6 +139,9 @@ const RockboxControls = () => {
               value={data.rockbox_transaction_percent_fee}
               minValue={0}
               unit={'%'}
+              onChange={(value) =>
+                act('set_rockbox_percentage_fee', { value: value })
+              }
             />
           </Stack.Item>
         </Stack>
@@ -153,6 +156,9 @@ const RockboxControls = () => {
               minValue={0}
               unit={'⪽'}
               format={formatMoney}
+              onChange={(value) =>
+                act('set_rockbox_minimum_fee', { value: value })
+              }
             />
           </Stack.Item>
         </Stack>

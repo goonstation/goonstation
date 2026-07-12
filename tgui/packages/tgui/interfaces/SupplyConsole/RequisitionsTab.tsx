@@ -51,10 +51,23 @@ const RequisitionEntry = (props) => {
             color={requisition.pinned ? 'bad' : 'good'}
             iconColor="white"
             tooltip={requisition.pinned ? 'Unpin Contract' : 'Pin Contract'}
+            onClick={() => act('requisition_pin', { ref: requisition.ref })}
           />
         ),
-        <Button key="listbutton" icon="print" tooltip={'Print List'} />,
-        <Button key="barcodebutton" icon="barcode" tooltip={'Print Barcode'} />,
+        <Button
+          key="listbutton"
+          icon="print"
+          tooltip={'Print List'}
+          onClick={() => act('requisition_print', { ref: requisition.ref })}
+        />,
+        <Button
+          key="barcodebutton"
+          icon="barcode"
+          tooltip={'Print Barcode'}
+          onClick={() =>
+            act('requisition_print', { ref: requisition.ref, type: 'barcode' })
+          }
+        />,
       ]}
     >
       <Stack vertical>

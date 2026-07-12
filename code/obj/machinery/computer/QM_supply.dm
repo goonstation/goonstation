@@ -46,6 +46,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 
 	New()
 		..()
+		START_TRACKING // all machinery has start tracking, but for some reason this computer ends up not being tracked by this point???
 		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, "pda", FREQ_PDA)
 
 /obj/machinery/computer/supplycomp/emag_act(var/mob/user, var/obj/item/card/emag/E)
@@ -135,6 +136,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 		var/req_data = list()
 		req_data["name"] = RC.name
 		req_data["desc"]= RC.requis_desc
+		req_data["ref"]= ref(RC)
 		req_data["pinned"] = RC.pinned
 		req_data["req_code"] = RC.req_code
 		req_data["flavor_desc"] = RC.flavor_desc
@@ -187,6 +189,108 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 			"cost" = SO.object.cost,
 			"console_location" = SO.console_location,
 		))
+
+/obj/machinery/computer/supplycomp/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	var/mob/user = ui.user
+	if(!in_interact_range(src, user))
+		boutput(user, SPAN_ALERT("You must be next to [src] to use it!"))
+		return
+	if(!src.allowed(user))
+		boutput(user, SPAN_ALERT("Access Denied."))
+		return
+	switch(action)
+		//Rockbox
+		if("set_rockbox_percentage_fee")
+			var/percentage = params["value"]
+			percentage = max(0, percentage)
+			rockbox_globals.rockbox_client_fee_pct = percentage
+			boutput(user, SPAN_NOTICE("Fee Percent per Transaction is now [rockbox_globals.rockbox_client_fee_pct]%"))
+			ui.send_update() //Immediately update to the changed value
+			return
+		if("set_rockbox_minimum_fee")
+			var/value = params["value"]
+			value = max(0, value)
+			rockbox_globals.rockbox_client_fee_min = value
+			boutput(user, SPAN_NOTICE("Minimum Fee per Transaction is now [rockbox_globals.rockbox_client_fee_min][CREDIT_SIGN]"))
+			ui.send_update() //Immediately update to the changed value
+			return
+		//Requisitions
+		if("requisition_pin")
+			var/datum/req_contract/contract = locate(params["ref"]) in shippingmarket.req_contracts
+			if(QDELETED(contract))
+				boutput(user, SPAN_ALERT("The requisition contract has expired due to a market update."))
+				return
+			if(contract.req_class == AID_CONTRACT)
+				boutput(user, SPAN_ALERT("That requisition contract is urgent and cannot be pinned!"))
+				return
+			contract.pinned = !contract.pinned
+			global.shippingmarket.update_supply_console_data() //Requisition data is static so pinning one requires an immediate update.
+			return
+		if("requisition_print")
+			var/datum/req_contract/contract = locate(params["ref"]) in shippingmarket.req_contracts
+			if(QDELETED(contract))
+				boutput(user, SPAN_ALERT("The requisition contract has expired due to a market update."))
+				return
+			if(GET_COOLDOWN(src, "print"))
+				boutput(user, SPAN_ALERT("It's still cooling off from the last print!"))
+				return
+			if(params["type"] == "barcode")
+				src.print_barcode(contract, contract.req_code)
+				return
+			src.print_requisition(contract)
+			return
+		//Supply pack orders, including requests
+		if("place_order")
+			var/target = locate(params["ref"])
+			var/datum/supply_order/supply_order
+			var/datum/supply_packs/supply_pack
+			if(istype(target, /datum/supply_order)) //Ordered via a request
+				supply_order = target
+				supply_pack = supply_order.object
+			else //Ordered via supply list
+				supply_order = new()
+				supply_pack = target
+				supply_order.object = supply_pack
+			if(src.handle_order(user, supply_order, supply_pack))
+				boutput(user, SPAN_NOTICE("Order successful."))
+			return
+		if("deny_request")
+			var/datum/supply_order/supply_order = locate(params["ref"])
+			if(!istype(supply_order))
+				return
+			global.shippingmarket.supply_requests -= supply_order
+			if(supply_order.address)
+				src.send_pda_message(supply_order.address, "Your order of [supply_order.object.name] has been denied.")
+			return
+
+/obj/machinery/computer/supplycomp/proc/handle_order(var/mob/user, var/datum/supply_order/supply_order, var/datum/supply_packs/supply_pack)
+	if(!istype(supply_order) || !istype(supply_pack))
+		return FALSE
+	if(global.wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] < supply_pack.cost)
+		boutput(user, SPAN_ALERT("Insufficient funds in supply budget."))
+		return FALSE
+	var/default_comment = "" //Makes default confirm different to cancel
+	var/comment = tgui_input_text(usr, "Comment:", "Enter comment", default_comment, multiline = TRUE, max_length = ORDER_LABEL_MAX_LEN, allowEmpty = TRUE)
+	if(global.wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] < supply_pack.cost)
+		boutput(user, SPAN_ALERT("Insufficient funds in supply budget."))
+		return FALSE
+	if(isnull(comment))
+		return FALSE
+	if(comment && comment != default_comment)
+		phrase_log.log_phrase("order-comment", comment, no_duplicates=TRUE)
+	//If this is a supply order we came from the request approval form
+	global.shippingmarket.supply_requests -= supply_order
+	supply_order.comment = html_encode(trimtext(comment))
+	supply_order.orderedby = user.name
+	global.wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] -= supply_pack.cost
+	if (supply_order.address)
+		src.send_pda_message(supply_order.address, "Your order of [supply_pack.name] has been approved.")
+	var/obj/storage/shipment = supply_order.create(user)
+	shippingmarket.receive_crate(shipment)
+	logTheThing(LOG_STATION, user, "ordered a [supply_pack.name] at [log_loc(src)].")
+	global.shippingmarket.supply_history += "[supply_pack.name] ordered by [supply_order.orderedby] for [supply_pack.cost] credits. Comment: [supply_order.comment]<br>"
+	return TRUE
 
 /obj/machinery/computer/supplycomp/attack_hand(var/mob/user)
 	if(!src.allowed(user))

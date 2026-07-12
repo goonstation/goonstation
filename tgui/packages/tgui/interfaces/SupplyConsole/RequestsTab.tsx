@@ -11,7 +11,7 @@ import { useBackend } from '../../backend';
 import { SupplyConsoleData } from './type';
 
 export const SupplyConsoleRequestsTab = () => {
-  const { data } = useBackend<SupplyConsoleData>();
+  const { data, act } = useBackend<SupplyConsoleData>();
   return (
     <Section title="Cargo Requests" fill>
       <Table>
@@ -39,6 +39,11 @@ export const SupplyConsoleRequestsTab = () => {
                 icon="check"
                 iconColor="white"
                 tooltip="Approve"
+                onClick={() =>
+                  act('place_order', {
+                    ref: order.order_ref,
+                  })
+                }
               />
             </Table.Cell>
             <Table.Cell py="2px">
@@ -47,6 +52,11 @@ export const SupplyConsoleRequestsTab = () => {
                 icon="trash"
                 iconColor="white"
                 tooltip="Deny"
+                onClick={() =>
+                  act('deny_request', {
+                    ref: order.order_ref,
+                  })
+                }
               />
             </Table.Cell>
           </Table.Row>

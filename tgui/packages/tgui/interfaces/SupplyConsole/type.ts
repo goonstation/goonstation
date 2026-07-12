@@ -67,6 +67,7 @@ interface SupplyTraderData {
 interface RequisitionData {
   name: string;
   desc: string;
+  ref: string;
   pinned: BooleanLike;
   req_code: string;
   flavor_desc: string;
