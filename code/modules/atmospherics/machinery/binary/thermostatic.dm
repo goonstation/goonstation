@@ -2,13 +2,14 @@
 	icon = 'icons/obj/atmospherics/thermostatic.dmi'
 	icon_state = "off-map"
 	name = "thermostatic gate"
-	desc = "A gate that automatically opens and closes when the red side reaches the set temperatures."
+	desc = "A gate that automatically opens and closes when the blue side reaches the set temperatures."
 	layer = PIPE_MACHINE_LAYER
 	plane = PLANE_NOSHADOW_BELOW
 
 	var/open = FALSE
 	var/open_temp = T100C
 	var/close_temp = T20C
+	var/inverted = FALSE
 	var/datum/pump_ui/ui
 	/// Radio frequency to operate on.
 	var/frequency = FREQ_FREE
@@ -16,16 +17,16 @@
 	var/id = null
 	/// Radio ID that refers to specifically us.
 	var/net_id = null
-	HELP_MESSAGE_OVERRIDE({"Above the open temperature, the gate opens. Below the gate temperature, the gate closes.\n
+	HELP_MESSAGE_OVERRIDE({"Above the open temperature, the gate opens. Below the gate temperature, the gate closes. When inverted, it becomes below the open and above the close.\n
 	You can click it with a <b>multitool</b> to open the menu and change the temperatures."})
 
 /obj/machinery/atmospherics/binary/thermostatic_gate/proc/check_temperature()
-	if (src.air1.temperature <= src.close_temp)
+	if (inverted ? (src.air1.temperature >= src.close_temp) : (src.air1.temperature <= src.close_temp))
 		open = FALSE
 		src.UpdateIcon()
 		logTheThing(LOG_STATION, null, "[log_object(src)] just closed due to hitting [src.close_temp] Kelvin at [log_loc(src)]")
 
-	else if (src.air1.temperature >= src.open_temp)
+	else if (inverted ? (src.air1.temperature <= src.open_temp) : (src.air1.temperature >= src.open_temp))
 		open = TRUE
 		src.UpdateIcon()
 		logTheThing(LOG_STATION, null, "[log_object(src)] just opened due to hitting [src.open_temp] Kelvin at [log_loc(src)]")
@@ -81,11 +82,11 @@
 	signal.data["power"] = src.open ? "open" : "closed"
 	signal.data["open_temp"] = src.open_temp
 	signal.data["close_temp"] = src.close_temp
+	signal.data["inverted"] = src.inverted
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 	return TRUE
-
 
 /obj/machinery/atmospherics/binary/thermostatic_gate/receive_signal(datum/signal/signal)
 	if(!((signal.data["tag"] && (signal.data["tag"] == src.id)) || (signal.data["address_1"] == src.net_id)))
@@ -109,6 +110,14 @@
 			src.close_temp = max(number, 0)
 			. = TRUE
 
+		if("set_inverted")
+			src.inverted = TRUE
+			. = TRUE
+
+		if("remove_inverted")
+			src.inverted = TRUE
+			. = TRUE
+
 		if("help")
 			var/datum/signal/help = get_free_signal()
 			help.transmission_method = TRANSMISSION_RADIO
@@ -117,7 +126,9 @@
 			help.data["info"] = "Command help. \
 									broadcast_status - Broadcasts info about self. \
 									set_open_temp (parameter: Number) - Sets opening temperature in kelvin to parameter. Minimum 0 Kelvin. \
-									set_close_temp (parameter: Number) - Sets closing temperature in kelvin to parameter. Minimum 0 Kelvin."
+									set_close_temp (parameter: Number) - Sets closing temperature in kelvin to parameter. Minimum 0 Kelvin. \
+									set_inverted - Inverts the gate. \
+									remove_inverted - Un-inverts the gate."
 
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, help)
 
@@ -129,29 +140,6 @@
 		var/hide_pipe = CHECKHIDEPIPE(src)
 		FLICK("[hide_pipe ? "h" : "" ]alert", src)
 		playsound(src, 'sound/machines/chime.ogg', 25)
-
-/obj/machinery/atmospherics/binary/thermostatic_gate/inverted
-	icon = 'icons/obj/atmospherics/thermostatic_inverted.dmi'
-	icon_state = "off-map"
-	name = "inverted thermostatic gate"
-	open_temp = T20C
-	close_temp = T100C
-	HELP_MESSAGE_OVERRIDE({"Below the open temperature, the gate opens. Above the close temperature, the gate closes.\n
-	You can click it with a <b>multitool</b> to open the menu and change the temperatures."})
-
-/obj/machinery/atmospherics/binary/thermostatic_gate/inverted/check_temperature()
-	if (src.air1.temperature >= src.close_temp)
-		open = FALSE
-		src.UpdateIcon()
-		logTheThing(LOG_STATION, null, "[log_object(src)] just closed due to hitting [src.close_temp] Kelvin at [log_loc(src)]")
-
-	else if (src.air1.temperature <= src.open_temp)
-		open = TRUE
-		src.UpdateIcon()
-		logTheThing(LOG_STATION, null, "[log_object(src)] just opened due to hitting [src.open_temp] Kelvin at [log_loc(src)]")
-
-	return open
-
 
 /datum/thermostatic_gate_ui
 	var/obj/machinery/atmospherics/binary/thermostatic_gate/our_gate
@@ -177,6 +165,10 @@
 					src.our_gate.close_temp = max(value_to_set, 0)
 					logTheThing(LOG_STATION, usr, "has set [src.our_gate] closing temperature to [src.our_gate.close_temp] at [log_loc(src.our_gate)]")
 
+			if("toggle_direction")
+				src.our_gate.inverted = !src.our_gate.inverted
+				logTheThing(LOG_STATION, usr, "has set [src.our_gate] inversion status to [src.our_gate.inverted] at [log_loc(src.our_gate)]")
+
 	src.show_ui(usr)
 
 /datum/thermostatic_gate_ui/proc/show_ui(mob/user)
@@ -190,6 +182,7 @@
 				"is_on" = src.our_gate.open,
 				"close_temp" = src.our_gate.close_temp,
 				"open_temp" = src.our_gate.open_temp,
+				"inverted" = src.our_gate.inverted
 			)
 		),
 	)

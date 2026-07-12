@@ -560,22 +560,12 @@ ABSTRACT_TYPE(/datum/pipe_recipe/atmos/machine/binary)
 		name = "Thermostatic Gate"
 		path = /obj/machinery/atmospherics/binary/thermostatic_gate
 		icon_state = "thermostatic"
-		desc = "Based on the red side, opens above the opening temperature and closes below the closing temperature. When open, tries to equalise the sides"
-	thermostatic_gate_inverted
-		name = "Inverted Thermostatic Gate"
-		path = /obj/machinery/atmospherics/binary/thermostatic_gate/inverted
-		icon_state = "thermostatic_inverted"
-		desc = "Based on the red side, opens below the opening temperature and closes above the closing temperature. When open, tries to equalise the sides."
+		desc = "Based on the blue side, opens at the opening temperature and closes at the closing temperature. When open, tries to equalise the sides"
 	pressure_relief_gate
 		name = "Pressure Relief Gate"
 		path = /obj/machinery/atmospherics/binary/pressure_gate
 		icon_state = "pressurerelief"
-		desc = "Based on the red side, opens above the opening pressure and closes below the closing pressure. When open, tries to equalise the sides"
-	pressure_relief_gate_inverted
-		name = "Vacuum Relief Gate"
-		path = /obj/machinery/atmospherics/binary/pressure_gate/inverted
-		icon_state = "vacuumrelief"
-		desc = "Based on the red side, opens below the opening pressure and closes above the closing pressure. When open, tries to equalise the sides"
+		desc = "Based on the red side, opens at the opening pressure and closes at the closing pressure. When open, tries to equalise the sides"
 
 ABSTRACT_TYPE(/datum/pipe_recipe/atmos/machine/trinary)
 /datum/pipe_recipe/atmos/machine/trinary

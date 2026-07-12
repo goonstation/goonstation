@@ -7,6 +7,7 @@
 	plane = PLANE_NOSHADOW_BELOW
 
 	var/open = FALSE
+	var/inverted = FALSE
 	var/open_pres = 10000
 	var/close_pres = 5000
 	var/datum/pump_ui/ui
@@ -16,16 +17,16 @@
 	var/id = null
 	/// Radio ID that refers to specifically us.
 	var/net_id = null
-	HELP_MESSAGE_OVERRIDE({"Above the open pressure, the gate opens. Below the gate pressure, the gate closes.\n
+	HELP_MESSAGE_OVERRIDE({"Above the open pressure, the gate opens. Below the gate pressure, the gate closes. When inverted, it becomes below the open and above the close\n
 	You can click it with a <b>multitool</b> to open the menu and change the temperatures."})
 
 /obj/machinery/atmospherics/binary/pressure_gate/proc/check_pressure()
-	if (MIXTURE_PRESSURE(src.air1) <= src.close_pres)
+	if (inverted ? (MIXTURE_PRESSURE(src.air1) >= src.close_pres) : (MIXTURE_PRESSURE(src.air1) <= src.close_pres))
 		open = FALSE
 		src.UpdateIcon()
 		logTheThing(LOG_STATION, null, "[log_object(src)] just closed due to hitting [src.close_pres] kPa at [log_loc(src)]")
 
-	else if (MIXTURE_PRESSURE(src.air1) >= src.open_pres)
+	else if (inverted ? (MIXTURE_PRESSURE(src.air1) <= src.open_pres) : (MIXTURE_PRESSURE(src.air1) >= src.open_pres))
 		open = TRUE
 		src.UpdateIcon()
 		logTheThing(LOG_STATION, null, "[log_object(src)] just opened due to hitting [src.open_pres] kPa at [log_loc(src)]")
@@ -81,6 +82,7 @@
 	signal.data["power"] = src.open ? "open" : "closed"
 	signal.data["open_pres"] = src.open_pres
 	signal.data["close_pres"] = src.close_pres
+	signal.data["inverted"] = src.inverted
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
@@ -109,6 +111,14 @@
 			src.close_pres = max(number, 0)
 			. = TRUE
 
+		if("set_inverted")
+			src.inverted = TRUE
+			. = TRUE
+
+		if("remove_inverted")
+			src.inverted = TRUE
+			. = TRUE
+
 		if("help")
 			var/datum/signal/help = get_free_signal()
 			help.transmission_method = TRANSMISSION_RADIO
@@ -117,7 +127,9 @@
 			help.data["info"] = "Command help. \
 									broadcast_status - Broadcasts info about self. \
 									set_open_pres (parameter: Number) - Sets opening pressure in kiloPascals to parameter. Minimum 0 kiloPascals. \
-									set_close_pres (parameter: Number) - Sets closing pressure in kiloPascals to parameter. Minimum 0 kiloPascals."
+									set_close_pres (parameter: Number) - Sets closing pressure in kiloPascals to parameter. Minimum 0 kiloPascals. \
+									set_inverted - Inverts the gate. \
+									remove_inverted - Un-inverts the gate."
 
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, help)
 
@@ -129,28 +141,6 @@
 		var/hide_pipe = CHECKHIDEPIPE(src)
 		FLICK("[hide_pipe ? "h" : "" ]alert", src)
 		playsound(src, 'sound/machines/chime.ogg', 25)
-
-/obj/machinery/atmospherics/binary/pressure_gate/inverted
-	icon = 'icons/obj/atmospherics/pressure_gate_inverted.dmi'
-	icon_state = "off-map"
-	name = "vacuum relief gate"
-	open_pres = 90
-	close_pres = 100
-	HELP_MESSAGE_OVERRIDE({"Below the open pressure, the gate opens. Above the close pressure, the gate closes.\n
-	You can click it with a <b>multitool</b> to open the menu and change the pressures."})
-
-/obj/machinery/atmospherics/binary/pressure_gate/inverted/check_pressure()
-	if (MIXTURE_PRESSURE(src.air1) >= src.close_pres)
-		open = FALSE
-		src.UpdateIcon()
-		logTheThing(LOG_STATION, null, "[log_object(src)] just closed due to hitting [src.close_pres] kPa at [log_loc(src)]")
-
-	else if (MIXTURE_PRESSURE(src.air1) <= src.open_pres)
-		open = TRUE
-		src.UpdateIcon()
-		logTheThing(LOG_STATION, null, "[log_object(src)] just opened due to hitting [src.open_pres] kPa at [log_loc(src)]")
-
-	return open
 
 /datum/pressure_gate_ui
 	var/obj/machinery/atmospherics/binary/pressure_gate/our_gate
@@ -176,6 +166,10 @@
 					src.our_gate.close_pres = max(value_to_set, 0)
 					logTheThing(LOG_STATION, usr, "has set [src.our_gate] closing pressure to [src.our_gate.open_pres] at [log_loc(src.our_gate)]")
 
+			if("toggle_direction")
+				src.our_gate.inverted = !src.our_gate.inverted
+				logTheThing(LOG_STATION, usr, "has set [src.our_gate] inversion status to [src.our_gate.inverted] at [log_loc(src.our_gate)]")
+
 	src.show_ui(usr)
 
 /datum/pressure_gate_ui/proc/show_ui(mob/user)
@@ -189,6 +183,7 @@
 				"is_on" = src.our_gate.open,
 				"close_pres" = src.our_gate.close_pres,
 				"open_pres" = src.our_gate.open_pres,
+				"inverted" = src.our_gate.inverted,
 			)
 		),
 	)
