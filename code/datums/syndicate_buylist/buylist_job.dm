@@ -64,6 +64,7 @@
 	vr_allowed = FALSE
 	job = list(ALL_CLOWNS)
 	can_buy = UPLINK_TRAITOR
+	max_buy = 3
 
 /datum/syndicate_buylist/traitor/chambomb
 	name = "Chameleon Bomb Case"
