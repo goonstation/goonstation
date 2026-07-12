@@ -2384,6 +2384,7 @@
 #include "code\modules\unit_tests\_map_correctness\xmas_tree.dm"
 #include "code\modules\unit_tests\_map_correctness\area_contents_check\_area_contents_check.dm"
 #include "code\modules\unit_tests\_map_correctness\area_contents_check\area_contents_condition.dm"
+#include "code\modules\unit_tests\_map_correctness\area_contents_check\medical\_medical.dm"
 #include "code\modules\unit_tests\_map_correctness\area_contents_check\medical\cloner.dm"
 #include "code\modules\unit_tests\_map_correctness\area_contents_check\medical\genetics.dm"
 #include "code\modules\unit_tests\_map_correctness\area_contents_check\medical\morgue.dm"

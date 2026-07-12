@@ -8430,6 +8430,7 @@
 "cwW" = (
 /obj/machinery/vending/medical,
 /obj/disposalpipe/segment/mail,
+/obj/item_dispenser/medical_mask,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/lobby)
 "cxc" = (
@@ -34920,6 +34921,10 @@
 /obj/machinery/light/incandescent/cool,
 /obj/disposalpipe/segment/mail,
 /obj/table/glass/auto,
+/obj/item/remote/porter/port_a_medbay{
+	pixel_x = -10;
+	pixel_y = 8
+	},
 /obj/item/reagent_containers/syringe/haloperidol{
 	pixel_x = -11
 	},
@@ -35249,6 +35254,10 @@
 /obj/item/storage/toolbox/emergency{
 	pixel_x = -5;
 	pixel_y = -13
+	},
+/obj/item/storage/box/gl_kit{
+	pixel_x = 7;
+	pixel_y = 18
 	},
 /obj/item/storage/box/syringes{
 	pixel_x = 7;

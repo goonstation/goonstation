@@ -38362,6 +38362,10 @@
 /area/station/security/interrogation)
 "kzI" = (
 /obj/machinery/sleeper/port_a_medbay,
+/obj/item_dispenser/latex_gloves{
+	pixel_x = -28;
+	pixel_y = 0
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -45933,6 +45937,10 @@
 	pixel_x = 5;
 	pixel_y = 2
 	},
+/obj/item_dispenser/medical_mask{
+	pixel_x = -28;
+	pixel_y = 0
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -50102,6 +50110,10 @@
 	},
 /obj/item/reagent_containers/glass/beaker/cryoxadone{
 	pixel_y = 8;
+	pixel_x = 8
+	},
+/obj/item/reagent_containers/glass/beaker/cryoxadone{
+	pixel_y = 4;
 	pixel_x = 8
 	},
 /obj/item/paper/cryo{
