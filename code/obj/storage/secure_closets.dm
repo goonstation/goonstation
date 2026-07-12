@@ -234,7 +234,6 @@
 	/obj/item/device/radio/headset/command/hop,
 	/obj/item/device/accessgun,
 	/obj/item/clipboard,
-	/obj/item/clothing/suit/hopjacket,
 	/obj/item/pet_carrier,
 	/obj/item/device/pda2/hop,
 	/obj/item/device/panicbutton/medicalalert/hop,
