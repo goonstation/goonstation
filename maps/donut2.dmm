@@ -17947,6 +17947,7 @@
 /area/station/security/checkpoint/arrivals)
 "ejI" = (
 /obj/machinery/firealarm/directional/east,
+/obj/storage/cart/medcart/crash,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/restroom)
 "ejJ" = (
@@ -32379,6 +32380,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/item/storage/box/gl_kit,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
 "mAE" = (
