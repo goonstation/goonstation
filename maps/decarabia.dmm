@@ -2360,11 +2360,6 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/disposal)
-"aFB" = (
-/turf/simulated/floor/bluewhite{
-	dir = 1
-	},
-/area/station/medical/medbay/surgery/storage)
 "aFF" = (
 /obj/mapping_helper/wingrille_spawn/auto/walp,
 /turf/simulated/floor/plating,
@@ -15820,6 +15815,11 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal/walp,
 /turf/simulated/floor/plating,
 /area/station/security/interrogation)
+"dHq" = (
+/obj/storage/cart/medcart/crash,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/blue,
+/area/station/medical/medbay/surgery/storage)
 "dHt" = (
 /obj/storage/closet/dresser/random,
 /obj/item/clothing/head/headband/nyan/random,
@@ -35674,9 +35674,7 @@
 /turf/simulated/floor/twotone,
 /area/station/quartermaster/refinery)
 "ihh" = (
-/turf/simulated/floor/bluewhite/corner{
-	dir = 1
-	},
+/turf/simulated/floor/white,
 /area/station/medical/medbay/surgery/storage)
 "ihp" = (
 /obj/mapping_helper/access/engineering,
@@ -65599,11 +65597,19 @@
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/wrench,
 /obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/ai_status_display{
+	pixel_y = 28
+	},
 /obj/item/robodefibrillator{
 	pixel_y = 14
 	},
-/obj/machinery/ai_status_display{
-	pixel_y = 28
+/obj/item/reagent_containers/glass/beaker/cryoxadone{
+	pixel_x = 5;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/glass/beaker/cryoxadone{
+	pixel_x = -5;
+	pixel_y = 8
 	},
 /turf/simulated/floor/minitiles/black,
 /area/station/medical/medbay)
@@ -80839,9 +80845,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "sMo" = (
-/turf/simulated/floor/bluewhite{
-	dir = 9
-	},
+/turf/simulated/floor/twotone/white,
 /area/station/medical/medbay/surgery/storage)
 "sMr" = (
 /obj/cable{
@@ -89006,9 +89010,7 @@
 	pixel_y = 7;
 	pixel_x = 3
 	},
-/turf/simulated/floor/bluewhite{
-	dir = 10
-	},
+/turf/simulated/floor/blue,
 /area/station/medical/medbay/surgery/storage)
 "uBb" = (
 /obj/machinery/vending/mechanics,
@@ -95527,11 +95529,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
-"whu" = (
-/turf/simulated/floor/bluewhite/corner{
-	dir = 4
-	},
-/area/station/medical/medbay/surgery/storage)
 "whx" = (
 /obj/storage/secure/crate/bee/loaded,
 /obj/decal/nav_danger,
@@ -137602,8 +137599,8 @@ iap
 bwL
 tlU
 pcR
-aFB
-job
+sMo
+dHq
 tlU
 rIA
 rIA
@@ -137905,7 +137902,7 @@ foh
 vsl
 tWB
 ihh
-whu
+kir
 cue
 kir
 ocR
