@@ -1,0 +1,574 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aN" = (
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
+/area/station/security/evidence)
+"bZ" = (
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/station/janitor/supply)
+"ci" = (
+/obj/machinery/disposal/cart_port,
+/obj/disposalpipe/trunk/east,
+/obj/storage/cart/trash,
+/turf/simulated/floor/darkblue,
+/area/station/janitor/supply)
+"dd" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
+/area/station/security/evidence)
+"dF" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/station/security/evidence)
+"dR" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/redblack/corner{
+	dir = 8
+	},
+/area/station/security/evidence)
+"ef" = (
+/obj/storage/secure/closet/brig,
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/station/security/evidence)
+"eQ" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/station/security/evidence)
+"fr" = (
+/obj/rack,
+/obj/item/storage/box/evidence{
+	pixel_x = 6;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/food/snacks/pie/cream{
+	pixel_y = 1;
+	pixel_x = -6
+	},
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/station/security/evidence)
+"fO" = (
+/turf/simulated/floor/redblack{
+	dir = 3
+	},
+/area/station/security/evidence)
+"ho" = (
+/obj/rack,
+/obj/decal/poster/wallsign/cdnp{
+	pixel_y = 28
+	},
+/obj/item/storage/box/evidence{
+	pixel_y = 3;
+	pixel_x = -6
+	},
+/obj/item/storage/box/evidence{
+	pixel_x = 6;
+	pixel_y = 3
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/redblack{
+	dir = 5
+	},
+/area/station/security/evidence)
+"jp" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/janitor/supply)
+"ll" = (
+/obj/storage/secure/crate/weapon/confiscated_items,
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/station/security/evidence)
+"mw" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/obj/landmark/start/job/janitor,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/janitor/supply)
+"qd" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "pink";
+	icon_state = "bedsheet-pink"
+	},
+/obj/landmark/start/job/janitor,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/darkblue,
+/area/station/janitor/supply)
+"qu" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/black,
+/area/station/security/evidence)
+"sc" = (
+/obj/machinery/photocopier,
+/obj/machinery/power/apc/autoname_west,
+/obj/cable,
+/turf/simulated/floor/redblack{
+	dir = 10
+	},
+/area/station/security/evidence)
+"tc" = (
+/obj/disposalpipe/segment/bent/south,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/janitor/supply)
+"tT" = (
+/obj/disposalpipe/segment/horizontal,
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/mopbucket,
+/turf/simulated/floor/darkblue,
+/area/station/janitor/supply)
+"vN" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/black,
+/area/station/security/evidence)
+"wo" = (
+/turf/simulated/wall/auto/supernorn/colored/purple,
+/area/station/janitor/supply)
+"wA" = (
+/obj/storage/cart/forensic/security,
+/turf/simulated/floor/redblack{
+	dir = 3
+	},
+/area/station/security/evidence)
+"xG" = (
+/obj/machinery/camera/directional/west,
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/station/security/evidence)
+"yh" = (
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 4
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	dir = 4;
+	id = "washdesk";
+	layer = 3.2;
+	name = "Janitor's Desk"
+	},
+/obj/table/reinforced/auto,
+/obj/mapping_helper/access/janitor,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/plating,
+/area/station/janitor/supply)
+"yv" = (
+/obj/disposalpipe/segment/bent/east,
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/station/security/evidence)
+"Am" = (
+/obj/disposalpipe/trunk/east,
+/obj/machinery/disposal,
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/station/security/evidence)
+"AO" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/security/evidence)
+"BD" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/station/security/evidence)
+"BE" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/stool/chair/red{
+	dir = 4
+	},
+/obj/landmark/start/job/security_assistant,
+/turf/simulated/floor/black,
+/area/station/security/evidence)
+"Ca" = (
+/obj/storage/secure/closet/brig,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/station/security/evidence)
+"CY" = (
+/obj/disposalpipe/segment/horizontal,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/landmark/start/job/security_assistant,
+/obj/machinery/firealarm/directional/north,
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/station/security/evidence)
+"CZ" = (
+/obj/table/wood/round/auto,
+/obj/machinery/coffeemaker/security,
+/obj/drink_rack/mug{
+	pixel_x = 3;
+	pixel_y = 29
+	},
+/turf/simulated/floor/redblack{
+	dir = 5
+	},
+/area/station/security/evidence)
+"Dw" = (
+/obj/machinery/firealarm/directional/west,
+/obj/machinery/sink/slim{
+	dir = 4
+	},
+/turf/simulated/floor/darkblue,
+/area/station/janitor/supply)
+"DM" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/darkblue,
+/area/station/janitor/supply)
+"Fm" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/station/security/evidence)
+"Gw" = (
+/obj/machinery/computer3/generic/secure_data{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	dir = null
+	},
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/station/security/evidence)
+"GQ" = (
+/obj/machinery/light_switch/directional/north,
+/obj/storage/closet/janitor,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/janitor/supply)
+"GW" = (
+/obj/machinery/door/airlock/pyro/security{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/security,
+/turf/simulated/floor/black,
+/area/station/security/evidence)
+"HE" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/camera/directional/south,
+/obj/rack,
+/obj/item/reagent_containers/glass/bottle/ammonia/janitors,
+/obj/item/reagent_containers/glass/bottle/ammonia/janitors,
+/obj/item/reagent_containers/glass/bottle/acetone/janitors,
+/obj/item/reagent_containers/glass/bottle/acetone/janitors,
+/obj/item/reagent_containers/glass/bottle/cleaner,
+/obj/item/reagent_containers/glass/bottle/cleaner,
+/obj/disposalpipe/junction/left/south,
+/turf/simulated/floor/darkblue,
+/area/station/janitor/supply)
+"Io" = (
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
+/area/station/security/evidence)
+"IX" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/janitor,
+/turf/simulated/floor/darkblue,
+/area/station/janitor/supply)
+"JM" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/station/security/evidence)
+"Lv" = (
+/obj/disposalpipe/segment/vertical,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
+/area/station/security/evidence)
+"LS" = (
+/obj/machinery/door/airlock/pyro/security{
+	dir = 1
+	},
+/obj/disposalpipe/segment/vertical,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/security,
+/turf/simulated/floor/black,
+/area/station/security/evidence)
+"NW" = (
+/obj/item/storage/toolbox/emergency,
+/obj/item/storage/box/mousetraps,
+/obj/item/sponge,
+/obj/item/spraybottle/cleaner,
+/obj/item/mop,
+/obj/item/reagent_containers/glass/bucket,
+/obj/item/chem_grenade/cleaner,
+/obj/item/reagent_containers/glass/bottle/cleaner,
+/obj/storage/crate,
+/obj/item/chem_grenade/cleaner,
+/obj/machinery/door_control{
+	id = "washdesk";
+	name = "Desk Control";
+	pixel_y = 28
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/station/janitor/supply)
+"Qm" = (
+/obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8
+	},
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 16
+	},
+/turf/simulated/floor/redblack{
+	dir = 6
+	},
+/area/station/security/evidence)
+"Rc" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/station/security/evidence)
+"RD" = (
+/obj/disposalpipe/segment/bent/west,
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/obj/blind_switch/directional/north{
+	pixel_x = 4
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/light_switch/directional/north{
+	pixel_x = -4
+	},
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/station/security/evidence)
+"Tk" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
+/area/station/security/evidence)
+"VT" = (
+/obj/rack,
+/obj/item/storage/box/evidence{
+	pixel_y = 3;
+	pixel_x = -6
+	},
+/obj/decal/poster/wallsign/iso/prohibited/touch,
+/turf/simulated/floor/redblack{
+	dir = 9
+	},
+/area/station/security/evidence)
+"Xp" = (
+/obj/machinery/light,
+/turf/simulated/floor/redblack{
+	dir = 3
+	},
+/area/station/security/evidence)
+"ZX" = (
+/obj/disposalpipe/segment/vertical,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/redblack{
+	dir = 3
+	},
+/area/station/security/evidence)
+
+(1,1,1) = {"
+aN
+aN
+aN
+aN
+GW
+aN
+aN
+aN
+aN
+"}
+(2,1,1) = {"
+aN
+VT
+ll
+xG
+dF
+JM
+eQ
+sc
+aN
+"}
+(3,1,1) = {"
+aN
+fr
+BE
+AO
+qu
+vN
+Fm
+wA
+aN
+"}
+(4,1,1) = {"
+aN
+ho
+Gw
+Am
+Ca
+ef
+dR
+fO
+aN
+"}
+(5,1,1) = {"
+Tk
+dd
+aN
+Io
+aN
+aN
+yv
+ZX
+LS
+"}
+(6,1,1) = {"
+wo
+qd
+Dw
+tT
+ci
+aN
+CY
+fO
+aN
+"}
+(7,1,1) = {"
+wo
+GQ
+jp
+tc
+HE
+Lv
+RD
+Xp
+aN
+"}
+(8,1,1) = {"
+wo
+NW
+mw
+bZ
+DM
+aN
+CZ
+Qm
+aN
+"}
+(9,1,1) = {"
+wo
+yh
+yh
+wo
+IX
+aN
+BD
+Rc
+aN
+"}

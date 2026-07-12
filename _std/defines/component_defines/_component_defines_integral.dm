@@ -7,7 +7,7 @@
 /// Arguments given here are packaged in a list and given to _SendSignal
 #define SEND_SIGNAL(target, sigtype, arguments...) ( !target?.comp_lookup || !target.comp_lookup[sigtype] ? 0 : target._SendSignal(sigtype, list(target, ##arguments)) )
 
-#define SEND_COMPLEX_SIGNAL(target, sigtype, arguments...) SEND_SIGNAL(target, sigtype[2], ##arguments)
+#define SEND_COMPLEX_SIGNAL(target, sigtype, arguments...) SEND_SIGNAL(target, (sigtype)::id, ##arguments)
 
 #define GLOBAL_SIGNAL (global.global_signal_holder ||= new()) // dummy datum that exclusively exists to hold onto global signals
 
@@ -26,7 +26,7 @@
 #define LoadComponent(arguments...) _LoadComponent(list(##arguments))
 
 /// Checks if a signal is "complex", i.e. it is handled by adding a special component and registering may have side effects and overhead
-#define IS_COMPLEX_SIGNAL(x) (length(x) == 2 && ispath(x[1], /datum/component/complexsignal))
+#define IS_COMPLEX_SIGNAL(x) ispath(x, /datum/xsig)
 
 /**
 	* Return this from `/datum/component/Initialize` or `datum/component/OnTransfer` to have the component be deleted if it's applied to an incorrect type.
