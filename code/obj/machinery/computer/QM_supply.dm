@@ -263,6 +263,82 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 			if(supply_order.address)
 				src.send_pda_message(supply_order.address, "Your order of [supply_order.object.name] has been denied.")
 			return
+		//Traders
+		if ("trader_sell")
+			var/datum/trader/trader = locate(params["trader_ref"]) in global.shippingmarket.active_traders
+			if(!src.trader_sanity_check(trader, user))
+				return
+			if(GET_COOLDOWN(src, "print"))
+				boutput(user, SPAN_ALERT("It's still cooling off from the last print!"))
+				return
+			src.print_barcode(trader.name, trader.crate_tag)
+			return
+		if("trader_haggle")
+			var/datum/trader/trader = locate(params["trader_ref"]) in global.shippingmarket.active_traders
+			if(!src.trader_sanity_check(trader, user))
+				return
+			var/trader_goods = trader.goods_buy + trader.goods_sell
+			var/buying = FALSE
+			if(locate(params["commodity_ref"]) in trader.goods_sell)
+				buying = TRUE
+			var/datum/commodity/commodity = locate(params["commodity_ref"]) in trader_goods
+			if(!src.commodity_sanity_check(commodity, user))
+				return
+			src.handle_haggle(user, trader, commodity, buying)
+		if("trader_purchase")
+			var/datum/trader/trader = locate(params["trader_ref"]) in global.shippingmarket.active_traders
+			if(!src.trader_sanity_check(trader, user))
+				return
+			var/datum/commodity/commodity = locate(params["commodity_ref"]) in trader.goods_sell
+			if(!src.commodity_sanity_check(commodity, user))
+				return
+			src.handle_trader_add_to_cart(user, trader, commodity, TRUE)
+			return
+		if("trader_remove_from_cart")
+			var/datum/trader/trader = locate(params["trader_ref"]) in global.shippingmarket.active_traders
+			if(!src.trader_sanity_check(trader, user))
+				return
+			var/datum/commodity/trader/incart/cart_commodity = locate(params["commodity_ref"]) in trader.shopping_cart
+			if(!src.commodity_sanity_check(cart_commodity, user))
+				return
+			var/selected_amount = tgui_input_number(user, "How many units do you want to remove from the cart?", "Remove from Cart", 1, cart_commodity.amount, 0)
+			if(!isnum_safe(selected_amount) || selected_amount < 1)
+				return
+			//Shouldn't normally be reachable thanks to the tgui window already limiting your maximum input
+			if(cart_commodity.amount < selected_amount)
+				selected_amount = cart_commodity.amount
+			cart_commodity.amount -= selected_amount
+			if(cart_commodity.reference && istype(cart_commodity.reference) && cart_commodity.reference.amount >= 0)
+				cart_commodity.reference.amount += selected_amount
+			if(cart_commodity.amount <= 0)
+				trader.shopping_cart -= cart_commodity
+				qdel(cart_commodity)
+			global.shippingmarket.update_supply_console_data()
+			return
+		if ("trader_buy_cart")
+			var/datum/trader/trader = locate(params["trader_ref"]) in global.shippingmarket.active_traders
+			if(!src.trader_sanity_check(trader, user))
+				return
+			if (!trader.shopping_cart.len)
+				boutput(user, SPAN_ALERT("There's nothing in the shopping cart to buy!"))
+				return
+			if (!(global.shippingmarket && istype(global.shippingmarket,/datum/shipping_market)))
+				logTheThing(LOG_DEBUG, null, "<b>ISN/Trader:</b> Shippingmarket buy cap improperly configured")
+			var/buy_cap = global.shippingmarket.max_buy_items_at_once || 99
+			var/cart_cost = 0
+			var/total_cart_amount = 0
+			for (var/datum/commodity/cart_commodity in trader.shopping_cart)
+				cart_cost += cart_commodity.price * cart_commodity.amount
+				total_cart_amount += cart_commodity.amount
+			if (total_cart_amount > buy_cap)
+				boutput(user, SPAN_ALERT("There are too many items in the cart. You may only order [buy_cap] items at a time."))
+				return
+			if (global.wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] < cart_cost)
+				trader.current_message = pick(trader.dialogue_cant_afford_that)
+				return
+			trader.current_message = pick(trader.dialogue_purchase)
+			trader.buy_from()
+			return
 
 /obj/machinery/computer/supplycomp/proc/handle_order(var/mob/user, var/datum/supply_order/supply_order, var/datum/supply_packs/supply_pack)
 	if(!istype(supply_order) || !istype(supply_pack))
@@ -291,6 +367,61 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 	logTheThing(LOG_STATION, user, "ordered a [supply_pack.name] at [log_loc(src)].")
 	global.shippingmarket.supply_history += "[supply_pack.name] ordered by [supply_order.orderedby] for [supply_pack.cost] credits. Comment: [supply_order.comment]<br>"
 	return TRUE
+
+/obj/machinery/computer/supplycomp/proc/handle_haggle(var/mob/user, var/datum/trader/trader, var/datum/commodity/commodity, var/buying = FALSE)
+	if(!istype(trader) || !istype(commodity))
+		return
+	if(trader.patience <= 0)
+		trader.current_message = pick(trader.dialogue_leave)
+		boutput(user, SPAN_ALERT("Your haggling has pushed [trader.name] too far, and they have left."))
+		return
+	var/haggle_target = tgui_input_number(user, "Suggest a new price", "Haggling", commodity.price, 1000000, 0)
+	if(!isnum_safe(haggle_target) || haggle_target < 0)
+		boutput(user, SPAN_ALERT("That doesn't even make any sense!"))
+		return
+	trader.haggle(commodity, haggle_target, buying)
+	// Trader data is static, so update to new price on haggle
+	global.shippingmarket.update_supply_console_data()
+
+/obj/machinery/computer/supplycomp/proc/handle_trader_add_to_cart(var/mob/user, var/datum/trader/trader, var/datum/commodity/commodity)
+	if(!istype(trader) || !istype(commodity))
+		return
+	if(commodity.amount == 0)
+		trader.current_message = pick(trader.dialogue_out_of_stock)
+		boutput(user, SPAN_ALERT("[trader.name] has no more [commodity.comname] left to trade!"))
+		return
+	if (!(global.shippingmarket && istype(global.shippingmarket,/datum/shipping_market)))
+		logTheThing(LOG_DEBUG, null, "<b>ISN/Trader:</b> Shippingmarket buy cap improperly configured")
+	var/buy_cap = global.shippingmarket.max_buy_items_at_once || 99
+	var/total_stuff_in_cart
+	for(var/datum/commodity/cart_commodity in trader.shopping_cart)
+		total_stuff_in_cart += cart_commodity.amount
+	if (total_stuff_in_cart >= buy_cap)
+		boutput(user, SPAN_ALERT("You may only have a maximum of [buy_cap] items in your shopping cart. You have already reached that limit."))
+		return
+	var/maximum_buy = buy_cap - total_stuff_in_cart
+	if(commodity.amount >= 0)
+		maximum_buy = min(maximum_buy, commodity.amount)
+	var/selected_amount = tgui_input_number(user, "How many units do you want to purchase?", "Trader Purchase", 1, maximum_buy, 0)
+	if(!isnum_safe(selected_amount) || selected_amount < 1)
+		return
+	//Below two checks shouldn't normally be reachable thanks to the tgui window already limiting your maximum input
+	if(commodity.amount > 0 && selected_amount > commodity.amount)
+		selected_amount = commodity.amount
+	if(selected_amount + total_stuff_in_cart > buy_cap)
+		boutput(user, SPAN_ALERT("You may only have a maximum of [buy_cap] items in your shopping cart. This order would exceed that limit."))
+		return
+	var/datum/commodity/trader/incart/newcart = new(trader)
+	trader.shopping_cart += newcart
+	newcart.comname = commodity.comname
+	newcart.price = commodity.price
+	newcart.reference = commodity
+	newcart.comtype = commodity.comtype
+	newcart.amount = selected_amount
+	if (commodity.amount > 0)
+		commodity.amount -= selected_amount
+	// Trader data is static, so update to new stock count
+	global.shippingmarket.update_supply_console_data()
 
 /obj/machinery/computer/supplycomp/attack_hand(var/mob/user)
 	if(!src.allowed(user))
@@ -1306,25 +1437,20 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 
 
 
-/obj/machinery/computer/supplycomp/proc/trader_sanity_check(var/datum/trader/T)
-	if (!T || !istype(T,/datum/trader/) || T.hidden)
-		src.temp = {"Error contacting trader. They may have departed from communications range.<br>
-					<A href='[topicLink("mainmenu")]'>Main Menu</A>"}
-		return 0
-	if (signal_loss >= 75)
-		src.temp = {"Severe signal interference is preventing contact with [T.name].<br>
-					<A href='[topicLink("mainmenu")]'>Main Menu</A>"}
-		return 0
-	return 1
+/obj/machinery/computer/supplycomp/proc/trader_sanity_check(var/datum/trader/trader, var/mob/user)
+	if(QDELETED(trader) || !istype(trader) || trader.hidden)
+		boutput(user, SPAN_ALERT("Error contacting trader. They may have departed from communications range."))
+		return FALSE
+	if(global.signal_loss >= 75)
+		boutput(user, SPAN_ALERT("Severe signal interference is preventing contact with [trader.name]."))
+		return FALSE
+	return TRUE
 
-/obj/machinery/computer/supplycomp/proc/commodity_sanity_check(var/datum/commodity/C)
-	if (!C)
-		boutput(usr, SPAN_ALERT("Something has gone wrong trying to access this commodity! Report this please!"))
-		return 0
-	if (!istype(C,/datum/commodity/))
-		boutput(usr, SPAN_ALERT("Something has gone wrong trying to access this commodity! Report this please!"))
-		return 0
-	return 1
+/obj/machinery/computer/supplycomp/proc/commodity_sanity_check(var/datum/commodity/commodity, var/mob/user)
+	if(QDELETED(commodity) || !istype(commodity))
+		boutput(user, SPAN_ALERT("Something has gone wrong trying to access this commodity! Please file a bug report."))
+		return FALSE
+	return TRUE
 
 /obj/machinery/computer/supplycomp/proc/send_pda_message(address, message)
 	var/datum/signal/newsignal = get_free_signal()

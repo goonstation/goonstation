@@ -116,6 +116,7 @@ const TraderView = (props) => {
                   commodity={commodity}
                   view_type={'selling'}
                   currency_name={'⪽'}
+                  trader_ref={trader.ref}
                 />
               ))}
             </Table>
@@ -128,6 +129,7 @@ const TraderView = (props) => {
                   commodity={commodity}
                   view_type={'buying'}
                   currency_name={'⪽'}
+                  trader_ref={trader.ref}
                 />
               ))}
             </Table>
@@ -136,7 +138,23 @@ const TraderView = (props) => {
             <Table>
               {trader.cart.map((item, index) => (
                 <Table.Row className="candystripe" key={index}>
-                  <Table.Cell>{capitalize(item.name)}</Table.Cell>
+                  <Table.Cell>
+                    <Button
+                      color="bad"
+                      icon="trash"
+                      iconColor="white"
+                      textColor="white"
+                      my="3px"
+                      mr="5px"
+                      onClick={() =>
+                        act('trader_remove_from_cart', {
+                          trader_ref: trader.ref,
+                          commodity_ref: item.ref,
+                        })
+                      }
+                    />
+                    {item.amount_left + 'x ' + capitalize(item.name)}
+                  </Table.Cell>
                 </Table.Row>
               ))}
             </Table>
@@ -168,7 +186,7 @@ const SupplyTraderInfo = (props) => {
                 iconColor="white"
                 textColor="white"
                 onClick={() => {
-                  act('pickupcart');
+                  act('trader_buy_cart', { trader_ref: trader.ref });
                 }}
               >
                 Confirm Cart
