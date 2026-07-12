@@ -30,6 +30,8 @@ TYPEINFO(/obj/item/device/accessgun)
 	var/list/security_access_list = list(access_security, access_brig, access_forensics_lockers, access_securitylockers, access_carrypermit, access_contrabandpermit, access_ticket)
 	var/list/command_access_list = list(access_research_director, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_heads, access_captain, access_engineering_chief, access_medical_director, access_head_of_personnel, access_sysadmin, access_money)
 	var/list/allowed_access_list
+	/// A list of accesses that can be set by this accessgun, but not overridden (e.g. can set armory access, but not configure any devices with armory access)
+	var/list/maxsec_access_list = list(access_armory, access_maxsec)
 
 	New()
 		. = ..()
@@ -50,6 +52,7 @@ TYPEINFO(/obj/item/device/accessgun)
 		var/list/research_access = list()
 		var/list/medical_access = list()
 		var/list/security_access = list()
+		var/list/maxsec_access = list()
 		var/list/command_access = list()
 
 		for(var/A in access_name_lookup)
@@ -65,11 +68,14 @@ TYPEINFO(/obj/item/device/accessgun)
 				medical_access.Add(access_data(A))
 			if (access_name_lookup[A] in security_access_list)
 				security_access.Add(access_data(A))
+			if (access_name_lookup[A] in maxsec_access_list)
+				maxsec_access.Add(access_data(A))
 			if (access_name_lookup[A] in command_access_list)
 				command_access.Add(access_data(A))
 
 		.["accesses_by_area"] = list(
 			list(name = "Command", color = /datum/job/command::ui_colour, accesses = command_access),
+			list(name = "Maximum Security - Cannot be reprogrammed without access", color = TGUI_COLOUR_CRIMSON, accesses = maxsec_access),
 			list(name = "Security", color = /datum/job/security::ui_colour, accesses = security_access),
 			list(name = "Science", color = /datum/job/research::ui_colour, accesses = research_access),
 			list(name = "Medical", color = /datum/job/medical::ui_colour, accesses = medical_access),
@@ -98,7 +104,7 @@ TYPEINFO(/obj/item/device/accessgun)
 			if("access")
 				var/access_type = text2num_safe(params["access"])
 				var/access_allowed = text2num_safe(params["allowed"])
-				if(access_type in src.allowed_access_list)
+				if((access_type in src.allowed_access_list) || (access_type in src.maxsec_access_list))
 					if(!access_allowed)
 						src.selected_accesses -= access_type
 					else
@@ -132,7 +138,13 @@ TYPEINFO(/obj/item/device/accessgun)
 
 		var/obj/O = target
 		for(var/access in O.req_access)
-			if (!(access in src.allowed_access_list))
+			if(access in src.maxsec_access_list)
+				var/user_access = user.get_id()?.access
+				if(!(length(user_access) && (access in user_access)))
+					playsound(src, 'sound/machines/airlock_deny.ogg', 35, TRUE, 0, 2)
+					boutput(user, SPAN_NOTICE("You must have [get_access_desc(access)] access to reprogram [O]."))
+					return
+			else if (!(access in src.allowed_access_list))
 				playsound(src, 'sound/machines/airlock_deny.ogg', 35, TRUE, 0, 2)
 				boutput(user, SPAN_NOTICE("[src] doesn't have the access to reprogram [O]."))
 				return

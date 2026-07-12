@@ -202,7 +202,7 @@ var/datum/signal_holder/global_signal_holder
 /datum/proc/RegisterSignal(datum/target, signal_type, proctype, override = FALSE, ...)
 	if(QDELETED(src) || QDELETED(target))
 		return
-	if (islist(signal_type) && !IS_COMPLEX_SIGNAL(signal_type))
+	if (islist(signal_type))
 		var/static/list/known_failures = list()
 		var/list/signal_type_list = signal_type
 		var/message = "([target.type]) is registering [signal_type_list.Join(", ")] as a list, the older method. Change it to RegisterSignals."
@@ -216,10 +216,10 @@ var/datum/signal_holder/global_signal_holder
 	var/list/lookup = (target.comp_lookup ||= list())
 
 	if(IS_COMPLEX_SIGNAL(signal_type))
-		var/complexsignal_component_type = signal_type[1]
-		var/datum/component/complexsignal/comp = target.LoadComponent(complexsignal_component_type)
+		var/datum/xsig/xsignal = signal_type
+		var/datum/component/complexsignal/comp = target.LoadComponent(xsignal::component)
 		var/list/register_args = args.Copy()
-		register_args[2] = signal_type[2] // replacing sig_type_or_types
+		register_args[2] = xsignal // replacing sig_type_or_types
 		register_args[1] = src // comp.register's first argument is the LISTENER not the target
 		comp.register(arglist(register_args))
 		return // exit early since we're done
@@ -256,22 +256,22 @@ var/datum/signal_holder/global_signal_holder
   * * sig_typeor_types Signal string key or list of signal keys to stop listening to specifically
   */
 /datum/proc/UnregisterSignal(datum/target, sig_type_or_types)
-	if (!target || !src || src.qdeled)
+	if (!target || !src || src.qdeled || !signal_procs)
 		return
 	var/list/lookup = target.comp_lookup
-	if(!signal_procs || (!islist(sig_type_or_types) && (!signal_procs[target] || !lookup)))
-		// if sig_type_or_types is a list it's either a complex signal (in which case the conditions can fail but we still want to remove the signal)
-		// or it is a list which can potentially contain another complex signal in which case ditto
+	if(!IS_COMPLEX_SIGNAL(sig_type_or_types) && !islist(sig_type_or_types) && (!signal_procs[target] || !lookup))
+		// if sig_type_or_types is either a complex signal (in which case the conditions can fail but we still want to remove the signal)
+		// or a list which can potentially contain another complex signal in which case ditto
 		return
-	if(!islist(sig_type_or_types) || IS_COMPLEX_SIGNAL(sig_type_or_types))
+	if(!islist(sig_type_or_types))
 		sig_type_or_types = list(sig_type_or_types)
 	for(var/sig in sig_type_or_types)
 		if(IS_COMPLEX_SIGNAL(sig))
-			var/complexsignal_component_type = sig[1]
-			var/datum/component/complexsignal/comp = target.GetComponent(complexsignal_component_type)
+			var/datum/xsig/xsignal = sig
+			var/datum/component/complexsignal/comp = target.GetComponent(xsignal::component)
 			if(isnull(comp))
-				CRASH("Unregistering a complex signal [json_encode(sig)] without its component existing.")
-			comp.unregister(src, sig[2])
+				CRASH("Unregistering a complex signal [xsignal] without its component existing.")
+			comp.unregister(src, xsignal)
 			continue
 		if(!signal_procs[target]?[sig])
 			if(!istext(sig))

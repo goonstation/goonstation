@@ -39,7 +39,7 @@
 	var/current = src.read_user_field("curpath")
 	initparams = ABSOLUTE_PATH(initparams, current)
 
-	var/datum/computer/target = src.signal_program(1, list("command" = DWAINE_COMMAND_FGET, "path" = initparams))
+	var/datum/computer/target = src.signal_program(1, list("command" = DWAINE::SYSCALL::FGET, "path" = initparams))
 
 	if (!istype(target))
 		src.message_user("Error: Invalid path.")
@@ -53,7 +53,7 @@
 			src.message_user("Remove target '[target.name]'?")
 			return
 
-		if (src.signal_program(1, list("command" = DWAINE_COMMAND_FKILL, "path" = initparams)) != ESIG_SUCCESS)
+		if (src.signal_program(1, list("command" = DWAINE::SYSCALL::FKILL, "path" = initparams)) != DWAINE::ERR::SIG::SUCCESS)
 			src.message_user("Error: Cannot remove target.")
 
 	mainframe_prog_exit
@@ -67,14 +67,14 @@
 	var/command = lowertext(command_list[1])
 
 	if ((command == "yes") || (command == "y"))
-		var/datum/computer/target = src.signal_program(1, list("command" = DWAINE_COMMAND_FGET, "path" = src.target_path))
+		var/datum/computer/target = src.signal_program(1, list("command" = DWAINE::SYSCALL::FGET, "path" = src.target_path))
 		if (!istype(target))
 			src.message_user("Error: Unable to locate target.")
 
 		else if (istype(target, /datum/computer/folder) && !src.opt_recursive)
 			src.message_user("Error: Cannot remove target (Is a directory).")
 
-		else if (src.signal_program(1, list("command" = DWAINE_COMMAND_FKILL, "path" = src.target_path)) != ESIG_SUCCESS)
+		else if (src.signal_program(1, list("command" = DWAINE::SYSCALL::FKILL, "path" = src.target_path)) != DWAINE::ERR::SIG::SUCCESS)
 			src.message_user("Error: Cannot remove target.")
 
 	mainframe_prog_exit

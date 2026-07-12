@@ -184,7 +184,7 @@
 
 	New()
 		. = ..()
-		src.stamp(200, 20, rand(-5,5), "stamp-qm.png", "stamp-qm")
+		src.stamp(200, 20, rand(-5,5), "[resource("images/tgui/stamp_icons/stamp-qm.png")]", "stamp-qm")
 
 /obj/item/paper/engine
 	name = "'Generator Startup Procedure'"
