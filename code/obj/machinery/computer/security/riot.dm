@@ -47,6 +47,18 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 		STOP_TRACKING
 		..()
 
+	/// Check if we're authorized to do full packet operations and modify the returnsignal with an error code if not
+	proc/packet_check(datum/signal/signal, datum/signal/returnsignal)
+		if(!IN_RANGE(signal.source, src, radiorange))
+			returnsignal.data["command"] = "nack"
+			returnsignal.data["data"] = "outofrange"
+			return FALSE
+		if (signal.data["acc_code"] != netpass_heads)
+			returnsignal.data["command"] = "nack"
+			returnsignal.data["data"] = "badpass"
+			return FALSE
+		return TRUE
+
 	receive_signal(datum/signal/signal)
 		if(!signal || signal.encryption || signal.transmission_method != TRANSMISSION_RADIO)
 			return
@@ -75,7 +87,7 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 			if ("help")
 				if (!signal.data["topic"])
 					returnsignal.data["description"] = "Armory Authorization Computer - allows for lowering of armory access level to SECURITY. Wireless authorization requires NETPASS_HEADS"
-					returnsignal.data["topics"] = "authorize,unauthorize"
+					returnsignal.data["topics"] = "authorize,unauthorize,set_reason"
 				else
 					returnsignal.data["topic"] = signal.data["topic"]
 					switch (lowertext(signal.data["topic"]))
@@ -85,32 +97,28 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 						if ("unauthorize")
 							returnsignal.data["description"] = "Unauthorizes armory access. Requires NETPASS_HEADS. Requires close range transmission."
 							returnsignal.data["args"] = "acc_code"
+						if ("set_reason")
+							returnsignal.data["description"] = "Sets the auth/unauth reason to the value specified by arg \"reason\". Requires NETPASS_HEADS. Requires close range transmission."
+							returnsignal.data["args"] = "acc_code"
 						else
 							returnsignal.data["description"] = "ERROR: UNKNOWN TOPIC"
 			if ("authorize")
-				if(!IN_RANGE(signal.source, src, radiorange))
-					returnsignal.data["command"] = "nack"
-					returnsignal.data["data"] = "outofrange"
-				else if (signal.data["acc_code"] == netpass_heads)
+				if (src.packet_check(signal, returnsignal))
 					returnsignal.data["command"] = "ack"
 					returnsignal.data["acc_code"] = netpass_security
 					returnsignal.data["data"] = "authorize"
 					authorize()
-				else
-					returnsignal.data["command"] = "nack"
-					returnsignal.data["data"] = "badpass"
 			if ("unauthorize")
-				if(!IN_RANGE(signal.source, src, radiorange))
-					returnsignal.data["command"] = "nack"
-					returnsignal.data["data"] = "outofrange"
-				else if (signal.data["acc_code"] == netpass_heads)
+				if (src.packet_check(signal, returnsignal))
 					returnsignal.data["command"] = "ack"
 					returnsignal.data["acc_code"] = netpass_security
 					returnsignal.data["data"] = "unauthorize"
 					unauthorize()
-				else
-					returnsignal.data["command"] = "nack"
-					returnsignal.data["data"] = "badpass"
+			if ("set_reason")
+				if (src.packet_check(signal, returnsignal))
+					returnsignal.data["command"] = "ack"
+					returnsignal.data["data"] = "set_reason"
+					src.auth_reason = signal.data["reason"]
 			else
 				return //COMMAND NOT RECOGNIZED
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, returnsignal, radiorange)
@@ -292,6 +300,10 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 				logTheThing(LOG_STATION, user, "repealed all approvals for [src.authed? "un":""]authorizing the armory using [id_card]. [length(src.authorized)] total approvals.")
 				src.clear_authorizations()
 			if("auth") //Handles both Authorization and Revokation depending on src.authed
+				if (!src.authed && !length(src.auth_reason))
+					boutput(user, SPAN_ALERT("ERROR: missing or empty authorization reason."))
+					playsound(src, 'sound/machines/buzz-two.ogg', 50, 1)
+					return
 				var/auths_left = (src.check_access_level(user) == ARMORY_ACCESS_LEVEL_UNRESTRICTED ? 0 : src.auth_need - length(src.authorized))
 				var/auth_or_revoke = src.authed ? "revoke" : "authorize"
 				var/choice = tgui_alert(user, "Would you like to [auth_or_revoke] access to riot gear? [auths_left ? "[auths_left] approval\s are still needed." : null]", src.name, list(capitalize(auth_or_revoke), "Cancel"))

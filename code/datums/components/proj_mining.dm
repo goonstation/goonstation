@@ -23,7 +23,7 @@ TYPEINFO(/datum/component/proj_mining)
 		var/turf/simulated/wall/auto/asteroid/T = hit
 		if(P.power <= 0)
 			return 0
-		T.damage_asteroid(P.power * power_ratio)
+		T.damage_asteroid(P.power * power_ratio, MINING_DMG_LASER)
 		P.initial_power -= power_loss
 		if (!T.density)
 			return PROJ_PASSWALL

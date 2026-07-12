@@ -443,7 +443,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 				M.TakeDamage("head", rand(5,10), 0)
 				take_bleeding_damage(M, user, 1, DAMAGE_CUT, 1)
 				return 0
-			if("amphibian", "Shelter Amphibian")
+			if("abzunian", "amphibian", "Shelter Amphibian")
 				if(barbery_type == "haircut")
 					playsound(M, 'sound/items/Scissor.ogg', 100, TRUE)
 				M.tri_message(user, "[user] waves [his_or_her(user)] [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s head, snipping at nothing!",\

@@ -19,7 +19,7 @@
 #define ishuman(x) istype(x, /mob/living/carbon/human)
 #define iscow(x) (istype(x, /mob/living/carbon/human) && istype(x:mutantrace, /datum/mutantrace/cow))
 #define ispug(x) (istype(x, /mob/living/carbon/human) && istype(x:mutantrace, /datum/mutantrace/pug))
-#define isfrog(x) (istype(x, /mob/living/carbon/human) && istype(x:mutantrace, /datum/mutantrace/amphibian))
+#define isfrog(x) (istype(x, /mob/living/carbon/human) && istype(x:mutantrace, /datum/mutantrace/frog))
 #define isskeleton(x) (istype(x, /mob/living/carbon/human) && istype(x:mutantrace, /datum/mutantrace/skeleton))
 #define iscritter(x) istype(x, /obj/critter)
 #define isintangible(x) istype(x, /mob/living/intangible)
@@ -51,7 +51,7 @@
 #define isnewplayer(x) (istype(x, /mob/new_player))
 
 /// Returns true if this mob immune to breathing in smoke?
-#define issmokeimmune(x) (!isliving(x) || isintangible(x) || issilicon(x) || ((x?.wear_mask && (x.wear_mask.c_flags & BLOCKSMOKE || (x.wear_mask.c_flags & MASKINTERNALS && x.internal))) || ischangeling(x) || HAS_ATOM_PROPERTY(x, PROP_MOB_REBREATHING) || HAS_ATOM_PROPERTY(x, PROP_MOB_BREATHLESS) || isdead(x) || x?.losebreath > 0))
+#define issmokeimmune(x) (!isliving(x) || isintangible(x) || issilicon(x) || ((x?.wear_mask && (x.wear_mask.c_flags & BLOCKSMOKE || (x.wear_mask.c_flags & MASKINTERNALS && x.internal))) || ischangelingORlingcritter(x) || HAS_ATOM_PROPERTY(x, PROP_MOB_REBREATHING) || HAS_ATOM_PROPERTY(x, PROP_MOB_BREATHLESS) || isdead(x) || x?.losebreath > 0))
 
 /// Returns true if this mob immune to breathing in miasma
 #define ismiasmaimmune(x) (!isliving(x) || isintangible(x) || issilicon(x) || ((x?.wear_mask && x.wear_mask.c_flags & BLOCKMIASMA )))

@@ -93,44 +93,68 @@
 	var/menuchoice = tgui_alert(user, "What would you like to do with [src]?", "Use paper", list("Fold", "Read", "Nothing"))
 	if (!menuchoice || menuchoice == "Nothing")
 		return
-	else if (menuchoice == "Read")
+	if (menuchoice == "Read")
 		src.examine(user)
+		return
+
+	var/list/options = list("Paper hat", "Paper plane", "Paper crane", "Paper ball", "Cigarette packet")
+	if (user.traitHolder.hasTrait("training_chaplain"))
+		options += "Charm"
+	var/fold = tgui_input_list(user, "What would you like to fold [src] into?", "Fold paper", options)
+	if(src.disposed || !fold) //It's possible to queue multiple of these menus before resolving any.
+		return
+
+	if (fold == "Paper hat")
+		user.show_text("You fold the paper into a hat! Neat.", "blue")
+		var/obj/item/clothing/head/paper_hat/H = new()
+		H.setMaterial(src.material)
+		user.put_in_hand_or_drop(H)
+	else if (fold == "Cigarette packet")
+		user.show_text("You fold the paper into a cigarette packet! Neat.", "blue")
+		var/obj/item/cigpacket/paperpack/H = new()
+		H.setMaterial(src.material)
+		user.put_in_hand_or_drop(H)
 	else
-		var/fold = tgui_input_list(user, "What would you like to fold [src] into?", "Fold paper", list("Paper hat", "Paper plane", "Paper crane", "Paper ball", "Cigarette packet"))
-		if(src.disposed || !fold) //It's possible to queue multiple of these menus before resolving any.
+		var/obj/item/paper/folded/F = null
+		if (fold == "Paper plane")
+			user.show_text("You fold the paper into a plane! Neat.", "blue")
+			F = new /obj/item/paper/folded/plane(user)
+
+		else if (fold == "Paper crane")
+			user.show_text("You fold the paper into a crane! Neat.", "blue")
+			F = new /obj/item/paper/folded/crane(user)
+		else if (fold == "Paper ball")
+			user.show_text("You crumple the paper into a ball! Neat.", "blue")
+			F = new /obj/item/paper/folded/ball(user)
+		else if (fold == "Charm")
+			if (!length(src.info))
+				user.show_text("You must inscribe this paper with words of faith and protection first!", "red")
+				return
+			if (get_chaplain_faith(user) < FAITH_CHARM_CREATION)
+				user.show_text("You are not strong enough in your faith to form this devotion.", "red")
+				return
+			modify_chaplain_faith(user, -FAITH_CHARM_CREATION)
+			user.show_text("You carefully fold the paper into a charm. By your faith it has power.", "blue")
+			SPAWN(1 SECOND)
+				user.show_text("You feel your own connection to the divine weaken.", "red")
+			var/obj/item/clothing/suit/charm/charm = new(user)
+			user.u_equip(src)
+			src.set_loc(charm)
+			charm.paper = src
+			charm.setMaterial(src.material)
+			user.put_in_hand_or_drop(charm)
 			return
+		F.info = src.info
+		F.old_desc = src.desc
+		F.icon_old = src.icon
+		F.old_icon_state = src.icon_state
+		F.stamps = src.stamps
+		F.setMaterial(src.material)
 		user.u_equip(src)
-		if (fold == "Paper hat")
-			user.show_text("You fold the paper into a hat! Neat.", "blue")
-			var/obj/item/clothing/head/paper_hat/H = new()
-			H.setMaterial(src.material)
-			user.put_in_hand_or_drop(H)
-		else if (fold == "Cigarette packet")
-			user.show_text("You fold the paper into a cigarette packet! Neat.", "blue")
-			var/obj/item/cigpacket/paperpack/H = new()
-			H.setMaterial(src.material)
-			user.put_in_hand_or_drop(H)
-		else
-			var/obj/item/paper/folded/F = null
-			if (fold == "Paper plane")
-				user.show_text("You fold the paper into a plane! Neat.", "blue")
-				F = new /obj/item/paper/folded/plane(user)
+		user.put_in_hand_or_drop(F)
 
-			else if (fold == "Paper crane")
-				user.show_text("You fold the paper into a crane! Neat.", "blue")
-				F = new /obj/item/paper/folded/crane(user)
-			else
-				user.show_text("You crumple the paper into a ball! Neat.", "blue")
-				F = new /obj/item/paper/folded/ball(user)
-			F.info = src.info
-			F.old_desc = src.desc
-			F.icon_old = src.icon
-			F.old_icon_state = src.icon_state
-			F.stamps = src.stamps
-			F.setMaterial(src.material)
-			user.put_in_hand_or_drop(F)
-
-		qdel(src)
+	user.u_equip(src)
+	qdel(src)
 
 /obj/item/paper/attack_ai(var/mob/AI as mob)
 	//Papers can be alt+click inspected from anywhere, let's give attack_ai the same freedom
@@ -512,70 +536,6 @@
 	src.add_fingerprint(user)
 	return
 
-
-// cogwerks - creepy picture things
-
-/obj/item/paper/printout
-	name = "Printed Image"
-	desc = "Fancy."
-	var/print_icon = 'icons/effects/sstv.dmi'
-	var/print_icon_state = "sstv_1"
-	sizex = 640 + 0
-	sizey = 480 + 32
-	scrollbar = FALSE
-
-	New()
-		..()
-		src.info = "<img style='width: 100%; position: absolute; top: 0; left: 0' src='data:image/png;base64,[icon2base64(icon(print_icon,print_icon_state))]'>"
-		return
-
-	satellite
-		print_icon_state = "sstv_2"
-		desc = "Looks like a satellite view of a research base."
-
-	group1
-		print_icon_state = "sstv_3"
-		desc = "A group photo of a research team."
-
-	group2
-		print_icon_state = "sstv_4"
-		desc = "A group photo of a research team."
-
-	group3
-		print_icon_state = "sstv_6"
-		desc = "A group of scientists working in a lab."
-
-	researcher1
-		print_icon_state = "sstv_5"
-		desc = "A scientist handling what looks like an ice core."
-
-	researcher2
-		print_icon_state = "sstv_9"
-		desc = "The image is badly distorted, but it seems to be a researcher carrying a lab monkey."
-
-	slide1
-		print_icon_state = "sstv_7"
-		desc = "A microscopic slide. Seems to be some sort of biological cell structure."
-
-	slide2
-		print_icon_state = "sstv_8"
-		desc = "A dissection report of some kind of arachnid."
-
-	slide3
-		print_icon_state = "sstv_10"
-		desc = "A dissection report of... something. What the hell is that?"
-
-	emerg1
-		print_icon_state = "sstv_11"
-		desc = "A coded emergency broadcast."
-
-	crewlog1
-		print_icon_state = "sstv_12"
-		desc = "A blurry image of something approaching the photographer."
-
-	crewlog2
-		print_icon_state = "sstv_13"
-		desc = "Oh god."
 
 /obj/item/paper_bin
 	name = "paper bin"
@@ -1097,3 +1057,7 @@
 		Levels of FAAE (commonly known as "plasma") in the lakewater have reached 500μg per liter according to an EPA source, prompting the agency to declare a substantial threat to public health.<br>
 		Nanotrasen is the only company in the Seneca area licensed to transport plasma, hundreds of kilograms of which are used in the fuelling of their inter-channel shuttle services every month.
 	"}
+
+/obj/item/paper/printout
+	name = "Printout"
+	desc = "Fancy!"

@@ -470,17 +470,17 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 		if (!tampered && islist(chem_whitelist) && length(chem_whitelist))
 			src.whitelist = chem_whitelist
 		if (src.reagents)
-			src.reagents.temperature_cap = 330
-			src.reagents.temperature_min = 270
+			src.reagents.temperature_cap = T20C
+			src.reagents.temperature_min = T0C
 			src.reagents.temperature_reagents(change_min = 0, change_cap = 0)
 		if(borg)
 			src.flags &= ~ACCEPTS_MOUSEDROP_REAGENTS
 
 	on_reagent_change(add)
 		..()
-		if (src.reagents && (src.reagents.total_temperature > 330 || src.reagents.total_temperature < 270))
-			src.reagents.temperature_cap = 330
-			src.reagents.temperature_min = 270
+		if (src.reagents && (src.reagents.total_temperature > T20C || src.reagents.total_temperature < T0C))
+			src.reagents.temperature_cap = T20C
+			src.reagents.temperature_min = T0C
 			src.reagents.temperature_reagents(change_min = 0, change_cap = 0)
 		if (!tampered && add)
 			check_whitelist(src, src.whitelist)
@@ -692,14 +692,15 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/mender_refill_cartridge)
 	desc = "A container designed to be able to quickly refill medical auto-menders."
 	icon = 'icons/obj/chemical.dmi'
 	initial_volume = 200
-	initial_reagents = "nicotine"
 	// item_state = "ecigrefill"
 	icon_state = "mender-refill"
-	flags = TABLEPASS
+	flags = TABLEPASS | OPENCONTAINER
 	var/image/fluid_image
+	var/list/whitelist = list()
 
 	New()
 		. = ..()
+		src.whitelist = chem_whitelist
 
 		src.AddComponent( \
 			/datum/component/reagent_overlay, \
@@ -708,6 +709,16 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/mender_refill_cartridge)
 			reagent_overlay_states = 4, \
 			reagent_overlay_scaling = RC_REAGENT_OVERLAY_SCALING_LINEAR, \
 		)
+
+	on_reagent_change(add)
+		..()
+		if (src.reagents && (src.reagents.total_temperature > T20C || src.reagents.total_temperature < T0C))
+			src.reagents.temperature_cap = T20C
+			src.reagents.temperature_min = T0C
+			src.reagents.temperature_reagents(change_min = 0, change_cap = 0)
+		if (add)
+			check_whitelist(src, src.whitelist)
+		src.UpdateIcon()
 
 	proc/do_refill(var/obj/item/reagent_containers/mender, var/mob/user)
 		if (src?.reagents.total_volume > 0)

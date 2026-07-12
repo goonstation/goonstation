@@ -154,6 +154,14 @@
 	maximum_demand_level = 25
 	base_price_multiplier = 0.5
 
+/datum/demand_control/fossils
+	commodities = list(/datum/commodity/fossil)
+	high_demand_level = 20
+	static_growth = 0
+	current_demand_level = 20
+	maximum_demand_level = 25
+	base_price_multiplier = 0.5
+
 /datum/demand_control/common_ores
 	commodities = list(/datum/commodity/ore/mauxite, /datum/commodity/ore/pharosium, /datum/commodity/ore/molitz, /datum/commodity/ore/char)
 	high_demand_level = 100
@@ -199,6 +207,14 @@
 
 /datum/demand_control/rare_crystals
 	commodities = list(/datum/commodity/ore/erebite, /datum/commodity/ore/telecrystal, /datum/commodity/ore/uqill)
+	high_demand_level = 20
+	static_growth = 1
+	fluctuates = 0
+	current_demand_level = 30
+	maximum_demand_level = 50
+
+/datum/demand_control/fossils
+	commodities = list(/datum/commodity/fossil)
 	high_demand_level = 20
 	static_growth = 1
 	fluctuates = 0

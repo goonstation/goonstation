@@ -7,8 +7,9 @@
 		if (islist(path))
 			path = pick(path)
 		var/obj/O = new path(get_turf(object))
-		O.set_dir(holder.dir)
-		O.onVarChanged("dir", SOUTH, O.dir)
+		if(src.holder.dir)
+			O.set_dir(holder.dir)
+			O.onVarChanged("dir", SOUTH, O.dir)
 		blink(O.loc)
 
 	click_right(atom/object, var/ctrl, var/alt, var/shift)
