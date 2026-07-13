@@ -108,7 +108,7 @@
 
 	if (!src.script_iteration)
 		src.message_user("[src.read_user_field("name")]@DWAINE - [time2text(world.realtime, "hh:mm MM/DD/53")]|nType \"help\" for command listing.", "multiline")
-		src.init_histfile_if_not_exist(src.useracc)
+		src.init_histfile(src.useracc)
 
 	src.process()
 
@@ -474,7 +474,7 @@
 	return FALSE
 
 /// creates the history file if not exists. TECHNICALLY history files on disk get written when your shell session ends but we do not seperate ram histfile and disk histfile
-/datum/computer/file/mainframe_program/shell/proc/init_histfile_if_not_exist(datum/mainframe2_user_data/useracc)
+/datum/computer/file/mainframe_program/shell/proc/init_histfile(datum/mainframe2_user_data/useracc)
 	if (!istype(useracc))
 		return TRUE
 
