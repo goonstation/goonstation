@@ -33,6 +33,8 @@ TYPEINFO(/mob/living/critter/wraith/demon_doll)
 		src.addAbility(/datum/targetable/critter/demon_doll/devious_song)
 		src.addAbility(/datum/targetable/critter/demon_doll/shrieking_song)
 		src.addAbility(/datum/targetable/critter/demon_doll/bouncy_song)
+		src.addAbility(/datum/targetable/critter/demon_doll/juggle_song)
+		src.addAbility(/datum/targetable/critter/demon_doll/gravity_song)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_THERMALVISION, src)
 
@@ -134,6 +136,54 @@ TYPEINFO(/mob/living/critter/wraith/demon_doll)
 			living_owner.bioHolder.AddEffect("regenerator", magical = 1)
 			REMOVE_MOVEMENT_MODIFIER(living_owner, /datum/movement_modifier/dark_affinity_off, src.type)
 			APPLY_MOVEMENT_MODIFIER(living_owner, /datum/movement_modifier/dark_affinity_on, src.type)
+
+/datum/statusEffect/gravity_song
+	id = "gravity_song"
+	name = "Gravity Song"
+	desc = "Your singing is flinging anything you juggle!"
+	icon_state = "sugar_rush"
+	duration = INFINITE_STATUS
+	maxDuration = null
+	unique = 1
+	var/counter = 0
+
+	onUpdate(timePassed)
+		counter += timePassed
+		if (counter >= 50)
+			var/mob/living/juggler = src.owner
+			counter = 0
+			if (length(juggler.juggling))
+				var/atom/movable/juggled = pick(juggler.juggling)
+				throw_thing(juggler, juggled)
+		. = ..(timePassed)
+
+	proc/throw_thing(var/mob/living/juggler, var/atom/movable/picked_thing)
+		if (!picked_thing)
+			return
+
+		var/list/humans = list()
+		for (var/mob/living/carbon/human/H in view(6, juggler))
+			if (isalive(H) && H.client && !H.nodamage && (H.invisibility <= INVIS_NONE))
+				humans += H
+
+		if (!humans)
+			return
+
+		var/mob/living/carbon/human/closest
+		for (var/mob/living/carbon/human/victim in humans)
+			if (!closest || GET_DIST(juggler, victim) < GET_DIST(juggler, closest))
+				closest = victim
+
+		if (closest && picked_thing)
+			juggler.remove_juggle(picked_thing, FALSE)
+			picked_thing.set_loc(juggler.loc)
+			picked_thing.pixel_y += 20
+			SPAWN(1 SECONDS)
+				picked_thing.throw_at(closest.loc, 10, 2, bonus_throwforce = 10)
+
+
+
+
 
 
 

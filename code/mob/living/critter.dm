@@ -57,7 +57,6 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	var/list/healthlist = list()
 
 	var/can_implant = TRUE
-	var/can_juggle = FALSE
 
 	var/death_text = null // can use %src%
 	var/pet_text = "pets" // can be a list

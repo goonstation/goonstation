@@ -67,15 +67,45 @@
 				continue
 			HH.apply_sonic_stun(0, 0, 30, 0, 5, 4, 6)
 
-/datum/targetable/critter/demon_doll/gravity_song
-	name = "Gravity Song"
-	desc = "Hum a tune to levitate-juggle anything that isn't bolted to the floor."
+/datum/targetable/critter/demon_doll/juggle_song
+	name = "juggle Song"
+	desc = "Hum a tune to bring anything not bolted to the floor towards your juggling mitts."
+	cooldown = 1 SECONDS
 	targeted = 1
 	target_anything = 1
 
 	cast(atom/target)
+		var/obj/juggled_obj
+		if (isobj(target))
+			juggled_obj = target
+			if (juggled_obj.anchored || juggled_obj == src.holder.owner || juggled_obj.anchored == ANCHORED_ALWAYS)
+				boutput(src.holder.owner, SPAN_ALERT("The void won't grant you enough strength for that."))
+				return
+		. = ..()
+		var/mob/living/juggler = src.holder.owner
+		juggler.playsound_local(juggler.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 40, 0)
+		juggler.add_juggle(target)
 
+/datum/targetable/critter/demon_doll/gravity_song
+	name = "Gravity Song"
+	desc = "Vibrate the air with your music, tossing random juggled things at nearby humans while it's active."
+	icon_state = "song_gravity_off"
+	cooldown = 1 SECONDS
+	targeted = 0
+	var/active = FALSE
 
+	cast(atom/target)
+		if (..())
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+
+		if (src.active)
+			src.icon_state = "song_gravity_off"
+			src.active = FALSE
+			src.holder.owner.delStatus("gravity_song")
+		else
+			src.icon_state = "song_gravity_on"
+			src.active = TRUE
+			src.holder.owner.setStatus("gravity_song")
 
 /datum/targetable/critter/demon_doll/bouncy_song
 	name = "Bouncy Song"
@@ -186,6 +216,8 @@
 		var/chosen_trap = pick(concrete_typesof(/obj/machinery/wraith/runetrap/))
 		var/obj/machinery/wraith/runetrap/trap = new chosen_trap(hit.loc, arming_time = 1 SECONDS)
 		trap.free_trap = TRUE
+
+
 
 
 
