@@ -39,6 +39,10 @@
 // Chose 16 letters that look distinct and sort of fingerprinty with curves and such
 #define FORENSIC_CHARS_FINGERPRINTS list("a","b","c","d","e","g","n","o","p","q","s","u","v","x","y","z")
 #define FORENSIC_CHARS_HEX list("0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F")
+// Letters that do not look like numbers (such as 'D', 'O', 'I', etc)
+#define FORENSIC_CHARS_UPPER_LIMITED list("A","B","C","E","F","H","K","L","M","N","P","R","T","U","V","W","X","Y","Z")
+#define FORENSIC_CHARS_LOWER_LIMITED list("a","b","c","d","e","f","g","h","k","m","n","p","q","r","s","t","u","v","w","x","y","z")
+#define FORENSIC_CHARS_NUMBERS list("0","1","2","3","4","5","6","7","8","9")
 
 #define FORENSIC_GLOVE_MASK_FINGERLESS "0123-4567-89AB-CDEF"
 #define FORENSIC_GLOVE_MASK_NONE "...???..."

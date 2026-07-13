@@ -1720,6 +1720,10 @@ TYPEINFO(/obj/machinery/networked/printer)
 	var/blinking = 0 //Is our indicator light blinking?
 	var/sheets_remaining = 15 //How many blank sheets of paper do we have left?
 
+	var/static/datum/forensic_display/forensic_pattern_disp = new("Recently Printed: @F")
+	var/forensic_pattern_prefix = "PRINTER"
+	var/datum/forensic_id/forensic_pattern
+
 #define MAX_SHEETS 20
 #define SETUP_JAM_IGNITION 6 //How jammed do we have to be before we break down?
 #define MAX_PRINTBUFFER_SIZE 10
@@ -1730,6 +1734,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 		src.AddComponent(/datum/component/obj_projectile_damage)
 		if(!print_id)
 			src.print_id = "GENERIC"
+		src.forensic_pattern = register_id("[src.forensic_pattern_prefix]-[build_id_pattern("L###")]")
 
 		SPAWN(0.5 SECONDS)
 			src.net_id = generate_net_id(src)
@@ -2034,6 +2039,10 @@ TYPEINFO(/obj/machinery/networked/printer)
 
 		return
 
+	on_forensic_scan(datum/forensic_scan/scan)
+		. = ..()
+		scan.add_text("Printing Pattern: [src.forensic_pattern.id]")
+
 	proc
 		print()
 			if(status & (NOPOWER|BROKEN))
@@ -2074,15 +2083,14 @@ TYPEINFO(/obj/machinery/networked/printer)
 
 				if (istype(print_text, /datum/computer/file/image)) // trying to print a photo! :I
 					var/datum/computer/file/image/IMG = print_text
-					/*var/obj/item/photo/P = */new/obj/item/photo(src.loc, IMG.ourImage, IMG.ourIcon, IMG.img_name, IMG.img_desc)
-					/*P.fullImage = IMG.ourImage ? IMG.ourImage : image(IMG.ourIcon)
-					P.fullIcon = IMG.ourIcon
-					P.name = IMG.img_name
-					P.desc = IMG.img_desc*/
+					var/obj/item/photo/P = new(src.loc, IMG.ourImage, IMG.ourIcon, IMG.img_name, IMG.img_desc)
+					var/datum/forensic_data/basic/pattern_data = new(src.forensic_pattern, src.forensic_pattern_disp)
+					P.add_evidence(pattern_data)
 				else
 					var/obj/item/paper/P = new /obj/item/paper
 					P.set_loc(src.loc)
-
+					var/datum/forensic_data/basic/pattern_data = new(src.forensic_pattern, src.forensic_pattern_disp)
+					P.add_evidence(pattern_data)
 
 					var/titlepoint = findtext(print_text, "&title;",1 , 72)
 					if (titlepoint)

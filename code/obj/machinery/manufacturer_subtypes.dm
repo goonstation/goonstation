@@ -4,6 +4,7 @@
 /obj/machinery/manufacturer/general
 	name = "general manufacturer"
 	supplemental_desc = "This one produces tools and other hardware, as well as general-purpose items like replacement lights."
+	forensic_pattern_prefix = "GEN"
 	free_resources = list(/obj/item/material_piece/steel = 5,
 		/obj/item/material_piece/copper = 5,
 		/obj/item/material_piece/glass = 5)
@@ -90,6 +91,7 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 	name = "grody manufacturer"
 	desc = "It's covered in more gunk than a truck stop ashtray. Is this thing even safe?"
 	supplemental_desc = "This one has seen better days. There are bits and pieces of the internal mechanisms poking out the side."
+	forensic_pattern_prefix = "GRODY"
 	free_resources = list()
 	malfunction = TRUE
 	wires = 15 & ~(1 << 3) // This cuts the malfunction wire, so the fab malfunctions immediately
@@ -99,6 +101,7 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 	supplemental_desc = "This one produces robot parts, cybernetic organs, and other robotics-related equipment."
 	icon_state = "fab-robotics"
 	icon_base = "robotics"
+	forensic_pattern_prefix = "ROBO"
 	free_resources = list(/obj/item/material_piece/steel = 5,
 		/obj/item/material_piece/copper = 5,
 		/obj/item/material_piece/glass = 5)
@@ -204,6 +207,7 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 	supplemental_desc = "This one produces medical equipment and sterile clothing."
 	icon_state = "fab-med"
 	icon_base = "med"
+	forensic_pattern_prefix = "MEDIC"
 	free_resources = list(/obj/item/material_piece/steel = 2,
 		/obj/item/material_piece/copper = 2,
 		/obj/item/material_piece/glass = 2,
@@ -280,6 +284,7 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 	supplemental_desc = "This one produces science equipment for experiments as well as expeditions."
 	icon_state = "fab-sci"
 	icon_base = "sci"
+	forensic_pattern_prefix = "SCI"
 	free_resources = list(/obj/item/material_piece/steel = 2,
 		/obj/item/material_piece/copper = 2,
 		/obj/item/material_piece/glass = 2,
@@ -337,6 +342,7 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 	supplemental_desc = "This one produces mining equipment like concussive charges and powered tools."
 	icon_state = "fab-mining"
 	icon_base = "mining"
+	forensic_pattern_prefix = "MINING"
 	free_resources = list(/obj/item/material_piece/steel = 2,
 		/obj/item/material_piece/copper = 2,
 		/obj/item/material_piece/glass = 2)
@@ -392,6 +398,7 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 	supplemental_desc = "This one produces modules for space pods or minisubs."
 	icon_state = "fab-hangar"
 	icon_base = "hangar"
+	forensic_pattern_prefix = "SHIP"
 	free_resources = list(/obj/item/material_piece/steel = 2,
 		/obj/item/material_piece/copper = 2,
 		/obj/item/material_piece/glass = 2)
@@ -438,6 +445,7 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 	supplemental_desc = "This one can create a wide variety of one-size-fits-all jumpsuits, as well as backpacks and radio headsets."
 	icon_state = "fab-jumpsuit"
 	icon_base = "jumpsuit"
+	forensic_pattern_prefix = "UNIFORM"
 	free_resources = list(/obj/item/material_piece/cloth/cottonfabric = 5,
 		/obj/item/material_piece/steel = 5,
 		/obj/item/material_piece/copper = 5)
@@ -508,6 +516,7 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 	icon_state = "fab-atmos"
 	icon_base = "atmos"
 	accept_blueprints = FALSE
+	forensic_pattern_prefix = "ATMOS"
 	available = list(
 		/datum/manufacture/atmos_can,
 		/datum/manufacture/air_can/large,
@@ -524,6 +533,7 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 	desc = "A specialized manufacturing unit designed to create new things (or copies of existing things) from blueprints."
 	icon_state = "fab-hangar"
 	icon_base = "hangar"
+	forensic_pattern_prefix = "REVERSE"
 	free_resources = list(/obj/item/material_piece/steel = 2,
 		/obj/item/material_piece/copper = 2,
 		/obj/item/material_piece/glass = 2)
@@ -533,6 +543,7 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 	supplemental_desc = "This one can produce blank ID cards and access implants."
 	icon_state = "fab-access"
 	icon_base = "access"
+	forensic_pattern_prefix = "ACCESS"
 	free_resources = list(/obj/item/material_piece/steel = 2,
 		/obj/item/material_piece/copper = 2,
 		/obj/item/material_piece/glass = 2)
@@ -553,6 +564,7 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 	supplemental_desc = "This one is a multi-purpose model, and is able to produce uniforms, headsets, and identification equipment."
 	icon_state = "fab-access"
 	icon_base = "access"
+	forensic_pattern_prefix = "UNIFORM"
 	free_resources = list(/obj/item/material_piece/steel = 5,
 		/obj/item/material_piece/copper = 5,
 		/obj/item/material_piece/glass = 5,
@@ -570,6 +582,7 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 	supplemental_desc = "This one produces crates, carts, that sort of thing. Y'know, box stuff."
 	icon_state = "fab-crates"
 	icon_base = "crates"
+	forensic_pattern_prefix = "CARGO"
 	free_resources = list(/obj/item/material_piece/steel = 1,
 		/obj/item/material_piece/organic/wood = 1)
 	accept_blueprints = FALSE
@@ -615,6 +628,7 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 	desc = "This manufacturing unit seems to have been loaded with a bunch of nonstandard blueprints, apparently to be useful in surviving \"extreme scenarios\"."
 	icon_state = "fab-crates"
 	icon_base = "crates"
+	forensic_pattern_prefix = "ZOMBIE"
 	free_resources = list(/obj/item/material_piece/steel = 50,
 		/obj/item/material_piece/copper = 50,
 		/obj/item/material_piece/glass = 50,
@@ -661,6 +675,7 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 	desc = "This one produces specialist engineering devices."
 	icon_state = "fab-engineering"
 	icon_base = "engineering"
+	forensic_pattern_prefix = "ENGI"
 	free_resources = list(/obj/item/material_piece/steel = 2,
 		/obj/item/material_piece/copper = 2,
 		/obj/item/material_piece/glass = 2)

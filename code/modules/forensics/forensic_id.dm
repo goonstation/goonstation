@@ -54,6 +54,21 @@ var/global/list/datum/forensic_id/registered_id_list = new()
 
 /proc/build_id_fingerprint(var/list/char_list)
 	return build_id_separate(build_id_norepeat(char_list, 16), 4)
+/proc/build_id_pattern(var/str_pattern)
+	// L = Uppercase Letter | l = Lowercase Letter | # = Number
+	var/result = ""
+	for(var/i in 1 to length(str_pattern))
+		var/char = copytext(str_pattern, i, i + 1)
+		switch(char)
+			if("L") // Uppercase letters
+				result += pick(FORENSIC_CHARS_UPPER_LIMITED)
+			if("l")
+				result += pick(FORENSIC_CHARS_LOWER_LIMITED)
+			if("#") // Uppercase letters
+				result += pick(FORENSIC_CHARS_NUMBERS)
+			else
+				result += char
+	return result
 
 // -----| Forensic Display |-----
 
