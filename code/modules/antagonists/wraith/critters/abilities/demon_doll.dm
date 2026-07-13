@@ -70,6 +70,7 @@
 /datum/targetable/critter/demon_doll/juggle_song
 	name = "juggle Song"
 	desc = "Hum a tune to bring anything not bolted to the floor towards your juggling mitts."
+	icon_state = "song_juggle"
 	cooldown = 1 SECONDS
 	targeted = 1
 	target_anything = 1

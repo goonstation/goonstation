@@ -177,9 +177,7 @@ TYPEINFO(/mob/living/critter/wraith/demon_doll)
 		if (closest && picked_thing)
 			juggler.remove_juggle(picked_thing, FALSE)
 			picked_thing.set_loc(juggler.loc)
-			picked_thing.pixel_y += 20
-			SPAWN(1 SECONDS)
-				picked_thing.throw_at(closest.loc, 10, 2, bonus_throwforce = 10)
+			picked_thing.throw_at(closest.loc, 10, 2, bonus_throwforce = 10)
 
 
 
