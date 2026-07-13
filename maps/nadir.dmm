@@ -11549,10 +11549,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
-"fmj" = (
-/obj/machinery/vending/monkey/genetics,
-/turf/simulated/floor/grass,
-/area/station/medical/dome)
 "fmy" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -11848,6 +11844,18 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
+"ftc" = (
+/obj/table/reinforced/auto,
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/mask/surgical{
+	pixel_y = 6
+	},
+/obj/item/storage/box/biohazard_bags{
+	pixel_x = -14;
+	pixel_y = 9
+	},
+/turf/simulated/floor/blackwhite,
+/area/station/medical/morgue)
 "fte" = (
 /obj/machinery/portable_reclaimer,
 /obj/machinery/light_switch/directional/east,
@@ -12198,6 +12206,10 @@
 	dir = 8
 	},
 /area/station/medical/medbay/cloner)
+"fAh" = (
+/obj/machinery/vending/monkey/genetics,
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
 "fAq" = (
 /turf/simulated/floor/shuttlebay/flock/middle,
 /area/flock_trader)
@@ -19959,6 +19971,26 @@
 	},
 /turf/simulated/floor/industrial,
 /area/station/mining/staff_room)
+"iGn" = (
+/obj/table/reinforced/auto,
+/obj/item/circular_saw{
+	pixel_x = 3;
+	pixel_y = 12
+	},
+/obj/item/scalpel,
+/obj/item/surgical_spoon{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/scissors/surgical_scissors,
+/obj/item/staple_gun,
+/obj/item/hand_labeler{
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/glass/bottle/formaldehyde,
+/obj/item/reagent_containers/syringe,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "iGw" = (
 /obj/machinery/door/airlock/pyro/glass/security{
 	req_access = null
@@ -26425,6 +26457,27 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
+"lxo" = (
+/obj/surgery_tray,
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/mask/surgical{
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/obj/item/clothing/mask/surgical_shield,
+/obj/item/hemostat,
+/obj/item/staple_gun,
+/obj/item/surgical_spoon,
+/obj/item/scissors/surgical_scissors,
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/station/medical/medbay/surgery)
 "lxv" = (
 /turf/simulated/floor/carpet/red/fancy/edge/north,
 /area/station/crew_quarters/quarters_east)
@@ -31077,31 +31130,6 @@
 /obj/machinery/turret,
 /turf/simulated/floor/greenblack,
 /area/station/turret_protected/Zeta)
-"nvM" = (
-/obj/storage/crate/freezer{
-	name = "Freezer - Spare Parts"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
-	desc = "Gross.";
-	name = "old kidney"
-	},
-/obj/item/organ/eye,
-/obj/item/organ/heart{
-	desc = "A human heart, grody. How long has it been in that freezer?";
-	name = "funky ol' heart"
-	},
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/blackwhite{
-	dir = 5
-	},
-/area/station/medical/morgue)
 "nvP" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/firstaid/regular{
@@ -42558,27 +42586,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"sPN" = (
-/obj/surgery_tray,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/mask/surgical{
-	pixel_x = -2;
-	pixel_y = 5
-	},
-/obj/item/clothing/mask/surgical_shield,
-/obj/item/hemostat,
-/obj/item/staple_gun,
-/obj/item/surgical_spoon,
-/obj/item/scissors/surgical_scissors,
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/turf/simulated/floor/redblack{
-	dir = 4
-	},
-/area/station/medical/medbay/surgery)
 "sPV" = (
 /obj/machinery/computer/operating/small,
 /turf/simulated/floor/white/grime,
@@ -43381,26 +43388,6 @@
 /obj/stool/chair/office{
 	dir = 4
 	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
-"thH" = (
-/obj/table/reinforced/auto,
-/obj/item/circular_saw{
-	pixel_x = 3;
-	pixel_y = 12
-	},
-/obj/item/scalpel,
-/obj/item/surgical_spoon{
-	pixel_x = 3;
-	pixel_y = 4
-	},
-/obj/item/scissors/surgical_scissors,
-/obj/item/staple_gun,
-/obj/item/hand_labeler{
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/glass/bottle/formaldehyde,
-/obj/item/reagent_containers/syringe,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "thP" = (
@@ -46280,18 +46267,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/arcade/dungeon)
-"uxA" = (
-/obj/table/reinforced/auto,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/mask/surgical{
-	pixel_y = 6
-	},
-/obj/item/storage/box/biohazard_bags{
-	pixel_x = -14;
-	pixel_y = 9
-	},
-/turf/simulated/floor/blackwhite,
-/area/station/medical/morgue)
 "uxX" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -53275,6 +53250,34 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
+"xJU" = (
+/obj/storage/crate/freezer{
+	name = "Freezer - Spare Parts"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
+	desc = "Gross.";
+	name = "old kidney"
+	},
+/obj/item/organ/eye,
+/obj/item/organ/heart{
+	desc = "A human heart, grody. How long has it been in that freezer?";
+	name = "funky ol' heart"
+	},
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
+/turf/simulated/floor/blackwhite{
+	dir = 5
+	},
+/area/station/medical/morgue)
 "xJY" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -98012,7 +98015,7 @@ iqo
 eej
 ibp
 fsR
-sPN
+lxo
 xlx
 tyd
 gUi
@@ -101035,7 +101038,7 @@ nlI
 jrx
 prh
 nlI
-uxA
+ftc
 fBA
 keg
 owZ
@@ -101334,7 +101337,7 @@ mGl
 nlI
 nlI
 sJJ
-thH
+iGn
 jrx
 qka
 adb
@@ -102236,7 +102239,7 @@ lRC
 fgA
 aFj
 fBA
-nvM
+xJU
 vYx
 kaR
 pUw
@@ -104354,7 +104357,7 @@ rlw
 rlw
 rlw
 rlw
-fmj
+fAh
 vqO
 foq
 vdT

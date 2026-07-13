@@ -1,4 +1,51 @@
 
+(t)sun jul 12 26
+(u)glowbold
+(+)Chaplain headsets have medical radio access.
+(u)JORJ949
+(p)26981
+(e)🆕🎨⚖⏰🐣|C-Feature, C-Sprites, C-Balance, A-Status-Effects, A-Respawning
+(*)You can now select both standard borg arms in character setup, however they no longer break cuffs.
+(*)Sturdy (1 reinforcement) cyborg arms can now be attached to humans and still break cuffs.
+(u)Cheekybrdy
+(p)26764
+(e)⚖🐣|C-Balance, A-Respawning
+(+)Midround events can now happen at all population amounts (1 minimum down from 15).
+(u)Midnightradar
+(p)26499
+(e)⚗|A-Chemistry
+(*)Added a new drink/disease reagent.
+(*)Added a new disease, "Water Poisoning".
+(+)Triple water and soda water don't like to be in the same container anymore.
+(u)LorrMaster
+(p)26654
+(e)🆕🎨🧱|C-Feature, C-Sprites, A-Materials
+(*)Rods in the nuclear reactor now have different melting points depending on the rod's material.
+(u)glowbold
+(p)25847
+(e)🗺⚖🧫⛔💊🐣|A-Mapping, C-Balance, C-Experimental, C-Removal, A-Medical, A-Respawning
+(*)Enzymatic Reclaimers only accept organs and limbs.
+(*)Empty Clone Pods will slowly regenerate bio-matter to the minimum required to clone.
+(*)Clone Pods accept an IV bag, injects into the growing clone.
+(+)Click-dragging blood/synthmeat/etc from reagent containers to Clone Pods transfers the entire amount.
+(u)Chasu
+(p)27067
+(f)https://forum.ss13.co/showthread.php?tid=25277
+(e)|
+(*)The timer before the start of the round has been extended by two minutes
+(u)Calphrick
+(p)26837
+(e)⚖🏅🛠️|C-Balance, A-Medal, A-Engineering
+(+)Reduced the credit requirement of the Chief Engineer's "Earn at least x credits via the PTL" from one million to one hundred thousand.
+(u)LorrMaster
+(p)26966
+(e)💅🧱|C-QoL, A-Materials
+(*)Any material may now be turned into sheets using the sheet extruder.
+(u)ANNmagedon
+(p)27005
+(e)|
+(+)More hotspot equipment has been added to the engineering manufacturer on maps with hotspots.
+(+)Miners can now print powered shovels on all maps (for fossils).
 (t)sat jul 11 26
 (u)CalliopeSoups
 (p)27112

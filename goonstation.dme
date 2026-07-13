@@ -1736,6 +1736,7 @@
 #include "code\modules\medical\diseases\teleportitis.dm"
 #include "code\modules\medical\diseases\tissue_necrosis.dm"
 #include "code\modules\medical\diseases\vamplague.dm"
+#include "code\modules\medical\diseases\water_poisoning.dm"
 #include "code\modules\medical\diseases\organ_diseases\appendicitis.dm"
 #include "code\modules\medical\diseases\organ_diseases\kidney_failure.dm"
 #include "code\modules\medical\diseases\organ_diseases\liver_failure.dm"

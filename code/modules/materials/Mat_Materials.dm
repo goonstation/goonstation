@@ -626,6 +626,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("hard", 2)
 		setProperty("electrical", 4)
 		setProperty("thermal", 4)
+		setProperty("melting_point", 1500 KELVIN)
 
 
 /datum/material/metal/electrum
@@ -643,6 +644,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("electrical", 9)
 		setProperty("density", 4)
 		setProperty("hard", 1)
+		setProperty("melting_point", 1300 KELVIN)
 
 
 /datum/material/metal/veranium
@@ -667,6 +669,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("thermal", 1)
 		setProperty("density", 4)
 		setProperty("chemical", 2)
+		setProperty("melting_point", 1600 KELVIN)
 		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/shock_life(4 SECONDS, 6 SECONDS, 100))
 
 /datum/material/metal/voltite
@@ -682,6 +685,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("density", 4)
 		setProperty("thermal", 1)
 		setProperty("hard", 1)
+		setProperty("melting_point", 1500 KELVIN)
 		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/shock_life(4 SECONDS, 6 SECONDS, 100))
 		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/arcflash_life(6 SECONDS, 8 SECONDS, 500))
 
@@ -700,6 +704,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		..()
 		setProperty("density", 4)
 		setProperty("hard", 3)
+		setProperty("melting_point", 1700 KELVIN)
 
 /datum/material/metal/copper
 	mat_id = "copper"
@@ -717,6 +722,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("electrical", 6)
 		setProperty("density", 2)
 		setProperty("hard", 1)
+		setProperty("melting_point", 1357 KELVIN)
 
 
 /datum/material/metal/pharosium
@@ -734,6 +740,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("electrical", 7)
 		setProperty("density", 2)
 		setProperty("hard", 2)
+		setProperty("melting_point", 1400 KELVIN)
 
 
 /datum/material/metal/cobryl
@@ -753,7 +760,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("density", 4)
 		setProperty("hard", 2)
 		setProperty("chemical", 8)
-
+		setProperty("melting_point", 900 KELVIN)
 
 
 /datum/material/metal/bohrum
@@ -777,6 +784,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("density", 6)
 		setProperty("hard", 5)
 		setProperty("chemical", 7)
+		setProperty("melting_point", 1700 KELVIN)
 
 /datum/material/metal/mauxite
 	mat_id = "mauxite"
@@ -798,6 +806,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		..()
 		setProperty("density", 4)
 		setProperty("hard", 3)
+		setProperty("melting_point", 1750 KELVIN)
 
 
 /datum/material/metal/cerenkite
@@ -824,6 +833,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("electrical", 6)
 		setProperty("radioactive", 5)
 		setProperty("hard", 2)
+		setProperty("melting_point", 1700 KELVIN)
 
 /datum/material/metal/syreline
 	mat_id = "syreline"
@@ -843,6 +853,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("density", 1)
 		setProperty("hard", 2)
 		setProperty("reflective", 8)
+		setProperty("melting_point", 2100 KELVIN) // Around the melting point of platnum
 
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/sparkles_add())
 		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/sparkles_remove())
@@ -868,6 +879,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("reflective", 6)
 		setProperty("electrical", 7)
 		setProperty("thermal", 7)
+		setProperty("melting_point", 1337 KELVIN)
 
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/sparkles_add())
 		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/sparkles_remove())
@@ -891,6 +903,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("hard", 2)
 		setProperty("reflective", 6)
 		setProperty("electrical", 6)
+		setProperty("melting_point", 1235 KELVIN)
 
 /datum/material/metal/batiline
 	mat_id = "batiline"
@@ -916,6 +929,8 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("thermal", 5)
 		setProperty("chemical", 4)
 		setProperty("reflective", 4)
+		setProperty("melting_point", 600 KELVIN) // Melting point of lead.
+
 		// TODO: Add lead poisoning. Would probably be best to implement via the reagent reaction system.
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/radiation_immune_add())
 		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/radiation_immune_remove())
@@ -932,6 +947,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		..()
 		setProperty("density", 7)
 		setProperty("hard", 3)
+		setProperty("melting_point", 1800 KELVIN)
 
 
 /datum/material/metal/neutronium
@@ -974,7 +990,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("density", 2) //fucked up values for fucked up material but not silly putty
 		setProperty("hard", 2)
 		setProperty("electrical", 2)
-
+		setProperty("melting_point", 1500 KELVIN)
 
 /datum/material/metal/spacelag
 	mat_id = "spacelag"
@@ -1012,6 +1028,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("density", 8)
 		setProperty("hard", 8)
 		setProperty("chemical", 9)
+		setProperty("melting_point", 2700 KELVIN)
 
 
 /datum/material/metal/negativematter
@@ -1048,6 +1065,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		material_flags|= MATERIAL_ENERGY
 		setProperty("density", 4)
 		setProperty("hard", 2)
+		setProperty("melting_point", 1600 KELVIN)
 		addTrigger(TRIGGERS_ON_ENTERED, new /datum/materialProc/soulsteel_entered())
 
 
@@ -1076,6 +1094,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		..()
 		setProperty("density", 2)
 		setProperty("hard", 3)
+		setProperty("melting_point", 1500 KELVIN)
 
 
 /datum/material/crystal/molitz
@@ -1091,6 +1110,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("density", 3)
 		setProperty("hard", 4)
 		setProperty("molitz_bubbles", 4)
+		setProperty("melting_point", 1900 KELVIN) // Around the melting point of quartz
 		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/molitz_temp())
 		addTrigger(TRIGGERS_ON_EXPLOSION, new /datum/materialProc/molitz_exp())
 
@@ -1103,6 +1123,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		New()
 			..()
 			// no need to remove molitz_on_hit, all it does is call molitz_temp
+			setProperty("melting_point", 2000 KELVIN)
 			removeTrigger(TRIGGERS_ON_TEMP, /datum/materialProc/molitz_temp)
 			addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/molitz_temp/agent_b())
 			return
@@ -1113,6 +1134,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		color = "#808080"
 		New()
 			..()
+			setProperty("melting_point", 2700 KELVIN)
 			removeTrigger(TRIGGERS_ON_TEMP, /datum/materialProc/molitz_temp)
 			removeTrigger(TRIGGERS_ON_EXPLOSION, /datum/materialProc/molitz_exp)
 
@@ -1141,6 +1163,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("density", 3)
 		setProperty("hard", 1)
 		setProperty("electrical", 8)
+		setProperty("melting_point", 1200 KELVIN)
 
 /datum/material/crystal/erebite
 	mat_id = "erebite"
@@ -1212,7 +1235,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		..()
 		setProperty("density", 3)
 		setProperty("hard", 7)
-
+		setProperty("melting_point", 1600 KELVIN) // Glass melting point + 500
 
 /datum/material/crystal/gemstone
 	mat_id = "quartz"
@@ -1231,6 +1254,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 				name = "clear [src.name]"
 				setProperty("density", 6)
 				setProperty("hard", 7)
+				setProperty("melting_point", 2300 KELVIN)
 				addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/sparkles_add())
 				addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/sparkles_remove())
 			if(2)
@@ -1238,11 +1262,13 @@ ABSTRACT_TYPE(/datum/material/crystal)
 				name = "flawed [src.name]"
 				setProperty("density", 4)
 				setProperty("hard", 5)
+				setProperty("melting_point", 2100 KELVIN)
 			if(3)
 				value = 200
 				name = "inferior [src.name]"
 				setProperty("density", 3)
 				setProperty("hard", 4)
+				setProperty("melting_point", 1800 KELVIN)
 
 
 	diamond
@@ -1371,6 +1397,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("density", 8)
 		setProperty("hard", 4)
 		setProperty("chemical", 9)
+		setProperty("melting_point", 3200 KELVIN)
 
 
 // hi it me cirr im doing dumb
@@ -1396,6 +1423,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("hard", 5) // very hard
 		setProperty("reflective", 9) // shiny
 		setProperty("electrical", 7) // good conductor
+		setProperty("melting_point", 1000 KELVIN)
 
 
 /datum/material/crystal/telecrystal
@@ -1416,6 +1444,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("density", 1)
 		setProperty("hard", 2)
 		setProperty("reflective", 8)
+		setProperty("melting_point", 1331 KELVIN)
 		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/telecrystal_life())
 		addTrigger(TRIGGERS_ON_ENTERED, new /datum/materialProc/telecrystal_entered())
 		addTrigger(TRIGGERS_ON_ATTACK, new /datum/materialProc/telecrystal_onattack())
@@ -1437,6 +1466,9 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("hard", rand(1, 8))
 		setProperty("reflective", rand(1, 9))
 		setProperty("chemical", rand(1, 8))
+		var/rand_val = rand()
+		var/melting_point = (3500 KELVIN * (rand_val * rand_val)) + 500 KELVIN
+		setProperty("melting_point", melting_point)
 		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/temp_miraclium())
 
 
@@ -1460,6 +1492,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("density", 9)
 		setProperty("hard", 9)
 		setProperty("electrical", 1)
+		setProperty("melting_point", 4300 KELVIN) // Around the melting point of diamond
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/sparkles_add())
 		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/sparkles_remove())
 
@@ -1481,6 +1514,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("electrical", 2)
 		setProperty("density", 1)
 		setProperty("hard", 2)
+		setProperty("melting_point", round(T0C))
 		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/ice_melt())
 		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/ice_life())
 		addTrigger(TRIGGERS_ON_ATTACK, new /datum/materialProc/slippery_attack())
@@ -1562,6 +1596,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("density", 5)
 		setProperty("hard", 1)
 		setProperty("flammable", 5)
+		setProperty("melting_point", 400 KELVIN)
 		addTrigger(TRIGGERS_ON_EAT, new /datum/materialProc/oneat_blob())
 
 
@@ -1648,6 +1683,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("reflective", 6)
 		setProperty("n_radioactive", 1)
 		setProperty("density", 5)
+		setProperty("melting_point", 6000 KELVIN)
 
 /datum/material/organic/viscerite
 	mat_id = "viscerite"
@@ -1672,6 +1708,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("hard", 1)
 		setProperty("chemical", 6)
 		setProperty("flammable", 2)
+		setProperty("melting_point", 750 KELVIN)
 		addTrigger(TRIGGERS_ON_EAT, new /datum/materialProc/oneat_viscerite())
 
 /datum/material/organic/tensed_viscerite
@@ -1688,6 +1725,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("hard", 3)
 		setProperty("chemical", 8)
 		setProperty("flammable", 2)
+		setProperty("melting_point", 1500 KELVIN)
 
 /datum/material/organic/bone
 	mat_id = "bone"
@@ -1802,6 +1840,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("density", 1)
 		setProperty("hard", 2)
 		setProperty("flammable", 4)
+		setProperty("melting_point", 335 KELVIN)
 
 
 /datum/material/organic/honey
@@ -1826,6 +1865,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("density", 2)
 		setProperty("hard", 1)
 		setProperty("flammable", 4)
+		setProperty("melting_point", 323 KELVIN)
 		// addTrigger(TRIGGERS_ON_EAT, new /datum/materialProc/oneat_honey())
 		// maybe make it sticky somehow?
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/honey_add())
@@ -1844,6 +1884,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("density", 3)
 		setProperty("hard", 2)
 		setProperty("thermal", 1)
+		setProperty("melting_point", 250 KELVIN)
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/ffart_add())
 		addTrigger(TRIGGERS_ON_PICKUP, new /datum/materialProc/ffart_pickup())
 
@@ -1878,6 +1919,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 	New()
 		..()
 		setProperty("hard", 1)
+		setProperty("melting_point", 330 KELVIN) // Around the melting point of cheese
 
 
 /datum/material/organic/coral
@@ -2132,7 +2174,7 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		setProperty("hard", 2)
 		setProperty("thermal", 1)
 		setProperty("flammable", 1)
-
+		setProperty("melting_point", 1200 KELVIN) // Around the melting point of asbestos
 
 	New()
 		..()
@@ -2275,6 +2317,7 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("hard", 1)
 		setProperty("electrical", 3)
 		setProperty("thermal", 4)
+		setProperty("melting_point", 453 KELVIN) // About the melting point of rubber
 
 /datum/material/rubber/synthrubber
 	mat_id = "synthrubber"
@@ -2293,7 +2336,7 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("hard", 1)
 		setProperty("electrical", 2)
 		setProperty("thermal", 4)
-
+		setProperty("melting_point", 500 KELVIN)
 
 /datum/material/rubber/synthblubber //it had to be done
 	mat_id = "synthblubber"
@@ -2308,6 +2351,7 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("electrical", 1)
 		setProperty("thermal", 3)
 		setProperty("flammable", 3)
+		setProperty("melting_point", 600 KELVIN) // IDK what the melting point of blubbler is
 
 /datum/material/rubber/plastic
 	mat_id = "plastic"
@@ -2327,6 +2371,7 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("electrical", 2)
 		setProperty("thermal", 3)
 		setProperty("chemical", 5)
+		setProperty("melting_point", 500 KELVIN)
 
 /datum/material/metal/plutonium
 	mat_id = "plutonium"
@@ -2343,6 +2388,7 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("n_radioactive", 5)
 		setProperty("radioactive", 3)
 		setProperty("electrical", 7)
+		setProperty("melting_point", 913 KELVIN)
 
 /datum/material/metal/yuranite
 	mat_id = "yuranite"
@@ -2359,6 +2405,7 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("radioactive", 4)
 		setProperty("thermal", 3)
 		setProperty("electrical", 4)
+		setProperty("melting_point", 1405 KELVIN) // About the melting point of uranium
 
 /datum/material/metal/neutrite
 	mat_id = "neutrite"
@@ -2391,6 +2438,7 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("radioactive", 1)
 		setProperty("electrical", 2)
 		setProperty("thermal", 3)
+		setProperty("melting_point", 550 KELVIN) // Around the melting point of plastic
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/glowstick_add())
 
 #undef MATERIAL_ARTISAN_COMMON
