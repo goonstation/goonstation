@@ -148,13 +148,11 @@ ABSTRACT_TYPE(/datum/part_customization/human/limb)
 				id = "arm_robo_standard_left"
 				slot = "l_arm"
 				part_type = /obj/item/parts/robot_parts/arm/left/standard
-				trait_cost = 1
 
 			robo_standard_right
 				id = "arm_robo_standard_right"
 				slot = "r_arm"
 				part_type = /obj/item/parts/robot_parts/arm/right/standard
-				trait_cost = 1
 
 			plant_left
 				id = "arm_plant_left"
