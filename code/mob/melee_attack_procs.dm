@@ -703,6 +703,9 @@
 
 	//clamp damage to non-negative values
 	msgs.damage = max(damage, 0)
+	if (do_punch && msgs.damage > 0 && ishuman(src))
+		var/mob/living/carbon/human/H = src
+		H.mutantrace?.on_punch(H, target, msgs, msgs.damage, do_punch)
 	return msgs
 
 // This is used by certain limb datums (werewolf, shambling abomination) (Convair880).

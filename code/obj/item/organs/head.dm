@@ -250,6 +250,8 @@
 				colorheck = AHead.customizations["hair_middle"].color
 			if(CUST_3)
 				colorheck = AHead.customizations["hair_top"].color
+			if(SKIN_TONE)
+				colorheck = AHead.s_tone // added skin tone support
 			else
 				colorheck = "#FFFFFF"
 		src.head_image_special_one.color = colorheck
@@ -260,6 +262,8 @@
 				colorheck = AHead.customizations["hair_middle"].color
 			if(CUST_3)
 				colorheck = AHead.customizations["hair_top"].color
+			if(SKIN_TONE)
+				colorheck = AHead.s_tone //skin tones
 			else
 				colorheck = "#FFFFFF"
 		src.head_image_special_two.color = colorheck
@@ -270,6 +274,8 @@
 				colorheck = AHead.customizations["hair_middle"].color
 			if(CUST_3)
 				colorheck = AHead.customizations["hair_top"].color
+			if(SKIN_TONE)
+				colorheck = AHead.s_tone // even more skin tone support
 			else
 				colorheck = "#FFFFFF"
 		src.head_image_special_three.color = colorheck

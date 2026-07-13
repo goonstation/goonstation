@@ -1732,6 +1732,54 @@
 	partlistPart = "foot_right"
 	step_image_state = "footprintsR"
 
+/// Sphynx Limbs ///
+// parent //
+/obj/item/parts/human_parts/arm/mutant/sphynx
+	icon = 'icons/mob/sphynx.dmi'
+	partIcon = 'icons/mob/sphynx.dmi'
+	skintoned = TRUE
+
+/obj/item/parts/human_parts/leg/mutant/sphynx
+	icon = 'icons/mob/sphynx.dmi'
+	partIcon = 'icons/mob/sphynx.dmi'
+	skintoned = TRUE
+
+// actual sphynx limbs
+/obj/item/parts/human_parts/arm/mutant/sphynx/left
+	name = "left sphynx arm"
+	desc = "A sphynx's left arm. Careful! It has claws."
+	icon_state = "arm_left"
+	slot = "l_arm"
+	side = "left"
+	handlistPart = "hand_left"
+
+/obj/item/parts/human_parts/arm/mutant/sphynx/right
+	name = "right sphynx arm"
+	desc = "A sphynx's right arm. Claws included."
+	icon_state = "arm_right"
+	slot = "r_arm"
+	side = "right"
+	handlistPart = "hand_right"
+
+/obj/item/parts/human_parts/leg/mutant/sphynx/left
+	name = "left sphynx leg"
+	desc = "A sphynx's left leg. Dangerous..."
+	icon_state = "leg_left"
+	slot = "l_leg"
+	side = "left"
+	partlistPart = "foot_left"
+	step_image_state = "footprintsL"
+
+/obj/item/parts/human_parts/leg/mutant/sphynx/right
+	name = "right sphynx leg"
+	desc = "A sphynx's right leg. It's soft..."
+	icon_state = "leg_right"
+	slot = "r_leg"
+	side = "right"
+	partlistPart = "foot_right"
+	step_image_state = "footprintsR"
+
+
 //// WEREWOLF LIMBS ////
 ////// PARENT	//////////
 /obj/item/parts/human_parts/leg/mutant/werewolf

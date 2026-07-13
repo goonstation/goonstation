@@ -19,6 +19,7 @@
 #define HEAD_VIRTUAL 16
 #define HEAD_FLASHY 17
 #define HEAD_PUG 18
+#define HEAD_SPHYNX 19
 
 //tail defines
 #define TAIL_NONE 0
@@ -31,6 +32,8 @@
 #define TAIL_CAT 7
 #define TAIL_ROACH 8
 #define TAIL_PUG 9
+#define TAIL_BINGUS 10
+#define TAIL_SPHYNX 11
 
 /// appearanceholder color vars. Tells mutant races to stick this color into the specified special hair / limb overlay color slot
 #define CUST_1 1

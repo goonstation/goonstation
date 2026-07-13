@@ -227,6 +227,16 @@
 	msgLose = "Your love of jeans fades."
 	icon_state = null
 
+/datum/bioEffect/mutantrace/sphynx
+	name = "Hairless Sphynx Genetics"
+	desc = "The subject becomes a hairless sphynx, gaining agility but an odor."
+	id = "sphynx"
+	mutantrace_option = "Sphynx"
+	mutantrace_path = /datum/mutantrace/sphynx
+	msgGain = "You feel skittish but agile."
+	msgLose = "Your fear of cucumbers lingers before fading."
+	icon_state = "sphynx"
+
 /datum/bioEffect/mutantrace/cow
 	name = "Bovine Genetics"
 	desc = "The subject takes on the appearance of a domesticated space cow and gains milk production."

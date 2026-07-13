@@ -265,6 +265,18 @@
 	organ_image_under_suit_2 = null
 	organ_image_over_suit = "bingus_over_suit"
 
+/obj/item/organ/tail/sphynx
+	name = "sphynx tail"
+	desc = "A long, hairless tail."
+	icon_state = "tail-sphynx"
+	icon_piece_1 = "tail-sphynx-detail"
+	organ_image_icon = 'icons/mob/sphynx.dmi'
+	tail_num = TAIL_SPHYNX
+	colorful = TRUE
+	organ_image_under_suit_1 = "sphynx_under_suit"
+	organ_image_under_suit_2 = null
+	organ_image_over_suit = "sphynx_over_suit"
+
 /obj/item/organ/tail/roach
 	name = "roach abdomen"
 	desc = "A large insect behind."

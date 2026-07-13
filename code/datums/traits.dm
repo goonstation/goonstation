@@ -253,10 +253,10 @@
 	/// Returns TRUE if a trait should NOT be added to a mob.
 	proc/preventAddTrait(mob/owner, resolved_role)
 		if (resolved_role == "tutorial")
-			for (var/trait_cateogry in src.category)
-				if (trait_cateogry == "species")
+			for (var/trait_category in src.category)
+				if (trait_category == "species")
 					return FALSE
-				if (trait_cateogry == "language")
+				if (trait_category == "language")
 					return FALSE
 			return TRUE
 		. = FALSE
@@ -1577,6 +1577,15 @@ TYPEINFO(/datum/trait/partyanimal)
 	points = -3
 	category = list("species")
 	mutantRace = /datum/mutantrace/frog/amphibian
+
+/datum/trait/Sphynx
+	name = "Sphynx"
+	icon_state = "sphynxT"
+	desc = "Possess neither fluff nor remorse, agile and skittish one!"
+	id = "sphynx"
+	points = -3
+	category = list("species")
+	mutantRace = /datum/mutantrace/sphynx
 
 /datum/trait/random_species
 	name = "Random Species"

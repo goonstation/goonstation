@@ -264,6 +264,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	proc/custom_attack(atom/target)
 		return FALSE
 
+	// called when a human with this mutantrace punches something. Can be used to apply special effects, bleeding, etc
+	proc/on_punch(var/mob/living/carbon/human/user, var/mob/target, var/datum/attackResults/msgs, var/damage, var/do_punch)
+		return
+
 	// vision modifier (see_mobs, etc i guess)
 	proc/sight_modifier()
 		return
@@ -1943,6 +1947,99 @@ TYPEINFO(/datum/mutantrace/cat/bingus)
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cat/bingus/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/bingus/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/bingus/left
+
+TYPEINFO(/datum/mutantrace/sphynx)
+	icon = 'icons/mob/sphynx.dmi'
+/datum/mutantrace/sphynx
+	name = "sphynx"
+	race_mutation = /datum/bioEffect/mutantrace/sphynx
+	mutant_organs = list("tail" = /obj/item/organ/tail/sphynx)
+	mutant_folder = 'icons/mob/sphynx.dmi'
+	special_head = HEAD_SPHYNX
+	special_hair_1_icon = 'icons/mob/sphynx.dmi'
+	special_hair_1_state = "head_detail1"
+	special_hair_1_color = SKIN_TONE
+	special_hair_1_layer = MOB_OVERMASK_LAYER
+	special_hair_1_layer_f = MOB_OVERMASK_LAYER
+	voice_name = "sphynx"
+	voice_override = "sphynx"
+	human_compatible = TRUE
+	dna_mutagen_banned = FALSE
+	aquaphobic = TRUE
+	can_walk_on_shards = TRUE
+	detail_1_color = SKIN_TONE // colored kitty? colored kitty.
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_EYES | TORSO_HAS_SKINTONE | HAS_SPECIAL_HAIR | FIX_COLORS | BUILT_FROM_PIECES | WEARS_UNDERPANTS)
+	color_channel_names = list("Kitty Ears")
+	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/sphynx/right
+	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/sphynx/left
+	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/sphynx/right
+	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/sphynx/left
+
+	on_attach(mob/living/carbon/human/M)
+		. = ..()
+		if (ishuman(M))
+			M.mob_flags |= SHOULD_HAVE_A_TAIL
+			M.punchMessage = "scratches"
+			M.kickMessage = "scratches"
+			M.trample_cooldown = 1 SECOND
+			M.traitHolder?.addTrait("stinky")
+		RegisterSignal(M, COMSIG_MOB_THROW_ITEM_NEARBY, PROC_REF(throw_response))
+
+	say_verb()
+		return "meows"
+
+	emote(var/act, var/voluntary)
+		switch(act)
+			if ("scream")
+				if (src.mob?.emote_check(voluntary, 3 SECONDS))
+					. = SPAN_ALERT("<B>[src.mob] hisses!</B>")
+					playsound(src.mob, pick('sound/voice/screams/sphynxscream1.ogg','sound/voice/screams/sphynxscream2.ogg','sound/voice/screams/sphynxscream3.ogg'), 60, 1, channel=VOLUME_CHANNEL_EMOTE)
+					return .
+			if ("lick", "lickself")
+				if (src.mob?.emote_check(voluntary, 3 SECONDS))
+					if (src.mob.sims)
+						src.mob.sims.affectMotive("Hygiene", 25)
+						. = list("<B>[src.mob]</B> carefully licks [his_or_her(src.mob)] skin and paws.", "<I>licks [his_or_her(src.mob)] skin and paws</I>")
+					else
+						. = ..()
+				else
+					. = ..()
+			else
+				. = ..()
+
+	on_punch(var/mob/living/carbon/human/user, var/mob/target, var/datum/attackResults/msgs, var/damage, var/do_punch)
+		if (do_punch && msgs?.damage > 0 && target && prob(20))
+			playsound(user, 'sound/impact_sounds/Flesh_Tear_3.ogg', 50, TRUE)
+			take_bleeding_damage(target, user, 1, DAMAGE_CUT, TRUE)
+
+	disposing()
+		if (src.mob)
+			if (src.mob.mob_flags & SHOULD_HAVE_A_TAIL)
+				src.mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
+			if (ishuman(src.mob))
+				var/mob/living/carbon/human/H = src.mob
+				H.punchMessage = initial(H.punchMessage)
+				H.kickMessage = initial(H.kickMessage)
+				H.trample_cooldown = initial(H.trample_cooldown)
+				H.traitHolder?.removeTrait("stinky")
+			UnregisterSignal(src.mob, COMSIG_MOB_THROW_ITEM_NEARBY)
+		. = ..()
+
+	proc/throw_response(target, var/atom/movable/item, var/mob/thrower)
+		if (src.mob == thrower || is_incapacitated(src.mob) || !istype(item) || !src.mob.canmove || ON_COOLDOWN(src.mob, "sphynx_cucumber_dodge", 3 SECONDS))
+			return
+
+		var/is_cucumber = istype(item, /obj/item/reagent_containers/food/snacks/plant/cucumber)
+		if (!is_cucumber && prob(90))
+			return
+
+		var/turf/escape_turf = get_step_away(src.mob, item)
+		if (!escape_turf || escape_turf == get_turf(src.mob))
+			return
+
+		src.mob.throw_at(escape_turf, 1, 1)
+		src.mob.visible_message(SPAN_ALERT("[src.mob] leaps out of the way!"))
+		src.mob.emote("scream")
 
 /obj/effect/rt/abzunian_distorts
 	icon = 'icons/mob/abzunian.dmi'

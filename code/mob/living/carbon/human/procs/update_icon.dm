@@ -756,6 +756,8 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 			. = src.bioHolder.mobAppearance.customizations["hair_middle"].color
 		if(CUST_3)
 			. = src.bioHolder.mobAppearance.customizations["hair_top"].color
+		if(SKIN_TONE)
+			. = src.bioHolder.mobAppearance.s_tone // skin tone please
 		else
 			return "#FFFFFF"
 	if (src.mutantrace?.mutant_appearance_flags & FIX_COLORS)
