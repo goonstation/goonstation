@@ -145,6 +145,13 @@ datum
 			thirst_value = 0.75
 			value = 3 // 1 2
 
+			on_mob_life(var/mob/M, var/mult = 1)
+				M.changeBodyTemp(5 KELVIN * mult, max_temp = M.base_body_temp)
+				M.reagents.add_reagent("sugar", 1 * src.calculate_depletion_rate(M, mult))
+				if (ispug(M) || istype(M, /mob/living/critter/small_animal/dog))
+					M.changeStatus("poisoned", 4 SECONDS * mult)
+				..()
+
 		fooddrink/milk/strawberry_milk
 			name = "strawberry milk"
 			id = "strawberry_milk"
@@ -4083,6 +4090,17 @@ datum
 			thirst_value = 1.5
 			taste = "like water, but more"
 
+		fooddrink/cocktail_quadruplewaterstable
+			name = "Quadruple Water"
+			id = "cocktail_quadruplewaterstable"
+			fluid_r = 10
+			fluid_g = 165
+			fluid_b = 254
+			description = "An even more water dense version of triple water, upon closer analysis its water matrix is neatly arranged."
+			reagent_state = LIQUID
+			thirst_value = 3.2
+			taste = "like a day worth of hydration in one sip"
+
 		fooddrink/lemonade
 			name = "lemonade"
 			id = "lemonade"
@@ -4877,6 +4895,16 @@ datum
 			description = "Tangy, yet refreshingly earthy."
 			reagent_state = LIQUID
 
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
+				if (!M)
+					M = holder.my_atom
+				if(istype(M, /mob/living/carbon/human))
+					var/mob/living/carbon/human/H = M
+					if (H.bioHolder.age < 57 && H.bioHolder.age > 41)
+						H.take_toxin_damage(-1)
+
+
 		fooddrink/caffeinated/thaicoffee
 			name = "Thai iced coffee"
 			id = "thaiicedcoffee"
@@ -4889,7 +4917,7 @@ datum
 			reagent_state = LIQUID
 			thirst_value = 0.8
 
-		fooddrink/pepperminthotchocolate
+		fooddrink/milk/chocolate_milk/pepperminthotchocolate
 			name = "peppermint hot chocolate"
 			id = "pepperminthotchocolate"
 			fluid_r = 147
@@ -4901,7 +4929,7 @@ datum
 			reagent_state = LIQUID
 			thirst_value = 0.8
 
-		fooddrink/mexicanhotchocolate
+		fooddrink/milk/chocolate_milk/mexicanhotchocolate
 			name = "Mexican hot chocolate"
 			id = "mexicanhotchocolate"
 			fluid_r = 76

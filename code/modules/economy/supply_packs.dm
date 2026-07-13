@@ -954,6 +954,15 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "Comedy Equipment"
 
 
+/datum/supply_packs/cane_gaudy
+	name = "Gaudy walking cane"
+	desc = "x1 Walking cane made of pure gold. Put the \"old\" in old money."
+	category = "Medical"
+	contains = list(/obj/item/cane/golden)
+	cost = PAY::DONTBUYIT
+	containertype = /obj/storage/crate
+	containername = "Gaudy walking cane"
+
 /datum/supply_packs/prosphetics
 	name = "Prosthetic Augmentation Kit"
 	desc = "x6+ Cybernetic Augmentations. Replace your feeble flesh with these mechanical substitutes."
@@ -1674,8 +1683,8 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 					continue
 
 			var/amt = 1
-			if (isnum(frames[path]))
-				amt = abs(frames[path])
+			if (isnum(flatpack_frames[path]))
+				amt = abs(flatpack_frames[path])
 
 			var/atom/template = path
 			var/template_name = initial(template.name)

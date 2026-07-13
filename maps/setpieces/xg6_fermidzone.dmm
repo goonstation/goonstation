@@ -3439,7 +3439,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "or" = (
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 8
 	},
 /area/solarium{
@@ -3766,7 +3766,7 @@
 	})
 "pp" = (
 /obj/reagent_dispensers/cleanable/ants,
-/turf/unsimulated/floor/orange,
+/turf/unsimulated/floor/lightyellow,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -4093,7 +4093,7 @@
 	id = "XG6_easthall";
 	name = "east hall lockdown"
 	},
-/turf/unsimulated/floor/orange,
+/turf/unsimulated/floor/lightyellow,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -4680,7 +4680,7 @@
 	})
 "ta" = (
 /obj/sec_tape,
-/turf/unsimulated/floor/orange,
+/turf/unsimulated/floor/lightyellow,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -6348,7 +6348,7 @@
 "Ad" = (
 /obj/machinery/door/airlock/pyro/glass/engineering,
 /obj/mapping_helper/access/owlmaint,
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 8
 	},
 /area/solarium{
@@ -7035,7 +7035,7 @@
 	id = "XG6_reactorlock";
 	name = "reactor lockdown"
 	},
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 4
 	},
 /area/solarium{
@@ -7756,7 +7756,7 @@
 	name = "west hall lockdown"
 	},
 /obj/mapping_helper/airlock/bolter,
-/turf/unsimulated/floor/orange,
+/turf/unsimulated/floor/lightyellow,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})
@@ -7915,7 +7915,7 @@
 "Gz" = (
 /obj/machinery/door/airlock/pyro/glass/engineering,
 /obj/mapping_helper/access/owlmaint,
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 4
 	},
 /area/solarium{
@@ -8736,7 +8736,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "Ks" = (
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 4
 	},
 /area/solarium{
@@ -9601,7 +9601,7 @@
 	id = "XG6_reactorlock";
 	name = "reactor access"
 	},
-/turf/unsimulated/floor/orangeblack/side{
+/turf/unsimulated/floor/caution/side{
 	dir = 8
 	},
 /area/solarium{
@@ -11869,7 +11869,7 @@
 	name = "XG6 Shen Kuo Observatory"
 	})
 "WH" = (
-/turf/unsimulated/floor/orange,
+/turf/unsimulated/floor/lightyellow,
 /area/solarium{
 	name = "XG6 Shen Kuo Observatory"
 	})

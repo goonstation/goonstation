@@ -280,6 +280,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/small_animal/mouse, proc/glorp)
 	player_can_spawn_with_pet = FALSE
 	has_genes = FALSE
 	shiny_chance = 0
+	can_juggle = TRUE
 
 	New()
 		..()
@@ -393,6 +394,12 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/small_animal/mouse, proc/glorp)
 			src.make_critter(/mob/living/critter/small_animal/mouse/weak)
 			return
 
+	new_static_image()
+		return
+
+	update_static_image()
+		return
+
 /datum/targetable/critter/mentordisappear
 	name = "Vanish"
 	desc = "Leave your body and return to ghost form"
@@ -453,6 +460,7 @@ TYPEINFO(/mob/living/critter/small_animal/mouse/weak/mentor/admin)
 	player_can_spawn_with_pet = FALSE
 	say_language = LANGUAGE_ENGLISH
 	shiny_chance = 1365 //Odds with the shiny charm, because of how charming these guys are before they run you over with a truck!
+	can_juggle = TRUE
 
 	New()
 		. = ..()

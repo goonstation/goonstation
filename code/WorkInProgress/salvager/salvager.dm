@@ -484,7 +484,7 @@
 /obj/item/device/radio/headset/salvager
 	desc = "A standard-issue device that can be worn on a crewmember's ear to allow hands-free communication with the rest of the crew. The headset is covered in scratch marks and the screws look nearly stripped."
 	protected_radio = TRUE
-	secure_frequencies = list("z" = R_FREQ_SALVAGER)
+	secure_frequencies = list("z" = RADIO::FREQ::SALVAGER)
 
 /obj/item/device/powersink/salvager
 	desc = "A nulling power sink which drains energy from electrical systems.  Installed with high capacity cells to steal away power."
@@ -720,7 +720,7 @@ TYPEINFO(/obj/item/salvager_hand_tele)
 /obj/item/device/radio_upgrade/salvager
 	name = "private radio channel upgrade"
 	desc = "A device capable of communicating over a private secure radio channel. Can be installed in a radio headset."
-	secure_frequencies = list("z" = R_FREQ_SALVAGER)
+	secure_frequencies = list("z" = RADIO::FREQ::SALVAGER)
 
 
 // Stubs for the public

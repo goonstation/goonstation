@@ -7,12 +7,6 @@
 	var/list/atom/movable/screen/parallax_layer/parallax_layers
 	/// A list of all the render source groups that the client is currently a member of.
 	var/list/datum/parallax_render_source_group/render_source_groups
-	/// The z-level that the outermost movable was in when `update_z_level_parallax_layers()` was last called.
-	var/previous_z_level
-	/// The area that the outermost movable was in when `update_area_parallax_layers()` was last called.
-	var/area/previous_area
-	/// The turf that the client's eye was centred upon when `update_parallax_layers()` was last called.
-	var/turf/previous_turf
 	/// The outermost atom/movable in the client's mob's .loc chain.
 	var/atom/movable/outermost_movable
 
@@ -44,15 +38,13 @@
 	. = ..()
 
 /// Updates the position of the parallax layer relative to the client's eye, taking into account the distance moved and the parallax value.
-/datum/parallax_controller/proc/update_parallax_layers(datum/component/component, turf/previous_turf, turf/current_turf)
-	if (!isturf(previous_turf) || !isturf(current_turf))
+/datum/parallax_controller/proc/update_parallax_layers(datum/component/component, turf/old_turf, turf/new_turf)
+	if (!isturf(old_turf) || !isturf(new_turf))
 		return
 
 	// Calculate the number of tiles the client's eye has moved, in pixels.
-	var/x_pixel_change = round((previous_turf.x - current_turf.x) * world.icon_size, 1)
-	var/y_pixel_change = round((previous_turf.y - current_turf.y) * world.icon_size, 1)
-
-	src.previous_turf = current_turf
+	var/x_pixel_change = (old_turf.x - new_turf.x) * world.icon_size
+	var/y_pixel_change = (old_turf.y - new_turf.y) * world.icon_size
 
 	var/animation_time = 0
 	if (src.outermost_movable.glide_size)
@@ -63,12 +55,14 @@
 		// Multiply the pixel change by the parallax value to determine the number of pixels the layer should move by.
 		// Update the position of the parallax layer on the client's screen, and animate the movement, using a time value derived from the client's mob's speed.
 		// Round to 1s to not blur sprites
-		animate( \
-			parallax_layer, \
-			animation_time, \
-			transform = matrix(	1, 0, round(x_pixel_change * parallax_layer.parallax_render_source.parallax_value, 1), \
-								0, 1, round(y_pixel_change * parallax_layer.parallax_render_source.parallax_value, 1)), \
-			flags = ANIMATION_PARALLEL | ANIMATION_RELATIVE \
+		animate(
+			parallax_layer,
+			animation_time,
+			transform = matrix(
+				1, 0, round(x_pixel_change * parallax_layer.parallax_render_source.parallax_value, 1),
+				0, 1, round(y_pixel_change * parallax_layer.parallax_render_source.parallax_value, 1)
+			),
+			flags = ANIMATION_PARALLEL | ANIMATION_RELATIVE
 		)
 
 		// Check whether the layer should be realigned on the client's screen.
@@ -76,9 +70,8 @@
 
 /// Updates the parallax render sources and layers displayed to a client by a z-level.
 /datum/parallax_controller/proc/update_z_level_parallax_layers(datum/component/component, old_z_level, new_z_level)
-	var/datum/parallax_render_source_group/old_render_source_group = get_parallax_render_source_group(src.previous_z_level)
+	var/datum/parallax_render_source_group/old_render_source_group = get_parallax_render_source_group(old_z_level)
 	var/datum/parallax_render_source_group/new_render_source_group = get_parallax_render_source_group(new_z_level)
-	src.previous_z_level = new_z_level
 
 	if (old_render_source_group == new_render_source_group)
 		return
@@ -95,9 +88,8 @@
 
 /// Updates the parallax render sources and layers displayed to a client by an area.
 /datum/parallax_controller/proc/update_area_parallax_layers(datum/component/component, area/old_area, area/new_area)
-	var/datum/parallax_render_source_group/old_render_source_group = get_parallax_render_source_group(src.previous_area)
+	var/datum/parallax_render_source_group/old_render_source_group = get_parallax_render_source_group(old_area)
 	var/datum/parallax_render_source_group/new_render_source_group = get_parallax_render_source_group(new_area)
-	src.previous_area = new_area
 
 	if (old_render_source_group == new_render_source_group)
 		return

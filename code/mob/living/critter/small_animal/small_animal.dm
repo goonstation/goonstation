@@ -87,6 +87,8 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	///Do we randomize stuff?
 	var/generic = TRUE
 	var/drop_contents_on_death = FALSE // Drop everything on death?
+	/// Small and insectoid enough to be eaten by a frog in one gulp
+	var/edible_insect = FALSE
 
 	New(loc)
 		if(isnull(src.is_pet))
@@ -1616,6 +1618,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	fits_under_table = 1
 	ai_type = /datum/aiHolder/hungry_critter
 	ai_retaliates = FALSE
+	edible_insect = TRUE
 	player_can_spawn_with_pet = TRUE
 
 	New()
@@ -3191,6 +3194,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 8
 	var/butterflytype = 1
 	isFlying = TRUE
+	edible_insect = TRUE
 	player_can_spawn_with_pet = TRUE
 
 	New()
@@ -3290,6 +3294,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 8
 	health_burn = 8
 	isFlying = TRUE
+	edible_insect = TRUE
 	add_abilities = list(/datum/targetable/critter/vomit)
 
 	New(loc)
@@ -3355,6 +3360,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 8
 	health_burn = 8
 	isFlying = TRUE
+	edible_insect = TRUE
 	add_abilities = list(/datum/targetable/critter/blood_bite)
 
 	New(loc)

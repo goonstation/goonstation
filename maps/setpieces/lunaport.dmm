@@ -1256,7 +1256,7 @@
 /obj/decoration/ntcratesmall/envelopes{
 	name = "metal crate of expensive envelopes"
 	},
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/moon/monorail_station{
 	name = "Blue Line platform"
 	})
@@ -2018,7 +2018,7 @@
 	dir = 4;
 	name = "cargo dock"
 	},
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/moon/monorail_station{
 	name = "Blue Line platform"
 	})
@@ -5561,7 +5561,7 @@
 	})
 "atN" = (
 /obj/storage/crate/wooden,
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/moon/monorail_station{
 	name = "Blue Line platform"
 	})
@@ -6224,7 +6224,7 @@
 /obj/machinery/computer/workstation{
 	dir = 4
 	},
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/moon/monorail_station{
 	name = "Blue Line platform"
 	})
@@ -6538,7 +6538,7 @@
 /obj/stool/chair/yellow{
 	dir = 8
 	},
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/moon/monorail_station{
 	name = "Blue Line platform"
 	})
@@ -7100,7 +7100,7 @@
 	})
 "azj" = (
 /obj/decoration/ntcrate/ntcrate2,
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/moon/monorail_station{
 	name = "Blue Line platform"
 	})
@@ -7585,7 +7585,7 @@
 	})
 "aAN" = (
 /obj/vehicle/forklift,
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/moon/monorail_station{
 	name = "Blue Line platform"
 	})
@@ -7731,7 +7731,7 @@
 	icon_state = "woodencrate6";
 	name = "wooden crate - unfit for consumption"
 	},
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/moon/monorail_station{
 	name = "Blue Line platform"
 	})
@@ -8353,7 +8353,7 @@
 	})
 "aDz" = (
 /obj/decoration/ntcratesmall/envelopes,
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/moon/monorail_station{
 	name = "Blue Line platform"
 	})
@@ -12897,7 +12897,7 @@
 	desc = "An old Kingsway lifter-loader model. It's offline right now.";
 	name = "railway stevedore unit"
 	},
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/moon/monorail_station{
 	name = "Blue Line platform"
 	})
@@ -14257,7 +14257,7 @@
 	ambient_light = "#441111"
 	})
 "aVY" = (
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/moon/monorail_station{
 	name = "Blue Line platform"
 	})
@@ -14843,7 +14843,7 @@
 	})
 "aXL" = (
 /obj/storage/secure/crate/dan/beverages,
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/moon/monorail_station{
 	name = "Blue Line platform"
 	})

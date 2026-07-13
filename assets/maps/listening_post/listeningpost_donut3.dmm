@@ -26,7 +26,7 @@
 	pixel_x = -9;
 	pixel_y = 1
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/break_room)
 "aB" = (
 /obj/machinery/vending/pizza,
@@ -70,6 +70,7 @@
 /obj/item/paper/pipebombs{
 	pixel_x = -5
 	},
+/obj/item/stamp/syndicate,
 /turf/simulated/floor/red,
 /area/listeningpost/general)
 "bn" = (
@@ -99,7 +100,7 @@
 /obj/cable/black{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/break_room)
 "cZ" = (
 /turf/simulated/floor/stairs/wide,
@@ -193,7 +194,7 @@
 /turf/simulated/floor/sanitary,
 /area/listeningpost/break_room)
 "ig" = (
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/break_room)
 "io" = (
 /turf/simulated/floor/stairs/wide/other,
@@ -229,7 +230,7 @@
 "kw" = (
 /obj/table/wood/auto,
 /obj/machinery/microwave,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/break_room)
 "kR" = (
 /turf/simulated/floor/carpet/grime,
@@ -275,7 +276,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/break_room)
 "nt" = (
 /obj/decal/floatingtiles{
@@ -324,7 +325,7 @@
 	dir = 1;
 	pixel_y = 26
 	},
-/obj/machinery/light_switch/east{
+/obj/machinery/light_switch/directional/east{
 	pixel_y = 7
 	},
 /turf/simulated/floor/grey/corner{
@@ -394,7 +395,7 @@
 /obj/machinery/computer/camera_viewer{
 	dir = 4
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/break_room)
 "rQ" = (
 /obj/machinery/vending/standard,
@@ -538,7 +539,7 @@
 /obj/stool/chair/comfy{
 	dir = 8
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/break_room)
 "yO" = (
 /obj/table/wood/auto,
@@ -549,10 +550,11 @@
 /obj/item/uplink_telecrystal{
 	pixel_y = 5
 	},
+/obj/item/stamp/syndicate,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost/barracks)
 "zs" = (
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /obj/storage/crate,
 /obj/item/shipcomponent/secondary_system/crash,
 /turf/simulated/floor/black,
@@ -598,7 +600,7 @@
 /obj/machinery/computer/announcement/syndicate{
 	dir = 8
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/break_room)
 "BH" = (
 /obj/machinery/computer3/terminal/zeta{
@@ -610,7 +612,7 @@
 /obj/cable/black{
 	icon_state = "0-2"
 	},
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
 "BV" = (
@@ -715,7 +717,7 @@
 /obj/stool/chair/comfy{
 	dir = 4
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/break_room)
 "HH" = (
 /obj/table/wood/auto,
@@ -940,7 +942,7 @@
 /obj/cable/black{
 	icon_state = "2-4"
 	},
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/caution/north,
 /area/listeningpost/power)
 "Sw" = (
@@ -1037,7 +1039,7 @@
 	icon_state = "bedsheet-red";
 	name = "syndicate bedsheet"
 	},
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost/barracks)
 "Wc" = (
