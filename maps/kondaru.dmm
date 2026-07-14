@@ -5514,8 +5514,12 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /obj/storage/cart/mechcart/tools,
-/turf/simulated/floor/yellow,
+/turf/simulated/floor/plating,
 /area/station/engine/elect)
 "awA" = (
 /obj/stool/chair/couch{
@@ -5902,11 +5906,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
-"ayw" = (
-/turf/simulated/floor/yellow/side{
-	dir = 1
-	},
-/area/station/engine/elect)
 "ayC" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -9433,13 +9432,13 @@
 /area/station/hallway/primary/west)
 "aPD" = (
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "2-4"
 	},
 /obj/cable{
 	icon_state = "2-8"
 	},
 /obj/cable{
-	icon_state = "2-4"
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -40089,6 +40088,17 @@
 /obj/mapping_helper/access/medical,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/psychiatrist)
+"lDG" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/engine/elect)
 "lDS" = (
 /obj/table/auto,
 /obj/item/clothing/glasses/spectro,
@@ -116492,7 +116502,7 @@ uzL
 aum
 aCC
 lWU
-aFq
+lDG
 aRX
 aTZ
 aYJ
@@ -116794,7 +116804,7 @@ uzL
 aum
 aCC
 aws
-ayw
+aFq
 aRX
 aUc
 aAw
