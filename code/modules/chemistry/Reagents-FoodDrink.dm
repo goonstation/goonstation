@@ -3008,6 +3008,24 @@ datum
 					var/mob/living/critter/small_animal/cat/theCat = M
 					theCat.catnip_effect()
 
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (issphynx(M)) // kitty high too maybe
+					if(!M) M = holder.my_atom
+					if(probmult(5))
+						M.emote(pick("sigh","yawn","lick","blink"))
+					if(probmult(5))
+						boutput(M, "[pick("You want to bask in the sun.","You breathe slower.","You feel like laying down.","You feel calm.")]")
+					if(probmult(10))
+						M.change_misstep_chance(-5)
+						M.delStatus("knockdown")
+					if (holder.get_reagent_amount(src.id) >= 70 && probmult(25))
+						if (holder.get_reagent_amount("catonium") <= 20)
+							M.setStatus("drowsy", 20 SECONDS)
+					if(prob(25))
+						M.HealDamage("All", 2 * mult, 0)
+					..()
+					return
+
 		fooddrink/vanilla
 			name = "vanilla"
 			id = "vanilla"

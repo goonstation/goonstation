@@ -1050,6 +1050,10 @@ datum
 			var/static/list/cat_sounds = list('sound/voice/animal/cat.ogg', 'sound/voice/animal/cat_hiss.ogg')
 
 			on_mob_life(var/mob/M, var/mult = 1)
+				if(issphynx(M))
+					M.visible_message(SPAN_ALERT("<b>[M.name]</b> eyes go wide."))
+					if(probmult(15))
+						M.emote(pick("lick", "blink_r", "blink", "shutter", "shiver"))
 				if(!M) M = holder.my_atom
 				M.druggy = max(M.druggy, 15)
 				if(probmult(11))
