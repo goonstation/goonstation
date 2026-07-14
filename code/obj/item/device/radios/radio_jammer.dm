@@ -53,7 +53,7 @@ TYPEINFO(/obj/item/radiojammer)
 		parent_assembly.UpdateOverlays(image('icons/obj/items/assemblies.dmi', icon_state), "jammed_light")
 	SPAWN(2 DECI SECONDS)
 		src.ClearSpecificOverlays("jammed_light")
-		if(istype(parent_assembly))
+		if(!QDELETED(parent_assembly) && istype(parent_assembly))
 			parent_assembly.ClearSpecificOverlays("jammed_light")
 
 /obj/item/radiojammer/attack_self(mob/user)
