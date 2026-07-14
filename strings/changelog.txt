@@ -1,4 +1,13 @@
 
+(t)tue jul 14 26
+(u)ANNmagedon.
+(p)27114
+(e)|
+(+)Added the new history shell builtin to dwaine! type "man history" to find out more.
+(u)EmeraldCrow
+(p)27176
+(e)🎨|C-Sprites
+(*)Added two new figuines to the game for Vi The Silly and Erikkainn: go gambling today!
 (t)mon jul 13 26
 (u)LorrMaster
 (p)27175

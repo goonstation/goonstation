@@ -1865,6 +1865,7 @@
 #include "code\modules\networks\computer3\mainframe2\programs\os\shell\shell_builtins\else.dm"
 #include "code\modules\networks\computer3\mainframe2\programs\os\shell\shell_builtins\eval.dm"
 #include "code\modules\networks\computer3\mainframe2\programs\os\shell\shell_builtins\goonsay.dm"
+#include "code\modules\networks\computer3\mainframe2\programs\os\shell\shell_builtins\history.dm"
 #include "code\modules\networks\computer3\mainframe2\programs\os\shell\shell_builtins\if.dm"
 #include "code\modules\networks\computer3\mainframe2\programs\os\shell\shell_builtins\logout.dm"
 #include "code\modules\networks\computer3\mainframe2\programs\os\shell\shell_builtins\man.dm"
