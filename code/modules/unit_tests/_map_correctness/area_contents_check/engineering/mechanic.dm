@@ -30,8 +30,6 @@
 		),
 
 		// Tools
-		CONTENTS_GT(/obj/item/storage/toolbox/mechanical, 0),
-		CONTENTS_GT(/obj/item/storage/toolbox/electrical, 0),
 		CONTENTS_GT(/obj/item/device/multitool, 0),
 		CONTENTS_GT(/obj/item/storage/belt/utility, 0),
 		CONTENTS_GT(/obj/item/electronics/soldering, 0),
@@ -62,8 +60,6 @@
 		),
 
 		// Tools
-		CONTENTS_GT(/obj/item/storage/toolbox/mechanical, 0),
-		CONTENTS_GT(/obj/item/storage/toolbox/electrical, 0),
 		CONTENTS_GT(/obj/item/device/multitool, 0),
 		CONTENTS_GT(/obj/item/storage/belt/utility, 0),
 		CONTENTS_GT(/obj/item/electronics/soldering, 0),
@@ -91,8 +87,6 @@
 		CONTENTS_EQ(/obj/submachine/cargopad/mechanics, 1),
 
 		// Tools
-		CONTENTS_GT(/obj/item/storage/toolbox/mechanical, 0),
-		CONTENTS_GT(/obj/item/storage/toolbox/electrical, 0),
 		CONTENTS_GT(/obj/item/device/multitool, 0),
 		CONTENTS_GT(/obj/item/storage/belt/utility, 0),
 		CONTENTS_GT(/obj/item/electronics/soldering, 0),
