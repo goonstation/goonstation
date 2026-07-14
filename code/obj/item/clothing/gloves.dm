@@ -7,6 +7,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	icon = 'icons/obj/clothing/item_gloves.dmi'
 	wear_image_icon = 'icons/mob/clothing/hands.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_feethand.dmi'
+	compatible_species = list("human", "cow")
 	protective_temperature = 400
 	wear_layer = MOB_HAND_LAYER2
 	duration_remove = 2 SECONDS

@@ -13,7 +13,7 @@
 	block_vision = 0
 	duration_remove = 1.5 SECONDS
 	duration_put = 1.5 SECONDS
-	compatible_species = list("human", "cow", "werewolf", "flubber")
+	compatible_species = list("human", "cow", "werewolf", "flubber", "sphynx")
 	var/block_eye = null // R or L
 	var/correct_bad_vision = 0
 	var/nudge_compatible = TRUE //! Works with the "nudge" emote

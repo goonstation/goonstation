@@ -7,7 +7,7 @@
 	wear_image_icon = 'icons/mob/clothing/head.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	body_parts_covered = HEAD
-	compatible_species = list("human", "cow", "werewolf", "flubber", "martian", "blob")
+	compatible_species = list("human", "cow", "werewolf", "flubber", "martian", "blob", "sphynx")
 	wear_layer = MOB_HEAD_LAYER2
 	block_vision = 0
 	var/team_num

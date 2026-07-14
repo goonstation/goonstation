@@ -499,7 +499,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	icon_state = "cursedclown"
 	item_state = "cclown_shoes"
 	step_sound = "cluwnestep"
-	compatible_species = list("human", "cow")
+	compatible_species = list("human", "cow", "sphinx")
 	cant_self_remove = 1
 	cant_other_remove = 1
 	step_lots = 1

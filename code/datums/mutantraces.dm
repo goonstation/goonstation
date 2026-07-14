@@ -1965,6 +1965,7 @@ TYPEINFO(/datum/mutantrace/sphynx)
 	voice_override = "sphynx"
 	override_attack = 0
 	human_compatible = TRUE
+	uses_human_clothes = FALSE
 	dna_mutagen_banned = FALSE
 	aquaphobic = TRUE
 	can_walk_on_shards = TRUE
@@ -1976,14 +1977,28 @@ TYPEINFO(/datum/mutantrace/sphynx)
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/sphynx/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/sphynx/left
 
+	var/mob/living/carbon/human/owner
+
 	on_attach(mob/living/carbon/human/M)
 		. = ..()
 		if (ishuman(M))
+			src.owner = M
+
 			M.mob_flags |= SHOULD_HAVE_A_TAIL
 			M.punchMessage = "scratches"
 			M.kickMessage = "scratches"
 			M.traitHolder?.addTrait("stinky")
+
+			if (M.gloves) // force remove gloves in glove slot
+				var/obj/item/clothing/gloves/G = M.gloves
+				M.u_equip(G)
+				if (G)
+					G.set_loc(M.loc)
+					G.dropped(M)
+					boutput(M, SPAN_ALERT("Your paws won't fit into [G]!"))
+
 		RegisterSignal(M, COMSIG_MOB_THROW_ITEM_NEARBY, PROC_REF(throw_response))
+
 
 	say_verb()
 		return "meows"
@@ -2014,15 +2029,18 @@ TYPEINFO(/datum/mutantrace/sphynx)
 
 	disposing()
 		if (src.mob)
-			if (src.mob.mob_flags & SHOULD_HAVE_A_TAIL)
-				src.mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
-			if (ishuman(src.mob))
-				var/mob/living/carbon/human/H = src.mob
+			var/mob/living/carbon/human/H = src.owner
+
+			if (H.mob_flags & SHOULD_HAVE_A_TAIL)
+				H.mob_flags &= ~SHOULD_HAVE_A_TAIL
+
 				H.punchMessage = initial(H.punchMessage)
 				H.kickMessage = initial(H.kickMessage)
-				H.trample_cooldown = initial(H.trample_cooldown)
 				H.traitHolder?.removeTrait("stinky")
+
 			UnregisterSignal(src.mob, COMSIG_MOB_THROW_ITEM_NEARBY)
+
+			src.owner = null
 		. = ..()
 
 	proc/throw_response(target, var/atom/movable/item, var/mob/thrower)

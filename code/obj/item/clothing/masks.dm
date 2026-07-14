@@ -8,7 +8,7 @@
 	var/obj/item/voice_changer/vchange = 0
 	body_parts_covered = HEAD
 	c_flags = COVERSMOUTH
-	compatible_species = list("human", "cow", "werewolf")
+	compatible_species = list("human", "cow", "werewolf", "sphynx")
 	wear_layer = MOB_HEAD_LAYER1
 	var/is_muzzle = FALSE
 	var/use_bloodoverlay = 1
@@ -320,7 +320,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	item_state = "muzzle"			// @TODO new sprite ok
 	w_class = W_CLASS_SMALL
 	c_flags = COVERSMOUTH	// NOT usable for internals.
-	compatible_species = list("human", "cow", "werewolf", "martian")
+	compatible_species = list("human", "cow", "werewolf", "martian", "sphynx")
 	var/new_language = LANGUAGE_ENGLISH	// idk maybe you can varedit one so that humans speak monkey instead. who knows
 
 	equipped(mob/user, slot)

@@ -24,7 +24,7 @@ ABSTRACT_TYPE(/obj/item/clothing)
 	var/chemicalprotection = 0 //chemsuit and chemhood in combination grant this
 
 	/// allow mutantraces to wear certain garments, see [/datum/mutantrace/var/uses_human_clothes]
-	var/list/compatible_species = list("human", "cow")
+	var/list/compatible_species = list("human", "cow", "sphynx")
 
 	var/fallen_offset_x = 1
 	var/fallen_offset_z = -6

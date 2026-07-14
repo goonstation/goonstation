@@ -1845,7 +1845,12 @@ Attempts to put an item in the hand of a mob, if not possible then stow it, then
 			if ((!src.limbs.l_arm) && (!src.limbs.r_arm))
 				return FALSE
 			if (istype(I, /obj/item/clothing/gloves))
-				return TRUE
+				var/obj/item/clothing/GL = I
+				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in GL.compatible_species)))
+					//DEBUG_MESSAGE("[src] can't wear [I].")
+					return FALSE
+				else
+					return TRUE
 		if (SLOT_HEAD)
 			if (!src.organHolder.head)
 				return FALSE

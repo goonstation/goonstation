@@ -11,7 +11,7 @@
 	var/chained = 0
 	var/laces = LACES_NORMAL // Laces for /obj/item/gun/energy/pickpocket harass mode.
 	var/kick_bonus = 0 //some shoes will yield extra kick damage!
-	compatible_species = list("human")
+	compatible_species = list("human", "sphynx")
 	protective_temperature = 500
 	//cogwerks - burn vars
 	burn_point = 400
