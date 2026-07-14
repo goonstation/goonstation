@@ -12934,19 +12934,26 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/storage/cart/mechcart,
+/obj/item/rods/steel{
+	amount = 50
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
 /area/station/engine/elect)
 "bnk" = (
-/obj/machinery/vending/mechanics,
 /obj/machinery/light/incandescent/warm,
+/obj/storage/cart/mechcart,
+/obj/item/rods/steel{
+	amount = 50
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
 /area/station/engine/elect)
 "bnm" = (
-/obj/machinery/manufacturer/mechanic,
+/obj/machinery/vending/standard,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -24461,15 +24468,6 @@
 /obj/storage/crate,
 /turf/simulated/floor/plating/damaged3,
 /area/martian_trader)
-"dma" = (
-/obj/storage/cart/mechcart,
-/obj/item/rods/steel{
-	amount = 50
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 1
-	},
-/area/station/engine/eva)
 "dmg" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/ai_experimental,
@@ -25161,8 +25159,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "dNf" = (
-/obj/machinery/vending/standard,
 /obj/item/device/radio/intercom/engineering,
+/obj/machinery/vending/mechanics,
 /turf/simulated/floor,
 /area/station/engine/elect)
 "dNn" = (
@@ -30547,13 +30545,6 @@
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
 	})
-"ihZ" = (
-/obj/storage/cart/mechcart,
-/obj/item/rods/steel{
-	amount = 50
-	},
-/turf/simulated/floor,
-/area/station/engine/eva)
 "iiK" = (
 /obj/machinery/firealarm/directional/west,
 /obj/cable{
@@ -40234,9 +40225,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "qjP" = (
-/obj/machinery/disposal/mail/autoname{
-	mail_tag = "mechanics"
-	},
+/obj/machinery/disposal/mail/autoname/mechanics,
 /obj/machinery/light/incandescent/warm,
 /obj/disposalpipe/trunk/mail/west,
 /turf/simulated/floor/yellow/side{
@@ -48304,6 +48293,7 @@
 /area/research_outpost)
 "wKy" = (
 /obj/machinery/firealarm/directional/north,
+/obj/machinery/manufacturer/mechanic,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -105051,8 +105041,8 @@ sYB
 lIm
 bfW
 mVB
-dma
-ihZ
+osH
+bfW
 blB
 bnj
 bnT
