@@ -23,7 +23,6 @@
 
 		// Infrastructure
 		CONTENTS_GT(/obj/machinery/power/data_terminal, 2),
-		CONTENTS_EQ(/obj/submachine/cargopad/mechanics, 1),
 		CONTENTS_OR(
 			list(CONTENTS_EQ(/obj/machinery/disposal/mail/autoname/mechanics, 1)),
 			list(CONTENTS_EQ(/obj/machinery/disposal/mail/small/autoname/mechanics, 1)),
@@ -53,7 +52,6 @@
 		CONTENTS_GT(/obj/machinery/rkit, 0),
 
 		// Infrastructure
-		CONTENTS_EQ(/obj/submachine/cargopad/mechanics, 1),
 		CONTENTS_OR(
 			list(CONTENTS_EQ(/obj/machinery/disposal/mail/autoname/mechanics, 1)),
 			list(CONTENTS_EQ(/obj/machinery/disposal/mail/small/autoname/mechanics, 1)),
@@ -84,7 +82,6 @@
 
 		// Infrastructure
 		CONTENTS_GT(/obj/machinery/power/data_terminal, 2),
-		CONTENTS_EQ(/obj/submachine/cargopad/mechanics, 1),
 
 		// Tools
 		CONTENTS_GT(/obj/item/device/multitool, 0),
