@@ -105,6 +105,17 @@ datum
 				..()
 				return
 
+			on_mob_life(var/mob/M, var/mult = 1)
+				..()
+
+				if (issphynx(M))
+					M.changeStatus("poisoned", 3 SECONDS * mult)
+
+					if (prob(20 * mult)) // nauseous kitty
+						M.vomit()
+						M.emote("scream")
+				..()
+
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0)
 				. = ..()
 				if(M.mob_flags & IS_BONEY)
@@ -125,12 +136,34 @@ datum
 			taste = "overly milky"
 			viscosity = 0.4
 
+			on_mob_life(var/mob/M, var/mult = 1)
+				..()
+
+				if (issphynx(M))
+					M.changeStatus("poisoned", 3 SECONDS * mult)
+
+					if (prob(20 * mult)) // nauseous kitty
+						M.vomit()
+						M.emote("scream")
+				..()
+
 		fooddrink/milk/super_milk
 			// i thought it was funny
 			name = "super milk"
 			id = "super_milk"
 			description = "This milk is far more milky than should be possible."
 			reagent_state = LIQUID
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				..()
+
+				if (issphynx(M))
+					M.changeStatus("poisoned", 3 SECONDS * mult)
+
+					if (prob(20 * mult)) // nauseous kitty
+						M.vomit()
+						M.emote("scream")
+				..()
 
 		fooddrink/milk/chocolate_milk
 			name = "chocolate milk"
@@ -150,6 +183,12 @@ datum
 				M.reagents.add_reagent("sugar", 1 * src.calculate_depletion_rate(M, mult))
 				if (ispug(M) || istype(M, /mob/living/critter/small_animal/dog))
 					M.changeStatus("poisoned", 4 SECONDS * mult)
+				if (issphynx(M))
+					M.changeStatus("poisoned", 3 SECONDS * mult)
+
+					if (prob(20 * mult)) // nauseous kitty
+						M.vomit()
+						M.emote("scream")
 				..()
 
 		fooddrink/milk/strawberry_milk
@@ -165,6 +204,17 @@ datum
 			thirst_value = 0.75
 			value = 3 // 1 2
 
+			on_mob_life(var/mob/M, var/mult = 1)
+				..()
+
+				if (issphynx(M))
+					M.changeStatus("poisoned", 3 SECONDS * mult)
+
+					if (prob(20 * mult)) // nauseous kitty
+						M.vomit()
+						M.emote("scream")
+				..()
+
 		fooddrink/milk/banana_milk
 			name = "Banana Milk"
 			id = "banana_milk"
@@ -178,6 +228,17 @@ datum
 			thirst_value = 0.75
 			value = 3 // 1 2
 
+			on_mob_life(var/mob/M, var/mult = 1)
+				..()
+
+				if (issphynx(M))
+					M.changeStatus("poisoned", 3 SECONDS * mult)
+
+					if (prob(20 * mult)) // nauseous kitty
+						M.vomit()
+						M.emote("scream")
+				..()
+
 		fooddrink/milk/blue_milk
 			name = "blue milk"
 			id = "blue_milk"
@@ -190,6 +251,17 @@ datum
 			reagent_state = LIQUID
 			thirst_value = 0.75
 			value = 3 // 1 2
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				..()
+
+				if (issphynx(M))
+					M.changeStatus("poisoned", 3 SECONDS * mult)
+
+					if (prob(20 * mult)) // nauseous kitty
+						M.vomit()
+						M.emote("scream")
+				..()
 
 		fooddrink/milk/milk_punch
 			name = "milk punch"
@@ -210,6 +282,17 @@ datum
 					var/mob/living/L = M
 					L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
 
+			on_mob_life(var/mob/M, var/mult = 1)
+				..()
+
+				if (issphynx(M))
+					M.changeStatus("poisoned", 3 SECONDS * mult)
+
+					if (prob(20 * mult)) // nauseous kitty
+						M.vomit()
+						M.emote("scream")
+				..()
+
 		fooddrink/yoghurt
 			name = "yoghurt"
 			id = "yoghurt"
@@ -226,6 +309,12 @@ datum
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
 					H.organHolder.heal_organ(1 * mult, 1 * mult, 1 * mult, "intestines")
+				if (issphynx(M))
+					M.changeStatus("poisoned", 3 SECONDS * mult)
+
+					if (prob(20 * mult)) // nauseous kitty
+						M.vomit()
+						M.emote("scream")
 				..()
 
 		fooddrink/cream
@@ -246,6 +335,12 @@ datum
 				if(prob(25))
 					M.reagents.add_reagent(("milk"), 2.5 * src.calculate_depletion_rate(M, mult))
 					M.reagents.add_reagent(("cholesterol"), 2.5 * src.calculate_depletion_rate(M, mult))
+				if (issphynx(M))
+					M.changeStatus("poisoned", 3 SECONDS * mult)
+
+					if (prob(20 * mult)) // nauseous kitty
+						M.vomit()
+						M.emote("scream")
 				..()
 
 
@@ -3975,6 +4070,17 @@ datum
 				if(method == INGEST)
 					if (M.get_toxin_damage())
 						M.take_toxin_damage(rand(1,2) * -1) //I assume this was not supposed to be poison.
+			on_mob_life(var/mob/M, var/mult = 1)
+				..()
+
+				if (issphynx(M))
+					M.changeStatus("poisoned", 3 SECONDS * mult)
+
+					if (prob(20 * mult)) // nauseous kitty
+						M.vomit()
+						M.emote("scream")
+				..()
+
 
 		fooddrink/cocktail_triple
 			name = "Triple Triple"

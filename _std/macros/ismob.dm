@@ -21,10 +21,12 @@
 #define ispug(x) (istype(x, /mob/living/carbon/human) && istype(x:mutantrace, /datum/mutantrace/pug))
 #define isfrog(x) (istype(x, /mob/living/carbon/human) && istype(x:mutantrace, /datum/mutantrace/frog))
 #define isskeleton(x) (istype(x, /mob/living/carbon/human) && istype(x:mutantrace, /datum/mutantrace/skeleton))
+#define issphynx(x) istype(x, /mob/living/carbon/human) && istype(x:mutantrace, /datum/mutantrace/sphynx)
 #define iscritter(x) istype(x, /obj/critter)
 #define isintangible(x) istype(x, /mob/living/intangible)
 #define ismobcritter(x) istype(x, /mob/living/critter)
 #define isrobocritter(x) istype(x, /mob/living/critter/robotic)
+
 
 #define issilicon(x) istype(x, /mob/living/silicon)
 #define isrobot(x) istype(x, /mob/living/silicon/robot)
