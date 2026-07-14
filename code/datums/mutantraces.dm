@@ -1981,7 +1981,6 @@ TYPEINFO(/datum/mutantrace/sphynx)
 			M.mob_flags |= SHOULD_HAVE_A_TAIL
 			M.punchMessage = "scratches"
 			M.kickMessage = "scratches"
-			M.trample_cooldown = 1 SECOND
 			M.traitHolder?.addTrait("stinky")
 		RegisterSignal(M, COMSIG_MOB_THROW_ITEM_NEARBY, PROC_REF(throw_response))
 
