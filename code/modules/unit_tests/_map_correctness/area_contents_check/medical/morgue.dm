@@ -29,7 +29,7 @@
 			list(CONTENTS_GT(/obj/item/storage/box/body_bag, 0)),
 			list(CONTENTS_GT(/obj/item/body_bag, 2)),
 		),
-		// Morgue-crematorium linkage of some sort (omitted on Nadir)
+		// Morgue-Crematorium Linkage
 		CONTENTS_OR(
 			list(CONTENTS_EQ(/obj/disposaloutlet, 1)),
 			list(CONTENTS_EQ(/obj/machinery/disposal/morgue, 1)),
