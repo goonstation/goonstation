@@ -18,7 +18,6 @@
 			list(CONTENTS_GT(/obj/storage/cart/mechcart, 0)),
 		),
 		CONTENTS_GT(/obj/machinery/vending/mechanics, 0),
-
 		CONTENTS_GT(/obj/machinery/portable_reclaimer, 0),
 		CONTENTS_GT(/obj/machinery/rkit, 0),
 
@@ -52,7 +51,6 @@
 			list(CONTENTS_GT(/obj/storage/cart/mechcart, 0)),
 		),
 		CONTENTS_GT(/obj/machinery/vending/mechanics, 0),
-
 		CONTENTS_GT(/obj/machinery/portable_reclaimer, 0),
 		CONTENTS_GT(/obj/machinery/rkit, 0),
 
@@ -85,7 +83,6 @@
 			list(CONTENTS_GT(/obj/storage/cart/mechcart, 0)),
 		),
 		CONTENTS_GT(/obj/machinery/vending/mechanics, 0),
-
 		CONTENTS_GT(/obj/machinery/portable_reclaimer, 0),
 		CONTENTS_GT(/obj/machinery/rkit, 0),
 
