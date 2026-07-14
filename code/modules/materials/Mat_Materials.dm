@@ -2328,7 +2328,6 @@ ABSTRACT_TYPE(/datum/material/rubber)
 				0.30, 0.00, 0.00, 0.00,\
 				0.00, 0.00, 0.00, 1.00,\
 				0.25, 0.00, 0.00, 0.00)
-	artisan_trait_weight = MATERIAL_ARTISAN_COMMON
 
 	New()
 		..()

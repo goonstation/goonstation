@@ -1,5 +1,9 @@
 
 (t)mon jul 13 26
+(u)LorrMaster
+(p)27175
+(e)🧱💪|A-Materials, A-Traits
+(+)Artisan trait is less likely to choose synthrubber materials.
 (u)ANNmagedon
 (p)27161
 (e)🎨|C-Sprites
