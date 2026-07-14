@@ -192,6 +192,7 @@
 	vr_allowed = FALSE
 	job = list("Botanist", "Apiculturist")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
+	max_buy = 3
 
 /datum/syndicate_buylist/traitor/fakegrenade
 	name = "Fake Cleaner Grenades"
