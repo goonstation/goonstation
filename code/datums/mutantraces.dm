@@ -1963,6 +1963,7 @@ TYPEINFO(/datum/mutantrace/sphynx)
 	special_hair_1_layer_f = MOB_OVERMASK_LAYER
 	voice_name = "sphynx"
 	voice_override = "sphynx"
+	override_attack = 0
 	human_compatible = TRUE
 	dna_mutagen_banned = FALSE
 	aquaphobic = TRUE
@@ -2007,9 +2008,9 @@ TYPEINFO(/datum/mutantrace/sphynx)
 				. = ..()
 
 	on_punch(var/mob/living/carbon/human/user, var/mob/target, var/datum/attackResults/msgs, var/damage, var/do_punch)
-		if (do_punch && msgs?.damage > 0 && target && prob(20))
+		if (do_punch && msgs?.damage > 0 && target && prob(50))
 			playsound(user, 'sound/impact_sounds/Flesh_Tear_3.ogg', 50, TRUE)
-			take_bleeding_damage(target, user, 1, DAMAGE_CUT, TRUE)
+			take_bleeding_damage(target, user, 1, DAMAGE_CUT, TRUE, null, FALSE, FALSE, 5)
 
 	disposing()
 		if (src.mob)
