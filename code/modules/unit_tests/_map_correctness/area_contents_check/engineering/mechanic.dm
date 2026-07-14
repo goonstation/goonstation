@@ -26,7 +26,7 @@
 		CONTENTS_EQ(/obj/submachine/cargopad/mechanics, 1),
 		CONTENTS_OR(
 			list(CONTENTS_EQ(/obj/machinery/disposal/mail/autoname/mechanics, 1)),
-			list(CONTENTS_EQ(/obj/machinery/disposal/mail/small/autoname/mechanics, 0)),
+			list(CONTENTS_EQ(/obj/machinery/disposal/mail/small/autoname/mechanics, 1)),
 		),
 
 		// Tools
@@ -77,7 +77,7 @@
 	expected_contents = list(
 		// Equipment
 		CONTENTS_GT(/obj/storage/secure/closet/engineering/mechanic, 1),
-		CONTENTS_GT(/obj/machinery/manufacturer/mechanic, 1),
+		CONTENTS_GT(/obj/machinery/manufacturer/mechanic, 0),
 		CONTENTS_OR(
 			list(CONTENTS_GT(/obj/storage/cart/mechcart/tools, 0)),
 			list(CONTENTS_GT(/obj/storage/cart/mechcart, 0)),
