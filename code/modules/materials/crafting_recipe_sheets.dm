@@ -202,6 +202,7 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/reinforced)
 		craftedType = /obj/item/tile
 		name = "Floor Tile"
 		yield = 4
+		required_mat_flags = MATERIAL_METAL | MATERIAL_WOOD
 		can_craft_multiples = TRUE
 		icon = 'icons/obj/metal.dmi'
 		icon_state = "tile_5"
