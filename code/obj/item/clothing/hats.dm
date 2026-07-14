@@ -1564,7 +1564,6 @@ TYPEINFO(/obj/item/clothing/head/bighat/syndicate)
 	name = "HoS Hat"
 	icon_state = "hoscap"
 	item_state = "hoscap"
-	c_flags = SPACEWEAR
 	var/folds = 0
 	desc = "Actually, this hat is from a fast-food restaurant, that's why it folds like it was made of paper."
 	setupProperties()

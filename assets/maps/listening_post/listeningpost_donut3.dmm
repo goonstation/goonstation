@@ -325,7 +325,7 @@
 	dir = 1;
 	pixel_y = 26
 	},
-/obj/machinery/light_switch/east{
+/obj/machinery/light_switch/directional/east{
 	pixel_y = 7
 	},
 /turf/simulated/floor/grey/corner{
@@ -554,7 +554,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost/barracks)
 "zs" = (
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/directional/east,
 /obj/storage/crate,
 /obj/item/shipcomponent/secondary_system/crash,
 /turf/simulated/floor/black,
@@ -612,7 +612,7 @@
 /obj/cable/black{
 	icon_state = "0-2"
 	},
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
 "BV" = (
@@ -942,7 +942,7 @@
 /obj/cable/black{
 	icon_state = "2-4"
 	},
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/caution/north,
 /area/listeningpost/power)
 "Sw" = (
@@ -1039,7 +1039,7 @@
 	icon_state = "bedsheet-red";
 	name = "syndicate bedsheet"
 	},
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost/barracks)
 "Wc" = (

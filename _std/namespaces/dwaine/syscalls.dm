@@ -1,4 +1,6 @@
 //------------ DWAINE System Calls ------------//
+CREATE_NAMESPACE(DWAINE, SYSCALL)
+
 /**
  *	Send a message or file to a connected terminal device.
  *	Accepted data fields:
@@ -9,7 +11,7 @@
  *		- `"clear"`: The screen should be cleared before the message is displayed.
  *		- `"multiline"`: `|n` should be interpreted as a line break.
  */
-#define DWAINE_COMMAND_MSG_TERM	1
+ADD_TO_NAMESPACE(DWAINE, SYSCALL)(var/const/MSG_TERM = 1)
 
 /**
  *	Send a log in request to the kernel.
@@ -19,20 +21,20 @@
  *	- `"service"`: Whether the user connecting is a service terminal.
  *	- `"data"`: If attempting to login as a temporary user, the net ID of the user terminal.
  */
-#define DWAINE_COMMAND_ULOGIN	2
+ADD_TO_NAMESPACE(DWAINE, SYSCALL)(var/const/ULOGIN = 2)
 
 /**
  *	Update the user's group.
  *	Accepted data fields:
  *	- `"group"`: The desired value of the `group` field on the user's record file.
  */
-#define DWAINE_COMMAND_UGROUP	3
+ADD_TO_NAMESPACE(DWAINE, SYSCALL)(var/const/UGROUP = 3)
 
 /**
  *	List all current users.
  *	No applicable data fields.
  */
-#define DWAINE_COMMAND_ULIST	4
+ADD_TO_NAMESPACE(DWAINE, SYSCALL)(var/const/ULIST = 4)
 
 /**
  *	Send message to a connected user terminal. Cannot send messages to non-user terminals.
@@ -40,7 +42,7 @@
  *	- `"term"`: The net ID of the target user terminal.
  *	- `"data"`: The content of the message.
  */
-#define DWAINE_COMMAND_UMSG		5
+ADD_TO_NAMESPACE(DWAINE, SYSCALL)(var/const/UMSG = 5)
 
 /**
  *	Acts as an alternate path for user input.
@@ -48,7 +50,7 @@
  *	- `"term"`: The net ID of the user terminal.
  *	- `"data"`: If a file is not provided, the content of the input.
  */
-#define DWAINE_COMMAND_UINPUT	6
+ADD_TO_NAMESPACE(DWAINE, SYSCALL)(var/const/UINPUT = 6)
 
 /**
  *	Send message to a specified driver.
@@ -58,7 +60,7 @@
  *	- `"dcommand"`: The `"command"` field to pass to the driver.
  *	- `"dtarget"`: The `"target"` field to pass to the driver.
  */
-#define DWAINE_COMMAND_DMSG		7
+ADD_TO_NAMESPACE(DWAINE, SYSCALL)(var/const/DMSG = 7)
 
 /**
  *	List all drivers of a specific terminal type.
@@ -66,7 +68,7 @@
  *	- `"dtag"`: The terminal type of the drivers to search for.
  *	- `"mode"`: If `1`, omit empty or invalid indexes, if `0`, do not.
  */
-#define DWAINE_COMMAND_DLIST	8
+ADD_TO_NAMESPACE(DWAINE, SYSCALL)(var/const/DLIST = 8)
 
 /**
  *	Get the ID of a specific driver.
@@ -74,19 +76,19 @@
  *	- `"dtag"`: The terminal type of the drivers to search for.
  *	- `"dnetid"`: If `"dtag"` is not specified, the driver name to search for. Driver names correspond to the net ID of their respective device, excluding the "pnet_" prefix.
  */
-#define DWAINE_COMMAND_DGET		9
+ADD_TO_NAMESPACE(DWAINE, SYSCALL)(var/const/DGET = 9)
 
 /**
  *	Instruct the mainframe to recheck for devices now instead of waiting for the full timeout.
  *	No applicable data fields.
  */
-#define DWAINE_COMMAND_DSCAN	10
+ADD_TO_NAMESPACE(DWAINE, SYSCALL)(var/const/DSCAN = 10)
 
 /**
  *	Instruct the caller_prog to exit the current running program.
  *	No applicable data fields.
  */
-#define DWAINE_COMMAND_EXIT		11
+ADD_TO_NAMESPACE(DWAINE, SYSCALL)(var/const/EXIT = 11)
 
 /**
  *	Run a task located at a specified filepath.
@@ -95,47 +97,47 @@
  *	- `"passusr"`: Whether to pass the user to the task.
  *	- `"args"`: The arguments to pass to the task.
  */
-#define DWAINE_COMMAND_TSPAWN	12
+ADD_TO_NAMESPACE(DWAINE, SYSCALL)(var/const/TSPAWN = 12)
 
 /**
  *	Run a new child task of the calling program's type.
  *	Accepted data fields:
  *	- `"args"`: The arguments to pass to the task.
  */
-#define DWAINE_COMMAND_TFORK	13
+ADD_TO_NAMESPACE(DWAINE, SYSCALL)(var/const/TFORK = 13)
 
 /**
  *	Terminate a child task of the calling program.
  *	Accepted data fields:
  *	- `"target"`: The ID of the target task.
  */
-#define DWAINE_COMMAND_TKILL	14
+ADD_TO_NAMESPACE(DWAINE, SYSCALL)(var/const/TKILL = 14)
 
 /**
  *	List all child tasks of the calling program.
  *	No applicable data fields.
  */
-#define DWAINE_COMMAND_TLIST	15
+ADD_TO_NAMESPACE(DWAINE, SYSCALL)(var/const/TLIST = 15)
 
 /**
  *	Instruct a program to exit the current running task.
  *	No applicable data fields.
  */
-#define DWAINE_COMMAND_TEXIT	16
+ADD_TO_NAMESPACE(DWAINE, SYSCALL)(var/const/TEXIT = 16)
 
 /**
  *	Get the computer file at the specified filepath.
  *	Accepted data fields:
  *	- `"path"`: The filepath at which the computer file is located.
  */
-#define DWAINE_COMMAND_FGET		17
+ADD_TO_NAMESPACE(DWAINE, SYSCALL)(var/const/FGET = 17)
 
 /**
  *	Delete the computer file at the specified filepath.
  *	Accepted data fields:
  *	- `"path"`: The filepath at which the computer file is located.
  */
-#define DWAINE_COMMAND_FKILL	18
+ADD_TO_NAMESPACE(DWAINE, SYSCALL)(var/const/FKILL = 18)
 
 /**
  *	Adjust the permissions of the computer file at the specified filepath.
@@ -143,7 +145,7 @@
  *	- `"path"`: The filepath at which the computer file is located.
  *	- `"permission"`: The desired permission level of the computer file.
  */
-#define DWAINE_COMMAND_FMODE	19
+ADD_TO_NAMESPACE(DWAINE, SYSCALL)(var/const/FMODE = 19)
 
 /**
  *	Adjust the owner and group of the computer file at the specified filepath.
@@ -152,7 +154,7 @@
  *	- `"owner"`: The desired owner of the computer file.
  *	- `"group"`: The desired group value of the computer file.
  */
-#define DWAINE_COMMAND_FOWNER	20
+ADD_TO_NAMESPACE(DWAINE, SYSCALL)(var/const/FOWNER = 20)
 
 /**
  *	Write a provided computer file to the specified path.
@@ -162,14 +164,14 @@
  *	- `"replace"`: If the computer file already exists, whether to overwrite it.
  *	- `"append"`: If the computer file already exists, whether to append the contents of the new file to it.
  */
-#define DWAINE_COMMAND_FWRITE	21
+ADD_TO_NAMESPACE(DWAINE, SYSCALL)(var/const/FWRITE = 21)
 
 /**
  *	Get the config file of the specified name.
  *	Accepted data fields:
  *	- `"fname"`: The name of the config file.
  */
-#define DWAINE_COMMAND_CONFGET	22
+ADD_TO_NAMESPACE(DWAINE, SYSCALL)(var/const/CONFGET = 22)
 
 /**
  *	Set up a mountpoint for a device driver.
@@ -177,22 +179,22 @@
  *	- `"id"`: The name of the device driver to set up a mountpoint for.
  *	- `"link"`: If set, the name of the symbolic link folder to set up for the mountpoint.
  */
-#define DWAINE_COMMAND_MOUNT	23
+ADD_TO_NAMESPACE(DWAINE, SYSCALL)(var/const/MOUNT = 23)
 
 /**
  *	Instruct a program to receive and handle a file.
  *	No applicable data fields.
  */
-#define DWAINE_COMMAND_RECVFILE	24
+ADD_TO_NAMESPACE(DWAINE, SYSCALL)(var/const/RECVFILE = 24)
 
 /**
  *	Instruct a program to halt processing a script.
  *	No applicable data fields.
  */
-#define DWAINE_COMMAND_BREAK	25
+ADD_TO_NAMESPACE(DWAINE, SYSCALL)(var/const/BREAK = 25)
 
 /**
  *	Reply to a request for information.
  *	Has unique data fields for each implementation, depending on the data requested.
  */
-#define DWAINE_COMMAND_REPLY	30
+ADD_TO_NAMESPACE(DWAINE, SYSCALL)(var/const/REPLY = 30)

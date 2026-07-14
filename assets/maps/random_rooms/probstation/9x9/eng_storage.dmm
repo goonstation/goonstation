@@ -1,0 +1,742 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ae" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/storage)
+"av" = (
+/obj/machinery/manufacturer/general,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/yellow/checker{
+	dir = 4
+	},
+/area/station/engine/storage)
+"ax" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
+/area/station/engine/storage)
+"aC" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/wall/auto/supernorn/colored/yellow,
+/area/station/engine/storage)
+"co" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/engine/storage)
+"cS" = (
+/obj/machinery/disposal_pipedispenser/mobile,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/yellowblack,
+/area/station/engine/storage)
+"fB" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/storage)
+"gP" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/yellow/checker{
+	dir = 4
+	},
+/area/station/engine/storage)
+"kl" = (
+/obj/machinery/dispenser,
+/turf/simulated/floor/yellowblack{
+	dir = 10
+	},
+/area/station/engine/storage)
+"lF" = (
+/obj/machinery/door/airlock/pyro/glass/engineering,
+/obj/mapping_helper/access/engineering_storage,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/yellow,
+/area/station/engine/storage)
+"lY" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/disposalpipe/segment,
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/yellow/checker{
+	dir = 4
+	},
+/area/station/engine/storage)
+"mU" = (
+/obj/storage/secure/closet/engineering/electrical,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/yellowblack{
+	dir = 4
+	},
+/area/station/engine/storage)
+"pA" = (
+/obj/machinery/door/airlock/pyro/engineering/alt,
+/obj/mapping_helper/access/engineering_storage,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/yellow,
+/area/station/engine/storage)
+"qA" = (
+/obj/machinery/door/airlock/pyro/glass/engineering,
+/obj/mapping_helper/access/engineering_storage,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/yellow,
+/area/station/engine/storage)
+"rj" = (
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	dir = 4
+	},
+/obj/mapping_helper/access/engineering_storage,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/yellow,
+/area/station/engine/storage)
+"rs" = (
+/obj/machinery/vending/jobclothing/engineering,
+/turf/simulated/floor/yellowblack{
+	dir = 4
+	},
+/area/station/engine/storage)
+"rW" = (
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
+/area/station/engine/storage)
+"sa" = (
+/obj/machinery/disposal/small/north{
+	pixel_y = 32
+	},
+/obj/disposalpipe/trunk/south,
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
+/area/station/engine/storage)
+"sU" = (
+/obj/rack,
+/obj/item/clothing/glasses/toggleable/meson{
+	pixel_y = 4
+	},
+/obj/item/clothing/glasses/toggleable/meson,
+/obj/item/clothing/glasses/toggleable/meson{
+	pixel_y = -4
+	},
+/obj/item/clothing/ears/earmuffs{
+	pixel_x = -8;
+	pixel_y = 4
+	},
+/obj/item/clothing/ears/earmuffs{
+	pixel_x = -8
+	},
+/obj/item/clothing/ears/earmuffs{
+	pixel_x = -8;
+	pixel_y = -4
+	},
+/obj/item/device/multitool{
+	pixel_x = 8;
+	pixel_y = 6
+	},
+/obj/item/device/multitool{
+	pixel_x = 8
+	},
+/obj/item/device/multitool{
+	pixel_x = 8;
+	pixel_y = -5
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 9
+	},
+/area/station/engine/storage)
+"uu" = (
+/obj/machinery/manufacturer/engineering,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/yellow/checker{
+	dir = 4
+	},
+/area/station/engine/storage)
+"ww" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/yellowblack,
+/area/station/engine/storage)
+"wF" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/yellow/checker{
+	dir = 4
+	},
+/area/station/engine/storage)
+"xI" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 4
+	},
+/area/station/engine/storage)
+"yw" = (
+/obj/machinery/firealarm/directional/east,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/yellow/checker{
+	dir = 4
+	},
+/area/station/engine/storage)
+"zB" = (
+/turf/simulated/floor/yellow/checker{
+	dir = 4
+	},
+/area/station/engine/storage)
+"AM" = (
+/obj/storage/secure/closet/engineering/engineer,
+/turf/simulated/floor/yellowblack{
+	dir = 5
+	},
+/area/station/engine/storage)
+"Ce" = (
+/obj/stool/chair/office/yellow{
+	dir = 1
+	},
+/obj/landmark/start/job/engineer,
+/obj/disposalpipe/segment/bent/east,
+/turf/simulated/floor/yellow/checker{
+	dir = 4
+	},
+/area/station/engine/storage)
+"CO" = (
+/obj/landmark/start/job/technical_trainee,
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 9
+	},
+/area/station/engine/storage)
+"Er" = (
+/obj/landmark/start/job/engineer,
+/obj/disposalpipe/segment/bent/north,
+/turf/simulated/floor/black,
+/area/station/engine/storage)
+"Fe" = (
+/obj/rack,
+/obj/item/old_grenade/oxygen{
+	pixel_x = -10;
+	pixel_y = 6
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = -10;
+	pixel_y = 3
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = -10
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = -10;
+	pixel_y = -3
+	},
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = -2;
+	pixel_y = 6
+	},
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = -2;
+	pixel_y = 6
+	},
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = -2;
+	pixel_y = 3
+	},
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = -2;
+	pixel_y = 3
+	},
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = -2
+	},
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = -2
+	},
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = -2;
+	pixel_y = -3
+	},
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = -2;
+	pixel_y = -3
+	},
+/obj/item/chem_grenade/firefighting{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/obj/item/chem_grenade/firefighting{
+	pixel_x = 7;
+	pixel_y = 3
+	},
+/obj/item/chem_grenade/firefighting{
+	pixel_x = 7
+	},
+/obj/item/chem_grenade/firefighting{
+	pixel_x = 7;
+	pixel_y = -3
+	},
+/obj/machinery/firealarm/directional/east,
+/turf/simulated/floor/yellowblack{
+	dir = 4
+	},
+/area/station/engine/storage)
+"FL" = (
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor/yellowblack{
+	dir = 8
+	},
+/area/station/engine/storage)
+"FQ" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	autoclose = 0;
+	dir = 1
+	},
+/obj/mapping_helper/access/engineering_storage,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/yellow,
+/area/station/engine/storage)
+"Gv" = (
+/obj/table/auto,
+/obj/item/sheet/steel/fullstack{
+	pixel_y = 4;
+	pixel_x = -6
+	},
+/obj/item/sheet/steel/fullstack{
+	pixel_y = 8;
+	pixel_x = -6
+	},
+/obj/item/sheet/steel/reinforced/fullstack{
+	pixel_y = 8;
+	pixel_x = 6
+	},
+/obj/item/sheet/steel/reinforced/fullstack{
+	pixel_y = 4;
+	pixel_x = 6
+	},
+/obj/item/storage/box/cablesbox{
+	pixel_y = 2
+	},
+/obj/item/storage/box/cablesbox{
+	pixel_y = 6
+	},
+/obj/item/clothing/gloves/yellow{
+	pixel_y = 6
+	},
+/obj/item/clothing/gloves/yellow,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/yellowblack,
+/area/station/engine/storage)
+"Hq" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	autoclose = 0;
+	dir = 1
+	},
+/obj/mapping_helper/access/engineering_storage,
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/cashreg,
+/turf/simulated/floor/yellow,
+/area/station/engine/storage)
+"Ih" = (
+/turf/simulated/wall/auto/supernorn/colored/yellow,
+/area/station/engine/storage)
+"JS" = (
+/obj/landmark/start/job/engineer,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 8
+	},
+/area/station/engine/storage)
+"KF" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/bent/west,
+/turf/simulated/floor/black,
+/area/station/engine/storage)
+"Li" = (
+/obj/rack,
+/obj/item/clothing/suit/hazard/fire{
+	pixel_x = -7
+	},
+/obj/item/clothing/mask/gas/emergency{
+	pixel_x = -4;
+	pixel_y = 8
+	},
+/obj/item/clothing/head/helmet/firefighter{
+	pixel_x = -4;
+	pixel_y = 15
+	},
+/obj/item/tank/air{
+	pixel_x = 2;
+	pixel_y = -2
+	},
+/obj/item/chem_grenade/firefighting{
+	pixel_x = 5;
+	pixel_y = -4
+	},
+/obj/item/chem_grenade/firefighting{
+	pixel_x = 10;
+	pixel_y = -6
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
+/area/station/engine/storage)
+"Mj" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/disposal/small/west{
+	pixel_x = 8
+	},
+/obj/disposalpipe/trunk/west,
+/turf/simulated/floor/yellow/checker{
+	dir = 4
+	},
+/area/station/engine/storage)
+"MB" = (
+/obj/landmark/start/job/technical_trainee,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 8
+	},
+/area/station/engine/storage)
+"Nu" = (
+/obj/machinery/portable_reclaimer,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/yellow/checker{
+	dir = 4
+	},
+/area/station/engine/storage)
+"NL" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/storage)
+"NT" = (
+/turf/simulated/floor/black,
+/area/station/engine/storage)
+"NU" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
+/area/station/engine/storage)
+"Ob" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/black,
+/area/station/engine/storage)
+"Pn" = (
+/obj/reagent_dispensers/foamtank,
+/turf/simulated/floor/yellowblack,
+/area/station/engine/storage)
+"PV" = (
+/obj/item/sheet/glass/fullstack{
+	pixel_x = -6
+	},
+/obj/item/sheet/glass/fullstack{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/sheet/glass/reinforced/fullstack{
+	pixel_x = 6
+	},
+/obj/item/sheet/glass/reinforced/fullstack{
+	pixel_y = 6;
+	pixel_x = 6
+	},
+/obj/machinery/camera/directional/east{
+	pixel_y = 10
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 6
+	},
+/area/station/engine/storage)
+"Qd" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/storage)
+"Sb" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 8
+	},
+/area/station/engine/storage)
+"Tw" = (
+/obj/rack,
+/obj/item/clothing/suit/hazard/fire{
+	pixel_x = -7
+	},
+/obj/item/clothing/mask/gas/emergency{
+	pixel_x = -4;
+	pixel_y = 8
+	},
+/obj/item/clothing/head/helmet/firefighter{
+	pixel_x = -4;
+	pixel_y = 15
+	},
+/obj/item/tank/air{
+	pixel_x = 2;
+	pixel_y = -2
+	},
+/obj/item/chem_grenade/firefighting{
+	pixel_x = 5;
+	pixel_y = -4
+	},
+/obj/item/chem_grenade/firefighting{
+	pixel_x = 10;
+	pixel_y = -6
+	},
+/obj/machinery/light_switch/directional/north,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
+/area/station/engine/storage)
+"TW" = (
+/obj/storage/secure/closet/engineering/engineer,
+/turf/simulated/floor/yellowblack{
+	dir = 4
+	},
+/area/station/engine/storage)
+"VN" = (
+/obj/machinery/camera/directional/south,
+/turf/simulated/floor/yellow/checker{
+	dir = 4
+	},
+/area/station/engine/storage)
+"Wb" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/disposalpipe/junction/middle,
+/turf/simulated/floor/black,
+/area/station/engine/storage)
+"WP" = (
+/obj/table/auto,
+/obj/item/storage/toolbox/electrical{
+	pixel_y = 7
+	},
+/obj/item/storage/toolbox/electrical{
+	pixel_y = 4
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = 1
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = -6
+	},
+/obj/item/storage/belt/utility{
+	pixel_x = -7;
+	pixel_y = -2
+	},
+/obj/item/storage/belt/utility{
+	pixel_x = -7;
+	pixel_y = 2
+	},
+/turf/simulated/floor/yellowblack,
+/area/station/engine/storage)
+"XM" = (
+/obj/machinery/vending/standard,
+/obj/machinery/light_switch/directional/east,
+/turf/simulated/floor/yellow/checker{
+	dir = 4
+	},
+/area/station/engine/storage)
+"YO" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/yellowblack/corner{
+	dir = 1
+	},
+/area/station/engine/storage)
+
+(1,1,1) = {"
+Ih
+NL
+fB
+co
+ax
+rW
+rW
+rW
+rW
+"}
+(2,1,1) = {"
+Qd
+uu
+Nu
+av
+aC
+sU
+FL
+kl
+rW
+"}
+(3,1,1) = {"
+FQ
+zB
+wF
+VN
+Ih
+Tw
+NT
+cS
+rW
+"}
+(4,1,1) = {"
+Hq
+Ce
+lY
+gP
+lF
+NU
+Er
+Pn
+rW
+"}
+(5,1,1) = {"
+qA
+Mj
+yw
+XM
+ae
+Li
+Wb
+ww
+pA
+"}
+(6,1,1) = {"
+rW
+Ih
+Ih
+Ih
+Ih
+sa
+KF
+WP
+rW
+"}
+(7,1,1) = {"
+rW
+CO
+JS
+MB
+Sb
+YO
+Ob
+Gv
+rW
+"}
+(8,1,1) = {"
+rW
+AM
+TW
+mU
+xI
+rs
+Fe
+PV
+rW
+"}
+(9,1,1) = {"
+rW
+rW
+rW
+rW
+rj
+rW
+rW
+rW
+rW
+"}
