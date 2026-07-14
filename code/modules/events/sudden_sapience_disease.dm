@@ -2,6 +2,7 @@
 	name = "Sudden Sapience Disease"
 	required_elapsed_round_time = 10 MINUTES
 	required_npc_type = /mob/living/carbon/human/npc/monkey
+	weight = 60
 	var/ghost_confirmation_delay = 1 MINUTES
 	var/list/antag_npcs = list(/mob/living/carbon/human/npc/monkey/stirstir, /mob/living/carbon/human/npc/monkey/oppenheimer)
 

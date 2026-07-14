@@ -12325,10 +12325,6 @@
 	dir = 4
 	},
 /area/station/maintenance/north)
-"aNT" = (
-/obj/disposalpipe/segment,
-/turf/simulated/floor/sanitary,
-/area/station/hallway/secondary/entry)
 "aNU" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
@@ -13638,13 +13634,17 @@
 	},
 /area/station/crew_quarters/locker)
 "aRP" = (
-/obj/machinery/bathtub{
-	anchored = 1
+/obj/landmark/start/job/assistant,
+/obj/item/storage/toilet/random{
+	dir = 4
 	},
-/turf/simulated/floor/wood{
-	icon_state = "wooden"
+/obj/landmark/pest,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
 	},
-/area/station/crew_quarters/locker)
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/toilets)
 "aRQ" = (
 /obj/table/wood/auto,
 /obj/item/device/light/candle/small,
@@ -14445,13 +14445,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "aUo" = (
-/obj/machinery/door/window/eastleft,
-/obj/landmark/start/job/assistant,
-/obj/item/storage/toilet/random{
+/obj/machinery/door/unpowered/wood/stall{
 	dir = 4
 	},
-/obj/item/clothing/head/plunger,
-/obj/landmark/pest,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/locker)
 "aUp" = (
@@ -14881,7 +14877,10 @@
 	dir = 4
 	},
 /obj/landmark/start/job/assistant,
-/obj/machinery/door/window/eastleft,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/locker)
 "aVQ" = (
@@ -14979,10 +14978,6 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/north)
-"aWp" = (
-/obj/reagent_dispensers/fueltank,
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
 "aWq" = (
 /obj/shrub{
 	dir = 1;
@@ -52559,7 +52554,7 @@
 	},
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/supernorn,
-/area/station/hallway/secondary/entry)
+/area/station/crew_quarters/locker)
 "fJr" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -53911,11 +53906,9 @@
 /turf/simulated/floor/plating,
 /area/station/security/main)
 "gPy" = (
-/obj/item/storage/toilet/random{
+/obj/machinery/door/unpowered/wood/stall{
 	dir = 4
 	},
-/obj/landmark/start/job/assistant,
-/obj/machinery/door/window/eastleft,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
 "gPI" = (
@@ -54684,7 +54677,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
-/area/station/hallway/secondary/entry)
+/area/station/crew_quarters/locker)
 "hzM" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/blueblack{
@@ -63208,8 +63201,18 @@
 	},
 /area/station/catwalk/south)
 "oeP" = (
-/turf/simulated/floor/plating/damaged1,
-/area/station/maintenance/south)
+/obj/landmark/start/job/assistant,
+/obj/item/storage/toilet/random{
+	dir = 4
+	},
+/obj/item/clothing/head/plunger,
+/obj/landmark/pest,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/locker)
 "ofi" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -63708,7 +63711,7 @@
 /obj/machinery/light_switch/directional/west,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/sanitary,
-/area/station/hallway/secondary/entry)
+/area/station/crew_quarters/locker)
 "oEr" = (
 /obj/disposalpipe/segment/mail/bent/east,
 /obj/machinery/camera/directional/north{
@@ -66303,15 +66306,6 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/security/checkpoint/podbay)
-"qEy" = (
-/obj/landmark/start/job/assistant,
-/obj/item/storage/toilet/random{
-	dir = 4
-	},
-/obj/landmark/pest,
-/obj/machinery/door/window/eastleft,
-/turf/simulated/floor/sanitary,
-/area/station/crew_quarters/toilets)
 "qFc" = (
 /obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/purple/side{
@@ -68104,6 +68098,11 @@
 /obj/decal/cleanable/cobweb,
 /obj/landmark/halloween,
 /obj/decal/cleanable/dirt,
+/obj/decal/cleanable/gangtag{
+	icon_state = "gangtag19";
+	layer = 4;
+	pixel_y = 32
+	},
 /turf/simulated/floor/plating/scorched,
 /area/station/maintenance/south)
 "shR" = (
@@ -74067,14 +74066,16 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "xvK" = (
-/obj/decal/cleanable/gangtag{
-	icon_state = "gangtag19";
-	layer = 4;
-	pixel_y = 32
+/obj/item/storage/toilet/random{
+	dir = 4
 	},
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/plating,
-/area/station/maintenance/south)
+/obj/landmark/start/job/assistant,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/toilets)
 "xwP" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -116999,7 +117000,7 @@ dgY
 aMr
 aaa
 cqE
-xvK
+oQQ
 sed
 jLU
 wyk
@@ -117300,8 +117301,8 @@ cFH
 dgY
 aMr
 aaa
-cqE
-oQQ
+mPE
+uYN
 eID
 cMW
 cuW
@@ -117602,9 +117603,9 @@ cFH
 dgY
 aaI
 aaa
-mPE
-uYN
-oeP
+wdR
+mKE
+cuW
 cMW
 lvI
 tpW
@@ -117901,11 +117902,11 @@ aam
 cwV
 cDS
 cFI
-cwV
-aaI
-aaa
-wdR
-mKE
+iFr
+iFr
+iFr
+iFr
+iFr
 lKu
 bUD
 nFb
@@ -118204,9 +118205,9 @@ cwV
 psd
 jDP
 iFr
+xvK
 iFr
-iFr
-iFr
+aRP
 mZD
 mZD
 guU
@@ -118508,7 +118509,7 @@ cFK
 mZD
 gPy
 mZD
-qEy
+gPy
 vjk
 pWO
 mZD
@@ -127793,12 +127794,12 @@ aaI
 aaa
 aam
 aQy
-aRP
+aRQ
 aRS
 aRS
 aRS
-aSZ
-aWp
+kwv
+chV
 aYL
 dHh
 chV
@@ -128095,12 +128096,12 @@ aMr
 aaa
 aam
 aQz
-aRQ
+aRR
 aRS
 rDN
-aRS
-kwv
-chV
+aVL
+aSZ
+juj
 inU
 ckt
 chV
@@ -128396,14 +128397,14 @@ aPa
 aMr
 aaa
 aam
-aQz
-aRR
+aQA
 aRS
-aRS
-aVL
-aSZ
-juj
-aYL
+aSY
+qci
+pVb
+aWZ
+crk
+ttC
 ckt
 cha
 cha
@@ -128697,15 +128698,15 @@ pdm
 aPx
 aMr
 aaa
-aam
-aQA
-aRS
-aSY
-qci
-pVb
-aWZ
-crk
-ttC
+aPl
+aPl
+piU
+aSZ
+aSZ
+aSZ
+aSZ
+aSZ
+aYL
 oEg
 cha
 aaF
@@ -129000,12 +129001,12 @@ aPx
 aMr
 aaa
 aPl
-aPl
-piU
+sRL
+aRU
 aSZ
+oeP
 aSZ
-aSZ
-aSZ
+aVN
 aSZ
 aYL
 ckp
@@ -129302,12 +129303,12 @@ aPx
 aMr
 aaa
 kvp
-sRL
+aQB
 aRU
 aSZ
 aUo
 aSZ
-aVN
+aUo
 aSZ
 iGh
 ckp
@@ -129906,7 +129907,7 @@ aFi
 aaI
 aaa
 gVg
-aQB
+aRU
 aRU
 eSC
 eSC
@@ -130205,8 +130206,8 @@ aFi
 lpR
 woI
 aFi
-aFi
-aFi
+aPl
+aPl
 aPl
 aQD
 aRU
@@ -130810,7 +130811,7 @@ jnd
 wkz
 aLq
 hzC
-aNT
+aPn
 vqJ
 aPn
 aPn

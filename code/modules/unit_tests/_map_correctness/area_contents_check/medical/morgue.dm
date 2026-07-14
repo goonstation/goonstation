@@ -6,7 +6,6 @@
 	expected_contents = list(
 		// General
 		CONTENTS_GT(/obj/machinery/traymachine/morgue, 2),
-		CONTENTS_EQ(/obj/disposaloutlet, 1),
 		CONTENTS_EQ(/mob/living/critter/small_animal/opossum/morty, 1),
 		// Surgical Equipment
 		CONTENTS_GT(/obj/machinery/optable, 0),
@@ -29,5 +28,10 @@
 		CONTENTS_OR(
 			list(CONTENTS_GT(/obj/item/storage/box/body_bag, 0)),
 			list(CONTENTS_GT(/obj/item/body_bag, 2)),
+		),
+		// Morgue-crematorium linkage of some sort (omitted on Nadir)
+		CONTENTS_OR(
+			list(CONTENTS_EQ(/obj/disposaloutlet, 1)),
+			list(CONTENTS_EQ(/obj/machinery/disposal/morgue, 1)),
 		),
 	)

@@ -10,7 +10,7 @@
 	Congratulations, your station has purchased the H-86 industrial cloning device!<br>
 	Using the H-86 is almost as simple as brain surgery! Simply insert a disk into the marked slot (cut corner on the RIGHT hand side), shove the target humanoid into the scanning chamber, and select the scan option to write their genetic data to the disk!<br>
 	<b>That's all there is to it!</b><br>
-	<i>Notice, cloning system cannot scan inorganic life or small primates.  Scan may fail if subject has suffered extreme brain damage.</i><br>
+	<i>Notice, cloning system cannot scan inorganic life or small animals. At minimum a torso is required to create a cloning record (head optional).</i><br>
 	<p>Clone disks should be properly labelled and stored in the provided rack. Scanning implants a complementary CLONING RECORDS IMPLANT into the subject, which sends a "keep alive!" signal back to the rack. Note: a red warning light indicates a lack of "keep alive!" signal and may indicate the subject's death, unauthorized implant removal, or solar flare interference.
 	<h4>Cloning from a disk</h4>
 	Cloning is as simple as inserting the disk back into the console and hitting the clone button.<br>
@@ -19,7 +19,10 @@
 	<p>The provided CLONEPOD SYSTEM will produce the desired clone.  Standard clone maturation times (with SPEEDCLONE technology) are roughly 90 seconds.
 	The cloning pod may be unlocked early with any \[Medical\] ID after initial maturation is complete.</p><br>
 	<i>Please note that resulting clones may have a small DEVELOPMENTAL DEFECT as a result of genetic drift.</i><br>
-	<br>
+	<h4>Cloning Biomatter Supply</h4>
+	<p>To ensure prompt and swift generation of new clones, be sure to feed organs and limbs of deceased personnel into the enzymatic reclaimer.<br>
+	By inducing a stem-cell like effect in reclaimed biomatter, a single set of humanoid organs can provide resources for multiple new clones.
+	<hr>
 	<font size=1>This technology produced under license from Thinktronic Systems, LTD.</font>"}
 
 /obj/item/paper/Wizardry101

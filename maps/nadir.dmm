@@ -6881,6 +6881,26 @@
 /area/station/maintenance/outer/nw{
 	name = "Northwest Breach Hull"
 	})
+"deV" = (
+/obj/table/reinforced/auto,
+/obj/item/paper_bin{
+	pixel_y = 14
+	},
+/obj/item/pen{
+	pixel_y = 15
+	},
+/obj/item/kitchen/food_box/donut_box{
+	pixel_y = 3
+	},
+/obj/machinery/light,
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/simulated/floor/blueblack/corner{
+	dir = 1
+	},
+/area/station/medical/staff)
 "dfm" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/blast/pyro{
@@ -17829,18 +17849,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
-"hNY" = (
-/obj/machinery/light/emergency{
-	dir = 8;
-	pixel_x = -10
-	},
-/obj/machinery/computer/chem_requester/medical{
-	dir = 4
-	},
-/turf/simulated/floor/blueblack{
-	dir = 4
-	},
-/area/station/medical/medbay)
 "hOc" = (
 /turf/unsimulated/wall/setpieces/leadwindow/white,
 /area/abandonedmedicalship/robot_trader)
@@ -20286,27 +20294,6 @@
 "iNU" = (
 /turf/simulated/floor/black,
 /area/station/science/research_director)
-"iOg" = (
-/obj/table/reinforced/auto,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/gloves/latex{
-	pixel_y = 5
-	},
-/obj/machinery/door_control{
-	id = "nadirmed";
-	name = "Medbay Door Control";
-	pixel_x = 23;
-	dir = 4;
-	pixel_y = 0
-	},
-/obj/item/storage/box/lglo_kit{
-	pixel_x = 0;
-	pixel_y = 9
-	},
-/turf/simulated/floor/blueblack/corner{
-	dir = 1
-	},
-/area/station/medical/medbay)
 "iOk" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -25038,32 +25025,6 @@
 	},
 /turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
-"kPl" = (
-/obj/table/reinforced/auto,
-/obj/item/paper/cryo{
-	pixel_x = -5
-	},
-/obj/item/wrench{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/reagent_containers/glass/beaker/cryoxadone{
-	pixel_x = 6;
-	pixel_y = 10
-	},
-/obj/item/reagent_containers/glass/beaker/cryoxadone{
-	pixel_x = 6;
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/glass/beaker/cryoxadone{
-	pixel_x = 6
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc/autoname_north,
-/turf/simulated/floor/blueblack,
-/area/station/medical/medbay)
 "kPn" = (
 /obj/disposalpipe/segment/transport{
 	dir = 1;
@@ -28059,6 +28020,11 @@
 "mbt" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/storage/hydroponics)
+"mby" = (
+/obj/storage/secure/closet/fridge/blood,
+/obj/item_dispenser/latex_gloves,
+/turf/simulated/floor/redblack,
+/area/station/medical/medbay/surgery)
 "mbF" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
@@ -31203,31 +31169,6 @@
 /obj/machinery/turret,
 /turf/simulated/floor/greenblack,
 /area/station/turret_protected/Zeta)
-"nvM" = (
-/obj/storage/crate/freezer{
-	name = "Freezer - Spare Parts"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
-	desc = "Gross.";
-	name = "old kidney"
-	},
-/obj/item/organ/eye,
-/obj/item/organ/heart{
-	desc = "A human heart, grody. How long has it been in that freezer?";
-	name = "funky ol' heart"
-	},
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/blackwhite{
-	dir = 5
-	},
-/area/station/medical/morgue)
 "nvP" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/firstaid/regular{
@@ -31463,6 +31404,32 @@
 	},
 /turf/simulated/floor/black/corner,
 /area/station/crew_quarters/courtroom)
+"nBD" = (
+/obj/table/reinforced/auto,
+/obj/item/paper/cryo{
+	pixel_x = -5
+	},
+/obj/item/wrench{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/glass/beaker/cryoxadone{
+	pixel_x = 6;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/glass/beaker/cryoxadone{
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/glass/beaker/cryoxadone{
+	pixel_x = 6
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north,
+/turf/simulated/floor/blueblack,
+/area/station/medical/medbay)
 "nBE" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/industrial,
@@ -32293,6 +32260,33 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/interrogation)
+"nTn" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/firstaid/oxygen,
+/obj/item/reagent_containers/glass/beaker/large/brute{
+	pixel_x = -11;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/glass/beaker/large/burn{
+	pixel_x = -11
+	},
+/obj/item/reagent_containers/glass/beaker/large/epinephrine{
+	pixel_x = 2;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/glass/beaker/large/antitox{
+	pixel_x = 2
+	},
+/obj/item/reagent_containers/hypospray{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/item_dispenser/medical_mask,
+/turf/simulated/floor/redblack,
+/area/station/medical/medbay/surgery)
 "nTq" = (
 /obj/decal/cleanable/dirt,
 /obj/random_item_spawner/junk/one_or_zero,
@@ -33644,30 +33638,6 @@
 /area/station/crew_quarters/lounge/starboard{
 	name = "Book Nook"
 	})
-"oBH" = (
-/obj/table/reinforced/auto,
-/obj/item/paper_bin{
-	pixel_y = 14
-	},
-/obj/item/pen{
-	pixel_y = 15
-	},
-/obj/item/kitchen/food_box/donut_box{
-	pixel_y = 3
-	},
-/obj/machinery/light,
-/obj/machinery/light/emergency{
-	dir = 4;
-	pixel_x = 10
-	},
-/obj/item/remote/porter/port_a_nanomed{
-	pixel_x = 11;
-	pixel_y = 7
-	},
-/turf/simulated/floor/blueblack/corner{
-	dir = 1
-	},
-/area/station/medical/staff)
 "oCi" = (
 /obj/machinery/vending/capsule,
 /turf/simulated/floor/redblack,
@@ -43219,11 +43189,6 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"tcd" = (
-/obj/storage/secure/closet/fridge/blood,
-/obj/item_dispenser/latex_gloves,
-/turf/simulated/floor/redblack,
-/area/station/medical/medbay/surgery)
 "tcn" = (
 /obj/stool/chair/pew/fancy/center{
 	dir = 1
@@ -46578,6 +46543,27 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"uCR" = (
+/obj/table/reinforced/auto,
+/obj/item/staple_gun{
+	pixel_x = -4;
+	pixel_y = -1
+	},
+/obj/item/spraybottle/cleaner{
+	pixel_x = 6
+	},
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 10
+	},
+/obj/item/storage/firstaid/fire{
+	pixel_x = -4;
+	pixel_y = 11
+	},
+/turf/simulated/floor/blueblack{
+	dir = 8
+	},
+/area/station/medical/medbay)
 "uCT" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8
@@ -46611,27 +46597,6 @@
 	},
 /turf/space/fluid/acid/clear,
 /area/space)
-"uEb" = (
-/obj/table/reinforced/auto,
-/obj/item/staple_gun{
-	pixel_x = -4;
-	pixel_y = -1
-	},
-/obj/item/spraybottle/cleaner{
-	pixel_x = 6
-	},
-/obj/machinery/light/emergency{
-	dir = 4;
-	pixel_x = 10
-	},
-/obj/item/storage/firstaid/fire{
-	pixel_x = -4;
-	pixel_y = 11
-	},
-/turf/simulated/floor/blueblack{
-	dir = 8
-	},
-/area/station/medical/medbay)
 "uEe" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -48354,6 +48319,18 @@
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
 	})
+"vwg" = (
+/obj/machinery/light/emergency{
+	dir = 8;
+	pixel_x = -10
+	},
+/obj/machinery/computer/chem_requester/medical{
+	dir = 4
+	},
+/turf/simulated/floor/blueblack{
+	dir = 4
+	},
+/area/station/medical/medbay)
 "vwl" = (
 /obj/shrub{
 	dir = 1
@@ -53405,6 +53382,34 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
+"xJU" = (
+/obj/storage/crate/freezer{
+	name = "Freezer - Spare Parts"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
+	desc = "Gross.";
+	name = "old kidney"
+	},
+/obj/item/organ/eye,
+/obj/item/organ/heart{
+	desc = "A human heart, grody. How long has it been in that freezer?";
+	name = "funky ol' heart"
+	},
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
+/turf/simulated/floor/blackwhite{
+	dir = 5
+	},
+/area/station/medical/morgue)
 "xJY" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -53738,6 +53743,27 @@
 	dir = 9
 	},
 /area/station/engine/core/nuclear)
+"xSL" = (
+/obj/table/reinforced/auto,
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/gloves/latex{
+	pixel_y = 5
+	},
+/obj/machinery/door_control{
+	id = "nadirmed";
+	name = "Medbay Door Control";
+	pixel_x = 23;
+	dir = 4;
+	pixel_y = 0
+	},
+/obj/item/storage/box/lglo_kit{
+	pixel_x = 0;
+	pixel_y = 9
+	},
+/turf/simulated/floor/blueblack/corner{
+	dir = 1
+	},
+/area/station/medical/medbay)
 "xTd" = (
 /turf/space/fluid/warp_z5,
 /area/space)
@@ -53859,33 +53885,6 @@
 	},
 /turf/simulated/floor/darkblue,
 /area/station/janitor/office)
-"xVq" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/firstaid/oxygen,
-/obj/item/reagent_containers/glass/beaker/large/brute{
-	pixel_x = -11;
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/glass/beaker/large/burn{
-	pixel_x = -11
-	},
-/obj/item/reagent_containers/glass/beaker/large/epinephrine{
-	pixel_x = 2;
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/glass/beaker/large/antitox{
-	pixel_x = 2
-	},
-/obj/item/reagent_containers/hypospray{
-	pixel_x = -5;
-	pixel_y = 5
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/item_dispenser/medical_mask,
-/turf/simulated/floor/redblack,
-/area/station/medical/medbay/surgery)
 "xVu" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -96948,7 +96947,7 @@ kfr
 dUF
 uLL
 pMZ
-oBH
+deV
 kIi
 kIi
 kIi
@@ -98747,7 +98746,7 @@ myj
 hRC
 tJx
 oWN
-tcd
+mby
 aqa
 fid
 xnq
@@ -99365,7 +99364,7 @@ wsM
 tJR
 kFE
 mBq
-hNY
+vwg
 eqK
 oub
 rhg
@@ -99653,7 +99652,7 @@ mbF
 mbF
 mbF
 oWN
-xVq
+nTn
 eeY
 iZO
 xnq
@@ -100266,7 +100265,7 @@ fjM
 oWN
 oWN
 oWN
-kPl
+nBD
 rav
 ewG
 owZ
@@ -101177,11 +101176,11 @@ owZ
 ewJ
 rOC
 cLH
-uEb
+uCR
 tKf
 mLB
 oYX
-iOg
+xSL
 fpQ
 ixp
 ttd
@@ -102371,7 +102370,7 @@ lRC
 fgA
 aFj
 fBA
-nvM
+xJU
 vYx
 kaR
 pUw

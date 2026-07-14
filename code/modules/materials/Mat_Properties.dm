@@ -16,7 +16,11 @@ ABSTRACT_TYPE(/datum/material_property)
 	var/prefix_high_min = 7
 	/// Max value for low-prefix. Maximum for the prefix to show up on the object names.
 	var/prefix_low_max = 3
+	var/value_unit = null
 
+	proc/getValueMerged(var/value_left, var/value_right, var/left_bias, var/right_bias)
+		var/result = (value_left * left_bias) + (value_right * right_bias)
+		return round(result)
 
 	proc/onValueChanged(var/datum/material/M, var/new_value)
 		return
@@ -256,6 +260,43 @@ ABSTRACT_TYPE(/datum/material_property)
 		M.removeTrigger(TRIGGERS_ON_ADD, /datum/materialProc/n_radioactive_add)
 		M.removeTrigger(TRIGGERS_ON_REMOVE, /datum/materialProc/n_radioactive_remove)
 		return
+
+/datum/material_property/melting_point
+	name = "Melting Point"
+	id = "melting_point"
+
+	min_value = 1 KELVIN
+	max_value = INFINITY
+	default_value = INFINITY
+	prefix_high_min = 1 KELVIN
+	value_unit = "K"
+
+	getAdjective(var/datum/material/M)
+		switch(M.getProperty(id))
+			if(1 to 150 KELVIN)
+				return "solid at very low temperatures"
+			if(150 KELVIN to (T0C-10))
+				return "solid at low temperatures"
+			if((T0C-10) to T20C)
+				return "liquid at room temperature"
+			if(T20C to 310 KELVIN)
+				return "melts to the touch"
+			if(310 KELVIN to (T100C + 50 KELVIN))
+				return "melts when heated"
+			if((T100C + 50 KELVIN) to 800 KELVIN)
+				return "low melting point"
+			if(800 KELVIN to 2000 KELVIN)
+				return "high melting point"
+			if(2000 KELVIN to INFINITY)
+				return "very high melting point"
+
+	getValueMerged(var/value_left, var/value_right, var/left_bias, var/right_bias)
+		if(value_left == INFINITY)
+			return value_right
+		if(value_right == INFINITY)
+			return value_left
+		var/result = (value_left * left_bias) + (value_right * right_bias)
+		return round(result)
 
 /// Literally just indicating that it can be refined into good nuclear fuel in the centrifuge
 /datum/material_property/spent_fuel
