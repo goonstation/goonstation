@@ -26,6 +26,7 @@
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.shoes?.magnetic)
+			boutput(H, SPAN_ALERT("Your magnetic boots anchor you to the ground, preventing you from teleporting!"))
 			return
 	SPAWN(0)
 		src.teleport(M)

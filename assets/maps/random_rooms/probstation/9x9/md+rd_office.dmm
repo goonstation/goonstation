@@ -1,0 +1,676 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"cw" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/command/alt,
+/obj/mapping_helper/access/medical_director,
+/obj/mapping_helper/button/area,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/wood/three,
+/area/station/medical/head)
+"dV" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 8
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/head)
+"eH" = (
+/obj/machinery/light/incandescent/netural,
+/obj/machinery/firealarm/directional/north,
+/turf/simulated/floor/wood/eight{
+	dir = 4
+	},
+/area/station/crew_quarters/hor)
+"fb" = (
+/obj/machinery/light/incandescent/netural,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer/card/department/medical{
+	dir = 8
+	},
+/obj/machinery/phone/wall{
+	pixel_x = 24
+	},
+/obj/machinery/camera/directional/east{
+	pixel_y = 9
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/se,
+/area/station/medical/head)
+"fz" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/ne,
+/area/station/medical/head)
+"fP" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/pink,
+/turf/simulated/floor/carpet/purple/fancy/edge/east,
+/area/station/crew_quarters/hor)
+"gq" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/landmark/gps_waypoint,
+/obj/item/storage/briefcase/toxins{
+	pixel_x = -4;
+	pixel_y = 18
+	},
+/obj/stool/chair/office/purple{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/carpet/purple,
+/area/station/crew_quarters/hor)
+"gI" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 4
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/sanitary/white,
+/area/station/crew_quarters/hor)
+"gY" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/computer/announcement/station/medical{
+	dir = 8
+	},
+/obj/item/device/radio/intercom/medical{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/east,
+/area/station/medical/head)
+"ii" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/window_blinds/cog2/right{
+	id = "jointdirectorblinds"
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/hor)
+"kq" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/wood/three,
+/area/station/medical/head)
+"kF" = (
+/turf/simulated/wall/auto/reinforced/supernorn/colored/blue,
+/area/station/crew_quarters/hor)
+"kL" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/plating,
+/area/station/medical/head)
+"kQ" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/computer/announcement/station/research{
+	dir = 4
+	},
+/obj/item/device/radio/intercom/science{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/west,
+/area/station/crew_quarters/hor)
+"kR" = (
+/turf/simulated/wall/auto/reinforced/supernorn/colored/blue,
+/area/station/medical/head)
+"pN" = (
+/obj/machinery/light/incandescent/netural,
+/obj/machinery/firealarm/directional/south,
+/turf/simulated/floor/wood/three,
+/area/station/medical/head)
+"qd" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/hor)
+"sE" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/wood/three,
+/area/station/medical/head)
+"sY" = (
+/obj/item/robodefibrillator,
+/obj/storage/secure/closet/command/medical_director,
+/turf/simulated/floor/carpet/blue/fancy/edge/nw,
+/area/station/medical/head)
+"uC" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left,
+/turf/simulated/floor/plating,
+/area/station/medical/head)
+"uV" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/machinery/shower,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/head)
+"wy" = (
+/obj/machinery/light_switch/directional/west{
+	pixel_y = -6
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/computer3/terminal/zeta{
+	dir = 4;
+	setup_os_string = "ZETA_MAINFRAME"
+	},
+/obj/blind_switch/directional/west{
+	pixel_y = 6
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/west,
+/area/station/crew_quarters/hor)
+"wM" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/command/alt{
+	dir = 4
+	},
+/obj/mapping_helper/access/research_director,
+/obj/mapping_helper/button/area,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/wood/eight{
+	dir = 4
+	},
+/area/station/crew_quarters/hor)
+"wN" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/item/device/radio/intercom/bridge{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/south,
+/area/station/crew_quarters/hor)
+"wV" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet/blue,
+/area/station/medical/head)
+"zV" = (
+/obj/table/wood/auto/desk,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/item/device/analyzer/healthanalyzer/upgraded{
+	pixel_x = -10
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/south,
+/area/station/medical/head)
+"Az" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/east,
+/area/station/crew_quarters/hor)
+"AA" = (
+/obj/table/wood/auto/desk,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/recharger{
+	pixel_y = 9;
+	pixel_x = -4
+	},
+/obj/item/plate{
+	pixel_y = 1
+	},
+/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake{
+	pixel_x = -2
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/north,
+/area/station/crew_quarters/hor)
+"AV" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/window_blinds/cog2/middle{
+	dir = 5;
+	id = "jointdirectorblinds"
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/hor)
+"Br" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/window_blinds/cog2/left{
+	id = "jointdirectorblinds"
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/hor)
+"BQ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/command/alt,
+/obj/mapping_helper/access/research_director,
+/obj/mapping_helper/button/area,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/wood/eight{
+	dir = 4
+	},
+/area/station/crew_quarters/hor)
+"Cc" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/wood/eight{
+	dir = 4
+	},
+/area/station/crew_quarters/hor)
+"CG" = (
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/machinery/shower{
+	dir = 1;
+	pixel_y = 16
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/crew_quarters/hor)
+"CZ" = (
+/obj/blind_switch/directional/east{
+	id = "jointdirectorblinds";
+	name = "joint blind switch";
+	pixel_y = -10
+	},
+/obj/machinery/door_control/bolter/new_walls/east,
+/obj/mapping_helper/button/area,
+/obj/stool/bee_bed/heisenbee,
+/obj/critter/domestic_bee/heisenbee,
+/obj/item/reagent_containers/food/snacks/beefood{
+	pixel_x = 10;
+	pixel_y = -11
+	},
+/turf/simulated/floor/wood/eight{
+	dir = 4
+	},
+/area/station/crew_quarters/hor)
+"Gi" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/west,
+/area/station/medical/head)
+"Gw" = (
+/obj/item/storage/toilet{
+	dir = 4
+	},
+/obj/machinery/sink/slim{
+	dir = 8;
+	pixel_x = 6;
+	pixel_y = 3
+	},
+/obj/decal/poster/wallsign/framed_award/mdlicense{
+	pixel_x = -28;
+	pixel_y = -3
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/head)
+"Io" = (
+/obj/storage/secure/closet/command/research_director,
+/obj/item/disk/data/tape/artifact_research,
+/obj/item/disk/data/tape/master,
+/turf/simulated/floor/carpet/purple/fancy/edge/se,
+/area/station/crew_quarters/hor)
+"Jy" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet/purple,
+/area/station/crew_quarters/hor)
+"JW" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/window_blinds/cog2/middle{
+	dir = 4;
+	id = "jointdirectorblinds"
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/hor)
+"Kj" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/window_blinds/cog2/middle{
+	dir = 6;
+	id = "jointdirectorblinds"
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/hor)
+"Kx" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/item/device/radio/intercom/bridge,
+/turf/simulated/floor/carpet/blue/fancy/edge/north,
+/area/station/medical/head)
+"Nn" = (
+/obj/machinery/light_switch/directional/east{
+	pixel_y = 6
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/med_data{
+	dir = 8
+	},
+/obj/blind_switch/directional/east{
+	pixel_y = -6
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/east,
+/area/station/medical/head)
+"Pt" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/blue,
+/turf/simulated/floor/carpet/blue/fancy/edge/west,
+/area/station/medical/head)
+"PG" = (
+/turf/simulated/wall/auto/supernorn/colored/blue,
+/area/station/crew_quarters/hor)
+"PO" = (
+/obj/machinery/power/apc/autoname_south,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/sw,
+/area/station/crew_quarters/hor)
+"Qh" = (
+/obj/table/wood/auto/desk,
+/obj/item/reagent_containers/hypospray{
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/obj/item/remote/porter/port_a_nanomed{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/stamp/md{
+	pixel_x = 10;
+	pixel_y = 12
+	},
+/obj/item/paper_bin{
+	pixel_x = 12;
+	pixel_y = 3
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/sw,
+/area/station/medical/head)
+"Rw" = (
+/obj/machinery/light/incandescent/netural,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/computer/card/department/research{
+	dir = 4
+	},
+/obj/machinery/phone/wall{
+	pixel_x = -24
+	},
+/obj/machinery/camera/directional/west{
+	pixel_y = 9
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/nw,
+/area/station/crew_quarters/hor)
+"SW" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/command/alt{
+	dir = 4
+	},
+/obj/mapping_helper/access/medical_director,
+/obj/mapping_helper/button/area,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/wood/three,
+/area/station/medical/head)
+"SX" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/hor)
+"TF" = (
+/obj/item/storage/toilet{
+	dir = 8
+	},
+/obj/machinery/sink/slim{
+	dir = 4;
+	pixel_x = -6
+	},
+/obj/decal/poster/wallsign/framed_award/rddiploma{
+	pixel_x = 28;
+	pixel_y = -3
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/crew_quarters/hor)
+"UE" = (
+/obj/blind_switch/on/directional/west{
+	id = "jointdirectorblinds";
+	name = "joint blind switch";
+	pixel_y = 10
+	},
+/obj/machinery/door_control/bolter/new_walls/west,
+/obj/mapping_helper/button/area,
+/obj/storage/closet/coffin{
+	dir = 4
+	},
+/obj/critter/bat/doctor,
+/turf/simulated/floor/wood/three,
+/area/station/medical/head)
+"UW" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/wood/eight{
+	dir = 4
+	},
+/area/station/crew_quarters/hor)
+"Xn" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right,
+/turf/simulated/floor/plating,
+/area/station/medical/head)
+"XR" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/hor)
+"YT" = (
+/turf/simulated/wall/auto/supernorn/colored/blue,
+/area/station/medical/head)
+"Zv" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/landmark/gps_waypoint,
+/obj/stool/chair/office/blue{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/carpet/blue,
+/area/station/medical/head)
+"ZS" = (
+/obj/table/wood/auto/desk,
+/obj/item/reagent_containers/hypospray{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/item/remote/porter/port_a_sci{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/stamp/rd{
+	pixel_x = -10;
+	pixel_y = 12
+	},
+/obj/item/paper_bin{
+	pixel_x = -10;
+	pixel_y = 3
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/ne,
+/area/station/crew_quarters/hor)
+
+(1,1,1) = {"
+kF
+kF
+kF
+kF
+wM
+PG
+YT
+YT
+YT
+"}
+(2,1,1) = {"
+XR
+Rw
+kQ
+wy
+PO
+PG
+Gw
+uV
+YT
+"}
+(3,1,1) = {"
+qd
+AA
+gq
+Jy
+wN
+PG
+YT
+dV
+YT
+"}
+(4,1,1) = {"
+SX
+ZS
+Az
+fP
+Io
+Br
+UE
+pN
+kR
+"}
+(5,1,1) = {"
+BQ
+Cc
+UW
+Kj
+JW
+AV
+sE
+kq
+cw
+"}
+(6,1,1) = {"
+kF
+eH
+CZ
+ii
+sY
+Pt
+Gi
+Qh
+uC
+"}
+(7,1,1) = {"
+PG
+gI
+PG
+PG
+Kx
+wV
+Zv
+zV
+kL
+"}
+(8,1,1) = {"
+PG
+CG
+TF
+PG
+fz
+Nn
+gY
+fb
+Xn
+"}
+(9,1,1) = {"
+PG
+PG
+PG
+PG
+SW
+kR
+kR
+kR
+kR
+"}

@@ -469,8 +469,12 @@ TYPEINFO(/obj/machinery/photocopier)
 		return P
 
 	proc/create_paper_photo(var/list/paper_info)
-		var/obj/item/paper/printout/P = new/obj/item/paper/printout(src)
+		var/obj/item/paper/image/P = new(src)
 		P.desc = paper_info["desc"]
+		P.path = paper_info["image_path"]
+		P.scale_dir = paper_info["scale_dir"]
+		P.sizex = paper_info["sizex"]
+		P.sizey = paper_info["sizey"]
 		return P
 
 	proc/create_paper_blueprint(var/list/bp_info)
@@ -569,7 +573,7 @@ TYPEINFO(/obj/machinery/photocopier)
 				effect_fail()
 				return
 			var/obj/item/paper/P = w
-			if (P.info != "" && tgui_alert(user, "This paper has writing on it, are you sure you want to put it in the inlet tray?", "Warning", list("Yes", "No")) == "No")
+			if ((P.info != "" || istype(P, /obj/item/paper/image)) && tgui_alert(user, "This paper has writing on it, are you sure you want to put it in the inlet tray?", "Warning", list("Yes", "No")) == "No")
 				return
 			boutput(user, "You load the sheet of paper into \the [src].")
 			src.paper_amount++
@@ -687,9 +691,13 @@ TYPEINFO(/obj/machinery/photocopier)
 		if (istype(P, /obj/item/paper/manufacturer_blueprint))
 			var/obj/item/paper/manufacturer_blueprint/bp = P
 			return scan_paper_blueprint(bp)
-		else if (istype(P, /obj/item/paper/printout))
-			var/obj/item/paper/printout/Pout = P
-			scan_info["desc"] = Pout.desc
+		else if (istype(P, /obj/item/paper/image))
+			var/obj/item/paper/image/paper_photo = P
+			scan_info["desc"] = paper_photo.desc
+			scan_info["image_path"] = paper_photo.path
+			scan_info["scale_dir"] = paper_photo.scale_dir
+			scan_info["sizex"] = paper_photo.sizex
+			scan_info["sizey"] = paper_photo.sizey
 			scan_info["print_type"] = "paper_photo"
 		else if (istype(P, /obj/item/paper/book))
 			scan_info["name"] = P.name

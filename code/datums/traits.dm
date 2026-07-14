@@ -880,6 +880,14 @@ ABSTRACT_TYPE(/datum/trait/job)
 		owner.AddComponent(/datum/component/death_confetti)
 		owner.bioHolder?.AddEffect("accent_comic", innate = TRUE)
 		owner.bioHolder?.AddEffect("clumsy", innate = TRUE)
+		if (isliving(owner))
+			var/mob/living/carbon/human/H = owner
+			H.can_juggle = TRUE
+
+	onRemove(var/mob/owner)
+		if (isliving(owner))
+			var/mob/living/carbon/human/H = owner
+			H.can_juggle = FALSE
 
 /datum/trait/job/mime
 	name = "Mime Training"
@@ -889,6 +897,14 @@ ABSTRACT_TYPE(/datum/trait/job)
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("mute", innate = TRUE)
 		owner.bioHolder?.AddEffect("blankman", innate = TRUE)
+		if (isliving(owner))
+			var/mob/living/carbon/human/H = owner
+			H.can_juggle = TRUE
+
+	onRemove(var/mob/owner)
+		if (isliving(owner))
+			var/mob/living/carbon/human/H = owner
+			H.can_juggle = FALSE
 
 /datum/trait/job/miner
 	name = "Miner Training"
@@ -1552,6 +1568,15 @@ TYPEINFO(/datum/trait/partyanimal)
 	points = -4 //Subject to change- -3 feels too low as puritan is relatively common. Though Puritan Pug DOES make for a special sort of Hard Modes
 	category = list("species", "nopug", "nohair")
 	mutantRace = /datum/mutantrace/pug
+
+/datum/trait/amphibian
+	name = "Amphibian"
+	icon_state = "amphibianT"
+	desc = "It's not easy being green. ...Or yellow, or blue, or vaguely reddish."
+	id = "frog"
+	points = -3
+	category = list("species")
+	mutantRace = /datum/mutantrace/frog/amphibian
 
 /datum/trait/random_species
 	name = "Random Species"
