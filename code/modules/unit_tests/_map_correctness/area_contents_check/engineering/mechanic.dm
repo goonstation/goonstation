@@ -12,7 +12,7 @@
 	expected_contents = list(
 		// Equipment
 		CONTENTS_GT(/obj/storage/secure/closet/engineering/mechanic, 1),
-		CONTENTS_GT(/obj/machinery/manufacturer/mechanic, 1),
+		CONTENTS_GT(/obj/machinery/manufacturer/mechanic, 0),
 		CONTENTS_OR(
 			list(CONTENTS_GT(/obj/storage/cart/mechcart/tools, 0)),
 			list(CONTENTS_GT(/obj/storage/cart/mechcart, 0)),
@@ -45,7 +45,7 @@
 	expected_contents = list(
 		// Equipment
 		CONTENTS_GT(/obj/storage/secure/closet/engineering/mechanic, 1),
-		CONTENTS_GT(/obj/machinery/manufacturer/mechanic, 1),
+		CONTENTS_GT(/obj/machinery/manufacturer/mechanic, 0),
 		CONTENTS_OR(
 			list(CONTENTS_GT(/obj/storage/cart/mechcart/tools, 0)),
 			list(CONTENTS_GT(/obj/storage/cart/mechcart, 0)),
