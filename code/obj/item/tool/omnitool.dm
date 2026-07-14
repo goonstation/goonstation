@@ -272,7 +272,7 @@
 		/datum/omnimode/knife,
 		/datum/omnimode/wirecutters,
 		/datum/omnimode/spoon,
-		/datum/omnimode/saw,
+		/datum/omnimode/fork,
 		/datum/omnimode/bottle_opener
 	)
 	switch_delay = 0.5 SECONDS
@@ -333,7 +333,7 @@ ABSTRACT_TYPE(/datum/omnimode)
 
 	crowbar
 		mode_name = "crowbar"
-		mode_id = "prying"
+		mode_id = OMNITOOL::MODE_CROWBAR
 		context_icon = "bar"
 		item_type = /obj/item/crowbar
 		item_special_type = /datum/item_special/tile_fling
@@ -345,23 +345,23 @@ ABSTRACT_TYPE(/datum/omnimode)
 
 	screwdriver
 		mode_name = "screwdriver"
-		mode_id = "screwing"
+		mode_id = OMNITOOL::MODE_SCREWDRIVER
 		context_icon = "screw"
 		item_type = /obj/item/screwdriver
 	wirecutters
 		mode_name = "wirecutters"
-		mode_id = "wirecut"
+		mode_id = OMNITOOL::MODE_WIRECUTTER
 		context_icon = "cut"
 		item_type = /obj/item/wirecutters
 		item_special_type = /datum/item_special/double
 	wrench
 		mode_name = "wrench"
-		mode_id = "wrenching"
+		mode_id = OMNITOOL::MODE_WRENCH
 		context_icon = "wrench"
 		item_type = /obj/item/wrench
 	multitool
 		mode_name = "multitool"
-		mode_id = "pulsing"
+		mode_id = OMNITOOL::MODE_MULTITOOL
 		context_icon = "pulse"
 		item_type = /obj/item/device/multitool
 		item_special_type = /datum/item_special/elecflash
@@ -373,7 +373,7 @@ ABSTRACT_TYPE(/datum/omnimode)
 
 	welder
 		mode_name = "welder"
-		mode_id = "welding"
+		mode_id = OMNITOOL::MODE_WELDER
 		context_icon = "weld"
 		item_type = /obj/item/weldingtool
 		item_special_type = /datum/item_special/flame
@@ -408,7 +408,7 @@ ABSTRACT_TYPE(/datum/omnimode)
 
 	solder
 		mode_name = "soldering"
-		mode_id = "solder"
+		mode_id = OMNITOOL::MODE_SOLDERING
 		context_icon = "solder"
 		item_type = /obj/item/electronics/soldering
 
@@ -420,7 +420,7 @@ ABSTRACT_TYPE(/datum/omnimode)
 
 	deconstruct
 		mode_name = "deconstructor"
-		mode_id = "decon"
+		mode_id = OMNITOOL::MODE_DECON
 		context_icon = "saw"
 		item_type = /obj/item/deconstructor
 
@@ -436,33 +436,25 @@ ABSTRACT_TYPE(/datum/omnimode)
 
 	knife
 		mode_name = "knife"
-		mode_id = "knife"
+		mode_id = OMNITOOL::MODE_KNIFE
 		context_icon = "knife"
 		item_type = /obj/item/kitchen/utensil/knife
 		item_special_type = /datum/item_special/double
 	spoon
 		mode_name = "spoon"
-		mode_id = "spoon"
+		mode_id = OMNITOOL::MODE_SPOON
 		context_icon = "spoon"
 		item_type = /obj/item/kitchen/utensil/spoon
-	saw
+	fork
 		mode_name = "sawing"
-		mode_id = "sawing"
+		mode_id = OMNITOOL::MODE_FORK
 		context_icon = "saw"
 		item_type = /obj/item/kitchen/utensil/fork
 	bottle_opener
 		mode_name = "bottle opener"
-		mode_id = "bottleopen"
+		mode_id = OMNITOOL::MODE_BOTTLE_OPENER
 		context_icon = "bottleopener"
 		item_type = /obj/item/kitchen/utensil
-
-ABSTRACT_TYPE(/datum/omnimode/mining)
-/datum/omnimode/mining
-	var/mining_mode = 0
-
-	on_mode_enter(var/mob/holder, var/obj/item/tool/omnitool/omni)
-		. = ..()
-		return
 
 // ===========================================================================
 // ========================= Omnitool Context Actions =========================

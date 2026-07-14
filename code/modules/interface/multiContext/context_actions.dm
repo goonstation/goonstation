@@ -495,7 +495,7 @@
 		name = "Wrench"
 		desc = "Wrenching required to deconstruct."
 		icon_state = "wrench"
-		omni_mode = "wrenching"
+		omni_mode = OMNITOOL::MODE_WRENCH
 		success_text = "You wrench %target%'s bolts."
 		success_sound = 'sound/items/Ratchet.ogg'
 
@@ -511,7 +511,7 @@
 		name = "Cut"
 		desc = "Cutting required to deconstruct."
 		icon_state = "cut"
-		omni_mode = "wirecut"
+		omni_mode = OMNITOOL::MODE_WIRECUTTER
 		success_text = "You cut some vestigial wires from %target%."
 		success_sound = 'sound/items/Wirecutter.ogg'
 
@@ -526,7 +526,7 @@
 		name = "Weld"
 		desc = "Welding required to deconstruct."
 		icon_state = "weld"
-		omni_mode = "welding"
+		omni_mode = OMNITOOL::MODE_WELDER
 		success_text = "You weld %target% carefully."
 		success_sound = null // sound handled in try_weld
 
@@ -545,7 +545,7 @@
 		name = "Pry"
 		desc = "Prying required to deconstruct. Try a crowbar."
 		icon_state = "bar"
-		omni_mode = "prying"
+		omni_mode = OMNITOOL::MODE_CROWBAR
 		success_text = "You pry on %target% without remorse."
 		success_sound = 'sound/items/Crowbar.ogg'
 
@@ -560,7 +560,7 @@
 		name = "Screw"
 		desc = "Screwing required to deconstruct."
 		icon_state = "screw"
-		omni_mode = "screwing"
+		omni_mode = OMNITOOL::MODE_SCREWDRIVER
 		success_text = "You unscrew some of the screws on %target%."
 		success_sound = 'sound/items/Screwdriver.ogg'
 
@@ -576,7 +576,7 @@
 		name = "Pulse"
 		desc = "Pulsing required to deconstruct. Try a multitool."
 		icon_state = "pulse"
-		omni_mode = "pulsing"
+		omni_mode = OMNITOOL::MODE_MULTITOOL
 		success_text = "You pulse %target%. In a general sense."
 		success_sound = 'sound/items/penclick.ogg'
 
