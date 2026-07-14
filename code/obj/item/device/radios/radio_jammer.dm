@@ -54,7 +54,7 @@ TYPEINFO(/obj/item/radiojammer)
 	SPAWN(2 DECI SECONDS)
 		src.ClearSpecificOverlays("jammed_light")
 		if(istype(parent_assembly))
-		parent_assembly.ClearSpecificOverlays("jammed_light")
+			parent_assembly.ClearSpecificOverlays("jammed_light")
 
 /obj/item/radiojammer/attack_self(mob/user)
 	src.toggle(user)
