@@ -787,12 +787,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/disposal/mail{
-	mail_tag = "chemistry";
-	mailgroup = "science";
-	message = 1;
-	name = "mail chute-'Chemistry'"
-	},
+/obj/machinery/disposal/mail/autoname/research/chemistry,
 /obj/disposalpipe/trunk/mail,
 /turf/simulated/floor/purplewhite,
 /area/station/science/chemistry)
@@ -1024,7 +1019,7 @@
 "aiE" = (
 /obj/disposalpipe/switch_junction{
 	dir = 4;
-	mail_tag = "telesci";
+	mail_tag = "telescience";
 	name = "telesci mail router"
 	},
 /obj/cable{
@@ -6588,12 +6583,7 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 4
 	},
-/obj/machinery/disposal/mail{
-	mail_tag = "robotics";
-	mailgroup = "medresearch";
-	message = "1";
-	name = "mail chute-'Robotics'"
-	},
+/obj/machinery/disposal/mail/autoname/medbay/robotics,
 /turf/simulated/floor/black/side{
 	dir = 4
 	},
@@ -11227,10 +11217,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge/west,
 /area/station/crew_quarters/courtroom)
 "bpV" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "security";
-	name = "mail chute-'Security'"
-	},
+/obj/machinery/disposal/mail/autoname/security,
 /obj/disposalpipe/trunk/mail/south,
 /obj/machinery/recharger/wall/sticky{
 	dir = 1
@@ -12533,11 +12520,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "bzO" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "electronics";
-	mailgroup = "engineer";
-	name = "mail chute-'Electronics'"
-	},
+/obj/machinery/disposal/mail/autoname/mechanics,
 /obj/disposalpipe/trunk/mail{
 	dir = 4
 	},
@@ -17319,7 +17302,7 @@
 "dRx" = (
 /obj/disposalpipe/switch_junction{
 	dir = 4;
-	mail_tag = list("station","bar","bridge","captain","cargo","chapel","chief_engineer","detective","electronics","engineering","genetics","hydroponics","kitchen","medbay","mining","robotics","security","shuttlebay","storage","chemlink");
+	mail_tag = list("station","bar","bridge","captain","cargo","chapel","chief_engineer","detective","mechanics","engineering","genetics","hydroponics","kitchen","medbay","mining","robotics","security","shuttlebay","storage","chemlink");
 	name = "station mail router"
 	},
 /turf/simulated/floor/green/side,
@@ -18240,12 +18223,7 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
-/obj/machinery/disposal/mail{
-	mail_tag = "engineering";
-	mailgroup = "engineer";
-	message = "1";
-	name = "mail chute-'Engineering'"
-	},
+/obj/machinery/disposal/mail/autoname/engineering,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -23440,7 +23418,7 @@
 	},
 /obj/disposalpipe/switch_junction{
 	icon_state = "pipe-sj2";
-	mail_tag = list("research","artlab","buddy_depot","chemistry","research_director","research_hangar","telesci","toxins","zeta_sec");
+	mail_tag = list("research","artlab","buddy_depot","chemistry","research_director","research_hangar","telescience","toxins","zeta_sec");
 	name = "outpost mail router"
 	},
 /turf/simulated/floor,
@@ -26863,12 +26841,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "jwV" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "telesci";
-	mailgroup = "science";
-	message = "1";
-	name = "mail chute-'Science Teleporter'"
-	},
+/obj/machinery/disposal/mail/autoname/research/telescience,
 /obj/disposalpipe/trunk/mail/west,
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/caution/white{
@@ -32014,7 +31987,7 @@
 /obj/disposalpipe/switch_junction{
 	dir = 8;
 	icon_state = "pipe-sj2";
-	mail_tag = "electronics";
+	mail_tag = "mechanics";
 	name = "electronics mail router"
 	},
 /turf/simulated/floor,
@@ -33412,10 +33385,7 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 4
 	},
-/obj/machinery/disposal/mail{
-	mail_tag = "medbay";
-	name = "mail chute-'Medbay'"
-	},
+/obj/machinery/disposal/mail/autoname/medbay,
 /obj/item/device/radio/intercom/medical,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay)
@@ -37206,10 +37176,7 @@
 	},
 /area/station/hallway/primary/south)
 "pdZ" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "bridge";
-	name = "mail chute-'Bridge'"
-	},
+/obj/machinery/disposal/mail/autoname/bridge,
 /obj/disposalpipe/trunk/mail/north,
 /obj/item/device/radio/intercom/medical{
 	dir = 4
@@ -39854,7 +39821,7 @@
 	},
 /area/station/science/artifact)
 "qyZ" = (
-/obj/machinery/disposal/mail,
+/obj/machinery/disposal/mail/autoname/bar,
 /obj/disposalpipe/trunk/mail/south,
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
@@ -44424,12 +44391,7 @@
 /turf/simulated/floor/carpet/purple/fancy/edge,
 /area/station/crew_quarters/bar)
 "toA" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "detective";
-	mailgroup = "security";
-	message = "1";
-	name = "mail chute-'Detective'"
-	},
+/obj/machinery/disposal/mail/autoname/security/detective,
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
@@ -45361,10 +45323,7 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/mining/magnet)
 "tLW" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "chapel";
-	name = "mail chute-'Chapel'"
-	},
+/obj/machinery/disposal/mail/autoname/chapel,
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
@@ -47192,6 +47151,12 @@
 /area/station/engine/engineering)
 "uRD" = (
 /obj/machinery/alarm/directional/east,
+/obj/disposalpipe/switch_junction{
+	dir = 4;
+	icon_state = "pipe-sj2";
+	mail_tag = "cargo";
+	name = "cargo mail router"
+	},
 /turf/simulated/floor/caution/side{
 	dir = 4
 	},
@@ -50059,11 +50024,7 @@
 	},
 /area/station/security/processing)
 "wzk" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "mining";
-	mailgroup = "engineer";
-	name = "mail chute-'Mining'"
-	},
+/obj/machinery/disposal/mail/autoname/mining,
 /obj/disposalpipe/trunk/mail/north,
 /obj/machinery/alarm/directional/east,
 /turf/simulated/floor/yellow/side{
