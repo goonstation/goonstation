@@ -1,4 +1,34 @@
 
+(t)wed jul 15 26
+(u)ANNmagedon
+(p)27196
+(e)🗺|A-Mapping
+(+)Fixed Oshan lacking the standard tools & breach engineering carts.
+(u)JORJ949
+(p)27121
+(e)🆕🧛📦|C-Feature, A-Gamemodes, A-Game-Objects
+(*)Clown Traitors can now purchase a "clownspider implanter", causing them to explode into several clownspiders on death
+(u)cringe
+(p)27142
+(e)🆕🎨💨|C-Feature, C-Sprites, A-Atmospherics
+(*)New gates in the HPD, check em out. Descriptions in minor changes.
+(+)Normal gates open above the opening value and close below the closing value. When inverted, they open below the opening value and close above the closing value.
+(+)The thermostatic gate works on temperature.
+(+)The pressure relief gate works on pressure.
+(u)JORJ949
+(p)27180
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Signal jammers can now be used in assemblies. Note that signal jammers block remote signaller signals, so you cannot disable a signal jammer via remote signaller.
+(u)LeahTheTech
+(+)Receiving a message from a partner station now plays the default announcement sound.
+(u)JORJ949
+(p)27172
+(e)🪲💡|C-Bug, A-Station-Systems
+(+)Syndicate hideout chutes (both entrance and exit) now always repressurize as if in a normal atmosphere, even if there is no atmosphere around them.
+(u)JORJ949
+(p)27136
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)You can now emag pulse rifles to turn them into pullse rifles.
 (t)tue jul 14 26
 (u)ANNmagedon.
 (p)27114
@@ -7,7 +37,7 @@
 (u)EmeraldCrow
 (p)27176
 (e)🎨|C-Sprites
-(*)Added two new figuines to the game for Vi The Silly and Erikkainn: go gambling today!
+(+)Added two new figurines to the game for Vi The Silly and Erikkainn: go gambling today!
 (t)mon jul 13 26
 (u)LorrMaster
 (p)27175

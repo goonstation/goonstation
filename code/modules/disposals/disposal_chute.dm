@@ -520,28 +520,23 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		if(flush && MIXTURE_PRESSURE(air_contents) >= 2*ONE_ATMOSPHERE)	// flush can happen even without power
 			SPAWN(0) //Quit holding up the process you fucker
 				flush()
+		src.absorb_gas()
+		return
 
-		if(status & NOPOWER)			// won't charge if no power
-			return
+	proc/absorb_gas(var/datum/gas_mixture/env)
+		if(!src.loc) return // Nullspaced, no point in trying.
+		if(src.status & NOPOWER) return // Won't charge without power
+		if(src.mode != DISPOSAL_CHUTE_CHARGING)	return // if off or ready, no need to charge
 
-		if (!loc) return
-
-		if(mode != DISPOSAL_CHUTE_CHARGING)		// if off or ready, no need to charge
-			return
-
-		var/atom/L = loc						// recharging from loc turf
-		var/datum/gas_mixture/env = L.return_air()
-		if (!air_contents)
-			air_contents = new /datum/gas_mixture
+		env ||= src.loc.return_air()
+		src.air_contents ||= new /datum/gas_mixture
 		var/pressure_delta = (3.5 * ONE_ATMOSPHERE) - MIXTURE_PRESSURE(air_contents) // purposefully trying to overshoot the target of 2 atmospheres to make it faster
 
 		if(env.temperature > 0)
 			var/transfer_moles = src.repressure_speed * pressure_delta*air_contents.volume/(env.temperature * R_IDEAL_GAS_EQUATION)
-
 			//Actually transfer the gas
 			var/datum/gas_mixture/removed = env.remove(transfer_moles)
 			air_contents.merge(removed)
-
 
 		// if full enough, switch to ready mode
 		if(MIXTURE_PRESSURE(air_contents) >= 2.5*ONE_ATMOSPHERE)
