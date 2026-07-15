@@ -3,8 +3,6 @@
 	target_areas = list(/area/station/engine/elect)
 	only_check_on = null
 	skip_check_on = list(
-		// Neon's mechlab have the data terminals outside of the lab, in maints.
-		/datum/map_settings/neon,
 		// Atlas's mechlab is too small to fit a mail chute & pipes.
 		/datum/map_settings/atlas,
 	)
@@ -33,17 +31,6 @@
 		CONTENTS_GT(/obj/item/storage/belt/utility, 0),
 		CONTENTS_GT(/obj/item/electronics/soldering, 0),
 	)
-
-/datum/map_correctness_check/area_contents/mechanics_lab/neon
-	only_check_on = list(
-		/datum/map_settings/neon,
-	)
-	skip_check_on = null
-	target_areas = list(
-		/area/station/engine/elect,
-		/area/station/maintenance/inner/east,
-	)
-
 
 /datum/map_correctness_check/area_contents/mechanics_lab/atlas
 	only_check_on = list(
