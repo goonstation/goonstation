@@ -19756,8 +19756,10 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/vending/mechanics,
 /obj/machinery/firealarm/directional/north,
+/obj/storage/secure/closet/engineering/mechanic,
+/obj/item/electronics/soldering,
+/obj/item/clothing/gloves/yellow,
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "jaD" = (
@@ -27211,6 +27213,7 @@
 /area/station/security/main)
 "ohZ" = (
 /obj/machinery/light_switch/directional/south,
+/obj/machinery/vending/mechanics,
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "oia" = (
@@ -28657,6 +28660,9 @@
 	dir = 4
 	},
 /obj/noticeboard/persistent/mechanics/directional/north,
+/obj/storage/secure/closet/engineering/mechanic,
+/obj/item/electronics/soldering,
+/obj/item/clothing/gloves/yellow,
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "pis" = (
@@ -34223,36 +34229,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/disposal/mail/small{
-	dir = 1;
-	mail_tag = "mechanics";
-	mailgroup = "mechanic";
-	message = "1";
-	name = "mail chute-'Mechanics'";
-	pixel_y = 32
-	},
+/obj/machinery/disposal/mail/small/autoname/mechanics/north,
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
-/obj/storage/cart/mechcart,
-/obj/item/electronics/scanner,
-/obj/item/electronics/scanner,
-/obj/item/disk/data/cartridge/diagnostics{
-	pixel_x = 9;
-	pixel_y = -2
-	},
-/obj/item/disk/data/cartridge/diagnostics{
-	pixel_x = 11;
-	pixel_y = 4
-	},
-/obj/item/disk/data/cartridge/diagnostics{
-	pixel_x = 10;
-	pixel_y = 12
-	},
-/obj/item/electronics/soldering,
-/obj/item/electronics/soldering,
-/obj/item/device/t_scanner,
-/obj/item/device/t_scanner,
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "sZH" = (
@@ -38231,11 +38211,19 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_north,
-/obj/storage/secure/closet/engineering/mechanic,
-/obj/item/clothing/gloves/yellow,
-/obj/item/clothing/gloves/yellow,
-/obj/item/electronics/soldering,
-/obj/item/electronics/soldering,
+/obj/storage/cart/mechcart/tools,
+/obj/item/disk/data/cartridge/diagnostics{
+	pixel_x = 9;
+	pixel_y = -2
+	},
+/obj/item/disk/data/cartridge/diagnostics{
+	pixel_x = 10;
+	pixel_y = 12
+	},
+/obj/item/disk/data/cartridge/diagnostics{
+	pixel_x = 11;
+	pixel_y = 4
+	},
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "vBC" = (

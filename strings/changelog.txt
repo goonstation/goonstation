@@ -1,6 +1,10 @@
 
 (t)wed jul 15 26
 (u)ANNmagedon
+(p)27201
+(e)🗺|A-Mapping
+(+)Standardized Clairon's mech-lab's engineering cart.
+(u)ANNmagedon
 (p)27196
 (e)🗺|A-Mapping
 (+)Fixed Oshan lacking the standard tools & breach engineering carts.
