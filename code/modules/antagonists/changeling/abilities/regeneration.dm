@@ -25,62 +25,64 @@
 			boutput(holder.owner, SPAN_NOTICE("We change our mind."))
 			return 1
 
-		if(!H.in_fakedeath)
-			boutput(holder.owner, SPAN_NOTICE("Repairing our wounds."))
-			logTheThing(LOG_COMBAT, holder.owner, "enters regenerative stasis as a changeling [log_loc(holder.owner)].")
-			var/list/implants = list()
-			for (var/obj/item/implant/I in holder.owner) //Still preserving implants
-				implants += I
+		if(H.in_fakedeath || isdead(C))
+			return 0
+		boutput(holder.owner, SPAN_NOTICE("Repairing our wounds."))
+		logTheThing(LOG_COMBAT, holder.owner, "enters regenerative stasis as a changeling [log_loc(holder.owner)].")
+		var/list/implants = list()
+		for (var/obj/item/implant/I in holder.owner) //Still preserving implants
+			implants += I
 
-			H.in_fakedeath = 1
-			APPLY_ATOM_PROPERTY(C, PROP_MOB_CANTMOVE, "regen_stasis")
+		H.in_fakedeath = 1
+		APPLY_ATOM_PROPERTY(C, PROP_MOB_CANTMOVE, "regen_stasis")
 
-			C.lying = 1
-			C.canmove = 0
+		C.lying = 1
+		C.canmove = 0
+		C.set_clothing_icon_dirty()
+
+		C.emote("deathgasp")
+
+		SPAWN(cooldown)
+			if(!H.in_fakedeath) //don't trigger this if we cancelled stasis via abomination form
+				return 0
+			changeling_super_heal_step(C, 100, 100) //get those limbs back i didn't lay here for 45 seconds to be hopping around on one leg dang it
+			if (C && !isdead(C))
+				C.HealDamage("All", 1000, 1000)
+				C.take_brain_damage(-INFINITY)
+				C.take_toxin_damage(-INFINITY)
+				C.change_misstep_chance(-INFINITY)
+				C.take_oxygen_deprivation(-INFINITY)
+				C.delStatus("drowsy")
+				C.delStatus("passing_out")
+				C.delStatus("n_radiation")
+				C.remove_stuns()
+				C.delStatus("slowed")
+				C.delStatus("radiation")
+				C.take_radiation_dose(-INFINITY)
+				C.delStatus("disorient")
+				C.health = 100
+				C.reagents.clear_reagents()
+				C.lying = 0
+				C.canmove = 1
+				boutput(C, SPAN_NOTICE("We have regenerated."))
+				logTheThing(LOG_COMBAT, C, "[C] finishes regenerative statis as a changeling [log_loc(C)].")
+				C.visible_message(SPAN_ALERT("<b>[C] appears to wake from the dead, having healed all wounds.</b>"))
+				for(var/obj/item/implant/I in implants)
+					if (istype(I, /obj/item/implant/projectile))
+						boutput(C, SPAN_ALERT("\an [I] falls out of your abdomen."))
+						I.on_remove(C)
+						C.implant.Remove(I)
+						I.set_loc(C.loc)
+						continue
+				if(C.bioHolder?.effects && length(C.bioHolder.effects))
+					for(var/bioEffectId in C.bioHolder.effects)
+						var/datum/bioEffect/gene = C.bioHolder.GetEffect(bioEffectId)
+						if (gene.curable_by_mutadone && gene.effectType == EFFECT_TYPE_DISABILITY)
+							C.bioHolder.RemoveEffect(gene.id)
+
 			C.set_clothing_icon_dirty()
-
-			C.emote("deathgasp")
-
-			SPAWN(cooldown)
-				if(H.in_fakedeath) //don't trigger this if we cancelled stasis via abomination form
-					changeling_super_heal_step(C, 100, 100) //get those limbs back i didn't lay here for 45 seconds to be hopping around on one leg dang it
-					if (C && !isdead(C))
-						C.HealDamage("All", 1000, 1000)
-						C.take_brain_damage(-INFINITY)
-						C.take_toxin_damage(-INFINITY)
-						C.change_misstep_chance(-INFINITY)
-						C.take_oxygen_deprivation(-INFINITY)
-						C.delStatus("drowsy")
-						C.delStatus("passing_out")
-						C.delStatus("n_radiation")
-						C.remove_stuns()
-						C.delStatus("slowed")
-						C.delStatus("radiation")
-						C.take_radiation_dose(-INFINITY)
-						C.delStatus("disorient")
-						C.health = 100
-						C.reagents.clear_reagents()
-						C.lying = 0
-						C.canmove = 1
-						boutput(C, SPAN_NOTICE("We have regenerated."))
-						logTheThing(LOG_COMBAT, C, "[C] finishes regenerative statis as a changeling [log_loc(C)].")
-						C.visible_message(SPAN_ALERT("<b>[C] appears to wake from the dead, having healed all wounds.</b>"))
-						for(var/obj/item/implant/I in implants)
-							if (istype(I, /obj/item/implant/projectile))
-								boutput(C, SPAN_ALERT("\an [I] falls out of your abdomen."))
-								I.on_remove(C)
-								C.implant.Remove(I)
-								I.set_loc(C.loc)
-								continue
-						if(C.bioHolder?.effects && length(C.bioHolder.effects))
-							for(var/bioEffectId in C.bioHolder.effects)
-								var/datum/bioEffect/gene = C.bioHolder.GetEffect(bioEffectId)
-								if (gene.curable_by_mutadone && gene.effectType == EFFECT_TYPE_DISABILITY)
-									C.bioHolder.RemoveEffect(gene.id)
-
-					C.set_clothing_icon_dirty()
-					H.in_fakedeath = 0
-					REMOVE_ATOM_PROPERTY(C, PROP_MOB_CANTMOVE, "regen_stasis")
+			H.in_fakedeath = 0
+			REMOVE_ATOM_PROPERTY(C, PROP_MOB_CANTMOVE, "regen_stasis")
 		return 0
 
 /proc/changeling_super_heal_step(var/mob/living/carbon/human/healed, var/limb_regen_prob = 25, var/eye_regen_prob = 25, var/mult = 1, var/changer = 1)
