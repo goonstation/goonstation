@@ -2308,6 +2308,8 @@
 	},
 /obj/item/hand_labeler,
 /obj/item/disk/data/cartridge/diagnostics,
+/obj/item/storage/box/lightbox/tubes,
+/obj/item/storage/box/lightbox/tubes,
 /turf/simulated/floor/yellow/checker{
 	dir = 4
 	},
@@ -4174,10 +4176,10 @@
 	},
 /area/station/hallway/primary/north)
 "dce" = (
-/obj/machinery/vending/standard,
 /obj/machinery/camera/directional/west{
 	pixel_y = 10
 	},
+/obj/machinery/vending/mechanics,
 /turf/simulated/floor/yellow/checker{
 	dir = 4
 	},
@@ -7496,7 +7498,6 @@
 /area/station/crew_quarters/captain)
 "fgY" = (
 /obj/landmark/gps_waypoint,
-/obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/yellow/checker{
 	dir = 4
 	},
@@ -7903,8 +7904,10 @@
 "fwf" = (
 /obj/table/auto,
 /obj/machinery/light/incandescent/warm,
-/obj/item/storage/box/lightbox/tubes,
-/obj/item/storage/box/lightbox/tubes,
+/obj/item/deconstructor,
+/obj/item/electronics/scanner,
+/obj/machinery/disposal/small/west,
+/obj/disposalpipe/trunk/west,
 /turf/simulated/floor/yellow/checker{
 	dir = 4
 	},
@@ -9292,6 +9295,12 @@
 "gsd" = (
 /obj/cable{
 	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/yellow/checker{
 	dir = 4
@@ -14560,17 +14569,15 @@
 /turf/simulated/floor/blue,
 /area/station/bridge)
 "jUQ" = (
-/obj/storage/cart/mechcart,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/storage/belt/utility,
-/obj/item/device/multitool,
 /obj/machinery/light/incandescent/warm,
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/data_terminal,
 /obj/machinery/power/apc/autoname_north,
-/turf/simulated/floor/plating,
+/obj/storage/cart/mechcart/tools,
+/turf/simulated/floor/yellow/checker{
+	dir = 4
+	},
 /area/station/engine/elect)
 "jUU" = (
 /obj/storage/secure/closet/command/hop,
@@ -15861,6 +15868,14 @@
 "kRp" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
+"kRq" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/yellow/checker{
+	dir = 4
+	},
+/area/station/engine/elect)
 "kRB" = (
 /obj/table/auto,
 /obj/machinery/light_switch/directional/west,
@@ -15869,6 +15884,8 @@
 	},
 /obj/item/storage/toolbox/mechanical,
 /obj/item/electronics/soldering,
+/obj/item/storage/belt/utility,
+/obj/item/device/multitool,
 /turf/simulated/floor/yellow/checker{
 	dir = 4
 	},
@@ -17983,9 +18000,6 @@
 	icon_state = "4-8"
 	},
 /obj/cable{
-	icon_state = "2-8"
-	},
-/obj/cable{
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating,
@@ -19467,8 +19481,8 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/space_heater,
 /obj/machinery/power/apc/autoname_east,
+/obj/machinery/space_heater,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
 "nut" = (
@@ -24807,14 +24821,6 @@
 "roP" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/bot_storage)
-"rpU" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/yellow/checker{
-	dir = 4
-	},
-/area/station/engine/elect)
 "rpX" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -27082,12 +27088,6 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/mining/staff_room)
-"sWX" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/inner/east)
 "sWY" = (
 /turf/simulated/floor/purple/checker{
 	dir = 1
@@ -28422,10 +28422,8 @@
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
 "tTm" = (
-/obj/table/auto,
 /obj/machinery/firealarm/directional/east,
-/obj/item/electronics/scanner,
-/obj/item/deconstructor,
+/obj/storage/secure/closet/engineering/mechanic,
 /turf/simulated/floor/yellow/checker{
 	dir = 4
 	},
@@ -28968,10 +28966,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/bridge/execrestroom)
 "unS" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-8"
-	},
+/obj/machinery/vending/standard,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
 "uoc" = (
@@ -29780,11 +29775,12 @@
 /turf/simulated/floor/plating,
 /area/station/engine/substation/southwest)
 "uQe" = (
-/obj/storage/secure/closet/engineering/mechanic,
 /obj/machinery/light_switch/directional/north,
-/turf/simulated/floor/yellow/checker{
-	dir = 4
+/obj/cable{
+	icon_state = "0-2"
 	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/plating,
 /area/station/engine/elect)
 "uQo" = (
 /obj/stool/chair/office/red{
@@ -29808,11 +29804,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "uQB" = (
-/obj/machinery/vending/mechanics,
 /obj/machinery/light/incandescent/warm,
-/turf/simulated/floor/yellow/checker{
-	dir = 4
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
 	},
+/turf/simulated/floor/plating,
 /area/station/engine/elect)
 "uRt" = (
 /obj/machinery/vehicle/tank/minisub/secsub,
@@ -29969,7 +29966,6 @@
 /area/evilreaver/chapel)
 "uXn" = (
 /obj/submachine/cargopad/mechanics,
-/obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/yellow/checker{
 	dir = 4
 	},
@@ -30142,6 +30138,12 @@
 /area/station/crew_quarters/market{
 	name = "Supply Lobby"
 	})
+"veK" = (
+/obj/disposalpipe/segment/bent/east,
+/turf/simulated/floor/yellow/checker{
+	dir = 4
+	},
+/area/station/engine/elect)
 "veY" = (
 /obj/machinery/disposal/mail/small/autoname/research/chemistry/west,
 /obj/disposalpipe/trunk/mail/north,
@@ -31883,11 +31885,12 @@
 /turf/simulated/floor/black,
 /area/station/engine/substation/northwest)
 "wjQ" = (
-/obj/storage/secure/closet/engineering/mechanic,
 /obj/item/device/radio/intercom/engineering,
-/turf/simulated/floor/yellow/checker{
-	dir = 4
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
 	},
+/turf/simulated/floor/plating,
 /area/station/engine/elect)
 "wjZ" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -33920,8 +33923,7 @@
 /turf/simulated/floor/caution,
 /area/station/ai_monitored/storage/eva)
 "xGI" = (
-/obj/machinery/disposal/small/west,
-/obj/disposalpipe/trunk/west,
+/obj/storage/secure/closet/engineering/mechanic,
 /turf/simulated/floor/yellow/checker{
 	dir = 4
 	},
@@ -85924,10 +85926,10 @@ dpN
 hUY
 jfT
 uQB
-eFo
+kRq
 uXn
 fgY
-gAU
+veK
 gAU
 dEL
 ibG
@@ -86227,9 +86229,9 @@ dvv
 jfT
 uQe
 gsd
-hSR
-txv
 biO
+txv
+hSR
 biO
 gKE
 oGX
@@ -86528,7 +86530,7 @@ dpN
 dvv
 jfT
 wjQ
-rpU
+vXB
 xGI
 tTm
 fwf
@@ -88040,7 +88042,7 @@ cVy
 idP
 mhl
 mpz
-sWX
+dvv
 dvv
 oyJ
 sLI
