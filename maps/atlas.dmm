@@ -1315,7 +1315,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/storage/cart/mechcart,
+/obj/storage/cart/mechcart/tools,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "afW" = (
