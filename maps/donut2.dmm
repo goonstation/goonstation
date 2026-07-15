@@ -17302,7 +17302,7 @@
 "dRx" = (
 /obj/disposalpipe/switch_junction{
 	dir = 4;
-	mail_tag = list("station","bar","bridge","captain","cargo","chapel","chief_engineer","detective","mechanics","engineering","genetics","hydroponics","kitchen","medbay","mining","robotics","security","shuttlebay","storage","chemlink");
+	mail_tag = list("station","bar","bridge","captain","cargo","chapel","chief_engineer","detective","electronics","engineering","genetics","hydroponics","kitchen","medbay","mining","robotics","security","shuttlebay","storage","chemlink");
 	name = "station mail router"
 	},
 /turf/simulated/floor/green/side,
@@ -23418,7 +23418,7 @@
 	},
 /obj/disposalpipe/switch_junction{
 	icon_state = "pipe-sj2";
-	mail_tag = list("research","artlab","buddy_depot","chemistry","research_director","research_hangar","telescience","toxins","zeta_sec");
+	mail_tag = list("research","artlab","buddy_depot","chemistry","research_director","research_hangar","telesci","toxins","zeta_sec");
 	name = "outpost mail router"
 	},
 /turf/simulated/floor,
@@ -31988,7 +31988,7 @@
 	dir = 8;
 	icon_state = "pipe-sj2";
 	mail_tag = "mechanics";
-	name = "mechanics mail router"
+	name = "electronics mail router"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
@@ -39821,7 +39821,7 @@
 	},
 /area/station/science/artifact)
 "qyZ" = (
-/obj/machinery/disposal/mail,
+/obj/machinery/disposal/mail/autoname/bar,
 /obj/disposalpipe/trunk/mail/south,
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
