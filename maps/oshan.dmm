@@ -12934,26 +12934,20 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/storage/cart/mechcart,
-/obj/item/rods/steel{
-	amount = 50
-	},
+/obj/storage/cart/mechcart/tools,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
 /area/station/engine/elect)
 "bnk" = (
 /obj/machinery/light/incandescent/warm,
-/obj/storage/cart/mechcart,
-/obj/item/rods/steel{
-	amount = 50
-	},
+/obj/machinery/vending/mechanics,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
 /area/station/engine/elect)
 "bnm" = (
-/obj/machinery/vending/standard,
+/obj/machinery/manufacturer/mechanic,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -25160,7 +25154,7 @@
 /area/station/maintenance/north)
 "dNf" = (
 /obj/item/device/radio/intercom/engineering,
-/obj/machinery/vending/mechanics,
+/obj/machinery/vending/standard,
 /turf/simulated/floor,
 /area/station/engine/elect)
 "dNn" = (
@@ -39219,6 +39213,10 @@
 /obj/machinery/firealarm/directional/west,
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge/port)
+"ppN" = (
+/obj/storage/cart/mechcart/breach,
+/turf/simulated/floor,
+/area/station/engine/eva)
 "ppQ" = (
 /obj/machinery/light/incandescent/netural,
 /obj/table/reinforced/auto,
@@ -39275,6 +39273,12 @@
 	pixel_y = 4
 	},
 /obj/item/clothing/ears/earmuffs,
+/obj/item/rods/steel{
+	amount = 50
+	},
+/obj/item/rods/steel{
+	amount = 50
+	},
 /turf/simulated/floor/yellow/side,
 /area/station/engine/eva)
 "prZ" = (
@@ -40422,6 +40426,12 @@
 /obj/landmark/pest,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"qsa" = (
+/obj/storage/cart/mechcart/breach,
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/engine/eva)
 "qsD" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4
@@ -48293,7 +48303,6 @@
 /area/research_outpost)
 "wKy" = (
 /obj/machinery/firealarm/directional/north,
-/obj/machinery/manufacturer/mechanic,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -105041,8 +105050,8 @@ sYB
 lIm
 bfW
 mVB
-osH
-bfW
+qsa
+ppN
 blB
 bnj
 bnT
