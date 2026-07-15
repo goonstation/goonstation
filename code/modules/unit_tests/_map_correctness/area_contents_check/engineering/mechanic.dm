@@ -11,10 +11,7 @@
 		// Equipment
 		CONTENTS_GT(/obj/storage/secure/closet/engineering/mechanic, 1),
 		CONTENTS_GT(/obj/machinery/manufacturer/mechanic, 0),
-		CONTENTS_OR(
-			list(CONTENTS_GT(/obj/storage/cart/mechcart/tools, 0)),
-			list(CONTENTS_GT(/obj/storage/cart/mechcart, 0)),
-		),
+		CONTENTS_GT(/obj/storage/cart/mechcart/tools, 0),
 		CONTENTS_GT(/obj/machinery/vending/mechanics, 0),
 		CONTENTS_GT(/obj/machinery/portable_reclaimer, 0),
 		CONTENTS_GT(/obj/machinery/rkit, 0),
