@@ -41,11 +41,6 @@ export const SupplyConsole = () => {
                   <MarketInformation />
                 </Section>
               </Stack.Item>
-              <Stack.Item>
-                <Section title="Rockbox Controls">
-                  <RockboxControls />
-                </Section>
-              </Stack.Item>
               <Stack.Item grow>
                 <Section title="Menu Selection" fill>
                   <Tabs vertical fill>
@@ -74,6 +69,11 @@ export const SupplyConsole = () => {
                       tabName={'Requisitions'}
                     />
                   </Tabs>
+                </Section>
+              </Stack.Item>
+              <Stack.Item>
+                <Section title="Rockbox Controls">
+                  <RockboxControls />
                 </Section>
               </Stack.Item>
             </Stack>
