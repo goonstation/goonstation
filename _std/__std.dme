@@ -196,6 +196,7 @@
 #include "macros\vehicles.dm"
 #include "namespaces\dwaine\_dwaine.dm"
 #include "namespaces\dwaine\errors.dm"
+#include "namespaces\dwaine\filenames.dm"
 #include "namespaces\dwaine\filepaths.dm"
 #include "namespaces\dwaine\permissions.dm"
 #include "namespaces\dwaine\shell.dm"
