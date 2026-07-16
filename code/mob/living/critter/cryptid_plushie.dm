@@ -1,6 +1,3 @@
-TYPEINFO(/mob/living/critter/small_animal/plush/cryptid)
-	start_speech_modifiers = list(SPEECH_MODIFIER_MOB_MODIFIERS, SPEECH_MODIFIER_CRYPTID_PLUSHIE)
-
 /mob/living/critter/small_animal/plush/cryptid
 	hand_count = 0
 	pull_w_class = W_CLASS_TINY

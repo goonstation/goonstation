@@ -2187,7 +2187,6 @@
 #include "code\modules\speech\modules\speech\modifiers\monospace_decorator.dm"
 #include "code\modules\speech\modules\speech\modifiers\mute.dm"
 #include "code\modules\speech\modules\speech\modifiers\muzzle.dm"
-#include "code\modules\speech\modules\speech\modifiers\plushie.dm"
 #include "code\modules\speech\modules\speech\modifiers\radio.dm"
 #include "code\modules\speech\modules\speech\modifiers\revenant.dm"
 #include "code\modules\speech\modules\speech\modifiers\shrouded.dm"

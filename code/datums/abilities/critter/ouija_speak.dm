@@ -6,6 +6,12 @@
 	icon_state = "corruption"
 	var/words_min = 7
 	var/words_max = 10
+	var/list/maptext_style = list(
+		"font-style" = "italic",
+		"font-family" = "'XFont 6x9'",
+		"font-size" = "7px",
+	)
+	var/list/maptext_colors = null
 
 	cast(atom/target)
 		if (..())
@@ -23,5 +29,10 @@
 			return
 		playsound(holder.owner, 'sound/misc/automaton_scratch.ogg', 50, 1)
 		selected = uppertext(selected)
-		src.holder.owner.say(selected)
+		if (prob(20))
+			src.maptext_colors = list("#FF2E00", "#b33418")
+		else
+			src.maptext_colors = null
+		src.holder.owner.say(selected, message_params = list("maptext_css_values" = src.maptext_style, "maptext_animation_colours" = src.maptext_colors))
+
 		return 0
