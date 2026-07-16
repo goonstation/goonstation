@@ -5343,15 +5343,6 @@
 /obj/random_item_spawner/junk/lots,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
-"aGg" = (
-/obj/machinery/disposal{
-	name = "Test Chamber Chute"
-	},
-/obj/disposalpipe/trunk/transport{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/station/science/testchamber)
 "aGh" = (
 /obj/storage/closet/coffin,
 /turf/simulated/floor/plating,
@@ -19086,17 +19077,6 @@
 	dir = 5
 	},
 /area/station/hallway/secondary/exit)
-"eRt" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/machinery/conveyor/NS{
-	id = "zetadisposals";
-	move_lag = 15
-	},
-/obj/landmark/disposals_endpoint,
-/turf/simulated/floor/plating,
-/area/station/maintenance/scidisposal)
 "eRx" = (
 /obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/caution/south,
@@ -20090,6 +20070,12 @@
 "fyy" = (
 /turf/simulated/floor,
 /area/station/crew_quarters/hor)
+"fyH" = (
+/obj/disposalpipe/segment/food,
+/turf/simulated/floor/grey/checker{
+	dir = 4
+	},
+/area/station/crew_quarters/kitchen)
 "fzM" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -20668,16 +20654,6 @@
 	icon_state = "catwalk_cross"
 	},
 /area/space)
-"fSn" = (
-/obj/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
-/obj/surgery_tray/kitchen_island,
-/turf/simulated/floor/grey/checker{
-	dir = 4
-	},
-/area/station/crew_quarters/kitchen)
 "fSG" = (
 /obj/machinery/camera/directional/east{
 	c_tag = "General Storage";
@@ -22919,13 +22895,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
-"hiA" = (
-/obj/disposalpipe/segment/food{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/white/checker2,
-/area/station/crew_quarters/kitchen)
 "hiU" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
@@ -26861,6 +26830,15 @@
 	dir = 4
 	},
 /area/station/security/processing)
+"jxb" = (
+/obj/machinery/conveyor/WS{
+	id = "garbage";
+	move_lag = 15
+	},
+/obj/machinery/light/small/sticky/frostedred,
+/obj/landmark/disposals_endpoint,
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "jxd" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -28335,6 +28313,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/ptl)
+"krl" = (
+/obj/decal/cleanable/blood/tracks,
+/obj/machinery/camera/directional/south{
+	pixel_x = 10
+	},
+/obj/storage/crate/freezer/organs,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "krO" = (
 /obj/machinery/sink/slim{
 	pixel_y = 8
@@ -28855,14 +28841,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
-"kJb" = (
-/obj/machinery/conveyor_switch{
-	id = "garbage";
-	position = 1
-	},
-/obj/machinery/light/small/sticky/frostedred,
-/turf/simulated/floor/plating,
-/area/station/maintenance/disposal)
 "kJp" = (
 /obj/decal/cleanable/rust/jen,
 /obj/machinery/light/small/sticky/frostedred,
@@ -28957,16 +28935,6 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/hydroponics/bay)
-"kLR" = (
-/obj/disposalpipe/trunk{
-	dir = 4
-	},
-/obj/machinery/disposal{
-	name = "loaf2space";
-	desc = "A pressurized trashcan that flushes things you put into it through pipes, in this case out into the cold depths of space! Perfect for people who hate bread."
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/disposal)
 "kLV" = (
 /obj/disposalpipe/segment,
 /obj/machinery/camera/directional/west{
@@ -29636,10 +29604,6 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
-"ldl" = (
-/obj/disposalpipe/junction/left/north,
-/turf/simulated/floor/white/checker2,
-/area/station/crew_quarters/kitchen)
 "ldw" = (
 /obj/machinery/computer3/generic/med_data,
 /obj/machinery/power/data_terminal,
@@ -30110,6 +30074,17 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"lrV" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/machinery/conveyor/NS{
+	id = "zetadisposals";
+	move_lag = 15
+	},
+/obj/landmark/disposals_endpoint,
+/turf/simulated/floor/plating,
+/area/station/maintenance/scidisposal)
 "lsq" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -30669,14 +30644,6 @@
 	dir = 1
 	},
 /area/station/science/hall)
-"lEd" = (
-/obj/disposalpipe/segment/food{
-	dir = 8
-	},
-/turf/simulated/floor/grey/checker{
-	dir = 4
-	},
-/area/station/crew_quarters/kitchen)
 "lEs" = (
 /obj/disposalpipe/segment/ejection,
 /obj/machinery/manufacturer/uniform,
@@ -32220,6 +32187,13 @@
 /obj/item_dispenser/latex_gloves,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/restroom)
+"mtn" = (
+/obj/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/machinery/disposal/ejection/space,
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "mtu" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -36216,15 +36190,6 @@
 	dir = 10
 	},
 /area/station/medical/medbay/lobby)
-"oCe" = (
-/obj/machinery/conveyor/WS{
-	id = "garbage";
-	move_lag = 15
-	},
-/obj/machinery/light/small/sticky/frostedred,
-/obj/landmark/disposals_endpoint,
-/turf/simulated/floor/plating,
-/area/station/maintenance/disposal)
 "oCp" = (
 /obj/machinery/light/incandescent,
 /obj/disposalpipe/segment{
@@ -36994,35 +36959,6 @@
 	dir = 8
 	},
 /area/abandonedship)
-"oXA" = (
-/obj/storage/crate/freezer{
-	name = "Freezer - Spare Parts"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/organ/liver,
-/obj/item/organ/heart{
-	desc = "A human heart, grody. How long has it been in that freezer?";
-	name = "funky ol' heart"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody{
-	pixel_x = -2;
-	pixel_y = -3
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	pixel_x = -2;
-	pixel_y = -2
-	},
-/obj/decal/cleanable/blood/tracks,
-/obj/machinery/camera/directional/south{
-	pixel_x = 10
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
 "oYB" = (
 /obj/disposalpipe/segment/food{
 	icon_state = "pipe-c"
@@ -38150,6 +38086,15 @@
 	},
 /turf/simulated/floor/carpet,
 /area/station/chapel/sanctuary)
+"pDq" = (
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/obj/submachine/chef_oven,
+/turf/simulated/floor/grey/checker{
+	dir = 4
+	},
+/area/station/crew_quarters/kitchen)
 "pDx" = (
 /obj/machinery/light/small/sticky/frostedred,
 /obj/reagent_dispensers/watertank,
@@ -42457,20 +42402,6 @@
 /obj/machinery/firealarm/directional/west,
 /turf/simulated/floor,
 /area/station/maintenance/northwest)
-"sft" = (
-/obj/machinery/light/incandescent{
-	dir = 1
-	},
-/obj/submachine/chef_oven,
-/obj/machinery/disposal/small/north{
-	pixel_y = 32;
-	name = "Lay-Z Chef Prison Food Chute"
-	},
-/obj/disposalpipe/trunk/food,
-/turf/simulated/floor/grey/checker{
-	dir = 4
-	},
-/area/station/crew_quarters/kitchen)
 "sfv" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -42494,27 +42425,6 @@
 "sfE" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hangar/arrivals)
-"sfF" = (
-/obj/machinery/light_switch/directional/south{
-	pixel_x = -7
-	},
-/obj/disposalpipe/trunk{
-	dir = 1
-	},
-/obj/machinery/disposal,
-/obj/blind_switch/on/directional/south{
-	pixel_x = 1
-	},
-/obj/item/storage/wall{
-	dir = 8;
-	name = "reagent gear cabinet";
-	pixel_x = 32;
-	spawn_contents = list(/obj/item/storage/box/beakerbox,/obj/item/device/reagentscanner,/obj/item/device/reagentscanner,/obj/item/reagent_containers/syringe)
-	},
-/turf/simulated/floor/grey/checker{
-	dir = 4
-	},
-/area/station/crew_quarters/kitchen)
 "sgh" = (
 /obj/machinery/vending/cigarette,
 /obj/machinery/firealarm/directional/north,
@@ -44070,6 +43980,13 @@
 /obj/decal/poster/wallsign/danger_highvolt,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/engineering)
+"sZx" = (
+/obj/machinery/disposal/sci/test_chamber,
+/obj/disposalpipe/trunk/transport{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/science/testchamber)
 "sZG" = (
 /obj/machinery/manufacturer/hangar,
 /turf/simulated/floor/shuttlebay,
@@ -45251,11 +45168,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
-"tJT" = (
-/turf/simulated/floor/grey/checker{
-	dir = 4
-	},
-/area/station/crew_quarters/kitchen)
 "tJW" = (
 /obj/table/wood/auto/desk{
 	icon_state = "8"
@@ -46034,6 +45946,18 @@
 	dir = 8
 	},
 /area/station/medical/robotics)
+"uhj" = (
+/obj/table/reinforced/chemistry/auto{
+	desc = "A black countertop table for storing kitchen-y objects.";
+	name = "kitchen counter";
+	icon_state = "2"
+	},
+/obj/item/reagent_containers/food/snacks/cheesewheel{
+	pixel_y = 2;
+	pixel_x = 1
+	},
+/turf/simulated/floor/white/checker2,
+/area/station/crew_quarters/kitchen)
 "uhL" = (
 /obj/storage/closet/fire,
 /turf/simulated/floor/plating,
@@ -46234,18 +46158,6 @@
 /obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/bar)
-"umq" = (
-/obj/machinery/navbeacon{
-	codes_txt = "delivery;dir=8";
-	location = "Kitchen"
-	},
-/obj/landmark/gps_waypoint,
-/obj/disposalpipe/segment,
-/obj/disposalpipe/segment/food{
-	dir = 8
-	},
-/turf/simulated/floor/white/checker2,
-/area/station/crew_quarters/kitchen)
 "umr" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -46413,6 +46325,13 @@
 /obj/disposalpipe/segment/food,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"uro" = (
+/obj/surgery_tray/kitchen_island,
+/obj/disposalpipe/segment/food,
+/turf/simulated/floor/grey/checker{
+	dir = 4
+	},
+/area/station/crew_quarters/kitchen)
 "urM" = (
 /obj/machinery/light/incandescent,
 /obj/cable{
@@ -46451,6 +46370,27 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
+"usv" = (
+/obj/machinery/light_switch/directional/south{
+	pixel_x = -7
+	},
+/obj/blind_switch/on/directional/south{
+	pixel_x = 1
+	},
+/obj/item/storage/wall{
+	dir = 8;
+	name = "reagent gear cabinet";
+	pixel_x = 32;
+	spawn_contents = list(/obj/item/storage/box/beakerbox,/obj/item/device/reagentscanner,/obj/item/device/reagentscanner,/obj/item/reagent_containers/syringe)
+	},
+/obj/machinery/disposal/kitchen/brig,
+/obj/disposalpipe/trunk/food{
+	dir = 1
+	},
+/turf/simulated/floor/grey/checker{
+	dir = 4
+	},
+/area/station/crew_quarters/kitchen)
 "usz" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -47820,6 +47760,15 @@
 	dir = 1
 	},
 /area/station/medical/robotics)
+"vlm" = (
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=8";
+	location = "Kitchen"
+	},
+/obj/landmark/gps_waypoint,
+/obj/disposalpipe/segment,
+/turf/simulated/floor/white/checker2,
+/area/station/crew_quarters/kitchen)
 "vlz" = (
 /obj/stool/chair/dining/wood{
 	dir = 1
@@ -48008,6 +47957,15 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"vpV" = (
+/obj/disposalpipe/segment/food{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/grey/checker{
+	dir = 4
+	},
+/area/station/crew_quarters/kitchen)
 "vqn" = (
 /obj/mesh/grille/steel{
 	layer = 2.7
@@ -48217,6 +48175,14 @@
 	dir = 8
 	},
 /area/station/medical/medbay/surgery)
+"vuH" = (
+/obj/machinery/conveyor_switch{
+	id = "garbage";
+	position = 1
+	},
+/obj/machinery/light/small/sticky/frostedred,
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "vuZ" = (
 /obj/machinery/power/tracker/aisat,
 /obj/cable/yellow{
@@ -50490,10 +50456,6 @@
 /obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
-"wPd" = (
-/obj/disposalpipe/segment/food,
-/turf/simulated/floor/white/checker2,
-/area/station/crew_quarters/kitchen)
 "wPr" = (
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
@@ -51147,21 +51109,6 @@
 	dir = 4
 	},
 /area/station/hydroponics/bay)
-"xmV" = (
-/obj/table/reinforced/chemistry/auto{
-	desc = "A black countertop table for storing kitchen-y objects.";
-	name = "kitchen counter";
-	icon_state = "2"
-	},
-/obj/item/reagent_containers/food/snacks/cheesewheel{
-	pixel_y = 2;
-	pixel_x = 1
-	},
-/obj/disposalpipe/segment/food{
-	dir = 8
-	},
-/turf/simulated/floor/white/checker2,
-/area/station/crew_quarters/kitchen)
 "xnx" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -65907,7 +65854,7 @@ aPL
 aRd
 aRd
 aQu
-oXA
+krl
 aUi
 aWO
 pVj
@@ -71069,9 +71016,9 @@ aXp
 vLP
 arN
 bjm
-sft
-wPd
-hiA
+pDq
+tvz
+tvz
 qur
 tvz
 hXP
@@ -71373,7 +71320,7 @@ arN
 bjm
 nsa
 tvz
-xmV
+uhj
 jgY
 ifQ
 tvz
@@ -71675,10 +71622,10 @@ aVl
 bjm
 fAg
 jmy
-umq
+vlm
 vwt
 iMT
-ldl
+tvz
 jkN
 hdg
 qQr
@@ -71977,11 +71924,11 @@ ptt
 bjm
 nbo
 hjz
-lEd
-tJT
-tJT
-fSn
-sfF
+vpV
+fyH
+fyH
+uro
+usv
 gmL
 haC
 tPu
@@ -88006,7 +87953,7 @@ bxT
 bCz
 bwc
 ekW
-kLR
+mtn
 bxT
 bFZ
 bCV
@@ -88910,7 +88857,7 @@ bAo
 ggu
 bAq
 otx
-kJb
+vuH
 ekW
 bPg
 bAo
@@ -89511,7 +89458,7 @@ bxS
 srQ
 bzu
 bAq
-oCe
+jxb
 vKg
 bCB
 bBU
@@ -121420,7 +121367,7 @@ ajD
 rYA
 ajA
 pyu
-eRt
+lrV
 sQh
 laX
 jeb
@@ -121698,7 +121645,7 @@ tBu
 tmN
 jBd
 rTP
-aGg
+sZx
 qvu
 aew
 aeQ

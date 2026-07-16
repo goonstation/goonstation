@@ -9246,17 +9246,6 @@
 /obj/landmark/bill_spawn,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
-"aDz" = (
-/obj/machinery/disposal{
-	name = "Lay-Z Chef Prison Food Chute"
-	},
-/obj/machinery/light,
-/obj/disposalpipe/trunk/food{
-	dir = 4
-	},
-/obj/decal/stripe_delivery,
-/turf/simulated/floor,
-/area/station/crew_quarters/kitchen)
 "aDA" = (
 /obj/machinery/deep_fryer,
 /obj/disposalpipe/segment,
@@ -9603,16 +9592,6 @@
 	dir = 1;
 	layer = 9.1;
 	pixel_y = 21
-	},
-/obj/decal/stripe_caution,
-/turf/simulated/floor,
-/area/station/hydroponics/bay)
-"aEI" = (
-/obj/machinery/disposal{
-	name = "Lay-Z Chef Prison Food Chute"
-	},
-/obj/disposalpipe/trunk/food{
-	dir = 1
 	},
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
@@ -11438,13 +11417,6 @@
 /obj/machinery/light/emergency,
 /turf/simulated/floor/green/side,
 /area/station/crew_quarters/garden)
-"aLk" = (
-/obj/machinery/optable{
-	name = "Autopsy Table"
-	},
-/obj/machinery/drainage,
-/turf/simulated/floor/sanitary/blue,
-/area/station/medical/morgue)
 "aLl" = (
 /turf/simulated/floor/green/corner,
 /area/station/crew_quarters/garden)
@@ -38876,21 +38848,6 @@
 	dir = 4
 	},
 /area/station/science/lobby)
-"cxB" = (
-/obj/machinery/disposal{
-	name = "Test Chamber Chute"
-	},
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/obj/disposalpipe/trunk/transport{
-	dir = 1
-	},
-/obj/decal/stripe_caution,
-/turf/simulated/floor,
-/area/station/science/lobby)
 "cxC" = (
 /obj/machinery/shower{
 	dir = 8;
@@ -45592,18 +45549,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/blue/side,
 /area/station/medical/medbay/surgery/storage)
-"cWA" = (
-/obj/machinery/disposal{
-	name = "Test Chamber Chute"
-	},
-/obj/item/storage/wall/random,
-/obj/disposalpipe/trunk/transport{
-	dir = 8
-	},
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/station/medical/dome)
 "cWB" = (
 /turf/simulated/floor/carpet{
 	dir = 9;
@@ -48783,20 +48728,6 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost)
-"diV" = (
-/obj/machinery/disposal{
-	name = "Test Chamber Chute"
-	},
-/obj/disposalpipe/trunk{
-	dir = 4
-	},
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/turf/simulated/floor/black,
-/area/research_outpost)
 "diW" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -50966,6 +50897,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost)
+"eiT" = (
+/obj/machinery/disposal/sci/test_chamber,
+/obj/item/storage/wall/random,
+/obj/disposalpipe/trunk/transport{
+	dir = 8
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/medical/dome)
 "ejc" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -51318,6 +51259,10 @@
 /obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/quarters_east)
+"eBK" = (
+/obj/storage/crate/freezer/organs,
+/turf/simulated/floor/sanitary/blue,
+/area/station/medical/morgue)
 "eBS" = (
 /obj/machinery/mass_driver{
 	dir = 1;
@@ -51675,6 +51620,16 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
+"eRz" = (
+/obj/machinery/disposal/kitchen/cafeteria,
+/obj/machinery/light_switch/directional/east{
+	pixel_y = 4
+	},
+/obj/disposalpipe/trunk/food{
+	dir = 8
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "eRF" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -52281,28 +52236,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
-"fvr" = (
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
-	desc = "Gross.";
-	name = "old kidney"
-	},
-/obj/item/organ/heart{
-	desc = "A human heart, grody. How long has it been in that freezer?";
-	name = "funky ol' heart"
-	},
-/obj/storage/crate/freezer{
-	name = "Freezer - Spare Parts"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
-/turf/simulated/floor/sanitary/blue,
-/area/station/medical/morgue)
 "fwi" = (
 /obj/cable/yellow{
 	icon_state = "1-2"
@@ -52572,18 +52505,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
-"fJN" = (
-/obj/machinery/disposal{
-	name = "Lay-Z Chef Cafeteria Chute"
-	},
-/obj/machinery/light_switch/directional/east{
-	pixel_y = 4
-	},
-/obj/disposalpipe/trunk/food{
-	dir = 8
-	},
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/crew_quarters/kitchen)
 "fJV" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -53328,6 +53249,19 @@
 	dir = 1
 	},
 /area/station/ranch)
+"gtT" = (
+/obj/machinery/disposal/sci/test_chamber,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/obj/disposalpipe/trunk/transport{
+	dir = 1
+	},
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/station/science/lobby)
 "gtZ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -59317,13 +59251,6 @@
 	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/lobby)
-"kXx" = (
-/obj/machinery/disposal{
-	name = "monkeydome chute"
-	},
-/obj/disposalpipe/trunk/transport,
-/turf/simulated/floor/greenwhite,
-/area/station/medical/research)
 "kYb" = (
 /obj/machinery/light/lamp/black,
 /obj/table/reinforced/chemistry/auto/basicsup,
@@ -60011,6 +59938,14 @@
 	name = "reinforced plating"
 	},
 /area/station/quartermaster/refinery)
+"lBB" = (
+/obj/machinery/disposal/kitchen/brig,
+/obj/disposalpipe/trunk/food{
+	dir = 1
+	},
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/station/hydroponics/bay)
 "lCC" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
@@ -64875,6 +64810,18 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/bridge)
+"pDA" = (
+/obj/machinery/conveyor/NS{
+	move_lag = 30;
+	name = "cargo belt - south";
+	operating = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 4
+	},
+/obj/landmark/disposals_endpoint,
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "pFl" = (
 /obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/stairs{
@@ -65117,18 +65064,6 @@
 /obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/crematorium)
-"pNP" = (
-/obj/machinery/conveyor/NS{
-	move_lag = 30;
-	name = "cargo belt - south";
-	operating = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 4
-	},
-/obj/landmark/disposals_endpoint,
-/turf/simulated/floor/plating,
-/area/station/maintenance/disposal)
 "pOG" = (
 /obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 1;
@@ -65637,6 +65572,14 @@
 /obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/caution,
 /area/station/maintenance/central)
+"qjk" = (
+/obj/machinery/optable{
+	name = "Autopsy Table"
+	},
+/obj/machinery/drainage,
+/obj/random_item_spawner/organs/bloody,
+/turf/simulated/floor/sanitary/blue,
+/area/station/medical/morgue)
 "qjA" = (
 /obj/machinery/door_control/bolter/new_walls/south{
 	id = "cc1";
@@ -67587,6 +67530,15 @@
 	dir = 9
 	},
 /area/research_outpost)
+"rKr" = (
+/obj/machinery/disposal/kitchen/brig,
+/obj/machinery/light,
+/obj/disposalpipe/trunk/food{
+	dir = 4
+	},
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/station/crew_quarters/kitchen)
 "rLc" = (
 /obj/cable/orange{
 	icon_state = "1-4"
@@ -71061,6 +71013,18 @@
 /obj/random_item_spawner/tools/some,
 /turf/simulated/floor/grime,
 /area/station/storage/auxillary)
+"uGO" = (
+/obj/machinery/disposal/sci/test_chamber,
+/obj/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/black,
+/area/research_outpost)
 "uGQ" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/external{
@@ -73605,6 +73569,11 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/security/checkpoint/podbay)
+"xdr" = (
+/obj/machinery/disposal/sci/monkey_dome,
+/obj/disposalpipe/trunk/transport,
+/turf/simulated/floor/greenwhite,
+/area/station/medical/research)
 "xdN" = (
 /obj/decal/poster/wallsign/hazard_caution,
 /turf/simulated/wall/auto/supernorn,
@@ -86245,7 +86214,7 @@ dii
 dii
 jPZ
 diG
-diV
+uGO
 dii
 eMk
 djH
@@ -102720,7 +102689,7 @@ lLB
 aAL
 aCi
 aDp
-aEI
+lBB
 aFJ
 aHw
 aJb
@@ -104307,7 +104276,7 @@ crN
 lUz
 cuG
 cvX
-cxB
+gtT
 cWV
 cXs
 cBW
@@ -105739,7 +105708,7 @@ axL
 mXm
 aAS
 aCm
-aDz
+rKr
 ase
 tTE
 aHF
@@ -106945,7 +106914,7 @@ auU
 awp
 axO
 azC
-fJN
+eRz
 aCq
 aDD
 ase
@@ -112791,7 +112760,7 @@ ddW
 kOi
 ecI
 rUu
-aLk
+qjk
 cIi
 cLH
 cuW
@@ -113382,7 +113351,7 @@ cNW
 cPu
 sIT
 nIZ
-kXx
+xdr
 vtW
 xVw
 mNS
@@ -113395,7 +113364,7 @@ gOd
 qum
 kVf
 isw
-fvr
+eBK
 cIi
 cyy
 cuW
@@ -115803,7 +115772,7 @@ tnJ
 pJX
 gLK
 ddg
-cWA
+eiT
 uKJ
 ddd
 dfK
@@ -124531,7 +124500,7 @@ okO
 okO
 qxl
 tgU
-pNP
+pDA
 jdW
 xpe
 iJy

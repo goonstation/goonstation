@@ -700,10 +700,38 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	west
 		dir = WEST
 
+/obj/machinery/disposal/ejection
+	name = "ejection chute"
+	desc = "A pneumatic delivery chute for ejecting things from a department."
+
+/obj/machinery/disposal/ejection/small
+	icon = 'icons/obj/disposal_small.dmi'
+	handle_normal_state = "disposal-handle"
+	density = 0
+	provides_grip = FALSE
+
+	north
+		dir = NORTH
+	east
+		dir = EAST
+	south
+		dir = SOUTH
+	west
+		dir = WEST
+
+/obj/machinery/disposal/ejection/space
+	desc = "A pneumatic delivery chute for sending things directly to the cold hard void of space."
+
 /obj/machinery/disposal/morgue
 	name = "morgue chute"
 	icon_state = "morguechute"
 	desc = "A pneumatic delivery chute for sending things directly to the morgue."
+	icon_style = "morgue"
+
+/obj/machinery/disposal/crematorium
+	name = "crematorium chute"
+	icon_state = "morguechute"
+	desc = "A pneumatic delivery chute for sending things directly to the crematorium."
 	icon_style = "morgue"
 
 /obj/machinery/disposal/sci
@@ -712,11 +740,35 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	desc = "A pneumatic delivery chute for sending completed research to the public."
 	icon_style = "sci"
 
+/obj/machinery/disposal/sci/monkey_dome
+	name = "monkey dome chute"
+	desc = "A pneumatic delivery chute for sending things directly to the monkey dome."
+
+/obj/machinery/disposal/sci/test_chamber
+	name = "test chamber chute"
+	desc = "A pneumatic delivery chute for sending things directly to the research test chamber."
+
 /obj/machinery/disposal/botany
 	name = "produce chute"
 	icon_state = "botanchute"
 	desc = "A pneumatic delivery chute for sending produce to the kitchen."
 	icon_style = "botan"
+
+/obj/machinery/disposal/kitchen
+	icon_state = "botanchute"
+	icon_style = "botan"
+
+/obj/machinery/disposal/kitchen/brig
+	name = "brig meal-line chute"
+	desc = "A pneumatic delivery chute for sending food to the brig."
+
+/obj/machinery/disposal/kitchen/cafeteria
+	name = "cafeteria meal-line chute"
+	desc = "A pneumatic delivery chute for sending food to the cafeteria."
+
+/obj/machinery/disposal/kitchen/freezer
+	name = "kitchen freezer chute"
+	desc = "A pneumatic delivery chute for sending \"food\" to the freezer."
 
 /obj/machinery/disposal/ore
 	name = "ore chute"
