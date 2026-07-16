@@ -5,7 +5,7 @@
  * @license MIT
  */
 
-import { Button, Section, Stack, Table } from 'tgui-core/components';
+import { Box, Icon, Section, Stack, Table } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { SupplyConsoleData } from './type';
@@ -51,15 +51,10 @@ const MarketTable = (props) => {
           <Table.Cell py="2px">{item.name}</Table.Cell>
           <Table.Cell align="right">
             {!!item.in_demand && (
-              <Button
-                icon="fire"
-                color={'orange'}
-                iconColor={'white'}
-                textColor={'white'}
-                align="center"
-              >
+              <Box textColor={'orange'}>
+                <Icon name="fire" />
                 Hot Item!
-              </Button>
+              </Box>
             )}
           </Table.Cell>
           <Table.Cell textAlign="right">{item.price}⪽</Table.Cell>

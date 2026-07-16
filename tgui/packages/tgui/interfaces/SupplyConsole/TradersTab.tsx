@@ -35,6 +35,9 @@ export const SupplyConsoleTradersTab = () => {
         viewing_trader >= 0 && (
           <Button
             icon="arrow-left"
+            iconColor="white"
+            textColor="white"
+            color="red"
             onClick={() => {
               setTrader(-1);
             }}
@@ -45,7 +48,14 @@ export const SupplyConsoleTradersTab = () => {
       }
     >
       {data.signal_loss >= 75 && (
-        <Modal textAlign="center" fontSize={2} p="10px">
+        <Modal
+          textAlign="center"
+          fontSize={2}
+          p="10px"
+          style={{ borderRadius: '4px' }}
+          backgroundColor="red"
+          textColor="white"
+        >
           <Icon name="wifi" /> Severe signal interference is preventing a
           connection with trader vessels.
         </Modal>
@@ -85,7 +95,14 @@ const TraderView = (props) => {
   return (
     <Stack vertical fill>
       {trader.patience <= 0 && (
-        <Modal textAlign="center" fontSize={2} p="10px">
+        <Modal
+          textAlign="center"
+          fontSize={2}
+          p="10px"
+          style={{ borderRadius: '4px' }}
+          backgroundColor="red"
+          textColor="white"
+        >
           {trader.name} has left.
         </Modal>
       )}

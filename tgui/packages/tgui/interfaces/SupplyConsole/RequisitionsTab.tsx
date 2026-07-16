@@ -33,7 +33,14 @@ export const SupplyConsoleRequisitionsTab = () => {
         {interference && (
           <Stack.Item>
             <Divider />
-            <Box textAlign="center" fontSize={2}>
+            <Box
+              textAlign="center"
+              fontSize={2}
+              p="10px"
+              style={{ borderRadius: '4px' }}
+              backgroundColor="red"
+              textColor="white"
+            >
               <Icon name="wifi" /> Severe signal interference is preventing a
               connection to requisition hub.
             </Box>
@@ -61,6 +68,7 @@ const RequisitionEntry = (props) => {
   const { requisition } = props;
   return (
     <Section
+      className="candystripe"
       title={requisition.name}
       buttons={[
         !requisition.urgent && (
@@ -137,6 +145,7 @@ const RequisitionEntry = (props) => {
           </Stack>
         </Stack.Item>
       </Stack>
+      <Divider />
     </Section>
   );
 };

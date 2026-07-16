@@ -9,11 +9,11 @@ import {
   BlockQuote,
   Box,
   Button,
+  Dropdown,
   Input,
   Section,
   Stack,
   Table,
-  Tabs,
 } from 'tgui-core/components';
 
 import { useBackend, useSharedState } from '../../backend';
@@ -22,13 +22,17 @@ import { SupplyConsoleData } from './type';
 
 export const SupplyConsoleSuppliesTab = () => {
   const { data } = useBackend<SupplyConsoleData>();
-  const [supply_tab, setSupplyTab] = useSharedState('supplytab', 'all');
+  const category_all = 'All Entries';
+  const categories = [category_all].concat(data.supply_categories);
+  const [supply_tab, setSupplyTab] = useSharedState('supplytab', category_all);
   const [suppliesTabSearchQuery, setSearchQuery] = useSharedState(
     'suppliesTabSearchQuery',
     '',
   );
   const filteredEntries = data.supply_entries
-    .filter((entry) => supply_tab === 'all' || entry.category === supply_tab)
+    .filter(
+      (entry) => supply_tab === category_all || entry.category === supply_tab,
+    )
     .filter((entry) =>
       (entry.name + entry.desc)
         .toLocaleLowerCase()
@@ -38,31 +42,23 @@ export const SupplyConsoleSuppliesTab = () => {
     <Section title="Place Order" fill>
       <Stack vertical fill>
         <Stack.Item pb="5px">
-          <Input
-            fluid
-            value={suppliesTabSearchQuery}
-            onChange={setSearchQuery}
-            placeholder="Filter Packages"
-          />
-        </Stack.Item>
-        <Stack.Item>
-          <Tabs scrollable>
-            <Tabs.Tab
-              selected={supply_tab === 'all'}
-              onClick={() => setSupplyTab('all')}
-            >
-              All Entries
-            </Tabs.Tab>
-            {data.supply_categories.map((category, index) => (
-              <Tabs.Tab
-                key={index}
-                selected={supply_tab === category}
-                onClick={() => setSupplyTab(category)}
-              >
-                {category}
-              </Tabs.Tab>
-            ))}
-          </Tabs>
+          <Stack fill>
+            <Stack.Item>
+              <Dropdown
+                options={categories}
+                selected={supply_tab}
+                onSelected={(value) => setSupplyTab(value)}
+              />
+            </Stack.Item>
+            <Stack.Item grow>
+              <Input
+                fluid
+                value={suppliesTabSearchQuery}
+                onChange={setSearchQuery}
+                placeholder="Filter Packages"
+              />
+            </Stack.Item>
+          </Stack>
         </Stack.Item>
         <Stack.Item grow>
           <Section scrollable fill noTopPadding>
