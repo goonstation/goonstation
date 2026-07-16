@@ -76,25 +76,25 @@
 
 	// movement process, persists while holder is moving through pipes
 	proc/process()
-		var/obj/disposalpipe/last
-		while(active)
-			sleep(0.1 SECONDS)		// was 1
-			if(slowed > 0)
-				slowed--
-				slowed = max(slowed,0)
-				sleep(1 SECONDS)
-			else
-				if (!loc)
-					return
-				var/obj/disposalpipe/curr = loc
-				last = curr
-				curr = curr.transfer(src)
-				if(!curr)
-					last.expel(src, get_turf(loc), dir)
+		var/delay = global.instant_pipe_network ? (0) : (0.1 SECONDS)
 
-				if(!(count--))
-					active = 0
-		return
+		while (src.active)
+			sleep(delay)
+
+			if (src.slowed > 0)
+				src.slowed = max(src.slowed - 1, 0)
+				sleep(1 SECONDS)
+
+			else if (src.loc)
+				var/obj/disposalpipe/current = src.loc
+				if (!current.transfer(src))
+					current.expel(src, get_turf(current), src.dir)
+
+				if (!(src.count--))
+					src.active = FALSE
+
+			else
+				return
 
 	// find the turf which should contain the next pipe
 	proc/nextloc()
@@ -2179,7 +2179,9 @@ TYPEINFO(/obj/disposaloutlet)
 		FLICK("outlet-open", src)
 		playsound(src, 'sound/machines/warning-buzzer.ogg', 50, FALSE, 0)
 
-		sleep(2 SECONDS)	//wait until correct animation frame
+		if (!global.instant_pipe_network)
+			sleep(2 SECONDS)
+
 		playsound(src, 'sound/machines/hiss.ogg', 50, FALSE, 0)
 
 		var/turf/expel_loc = get_turf(src)
