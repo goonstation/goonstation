@@ -28163,6 +28163,19 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/northwest)
+"meR" = (
+/obj/machinery/conveyor/EW{
+	id = "garbage";
+	move_lag = 6;
+	operating = 1
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/landmark/disposals_endpoint,
+/turf/simulated/floor/caution/northsouth,
+/area/station/maintenance/disposal)
 "meU" = (
 /obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/stairs/dark/wide{
@@ -54497,6 +54510,7 @@
 	name = "Pasiphae disposal belt";
 	operating = 1
 	},
+/obj/landmark/disposals_endpoint,
 /turf/simulated/floor/plating,
 /area/pasiphae/maint)
 "ylO" = (
@@ -112950,7 +112964,7 @@ fPT
 oDy
 fPT
 pYH
-aiC
+meR
 xeY
 xeY
 jPN

@@ -41929,6 +41929,7 @@
 	move_lag = 30;
 	operating = 1
 	},
+/obj/landmark/disposals_endpoint,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},

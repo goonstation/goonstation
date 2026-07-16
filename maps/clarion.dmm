@@ -21292,6 +21292,7 @@
 /obj/strip_door{
 	dir = 1
 	},
+/obj/landmark/disposals_endpoint,
 /turf/simulated/floor/caution/westeast,
 /area/station/maintenance/disposal)
 "klx" = (

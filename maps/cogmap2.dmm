@@ -65126,6 +65126,7 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
+/obj/landmark/disposals_endpoint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "pOG" = (

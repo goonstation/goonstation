@@ -16733,6 +16733,15 @@
 /obj/mapping_helper/access/brig,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/courtroom)
+"fhM" = (
+/obj/machinery/conveyor/EW{
+	id = "disposals";
+	move_lag = 30;
+	operating = 1
+	},
+/obj/landmark/disposals_endpoint,
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/sw)
 "fhN" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -105497,7 +105506,7 @@ xVy
 kmy
 efD
 ieL
-ltH
+fhM
 ieL
 rdj
 rdj

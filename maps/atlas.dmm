@@ -18511,6 +18511,16 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/purple,
 /area/station/janitor/office)
+"rlC" = (
+/obj/machinery/conveyor/WE{
+	id = "trash";
+	name = "cargo belt - east";
+	operating = 1;
+	move_lag = 15
+	},
+/obj/landmark/disposals_endpoint,
+/turf/simulated/floor/plating,
+/area/station/janitor/office)
 "rlD" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/random,
@@ -80777,7 +80787,7 @@ boC
 sSu
 ayi
 aEZ
-xGP
+rlC
 hPj
 aZj
 aHM

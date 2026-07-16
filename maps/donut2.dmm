@@ -19094,6 +19094,7 @@
 	id = "zetadisposals";
 	move_lag = 15
 	},
+/obj/landmark/disposals_endpoint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/scidisposal)
 "eRx" = (
@@ -28856,7 +28857,8 @@
 /area/station/maintenance/south)
 "kJb" = (
 /obj/machinery/conveyor_switch{
-	id = "garbage"
+	id = "garbage";
+	position = 1
 	},
 /obj/machinery/light/small/sticky/frostedred,
 /turf/simulated/floor/plating,
@@ -36220,6 +36222,7 @@
 	move_lag = 15
 	},
 /obj/machinery/light/small/sticky/frostedred,
+/obj/landmark/disposals_endpoint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "oCp" = (

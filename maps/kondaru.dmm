@@ -56787,6 +56787,14 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"xki" = (
+/obj/machinery/conveyor/SN{
+	id = "garbage";
+	operating = 1
+	},
+/obj/landmark/disposals_endpoint,
+/turf/simulated/floor/black/grime,
+/area/station/maintenance/disposal)
 "xkI" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/wood,
@@ -93249,7 +93257,7 @@ rhx
 tmW
 qVn
 tmW
-rhx
+xki
 gQC
 axJ
 nco

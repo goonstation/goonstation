@@ -24523,6 +24523,7 @@
 	operating = 1
 	},
 /obj/strip_door,
+/obj/landmark/disposals_endpoint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "rdL" = (

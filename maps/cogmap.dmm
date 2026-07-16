@@ -62938,6 +62938,15 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
+"wRB" = (
+/obj/machinery/conveyor/WE{
+	id = "garbage";
+	move_lag = 30;
+	operating = 1
+	},
+/obj/landmark/disposals_endpoint,
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "wRG" = (
 /obj/machinery/vending/standard,
 /obj/cable{
@@ -117540,7 +117549,7 @@ rJO
 beI
 bjj
 bfF
-dWz
+wRB
 bdK
 fBe
 aYQ
