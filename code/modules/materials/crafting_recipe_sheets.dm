@@ -539,18 +539,11 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/reinforced)
 		"canCraftMultiples" = initial(typedRecipePath.can_craft_multiples),
 		"img" = sheet_crafting_recipe_getBase64Img(initial(typedRecipePath.recipe_id), initial(typedRecipePath.icon), initial(typedRecipePath.icon_state), initial(typedRecipePath.icon_default_mat), sheet)
 	))
-/proc/sheet_crafting_recipe_getBase64Img(var/recipeID, var/icon, var/icon_state, var/icon_default_mat, var/obj/item/sheet/sheet)
+
+/proc/sheet_crafting_recipe_getBase64Img(var/recipeID, var/icon, var/icon_state)
 	var/static/base64_preview_cache = list() // Base64 preview images for item types, for use in ui interfaces.
-
-	var/preview_cache_id = recipeID
-	var/potential_new_icon_state = "[icon_state]$$[sheet.material.getID()]"
-	if(sheet.is_valid_icon_state(potential_new_icon_state, icon))
-		icon_state = potential_new_icon_state
-		preview_cache_id += "$$[sheet.material.getID()]"
-	else if(sheet.material.getID() != icon_default_mat)
-		preview_cache_id += "$$[sheet.material.getID()]"
-
-	. = base64_preview_cache[preview_cache_id]
+	
+	. = base64_preview_cache[recipeID]
 	if(isnull(.))
 		var/dir = SOUTH
 		if (recipeID == "bigwindow")
@@ -560,4 +553,4 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/reinforced)
 			. = icon2base64(result_icon)
 		else
 			. = "" // Empty but not null
-		base64_preview_cache[preview_cache_id] = .
+		base64_preview_cache[recipeID] = .
