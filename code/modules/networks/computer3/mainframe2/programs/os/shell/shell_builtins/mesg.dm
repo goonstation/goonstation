@@ -32,4 +32,4 @@
 	else
 		src.shell.message_user(output)
 
-	return BUILTIN_SUCCESS
+	return DWAINE::ERR::SHELL::BUILTIN::SUCCESS

@@ -7,6 +7,7 @@ TYPEINFO(/obj/item/radiojammer)
 	icon = 'icons/obj/shield_gen.dmi'
 	icon_state = "syndieshieldoff"
 	w_class = W_CLASS_TINY
+	tool_flags = TOOL_ASSEMBLY_APPLIER
 	var/active = FALSE
 	var/range = DEFAULT_RADIO_JAMMER_RANGE
 	var/base_icon = "syndieshield"
@@ -14,6 +15,8 @@ TYPEINFO(/obj/item/radiojammer)
 /obj/item/radiojammer/New()
 	. = ..()
 	src.RegisterSignal(src, COMSIG_SIGNAL_JAMMED, PROC_REF(signal_jammed))
+	src.RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
+	src.RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
 	src.UpdateIcon()
 
 /obj/item/radiojammer/disposing()
@@ -23,6 +26,14 @@ TYPEINFO(/obj/item/radiojammer)
 /obj/item/radiojammer/update_icon(...)
 	. = ..()
 	src.icon_state = "[src.base_icon][src.active ? "on" : "off"]"
+	var/obj/item/assembly/parent_assembly = src.loc
+	if(!istype(parent_assembly))
+		return
+	if(src.active)
+		var/image/temp_image = image('icons/obj/items/assemblies.dmi', parent_assembly, "jammer_active")
+		parent_assembly.AddOverlays(temp_image, "jammer_active")
+	else
+		parent_assembly.ClearSpecificOverlays("jammer_active")
 
 /obj/item/radiojammer/get_desc(dist, mob/user)
 	. = ..()
@@ -32,24 +43,33 @@ TYPEINFO(/obj/item/radiojammer)
 
 /obj/item/radiojammer/proc/signal_jammed(_source, datum/signal/signal)
 	//hoping this isn't too performance heavy if a lot of signals get blocked at once
-	if (!src.GetOverlayImage("jammed_light"))
-		//automatic heartbeat signals: we still want to know when we're jamming them but we probably don't care most of the time
-		var/icon_state = signal.data["command"] == "heartbeat" ? "signal_jammed_heartbeat" : "signal_jammed"
-		src.UpdateOverlays(image(src.icon, icon_state), "jammed_light")
+	if (src.GetOverlayImage("jammed_light"))
+		return
+	var/obj/item/assembly/parent_assembly = src.loc
+	//automatic heartbeat signals: we still want to know when we're jamming them but we probably don't care most of the time
+	var/icon_state = signal.data["command"] == "heartbeat" ? "signal_jammed_heartbeat" : "signal_jammed"
+	src.UpdateOverlays(image(src.icon, icon_state), "jammed_light")
+	if(istype(parent_assembly))
+		parent_assembly.UpdateOverlays(image('icons/obj/items/assemblies.dmi', icon_state), "jammed_light")
 	SPAWN(2 DECI SECONDS)
 		src.ClearSpecificOverlays("jammed_light")
+		if(!QDELETED(parent_assembly) && istype(parent_assembly))
+			parent_assembly.ClearSpecificOverlays("jammed_light")
 
 /obj/item/radiojammer/attack_self(mob/user)
+	src.toggle(user)
+
+/obj/item/radiojammer/proc/toggle(mob/user)
 	if (!istype(global.radio_controller))
 		return
 
 	src.active = !src.active
+	if(user)
+		boutput(user, SPAN_NOTICE("You [src.active ? "activate" : "deactivate"] [src]."))
 
 	if (src.active)
-		boutput(user, "You activate [src].")
 		START_TRACKING_CAT(TR_CAT_RADIO_JAMMERS)
 	else
-		boutput(user, "You shut off [src].")
 		STOP_TRACKING_CAT(TR_CAT_RADIO_JAMMERS)
 	src.UpdateIcon()
 
@@ -76,6 +96,13 @@ TYPEINFO(/obj/item/radiojammer)
 	src.range = inputted_number
 	boutput(user, SPAN_NOTICE("You set [src]'s range to [inputted_number]."))
 
+/obj/item/radiojammer/proc/assembly_setup(var/manipulated_jammer, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
+	parent_assembly.applier_icon_prefix = src.base_icon
+
+/obj/item/radiojammer/proc/assembly_application(var/manipulated_jammer, var/obj/item/assembly/parent_assembly, var/obj/assembly_target)
+	src.toggle()
+
+// -- Charged jammer
 /obj/item/radiojammer/charged
 	desc = "An illegal device used to jam radio signals, preventing broadcast or transmission. This one has a slot for a power cell."
 	icon_state = "shieldoff"
@@ -112,7 +139,7 @@ TYPEINFO(/obj/item/radiojammer)
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
 			inventory_counter.update_percent(ret["charge"], ret["max_charge"])
 
-	attack_self()
+	toggle(mob/user)
 		if (!src.active && !(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, src.power_cost_per_tick) & CELL_SUFFICIENT_CHARGE))
 			boutput(src.loc, SPAN_ALERT("[src] doesn't have enough charge to turn on!"))
 			return

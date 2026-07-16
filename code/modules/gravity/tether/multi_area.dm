@@ -93,9 +93,11 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether/multi_area)
 	name = "Asylum gravity tether"
 	req_access = list(access_medical_director)
 	base_area_typepath = /area/station/medical/asylum
+#ifndef MAP_OVERRIDE_PROBSTATION
 	additional_area_types = list(
 		/area/station/crew_quarters/clown,
 	)
+#endif
 
 // cogmap2/kondaru research outpost
 /obj/machinery/gravity_tether/multi_area/research_outpost

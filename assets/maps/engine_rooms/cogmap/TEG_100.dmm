@@ -682,10 +682,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "Yg" = (
-/obj/machinery/light_switch{
-	name = "N light switch";
-	pixel_y = 24
-	},
+/obj/machinery/light_switch/directional/north,
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 6
 	},

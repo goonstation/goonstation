@@ -298,12 +298,6 @@
 /area/station/devzone)
 "fU" = (
 /obj/machinery/clonegrinder,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat{
-	pixel_x = 4
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat{
-	pixel_x = 4
-	},
 /turf/simulated/floor/blue/checker,
 /area/station/devzone)
 "gd" = (
@@ -314,6 +308,10 @@
 /obj/landmark/antagonist/pirate/first_mate,
 /obj/landmark/antagonist/blob,
 /turf/unsimulated/floor/blue,
+/area/station/devzone)
+"gk" = (
+/obj/machinery/manufacturer/general,
+/turf/simulated/floor,
 /area/station/devzone)
 "gF" = (
 /obj/machinery/teleport/portal_ring,
@@ -698,6 +696,10 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
+"mI" = (
+/obj/machinery/manufacturer/science,
+/turf/simulated/floor,
+/area/station/devzone)
 "mQ" = (
 /obj/disposalpipe/segment/mail/bent/west,
 /turf/simulated/floor/plating/jen,
@@ -922,6 +924,10 @@
 "pO" = (
 /turf/unsimulated/floor/engine,
 /area/station/devzone)
+"pQ" = (
+/obj/storage/crate/freezer/organs,
+/turf/simulated/floor/caution,
+/area/station/devzone)
 "pR" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 5
@@ -945,6 +951,10 @@
 /obj/item/cloner_upgrade,
 /obj/item/grinder_upgrade,
 /turf/simulated/floor/blue/checker,
+/area/station/devzone)
+"qd" = (
+/obj/machinery/manufacturer/hangar,
+/turf/simulated/floor,
 /area/station/devzone)
 "qg" = (
 /obj/forcefield/energyshield/perma,
@@ -1059,10 +1069,6 @@
 /obj/item/rocko,
 /obj/item/rcd/construction/chiefEngineer,
 /turf/unsimulated/floor/caution,
-/area/station/devzone)
-"sE" = (
-/obj/machinery/manufacturer/engineering,
-/turf/simulated/floor,
 /area/station/devzone)
 "sG" = (
 /obj/machinery/door/poddoor/pyro{
@@ -1234,6 +1240,10 @@
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/devzone)
+"wm" = (
+/obj/machinery/manufacturer/gas,
+/turf/simulated/floor,
+/area/station/devzone)
 "wn" = (
 /obj/landmark/start/job/captain,
 /turf/simulated/floor,
@@ -1273,7 +1283,8 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/caution,
+/obj/machinery/manufacturer/engineering,
+/turf/simulated/floor,
 /area/station/devzone)
 "xp" = (
 /obj/surgery_tray,
@@ -1566,7 +1577,7 @@
 /turf/simulated/floor,
 /area/station/devzone)
 "Bs" = (
-/obj/machinery/computer/announcement/station,
+/obj/machinery/computer/announcement/station/bridge,
 /turf/simulated/floor,
 /area/station/devzone)
 "Bw" = (
@@ -1666,6 +1677,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "Di" = (
@@ -2119,10 +2131,6 @@
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor,
 /area/station/devzone)
-"Lm" = (
-/obj/machinery/manufacturer/robotics,
-/turf/simulated/floor,
-/area/station/devzone)
 "Ln" = (
 /obj/disposalpipe/switch_junction/left/east{
 	mail_tag = "medbay";
@@ -2436,7 +2444,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/reagent_dispensers/fueltank,
+/obj/machinery/manufacturer/robotics,
 /turf/simulated/floor,
 /area/station/devzone)
 "Ql" = (
@@ -2871,13 +2879,6 @@
 	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/devzone)
-"Xo" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/manufacturer/general,
-/turf/simulated/floor,
-/area/station/devzone)
 "Xx" = (
 /obj/forcefield/energyshield/perma{
 	dir = 6
@@ -2973,6 +2974,10 @@
 	name = "Exhaust Vent"
 	},
 /turf/simulated/floor/engine/vacuum,
+/area/station/devzone)
+"YO" = (
+/obj/machinery/manufacturer/personnel,
+/turf/simulated/floor,
 /area/station/devzone)
 "YU" = (
 /obj/machinery/conveyor/WE{
@@ -3690,7 +3695,7 @@ zT
 Yx
 Yx
 ng
-ng
+pQ
 Kr
 ng
 ng
@@ -3974,7 +3979,7 @@ hL
 Cn
 Dh
 PX
-Xo
+Cv
 xi
 ng
 nG
@@ -4017,9 +4022,9 @@ Hk
 Hk
 Hk
 GS
+fs
 Yx
-sE
-ng
+wm
 ng
 DG
 Fg
@@ -4061,9 +4066,9 @@ Hk
 Hk
 Hk
 AA
+mI
 Yx
 zn
-ng
 ng
 nF
 Yx
@@ -4105,9 +4110,9 @@ Es
 iA
 Es
 hr
+YO
 Yx
-fs
-ng
+GZ
 ng
 UT
 Yx
@@ -4150,8 +4155,8 @@ Es
 Es
 Es
 LM
-GZ
-ng
+Yx
+qd
 ng
 Vl
 oL
@@ -4194,8 +4199,8 @@ lH
 Es
 Ea
 Xk
-Lm
-ng
+Yx
+gk
 ng
 Hy
 Yx

@@ -8,7 +8,7 @@
 		return
 
 	src.opt_data = null
-	if (src.signal_program(1, list("command" = DWAINE_COMMAND_TSPAWN, "passusr" = TRUE, "path" = "/bin/getopt", "args" = "ht: [initparams]")) == ESIG_NOTARGET)
+	if (src.signal_program(1, list("command" = DWAINE::SYSCALL::TSPAWN, "passusr" = TRUE, "path" = "/bin/getopt", "args" = "ht: [initparams]")) == DWAINE::ERR::SIG::NOTARGET)
 		src.message_user("getopt: command not found.")
 		mainframe_prog_exit
 		return
@@ -55,23 +55,23 @@
 
 /datum/computer/file/mainframe_program/utility/date/receive_progsignal(sendid, list/data, datum/computer/file/file)
 	if (..())
-		return ESIG_GENERIC
+		return DWAINE::ERR::SIG::GENERIC
 
 	switch (data["command"])
-		if (DWAINE_COMMAND_REPLY)
+		if (DWAINE::SYSCALL::REPLY)
 			if (data["sender_tag"] == "getopt")
 				src.opt_data = data["data"]
-				return ESIG_USR4
+				return DWAINE::ERR::SIG::USR4
 			else
-				return ESIG_GENERIC
+				return DWAINE::ERR::SIG::GENERIC
 
-		if (DWAINE_COMMAND_MSG_TERM)
+		if (DWAINE::SYSCALL::MSG_TERM)
 			src.message_user(data["data"])
 
 		else
-			return ESIG_GENERIC
+			return DWAINE::ERR::SIG::GENERIC
 
-	return ESIG_SUCCESS
+	return DWAINE::ERR::SIG::SUCCESS
 
 /datum/computer/file/mainframe_program/utility/date/proc/usage()
 	src.message_user("Date and time utility. Without parameters, outputs current Spacetime Stamp.")
@@ -80,9 +80,9 @@
 	src.message_user("[src.name] \[-t FORMAT\]")
 
 /datum/computer/file/mainframe_program/utility/date/proc/message_reply_and_user(message)
-	var/list/data = list("command" = DWAINE_COMMAND_REPLY, "data" = message, "sender_tag" = "date")
+	var/list/data = list("command" = DWAINE::SYSCALL::REPLY, "data" = message, "sender_tag" = "date")
 	if (src.useracc)
 		data["term"] = src.useracc.user_id
 
-	if (src.signal_program(src.parent_task.progid, data) != ESIG_USR4)
+	if (src.signal_program(src.parent_task.progid, data) != DWAINE::ERR::SIG::USR4)
 		src.message_user(message)
