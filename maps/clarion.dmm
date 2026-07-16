@@ -18477,6 +18477,7 @@
 	name = "Autopsy Table"
 	},
 /obj/machinery/drainage,
+/obj/random_item_spawner/organs/bloody,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "ikD" = (
@@ -18753,25 +18754,7 @@
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/storage/crate/freezer{
-	name = "Freezer - Spare Parts"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
-	desc = "Gross.";
-	name = "old kidney"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/organ/heart{
-	desc = "A human heart, grody. How long has it been in that freezer?";
-	name = "funky ol' heart"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/obj/storage/crate/freezer/organs,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "ith" = (

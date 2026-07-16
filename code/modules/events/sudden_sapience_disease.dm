@@ -12,7 +12,8 @@
 			var/turf/monkearea = get_turf(monke)
 			if (istype(monkearea.loc, /area/station/medical/dome) || istype(monke, /mob/living/carbon/human/npc/monkey/angry) || monke.mind?.current.client)
 				continue // remove monkey pen apes so you don't get one of those 95% of the time
-
+			else if (istypes(monke, src.antag_npcs) && istype(ticker.mode, /datum/game_mode/extended))
+				continue
 			if (isalive(monke) && get_z(monke) == Z_LEVEL_STATION)
 				found_npcs += monke
 

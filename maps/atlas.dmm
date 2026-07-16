@@ -1873,6 +1873,7 @@
 	pixel_y = 32
 	},
 /obj/machinery/drainage,
+/obj/random_item_spawner/organs/bloody,
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "ajq" = (
@@ -19649,6 +19650,7 @@
 	dir = 8
 	},
 /obj/machinery/light_switch/directional/south,
+/obj/storage/crate/freezer/organs,
 /turf/simulated/floor/darkblue,
 /area/station/medical/morgue)
 "sVU" = (
