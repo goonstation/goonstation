@@ -1207,12 +1207,6 @@
 /obj/machinery/light_switch/directional/south,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
-"afj" = (
-/obj/item/reagent_containers/food/snacks/pizzaslice/standard/meatball{
-	doants = 0
-	},
-/turf/simulated/floor/stairs/dark/wide,
-/area/station/medical/morgue)
 "afl" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -1321,7 +1315,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/storage/cart/mechcart,
+/obj/storage/cart/mechcart/tools,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "afW" = (
@@ -1879,6 +1873,7 @@
 	pixel_y = 32
 	},
 /obj/machinery/drainage,
+/obj/random_item_spawner/organs/bloody,
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "ajq" = (
@@ -7419,16 +7414,6 @@
 /obj/machinery/r_door_control/podbay/mining,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/mining/staff_room)
-"aWm" = (
-/obj/stool/chair/office/blue{
-	dir = 4
-	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 8
-	},
-/obj/machinery/light_switch/directional/south,
-/turf/simulated/floor/darkblue,
-/area/station/medical/morgue)
 "aWo" = (
 /obj/shrub,
 /obj/machinery/alarm/directional/east,
@@ -16430,6 +16415,15 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
+"nAZ" = (
+/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/lightyellow,
+/area/station/engine/gas)
 "nBy" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -19179,6 +19173,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
+"snr" = (
+/obj/machinery/portable_atmospherics/canister/toxins,
+/turf/simulated/floor/lightyellow,
+/area/station/engine/gas)
 "sok" = (
 /turf/simulated/floor/red/redblackchecker,
 /area/station/engine/core)
@@ -19647,13 +19645,14 @@
 	dir = 8
 	},
 /area/station/hallway/primary/north)
-"sUO" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
-/obj/machinery/camera/directional/east{
-	pixel_y = 10
+"sUU" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
 	},
-/turf/simulated/floor/orange,
-/area/station/engine/gas)
+/obj/machinery/light_switch/directional/south,
+/obj/storage/crate/freezer/organs,
+/turf/simulated/floor/darkblue,
+/area/station/medical/morgue)
 "sVU" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -20189,6 +20188,15 @@
 	dir = 8
 	},
 /area/station/ranch)
+"tDM" = (
+/obj/stool/chair/office/blue{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/turf/simulated/floor/darkblue,
+/area/station/medical/morgue)
 "tEj" = (
 /obj/storage/secure/closet/engineering/mechanic,
 /turf/simulated/floor/yellow/side{
@@ -22045,15 +22053,6 @@
 /obj/displaycase/captain,
 /turf/simulated/floor/blue,
 /area/station/bridge/captain)
-"wmz" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/orange,
-/area/station/engine/gas)
 "wnp" = (
 /obj/machinery/firealarm/directional/north,
 /obj/cable{
@@ -22759,10 +22758,6 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/engine,
 /area/station/engine/power)
-"xxu" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
-/turf/simulated/floor/orange,
-/area/station/engine/gas)
 "xxF" = (
 /obj/decal/poster/wallsign/stencil/left/n{
 	pixel_y = 19
@@ -23238,6 +23233,13 @@
 	},
 /turf/simulated/floor/auto/grass,
 /area/station/crew_quarters/kitchen)
+"yhR" = (
+/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/camera/directional/east{
+	pixel_y = 10
+	},
+/turf/simulated/floor/lightyellow,
+/area/station/engine/gas)
 "yjT" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/grass/leafy,
@@ -60521,8 +60523,8 @@ afn
 ajZ
 ajb
 opg
-wmz
-xxu
+nAZ
+snr
 wgo
 dPR
 dPR
@@ -60823,8 +60825,8 @@ afn
 ajZ
 mou
 opg
-sUO
-xxu
+yhR
+snr
 wGd
 frG
 frG
@@ -71424,7 +71426,7 @@ aBx
 acX
 aGV
 ajm
-afj
+afW
 adr
 adm
 aaa
@@ -72934,8 +72936,8 @@ oUl
 aWL
 aKm
 ahp
-aWm
-aGV
+tDM
+sUU
 acZ
 aaa
 aaa

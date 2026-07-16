@@ -229,7 +229,9 @@ TYPEINFO(/mob/new_player)
 			else if(istype(ticker.mode, /datum/game_mode/battle_royale))
 				var/datum/game_mode/battle_royale/battlemode = ticker.mode
 				if (current_state < GAME_STATE_FINISHED)
-					battlemode.battlersleft_hud.add_client(character.client)
+					var/datum/player/player = make_player(character.key, character.client)
+					if (!player?.tutorial)
+						battlemode.battlersleft_hud.add_client(character.client)
 				if(ticker.round_elapsed_ticks > 3000) // no new people after 5 minutes
 					boutput(character.mind.current,"<h3 class='notice'>You've arrived on a station with a battle royale in progress! Feel free to spectate!</h3>")
 					character.ghostize()
@@ -401,6 +403,8 @@ TYPEINFO(/mob/new_player)
 		var/mob/living/silicon/S = latejoin.find_parent_of_type(/mob/living/silicon)
 		if (!S)
 			return
+
+		src.spawning = 1
 
 		latejoin.activated = TRUE
 		latejoin.name_prefix("activated")
