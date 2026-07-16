@@ -19329,6 +19329,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/storage/crate/freezer/organs,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "iMJ" = (
@@ -41918,6 +41919,10 @@
 	pixel_x = 10
 	},
 /obj/item/device/radio/intercom/medical,
+/obj/random_item_spawner/organs/bloody,
+/obj/machinery/optable{
+	name = "Autopsy Table"
+	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "sYT" = (

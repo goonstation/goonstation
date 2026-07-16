@@ -1983,6 +1983,10 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 		src.powered_overlay = image('icons/obj/items/mining.dmi', "ph-glow")
 		..()
 
+TYPEINFO(/obj/item/mining_tool/powered/shovel)
+	mats = list("metal_dense" = 2,
+				"conductive" = 5)
+
 /obj/item/mining_tool/powered/shovel
 	name = "power shovel"
 	desc = "An energized mining tool that can be used to dig holes in the sand."

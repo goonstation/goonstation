@@ -1,4 +1,111 @@
 
+(t)wed jul 15 26
+(u)ANNmagedon
+(p)27201
+(e)🗺|A-Mapping
+(+)Standardized Clairon's mech-lab's engineering cart.
+(u)ANNmagedon
+(p)27196
+(e)🗺|A-Mapping
+(+)Fixed Oshan lacking the standard tools & breach engineering carts.
+(u)JORJ949
+(p)27121
+(e)🆕🧛📦|C-Feature, A-Gamemodes, A-Game-Objects
+(*)Clown Traitors can now purchase a "clownspider implanter", causing them to explode into several clownspiders on death
+(u)cringe
+(p)27142
+(e)🆕🎨💨|C-Feature, C-Sprites, A-Atmospherics
+(*)New gates in the HPD, check em out. Descriptions in minor changes.
+(+)Normal gates open above the opening value and close below the closing value. When inverted, they open below the opening value and close above the closing value.
+(+)The thermostatic gate works on temperature.
+(+)The pressure relief gate works on pressure.
+(u)JORJ949
+(p)27180
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Signal jammers can now be used in assemblies. Note that signal jammers block remote signaller signals, so you cannot disable a signal jammer via remote signaller.
+(u)LeahTheTech
+(+)Receiving a message from a partner station now plays the default announcement sound.
+(u)JORJ949
+(p)27172
+(e)🪲💡|C-Bug, A-Station-Systems
+(+)Syndicate hideout chutes (both entrance and exit) now always repressurize as if in a normal atmosphere, even if there is no atmosphere around them.
+(u)JORJ949
+(p)27136
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)You can now emag pulse rifles to turn them into pullse rifles.
+(t)tue jul 14 26
+(u)ANNmagedon.
+(p)27114
+(e)|
+(+)Added the new history shell builtin to dwaine! type "man history" to find out more.
+(u)EmeraldCrow
+(p)27176
+(e)🎨|C-Sprites
+(+)Added two new figurines to the game for Vi The Silly and Erikkainn: go gambling today!
+(t)mon jul 13 26
+(u)LorrMaster
+(p)27175
+(e)🧱💪|A-Materials, A-Traits
+(+)Artisan trait is less likely to choose synthrubber materials.
+(u)ANNmagedon
+(p)27161
+(e)🎨|C-Sprites
+(+)Due to complaints from low perception crew mates, the ship component fabricator has been painted.
+(u)Calphrick
+(p)27149
+(e)💅🎩🧑‍✈️|C-QoL, A-Clothing, A-Command
+(+)The Head of Personnel now comes to work with their jacket already on.
+(u)bamlord
+(p)27105
+(e)🔄📦|C-Rework, A-Game-Objects
+(*)Stimpacks can now be used on other people/critters.
+(t)sun jul 12 26
+(u)glowbold
+(+)Chaplain headsets have medical radio access.
+(u)JORJ949
+(p)26981
+(e)🆕🎨⚖⏰🐣|C-Feature, C-Sprites, C-Balance, A-Status-Effects, A-Respawning
+(*)You can now select both standard borg arms in character setup, however they no longer break cuffs.
+(*)Sturdy (1 reinforcement) cyborg arms can now be attached to humans and still break cuffs.
+(u)Cheekybrdy
+(p)26764
+(e)⚖🐣|C-Balance, A-Respawning
+(+)Midround events can now happen at all population amounts (1 minimum down from 15).
+(u)Midnightradar
+(p)26499
+(e)⚗|A-Chemistry
+(*)Added a new drink/disease reagent.
+(*)Added a new disease, "Water Poisoning".
+(+)Triple water and soda water don't like to be in the same container anymore.
+(u)LorrMaster
+(p)26654
+(e)🆕🎨🧱|C-Feature, C-Sprites, A-Materials
+(*)Rods in the nuclear reactor now have different melting points depending on the rod's material.
+(u)glowbold
+(p)25847
+(e)🗺⚖🧫⛔💊🐣|A-Mapping, C-Balance, C-Experimental, C-Removal, A-Medical, A-Respawning
+(*)Enzymatic Reclaimers only accept organs and limbs.
+(*)Empty Clone Pods will slowly regenerate bio-matter to the minimum required to clone.
+(*)Clone Pods accept an IV bag, injects into the growing clone.
+(+)Click-dragging blood/synthmeat/etc from reagent containers to Clone Pods transfers the entire amount.
+(u)Chasu
+(p)27067
+(f)https://forum.ss13.co/showthread.php?tid=25277
+(e)|
+(*)The timer before the start of the round has been extended by two minutes
+(u)Calphrick
+(p)26837
+(e)⚖🏅🛠️|C-Balance, A-Medal, A-Engineering
+(+)Reduced the credit requirement of the Chief Engineer's "Earn at least x credits via the PTL" from one million to one hundred thousand.
+(u)LorrMaster
+(p)26966
+(e)💅🧱|C-QoL, A-Materials
+(*)Any material may now be turned into sheets using the sheet extruder.
+(u)ANNmagedon
+(p)27005
+(e)|
+(+)More hotspot equipment has been added to the engineering manufacturer on maps with hotspots.
+(+)Miners can now print powered shovels on all maps (for fossils).
 (t)sat jul 11 26
 (u)CalliopeSoups
 (p)27112

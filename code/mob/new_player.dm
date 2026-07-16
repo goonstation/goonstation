@@ -404,6 +404,8 @@ TYPEINFO(/mob/new_player)
 		if (!S)
 			return
 
+		src.spawning = 1
+
 		latejoin.activated = TRUE
 		latejoin.name_prefix("activated")
 		latejoin.UpdateName()
