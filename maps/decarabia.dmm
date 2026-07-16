@@ -9563,16 +9563,6 @@
 	},
 /turf/simulated/floor/blackwhite/whitegrime,
 /area/station/crew_quarters/catering)
-"cpm" = (
-/obj/decal/poster/wallsign/stencil/left/b{
-	pixel_x = 4
-	},
-/obj/decal/poster/wallsign/stencil/right/i{
-	pixel_x = 17
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/walp,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/cafeteria/the_eye_bar)
 "cpo" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
@@ -12269,12 +12259,6 @@
 	},
 /turf/simulated/floor/twotone/red,
 /area/station/security/checkpoint/west)
-"cTJ" = (
-/obj/decal/poster/wallsign/stencil/left/zero,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/walp,
-/obj/decal/poster/wallsign/stencil/right/seven,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/cafeteria/the_eye_bar)
 "cTK" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -16435,14 +16419,6 @@
 	level = -1
 	},
 /turf/simulated/floor/glassblock/transparent/purple,
-/area/station/crew_quarters/cafeteria/the_eye_bar)
-"dNT" = (
-/obj/decal/poster/wallsign/stencil/left/t,
-/obj/decal/poster/wallsign/stencil/right/e{
-	pixel_x = 13
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/walp,
-/turf/simulated/floor/plating,
 /area/station/crew_quarters/cafeteria/the_eye_bar)
 "dNY" = (
 /obj/decal/cleanable/fungus,
@@ -53504,16 +53480,6 @@
 	dir = 4
 	},
 /area/station/crew_quarters/mime)
-"mnt" = (
-/obj/decal/poster/wallsign/stencil/left/d{
-	pixel_x = 8
-	},
-/obj/decal/poster/wallsign/stencil/right/e{
-	pixel_x = 24
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/walp,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/cafeteria/the_eye_bar)
 "mnA" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -89703,16 +89669,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/south)
-"uKM" = (
-/obj/decal/poster/wallsign/stencil/left/c{
-	pixel_x = 7
-	},
-/obj/decal/poster/wallsign/stencil/right/a{
-	pixel_x = 22
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/walp,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/cafeteria/the_eye_bar)
 "uKS" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -94982,12 +94938,6 @@
 /obj/disposalpipe/segment/mail/bent/west,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
-"vZW" = (
-/obj/decal/poster/wallsign/stencil/left/s,
-/obj/decal/poster/wallsign/stencil/right/t,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/walp,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/cafeteria/the_eye_bar)
 "vZZ" = (
 /obj/decal/tile_edge/line/black{
 	dir = 9;
@@ -95745,11 +95695,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor/industrial,
 /area/station/maintenance/inner/se)
-"wiZ" = (
-/obj/decal/poster/wallsign/stencil/left/a,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/walp,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/cafeteria/the_eye_bar)
 "wje" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 4;
@@ -101494,16 +101439,6 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor,
 /area/station/hallway/primary/southeast)
-"xyv" = (
-/obj/decal/poster/wallsign/stencil/left/r{
-	pixel_x = 5
-	},
-/obj/decal/poster/wallsign/stencil/right/a{
-	pixel_x = 19
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/walp,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/cafeteria/the_eye_bar)
 "xyD" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -151299,7 +151234,7 @@ adM
 dMJ
 eZx
 foO
-mnt
+dSb
 nKj
 wNY
 cwn
@@ -151601,7 +151536,7 @@ nnV
 gUa
 eZx
 hDo
-uKM
+dSb
 rgu
 xJC
 inF
@@ -151903,7 +151838,7 @@ qVl
 nvH
 eZx
 mCy
-xyv
+dSb
 rgu
 xJC
 wOd
@@ -152205,7 +152140,7 @@ lnO
 ajK
 eZx
 raq
-cpm
+dSb
 rgu
 xJC
 inF
@@ -152507,7 +152442,7 @@ alU
 ajK
 eZx
 foO
-wiZ
+dSb
 qoQ
 xJC
 yeI
@@ -153111,7 +153046,7 @@ vSw
 ajK
 eZx
 yfP
-dNT
+dSb
 rgu
 xJC
 iek
@@ -153413,7 +153348,7 @@ fRB
 ukV
 eZx
 rlp
-vZW
+dSb
 rgu
 xJC
 inF
@@ -153715,7 +153650,7 @@ jje
 gUa
 eZx
 pAs
-cTJ
+dSb
 nKj
 wNY
 krr
