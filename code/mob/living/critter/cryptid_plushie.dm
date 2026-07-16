@@ -257,11 +257,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 			if(!our_plushie)
 				qdel(src)
 
-/datum/targetable/critter/ouija_speak/plushie
-	name = "Plushie Talk"
-	desc = "Communicate."
-	icon_state = "corruption"
-
 /datum/targetable/critter/cryptid_plushie/movement_override
 	name = "Override Sensors"
 	desc = "Be able to move a few steps in spite of whether you're being looked at."

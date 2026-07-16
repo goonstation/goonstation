@@ -2,6 +2,8 @@
 	name = "Ouija Speak"
 	desc = "Let the spirits decide what to say."
 	targeted = 0
+	icon = 'icons/mob/spell_buttons.dmi'
+	icon_state = "corruption"
 	var/words_min = 7
 	var/words_max = 10
 
