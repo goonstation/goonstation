@@ -256,12 +256,15 @@
 				R.traitorradio = src
 				if (src.lock_code_autogenerate == 1)
 					R.traitor_frequency = src.generate_code()
+					src.locked = TRUE
 				R.protected_radio = TRUE
-				src.name = R.name
-				src.icon = R.icon
-				src.icon_state = R.icon_state
 				src.origradio = R
 		return
+
+	lock(mob/user)
+		. = ..()
+		if(!.) return //Failed to lock, don't continue.
+		src.origradio?.ui_interact(user)
 
 	traitor
 		purchase_flags = UPLINK_TRAITOR

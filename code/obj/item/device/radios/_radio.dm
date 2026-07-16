@@ -154,6 +154,8 @@ TYPEINFO(/obj/item/device/radio)
 	src.ensure_speech_tree().process(message)
 
 /obj/item/device/radio/attackby(obj/item/W, mob/user)
+	if(src.traitorradio && !src.traitorradio.locked && !isscrewingtool(W))
+		return src.traitorradio.Attackby(W, user)
 	src.add_dialog(user)
 	if (!isscrewingtool(W))
 		return
@@ -175,6 +177,10 @@ TYPEINFO(/obj/item/device/radio)
 	src.toggle_speaker(FALSE)
 
 /obj/item/device/radio/ui_interact(mob/user, datum/tgui/ui)
+	if(src.traitorradio && !src.traitorradio.locked)
+		src.traitorradio.ui_interact(user)
+		return
+
 	if (src.bricked)
 		user.show_text(src.bricked_msg, "red")
 		return
@@ -185,10 +191,7 @@ TYPEINFO(/obj/item/device/radio)
 
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if (!ui)
-		if(src.traitorradio && !src.traitorradio.locked)
-			ui = new(user, src.traitorradio, "Uplink")
-		else
-			ui = new(user, src, "Radio")
+		ui = new(user, src, "Radio")
 		ui.open()
 
 /obj/item/device/radio/ui_state(mob/user)
