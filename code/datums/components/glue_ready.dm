@@ -81,6 +81,9 @@ TYPEINFO(/datum/component/glue_ready)
 		return FALSE
 	if(istype(glued_to, /obj/machinery/door) || istype(glued_to, /obj/mesh/grille))
 		return FALSE
+	if(istype(glued_to, /obj/item/disk/data))
+		boutput(user, SPAN_ALERT("Gluing on \the [thing_glued] will make \the [glued_to] unusable! You'd better not!")) /* Stop people gluing shit (read: signal jammers or fibre wires) to a disk or cartridge and inserting it into a pda/console*/
+		return FALSE
 	if(istype(glued_to, /mob/dead) || istype(glued_to, /mob/living/intangible) )
 		if(user)
 			boutput(user, SPAN_ALERT("Your hand with [thing_glued] passes straight through \the [glued_to]."))
