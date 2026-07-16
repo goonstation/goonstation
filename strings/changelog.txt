@@ -1,4 +1,9 @@
 
+(t)thu jul 16 26
+(u)glowbold
+(p)26772
+(e)🔄📄💊|C-Rework, A-UI, A-Medical
+(*)Hand-held Health Analyzers use a TGUI window, and update automatically as long as you're next to the patient.
 (t)wed jul 15 26
 (u)ANNmagedon
 (p)27201
