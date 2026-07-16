@@ -154,7 +154,7 @@ TYPEINFO(/obj/item/device/radio)
 	src.ensure_speech_tree().process(message)
 
 /obj/item/device/radio/attackby(obj/item/W, mob/user)
-	if(src.traitorradio && !src.traitorradio.locked && !isscrewingtool(W))
+	if(src.traitorradio && !src.traitorradio.locked && istype(W, /obj/item/uplink_telecrystal))
 		return src.traitorradio.Attackby(W, user)
 	src.add_dialog(user)
 	if (!isscrewingtool(W))
