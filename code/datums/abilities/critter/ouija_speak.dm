@@ -13,7 +13,7 @@
 		do
 			var/list/words = list("*REFRESH*") + get_ouija_word_list(src, words_min, words_max,
 				filename="plush_toy_words.txt", strings_category="plush_toy_words")
-			selected = tgui_input_list(usr, "Select a word:", src.name, words, allowIllegal=FALSE)
+			selected = tgui_input_list(usr, "Select a word:", src.name, words, allowIllegal=FALSE, timeout=10 SECONDS)
 		while(selected == "*REFRESH*")
 		if(!selected)
 			return
