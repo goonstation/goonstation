@@ -112,7 +112,7 @@ var/list/removed_jobs = list(
 
 	var/font_size = null
 
-	var/observer_dnr = FALSE //Autmatically set DNR when spawn as observer?
+	var/observer_dnr = FALSE //Automatically set DNR when spawn as observer?
 
 	///An associative list of slots to part IDs, see part_customization.dm
 	var/list/custom_parts = null
