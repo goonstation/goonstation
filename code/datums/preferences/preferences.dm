@@ -77,6 +77,7 @@ var/list/removed_jobs = list(
 	var/use_satchel //Automatically convert backpack to satchel?
 	var/preferred_uplink = PREFERRED_UPLINK_PDA //Which uplink to prioritise spawning for Traitors and Headrevs (spiefs are forced to have PDA uplinks)
 	var/id_starts_in_pda = FALSE //Try to automatically equip IDs in PDAs and PDAs in ID slots?
+	var/observer_dnr = FALSE //Autmatically set DNR when spawn as observer?
 
 	var/job_favorite = null
 	var/list/jobs_med_priority = list()
@@ -321,6 +322,7 @@ var/list/removed_jobs = list(
 			"useWasd" = src.use_wasd,
 			"useAzerty" = src.use_azerty,
 			"preferredMap" = src.preferred_map,
+			"observerDnr" = src.observer_dnr,
 			"traitsAvailable" = traits,
 			"traitsMax" = src.traitPreferences.max_traits,
 			"traitsPointsTotal" = src.traitPreferences.calcTotal(src.traitPreferences.traits_selected, src.custom_parts),
@@ -1050,6 +1052,11 @@ var/list/removed_jobs = list(
 
 			if ("update-preferredMap")
 				src.preferred_map = mapSwitcher.clientSelectMap(usr.client, pickable=TRUE)
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("update-observerDnr")
+				src.observer_dnr = !src.observer_dnr
 				src.profile_modified = TRUE
 				return TRUE
 

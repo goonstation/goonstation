@@ -743,7 +743,7 @@ TYPEINFO(/mob/new_player)
 			observer.client.loadResources()
 
 		respawn_controller.unsubscribeRespawnee(observer?.client?.ckey)
-
+		observer.mind.get_player()?.dnr = observer.client?.preferences?.observer_dnr
 		qdel(src)
 
 #ifdef TWITCH_BOT_ALLOWED

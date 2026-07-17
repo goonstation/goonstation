@@ -345,6 +345,16 @@ export const GameSettingsTab = () => {
             See help messages when you examine?
           </Button.Checkbox>
         </LabeledList.Item>
+        <LabeledList.Item label="Observer">
+          <Button.Checkbox
+            checked={data.observerDnr}
+            onClick={() => act('update-observerDnr')}
+            tooltip="If you spawn as observer, game will automatically flag you as DNR."
+            tooltipPosition="top"
+          >
+            Automatically set DNR when spawning as observer?
+          </Button.Checkbox>
+        </LabeledList.Item>
       </LabeledList>
     </Section>
   );
