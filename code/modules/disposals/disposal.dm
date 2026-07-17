@@ -56,7 +56,9 @@
 			if(ishuman(AM))
 				var/mob/living/carbon/human/H = AM
 				H.unlock_medal("It'sa me, Mario", 1)
-			LAGCHECK(LAG_HIGH)
+
+			if (!global.instant_pipe_network)
+				LAGCHECK(LAG_HIGH)
 
 
 	// start the movement process

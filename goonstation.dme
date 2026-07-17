@@ -2399,6 +2399,7 @@
 #include "code\modules\unit_tests\_map_correctness\area_contents_check\security\armoury.dm"
 #include "code\modules\unit_tests\_map_correctness\pipe_networks\_helpers.dm"
 #include "code\modules\unit_tests\_map_correctness\pipe_networks\disposal_chutes.dm"
+#include "code\modules\unit_tests\_map_correctness\pipe_networks\mail_chutes.dm"
 #include "code\modules\vending\jobclothing.dm"
 #include "code\modules\vending\vending.dm"
 #include "code\modules\vpn_bonk\vpn_bonk.dm"
