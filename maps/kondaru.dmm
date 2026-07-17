@@ -34965,7 +34965,7 @@
 	opacity = 0
 	},
 /turf/simulated/floor/engine/vacuum,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "iiL" = (
 /obj/storage/secure/closet/security/equipment,
 /obj/machinery/power/apc/autoname_east,

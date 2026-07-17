@@ -62876,6 +62876,13 @@
 /obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
+"nVm" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/station/engine/core/thermoelectric)
 "nVR" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
@@ -69891,7 +69898,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "tFV" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -107525,7 +107532,7 @@ big
 big
 vDV
 bgQ
-aaB
+nVm
 aaB
 bgQ
 btf
