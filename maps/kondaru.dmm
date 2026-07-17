@@ -31981,6 +31981,7 @@
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "gid" = (
+/obj/machinery/disposal/kitchen/brig,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
@@ -35112,6 +35113,7 @@
 /area/station/science/chemistry)
 "ipk" = (
 /obj/disposalpipe/segment/bent/east,
+/obj/storage/crate/freezer/organs,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "ipJ" = (
@@ -55900,6 +55902,14 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/radio/news_office)
+"wKz" = (
+/obj/machinery/conveyor/SN{
+	id = "garbage";
+	operating = 1
+	},
+/obj/landmark/disposals_endpoint,
+/turf/simulated/floor/black/grime,
+/area/station/maintenance/disposal)
 "wKO" = (
 /obj/railing/orange/reinforced,
 /obj/cable{
@@ -93230,7 +93240,7 @@ rhx
 tmW
 qVn
 tmW
-rhx
+wKz
 gQC
 axJ
 nco

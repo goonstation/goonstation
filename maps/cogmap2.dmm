@@ -9257,6 +9257,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "aDz" = (
+/obj/machinery/disposal/kitchen/brig,
 /obj/machinery/light,
 /obj/disposalpipe/trunk/food{
 	dir = 4
@@ -9615,6 +9616,7 @@
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "aEI" = (
+/obj/machinery/disposal/kitchen/brig,
 /obj/disposalpipe/trunk/food{
 	dir = 1
 	},
@@ -38826,6 +38828,7 @@
 	},
 /area/station/science/lobby)
 "cxB" = (
+/obj/machinery/disposal/sci/test_chamber,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
@@ -45539,6 +45542,7 @@
 /turf/simulated/floor/blue/side,
 /area/station/medical/medbay/surgery/storage)
 "cWA" = (
+/obj/machinery/disposal/sci/test_chamber,
 /obj/item/storage/wall/random,
 /obj/disposalpipe/trunk/transport{
 	dir = 8
@@ -48727,6 +48731,7 @@
 /turf/simulated/floor,
 /area/research_outpost)
 "diV" = (
+/obj/machinery/disposal/sci/test_chamber,
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
@@ -52491,6 +52496,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "fJN" = (
+/obj/machinery/disposal/kitchen/cafeteria,
 /obj/machinery/light_switch/directional/east{
 	pixel_y = 4
 	},
@@ -56295,6 +56301,10 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/evidence)
+"iJr" = (
+/obj/storage/crate/freezer/organs,
+/turf/simulated/floor/sanitary/blue,
+/area/station/medical/morgue)
 "iJy" = (
 /obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
@@ -59246,6 +59256,7 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/lobby)
 "kXx" = (
+/obj/machinery/disposal/sci/monkey_dome,
 /obj/disposalpipe/trunk/transport,
 /turf/simulated/floor/greenwhite,
 /area/station/medical/research)
@@ -62876,13 +62887,6 @@
 /obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
-"nVm" = (
-/obj/lattice{
-	dir = 1;
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/area/station/engine/core/thermoelectric)
 "nVR" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
@@ -64816,6 +64820,7 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
+/obj/landmark/disposals_endpoint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "pFl" = (
@@ -107532,7 +107537,7 @@ big
 big
 vDV
 bgQ
-nVm
+aaB
 aaB
 bgQ
 btf
@@ -113344,7 +113349,7 @@ gOd
 qum
 kVf
 isw
-gOd
+iJr
 cIi
 cyy
 cuW

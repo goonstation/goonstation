@@ -8614,6 +8614,7 @@
 	dir = 8
 	},
 /obj/machinery/light_switch/directional/south,
+/obj/storage/crate/freezer/organs,
 /turf/simulated/floor/darkblue,
 /area/station/medical/morgue)
 "cga" = (
@@ -10330,6 +10331,16 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/edge,
 /area/station/security/hos)
+"eRz" = (
+/obj/machinery/conveyor/WE{
+	id = "trash";
+	name = "cargo belt - east";
+	operating = 1;
+	move_lag = 15
+	},
+/obj/landmark/disposals_endpoint,
+/turf/simulated/floor/plating,
+/area/station/janitor/office)
 "eSH" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 1
@@ -80778,7 +80789,7 @@ boC
 sSu
 ayi
 aEZ
-xGP
+eRz
 hPj
 aZj
 aHM
