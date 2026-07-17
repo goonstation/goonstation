@@ -60,7 +60,7 @@ TYPEINFO(/mob/living/critter/wraith/demon_doll)
 		HH.limb_name = "claws"
 
 		HH = hands[2]
-		HH.limb = new /datum/limb/mouth/small
+		HH.limb = new /datum/limb/mouth/demon_doll
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.icon_state = "mouth"
 		HH.name = "mouth"
