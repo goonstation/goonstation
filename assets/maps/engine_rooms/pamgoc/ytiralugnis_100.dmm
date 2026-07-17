@@ -8,21 +8,21 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/engine/caution/west,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "ab" = (
 /obj/cable/orange{
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/engine/caution/west,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "ac" = (
 /obj/cable/orange{
 	icon_state = "1-8"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/engine/caution/north,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "ad" = (
 /obj/cable/orange{
 	icon_state = "2-4"
@@ -31,7 +31,7 @@
 /turf/simulated/floor/engine/caution/corner{
 	dir = 1
 	},
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "ae" = (
 /obj/cable/orange{
 	icon_state = "2-8"
@@ -41,39 +41,39 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/engine/caution/south,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "af" = (
 /obj/cable/orange{
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/engine/caution/north,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "ag" = (
 /obj/cable/orange{
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/engine/caution/south,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "ah" = (
 /obj/cable/orange{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "ai" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "aj" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "ak" = (
 /obj/item/gun/kinetic/antisingularity{
 	pixel_x = 16
@@ -85,7 +85,7 @@
 	name = "Singularity buster crate"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "al" = (
 /obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 4;
@@ -95,7 +95,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "am" = (
 /obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 8;
@@ -105,7 +105,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "an" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 8;
@@ -115,7 +115,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "ao" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 8;
@@ -125,7 +125,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "ap" = (
 /obj/machinery/atmospherics/binary/valve{
 	name = "outlet purge valve"
@@ -137,7 +137,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "aq" = (
 /obj/machinery/atmospherics/binary/valve{
 	name = "outlet purge valve"
@@ -146,7 +146,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "ar" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor{
 	dir = 8
@@ -156,7 +156,7 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/engine/caution/east,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "as" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/cable/orange{
@@ -167,7 +167,7 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/engine/caution/east,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "at" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/cable/orange{
@@ -175,7 +175,7 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/engine/caution/east,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "au" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/cable/orange{
@@ -185,7 +185,7 @@
 /turf/simulated/floor/engine/caution/corner{
 	dir = 8
 	},
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "av" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/cable/orange{
@@ -196,7 +196,7 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/engine/caution/west,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "aw" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/cable/orange{
@@ -204,7 +204,7 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/engine/caution/west,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "ax" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
@@ -225,7 +225,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "ay" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
@@ -239,7 +239,7 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/engine/caution/west,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "az" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
@@ -251,7 +251,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "aA" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0
@@ -263,7 +263,7 @@
 /turf/simulated/floor/engine/caution/corner{
 	dir = 4
 	},
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "aB" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 8
@@ -277,7 +277,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "aC" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 8
@@ -291,7 +291,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "aD" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
@@ -302,7 +302,7 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/engine/caution/east,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "aE" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
@@ -317,7 +317,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "aF" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
@@ -332,7 +332,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "aG" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
@@ -347,7 +347,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "aH" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
@@ -359,7 +359,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "aI" = (
 /obj/machinery/dispenser,
 /obj/cable{
@@ -369,7 +369,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "aJ" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 8;
@@ -387,26 +387,26 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/floor/plating/jen,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "aK" = (
 /obj/machinery/emitter,
 /obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/engine,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "aL" = (
 /obj/machinery/emitter{
 	dir = 4
 	},
 /obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/engine,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "aM" = (
 /obj/machinery/emitter{
 	dir = 8
 	},
 /obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/engine,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "aN" = (
 /obj/machinery/field_generator,
 /obj/machinery/power/data_terminal,
@@ -414,7 +414,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "aO" = (
 /obj/machinery/field_generator,
 /obj/machinery/power/data_terminal,
@@ -422,11 +422,11 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "aP" = (
 /obj/machinery/light,
 /turf/simulated/floor/engine,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "aQ" = (
 /obj/machinery/light/emergency{
 	dir = 4
@@ -435,21 +435,21 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "aS" = (
 /obj/machinery/light/small/floor,
 /obj/cable{
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "aT" = (
 /obj/machinery/light/small/floor,
 /obj/cable{
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "aU" = (
 /obj/machinery/light/small/floor,
 /obj/storage/closet/radiation,
@@ -457,13 +457,13 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "aV" = (
 /obj/machinery/light{
 	dir = 1
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "aW" = (
 /obj/machinery/power/data_terminal,
 /obj/cable/orange{
@@ -473,7 +473,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "aX" = (
 /obj/machinery/power/data_terminal,
 /obj/cable/orange{
@@ -483,7 +483,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "aY" = (
 /obj/machinery/power/data_terminal,
 /obj/cable/orange{
@@ -494,7 +494,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "aZ" = (
 /obj/machinery/the_singularitygen,
 /obj/machinery/power/data_terminal,
@@ -502,7 +502,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "ba" = (
 /obj/mapping_helper/access/engineering_engine,
 /obj/mapping_helper/firedoor_spawn,
@@ -517,32 +517,32 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/simulated/floor/plating/jen,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "bb" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/engine/caution/corner{
 	dir = 2
 	},
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "bc" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/engine/caution/north,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "bd" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/engine/caution/east,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "be" = (
 /obj/storage/closet/radiation,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 "bf" = (
 /turf/simulated/floor/engine,
-/area/station/engine/core/singularity)
-"RC" = (
+/area/station/engine/inner)
+"SA" = (
 /obj/machinery/light/emergency{
 	dir = 8
 	},
@@ -550,7 +550,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/engine/core/singularity)
+/area/station/engine/inner)
 
 (1,1,1) = {"
 aU
@@ -686,9 +686,9 @@ aj
 aU
 be
 ao
-RC
+SA
 ai
-ai
+SA
 ai
 al
 ai
