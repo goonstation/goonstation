@@ -1315,7 +1315,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/storage/cart/mechcart,
+/obj/storage/cart/mechcart/tools,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "afW" = (
@@ -1865,14 +1865,6 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/black,
-/area/station/medical/morgue)
-"ajn" = (
-/obj/machinery/optable,
-/obj/item/storage/wall/surgery{
-	pixel_y = 32
-	},
-/obj/machinery/drainage,
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "ajq" = (
@@ -8617,6 +8609,14 @@
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
+"cfK" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/obj/machinery/light_switch/directional/south,
+/obj/storage/crate/freezer/organs,
+/turf/simulated/floor/darkblue,
+/area/station/medical/morgue)
 "cga" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 5
@@ -16204,6 +16204,15 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
+"nkH" = (
+/obj/machinery/optable,
+/obj/item/storage/wall/surgery{
+	pixel_y = 32
+	},
+/obj/machinery/drainage,
+/obj/random_item_spawner/organs/bloody,
+/turf/simulated/floor/black,
+/area/station/medical/morgue)
 "nkI" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -18511,6 +18520,16 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/purple,
 /area/station/janitor/office)
+"rlC" = (
+/obj/machinery/conveyor/WE{
+	id = "trash";
+	name = "cargo belt - east";
+	operating = 1;
+	move_lag = 15
+	},
+/obj/landmark/disposals_endpoint,
+/turf/simulated/floor/plating,
+/area/station/janitor/office)
 "rlD" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/random,
@@ -19644,13 +19663,6 @@
 	dir = 8
 	},
 /area/station/hallway/primary/north)
-"sUU" = (
-/obj/decal/tile_edge/stripe/big{
-	dir = 8
-	},
-/obj/machinery/light_switch/directional/south,
-/turf/simulated/floor/darkblue,
-/area/station/medical/morgue)
 "sVU" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -72027,7 +72039,7 @@ cWb
 aBx
 aIY
 aGV
-ajn
+nkH
 afp
 aji
 acZ
@@ -72935,7 +72947,7 @@ aWL
 aKm
 ahp
 tDM
-sUU
+cfK
 acZ
 aaa
 aaa
@@ -80777,7 +80789,7 @@ boC
 sSu
 ayi
 aEZ
-xGP
+rlC
 hPj
 aZj
 aHM

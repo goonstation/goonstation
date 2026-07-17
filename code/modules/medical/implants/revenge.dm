@@ -158,3 +158,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		SPAWN(1)
 			src.owner?.gib()
 		. = ..()
+
+/obj/item/implant/revenge/wasp/clownspider
+	name = "funny implant"
+	big_message = " squeaks a little."
+	small_message = "emits a loud honk, uh oh!"
+	wasp_type = /mob/living/critter/spider/clown
+	faction = FACTION_CLOWN

@@ -6,6 +6,19 @@
 	_max_health = 250
 	SYNDICATE_STEALTH_DESCRIPTION("You can't see the bottom.", null)
 
+/obj/machinery/disposal/extradimensional/absorb_gas(var/datum/gas_mixture/mix)
+	if(mix)
+		return ..(mix)
+
+	//Always absorb atmosphere at the standard rate
+	var/datum/gas_mixture/air_mix = new
+	air_mix.oxygen = MOLES_O2STANDARD
+	air_mix.nitrogen = MOLES_O2STANDARD
+	air_mix.fuel_burnt = 0
+	air_mix.temperature = T20C
+	. = ..(air_mix)
+	qdel(air_mix)
+
 /obj/machinery/disposal/extradimensional/flush()
 	src.flushing = 1
 	FLICK("[icon_style]-flush", src)

@@ -25715,29 +25715,6 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/courtroom)
-"cnY" = (
-/obj/storage/crate/freezer{
-	name = "Freezer - Spare Parts"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
-	desc = "Gross.";
-	name = "old kidney"
-	},
-/obj/item/organ/eye,
-/obj/item/organ/heart{
-	desc = "A human heart, grody. How long has it been in that freezer?";
-	name = "funky ol' heart"
-	},
-/obj/disposalpipe/segment/bent/east,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
 "coa" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -32003,6 +31980,15 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/bridge)
+"gid" = (
+/obj/machinery/disposal/kitchen/brig,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/disposalpipe/trunk/east,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "gih" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
@@ -35125,6 +35111,11 @@
 	dir = 8
 	},
 /area/station/science/chemistry)
+"ipk" = (
+/obj/disposalpipe/segment/bent/east,
+/obj/storage/crate/freezer/organs,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "ipJ" = (
 /obj/machinery/recharge_station,
 /obj/machinery/light/small{
@@ -41706,15 +41697,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/gas)
-"mLt" = (
-/obj/machinery/disposal,
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/obj/disposalpipe/trunk/east,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/catering)
 "mLH" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 8
@@ -44037,13 +44019,6 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
-"oyo" = (
-/obj/machinery/optable{
-	name = "Autopsy Table"
-	},
-/obj/machinery/drainage,
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
 "oyu" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1
@@ -44430,6 +44405,14 @@
 /obj/landmark/pest,
 /turf/simulated/floor/grime,
 /area/station/routing/depot)
+"oOk" = (
+/obj/machinery/optable{
+	name = "Autopsy Table"
+	},
+/obj/machinery/drainage,
+/obj/random_item_spawner/organs/bloody,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "oOn" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Foundry"
@@ -56787,6 +56770,14 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"xki" = (
+/obj/machinery/conveyor/SN{
+	id = "garbage";
+	operating = 1
+	},
+/obj/landmark/disposals_endpoint,
+/turf/simulated/floor/black/grime,
+/area/station/maintenance/disposal)
 "xkI" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/wood,
@@ -92966,7 +92957,7 @@ bcR
 boT
 btV
 oGg
-cnY
+ipk
 baC
 bbC
 bGb
@@ -93249,7 +93240,7 @@ rhx
 tmW
 qVn
 tmW
-rhx
+xki
 gQC
 axJ
 nco
@@ -93271,7 +93262,7 @@ iCG
 aZn
 baD
 bbD
-oyo
+oOk
 fiq
 kne
 bfZ
@@ -112903,7 +112894,7 @@ maV
 nYS
 nbR
 sxr
-mLt
+gid
 ueg
 qtY
 rck

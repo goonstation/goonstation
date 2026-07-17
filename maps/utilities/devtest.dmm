@@ -924,6 +924,10 @@
 "pO" = (
 /turf/unsimulated/floor/engine,
 /area/station/devzone)
+"pQ" = (
+/obj/storage/crate/freezer/organs,
+/turf/simulated/floor/caution,
+/area/station/devzone)
 "pR" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 5
@@ -3691,7 +3695,7 @@ zT
 Yx
 Yx
 ng
-ng
+pQ
 Kr
 ng
 ng

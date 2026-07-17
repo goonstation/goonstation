@@ -267,6 +267,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 						R["criminal"] = SECURITY::ARREST::STATE::RELEASED
 						H.update_arrest_icon()
 
+			if (global.instant_pipe_network)
+				src.process()
+
 	// timed process
 	// charge the gas reservoir and perform flush if ready
 	process()
@@ -304,7 +307,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 
 		flushing = 1
 
-		closeup()
+		if (!global.instant_pipe_network)
+			closeup()
+
 		var/obj/disposalholder/H = new /obj/disposalholder	// virtual holder object which actually
 																// travels through the pipes.
 		H.mail_tag = src.mail_tag // apply mail_tag
@@ -313,9 +318,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 
 		ZERO_GASES(air_contents)
 
-		sleep(1 SECOND)
-		playsound(src, 'sound/machines/disposalflush.ogg', 50, FALSE, 0)
-		sleep(0.5 SECONDS) // wait for animation to finish
+		if (!global.instant_pipe_network)
+			sleep(1 SECOND)
+			playsound(src, 'sound/machines/disposalflush.ogg', 50, FALSE, 0)
+			sleep(0.5 SECONDS) // wait for animation to finish
 
 
 		H.start(src) // start the holder processing movement
