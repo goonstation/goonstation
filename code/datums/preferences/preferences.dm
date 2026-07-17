@@ -77,7 +77,6 @@ var/list/removed_jobs = list(
 	var/use_satchel //Automatically convert backpack to satchel?
 	var/preferred_uplink = PREFERRED_UPLINK_PDA //Which uplink to prioritise spawning for Traitors and Headrevs (spiefs are forced to have PDA uplinks)
 	var/id_starts_in_pda = FALSE //Try to automatically equip IDs in PDAs and PDAs in ID slots?
-	var/observer_dnr = FALSE //Autmatically set DNR when spawn as observer?
 
 	var/job_favorite = null
 	var/list/jobs_med_priority = list()
@@ -112,6 +111,8 @@ var/list/removed_jobs = list(
 	var/preferred_map = ""
 
 	var/font_size = null
+
+	var/observer_dnr = FALSE //Autmatically set DNR when spawn as observer?
 
 	///An associative list of slots to part IDs, see part_customization.dm
 	var/list/custom_parts = null
