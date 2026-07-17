@@ -540,41 +540,40 @@
 		)
 
 	ui_static_data(mob/user)
-		var/list/categorised_items = list()
-		categorised_items["General"] = src.items_general
-		categorised_items["Job-Specific"] = src.items_job
-		categorised_items["Objective"] = src.items_objective
-		categorised_items["Telecrystals"] = src.items_telecrystal
-		categorised_items["Ammunition"] = src.items_ammo
-		var/list/categorised_data = list()
-		for(var/category in categorised_items)
-			categorised_data[category] = src.get_category_data(categorised_items[category])
 		. = list(
 			"title" = "Syndicate Uplink",
 			"theme" = "syndicate",
 			"currency_name" = global.syndicate_currency,
-			"item_entries" = categorised_data,
+			"item_entries" = src.get_categorised_item_data(),
 			"vr" = src.is_VR_uplink,
 			"can_lock" = !isnull(src.lock_code) || istype(src, /obj/item/uplink/integrated/radio), //radio uplink codes are on their associated radio
 			"can_self_destruct" = src.can_selfdestruct,
 		)
 
-	proc/get_category_data(var/buylist_entry_list)
-		var/list/category_data = list()
-		for(var/buylist_name as anything in buylist_entry_list)
-			var/datum/syndicate_buylist/uplink_item = buylist_entry_list[buylist_name]
-			var/icon = getItemIcon(uplink_item.items[1])
-			category_data += list(list(
-				"name" = uplink_item.name,
-				"desc" = uplink_item.desc,
-				"cost" = uplink_item.cost,
-				"icon" = icon,
-				"vr_allowed"= uplink_item.vr_allowed,
-				"ref" = ref(uplink_item),
-				"type" = uplink_item.type,
-				"purchase_limit" = uplink_item.max_buy,
-			))
-		return category_data
+	proc/get_categorised_item_data()
+		var/list/all_items = src.items_general + src.items_job + src.items_objective + src.items_telecrystal + src.items_ammo
+		var/list/categorised_data = list()
+		for(var/category in UPLINK.CATEGORY._get_namespace_constants())
+			categorised_data[category] = list()
+		for(var/buylist_name in all_items)
+			var/datum/syndicate_buylist/buylist_entry = all_items[buylist_name]
+			categorised_data[buylist_entry.get_category()] += src.get_item_data(buylist_entry)
+		for(var/category in categorised_data)
+			if(!length(categorised_data[category]))
+				categorised_data -= category
+		return categorised_data
+
+	proc/get_item_data(var/datum/syndicate_buylist/uplink_item)
+		return list(list(
+			"name" = uplink_item.name,
+			"desc" = uplink_item.desc,
+			"cost" = uplink_item.cost,
+			"icon" = getItemIcon(uplink_item.items[1]),
+			"vr_allowed"= uplink_item.vr_allowed,
+			"ref" = ref(uplink_item),
+			"type" = uplink_item.type,
+			"purchase_limit" = uplink_item.max_buy,
+		))
 
 	ui_act(action, list/params)
 		. = ..()
