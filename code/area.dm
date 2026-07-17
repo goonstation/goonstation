@@ -2922,6 +2922,7 @@ TYPEINFO(/area/station/engine/core/singularity/external)
 	name = "Singularity Core"
 	icon_state = "red"
 	requires_power = FALSE
+	sound_environment = 10
 
 /area/station/engine/eva
 	name = "Engineering EVA"
