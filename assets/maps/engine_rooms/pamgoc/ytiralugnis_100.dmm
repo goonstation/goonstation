@@ -61,7 +61,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "ai" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -85,7 +85,7 @@
 	name = "Singularity buster crate"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "al" = (
 /obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 4;
@@ -392,21 +392,21 @@
 /obj/machinery/emitter,
 /obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/engine,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "aL" = (
 /obj/machinery/emitter{
 	dir = 4
 	},
 /obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/engine,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "aM" = (
 /obj/machinery/emitter{
 	dir = 8
 	},
 /obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/engine,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "aN" = (
 /obj/machinery/field_generator,
 /obj/machinery/power/data_terminal,
@@ -414,7 +414,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "aO" = (
 /obj/machinery/field_generator,
 /obj/machinery/power/data_terminal,
@@ -422,11 +422,11 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "aP" = (
 /obj/machinery/light,
 /turf/simulated/floor/engine,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "aQ" = (
 /obj/machinery/light/emergency{
 	dir = 4
@@ -463,7 +463,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "aW" = (
 /obj/machinery/power/data_terminal,
 /obj/cable/orange{
@@ -473,7 +473,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "aX" = (
 /obj/machinery/power/data_terminal,
 /obj/cable/orange{
@@ -483,7 +483,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "aY" = (
 /obj/machinery/power/data_terminal,
 /obj/cable/orange{
@@ -502,7 +502,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "ba" = (
 /obj/mapping_helper/access/engineering_engine,
 /obj/mapping_helper/firedoor_spawn,
@@ -541,7 +541,7 @@
 /area/station/engine/core/singularity)
 "bf" = (
 /turf/simulated/floor/engine,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "RC" = (
 /obj/machinery/light/emergency{
 	dir = 8

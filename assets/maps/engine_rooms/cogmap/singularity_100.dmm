@@ -27,7 +27,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "fc" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -206,7 +206,7 @@
 /obj/machinery/emitter,
 /obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/engine,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "pO" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
@@ -226,7 +226,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "qO" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0
@@ -294,7 +294,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "AQ" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor{
 	dir = 4
@@ -318,7 +318,7 @@
 	},
 /obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/engine,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "De" = (
 /obj/mapping_helper/access/engineering_engine,
 /obj/mapping_helper/firedoor_spawn,
@@ -341,14 +341,14 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "GB" = (
 /obj/machinery/emitter{
 	dir = 4
 	},
 /obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/engine,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "Ig" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -358,7 +358,7 @@
 "JY" = (
 /obj/machinery/light,
 /turf/simulated/floor/engine,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "Ma" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
@@ -384,7 +384,7 @@
 /area/station/engine/core/singularity)
 "Mp" = (
 /turf/simulated/floor/engine,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "On" = (
 /obj/machinery/light/emergency{
 	dir = 4
@@ -405,13 +405,13 @@
 	name = "Singularity buster crate"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "Pw" = (
 /obj/cable/orange{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "PX" = (
 /obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 4;
@@ -454,7 +454,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "Tn" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
@@ -541,7 +541,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity)
 "ZF" = (
 /obj/cable/orange{
 	icon_state = "4-8"
