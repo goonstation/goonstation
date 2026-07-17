@@ -8768,6 +8768,16 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
+"aCr" = (
+/obj/shrub{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/brig,
+/turf/simulated/floor/grime,
+/area/station/security/main)
 "aCs" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
@@ -9247,9 +9257,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "aDz" = (
-/obj/machinery/disposal{
-	name = "Lay-Z Chef Prison Food Chute"
-	},
+/obj/machinery/disposal/kitchen/brig,
 /obj/machinery/light,
 /obj/disposalpipe/trunk/food{
 	dir = 4
@@ -9608,9 +9616,7 @@
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "aEI" = (
-/obj/machinery/disposal{
-	name = "Lay-Z Chef Prison Food Chute"
-	},
+/obj/machinery/disposal/kitchen/brig,
 /obj/disposalpipe/trunk/food{
 	dir = 1
 	},
@@ -28663,10 +28669,6 @@
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
-"bPH" = (
-/obj/disposalpipe/junction/right/west,
-/turf/simulated/floor/black,
-/area/station/hallway/primary/east)
 "bPI" = (
 /obj/machinery/light,
 /obj/disposalpipe/segment/ejection{
@@ -29232,14 +29234,6 @@
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/plating,
 /area/station/security/main)
-"bRq" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/disposalpipe/segment,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/security/main)
 "bRr" = (
 /obj/disposalpipe/junction/left/north,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -29726,50 +29720,6 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor,
-/area/station/security/main)
-"bSS" = (
-/obj/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/red/side{
-	dir = 4
-	},
-/area/station/security/main)
-"bST" = (
-/obj/item/device/radio/intercom/security,
-/obj/machinery/disposal,
-/obj/disposalpipe/trunk{
-	dir = 4
-	},
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/obj/decal/stripe_delivery,
-/turf/simulated/floor,
-/area/station/security/main)
-"bSU" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/shrub{
-	dir = 1
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/brig,
-/turf/simulated/floor/grime,
-/area/station/security/main)
-"bSV" = (
-/obj/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/obj/machinery/vending/coffee,
-/turf/simulated/floor/grime,
 /area/station/security/main)
 "bSW" = (
 /obj/machinery/disposal/brig{
@@ -38878,9 +38828,7 @@
 	},
 /area/station/science/lobby)
 "cxB" = (
-/obj/machinery/disposal{
-	name = "Test Chamber Chute"
-	},
+/obj/machinery/disposal/sci/test_chamber,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
@@ -45594,9 +45542,7 @@
 /turf/simulated/floor/blue/side,
 /area/station/medical/medbay/surgery/storage)
 "cWA" = (
-/obj/machinery/disposal{
-	name = "Test Chamber Chute"
-	},
+/obj/machinery/disposal/sci/test_chamber,
 /obj/item/storage/wall/random,
 /obj/disposalpipe/trunk/transport{
 	dir = 8
@@ -48785,9 +48731,7 @@
 /turf/simulated/floor,
 /area/research_outpost)
 "diV" = (
-/obj/machinery/disposal{
-	name = "Test Chamber Chute"
-	},
+/obj/machinery/disposal/sci/test_chamber,
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
@@ -52556,9 +52500,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "fJN" = (
-/obj/machinery/disposal{
-	name = "Lay-Z Chef Cafeteria Chute"
-	},
+/obj/machinery/disposal/kitchen/cafeteria,
 /obj/machinery/light_switch/directional/east{
 	pixel_y = 4
 	},
@@ -54865,6 +54807,13 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"hHB" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/main)
 "hHJ" = (
 /obj/stool/chair/dining/wood{
 	dir = 8
@@ -58247,6 +58196,12 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/locker)
+"kfd" = (
+/obj/disposalpipe/junction/middle/south,
+/turf/simulated/floor/red/side{
+	dir = 4
+	},
+/area/station/security/main)
 "kff" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -59301,9 +59256,7 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/lobby)
 "kXx" = (
-/obj/machinery/disposal{
-	name = "monkeydome chute"
-	},
+/obj/machinery/disposal/sci/monkey_dome,
 /obj/disposalpipe/trunk/transport,
 /turf/simulated/floor/greenwhite,
 /area/station/medical/research)
@@ -64858,6 +64811,18 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/bridge)
+"pDA" = (
+/obj/machinery/conveyor/NS{
+	move_lag = 30;
+	name = "cargo belt - south";
+	operating = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 4
+	},
+/obj/landmark/disposals_endpoint,
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "pFl" = (
 /obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/stairs{
@@ -65100,17 +65065,6 @@
 /obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/crematorium)
-"pNP" = (
-/obj/machinery/conveyor/NS{
-	move_lag = 30;
-	name = "cargo belt - south";
-	operating = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/disposal)
 "pOG" = (
 /obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 1;
@@ -73572,6 +73526,10 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/quartermaster/refinery)
+"xbI" = (
+/obj/machinery/vending/coffee,
+/turf/simulated/floor/grime,
+/area/station/security/main)
 "xcl" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/storage/closet/fire,
@@ -73671,6 +73629,20 @@
 /obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor/sanitary/blue,
 /area/station/medical/morgue)
+"xgT" = (
+/obj/item/device/radio/intercom/security,
+/obj/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/decal/stripe_delivery,
+/obj/machinery/disposal,
+/turf/simulated/floor,
+/area/station/security/main)
 "xgX" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/firedoor_spawn,
@@ -124513,7 +124485,7 @@ okO
 okO
 qxl
 tgU
-pNP
+pDA
 jdW
 xpe
 iJy
@@ -133252,7 +133224,7 @@ bMF
 bOg
 bBu
 bRo
-bSS
+kfd
 bUt
 rLS
 bXw
@@ -133554,7 +133526,7 @@ bMG
 bOh
 bBu
 bBo
-bBo
+bZN
 tTK
 bBo
 bXx
@@ -133856,7 +133828,7 @@ knV
 bOh
 bPF
 bBo
-bST
+xgT
 bUv
 bWd
 bXy
@@ -134158,7 +134130,7 @@ bMI
 bOi
 bPG
 bRp
-bSU
+aCr
 bUw
 bWe
 bXz
@@ -134458,9 +134430,9 @@ bJj
 bKV
 bMJ
 bOj
-bPH
-bRq
-bSV
+bOj
+hHB
+xbI
 bSX
 bWf
 bkt

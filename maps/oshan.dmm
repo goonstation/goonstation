@@ -23847,6 +23847,15 @@
 	},
 /turf/simulated/floor/caution/westeast,
 /area/station/mining/staff_room)
+"cMx" = (
+/obj/machinery/sink/slim{
+	desc = "A water-filled unit intended for hand-washing purposes.";
+	dir = 4;
+	pixel_x = -2
+	},
+/obj/storage/crate/freezer/organs,
+/turf/simulated/floor/sanitary,
+/area/station/medical/morgue)
 "cNh" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -24121,6 +24130,18 @@
 "dax" = (
 /turf/simulated/wall/auto/martian,
 /area/evilreaver/security)
+"daE" = (
+/obj/strip_door,
+/obj/machinery/conveyor/SN{
+	id = "garbage";
+	move_lag = 30;
+	operating = 1
+	},
+/obj/landmark/disposals_endpoint,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/maintenance/disposal)
 "dbp" = (
 /obj/item/raw_material/syreline,
 /obj/item/raw_material/syreline,
@@ -26313,6 +26334,22 @@
 	dir = 4
 	},
 /area/station/hallway/primary/east)
+"eKJ" = (
+/obj/machinery/optable{
+	name = "Autopsy Table"
+	},
+/obj/item/circular_saw{
+	pixel_x = 3;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/glass/bottle/formaldehyde,
+/obj/item/scalpel,
+/obj/machinery/drainage/big,
+/obj/item/reagent_containers/syringe,
+/obj/machinery/camera/directional/east,
+/obj/random_item_spawner/organs/bloody,
+/turf/simulated/floor/sanitary,
+/area/station/medical/morgue)
 "eKS" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -28879,15 +28916,6 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
-"gLv" = (
-/obj/machinery/sink/slim{
-	desc = "A water-filled unit intended for hand-washing purposes.";
-	dir = 4;
-	pixel_x = -2
-	},
-/obj/storage/crate/freezer/organs,
-/turf/simulated/floor/sanitary,
-/area/station/medical/morgue)
 "gLD" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/treatment2)
@@ -28929,22 +28957,6 @@
 	},
 /turf/simulated/floor,
 /area/shuttle/sea_elevator_room)
-"gNS" = (
-/obj/machinery/optable{
-	name = "Autopsy Table"
-	},
-/obj/item/circular_saw{
-	pixel_x = 3;
-	pixel_y = 12
-	},
-/obj/item/reagent_containers/glass/bottle/formaldehyde,
-/obj/item/scalpel,
-/obj/machinery/drainage/big,
-/obj/item/reagent_containers/syringe,
-/obj/machinery/camera/directional/east,
-/obj/random_item_spawner/organs/bloody,
-/turf/simulated/floor/sanitary,
-/area/station/medical/morgue)
 "gNY" = (
 /obj/machinery/status_display/market,
 /turf/simulated/wall/auto/supernorn,
@@ -41905,17 +41917,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
-"rzY" = (
-/obj/strip_door,
-/obj/machinery/conveyor/SN{
-	id = "garbage";
-	move_lag = 30;
-	operating = 1
-	},
-/turf/simulated/floor/shuttlebay{
-	name = "reinforced plating"
-	},
-/area/station/maintenance/disposal)
 "rAw" = (
 /obj/machinery/light/incandescent/warm,
 /obj/cable{
@@ -88163,7 +88164,7 @@ bRq
 bSy
 bTC
 bSy
-rzY
+daE
 bWz
 bWz
 sUx
@@ -96224,7 +96225,7 @@ ayL
 ana
 fgh
 ahG
-gLv
+cMx
 ajJ
 jBl
 alq
@@ -97128,7 +97129,7 @@ dvm
 chD
 chD
 chD
-gNS
+eKJ
 soV
 cGU
 ajJ

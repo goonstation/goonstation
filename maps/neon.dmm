@@ -1430,6 +1430,16 @@
 /obj/machinery/firealarm/directional/south,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/north)
+"baB" = (
+/obj/machinery/conveyor/NS{
+	id = "garbage";
+	move_lag = 30;
+	operating = 1
+	},
+/obj/strip_door,
+/obj/landmark/disposals_endpoint,
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "baJ" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4;
@@ -22207,6 +22217,13 @@
 "puG" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/mining/staff_room)
+"puO" = (
+/obj/machinery/disposal/small/south,
+/obj/disposalpipe/trunk/west,
+/obj/machinery/light_switch/directional/south,
+/obj/storage/crate/freezer/organs,
+/turf/simulated/floor/sanitary,
+/area/station/medical/morgue)
 "puP" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/machinery/door/poddoor/pyro{
@@ -24516,15 +24533,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/diner/kitchen)
-"rdr" = (
-/obj/machinery/conveyor/NS{
-	id = "garbage";
-	move_lag = 30;
-	operating = 1
-	},
-/obj/strip_door,
-/turf/simulated/floor/plating,
-/area/station/maintenance/disposal)
 "rdL" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right{
@@ -24673,13 +24681,6 @@
 	},
 /turf/simulated/floor/blue/side,
 /area/station/hallway/primary/north)
-"rky" = (
-/obj/machinery/disposal/small/south,
-/obj/disposalpipe/trunk/west,
-/obj/machinery/light_switch/directional/south,
-/obj/storage/crate/freezer/organs,
-/turf/simulated/floor/sanitary,
-/area/station/medical/morgue)
 "rkO" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -29044,21 +29045,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/central)
-"upb" = (
-/obj/machinery/optable{
-	name = "Autopsy Table"
-	},
-/obj/item/circular_saw{
-	pixel_x = 3;
-	pixel_y = 12
-	},
-/obj/item/reagent_containers/glass/bottle/formaldehyde,
-/obj/item/scalpel,
-/obj/machinery/drainage/big,
-/obj/item/reagent_containers/syringe,
-/obj/random_item_spawner/organs/bloody,
-/turf/simulated/floor/sanitary,
-/area/station/medical/morgue)
 "upj" = (
 /obj/shrub{
 	dir = 10
@@ -32672,6 +32658,21 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/ranch)
+"wKn" = (
+/obj/machinery/optable{
+	name = "Autopsy Table"
+	},
+/obj/item/circular_saw{
+	pixel_x = 3;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/glass/bottle/formaldehyde,
+/obj/item/scalpel,
+/obj/machinery/drainage/big,
+/obj/item/reagent_containers/syringe,
+/obj/random_item_spawner/organs/bloody,
+/turf/simulated/floor/sanitary,
+/area/station/medical/morgue)
 "wLd" = (
 /obj/lattice{
 	dir = 8;
@@ -73549,7 +73550,7 @@ jOL
 dLu
 kAL
 kUi
-upb
+wKn
 urD
 kAL
 eGu
@@ -73839,7 +73840,7 @@ qpn
 qpn
 wSs
 vrh
-rdr
+baB
 sKB
 kIk
 jum
@@ -75060,7 +75061,7 @@ hpf
 kAL
 rsi
 otO
-rky
+puO
 kAL
 wFa
 vVG
