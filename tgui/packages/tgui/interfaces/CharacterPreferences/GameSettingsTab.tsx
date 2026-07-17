@@ -349,10 +349,10 @@ export const GameSettingsTab = () => {
           <Button.Checkbox
             checked={data.observerDnr}
             onClick={() => act('update-observerDnr')}
-            tooltip="Automatically set yourself to DNR when joining as observer, will prevent some ghost spawn roles."
+            tooltip="Automatically set yourself to DNR when joining as observer, will prevent some ghost spawn roles. Only applies when joining as observer from the lobby, not on death."
             tooltipPosition="top"
           >
-            Automatically set DNR when spawning as observer?
+            Automatically set DNR when joining as an observer
           </Button.Checkbox>
         </LabeledList.Item>
       </LabeledList>
