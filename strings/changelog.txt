@@ -1,4 +1,13 @@
 
+(t)fri jul 17 26
+(u)Sovexe
+(p)26841
+(e)🧫🔊🚨⚙|C-Experimental, C-Sound, A-Admin, A-Internal
+(*)Added backend support for multi-emitter managed positional sounds that dynamically update their position and volume while playing.
+(u)JORJ949
+(p)27153
+(e)💅🧛|C-QoL, A-Gamemodes
+(*)The "General" category in uplinks has been split into several new categories for easier finding of what you want to buy.
 (t)thu jul 16 26
 (u)glowbold
 (p)26772
