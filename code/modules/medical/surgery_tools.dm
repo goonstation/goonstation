@@ -639,14 +639,7 @@ CONTAINS:
 			src.w_class = W_CLASS_TINY
 
 	attack_self(mob/user as mob)
-		if (src.is_folded())
-			user.visible_message("<b>[user]</b> unfolds [src].",\
-			"You unfold [src].")
-			user.drop_item()
-			pixel_x = 0
-			pixel_y = 0
-			src.UpdateIcon()
-		else
+		if(!src.try_unfold(user))
 			return
 
 	attack_hand(mob/user)
@@ -657,10 +650,8 @@ CONTAINS:
 		src.toggle(user)
 
 	attack_ai(mob/user)
-		if (src.is_folded())
-			return ..()
-
-		src.toggle(user)
+		if (!src.try_unfold())
+			src.toggle(user)
 
 	relaymove(mob/user as mob)
 		if (user.stat)
@@ -740,7 +731,6 @@ CONTAINS:
 		src.open = 0
 		src.UpdateIcon()
 
-	/// toggle the deployed bag open and close, returns true if toggled
 	proc/toggle(mob/user)
 		if(ON_COOLDOWN(user, "bodybag_zip", 1 SECOND))
 			return FALSE
@@ -753,6 +743,18 @@ CONTAINS:
 
 	proc/is_folded()
 		return src.icon_state == "bodybag" && src.w_class == W_CLASS_TINY
+	proc/try_unfold(mob/user)
+		if (src.is_folded())
+			user.visible_message("<b>[user]</b> unfolds [src].",\
+			"You unfold [src].")
+			if(iscarbon(user))
+				user.drop_item()
+			pixel_x = 0
+			pixel_y = 0
+			src.UpdateIcon()
+			return TRUE
+		else
+			return FALSE
 
 /* ================================================== */
 /* -------------------- Hemostat -------------------- */
