@@ -405,10 +405,12 @@
 		return src.speaker.name
 
 	var/mob/M = src.speaker
-
-	// The speaker is vocally disfigured.
-	if (M.vdisfigured)
+	if (M.vdisfigured) // The speaker is vocally disfigured.
 		return "Unknown"
+	else if (ishuman(M))
+		var/mob/living/carbon/human/maybemuffled = M
+		if (maybemuffled.muffled_by_grab())
+			return("Unknown")
 
 	// The speaker's displayed name does not match their real name.
 	if (!heard_name_only && (M.name != M.real_name))
