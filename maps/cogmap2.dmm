@@ -38005,17 +38005,6 @@
 	dir = 4
 	},
 /area/station/medical/robotics)
-"cuQ" = (
-/obj/machinery/disposal/mail/small{
-	dir = 1;
-	mail_tag = "robotics";
-	mailgroup = "robotics";
-	mailgroup2 = null;
-	message = "1";
-	name = "mail chute-'Robotics'"
-	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/medical/robotics)
 "cuS" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -38447,6 +38436,16 @@
 /area/station/medical/robotics)
 "cwt" = (
 /obj/disposalpipe/trunk/mail/south,
+/obj/machinery/disposal/mail/small{
+	dir = 1;
+	mail_tag = "robotics";
+	mailgroup = "robotics";
+	mailgroup2 = null;
+	message = "1";
+	name = "mail chute-'Robotics'";
+	pixel_x = 0;
+	pixel_y = 32
+	},
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -41007,10 +41006,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "cED" = (
-/obj/disposalpipe/switch_junction/right/west{
-	mail_tag = "mining";
-	name = "mail junction (mining)"
-	},
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor{
 	icon_state = "L6"
 	},
@@ -41906,7 +41902,6 @@
 /obj/stool/chair{
 	dir = 4
 	},
-/obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/arrival,
 /area/station/hallway/secondary/exit)
 "cHJ" = (
@@ -42085,11 +42080,6 @@
 /area/station/mining/staff_room)
 "cII" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor,
-/area/station/mining/staff_room)
-"cIJ" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "cIL" = (
@@ -42441,15 +42431,6 @@
 	dir = 9
 	},
 /area/station/mining/staff_room)
-"cKg" = (
-/obj/storage/secure/closet/engineering/mining,
-/obj/decal/poster/wallsign/poster_nt{
-	pixel_y = 28
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 1
-	},
-/area/station/mining/staff_room)
 "cKh" = (
 /obj/storage/secure/closet/engineering/mining,
 /obj/decal/poster/miners_almanac{
@@ -42460,6 +42441,7 @@
 	},
 /area/station/mining/staff_room)
 "cKi" = (
+/obj/disposalpipe/segment/mail/bent/north,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -42517,7 +42499,6 @@
 /obj/table/reinforced/auto,
 /obj/item/paper/book/from_file/matsci_guide,
 /obj/item/device/matanalyzer,
-/obj/disposalpipe/segment/mail/vertical,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
@@ -42862,19 +42843,6 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "cLQ" = (
-/turf/simulated/floor/caution/south,
-/area/station/mining/staff_room)
-"cLR" = (
-/obj/disposalpipe/segment/mail/bent/north,
-/turf/simulated/floor/caution/south,
-/area/station/mining/staff_room)
-"cLS" = (
-/obj/disposalpipe/segment/mail/horizontal,
-/turf/simulated/floor/caution/south,
-/area/station/mining/staff_room)
-"cLT" = (
-/obj/disposalpipe/trunk/mail/west,
-/obj/machinery/disposal/mail/small/autoname/mining/west,
 /turf/simulated/floor/caution/south,
 /area/station/mining/staff_room)
 "cLV" = (
@@ -50671,6 +50639,10 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
+"dYG" = (
+/obj/disposalpipe/segment/mail/bent/east,
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "dYY" = (
 /obj/storage/crate,
 /obj/item/sheet/wood,
@@ -51902,7 +51874,7 @@
 /area/station/medical/medbay/surgery/storage)
 "ffT" = (
 /obj/disposalpipe/switch_junction/right/north{
-	mail_tag = list("janitor","escape                checkpoint","mining","escape                hallway","mechanics","cargo                checkpoint","QM","refinery");
+	mail_tag = list("janitor","escape checkpoint","mining","escape hallway","mechanics","cargo checkpoint","QM","refinery");
 	name = "mail junction (escape and cargo sectors)"
 	},
 /turf/simulated/wall/auto/supernorn,
@@ -54028,7 +54000,7 @@
 /area/station/hallway/secondary/exit)
 "gZy" = (
 /obj/disposalpipe/switch_junction/right/north{
-	mail_tag = list("medbay                lobby","telescience","testchamber","research","chemistry","medbay","morgue","pathology","genetics","robotics","medical director");
+	mail_tag = list("medbay lobby","telescience","testchamber","research","chemistry","medbay","morgue","pathology","genetics","robotics","medical director");
 	name = "mail junction (medsci sector)"
 	},
 /turf/simulated/wall/auto/supernorn,
@@ -56411,7 +56383,7 @@
 /area/station/maintenance/solar/south)
 "iOr" = (
 /obj/disposalpipe/switch_junction/right/north{
-	mail_tag = list("chapel","chapel                checkpoint","crewA","arrivals                checkpoint");
+	mail_tag = list("chapel","chapel checkpoint","crewA","arrivals checkpoint");
 	name = "mail junction (arrivals sector)"
 	},
 /turf/simulated/wall/auto/supernorn,
@@ -60272,6 +60244,10 @@
 /obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/plating/scorched,
 /area/station/maintenance/southeast)
+"lMU" = (
+/obj/disposalpipe/segment/mail/bent/west,
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "lNu" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -60415,7 +60391,7 @@
 /area/station/engine/inner)
 "lTt" = (
 /obj/disposalpipe/switch_junction/left/north{
-	mail_tag = list("brig","customs                checkpoint","bridge","security");
+	mail_tag = list("brig","customs checkpoint","bridge","security","armory");
 	name = "mail junction (command sector)"
 	},
 /turf/simulated/wall/auto/supernorn,
@@ -63582,6 +63558,10 @@
 "oAv" = (
 /turf/simulated/floor/carpet/blue/fancy/innercorner/ne_triple,
 /area/station/medical/medbay/psychiatrist)
+"oAC" = (
+/obj/disposalpipe/segment/mail/vertical,
+/turf/simulated/floor/yellow/side,
+/area/station/hallway/secondary/exit)
 "oAF" = (
 /obj/machinery/light/incandescent,
 /obj/disposalpipe/segment/mail/vertical,
@@ -64409,7 +64389,10 @@
 /area/station/maintenance/south)
 "pmw" = (
 /obj/machinery/light_switch/directional/north,
-/obj/disposalpipe/segment/mail/horizontal,
+/obj/disposalpipe/switch_junction/right/west{
+	mail_tag = "mining";
+	name = "mail junction (mining)"
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -65962,7 +65945,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/switch_junction/right/north{
-	mail_tag = list("hydroponics","kitchen","detective","crewB","arcade","cafeteria","medical                booth");
+	mail_tag = list("hydroponics","kitchen","detective","crewB","arcade","cafeteria","medical booth");
 	name = "mail junction (catering sector)"
 	},
 /turf/simulated/floor/grime,
@@ -68803,6 +68786,13 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/catwalk/north)
+"sLm" = (
+/obj/storage/secure/closet/engineering/mining,
+/obj/machinery/light_switch/directional/north,
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/mining/staff_room)
 "sLv" = (
 /mob/living/critter/small_animal/bird/owl,
 /turf/simulated/floor/grass/leafy,
@@ -71184,7 +71174,7 @@
 /area/station/crew_quarters/quartersA)
 "uNZ" = (
 /obj/disposalpipe/switch_junction/right/north{
-	mail_tag = list("engineering","podbay","podbay                checkpoint");
+	mail_tag = list("engineering","podbay","podbay checkpoint");
 	name = "mail junction (engineering sector)"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -73184,7 +73174,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "wOe" = (
-/obj/machinery/light_switch/directional/north,
+/obj/machinery/disposal/mail/small/autoname/mining/north,
+/obj/disposalpipe/trunk/mail/west,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -74745,6 +74736,7 @@
 	},
 /obj/mapping_helper/access/mining,
 /obj/decal/stripe_delivery,
+/obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "yaB" = (
@@ -113319,7 +113311,7 @@ coE
 cqu
 csh
 ctx
-cuQ
+coE
 cwt
 ltA
 czt
@@ -131751,7 +131743,7 @@ cEv
 cGh
 cHA
 cIG
-cKg
+cKh
 cLK
 cLP
 cOA
@@ -132053,7 +132045,7 @@ mcr
 cmk
 kcH
 cIG
-cKh
+sLm
 cLK
 cLP
 cLP
@@ -132352,8 +132344,8 @@ czR
 cBz
 xlE
 cEx
-cmk
-cHA
+dYG
+oAC
 xZZ
 cKi
 cLK
@@ -132654,7 +132646,7 @@ czR
 cBA
 crl
 pmw
-cmk
+lMU
 cHB
 cIG
 wOe
@@ -135070,11 +135062,11 @@ czZ
 cmk
 cCP
 cED
-cBG
+cmk
 cHI
-cIJ
+cII
 cKq
-cLR
+cLQ
 cNl
 cOF
 cQc
@@ -135376,7 +135368,7 @@ cmk
 cHJ
 cII
 cKr
-cLS
+cLQ
 cNl
 cOG
 cQd
@@ -135678,7 +135670,7 @@ cmk
 cHK
 cIG
 cKs
-cLT
+cLQ
 cNl
 cOH
 cQe
