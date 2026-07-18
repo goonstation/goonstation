@@ -348,6 +348,8 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 	var/healthscan_mode = HEALTHSCAN_MODE_TGUI
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
+	HELP_MESSAGE_OVERRIDE("Use in-hand to switch between chat and TGUI output.")
+
 	New()
 		..()
 		scanner_status = image('icons/obj/items/device.dmi', icon_state = "health_over-basic")
@@ -440,6 +442,7 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 				src.ui_interact(user)
 			else if (src.healthscan_mode == HEALTHSCAN_MODE_CHAT)
 				boutput(user, src.last_scan_data)
+				boutput(user, "--- <a href='byond://?src=\ref[src];print=true'>PRINT REPORT</a> ---<br>")
 
 		DISPLAY_MAPTEXT(target, list(user), MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/health, target)
 		update_medical_record(target)
@@ -482,15 +485,19 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 		if (src.victim)
 			. += src.victim.ui_health_data(include_organs=src.organ_scan, include_reagents=src.reagent_scan, include_diseases=TRUE)
 
+	Topic(href, href_list)
+		. = ..()
+		if (href_list["print"])
+			if (!(src in usr.contents))
+				boutput(usr, SPAN_NOTICE("You must be holding [src] in order to print a report."))
+			src.print_report(usr)
+
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 		. = ..()
 		if (.)
 			return
 		switch(action)
 			if ("print")
-				if (isnull(src.last_scan_data))
-					boutput(ui.user, SPAN_NOTICE("No previous scan results located."))
-					return
 				src.print_report(ui.user)
 
 	process()
