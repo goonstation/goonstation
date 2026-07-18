@@ -1,6 +1,10 @@
 /datum/map_correctness_check/mail_chutes
 	check_name = "Faulty Mail Chutes"
 	check_prefabs = FALSE
+	skip_check_on = list(
+		// Donut2's Zeta Outpost, in not being directly connected via pipe, breaks `mail_tag` routing.
+		/datum/map_settings/donut2,
+	)
 
 /datum/map_correctness_check/mail_chutes/run_check()
 	. = list()
