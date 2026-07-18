@@ -660,6 +660,17 @@ CONTAINS:
 				src.open()
 			return
 
+	attack_ai(mob/user)
+		if (src.icon_state == "bodybag" && src.w_class == W_CLASS_TINY)
+			return ..()
+		else if(!ON_COOLDOWN(user, "bodybag_zip", 1 SECOND))
+			if (src.open)
+				src.close()
+			else
+				src.open()
+			return
+
+
 	relaymove(mob/user as mob)
 		if (user.stat)
 			return
