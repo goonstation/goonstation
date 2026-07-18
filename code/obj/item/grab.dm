@@ -723,6 +723,7 @@
 
 
 /obj/item/grab/rag_muffle
+	muffle_affecting = TRUE
 	check()
 		if(!assailant || !affecting)
 			qdel(src)

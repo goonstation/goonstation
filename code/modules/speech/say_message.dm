@@ -408,6 +408,11 @@
 	var/mob/M = src.speaker
 	if (M.vdisfigured)
 		return "Unknown"
+	else
+		for (var/obj/item/grab/rag_muffle/muffler in M.grabbed_by)
+			if (!muffler.state)
+				continue
+			return "Unknown"
 
 	// The speaker's displayed name does not match their real name.
 	if (!heard_name_only && (M.name != M.real_name))
