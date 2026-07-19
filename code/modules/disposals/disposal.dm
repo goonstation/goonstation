@@ -90,7 +90,7 @@
 			else if (src.loc)
 				var/obj/disposalpipe/current = src.loc
 				if (!current.transfer(src))
-					current.expel(src, get_turf(current), src.dir)
+					current.expel(src, get_turf(src.loc), src.dir)
 
 				if (!(src.count--))
 					src.active = FALSE
