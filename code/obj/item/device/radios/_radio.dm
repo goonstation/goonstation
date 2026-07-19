@@ -154,6 +154,8 @@ TYPEINFO(/obj/item/device/radio)
 	src.ensure_speech_tree().process(message)
 
 /obj/item/device/radio/attackby(obj/item/W, mob/user)
+	if(src.traitorradio && !src.traitorradio.locked && istype(W, /obj/item/uplink_telecrystal))
+		return src.traitorradio.Attackby(W, user)
 	src.add_dialog(user)
 	if (!isscrewingtool(W))
 		return
@@ -175,6 +177,10 @@ TYPEINFO(/obj/item/device/radio)
 	src.toggle_speaker(FALSE)
 
 /obj/item/device/radio/ui_interact(mob/user, datum/tgui/ui)
+	if(src.traitorradio && !src.traitorradio.locked)
+		src.traitorradio.ui_interact(user)
+		return
+
 	if (src.bricked)
 		user.show_text(src.bricked_msg, "red")
 		return
@@ -232,26 +238,18 @@ TYPEINFO(/obj/item/device/radio)
 		if ("set-frequency")
 			if (src.locked_frequency)
 				return FALSE
-			src.set_frequency(sanitize_frequency(params["value"]))
+
+			var/frequency_to_set = sanitize_frequency(params["value"])
 
 			// The "finish" param indicates that a user has inputted a number or finished dragging the frequency dial.
 			// This makes it more difficult to bruteforce the uplink.
-			if (params["finish"] && !isnull(src.traitorradio) && src.traitor_frequency && src.frequency == src.traitor_frequency)
-				ui.close()
-				src.remove_dialog(usr)
-				usr.Browse(null, WINDOW_OPTIONS)
-				global.onclose(usr, "radio")
-
-				// Transform the regular radio into a disguised Syndicate uplink.
-				var/obj/item/uplink/integrated/radio/T = src.traitorradio
-				var/obj/item/device/radio/R = src
-				R.set_loc(T)
-				usr.u_equip(R)
-				usr.put_in_hand_or_drop(T)
-				R.set_loc(T)
-				T.locked = 0
-				T.AttackSelf(usr)
+			if (params["finish"] && !isnull(src.traitorradio) && src.traitor_frequency && frequency_to_set == src.traitor_frequency)
+				tgui_process.close_uis(src)
+				src.traitorradio.locked = FALSE
+				src.ui_interact(usr)
 				return
+
+			src.set_frequency(frequency_to_set)
 
 			return TRUE
 
