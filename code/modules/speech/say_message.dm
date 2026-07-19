@@ -404,8 +404,9 @@
 	if (!ismob(src.speaker))
 		return src.speaker.name
 
-	// The speaker is vocally disfigured.
 	var/mob/M = src.speaker
+
+	// The speaker is vocally disfigured.
 	if (M.vdisfigured)
 		return "Unknown"
 	else
