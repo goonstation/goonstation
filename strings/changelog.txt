@@ -1,4 +1,9 @@
 
+(t)sat jul 18 26
+(u)JORJ949
+(p)27210
+(e)🧛|A-Gamemodes
+(*)Headset integrated uplinks are now actually integrated into the headset, rather than swapping the uplink/headset items on lock/unlock. Selecting the unlock frequency on an uplink headset will only unlock the uplink, and not set the frequency.
 (t)fri jul 17 26
 (u)Sovexe
 (p)26841
