@@ -19130,6 +19130,7 @@
 /obj/shrub{
 	dir = 10
 	},
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/grasslush/thinner,
 /area/station/garden/zen)
 "bSy" = (
@@ -45517,6 +45518,10 @@
 	dir = 8
 	},
 /area/station/medical/medbay/lobby)
+"tzN" = (
+/obj/machinery/light_switch/directional/east,
+/turf/simulated/floor/plating/random,
+/area/station/security/beepsky)
 "tzT" = (
 /obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/sanitary,
@@ -97916,7 +97921,7 @@ bLr
 uPW
 mPD
 mBy
-rPU
+tzN
 vDb
 rfc
 aqn
