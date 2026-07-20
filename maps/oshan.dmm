@@ -1621,6 +1621,7 @@
 "ahE" = (
 /obj/machinery/disposal/small/west,
 /obj/disposalpipe/trunk/regular/west,
+/obj/item_dispenser/latex_gloves,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fblue2"
@@ -2236,6 +2237,7 @@
 	pixel_x = 12;
 	pixel_y = 1
 	},
+/obj/item_dispenser/medical_mask,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "akN" = (
@@ -2836,11 +2838,13 @@
 	pixel_x = -4;
 	pixel_y = 5
 	},
+/obj/item/reagent_containers/glass/beaker/cryoxadone,
+/obj/item/paper/cryo,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "anu" = (
-/obj/machinery/vending/jobclothing/medical,
 /obj/machinery/light/incandescent/cool,
+/obj/storage/secure/closet/medical/medkit,
 /turf/simulated/floor/redwhite{
 	dir = 10
 	},
@@ -2971,15 +2975,11 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/head)
 "aoh" = (
-/obj/shrub{
-	dir = 4;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
-	},
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/machinery/vending/jobclothing/medical,
 /turf/simulated/floor/redwhite{
 	dir = 6
 	},
@@ -4744,6 +4744,7 @@
 "awg" = (
 /obj/table/auto,
 /obj/random_item_spawner/medicine,
+/obj/item/storage/box/gl_kit,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "awi" = (
@@ -29244,22 +29245,12 @@
 /obj/storage/crate/freezer{
 	name = "Freezer - Spare Parts"
 	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
 /obj/item/organ/heart{
 	desc = "A human heart, grody. How long has it been in that freezer?";
 	name = "funky ol' heart"
 	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
-	desc = "Gross.";
-	name = "old kidney"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/obj/random_item_spawner/organs/bloody/one_to_three,
+/obj/item/parts/human_parts/leg/left,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "gLD" = (
@@ -29316,6 +29307,7 @@
 /obj/machinery/drainage/big,
 /obj/item/reagent_containers/syringe,
 /obj/machinery/camera/directional/east,
+/obj/random_item_spawner/organs/bloody,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "gNY" = (
@@ -31254,6 +31246,7 @@
 	pixel_x = -11;
 	pixel_y = 8
 	},
+/obj/item_dispenser/latex_gloves,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "itY" = (
@@ -41508,7 +41501,7 @@
 	pixel_x = 32;
 	pixel_y = 0
 	},
-/obj/stool/chair/comfy/wheelchair,
+/obj/storage/cart/medcart/crash,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
