@@ -2236,7 +2236,6 @@
 	pixel_x = 12;
 	pixel_y = 1
 	},
-/obj/item_dispenser/medical_mask,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "akN" = (
@@ -2831,25 +2830,17 @@
 /obj/table/auto,
 /obj/item/reagent_containers/glass/beaker/cryoxadone{
 	pixel_x = 4;
-	pixel_y = 8
+	pixel_y = 5
 	},
 /obj/item/reagent_containers/glass/beaker/cryoxadone{
 	pixel_x = -4;
-	pixel_y = 8
-	},
-/obj/item/reagent_containers/glass/beaker/cryoxadone{
-	pixel_x = 0;
-	pixel_y = 2
-	},
-/obj/item/paper/cryo{
-	pixel_x = 8;
-	pixel_y = -1
+	pixel_y = 5
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "anu" = (
+/obj/machinery/vending/jobclothing/medical,
 /obj/machinery/light/incandescent/cool,
-/obj/storage/secure/closet/medical/medkit,
 /turf/simulated/floor/redwhite{
 	dir = 10
 	},
@@ -2980,11 +2971,15 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/head)
 "aoh" = (
+/obj/shrub{
+	dir = 4;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant"
+	},
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/vending/jobclothing/medical,
 /turf/simulated/floor/redwhite{
 	dir = 6
 	},
@@ -4749,7 +4744,6 @@
 "awg" = (
 /obj/table/auto,
 /obj/random_item_spawner/medicine,
-/obj/item/storage/box/gl_kit,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "awi" = (
@@ -12948,14 +12942,13 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/storage/cart/mechcart/tools,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
 /area/station/engine/elect)
 "bnk" = (
-/obj/machinery/light/incandescent/warm,
 /obj/machinery/vending/mechanics,
+/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -24009,15 +24002,6 @@
 	},
 /turf/simulated/floor/caution/westeast,
 /area/station/mining/staff_room)
-"cMx" = (
-/obj/machinery/sink/slim{
-	desc = "A water-filled unit intended for hand-washing purposes.";
-	dir = 4;
-	pixel_x = -2
-	},
-/obj/storage/crate/freezer/organs,
-/turf/simulated/floor/sanitary,
-/area/station/medical/morgue)
 "cMV" = (
 /obj/machinery/camera/directional/west{
 	pixel_y = 10
@@ -24349,18 +24333,6 @@
 "dax" = (
 /turf/simulated/wall/auto/martian,
 /area/evilreaver/security)
-"daE" = (
-/obj/strip_door,
-/obj/machinery/conveyor/SN{
-	id = "garbage";
-	move_lag = 30;
-	operating = 1
-	},
-/obj/landmark/disposals_endpoint,
-/turf/simulated/floor/shuttlebay{
-	name = "reinforced plating"
-	},
-/area/station/maintenance/disposal)
 "dbp" = (
 /obj/item/raw_material/syreline,
 /obj/item/raw_material/syreline,
@@ -24702,6 +24674,15 @@
 /obj/storage/crate,
 /turf/simulated/floor/plating/damaged3,
 /area/martian_trader)
+"dma" = (
+/obj/storage/cart/mechcart,
+/obj/item/rods/steel{
+	amount = 50
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/engine/eva)
 "dmg" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/ai_experimental,
@@ -25403,8 +25384,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "dNf" = (
-/obj/item/device/radio/intercom/engineering,
 /obj/machinery/vending/standard,
+/obj/item/device/radio/intercom/engineering,
 /turf/simulated/floor,
 /area/station/engine/elect)
 "dNn" = (
@@ -26637,22 +26618,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/east)
-"eKJ" = (
-/obj/machinery/optable{
-	name = "Autopsy Table"
-	},
-/obj/item/circular_saw{
-	pixel_x = 3;
-	pixel_y = 12
-	},
-/obj/item/reagent_containers/glass/bottle/formaldehyde,
-/obj/item/scalpel,
-/obj/machinery/drainage/big,
-/obj/item/reagent_containers/syringe,
-/obj/machinery/camera/directional/east,
-/obj/random_item_spawner/organs/bloody,
-/turf/simulated/floor/sanitary,
-/area/station/medical/morgue)
 "eKS" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -29269,6 +29234,33 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
+"gLv" = (
+/obj/machinery/sink/slim{
+	desc = "A water-filled unit intended for hand-washing purposes.";
+	dir = 4;
+	pixel_x = -2
+	},
+/obj/storage/crate/freezer{
+	name = "Freezer - Spare Parts"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
+/obj/item/organ/heart{
+	desc = "A human heart, grody. How long has it been in that freezer?";
+	name = "funky ol' heart"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
+	desc = "Gross.";
+	name = "old kidney"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/turf/simulated/floor/sanitary,
+/area/station/medical/morgue)
 "gLD" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/treatment2)
@@ -29310,6 +29302,21 @@
 	},
 /turf/simulated/floor,
 /area/shuttle/sea_elevator_room)
+"gNS" = (
+/obj/machinery/optable{
+	name = "Autopsy Table"
+	},
+/obj/item/circular_saw{
+	pixel_x = 3;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/glass/bottle/formaldehyde,
+/obj/item/scalpel,
+/obj/machinery/drainage/big,
+/obj/item/reagent_containers/syringe,
+/obj/machinery/camera/directional/east,
+/turf/simulated/floor/sanitary,
+/area/station/medical/morgue)
 "gNY" = (
 /obj/machinery/status_display/market,
 /turf/simulated/wall/auto/supernorn,
@@ -30961,6 +30968,13 @@
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
 	})
+"ihZ" = (
+/obj/storage/cart/mechcart,
+/obj/item/rods/steel{
+	amount = 50
+	},
+/turf/simulated/floor,
+/area/station/engine/eva)
 "iiK" = (
 /obj/machinery/firealarm/directional/west,
 /obj/cable{
@@ -31239,7 +31253,6 @@
 	pixel_x = -11;
 	pixel_y = 8
 	},
-/obj/item_dispenser/latex_gloves,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "itY" = (
@@ -40005,10 +40018,6 @@
 /obj/machinery/firealarm/directional/west,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/lounge/port)
-"ppN" = (
-/obj/storage/cart/mechcart/breach,
-/turf/simulated/floor,
-/area/station/engine/eva)
 "ppQ" = (
 /obj/machinery/light/incandescent/netural,
 /obj/table/reinforced/auto,
@@ -40065,12 +40074,6 @@
 	pixel_y = 4
 	},
 /obj/item/clothing/ears/earmuffs,
-/obj/item/rods/steel{
-	amount = 50
-	},
-/obj/item/rods/steel{
-	amount = 50
-	},
 /turf/simulated/floor/yellow/side,
 /area/station/engine/eva)
 "prZ" = (
@@ -41034,7 +41037,9 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "qjP" = (
-/obj/machinery/disposal/mail/autoname/mechanics,
+/obj/machinery/disposal/mail/autoname{
+	mail_tag = "mechanics"
+	},
 /obj/machinery/light/incandescent/warm,
 /obj/disposalpipe/trunk/mail/west,
 /turf/simulated/floor/yellow/side{
@@ -41275,12 +41280,6 @@
 /obj/landmark/pest,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
-"qsa" = (
-/obj/storage/cart/mechcart/breach,
-/turf/simulated/floor/yellow/side{
-	dir = 1
-	},
-/area/station/engine/eva)
 "qsD" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4
@@ -41508,7 +41507,7 @@
 	pixel_x = 32;
 	pixel_y = 0
 	},
-/obj/storage/cart/medcart/crash,
+/obj/stool/chair/comfy/wheelchair,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -42826,6 +42825,17 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
+"rzY" = (
+/obj/strip_door,
+/obj/machinery/conveyor/SN{
+	id = "garbage";
+	move_lag = 30;
+	operating = 1
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/maintenance/disposal)
 "rAw" = (
 /obj/machinery/light/incandescent/warm,
 /obj/cable{
@@ -45507,9 +45517,6 @@
 	dir = 8
 	},
 /area/station/medical/medbay/lobby)
-"tzN" = (
-/turf/simulated/floor/plating,
-/area/space)
 "tzT" = (
 /obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/sanitary,
@@ -89442,7 +89449,7 @@ bRq
 bSy
 bTC
 bSy
-daE
+rzY
 bWz
 bWz
 nEQ
@@ -97503,7 +97510,7 @@ ayL
 ana
 fgh
 ahG
-cMx
+gLv
 ajJ
 jBl
 alq
@@ -98407,7 +98414,7 @@ dvm
 chD
 chD
 chD
-eKJ
+gNS
 soV
 cGU
 ajJ
@@ -104543,7 +104550,7 @@ bTb
 bLr
 cwP
 anh
-tzN
+anh
 anh
 aud
 bLr
@@ -106312,8 +106319,8 @@ sYB
 lIm
 bfW
 mVB
-qsa
-ppN
+dma
+ihZ
 blB
 bnj
 bnT
