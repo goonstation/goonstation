@@ -1,19 +1,17 @@
-/datum/listen_module/modifier/phone
+/datum/listen_module/modifier/phone_new
 	id = LISTEN_MODIFIER_PHONE
 
-/datum/listen_module/modifier/phone/process(datum/say_message/message)
+/datum/listen_module/modifier/phone_new/process(datum/say_message/message)
 	// If this message has already been relayed by a phone, don't receive it.
 	if (!CAN_RELAY_MESSAGE(message, SAY_RELAY_PHONE))
 		return NO_MESSAGE
 
 	. = message
 
-	var/obj/item/phone_handset/handset = src.parent_tree.listener_parent
-	if (!istype(handset))
-		return
+	var/atom/listener_parent = src.parent_tree.listener_parent
 
-	// If held, the handset must be in the speaker's active hand to receive the message.
-	if (ismob(handset.loc) && (astype(message.original_speaker, /mob)?.equipped() != handset))
+	// If held, the output atom must be in the speaker's active hand to receive the message.
+	if (ismob(listener_parent.loc) && (astype(message.original_speaker, /mob)?.equipped() != listener_parent))
 		return NO_MESSAGE
 
 	message.flags |= SAYFLAG_NO_MAPTEXT
@@ -37,8 +35,11 @@
 		<b>\
 	"}
 
+	var/list/return_list = list()
+	SEND_SIGNAL(src.parent_tree.listener_parent, COMSIG_PHONE_RETRIEVE_PREFIX, return_list)
+
 	message.format_verb_prefix = {" \
-		\[ <span style=\"color:[handset.parent.stripe_color]\">[bicon(handset.handset_icon)] [handset.parent.phone_id]</span> \]\
+		[return_list["prefix"]]\
 		</b></span> \
 		<span class='message'>\
 	"}

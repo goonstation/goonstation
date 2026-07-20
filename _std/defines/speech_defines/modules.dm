@@ -238,6 +238,7 @@
 #define LISTEN_EFFECT_DETGADGET "detgadget"
 #define LISTEN_EFFECT_DISPLAY_TO_CLIENT "display_to_client"
 #define LISTEN_EFFECT_HANDSET "handset"
+#define LISTEN_EFFECT_BASE_PHONE "base_phone"
 #define LISTEN_EFFECT_LAWBRINGER "lawbringer"
 #define LISTEN_EFFECT_LIL_GREG "lil_greg"
 #define LISTEN_EFFECT_MEAT_HEAD "meat_head"

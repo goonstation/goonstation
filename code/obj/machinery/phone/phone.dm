@@ -13,27 +13,21 @@ TYPEINFO(/obj/machinery/phone)
 	color = null
 	custom_suicide = TRUE
 	var/obj/item/phone_handset/handset = null
-	var/obj/machinery/phone/linked = null
 	var/answered_icon = "phone_answered"
 	var/dialicon = "phone_dial"
 	var/phone_icon = "phone"
 	var/ringing_icon = "phone_ringing"
-	var/last_called = null
-	var/caller_id_message = null
-	var/phone_category = null
-	var/phone_id = null
-	var/stripe_color = null
-	var/last_ring = 0
 	var/answered = FALSE
-	var/can_talk_across_z_levels = TRUE
 	var/connected = TRUE
-	var/dialing = FALSE
 	var/emagged = FALSE
+	var/emag_message = null
 	var/labelling = FALSE
-	var/ringing = FALSE
+
+	var/phone_id = null
+	var/phone_category = null
+	var/can_talk_across_z_levels = TRUE
 	var/unlisted = FALSE
-	var/frequency = FREQ_FREE
-	var/net_id = null
+	var/stripe_color = null
 
 /obj/machinery/phone/New()
 	. = ..() // Set up power usage, subscribe to loop, yada yada yada
@@ -70,38 +64,56 @@ TYPEINFO(/obj/machinery/phone)
 	stripe_image.color = src.stripe_color
 	stripe_image.appearance_flags = RESET_COLOR | PIXEL_SCALE
 	src.UpdateOverlays(stripe_image, "stripe")
-
-	// Generate a name for the phone.
-	if (isnull(src.phone_id))
-		var/temp_name = src.name
-		if ((temp_name == src::name) && location)
-			temp_name = location.name
-
-		var/name_counter = 1
-		for_by_tcl(M, /obj/machinery/phone)
-			if (M.phone_id && (M.phone_id == temp_name))
-				name_counter++
-
-		if (name_counter > 1)
-			temp_name = "[temp_name] [name_counter]"
-
-		src.phone_id = temp_name
-
-	src.net_id = global.format_net_id("\ref[src]")
-	MAKE_DEVICE_RADIO_PACKET_COMPONENT(src.net_id, "phone", src.frequency)
+	UpdateIcon()
 
 	RegisterSignal(src, COMSIG_CORD_RETRACT, PROC_REF(hang_up))
+	RegisterSignal(src, COMSIG_PHONE_INBOUND_CONNECTION_OBJECTION_CHECK, PROC_REF(inbound_connection_check))
+	RegisterSignal(src, COMSIG_PHONE_OUTBOUND_CONNECTION_OBJECTION_CHECK, PROC_REF(outbound_connection_check))
+	RegisterSignal(src, COMSIG_PHONE_RING_START, PROC_REF(ring_start))
+	RegisterSignal(src, COMSIG_PHONE_RING_STOP, PROC_REF(ring_stop))
+	RegisterSignal(src, COMSIG_PHONE_INFO_UPDATED, PROC_REF(info_updated))
 	START_TRACKING
+	src.handset = new /obj/item/phone_handset(src)
+	src.AddComponent(/datum/component/phone_controller, phone_id, phone_category, can_talk_across_z_levels, unlisted, stripe_color)
+	src.AddComponent(/datum/component/phone_ui)
+	src.AddComponent(/datum/component/phone_ringer)
 
 /obj/machinery/phone/disposing()
-	if (src.linked)
-		src.linked.linked = null
-		src.linked = null
-
+	src.hang_up()
+	src.RemoveComponentsOfType(/datum/component/phone_controller)
+	src.RemoveComponentsOfType(/datum/component/phone_ui)
+	src.RemoveComponentsOfType(/datum/component/phone_ringer)
 	qdel(src.handset)
 	UnregisterSignal(src, COMSIG_CORD_RETRACT)
+	UnregisterSignal(src, COMSIG_PHONE_RING_START)
+	UnregisterSignal(src, COMSIG_PHONE_RING_STOP)
+	UnregisterSignal(src, COMSIG_PHONE_INFO_UPDATED)
+	UnregisterSignal(src, COMSIG_PHONE_INBOUND_CONNECTION_OBJECTION_CHECK)
+	UnregisterSignal(src, COMSIG_PHONE_OUTBOUND_CONNECTION_OBJECTION_CHECK)
 	STOP_TRACKING
 	. = ..()
+
+/obj/machinery/phone/proc/info_updated(datum/source, list/updated_info)
+	if(updated_info["id"])
+		src.phone_id = updated_info["id"]
+	if(updated_info["category"])
+		src.phone_category = updated_info["category"]
+	if(updated_info["color"])
+		src.stripe_color = updated_info["color"]
+
+/obj/machinery/phone/proc/connect_wire()
+	src.connected = TRUE
+	SEND_SIGNAL(src, COMSIG_PHONE_SET_UNLISTED, FALSE)
+	if(src.answered)
+		SEND_SIGNAL(src, COMSIG_PHONE_MICROPHONE_ENABLE)
+		SEND_SIGNAL(src, COMSIG_PHONE_SPEAKER_ENABLE)
+
+/obj/machinery/phone/proc/disconnect_wire()
+	src.connected = FALSE
+	SEND_SIGNAL(src, COMSIG_PHONE_SET_UNLISTED, TRUE)
+	SEND_SIGNAL(src, COMSIG_PHONE_MICROPHONE_DISABLE)
+	SEND_SIGNAL(src, COMSIG_PHONE_SPEAKER_DISABLE)
+	SEND_SIGNAL(src, COMSIG_PHONE_OUTBOUND_DISCONNECTION)
 
 /obj/machinery/phone/was_deconstructed_to_frame(mob/user)
 	src.hang_up()
@@ -109,18 +121,7 @@ TYPEINFO(/obj/machinery/phone)
 
 /obj/machinery/phone/get_desc()
 	if (!isnull(src.phone_id))
-		return " There is a small label on the phone that reads \"[src.phone_id]\"."
-
-/obj/machinery/phone/receive_signal(datum/signal/signal)
-	if (!src.linked || !src.handset || !signal.data || !istype(signal.data["message"], /datum/say_message))
-		return TRUE
-
-	var/datum/say_message/message = signal.data["message"]
-	message = message.Copy()
-	message.speaker = src.handset
-	message.message_origin = src.handset
-
-	src.handset.ensure_speech_tree().process(message)
+		return " There is a small label on the phone that reads \"[phone_id]\"."
 
 /obj/machinery/phone/attack_ai(mob/user)
 	return
@@ -136,11 +137,11 @@ TYPEINFO(/obj/machinery/phone)
 		if (src.connected)
 			if (user)
 				boutput(user,"You cut the phone line leading to the phone.")
-			src.connected = FALSE
+			src.disconnect_wire()
 		else
 			if (user)
 				boutput(user,"You repair the line leading to the phone.")
-			src.connected = TRUE
+			src.connect_wire()
 		return
 
 	if (ispulsingtool(P))
@@ -154,7 +155,7 @@ TYPEINFO(/obj/machinery/phone)
 		if (!text || !in_interact_range(src, user))
 			return
 
-		src.phone_id = text
+		SEND_SIGNAL(src, COMSIG_PHONE_SET_INFO, list("id" = text))
 		boutput(user, SPAN_NOTICE("You rename the phone to \"[src.phone_id]\"."))
 		return
 
@@ -166,8 +167,7 @@ TYPEINFO(/obj/machinery/phone)
 	playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
 
 	if (src._health <= 0)
-		if (src.linked)
-			src.hang_up()
+		src.hang_up()
 		src.gib(src.loc)
 		qdel(src)
 
@@ -181,8 +181,9 @@ TYPEINFO(/obj/machinery/phone)
 		src.explode()
 		return
 
-	src.handset = new /obj/item/phone_handset(src,user)
-	src.AddComponent(/datum/component/cord, src.handset, base_offset_x = -4, base_offset_y = -1, range=48)
+	if(!src.handset)
+		src.handset = new /obj/item/phone_handset(src)
+	src.create_cord()
 	user.put_in_hand_or_drop(src.handset)
 	src.answered = TRUE
 
@@ -190,79 +191,28 @@ TYPEINFO(/obj/machinery/phone)
 	src.UpdateIcon()
 	playsound(user, 'sound/machines/phones/pick_up.ogg', 50, FALSE)
 
-	// A call is being answered.
-	if (src.ringing)
-		src.ringing = FALSE
-		src.linked.ringing = FALSE
+	if(!src.emagged)
+		SEND_SIGNAL(src, COMSIG_PHONE_RING_STOP)
+	if(src.connected)
+		SEND_SIGNAL(src, COMSIG_PHONE_MICROPHONE_ENABLE)
+		SEND_SIGNAL(src, COMSIG_PHONE_SPEAKER_ENABLE)
+		SEND_SIGNAL(src, COMSIG_PHONE_OUTBOUND_SOUND, 'sound/machines/phones/remote_answer.ogg', 50, 0)
 
-		var/mob/linked_holder = src.linked.handset.get_holder()
-		if (linked_holder && (GET_DIST(src.linked.handset, linked_holder) < 1))
-			linked_holder.playsound_local(linked_holder, 'sound/machines/phones/remote_answer.ogg', 50, 0)
-
-	// An outgoing call is being made.
-	else if (user)
+	if (user)
 		if (src.connected)
-			ui_interact(user)
+			SEND_SIGNAL(src, COMSIG_PHONE_UI_INTERACT, user)
 		else
 			boutput(user,SPAN_ALERT("As you pick up the phone you notice that the cord has been cut!"))
 
 /obj/machinery/phone/emag_act(mob/user, obj/item/card/emag/E)
-	src.icon_state = "[ringing_icon]"
-	src.UpdateIcon()
-
 	if (src.emagged)
 		return FALSE
-
 	if (user)
 		boutput(user, SPAN_ALERT("You short out the ringer circuit on the [src]."))
 	src.emagged = TRUE
-
-	// Pick a random phone.
-	src.caller_id_message = "<span style=\"color: #cccccc;\">???</span>"
-	var/list/phonebook = list()
-	for_by_tcl(P, /obj/machinery/phone)
-		if (P.unlisted)
-			continue
-		phonebook += P
-
-	if (length(phonebook))
-		var/obj/machinery/phone/prank = pick(phonebook)
-		src.caller_id_message = "<span style=\"color: [prank.stripe_color];\">[prank.phone_id]</span>"
-
+	src.hang_up()
+	SEND_SIGNAL(src, COMSIG_PHONE_EMAG)
 	return TRUE
-
-/obj/machinery/phone/process()
-	if (src.emagged)
-		playsound(src.loc,'sound/machines/phones/ring_incoming.ogg', 100, 1)
-		if (!src.answered)
-			src.say("Call from [src.caller_id_message].", flags = SAYFLAG_IGNORE_HTML)
-			src.icon_state = "[ringing_icon]"
-			UpdateIcon()
-		return
-
-	if (!src.connected)
-		return
-
-	src.last_ring++
-	if (..())
-		return
-
-	if (!src.ringing)
-		return
-
-	if (src.linked && (src.linked.answered == FALSE))
-		if (src.last_ring >= 2)
-			src.last_ring = 0
-			var/mob/holder = src.handset?.get_holder()
-			if (holder && (GET_DIST(src.handset, holder) < 1))
-				holder.playsound_local(holder, 'sound/machines/phones/ring_outgoing.ogg', 40, 0)
-
-	else if (src.last_ring >= 2)
-		playsound(src.loc, 'sound/machines/phones/ring_incoming.ogg', 40, 0)
-		src.icon_state = "[src.ringing_icon]"
-		src.UpdateIcon()
-		src.last_ring = 0
-		src.say("Call from [src.caller_id_message].", flags = SAYFLAG_IGNORE_HTML)
 
 /obj/machinery/phone/suicide(mob/user)
 	if (!src.user_can_suicide(user))
@@ -273,126 +223,54 @@ TYPEINFO(/obj/machinery/phone)
 		user.TakeDamage("head", 150, 0)
 		return TRUE
 
-/obj/machinery/phone/ui_interact(mob/user, datum/tgui/ui)
-	ui = tgui_process.try_update_ui(user, src, ui)
-	if (!ui)
-		ui = new(user, src, "Phone")
-		ui.open()
-
-/obj/machinery/phone/ui_data(mob/user)
-	var/list/list/list/phonebook = list()
-	for_by_tcl(P, /obj/machinery/phone)
-		var/match_found = FALSE
-		if (P.unlisted || P == src)
-			continue
-		if (!(src.can_talk_across_z_levels && P.can_talk_across_z_levels) && (get_z(P) != get_z(src)))
-			continue
-		if (length(phonebook))
-			for (var/i in 1 to length(phonebook))
-				if (phonebook[i]["category"] == P.phone_category)
-					match_found = TRUE
-					phonebook[i]["phones"] += list(list(
-						"id" = P.phone_id
-					))
-					break
-		if (!match_found)
-			phonebook += list(list(
-				"category" = P.phone_category,
-				"phones" = list(list(
-					"id" = P.phone_id
-				))
-			))
-
-	. = list(
-		"dialing" = src.dialing,
-		"inCall" = src.linked,
-		"lastCalled" = src.last_called,
-		"name" = src.name
-	)
-
-	.["phonebook"] = phonebook
-
-/obj/machinery/phone/ui_act(action, params)
-	. = ..()
-	if (.)
-		return
-	switch (action)
-		if ("call")
-			if (src.dialing == TRUE || src.linked)
-				return
-			. = TRUE
-			src.add_fingerprint(usr)
-			var/id = params["target"]
-			for_by_tcl(P, /obj/machinery/phone)
-				if (P.phone_id == id)
-					src.call_other(P)
-					return
-			boutput(usr, SPAN_ALERT("Unable to connect!"))
-
-/obj/machinery/phone/update_icon()
-	. = ..()
-	src.UpdateOverlays(src.SafeGetOverlayImage("stripe", 'icons/obj/machines/phones.dmi',"[src.icon_state]-stripe"), "stripe")
+/obj/machinery/phone/proc/create_cord()
+	src.AddComponent(/datum/component/cord, src.handset, base_offset_x = -4, base_offset_y = -1, range=48)
 
 /obj/machinery/phone/proc/explode()
 	src.blowthefuckup(strength = 2.5, delete = TRUE)
 
 /obj/machinery/phone/proc/hang_up()
 	src.answered = FALSE
-	if (src.linked)
-		// If nobody picked up, return to the non-ringing state.
-		if (!src.linked.answered)
-			src.linked.icon_state = "[src.linked.phone_icon]"
-			src.linked.UpdateIcon()
-
-		// If someone did pick up, play the hangup sound.
-		else
-			var/mob/linked_holder = src.linked.handset?.get_holder()
-			if (linked_holder && (GET_DIST(src.linked.handset, linked_holder) < 1))
-				linked_holder.playsound_local(linked_holder, 'sound/machines/phones/remote_hangup.ogg', 50, 0)
-
-		src.linked.ringing = FALSE
-		src.linked.linked = null
-		src.linked = null
-
+	SEND_SIGNAL(src, COMSIG_PHONE_OUTBOUND_SOUND, 'sound/machines/phones/remote_hangup.ogg', 50, 0)
+	SEND_SIGNAL(src, COMSIG_PHONE_UI_CLOSE)
+	SEND_SIGNAL(src, COMSIG_PHONE_HANGUP)
 	src.RemoveComponentsOfType(/datum/component/cord)
-	src.ringing = FALSE
-	src.handset?.force_drop(sever = TRUE)
-	qdel(src.handset)
-	src.handset = null
-	src.icon_state = "[phone_icon]"
-	tgui_process.close_uis(src)
+	src.ClearSpecificOverlays("cord_\ref[src]")
+	if(src.handset && !src.handset.disposed)
+	// just in case we're being deleted and the handset is already gone
+		src.handset.force_drop(sever = TRUE)
+		src.handset.set_loc(src)
+	if(!src.emagged)
+		src.icon_state = "[phone_icon]"
+	else
+		src.icon_state = "[ringing_icon]"
 	src.UpdateIcon()
 	playsound(src.loc, 'sound/machines/phones/hang_up.ogg', 50, 0)
 
-/obj/machinery/phone/proc/call_other(obj/machinery/phone/target)
-	if (!src.handset)
-		return
+/obj/machinery/phone/proc/inbound_connection_check()
+	if(!src.connected || src.emagged)
+		return PHONE_FAILED
+	if(src.answered)
+		return PHONE_REJECTED
 
-	src.dialing = TRUE
-	tgui_process?.update_uis(src)
+/obj/machinery/phone/proc/outbound_connection_check()
+	if(!src.connected || src.emagged)
+		return PHONE_FAILED
 
-	var/mob/holder = src.handset?.get_holder()
-	if (holder && (GET_DIST(src.handset, holder) < 1))
-		holder.playsound_local(holder, 'sound/machines/phones/dial.ogg', 50, 0)
+/obj/machinery/phone/proc/ring_start()
+	src.icon_state = "[src.ringing_icon]"
+	UpdateIcon()
 
-	src.last_called = target.unlisted ? "Undisclosed" : "[target.phone_id]"
-	target.caller_id_message = "<span style=\"color: [src.stripe_color];\">[src.phone_id]</span>"
+/obj/machinery/phone/proc/ring_stop()
+	if(src.answered)
+		src.icon_state = "[answered_icon]"
+	else
+		src.icon_state = "[phone_icon]"
+	UpdateIcon()
 
-	SPAWN(4 SECONDS)
-		// Return if the line is busy.
-		if (target.answered || target.linked || !target.connected || !src.answered)
-			playsound(src.loc,'sound/machines/phones/phone_busy.ogg', 50, 0)
-			src.dialing = FALSE
-			return
-
-		// Start ringing the other phone.
-		src.linked = target
-		target.linked = src
-		src.ringing = TRUE
-		src.linked.ringing = TRUE
-		src.dialing = FALSE
-		src.linked.last_called = src.unlisted ? "Undisclosed" : "[src.phone_id]"
-
+/obj/machinery/phone/update_icon()
+	. = ..()
+	src.UpdateOverlays(src.SafeGetOverlayImage("stripe", 'icons/obj/machines/phones.dmi',"[src.icon_state]-stripe"), "stripe")
 
 TYPEINFO(/obj/machinery/phone/wall)
 	mats = 25
