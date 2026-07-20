@@ -787,12 +787,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/disposal/mail{
-	mail_tag = "chemistry";
-	mailgroup = "science";
-	message = 1;
-	name = "mail chute-'Chemistry'"
-	},
+/obj/machinery/disposal/mail/autoname/research/chemistry,
 /obj/disposalpipe/trunk/mail,
 /turf/simulated/floor/purplewhite,
 /area/station/science/chemistry)
@@ -1024,7 +1019,7 @@
 "aiE" = (
 /obj/disposalpipe/switch_junction{
 	dir = 4;
-	mail_tag = "telesci";
+	mail_tag = "telescience";
 	name = "telesci mail router"
 	},
 /obj/cable{
@@ -5349,9 +5344,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aGg" = (
-/obj/machinery/disposal{
-	name = "Test Chamber Chute"
-	},
+/obj/machinery/disposal/sci/test_chamber,
 /obj/disposalpipe/trunk/transport{
 	dir = 4
 	},
@@ -6588,12 +6581,7 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 4
 	},
-/obj/machinery/disposal/mail{
-	mail_tag = "robotics";
-	mailgroup = "medresearch";
-	message = "1";
-	name = "mail chute-'Robotics'"
-	},
+/obj/machinery/disposal/mail/autoname/medbay/robotics,
 /turf/simulated/floor/black/side{
 	dir = 4
 	},
@@ -11227,10 +11215,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge/west,
 /area/station/crew_quarters/courtroom)
 "bpV" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "security";
-	name = "mail chute-'Security'"
-	},
+/obj/machinery/disposal/mail/autoname/security,
 /obj/disposalpipe/trunk/mail/south,
 /obj/machinery/recharger/wall/sticky{
 	dir = 1
@@ -12533,11 +12518,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "bzO" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "electronics";
-	mailgroup = "engineer";
-	name = "mail chute-'Electronics'"
-	},
+/obj/machinery/disposal/mail/autoname/mechanics,
 /obj/disposalpipe/trunk/mail{
 	dir = 4
 	},
@@ -17319,7 +17300,7 @@
 "dRx" = (
 /obj/disposalpipe/switch_junction{
 	dir = 4;
-	mail_tag = list("station","bar","bridge","captain","cargo","chapel","chief_engineer","detective","electronics","engineering","genetics","hydroponics","kitchen","medbay","mining","robotics","security","shuttlebay","storage","chemlink");
+	mail_tag = list("station","bar","bridge","captain","cargo","chapel","chief_engineer","detective","mechanics","engineering","genetics","hydroponics","kitchen","medbay","mining","robotics","security","shuttlebay","storage","chemlink");
 	name = "station mail router"
 	},
 /turf/simulated/floor/green/side,
@@ -18240,12 +18221,7 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
-/obj/machinery/disposal/mail{
-	mail_tag = "engineering";
-	mailgroup = "engineer";
-	message = "1";
-	name = "mail chute-'Engineering'"
-	},
+/obj/machinery/disposal/mail/autoname/engineering,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -19108,16 +19084,6 @@
 	dir = 5
 	},
 /area/station/hallway/secondary/exit)
-"eRt" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/machinery/conveyor/NS{
-	id = "zetadisposals";
-	move_lag = 15
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/scidisposal)
 "eRx" = (
 /obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/caution/south,
@@ -20690,11 +20656,8 @@
 	},
 /area/space)
 "fSn" = (
-/obj/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
 /obj/surgery_tray/kitchen_island,
+/obj/disposalpipe/segment/food,
 /turf/simulated/floor/grey/checker{
 	dir = 4
 	},
@@ -22940,13 +22903,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
-"hiA" = (
-/obj/disposalpipe/segment/food{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/white/checker2,
-/area/station/crew_quarters/kitchen)
 "hiU" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
@@ -23440,7 +23396,7 @@
 	},
 /obj/disposalpipe/switch_junction{
 	icon_state = "pipe-sj2";
-	mail_tag = list("research","artlab","buddy_depot","chemistry","research_director","research_hangar","telesci","toxins","zeta_sec");
+	mail_tag = list("research","artlab","buddy_depot","chemistry","research_director","research_hangar","telescience","toxins","zeta_sec");
 	name = "outpost mail router"
 	},
 /turf/simulated/floor,
@@ -26863,12 +26819,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "jwV" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "telesci";
-	mailgroup = "science";
-	message = "1";
-	name = "mail chute-'Science Teleporter'"
-	},
+/obj/machinery/disposal/mail/autoname/research/telescience,
 /obj/disposalpipe/trunk/mail/west,
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/caution/white{
@@ -26887,6 +26838,15 @@
 	dir = 4
 	},
 /area/station/security/processing)
+"jxb" = (
+/obj/machinery/conveyor/WS{
+	id = "garbage";
+	move_lag = 15
+	},
+/obj/machinery/light/small/sticky/frostedred,
+/obj/landmark/disposals_endpoint,
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "jxd" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -28881,13 +28841,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
-"kJb" = (
-/obj/machinery/conveyor_switch{
-	id = "garbage"
-	},
-/obj/machinery/light/small/sticky/frostedred,
-/turf/simulated/floor/plating,
-/area/station/maintenance/disposal)
 "kJp" = (
 /obj/decal/cleanable/rust/jen,
 /obj/machinery/light/small/sticky/frostedred,
@@ -28986,10 +28939,7 @@
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
-/obj/machinery/disposal{
-	name = "loaf2space";
-	desc = "A pressurized trashcan that flushes things you put into it through pipes, in this case out into the cold depths of space! Perfect for people who hate bread."
-	},
+/obj/machinery/disposal/ejection/space,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "kLV" = (
@@ -29661,10 +29611,6 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
-"ldl" = (
-/obj/disposalpipe/junction/left/north,
-/turf/simulated/floor/white/checker2,
-/area/station/crew_quarters/kitchen)
 "ldw" = (
 /obj/machinery/computer3/generic/med_data,
 /obj/machinery/power/data_terminal,
@@ -30135,6 +30081,17 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"lrV" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/machinery/conveyor/NS{
+	id = "zetadisposals";
+	move_lag = 15
+	},
+/obj/landmark/disposals_endpoint,
+/turf/simulated/floor/plating,
+/area/station/maintenance/scidisposal)
 "lsq" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -30696,7 +30653,8 @@
 /area/station/science/hall)
 "lEd" = (
 /obj/disposalpipe/segment/food{
-	dir = 8
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/grey/checker{
 	dir = 4
@@ -32014,7 +31972,7 @@
 /obj/disposalpipe/switch_junction{
 	dir = 8;
 	icon_state = "pipe-sj2";
-	mail_tag = "electronics";
+	mail_tag = "mechanics";
 	name = "electronics mail router"
 	},
 /turf/simulated/floor,
@@ -33412,10 +33370,7 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 4
 	},
-/obj/machinery/disposal/mail{
-	mail_tag = "medbay";
-	name = "mail chute-'Medbay'"
-	},
+/obj/machinery/disposal/mail/autoname/medbay,
 /obj/item/device/radio/intercom/medical,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay)
@@ -36244,14 +36199,6 @@
 	dir = 10
 	},
 /area/station/medical/medbay/lobby)
-"oCe" = (
-/obj/machinery/conveyor/WS{
-	id = "garbage";
-	move_lag = 15
-	},
-/obj/machinery/light/small/sticky/frostedred,
-/turf/simulated/floor/plating,
-/area/station/maintenance/disposal)
 "oCp" = (
 /obj/machinery/light/incandescent,
 /obj/disposalpipe/segment{
@@ -37022,32 +36969,11 @@
 	},
 /area/abandonedship)
 "oXA" = (
-/obj/storage/crate/freezer{
-	name = "Freezer - Spare Parts"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/organ/liver,
-/obj/item/organ/heart{
-	desc = "A human heart, grody. How long has it been in that freezer?";
-	name = "funky ol' heart"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody{
-	pixel_x = -2;
-	pixel_y = -3
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	pixel_x = -2;
-	pixel_y = -2
-	},
 /obj/decal/cleanable/blood/tracks,
 /obj/machinery/camera/directional/south{
 	pixel_x = 10
 	},
+/obj/storage/crate/freezer/organs,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "oYB" = (
@@ -37206,10 +37132,7 @@
 	},
 /area/station/hallway/primary/south)
 "pdZ" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "bridge";
-	name = "mail chute-'Bridge'"
-	},
+/obj/machinery/disposal/mail/autoname/bridge,
 /obj/disposalpipe/trunk/mail/north,
 /obj/item/device/radio/intercom/medical{
 	dir = 4
@@ -39854,7 +39777,7 @@
 	},
 /area/station/science/artifact)
 "qyZ" = (
-/obj/machinery/disposal/mail,
+/obj/machinery/disposal/mail/autoname/bar,
 /obj/disposalpipe/trunk/mail/south,
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
@@ -42492,11 +42415,6 @@
 	dir = 1
 	},
 /obj/submachine/chef_oven,
-/obj/machinery/disposal/small/north{
-	pixel_y = 32;
-	name = "Lay-Z Chef Prison Food Chute"
-	},
-/obj/disposalpipe/trunk/food,
 /turf/simulated/floor/grey/checker{
 	dir = 4
 	},
@@ -42528,10 +42446,6 @@
 /obj/machinery/light_switch/directional/south{
 	pixel_x = -7
 	},
-/obj/disposalpipe/trunk{
-	dir = 1
-	},
-/obj/machinery/disposal,
 /obj/blind_switch/on/directional/south{
 	pixel_x = 1
 	},
@@ -42540,6 +42454,10 @@
 	name = "reagent gear cabinet";
 	pixel_x = 32;
 	spawn_contents = list(/obj/item/storage/box/beakerbox,/obj/item/device/reagentscanner,/obj/item/device/reagentscanner,/obj/item/reagent_containers/syringe)
+	},
+/obj/machinery/disposal/kitchen/brig,
+/obj/disposalpipe/trunk/food{
+	dir = 1
 	},
 /turf/simulated/floor/grey/checker{
 	dir = 4
@@ -44424,12 +44342,7 @@
 /turf/simulated/floor/carpet/purple/fancy/edge,
 /area/station/crew_quarters/bar)
 "toA" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "detective";
-	mailgroup = "security";
-	message = "1";
-	name = "mail chute-'Detective'"
-	},
+/obj/machinery/disposal/mail/autoname/security/detective,
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
@@ -45287,6 +45200,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "tJT" = (
+/obj/disposalpipe/segment/food,
 /turf/simulated/floor/grey/checker{
 	dir = 4
 	},
@@ -45361,10 +45275,7 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/mining/magnet)
 "tLW" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "chapel";
-	name = "mail chute-'Chapel'"
-	},
+/obj/machinery/disposal/mail/autoname/chapel,
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
@@ -46279,9 +46190,6 @@
 	},
 /obj/landmark/gps_waypoint,
 /obj/disposalpipe/segment,
-/obj/disposalpipe/segment/food{
-	dir = 8
-	},
 /turf/simulated/floor/white/checker2,
 /area/station/crew_quarters/kitchen)
 "umr" = (
@@ -47192,6 +47100,12 @@
 /area/station/engine/engineering)
 "uRD" = (
 /obj/machinery/alarm/directional/east,
+/obj/disposalpipe/switch_junction{
+	dir = 4;
+	icon_state = "pipe-sj2";
+	mail_tag = "cargo";
+	name = "cargo mail router"
+	},
 /turf/simulated/floor/caution/side{
 	dir = 4
 	},
@@ -48249,6 +48163,14 @@
 	dir = 8
 	},
 /area/station/medical/medbay/surgery)
+"vuH" = (
+/obj/machinery/conveyor_switch{
+	id = "garbage";
+	position = 1
+	},
+/obj/machinery/light/small/sticky/frostedred,
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "vuZ" = (
 /obj/machinery/power/tracker/aisat,
 /obj/cable/yellow{
@@ -50059,11 +49981,7 @@
 	},
 /area/station/security/processing)
 "wzk" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "mining";
-	mailgroup = "engineer";
-	name = "mail chute-'Mining'"
-	},
+/obj/machinery/disposal/mail/autoname/mining,
 /obj/disposalpipe/trunk/mail/north,
 /obj/machinery/alarm/directional/east,
 /turf/simulated/floor/yellow/side{
@@ -50526,10 +50444,6 @@
 /obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
-"wPd" = (
-/obj/disposalpipe/segment/food,
-/turf/simulated/floor/white/checker2,
-/area/station/crew_quarters/kitchen)
 "wPr" = (
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
@@ -51192,9 +51106,6 @@
 /obj/item/reagent_containers/food/snacks/cheesewheel{
 	pixel_y = 2;
 	pixel_x = 1
-	},
-/obj/disposalpipe/segment/food{
-	dir = 8
 	},
 /turf/simulated/floor/white/checker2,
 /area/station/crew_quarters/kitchen)
@@ -71106,8 +71017,8 @@ vLP
 arN
 bjm
 sft
-wPd
-hiA
+tvz
+tvz
 qur
 tvz
 hXP
@@ -71714,7 +71625,7 @@ jmy
 umq
 vwt
 iMT
-ldl
+iMT
 jkN
 hdg
 qQr
@@ -88946,7 +88857,7 @@ bAo
 ggu
 bAq
 otx
-kJb
+vuH
 ekW
 bPg
 bAo
@@ -89547,7 +89458,7 @@ bxS
 srQ
 bzu
 bAq
-oCe
+jxb
 vKg
 bCB
 bBU
@@ -121456,7 +121367,7 @@ ajD
 rYA
 ajA
 pyu
-eRt
+lrV
 sQh
 laX
 jeb
