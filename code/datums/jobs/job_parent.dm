@@ -180,13 +180,18 @@ ABSTRACT_TYPE(/datum/job)
 				boutput(M, "<B>Your OPTIONAL Crew Objectives are as follows:</b>")
 				boutput(M, "<B>Objective #1</B>: [newObjective.explanation_text]")
 
-			if (M.client && src.change_name_on_spawn && !jobban_isbanned(M, "Custom Names"))
-				//if (ishuman(M)) //yyeah this doesn't work with critters fix later
-				var/default = M.real_name + " the " + src.name
-				var/orig_real = M.real_name
-				M.choose_name(3, src.name, default)
-				if(M.real_name != default && M.real_name != orig_real)
-					phrase_log.log_phrase("name-[ckey(src.name)]", M.real_name, no_duplicates=TRUE)
+			if (M.client && src.change_name_on_spawn)
+				if (!jobban_isbanned(M, "Custom Names"))
+					//if (ishuman(M)) //yyeah this doesn't work with critters fix later
+					var/default = M.real_name + " the " + src.name
+					var/orig_real = M.real_name
+					M.choose_name(3, src.name, default)
+					if(M.real_name != default && M.real_name != orig_real)
+						phrase_log.log_phrase("name-[ckey(src.name)]", M.real_name, no_duplicates=TRUE)
+				if (src.radio_announcement)
+					for (var/obj/machinery/computer/announcement/A as anything in machine_registry[MACHINES_ANNOUNCEMENTS])
+						if (!A.status && A.announces_arrivals)
+							A.announce_arrival(M)
 
 	proc/can_be_antag(var/role)
 		if (!src.can_roll_antag)

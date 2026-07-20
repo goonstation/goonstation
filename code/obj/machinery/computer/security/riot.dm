@@ -268,6 +268,11 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 		if(!id_card && action != "disk_auth")
 			boutput(user, SPAN_ALERT("You need an ID card to do that!"))
 			return
+		if (action in list("auth", "disk_auth"))
+			if (!src.authed && !length(src.auth_reason))
+				boutput(user, SPAN_ALERT("ERROR: missing or empty authorization reason."))
+				playsound(src, 'sound/machines/buzz-two.ogg', 50, 1)
+				return
 		switch(action)
 			if("disk_auth")
 				if(!istype(user.equipped(), /obj/item/disk/data/floppy/read_only/authentication))
@@ -300,10 +305,6 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 				logTheThing(LOG_STATION, user, "repealed all approvals for [src.authed? "un":""]authorizing the armory using [id_card]. [length(src.authorized)] total approvals.")
 				src.clear_authorizations()
 			if("auth") //Handles both Authorization and Revokation depending on src.authed
-				if (!src.authed && !length(src.auth_reason))
-					boutput(user, SPAN_ALERT("ERROR: missing or empty authorization reason."))
-					playsound(src, 'sound/machines/buzz-two.ogg', 50, 1)
-					return
 				var/auths_left = (src.check_access_level(user) == ARMORY_ACCESS_LEVEL_UNRESTRICTED ? 0 : src.auth_need - length(src.authorized))
 				var/auth_or_revoke = src.authed ? "revoke" : "authorize"
 				var/choice = tgui_alert(user, "Would you like to [auth_or_revoke] access to riot gear? [auths_left ? "[auths_left] approval\s are still needed." : null]", src.name, list(capitalize(auth_or_revoke), "Cancel"))
