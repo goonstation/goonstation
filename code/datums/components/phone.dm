@@ -145,12 +145,12 @@ TYPEINFO(/datum/component/phone_controller)
 
 /// Another phone wants to connect to us
 /// Disambiguation: This only means the initial connection; accepting is not the same as picking up
-/datum/component/phone_controller/proc/inbound_connection(datum/source, datum/caller, var/inbound_caller_id_message)
+/datum/component/phone_controller/proc/inbound_connection(datum/source, datum/phone_caller, var/inbound_caller_id_message)
 	. = SEND_SIGNAL(parent, COMSIG_PHONE_INBOUND_CONNECTION_OBJECTION_CHECK)
 	if(.)
 		return
 	if(!isnull(src.partner))
-		if(src.partner == caller)
+		if(src.partner == phone_caller)
 			CRASH()
 		return PHONE_REJECTED
 

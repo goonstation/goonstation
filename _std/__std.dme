@@ -101,6 +101,7 @@
 #include "defines\movement.dm"
 #include "defines\mutantraces.dm"
 #include "defines\obj.dm"
+#include "defines\phone.dm"
 #include "defines\pod_door_access_levels.dm"
 #include "defines\preferences.dm"
 #include "defines\pressure.dm"
