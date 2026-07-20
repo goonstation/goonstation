@@ -345,10 +345,10 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 	var/last_scan_timestamp = null
 	var/mob/living/carbon/human/victim = null
 	var/clumsy_scan = FALSE
-	var/healthscan_mode = HEALTHSCAN_MODE_TGUI
+	var/healthscan_mode = HEALTHSCAN_MODE_CHAT
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
-	HELP_MESSAGE_OVERRIDE("Use in-hand to switch between chat and TGUI output.")
+	HELP_MESSAGE_OVERRIDE("Use in-hand to switch between Chat and Window output.")
 
 	New()
 		..()
@@ -406,7 +406,7 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 				var/datum/tgui/ui = tgui_process.try_update_ui(user, src)
 				ui?.close()
 			if(HEALTHSCAN_MODE_CHAT)
-				boutput(user, SPAN_NOTICE("Now showing health results in TGUI."))
+				boutput(user, SPAN_NOTICE("Now showing health results in its own window."))
 				src.healthscan_mode = HEALTHSCAN_MODE_TGUI
 
 	attackby(obj/item/W, mob/user)
