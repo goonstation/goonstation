@@ -60,7 +60,7 @@ TYPEINFO(/mob/living/silicon/ghostdrone)
 		if (rand(1, 1000) == 69 && ticker?.mode) //heh
 			//Nuke op radio freq
 			if (istype(ticker.mode, /datum/game_mode/nuclear))
-				name = "Drone [R_FREQ_SYNDICATE]"
+				name = "Drone [RADIO::FREQ::SYNDICATE]"
 			else if (length(flocks))
 				name = "Flockdrone"
 			else

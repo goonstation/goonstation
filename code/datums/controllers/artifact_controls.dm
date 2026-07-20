@@ -267,7 +267,7 @@ var/datum/artifact_controller/artifact_controls
 		if(is_chapel && artifact.activated)
 			playsound(O.loc, 'sound/effects/bamf.ogg', 50, 1, pitch = 1.25)
 			O.ArtifactDeactivated()
-		if(!is_chapel && !artifact.activated && artifact.automatic_activation)
+		else if(!is_chapel && !artifact.activated && artifact.automatic_activation)
 			O.ArtifactActivated()
 
 

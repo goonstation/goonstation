@@ -1010,16 +1010,16 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 	var/message = null
 
 	proc/get_ticket_level()
-		. = TICKET_LEVEL_NONE
+		. = SECURITY::TICKET::LEVEL::NONE
 		var/obj/item/card/id/ID = src.master.ID_card
 		if(!ID || !istype(ID))
-			return TICKET_LEVEL_NONE
+			return SECURITY::TICKET::LEVEL::NONE
 		if(access_ticket in ID.access)
-			. = TICKET_LEVEL_TICKET
+			. = SECURITY::TICKET::LEVEL::TICKET
 		if(access_fine_small in ID.access)
-			. = TICKET_LEVEL_FINE_SMALL
+			. = SECURITY::TICKET::LEVEL::FINE_SMALL
 		if(access_fine_large in ID.access)
-			. = TICKET_LEVEL_FINE_LARGE
+			. = SECURITY::TICKET::LEVEL::FINE_LARGE
 
 	return_text()
 		if(..())
@@ -1066,7 +1066,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 					for (var/datum/fine/F in data_core.fines)
 						if(!F.approver)
 							dat += "[F.target]: [F.amount] credits<br>Reason: [F.reason]<br>Requested by: [F.issuer] - [F.issuer_job]"
-							if((ticket_level >= TICKET_LEVEL_FINE_LARGE) || ((ticket_level >= TICKET_LEVEL_FINE_SMALL) && F.amount <= MAX_FINE_NO_APPROVAL)) dat += "<br><a href='byond://?src=\ref[src];approve=\ref[F]'>Approve Fine</a>"
+							if((ticket_level >= SECURITY::TICKET::LEVEL::FINE_LARGE) || ((ticket_level >= SECURITY::TICKET::LEVEL::FINE_SMALL) && F.amount <= SECURITY::TICKET::MAX_FINE_NO_APPROVAL)) dat += "<br><a href='byond://?src=\ref[src];approve=\ref[F]'>Approve Fine</a>"
 							dat += "<br><br>"
 
 				if(3) //unpaid fines
@@ -1172,7 +1172,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			var/ticket_level = src.get_ticket_level()
 
 			logTheThing(LOG_ADMIN, usr, "requested a fine using [PDAowner]([PDAownerjob])'s PDA. It is a [fine_amount] credit fine on <b>[ticket_target]</b> with the reason: [ticket_reason].")
-			if((fine_amount <= MAX_FINE_NO_APPROVAL && (ticket_level >= TICKET_LEVEL_FINE_SMALL)) || (ticket_level >= TICKET_LEVEL_FINE_LARGE))
+			if((fine_amount <= SECURITY::TICKET::MAX_FINE_NO_APPROVAL && (ticket_level >= SECURITY::TICKET::LEVEL::FINE_SMALL)) || (ticket_level >= SECURITY::TICKET::LEVEL::FINE_LARGE))
 				var/ticket_text = "[ticket_target] has been fined [fine_amount] credits by Nanotrasen Corporate Security for [ticket_reason] on [time2text(world.realtime, "DD/MM/53")].<br>Issued and approved by: [PDAowner] - [PDAownerjob]<br>"
 				playsound(src.master, 'sound/machines/printer_thermal.ogg', 50, 1)
 				SPAWN(3 SECONDS)
@@ -1183,7 +1183,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 					p.info = ticket_text
 					p.icon_state = "paper_caution"
 
-			else if(fine_amount <= MAX_FINE_NO_APPROVAL)
+			else if(fine_amount <= SECURITY::TICKET::MAX_FINE_NO_APPROVAL)
 				message = "Fine request created, awaiting approval for a small fine."
 			else
 				message = "Fine request created, awaiting approval for a large fine."
@@ -1452,10 +1452,6 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 
 		var/dat = src.return_text_header()
 
-		if (!istype(ticker.mode, /datum/game_mode/revolution))
-			dat += "<h4>Watchful Eye infrared tracking not available at this time</h4>"
-			return dat
-
 		dat += "<h4>Watchful Eye Revolutionary Leader Tracker</h4>"
 
 		dat += "<a href='byond://?src=\ref[src];gethead=1'>Track nearest revolutionary leader</a>"
@@ -1470,29 +1466,21 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			return
 
 		if (href_list["gethead"])
-			pressed = 1
-			if (istype(ticker.mode, /datum/game_mode/revolution))
-				var/datum/game_mode/revolution/R = ticker.mode
-				var/list/datum/mind/heads = R.head_revolutionaries
-				var/turf/Turf = get_turf(usr)
-				nearest_head_location = null
-
-				for (var/datum/mind/Mind in heads)
-					if(!Mind.current)
-						continue
-					if(!istype(Mind.current, /mob/living/carbon/human))
-						continue
-					var/MindMob = Mind.current
-					var/turf/MindTurf = get_turf(MindMob)
-					if(!isalive(Mind.current) || MindTurf.z != 1)
-						continue
-					if(GET_DIST(Turf, MindTurf) <= GET_DIST(Turf, nearest_head_location))
-						nearest_head_location = MindTurf
-
-				if(nearest_head_location != null)
-					direction = dir2text(get_dir(Turf, nearest_head_location))
-					distance = GET_DIST(Turf, nearest_head_location)
-
+			src.pressed = TRUE
+			src.nearest_head_location = null
+			var/turf/scanning_from = get_turf(src.master)
+			for(var/datum/antagonist/headrev_role in get_all_antagonists(ROLE_HEAD_REVOLUTIONARY))
+				var/mob/headrev_mob = headrev_role.owner?.current
+				if(!headrev_mob || !ishuman(headrev_mob) || !isalive(headrev_mob))
+					continue
+				if(get_z(headrev_mob) != Z_LEVEL_STATION)
+					continue
+				var/turf/headrev_turf = get_turf(headrev_mob)
+				if(GET_DIST(scanning_from, headrev_turf) <= GET_DIST(scanning_from, src.nearest_head_location))
+					src.nearest_head_location = headrev_turf
+			if(!isnull(src.nearest_head_location))
+				src.direction = dir2text(get_dir(scanning_from, src.nearest_head_location))
+				src.distance = GET_DIST(scanning_from, src.nearest_head_location)
 
 		src.master.add_fingerprint(usr)
 		src.master.updateSelfDialog()
@@ -1512,10 +1500,6 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 
 		var/dat = src.return_text_header()
 
-		if (!istype(ticker.mode, /datum/game_mode/revolution))
-			dat += "<h4>Egeria Providence Array infrared tracking not available at this time</h4>"
-			return dat
-
 		dat += "<h4>Egeria Providence Array Command Tracker</h4>"
 
 		dat += "<a href='byond://?src=\ref[src];gethead=1'>Track nearest head</a>"
@@ -1531,28 +1515,21 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			return
 
 		if (href_list["gethead"])
-			pressed = 1
-			if (istype(ticker.mode, /datum/game_mode/revolution))
-				var/datum/game_mode/revolution/R = ticker.mode
-				var/list/datum/mind/heads = R.get_all_heads()
-				var/turf/Turf = get_turf(usr)
-				nearest_head_location = null
-
-				for (var/datum/mind/Mind in heads)
-					if(!Mind.current)
-						continue
-					if(!istype(Mind.current, /mob/living/carbon/human))
-						continue
-					var/MindMob = Mind.current
-					var/turf/MindTurf = get_turf(MindMob)
-					if(!isalive(Mind.current) || MindTurf.z != 1)
-						continue
-					if(GET_DIST(Turf, MindTurf) <= GET_DIST(Turf, nearest_head_location))
-						nearest_head_location = MindTurf
-
-				if(nearest_head_location != null)
-					direction = dir2text(get_dir(Turf, nearest_head_location))
-					distance = GET_DIST(Turf, nearest_head_location)
+			src.pressed = TRUE
+			src.nearest_head_location = null
+			var/turf/scanning_from = get_turf(src.master)
+			for(var/datum/mind/head_mind in ticker.mode?.get_living_heads())
+				var/mob/head_mob = head_mind.current
+				if(!head_mob || !ishuman(head_mob) || !isalive(head_mob))
+					continue
+				if(get_z(head_mob) != Z_LEVEL_STATION)
+					continue
+				var/turf/head_turf = get_turf(head_mob)
+				if(GET_DIST(scanning_from, head_turf) <= GET_DIST(scanning_from, src.nearest_head_location))
+					src.nearest_head_location = head_turf
+			if(!isnull(src.nearest_head_location))
+				src.direction = dir2text(get_dir(scanning_from, src.nearest_head_location))
+				src.distance = GET_DIST(scanning_from, src.nearest_head_location)
 
 		src.master.add_fingerprint(usr)
 		src.master.updateSelfDialog()

@@ -1,4 +1,4 @@
-/// Used to track the state of the soulguard spell inside a living mob
+/// Used to track the state of the soulguard spell inside a living mob.
 CREATE_NAMESPACE(SOULGUARD)
 
 /// No soulguard.

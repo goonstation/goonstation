@@ -1,8 +1,8 @@
 /obj/item/paper/image
 	/// A path to an image resource
 	var/path = null
-	/// Should the UI attempt to smoothly scale down the image, rather than just displaying it pixel-perfect
-	var/scaled = FALSE
+	/// Should the UI attempt to scale the image up or down? 0 = pixel perfect display.
+	var/scale_dir = 0
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
@@ -13,7 +13,7 @@
 		return list(
 			"title" = src.name,
 			"path" = src.path,
-			"scaled" = src.scaled,
+			"scale_dir" = src.scale_dir,
 			"fixed_size" = list(
 				"width" = src.sizex,
 				"height" = src.sizey
@@ -76,7 +76,7 @@
 	sizey = 800
 	scrollbar = FALSE
 	path = "images/pocket_guides/ranchguide.png"
-	scaled = TRUE
+	scale_dir = -1
 
 	New()
 		..()
@@ -91,3 +91,62 @@
 	sizey = 600
 	scrollbar = FALSE
 	path = "images/pocket_guides/siphonguide.png"
+
+// cogwerks - creepy picture things
+
+/obj/item/paper/image/sstv
+	name = "Printed Image"
+	desc = "Fancy."
+	icon_state = "paper"
+	path = "images/sstv/1.png"
+	scale_dir = 1
+	sizex = 640
+	sizey = 480
+
+	satellite
+		path = "images/sstv/2.png"
+		desc = "Looks like a satellite view of a research base."
+
+	group1
+		path = "images/sstv/3.png"
+		desc = "A group photo of a research team."
+
+	group2
+		path = "images/sstv/4.png"
+		desc = "A group photo of a research team."
+
+	group3
+		path = "images/sstv/6.png"
+		desc = "A group of scientists working in a lab."
+
+	researcher1
+		path = "images/sstv/5.png"
+		desc = "A scientist handling what looks like an ice core."
+
+	researcher2
+		path = "images/sstv/9.png"
+		desc = "The image is badly distorted, but it seems to be a researcher carrying a lab monkey."
+
+	slide1
+		path = "images/sstv/7.png"
+		desc = "A microscopic slide. Seems to be some sort of biological cell structure."
+
+	slide2
+		path = "images/sstv/8.png"
+		desc = "A dissection report of some kind of arachnid."
+
+	slide3
+		path = "images/sstv/10.png"
+		desc = "A dissection report of... something. What the hell is that?"
+
+	emerg1
+		path = "images/sstv/11.png"
+		desc = "A coded emergency broadcast."
+
+	crewlog1
+		path = "images/sstv/12.png"
+		desc = "A blurry image of something approaching the photographer."
+
+	crewlog2
+		path = "images/sstv/13.png"
+		desc = "Oh god."

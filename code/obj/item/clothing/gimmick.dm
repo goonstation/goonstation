@@ -1885,50 +1885,50 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 
 /obj/item/clothing/under/collardressbl
 	name = "collar dress"
-	desc = "a dress made for casual wear"
+	desc = "a dress made for casual wear."
 	icon_state = "collardressbl"
 	item_state = "collardressbl"
 
 /obj/item/clothing/under/collardressr
 	name = "collar dress"
-	desc = "a dress made for casual wear"
+	desc = "a dress made for casual wear."
 	icon_state = "collardressr"
 	item_state = "collardressr"
 
 /obj/item/clothing/under/collardressg
 	name = "collar dress"
-	desc = "a dress made for casual wear"
+	desc = "a dress made for casual wear."
 	icon_state = "collardressg"
 	item_state = "collardressg"
 
 /obj/item/clothing/under/collardressb
 	name = "collar dress"
-	desc = "a dress made for casual wear"
+	desc = "a dress made for casual wear."
 	icon_state = "collardressb"
 	item_state = "collardressb"
 
 /obj/item/clothing/under/redtie
 	name = "collar shirt and red tie"
-	desc = "a pale dress shirt with a nice red tie to go with it"
+	desc = "a pale dress shirt with a nice red tie to go with it."
 	icon_state = "red-tie"
 	item_state = "red-tie"
 
 /obj/item/clothing/suit/loosejacket
 	name = "loose jacket"
-	desc = "a loose and stylish jacket"
+	desc = "a loose and stylish jacket."
 	icon_state = "loose"
 	item_state = "loose"
 	body_parts_covered = TORSO|ARMS
 
 /obj/item/clothing/shoes/floppy
 	name = "floppy boots"
-	desc = "a pair of boots with very floppy design around the ankles"
+	desc = "a pair of boots with very floppy design around the ankles."
 	icon_state = "floppy"
 	item_state = "floppy"
 
 /obj/item/clothing/suit/labcoatlong
 	name = "off-brand lab coat"
-	desc = "a long labcoat from some sort of supermarket"
+	desc = "a long labcoat from some sort of supermarket."
 	icon_state = "labcoat-long"
 	item_state = "labcoat-long"
 	body_parts_covered = TORSO|LEGS|ARMS
@@ -1946,17 +1946,70 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 /obj/item/clothing/suit/gimmick/dinosaur
 	name = "dinosaur pajamas"
 	desc = "It has a little hood you can flip up and down. Rawr!"
-	icon_state = "dinosaur"
-	item_state = "dinosaur"
+	icon_state = "dinosaur-green"
+	item_state = "dinosaur-green"
 	hides_from_examine = C_UNIFORM
+	var/hcolor = "green"
 
 	New()
 		..()
-		src.AddComponent(/datum/component/toggle_hood, hood_style="dinosaur")
+		src.AddComponent(/datum/component/toggle_hood, hood_style="dinosaur[src.hcolor ? "-[hcolor]" : null]",)
+		src.item_state = "dinosaur[src.hcolor ? "-[hcolor]" : null]"
+		src.icon_state = "dinosaur[src.hcolor ? "-[hcolor]" : null]"
+		src.name = "[src.hcolor] dinosaur pajamas"
+		if(src.hcolor == "yellow" && prob(25))
+			src.name = "bananasaur pajamas"
+			src.desc = "It has a little banana-scented hood you can flip up an down. In fact, the whole thing smells like bananas."
+
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 25)
+
+/obj/item/clothing/suit/gimmick/dinosaur/red
+	icon_state = "dinosaur-red"
+	item_state = "dinosaur-red"
+	hcolor = "red"
+
+/obj/item/clothing/suit/gimmick/dinosaur/blue
+	icon_state = "dinosaur-blue"
+	item_state = "dinosaur-blue"
+	hcolor = "blue"
+
+/obj/item/clothing/suit/gimmick/dinosaur/green
+	icon_state = "dinosaur-green"
+	item_state = "dinosaur-green"
+	hcolor = "green"
+
+/obj/item/clothing/suit/gimmick/dinosaur/yellow
+	icon_state = "dinosaur-yellow"
+	item_state = "dinosaur-yellow"
+	hcolor = "yellow"
+
+/obj/item/clothing/suit/gimmick/dinosaur/orange
+	icon_state = "dinosaur-orange"
+	item_state = "dinosaur-orange"
+	hcolor = "orange"
+
+/obj/item/clothing/suit/gimmick/dinosaur/white
+	icon_state = "dinosaur-white"
+	item_state = "dinosaur-white"
+	hcolor = "white"
+
+/obj/item/clothing/suit/gimmick/dinosaur/black
+	icon_state = "dinosaur-black"
+	item_state = "dinosaur-black"
+	hcolor = "black"
+
+/obj/item/clothing/suit/gimmick/dinosaur/purple
+	icon_state = "dinosaur-purple"
+	item_state = "dinosaur-purple"
+	hcolor = "purple"
+
+/obj/item/clothing/suit/gimmick/dinosaur/pink
+	icon_state = "dinosaur-pink"
+	item_state = "dinosaur-pink"
+	hcolor = "pink"
 
 /obj/item/clothing/head/biglizard
 	name = "giant novelty lizard head"
