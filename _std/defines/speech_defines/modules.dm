@@ -152,6 +152,7 @@
 #define SPEECH_MODIFIER_VENDING_MACHINE "vending_machine"
 #define SPEECH_MODIFIER_VOICE_CHANGER "voice_changer"
 #define SPEECH_MODIFIER_VOICE_ANONYMIZER "voice_anonymizer"
+#define SPEECH_MODIFIER_ORIGINAL_NAME "original_name"
 
 
 //------------ Speech Prefixes ------------//
