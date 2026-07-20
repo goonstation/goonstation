@@ -154,7 +154,7 @@ TYPEINFO(/datum/component/phone_controller)
 			CRASH()
 		return PHONE_REJECTED
 
-	src.partner = caller
+	src.partner = phone_caller
 	SEND_SIGNAL(src.parent, COMSIG_PHONE_RING_START, inbound_caller_id_message)
 	return PHONE_ACCEPTED
 
