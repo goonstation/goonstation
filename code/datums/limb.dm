@@ -679,8 +679,6 @@
 /datum/limb/mouth/demon_doll
 	dam_low = 4
 	dam_high = 9
-	dmg_type = DAMAGE_CRUSH
-	actions = list("crunches", "gnaws", "bites")
 	can_gun_grab = FALSE
 	can_beat_up_robots = TRUE
 

@@ -1,7 +1,7 @@
 /datum/targetable/wraithAbility/make_demon_doll
 	name = "Summon Demon Doll"
 	desc = "Dredge an evil spirit up from the depths of the void to pester the living."
-	icon_state = "summonrats"
+	icon_state = "make_doll"
 	targeted = 0
 	pointCost = 400
 	cooldown = 150 SECONDS
