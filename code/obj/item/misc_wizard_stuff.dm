@@ -345,6 +345,9 @@
 		STOP_TRACKING
 		. = ..()
 
+	attack(mob/target, mob/user, def_zone, is_special, params) // stop hitting yourself
+		return
+
 	pixelaction(atom/target, params, mob/user, reach)
 		if(!IN_RANGE(user, target, WIDE_TILE_WIDTH / 2))
 			return
@@ -366,19 +369,28 @@
 				src.victim = target
 				if(victim.anchored)
 					return
-				src.throw_mode = TRUE
-				boutput(user, SPAN_ALERT("Target selected!"))
-				boutput(target, SPAN_ALERT("You feel a gripping force take hold of you!"))
-				user.set_cursor(cursors_selection[user.client.preferences.target_cursor])
-				victim.changeStatus("telekinetic_grasp", 3 SECONDS)
-				playsound(user.loc, 'sound/impact_sounds/Energy_Hit_2.ogg', 50, 1)
+				if(victim?.traitHolder?.hasTrait("training_chaplain"))
+					victim.visible_message("<spab class='alert'>A divine light shields [victim] from harm!</span>")
+					return
+				if(iswizard(victim) && victim != user)
+					victim.visible_message("<spab class='alert'>A magical light shields [victim] from harm!</span>")
+					return
+				else
+					src.throw_mode = TRUE
+					boutput(user, SPAN_ALERT("Target selected!"))
+					boutput(target, SPAN_ALERT("You feel a gripping force take hold of you!"))
+					user.set_cursor(cursors_selection[user.client.preferences.target_cursor])
+					victim.changeStatus("telekinetic_grasp", 3 SECONDS)
+					playsound(user.loc, 'sound/impact_sounds/Energy_Hit_2.ogg', 50, 1)
+					UpdateIcon()
+					FLICK("[icon_state]_fire", src)
 
-				SPAWN(3 SECONDS) // is there a better way to do this
-					if(src.victim && src.throw_mode)
-						victim.changeStatus("telekinetic_grasp", -5 SECONDS)
-						src.victim = null
-						src.throw_mode = FALSE
-						user.update_cursor()
+					SPAWN(3 SECONDS) // is there a better way to do this
+						if(src.victim && src.throw_mode)
+							victim.changeStatus("telekinetic_grasp", -5 SECONDS)
+							src.victim = null
+							src.throw_mode = FALSE
+							user.update_cursor()
 
 		else if(src.throw_mode && src.victim)
 			if(!IN_RANGE(user, victim, WIDE_TILE_WIDTH / 2))
@@ -388,21 +400,22 @@
 			else
 				var/turf/T = get_turf(target)
 				playsound(victim.loc, "swing_hit", 50, 1)
+				src.throw_charges -= 1
 				victim.throw_at(T, 8, 2)
 				victim.changeStatus("knockdown", 1 SECOND)
 				victim.force_laydown_standup()
 				victim.visible_message(SPAN_ALERT("<B>[victim] is thrown by a mysterious force!</b>"))
 				src.throw_mode = FALSE
 				src.victim = null
-				src.throw_charges -= 1
 				user.update_cursor()
 
 	dropped(mob/user)
 		. = ..()
-		victim.changeStatus("telekinetic_grasp", -5 SECONDS)
-		src.throw_mode = FALSE
-		src.victim = null
-		user.update_cursor()
+		if(src.victim && src.throw_mode)
+			victim.changeStatus("telekinetic_grasp", -5 SECONDS)
+			src.victim = null
+			src.throw_mode = FALSE
+			user.update_cursor()
 
 	pull(mob/user)
 		if(check_target_immunity(user))

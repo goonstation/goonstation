@@ -184,7 +184,7 @@
 /datum/targetable/spell/summon_telekinetic_staff
 	name = "Summon and Recharge telekinetic staff"
 	desc = "Returns the staff to your active hand and restores its charges."
-	icon_state = "staff_thunder"
+	icon_state = "staff_tele"
 	targeted = 0
 	cooldown = 1 MINUTE
 	requires_robes = 1
@@ -195,7 +195,7 @@
 		if (!ismob(M))
 			return 1
 		if (!can_act(M))
-			boutput(M, "<span class='alert'Not when you're incapacitated or restrained.")
+			boutput(M, SPAN_ALERT("Not when you're incapacitated or restrained."))
 			return 1
 
 		if(!istype(get_area(M), /area/sim/gunsim)) // Avoid dead chat spam
@@ -217,10 +217,10 @@
 				if (we_hold_it)
 					for (var/obj/item/staff/telekinesis/T in M.contents)
 						T.recharge_throws()
-					boutput(M, "<span class='alert'You charge your staff in your hand.")
+					boutput(M, SPAN_ALERT("You charge your staff in your hand."))
 					return 0
 				else
-					boutput(M, "<span class='alert'You summon a new staff to your hands.")
+					boutput(M, SPAN_ALERT("You summon a new staff to your hands."))
 					var/obj/item/staff/telekinesis/C = new /obj/item/staff/telekinesis(get_turf(M))
 					if(!isvirtual(M))
 						C.wizard_key = M.mind?.key
@@ -234,7 +234,7 @@
 					break
 
 				if (!staff || !istype(staff))
-					boutput(M, "<span class='alert'You were unable to summon your staff.")
+					boutput(M, SPAN_ALERT("You were unable to summon your staff."))
 					return 0
 
 				staff.send_staff_to_target_mob(M)
@@ -251,13 +251,13 @@
 				if (!M)
 					return 0
 				if (!istype(staff))
-					boutput(M, "<span class='alert'You were unable to summon your staff.")
+					boutput(M, SPAN_ALERT("You were unable to summon your staff."))
 					return 0
 				if (!can_act(M))
-					boutput(M, "<span class='alert'Not when you're incapacitated or restrained.")
+					boutput(M, SPAN_ALERT("Not when you're incapacitated or restrained."))
 					return 0
 				if (M.mind.key != staff.wizard_key)
-					boutput(M, "<span class='alert'You were unable to summon your staff.")
+					boutput(M, SPAN_ALERT("You were unable to summon your staff."))
 					return 0
 
 				staff.send_staff_to_target_mob(M)
