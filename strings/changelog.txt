@@ -1,4 +1,32 @@
 
+(t)mon jul 20 26
+(u)LeahTheTech
+(p)27260
+(e)🆕🧛🔨|C-Feature, A-Gamemodes, A-Player-Actions
+(+)Changeling critters now use their original names in hivechat.
+(u)Callipygian0
+(p)27051
+(e)🗺|A-Mapping
+(*)Added a new hideout variant for the Syndicate Disposals Hijacker for those who want a seedy bar to lure people into. Bouncer not included.
+(t)sat jul 18 26
+(u)JORJ949
+(p)27210
+(e)🧛|A-Gamemodes
+(*)Headset integrated uplinks are now actually integrated into the headset, rather than swapping the uplink/headset items on lock/unlock. Selecting the unlock frequency on an uplink headset will only unlock the uplink, and not set the frequency.
+(t)fri jul 17 26
+(u)Sovexe
+(p)26841
+(e)🧫🔊🚨⚙|C-Experimental, C-Sound, A-Admin, A-Internal
+(*)Added backend support for multi-emitter managed positional sounds that dynamically update their position and volume while playing.
+(u)JORJ949
+(p)27153
+(e)💅🧛|C-QoL, A-Gamemodes
+(*)The "General" category in uplinks has been split into several new categories for easier finding of what you want to buy.
+(t)thu jul 16 26
+(u)glowbold
+(p)26772
+(e)🔄📄💊|C-Rework, A-UI, A-Medical
+(*)Hand-held Health Analyzers use a TGUI window, and update automatically as long as you're next to the patient.
 (t)wed jul 15 26
 (u)ANNmagedon
 (p)27201

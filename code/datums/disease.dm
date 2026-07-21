@@ -20,7 +20,6 @@
 	// or any combination of the above!
 	var/recureprob = 8					// ...and how likely % they are per tick to do so (unless a number or list is associated with the reagent as above)
 	var/temperature_cure = 406			// bodytemperature >= this will purge the infection
-	var/detectability = 0				// detectors must >= this to pick up the disease
 	var/resistance_prob = 0				// how likely this disease is to grant immunity once cured
 	var/max_stacks = 1					// how many times at once you can have this ailment
 	var/can_be_asymptomatic = TRUE
@@ -60,7 +59,6 @@
 		strain.stage_prob = src.stage_prob
 		strain.reagentcure = src.reagentcure
 		strain.recureprob = src.recureprob
-		strain.detectability = src.detectability
 		strain.cure_flags = src.cure_flags
 		strain.cure_desc = src.cure_desc
 		strain.spread = src.spread
@@ -108,7 +106,6 @@
 	var/tmp/mob/living/affected_mob = null	// the poor sod suffering from the disease
 	var/name = null							// an override - uses the base disease name if null - if not, it uses this
 	var/scantype = null						// same as above but for scantype
-	var/detectability = 0					// scans must >= this to detect the disease
 	/// flags for determining how this ailment is cured
 	var/cure_flags = CURE_UNKNOWN
 	/// description for the cure that appears in medical scanners, etc. if null, presets based on the cure flags
@@ -128,7 +125,6 @@
 		src.master = other.master
 		src.name = other.name
 		src.scantype = other.scantype
-		src.detectability = other.detectability
 		src.cure_flags = other.cure_flags
 		src.cure_desc = other.cure_desc
 		src.spread = other.spread
@@ -192,13 +188,19 @@
 			text += "Info: [src.info]<br>"
 		if (istype(src.master,/datum/ailment/disease) && src.spread)
 			text += "Spread: [src.spread]<br>"
-		var/cure_method = "Suggested Remedy: "
+		text += src.get_cure_method()
+		text += "</small></span>"
+		return text
+
+	/// Get cure methods of a given disease in a string
+	proc/get_cure_method()
+		. = "Suggested Remedy: "
 		if (src.cure_flags & CURE_INCURABLE)
-			cure_method = "Infection is incurable. Suggest quarantine measures."
+			return "Infection is incurable. Suggest quarantine measures."
 		else if (src.cure_flags & CURE_UNKNOWN)
-			cure_method = "No suggested remedies."
+			return "No suggested remedies."
 		else if (src.cure_flags & CURE_CUSTOM)
-			cure_method += src.cure_desc
+			. += src.cure_desc
 		else
 			var/list/cures = list()
 			if (src.cure_flags & CURE_TIME)
@@ -213,18 +215,20 @@
 				cures += "Sleep"
 			if (src.cure_flags & CURE_HEART_TRANSPLANT)
 				cures += "Heart transplant"
+			. += english_list(cures, and_text=" or ")
 
-			if (length(cures) == 1)
-				cure_method += cures[1]
-			else if (length(cures) == 2)
-				cure_method += "[cures[1]] or [cures[2]]"
-			else
-				for (var/i in 1 to (length(cures) - 1))
-					cure_method += cures[i] + ", "
-				cure_method += " or [cures[length(cures)]]"
-		text += cure_method
-		text += "</small></span>"
-		return text
+	/// Package disease data for use in TGUI health interfaces
+	proc/ui_disease_data()
+		. = list(
+			"state" = src.state,
+			"disease_name" = src.name ? src.name : src.master.name,
+			"scantype" = src.scantype ? src.scantype : src.master.scantype,
+			"spread" = src.spread,
+			"info" = src.info,
+			"stage" = src.stage,
+			"max_stage" = src.master.max_stages,
+			"cure_method" = src.get_cure_method()
+		)
 
 	proc/on_infection()
 		master.on_infection(affected_mob, src)

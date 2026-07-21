@@ -441,21 +441,6 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/engine/elect)
-"adD" = (
-/obj/machinery/light/small/sticky,
-/obj/disposalpipe/trunk/food{
-	dir = 8
-	},
-/obj/machinery/disposal{
-	name = "Lay-Z Chef Prison Food Chute"
-	},
-/obj/machinery/camera/directional/south{
-	pixel_x = -10
-	},
-/turf/simulated/floor/white/checker2{
-	dir = 1
-	},
-/area/station/crew_quarters/kitchen)
 "adN" = (
 /obj/rack,
 /obj/item/clothing/shoes/magnetic,
@@ -1733,13 +1718,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
-"aym" = (
-/obj/machinery/light/small/sticky/cool/very{
-	dir = 1
-	},
-/obj/storage/crate/freezer/organs,
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
 "ayn" = (
 /obj/mesh/catwalk{
 	dir = 4
@@ -3708,17 +3686,6 @@
 /obj/decal/tile_edge/stripe/corner,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
-"bcE" = (
-/obj/machinery/disposal{
-	desc = "Listen... sometimes you don't wanna just toss the old bodies into the reclaimer...";
-	name = "Kitchen Freezer Chute"
-	},
-/obj/disposalpipe/trunk/morgue{
-	dir = 1;
-	name = "kitchen freezer pipe"
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
 "bcG" = (
 /obj/machinery/light/incandescent/warm,
 /obj/machinery/light/emergency{
@@ -16715,6 +16682,15 @@
 /obj/mapping_helper/access/brig,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/courtroom)
+"fhM" = (
+/obj/machinery/conveyor/EW{
+	id = "disposals";
+	move_lag = 30;
+	operating = 1
+	},
+/obj/landmark/disposals_endpoint,
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/sw)
 "fhN" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -17889,6 +17865,19 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/elect)
+"fBz" = (
+/obj/machinery/light/small/sticky,
+/obj/disposalpipe/trunk/food{
+	dir = 8
+	},
+/obj/machinery/disposal/kitchen/brig,
+/obj/machinery/camera/directional/south{
+	pixel_x = -10
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/crew_quarters/kitchen)
 "fBA" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
@@ -24528,6 +24517,14 @@
 	dir = 4
 	},
 /area/station/crew_quarters/hor)
+"hDt" = (
+/obj/machinery/disposal/kitchen/freezer,
+/obj/disposalpipe/trunk/morgue{
+	dir = 1;
+	name = "kitchen freezer pipe"
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "hDK" = (
 /obj/item/storage/toolbox/electrical{
 	pixel_y = -1
@@ -58272,14 +58269,6 @@
 	},
 /turf/simulated/floor/carpet/purple/standard,
 /area/station/science/lobby)
-"sdd" = (
-/obj/machinery/optable{
-	name = "Autopsy Table"
-	},
-/obj/machinery/drainage,
-/obj/random_item_spawner/organs/bloody,
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
 "sdm" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -64986,6 +64975,13 @@
 	icon_state = "fgreen2"
 	},
 /area/station/crew_quarters/cafeteria)
+"ugo" = (
+/obj/machinery/disposal/ejection,
+/obj/disposalpipe/trunk{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/chapel/office)
 "ugv" = (
 /obj/random_item_spawner/junk/maybe_few,
 /turf/simulated/floor/plating/jen,
@@ -70226,6 +70222,13 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
+"vKZ" = (
+/obj/machinery/light/small/sticky/cool/very{
+	dir = 1
+	},
+/obj/storage/crate/freezer/organs,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "vLt" = (
 /obj/disposalpipe/switch_junction/left/west{
 	mail_tag = "market"
@@ -74959,13 +74962,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
-"xbG" = (
-/obj/machinery/disposal,
-/obj/disposalpipe/trunk{
-	dir = 4
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/chapel/office)
 "xbJ" = (
 /obj/machinery/conveyor/WE{
 	id = "disposals";
@@ -78412,6 +78408,14 @@
 	},
 /turf/simulated/floor/white,
 /area/spacehabitat/pool)
+"xZt" = (
+/obj/machinery/optable{
+	name = "Autopsy Table"
+	},
+/obj/machinery/drainage,
+/obj/random_item_spawner/organs/bloody,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "xZH" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -105479,7 +105483,7 @@ xVy
 kmy
 efD
 ieL
-ltH
+fhM
 ieL
 rdj
 rdj
@@ -112018,7 +112022,7 @@ rdj
 rdj
 rdj
 pcq
-xbG
+ugo
 dmd
 prO
 hgG
@@ -121694,7 +121698,7 @@ lxA
 tdo
 xBr
 sZh
-adD
+fBz
 pQh
 kIP
 rxO
@@ -124182,7 +124186,7 @@ aop
 wDu
 rdj
 eKH
-aym
+vKZ
 qkl
 jMh
 kxL
@@ -124484,7 +124488,7 @@ aei
 xqF
 rhQ
 fgL
-sdd
+xZt
 dOV
 ipi
 ipi
@@ -124792,7 +124796,7 @@ aIa
 aIa
 cBI
 aWa
-bcE
+hDt
 lvL
 reX
 qxM

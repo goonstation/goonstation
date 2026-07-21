@@ -5344,9 +5344,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aGg" = (
-/obj/machinery/disposal{
-	name = "Test Chamber Chute"
-	},
+/obj/machinery/disposal/sci/test_chamber,
 /obj/disposalpipe/trunk/transport{
 	dir = 4
 	},
@@ -19086,16 +19084,6 @@
 	dir = 5
 	},
 /area/station/hallway/secondary/exit)
-"eRt" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/machinery/conveyor/NS{
-	id = "zetadisposals";
-	move_lag = 15
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/scidisposal)
 "eRx" = (
 /obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/caution/south,
@@ -20668,11 +20656,8 @@
 	},
 /area/space)
 "fSn" = (
-/obj/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
 /obj/surgery_tray/kitchen_island,
+/obj/disposalpipe/segment/food,
 /turf/simulated/floor/grey/checker{
 	dir = 4
 	},
@@ -22918,13 +22903,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
-"hiA" = (
-/obj/disposalpipe/segment/food{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/white/checker2,
-/area/station/crew_quarters/kitchen)
 "hiU" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
@@ -26860,6 +26838,15 @@
 	dir = 4
 	},
 /area/station/security/processing)
+"jxb" = (
+/obj/machinery/conveyor/WS{
+	id = "garbage";
+	move_lag = 15
+	},
+/obj/machinery/light/small/sticky/frostedred,
+/obj/landmark/disposals_endpoint,
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "jxd" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -28854,13 +28841,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
-"kJb" = (
-/obj/machinery/conveyor_switch{
-	id = "garbage"
-	},
-/obj/machinery/light/small/sticky/frostedred,
-/turf/simulated/floor/plating,
-/area/station/maintenance/disposal)
 "kJp" = (
 /obj/decal/cleanable/rust/jen,
 /obj/machinery/light/small/sticky/frostedred,
@@ -28959,10 +28939,7 @@
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
-/obj/machinery/disposal{
-	name = "loaf2space";
-	desc = "A pressurized trashcan that flushes things you put into it through pipes, in this case out into the cold depths of space! Perfect for people who hate bread."
-	},
+/obj/machinery/disposal/ejection/space,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "kLV" = (
@@ -29634,10 +29611,6 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
-"ldl" = (
-/obj/disposalpipe/junction/left/north,
-/turf/simulated/floor/white/checker2,
-/area/station/crew_quarters/kitchen)
 "ldw" = (
 /obj/machinery/computer3/generic/med_data,
 /obj/machinery/power/data_terminal,
@@ -30108,6 +30081,17 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"lrV" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/machinery/conveyor/NS{
+	id = "zetadisposals";
+	move_lag = 15
+	},
+/obj/landmark/disposals_endpoint,
+/turf/simulated/floor/plating,
+/area/station/maintenance/scidisposal)
 "lsq" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -30669,7 +30653,8 @@
 /area/station/science/hall)
 "lEd" = (
 /obj/disposalpipe/segment/food{
-	dir = 8
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/grey/checker{
 	dir = 4
@@ -36214,14 +36199,6 @@
 	dir = 10
 	},
 /area/station/medical/medbay/lobby)
-"oCe" = (
-/obj/machinery/conveyor/WS{
-	id = "garbage";
-	move_lag = 15
-	},
-/obj/machinery/light/small/sticky/frostedred,
-/turf/simulated/floor/plating,
-/area/station/maintenance/disposal)
 "oCp" = (
 /obj/machinery/light/incandescent,
 /obj/disposalpipe/segment{
@@ -42438,11 +42415,6 @@
 	dir = 1
 	},
 /obj/submachine/chef_oven,
-/obj/machinery/disposal/small/north{
-	pixel_y = 32;
-	name = "Lay-Z Chef Prison Food Chute"
-	},
-/obj/disposalpipe/trunk/food,
 /turf/simulated/floor/grey/checker{
 	dir = 4
 	},
@@ -42474,10 +42446,6 @@
 /obj/machinery/light_switch/directional/south{
 	pixel_x = -7
 	},
-/obj/disposalpipe/trunk{
-	dir = 1
-	},
-/obj/machinery/disposal,
 /obj/blind_switch/on/directional/south{
 	pixel_x = 1
 	},
@@ -42486,6 +42454,10 @@
 	name = "reagent gear cabinet";
 	pixel_x = 32;
 	spawn_contents = list(/obj/item/storage/box/beakerbox,/obj/item/device/reagentscanner,/obj/item/device/reagentscanner,/obj/item/reagent_containers/syringe)
+	},
+/obj/machinery/disposal/kitchen/brig,
+/obj/disposalpipe/trunk/food{
+	dir = 1
 	},
 /turf/simulated/floor/grey/checker{
 	dir = 4
@@ -45228,6 +45200,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "tJT" = (
+/obj/disposalpipe/segment/food,
 /turf/simulated/floor/grey/checker{
 	dir = 4
 	},
@@ -46217,9 +46190,6 @@
 	},
 /obj/landmark/gps_waypoint,
 /obj/disposalpipe/segment,
-/obj/disposalpipe/segment/food{
-	dir = 8
-	},
 /turf/simulated/floor/white/checker2,
 /area/station/crew_quarters/kitchen)
 "umr" = (
@@ -48193,6 +48163,14 @@
 	dir = 8
 	},
 /area/station/medical/medbay/surgery)
+"vuH" = (
+/obj/machinery/conveyor_switch{
+	id = "garbage";
+	position = 1
+	},
+/obj/machinery/light/small/sticky/frostedred,
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "vuZ" = (
 /obj/machinery/power/tracker/aisat,
 /obj/cable/yellow{
@@ -50466,10 +50444,6 @@
 /obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
-"wPd" = (
-/obj/disposalpipe/segment/food,
-/turf/simulated/floor/white/checker2,
-/area/station/crew_quarters/kitchen)
 "wPr" = (
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
@@ -51132,9 +51106,6 @@
 /obj/item/reagent_containers/food/snacks/cheesewheel{
 	pixel_y = 2;
 	pixel_x = 1
-	},
-/obj/disposalpipe/segment/food{
-	dir = 8
 	},
 /turf/simulated/floor/white/checker2,
 /area/station/crew_quarters/kitchen)
@@ -71046,8 +71017,8 @@ vLP
 arN
 bjm
 sft
-wPd
-hiA
+tvz
+tvz
 qur
 tvz
 hXP
@@ -71654,7 +71625,7 @@ jmy
 umq
 vwt
 iMT
-ldl
+iMT
 jkN
 hdg
 qQr
@@ -88886,7 +88857,7 @@ bAo
 ggu
 bAq
 otx
-kJb
+vuH
 ekW
 bPg
 bAo
@@ -89487,7 +89458,7 @@ bxS
 srQ
 bzu
 bAq
-oCe
+jxb
 vKg
 bCB
 bBU
@@ -121396,7 +121367,7 @@ ajD
 rYA
 ajA
 pyu
-eRt
+lrV
 sQh
 laX
 jeb
