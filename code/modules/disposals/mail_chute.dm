@@ -32,6 +32,12 @@
 		SPAWN(10 SECONDS)
 			src.post_radio_status()
 
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
+
 	ui_data(mob/user)
 		. = ..()
 		. += list(

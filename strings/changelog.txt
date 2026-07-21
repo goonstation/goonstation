@@ -1,4 +1,13 @@
 
+(t)mon jul 20 26
+(u)LeahTheTech
+(p)27260
+(e)🆕🧛🔨|C-Feature, A-Gamemodes, A-Player-Actions
+(+)Changeling critters now use their original names in hivechat.
+(u)Callipygian0
+(p)27051
+(e)🗺|A-Mapping
+(*)Added a new hideout variant for the Syndicate Disposals Hijacker for those who want a seedy bar to lure people into. Bouncer not included.
 (t)sat jul 18 26
 (u)JORJ949
 (p)27210
