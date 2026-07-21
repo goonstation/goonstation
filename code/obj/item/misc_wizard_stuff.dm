@@ -326,6 +326,85 @@
 		. = ..()
 		src.setItemSpecial(/datum/item_special/launch_projectile/monkey_organ)
 
+/obj/item/staff/telekinesis
+
+	name = "telekinetic staff"
+	desc = "A strange staff infused with the power of throwing people into vending machines."
+	force = 0
+	icon_state = "stafftelekinesis"
+	item_state = "staff_telekinesis"
+	var/throw_charges = 8
+	var/throw_mode = FALSE
+	var/mob/living/victim = null
+
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
+
+	pixelaction(atom/target, params, mob/user, reach)
+		if(!IN_RANGE(user, target, WIDE_TILE_WIDTH / 2))
+			return
+		if (!user.wizard_castcheck())
+			return
+		var/area/A = get_area(target)
+		if (istype(A, /area/station/chapel))
+			boutput(user, SPAN_ALERT("You cannot throw people on holy ground!"))
+			return
+		if (A?.sanctuary || istype(A, /area/wizard_station))
+			boutput(user, SPAN_ALERT("You cannot throw people here!"))
+			return
+		if (throw_charges <= 0)
+			boutput(user, SPAN_ALERT("[name] is out of charges! Magically recall it to restore it's power."))
+			return
+
+		if (!src.throw_mode)
+			if(ismob(target) && !isintangible(target))
+				src.victim = target
+				src.throw_mode = TRUE
+				boutput(user, SPAN_ALERT("Target selected!"))
+				boutput(target, SPAN_ALERT("You feel a gripping force take hold of you!"))
+				user.set_cursor(cursors_selection[user.client.preferences.target_cursor])
+				victim.changeStatus("telekinetic_grasp", 3 SECONDS)
+				playsound(user.loc, 'sound/impact_sounds/Energy_Hit_2.ogg', 50, 1)
+
+				SPAWN(3 SECONDS) // is there a better way to do this
+					if(src.victim && src.throw_mode)
+						victim.changeStatus("telekinetic_grasp", -5 SECONDS)
+						src.victim = null
+						src.throw_mode = FALSE
+						user.update_cursor()
+
+		else if(src.throw_mode && src.victim)
+			if(!IN_RANGE(user, victim, WIDE_TILE_WIDTH / 2))
+				src.throw_mode = FALSE
+				src.victim = null
+				user.update_cursor()
+			else
+				var/turf/T = get_turf(target)
+				playsound(victim.loc, "swing_hit", 50, 1)
+				victim.throw_at(T, 8, 2)
+				victim.changeStatus("knockdown", 1 SECOND)
+				victim.force_laydown_standup()
+				victim.visible_message(SPAN_ALERT("<B>[victim] is thrown by a mysterious force!</b>"))
+				src.throw_mode = FALSE
+				src.victim = null
+				src.throw_charges -= 1
+				user.update_cursor()
+
+	dropped(mob/user)
+		. = ..()
+		victim.changeStatus("telekinetic_grasp", -5 SECONDS)
+		src.throw_mode = FALSE
+		src.victim = null
+		user.update_cursor()
+
+
+
+
 /////////////////////////////////////////////////////////// Magic mirror /////////////////////////////////////////////
 
 /obj/magicmirror
