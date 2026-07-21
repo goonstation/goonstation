@@ -333,7 +333,7 @@
 	force = 0
 	icon_state = "stafftelekinesis"
 	item_state = "staff_telekinesis"
-	var/throw_charges = 8
+	var/throw_charges = 3
 	var/throw_mode = FALSE
 	var/mob/living/victim = null
 
@@ -453,7 +453,9 @@
 			target.force_laydown_standup()
 			boutput(target, SPAN_ALERT("A powerful force throws you as you try to touch [name]!"))
 
-
+	proc/recharge_throws()
+		if(src.throw_charges <= 3) //doesn't ever reduce charge even though three is usually max
+			src.throw_charges = 3
 /////////////////////////////////////////////////////////// Magic mirror /////////////////////////////////////////////
 
 /obj/magicmirror

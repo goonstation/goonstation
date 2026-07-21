@@ -180,6 +180,13 @@ ABSTRACT_TYPE(/datum/SWFuplinkspell)
 	assoc_item = /obj/item/staff/thunder
 	cost = 2
 
+/datum/SWFuplinkspell/staffoftelekinesis
+	name = "Staff of Telekinesis"
+	eqtype = "Equipment"
+	desc = "A powerful staff charged with telekinetic power. Choose any visible unfortunate target and then aim elsewhere to send them flying in that direction. Can be used three times before needing to be recharged. Can be summoned magically."
+	assoc_spell = /datum/targetable/spell/summon_telekinetic_staff
+	assoc_item = /obj/item/staff/telekinesis
+	cost = 2
 //------------ OFFENSIVE SPELLS ------------//
 /datum/SWFuplinkspell/bull
 	name = "Bull's Charge"
