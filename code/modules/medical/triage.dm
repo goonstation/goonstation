@@ -123,8 +123,9 @@
 		if (istype(A, /obj/item/sticker/postit/triage))
 			tag = A
 		else if (!ismob(A))
-			return;
-		for (var/obj/item/sticker/postit/triage/content in A.vis_contents)
+			return
+		var/mob/M = A
+		for (var/obj/item/sticker/postit/triage/content in M.vis_contents)
 			tag = content
 			break
 		if (!tag)
