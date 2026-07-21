@@ -361,9 +361,11 @@
 			boutput(user, SPAN_ALERT("[name] is out of charges! Magically recall it to restore it's power."))
 			return
 
-		if (!src.throw_mode)
+		if (!src.throw_mode && !ON_COOLDOWN(src, "select_target", 3 SECONDS))
 			if(ismob(target) && !isintangible(target))
 				src.victim = target
+				if(victim.anchored)
+					return
 				src.throw_mode = TRUE
 				boutput(user, SPAN_ALERT("Target selected!"))
 				boutput(target, SPAN_ALERT("You feel a gripping force take hold of you!"))
@@ -402,7 +404,54 @@
 		src.victim = null
 		user.update_cursor()
 
+	pull(mob/user)
+		if(check_target_immunity(user))
+			return ..()
 
+		if (!istype(user))
+			return
+
+		if (iswizard(user))
+			return ..()
+		else
+			fling_person(user)
+			return
+
+	attack_hand(var/mob/user)
+		if (user.mind)
+			if (iswizard(user) || check_target_immunity(user))
+				if (user.mind.key != src.wizard_key && !check_target_immunity(user))
+					boutput(user, SPAN_ALERT("The [src.name] is magically attuned to another wizard! You can use it, but may not summon it magically."))
+				..()
+				return
+			else
+				fling_person(user)
+				return
+		else ..()
+
+	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
+		if (iswizard(usr))
+			. = ..()
+		else if(isliving(usr))
+			fling_person(usr)
+		else
+			return
+
+	attackby(obj/item/W, mob/user, params)
+		if (istype(W, /obj/item/magtractor))
+			src.fling_person(user)
+			user.changeStatus("unconscious", 3 SECONDS)
+			return
+		. = ..()
+
+
+	proc/fling_person(var/mob/target)
+		if(!target.anchored)
+			var/turf/T = get_edge_target_turf(target, target.dir)
+			target.throw_at(T, 8, 2)
+			target.changeStatus("knockdown", 1 SECOND)
+			target.force_laydown_standup()
+			boutput(target, SPAN_ALERT("A powerful force throws you as you try to touch [name]!"))
 
 
 /////////////////////////////////////////////////////////// Magic mirror /////////////////////////////////////////////
