@@ -200,6 +200,7 @@
 #include "namespaces\dwaine\filenames.dm"
 #include "namespaces\dwaine\filepaths.dm"
 #include "namespaces\dwaine\permissions.dm"
+#include "namespaces\phone.dm"
 #include "namespaces\dwaine\shell.dm"
 #include "namespaces\dwaine\syscalls.dm"
 #include "namespaces\pay.dm"
