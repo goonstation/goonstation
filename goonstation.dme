@@ -38,6 +38,7 @@
 #endif
 
 // BEGIN_INCLUDE
+#include "_std\namespaces\phone.dm"
 #include "code\area.dm"
 #include "code\atom.dm"
 #include "code\client.dm"
@@ -1649,6 +1650,7 @@
 #include "code\modules\mapping\helpers\firedoor_spawn.dm"
 #include "code\modules\mapping\helpers\mailtag_spawn.dm"
 #include "code\modules\mapping\helpers\mob_spawn.dm"
+#include "code\modules\mapping\helpers\phone_networks.dm"
 #include "code\modules\mapping\helpers\plant_spawn.dm"
 #include "code\modules\mapping\helpers\turf_helpers.dm"
 #include "code\modules\mapping\helpers\wingrille_spawner.dm"
