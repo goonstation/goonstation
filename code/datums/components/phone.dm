@@ -1,4 +1,4 @@
-/* ================== COMPONENTIZED PHONES ==================
+/* ================== COMPONENT PHONES ==================
  To turn something into a phone, you just need to be able to handle the relevant signals and
  correctly update the phone directory. Thankfully, the components do this all for you.
  Simply add the following components to your phone, and have a means of sending the following signals:
@@ -17,72 +17,20 @@
  You can always make your own UI, not have a speaker, or even make your own unique microphone component.
  These are just the basic components and signals you should be able to use for most purposes.
 
+ Phones operate through a mix of signals and the PHONE namespace. All communications and controls
+ to and from phones is done through signals, with important procs available in PHONE, such as
+ get_var and set_var. Certain logic is made available to all parts of the codebase, primarily
+ defined in defines\phone.dm. There are also mapping helpers available.
+
 */
-
-// ================== GLOBALS ==================
-
-/// [phone_id (which should be unique)] = [list(controller_parent, unlisted, can_talk_across_z_levels, category, color)]
-/// All phones should always be listed here, regardless of if they're able to be called or not
-var/global/list/phone_directory = list()
-#define PHONE_DIRECTORY_PARENT 1
-#define PHONE_DIRECTORY_UNLISTED 2
-#define PHONE_DIRECTORY_Z 3
-#define PHONE_DIRECTORY_CATEGORY 4
-#define PHONE_DIRECTORY_COLOR 5
-
-/// Returns a valid unique phone name/id, optionally auto-generated if name is left null
-/// Controller components always use this when setting their name with COMSIG_PHONE_SET_INFO
-/proc/phone_id_handler(var/datum/controller_parent, var/name)
-	// Generate a name for the phone.
-	var/temp_name = "phone"
-	if (isnull(name))
-		if(isatom(controller_parent))
-			var/atom/parent_atom = controller_parent
-			temp_name = parent_atom.name
-			var/area/location = get_area(parent_atom)
-			if ((temp_name == parent_atom::name) && location)
-				temp_name = location.name
-		name = temp_name
-	temp_name = name // gonna reuse this variable in a sec
-	var/safe_name_found = FALSE
-	var/name_counter = 1
-	var/match_found = FALSE
-	while (!safe_name_found)
-		match_found = FALSE
-		for (var/phone_id in phone_directory)
-			if (phone_id == temp_name)
-				match_found = TRUE
-				temp_name = name + " [name_counter]"
-				name_counter++
-				break
-		if(!match_found)
-			safe_name_found = TRUE
-			name = temp_name
-	return name
 
 /// Our job is to handle connections between ourselves and other phones, and
 ///  take outbound signals and sending them as inbound signals on any connected phone
 /// We assume everyone else will do the work of validation for signals, we just pass it along
 /datum/component/phone_controller
 	/// Who are we connected to and should forward signals to? (Even if one side hasn't picked up yet)
-	/// If this is not null, we inherently cannot take calls
 	var/datum/partner = null
-
-	// misc vars
-	var/can_talk_across_z_levels = TRUE
-	var/unlisted = FALSE
-
-	// Phone identification stuff
-	var/phone_category = null
 	var/phone_id = null
-	var/stripe_color = null
-
-	var/last_called = null
-
-// old vars that are possibly needed
-	var/dialing = FALSE
-	var/emagged = FALSE
-	var/ringing = FALSE
 
 TYPEINFO(/datum/component/phone_controller)
 	initialization_args = list(
@@ -98,12 +46,10 @@ TYPEINFO(/datum/component/phone_controller)
 		_phone_category = "uncategorized",
 		_can_talk_across_z_levels = TRUE,
 		_unlisted = FALSE,
-		_stripe_color = "#b65f08"
+		_stripe_color = "#b65f08",
+		_networks = PHONE_NET_STATION
 	)
 		. = ..()
-		src.set_info(null, list("id" = _phone_id, "category" = _phone_category, "color" = _stripe_color))
-		src.set_unlisted(null, _unlisted)
-		src.set_can_z(null, _can_talk_across_z_levels)
 
 		RegisterSignal(parent, COMSIG_PHONE_INBOUND_CONNECTION, PROC_REF(inbound_connection))
 		RegisterSignal(parent, COMSIG_PHONE_INBOUND_DISCONNECTION, PROC_REF(inbound_disconnection))
@@ -113,15 +59,20 @@ TYPEINFO(/datum/component/phone_controller)
 		RegisterSignal(parent, COMSIG_PHONE_OUTBOUND_SOUND, PROC_REF(outbound_sound))
 		RegisterSignal(parent, COMSIG_PHONE_OUTBOUND_VAPE, PROC_REF(outbound_vape))
 		RegisterSignal(parent, COMSIG_PHONE_OUTBOUND_VOLTRON, PROC_REF(outbound_voltron))
-		RegisterSignal(parent, COMSIG_PHONE_CHECK_Z, PROC_REF(check_z))
+		RegisterSignal(parent, COMSIG_PHONE_GET_Z, PROC_REF(get_phone_z))
 		RegisterSignal(parent, COMSIG_PHONE_CHECK_CONNECTED, PROC_REF(check_connected))
-		RegisterSignal(parent, COMSIG_PHONE_SET_INFO, PROC_REF(set_info))
-		RegisterSignal(parent, COMSIG_PHONE_SET_UNLISTED, PROC_REF(set_unlisted))
-		RegisterSignal(parent, COMSIG_PHONE_SET_CAN_Z, PROC_REF(set_can_z))
 		RegisterSignal(parent, COMSIG_PHONE_ANSWER, PROC_REF(answer))
 		RegisterSignal(parent, COMSIG_PHONE_HANGUP, PROC_REF(hangup))
+		RegisterSignal(parent, COMSIG_PHONE_GET_PHONEBOOK, PROC_REF(get_phonebook))
+		RegisterSignal(parent, COMSIG_PHONE_GET_NAME, PROC_REF(get_name))
 
-		phone_directory[phone_id] = list(parent, unlisted, can_talk_across_z_levels, phone_category, stripe_color)
+		src.phone_id = PHONE.name_handler(src.parent, _phone_id)
+		PHONE.set_var(src.phone_id, PHONE_PARENT, src.parent, suppress_updates = TRUE)
+		PHONE.set_var(src.phone_id, PHONE_CATEGORY, _phone_category, suppress_updates = TRUE)
+		PHONE.set_var(src.phone_id, PHONE_COLOR, _stripe_color, suppress_updates = TRUE)
+		PHONE.set_var(src.phone_id, PHONE_CAN_Z, _can_talk_across_z_levels, suppress_updates = TRUE)
+		PHONE.set_var(src.phone_id, PHONE_UNLISTED, _unlisted, suppress_updates = TRUE)
+		PHONE.set_var(src.phone_id, PHONE_NETWORKS, _networks, suppress_updates = FALSE)
 
 /datum/component/phone_controller/UnregisterFromParent()
 	SEND_SIGNAL(parent, COMSIG_PHONE_OUTBOUND_DISCONNECTION)
@@ -133,26 +84,25 @@ TYPEINFO(/datum/component/phone_controller)
 	UnregisterSignal(parent, COMSIG_PHONE_OUTBOUND_SOUND)
 	UnregisterSignal(parent, COMSIG_PHONE_OUTBOUND_VAPE)
 	UnregisterSignal(parent, COMSIG_PHONE_OUTBOUND_VOLTRON)
-	UnregisterSignal(parent, COMSIG_PHONE_CHECK_Z)
+	UnregisterSignal(parent, COMSIG_PHONE_GET_Z)
 	UnregisterSignal(parent, COMSIG_PHONE_CHECK_CONNECTED)
-	UnregisterSignal(parent, COMSIG_PHONE_SET_INFO)
-	UnregisterSignal(parent, COMSIG_PHONE_SET_UNLISTED)
-	UnregisterSignal(parent, COMSIG_PHONE_SET_CAN_Z)
 	UnregisterSignal(parent, COMSIG_PHONE_ANSWER)
 	UnregisterSignal(parent, COMSIG_PHONE_HANGUP)
-	phone_directory.Remove(phone_id)
+	UnregisterSignal(parent, COMSIG_PHONE_GET_PHONEBOOK)
+	UnregisterSignal(parent, COMSIG_PHONE_GET_NAME)
+	PHONE.directory.Remove(phone_id)
 	. = ..()
 
 /// Another phone wants to connect to us
 /// Disambiguation: This only means the initial connection; accepting is not the same as picking up
 /datum/component/phone_controller/proc/inbound_connection(datum/source, datum/phone_caller, var/inbound_caller_id_message)
-	. = SEND_SIGNAL(parent, COMSIG_PHONE_INBOUND_CONNECTION_OBJECTION_CHECK)
+	. = SEND_SIGNAL(parent, COMSIG_PHONE_INBOUND_CONNECTION_CHECK)
 	if(.)
 		return
 	if(!isnull(src.partner))
 		if(src.partner == phone_caller)
 			CRASH()
-		return PHONE_REJECTED
+		return PHONE_FAILED
 
 	src.partner = phone_caller
 	SEND_SIGNAL(src.parent, COMSIG_PHONE_RING_START, inbound_caller_id_message)
@@ -173,15 +123,15 @@ TYPEINFO(/datum/component/phone_controller)
 /// Something wants us to connect to a specific phone
 /datum/component/phone_controller/proc/outbound_connection(datum/source, target_id)
 	if(partner)
-		return PHONE_REJECTED
-	. = SEND_SIGNAL(parent, COMSIG_PHONE_OUTBOUND_CONNECTION_OBJECTION_CHECK)
+		return PHONE_FAILED
+	. = SEND_SIGNAL(parent, COMSIG_PHONE_OUTBOUND_CONNECTION_CHECK)
 	if(.)
 		return
 	var/datum/target
 	// there's a delay between dialing and starting the call, and we'd risk a bad index if the target phone
 	// gets deleted in that time
 	try
-		target = phone_directory[target_id][PHONE_DIRECTORY_PARENT]
+		target = PHONE.directory[target_id][PHONE_PARENT]
 	catch
 		return PHONE_FAILED
 	. = SEND_SIGNAL(target, COMSIG_PHONE_INBOUND_CONNECTION, parent, src.get_caller_id_message())
@@ -198,10 +148,10 @@ TYPEINFO(/datum/component/phone_controller)
 	. = SEND_SIGNAL(src.partner, COMSIG_PHONE_INBOUND_DISCONNECTION, src.parent)
 	src.on_disconnection()
 
-/datum/component/phone_controller/proc/outbound_speech(datum/source, var/list/said_message, var/echo = FALSE)
+/datum/component/phone_controller/proc/outbound_speech(datum/source, var/list/said_message, var/do_echo = FALSE)
 	if(!src.partner)
 		return PHONE_FAILED
-	. = SEND_SIGNAL(src.partner, COMSIG_PHONE_INBOUND_SPEECH, said_message, echo)
+	. = SEND_SIGNAL(src.partner, COMSIG_PHONE_INBOUND_SPEECH, said_message, do_echo)
 
 /datum/component/phone_controller/proc/outbound_sound(datum/source, sound_file, vol = 50, vary = 0)
 	if(!src.partner)
@@ -218,9 +168,11 @@ TYPEINFO(/datum/component/phone_controller)
 		return PHONE_FAILED
 	. = SEND_SIGNAL(src.partner, COMSIG_PHONE_INBOUND_VOLTRON, voltron_list)
 
-/datum/component/phone_controller/proc/check_z(datum/source, z2check)
-	if(z2check == get_z(parent))
-		return 1
+/// Returns the parent's z-level, or 0 if it's a datum
+/datum/component/phone_controller/proc/get_phone_z()
+	if(!isatom(src.parent))
+		return 0
+	return get_z(src.parent)
 
 /datum/component/phone_controller/proc/check_connected(datum/source)
 	if(partner)
@@ -228,32 +180,9 @@ TYPEINFO(/datum/component/phone_controller)
 	else
 		return FALSE
 
-/datum/component/phone_controller/proc/set_info(datum/source, list/new_info)
-	var/list/updated_info = list()
-	if(new_info["id"] || isnull(src.phone_id))
-		SEND_SIGNAL(parent, COMSIG_PHONE_OUTBOUND_DISCONNECTION)
-		phone_directory.Remove(phone_id)
-		src.phone_id = phone_id_handler(parent, new_info["id"])
-		updated_info["id"] = src.phone_id
-	if(new_info["category"])
-		src.phone_category = new_info["category"]
-		updated_info["category"] = new_info["category"]
-	if(new_info["color"])
-		src.stripe_color = new_info["color"]
-		updated_info["color"] = new_info["color"]
-	phone_directory[phone_id] = list(parent, unlisted, can_talk_across_z_levels, phone_category, stripe_color)
-	SEND_SIGNAL(parent, COMSIG_PHONE_INFO_UPDATED, updated_info)
-
 /datum/component/phone_controller/proc/get_caller_id_message()
-	return "<span style=\"color: [src.stripe_color];\">[src.phone_id]</span>"
-
-/datum/component/phone_controller/proc/set_unlisted(datum/source, do_unlisted)
-	src.unlisted = do_unlisted
-	phone_directory[phone_id][PHONE_DIRECTORY_UNLISTED] = src.unlisted
-
-/datum/component/phone_controller/proc/set_can_z(datum/source, allow_across_z)
-	src.can_talk_across_z_levels = allow_across_z
-	phone_directory[phone_id][PHONE_DIRECTORY_Z] = src.can_talk_across_z_levels
+	var/color = PHONE.get_var(src.phone_id, PHONE_COLOR)
+	return "<span style=\"color: [color];\">[src.phone_id]</span>"
 
 /datum/component/phone_controller/proc/answer()
 	SEND_SIGNAL(src.parent, COMSIG_PHONE_RING_STOP)
@@ -265,6 +194,23 @@ TYPEINFO(/datum/component/phone_controller)
 	SEND_SIGNAL(src.parent, COMSIG_PHONE_MICROPHONE_DISABLE)
 	SEND_SIGNAL(src.parent, COMSIG_PHONE_SPEAKER_DISABLE)
 
+/// Returns all entries in PHONE.directory which we can see
+/datum/component/phone_controller/proc/get_phonebook(datum/source, list/return_list)
+	for(var/phone in PHONE.directory)
+		var/datum/phone_parent = PHONE.directory[phone][PHONE_PARENT]
+		if(PHONE.get_var(phone, PHONE_UNLISTED))
+			continue
+		if(!(PHONE.get_var(src.phone_id, PHONE_NETWORKS) & PHONE.get_var(phone, PHONE_NETWORKS)))
+			continue
+		if(phone_parent == src.parent)
+			continue
+		if(!PHONE.z_check(src.parent, phone_parent))
+			continue
+		return_list[phone] = PHONE.directory[phone]
+
+/datum/component/phone_controller/proc/get_name(datum/source, list/return_list)
+	return_list[PHONE_NAME] = src.phone_id
+
 // Default UI =======================================================================
 
 /datum/component/phone_ui
@@ -273,8 +219,6 @@ TYPEINFO(/datum/component/phone_controller)
 	var/last_called = "None"
 	/// If we're in the middle of dialing
 	var/dialing = FALSE
-	// todo fix
-	var/name = "TEST NAME"
 
 TYPEINFO(/datum/component/phone_ui)
 	initialization_args = list(
@@ -289,14 +233,12 @@ TYPEINFO(/datum/component/phone_ui)
 		src.controller_parent = parent
 	RegisterSignal(src.controller_parent, COMSIG_PHONE_UI_INTERACT, PROC_REF(signal_ui_interact))
 	RegisterSignal(src.controller_parent, COMSIG_PHONE_UI_CLOSE, PROC_REF(phone_ui_close))
-	RegisterSignal(src.controller_parent, COMSIG_PHONE_INBOUND_CONNECTION_OBJECTION_CHECK, PROC_REF(inbound_connection_check))
-	RegisterSignal(src.controller_parent, COMSIG_PHONE_INFO_UPDATED, PROC_REF(info_updated))
+	RegisterSignal(src.controller_parent, COMSIG_PHONE_INBOUND_CONNECTION_CHECK, PROC_REF(inbound_connection_check))
 
 /datum/component/phone_ui/UnregisterFromParent()
 	UnregisterSignal(src.controller_parent, COMSIG_PHONE_UI_INTERACT)
 	UnregisterSignal(src.controller_parent, COMSIG_PHONE_UI_CLOSE)
-	UnregisterSignal(src.controller_parent, COMSIG_PHONE_INBOUND_CONNECTION_OBJECTION_CHECK)
-	UnregisterSignal(src.controller_parent, COMSIG_PHONE_INFO_UPDATED)
+	UnregisterSignal(src.controller_parent, COMSIG_PHONE_INBOUND_CONNECTION_CHECK)
 	. = ..()
 
 /datum/component/phone_ui/proc/signal_ui_interact(datum/source, mob/user)
@@ -309,19 +251,12 @@ TYPEINFO(/datum/component/phone_ui)
 		ui.open()
 
 /datum/component/phone_ui/ui_data(mob/user)
+	var/list/our_directory = list()
+	SEND_SIGNAL(controller_parent, COMSIG_PHONE_GET_PHONEBOOK, our_directory)
 	var/list/list/list/phonebook = list()
-	for(var/P in phone_directory)
+	for(var/P in our_directory)
 		var/match_found = FALSE
-		var/unlisted = phone_directory[P][PHONE_DIRECTORY_UNLISTED]
-		if (unlisted)
-			continue
-		var/datum/phone_parent = phone_directory[P][PHONE_DIRECTORY_PARENT]
-		if (phone_parent == src.controller_parent)
-			continue
-		var/can_z = phone_directory[P][PHONE_DIRECTORY_Z]
-		if (!can_z && !SEND_SIGNAL(phone_parent, COMSIG_PHONE_CHECK_Z, get_z(src.controller_parent)))
-			continue
-		var/category = phone_directory[P][PHONE_DIRECTORY_CATEGORY]
+		var/category = PHONE.directory[P][PHONE_CATEGORY]
 		if (length(phonebook))
 			for (var/i in 1 to length(phonebook))
 				if (phonebook[i]["category"] == category)
@@ -346,7 +281,7 @@ TYPEINFO(/datum/component/phone_ui)
 		"dialing" = src.dialing,
 		"inCall" = incall,
 		"lastCalled" = src.last_called,
-		"name" = src.name
+		"name" = PHONE.get_var(src.controller_parent, PHONE_NAME)
 	)
 
 	.["phonebook"] = phonebook
@@ -362,13 +297,13 @@ TYPEINFO(/datum/component/phone_ui)
 			. = TRUE
 			var/id = params["target"]
 			// good to double-check since uis don't immediately update
-			if(!phone_directory[id][PHONE_DIRECTORY_UNLISTED])
+			if(!PHONE.directory[id][PHONE_UNLISTED])
 				src.start_call(id)
 				return
 			boutput(usr, SPAN_ALERT("Unable to connect!"))
 
 /datum/component/phone_ui/proc/start_call(target_id)
-	if(SEND_SIGNAL(src.controller_parent, COMSIG_PHONE_OUTBOUND_CONNECTION_OBJECTION_CHECK)) return
+	if(SEND_SIGNAL(src.controller_parent, COMSIG_PHONE_OUTBOUND_CONNECTION_CHECK)) return
 
 	src.dialing = TRUE
 	tgui_process?.update_uis(src)
@@ -377,7 +312,7 @@ TYPEINFO(/datum/component/phone_ui)
 
 	// in the slight chance we start dialing after the target phone blew up but before our UI updated
 	try
-		src.last_called = phone_directory[target_id][PHONE_DIRECTORY_UNLISTED] ? "Undisclosed" : "[target_id]"
+		src.last_called = PHONE.directory[target_id][PHONE_UNLISTED] ? "Undisclosed" : "[target_id]"
 	catch
 		SEND_SIGNAL(src.controller_parent, COMSIG_PHONE_INBOUND_SOUND, 'sound/machines/phones/phone_busy.ogg')
 		return
@@ -388,14 +323,10 @@ TYPEINFO(/datum/component/phone_ui)
 
 /datum/component/phone_ui/proc/inbound_connection_check()
 	if(src.dialing)
-		return PHONE_REJECTED
+		return PHONE_FAILED
 
 /datum/component/phone_ui/proc/phone_ui_close()
 	tgui_process.close_uis(src)
-
-/datum/component/phone_ui/proc/info_updated(datum/source, list/info_list)
-	if(info_list["id"])
-		src.name = info_list["id"]
 
 // Microphone =======================================================================
 
@@ -473,8 +404,6 @@ TYPEINFO(/datum/component/phone_microphone)
 /datum/component/phone_speaker
 	var/datum/controller_parent = null
 	var/speaker_enabled = FALSE
-	var/name = null
-	var/color = null
 
 TYPEINFO(/datum/component/phone_speaker)
 	initialization_args = list(
@@ -494,7 +423,6 @@ TYPEINFO(/datum/component/phone_speaker)
 	RegisterSignal(src.controller_parent, COMSIG_PHONE_SPEAKER_ENABLE, PROC_REF(speaker_enable))
 	RegisterSignal(src.controller_parent, COMSIG_PHONE_SPEAKER_DISABLE, PROC_REF(speaker_disable))
 	RegisterSignal(src.parent, COMSIG_PHONE_RETRIEVE_PREFIX, PROC_REF(retrieve_prefix))
-	RegisterSignal(src.controller_parent, COMSIG_PHONE_INFO_UPDATED, PROC_REF(info_updated))
 	if(voltronnable)
 		RegisterSignal(src.controller_parent, COMSIG_PHONE_INBOUND_VOLTRON, PROC_REF(receive_voltron))
 	if(vapeable)
@@ -507,7 +435,6 @@ TYPEINFO(/datum/component/phone_speaker)
 	UnregisterSignal(src.controller_parent, COMSIG_PHONE_SPEAKER_ENABLE)
 	UnregisterSignal(src.controller_parent, COMSIG_PHONE_SPEAKER_DISABLE)
 	UnregisterSignal(src.controller_parent, COMSIG_PHONE_RETRIEVE_PREFIX)
-	UnregisterSignal(src.controller_parent, COMSIG_PHONE_INFO_UPDATED)
 	UnregisterSignal(src.controller_parent, COMSIG_PHONE_INBOUND_VOLTRON)
 	UnregisterSignal(src.controller_parent, COMSIG_PHONE_INBOUND_VAPE)
 	. = ..()
@@ -516,12 +443,12 @@ TYPEINFO(/datum/component/phone_speaker)
 	var/atom/parent_atom = src.parent
 	parent_atom.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_SPOKEN_RADIO)
 
-/datum/component/phone_speaker/proc/receive_speech(datum/source, var/datum/say_message/message, var/echo = FALSE)
+/datum/component/phone_speaker/proc/receive_speech(datum/source, var/datum/say_message/message, var/do_echo = FALSE)
 	if(!istype(message, /datum/say_message))
 		CRASH("[src].receive_speech() (Parent: [parent]) received [message], expected type /datum/say_message!")
 	if(!src.speaker_enabled) return
-	if(!echo)
-		SEND_SIGNAL(src.controller_parent, COMSIG_PHONE_OUTBOUND_SPEECH, message, TRUE)
+	if(do_echo)
+		SEND_SIGNAL(src.controller_parent, COMSIG_PHONE_OUTBOUND_SPEECH, message, FALSE)
 	var/atom/P = parent
 	message = message.Copy()
 	message.speaker = P
@@ -567,15 +494,11 @@ TYPEINFO(/datum/component/phone_speaker)
 		vape_list["target_loc"] = parent_atom.loc
 	return PHONE_ACCEPTED
 
-/datum/component/phone_speaker/proc/info_updated(datum/source, list/info_list)
-	if(info_list["id"])
-		src.name = info_list["id"]
-	if(info_list["color"])
-		src.color = info_list["color"]
-
 /// Effectively returns a string which we should display in output speech, by putting it into an existing list
 /datum/component/phone_speaker/proc/retrieve_prefix(datum/source, list/return_list)
-	return_list["prefix"] = "\[ <span style=\"color:[src.color]\">[bicon(src.parent)] [src.name]</span> \]"
+	var/color = PHONE.get_var(src.controller_parent, PHONE_COLOR)
+	var/name = PHONE.get_var(src.controller_parent, PHONE_NAME)
+	return_list["prefix"] = "\[ <span style=\"color:[color]\">[bicon(src.parent)] [name]</span> \]"
 
 // Ringer ===========================================================================
 
@@ -665,13 +588,13 @@ TYPEINFO(/datum/component/phone_ringer)
 	// Pick a random phone.
 	src.inbound_caller_id_message = "<span style=\"color: #cccccc;\">???</span>"
 	var/list/phonebook = list()
-	for(var/phone in phone_directory)
-		if (phone_directory[phone][PHONE_DIRECTORY_UNLISTED])
+	for(var/phone in PHONE.directory)
+		if (PHONE.directory[phone][PHONE_UNLISTED])
 			continue
 		phonebook += phone
-		phonebook[phone] = phone_directory[phone]
+		phonebook[phone] = PHONE.directory[phone]
 
 	if (length(phonebook))
 		var/prank_id = pick(phonebook)
-		src.inbound_caller_id_message = "<span style=\"color: [phonebook[prank_id][PHONE_DIRECTORY_COLOR]];\">[prank_id]</span>"
+		src.inbound_caller_id_message = "<span style=\"color: [phonebook[prank_id][PHONE_COLOR]];\">[prank_id]</span>"
 	SEND_SIGNAL(src.controller_parent, COMSIG_PHONE_RING_START, inbound_caller_id_message)

@@ -67,8 +67,8 @@ TYPEINFO(/obj/machinery/phone)
 	UpdateIcon()
 
 	RegisterSignal(src, COMSIG_CORD_RETRACT, PROC_REF(hang_up))
-	RegisterSignal(src, COMSIG_PHONE_INBOUND_CONNECTION_OBJECTION_CHECK, PROC_REF(inbound_connection_check))
-	RegisterSignal(src, COMSIG_PHONE_OUTBOUND_CONNECTION_OBJECTION_CHECK, PROC_REF(outbound_connection_check))
+	RegisterSignal(src, COMSIG_PHONE_INBOUND_CONNECTION_CHECK, PROC_REF(inbound_connection_check))
+	RegisterSignal(src, COMSIG_PHONE_OUTBOUND_CONNECTION_CHECK, PROC_REF(outbound_connection_check))
 	RegisterSignal(src, COMSIG_PHONE_RING_START, PROC_REF(ring_start))
 	RegisterSignal(src, COMSIG_PHONE_RING_STOP, PROC_REF(ring_stop))
 	RegisterSignal(src, COMSIG_PHONE_INFO_UPDATED, PROC_REF(info_updated))
@@ -88,29 +88,26 @@ TYPEINFO(/obj/machinery/phone)
 	UnregisterSignal(src, COMSIG_PHONE_RING_START)
 	UnregisterSignal(src, COMSIG_PHONE_RING_STOP)
 	UnregisterSignal(src, COMSIG_PHONE_INFO_UPDATED)
-	UnregisterSignal(src, COMSIG_PHONE_INBOUND_CONNECTION_OBJECTION_CHECK)
-	UnregisterSignal(src, COMSIG_PHONE_OUTBOUND_CONNECTION_OBJECTION_CHECK)
+	UnregisterSignal(src, COMSIG_PHONE_INBOUND_CONNECTION_CHECK)
+	UnregisterSignal(src, COMSIG_PHONE_OUTBOUND_CONNECTION_CHECK)
 	STOP_TRACKING
 	. = ..()
 
-/obj/machinery/phone/proc/info_updated(datum/source, list/updated_info)
-	if(updated_info["id"])
-		src.phone_id = updated_info["id"]
-	if(updated_info["category"])
-		src.phone_category = updated_info["category"]
-	if(updated_info["color"])
-		src.stripe_color = updated_info["color"]
+/obj/machinery/phone/proc/info_updated(datum/source, var/phone_name)
+	src.phone_id = phone_name
+	src.phone_category = PHONE.get_var(src, PHONE_CATEGORY)
+	src.stripe_color = PHONE.get_var(src, PHONE_COLOR)
 
 /obj/machinery/phone/proc/connect_wire()
 	src.connected = TRUE
-	SEND_SIGNAL(src, COMSIG_PHONE_SET_UNLISTED, FALSE)
+	PHONE.set_var(src, PHONE_UNLISTED, FALSE)
 	if(src.answered)
 		SEND_SIGNAL(src, COMSIG_PHONE_MICROPHONE_ENABLE)
 		SEND_SIGNAL(src, COMSIG_PHONE_SPEAKER_ENABLE)
 
 /obj/machinery/phone/proc/disconnect_wire()
 	src.connected = FALSE
-	SEND_SIGNAL(src, COMSIG_PHONE_SET_UNLISTED, TRUE)
+	PHONE.set_var(src, PHONE_UNLISTED, TRUE)
 	SEND_SIGNAL(src, COMSIG_PHONE_MICROPHONE_DISABLE)
 	SEND_SIGNAL(src, COMSIG_PHONE_SPEAKER_DISABLE)
 	SEND_SIGNAL(src, COMSIG_PHONE_OUTBOUND_DISCONNECTION)
@@ -155,7 +152,7 @@ TYPEINFO(/obj/machinery/phone)
 		if (!text || !in_interact_range(src, user))
 			return
 
-		SEND_SIGNAL(src, COMSIG_PHONE_SET_INFO, list("id" = text))
+		PHONE.set_var(src, PHONE_NAME, text)
 		boutput(user, SPAN_NOTICE("You rename the phone to \"[src.phone_id]\"."))
 		return
 
@@ -210,7 +207,7 @@ TYPEINFO(/obj/machinery/phone)
 	if (user)
 		boutput(user, SPAN_ALERT("You short out the ringer circuit on the [src]."))
 	src.emagged = TRUE
-	src.hang_up()
+	SEND_SIGNAL(src, COMSIG_PHONE_HANGUP)
 	SEND_SIGNAL(src, COMSIG_PHONE_EMAG)
 	return TRUE
 
@@ -251,14 +248,15 @@ TYPEINFO(/obj/machinery/phone)
 	if(!src.connected || src.emagged)
 		return PHONE_FAILED
 	if(src.answered)
-		return PHONE_REJECTED
+		return PHONE_FAILED
 
 /obj/machinery/phone/proc/outbound_connection_check()
 	if(!src.connected || src.emagged)
 		return PHONE_FAILED
 
 /obj/machinery/phone/proc/ring_start()
-	src.icon_state = "[src.ringing_icon]"
+	if(!src.answered) // in case we're emagged while answered
+		src.icon_state = "[src.ringing_icon]"
 	UpdateIcon()
 
 /obj/machinery/phone/proc/ring_stop()
