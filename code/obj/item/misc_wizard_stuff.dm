@@ -382,8 +382,6 @@
 					user.set_cursor(cursors_selection[user.client.preferences.target_cursor])
 					victim.changeStatus("telekinetic_grasp", 3 SECONDS)
 					playsound(user.loc, 'sound/impact_sounds/Energy_Hit_2.ogg', 50, 1)
-					UpdateIcon()
-					FLICK("[icon_state]_fire", src)
 
 					SPAWN(3 SECONDS) // is there a better way to do this
 						if(src.victim && src.throw_mode)
