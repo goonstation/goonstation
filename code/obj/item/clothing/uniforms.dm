@@ -1130,6 +1130,12 @@ TYPEINFO(/obj/item/clothing/under/shorts/luchador)
 	icon_state = "shirt_n_pant-br_tie-bl"
 	item_state = "shirt_n_pant-br_tie-bl"
 
+/obj/item/clothing/under/shirt_pants_br/scitie
+	name = "shirt and brown pants with a purple tie"
+	desc = "A button-down shirt, some black pants and a purple tie."
+	icon_state = "shirt_n_pant-br_tie-sci"
+	item_state = "shirt_n_pant-br_tie-sci"
+
 // White Pants
 /obj/item/clothing/under/shirt_pants_w
 	name = "shirt and white pants"
