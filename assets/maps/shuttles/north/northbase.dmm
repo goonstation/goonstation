@@ -324,10 +324,7 @@
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "iQ" = (
-/obj/machinery/door/airlock/pyro/security{
-	name = "Secure Transport";
-	hardened = 1
-	},
+/obj/machinery/door/airlock/pyro/glass/security,
 /obj/mapping_helper/access/security,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
