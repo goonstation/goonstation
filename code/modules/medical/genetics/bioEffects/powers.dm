@@ -2082,6 +2082,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	cooldown = 0
 	var/active = 0
 	ability_path = /datum/targetable/geneticsAbility/darkcloak
+	var/has_modifier = FALSE
 
 	proc/cloak_decloak(var/which_way = 1)
 		if (!src.owner || !isliving(src.owner))
@@ -2091,9 +2092,16 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		if (which_way == 1)
 			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src, INVIS_MESON)
 			L.UpdateOverlays(overlay_image, id)
+			if (!src.has_modifier)
+				L.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_CLOAKED)
+				src.has_modifier = TRUE
+
 		else
 			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
 			L.UpdateOverlays(null, id)
+			if (src.has_modifier)
+				L.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_CLOAKED)
+				src.has_modifier = FALSE
 
 	OnAdd()
 		active = 0
