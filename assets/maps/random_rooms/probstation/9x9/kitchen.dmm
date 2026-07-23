@@ -1,0 +1,489 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/table/reinforced/chemistry/auto{
+	desc = "A black countertop table for storing kitchen-y objects.";
+	name = "kitchen counter"
+	},
+/obj/machinery/mixer,
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/crew_quarters/kitchen)
+"b" = (
+/obj/stove{
+	pixel_y = 2
+	},
+/obj/item/soup_pot{
+	pixel_x = 1;
+	pixel_y = 12
+	},
+/obj/item/ladle{
+	name = "soup sword";
+	pixel_x = 10;
+	pixel_y = 15
+	},
+/obj/item/matchbook{
+	pixel_x = -7;
+	pixel_y = 6
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/crew_quarters/kitchen)
+"e" = (
+/obj/machinery/deep_fryer,
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/crew_quarters/kitchen)
+"f" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "kitchen_shutter";
+	layer = 3.1;
+	name = "Kitchen Shutter";
+	dir = 8
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/crew_quarters/kitchen)
+"g" = (
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
+"h" = (
+/obj/machinery/light/small/floor,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/crew_quarters/kitchen)
+"j" = (
+/obj/machinery/camera/directional/west,
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk/east,
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/crew_quarters/kitchen)
+"k" = (
+/obj/machinery/door/airlock/pyro/alt,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/kitchen,
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/crew_quarters/kitchen)
+"l" = (
+/obj/machinery/vending/kitchen,
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/crew_quarters/kitchen)
+"m" = (
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4
+	},
+/obj/mapping_helper/access/kitchen,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/crew_quarters/kitchen)
+"n" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/crew_quarters/kitchen)
+"o" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
+"p" = (
+/obj/submachine/chef_oven{
+	dir = 4
+	},
+/obj/machinery/firealarm/directional/west,
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/crew_quarters/kitchen)
+"q" = (
+/mob/living/critter/small_animal/mouse/remy,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
+"r" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/wood/eight{
+	dir = 4
+	},
+/area/station/crew_quarters/kitchen)
+"s" = (
+/obj/table/auto,
+/obj/item/plate{
+	pixel_y = 3
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
+"t" = (
+/obj/machinery/light/small/floor,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
+"u" = (
+/obj/storage/secure/closet/fridge/kitchen,
+/obj/machinery/phone/wall{
+	pixel_y = 30
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/crew_quarters/kitchen)
+"v" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/camera/directional/south,
+/turf/simulated/floor/wood/eight{
+	dir = 4
+	},
+/area/station/crew_quarters/kitchen)
+"w" = (
+/obj/landmark/start/job/chef,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
+"x" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/bent/south,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
+"y" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/wood/eight{
+	dir = 4
+	},
+/area/station/crew_quarters/kitchen)
+"z" = (
+/obj/machinery/sink{
+	dir = 4
+	},
+/obj/machinery/light_switch/directional/west,
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/crew_quarters/kitchen)
+"B" = (
+/obj/stool/chair/dining/wood{
+	dir = 1
+	},
+/obj/landmark/start/job/assistant,
+/obj/disposalpipe/trunk/west,
+/obj/machinery/disposal/small/south,
+/turf/simulated/floor/wood/eight{
+	dir = 4
+	},
+/area/station/crew_quarters/kitchen)
+"D" = (
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/crew_quarters/kitchen)
+"F" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/wood/eight{
+	dir = 4
+	},
+/area/station/crew_quarters/kitchen)
+"G" = (
+/obj/table/auto,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/item/kitchen/utensil/knife/bread{
+	pixel_x = 2;
+	pixel_y = 5
+	},
+/obj/item/kitchen/rollingpin{
+	pixel_y = -3;
+	pixel_x = 4
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
+"H" = (
+/obj/machinery/vending/cigarette,
+/obj/machinery/firealarm/directional/north,
+/turf/simulated/floor/wood/eight{
+	dir = 4
+	},
+/area/station/crew_quarters/kitchen)
+"I" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/kitchen)
+"J" = (
+/obj/submachine/foodprocessor,
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/crew_quarters/kitchen)
+"K" = (
+/obj/stool/chair/dining/wood,
+/turf/simulated/floor/wood/eight{
+	dir = 4
+	},
+/area/station/crew_quarters/kitchen)
+"L" = (
+/obj/table/reinforced/bar/auto,
+/obj/random_item_spawner/tableware/few,
+/obj/item/plate{
+	pixel_y = 3
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 4
+	},
+/turf/simulated/floor/wood/eight{
+	dir = 4
+	},
+/area/station/crew_quarters/kitchen)
+"N" = (
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4
+	},
+/obj/mapping_helper/access/kitchen,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/crew_quarters/kitchen)
+"O" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/wood/eight{
+	dir = 4
+	},
+/area/station/crew_quarters/kitchen)
+"Q" = (
+/obj/table/auto,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
+"R" = (
+/obj/landmark/start/job/chef,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
+"S" = (
+/obj/machinery/door/airlock/pyro/alt,
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/kitchen,
+/obj/disposalpipe/segment,
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/crew_quarters/kitchen)
+"T" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "kitchen_shutter";
+	layer = 3.1;
+	name = "Kitchen Shutter";
+	dir = 8
+	},
+/obj/random_item_spawner/tableware/maybe_few,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/crew_quarters/kitchen)
+"V" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/junction/right/south,
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/crew_quarters/kitchen)
+"W" = (
+/obj/submachine/chef_oven{
+	dir = 4
+	},
+/obj/machinery/door_control{
+	id = "kitchen_shutter";
+	name = "Kitchen Shutter Control";
+	pixel_x = -24;
+	dir = 8;
+	pixel_y = 0
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/crew_quarters/kitchen)
+"X" = (
+/obj/stool/chair/dining/wood{
+	dir = 1
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/wood/eight{
+	dir = 4
+	},
+/area/station/crew_quarters/kitchen)
+"Y" = (
+/obj/item/device/radio/beacon,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
+
+(1,1,1) = {"
+D
+D
+D
+D
+N
+D
+D
+D
+D
+"}
+(2,1,1) = {"
+D
+b
+j
+p
+h
+W
+z
+l
+D
+"}
+(3,1,1) = {"
+D
+e
+w
+g
+Y
+g
+R
+J
+D
+"}
+(4,1,1) = {"
+D
+u
+q
+Q
+G
+s
+g
+a
+D
+"}
+(5,1,1) = {"
+k
+n
+x
+o
+t
+o
+o
+V
+S
+"}
+(6,1,1) = {"
+D
+f
+T
+T
+T
+T
+f
+m
+D
+"}
+(7,1,1) = {"
+D
+F
+r
+r
+y
+r
+r
+v
+D
+"}
+(8,1,1) = {"
+D
+H
+L
+X
+O
+K
+L
+B
+D
+"}
+(9,1,1) = {"
+D
+I
+I
+I
+O
+I
+I
+I
+D
+"}

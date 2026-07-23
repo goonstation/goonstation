@@ -217,6 +217,16 @@
 		src.imp = new /obj/item/implant/revenge/wasp(src)
 		..()
 
+/obj/item/implanter/clownspider
+	name = "funny-looking implanter"
+	icon_state = "implanter1-g"
+	sneaky = TRUE
+	HELP_MESSAGE_OVERRIDE({"When someone dies while implanted with this, they will explode into a cloud of angry clownspiders. Suiciding will cause no cloud of wasps to appear. This implant will also make clownspiders friendly to the user."})
+
+	New()
+		src.imp = new /obj/item/implant/revenge/wasp/clownspider(src)
+		..()
+
 /obj/item/implanter/marionette
 	icon_state = "implanter1-g"
 	sneaky = TRUE

@@ -39,7 +39,7 @@
 		var/datum/absorbedIdentity/face = H.absorbed_dna[target_name]
 		//re-store the current identity, it may have been modified
 		if (!current_ident.do_not_store && !face.do_not_store)
-			current_ident.set_up_from(C)
+			current_ident = new(C)
 			H.absorbed_dna[src.holder.owner.real_name] = current_ident
 		face.apply_to(C)
 		if (istype(face, /datum/absorbedIdentity/monkey) || face.bioHolder.HasEffect("monkey"))
