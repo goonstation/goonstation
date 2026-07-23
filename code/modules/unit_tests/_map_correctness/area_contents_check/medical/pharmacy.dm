@@ -1,4 +1,4 @@
-/datum/map_correctness_check/area_contents/medical
+/datum/map_correctness_check/area_contents/pharmacy
 	check_name = "Pharmacy Contents Check"
 
 	target_areas = list(
