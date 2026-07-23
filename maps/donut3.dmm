@@ -63487,6 +63487,10 @@
 	pixel_x = 12;
 	pixel_y = 4
 	},
+/obj/item/hand_labeler{
+	pixel_y = -4;
+	pixel_x = 2
+	},
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},

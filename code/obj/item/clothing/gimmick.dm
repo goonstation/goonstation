@@ -731,6 +731,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	icon_state = "balaclava"
 	item_state = "balaclava"
 	see_face = FALSE
+	c_flags = COVERSMOUTH | COVERSHAIR
 
 // Sweet Bro and Hella Jeff
 

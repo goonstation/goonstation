@@ -1,4 +1,11 @@
 
+(t)thu jul 23 26
+(u)JORJ949
+(+)Auto injectors filled by a pharmacist have the chem name applied via removable label. All pharmacies now come with a hand labeler. For crime.
+(u)ANNmagedon
+(p)27270
+(e)|
+(+)Balaclavas will now also cover your hair
 (t)wed jul 22 26
 (u)glowbold
 (p)27230
