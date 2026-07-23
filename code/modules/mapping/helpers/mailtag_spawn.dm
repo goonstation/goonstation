@@ -9,18 +9,25 @@
 
 ABSTRACT_TYPE(/obj/mapping_helper/mailtag)
 /obj/mapping_helper/mailtag
-	name = "junction mailtag spawn"
-	desc = "Configures a mail junction with its mail tag, then destroys itself."
+	name = "mailtag spawn"
+	desc = "Configures a mail chute or junction with its mail tag, then destroys itself."
 	icon = 'icons/effects/mapeditor.dmi'
 	icon_state = "mail_tag"
 	var/mail_tag = null
 
 	setup()
+		if(!src.mail_tag)
+			CRASH("Unconfigured mailtag spawn!\nCoordinates: [src.x] x, [src.y] y, [src.z] z")
 		for (var/obj/disposalpipe/switch_junction/sj in src.loc)
-			if(src.mail_tag)
-				if(!sj.mail_tag) sj.mail_tag = list()
-				sj.mail_tag += src.mail_tag
-				break
+			if(!sj.mail_tag) sj.mail_tag = list()
+			sj.mail_tag += src.mail_tag
+			break
+		for (var/obj/machinery/disposal/mail/mc in src.loc)
+			mc.name = "mail chute ([src.mail_tag])"
+			mc.mail_tag = src.mail_tag
+			SPAWN(1 SECOND)
+				mc.post_radio_status()
+			break
 
 	// Mailtag types
 	// All subtypes should exist across:

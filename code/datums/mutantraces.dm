@@ -2033,6 +2033,8 @@ TYPEINFO(/datum/mutantrace/frog) /// abstract parent for traits shared across am
 
 	onLife(var/mult = 1)
 		src.dermal_absorbtion(5)
+		if (isdead(src.mob))
+			return
 		if(src.mob.sims.getValue("Thirst") < 25.0) // dehydration effect
 			if (prob(10))
 				src.mob.visible_message(SPAN_EMOTE(pick("[mob] wrinkles up conspicuously.", "[mob] quietly wheezes.", "[mob]'s third eyelids stick to [his_or_her(src.mob)] eyes for a moment.")))

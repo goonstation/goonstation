@@ -341,6 +341,7 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 		/obj/item/material_piece/copper = 2,
 		/obj/item/material_piece/glass = 2)
 	available = list(/datum/manufacture/pick,
+		/datum/manufacture/powered_shovel,
 		/datum/manufacture/powerpick,
 		/datum/manufacture/blastchargeslite,
 		/datum/manufacture/blastcharges,
@@ -521,8 +522,8 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 /obj/machinery/manufacturer/mechanic
 	name = "reverse-engineering fabricator"
 	desc = "A specialized manufacturing unit designed to create new things (or copies of existing things) from blueprints."
-	icon_state = "fab-hangar"
-	icon_base = "hangar"
+	icon_state = "fab-reverse"
+	icon_base = "reverse"
 	free_resources = list(/obj/item/material_piece/steel = 2,
 		/obj/item/material_piece/copper = 2,
 		/obj/item/material_piece/glass = 2)
@@ -704,9 +705,6 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 #else
 		/datum/manufacture/mechanics/gravity_tether_area,
 #endif
-#ifdef MAP_OVERRIDE_OSHAN
-		/datum/manufacture/cable/reinforced,
-#endif
 		/datum/manufacture/mechanics/laser_mirror,
 		/datum/manufacture/mechanics/laser_splitter,
 		/datum/manufacture/interdictor_kit,
@@ -717,7 +715,13 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 		/datum/manufacture/interdictor_rod_lambda,
 		/datum/manufacture/interdictor_rod_sigma,
 		/datum/manufacture/interdictor_rod_epsilon,
-		/datum/manufacture/interdictor_rod_phi
+		/datum/manufacture/interdictor_rod_phi,
+#ifdef HOTSPOTS_ENABLED
+	/datum/manufacture/dowsing_rod,
+	/datum/manufacture/capture_unit,
+	/datum/manufacture/powered_shovel,
+	/datum/manufacture/cable/reinforced,
+#endif
 	)
 
 	New()

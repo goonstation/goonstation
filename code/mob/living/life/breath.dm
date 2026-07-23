@@ -116,6 +116,9 @@
 				var/obj/fluid/F = new // used for underwater breathing check
 				F.reagents = owner.loc.reagents
 				underwater = F
+		else if (istype(owner.loc, /mob/living/critter))
+			src.update_breath_hud(status_updates)
+			return
 
 		//if (istype(loc, /obj/machinery/clonepod)) return
 

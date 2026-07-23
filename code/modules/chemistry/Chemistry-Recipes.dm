@@ -1262,6 +1262,36 @@
 		drinkrecipe = TRUE
 		hidden = TRUE
 
+	cocktail_quadruplewaterstable
+		name = "Quadruple Water"
+		id = "cocktail_quadruplewaterstable"
+		result = "cocktail_quadruplewaterstable"
+		required_reagents = list("cocktail_triplewater" = 1, "sodawater" = 1, "uranium" = 0, "stabiliser" = 1)
+		result_amount = 1
+		mix_phrase = "The triple water seems to begrudgingly let the soda water mix in."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
+	cocktail_quadruplewater
+		name = "Quadruple Water Unstable"
+		id = "cocktail_quadruplewater"
+		result = "cocktail_quadruplewater"
+		required_reagents = list("cocktail_triplewater" = 1, "sodawater" = 1, "uranium" = 0)
+		inhibitors = list("stabiliser")
+		result_amount = 1
+		mix_phrase = "The triple water and soda water mix as unsetteling bubbles appear on the surface."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
+	triplewater_reject
+		name = "Triplewater Reject"
+		id = "triplewater_reject"
+		result = "steam"
+		required_reagents = list("cocktail_triplewater" = 1, "sodawater" = 1)
+		inhibitors = list("uranium")
+		result_amount = 2
+		mix_phrase = "The triple water aggressively boils off on contact with the soda water!"
+
 	cocktail_triplewater
 		name = "Triple Water"
 		id = "cocktail_triplewater"
