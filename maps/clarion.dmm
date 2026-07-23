@@ -42011,6 +42011,10 @@
 	},
 /obj/mapping_helper/access/pharmacy,
 /obj/mapping_helper/firedoor_spawn,
+/obj/item/hand_labeler{
+	pixel_y = -4;
+	pixel_x = 2
+	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "yjk" = (

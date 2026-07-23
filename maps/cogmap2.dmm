@@ -50854,6 +50854,10 @@
 /obj/item/paper/book/from_file/pharmacopia{
 	pixel_x = -8
 	},
+/obj/item/hand_labeler{
+	pixel_y = -4;
+	pixel_x = 2
+	},
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
