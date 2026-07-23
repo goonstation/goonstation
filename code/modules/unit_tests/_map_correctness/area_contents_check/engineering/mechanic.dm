@@ -23,6 +23,7 @@
 		CONTENTS_GT(/obj/item/device/multitool, 0),
 		CONTENTS_GT(/obj/item/storage/belt/utility, 0),
 		CONTENTS_GT(/obj/item/electronics/soldering, 0),
+		CONTENTS_GT(/obj/item/disk/data/cartridge/diagnostics, 1),
 	)
 
 /datum/map_correctness_check/area_contents/mechanics_lab/cogmap
