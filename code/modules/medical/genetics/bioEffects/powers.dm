@@ -2082,7 +2082,6 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	cooldown = 0
 	var/active = 0
 	ability_path = /datum/targetable/geneticsAbility/darkcloak
-	var/has_modifier = FALSE
 
 	proc/cloak_decloak(var/which_way = 1)
 		if (!src.owner || !isliving(src.owner))
@@ -2090,18 +2089,11 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 
 		var/mob/living/L = owner
 		if (which_way == 1)
-			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src, INVIS_MESON)
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY_CLOAK, src, INVIS_MESON)
 			L.UpdateOverlays(overlay_image, id)
-			if (!src.has_modifier)
-				L.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_CLOAKED)
-				src.has_modifier = TRUE
-
 		else
-			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY_CLOAK, src)
 			L.UpdateOverlays(null, id)
-			if (src.has_modifier)
-				L.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_CLOAKED)
-				src.has_modifier = FALSE
 
 	OnAdd()
 		active = 0
@@ -2192,7 +2184,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		if (isliving(owner))
 			var/mob/living/L = owner
 			L.UpdateOverlays(null, id)
-			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY_CLOAK, src)
 		if (src.active)
 			src.UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_ATTACKED_PRE))
 		return
@@ -2204,14 +2196,14 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			var/mob/living/L = owner
 			if (TIME - last_moved >= 3 SECONDS && can_act(owner))
 				L.UpdateOverlays(overlay_image, id)
-				APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src, INVIS_MESON)
+				APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY_CLOAK, src, INVIS_MESON)
 
 	proc/decloak()
 		if(isliving(owner))
 			var/mob/living/L = owner
 			last_moved = TIME
 			L.UpdateOverlays(null, id)
-			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY_CLOAK, src)
 
 /datum/targetable/geneticsAbility/chameleon
 	name = "Chameleon"

@@ -56,9 +56,8 @@ TYPEINFO(/obj/item/cloaking_device)
 			return FALSE
 
 		RegisterSignal(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE, PROC_REF(deactivate))
-		APPLY_ATOM_PROPERTY(user, PROP_MOB_INVISIBILITY, "cloak", INVIS_CLOAK)
+		APPLY_ATOM_PROPERTY(user, PROP_MOB_INVISIBILITY_CLOAK, "cloak", INVIS_CLOAK)
 		cloak_overlay.loc = user
-		user.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_CLOAKED)
 		user.client?.images += cloak_overlay
 		src.active = TRUE
 		src.UpdateIcon()
@@ -67,9 +66,8 @@ TYPEINFO(/obj/item/cloaking_device)
 
 	proc/deactivate(mob/user, deliberate = FALSE)
 		UnregisterSignal(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
-		REMOVE_ATOM_PROPERTY(user, PROP_MOB_INVISIBILITY, "cloak")
-		cloak_overlay.loc = null
-		user.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_CLOAKED)
+		REMOVE_ATOM_PROPERTY(user, PROP_MOB_INVISIBILITY_CLOAK, "cloak")
+		cloak_overlay.loc = num_allowed_suffixes
 		user.client?.images -= cloak_overlay
 		if(src.active && istype(user))
 			user.visible_message(SPAN_NOTICE("<b>[user]'s cloak is disrupted!</b>"))
