@@ -3,6 +3,11 @@
 // Handheld health analyzer & upgrade chips
 // Floor health scanner & wall readout
 
+/// Show healthscan output via TGUI window.
+#define HEALTHSCAN_MODE_TGUI 1
+/// Show healthscan output via chat.
+#define HEALTHSCAN_MODE_CHAT 2
+
 /proc/scan_health(var/mob/M as mob, var/verbose_reagent_info = 0, var/disease_detection = 1, var/organ_scan = 0, var/visible = 0, syndicate = FALSE,
 	admin = FALSE)
 	if (!M)
@@ -340,7 +345,10 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 	var/last_scan_timestamp = null
 	var/mob/living/carbon/human/victim = null
 	var/clumsy_scan = FALSE
+	var/healthscan_mode = HEALTHSCAN_MODE_CHAT
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
+
+	HELP_MESSAGE_OVERRIDE("Use in-hand to switch between Chat and Window output.")
 
 	New()
 		..()
@@ -390,10 +398,16 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 /// ----------------------------------------------
 
 	attack_self(mob/user)
-		if (isnull(src.last_scan_data))
-			boutput(user, SPAN_NOTICE("No previous scan results located."))
-			return
-		src.print_report(user)
+		switch(src.healthscan_mode)
+			if(HEALTHSCAN_MODE_TGUI)
+				boutput(user, SPAN_NOTICE("Now showing health results in chat."))
+				src.healthscan_mode = HEALTHSCAN_MODE_CHAT
+				global.processing_items |= src
+				var/datum/tgui/ui = tgui_process.try_update_ui(user, src)
+				ui?.close()
+			if(HEALTHSCAN_MODE_CHAT)
+				boutput(user, SPAN_NOTICE("Now showing health results in its own window."))
+				src.healthscan_mode = HEALTHSCAN_MODE_TGUI
 
 	attackby(obj/item/W, mob/user)
 		addUpgrade(W, user, src.reagent_upgrade)
@@ -402,10 +416,16 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if ((user.bioHolder.HasEffect("clumsy") || user.get_brain_damage() >= BRAIN_DAMAGE_MAJOR) && prob(50))
 			user.visible_message(SPAN_ALERT("<b>[user]</b> slips and drops [src]'s sensors on the floor!"))
-			JOB_XP(user, "Clown", 1)
 			src.clumsy_scan = TRUE
 			src.victim = null
-			src.ui_interact(user)
+			JOB_XP(user, "Clown", 1)
+			if (src.healthscan_mode == HEALTHSCAN_MODE_TGUI)
+				src.ui_interact(user)
+			else if (src.healthscan_mode == HEALTHSCAN_MODE_CHAT)
+				user.show_message("Analyzing Results for [SPAN_NOTICE("The floor:<br>&emsp; Overall Status: Healthy")]", 1)
+				user.show_message("&emsp; Damage Specifics: <font color='#1F75D1'>[0]</font> - <font color='#138015'>[0]</font> - <font color='#CC7A1D'>[0]</font> - <font color='red'>[0]</font>", 1)
+				user.show_message("&emsp; Key: <font color='#1F75D1'>Suffocation</font>/<font color='#138015'>Toxin</font>/<font color='#CC7A1D'>Burns</font>/<font color='red'>Brute</font>", 1)
+				user.show_message(SPAN_NOTICE("Body Temperature: ???"), 1)
 			return
 
 		src.clumsy_scan = FALSE
@@ -417,8 +437,12 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 
 		if (istype(target, /mob/living))
 			src.victim = target
-			global.processing_items |= src
-			src.ui_interact(user)
+			if (src.healthscan_mode == HEALTHSCAN_MODE_TGUI)
+				global.processing_items |= src
+				src.ui_interact(user)
+			else if (src.healthscan_mode == HEALTHSCAN_MODE_CHAT)
+				boutput(user, src.last_scan_data)
+				boutput(user, "--- <a href='byond://?src=\ref[src];print=true'>PRINT REPORT</a> ---<br>")
 
 		DISPLAY_MAPTEXT(target, list(user), MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/health, target)
 		update_medical_record(target)
@@ -433,8 +457,16 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 			if(P.occupant)
 				user.visible_message(SPAN_ALERT("<b>[user]</b> has analyzed [P.occupant]'s vitals."),\
 					SPAN_ALERT("You have analyzed [P.occupant]'s vitals."))
-				boutput(user, scan_health(P.occupant, src.reagent_scan, src.disease_detection, src.organ_scan))
+				src.clumsy_scan = FALSE
+				src.victim = P.occupant
+				src.last_scan_data = scan_health(P.occupant, src.reagent_scan, src.disease_detection, src.organ_scan, visible = 1)
+				src.last_scan_timestamp = time2text(world.timeofday, "DD MMM [CURRENT_SPACE_YEAR], hh:mm:ss")
 				update_medical_record(P.occupant)
+				if (src.healthscan_mode == HEALTHSCAN_MODE_TGUI)
+					global.processing_items |= src
+					src.ui_interact(user)
+				else if (src.healthscan_mode == HEALTHSCAN_MODE_CHAT)
+					boutput(user, scan_health(P.occupant, src.reagent_scan, src.disease_detection, src.organ_scan))
 				return
 		..()
 
@@ -452,6 +484,21 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 		.["reagent_scan_upgrade"] = src.reagent_scan
 		if (src.victim)
 			. += src.victim.ui_health_data(include_organs=src.organ_scan, include_reagents=src.reagent_scan, include_diseases=TRUE)
+
+	Topic(href, href_list)
+		. = ..()
+		if (href_list["print"])
+			if (!(src in usr.contents))
+				boutput(usr, SPAN_NOTICE("You must be holding [src] in order to print a report."))
+			src.print_report(usr)
+
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
+		if (.)
+			return
+		switch(action)
+			if ("print")
+				src.print_report(ui.user)
 
 	process()
 		if (!src.victim || QDELETED(src.victim))
@@ -658,3 +705,5 @@ ABSTRACT_TYPE(/obj/health_scanner)
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, new_signal, null, "pda")
 
 
+#undef HEALTHSCAN_MODE_TGUI
+#undef HEALTHSCAN_MODE_CHAT
