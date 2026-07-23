@@ -35,6 +35,3 @@
 			endpoint = "(null)"
 
 		. += "[src.format_position(dummy.chute)] misroutes objects addressed to \"[dummy.destination_tag]\" to [endpoint]."
-
-
-SET_UP_CI_TRACKING(/obj/machinery/disposal/mail)

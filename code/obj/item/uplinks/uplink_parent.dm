@@ -21,8 +21,8 @@
 	uses = 9999
 #endif
 
-	/// Which UI type does this uplink use?
-	var/uplink_ui_type = UPLINK_UI_CUSTOM
+	/// Allow direct UI interaction with this uplink through attackself?
+	var/can_directly_open = FALSE
 	var/temp = null
 	var/selfdestruct = 0
 	var/can_selfdestruct = 0
@@ -235,18 +235,16 @@
 		return
 
 	attack_self(mob/user as mob)
+		if(!src.can_directly_open)
+			return
 		if (!src.vr_check(user))
 			user.show_text("This uplink only works in virtual reality.", "red")
-		else if (src.uplink_ui_type == UPLINK_UI_HTML)
-			src.add_dialog(user)
-			src.generate_menu()
-		else if (src.uplink_ui_type == UPLINK_UI_TGUI)
-			if(src.locked)
-				src.try_unlock(user)
-			if(src.locked)
-				return
-			src.ui_interact(user)
-		return
+			return
+		if(src.locked)
+			src.try_unlock(user)
+		if(src.locked)
+			return
+		src.ui_interact(user)
 
 	attackby(obj/item/W, mob/user)
 		if(src.locked)
@@ -264,102 +262,6 @@
 			uses = uses + crystal_amount
 			boutput(user, "You insert [crystal_amount] [syndicate_currency] into the [src].")
 			qdel(W)
-
-	proc/generate_menu()
-		if (src.uses < 0)
-			src.uses = 0
-		if (src.uplink_ui_type != UPLINK_UI_HTML)
-			return
-
-		var/list/dat = list()
-		if (src.selfdestruct)
-			dat += "Self Destructing..."
-
-		else if (src.locked && !isnull(src.lock_code))
-			dat += "The uplink is locked. <A href='byond://?src=\ref[src];unlock=1'>Enter password</A>.<BR>"
-
-		else if (reading_about)
-			var/item_about = "<b>Error:</b> We're sorry, but there is no current entry for this item!<br>For full information on Syndicate Tools, call 1-555-SYN-DKIT."
-			if(reading_about.desc) item_about = "[reading_about.desc]"
-			dat += "<b>Extended Item Information:</b><hr>[item_about]<hr><A href='byond://?src=\ref[src];back=1'>Back</A>"
-
-		else if(reading_synd_int)
-			dat += "<h4>Syndicate Intelligence</h4>"
-			dat += get_manifest(FALSE, src)
-			dat += "<br>"
-			dat += "<A href='byond://?src=\ref[src];back=1'>Back</A>"
-			dat += "<br>"
-
-		else if(reading_specific_synd_int)
-			var/datum/db_record/staff_record = reading_specific_synd_int
-			dat += "<h4>Syndicate intelligence on [staff_record["name"]]</h4>"
-			dat += staff_record["syndint"]
-			dat += "<br>"
-			dat += "<A href='byond://?src=\ref[src];back=1'>Back</A>"
-			dat += "<br>"
-
-		else
-			if (src.temp)
-				dat += "[src.temp]<BR><BR><A href='byond://?src=\ref[src];temp=1'>Clear</A>"
-			else
-				if (src.is_VR_uplink)
-					dat += "<B><U>Syndicate Simulator 2053!</U></B><BR>"
-					dat += "Buy the Cat Armor DLC today! Only 250 Credits!"
-					dat += "<HR>"
-					dat += "<B>Sandbox mode - Spawn item:</B><BR><table cellspacing=5>"
-				else
-					dat += "<B>Syndicate Uplink Console:</B><BR>"
-					dat += "[syndicate_currency] left: [src.uses]<BR>"
-					dat += "<HR>"
-					dat += "<B>Request item:</B><BR>"
-					dat += "<I>Each item costs a number of [syndicate_currency] as indicated by the number following their name, and if it has a maximum number of times it can be purchased, that will follow the cost. </I><BR><table cellspacing=5>"
-				if (src.items_telecrystal && islist(src.items_telecrystal) && length(src.items_telecrystal))
-					dat += "</table><B>Ejectable [syndicate_currency]:</B><BR><table cellspacing=5>"
-					for (var/T in src.items_telecrystal)
-						var/datum/syndicate_buylist/I4 = src.items_telecrystal[T]
-						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_telecrystal[T]]'>[I4.name]</A> ([I4.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_telecrystal[T]]'>About</A> [I4.max_buy == INFINITY  ? "" :"([src.purchase_log[I4.type] ? src.purchase_log[I4.type] : 0]/[I4.max_buy])"]</td>"
-				if (src.items_objective && islist(src.items_objective) && length(src.items_objective))
-					dat += "</table><B>Objective Specific:</B><BR><table cellspacing=5>"
-					for (var/O in src.items_objective)
-						var/datum/syndicate_buylist/I3 = src.items_objective[O]
-						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_objective[O]]'>[I3.name]</A> ([I3.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_objective[O]]'>About</A> [I3.max_buy == INFINITY  ? "" :"([src.purchase_log[I3.type] ? src.purchase_log[I3.type] : 0]/[I3.max_buy])"]</td>"
-				if (src.items_job && islist(src.items_job) && length(src.items_job))
-					dat += "</table><B>Job Specific:</B><BR><table cellspacing=5>"
-					for (var/J in src.items_job)
-						var/datum/syndicate_buylist/I2 = src.items_job[J]
-						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_job[J]]'>[I2.name]</A> ([I2.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_job[J]]'>About</A> [I2.max_buy == INFINITY  ? "" :"([src.purchase_log[I2.type] ? src.purchase_log[I2.type] : 0]/[I2.max_buy])"]</td>"
-				if (src.items_general && islist(src.items_general) && length(src.items_general))
-					dat += "</table><B>Standard Equipment:</B><BR><table cellspacing=5>"
-					for (var/G in src.items_general)
-						var/datum/syndicate_buylist/I1 = src.items_general[G]
-						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_general[G]]'>[I1.name]</A> ([I1.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_general[G]]'>About</A> [I1.max_buy == INFINITY  ? "" :"([src.purchase_log[I1.type] ? src.purchase_log[I1.type] : 0]/[I1.max_buy])"]</td>"
-				if (src.items_ammo && islist(src.items_ammo) && length(src.items_ammo))
-					dat += "</table><B>Special ammunition:</B><BR><table cellspacing=5>"
-					for (var/A in src.items_ammo)
-						var/datum/syndicate_buylist/I5 = src.items_ammo[A]
-						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_ammo[A]]'>[I5.name]</A> ([I5.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_ammo[A]]'>About</A> [I5.max_buy == INFINITY  ? "" :"([src.purchase_log[I5.type] ? src.purchase_log[I5.type] : 0]/[I5.max_buy])"]</td>"
-				dat += "</table>"
-				var/do_divider = 1
-
-				if(has_synd_int && !is_VR_uplink)
-					dat += "<HR><A href='byond://?src=\ref[src];synd_int=1'>Syndicate Intelligence</A><BR>"
-
-				if (istype(src, /obj/item/uplink/integrated/radio))
-					var/obj/item/uplink/integrated/radio/RU = src
-					if (!isnull(RU.origradio) && istype(RU.origradio, /obj/item/device/radio))
-						dat += "<HR><A href='byond://?src=\ref[src];lock=1'>Lock</A><BR>"
-						do_divider = 0
-				else if (src.is_VR_uplink == 0 && !isnull(src.lock_code))
-					dat += "<HR><A href='byond://?src=\ref[src];lock=1'>Lock</A><BR>"
-					do_divider = 0
-
-				if (src.can_selfdestruct == 1)
-					dat += "[do_divider == 1 ? "<HR>" : ""]<A href='byond://?src=\ref[src];selfdestruct=1'>Self-Destruct</A>"
-
-		usr.Browse(jointext(dat, ""), "window=radio")
-		onclose(usr, "radio")
-		return
-
 
 	// Validates that the user is not trying to spawn something they should not
 	proc/validate_spawn(var/datum/syndicate_buylist/SB)
@@ -436,12 +338,7 @@
 	proc/lock(mob/user)
 		if(src.locked || src.is_VR_uplink)
 			return FALSE
-		switch(src.uplink_ui_type)
-			if(UPLINK_UI_TGUI)
-				tgui_process.close_uis(src)
-			if(UPLINK_UI_HTML)
-				src.remove_dialog(user)
-				user.Browse(null, "window=radio")
+		tgui_process.close_uis(src)
 		user.show_text("The uplink is now locked.", "blue")
 		src.locked = 1
 		return TRUE
@@ -467,61 +364,6 @@
 
 		src.locked = 0
 		user.show_text("The uplink beeps softly and unlocks.", "blue")
-
-	Topic(href, href_list)
-		..()
-		var/mob/user = usr //CHECK1 and CHECK2 use user not usr
-		if (src.uses < 0)
-			src.uses = 0
-		if (src.uplink_ui_type != UPLINK_UI_HTML)
-			return
-		if (CHECK1)
-			return
-		if (CHECK2)
-			return
-		if (!src.vr_check(usr))
-			usr.show_text("This uplink only works in virtual reality.", "red")
-			return
-
-		src.add_dialog(usr)
-
-		if (href_list["unlock"] && src.locked && !isnull(src.lock_code))
-			src.try_unlock(usr)
-
-		else if (href_list["lock"])
-			src.lock(usr)
-
-		else if (href_list["spawn"])
-			src.try_buy(locate(href_list["spawn"]))
-
-		else if (href_list["about"])
-			reading_about = locate(href_list["about"])
-
-		else if (href_list["back"])
-			if(reading_about)
-				reading_about = null
-			if(reading_synd_int)
-				reading_synd_int = FALSE
-			if(reading_specific_synd_int)
-				reading_specific_synd_int = null
-				reading_synd_int = TRUE
-
-		else if (href_list["selfdestruct"] && src.can_selfdestruct == 1)
-			src.self_destruct()
-
-		else if (href_list["synd_int"] && !src.is_VR_uplink)
-			reading_synd_int = TRUE
-
-		else if (href_list["select_exp"])
-			var/datum/db_record/staff_record = locate(href_list["select_exp"])
-			reading_specific_synd_int = staff_record
-			reading_synd_int = FALSE
-
-		else if (href_list["temp"])
-			src.temp = null
-
-		src.AttackSelf(usr)
-		return
 #undef CHECK1
 #undef CHECK2
 
