@@ -36822,6 +36822,18 @@
 /obj/machinery/status_display{
 	pixel_y = 30
 	},
+/obj/item/disk/data/cartridge/diagnostics{
+	pixel_x = 9;
+	pixel_y = -2
+	},
+/obj/item/disk/data/cartridge/diagnostics{
+	pixel_x = 11;
+	pixel_y = 4
+	},
+/obj/item/disk/data/cartridge/diagnostics{
+	pixel_x = 10;
+	pixel_y = 12
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 5
 	},
