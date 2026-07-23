@@ -64555,10 +64555,6 @@
 	pixel_x = -7;
 	pixel_y = -3
 	},
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-4"
-	},
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
@@ -64567,30 +64563,9 @@
 	pixel_y = 4
 	},
 /obj/table/reinforced/chemistry/auto/auxsup,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/glass_recycler{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/reagent_containers/emergency_injector/calomel{
-	pixel_x = -7;
-	pixel_y = -3
-	},
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-4"
-	},
-/obj/table/reinforced/chemistry/auto/beakers,
-/obj/machinery/light/incandescent/netural{
-	dir = 1
-	},
-/obj/item/device/reagentscanner{
-	pixel_x = 12;
-	pixel_y = 4
 	},
 /obj/item/hand_labeler{
 	pixel_y = -4;
