@@ -847,9 +847,6 @@
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
 /area/space)
-"adc" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/solar/north)
 "add" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -943,7 +940,7 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/station/solar/north)
+/area/station/maintenance/solar/north)
 "adz" = (
 /obj/cable/yellow{
 	icon_state = "0-8"
@@ -1121,10 +1118,6 @@
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
 /area/space)
-"aeg" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/plating,
-/area/station/solar/north)
 "aeh" = (
 /obj/machinery/power/smes{
 	chargelevel = 15000;
@@ -55803,12 +55796,6 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/security/checkpoint/podbay)
-"ipY" = (
-/obj/machinery/computer/robotics/lab{
-	dir = 8
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/north)
 "iqa" = (
 /obj/machinery/atmospherics/unary/tank/air_repressurization,
 /turf/simulated/floor/plating,
@@ -105971,11 +105958,11 @@ aaB
 bJK
 aaB
 aaB
-adc
+ade
 ady
-aeg
+add
 ady
-adc
+ade
 ade
 ade
 ade
@@ -108219,7 +108206,7 @@ uBy
 dfZ
 cLH
 dgs
-aFb
+cqE
 aaa
 aam
 jFS
@@ -108521,7 +108508,7 @@ uBy
 dgr
 cLH
 dgs
-aFb
+cqE
 aaa
 aam
 vuz
@@ -108823,7 +108810,7 @@ rfK
 cuW
 cLH
 cuW
-aFb
+cqE
 aaa
 dgD
 oTY
@@ -109125,7 +109112,7 @@ uBy
 pmo
 dgv
 cuW
-aFb
+cqE
 aaa
 dgD
 oTY
@@ -114468,7 +114455,7 @@ aVg
 aWA
 aYc
 aXY
-ipY
+bhS
 bhS
 aaa
 aaa
