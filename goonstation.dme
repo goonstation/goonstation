@@ -2394,6 +2394,7 @@
 #include "code\modules\unit_tests\_map_correctness\area_contents_check\medical\cloner.dm"
 #include "code\modules\unit_tests\_map_correctness\area_contents_check\medical\genetics.dm"
 #include "code\modules\unit_tests\_map_correctness\area_contents_check\medical\morgue.dm"
+#include "code\modules\unit_tests\_map_correctness\area_contents_check\medical\pharmacy.dm"
 #include "code\modules\unit_tests\_map_correctness\area_contents_check\medical\robotics.dm"
 #include "code\modules\unit_tests\_map_correctness\area_contents_check\medical\surgery.dm"
 #include "code\modules\unit_tests\_map_correctness\area_contents_check\research\chemistry.dm"
