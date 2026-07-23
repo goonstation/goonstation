@@ -1,4 +1,25 @@
 
+(t)thu jul 23 26
+(u)JORJ949
+(+)Auto injectors filled by a pharmacist have the chem name applied via removable label. All pharmacies now come with a hand labeler. For crime.
+(u)ANNmagedon
+(p)27270
+(e)|
+(+)Balaclavas will now also cover your hair
+(t)wed jul 22 26
+(u)glowbold
+(p)27230
+(e)💅📄💊|C-QoL, A-UI, A-Medical
+(*)Using health analyzers in-hand switches between chat and TGUI output.
+(t)mon jul 20 26
+(u)LeahTheTech
+(p)27260
+(e)🆕🧛🔨|C-Feature, A-Gamemodes, A-Player-Actions
+(+)Changeling critters now use their original names in hivechat.
+(u)Callipygian0
+(p)27051
+(e)🗺|A-Mapping
+(*)Added a new hideout variant for the Syndicate Disposals Hijacker for those who want a seedy bar to lure people into. Bouncer not included.
 (t)sat jul 18 26
 (u)JORJ949
 (p)27210
