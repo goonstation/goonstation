@@ -19,7 +19,7 @@
 		// Equipment - General
 		CONTENTS_GT(/obj/item/clothing/gloves/yellow, 1),
 		CONTENTS_GT(/obj/item/storage/belt/utility, 1),
-		CONTENTS_GT(/obj/item/clothing/ears/earmuffs, 2)
+		CONTENTS_GT(/obj/item/clothing/ears/earmuffs, 2),
 
 		// Fire fighter
 		CONTENTS_GT(/obj/item/clothing/suit/hazard/fire, 1),
@@ -36,7 +36,7 @@
 		CONTENTS_GT(/obj/item/sheet/glass/reinforced/fullstack, 0),
 		CONTENTS_GT(/obj/item/rods/steel/fullstack, 0),
 		CONTENTS_GT(/obj/item/storage/box/cablesbox, 0),
-		CONTENTS_GT(/obj/item/reagent_containers/food/drinks/fueltank, 2)
+		CONTENTS_GT(/obj/item/reagent_containers/food/drinks/fueltank, 2),
 
 		// Draggables
 		CONTENTS_GT(/obj/storage/cart/mechcart/breach, 0),
@@ -49,17 +49,17 @@
 			list(
 				CONTENTS_GT(/obj/item/old_grenade/oxygen, 2),
 				CONTENTS_GT(/obj/item/clothing/suit/space/engineer, 1),
-				CONTENTS(/obj/item/clothing/head/helmet/space/engineer, 1),
-				CONTENTS(/obj/item/clothing/shoes/magnetic, 1)
+				CONTENTS_GT(/obj/item/clothing/head/helmet/space/engineer, 1),
+				CONTENTS_GT(/obj/item/clothing/shoes/magnetic, 1),
 			),
 			list(
 				CONTENTS_GT(/obj/item/clothing/head/helmet/space/engineer/diving/engineering, 1),
 				CONTENTS_GT(/obj/item/clothing/suit/space/diving/engineering, 1),
 				CONTENTS_GT(/obj/item/clothing/shoes/magnetic, 1),
-				CONTENTS_GT(/obj/item/clothing/shoes/flippers, 1)
+				CONTENTS_GT(/obj/item/clothing/shoes/flippers, 1),
 			)
 		),
-		CONTENTS_GT(/obj/item/clothing/mask/breath, 1)
+		CONTENTS_GT(/obj/item/clothing/mask/breath, 1),
 
 	)
 
