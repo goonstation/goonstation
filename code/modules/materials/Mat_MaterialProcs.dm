@@ -535,7 +535,9 @@ triggerOnImage(var/image/target, var/datum/material/source)
 	execute(var/atom/owner, var/temp)
 		if(temp < T0C + 900)
 			return
-		material_explode(owner)
+		// Chance to explode. Guaranteed when temp hits 1473 kelvin.
+		if(prob(20 + (((temp - 900 - T0C)/(1200 - 900 - T0C)) * 80)))
+			material_explode(owner)
 		return
 
 /datum/materialProc/explosion/impact
