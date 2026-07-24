@@ -440,6 +440,11 @@
 	desc = "Contains pills used to treat pain and fevers."
 	spawn_contents = list(/obj/item/reagent_containers/pill/salicylic_acid = 7)
 
+/obj/item/storage/pill_bottle/acetylsalicylic_acid
+	name = "pill bottle (acetylsalicylic)"
+	desc = "Contains pills used to treat pain, high blood pressure and moderate injuries."
+	spawn_contents = list(/obj/item/reagent_containers/pill/acetylsalicylic_acid = 7)
+
 /obj/item/storage/pill_bottle/menthol
 	name = "pill bottle (menthol)"
 	desc = "Contains pills used to treat burns and fevers."
