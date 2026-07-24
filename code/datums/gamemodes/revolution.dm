@@ -33,7 +33,8 @@
 	do_antag_random_spawns = 0
 	escape_possible = 0
 
-/datum/game_mode/revolution/extended //Has sev
+//Has several changes to accomodate the RP experience. See ROLEPLAY_REVOLUTIONARIES define for changes.
+/datum/game_mode/revolution/extended
 	name = "Revolution (Roleplay)"
 	config_tag = "revolution_extended"
 	regular = FALSE
