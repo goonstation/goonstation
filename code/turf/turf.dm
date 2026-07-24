@@ -608,6 +608,7 @@ var/global/in_replace_with = 0
 
 /turf/proc/ReplaceWith(what, keep_old_material = 0, handle_air = 1, handle_dir = 0, force = 0)
 	var/new_type = ispath(what) ? what : text2path(what)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_TURF_REPLACED, src, what)
 
 	if(ispath(new_type, /turf/variableTurf))
 		var/typeinfo/turf/variableTurf/typeinfo = get_type_typeinfo(new_type)
