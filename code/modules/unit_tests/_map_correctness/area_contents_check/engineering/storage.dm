@@ -40,8 +40,7 @@
 
 		// Draggables
 		CONTENTS_GT(/obj/storage/cart/mechcart/breach, 0),
-		CONTENTS_EQ(/obj/reagent_dispensers/fueltank, 1),
-		CONTENTS_EQ(/obj/reagent_dispensers/fueltank, 1),
+		CONTENTS_EQ(/obj/reagent_dispensers/foamtank, 1),
 		CONTENTS_EQ(/obj/reagent_dispensers/fueltank, 1),
 
 		// space / ocean eva
