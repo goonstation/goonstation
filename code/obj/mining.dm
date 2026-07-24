@@ -907,6 +907,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	var/default_ore = /obj/item/raw_material/rock
 	var/datum/ore/ore = null
 	var/datum/ore/event/event = null
+	var/image/mining_marker = null
+	var/marker_expiration_time = 0
 	var/list/space_overlays = null
 	var/turf/replace_type = /turf/simulated/floor/plating/airless/asteroid
 
@@ -1238,6 +1240,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			src.AddOverlays(new/image/fullbright, "fullbright")
 		src.top_overlays()
 		src.ore_overlays()
+		if(src.mining_marker)
+			src.AddOverlays(src.mining_marker, "geo_scan_marker")
 
 	proc/top_overlays() // replaced what was here with cool stuff for autowalls
 		var/image/top_overlay = mutable_appearance('icons/turf/walls/asteroid.dmi',"top[src.topnumber]")
@@ -1392,6 +1396,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		if(!icon_old)
 			icon_old = icon_state
 
+		src.mining_marker = null
 		var/new_color = src.stone_color
 		src.set_opacity(0)
 		src.ReplaceWith(src.replace_type, FALSE)
@@ -2500,10 +2505,6 @@ TYPEINFO(/obj/item/cargotele)
 	var/datum/ore/O
 	var/datum/ore/event/E
 	for (var/turf/simulated/wall/auto/asteroid/AST in range(T,range))
-		//clear out any scanning images if there are any
-		var/datum/client_image_group/cig = get_image_group(T)
-		for(var/image/i in cig.images)
-			cig.remove_image(i)
 		stone++
 		O = AST.ore
 		E = AST.event
@@ -2533,15 +2534,20 @@ TYPEINFO(/obj/item/cargotele)
 	rendered += "----------------------------------"
 	boutput(L, rendered)
 
-/proc/mining_scandecal(var/mob/living/user, var/turf/T, var/decalicon)
-	if(!user || !T || !decalicon) return
-	var/image/O = image('icons/obj/items/mining.dmi',T,decalicon,ASTEROID_MINING_SCAN_DECAL_LAYER)
-	var/datum/client_image_group/cig = get_image_group(T)
-	cig.add_mob(user) //we can add this multiple times so if the user refreshes the scan, it times properly and uses the sub count to handle remove
-	cig.add_image(O)
-
+/proc/mining_scandecal(var/mob/living/user, var/turf/simulated/wall/auto/asteroid/AST, var/decalicon)
+	if(!user || !AST || AST.mining_marker || !decalicon)
+		return
+	var/image/mining_marker = image('icons/obj/items/mining.dmi', AST, decalicon, ASTEROID_MINING_SCAN_DECAL_LAYER)
+	AST.mining_marker = mining_marker
+	AST.marker_expiration_time = TIME + 2 MINUTES
+	mining_marker.appearance_flags = KEEP_APART | RESET_ALPHA | RESET_COLOR
+	mining_marker.alpha = 200
+	AST.UpdateOverlays(mining_marker, "geo_scan_marker")
 	SPAWN(2 MINUTES)
-		cig.remove_mob(user)
+		if(AST.marker_expiration_time <= TIME)
+			AST.ClearSpecificOverlays("geo_scan_marker")
+			qdel(AST.mining_marker)
+			AST.mining_marker = null
 
 ///// MINER TRAITOR ITEM /////
 
