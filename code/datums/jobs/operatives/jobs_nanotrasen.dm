@@ -85,7 +85,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	name = "Nanotrasen Emergency Medic"
 	trait_list = list("training_medical")
 
-	slot_belt = list(/obj/item/storage/belt/medical/prepared)
+	slot_belt = list(/obj/item/storage/belt/medical/prepared/NT)
 	slot_jump = list(/obj/item/clothing/under/rank/medical)
 	slot_suit = list(/obj/item/clothing/suit/hazard/paramedic/armored)
 	slot_head = list(/obj/item/clothing/head/helmet/space/ntso)
@@ -96,10 +96,10 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
 	slot_poc1 = list(/obj/item/tank/pocket/extended/oxygen)
 	slot_poc2 = list(/obj/item/device/pda2/nt_medical)
-	items_in_backpack = list(/obj/item/storage/firstaid/regular,
+	items_in_backpack = list(/obj/item/storage/firstaid/crit,
 							/obj/item/device/flash,
-							/obj/item/reagent_containers/glass/bottle/omnizine,
-							/obj/item/reagent_containers/glass/bottle/ether)
+							/obj/item/storage/pill_bottle/acetylsalicylic_acid,
+							/obj/item/extinguisher)
 
 // Use this one for late respawns to deal with existing antags. they are weaker cause they dont get a laser rifle or frags
 /datum/job/special/nt/security_consultant
