@@ -866,7 +866,7 @@ datum
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
 				..()
 				..()
-				/*var/effect = ..(severity, M)
+				var/effect = ..(severity, M)
 				if (severity == 1)
 					if (effect <= 2)
 						M.visible_message(SPAN_ALERT("<b>[M.name]</b> looks really nervous!"))
@@ -909,7 +909,7 @@ datum
 						M.changeStatus("knockdown", 50 * mult)
 						M.make_jittery(60)
 						M.take_toxin_damage(5)
-						M.take_oxygen_deprivation(20)*/
+						M.take_oxygen_deprivation(20)
 
 		drug/psilocybin
 			name = "psilocybin"

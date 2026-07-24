@@ -23619,16 +23619,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/east)
-"bUy" = (
-/obj/machinery/glass_recycler,
-/obj/item/hand_labeler{
-	pixel_y = -9
-	},
-/obj/table/reinforced/chemistry/auto/auxsup,
-/turf/simulated/floor/bluewhite{
-	dir = 6
-	},
-/area/station/medical/medbay/pharmacy)
 "bUz" = (
 /obj/machinery/camera/directional/north{
 	pixel_x = -10
@@ -32305,6 +32295,38 @@
 /obj/machinery/light_switch/directional/west,
 /turf/simulated/floor,
 /area/station/routing/eva)
+"cHk" = (
+/obj/table/auto,
+/obj/item/reagent_containers/glass/beaker/large/burn{
+	pixel_x = -9;
+	pixel_y = 15
+	},
+/obj/item/reagent_containers/glass/beaker/large/brute{
+	pixel_x = -7;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/glass/beaker/large/epinephrine{
+	pixel_x = -5;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/glass/beaker/large/antitox{
+	pixel_x = -3;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/hypospray{
+	pixel_x = 7;
+	pixel_y = 14
+	},
+/obj/item/reagent_containers/hypospray{
+	pixel_x = 10;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/dropper,
+/obj/item/reagent_containers/dropper/mechanical,
+/turf/simulated/floor/bluewhite{
+	dir = 1
+	},
+/area/station/medical/medbay/pharmacy)
 "cHu" = (
 /obj/mesh/catwalk,
 /obj/cable{
@@ -42830,12 +42852,6 @@
 	dir = 4
 	},
 /area/station/solar/north)
-"jxO" = (
-/obj/storage/secure/closet/research/chemical/pharmacy,
-/turf/simulated/floor/bluewhite{
-	dir = 5
-	},
-/area/station/medical/medbay/pharmacy)
 "jyi" = (
 /obj/disposalpipe/trunk/food,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -52188,36 +52204,6 @@
 /obj/machinery/arrivalnotifier/disposals,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
-"pLh" = (
-/obj/table/auto,
-/obj/item/reagent_containers/glass/beaker/large/burn{
-	pixel_x = -9;
-	pixel_y = 15
-	},
-/obj/item/reagent_containers/glass/beaker/large/brute{
-	pixel_x = -7;
-	pixel_y = 13
-	},
-/obj/item/reagent_containers/glass/beaker/large/epinephrine{
-	pixel_x = -5;
-	pixel_y = 10
-	},
-/obj/item/reagent_containers/glass/beaker/large/antitox{
-	pixel_x = -3;
-	pixel_y = 8
-	},
-/obj/item/reagent_containers/hypospray{
-	pixel_x = 7;
-	pixel_y = 14
-	},
-/obj/item/reagent_containers/hypospray{
-	pixel_x = 10;
-	pixel_y = 11
-	},
-/turf/simulated/floor/bluewhite{
-	dir = 1
-	},
-/area/station/medical/medbay/pharmacy)
 "pMu" = (
 /obj/strip_door,
 /obj/machinery/conveyor/WE{
@@ -57895,6 +57881,19 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/crew_quarters/supplylobby)
+"tJw" = (
+/obj/machinery/glass_recycler,
+/obj/item/hand_labeler{
+	pixel_y = -9
+	},
+/obj/table/reinforced/chemistry/auto/auxsup,
+/obj/item/clothing/gloves/latex{
+	pixel_y = 12
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 6
+	},
+/area/station/medical/medbay/pharmacy)
 "tJH" = (
 /obj/machinery/conveyor/WE{
 	id = "ghostdrone"
@@ -64438,6 +64437,13 @@
 	icon_state = "fgreen2"
 	},
 /area/station/crew_quarters/cafeteria)
+"ybD" = (
+/obj/storage/secure/closet/research/chemical/pharmacy,
+/obj/item/paper/book/from_file/pharmacopia,
+/turf/simulated/floor/bluewhite{
+	dir = 5
+	},
+/area/station/medical/medbay/pharmacy)
 "ybI" = (
 /obj/storage/secure/closet/civilian/hydro,
 /turf/simulated/floor/grime,
@@ -99444,7 +99450,7 @@ cqB
 cqB
 gDm
 rAT
-pLh
+cHk
 shO
 eWa
 jSW
@@ -100350,9 +100356,9 @@ cqC
 cqC
 kxr
 oOM
-jxO
+ybD
 qGZ
-bUy
+tJw
 hZq
 jQc
 ebH
