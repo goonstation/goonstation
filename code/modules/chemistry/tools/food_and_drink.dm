@@ -1076,7 +1076,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			src.labeled = 1
 		else if (istype(W,/obj/item/tool/omnitool))
 			var/obj/item/tool/omnitool/OT = W
-			if (OT.mode?.mode_id == "bottleopen")
+			if (OT.mode?.mode_id == OMNITOOL::MODE_BOTTLE_OPENER)
 				boutput(user, SPAN_ALERT("It's a screw-top bottle."))
 			else
 				..()
