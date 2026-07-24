@@ -2542,7 +2542,7 @@ TYPEINFO(/obj/item/cargotele)
 	AST.marker_expiration_time = TIME + 2 MINUTES
 	mining_marker.appearance_flags = KEEP_APART | RESET_ALPHA | RESET_COLOR
 	mining_marker.alpha = 200
-	AST.UpdateOverlays(mining_marker, "geo_scan_marker")
+	AST.AddOverlays(mining_marker, "geo_scan_marker")
 	SPAWN(2 MINUTES)
 		if(AST.marker_expiration_time <= TIME)
 			AST.ClearSpecificOverlays("geo_scan_marker")
