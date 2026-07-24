@@ -42822,6 +42822,7 @@
 /area/station/solar/north)
 "jxO" = (
 /obj/storage/secure/closet/research/chemical/pharmacy,
+/obj/item/paper/book/from_file/pharmacopia,
 /turf/simulated/floor/bluewhite{
 	dir = 5
 	},
@@ -52211,6 +52212,8 @@
 	pixel_x = 10;
 	pixel_y = 11
 	},
+/obj/item/reagent_containers/dropper,
+/obj/item/reagent_containers/dropper/mechanical,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -60198,6 +60201,9 @@
 /obj/machinery/glass_recycler,
 /obj/item/hand_labeler{
 	pixel_y = -9
+	},
+/obj/item/clothing/gloves/latex{
+	pixel_y = 12
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 6

@@ -847,9 +847,6 @@
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
 /area/space)
-"adc" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/solar/north)
 "add" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -943,7 +940,7 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/station/solar/north)
+/area/station/maintenance/solar/north)
 "adz" = (
 /obj/cable/yellow{
 	icon_state = "0-8"
@@ -1121,10 +1118,6 @@
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
 /area/space)
-"aeg" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/plating,
-/area/station/solar/north)
 "aeh" = (
 /obj/machinery/power/smes{
 	chargelevel = 15000;
@@ -31149,6 +31142,10 @@
 "bXF" = (
 /obj/table/wood/auto,
 /obj/machinery/light/lamp/green,
+/obj/item/pinpointer/disk{
+	pixel_x = 10;
+	pixel_y = 9
+	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "bXG" = (
@@ -39167,8 +39164,19 @@
 /obj/item/clothing/gloves/yellow,
 /obj/item/device/multitool,
 /obj/item/device/multitool,
-/obj/item/disk/data/cartridge/diagnostics,
 /obj/item/storage/wall/random,
+/obj/item/disk/data/cartridge/diagnostics{
+	pixel_x = 9;
+	pixel_y = -2
+	},
+/obj/item/disk/data/cartridge/diagnostics{
+	pixel_x = 11;
+	pixel_y = 4
+	},
+/obj/item/disk/data/cartridge/diagnostics{
+	pixel_x = 10;
+	pixel_y = 12
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},
@@ -50854,6 +50862,10 @@
 /obj/item/paper/book/from_file/pharmacopia{
 	pixel_x = -8
 	},
+/obj/item/hand_labeler{
+	pixel_y = -4;
+	pixel_x = 2
+	},
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
@@ -55795,12 +55807,6 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/security/checkpoint/podbay)
-"ipY" = (
-/obj/machinery/computer/robotics/lab{
-	dir = 8
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/north)
 "iqa" = (
 /obj/machinery/atmospherics/unary/tank/air_repressurization,
 /turf/simulated/floor/plating,
@@ -59650,6 +59656,8 @@
 	},
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
+/obj/item/reagent_containers/dropper,
+/obj/item/clothing/gloves/latex,
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
@@ -105963,11 +105971,11 @@ aaB
 bJK
 aaB
 aaB
-adc
+ade
 ady
-aeg
+add
 ady
-adc
+ade
 ade
 ade
 ade
@@ -108211,7 +108219,7 @@ uBy
 dfZ
 cLH
 dgs
-aFb
+cqE
 aaa
 aam
 jFS
@@ -108513,7 +108521,7 @@ uBy
 dgr
 cLH
 dgs
-aFb
+cqE
 aaa
 aam
 vuz
@@ -108815,7 +108823,7 @@ rfK
 cuW
 cLH
 cuW
-aFb
+cqE
 aaa
 dgD
 oTY
@@ -109117,7 +109125,7 @@ uBy
 pmo
 dgv
 cuW
-aFb
+cqE
 aaa
 dgD
 oTY
@@ -114460,7 +114468,7 @@ aVg
 aWA
 aYc
 aXY
-ipY
+bhS
 bhS
 aaa
 aaa
