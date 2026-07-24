@@ -1669,7 +1669,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 
 	make_reagents()
 		..()
-		src.reagents.add_reagent("craftglue", 5)
 		src.reagents.add_reagent("simplesyrup", 5)
 
 /obj/item/reagent_containers/food/snacks/plant/mustard

@@ -32,8 +32,8 @@ ABSTRACT_TYPE(/datum/plant/weed)
 	nectarlevel = 5
 	endurance = 5
 	genome = 6
-	assoc_reagents = list("craftglue","simplesyrup")
-	commuts = list(/datum/plant_gene_strain/metabolism_fast)
+	assoc_reagents = list("simplesyrup")
+	commuts = list(/datum/plant_gene_strain/metabolism_fast,/datum/plant_gene_strain/reagent_adder/craftglue)
 
 /datum/plant/weed/lasher
 	name = "Lasher"
