@@ -188,9 +188,9 @@
 
 
 /obj/item/reagent_containers/pill/acetylsalicylic_acid
-	name = "analgesic pill"
+	name = "acetylsalicylic pill"
 	desc = "An anticoagulant and painkiller used to treat moderate injuries."
-	icon_state = "pill4"
+	icon_state = "pill9"
 
 	New()
 		..()
