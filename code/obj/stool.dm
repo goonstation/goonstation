@@ -469,7 +469,7 @@ TYPEINFO(/obj/stool/wooden)
 			newsheet.bed = src
 			user.u_equip(newsheet)
 			newsheet.set_loc(src.loc)
-			LAZYLISTADDUNIQUE(src.attached_objs, newsheet)
+			mutual_attach(src, newsheet)
 
 			var/mob/somebody
 			if (src.buckled_guy)
@@ -1051,7 +1051,13 @@ TYPEINFO(/obj/item/chair/folded)
 			if ((src.dir == WEST || src.dir == EAST) && !src.arm_image)
 				src.arm_image = image(src.icon, src.arm_icon_state)
 				src.arm_image.layer = FLY_LAYER+1
+				if(src.material && src.material_applied_appearance)
+					src.arm_image.apply_material_appearance(src.material)
 				src.UpdateOverlays(src.arm_image, "arm")
+
+	setMaterialAppearance(datum/material/mat1)
+		. = ..()
+		src.arm_image?.apply_material_appearance(mat1)
 
 	blue
 		name = "comfy blue chair"

@@ -8,6 +8,10 @@
 		procname = name
 
 
+#define MATERIAL_ARTISAN_COMMON 100
+#define MATERIAL_ARTISAN_UNCOMMON 30
+#define MATERIAL_ARTISAN_RARE 5
+
 /**
 	* # material
 	* Base material datum definition
@@ -31,6 +35,7 @@ ABSTRACT_TYPE(/datum/material)
 	VAR_PROTECTED/material_flags = 0
 	/// In percent of a base value. How much this sells for.
 	VAR_PROTECTED/value = 100
+	var/artisan_trait_weight = MATERIAL_ARTISAN_UNCOMMON
 
 	//naming stuff
 	/// words that go before the name, used in combination
@@ -105,6 +110,8 @@ ABSTRACT_TYPE(/datum/material)
 	VAR_PROTECTED/list/triggersOnHit = list()
 	/// Called when the material is interpolated with another.
 	VAR_PROTECTED/list/triggersOnMix = list()
+	/// Called when the material appearance is applied to an image
+	VAR_PROTECTED/list/triggersOnImage = list()
 
 
 	New()
@@ -475,6 +482,11 @@ ABSTRACT_TYPE(/datum/material)
 			X.execute(new_mat, old_matA, old_matB, bias)
 		return
 
+	proc/triggerOnImage(var/image/target)
+		for(var/datum/materialProc/X in triggersOnImage)
+			X.execute(target, src) // Need to include the material for the image
+		return
+
 	proc/calc_radiation_prot()
 		// Get roughly how many Ohms of radiation shielding should exist per unit of material
 		if(src.hasProperty("radiation") || src.hasProperty("n_radiation"))
@@ -495,6 +507,7 @@ ABSTRACT_TYPE(/datum/material)
 	desc = "You should not be seeing this"
 	color = "#6f00ff"
 	cached = FALSE
+	artisan_trait_weight = 0
 
 	///Create an interpolated material from two input materials, with bias. Bias of 0 is entirely mat1, bias of 1 is entirely mat2
 	New(var/datum/material/mat1,var/datum/material/mat2,var/bias)
@@ -605,6 +618,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 				0.00, 0.00, 0.00, 1.00,\
 				0.00, 0.00, 0.00, 0.00)
 	texture = "rock"
+	artisan_trait_weight = MATERIAL_ARTISAN_COMMON
 
 	New()
 		..()
@@ -612,6 +626,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("hard", 2)
 		setProperty("electrical", 4)
 		setProperty("thermal", 4)
+		setProperty("melting_point", 1500 KELVIN)
 
 
 /datum/material/metal/electrum
@@ -629,6 +644,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("electrical", 9)
 		setProperty("density", 4)
 		setProperty("hard", 1)
+		setProperty("melting_point", 1300 KELVIN)
 
 
 /datum/material/metal/veranium
@@ -653,6 +669,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("thermal", 1)
 		setProperty("density", 4)
 		setProperty("chemical", 2)
+		setProperty("melting_point", 1600 KELVIN)
 		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/shock_life(4 SECONDS, 6 SECONDS, 100))
 
 /datum/material/metal/voltite
@@ -660,6 +677,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	name = "voltite"
 	desc = "Energy seems to be flowing around it, chanelled through in an unknown manner."
 	color = "#389fff"
+	artisan_trait_weight = MATERIAL_ARTISAN_RARE
 
 	New()
 		..()
@@ -667,6 +685,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("density", 4)
 		setProperty("thermal", 1)
 		setProperty("hard", 1)
+		setProperty("melting_point", 1500 KELVIN)
 		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/shock_life(4 SECONDS, 6 SECONDS, 100))
 		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/arcflash_life(6 SECONDS, 8 SECONDS, 500))
 
@@ -679,10 +698,13 @@ ABSTRACT_TYPE(/datum/material/metal)
 				0.054, 0.054, 0.414, 0.00,\
 				0.00, 0.00, 0.00, 1.00,\
 				0.00, 0.00, 0.00, 0.00) // Desaturate and darken slightly
+	artisan_trait_weight = MATERIAL_ARTISAN_COMMON
+
 	New()
 		..()
 		setProperty("density", 4)
 		setProperty("hard", 3)
+		setProperty("melting_point", 1700 KELVIN)
 
 /datum/material/metal/copper
 	mat_id = "copper"
@@ -693,11 +715,14 @@ ABSTRACT_TYPE(/datum/material/metal)
 				0.60, 0.20, 0.30, 0.00,\
 				0.00, 0.00, 0.00, 1.00,\
 				0.00, 0.00, 0.00, 0.00)
+	artisan_trait_weight = MATERIAL_ARTISAN_COMMON
+
 	New()
 		..()
 		setProperty("electrical", 6)
 		setProperty("density", 2)
 		setProperty("hard", 1)
+		setProperty("melting_point", 1357 KELVIN)
 
 
 /datum/material/metal/pharosium
@@ -715,6 +740,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("electrical", 7)
 		setProperty("density", 2)
 		setProperty("hard", 2)
+		setProperty("melting_point", 1400 KELVIN)
 
 
 /datum/material/metal/cobryl
@@ -734,7 +760,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("density", 4)
 		setProperty("hard", 2)
 		setProperty("chemical", 8)
-
+		setProperty("melting_point", 900 KELVIN)
 
 
 /datum/material/metal/bohrum
@@ -758,6 +784,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("density", 6)
 		setProperty("hard", 5)
 		setProperty("chemical", 7)
+		setProperty("melting_point", 1700 KELVIN)
 
 /datum/material/metal/mauxite
 	mat_id = "mauxite"
@@ -779,6 +806,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		..()
 		setProperty("density", 4)
 		setProperty("hard", 3)
+		setProperty("melting_point", 1750 KELVIN)
 
 
 /datum/material/metal/cerenkite
@@ -805,6 +833,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("electrical", 6)
 		setProperty("radioactive", 5)
 		setProperty("hard", 2)
+		setProperty("melting_point", 1700 KELVIN)
 
 /datum/material/metal/syreline
 	mat_id = "syreline"
@@ -824,6 +853,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("density", 1)
 		setProperty("hard", 2)
 		setProperty("reflective", 8)
+		setProperty("melting_point", 2100 KELVIN) // Around the melting point of platnum
 
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/sparkles_add())
 		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/sparkles_remove())
@@ -849,6 +879,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("reflective", 6)
 		setProperty("electrical", 7)
 		setProperty("thermal", 7)
+		setProperty("melting_point", 1337 KELVIN)
 
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/sparkles_add())
 		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/sparkles_remove())
@@ -872,6 +903,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("hard", 2)
 		setProperty("reflective", 6)
 		setProperty("electrical", 6)
+		setProperty("melting_point", 1235 KELVIN)
 
 /datum/material/metal/batiline
 	mat_id = "batiline"
@@ -897,6 +929,8 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("thermal", 5)
 		setProperty("chemical", 4)
 		setProperty("reflective", 4)
+		setProperty("melting_point", 600 KELVIN) // Melting point of lead.
+
 		// TODO: Add lead poisoning. Would probably be best to implement via the reagent reaction system.
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/radiation_immune_add())
 		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/radiation_immune_remove())
@@ -913,6 +947,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		..()
 		setProperty("density", 7)
 		setProperty("hard", 3)
+		setProperty("melting_point", 1800 KELVIN)
 
 
 /datum/material/metal/neutronium
@@ -930,6 +965,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 					0.00, 0.00, 0.00, 1.00,\
 					0.58, 0.30, 0.00, 0.00)
 	alpha = 255
+	artisan_trait_weight = 0
 
 	New()
 		..()
@@ -954,7 +990,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("density", 2) //fucked up values for fucked up material but not silly putty
 		setProperty("hard", 2)
 		setProperty("electrical", 2)
-
+		setProperty("melting_point", 1500 KELVIN)
 
 /datum/material/metal/spacelag
 	mat_id = "spacelag"
@@ -965,6 +1001,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 				-0.15, -0.25, -0.15, 0.00,\
 				0.00, 0.00, 0.00, 1.00,\
 				0.30, 0.25, 0.30, 0.00)
+	artisan_trait_weight = MATERIAL_ARTISAN_RARE
 
 	New()
 		..()
@@ -991,6 +1028,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("density", 8)
 		setProperty("hard", 8)
 		setProperty("chemical", 9)
+		setProperty("melting_point", 2700 KELVIN)
 
 
 /datum/material/metal/negativematter
@@ -998,6 +1036,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	name = "negative matter"
 	desc = "It seems to repel matter."
 	color = COLOR_MATRIX_INVERSE
+	artisan_trait_weight = MATERIAL_ARTISAN_RARE
 
 	New()
 		..()
@@ -1026,6 +1065,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		material_flags|= MATERIAL_ENERGY
 		setProperty("density", 4)
 		setProperty("hard", 2)
+		setProperty("melting_point", 1600 KELVIN)
 		addTrigger(TRIGGERS_ON_ENTERED, new /datum/materialProc/soulsteel_entered())
 
 
@@ -1048,10 +1088,13 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	desc = "Terrestrial glass. Inferior to Molitz."
 	color = "#A3DCFF"
 	alpha = 180
+	artisan_trait_weight = MATERIAL_ARTISAN_COMMON
+
 	New()
 		..()
 		setProperty("density", 2)
 		setProperty("hard", 3)
+		setProperty("melting_point", 1500 KELVIN)
 
 
 /datum/material/crystal/molitz
@@ -1067,6 +1110,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("density", 3)
 		setProperty("hard", 4)
 		setProperty("molitz_bubbles", 4)
+		setProperty("melting_point", 1900 KELVIN) // Around the melting point of quartz
 		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/molitz_temp())
 		addTrigger(TRIGGERS_ON_EXPLOSION, new /datum/materialProc/molitz_exp())
 
@@ -1079,6 +1123,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		New()
 			..()
 			// no need to remove molitz_on_hit, all it does is call molitz_temp
+			setProperty("melting_point", 2000 KELVIN)
 			removeTrigger(TRIGGERS_ON_TEMP, /datum/materialProc/molitz_temp)
 			addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/molitz_temp/agent_b())
 			return
@@ -1089,6 +1134,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		color = "#808080"
 		New()
 			..()
+			setProperty("melting_point", 2700 KELVIN)
 			removeTrigger(TRIGGERS_ON_TEMP, /datum/materialProc/molitz_temp)
 			removeTrigger(TRIGGERS_ON_EXPLOSION, /datum/materialProc/molitz_exp)
 
@@ -1117,6 +1163,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("density", 3)
 		setProperty("hard", 1)
 		setProperty("electrical", 8)
+		setProperty("melting_point", 1200 KELVIN)
 
 /datum/material/crystal/erebite
 	mat_id = "erebite"
@@ -1189,7 +1236,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		..()
 		setProperty("density", 3)
 		setProperty("hard", 7)
-
+		setProperty("melting_point", 1600 KELVIN) // Glass melting point + 500
 
 /datum/material/crystal/gemstone
 	mat_id = "quartz"
@@ -1197,6 +1244,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	desc = "Quartz is somewhat valuable but not particularly useful."
 	color = "#BBBBBB"
 	alpha = 180
+	artisan_trait_weight = 10
 	var/gem_tier = 3
 
 	New()
@@ -1207,6 +1255,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 				name = "clear [src.name]"
 				setProperty("density", 6)
 				setProperty("hard", 7)
+				setProperty("melting_point", 2300 KELVIN)
 				addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/sparkles_add())
 				addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/sparkles_remove())
 			if(2)
@@ -1214,11 +1263,13 @@ ABSTRACT_TYPE(/datum/material/crystal)
 				name = "flawed [src.name]"
 				setProperty("density", 4)
 				setProperty("hard", 5)
+				setProperty("melting_point", 2100 KELVIN)
 			if(3)
 				value = 200
 				name = "inferior [src.name]"
 				setProperty("density", 3)
 				setProperty("hard", 4)
+				setProperty("melting_point", 1800 KELVIN)
 
 
 	diamond
@@ -1347,6 +1398,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("density", 8)
 		setProperty("hard", 4)
 		setProperty("chemical", 9)
+		setProperty("melting_point", 3200 KELVIN)
 
 
 // hi it me cirr im doing dumb
@@ -1372,6 +1424,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("hard", 5) // very hard
 		setProperty("reflective", 9) // shiny
 		setProperty("electrical", 7) // good conductor
+		setProperty("melting_point", 1000 KELVIN)
 
 
 /datum/material/crystal/telecrystal
@@ -1392,6 +1445,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("density", 1)
 		setProperty("hard", 2)
 		setProperty("reflective", 8)
+		setProperty("melting_point", 1331 KELVIN)
 		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/telecrystal_life())
 		addTrigger(TRIGGERS_ON_ENTERED, new /datum/materialProc/telecrystal_entered())
 		addTrigger(TRIGGERS_ON_ATTACK, new /datum/materialProc/telecrystal_onattack())
@@ -1413,6 +1467,9 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("hard", rand(1, 8))
 		setProperty("reflective", rand(1, 9))
 		setProperty("chemical", rand(1, 8))
+		var/rand_val = rand()
+		var/melting_point = (3500 KELVIN * (rand_val * rand_val)) + 500 KELVIN
+		setProperty("melting_point", melting_point)
 		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/temp_miraclium())
 
 
@@ -1428,6 +1485,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 				0.00, 0.15, 0.25, 0.00)
 	alpha = 80
 	value = 1000
+	artisan_trait_weight = MATERIAL_ARTISAN_RARE
 
 	New()
 		..()
@@ -1435,6 +1493,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("density", 9)
 		setProperty("hard", 9)
 		setProperty("electrical", 1)
+		setProperty("melting_point", 4300 KELVIN) // Around the melting point of diamond
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/sparkles_add())
 		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/sparkles_remove())
 
@@ -1446,6 +1505,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	icon_file = 'icons/obj/items/materials/ice.dmi'
 	color = "#E8F2FF"
 	alpha = 100
+	artisan_trait_weight = MATERIAL_ARTISAN_COMMON
 
 	edible_exact = 1
 	edible = 1
@@ -1455,6 +1515,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("electrical", 2)
 		setProperty("density", 1)
 		setProperty("hard", 2)
+		setProperty("melting_point", round(T0C))
 		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/ice_melt())
 		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/ice_life())
 		addTrigger(TRIGGERS_ON_ATTACK, new /datum/materialProc/slippery_attack())
@@ -1464,6 +1525,7 @@ ABSTRACT_TYPE(/datum/material/crystal/wizard)
 /datum/material/crystal/wizard
 	alpha = 100
 	value = 650
+	artisan_trait_weight = 0
 
 	New()
 		..()
@@ -1535,6 +1597,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("density", 5)
 		setProperty("hard", 1)
 		setProperty("flammable", 5)
+		setProperty("melting_point", 400 KELVIN)
 		addTrigger(TRIGGERS_ON_EAT, new /datum/materialProc/oneat_blob())
 
 
@@ -1587,6 +1650,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 				-0.10, -0.10, -0.10, 0.00)
 	texture = list("char_a","char_b","char_c","char_d")
 	texture_blend = BLEND_DEFAULT
+	artisan_trait_weight = MATERIAL_ARTISAN_COMMON
 
 	New()
 		..()
@@ -1620,6 +1684,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("reflective", 6)
 		setProperty("n_radioactive", 1)
 		setProperty("density", 5)
+		setProperty("melting_point", 6000 KELVIN)
 
 /datum/material/organic/viscerite
 	mat_id = "viscerite"
@@ -1644,6 +1709,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("hard", 1)
 		setProperty("chemical", 6)
 		setProperty("flammable", 2)
+		setProperty("melting_point", 750 KELVIN)
 		addTrigger(TRIGGERS_ON_EAT, new /datum/materialProc/oneat_viscerite())
 
 /datum/material/organic/tensed_viscerite
@@ -1660,6 +1726,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("hard", 3)
 		setProperty("chemical", 8)
 		setProperty("flammable", 2)
+		setProperty("melting_point", 1500 KELVIN)
 
 /datum/material/organic/bone
 	mat_id = "bone"
@@ -1670,6 +1737,8 @@ ABSTRACT_TYPE(/datum/material/organic)
 				0.65, 0.60, 0.55, 0.00,\
 				0.00, 0.00, 0.00, 1.00,\
 				-0.20, -0.20, -0.20, 0.00)
+	artisan_trait_weight = MATERIAL_ARTISAN_COMMON
+
 	New()
 		..()
 		setProperty("density", 3)
@@ -1688,6 +1757,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 				0.05, 0.00, -0.10, 0.00)
 	texture = list("wood_a","wood_b","wood_c")
 	texture_blend = BLEND_DEFAULT
+	artisan_trait_weight = MATERIAL_ARTISAN_COMMON
 
 	New()
 		..()
@@ -1703,6 +1773,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 	desc = "Bamboo is a giant woody grass."
 	color = "#544c24"
 	texture_blend = BLEND_ADD
+	artisan_trait_weight = MATERIAL_ARTISAN_COMMON
 
 	New()
 		..()
@@ -1722,6 +1793,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 				0.10, 0.10, 0.05, 0.00)
 	texture = "cardboard"
 	texture_blend = BLEND_DEFAULT
+	artisan_trait_weight = MATERIAL_ARTISAN_COMMON
 
 	New()
 		..()
@@ -1738,7 +1810,18 @@ ABSTRACT_TYPE(/datum/material/organic)
 	name = "chitin"
 	desc = "Chitin is an organic material found in the exoskeletons of insects."
 	icon_file = 'icons/obj/items/materials/chitin.dmi'
-	color = "#118800"
+	color = list(1.00, 0.00, 0.00, 0.00,\
+				0.00, 0.60, 0.10, 0.00,\
+				0.00, 0.10, 1.00, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				-0.05, -0.10, 0.00, 0.00)
+	hsl_color = list(0.00, 0.00, -0.10, 0.00,\
+					0.00, 1.35, 0.20, 0.00,\
+					0.00, 0.00, 0.60, 0.00,\
+					0.00, 0.00, 0.00, 1.00,\
+					0.48, 0.00, 0.00, 0.00)
+	texture = "chitin"
+	texture_blend = BLEND_OVERLAY
 
 	New()
 		..()
@@ -1758,6 +1841,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("density", 1)
 		setProperty("hard", 2)
 		setProperty("flammable", 4)
+		setProperty("melting_point", 335 KELVIN)
 
 
 /datum/material/organic/honey
@@ -1782,10 +1866,12 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("density", 2)
 		setProperty("hard", 1)
 		setProperty("flammable", 4)
+		setProperty("melting_point", 323 KELVIN)
 		// addTrigger(TRIGGERS_ON_EAT, new /datum/materialProc/oneat_honey())
 		// maybe make it sticky somehow?
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/honey_add())
 		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/honey_remove())
+		addTrigger(TRIGGERS_ON_IMAGE, new /datum/materialProc/honey_image())
 
 
 /datum/material/organic/frozenfart
@@ -1799,6 +1885,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("density", 3)
 		setProperty("hard", 2)
 		setProperty("thermal", 1)
+		setProperty("melting_point", 250 KELVIN)
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/ffart_add())
 		addTrigger(TRIGGERS_ON_PICKUP, new /datum/materialProc/ffart_pickup())
 
@@ -1808,6 +1895,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 	name = "hamburgris"
 	desc = "Ancient medium ground chuck, petrified by the ages into a sturdy composite. Or worse."
 	color = "#816962"
+	artisan_trait_weight = 0
 
 	New()
 		..()
@@ -1832,6 +1920,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 	New()
 		..()
 		setProperty("hard", 1)
+		setProperty("melting_point", 330 KELVIN) // Around the melting point of cheese
 
 
 /datum/material/organic/coral
@@ -1886,6 +1975,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 	texture_blend = BLEND_DEFAULT
 	edible_exact = 1
 	edible = 1
+	artisan_trait_weight = MATERIAL_ARTISAN_COMMON
 
 	New()
 		..()
@@ -1926,6 +2016,7 @@ ABSTRACT_TYPE(/datum/material/fabric)
 	name = "leather"
 	desc = "Leather is a flexible material derived from processed animal skins."
 	color = "#8A3B11"
+	artisan_trait_weight = MATERIAL_ARTISAN_COMMON
 
 	New()
 		..()
@@ -1940,6 +2031,7 @@ ABSTRACT_TYPE(/datum/material/fabric)
 	name = "synthleather"
 	desc = "Synthleather is an artificial leather."
 	color = "#BB3B11"
+	artisan_trait_weight = MATERIAL_ARTISAN_COMMON
 
 	New()
 		..()
@@ -1968,6 +2060,7 @@ ABSTRACT_TYPE(/datum/material/fabric)
 	name = "king brullbar hide"
 	desc = "The hide of a terrifying brullbar king!!!"
 	color = "#EFEEEE"
+	artisan_trait_weight = 0
 
 	New()
 		..()
@@ -1983,6 +2076,7 @@ ABSTRACT_TYPE(/datum/material/fabric)
 	name = "cotton"
 	desc = "Cotton is a soft and fluffy material obtained from certain plants."
 	color = "#FFFFFF"
+	artisan_trait_weight = MATERIAL_ARTISAN_COMMON
 
 	New()
 		..()
@@ -1999,6 +2093,7 @@ ABSTRACT_TYPE(/datum/material/fabric)
 	special_naming = TRUE
 	texture = "jean"
 	texture_blend = BLEND_MULTIPLY
+	artisan_trait_weight = MATERIAL_ARTISAN_COMMON
 
 	New()
 		..()
@@ -2080,7 +2175,7 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		setProperty("hard", 2)
 		setProperty("thermal", 1)
 		setProperty("flammable", 1)
-
+		setProperty("melting_point", 1200 KELVIN) // Around the melting point of asbestos
 
 	New()
 		..()
@@ -2125,7 +2220,7 @@ ABSTRACT_TYPE(/datum/material/fabric)
 	name = "hauntium"
 	desc = "A silky smooth fabric that almost seems alive."
 	color = "#8c87b2"
-
+	artisan_trait_weight = MATERIAL_ARTISAN_RARE
 
 	New()
 		..()
@@ -2143,6 +2238,7 @@ ABSTRACT_TYPE(/datum/material/fabric)
 	desc = "Ectoplasmic fibres. Sort of transparent. Seems to be rather strong yet flexible."
 	color = "#ffffff"
 	alpha = 128
+	artisan_trait_weight = MATERIAL_ARTISAN_RARE
 
 	New()
 		..()
@@ -2160,6 +2256,7 @@ ABSTRACT_TYPE(/datum/material/fabric)
 	name = "dyneema"
 	desc = "A blend of carbon nanofibres and space spider silk. Highly versatile."
 	color = "#333333"
+	artisan_trait_weight = MATERIAL_ARTISAN_RARE
 
 	New()
 		..()
@@ -2175,6 +2272,7 @@ ABSTRACT_TYPE(/datum/material/fabric)
 	name = "ExoWeave"
 	desc = "A prototype composite fabric designed for EVA activity, comprised primarily of carbon fibers treated with a silica-based solution."
 	color = "#3d666b"
+	artisan_trait_weight = MATERIAL_ARTISAN_RARE
 
 	New()
 		..()
@@ -2220,6 +2318,7 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("hard", 1)
 		setProperty("electrical", 3)
 		setProperty("thermal", 4)
+		setProperty("melting_point", 453 KELVIN) // About the melting point of rubber
 
 /datum/material/rubber/synthrubber
 	mat_id = "synthrubber"
@@ -2237,7 +2336,7 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("hard", 1)
 		setProperty("electrical", 2)
 		setProperty("thermal", 4)
-
+		setProperty("melting_point", 500 KELVIN)
 
 /datum/material/rubber/synthblubber //it had to be done
 	mat_id = "synthblubber"
@@ -2252,6 +2351,7 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("electrical", 1)
 		setProperty("thermal", 3)
 		setProperty("flammable", 3)
+		setProperty("melting_point", 600 KELVIN) // IDK what the melting point of blubbler is
 
 /datum/material/rubber/plastic
 	mat_id = "plastic"
@@ -2262,6 +2362,7 @@ ABSTRACT_TYPE(/datum/material/rubber)
 				-0.25, -0.25, 2.00, 0.00,\
 				0.00, 0.00, 0.00, 1.00,\
 				0.00, 0.00, 0.00, 0.00) // Increase saturation and brightness
+	artisan_trait_weight = MATERIAL_ARTISAN_COMMON
 
 	New()
 		..()
@@ -2270,6 +2371,7 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("electrical", 2)
 		setProperty("thermal", 3)
 		setProperty("chemical", 5)
+		setProperty("melting_point", 500 KELVIN)
 
 /datum/material/metal/plutonium
 	mat_id = "plutonium"
@@ -2286,6 +2388,7 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("n_radioactive", 5)
 		setProperty("radioactive", 3)
 		setProperty("electrical", 7)
+		setProperty("melting_point", 913 KELVIN)
 
 /datum/material/metal/yuranite
 	mat_id = "yuranite"
@@ -2302,6 +2405,7 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("radioactive", 4)
 		setProperty("thermal", 3)
 		setProperty("electrical", 4)
+		setProperty("melting_point", 1405 KELVIN) // About the melting point of uranium
 
 /datum/material/metal/neutrite
 	mat_id = "neutrite"
@@ -2325,6 +2429,7 @@ ABSTRACT_TYPE(/datum/material/rubber)
 	desc = "It's just a bunch of glowsticks stuck together. How is this an ingot?"
 	color = "#00e618"
 	alpha = 200
+	artisan_trait_weight = 0
 
 	New()
 		..()
@@ -2333,7 +2438,12 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("radioactive", 1)
 		setProperty("electrical", 2)
 		setProperty("thermal", 3)
+		setProperty("melting_point", 550 KELVIN) // Around the melting point of plastic
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/glowstick_add())
+
+#undef MATERIAL_ARTISAN_COMMON
+#undef MATERIAL_ARTISAN_UNCOMMON
+#undef MATERIAL_ARTISAN_RARE
 
 // Placed here because it needs to have /datum/material defined already to work
 /datum/materialProc/batiline_mix

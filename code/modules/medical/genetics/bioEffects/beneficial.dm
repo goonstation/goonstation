@@ -206,6 +206,15 @@
 	degrade_to = "drunk"
 	icon_state  = "alc_res"
 
+	OnAdd()
+		. = ..()
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_ALCOHOL_RESIST, src, 100)
+
+	OnRemove()
+		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_ALCOHOL_RESIST, src)
+		. = ..()
+
+
 /datum/bioEffect/toxres
 	name = "Toxic Resistance"
 	desc = "Renders the subject's blood immune to toxification. This will not stop other effects of poisons from occurring, however."

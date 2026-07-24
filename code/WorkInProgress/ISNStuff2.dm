@@ -320,10 +320,6 @@
 			boutput(user, SPAN_NOTICE("You paint the butOH FOR FUCKS SAKE JUST STOP LIKE IVE BEEN ASKING YOU TO"))
 			steps_until_pressable--
 			return
-		if (istype(W,/obj/item/paint) && steps_until_pressable == 3)
-			boutput(user, SPAN_NOTICE("You paint the butOH FOR FUCKS SAKE JUST STOP LIKE IVE BEEN ASKING YOU TO"))
-			steps_until_pressable--
-			return
 		if (istype(W,/obj/item/reagent_containers/glass/bottle/holywater) && steps_until_pressable == 2)
 			boutput(user, SPAN_ALERT("Stop it."))
 			steps_until_pressable--

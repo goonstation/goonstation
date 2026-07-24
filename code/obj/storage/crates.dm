@@ -127,7 +127,7 @@
 	make_my_stuff()
 		. = ..()
 		if (prob(30))
-			new /obj/item/paper/businesscard/hemera_rcd(src)
+			new /obj/item/paper/image/businesscard/hemera_rcd(src)
 
 /obj/storage/crate/rcd/CE
 	name = "\improper RCD crate"
@@ -175,6 +175,36 @@
 	icon_opened = "biohazardcrateopen"
 	icon_closed = "biohazardcrate"
 	weld_image_offset_Y = -2
+
+/obj/storage/crate/freezer/organs
+	name = "Freezer - Spare Parts"
+
+	make_my_stuff()
+		if(..())
+			var/i = 0
+			var/limit = rand(5,7)
+			while(i < limit)
+				i++
+				switch(rand(1,9))
+					if(1)
+						new /obj/item/organ/appendix(src)
+					if(2)
+						new /obj/item/organ/heart(src)
+					if(3)
+						new /obj/item/organ/intestines(src)
+					if(4)
+						new /obj/item/organ/kidney(src)
+					if(5)
+						new /obj/item/organ/liver(src)
+					if(6)
+						new /obj/item/organ/stomach(src)
+					if(7)
+						new /obj/item/organ/spleen(src)
+					if(8)
+						new /obj/item/organ/pancreas(src)
+					if(9)
+						new /obj/item/organ/eye(src)
+			return TRUE
 
 /obj/storage/crate/freezer/milk
 	spawn_contents = list(/obj/item/reagent_containers/food/drinks/milk = 10, \

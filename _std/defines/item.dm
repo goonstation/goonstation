@@ -208,6 +208,7 @@
                        HAS_FLAG(x:kind_of_limb, LIMB_HEAVY) |\
                        HAS_FLAG(x:kind_of_limb, LIMB_HEAVIER) |\
                        HAS_FLAG(x:kind_of_limb, LIMB_TREADS))
+#define isartifactlimb(x) HAS_FLAG(x:kind_of_limb, LIMB_ARTIFACT)
 
 #define W_CLASS_TINY 1
 #define W_CLASS_SMALL 2
@@ -237,9 +238,6 @@
 #define MATCH_UNLIT 0
 #define MATCH_LIT 1
 #define MATCH_INERT 2 /// broken or burn out
-
-/// Macro for rendering an image fullsize on paper
-#define PAPER_IMAGE_RENDER(image) "<img style='position: absolute; top: 0; left: 0' src='[resource(image)]'>"
 
 // implant stuff
 #define IMPLANT_SCAN_CATEGORY_OTHER "other"

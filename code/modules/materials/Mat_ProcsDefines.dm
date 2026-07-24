@@ -24,24 +24,12 @@ var/global/list/material_cache
 
 /proc/mergeProperties(var/list/leftProps, var/list/rightProps, var/rightBias=0.5)
 	var/leftBias = 1 - rightBias
+	var/list/merged = rightProps | leftProps
 
-	var/list/merged = list()
-
-	for(var/o in leftProps)
-		//merged.Add(o)
-		merged[o] = leftProps[o] * leftBias
-
-	if(rightProps)
-		for(var/x in rightProps)
-			if(x in merged)
-				merged[x] += rightProps[x] * rightBias
-			else
-				merged.Add(x)
-				merged[x] = rightProps[x] * rightBias
-
-	for(var/x in merged)
-		merged[x] = round(merged[x])
-
+	for(var/datum/material_property/prop in merged)
+		var/value_left = (prop in leftProps) ? leftProps[prop] : prop.default_value
+		var/value_right = (prop in rightProps) ? rightProps[prop] : prop.default_value
+		merged[prop] = prop.getValueMerged(value_left, value_right, leftBias, rightBias)
 	return merged
 
 

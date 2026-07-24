@@ -41,7 +41,7 @@
 /obj/cable/black{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/general)
 "dO" = (
 /obj/machinery/door/airlock,
@@ -97,7 +97,11 @@
 	pixel_y = 7;
 	pixel_x = 9
 	},
-/turf/simulated/floor/orangeblack,
+/obj/item/stamp/syndicate{
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/turf/simulated/floor/caution,
 /area/listeningpost/general)
 "gU" = (
 /obj/machinery/power/rtg/erebite_loaded,
@@ -176,7 +180,7 @@
 /obj/cable/black{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/general)
 "lo" = (
 /turf/unsimulated/floor/shuttle/red{
@@ -238,7 +242,7 @@
 /obj/cable/black{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/general)
 "nC" = (
 /obj/machinery/vending/floppy{
@@ -265,7 +269,7 @@
 "oD" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost/barracks)
 "oO" = (
@@ -336,7 +340,7 @@
 /obj/cable/black{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/general)
 "tz" = (
 /obj/mesh/grille/steel,
@@ -363,7 +367,7 @@
 /obj/table/wood/auto,
 /obj/item/storage/firstaid/regular,
 /obj/item/bandage,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/general)
 "va" = (
 /obj/machinery/light/small{
@@ -461,10 +465,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/light_switch{
-	name = "S light switch";
-	pixel_y = -24
-	},
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor/black,
 /area/listeningpost/general)
 "Bd" = (
@@ -482,7 +483,7 @@
 /obj/cable/black{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/general)
 "BP" = (
 /obj/machinery/shuttle/engine/heater{
@@ -495,7 +496,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/tequila,
 /obj/item/card_group/plain,
 /obj/item/currency/spacecash/hundred,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/general)
 "Dh" = (
 /obj/item/storage/toilet{
@@ -519,7 +520,7 @@
 	name = "defaced NanoTrasen poster";
 	pixel_y = 28
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/general)
 "DN" = (
 /obj/machinery/door/airlock,
@@ -620,7 +621,7 @@
 	},
 /obj/machinery/bot/medbot/no_camera,
 /obj/noticeboard/directional/north,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/general)
 "Hu" = (
 /obj/storage/secure/crate/gear/syndicate,
@@ -685,7 +686,7 @@
 /obj/cable/black{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/general)
 "KG" = (
 /obj/table/wood/auto,
@@ -700,13 +701,13 @@
 /obj/machinery/codereader/syndicate{
 	pixel_y = 5
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/general)
 "Lf" = (
 /obj/table/wood/auto,
 /obj/item/paper_bin,
 /obj/item/pen,
-/obj/item/paper/printout/emerg1,
+/obj/item/paper/image/sstv/emerg1,
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
 "Lu" = (
@@ -770,7 +771,7 @@
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "Om" = (
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /obj/machinery/computer/camera_viewer,
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
@@ -875,7 +876,7 @@
 /obj/item/device/radio/intercom/security{
 	dir = 8
 	},
-/obj/machinery/light_switch/east{
+/obj/machinery/light_switch/directional/east{
 	pixel_y = -16
 	},
 /turf/simulated/floor/black,
@@ -913,7 +914,7 @@
 /area/space)
 "WU" = (
 /obj/stool/chair/comfy,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/general)
 "XA" = (
 /obj/table/wood/auto,

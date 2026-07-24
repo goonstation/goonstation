@@ -1077,6 +1077,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 			u_equip(I)
 
 /mob/living/critter/empty_hands()
+	..()
 	for (var/datum/handHolder/HH in hands)
 		if (HH.item)
 			if (!HH.item.qdeled && !HH.item.disposed && istype(HH.item, /obj/item/grab))
@@ -1193,7 +1194,13 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 					else
 						message = "<b>[src]</B> does a flip!"
 						animate_spin(src, pick("L", "R"), 1, 0)
-
+				src.drop_juggle()
+			if ("juggle")
+				if (src.can_juggle && src.emote_check(voluntary, 25))
+					if(!src.juggle_emote())
+						m_type = 1
+						message = "<B>[src]</B> wiggles [his_or_her(src)] fingers a bit.[prob(10) ? " Weird." : null]"
+						maptext_out = "<I>wiggles [his_or_her(src)] fingers a bit.</I>"
 	if (!message)
 		return
 
@@ -1443,6 +1450,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 /mob/living/critter/proc/should_critter_retaliate(var/mob/attcker, var/obj/attcked_with)
 	return src.ai_retaliates && (src._ai_patience_count <= 0)
 
+/// Used for the go_home AI task. Returns the type.
+/mob/living/critter/proc/home_area()
+	return null
 
 /mob/living/critter/bump(atom/A)
 	var/atom/movable/AM = A

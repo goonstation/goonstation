@@ -1119,6 +1119,10 @@ ABSTRACT_TYPE(/obj/loot_spawner/random/medium)
 			spawn_item(C,I,/obj/item/reagent_containers/emergency_injector/random,off_y=0,rot=45,scale_x=0.75,scale_y=0.75)
 			spawn_item(C,I,/obj/item/reagent_containers/emergency_injector/random,off_y=-4,rot=45,scale_x=0.75,scale_y=0.75)
 
+	flatcap
+		spawn_loot(loc, datum/loot_spawner_info/I)
+			spawn_item(loc, I, /obj/item/clothing/head/flatcap/razor)
+
 
 ABSTRACT_TYPE(/obj/loot_spawner/random/long)
 /obj/loot_spawner/random/long //3x1
@@ -1301,7 +1305,7 @@ ABSTRACT_TYPE(/obj/loot_spawner/random/medium_tall)
 	helmet
 		tier = GANG_CRATE_GEAR
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			var/helmet = pick(filtered_concrete_typesof(/obj/item/clothing/head/helmet, PROC_REF(filter_trait_hats)))
+			var/helmet = pick(filtered_concrete_typesof(/obj/item/clothing/head/helmet, GLOBAL_PROC_REF(filter_trait_hats)))
 			spawn_item(C,I,helmet,off_y=-2,scale_x=0.7,scale_y=0.7)
 			spawn_item(C,I,helmet,off_y=0,scale_x=0.7,scale_y=0.7)
 			spawn_item(C,I,helmet,off_y=2,scale_x=0.7,scale_y=0.7)
@@ -1322,9 +1326,10 @@ ABSTRACT_TYPE(/obj/loot_spawner/random/medium_tall)
 
 	hat
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			spawn_item(C,I,pick(filtered_concrete_typesof(/obj/item/clothing/head, PROC_REF(filter_trait_hats))),off_y=-2,scale_x=0.7,scale_y=0.7)
-			spawn_item(C,I,pick(filtered_concrete_typesof(/obj/item/clothing/head, PROC_REF(filter_trait_hats))),off_y=0,scale_x=0.7,scale_y=0.7)
-			spawn_item(C,I,pick(filtered_concrete_typesof(/obj/item/clothing/head, PROC_REF(filter_trait_hats))),off_y=2,scale_x=0.7,scale_y=0.7)
+			//always at least one if we get hats
+			spawn_item(C,I,/obj/item/clothing/head/flatcap/razor,off_y=-2,scale_x=0.7,scale_y=0.7)
+			spawn_item(C,I,pick(filtered_concrete_typesof(/obj/item/clothing/head, GLOBAL_PROC_REF(filter_trait_hats))),off_y=0,scale_x=0.7,scale_y=0.7)
+			spawn_item(C,I,pick(filtered_concrete_typesof(/obj/item/clothing/head, GLOBAL_PROC_REF(filter_trait_hats))),off_y=2,scale_x=0.7,scale_y=0.7)
 	medkits
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
 			spawn_item(C,I,/obj/item/storage/firstaid/crit,off_y=2)

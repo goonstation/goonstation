@@ -280,23 +280,19 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	item_state = "detective"
 	var/obj/item/razor_blade/blade = null
 
+	razor
+		New()
+			. = ..()
+			var/obj/item/razor_blade/razor = new()
+			src.insert_razor(razor)
+
 	attackby(obj/item/W, mob/user, params) //https://www.youtube.com/watch?v=KGD2N5hJ2e0
 		if (istype(W, /obj/item/razor_blade))
 			boutput(user, SPAN_NOTICE("You sneakily insert [W] into the brim of [src]."))
-			src.desc += " This one has something metal hidden in the brim."
-			src.hit_type = W.hit_type
-			src.tool_flags = W.tool_flags
-			src.force = W.force
-			src.hitsound = W.hitsound
-			src.throwforce = W.throwforce
-			src.throw_speed = W.throw_speed
-			src.throw_range = W.throw_range
-			src.setItemSpecial(W.special.type)
 			user.drop_item(W)
-			W.set_loc(src)
-			src.blade = W
+			src.insert_razor(W)
 			return
-		else if (issnippingtool(W) && src.blade)
+		if (issnippingtool(W) && src.blade)
 			playsound(src, 'sound/items/Scissor.ogg', 40, 1)
 			boutput(user, SPAN_NOTICE("You snip [src.blade] out of the brim of [src]."))
 			src.desc = initial(src.desc)
@@ -312,6 +308,59 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 			src.blade = null
 			return
 		. = ..()
+
+	proc/insert_razor(obj/item/razor)
+		src.desc += " This one has something metal hidden in the brim."
+		src.hit_type = razor.hit_type
+		src.tool_flags = razor.tool_flags
+		src.force = razor.force
+		src.hitsound = razor.hitsound
+		src.throwforce = razor.throwforce
+		src.throw_speed = razor.throw_speed
+		src.throw_range = razor.throw_range
+		src.setItemSpecial(razor.special.type)
+		razor.set_loc(src)
+		src.blade = razor
+
+	attack(mob/living/carbon/human/target, mob/user, def_zone, is_special, params)
+		if (def_zone != "head" || !src.blade || !istype(target))
+			return ..()
+		//need to grab them close
+		var/obj/item/grab/grab = user.find_type_in_hand(/obj/item/grab)
+		if (!grab || grab.affecting != target || grab.state < GRAB_AGGRESSIVE)
+			return ..()
+		//anything covering their eyes?
+		if (target.wear_mask?.c_flags & COVERSEYES || target.head?.c_flags & COVERSEYES || target.glasses?.c_flags & COVERSEYES)
+			return ..()
+		//don't let them do this more than once
+		if ((!target.organHolder.left_eye || target.organHolder.left_eye.broken) && (!target.organHolder.right_eye || target.organHolder.right_eye.broken))
+			return ..()
+		src.visible_message(SPAN_BOLD(SPAN_COMBAT("[user] begins to slowly drag their blade across [target]'s eyes!")))
+		target.emote("scream")
+		var/datum/action/bar/razor_blind/actionbar = new()
+		actionbar.victim = target
+		actions.start(actionbar, user)
+
+//is this too far? maybe?? It's kind of badass though...
+/datum/action/bar/razor_blind
+	duration = 10 SECONDS
+	var/mob/living/carbon/human/victim
+
+	onUpdate()
+		take_bleeding_damage(src.victim, src.owner, 5)
+		if (TIME - src.started >= 5 SECONDS && src.victim.organHolder.left_eye && !src.victim.organHolder.left_eye.broken)
+			src.victim.emote("scream")
+			playsound(get_turf(src.victim), 'sound/impact_sounds/Flesh_Cut_1.ogg', 50, 1)
+			src.victim.organHolder.left_eye.take_damage(src.victim.organHolder.left_eye.max_damage)
+		..()
+
+	onEnd()
+		if (src.victim.organHolder.right_eye && !src.victim.organHolder.right_eye.broken)
+			src.victim.emote("scream")
+			playsound(get_turf(src.victim), 'sound/impact_sounds/Flesh_Cut_1.ogg', 50, 1)
+			src.victim.organHolder.right_eye.take_damage(src.victim.organHolder.right_eye.max_damage)
+		..()
+
 
 // Donk clothes
 
@@ -682,6 +731,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	icon_state = "balaclava"
 	item_state = "balaclava"
 	see_face = FALSE
+	c_flags = COVERSMOUTH | COVERSHAIR
 
 // Sweet Bro and Hella Jeff
 
@@ -1836,50 +1886,50 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 
 /obj/item/clothing/under/collardressbl
 	name = "collar dress"
-	desc = "a dress made for casual wear"
+	desc = "a dress made for casual wear."
 	icon_state = "collardressbl"
 	item_state = "collardressbl"
 
 /obj/item/clothing/under/collardressr
 	name = "collar dress"
-	desc = "a dress made for casual wear"
+	desc = "a dress made for casual wear."
 	icon_state = "collardressr"
 	item_state = "collardressr"
 
 /obj/item/clothing/under/collardressg
 	name = "collar dress"
-	desc = "a dress made for casual wear"
+	desc = "a dress made for casual wear."
 	icon_state = "collardressg"
 	item_state = "collardressg"
 
 /obj/item/clothing/under/collardressb
 	name = "collar dress"
-	desc = "a dress made for casual wear"
+	desc = "a dress made for casual wear."
 	icon_state = "collardressb"
 	item_state = "collardressb"
 
 /obj/item/clothing/under/redtie
 	name = "collar shirt and red tie"
-	desc = "a pale dress shirt with a nice red tie to go with it"
+	desc = "a pale dress shirt with a nice red tie to go with it."
 	icon_state = "red-tie"
 	item_state = "red-tie"
 
 /obj/item/clothing/suit/loosejacket
 	name = "loose jacket"
-	desc = "a loose and stylish jacket"
+	desc = "a loose and stylish jacket."
 	icon_state = "loose"
 	item_state = "loose"
 	body_parts_covered = TORSO|ARMS
 
 /obj/item/clothing/shoes/floppy
 	name = "floppy boots"
-	desc = "a pair of boots with very floppy design around the ankles"
+	desc = "a pair of boots with very floppy design around the ankles."
 	icon_state = "floppy"
 	item_state = "floppy"
 
 /obj/item/clothing/suit/labcoatlong
 	name = "off-brand lab coat"
-	desc = "a long labcoat from some sort of supermarket"
+	desc = "a long labcoat from some sort of supermarket."
 	icon_state = "labcoat-long"
 	item_state = "labcoat-long"
 	body_parts_covered = TORSO|LEGS|ARMS
@@ -1897,17 +1947,70 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 /obj/item/clothing/suit/gimmick/dinosaur
 	name = "dinosaur pajamas"
 	desc = "It has a little hood you can flip up and down. Rawr!"
-	icon_state = "dinosaur"
-	item_state = "dinosaur"
+	icon_state = "dinosaur-green"
+	item_state = "dinosaur-green"
 	hides_from_examine = C_UNIFORM
+	var/hcolor = "green"
 
 	New()
 		..()
-		src.AddComponent(/datum/component/toggle_hood, hood_style="dinosaur")
+		src.AddComponent(/datum/component/toggle_hood, hood_style="dinosaur[src.hcolor ? "-[hcolor]" : null]",)
+		src.item_state = "dinosaur[src.hcolor ? "-[hcolor]" : null]"
+		src.icon_state = "dinosaur[src.hcolor ? "-[hcolor]" : null]"
+		src.name = "[src.hcolor] dinosaur pajamas"
+		if(src.hcolor == "yellow" && prob(25))
+			src.name = "bananasaur pajamas"
+			src.desc = "It has a little banana-scented hood you can flip up an down. In fact, the whole thing smells like bananas."
+
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 25)
+
+/obj/item/clothing/suit/gimmick/dinosaur/red
+	icon_state = "dinosaur-red"
+	item_state = "dinosaur-red"
+	hcolor = "red"
+
+/obj/item/clothing/suit/gimmick/dinosaur/blue
+	icon_state = "dinosaur-blue"
+	item_state = "dinosaur-blue"
+	hcolor = "blue"
+
+/obj/item/clothing/suit/gimmick/dinosaur/green
+	icon_state = "dinosaur-green"
+	item_state = "dinosaur-green"
+	hcolor = "green"
+
+/obj/item/clothing/suit/gimmick/dinosaur/yellow
+	icon_state = "dinosaur-yellow"
+	item_state = "dinosaur-yellow"
+	hcolor = "yellow"
+
+/obj/item/clothing/suit/gimmick/dinosaur/orange
+	icon_state = "dinosaur-orange"
+	item_state = "dinosaur-orange"
+	hcolor = "orange"
+
+/obj/item/clothing/suit/gimmick/dinosaur/white
+	icon_state = "dinosaur-white"
+	item_state = "dinosaur-white"
+	hcolor = "white"
+
+/obj/item/clothing/suit/gimmick/dinosaur/black
+	icon_state = "dinosaur-black"
+	item_state = "dinosaur-black"
+	hcolor = "black"
+
+/obj/item/clothing/suit/gimmick/dinosaur/purple
+	icon_state = "dinosaur-purple"
+	item_state = "dinosaur-purple"
+	hcolor = "purple"
+
+/obj/item/clothing/suit/gimmick/dinosaur/pink
+	icon_state = "dinosaur-pink"
+	item_state = "dinosaur-pink"
+	hcolor = "pink"
 
 /obj/item/clothing/head/biglizard
 	name = "giant novelty lizard head"

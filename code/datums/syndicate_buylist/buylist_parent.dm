@@ -41,7 +41,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist)
 	/// How often should this show up in a surplus crate/spy bounty?
 	var/surplus_weight = 50
 	/// The category of the item, currently unused (somewhat used in the Nukeop Commander uplink)
-	var/category
+	var/category = UPLINK::CATEGORY::MISC
 	/// Bitflags for what uplinks can buy this item (see `_std/defines/uplink.dm` for flags)
 	var/can_buy
 	/// The maximum amount a given uplink can buy this item
@@ -59,6 +59,17 @@ ABSTRACT_TYPE(/datum/syndicate_buylist)
 	proc/run_on_spawn(obj/item, mob/living/owner, in_surplus_crate = FALSE, obj/item/uplink/uplink)
 		if(!in_surplus_crate)
 			owner.put_in_hand_or_drop(item)
+
+	proc/get_category()
+		if(length(src.job))
+			return UPLINK::CATEGORY::JOB
+		if(src.objective)
+			return UPLINK::CATEGORY::OBJECTIVE
+		if(src.telecrystal)
+			return UPLINK::CATEGORY::TELECRYSTAL
+		if(src.ammo)
+			return UPLINK::CATEGORY::AMMO
+		return src.category
 
 //////////////////////////////////////////////// Special ammunition //////////////////////////////////////////////
 

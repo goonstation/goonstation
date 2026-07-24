@@ -103,10 +103,12 @@ A-Station-Systems:
   - any-glob-to-any-file: code/modules/camera/*
   - any-glob-to-any-file: code/modules/disposals/*
   - any-glob-to-any-file: code/modules/gravity/*
-  - any-glob-to-any-file: code/modules/networks/*
-  - any-glob-to-any-file: code/modules/packets/*
   - any-glob-to-any-file: code/modules/power/*
-  - any-glob-to-any-file: code/datums/datacore.dm
+A-computers:
+- changed-files:
+    - any-glob-to-any-file: code/modules/networks/*
+    - any-glob-to-any-file: code/modules/packets/*
+    - any-glob-to-any-file: code/datums/datacore.dm
 A-Status-Effects:
 - changed-files:
   - any-glob-to-any-file: code/modules/status_system/*

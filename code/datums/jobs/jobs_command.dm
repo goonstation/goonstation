@@ -20,7 +20,7 @@ ABSTRACT_TYPE(/datum/job/command)
 /datum/job/command/captain
 	name = "Captain"
 	limit = 1
-	wages = PAY_EXECUTIVE
+	wages = PAY::EXECUTIVE
 	access_string = "Captain"
 	high_priority_job = TRUE
 	receives_miranda = TRUE
@@ -74,7 +74,7 @@ ABSTRACT_TYPE(/datum/job/command)
 /datum/job/command/head_of_personnel
 	name = "Head of Personnel"
 	limit = 1
-	wages = PAY_IMPORTANT
+	wages = PAY::IMPORTANT
 	access_string = "Head of Personnel"
 	wiki_link = "https://wiki.ss13.co/Head_of_Personnel"
 
@@ -86,6 +86,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_back = list(/obj/item/storage/backpack)
 	slot_belt = list(/obj/item/device/pda2/hop)
 	slot_jump = list(/obj/item/clothing/under/suit/hop)
+	slot_suit = list(/obj/item/clothing/suit/hopjacket)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_ears = list(/obj/item/device/radio/headset/command/hop)
 	slot_poc1 = list(/obj/item/pocketwatch)
@@ -94,7 +95,7 @@ ABSTRACT_TYPE(/datum/job/command)
 /datum/job/command/head_of_security
 	name = "Head of Security"
 	limit = 1
-	wages = PAY_IMPORTANT
+	wages = PAY::IMPORTANT
 	trait_list = list("training_drinker", "training_security")
 	access_string = "Head of Security"
 	requires_whitelist = REQUIRES_WHITELIST_USUALLY
@@ -143,7 +144,7 @@ ABSTRACT_TYPE(/datum/job/command)
 /datum/job/command/chief_engineer
 	name = "Chief Engineer"
 	limit = 1
-	wages = PAY_IMPORTANT
+	wages = PAY::IMPORTANT
 	trait_list = list("training_engineer")
 	access_string = "Chief Engineer"
 	wiki_link = "https://wiki.ss13.co/Chief_Engineer"
@@ -181,7 +182,7 @@ ABSTRACT_TYPE(/datum/job/command)
 /datum/job/command/research_director
 	name = "Research Director"
 	limit = 1
-	wages = PAY_IMPORTANT
+	wages = PAY::IMPORTANT
 	trait_list = list("training_scientist")
 	access_string = "Research Director"
 	wiki_link = "https://wiki.ss13.co/Research_Director"
@@ -206,7 +207,7 @@ ABSTRACT_TYPE(/datum/job/command)
 /datum/job/command/medical_director
 	name = "Medical Director"
 	limit = 1
-	wages = PAY_IMPORTANT
+	wages = PAY::IMPORTANT
 	trait_list = list("training_medical")
 	access_string = "Medical Director"
 	wiki_link = "https://wiki.ss13.co/Medical_Director"

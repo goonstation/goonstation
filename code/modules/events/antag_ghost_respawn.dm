@@ -19,10 +19,6 @@
 	centcom_message = "Aggressive macrocellular organism detected aboard the station. All personnel must contain the outbreak."
 	message_delay = 5 MINUTES // (+ ghost_confirmation_delay). Don't out them too early, blobs in particular need time to establish themselves.
 	targetable = TRUE
-	//sigh
-#ifdef RP_MODE
-	disabled = 1
-#endif
 	var/antagonist_type = "Blob"
 	var/ghost_confirmation_delay = 2 MINUTES // time to acknowledge or deny respawn offer.
 	var/respawn_lock = 0
@@ -70,7 +66,7 @@
 			#ifndef RP_MODE
 			possible_antags = list("Blob", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestle Doodle", "Vampire", "Changeling", "Flockmind", "Space Phoenix")
 			#else
-			possible_antags = list("Space Phoenix")
+			possible_antags = list("Wizard")
 			#endif
 			#ifdef MAP_OVERRIDE_NADIR
 			possible_antags -= list("Blob")

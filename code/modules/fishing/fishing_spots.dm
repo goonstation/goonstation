@@ -88,6 +88,9 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 		var/atom/movable/fish = src.generate_fish(user, fishing_rod, target)
 		if (!fish)
 			return 0
+
+		user.add_to_fish_collection(fish)
+
 		// ever put this much effort into the dumbest thing ever haha
 		user.visible_message("[user] [pick("reels in", "catches", "pulls in", "fishes up")] a \
 		[pick("big", "wriggly", "fat", "slimy", "fishy", "large", "high-quality", "nasty", "chompy", "real", "wily")] \
@@ -114,6 +117,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/shrimp = 15,\
 	/mob/living/carbon/human/npc/monkey/sea = 5,\
 	/obj/item/reagent_containers/food/fish/barracuda = 5,\
+	/obj/item/reagent_containers/food/fish/swordfish = 10,\
 	/obj/item/reagent_containers/food/fish/sailfish = 2,\
 	/obj/item/reagent_containers/food/fish/sardine = 20,
 	/obj/item/reagent_containers/food/fish/anchovy = 10)
@@ -231,6 +235,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/mahimahi = 10,\
 	/obj/item/reagent_containers/food/fish/shrimp = 15,\
 	/obj/item/reagent_containers/food/fish/barracuda = 5,\
+	/obj/item/reagent_containers/food/fish/swordfish = 10,\
 	/obj/item/reagent_containers/food/fish/sailfish = 2,\
 	/obj/item/reagent_containers/food/fish/sardine = 20,\
 	/obj/item/reagent_containers/food/fish/anchovy = 10)
@@ -353,6 +358,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/mahimahi = 10,\
 	/obj/item/reagent_containers/food/fish/shrimp = 15,\
 	/obj/item/reagent_containers/food/fish/sardine = 20,\
+	/obj/item/reagent_containers/food/fish/swordfish = 10,\
 	/obj/item/reagent_containers/food/fish/barracuda = 5,\
 	/obj/item/reagent_containers/food/fish/sailfish = 2,\
 	/obj/item/clothing/head/chefhat = 10,\
@@ -374,6 +380,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/flounder = 10,\
 	/obj/item/reagent_containers/food/fish/mahimahi = 10,\
 	/obj/item/reagent_containers/food/fish/shrimp = 15,\
+	/obj/item/reagent_containers/food/fish/swordfish = 10,\
 	/obj/item/reagent_containers/food/fish/barracuda = 5,\
 	/obj/item/reagent_containers/food/fish/sailfish = 2,\
 	/obj/item/reagent_containers/food/fish/sardine = 20,\
@@ -446,6 +453,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/cod = 20,\
 	/obj/item/reagent_containers/food/fish/dace = 15,\
 	/obj/item/reagent_containers/food/fish/minnow = 15,\
+	/obj/item/reagent_containers/food/fish/rosefin_shiner = 15,\
 	/obj/item/reagent_containers/food/fish/flounder = 15,\
 	/obj/item/reagent_containers/food/fish/barracuda = 5,\
 	/obj/item/reagent_containers/food/fish/sailfish = 2,\
@@ -581,6 +589,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/mob/living/critter/blobman = 5,\
 	/mob/living/critter/blobman/meat = 5,\
 	/obj/item/reagent_containers/food/fish/eye_mutant = 15,\
+	/obj/item/reagent_containers/food/fish/blood_fish = 15,\
 	/obj/item/reagent_containers/food/fish/lingfish = 5,\
 	/obj/decal/cleanable/blood/gibs = 25,\
 	/obj/decal/cleanable/blood/gibs/core = 25)
@@ -609,6 +618,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	fishing_atom_type = /obj/machinery/clonepod
 	rod_tier_required = 2
 	fish_available = list(/obj/item/reagent_containers/food/fish/meat_mutant = 10,\
+	/obj/item/reagent_containers/food/fish/blood_fish = 5,\
 	/mob/living/critter/blobman = 5,\
 	/mob/living/critter/blobman/meat = 5,\
 	/obj/item/parts/human_parts/arm/left = 10,\
@@ -822,6 +832,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	..()
 	src.fishing_lootpools += new /datum/fishing_lootpool/lava_fish(src)
 	src.fishing_lootpools += new /datum/fishing_lootpool/igneous_fish(src)
+	src.fishing_lootpools += new /datum/fishing_lootpool/literal_swordfish(src)
 
 //golden toilet
 datum/fishing_spot/golden_toilet
@@ -950,7 +961,8 @@ datum/fishing_spot/golden_toilet
 	fishing_atom_type = /obj/item/reagent_containers/applicator/condiment/bottle/ketchup
 	rod_tier_required = 3
 	fish_available = list(/obj/item/reagent_containers/food/snacks/condiment/ketchup = 50,\
-	/obj/item/reagent_containers/food/snacks/yuck = 20)
+	/obj/item/reagent_containers/food/snacks/yuck = 20,\
+	/obj/item/reagent_containers/food/fish/blood_fish = 1,) //but of course!
 
 /datum/fishing_spot/mustard
 	fishing_atom_type = /obj/item/reagent_containers/applicator/condiment/bottle/mustard
@@ -996,6 +1008,7 @@ datum/fishing_spot/golden_toilet
 	fish_available = list(/obj/decal/cleanable/blood/gibs = 25,\
 	/obj/decal/cleanable/blood/gibs/core = 25,\
 	/obj/item/reagent_containers/food/fish/meat_mutant = 10,\
+	/obj/item/reagent_containers/food/fish/blood_fish = 5,\
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat = 10,\
 	/obj/item/clothing/glasses/blindfold = 5,\
 	/obj/item/parts/human_parts/arm/mutant/monkey/left = 5,\
@@ -1012,4 +1025,44 @@ datum/fishing_spot/golden_toilet
 	/obj/item/clothing/shoes/flippers = 5, //like fishing up a boot (cartoonstyle)
 	/mob/living/critter/small_animal/pikaia = 5,
 	/mob/living/critter/small_animal/trilobite = 5,
-	/mob/living/critter/small_animal/hallucigenia = 5)
+	/mob/living/critter/small_animal/hallucigenia = 5,
+	/obj/item/reagent_containers/food/fish/blobfish = 1)
+
+//deeper trench hole (cultist base/polaris)
+/datum/fishing_spot/deeperhole
+	fishing_atom_type = /turf/unsimulated/floor/polarispit
+	rod_tier_required = 3
+	fish_available = list(/obj/item/raw_material/rock = 20,
+	/obj/item/seashell = 20,
+	/obj/item/clothing/shoes/flippers = 10,
+	/mob/living/critter/small_animal/pikaia = 10,
+	/mob/living/critter/small_animal/trilobite = 10,
+	/mob/living/critter/small_animal/hallucigenia = 10,
+	/obj/item/reagent_containers/food/fish/blobfish = 5)
+
+//rockworm
+/datum/fishing_spot/rockworm
+	fishing_atom_type = /mob/living/critter/rockworm
+	rod_tier_required = 3
+	fish_available = list(/obj/item/raw_material/rock = 50,
+	/obj/item/raw_material/mauxite = 10,
+	/obj/item/raw_material/pharosium = 10,
+	/obj/item/raw_material/molitz = 10,
+	/obj/item/raw_material/char = 10,
+	/obj/item/raw_material/cobryl = 5,
+	/obj/item/raw_material/syreline = 5,
+	/obj/item/raw_material/batiline = 5,
+	/obj/item/raw_material/bohrum = 5,
+	/obj/item/raw_material/claretine = 5,
+	/obj/item/raw_material/gold = 5,
+	/obj/item/raw_material/uqill = 2,
+	/obj/item/raw_material/gemstone = 2,
+	/obj/item/raw_material/starstone = 1, //wrong one, bucko
+	/obj/item/reagent_containers/food/fish/starstonefish = 1) //YOU SAVED IT!
+
+//starstone geode
+/datum/fishing_spot/stargeode
+	fishing_atom_type = /obj/geode/crystal/starstone
+	rod_tier_required = 3
+	fish_available = list(/obj/item/raw_material/rock = 30,
+	/obj/item/reagent_containers/food/fish/starstonefish = 5)

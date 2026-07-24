@@ -9,6 +9,8 @@ triggerDrop(var/mob/M, var/obj/item/I)
 triggerTemp(var/owner, var/temp)
 triggerExp(var/owner, var/severity)
 triggerOnEntered(var/atom/owner, var/atom/entering)
+triggerOnMix(var/datum/material/new_mat, var/datum/material/old_matA, var/datum/material/old_matB, var/bias)
+triggerOnImage(var/image/target, var/datum/material/source)
 */
 
 // THINGS LIKE GOLD SPARKLES ARE NOT REMOVED WHEN MATERIAL CHANGES!. MOVE THESE TO NEW APPEARANCE SYSTEM.
@@ -573,7 +575,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if (iscarbon(M))
 			var/mob/living/carbon/C = M
 			C.changeBodyTemp(-2 KELVIN)
-			if (C.bodytemperature > T0C && probmult(4))
+			if (C.bodytemperature > I.material.getProperty("melting_point") && probmult(4))
 				boutput(C, "Your [I] melts from your body heat!")
 				qdel(I)
 		return
@@ -582,7 +584,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	desc = "It would melt when exposed to heat."
 
 	execute(var/atom/owner, var/temp)
-		if(temp < T0C) return // less than reaction temp
+		if(temp < owner.material.getProperty("melting_point")) return // less than reaction temp
 
 		var/turf/T = get_turf(owner)
 
@@ -680,6 +682,12 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/honey_remove
 	execute(var/atom/location)
 		location.remove_filter("honey_wave")
+		return
+
+/datum/materialProc/honey_image
+	execute(var/image/target, var/datum/material/source)
+		var/wave_filter = wave_filter(16, 16, 1, rand(), flags = WAVE_SIDEWAYS | WAVE_BOUNDED)
+		target.filters = wave_filter + target.filters
 		return
 
 /datum/materialProc/temp_miraclium
