@@ -167,6 +167,10 @@ TYPEINFO(/datum/component/radioactive)
 			if(!ON_COOLDOWN(M,"radiation_exposure", 0.5 SECONDS) && !isintangible(M)) //shorter than item tick time, so you can get multiple doses but there's a limit
 				M.take_radiation_dose(rad_dose * (src.effect_range - GET_DIST(M, PA) + 1) / (max(src.effect_range, 1)) * 0.8) //lnear, not inverse square because it plays nicer in game
 
+		if(owner.color)
+			// If the owner has been given a new color, keep it null so that the radiation outline stays green/blue
+			src._backup_color = owner.color
+			owner.color = null
 		var/update_filters = FALSE
 		if(src.radStrength > src.decay_target && prob(33))
 			src.radStrength = max(src.decay_target, src.radStrength - (1 * mult))
