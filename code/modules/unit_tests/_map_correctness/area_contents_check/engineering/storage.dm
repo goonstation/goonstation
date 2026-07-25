@@ -1,5 +1,5 @@
 /datum/map_correctness_check/area_contents/engineering_storage
-	check_name = "Mechanic's Lab Contents Check"
+	check_name = "Engineering Storage Check"
 	target_areas = list(/area/station/engine/storage)
 	only_check_on = null
 	skip_check_on = list(
@@ -54,7 +54,6 @@
 			list(
 				CONTENTS_GT(/obj/item/clothing/head/helmet/space/engineer/diving/engineering, 1),
 				CONTENTS_GT(/obj/item/clothing/suit/space/diving/engineering, 1),
-				CONTENTS_GT(/obj/item/clothing/shoes/magnetic, 1),
 				CONTENTS_GT(/obj/item/clothing/shoes/flippers, 1),
 			)
 		),
