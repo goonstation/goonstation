@@ -1457,10 +1457,14 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	desc = "Miraclium is a bizarre substance that can have a wide variety of effects."
 	icon_file = 'icons/obj/items/materials/miracle.dmi'
 	color = "#FFFFFF"
+	hsl_color =	list(0.00, 0.00, 0.00, 0.00,\
+					0.00, 0.60, 0.00, 0.00,\
+					0.00, 0.00, 1.00, 0.00,\
+					0.00, 0.00, 0.00, 1.00,\
+					0.00, 0.40, 0.00, 0.00)
 
 	New()
 		..()
-		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/miracle_add())
 		alpha = rand(20, 255)
 		setProperty("density", rand(1, 8))
 		setProperty("hard", rand(1, 8))
@@ -1469,6 +1473,11 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		var/rand_val = rand()
 		var/melting_point = (3500 KELVIN * (rand_val * rand_val)) + 500 KELVIN
 		setProperty("melting_point", melting_point)
+
+		src.hsl_color[18] = ((getProperty("density") - 1) / (8 - 1)) * 0.8
+		src.hsl_color[6] = ((getProperty("hard") - 1) / (8 - 1)) - src.hsl_color[18] + 0.2
+
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/miracle_add())
 		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/temp_miraclium())
 
 
