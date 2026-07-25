@@ -375,8 +375,25 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 			if(our_guest)
 				var/area/A = get_area(our_guest)
 				if(istype(A,/area/station/crown)) //make sure the guest is still here
+					///Odds that, if we're not doing healing or gene tampering, we'll just do a noise instead of trialing chems on the guest
 					var/noise_odds = min((4 - assertiveness) * 20, 10)
-					if(prob(40) && assertiveness == 1) //let's see what's poking around in that genome - not more than once per visit, though.
+
+					if(our_guest.health < 60 && assertiveness == 1) //before anything else, see how our guest is doing. if it's not so well, take care of that.
+						var/list/cure_reagents = list("epinephrine" = 4, "saline" = 4)
+						if(our_guest.get_brute_damage() > 5)
+							cure_reagents["salicylic_acid"] = 4
+						if(our_guest.get_burn_damage() > 5)
+							cure_reagents["menthol"] = 4
+						if(our_guest.get_toxin_damage() > 5)
+							cure_reagents["charcoal"] = 4
+						if(our_guest.get_oxygen_deprivation() > 5)
+							cure_reagents["salbutamol"] = 4
+						for(var/reagent in cure_reagents)
+							our_guest.reagents.add_reagent(reagent, cure_reagents[reagent])
+						our_guest.playsound_local_not_inworld('sound/items/hypo.ogg', 30, 0)
+						boutput(our_guest,SPAN_ALERT("You feel a small poke and see a tiny mechanical arm receding into the floor.[pick(" A strange feeling suffuses you.","")]"))
+
+					else if(prob(40) && assertiveness == 1) //elsewise, let's perhaps see what's poking around in that genome - not more than one try per visit, though.
 						var/datum/bioHolder/B = our_guest.bioHolder
 						var/bioEffectId = pick(B.effectPool)
 						var/datum/bioEffect/E = B.effectPool[bioEffectId]
@@ -385,9 +402,11 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 						boutput(our_guest,SPAN_ALERT("A strange [pick("pulse","wave","swell")] of energy washes over you.[pick(" You feel different."," What the hell?","")]"))
 						SPAWN(rand(8,12))
 							B.ActivatePoolEffect(E, 1, 0)
+
 					else if(prob(noise_odds)) //sing them a little sound; less likely to do this if our guest has been rambunctious
 						var/response_tester_sound = pick('sound/effects/explosionfar.ogg','sound/effects/explosionfar.ogg','sound/musical_instruments/Gong_Rumbling.ogg')
 						our_guest.playsound_local_not_inworld(response_tester_sound, 80, 0)
+
 					else //test chemical reaction
 						var/response_tester_reagent = pick("love","colors","transparium","psilocybin","lumen","ethanol")
 						var/quantity = 10
