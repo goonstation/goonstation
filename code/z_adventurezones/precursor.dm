@@ -634,7 +634,7 @@ ABSTRACT_TYPE(/datum/menhir_puzzle)
 	name = "peculiar panel"
 	desc = "You can't explain why, but it feels like it's watching you."
 	icon = 'icons/obj/artifacts/puzzles.dmi'
-	icon_state = "controller_on"
+	icon_state = "innervator"
 	anchored = ANCHORED
 	var/vision_description = null
 	var/vision_type = "an image"
