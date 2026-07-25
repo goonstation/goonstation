@@ -76,15 +76,4 @@
 				boutput(owner, SPAN_ALERT("Your head [pick("feels like shit","hurts like fuck","pounds horribly","twinges with an awful pain")]."))
 				owner.losebreath += 10 * mult
 				owner.changeStatus("knockdown", 3 SECONDS * mult)
-		if (owner.health <= -100)
-			if ((owner.reagents && owner.reagents.has_reagent("synaptizine") && owner.reagents.has_reagent("atropine")) || ((owner.bodytemperature < owner.base_body_temp - 100 && owner.bodytemperature > owner.base_body_temp - 275 && !owner.hasStatus("burning")) && (owner.reagents && owner.reagents.has_reagent("cryoxadone"))))
-				var/deathchance = min(99, ((owner.get_brain_damage() * -5) + (owner.health + (owner.get_oxygen_deprivation() / 2))) * -0.001)
-				if (probmult(deathchance))
-					owner.death()
-			else
-				var/deathchance = min(99, ((owner.get_brain_damage() * -5) + (owner.health + (owner.get_oxygen_deprivation() / 2))) * -0.01)
-				if (probmult(deathchance))
-					owner.death()
-
-
 		..()
