@@ -146,7 +146,11 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
-		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
+		var/name = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
+		var/antag_roles = usr?.mind?.list_antagonist_roles()
+		if(antag_roles)
+			name += " \[[antag_roles]\]"
+		ircmsg["name"] = name
 		ircmsg["msg"] = "authorized the armory. Reason: [src.auth_reason || "None"]"
 		ircbot.export_async("admin", ircmsg)
 
