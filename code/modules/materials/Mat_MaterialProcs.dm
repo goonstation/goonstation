@@ -521,7 +521,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 		var/list/color_end = color_start.Copy()
 		color_end[17] = 1
 
-		var/loop_length = 1 - (location.material.getProperty("reflective") / location.material.getProperty("reflective", VALUE_MAX))
+		var/loop_length = 1 - (location.material.getProperty("chemical") / location.material.getProperty("chemical", VALUE_MAX))
 		loop_length = ((loop_length * 19) + 1) SECONDS
 		animate(filter, color = color_end, time = loop_length, loop = -1, easing = LINEAR_EASING)
 		animate(color = color_start, time = 0, loop = -1, easing = JUMP_EASING)
