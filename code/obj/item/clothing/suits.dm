@@ -1530,6 +1530,12 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 		..()
 		setProperty("space_movespeed", 0)  // ntso space suits don't suffer from slowdown
 
+/obj/item/clothing/suit/space/ntso/medic // Sprites by TekoTheTeapot
+	name = "NT field medic pressure suit"
+	desc = "A specialised Nanotrasen space suit, with an integrated chest rig. The rig has been modified to fit a medical insignia."
+	icon_state = "ntso_medic"
+	item_state = "ntso_medic"
+
 /obj/item/clothing/suit/space/ntso/bellona
 	name = "NTSO combat dress"
 	desc = "A modernized NTSO combat suit, with an integrated energy shield."
