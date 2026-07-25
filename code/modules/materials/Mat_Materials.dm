@@ -1476,7 +1476,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 
 		src.hsl_color[18] = ((getProperty("density") - 1) / (8 - 1)) * 0.8 // Total saturation
 		src.hsl_color[6] = ((getProperty("hard") - 1) / (8 - 1)) - src.hsl_color[18] + 0.2 // Color saturation
-		src.hsl_color[11] = (((getProperty("reflective") - 1) / (9 - 1)) * 0.5) + 0.75 // Luminosity
+		src.hsl_color[11] = (((getProperty("chemical") - 1) / (8 - 1)) * 0.5) + 0.75 // Luminosity
 
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/miracle_add())
 		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/temp_miraclium())
