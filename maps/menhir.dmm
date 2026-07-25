@@ -1488,7 +1488,7 @@
 	dir = 1
 	},
 /area/station/hangar/mining{
-	name = "Mining Dock"
+	name = "Mining Hangar"
 	})
 "aPt" = (
 /obj/machinery/door/airlock/pyro,
@@ -2498,7 +2498,7 @@
 /obj/machinery/vehicle/miniputt/indyputt/armed,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/mining{
-	name = "Mining Dock"
+	name = "Mining Hangar"
 	})
 "bpW" = (
 /obj/table/auto,
@@ -3007,7 +3007,7 @@
 "bDQ" = (
 /turf/simulated/floor/caution/south,
 /area/station/hangar/mining{
-	name = "Mining Dock"
+	name = "Mining Hangar"
 	})
 "bEl" = (
 /obj/cable{
@@ -3466,7 +3466,7 @@
 	dir = 8
 	},
 /area/station/hangar/mining{
-	name = "Mining Dock"
+	name = "Mining Hangar"
 	})
 "bSb" = (
 /obj/machinery/chem_heater/chemistry,
@@ -4023,8 +4023,8 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "cev" = (
-/obj/machinery/manufacturer/mining,
 /obj/machinery/light,
+/obj/machinery/manufacturer/hangar,
 /turf/simulated/floor/caution/side{
 	dir = 10
 	},
@@ -5753,7 +5753,7 @@
 	dir = 1
 	},
 /area/station/hangar/mining{
-	name = "Mining Dock"
+	name = "Mining Hangar"
 	})
 "dhY" = (
 /obj/disposalpipe/segment/vertical,
@@ -7832,8 +7832,8 @@
 	},
 /area/station/solar/west)
 "enS" = (
-/obj/machinery/manufacturer/medical,
 /obj/machinery/light,
+/obj/machinery/manufacturer/mining,
 /turf/simulated/floor/caution/side,
 /area/station/quartermaster/office)
 "enU" = (
@@ -8207,7 +8207,7 @@
 	dir = 1
 	},
 /area/station/hangar/mining{
-	name = "Mining Dock"
+	name = "Mining Hangar"
 	})
 "eyy" = (
 /obj/cable{
@@ -8466,7 +8466,7 @@
 	dir = 1
 	},
 /area/station/hangar/mining{
-	name = "Mining Dock"
+	name = "Mining Hangar"
 	})
 "eGO" = (
 /obj/machinery/computer/card/department/engineering{
@@ -8948,7 +8948,7 @@
 "eWd" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/mining{
-	name = "Mining Dock"
+	name = "Mining Hangar"
 	})
 "eWu" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -10906,7 +10906,7 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/mining{
-	name = "Mining Dock"
+	name = "Mining Hangar"
 	})
 "gbq" = (
 /obj/rack,
@@ -11174,7 +11174,7 @@
 /obj/machinery/r_door_control/podbay/mining,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/mining{
-	name = "Mining Dock"
+	name = "Mining Hangar"
 	})
 "gjg" = (
 /obj/cable{
@@ -16533,7 +16533,7 @@
 /obj/machinery/vehicle/pod_smooth/industrial,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/mining{
-	name = "Mining Dock"
+	name = "Mining Hangar"
 	})
 "jdE" = (
 /obj/machinery/plantpot{
@@ -20938,7 +20938,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/caution,
 /area/station/hangar/mining{
-	name = "Mining Dock"
+	name = "Mining Hangar"
 	})
 "luV" = (
 /turf/simulated/floor/shuttlebay{
@@ -21060,7 +21060,7 @@
 	},
 /area/station/hangar/science)
 "lzd" = (
-/obj/machinery/manufacturer/robotics,
+/obj/machinery/manufacturer/general,
 /turf/simulated/floor/caution/side,
 /area/station/quartermaster/office)
 "lzf" = (
@@ -22240,7 +22240,7 @@
 "mdH" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/mining{
-	name = "Mining Dock"
+	name = "Mining Hangar"
 	})
 "mdI" = (
 /obj/table/wood/auto,
@@ -23348,8 +23348,8 @@
 "mIe" = (
 /obj/disposalpipe/segment/vertical,
 /obj/machinery/power/apc/autoname_west{
-	name = "Mining Dock APC";
-	areastring = "Mining Dock"
+	name = "Mining Hangar APC";
+	areastring = "Mining Hangar"
 	},
 /obj/cable{
 	icon_state = "0-4"
@@ -23564,7 +23564,7 @@
 	dir = 9
 	},
 /area/station/hangar/mining{
-	name = "Mining Dock"
+	name = "Mining Hangar"
 	})
 "mNu" = (
 /obj/cable{
@@ -25130,7 +25130,7 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/mining{
-	name = "Mining Dock"
+	name = "Mining Hangar"
 	})
 "nGY" = (
 /obj/machinery/shower{
@@ -26116,7 +26116,7 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/mining{
-	name = "Mining Dock"
+	name = "Mining Hangar"
 	})
 "ogS" = (
 /obj/cable{
@@ -26746,7 +26746,7 @@
 	dir = 1
 	},
 /area/station/hangar/mining{
-	name = "Mining Dock"
+	name = "Mining Hangar"
 	})
 "oxh" = (
 /turf/simulated/floor/black/side,
@@ -28070,7 +28070,7 @@
 "pdH" = (
 /turf/simulated/floor/caution/east,
 /area/station/hangar/mining{
-	name = "Mining Dock"
+	name = "Mining Hangar"
 	})
 "per" = (
 /obj/machinery/door/airlock/pyro/engineering,
@@ -29519,7 +29519,7 @@
 	dir = 1
 	},
 /area/station/hangar/mining{
-	name = "Mining Dock"
+	name = "Mining Hangar"
 	})
 "pSQ" = (
 /obj/machinery/atmospherics/binary/valve{
@@ -31424,6 +31424,10 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
+"qVj" = (
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon17,
+/turf/simulated/floor,
+/area/station/hallway/primary/west)
 "qVp" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/mechanical{
@@ -31655,7 +31659,7 @@
 	dir = 6
 	},
 /area/station/hangar/mining{
-	name = "Mining Dock"
+	name = "Mining Hangar"
 	})
 "rcQ" = (
 /obj/decal/cleanable/dirt/jen,
@@ -32185,6 +32189,7 @@
 /turf/simulated/floor/grey,
 /area/station/medical/robotics)
 "rpW" = (
+/obj/machinery/manufacturer/robotics,
 /turf/simulated/floor/caution/side{
 	dir = 10
 	},
@@ -32520,7 +32525,7 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/hangar/mining{
-	name = "Mining Dock"
+	name = "Mining Hangar"
 	})
 "ryj" = (
 /obj/cable{
@@ -32935,13 +32940,23 @@
 	pixel_y = 10;
 	pixel_x = 6
 	},
-/obj/item/cell/supercell/charged,
-/obj/item/cell/supercell/charged,
-/obj/item/cell/supercell/charged,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
 	pixel_y = 21
+	},
+/obj/item/disk/data/cartridge/diagnostics{
+	pixel_y = 10;
+	pixel_x = 3
+	},
+/obj/item/cell/supercell/charged{
+	pixel_x = 4
+	},
+/obj/item/cell/supercell/charged{
+	pixel_x = 4
+	},
+/obj/item/cell/supercell/charged{
+	pixel_x = 4
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 9
@@ -39913,7 +39928,7 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/caution/south,
 /area/station/hangar/mining{
-	name = "Mining Dock"
+	name = "Mining Hangar"
 	})
 "vpl" = (
 /obj/table/reinforced/auto,
@@ -40462,7 +40477,7 @@
 	dir = 1
 	},
 /area/station/hangar/mining{
-	name = "Mining Dock"
+	name = "Mining Hangar"
 	})
 "vDV" = (
 /obj/item/clothing/suit/cardboard_box,
@@ -40517,7 +40532,7 @@
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/caution/south,
 /area/station/hangar/mining{
-	name = "Mining Dock"
+	name = "Mining Hangar"
 	})
 "vGr" = (
 /obj/table/reinforced/auto,
@@ -42074,8 +42089,10 @@
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)
 "wnr" = (
-/obj/machinery/manufacturer/general,
 /obj/machinery/light_switch/directional/west,
+/obj/table/reinforced/auto,
+/obj/machinery/recharger,
+/obj/item/cargotele,
 /turf/simulated/floor/caution,
 /area/station/quartermaster/office)
 "wnu" = (
@@ -43222,7 +43239,7 @@
 	dir = 1
 	},
 /area/station/hangar/mining{
-	name = "Mining Dock"
+	name = "Mining Hangar"
 	})
 "wSO" = (
 /obj/disposalpipe/segment/bent/north,
@@ -45113,7 +45130,7 @@
 "xQI" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hangar/mining{
-	name = "Mining Dock"
+	name = "Mining Hangar"
 	})
 "xQR" = (
 /obj/stool/chair/dining/wood{
@@ -45184,9 +45201,7 @@
 	},
 /area/station/security/secwing)
 "xRT" = (
-/obj/table/reinforced/auto,
-/obj/machinery/recharger,
-/obj/item/cargotele,
+/obj/machinery/manufacturer/medical,
 /turf/simulated/floor/caution,
 /area/station/quartermaster/office)
 "xSB" = (
@@ -85068,7 +85083,7 @@ ouJ
 ouJ
 ouJ
 iuY
-vna
+qVj
 tYB
 veM
 bXh
