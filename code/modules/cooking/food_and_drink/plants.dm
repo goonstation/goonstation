@@ -897,6 +897,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	food_color = "#BF7029"
 	initial_volume = 30
 
+	New()
+		src.food_effects -= "food_disease_resist"
+
 	make_reagents()
 		..()
 		reagents.add_reagent("too much",5) // eh, build yield if you want more
