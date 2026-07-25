@@ -1,18 +1,12 @@
-/datum/listen_module/modifier/phone_new
+/datum/listen_module/modifier/phone
 	id = LISTEN_MODIFIER_PHONE
 
-/datum/listen_module/modifier/phone_new/process(datum/say_message/message)
+/datum/listen_module/modifier/phone/process(datum/say_message/message)
 	// If this message has already been relayed by a phone, don't receive it.
 	if (!CAN_RELAY_MESSAGE(message, SAY_RELAY_PHONE))
 		return NO_MESSAGE
 
 	. = message
-
-	var/atom/listener_parent = src.parent_tree.listener_parent
-
-	// If held, the output atom must be in the speaker's active hand to receive the message.
-	if (ismob(listener_parent.loc) && (astype(message.original_speaker, /mob)?.equipped() != listener_parent))
-		return NO_MESSAGE
 
 	message.flags |= SAYFLAG_NO_MAPTEXT
 	message.flags &= ~(SAYFLAG_WHISPER | SAYFLAG_NO_SAY_VERB)
@@ -22,6 +16,7 @@
 	message.atom_listeners_to_be_excluded = null
 	FORMAT_MESSAGE_FOR_RELAY(message, SAY_RELAY_PHONE)
 
+	var/datum/listener_parent = src.parent_tree.listener_parent
 	// Create a text reference to the speaker's mind, if they have one.
 	var/mind_ref = ""
 	if (ismob(message.original_speaker))
@@ -51,3 +46,14 @@
 	message.format_content_suffix = {"\
 		</span>\
 	"}
+
+// ONLY to be used with atoms
+/datum/listen_module/modifier/phone/inhand
+	id = LISTEN_MODIFIER_PHONE_INHAND
+
+/datum/listen_module/modifier/phone/inhand/process(datum/say_message/message)
+	var/atom/listener_parent = src.parent_tree.listener_parent
+	// If held, the microphone atom must be held in the speaker's active hand for us to receive their speech
+	if (ismob(listener_parent.loc) && (astype(message.original_speaker, /mob)?.equipped() != listener_parent))
+		return NO_MESSAGE
+	. = ..()

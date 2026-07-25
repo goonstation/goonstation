@@ -227,6 +227,7 @@
 #define LISTEN_MODIFIER_COMIC_SANS "comic_sans"
 #define LISTEN_MODIFIER_MOB_MODIFIERS "mob_modifiers"
 #define LISTEN_MODIFIER_PHONE "phone_formatting"
+#define LISTEN_MODIFIER_PHONE_INHAND "phone_inhand_formatting"
 #define LISTEN_MODIFIER_RADIO "radio_formatting"
 
 
@@ -238,7 +239,7 @@
 #define LISTEN_EFFECT_DETGADGET "detgadget"
 #define LISTEN_EFFECT_DISPLAY_TO_CLIENT "display_to_client"
 #define LISTEN_EFFECT_HANDSET "handset"
-#define LISTEN_EFFECT_BASE_PHONE "base_phone"
+#define LISTEN_EFFECT_PHONE "phone"
 #define LISTEN_EFFECT_LAWBRINGER "lawbringer"
 #define LISTEN_EFFECT_LIL_GREG "lil_greg"
 #define LISTEN_EFFECT_MEAT_HEAD "meat_head"

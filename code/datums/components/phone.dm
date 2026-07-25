@@ -332,6 +332,7 @@ TYPEINFO(/datum/component/phone_ui)
 
 /// Turns an atom into a microphone, setting up speech trees accordingly. This will NOT remove them upon component removal.
 /// You may safely not use this if you don't need a microphone, or have another means of sending outbound phone signals
+/// This component currently assumes your microphone is intended to have someone holding it in their active hand when speaking
 /datum/component/phone_microphone
 	var/datum/controller_parent = null
 	var/microphone_enabled = FALSE
@@ -369,7 +370,7 @@ TYPEINFO(/datum/component/phone_microphone)
 /// Listens for our speech tree effect to send us a signal so we can transmit, assuming we're on
 /datum/component/phone_microphone/proc/transmit_speech(datum/source, var/datum/say_message/message)
 	if(!src.microphone_enabled) return
-	SEND_SIGNAL(src.controller_parent, COMSIG_PHONE_OUTBOUND_SPEECH, message)
+	SEND_SIGNAL(src.controller_parent, COMSIG_PHONE_OUTBOUND_SPEECH, message, TRUE)
 
 /datum/component/phone_microphone/proc/microphone_enable()
 	src.microphone_enabled = TRUE
@@ -391,8 +392,8 @@ TYPEINFO(/datum/component/phone_microphone)
 	var/atom/parent_atom = src.parent
 	parent_atom.ensure_listen_tree().AddListenInput(LISTEN_INPUT_EQUIPPED)
 	parent_atom.listen_tree.AddListenInput(LISTEN_INPUT_OUTLOUD_RANGE_0)
-	parent_atom.listen_tree.AddListenEffect(LISTEN_EFFECT_BASE_PHONE)
-	parent_atom.listen_tree.AddListenModifier(LISTEN_MODIFIER_PHONE)
+	parent_atom.listen_tree.AddListenEffect(LISTEN_EFFECT_PHONE)
+	parent_atom.listen_tree.AddListenModifier(LISTEN_MODIFIER_PHONE_INHAND)
 	parent_atom.listen_tree.AddKnownLanguage(LANGUAGE_ALL)
 
 
