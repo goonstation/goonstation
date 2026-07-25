@@ -43866,6 +43866,7 @@
 /area/station/crew_quarters/quartersB)
 "xiP" = (
 /obj/decal/cleanable/dirt,
+/obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/yellowblack{
 	dir = 4
 	},
