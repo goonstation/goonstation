@@ -3076,6 +3076,7 @@
 #include "code\WorkInProgress\mantaObjects.dm"
 #include "code\WorkInProgress\MarqStuff.dm"
 #include "code\WorkInProgress\missile_latejoin.dm"
+#include "code\WorkInProgress\MoriartyStuff.dm"
 #include "code\WorkInProgress\nadir_antenna.dm"
 #include "code\WorkInProgress\NewVote.dm"
 #include "code\WorkInProgress\ObjectProperties.dm"
