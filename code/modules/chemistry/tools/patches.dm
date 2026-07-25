@@ -610,11 +610,9 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 /obj/item/reagent_containers/mender/both
 	initial_reagents = "synthflesh"
 
-	high_capacity
-		initial_volume = 500
-
-	mini
-		initial_volume = 50
+/obj/item/reagent_containers/mender/both/mini
+	initial_volume = 50
+	initial_reagents = "synthflesh"
 
 /datum/action/bar/icon/automender_apply
 	duration = 10

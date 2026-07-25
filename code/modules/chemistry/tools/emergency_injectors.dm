@@ -336,7 +336,7 @@
 	label = "vr2"
 
 /* ======================================================================== */
-/* -------------------- Nuke Ops Medic - high-capacity -------------------- */
+/* ---------------- Nuke Ops / NTEM Medic - high-capacity ----------------- */
 /* ======================================================================== */
 
 /obj/item/reagent_containers/emergency_injector/high_capacity/
@@ -396,6 +396,12 @@
 	initial_reagents = "mannitol"
 	label = "green"
 	desc = "A high-capacity auto-injector containing mannitol, a medicine used to treat severe concussions."
+
+/obj/item/reagent_containers/emergency_injector/high_capacity/formaldehyde
+	name = "high-capacity auto-injector (formaldehyde)"
+	initial_reagents = "formaldehyde"
+	label = "white"
+	desc = "A high-capacity auto-injector containing formaldehyde, a chemical to preserve corpses. <span class='alert'><b>Do not use on the living!!</b></span>"
 
 /obj/item/reagent_containers/emergency_injector/high_capacity/cardiac
 	name = "cardiac combi-injector"

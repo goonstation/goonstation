@@ -958,10 +958,9 @@
 	/obj/item/robodefibrillator)
 
 /obj/item/storage/belt/medical/prepared/NT
-	spawn_contents = list(/obj/item/reagent_containers/mender/both/high_capacity,
-	/obj/item/reagent_containers/emergency_injector/high_capacity/cardiac,
-	/obj/item/reagent_containers/emergency_injector/high_capacity/bloodloss,
-	/obj/item/reagent_containers/emergency_injector/high_capacity/lifesupport,
+	spawn_contents = list(/obj/item/reagent_containers/mender/brute/high_capacity,
+	/obj/item/reagent_containers/mender/brute/high_capacity,
+	/obj/item/reagent_containers/hypospray,
 	/obj/item/bandage/medicated,
 	/obj/item/device/analyzer/healthanalyzer/upgraded,
 	/obj/item/robodefibrillator

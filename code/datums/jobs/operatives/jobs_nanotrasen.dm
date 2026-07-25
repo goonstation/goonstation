@@ -92,11 +92,10 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	slot_eyes = list(/obj/item/clothing/glasses/healthgoggles/upgraded)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt/medic)
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
-	slot_poc1 = list(/obj/item/tank/pocket/extended/oxygen)
+	slot_poc1 = list(/obj/item/storage/ntsc_pouch/medic)
 	slot_poc2 = list(/obj/item/device/pda2/nt_medical)
-	items_in_backpack = list(/obj/item/storage/firstaid/crit,
-							/obj/item/device/flash,
-							/obj/item/storage/pill_bottle/acetylsalicylic_acid,
+	items_in_backpack = list(/obj/item/device/flash,
+							/obj/item/storage/firstaid/docbag/field_surgeon,
 							/obj/item/extinguisher)
 
 // Use this one for late respawns to deal with existing antags. they are weaker cause they dont get a laser rifle or frags

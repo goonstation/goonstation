@@ -152,6 +152,11 @@
 	kit_styles = list("docbag1", "docbag2", "docbag3")
 	spawn_contents = list(/obj/item/circular_saw, /obj/item/scalpel, /obj/item/scissors/surgical_scissors, /obj/item/suture, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/iv_drip/blood, /obj/item/medicaldiagnosis/stethoscope)
 
+	field_surgeon
+		desc = "An old-fashioned doctor's bag designed to carry medical and surgical supplies. This one been stuffed with what a field surgeon would require"
+		kit_styles = list("docbag3") // always black because tacticool.
+		can_hold = list(/obj/item/clothing/mask/medical)
+		spawn_contents = list(/obj/item/circular_saw, /obj/item/scalpel, /obj/item/scissors/surgical_scissors, /obj/item/suture, /obj/item/staple_gun, /obj/item/clothing/mask/medical/anesthetic, /obj/item/hemostat)
 /* -------------------- First Aid Kits - VR -------------------- */
 
 /obj/item/storage/firstaid/vr
@@ -439,11 +444,6 @@
 	name = "pill bottle (analgesic)"
 	desc = "Contains pills used to treat pain and fevers."
 	spawn_contents = list(/obj/item/reagent_containers/pill/salicylic_acid = 7)
-
-/obj/item/storage/pill_bottle/acetylsalicylic_acid
-	name = "pill bottle (acetylsalicylic)"
-	desc = "Contains pills used to treat pain, high blood pressure and moderate injuries."
-	spawn_contents = list(/obj/item/reagent_containers/pill/acetylsalicylic_acid = 7)
 
 /obj/item/storage/pill_bottle/menthol
 	name = "pill bottle (menthol)"
