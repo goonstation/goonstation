@@ -158,7 +158,7 @@
 		icon_state = "docbag3"
 		item_state = "docbag3" // always black because tacticool.
 		can_hold = list(/obj/item/clothing/mask/medical)
-		spawn_contents = list(/obj/item/circular_saw, /obj/item/scalpel, /obj/item/scissors/surgical_scissors, /obj/item/suture, /obj/item/staple_gun, /obj/item/clothing/mask/medical/anesthetic, /obj/item/hemostat)
+		spawn_contents = list(/obj/item/circular_saw, /obj/item/scalpel, /obj/item/scissors/surgical_scissors, /obj/item/suture, /obj/item/reagent_containers/iv_drip/blood, /obj/item/clothing/mask/medical/anesthetic, /obj/item/hemostat)
 /* -------------------- First Aid Kits - VR -------------------- */
 
 /obj/item/storage/firstaid/vr
