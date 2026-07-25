@@ -748,6 +748,38 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 		result.AddComponent(/datum/component/radioactive, 20, TRUE, FALSE, 0)
 		return result
 
+//toxmoon fishing spots
+
+/datum/fishing_spot/acid_goop
+	fishing_atom_type = /turf/unsimulated/floor/setpieces/toxmoon/radpool
+	rod_tier_required = 3
+	fish_available = list(/obj/item/reagent_containers/food/fish/goldfish = 30,\
+	/obj/item/reagent_containers/food/fish/carp = 15,\
+	/obj/item/reagent_containers/food/fish/meat_mutant = 5,\
+	/obj/item/material_piece/cerenkite = 10,\
+	/obj/item/material_piece/erebite = 10,\
+	/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake = 1)
+
+	generate_fish(var/mob/user, var/obj/item/fishing_rod/fishing_rod, atom/target)
+		var/atom/result = ..()
+		result.AddComponent(/datum/component/radioactive, 20, TRUE, FALSE, 0)
+		return result
+
+/datum/fishing_spot/acid_river
+	fishing_atom_type = /obj/machinery/conveyor/toxriver
+	rod_tier_required = 3
+	fish_available = list(/obj/item/reagent_containers/food/fish/goldfish = 30,\
+	/obj/item/reagent_containers/food/fish/carp = 15,\
+	/obj/item/reagent_containers/food/fish/meat_mutant = 5,\
+	/obj/item/material_piece/cerenkite = 10,\
+	/obj/item/material_piece/erebite = 10,\
+	/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake = 1)
+
+	generate_fish(var/mob/user, var/obj/item/fishing_rod/fishing_rod, atom/target)
+		var/atom/result = ..()
+		result.AddComponent(/datum/component/radioactive, 20, TRUE, FALSE, 0)
+		return result
+
 //solarium
 /datum/fishing_spot/the_sun
 	fishing_atom_type = /obj/the_sun

@@ -72,7 +72,7 @@ TYPEINFO(/area)
 	text = ""
 	var/lightswitch = 1
 
-	/// If the area is on a restricted z leve, this controls if people can eat within it. (The reason for this might shock you!)
+	/// If the area is on a restricted z level, this controls if people can eat within it. (The reason for this might shock you!)
 	var/may_eat_here_in_restricted_z = FALSE
 
 	var/eject = null
@@ -94,6 +94,10 @@ TYPEINFO(/area)
 	/// Blowouts don't set irradiated on this area back to zero.
 	var/permarads = 0
 
+	/// prevents the glowy warning stuff from radiation, should always be false for standard areas
+	var/prevent_radiation_overlay = FALSE
+
+	var/do_not_irradiate = TRUE
 	/**
 	  * Don't irradiate this place during the blowout event
 		*
@@ -105,7 +109,6 @@ TYPEINFO(/area)
 		*
 		* If you set the d_n_i flag, it will render them useless.
 		*/
-	var/do_not_irradiate = TRUE
 
 	/// gang that owns this area in gang mode
 	var/datum/gang/gang_owners = null
@@ -858,6 +861,20 @@ ABSTRACT_TYPE(/area/shuttle)
 	name = "Biodome Lift Lower Section"
 	icon_state = "shuttle2"
 	force_fullbright = 0
+
+/area/shuttle/toxmoon_elevator/upper
+	name = "Toxmoon Lift Upper Section"
+	icon_state = "shuttle"
+	force_fullbright = 0
+	irradiated = 0.4
+	prevent_radiation_overlay = TRUE
+
+/area/shuttle/toxmoon_elevator/lower
+	name = "Toxmoon Lift Lower Section"
+	icon_state = "shuttle2"
+	force_fullbright = 0
+	irradiated = 0.6
+	prevent_radiation_overlay = TRUE
 
 /area/shuttle/centcom_elevator/upper
 	name = "Centcom Lift Upper Section"
@@ -4576,7 +4593,7 @@ ABSTRACT_TYPE(/area/mining)
   * Updates the icon of the area. Mainly used for flashing it red or blue. See: old party lights
   */
 /area/update_icon()
-	if(irradiated) //From a radiation blowout event
+	if(irradiated && !prevent_radiation_overlay) //From a radiation blowout event
 		icon_state = "blowout"
 	else if ((fire || eject) && power_environ)
 		if(fire && !eject)

@@ -1466,11 +1466,8 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		pickupdialoguefailure = "No."
 
 
-
-/*
-
-/obj/npc/trader/flexx
-	icon = 'icons/obj/64.dmi'
+/obj/npc/trader/flexx // Gonna reuse this cause I don't have the talent to make a proper NPC portrait
+	icon = 'icons/mob/64.dmi'
 	icon_state = "flexx"
 	picture = "flexx.png"
 	name = "Flexx"
@@ -1499,8 +1496,6 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 
 		greeting= {"Hello there, space-faring friend."}
 
-		portrait_setup = "<img src='[resource("images/traders/[src.picture]")]'><HR><B>[src.name]</B><HR>"
-
 		sell_dialogue = "What can I relieve you of?"
 
 		buy_dialogue = "What would you like to purchase?"
@@ -1523,7 +1518,6 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		pickupdialoguefailure = "I don't believe you've bought anything yet."
 
 
-*/
 #undef TRADER_RESPONSE_GREETING
 #undef TRADER_RESPONSE_ANGRY
 #undef TRADER_RESPONSE_WHO_ARE_YOU

@@ -510,6 +510,7 @@ proc/generate_space_color()
 							mover.Bump(obstacle)
 							return FALSE
 
+
 	return ..() //Nothing found to block so return success!
 
 /turf/Exited(atom/movable/Obj, atom/newloc)

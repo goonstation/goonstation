@@ -194,6 +194,34 @@ TYPEINFO(/obj/machinery/conveyor) {
 	move_lag = 5.5
 	operating = 1
 
+/obj/machinery/conveyor/toxriver
+	name = "Toxic River"
+	desc = "Some foul flowing goop. The current seems strong enough to push a person around."
+	icon_state = "toxriver"
+	icon = 'icons/misc/worlds.dmi'
+	protected = TRUE
+	operating = 1
+	move_lag = 2.5
+
+	var/entry = FALSE // To start the tug test after the fall
+
+	New()
+		..()
+		src.add_simple_light("rad", list(0, 0.8 * 255, 0.3 * 255, 0.8 * 255))
+
+	update() // These aren't gonna be fucked with
+		return
+
+	get_help_message(dist, mob/user)
+		return null
+
+	Entered(atom/movable/AM, atom/OldLoc)
+		if(entry)
+			move_thing(AM)
+		..()
+
+
+
 /obj/machinery/conveyor/get_help_message(dist, mob/user)
 	if (src.deconstructable)
 		return {"To change the conveyor belt directions, you must use a <b>crowbar</b> or any other prying item.

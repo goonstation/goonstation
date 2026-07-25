@@ -560,6 +560,12 @@ ABSTRACT_TYPE(/obj/machinery/computer/elevator)
 	endTurfToLeave = /turf/simulated/floor/auto/elevator_shaft/biodome
 	logBioeleAccident = TRUE
 
+/obj/machinery/computer/elevator/toxmoon
+	machine_registry_idx = MACHINES_ELEVATORTOXMOON
+	areaLower = /area/shuttle/toxmoon_elevator/lower
+	areaUpper = /area/shuttle/toxmoon_elevator/upper
+	endTurfToLeave = /turf/simulated/floor/auto/elevator_shaft/toxmoon
+
 /obj/machinery/computer/elevator/sea
 	machine_registry_idx = MACHINES_ELEVATORSEA
 	areaLower = /area/shuttle/sea_elevator/lower

@@ -547,6 +547,9 @@ var/global/list/job_start_locations = list()
 /obj/landmark/lrt/biodome
 	name = "Fatuus"
 
+/obj/landmark/lrt/toxmoon
+	name = "Fatuus II"
+
 /obj/landmark/lrt/mars_outpost
 	name = "Mars"
 
@@ -608,6 +611,17 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/fall/biodome/ancient
 	name = LANDMARK_FALL_ANCIENT
+
+// Toxmoon
+
+/obj/landmark/fall/toxmoon
+	name = LANDMARK_FALL_TOX_REACTOR
+
+/obj/landmark/fall/toxmoon/sewer
+	name = LANDMARK_FALL_TOX_SEWER
+
+/obj/landmark/fall/toxmoon/lake
+	name = LANDMARK_FALL_TOX_LAKE
 
 // Underwater
 

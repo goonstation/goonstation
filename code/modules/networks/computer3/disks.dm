@@ -414,6 +414,27 @@ TYPEINFO(/obj/item/disk/data/floppy/read_only/authentication)
 		name = "galactic coordinate disk - 'Fatuus'"
 		target_name = "Fatuus"
 
+	toxmoon
+		name = "galactic coordinate disk - 'Fatuus Dumping Site'"
+		icon_state = "datadisktele2"
+		disk_color = "#4ED57C"
+		target_name = "Fatuus II"
+
+	carcosa // unobtainable, out of reach 4eva (or when carcosa is done)
+		name = "galactic coordinate disk - 'Domus Dei'"
+		default_material = "flesh"
+		icon_state = "datadisktele3"
+		layer = 2
+		disk_color = "#4D0D7B"
+		target_name = "Domus Dei"
+		desc = "It appears to be in a incorporeal state. Who knows when it will manifest properly again." //remove on carcosa addition
+
+		New() // remove when its actually a proper thing
+			..()
+			src.alpha = 0
+			animate(src, 10 SECONDS, alpha = 255)
+			animate_wave(src)
+
 	mars_outpost
 		name = "galactic coordinate disk - 'Mars'"
 		target_name = "Mars"

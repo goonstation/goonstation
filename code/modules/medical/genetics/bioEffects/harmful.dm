@@ -440,6 +440,17 @@
 		var/datum/component/radioactive/R = owner.GetComponent(/datum/component/radioactive)
 		R?.RemoveComponent()
 
+/datum/bioEffect/radioactive/neutron
+	occur_in_genepools = 0
+	id = "n_radioactive"
+
+	OnAdd()
+		if (ishuman(owner))
+			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
+			overlay_image.color = "#0084ff"
+		owner.AddComponent(/datum/component/radioactive, 50, FALSE, TRUE)
+		..()
+
 /datum/bioEffect/radioactive_farts
 	name = "Radioactive Farts"
 	desc = "The subject's flatulence is contaminated with radioactive isotopes."
