@@ -233,6 +233,14 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/engine/power)
+"gJ" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
+/area/station/engine/power)
 "gT" = (
 /obj/stool/chair/office/yellow{
 	dir = 8
@@ -353,7 +361,9 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
 /area/station/engine/power)
 "lH" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -393,7 +403,6 @@
 /area/station/engine/monitoring)
 "na" = (
 /obj/storage/secure/closet/engineering/engineer,
-/obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
@@ -561,6 +570,10 @@
 "rB" = (
 /obj/table/reinforced/auto,
 /obj/machinery/phone,
+/obj/machinery/firealarm/directional/north,
+/obj/item/device/radio/intercom/engineering{
+	dir = 4
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
@@ -940,7 +953,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/item/device/radio/intercom/engineering,
+/obj/cable,
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
@@ -1933,7 +1946,7 @@ UV
 UV
 "}
 (11,1,1) = {"
-XG
+gJ
 Db
 ax
 xy

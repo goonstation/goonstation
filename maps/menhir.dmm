@@ -388,14 +388,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/se)
 "aiN" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
-/turf/simulated/floor/white/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/outer/nw)
 "aiP" = (
 /obj/storage/secure/closet/personal,
@@ -933,12 +932,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "ayP" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/bent/north,
-/turf/simulated/floor/black,
+/turf/simulated/floor/industrial,
 /area/station/security/secwing)
 "ayY" = (
 /obj/vehicle/segway{
@@ -978,12 +976,11 @@
 /turf/simulated/floor/airless/damaged2,
 /area/space)
 "aAP" = (
-/obj/mesh/catwalk,
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/inner/se{
 	name = "Southeast Auxiliary Conduit"
 	})
@@ -1305,7 +1302,6 @@
 /turf/unsimulated/floor/setpieces/bluefloor,
 /area/station/crown)
 "aKs" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -1313,7 +1309,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/inner/se{
 	name = "Southeast Auxiliary Conduit"
 	})
@@ -1596,8 +1592,7 @@
 /turf/simulated/floor/plating,
 /area/station/chapel/office)
 "aUk" = (
-/obj/mesh/catwalk,
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/inner/se{
 	name = "Southeast Auxiliary Conduit"
 	})
@@ -1992,7 +1987,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "beI" = (
-/obj/machinery/door/airlock/pyro/engineering,
+/obj/machinery/door/airlock/pyro/glass/engineering,
 /obj/mapping_helper/access/engineering_engine,
 /obj/mapping_helper/access/engineering_power,
 /obj/cable{
@@ -3195,11 +3190,10 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/station/crew_quarters/md)
 "bJY" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/industrial,
 /area/station/security/secwing)
 "bKf" = (
 /obj/machinery/sink/slim{
@@ -3322,7 +3316,6 @@
 	},
 /area/station/hangar/science)
 "bNj" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -3330,7 +3323,7 @@
 	icon_state = "1-4"
 	},
 /obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/black,
+/turf/simulated/floor/industrial,
 /area/station/security/secwing)
 "bOt" = (
 /obj/machinery/vending/monkey/research,
@@ -3571,7 +3564,6 @@
 	},
 /area/station/solar/east)
 "bUi" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -3581,7 +3573,7 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/inner/se{
 	name = "Southeast Auxiliary Conduit"
 	})
@@ -3601,7 +3593,6 @@
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)
 "bUX" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -3609,7 +3600,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/engine/engineering{
 	name = "Engineering Auxiliary Conduit";
 	do_not_irradiate = 1
@@ -3703,9 +3694,8 @@
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "bWK" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/segment/mail/horizontal,
-/turf/simulated/floor/black,
+/turf/simulated/floor/industrial,
 /area/station/security/secwing)
 "bWV" = (
 /obj/machinery/fluid_machinery/unary/drain/inlet_pump{
@@ -4033,9 +4023,8 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/medical)
 "ceA" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/segment/bent/south,
-/turf/simulated/floor/black,
+/turf/simulated/floor/industrial,
 /area/station/hangar/sec)
 "ceI" = (
 /obj/cable{
@@ -5246,7 +5235,6 @@
 /turf/simulated/floor/grey/side,
 /area/station/hangar/main)
 "cQV" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "2-8"
 	},
@@ -5254,7 +5242,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/junction/middle/west,
-/turf/simulated/floor/black,
+/turf/simulated/floor/industrial,
 /area/station/security/secwing)
 "cRy" = (
 /obj/disposalpipe/segment/horizontal,
@@ -5576,6 +5564,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/landmark/start/job/quartermaster,
 /turf/simulated/floor/caution/side{
 	dir = 4
 	},
@@ -6292,6 +6281,10 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
+"dyJ" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/engine/power)
 "dyL" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -6882,11 +6875,10 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/research)
 "dSc" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/inner/se{
 	name = "Southeast Auxiliary Conduit"
 	})
@@ -6912,11 +6904,10 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/ce)
 "dTp" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/engine/engineering{
 	name = "Engineering Auxiliary Conduit";
 	do_not_irradiate = 1
@@ -8564,7 +8555,6 @@
 /turf/simulated/floor/black,
 /area/station/garden/owlery)
 "eLT" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -8573,7 +8563,7 @@
 	pixel_x = -12;
 	pixel_y = 12
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/engine/engineering{
 	name = "Engineering Auxiliary Conduit";
 	do_not_irradiate = 1
@@ -8829,11 +8819,10 @@
 	},
 /area/station/medical/research)
 "eTz" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/outer/se)
 "eTD" = (
 /obj/machinery/door/airlock/pyro/security{
@@ -9663,12 +9652,11 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/space)
 "frh" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/vertical,
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/inner/se{
 	name = "Southeast Auxiliary Conduit"
 	})
@@ -9701,6 +9689,10 @@
 	dir = 9
 	},
 /area/station/science/lab)
+"fth" = (
+/obj/landmark/start/job/quartermaster,
+/turf/simulated/floor,
+/area/station/quartermaster/office)
 "ftH" = (
 /obj/disposalpipe/segment/bent/south,
 /obj/cable{
@@ -10285,11 +10277,10 @@
 /turf/simulated/floor/grey,
 /area/station/medical/robotics)
 "fJA" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/engine/engineering{
 	name = "Engineering Auxiliary Conduit";
 	do_not_irradiate = 1
@@ -10498,7 +10489,6 @@
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "fOo" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -10506,7 +10496,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/inner/se{
 	name = "Southeast Auxiliary Conduit"
 	})
@@ -10981,9 +10971,8 @@
 	},
 /area/station/hangar/sec)
 "gdg" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/segment/vertical,
-/turf/simulated/floor/black,
+/turf/simulated/floor/industrial,
 /area/station/security/secwing)
 "gdT" = (
 /obj/cable{
@@ -10999,8 +10988,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "gea" = (
-/obj/mesh/catwalk,
-/turf/simulated/floor/black,
+/turf/simulated/floor/industrial,
 /area/station/hangar/sec)
 "geA" = (
 /obj/machinery/door/airlock/pyro/medical{
@@ -12410,7 +12398,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "gSp" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -12423,7 +12410,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 1
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/industrial,
 /area/station/security/secwing)
 "gSD" = (
 /obj/machinery/door_timer/solitary/new_walls/east,
@@ -12520,13 +12507,12 @@
 /turf/simulated/floor/grass,
 /area/station/hydroponics)
 "gVc" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/segment/ejection{
 	dir = 1;
 	icon_state = "pipe-c"
 	},
 /obj/machinery/light/small,
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/inner/se{
 	name = "Southeast Auxiliary Conduit"
 	})
@@ -12763,8 +12749,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "hdR" = (
-/obj/mesh/catwalk,
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/engine/engineering{
 	name = "Engineering Auxiliary Conduit";
 	do_not_irradiate = 1
@@ -12991,14 +12976,13 @@
 	name = "Primary Docking Wing"
 	})
 "hkl" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/segment/brig{
 	dir = 1
 	},
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/industrial,
 /area/station/security/secwing)
 "hku" = (
 /obj/machinery/light_switch/directional/north,
@@ -13070,12 +13054,11 @@
 /turf/simulated/floor/white,
 /area/station/science/hall)
 "hmv" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
 /obj/disposalpipe/segment/vertical,
-/turf/simulated/floor/black,
+/turf/simulated/floor/industrial,
 /area/station/security/secwing)
 "hmY" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -13411,7 +13394,6 @@
 /turf/simulated/floor/darkblue,
 /area/station/janitor/office)
 "hvz" = (
-/obj/mesh/catwalk,
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4
 	},
@@ -13420,7 +13402,7 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/access/security,
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/hangar/sec)
 "hvD" = (
 /obj/machinery/shieldgenerator/meteorshield,
@@ -13875,13 +13857,12 @@
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/genpop)
 "hEU" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/segment/horizontal,
 /obj/disposalpipe/segment/mail,
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/outer/se)
 "hEW" = (
 /obj/decal/tile_edge/line/blue{
@@ -13975,9 +13956,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "hIx" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/junction/left/north,
-/turf/simulated/floor/black,
+/turf/simulated/floor/industrial,
 /area/station/security/secwing)
 "hIT" = (
 /obj/table/reinforced/bar/auto{
@@ -14133,11 +14113,10 @@
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "hMJ" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-10"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/industrial,
 /area/station/hangar/sec)
 "hMV" = (
 /obj/table/reinforced/auto,
@@ -14173,6 +14152,13 @@
 /obj/landmark/start/job/assistant,
 /turf/simulated/floor/grey/side,
 /area/station/crew_quarters/lounge)
+"hNs" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/power)
 "hND" = (
 /obj/machinery/light{
 	dir = 1;
@@ -14233,10 +14219,9 @@
 /turf/simulated/floor/black/grime,
 /area/station/engine/gravity)
 "hPy" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/switch_junction/left/west,
 /obj/mapping_helper/mailtag/research,
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/inner/se{
 	name = "Southeast Auxiliary Conduit"
 	})
@@ -14414,7 +14399,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "hSv" = (
-/obj/mesh/catwalk,
 /obj/machinery/camera/directional/north,
 /turf/simulated/floor/blackwhite{
 	dir = 1
@@ -14821,8 +14805,7 @@
 	},
 /area/station/hallway/primary/north)
 "icn" = (
-/obj/mesh/catwalk,
-/turf/simulated/floor/white/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/outer/nw)
 "icz" = (
 /obj/machinery/floorflusher/industrial,
@@ -15392,13 +15375,12 @@
 	},
 /area/station/solar/east)
 "itM" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
 /obj/machinery/light/small,
 /obj/disposalpipe/segment/vertical,
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/inner/se{
 	name = "Southeast Auxiliary Conduit"
 	})
@@ -15528,11 +15510,10 @@
 /turf/space,
 /area/space)
 "ixI" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
-/turf/simulated/floor/white/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/outer/nw)
 "iyx" = (
 /obj/disposalpipe/segment/mail{
@@ -15640,11 +15621,10 @@
 /turf/simulated/floor/green/side,
 /area/station/hydroponics)
 "iBn" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "2-5"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/industrial,
 /area/station/hangar/sec)
 "iBt" = (
 /turf/simulated/floor/stairs/medical/wide,
@@ -16055,13 +16035,12 @@
 /turf/simulated/floor/airless/damaged4,
 /area/space)
 "iNl" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/firealarm/directional/north,
 /obj/machinery/camera/directional/north{
 	pixel_x = -10
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/industrial,
 /area/station/security/secwing)
 "iNA" = (
 /obj/mesh/catwalk,
@@ -16296,10 +16275,9 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
 /area/station/crew_quarters/md)
 "iWd" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/segment/mail,
 /obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/engine/engineering{
 	name = "Engineering Auxiliary Conduit";
 	do_not_irradiate = 1
@@ -17256,11 +17234,10 @@
 /turf/simulated/floor/black,
 /area/station/science/artifact)
 "jtk" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/segment/brig{
 	dir = 1
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/industrial,
 /area/station/security/secwing)
 "jtp" = (
 /obj/shrub{
@@ -17419,11 +17396,10 @@
 	},
 /area/station/turret_protected/ai)
 "jAU" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/inner/se{
 	name = "Southeast Auxiliary Conduit"
 	})
@@ -17979,13 +17955,10 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/cafeteria)
 "jRV" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/blackwhite{
-	dir = 1
-	},
+/turf/simulated/floor/industrial,
 /area/station/maintenance/outer/nw)
 "jRX" = (
 /obj/decal/tile_edge/line/black{
@@ -18311,7 +18284,6 @@
 	},
 /area/station/science/teleporter)
 "kal" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -18321,7 +18293,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 1
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/industrial,
 /area/station/security/secwing)
 "kaw" = (
 /obj/machinery/computer/solar_control,
@@ -18502,11 +18474,10 @@
 	},
 /area/station/engine/storage)
 "kgH" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/segment/mail,
 /obj/machinery/door/airlock/pyro/engineering,
 /obj/mapping_helper/access/engineering_storage,
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/engine/engineering{
 	name = "Engineering Auxiliary Conduit";
 	do_not_irradiate = 1
@@ -18568,7 +18539,6 @@
 /turf/simulated/floor,
 /area/station/hydroponics)
 "khY" = (
-/obj/mesh/catwalk,
 /turf/simulated/floor/blackwhite,
 /area/station/hangar/medical)
 "kir" = (
@@ -18731,13 +18701,12 @@
 /turf/simulated/floor/grey/side,
 /area/station/storage/emergency)
 "kmu" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/horizontal,
 /obj/landmark/menhir/outreach,
-/turf/simulated/floor/white/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/outer/nw)
 "kmB" = (
 /obj/item/sheet/steel{
@@ -18910,14 +18879,13 @@
 	name = "East Shuttle Concourse"
 	})
 "krz" = (
-/obj/mesh/catwalk,
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/security,
 /obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/hangar/sec)
 "krG" = (
 /obj/storage/crate/adventure,
@@ -19122,7 +19090,6 @@
 /turf/simulated/floor/grey,
 /area/station/medical/robotics)
 "kxB" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -19130,18 +19097,17 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/engine/engineering{
 	name = "Engineering Auxiliary Conduit";
 	do_not_irradiate = 1
 	})
 "kxL" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "5-8"
 	},
 /obj/landmark/gps_waypoint,
-/turf/simulated/floor/black,
+/turf/simulated/floor/industrial,
 /area/station/hangar/sec)
 "kxV" = (
 /obj/machinery/photocopier,
@@ -19250,9 +19216,8 @@
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/sanctuary)
 "kAa" = (
-/obj/mesh/catwalk,
 /obj/machinery/camera/directional/south,
-/turf/simulated/floor/black,
+/turf/simulated/floor/industrial,
 /area/station/hangar/sec)
 "kAn" = (
 /obj/machinery/light{
@@ -19281,8 +19246,7 @@
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "kAT" = (
-/obj/mesh/catwalk,
-/turf/simulated/floor/white/grime,
+/turf/simulated/floor/industrial,
 /area/station/hangar/medical)
 "kBc" = (
 /turf/simulated/floor/engine/vacuum,
@@ -19345,7 +19309,6 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "kDf" = (
-/obj/mesh/catwalk,
 /obj/machinery/power/apc/autoname_north{
 	name = "Solitary-1 APC";
 	areastring = "Solitary Confinement #1"
@@ -19354,7 +19317,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/industrial,
 /area/station/security/secwing)
 "kDw" = (
 /obj/stool/bar,
@@ -20081,12 +20044,11 @@
 /turf/simulated/floor/grey,
 /area/station/security/checkpoint/arrivals)
 "kXd" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/segment/horizontal,
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/outer/se)
 "kXf" = (
 /obj/shrub{
@@ -20710,7 +20672,6 @@
 /turf/simulated/floor/grass,
 /area/station/hydroponics)
 "lpj" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -20718,7 +20679,7 @@
 	icon_state = "1-4"
 	},
 /obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/white/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/outer/nw)
 "lpk" = (
 /turf/simulated/floor/carpet/arcade,
@@ -20791,7 +20752,6 @@
 /turf/simulated/floor/grey/side,
 /area/station/hangar/main)
 "lqW" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/segment/mail{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -20799,7 +20759,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/inner/se{
 	name = "Southeast Auxiliary Conduit"
 	})
@@ -21121,7 +21081,6 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/mesh/catwalk,
 /obj/disposalpipe/switch_junction/left/south,
 /obj/mapping_helper/mailtag/security,
 /obj/cable{
@@ -21130,7 +21089,7 @@
 /obj/cable{
 	icon_state = "1-10"
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/outer/se)
 "lAz" = (
 /turf/simulated/wall/false_wall,
@@ -22151,9 +22110,8 @@
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "maS" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/segment/mail,
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/engine/engineering{
 	name = "Engineering Auxiliary Conduit";
 	do_not_irradiate = 1
@@ -22340,7 +22298,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/se)
 "mgc" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -22351,7 +22308,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/inner/se{
 	name = "Southeast Auxiliary Conduit"
 	})
@@ -22500,12 +22457,11 @@
 	name = "West Shuttle Concourse"
 	})
 "mlo" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/transport,
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/engine/engineering{
 	name = "Engineering Auxiliary Conduit";
 	do_not_irradiate = 1
@@ -22527,13 +22483,12 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/hop)
 "mmL" = (
-/obj/mesh/catwalk,
 /obj/machinery/light,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/black,
+/turf/simulated/floor/industrial,
 /area/station/security/secwing)
 "mnb" = (
 /obj/cable{
@@ -22748,13 +22703,12 @@
 /turf/simulated/floor/white,
 /area/station/science/hall)
 "muy" = (
-/obj/mesh/catwalk,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/disposalpipe/segment/transport,
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/engine/engineering{
 	name = "Engineering Auxiliary Conduit";
 	do_not_irradiate = 1
@@ -22935,10 +22889,9 @@
 	name = "Security Office"
 	})
 "mxU" = (
-/obj/mesh/catwalk,
 /obj/machinery/disposal/mail/small/autoname/security/north,
 /obj/disposalpipe/trunk/mail/east,
-/turf/simulated/floor/black,
+/turf/simulated/floor/industrial,
 /area/station/security/secwing)
 "mya" = (
 /obj/machinery/vending/snack,
@@ -22996,12 +22949,11 @@
 	},
 /area/station/hallway/primary/north)
 "mzu" = (
-/obj/mesh/catwalk,
 /obj/stool/chair/red{
 	dir = 1
 	},
 /obj/machinery/light,
-/turf/simulated/floor/black,
+/turf/simulated/floor/industrial,
 /area/station/hangar/sec)
 "mzv" = (
 /obj/machinery/conveyor/EW{
@@ -23129,7 +23081,6 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/maintenance/northeast)
 "mEy" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/segment/mail,
 /obj/cable{
 	icon_state = "1-4"
@@ -23140,7 +23091,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/inner/se{
 	name = "Southeast Auxiliary Conduit"
 	})
@@ -23162,8 +23113,7 @@
 /turf/simulated/floor/darkblue,
 /area/station/hallway/primary/east)
 "mEO" = (
-/obj/mesh/catwalk,
-/turf/simulated/floor/black,
+/turf/simulated/floor/industrial,
 /area/station/security/secwing)
 "mFf" = (
 /obj/disposalpipe/segment/vertical,
@@ -23518,13 +23468,12 @@
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/genpop)
 "mNg" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/engineering,
 /obj/mapping_helper/access/engineering_storage,
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/engine/engineering{
 	name = "Engineering Auxiliary Conduit";
 	do_not_irradiate = 1
@@ -23593,7 +23542,6 @@
 /turf/simulated/floor/black,
 /area/station/medical/medbay/psychiatrist)
 "mOA" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/segment/brig{
 	dir = 1;
 	icon_state = "pipe-c"
@@ -23601,7 +23549,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/industrial,
 /area/station/security/secwing)
 "mOJ" = (
 /obj/stool/chair/office/yellow{
@@ -24044,11 +23992,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "nbp" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/industrial,
 /area/station/hangar/sec)
 "nbJ" = (
 /obj/decal/tile_edge/line/yellow{
@@ -24177,12 +24124,11 @@
 	},
 /area/station/engine/storage)
 "nfP" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/segment/mail{
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/engine/engineering{
 	name = "Engineering Auxiliary Conduit";
 	do_not_irradiate = 1
@@ -24282,7 +24228,6 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "njV" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -24290,7 +24235,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/industrial,
 /area/station/security/secwing)
 "njX" = (
 /obj/cable{
@@ -24725,7 +24670,6 @@
 /turf/simulated/floor/purplewhite,
 /area/station/science/hall)
 "nvs" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -24735,7 +24679,7 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/inner/se{
 	name = "Southeast Auxiliary Conduit"
 	})
@@ -24799,12 +24743,11 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/crematorium)
 "nxu" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/segment/mail{
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/engine/engineering{
 	name = "Engineering Auxiliary Conduit";
 	do_not_irradiate = 1
@@ -24823,11 +24766,10 @@
 	},
 /area/station/medical/medbay/surgery)
 "nxH" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/inner/se{
 	name = "Southeast Auxiliary Conduit"
 	})
@@ -25150,11 +25092,10 @@
 /turf/simulated/floor/darkblue,
 /area/station/janitor/office)
 "nHf" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/outer/se)
 "nHm" = (
 /obj/disposalpipe/segment/horizontal,
@@ -25500,7 +25441,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/blackwhite,
+/turf/simulated/floor/industrial,
 /area/station/hangar/medical)
 "nQt" = (
 /obj/stool/chair/couch{
@@ -25691,12 +25632,11 @@
 /turf/simulated/floor/black,
 /area/station/garden/owlery)
 "nVu" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/white/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/outer/nw)
 "nVv" = (
 /obj/machinery/atmospherics/unary/portables_connector{
@@ -25861,14 +25801,13 @@
 /turf/simulated/floor,
 /area/research_outpost/limpet)
 "oag" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/transport{
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/engine/engineering{
 	name = "Engineering Auxiliary Conduit";
 	do_not_irradiate = 1
@@ -26618,7 +26557,6 @@
 	name = "Primary Docking Wing"
 	})
 "otS" = (
-/obj/mesh/catwalk,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-8"
@@ -26626,7 +26564,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/engine/engineering{
 	name = "Engineering Auxiliary Conduit";
 	do_not_irradiate = 1
@@ -26757,12 +26695,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "oxF" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
 /obj/disposalpipe/segment/vertical,
-/turf/simulated/floor/black,
+/turf/simulated/floor/industrial,
 /area/station/security/secwing)
 "oxJ" = (
 /obj/disposalpipe/segment/bent/south,
@@ -27002,11 +26939,10 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/white/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/outer/nw)
 "oDo" = (
 /obj/machinery/door/airlock/pyro/glass,
@@ -28743,14 +28679,13 @@
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/storage/tech)
 "pzL" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
 /obj/disposalpipe/segment/ejection{
 	dir = 2
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/inner/se{
 	name = "Southeast Auxiliary Conduit"
 	})
@@ -29914,7 +29849,6 @@
 	do_not_irradiate = 1
 	})
 "qfs" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/segment/mail,
 /obj/cable{
 	icon_state = "4-8"
@@ -29922,7 +29856,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/engine/engineering{
 	name = "Engineering Auxiliary Conduit";
 	do_not_irradiate = 1
@@ -30617,14 +30551,13 @@
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "qwf" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/brig{
 	dir = 1
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/industrial,
 /area/station/security/secwing)
 "qwm" = (
 /obj/cable{
@@ -31917,14 +31850,13 @@
 /turf/simulated/wall/auto/supernorn,
 /area/space)
 "rlh" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/engine/engineering{
 	name = "Engineering Auxiliary Conduit";
 	do_not_irradiate = 1
@@ -32235,7 +32167,6 @@
 	name = "Honkington's Abode"
 	})
 "rqG" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/segment/brig{
 	dir = 1
 	},
@@ -32245,7 +32176,7 @@
 /obj/cable{
 	icon_state = "2-5"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/industrial,
 /area/station/security/secwing)
 "rqO" = (
 /obj/disposalpipe/segment/vertical,
@@ -32462,13 +32393,12 @@
 /turf/simulated/floor/caution,
 /area/station/quartermaster/office)
 "rwf" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/segment/horizontal,
 /obj/machinery/light/small,
 /obj/cable{
 	icon_state = "5-8"
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/outer/se)
 "rwG" = (
 /turf/simulated/floor/specialroom/chapel,
@@ -33131,7 +33061,6 @@
 	},
 /area/station/science/lab)
 "rPD" = (
-/obj/mesh/catwalk,
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4
 	},
@@ -33141,7 +33070,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/security,
 /obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/security/secwing)
 "rPI" = (
 /turf/simulated/floor/shuttle,
@@ -33359,13 +33288,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "rWg" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/horizontal,
 /obj/machinery/light/small,
-/turf/simulated/floor/white/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/outer/nw)
 "rWk" = (
 /obj/machinery/light,
@@ -33841,14 +33769,13 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-4"
 	},
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/white/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/outer/nw)
 "sgR" = (
 /obj/machinery/door/airlock/pyro/glass/command{
@@ -33883,11 +33810,10 @@
 /turf/simulated/floor/shuttle/menhir_arm,
 /area/station/hallway/primary/southeast)
 "shH" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/engine/engineering{
 	name = "Engineering Auxiliary Conduit";
 	do_not_irradiate = 1
@@ -34226,9 +34152,8 @@
 	},
 /area/station/engine/storage)
 "sqx" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/segment/mail/horizontal,
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/outer/se)
 "sqC" = (
 /obj/machinery/disposal,
@@ -34519,6 +34444,7 @@
 	dir = 8
 	},
 /obj/machinery/firealarm/directional/north,
+/obj/landmark/start/job/quartermaster,
 /turf/simulated/floor/caution/side{
 	dir = 1
 	},
@@ -34806,12 +34732,11 @@
 /turf/space,
 /area/space)
 "sGd" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/segment/mail,
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/inner/se{
 	name = "Southeast Auxiliary Conduit"
 	})
@@ -35220,12 +35145,11 @@
 	name = "East Shuttle Concourse"
 	})
 "sQS" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/black,
+/turf/simulated/floor/industrial,
 /area/station/security/secwing)
 "sRf" = (
 /obj/table/reinforced/auto,
@@ -35593,12 +35517,11 @@
 /turf/simulated/floor/black,
 /area/station/science/artifact)
 "tca" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/junction/right/north,
 /obj/cable{
 	icon_state = "5-10"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/industrial,
 /area/station/security/secwing)
 "tcs" = (
 /obj/disposalpipe/segment/mail{
@@ -36345,13 +36268,12 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/mesh/catwalk,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
 	pixel_x = 10
 	},
-/turf/simulated/floor/white/grime,
+/turf/simulated/floor/industrial,
 /area/station/hangar/medical)
 "tuw" = (
 /obj/disposalpipe/segment/mail{
@@ -36373,13 +36295,11 @@
 /area/station/mining/staff_room)
 "tvi" = (
 /obj/machinery/light_switch/directional/east,
-/obj/mesh/catwalk,
-/obj/mesh/catwalk,
 /obj/landmark/gps_waypoint,
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/white/grime,
+/turf/simulated/floor/industrial,
 /area/station/hangar/medical)
 "tvx" = (
 /obj/lattice{
@@ -36858,14 +36778,13 @@
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/storage/tech)
 "tLB" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/inner/se{
 	name = "Southeast Auxiliary Conduit"
 	})
@@ -37956,14 +37875,13 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/crew_quarters/md)
 "unr" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/inner/se{
 	name = "Southeast Auxiliary Conduit"
 	})
@@ -38165,9 +38083,8 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
 "urz" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/segment/mail,
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/inner/se{
 	name = "Southeast Auxiliary Conduit"
 	})
@@ -38460,11 +38377,10 @@
 /turf/simulated/floor/engine/glow/blue,
 /area/station/turret_protected/ai)
 "uBV" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/inner/se{
 	name = "Southeast Auxiliary Conduit"
 	})
@@ -38694,6 +38610,11 @@
 	dir = 1
 	},
 /area/station/crown)
+"uIe" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/status_display/market,
+/turf/simulated/floor/plating,
+/area/station/quartermaster/office)
 "uIn" = (
 /obj/item/clothing/mask/breath{
 	pixel_y = 6;
@@ -38726,12 +38647,11 @@
 /turf/simulated/floor/black,
 /area/station/science/research_director)
 "uIV" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
 /obj/machinery/light/small,
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/inner/se{
 	name = "Southeast Auxiliary Conduit"
 	})
@@ -38971,7 +38891,6 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
 "uPQ" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/segment/transport{
 	dir = 1;
 	icon_state = "pipe-c"
@@ -38986,7 +38905,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/engine/engineering{
 	name = "Engineering Auxiliary Conduit";
 	do_not_irradiate = 1
@@ -40245,11 +40164,10 @@
 /turf/simulated/floor/caution/north,
 /area/station/quartermaster/office)
 "vzd" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "6-9"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/industrial,
 /area/station/security/secwing)
 "vzg" = (
 /obj/mesh/catwalk,
@@ -40344,11 +40262,10 @@
 	icon_state = "2-8"
 	},
 /obj/disposalpipe/junction/right/north,
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/white/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/outer/nw)
 "vBK" = (
 /obj/rack,
@@ -42009,13 +41926,12 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/surgery)
 "wlH" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/transport,
 /obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/engine/engineering{
 	name = "Engineering Auxiliary Conduit";
 	do_not_irradiate = 1
@@ -42344,11 +42260,10 @@
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/genpop)
 "wuM" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/industrial,
 /area/station/hangar/sec)
 "wvd" = (
 /obj/machinery/light/small/floor,
@@ -42444,7 +42359,6 @@
 	},
 /area/station/hydroponics)
 "wyu" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "2-8"
 	},
@@ -42454,7 +42368,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/inner/se{
 	name = "Southeast Auxiliary Conduit"
 	})
@@ -42586,14 +42500,13 @@
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
 "wAf" = (
-/obj/mesh/catwalk,
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/security,
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/security/secwing)
 "wAs" = (
 /turf/simulated/floor/blue/corner{
@@ -42708,7 +42621,6 @@
 	name = "Primary Docking Wing"
 	})
 "wDE" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/segment/brig{
 	dir = 1
 	},
@@ -42717,7 +42629,7 @@
 	},
 /obj/landmark/gps_waypoint,
 /obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/black,
+/turf/simulated/floor/industrial,
 /area/station/security/secwing)
 "wDX" = (
 /obj/disposalpipe/segment/mail{
@@ -42885,7 +42797,6 @@
 /turf/simulated/floor/carpet/red/fancy/edge/west,
 /area/station/crew_quarters/market)
 "wJf" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -42896,7 +42807,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/industrial,
 /area/station/security/secwing)
 "wJx" = (
 /obj/machinery/phone/wall{
@@ -42965,7 +42876,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "wLU" = (
-/obj/machinery/door/airlock/pyro/engineering,
+/obj/machinery/door/airlock/pyro/glass/engineering,
 /obj/mapping_helper/access/engineering_engine,
 /obj/mapping_helper/access/engineering_power,
 /obj/mapping_helper/firedoor_spawn,
@@ -43072,7 +42983,6 @@
 /turf/simulated/floor,
 /area/station/hangar/main)
 "wPr" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -43083,7 +42993,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/engine/engineering{
 	name = "Engineering Auxiliary Conduit";
 	do_not_irradiate = 1
@@ -43170,6 +43080,10 @@
 	dir = 1
 	},
 /area/station/medical/research)
+"wQN" = (
+/obj/machinery/status_display/market,
+/turf/simulated/wall/auto/supernorn,
+/area/station/quartermaster/office)
 "wQT" = (
 /obj/disposalpipe/segment/brig{
 	icon_state = "pipe-c"
@@ -43181,7 +43095,6 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "wRu" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -43189,7 +43102,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/inner/se{
 	name = "Southeast Auxiliary Conduit"
 	})
@@ -43636,11 +43549,10 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/solar/west)
 "xdK" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/industrial,
 /area/station/security/secwing)
 "xeb" = (
 /obj/machinery/light/small{
@@ -44242,7 +44154,6 @@
 	},
 /area/station/hangar/main)
 "xsd" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/switch_junction/left/west,
 /obj/mapping_helper/mailtag/research/chemistry,
 /obj/cable{
@@ -44251,7 +44162,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/inner/se{
 	name = "Southeast Auxiliary Conduit"
 	})
@@ -44652,9 +44563,8 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/qm)
 "xDP" = (
-/obj/mesh/catwalk,
 /obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/outer/se)
 "xEC" = (
 /obj/decal/tile_edge/line/black{
@@ -45596,7 +45506,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/se)
 "ybO" = (
-/obj/mesh/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -45606,7 +45515,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/maintenance/inner/se{
 	name = "Southeast Auxiliary Conduit"
 	})
@@ -81150,7 +81059,7 @@ uqf
 sFM
 ejj
 gGB
-pMR
+wQN
 ehx
 vyY
 xTq
@@ -81460,7 +81369,7 @@ oKW
 oKW
 oKW
 hJN
-pWi
+fth
 cev
 pMR
 wBi
@@ -83873,7 +83782,7 @@ vCu
 xTq
 dTS
 fen
-hcW
+uIe
 iqW
 orG
 ghs
@@ -89641,7 +89550,7 @@ ect
 bmI
 bSO
 ect
-wuo
+hNs
 mSQ
 hTm
 uRw
@@ -90245,7 +90154,7 @@ sBr
 bDa
 kMm
 sEf
-wuo
+dyJ
 mSQ
 hTm
 mSQ

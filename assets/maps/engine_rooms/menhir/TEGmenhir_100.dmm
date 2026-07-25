@@ -463,6 +463,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/hotloop)
+"jE" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
+/area/station/engine/power)
 "jX" = (
 /obj/stool/chair/yellow{
 	dir = 8
@@ -499,7 +507,6 @@
 /area/station/engine/core)
 "lr" = (
 /obj/storage/secure/closet/engineering/engineer,
-/obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
@@ -1502,7 +1509,9 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
 /area/station/engine/power)
 "Hb" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -1596,6 +1605,10 @@
 "JX" = (
 /obj/table/reinforced/auto,
 /obj/machinery/phone,
+/obj/item/device/radio/intercom/engineering{
+	dir = 4
+	},
+/obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
@@ -2175,7 +2188,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/item/device/radio/intercom/engineering,
+/obj/cable,
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
@@ -2653,7 +2666,7 @@ Br
 Br
 "}
 (11,1,1) = {"
-pk
+jE
 ii
 pk
 Ce
