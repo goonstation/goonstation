@@ -666,9 +666,10 @@
 /obj/disposalpipe/segment/produce{
 	dir = 4
 	},
-/obj/cable{
-	icon_state = "4-8"
+/obj/stool/chair{
+	dir = 8
 	},
+/obj/landmark/start/job/rancher,
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
 "arN" = (
@@ -1839,7 +1840,7 @@
 	},
 /obj/disposalpipe/junction/left/west,
 /obj/cable{
-	icon_state = "1-8"
+	icon_state = "1-10"
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
@@ -2616,6 +2617,10 @@
 	dir = 4
 	},
 /area/station/turret_protected/incursion)
+"bsp" = (
+/obj/machinery/camera/directional/north,
+/turf/space,
+/area/space)
 "bsC" = (
 /turf/simulated/floor/grey/side{
 	dir = 1
@@ -6650,6 +6655,9 @@
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/green/side,
 /area/station/hallway/primary/north)
 "dIO" = (
@@ -6839,7 +6847,6 @@
 /area/station/hydroponics)
 "dPo" = (
 /obj/iv_stand,
-/obj/machinery/camera/directional/south,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
 "dPt" = (
@@ -8431,6 +8438,7 @@
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant"
 	},
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
 "eDq" = (
@@ -11561,12 +11569,11 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/bathroom)
 "gsY" = (
-/obj/stool/chair{
-	dir = 8
-	},
-/obj/landmark/start/job/rancher,
 /obj/disposalpipe/segment/brig{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
@@ -13860,7 +13867,7 @@
 	dir = 4
 	},
 /obj/cable{
-	icon_state = "5-10"
+	icon_state = "4-10"
 	},
 /turf/simulated/floor/green/corner,
 /area/station/hallway/primary/north)
@@ -16219,7 +16226,6 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/machinery/camera/directional/south,
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
@@ -18848,6 +18854,12 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/bathroom)
+"kom" = (
+/obj/disposalpipe/segment/produce{
+	dir = 4
+	},
+/turf/simulated/floor/wood/seven,
+/area/station/ranch)
 "koG" = (
 /obj/decal/tile_edge/line/black{
 	dir = 4;
@@ -20758,9 +20770,6 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "lmS" = (
-/obj/machinery/camera/directional/west{
-	pixel_y = 10
-	},
 /turf/simulated/floor/caution/corner/misc{
 	dir = 10
 	},
@@ -20999,12 +21008,8 @@
 	name = "Honkington's Abode"
 	})
 "ltp" = (
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
 /obj/disposalpipe/switch_junction/right/north,
+/obj/machinery/camera/directional/east,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -26220,6 +26225,13 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/crew_quarters/md)
+"oio" = (
+/obj/mesh/catwalk,
+/obj/machinery/camera/directional/south,
+/turf/simulated/floor/airless/plating/catwalk{
+	icon_state = "catwalk_cross"
+	},
+/area/station/mining/magnet)
 "oip" = (
 /turf/simulated/floor/darkblue,
 /area/station/hallway/primary/east)
@@ -26651,6 +26663,7 @@
 /area/station/turret_protected/Zeta)
 "otw" = (
 /obj/machinery/portable_atmospherics/pump,
+/obj/machinery/camera/directional/west,
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/east{
 	name = "East Shuttle Concourse"
@@ -29793,13 +29806,6 @@
 	},
 /turf/unsimulated/wall/auto/adventure/icemooninterior,
 /area/station/crown)
-"qbI" = (
-/obj/disposalpipe/segment/mail,
-/obj/machinery/camera/directional/east,
-/turf/simulated/floor/yellow/side{
-	dir = 4
-	},
-/area/station/hallway/primary/west)
 "qce" = (
 /obj/machinery/computer/stockexchange{
 	dir = 8
@@ -30808,7 +30814,6 @@
 /obj/stool/chair/yellow{
 	dir = 8
 	},
-/obj/machinery/camera/directional/east,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
@@ -32425,9 +32430,6 @@
 	},
 /area/station/security/secwing)
 "rtp" = (
-/obj/cable{
-	icon_state = "4-10"
-	},
 /obj/disposalpipe/segment/produce{
 	dir = 4
 	},
@@ -38357,7 +38359,6 @@
 /obj/stool/chair/yellow{
 	dir = 8
 	},
-/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -40639,11 +40640,20 @@
 "vIx" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cell_charger,
-/obj/item/cell/supercell/charged,
-/obj/item/cell/supercell/charged,
-/obj/item/cell/supercell/charged,
-/obj/item/cell/supercell/charged,
+/obj/item/cell/supercell/charged{
+	pixel_x = 4
+	},
+/obj/item/cell/supercell/charged{
+	pixel_x = 4
+	},
+/obj/item/cell/supercell/charged{
+	pixel_x = 4
+	},
 /obj/machinery/light_switch/directional/west,
+/obj/machinery/camera/directional/south,
+/obj/item/cell/supercell/charged{
+	pixel_x = 4
+	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "vIB" = (
@@ -41700,21 +41710,23 @@
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "wgI" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
+/obj/table/reinforced/bar/auto{
+	name = "wooden table"
+	},
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8
+	},
+/obj/machinery/cashreg{
+	pixel_y = -4
 	},
 /obj/decal/tile_edge/line/black{
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment/produce{
 	dir = 4
 	},
 /obj/mapping_helper/access/rancher,
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
 "wgL" = (
@@ -41925,6 +41937,7 @@
 /area/station/crew_quarters/md)
 "wkv" = (
 /obj/machinery/vending/cards,
+/obj/machinery/camera/directional/west,
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
@@ -42579,23 +42592,21 @@
 	},
 /area/station/hangar/medical)
 "wzU" = (
-/obj/table/reinforced/bar/auto{
-	name = "wooden table"
-	},
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8
-	},
-/obj/machinery/cashreg{
-	pixel_y = -4
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
 	},
 /obj/decal/tile_edge/line/black{
 	dir = 8;
 	icon_state = "line1"
 	},
+/obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
 /obj/mapping_helper/access/rancher,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
 "wAf" = (
@@ -43427,6 +43438,9 @@
 "wVF" = (
 /obj/disposalpipe/segment/brig{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "5-8"
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
@@ -79686,7 +79700,7 @@ rlI
 vsC
 vsC
 vsC
-vsC
+oio
 tsR
 tsR
 tsR
@@ -85399,11 +85413,11 @@ nYR
 aXg
 upM
 aXg
-aXg
+nYR
 ltp
 xeh
-qbI
 nYR
+aXg
 qAf
 aXg
 aXg
@@ -95024,7 +95038,7 @@ wjh
 ozY
 kks
 lXD
-arG
+kom
 wVF
 viN
 sVA
@@ -108965,7 +108979,7 @@ asi
 asi
 oWc
 kyh
-sEf
+bsp
 sEf
 sEf
 sEf
