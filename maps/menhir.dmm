@@ -32949,6 +32949,10 @@
 	pixel_y = 10;
 	pixel_x = 3
 	},
+/obj/item/disk/data/cartridge/diagnostics{
+	pixel_y = 10;
+	pixel_x = 6
+	},
 /obj/item/cell/supercell/charged{
 	pixel_x = 4
 	},
