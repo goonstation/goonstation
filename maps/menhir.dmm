@@ -96,7 +96,6 @@
 /area/station/science/storage)
 "adj" = (
 /obj/table/reinforced/auto,
-/obj/machinery/light,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "adQ" = (
@@ -314,20 +313,6 @@
 /obj/landmark/random_room/size5x3,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
-"ahW" = (
-/obj/machinery/door/airlock/pyro/classic{
-	dir = 4
-	},
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/turf/simulated/floor/yellowblack{
-	dir = 4
-	},
-/area/station/engine/engineering{
-	name = "Engineering Auxiliary Conduit";
-	do_not_irradiate = 1
-	})
 "ahX" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/primary/central)
@@ -1379,11 +1364,11 @@
 	},
 /area/station/hallway/primary/north)
 "aLp" = (
-/obj/machinery/vending/jobclothing/engineering,
 /obj/decal/tile_edge/line/yellow{
 	dir = 9;
 	icon_state = "line1"
 	},
+/obj/machinery/dispenser,
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
@@ -2071,6 +2056,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/disposalpipe/segment/vertical,
 /turf/simulated/floor,
 /area/station/engine/storage)
 "bfN" = (
@@ -2375,6 +2361,13 @@
 	dir = 8
 	},
 /area/station/medical/medbay/psychiatrist)
+"bmA" = (
+/obj/decal/tile_edge/line/yellow{
+	dir = 1;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/industrial,
+/area/station/engine/storage)
 "bmI" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -2853,7 +2846,7 @@
 	},
 /area/station/hallway/primary/west)
 "byJ" = (
-/obj/machinery/dispenser,
+/obj/landmark/start/job/technical_trainee,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/storage)
 "byS" = (
@@ -3501,6 +3494,15 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
+"bSQ" = (
+/obj/disposalpipe/segment/mail{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/caution/side{
+	dir = 8
+	},
+/area/station/hallway/primary/west)
 "bTm" = (
 /obj/machinery/firealarm/directional/north,
 /obj/machinery/camera/directional/west{
@@ -3744,6 +3746,7 @@
 /obj/stool/chair/yellow{
 	dir = 4
 	},
+/obj/machinery/light,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "bXr" = (
@@ -3802,32 +3805,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/staff)
 "bZe" = (
-/obj/table/reinforced/auto,
-/obj/machinery/light,
-/obj/item/old_grenade/oxygen{
-	pixel_x = -4;
-	pixel_y = 10
-	},
-/obj/item/old_grenade/oxygen{
-	pixel_x = -4;
-	pixel_y = 5
-	},
-/obj/item/old_grenade/oxygen{
-	pixel_x = -4
-	},
-/obj/item/chem_grenade/metalfoam{
-	pixel_y = 9;
-	pixel_x = 7
-	},
-/obj/item/chem_grenade/metalfoam{
-	pixel_y = 5;
-	pixel_x = 7
-	},
-/obj/item/chem_grenade/metalfoam{
-	pixel_y = 1;
-	pixel_x = 7
-	},
-/turf/simulated/floor/yellow/side,
+/turf/simulated/floor,
 /area/station/engine/storage)
 "bZx" = (
 /obj/landmark/halloween,
@@ -5813,7 +5791,8 @@
 	dir = 5;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/yellow/side,
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor,
 /area/station/engine/storage)
 "dkJ" = (
 /obj/machinery/sink/slim{
@@ -5949,6 +5928,37 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"dot" = (
+/obj/item/caution{
+	desc = "Caution! Construction Zone!";
+	name = "caution sign"
+	},
+/obj/item/caution{
+	desc = "Caution! Construction Zone!";
+	name = "caution sign"
+	},
+/obj/item/caution{
+	desc = "Caution! Construction Zone!";
+	name = "caution sign"
+	},
+/obj/item/caution{
+	desc = "Caution! Construction Zone!";
+	name = "caution sign"
+	},
+/obj/item/caution{
+	desc = "Caution! Construction Zone!";
+	name = "caution sign"
+	},
+/obj/storage/crate,
+/obj/item/clothing/suit/hi_vis,
+/obj/item/clothing/suit/hi_vis,
+/turf/simulated/floor/yellowblack{
+	dir = 4
+	},
+/area/station/engine/engineering{
+	name = "Engineering Auxiliary Conduit";
+	do_not_irradiate = 1
+	})
 "dow" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 1
@@ -6245,6 +6255,20 @@
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
+"dwO" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/line/yellow{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/machinery/disposal/small/east{
+	pixel_x = -9
+	},
+/obj/disposalpipe/trunk/north,
+/turf/simulated/floor/industrial,
+/area/station/engine/storage)
 "dwV" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -6462,10 +6486,9 @@
 	name = "Arrival Concourse"
 	})
 "dEE" = (
-/obj/machinery/door/airlock/pyro/engineering,
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/engineering_storage,
-/turf/simulated/floor/yellow,
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
 /area/station/engine/storage)
 "dFl" = (
 /obj/cable{
@@ -6772,6 +6795,19 @@
 "dOq" = (
 /turf/simulated/floor,
 /area/station/science/storage)
+"dOF" = (
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/disposalpipe/segment/transport{
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/industrial,
+/area/station/engine/engineering{
+	name = "Engineering Auxiliary Conduit";
+	do_not_irradiate = 1
+	})
 "dOY" = (
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/vending/cards,
@@ -6906,6 +6942,17 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/ce)
+"dTo" = (
+/obj/vehicle/forklift{
+	dir = 4
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 4
+	},
+/area/station/engine/engineering{
+	name = "Engineering Auxiliary Conduit";
+	do_not_irradiate = 1
+	})
 "dTp" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -7273,6 +7320,15 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
+"dZZ" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/caution/side{
+	dir = 8
+	},
+/area/station/hallway/primary/west)
 "eat" = (
 /obj/stool/chair/comfy,
 /turf/simulated/floor/specialroom/chapel{
@@ -7510,6 +7566,9 @@
 /obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "efB" = (
@@ -7545,6 +7604,15 @@
 	},
 /turf/simulated/floor/caution/west,
 /area/research_outpost/limpet/maint)
+"egs" = (
+/obj/machinery/door/airlock/pyro/engineering,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/engineering_storage,
+/turf/simulated/floor/industrial,
+/area/station/engine/storage)
 "egu" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -8212,6 +8280,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/secwing)
+"eyI" = (
+/obj/disposalpipe/segment/transport,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/west)
 "eza" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -8345,6 +8420,19 @@
 /obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
+"eDo" = (
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/obj/shrub{
+	dir = 4;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant"
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/primary/west)
 "eDq" = (
 /obj/effects/menhir_fog,
 /obj/landmark/menhir/coalesce{
@@ -8544,6 +8632,12 @@
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
+"eLt" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/hallway/primary/west)
 "eLB" = (
 /obj/stool/chair/dining/wood{
 	desc = "An antique chair.";
@@ -8660,9 +8754,7 @@
 /turf/space,
 /area/shuttle/escape/station)
 "eOJ" = (
-/turf/simulated/floor/yellowblack{
-	dir = 4
-	},
+/turf/simulated/floor/black/grime,
 /area/station/engine/engineering{
 	name = "Engineering Auxiliary Conduit";
 	do_not_irradiate = 1
@@ -10977,6 +11069,12 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/industrial,
 /area/station/security/secwing)
+"gdl" = (
+/obj/storage/crate/bin,
+/turf/simulated/floor/caution/side{
+	dir = 8
+	},
+/area/station/hallway/primary/west)
 "gdT" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -11952,12 +12050,10 @@
 /area/station/security/brig/genpop)
 "gFx" = (
 /obj/disposalpipe/segment/mail{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/obj/machinery/light_switch/directional/east,
-/turf/simulated/floor/yellow/side{
 	dir = 4
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 8
 	},
 /area/station/hallway/primary/west)
 "gFy" = (
@@ -13009,17 +13105,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black/side,
 /area/station/hallway/primary/southeast)
-"hlj" = (
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/turf/simulated/floor/yellowblack{
-	dir = 8
-	},
-/area/station/engine/engineering{
-	name = "Engineering Auxiliary Conduit";
-	do_not_irradiate = 1
-	})
 "hlw" = (
 /obj/mesh/catwalk,
 /obj/machinery/light{
@@ -13510,32 +13595,10 @@
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)
 "hyz" = (
-/obj/item/caution{
-	desc = "Caution! Construction Zone!";
-	name = "caution sign"
+/obj/disposalpipe/segment/mail{
+	dir = 4
 	},
-/obj/item/caution{
-	desc = "Caution! Construction Zone!";
-	name = "caution sign"
-	},
-/obj/item/caution{
-	desc = "Caution! Construction Zone!";
-	name = "caution sign"
-	},
-/obj/item/caution{
-	desc = "Caution! Construction Zone!";
-	name = "caution sign"
-	},
-/obj/item/caution{
-	desc = "Caution! Construction Zone!";
-	name = "caution sign"
-	},
-/obj/storage/crate,
-/obj/item/clothing/suit/hi_vis,
-/obj/item/clothing/suit/hi_vis,
-/turf/simulated/floor/yellowblack{
-	dir = 8
-	},
+/turf/simulated/floor/black/grime,
 /area/station/engine/engineering{
 	name = "Engineering Auxiliary Conduit";
 	do_not_irradiate = 1
@@ -14110,6 +14173,12 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/maintenance/east)
+"hMz" = (
+/obj/machinery/door/airlock/pyro/engineering,
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/engineering_storage,
+/turf/simulated/floor/industrial,
+/area/station/engine/storage)
 "hMD" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/fakeobject/pipe/heat,
@@ -15950,6 +16019,12 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/fitness)
+"iLs" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/yellow/side{
+	dir = 6
+	},
+/area/station/engine/storage)
 "iLM" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -16562,7 +16637,8 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/yellow/side,
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/yellow/corner,
 /area/station/engine/storage)
 "jdZ" = (
 /obj/effects/menhir_fog,
@@ -18046,7 +18122,7 @@
 /obj/machinery/disposal/small/south,
 /obj/disposalpipe/trunk/west,
 /turf/simulated/floor/yellow/side,
-/area/station/maintenance/southwest)
+/area/station/engine/elect)
 "jVk" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -19096,15 +19172,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/turf/simulated/floor/industrial,
-/area/station/engine/engineering{
-	name = "Engineering Auxiliary Conduit";
-	do_not_irradiate = 1
-	})
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor/yellow/side,
+/area/station/engine/storage)
 "kxL" = (
 /obj/cable{
 	icon_state = "5-8"
@@ -19388,6 +19458,29 @@
 "kEK" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/engine)
+"kEL" = (
+/obj/table/reinforced/auto,
+/obj/item/sheet/glass/fullstack{
+	pixel_y = 5;
+	pixel_x = -4
+	},
+/obj/item/storage/box/cablesbox{
+	pixel_y = 10;
+	pixel_x = 13
+	},
+/obj/item/storage/box/cablesbox{
+	pixel_y = 3;
+	pixel_x = 15
+	},
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 10
+	},
+/area/station/engine/storage)
 "kFq" = (
 /obj/decal/tile_edge/floorguide/arrow_w{
 	dir = 1
@@ -21939,6 +22032,7 @@
 /obj/cable{
 	icon_state = "2-5"
 	},
+/obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "lVx" = (
@@ -21987,15 +22081,6 @@
 	dir = 8
 	},
 /area/station/hallway/primary/southwest)
-"lWZ" = (
-/obj/disposalpipe/segment/mail{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 4
-	},
-/area/station/hallway/primary/west)
 "lXk" = (
 /obj/disposalpipe/segment/bent/west,
 /obj/cable{
@@ -23049,14 +23134,6 @@
 /obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/genpop)
-"mDO" = (
-/obj/disposalpipe/switch_junction/right/west,
-/obj/storage/crate/bin,
-/obj/mapping_helper/mailtag/mining,
-/turf/simulated/floor/yellowblack{
-	dir = 8
-	},
-/area/station/hallway/primary/west)
 "mEk" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 1;
@@ -23431,7 +23508,7 @@
 	name = "Southeast Auxiliary Conduit"
 	})
 "mKv" = (
-/obj/disposalpipe/segment/bent/north,
+/obj/disposalpipe/junction/left/north,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/elect)
 "mKG" = (
@@ -24586,6 +24663,15 @@
 /area/station/maintenance/inner/se{
 	name = "Southeast Auxiliary Conduit"
 	})
+"nqR" = (
+/obj/disposalpipe/segment/mail{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/yellow/corner{
+	dir = 4
+	},
+/area/station/hallway/primary/west)
 "nro" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/disposalpipe/segment/transport{
@@ -24672,6 +24758,12 @@
 /obj/cable,
 /turf/simulated/floor/purplewhite,
 /area/station/science/hall)
+"nve" = (
+/obj/machinery/vending/jobclothing/engineering,
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/engine/storage)
 "nvs" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -25162,9 +25254,7 @@
 "nIE" = (
 /obj/decal/cleanable/dirt,
 /obj/random_item_spawner/junk/one_or_zero,
-/turf/simulated/floor/yellowblack{
-	dir = 8
-	},
+/turf/simulated/floor/black/grime,
 /area/station/maintenance/inner/sw)
 "nJa" = (
 /obj/table/auto,
@@ -25803,18 +25893,6 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost/limpet)
-"oag" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/transport{
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/industrial,
-/area/station/engine/engineering{
-	name = "Engineering Auxiliary Conduit";
-	do_not_irradiate = 1
-	})
 "oau" = (
 /obj/effects/menhir_fog,
 /obj/landmark/menhir/doorway{
@@ -27097,6 +27175,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -28395,14 +28474,13 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "ppB" = (
-/obj/storage/crate{
-	desc = "Whoa! What will they think of next?";
-	name = "Boxes in a Box"
-	},
-/obj/item/storage/box,
-/obj/item/storage/box,
-/obj/item/storage/box,
-/obj/item/storage/box,
+/obj/rack,
+/obj/item/furniture_parts/bench,
+/obj/item/furniture_parts/bench,
+/obj/item/furniture_parts/bench,
+/obj/item/furniture_parts/bench,
+/obj/item/furniture_parts/office_chair,
+/obj/item/furniture_parts/office_chair/yellow,
 /turf/simulated/floor/yellowblack{
 	dir = 8
 	},
@@ -28640,7 +28718,6 @@
 	},
 /area/station/crew_quarters/ce)
 "pxp" = (
-/obj/landmark/start/job/technical_trainee,
 /obj/machinery/light,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/storage)
@@ -29821,6 +29898,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering_mechanic,
+/obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "qeY" = (
@@ -29934,12 +30012,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
-"qhU" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/hallway/primary/west)
 "qib" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "12"
@@ -30382,14 +30454,19 @@
 	},
 /area/station/science/storage)
 "qqq" = (
-/obj/storage/cart,
-/obj/random_item_spawner/tools/maybe_few,
-/obj/random_item_spawner/hat/one,
 /obj/decal/cleanable/dirt,
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
 	},
+/obj/storage/crate{
+	desc = "Whoa! What will they think of next?";
+	name = "Boxes in a Box"
+	},
+/obj/item/storage/box,
+/obj/item/storage/box,
+/obj/item/storage/box,
+/obj/item/storage/box,
 /turf/simulated/floor/yellowblack{
 	dir = 8
 	},
@@ -30701,8 +30778,11 @@
 	dir = 8
 	},
 /obj/machinery/camera/directional/east,
-/turf/simulated/floor/yellow/side{
+/obj/disposalpipe/segment/transport{
 	dir = 4
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 5
 	},
 /area/station/hallway/primary/west)
 "qAf" = (
@@ -31168,6 +31248,12 @@
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"qQG" = (
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/caution/side{
+	dir = 8
+	},
+/area/station/hallway/primary/west)
 "qQK" = (
 /obj/machinery/camera/directional/west,
 /obj/stool/chair{
@@ -31356,6 +31442,7 @@
 /area/station/science/teleporter)
 "qVj" = (
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon17,
+/obj/disposalpipe/segment/transport,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "qVp" = (
@@ -33452,16 +33539,12 @@
 /turf/simulated/floor/black,
 /area/station/science/artifact)
 "rZo" = (
-/obj/storage/crate,
-/obj/item/sheet/wood,
-/obj/item/sheet/wood,
-/obj/item/sheet/wood,
-/obj/item/sheet/wood,
-/obj/item/sheet/wood,
 /obj/machinery/light/small,
-/turf/simulated/floor/yellowblack{
-	dir = 4
+/obj/stool/chair/yellow{
+	dir = 8
 	},
+/obj/landmark/start/job/engineer,
+/turf/simulated/floor/yellowblack/corner,
 /area/station/engine/engineering{
 	name = "Engineering Auxiliary Conduit";
 	do_not_irradiate = 1
@@ -33816,10 +33899,9 @@
 	do_not_irradiate = 1
 	})
 "shK" = (
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/turf/simulated/floor/yellow/corner{
+/obj/disposalpipe/switch_junction/right/north,
+/obj/mapping_helper/mailtag/mining,
+/turf/simulated/floor/yellow/side{
 	dir = 4
 	},
 /area/station/hallway/primary/west)
@@ -34399,25 +34481,18 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/nw)
 "swR" = (
-/obj/table/reinforced/auto,
-/obj/item/sheet/glass/fullstack{
-	pixel_y = 5;
-	pixel_x = -4
+/obj/machinery/disposal_pipedispenser/mobile{
+	dir = 4
 	},
-/obj/item/storage/box/cablesbox{
-	pixel_y = 10;
-	pixel_x = 13
-	},
-/obj/item/storage/box/cablesbox{
-	pixel_y = 3;
-	pixel_x = 15
+/obj/decal/stripe_caution,
+/obj/decal/tile_edge/line/yellow{
+	dir = 8;
+	icon_state = "line1"
 	},
 /obj/item/device/radio/intercom/engineering{
 	dir = 4
 	},
-/turf/simulated/floor/yellow/side{
-	dir = 10
-	},
+/turf/simulated/floor,
 /area/station/engine/storage)
 "swZ" = (
 /turf/simulated/floor/grey,
@@ -35165,9 +35240,6 @@
 	},
 /area/station/hallway/primary/southeast)
 "sRQ" = (
-/obj/machinery/disposal_pipedispenser/mobile{
-	dir = 8
-	},
 /obj/decal/tile_edge/line/yellow{
 	dir = 8;
 	icon_state = "line1"
@@ -36655,13 +36727,11 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
 "tGZ" = (
-/obj/machinery/door/airlock/pyro/engineering,
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/engineering_storage,
-/turf/simulated/floor/yellow,
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor,
 /area/station/engine/storage)
 "tHs" = (
 /obj/cable{
@@ -36869,23 +36939,12 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/fitness)
 "tNR" = (
-/obj/stool/chair/yellow{
-	dir = 4
-	},
-/obj/landmark/start/job/engineer,
-/turf/simulated/floor/yellowblack{
-	dir = 8
-	},
-/area/station/engine/engineering{
-	name = "Engineering Auxiliary Conduit";
-	do_not_irradiate = 1
-	})
-"tNU" = (
-/obj/machinery/light_switch/directional/north,
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/storage/closet/emergency,
+/obj/storage/crate,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
 /turf/simulated/floor/yellowblack{
 	dir = 8
 	},
@@ -37372,13 +37431,6 @@
 /area/station/maintenance/inner/se{
 	name = "Southeast Auxiliary Conduit"
 	})
-"tYB" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/west)
 "tYG" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
@@ -37628,13 +37680,12 @@
 /turf/simulated/floor/blue,
 /area/station/hallway/primary/central)
 "ugX" = (
-/obj/storage/crate,
-/obj/item/mining_tool,
-/obj/item/mining_tool,
-/obj/item/storage/belt/utility,
-/obj/item/wrapping_paper,
-/turf/simulated/floor/yellowblack{
-	dir = 8
+/obj/storage/closet/emergency,
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/simulated/floor/yellowblack/corner{
+	dir = 4
 	},
 /area/station/engine/engineering{
 	name = "Engineering Auxiliary Conduit";
@@ -37752,21 +37803,6 @@
 "ujP" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/teleporter)
-"ukc" = (
-/obj/rack,
-/obj/item/furniture_parts/bench,
-/obj/item/furniture_parts/bench,
-/obj/item/furniture_parts/bench,
-/obj/item/furniture_parts/bench,
-/obj/item/furniture_parts/office_chair,
-/obj/item/furniture_parts/office_chair/yellow,
-/turf/simulated/floor/yellowblack{
-	dir = 4
-	},
-/area/station/engine/engineering{
-	name = "Engineering Auxiliary Conduit";
-	do_not_irradiate = 1
-	})
 "ukf" = (
 /obj/lattice{
 	dir = 1;
@@ -38268,6 +38304,7 @@
 /obj/stool/chair/yellow{
 	dir = 8
 	},
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -38495,6 +38532,7 @@
 	icon_state = "line1"
 	},
 /obj/landmark/menhir/outreach,
+/obj/disposalpipe/segment/vertical,
 /turf/simulated/floor,
 /area/station/engine/storage)
 "uEJ" = (
@@ -39514,13 +39552,6 @@
 	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/staff)
-"veM" = (
-/obj/disposalpipe/segment/mail{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/west)
 "vfc" = (
 /turf/simulated/floor/blackwhite{
 	dir = 4
@@ -39824,9 +39855,15 @@
 /turf/simulated/floor/black,
 /area/station/science/artifact)
 "vnY" = (
-/obj/decal/stripe_caution,
+/obj/storage/crate,
+/obj/item/mining_tool,
+/obj/item/mining_tool,
+/obj/item/storage/belt/utility,
+/obj/item/wrapping_paper,
 /obj/machinery/light/small,
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/yellowblack{
+	dir = 4
+	},
 /area/station/engine/engineering{
 	name = "Engineering Auxiliary Conduit";
 	do_not_irradiate = 1
@@ -40173,22 +40210,6 @@
 	},
 /area/station/maintenance/outer/sw{
 	name = "Arrivals Auxiliary Arm"
-	})
-"vzB" = (
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/obj/vehicle/forklift{
-	dir = 4
-	},
-/turf/simulated/floor/yellowblack{
-	dir = 8
-	},
-/area/station/engine/engineering{
-	name = "Engineering Auxiliary Conduit";
-	do_not_irradiate = 1
 	})
 "vzC" = (
 /obj/disposalpipe/segment/horizontal,
@@ -42240,6 +42261,33 @@
 	dir = 4
 	},
 /area/station/medical/research)
+"wtQ" = (
+/obj/table/reinforced/auto,
+/obj/item/old_grenade/oxygen{
+	pixel_x = -4;
+	pixel_y = 10
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/old_grenade/oxygen{
+	pixel_x = -4
+	},
+/obj/item/chem_grenade/metalfoam{
+	pixel_y = 9;
+	pixel_x = 7
+	},
+/obj/item/chem_grenade/metalfoam{
+	pixel_y = 5;
+	pixel_x = 7
+	},
+/obj/item/chem_grenade/metalfoam{
+	pixel_y = 1;
+	pixel_x = 7
+	},
+/turf/simulated/floor/yellow/side,
+/area/station/engine/storage)
 "wuo" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/power)
@@ -42899,6 +42947,23 @@
 	},
 /area/station/maintenance/inner/se{
 	name = "Southeast Auxiliary Conduit"
+	})
+"wMF" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 4
+	},
+/area/station/engine/engineering{
+	name = "Engineering Auxiliary Conduit";
+	do_not_irradiate = 1
 	})
 "wMR" = (
 /turf/simulated/floor/redblack{
@@ -45357,15 +45422,6 @@
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/north,
 /area/station/crew_quarters/hop)
-"xXS" = (
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/obj/disposalpipe/segment/mail,
-/turf/simulated/floor/yellowblack{
-	dir = 10
-	},
-/area/station/hallway/primary/west)
 "xXV" = (
 /turf/simulated/floor/grey/side{
 	dir = 4
@@ -84694,11 +84750,11 @@ dUK
 evZ
 evZ
 wOx
-evZ
-evZ
-evZ
-dUK
-gve
+dZZ
+qQG
+qQG
+bSQ
+gdl
 vlo
 tVJ
 tVJ
@@ -84996,10 +85052,10 @@ mPQ
 ouJ
 ouJ
 ouJ
-iuY
+eyI
 qVj
-tYB
-veM
+ouJ
+iuY
 bXh
 vlo
 tVJ
@@ -85297,10 +85353,10 @@ nYR
 qAf
 aXg
 aXg
-lWZ
+aXg
 shK
-vna
-nBd
+aXg
+nqR
 efA
 adj
 vlo
@@ -85597,11 +85653,11 @@ rhZ
 jWE
 jWE
 jWE
+jWE
+jWE
 lUT
 lZk
-mDO
-xXS
-nYR
+eDo
 gFx
 qzZ
 uzp
@@ -85896,16 +85952,16 @@ sKr
 rjT
 ejT
 hVJ
-nfp
+nve
 swR
+nfp
+kEL
 jWE
 lha
 lZk
-qhU
-ahW
 lZk
-lZk
-lZk
+wMF
+eLt
 lZk
 vlo
 vlo
@@ -86198,14 +86254,14 @@ gpQ
 rjT
 rtO
 ihB
-tEZ
 bZe
+bZe
+tEZ
+wtQ
 jWE
-lZk
-lZk
-tNU
-hlj
-vzB
+jWE
+pmG
+roB
 hyz
 ugX
 pmG
@@ -86504,12 +86560,12 @@ uEg
 dku
 tGZ
 kxB
+dwO
+egs
+fJA
 fJA
 rlh
-oag
-mlo
-mlo
-muy
+dOF
 mlo
 muy
 mlo
@@ -86805,12 +86861,12 @@ qUo
 obw
 jdY
 dEE
+iLs
+bmA
+hMz
 hdR
 hdR
 nfP
-maS
-maS
-maS
 maS
 maS
 maS
@@ -87111,12 +87167,12 @@ lhN
 oau
 lhN
 lhN
-ukc
+tvK
 eOJ
 rZo
 pmG
-tvK
-tvK
+dTo
+dot
 vnY
 pmG
 xiP
