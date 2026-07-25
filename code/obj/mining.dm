@@ -2497,11 +2497,13 @@ TYPEINFO(/obj/item/cargotele)
 
 	pickup(mob/user)
 		. = ..()
-		get_image_group(CLIENT_IMAGE_GROUP_GEOLOGICAL_ANOMALIES).add_mob(user)
+		if(user)
+			get_image_group(CLIENT_IMAGE_GROUP_GEOLOGICAL_ANOMALIES).add_mob(user)
 
 	dropped(mob/user)
 		. = ..()
-		get_image_group(CLIENT_IMAGE_GROUP_GEOLOGICAL_ANOMALIES).remove_mob(user)
+		if(user)
+			get_image_group(CLIENT_IMAGE_GROUP_GEOLOGICAL_ANOMALIES).remove_mob(user)
 
 
 /proc/mining_scan(var/turf/T, var/mob/living/L, var/range)
