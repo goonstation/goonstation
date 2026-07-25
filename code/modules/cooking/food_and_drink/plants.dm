@@ -899,7 +899,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 
 	make_reagents()
 		..()
-		reagents.add_reagent("too much",25)
+		reagents.add_reagent("too much",5) // eh, build yield if you want more
 
 
 /obj/item/reagent_containers/food/snacks/plant/peach
