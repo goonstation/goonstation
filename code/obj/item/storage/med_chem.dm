@@ -155,7 +155,8 @@
 	field_surgeon
 		name = "field surgeon's bag"
 		desc = "An old-fashioned doctor's bag designed to carry medical and surgical supplies. This one been stuffed with what a field surgeon would require, including an anesthetic compartment."
-		kit_styles = list("docbag3") // always black because tacticool.
+		icon_state = "docbag3"
+		item_state = "docbag3" // always black because tacticool.
 		can_hold = list(/obj/item/clothing/mask/medical)
 		spawn_contents = list(/obj/item/circular_saw, /obj/item/scalpel, /obj/item/scissors/surgical_scissors, /obj/item/suture, /obj/item/staple_gun, /obj/item/clothing/mask/medical/anesthetic, /obj/item/hemostat)
 /* -------------------- First Aid Kits - VR -------------------- */
