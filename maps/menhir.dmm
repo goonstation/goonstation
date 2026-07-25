@@ -27714,7 +27714,7 @@
 	icon_state = "0-2"
 	},
 /obj/storage/secure/closet/engineering/engineer,
-/turf/simulated/floor/yellowblack{
+/turf/simulated/floor/yellow/side{
 	dir = 1
 	},
 /area/station/engine/storage)
