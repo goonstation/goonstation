@@ -1151,6 +1151,7 @@
 
 		if (isitem(target))
 			if(prob(15) && user.bodytemperature >= T0C + 37)
+				user.get_burn_damage(5)
 				user.changeBodyTemp(-15 KELVIN, T0C + 30)
 				var/obj/item/I = target
 				if(I.anchored)
@@ -1170,6 +1171,7 @@
 		if(check_target_immunity( target ))
 			return 0
 		if (prob(15))
+			user.get_burn_damage(5)
 			user.changeBodyTemp(-15 KELVIN)
 			logTheThing(LOG_COMBAT, user, "accidentally harms [constructTarget(target,"combat")] with hot hands at [log_loc(user)].")
 			user.visible_message(SPAN_COMBAT("<b>[user] accidentally melts [target] while trying to [user.a_intent] them!</b>"), SPAN_COMBAT("<b>You accidentally melt [target] while trying to [user.a_intent] them!</b>"))
