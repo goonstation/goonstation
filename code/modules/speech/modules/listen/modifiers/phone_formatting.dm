@@ -16,7 +16,6 @@
 	message.atom_listeners_to_be_excluded = null
 	FORMAT_MESSAGE_FOR_RELAY(message, SAY_RELAY_PHONE)
 
-	var/datum/listener_parent = src.parent_tree.listener_parent
 	// Create a text reference to the speaker's mind, if they have one.
 	var/mind_ref = ""
 	if (ismob(message.original_speaker))
