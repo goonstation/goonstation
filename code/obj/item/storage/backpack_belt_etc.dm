@@ -961,6 +961,7 @@
 	spawn_contents = list(/obj/item/reagent_containers/mender/brute/high_capacity,
 	/obj/item/reagent_containers/mender/brute/high_capacity,
 	/obj/item/reagent_containers/hypospray,
+	/obj/item/reagent_containers/glass/bottle/omnizine,
 	/obj/item/bandage/medicated,
 	/obj/item/device/analyzer/healthanalyzer/upgraded,
 	/obj/item/robodefibrillator

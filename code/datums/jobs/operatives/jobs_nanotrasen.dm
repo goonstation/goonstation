@@ -96,7 +96,8 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	slot_poc2 = list(/obj/item/device/pda2/nt_medical)
 	items_in_backpack = list(/obj/item/device/flash,
 							/obj/item/storage/firstaid/docbag/field_surgeon,
-							/obj/item/extinguisher)
+							/obj/item/extinguisher,
+							/obj/item/storage/box/body_bag)
 
 // Use this one for late respawns to deal with existing antags. they are weaker cause they dont get a laser rifle or frags
 /datum/job/special/nt/security_consultant

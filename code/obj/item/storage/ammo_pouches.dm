@@ -226,12 +226,13 @@
 		/obj/item/ammo/bullets/bullet_9mm = 4)
 
 	medic
+		name = "tacticool medicine pouch"
 		desc = "A dump pouch for various injectors, in reality its just a re-used ammo pouch. Attaches to virtually any webbing system through an incredibly complex and very patented Nanotrasen design."
 		spawn_contents = list(/obj/item/reagent_containers/emergency_injector/high_capacity/cardiac,
 			/obj/item/reagent_containers/emergency_injector/high_capacity/bloodloss,
 			/obj/item/reagent_containers/emergency_injector/high_capacity/lifesupport,
 			/obj/item/reagent_containers/emergency_injector/high_capacity/atropine,
-			/obj/item/reagent_containers/emergency_injector/high_capacity/formaldehyde)
+			/obj/item/reagent_containers/syringe/formaldehyde)
 
 /obj/item/storage/breach_pouch
 	name = "mining charge pouch"
