@@ -1995,7 +1995,10 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/landmark/gps_waypoint,
-/turf/simulated/floor/black/grime,
+/obj/decal/tile_edge/line/yellow{
+	icon_state = "line1"
+	},
+/turf/simulated/floor/industrial,
 /area/station/engine/power)
 "beS" = (
 /obj/machinery/light/small{
@@ -9387,7 +9390,7 @@
 /obj/landmark/gps_waypoint{
 	name = "Engine"
 	},
-/turf/simulated/floor/black/grime,
+/turf/simulated/floor/industrial,
 /area/station/engine/engineering{
 	name = "Engineering Auxiliary Conduit";
 	do_not_irradiate = 1
@@ -18475,7 +18478,7 @@
 /area/station/engine/storage)
 "kgH" = (
 /obj/disposalpipe/segment/mail,
-/obj/machinery/door/airlock/pyro/engineering,
+/obj/machinery/door/airlock/pyro/glass/engineering,
 /obj/mapping_helper/access/engineering_storage,
 /turf/simulated/floor/industrial,
 /area/station/engine/engineering{
@@ -23471,7 +23474,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/engineering,
+/obj/machinery/door/airlock/pyro/glass/engineering,
 /obj/mapping_helper/access/engineering_storage,
 /turf/simulated/floor/industrial,
 /area/station/engine/engineering{
@@ -27711,7 +27714,7 @@
 	icon_state = "0-2"
 	},
 /obj/storage/secure/closet/engineering/engineer,
-/turf/simulated/floor/yellow/side{
+/turf/simulated/floor/yellowblack{
 	dir = 1
 	},
 /area/station/engine/storage)
@@ -29202,12 +29205,6 @@
 /obj/machinery/deep_fryer,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
-"pOj" = (
-/turf/simulated/floor/black/grime,
-/area/station/engine/engineering{
-	name = "Engineering Auxiliary Conduit";
-	do_not_irradiate = 1
-	})
 "pOo" = (
 /obj/table/reinforced/auto,
 /obj/item/folder{
@@ -42880,7 +42877,10 @@
 /obj/mapping_helper/access/engineering_engine,
 /obj/mapping_helper/access/engineering_power,
 /obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/black/grime,
+/obj/decal/tile_edge/line/yellow{
+	icon_state = "line1"
+	},
+/turf/simulated/floor/industrial,
 /area/station/engine/power)
 "wMn" = (
 /obj/disposalpipe/segment/bent/north,
@@ -88341,7 +88341,7 @@ uGn
 wJR
 dTp
 shH
-pOj
+hdR
 wLU
 mSQ
 hZx
