@@ -85,6 +85,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	name = "Nanotrasen Emergency Medic"
 	trait_list = list("training_medical")
 
+	slot_back = list(/obj/item/storage/backpack/satchel/NT)
 	slot_belt = list(/obj/item/storage/belt/medical/prepared/NT)
 	slot_suit = list(/obj/item/clothing/suit/space/ntso/medic)
 	slot_head = list(/obj/item/clothing/head/helmet/space/ntso)
