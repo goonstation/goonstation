@@ -5,6 +5,7 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 	start_speech_modifiers = null
 	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
+ADMIN_INTERACT_PROCS(/obj/machinery/computer/riotgear, proc/authorize, proc/unauthorize)
 /obj/machinery/computer/riotgear
 	name = "Armory Control"
 	icon_state = "drawbr"
