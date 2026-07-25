@@ -18,7 +18,7 @@ TYPEINFO(/datum/component/contraband)
 	RegisterSignal(AM, COMSIG_MOVABLE_CONTRABAND_CHANGED, PROC_REF(visible_contraband_changed))
 
 	if (isitem(AM))
-		RegisterSignal(AM, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_PICKUP), PROC_REF(equipped))
+		RegisterSignals(AM, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_PICKUP), PROC_REF(equipped))
 		RegisterSignals(AM, list(COMSIG_ITEM_UNEQUIPPED, COMSIG_ITEM_DROPPED), PROC_REF(removed))
 
 	src.visible_contraband_changed(AM)

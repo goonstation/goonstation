@@ -6291,7 +6291,7 @@
 	},
 /obj/mapping_helper/access/engineering_engine,
 /turf/simulated/floor,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "aMm" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -8081,7 +8081,7 @@
 /area/station/medical/medbay/psychiatrist)
 "aWx" = (
 /turf/simulated/floor/circuit,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "aWz" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -9987,7 +9987,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "bhY" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/secondary/construction)
@@ -12663,6 +12663,18 @@
 "bAF" = (
 /obj/table/auto,
 /obj/item/electronics/soldering,
+/obj/item/disk/data/cartridge/diagnostics{
+	pixel_x = 9;
+	pixel_y = -2
+	},
+/obj/item/disk/data/cartridge/diagnostics{
+	pixel_x = 11;
+	pixel_y = 4
+	},
+/obj/item/disk/data/cartridge/diagnostics{
+	pixel_x = 10;
+	pixel_y = 12
+	},
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "bAG" = (
@@ -14045,7 +14057,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "bON" = (
 /obj/machinery/light/incandescent,
 /obj/storage/closet/wardrobe/black/formalwear,
@@ -14446,7 +14458,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "cbO" = (
 /obj/decal/tile_edge/floorguide/science{
 	dir = 8
@@ -15388,7 +15400,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "cHX" = (
 /obj/cable/orange{
 	icon_state = "2-4"
@@ -16191,7 +16203,7 @@
 "dfS" = (
 /obj/machinery/the_singularitygen,
 /turf/simulated/floor/plating/airless,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "dgx" = (
 /obj/machinery/conveyor/EW{
 	id = "cargo-art-in";
@@ -17327,7 +17339,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "dSI" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable/blue,
@@ -17620,7 +17632,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "eav" = (
 /obj/storage/crate{
 	name = "Discount Dan's Liquidation Clothes Crate"
@@ -17854,7 +17866,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "eil" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/blueblack{
@@ -23147,7 +23159,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "hts" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -23565,7 +23577,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "hEw" = (
 /obj/cable/yellow{
 	icon_state = "1-2"
@@ -23809,7 +23821,7 @@
 /area/station/mining/magnet)
 "hLB" = (
 /turf/space,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "hLH" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -24833,7 +24845,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "inW" = (
 /obj/machinery/computer/tetris,
 /obj/machinery/light_switch/directional/east,
@@ -26689,7 +26701,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "jsg" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	req_access = null
@@ -27304,7 +27316,7 @@
 	},
 /obj/cable/orange,
 /turf/simulated/floor/plating/airless,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "jIt" = (
 /obj/machinery/light/small/sticky/frostedred,
 /obj/machinery/portable_atmospherics/pump,
@@ -27383,7 +27395,7 @@
 /area/station/hallway/primary/west)
 "jKU" = (
 /turf/simulated/floor/plating/airless,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "jKV" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -27847,7 +27859,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "kbT" = (
 /turf/simulated/floor/green/side{
 	dir = 1
@@ -28045,7 +28057,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "kio" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -28112,7 +28124,7 @@
 	icon_state = "1-8"
 	},
 /turf/space,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "kkp" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -28990,7 +29002,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "kMT" = (
 /obj/table/auto,
 /obj/machinery/recharger{
@@ -29648,7 +29660,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "leK" = (
 /obj/machinery/optable{
 	id = "robotics"
@@ -34232,7 +34244,7 @@
 	icon_state = "1-4"
 	},
 /turf/space,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "nxe" = (
 /obj/disposalpipe/segment{
 	dir = 8;
@@ -34626,7 +34638,7 @@
 	},
 /obj/cable/orange,
 /turf/simulated/floor/plating/airless,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "nKw" = (
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/locker)
@@ -34913,7 +34925,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "nUH" = (
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
@@ -35052,6 +35064,10 @@
 	dir = 1
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/item/hand_labeler{
+	pixel_y = -4;
+	pixel_x = 2
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/pharmacy)
 "nYq" = (
@@ -35490,7 +35506,7 @@
 	icon_state = "4-8"
 	},
 /turf/space,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "okT" = (
 /obj/machinery/light/runway_light/delay3,
 /obj/lattice{
@@ -35750,7 +35766,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "ore" = (
 /obj/decal/cleanable/oil/streak,
 /obj/cable{
@@ -37223,7 +37239,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "pgY" = (
 /obj/item/raw_material/syreline,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
@@ -37724,7 +37740,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "pvz" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -37798,7 +37814,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "pwG" = (
 /obj/table/auto,
 /obj/linen_bin/bedsheet,
@@ -38092,7 +38108,7 @@
 	},
 /obj/cable/orange,
 /turf/simulated/floor/plating/airless,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "pDm" = (
 /obj/stool/chair/pew/fancy/right{
 	dir = 1
@@ -39166,7 +39182,7 @@
 	},
 /obj/cable/orange,
 /turf/simulated/floor/plating/airless,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "qiR" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -39242,7 +39258,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "qlb" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left,
@@ -39375,7 +39391,7 @@
 "qpc" = (
 /obj/lattice,
 /turf/space,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "qpd" = (
 /obj/stool/chair/yellow{
 	dir = 1
@@ -40287,7 +40303,7 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "qPC" = (
 /obj/item/cable_coil/cut{
 	icon_state = "coil1"
@@ -40403,7 +40419,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "qSL" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -40430,7 +40446,7 @@
 	},
 /obj/mapping_helper/access/engineering_engine,
 /turf/simulated/floor,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "qTb" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -40943,7 +40959,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "rjW" = (
 /obj/machinery/computer/television,
 /obj/machinery/light/small{
@@ -41783,7 +41799,7 @@
 	icon_state = "4-8"
 	},
 /turf/space,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "rLP" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 8;
@@ -42115,7 +42131,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "rVC" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating{
@@ -43284,7 +43300,7 @@
 	},
 /obj/machinery/field_generator,
 /turf/simulated/floor/plating/airless,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "sEj" = (
 /obj/mesh/catwalk{
 	dir = 6
@@ -43347,7 +43363,7 @@
 	icon_state = "1-2"
 	},
 /turf/space,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "sGt" = (
 /obj/machinery/light/emergency{
 	dir = 1
@@ -43666,7 +43682,7 @@
 	icon_state = "1-2"
 	},
 /turf/space,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "sPL" = (
 /obj/rack,
 /obj/item/tank/jetpack/micro,
@@ -44800,6 +44816,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/item/clothing/gloves/latex,
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/pharmacy)
 "tAo" = (
@@ -45093,7 +45110,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "tGm" = (
 /obj/storage/crate{
 	name = "Silent Crate"
@@ -47396,7 +47413,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "vaR" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -48442,7 +48459,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "vBp" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -48809,7 +48826,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "vLM" = (
 /obj/storage/crate,
 /obj/item/storage/box/beakerbox,
@@ -49015,7 +49032,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "vTU" = (
 /obj/decal/poster/wallsign/stencil/right/o{
 	pixel_x = 8;
@@ -49488,7 +49505,7 @@
 	},
 /obj/machinery/field_generator,
 /turf/simulated/floor/plating/airless,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "wkz" = (
 /obj/railing/orange/reinforced{
 	dir = 8
@@ -50837,7 +50854,7 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 "xbD" = (
 /obj/decal/stage_edge/alt,
 /obj/item/clothing/glasses/sunglasses/tanning,
@@ -52689,7 +52706,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating/airless,
-/area/station/engine/singcore)
+/area/station/engine/core/singularity/external)
 
 (1,1,1) = {"
 aaa

@@ -154,7 +154,7 @@
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
 	},
-/area/station/engine/singcore{
+/area/station/engine/core/singularity/external{
 	name = "Ringularity Core"
 	})
 "abr" = (
@@ -1208,7 +1208,7 @@
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
 	},
-/area/station/engine/singcore{
+/area/station/engine/core/singularity/external{
 	name = "Ringularity Core"
 	})
 "awU" = (
@@ -10143,7 +10143,7 @@
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
 	},
-/area/station/engine/singcore{
+/area/station/engine/core/singularity/external{
 	name = "Ringularity Core"
 	})
 "ext" = (
@@ -11113,7 +11113,7 @@
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
 	},
-/area/station/engine/singcore{
+/area/station/engine/core/singularity/external{
 	name = "Ringularity Core"
 	})
 "eWl" = (
@@ -11617,7 +11617,7 @@
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
 	},
-/area/station/engine/singcore{
+/area/station/engine/core/singularity/external{
 	name = "Ringularity Core"
 	})
 "fif" = (
@@ -12391,7 +12391,7 @@
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
 	},
-/area/station/engine/singcore{
+/area/station/engine/core/singularity/external{
 	name = "Ringularity Core"
 	})
 "fBF" = (
@@ -17131,7 +17131,7 @@
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
 	},
-/area/station/engine/singcore{
+/area/station/engine/core/singularity/external{
 	name = "Ringularity Core"
 	})
 "hIT" = (
@@ -26860,7 +26860,7 @@
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
 	},
-/area/station/engine/singcore{
+/area/station/engine/core/singularity/external{
 	name = "Ringularity Core"
 	})
 "mbw" = (
@@ -30440,7 +30440,7 @@
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
 	},
-/area/station/engine/singcore{
+/area/station/engine/core/singularity/external{
 	name = "Ringularity Core"
 	})
 "nJb" = (
@@ -31413,7 +31413,7 @@
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
 	},
-/area/station/engine/singcore{
+/area/station/engine/core/singularity/external{
 	name = "Ringularity Core"
 	})
 "oaR" = (
@@ -34291,7 +34291,7 @@
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
 	},
-/area/station/engine/singcore{
+/area/station/engine/core/singularity/external{
 	name = "Ringularity Core"
 	})
 "pte" = (
@@ -35843,7 +35843,7 @@
 /obj/table/reinforced/bar/auto,
 /obj/item/device/microphone,
 /turf/simulated/floor,
-/area/station/engine/singcore{
+/area/station/engine/core/singularity/external{
 	name = "Ringularity Core"
 	})
 "qgf" = (
@@ -35859,7 +35859,7 @@
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
 	},
-/area/station/engine/singcore{
+/area/station/engine/core/singularity/external{
 	name = "Ringularity Core"
 	})
 "qgk" = (
@@ -36668,7 +36668,7 @@
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
 	},
-/area/station/engine/singcore{
+/area/station/engine/core/singularity/external{
 	name = "Ringularity Core"
 	})
 "qwr" = (
@@ -37012,7 +37012,7 @@
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
 	},
-/area/station/engine/singcore{
+/area/station/engine/core/singularity/external{
 	name = "Ringularity Core"
 	})
 "qFQ" = (
@@ -37062,7 +37062,7 @@
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
 	},
-/area/station/engine/singcore{
+/area/station/engine/core/singularity/external{
 	name = "Ringularity Core"
 	})
 "qHh" = (
@@ -37671,7 +37671,7 @@
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
 	},
-/area/station/engine/singcore{
+/area/station/engine/core/singularity/external{
 	name = "Ringularity Core"
 	})
 "qXA" = (
@@ -38834,7 +38834,7 @@
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
 	},
-/area/station/engine/singcore{
+/area/station/engine/core/singularity/external{
 	name = "Ringularity Core"
 	})
 "rAt" = (
@@ -43024,7 +43024,7 @@
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
 	},
-/area/station/engine/singcore{
+/area/station/engine/core/singularity/external{
 	name = "Ringularity Core"
 	})
 "tyt" = (
@@ -45487,7 +45487,7 @@
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
 	},
-/area/station/engine/singcore{
+/area/station/engine/core/singularity/external{
 	name = "Ringularity Core"
 	})
 "uHr" = (
@@ -47344,7 +47344,7 @@
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
 	},
-/area/station/engine/singcore{
+/area/station/engine/core/singularity/external{
 	name = "Ringularity Core"
 	})
 "vyG" = (
@@ -47789,7 +47789,7 @@
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
 	},
-/area/station/engine/singcore{
+/area/station/engine/core/singularity/external{
 	name = "Ringularity Core"
 	})
 "vLy" = (
@@ -50096,7 +50096,7 @@
 /obj/table/reinforced/bar/auto,
 /obj/machinery/wrestlingbell,
 /turf/simulated/floor,
-/area/station/engine/singcore{
+/area/station/engine/core/singularity/external{
 	name = "Ringularity Core"
 	})
 "wMh" = (
@@ -51675,7 +51675,7 @@
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
 	},
-/area/station/engine/singcore{
+/area/station/engine/core/singularity/external{
 	name = "Ringularity Core"
 	})
 "xwM" = (
@@ -52515,7 +52515,7 @@
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
 	},
-/area/station/engine/singcore{
+/area/station/engine/core/singularity/external{
 	name = "Ringularity Core"
 	})
 "xSt" = (
@@ -52822,7 +52822,7 @@
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
 	},
-/area/station/engine/singcore{
+/area/station/engine/core/singularity/external{
 	name = "Ringularity Core"
 	})
 "xYG" = (

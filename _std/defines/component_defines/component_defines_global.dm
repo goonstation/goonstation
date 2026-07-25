@@ -14,6 +14,10 @@
 	/// When `world.maxz` is incremented.
 	#define COMSIG_GLOBAL_MAXZ_INCREMENTED "global_maxz_incremented"
 
+// ---- turfs ----
+	/// When any turf is about to be replaced. (GLOBAL_SIGNAL, turf/replaced_turf, replacement_type)
+	#define COMSIG_GLOBAL_TURF_REPLACED "global_turf_replaced"
+
 // ---- cargo pads ----
 
 	/// When a cargo pad is destroyed, deconstructed, or turned off
