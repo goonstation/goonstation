@@ -747,7 +747,7 @@ CONTAINS:
 		if (src.is_folded())
 			user.visible_message("<b>[user]</b> unfolds [src].",\
 			"You unfold [src].")
-			if(iscarbon(user))
+			if(!issilicon(user))
 				user.drop_item()
 			pixel_x = 0
 			pixel_y = 0
