@@ -1329,7 +1329,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 	var/tmp/note = null
 	var/tmp/quantity = 5
 	var/tmp/reagent_color = null
-	var/list/datum/reagent/chems = list()
+	var/static/list/datum/reagent/chems = list()
 
 	proc/generate_list(var/list/chems)
 		for (var/id in chem_reactions_by_id)
