@@ -724,6 +724,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 /datum/materialProc/blob_remove
 	execute(var/atom/location)
 		location.remove_filter("blob_wave")
+		location.avoid_animating = FALSE
 		return
 
 /datum/materialProc/blob_image
