@@ -11666,12 +11666,6 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
-"gve" = (
-/obj/shrub,
-/turf/simulated/floor/caution/side{
-	dir = 8
-	},
-/area/station/hallway/primary/west)
 "gvk" = (
 /obj/decal/tile_edge/line/purple{
 	dir = 1;
@@ -25221,14 +25215,6 @@
 /area/station/hallway/secondary/exit{
 	name = "Primary Docking Wing"
 	})
-"nGs" = (
-/obj/stool/chair{
-	dir = 4
-	},
-/turf/simulated/floor/caution/side{
-	dir = 8
-	},
-/area/station/hallway/primary/west)
 "nGu" = (
 /obj/table/auto,
 /obj/machinery/computer/television/small{
@@ -33395,6 +33381,9 @@
 /area/station/security/brig/genpop)
 "rSq" = (
 /obj/item/device/radio/intercom/cargo,
+/obj/stool/chair{
+	dir = 4
+	},
 /turf/simulated/floor/caution/side{
 	dir = 8
 	},
@@ -84895,11 +84884,11 @@ bqR
 evZ
 alK
 sMw
-gve
-nGs
+evZ
+evZ
 xkU
 dUK
-gve
+evZ
 lZk
 rSq
 dUK
