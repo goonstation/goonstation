@@ -155,10 +155,14 @@
 	field_surgeon
 		name = "field surgeon's bag"
 		desc = "An old-fashioned doctor's bag designed to carry medical and surgical supplies. This one been stuffed with what a field surgeon would require, including an anesthetic compartment."
-		icon_state = "docbag3"
-		item_state = "docbag3" // always black because tacticool.
 		can_hold = list(/obj/item/clothing/mask/medical)
 		spawn_contents = list(/obj/item/circular_saw, /obj/item/scalpel, /obj/item/scissors/surgical_scissors, /obj/item/suture, /obj/item/reagent_containers/iv_drip/blood, /obj/item/clothing/mask/medical/anesthetic, /obj/item/hemostat)
+
+		NT
+			icon_state = "docbag_nt" // Sprite by TekoTheTeapot
+			item_state = "docbag3"
+			kit_styles = null
+
 /* -------------------- First Aid Kits - VR -------------------- */
 
 /obj/item/storage/firstaid/vr
@@ -292,6 +296,14 @@
 	icon_state = "trashybs"
 	desc = "A box containing body bags*, which, like the name suggests, are used for transporting bodies around. Usually dead ones.<br><small><i>*Bodies not included.</i></small>"
 	spawn_contents = list(/obj/item/body_bag = 7)
+
+/obj/item/storage/box/casualties // Sprite by TekoTheTeapot
+	name = "casualty extraction kit"
+	icon_state = "casualty_nt"
+	desc = "A box containing body bags and the chemicals required to prevent rotting inside said bags. Rather pessimistic on CentCom's end to send you with these."
+	spawn_contents = list(/obj/item/body_bag = 5,
+						/obj/item/reagent_containers/syringe/formaldehyde = 1,
+						/obj/item/reagent_containers/glass/bottle/formaldehyde = 1)
 
 /* -------------------- Prostheses storage -------------------- */
 

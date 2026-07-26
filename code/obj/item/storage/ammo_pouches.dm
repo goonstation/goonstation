@@ -232,7 +232,7 @@
 			/obj/item/reagent_containers/emergency_injector/high_capacity/bloodloss,
 			/obj/item/reagent_containers/emergency_injector/high_capacity/lifesupport,
 			/obj/item/reagent_containers/emergency_injector/high_capacity/atropine,
-			/obj/item/reagent_containers/syringe/formaldehyde)
+			/obj/item/reagent_containers/emergency_injector/high_capacity/pentetic)
 
 /obj/item/storage/breach_pouch
 	name = "mining charge pouch"
