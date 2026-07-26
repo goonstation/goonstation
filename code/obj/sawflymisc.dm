@@ -64,6 +64,7 @@ TYPEINFO(/obj/item/old_grenade/sawfly/firsttime)
 	New()
 
 		heldfly = new /mob/living/critter/robotic/sawfly(src.loc)
+		heldfly.forensic_holder = src.forensic_holder
 		heldfly.ourgrenade = src
 		heldfly.set_loc(src)
 		..()
