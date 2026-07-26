@@ -1606,7 +1606,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("melting_point", 400 KELVIN)
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/blob_add())
 		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/blob_remove())
-		addTrigger(TRIGGERS_ON_IMAGE, new /datum/materialProc/blob_image())
+		addTrigger(TRIGGERS_ON_IMAGE, new /datum/materialProc/honey_image())
 		addTrigger(TRIGGERS_ON_EAT, new /datum/materialProc/oneat_blob())
 
 

@@ -727,12 +727,6 @@ triggerOnImage(var/image/target, var/datum/material/source)
 		location.avoid_animating = FALSE
 		return
 
-/datum/materialProc/blob_image
-	execute(var/image/target, var/datum/material/source)
-		var/wave_filter = wave_filter(16, 16, 1, rand(), flags = WAVE_SIDEWAYS | WAVE_BOUNDED)
-		target.filters = wave_filter + target.filters
-		return
-
 /datum/materialProc/temp_miraclium
 	execute(var/atom/location, var/temp)
 		if(temp < T0C + 100)
