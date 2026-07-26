@@ -2524,7 +2524,11 @@
 /area/station/security/secwing)
 "bqi" = (
 /obj/effects/menhir_fog,
-/obj/tree/sakura_tree,
+/obj/precursor_puzzle/orb_stand{
+	id = "NOW";
+	target_id = "THEN";
+	safeish = 1
+	},
 /turf/unsimulated/floor/setpieces/bluefloor,
 /area/station/crown)
 "bqq" = (
