@@ -66,7 +66,7 @@
 			src.print_to_host(src.menu_message)
 
 	//Let's build a menu!
-	generate_menu()
+	proc/generate_menu()
 		if (src.uses < 0)
 			src.uses = 0
 		if (!src.vr_check(usr))
@@ -214,7 +214,6 @@
 
 /obj/item/uplink/integrated/radio
 	lock_code_autogenerate = 1
-	uplink_ui_type = UPLINK_UI_TGUI
 	var/obj/item/device/radio/origradio = null
 
 	generate_code()

@@ -5309,6 +5309,8 @@
 /obj/item/clothing/glasses/spectro{
 	pixel_y = -3
 	},
+/obj/item/clothing/gloves/latex,
+/obj/item/reagent_containers/dropper,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "dMp" = (
@@ -7932,6 +7934,18 @@
 /obj/machinery/light/incandescent/warm,
 /obj/item/deconstructor,
 /obj/item/electronics/scanner,
+/obj/item/disk/data/cartridge/diagnostics{
+	pixel_x = 2;
+	pixel_y = -16
+	},
+/obj/item/disk/data/cartridge/diagnostics{
+	pixel_x = 11;
+	pixel_y = -15
+	},
+/obj/item/disk/data/cartridge/diagnostics{
+	pixel_x = -6;
+	pixel_y = -15
+	},
 /turf/simulated/floor/yellow/checker{
 	dir = 4
 	},
@@ -9576,6 +9590,7 @@
 "gBH" = (
 /obj/machinery/light/incandescent/cool,
 /obj/storage/secure/closet/research/chemical/pharmacy,
+/obj/item/paper/book/from_file/pharmacopia,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "gBR" = (
@@ -31141,7 +31156,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/main)
 "vMk" = (
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "vMH" = (

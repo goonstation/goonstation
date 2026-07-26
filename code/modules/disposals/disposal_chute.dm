@@ -15,7 +15,7 @@
 
 TYPEINFO(/obj/machinery/disposal)
 	mats = 20			// whats the point of letting people build trunk pipes if they cant build new disposals?
-ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
+ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject, proc/expel_contents)
 /obj/machinery/disposal
 	name = "disposal unit"
 	desc = "A pressurized trashcan that flushes things you put into it through pipes, usually to disposals."
@@ -602,6 +602,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 
 		H.vent_gas(loc)
 		qdel(H)
+
+	proc/expel_contents()
+		var/obj/disposalholder/H = new /obj/disposalholder()
+		H.init(src)
+		src.expel(H)
 
 	custom_suicide = 1
 	suicide(var/mob/living/carbon/human/user as mob)
