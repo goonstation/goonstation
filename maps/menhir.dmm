@@ -4815,6 +4815,10 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
+"cFn" = (
+/obj/machinery/navbeacon/tour/menhir/tour1,
+/turf/simulated/floor,
+/area/station/hallway/primary/north)
 "cFz" = (
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/qm)
@@ -4934,6 +4938,10 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/lounge)
+"cIt" = (
+/obj/machinery/navbeacon/tour/menhir/tour9,
+/turf/simulated/floor/red/corner,
+/area/station/hallway/primary/east)
 "cIv" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
@@ -6302,6 +6310,12 @@
 "dyg" = (
 /turf/simulated/floor/white,
 /area/station/science/artifact)
+"dyh" = (
+/obj/machinery/navbeacon/tour/menhir/tour7,
+/turf/simulated/floor/grey/side{
+	dir = 4
+	},
+/area/station/hallway/primary/central)
 "dym" = (
 /obj/machinery/computer/announcement/station/catering{
 	dir = 8
@@ -12843,6 +12857,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/machinery/navbeacon/tour/menhir/tour11,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit{
 	name = "Primary Docking Wing"
@@ -13313,6 +13328,12 @@
 /obj/machinery/drainage,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/barber_shop)
+"hqc" = (
+/obj/machinery/navbeacon/tour/menhir/tour8,
+/turf/simulated/floor/black/side{
+	dir = 1
+	},
+/area/station/hallway/primary/southeast)
 "hqe" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1
@@ -13573,6 +13594,7 @@
 /turf/simulated/floor/grey,
 /area/station/hallway/primary/east)
 "hyc" = (
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon3,
 /turf/simulated/floor/red/corner,
 /area/station/hallway/primary/east)
 "hyj" = (
@@ -15823,6 +15845,14 @@
 /obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/courtroom)
+"iEA" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/entry{
+	name = "Arrival Concourse"
+	})
 "iEF" = (
 /obj/table/wood/auto,
 /obj/machinery/computer/television/small{
@@ -15999,6 +16029,7 @@
 	name = "Southeast Auxiliary Conduit"
 	})
 "iJG" = (
+/obj/machinery/navbeacon/tour/menhir/tour12,
 /turf/simulated/floor{
 	icon_state = "L16"
 	},
@@ -19510,6 +19541,7 @@
 /obj/decal/tile_edge/floorguide/arrow_w{
 	dir = 1
 	},
+/obj/machinery/navbeacon/tour/menhir/tour10,
 /turf/simulated/floor/black/side{
 	dir = 1
 	},
@@ -19856,6 +19888,7 @@
 	},
 /area/station/hallway/primary/north)
 "kPb" = (
+/obj/machinery/navbeacon/tour/menhir/tour5,
 /turf/simulated/floor/purpleblack/corner{
 	dir = 1
 	},
@@ -21868,6 +21901,19 @@
 /obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
+"lRE" = (
+/obj/table/reinforced/auto,
+/obj/machinery/computer/tour_console,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/station/hallway/secondary/entry{
+	name = "Arrival Concourse"
+	})
 "lRP" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -23682,6 +23728,7 @@
 /turf/simulated/floor/airless,
 /area/space)
 "mPk" = (
+/obj/machinery/navbeacon/tour/menhir/tour3,
 /turf/simulated/floor/blue/side{
 	dir = 1
 	},
@@ -29950,6 +29997,23 @@
 "qfg" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/bridge/captain)
+"qfi" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/guardbot_dock{
+	desc = "A recharging and command station for PR-4 Robuddies.";
+	name = "tourbot docking station"
+	},
+/obj/machinery/bot/guardbot/old/tourguide/menhir,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/navbeacon/tour/menhir/tour13,
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/station/hallway/secondary/entry{
+	name = "Arrival Concourse"
+	})
 "qfm" = (
 /obj/item/clothing/head/rastacap,
 /obj/item/clothing/head/rastacap,
@@ -30425,10 +30489,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
-"qpA" = (
-/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon3,
-/turf/simulated/floor,
-/area/station/hallway/primary/east)
 "qpL" = (
 /obj/stool/chair/red{
 	dir = 4
@@ -33294,6 +33354,11 @@
 	},
 /turf/simulated/floor/red,
 /area/station/medical/medbay/surgery)
+"rRW" = (
+/obj/disposalpipe/segment/mail,
+/obj/machinery/navbeacon/tour/menhir/tour2,
+/turf/simulated/floor,
+/area/station/hallway/primary/north)
 "rRZ" = (
 /obj/shrub{
 	dir = 1;
@@ -34184,6 +34249,17 @@
 /turf/simulated/floor/arrival/corner{
 	dir = 1
 	},
+/area/station/hallway/secondary/entry{
+	name = "Arrival Concourse"
+	})
+"smV" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
 /area/station/hallway/secondary/entry{
 	name = "Arrival Concourse"
 	})
@@ -37471,6 +37547,9 @@
 	icon_state = "4-8"
 	},
 /obj/landmark/halloween,
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry{
 	name = "Arrival Concourse"
@@ -37838,6 +37917,7 @@
 /area/station/crew_quarters/ce)
 "uja" = (
 /obj/machinery/light,
+/obj/machinery/navbeacon/tour/menhir/tour0,
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry{
 	name = "Arrival Concourse"
@@ -39727,6 +39807,7 @@
 /turf/space,
 /area/space)
 "viw" = (
+/obj/machinery/navbeacon/tour/menhir/tour6,
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
@@ -45106,6 +45187,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/east)
+"xPa" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/machinery/navbeacon/tour/menhir/tour4,
+/turf/simulated/floor,
+/area/station/hallway/primary/west)
 "xPm" = (
 /obj/storage/secure/closet/medical/anesthetic,
 /obj/machinery/light,
@@ -84797,7 +84885,7 @@ qRx
 byI
 byI
 nsA
-nBd
+xPa
 lSE
 pad
 iaC
@@ -91088,8 +91176,8 @@ bYx
 iJG
 uTW
 rOF
-rOF
-rOF
+lRE
+qfi
 dSj
 wGH
 fvc
@@ -91387,11 +91475,11 @@ rny
 rny
 qIF
 tYp
-ubd
-ubd
-ubd
-ubd
-ubd
+rnE
+rnE
+rnE
+smV
+iEA
 fcI
 cIG
 ndg
@@ -93527,7 +93615,7 @@ tPI
 mIZ
 mIZ
 mGm
-mIZ
+rRW
 jAW
 rrI
 wFO
@@ -93816,7 +93904,7 @@ cIG
 cIG
 cIG
 ndg
-cIG
+cFn
 hNP
 fMk
 fMk
@@ -96259,7 +96347,7 @@ vtC
 lYr
 xwY
 pgw
-rae
+dyh
 wTQ
 wTQ
 blY
@@ -99894,7 +99982,7 @@ bHp
 xnn
 eIi
 rhh
-wKs
+hqc
 kyR
 lhN
 osZ
@@ -102316,7 +102404,7 @@ rfs
 wOB
 poT
 rkj
-qpA
+wOB
 hyc
 ukv
 qpL
@@ -102618,7 +102706,7 @@ kWn
 jCF
 meW
 rkj
-hyc
+cIt
 uEJ
 qdv
 rSf
