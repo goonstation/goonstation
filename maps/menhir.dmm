@@ -2524,11 +2524,7 @@
 /area/station/security/secwing)
 "bqi" = (
 /obj/effects/menhir_fog,
-/obj/precursor_puzzle/orb_stand{
-	id = "NOW";
-	target_id = "THEN";
-	safeish = 1
-	},
+/obj/tree/sakura_tree,
 /turf/unsimulated/floor/setpieces/bluefloor,
 /area/station/crown)
 "bqq" = (
@@ -8423,7 +8419,7 @@
 /turf/simulated/floor/redwhite,
 /area/station/security/evidence)
 "eDk" = (
-/obj/machinery/door/airlock/pyro/medical,
+/obj/machinery/door/airlock/pyro/glass/sci,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/research,
 /turf/simulated/floor/purple,
