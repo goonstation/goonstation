@@ -57404,6 +57404,18 @@
 	},
 /turf/simulated/floor/white/grime,
 /area/observatory)
+"gzG" = (
+/obj/precursor_puzzle/orb_stand{
+	id = "LAMENT";
+	target_id = "KINSHIP";
+	safeish = 1;
+	assembled = 1;
+	ready = 1;
+	invisibility = 101;
+	density = 0
+	},
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/precursor)
 "gzH" = (
 /obj/machinery/computer/camera_viewer{
 	dir = 8
@@ -99553,7 +99565,7 @@ bfQ
 bfQ
 bfQ
 bfQ
-bfQ
+gzG
 bfQ
 bZH
 bZH

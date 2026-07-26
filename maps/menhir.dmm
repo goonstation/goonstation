@@ -44921,7 +44921,7 @@
 /turf/simulated/floor/black,
 /area/station/quartermaster/office)
 "xHs" = (
-/obj/disposalpipe/segment/produce,
+/obj/disposalpipe/chicken_disposal_pipe/vertical,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
 "xHw" = (
