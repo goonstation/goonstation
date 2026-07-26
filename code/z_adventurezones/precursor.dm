@@ -627,7 +627,7 @@ ABSTRACT_TYPE(/datum/menhir_puzzle)
 /datum/menhir_puzzle/frame
 	target_path = /obj/item/electronics/frame
 	desc_strings = list(
-		"Disparate parts lay strewn before you. As your perspective recedes, they gather into a single vessel, awaiting an end to its formlessness."
+		"Disparate parts lay strewn before you. As your perspective recedes, they gather into a single vessel, waiting to take its final shape."
 	)
 
 /obj/precursor_puzzle/innervator
