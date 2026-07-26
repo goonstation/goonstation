@@ -1103,6 +1103,12 @@ TYPEINFO(/obj/item/clothing/under/shorts/luchador)
 	icon_state = "shirt_n_pant-b_tie-bl"
 	item_state = "shirt_n_pant-b_tie-bl"
 
+/obj/item/clothing/under/shirt_pants_b/scitie
+	name = "shirt and black pants with a purple tie"
+	desc = "A button-down shirt, some black pants and a purple tie."
+	icon_state = "shirt_n_pant-b_tie-sci"
+	item_state = "shirt_n_pant-b_tie-sci"
+
 // Brown Pants
 /obj/item/clothing/under/shirt_pants_br
 	name = "shirt and brown pants"
@@ -1146,22 +1152,28 @@ TYPEINFO(/obj/item/clothing/under/shorts/luchador)
 	item_state = "shirt_n_pant-w"
 
 /obj/item/clothing/under/shirt_pants_w/redtie
-	name = "shirt and white pants"
+	name = "shirt and white pants with a red tie"
 	desc = "A button-down shirt and some white pants and red tie."
 	icon_state = "shirt_n_pant-w_tie-r"
 	item_state = "shirt_n_pant-w_tie-r"
 
 /obj/item/clothing/under/shirt_pants_w/blacktie
-	name = "shirt and white pants"
+	name = "shirt and white pants with a black tie"
 	desc = "A button-down shirt and some white pants and black tie."
 	icon_state = "shirt_n_pant-w_tie-b"
 	item_state = "shirt_n_pant-w_tie-b"
 
 /obj/item/clothing/under/shirt_pants_w/bluetie
-	name = "shirt and white pants"
+	name = "shirt and white pants with a blue tie"
 	desc = "A button-down shirt and some white pants and blue tie."
 	icon_state = "shirt_n_pant-w_tie-bl"
 	item_state = "shirt_n_pant-w_tie-bl"
+
+/obj/item/clothing/under/shirt_pants_w/scitie
+	name = "shirt and white pants with a purple tie"
+	desc = "A button-down shirt, some black pants and a purple tie."
+	icon_state = "shirt_n_pant-w_tie-sci"
+	item_state = "shirt_n_pant-w_tie-sci"
 
 // Suits
 
