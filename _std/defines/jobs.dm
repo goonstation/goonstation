@@ -13,6 +13,7 @@
 
 #define MGT_ROBOTICS "robotics"
 #define MGT_GENETICS "genetics"
+#define MGT_PHARMACY "pharmacy"
 #define MGT_CARGO "cargo"
 #define MGT_MINING "mining"
 #define MGT_CATERING "catering" // chef/bartender
