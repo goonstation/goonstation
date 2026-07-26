@@ -164,11 +164,6 @@
 		var/mob/living/L = src
 		APPLY_ATOM_PROPERTY(L, PROP_MOB_CANTMOVE, "peel_slip_\ref[thr]")
 
-	//if(isitem(src))
-	//	var/obj/item/I = src
-	//	I.force_drop()
-	//	return
-
 	LAZYLISTADD(throwing_controller.thrown, thr)
 	throwing_controller.start()
 
