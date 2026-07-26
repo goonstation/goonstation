@@ -1241,7 +1241,6 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 	name = "Cargo Request"
 	size = 2
 	var/tmp/temp = null
-	var/tmp/antispam = 0
 
 	return_text()
 		if(..())
@@ -1297,8 +1296,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			src.temp = "Request sent to Supply Console. The Quartermasters will process your request as soon as possible.<BR>"
 
 			// pda alert ////////
-			if (!antispam || (antispam < (ticker.round_elapsed_ticks)) )
-				antispam = ticker.round_elapsed_ticks + SPAM_DELAY
+			if (!ON_COOLDOWN(src.master, "spam_cooldown", SPAM_DELAY))
 				var/datum/signal/pdaSignal = get_free_signal()
 				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGT_CARGO, MGA_CARGOREQUEST), "sender"="00000000", "message"="Notification: [O.object] requested by [O.orderedby] at [O.console_location].")
 				SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
@@ -1325,13 +1323,12 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 	name = "Chemical Request"
 	size = 2
 	var/tmp/temp = null
-	var/tmp/antispam = 0 /// Cooldown for PDA alert generation
 	var/tmp/note = null
 	var/tmp/quantity = 5
 	var/tmp/reagent_color = null
 	var/static/list/datum/reagent/chems = list()
 
-	proc/generate_list(var/list/chems)
+	proc/generate_list()
 		for (var/id in chem_reactions_by_id)
 			var/datum/chemical_reaction/reaction = chem_reactions_by_id[id]
 			if (reaction.hidden)
@@ -1407,10 +1404,10 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 				return
 
 			note = input("Add a Note (Optional)", "Enter Message Text", note) as text|null
-			quantity = input("Enter request amount (Max [CHEM::REQUSITION::AMOUNT::MAX])", "Enter Amount", quantity) as num|null
+			quantity = input("Enter request amount (Max [CHEM::REQUEST::AMOUNT::MAX])", "Enter Amount", quantity) as num|null
 			if(!quantity) return
 			if(!isnum_safe(quantity)) return
-			quantity = clamp(quantity,1,CHEM::REQUSITION::AMOUNT::MAX)
+			quantity = clamp(quantity,1,CHEM::REQUEST::AMOUNT::MAX)
 
 			new_req.reagent_name = req_reagent.name
 			new_req.reagent_color = list(req_reagent.fluid_r, req_reagent.fluid_g, req_reagent.fluid_b)
@@ -1424,10 +1421,9 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			<A href='byond://?src=\ref[src];reset=1'>New Order</A>"}
 
 			// pda alert ////////
-			if (!antispam || (antispam < (ticker.round_elapsed_ticks)) )
-				antispam = ticker.round_elapsed_ticks + SPAM_DELAY
+			if (!ON_COOLDOWN(src.master, "spam_cooldown", SPAM_DELAY))
 				var/datum/signal/pdaSignal = get_free_signal()
-				pdaSignal.data = list("address_1"=src.master.net_id, "command"="text_message", "sender_name"="RESEARCH-MAILBOT",  "group"=list(MGD_RESEARCH, MGD_MEDICAL, MGA_CHEMREQUEST), "sender"="00000000", "message"="Notification: [new_req.reagent_name] requested by [new_req.requester_name] at [new_req.area_name].")
+				pdaSignal.data = list("address_1"=src.master.net_id, "command"="text_message", "sender_name"="RESEARCH-MAILBOT",  "group"=list(MGA_CHEMREQUEST), "sender"="00000000", "message"="Notification: [new_req.reagent_name] requested by [new_req.requester_name] at [new_req.area_name].")
 				SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 
 		else if (href_list["reset"])
@@ -1446,13 +1442,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 	var/tmp/temp = null
 
 	init()
-		for (var/request_id in chem_requests)
-			var/datum/chem_request/request = chem_requests[request_id]
-			src.temp += "[request.volume] units of [request.reagent_name] requested by [request.requester_name] from [request.area_name].<BR>"
-			src.temp += "STATUS: [request.state]"
-			if(request.state == "pending")
-				src.temp += "<a href='byond://?src=\ref[src];deny=[request.id]'>Deny</a> <a href='byond://?src=\ref[src];fulfil=[request.id]'>Fulfil</a>"
-			src.temp += "<BR>"
+		src.refresh()
 		..()
 
 	return_text()
@@ -1467,6 +1457,8 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 		return dat
 
 	Topic(href, href_list)
+		var/req_id = href
+		var/datum/chem_request/request = chem_requests[req_id]
 		if(..())
 			return
 
@@ -1474,28 +1466,20 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			refresh()
 
 		if (href_list["deny"])
-			var/req_id = href_list["deny"]
-			var/datum/chem_request/request = chem_requests[req_id]
 			if (request)
 				logTheThing(LOG_STATION, src, "[src.master.owner] denied [request.requester_name]'s chemical request for [request.volume] units of [request.reagent_id] at [log_loc(src)]")
-				request.state = CHEM::REQUSITION::STATE::DENIED
-				if(request.address)
-					var/datum/signal/pdaSignal = get_free_signal()
-					pdaSignal.data = list("address_1"=request.address, "command"="text_message", "sender_name"="RESEARCH-MAILBOT", "sender"="00000000", "message"="Notification: request for [request.volume]u of [request.reagent_name] was DENIED.")
-					radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
-				refresh()
+				request.state = CHEM::REQUEST::STATE::DENIED
 
 		if (href_list["fulfil"])
-			var/req_id = href_list["fulfil"]
-			var/datum/chem_request/request = chem_requests[req_id]
 			if (request)
 				logTheThing(LOG_STATION, src, "[src.master.owner] fulfilled [request.requester_name]'s chemical request for [request.volume] units of [request.reagent_id] at [log_loc(src)]")
-				request.state = CHEM::REQUSITION::STATE::FULFILLED
-				if(request.address)
-					var/datum/signal/pdaSignal = get_free_signal()
-					pdaSignal.data = list("address_1"=request.address, "command"="text_message", "sender_name"="RESEARCH-MAILBOT",  "sender"="00000000", "message"="Notification: request for [request.volume]u of [request.reagent_name] was FULFILLED.")
-					radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
-				refresh()
+				request.state = CHEM::REQUEST::STATE::FULFILLED
+
+		if(request.address && href["deny"] || href["fulfil"])
+			var/datum/signal/pdaSignal = get_free_signal()
+			pdaSignal.data = list("address_1"=request.address, "command"="text_message", "sender_name"="RESEARCH-MAILBOT", "sender"="00000000", "message"="Notification: request for [request.volume]u of [request.reagent_name] was DENIED.")
+			radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
+		refresh()
 
 		src.master.add_fingerprint(usr)
 		src.master.updateSelfDialog()

@@ -8,7 +8,7 @@ var/list/datum/chem_request/chem_requests = list()
 	var/note = ""
 	var/volume = 5
 	var/area_name = "Somewhere"
-	var/state = CHEM::REQUSITION::STATE::PENDING
+	var/state = CHEM::REQUEST::STATE::PENDING
 	var/address = null /// Lets a PDA message be sent to the requester if provided with one
 	var/id
 	var/static/last_id = 0
@@ -63,7 +63,7 @@ var/list/datum/chem_request/chem_requests = list()
 			var/datum/reagent/reagent = reagents_cache[id]
 			chems[lowertext(reagent.name)] = id
 		.["chemicals"] = chems
-		.["max_volume"] = CHEM::REQUSITION::AMOUNT::MAX
+		.["max_volume"] = CHEM::REQUEST::AMOUNT::MAX
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
@@ -101,7 +101,7 @@ var/list/datum/chem_request/chem_requests = list()
 			if ("set_notes")
 				src.request.note = strip_html(copytext(params["notes"], 1, 66))
 			if ("set_volume")
-				src.request.volume = clamp(params["volume"], 1, CHEM::REQUSITION::AMOUNT::MAX)
+				src.request.volume = clamp(params["volume"], 1, CHEM::REQUEST::AMOUNT::MAX)
 				. = TRUE
 			if ("submit")
 				src.request.area_name = src.area_name || (get_area(src))?.name || src.request.area_name
@@ -112,7 +112,7 @@ var/list/datum/chem_request/chem_requests = list()
 				logTheThing(LOG_STATION, src, "[constructTarget(ui.user)] placed a chemical request for [src.request.volume] units of [src.request.reagent_id] using [src.request.requester_name]'s ID at [log_loc(src)], notes: \"[src.request.note]\"")
 				boutput(ui.user, SPAN_NOTICE("Request for [src.request.volume] units of [src.request.reagent_id] sent to all Chemical Request Displays. Research will process your order as soon as possible."))
 				var/datum/signal/pdaSignal = get_free_signal()
-				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="RESEARCH-MAILBOT",  "group"=list(MGD_RESEARCH, MGD_MEDICAL, MGA_CHEMREQUEST), "sender"="00000000", "message"="Notification: new chemical request received. [src.request.volume]u of [src.request.reagent_name] requested by [src.request.requester_name].")
+				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="RESEARCH-MAILBOT",  "group"=list(MGA_CHEMREQUEST), "sender"="00000000", "message"="Notification: new chemical request received. [src.request.volume]u of [src.request.reagent_name] requested by [src.request.requester_name].")
 				radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 				src.request = new
 				. = TRUE
@@ -179,24 +179,20 @@ var/list/datum/chem_request/chem_requests = list()
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 		. = ..()
+		var/datum/chem_request/request = chem_requests["[params["id"]]"]
 		switch (action)
 			if ("deny")
-				var/datum/chem_request/request = chem_requests["[params["id"]]"]
 				if (request)
-					request.state = CHEM::REQUSITION::STATE::DENIED
+					request.state = CHEM::REQUEST::STATE::DENIED
 					logTheThing(LOG_STATION, src, "[constructTarget(ui.user)] denied [request.requester_name]'s chemical request for [request.volume] units of [request.reagent_id] at [log_loc(src)]")
-					if(request.address)
-						var/datum/signal/pdaSignal = get_free_signal()
-						pdaSignal.data = list("address_1"=request.address, "command"="text_message", "sender_name"="RESEARCH-MAILBOT",  "sender"="00000000", "message"="Notification: request for [request.volume]u of [request.reagent_name] was [request.state].")
-						radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 				. = TRUE
 			if ("fulfil")
-				var/datum/chem_request/request = chem_requests["[params["id"]]"]
 				if (request)
-					request.state = CHEM::REQUSITION::STATE::FULFILLED
+					request.state = CHEM::REQUEST::STATE::FULFILLED
 					logTheThing(LOG_STATION, src, "[constructTarget(ui.user)] fulfilled [request.requester_name]'s chemical request for [request.volume] units of [request.reagent_id] at [log_loc(src)]")
-					if(request.address)
-						var/datum/signal/pdaSignal = get_free_signal()
-						pdaSignal.data = list("address_1"=request.address, "command"="text_message", "sender_name"="RESEARCH-MAILBOT", "sender"="00000000", "message"="Notification: request for [request.volume]u of [request.reagent_name] was [request.state].")
-						radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 				. = TRUE
+			if("fulfil", "deny")
+				if(request.address)
+					var/datum/signal/pdaSignal = get_free_signal()
+					pdaSignal.data = list("address_1"=request.address, "command"="text_message", "sender_name"="RESEARCH-MAILBOT",  "sender"="00000000", "message"="Notification: request for [request.volume]u of [request.reagent_name] was [request.state].")
+					radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
