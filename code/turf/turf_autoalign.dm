@@ -342,13 +342,13 @@ TYPEINFO(/turf/simulated/wall/auto/supernorn)
 TYPEINFO_NEW(/turf/simulated/wall/auto/supernorn)
 	. = ..()
 	connects_to = typecacheof(list(
-		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
+		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn, /turf/unsimulated/wall/auto/adventure/icemooninterior, //menhir
 		/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 		/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old, /obj/strip_door
 	))
 	connects_with_overlay = typecacheof(list(
-		/turf/simulated/wall/auto/shuttle,
+		/turf/simulated/wall/auto/shuttle, /turf/unsimulated/wall/auto/adventure/icemooninterior, //menhir
 		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen, /obj/strip_door
 	))
@@ -401,14 +401,14 @@ TYPEINFO(/turf/simulated/wall/auto/reinforced/supernorn)
 TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn)
 	. = ..()
 	connects_to = typecacheof(list(
-		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
+		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn, /turf/unsimulated/wall/auto/adventure/icemooninterior, //menhir
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 		/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /obj/machinery/door,
 		/obj/window, /obj/mapping_helper/wingrille_spawn,
 		/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old, /obj/strip_door
 	))
 	connects_with_overlay = typecacheof(list(
-		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
+		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen, /turf/unsimulated/wall/auto/adventure/icemooninterior, //menhir
 		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window,
 		/obj/mapping_helper/wingrille_spawn, /turf/simulated/wall/auto/reinforced/paper, /obj/strip_door
 	))
