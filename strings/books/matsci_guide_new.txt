@@ -60,24 +60,42 @@ Materials Science is infinitely useful.
 <br><br>
 <section id="Index-of-Properties"><h3>An Index of Properties and their Effects</h3></section>
 <hr>
+
+
+
 This section shows the different properties or materials that are of interest to us and how they affect our materials, and some primary materials for each property. Please see the footnote for an appendix on how these properties are rated.
+
 <p style="margin-right:10%; margin-left:1%"><b>Radioactivity</b> - higher radiation output means a higher recharge rate, but also higher radiation damage to those handling or around these materials.
 </p><ul><li>(ex.: Cerenkite, Erebite, Koshmarite)</ul></li>
+
 <p style="margin-right:10%; margin-left:1%"><b>Electrical Conductivity</b> - ability of material to let electricity pass through it; <b>more conductive materials make for better reservoirs for energy storage in batteries</b>.
 </p><ul><li>(ex.: Copper, Claretine, Electrum)</ul></li>
+
 <p style="margin-right:10%; margin-left:1%"><b>Thermal Conductivity</b> - ability of material to transfer heat through it with little loss of energy; <b>more insulating materials do better at keeping heat within which can be advantageous for creating temperature differentials.</b></p>
 <ul><li>(ex.: Carbon Nanofiber, Fibrilith, Space spider silk)</ul></li>
 </p><ul><li>(ex.: Starstone, Carbon Nanofiber, Hauntium)</ul></li>
+
 <p style="margin-right:10%; margin-left:1%"><b>Density</b> -  sturdiness of the material when used in things like wearables.</p>
 <ul><li>(ex.: Viscerite, Plasmasteel, Starstone)</ul></li>
+
 <p style="margin-right:10%; margin-left:1%"><b>Hardness</b> - blunt force of the material; sturdiness and ability to impact other materials when used in tools.</p>
 <ul><li>(ex.: Koshmarite, Dyneema, Starstone)</ul></li>
+
 <p style="margin-right:10%; margin-left:1%"><b>Flammability</b> - how combustible a material is.</p>
 <ul><li>(ex.: Char, Plasmastone)</ul></li>
+
 <p style="margin-right:10%; margin-left:1%"><b>Chemical resistance</b> - how well a material resists acids and how well it resists viruses pass through it.</p>
 <ul><li>(ex.: Uqill, Iridium, Dyneema)</ul></li>
+
 <p style="margin-right:10%; margin-left:1%"><b>Reflectivity</b> - the albedo of the material and how much light is bounced off the surface of it.</p>
 <ul><li>(ex.: Syreline, Starstone, Telecrystal)</ul></li>
+
+<p style="margin-right:10%; margin-left:1%"><b>Melting Point</b> - the temperature at which point the material starts turning into a liquid.</p>
+<ul><li>(ex.: Ice)</ul></li>
+
+
+
+
 <section id="Basic-Mats"><h3>Basic Ores and Their Properties</h3></section>
 <hr>
 Below is a list of all the basic ores that are common to asteroids in this sector, as well as their particular properties that are of interest for Materials Science. See Appendix II for material classifications.
@@ -92,8 +110,22 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<th align="right">Flam.</th>
 	<th align="right">Chem. Res.</th>
 	<th align="right">Reflect.</th>
-	<th align="right">Rad.</th></tr>
-
+	<th align="right">Rad.</th>
+	<th align="right">N. Rad.</th>
+	<th align="right">Melt</th>
+	</tr>
+    <tr><td align="right">Batiline</td>
+	<td align="right">5</td>
+	<td align="right">5</td>
+	<td align="right">2</td>
+	<td align="right">7</td>
+	<td align="right">1</td>
+	<td align="right">4</td>
+	<td align="right">4</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right">600K</td>
+	</tr>
 	<tr><td align="right">Bohrum</td>
 	<td align="right">5</td>
 	<td align="right">6</td>
@@ -103,6 +135,8 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">7</td>
 	<td align="right" class="unavaib">n/a</td>
 	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right">1700K</td>
 	</tr>
 	<tr><td align="right">Char</td>
 	<td align="right">4</td>
@@ -111,6 +145,8 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">2</td>
 	<td align="right">5</td>
 	<td align="right">3</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
 	<td align="right" class="unavaib">n/a</td>
 	<td align="right" class="unavaib">n/a</td>
 	</tr>
@@ -123,6 +159,8 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">5</td>
 	<td align="right" class="unavaib">n/a</td>
 	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right">1200K</td>
 	</tr>
 	<tr><td align="right">Cerenkite</td>
 	<td align="right">6</td>
@@ -133,6 +171,8 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">6</td>
 	<td align="right" class="unavaib">n/a</td>
 	<td align="right">5</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right">1700K</td>
 	</tr>
 	<tr><td align="right">Cobryl</td>
 	<td align="right">5</td>
@@ -143,6 +183,8 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">8</td>
 	<td align="right" class="unavaib">n/a</td>
 	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right">900K</td>
 	</tr>
 	<tr><td align="right">Erebite</td>
 	<td align="right">6</td>
@@ -153,6 +195,8 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">5</td>
 	<td align="right" class="unavaib">n/a</td>
 	<td align="right">8</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
 	</tr>
 	<tr><td align="right">Gold</td>
 	<td align="right">7</td>
@@ -163,6 +207,8 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">6</td>
 	<td align="right">6</td>
 	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right">1337K</td>
 	</tr>
 	<tr><td align="right">Ice</td>
 	<td align="right">6</td>
@@ -173,8 +219,10 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">5</td>
 	<td align="right" class="unavaib">n/a</td>
 	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right">273K</td>
 	</tr>
-	<tr><td align="right">Rock</td>
+	<tr><td align="right">Stone</td>
 	<td align="right">4</td>
 	<td align="right">4</td>
 	<td align="right">2</td>
@@ -183,6 +231,8 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">6</td>
 	<td align="right" class="unavaib">n/a</td>
 	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right">1500K</td>
 	</tr>
 	<tr><td align="right">Koshmarite</td>
 	<td align="right">4</td>
@@ -192,7 +242,9 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">3</td>
 	<td align="right">3</td>
 	<td align="right">6</td>
+	<td align="right" class="unavaib">n/a</td>
 	<td align="right">1</td>
+	<td align="right">6000K</td>
 	</tr>
 	<tr><td align="right">Mauxite</td>
 	<td align="right">5</td>
@@ -203,8 +255,10 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">6</td>
 	<td align="right" class="unavaib">n/a</td>
 	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right">1750K</td>
 	</tr>
-	<tr><td align="right">Molitz / Beta</td>
+	<tr><td align="right">Molitz Beta</td>
 	<td align="right">3</td>
 	<td align="right">3</td>
 	<td align="right">4</td>
@@ -213,6 +267,8 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">5</td>
 	<td align="right" class="unavaib">n/a</td>
 	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right">2000K</td>
 	</tr>
 	<tr><td align="right">Pharosium</td>
 	<td align="right">7</td>
@@ -223,6 +279,8 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">6</td>
 	<td align="right" class="unavaib">n/a</td>
 	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right">1400K</td>
 	</tr>
 	<tr><td align="right">Plasmastone</td>
 	<td align="right">5</td>
@@ -233,6 +291,8 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">5</td>
 	<td align="right" class="unavaib">n/a</td>
 	<td align="right">2</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
 	</tr>
 	<tr><td align="right">Syreline</td>
 	<td align="right">5</td>
@@ -243,6 +303,8 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">6</td>
 	<td align="right">8</td>
 	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right">2100K</td>
 	</tr>
 	<tr><td align="right">Viscerite</td>
 	<td align="right">4</td>
@@ -253,13 +315,39 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">6</td>
 	<td align="right" class="unavaib">n/a</td>
 	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right">750K</td>
+	</tr>
+	<tr><td align="right">Veranium</td>
+	<td align="right">4</td>
+	<td align="right">1</td>
+	<td align="right">3</td>
+	<td align="right">4</td>
+	<td align="right">1</td>
+	<td align="right">2</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right">1600K</td>
+	</tr>
+	<tr><td align="right">Yuranite</td>
+	<td align="right">4</td>
+	<td align="right">3</td>
+	<td align="right">5</td>
+	<td align="right">7</td>
+	<td align="right">1</td>
+	<td align="right">6</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right">4</td>
+	<td align="right">3</td>
+	<td align="right">1405K</td>
 	</tr>
 </table><br/>
 <hr>
 <section id="Advanced-Mats"><h3>Advanced Materials and Their Properties</h3></section>
 <hr>
 These are additional useful materials and their relative properties.
-The properties in full and in order are Radioactivity, Electrical Conductivity, Thermal Conductivity, Hardness, Density, Flammability, Corrosion Resistance, Permeability, and Reflectivity.
+The properties in full and in order are Radioactivity, Electrical Conductivity, Thermal Conductivity, Hardness, Density, Flammability, Corrosion Resistance, Permeability, Reflectivity, and Melting Point.
 <br><br>
 <table>
 	<tr><th align="right">ORGANIC MAT</th>
@@ -268,7 +356,9 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<th align="right">Hard.</th>
 	<th align="right">Dens.</th>
 	<th align="right">Flam.</th>
-	<th align="right">Chem. Res.</th></tr>
+	<th align="right">Chem. Res.</th>
+	<th align="right">Melt.</th>
+	</tr>
 	<tr><td align="right">Bamboo</td>
 	<td align="right">4</td>
 	<td align="right">5</td>
@@ -276,6 +366,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">4</td>
 	<td align="right">4</td>
 	<td align="right">3</td>
+	<td align="right" class="unavaib">n/a</td>
 	</tr>
 	<tr><td align="right">Beeswax</td>
 	<td align="right">4</td>
@@ -284,6 +375,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">1</td>
 	<td align="right">4</td>
 	<td align="right">3</td>
+	<td align="right">335K</td>
 	</tr>
 	<tr><td align="right">Honey</td>
 	<td align="right">4</td>
@@ -292,6 +384,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">2</td>
 	<td align="right">4</td>
 	<td align="right">3</td>
+	<td align="right">323K</td>
 	</tr>
 	<tr><td align="right">Blob (Amoeba)</td>
 	<td align="right">4</td>
@@ -300,6 +393,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">5</td>
 	<td align="right">5</td>
 	<td align="right">3</td>
+	<td align="right">400K</td>
 	</tr>
 	<tr><td align="right">Bone</td>
 	<td align="right">4</td>
@@ -308,6 +402,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">3</td>
 	<td align="right">2</td>
 	<td align="right">3</td>
+	<td align="right" class="unavaib">n/a</td>
 	</tr>
 	<tr><td align="right">Chitin</td>
 	<td align="right">4</td>
@@ -316,6 +411,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">2</td>
 	<td align="right">3</td>
 	<td align="right">3</td>
+	<td align="right" class="unavaib">n/a</td>
 	</tr>
 	<tr><td align="right">Cotton</td>
 	<td align="right">4</td>
@@ -324,6 +420,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">1</td>
 	<td align="right">4</td>
 	<td align="right">3</td>
+	<td align="right" class="unavaib">n/a</td>
 	</tr>
 	<tr><td align="right">Coral</td>
 	<td align="right">4</td>
@@ -332,6 +429,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">2</td>
 	<td align="right">3</td>
 	<td align="right">3</td>
+	<td align="right" class="unavaib">n/a</td>
 	</tr>
 	<tr><td align="right">Flesh</td>
 	<td align="right">4</td>
@@ -340,6 +438,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">3</td>
 	<td align="right">3</td>
 	<td align="right">3</td>
+	<td align="right" class="unavaib">n/a</td>
 	</tr>
 	<tr><td align="right">Frozen Fart</td>
 	<td align="right">4</td>
@@ -348,6 +447,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">3</td>
 	<td align="right">3</td>
 	<td align="right">3</td>
+	<td align="right">250K</td>
 	</tr>
 	<tr><td align="right">Wood</td>
 	<td align="right">4</td>
@@ -356,6 +456,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">5</td>
 	<td align="right">4</td>
 	<td align="right">3</td>
+	<td align="right" class="unavaib">n/a</td>
 	</tr>
 	<tr><td align="right">Cardboard</td>
 	<td align="right">4</td>
@@ -364,6 +465,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">2</td>
 	<td align="right">4</td>
 	<td align="right">3</td>
+	<td align="right" class="unavaib">n/a</td>
 	</tr>
 	<tr><td align="right">Hamburgris</td>
 	<td align="right">4</td>
@@ -372,6 +474,16 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">5</td>
 	<td align="right">1</td>
 	<td align="right">7</td>
+	<td align="right" class="unavaib">n/a</td>
+	</tr>
+	<tr><td align="right">Mycelium</td>
+	<td align="right">3</td>
+	<td align="right">3</td>
+	<td align="right">3</td>
+	<td align="right">2</td>
+	<td align="right">3</td>
+	<td align="right">3</td>
+	<td align="right" class="unavaib">n/a</td>
 	</tr>
 	<tr><td align="right">Pizza</td>
 	<td align="right">4</td>
@@ -380,6 +492,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">3</td>
 	<td align="right">3</td>
 	<td align="right">3</td>
+	<td align="right">330K</td>
 	</tr>
 </table><br/>
 <table>
@@ -390,7 +503,9 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<th align="right">Dens.</th>
 	<th align="right">Flam.</th>
 	<th align="right">Chem. Res.</th>
-	<th align="right">Rad.</th></tr>
+	<th align="right">Rad.</th>
+	<th align="right">Melt.</th>
+	</tr>
 	<tr><td align="right">Bee Wool</td>
 	<td align="right">3</td>
 	<td align="right">7</td>
@@ -398,6 +513,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">2</td>
 	<td align="right">6</td>
 	<td align="right">3</td>
+	<td align="right" class="unavaib">n/a</td>
 	<td align="right" class="unavaib">n/a</td>
 	</tr>
 	<tr><td align="right">Carbon Nanofiber</td>
@@ -408,6 +524,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">2</td>
 	<td align="right">3</td>
 	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
 	</tr>
 	<tr><td align="right">Ectofiber</td>
 	<td align="right">7</td>
@@ -417,6 +534,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">2</td>
 	<td align="right">3</td>
 	<td align="right">3</td>
+	<td align="right" class="unavaib">n/a</td>
 	</tr>
 	<tr><td align="right">Fibrilith</td>
 	<td align="right">4</td>
@@ -426,6 +544,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">1</td>
 	<td align="right">3</td>
 	<td align="right" class="unavaib">n/a</td>
+	<td align="right">1200K</td>
 	</tr>
 	<tr><td align="right">Latex</td>
 	<td align="right">3</td>
@@ -435,6 +554,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">1</td>
 	<td align="right">3</td>
 	<td align="right" class="unavaib">n/a</td>
+	<td align="right">453K</td>
 	</tr>
 	<tr><td align="right">Plastic</td>
 	<td align="right">2</td>
@@ -444,6 +564,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">1</td>
 	<td align="right">5</td>
 	<td align="right" class="unavaib">n/a</td>
+	<td align="right">500K</td>
 	</tr>
 	<tr><td align="right">Leather</td>
 	<td align="right">3</td>
@@ -452,6 +573,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">3</td>
 	<td align="right">2</td>
 	<td align="right">3</td>
+	<td align="right" class="unavaib">n/a</td>
 	<td align="right" class="unavaib">n/a</td>
 	</tr>
 	<tr><td align="right">Space Spider Silk</td>
@@ -462,6 +584,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">5</td>
 	<td align="right">3</td>
 	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
 	</tr>
 	<tr><td align="right">Synthleather</td>
 	<td align="right">4</td>
@@ -470,6 +593,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">3</td>
 	<td align="right">2</td>
 	<td align="right">3</td>
+	<td align="right" class="unavaib">n/a</td>
 	<td align="right" class="unavaib">n/a</td>
 	</tr>
 	<tr><td align="right">Brullbar Hide</td>
@@ -480,6 +604,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">2</td>
 	<td align="right">3</td>
 	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
 	</tr>
 	<tr><td align="right">King Brullbar Hide</td>
 	<td align="right">4</td>
@@ -488,6 +613,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">7</td>
 	<td align="right">1</td>
 	<td align="right">3</td>
+	<td align="right" class="unavaib">n/a</td>
 	<td align="right" class="unavaib">n/a</td>
 	</tr>
 </table><br>
@@ -499,7 +625,11 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<th align="right">Dens.</th>
 	<th align="right">Flam.</th>
 	<th align="right">Chem. Res.</th>
-	<th align="right">Reflect.</th></tr>
+	<th align="right">Reflect.</th>
+	<th align="right">Rad.</th>
+	<th align="right">N. Rad.</th>
+	<th align="right">Melt.</th>
+	</tr>
 	<tr><td align="right">Copper</td>
 	<td align="right">6</td>
 	<td align="right">6</td>
@@ -508,6 +638,9 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">1</td>
 	<td align="right">6</td>
 	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right">1357K</td>
 	</tr>
 	<tr><td align="right">Gnesis</td>
 	<td align="right">7</td>
@@ -517,6 +650,9 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">1</td>
 	<td align="right">5</td>
 	<td align="right">9</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right">1000K</td>
 	</tr>
 	<tr><td align="right">Iridium</td>
 	<td align="right">5</td>
@@ -526,6 +662,21 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">1</td>
 	<td align="right">9</td>
 	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right">2700K</td>
+	</tr>
+	<tr><td align="right">Plutonium</td>
+	<td align="right">7</td>
+	<td align="right">6</td>
+	<td align="right">7</td>
+	<td align="right">8</td>
+	<td align="right">1</td>
+	<td align="right">6</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right">3</td>
+	<td align="right">5</td>
+	<td align="right">913K</td>
 	</tr>
 	<tr><td align="right">Slag</td>
 	<td align="right">2</td>
@@ -535,6 +686,9 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">1</td>
 	<td align="right">6</td>
 	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right">1500K</td>
 	</tr>
 	<tr><td align="right">Spacelag</td>
 	<td align="right">5</td>
@@ -543,6 +697,9 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">8</td>
 	<td align="right">1</td>
 	<td align="right">6</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
 	<td align="right" class="unavaib">n/a</td>
 	</tr>
 </table><br/>
@@ -554,7 +711,9 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<th align="right">Dens.</th>
 	<th align="right">Flam.</th>
 	<th align="right">Chem. Res.</th>
-	<th align="right">Reflect.</th></tr>
+	<th align="right">Reflect.</th>
+	<th align="right">Melt.</th>
+	</tr>
 	<tr><td align="right">Gemstone</td>
 	<td align="right">3</td>
 	<td align="right">3</td>
@@ -563,6 +722,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">1</td>
 	<td align="right">5</td>
 	<td align="right" class="unavaib">n/a</td>
+	<td align="right">2300-1800K</td>
 	</tr>
 	<tr><td align="right">Glass</td>
 	<td align="right">3</td>
@@ -572,6 +732,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">1</td>
 	<td align="right">5</td>
 	<td align="right" class="unavaib">n/a</td>
+	<td align="right">1500K</td>
 	</tr>
 	<tr><td align="right">Magic Crystal</td>
 	<td align="right">3</td>
@@ -580,6 +741,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">6</td>
 	<td align="right">1</td>
 	<td align="right">5</td>
+	<td align="right" class="unavaib">n/a</td>
 	<td align="right" class="unavaib">n/a</td>
 	</tr>
 	<tr><td align="right">Miraclium</td>
@@ -590,6 +752,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">1</td>
 	<td align="right">1-8</td>
 	<td align="right">1-9</td>
+	<td align="right">4000-500K</td>
 	</tr>
 	<tr><td align="right">Starstone</td>
 	<td align="right">1</td>
@@ -599,6 +762,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">1</td>
 	<td align="right">5</td>
 	<td align="right">9</td>
+	<td align="right">4300K</td>
 	</tr>
 	<tr><td align="right">Telecrystal</td>
 	<td align="right">3</td>
@@ -608,6 +772,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">1</td>
 	<td align="right">5</td>
 	<td align="right">8</td>
+	<td align="right">1331K</td>
 	</tr>
 	<tr><td align="right">Uqill</td>
 	<td align="right">3</td>
@@ -617,6 +782,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<td align="right">1</td>
 	<td align="right">9</td>
 	<td align="right" class="unavaib">n/a</td>
+	<td align="right">3200K</td>
 	</tr>
 </table><br/>
 <table>
@@ -626,14 +792,142 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<th align="right">Hard.</th>
 	<th align="right">Dens.</th>
 	<th align="right">Flam.</th>
-	<th align="right">Chem. Res.</th></tr>
-	<tr><td align="right">Ectoplasm</td>
+	<th align="right">Chem. Res.</th>
+	<th align="right">Rad.</th>
+	<th align="right">N. Rad.</th>
+	<th align="right">Melt.</th>
+	</tr>
+	<tr><td align="right">Cerenkite</td>
+	<td align="right">6</td>
+	<td align="right">6</td>
+	<td align="right">2</td>
 	<td align="right">4</td>
+	<td align="right">1</td>
+	<td align="right">6</td>
+	<td align="right">5</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right">1700K</td>
+	</tr>
+	<tr><td align="right">Ectofiber</td>
+	<td align="right">7</td>
+	<td align="right">9</td>
+	<td align="right">1</td>
+	<td align="right">6</td>
+	<td align="right">2</td>
+	<td align="right">3</td>
+	<td align="right">3</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
+	</tr>
+	<tr><td align="right">Ectoplasm</td>
+	<td align="right">6</td>
+	<td align="right">3</td>
+	<td align="right">3</td>
+	<td align="right">2</td>
+	<td align="right">1</td>
+	<td align="right">5</td>
+	<td align="right">8</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
+	</tr>
+	<tr><td align="right">Erebite</td>
+	<td align="right">5</td>
+	<td align="right">6</td>
+	<td align="right">2</td>
+	<td align="right">4</td>
+	<td align="right">1</td>
+	<td align="right">6</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
+	</tr>
+	<tr><td align="right">Hauntium</td>
+	<td align="right">1</td>
 	<td align="right">5</td>
 	<td align="right">1</td>
 	<td align="right">1</td>
+	<td align="right">2</td>
+	<td align="right">3</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
+	</tr>
+	<tr><td align="right">Negative Matter</td>
+	<td align="right">5</td>
+	<td align="right">6</td>
+	<td align="right">3</td>
+	<td align="right">4</td>
+	<td align="right">1</td>
+	<td align="right">6</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
+	</tr>
+	<tr><td align="right">Neutrite</td>
+	<td align="right">5</td>
+	<td align="right">5</td>
+	<td align="right">2</td>
+	<td align="right">7</td>
+	<td align="right">1</td>
+	<td align="right">6</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right">5</td>
+	<td align="right" class="unavaib">n/a</td>
+	</tr>
+	<tr><td align="right">Neutronium</td>
+	<td align="right">7</td>
+	<td align="right">5</td>
+	<td align="right">3</td>
+	<td align="right">9</td>
+	<td align="right">1</td>
+	<td align="right">6</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right">8</td>
+	<td align="right" class="unavaib">n/a</td>
+	</tr>
+	<tr><td align="right">Plasmastone</td>
+	<td align="right">5</td>
+	<td align="right">3</td>
+	<td align="right">2</td>
+	<td align="right">1</td>
+	<td align="right">8</td>
+	<td align="right">5</td>
+	<td align="right">2</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
+	</tr>
+	<tr><td align="right">Plasmacoral</td>
+	<td align="right">4</td>
+	<td align="right">5</td>
+	<td align="right">2</td>
+	<td align="right">1</td>
+	<td align="right">8</td>
+	<td align="right">3</td>
+	<td align="right">1</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
+	</tr>
+	<tr><td align="right">Soulsteel</td>
+	<td align="right">5</td>
+	<td align="right">6</td>
+	<td align="right">2</td>
+	<td align="right">4</td>
+	<td align="right">1</td>
+	<td align="right">6</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right">1600K</td>
+	</tr>
+	<tr><td align="right">Telecrystal</td>
 	<td align="right">3</td>
 	<td align="right">3</td>
+	<td align="right">2</td>
+	<td align="right">1</td>
+	<td align="right">1</td>
+	<td align="right">5</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right" class="unavaib">n/a</td>
+	<td align="right">1331K</td>
 	</tr>
 </table>
 <hr>
@@ -649,7 +943,9 @@ The properties in full and in order are Radioactivity, Neutron Radiation, Electr
 	<th align="right">Hard.</th>
 	<th align="right">Dens.</th>
 	<th align="right">Flam.</th>
-	<th align="right">Chem. Res.</th></tr>
+	<th align="right">Chem. Res.</th>
+	<th align="right">Melt.</th>
+	</tr>
 	<tr><td align="right">Dyneema</td>
 	<td align="right">7</td>
 	<td align="right">5</td>
@@ -657,6 +953,7 @@ The properties in full and in order are Radioactivity, Neutron Radiation, Electr
 	<td align="right">8</td>
 	<td align="right">1</td>
 	<td align="right">9</td>
+	<td align="right" class="unavaib">n/a</td>
 	</tr>
 	<tr><td align="right">Electrum</td>
 	<td align="right">9</td>
@@ -665,6 +962,7 @@ The properties in full and in order are Radioactivity, Neutron Radiation, Electr
 	<td align="right">4</td>
 	<td align="right">1</td>
 	<td align="right">6</td>
+	<td align="right">1300K</td>
 	</tr>
 	<tr><td align="right">Hauntium</td>
 	<td align="right">1</td>
@@ -673,6 +971,7 @@ The properties in full and in order are Radioactivity, Neutron Radiation, Electr
 	<td align="right">1</td>
 	<td align="right">2</td>
 	<td align="right">3</td>
+	<td align="right" class="unavaib">n/a</td>
 	</tr>
 	<tr><td align="right">Plasma Glass</td>
 	<td align="right">3</td>
@@ -681,6 +980,7 @@ The properties in full and in order are Radioactivity, Neutron Radiation, Electr
 	<td align="right">3</td>
 	<td align="right">1</td>
 	<td align="right">5</td>
+	<td align="right">1600K</td>
 	</tr>
 	<tr><td align="right">Plasma Steel</td>
 	<td align="right">5</td>
@@ -689,6 +989,7 @@ The properties in full and in order are Radioactivity, Neutron Radiation, Electr
 	<td align="right">7</td>
 	<td align="right">1</td>
 	<td align="right">6</td>
+	<td align="right">1800K</td>
 	</tr>
 	<tr><td align="right">Steel</td>
 	<td align="right">5</td>
@@ -697,6 +998,7 @@ The properties in full and in order are Radioactivity, Neutron Radiation, Electr
 	<td align="right">4</td>
 	<td align="right">1</td>
 	<td align="right">6</td>
+	<td align="right">1700K</td>
 	</tr>
 	<tr><td align="right">Soulsteel</td>
 	<td align="right">5</td>
@@ -705,11 +1007,21 @@ The properties in full and in order are Radioactivity, Neutron Radiation, Electr
 	<td align="right">4</td>
 	<td align="right">1</td>
 	<td align="right">6</td>
+	<td align="right">1600K</td>
+	</tr>
+	<tr><td align="right">Voltite</td>
+	<td align="right">9</td>
+	<td align="right">1</td>
+	<td align="right">1</td>
+	<td align="right">4</td>
+	<td align="right">1</td>
+	<td align="right">6</td>
+	<td align="right">1500K</td>
 	</tr>
 </table><br/>
 
 <section id="Alloying"><h3>Alloying</h3></section>
-Alloying is done in the Nano-Crucible using processed materials. When you alloy two materials together, the stats of the created alloy is an average of the two progenitor materials. So, if you were looking to create a dense material and you alloyed Plasmasteel (density 75) with Viscerite (density 65), the resulting alloy would have a density of 70.
+Alloying is done in the Nano-Crucible using processed materials. When you alloy two materials together, the stats of the created alloy is an average of the two progenitor materials (rounded down). So, if you were looking to create a dense material and you alloyed Plasmasteel (density 7) with Viscerite (density 4), the resulting alloy would have a density of 5.
 However, if one material being alloyed lacks a certain property (indicated in the table by an "n/a"), then it will simply inherit the full value of the material that <b><i>does</i></ib> have the stat.
 When you alloy a material, the material passes on any unique properties to the resulting alloy.<br><br>
 
@@ -737,96 +1049,132 @@ Thank you for your service to Nanotrasen.</i></p>
 <h4>Ratings of various properties.</h4>
 		<p style="margin-right:10%; margin-left:1%"><b>Radioactivity</b></p>
 			<ul style='list-style-type:circle'>
-			<li>1 to 10  --  Slightly Radioactive</li>
-			<li>11 to 25 --  Somewhat Radioactive</li>
-			<li>26 to 50 --  Radioactive</li>
-			<li>51 to 75 --  Very Radioactive</li>
-			<li>76 to 90 --  Extremely Radioactive</li>
-			<li>90+      --  Impossibly Radioactive</li></ul>
+			<li>1   --  Slightly Radioactive</li>
+			<li>2   --  Somewhat Radioactive</li>
+			<li>3-4 --  Radioactive</li>
+			<li>5-6 --  Very Radioactive</li>
+			<li>7-8 --  Extremely Radioactive</li>
+			<li>9   --  Impossibly Radioactive</li></ul>
 		<p style="margin-right:10%; margin-left:1%"><b>Neutron Radioactivity</b></p>
 			<ul style='list-style-type:circle'>
-			<li>1 to 10  --  Glowing slightly blue</li>
-			<li>11 to 25 --  Glowing somewhat blue</li>
-			<li>26 to 50 --  Glowing blue</li>
-			<li>51 to 75 --  Brightly glowing blue</li>
-			<li>76 to 90 --  Brilliantly glowing blue</li>
-			<li>90+      --  Blindingly glowing blue</li></ul>
+			<li>1   --  Glowing slightly blue</li>
+			<li>2   --  Glowing somewhat blue</li>
+			<li>3-4 --  Glowing blue</li>
+			<li>5-6 --  Brightly glowing blue</li>
+			<li>7-8 --  Brilliantly glowing blue</li>
+			<li>9   --  Blindingly glowing blue</li></ul>
 		<p style="margin-right:10%; margin-left:1%"><b>Electrical Conductivity</b></p>
 			<ul style='list-style-type:circle'>
-			<li>1 to 14  --  Highly insulating (low conductivity)</li>
-			<li>15 to 30 --  Insulating</li>
-			<li>31 to 45 --  Slightly insulating</li>
-			<li>46 to 65 --  Slightly conductive</li>
-			<li>66 to 76 --  Conductive</li>
-			<li>77 to 85 --  Highly conductive</li>
-			<li>86+      --  Extremely conductive</li></ul>
+			<li>1   --  Highly insulating</li>
+			<li>2   --  Insulating</li>
+			<li>3-4 --  Slightly insulating</li>
+			<li>5-6 --  Slightly conductive</li>
+			<li>7-8 --  Conductive</li>
+			<li>9   --  Highly conductive</li>
+			</ul>
 		<p style="margin-right:10%; margin-left:1%"><b>Thermal Conductivity</b></p>
 			<ul style='list-style-type:circle'>
-			<li>1 to 14  --  Very temperature-resistant (low conductivity)</li>
-			<li>15 to 30 --  Temperature-resistant</li>
-			<li>31 to 45 --  Slightly temperature-resistant</li>
-			<li>46 to 65 --  Slightly thermally-conductive</li>
-			<li>66 to 76 --  Thermally-conductive</li>
-			<li>77 to 85 --  Highly thermally-conductive</li>
-			<li>86+      --  Extremely thermally-conductive</li></ul>
+			<li>1   --  Very temperature-resistant</li>
+			<li>2   --  Temperature-resistant</li>
+			<li>3-4 --  Slightly temperature-resistant</li>
+			<li>5-6 --  Slightly thermally-conductive</li>
+			<li>7-8 --  Thermally-conductive</li>
+			<li>9   --  Highly thermally-conductive</li>
+			</ul>
 		<p style="margin-right:10%; margin-left:1%"><b>Hardness</b></p>
 			<ul style='list-style-type:circle'>
-			<li>1 to 10  --  Very soft (low hardness)</li>
-			<li>11 to 25 --  Soft</li>
-			<li>26 to 50 --  Slightly soft</li>
-			<li>51 to 75 --  Slightly hard</li>
-			<li>76 to 90 --  Hard</li>
-			<li>90+      --  Very hard (high hardness)</li></ul>
+			<li>1   --  Very soft</li>
+			<li>2   --  Soft</li>
+			<li>3-4 --  Slightly hard</li>
+			<li>5-6 --  Hard</li>
+			<li>7-8 --  Very hard</li>
+			<li>9   --  Extremely hard</li>
+			</ul>
 		<p style="margin-right:10%; margin-left:1%"><b>Density</b></p>
 			<ul style='list-style-type:circle'>
-			<li>1 to 10  --  Very light (low density)</li>
-			<li>11 to 25 --  Light</li>
-			<li>26 to 50 --  Somewhat light</li>
-			<li>51 to 75 --  Somewhat dense</li>
-			<li>76 to 90 --  Dense</li>
-			<li>90+      --  Very dense</li></ul>
+			<li>1   --  Very light</li>
+			<li>2   --  Light</li>
+			<li>3-4 --  Somewhat dense</li>
+			<li>5-6 --  Dense</li>
+			<li>7-8 --  Very dense</li>
+			<li>9   --  Extremely dense</li>
+			</ul>
 		<p style="margin-right:10%; margin-left:1%"><b>Flammability</b></p>
 			<ul style='list-style-type:circle'>
-			<li>1 to 10  --  Very fireproof (low flammability)</li>
-			<li>11 to 25 --  Fireproof</li>
-			<li>26 to 50 --  Slightly fireproof</li>
-			<li>51 to 75 --  Slightly flammable</li>
-			<li>76 to 90 --  Flammable</li>
-			<li>90+      --  Very Flammable</li></ul>
+			<li>1   --  Nonflammable</li>
+			<li>2-3 --  Slightly flammable</li>
+			<li>4-5 --  Flammable</li>
+			<li>6-8 --  Extremely flammable</li>
+			<li>9   --  Insanely Flammable</li>
+			</ul>
 		<p style="margin-right:10%; margin-left:1%"><b>Corrosion Resistance</b></p>
 			<ul style='list-style-type:circle'>
-			<li>1 to 10  --  Very corroded (low resistance)</li>
-			<li>11 to 25 --  Corroded</li>
-			<li>26 to 50 --  Slightly corroded</li>
-			<li>51 to 75 --  Slightly corrosion-resistant</li>
-			<li>76 to 90 --  Corrosion-resistant</li>
-			<li>90+      --  Very corrosion-resistant</li></ul>
+			<li>1   --  Very corroded</li>
+			<li>2   --  Corroded</li>
+			<li>3-4 --  Slightly corroded</li>
+			<li>5-6 --  Slightly chemical-resistant</li>
+			<li>7-8 --  Chemical-resistant</li>
+			<li>9   --  Highly chemical-resistant</li>
+			</ul>
 		<p style="margin-right:10%; margin-left:1%"><b>Reflectivity</b></p>
 			<ul style='list-style-type:circle'>
-			<li>1 to 10  --  Very dull (low reflectivity)</li>
-			<li>11 to 25 --  Dull</li>
-			<li>26 to 50 --  Slightly dull</li>
-			<li>51 to 75 --  Slightly reflective</li>
-			<li>76 to 90 --  Reflective</li>
-			<li>90+      --  Very reflective</li></ul>
+			<li>1   --  Very dull</li>
+			<li>2   --  Dull</li>
+			<li>3-4 --  Slightly dull</li>
+			<li>5-6 --  Slightly reflective</li>
+			<li>7-8 --  Reflective</li>
+			<li>9   --  Very reflective</li>
+			</ul>
+		<p style="margin-right:10%; margin-left:1%"><b>Melting Point</b></p>
+			<ul style='list-style-type:circle'>
+			<li>0-150K    --  Solid at very low temperatures</li>
+			<li>150-263K  --  Solid at low temperatures</li>
+			<li>263-293K  --  Liquid at room temperature</li>
+			<li>293-310K  --  Melts to the touch</li>
+			<li>310-423K  --  Melts when heated</li>
+			<li>423-800K  --  Low melting point</li>
+			<li>800-2000K --  High melting point</li>
+			<li>+2000K    --  Very high melting point</li>
+			</ul>
 <hr>
 <h3>Appendix II.</h3>
 <h4>Classifications of different material groups</h4>
 <br><br>
+
 <b>Metal</b>
-<ul><li>Chitin</li><li>Cobryl</li><li>Copper</li><li>Coral</li>
-<li>Electrum</li><li>Gold</li><li>Hauntium</li><li>Iridium</li>
-<li>Plasmasteel</li><li>Slag</li><li>Spacelag</li><li>Soulsteel</li>
+<ul><li>Chitin</li>
+<li>Cobryl</li>
+<li>Copper</li>
+<li>Coral</li>
+<li>Electrum</li>
+<li>Gold</li>
+<li>Hauntium</li>
+<li>Iridium</li>
+<li>Plasmasteel</li>
+<li>Slag</li>
+<li>Spacelag</li>
+<li>Soulsteel</li>
 <li>Syreline</li>
+<li>Veranium</li>
+<li>Voltite</li>
 </ul>
 
 <b>Sturdy Metal</b>
-<ul><li>Cerenkite</li><li>Iridium</li><li>Mauxite</li><li>Pharosium</li>
-<li>Rock</li><li>Slag</li><li>Steel</li>
+<ul><li>Cerenkite</li>
+<li>Iridium</li>
+<li>Mauxite</li>
+<li>Pharosium</li>
+<li>Rock</li>
+<li>Slag</li>
+<li>Steel</li>
 </ul>
 
 <b>Dense Metal</b>
-<ul><li>Bohrum</li><li>Iridium</li><li>Gnesis</li><li>Plasmasteel</li>
+<ul><li>Batiline</li>
+<li>Bohrum</li>
+<li>Iridium</li><li>
+Gnesis</li>
+<li>Plasmasteel</li>
 <li>Translucent Gnesis</li></ul>
 
 <b>Crystal</b>
@@ -857,14 +1205,38 @@ Thank you for your service to Nanotrasen.</i></p>
 <li>Neutronium</li><li>Plasmastone</li><li>Telecrystal</li><li>Soulsteel</li></ul>
 
 <b>Fabric/Cloth</b>
-<ul><li>Bee Wool</li><li>Blob (Amoeba)</li><li>Carbon Nanofiber</li><li>Char</li><li>Coral</li>
-<li>Cotton</li><li>Dyneema</li><li>Ectofiber</li><li>Fibrilith</li><li>Hauntium</li>
-<li>Koshmarite</li><li>Leather</li><li>Space Spider Silk</li><li>Synthleather</li><li>Brullbar Hide</li></ul>
+<ul><li>Bee Wool</li>
+<li>Blob (Amoeba)</li>
+<li>Carbon Nanofiber</li>
+<li>Char</li>
+<li>Coral</li>
+<li>Cotton</li>
+<li>Dyneema</li>
+<li>Ectofiber</li>
+<li>Fibrilith</li>
+<li>Hauntium</li>
+<li>Koshmarite</li>
+<li>Leather</li>
+<li>Space Spider Silk</li>
+<li>Synthleather</li>
+<li>Brullbar Hide</li></ul>
 
 <b>Organic</b>
-<ul><li>Bamboo</li><li>Beeswax</li><li>Blob (Amoeba)</li><li>Bone</li><li>Char</li><li>Chitin</li>
-<li>Frozen Fart</li><li>Hamburgris</li><li>Honey</li><li>Koshmarite</li>
-<li>Pizza</li><li>Space Spider Silk</li><li>Viscerite</li><li>Wood</li></ul>
+<ul><li>Bamboo</li>
+<li>Beeswax</li>
+<li>Blob (Amoeba)</li>
+<li>Bone</li>
+<li>Char</li>
+<li>Chitin</li>
+<li>Frozen Fart</li>
+<li>Hamburgris</li>
+<li>Honey</li>
+<li>Koshmarite</li>
+<li>Mycelium</li>
+<li>Pizza</li>
+<li>Space Spider Silk</li>
+<li>Viscerite</li>
+<li>Wood</li></ul>
 
 <b>Rubber</b>
 <ul><li>Latex</li>
