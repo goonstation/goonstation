@@ -367,11 +367,19 @@
 	initial_reagents = "acetylsalicylic_acid"
 	label = "purple"
 	desc = "A high-capacity auto-injector containing acetylsalicylic acid, used as a painkiller, anticoagulant, and fever reducer."
+
 /obj/item/reagent_containers/emergency_injector/high_capacity/saline
 	name = "high-capacity auto-injector (saline-glucose)"
 	initial_reagents = "saline"
 	label = "blue"
 	desc = "A high-capacity auto-injector containing saline-glucose solution, used for treating blood loss and shock. It also speeds up recovery from small injuries."
+
+/obj/item/reagent_containers/emergency_injector/high_capacity/oculine
+	name = "high-capacity auto-injector (oculine)"
+	initial_reagents = "oculine"
+	label = "white"
+	desc = "A high-capacity auto-injector containing oculine, used for treating hearing loss loss and eye problems, useful for many workplace related injuries."
+
 
 /obj/item/reagent_containers/emergency_injector/high_capacity/atropine
 	name = "high-capacity auto-injector (atropine)"
@@ -396,6 +404,18 @@
 	initial_reagents = "mannitol"
 	label = "green"
 	desc = "A high-capacity auto-injector containing mannitol, a medicine used to treat severe concussions."
+
+/obj/item/reagent_containers/emergency_injector/high_capacity/filgrastim
+	name = "high-capacity auto-injector (filgrastim)"
+	desc = "high-capacity auto-injector containing filgrastim, a medicine used to treat severe blood loss."
+	initial_reagents = "filgrastim"
+	label = "red"
+
+/obj/item/reagent_containers/emergency_injector/high_capacity/detox /// we got pentetic acid at home.
+	name = "detox combi-injector"
+	initial_reagents = list("charcoal" = 25, "anti_rad" = 25)
+	label = "purple"
+	desc = "A combination medical injector containing charcoal and potassium iodide useful in treating toxic damage and radiation."
 
 /obj/item/reagent_containers/emergency_injector/high_capacity/cardiac
 	name = "cardiac combi-injector"
