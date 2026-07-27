@@ -93031,7 +93031,7 @@
 /turf/simulated/floor/engine/glow,
 /area/station/hangar/sec)
 "vBb" = (
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
