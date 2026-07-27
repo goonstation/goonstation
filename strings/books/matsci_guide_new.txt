@@ -39,17 +39,15 @@ This text serves as a comprehensive overview of Material Science. It is detailed
 The field of Materials Science is long studied and long storied. To detail precisely the extensive history of this field would require a tome all on its own, and we will instead focus not on what has been done in the field, but on what there is yet to do.
 <br><br>
 An aspiring metallurgist requires a suitable workshop in which they can create and refine alloys. Recommended for this line of work are:
-<ul><li><b>Nano-Crucible</b> - a large cuboid forge that melts two materials and reforms them as an alloyed bar
-<li><b>Slag Shovel</b> - used for removing slag buildup from impurities removed in the refining process. Modern Nano-Crucibles filter impurities with more accuracy and so the old practice of slag shoveling has fallen by the wayside.
-</li></ul><ul><li><b>Material Processor</b> - a machine with a rectangular surface and two clamps to hold bars of alloys in place; used to process raw ores and gems into more workable ingots
-</li></ul><ul><li><b>Portable Reclaimer</b> - a machine on wheels that can turn most materials into workable ingots, and is often used to restock fabricators around the station
-</li></ul><ul><li><b>Nano-Fabricator</b> - the machine with two upright arms embedded with lasers that precisely cut and mold materials into pre-loaded schematics
+<ul><li><b>Nano-Crucible</b> - A large cuboid forge that melts two materials and reforms them as an alloyed bar.
+</li></ul><ul><li><b>Portable Reclaimer</b> - A machine on wheels that can turn most materials into workable ingots. It is often used to restock fabricators around the station.
+</li></ul><ul><li><b>Nano-Fabricator</b> - The machine with two upright arms embedded with lasers that precisely cut and mold materials into pre-loaded schematics
 <ul><li>Nano-Fabricator schematics describe needing either metal alloys, fabrics, rubber, or crystals, but it is possible for a single bar of alloyed material to possess all the properties needed for a schematic to begin working
 <li> You can store and view your stored materials under the “Storage” tab</li><br>
 <li>You can automatically store projects you make in the Nano-Fabricator by setting output to the Nano-Fabricator under the “Settings” tab</li><br>
-</li></ul><li><b>Material Analyzer</b> - a green handheld device that reports information about a material including electrical conductivity, thermal conductivity, hardness, density, and others. See "An Index of Properties and Their Effects" section below.
+</li></ul><li><b>Material Analyzer</b> - A green handheld device that reports information about a material including electrical conductivity, thermal conductivity, hardness, density, and others. See "An Index of Properties and Their Effects" section below.
 </ul>
-<ul><li><b>Arc Electroplater</b> - a machine that allows you to place a material in an electrolyte bath and then place an object into the bath to transfer the electrolyzed material to the surface of the object.
+<ul><li><b>Arc Electroplater</b> - A machine that allows you to place a material in an electrolyte bath and then place an object into the bath to transfer the electrolyzed material to the surface of the object.
 <ul><li>This allows for the transfer of material properties to objects you cannot make through the Nano-Fabricator. Particularly of interest in thermo-electric systems.</li></ul>
 </ul></ul><br>
 The reasons for partaking in metallurgy are numerous and varied. You can, for example, create new types of walls and floorings with high reflectivity for defense from energy projectiles, which might be desirable in sensitive areas like an AI Core.
@@ -65,32 +63,32 @@ Materials Science is infinitely useful.
 
 This section shows the different properties or materials that are of interest to us and how they affect our materials, and some primary materials for each property. Please see the footnote for an appendix on how these properties are rated.
 
-<p style="margin-right:10%; margin-left:1%"><b>Radioactivity</b> - higher radiation output means a higher recharge rate, but also higher radiation damage to those handling or around these materials.
+<p style="margin-right:10%; margin-left:1%"><b>Radioactivity</b> - Higher radiation output means a higher recharge rate, but also higher radiation damage to those handling or around these materials.
 </p><ul><li>(ex.: Cerenkite, Erebite, Koshmarite)</ul></li>
 
-<p style="margin-right:10%; margin-left:1%"><b>Electrical Conductivity</b> - ability of material to let electricity pass through it; <b>more conductive materials make for better reservoirs for energy storage in batteries</b>.
+<p style="margin-right:10%; margin-left:1%"><b>Electrical Conductivity</b> - Ability of material to let electricity pass through it. More conductive materials make for better reservoirs for energy storage in batteries.
 </p><ul><li>(ex.: Copper, Claretine, Electrum)</ul></li>
 
-<p style="margin-right:10%; margin-left:1%"><b>Thermal Conductivity</b> - ability of material to transfer heat through it with little loss of energy; <b>more insulating materials do better at keeping heat within which can be advantageous for creating temperature differentials.</b></p>
+<p style="margin-right:10%; margin-left:1%"><b>Thermal Conductivity</b> - Ability of material to transfer heat through it with little loss of energy. More insulating materials do better at keeping heat within which can be advantageous for creating temperature differentials.</p>
 <ul><li>(ex.: Carbon Nanofiber, Fibrilith, Space spider silk)</ul></li>
-</p><ul><li>(ex.: Starstone, Carbon Nanofiber, Hauntium)</ul></li>
+</p>
 
-<p style="margin-right:10%; margin-left:1%"><b>Density</b> -  sturdiness of the material when used in things like wearables.</p>
+<p style="margin-right:10%; margin-left:1%"><b>Density</b> -  Sturdiness of the material when used in things like wearables.</p>
 <ul><li>(ex.: Viscerite, Plasmasteel, Starstone)</ul></li>
 
-<p style="margin-right:10%; margin-left:1%"><b>Hardness</b> - blunt force of the material; sturdiness and ability to impact other materials when used in tools.</p>
+<p style="margin-right:10%; margin-left:1%"><b>Hardness</b> - Blunt force of the material; sturdiness and ability to impact other materials when used in tools.</p>
 <ul><li>(ex.: Koshmarite, Dyneema, Starstone)</ul></li>
 
-<p style="margin-right:10%; margin-left:1%"><b>Flammability</b> - how combustible a material is.</p>
+<p style="margin-right:10%; margin-left:1%"><b>Flammability</b> - How combustible a material is.</p>
 <ul><li>(ex.: Char, Plasmastone)</ul></li>
 
-<p style="margin-right:10%; margin-left:1%"><b>Chemical resistance</b> - how well a material resists acids and how well it resists viruses pass through it.</p>
+<p style="margin-right:10%; margin-left:1%"><b>Chemical resistance</b> - How well a material resists exposure to various chemicals.</p>
 <ul><li>(ex.: Uqill, Iridium, Dyneema)</ul></li>
 
-<p style="margin-right:10%; margin-left:1%"><b>Reflectivity</b> - the albedo of the material and how much light is bounced off the surface of it.</p>
+<p style="margin-right:10%; margin-left:1%"><b>Reflectivity</b> - The albedo of a material and how much light is bounced off its surface.</p>
 <ul><li>(ex.: Syreline, Starstone, Telecrystal)</ul></li>
 
-<p style="margin-right:10%; margin-left:1%"><b>Melting Point</b> - the temperature at which point the material starts turning into a liquid.</p>
+<p style="margin-right:10%; margin-left:1%"><b>Melting Point</b> - The temperature at which point a material starts turning into a liquid.</p>
 <ul><li>(ex.: Ice)</ul></li>
 
 
@@ -99,7 +97,6 @@ This section shows the different properties or materials that are of interest to
 <section id="Basic-Mats"><h3>Basic Ores and Their Properties</h3></section>
 <hr>
 Below is a list of all the basic ores that are common to asteroids in this sector, as well as their particular properties that are of interest for Materials Science. See Appendix II for material classifications.
-The properties in full and in order are Radioactivity, Electrical Conductivity, Hardness, Density, Flammability, Corrosion Resistance, Permeability, and Reflectivity.
 <br><br>
 <table>
 	<tr><th align="right">ORE</th>
@@ -371,7 +368,6 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 <section id="Advanced-Mats"><h3>Advanced Materials and Their Properties</h3></section>
 <hr>
 These are additional useful materials and their relative properties.
-The properties in full and in order are Radioactivity, Electrical Conductivity, Thermal Conductivity, Hardness, Density, Flammability, Corrosion Resistance, Permeability, Reflectivity, and Melting Point.
 <br><br>
 <table>
 	<tr><th align="right">ORGANIC MAT</th>
@@ -958,7 +954,6 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 <section id="Alloyed-Mats"><h3>Alloyed Materials and Their Properties</h3></section>
 <hr>
 This section contains different common and particular alloyed materials and the properties they possess that are of interest for Materials Science. The exact manner by which most of these can be made can be found at the references in the footnote.
-The properties in full and in order are Radioactivity, Neutron Radiation, Electrical Conductivity, Thermal Conductivity, Hardness, Density, Flammability, Corrosion Resistance, Permeability, and Reflectivity.
 <br><br>
 <table>
 	<tr><th align="right">ALLOY</th>
@@ -1197,31 +1192,63 @@ Gnesis</li>
 <li>Translucent Gnesis</li></ul>
 
 <b>Crystal</b>
-<ul><li>Blob (Amoeba)</li><li>Claretine</li><li>Coral</li><li>Erebite</li><li>Fibrilith</li>
-<li>Gemstone</li><li>Gensis</li><li>Glass</li><li>Ice</li><li>Koshmarite</li>
-<li>Miraclium</li><li>Pizza</li><li>Plasmastone</li><li>Telecrystal</li>
+<ul><li>Blob (Amoeba)</li>
+<li>Claretine</li>
+<li>Coral</li>
+<li>Erebite</li>
+<li>Fibrilith</li>
+<li>Gemstone</li>
+<li>Gensis</li>
+<li>Glass</li>
+<li>Ice</li>
+<li>Koshmarite</li>
+<li>Miraclium</li>
+<li>Pizza</li>
+<li>Plasmastone</li>
+<li>Telecrystal</li>
 <li>Translucent Gnesis</li></ul>
 
 <b>High Density Crystalline Matter</b>
-<ul><li>Molitz</li><li>Molitz Beta</li></ul>
+<ul><li>Molitz</li>
+<li>Molitz Beta</li></ul>
 
 <b>Extraordinarily Dense Crystalline Matter</b>
-<ul><li>Neutronium</li><li>Starstone</li><li>Uqill</li></ul>
+<ul><li>Neutronium</li>
+<li>Starstone</li>
+<li>Uqill</li></ul>
 
 <b>Reflective Material</b>
-<ul><li>Gnesis</li><li>Gold</li><li>Koshmarite</li><li>Translucent Gnesis</li></ul>
+<ul><li>Gnesis</li>
+<li>Gold</li>
+<li>Koshmarite</li>
+<li>Translucent Gnesis</li></ul>
 
 <b>Conductive Material</b>
-<ul><li>Carbon Nanofiber</li><li>Cerenkite</li><li>Copper</li>
-<li>Ectofiber</li><li>Erebite</li><li>Gold</li><li>Ice</li>
+<ul><li>Carbon Nanofiber</li>
+<li>Cerenkite</li>
+<li>Copper</li>
+<li>Ectofiber</li>
+<li>Erebite</li>
+<li>Gold</li>
+<li>Ice</li>
 <li>Plasmastone</li></ul>
 
 <b>High Energy Conductor</b>
-<ul><li>Claretine</li><li>Electrum</li><li>Gnesis</li><li>Translucent Gnesis</li></ul>
+<ul><li>Claretine</li>
+<li>Electrum</li>
+<li>Gnesis</li>
+<li>Translucent Gnesis</li></ul>
 
 <b>Power Source</b>
-<ul><li>Cerenkite</li><li>Ectofiber</li><li>Erebite</li><li>Hauntium</li>
-<li>Neutronium</li><li>Plasmastone</li><li>Telecrystal</li><li>Soulsteel</li></ul>
+<ul><li>Cerenkite</li>
+<li>Ectofiber</li>
+<li>Erebite</li>
+<li>Hauntium</li>
+<li>Neutrite</li>
+<li>Neutronium</li>
+<li>Plasmastone</li>
+<li>Telecrystal</li>
+<li>Soulsteel</li></ul>
 
 <b>Fabric/Cloth</b>
 <ul><li>Bee Wool</li>
