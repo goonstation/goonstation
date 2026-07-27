@@ -28686,9 +28686,7 @@
 "efc" = (
 /obj/machinery/firealarm/directional/west,
 /obj/disposalpipe/trunk/mail/east,
-/obj/machinery/disposal/mail/autoname{
-	mail_tag = "psychiatry"
-	},
+/obj/machinery/disposal/mail/autoname/medbay/psychiatry,
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},

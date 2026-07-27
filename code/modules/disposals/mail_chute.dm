@@ -240,6 +240,11 @@
 		refinery
 			name = "Refinery"
 			mail_tag = "refinery"
+
+		warehouse
+			name = "Warehouse"
+			mail_tag = "warehouse"
+
 	tool_storage
 		name = "Tool Storage"
 		mail_tag = "storage"
@@ -298,6 +303,36 @@
 		booth
 			name = "Medical Booth"
 			mail_tag = "medical booth"
+		psychiatry
+			name = "Psychiatry"
+			mail_tag = "psychiatry"
+
+	command_office
+		name = "Don't spawn me"
+		mailgroup = MGD_COMMAND
+
+		cap
+			name = "Captain's Office"
+			mail_tag = "captain"
+
+		hop
+			name = "Head of Personnel's Office"
+			mail_tag = "head_of_personnel"
+
+		rd
+			name = "Research Director's Office"
+			mail_tag = "research_director"
+			mailgroup2 = MGD_RESEARCH
+
+		md
+			name = "Medical Director's Office"
+			mail_tag = "medical_director"
+			mailgroup2 = MGD_MEDICAL
+
+		ce
+			name = "Chief Engineer's Office"
+			mail_tag = "chief_engineer"
+			mailgroup2 = MGD_ENGINEER
 
 	checkpoint
 		name = "Don't spawn me"

@@ -688,7 +688,7 @@
 /area/station/hallway/primary/south)
 "akI" = (
 /obj/disposalpipe/switch_junction/right/south{
-	mail_tag = "Cargo";
+	mail_tag = "QM";
 	name = "Cargo Mail Router"
 	},
 /turf/simulated/floor/lightyellow/side{
@@ -2389,11 +2389,7 @@
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "aYZ" = (
-/obj/machinery/disposal/mail/autoname{
-	mail_tag = "Engineering";
-	mailgroup = "Engineering";
-	name = "Engineering"
-	},
+/obj/machinery/disposal/mail/autoname/engineering,
 /obj/disposalpipe/trunk/mail/north,
 /turf/simulated/floor/caution,
 /area/station/engine/engineering)
@@ -16449,11 +16445,7 @@
 /turf/simulated/floor/airless/caution,
 /area/ghostdrone_factory)
 "huK" = (
-/obj/machinery/disposal/mail/autoname{
-	mail_tag = "Cargo";
-	mailgroup = "cargo";
-	name = "Cargo"
-	},
+/obj/machinery/disposal/mail/autoname/qm,
 /obj/machinery/light/emergency,
 /obj/disposalpipe/trunk/mail/north,
 /turf/simulated/floor/caution,
@@ -23225,7 +23217,7 @@
 /area/station/hydroponics/bay)
 "kts" = (
 /obj/disposalpipe/switch_junction/right/west{
-	mail_tag = "Engineering";
+	mail_tag = "engineering";
 	name = "Engineering Mail Router"
 	},
 /turf/simulated/floor/neutral/side{
@@ -37344,7 +37336,7 @@
 	})
 "qPH" = (
 /obj/disposalpipe/switch_junction/left/north{
-	mail_tag = "Research Director";
+	mail_tag = "research_director";
 	name = "RD Mail Router"
 	},
 /obj/cable{
@@ -39137,11 +39129,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/disposal/mail/autoname{
-	mail_tag = "Research Director";
-	mailgroup = "Research";
-	name = "Research Director"
-	},
+/obj/machinery/disposal/mail/autoname/command_office/rd,
 /turf/simulated/floor/grey,
 /area/station/science/research_director)
 "rJV" = (
@@ -39609,11 +39597,7 @@
 	},
 /area/station/security/checkpoint/arrivals)
 "rVZ" = (
-/obj/machinery/disposal/mail/autoname{
-	mail_tag = "Chief Engineer";
-	mailgroup = "Engineering";
-	name = "Chief Engineer"
-	},
+/obj/machinery/disposal/mail/autoname/command_office/ce,
 /obj/disposalpipe/trunk/mail/north,
 /turf/simulated/floor/lightyellow/side{
 	dir = 4
@@ -49719,7 +49703,7 @@
 /area/station/engine/engineering/ce)
 "wEU" = (
 /obj/disposalpipe/switch_junction/right/north{
-	mail_tag = "Chief Engineer";
+	mail_tag = "chief_engineer";
 	name = "CE Mail Router"
 	},
 /obj/cable{

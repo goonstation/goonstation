@@ -1885,9 +1885,7 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "aiZ" = (
-/obj/machinery/disposal/mail/autoname{
-	mail_tag = "genetics"
-	},
+/obj/machinery/disposal/mail/autoname/medbay/genetics,
 /obj/disposalpipe/trunk/mail/west,
 /obj/machinery/light/incandescent/cool{
 	dir = 4
@@ -8715,9 +8713,7 @@
 /area/station/crew_quarters/info)
 "aSa" = (
 /obj/disposalpipe/trunk/mail/north,
-/obj/machinery/disposal/mail/autoname{
-	mail_tag = "hydroponics"
-	},
+/obj/machinery/disposal/mail/autoname/hydroponics,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "aSb" = (
@@ -8774,9 +8770,7 @@
 /area/station/hangar/engine)
 "aSq" = (
 /obj/machinery/light/incandescent/cool,
-/obj/machinery/disposal/mail/autoname{
-	mail_tag = "customs"
-	},
+/obj/machinery/disposal/mail/autoname/checkpoint/customs,
 /obj/disposalpipe/trunk/mail/west,
 /turf/simulated/floor/wood,
 /area/station/bridge/customs)
@@ -8796,9 +8790,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "aSC" = (
-/obj/machinery/disposal/mail/autoname{
-	mail_tag = "refinery"
-	},
+/obj/machinery/disposal/mail/autoname/qm/refinery,
 /obj/disposalpipe/trunk/mail/north{
 	dir = 8
 	},
@@ -17145,7 +17137,7 @@
 /area/station/hallway/primary/south)
 "bHA" = (
 /obj/disposalpipe/switch_junction/right/east{
-	mail_tag = "customs";
+	mail_tag = "customs checkpoint";
 	name = "customs mail router"
 	},
 /obj/cable{
@@ -23570,9 +23562,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/power)
 "cAr" = (
-/obj/machinery/disposal/mail/autoname{
-	mail_tag = "engineering"
-	},
+/obj/machinery/disposal/mail/autoname/engineering,
 /obj/disposalpipe/trunk/mail/south,
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
@@ -31952,7 +31942,7 @@
 "jvD" = (
 /obj/machinery/drainage/big,
 /obj/disposalpipe/switch_junction/left/south{
-	mail_tag = "crew quarters";
+	mail_tag = "crew";
 	name = "crew quarters mail router"
 	},
 /turf/simulated/floor,
@@ -36326,8 +36316,8 @@
 "mRa" = (
 /obj/decal/stripe_caution,
 /obj/disposalpipe/switch_junction/left/north{
-	mail_tag = "escape";
-	name = "escape mail router"
+	mail_tag = "escape hallway";
+	name = "escape hallway mail router"
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
@@ -41346,9 +41336,7 @@
 /area/spacehabitat/owlery)
 "rgB" = (
 /obj/disposalpipe/trunk/mail/east,
-/obj/machinery/disposal/mail/autoname{
-	mail_tag = "bridge"
-	},
+/obj/machinery/disposal/mail/autoname/bridge,
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "blue2"
@@ -45378,9 +45366,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/machinery/disposal/mail/autoname{
-	mail_tag = "security"
-	},
+/obj/machinery/disposal/mail/autoname/security,
 /obj/disposalpipe/trunk/mail/east,
 /turf/simulated/floor/red,
 /area/station/security/main)
@@ -46241,9 +46227,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "uZY" = (
-/obj/machinery/disposal/mail/autoname{
-	mail_tag = "escape"
-	},
+/obj/machinery/disposal/mail/autoname/public/escape,
 /obj/disposalpipe/trunk/mail/east,
 /turf/simulated/floor/darkpurple/side{
 	dir = 8
@@ -46942,9 +46926,7 @@
 	name = "South Crew Lounge"
 	})
 "vKp" = (
-/obj/machinery/disposal/mail/autoname{
-	mail_tag = "artlab"
-	},
+/obj/machinery/disposal/mail/autoname/research/artlab,
 /obj/disposalpipe/trunk/mail/south,
 /turf/simulated/floor/black,
 /area/station/science/artifact)
@@ -48626,9 +48608,7 @@
 /area/station/crew_quarters/arcade/dungeon)
 "wZT" = (
 /obj/disposalpipe/trunk/mail/west,
-/obj/machinery/disposal/mail/autoname{
-	mail_tag = "crew quarters"
-	},
+/obj/machinery/disposal/mail/autoname/public/crew,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quartersA)
 "xac" = (
