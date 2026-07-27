@@ -35760,6 +35760,17 @@
 	dir = 4
 	},
 /area/station/hydroponics)
+"tdn" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit{
+	name = "Primary Docking Wing"
+	})
 "tdp" = (
 /obj/table/reinforced/chemistry/auto/basicsup,
 /obj/item/robodefibrillator{
@@ -36497,14 +36508,6 @@
 /area/station/engine/engineering{
 	name = "Engineering Auxiliary Conduit";
 	do_not_irradiate = 1
-	})
-"tvU" = (
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4
-	},
-/turf/simulated/floor/black,
-/area/station/maintenance/outer/east{
-	name = "Escape Auxiliary Arm"
 	})
 "twa" = (
 /obj/cable{
@@ -94770,10 +94773,10 @@ ebB
 sEf
 slG
 bMn
-oha
+tdn
 plw
 plw
-oha
+tdn
 bMn
 bXb
 sEf
@@ -99300,10 +99303,10 @@ vtP
 sPW
 sPW
 sPW
-tvU
+pIt
 cpG
 cpG
-tvU
+pIt
 sPW
 nFe
 nFe
