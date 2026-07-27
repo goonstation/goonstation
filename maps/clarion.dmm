@@ -19009,6 +19009,7 @@
 	pixel_x = 10
 	},
 /obj/storage/secure/closet/medical/medicine,
+/obj/item/clothing/gloves/latex,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "iCi" = (
@@ -32783,6 +32784,8 @@
 	pixel_y = -20
 	},
 /obj/machinery/light,
+/obj/submachine/chem_extractor,
+/obj/item/device/reagentscanner,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "sbc" = (

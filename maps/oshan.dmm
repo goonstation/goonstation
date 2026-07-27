@@ -9276,6 +9276,7 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
+/obj/item/clothing/gloves/latex,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "aUP" = (
@@ -49898,8 +49899,16 @@
 /obj/item/electronics/scanner,
 /obj/item/deconstructor,
 /obj/item/disk/data/cartridge/diagnostics{
-	pixel_x = -6;
-	pixel_y = 10
+	pixel_x = 9;
+	pixel_y = -2
+	},
+/obj/item/disk/data/cartridge/diagnostics{
+	pixel_x = 10;
+	pixel_y = 12
+	},
+/obj/item/disk/data/cartridge/diagnostics{
+	pixel_x = 11;
+	pixel_y = 4
 	},
 /turf/simulated/floor/caution/west{
 	dir = 5
