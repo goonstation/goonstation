@@ -23760,7 +23760,8 @@
 /area/station/mining/staff_room)
 "fvh" = (
 /obj/machinery/conveyor_switch{
-	id = "garbage"
+	id = "garbage";
+	position = 1
 	},
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/disposal)
@@ -46228,6 +46229,15 @@
 	dir = 5
 	},
 /area/station/security/main)
+"kHR" = (
+/obj/machinery/conveyor/SN{
+	id = "garbage";
+	move_lag = 25;
+	operating = 1
+	},
+/obj/landmark/disposals_endpoint,
+/turf/simulated/floor/black/grime,
+/area/station/maintenance/disposal)
 "kHT" = (
 /obj/machinery/light/emergency{
 	dir = 1;
@@ -77501,9 +77511,7 @@
 /obj/disposalpipe/trunk/ejection{
 	dir = 4
 	},
-/obj/machinery/disposal{
-	name = "ejection chute"
-	},
+/obj/machinery/disposal/ejection,
 /turf/simulated/floor/minitiles/black,
 /area/station/ai_monitored/armory)
 "rWD" = (
@@ -172327,7 +172335,7 @@ rEU
 pqy
 eWP
 pqy
-rEU
+kHR
 rEU
 ycU
 duc
