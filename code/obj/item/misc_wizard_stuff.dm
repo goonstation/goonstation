@@ -455,6 +455,10 @@
 			return
 		. = ..()
 
+	throw_begin(atom/target)
+		icon_state = "lawspin"
+		playsound(src.loc, "rustle", 50, 1)
+		return ..(target)
 
 	proc/fling_person(var/mob/target)
 		if(!target.anchored)
