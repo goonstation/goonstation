@@ -29411,11 +29411,8 @@
 /obj/storage/crate/rcd/CE,
 /obj/machinery/light/incandescent,
 /obj/disposalpipe/trunk/mail,
-/obj/machinery/disposal/mail/small{
+/obj/machinery/disposal/mail/small/autoname/command_office/ce{
 	dir = 1;
-	mail_tag = "chief_engineer";
-	mailgroup = "command";
-	mailgroup2 = "engineer";
 	pixel_y = 32
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/north,
@@ -34150,10 +34147,9 @@
 /area/station/medical/medbay/psychiatrist)
 "nsY" = (
 /obj/storage/secure/closet/command/captain,
-/obj/machinery/disposal/mail/small{
+/obj/machinery/disposal/mail/small/autoname/command_office/cap{
 	dir = 8;
-	mail_tag = "captain";
-	mailgroup = "command"
+	
 	},
 /obj/disposalpipe/trunk/mail{
 	dir = 8
@@ -43696,11 +43692,9 @@
 /area/station/mining/staff_room)
 "sQZ" = (
 /obj/table/auto,
-/obj/machinery/disposal/mail/small{
+/obj/machinery/disposal/mail/small/autoname/command_office/rd{
 	dir = 8;
-	mail_tag = "research_director";
-	mailgroup = "command";
-	mailgroup2 = "science"
+	
 	},
 /obj/disposalpipe/trunk/mail{
 	dir = 8

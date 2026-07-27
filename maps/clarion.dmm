@@ -5354,12 +5354,8 @@
 /turf/simulated/floor,
 /area/station/science/lab)
 "aYA" = (
-/obj/machinery/disposal/mail/small{
+/obj/machinery/disposal/mail/small/autoname/research/toxins{
 	dir = 8;
-	mail_tag = "toxins";
-	mailgroup = "science";
-	message = "1";
-	name = "mail chute-'Toxins'";
 	pixel_x = 5
 	},
 /obj/disposalpipe/trunk/mail{
@@ -5689,12 +5685,8 @@
 	},
 /area/station/hallway/primary/southwest)
 "bbB" = (
-/obj/machinery/disposal/mail/small{
+/obj/machinery/disposal/mail/small/autoname/security{
 	dir = 4;
-	mail_tag = "security";
-	mailgroup = "security";
-	message = "1";
-	name = "mail chute-'Security'";
 	pixel_x = -5
 	},
 /obj/disposalpipe/trunk/mail/north,
@@ -7405,10 +7397,8 @@
 /turf/simulated/floor/grass/random/alt,
 /area/station/garden/aviary)
 "btN" = (
-/obj/machinery/disposal/mail/small{
+/obj/machinery/disposal/mail/small/autoname/research/hangar{
 	dir = 1;
-	mail_tag = "pod_star";
-	name = "mail chute-'East Pod Bay'";
 	pixel_y = 32
 	},
 /obj/disposalpipe/trunk/mail,
@@ -14963,12 +14953,8 @@
 	dir = 8;
 	pixel_x = -10
 	},
-/obj/machinery/disposal/mail/small{
+/obj/machinery/disposal/mail/small/autoname/command_office/hop{
 	dir = 4;
-	mail_tag = "hop";
-	mailgroup = "command";
-	message = "1";
-	name = "mail chute-'Head of Personnel'";
 	pixel_x = -5
 	},
 /obj/disposalpipe/trunk/mail/north,
@@ -17932,13 +17918,8 @@
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "hRL" = (
-/obj/machinery/disposal/mail/small{
+/obj/machinery/disposal/mail/small/autoname/command_office/ce{
 	dir = 8;
-	mail_tag = "chief_engineer";
-	mailgroup = "command";
-	mailgroup2 = "engineer";
-	message = "1";
-	name = "mail chute-'Chief Engineer'";
 	pixel_x = 5;
 	pixel_y = 5
 	},
@@ -21981,10 +21962,7 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 4
 	},
-/obj/machinery/disposal/mail/small{
-	mail_tag = "barbershop";
-	name = "mail chute - The Snip"
-	},
+/obj/machinery/disposal/mail/small/autoname/public/barbershop,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/barber_shop)
 "kRY" = (
@@ -22867,7 +22845,7 @@
 	},
 /obj/disposalpipe/switch_junction{
 	dir = 4;
-	mail_tag = "hop";
+	mail_tag = "head_of_personnel";
 	name = "Head of Personnel mail router"
 	},
 /turf/simulated/floor/black,
@@ -26625,8 +26603,8 @@
 	desc = "An underfloor mail pipe.";
 	dir = 2;
 	icon_state = "pipe-sj2";
-	mail_tag = "pod_star";
-	name = "east pod bay mail router"
+	mail_tag = "research_hangar";
+	name = "research pod bay mail router"
 	},
 /obj/cable{
 	icon_state = "1-8"
@@ -30379,12 +30357,8 @@
 /area/station/hallway/primary/southeast)
 "qtZ" = (
 /obj/disposalpipe/trunk/mail/east,
-/obj/machinery/disposal/mail/small{
+/obj/machinery/disposal/mail/small/autoname/command_office/cap{
 	dir = 4;
-	mail_tag = "captain";
-	mailgroup = "command";
-	message = "1";
-	name = "mail chute-'Captain'";
 	pixel_x = -5
 	},
 /turf/simulated/floor/carpet/arcade,
@@ -34642,13 +34616,8 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "tnY" = (
-/obj/machinery/disposal/mail/small{
+/obj/machinery/disposal/mail/small/autoname/command_office/rd{
 	dir = 8;
-	mail_tag = "research_director";
-	mailgroup = "command";
-	mailgroup2 = "science";
-	message = "1";
-	name = "mail chute-'Research Director'";
 	pixel_x = 5
 	},
 /obj/disposalpipe/trunk{

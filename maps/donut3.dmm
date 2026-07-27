@@ -33402,10 +33402,7 @@
 /turf/simulated/wall/auto/jen/blue,
 /area/station/maintenance/inner/sw)
 "ksz" = (
-/obj/machinery/disposal/mail/small{
-	mail_tag = "ranch";
-	name = "mail chute (ranch)"
-	},
+/obj/machinery/disposal/mail/small/autoname/ranch,
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},

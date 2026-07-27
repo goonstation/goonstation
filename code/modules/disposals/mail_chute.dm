@@ -456,6 +456,22 @@
 		west
 			dir = WEST
 
+	ranch
+		name = "Ranch"
+		mail_tag = "ranch"
+		mailgroup = MGT_HYDROPONICS
+		message = 1
+
+		north
+			dir = NORTH
+			pixel_y = 32
+		east
+			dir = EAST
+		south
+			dir = SOUTH
+		west
+			dir = WEST
+
 	security
 		name = "Security"
 		mail_tag = "security"
@@ -654,9 +670,37 @@
 			west
 				dir = WEST
 
+		toxins
+			name = "Toxins"
+			mail_tag = "toxins"
+
+			north
+				dir = NORTH
+				pixel_y = 32
+			east
+				dir = EAST
+			south
+				dir = SOUTH
+			west
+				dir = WEST
+
 		testchamber
 			name = "Test Chamber"
 			mail_tag = "testchamber"
+
+			north
+				dir = NORTH
+				pixel_y = 32
+			east
+				dir = EAST
+			south
+				dir = SOUTH
+			west
+				dir = WEST
+
+		hangar
+			name = "Research Hangar"
+			mail_tag = "research_hangar"
 
 			north
 				dir = NORTH
@@ -745,6 +789,83 @@
 		booth
 			name = "Medical Booth"
 			mail_tag = "medical booth"
+
+			north
+				dir = NORTH
+				pixel_y = 32
+			east
+				dir = EAST
+			south
+				dir = SOUTH
+			west
+				dir = WEST
+
+	command_office
+		name = "Don't spawn me"
+		mailgroup = MGD_COMMAND
+
+		cap
+			name = "Captain's Office"
+			mail_tag = "captain"
+
+			north
+				dir = NORTH
+				pixel_y = 32
+			east
+				dir = EAST
+			south
+				dir = SOUTH
+			west
+				dir = WEST
+
+		hop
+			name = "Head of Personnel's Office"
+			mail_tag = "head_of_personnel"
+
+			north
+				dir = NORTH
+				pixel_y = 32
+			east
+				dir = EAST
+			south
+				dir = SOUTH
+			west
+				dir = WEST
+
+		rd
+			name = "Research Director's Office"
+			mail_tag = "research_director"
+			mailgroup2 = MGD_RESEARCH
+
+			north
+				dir = NORTH
+				pixel_y = 32
+			east
+				dir = EAST
+			south
+				dir = SOUTH
+			west
+				dir = WEST
+
+		md
+			name = "Medical Director's Office"
+			mail_tag = "medical_director"
+			mailgroup2 = MGD_MEDICAL
+
+			north
+				dir = NORTH
+				pixel_y = 32
+			east
+				dir = EAST
+			south
+				dir = SOUTH
+			west
+				dir = WEST
+
+		ce
+			name = "Chief Engineer's Office"
+			mail_tag = "chief_engineer"
+			mailgroup2 = MGD_ENGINEER
 
 			north
 				dir = NORTH
@@ -1030,6 +1151,21 @@
 				dir = SOUTH
 			west
 				dir = WEST
+
+		barbershop
+			name = "The Snip"
+			mail_tag = "barbershop"
+
+			north
+				dir = NORTH
+				pixel_y = 32
+			east
+				dir = EAST
+			south
+				dir = SOUTH
+			west
+				dir = WEST
+
 /// special mail chutes for the cargo bay
 /obj/machinery/disposal/mail/qm
 	icon_state = "qm_mailchute"
