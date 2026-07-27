@@ -32,6 +32,12 @@
 		SPAWN(10 SECONDS)
 			src.post_radio_status()
 
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
+
 	ui_data(mob/user)
 		. = ..()
 		. += list(
@@ -104,9 +110,10 @@
 
 		ZERO_GASES(air_contents)
 
-		sleep(1 SECOND)
-		playsound(src, 'sound/machines/disposalflush.ogg', 50, FALSE, 0)
-		sleep(0.5 SECONDS) // wait for animation to finish
+		if (!global.instant_pipe_network)
+			sleep(1 SECOND)
+			playsound(src, 'sound/machines/disposalflush.ogg', 50, FALSE, 0)
+			sleep(0.5 SECONDS) // wait for animation to finish
 
 		H.start(src) // start the holder processing movement
 		flushing = FALSE

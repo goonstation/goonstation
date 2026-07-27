@@ -1109,6 +1109,16 @@ TYPEINFO(/obj/item/chair/folded)
 	deconstructable = 1
 	parts_type = /obj/item/furniture_parts/sleekchair
 
+/obj/stool/chair/comfy/wood_regal
+	name = "fancy wooden chair"
+	desc = "Much more comfortable than the average chair, and much more expensive."
+	icon_state = "wooden_regalchair"
+	arm_icon_state = "wooden_regalchair-arm"
+	comfort_value = 7
+	anchored= UNANCHORED
+	deconstructable = TRUE
+	parts_type = /obj/item/furniture_parts/wood_regalchair
+
 /* ======================================================== */
 /* -------------------- Shuttle Chairs -------------------- */
 /* ======================================================== */

@@ -18939,6 +18939,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/random_item_spawner/organs/bloody,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "kxq" = (
@@ -18986,25 +18987,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
 "kyi" = (
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
-/obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
-	desc = "Gross.";
-	name = "old kidney"
-	},
-/obj/item/organ/heart{
-	desc = "A human heart, grody. How long has it been in that freezer?";
-	name = "funky ol' heart"
-	},
-/obj/storage/crate/freezer{
-	name = "Freezer - Spare Parts"
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/obj/storage/crate/freezer/organs,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "kyU" = (

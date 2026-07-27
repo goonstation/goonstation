@@ -147,16 +147,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/south)
-"aaS" = (
-/obj/stool/chair/boxingrope_corner{
-	dir = 6
-	},
-/turf/simulated/floor/engine/glow/blue{
-	icon_state = "boxing"
-	},
-/area/station/engine/singcore{
-	name = "Ringularity Core"
-	})
 "abr" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -1200,17 +1190,6 @@
 /obj/machinery/light/beacon,
 /turf/space,
 /area/space)
-"awO" = (
-/obj/cable,
-/obj/machinery/power/data_terminal,
-/obj/machinery/field_generator,
-/obj/decal/stripe_caution,
-/turf/simulated/floor/engine/glow/blue{
-	icon_state = "boxing"
-	},
-/area/station/engine/singcore{
-	name = "Ringularity Core"
-	})
 "awU" = (
 /obj/decal/tile_edge/stripe,
 /obj/machinery/firealarm/directional/south,
@@ -1747,6 +1726,21 @@
 /obj/machinery/ghostdrone_factory/part2,
 /turf/simulated/floor/airless/caution,
 /area/ghostdrone_factory)
+"aJB" = (
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	dir = 4;
+	name = "The Ringularity";
+	req_access = null
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine/glow/blue{
+	icon_state = "boxing"
+	},
+/area/station/engine/core/singularity/external{
+	name = "Ringularity Core"
+	})
 "aJF" = (
 /obj/cable{
 	icon_state = "5-9"
@@ -2291,6 +2285,20 @@
 /area/station/engine/engineering/restroom{
 	name = "Safety Shower"
 	})
+"aVQ" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/light/incandescent,
+/obj/decal/boxingrope{
+	dir = 4
+	},
+/turf/simulated/floor/engine/glow/blue{
+	icon_state = "boxing"
+	},
+/area/station/engine/core/singularity/external{
+	name = "Ringularity Core"
+	})
 "aWB" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -2389,14 +2397,6 @@
 /obj/disposalpipe/trunk/mail/north,
 /turf/simulated/floor/caution,
 /area/station/engine/engineering)
-"aZv" = (
-/obj/machinery/disposal/mail/autoname/bar,
-/obj/machinery/camera/directional/west{
-	pixel_y = 10
-	},
-/obj/disposalpipe/trunk/mail/north,
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/baroffice)
 "aZQ" = (
 /obj/machinery/camera/directional/east{
 	pixel_y = 10
@@ -2887,6 +2887,16 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/brig{
 	name = "The Cage Arena"
+	})
+"bob" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine/glow/blue{
+	icon_state = "boxing"
+	},
+/area/station/engine/core/singularity/external{
+	name = "Ringularity Core"
 	})
 "boS" = (
 /obj/lattice{
@@ -3742,6 +3752,23 @@
 	},
 /turf/space,
 /area/space)
+"bGz" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/stool/chair/boxingrope_corner{
+	dir = 9
+	},
+/turf/simulated/floor/engine/glow/blue{
+	icon_state = "boxing"
+	},
+/area/station/engine/core/singularity/external{
+	name = "Ringularity Core"
+	})
 "bGA" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment,
@@ -5160,6 +5187,16 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/mining/staff_room)
+"cos" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine/glow/blue{
+	icon_state = "boxing"
+	},
+/area/station/engine/core/singularity/external{
+	name = "Ringularity Core"
+	})
 "coD" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/machinery/recharge_station,
@@ -10129,20 +10166,18 @@
 	dir = 8
 	},
 /area/station/crew_quarters/jazz)
+"ewI" = (
+/obj/railing/boxing,
+/turf/simulated/floor/engine/glow/blue{
+	icon_state = "boxing"
+	},
+/area/station/engine/core/singularity/external{
+	name = "Ringularity Core"
+	})
 "exm" = (
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/carpet/purple/fancy/edge/west,
 /area/station/science/research_director)
-"exs" = (
-/obj/decal/boxingrope{
-	dir = 4
-	},
-/turf/simulated/floor/engine/glow/blue{
-	icon_state = "boxing"
-	},
-/area/station/engine/singcore{
-	name = "Ringularity Core"
-	})
 "ext" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -10267,6 +10302,17 @@
 	dir = 8
 	},
 /area/station/bridge)
+"eyG" = (
+/obj/machinery/camera/directional/north{
+	pixel_x = 10
+	},
+/obj/item/device/radio/intercom/medical,
+/obj/random_item_spawner/organs/bloody,
+/obj/machinery/optable{
+	name = "Autopsy Table"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/medical/morgue)
 "ezb" = (
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
@@ -11101,18 +11147,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
-"eWi" = (
-/obj/disposalpipe/segment/horizontal,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/turf/simulated/floor/engine/glow/blue{
-	icon_state = "boxing"
-	},
-/area/station/engine/singcore{
-	name = "Ringularity Core"
-	})
 "eWl" = (
 /obj/machinery/light{
 	dir = 4;
@@ -11391,6 +11425,13 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
+"fdC" = (
+/turf/simulated/floor/engine/glow/blue{
+	icon_state = "boxing"
+	},
+/area/station/engine/core/singularity/external{
+	name = "Ringularity Core"
+	})
 "fdD" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
@@ -11606,16 +11647,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest{
 	name = "Corpse Tunnel"
-	})
-"fid" = (
-/obj/stool/chair/boxingrope_corner{
-	dir = 10
-	},
-/turf/simulated/floor/engine/glow/blue{
-	icon_state = "boxing"
-	},
-/area/station/engine/singcore{
-	name = "Ringularity Core"
 	})
 "fif" = (
 /obj/item/clothing/suit/cardboard_box,
@@ -11851,6 +11882,14 @@
 "fox" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/data)
+"foy" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/engine/glow/blue{
+	icon_state = "boxing"
+	},
+/area/station/engine/core/singularity/external{
+	name = "Ringularity Core"
+	})
 "foI" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -12377,20 +12416,6 @@
 /obj/landmark/start/job/engineer,
 /turf/simulated/floor/lightyellow,
 /area/station/engine/engineering)
-"fBu" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/machinery/light/incandescent,
-/obj/decal/boxingrope{
-	dir = 8
-	},
-/turf/simulated/floor/engine/glow/blue{
-	icon_state = "boxing"
-	},
-/area/station/engine/singcore{
-	name = "Ringularity Core"
-	})
 "fBF" = (
 /turf/simulated/floor/carpet/blue/standard/edge/ne,
 /area/station/hallway/secondary/north)
@@ -17121,16 +17146,6 @@
 	dir = 4
 	},
 /area/station/medical/medbay)
-"hIS" = (
-/obj/decal/boxingrope{
-	dir = 8
-	},
-/turf/simulated/floor/engine/glow/blue{
-	icon_state = "boxing"
-	},
-/area/station/engine/singcore{
-	name = "Ringularity Core"
-	})
 "hIT" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left{
@@ -17712,17 +17727,6 @@
 /obj/disposalpipe/trunk/south,
 /turf/simulated/floor/plating,
 /area/station/garden/owlery)
-"hYL" = (
-/obj/disposalpipe/switch_junction/left/east{
-	mail_tag = "bar";
-	name = "Bar Mail Router"
-	},
-/obj/decal/tile_edge/line/grey{
-	dir = 9;
-	icon_state = "line2"
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/central)
 "hZk" = (
 /obj/cable{
 	icon_state = "9-10"
@@ -18872,6 +18876,19 @@
 "iBD" = (
 /turf/simulated/floor/carpet/purple/fancy/edge/west,
 /area/station/science/research_director)
+"iBW" = (
+/obj/railing/boxing{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/engine/glow/blue{
+	icon_state = "boxing"
+	},
+/area/station/engine/core/singularity/external{
+	name = "Ringularity Core"
+	})
 "iCi" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -19321,13 +19338,6 @@
 	},
 /turf/simulated/floor/blueblack,
 /area/station/bridge)
-"iMF" = (
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/sanitary,
-/area/station/medical/morgue)
 "iMJ" = (
 /obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/plating,
@@ -26846,19 +26856,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/station/science/lobby)
-"mbl" = (
-/obj/railing/boxing{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor/engine/glow/blue{
-	icon_state = "boxing"
-	},
-/area/station/engine/singcore{
-	name = "Ringularity Core"
-	})
 "mbw" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/northwest)
@@ -27465,6 +27462,21 @@
 	},
 /turf/simulated/floor/black,
 /area/station/maintenance/inner/the_cage)
+"mqH" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/decal/boxingrope,
+/turf/simulated/floor/engine/glow/blue{
+	icon_state = "boxing"
+	},
+/area/station/engine/core/singularity/external{
+	name = "Ringularity Core"
+	})
 "mrD" = (
 /obj/lattice{
 	dir = 10;
@@ -28370,6 +28382,17 @@
 /obj/landmark/listening_post,
 /turf/space,
 /area/space)
+"mMh" = (
+/obj/cable,
+/obj/machinery/power/data_terminal,
+/obj/machinery/field_generator,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/engine/glow/blue{
+	icon_state = "boxing"
+	},
+/area/station/engine/core/singularity/external{
+	name = "Ringularity Core"
+	})
 "mMs" = (
 /obj/machinery/light/runway_light/delay2,
 /obj/lattice{
@@ -30423,22 +30446,6 @@
 "nIY" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/clown)
-"nIZ" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/turf/simulated/floor/engine/glow/blue{
-	icon_state = "boxing"
-	},
-/area/station/engine/singcore{
-	name = "Ringularity Core"
-	})
 "nJb" = (
 /turf/simulated/floor/red/corner{
 	dir = 8
@@ -31402,16 +31409,6 @@
 /obj/item/clothing/glasses/spectro,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
-"oaM" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/engine/glow/blue{
-	icon_state = "boxing"
-	},
-/area/station/engine/singcore{
-	name = "Ringularity Core"
-	})
 "oaR" = (
 /obj/table/auto,
 /obj/item/boardgame/chess,
@@ -32506,6 +32503,17 @@
 	},
 /turf/simulated/floor,
 /area/station/storage/emergencyinternals)
+"oxS" = (
+/obj/disposalpipe/switch_junction/left/east{
+	mail_tag = "bar";
+	name = "Bar Mail Router"
+	},
+/obj/decal/tile_edge/line/grey{
+	dir = 9;
+	icon_state = "line2"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/central)
 "oxX" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -33567,6 +33575,22 @@
 	dir = 8
 	},
 /area/station/hallway/primary/west)
+"oZL" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/engine/glow/blue{
+	icon_state = "boxing"
+	},
+/area/station/engine/core/singularity/external{
+	name = "Ringularity Core"
+	})
 "oZZ" = (
 /obj/mesh/catwalk{
 	dir = 6;
@@ -34282,13 +34306,6 @@
 /turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
-	})
-"psv" = (
-/turf/simulated/floor/engine/glow/blue{
-	icon_state = "boxing"
-	},
-/area/station/engine/singcore{
-	name = "Ringularity Core"
 	})
 "pte" = (
 /obj/machinery/camera/directional/west{
@@ -35834,30 +35851,6 @@
 	dir = 10
 	},
 /area/station/catwalk/south)
-"qge" = (
-/obj/decal/stage_edge,
-/obj/table/reinforced/bar/auto,
-/obj/item/device/microphone,
-/turf/simulated/floor,
-/area/station/engine/singcore{
-	name = "Ringularity Core"
-	})
-"qgf" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/cable{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/engine/glow/blue{
-	icon_state = "boxing"
-	},
-/area/station/engine/singcore{
-	name = "Ringularity Core"
-	})
 "qgk" = (
 /obj/cabinet/medicalmenders,
 /turf/simulated/floor/darkblue,
@@ -36225,6 +36218,19 @@
 	},
 /turf/simulated/floor/black,
 /area/station/maintenance/inner/the_cage)
+"qom" = (
+/obj/machinery/field_generator,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/engine/glow/blue{
+	icon_state = "boxing"
+	},
+/area/station/engine/core/singularity/external{
+	name = "Ringularity Core"
+	})
 "qon" = (
 /turf/simulated/wall/auto/reinforced/supernorn/colored/red,
 /area/station/crew_quarters/courtroom)
@@ -36276,6 +36282,16 @@
 /obj/item/clothing/under/towel,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
+"qpo" = (
+/obj/decal/boxingrope{
+	dir = 4
+	},
+/turf/simulated/floor/engine/glow/blue{
+	icon_state = "boxing"
+	},
+/area/station/engine/core/singularity/external{
+	name = "Ringularity Core"
+	})
 "qps" = (
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/radio/commentators_desk)
@@ -36654,19 +36670,6 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor,
 /area/station/storage/tools)
-"qwn" = (
-/obj/machinery/field_generator,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/data_terminal,
-/obj/decal/stripe_caution,
-/turf/simulated/floor/engine/glow/blue{
-	icon_state = "boxing"
-	},
-/area/station/engine/singcore{
-	name = "Ringularity Core"
-	})
 "qwr" = (
 /obj/machinery/camera/directional/north{
 	pixel_x = -10
@@ -36996,21 +36999,6 @@
 /obj/effects/background_objects/x5,
 /turf/space,
 /area/space)
-"qFK" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/decal/boxingrope,
-/turf/simulated/floor/engine/glow/blue{
-	icon_state = "boxing"
-	},
-/area/station/engine/singcore{
-	name = "Ringularity Core"
-	})
 "qFQ" = (
 /obj/machinery/atmospherics/unary/tank/air_repressurization{
 	name = "Air Hookup Reserve Tank (Air)"
@@ -37051,16 +37039,6 @@
 /obj/item/item_box/postit,
 /turf/simulated/floor/carpet/green/fancy/edge/sw,
 /area/station/crew_quarters/hop)
-"qGS" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/engine/glow/blue{
-	icon_state = "boxing"
-	},
-/area/station/engine/singcore{
-	name = "Ringularity Core"
-	})
 "qHh" = (
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment/mail/horizontal,
@@ -37662,14 +37640,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/main)
-"qXr" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/turf/simulated/floor/engine/glow/blue{
-	icon_state = "boxing"
-	},
-/area/station/engine/singcore{
-	name = "Ringularity Core"
-	})
 "qXA" = (
 /obj/machinery/light/small/cool{
 	dir = 8
@@ -38193,6 +38163,23 @@
 /obj/decal/boxingrope,
 /turf/simulated/floor/specialroom/gym,
 /area/station/medical/dome)
+"rlD" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/stool/chair/boxingrope_corner{
+	dir = 5
+	},
+/turf/simulated/floor/engine/glow/blue{
+	icon_state = "boxing"
+	},
+/area/station/engine/core/singularity/external{
+	name = "Ringularity Core"
+	})
 "rlY" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/boxing,
@@ -38818,21 +38805,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/supernorn,
 /area/station/storage/tools)
-"rAd" = (
-/obj/machinery/door/airlock/pyro/glass/engineering{
-	dir = 4;
-	name = "The Ringularity";
-	req_access = null
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/engine/glow/blue{
-	icon_state = "boxing"
-	},
-/area/station/engine/singcore{
-	name = "Ringularity Core"
-	})
 "rAt" = (
 /obj/machinery/vending/cola/blue,
 /obj/disposalpipe/segment/mail/horizontal,
@@ -39194,6 +39166,14 @@
 "rKq" = (
 /turf/simulated/floor/carpet/red/fancy/edge/se,
 /area/station/crew_quarters/lounge/luxury_seating)
+"rKx" = (
+/obj/decal/stage_edge,
+/obj/table/reinforced/bar/auto,
+/obj/item/device/microphone,
+/turf/simulated/floor,
+/area/station/engine/core/singularity/external{
+	name = "Ringularity Core"
+	})
 "rKB" = (
 /obj/storage/closet/janitor,
 /obj/item/mop,
@@ -39844,6 +39824,16 @@
 	},
 /turf/simulated/floor/white/checker2,
 /area/station/crew_quarters/kitchen)
+"sbC" = (
+/obj/decal/boxingrope{
+	dir = 8
+	},
+/turf/simulated/floor/engine/glow/blue{
+	icon_state = "boxing"
+	},
+/area/station/engine/core/singularity/external{
+	name = "Ringularity Core"
+	})
 "sbM" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -40971,6 +40961,14 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
+"sGx" = (
+/obj/decal/stage_edge,
+/obj/table/reinforced/bar/auto,
+/obj/machinery/wrestlingbell,
+/turf/simulated/floor,
+/area/station/engine/core/singularity/external{
+	name = "Ringularity Core"
+	})
 "sGG" = (
 /obj/rack,
 /obj/item/tank/mini/oxygen,
@@ -41045,6 +41043,14 @@
 /area/station/crew_quarters/toilets{
 	name = "Central Toilets"
 	})
+"sIn" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/storage/crate/freezer/organs,
+/turf/simulated/floor/sanitary,
+/area/station/medical/morgue)
 "sIz" = (
 /obj/machinery/light{
 	dir = 8;
@@ -41599,6 +41605,14 @@
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/chapel/sanctuary)
+"sTK" = (
+/obj/machinery/disposal/mail/autoname/bar,
+/obj/machinery/camera/directional/west{
+	pixel_y = 10
+	},
+/obj/disposalpipe/trunk/mail/north,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/baroffice)
 "sTO" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -41910,13 +41924,6 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/hydroponics/lobby)
-"sYH" = (
-/obj/machinery/camera/directional/north{
-	pixel_x = 10
-	},
-/obj/item/device/radio/intercom/medical,
-/turf/simulated/floor/sanitary,
-/area/station/medical/morgue)
 "sYT" = (
 /obj/disposalpipe/segment,
 /obj/machinery/light/small{
@@ -42020,6 +42027,22 @@
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/medical/dome)
+"taE" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/engine/glow/blue{
+	icon_state = "boxing"
+	},
+/area/station/engine/core/singularity/external{
+	name = "Ringularity Core"
+	})
 "taJ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -43002,23 +43025,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor/caution,
 /area/station/hangar/main)
-"tyg" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/stool/chair/boxingrope_corner{
-	dir = 9
-	},
-/turf/simulated/floor/engine/glow/blue{
-	icon_state = "boxing"
-	},
-/area/station/engine/singcore{
-	name = "Ringularity Core"
-	})
 "tyt" = (
 /obj/landmark/gps_waypoint,
 /obj/cable{
@@ -43592,6 +43598,22 @@
 /area/station/maintenance/west{
 	name = "Boardroom"
 	})
+"tMl" = (
+/obj/machinery/the_singularitygen,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/engine/glow/blue{
+	icon_state = "boxing"
+	},
+/area/station/engine/core/singularity/external{
+	name = "Ringularity Core"
+	})
 "tMz" = (
 /obj/stool/chair/comfy,
 /turf/simulated/floor/black,
@@ -43949,6 +43971,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
+"tXe" = (
+/obj/machinery/light/incandescent,
+/obj/railing/boxing,
+/turf/simulated/floor/engine/glow/blue{
+	icon_state = "boxing"
+	},
+/area/station/engine/core/singularity/external{
+	name = "Ringularity Core"
+	})
 "tXB" = (
 /obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/wood,
@@ -44599,6 +44630,18 @@
 	},
 /turf/simulated/floor/caution,
 /area/station/engine/engineering)
+"unq" = (
+/obj/disposalpipe/segment/horizontal,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/engine/glow/blue{
+	icon_state = "boxing"
+	},
+/area/station/engine/core/singularity/external{
+	name = "Ringularity Core"
+	})
 "unS" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/cable{
@@ -45469,19 +45512,6 @@
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/black,
 /area/station/security/brig)
-"uHq" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/railing/boxing{
-	dir = 8
-	},
-/turf/simulated/floor/engine/glow/blue{
-	icon_state = "boxing"
-	},
-/area/station/engine/singcore{
-	name = "Ringularity Core"
-	})
 "uHr" = (
 /obj/table/glass/auto,
 /obj/machinery/computer/television/small,
@@ -46265,6 +46295,16 @@
 	dir = 4
 	},
 /area/station/engine/inner)
+"vbz" = (
+/obj/stool/chair/boxingrope_corner{
+	dir = 10
+	},
+/turf/simulated/floor/engine/glow/blue{
+	icon_state = "boxing"
+	},
+/area/station/engine/core/singularity/external{
+	name = "Ringularity Core"
+	})
 "vbD" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -47325,20 +47365,6 @@
 "vyu" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/data)
-"vyB" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
-/obj/machinery/light/incandescent,
-/obj/decal/boxingrope{
-	dir = 4
-	},
-/turf/simulated/floor/engine/glow/blue{
-	icon_state = "boxing"
-	},
-/area/station/engine/singcore{
-	name = "Ringularity Core"
-	})
 "vyG" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/disposalpipe/segment/brig{
@@ -47768,22 +47794,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload_foyer)
-"vLr" = (
-/obj/machinery/the_singularitygen,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/light/small/floor,
-/turf/simulated/floor/engine/glow/blue{
-	icon_state = "boxing"
-	},
-/area/station/engine/singcore{
-	name = "Ringularity Core"
-	})
 "vLy" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle{
@@ -49830,6 +49840,16 @@
 /obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
+"wGK" = (
+/obj/stool/chair/boxingrope_corner{
+	dir = 6
+	},
+/turf/simulated/floor/engine/glow/blue{
+	icon_state = "boxing"
+	},
+/area/station/engine/core/singularity/external{
+	name = "Ringularity Core"
+	})
 "wGO" = (
 /obj/machinery/door/poddoor/pyro{
 	dir = 4;
@@ -50083,14 +50103,6 @@
 "wLN" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/hop)
-"wMc" = (
-/obj/decal/stage_edge,
-/obj/table/reinforced/bar/auto,
-/obj/machinery/wrestlingbell,
-/turf/simulated/floor,
-/area/station/engine/singcore{
-	name = "Ringularity Core"
-	})
 "wMh" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -50272,6 +50284,19 @@
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/south,
 /area/station/engine/engineering/breakroom)
+"wPX" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/railing/boxing{
+	dir = 8
+	},
+/turf/simulated/floor/engine/glow/blue{
+	icon_state = "boxing"
+	},
+/area/station/engine/core/singularity/external{
+	name = "Ringularity Core"
+	})
 "wQb" = (
 /obj/storage/crate/packing,
 /turf/simulated/floor,
@@ -51640,6 +51665,20 @@
 /area/station/hallway/secondary/central{
 	name = "Ringside Hallway"
 	})
+"xvN" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/light/incandescent,
+/obj/decal/boxingrope{
+	dir = 8
+	},
+/turf/simulated/floor/engine/glow/blue{
+	icon_state = "boxing"
+	},
+/area/station/engine/core/singularity/external{
+	name = "Ringularity Core"
+	})
 "xvW" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -51653,23 +51692,6 @@
 	icon_state = "L8"
 	},
 /area/station/hallway/secondary/entry)
-"xwx" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/stool/chair/boxingrope_corner{
-	dir = 5
-	},
-/turf/simulated/floor/engine/glow/blue{
-	icon_state = "boxing"
-	},
-/area/station/engine/singcore{
-	name = "Ringularity Core"
-	})
 "xwM" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/cable{
@@ -52502,14 +52524,6 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/science/research_director)
-"xRU" = (
-/obj/railing/boxing,
-/turf/simulated/floor/engine/glow/blue{
-	icon_state = "boxing"
-	},
-/area/station/engine/singcore{
-	name = "Ringularity Core"
-	})
 "xSt" = (
 /obj/decal/cleanable/rust,
 /turf/simulated/wall/auto/supernorn,
@@ -52808,15 +52822,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/quarters_south)
-"xYd" = (
-/obj/machinery/light/incandescent,
-/obj/railing/boxing,
-/turf/simulated/floor/engine/glow/blue{
-	icon_state = "boxing"
-	},
-/area/station/engine/singcore{
-	name = "Ringularity Core"
-	})
 "xYG" = (
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
 /area/station/crew_quarters/lounge)
@@ -87726,7 +87731,7 @@ vnX
 cRV
 yaT
 uND
-iMF
+sIn
 fdB
 daU
 lfT
@@ -88028,7 +88033,7 @@ vnX
 vnX
 say
 uND
-sYH
+eyG
 dxE
 wJh
 azq
@@ -88406,16 +88411,16 @@ dmA
 aQS
 cCg
 sOc
-eWi
-qXr
-qXr
-qXr
-qXr
-rAd
-qXr
-qXr
-qXr
-qXr
+unq
+foy
+foy
+foy
+foy
+aJB
+foy
+foy
+foy
+foy
 ggI
 jbo
 xWc
@@ -88708,16 +88713,16 @@ eWH
 aQS
 wtf
 sOc
-tyg
-hIS
-hIS
-hIS
-fBu
-uHq
-hIS
-hIS
-fid
-qXr
+bGz
+sbC
+sbC
+sbC
+xvN
+wPX
+sbC
+sbC
+vbz
+foy
 ggI
 qkO
 uyl
@@ -89010,16 +89015,16 @@ olp
 aQS
 aqq
 sOc
-qFK
-qwn
-qGS
-qGS
-nIZ
-qGS
-qGS
-awO
-xYd
-qXr
+mqH
+qom
+bob
+bob
+oZL
+bob
+bob
+mMh
+tXe
+foy
 ggI
 qkO
 alC
@@ -89312,16 +89317,16 @@ mtV
 aQS
 aqq
 mid
-qFK
-psv
-psv
-psv
-oaM
-psv
-psv
-psv
-xRU
-qXr
+mqH
+fdC
+fdC
+fdC
+cos
+fdC
+fdC
+fdC
+ewI
+foy
 ggI
 qkO
 jmP
@@ -89614,17 +89619,17 @@ kqO
 aQS
 aqq
 jin
-qFK
-psv
-psv
-psv
-oaM
-psv
-psv
-psv
-xRU
-qXr
-wMc
+mqH
+fdC
+fdC
+fdC
+cos
+fdC
+fdC
+fdC
+ewI
+foy
+sGx
 qkO
 uyl
 dhJ
@@ -89916,16 +89921,16 @@ qHS
 aQS
 gom
 oRl
-qFK
-psv
-psv
-psv
-vLr
-psv
-psv
-psv
-xRU
-qXr
+mqH
+fdC
+fdC
+fdC
+tMl
+fdC
+fdC
+fdC
+ewI
+foy
 oke
 mzh
 ubB
@@ -90218,17 +90223,17 @@ qHS
 aQS
 oRN
 jzZ
-qFK
-psv
-psv
-psv
-oaM
-psv
-psv
-psv
-xRU
-qXr
-qge
+mqH
+fdC
+fdC
+fdC
+cos
+fdC
+fdC
+fdC
+ewI
+foy
+rKx
 ycW
 uyl
 dhJ
@@ -90520,16 +90525,16 @@ pPQ
 aQS
 aqq
 jmw
-qFK
-psv
-psv
-psv
-oaM
-psv
-psv
-psv
-xRU
-qXr
+mqH
+fdC
+fdC
+fdC
+cos
+fdC
+fdC
+fdC
+ewI
+foy
 ggI
 qkO
 cxT
@@ -90822,16 +90827,16 @@ pPQ
 aQS
 aqq
 jEM
-qFK
-qwn
-qGS
-qGS
-qgf
-qGS
-qGS
-awO
-xYd
-qXr
+mqH
+qom
+bob
+bob
+taE
+bob
+bob
+mMh
+tXe
+foy
 ggI
 qkO
 alC
@@ -91124,16 +91129,16 @@ pPQ
 aQS
 wtf
 sOc
-xwx
-exs
-exs
-exs
-vyB
-mbl
-exs
-exs
-aaS
-qXr
+rlD
+qpo
+qpo
+qpo
+aVQ
+iBW
+qpo
+qpo
+wGK
+foy
 ggI
 qkO
 uyl
@@ -91426,16 +91431,16 @@ cns
 xWi
 cCg
 sOc
-eWi
-qXr
-qXr
-qXr
-qXr
-rAd
-qXr
-qXr
-qXr
-qXr
+unq
+foy
+foy
+foy
+foy
+aJB
+foy
+foy
+foy
+foy
 ggI
 pQf
 lNN
@@ -95299,7 +95304,7 @@ aLx
 cGn
 oBo
 cXM
-hYL
+oxS
 mnR
 cvl
 ttM
@@ -97422,7 +97427,7 @@ vnX
 uot
 uYI
 ovt
-aZv
+sTK
 iyM
 iKz
 sHJ
