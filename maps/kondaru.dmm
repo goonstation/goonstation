@@ -40628,7 +40628,7 @@
 /area/station/medical/medbay)
 "mcp" = (
 /obj/disposalpipe/trunk/mail/west,
-/obj/machinery/disposal/mail/autoname/news,
+/obj/machinery/disposal/mail/autoname/public/news,
 /obj/machinery/camera/directional/east{
 	pixel_y = 10
 	},
