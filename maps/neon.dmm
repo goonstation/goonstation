@@ -3406,9 +3406,7 @@
 /area/station/quartermaster/office)
 "cEa" = (
 /obj/machinery/light/incandescent/blueish,
-/obj/machinery/disposal/mail/autoname{
-	mail_tag = "warehouse"
-	},
+/obj/machinery/disposal/mail/autoname/qm/warehouse,
 /obj/disposalpipe/trunk/mail/east,
 /turf/simulated/floor/grime{
 	dir = 8

@@ -29102,8 +29102,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
 "jcT" = (
-/obj/machinery/disposal/mail/small/autoname/public/crewB/north{
-	mail_tag = "crewC";
+/obj/machinery/disposal/mail/small/autoname/public/crewC/north{
 	pixel_y = 24
 	},
 /obj/disposalpipe/trunk/mail,
@@ -33402,10 +33401,7 @@
 /turf/simulated/wall/auto/jen/blue,
 /area/station/maintenance/inner/sw)
 "ksz" = (
-/obj/machinery/disposal/mail/small{
-	mail_tag = "ranch";
-	name = "mail chute (ranch)"
-	},
+/obj/machinery/disposal/mail/small/autoname/ranch,
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
@@ -64643,10 +64639,8 @@
 	},
 /area/station/engine/engineering)
 "uae" = (
-/obj/machinery/disposal/mail/small/autoname{
+/obj/machinery/disposal/mail/small/autoname/medbay/pharmacy{
 	dir = 1;
-	mail_tag = "pharmacy";
-	mailgroup = "medbay";
 	pixel_y = 28
 	},
 /obj/cable{
@@ -74648,9 +74642,7 @@
 	dir = 6;
 	icon_state = "line2"
 	},
-/obj/machinery/disposal/mail/small/autoname/public/escape/south{
-	mail_tag = "fuq III"
-	},
+/obj/machinery/disposal/mail/small/autoname/public/fuq3,
 /obj/disposalpipe/trunk/mail,
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{

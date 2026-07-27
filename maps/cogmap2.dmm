@@ -38433,13 +38433,8 @@
 /area/station/medical/robotics)
 "cwt" = (
 /obj/disposalpipe/trunk/mail/south,
-/obj/machinery/disposal/mail/small{
+/obj/machinery/disposal/mail/small/autoname/medbay/robotics{
 	dir = 1;
-	mail_tag = "robotics";
-	mailgroup = "robotics";
-	mailgroup2 = null;
-	message = "1";
-	name = "mail chute-'Robotics'";
 	pixel_x = 0;
 	pixel_y = 32
 	},
@@ -52259,12 +52254,8 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/trunk/mail/south,
-/obj/machinery/disposal/mail/small{
+/obj/machinery/disposal/mail/small/autoname/command_office/md{
 	dir = 1;
-	mail_tag = "medical director";
-	mailgroup = "command";
-	mailgroup2 = "medbay";
-	name = "mail chute-'Medical Director'";
 	pixel_y = 32
 	},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/north,
@@ -54008,7 +53999,7 @@
 /area/station/hallway/secondary/exit)
 "gZy" = (
 /obj/disposalpipe/switch_junction/right/north{
-	mail_tag = list("medbay lobby","telescience","testchamber","research","chemistry","medbay","morgue","pathology","genetics","robotics","medical director");
+	mail_tag = list("medbay lobby","telescience","testchamber","research","chemistry","medbay","morgue","pathology","genetics","robotics","medical_director");
 	name = "mail junction (medsci sector)"
 	},
 /turf/simulated/wall/auto/supernorn,
@@ -60068,7 +60059,7 @@
 /area/station/bridge/customs)
 "lGZ" = (
 /obj/disposalpipe/switch_junction/right/east{
-	mail_tag = "medical director";
+	mail_tag = "medical_director";
 	name = "mail junction (medical director)"
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{

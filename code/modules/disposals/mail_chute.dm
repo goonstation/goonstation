@@ -182,12 +182,20 @@
 		mail_tag = "hydroponics"
 		mailgroup = MGT_HYDROPONICS
 		message = 1
+	ranch
+		name = "Ranch"
+		mail_tag = "ranch"
+		mailgroup = MGT_HYDROPONICS
+		message = 1
 	security
 		name = "Security"
 		mail_tag = "security"
 		mailgroup = MGD_SECURITY
 		message = 1
 
+		foyer
+			name = "Security Foyer"
+			mail_tag = "sec foyer"
 		brig
 			name = "Brig"
 			mail_tag = "brig"
@@ -233,6 +241,17 @@
 			name = "Refinery"
 			mail_tag = "refinery"
 
+		warehouse
+			name = "Warehouse"
+			mail_tag = "warehouse"
+
+	tool_storage
+		name = "Tool Storage"
+		mail_tag = "storage"
+	sorting_room
+		name = "Sorting Room"
+		mail_tag = "sortingroom"
+
 	research
 		name = "Research"
 		mail_tag = "research"
@@ -245,9 +264,21 @@
 		chemistry
 			name = "Chemistry"
 			mail_tag = "chemistry"
+		toxins
+			name = "Toxins"
+			mail_tag = "toxins"
+		artlab
+			name = "Artifact lab"
+			mail_tag = "artlab"
 		testchamber
 			name = "Test Chamber"
 			mail_tag = "testchamber"
+		robot_depot
+			name = "Robot Depot"
+			mail_tag = "buddy_depot"
+		hangar
+			name = "Research Hangar"
+			mail_tag = "research_hangar"
 
 	medbay
 		name = "Medbay"
@@ -272,6 +303,36 @@
 		booth
 			name = "Medical Booth"
 			mail_tag = "medical booth"
+		psychiatry
+			name = "Psychiatry"
+			mail_tag = "psychiatry"
+
+	command_office
+		name = "Don't spawn me"
+		mailgroup = MGD_COMMAND
+
+		cap
+			name = "Captain's Office"
+			mail_tag = "captain"
+
+		hop
+			name = "Head of Personnel's Office"
+			mail_tag = "head_of_personnel"
+
+		rd
+			name = "Research Director's Office"
+			mail_tag = "research_director"
+			mailgroup2 = MGD_RESEARCH
+
+		md
+			name = "Medical Director's Office"
+			mail_tag = "medical_director"
+			mailgroup2 = MGD_MEDICAL
+
+		ce
+			name = "Chief Engineer's Office"
+			mail_tag = "chief_engineer"
+			mailgroup2 = MGD_ENGINEER
 
 	checkpoint
 		name = "Don't spawn me"
@@ -306,6 +367,9 @@
 		east
 			name = "East Hallway Checkpoint"
 			mail_tag = "east hallway checkpoint"
+		zeta
+			name = "Outpost Checkpoint"
+			mail_tag = "zeta checkpoint"
 
 	public
 		name = "Don't spawn me"
@@ -340,6 +404,12 @@
 		podbay
 			name = "Pod Bay"
 			mail_tag = "podbay"
+		news
+			name = "News Office"
+			mail_tag = "news office"
+		aviary
+			name = "Aviary"
+			mail_tag = "aviary"
 
 /obj/machinery/disposal/mail/small
 	icon = 'icons/obj/disposal_small.dmi'
@@ -421,6 +491,22 @@
 		west
 			dir = WEST
 
+	ranch
+		name = "Ranch"
+		mail_tag = "ranch"
+		mailgroup = MGT_HYDROPONICS
+		message = 1
+
+		north
+			dir = NORTH
+			pixel_y = 32
+		east
+			dir = EAST
+		south
+			dir = SOUTH
+		west
+			dir = WEST
+
 	security
 		name = "Security"
 		mail_tag = "security"
@@ -454,6 +540,20 @@
 		detective
 			name = "Detective"
 			mail_tag = "detective"
+
+			north
+				dir = NORTH
+				pixel_y = 32
+			east
+				dir = EAST
+			south
+				dir = SOUTH
+			west
+				dir = WEST
+
+		hangar
+			name = "Security Hangar"
+			mail_tag = "security_hangar"
 
 			north
 				dir = NORTH
@@ -512,6 +612,20 @@
 			dir = SOUTH
 		west
 			dir = WEST
+
+		storage
+			name = "Engineering Storage"
+			mail_tag = "engineering_storage"
+
+			north
+				dir = NORTH
+				pixel_y = 32
+			east
+				dir = EAST
+			south
+				dir = SOUTH
+			west
+				dir = WEST
 
 	mechanics
 		name = "Mechanics"
@@ -619,9 +733,37 @@
 			west
 				dir = WEST
 
+		toxins
+			name = "Toxins"
+			mail_tag = "toxins"
+
+			north
+				dir = NORTH
+				pixel_y = 32
+			east
+				dir = EAST
+			south
+				dir = SOUTH
+			west
+				dir = WEST
+
 		testchamber
 			name = "Test Chamber"
 			mail_tag = "testchamber"
+
+			north
+				dir = NORTH
+				pixel_y = 32
+			east
+				dir = EAST
+			south
+				dir = SOUTH
+			west
+				dir = WEST
+
+		hangar
+			name = "Research Hangar"
+			mail_tag = "research_hangar"
 
 			north
 				dir = NORTH
@@ -693,6 +835,20 @@
 			west
 				dir = WEST
 
+		pharmacy
+			name = "Pharmacy"
+			mail_tag = "pharmacy"
+
+			north
+				dir = NORTH
+				pixel_y = 32
+			east
+				dir = EAST
+			south
+				dir = SOUTH
+			west
+				dir = WEST
+
 		morgue
 			name = "Morgue"
 			mail_tag = "morgue"
@@ -710,6 +866,97 @@
 		booth
 			name = "Medical Booth"
 			mail_tag = "medical booth"
+
+			north
+				dir = NORTH
+				pixel_y = 32
+			east
+				dir = EAST
+			south
+				dir = SOUTH
+			west
+				dir = WEST
+
+		psychiatry
+			name = "Psychiatry"
+			mail_tag = "psychiatry"
+
+			north
+				dir = NORTH
+				pixel_y = 32
+			east
+				dir = EAST
+			south
+				dir = SOUTH
+			west
+				dir = WEST
+
+	command_office
+		name = "Don't spawn me"
+		mailgroup = MGD_COMMAND
+
+		cap
+			name = "Captain's Office"
+			mail_tag = "captain"
+
+			north
+				dir = NORTH
+				pixel_y = 32
+			east
+				dir = EAST
+			south
+				dir = SOUTH
+			west
+				dir = WEST
+
+		hop
+			name = "Head of Personnel's Office"
+			mail_tag = "head_of_personnel"
+
+			north
+				dir = NORTH
+				pixel_y = 32
+			east
+				dir = EAST
+			south
+				dir = SOUTH
+			west
+				dir = WEST
+
+		rd
+			name = "Research Director's Office"
+			mail_tag = "research_director"
+			mailgroup2 = MGD_RESEARCH
+
+			north
+				dir = NORTH
+				pixel_y = 32
+			east
+				dir = EAST
+			south
+				dir = SOUTH
+			west
+				dir = WEST
+
+		md
+			name = "Medical Director's Office"
+			mail_tag = "medical_director"
+			mailgroup2 = MGD_MEDICAL
+
+			north
+				dir = NORTH
+				pixel_y = 32
+			east
+				dir = EAST
+			south
+				dir = SOUTH
+			west
+				dir = WEST
+
+		ce
+			name = "Chief Engineer's Office"
+			mail_tag = "chief_engineer"
+			mailgroup2 = MGD_ENGINEER
 
 			north
 				dir = NORTH
@@ -898,6 +1145,20 @@
 			west
 				dir = WEST
 
+		crewC
+			name = "Crew C"
+			mail_tag = "crewC"
+
+			north
+				dir = NORTH
+				pixel_y = 32
+			east
+				dir = EAST
+			south
+				dir = SOUTH
+			west
+				dir = WEST
+
 		arcade
 			name = "Arcade"
 			mail_tag = "arcade"
@@ -995,6 +1256,67 @@
 				dir = SOUTH
 			west
 				dir = WEST
+
+		barbershop
+			name = "The Snip"
+			mail_tag = "barbershop"
+
+			north
+				dir = NORTH
+				pixel_y = 32
+			east
+				dir = EAST
+			south
+				dir = SOUTH
+			west
+				dir = WEST
+
+		info_office
+			name = "Information Office"
+			mail_tag = "information office"
+
+			north
+				dir = NORTH
+				pixel_y = 32
+			east
+				dir = EAST
+			south
+				dir = SOUTH
+			west
+				dir = WEST
+
+		fitness
+			name = "Fitness Room"
+			mail_tag = "fitness room"
+
+			north
+				dir = NORTH
+				pixel_y = 32
+			east
+				dir = EAST
+			south
+				dir = SOUTH
+			west
+				dir = WEST
+
+		radio
+			name = "Radio Booth"
+			mail_tag = "radio booth"
+
+			north
+				dir = NORTH
+				pixel_y = 32
+			east
+				dir = EAST
+			south
+				dir = SOUTH
+			west
+				dir = WEST
+
+		fuq3
+			name = "Fuq III"
+			mail_tag = "fuq III"
+
 /// special mail chutes for the cargo bay
 /obj/machinery/disposal/mail/qm
 	icon_state = "qm_mailchute"

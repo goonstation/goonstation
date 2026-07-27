@@ -19075,10 +19075,7 @@
 /obj/machinery/camera/directional/north{
 	pixel_x = -10
 	},
-/obj/machinery/disposal/mail/autoname{
-	mail_tag = "mechanics";
-	mailgroup = "engineer"
-	},
+/obj/machinery/disposal/mail/autoname/mechanics,
 /obj/disposalpipe/trunk/mail/south,
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
@@ -38165,10 +38162,8 @@
 /area/station/security/hos)
 "xnN" = (
 /obj/disposalpipe/trunk/mail/south,
-/obj/machinery/disposal/mail/small/autoname{
-	dir = 8;
-	mail_tag = "ranch";
-	mailgroup = "botany"
+/obj/machinery/disposal/mail/small/autoname/ranch{
+	dir = 8
 	},
 /obj/machinery/shieldgenerator/energy_shield,
 /turf/simulated/floor/neutral,
@@ -38765,10 +38760,8 @@
 	},
 /obj/machinery/hydro_growlamp,
 /obj/disposalpipe/trunk/mail/east,
-/obj/machinery/disposal/mail/small/autoname{
-	dir = 4;
-	mail_tag = "ranch";
-	mailgroup = "botany"
+/obj/machinery/disposal/mail/small/autoname/ranch{
+	dir = 4
 	},
 /turf/simulated/floor/auto/dirt,
 /area/station/ranch)

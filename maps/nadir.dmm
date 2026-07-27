@@ -16794,6 +16794,30 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
 /area/station/bridge/captain)
+"hpU" = (
+/obj/table/reinforced/auto,
+/obj/machinery/cell_charger,
+/obj/item/cell/supercell/charged,
+/obj/item/cell/supercell/charged,
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
+/obj/item/disk/data/cartridge/diagnostics{
+	pixel_x = 9;
+	pixel_y = -2
+	},
+/obj/item/disk/data/cartridge/diagnostics{
+	pixel_x = 11;
+	pixel_y = 4
+	},
+/obj/item/disk/data/cartridge/diagnostics{
+	pixel_x = 10;
+	pixel_y = 12
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 5
+	},
+/area/station/engine/elect)
 "hqP" = (
 /obj/mesh/catwalk,
 /obj/cable{
@@ -25841,6 +25865,16 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/sauna)
+"lil" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/machinery/disposal/mail/autoname/ranch,
+/obj/disposalpipe/trunk/mail/south,
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "lix" = (
 /obj/table/wood/round/auto,
 /obj/machinery/microwave,
@@ -36814,30 +36848,6 @@
 	icon_state = "crewquarters";
 	name = "Warrens Hall"
 	})
-"pXd" = (
-/obj/table/reinforced/auto,
-/obj/machinery/cell_charger,
-/obj/item/cell/supercell/charged,
-/obj/item/cell/supercell/charged,
-/obj/machinery/status_display{
-	pixel_y = 30
-	},
-/obj/item/disk/data/cartridge/diagnostics{
-	pixel_x = 9;
-	pixel_y = -2
-	},
-/obj/item/disk/data/cartridge/diagnostics{
-	pixel_x = 11;
-	pixel_y = 4
-	},
-/obj/item/disk/data/cartridge/diagnostics{
-	pixel_x = 10;
-	pixel_y = 12
-	},
-/turf/simulated/floor/yellowblack{
-	dir = 5
-	},
-/area/station/engine/elect)
 "pXu" = (
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
@@ -44819,20 +44829,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/artifact)
-"tLV" = (
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/obj/machinery/disposal/mail{
-	mail_tag = "ranch";
-	mailgroup = "botany";
-	name = "Ranch"
-	},
-/obj/disposalpipe/trunk/mail/south,
-/turf/simulated/floor/dirt,
-/area/station/ranch)
 "tMa" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -91821,7 +91817,7 @@ fxR
 fxR
 fxR
 fer
-tLV
+lil
 wQX
 jRZ
 sJm
@@ -107870,7 +107866,7 @@ iPJ
 vEo
 vIQ
 hWH
-pXd
+hpU
 vyY
 rjb
 bHF
