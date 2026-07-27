@@ -551,6 +551,20 @@
 			west
 				dir = WEST
 
+		hangar
+			name = "Security Hangar"
+			mail_tag = "security_hangar"
+
+			north
+				dir = NORTH
+				pixel_y = 32
+			east
+				dir = EAST
+			south
+				dir = SOUTH
+			west
+				dir = WEST
+
 	bridge
 		name = "Bridge"
 		mail_tag = "bridge"
@@ -598,6 +612,20 @@
 			dir = SOUTH
 		west
 			dir = WEST
+
+		storage
+			name = "Engineering Storage"
+			mail_tag = "engineering_storage"
+
+			north
+				dir = NORTH
+				pixel_y = 32
+			east
+				dir = EAST
+			south
+				dir = SOUTH
+			west
+				dir = WEST
 
 	mechanics
 		name = "Mechanics"
@@ -807,6 +835,20 @@
 			west
 				dir = WEST
 
+		pharmacy
+			name = "Pharmacy"
+			mail_tag = "pharmacy"
+
+			north
+				dir = NORTH
+				pixel_y = 32
+			east
+				dir = EAST
+			south
+				dir = SOUTH
+			west
+				dir = WEST
+
 		morgue
 			name = "Morgue"
 			mail_tag = "morgue"
@@ -824,6 +866,20 @@
 		booth
 			name = "Medical Booth"
 			mail_tag = "medical booth"
+
+			north
+				dir = NORTH
+				pixel_y = 32
+			east
+				dir = EAST
+			south
+				dir = SOUTH
+			west
+				dir = WEST
+
+		psychiatry
+			name = "Psychiatry"
+			mail_tag = "psychiatry"
 
 			north
 				dir = NORTH
@@ -1089,6 +1145,20 @@
 			west
 				dir = WEST
 
+		crewC
+			name = "Crew C"
+			mail_tag = "crewC"
+
+			north
+				dir = NORTH
+				pixel_y = 32
+			east
+				dir = EAST
+			south
+				dir = SOUTH
+			west
+				dir = WEST
+
 		arcade
 			name = "Arcade"
 			mail_tag = "arcade"
@@ -1200,6 +1270,52 @@
 				dir = SOUTH
 			west
 				dir = WEST
+
+		info_office
+			name = "Information Office"
+			mail_tag = "information office"
+
+			north
+				dir = NORTH
+				pixel_y = 32
+			east
+				dir = EAST
+			south
+				dir = SOUTH
+			west
+				dir = WEST
+
+		fitness
+			name = "Fitness Room"
+			mail_tag = "fitness room"
+
+			north
+				dir = NORTH
+				pixel_y = 32
+			east
+				dir = EAST
+			south
+				dir = SOUTH
+			west
+				dir = WEST
+
+		radio
+			name = "Radio Booth"
+			mail_tag = "radio booth"
+
+			north
+				dir = NORTH
+				pixel_y = 32
+			east
+				dir = EAST
+			south
+				dir = SOUTH
+			west
+				dir = WEST
+
+		fuq3
+			name = "Fuq III"
+			mail_tag = "fuq III"
 
 /// special mail chutes for the cargo bay
 /obj/machinery/disposal/mail/qm
