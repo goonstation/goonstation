@@ -1,4 +1,9 @@
 
+(t)mon jul 27 26
+(u)JORJ949
+(p)27157
+(e)🔄📄📨|C-Rework, A-UI, A-Logistics
+(*)The Quartermaster supply console is now in TGUI. It should now be more responsive and the data should refresh as soon  as it changes (e.g. market reset) instead of needing you to click the console to refresh.
 (t)thu jul 23 26
 (u)ANNmagedon
 (p)27280
