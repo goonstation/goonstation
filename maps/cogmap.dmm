@@ -2444,10 +2444,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
 "akJ" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "crew";
-	name = "mail chute-'Crew Quarters'"
-	},
+/obj/machinery/disposal/mail/autoname/public/crew,
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
@@ -4747,12 +4744,7 @@
 	},
 /area/station/hydroponics/lobby)
 "awx" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "hydroponics";
-	mailgroup = "botany";
-	message = "1";
-	name = "mail chute-'Hydroponics'"
-	},
+/obj/machinery/disposal/mail/autoname/hydroponics,
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
@@ -10083,12 +10075,7 @@
 	pixel_x = -10
 	},
 /obj/machinery/atmospherics/pipe/simple,
-/obj/machinery/disposal/mail{
-	mail_tag = "bridge";
-	mailgroup = "command";
-	message = "1";
-	name = "mail chute-'Bridge'"
-	},
+/obj/machinery/disposal/mail/autoname/bridge,
 /obj/disposalpipe/trunk/mail{
 	dir = 4
 	},
@@ -10630,12 +10617,7 @@
 /turf/simulated/wall/auto/supernorn/wood,
 /area/station/crew_quarters/pool)
 "aRz" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "detective";
-	mailgroup = "security";
-	message = "1";
-	name = "mail chute-'Detective'"
-	},
+/obj/machinery/disposal/mail/autoname/security/detective,
 /obj/disposalpipe/trunk/mail{
 	dir = 1
 	},
@@ -11276,12 +11258,7 @@
 /area/station/medical/crematorium)
 "aTI" = (
 /obj/disposalpipe/trunk/mail,
-/obj/machinery/disposal/mail{
-	mail_tag = "chapel";
-	mailgroup = "chaplain";
-	message = "1";
-	name = "mail chute-'Chapel'"
-	},
+/obj/machinery/disposal/mail/autoname/chapel,
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
@@ -24417,12 +24394,7 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 1
 	},
-/obj/machinery/disposal/mail{
-	mail_tag = "research";
-	mailgroup = "science";
-	message = 1;
-	name = "mail chute-'Research'"
-	},
+/obj/machinery/disposal/mail/autoname/research,
 /turf/simulated/floor/purple/side,
 /area/station/science/lobby)
 "bXH" = (
@@ -25977,12 +25949,7 @@
 	dir = 10;
 	icon_state = "xtra_bigstripe-corner2"
 	},
-/obj/machinery/disposal/mail{
-	mail_tag = "robotics";
-	mailgroup = "medresearch";
-	message = "1";
-	name = "mail chute-'Robotics'"
-	},
+/obj/machinery/disposal/mail/autoname/medbay/robotics,
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
@@ -28021,13 +27988,7 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 1
 	},
-/obj/machinery/disposal/mail{
-	mail_tag = "medbay";
-	mailgroup = "medbay";
-	mailgroup2 = "medresearch";
-	message = "1";
-	name = "mail chute-'Medbay'"
-	},
+/obj/machinery/disposal/mail/autoname/medbay,
 /obj/machinery/door_control{
 	id = "medbay_front";
 	name = "Medbay Door Control";
@@ -28987,12 +28948,7 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
-/obj/machinery/disposal/mail{
-	mail_tag = "chemistry";
-	mailgroup = "science";
-	message = 1;
-	name = "mail chute-'Chemistry'"
-	},
+/obj/machinery/disposal/mail/autoname/research/chemistry,
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
@@ -30932,12 +30888,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/disposal/mail{
-	mail_tag = "testchamber";
-	mailgroup = "science";
-	message = 1;
-	name = "mail chute-'Test Chamber'"
-	},
+/obj/machinery/disposal/mail/autoname/research/testchamber,
 /obj/disposalpipe/trunk/mail{
 	dir = 1
 	},
@@ -35386,10 +35337,7 @@
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "eCT" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "kitchen";
-	name = "mail chute-'Kitchen'"
-	},
+/obj/machinery/disposal/mail/autoname/kitchen,
 /obj/disposalpipe/trunk/mail,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -51612,11 +51560,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/substation/pylon)
 "poS" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "genetics";
-	mailgroup = "medresearch";
-	name = "mail chute-'Genetics'"
-	},
+/obj/machinery/disposal/mail/autoname/research/genetics,
 /obj/disposalpipe/trunk/mail{
 	dir = 1
 	},
@@ -52792,12 +52736,7 @@
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "qiY" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "brig";
-	mailgroup = "security";
-	message = "1";
-	name = "mail chute-'Brig'"
-	},
+/obj/machinery/disposal/mail/autoname/security/brig,
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},

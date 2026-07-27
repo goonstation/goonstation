@@ -2390,10 +2390,7 @@
 /turf/simulated/floor/caution,
 /area/station/engine/engineering)
 "aZv" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "Bar";
-	name = "Bar"
-	},
+/obj/machinery/disposal/mail/autoname/bar,
 /obj/machinery/camera/directional/west{
 	pixel_y = 10
 	},
@@ -17717,7 +17714,7 @@
 /area/station/garden/owlery)
 "hYL" = (
 /obj/disposalpipe/switch_junction/left/east{
-	mail_tag = "Bar";
+	mail_tag = "bar";
 	name = "Bar Mail Router"
 	},
 /obj/decal/tile_edge/line/grey{

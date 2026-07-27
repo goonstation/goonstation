@@ -30106,10 +30106,7 @@
 /area/station/engine/gas)
 "eOP" = (
 /obj/disposalpipe/trunk/mail/west,
-/obj/machinery/disposal/mail{
-	mail_tag = "news office";
-	name = "News Office"
-	},
+/obj/machinery/disposal/mail/autoname/news,
 /obj/machinery/camera/directional/east{
 	pixel_y = 10
 	},
@@ -52698,11 +52695,7 @@
 	},
 /area/station/crew_quarters/fitness)
 "uCo" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "ranch";
-	mailgroup = "botany";
-	name = "Ranch"
-	},
+/obj/machinery/disposal/mail/autoname/ranch,
 /obj/disposalpipe/trunk/mail/east,
 /turf/simulated/floor/caution/misc{
 	dir = 4

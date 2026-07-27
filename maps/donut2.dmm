@@ -624,12 +624,7 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/south,
 /area/station/crew_quarters/hor)
 "afR" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "artlab";
-	mailgroup = "science";
-	message = "1";
-	name = "mail chute-'Artifact Lab'"
-	},
+/obj/machinery/disposal/mail/autoname/research/artlab,
 /obj/disposalpipe/trunk/mail/east,
 /turf/simulated/floor/white/checker2{
 	dir = 8
@@ -1150,12 +1145,7 @@
 	},
 /area/station/science/hall)
 "ajL" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "buddy_depot";
-	mailgroup = "science";
-	message = "1";
-	name = "mail chute-'Robot Depot'"
-	},
+/obj/machinery/disposal/mail/autoname/research/robot_depot,
 /obj/disposalpipe/trunk/mail{
 	dir = 4
 	},
@@ -2634,10 +2624,7 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "asF" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "shuttlebay";
-	name = "mail chute-'Shuttlebay'"
-	},
+/obj/machinery/disposal/mail/autoname/public/arrivals,
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
@@ -17302,7 +17289,7 @@
 "dRx" = (
 /obj/disposalpipe/switch_junction{
 	dir = 4;
-	mail_tag = list("station","bar","bridge","captain","cargo","chapel","chief_engineer","detective","mechanics","engineering","genetics","hydroponics","kitchen","medbay","mining","robotics","security","shuttlebay","storage","chemlink");
+	mail_tag = list("station","bar","bridge","captain","cargo","chapel","chief_engineer","detective","mechanics","engineering","genetics","hydroponics","kitchen","medbay","mining","robotics","security","arrivals hallway","storage","chemlink");
 	name = "station mail router"
 	},
 /turf/simulated/floor/green/side,
@@ -17316,8 +17303,8 @@
 	},
 /obj/disposalpipe/switch_junction{
 	dir = 8;
-	mail_tag = "zeta_sec";
-	name = "zeta sec mail router"
+	mail_tag = "zeta checkpoint";
+	name = "zeta checkpoint mail router"
 	},
 /turf/simulated/floor/red/side{
 	dir = 1
@@ -23418,7 +23405,7 @@
 	},
 /obj/disposalpipe/switch_junction{
 	icon_state = "pipe-sj2";
-	mail_tag = list("research","artlab","buddy_depot","chemistry","research_director","research_hangar","telescience","toxins","zeta_sec");
+	mail_tag = list("research","artlab","buddy_depot","chemistry","research_director","research_hangar","telescience","toxins","zeta checkpoint");
 	name = "outpost mail router"
 	},
 /turf/simulated/floor,
@@ -27513,8 +27500,8 @@
 /obj/disposalpipe/switch_junction{
 	dir = 4;
 	icon_state = "pipe-sj2";
-	mail_tag = "shuttlebay";
-	name = "shuttlebay mail router"
+	mail_tag = "arrivals hallway";
+	name = "arrivals hallway mail router"
 	},
 /obj/machinery/camera/directional/south{
 	c_tag = "North Hallway Middle";
@@ -31119,10 +31106,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria)
 "lNP" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "storage";
-	name = "mail chute-'Storage'"
-	},
+/obj/machinery/disposal/mail/autoname/tool_storage,
 /obj/disposalpipe/trunk/mail{
 	dir = 1
 	},
@@ -31519,12 +31503,7 @@
 /turf/simulated/floor,
 /area/station/science/testchamber)
 "man" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "toxins";
-	mailgroup = "science";
-	message = "1";
-	name = "mail chute-'Toxins'"
-	},
+/obj/machinery/disposal/mail/autoname/research/toxins,
 /obj/machinery/firealarm/directional/west,
 /obj/disposalpipe/trunk/mail{
 	dir = 1
@@ -35455,11 +35434,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "ojf" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "zeta_sec";
-	mailgroup = "security";
-	name = "mail chute-'Outpost Security'"
-	},
+/obj/machinery/disposal/mail/autoname/checkpoint/zeta,
 /obj/disposalpipe/trunk/mail,
 /turf/simulated/floor/redblack,
 /area/station/security/checkpoint/research)
@@ -46826,12 +46801,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
-/obj/machinery/disposal/mail{
-	mail_tag = "research_hangar";
-	mailgroup = "science";
-	message = 1;
-	name = "mail chute-'Research Hangar"
-	},
+/obj/machinery/disposal/mail/autoname/research/hangar,
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},

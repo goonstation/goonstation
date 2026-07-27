@@ -175,6 +175,11 @@
 		mail_tag = "hydroponics"
 		mailgroup = MGT_HYDROPONICS
 		message = 1
+	ranch
+		name = "Ranch"
+		mail_tag = "ranch"
+		mailgroup = MGT_HYDROPONICS
+		message = 1
 	security
 		name = "Security"
 		mail_tag = "security"
@@ -225,6 +230,9 @@
 		refinery
 			name = "Refinery"
 			mail_tag = "refinery"
+	tool_storage
+		name = "Tool Storage"
+		mail_tag = "storage"
 
 	research
 		name = "Research"
@@ -238,9 +246,21 @@
 		chemistry
 			name = "Chemistry"
 			mail_tag = "chemistry"
+		toxins
+			name = "Toxins"
+			mail_tag = "toxins"
+		artlab
+			name = "Artifact lab"
+			mail_tag = "artlab"
 		testchamber
 			name = "Test Chamber"
 			mail_tag = "testchamber"
+		robot_depot
+			name = "Robot Depot"
+			mail_tag = "buddy_depot"
+		hangar
+			name = "Research Hangar"
+			mail_tag = "research_hangar"
 
 	medbay
 		name = "Medbay"
@@ -299,6 +319,9 @@
 		east
 			name = "East Hallway Checkpoint"
 			mail_tag = "east hallway checkpoint"
+		zeta
+			name = "Outpost Checkpoint"
+			mail_tag = "zeta checkpoint"
 
 	public
 		name = "Don't spawn me"
@@ -333,6 +356,9 @@
 		podbay
 			name = "Pod Bay"
 			mail_tag = "podbay"
+		news
+			name = "News Office"
+			mail_tag = "news office"
 
 /obj/machinery/disposal/mail/small
 	icon = 'icons/obj/disposal_small.dmi'

@@ -44762,11 +44762,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/machinery/disposal/mail{
-	mail_tag = "ranch";
-	mailgroup = "botany";
-	name = "Ranch"
-	},
+/obj/machinery/disposal/mail/autoname/ranch,
 /obj/disposalpipe/trunk/mail/south,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
