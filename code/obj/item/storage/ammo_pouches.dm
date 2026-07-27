@@ -230,6 +230,8 @@
 		name = "tacticool medicine pouch"
 		desc = "A dump pouch for various injectors, in reality its just a refitted ammo pouch. Attaches to virtually any webbing system through an incredibly complex and very patented Nanotrasen design."
 		icon_state = "ammopouch_ntsc_medic"
+
+		can_hold = list(/obj/item/reagent_containers/emergency_injector, /obj/item/reagent_containers/hypospray, /obj/item/reagent_containers/syringe)
 		spawn_contents = list(/obj/item/reagent_containers/emergency_injector/high_capacity/lifesupport,
 			/obj/item/reagent_containers/emergency_injector/high_capacity/cardiac,
 			/obj/item/reagent_containers/emergency_injector/high_capacity/atropine,
