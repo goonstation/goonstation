@@ -16,6 +16,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	items = list(/obj/item/storage/box/revolver)
 	cost = 6
 	desc = "The traditional sidearm of a Syndicate field agent. Holds 7 rounds and comes with extra ammo."
+	category = UPLINK::CATEGORY::WEAPON
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/generic/pistol
@@ -23,6 +24,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	items = list(/obj/item/storage/box/pistol)
 	cost = 3
 	desc = "A fairly weak yet sneaky pistol, it can still be heard but it won't alert anyone about who fired it."
+	category = UPLINK::CATEGORY::WEAPON
 	br_allowed = TRUE
 
 /datum/syndicate_buylist/generic/shotgun
@@ -30,6 +32,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	items = list(/obj/item/storage/box/shotgun)
 	cost = 8
 	desc = "Not exactly stealthy, but it'll certainly make an impression."
+	category = UPLINK::CATEGORY::WEAPON
 	not_in_crates = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP
 
@@ -38,6 +41,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	items = list(/obj/item/storage/box/hunting_rifle)
 	cost = 7
 	desc = "An old hunting rifle, comes with a scope and eight bullets. Use them wisely."
+	category = UPLINK::CATEGORY::WEAPON
 	can_buy = UPLINK_TRAITOR
 
 /datum/syndicate_buylist/generic/radbow
@@ -45,12 +49,14 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	items = list(/obj/item/gun/energy/crossbow)
 	cost = 3
 	desc = "Crossbow Model C - Now with safer Niobium core. This ranged weapon is great for hitting someone in a dark corridor! They'll never know what hit em! Will slowly recharge between shots."
+	category = UPLINK::CATEGORY::WEAPON
 
 /datum/syndicate_buylist/generic/garrote
 	name = "Fibre Wire"
 	items = list(/obj/item/garrote)
 	cost = 3
 	desc = "Commonly used by special forces for silent removal of isolated targets. Ensure you are out of sight, apply to the target's neck from behind with a firm two-hand grip and wait for death to occur."
+	category = UPLINK::CATEGORY::WEAPON
 
 /datum/syndicate_buylist/generic/bladed_gloves
 	name = "Bladed Gloves"
@@ -58,6 +64,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	cost = 3
 	desc = "A pair of transparent gloves with a concealed blade on the back of each hand that cannot be disarmed. Deploy and retract with a finger snap, perfect for the killer-on-the-go!"
 	br_allowed = TRUE
+	category = UPLINK::CATEGORY::WEAPON
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY_THIEF
 
 
@@ -67,6 +74,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	cost = 1
 	desc = "A pouch of EMP grenades, each capable of causing havoc with the electrical and computer systems found aboard the modern space station. Shorts out power systems, causes feedback in electronic vision devices such as thermals, and causes robots to go haywire."
 	br_allowed = TRUE
+	category = UPLINK::CATEGORY::EXPLOSIVE
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY_THIEF | UPLINK_HEAD_REV
 
 /datum/syndicate_buylist/generic/tacticalgrenades
@@ -75,6 +83,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	cost = 2
 	desc = "A pouch of assorted special-ops grenades."
 	br_allowed = TRUE
+	category = UPLINK::CATEGORY::EXPLOSIVE
 
 /datum/syndicate_buylist/generic/voicechanger
 	name = "Voice Changer"
@@ -113,6 +122,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	items = list(/obj/item/implanter/freedom)
 	cost = 1
 	desc = "An implant that allows instant escape from handcuffs and shackles. Multiple uses possible but not guaranteed."
+	category = UPLINK::CATEGORY::IMPLANT
 
 /datum/syndicate_buylist/generic/signaler_implant
 	name = "Signaler Implant"
@@ -121,6 +131,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	desc = "An implant that can send configurable signals. Can be used while stunned or handcuffed."
 	not_in_crates = TRUE
 	vr_allowed = FALSE
+	category = UPLINK::CATEGORY::IMPLANT
 	can_buy = UPLINK_TRAITOR
 
 /datum/syndicate_buylist/generic/marionette_implant
@@ -131,6 +142,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 		The first purchase of this item will be contained in a box that also includes instructions and a remote. Subsequent purchases will only \
 		provide additional implanters."
 	vr_allowed = FALSE
+	category = UPLINK::CATEGORY::IMPLANT
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 	run_on_spawn(obj/item, mob/living/owner, in_surplus_crate, obj/item/uplink/uplink)
@@ -164,6 +176,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	cost = 5
 	desc = "Lights too bright? Airlocks too automatic? Alarms too functional? Or maybe just nostalgic about the good ol' days before electricity came along? The XL-100 Power Sink addresses all these ills and more. Simply screw to the nearest exposed wiring and flip the switch, and this little wonder will get to work on draining all of that nasty power."
 	not_in_crates = TRUE
+	category = UPLINK::CATEGORY::EXPLOSIVE
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP
 
 /datum/syndicate_buylist/generic/detomatix
@@ -171,6 +184,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	items = list(/obj/item/disk/data/cartridge/syndicate)
 	cost = 1
 	desc = "A PDA cartridge allowing remote detonation of other devices. Detonation programs may be accessed through the file manager. Comes complete with readme file."
+	category = UPLINK::CATEGORY::EXPLOSIVE
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/generic/trickcigs
@@ -178,6 +192,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	items = list(/obj/item/cigpacket/syndicate)
 	cost = 1
 	desc = "A pack of Syndicool Lights exploding trick cigarettes. Due to the use of a military-grade explosive, please do not attempt to smoke these after lighting."
+	category = UPLINK::CATEGORY::EXPLOSIVE
 
 /datum/syndicate_buylist/generic/sawfly
 	name = "Compact Sawfly"
@@ -185,6 +200,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	cost = 1
 	vr_allowed = FALSE
 	desc = "A small antipersonnel robot that will not attack anyone of syndicate affiliation. It can be folded up after use."
+	category = UPLINK::CATEGORY::EXPLOSIVE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/generic/sawflymany
@@ -193,6 +209,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	cost = 5
 	vr_allowed = FALSE
 	desc = "An assembly of five antipersonnel robots that will not attack anyone of syndicate affiliation. They can be individually folded up after use."
+	category = UPLINK::CATEGORY::EXPLOSIVE
 	can_buy = UPLINK_SPY_THIEF | UPLINK_NUKE_OP
 /datum/syndicate_buylist/generic/dnascram
 	name = "DNA Scrambler"
@@ -206,6 +223,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	cost = 2
 	desc = "A small pistol that can be hidden inside worn clothes and retrieved using the wink emote. Comes with two shots and does extreme damage at close range."
 	br_allowed = TRUE
+	category = UPLINK::CATEGORY::WEAPON
 
 /datum/syndicate_buylist/generic/stealthstorage
 	name = "Stealth Storage"
@@ -219,6 +237,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	cost = 7
 	desc = "A powerful melee weapon, crafted using the latest in applied photonics! When inactive, it is small enough to fit in a pocket!"
 	not_in_crates = TRUE
+	category = UPLINK::CATEGORY::WEAPON
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP
 
 	run_on_spawn(obj/item/sword/stabby, mob/living/owner, in_surplus_crate=FALSE) //Nukies get red ones
@@ -233,6 +252,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	cost = 7
 	desc = "A Japanese sword created in the fire of a dying star. Comes with a sheath for easier storage"
 	not_in_crates = TRUE
+	category = UPLINK::CATEGORY::WEAPON
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/generic/wrestling
@@ -241,6 +261,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	cost = 7
 	desc = "A haunted antique wrestling belt, imbued with the spirits of wrestlers past. Wearing it unlocks a number of wrestling moves."
 	not_in_crates = TRUE
+	category = UPLINK::CATEGORY::WEAPON
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP
 
 /datum/syndicate_buylist/generic/spy_sticker_kit
@@ -302,6 +323,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	vr_allowed = FALSE
 	desc = "A rather volatile pipe bomb packed with miniature syndicate troops. Assembled and ready for use"
 	br_allowed = TRUE
+	category = UPLINK::CATEGORY::EXPLOSIVE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/champrojector
@@ -346,6 +368,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	cost = 6
 	desc = "Comes with several bowling balls and a suit. You won't be able to pluck up the courage to throw them very hard without wearing the suit!"
 	br_allowed = TRUE
+	category = UPLINK::CATEGORY::WEAPON
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/football
@@ -354,6 +377,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	cost = 7
 	desc = "This kit contains everything you need to become a great football player! Wearing all of the equipment inside will grant you the ability to rush down and tackle foes. You'll also make amazing throws!"
 	br_allowed = TRUE
+	category = UPLINK::CATEGORY::WEAPON
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/mindhack
@@ -362,6 +386,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	cost = 3
 	vr_allowed = FALSE
 	desc = "Temporarily place an injected victim under your complete control! Faster and more effective than hypnotism! Warning: Implant effects are NOT indefinite. Will not work on anyone protected by those pesky security issue mind-protection implants."
+	category = UPLINK::CATEGORY::IMPLANT
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/deluxe_mindhack
@@ -370,6 +395,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	cost = 6
 	vr_allowed = FALSE
 	desc = "Place an injected victim under your complete control! Enhanced cyberneurostimulators make this version last virtually indefinitely! Will not work on anyone protected by those pesky security issue mind-protection implants."
+	category = UPLINK::CATEGORY::IMPLANT
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/microbomb
@@ -378,6 +404,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	cost = 1
 	vr_allowed = FALSE
 	desc = "This miniaturized explosive packs a decent punch and will detonate upon the unintentional death of the host. Do not swallow and keep out of reach of children."
+	category = UPLINK::CATEGORY::IMPLANT
 
 /datum/syndicate_buylist/traitor/lightbreaker
 	name = "Light Breaker"
@@ -385,6 +412,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	cost = 3
 	desc = "A casette player that breaks all lights near you. It also temporarily deafens and staggers all other nearby people. Comes with four charges and has a distinctive sound. Can be rewound with a screwdriver."
 	br_allowed = TRUE
+	category = UPLINK::CATEGORY::EXPLOSIVE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY | UPLINK_SPY_THIEF | UPLINK_HEAD_REV
 
 /datum/syndicate_buylist/traitor/ringtone
@@ -400,6 +428,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	cost = 2
 	desc = "A pouch filled with five sonic grenades, each one packs enough power to shatter reinforced windows and pop eardrums. No more being cornered by an angry mob! Comes with earplugs."
 	br_allowed = TRUE
+	category = UPLINK::CATEGORY::EXPLOSIVE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/pickpocket
@@ -433,6 +462,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	items = list(/obj/item/storage/briefcase/instruments/blowgun/tranq)
 	desc = "A blowgun with a set of 8 knockout darts. \"Cunningly\" disguised as a flute."
 	cost = 4
+	category = UPLINK::CATEGORY::WEAPON
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 

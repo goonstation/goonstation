@@ -25,8 +25,9 @@
 
 	New()
 		..()
-		src.pixel_x = rand(0 - wiggle, wiggle)
-		src.pixel_y = rand(0 - wiggle, wiggle)
+		if(wiggle)
+			src.pixel_x = rand(0 - wiggle, wiggle)
+			src.pixel_y = rand(0 - wiggle, wiggle)
 		setup_material()
 		if(src.material?.getName())
 			initial_material_name = src.material.getName()

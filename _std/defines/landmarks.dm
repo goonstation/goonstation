@@ -171,3 +171,6 @@
 #define LANDMARK_HTR_TEAM "HTR_TEAM"
 #define LANDMARK_HTR_VENDOR "HTR_VENDOR"
 #define LANDMARK_HTR_BOTS "HTR_BOTS"
+
+// Map Correctness
+#define LANDMARK_DISPOSALS_ENDPOINT "disposals endpoint"
