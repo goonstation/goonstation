@@ -193,6 +193,9 @@
 		mailgroup = MGD_SECURITY
 		message = 1
 
+		foyer
+			name = "Security Foyer"
+			mail_tag = "sec foyer"
 		brig
 			name = "Brig"
 			mail_tag = "brig"
@@ -240,6 +243,9 @@
 	tool_storage
 		name = "Tool Storage"
 		mail_tag = "storage"
+	sorting_room
+		name = "Sorting Room"
+		mail_tag = "sortingroom"
 
 	research
 		name = "Research"

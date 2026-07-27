@@ -2470,13 +2470,7 @@
 	},
 /area/station/security/checkpoint/arrivals)
 "ale" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "arrivals";
-	mailgroup = "command";
-	mailgroup2 = "security";
-	message = "1";
-	name = "mail chute-'Customs Desk'"
-	},
+/obj/machinery/disposal/mail/autoname/checkpoint/arrivals,
 /obj/disposalpipe/trunk/mail,
 /obj/item/device/radio/intercom{
 	dir = 8
@@ -5516,8 +5510,8 @@
 /obj/stool,
 /obj/disposalpipe/switch_junction{
 	dir = 4;
-	mail_tag = "dispatch";
-	name = "dispatch mail router"
+	mail_tag = "sec foyer";
+	name = "sec foyer mail router"
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
@@ -7643,12 +7637,7 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
-/obj/machinery/disposal/mail{
-	mail_tag = "dispatch";
-	mailgroup = "security";
-	message = "1";
-	name = "mail chute-'Dispatch'"
-	},
+/obj/machinery/disposal/mail/autoname/security/foyer,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -38267,13 +38256,7 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 1
 	},
-/obj/machinery/disposal/mail{
-	mail_tag = "customs";
-	mailgroup = "command";
-	mailgroup2 = "security";
-	message = "1";
-	name = "mail chute-'Customs Desk'"
-	},
+/obj/machinery/disposal/mail/autoname/checkpoint/customs,
 /obj/machinery/light{
 	dir = 8;
 	tag = ""
@@ -40554,8 +40537,8 @@
 /obj/disposalpipe/switch_junction{
 	dir = 4;
 	icon_state = "pipe-sj2";
-	mail_tag = "arrivals";
-	name = "arrivals mail router"
+	mail_tag = "arrivals checkpoint";
+	name = "arrivals checkpoint mail router"
 	},
 /obj/machinery/light/small/floor/warm,
 /obj/railing,
@@ -45460,7 +45443,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "lvz" = (
-/obj/machinery/disposal/mail/autoname/research/genetics,
+/obj/machinery/disposal/mail/autoname/medbay/genetics,
 /obj/disposalpipe/trunk/mail{
 	dir = 1
 	},
@@ -47146,10 +47129,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/catering)
 "mAp" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "info";
-	name = "mail chute-'Info'"
-	},
+/obj/machinery/disposal/mail/autoname/public/market,
 /obj/disposalpipe/trunk/mail{
 	dir = 4
 	},
@@ -51613,8 +51593,8 @@
 	desc = "An underfloor mail pipe.";
 	dir = 1;
 	icon_state = "pipe-sj2";
-	mail_tag = "info";
-	name = "info mail router"
+	mail_tag = "market";
+	name = "market mail router"
 	},
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -56236,10 +56216,7 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 1
 	},
-/obj/machinery/disposal/mail{
-	mail_tag = "sortingroom";
-	name = "mail chute-'Sorting Room'"
-	},
+/obj/machinery/disposal/mail/autoname/sorting_room,
 /turf/simulated/floor,
 /area/station/routing/sortingRoom)
 "sFY" = (
@@ -60910,8 +60887,8 @@
 	desc = "An underfloor mail pipe.";
 	dir = 8;
 	icon_state = "pipe-sj2";
-	mail_tag = "customs";
-	name = "customs mail router"
+	mail_tag = "customs checkpoint";
+	name = "customs checkpoint mail router"
 	},
 /obj/cable{
 	icon_state = "4-8"
