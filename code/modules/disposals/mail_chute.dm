@@ -372,6 +372,9 @@
 		news
 			name = "News Office"
 			mail_tag = "news office"
+		aviary
+			name = "Aviary"
+			mail_tag = "aviary"
 
 /obj/machinery/disposal/mail/small
 	icon = 'icons/obj/disposal_small.dmi'

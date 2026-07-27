@@ -9665,12 +9665,7 @@
 	},
 /area/station/medical/medbay/cloner)
 "cid" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "buddy_depot";
-	mailgroup = "science";
-	message = "1";
-	name = "mail chute-'Robot Depot'"
-	},
+/obj/machinery/disposal/mail/autoname/research/robot_depot,
 /obj/disposalpipe/trunk/mail{
 	dir = 1
 	},
@@ -18404,10 +18399,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "ijp" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "crew";
-	name = "mail chute-'Crew Quarters'"
-	},
+/obj/machinery/disposal/mail/autoname/public/crew,
 /obj/disposalpipe/trunk/mail,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters_west)
@@ -19943,12 +19935,7 @@
 /obj/item/device/radio/intercom{
 	dir = 8
 	},
-/obj/machinery/disposal/mail{
-	mail_tag = "brig";
-	mailgroup = "security";
-	message = "1";
-	name = "mail chute-'Brig'"
-	},
+/obj/machinery/disposal/mail/autoname/security/brig,
 /obj/disposalpipe/trunk/mail/north,
 /obj/machinery/light{
 	dir = 4;
@@ -24226,11 +24213,7 @@
 	dir = 4;
 	pixel_x = -4
 	},
-/obj/machinery/disposal/mail{
-	mail_tag = "ranch";
-	mailgroup = "botany";
-	name = "Ranch"
-	},
+/obj/machinery/disposal/mail/autoname/ranch,
 /obj/disposalpipe/trunk/mail{
 	dir = 4
 	},
@@ -36756,12 +36739,7 @@
 /turf/space,
 /area/station/com_dish/auxdish)
 "uAn" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "artlab";
-	mailgroup = "science";
-	message = "1";
-	name = "mail chute-'Artifact Lab'"
-	},
+/obj/machinery/disposal/mail/autoname/research/artlab,
 /obj/disposalpipe/trunk/mail{
 	dir = 4
 	},
@@ -36972,10 +36950,7 @@
 /area/station/engine/substation/west)
 "uJC" = (
 /obj/machinery/light,
-/obj/machinery/disposal/mail{
-	mail_tag = "aviary";
-	name = "mail chute-'Aviary'"
-	},
+/obj/machinery/disposal/mail/autoname/public/aviary,
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
