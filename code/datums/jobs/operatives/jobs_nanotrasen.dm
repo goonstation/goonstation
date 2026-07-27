@@ -82,7 +82,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 			rcd.UpdateIcon()
 
 /datum/job/special/nt/medic
-	name = "Nanotrasen Emergency Medic"
+	name = "Nanotrasen Emergency Paramedic"
 	trait_list = list("training_medical")
 
 	slot_back = list(/obj/item/storage/backpack/satchel/NT)
