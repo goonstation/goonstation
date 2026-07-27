@@ -112,7 +112,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<th align="right">Reflect.</th>
 	<th align="right">Rad.</th>
 	<th align="right">N. Rad.</th>
-	<th align="right">Melt</th>
+	<th align="right">Melt P.</th>
 	</tr>
     <tr><td align="right">Batiline</td>
 	<td align="right">5</td>
@@ -357,7 +357,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<th align="right">Dens.</th>
 	<th align="right">Flam.</th>
 	<th align="right">Chem. Res.</th>
-	<th align="right">Melt.</th>
+	<th align="right">Melt P.</th>
 	</tr>
 	<tr><td align="right">Bamboo</td>
 	<td align="right">4</td>
@@ -504,7 +504,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<th align="right">Flam.</th>
 	<th align="right">Chem. Res.</th>
 	<th align="right">Rad.</th>
-	<th align="right">Melt.</th>
+	<th align="right">Melt P.</th>
 	</tr>
 	<tr><td align="right">Bee Wool</td>
 	<td align="right">3</td>
@@ -628,7 +628,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<th align="right">Reflect.</th>
 	<th align="right">Rad.</th>
 	<th align="right">N. Rad.</th>
-	<th align="right">Melt.</th>
+	<th align="right">Melt P.</th>
 	</tr>
 	<tr><td align="right">Copper</td>
 	<td align="right">6</td>
@@ -712,7 +712,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<th align="right">Flam.</th>
 	<th align="right">Chem. Res.</th>
 	<th align="right">Reflect.</th>
-	<th align="right">Melt.</th>
+	<th align="right">Melt P.</th>
 	</tr>
 	<tr><td align="right">Gemstone</td>
 	<td align="right">3</td>
@@ -795,7 +795,7 @@ The properties in full and in order are Radioactivity, Electrical Conductivity, 
 	<th align="right">Chem. Res.</th>
 	<th align="right">Rad.</th>
 	<th align="right">N. Rad.</th>
-	<th align="right">Melt.</th>
+	<th align="right">Melt P.</th>
 	</tr>
 	<tr><td align="right">Cerenkite</td>
 	<td align="right">6</td>
@@ -944,7 +944,7 @@ The properties in full and in order are Radioactivity, Neutron Radiation, Electr
 	<th align="right">Dens.</th>
 	<th align="right">Flam.</th>
 	<th align="right">Chem. Res.</th>
-	<th align="right">Melt.</th>
+	<th align="right">Melt P.</th>
 	</tr>
 	<tr><td align="right">Dyneema</td>
 	<td align="right">7</td>
