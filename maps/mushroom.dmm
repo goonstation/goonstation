@@ -16488,13 +16488,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "iKH" = (
-/obj/machinery/door/airlock/pyro/glass/security{
-	dir = 4
-	},
-/obj/mapping_helper/access/security,
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/pyro/security{
+	dir = 4
+	},
+/obj/mapping_helper/access/security,
 /turf/simulated/floor,
 /area/station/security/evidence)
 "iKJ" = (
@@ -22240,7 +22240,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/storage/secure/closet/security,
+/obj/storage/secure/closet/security/equipment,
 /turf/simulated/floor/red/redblackchecker,
 /area/station/security/equipment)
 "ncf" = (
@@ -28876,7 +28876,9 @@
 /area/station/crew_quarters/cafeteria)
 "rhE" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/window_blinds/vertical,
+/obj/window_blinds/cog2{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/security/evidence)
 "rhT" = (
@@ -33982,7 +33984,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/courtroom)
 "upA" = (
-/obj/storage/secure/closet/security,
+/obj/storage/secure/closet/security/equipment,
 /turf/simulated/floor/red/redblackchecker,
 /area/station/security/equipment)
 "upI" = (
