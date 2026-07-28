@@ -32863,6 +32863,9 @@
 	dir = 4;
 	pixel_x = 12
 	},
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "rDt" = (
