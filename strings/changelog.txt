@@ -1,5 +1,9 @@
 
 (t)tue jul 28 26
+(u)Driftered
+(p)27304
+(e)🎨|C-Sprites
+(+)Adds the blue nurse hat to the medical clothing vendor and medical clothing locker. It's like the red nurse hat, but blue!
 (u)LorrMaster
 (p)27299
 (e)🧱|A-Materials
