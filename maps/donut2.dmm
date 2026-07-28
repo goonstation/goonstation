@@ -51435,9 +51435,9 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
 "xxj" = (
+/obj/mapping_helper/mailtag/public/crew,
 /obj/machinery/disposal/mail/small,
 /obj/disposalpipe/trunk/mail/east,
-/obj/mapping_helper/mailtag/public/crew,
 /turf/simulated/floor/black/side{
 	dir = 1
 	},

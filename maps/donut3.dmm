@@ -34270,6 +34270,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "kGA" = (
+/obj/mapping_helper/mailtag/public/library,
 /obj/machinery/disposal/mail/small,
 /obj/disposalpipe/trunk/mail{
 	dir = 1
@@ -34277,7 +34278,6 @@
 /obj/machinery/camera/directional/south{
 	pixel_x = -10
 	},
-/obj/mapping_helper/mailtag/public/library,
 /turf/simulated/floor/wood/six,
 /area/station/library)
 "kGB" = (
