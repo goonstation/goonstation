@@ -737,6 +737,15 @@
 		result_amount = 1
 		mix_phrase = "The mixture concentrates."
 
+	milk
+		name = "Milk"
+		id = "milk"
+		result = "milk"
+		required_reagents = list("super_milk" = 1, "water" = 1)
+		result_amount = 1
+		max_temperature = T0C + 100
+		mix_phrase = "The milk dilutes, becoming less super."
+
 	bilk
 		name = "Bilk"
 		id = "bilk"
