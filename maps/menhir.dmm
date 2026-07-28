@@ -11936,6 +11936,9 @@
 /obj/machinery/portable_atmospherics/canister/air/large,
 /obj/decal/stripe_caution,
 /obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/black/grime,
 /area/station/engine/engineering{
 	name = "Engineering Auxiliary Conduit";
