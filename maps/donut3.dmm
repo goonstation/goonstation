@@ -34277,6 +34277,7 @@
 /obj/machinery/camera/directional/south{
 	pixel_x = -10
 	},
+/obj/mapping_helper/mailtag/public/library,
 /turf/simulated/floor/wood/six,
 /area/station/library)
 "kGB" = (

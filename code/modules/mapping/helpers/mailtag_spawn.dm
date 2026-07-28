@@ -362,3 +362,7 @@ ABSTRACT_TYPE(/obj/mapping_helper/mailtag/public)
 /obj/mapping_helper/mailtag/public/aviary
 	name = "Aviary"
 	mail_tag = "aviary"
+
+/obj/mapping_helper/mailtag/public/library
+	name = "Library"
+	mail_tag = "library"
