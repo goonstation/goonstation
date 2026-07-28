@@ -1540,9 +1540,9 @@
 /obj/machinery/camera/directional/east{
 	pixel_y = 10
 	},
-/obj/machinery/disposal/mail/small/autoname{
-	dir = 8;
-	mail_tag = "therapist"
+/obj/mapping_helper/mailtag/medbay/psychiatry,
+/obj/machinery/disposal/mail/small{
+	dir = 8
 	},
 /obj/disposalpipe/trunk/mail/west,
 /turf/simulated/floor/carpet{
@@ -1631,9 +1631,9 @@
 /area/station/medical/morgue)
 "ahJ" = (
 /obj/disposalpipe/trunk/mail/east,
-/obj/machinery/disposal/mail/small/autoname{
-	dir = 4;
-	mail_tag = "robotics"
+/obj/mapping_helper/mailtag/medbay/robotics,
+/obj/machinery/disposal/mail/small{
+	dir = 4
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
@@ -1885,9 +1885,8 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "aiZ" = (
-/obj/machinery/disposal/mail/autoname{
-	mail_tag = "genetics"
-	},
+/obj/mapping_helper/mailtag/medbay/genetics,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/west,
 /obj/machinery/light/incandescent/cool{
 	dir = 4
@@ -2494,9 +2493,9 @@
 /area/station/crew_quarters/lounge)
 "alO" = (
 /obj/disposalpipe/trunk/mail/south,
-/obj/machinery/disposal/mail/small/autoname{
+/obj/mapping_helper/mailtag/chapel,
+/obj/machinery/disposal/mail/small{
 	dir = 1;
-	mail_tag = "chapel office";
 	pixel_y = 32
 	},
 /obj/cable{
@@ -3233,8 +3232,8 @@
 	icon_state = "1-8"
 	},
 /obj/disposalpipe/switch_junction/left/west{
-	mail_tag = "therapist";
-	name = "therapist mail router"
+	mail_tag = "psychiatry";
+	name = "psychiatry mail router"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
@@ -3634,9 +3633,9 @@
 /area/station/medical/medbay)
 "arq" = (
 /obj/disposalpipe/trunk/mail/south,
-/obj/machinery/disposal/mail/small/autoname{
-	dir = 4;
-	mail_tag = "medical director's office"
+/obj/mapping_helper/mailtag/command_office/md,
+/obj/machinery/disposal/mail/small{
+	dir = 4
 	},
 /turf/simulated/floor/carpet{
 	dir = 8;
@@ -3888,9 +3887,9 @@
 /area/station/medical/medbay)
 "asq" = (
 /obj/disposalpipe/trunk/mail/east,
-/obj/machinery/disposal/mail/small/autoname{
-	dir = 8;
-	mail_tag = "medbay"
+/obj/mapping_helper/mailtag/medbay,
+/obj/machinery/disposal/mail/small{
+	dir = 8
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
@@ -8715,16 +8714,15 @@
 /area/station/crew_quarters/info)
 "aSa" = (
 /obj/disposalpipe/trunk/mail/north,
-/obj/machinery/disposal/mail/autoname{
-	mail_tag = "hydroponics"
-	},
+/obj/mapping_helper/mailtag/hydroponics,
+/obj/machinery/disposal/mail,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "aSb" = (
 /obj/disposalpipe/trunk/mail/south,
-/obj/machinery/disposal/mail/small/autoname{
+/obj/mapping_helper/mailtag/kitchen,
+/obj/machinery/disposal/mail/small{
 	dir = 1;
-	mail_tag = "kitchen";
 	pixel_y = 32
 	},
 /turf/simulated/floor/white,
@@ -8751,9 +8749,9 @@
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/catering)
 "aSi" = (
-/obj/machinery/disposal/mail/small/autoname{
-	dir = 4;
-	mail_tag = "information office"
+/obj/mapping_helper/mailtag/public/info_office,
+/obj/machinery/disposal/mail/small{
+	dir = 4
 	},
 /obj/disposalpipe/trunk/mail/south,
 /turf/simulated/floor,
@@ -8774,9 +8772,8 @@
 /area/station/hangar/engine)
 "aSq" = (
 /obj/machinery/light/incandescent/cool,
-/obj/machinery/disposal/mail/autoname{
-	mail_tag = "customs"
-	},
+/obj/mapping_helper/mailtag/checkpoint/customs,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/west,
 /turf/simulated/floor/wood,
 /area/station/bridge/customs)
@@ -8796,9 +8793,8 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "aSC" = (
-/obj/machinery/disposal/mail/autoname{
-	mail_tag = "refinery"
-	},
+/obj/mapping_helper/mailtag/qm/refinery,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/north{
 	dir = 8
 	},
@@ -17145,7 +17141,7 @@
 /area/station/hallway/primary/south)
 "bHA" = (
 /obj/disposalpipe/switch_junction/right/east{
-	mail_tag = "customs";
+	mail_tag = "customs checkpoint";
 	name = "customs mail router"
 	},
 /obj/cable{
@@ -19479,9 +19475,9 @@
 /area/skeleton_trader)
 "bUv" = (
 /obj/table/wood/auto,
-/obj/machinery/disposal/mail/small/autoname{
-	dir = 8;
-	mail_tag = "engineering_storage"
+/obj/mapping_helper/mailtag/engineering/storage,
+/obj/machinery/disposal/mail/small{
+	dir = 8
 	},
 /obj/disposalpipe/trunk/mail/west,
 /obj/item/hand_labeler,
@@ -23570,9 +23566,8 @@
 /turf/simulated/floor/plating,
 /area/station/engine/power)
 "cAr" = (
-/obj/machinery/disposal/mail/autoname{
-	mail_tag = "engineering"
-	},
+/obj/mapping_helper/mailtag/engineering,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/south,
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
@@ -24709,9 +24704,9 @@
 /area/station/medical/robotics)
 "dvD" = (
 /obj/disposalpipe/trunk/mail/north,
-/obj/machinery/disposal/mail/small/autoname{
+/obj/mapping_helper/mailtag/security/hangar,
+/obj/machinery/disposal/mail/small{
 	dir = 1;
-	mail_tag = "secure dock";
 	pixel_y = 32
 	},
 /turf/simulated/floor,
@@ -24778,13 +24773,13 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen/freezer)
 "dyC" = (
-/obj/machinery/disposal/mail/small/autoname{
-	dir = 4;
-	mail_tag = "detective's office"
+/obj/mapping_helper/mailtag/security/detective,
+/obj/machinery/disposal/mail/small{
+	dir = 4
 	},
 /obj/disposalpipe/trunk/mail{
 	dir = 4;
-	mail_tag = "detective's office"
+	mail_tag = "detective"
 	},
 /obj/item/reagent_containers/food/drinks/bottle/bojackson,
 /obj/cable{
@@ -25387,7 +25382,8 @@
 	icon_state = "2-4"
 	},
 /obj/disposalpipe/trunk/mail/east,
-/obj/machinery/disposal/mail/small/autoname/security/brig{
+/obj/mapping_helper/mailtag/security/brig,
+/obj/machinery/disposal/mail/small{
 	dir = 4
 	},
 /obj/cable{
@@ -26458,7 +26454,7 @@
 /area/station/maintenance/northwest)
 "eQB" = (
 /obj/disposalpipe/switch_junction/right/west{
-	mail_tag = "janitor's office";
+	mail_tag = "janitor";
 	name = "janitor office mail router"
 	},
 /obj/cable{
@@ -27521,7 +27517,7 @@
 /area/station/crew_quarters/captain)
 "fIz" = (
 /obj/disposalpipe/switch_junction/left/east{
-	mail_tag = "secure dock";
+	mail_tag = "security_hangar";
 	name = "secure dock mail router"
 	},
 /turf/simulated/floor,
@@ -27592,9 +27588,9 @@
 /area/station/crew_quarters/kitchen)
 "fMA" = (
 /obj/disposalpipe/trunk/mail/north,
-/obj/machinery/disposal/mail/small/autoname{
-	dir = 4;
-	mail_tag = "chemistry"
+/obj/mapping_helper/mailtag/research/chemistry,
+/obj/machinery/disposal/mail/small{
+	dir = 4
 	},
 /obj/item/device/radio/intercom/science{
 	dir = 4
@@ -29406,7 +29402,7 @@
 /area/martian_trader)
 "heT" = (
 /obj/disposalpipe/switch_junction/left/west{
-	mail_tag = "research director's office";
+	mail_tag = "research_director";
 	name = "research director mail router"
 	},
 /turf/simulated/floor/purple/side{
@@ -29461,9 +29457,9 @@
 /turf/simulated/floor/martian,
 /area/evilreaver/bridge)
 "hgS" = (
-/obj/machinery/disposal/mail/small/autoname{
-	dir = 4;
-	mail_tag = "radio booth"
+/obj/mapping_helper/mailtag/public/radio,
+/obj/machinery/disposal/mail/small{
+	dir = 4
 	},
 /obj/disposalpipe/trunk/mail/east,
 /obj/cable{
@@ -31952,7 +31948,7 @@
 "jvD" = (
 /obj/machinery/drainage/big,
 /obj/disposalpipe/switch_junction/left/south{
-	mail_tag = "crew quarters";
+	mail_tag = "crew";
 	name = "crew quarters mail router"
 	},
 /turf/simulated/floor,
@@ -34968,7 +34964,7 @@
 /area/station/maintenance/inner/central)
 "lPG" = (
 /obj/disposalpipe/switch_junction/left/west{
-	mail_tag = "medical director's office";
+	mail_tag = "medical_director";
 	name = "medical director mail router"
 	},
 /obj/cable{
@@ -35134,9 +35130,9 @@
 "lWt" = (
 /obj/machinery/light/incandescent/warm,
 /obj/disposalpipe/trunk/mail/west,
-/obj/machinery/disposal/mail/small/autoname{
-	dir = 8;
-	mail_tag = "research director's office"
+/obj/mapping_helper/mailtag/command_office/rd,
+/obj/machinery/disposal/mail/small{
+	dir = 8
 	},
 /turf/simulated/floor/wood,
 /area/station/science/research_director)
@@ -36326,8 +36322,8 @@
 "mRa" = (
 /obj/decal/stripe_caution,
 /obj/disposalpipe/switch_junction/left/north{
-	mail_tag = "escape";
-	name = "escape mail router"
+	mail_tag = "escape hallway";
+	name = "escape hallway mail router"
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
@@ -36798,9 +36794,9 @@
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "nlh" = (
-/obj/machinery/disposal/mail/small/autoname{
+/obj/mapping_helper/mailtag/medbay/pharmacy,
+/obj/machinery/disposal/mail/small{
 	dir = 1;
-	mail_tag = "pharmacy";
 	pixel_y = 32
 	},
 /obj/disposalpipe/trunk/mail/south,
@@ -38271,9 +38267,9 @@
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
 "oAu" = (
-/obj/machinery/disposal/mail/small/autoname{
+/obj/mapping_helper/mailtag/ranch,
+/obj/machinery/disposal/mail/small{
 	dir = 1;
-	mail_tag = "ranch";
 	pixel_y = 32
 	},
 /obj/disposalpipe/trunk/mail,
@@ -40225,7 +40221,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "qjP" = (
-/obj/machinery/disposal/mail/autoname/mechanics,
+/obj/mapping_helper/mailtag/mechanics,
+/obj/machinery/disposal/mail,
 /obj/machinery/light/incandescent/warm,
 /obj/disposalpipe/trunk/mail/west,
 /turf/simulated/floor/yellow/side{
@@ -40731,7 +40728,7 @@
 /area/research_outpost)
 "qDX" = (
 /obj/disposalpipe/switch_junction/right/south{
-	mail_tag = "detective's office"
+	mail_tag = "detective"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
@@ -41346,9 +41343,8 @@
 /area/spacehabitat/owlery)
 "rgB" = (
 /obj/disposalpipe/trunk/mail/east,
-/obj/machinery/disposal/mail/autoname{
-	mail_tag = "bridge"
-	},
+/obj/mapping_helper/mailtag/bridge,
+/obj/machinery/disposal/mail,
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "blue2"
@@ -41536,9 +41532,9 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "rmS" = (
-/obj/machinery/disposal/mail/small/autoname{
-	dir = 4;
-	mail_tag = "telescience"
+/obj/mapping_helper/mailtag/research/telescience,
+/obj/machinery/disposal/mail/small{
+	dir = 4
 	},
 /obj/disposalpipe/trunk/mail/east,
 /turf/simulated/floor,
@@ -42370,8 +42366,8 @@
 /area/station/maintenance/south)
 "rTu" = (
 /obj/disposalpipe/switch_junction/left/west{
-	mail_tag = "chapel office";
-	name = "chapel office mail router"
+	mail_tag = "chapel";
+	name = "chapel mail router"
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -44862,9 +44858,9 @@
 /area/station/hallway/primary/north)
 "tOQ" = (
 /obj/disposalpipe/trunk/mail/east,
-/obj/machinery/disposal/mail/small/autoname{
-	dir = 4;
-	mail_tag = "janitor's office"
+/obj/mapping_helper/mailtag/janitor,
+/obj/machinery/disposal/mail/small{
+	dir = 4
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
@@ -45378,9 +45374,8 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/machinery/disposal/mail/autoname{
-	mail_tag = "security"
-	},
+/obj/mapping_helper/mailtag/security,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/east,
 /turf/simulated/floor/red,
 /area/station/security/main)
@@ -46241,9 +46236,8 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "uZY" = (
-/obj/machinery/disposal/mail/autoname{
-	mail_tag = "escape"
-	},
+/obj/mapping_helper/mailtag/public/escape,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/east,
 /turf/simulated/floor/darkpurple/side{
 	dir = 8
@@ -46942,9 +46936,8 @@
 	name = "South Crew Lounge"
 	})
 "vKp" = (
-/obj/machinery/disposal/mail/autoname{
-	mail_tag = "artlab"
-	},
+/obj/mapping_helper/mailtag/research/artlab,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/south,
 /turf/simulated/floor/black,
 /area/station/science/artifact)
@@ -47414,9 +47407,9 @@
 /area/station/hallway/primary/west)
 "wdf" = (
 /obj/disposalpipe/trunk/mail/north,
-/obj/machinery/disposal/mail/small/autoname{
-	dir = 4;
-	mail_tag = "fitness room"
+/obj/mapping_helper/mailtag/public/fitness,
+/obj/machinery/disposal/mail/small{
+	dir = 4
 	},
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
@@ -48626,9 +48619,8 @@
 /area/station/crew_quarters/arcade/dungeon)
 "wZT" = (
 /obj/disposalpipe/trunk/mail/west,
-/obj/machinery/disposal/mail/autoname{
-	mail_tag = "crew quarters"
-	},
+/obj/mapping_helper/mailtag/public/crew,
+/obj/machinery/disposal/mail,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quartersA)
 "xac" = (
