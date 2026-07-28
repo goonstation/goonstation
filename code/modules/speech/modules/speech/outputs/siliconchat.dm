@@ -33,28 +33,41 @@
 
 	. = ..()
 
-
-/datum/speech_module/output/siliconchat/broadcast
-	id = SPEECH_OUTPUT_SILICONCHAT_BROADCAST
-	priority = SPEECH_OUTPUT_PRIORITY_HIGH
+/datum/speech_module/output/siliconchat/admin
+	id = SPEECH_OUTPUT_SILICONCHAT_ADMIN
 	speech_prefix = null
 
-/datum/speech_module/output/siliconchat/broadcast/process(datum/say_message/message)
-	. = ..()
+/datum/speech_module/output/siliconchat_broadcast
+	id = SPEECH_OUTPUT_SILICONCHAT_BROADCAST
+	channel = SAY_CHANNEL_SILICON
+	priority = SPEECH_OUTPUT_PRIORITY_HIGH
+	speech_prefix = SPEECH_PREFIX_SILICON
+
+/datum/speech_module/output/siliconchat_broadcast/process(datum/say_message/message)
+	message.flags |= SAYFLAG_NO_MAPTEXT
+	message.language = global.SpeechManager.GetLanguageInstance(LANGUAGE_SILICON)
+
+	var/mind_ref = ""
+	if (ismob(message.speaker))
+		var/mob/mob_speaker = message.speaker
+		mind_ref = "\ref[mob_speaker.mind]"
+
 
 	message.format_speaker_prefix = {"\
 		<span class='game roboticsay'>\
 			<span class='prefix'>
+			<span class='name' data-ctx='[mind_ref]'>\
 	"}
 
 	message.format_verb_prefix = {"\
-		: </span></span> \
+		</span>: </span> \
 		<span class='message'>\
 	"}
+	message.say_verb = null
 
 	message.format_content_prefix = null
 
-
-/datum/speech_module/output/siliconchat/admin
-	id = SPEECH_OUTPUT_SILICONCHAT_ADMIN
-	speech_prefix = null
+	message.format_content_suffix = {"\
+		</span></span>\
+	"}
+	. = ..()

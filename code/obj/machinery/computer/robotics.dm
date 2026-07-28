@@ -78,7 +78,7 @@
 			return
 		var/obj/item/card/id/I = usr.equipped()
 		if (!isAI(usr))
-			if (!istype(I) || !src.check_access(I))
+			if ((!istype(I) || !src.check_access(I)) && !(action == "silicon_broadcast"))
 				boutput(usr, SPAN_ALERT("Access Denied."))
 				return TRUE
 		if (issilicon(usr) && !isAI(usr))
@@ -277,7 +277,6 @@
 	name = "robotics monitoring"
 	desc = "A computer that allows users to have an overview of the cyborgs on the station."
 	circuit_type = /obj/item/circuitboard/robotics_lab
-	req_access = list(access_robotics)
 	can_killswitch = FALSE
 	can_lockdown = FALSE
 
