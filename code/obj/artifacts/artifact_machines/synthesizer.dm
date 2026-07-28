@@ -30,7 +30,7 @@
 	var/datum/powernet/drawsource = null
 	var/drawn_energy = 0
 	var/initial_draw = 10 KILO WATTS
-	var/draw_cap = 6e7
+	var/draw_cap = 10e7
 	var/current_draw = 0
 	examine_hint = "It is covered in very conspicuous markings."
 
@@ -38,7 +38,7 @@
 		. = ..()
 		src.react_heat[2] = "NO TEMPERATURE CHANGE" //slurped it right up
 		src.initial_draw = rand(10 KILO WATTS, 20 KILO WATTS)
-		src.draw_cap = rand(6,12) * 1e7
+		src.draw_cap = rand(10,12) * 1e7
 
 	may_activate(var/obj/O)
 		if (!..())
