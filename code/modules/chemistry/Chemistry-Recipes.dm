@@ -694,15 +694,6 @@
 		result_amount = 1
 		mix_phrase = "The paper chars, seperating into a silky black powder."
 
-	milk
-		name = "Milk"
-		id = "milk"
-		result = "milk"
-		required_reagents = list("milk_powder" = 1, "water" = 1)
-		result_amount = 1
-		max_temperature = T0C + 100
-		mix_phrase = "The powder dissolves, turning the solution milky."
-
 	barbecue_sauce
 		name = "Barbecue Sauce"
 		id = "barbecue_sauce"
@@ -728,6 +719,15 @@
 			smoke.set_up(1, 0, get_turf(src))
 			smoke.start()
 
+	milk_reconstitution
+		name = "Milk"
+		id = "milk"
+		result = "milk"
+		required_reagents = list("milk_powder" = 1, "water" = 1)
+		result_amount = 1
+		max_temperature = T0C + 100
+		mix_phrase = "The powder dissolves, turning the solution milky."
+
 	super_milk
 		name = "Super Milk"
 		id = "super_milk"
@@ -737,7 +737,7 @@
 		result_amount = 1
 		mix_phrase = "The mixture concentrates."
 
-	milk
+	milk_dilution
 		name = "Milk"
 		id = "milk"
 		result = "milk"
