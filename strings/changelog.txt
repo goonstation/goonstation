@@ -1,5 +1,10 @@
 
 (t)tue jul 28 26
+(u)Gomp
+(p)26280
+(e)🎨💡|C-Sprites, A-Station-Systems
+(*)AI TURRET RESPRITE The colors of the different shooting modes have changed! Details in minor changes.
+(+)BLUE now means the turret is NOT FIRING. GREY means the turret has NO POWER. YELLOW means the turret is on the STUN setting. RED means the turret is going to KILL you!
 (u)Astarthoc
 (p)27219
 (e)|
