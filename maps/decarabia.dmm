@@ -5558,7 +5558,9 @@
 	panel_open = 1
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/walp/glass/science,
+/obj/machinery/door/airlock/walp/glass/science{
+	id = "telesci_door"
+	},
 /turf/simulated/floor/purple,
 /area/station/science/teleporter)
 "bsI" = (
@@ -6789,6 +6791,13 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/exit)
+"bFK" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/random_item_spawner/gross/one,
+/turf/simulated/floor/industrial,
+/area/station/maintenance/outer/sw)
 "bFS" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/wood{
@@ -39454,6 +39463,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/random_item_spawner/junk/one,
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/outer/sw)
 "jaL" = (
@@ -49957,6 +49967,9 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/decal/poster/wallsign/psa_bucket{
+	pixel_x = -27
+	},
 /turf/simulated/floor/carpet/purple/standard/edge{
 	dir = 9
 	},
@@ -54386,6 +54399,10 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor/red,
 /area/research_outpost/toxins)
+"mxD" = (
+/obj/decal/cleanable/generic,
+/turf/simulated/floor/black/grime,
+/area/station/maintenance/outer/sw)
 "mxG" = (
 /obj/decal/tile_edge/line/purple{
 	icon_state = "line1"
@@ -61296,6 +61313,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
 	},
+/obj/machinery/light/small/floor/purpleish,
 /turf/simulated/floor/black/grime,
 /area/station/hangar/science)
 "ohq" = (
@@ -63733,6 +63751,7 @@
 	dir = 6;
 	icon_state = "xtra_bigstripe-corner2"
 	},
+/obj/random_item_spawner/gross/one,
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/outer/sw)
 "oLC" = (
@@ -76449,7 +76468,8 @@
 /obj/mapping_helper/access/telesci,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/walp/glass/science{
-	dir = 4
+	dir = 4;
+	id = "telesci_door"
 	},
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
@@ -82194,7 +82214,6 @@
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/command/alt,
 /obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "compcore";
 	enter_id = "outer";
@@ -82202,6 +82221,7 @@
 	},
 /obj/mapping_helper/access/research_director,
 /obj/mapping_helper/button/area,
+/obj/machinery/door/airlock/walp/command,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -85141,6 +85161,10 @@
 	},
 /turf/simulated/floor/carpet/office,
 /area/station/medical/staff)
+"tHI" = (
+/obj/random_item_spawner/gross/one,
+/turf/simulated/floor/industrial,
+/area/station/maintenance/outer/south)
 "tHW" = (
 /obj/stool/bench/red,
 /turf/simulated/floor/plating/random,
@@ -131928,7 +131952,7 @@ kEt
 iFI
 pfP
 vzp
-mFv
+bFK
 muA
 bzX
 cJV
@@ -134647,7 +134671,7 @@ rFr
 bkC
 vQq
 nXR
-bzX
+mtG
 kBb
 jWK
 ptJ
@@ -141581,7 +141605,7 @@ jqs
 bsi
 oOB
 rUI
-vPD
+mxD
 mKe
 mKe
 cRW
@@ -147969,7 +147993,7 @@ lLQ
 hAs
 sRC
 cKR
-jmW
+tHI
 ykJ
 ykJ
 ykJ
