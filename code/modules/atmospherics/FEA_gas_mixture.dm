@@ -635,3 +635,26 @@ What are the archived variables for?
 		return TRUE
 	else
 		return FALSE
+
+/datum/gas_mixture/proc/release_to(atom/target, release_pressure)
+	var/datum/gas_mixture/environment
+	if (isturf(target))
+		environment = target.return_air()
+	else
+		environment = target.return_air(TRUE)
+
+	var/env_pressure = MIXTURE_PRESSURE(environment)
+	var/pressure_delta = min(release_pressure - env_pressure, (MIXTURE_PRESSURE(src) - env_pressure)/2)
+	//Can not have a pressure delta that would cause environment pressure > tank pressure
+
+	var/transfer_moles = 0
+	if((src.temperature > 0) && (pressure_delta > 0))
+		transfer_moles = pressure_delta*environment.volume/(src.temperature * R_IDEAL_GAS_EQUATION)
+
+		//Actually transfer the gas
+		var/datum/gas_mixture/removed = src.remove(transfer_moles)
+
+		if(isturf(target))
+			target.assume_air(removed)
+		else
+			environment.merge(removed)

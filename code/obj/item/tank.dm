@@ -23,6 +23,7 @@ ABSTRACT_TYPE(/obj/item/tank)
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	flags = TABLEPASS | CONDUCT | TGUI_INTERACTIVE
 	c_flags = ONBACK
+	tool_flags = parent_type::tool_flags | TOOL_ASSEMBLY_APPLIER
 
 	pressure_resistance = ONE_ATMOSPHERE * 5
 
@@ -57,14 +58,29 @@ ABSTRACT_TYPE(/obj/item/tank)
 		processing_items |= src
 		src.create_inventory_counter()
 		BLOCK_SETUP(BLOCK_TANK)
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
 		return
 
 	disposing()
 		if(air_contents)
 			qdel(air_contents)
 			air_contents = null
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY)
 		processing_items.Remove(src)
 		..()
+
+	proc/assembly_application(var/manipulated_tank, var/obj/item/assembly/parent_assembly, var/obj/assembly_target)
+		if (!assembly_target)
+			playsound(parent_assembly, 'sound/effects/valve_creak.ogg', 50, 1)
+			var/turf/simulated/T = get_turf(parent_assembly)
+			if (!T)
+				return
+			if (istype(T) && T.parent?.group_processing)
+				T.parent.suspend_group_processing()
+			src.air_contents.release_to(T, src.distribute_pressure)
+			if (MIXTURE_PRESSURE(src.air_contents) < ATMOS_EPSILON)
+				T.return_air().remove()
+
 
 	blob_act(var/power)
 		if(prob(25 * power / 20))

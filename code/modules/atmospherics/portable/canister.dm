@@ -238,33 +238,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 
 	..()
 
-	var/datum/gas_mixture/environment
-
-	if(holding)
-		environment = holding.air_contents
-	else
-		environment = loc.return_air()
-
-	if (!environment)
-		return
-
-	var/env_pressure = MIXTURE_PRESSURE(environment)
-
 	if(valve_open)
-		var/pressure_delta = min(release_pressure - env_pressure, (MIXTURE_PRESSURE(air_contents) - env_pressure)/2)
-		//Can not have a pressure delta that would cause environment pressure > tank pressure
-
-		var/transfer_moles = 0
-		if((air_contents.temperature > 0) && (pressure_delta > 0))
-			transfer_moles = pressure_delta*environment.volume/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
-
-			//Actually transfer the gas
-			var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
-
-			if(holding)
-				environment.merge(removed)
-			else
-				loc.assume_air(removed)
+		src.air_contents.release_to(src.holding ? src.holding : src.loc, src.release_pressure)
 
 	overpressure = MIXTURE_PRESSURE(air_contents) / maximum_pressure
 
