@@ -1,5 +1,10 @@
 
 (t)tue jul 28 26
+(u)Astarthoc
+(p)27143
+(e)⚗|A-Chemistry
+(*)Added sweet condensed milk to the game. A sweet ingredient for bakery or drinks!
+(*)Added café bombón to the game. The sweetest way to drink a espresso
 (u)Kubius
 (p)27245
 (e)💅|C-QoL
