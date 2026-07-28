@@ -179,7 +179,7 @@
 	if(!message || length_char(message) > 400)
 		return FALSE
 
-	var/cooldown = ON_COOLDOWN(user, "silicon_broadcast", 2 SECONDS)
+	var/cooldown = ON_COOLDOWN(user, "silicon_broadcast", 2 MINUTES)
 	if(cooldown)
 		boutput(user, SPAN_ALERT("You cannot do that for another [cooldown/10] seconds!"))
 		return
