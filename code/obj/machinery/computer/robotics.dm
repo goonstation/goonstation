@@ -14,6 +14,7 @@
 	var/perma = 0
 	var/can_lockdown = TRUE
 	var/can_killswitch = TRUE
+	var/static/atom/movable/abstract_say_source/robotics_control/broadcast_say_source
 
 	light_r =0.85
 	light_g = 0.86
@@ -21,6 +22,7 @@
 
 	New()
 		..()
+		src.broadcast_say_source ||= new
 		START_TRACKING
 
 	disposing()
@@ -168,6 +170,24 @@
 					boutput(drone, SPAN_ALERT("<b>Killswitch activated.</b>"))
 				drone.gib()
 				return TRUE
+			if ("silicon_broadcast")
+				return src.send_message(usr, params["message"])
+
+/obj/machinery/computer/robotics/proc/send_message(var/mob/user, message)
+	message = sanitize(adminscrub(message))
+	message = user.say(message, flags = SAYFLAG_DO_NOT_OUTPUT)?.get_content()
+	if(!message || length_char(message) > 400)
+		return FALSE
+
+	var/cooldown = ON_COOLDOWN(user, "silicon_broadcast", 2 SECONDS)
+	if(cooldown)
+		boutput(user, SPAN_ALERT("You cannot do that for another [cooldown/10] seconds!"))
+		return
+
+	logTheThing(LOG_SAY, user, "creates a broadcast to silicons: [message]")
+	logTheThing(LOG_DIARY, user, "creates a broadcast to silicons: [message]", "say")
+	src.broadcast_say_source.say(message)
+	return TRUE
 
 /obj/machinery/computer/robotics/attackby(obj/item/I, user)
 	if (perma && isscrewingtool(I))
@@ -257,6 +277,7 @@
 	name = "robotics monitoring"
 	desc = "A computer that allows users to have an overview of the cyborgs on the station."
 	circuit_type = /obj/item/circuitboard/robotics_lab
+	req_access = list(access_robotics)
 	can_killswitch = FALSE
 	can_lockdown = FALSE
 

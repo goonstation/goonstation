@@ -34,6 +34,27 @@
 	. = ..()
 
 
+/datum/speech_module/output/siliconchat/broadcast
+	id = SPEECH_OUTPUT_SILICONCHAT_BROADCAST
+	priority = SPEECH_OUTPUT_PRIORITY_HIGH
+	speech_prefix = null
+
+/datum/speech_module/output/siliconchat/broadcast/process(datum/say_message/message)
+	. = ..()
+
+	message.format_speaker_prefix = {"\
+		<span class='game roboticsay'>\
+			<span class='prefix'>
+	"}
+
+	message.format_verb_prefix = {"\
+		: </span></span> \
+		<span class='message'>\
+	"}
+
+	message.format_content_prefix = null
+
+
 /datum/speech_module/output/siliconchat/admin
 	id = SPEECH_OUTPUT_SILICONCHAT_ADMIN
 	speech_prefix = null
