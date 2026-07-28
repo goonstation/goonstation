@@ -1,5 +1,9 @@
 
 (t)tue jul 28 26
+(u)Kubius
+(p)27245
+(e)💅|C-QoL
+(+)Mopping a catwalk will now automatically pass the click through to the floor underneath.
 (u)Driftered
 (p)27304
 (e)🎨|C-Sprites
