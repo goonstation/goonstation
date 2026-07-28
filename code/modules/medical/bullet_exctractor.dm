@@ -1,7 +1,7 @@
 /// This tool is mainly used by NanoTrasen Emergency Paramedics. It let you remove shrapnel from someone whos standing up, at the cost of hurting. Its kind of a psudo surgery.
 /obj/item/bullet_extractor
 	name = "Shrapnel Extractor"
-	desc = "An advanced surgeon's tool, used to extract shrapnel from the body of a standing person, used in desperate situations due to patiant movment often causing additonal harm. Users often complain the tool has a personality of it's own."
+	desc = "An advanced surgeon's tool. It lets you extract shrapnel from a patient in any situation. Reserved only for desperate situations due high risk of causing minor injuries. Users often complain the tool has a personality of it's own."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "cell-on"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
