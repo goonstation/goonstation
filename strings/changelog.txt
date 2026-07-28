@@ -1,5 +1,9 @@
 
 (t)tue jul 28 26
+(u)LorrMaster
+(p)27309
+(e)🧱|A-Materials
+(+)Nanotrasen has ordered a slightly newer edition of "Dummies' Guide to Material Science"
 (u)Wrastlingcat
 (p)27285
 (e)🎨🌱|C-Sprites, A-Hydroponics
