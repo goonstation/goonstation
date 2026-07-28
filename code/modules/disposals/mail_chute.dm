@@ -7,26 +7,25 @@
 	icon_style = "mail"
 	light_style = "mailchute"
 	repressure_speed = 0.2
-	var/mail_tag = null
-	//var/destination_tag = null // dropped to parent /obj/machinery/disposal
-	var/list/destinations = list()
-	var/frequency = FREQ_MAIL_CHUTE
-	var/last_inquire = 0 //No signal spamming etc
-	var/autoname = FALSE
 
-	var/message = null
-	var/mailgroup = null
-	var/mailgroup2 = null
+	var/list/destinations = list()
+
 	var/net_id = null
 	var/pdafrequency = FREQ_PDA
+	var/frequency = FREQ_MAIL_CHUTE
+	var/last_inquire = 0 //No signal spamming etc
+
+	var/mail_tag = null
+	var/mailgroup = null
+	var/mailgroup2 = null
+	var/message = null
 
 	New()
 		..()
-		if (src.autoname && !isnull(src.mail_tag))
-			src.name = "mail chute ([src.mail_tag])"
 
 		if (!src.net_id)
 			src.net_id = generate_net_id(src)
+
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, "main", frequency)
 		MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, "pda", pdafrequency)
 		SPAWN(10 SECONDS)
@@ -153,6 +152,7 @@
 		..()
 		return
 
+
 /obj/machinery/disposal/mail/small
 	icon = 'icons/obj/disposal_small.dmi'
 	handle_normal_state = "mail-handle"
@@ -180,6 +180,3 @@
 	message = TRUE
 	icon_style = "qm_mail"
 	light_style = "qm_mailchute"
-
-	autoname
-		autoname = TRUE
