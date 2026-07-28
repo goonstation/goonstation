@@ -101,8 +101,12 @@ toxic - poisons
 
 /datum/projectile/laser/heavy/law_safe //subclass of heavy laser that can't damage the law rack - for AI turrets
 	name = "heavy laser"
-	icon_state ="laser_anim"
+	icon_state ="laser_big"
 	law_rack_safe = TRUE
+	brightness = 0.8
+	color_red = 1
+	color_green = 0.2
+	color_blue = 0.2
 
 /datum/projectile/laser/diffuse
 	sname = "diffuse laser"
