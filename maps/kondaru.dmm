@@ -3901,7 +3901,8 @@
 /turf/simulated/floor/neutral/side,
 /area/station/hangar/main)
 "apA" = (
-/obj/machinery/disposal/mail/autoname/public/podbay,
+/obj/mapping_helper/mailtag/public/podbay,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/west,
 /obj/machinery/camera/directional/south{
 	pixel_x = -10
@@ -6098,7 +6099,8 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "azN" = (
-/obj/machinery/disposal/mail/small/autoname/security/detective/north,
+/obj/mapping_helper/mailtag/security/detective,
+/obj/machinery/disposal/mail/small/north,
 /obj/decal/cleanable/dirt,
 /obj/disposalpipe/trunk/mail/east,
 /obj/cable{
@@ -6183,7 +6185,8 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload_foyer)
 "aAe" = (
-/obj/machinery/disposal/mail/autoname/chapel,
+/obj/mapping_helper/mailtag/chapel,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/east,
 /turf/simulated/floor/wood/two,
 /area/station/chapel/sanctuary)
@@ -8318,7 +8321,8 @@
 	},
 /area/station/engine/engineering)
 "aJw" = (
-/obj/machinery/disposal/mail/autoname/mechanics,
+/obj/mapping_helper/mailtag/mechanics,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/south,
 /turf/simulated/floor/yellow/side{
 	dir = 4
@@ -9102,7 +9106,8 @@
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "aOC" = (
-/obj/machinery/disposal/mail/autoname/medbay/genetics,
+/obj/mapping_helper/mailtag/medbay/genetics,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/south,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -15431,7 +15436,8 @@
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "btN" = (
-/obj/machinery/disposal/mail/autoname/medbay/booth,
+/obj/mapping_helper/mailtag/medbay/booth,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/south,
 /obj/item/storage/wall/medical_wear,
 /turf/simulated/floor/bluewhite{
@@ -15916,7 +15922,8 @@
 /turf/simulated/floor/darkblue,
 /area/station/janitor/office)
 "bwE" = (
-/obj/machinery/disposal/mail/autoname/janitor,
+/obj/mapping_helper/mailtag/janitor,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/south,
 /obj/machinery/door_control{
 	id = "washdesk";
@@ -16916,7 +16923,8 @@
 /area/station/hallway/primary/south)
 "bBM" = (
 /obj/disposalpipe/trunk/mail/south,
-/obj/machinery/disposal/mail/autoname/bridge,
+/obj/mapping_helper/mailtag/bridge,
+/obj/machinery/disposal/mail,
 /obj/machinery/light/emergency{
 	dir = 8;
 	pixel_x = -10
@@ -19525,7 +19533,8 @@
 /turf/simulated/floor/white,
 /area/station/science/lobby)
 "bLJ" = (
-/obj/machinery/disposal/mail/autoname/research,
+/obj/mapping_helper/mailtag/research,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/north,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
@@ -24103,7 +24112,8 @@
 /turf/space,
 /area/space)
 "chr" = (
-/obj/machinery/disposal/mail/autoname/medbay/robotics,
+/obj/mapping_helper/mailtag/medbay/robotics,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/south,
 /obj/machinery/light{
 	dir = 1;
@@ -25477,7 +25487,8 @@
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "cov" = (
-/obj/machinery/disposal/mail/autoname/security,
+/obj/mapping_helper/mailtag/security,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/east,
 /turf/simulated/floor/red/side{
 	dir = 9
@@ -28686,7 +28697,8 @@
 "efc" = (
 /obj/machinery/firealarm/directional/west,
 /obj/disposalpipe/trunk/mail/east,
-/obj/machinery/disposal/mail/autoname/medbay/psychiatry,
+/obj/mapping_helper/mailtag/medbay/psychiatry,
+/obj/machinery/disposal/mail,
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
@@ -29452,7 +29464,8 @@
 	},
 /area/station/crew_quarters/courtroom)
 "eCZ" = (
-/obj/machinery/disposal/mail/autoname/engineering,
+/obj/mapping_helper/mailtag/engineering,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/north,
 /obj/machinery/camera/directional/south{
 	pixel_x = 10
@@ -29882,7 +29895,8 @@
 /obj/machinery/firealarm/directional/east{
 	pixel_y = 6
 	},
-/obj/machinery/disposal/mail/autoname/medbay,
+/obj/mapping_helper/mailtag/medbay,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/south,
 /obj/mapping_helper/button/area,
 /turf/simulated/floor/bluewhite{
@@ -30783,7 +30797,8 @@
 	},
 /area/station/medical/medbay)
 "fBk" = (
-/obj/machinery/disposal/mail/autoname/hydroponics,
+/obj/mapping_helper/mailtag/hydroponics,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail,
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
@@ -31926,7 +31941,8 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/robotics)
 "gpE" = (
-/obj/machinery/disposal/mail/autoname/public/escape,
+/obj/mapping_helper/mailtag/public/escape,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/west,
 /turf/simulated/floor/escape/corner{
 	dir = 4
@@ -40608,7 +40624,8 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/catering)
 "maW" = (
-/obj/machinery/disposal/mail/autoname/research/chemistry,
+/obj/mapping_helper/mailtag/research/chemistry,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/south,
 /obj/item/device/radio/intercom/science{
 	pixel_x = 3;
@@ -40628,7 +40645,8 @@
 /area/station/medical/medbay)
 "mcp" = (
 /obj/disposalpipe/trunk/mail/west,
-/obj/machinery/disposal/mail/autoname/public/news,
+/obj/mapping_helper/mailtag/public/news,
+/obj/machinery/disposal/mail,
 /obj/machinery/camera/directional/east{
 	pixel_y = 10
 	},
@@ -47716,7 +47734,8 @@
 /turf/space,
 /area/space)
 "rgh" = (
-/obj/machinery/disposal/mail/autoname/mining,
+/obj/mapping_helper/mailtag/mining,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/west,
 /obj/machinery/light_switch/directional/east{
 	pixel_y = -6
@@ -49447,7 +49466,8 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "sxr" = (
-/obj/machinery/disposal/mail/autoname/kitchen,
+/obj/mapping_helper/mailtag/kitchen,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/east,
 /obj/item/storage/wall{
 	pixel_y = 32
@@ -51255,7 +51275,8 @@
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "tHc" = (
-/obj/machinery/disposal/mail/autoname/ranch,
+/obj/mapping_helper/mailtag/ranch,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/east,
 /turf/simulated/floor/caution/misc{
 	dir = 4
