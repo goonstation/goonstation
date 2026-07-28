@@ -34,13 +34,6 @@
 	},
 /turf/unsimulated/floor/cave,
 /area/unspace/poolroom/reservoir)
-"l" = (
-/obj/decal/cliff/shore{
-	dir = 1;
-	density = 1
-	},
-/turf/unsimulated/floor/setpieces/menhir_cavepool,
-/area/unspace/poolroom/reservoir)
 "m" = (
 /obj/landmark/menhir/room{
 	tag = "menhir_room_cavern"
@@ -60,11 +53,9 @@
 /area/unspace/poolroom)
 "q" = (
 /obj/decal/cliff/shore{
-	dir = 1
-	},
-/obj/decal/cliff/shore{
 	dir = 1;
-	density = 1
+	density = 1;
+	pixel_y = 10
 	},
 /turf/unsimulated/floor/setpieces/menhir_cavepool,
 /area/unspace/poolroom/reservoir)
@@ -458,7 +449,7 @@ H
 a
 c
 R
-l
+q
 N
 N
 N

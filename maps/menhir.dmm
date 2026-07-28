@@ -9402,9 +9402,7 @@
 /obj/table/reinforced/bar/auto,
 /obj/machinery/espresso_machine,
 /obj/mapping_helper/glassware_spawn,
-/obj/item/device/radio/intercom/catering{
-	dir = 4
-	},
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
 "fhJ" = (
@@ -34237,7 +34235,9 @@
 /area/station/science/lab)
 "smx" = (
 /obj/submachine/slot_machine,
-/obj/machinery/light_switch/directional/west,
+/obj/item/device/radio/intercom/catering{
+	dir = 4
+	},
 /turf/simulated/floor/carpet/green/standard/edge{
 	dir = 8
 	},
@@ -39064,9 +39064,12 @@
 /area/station/hangar/main)
 "uPM" = (
 /obj/machinery/chem_heater,
-/obj/machinery/light_switch/directional/west,
 /obj/drink_rack/cup{
 	pixel_y = 32
+	},
+/obj/item/storage/wall/bar{
+	dir = 4;
+	pixel_x = -32
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
