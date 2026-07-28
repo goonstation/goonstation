@@ -1,5 +1,9 @@
 
 (t)tue jul 28 26
+(u)Astarthoc
+(p)27219
+(e)|
+(*)You can now select to spawn with DNR set when choosing to observe a round
 (u)JORJ949
 (p)27191
 (e)⚖📦🤖|C-Balance, A-Game-Objects, A-Silicons
