@@ -21266,7 +21266,7 @@
 	desc = "An underfloor mail pipe.";
 	dir = 2;
 	icon_state = "pipe-sj2";
-	mail_tag = "cargo";
+	mail_tag = "QM";
 	name = "quartermasters mail router"
 	},
 /obj/decal/tile_edge/stripe/corner/extra_big2{
@@ -43708,11 +43708,7 @@
 /turf/simulated/floor/bluewhite,
 /area/station/medical/staff)
 "keI" = (
-/obj/machinery/disposal/mail/qm/autoname{
-	mail_tag = "cargo";
-	message = "1";
-	name = "mail chute-'Cargo'"
-	},
+/obj/machinery/disposal/mail/qm,
 /obj/disposalpipe/trunk/mail{
 	dir = 1
 	},

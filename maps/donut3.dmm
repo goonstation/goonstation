@@ -34270,7 +34270,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "kGA" = (
-/obj/machinery/disposal/mail/small/autoname,
+/obj/machinery/disposal/mail/small,
 /obj/disposalpipe/trunk/mail{
 	dir = 1
 	},
