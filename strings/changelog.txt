@@ -1,5 +1,9 @@
 
 (t)tue jul 28 26
+(u)JORJ949
+(p)27191
+(e)⚖📦🤖|C-Balance, A-Game-Objects, A-Silicons
+(*)The AI can no longer make station announcements or call the shuttle if their core is being signal jammed.
 (u)Astarthoc
 (p)27143
 (e)⚗|A-Chemistry
