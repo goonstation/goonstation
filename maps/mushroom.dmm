@@ -10851,6 +10851,10 @@
 /area/station/medical/robotics)
 "eAY" = (
 /obj/storage/secure/crate/weapon/confiscated_items,
+/obj/machinery/light_switch/directional/north{
+	pixel_x = -7
+	},
+/obj/blind_switch/directional/north,
 /turf/simulated/floor/red/redblackchecker,
 /area/station/security/evidence)
 "eBf" = (
@@ -16488,13 +16492,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "iKH" = (
-/obj/machinery/door/airlock/pyro/glass/security{
-	dir = 4
-	},
-/obj/mapping_helper/access/security,
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/pyro/security{
+	dir = 4
+	},
+/obj/mapping_helper/access/security,
 /turf/simulated/floor,
 /area/station/security/evidence)
 "iKJ" = (
@@ -22240,7 +22244,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/storage/secure/closet/security,
+/obj/storage/secure/closet/security/equipment,
 /turf/simulated/floor/red/redblackchecker,
 /area/station/security/equipment)
 "ncf" = (
@@ -27583,6 +27587,10 @@
 /obj/item/razor_blade,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/barber_shop)
+"qtq" = (
+/obj/machinery/interdictor/ranch,
+/turf/simulated/floor/auto/dirt,
+/area/station/ranch)
 "qtN" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor{
 	dir = 1
@@ -28876,7 +28884,9 @@
 /area/station/crew_quarters/cafeteria)
 "rhE" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/window_blinds/vertical,
+/obj/window_blinds/cog2{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/security/evidence)
 "rhT" = (
@@ -33982,7 +33992,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/courtroom)
 "upA" = (
-/obj/storage/secure/closet/security,
+/obj/storage/secure/closet/security/equipment,
 /turf/simulated/floor/red/redblackchecker,
 /area/station/security/equipment)
 "upI" = (
@@ -82783,7 +82793,7 @@ spN
 cMw
 flP
 gZR
-nIu
+qtq
 cAL
 wTg
 ftF
