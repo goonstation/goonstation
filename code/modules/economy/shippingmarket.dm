@@ -742,9 +742,14 @@
 	//needs to be called whenever active_traders or req_contracts changes
 	proc/update_shipping_data()
 		for_by_tcl(computer, /obj/machinery/computer/barcode)
-			computer.update_static_data()
+			computer.update_static_data_for_all_viewers()
 		for_by_tcl(barcoder, /obj/item/portable_barcoder)
 			barcoder.update_destinations()
+		src.update_supply_console_data()
+
+	proc/update_supply_console_data()
+		for_by_tcl(computer, /obj/machinery/computer/supplycomp)
+			computer.update_static_data_for_all_viewers()
 
 // Debugging and admin verbs (mostly coder)
 

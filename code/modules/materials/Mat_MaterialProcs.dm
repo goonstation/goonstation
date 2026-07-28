@@ -590,7 +590,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 		if (iscarbon(M))
 			var/mob/living/carbon/C = M
 			C.changeBodyTemp(-2 KELVIN)
-			if (C.bodytemperature > T0C && probmult(4))
+			if (C.bodytemperature > I.material.getProperty("melting_point") && probmult(4))
 				boutput(C, "Your [I] melts from your body heat!")
 				qdel(I)
 		return
@@ -599,7 +599,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 	desc = "It would melt when exposed to heat."
 
 	execute(var/atom/owner, var/temp)
-		if(temp < T0C) return // less than reaction temp
+		if(temp < owner.material.getProperty("melting_point")) return // less than reaction temp
 
 		var/turf/T = get_turf(owner)
 
@@ -703,6 +703,28 @@ triggerOnImage(var/image/target, var/datum/material/source)
 	execute(var/image/target, var/datum/material/source)
 		var/wave_filter = wave_filter(16, 16, 1, rand(), flags = WAVE_SIDEWAYS | WAVE_BOUNDED)
 		target.filters = wave_filter + target.filters
+		return
+
+/datum/materialProc/blob_add
+	execute(var/atom/location)
+		if(endswith(location.icon_state, "$$blob") || ("blob" in location.get_typeinfo().mat_appearances_to_ignore))
+			return
+		var/wave_filter = wave_filter(16, 16, 0.6, 0, flags = WAVE_SIDEWAYS | WAVE_BOUNDED)
+		location.add_filter("blob_wave", 4, wave_filter)
+		var/filter = location.get_filter("blob_wave")
+
+		location.avoid_animating = TRUE
+		var/datum/material/blob_mat = location.material
+		var/wiggle_time = round(5 * (blob_mat.getProperty("density") ** 1.4), 1)
+		var/blob_offset = TIME % wiggle_time
+		animate(filter, offset = blob_offset, time = 0, loop = -1, flags = ANIMATION_PARALLEL)
+		animate(offset = blob_offset + 1, time = wiggle_time, loop = -1)
+		return
+
+/datum/materialProc/blob_remove
+	execute(var/atom/location)
+		location.remove_filter("blob_wave")
+		location.avoid_animating = FALSE
 		return
 
 /datum/materialProc/temp_miraclium

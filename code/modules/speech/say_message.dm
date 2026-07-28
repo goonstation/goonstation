@@ -86,6 +86,8 @@
 	var/group = ""
 
 	// Maptext Variables:
+	/// The atom that the maptext should appear over. Defaults to `message_origin` if unset.
+	var/atom/maptext_origin = null
 	/// The CSS values for the maptext, stored as an associative list, i.e: "font-weight" = "bold".
 	var/list/maptext_css_values = null
 	/// The variables for the maptext object, stored as an associative list, i.e: "alpha" = "140".
@@ -203,6 +205,7 @@
 	src.received_module = null
 	src.atom_listeners_override = null
 	src.atom_listeners_to_be_excluded = null
+	src.maptext_origin = null
 
 	. = ..()
 
@@ -339,9 +342,10 @@
 	if (istype(mob_listener) && mob_listener.client)
 		// Display maptext to the listener, if applicable.
 		if (!(src.flags & SAYFLAG_NO_MAPTEXT))
+			src.maptext_origin ||= src.message_origin
 			src.maptext_css_values["color"] ||= living_maptext_color(src.speaker.name)
-			src.message_origin.maptext_manager ||= new /atom/movable/maptext_manager(src.message_origin)
-			src.message_origin.maptext_manager.add_maptext(mob_listener.client, NEW_MAPTEXT(/image/maptext/message, src))
+			src.maptext_origin.maptext_manager ||= new /atom/movable/maptext_manager(src.maptext_origin)
+			src.maptext_origin.maptext_manager.add_maptext(mob_listener.client, NEW_MAPTEXT(/image/maptext/message, src))
 
 		// Handle hear sounds.
 		if (src.hear_sound && !src.received_module.say_channel.suppress_hear_sound)
@@ -469,6 +473,7 @@
 	copy.group = src.group
 
 	// Maptext Variables:
+	copy.maptext_origin = src.maptext_origin
 	copy.maptext_css_values = src.maptext_css_values?.Copy()
 	copy.maptext_variables = src.maptext_variables?.Copy()
 	copy.maptext_animation_colours = src.maptext_animation_colours?.Copy()

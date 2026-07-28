@@ -274,7 +274,7 @@ TYPEINFO(/datum/component/consume/food_effects)
 		return COMPONENT_INCOMPATIBLE
 	src.food_parent = parent
 	src.status_effects = _status_effects
-	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED), PROC_REF(apply_food_effects))
+	RegisterSignals(parent, list(COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED), PROC_REF(apply_food_effects))
 
 /datum/component/consume/food_effects/InheritComponent(datum/component/consume/food_effects/C, i_am_original, _new_status_effects)
 	if(C?.status_effects)

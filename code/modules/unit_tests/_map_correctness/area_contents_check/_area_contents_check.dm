@@ -22,7 +22,7 @@ ABSTRACT_TYPE(/datum/map_correctness_check/area_contents)
 	for (var/target_area_type in src.target_areas)
 		for (var/area/A as anything in global.by_type[target_area_type])
 			for (var/type in A.mapload_contents)
-				summed_contents[type] ||= 0
+				summed_contents[type] ||= list()
 				summed_contents[type] += A.mapload_contents[type]
 
 	for (var/datum/area_contents_condition/condition as anything in src.expected_contents)
@@ -35,7 +35,7 @@ ABSTRACT_TYPE(/datum/map_correctness_check/area_contents)
 		. += area_check_results
 
 
-/// A list of atoms types instantiated in this area during mapload and their associated counts. Only populated if `CI_RUNTIME_CHECKING` is enabled.
+/// A list of atom types instantiated in this area during mapload associated with a list of coordinates where those types appear. Only populated if `CI_RUNTIME_CHECKING` is enabled.
 /area/var/alist/mapload_contents = null
 
 #ifdef CI_RUNTIME_CHECKING
@@ -59,10 +59,14 @@ ABSTRACT_TYPE(/datum/map_correctness_check/area_contents)
 	if (!A)
 		return
 
+	var/turf/T = get_turf(src)
+	if (!T)
+		return
+
 	var/atom/type = src.type
 	while (type != /atom)
-		A.mapload_contents[type] ||= 0
-		A.mapload_contents[type] += 1
+		A.mapload_contents[type] ||= list()
+		A.mapload_contents[type] += "([T.x], [T.y], [T.z])"
 		type = type::parent_type
 
 #endif
