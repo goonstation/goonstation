@@ -5627,3 +5627,4 @@
 		result_amount = 2
 		mix_phrase = "The mixture slowly separates into two distinct layers."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
