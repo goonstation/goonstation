@@ -948,66 +948,61 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 			particleMaster.RemoveSystem(/datum/particleSystem/rads_warning)
 		..()
 
-//a moment of silence
-/datum/random_event/menhir/apc_off
-	name = "Quiet is the Chorus"
-	message_delay = 1 MINUTE
-	announcement_style = MENHIR_EVENT_NOTIFY_GLOBAL
+//it's time to share your perspective.
+/datum/random_event/menhir/resight
+	name = "Through Another's Eyes"
 	weight = 70
 
-	var/list/ineligible_areas = list(
-		/area/station/maintenance,
-		/area/station/engine/core,
-		/area/station/engine/hotloop,
-		/area/station/engine/coldloop,
-		/area/station/engine/combustion_chamber,
-		/area/station/engine/monitoring,
-		/area/station/engine/power,
-		/area/station/crown
-	)
-
 	event_effect()
-		var/list/station_areas = get_accessible_station_areas()
-		var/list/candidate_areas = list()
-		for (var/area_name in station_areas)
-			var/area/A = station_areas[area_name]
-			var/not_eligible = FALSE
-			for (var/check_area in ineligible_areas)
-				if (istype(A,check_area))
-					not_eligible = TRUE
+		//First verify we have some people to mess with.
+		var/list/eligible_examinees = get_menhir_event_candidates(EVFILTER_ONTURF)
+		var/candidate_num = length(eligible_examinees)
+
+		if (candidate_num < 3)
+			logTheThing(LOG_STATION, null, "Menhir resight event has inadequate candidates ([candidate_num]/3); skipping event.")
+			message_admins("Menhir resight event has inadequate candidates ([candidate_num]/3); skipping event.")
+			return
+
+		//And consider how many we'll swap. This is, at most, how many PAIRS of people will have their perspective exchanged.
+		var/swapcount = floor(candidate_num/3)
+		if (swapcount < 1) //always at least 1 pair
+			swapcount = 1
+
+		///String for recording who got swapped
+		var/return_string = ""
+		for(var/i in 1 to swapcount)
+			if(!length(eligible_examinees)) break
+			var/mob/candidate_A = pick(eligible_examinees)
+			var/mob/candidate_B = null
+			eligible_examinees -= candidate_A
+			for(var/mob/M in eligible_examinees)
+				if(GET_DIST(candidate_A,M) < 9) //we only want to swap people who are in visual range of each other
+					candidate_B = M
+					eligible_examinees -= M
 					break
-			if (not_eligible) continue
-			if (istype(A.area_apc))
-				candidate_areas += A
 
-		var/report_num = 0
-		var/spare_areas = rand(8,16)
-		var/outage_time = rand(30 SECONDS, 36 SECONDS)
-		SPAWN(1) //don't hold up other operations
-			while(length(candidate_areas) > spare_areas)
-				var/area/our_target = pick(candidate_areas)
-				candidate_areas -= our_target
-				report_num++
-				var/obj/machinery/power/apc/to_mess_with = our_target.area_apc
-				to_mess_with.operating = FALSE
-				to_mess_with.update()
-				to_mess_with.UpdateIcon()
-				SPAWN(2)
-					playsound(to_mess_with.loc, 'sound/effects/sparks1.ogg', 30, 0)
-					FLICK("apc-spark", to_mess_with)
-				SPAWN(rand(outage_time, outage_time + 5 SECONDS))
-					to_mess_with.operating = TRUE
-					to_mess_with.update()
-					to_mess_with.UpdateIcon()
-				sleep(1)
-			logTheThing(LOG_STATION, null, "Menhir apc_off event triggered for [report_num] areas")
-			message_admins("Menhir apc_off event triggered for [report_num] areas")
+			if(candidate_A && candidate_B)
+				SPAWN(1 SECOND)
+					src.perception_swap(candidate_A,candidate_B)
+				return_string += "[key_name(candidate_A)] and [key_name(candidate_A)]"
+				if(i < swapcount) return_string += " | "
 
-		message_delay = rand(9 SECONDS,15 SECONDS)
+		message_delay = rand(18 SECONDS, 24 SECONDS)
 		..()
-		if (random_events.announce_events)
-			SPAWN(message_delay)
-				playsound_global(world, 'sound/misc/announcement_curious.ogg', MENHIR_STANDARD_ALERT_VOLUME)
+
+		logTheThing(LOG_STATION, null, "Menhir resight event - perceptions swapped: [return_string]")
+		message_admins("Menhir resight event - perceptions swapped: [return_string]")
+
+	proc/perception_swap(var/mob/swapped_A,var/mob/swapped_B)
+		var/swap_duration = rand(40 SECONDS,50 SECONDS)
+		swapped_A.set_eye(swapped_B)
+		swapped_B.set_eye(swapped_A)
+		SPAWN(1)
+			swapped_A.playsound_local_not_inworld('sound/musical_instruments/artifact/Artifact_Precursor_5.ogg', 55, 0, pitch = 0.45)
+			swapped_B.playsound_local_not_inworld('sound/musical_instruments/artifact/Artifact_Precursor_5.ogg', 55, 0, pitch = 0.45)
+		sleep(swap_duration)
+		if(swapped_A) swapped_A.set_eye(null)
+		if(swapped_B) swapped_B.set_eye(null)
 
 //untangle the snare, untangle a prize
 /datum/random_event/menhir/knot
