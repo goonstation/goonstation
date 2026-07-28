@@ -16790,6 +16790,11 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"jgJ" = (
+/obj/lattice,
+/obj/warp_beacon/qm,
+/turf/space,
+/area/space)
 "jhy" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer{
 	dir = 4
@@ -75859,7 +75864,7 @@ sEf
 sEf
 sEf
 kBS
-eAw
+jgJ
 vVB
 sEf
 sEf
