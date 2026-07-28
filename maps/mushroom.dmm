@@ -10851,6 +10851,10 @@
 /area/station/medical/robotics)
 "eAY" = (
 /obj/storage/secure/crate/weapon/confiscated_items,
+/obj/machinery/light_switch/directional/north{
+	pixel_x = -7
+	},
+/obj/blind_switch/directional/north,
 /turf/simulated/floor/red/redblackchecker,
 /area/station/security/evidence)
 "eBf" = (
@@ -27583,6 +27587,10 @@
 /obj/item/razor_blade,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/barber_shop)
+"qtq" = (
+/obj/machinery/interdictor/ranch,
+/turf/simulated/floor/auto/dirt,
+/area/station/ranch)
 "qtN" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor{
 	dir = 1
@@ -82785,7 +82793,7 @@ spN
 cMw
 flP
 gZR
-nIu
+qtq
 cAL
 wTg
 ftF
