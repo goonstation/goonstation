@@ -414,7 +414,8 @@
 /obj/decal/tile_edge/line/grey{
 	icon_state = "line1"
 	},
-/obj/machinery/disposal/mail/small/autoname/janitor/south,
+/obj/mapping_helper/mailtag/janitor,
+/obj/machinery/disposal/mail/small/south,
 /obj/disposalpipe/trunk/mail/west,
 /turf/simulated/floor/twotone,
 /area/station/janitor/office)
@@ -9682,7 +9683,8 @@
 /area/station/ai_monitored/storage/eva)
 "cqx" = (
 /obj/machinery/light/incandescent,
-/obj/machinery/disposal/mail/autoname/research/chemistry,
+/obj/mapping_helper/mailtag/research/chemistry,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/north,
 /turf/simulated/floor/purplewhite{
 	dir = 1
@@ -10008,7 +10010,8 @@
 	},
 /area/station/hallway/secondary/exit)
 "cuN" = (
-/obj/machinery/disposal/mail/autoname/chapel,
+/obj/mapping_helper/mailtag/chapel,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/west,
 /obj/decal/stripe_caution,
 /turf/simulated/floor/black,
@@ -12616,7 +12619,8 @@
 	dir = 9;
 	icon_state = "xtra_bigstripe-corner2"
 	},
-/obj/machinery/disposal/mail/small/autoname/engineering/east,
+/obj/mapping_helper/mailtag/engineering,
+/obj/machinery/disposal/mail/small/east,
 /obj/disposalpipe/trunk/mail/north,
 /obj/decal/stripe_caution,
 /turf/simulated/floor/black,
@@ -12834,10 +12838,8 @@
 	},
 /area/station/crew_quarters/clown)
 "daI" = (
-/obj/machinery/disposal/mail{
-	name = "Rec Hall";
-	mail_tag = "recreation hall"
-	},
+/obj/mapping_helper/mailtag/public/rec_hall,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/east,
 /obj/decal/stripe_caution,
 /turf/simulated/floor/wood{
@@ -15583,7 +15585,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/south)
 "dEG" = (
-/obj/machinery/disposal/mail/small/autoname/mechanics/west,
+/obj/mapping_helper/mailtag/mechanics,
+/obj/machinery/disposal/mail/small/west,
 /obj/disposalpipe/trunk/mail/west,
 /turf/simulated/floor/yellowblack{
 	dir = 4
@@ -15830,7 +15833,8 @@
 	},
 /area/station/hallway/primary/southeast)
 "dHJ" = (
-/obj/machinery/disposal/mail/autoname/research,
+/obj/mapping_helper/mailtag/research,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/north,
 /obj/decal/stripe_caution,
 /turf/simulated/floor/purpleblack,
@@ -21262,7 +21266,8 @@
 /obj/item/device/radio/intercom/engineering{
 	dir = 4
 	},
-/obj/machinery/disposal/mail/autoname/mining,
+/obj/mapping_helper/mailtag/mining,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/east,
 /obj/decal/stripe_caution,
 /turf/simulated/floor/shuttlebay{
@@ -24251,7 +24256,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/ne)
 "fAV" = (
-/obj/machinery/disposal/mail/autoname/public/market,
+/obj/mapping_helper/mailtag/public/market,
+/obj/machinery/disposal/mail,
 /obj/decal/stripe_caution,
 /obj/disposalpipe/trunk/mail/east,
 /obj/machinery/light/incandescent,
@@ -28590,7 +28596,8 @@
 	},
 /area/station/security/main)
 "gDK" = (
-/obj/machinery/disposal/mail/autoname/hydroponics,
+/obj/mapping_helper/mailtag/hydroponics,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/north,
 /obj/decal/stripe_caution,
 /turf/simulated/floor/grass/random/walp,
@@ -35992,7 +35999,8 @@
 	dir = 4;
 	pixel_x = 12
 	},
-/obj/machinery/disposal/mail/autoname/public/podbay,
+/obj/mapping_helper/mailtag/public/podbay,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/west,
 /obj/decal/stripe_caution,
 /turf/simulated/floor/caution/side{
@@ -37024,11 +37032,8 @@
 	},
 /area/station/science/teleporter)
 "ixX" = (
-/obj/machinery/disposal/mail{
-	mail_tag = "ranch";
-	mailgroup = "botany";
-	name = "Ranch"
-	},
+/obj/mapping_helper/mailtag/ranch,
+/obj/machinery/disposal/mail,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6;
 	icon_state = "xtra_bigstripe-edge2"
@@ -42168,7 +42173,8 @@
 /area/station/crew_quarters/barber_shop)
 "jJd" = (
 /obj/disposalpipe/trunk/mail/east,
-/obj/machinery/disposal/mail/small/autoname/medbay/robotics/south,
+/obj/mapping_helper/mailtag/medbay/robotics,
+/obj/machinery/disposal/mail/small/south,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -46173,7 +46179,8 @@
 /obj/machinery/status_display{
 	pixel_y = 30
 	},
-/obj/machinery/disposal/mail/autoname/bridge,
+/obj/mapping_helper/mailtag/bridge,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/south,
 /turf/simulated/floor/minitiles/black,
 /area/station/bridge)
@@ -60080,7 +60087,8 @@
 /turf/simulated/floor/industrial,
 /area/station/maintenance/inner/sw)
 "nVp" = (
-/obj/machinery/disposal/mail/small/autoname/medbay/genetics/north{
+/obj/mapping_helper/mailtag/medbay/genetics,
+/obj/machinery/disposal/mail/small/north{
 	pixel_y = 24
 	},
 /obj/disposalpipe/trunk/mail/east,
@@ -65517,7 +65525,8 @@
 /area/station/maintenance/inner/sw)
 "pkt" = (
 /obj/machinery/light/small/floor/netural,
-/obj/machinery/disposal/mail/autoname/public/escape,
+/obj/mapping_helper/mailtag/public/escape,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/south,
 /obj/decal/stripe_caution,
 /turf/simulated/floor/neutral/side{
@@ -70372,10 +70381,11 @@
 /area/station/maintenance/outer/south)
 "qrL" = (
 /obj/machinery/light/incandescent,
-/obj/machinery/disposal/mail{
-	name = "South Primary Hallway";
-	mail_tag = "south primary hallway"
+/obj/mapping_helper/mailtag/manual{
+	mail_tag = "south primary hallway";
+	name = "South Primary Hallway"
 	},
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/south,
 /obj/decal/stripe_caution,
 /turf/simulated/floor/neutral/side{
@@ -79793,10 +79803,11 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/machinery/disposal/mail{
-	name = "Conference Room";
-	mail_tag = "confroom"
+/obj/mapping_helper/mailtag/manual{
+	mail_tag = "confroom";
+	name = "Conference Room"
 	},
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/west,
 /obj/decal/stripe_caution,
 /turf/simulated/floor/carpet/office,
@@ -81019,7 +81030,8 @@
 	dir = 6;
 	icon_state = "line2"
 	},
-/obj/machinery/disposal/mail/autoname/medbay,
+/obj/mapping_helper/mailtag/medbay,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/west,
 /obj/decal/stripe_caution,
 /turf/simulated/floor/twotone/white,
@@ -89485,7 +89497,8 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/machinery/disposal/mail/autoname/security{
+/obj/mapping_helper/mailtag/security,
+/obj/machinery/disposal/mail{
 	pixel_y = 6
 	},
 /obj/disposalpipe/trunk/mail/north,
@@ -103150,7 +103163,8 @@
 	pixel_x = -32;
 	pixel_y = 0
 	},
-/obj/machinery/disposal/mail/autoname/kitchen,
+/obj/mapping_helper/mailtag/kitchen,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/east,
 /turf/simulated/floor/blackwhite{
 	dir = 10
