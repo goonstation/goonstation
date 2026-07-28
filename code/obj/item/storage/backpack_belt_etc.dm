@@ -964,7 +964,7 @@
 	/obj/item/reagent_containers/mender_refill_cartridge/both/high_capacity,
 	/obj/item/storage/pill_bottle/mutadone,
 	/obj/item/reagent_containers/hypospray,
-	/**I.O.U new toy */)
+	/obj/item/bullet_extractor)
 
 /obj/item/storage/belt/roboticist
 	icon_state = "utilrobotics"
