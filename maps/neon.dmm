@@ -19,7 +19,8 @@
 /turf/simulated/floor/carpet/grime,
 /area/radiostation/studio)
 "abA" = (
-/obj/machinery/disposal/mail/small/autoname/bridge/south,
+/obj/mapping_helper/mailtag/bridge,
+/obj/machinery/disposal/mail/small/south,
 /obj/disposalpipe/trunk/mail/north,
 /obj/item/device/radio/intercom/AI{
 	dir = 1
@@ -447,7 +448,8 @@
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "aqE" = (
-/obj/machinery/disposal/mail/small/autoname/public/market/north,
+/obj/mapping_helper/mailtag/public/market,
+/obj/machinery/disposal/mail/small/north,
 /obj/disposalpipe/trunk/mail/west,
 /turf/simulated/floor,
 /area/station/storage/tools)
@@ -1796,7 +1798,8 @@
 /area/station/chapel/sanctuary)
 "bsQ" = (
 /obj/machinery/firealarm/directional/west,
-/obj/machinery/disposal/mail/small/autoname/bar/east,
+/obj/mapping_helper/mailtag/bar,
+/obj/machinery/disposal/mail/small/east,
 /obj/disposalpipe/trunk/mail/east,
 /obj/table/wood/round/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style,
@@ -3134,7 +3137,8 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "csy" = (
-/obj/machinery/disposal/mail/small/autoname/medbay/south,
+/obj/mapping_helper/mailtag/medbay,
+/obj/machinery/disposal/mail/small/south,
 /obj/disposalpipe/trunk/mail/west,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
@@ -3406,9 +3410,8 @@
 /area/station/quartermaster/office)
 "cEa" = (
 /obj/machinery/light/incandescent/blueish,
-/obj/machinery/disposal/mail/autoname{
-	mail_tag = "warehouse"
-	},
+/obj/mapping_helper/mailtag/qm/warehouse,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/east,
 /turf/simulated/floor/grime{
 	dir = 8
@@ -5336,7 +5339,8 @@
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/storage/tools)
 "dND" = (
-/obj/machinery/disposal/mail/small/autoname/janitor/west,
+/obj/mapping_helper/mailtag/janitor,
+/obj/machinery/disposal/mail/small/west,
 /obj/disposalpipe/trunk/mail/south,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
@@ -6685,7 +6689,8 @@
 /turf/space/fluid,
 /area/space)
 "eFB" = (
-/obj/machinery/disposal/mail/small/autoname/mining/south,
+/obj/mapping_helper/mailtag/mining,
+/obj/machinery/disposal/mail/small/south,
 /obj/disposalpipe/trunk/mail/east,
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/yellow,
@@ -9612,7 +9617,8 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/vertical,
-/obj/machinery/disposal/mail/small/autoname/research/west,
+/obj/mapping_helper/mailtag/research,
+/obj/machinery/disposal/mail/small/west,
 /obj/disposalpipe/trunk/mail/west,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
@@ -12965,7 +12971,8 @@
 	pixel_x = 9;
 	pixel_y = -25
 	},
-/obj/machinery/disposal/mail/small/autoname/kitchen/south,
+/obj/mapping_helper/mailtag/kitchen,
+/obj/machinery/disposal/mail/small/south,
 /obj/disposalpipe/trunk/mail/north,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -20223,7 +20230,8 @@
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/toilets)
 "nXu" = (
-/obj/machinery/disposal/mail/small/autoname/chapel/east,
+/obj/mapping_helper/mailtag/chapel,
+/obj/machinery/disposal/mail/small/east,
 /obj/disposalpipe/trunk/mail/east,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
@@ -20300,7 +20308,8 @@
 /turf/simulated/floor/plating,
 /area/iss)
 "oai" = (
-/obj/machinery/disposal/mail/small/autoname/public/crew/north,
+/obj/mapping_helper/mailtag/public/crew,
+/obj/machinery/disposal/mail/small/north,
 /obj/disposalpipe/trunk/mail/west,
 /turf/simulated/floor/carpet{
 	dir = 9;
@@ -22422,7 +22431,8 @@
 /obj/machinery/camera/directional/north{
 	pixel_x = 10
 	},
-/obj/machinery/disposal/mail/autoname/engineering,
+/obj/mapping_helper/mailtag/engineering,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/west,
 /turf/simulated/floor/yellow,
 /area/station/engine/storage)
@@ -26628,7 +26638,8 @@
 /area/station/crew_quarters/bar)
 "sFr" = (
 /obj/disposalpipe/trunk/mail/west,
-/obj/machinery/disposal/mail/small/autoname/hydroponics/north,
+/obj/mapping_helper/mailtag/hydroponics,
+/obj/machinery/disposal/mail/small/north,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "sFE" = (
@@ -26731,7 +26742,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/disposal/mail/small/autoname/security/west,
+/obj/mapping_helper/mailtag/security,
+/obj/machinery/disposal/mail/small/west,
 /obj/disposalpipe/trunk/mail/west,
 /turf/simulated/floor/red/side{
 	dir = 4
@@ -28758,7 +28770,8 @@
 /obj/machinery/camera/directional/west{
 	pixel_y = 10
 	},
-/obj/machinery/disposal/mail/small/autoname/research/telescience/south,
+/obj/mapping_helper/mailtag/research/telescience,
+/obj/machinery/disposal/mail/small/south,
 /obj/disposalpipe/trunk/mail/east,
 /obj/storage/crate/adventure,
 /turf/simulated/floor/purplewhite/corner{
@@ -28790,7 +28803,8 @@
 /area/station/bridge/customs)
 "ufW" = (
 /obj/landmark/start/job/engineer,
-/obj/machinery/disposal/mail/small/autoname/mechanics/east,
+/obj/mapping_helper/mailtag/mechanics,
+/obj/machinery/disposal/mail/small/east,
 /obj/disposalpipe/trunk/mail/south,
 /turf/simulated/floor/yellow/checker{
 	dir = 4
@@ -30179,7 +30193,8 @@
 	name = "Supply Lobby"
 	})
 "veY" = (
-/obj/machinery/disposal/mail/small/autoname/research/chemistry/west,
+/obj/mapping_helper/mailtag/research/chemistry,
+/obj/machinery/disposal/mail/small/west,
 /obj/disposalpipe/trunk/mail/north,
 /turf/simulated/floor/purplewhite{
 	dir = 6
@@ -31009,7 +31024,8 @@
 	dir = 4
 	},
 /obj/disposalpipe/trunk/mail/east,
-/obj/machinery/disposal/mail/small/autoname/medbay/robotics/east{
+/obj/mapping_helper/mailtag/medbay/robotics,
+/obj/machinery/disposal/mail/small/east{
 	pixel_x = -8
 	},
 /turf/simulated/floor/black,
