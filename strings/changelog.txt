@@ -1,6 +1,10 @@
 
 (t)tue jul 28 26
 (u)LorrMaster
+(p)27299
+(e)🧱|A-Materials
+(+)Things made out of blob material now wobble (does not affect clothing, as great as that would be).
+(u)LorrMaster
 (p)27309
 (e)🧱|A-Materials
 (+)Nanotrasen has ordered a slightly newer edition of "Dummies' Guide to Material Science"
