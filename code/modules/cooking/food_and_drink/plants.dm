@@ -1655,6 +1655,22 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		..()
 		src.reagents.add_reagent("booster_enzyme", 5)
 
+/obj/item/reagent_containers/food/snacks/plant/sundew
+	name = "sundew slime"
+	crop_suffix = " slime"
+	desc = "The sticky, syrupy secretions of a sundew. Most of the time it attracts mindless insects- but sometimes it works on people too."
+	icon_state = "sundew"
+	planttype = /datum/plant/weed/sundew
+	bites_left = 1
+	heal_amt = 0
+	food_color = "#d8eef2"
+	initial_volume = 25
+	food_effects = list("food_cleanse")
+
+	make_reagents()
+		..()
+		src.reagents.add_reagent("simplesyrup", 5)
+
 /obj/item/reagent_containers/food/snacks/plant/mustard
 	name = "mustard seed pod"
 	crop_suffix = " seed pod"
@@ -1684,6 +1700,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	make_reagents()
 		..()
 		src.reagents.add_reagent("yuck", 20)
+
 
 /obj/item/reagent_containers/food/snacks/plant/purplegoop/orangegoop
 	name = "orange goop"
