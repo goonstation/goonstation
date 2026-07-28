@@ -1813,7 +1813,8 @@
 	})
 "aKC" = (
 /obj/disposalpipe/trunk/mail/north,
-/obj/machinery/disposal/mail/autoname/public/arrivals{
+/obj/mapping_helper/mailtag/public/arrivals,
+/obj/machinery/disposal/mail{
 	mail_tag = "Arrivals"
 	},
 /turf/simulated/floor/neutral/side,
@@ -2389,7 +2390,8 @@
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "aYZ" = (
-/obj/machinery/disposal/mail/autoname/engineering,
+/obj/mapping_helper/mailtag/engineering,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/north,
 /turf/simulated/floor/caution,
 /area/station/engine/engineering)
@@ -3658,7 +3660,8 @@
 /area/station/medical/medbay/lobby)
 "bEG" = (
 /obj/disposalpipe/trunk/mail,
-/obj/machinery/disposal/mail/autoname/kitchen{
+/obj/mapping_helper/mailtag/kitchen,
+/obj/machinery/disposal/mail{
 	mail_tag = "Kitchen"
 	},
 /turf/simulated/floor/grey,
@@ -4998,7 +5001,8 @@
 	},
 /obj/machinery/light_switch/directional/north,
 /obj/disposalpipe/trunk/mail/west,
-/obj/machinery/disposal/mail/autoname/public/medbay_lobby{
+/obj/mapping_helper/mailtag/public/medbay_lobby,
+/obj/machinery/disposal/mail{
 	mail_tag = "Medbay"
 	},
 /turf/simulated/floor/bluewhite{
@@ -5579,7 +5583,8 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/disposal/mail/autoname/medbay/genetics{
+/obj/mapping_helper/mailtag/medbay/genetics,
+/obj/machinery/disposal/mail{
 	mail_tag = "Genetics"
 	},
 /obj/cable{
@@ -6854,7 +6859,8 @@
 /turf/simulated/floor/red/side,
 /area/station/hallway/primary/south)
 "ddB" = (
-/obj/machinery/disposal/mail/autoname/hydroponics{
+/obj/mapping_helper/mailtag/hydroponics,
+/obj/machinery/disposal/mail{
 	mail_tag = "Hydroponics"
 	},
 /obj/disposalpipe/trunk/mail,
@@ -7475,7 +7481,8 @@
 /area/station/engine/engineering/breakroom)
 "drt" = (
 /obj/disposalpipe/trunk/mail/west,
-/obj/machinery/disposal/mail/autoname/chapel{
+/obj/mapping_helper/mailtag/chapel,
+/obj/machinery/disposal/mail{
 	mail_tag = "Chapel"
 	},
 /obj/decoration/clock{
@@ -7746,7 +7753,8 @@
 /area/station/crew_quarters/barber_shop)
 "dwa" = (
 /obj/disposalpipe/trunk/mail/west,
-/obj/machinery/disposal/mail/autoname/bridge{
+/obj/mapping_helper/mailtag/bridge,
+/obj/machinery/disposal/mail{
 	mail_tag = "Bridge"
 	},
 /turf/simulated/floor/carpet/blue/standard/edge/se,
@@ -10154,7 +10162,8 @@
 	dir = 8;
 	pixel_x = -10
 	},
-/obj/machinery/disposal/mail/autoname/public/market{
+/obj/mapping_helper/mailtag/public/market,
+/obj/machinery/disposal/mail{
 	name = "Jazz Lounge"
 	},
 /obj/disposalpipe/trunk/mail/west,
@@ -14193,7 +14202,8 @@
 /obj/item/device/radio/intercom/engineering{
 	pixel_x = -28
 	},
-/obj/machinery/disposal/mail/autoname/mechanics{
+/obj/mapping_helper/mailtag/mechanics,
+/obj/machinery/disposal/mail{
 	mail_tag = "Mechanics"
 	},
 /turf/simulated/floor/caution/south,
@@ -16445,7 +16455,8 @@
 /turf/simulated/floor/airless/caution,
 /area/ghostdrone_factory)
 "huK" = (
-/obj/machinery/disposal/mail/autoname/qm,
+/obj/mapping_helper/mailtag/qm,
+/obj/machinery/disposal/mail,
 /obj/machinery/light/emergency,
 /obj/disposalpipe/trunk/mail/north,
 /turf/simulated/floor/caution,
@@ -17531,7 +17542,8 @@
 "hTF" = (
 /obj/machinery/light_switch/directional/west,
 /obj/disposalpipe/trunk/mail/east,
-/obj/machinery/disposal/mail/autoname/medbay/robotics{
+/obj/mapping_helper/mailtag/medbay/robotics,
+/obj/machinery/disposal/mail{
 	mail_tag = "Robotics"
 	},
 /turf/simulated/floor/black,
@@ -18066,7 +18078,8 @@
 /obj/machinery/camera/directional/east{
 	pixel_y = 10
 	},
-/obj/machinery/disposal/mail/autoname/security/detective{
+/obj/mapping_helper/mailtag/security/detective,
+/obj/machinery/disposal/mail{
 	mail_tag = "Detective"
 	},
 /turf/simulated/floor/carpet/grime,
@@ -19443,7 +19456,8 @@
 	pixel_x = -10
 	},
 /obj/disposalpipe/trunk/mail/west,
-/obj/machinery/disposal/mail/autoname/research/chemistry{
+/obj/mapping_helper/mailtag/research/chemistry,
+/obj/machinery/disposal/mail{
 	mail_tag = "Chemistry"
 	},
 /turf/simulated/floor/white,
@@ -20376,7 +20390,8 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters_north)
 "jfp" = (
-/obj/machinery/disposal/mail/autoname/public/crewA{
+/obj/mapping_helper/mailtag/public/crewA,
+/obj/machinery/disposal/mail{
 	autoname = "Crew Quarters";
 	mail_tag = "Crew"
 	},
@@ -28472,7 +28487,8 @@
 	pixel_x = 10
 	},
 /obj/disposalpipe/trunk/mail/north,
-/obj/machinery/disposal/mail/autoname/security/brig{
+/obj/mapping_helper/mailtag/security/brig,
+/obj/machinery/disposal/mail{
 	mail_tag = "Brig"
 	},
 /turf/simulated/floor/black,
@@ -32134,7 +32150,8 @@
 /area/station/hydroponics/bay)
 "opL" = (
 /obj/machinery/power/apc/autoname_west,
-/obj/machinery/disposal/mail/autoname/research{
+/obj/mapping_helper/mailtag/research,
+/obj/machinery/disposal/mail{
 	mail_tag = "Artlab";
 	name = "Artlab"
 	},
@@ -39129,7 +39146,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/disposal/mail/autoname/command_office/rd,
+/obj/mapping_helper/mailtag/command_office/rd,
+/obj/machinery/disposal/mail,
 /turf/simulated/floor/grey,
 /area/station/science/research_director)
 "rJV" = (
@@ -39597,7 +39615,8 @@
 	},
 /area/station/security/checkpoint/arrivals)
 "rVZ" = (
-/obj/machinery/disposal/mail/autoname/command_office/ce,
+/obj/mapping_helper/mailtag/command_office/ce,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/north,
 /turf/simulated/floor/lightyellow/side{
 	dir = 4
@@ -40743,7 +40762,8 @@
 /area/station/mining/staff_room)
 "sAk" = (
 /obj/disposalpipe/trunk/mail/north,
-/obj/machinery/disposal/mail/autoname/security/armory{
+/obj/mapping_helper/mailtag/security/armory,
+/obj/machinery/disposal/mail{
 	mail_tag = "HoS";
 	name = "HoS"
 	},
@@ -41590,7 +41610,8 @@
 /turf/simulated/floor/specialroom/gym,
 /area/station/chapel/sanctuary)
 "sTK" = (
-/obj/machinery/disposal/mail/autoname/bar,
+/obj/mapping_helper/mailtag/bar,
+/obj/machinery/disposal/mail,
 /obj/machinery/camera/directional/west{
 	pixel_y = 10
 	},
@@ -41973,7 +41994,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/disposal/mail/autoname/bridge{
+/obj/mapping_helper/mailtag/bridge,
+/obj/machinery/disposal/mail{
 	mail_tag = "HoP";
 	name = "HoP"
 	},
@@ -42186,7 +42208,8 @@
 /obj/decoration/clock{
 	pixel_y = 30
 	},
-/obj/machinery/disposal/mail/autoname/bridge{
+/obj/mapping_helper/mailtag/bridge,
+/obj/machinery/disposal/mail{
 	mail_tag = "Captain";
 	name = "Captain"
 	},
@@ -45269,7 +45292,8 @@
 /area/station/crew_quarters/hop)
 "uCQ" = (
 /obj/disposalpipe/trunk/mail/east,
-/obj/machinery/disposal/mail/autoname/security{
+/obj/mapping_helper/mailtag/security,
+/obj/machinery/disposal/mail{
 	mail_tag = "Security"
 	},
 /turf/simulated/floor/black,

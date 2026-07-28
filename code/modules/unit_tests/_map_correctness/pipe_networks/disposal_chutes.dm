@@ -1,5 +1,5 @@
 /datum/map_correctness_check/disposal_chutes
-	check_name = "Faulty Disposal Chutes"
+	check_name = "Misrouted Disposal Chutes"
 	check_prefabs = FALSE
 
 /datum/map_correctness_check/disposal_chutes/run_check()

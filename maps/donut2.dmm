@@ -775,7 +775,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/disposal/mail/autoname/research/chemistry,
+/obj/mapping_helper/mailtag/research/chemistry,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail,
 /turf/simulated/floor/purplewhite,
 /area/station/science/chemistry)
@@ -3013,7 +3014,8 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "auC" = (
-/obj/machinery/disposal/mail/autoname/research/toxins,
+/obj/mapping_helper/mailtag/research/toxins,
+/obj/machinery/disposal/mail,
 /obj/machinery/firealarm/directional/west,
 /obj/disposalpipe/trunk/mail{
 	dir = 1
@@ -6561,7 +6563,8 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 4
 	},
-/obj/machinery/disposal/mail/autoname/medbay/robotics,
+/obj/mapping_helper/mailtag/medbay/robotics,
+/obj/machinery/disposal/mail,
 /turf/simulated/floor/black/side{
 	dir = 4
 	},
@@ -11190,7 +11193,8 @@
 /turf/simulated/floor/carpet/green/fancy/edge/west,
 /area/station/crew_quarters/courtroom)
 "bpV" = (
-/obj/machinery/disposal/mail/autoname/security,
+/obj/mapping_helper/mailtag/security,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/south,
 /obj/machinery/recharger/wall/sticky{
 	dir = 1
@@ -12499,7 +12503,8 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "bzO" = (
-/obj/machinery/disposal/mail/autoname/mechanics,
+/obj/mapping_helper/mailtag/mechanics,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail{
 	dir = 4
 	},
@@ -12790,7 +12795,8 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 2
 	},
-/obj/machinery/disposal/mail/small/autoname/kitchen/west{
+/obj/mapping_helper/mailtag/kitchen,
+/obj/machinery/disposal/mail/small/west{
 	pixel_x = 8
 	},
 /turf/simulated/floor/black,
@@ -18202,7 +18208,8 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
-/obj/machinery/disposal/mail/autoname/engineering,
+/obj/mapping_helper/mailtag/engineering,
+/obj/machinery/disposal/mail,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -21120,7 +21127,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "ggJ" = (
-/obj/machinery/disposal/mail/autoname/medbay/genetics,
+/obj/mapping_helper/mailtag/medbay/genetics,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail{
 	dir = 4
 	},
@@ -21185,7 +21193,8 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
-/obj/machinery/disposal/mail/autoname/research/hangar,
+/obj/mapping_helper/mailtag/research/hangar,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
@@ -26898,7 +26907,8 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "jwV" = (
-/obj/machinery/disposal/mail/autoname/research/telescience,
+/obj/mapping_helper/mailtag/research/telescience,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/west,
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/caution/white{
@@ -29411,7 +29421,8 @@
 /obj/storage/crate/rcd/CE,
 /obj/machinery/light/incandescent,
 /obj/disposalpipe/trunk/mail,
-/obj/machinery/disposal/mail/small/autoname/command_office/ce{
+/obj/mapping_helper/mailtag/command_office/ce,
+/obj/machinery/disposal/mail/small{
 	dir = 1;
 	pixel_y = 32
 	},
@@ -33435,7 +33446,8 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 4
 	},
-/obj/machinery/disposal/mail/autoname/medbay,
+/obj/mapping_helper/mailtag/medbay,
+/obj/machinery/disposal/mail,
 /obj/item/device/radio/intercom/medical,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay)
@@ -34147,9 +34159,9 @@
 /area/station/medical/medbay/psychiatrist)
 "nsY" = (
 /obj/storage/secure/closet/command/captain,
-/obj/machinery/disposal/mail/small/autoname/command_office/cap{
-	dir = 8;
-	
+/obj/mapping_helper/mailtag/command_office/cap,
+/obj/machinery/disposal/mail/small{
+	dir = 8
 	},
 /obj/disposalpipe/trunk/mail{
 	dir = 8
@@ -37197,7 +37209,8 @@
 	},
 /area/station/hallway/primary/south)
 "pdZ" = (
-/obj/machinery/disposal/mail/autoname/bridge,
+/obj/mapping_helper/mailtag/bridge,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/north,
 /obj/item/device/radio/intercom/medical{
 	dir = 4
@@ -39816,7 +39829,8 @@
 	},
 /area/station/science/artifact)
 "qyZ" = (
-/obj/machinery/disposal/mail/autoname/bar,
+/obj/mapping_helper/mailtag/bar,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/south,
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
@@ -40398,7 +40412,8 @@
 /turf/space,
 /area/space)
 "qRG" = (
-/obj/machinery/disposal/mail/small/autoname/hydroponics/north{
+/obj/mapping_helper/mailtag/hydroponics,
+/obj/machinery/disposal/mail/small/north{
 	pixel_y = 23
 	},
 /obj/disposalpipe/trunk/mail{
@@ -40448,7 +40463,8 @@
 	},
 /area/station/security/processing)
 "qST" = (
-/obj/machinery/disposal/mail/autoname/tool_storage,
+/obj/mapping_helper/mailtag/tool_storage,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail{
 	dir = 1
 	},
@@ -43309,7 +43325,8 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/ce)
 "sFm" = (
-/obj/machinery/disposal/mail/autoname/research/robot_depot,
+/obj/mapping_helper/mailtag/research/robot_depot,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail{
 	dir = 4
 	},
@@ -43692,9 +43709,9 @@
 /area/station/mining/staff_room)
 "sQZ" = (
 /obj/table/auto,
-/obj/machinery/disposal/mail/small/autoname/command_office/rd{
-	dir = 8;
-	
+/obj/mapping_helper/mailtag/command_office/rd,
+/obj/machinery/disposal/mail/small{
+	dir = 8
 	},
 /obj/disposalpipe/trunk/mail{
 	dir = 8
@@ -44315,7 +44332,8 @@
 /turf/simulated/floor/carpet/purple/fancy/edge,
 /area/station/crew_quarters/bar)
 "toA" = (
-/obj/machinery/disposal/mail/autoname/security/detective,
+/obj/mapping_helper/mailtag/security/detective,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
@@ -45223,7 +45241,8 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/mining/magnet)
 "tLW" = (
-/obj/machinery/disposal/mail/autoname/chapel,
+/obj/mapping_helper/mailtag/chapel,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
@@ -48815,7 +48834,8 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/locker)
 "vNu" = (
-/obj/machinery/disposal/mail/autoname/public/arrivals,
+/obj/mapping_helper/mailtag/public/arrivals,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
@@ -49945,7 +49965,8 @@
 	},
 /area/station/security/processing)
 "wzk" = (
-/obj/machinery/disposal/mail/autoname/mining,
+/obj/mapping_helper/mailtag/mining,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/north,
 /obj/machinery/alarm/directional/east,
 /turf/simulated/floor/yellow/side{
@@ -51236,7 +51257,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "xtq" = (
-/obj/machinery/disposal/mail/autoname/research/artlab,
+/obj/mapping_helper/mailtag/research/artlab,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/east,
 /turf/simulated/floor/white/checker2{
 	dir = 8
@@ -51413,7 +51435,8 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
 "xxj" = (
-/obj/machinery/disposal/mail/small/autoname,
+/obj/mapping_helper/mailtag/public/crew,
+/obj/machinery/disposal/mail/small,
 /obj/disposalpipe/trunk/mail/east,
 /turf/simulated/floor/black/side{
 	dir = 1
@@ -51801,7 +51824,8 @@
 	},
 /area/station/hangar/arrivals)
 "xJW" = (
-/obj/machinery/disposal/mail/autoname/checkpoint/zeta,
+/obj/mapping_helper/mailtag/checkpoint/zeta,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail,
 /turf/simulated/floor/redblack,
 /area/station/security/checkpoint/research)
