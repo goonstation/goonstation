@@ -733,6 +733,7 @@
 		id = "super_milk"
 		result = "super_milk"
 		required_reagents = list("milk" = 1, "milk_powder" = 1)
+		inhibitors = list("water")
 		result_amount = 1
 		mix_phrase = "The mixture concentrates."
 
