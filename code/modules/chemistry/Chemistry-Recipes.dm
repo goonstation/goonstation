@@ -742,7 +742,7 @@
 		id = "milk"
 		result = "milk"
 		required_reagents = list("super_milk" = 1, "water" = 1)
-		result_amount = 1
+		result_amount = 2
 		max_temperature = T0C + 100
 		mix_phrase = "The milk dilutes, becoming less super."
 
