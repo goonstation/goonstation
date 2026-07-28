@@ -583,7 +583,7 @@ ABSTRACT_TYPE(/datum/menhir_puzzle)
 /datum/menhir_puzzle/viscerite
 	target_path = /obj/item/raw_material/martian
 	desc_strings = list(
-		"Snarls of rosy sinew wait in unsettling stillness before you. As you grasp one to examine it more closely, it begins to shudder and contort..."
+		"Snarls of dry, rosy sinew wait in unsettling stillness before you. As you grasp one to examine it more closely, it begins to shudder and contort..."
 	)
 
 /datum/menhir_puzzle/lotto
@@ -595,7 +595,8 @@ ABSTRACT_TYPE(/datum/menhir_puzzle)
 /datum/menhir_puzzle/record
 	target_path = /obj/item/record
 	desc_strings = list(
-		"In a quiet alcove, a hooded figure peruses a row of deep black slates. The figure's selection, grasped tightly, begins to spin and sing."
+		"In a quiet alcove, a hooded figure peruses a row of deep black slates. The figure's selection, grasped tightly, begins to spin and sing.",
+		"A voice sings to a chisel. A chisel sings to a disc. A chisel sings by the disc. A disc sings with the voice."
 	)
 
 /datum/menhir_puzzle/blight
@@ -609,13 +610,14 @@ ABSTRACT_TYPE(/datum/menhir_puzzle)
 	target_path = /obj/item/seed/alien
 	desc_strings = list(
 		"A knotted mass of peculiar hue falls into a solitary puddle. A strange growth sprouts from the depths.",
-		"You stretch out your hand, and it is not yours. You sow a beautiful gift in the earth, and await its blooming."
+		"Falling from a hand you do not recognize, a beautiful gift sinks deep into the earth. You await its bloom with a strange uncertainty."
 	)
 
 /datum/menhir_puzzle/figurine
 	target_path = /obj/item/toy/figure
 	desc_strings = list(
-		"A token in your brethren's visage lies still and silent among its kin, suspended in a sea of cages."
+		"A token in your brethren's visage lies still and silent among its kin, suspended in a sea of cages.",
+		"Innumerable small figures march down a line, their legs rigid and unmoving. You pluck one from the ranks, and it bears a familiar face."
 	)
 
 /datum/menhir_puzzle/snackcake
