@@ -367,7 +367,6 @@
 	initial_reagents = "acetylsalicylic_acid"
 	label = "purple"
 	desc = "A high-capacity auto-injector containing acetylsalicylic acid, used as a painkiller, anticoagulant, and fever reducer."
-
 /obj/item/reagent_containers/emergency_injector/high_capacity/saline
 	name = "high-capacity auto-injector (saline-glucose)"
 	initial_reagents = "saline"
