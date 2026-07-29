@@ -12,4 +12,4 @@
 				break
 
 		if (!apc_ok)
-			. += src.format_position(apc)
+			. += CI.format_position(apc)
