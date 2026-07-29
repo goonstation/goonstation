@@ -57,8 +57,8 @@
 
 		if (surgeon.bioHolder.HasEffect("clumsy") && prob(30))
 			surgeon.visible_message(\
-			SPAN_ALERT("<b>[surgeon]</b> fumble so much with the [src] slaps [surgeon] in the face!"), \
-			SPAN_ALERT("You fumble with the [src] and it becomes so insulted that it slaps you in the face!"))
+			SPAN_ALERT("<b>[surgeon]</b> missuses the [src] so much it slaps [surgeon] in the face!"), \
+			SPAN_ALERT("You fumble with the [src] and it becomes so insulted with your lack of skill that it slaps you in the face!"))
 
 			surgeon.changeStatus("disorient", 2 SECOND)
 			JOB_XP(surgeon, "Clown", 1)
@@ -84,7 +84,7 @@
 			surgeon.tri_message(patient, \
 				SPAN_ALERT("<b>[surgeon]</b> reaches with the [src] into [patient == surgeon ? his_or_her(patient) : "[patient]'s"] wound and pull \an [I] from [patient == surgeon ? "[him_or_her(patient)]self" : patient] with the [src]!"),\
 				SPAN_ALERT("You pluck out \an [I] from [surgeon == patient ? "yourself" : "[patient]"] with [src]!"),\
-				SPAN_ALERT("[patient == surgeon ? "You pluck" : "<b>[surgeon]</b> plucjs"] out \an [I] from you with [src]!"))
+				SPAN_ALERT("[patient == surgeon ? "You pluck" : "<b>[surgeon]</b> plucks"] out \an [I] from you with [src]!"))
 
 			I.on_remove(patient)
 			patient.implant.Remove(I)
