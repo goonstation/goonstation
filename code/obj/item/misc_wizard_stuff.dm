@@ -331,11 +331,16 @@
 	name = "telekinetic staff"
 	desc = "A strange staff infused with the power of throwing people into vending machines."
 	force = 0
+	throw_range = 10
+	throw_speed = 1
+	throw_return = 1
+	throwforce = 1
 	icon_state = "stafftelekinesis"
 	item_state = "staff_telekinesis"
-	var/throw_charges = 3
+	var/throw_charges = 4
 	var/throw_mode = FALSE
 	var/mob/living/victim = null
+	var/prob_clonk = 0
 
 	New()
 		. = ..()
@@ -346,6 +351,7 @@
 		. = ..()
 
 	attack(mob/target, mob/user, def_zone, is_special, params) // stop hitting yourself
+		visible_message(SPAN_ALERT("[user] waves the [src.name] in [target]'s face!"))
 		return
 
 	pixelaction(atom/target, params, mob/user, reach)
@@ -361,7 +367,7 @@
 			boutput(user, SPAN_ALERT("You cannot throw people here!"))
 			return
 		if (throw_charges <= 0)
-			boutput(user, SPAN_ALERT("[name] is out of charges! Magically recall it to restore it's power."))
+			boutput(user, SPAN_ALERT("[src.name] is out of charges! Magically recall it to restore it's power."))
 			return
 
 		if (!src.throw_mode && !ON_COOLDOWN(src, "select_target", 3 SECONDS))
@@ -456,9 +462,24 @@
 		. = ..()
 
 	throw_begin(atom/target)
-		icon_state = "lawspin"
 		playsound(src.loc, "rustle", 50, 1)
 		return ..(target)
+
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
+		if(hit_atom == usr)
+			if(prob(prob_clonk))
+				var/mob/living/carbon/human/user = usr
+				src.fling_person(user) // boastful wiznerds can get flung too
+			else
+				src.Attackhand(usr)
+			return
+		else
+			if(ishuman(hit_atom))
+				prob_clonk = min(prob_clonk + 5, 40)
+				SPAWN(2 SECONDS)
+					prob_clonk = max(prob_clonk - 5, 0)
+
+		return ..(hit_atom)
 
 	proc/fling_person(var/mob/target)
 		if(!target.anchored)
@@ -469,8 +490,8 @@
 			boutput(target, SPAN_ALERT("A powerful force throws you as you try to touch [name]!"))
 
 	proc/recharge_throws()
-		if(src.throw_charges <= 3) //doesn't ever reduce charge even though three is usually max
-			src.throw_charges = 3
+		if(src.throw_charges <= 4) //doesn't ever reduce charge even though three is usually max
+			src.throw_charges = 4
 /////////////////////////////////////////////////////////// Magic mirror /////////////////////////////////////////////
 
 /obj/magicmirror
