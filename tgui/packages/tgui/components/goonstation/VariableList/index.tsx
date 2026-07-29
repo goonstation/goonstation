@@ -8,7 +8,7 @@
 import { classes } from 'common/react';
 import { Box, Button, LabeledList, Table, Tooltip } from 'tgui-core/components';
 
-import { getVariableValueComponent } from './actions';
+import { getValueDisplayComponent } from './actions';
 import { VariableListProps, VariableProps } from './type';
 
 export const VariableList = (props: VariableListProps) => {
@@ -29,7 +29,7 @@ export const VariableList = (props: VariableListProps) => {
 };
 
 const Variable = (props: VariableProps) => {
-  const VariableValueComponent = getVariableValueComponent(props.value_type);
+  const ValueDisplayComponent = getValueDisplayComponent(props.value_type);
 
   return (
     <LabeledList.Item
@@ -43,7 +43,7 @@ const Variable = (props: VariableProps) => {
     >
       <Table>
         <Table.Cell height="20px" verticalAlign="middle">
-          <VariableValueComponent {...props.value} onAction={props.onAction} />
+          <ValueDisplayComponent {...props.value} onAction={props.onAction} />
         </Table.Cell>
         {!!props.edit_action && (
           <Table.Cell verticalAlign="middle" collapsing>

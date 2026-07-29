@@ -5,24 +5,24 @@
  * @license MIT
  */
 
-import { VariableDropdown } from './VariableDropdown';
-import { VariableReference, VariableReferenceList } from './VariableReference';
-import { VariableToggleable } from './VariableToggleable';
-import { VariableValue } from './VariableValue';
+import { DisplayDropdown } from './DisplayDropdown';
+import { DisplayReference, DisplayReferenceList } from './DisplayReference';
+import { DisplayStandard } from './DisplayStandard';
+import { DisplayToggleable } from './DisplayToggleable';
 
-export const variableValueComponents = {
-  value: VariableValue,
-  toggleable: VariableToggleable,
-  reference: VariableReference,
-  reference_list: VariableReferenceList,
-  dropdown: VariableDropdown,
+export const valueDisplayComponents = {
+  dropdown: DisplayDropdown,
+  reference: DisplayReference,
+  reference_list: DisplayReferenceList,
+  value: DisplayStandard,
+  toggleable: DisplayToggleable,
 };
 
-export const getVariableValueComponent = (value_type) => {
+export const getValueDisplayComponent = (value_type) => {
   if (value_type === undefined) {
     return ({ value }) => value;
   }
-  if (value_type in variableValueComponents) {
-    return variableValueComponents[value_type];
+  if (value_type in valueDisplayComponents) {
+    return valueDisplayComponents[value_type];
   }
 };

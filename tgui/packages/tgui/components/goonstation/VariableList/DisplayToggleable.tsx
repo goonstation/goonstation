@@ -8,15 +8,15 @@
 import { Button, Tooltip } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
-import { VarValueParent } from './type';
+import { ValueDisplayParent } from './type';
 
-interface VarToggleableProps extends VarValueParent {
+interface DisplayToggleableProps extends ValueDisplayParent {
   value: BooleanLike;
   action: [string, object | undefined];
 }
 
 /** Component for a toggleable boolean variable value. */
-export const VariableToggleable = (props: VarToggleableProps) => {
+export const DisplayToggleable = (props: DisplayToggleableProps) => {
   return (
     <Tooltip content="Toggle Value">
       <Button

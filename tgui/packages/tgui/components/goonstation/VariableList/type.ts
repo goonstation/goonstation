@@ -5,16 +5,16 @@
  * @license MIT
  */
 
-import { BooleanLike } from 'tgui-core/react';
 import { ComponentProps } from 'react';
+import { BooleanLike } from 'tgui-core/react';
 
-import { variableValueComponents } from './actions';
+import { valueDisplayComponents } from './actions';
 
 type Act = (action: string, payload?: object) => void;
 
-type VarValueComponents = typeof variableValueComponents;
-type VarValueKey = keyof VarValueComponents;
-type VarValueProps = ComponentProps<VarValueComponents[VarValueKey]>;
+type DisplayComponents = typeof valueDisplayComponents;
+type DisplayKey = keyof DisplayComponents;
+type DisplayProps = ComponentProps<DisplayComponents[DisplayKey]>;
 
 export interface VariableListProps {
   className?: string | BooleanLike;
@@ -27,12 +27,12 @@ export interface VariableProps {
   onAction: Act;
   name: string;
   tooltip: string;
-  value_type: VarValueKey;
-  value: VarValueProps;
+  value_type: DisplayKey;
+  value: DisplayProps;
   edit_action?: [string, object | undefined];
   edit_tooltip?: string;
 }
 
-export interface VarValueParent {
+export interface ValueDisplayParent {
   onAction: Act;
 }

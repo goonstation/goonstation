@@ -5,13 +5,13 @@
  * @license MIT
  */
 
-import { VarValueParent } from './type';
+import { ValueDisplayParent } from './type';
 
-interface VarValueProps extends VarValueParent {
+interface DisplayStandardProps extends ValueDisplayParent {
   value: string;
 }
 
 /** Component for a standard variable value. */
-export const VariableValue = (props: VarValueProps) => {
+export const DisplayStandard = (props: DisplayStandardProps) => {
   return props.value;
 };

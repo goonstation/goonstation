@@ -8,9 +8,9 @@
 import { Dropdown } from 'tgui-core/components';
 import { BooleanLike } from 'tgui-core/react';
 
-import { VarValueParent } from './type';
+import { ValueDisplayParent } from './type';
 
-interface VarDropdownProps extends VarValueParent {
+interface DisplayDropdownProps extends ValueDisplayParent {
   searchable: BooleanLike;
   selected: string;
   options: string[];
@@ -18,7 +18,7 @@ interface VarDropdownProps extends VarValueParent {
 }
 
 /** Component for a variable value that create a dropdown menu. */
-export const VariableDropdown = (props: VarDropdownProps) => {
+export const DisplayDropdown = (props: DisplayDropdownProps) => {
   return (
     <Dropdown
       searchInput={!!props.searchable}

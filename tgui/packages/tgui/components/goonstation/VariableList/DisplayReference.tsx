@@ -7,16 +7,16 @@
 
 import { Button, Tooltip } from 'tgui-core/components';
 
-import { VarValueParent } from './type';
+import { ValueDisplayParent } from './type';
 
-interface VarReferenceProps extends VarValueParent {
+interface DisplayReferenceProps extends ValueDisplayParent {
   title: string;
   tooltip: string;
   action: [string, object | undefined];
 }
 
 /** Component for a variable value that should perform an action when clicked. */
-export const VariableReference = (props: VarReferenceProps) => {
+export const DisplayReference = (props: DisplayReferenceProps) => {
   return (
     <Tooltip content={props.tooltip}>
       <Button onClick={() => props.onAction(...props.action)}>
@@ -26,17 +26,17 @@ export const VariableReference = (props: VarReferenceProps) => {
   );
 };
 
-interface VarReferenceListProps extends VarValueParent {
-  variable_list: VarReferenceProps[];
+interface DisplayReferenceListProps extends ValueDisplayParent {
+  variable_list: DisplayReferenceProps[];
 }
 
 /** Component for a list of variable values that should each perform an action when clicked. */
-export const VariableReferenceList = (props: VarReferenceListProps) => {
+export const DisplayReferenceList = (props: DisplayReferenceListProps) => {
   if (props.variable_list === undefined || props.variable_list.length === 0) {
     return 'None';
   }
 
   return props.variable_list.map((item, index) => (
-    <VariableReference key={index} {...item} onAction={props.onAction} />
+    <DisplayReference key={index} {...item} onAction={props.onAction} />
   ));
 };
