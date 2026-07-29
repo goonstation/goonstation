@@ -1,4 +1,5 @@
 /atom/movable/abstract_say_source/mixing_desk
+	internal_name = "Mixing Desk"
 	var/obj/submachine/mixing_desk/parent
 
 /atom/movable/abstract_say_source/mixing_desk/New(obj/submachine/mixing_desk/loc, name, accent_id)

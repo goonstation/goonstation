@@ -239,7 +239,7 @@
 /// Adds the relevant module tree data to the passed module tree props lists.
 /datum/listen_module_tree/proc/get_tree_data(list/module_tree_props)
 	module_tree_props["title"] = "Listen Module Tree \ref[src]"
-	module_tree_props["info"] = "Listen module tree datums handle applying the effects of languages and listen modifier modules to say message datums received by any listen input modules registered to itself. Processed messages are then stored in the message buffer before being sent to listen effect modules."
+	module_tree_props["info"] = "Listen module tree datums handle applying the effects of languages and listen modifier modules to say message datums received by any listen input modules registered to itself. Processed messages are then stored in the message buffer before being sent to listen effect modules. Note: hover over the names of variables for a brief explanation of their purpose."
 	module_tree_props["atom_ref"] = ref(src)
 
 	// Enable Requests variable.
@@ -253,7 +253,7 @@
 	var/list/parent_var = list()
 	parent_var["name"] = "Listener Parent"
 	parent_var["tooltip"] = "The listener parent is the atom that should receive messages sent to this listen module tree."
-	parent_var["edit_action"] = "edit_listener_parent"
+	parent_var["edit_action"] = list("edit_listener_parent")
 	parent_var["edit_tooltip"] = "Edit Listener Parent"
 
 	if (src.listener_parent)
@@ -267,7 +267,7 @@
 	var/list/origin_var = new()
 	origin_var["name"] = "Listener Origin"
 	origin_var["tooltip"] = "The listener origin is the atom that should act as the origin point for listening to messages."
-	origin_var["edit_action"] = "edit_listener_origin"
+	origin_var["edit_action"] = list("edit_listener_origin")
 	origin_var["edit_tooltip"] = "Edit Listener Origin"
 
 	if (src.listener_origin)
@@ -312,7 +312,7 @@
 	target_tree_props["tooltip"] = "The target tree is the listen module tree that this tree should add and remove its modules to and from."
 	target_tree_props["value_type"] = "reference"
 	target_tree_props["value"] = VAR_REFERENCE_DATA(src.target_listen_tree.get_name(), "Open Module Tree Editor", "view_module_tree", list("ref" = ref(src.target_listen_tree)))
-	target_tree_props["edit_action"] = "edit_target_tree"
+	target_tree_props["edit_action"] = list("edit_target_tree")
 	target_tree_props["edit_tooltip"] = "Edit Target Tree"
 
 	module_tree_props["variables"] = list(target_tree_props)

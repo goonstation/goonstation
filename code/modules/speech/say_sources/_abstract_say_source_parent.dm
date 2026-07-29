@@ -7,6 +7,10 @@ TYPEINFO(/atom/movable/abstract_say_source)
 
 /atom/movable/abstract_say_source
 	name = "Unknown"
+	/// The name used to refer to this say source on admin panels.
+	var/internal_name = "Say Source"
+	/// Whether this say source was created by an admin.
+	var/admin_created = FALSE
 
 	open_to_sound = FALSE
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
@@ -17,6 +21,14 @@ TYPEINFO(/atom/movable/abstract_say_source)
 	speech_verb_exclaim = null
 	speech_verb_stammer = null
 	speech_verb_gasp = null
+
+/atom/movable/abstract_say_source/New()
+	. = ..()
+	START_TRACKING
+
+/atom/movable/abstract_say_source/disposing()
+	STOP_TRACKING
+	. = ..()
 
 
 /**
@@ -39,12 +51,18 @@ TYPEINFO(/atom/movable/abstract_say_source/radio)
 
 /atom/movable/abstract_say_source/radio/New()
 	. = ..()
+	src.create_radio()
+	src.set_radio_variables()
+
+/atom/movable/abstract_say_source/radio/proc/create_radio()
+	QDEL_NULL(src.radio)
 
 	src.radio = new src.radio_type(src)
 	src.radio.toggle_microphone(FALSE)
 	src.radio.toggle_speaker(FALSE)
 	src.radio.ensure_listen_tree().AddListenInput(LISTEN_INPUT_EQUIPPED)
 
+/atom/movable/abstract_say_source/radio/proc/set_radio_variables()
 	src.radio.set_frequency(src.default_frequency)
 	src.radio.chat_class = src.radio_chat_class
 	src.radio.icon_override = src.radio_icon

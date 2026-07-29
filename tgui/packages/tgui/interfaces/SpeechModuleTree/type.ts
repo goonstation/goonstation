@@ -7,6 +7,8 @@
 
 import { BooleanLike } from 'tgui-core/react';
 
+import { VariableProps } from '../../components/goonstation/VariableList/type';
+
 // Interface for the main body of the module tree.
 export interface SpeechModuleTreeProps {
   title: string;
@@ -31,39 +33,4 @@ export interface ModuleProps {
   aux_ref?: string;
   module_variables: VariableProps[];
   remove_action: string;
-}
-
-// Interface for each name-value variable pair that a module possesses.
-export interface VariableProps {
-  name: string;
-  tooltip: string;
-  value_type: string;
-  value: any;
-  edit_action?: string;
-  edit_tooltip?: string;
-}
-
-// The interface for a standard variable value.
-export interface VarValueProps {
-  value: string;
-}
-
-// The interface for a toggleable boolean variable value.
-export interface VarToggleableProps {
-  value: BooleanLike;
-  action: string;
-  arguments?: string[];
-}
-
-// The interface for a variable value that should perform a function when clicked.
-export interface VarReferenceProps {
-  title: string;
-  tooltip: string;
-  action: string;
-  arguments?: string[];
-}
-
-// The interface for a list of reference variables.
-export interface VarReferenceListProps {
-  variable_list: VarReferenceProps[];
 }

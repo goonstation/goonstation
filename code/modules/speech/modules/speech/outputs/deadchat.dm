@@ -71,8 +71,6 @@
 
 /datum/speech_module/output/deadchat_announcer/process(datum/say_message/message)
 	message.flags &= ~SAYFLAG_HAS_QUOTATION_MARKS
-	message.speaker_to_display = ""
-	message.say_verb = ""
 
 	message.format_speaker_prefix = {"\
 		<span class='game deadsay'>\

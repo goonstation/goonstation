@@ -1,6 +1,8 @@
 #define VAR_VALUE_DATA(VALUE) list("value" = VALUE)
-#define VAR_TOGGLEABLE_DATA(VALUE, ACTION, ARGUMENTS) list("value" = VALUE, "action" = ACTION, "arguments" = ARGUMENTS)
-#define VAR_REFERENCE_DATA(TITLE, TOOLTIP, ACTION, ARGUMENTS) list("title" = TITLE, "tooltip" = TOOLTIP, "action" = ACTION, "arguments" = ARGUMENTS)
+#define VAR_TOGGLEABLE_DATA(VALUE, ACTION, ARGUMENTS) list("value" = VALUE, "action" = list(ACTION, ARGUMENTS))
+#define VAR_REFERENCE_DATA(TITLE, TOOLTIP, ACTION, ARGUMENTS) list("title" = TITLE, "tooltip" = TOOLTIP, "action" = list(ACTION, ARGUMENTS))
+#define VAR_REFERENCE_LIST_DATA(LIST) list("variable_list" = LIST)
+#define VAR_DROPDOWN(SEARCHABLE, SELECTED, OPTIONS, ACTION, ARGUMENTS) list("searchable" = SEARCHABLE, "selected" = SELECTED, "options" = OPTIONS, "action" = list(ACTION, ARGUMENTS))
 
 #define SPEECH_TREE_REFERENCE_DATA(WRITE_TO, READ_FROM, NAME, EDIT_ACTION, TOOLTIP) TREE_REFERENCE_DATA(/datum/speech_module_tree, WRITE_TO, READ_FROM, NAME, EDIT_ACTION, TOOLTIP)
 #define LISTEN_TREE_REFERENCE_DATA(WRITE_TO, READ_FROM, NAME, EDIT_ACTION, TOOLTIP) TREE_REFERENCE_DATA(/datum/listen_module_tree, WRITE_TO, READ_FROM, NAME, EDIT_ACTION, TOOLTIP)
@@ -11,16 +13,15 @@
 #define TREE_REFERENCE_DATA(TYPE, WRITE_TO, READ_FROM, NAME, EDIT_ACTION, TOOLTIP) \
 	if (WRITE_TO) { \
 		var/list/_TREES = list(); \
-		_TREES["variable_list"] = list(); \
 		for (var##TYPE/_TREE as anything in READ_FROM) { \
-			_TREES["variable_list"] += list(VAR_REFERENCE_DATA(_TREE.get_name(), "Open Module Tree Editor", "view_module_tree", list("ref" = ref(_TREE)))); \
+			_TREES += list(VAR_REFERENCE_DATA(_TREE.get_name(), "Open Module Tree Editor", "view_module_tree", list("ref" = ref(_TREE)))); \
 		} \
 		var/list/_TREE_PROPS = list(); \
 		_TREE_PROPS["name"] = NAME; \
 		_TREE_PROPS["tooltip"] = TOOLTIP; \
 		_TREE_PROPS["value_type"] = "reference_list"; \
-		_TREE_PROPS["value"] = _TREES; \
-		_TREE_PROPS["edit_action"] = EDIT_ACTION; \
+		_TREE_PROPS["value"] = VAR_REFERENCE_LIST_DATA(_TREES); \
+		_TREE_PROPS["edit_action"] = list(EDIT_ACTION); \
 		_TREE_PROPS["edit_tooltip"] = "Edit As List"; \
 		WRITE_TO += list(_TREE_PROPS); \
 	}
