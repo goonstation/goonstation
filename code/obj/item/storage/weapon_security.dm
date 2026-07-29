@@ -455,3 +455,22 @@
 	name = "demolition grenade box"
 	icon_state = "flashbang"
 	spawn_contents = list(/obj/item/chem_grenade/fcleaner = 5)
+
+// Boxes for nuke ops commander uplink
+
+/obj/item/storage/box/nuke_ops
+	name = "specialist nuclear equipment case" // generic
+	icon_state = "hard_case"
+	slots = 3
+
+/obj/item/storage/box/nuke_ops/reinforcement
+	name = "reinforcement beacon case"
+	spawn_contents = list(/obj/item/remote/reinforcement_beacon, /obj/item/paper/reinforcement_info)
+
+/obj/item/storage/box/nuke_ops/designator
+	name = "laser designator case"
+	spawn_contents = list(/obj/item/device/laser_designator/syndicate, /obj/item/paper/designator_info)
+
+/obj/item/storage/box/nuke_ops/deployment_remote
+	name = "deployment remote case"
+	spawn_contents = list(/obj/item/device/deployment_remote, /obj/item/paper/deployment_info)

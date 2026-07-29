@@ -8,7 +8,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/commander)
 
 /datum/syndicate_buylist/commander/reinforcement
 	name = "Reinforcements"
-	items = list(/obj/item/remote/reinforcement_beacon, /obj/item/paper/reinforcement_info)
+	items = list(/obj/item/storage/box/nuke_ops/reinforcement)
 	cost = 2
 	desc = "Request a (probably) top-of-the-line Syndicate gunbot to help assist your team."
 	category = "Main"
@@ -29,14 +29,14 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/commander)
 
 /datum/syndicate_buylist/commander/designator
 	name = "Laser Designator"
-	items = list(/obj/item/device/laser_designator/syndicate, /obj/item/paper/designator_info)
+	items = list(/obj/item/storage/box/nuke_ops/designator)
 	cost = 3
 	desc = "A handheld, monocular laser designator that allows you to call in heavy fire support from the Cairngorm. Comes with 2 charges."
 	category = "Main"
 
 /datum/syndicate_buylist/commander/deployment_pods
 	name = "Rapid Deployment Remote"
-	items = list(/obj/item/device/deployment_remote, /obj/item/paper/deployment_info)
+	items = list(/obj/item/storage/box/nuke_ops/deployment_remote)
 	cost = 2
 	desc = "A handheld remote allowing you, your team, and the nuclear device to be sent in anywhere at a moment's notice!"
 	category = "Main"
