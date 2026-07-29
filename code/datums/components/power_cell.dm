@@ -157,7 +157,7 @@ TYPEINFO(/datum/component/power_cell)
 /datum/component/power_cell/redirect/proc/connect(obj/item/parent, atom/target, mob/user, reach, params)
 	if(istype(target, target_type))
 		redirect_object = target
-		RegisterSignal(redirect_object, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC), PROC_REF(check_redirect))
+		RegisterSignals(redirect_object, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC), PROC_REF(check_redirect))
 		boutput(user,SPAN_SUCCESS("You connect [parent] to [target]."))
 
 /datum/component/power_cell/redirect/proc/update_redirect(atom/movable/target, previous_loc, direction)
@@ -167,7 +167,7 @@ TYPEINFO(/datum/component/power_cell)
 
 		if(!cell.internal && !parent_locked)
 			parent_locked = TRUE
-			RegisterSignal(cell.loc, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC), PROC_REF(check_redirect))
+			RegisterSignals(cell.loc, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC), PROC_REF(check_redirect))
 			RegisterSignal(cell.loc, COMSIG_ITEM_AFTERATTACK, PROC_REF(connect))
 
 		var/obj/O = parent

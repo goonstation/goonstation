@@ -47,7 +47,7 @@ TYPEINFO(/obj/item/radiojammer)
 		return
 	var/obj/item/assembly/parent_assembly = src.loc
 	//automatic heartbeat signals: we still want to know when we're jamming them but we probably don't care most of the time
-	var/icon_state = signal.data["command"] == "heartbeat" ? "signal_jammed_heartbeat" : "signal_jammed"
+	var/icon_state = signal?.data["command"] == "heartbeat" ? "signal_jammed_heartbeat" : "signal_jammed"
 	src.UpdateOverlays(image(src.icon, icon_state), "jammed_light")
 	if(istype(parent_assembly))
 		parent_assembly.UpdateOverlays(image('icons/obj/items/assemblies.dmi', icon_state), "jammed_light")

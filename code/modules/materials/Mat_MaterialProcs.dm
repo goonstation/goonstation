@@ -705,6 +705,28 @@ triggerOnImage(var/image/target, var/datum/material/source)
 		target.filters = wave_filter + target.filters
 		return
 
+/datum/materialProc/blob_add
+	execute(var/atom/location)
+		if(endswith(location.icon_state, "$$blob") || ("blob" in location.get_typeinfo().mat_appearances_to_ignore))
+			return
+		var/wave_filter = wave_filter(16, 16, 0.6, 0, flags = WAVE_SIDEWAYS | WAVE_BOUNDED)
+		location.add_filter("blob_wave", 4, wave_filter)
+		var/filter = location.get_filter("blob_wave")
+
+		location.avoid_animating = TRUE
+		var/datum/material/blob_mat = location.material
+		var/wiggle_time = round(5 * (blob_mat.getProperty("density") ** 1.4), 1)
+		var/blob_offset = TIME % wiggle_time
+		animate(filter, offset = blob_offset, time = 0, loop = -1, flags = ANIMATION_PARALLEL)
+		animate(offset = blob_offset + 1, time = wiggle_time, loop = -1)
+		return
+
+/datum/materialProc/blob_remove
+	execute(var/atom/location)
+		location.remove_filter("blob_wave")
+		location.avoid_animating = FALSE
+		return
+
 /datum/materialProc/temp_miraclium
 	execute(var/atom/location, var/temp)
 		if(temp < T0C + 100)
