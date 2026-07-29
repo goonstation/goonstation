@@ -4,7 +4,7 @@
 	random_brute_damage(victim, damage);\
 	take_bleeding_damage(victim, null, damage);\
 	victim.emote("scream");
-	
+
 /obj/item/bullet_extractor
 	name = "Shrapnel Extractor"
 	desc = "An advanced surgeon's tool. It lets you extract shrapnel from a patient in any situation. Reserved only for desperate situations due high risk of causing minor injuries. Users often complain the tool has a personality of it's own."
@@ -41,7 +41,6 @@
 		if (length(patient.implant) == 0)
 			boutput(user, SPAN_NOTICE("You wave around the [src], It has nothing to do, it is insulted."))
 			return
-			//!attempt_extraction(target, user) || user.a_intent != INTENT_HELP
 
 		SETUP_GENERIC_ACTIONBAR(user, src, 1 SECONDS ,PROC_REF(attempt_extraction), list(patient, user), src.icon, src.icon_state, null, src.interrupt_flags)
 
