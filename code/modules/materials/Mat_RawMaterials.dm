@@ -330,6 +330,7 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 			..()
 
 	_update_stack_appearance()
+		src.transform = initial(src.transform) // Logs are rotated after being felled. Stacking should unrotate them.
 		switch(src.amount)
 			if(1)
 				src.icon_state = "log1"
