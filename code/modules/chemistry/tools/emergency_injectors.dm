@@ -408,7 +408,7 @@
 	name = "high-capacity auto-injector (filgrastim)"
 	desc = "high-capacity auto-injector containing filgrastim, a medicine used to treat severe blood loss."
 	initial_reagents = "filgrastim"
-	label = "red"
+	label = "purple"
 
 /obj/item/reagent_containers/emergency_injector/high_capacity/detox /// we got pentetic acid at home.
 	name = "detox combi-injector"
