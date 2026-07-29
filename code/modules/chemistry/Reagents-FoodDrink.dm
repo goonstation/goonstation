@@ -5030,3 +5030,14 @@ datum
 			taste = "a bit too sweet, but in a good way, somehow"
 			thirst_value = 1
 			caffeine_content = 0.8
+
+		fooddrink/frothedmilk
+			name = "frothed milk"
+			id = "frothedmilk"
+			description = "Silky, airy, and topped with a cloud of tiny bubbles."
+			reagent_state = LIQUID
+			fluid_r = 255
+			fluid_b = 255
+			fluid_g = 255
+			transparency = 200
+			taste = list("creamy", "airy")
