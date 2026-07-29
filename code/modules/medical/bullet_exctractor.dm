@@ -7,7 +7,7 @@
 
 /obj/item/bullet_extractor
 	name = "Shrapnel Extractor"
-	desc = "An advanced surgeon's tool. It lets you extract shrapnel from a patient in any situation. Reserved only for desperate situations due high risk of causing minor injuries. Users often complain the tool has a personality of it's own."
+	desc = "An advanced surgeon's tool with many robotic limbs. It lets you extract shrapnel from a patient in any situation. Reserved only for desperate situations due high risk of causing minor injuries. Users often complain the tool has a personality of it's own."
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "shrapnel_extractor"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
