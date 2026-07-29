@@ -26,8 +26,9 @@
 /obj/machinery/disposal/mail/proc/run_checks()
 	src.ci_errors = list()
 
-	if (!(locate(/obj/mapping_helper/mailtag) in src.loc))
-		src.ci_errors += " has no mailtag mapping helper (/obj/mapping_helper/mailtag)."
+	SPAWN(0)
+		if (!(locate(/obj/mapping_helper/mailtag) in src.loc))
+			src.ci_errors += " has no mailtag mapping helper (/obj/mapping_helper/mailtag)."
 
 	if (!isnull(src.mail_tag))
 		src.ci_errors += " has varedited or overriden `mail_tag` value. Use a mailtag mapping helper (/obj/mapping_helper/mailtag) instead."
