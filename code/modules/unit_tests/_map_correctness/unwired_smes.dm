@@ -12,7 +12,7 @@
 				break
 
 		if (!smes_ok)
-			. += src.format_position(smes)
+			. += CI.format_position(smes)
 
 
 SET_UP_CI_TRACKING(/obj/machinery/power/smes)
