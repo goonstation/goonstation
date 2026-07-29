@@ -3895,8 +3895,9 @@ datum
 				. = ..()
 				if (!M)
 					M = holder.my_atom
-				if (M && M.hasStatus("nausea"))
+				if (M && M.hasStatus("nausea") && prob(50))
 					M.nauseate(-1)
+					boutput(M,"<span class= 'notice'>You feel a little less nauseous.</span>")
 
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
 				if (!M)
