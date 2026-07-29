@@ -301,18 +301,12 @@
 	name = "casualty extraction kit"
 	icon_state = "casualty_nt"
 	desc = "A box containing body bags and the chemicals required to prevent rotting inside said bags."
+	tooltip_flags = REBUILD_USER
 	spawn_contents = list(/obj/item/body_bag = 5,
 						/obj/item/reagent_containers/syringe/formaldehyde = 1,
 						/obj/item/reagent_containers/glass/bottle/formaldehyde = 1)
 
-	get_desc(dist, mob/user)
-		. = ..()
-
-		if(ishuman(user) && user.traitHolder.hasTrait("training_medical"))
-			.+= " Every first responder would know these are a must have at any crisis response."
-		else
-
-			.+= " Rather pessimistic on CentCom's end to send someone with these."
+	TRAIT_ALTERED_DESCRIPTION("training_medical", " Every first responder would know these are a must have at any crisis response.", " Rather pessimistic on CentCom's end to send someone with these.")
 
 /* -------------------- Prostheses storage -------------------- */
 
