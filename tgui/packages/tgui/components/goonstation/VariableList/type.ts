@@ -6,8 +6,15 @@
  */
 
 import { BooleanLike } from 'tgui-core/react';
+import { ComponentProps } from 'react';
+
+import { variableValueComponents } from './actions';
 
 type Act = (action: string, payload?: object) => void;
+
+type VarValueComponents = typeof variableValueComponents;
+type VarValueKey = keyof VarValueComponents;
+type VarValueProps = ComponentProps<VarValueComponents[VarValueKey]>;
 
 export interface VariableListProps {
   className?: string | BooleanLike;
@@ -20,8 +27,8 @@ export interface VariableProps {
   onAction: Act;
   name: string;
   tooltip: string;
-  value_type: string;
-  value: any;
+  value_type: VarValueKey;
+  value: VarValueProps;
   edit_action?: [string, object | undefined];
   edit_tooltip?: string;
 }

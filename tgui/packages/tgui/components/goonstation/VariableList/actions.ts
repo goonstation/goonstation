@@ -10,7 +10,7 @@ import { VariableReference, VariableReferenceList } from './VariableReference';
 import { VariableToggleable } from './VariableToggleable';
 import { VariableValue } from './VariableValue';
 
-const variableValueComponents = {
+export const variableValueComponents = {
   value: VariableValue,
   toggleable: VariableToggleable,
   reference: VariableReference,
