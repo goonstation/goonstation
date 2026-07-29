@@ -3878,6 +3878,30 @@ datum
 						boutput(M,"<span class= 'notice'>You feel a little less sickly.</span>")
 				..()
 
+		fooddrink/ginger
+			name = "ginger"
+			id = "ginger"
+			description = "Has a warm, spicy scent and nausea-soothing properties. Much less prone to staining than turmeric."
+			reagent_state = SOLID
+			fluid_r = 225
+			fluid_g = 225
+			fluid_b = 102
+			transparency = 255
+			taste = list("spicy")
+
+			on_mob_life(var/mob/living/M, var/mult = 1)
+				for(var/datum/ailment_data/disease/virus in M.ailments)
+					if(probmult(10) && istype(virus.master,/datum/ailment/disease/cold))
+						M.cure_disease(virus)
+						boutput(M,"<span class= 'notice'>You feel a little less ill.</span>")
+					if(probmult(10) && istype(virus.master,/datum/ailment/disease/flu))
+						M.cure_disease(virus)
+						boutput(M,"<span class= 'notice'>You feel a little less ill.</span>")
+					if(probmult(10) && istype(virus.master,/datum/ailment/disease/food_poisoning))
+						M.cure_disease(virus)
+						boutput(M,"<span class= 'notice'>You feel a little less sickly.</span>")
+				..()
+
 		fooddrink/cinnamon
 			name = "cinnamon"
 			id = "cinnamon"
