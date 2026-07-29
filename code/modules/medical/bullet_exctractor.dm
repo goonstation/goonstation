@@ -1,4 +1,4 @@
-/// This tool is mainly used by NanoTrasen Emergency Paramedics. It let you remove shrapnel from someone whos standing up, at the cost of hurting. Its kind of a psudo surgery.
+/// This tool is mainly used by NanoTrasen Emergency Paramedics. It lets you remove shrapnel from someone whos standing up, at the cost of hurting. Its kind of a pseudo surgery that really hurts.
 
 #define CAUSE_EXPECTED_PAIN(victim, damage)\
 	random_brute_damage(victim, damage);\
@@ -9,7 +9,7 @@
 	name = "Shrapnel Extractor"
 	desc = "An advanced surgeon's tool with multiple robotic limbs capable of extracting shrapnel from a patient in any situation. \
 	 Reserved only for desperate conditions due to the high risk of causing minor injuries. \
-	 Users often complain the rool has a personality of its own"
+	 Users often complain the tool has a personality of its own"
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "shrapnel_extractor"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
@@ -57,8 +57,8 @@
 
 		if (surgeon.bioHolder.HasEffect("clumsy") && prob(30))
 			surgeon.visible_message(\
-			SPAN_ALERT("<b>[surgeon]</b> missuses the [src] so much it slaps [surgeon] in the face!"), \
-			SPAN_ALERT("You fumble with the [src] and it becomes so insulted with your lack of skill that it slaps you in the face!"))
+			SPAN_ALERT("<b>[surgeon]</b> Missuses the [src] so much it slaps [surgeon] on [his_or_her(surgeon)] face!"), \
+			SPAN_ALERT("You fumble with the [src] and it becomes so insulted with your lack of skill that it slaps you on the face!"))
 
 			surgeon.changeStatus("disorient", 2 SECOND)
 			JOB_XP(surgeon, "Clown", 1)
