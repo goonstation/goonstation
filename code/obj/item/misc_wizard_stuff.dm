@@ -484,6 +484,7 @@
 	proc/fling_person(var/mob/target)
 		if(!target.anchored)
 			var/turf/T = get_edge_target_turf(target, target.dir)
+			playsound(target.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 50 , 1)
 			target.throw_at(T, 8, 2)
 			target.changeStatus("knockdown", 1 SECOND)
 			target.force_laydown_standup()
