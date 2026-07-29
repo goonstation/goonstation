@@ -9,9 +9,9 @@
 	name = "Shrapnel Extractor"
 	desc = "An advanced surgeon's tool. It lets you extract shrapnel from a patient in any situation. Reserved only for desperate situations due high risk of causing minor injuries. Users often complain the tool has a personality of it's own."
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "cell-on"
+	icon_state = "shrapnel_extractor"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
-	item_state = "cell-on"
+	item_state = "shrapnel_extractor"
 	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
