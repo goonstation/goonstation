@@ -28,10 +28,10 @@
 
 		var/endpoint = null
 		if (istype(dummy.ejection_chute))
-			endpoint = "[src.format_position(dummy.ejection_chute, FALSE)] with mail_tag \"[dummy.ejection_chute.mail_tag]\""
+			endpoint = "[CI.format_position(dummy.ejection_chute, FALSE)] with mail_tag \"[dummy.ejection_chute.mail_tag]\""
 		else if (dummy.ejection_turf)
 			endpoint = "([dummy.ejection_turf.x], [dummy.ejection_turf.y], [dummy.ejection_turf.z]) in [dummy.ejection_turf.loc]"
 		else
 			endpoint = "(null)"
 
-		. += "[src.format_position(dummy.chute)] misroutes objects addressed to \"[dummy.destination_tag]\" to [endpoint]."
+		. += "[CI.format_position(dummy.chute)] misroutes objects addressed to \"[dummy.destination_tag]\" to [endpoint]."

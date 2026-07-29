@@ -31,7 +31,7 @@
 			continue
 
 		var/endpoint = T ? "([T.x], [T.y], [T.z]) in [T.loc]" : "(null)"
-		. += "[src.format_position(dummy.chute)] sends objects to non-disposals-endpoint at [endpoint]."
+		. += "[CI.format_position(dummy.chute)] sends objects to non-disposals-endpoint at [endpoint]."
 
 
 /obj/landmark/disposals_endpoint
