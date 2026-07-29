@@ -1,4 +1,4 @@
-/datum/map_correctness_check/mail_chutes
+/datum/map_correctness_check/misrouted_mail_chutes
 	check_name = "Misrouted Mail Chutes"
 	check_prefabs = FALSE
 	skip_check_on = list(
@@ -6,7 +6,7 @@
 		/datum/map_settings/donut2,
 	)
 
-/datum/map_correctness_check/mail_chutes/run_check()
+/datum/map_correctness_check/misrouted_mail_chutes/run_check()
 	. = list()
 
 	global.instant_pipe_network()

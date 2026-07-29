@@ -1,8 +1,8 @@
-/datum/map_correctness_check/mailtags
+/datum/map_correctness_check/misconfigured_mail_chutes
 	check_name = "Misconfigured Mail Chutes"
 	check_prefabs = FALSE
 
-/datum/map_correctness_check/mailtags/run_check()
+/datum/map_correctness_check/misconfigured_mail_chutes/run_check()
 	return CI.ERRORS.mail_chutes
 
 
@@ -16,10 +16,6 @@
 
 /obj/machinery/disposal/mail/proc/run_checks()
 	var/position = CI.format_position(src)
-
-	SPAWN(0)
-		if (!(locate(/obj/mapping_helper/mailtag) in src.loc))
-			CI.ERRORS.mail_chutes += "[position] has no mailtag mapping helper (/obj/mapping_helper/mailtag)."
 
 	if (!isnull(src.mail_tag))
 		CI.ERRORS.mail_chutes += "[position] has varedited or overriden `mail_tag` value. Use a mailtag mapping helper (/obj/mapping_helper/mailtag) instead."

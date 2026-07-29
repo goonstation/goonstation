@@ -1,8 +1,8 @@
-/datum/map_correctness_check/disposal_chutes
+/datum/map_correctness_check/misrouted_disposal_chutes
 	check_name = "Misrouted Disposal Chutes"
 	check_prefabs = FALSE
 
-/datum/map_correctness_check/disposal_chutes/run_check()
+/datum/map_correctness_check/misrouted_disposal_chutes/run_check()
 	. = list()
 
 	global.instant_pipe_network()
