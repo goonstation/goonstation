@@ -2101,18 +2101,11 @@ ABSTRACT_TYPE(/datum/material/fabric)
 	mat_id = "kingbrullbarhide"
 	name = "king brullbar hide"
 	desc = "The hide of a terrifying brullbar king!!!"
-	color = list(1.25, 0.00, 0.00, 0.00,\
-				0.00, 1.25, 0.00, 0.00,\
-				0.00, 0.00, 1.25, 0.00,\
-				0.00, 0.00, 0.00, 1.00,\
-				0.00, 0.00, 0.00, 0.00)
 	hsl_color = list(0.00, 0.00, 0.00, 0.00,\
 					0.00, 1.35, -0.25, 0.00,\
 					0.00, 0.00, 1.15, 0.00,\
 					0.00, 0.00, 0.00, 1.00,\
 					0.00, -0.10, 0.00, 0.00)
-	texture = "leather"
-	texture_blend = BLEND_DEFAULT
 	artisan_trait_weight = 0
 
 	New()
