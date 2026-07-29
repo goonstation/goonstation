@@ -63517,12 +63517,8 @@
 	},
 /area/station/hallway/secondary/exit)
 "tJo" = (
-/obj/machinery/door/airlock/pyro/glass/windoor,
-/obj/mapping_helper/access/pharmacy,
-/obj/item/storage/box/beakerbox{
-	pixel_x = 6
-	},
 /obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/mapping_helper/access/pharmacy,
 /obj/machinery/cashreg{
 	pixel_x = -4;
@@ -64596,6 +64592,10 @@
 	pixel_x = -7;
 	pixel_y = -3
 	},
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
@@ -64603,15 +64603,11 @@
 	pixel_x = 12;
 	pixel_y = 4
 	},
-/obj/table/reinforced/chemistry/auto/auxsup,
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-4"
-	},
 /obj/item/hand_labeler{
 	pixel_y = -4;
 	pixel_x = 2
 	},
+/obj/table/reinforced/chemistry/auto/auxsup,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},

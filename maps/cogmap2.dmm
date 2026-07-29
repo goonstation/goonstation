@@ -61995,6 +61995,7 @@
 	},
 /area/research_outpost/hangar)
 "noe" = (
+/obj/machinery/light/incandescent,
 /obj/machinery/glass_recycler,
 /obj/item/storage/box/beakerbox{
 	pixel_y = 4
@@ -62003,8 +62004,11 @@
 /obj/item/paper/book/from_file/pharmacopia{
 	pixel_x = -8
 	},
+/obj/item/hand_labeler{
+	pixel_y = -4;
+	pixel_x = 2
+	},
 /obj/table/reinforced/chemistry/auto/auxsup,
-/obj/machinery/light/incandescent,
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
