@@ -1,4 +1,10 @@
 /// This tool is mainly used by NanoTrasen Emergency Paramedics. It let you remove shrapnel from someone whos standing up, at the cost of hurting. Its kind of a psudo surgery.
+
+#define CAUSE_EXPECTED_PAIN(victim, damage)\
+	random_brute_damage(victim, damage);\
+	take_bleeding_damage(victim, null, damage);\
+	victim.emote("scream");
+	
 /obj/item/bullet_extractor
 	name = "Shrapnel Extractor"
 	desc = "An advanced surgeon's tool. It lets you extract shrapnel from a patient in any situation. Reserved only for desperate situations due high risk of causing minor injuries. Users often complain the tool has a personality of it's own."
@@ -37,37 +43,40 @@
 			return
 			//!attempt_extraction(target, user) || user.a_intent != INTENT_HELP
 
-		SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS ,PROC_REF(attempt_extraction), list(patient, user), src.icon, src.icon_state, null, src.interrupt_flags)
+		SETUP_GENERIC_ACTIONBAR(user, src, 1 SECONDS ,PROC_REF(attempt_extraction), list(patient, user), src.icon, src.icon_state, null, src.interrupt_flags)
 
 
 	proc/attempt_extraction(var/mob/living/carbon/human/patient as mob, var/mob/living/surgeon as mob)
 		var/fluff = pick(" messes up", "'s hand slips", " fumbles with [src]", " nearly drops [src]", "'s hand twitches", " makes a really messy cut", " accidentally pinches themselves", " had a messy disagreement with the [src]'s robotic arms", "'s medical incompetence is an insult to [src]'s advanced micro electronics")
 
-		var/screw_up_prob = calc_screw_up_prob(patient, surgeon, 40)
+		var/screw_up_prob = calc_screw_up_prob(patient, surgeon, 10)
 
 		var/damage_low = calc_surgery_damage(surgeon, screw_up_prob, rand(1,5))
 		var/damage_high = calc_surgery_damage(surgeon, screw_up_prob, rand(5,10))
 
 		if (surgeon.bioHolder.HasEffect("clumsy") && prob(30))
-			surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> fumble so much with the [src] pricks [him_or_her(surgeon)] them!"), \
-			SPAN_ALERT("You fumble with the [src] and it becomes so insulted that it pricks you!"))
+			surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> fumble so much with the [src] slaps [surgeon] in the face!"), \
+			SPAN_ALERT("You fumble with the [src] and it becomes so insulted that it slaps you in the face!"))
 
 			surgeon.changeStatus("disorient", 2 SECOND)
 			JOB_XP(surgeon, "Clown", 1)
 
-			random_brute_damage(surgeon, damage_low)
-			take_bleeding_damage(surgeon, null, damage_low)
-			surgeon.emote("scream")
+			CAUSE_EXPECTED_PAIN(surgeon, damage_high)
 
-			return FALSE
+			return
 
 		if (surgeon.a_intent == INTENT_DISARM)
 			boutput(surgeon, SPAN_NOTICE("You intentionally hurt [patient] with the [src], an insult to the craftmanship."))
 			do_slipup(surgeon, patient, "chest", damage_high, fluff)
 
-			return TRUE
+			return
 
 		playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
+
+		if(prob(screw_up_prob))
+			do_slipup(surgeon, patient, "chest", damage_low, fluff)
+
+			return
 
 		for (var/obj/item/implant/projectile/I in patient.implant)
 			surgeon.tri_message(patient, \
@@ -77,17 +86,16 @@
 
 			I.on_remove(patient)
 			patient.implant.Remove(I)
-			I.set_loc(patient.loc)
 
+			// The shrapnel gets pulled to the user
+			I.set_loc(surgeon.loc)
 			I.pixel_x = rand(-2, 5)
 			I.pixel_y = rand(-6, 1)
 
 			// This tool is sofisticated, but operating on a patiant whos awake and moving is risky
-			if(screw_up_prob)
-				random_brute_damage(patient, patient)
-				take_bleeding_damage(patient, null, patient)
-				patient.emote("scream")
+			CAUSE_EXPECTED_PAIN(patient, damage_low)
 
-			return TRUE
+			return
 
 
+#undef CAUSE_EXPECTED_PAIN
