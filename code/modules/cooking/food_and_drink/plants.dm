@@ -1634,6 +1634,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	edible = TRUE //You really should peel it first!!!!
 	validforhat = 1
 	food_color = "#C58C66"
+	brew_result = "ginger_ale"
 
 	make_reagents()
 		..()
