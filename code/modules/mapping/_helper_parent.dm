@@ -12,23 +12,25 @@ ABSTRACT_TYPE(/obj/mapping_helper)
 	anchored = ANCHORED_ALWAYS
 	invisibility = INVIS_ALWAYS
 	layer = OBJ_LAYER + 1 // yeah let's consistently be above doors
-
-	New()
-		..()
-		if (global.current_state >= GAME_STATE_WORLD_INIT)
-			src.initialize()
-
-	initialize()
-		..()
-		if (QDELETED(src))
-			return
-#ifdef CHECK_MORE_RUNTIMES
-		for (var/obj/mapping_helper/helper in get_turf(src))
-			if (helper.type == src.type && helper != src)
-				CRASH("Two or more mapping helpers [identify_object(src)] found on [src.x], [src.y], [src.z] at area [get_area(src)]")
+#ifdef CI_RUNTIME_CHECKING
+	var/deleted_on_start = FALSE
+#else
+	var/deleted_on_start = TRUE
 #endif
-		src.setup()
+
+/obj/mapping_helper/New()
+	. = ..()
+	if (global.current_state >= GAME_STATE_WORLD_INIT)
+		src.initialize()
+
+/obj/mapping_helper/initialize()
+	. = ..()
+	if (QDELETED(src))
+		return
+
+	src.setup()
+	if (src.deleted_on_start)
 		qdel(src)
 
-	proc/setup()
-		return
+/obj/mapping_helper/proc/setup()
+	return

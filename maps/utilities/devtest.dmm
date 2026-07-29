@@ -298,12 +298,6 @@
 /area/station/devzone)
 "fU" = (
 /obj/machinery/clonegrinder,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat{
-	pixel_x = 4
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat{
-	pixel_x = 4
-	},
 /turf/simulated/floor/blue/checker,
 /area/station/devzone)
 "gd" = (
@@ -515,7 +509,8 @@
 /area/station/devzone)
 "iQ" = (
 /obj/disposalpipe/trunk/mail/north,
-/obj/machinery/disposal/mail/autoname/chapel,
+/obj/mapping_helper/mailtag/chapel,
+/obj/machinery/disposal/mail,
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "ja" = (
@@ -721,7 +716,8 @@
 /turf/simulated/floor/caution,
 /area/station/devzone)
 "nn" = (
-/obj/machinery/disposal/mail/autoname/engineering,
+/obj/mapping_helper/mailtag/engineering,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/north,
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
@@ -840,7 +836,8 @@
 /turf/simulated/floor/white,
 /area/station/devzone)
 "oF" = (
-/obj/machinery/disposal/mail/autoname/research/chemistry,
+/obj/mapping_helper/mailtag/research/chemistry,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/north,
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
@@ -930,6 +927,10 @@
 "pO" = (
 /turf/unsimulated/floor/engine,
 /area/station/devzone)
+"pQ" = (
+/obj/storage/crate/freezer/organs,
+/turf/simulated/floor/caution,
+/area/station/devzone)
 "pR" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 5
@@ -937,7 +938,8 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/devzone)
 "pZ" = (
-/obj/machinery/disposal/mail/autoname/security,
+/obj/mapping_helper/mailtag/security,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/north,
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
@@ -1579,7 +1581,7 @@
 /turf/simulated/floor,
 /area/station/devzone)
 "Bs" = (
-/obj/machinery/computer/announcement/station,
+/obj/machinery/computer/announcement/station/bridge,
 /turf/simulated/floor,
 /area/station/devzone)
 "Bw" = (
@@ -1788,7 +1790,8 @@
 /turf/space,
 /area/station/devzone)
 "EL" = (
-/obj/machinery/disposal/mail/autoname/public/cafeteria,
+/obj/mapping_helper/mailtag/public/cafeteria,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/north,
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
@@ -1996,7 +1999,8 @@
 /turf/simulated/floor,
 /area/station/devzone)
 "Jb" = (
-/obj/machinery/disposal/mail/autoname/bridge,
+/obj/mapping_helper/mailtag/bridge,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/north,
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
@@ -2480,7 +2484,8 @@
 /turf/simulated/floor/white,
 /area/station/devzone)
 "QI" = (
-/obj/machinery/disposal/mail/autoname/kitchen,
+/obj/mapping_helper/mailtag/kitchen,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/north,
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
@@ -2668,7 +2673,8 @@
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "TR" = (
-/obj/machinery/disposal/mail/autoname/medbay,
+/obj/mapping_helper/mailtag/medbay,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/north,
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
@@ -2742,7 +2748,8 @@
 /turf/simulated/floor,
 /area/station/devzone)
 "UZ" = (
-/obj/machinery/disposal/mail/autoname/janitor,
+/obj/mapping_helper/mailtag/janitor,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/north,
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
@@ -2810,7 +2817,8 @@
 /turf/simulated/floor/red/redblackchecker,
 /area/station/devzone)
 "VV" = (
-/obj/machinery/disposal/mail/autoname/bar,
+/obj/mapping_helper/mailtag/bar,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/north,
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
@@ -2842,7 +2850,8 @@
 /turf/simulated/floor/grass/random,
 /area/station/devzone)
 "WY" = (
-/obj/machinery/disposal/mail/autoname/hydroponics,
+/obj/mapping_helper/mailtag/hydroponics,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/north,
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
@@ -3022,7 +3031,8 @@
 /turf/simulated/floor,
 /area/station/devzone)
 "ZB" = (
-/obj/machinery/disposal/mail/autoname/qm,
+/obj/mapping_helper/mailtag/qm,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail/north,
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
@@ -3697,7 +3707,7 @@ zT
 Yx
 Yx
 ng
-ng
+pQ
 Kr
 ng
 ng

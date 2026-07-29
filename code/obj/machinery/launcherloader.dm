@@ -46,7 +46,9 @@
 		operating = 1
 		FLICK("launcher_loader_1",src)
 		playsound(src, 'sound/effects/pump.ogg', 50, TRUE)
-		SPAWN(0.3 SECONDS)
+
+		var/delay = global.instant_pipe_network ? (0) : (0.3 SECONDS)
+		SPAWN(delay)
 			for(var/atom/movable/AM in src.loc)
 				if(AM.anchored || AM == src || HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING) || isflockmob(AM)) continue
 				if(trash && AM.delivery_destination != "Disposals")
@@ -71,7 +73,8 @@
 							if (door)
 								door.close()
 
-				SPAWN(door ? door_delay : 2 SECONDS) driver_operating = FALSE
+				var/delay = global.instant_pipe_network ? (0) : (door ? door_delay : 2 SECONDS)
+				SPAWN(delay) driver_operating = FALSE
 
 				sleep(door ? 20 : 10)
 				if (driver)
