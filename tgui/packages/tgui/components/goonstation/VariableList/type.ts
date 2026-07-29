@@ -11,13 +11,13 @@ type Act = (action: string, payload?: object) => void;
 
 export interface VariableListProps {
   className?: string | BooleanLike;
-  act: Act;
+  onAction: Act;
   variables: VariableProps[];
 }
 
 export interface VariableProps {
   className?: string | BooleanLike;
-  act: Act;
+  onAction: Act;
   name: string;
   tooltip: string;
   value_type: string;
@@ -27,5 +27,5 @@ export interface VariableProps {
 }
 
 export interface VarValueParent {
-  act: Act;
+  onAction: Act;
 }

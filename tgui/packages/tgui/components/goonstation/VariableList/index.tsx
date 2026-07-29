@@ -20,7 +20,7 @@ export const VariableList = (props: VariableListProps) => {
             key={index}
             {...variable}
             className={props.className}
-            act={props.act}
+            onAction={props.onAction}
           />
         ))}
       </LabeledList>
@@ -43,12 +43,12 @@ const Variable = (props: VariableProps) => {
     >
       <Table>
         <Table.Cell height="20px" verticalAlign="middle">
-          <VariableValueComponent act={props.act} {...props.value} />
+          <VariableValueComponent {...props.value} onAction={props.onAction} />
         </Table.Cell>
         {!!props.edit_action && (
           <Table.Cell verticalAlign="middle" collapsing>
             <Button
-              onClick={() => props.act(...props.edit_action!)}
+              onClick={() => props.onAction(...props.edit_action!)}
               tooltip={props.edit_tooltip}
               icon="pen"
               textAlign="center"

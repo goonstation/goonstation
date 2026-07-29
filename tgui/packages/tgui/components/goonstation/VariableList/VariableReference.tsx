@@ -19,7 +19,9 @@ interface VarReferenceProps extends VarValueParent {
 export const VariableReference = (props: VarReferenceProps) => {
   return (
     <Tooltip content={props.tooltip}>
-      <Button onClick={() => props.act(...props.action)}>{props.title}</Button>
+      <Button onClick={() => props.onAction(...props.action)}>
+        {props.title}
+      </Button>
     </Tooltip>
   );
 };
@@ -35,6 +37,6 @@ export const VariableReferenceList = (props: VarReferenceListProps) => {
   }
 
   return props.variable_list.map((item, index) => (
-    <VariableReference key={index} {...item} act={props.act} />
+    <VariableReference key={index} {...item} onAction={props.onAction} />
   ));
 };

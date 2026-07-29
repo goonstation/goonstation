@@ -26,7 +26,10 @@ export const VariableDropdown = (props: VarDropdownProps) => {
       displayText={props.selected}
       options={props.options}
       onSelected={(value) =>
-        props.act(props.action[0], { value: value, ...props.action[1] })
+        props.onAction(props.action[0], {
+          value: value,
+          ...props.action[1],
+        })
       }
     />
   );

@@ -37,7 +37,7 @@ export const SpeechModuleTree = () => {
         <Section>
           <VariableList
             className="candystripe"
-            act={act}
+            onAction={act}
             variables={data.variables}
           />
         </Section>
@@ -116,7 +116,7 @@ const Module = (props: ModuleProps) => {
         m="1px"
         className={props.auxiliary ? 'module--auxiliary' : 'module'}
       >
-        <VariableList act={act} variables={props.module_variables} />
+        <VariableList onAction={act} variables={props.module_variables} />
       </Section>
     </Stack.Item>
   );

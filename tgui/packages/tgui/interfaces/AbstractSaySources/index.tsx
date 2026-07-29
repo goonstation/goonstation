@@ -66,7 +66,7 @@ const AbstractSaySource = (props: AbstractSaySourceProps) => {
           <Stack.Item>
             <VariableList
               className="candystripe"
-              act={act}
+              onAction={act}
               variables={props.atom_variables}
             />
           </Stack.Item>
@@ -74,7 +74,7 @@ const AbstractSaySource = (props: AbstractSaySourceProps) => {
           <Stack.Item>
             <VariableList
               className="two_columns candystripe"
-              act={act}
+              onAction={act}
               variables={props.verb_variables}
             />
           </Stack.Item>

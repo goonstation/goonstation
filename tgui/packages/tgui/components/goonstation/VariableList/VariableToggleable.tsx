@@ -20,7 +20,7 @@ export const VariableToggleable = (props: VarToggleableProps) => {
   return (
     <Tooltip content="Toggle Value">
       <Button
-        onClick={() => props.act(...props.action)}
+        onClick={() => props.onAction(...props.action)}
         color={props.value ? 'green' : 'red'}
       >
         {props.value ? 'TRUE' : 'FALSE'}
