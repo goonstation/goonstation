@@ -779,6 +779,13 @@
 	dam_low = 0
 	dam_high = 0
 
+/datum/limb/mouth/hippo
+	sound_attack = 'sound/impact_sounds/Flesh_Tear_2.ogg'
+	dam_low = 12
+	dam_high = 22
+	can_beat_up_robots = TRUE
+	miss_prob = 90
+
 /datum/limb/item
 	can_pickup_item = FALSE
 	attack_hand(atom/target, var/mob/user, var/reach, params, location, control)
