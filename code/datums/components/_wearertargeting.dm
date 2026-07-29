@@ -25,7 +25,7 @@ TYPEINFO(/datum/component/wearertargeting)
 /datum/component/wearertargeting/proc/on_equip(datum/source, mob/equipper, slot)
 	SHOULD_CALL_PARENT(1)
 	if((slot in valid_slots) && istype(equipper, mobtype))
-		RegisterSignal(equipper, signals, proctype, TRUE)
+		RegisterSignals(equipper, signals, proctype, TRUE)
 		current_user = equipper
 	else
 		UnregisterSignal(equipper, signals)

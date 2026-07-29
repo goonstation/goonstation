@@ -1,5 +1,65 @@
 
+(t)tue jul 28 26
+(u)CelineTheYeen
+(p)27139
+(e)🗺|A-Mapping
+(+)Added a new space prefab, The Hidden Gem. Satisfy all your gourmet needs today!
+(u)Gomp
+(p)26280
+(e)🎨💡|C-Sprites, A-Station-Systems
+(*)AI TURRET RESPRITE The colors of the different shooting modes have changed! Details in minor changes.
+(+)BLUE now means the turret is NOT FIRING. GREY means the turret has NO POWER. YELLOW means the turret is on the STUN setting. RED means the turret is going to KILL you!
+(u)Astarthoc
+(p)27219
+(e)|
+(*)You can now select to spawn with DNR set when choosing to observe a round
+(u)JORJ949
+(p)27191
+(e)⚖📦🤖|C-Balance, A-Game-Objects, A-Silicons
+(*)The AI can no longer make station announcements or call the shuttle if their core is being signal jammed.
+(u)Astarthoc
+(p)27143
+(e)⚗|A-Chemistry
+(*)Added sweet condensed milk to the game. A sweet ingredient for bakery or drinks!
+(*)Added café bombón to the game. The sweetest way to drink a espresso
+(u)Kubius
+(p)27245
+(e)💅|C-QoL
+(+)Mopping a catwalk will now automatically pass the click through to the floor underneath.
+(u)Driftered
+(p)27304
+(e)🎨|C-Sprites
+(+)Adds the blue nurse hat to the medical clothing vendor and medical clothing locker. It's like the red nurse hat, but blue!
+(u)LorrMaster
+(p)27299
+(e)🧱|A-Materials
+(+)Things made out of blob material now wobble (does not affect clothing, as great as that would be).
+(u)LorrMaster
+(p)27309
+(e)🧱|A-Materials
+(+)Nanotrasen has ordered a slightly newer edition of "Dummies' Guide to Material Science"
+(u)Wrastlingcat
+(p)27285
+(e)🎨🌱|C-Sprites, A-Hydroponics
+(*)Added Sundew! A new botany plant known for its sticky sugary slime!
+(t)mon jul 27 26
+(u)JORJ949
+(p)27157
+(e)🔄📄📨|C-Rework, A-UI, A-Logistics
+(*)The Quartermaster supply console is now in TGUI. It should now be more responsive and the data should refresh as soon  as it changes (e.g. market reset) instead of needing you to click the console to refresh.
 (t)thu jul 23 26
+(u)ANNmagedon
+(p)27280
+(e)🗺|A-Mapping
+(+)Standardized all mechanic's labs to have 3 networks diagnostics cartridges
+(u)GabbySins
+(p)27169
+(e)⚗|A-Chemistry
+(+)The aquaphobic trait found on some species of cat is now properly blocked by wearing sealed spacesuits.
+(u)CelineTheYeen
+(p)27266
+(e)⚗|A-Chemistry
+(+)Nicotwaine has an overdose effect again.
 (u)JORJ949
 (+)Auto injectors filled by a pharmacist have the chem name applied via removable label. All pharmacies now come with a hand labeler. For crime.
 (u)ANNmagedon

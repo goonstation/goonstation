@@ -334,7 +334,7 @@
 /turf/simulated/floor/black,
 /area/space)
 "bi" = (
-/obj/machinery/disposal/mail/autoname,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/segment/auto/mail,
 /turf/simulated/floor,
 /area/space)

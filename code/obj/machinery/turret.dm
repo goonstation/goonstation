@@ -1,7 +1,7 @@
 /obj/machinery/turret
 	name = "turret"
 	icon = 'icons/obj/turrets.dmi'
-	icon_state = "grey_target_prism"
+	icon_state = "Turret_off"
 	var/raised = 0
 	var/enabled = 1
 	anchored = ANCHORED
@@ -14,22 +14,44 @@
 	var/lasers = 0
 	var/health = 100
 	var/obj/machinery/turretcover/cover = null
+	var/obj/machinery/turretbase/base = null
+	var/obj/decal/turretvoid/void = null
 	var/popping = 0
 	var/wasvalid = 0
 	var/lastfired = 0
 	var/shot_delay = 15 //1.5 seconds between shots (previously 3, way too much to be useful)
 	var/shot_type = 0
 	var/override_area_bullshit = 0
-	var/datum/projectile/lethal = new/datum/projectile/laser/heavy/law_safe
+	var/datum/projectile/lethal = new/datum/projectile/laser/heavy/ai_turret
 	var/datum/projectile/stun = new/datum/projectile/energy_bolt/robust
 	var/list/mob/target_list = null
+	var/image/turret_overlay = null
+	var/image/turret_smoke_overlay = null
 
 /obj/machinery/turretcover
-	name = "pop-up turret cover"
+	name = "Turret Cover"
 	icon = 'icons/obj/turrets.dmi'
-	icon_state = "turretCover"
+	icon_state = "TurretCover"
 	anchored = ANCHORED
-	layer = OBJ_LAYER+0.5
+	layer = ABOVE_OBJ_LAYER
+	density = 0
+
+/obj/machinery/turretbase
+	name = "turret base"
+	icon = 'icons/obj/turrets.dmi'
+	icon_state = "TurretBase"
+	anchored = ANCHORED
+	layer = OBJ_LAYER - 0.01
+	plane = PLANE_WALL
+	density = 0
+
+/obj/decal/turretvoid
+	name = ""
+	icon = 'icons/obj/turrets.dmi'
+	icon_state = "TurretVoid"
+	anchored = ANCHORED
+	layer = TURF_LAYER
+	plane = PLANE_FLOOR
 	density = 0
 
 /obj/machinery/turret/New()
@@ -56,20 +78,40 @@
 
 /obj/machinery/turret/power_change()
 	if(status & BROKEN)
-		icon_state = "grey_target_prism"
+		icon_state = "Turret_off"
+		var/image/turret_overlay = ClearAllOverlays()
+		turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "off_overlay")
+		turret_overlay.plane = PLANE_SELFILLUM
+		src.UpdateOverlays(turret_overlay, "off_overlay")
 	else
 		if( powered() )
 			if (src.enabled)
 				if (src.lasers)
-					icon_state = "orange_target_prism"
+					icon_state = "Turret_lethal"
+					turret_overlay = ClearAllOverlays()
+					turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "lethal_overlay")
+					turret_overlay.plane = PLANE_SELFILLUM
+					src.UpdateOverlays(turret_overlay, "lethal_overlay")
 				else
-					icon_state = "target_prism"
+					icon_state = "Turret_stun"
+					turret_overlay = ClearAllOverlays()
+					turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "stun_overlay")
+					turret_overlay.plane = PLANE_SELFILLUM
+					turret_overlay.alpha = 128
+					src.UpdateOverlays(turret_overlay, "stun_overlay")
+
 			else
-				icon_state = "grey_target_prism"
+				icon_state = "Turret_off"
+				turret_overlay = ClearAllOverlays()
+				turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "off_overlay")
+				turret_overlay.plane = PLANE_SELFILLUM
+				src.UpdateOverlays(turret_overlay, "off_overlay")
 			status &= ~NOPOWER
 		else
 			SPAWN(rand(0, 15))
-				src.icon_state = "grey_target_prism"
+				src.icon_state = "Turret_nopower"
+				turret_overlay = ClearAllOverlays()
+				src.UpdateOverlays(turret_overlay)
 				status |= NOPOWER
 
 /obj/machinery/turret/proc/setState(var/enabled, var/lethal)
@@ -90,6 +132,11 @@
 
 	if (src.cover==null)
 		src.cover = new /obj/machinery/turretcover(src.loc)
+	if (src.base==null)
+		src.base = new /obj/machinery/turretbase(src.loc)
+	var/turf/T = get_turf(src)
+	if (isfloor(T))
+		src.void = new /obj/decal/turretvoid(src.loc)
 
 	if(GET_COOLDOWN(src, "emp_timer"))
 		return
@@ -102,8 +149,8 @@
 			target_list = get_target_list()	//Calculate a new batch of targets
 			if(istype(area, /area/station/turret_protected)) //It'd be faster to just throw our turret buds our target list.
 				var/area/station/turret_protected/TP = area
-				for(var/obj/machinery/turret/T in TP.turret_list) //Sharing is caring - give it to our turret friends so they don't have to work out a target list
-					T.target_list = src.target_list
+				for(var/obj/machinery/turret/turrets in TP.turret_list) //Sharing is caring - give it to our turret friends so they don't have to work out a target list
+					turrets.target_list = src.target_list
 
 
 		if (length(target_list))
@@ -178,8 +225,31 @@
 		if (src.cover!=null)
 			FLICK("popup", src.cover)
 			src.cover.icon_state = "openTurretCover"
+			turret_overlay = ClearAllOverlays()
+			SPAWN(1.4 SECONDS)
+				if(status & BROKEN)
+					turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "off_overlay")
+					turret_overlay.plane = PLANE_SELFILLUM
+					src.UpdateOverlays(turret_overlay, "off_overlay")
+				else
+					if( powered() )
+						if (src.enabled)
+							if (src.lasers)
+								turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "lethal_overlay")
+								turret_overlay.plane = PLANE_SELFILLUM
+								src.UpdateOverlays(turret_overlay, "lethal_overlay")
+							else
+								turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "stun_overlay")
+								turret_overlay.plane = PLANE_SELFILLUM
+								turret_overlay.alpha = 128
+								src.UpdateOverlays(turret_overlay, "stun_overlay")
+						else
+							turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "off_overlay")
+							turret_overlay.plane = PLANE_SELFILLUM
+							src.UpdateOverlays(turret_overlay, "off_overlay")
 		SPAWN(1 SECOND)
-			if (popping==1) popping = 0
+			if (popping==1)
+				popping = 0
 			set_density(1)
 
 /obj/machinery/turret/proc/popDown()
@@ -188,7 +258,8 @@
 		popping = -1
 		if (src.cover!=null)
 			FLICK("popdown", src.cover)
-			src.cover.icon_state = "turretCover"
+			src.cover.icon_state = "TurretCover"
+			turret_overlay = ClearAllOverlays()
 		SPAWN(1.3 SECONDS)
 			if (popping==-1)
 				invisibility = INVIS_ALWAYS
@@ -259,13 +330,28 @@
 	src.health = 0
 	src.set_density(0)
 	src.status |= BROKEN
-	src.icon_state = "destroyed_target_prism"
-	if (cover!=null)
-		qdel(cover)
-	sleep(0.3 SECONDS)
-	FLICK("explosion", src)
-	SPAWN(1.3 SECONDS)
-		qdel(src)
+	turret_overlay = ClearAllOverlays()
+	turret_overlay = SafeGetOverlayImage("turret_overlay", 'icons/obj/turrets.dmi', "explosion_overlay")
+	turret_overlay.plane = PLANE_SELFILLUM
+	src.UpdateOverlays(turret_overlay, "explosion_overlay")
+	src.icon_state = "Turret_nopower" //otherwise it doesn't want to work
+	SPAWN(0.2 SECONDS)
+		turret_smoke_overlay = SafeGetOverlayImage("turret_smoke_overlay", 'icons/obj/turrets.dmi', "smoke_overlay_1")
+		src.UpdateOverlays(turret_smoke_overlay, "smoke_overlay_1")
+	SPAWN(0.9 SECONDS)
+		turret_overlay = ClearAllOverlays()
+		turret_smoke_overlay = ClearAllOverlays()
+		turret_smoke_overlay = SafeGetOverlayImage("turret_smoke_overlay", 'icons/obj/turrets.dmi', "smoke_overlay_2")
+		src.UpdateOverlays(turret_smoke_overlay, "smoke_overlay_2")
+		src.icon_state = "Turret_destroyed" //same deal here
+		SPAWN(0.6 SECONDS)
+			turret_overlay = ClearAllOverlays()
+			turret_smoke_overlay = ClearAllOverlays()
+			if (cover!=null)
+				qdel(cover)
+			if(base!=null)
+				qdel(base)
+			qdel(src)
 
 /*
  *	Network turret, a turret controlled over the wire network instead of a turretid
