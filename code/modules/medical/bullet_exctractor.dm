@@ -7,7 +7,9 @@
 
 /obj/item/bullet_extractor
 	name = "Shrapnel Extractor"
-	desc = "An advanced surgeon's tool with many robotic limbs. It lets you extract shrapnel from a patient in any situation. Reserved only for desperate situations due high risk of causing minor injuries. Users often complain the tool has a personality of it's own."
+	desc = "An advanced surgeon's tool with multiple robotic limbs capable of extracting shrapnel from a patient in any situation. \
+	 Reserved only for desperate conditions due to the high risk of causing minor injuries. \
+	 Users often complain the rool has a personality of its own"
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "shrapnel_extractor"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
@@ -54,7 +56,8 @@
 		var/damage_high = calc_surgery_damage(surgeon, screw_up_prob, rand(5,10))
 
 		if (surgeon.bioHolder.HasEffect("clumsy") && prob(30))
-			surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> fumble so much with the [src] slaps [surgeon] in the face!"), \
+			surgeon.visible_message(\
+			SPAN_ALERT("<b>[surgeon]</b> fumble so much with the [src] slaps [surgeon] in the face!"), \
 			SPAN_ALERT("You fumble with the [src] and it becomes so insulted that it slaps you in the face!"))
 
 			surgeon.changeStatus("disorient", 2 SECOND)
