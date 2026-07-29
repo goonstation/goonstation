@@ -2338,9 +2338,8 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	name = "Milk Frother"
 	desc = "A sophisticated machine used to froth milk."
 	icon = 'icons/obj/foodNdrink/bottle.dmi'
-	icon_state = "cocktailshaker"
+	icon_state = "milk_frother"
 	initial_volume = 50
-	amount_per_transfer_from_this = 5
 	can_recycle = FALSE
 	var/list/whitelist = list()
 
