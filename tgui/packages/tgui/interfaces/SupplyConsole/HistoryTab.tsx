@@ -13,7 +13,7 @@ import { SupplyConsoleData } from './type';
 export const SupplyConsoleHistoryTab = () => {
   const { data } = useBackend<SupplyConsoleData>();
   return (
-    <Section title="Order History" fill>
+    <Section title="Order History" scrollable fill>
       <Table>
         <Table.Cell py="2px">
           <b>Ordered Items:</b>
