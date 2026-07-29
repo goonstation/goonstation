@@ -317,6 +317,7 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 	max_stack = 10
 	uses_default_material_appearance = FALSE
 	mat_changename = FALSE
+	var/is_rotated = FALSE // Logs are rotated after being felled. Need to unrotate them after stacking.
 
 	attackby(obj/item/W, mob/user)
 		if ((istool(W, TOOL_CUTTING | TOOL_SAWING)))
@@ -330,7 +331,10 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 			..()
 
 	_update_stack_appearance()
-		src.transform = initial(src.transform) // Logs are rotated after being felled. Stacking should unrotate them.
+		..()
+		if(src.is_rotated)
+			src.Turn(-90)
+			src.is_rotated = FALSE
 		switch(src.amount)
 			if(1)
 				src.icon_state = "log1"
@@ -347,6 +351,7 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 	icon_state = "log_thin1"
 
 	_update_stack_appearance()
+		..()
 		switch(src.amount)
 			if(1)
 				src.icon_state = "log_thin1"
