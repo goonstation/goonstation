@@ -93,8 +93,8 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	slot_eyes = list(/obj/item/clothing/glasses/healthgoggles/upgraded)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt/medic)
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
-	slot_poc1 = list(/obj/item/storage/ntsc_pouch/medic)
-	slot_poc2 = list(/obj/item/tank/pocket/extended/oxygen)
+    slot_poc1 = list(/obj/item/tank/pocket/extended/oxygen)
+	slot_poc2 = list(/obj/item/storage/ntsc_pouch/medic)
 	items_in_backpack = list(/obj/item/device/flash,
 							/obj/item/storage/firstaid/docbag/field_surgeon/NT,
 							/obj/item/extinguisher,
