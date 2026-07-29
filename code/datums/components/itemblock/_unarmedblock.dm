@@ -34,7 +34,7 @@
 	if(affectedBlock)
 		on_block_end(source, affectedBlock)
 	affectedBlock = B
-	RegisterSignal(source, signals, proctype, TRUE)
+	RegisterSignals(source, signals, proctype, TRUE)
 
 //Must clean up anything you're doing to the block in here - this also gets called when the item is unequipped, so that we unmodify our block
 /datum/component/wearertargeting/unarmedblock/proc/on_block_end(var/mob/living/carbon/source, var/obj/item/grab/block/B)
