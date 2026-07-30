@@ -5041,3 +5041,15 @@ datum
 			fluid_g = 255
 			transparency = 200
 			taste = list("creamy", "airy")
+
+		fooddrink/caffeinated/macchiato
+			name = "macchiato"
+			id = "macchiato"
+			fluid_r = 156
+			fluid_g = 114
+			fluid_b = 74
+			description = "A bold espresso marked with a small crown of silky milk foam."
+			reagent_state = LIQUID
+			taste = list("bold", "creamy")
+			thirst_value = 1
+			caffeine_content = 0.8
