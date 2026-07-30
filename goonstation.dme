@@ -1685,7 +1685,7 @@
 #include "code\modules\medals\rewardsLocker.dm"
 #include "code\modules\medical\blood_system.dm"
 #include "code\modules\medical\bone_system.dm"
-#include "code\modules\medical\bullet_exctractor.dm"
+#include "code\modules\medical\bullet_extractor.dm"
 #include "code\modules\medical\canes.dm"
 #include "code\modules\medical\defibrillator.dm"
 #include "code\modules\medical\health_scans.dm"
