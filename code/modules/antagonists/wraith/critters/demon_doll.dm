@@ -150,7 +150,7 @@ TYPEINFO(/mob/living/critter/wraith/demon_doll)
 
 	onUpdate(timePassed)
 		counter += timePassed
-		if (counter >= 50)
+		if (counter >= 30)
 			var/mob/living/juggler = src.owner
 			counter = 0
 			if (length(juggler.juggling))
@@ -178,7 +178,7 @@ TYPEINFO(/mob/living/critter/wraith/demon_doll)
 		if (closest && picked_thing)
 			juggler.remove_juggle(picked_thing, FALSE)
 			picked_thing.set_loc(juggler.loc)
-			picked_thing.throw_at(closest.loc, 10, 2, bonus_throwforce = 10)
+			picked_thing.throw_at(closest.loc, 10, 2, bonus_throwforce = 3)
 
 
 
