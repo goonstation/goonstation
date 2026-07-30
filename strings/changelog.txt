@@ -1,4 +1,9 @@
 
+(t)wed jul 29 26
+(u)LorrMaster
+(p)27300
+(e)🪲🧱🐁👮|C-Bug, A-Materials, A-Critters, A-Security
+(+)Sawflies now keep their material when deployed/undeployed.
 (t)tue jul 28 26
 (u)CelineTheYeen
 (p)27139
