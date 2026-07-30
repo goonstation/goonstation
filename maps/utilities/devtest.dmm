@@ -481,10 +481,8 @@
 /turf/unsimulated/floor/blue,
 /area/station/devzone)
 "iv" = (
-/obj/disposalpipe/switch_junction/right/west{
-	mail_tag = "cafeteria";
-	name = "cafeteria mail junction"
-	},
+/obj/mapping_helper/mailtag/public/cafeteria,
+/obj/disposalpipe/switch_junction/right/west,
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "iA" = (
@@ -532,10 +530,8 @@
 /turf/simulated/floor,
 /area/station/devzone)
 "jp" = (
-/obj/disposalpipe/switch_junction/left/east{
-	mail_tag = "QM";
-	name = "QM mail junction"
-	},
+/obj/mapping_helper/mailtag/qm,
+/obj/disposalpipe/switch_junction/left/east,
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "ju" = (
@@ -691,10 +687,8 @@
 /turf/simulated/floor,
 /area/station/devzone)
 "mG" = (
-/obj/disposalpipe/switch_junction/right/west{
-	mail_tag = "kitchen";
-	name = "kitchen mail junction"
-	},
+/obj/mapping_helper/mailtag/kitchen,
+/obj/disposalpipe/switch_junction/right/west,
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "mI" = (
@@ -722,10 +716,8 @@
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "np" = (
-/obj/disposalpipe/switch_junction/right/west{
-	mail_tag = "janitor";
-	name = "janitor mail junction"
-	},
+/obj/mapping_helper/mailtag/janitor,
+/obj/disposalpipe/switch_junction/right/west,
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "ns" = (
@@ -944,10 +936,8 @@
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "qa" = (
-/obj/disposalpipe/switch_junction/right/west{
-	mail_tag = "bridge";
-	name = "bridge mail junction"
-	},
+/obj/mapping_helper/mailtag/bridge,
+/obj/disposalpipe/switch_junction/right/west,
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "qc" = (
@@ -2138,10 +2128,8 @@
 /turf/simulated/floor,
 /area/station/devzone)
 "Ln" = (
-/obj/disposalpipe/switch_junction/left/east{
-	mail_tag = "medbay";
-	name = "medbay mail junction"
-	},
+/obj/mapping_helper/mailtag/medbay,
+/obj/disposalpipe/switch_junction/left/east,
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "Lq" = (
@@ -2218,10 +2206,8 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/devzone)
 "MN" = (
-/obj/disposalpipe/switch_junction/left/east{
-	mail_tag = "chapel";
-	name = "chapel mail junction"
-	},
+/obj/mapping_helper/mailtag/chapel,
+/obj/disposalpipe/switch_junction/left/east,
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "MR" = (
@@ -2233,10 +2219,8 @@
 /turf/simulated/floor,
 /area/station/devzone)
 "MT" = (
-/obj/disposalpipe/switch_junction/left/east{
-	mail_tag = "security";
-	name = "security mail junction"
-	},
+/obj/mapping_helper/mailtag/security,
+/obj/disposalpipe/switch_junction/left/east,
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "MV" = (
@@ -2454,10 +2438,8 @@
 /turf/simulated/floor,
 /area/station/devzone)
 "Ql" = (
-/obj/disposalpipe/switch_junction/right/west{
-	mail_tag = "hydroponics";
-	name = "hydroponics mail junction"
-	},
+/obj/mapping_helper/mailtag/hydroponics,
+/obj/disposalpipe/switch_junction/right/west,
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "Qm" = (
@@ -2490,10 +2472,8 @@
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "QL" = (
-/obj/disposalpipe/switch_junction/left/east{
-	mail_tag = "chemistry";
-	name = "chemistry mail junction"
-	},
+/obj/mapping_helper/mailtag/research/chemistry,
+/obj/disposalpipe/switch_junction/left/east,
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "QN" = (
@@ -2571,10 +2551,8 @@
 /turf/simulated/floor/white,
 /area/station/devzone)
 "RK" = (
-/obj/disposalpipe/switch_junction/right/west{
-	mail_tag = "engineering";
-	name = "engineering mail junction"
-	},
+/obj/mapping_helper/mailtag/engineering,
+/obj/disposalpipe/switch_junction/right/west,
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "RM" = (
@@ -2666,10 +2644,8 @@
 /turf/simulated/floor,
 /area/station/devzone)
 "TN" = (
-/obj/disposalpipe/switch_junction/left/east{
-	mail_tag = "bar";
-	name = "bar mail junction"
-	},
+/obj/mapping_helper/mailtag/bar,
+/obj/disposalpipe/switch_junction/left/east,
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "TR" = (

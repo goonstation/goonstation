@@ -976,10 +976,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/switch_junction/left/north{
-	mail_tag = "toxins";
-	name = "toxins mail junction"
-	},
+/obj/mapping_helper/mailtag/research/toxins,
+/obj/disposalpipe/switch_junction/left/north,
 /turf/simulated/floor,
 /area/station/science/hall)
 "aiv" = (
@@ -996,20 +994,18 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/mapping_helper/mailtag/research/hangar,
 /obj/disposalpipe/switch_junction{
-	dir = 4;
-	mail_tag = "research_hangar";
-	name = "research hangar mail router"
+	dir = 4
 	},
 /turf/simulated/floor/greenwhite/other{
 	dir = 4
 	},
 /area/station/science/lobby)
 "aiE" = (
+/obj/mapping_helper/mailtag/research/telescience,
 /obj/disposalpipe/switch_junction{
-	dir = 4;
-	mail_tag = "telescience";
-	name = "telesci mail router"
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -5307,11 +5303,10 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "aFW" = (
+/obj/mapping_helper/mailtag/chapel,
 /obj/disposalpipe/switch_junction{
 	dir = 2;
-	icon_state = "pipe-sj2";
-	mail_tag = "chapel";
-	name = "chapel mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
@@ -6495,11 +6490,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/mailtag/medbay/robotics,
 /obj/disposalpipe/switch_junction{
 	dir = 1;
-	icon_state = "pipe-sj2";
-	mail_tag = "robotics";
-	name = "robotics mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor/black/side{
 	dir = 4
@@ -6607,11 +6601,10 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "aOc" = (
+/obj/mapping_helper/mailtag/security/detective,
 /obj/disposalpipe/switch_junction{
 	dir = 2;
-	icon_state = "pipe-sj2";
-	mail_tag = "detective";
-	name = "detective mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor/red/side{
 	dir = 4
@@ -6843,11 +6836,10 @@
 /obj/decal/tile_edge/floorguide/arrow_e{
 	dir = 1
 	},
+/obj/mapping_helper/mailtag/command_office/cap,
 /obj/disposalpipe/switch_junction{
 	dir = 2;
-	icon_state = "pipe-sj2";
-	mail_tag = "captain";
-	name = "captain mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor/darkblue/side{
 	dir = 4
@@ -8282,11 +8274,10 @@
 /area/station/medical/medbay)
 "aXG" = (
 /obj/decal/tile_edge/floorguide/arrow_w,
+/obj/mapping_helper/mailtag/medbay,
 /obj/disposalpipe/switch_junction{
 	dir = 1;
-	icon_state = "pipe-sj2";
-	mail_tag = "medbay";
-	name = "medbay mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor/blue/side{
 	dir = 8
@@ -9163,11 +9154,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "bbZ" = (
+/obj/mapping_helper/mailtag/bridge,
 /obj/disposalpipe/switch_junction{
 	dir = 2;
-	icon_state = "pipe-sj2";
-	mail_tag = "bridge";
-	name = "bridge mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor/darkblue/side{
 	dir = 4
@@ -15097,11 +15087,10 @@
 	},
 /area/station/security/hos)
 "cAt" = (
+/obj/mapping_helper/mailtag/public/crew,
 /obj/disposalpipe/switch_junction{
 	dir = 1;
-	icon_state = "pipe-sj2";
-	mail_tag = "crew";
-	name = "crew quarters mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor/caution/side{
 	dir = 4
@@ -16989,11 +16978,10 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "dHK" = (
+/obj/mapping_helper/mailtag/kitchen,
 /obj/disposalpipe/switch_junction{
 	dir = 1;
-	icon_state = "pipe-sj2";
-	mail_tag = "kitchen";
-	name = "kitchen mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
@@ -18848,10 +18836,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/mailtag/command_office/rd,
 /obj/disposalpipe/switch_junction{
-	dir = 8;
-	mail_tag = "research_director";
-	name = "RD mail router"
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/science/hall)
@@ -19475,10 +19462,8 @@
 	},
 /area/station/security/processing)
 "fcB" = (
-/obj/disposalpipe/switch_junction/right/north{
-	mail_tag = "genetics";
-	name = "genetics mail junction"
-	},
+/obj/mapping_helper/mailtag/medbay/genetics,
+/obj/disposalpipe/switch_junction/right/north,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "fcG" = (
@@ -21225,10 +21210,9 @@
 /turf/simulated/floor/plating/airless,
 /area/station/com_dish/auxdish)
 "giG" = (
+/obj/mapping_helper/mailtag/research/robot_depot,
 /obj/disposalpipe/switch_junction{
-	dir = 4;
-	mail_tag = "buddy_depot";
-	name = "buddydepot mail router"
+	dir = 4
 	},
 /turf/simulated/floor/neutral/side,
 /area/station/science/hall)
@@ -22172,11 +22156,10 @@
 /obj/decal/tile_edge/floorguide/arrow_w{
 	dir = 8
 	},
+/obj/mapping_helper/mailtag/hydroponics,
 /obj/disposalpipe/switch_junction{
 	dir = 1;
-	icon_state = "pipe-sj2";
-	mail_tag = "hydroponics";
-	name = "hydroponics mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor/green/side{
 	dir = 8
@@ -30130,11 +30113,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "lrU" = (
+/obj/mapping_helper/mailtag/bar,
 /obj/disposalpipe/switch_junction{
 	dir = 1;
-	icon_state = "pipe-sj2";
-	mail_tag = "bar";
-	name = "bar mail router"
+	icon_state = "pipe-sj2"
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -30722,10 +30704,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/mailtag/research/chemistry,
 /obj/disposalpipe/switch_junction{
-	dir = 8;
-	mail_tag = "chemistry";
-	name = "chemistry mail router"
+	dir = 8
 	},
 /turf/simulated/floor/purple/side{
 	dir = 1
@@ -32020,11 +32001,10 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/psychiatrist)
 "mmv" = (
+/obj/mapping_helper/mailtag/mechanics,
 /obj/disposalpipe/switch_junction{
 	dir = 8;
-	icon_state = "pipe-sj2";
-	mail_tag = "mechanics";
-	name = "electronics mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
@@ -34026,11 +34006,10 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/ce)
 "noB" = (
+/obj/mapping_helper/mailtag/tool_storage,
 /obj/disposalpipe/switch_junction{
 	dir = 8;
-	icon_state = "pipe-sj2";
-	mail_tag = "storage";
-	name = "storage mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -37307,10 +37286,9 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/ce)
 "phI" = (
+/obj/mapping_helper/mailtag/research/artlab,
 /obj/disposalpipe/switch_junction{
-	dir = 8;
-	mail_tag = "artlab";
-	name = "artlab mail router"
+	dir = 8
 	},
 /turf/simulated/floor/caution/side{
 	dir = 1
@@ -40551,11 +40529,10 @@
 /area/station/crew_quarters/locker)
 "qWx" = (
 /obj/machinery/light/incandescent,
+/obj/mapping_helper/mailtag/security,
 /obj/disposalpipe/switch_junction{
 	dir = 2;
-	icon_state = "pipe-sj2";
-	mail_tag = "security";
-	name = "security mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
@@ -42300,10 +42277,9 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/mapping_helper/mailtag/command_office/ce,
 /obj/disposalpipe/switch_junction{
-	dir = 8;
-	mail_tag = "chief_engineer";
-	name = "chief engineer mail router"
+	dir = 8
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -46229,10 +46205,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/mailtag/checkpoint/zeta,
 /obj/disposalpipe/switch_junction{
-	dir = 8;
-	mail_tag = "zeta checkpoint";
-	name = "zeta checkpoint mail router"
+	dir = 8
 	},
 /turf/simulated/floor/red/side{
 	dir = 1
@@ -48581,9 +48556,9 @@
 /turf/space,
 /area/abandonedship)
 "vGW" = (
+/obj/mapping_helper/mailtag/engineering,
 /obj/disposalpipe/switch_junction{
-	dir = 1;
-	mail_tag = "engineering"
+	dir = 1
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
@@ -49075,11 +49050,10 @@
 /turf/simulated/floor/black,
 /area/station/security/processing)
 "vXO" = (
+/obj/mapping_helper/mailtag/mining,
 /obj/disposalpipe/switch_junction{
 	dir = 8;
-	icon_state = "pipe-sj2";
-	mail_tag = "mining";
-	name = "mining mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -49848,11 +49822,10 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "wwE" = (
+/obj/mapping_helper/mailtag/public/arrivals,
 /obj/disposalpipe/switch_junction{
 	dir = 4;
-	icon_state = "pipe-sj2";
-	mail_tag = "arrivals hallway";
-	name = "arrivals hallway mail router"
+	icon_state = "pipe-sj2"
 	},
 /obj/machinery/camera/directional/south{
 	c_tag = "North Hallway Middle";

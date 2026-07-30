@@ -3231,10 +3231,8 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/disposalpipe/switch_junction/left/west{
-	mail_tag = "psychiatry";
-	name = "psychiatry mail router"
-	},
+/obj/mapping_helper/mailtag/medbay/psychiatry,
+/obj/disposalpipe/switch_junction/left/west,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "apy" = (
@@ -6358,10 +6356,8 @@
 	},
 /area/station/hallway/primary/east)
 "aEw" = (
-/obj/disposalpipe/switch_junction/left/north{
-	mail_tag = "artlab";
-	name = "artlab mail router"
-	},
+/obj/mapping_helper/mailtag/research/artlab,
+/obj/disposalpipe/switch_junction/left/north,
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
@@ -8732,10 +8728,8 @@
 /turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
 "aSg" = (
-/obj/disposalpipe/switch_junction/left/south{
-	mail_tag = "fitness room";
-	name = "fitness room mail router"
-	},
+/obj/mapping_helper/mailtag/public/fitness,
+/obj/disposalpipe/switch_junction/left/south,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "aSh" = (
@@ -11384,10 +11378,8 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "bfQ" = (
-/obj/disposalpipe/switch_junction/left/south{
-	mail_tag = "hydroponics";
-	name = "hydroponics mail router"
-	},
+/obj/mapping_helper/mailtag/hydroponics,
+/obj/disposalpipe/switch_junction/left/south,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "bfT" = (
@@ -17022,10 +17014,8 @@
 	},
 /area/station/hallway/primary/south)
 "bHe" = (
-/obj/disposalpipe/switch_junction/left/east{
-	mail_tag = "refinery";
-	name = "refinery mail router"
-	},
+/obj/mapping_helper/mailtag/qm/refinery,
+/obj/disposalpipe/switch_junction/left/east,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -17140,10 +17130,8 @@
 	},
 /area/station/hallway/primary/south)
 "bHA" = (
-/obj/disposalpipe/switch_junction/right/east{
-	mail_tag = "customs checkpoint";
-	name = "customs mail router"
-	},
+/obj/mapping_helper/mailtag/checkpoint/customs,
+/obj/disposalpipe/switch_junction/right/east,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -25001,10 +24989,8 @@
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "dHU" = (
-/obj/disposalpipe/switch_junction/right/west{
-	mail_tag = "telescience";
-	name = "telescience mail router"
-	},
+/obj/mapping_helper/mailtag/research/telescience,
+/obj/disposalpipe/switch_junction/right/west,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "dIf" = (
@@ -26033,10 +26019,8 @@
 /turf/simulated/floor/plating/damaged2,
 /area/evilreaver/atmospherics)
 "eux" = (
-/obj/disposalpipe/switch_junction/left/east{
-	mail_tag = "security";
-	name = "security mail router"
-	},
+/obj/mapping_helper/mailtag/security,
+/obj/disposalpipe/switch_junction/left/east,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "evF" = (
@@ -26453,10 +26437,8 @@
 /turf/simulated/floor/black,
 /area/station/maintenance/northwest)
 "eQB" = (
-/obj/disposalpipe/switch_junction/right/west{
-	mail_tag = "janitor";
-	name = "janitor office mail router"
-	},
+/obj/mapping_helper/mailtag/janitor,
+/obj/disposalpipe/switch_junction/right/west,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -27516,10 +27498,8 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/captain)
 "fIz" = (
-/obj/disposalpipe/switch_junction/left/east{
-	mail_tag = "security_hangar";
-	name = "secure dock mail router"
-	},
+/obj/mapping_helper/mailtag/security/hangar,
+/obj/disposalpipe/switch_junction/left/east,
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "fJb" = (
@@ -28487,10 +28467,8 @@
 	},
 /area/station/medical/medbay/cloner)
 "gwY" = (
-/obj/disposalpipe/switch_junction/left/north{
-	mail_tag = "engineering";
-	name = "engineering mail router"
-	},
+/obj/mapping_helper/mailtag/engineering,
+/obj/disposalpipe/switch_junction/left/north,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -29016,10 +28994,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/switch_junction/left/west{
-	mail_tag = "genetics";
-	name = "genetics mail router"
-	},
+/obj/mapping_helper/mailtag/medbay/genetics,
+/obj/disposalpipe/switch_junction/left/west,
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -29401,10 +29377,8 @@
 /turf/simulated/floor/plating/damaged3,
 /area/martian_trader)
 "heT" = (
-/obj/disposalpipe/switch_junction/left/west{
-	mail_tag = "research_director";
-	name = "research director mail router"
-	},
+/obj/mapping_helper/mailtag/command_office/rd,
+/obj/disposalpipe/switch_junction/left/west,
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
@@ -29591,10 +29565,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "hnm" = (
-/obj/disposalpipe/switch_junction/left/west{
-	mail_tag = "robotics";
-	name = "robotics mail router"
-	},
+/obj/mapping_helper/mailtag/medbay/robotics,
+/obj/disposalpipe/switch_junction/left/west,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -30011,10 +29983,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "hJl" = (
-/obj/disposalpipe/switch_junction/left/east{
-	mail_tag = "brig";
-	name = "brig mail router"
-	},
+/obj/mapping_helper/mailtag/security/brig,
+/obj/disposalpipe/switch_junction/left/east,
 /obj/machinery/light_switch/directional/north,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
@@ -30749,10 +30719,8 @@
 /turf/simulated/floor,
 /area/station/engine/inner)
 "isw" = (
-/obj/disposalpipe/switch_junction/left/north{
-	mail_tag = "engineering_storage";
-	name = "engineering storage mail router"
-	},
+/obj/mapping_helper/mailtag/engineering/storage,
+/obj/disposalpipe/switch_junction/left/north,
 /turf/simulated/floor/yellow/checker{
 	dir = 4
 	},
@@ -31655,10 +31623,8 @@
 /turf/simulated/floor/darkpurple,
 /area/station/crew_quarters/data)
 "jii" = (
-/obj/disposalpipe/switch_junction/right/east{
-	mail_tag = "information office";
-	name = "information office mail router"
-	},
+/obj/mapping_helper/mailtag/public/info_office,
+/obj/disposalpipe/switch_junction/right/east,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
@@ -31947,10 +31913,8 @@
 /area/diner/dining)
 "jvD" = (
 /obj/machinery/drainage/big,
-/obj/disposalpipe/switch_junction/left/south{
-	mail_tag = "crew";
-	name = "crew quarters mail router"
-	},
+/obj/mapping_helper/mailtag/public/crew,
+/obj/disposalpipe/switch_junction/left/south,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "jvN" = (
@@ -32422,10 +32386,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/switch_junction/left/west{
-	mail_tag = "pharmacy";
-	name = "pharmacy mail router"
-	},
+/obj/mapping_helper/mailtag/medbay/pharmacy,
+/obj/disposalpipe/switch_junction/left/west,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
 "jRF" = (
@@ -33598,10 +33560,8 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/lobby)
 "kIj" = (
-/obj/disposalpipe/switch_junction/left/north{
-	mail_tag = "radio booth";
-	name = "radio booth mail router"
-	},
+/obj/mapping_helper/mailtag/public/radio,
+/obj/disposalpipe/switch_junction/left/north,
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "kIm" = (
@@ -34490,10 +34450,8 @@
 	},
 /area/station/medical/staff)
 "lso" = (
-/obj/disposalpipe/switch_junction/left/south{
-	mail_tag = "kitchen";
-	name = "kitchen mail router"
-	},
+/obj/mapping_helper/mailtag/kitchen,
+/obj/disposalpipe/switch_junction/left/south,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "lsy" = (
@@ -34963,10 +34921,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "lPG" = (
-/obj/disposalpipe/switch_junction/left/west{
-	mail_tag = "medical_director";
-	name = "medical director mail router"
-	},
+/obj/mapping_helper/mailtag/command_office/md,
+/obj/disposalpipe/switch_junction/left/west,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -36321,10 +36277,8 @@
 /area/station/hydroponics/bay)
 "mRa" = (
 /obj/decal/stripe_caution,
-/obj/disposalpipe/switch_junction/left/north{
-	mail_tag = "escape hallway";
-	name = "escape hallway mail router"
-	},
+/obj/mapping_helper/mailtag/public/escape,
+/obj/disposalpipe/switch_junction/left/north,
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "mRr" = (
@@ -37441,10 +37395,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "nKH" = (
-/obj/disposalpipe/switch_junction/right/east{
-	mail_tag = "bridge";
-	name = "bridge mail router"
-	},
+/obj/mapping_helper/mailtag/bridge,
+/obj/disposalpipe/switch_junction/right/east,
 /obj/machinery/light/incandescent/netural,
 /obj/cable{
 	icon_state = "1-2"
@@ -38168,10 +38120,8 @@
 /turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
 "ovO" = (
-/obj/disposalpipe/switch_junction/left/north{
-	mail_tag = "chemistry";
-	name = "chemistry mail router"
-	},
+/obj/mapping_helper/mailtag/research/chemistry,
+/obj/disposalpipe/switch_junction/left/north,
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},
@@ -40727,9 +40677,8 @@
 /turf/simulated/floor,
 /area/research_outpost)
 "qDX" = (
-/obj/disposalpipe/switch_junction/right/south{
-	mail_tag = "detective"
-	},
+/obj/mapping_helper/mailtag/security/detective,
+/obj/disposalpipe/switch_junction/right/south,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "qEo" = (
@@ -42365,10 +42314,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
 "rTu" = (
-/obj/disposalpipe/switch_junction/left/west{
-	mail_tag = "chapel";
-	name = "chapel mail router"
-	},
+/obj/mapping_helper/mailtag/chapel,
+/obj/disposalpipe/switch_junction/left/west,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -46330,9 +46277,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/switch_junction/right/south{
-	mail_tag = "ranch"
-	},
+/obj/mapping_helper/mailtag/ranch,
+/obj/disposalpipe/switch_junction/right/south,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "vfW" = (
@@ -49229,10 +49175,8 @@
 	},
 /area/station/security/evidence)
 "xxb" = (
-/obj/disposalpipe/switch_junction/left/west{
-	mail_tag = "medbay";
-	name = "medbay mail router"
-	},
+/obj/mapping_helper/mailtag/medbay,
+/obj/disposalpipe/switch_junction/left/west,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -49549,10 +49493,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "xLY" = (
-/obj/disposalpipe/switch_junction/right/north{
-	mail_tag = "mechanics";
-	name = "mechanics mail router"
-	},
+/obj/mapping_helper/mailtag/mechanics,
+/obj/disposalpipe/switch_junction/right/north,
 /turf/simulated/floor/yellow/checker{
 	dir = 4
 	},
