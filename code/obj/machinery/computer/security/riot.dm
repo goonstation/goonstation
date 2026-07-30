@@ -5,6 +5,7 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 	start_speech_modifiers = null
 	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
+ADMIN_INTERACT_PROCS(/obj/machinery/computer/riotgear, proc/authorize, proc/unauthorize)
 /obj/machinery/computer/riotgear
 	name = "Armory Control"
 	icon_state = "drawbr"
@@ -146,7 +147,11 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
-		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
+		var/name = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
+		var/antag_roles = usr?.mind?.list_antagonist_roles()
+		if(antag_roles)
+			name += " \[[antag_roles]\]"
+		ircmsg["name"] = name
 		ircmsg["msg"] = "authorized the armory. Reason: [src.auth_reason || "None"]"
 		ircbot.export_async("admin", ircmsg)
 

@@ -726,6 +726,7 @@ DEFINE_DELAYS(/obj/machinery/light/traffic_light/medical_pathology)
 	desc = "A large portable light tripod."
 	density = 1
 	anchored = ANCHORED
+	plane = PLANE_DEFAULT
 	icon_state = "tripod1"
 	base_state = "tripod"
 	fitting = "bulb"

@@ -31,7 +31,7 @@ ABSTRACT_TYPE(/datum/map_correctness_check/area_contents)
 
 	if (length(area_check_results))
 		. = list()
-		. += "The following objects were expected in [src.area_list(src.target_areas, and_text = " or ")]:"
+		. += "The following objects were expected in [CI.area_list(src.target_areas, and_text = " or ")]:"
 		. += area_check_results
 
 
