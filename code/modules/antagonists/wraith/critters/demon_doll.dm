@@ -35,6 +35,7 @@ TYPEINFO(/mob/living/critter/wraith/demon_doll)
 		src.addAbility(/datum/targetable/critter/demon_doll/bouncy_song)
 		src.addAbility(/datum/targetable/critter/demon_doll/juggle_song)
 		src.addAbility(/datum/targetable/critter/demon_doll/gravity_song)
+		src.addAbility(/datum/targetable/critter/ouija_speak/demon_doll)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_THERMALVISION, src)
 
