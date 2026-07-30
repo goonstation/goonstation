@@ -2650,10 +2650,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/machinery/disposal/mail/qm{
-	mail_tag = "cargo";
-	name = "mail chute-'Cargo'"
-	},
+/obj/machinery/disposal/mail/qm,
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
@@ -3704,11 +3701,10 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "axZ" = (
+/obj/mapping_helper/mailtag/qm,
 /obj/disposalpipe/switch_junction{
 	dir = 4;
-	icon_state = "pipe-sj2";
-	mail_tag = "cargo";
-	name = "cargo mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/primary/north)
@@ -3716,7 +3712,6 @@
 /obj/disposalpipe/switch_junction{
 	dir = 4;
 	icon_state = "pipe-sj2";
-	mail_tag = null;
 	name = "undeliverable mail router"
 	},
 /turf/simulated/floor/neutral/side,
@@ -9642,11 +9637,10 @@
 /area/station/security/brig/solitary2)
 "bfX" = (
 /obj/machinery/vending/medical_public,
+/obj/mapping_helper/mailtag/chemlink,
 /obj/disposalpipe/switch_junction{
 	dir = 1;
-	icon_state = "pipe-sj2";
-	mail_tag = "chemlink";
-	name = "dispensary mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor/blue/side{
 	dir = 8
@@ -16390,10 +16384,12 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/mailtag/manual{
+	name = "outpost";
+	mail_tag = list("research","artlab","buddy_depot","chemistry","research_director","research_hangar","telescience","toxins","zeta checkpoint")
+	},
 /obj/disposalpipe/switch_junction{
-	icon_state = "pipe-sj2";
-	mail_tag = list("research","artlab","buddy_depot","chemistry","research_director","research_hangar","telescience","toxins","zeta checkpoint");
-	name = "outpost mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
@@ -33096,10 +33092,12 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "mTv" = (
+/obj/mapping_helper/mailtag/manual{
+	name = "station";
+	mail_tag = list("station","bar","bridge","captain","cargo","chapel","chief_engineer","detective","mechanics","engineering","genetics","hydroponics","kitchen","medbay","mining","robotics","security","arrivals hallway","storage","chemlink")
+	},
 /obj/disposalpipe/switch_junction{
-	dir = 4;
-	mail_tag = list("station","bar","bridge","captain","cargo","chapel","chief_engineer","detective","mechanics","engineering","genetics","hydroponics","kitchen","medbay","mining","robotics","security","arrivals hallway","storage","chemlink");
-	name = "station mail router"
+	dir = 4
 	},
 /turf/simulated/floor/green/side,
 /area/station/science/hall)
@@ -47070,11 +47068,10 @@
 /area/station/engine/engineering)
 "uRD" = (
 /obj/machinery/alarm/directional/east,
+/obj/mapping_helper/mailtag/qm,
 /obj/disposalpipe/switch_junction{
 	dir = 4;
-	icon_state = "pipe-sj2";
-	mail_tag = "cargo";
-	name = "cargo mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor/caution/side{
 	dir = 4

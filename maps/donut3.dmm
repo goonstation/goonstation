@@ -21008,9 +21008,8 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "gzF" = (
-/obj/disposalpipe/switch_junction/right/east{
-	mail_tag = "chemlink"
-	},
+/obj/mapping_helper/mailtag/chemlink,
+/obj/disposalpipe/switch_junction/right/east,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -42292,7 +42291,6 @@
 /area/station/science/lobby)
 "nhf" = (
 /obj/disposalpipe/switch_junction/right/north{
-	mail_tag = null;
 	name = "undeliverable mail router"
 	},
 /turf/simulated/floor,

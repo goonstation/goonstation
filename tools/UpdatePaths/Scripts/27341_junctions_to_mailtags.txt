@@ -1,3 +1,4 @@
+/obj/disposalpipe/switch_junction/@SUBTYPES{mail_tag = "chemlink"}					: /obj/mapping_helper/mailtag/chemlink,				/obj/disposalpipe/switch_junction/@SUBTYPES_1{@OLD; name = @SKIP; desc = @SKIP; mail_tag = @SKIP}
 /obj/disposalpipe/switch_junction/@SUBTYPES{mail_tag = "janitor"}					: /obj/mapping_helper/mailtag/janitor,				/obj/disposalpipe/switch_junction/@SUBTYPES_1{@OLD; name = @SKIP; desc = @SKIP; mail_tag = @SKIP}
 /obj/disposalpipe/switch_junction/@SUBTYPES{mail_tag = "kitchen"}					: /obj/mapping_helper/mailtag/kitchen,				/obj/disposalpipe/switch_junction/@SUBTYPES_1{@OLD; name = @SKIP; desc = @SKIP; mail_tag = @SKIP}
 /obj/disposalpipe/switch_junction/@SUBTYPES{mail_tag = "bar"}						: /obj/mapping_helper/mailtag/bar,					/obj/disposalpipe/switch_junction/@SUBTYPES_1{@OLD; name = @SKIP; desc = @SKIP; mail_tag = @SKIP}

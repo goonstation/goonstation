@@ -11073,13 +11073,7 @@
 /turf/simulated/floor/caution,
 /area/station/storage/warehouse)
 "dnf" = (
-/obj/machinery/disposal/mail/qm{
-	dir = 1;
-	mail_tag = "cargo";
-	mailgroup = "cargo";
-	message = "1";
-	name = "mail chute-'Cargo'"
-	},
+/obj/machinery/disposal/mail/qm,
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
@@ -21814,11 +21808,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/mailtag/qm,
 /obj/disposalpipe/switch_junction{
-	desc = "An underfloor mail pipe.";
-	dir = 1;
-	mail_tag = "cargo";
-	name = "quartermasters mail router"
+	dir = 1
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
@@ -29252,11 +29244,10 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "pEX" = (
+/obj/mapping_helper/mailtag/chemlink,
 /obj/disposalpipe/switch_junction{
 	dir = 1;
-	icon_state = "pipe-sj2";
-	mail_tag = "chemlink";
-	name = "dispensary mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southwest)

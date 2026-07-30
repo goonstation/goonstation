@@ -8772,17 +8772,13 @@
 /turf/simulated/floor/wood,
 /area/station/bridge/customs)
 "aSr" = (
-/obj/disposalpipe/switch_junction/left/south{
-	mail_tag = "quartermasters' office";
-	name = "qm mail router"
-	},
+/obj/mapping_helper/mailtag/qm,
+/obj/disposalpipe/switch_junction/left/south,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "aSy" = (
 /obj/disposalpipe/trunk/mail/north,
-/obj/machinery/disposal/mail/qm{
-	mail_tag = "quartermasters' office"
-	},
+/obj/machinery/disposal/mail/qm,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -24766,8 +24762,7 @@
 	dir = 4
 	},
 /obj/disposalpipe/trunk/mail{
-	dir = 4;
-	mail_tag = "detective"
+	dir = 4
 	},
 /obj/item/reagent_containers/food/drinks/bottle/bojackson,
 /obj/cable{
@@ -30474,10 +30469,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/switch_junction/left/west{
-	mail_tag = "chemlink";
-	name = "dispensary mail router"
-	},
+/obj/mapping_helper/mailtag/chemlink,
+/obj/disposalpipe/switch_junction/left/west,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
 "igz" = (
@@ -38652,10 +38645,11 @@
 	},
 /area/station/security/interrogation)
 "oRt" = (
-/obj/disposalpipe/switch_junction/left/west{
-	mail_tag = "crematorium";
-	name = "crematorium router"
+/obj/mapping_helper/mailtag/manual{
+	name = "Crematorium";
+	mail_tag = "crematorium"
 	},
+/obj/disposalpipe/switch_junction/left/west,
 /obj/cable{
 	icon_state = "4-8"
 	},

@@ -10940,10 +10940,11 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "aJr" = (
-/obj/disposalpipe/switch_junction/right/east{
-	mail_tag = "freezer";
-	name = "mail junction (freezer)"
+/obj/mapping_helper/mailtag/manual{
+	name = "Freezer";
+	mail_tag = "freezer"
 	},
+/obj/disposalpipe/switch_junction/right/east,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "aJs" = (
@@ -51848,10 +51849,11 @@
 	},
 /area/station/medical/medbay/surgery/storage)
 "ffT" = (
-/obj/disposalpipe/switch_junction/right/north{
-	mail_tag = list("janitor","escape checkpoint","mining","escape hallway","mechanics","cargo checkpoint","QM","refinery");
-	name = "mail junction (escape and cargo sectors)"
+/obj/mapping_helper/mailtag/manual{
+	name = "escape and cargo sectors";
+	mail_tag = list("janitor","escape checkpoint","mining","escape hallway","mechanics","cargo checkpoint","QM","refinery")
 	},
+/obj/disposalpipe/switch_junction/right/north,
 /turf/simulated/wall/auto/supernorn,
 /area/station/routing/depot)
 "fgQ" = (
@@ -53963,10 +53965,11 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "gZy" = (
-/obj/disposalpipe/switch_junction/right/north{
-	mail_tag = list("medbay lobby","telescience","testchamber","research","chemistry","medbay","morgue","pathology","genetics","robotics","medical_director");
-	name = "mail junction (medsci sector)"
+/obj/mapping_helper/mailtag/manual{
+	name = "medsci sector";
+	mail_tag = list("medbay lobby","telescience","testchamber","research","chemistry","medbay","morgue","pathology","genetics","robotics","medical_director")
 	},
+/obj/disposalpipe/switch_junction/right/north,
 /turf/simulated/wall/auto/supernorn,
 /area/station/routing/depot)
 "haq" = (
@@ -56344,10 +56347,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
 "iOr" = (
-/obj/disposalpipe/switch_junction/right/north{
-	mail_tag = list("chapel","chapel checkpoint","crewA","arrivals checkpoint");
-	name = "mail junction (arrivals sector)"
+/obj/mapping_helper/mailtag/manual{
+	name = "arrivals sector";
+	mail_tag = list("chapel","chapel checkpoint","crewA","arrivals checkpoint")
 	},
+/obj/disposalpipe/switch_junction/right/north,
 /turf/simulated/wall/auto/supernorn,
 /area/station/routing/depot)
 "iOK" = (
@@ -60352,10 +60356,11 @@
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "lTt" = (
-/obj/disposalpipe/switch_junction/left/north{
-	mail_tag = list("brig","customs checkpoint","bridge","security","armory");
-	name = "mail junction (command sector)"
+/obj/mapping_helper/mailtag/manual{
+	name = "command sector";
+	mail_tag = list("brig","customs checkpoint","bridge","security","armory")
 	},
+/obj/disposalpipe/switch_junction/left/north,
 /turf/simulated/wall/auto/supernorn,
 /area/station/routing/depot)
 "lTN" = (
@@ -65905,10 +65910,11 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/switch_junction/right/north{
-	mail_tag = list("hydroponics","kitchen","detective","crewB","arcade","cafeteria","medical booth");
-	name = "mail junction (catering sector)"
+/obj/mapping_helper/mailtag/manual{
+	name = "catering sector";
+	mail_tag = list("hydroponics","kitchen","detective","crewB","arcade","cafeteria","medical booth")
 	},
+/obj/disposalpipe/switch_junction/right/north,
 /turf/simulated/floor/grime,
 /area/station/routing/depot)
 "qzf" = (
@@ -71133,10 +71139,11 @@
 	},
 /area/station/crew_quarters/quartersA)
 "uNZ" = (
-/obj/disposalpipe/switch_junction/right/north{
-	mail_tag = list("engineering","podbay","podbay checkpoint");
-	name = "mail junction (engineering sector)"
+/obj/mapping_helper/mailtag/manual{
+	name = "engineering sector";
+	mail_tag = list("engineering","podbay","podbay checkpoint")
 	},
+/obj/disposalpipe/switch_junction/right/north,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/routing/depot)
 "uOl" = (

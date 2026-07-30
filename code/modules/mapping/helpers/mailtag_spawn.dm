@@ -33,6 +33,10 @@ ABSTRACT_TYPE(/obj/mapping_helper/mailtag)
 /obj/mapping_helper/mailtag/manual
 	name = "varedit mailtag spawn"
 
+/obj/mapping_helper/mailtag/chemlink
+	name = "Dispensary"
+	mail_tag = "chemlink"
+
 /obj/mapping_helper/mailtag/janitor
 	name = "Janitor"
 	mail_tag = "janitor"

@@ -3312,10 +3312,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/switch_junction/right/south{
-	mail_tag = "cargo";
-	name = "Mail Junction - Cargo"
-	},
+/obj/disposalpipe/switch_junction/right/south,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "ayT" = (
@@ -6421,10 +6418,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/switch_junction/right/north{
-	name = "Mail Junction - Emergency Storage";
-	mail_tag = "emergency storage"
-	},
+/obj/disposalpipe/switch_junction/right/north,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "bDy" = (
