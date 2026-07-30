@@ -1452,10 +1452,6 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 
 		var/dat = src.return_text_header()
 
-		if (!istype(ticker.mode, /datum/game_mode/revolution))
-			dat += "<h4>Watchful Eye infrared tracking not available at this time</h4>"
-			return dat
-
 		dat += "<h4>Watchful Eye Revolutionary Leader Tracker</h4>"
 
 		dat += "<a href='byond://?src=\ref[src];gethead=1'>Track nearest revolutionary leader</a>"
@@ -1470,29 +1466,21 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			return
 
 		if (href_list["gethead"])
-			pressed = 1
-			if (istype(ticker.mode, /datum/game_mode/revolution))
-				var/datum/game_mode/revolution/R = ticker.mode
-				var/list/datum/mind/heads = R.head_revolutionaries
-				var/turf/Turf = get_turf(usr)
-				nearest_head_location = null
-
-				for (var/datum/mind/Mind in heads)
-					if(!Mind.current)
-						continue
-					if(!istype(Mind.current, /mob/living/carbon/human))
-						continue
-					var/MindMob = Mind.current
-					var/turf/MindTurf = get_turf(MindMob)
-					if(!isalive(Mind.current) || MindTurf.z != 1)
-						continue
-					if(GET_DIST(Turf, MindTurf) <= GET_DIST(Turf, nearest_head_location))
-						nearest_head_location = MindTurf
-
-				if(nearest_head_location != null)
-					direction = dir2text(get_dir(Turf, nearest_head_location))
-					distance = GET_DIST(Turf, nearest_head_location)
-
+			src.pressed = TRUE
+			src.nearest_head_location = null
+			var/turf/scanning_from = get_turf(src.master)
+			for(var/datum/antagonist/headrev_role in get_all_antagonists(ROLE_HEAD_REVOLUTIONARY))
+				var/mob/headrev_mob = headrev_role.owner?.current
+				if(!headrev_mob || !ishuman(headrev_mob) || !isalive(headrev_mob))
+					continue
+				if(get_z(headrev_mob) != Z_LEVEL_STATION)
+					continue
+				var/turf/headrev_turf = get_turf(headrev_mob)
+				if(GET_DIST(scanning_from, headrev_turf) <= GET_DIST(scanning_from, src.nearest_head_location))
+					src.nearest_head_location = headrev_turf
+			if(!isnull(src.nearest_head_location))
+				src.direction = dir2text(get_dir(scanning_from, src.nearest_head_location))
+				src.distance = GET_DIST(scanning_from, src.nearest_head_location)
 
 		src.master.add_fingerprint(usr)
 		src.master.updateSelfDialog()
@@ -1512,10 +1500,6 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 
 		var/dat = src.return_text_header()
 
-		if (!istype(ticker.mode, /datum/game_mode/revolution))
-			dat += "<h4>Egeria Providence Array infrared tracking not available at this time</h4>"
-			return dat
-
 		dat += "<h4>Egeria Providence Array Command Tracker</h4>"
 
 		dat += "<a href='byond://?src=\ref[src];gethead=1'>Track nearest head</a>"
@@ -1531,28 +1515,21 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			return
 
 		if (href_list["gethead"])
-			pressed = 1
-			if (istype(ticker.mode, /datum/game_mode/revolution))
-				var/datum/game_mode/revolution/R = ticker.mode
-				var/list/datum/mind/heads = R.get_all_heads()
-				var/turf/Turf = get_turf(usr)
-				nearest_head_location = null
-
-				for (var/datum/mind/Mind in heads)
-					if(!Mind.current)
-						continue
-					if(!istype(Mind.current, /mob/living/carbon/human))
-						continue
-					var/MindMob = Mind.current
-					var/turf/MindTurf = get_turf(MindMob)
-					if(!isalive(Mind.current) || MindTurf.z != 1)
-						continue
-					if(GET_DIST(Turf, MindTurf) <= GET_DIST(Turf, nearest_head_location))
-						nearest_head_location = MindTurf
-
-				if(nearest_head_location != null)
-					direction = dir2text(get_dir(Turf, nearest_head_location))
-					distance = GET_DIST(Turf, nearest_head_location)
+			src.pressed = TRUE
+			src.nearest_head_location = null
+			var/turf/scanning_from = get_turf(src.master)
+			for(var/datum/mind/head_mind in ticker.mode?.get_living_heads())
+				var/mob/head_mob = head_mind.current
+				if(!head_mob || !ishuman(head_mob) || !isalive(head_mob))
+					continue
+				if(get_z(head_mob) != Z_LEVEL_STATION)
+					continue
+				var/turf/head_turf = get_turf(head_mob)
+				if(GET_DIST(scanning_from, head_turf) <= GET_DIST(scanning_from, src.nearest_head_location))
+					src.nearest_head_location = head_turf
+			if(!isnull(src.nearest_head_location))
+				src.direction = dir2text(get_dir(scanning_from, src.nearest_head_location))
+				src.distance = GET_DIST(scanning_from, src.nearest_head_location)
 
 		src.master.add_fingerprint(usr)
 		src.master.updateSelfDialog()
