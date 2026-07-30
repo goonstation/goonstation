@@ -84,9 +84,15 @@
 
 
 /obj/item/storage/box/starter/withO2 //use this if the box should not get additional items after the round has passed 20 min
-	spawn_contents = list(/obj/item/clothing/mask/breath, /obj/item/tank/pocket/oxygen)
+	spawn_contents = list(/obj/item/clothing/mask/breath, /obj/item/tank/pocket/oxygen, )
 	make_my_stuff()
 		..(TRUE)
+
+/obj/item/storage/box/starternt
+	name = "nanotrasen emergency kit"
+	icon_state = "ntebox"
+	desc = "A specialized NT emergency kit, containing all you should need to survive an emergency situation. How optimistic."
+	spawn_contents = list(/obj/item/clothing/mask/breath, /obj/item/tank/pocket/extended/oxygen, /obj/item/clothing/head/NTberet, /obj/item/crowbar, /obj/item/device/light/zippo)
 
 /obj/item/storage/pill_bottle
 	name = "pill bottle"
