@@ -135,6 +135,7 @@ var/image/remote_indicator_off = image('icons/mob/overhead_icons32x48.dmi', "rem
 
 	SPAWN(1 MINUTE)
 		if (INVALID_OFFLINE)
+			src?.clear_offline_indicator()
 			return
 		// check if they're still logged out after a while and update the overlay
 		if (!src.client && logout_check == src.logout_at)
@@ -142,6 +143,7 @@ var/image/remote_indicator_off = image('icons/mob/overhead_icons32x48.dmi', "rem
 
 		SPAWN(4 MINUTES)
 			if (INVALID_OFFLINE)
+				src?.clear_offline_indicator()
 				return
 			// check if they're STILL logged out and update the overlay again
 			if (!src.client && logout_check == src.logout_at)
