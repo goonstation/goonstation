@@ -635,10 +635,12 @@
 				req_contracts -= contract_to_clear
 				complete_orders += contract_to_clear
 				qdel(contract_to_clear)
+				src.update_supply_console_data()
 			else if(special_orders.Find(contract_to_clear))
 				special_orders -= contract_to_clear
 				complete_orders += contract_to_clear
 				qdel(contract_to_clear)
+				src.update_supply_console_data()
 		else
 			duckets += src.appraise_value(sell_crate, commodities_list, 1) + src.points_per_crate
 			qdel(sell_crate)
