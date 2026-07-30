@@ -905,7 +905,21 @@ triggerOnImage(var/image/target, var/datum/material/source)
 		else
 			I.material.removeProperty("n_radioactive")
 
-/datum/materialProc/shock_life
+/datum/materialProc/electrical
+	proc/shock_animate(var/atom/target)
+		var/potential_flick_state = "[target.icon_state]_matshock"
+		if(target.is_valid_icon_state(potential_flick_state))
+			FLICK(potential_flick_state, target)
+		else if(!target.avoid_animating)
+			var/dm_filter/shock_filter = target.get_filter("material_shock_outline")
+			if(!shock_filter)
+				target.add_filter("material_shock_outline", 90, outline_filter(size=1, color="#fbfbd2", flags=OUTLINE_SQUARE))
+				shock_filter = target.get_filter("material_shock_outline")
+			shock_filter.size = 1
+			shock_filter.color = "#fbfbd2"
+			animate(shock_filter, size = 0, color="#868606", time = 2 SECONDS, easing = LINEAR_EASING, tag = "material_shock_outline", flags = ANIMATION_END_NOW)
+
+/datum/materialProc/electrical/shock_life
 	var/cd_min
 	var/cd_max
 	var/wattage
@@ -921,17 +935,10 @@ triggerOnImage(var/image/target, var/datum/material/source)
 			return
 		if (!istype(L))
 			return
-
-		if(istype(I, /obj/item/raw_material/veranium))
-			var/obj/item/raw_material/veranium/ore = I
-			FLICK("ore[ore.icon_stack_value]_shock$$veranium", ore)
-		else if(istype(I, /obj/item/rocko))
-			var/obj/item/rocko/rocko = I
-			var/flick_state = replacetextEx(rocko.icon_state, "$$veranium", "shock$$veranium")
-			FLICK(flick_state, rocko)
+		src.shock_animate(I)
 		L.shock(I, src.wattage, "All", 1, FALSE)
 
-/datum/materialProc/arcflash_life
+/datum/materialProc/electrical/arcflash_life
 	var/cd_min
 	var/cd_max
 	var/wattage
@@ -947,7 +954,9 @@ triggerOnImage(var/image/target, var/datum/material/source)
 			return
 		if (!istype(L))
 			return
+		src.shock_animate(I)
 		if (!isturf(L.loc) || prob(10))
 			L.shock(I, src.wattage, "All", 1.5, TRUE)
 		else
-			arcFlashTurf(L, pick(block(L.x - 5, L.y - 5, L.z, L.x + 5, L.y + 5, L.z)), src.wattage, 100)
+			var/turf/target = pick(block(L.x - 5, L.y - 5, L.z, L.x + 5, L.y + 5, L.z))
+			arcFlashTurf(L, target, src.wattage, 100)
