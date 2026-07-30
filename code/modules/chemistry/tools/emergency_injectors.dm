@@ -410,12 +410,6 @@
 	initial_reagents = "filgrastim"
 	label = "purple"
 
-/obj/item/reagent_containers/emergency_injector/high_capacity/detox /// we got pentetic acid at home.
-	name = "detox combi-injector"
-	initial_reagents = list("charcoal" = 25, "anti_rad" = 25)
-	label = "purple"
-	desc = "A combination medical injector containing charcoal and potassium iodide useful in treating toxic damage and radiation."
-
 /obj/item/reagent_containers/emergency_injector/high_capacity/cardiac
 	name = "cardiac combi-injector"
 	desc = "A combination medical injector containing saline and epinephrine- useful in near-death situations."

@@ -235,7 +235,7 @@
 		spawn_contents = list(/obj/item/reagent_containers/emergency_injector/high_capacity/lifesupport,
 			/obj/item/reagent_containers/emergency_injector/high_capacity/cardiac,
 			/obj/item/reagent_containers/emergency_injector/high_capacity/atropine,
-			/obj/item/reagent_containers/emergency_injector/high_capacity/detox,
+			/obj/item/reagent_containers/emergency_injector/pentetic_acid,
 			/obj/item/reagent_containers/emergency_injector/high_capacity/filgrastim,
 			/obj/item/reagent_containers/emergency_injector/high_capacity/acetylsalicylic_acid,
 			/obj/item/reagent_containers/emergency_injector/high_capacity/oculine)
