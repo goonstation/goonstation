@@ -373,13 +373,6 @@
 	label = "blue"
 	desc = "A high-capacity auto-injector containing saline-glucose solution, used for treating blood loss and shock. It also speeds up recovery from small injuries."
 
-/obj/item/reagent_containers/emergency_injector/high_capacity/oculine
-	name = "high-capacity auto-injector (oculine)"
-	initial_reagents = "oculine"
-	label = "white"
-	desc = "A high-capacity auto-injector containing oculine, used for treating hearing loss loss and eye problems, useful for many workplace related injuries."
-
-
 /obj/item/reagent_containers/emergency_injector/high_capacity/atropine
 	name = "high-capacity auto-injector (atropine)"
 	initial_reagents = "atropine"
