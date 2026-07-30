@@ -24,7 +24,7 @@
 /datum/component/itemblock/proc/on_block_begin(obj/item/I, var/obj/item/grab/block/B)
 	SHOULD_CALL_PARENT(1)
 	if(istype(B.assailant, mobtype)) //make sure only things that we want are getting signals registered for them
-		RegisterSignal(B.assailant, signals, proctype, TRUE) //start listening for signals from the user
+		RegisterSignals(B.assailant, signals, proctype, TRUE) //start listening for signals from the user
 	else
 		UnregisterSignal(B.assailant, signals)
 	showTooltip = 1 //show any custom tooltip stuff

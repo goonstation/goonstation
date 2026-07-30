@@ -523,6 +523,27 @@
 	time = 8 SECONDS
 	category = MANUFACTURER::CATEGORY::TOOL
 
+/datum/manufacture/dowsing_rod
+	name = "Dowsing Rod"
+	item_outputs = list(/obj/item/heat_dowsing)
+	create = 1
+	time = 8 SECONDS
+	category = MANUFACTURER::CATEGORY::TOOL
+
+/datum/manufacture/capture_unit
+	name = "Unbuilt Vent Capture Unit"
+	item_outputs = list(/obj/item/vent_capture_unbuilt)
+	create = 1
+	time = 12 SECONDS
+	category = MANUFACTURER::CATEGORY::MACHINERY
+
+/datum/manufacture/powered_shovel
+	name = "Power Shovel"
+	item_outputs = list(/obj/item/mining_tool/powered/shovel)
+	create = 1
+	time = 10 SECONDS
+	category = MANUFACTURER::CATEGORY::TOOL
+
 /datum/manufacture/accessgun
 	name = "Access Lite"
 	item_outputs = list(/obj/item/device/accessgun/lite)

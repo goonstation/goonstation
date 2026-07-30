@@ -635,10 +635,12 @@
 				req_contracts -= contract_to_clear
 				complete_orders += contract_to_clear
 				qdel(contract_to_clear)
+				src.update_supply_console_data()
 			else if(special_orders.Find(contract_to_clear))
 				special_orders -= contract_to_clear
 				complete_orders += contract_to_clear
 				qdel(contract_to_clear)
+				src.update_supply_console_data()
 		else
 			duckets += src.appraise_value(sell_crate, commodities_list, 1) + src.points_per_crate
 			qdel(sell_crate)
@@ -742,9 +744,14 @@
 	//needs to be called whenever active_traders or req_contracts changes
 	proc/update_shipping_data()
 		for_by_tcl(computer, /obj/machinery/computer/barcode)
-			computer.update_static_data()
+			computer.update_static_data_for_all_viewers()
 		for_by_tcl(barcoder, /obj/item/portable_barcoder)
 			barcoder.update_destinations()
+		src.update_supply_console_data()
+
+	proc/update_supply_console_data()
+		for_by_tcl(computer, /obj/machinery/computer/supplycomp)
+			computer.update_static_data_for_all_viewers()
 
 // Debugging and admin verbs (mostly coder)
 
