@@ -12940,6 +12940,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/storage/cart/mechcart,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -24673,10 +24674,7 @@
 /turf/simulated/floor/plating/damaged3,
 /area/martian_trader)
 "dma" = (
-/obj/storage/cart/mechcart,
-/obj/item/rods/steel{
-	amount = 50
-	},
+/obj/storage/cart/mechcart/breach,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -30959,10 +30957,7 @@
 	name = "Net Cafe"
 	})
 "ihZ" = (
-/obj/storage/cart/mechcart,
-/obj/item/rods/steel{
-	amount = 50
-	},
+/obj/storage/cart/mechcart/breach,
 /turf/simulated/floor,
 /area/station/engine/eva)
 "iiK" = (
@@ -40065,6 +40060,12 @@
 	pixel_y = 4
 	},
 /obj/item/clothing/ears/earmuffs,
+/obj/item/rods/steel{
+	amount = 50
+	},
+/obj/item/rods/steel{
+	amount = 50
+	},
 /turf/simulated/floor/yellow/side,
 /area/station/engine/eva)
 "prZ" = (
