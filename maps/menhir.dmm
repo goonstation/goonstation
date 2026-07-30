@@ -14802,6 +14802,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/turret_protected/incursion)
+"hYa" = (
+/obj/item/paper{
+	info = "<I>for the record somebody put a door here on the schematic so I'm putting a door in, I am not getting fired over this</I>";
+	pixel_y = -7;
+	pixel_x = 2
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "hYm" = (
 /obj/disposalpipe/segment/vertical,
 /obj/cable{
@@ -16901,6 +16909,16 @@
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon1_start,
 /turf/simulated/floor/purple,
 /area/station/hallway/primary/southeast)
+"jiE" = (
+/obj/machinery/door/airlock/pyro/maintenance,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/welder,
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "jiF" = (
 /obj/disposalpipe/segment/mail{
 	dir = 2;
@@ -22514,6 +22532,9 @@
 /area/station/mining/refinery)
 "mga" = (
 /obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/airlock/cycler/auto/queen{
+	dir = 6
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/se)
 "mgc" = (
@@ -106142,8 +106163,8 @@ okL
 okL
 okL
 okL
-okL
-qEa
+hYa
+jiE
 xqm
 gxh
 sEf
