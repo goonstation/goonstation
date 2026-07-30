@@ -6,3 +6,12 @@
 		if(istrainedsyndie(user) || isspythief(user)) {. += SPAN_ALERT(SPAN_BOLD("<br>[syndie_desc]"))} \
 		else {. += (" [alt_desc] ")} \
 	}
+
+// Modifiys the description of the type based on the existance of a trait
+// Do NOT forget to add REBUILD_USER to any items with a trait altered description!
+#define TRAIT_ALTERED_DESCRIPTION(trait_id, trait_desc, no_trait_desc) \
+	get_desc(dist, mob/user) { \
+		. = ..(); \
+		if(user.traitHolder.hasTrait(trait_id)) {. += (" [trait_desc]")} \
+		else {. += (" [no_trait_desc]")} \
+	}
