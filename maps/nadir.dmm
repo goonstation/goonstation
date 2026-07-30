@@ -50290,9 +50290,8 @@
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
 "wmT" = (
-/obj/disposalpipe/switch_junction/right/west{
-	name = "undeliverable mail junction"
-	},
+/obj/mapping_helper/mailtag/undeliverable,
+/obj/disposalpipe/switch_junction/right/west,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},

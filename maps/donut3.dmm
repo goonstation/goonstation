@@ -6390,7 +6390,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/switch_junction/left/east,
+/obj/disposalpipe/junction/left/east,
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/medical/breakroom)
 "bVI" = (
@@ -42290,9 +42290,8 @@
 /turf/simulated/floor/black,
 /area/station/science/lobby)
 "nhf" = (
-/obj/disposalpipe/switch_junction/right/north{
-	name = "undeliverable mail router"
-	},
+/obj/mapping_helper/mailtag/undeliverable,
+/obj/disposalpipe/switch_junction/right/north,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "nhr" = (

@@ -26305,7 +26305,7 @@
 /turf/simulated/floor/damaged2,
 /area/derelict_diner)
 "eKI" = (
-/obj/disposalpipe/switch_junction/left/north,
+/obj/disposalpipe/junction/left/north,
 /turf/simulated/floor/purple/side{
 	dir = 4
 	},

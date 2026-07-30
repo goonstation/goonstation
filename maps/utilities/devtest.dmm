@@ -1581,9 +1581,8 @@
 /turf/simulated/floor,
 /area/station/devzone)
 "Ca" = (
-/obj/disposalpipe/switch_junction/left/north{
-	name = "undeliverable mail junction"
-	},
+/obj/mapping_helper/mailtag/undeliverable,
+/obj/disposalpipe/switch_junction/left/north,
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "Cb" = (

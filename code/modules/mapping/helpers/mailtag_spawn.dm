@@ -10,10 +10,8 @@ ABSTRACT_TYPE(/obj/mapping_helper/mailtag)
 	var/message = FALSE
 
 /obj/mapping_helper/mailtag/setup()
-	if (!src.mail_tag)
-		CRASH("Unconfigured mailtag spawn!\nCoordinates: [src.x] x, [src.y] y, [src.z] z")
-
 	for (var/obj/disposalpipe/switch_junction/junction in src.loc)
+		junction.name = "mail junction ([src.name])"
 		junction.mail_tag ||= list()
 		junction.mail_tag += src.mail_tag
 		break
@@ -32,6 +30,17 @@ ABSTRACT_TYPE(/obj/mapping_helper/mailtag)
 
 /obj/mapping_helper/mailtag/manual
 	name = "varedit mailtag spawn"
+
+/obj/mapping_helper/mailtag/manual/setup()
+	if (!src.mail_tag)
+		CRASH("Unconfigured mailtag spawn!\nCoordinates: [src.x] x, [src.y] y, [src.z] z")
+
+	. = ..()
+
+
+/obj/mapping_helper/mailtag/undeliverable
+	name = "Undeliverable"
+	mail_tag = null
 
 /obj/mapping_helper/mailtag/chemlink
 	name = "Dispensary"

@@ -17914,9 +17914,8 @@
 /turf/simulated/floor/caution/side,
 /area/station/hallway/primary/south)
 "bFt" = (
-/obj/disposalpipe/switch_junction/right/west{
-	name = "undeliverable mail junction"
-	},
+/obj/mapping_helper/mailtag/undeliverable,
+/obj/disposalpipe/switch_junction/right/west,
 /turf/simulated/floor/caution/side,
 /area/station/hallway/primary/south)
 "bFu" = (

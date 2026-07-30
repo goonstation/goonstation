@@ -940,9 +940,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/lobby)
 "ahM" = (
-/obj/disposalpipe/switch_junction{
-	dir = 8
-	},
+/obj/disposalpipe/junction/left/west,
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
@@ -3709,10 +3707,10 @@
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/primary/north)
 "ayb" = (
+/obj/mapping_helper/mailtag/undeliverable,
 /obj/disposalpipe/switch_junction{
 	dir = 4;
-	icon_state = "pipe-sj2";
-	name = "undeliverable mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/primary/north)

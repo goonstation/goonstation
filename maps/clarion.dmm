@@ -21569,10 +21569,10 @@
 /turf/unsimulated/floor/sanitary,
 /area/station/crewquarters/cryotron)
 "kAx" = (
+/obj/mapping_helper/mailtag/undeliverable,
 /obj/disposalpipe/switch_junction{
 	dir = 2;
-	icon_state = "pipe-sj2";
-	name = "undeliverable mail router"
+	icon_state = "pipe-sj2"
 	},
 /obj/machinery/light{
 	dir = 4;

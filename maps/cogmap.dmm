@@ -44232,9 +44232,9 @@
 	name = "Mail Sorting Room"
 	},
 /obj/mapping_helper/access/maint,
+/obj/mapping_helper/mailtag/undeliverable,
 /obj/disposalpipe/switch_junction{
-	dir = 2;
-	name = "undeliverable mail router"
+	dir = 2
 	},
 /obj/cable{
 	icon_state = "4-8"
