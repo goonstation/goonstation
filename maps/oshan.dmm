@@ -1621,7 +1621,6 @@
 "ahE" = (
 /obj/machinery/disposal/small/west,
 /obj/disposalpipe/trunk/regular/west,
-/obj/item_dispenser/latex_gloves,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fblue2"
@@ -2831,14 +2830,19 @@
 /obj/table/auto,
 /obj/item/reagent_containers/glass/beaker/cryoxadone{
 	pixel_x = 4;
-	pixel_y = 5
+	pixel_y = 8
 	},
 /obj/item/reagent_containers/glass/beaker/cryoxadone{
 	pixel_x = -4;
-	pixel_y = 5
+	pixel_y = 8
 	},
-/obj/item/reagent_containers/glass/beaker/cryoxadone,
-/obj/item/paper/cryo,
+/obj/item/reagent_containers/glass/beaker/cryoxadone{
+	pixel_y = 2
+	},
+/obj/item/paper/cryo{
+	pixel_x = 8;
+	pixel_y = -1
+	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "anu" = (
@@ -12940,7 +12944,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/storage/cart/mechcart,
+/obj/storage/cart/mechcart/tools,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -29240,12 +29244,6 @@
 /obj/storage/crate/freezer{
 	name = "Freezer - Spare Parts"
 	},
-/obj/item/organ/heart{
-	desc = "A human heart, grody. How long has it been in that freezer?";
-	name = "funky ol' heart"
-	},
-/obj/random_item_spawner/organs/bloody/one_to_three,
-/obj/item/parts/human_parts/leg/left,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "gLD" = (
