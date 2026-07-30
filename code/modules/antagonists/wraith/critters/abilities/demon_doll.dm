@@ -46,6 +46,9 @@
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 
 		var/chosen_trap = pick(concrete_typesof(/obj/machinery/wraith/runetrap/))
+		var/obj/itemspecialeffect/poof/poof = new /obj/itemspecialeffect/poof
+		poof.color = "#670086"
+		poof.setup(src.holder.owner.loc)
 		new chosen_trap(T, src.holder.owner, src.holder.owner)
 		src.traps_laid++
 
