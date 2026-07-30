@@ -1,5 +1,6 @@
 TYPEINFO(/mob/living/critter/robotic/probe)
 	start_listen_languages = list(LANGUAGE_ALL)
+	start_listen_inputs = list(LISTEN_INPUT_EARS, LISTEN_INPUT_RADIO_GLOBAL_UNPROTECTED_ONLY, LISTEN_INPUT_SILICONCHAT_DISTORTED)
 
 ///Precursor probe for Menhir random events
 /mob/living/critter/robotic/probe
@@ -14,6 +15,7 @@ TYPEINFO(/mob/living/critter/robotic/probe)
 	speech_verb_gasp = "screeches"
 	speech_verb_stammer = "stutters"
 	death_text = "%src% violently shatters!"
+	pet_text = list("taps", "pats", "drums on", "buffs off", "pokes", "prods")
 	mat_changename = FALSE
 	mat_changedesc = FALSE
 	see_invisible = INVIS_CLOAK
