@@ -37,7 +37,7 @@
 	density = 0
 
 /obj/machinery/turretbase
-	name = "turret tase"
+	name = "turret base"
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "TurretBase"
 	anchored = ANCHORED
