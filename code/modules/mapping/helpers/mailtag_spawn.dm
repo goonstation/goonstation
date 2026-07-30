@@ -227,6 +227,10 @@ ABSTRACT_TYPE(/obj/mapping_helper/mailtag/command_office)
 	name = "Head of Personnel's Office"
 	mail_tag = "head_of_personnel"
 
+/obj/mapping_helper/mailtag/command_office/hos
+	name = "Head of Security's Office"
+	mail_tag = "head_of_security"
+
 /obj/mapping_helper/mailtag/command_office/rd
 	name = "Research Director's Office"
 	mail_tag = "research_director"
@@ -366,3 +370,7 @@ ABSTRACT_TYPE(/obj/mapping_helper/mailtag/public)
 /obj/mapping_helper/mailtag/public/library
 	name = "Library"
 	mail_tag = "library"
+
+/obj/mapping_helper/mailtag/public/jazz_lounge
+	name = "Jazz Lounge"
+	mail_tag = "jazz lounge"
