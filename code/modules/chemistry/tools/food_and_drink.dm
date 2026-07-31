@@ -2360,6 +2360,6 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 			src.reagents.remove_reagent("milk",milk_volume)
 			src.reagents.add_reagent("frothedmilk",milk_volume)
 		else if (src.reagents.total_volume > 0)
-			user.visible_message("Milk is already frothed.")
+			user.visible_message("The milk is already frothed.")
 		else
 			user.visible_message("There’s nothing to froth here!")
