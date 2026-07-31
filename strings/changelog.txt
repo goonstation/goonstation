@@ -1,5 +1,9 @@
 
 (t)fri jul 31 26
+(u)JORJ949
+(p)27336
+(e)🪲📄📨|C-Bug, A-UI, A-Logistics
+(+)Cargo traders now reset with the market, instead of 5 seconds after.
 (u)Wrastlingcat
 (p)27334
 (e)🎨⚗🌱|C-Sprites, A-Chemistry, A-Hydroponics
