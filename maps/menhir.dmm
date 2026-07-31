@@ -21646,10 +21646,9 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/mapping_helper/button/pair{
-	dir = 6
+/obj/sign_switch/directional/east{
+	id = "poolwashroom"
 	},
-/obj/machinery/door_control/bolter/new_walls/east,
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/pool)
 "lwP" = (
@@ -37409,6 +37408,13 @@
 	},
 /turf/simulated/floor/minitiles/black,
 /area/station/bridge)
+"tDz" = (
+/obj/machinery/illuminated_sign/occupancy{
+	pixel_x = 11;
+	id = "poolwashroom"
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/crew_quarters/pool)
 "tDF" = (
 /obj/disposalpipe/segment/brig,
 /obj/decal/tile_edge/line/black{
@@ -94514,7 +94520,7 @@ vLm
 wzv
 dKf
 ovv
-ovv
+tDz
 nFA
 ovv
 ovv
