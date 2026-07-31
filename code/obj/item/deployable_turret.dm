@@ -91,7 +91,7 @@ TYPEINFO(/obj/item/turret_deployer/riot)
 	name = "N.A.R.C.S. Deployer"
 	desc = "A Nanotrasen Automatic Riot Control System Deployer. Use it in your hand to deploy."
 	turret_health = 125
-	icon_state = "st_deployer"
+	icon_state = "nt_deployer"
 	w_class = W_CLASS_BULKY
 	icon_tag = "nt"
 	associated_turret = /obj/deployable_turret/riot

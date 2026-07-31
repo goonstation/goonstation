@@ -85,9 +85,7 @@ TYPEINFO(/datum/component/radioactive)
 			(rgb_rads[3] * perc_rads) + (rgb_neutron[3] * perc_neutron))
 		var/rad_color = rgb(rgb_comb[1], rgb_comb[2], rgb_comb[3], 255)
 		if(PA.color)
-			src._backup_color = PA.color
-			PA.add_filter("radiation_color_\ref[src]", 98, color_matrix_filter(normalize_color_to_matrix(PA.color ? PA.color : "#FFF")))
-			PA.color = null
+			src.filterize_color(PA)
 		if (isturf(PA))
 			PA.add_simple_light("radiation_light_\ref[src]", rgb2num(rad_color))
 		else if(src.our_light)
@@ -108,6 +106,12 @@ TYPEINFO(/datum/component/radioactive)
 				PA.add_filter("n_radiation_outline_\ref[src]", 99, outline_filter(size=outline_size_n, color="#2e3ae4", flags=OUTLINE_SQUARE))
 			if(src.radStrength)
 				PA.add_filter("radiation_outline_\ref[src]", 100, outline_filter(size=outline_size, color="#18e022", flags=OUTLINE_SQUARE))
+
+	/// Converts the owner's color to a filter so that the radioactive outline stays unaffected by the color change
+	proc/filterize_color(atom/owner)
+		src._backup_color = owner.color
+		owner.add_filter("radiation_color_\ref[src]", 98, color_matrix_filter(normalize_color_to_matrix(owner.color ? owner.color : "#FFF")))
+		owner.color = null
 
 	proc/process()
 		if(QDELETED(parent) || !parent.datum_components)
@@ -167,6 +171,8 @@ TYPEINFO(/datum/component/radioactive)
 			if(!ON_COOLDOWN(M,"radiation_exposure", 0.5 SECONDS) && !isintangible(M)) //shorter than item tick time, so you can get multiple doses but there's a limit
 				M.take_radiation_dose(rad_dose * (src.effect_range - GET_DIST(M, PA) + 1) / (max(src.effect_range, 1)) * 0.8) //lnear, not inverse square because it plays nicer in game
 
+		if(owner.color)
+			src.filterize_color(owner) // If the owner has been given a new color, keep it null so that the radiation outline stays green/blue
 		var/update_filters = FALSE
 		if(src.radStrength > src.decay_target && prob(33))
 			src.radStrength = max(src.decay_target, src.radStrength - (1 * mult))

@@ -3,13 +3,19 @@
 	desc = "Sets access of machines on the same turf as it to its access, then destroys itself."
 	icon = 'icons/effects/mapeditor.dmi'
 	icon_state = "access_spawn"
+	/// List of types this helper affects, anything else is ignored.
+	var/affected_types = list(/obj/machinery)
+	/// Completely override any existing accesses on the target or just add to it?
+	var/override_access = FALSE
 
 	setup()
-		for (var/obj/machinery/M in src.loc)
-			if (!M.req_access)
-				M.req_access = src.req_access
+		for (var/obj/O in src.loc)
+			if(!istypes(O, src.affected_types))
+				continue
+			if (!O.req_access || src.override_access)
+				O.req_access = src.req_access
 			else
-				M.req_access += src.req_access
+				O.req_access += src.req_access
 			//todo : autoname doors	here too. var editing is illegal!
 
 #define SPECIAL "#ffa135"
@@ -298,10 +304,13 @@
 /obj/mapping_helper/access/admin_override //special admin override access spawner
 	name = "admin override access spawn"
 	color = SPECIAL
+	affected_types = list(/obj)
 	admin_access_override = ADMIN_ACCESS_OVERRIDE_BYPASS
 
 	setup()
 		for (var/obj/O in src.loc)
+			if(!istypes(O, src.affected_types))
+				continue
 			O.admin_access_override = src.admin_access_override
 
 /obj/mapping_helper/access/admin_override/admin_only //Deny access to any non-admins
@@ -312,9 +321,12 @@
 /obj/mapping_helper/access/public
 	name = "public access spawn"
 	color = SPECIAL
+	affected_types = list(/obj)
 
 	setup()
 		for (var/obj/O in src.loc)
+			if(!istypes(O, src.affected_types))
+				continue
 			O.req_access = null
 
 //////////////////////owlzone access///////
