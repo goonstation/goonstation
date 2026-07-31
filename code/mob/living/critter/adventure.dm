@@ -215,6 +215,7 @@ TYPEINFO(/mob/living/critter/shade)
 	base_walk_delay = 2
 	no_stamina_stuns = TRUE
 	can_bleed = FALSE
+	blood_id = "black_goop"
 	var/can_burst = TRUE
 
 	New() //we shall not falter
