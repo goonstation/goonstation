@@ -87,6 +87,11 @@
 				return
 		. = ..()
 		var/mob/living/juggler = src.holder.owner
+		var/mob/living/victim
+		if (ismob(target))
+			victim = target
+		if (victim.juggling)
+			victim.drop_juggle()
 		juggler.playsound_local(juggler.loc, "sound/voice/wraith/wraithwhisper[rand(1, 4)].ogg", 40, 0)
 		juggler.add_juggle(target)
 
