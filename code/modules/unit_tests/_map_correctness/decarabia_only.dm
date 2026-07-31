@@ -19,7 +19,7 @@
 			if ((A.z == Z_LEVEL_STATION) && is_decarabia)
 				continue
 
-			. += src.format_position(A)
+			. += CI.format_position(A)
 
 
 SET_UP_CI_TRACKING_TURF(/turf/simulated/wall/auto/walp)
