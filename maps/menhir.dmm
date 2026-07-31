@@ -8933,7 +8933,13 @@
 	pixel_x = -12
 	},
 /obj/table/round/auto,
-/obj/linen_bin/towel,
+/obj/item/clothing/glasses/sunglasses/tanning,
+/obj/item/clothing/glasses/sunglasses/tanning{
+	pixel_y = 4
+	},
+/obj/item/clothing/glasses/sunglasses/tanning{
+	pixel_y = 8
+	},
 /turf/simulated/floor/minitiles/black,
 /area/station/crew_quarters/pool)
 "eNZ" = (
