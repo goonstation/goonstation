@@ -359,6 +359,19 @@ ABSTRACT_TYPE(/datum/menhir_room_roll)
 	name = "misty cavern (pool)"
 	entrance_side = WEST
 	map_path = /datum/mapPrefab/allocated/menhir_room_cavern
+	has_special_condition = TRUE
+
+	special_eval(direction_eligibility)
+		. = ..()
+		if (. == FALSE) return
+		. = FALSE
+		var/obj/plinth = locate("menhir_plinth")
+		if(plinth)
+			for (var/obj/O in get_turf(plinth))
+				if(istype(O,/obj/item/beach_ball))
+					playsound(plinth.loc, 'sound/musical_instruments/artifact/Artifact_Precursor_4.ogg', 55, 0)
+					. = TRUE
+					return
 
 /datum/menhir_room_roll/bball
 	name = "reverberating arena (bball)"
