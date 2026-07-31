@@ -39,6 +39,7 @@
 					dat += "Sex: [src.active1["sex"]]<br>"
 					dat += "Pronouns: [src.active1["pronouns"]]<br>"
 					dat += "Age: [src.active1["age"]]<br>"
+					dat += "Rank: [src.active1["rank"]]<br>"
 					dat += "Fingerprint (R): [src.active1["fingerprint_right"]]<br>"
 					dat += "Fingerprint (L): [src.active1["fingerprint_left"]]<br>"
 					dat += "DNA: [src.active1["dna"]]<br>"
