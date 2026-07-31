@@ -208,7 +208,7 @@ TYPEINFO(/mob/living/critter/martian)
 		abilityHolder.addAbility(/datum/targetable/critter/gibstare)
 		abilityHolder.addAbility(/datum/targetable/critter/telepathy)
 		abilityHolder.addAbility(/datum/targetable/critter/scarylook)
-		src.bioHolder.AddNewPoolEffect("telekinesisM", scramble=FALSE)
+		src.bioHolder.AddNewPoolEffect("telekinesis_drag", scramble=FALSE)
 		src.bioHolder.AddNewPoolEffect("telepathy", scramble=FALSE)
 		src.bioHolder.AddNewPoolEffect("psy_resist", scramble=FALSE)
 
