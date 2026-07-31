@@ -1,4 +1,10 @@
 
+(t)fri jul 31 26
+(u)ANNmagedon
+(p)27348
+(e)💅💊|C-QoL, A-Medical
+(+)Empty auto injectors & mender cartridges have been moved to the medicine category in the medical manufacturer.
+(+)Automander (x2) have been moved to the tools category in the medical manufacturer.
 (t)wed jul 29 26
 (u)LorrMaster
 (p)27300
