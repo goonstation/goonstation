@@ -78,14 +78,13 @@ TYPEINFO(/mob/living/critter/wraith/demon_doll)
 
 		animate(src, 3 SECONDS, pixel_y = 40)
 		SPAWN(3 SECONDS)
-			new/obj/item/clothing/gloves/ring/gold()
 			src.gib()
 		return ..()
 
 	gib()
 		var/turf/T = get_turf(src)
 		if (T)
-			new/obj/item/clothing/gloves/ring/gold(T)
+			new/obj/item/clothing/gloves/ring/gold/spooky(T)
 			playsound(T, 'sound/items/coindrop.ogg', 30, 1)
 		return ..()
 
@@ -98,9 +97,13 @@ TYPEINFO(/mob/living/critter/wraith/demon_doll)
 	maxDuration = null
 	unique = 1
 	var/last_check = TRUE // TRUE = lights on
+	var/cursed = FALSE // gives you hallucinations in the dark and doesn't give you the speed buff
 	var/counter = 0
 
 	onAdd()
+		if (ishuman(owner)) // Dolls' dropped rings give this status, best not give the speed changes to humans
+			src.desc = "Darkness restores your form."
+			src.cursed = TRUE
 		light_check(TRUE)
 		..()
 
@@ -125,18 +128,26 @@ TYPEINFO(/mob/living/critter/wraith/demon_doll)
 		var/mob/living/living_owner = owner
 		if (light)
 			src.icon_state = "eye_closed"
-			src.desc = "Darkness will restore your body and grant you haste."
-			living_owner.alpha = 255
 			living_owner.bioHolder.RemoveEffect("regenerator")
-			REMOVE_MOVEMENT_MODIFIER(living_owner, /datum/movement_modifier/dark_affinity_on, src.type)
-			APPLY_MOVEMENT_MODIFIER(living_owner, /datum/movement_modifier/dark_affinity_off, src.type)
+			if (!src.cursed)
+				src.desc = "Darkness will restore your form and grant you haste."
+				living_owner.alpha = 255
+				REMOVE_MOVEMENT_MODIFIER(living_owner, /datum/movement_modifier/dark_affinity_on, src.type)
+				APPLY_MOVEMENT_MODIFIER(living_owner, /datum/movement_modifier/dark_affinity_off, src.type)
+			else
+				src.desc = "Darkness will restore your form."
+				living_owner.setStatus("terror", INFINITE_STATUS)
 		else
 			src.icon_state = "eye"
-			src.desc = "Darkness is restoring your body and granting you haste."
-			living_owner.alpha = 160
 			living_owner.bioHolder.AddEffect("regenerator", magical = 1)
-			REMOVE_MOVEMENT_MODIFIER(living_owner, /datum/movement_modifier/dark_affinity_off, src.type)
-			APPLY_MOVEMENT_MODIFIER(living_owner, /datum/movement_modifier/dark_affinity_on, src.type)
+			if (!src.cursed)
+				src.desc = "Darkness is restoring your form and granting you haste."
+				living_owner.alpha = 160
+				REMOVE_MOVEMENT_MODIFIER(living_owner, /datum/movement_modifier/dark_affinity_off, src.type)
+				APPLY_MOVEMENT_MODIFIER(living_owner, /datum/movement_modifier/dark_affinity_on, src.type)
+			else
+				src.desc = "Darkness is restoring your form."
+				living_owner.delStatus("terror")
 
 /datum/statusEffect/gravity_song
 	id = "gravity_song"
