@@ -1,5 +1,33 @@
 
+(t)fri jul 31 26
+(u)JORJ949
+(p)27336
+(e)🪲📄📨|C-Bug, A-UI, A-Logistics
+(+)Cargo traders now reset with the market, instead of 5 seconds after.
+(u)Wrastlingcat
+(p)27334
+(e)🎨⚗🌱|C-Sprites, A-Chemistry, A-Hydroponics
+(*)Added a new ginger plant with an associated ginger reagent! Ginger can help with nausea but ODs can worsen bleeds!
+(u)ANNmagedon
+(p)27348
+(e)💅💊|C-QoL, A-Medical
+(+)Empty auto injectors & mender cartridges have been moved to the medicine category in the medical manufacturer.
+(+)Automander (x2) have been moved to the tools category in the medical manufacturer.
+(t)wed jul 29 26
+(u)LorrMaster
+(p)27300
+(e)🪲🧱🐁👮|C-Bug, A-Materials, A-Critters, A-Security
+(+)Sawflies now keep their material when deployed/undeployed.
 (t)tue jul 28 26
+(u)CelineTheYeen
+(p)27139
+(e)🗺|A-Mapping
+(+)Added a new space prefab, The Hidden Gem. Satisfy all your gourmet needs today!
+(u)Gomp
+(p)26280
+(e)🎨💡|C-Sprites, A-Station-Systems
+(*)AI TURRET RESPRITE The colors of the different shooting modes have changed! Details in minor changes.
+(+)BLUE now means the turret is NOT FIRING. GREY means the turret has NO POWER. YELLOW means the turret is on the STUN setting. RED means the turret is going to KILL you!
 (u)Astarthoc
 (p)27219
 (e)|

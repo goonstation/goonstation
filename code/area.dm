@@ -1624,6 +1624,10 @@ ABSTRACT_TYPE(/area/prefab)
 	name = "Frontier Outpost 8"
 	icon_state = "red"
 
+/area/prefab/fancy_restaurant
+	name = "The Hidden Gem"
+	icon_state = "green"
+
 // Sealab trench areas //
 
 /area/shuttle/sea_elevator_room

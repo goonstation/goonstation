@@ -16,4 +16,4 @@
 		if (istype(T.loc, /area/station/crown))
 			continue
 
-		. += src.format_position(T)
+		. += CI.format_position(T)

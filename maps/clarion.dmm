@@ -879,11 +879,9 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "age" = (
+/obj/mapping_helper/mailtag/command_office/ce,
 /obj/disposalpipe/switch_junction{
-	desc = "An underfloor mail pipe.";
-	dir = 8;
-	mail_tag = "chief_engineer";
-	name = "Chief Engineer mail router"
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
@@ -1728,11 +1726,10 @@
 /turf/simulated/floor/black/side,
 /area/station/hallway/primary/west)
 "asB" = (
+/obj/mapping_helper/mailtag/chapel,
 /obj/disposalpipe/switch_junction{
 	dir = 1;
-	icon_state = "pipe-sj2";
-	mail_tag = "chapel";
-	name = "chapel mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
@@ -2513,11 +2510,10 @@
 	name = "Chaplain's Office"
 	})
 "awD" = (
+/obj/mapping_helper/mailtag/hydroponics,
 /obj/disposalpipe/switch_junction{
 	dir = 2;
-	icon_state = "pipe-sj2";
-	mail_tag = "hydroponics";
-	name = "hydroponics mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor/greenblack{
 	dir = 4
@@ -3786,11 +3782,9 @@
 	},
 /area/station/hallway/primary/central)
 "aFz" = (
+/obj/mapping_helper/mailtag/bar,
 /obj/disposalpipe/switch_junction{
-	desc = "An underfloor mail pipe.";
-	icon_state = "pipe-sj2";
-	mail_tag = "bar";
-	name = "bar mail router"
+	icon_state = "pipe-sj2"
 	},
 /obj/stool/chair/red{
 	anchored = 0;
@@ -6530,11 +6524,10 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/reception)
 "bkV" = (
+/obj/mapping_helper/mailtag/medbay/genetics,
 /obj/disposalpipe/switch_junction{
 	dir = 1;
-	icon_state = "pipe-sj2";
-	mail_tag = "genetics";
-	name = "genetics mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southwest)
@@ -6576,12 +6569,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/mailtag/research/chemistry,
 /obj/disposalpipe/switch_junction{
-	desc = "An underfloor mail pipe.";
 	dir = 2;
-	icon_state = "pipe-sj2";
-	mail_tag = "chemistry";
-	name = "chemistry mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
@@ -8123,10 +8114,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/mailtag/ranch,
 /obj/disposalpipe/switch_junction/right/north{
-	dir = 2;
-	mail_tag = "ranch";
-	name = "ranch mail junction"
+	dir = 2
 	},
 /turf/simulated/floor/black/side{
 	dir = 4
@@ -8454,12 +8444,10 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/mapping_helper/mailtag/command_office/rd,
 /obj/disposalpipe/switch_junction{
-	desc = "An underfloor mail pipe.";
 	dir = 2;
-	icon_state = "pipe-sj2";
-	mail_tag = "research_director";
-	name = "Research Director mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
@@ -11085,13 +11073,7 @@
 /turf/simulated/floor/caution,
 /area/station/storage/warehouse)
 "dnf" = (
-/obj/machinery/disposal/mail/qm{
-	dir = 1;
-	mail_tag = "cargo";
-	mailgroup = "cargo";
-	message = "1";
-	name = "mail chute-'Cargo'"
-	},
+/obj/machinery/disposal/mail/qm,
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
@@ -11276,12 +11258,10 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "dtu" = (
+/obj/mapping_helper/mailtag/security/brig,
 /obj/disposalpipe/switch_junction{
-	desc = "An underfloor mail pipe.";
 	dir = 8;
-	icon_state = "pipe-sj2";
-	mail_tag = "brig";
-	name = "brig mail router"
+	icon_state = "pipe-sj2"
 	},
 /obj/cable/orange{
 	icon_state = "4-8"
@@ -14111,12 +14091,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/mailtag/research/toxins,
 /obj/disposalpipe/switch_junction{
-	desc = "An underfloor mail pipe.";
 	dir = 2;
-	icon_state = "pipe-sj2";
-	mail_tag = "toxins";
-	name = "toxins mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
@@ -15887,11 +15865,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/mailtag/janitor,
 /obj/disposalpipe/switch_junction{
 	dir = 4;
-	icon_state = "pipe-sj2";
-	mail_tag = "janitor";
-	name = "janitor mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
@@ -16090,12 +16067,10 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/ce)
 "gDv" = (
+/obj/mapping_helper/mailtag/mining,
 /obj/disposalpipe/switch_junction{
-	desc = "An underfloor mail pipe.";
 	dir = 8;
-	icon_state = "pipe-sj2";
-	mail_tag = "mining";
-	name = "mining mail router"
+	icon_state = "pipe-sj2"
 	},
 /obj/cable/orange{
 	icon_state = "2-4"
@@ -19154,12 +19129,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/mailtag/research/robot_depot,
 /obj/disposalpipe/switch_junction{
-	desc = "An underfloor mail pipe.";
 	dir = 2;
-	icon_state = "pipe-sj2";
-	mail_tag = "buddy_depot";
-	name = "robot depot mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
@@ -19817,11 +19790,10 @@
 	},
 /area/station/science/lobby)
 "jhX" = (
+/obj/mapping_helper/mailtag/public/crew,
 /obj/disposalpipe/switch_junction{
 	dir = 1;
-	icon_state = "pipe-sj2";
-	mail_tag = "crew";
-	name = "crew quarters mail router"
+	icon_state = "pipe-sj2"
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=chapel";
@@ -21597,10 +21569,10 @@
 /turf/unsimulated/floor/sanitary,
 /area/station/crewquarters/cryotron)
 "kAx" = (
+/obj/mapping_helper/mailtag/undeliverable,
 /obj/disposalpipe/switch_junction{
 	dir = 2;
-	icon_state = "pipe-sj2";
-	name = "undeliverable mail router"
+	icon_state = "pipe-sj2"
 	},
 /obj/machinery/light{
 	dir = 4;
@@ -21836,11 +21808,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/mailtag/qm,
 /obj/disposalpipe/switch_junction{
-	desc = "An underfloor mail pipe.";
-	dir = 1;
-	mail_tag = "cargo";
-	name = "quartermasters mail router"
+	dir = 1
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
@@ -22859,10 +22829,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/mailtag/command_office/hop,
 /obj/disposalpipe/switch_junction{
-	dir = 4;
-	mail_tag = "head_of_personnel";
-	name = "Head of Personnel mail router"
+	dir = 4
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
@@ -23792,10 +23761,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/mailtag/bridge,
 /obj/disposalpipe/switch_junction{
-	dir = 4;
-	mail_tag = "bridge";
-	name = "bridge mail router"
+	dir = 4
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
@@ -23857,11 +23825,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/mailtag/public/aviary,
 /obj/disposalpipe/switch_junction{
 	dir = 4;
-	icon_state = "pipe-sj2";
-	mail_tag = "aviary";
-	name = "aviary mail router"
+	icon_state = "pipe-sj2"
 	},
 /obj/decal/tile_edge/floorguide/medbay{
 	dir = 8
@@ -26616,12 +26583,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/mailtag/research/hangar,
 /obj/disposalpipe/switch_junction{
-	desc = "An underfloor mail pipe.";
 	dir = 2;
-	icon_state = "pipe-sj2";
-	mail_tag = "research_hangar";
-	name = "research pod bay mail router"
+	icon_state = "pipe-sj2"
 	},
 /obj/cable{
 	icon_state = "1-8"
@@ -27567,12 +27532,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/mailtag/research/telescience,
 /obj/disposalpipe/switch_junction{
-	desc = "An underfloor mail pipe.";
 	dir = 2;
-	icon_state = "pipe-sj2";
-	mail_tag = "telescience";
-	name = "science teleporter mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
@@ -29273,21 +29236,18 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/mapping_helper/mailtag/research/testchamber,
 /obj/disposalpipe/switch_junction{
-	desc = "An underfloor mail pipe.";
 	dir = 4;
-	icon_state = "pipe-sj2";
-	mail_tag = "testchamber";
-	name = "test chamber mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "pEX" = (
+/obj/mapping_helper/mailtag/chemlink,
 /obj/disposalpipe/switch_junction{
 	dir = 1;
-	icon_state = "pipe-sj2";
-	mail_tag = "chemlink";
-	name = "dispensary mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southwest)
@@ -29928,11 +29888,10 @@
 /turf/simulated/floor/carpet/purple/fancy,
 /area/station/chapel/sanctuary)
 "qdJ" = (
+/obj/mapping_helper/mailtag/medbay/robotics,
 /obj/disposalpipe/switch_junction{
 	dir = 1;
-	icon_state = "pipe-sj2";
-	mail_tag = "robotics";
-	name = "robotics mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
@@ -29971,11 +29930,10 @@
 	},
 /area/station/science/lobby)
 "qeJ" = (
+/obj/mapping_helper/mailtag/public/barbershop,
 /obj/disposalpipe/switch_junction{
 	dir = 1;
-	icon_state = "pipe-sj2";
-	mail_tag = "barbershop";
-	name = "barbershopmail router"
+	icon_state = "pipe-sj2"
 	},
 /obj/machinery/vending/medical_public,
 /obj/machinery/light{
@@ -30203,12 +30161,10 @@
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
 "qmW" = (
+/obj/mapping_helper/mailtag/security,
 /obj/disposalpipe/switch_junction{
-	desc = "An underfloor mail pipe.";
 	dir = 8;
-	icon_state = "pipe-sj2";
-	mail_tag = "security";
-	name = "security mail router"
+	icon_state = "pipe-sj2"
 	},
 /obj/cable/orange{
 	icon_state = "4-8"
@@ -30592,12 +30548,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/mailtag/kitchen,
 /obj/disposalpipe/switch_junction{
-	desc = "An underfloor mail pipe.";
 	dir = 4;
-	icon_state = "pipe-sj2";
-	mail_tag = "kitchen";
-	name = "kitchen mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
@@ -31981,11 +31935,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/mailtag/research/artlab,
 /obj/disposalpipe/switch_junction{
-	desc = "An underfloor mail pipe.";
 	dir = 2;
-	icon_state = "pipe-sj2";
-	mail_tag = "artlab"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
@@ -33382,11 +33335,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/mailtag/mechanics,
 /obj/disposalpipe/switch_junction{
-	desc = "An underfloor mail pipe.";
-	dir = 1;
-	mail_tag = "mechanics";
-	name = "mechanics mail router"
+	dir = 1
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southwest)
@@ -34715,10 +34666,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/mailtag/command_office/cap,
 /obj/disposalpipe/switch_junction{
-	dir = 4;
-	mail_tag = "captain";
-	name = "Captain mail router"
+	dir = 4
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
@@ -34995,9 +34945,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/switch_junction/right/south{
-	mail_tag = "detective"
-	},
+/obj/mapping_helper/mailtag/security/detective,
+/obj/disposalpipe/switch_junction/right/south,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "tzE" = (
@@ -38444,11 +38393,10 @@
 	},
 /area/station/hallway/secondary/exit)
 "vLR" = (
+/obj/mapping_helper/mailtag/medbay,
 /obj/disposalpipe/switch_junction{
 	dir = 1;
-	icon_state = "pipe-sj2";
-	mail_tag = "medbay";
-	name = "medbay mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southwest)
@@ -39061,12 +39009,10 @@
 /turf/simulated/floor/plating,
 /area/station/engine/storage)
 "wjv" = (
+/obj/mapping_helper/mailtag/engineering,
 /obj/disposalpipe/switch_junction{
-	desc = "An underfloor mail pipe.";
 	dir = 8;
-	icon_state = "pipe-sj2";
-	mail_tag = "engineering";
-	name = "engineering mail router"
+	icon_state = "pipe-sj2"
 	},
 /obj/decal/cleanable/machine_debris,
 /obj/landmark/antagonist/blob,
