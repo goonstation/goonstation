@@ -13615,7 +13615,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor/carpet/blue/fancy/innercorner/se,
+/turf/simulated/floor/carpet/blue/fancy/innercorner/nw_se,
 /area/station/hallway/secondary/exit{
 	name = "Primary Docking Wing"
 	})
@@ -17806,7 +17806,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/carpet/blue/fancy/innercorner/sw,
+/turf/simulated/floor/carpet/blue/fancy/innercorner/ne_sw,
 /area/station/hallway/secondary/exit{
 	name = "Primary Docking Wing"
 	})
@@ -18551,7 +18551,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/carpet/blue,
+/turf/simulated/floor/carpet/blue/standard/innercorner/south,
 /area/station/hallway/secondary/exit{
 	name = "Primary Docking Wing"
 	})
@@ -21569,7 +21569,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor/carpet/blue,
+/turf/simulated/floor/carpet/blue/standard/innercorner/north,
 /area/station/hallway/secondary/exit{
 	name = "Primary Docking Wing"
 	})
@@ -29804,7 +29804,7 @@
 	dir = 9;
 	icon_state = "line2"
 	},
-/turf/simulated/floor/carpet/blue/fancy/innercorner/nw,
+/turf/simulated/floor/carpet/blue/fancy/innercorner/nw_se,
 /area/station/hallway/secondary/exit{
 	name = "Primary Docking Wing"
 	})
@@ -41514,7 +41514,7 @@
 	dir = 5;
 	icon_state = "line2"
 	},
-/turf/simulated/floor/carpet/blue/fancy/innercorner/ne,
+/turf/simulated/floor/carpet/blue/fancy/innercorner/ne_sw,
 /area/station/hallway/secondary/exit{
 	name = "Primary Docking Wing"
 	})
