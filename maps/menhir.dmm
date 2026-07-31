@@ -507,6 +507,9 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/cable{
+	icon_state = "2-9"
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "anY" = (
@@ -4239,6 +4242,15 @@
 /area/station/maintenance/outer/sw{
 	name = "Arrivals Auxiliary Arm"
 	})
+"cjl" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "cjT" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/fluid_pipe/t_junction/waste,
@@ -6183,6 +6195,10 @@
 	dir = 4
 	},
 /obj/landmark/start/job/medical_doctor,
+/obj/disposalpipe/segment/morgue{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -7410,13 +7426,6 @@
 	},
 /turf/simulated/floor/industrial,
 /area/station/maintenance/southwest)
-"dZm" = (
-/obj/disposalpipe/segment/transport,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
 "dZu" = (
 /obj/disposalpipe/switch_junction/left/north,
 /obj/mapping_helper/mailtag/medbay/robotics,
@@ -8354,8 +8363,7 @@
 /area/station/medical/medbay)
 "ewY" = (
 /obj/disposalpipe/segment/morgue{
-	dir = 4;
-	icon_state = "pipe-c"
+	dir = 4
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -8894,12 +8902,6 @@
 /obj/mapping_helper/access/medlab,
 /turf/simulated/floor/shuttle/menhir_arm,
 /area/station/medical/research)
-"eOj" = (
-/obj/machinery/sleeper/compact{
-	dir = 8
-	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
 "eOl" = (
 /turf/simulated/floor/redblack{
 	dir = 1
@@ -9874,29 +9876,13 @@
 /turf/simulated/floor/black/grime,
 /area/station/security/evidence)
 "fph" = (
-/obj/table/reinforced/auto,
-/obj/item/paper/cryo{
-	pixel_x = -5
-	},
-/obj/item/wrench{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/reagent_containers/glass/beaker/cryoxadone{
-	pixel_x = 9;
-	pixel_y = 9
-	},
 /obj/machinery/alarm/directional/east,
-/obj/item/reagent_containers/glass/beaker/cryoxadone{
-	pixel_x = 8;
-	pixel_y = 5
+/obj/machinery/sleeper/port_a_medbay{
+	dir = 8
 	},
-/obj/item/reagent_containers/glass/beaker/cryoxadone{
-	pixel_x = 6
-	},
-/turf/simulated/floor/bluewhite{
-	dir = 4
-	},
+/obj/decal/tile_edge/line/blue,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/black,
 /area/station/medical/medbay)
 "fpn" = (
 /obj/cable/yellow{
@@ -10090,6 +10076,8 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk/east,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -10536,13 +10524,21 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/se)
 "fIA" = (
-/obj/table/reinforced/auto,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
 	pixel_x = 10
 	},
-/turf/simulated/floor/white,
+/obj/machinery/sleeper/compact{
+	dir = 8
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
 /area/station/medical/medbay)
 "fIB" = (
 /obj/machinery/vending/chapel,
@@ -14674,9 +14670,12 @@
 	name = "East Shuttle Concourse"
 	})
 "hRa" = (
-/obj/disposalpipe/junction/left/west,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/horizontal,
+/obj/cable{
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -17060,7 +17059,7 @@
 /area/station/science/lab)
 "jhz" = (
 /obj/cable{
-	icon_state = "2-9"
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -21769,6 +21768,13 @@
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/white,
 /area/station/science/lab)
+"lEJ" = (
+/obj/disposalpipe/segment/transport,
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "lES" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -24497,13 +24503,6 @@
 /obj/machinery/door/airlock/pyro/maintenance,
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/se)
-"mZK" = (
-/obj/machinery/sleeper/port_a_medbay{
-	dir = 8
-	},
-/obj/decal/stripe_caution,
-/turf/simulated/floor/white,
-/area/station/medical/medbay)
 "mZP" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -25067,10 +25066,12 @@
 /turf/simulated/floor/sanitary/white,
 /area/research_outpost/limpet/personnel)
 "npL" = (
-/obj/machinery/sleeper/compact{
-	dir = 8
-	},
 /obj/machinery/light,
+/obj/machinery/sleeper/compact{
+	dir = 4
+	},
+/obj/cable,
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "npO" = (
@@ -29996,13 +29997,8 @@
 "pSl" = (
 /obj/table/auto,
 /obj/machinery/recharger/defibrillator,
-/obj/item/remote/porter/port_a_medbay{
-	pixel_x = -12;
-	pixel_y = 2
-	},
 /obj/item/robodefibrillator{
-	pixel_y = 3;
-	pixel_x = 4
+	pixel_y = 5
 	},
 /obj/machinery/door_control{
 	pixel_y = -17;
@@ -30397,7 +30393,7 @@
 	},
 /obj/item/device/radio/beacon,
 /obj/landmark/gps_waypoint,
-/obj/disposalpipe/segment/bent/north,
+/obj/disposalpipe/junction/middle/north,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "qeX" = (
@@ -30947,7 +30943,6 @@
 /obj/machinery/atmospherics/pipe/simple/overfloor{
 	dir = 8
 	},
-/obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "qpT" = (
@@ -31115,9 +31110,6 @@
 	},
 /area/station/turret_protected/incursion)
 "qtJ" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/bluewhite{
 	dir = 1
@@ -31302,11 +31294,12 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/disposalpipe/segment/morgue{
+	dir = 8;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
@@ -36998,8 +36991,26 @@
 /turf/simulated/floor/industrial,
 /area/station/hangar/medical)
 "tvp" = (
-/obj/machinery/disposal,
-/obj/disposalpipe/trunk/south,
+/obj/table/reinforced/auto,
+/obj/item/paper/cryo{
+	pixel_x = -5
+	},
+/obj/item/wrench{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/glass/beaker/cryoxadone{
+	pixel_x = 9;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/glass/beaker/cryoxadone{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/glass/beaker/cryoxadone{
+	pixel_x = 6
+	},
+/obj/item_dispenser/latex_gloves,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -40272,10 +40283,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/segment/morgue{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
+/obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "vha" = (
@@ -40710,6 +40718,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/transport,
+/obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "vtx" = (
@@ -40935,12 +40944,7 @@
 /obj/machinery/camera/directional/west{
 	pixel_y = 10
 	},
-/obj/item_dispenser/latex_gloves{
-	pixel_x = -6
-	},
-/obj/item_dispenser/medical_mask{
-	pixel_x = 6
-	},
+/obj/item_dispenser/medical_mask,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/staff)
 "vAE" = (
@@ -43819,9 +43823,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -45495,22 +45496,23 @@
 /area/station/hallway/primary/central)
 "xGT" = (
 /obj/table/auto,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/gloves/latex{
-	pixel_y = 5
+/obj/item/reagent_containers/hypospray{
+	pixel_x = -14;
+	pixel_y = 6
 	},
 /obj/item/reagent_containers/hypospray{
-	pixel_x = -15;
-	pixel_y = 4
-	},
-/obj/item/reagent_containers/hypospray{
-	pixel_x = -12;
-	pixel_y = 4
+	pixel_x = -10;
+	pixel_y = 6
 	},
 /obj/item/staple_gun{
-	pixel_x = 5
+	pixel_x = 2;
+	pixel_y = 3
 	},
 /obj/machinery/light/emergency,
+/obj/item/remote/porter/port_a_medbay{
+	pixel_y = 4;
+	pixel_x = 15
+	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "xGV" = (
@@ -46510,6 +46512,10 @@
 "ydE" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/hall)
+"ydI" = (
+/obj/disposalpipe/segment/bent/west,
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "ydP" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -84942,7 +84948,7 @@ auH
 stL
 stL
 fLS
-kUD
+lEJ
 wPU
 vtr
 xzm
@@ -85246,9 +85252,9 @@ olv
 vYR
 ewY
 vgq
-nvx
+ydI
 kSC
-neb
+wov
 nvx
 pSl
 gLT
@@ -85550,7 +85556,7 @@ wmq
 qeU
 xgM
 xLO
-dZm
+kUD
 anS
 npL
 xrA
@@ -86154,7 +86160,7 @@ ewT
 pIH
 xgM
 tzz
-wov
+nvx
 pLV
 qzL
 thc
@@ -86454,9 +86460,9 @@ olv
 tvp
 qpS
 hRa
-nvx
-nvx
-nvx
+jhz
+jhz
+cjl
 jhz
 eLb
 xJR
@@ -86757,8 +86763,8 @@ qxn
 lcs
 oQO
 kPi
-mZK
-eOj
+nvx
+neb
 nvx
 mXD
 xrA
