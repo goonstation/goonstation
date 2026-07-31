@@ -337,9 +337,9 @@
 	throwforce = 1
 	icon_state = "stafftelekinesis"
 	item_state = "staff_telekinesis"
-	var/throw_charges = 4
-	var/throw_mode = FALSE
-	var/mob/living/victim = null
+	var/throw_charges = 4 // how many times we can throw before recharging
+	var/throw_mode = FALSE // throwmode is FALSE when no target is selected, TRUE when clicking somewhere will throw the target
+	var/mob/living/victim = null // the person about to be flung into a vending machine
 	var/prob_clonk = 0
 
 	New()
@@ -350,10 +350,11 @@
 		STOP_TRACKING
 		. = ..()
 
-	attack(mob/target, mob/user, def_zone, is_special, params) // stop hitting yourself
+	attack(mob/target, mob/user, def_zone, is_special, params) // stop hitting yourself. infact stop hitting everyone and everything.
 		visible_message(SPAN_ALERT("[user] waves the [src.name] in [target]'s face!"))
 		return
 
+ // clicking on a mob selects them as target and switches to throw mode. clicking somewhere when throw mode is enabled throws the victim.
 	pixelaction(atom/target, params, mob/user, reach)
 		if(!IN_RANGE(user, target, WIDE_TILE_WIDTH / 2))
 			return
@@ -370,7 +371,7 @@
 			boutput(user, SPAN_ALERT("[src.name] is out of charges! Magically recall it to restore it's power."))
 			return
 
-		if (!src.throw_mode && !ON_COOLDOWN(src, "select_target", 3 SECONDS))
+		if (!src.throw_mode && !ON_COOLDOWN(src, "select_target", 3 SECONDS)) // select target
 			if(ismob(target) && !isintangible(target))
 				src.victim = target
 				if(victim.anchored)
@@ -389,14 +390,14 @@
 					victim.changeStatus("telekinetic_grasp", 3 SECONDS)
 					playsound(user.loc, 'sound/impact_sounds/Energy_Hit_2.ogg', 50, 1)
 
-					SPAWN(3 SECONDS) // is there a better way to do this
+					SPAWN(3 SECONDS) // You have three seconds to fling the target or it resets
 						if(src.victim && src.throw_mode)
 							victim.changeStatus("telekinetic_grasp", -5 SECONDS)
 							src.victim = null
 							src.throw_mode = FALSE
 							user.update_cursor()
 
-		else if(src.throw_mode && src.victim)
+		else if(src.throw_mode && src.victim) // throw target
 			if(!IN_RANGE(user, victim, WIDE_TILE_WIDTH / 2))
 				src.throw_mode = FALSE
 				src.victim = null
@@ -413,7 +414,7 @@
 				src.victim = null
 				user.update_cursor()
 
-	dropped(mob/user)
+	dropped(mob/user) // when staff is dropped, resets stuff
 		. = ..()
 		if(src.victim && src.throw_mode)
 			victim.changeStatus("telekinetic_grasp", -5 SECONDS)
@@ -455,12 +456,13 @@
 			return
 
 	attackby(obj/item/W, mob/user, params)
-		if (istype(W, /obj/item/magtractor))
+		if (istype(W, /obj/item/magtractor)) // for ghost drones
 			src.fling_person(user)
 			user.changeStatus("unconscious", 3 SECONDS)
 			return
 		. = ..()
 
+// you can throw it like a boomerang, doesn't do anything but it's swag.
 	throw_begin(atom/target)
 		playsound(src.loc, "rustle", 50, 1)
 		return ..(target)
@@ -481,7 +483,7 @@
 
 		return ..(hit_atom)
 
-	proc/fling_person(var/mob/target)
+	proc/fling_person(var/mob/target) // the effect when a non wizard fool tries to pick up or move the staff
 		if(!target.anchored)
 			var/turf/T = get_edge_target_turf(target, target.dir)
 			playsound(target.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 50 , 1)
@@ -491,7 +493,7 @@
 			boutput(target, SPAN_ALERT("A powerful force throws you as you try to touch [name]!"))
 
 	proc/recharge_throws()
-		if(src.throw_charges <= 4) //doesn't ever reduce charge even though three is usually max
+		if(src.throw_charges <= 4)
 			src.throw_charges = 4
 /////////////////////////////////////////////////////////// Magic mirror /////////////////////////////////////////////
 
