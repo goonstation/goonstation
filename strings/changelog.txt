@@ -1,5 +1,19 @@
 
+(t)wed jul 29 26
+(u)LorrMaster
+(p)27300
+(e)🪲🧱🐁👮|C-Bug, A-Materials, A-Critters, A-Security
+(+)Sawflies now keep their material when deployed/undeployed.
 (t)tue jul 28 26
+(u)CelineTheYeen
+(p)27139
+(e)🗺|A-Mapping
+(+)Added a new space prefab, The Hidden Gem. Satisfy all your gourmet needs today!
+(u)Gomp
+(p)26280
+(e)🎨💡|C-Sprites, A-Station-Systems
+(*)AI TURRET RESPRITE The colors of the different shooting modes have changed! Details in minor changes.
+(+)BLUE now means the turret is NOT FIRING. GREY means the turret has NO POWER. YELLOW means the turret is on the STUN setting. RED means the turret is going to KILL you!
 (u)Astarthoc
 (p)27219
 (e)|
