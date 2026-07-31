@@ -62,7 +62,8 @@
 		screech.setup(doll.loc)
 		var/turf/T = get_turf(doll)
 		var/direction = dir_to_dirname(get_dir(doll.master.loc, doll.loc))
-		playsound(holder.owner, 'sound/voice/wraith/wraithwhisper1.ogg', 30, 1)
+		playsound(doll, 'sound/voice/wraith/wraithwhisper1.ogg', 30, 1)
+		playsound(doll.master, 'sound/voice/wraith/wraithwhisper4.ogg', 30, 1)
 		boutput(doll, "<i>You cry out to your master...</i>")
 		boutput(doll.master, SPAN_ALERT("<i>You feel a cry for attention coming from [T.loc] to the [direction]...</i>"))
 
