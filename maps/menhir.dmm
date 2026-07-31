@@ -6866,6 +6866,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
+/obj/machinery/camera/directional/south,
 /turf/simulated/floor/minitiles/black,
 /area/station/crew_quarters/pool)
 "dKh" = (
@@ -36661,6 +36662,7 @@
 /obj/machinery/computer/television/small{
 	pixel_y = 8
 	},
+/obj/machinery/camera/directional/north,
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/exit{
 	name = "Primary Docking Wing"
