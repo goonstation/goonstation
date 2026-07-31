@@ -714,6 +714,7 @@
 #include "code\modules\admin\adminjump.dm"
 #include "code\modules\admin\adminsay.dm"
 #include "code\modules\admin\antagifiers.dm"
+#include "code\modules\admin\appearance_debugger.dm"
 #include "code\modules\admin\atom_verbs.dm"
 #include "code\modules\admin\ban_panel.dm"
 #include "code\modules\admin\bans.dm"
