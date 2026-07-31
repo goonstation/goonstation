@@ -10,10 +10,8 @@ ABSTRACT_TYPE(/obj/mapping_helper/mailtag)
 	var/message = FALSE
 
 /obj/mapping_helper/mailtag/setup()
-	if (!src.mail_tag)
-		CRASH("Unconfigured mailtag spawn!\nCoordinates: [src.x] x, [src.y] y, [src.z] z")
-
 	for (var/obj/disposalpipe/switch_junction/junction in src.loc)
+		junction.name = "mail junction ([src.name])"
 		junction.mail_tag ||= list()
 		junction.mail_tag += src.mail_tag
 		break
@@ -32,6 +30,21 @@ ABSTRACT_TYPE(/obj/mapping_helper/mailtag)
 
 /obj/mapping_helper/mailtag/manual
 	name = "varedit mailtag spawn"
+
+/obj/mapping_helper/mailtag/manual/setup()
+	if (!src.mail_tag)
+		CRASH("Unconfigured mailtag spawn!\nCoordinates: [src.x] x, [src.y] y, [src.z] z")
+
+	. = ..()
+
+
+/obj/mapping_helper/mailtag/undeliverable
+	name = "Undeliverable"
+	mail_tag = null
+
+/obj/mapping_helper/mailtag/chemlink
+	name = "Dispensary"
+	mail_tag = "chemlink"
 
 /obj/mapping_helper/mailtag/janitor
 	name = "Janitor"
@@ -227,6 +240,10 @@ ABSTRACT_TYPE(/obj/mapping_helper/mailtag/command_office)
 	name = "Head of Personnel's Office"
 	mail_tag = "head_of_personnel"
 
+/obj/mapping_helper/mailtag/command_office/hos
+	name = "Head of Security's Office"
+	mail_tag = "head_of_security"
+
 /obj/mapping_helper/mailtag/command_office/rd
 	name = "Research Director's Office"
 	mail_tag = "research_director"
@@ -366,3 +383,7 @@ ABSTRACT_TYPE(/obj/mapping_helper/mailtag/public)
 /obj/mapping_helper/mailtag/public/library
 	name = "Library"
 	mail_tag = "library"
+
+/obj/mapping_helper/mailtag/public/jazz_lounge
+	name = "Jazz Lounge"
+	mail_tag = "jazz lounge"
