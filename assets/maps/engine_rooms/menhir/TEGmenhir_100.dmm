@@ -692,14 +692,6 @@
 	dir = 1
 	},
 /area/station/engine/coldloop)
-"oC" = (
-/obj/machinery/door/airlock/pyro/external,
-/obj/mapping_helper/access/engineering_engine,
-/obj/mapping_helper/airlock/cycler/auto/queen{
-	dir = 1
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "oF" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/hotloop)
@@ -2657,7 +2649,7 @@ Fi
 pF
 EP
 pF
-oC
+EP
 MW
 Br
 Br
