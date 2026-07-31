@@ -1,6 +1,8 @@
 TYPEINFO(/obj/item/pinpointer)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
-	mats = 4
+	mats = list("metal"=1,
+				"conductive"=2,
+				"crystal"=1)
 
 /obj/item/pinpointer
 	name = "pinpointer"
@@ -292,8 +294,7 @@ TYPEINFO(/obj/item/pinpointer/idtracker)
 					if(ckey(I.registered) == ckey(A.targetname))
 						targets[I] = I
 				LAGCHECK(LAG_LOW)
-			target = null
-			target = input(user, "Which ID do you wish to track?", "Target Locator", null) in targets
+			target = tgui_input_list(user, "Which ID do you wish to track?", "Target Locator", targets)
 			if(!target)
 				boutput(user, SPAN_NOTICE("You activate the target locator. No available targets!"))
 			else

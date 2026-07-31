@@ -5,6 +5,7 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 	start_speech_modifiers = null
 	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
+ADMIN_INTERACT_PROCS(/obj/machinery/computer/riotgear, proc/authorize, proc/unauthorize)
 /obj/machinery/computer/riotgear
 	name = "Armory Control"
 	icon_state = "drawbr"
@@ -47,6 +48,18 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 		STOP_TRACKING
 		..()
 
+	/// Check if we're authorized to do full packet operations and modify the returnsignal with an error code if not
+	proc/packet_check(datum/signal/signal, datum/signal/returnsignal)
+		if(!IN_RANGE(signal.source, src, radiorange))
+			returnsignal.data["command"] = "nack"
+			returnsignal.data["data"] = "outofrange"
+			return FALSE
+		if (signal.data["acc_code"] != netpass_heads)
+			returnsignal.data["command"] = "nack"
+			returnsignal.data["data"] = "badpass"
+			return FALSE
+		return TRUE
+
 	receive_signal(datum/signal/signal)
 		if(!signal || signal.encryption || signal.transmission_method != TRANSMISSION_RADIO)
 			return
@@ -75,7 +88,7 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 			if ("help")
 				if (!signal.data["topic"])
 					returnsignal.data["description"] = "Armory Authorization Computer - allows for lowering of armory access level to SECURITY. Wireless authorization requires NETPASS_HEADS"
-					returnsignal.data["topics"] = "authorize,unauthorize"
+					returnsignal.data["topics"] = "authorize,unauthorize,set_reason"
 				else
 					returnsignal.data["topic"] = signal.data["topic"]
 					switch (lowertext(signal.data["topic"]))
@@ -85,32 +98,28 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 						if ("unauthorize")
 							returnsignal.data["description"] = "Unauthorizes armory access. Requires NETPASS_HEADS. Requires close range transmission."
 							returnsignal.data["args"] = "acc_code"
+						if ("set_reason")
+							returnsignal.data["description"] = "Sets the auth/unauth reason to the value specified by arg \"reason\". Requires NETPASS_HEADS. Requires close range transmission."
+							returnsignal.data["args"] = "acc_code"
 						else
 							returnsignal.data["description"] = "ERROR: UNKNOWN TOPIC"
 			if ("authorize")
-				if(!IN_RANGE(signal.source, src, radiorange))
-					returnsignal.data["command"] = "nack"
-					returnsignal.data["data"] = "outofrange"
-				else if (signal.data["acc_code"] == netpass_heads)
+				if (src.packet_check(signal, returnsignal))
 					returnsignal.data["command"] = "ack"
 					returnsignal.data["acc_code"] = netpass_security
 					returnsignal.data["data"] = "authorize"
 					authorize()
-				else
-					returnsignal.data["command"] = "nack"
-					returnsignal.data["data"] = "badpass"
 			if ("unauthorize")
-				if(!IN_RANGE(signal.source, src, radiorange))
-					returnsignal.data["command"] = "nack"
-					returnsignal.data["data"] = "outofrange"
-				else if (signal.data["acc_code"] == netpass_heads)
+				if (src.packet_check(signal, returnsignal))
 					returnsignal.data["command"] = "ack"
 					returnsignal.data["acc_code"] = netpass_security
 					returnsignal.data["data"] = "unauthorize"
 					unauthorize()
-				else
-					returnsignal.data["command"] = "nack"
-					returnsignal.data["data"] = "badpass"
+			if ("set_reason")
+				if (src.packet_check(signal, returnsignal))
+					returnsignal.data["command"] = "ack"
+					returnsignal.data["data"] = "set_reason"
+					src.auth_reason = signal.data["reason"]
 			else
 				return //COMMAND NOT RECOGNIZED
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, returnsignal, radiorange)
@@ -138,7 +147,11 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
-		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
+		var/name = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
+		var/antag_roles = usr?.mind?.list_antagonist_roles()
+		if(antag_roles)
+			name += " \[[antag_roles]\]"
+		ircmsg["name"] = name
 		ircmsg["msg"] = "authorized the armory. Reason: [src.auth_reason || "None"]"
 		ircbot.export_async("admin", ircmsg)
 
@@ -260,6 +273,11 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 		if(!id_card && action != "disk_auth")
 			boutput(user, SPAN_ALERT("You need an ID card to do that!"))
 			return
+		if (action in list("auth", "disk_auth"))
+			if (!src.authed && !length(src.auth_reason))
+				boutput(user, SPAN_ALERT("ERROR: missing or empty authorization reason."))
+				playsound(src, 'sound/machines/buzz-two.ogg', 50, 1)
+				return
 		switch(action)
 			if("disk_auth")
 				if(!istype(user.equipped(), /obj/item/disk/data/floppy/read_only/authentication))

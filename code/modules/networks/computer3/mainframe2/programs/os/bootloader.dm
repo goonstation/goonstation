@@ -146,9 +146,9 @@
 				src.new_current()
 				return
 
-			var/datum/computer/folder/sys_folder = src.parse_directory(setup_filepath_system, src.holder.root, TRUE)
-			var/datum/computer/folder/drive_folder = src.parse_directory(setup_filepath_drivers_proto, src.holder.root, TRUE)
-			var/datum/computer/folder/bin_folder = src.parse_directory(setup_filepath_commands, src.holder.root, TRUE)
+			var/datum/computer/folder/sys_folder = src.parse_directory(DWAINE::DIRECTORY::SYSTEM, src.holder.root, TRUE)
+			var/datum/computer/folder/drive_folder = src.parse_directory(DWAINE::DIRECTORY::DRIVERS, src.holder.root, TRUE)
+			var/datum/computer/folder/bin_folder = src.parse_directory(DWAINE::DIRECTORY::BINARIES, src.holder.root, TRUE)
 			var/datum/computer/folder/srv_folder = src.parse_directory("srv", sys_folder, TRUE)
 
 			if (!sys_folder || !drive_folder || !bin_folder || !srv_folder)

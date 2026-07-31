@@ -208,6 +208,7 @@
                        HAS_FLAG(x:kind_of_limb, LIMB_HEAVY) |\
                        HAS_FLAG(x:kind_of_limb, LIMB_HEAVIER) |\
                        HAS_FLAG(x:kind_of_limb, LIMB_TREADS))
+#define isartifactlimb(x) HAS_FLAG(x:kind_of_limb, LIMB_ARTIFACT)
 
 #define W_CLASS_TINY 1
 #define W_CLASS_SMALL 2

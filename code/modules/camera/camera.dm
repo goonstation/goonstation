@@ -387,6 +387,7 @@ SET_UP_DIRECTIONALS(/obj/machinery/camera/watchful_eye, OFFSETS_CAMERA)
 	network = CAMERA_NETWORK_AI_ONLY
 	prefix = "AI"
 
+SET_UP_DIRECTIONALS(/obj/machinery/camera/AI, OFFSETS_CAMERA)
 
 /obj/machinery/camera/public
 	name = "autoname - ghost"

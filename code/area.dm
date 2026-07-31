@@ -1624,6 +1624,10 @@ ABSTRACT_TYPE(/area/prefab)
 	name = "Frontier Outpost 8"
 	icon_state = "red"
 
+/area/prefab/fancy_restaurant
+	name = "The Hidden Gem"
+	icon_state = "green"
+
 // Sealab trench areas //
 
 /area/shuttle/sea_elevator_room
@@ -1962,6 +1966,19 @@ TYPEINFO(/area/station/maintenance)
 	do_not_irradiate = TRUE
 	station_map_colour = MAPC_MAINTENANCE
 
+//Randomly name the maintenance tunnels on probstation to enhance confusion.
+#ifdef MAP_OVERRIDE_PROBSTATION
+	var/static/list/unused_greek_letters
+	New()
+		. = ..()
+		if(!src.unused_greek_letters)
+			src.unused_greek_letters = strings("station_name.txt", "greek")
+		if(src.name == initial(src.name))
+			var/chosen_letter = pick(src.unused_greek_letters)
+			src.unused_greek_letters -= chosen_letter
+			src.name = "[chosen_letter] Maintenance"
+#endif
+
 /area/station/maintenance/northwest
 	name = "North West Maintenance"
 	icon_state = "NWmaint"
@@ -2019,6 +2036,15 @@ ABSTRACT_TYPE(/area/station/maintenance/solar)
 /area/station/maintenance/solar/north
 	name = "North Solar Maintenance"
 	icon_state = "SolarcontrolN"
+
+/area/station/maintenance/solar/alpha
+	name = "Alpha Solar Maintenance"
+	icon_state = "SolarcontrolW"
+
+/area/station/maintenance/solar/bravo
+	name = "Bravo Solar Maintenance"
+	icon_state = "SolarcontrolW"
+
 ABSTRACT_TYPE(/area/station/maintenance/inner)
 /area/station/maintenance/inner
 	name = "Inner Maintenance"
@@ -2073,6 +2099,9 @@ TYPEINFO(/area/station/medical/asylum)
 /area/station/medical/asylum
 	name = "Asylum Mini-Station"
 	icon_state = "blue"
+#ifdef MAP_OVERRIDE_PROBSTATION
+	minimaps_to_render_on = 0
+#endif
 
 /area/station/medical/asylum/main
 
@@ -2410,6 +2439,9 @@ ABSTRACT_TYPE(/area/station/mining)
 	sound_environment = 4
 	station_map_colour = MAPC_COMMAND
 
+/area/station/bridge/map_control
+	name = "Map Control Center"
+
 /area/station/bridge/united_command //currently only on atlas - ET
     name = "United Command"
     icon_state ="bridge"
@@ -2568,6 +2600,11 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 	icon_state = "purple"
 	sound_environment = 5
 
+/area/station/crew_quarters/aquarium
+	name = "Aquarium"
+	icon_state = "blue"
+	sound_environment = 4
+
 /area/station/crew_quarters/data
 	name = "Data Center"
 	icon_state = "purple"
@@ -2621,6 +2658,10 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 	requires_power = FALSE
 #endif
 
+/area/station/crew_quarters/clown/entryway
+	name = "Clown Hole Entrance"
+	icon_state = "pink"
+
 /area/station/crew_quarters/catering
 	name = "Catering Storage"
 	icon_state = "storage"
@@ -2643,6 +2684,10 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 /area/station/crew_quarters/info
 	name = "Information Office"
 	icon_state = "purple"
+
+/area/station/crew_quarters/map_atrium
+	name = "Mapping Atrium"
+	icon_state = "park"
 
 /area/station/crew_quarters/bar
 	name= "Bar"
@@ -2756,6 +2801,9 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 /area/station/crew_quarters/garden
 	name = "Public Garden"
 	icon_state = "park"
+
+/area/station/crew_quarters/garden/shrub_hall
+	name = "Shrub Hall"
 
 /area/station/crew_quarters/garden/sunlight
 	name = "Public Garden"
@@ -2872,12 +2920,13 @@ TYPEINFO(/area/station/engine/power/transmission)
 	name = "Engineering Gravity Tether"
 	icon_state = "engineering"
 
-TYPEINFO(/area/station/engine/singcore)
+TYPEINFO(/area/station/engine/core/singularity/external)
 	valid_bounty_area = FALSE
-/area/station/engine/singcore
+/area/station/engine/core/singularity/external
 	name = "Singularity Core"
 	icon_state = "red"
 	requires_power = FALSE
+	sound_environment = 10
 
 /area/station/engine/eva
 	name = "Engineering EVA"
@@ -3207,6 +3256,8 @@ ABSTRACT_TYPE(/area/station/security)
 		name = "Security Foyer Checkpoint"
 /area/station/security/checkpoint/sec_foyer/no_teleblock
 	teleport_blocked = AREA_TELEPORT_ALLOWED
+/area/station/security/checkpoint/generic
+		name = "Security Checkpoint"
 /area/station/security/checkpoint/podbay
 		name = "Pod Bay Security Checkpoint"
 /area/station/security/checkpoint/chapel
@@ -3350,6 +3401,15 @@ TYPEINFO(/area/station/solar/small_backup3)
 	name = "Emergency Solar Array 3"
 	icon_state = "yellow"
 
+TYPEINFO(/area/station/solar/asylum)
+	valid_bounty_area = FALSE
+/area/station/solar/asylum
+	name = "Asylum Solar Array"
+	icon_state = "yellow"
+#ifdef MAP_OVERRIDE_PROBSTATION
+	minimaps_to_render_on = 0
+#endif
+
 /area/station/solar/aisat
 	name = "AI Satellite Solar Array"
 	icon_state = "yellow"
@@ -3467,6 +3527,10 @@ ABSTRACT_TYPE(/area/station/science)
 	name = "Science Teleporter"
 	icon_state = "telelab"
 	station_map_colour = MAPC_TELESCI
+
+/area/station/science/teleporter/foyer
+	name = "Science Teleporter Foyer"
+	icon_state = "purple"
 
 /area/station/science/research_director
 	name = "Research Director's Office"
@@ -4602,7 +4666,11 @@ ABSTRACT_TYPE(/area/mining)
 
 // pod_wars Areas
 /area/pod_wars
+#ifdef MAP_OVERRIDE_PROBSTATION
+	minimaps_to_render_on = 0
+#else
 	minimaps_to_render_on = MAP_POD_WARS_NANOTRASEN | MAP_POD_WARS_SYNDICATE | MAP_OBSERVER
+#endif
 
 /area/pod_wars/team1
 	station_map_colour = MAPC_NANOTRASEN
