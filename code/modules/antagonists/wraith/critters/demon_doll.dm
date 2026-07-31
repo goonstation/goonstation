@@ -1,6 +1,6 @@
 
 TYPEINFO(/mob/living/critter/wraith/demon_doll)
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN, SPEECH_OUTPUT_EQUIPPED, SPEECH_OUTPUT_WRAITHCHAT_DEMON_DOLL)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN, SPEECH_OUTPUT_EQUIPPED)
 
 /mob/living/critter/wraith/demon_doll
 	name = "demon doll"
@@ -42,6 +42,7 @@ TYPEINFO(/mob/living/critter/wraith/demon_doll)
 		src.setStatus("dark_affinity")
 
 	say_verb()
+		..()
 		if (!ON_COOLDOWN(src, "playsound", 10 SECONDS))
 			playsound(src, 'sound/voice/wraith/doll_laugh.ogg', 60, 1)
 			src.emote("giggle", TRUE)
