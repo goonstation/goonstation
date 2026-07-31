@@ -71,7 +71,7 @@
 			HH.apply_sonic_stun(0, 0, 30, 0, 5, 4, 6)
 
 /datum/targetable/critter/demon_doll/juggle_song
-	name = "juggle Song"
+	name = "Juggle Song"
 	desc = "Hum a tune to bring anything not bolted to the floor towards your juggling mitts."
 	icon_state = "song_juggle"
 	cooldown = 1 SECONDS
