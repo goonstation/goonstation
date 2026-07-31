@@ -3878,6 +3878,42 @@ datum
 						boutput(M,"<span class= 'notice'>You feel a little less sickly.</span>")
 				..()
 
+		fooddrink/ginger
+			name = "ginger"
+			id = "ginger"
+			description = "Ginger can calm your stomach by speeding your circulation, but overdo it and you might find your blood getting a little too free-flowing."
+			reagent_state = SOLID
+			fluid_r = 225
+			fluid_g = 225
+			fluid_b = 102
+			transparency = 255
+			overdose = 25
+			taste = list("spicy")
+			threshold = THRESHOLD_INIT
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				. = ..()
+				if (!M)
+					M = holder.my_atom
+				if (M && M.hasStatus("nausea") && prob(50))
+					M.nauseate(-1)
+					boutput(M,"<span class= 'notice'>You feel a little less nauseous.</span>")
+
+			do_overdose(var/severity, var/mob/M, var/mult = 1)
+				if (!M)
+					M = holder.my_atom
+				if (!isliving(M))
+					return
+				var/mob/living/H = M
+				if (!H.bleeding)
+					return
+				if (severity == 1 && probmult(2))
+					H.bleeding++
+					boutput(H, SPAN_ALERT("Your wounds seem to be clotting more slowly!"))
+				else if (severity == 2 && probmult(5))
+					H.bleeding++
+					boutput(H, SPAN_ALERT("Your bleeding suddenly worsens!"))
+
 		fooddrink/cinnamon
 			name = "cinnamon"
 			id = "cinnamon"
@@ -5007,3 +5043,26 @@ datum
 			taste = "like living in a cottage in the countryside"
 			thirst_value = 1
 			caffeine_content = 0.6
+
+		fooddrink/sweetcondensedmilk
+			name = "sweet condensed milk"
+			id = "sweetcondensedmilk"
+			description = "A thick, sweet, condensed milk."
+			reagent_state = LIQUID
+			fluid_r = 255
+			fluid_b = 255
+			fluid_g = 255
+			transparency = 255
+			taste = "sweet, way too sweet"
+
+		fooddrink/caffeinated/cafebombon
+			name = "café bombón"
+			id = "cafebombon"
+			fluid_r = 125
+			fluid_g = 83
+			fluid_b = 45
+			description = "A deceptively simple coffee with a sweet side."
+			reagent_state = LIQUID
+			taste = "a bit too sweet, but in a good way, somehow"
+			thirst_value = 1
+			caffeine_content = 0.8

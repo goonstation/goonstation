@@ -377,7 +377,7 @@ ADMIN_INTERACT_PROCS(/obj/item/ghostboard, proc/admin_command_speak)
 			var/selected
 			do
 				var/list/words = list("*REFRESH*") + src.generate_words()
-				selected = tgui_input_list(usr, "Select a word:", src.name, words, allowIllegal=TRUE)
+				selected = tgui_input_list(usr, "Select a word:", src.name, words, allowIllegal=TRUE, timeout=10 SECONDS)
 			while(selected == "*REFRESH*")
 
 			if(!selected)
