@@ -40944,7 +40944,12 @@
 /obj/machinery/camera/directional/west{
 	pixel_y = 10
 	},
-/obj/item_dispenser/medical_mask,
+/obj/item_dispenser/latex_gloves{
+	pixel_x = -6
+	},
+/obj/item_dispenser/medical_mask{
+	pixel_x = 6
+	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/staff)
 "vAE" = (
