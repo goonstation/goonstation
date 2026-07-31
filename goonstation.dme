@@ -2404,6 +2404,7 @@
 #include "code\modules\unit_tests\_map_correctness\area_contents_check\security\armoury.dm"
 #include "code\modules\unit_tests\_map_correctness\pipe_networks\_helpers.dm"
 #include "code\modules\unit_tests\_map_correctness\pipe_networks\misconfigured_mail_chutes.dm"
+#include "code\modules\unit_tests\_map_correctness\pipe_networks\misconfigured_mail_junctions.dm"
 #include "code\modules\unit_tests\_map_correctness\pipe_networks\misrouted_disposal_chutes.dm"
 #include "code\modules\unit_tests\_map_correctness\pipe_networks\misrouted_mail_chutes.dm"
 #include "code\modules\unit_tests\_map_correctness\pipe_networks\missing_mailtags.dm"

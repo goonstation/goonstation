@@ -643,6 +643,11 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 				return
 			src.remove_effects(user)
 
+	disposing()
+		if (!QDELETED(src.holder) && !QDELETED(src.holder.owner))
+			src.remove_effects(src.holder.owner)
+		. = ..()
+
 	proc/remove_effects(mob/user)
 		UnregisterSignal(user, COMSIG_MOVABLE_SET_LOC)
 		REMOVE_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "xray_gene")
