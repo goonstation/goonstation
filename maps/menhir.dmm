@@ -21514,6 +21514,7 @@
 "ltp" = (
 /obj/disposalpipe/switch_junction/right/north,
 /obj/machinery/camera/directional/east,
+/obj/mapping_helper/mailtag/undeliverable,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
