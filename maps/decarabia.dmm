@@ -5353,10 +5353,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/switch_junction/left/south{
-	mail_tag = "robotics";
-	name = "robotics mail junction"
-	},
+/obj/mapping_helper/mailtag/medbay/robotics,
+/obj/disposalpipe/switch_junction/left/south,
 /obj/decal/tile_edge/line/grey{
 	dir = 1;
 	icon_state = "line1"
@@ -5734,10 +5732,8 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
 /area/station/medical/head/private)
 "btT" = (
-/obj/disposalpipe/switch_junction/left/north{
-	name = "security mail junction";
-	mail_tag = "security"
-	},
+/obj/mapping_helper/mailtag/security,
+/obj/disposalpipe/switch_junction/left/north,
 /turf/simulated/floor/neutral/corner{
 	dir = 4
 	},
@@ -11474,10 +11470,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/switch_junction/left/south{
-	mail_tag = "genetics";
-	name = "genetics mail junction"
-	},
+/obj/mapping_helper/mailtag/medbay/genetics,
+/obj/disposalpipe/switch_junction/left/south,
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
 "cKN" = (
@@ -12297,10 +12291,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/switch_junction/left/north{
-	name = "janitor mail junction";
-	mail_tag = "chapel"
-	},
+/obj/mapping_helper/mailtag/chapel,
+/obj/disposalpipe/switch_junction/left/north,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "cUo" = (
@@ -15205,10 +15197,8 @@
 /turf/simulated/floor/twotone,
 /area/station/hallway/primary/southeast)
 "dzu" = (
-/obj/disposalpipe/switch_junction/right/west{
-	name = "hydroponics mail junction";
-	mail_tag = "hydroponics"
-	},
+/obj/mapping_helper/mailtag/hydroponics,
+/obj/disposalpipe/switch_junction/right/west,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "dzv" = (
@@ -30972,10 +30962,8 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/disposalpipe/switch_junction/left/south{
-	mail_tag = "chemistry";
-	name = "chemistry mail junction"
-	},
+/obj/mapping_helper/mailtag/research/chemistry,
+/obj/disposalpipe/switch_junction/left/south,
 /turf/simulated/floor/twotone,
 /area/station/hallway/primary/west)
 "hcW" = (
@@ -31435,10 +31423,8 @@
 	},
 /area/station/science/teleporter)
 "hic" = (
-/obj/disposalpipe/switch_junction/left/east{
-	name = "mining mail junction";
-	mail_tag = "mining"
-	},
+/obj/mapping_helper/mailtag/mining,
+/obj/disposalpipe/switch_junction/left/east,
 /obj/decal/tile_edge/line/grey{
 	dir = 6;
 	icon_state = "line1"
@@ -37992,10 +37978,8 @@
 	},
 /area/research_outpost/hangar)
 "iJy" = (
-/obj/disposalpipe/switch_junction/left/north{
-	name = "janitor mail junction";
-	mail_tag = "janitor"
-	},
+/obj/mapping_helper/mailtag/janitor,
+/obj/disposalpipe/switch_junction/left/north,
 /obj/decal/tile_edge/line/grey{
 	icon_state = "line1"
 	},
@@ -43192,10 +43176,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/switch_junction/left/south{
-	name = "public market mail junction";
-	mail_tag = "market"
-	},
+/obj/mapping_helper/mailtag/public/market,
+/obj/disposalpipe/switch_junction/left/south,
 /turf/simulated/floor/neutral/side{
 	dir = 1
 	},
@@ -50607,10 +50589,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/switch_junction/left/east{
-	mail_tag = "podbay";
-	name = "podbay mail junction"
-	},
+/obj/mapping_helper/mailtag/public/podbay,
+/obj/disposalpipe/switch_junction/left/east,
 /turf/simulated/floor/neutral/corner{
 	dir = 4
 	},
@@ -50786,10 +50766,8 @@
 	},
 /area/station/hangar/main)
 "lFt" = (
-/obj/disposalpipe/switch_junction/left/west{
-	name = "bridge mail junction";
-	mail_tag = "bridge"
-	},
+/obj/mapping_helper/mailtag/bridge,
+/obj/disposalpipe/switch_junction/left/west,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "lFE" = (
@@ -51238,10 +51216,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/switch_junction/left/east{
-	name = "engineering mail junction";
-	mail_tag = "engineering"
-	},
+/obj/mapping_helper/mailtag/engineering,
+/obj/disposalpipe/switch_junction/left/east,
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon14,
 /obj/decal/tile_edge/line/grey{
 	icon_state = "line1"
@@ -51264,10 +51240,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/switch_junction/left/south{
-	mail_tag = "research";
-	name = "research mail junction"
-	},
+/obj/mapping_helper/mailtag/research,
+/obj/disposalpipe/switch_junction/left/south,
 /turf/simulated/floor/twotone,
 /area/station/hallway/primary/west)
 "lMy" = (
@@ -56704,10 +56678,11 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/switch_junction/right/east{
+/obj/mapping_helper/mailtag/manual{
 	mail_tag = "south primary hallway";
-	name = "south hall mail junction"
+	name = "South Primary Hallway"
 	},
+/obj/disposalpipe/switch_junction/right/east,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "nbY" = (
@@ -64121,10 +64096,11 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/disposalpipe/switch_junction/left/north{
-	name = "conference room mail junction";
-	mail_tag = "confroom"
+/obj/mapping_helper/mailtag/manual{
+	mail_tag = "confroom";
+	name = "Conference Room"
 	},
+/obj/disposalpipe/switch_junction/left/north,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -64178,10 +64154,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/switch_junction/right/south{
-	mail_tag = "ranch";
-	name = "ranch mail junction"
-	},
+/obj/mapping_helper/mailtag/ranch,
+/obj/disposalpipe/switch_junction/right/south,
 /turf/simulated/floor,
 /area/station/crew_quarters/garden)
 "oRo" = (
@@ -66196,10 +66170,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/switch_junction/left/east{
-	mail_tag = "QM";
-	name = "QM mail junction"
-	},
+/obj/mapping_helper/mailtag/qm,
+/obj/disposalpipe/switch_junction/left/east,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "psj" = (
@@ -67443,10 +67415,8 @@
 /turf/simulated/floor/marble/black,
 /area/station/bridge/customs)
 "pGE" = (
-/obj/disposalpipe/switch_junction/left/south{
-	mail_tag = "recreation hall";
-	name = "rec hall mail junction"
-	},
+/obj/mapping_helper/mailtag/public/rec_hall,
+/obj/disposalpipe/switch_junction/left/south,
 /obj/decal/tile_edge/line/grey{
 	dir = 4;
 	icon_state = "line1"
@@ -83874,10 +83844,8 @@
 	},
 /area/station/hallway/secondary/east)
 "tsy" = (
-/obj/disposalpipe/switch_junction/left/east{
-	name = "mechanics mail junction";
-	mail_tag = "mechanics"
-	},
+/obj/mapping_helper/mailtag/mechanics,
+/obj/disposalpipe/switch_junction/left/east,
 /obj/decal/tile_edge/line/grey{
 	icon_state = "line1";
 	dir = 10
@@ -87504,9 +87472,8 @@
 /turf/simulated/floor/black/grime,
 /area/station/hangar/sec)
 "uiJ" = (
-/obj/disposalpipe/switch_junction/right/north{
-	mail_tag = "kitchen"
-	},
+/obj/mapping_helper/mailtag/kitchen,
+/obj/disposalpipe/switch_junction/right/north,
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/primary/east)
 "uiK" = (
@@ -88587,10 +88554,8 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/disposalpipe/switch_junction/left/east{
-	mail_tag = "escape hallway";
-	name = "escape hallway mail junction"
-	},
+/obj/mapping_helper/mailtag/public/escape,
+/obj/disposalpipe/switch_junction/left/east,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "uws" = (
@@ -90442,10 +90407,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/switch_junction/left/south{
-	mail_tag = "medbay";
-	name = "medbay mail junction"
-	},
+/obj/mapping_helper/mailtag/medbay,
+/obj/disposalpipe/switch_junction/left/south,
 /turf/simulated/floor/twotone,
 /area/station/hallway/primary/west)
 "uUH" = (
