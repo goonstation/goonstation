@@ -76374,9 +76374,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/switch_junction/left/east{
-	name = "undeliverable mail router"
-	},
+/obj/mapping_helper/mailtag/undeliverable,
+/obj/disposalpipe/switch_junction/left/east,
 /turf/simulated/floor{
 	icon_state = "nt_logo"
 	},
