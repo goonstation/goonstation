@@ -1,4 +1,23 @@
 
+(t)fri jul 31 26
+(u)JORJ949
+(p)27336
+(e)🪲📄📨|C-Bug, A-UI, A-Logistics
+(+)Cargo traders now reset with the market, instead of 5 seconds after.
+(u)Wrastlingcat
+(p)27334
+(e)🎨⚗🌱|C-Sprites, A-Chemistry, A-Hydroponics
+(*)Added a new ginger plant with an associated ginger reagent! Ginger can help with nausea but ODs can worsen bleeds!
+(u)ANNmagedon
+(p)27348
+(e)💅💊|C-QoL, A-Medical
+(+)Empty auto injectors & mender cartridges have been moved to the medicine category in the medical manufacturer.
+(+)Automander (x2) have been moved to the tools category in the medical manufacturer.
+(t)wed jul 29 26
+(u)LorrMaster
+(p)27300
+(e)🪲🧱🐁👮|C-Bug, A-Materials, A-Critters, A-Security
+(+)Sawflies now keep their material when deployed/undeployed.
 (t)tue jul 28 26
 (u)CelineTheYeen
 (p)27139

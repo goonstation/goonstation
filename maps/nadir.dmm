@@ -8780,10 +8780,8 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/disposalpipe/switch_junction/right/east{
-	mail_tag = "medbay lobby";
-	name = "medbay lobby mail junction"
-	},
+/obj/mapping_helper/mailtag/public/medbay_lobby,
+/obj/disposalpipe/switch_junction/right/east,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -9442,10 +9440,8 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/disposalpipe/switch_junction/left/east{
-	mail_tag = "chemistry";
-	name = "chemistry mail junction"
-	},
+/obj/mapping_helper/mailtag/research/chemistry,
+/obj/disposalpipe/switch_junction/left/east,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/northeast)
 "eqq" = (
@@ -11226,10 +11222,8 @@
 	name = "Southwest Breach Hull"
 	})
 "fbu" = (
-/obj/disposalpipe/switch_junction/right/north{
-	mail_tag = "hydroponics";
-	name = "hydroponics mail junction"
-	},
+/obj/mapping_helper/mailtag/hydroponics,
+/obj/disposalpipe/switch_junction/right/north,
 /obj/decal/tile_edge/floorguide/mining,
 /obj/decal/tile_edge/floorguide/arrow_n{
 	dir = 4
@@ -12995,10 +12989,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/switch_junction/right/west{
-	mail_tag = "bridge";
-	name = "bridge mail junction"
-	},
+/obj/mapping_helper/mailtag/bridge,
+/obj/disposalpipe/switch_junction/right/west,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -13731,10 +13723,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "gjM" = (
-/obj/disposalpipe/switch_junction/left/north{
-	mail_tag = "research";
-	name = "research mail junction"
-	},
+/obj/mapping_helper/mailtag/research,
+/obj/disposalpipe/switch_junction/left/north,
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
@@ -23288,10 +23278,8 @@
 	dir = 4
 	},
 /obj/decal/tile_edge/floorguide/arrow_s,
-/obj/disposalpipe/switch_junction/right/south{
-	mail_tag = "mechanics";
-	name = "mechanics mail junction"
-	},
+/obj/mapping_helper/mailtag/mechanics,
+/obj/disposalpipe/switch_junction/right/south,
 /turf/simulated/floor/grey,
 /area/station/hallway/primary/southeast)
 "keg" = (
@@ -23650,10 +23638,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "kmj" = (
-/obj/disposalpipe/switch_junction/right/east{
-	mail_tag = "robotics";
-	name = "robotics mail junction"
-	},
+/obj/mapping_helper/mailtag/medbay/robotics,
+/obj/disposalpipe/switch_junction/right/east,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/northwest)
 "kmo" = (
@@ -35494,10 +35480,8 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/disposalpipe/switch_junction/right/east{
-	mail_tag = "medbay";
-	name = "medbay mail junction"
-	},
+/obj/mapping_helper/mailtag/medbay,
+/obj/disposalpipe/switch_junction/right/east,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -40464,10 +40448,8 @@
 /obj/decal/tile_edge/floorguide/arrow_s{
 	dir = 4
 	},
-/obj/disposalpipe/switch_junction/right/north{
-	mail_tag = "security";
-	name = "security mail junction"
-	},
+/obj/mapping_helper/mailtag/security,
+/obj/disposalpipe/switch_junction/right/north,
 /obj/decal/tile_edge/floorguide/mining,
 /turf/simulated/floor/grey,
 /area/station/hallway/primary/southwest)
@@ -42162,10 +42144,8 @@
 /obj/decal/tile_edge/floorguide/arrow_n{
 	dir = 1
 	},
-/obj/disposalpipe/switch_junction/right/north{
-	mail_tag = "ranch";
-	name = "ranch mail junction"
-	},
+/obj/mapping_helper/mailtag/ranch,
+/obj/disposalpipe/switch_junction/right/north,
 /turf/simulated/floor/grey,
 /area/station/hallway/primary/northwest)
 "sEx" = (
@@ -44810,10 +44790,8 @@
 /obj/decal/tile_edge/floorguide/arrow_s{
 	dir = 8
 	},
-/obj/disposalpipe/switch_junction/right/south{
-	mail_tag = "escape hallway";
-	name = "escape hallway mail junction"
-	},
+/obj/mapping_helper/mailtag/public/escape,
+/obj/disposalpipe/switch_junction/right/south,
 /turf/simulated/floor/grey,
 /area/station/hallway/primary/southeast)
 "tLg" = (
@@ -46524,10 +46502,8 @@
 	},
 /area/station/hangar/sec)
 "uzM" = (
-/obj/disposalpipe/switch_junction/right/east{
-	mail_tag = "crew";
-	name = "crew quarters mail junction"
-	},
+/obj/mapping_helper/mailtag/public/crew,
+/obj/disposalpipe/switch_junction/right/east,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/northwest)
 "uzW" = (
@@ -48893,10 +48869,8 @@
 /turf/simulated/floor/sanitary,
 /area/station/bridge/captain)
 "vIs" = (
-/obj/disposalpipe/switch_junction/right/west{
-	mail_tag = "QM";
-	name = "QM mail junction"
-	},
+/obj/mapping_helper/mailtag/qm,
+/obj/disposalpipe/switch_junction/right/west,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -50316,9 +50290,8 @@
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
 "wmT" = (
-/obj/disposalpipe/switch_junction/right/west{
-	name = "undeliverable mail junction"
-	},
+/obj/mapping_helper/mailtag/undeliverable,
+/obj/disposalpipe/switch_junction/right/west,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -50834,10 +50807,8 @@
 /turf/simulated/floor/circuit/white,
 /area/station/turret_protected/ai_upload)
 "wAy" = (
-/obj/disposalpipe/switch_junction/right/north{
-	mail_tag = "kitchen";
-	name = "kitchen mail junction"
-	},
+/obj/mapping_helper/mailtag/kitchen,
+/obj/disposalpipe/switch_junction/right/north,
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/west)
 "wAB" = (
