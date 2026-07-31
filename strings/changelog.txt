@@ -1,5 +1,9 @@
 
 (t)fri jul 31 26
+(u)Wrastlingcat
+(p)27334
+(e)🎨⚗🌱|C-Sprites, A-Chemistry, A-Hydroponics
+(*)Added a new ginger plant with an associated ginger reagent! Ginger can help with nausea but ODs can worsen bleeds!
 (u)ANNmagedon
 (p)27348
 (e)💅💊|C-QoL, A-Medical
