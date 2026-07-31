@@ -679,6 +679,7 @@
 /datum/limb/mouth/demon_doll
 	dam_low = 4
 	dam_high = 9
+	miss_prob = 60
 	can_gun_grab = FALSE
 	can_beat_up_robots = TRUE
 
