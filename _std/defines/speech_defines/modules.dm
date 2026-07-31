@@ -58,7 +58,6 @@
 #define SPEECH_OUTPUT_WRAITHCHAT "wraithchat"
 #define SPEECH_OUTPUT_WRAITHCHAT_ADMIN "admin_wraithchat"
 #define SPEECH_OUTPUT_WRAITHCHAT_PLAGUE_RAT "plague_rat_wraithchat"
-#define SPEECH_OUTPUT_WRAITHCHAT_DEMON_DOLL "demon_doll_wraithchat"
 #define SPEECH_OUTPUT_WRAITHCHAT_POLTERGEIST "poltergeist_wraithchat"
 #define SPEECH_OUTPUT_WRAITHCHAT_WRAITH "wraith_wraithchat"
 #define SPEECH_OUTPUT_WRAITHCHAT_WRAITH_SUMMON "wraith_summon_wraithchat"
