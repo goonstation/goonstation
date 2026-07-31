@@ -3,7 +3,7 @@
 	desc = "Dredge an evil spirit up from the depths of the void to pester the living."
 	icon_state = "make_doll"
 	targeted = 0
-	pointCost = 400
+	pointCost = 250
 	cooldown = 150 SECONDS
 	ignore_holder_lock = 0
 	var/in_use = 0

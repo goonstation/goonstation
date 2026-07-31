@@ -10,10 +10,10 @@ TYPEINFO(/mob/living/critter/wraith/demon_doll)
 	icon_state = "demon_doll"
 	icon_state_dead = "dead_demon_doll"
 	hand_count = 2
-	health_brute = 50
-	health_brute_vuln = 1
-	health_burn = 50
-	health_burn_vuln = 0.8
+	health_brute = 40
+	health_brute_vuln = 0.7
+	health_burn = 40
+	health_burn_vuln = 1
 	faction = list(FACTION_WRAITH)
 	can_use_say = FALSE
 	can_juggle = TRUE
