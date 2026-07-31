@@ -89,7 +89,9 @@
 			else
 				c_flags &= ~COVERSHAIR
 			src.tooltip_rebuild = TRUE
-			usr.set_clothing_icon_dirty()
+			if(ismob(src.loc))
+				var/mob/mob_loc = src.loc
+				mob_loc.set_clothing_icon_dirty()
 
 /datum/chameleon_hat_pattern
 	var/name = "hat"
@@ -261,4 +263,11 @@
 		desc = "The hat of a postmaster."
 		icon_state = "mailcap"
 		item_state = "mailcap"
+		seal_hair = FALSE
+
+	winter_clown_hat
+		name = /obj/item/clothing/head/clown_winter_hat::name
+		desc = /obj/item/clothing/head/clown_winter_hat::desc
+		icon_state = /obj/item/clothing/head/clown_winter_hat::icon_state
+		item_state = /obj/item/clothing/head/clown_winter_hat::item_state
 		seal_hair = FALSE

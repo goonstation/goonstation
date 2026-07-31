@@ -108,6 +108,7 @@
 
 	if (!src.script_iteration)
 		src.message_user("[src.read_user_field("name")]@DWAINE - [time2text(world.realtime, "hh:mm MM/DD/53")]|nType \"help\" for command listing.", "multiline")
+		src.init_histfile(src.useracc)
 
 	src.process()
 
@@ -121,6 +122,9 @@
 /datum/computer/file/mainframe_program/shell/input_text(text)
 	if (..() || !src.useracc)
 		return TRUE
+
+	if(!length(src.shscript)) // skip logging the script content
+		src.log_command(src.useracc, text)
 
 	var/list/subcommands = list()
 	var/list/piped_list = global.command2list(text, "^", src.scriptvars, subcommands)
@@ -455,3 +459,36 @@
 			return FALSE
 
 	return DWAINE::ERR::SHELL::SCRIPT::SUCCESS
+
+/// attempts to log command to the user's histfile
+/datum/computer/file/mainframe_program/shell/proc/log_command(datum/mainframe2_user_data/useracc, command)
+	if (!istype(useracc) || !command)
+		return TRUE
+
+	var/datum/computer/file/record/history =  src.signal_program(1, list("command"=DWAINE::SYSCALL::FGET, "path" =  src.histfile_full_path(useracc.user_filename)))
+	if (!istype(history))
+		return TRUE
+
+	history.fields[toIso8601InCharacter(world.timeofday)] = command
+
+	return FALSE
+
+/// creates the history file if not exists. TECHNICALLY history files on disk get written when your shell session ends but we do not seperate ram histfile and disk histfile
+/datum/computer/file/mainframe_program/shell/proc/init_histfile(datum/mainframe2_user_data/useracc)
+	if (!istype(useracc))
+		return TRUE
+
+	if(!src.signal_program(1, list("command"=DWAINE::SYSCALL::FGET, "path" = src.histfile_full_path(useracc.user_filename))))
+		return FALSE
+
+	var/datum/computer/file/record/new_histfile = new /datum/computer/file/record()
+	new_histfile.name = DWAINE::FILE::HISTORY
+
+	if(src.signal_program(1, list("command" = DWAINE::SYSCALL::FWRITE, "path" = "[DWAINE::DIRECTORY::HOME]/[useracc.user_filename]"), new_histfile))
+		new_histfile.dispose()
+		src.message_user("Warning: Could not initialize user's history file.")
+
+		return TRUE
+
+/datum/computer/file/mainframe_program/shell/proc/histfile_full_path(username)
+	return "[DWAINE::DIRECTORY::HOME]/[username]/[DWAINE::FILE::HISTORY]"

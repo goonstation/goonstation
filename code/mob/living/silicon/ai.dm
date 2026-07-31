@@ -2507,6 +2507,10 @@ proc/get_mobs_trackable_by_AI()
 		if(tgui_alert(src.get_message_mob(), "Your message was shortened to: \"[message]\", continue anyway?", "Too wordy!", list("Yes", "No")) != "Yes")
 			return
 
+	if(check_for_radio_jammers(src))
+		src.show_text("Your mainframe's communications array is currently being jammed!", "red")
+		return
+
 	command_announcement(html_encode(message), "Station Announcement by [src.name] (AI)", 'sound/misc/announcement_1.ogg', alert_origin=ALERT_COMMAND)
 
 	last_announcement = world.time

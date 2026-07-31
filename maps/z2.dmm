@@ -56710,6 +56710,27 @@
 "gec" = (
 /turf/unsimulated/wall/auto/adventure/fake_window,
 /area/owlery/staffhall)
+"geK" = (
+/obj/decal/carpet{
+	pixel_x = 16;
+	pixel_y = 16;
+	dir = 10
+	},
+/obj/table/wood/regal,
+/obj/machinery/light_switch/directional/west,
+/obj/machinery/phone/unlisted{
+	pixel_x = -5;
+	pixel_y = 7;
+	stripe_color = "#ff0000"
+	},
+/obj/item/reagent_containers/food/drinks/teapot{
+	name = "teapot";
+	pixel_x = 6;
+	pixel_y = 1;
+	initial_reagents = list("tea"=50)
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/moriarty)
 "geL" = (
 /obj/computer3frame/terminal{
 	anchored = 1;
@@ -57004,6 +57025,40 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
+"gpT" = (
+/obj/table/wood/regal{
+	icon_state = "4"
+	},
+/obj/machinery/light/lamp/green{
+	dir = 4;
+	pixel_x = -1;
+	pixel_y = 19;
+	layer = 3;
+	switchon = 1
+	},
+/obj/item/paper{
+	icon_state = "paper";
+	pixel_x = 7;
+	pixel_y = -1
+	},
+/obj/decoration/paperstack/small{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/paper{
+	name = "booklet";
+	desc = "A stack of papers stapled together in a sequence intended for reading in.";
+	icon_state = "stamped-thin";
+	pixel_x = 14;
+	pixel_y = 9
+	},
+/obj/item/pen{
+	pixel_x = 10;
+	pixel_y = 1;
+	layer = 3.1
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/moriarty)
 "gqy" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -60138,6 +60193,63 @@
 	icon_state = "floor5"
 	},
 /area/wizard_station)
+"iNp" = (
+/obj/noticeboard/directional/north{
+	pixel_x = -8;
+	pixel_y = 32;
+	icon_state = "nboard05";
+	layer = 2.9
+	},
+/obj/table/wood/regal{
+	icon_state = "8"
+	},
+/obj/item/decoration/flower_vase{
+	icon_state = "vase7";
+	pixel_x = 7;
+	pixel_y = 18
+	},
+/obj/item/paper{
+	name = "paper-'say rework schematics'";
+	desc = "A fiendishly complicated system of trees, modules, channels, languages, and sources covers the page. It's beautiful.";
+	icon = 'icons/obj/electronics.dmi';
+	icon_state = "blueprint";
+	item_state = "sheet";
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/obj/item/paper{
+	name = "paper-'minimap blueprints'";
+	desc = "This one appears to have been redrawn several times. A note at the bottom suggests that it needs to be redrawn again.";
+	icon = 'icons/obj/electronics.dmi';
+	icon_state = "blueprint";
+	item_state = "sheet";
+	pixel_x = -12;
+	pixel_y = 7
+	},
+/obj/item/paper{
+	name = "paper-'parallax maths'";
+	desc = "Uh oh.";
+	icon = 'icons/obj/electronics.dmi';
+	icon_state = "blueprint";
+	item_state = "sheet";
+	pixel_x = -10;
+	pixel_y = 5
+	},
+/obj/item/paper{
+	name = "paper-'namespace implementation'";
+	desc = "Behind a relatively short and simple \"usage\" section lies a sprawling network of self-referential patterns and substitutions.";
+	icon = 'icons/obj/electronics.dmi';
+	icon_state = "blueprint";
+	item_state = "sheet";
+	pixel_x = -6;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/food/drinks/mug{
+	pixel_x = -7;
+	pixel_y = 12
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/moriarty)
 "iNq" = (
 /obj/decoration/ntcrate,
 /turf/unsimulated/floor/darkblueblack{
@@ -62613,6 +62725,17 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/guts)
+"kyH" = (
+/obj/admin_plaque{
+	name = "Moriarty's Office";
+	pixel_x = 32
+	},
+/turf/unsimulated/floor/grey/side{
+	dir = 4
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "kzk" = (
 /obj/admin_plaque{
 	desc = "<< sound not welcome";
@@ -63571,6 +63694,19 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/centcom/lobby)
+"lka" = (
+/obj/table/wood/regal{
+	icon_state = "12"
+	},
+/obj/machinery/computer3/generic/personal/personel_alt{
+	pixel_y = 9
+	},
+/obj/decoration/clock{
+	pixel_x = -12;
+	pixel_y = 32
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/moriarty)
 "lkO" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /turf/unsimulated/floor/plating,
@@ -64211,6 +64347,9 @@
 	},
 /turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
+"lKO" = (
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/moriarty)
 "lLg" = (
 /turf/unsimulated/wall/generic{
 	desc = "It won't budge.";
@@ -68909,6 +69048,17 @@
 	},
 /turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
+"poE" = (
+/obj/decal/carpet{
+	pixel_x = 16;
+	pixel_y = 16
+	},
+/obj/decoration/decorativeplant/plant7{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/moriarty)
 "poK" = (
 /obj/item/paper/book/from_file/pharmacopia{
 	pixel_x = -8;
@@ -69611,6 +69761,14 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital)
+"pQM" = (
+/obj/decal/carpet{
+	pixel_x = 16;
+	pixel_y = 16;
+	dir = 9
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/moriarty)
 "pRB" = (
 /turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
@@ -71420,7 +71578,10 @@
 	},
 /area/iomoon/base)
 "rlz" = (
-/obj/decoration/decorativeplant/plant7,
+/obj/decoration/decorativeplant/plant7{
+	pixel_x = -5;
+	pixel_y = 1
+	},
 /turf/unsimulated/floor/wood/seven,
 /area/sim/gunsim/lobby)
 "rlL" = (
@@ -73245,6 +73406,17 @@
 	dir = 6
 	},
 /area/centcom/offices/katzen)
+"szB" = (
+/obj/decal/carpet{
+	pixel_x = 16;
+	pixel_y = 16;
+	dir = 5
+	},
+/obj/stool/chair/comfy/wood_regal{
+	dir = 1
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/moriarty)
 "szE" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -73531,6 +73703,25 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital)
+"sMi" = (
+/obj/table/wood/regal/bookshelf{
+	layer = 1
+	},
+/obj/item/paper/postcard/thundrando{
+	pixel_x = 14;
+	pixel_y = 27
+	},
+/obj/decoration/pottedfern{
+	pixel_x = -6;
+	pixel_y = 33
+	},
+/obj/item/decoration/flower_vase{
+	icon_state = "vase6";
+	pixel_x = 7;
+	pixel_y = 15
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/moriarty)
 "sMO" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/pink,
@@ -75140,6 +75331,10 @@
 	name = "strange surface"
 	},
 /area/crater/cave/lower)
+"uod" = (
+/obj/storage/secure/closet/iron_safe/moriarty,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/moriarty)
 "uox" = (
 /obj/effects/precipitation/snow/grey/tile,
 /obj/decoration/syndcorpse10{
@@ -75297,6 +75492,15 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
+"uuy" = (
+/obj/decal/carpet{
+	pixel_x = 16;
+	pixel_y = 16;
+	dir = 6
+	},
+/obj/machinery/light/incandescent/netural,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/moriarty)
 "uuH" = (
 /obj/machinery/optable,
 /obj/random_item_spawner/organs{
@@ -78882,6 +79086,14 @@
 "wSI" = (
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
+"wSQ" = (
+/obj/machinery/door/unpowered/wood{
+	dir = 8;
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 4
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/moriarty)
 "wTN" = (
 /obj/channel{
 	required_to_pass = 1e+009
@@ -79722,6 +79934,14 @@
 /obj/item/cell/supercell/charged,
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
+"xxb" = (
+/obj/decal/carpet{
+	pixel_x = 16;
+	pixel_y = 16;
+	dir = 1
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/moriarty)
 "xxs" = (
 /obj/table/wood/auto/desk,
 /obj/item/clothing/mask/mime{
@@ -158115,7 +158335,7 @@ lmi
 rER
 dxn
 rER
-rER
+kyH
 rER
 rER
 rER
@@ -158418,7 +158638,7 @@ xsg
 wel
 wel
 wel
-oaN
+wSQ
 wel
 wel
 wel
@@ -158719,9 +158939,9 @@ vgQ
 fcy
 iNq
 wel
-dvW
-dvW
-dvW
+sMi
+pQM
+geK
 wel
 dvW
 dvW
@@ -159021,9 +159241,9 @@ xtj
 vjZ
 jLf
 wel
-dvW
-dvW
-dvW
+gpT
+xxb
+poE
 wel
 dvW
 dvW
@@ -159323,9 +159543,9 @@ fBu
 sge
 eFT
 wel
-lRO
-dvW
-dvW
+lka
+szB
+uuy
 wel
 lRO
 dvW
@@ -159625,9 +159845,9 @@ exk
 wOQ
 ssz
 wel
-dvW
-dvW
-dvW
+iNp
+lKO
+uod
 wel
 dvW
 dvW
