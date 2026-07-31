@@ -39,7 +39,7 @@ TYPEINFO(/obj/item/remote/porter)
 		if(!T || !isturf(T)) return
 		if(isrestrictedz(T.z))
 #ifdef MAP_OVERRIDE_MENHIR
-			if (istype(T.loc,/area/precursor/menhir) || istype(T.loc,/area/unspace))
+			if (in_menhir_zone(T))
 				. = TRUE
 #endif
 			return
@@ -81,12 +81,8 @@ TYPEINFO(/obj/item/remote/porter)
 		if (test_turf)
 			if (test_turf.loc:teleport_blocked == 2) return 0
 			if (!no_zlevel_check && (isrestrictedz(test_turf.z) || isrestrictedz(our_loc.z))) // Somebody will find a way to abuse it if I don't put this here.
-#ifdef MAP_OVERRIDE_MENHIR
-				if (!istype(our_loc.loc,/area/precursor/menhir) && !istype(our_loc.loc,/area/unspace)) //Special Exemption
+				if (!in_menhir_zone(our_loc)) //Special Exemption
 					return 0
-#else
-				return 0
-#endif
 			if (test_turf.density)
 				return 5
 			for (var/obj/thing in view(0, test_turf))
@@ -101,12 +97,8 @@ TYPEINFO(/obj/item/remote/porter)
 			if (!our_loc || !isturf(our_loc))
 				return 0
 			if (!no_zlevel_check && isrestrictedz(our_loc.z)) // Somebody will find a way to abuse it if I don't put this here.
-#ifdef MAP_OVERRIDE_MENHIR
-				if (!istype(our_loc.loc,/area/precursor/menhir) && !istype(our_loc.loc,/area/unspace)) //Special Exemption
+				if (!in_menhir_zone(our_loc)) //Special Exemption
 					return 0
-#else
-				return 0
-#endif
 			if (our_loc.density)
 				return 4
 			for (var/obj/thing2 in view(0, our_loc))
