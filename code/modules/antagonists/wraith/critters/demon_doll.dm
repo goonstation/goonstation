@@ -73,7 +73,7 @@ TYPEINFO(/mob/living/critter/wraith/demon_doll)
 		if (src.master)
 			src.master.summons -= src
 		src.master = null
-		playsound(src, "sound/voice/wraith/revleave.ogg", 50)
+		playsound(src, 'sound/voice/wraith/revleave.ogg', 50)
 		if (gibbed)
 			return ..()
 
