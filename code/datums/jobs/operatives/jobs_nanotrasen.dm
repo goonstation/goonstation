@@ -10,7 +10,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
 	access_string = "Nanotrasen Responder" // "All Access" + Centcom
 
-	slot_back = list(/obj/item/storage/backpack/NT)
+	slot_back = list(/obj/item/storage/backpack/NT/ERT)
 	slot_jump = list(/obj/item/clothing/under/misc/turds)
 	slot_foot = list(/obj/item/clothing/shoes/swat)
 	slot_glov = list(/obj/item/clothing/gloves/swat/NT)
@@ -30,8 +30,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
 	slot_poc1 = list(/obj/item/device/pda2/ntso)
 	slot_poc2 = list(/obj/item/storage/ntsc_pouch/ntso)
-	items_in_backpack = list(/obj/item/storage/firstaid/regular,
-							/obj/item/clothing/head/NTberet)
+	items_in_backpack = list(/obj/item/storage/firstaid/regular)
 
 /datum/job/special/nt/commander
 	name = "Nanotrasen Commander"
@@ -65,8 +64,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	slot_eyes = list(/obj/item/clothing/glasses/toggleable/meson)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt/engineer)
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
-	slot_poc1 = list(/obj/item/tank/pocket/extended/oxygen)
-	slot_poc2 = list(/obj/item/device/pda2/nt_engineer)
+	slot_poc1 = list(/obj/item/device/pda2/nt_engineer)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular,
 							/obj/item/device/flash,
 							/obj/item/sheet/steel/fullstack,
@@ -94,8 +92,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	slot_eyes = list(/obj/item/clothing/glasses/healthgoggles/upgraded)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt/medic)
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
-	slot_poc1 = list(/obj/item/tank/pocket/extended/oxygen)
-	slot_poc2 = list(/obj/item/device/pda2/nt_medical)
+	slot_poc1 = list(/obj/item/device/pda2/nt_medical)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular,
 							/obj/item/device/flash,
 							/obj/item/reagent_containers/glass/bottle/omnizine,
@@ -115,6 +112,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	receives_miranda = TRUE
 	rounds_needed_to_play = ROUNDS_MIN_HIGHSEC
 
+	slot_back = list(/obj/item/storage/backpack/NT)
 	slot_belt = list(/obj/item/storage/belt/security/ntsc)
 	slot_suit = list(/obj/item/clothing/suit/space/ntso)
 	slot_head = list(/obj/item/clothing/head/NTberet)

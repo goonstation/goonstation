@@ -1122,7 +1122,6 @@
 		spawn_contents = list(/obj/item/gun/energy/cornicen3,
 		/obj/item/old_grenade/energy_frag = 2,
 		/obj/item/old_grenade/energy_concussion = 2,
-		/obj/item/tank/pocket/extended/oxygen,
 		/obj/item/reagent_containers/food/snacks/donkpocket/warm)
 
 	baton
