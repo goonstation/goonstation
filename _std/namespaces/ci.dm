@@ -30,6 +30,8 @@ CREATE_NAMESPACE(CI, ERRORS)
 
 /// Misconfigured mail chutes.
 ADD_TO_NAMESPACE(CI, ERRORS)(var/list/mail_chutes = CI_LIST)
+/// Misconfigured mail junctions.
+ADD_TO_NAMESPACE(CI, ERRORS)(var/list/mail_junctions = CI_LIST)
 
 
 #undef CI_LIST
