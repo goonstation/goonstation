@@ -5,6 +5,7 @@ import {
   ByondUi,
   Dropdown,
   Flex,
+  NoticeBox,
   Section,
   Stack,
 } from 'tgui-core/components';
@@ -20,6 +21,7 @@ interface MinimapData {
   z_level?: number;
   show_players?: BooleanLike;
   show_observers?: BooleanLike;
+  is_loading?: BooleanLike;
 }
 
 export const Minimap = () => {
@@ -32,6 +34,7 @@ export const Minimap = () => {
     z_level,
     show_players,
     show_observers,
+    is_loading,
   } = data;
   const zLevelLabels = Object.keys(z_level_options || {});
   const selectedZLevel = zLevelLabels?.find(
@@ -40,12 +43,13 @@ export const Minimap = () => {
   const isAdminMinimap = !!z_level_options;
   const playersVisible = !!show_players;
   const observersVisible = !!show_observers;
+  const isLoading = !!is_loading;
 
   return (
     <Window
       title={title}
       theme={theme}
-      width={z_level_options ? 850 : 610}
+      width={z_level_options ? 830 : 610}
       height={640}
     >
       <Window.Content>
@@ -81,6 +85,7 @@ export const Minimap = () => {
                       fluid
                       icon="refresh"
                       color="blue"
+                      disabled={isLoading}
                       onClick={() => act('refresh_map')}
                     >
                       Refresh Current Z-Level
@@ -111,6 +116,13 @@ export const Minimap = () => {
                       Scroll to zoom. Drag to pan. Click to teleport.
                     </Box>
                   </Stack.Item>
+                  {isLoading && (
+                    <Stack.Item>
+                      <NoticeBox info textAlign="center">
+                        Generating minimap, please wait...
+                      </NoticeBox>
+                    </Stack.Item>
+                  )}
                 </Stack>
               </Section>
               <Section title="Z Level">

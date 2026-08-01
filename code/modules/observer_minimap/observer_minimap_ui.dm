@@ -15,13 +15,31 @@ var/global/atom/movable/minimap_ui_handler/observer_minimap/observer_minimap_ui
 	var/obj/minimap_controller/admin_minimap/admin_controller
 	var/show_players = TRUE
 	var/show_observers = TRUE
+	var/is_loading = FALSE
+	var/render_request_id = 0
 
 /atom/movable/minimap_ui_handler/admin_minimap/New(parent, control_id = "minimap_ui_\ref[src]", obj/minimap/minimap, tgui_title, tgui_theme)
+	var/initial_render_request_id = src.begin_render()
 	src.admin_map = minimap
 	src.admin_controller = new(src.admin_map)
 	. = ..(parent, control_id, src.admin_controller, tgui_title, tgui_theme)
 	src.loc = null
-	src.get_admin_area_map()
+	var/datum/minimap/area_map/admin/initial_area_map = src.get_admin_area_map()
+	if (initial_area_map)
+		initial_area_map.refresh_render(CALLBACK(src, PROC_REF(finish_render), initial_render_request_id))
+	else
+		src.finish_render(initial_render_request_id)
+
+/atom/movable/minimap_ui_handler/admin_minimap/proc/begin_render()
+	src.render_request_id++
+	src.is_loading = TRUE
+	return src.render_request_id
+
+/atom/movable/minimap_ui_handler/admin_minimap/proc/finish_render(render_request_id)
+	if (QDELETED(src) || src.render_request_id != render_request_id)
+		return
+	src.is_loading = FALSE
+	tgui_process?.update_uis(src)
 
 /atom/movable/minimap_ui_handler/admin_minimap/proc/get_admin_area_map()
 	RETURN_TYPE(/datum/minimap/area_map/admin)
@@ -90,6 +108,7 @@ var/global/atom/movable/minimap_ui_handler/observer_minimap/observer_minimap_ui
 		"z_level" = admin_area_map?.z_level || Z_LEVEL_STATION,
 		"show_players" = src.show_players,
 		"show_observers" = src.show_observers,
+		"is_loading" = src.is_loading,
 	)
 
 /atom/movable/minimap_ui_handler/admin_minimap/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -104,13 +123,28 @@ var/global/atom/movable/minimap_ui_handler/observer_minimap/observer_minimap_ui
 
 	switch (action)
 		if ("refresh_map")
-			if (ON_COOLDOWN(src, "admin_minimap_refresh", 1 SECOND))
+			if (src.is_loading)
+				return
+			if (ON_COOLDOWN(src, "admin_minimap_refresh", 2 SECONDS))
 				boutput(ui.user, SPAN_NOTICE("Please wait a moment before refreshing the minimap again."))
 				return
-			global.minimap_renderer?.refresh_admin_minimap(admin_area_map.z_level)
-			admin_area_map.refresh_render()
-			var/datum/minimap/area_map/admin/refreshed_displayed_map = src.admin_controller?.displayed_minimap
-			refreshed_displayed_map?.refresh_render()
+			var/refresh_request_id = src.begin_render()
+			var/datum/callback/refresh_callback = CALLBACK(src, PROC_REF(finish_render), refresh_request_id)
+			var/refresh_z_level = admin_area_map.z_level
+			SPAWN(0)
+				if (QDELETED(src))
+					return
+				global.minimap_renderer?.refresh_admin_minimap(refresh_z_level)
+				var/datum/minimap/area_map/admin/refreshed_area_map = src.get_admin_area_map()
+				if (!refreshed_area_map || refreshed_area_map.z_level != refresh_z_level)
+					src.finish_render(refresh_request_id)
+					return
+				refreshed_area_map.refresh_render()
+				var/datum/minimap/area_map/admin/refreshed_displayed_map = src.admin_controller?.displayed_minimap
+				if (refreshed_displayed_map?.z_level == refresh_z_level)
+					refreshed_displayed_map.refresh_render(refresh_callback)
+				else
+					refreshed_area_map.refresh_render(refresh_callback)
 
 		if ("select_z_level")
 			var/z_level = params["z_level"]
@@ -118,8 +152,15 @@ var/global/atom/movable/minimap_ui_handler/observer_minimap/observer_minimap_ui
 				z_level = text2num(z_level)
 			if (!global.minimap_renderer?.valid_admin_z_level(z_level))
 				return
+			var/z_level_request_id = src.begin_render()
+			var/datum/callback/z_level_callback = CALLBACK(src, PROC_REF(finish_render), z_level_request_id)
 			admin_area_map.update_z_level(z_level)
-			src.admin_controller?.displayed_minimap?.update_z_level(z_level)
+			var/datum/minimap/area_map/admin/displayed_area_map = src.admin_controller?.displayed_minimap
+			if (displayed_area_map)
+				displayed_area_map.update_z_level(z_level)
+				displayed_area_map.refresh_render(z_level_callback)
+			else
+				admin_area_map.refresh_render(z_level_callback)
 			src.update_marker_visibility()
 
 		if ("reset_scale")

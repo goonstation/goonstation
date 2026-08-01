@@ -70,7 +70,6 @@
 			return
 
 		src.map = new()
-		src.map.icon = global.minimap_renderer.get_admin_minimap_icon(src.z_level)
 		src.map.vis_flags |= VIS_INHERIT_ID
 		src.map.mouse_opacity = 0
 
@@ -80,13 +79,13 @@
 
 		src.minimap_render.vis_contents += src.map
 		src.minimap_holder.vis_contents += src.minimap_render
+		src.refresh_render()
 
 	update_z_level(z_level)
 		if (!global.minimap_renderer?.valid_admin_z_level(z_level))
 			return
 
 		src.z_level = z_level
-		src.map.icon = global.minimap_renderer.get_admin_minimap_icon(src.z_level)
 		src.centre_focus_x = null
 		src.centre_focus_y = null
 		src.centre_scale = null
@@ -96,9 +95,16 @@
 			var/datum/minimap_marker/minimap/minimap_marker = src.minimap_markers[target]
 			src.set_marker_position(minimap_marker, minimap_marker.target.x, minimap_marker.target.y, minimap_marker.target.z)
 
-	proc/refresh_render()
-		if (global.minimap_renderer)
-			src.map.icon = global.minimap_renderer.get_admin_minimap_icon(src.z_level)
+		src.refresh_render()
+
+	proc/refresh_render(datum/callback/on_complete = null)
+		var/render_z_level = src.z_level
+		SPAWN(0)
+			if (QDELETED(src) || !src.map || src.z_level != render_z_level || !global.minimap_renderer)
+				on_complete?.Invoke()
+				return
+			src.map.icon = global.minimap_renderer.get_admin_minimap_icon(render_z_level)
+			on_complete?.Invoke()
 
 	valid_turf(turf/T)
 		return T?.loc && !istype(T, /turf/space)

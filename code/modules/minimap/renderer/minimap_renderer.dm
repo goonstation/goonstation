@@ -252,6 +252,7 @@ var/list/minimap_z_levels = list(Z_LEVEL_STATION, Z_LEVEL_DEBRIS, Z_LEVEL_MINING
 	minimap_render.SwapColor(rgb(0, 0, 0), rgb(0, 0, 0, 0))
 
 	for (var/turf/T as anything in block(locate(1, 1, z_level), locate(world.maxx, world.maxy, z_level)))
+		LAGCHECK(LAG_LOW)
 		var/colour = src.admin_turf_color(T)
 		if (colour)
 			minimap_render.DrawBox(colour, T.x, T.y)
@@ -320,4 +321,3 @@ var/list/minimap_z_levels = list(Z_LEVEL_STATION, Z_LEVEL_DEBRIS, Z_LEVEL_MINING
 /// Compare the priority of two minimap render modifiers.
 /proc/cmp_minimap_modifiers(datum/minimap_render_modifier/a, datum/minimap_render_modifier/b)
 	return b.priority - a.priority
-
