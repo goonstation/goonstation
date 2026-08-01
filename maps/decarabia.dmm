@@ -48621,7 +48621,6 @@
 	},
 /area/station/hallway/secondary/east)
 "lkv" = (
-/obj/machinery/clonegrinder,
 /obj/decal/tile_edge/line/white{
 	dir = 5;
 	icon_state = "line2"
@@ -48631,10 +48630,14 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/light_switch/directional/east,
-/obj/landmark/bill_spawn,
 /obj/decal/poster/wallsign/poster_hanginthere{
 	pixel_y = 28;
 	pixel_x = -19
+	},
+/obj/machinery/computer3/generic/med_data,
+/obj/item/storage/box/diskbox{
+	pixel_x = 5;
+	pixel_y = 1
 	},
 /turf/simulated/floor/twotone/green{
 	dir = 1
@@ -57804,15 +57807,12 @@
 	dir = 1;
 	pixel_y = 32
 	},
-/obj/machinery/computer3/generic/med_data,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/item/storage/box/diskbox{
-	pixel_x = 5;
-	pixel_y = 1
-	},
+/obj/machinery/clonegrinder,
+/obj/landmark/bill_spawn,
 /turf/simulated/floor/green/checker,
 /area/station/medical/medbay/cloner)
 "nqB" = (
