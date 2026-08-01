@@ -63,6 +63,79 @@
 		var/datum/minimap_marker/minimap/minimap_marker = src.minimap_markers[target]
 		src.set_marker_position(minimap_marker, minimap_marker.target.x, minimap_marker.target.y, minimap_marker.target.z)
 
+/datum/minimap/area_map/admin
+	initialise_minimap_render()
+		src.z_level ||= Z_LEVEL_STATION
+		if (!global.minimap_renderer)
+			return
+
+		src.map = new()
+		src.map.icon = global.minimap_renderer.get_admin_minimap_icon(src.z_level)
+		src.map.vis_flags |= VIS_INHERIT_ID
+		src.map.mouse_opacity = 0
+
+		src.minimap_render = new()
+		src.minimap_render.appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
+		src.minimap_render.mouse_opacity = 0
+
+		src.minimap_render.vis_contents += src.map
+		src.minimap_holder.vis_contents += src.minimap_render
+
+	update_z_level(z_level)
+		if (!global.minimap_renderer?.valid_admin_z_level(z_level))
+			return
+
+		src.z_level = z_level
+		src.map.icon = global.minimap_renderer.get_admin_minimap_icon(src.z_level)
+		src.centre_focus_x = null
+		src.centre_focus_y = null
+		src.centre_scale = null
+		src.find_focal_point()
+
+		for (var/atom/target as anything in src.minimap_markers)
+			var/datum/minimap_marker/minimap/minimap_marker = src.minimap_markers[target]
+			src.set_marker_position(minimap_marker, minimap_marker.target.x, minimap_marker.target.y, minimap_marker.target.z)
+
+	proc/refresh_render()
+		if (global.minimap_renderer)
+			src.map.icon = global.minimap_renderer.get_admin_minimap_icon(src.z_level)
+
+	valid_turf(turf/T)
+		return T?.loc && !istype(T, /turf/space)
+
+	find_focal_point()
+		if (!src.x_max || !src.x_min || !src.y_max || !src.y_min || !src.z_level)
+			return
+
+		var/max_x = src.x_min
+		var/min_x = src.x_max
+		var/max_y = src.y_min
+		var/min_y = src.y_max
+		var/found_valid_turf = FALSE
+
+		for (var/turf/T as anything in block(locate(src.x_min, src.y_min, src.z_level), locate(src.x_max, src.y_max, src.z_level)))
+			if (!src.valid_turf(T))
+				continue
+
+			found_valid_turf = TRUE
+			max_x = max(max_x, T.x)
+			min_x = min(min_x, T.x)
+			max_y = max(max_y, T.y)
+			min_y = min(min_y, T.y)
+
+		if (!found_valid_turf)
+			max_x = src.x_max
+			min_x = src.x_min
+			max_y = src.y_max
+			min_y = src.y_min
+
+		src.centre_focus_x = ((max_x + min_x) - 1) / 2
+		src.centre_focus_y = ((max_y + min_y) - 1) / 2
+		src.centre_scale = min(world.maxx / ((max_x - min_x) + src.border_width), world.maxy / ((max_y - min_y) + src.border_width))
+		src.centre_scale = clamp(src.centre_scale, src.min_zoom, src.max_zoom)
+
+		src.centre_on_point(src.centre_scale, src.centre_focus_x, src.centre_focus_y)
+
 /// Checks whether a turf is rendered on this minimap type.
 /datum/minimap/area_map/proc/valid_turf(turf/T)
 	if (!T.loc)

@@ -17,6 +17,12 @@ var/list/minimap_z_levels = list(Z_LEVEL_STATION, Z_LEVEL_DEBRIS, Z_LEVEL_MINING
 	var/list/icon/radar_minimaps_by_z_level
 	/// A list of radar minimap objects. Indexed by z-level.
 	var/list/atom/movable/radar_minimap_objects_by_z_level
+	/// Full area renders for admin minimaps, generated lazily and indexed by z-level
+	var/list/icon/admin_minimap_renders_by_z_level
+	/// Current colours for dynamic area groups, used when generating admin renders
+	var/list/admin_dynamic_area_colours
+	/// Generated fallback colours for areas without a dedicated minimap colour
+	var/list/admin_area_colours
 	/// A list of minimap render modifiers, sorted by priority.
 	var/list/datum/minimap_render_modifier/minimap_modifiers
 	/// Does this minimap render space, if so - what color? Null if it renders space as black.
@@ -29,6 +35,9 @@ var/list/minimap_z_levels = list(Z_LEVEL_STATION, Z_LEVEL_DEBRIS, Z_LEVEL_MINING
 	src.dynamic_area_overlays = list()
 	src.radar_minimaps_by_z_level = list()
 	src.radar_minimap_objects_by_z_level = list()
+	src.admin_minimap_renders_by_z_level = list()
+	src.admin_dynamic_area_colours = list()
+	src.admin_area_colours = list()
 
 	src.minimap_modifiers = list()
 	for (var/T in concrete_typesof(/datum/minimap_render_modifier))
@@ -192,6 +201,71 @@ var/list/minimap_z_levels = list(Z_LEVEL_STATION, Z_LEVEL_DEBRIS, Z_LEVEL_MINING
 
 	return hsl2rgb(turf_hsl[1], turf_hsl[2], turf_hsl[3])
 
+/// Returns a fallback colour for an area that has no dedicated minimap colour
+/datum/minimap_renderer/proc/admin_area_colour(area/A)
+	if (!A)
+		return
+
+	var/area_type = "[A.type]"
+	if (src.admin_area_colours[area_type])
+		return src.admin_area_colours[area_type]
+
+	var/colour_seed = hex2num(copytext(md5(area_type), 1, 7))
+	var/colour = hsl2rgb(colour_seed % 360, 45, 60)
+	src.admin_area_colours[area_type] = colour
+	return colour
+
+/// Determine the colour of a turf on the admin minimap
+/datum/minimap_renderer/proc/admin_turf_color(turf/T)
+	if (!T?.loc || istype(T, /turf/space))
+		return
+
+	var/area/A = T.loc
+	var/colour = src.admin_dynamic_area_colours["[A.dynamic_map_colour_group]"]
+	if (!colour)
+		colour = A.station_map_colour
+	if (!istext(colour) || !length(colour) || colour == MAPC_DEFAULT)
+		colour = istype(A, /area/station) ? MAPC_DEFAULT : src.admin_area_colour(A)
+
+	var/list/turf_hsl = hex_to_hsl_list(colour)
+	for (var/datum/minimap_render_modifier/modifier as anything in src.minimap_modifiers)
+		if (modifier.is_compatible(T))
+			turf_hsl = modifier.process(turf_hsl)
+			break
+
+	return hsl2rgb(turf_hsl[1], turf_hsl[2], turf_hsl[3])
+
+/datum/minimap_renderer/proc/valid_admin_z_level(z_level)
+	return isnum(z_level) && z_level == round(z_level) && z_level >= 1 && z_level <= world.maxz
+
+/// Generate and cache a complete area render for one Z-level
+/datum/minimap_renderer/proc/get_admin_minimap_icon(z_level)
+	if (!src.valid_admin_z_level(z_level))
+		return
+
+	var/z_level_key = "[z_level]"
+	if (src.admin_minimap_renders_by_z_level[z_level_key])
+		return src.admin_minimap_renders_by_z_level[z_level_key]
+
+	var/icon/minimap_render = icon('icons/obj/minimap/minimap.dmi', "blank")
+	minimap_render.Scale(world.maxx, world.maxy)
+	minimap_render.SwapColor(rgb(0, 0, 0), rgb(0, 0, 0, 0))
+
+	for (var/turf/T as anything in block(locate(1, 1, z_level), locate(world.maxx, world.maxy, z_level)))
+		var/colour = src.admin_turf_color(T)
+		if (colour)
+			minimap_render.DrawBox(colour, T.x, T.y)
+
+	src.admin_minimap_renders_by_z_level[z_level_key] = minimap_render
+	return minimap_render
+
+/// Invalidate the cached admin minimap render for one Z-level
+/datum/minimap_renderer/proc/refresh_admin_minimap(z_level)
+	if (!src.valid_admin_z_level(z_level))
+		return
+
+	src.admin_minimap_renders_by_z_level["[z_level]"] = null
+
 /// Generates a list of `/atom/movable` objects for each z-level for a specified minimap type.
 /datum/minimap_renderer/proc/generate_minimap_icons(minimap_type)
 	. = list()
@@ -224,17 +298,24 @@ var/list/minimap_z_levels = list(Z_LEVEL_STATION, Z_LEVEL_DEBRIS, Z_LEVEL_MINING
 
 /// Recolours a specified dynamic area group to a given colour.
 /datum/minimap_renderer/proc/recolor_area(area_group, colour)
+	src.admin_dynamic_area_colours["[area_group]"] = colour
+
 	for (var/z_level in src.dynamic_area_overlays)
-		for (var/map_type in src.dynamic_area_overlays)
-			if (!src.dynamic_area_overlays[z_level][map_type]["[area_group]"])
+		for (var/map_type in src.dynamic_area_overlays["[z_level]"])
+			if (!src.dynamic_area_overlays["[z_level]"][map_type]["[area_group]"])
 				continue
 
-			var/atom/movable/area_render = src.dynamic_area_overlays[z_level][map_type]["[area_group]"]
+			var/atom/movable/area_render = src.dynamic_area_overlays["[z_level]"][map_type]["[area_group]"]
 			var/icon/area_render_icon = icon(area_render.icon)
 
 			area_render_icon.SetIntensity(0)
 			area_render_icon.SwapColor(rgb(0, 0, 0, 255), colour)
 			area_render.icon = icon(area_render_icon)
+
+	// invalidate any cached Z-levels and refresh active admin maps.
+	src.admin_minimap_renders_by_z_level = list()
+	for_by_tcl(admin_map, /datum/minimap/area_map/admin)
+		admin_map.refresh_render()
 
 /// Compare the priority of two minimap render modifiers.
 /proc/cmp_minimap_modifiers(datum/minimap_render_modifier/a, datum/minimap_render_modifier/b)
