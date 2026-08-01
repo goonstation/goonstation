@@ -4764,6 +4764,10 @@
 	pixel_x = -9;
 	pixel_y = -2
 	},
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 6
+	},
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
@@ -14716,7 +14720,6 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/light/small/floor/netural,
-/obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/floor/black,
 /area/research_outpost/toxins)
 "dtP" = (
@@ -15139,6 +15142,16 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/east)
+"dyC" = (
+/obj/machinery/meter{
+	pixel_y = -8;
+	pixel_x = -10
+	},
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 1
+	},
+/turf/simulated/floor/black/grime,
+/area/research_outpost/toxins)
 "dyH" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9;
@@ -17588,12 +17601,7 @@
 /turf/simulated/wall/auto/walp/pink,
 /area/station/crew_quarters/cafeteria/the_eye_bar)
 "eba" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
-	dir = 6
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal/walp,
-/turf/simulated/floor/plating,
+/turf/space,
 /area/research_outpost/toxins)
 "ebb" = (
 /obj/table/reinforced/bar/auto{
@@ -41350,6 +41358,10 @@
 	},
 /turf/simulated/floor/twotone/white,
 /area/station/medical/medbay)
+"jxw" = (
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/turf/simulated/floor/black,
+/area/research_outpost/toxins)
 "jxx" = (
 /obj/stool/bed,
 /obj/item/clothing/glasses/vr{
@@ -56923,8 +56935,9 @@
 /area/station/storage/warehouse)
 "neO" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 6
+	dir = 4
 	},
+/obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/space,
 /area/research_outpost/toxins)
 "neV" = (
@@ -69144,7 +69157,6 @@
 /turf/simulated/floor/white/checker,
 /area/station/crew_quarters/pool)
 "qbe" = (
-/obj/decoration/pottedfern,
 /obj/decoration/pottedfern,
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/black,
@@ -81855,10 +81867,11 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/observatory)
 "sWN" = (
-/obj/machinery/atmospherics/pipe/manifold{
-	level = 2
-	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal/walp,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 6
+	},
 /turf/simulated/floor/plating,
 /area/research_outpost/toxins)
 "sWP" = (
@@ -95686,12 +95699,11 @@
 	},
 /area/station/medical/medbay/lobby)
 "wjf" = (
-/obj/machinery/atmospherics/pipe/manifold/overfloor{
-	dir = 1
-	},
-/obj/machinery/meter,
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 8
 	},
 /turf/simulated/floor/black,
 /area/research_outpost/toxins)
@@ -110617,8 +110629,8 @@ dJj
 daW
 avS
 ufP
+sWN
 xzO
-eba
 sWN
 ufP
 vmN
@@ -110917,10 +110929,10 @@ dxo
 wJy
 wjf
 dtM
-pWS
-efn
-jsW
+wVQ
+xzO
 kVu
+eba
 kVu
 xzO
 rua
@@ -111217,12 +111229,12 @@ gjI
 fFm
 pVv
 mxB
-dJj
-mjp
-wVQ
-xzO
+dyC
+jxw
+pWS
+efn
 neO
-yfj
+jsW
 bNR
 xzO
 jCr
