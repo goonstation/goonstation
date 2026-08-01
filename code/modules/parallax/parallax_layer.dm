@@ -51,20 +51,18 @@
 
 	var/x = src.parallax_render_source.scroll_speed * src.parallax_render_source.parallax_value * sin(src.parallax_render_source.scroll_angle)
 	if (x)
-		var/half_width = src.parallax_render_source.icon_width / 2
 		var/x_direction = sign(x)
-		var/x_time = round((half_width / abs(x)) SECONDS, 1)
-		var/x_offset = round(half_width, 1)
+		var/x_offset = src.parallax_render_source.icon_width / 2
+		var/x_time = (x_offset / abs(x)) SECONDS
 
-		animate(src, 0, -1, pixel_x = x_offset * -x_direction, flags = ANIMATION_PARALLEL | ANIMATION_RELATIVE)
-		animate(time = x_time, pixel_x = src.parallax_render_source.icon_width * x_direction, flags = ANIMATION_RELATIVE)
+		animate(src, 0, -1, transform = matrix(1, 0, x_offset * -x_direction, 0, 1, 0), flags = ANIMATION_PARALLEL | ANIMATION_RELATIVE)
+		animate(time = x_time, transform = matrix(1, 0, src.parallax_render_source.icon_width * x_direction, 0, 1, 0), flags = ANIMATION_RELATIVE)
 
 	var/y = src.parallax_render_source.scroll_speed * src.parallax_render_source.parallax_value * cos(src.parallax_render_source.scroll_angle)
 	if (y)
-		var/half_height = src.parallax_render_source.icon_height / 2
 		var/y_direction = sign(y)
-		var/y_time = round((half_height / abs(y)) SECONDS, 1)
-		var/y_offset = round(half_height, 1)
+		var/y_offset = src.parallax_render_source.icon_height / 2
+		var/y_time = (y_offset / abs(y)) SECONDS
 
-		animate(src, 0, -1, pixel_y = y_offset * -y_direction, flags = ANIMATION_PARALLEL | ANIMATION_RELATIVE)
-		animate(time = y_time, pixel_y = src.parallax_render_source.icon_height * y_direction, flags = ANIMATION_RELATIVE)
+		animate(src, 0, -1, transform = matrix(1, 0, 0, 0, 1, y_offset * -y_direction), flags = ANIMATION_PARALLEL | ANIMATION_RELATIVE)
+		animate(time = y_time, transform = matrix(1, 0, 0, 0, 1, src.parallax_render_source.icon_height * y_direction), flags = ANIMATION_RELATIVE)
