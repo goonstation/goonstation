@@ -1625,6 +1625,21 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 		..()
 		src.reagents.add_reagent("currypowder",10)
 
+/obj/item/reagent_containers/food/snacks/plant/ginger
+	name = "ginger"
+	crop_suffix = " root"
+	desc = "An aromatic root from the ginger plant, a hotter relative of turmeric"
+	icon_state = "ginger"
+	planttype = /datum/plant/veg/ginger
+	edible = TRUE //You really should peel it first!!!!
+	validforhat = 1
+	food_color = "#C58C66"
+	brew_result = "ginger_ale"
+
+	make_reagents()
+		..()
+		src.reagents.add_reagent("ginger", 10)
+
 /obj/item/reagent_containers/food/snacks/plant/cinnamon
 	name = "cinnamon stick"
 	crop_suffix = " stick"

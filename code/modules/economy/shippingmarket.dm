@@ -294,21 +294,19 @@
 				src.generate_mail()
 		#endif
 
-		SPAWN(5 SECONDS)
-			// 20% chance to shuffle out generic traders for a new one
-			// Do this after a short delay so QMs can finish any last-second deals
-			var/removed_count = 0
-			for (var/datum/trader/generic/GT in src.active_traders)
-				if (prob(20))
-					src.active_traders -= GT
-					removed_count++
+		// 20% chance to shuffle out generic traders for a new one
+		var/removed_count = 0
+		for (var/datum/trader/generic/GT in src.active_traders)
+			if (prob(20))
+				src.active_traders -= GT
+				removed_count++
 
-			while(removed_count > 0)
-				removed_count--
-				src.active_traders += new /datum/trader/generic(src)
+		while(removed_count > 0)
+			removed_count--
+			src.active_traders += new /datum/trader/generic(src)
 
-			update_shipping_data()
-			update_buy_prices()
+		update_shipping_data()
+		update_buy_prices()
 
 	proc/generate_mail()
 		var/alive_players = 0
@@ -747,11 +745,13 @@
 			computer.update_static_data_for_all_viewers()
 		for_by_tcl(barcoder, /obj/item/portable_barcoder)
 			barcoder.update_destinations()
-		src.update_supply_console_data()
+		src.update_supply_console_data(TRUE)
 
-	proc/update_supply_console_data()
+	proc/update_supply_console_data(var/market_reset = FALSE)
 		for_by_tcl(computer, /obj/machinery/computer/supplycomp)
 			computer.update_static_data_for_all_viewers()
+			if(market_reset) //Return to the trader main menu to avoid trying to view a trader that has left
+				computer.set_tgui_shared_state("viewtrader", -1)
 
 // Debugging and admin verbs (mostly coder)
 
