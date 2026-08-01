@@ -54,8 +54,11 @@
 /turf/simulated/floor/engine/glow,
 /area/listeningpost/landing_bay)
 "bM" = (
-/turf/simulated/floor/wood/two,
-/area/listeningpost/barracks)
+/obj/cable/black{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/break_room)
 "bT" = (
 /obj/cable/orange{
 	icon_state = "4-8"
@@ -69,12 +72,8 @@
 /turf/simulated/floor/minitiles/black,
 /area/listeningpost/general)
 "cn" = (
-/obj/decal/tile_edge/line/black{
-	dir = 4;
-	icon_state = "line1"
-	},
-/turf/simulated/floor/wood/two,
-/area/listeningpost/barracks)
+/turf/simulated/floor/blueblack,
+/area/listeningpost/break_room)
 "cu" = (
 /obj/decal/tile_edge/line/black{
 	dir = 9;
@@ -260,7 +259,7 @@
 /area/listeningpost/break_room)
 "hs" = (
 /obj/machinery/light/incandescent/warm,
-/turf/simulated/floor/black,
+/turf/simulated/floor/carpet/grime,
 /area/listeningpost/general)
 "iG" = (
 /obj/machinery/power/terminal,
@@ -403,13 +402,9 @@
 /turf/simulated/floor/black,
 /area/listeningpost/power)
 "me" = (
-/obj/machinery/shower{
-	dir = 4;
-	pixel_x = 8;
-	pixel_y = 8
-	},
-/turf/simulated/floor/minitiles/black,
-/area/listeningpost/general)
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/wood/two,
+/area/listeningpost/barracks)
 "mm" = (
 /obj/lattice{
 	tag = "icon-lattice-dir (EAST)";
@@ -419,6 +414,13 @@
 /obj/machinery/light/runway_light/delay2,
 /turf/variableTurf/clear,
 /area/listeningpost/comm_dish)
+"mv" = (
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/wood/two,
+/area/listeningpost/barracks)
 "mM" = (
 /obj/machinery/computer/camera_viewer,
 /obj/machinery/power/data_terminal,
@@ -436,9 +438,6 @@
 /turf/simulated/floor/circuit/red,
 /area/listeningpost/syndicate_teleporter)
 "mZ" = (
-/obj/cable/black{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/stairs/dark/wide{
 	dir = 8
 	},
@@ -533,9 +532,6 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/cable/black{
-	icon_state = "2-4"
-	},
 /turf/simulated/floor/red/redblackchecker,
 /area/listeningpost/general)
 "ou" = (
@@ -548,14 +544,6 @@
 /turf/simulated/floor/plating,
 /area/listeningpost/tech_room)
 "oO" = (
-/obj/machinery/power/data_terminal,
-/obj/cable/black{
-	icon_state = "0-4"
-	},
-/obj/machinery/guardbot_dock,
-/obj/machinery/bot/guardbot/bad{
-	on = 0
-	},
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -620,9 +608,15 @@
 	},
 /area/listeningpost/general)
 "qt" = (
-/obj/machinery/light/incandescent/warm,
-/turf/simulated/floor/carpet/grime,
-/area/listeningpost/general)
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1";
+	tag = "icon-line1 (NORTH)"
+	},
+/obj/iv_stand,
+/obj/item/reagent_containers/iv_drip/blood,
+/turf/simulated/floor/sanitary/white,
+/area/listeningpost/break_room)
 "qy" = (
 /obj/rack,
 /obj/decal/stripe_caution,
@@ -726,17 +720,27 @@
 /turf/simulated/floor/black,
 /area/listeningpost/general)
 "tE" = (
-/obj/storage/secure/closet/fridge,
-/obj/item/reagent_containers/food/drinks/milk,
-/obj/item/reagent_containers/food/drinks/milk{
-	pixel_x = 7
+/obj/decal/tile_edge/line/black{
+	dir = 5;
+	icon_state = "tile1"
 	},
-/turf/simulated/floor/carpet/grime,
-/area/listeningpost/general)
+/obj/decal/tile_edge/line/black{
+	dir = 5;
+	icon_state = "line2"
+	},
+/obj/cable/black{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_north/hardened,
+/turf/simulated/floor/sanitary/white,
+/area/listeningpost/break_room)
 "tQ" = (
 /obj/item/storage/wall/random{
 	dir = 1;
 	pixel_y = 29
+	},
+/obj/cable/black{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
 /area/listeningpost/break_room)
@@ -797,8 +801,9 @@
 /turf/simulated/floor/minitiles/black,
 /area/listeningpost/tech_room)
 "vy" = (
-/turf/simulated/floor/black,
-/area/listeningpost/break_room)
+/obj/machinery/vending/jobclothing/syndicate,
+/turf/simulated/floor/wood/two,
+/area/listeningpost/barracks)
 "vD" = (
 /obj/table/syndicate/auto,
 /obj/machinery/cell_charger{
@@ -855,9 +860,11 @@
 /turf/simulated/floor/minitiles/black,
 /area/listeningpost/general)
 "wK" = (
-/turf/simulated/floor/redblack{
-	dir = 1
+/obj/machinery/light/incandescent/warm,
+/obj/cable/black{
+	icon_state = "1-8"
 	},
+/turf/simulated/floor/black,
 /area/listeningpost/general)
 "wM" = (
 /obj/decal/tile_edge/line/black{
@@ -872,9 +879,6 @@
 "xb" = (
 /obj/machinery/door/airlock/pyro/weapons{
 	dir = 4
-	},
-/obj/cable/black{
-	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
 /area/listeningpost/general)
@@ -1075,6 +1079,9 @@
 /turf/simulated/floor/red/redblackchecker,
 /area/listeningpost/general)
 "By" = (
+/obj/cable/black{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/redblack/corner{
 	dir = 8
 	},
@@ -1121,20 +1128,21 @@
 /turf/simulated/floor/stairs/dark/wide,
 /area/listeningpost/general)
 "DP" = (
+/obj/machinery/door/airlock/pyro/weapons{
+	dir = 8
+	},
 /obj/cable/black{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost/inner{
-	dir = 4
-	},
 /turf/simulated/floor/black,
-/area/listeningpost/barracks)
+/area/listeningpost/break_room)
 "DR" = (
-/obj/machinery/vending/jobclothing/syndicate,
 /turf/simulated/floor/wood/two,
 /area/listeningpost/barracks)
 "Ex" = (
-/turf/simulated/floor/blueblack,
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet,
+/turf/simulated/floor/techfloor/red,
 /area/listeningpost/break_room)
 "EG" = (
 /obj/stool/chair/comfy/red{
@@ -1210,6 +1218,9 @@
 /obj/cable/black{
 	icon_state = "1-4"
 	},
+/obj/cable/black{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -1237,11 +1248,14 @@
 /turf/simulated/floor/minitiles/black,
 /area/listeningpost/general)
 "HB" = (
-/obj/machinery/door/airlock/pyro/weapons{
-	dir = 8
+/obj/cable/black{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost/inner{
+	dir = 4
 	},
 /turf/simulated/floor/black,
-/area/listeningpost/break_room)
+/area/listeningpost/barracks)
 "HG" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/listeningpost/vestibule)
@@ -1283,19 +1297,18 @@
 	},
 /turf/simulated/floor/minitiles/black,
 /area/listeningpost/tech_room)
-"JA" = (
-/obj/machinery/light/incandescent/warm,
-/turf/simulated/floor/wood/two,
-/area/listeningpost/barracks)
 "JP" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/wood/two,
 /area/listeningpost/barracks)
 "JS" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
-/turf/simulated/floor/techfloor/red,
-/area/listeningpost/break_room)
+/obj/machinery/shower{
+	dir = 4;
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/turf/simulated/floor/minitiles/black,
+/area/listeningpost/general)
 "JV" = (
 /obj/cable/black{
 	icon_state = "1-4"
@@ -1380,17 +1393,6 @@
 	},
 /turf/simulated/floor/red/redblackchecker,
 /area/listeningpost/general)
-"MD" = (
-/obj/decal/tile_edge/line/black{
-	dir = 5;
-	icon_state = "tile1"
-	},
-/obj/decal/tile_edge/line/black{
-	dir = 5;
-	icon_state = "line2"
-	},
-/turf/simulated/floor/sanitary/white,
-/area/listeningpost/break_room)
 "Nd" = (
 /obj/machinery/bot/medbot/no_camera,
 /turf/simulated/floor/blueblack,
@@ -1401,25 +1403,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/listeningpost/comm_dish)
-"NC" = (
-/obj/table/syndicate/auto,
-/obj/item/cigpacket{
-	pixel_x = 6;
-	pixel_y = 14
-	},
-/obj/item/device/light/zippo/gold{
-	pixel_y = 10;
-	pixel_x = -4
-	},
-/obj/item/decoration/ashtray,
-/obj/item/matchbook{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/turf/simulated/floor/redblack{
-	dir = 8
-	},
-/area/listeningpost/general)
 "NE" = (
 /obj/cable/black{
 	icon_state = "2-8"
@@ -1481,6 +1464,25 @@
 /obj/machinery/light/runway_light/delay4,
 /turf/simulated/floor/glassblock/transparent/red,
 /area/listeningpost/syndicate_teleporter)
+"PJ" = (
+/obj/table/syndicate/auto,
+/obj/item/cigpacket{
+	pixel_x = 6;
+	pixel_y = 14
+	},
+/obj/item/device/light/zippo/gold{
+	pixel_y = 10;
+	pixel_x = -4
+	},
+/obj/item/decoration/ashtray,
+/obj/item/matchbook{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/listeningpost/general)
 "Qd" = (
 /obj/table/syndicate/auto,
 /obj/item/reagent_containers/food/drinks/drinkingglass/flute{
@@ -1667,12 +1669,12 @@
 /turf/simulated/floor/minitiles/black,
 /area/listeningpost/general)
 "VG" = (
-/obj/cable/black{
-	icon_state = "4-8"
+/obj/storage/secure/closet/fridge,
+/obj/item/reagent_containers/food/drinks/milk,
+/obj/item/reagent_containers/food/drinks/milk{
+	pixel_x = 7
 	},
-/turf/simulated/floor/redblack{
-	dir = 4
-	},
+/turf/simulated/floor/carpet/grime,
 /area/listeningpost/general)
 "VL" = (
 /obj/table/syndicate/auto,
@@ -1750,13 +1752,17 @@
 /turf/simulated/floor/engine/glow,
 /area/listeningpost/vestibule)
 "Yx" = (
-/obj/decal/tile_edge/line/black{
-	dir = 4;
-	icon_state = "line1"
+/obj/machinery/power/data_terminal,
+/obj/cable/black{
+	icon_state = "0-4"
 	},
-/obj/machinery/power/apc/autoname_east/hardened,
-/obj/cable/black,
-/turf/simulated/floor/red/redblackchecker,
+/obj/machinery/guardbot_dock,
+/obj/machinery/bot/guardbot/bad{
+	on = 0
+	},
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
 /area/listeningpost/general)
 "YJ" = (
 /obj/cable/black{
@@ -1778,16 +1784,6 @@
 /obj/map/light/dimred,
 /turf/variableTurf/floor,
 /area/space)
-"Zg" = (
-/obj/decal/tile_edge/line/black{
-	dir = 8;
-	icon_state = "line1";
-	tag = "icon-line1 (NORTH)"
-	},
-/obj/iv_stand,
-/obj/item/reagent_containers/iv_drip/blood,
-/turf/simulated/floor/sanitary/white,
-/area/listeningpost/break_room)
 "ZD" = (
 /obj/cable/black{
 	icon_state = "4-8"
@@ -2004,7 +2000,7 @@ gt
 Vd
 rD
 Gk
-Zg
+qt
 ZH
 rD
 Ts
@@ -2032,13 +2028,13 @@ Ts
 Ts
 Px
 cE
-me
+JS
 cg
 cg
 uM
 rD
 Rq
-JS
+Ex
 LL
 rD
 Ts
@@ -2071,7 +2067,7 @@ Px
 cg
 Hy
 rD
-MD
+tE
 na
 jQ
 rD
@@ -2106,7 +2102,7 @@ Kn
 rD
 rD
 tQ
-Ex
+cn
 rD
 rD
 Ts
@@ -2136,10 +2132,10 @@ yf
 BS
 dd
 wM
-qt
+hs
 rD
 zX
-vy
+bM
 Nd
 rD
 Ts
@@ -2168,12 +2164,12 @@ Ts
 Px
 Di
 or
-Yx
+or
 MA
-tE
+VG
 rD
 le
-vy
+bM
 gv
 rD
 Ts
@@ -2207,7 +2203,7 @@ Iy
 Iy
 rD
 bF
-HB
+DP
 rD
 rD
 tU
@@ -2237,11 +2233,11 @@ Px
 lS
 mZ
 pu
-oO
+Yx
 vD
 dl
 By
-hs
+wK
 Px
 tU
 tU
@@ -2269,12 +2265,12 @@ kE
 Px
 am
 JV
-VG
+oO
 EM
 ZD
 cg
 cg
-wK
+LB
 vZ
 HG
 HG
@@ -2303,7 +2299,7 @@ RW
 Px
 kN
 yT
-VR
+dP
 dP
 VR
 dP
@@ -2509,7 +2505,7 @@ Px
 UJ
 UZ
 KU
-NC
+PJ
 Pb
 zm
 aH
@@ -2546,7 +2542,7 @@ Cg
 ep
 Cg
 Pw
-DP
+HB
 Pw
 Pw
 Pw
@@ -2580,8 +2576,8 @@ zK
 Qs
 Cg
 VL
-bM
-JA
+DR
+me
 JP
 Pw
 Ts
@@ -2613,9 +2609,9 @@ Fn
 iG
 pp
 Cg
+vy
 DR
-bM
-bM
+DR
 Cf
 Pw
 Ts
@@ -2648,9 +2644,9 @@ rZ
 vp
 Cg
 Ie
-cn
-cn
-cn
+mv
+mv
+mv
 Pw
 Pw
 Ts
