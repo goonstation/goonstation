@@ -11819,7 +11819,6 @@
 /area/station/crew_quarters/kitchen)
 "cOW" = (
 /obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/heads,
 /obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "compcore";
 	enter_id = "inner";
@@ -11828,6 +11827,7 @@
 /obj/machinery/door/airlock/walp/glass/command{
 	dir = 4
 	},
+/obj/mapping_helper/access/computer_core,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "cPg" = (
@@ -36696,7 +36696,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/access/heads,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/airlock/cycler/manual{
 	cycle_id = "compcore";
@@ -36704,6 +36703,7 @@
 	name = "Computer Core"
 	},
 /obj/machinery/door/airlock/walp/command,
+/obj/mapping_helper/access/computer_core,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "iux" = (
