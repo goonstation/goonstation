@@ -93,8 +93,8 @@
 	var/screen_scale = src.displayed_minimap.zoom_coefficient * src.displayed_minimap.map_scale
 	if (!screen_scale)
 		return
-	var/x = round((text2num(param_list["icon-x"]) - src.displayed_minimap.minimap_render.pixel_x) / screen_scale)
-	var/y = round((text2num(param_list["icon-y"]) - src.displayed_minimap.minimap_render.pixel_y) / screen_scale)
+	var/x = round((text2num(param_list["icon-x"]) - src.displayed_minimap.minimap_render.pixel_x) / screen_scale) + 1
+	var/y = round((text2num(param_list["icon-y"]) - src.displayed_minimap.minimap_render.pixel_y) / screen_scale) + 1
 	var/turf/clicked = locate(x, y, src.displayed_minimap.z_level)
 	if (clicked)
 		user.set_loc(clicked)
