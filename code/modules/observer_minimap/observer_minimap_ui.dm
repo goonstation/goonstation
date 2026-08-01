@@ -104,6 +104,9 @@ var/global/atom/movable/minimap_ui_handler/observer_minimap/observer_minimap_ui
 
 	switch (action)
 		if ("refresh_map")
+			if (ON_COOLDOWN(src, "admin_minimap_refresh", 1 SECOND))
+				boutput(ui.user, SPAN_NOTICE("Please wait a moment before refreshing the minimap again."))
+				return
 			global.minimap_renderer?.refresh_admin_minimap(admin_area_map.z_level)
 			admin_area_map.refresh_render()
 			var/datum/minimap/area_map/admin/refreshed_displayed_map = src.admin_controller?.displayed_minimap

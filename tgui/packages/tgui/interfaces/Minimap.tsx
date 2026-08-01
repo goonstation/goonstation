@@ -93,7 +93,7 @@ export const Minimap = () => {
                       color={playersVisible ? 'green' : 'red'}
                       onClick={() => act('toggle_players')}
                     >
-                      {playersVisible ? 'Hide Players' : 'Show Players'}
+                      Show Players
                     </Button>
                   </Stack.Item>
                   <Stack.Item>
@@ -103,7 +103,7 @@ export const Minimap = () => {
                       color={observersVisible ? 'green' : 'red'}
                       onClick={() => act('toggle_observers')}
                     >
-                      {observersVisible ? 'Hide Observers' : 'Show Observers'}
+                      Show Observers
                     </Button>
                   </Stack.Item>
                   <Stack.Item>
