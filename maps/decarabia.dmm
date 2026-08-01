@@ -47597,6 +47597,9 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/blueblack{
 	dir = 10
 	},
@@ -60541,7 +60544,6 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/bathroom)
 "nZX" = (
-/obj/table/reinforced/auto,
 /obj/decal/tile_edge/line/black{
 	dir = 8;
 	icon_state = "line1"
@@ -60552,13 +60554,11 @@
 	pixel_y = 0
 	},
 /obj/machinery/power/data_terminal,
-/obj/item/storage/toolbox/emergency{
-	pixel_x = 2;
-	pixel_y = 11
+/obj/cable{
+	icon_state = "0-4"
 	},
-/obj/item/clothing/head/helmet/welding{
-	pixel_x = -2;
-	pixel_y = 2
+/obj/machinery/computer/robotics/lab{
+	dir = 4
 	},
 /turf/simulated/floor/minitiles/black,
 /area/station/medical/robotics)
@@ -96138,6 +96138,14 @@
 /obj/item/storage/firstaid/regular{
 	pixel_y = 4;
 	pixel_x = 2
+	},
+/obj/item/clothing/head/helmet/welding{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/storage/toolbox/emergency{
+	pixel_x = 2;
+	pixel_y = 11
 	},
 /turf/simulated/floor/blueblack{
 	dir = 10
