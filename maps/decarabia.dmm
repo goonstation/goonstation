@@ -12594,11 +12594,7 @@
 	pixel_y = 7
 	},
 /obj/item/shipcomponent/mainweapon/taser{
-	pixel_x = -1;
-	pixel_y = 7
-	},
-/obj/item/shipcomponent/mainweapon/taser{
-	pixel_x = 8;
+	pixel_x = 6;
 	pixel_y = 7
 	},
 /turf/simulated/floor/black/grime,
@@ -95358,28 +95354,16 @@
 "wfj" = (
 /obj/machinery/light/incandescent,
 /obj/table/reinforced/industrial/auto,
-/obj/item/shipcomponent/mainweapon/taser{
-	pixel_x = -15;
-	pixel_y = 7
-	},
-/obj/item/shipcomponent/secondary_system/tractor_beam{
-	pixel_x = -8;
-	pixel_y = 11
-	},
-/obj/item/shipcomponent/secondary_system/tractor_beam{
-	pixel_x = 4;
-	pixel_y = 11
-	},
-/obj/item/shipcomponent/secondary_system/tractor_beam{
-	pixel_x = -8;
-	pixel_y = 5
-	},
-/obj/item/shipcomponent/secondary_system/tractor_beam{
-	pixel_x = 4;
-	pixel_y = 5
-	},
 /obj/machinery/camera/directional/east{
 	pixel_y = 4
+	},
+/obj/item/shipcomponent/mainweapon/taser{
+	pixel_x = -9;
+	pixel_y = 7
+	},
+/obj/item/shipcomponent/mainweapon/taser{
+	pixel_x = 4;
+	pixel_y = 7
 	},
 /turf/simulated/floor/black/grime,
 /area/station/hangar/sec)
