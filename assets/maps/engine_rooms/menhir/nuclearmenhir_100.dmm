@@ -35,6 +35,9 @@
 /area/station/engine/power)
 "aK" = (
 /obj/machinery/light_switch/directional/north,
+/obj/machinery/atmospherics/pipe/simple/insulated/underfloor{
+	dir = 4
+	},
 /turf/simulated/floor/stairs{
 	dir = 4
 	},
@@ -57,13 +60,6 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/engine/monitoring)
-"bI" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 9;
-	can_rupture = 0
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core/nuclear)
 "bR" = (
 /obj/lattice{
 	dir = 8;
@@ -201,6 +197,7 @@
 	},
 /area/station/engine/monitoring)
 "gp" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/underfloor,
 /turf/simulated/floor/yellowblack/corner{
 	dir = 4
 	},
@@ -248,6 +245,7 @@
 /obj/cable{
 	icon_state = "4-9"
 	},
+/obj/machinery/atmospherics/pipe/simple/insulated/underfloor,
 /turf/simulated/floor/black/grime,
 /area/station/engine/monitoring)
 "he" = (
@@ -269,6 +267,7 @@
 /obj/cable{
 	icon_state = "4-10"
 	},
+/obj/machinery/atmospherics/pipe/simple/insulated/underfloor,
 /turf/simulated/floor/black/grime,
 /area/station/engine/monitoring)
 "hC" = (
@@ -407,6 +406,12 @@
 	dir = 1
 	},
 /area/station/engine/power)
+"nd" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/underfloor,
+/turf/simulated/floor/yellowblack{
+	dir = 8
+	},
+/area/station/engine/monitoring)
 "nj" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/power)
@@ -491,6 +496,9 @@
 	},
 /obj/mapping_helper/access/engineering_engine,
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/atmospherics/pipe/simple/insulated/underfloor{
+	dir = 4
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 4
 	},
@@ -557,6 +565,9 @@
 	},
 /obj/mapping_helper/access/engineering_engine,
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/atmospherics/pipe/simple/insulated/underfloor{
+	dir = 4
+	},
 /turf/simulated/floor/black/grime,
 /area/station/engine/monitoring)
 "rf" = (
@@ -588,6 +599,7 @@
 	dir = 8;
 	pixel_x = -24
 	},
+/obj/machinery/atmospherics/pipe/simple/insulated/underfloor,
 /turf/simulated/floor/yellowblack{
 	dir = 8
 	},
@@ -722,6 +734,9 @@
 "wG" = (
 /obj/cable/orange{
 	icon_state = "1-10"
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
 	},
 /turf/simulated/floor/engine/caution/east,
 /area/station/engine/core/nuclear)
@@ -1108,6 +1123,12 @@
 /area/station/engine/coldloop{
 	name = "Volatiles Handling"
 	})
+"EZ" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/underfloor{
+	dir = 4
+	},
+/turf/simulated/floor/black/grime,
+/area/station/engine/monitoring)
 "Fh" = (
 /obj/lattice{
 	dir = 9;
@@ -1139,6 +1160,19 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
+"FJ" = (
+/obj/machinery/atmospherics/binary/pump/active{
+	id = "Hot Loop Sauna Pump";
+	target_pressure = 2000
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
+"GY" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "sauna purge valve"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "He" = (
 /obj/cable/orange{
 	icon_state = "1-2"
@@ -1166,6 +1200,9 @@
 /turf/space,
 /area/space)
 "HY" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/underfloor{
+	dir = 9
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 8
 	},
@@ -1252,6 +1289,7 @@
 	},
 /area/station/engine/monitoring)
 "Ms" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/underfloor,
 /turf/simulated/floor/yellowblack/corner{
 	dir = 1
 	},
@@ -1569,6 +1607,9 @@
 /obj/cable{
 	icon_state = "6-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/insulated/underfloor{
+	dir = 6
+	},
 /turf/simulated/floor/black/grime,
 /area/station/engine/monitoring)
 "WG" = (
@@ -1608,6 +1649,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/engine/power)
 "Xx" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/underfloor,
 /turf/simulated/floor/black/grime,
 /area/station/engine/monitoring)
 "XG" = (
@@ -2121,11 +2163,11 @@ MD
 sv
 Tq
 hK
-bI
-dn
-dn
-dn
-dn
+tg
+GY
+FJ
+sk
+yq
 Uz
 YO
 nZ
@@ -2230,7 +2272,7 @@ yZ
 xo
 Wt
 gp
-HY
+nd
 Ms
 gT
 hB
@@ -2256,7 +2298,7 @@ UV
 (22,1,1) = {"
 yZ
 jv
-Xx
+EZ
 Tw
 bd
 bd

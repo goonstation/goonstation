@@ -5,6 +5,13 @@
 	},
 /turf/space,
 /area/space)
+"ao" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated/underfloor,
+/turf/simulated/floor/black/grime,
+/area/station/engine/power)
 "aA" = (
 /turf/simulated/floor/yellowblack/corner{
 	dir = 1
@@ -302,10 +309,6 @@
 	},
 /area/station/engine/monitoring)
 "gk" = (
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4;
-	name = "cold reserve tank valve"
-	},
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
@@ -341,6 +344,12 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/engine/hotloop)
+"hj" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/underfloor{
+	dir = 6
+	},
+/turf/simulated/floor/black/grime,
+/area/station/engine/power)
 "hk" = (
 /obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
@@ -401,11 +410,15 @@
 /turf/simulated/floor/black/grime,
 /area/station/engine/power)
 "ik" = (
-/obj/machinery/portable_atmospherics/scrubber,
+/obj/machinery/atmospherics/unary/tank{
+	dir = 8
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "im" = (
-/obj/reagent_dispensers/foamtank,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 9
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "ip" = (
@@ -425,6 +438,12 @@
 	dir = 4
 	},
 /area/station/engine/hotloop)
+"iy" = (
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 8
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "iB" = (
 /obj/machinery/atmospherics/binary/pump/active{
 	dir = 1;
@@ -480,6 +499,10 @@
 "kx" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 5
+	},
+/obj/machinery/meter{
+	pixel_y = 11;
+	pixel_x = 10
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -592,6 +615,9 @@
 	pixel_x = -1
 	},
 /obj/machinery/firealarm/directional/north,
+/obj/machinery/atmospherics/pipe/simple/insulated/underfloor{
+	dir = 10
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
@@ -627,10 +653,6 @@
 	dir = 4
 	},
 /area/station/engine/coldloop)
-"nn" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold,
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "nr" = (
 /obj/machinery/atmospherics/binary/valve{
 	name = "combustion chamber outlet valve";
@@ -661,6 +683,9 @@
 	},
 /obj/mapping_helper/access/engineering_engine,
 /obj/mapping_helper/firedoor_spawn,
+/obj/machinery/atmospherics/pipe/simple/insulated/underfloor{
+	dir = 4
+	},
 /turf/simulated/floor/black/grime,
 /area/station/engine/monitoring)
 "nY" = (
@@ -857,14 +882,15 @@
 /turf/simulated/floor/black/grime,
 /area/station/engine/monitoring)
 "sN" = (
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4;
-	name = "cold auxillary valve"
+/obj/cable{
+	icon_state = "9-10"
 	},
 /obj/cable/orange{
-	icon_state = "1-2"
+	icon_state = "2-5"
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/caution/misc{
+	dir = 6
+	},
 /area/station/engine/core)
 "sT" = (
 /obj/cable/orange{
@@ -887,9 +913,7 @@
 /turf/simulated/floor/blue,
 /area/station/engine/coldloop)
 "tJ" = (
-/obj/machinery/atmospherics/unary/tank{
-	dir = 8
-	},
+/obj/machinery/atmospherics/unary/portables_connector,
 /turf/simulated/floor/engine/caution/north,
 /area/station/engine/core)
 "ua" = (
@@ -1015,6 +1039,9 @@
 /obj/rack,
 /obj/item/clothing/suit/hazard/rad,
 /obj/item/clothing/head/rad_hood,
+/obj/machinery/atmospherics/pipe/simple/insulated/underfloor{
+	dir = 4
+	},
 /turf/simulated/floor/black/grime,
 /area/station/engine/power)
 "vY" = (
@@ -1053,16 +1080,6 @@
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 6
 	},
-/area/station/engine/core)
-"wG" = (
-/obj/machinery/atmospherics/pipe/manifold/overfloor{
-	dir = 4
-	},
-/obj/machinery/meter{
-	pixel_y = 11;
-	pixel_x = -10
-	},
-/turf/simulated/floor/engine,
 /area/station/engine/core)
 "wI" = (
 /obj/cable{
@@ -1134,6 +1151,19 @@
 	dir = 4
 	},
 /area/station/engine/monitoring)
+"yz" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable/orange{
+	icon_state = "0-4"
+	},
+/obj/cable/orange{
+	icon_state = "0-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/power)
 "yC" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/simulated/floor/blueblack,
@@ -1141,7 +1171,11 @@
 "yZ" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
-	icon_state = "0-2"
+	icon_state = "0-6"
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 6
 	},
 /turf/simulated/floor/engine/caution/north,
 /area/station/engine/core)
@@ -1166,6 +1200,9 @@
 	dir = 1;
 	layer = 9.1;
 	pixel_y = 21
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated/underfloor{
+	dir = 4
 	},
 /turf/simulated/floor/yellowblack{
 	dir = 1
@@ -1327,6 +1364,12 @@
 	dir = 8
 	},
 /area/station/engine/power)
+"CM" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/underfloor{
+	dir = 4
+	},
+/turf/simulated/floor/black/grime,
+/area/station/engine/power)
 "CN" = (
 /obj/machinery/atmospherics/binary/circulatorTemp/right,
 /turf/simulated/floor/engine,
@@ -1460,15 +1503,17 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 10
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 4
 	},
 /obj/machinery/power/stats_meter{
 	name = "Hot Loop Inlet Meter";
 	pixel_x = 12;
 	tag = "Hot Loop Inlet Meter"
 	},
-/obj/cable,
+/obj/cable{
+	icon_state = "0-5"
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "Gz" = (
@@ -1528,6 +1573,16 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/engine/monitoring)
+"Hl" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 6
+	},
+/obj/machinery/meter{
+	pixel_x = 10;
+	pixel_y = -9
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "Hv" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 10
@@ -1556,6 +1611,9 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "Ie" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/underfloor{
+	dir = 4
+	},
 /turf/simulated/floor/black/grime,
 /area/station/engine/monitoring)
 "Ik" = (
@@ -1584,6 +1642,9 @@
 /obj/cable{
 	icon_state = "6-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/insulated/underfloor{
+	dir = 5
+	},
 /turf/simulated/floor/black/grime,
 /area/station/engine/monitoring)
 "Jb" = (
@@ -1607,6 +1668,13 @@
 	dir = 1
 	},
 /area/station/engine/power)
+"Ka" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "cold reserve tank valve"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "Kb" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -1630,6 +1698,7 @@
 /obj/cable/orange{
 	icon_state = "4-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/insulated/underfloor,
 /turf/simulated/floor/engine/caution/northsouth,
 /area/station/engine/power)
 "Kt" = (
@@ -1640,6 +1709,13 @@
 	dir = 8
 	},
 /area/station/engine/monitoring)
+"Kv" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/atmospherics/pipe/simple/insulated/underfloor{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/power)
 "Kz" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 10
@@ -1648,9 +1724,6 @@
 /area/space)
 "KA" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
-/obj/machinery/meter{
-	pixel_x = 10
-	},
 /obj/cable{
 	icon_state = "4-9"
 	},
@@ -1661,22 +1734,22 @@
 /area/station/engine/core)
 "KE" = (
 /obj/cable/orange{
-	icon_state = "1-8"
+	icon_state = "1-10"
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
 	},
 /turf/simulated/floor/engine/caution/north,
 /area/station/engine/core)
 "KJ" = (
-/obj/machinery/atmospherics/unary/portables_connector{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "1-2"
+/obj/machinery/atmospherics/binary/valve{
+	name = "sauna purge valve"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "KQ" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 6
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 9
 	},
 /turf/simulated/floor/engine/caution/north,
 /area/station/engine/core)
@@ -1900,12 +1973,12 @@
 /turf/simulated/floor/caution/corner/ne,
 /area/station/engine/coldloop)
 "OM" = (
-/obj/machinery/portable_atmospherics/canister/empty,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
 	pixel_x = 10
 	},
+/obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "OU" = (
@@ -2138,8 +2211,10 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/cable/orange{
-	icon_state = "2-4"
+/obj/machinery/atmospherics/binary/pump/active{
+	id = "Hot Loop Sauna Pump";
+	target_pressure = 2000;
+	dir = 4
 	},
 /turf/simulated/floor/engine/caution/north,
 /area/station/engine/core)
@@ -2250,6 +2325,10 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/space,
 /area/space)
+"Xa" = (
+/obj/machinery/portable_atmospherics/canister/empty,
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "Xj" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 6
@@ -2778,7 +2857,7 @@ Ik
 Gz
 pv
 KE
-KR
+Hl
 QK
 CN
 Qv
@@ -2801,15 +2880,15 @@ Qx
 "}
 (16,1,1) = {"
 ZQ
-ii
-pk
+hj
+ao
 Kr
-Xv
+yz
 KQ
-wG
-LT
+KR
+iy
 KA
-nn
+LT
 kx
 Nd
 Ml
@@ -2829,13 +2908,13 @@ Qx
 "}
 (17,1,1) = {"
 lr
-ii
+CM
 pk
 sT
 Xv
 gk
-pF
-pF
+cF
+Ka
 HN
 gH
 aI
@@ -2865,7 +2944,7 @@ tJ
 im
 ik
 OM
-pF
+Xa
 Hv
 FU
 pL
@@ -2885,7 +2964,7 @@ Qx
 "}
 (19,1,1) = {"
 bV
-Ce
+Kv
 uE
 Ce
 bV
