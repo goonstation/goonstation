@@ -37323,7 +37323,9 @@
 	},
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/walp/glass/medical,
+/obj/machinery/door/airlock/walp/glass/medical{
+	id = "medbay_door"
+	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "iCg" = (
@@ -65146,7 +65148,9 @@
 "peo" = (
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/walp/glass/medical,
+/obj/machinery/door/airlock/walp/glass/medical{
+	id = "medbay_door"
+	},
 /turf/simulated/floor/twotone/blue,
 /area/station/medical/medbay)
 "pev" = (
@@ -68424,7 +68428,9 @@
 "pTn" = (
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
-/obj/machinery/door/airlock/walp/glass/medical,
+/obj/machinery/door/airlock/walp/glass/medical{
+	id = "medbay_door"
+	},
 /turf/simulated/floor/twotone/blue{
 	dir = 1
 	},
@@ -76035,6 +76041,7 @@
 /area/station/crew_quarters/info)
 "rFL" = (
 /obj/machinery/light/small/floor/netural,
+/obj/machinery/manufacturer/uniform,
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters_south)
 "rFM" = (
