@@ -3823,6 +3823,11 @@
 	dir = 10;
 	icon_state = "xtra_bigstripe-corner2"
 	},
+/obj/machinery/conveyor_switch{
+	id = "the_qmio";
+	pixel_x = 12;
+	pixel_y = 21
+	},
 /turf/simulated/floor/caution/corner/ne,
 /area/station/quartermaster/office)
 "bXb" = (
@@ -6795,7 +6800,6 @@
 	},
 /area/station/turret_protected/incursion)
 "dGv" = (
-/obj/disposalpipe/segment/vertical,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -8283,7 +8287,7 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/mining/magnet)
 "erJ" = (
-/obj/decal/stripe_delivery,
+/obj/decal/stripe_caution,
 /obj/decal/tile_edge/line/yellow{
 	dir = 8;
 	icon_state = "line1"
@@ -9485,7 +9489,6 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "faL" = (
-/obj/disposalpipe/segment/horizontal,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -12218,13 +12221,14 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/janitor/office)
 "gzm" = (
-/obj/table/reinforced/auto,
-/obj/machinery/recharger,
-/obj/item/cargotele,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
 	pixel_y = 21
+	},
+/obj/disposalpipe/trunk/mail/south,
+/obj/disposaloutlet/south{
+	name = "undeliverable mail outlet"
 	},
 /turf/simulated/floor/caution/side{
 	dir = 1
@@ -14583,13 +14587,6 @@
 /area/station/hallway/secondary/entry{
 	name = "Arrival Concourse"
 	})
-"hJN" = (
-/obj/disposalpipe/segment/bent/west,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/station/quartermaster/office)
 "hKf" = (
 /obj/cable{
 	icon_state = "4-9"
@@ -18011,6 +18008,13 @@
 /area/station/hallway/secondary/west{
 	name = "West Shuttle Concourse"
 	})
+"jwM" = (
+/obj/disposalpipe/segment/mail{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor,
+/area/station/quartermaster/office)
 "jxo" = (
 /obj/decal/tile_edge/line/black{
 	dir = 10;
@@ -21413,13 +21417,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/central)
-"lkT" = (
-/obj/disposalpipe/segment/horizontal,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/station/quartermaster/office)
 "lkU" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -24325,7 +24322,7 @@
 	name = "Primary Docking Wing"
 	})
 "mIv" = (
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor/caution/corner,
 /area/station/quartermaster/office)
 "mIP" = (
@@ -25815,7 +25812,6 @@
 	name = "Solitary Confinement #1"
 	})
 "nyW" = (
-/obj/disposalpipe/segment/bent/east,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -28334,10 +28330,6 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
-"oKW" = (
-/obj/disposalpipe/segment/vertical,
-/turf/simulated/floor,
-/area/station/quartermaster/office)
 "oLx" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -29781,6 +29773,12 @@
 	},
 /turf/simulated/floor/shuttle/menhir_arm,
 /area/station/hallway/primary/southeast)
+"pAm" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/turf/simulated/floor/shuttle/menhir_arm,
+/area/station/hallway/primary/southwest)
 "pAs" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/table/reinforced/industrial/auto,
@@ -30671,10 +30669,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
-"pXx" = (
-/obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor,
-/area/station/quartermaster/office)
 "pXK" = (
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
@@ -34552,29 +34546,8 @@
 /area/station/crew_quarters/barber_shop)
 "rXa" = (
 /obj/table/reinforced/auto,
-/obj/item/clipboard{
-	pixel_y = 3;
-	pixel_x = -12
-	},
-/obj/item/pen/marker{
-	pixel_y = -1;
-	pixel_x = -14
-	},
-/obj/item/pen/marker/red{
-	pixel_y = 4;
-	pixel_x = -13
-	},
-/obj/item/pen/marker/blue{
-	pixel_x = -12
-	},
-/obj/item/paper_bin{
-	pixel_y = 2;
-	pixel_x = 5
-	},
-/obj/item/stamp{
-	pixel_y = 8;
-	pixel_x = -6
-	},
+/obj/machinery/recharger,
+/obj/item/cargotele,
 /turf/simulated/floor/caution/side{
 	dir = 1
 	},
@@ -35763,16 +35736,9 @@
 	pixel_y = -19;
 	dir = 1
 	},
-/obj/machinery/conveyor_switch{
-	id = "the_qmio";
-	pixel_x = 13;
-	pixel_y = -4
-	},
-/obj/disposaloutlet/south{
-	name = "undeliverable mail outlet";
-	dir = 1
-	},
-/obj/disposalpipe/trunk/mail/north,
+/obj/machinery/navbeacon/mule/QM1_north/west,
+/obj/decal/stripe_caution,
+/obj/machinery/bot/mulebot/QM1,
 /turf/simulated/floor/caution/side,
 /area/station/quartermaster/office)
 "sAR" = (
@@ -36079,9 +36045,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/se)
 "sIb" = (
-/obj/disposalpipe/segment/bent/west,
 /obj/cable{
 	icon_state = "4-10"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 2;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -38282,8 +38251,6 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/machinery/navbeacon/mule/QM1_north/south,
-/obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "tPI" = (
@@ -38809,8 +38776,30 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "ucs" = (
-/obj/machinery/disposal,
-/obj/disposalpipe/trunk/south,
+/obj/table/reinforced/auto,
+/obj/item/paper_bin{
+	pixel_y = 2;
+	pixel_x = 5
+	},
+/obj/item/clipboard{
+	pixel_y = 3;
+	pixel_x = -12
+	},
+/obj/item/pen/marker/red{
+	pixel_y = 4;
+	pixel_x = -13
+	},
+/obj/item/pen/marker{
+	pixel_y = -1;
+	pixel_x = -14
+	},
+/obj/item/pen/marker/blue{
+	pixel_x = -12
+	},
+/obj/item/stamp{
+	pixel_y = 8;
+	pixel_x = -6
+	},
 /turf/simulated/floor/caution/side{
 	dir = 1
 	},
@@ -41060,10 +41049,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "vjH" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
 /obj/cable{
 	icon_state = "5-8"
 	},
@@ -42558,7 +42543,7 @@
 /turf/simulated/floor/grey,
 /area/station/storage/emergency)
 "vWj" = (
-/obj/disposalpipe/segment/horizontal,
+/obj/disposalpipe/segment/bent/south,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -43179,7 +43164,6 @@
 /turf/simulated/floor/carpet/red/fancy/innercorner/omni,
 /area/station/security/hos)
 "wiF" = (
-/obj/disposalpipe/segment/horizontal,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -46772,6 +46756,10 @@
 /area/station/security/secwing)
 "xRT" = (
 /obj/machinery/manufacturer/medical,
+/obj/machinery/disposal/small/east{
+	pixel_x = -9
+	},
+/obj/disposalpipe/trunk/north,
 /turf/simulated/floor/caution,
 /area/station/quartermaster/office)
 "xSB" = (
@@ -82759,7 +82747,7 @@ xTq
 pWi
 pWi
 avz
-lkT
+xTq
 rpW
 wnr
 pMR
@@ -83058,10 +83046,10 @@ pZT
 snW
 nyW
 dGv
-oKW
-oKW
-oKW
-hJN
+pWi
+pWi
+pWi
+xTq
 fth
 cev
 pMR
@@ -83660,7 +83648,7 @@ qAM
 aeE
 pZT
 sxW
-pXx
+pWi
 pqk
 xHk
 vJK
@@ -84264,7 +84252,7 @@ nOg
 nMd
 pZT
 gzm
-pXx
+jwM
 bks
 mIv
 jZb
@@ -84566,7 +84554,7 @@ uJS
 qlZ
 hcW
 rXa
-pXx
+cem
 vjH
 sAC
 pMR
@@ -84869,7 +84857,7 @@ pQm
 hcW
 ucs
 sIb
-cem
+jwM
 oYn
 hcW
 qui
@@ -92118,7 +92106,7 @@ lhN
 lhN
 jVK
 xFh
-xFh
+pAm
 iCx
 bOZ
 aBi
