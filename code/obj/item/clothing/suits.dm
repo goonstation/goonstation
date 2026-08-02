@@ -1538,7 +1538,7 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 
 	setupProperties()
 		..()
-		setProperty("viralprot", 70)
+		setProperty("viralprot", 50)
 		setProperty("chemprot", 60)
 
 /obj/item/clothing/suit/space/ntso/bellona
