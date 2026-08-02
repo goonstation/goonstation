@@ -482,7 +482,7 @@
 		cant_self_remove = 1
 		cant_other_remove = 1
 
-	medic
+	medic // Sprite by tekoTheTeapot
 		icon_state = "ntso_medic"
 		item_state = "ntso_medic"
 		name = "NT paramedic helmet"
