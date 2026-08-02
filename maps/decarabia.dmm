@@ -34242,6 +34242,11 @@
 /turf/simulated/floor/twotone/red,
 /area/station/hallway/secondary/east)
 "hQl" = (
+/obj/machinery/door_control{
+	id = "tox_vent3";
+	name = "Waste Chamber Exhaust";
+	pixel_y = 24
+	},
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -45484,11 +45489,6 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
 	dir = 1
-	},
-/obj/machinery/door_control{
-	id = "tox_vent3";
-	name = "Waste Chamber Exhaust";
-	pixel_x = 24
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal/walp,
 /turf/simulated/floor/engine/vacuum,
