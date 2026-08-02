@@ -57,7 +57,7 @@
 
 		if (surgeon.bioHolder.HasEffect("clumsy") && prob(30))
 			surgeon.visible_message(\
-			SPAN_ALERT("<b>[surgeon]</b> Missuses the [src] so much it slaps [surgeon] on [his_or_her(surgeon)] face!"), \
+			SPAN_ALERT("<b>[surgeon]</b> misuses the [src] so much that it slaps [surgeon] on [his_or_her(surgeon)] face!"), \
 			SPAN_ALERT("You fumble with the [src] and it becomes so insulted with your lack of skill that it slaps you on the face!"))
 
 			surgeon.changeStatus("disorient", 2 SECOND)
@@ -94,7 +94,7 @@
 			I.pixel_x = rand(-2, 5)
 			I.pixel_y = rand(-6, 1)
 
-			// This tool is sofisticated, but operating on a patiant whos awake and moving is risky
+			// This tool is sophisticated, but operating on a patient who's awake and moving is risky
 			CAUSE_EXPECTED_PAIN(patient, damage_low)
 
 			return

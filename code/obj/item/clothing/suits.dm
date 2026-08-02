@@ -1532,7 +1532,7 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 
 /obj/item/clothing/suit/space/ntso/medic // Sprites by TekoTheTeapot
 	name = "NT field medic pressure suit"
-	desc = "A specialised Nanotrasen space suit, with an integrated chest rig. The rig has been modified to fit a medical insignia. The fabric on this model is highly chemicaly resistant."
+	desc = "A specialised Nanotrasen space suit, with an integrated chest rig. The rig has been modified to fit a medical insignia. The fabric on this model is highly chemically and biologically resistant."
 	icon_state = "ntso_medic"
 	item_state = "ntso_medic"
 

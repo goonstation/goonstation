@@ -154,7 +154,7 @@
 
 	field_surgeon
 		name = "field surgeon's bag"
-		desc = "An old-fashioned doctor's bag designed to carry medical and surgical supplies. This one been stuffed with what a field surgeon would require, including an anesthetic compartment."
+		desc = "An old-fashioned doctor's bag designed to carry medical and surgical supplies. This one has been stuffed with what a field surgeon would require, including an anesthetic compartment."
 		can_hold = list(/obj/item/clothing/mask/medical)
 		spawn_contents = list(/obj/item/circular_saw, /obj/item/scalpel, /obj/item/scissors/surgical_scissors, /obj/item/suture, /obj/item/reagent_containers/iv_drip/blood, /obj/item/clothing/mask/medical/anesthetic, /obj/item/hemostat)
 
@@ -306,7 +306,7 @@
 						/obj/item/reagent_containers/syringe/formaldehyde = 1,
 						/obj/item/reagent_containers/glass/bottle/formaldehyde = 1)
 
-	TRAIT_ALTERED_DESCRIPTION("training_medical", "Every first responder would know these are a must have at any crisis response.", "Rather pessimistic on CentCom's end to send someone with these.")
+	TRAIT_ALTERED_DESCRIPTION("training_medical", "Every first responder knows these are a must-have at any crisis response.", "Rather pessimistic on CentCom's end to send someone with these.")
 
 /* -------------------- Prostheses storage -------------------- */
 

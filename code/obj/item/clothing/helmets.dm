@@ -486,7 +486,7 @@
 		icon_state = "ntso_medic"
 		item_state = "ntso_medic"
 		name = "NT paramedic helmet"
-		desc = "A modified combat helmet for Nanotrasen emergency paramedics. Comes a with built in ProDoc HUD."
+		desc = "A modified combat helmet for Nanotrasen emergency paramedics. Equipped with an integrated ProDoc HUD."
 
 		equipped(var/mob/user, var/slot)
 			..()
