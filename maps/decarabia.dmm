@@ -11056,6 +11056,7 @@
 	network = "Armory Perimeter";
 	pixel_x = 7
 	},
+/obj/storage/crate/radio,
 /turf/simulated/floor/longtile/black,
 /area/station/bridge)
 "cFW" = (
