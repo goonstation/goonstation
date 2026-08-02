@@ -13546,6 +13546,7 @@
 "dgU" = (
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/walp/glass/generic,
+/obj/mapping_helper/button/area,
 /turf/simulated/floor/yellow,
 /area/station/conveniencestore)
 "dgV" = (
@@ -18198,6 +18199,17 @@
 	dir = 4
 	},
 /obj/landmark/start/job/quartermaster,
+/obj/sign_switch/directional/north{
+	pixel_x = -4;
+	name = "convenience store open sign"
+	},
+/obj/mapping_helper/button/area,
+/obj/machinery/door_control/bolter/new_walls/north{
+	dir = 2;
+	pixel_x = 5;
+	pixel_y = 25;
+	name = "convenience store door locks"
+	},
 /turf/simulated/floor/twotone/blue,
 /area/station/conveniencestore)
 "ehG" = (
@@ -31956,6 +31968,13 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal/walp,
 /turf/simulated/floor/circuit/purple,
 /area/station/turret_protected/ai)
+"hnz" = (
+/obj/mapping_helper/wingrille_spawn/auto/walp,
+/obj/machinery/illuminated_sign/open_neon{
+	pixel_y = -4
+	},
+/turf/simulated/floor/plating,
+/area/station/conveniencestore)
 "hnD" = (
 /obj/mapping_helper/wingrille_spawn/auto/walp,
 /turf/simulated/floor/plating,
@@ -40891,6 +40910,7 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/walp/glass/generic,
+/obj/mapping_helper/button/area,
 /turf/simulated/floor/yellow,
 /area/station/conveniencestore)
 "jrB" = (
@@ -155864,7 +155884,7 @@ mTh
 oOq
 mni
 mHP
-jxQ
+hnz
 tRU
 kSQ
 oZB
