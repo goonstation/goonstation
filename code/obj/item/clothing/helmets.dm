@@ -482,6 +482,12 @@
 		cant_self_remove = 1
 		cant_other_remove = 1
 
+	medic
+		icon_state = "ntso_medic"
+		item_state = "ntso_medic"
+		name = "NT paramedic helmet"
+		desc = "A modified combat helmet for Nanotrasen emergency paramedics. Comes a with built in ProDoc HUD."
+
 /obj/item/clothing/head/helmet/space/nanotrasen
 	name = "Nanotrasen Heavy Helmet"
 	icon_state = "nthelm2"
