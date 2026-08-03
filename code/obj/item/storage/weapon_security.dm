@@ -323,6 +323,8 @@
 	var/cloaked = 0
 	w_class = W_CLASS_SMALL
 	max_wclass = W_CLASS_NORMAL
+	tooltip_flags = REBUILD_USER
+	SYNDICATE_STEALTH_DESCRIPTION("It looks heavy, somehow.", null)
 
 	New()
 		..()
@@ -342,8 +344,7 @@
 				return
 			src.name = W.name
 			src.real_name = W.name
-			src.desc = "[W.desc] It looks heavy, somehow."
-			src.real_desc = "[W.desc] It looks heavy, somehow."
+			src.desc = W.desc
 			src.icon = W.icon
 			src.icon_state = W.icon_state
 			src.item_state = W.item_state
