@@ -11,166 +11,7 @@
 
 //permission defines moved to _setup.dm
 
-/datum/computer
-	/// Prevent it from piracy via PDA filehosting? Also prevents term os copy and pasting and moving.
-	var/dont_copy = 0
-	var/name
-	var/size = 4
-	var/tmp/obj/item/disk/data/holder = null
-	var/tmp/datum/computer/folder/holding_folder = null
-	var/tmp/list/metadata = list()
 
-	New()
-		..()
-		metadata = list("date" = world.realtime, "owner"=null,"group"=null, "permission"=DWAINE::PERM::DEFAULT::ALLACCESS)
-
-	folder
-		name = "Folder"
-		size = 0
-		var/gen = 0
-		var/list/datum/computer/contents = list()
-		var/tmp/list/linkers = list()
-		/* commented by singh, new disposing() pattern should handle this. if i broke everything sorry IBM, SORRY
-		disposing()
-			for(var/datum/computer/F in src.contents)
-				qdel(F)
-
-			for(var/datum/computer/folder/link/L in src.linkers)
-				L.contents = list()
-
-			..()
-		*/
-		disposing()
-			for (var/datum/computer/F in src.contents)
-				F.dispose()
-
-			for (var/datum/computer/folder/link/L in src.linkers)
-				L.contents.len = 0
-
-			..()
-
-		proc
-			add_file(datum/computer/R)
-				if(!holder || holder.read_only || !R)
-					return 0
-				if(istype(R,/datum/computer/folder) && (src.gen>=10))
-					return 0
-				if((holder.file_used + R.size) <= holder.file_amount)
-					src.contents.Add(R)
-					R.holder = holder
-					R.holding_folder = src
-					if (src.gen)
-						if (isnull(R.metadata["owner"]))
-							R.metadata["owner"] = src.metadata["owner"]
-						if (isnull(R.metadata["group"]))
-							R.metadata["group"] = src.metadata["group"]
-						if (isnull(R.metadata["permission"]) || R.metadata["permission"] == DWAINE::PERM::DEFAULT::ALLACCESS)
-							R.metadata["permission"] = src.metadata["permission"]
-					src.holder.file_used -= src.size
-					src.size += R.size
-					src.holder.file_used += src.size
-					if(istype(R,/datum/computer/folder))
-						R:gen = (src.gen+1)
-					return 1
-
-				return 0
-
-			remove_file(datum/computer/R)
-				if(holder && !holder.read_only && R)
-//					boutput(world, "Removing file [R]. File_used: [src.holder.file_used]")
-					src.contents.Remove(R)
-					src.holder.file_used -= src.size
-					src.size -= R.size
-					src.holder.file_used += src.size
-					src.holder.file_used = max(src.holder.file_used, 0)
-//					boutput(world, "Removed file [R]. File_used: [src.holder.file_used]")
-					return 1
-				return 0
-
-			can_add_file(datum/computer/R)
-				if(!holder || holder.read_only || !R)
-					return 0
-				if(istype(R,/datum/computer/folder) && (src.gen>=10))
-					return 0
-				return ((holder.file_used + R.size) <= holder.file_amount)
-
-			copy_folder(var/depth = 0)
-				if (depth >= 8)
-					return null
-				var/datum/computer/folder/F = new src.type()
-				F.name = src.name
-				F.holder = src.holder
-				for (var/datum/computer/C in contents)
-					if (istype(C, /datum/computer/file))
-						F.add_file(C:copy_file())
-					else if (istype(C, /datum/computer/folder))
-						F.add_file(C:copy_folder(depth + 1))
-				return F
-
-
-	file
-		name = "File"
-		var/extension = "FILE" //Differentiate between types of files, why not
-
-		asText()
-			return corruptText(pick("Error: Unknown filetype for '[name]'", "Imagine four balls on the edge of a cliff.  Time works the same way.","Packet five loss packet six echo loss packet nine loss packet ten loss gain signal."),60)
-
-		proc
-			copy_file_to_folder(datum/computer/folder/newfolder, var/newname)
-				if(!newfolder || (!istype(newfolder)) || (!newfolder.holder) || (newfolder.holder.read_only))
-					return 0
-
-				if((newfolder.holder.file_used + src.size) <= newfolder.holder.file_amount)
-					var/datum/computer/file/newfile = src.copy_file()
-					if(newname)
-						newfile.name = newname
-
-					if(!newfolder.add_file(newfile))
-						qdel(newfile)
-
-					return 1
-
-				return 0
-
-			copy_file() //Just make a replica of self
-				var/datum/computer/file/copy = new src.type
-
-				for(var/V in src.vars)
-					if (issaved(src.vars[V]))// && V != "holder")
-						copy.vars[V] = src.vars[V]
-
-				if (!copy.metadata)
-					copy.metadata = list()
-				if (src.metadata)
-					copy.metadata["owner"] = src.metadata["owner"]
-					copy.metadata["permission"] = src.metadata["permission"]
-					copy.metadata["group"] = src.metadata["group"]
-
-				return copy
-
-			writable()
-				if(src.holder && src.holder.read_only)
-					return 0
-
-				return 1
-
-	proc/asText() //Convert contents to text, if possible
-		return null
-
-	disposing()
-		// same as above, XOXOXO. -singh
-		//if(holder && holding_folder)
-		//	holding_folder.remove_file(src)
-		..()
-
-	disposing()
-		if (holding_folder)
-			holding_folder.remove_file(src)
-			src.holding_folder = null
-
-		src.holder = null
-		src.metadata = null
-		..()
 
 /datum/computer/file/text
 	name = "text"
@@ -260,7 +101,7 @@
 			if (istype(F, /datum/computer/file))
 				copy.contained_files += F:copy_file()
 			else if (istype(F, /datum/computer/folder))
-				var/datum/computer/folder/fcopy = F:copy_folder()
+				var/datum/computer/folder/fcopy = F:copy_file()
 				if (fcopy)
 					copy.contained_files += fcopy
 
@@ -362,11 +203,11 @@
 
 		return target.remove_file(R, misc)
 
-	copy_folder(var/depth = 0)
+	copy_file(var/depth = 0)
 		if(!target || target.holder != src.holder)
 			return 0
 
-		return target.copy_folder(depth)
+		return target.copy_file(depth)
 
 /datum/computer/file/image
 	extension = "IMG"
