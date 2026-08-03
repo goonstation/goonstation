@@ -1,5 +1,9 @@
 
 (t)mon aug 03 26
+(u)JORJ949
+(p)27356
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)The "It looks heavy, somehow" description on disguised stealth storages now only shows to syndicate operatives.
 (u)ANNmagedon
 (p)27346
 (e)🗺🐣|A-Mapping, A-Respawning
