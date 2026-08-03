@@ -628,6 +628,7 @@ TYPEINFO(/obj/item/clothing/shoes/cowboy/boom)
 
 	emag_act(mob/user, obj/item/card/emag/E)
 		if(src.step_sound != "clownstep")
+			src.step_lots = 1
 			src.step_sound = "clownstep"
 			src.step_priority = /obj/item/clothing/shoes/clown_shoes::step_priority
 			boutput(user, SPAN_NOTICE("You scramble the speakers installed in [src]"))
