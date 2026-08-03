@@ -106,9 +106,3 @@
 		var/turf/clicked = src.get_turf_at_screen_coords(text2num(param_list["icon-x"]), text2num(param_list["icon-y"]))
 		if (clicked)
 			user.set_loc(clicked)
-
-/obj/minimap/admin_minimap/disposing()
-	UnregisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_CLIENT_NEW)
-	for (var/client/C as anything in clients)
-		UnregisterSignal(C, COMSIG_CLIENT_LOGIN)
-	. = ..()
