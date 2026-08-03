@@ -1,4 +1,9 @@
 
+(t)mon aug 03 26
+(u)LorrMaster
+(p)27323
+(e)🎨🧱|C-Sprites, A-Materials
+(+)New appearances for synthleather, leather, brullbar hide, and king brullbar hide.
 (t)fri jul 31 26
 (u)JORJ949
 (p)27336
