@@ -23702,15 +23702,6 @@
 	dir = 1
 	},
 /area/station/medical/medbay/cloner)
-"fuu" = (
-/obj/machinery/plantpot{
-	anchored = 1
-	},
-/obj/machinery/plantpot{
-	anchored = 1
-	},
-/turf/simulated/floor/grass/random/walp,
-/area/station/hydroponics/bay)
 "fuw" = (
 /obj/machinery/firealarm/directional/west,
 /turf/simulated/floor/neutral/side{
@@ -151301,7 +151292,7 @@ bnC
 amO
 hNL
 imn
-fuu
+ugc
 saJ
 ugc
 lyC
