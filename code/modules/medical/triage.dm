@@ -138,8 +138,8 @@
 		. = ..()
 		if (src.triage_level == TRIAGE_REMOVE)
 			. += "It is set to remove existing triage tags."
-			return;
-		var/tag_info = "bababooey"
+			return
+		var/tag_info = "unknown"
 		switch (src.triage_level)
 			if (TRIAGE_MINOR)
 				tag_info = "minor injuries"
