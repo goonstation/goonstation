@@ -35,6 +35,9 @@
 	STOP_TRACKING
 	. = ..()
 
+/datum/minimap/area_map/proc/refresh_render(datum/callback/on_complete = null)
+	on_complete?.Invoke()
+
 /datum/minimap/area_map/initialise_minimap_render()
 	src.map_icons_by_z_level = global.minimap_renderer.generate_minimap_icons(src.minimap_type)
 	src.dynamic_areas_overlays_by_z_level = global.minimap_renderer.get_minimap_dynamic_area_overlays(src.minimap_type)
@@ -66,6 +69,7 @@
 /datum/minimap/area_map/admin
 	// hacky raster sampling fix, set just ever so slightly above the parent default of 0.95
 	min_zoom = 0.951
+
 	initialise_minimap_render()
 		src.z_level ||= Z_LEVEL_STATION
 		if (!global.minimap_renderer)
@@ -84,7 +88,7 @@
 		src.refresh_render()
 
 	update_z_level(z_level)
-		if (!global.minimap_renderer?.valid_admin_z_level(z_level))
+		if (!global.minimap_renderer?.valid_area_map_z_level(z_level))
 			return
 
 		src.z_level = z_level
@@ -99,43 +103,27 @@
 
 		src.refresh_render()
 
-	proc/refresh_render(datum/callback/on_complete = null)
+	refresh_render(datum/callback/on_complete = null)
 		var/render_z_level = src.z_level
 		SPAWN(0)
 			if (QDELETED(src) || !src.map || src.z_level != render_z_level || !global.minimap_renderer)
 				on_complete?.Invoke()
 				return
-			src.map.icon = global.minimap_renderer.get_admin_minimap_icon(render_z_level)
+			src.map.icon = global.minimap_renderer.get_area_map_icon(render_z_level)
 			on_complete?.Invoke()
-
-	valid_turf(turf/T)
-		return T?.loc && !istype(T, /turf/space)
 
 	find_focal_point()
 		if (!src.x_max || !src.x_min || !src.y_max || !src.y_min || !src.z_level)
 			return
 
-		var/max_x = src.x_min
-		var/min_x = src.x_max
-		var/max_y = src.y_min
-		var/min_y = src.y_max
-		var/found_valid_turf = FALSE
+		var/list/focal_bounds = global.minimap_renderer?.get_area_map_focal_bounds(src.z_level)
+		if (!focal_bounds)
+			return
 
-		for (var/turf/T as anything in block(locate(src.x_min, src.y_min, src.z_level), locate(src.x_max, src.y_max, src.z_level)))
-			if (!src.valid_turf(T))
-				continue
-
-			found_valid_turf = TRUE
-			max_x = max(max_x, T.x)
-			min_x = min(min_x, T.x)
-			max_y = max(max_y, T.y)
-			min_y = min(min_y, T.y)
-
-		if (!found_valid_turf)
-			max_x = src.x_max
-			min_x = src.x_min
-			max_y = src.y_max
-			min_y = src.y_min
+		var/max_x = focal_bounds["max_x"]
+		var/min_x = focal_bounds["min_x"]
+		var/max_y = focal_bounds["max_y"]
+		var/min_y = focal_bounds["min_y"]
 
 		src.centre_focus_x = ((max_x + min_x) - 1) / 2
 		src.centre_focus_y = ((max_y + min_y) - 1) / 2

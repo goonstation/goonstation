@@ -134,7 +134,7 @@ var/global/atom/movable/minimap_ui_handler/observer_minimap/observer_minimap_ui
 			SPAWN(0)
 				if (QDELETED(src))
 					return
-				global.minimap_renderer?.refresh_admin_minimap(refresh_z_level)
+				global.minimap_renderer?.refresh_area_map(refresh_z_level)
 				var/datum/minimap/area_map/admin/refreshed_area_map = src.get_admin_area_map()
 				if (!refreshed_area_map || refreshed_area_map.z_level != refresh_z_level)
 					src.finish_render(refresh_request_id)
@@ -150,7 +150,7 @@ var/global/atom/movable/minimap_ui_handler/observer_minimap/observer_minimap_ui
 			var/z_level = params["z_level"]
 			if (!isnum(z_level))
 				z_level = text2num(z_level)
-			if (!global.minimap_renderer?.valid_admin_z_level(z_level))
+			if (!global.minimap_renderer?.valid_area_map_z_level(z_level))
 				return
 			var/z_level_request_id = src.begin_render()
 			var/datum/callback/z_level_callback = CALLBACK(src, PROC_REF(finish_render), z_level_request_id)
