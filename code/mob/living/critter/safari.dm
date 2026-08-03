@@ -6,8 +6,8 @@
 	icon = 'icons/misc/bigcritter.dmi'
 	icon_state = "hippo"
 	icon_state_dead = "hippo-dead"
-	health_brute = 100
-	health_burn = 100
+	health_brute = 125
+	health_burn = 125
 	health_brute_vuln = 0.4
 	health_burn_vuln = 1.2
 	no_stamina_stuns = TRUE
