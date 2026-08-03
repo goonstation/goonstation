@@ -52,6 +52,12 @@ TYPEINFO(/obj/machinery/deep_fryer)
 	if (istype(W, /obj/item/reagent_containers/food/snacks/shell/deepfry))
 		boutput(user, SPAN_ALERT("Your cooking skills are not up to the legendary Doublefry technique."))
 		return
+	if (istype(W, /obj/item/phone_handset)) // to prevent handset duping
+		var/obj/item/phone_handset/H = W
+		user.visible_message(SPAN_COMBAT("<b>[user] attempts to put [H] into the [src] but the hot oil splashed on [his_or_her(user)] hand! Ouch!</b>"))
+		H.parent.hang_up()
+		user.TakeDamage("All", burn = 5)
+		return
 	if (HAS_FLAG(status, BROKEN))
 		boutput(user, SPAN_ALERT("It looks like the fryer is broken!"))
 		return

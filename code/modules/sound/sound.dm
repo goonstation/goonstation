@@ -1,39 +1,3 @@
-#define TOO_QUIET 0.9 //experimentally found to be 0.6 - raised due to lag, I don't care if it's super quiet because there's already shitloads of other sounds playing
-#define SPACE_ATTEN_MIN 0.5
-#define EARLY_RETURN_IF_QUIET(v) if (v < TOO_QUIET) return
-#define EARLY_CONTINUE_IF_QUIET(v) if (v < TOO_QUIET) continue
-
-#define SOURCE_ATTEN(A) do {\
-	if (A <= SPACE_ATTEN_MIN){\
-		vol *= SPACE_ATTEN_MIN;\
-		extrarange = clamp(-MAX_SOUND_RANGE + MAX_SPACED_RANGE + extrarange, -32,-20);\
-		spaced_source = 1;\
-	}\
-	else{\
-		vol *= A\
-	}\
-} while(FALSE)
-
-#define LISTENER_ATTEN(A) do {\
-	if (A <= SPACE_ATTEN_MIN){\
-		if (!spaced_source && dist >= MAX_SPACED_RANGE){\
-			ourvolume = 0;\
-		}\
-		else{\
-			spaced_env = 1;\
-			ourvolume = clamp(ourvolume + 95, 25,200);\
-		}\
-	}\
-	else{\
-		ourvolume *= A\
-	}\
-} while(FALSE)
-
-#define MAX_SPACED_RANGE 6 //diff range for when youre in a vaccuum
-#define CLIENT_IGNORES_SOUND(C) (C?.ignore_sound_flags && ((ignore_flag && C.ignore_sound_flags & ignore_flag) || C.ignore_sound_flags & SOUND_ALL))
-
-#define SOUNDIN_ID (istype(soundin, /sound) ? soundin:file : (islist(soundin) ? ref(soundin) : soundin))
-
 /// returns 0 to 1 based on air pressure in turf
 /proc/attenuate_for_location(var/atom/loc)
 	var/attenuate = 1

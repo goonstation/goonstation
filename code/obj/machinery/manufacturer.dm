@@ -567,6 +567,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (!(status & NOPOWER || status & BROKEN))
 				if (src.shock(user, 33))
 					return
+		src.add_fingerprint(user)
 		src.ui_interact(user)
 
 	proc/is_electrified()

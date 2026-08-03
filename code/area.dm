@@ -1624,6 +1624,10 @@ ABSTRACT_TYPE(/area/prefab)
 	name = "Frontier Outpost 8"
 	icon_state = "red"
 
+/area/prefab/fancy_restaurant
+	name = "The Hidden Gem"
+	icon_state = "green"
+
 // Sealab trench areas //
 
 /area/shuttle/sea_elevator_room
@@ -2916,12 +2920,13 @@ TYPEINFO(/area/station/engine/power/transmission)
 	name = "Engineering Gravity Tether"
 	icon_state = "engineering"
 
-TYPEINFO(/area/station/engine/singcore)
+TYPEINFO(/area/station/engine/core/singularity/external)
 	valid_bounty_area = FALSE
-/area/station/engine/singcore
+/area/station/engine/core/singularity/external
 	name = "Singularity Core"
 	icon_state = "red"
 	requires_power = FALSE
+	sound_environment = 10
 
 /area/station/engine/eva
 	name = "Engineering EVA"
