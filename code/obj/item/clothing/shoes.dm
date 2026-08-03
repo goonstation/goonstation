@@ -576,7 +576,6 @@ TYPEINFO(/obj/item/clothing/shoes/cowboy/boom)
 	protective_temperature = 1250
 	step_sound = "step_military"
 	step_priority = STEP_PRIORITY_LOW
-	step_lots = 1
 	kick_bonus = 2
 
 	setupProperties()
