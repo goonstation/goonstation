@@ -76350,6 +76350,9 @@
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine/safe{
 	pixel_x = -4
 	},
+/obj/machinery/door_control/bolter/new_walls/west{
+	id = "mimelair"
+	},
 /turf/simulated/floor/blackwhite{
 	dir = 5
 	},
