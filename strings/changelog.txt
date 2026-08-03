@@ -1,5 +1,9 @@
 
 (t)mon aug 03 26
+(u)ANNmagedon
+(p)27346
+(e)🗺🐣|A-Mapping, A-Respawning
+(+)Fixed the pod-wars' corpse grinder.
 (u)LorrMaster
 (p)27323
 (e)🎨🧱|C-Sprites, A-Materials
