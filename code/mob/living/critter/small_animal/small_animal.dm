@@ -443,6 +443,7 @@ proc/filter_carrier_pets(var/type)
 	random_name = FALSE
 	random_look = FALSE
 	desc = "Although this cat is vegan, it's still a carnivore."
+	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat
 
 /* -------------------- Jones -------------------- */
 

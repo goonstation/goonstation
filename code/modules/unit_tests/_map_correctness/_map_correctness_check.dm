@@ -34,19 +34,3 @@ ABSTRACT_TYPE(/datum/map_correctness_check)
 /datum/map_correctness_check/proc/run_check()
 	RETURN_TYPE(/list)
 	return
-
-/// Format the name, type, and position of an atom into a single string.
-/datum/map_correctness_check/proc/format_position(atom/A, capitalise = TRUE)
-	var/turf/T = get_turf(A)
-	if (capitalise)
-		return "\The [A.name] ([A.type]) at ([T.x], [T.y], [T.z]) in [T.loc]"
-	else
-		return "\the [A.name] ([A.type]) at ([T.x], [T.y], [T.z]) in [T.loc]"
-
-/// Format a list of area types into a list in plain English as a string.
-/datum/map_correctness_check/proc/area_list(list/area/area_list, and_text = " and ")
-	var/list/text_list = list()
-	for (var/area/A as anything in area_list)
-		text_list += "([A])"
-
-	return global.english_list(text_list, and_text = and_text)

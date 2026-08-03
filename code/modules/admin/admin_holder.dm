@@ -148,6 +148,7 @@
 			"Scale",\
 			"Emag",\
 			"Pixel Offset",\
+			"Debug Appearance",\
 			)
 
 		if (!admin_interact_verbs || length(admin_interact_verbs) <= 0)
