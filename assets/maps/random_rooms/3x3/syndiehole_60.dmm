@@ -38,6 +38,7 @@
 /obj/table/syndicate/auto,
 /obj/item/device/radio,
 /obj/decal/cleanable/cobweb2,
+/obj/item/device/audio_log/infiltrator_log,
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "O" = (
