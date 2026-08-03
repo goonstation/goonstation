@@ -184,7 +184,7 @@
 		..()
 		var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
 		newfolder.name = "sys"
-		newfolder.metadata["permission"] = COMP_HIDDEN
+		newfolder.metadata["permission"] = DWAINE::PERM::DEFAULT::NONE
 		src.root.add_file( newfolder )
 		newfolder.add_file( new /datum/computer/file/mainframe_program/os/kernel(src) )
 		newfolder.add_file( new /datum/computer/file/mainframe_program/shell(src) )
@@ -205,7 +205,7 @@
 
 		newfolder = new /datum/computer/folder
 		newfolder.name = "bin" //Applications available to all users.
-		newfolder.metadata["permission"] = COMP_ROWNER|COMP_RGROUP|COMP_ROTHER
+		newfolder.metadata["permission"] = DWAINE::PERM::DEFAULT::ALL_READ_ONLY
 		src.root.add_file( newfolder )
 		newfolder.add_file( new /datum/computer/file/mainframe_program/utility/cd(src) )
 		newfolder.add_file( new /datum/computer/file/mainframe_program/utility/ls(src) )
@@ -223,12 +223,12 @@
 
 		newfolder = new /datum/computer/folder
 		newfolder.name = "mnt"
-		newfolder.metadata["permission"] = COMP_ROWNER|COMP_RGROUP|COMP_ROTHER
+		newfolder.metadata["permission"] = DWAINE::PERM::DEFAULT::ALL_READ_ONLY
 		src.root.add_file( newfolder )
 
 		newfolder = new /datum/computer/folder
 		newfolder.name = "conf"
-		newfolder.metadata["permission"] = COMP_ROWNER|COMP_RGROUP|COMP_ROTHER
+		newfolder.metadata["permission"] = DWAINE::PERM::DEFAULT::ALL_READ_ONLY
 		src.root.add_file( newfolder )
 
 		var/datum/computer/file/record/testR = new
@@ -241,7 +241,7 @@
 
 		newfolder = new /datum/computer/folder
 		newfolder.name = "etc"
-		newfolder.metadata["permission"] = COMP_ROWNER|COMP_RGROUP|COMP_ROTHER
+		newfolder.metadata["permission"] = DWAINE::PERM::DEFAULT::ALL_READ_ONLY
 		src.root.add_file( newfolder )
 
 		return

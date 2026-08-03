@@ -192,7 +192,7 @@
 /area/station/devzone)
 "J" = (
 /obj/machinery/siphon_lever,
-/obj/item/paper/siphon_guide{
+/obj/item/paper/image/siphon_guide{
 	pixel_y = -10
 	},
 /turf/simulated/floor/engine,

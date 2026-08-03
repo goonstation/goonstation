@@ -128,6 +128,7 @@
 		F["clickbuffer"] << src.use_click_buffer
 		F["help_text_in_examine"] << src.help_text_in_examine
 		F["font_size"] << src.font_size
+		F["observer_dnr"] << src.observer_dnr
 
 		F["see_mentor_pms"] << src.see_mentor_pms
 		F["listen_ooc"] << src.listen_ooc
@@ -332,6 +333,7 @@
 		if (isnull(src.help_text_in_examine))
 			src.help_text_in_examine = TRUE
 		F["font_size"] >> src.font_size
+		F["observer_dnr"] >> src.observer_dnr
 
 		F["see_mentor_pms"] >> src.see_mentor_pms
 		F["listen_ooc"] >> src.listen_ooc

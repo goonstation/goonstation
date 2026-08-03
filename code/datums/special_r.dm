@@ -152,7 +152,7 @@ datum/special_respawn
 				O.cant_other_remove = 1
 				O.cant_self_remove = 1
 			mob.nodamage = 1
-			mob.bioHolder.AddEffect("xray", 2)
+			APPLY_ATOM_PROPERTY(mob, PROP_MOB_XRAYVISION, "smile")
 			mob.verbs += /client/proc/noclip
 			mob.bioHolder.AddEffect("accent_smiling")
 		else

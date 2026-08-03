@@ -5,6 +5,7 @@
 	var/centcom_origin = null			 // The origin of the message
 	var/message_delay = 0 SECONDS        // How long it takes after the event's effect for the message to arrive.
 	var/required_elapsed_round_time = 0  // Round elapsed ticks must be this or higher for the event to trigger naturally.
+	var/required_npc_type = null         // Check for events that require a living npc to trigger.
 	var/wont_occur_past_this_time = -1   // Event will no longer occur naturally after this many ticks have elapsed.
 	var/disabled = 0                     // Event won't occur if this is true.
 	var/announce_to_admins = 1
@@ -40,6 +41,10 @@
 
 		if (src.disabled)
 			return 0
+
+		if (src.required_npc_type)
+			if (!find_all_by_type(src.required_npc_type))
+				return 0
 
 		return 1
 

@@ -1,0 +1,581 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"cg" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/landmark/start/job/security_officer,
+/turf/simulated/floor/red/redblackchecker,
+/area/station/security/equipment)
+"cw" = (
+/obj/table/reinforced/auto,
+/obj/machinery/coffeemaker/security,
+/obj/drink_rack/mug{
+	pixel_x = -24;
+	pixel_y = 5
+	},
+/turf/simulated/floor/red,
+/area/station/security/main)
+"dD" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/red/redblackchecker,
+/area/station/security/equipment)
+"dJ" = (
+/obj/machinery/light_switch/directional/north{
+	pixel_x = -5
+	},
+/obj/blind_switch/directional/north{
+	pixel_x = 6
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/obj/machinery/computer/announcement/station/security/department,
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/black,
+/area/station/security/main)
+"eb" = (
+/obj/machinery/disposal/small/west,
+/obj/disposalpipe/trunk/south,
+/turf/simulated/floor/black,
+/area/station/security/main)
+"gp" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/table/reinforced/auto,
+/obj/machinery/power/data_terminal,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/networked/printer{
+	name = "Printer - Security";
+	print_id = "security"
+	},
+/turf/simulated/floor/red,
+/area/station/security/main)
+"gC" = (
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/security,
+/obj/table/reinforced/auto,
+/obj/item/paper_bin{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/obj/item/stamp/law,
+/obj/item/pen,
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/station/security/main)
+"hh" = (
+/obj/machinery/light/incandescent/warm,
+/obj/storage/secure/closet/security/equipment,
+/turf/simulated/floor/red/redblackchecker,
+/area/station/security/equipment)
+"hj" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/black,
+/area/station/security/main)
+"iV" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/recharger/wall/sticky{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/simulated/floor/red/redblackchecker,
+/area/station/security/equipment)
+"ji" = (
+/obj/machinery/light/small/floor/netural,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/security/main)
+"jI" = (
+/obj/stool/chair/office/red{
+	dir = 1
+	},
+/obj/landmark/start/job/security_officer,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/redblack,
+/area/station/security/main)
+"nt" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/bent/north,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/red,
+/area/station/security/main)
+"oe" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/disposalpipe/segment,
+/turf/simulated/floor/plating,
+/area/station/security/equipment)
+"qu" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
+/obj/item/device/ticket_writer{
+	pixel_y = -3;
+	pixel_x = -18
+	},
+/obj/item/instrument/whistle{
+	pixel_y = 10;
+	pixel_x = -18
+	},
+/turf/simulated/floor/plating,
+/area/station/security/main)
+"rw" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/window_blinds/cog2/right,
+/turf/simulated/floor/plating,
+/area/station/security/main)
+"sC" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/plating,
+/area/station/security/main)
+"vr" = (
+/obj/machinery/door/airlock/pyro/glass/security{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/security,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/secscanner{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/station/security/main)
+"yI" = (
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
+/area/station/security/main)
+"zZ" = (
+/obj/table/reinforced/auto,
+/obj/item/kitchen/food_box/sugar_box,
+/obj/item/kitchen/food_box/donut_box{
+	desc = "It appears to be a Martian brand of donuts.";
+	name = "Robust Donuts";
+	pixel_y = 11
+	},
+/turf/simulated/floor/red,
+/area/station/security/main)
+"Ay" = (
+/obj/submachine/weapon_vendor/security,
+/obj/machinery/firealarm/directional/north,
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/red/redblackchecker,
+/area/station/security/equipment)
+"AC" = (
+/obj/disposalpipe/segment,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
+/area/station/security/equipment)
+"Bw" = (
+/obj/machinery/vending/security,
+/obj/machinery/camera/directional/north,
+/turf/simulated/floor/red/redblackchecker,
+/area/station/security/equipment)
+"Ce" = (
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
+/area/station/security/equipment)
+"CP" = (
+/obj/machinery/door/airlock/pyro/glass/security{
+	req_access = null;
+	dir = 4
+	},
+/obj/mapping_helper/access/security,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/bent/south,
+/turf/simulated/floor/red/redblackchecker,
+/area/station/security/equipment)
+"Ee" = (
+/obj/machinery/weapon_stand/taser_rack/recharger/empty,
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/station/security/main)
+"Eg" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/station/security/main)
+"El" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/window_blinds/cog2/left{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/security/main)
+"Ex" = (
+/obj/stool/chair/office/red{
+	dir = 8
+	},
+/obj/landmark/start/job/security_officer,
+/obj/machinery/light/small/floor/netural,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/black,
+/area/station/security/main)
+"Ht" = (
+/obj/noticeboard/persistent/security/directional/north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/submachine/poster_creator,
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/black,
+/area/station/security/main)
+"Ki" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/security/equipment)
+"Ku" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/red/redblackchecker,
+/area/station/security/equipment)
+"KA" = (
+/obj/machinery/computer3/generic/secure_data,
+/obj/machinery/power/data_terminal,
+/obj/machinery/light/emergency{
+	dir = 8;
+	pixel_x = -10
+	},
+/obj/machinery/camera/directional/north{
+	pixel_x = 10
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/station/security/main)
+"KB" = (
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -15;
+	pixel_y = 7
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/table/reinforced/auto,
+/obj/machinery/recharger,
+/turf/simulated/floor/red,
+/area/station/security/main)
+"Mc" = (
+/turf/simulated/floor/red/redblackchecker,
+/area/station/security/equipment)
+"MA" = (
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/security/alt{
+	dir = 4
+	},
+/obj/mapping_helper/access/security,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/secscanner{
+	dir = 4
+	},
+/turf/simulated/floor/red/redblackchecker,
+/area/station/security/equipment)
+"MB" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/security/main)
+"Oi" = (
+/obj/machinery/photocopier,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/light/emergency{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor/redblack/corner{
+	dir = 4
+	},
+/area/station/security/main)
+"OD" = (
+/obj/machinery/firealarm/directional/north,
+/obj/table/reinforced/auto,
+/obj/item/storage/box/panic_buttons,
+/obj/item/device/panicbutton,
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/station/security/main)
+"Pf" = (
+/obj/storage/secure/closet/security/equipment,
+/turf/simulated/floor/red/redblackchecker,
+/area/station/security/equipment)
+"PY" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/window_blinds/cog2/left,
+/turf/simulated/floor/plating,
+/area/station/security/main)
+"Ql" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/simulated/floor/red/redblackchecker,
+/area/station/security/equipment)
+"QT" = (
+/turf/simulated/floor/black,
+/area/station/security/main)
+"Td" = (
+/obj/stool/chair/office/red{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/landmark/start/job/security_officer,
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/station/security/main)
+"TB" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/red/redblackchecker,
+/area/station/security/equipment)
+"Ug" = (
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor/redblack/corner,
+/area/station/security/main)
+"UW" = (
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
+/obj/machinery/vending/jobclothing/security,
+/turf/simulated/floor/black,
+/area/station/security/main)
+"Vy" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
+/area/station/security/main)
+"Wh" = (
+/obj/machinery/firealarm/directional/west,
+/turf/simulated/floor/redblack/corner{
+	dir = 1
+	},
+/area/station/security/main)
+"Xz" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/black,
+/area/station/security/main)
+"XD" = (
+/obj/landmark/gps_waypoint,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/black,
+/area/station/security/main)
+"XR" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = 15
+	},
+/obj/item/clothing/gloves/yellow{
+	pixel_y = 7;
+	pixel_x = 19
+	},
+/obj/table/reinforced/auto,
+/obj/machinery/phone,
+/turf/simulated/floor/black,
+/area/station/security/main)
+"Zb" = (
+/obj/machinery/computer/camera_viewer,
+/obj/machinery/power/data_terminal,
+/obj/machinery/recharger/wall/sticky{
+	dir = 1;
+	pixel_y = 26
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/black,
+/area/station/security/main)
+
+(1,1,1) = {"
+yI
+yI
+gC
+yI
+vr
+yI
+yI
+yI
+yI
+"}
+(2,1,1) = {"
+yI
+KA
+Td
+Wh
+hj
+Oi
+gp
+cw
+PY
+"}
+(3,1,1) = {"
+yI
+Zb
+ji
+MB
+XD
+QT
+jI
+zZ
+sC
+"}
+(4,1,1) = {"
+yI
+UW
+Eg
+QT
+eb
+Ug
+nt
+KB
+rw
+"}
+(5,1,1) = {"
+Vy
+dJ
+Xz
+Ce
+Ce
+Ki
+CP
+oe
+AC
+"}
+(6,1,1) = {"
+yI
+Ht
+Xz
+Ce
+Bw
+Mc
+Ku
+Pf
+Ce
+"}
+(7,1,1) = {"
+yI
+XR
+Ex
+Ce
+Ay
+dD
+cg
+hh
+Ce
+"}
+(8,1,1) = {"
+yI
+OD
+Ee
+Ce
+TB
+Ql
+iV
+Pf
+Ce
+"}
+(9,1,1) = {"
+yI
+qu
+El
+Ce
+MA
+Ce
+Ce
+Ce
+Ce
+"}

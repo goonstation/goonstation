@@ -6,77 +6,83 @@
 ////////////////////////////////////////////// Helper procs //////////////////////////////
 
 // Avoids C&P code for that werewolf disease.
-/mob/proc/werewolf_transform()
-	if (ishuman(src))
-		var/mob/living/carbon/human/M = src
-		var/which_way = 0
-
-		// not a werewolf? Go become one!
-		if (!istype(M.mutantrace, /datum/mutantrace/werewolf))
-			/// Werewolf is typically a "temporary" MR, as few people start the round as a wolf. Or TF into a wolf while being a wolf
-			if(istype(M.coreMR, /datum/mutantrace/werewolf)) // so if this somehow happens, uh. human?
-				M.coreMR = null
-			M.coreMR = M.mutantrace
-			M.jitteriness = 0
-			M.remove_stuns()
-			M.delStatus("slowed")
-			M.delStatus("disorient")
-			M.delStatus("radiation")
-			M.take_radiation_dose(-INFINITY)
-			M.delStatus("burning")
-			M.delStatus("staggered")
-			M.change_misstep_chance(-INFINITY)
-			M.stuttering = 0
-			M.delStatus("drowsy")
-
-			//wolfing removes all the implants in you
-			for(var/obj/item/implant/I in M)
-				boutput(M, SPAN_ALERT("\an [I] falls out of your abdomen."))
-				I.on_remove(M)
-				M.implant.Remove(I)
-				I.set_loc(M.loc)
-				continue
-
-			M.set_mutantrace(/datum/mutantrace/werewolf)
-
-			playsound(M.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1, -1)
-			SPAWN(0.5 SECONDS)
-				if (istype(M?.mutantrace, /datum/mutantrace/werewolf))
-					M.emote("howl")
-
-			M.visible_message(SPAN_ALERT("<B>[M] [pick("metamorphizes", "transforms", "changes")] into a werewolf! Holy shit!</B>"))
-			if (M.find_ailment_by_type(/datum/ailment/disease/lycanthropy))
-				boutput(M, SPAN_ALERT("<h2>You've been turned into a werewolf!</h2> Your transformation was achieved by in-game means, you are <i>not</i> an antagonist unless you already were one."))
-			else
-				boutput(M, "[SPAN_NOTICE("<h3>You are now a werewolf. You can remain in this form indefinitely or change back at any time.")]</h3>")
-
-			if (M.hasStatus("handcuffed"))
-				if (M.handcuffs.werewolf_cant_rip())
-					boutput(M, SPAN_ALERT("You can't seem to break free from these silver handcuffs."))
-				else
-					M.visible_message(SPAN_ALERT("<B>[M] rips apart the [M.handcuffs] with pure brute strength!</b>"))
-					M.handcuffs.destroy_handcuffs(M)
-
-			which_way = 0
-
-		// iswolf?
-		else
-			boutput(M, "[SPAN_NOTICE("<h3>You transform back into your original form.")]</h3>")
-
-			M.set_mutantrace(M.coreMR) // return to monke/bove/herpe/etc
-
-			//Changing back removes all the implants in you, wolves should have a non-surgery way to remove bullets. considering silver is so harmful
-			for(var/obj/item/implant/I in M)
-				boutput(M, SPAN_ALERT("\an [I] falls out of your abdomen."))
-				I.on_remove(M)
-				M.implant.Remove(I)
-				I.set_loc(M.loc)
-				continue
-
-			which_way = 1
-
-		logTheThing(LOG_COMBAT, M, "[which_way == 0 ? "transforms into a werewolf" : "changes back into human form"] at [log_loc(M)].")
+/mob/proc/werewolf_transform(voluntary)
+	if (!ishuman(src))
 		return
+	var/mob/living/carbon/human/M = src
+	var/which_way = 0
+
+	// not a werewolf? Go become one!
+	if (!istype(M.mutantrace, /datum/mutantrace/werewolf))
+		if (!voluntary && HAS_ATOM_PROPERTY(src, PROP_MOB_LYCANTHROPY_RESIST))
+			boutput(src, SPAN_ALERT(SPAN_BOLD("You feel a strong burning sensation all over your body!")))
+			SPAWN(2 SECONDS)
+				boutput(src, SPAN_NOTICE("But your charm forces the hunger back inside."))
+			return
+		/// Werewolf is typically a "temporary" MR, as few people start the round as a wolf. Or TF into a wolf while being a wolf
+		if(istype(M.coreMR, /datum/mutantrace/werewolf)) // so if this somehow happens, uh. human?
+			M.coreMR = null
+		M.coreMR = M.mutantrace
+		M.jitteriness = 0
+		M.remove_stuns()
+		M.delStatus("slowed")
+		M.delStatus("disorient")
+		M.delStatus("radiation")
+		M.take_radiation_dose(-INFINITY)
+		M.delStatus("burning")
+		M.delStatus("staggered")
+		M.change_misstep_chance(-INFINITY)
+		M.stuttering = 0
+		M.delStatus("drowsy")
+
+		//wolfing removes all the implants in you
+		for(var/obj/item/implant/I in M)
+			boutput(M, SPAN_ALERT("\an [I] falls out of your abdomen."))
+			I.on_remove(M)
+			M.implant.Remove(I)
+			I.set_loc(M.loc)
+			continue
+
+		M.set_mutantrace(/datum/mutantrace/werewolf)
+
+		playsound(M.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1, -1)
+		SPAWN(0.5 SECONDS)
+			if (istype(M?.mutantrace, /datum/mutantrace/werewolf))
+				M.emote("howl")
+
+		M.visible_message(SPAN_ALERT("<B>[M] [pick("metamorphizes", "transforms", "changes")] into a werewolf! Holy shit!</B>"))
+		if (M.find_ailment_by_type(/datum/ailment/disease/lycanthropy))
+			boutput(M, SPAN_ALERT("<h2>You've been turned into a werewolf!</h2> Your transformation was achieved by in-game means, you are <i>not</i> an antagonist unless you already were one."))
+		else
+			boutput(M, "[SPAN_NOTICE("<h3>You are now a werewolf. You can remain in this form indefinitely or change back at any time.")]</h3>")
+
+		if (M.hasStatus("handcuffed"))
+			if (M.handcuffs.werewolf_cant_rip())
+				boutput(M, SPAN_ALERT("You can't seem to break free from these silver handcuffs."))
+			else
+				M.visible_message(SPAN_ALERT("<B>[M] rips apart the [M.handcuffs] with pure brute strength!</b>"))
+				M.handcuffs.destroy_handcuffs(M)
+
+		which_way = 0
+
+	// iswolf?
+	else
+		boutput(M, "[SPAN_NOTICE("<h3>You transform back into your original form.")]</h3>")
+
+		M.set_mutantrace(M.coreMR) // return to monke/bove/herpe/etc
+
+		//Changing back removes all the implants in you, wolves should have a non-surgery way to remove bullets. considering silver is so harmful
+		for(var/obj/item/implant/I in M)
+			boutput(M, SPAN_ALERT("\an [I] falls out of your abdomen."))
+			I.on_remove(M)
+			M.implant.Remove(I)
+			I.set_loc(M.loc)
+			continue
+
+		which_way = 1
+
+	logTheThing(LOG_COMBAT, M, "[which_way == 0 ? "transforms into a werewolf" : "changes back into human form"] at [log_loc(M)].")
+	return
 
 // There used to be more stuff here, most of which was moved to limb datums.
 /mob/proc/werewolf_attack(var/mob/target = null, var/attack_type = "")

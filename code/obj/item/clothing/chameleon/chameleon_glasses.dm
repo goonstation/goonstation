@@ -79,7 +79,9 @@
 			src.wear_image = image(wear_image_icon)
 			src.inhand_image = image(inhand_image_icon)
 			src.tooltip_rebuild = TRUE
-			usr.set_clothing_icon_dirty()
+			if(ismob(src.loc))
+				var/mob/mob_loc = src.loc
+				mob_loc.set_clothing_icon_dirty()
 
 /datum/chameleon_glasses_pattern
 	var/name = "prescription glasses"
@@ -214,7 +216,9 @@
 			src.inhand_image = image(inhand_image_icon)
 			src.step_sound = T.step_sound
 			src.tooltip_rebuild = TRUE
-			usr.set_clothing_icon_dirty()
+			if(ismob(src.loc))
+				var/mob/mob_loc = src.loc
+				mob_loc.set_clothing_icon_dirty()
 
 /datum/chameleon_shoes_pattern
 	var/name = "black shoes"
@@ -314,3 +318,10 @@
 		name = "mechanised boots"
 		desc = "Industrial-grade boots fitted with mechanised balancers and stabilisers to increase running speed under a heavy workload."
 		step_sound = "step_default"
+
+	clown_shoes
+		name = /obj/item/clothing/shoes/clown_shoes::name
+		desc = /obj/item/clothing/shoes/clown_shoes::desc
+		icon_state = /obj/item/clothing/shoes/clown_shoes::icon_state
+		item_state = /obj/item/clothing/shoes/clown_shoes::item_state
+		step_sound = /obj/item/clothing/shoes/clown_shoes::step_sound

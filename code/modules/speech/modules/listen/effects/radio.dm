@@ -17,7 +17,7 @@
 	else //Just whisper, don't try talking crime on general
 		return
 
-	if (signal_frequency != R_FREQ_DEFAULT)
+	if (signal_frequency != RADIO::FREQ::DEFAULT)
 		message.hear_sound = 'sound/misc/talk/radio2.ogg'
 
 	else if (global.signal_loss && !radio.hardened) // Prevent broadcasting to the general frequency during a solar flare.
@@ -48,7 +48,7 @@
 	radio.speech_tree.process(global_message)
 
 	// If the message has been sent on the default frequency, send it to the global radio default channel.
-	if (signal_frequency == R_FREQ_DEFAULT)
+	if (signal_frequency == RADIO::FREQ::DEFAULT)
 		var/datum/say_message/radio_default_message = message.Copy()
 		radio_default_message.output_module_channel = SAY_CHANNEL_GLOBAL_RADIO_DEFAULT_ONLY
 		radio.speech_tree.process(radio_default_message)

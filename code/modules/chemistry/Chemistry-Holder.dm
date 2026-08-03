@@ -325,7 +325,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 	/// index = which reagent to transfer (0 = all)
 	proc/trans_to(var/obj/target, var/amount=1, var/multiplier=1, var/do_fluid_react=1, var/index=0, var/exception=0)
-		if(amount > total_volume) amount = total_volume
+		amount = clamp(amount, 0, total_volume)
 		if(amount <= CHEM_EPSILON) return
 		if(!target) return
 
@@ -339,7 +339,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 			target.create_reagents()
 
 		var/datum/reagents/target_reagents = target.reagents
-		amount = min(amount, target_reagents.maximum_volume - target_reagents.total_volume)
+		amount = clamp(amount, 0, target_reagents.maximum_volume - target_reagents.total_volume)
 
 		return trans_to_direct(target_reagents, amount, multiplier, index = index, exception = exception)
 
@@ -348,6 +348,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	proc/trans_to_direct(var/datum/reagents/target_reagents, var/amount=1, var/multiplier=1, var/update_target_reagents = 1, var/update_self_reagents = 1, var/index = 0, var/exception = null)
 		if (!target_reagents || !total_volume) //Wire & ZeWaka: Fix for Division by zero
 			return
+		amount = clamp(amount, 0, total_volume)
 		var/transfer_ratio = amount/total_volume
 
 		if(!index)

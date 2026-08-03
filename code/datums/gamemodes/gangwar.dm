@@ -1449,7 +1449,7 @@
 /obj/ganglocker
 	desc = "Gang locker."
 	name = "gang closet"
-	icon = 'icons/obj/large_storage.dmi'
+	icon = 'icons/obj/storage/locker.dmi'
 	icon_state = "gang"
 	density = FALSE
 	anchored = ANCHORED
@@ -1495,7 +1495,7 @@
 	New()
 		START_TRACKING
 		..()
-		default_screen_overlay = image('icons/obj/large_storage.dmi', "gang_overlay_yellow")
+		default_screen_overlay = image('icons/obj/storage/locker.dmi', "gang_overlay_yellow")
 		src.UpdateOverlays(default_screen_overlay, "screen")
 		buyable_items = list(
 			new/datum/gang_item/consumable/medkit,
@@ -1632,7 +1632,7 @@
 				boutput(user, SPAN_ALERT("You grab a bottle of spray paint from the locker."))
 		else
 			boutput(user, SPAN_ALERT("The locker's screen briefly displays the message \"Access Denied\"."))
-			overlay = image('icons/obj/large_storage.dmi', "gang_overlay_red")
+			overlay = image('icons/obj/storage/locker.dmi', "gang_overlay_red")
 
 		src.UpdateOverlays(overlay, "screen")
 		SPAWN(1 SECOND)
@@ -1793,14 +1793,14 @@
 		switch(src.get_gang_gear(user))
 			if(0)
 				boutput(user, "<b class='alert'>The locker's screen briefly displays the message \"Access Denied\".</b>")
-				overlay = image('icons/obj/large_storage.dmi', "gang_overlay_red")
+				overlay = image('icons/obj/storage/locker.dmi', "gang_overlay_red")
 			if(1)
 				boutput(user, "<b class='alert'>The locker's screen briefly displays the message \"Access Denied\".</b>")
 				boutput(user, SPAN_ALERT("You may only receive one set of gang gear every five minutes."))
-				overlay = image('icons/obj/large_storage.dmi', "gang_overlay_red")
+				overlay = image('icons/obj/storage/locker.dmi', "gang_overlay_red")
 			if(2)
 				boutput(user, SPAN_SUCCESS("The locker's screen briefly displays the message \"Access Granted\". A set of gang equipment drops out of a slot."))
-				overlay = image('icons/obj/large_storage.dmi', "gang_overlay_green")
+				overlay = image('icons/obj/storage/locker.dmi', "gang_overlay_green")
 
 		src.UpdateOverlays(overlay, "screen")
 		SPAWN(1 SECOND)
@@ -1901,9 +1901,9 @@
 		src.UpdateOverlays(default_screen_overlay, "screen")
 
 		if(gang.can_be_joined())
-			src.UpdateOverlays(image('icons/obj/large_storage.dmi', "greenlight"), "light")
+			src.UpdateOverlays(image('icons/obj/storage/locker.dmi', "greenlight"), "light")
 		else
-			src.UpdateOverlays(image('icons/obj/large_storage.dmi', "redlight"), "light")
+			src.UpdateOverlays(image('icons/obj/storage/locker.dmi', "redlight"), "light")
 
 	/// Handles dropping laundering money if the locker takes damage.
 	proc/take_damage(var/amount)

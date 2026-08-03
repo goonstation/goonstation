@@ -1,0 +1,2769 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"av" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8
+	},
+/area/station/solar/asylum)
+"aJ" = (
+/obj/stool/bench/red,
+/turf/simulated/floor/wood/five,
+/area/station/medical/asylum/main)
+"aK" = (
+/obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/turf/simulated/floor/white/checker,
+/area/station/medical/asylum/rec)
+"aT" = (
+/turf/space,
+/area/space)
+"be" = (
+/obj/table/reinforced/chemistry/auto{
+	desc = "A black countertop table for storing kitchen-y objects.";
+	name = "kitchen counter"
+	},
+/obj/item/kitchen/rollingpin{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing{
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/obj/item/kitchen/utensil/knife/bread{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/paper/book/from_file/cookbook{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/medical/asylum/kitchen)
+"bg" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"bl" = (
+/turf/simulated/wall/auto/jen/blue,
+/area/station/medical/asylum/maintenance)
+"bn" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"by" = (
+/obj/storage/secure/closet/fridge/kitchen,
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/medical/asylum/kitchen)
+"bK" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/stool/bench/red,
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/turf/simulated/floor/wood/five,
+/area/station/medical/asylum/main)
+"bS" = (
+/obj/item/storage/wall/fire{
+	dir = 8;
+	pixel_x = 32
+	},
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"cl" = (
+/obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/white/checker,
+/area/station/medical/asylum/main)
+"cx" = (
+/turf/simulated/wall/auto/reinforced/jen/blue,
+/area/station/medical/asylum/maintenance)
+"cL" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/asylum/rec)
+"da" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/medical/asylum/computer)
+"ds" = (
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/solar/asylum,
+/turf/simulated/floor/airless{
+	icon_state = "solarbase";
+	name = "solar paneling"
+	},
+/area/station/solar/asylum)
+"dv" = (
+/obj/table/reinforced/auto,
+/obj/linen_bin/towel,
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor/sanitary/blue,
+/area/station/medical/asylum/bathroom)
+"dx" = (
+/obj/mesh/catwalk,
+/obj/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless/plating/catwalk,
+/area/station/solar/asylum)
+"dQ" = (
+/obj/machinery/light_switch/directional/north,
+/turf/simulated/floor/wood/five,
+/area/station/medical/asylum/main)
+"eg" = (
+/obj/machinery/drainage,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/sanitary/blue,
+/area/station/medical/asylum/bathroom)
+"ej" = (
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"eq" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/medical/asylum/kitchen)
+"eu" = (
+/turf/simulated/floor/black/grime,
+/area/station/medical/asylum/bathroom)
+"fk" = (
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/turf/simulated/floor/black/grime,
+/area/station/medical/asylum/bathroom)
+"fs" = (
+/obj/bookshelf{
+	pixel_y = 28
+	},
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"fw" = (
+/obj/cable,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/wood/five,
+/area/station/medical/asylum/main)
+"fO" = (
+/obj/mesh/catwalk,
+/obj/cable/yellow{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5
+	},
+/area/station/solar/asylum)
+"fX" = (
+/obj/stool/bench/blue/auto,
+/turf/simulated/floor/wood/five,
+/area/station/medical/asylum/main)
+"ge" = (
+/obj/machinery/vending/floppy,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/carpet/grime,
+/area/station/medical/asylum/computer)
+"gh" = (
+/obj/machinery/sink,
+/obj/machinery/camera/directional/west{
+	pixel_y = 10
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/medical/asylum/kitchen)
+"gs" = (
+/obj/machinery/computer3/generic/radio,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/carpet/grime,
+/area/station/medical/asylum/computer)
+"gD" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/asylum/kitchen)
+"gX" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/auto/reinforced/jen/blue,
+/area/station/medical/asylum/bathroom)
+"gY" = (
+/obj/machinery/bathtub,
+/turf/simulated/floor/sanitary/blue,
+/area/station/medical/asylum/bathroom)
+"he" = (
+/obj/machinery/sim/vr_bed{
+	dir = 8
+	},
+/obj/item/clothing/glasses/vr/arcade,
+/obj/machinery/camera/directional/south{
+	pixel_x = -10
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/medical/asylum/rec)
+"ho" = (
+/obj/table/reinforced/auto,
+/obj/machinery/coffeemaker/medbay{
+	pixel_y = 2
+	},
+/obj/drink_rack/mug{
+	pixel_y = 33
+	},
+/turf/simulated/floor/wood/five,
+/area/station/medical/asylum/main)
+"hv" = (
+/obj/item/sponge,
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"hF" = (
+/obj/disposalpipe/segment/transport,
+/obj/decal/poster/wallsign/warning3{
+	desc = "'Personnel who enter through this unit will not be able to escape without destruction of Nanotrasen property. Proceed with extreme caution!'";
+	icon_state = "securearea";
+	layer = 2.9;
+	name = "WARNING - ONE-WAY ENTRY";
+	plane = -101
+	},
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"hL" = (
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/plating/jen,
+/area/station/medical/asylum/maintenance)
+"iw" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/wood/five,
+/area/station/medical/asylum/main)
+"iI" = (
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
+/obj/machinery/vending/book,
+/obj/machinery/camera/directional/west{
+	pixel_y = 10
+	},
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"iN" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/sanitary/blue,
+/area/station/medical/asylum/bathroom)
+"ju" = (
+/turf/simulated/wall/auto/reinforced/jen/blue,
+/area/station/medical/asylum/main)
+"jF" = (
+/obj/machinery/shower{
+	dir = 8;
+	pixel_x = -4
+	},
+/obj/machinery/light/incandescent/cool{
+	dir = 1
+	},
+/turf/simulated/floor/sanitary/blue,
+/area/station/medical/asylum/bathroom)
+"jY" = (
+/obj/item/storage/wall/emergency{
+	dir = 1;
+	pixel_y = 32
+	},
+/turf/simulated/floor/wood/five,
+/area/station/medical/asylum/main)
+"kp" = (
+/obj/machinery/sim/vr_bed{
+	dir = 4
+	},
+/obj/item/clothing/glasses/vr/arcade,
+/turf/simulated/floor/carpet/arcade,
+/area/station/medical/asylum/rec)
+"kJ" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/medical/asylum/kitchen)
+"lw" = (
+/turf/simulated/floor/carpet/grime,
+/area/station/medical/asylum/computer)
+"lB" = (
+/obj/machinery/light/small/sticky{
+	dir = 1
+	},
+/obj/table/reinforced/auto,
+/obj/item/device/multitool{
+	pixel_x = 7
+	},
+/obj/item/reagent_containers/food/snacks/popcorn,
+/obj/item/storage/toolbox/emergency{
+	pixel_x = -1;
+	pixel_y = 5
+	},
+/obj/item/screwdriver{
+	pixel_x = -8;
+	pixel_y = 6
+	},
+/turf/simulated/floor/black/grime,
+/area/station/medical/asylum/bathroom)
+"mc" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/sanitary/blue,
+/area/station/medical/asylum/bathroom)
+"na" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 4
+	},
+/turf/simulated/floor/white/checker,
+/area/station/medical/asylum/main)
+"ni" = (
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/medical/asylum/maintenance)
+"nq" = (
+/turf/simulated/wall/false_wall{
+	color = "#87befd";
+	icon = 'icons/turf/walls/jen.dmi';
+	icon_state = "3"
+	},
+/area/station/medical/asylum/bathroom)
+"nr" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"ns" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/wood/five,
+/area/station/medical/asylum/main)
+"nO" = (
+/obj/cable,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"nR" = (
+/obj/machinery/chem_dispenser/alcohol,
+/obj/mapping_helper/glassware_spawn,
+/turf/simulated/floor/plating/jen,
+/area/station/medical/asylum/rec)
+"oa" = (
+/obj/table/reinforced/auto,
+/obj/item/kitchen/utensil/knife{
+	pixel_y = 10
+	},
+/turf/simulated/floor/specialroom/freezer,
+/area/station/medical/asylum/kitchen)
+"oi" = (
+/obj/submachine/ATM/atm_alt{
+	dir = 4
+	},
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/medical/asylum/rec)
+"oz" = (
+/turf/simulated/floor/specialroom/freezer,
+/area/station/medical/asylum/kitchen)
+"pm" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/asylum/kitchen)
+"qk" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"ql" = (
+/obj/machinery/light/small/sticky{
+	dir = 1
+	},
+/obj/stool/bench/red,
+/turf/simulated/floor/black/grime,
+/area/station/medical/asylum/maintenance)
+"qJ" = (
+/obj/machinery/gravity_tether/multi_area/medical_asylum,
+/turf/simulated/floor/black/grime,
+/area/station/medical/asylum/maintenance)
+"qL" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/station/solar/asylum)
+"qV" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/medical/asylum/kitchen)
+"rT" = (
+/obj/machinery/light_switch/directional/north,
+/turf/simulated/floor/carpet/arcade,
+/area/station/medical/asylum/rec)
+"sh" = (
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/medical/asylum/computer)
+"sx" = (
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/cable/yellow,
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/plating/jen,
+/area/station/medical/asylum/maintenance)
+"sB" = (
+/obj/table/wood/round/auto,
+/obj/item/plate,
+/obj/random_item_spawner/snacks/one_or_zero,
+/obj/item/reagent_containers/applicator/condiment/shaker/salt{
+	pixel_x = -12;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/applicator/condiment/shaker/pepper{
+	pixel_x = 12;
+	pixel_y = 9
+	},
+/turf/simulated/floor/wood/five,
+/area/station/medical/asylum/main)
+"sH" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/asylum/main)
+"sK" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/medical/asylum/rec)
+"tb" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/asylum/computer)
+"tJ" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/wood/five,
+/area/station/medical/asylum/main)
+"tU" = (
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"ug" = (
+/obj/machinery/vending/kitchen{
+	freestuff = 1
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/medical/asylum/kitchen)
+"uq" = (
+/obj/machinery/light_switch/directional/south,
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/medical/asylum/kitchen)
+"uH" = (
+/obj/mesh/catwalk,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless/plating/catwalk,
+/area/station/solar/asylum)
+"uN" = (
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass{
+	pixel_x = 8;
+	pixel_y = -6
+	},
+/obj/item/paper{
+	info = "taste the wall candy it's so fucking good they couldn't stop me when i started drinking it made me too powerful hahAHAEHHSAbggxf (The rest of the text is illegible scribbles with an unbelievably shitty drawing of a mushroom at the bottom.)";
+	name = "crinkled paper";
+	pixel_x = -6;
+	pixel_y = -7
+	},
+/obj/decal/cleanable/fungus{
+	pixel_y = 32
+	},
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"uP" = (
+/obj/item/sticker/postit{
+	pixel_x = 3;
+	pixel_y = 28;
+	words = "sponge. sponge. sponge. sponge. sponge. sponge. sponge. sponge. sponge. sponge. sponge. sponge. sponge. sponge. sponge. sponge."
+	},
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"uY" = (
+/obj/item/device/radio/intercom/medical,
+/obj/table/reinforced/chemistry/auto{
+	desc = "A black countertop table for storing kitchen-y objects.";
+	name = "kitchen counter"
+	},
+/obj/machinery/microwave{
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/food/snacks/plant/banana{
+	color = "#00ff00";
+	food_color = "#00ff00"
+	},
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/medical/asylum/kitchen)
+"vd" = (
+/obj/cable/yellow,
+/obj/machinery/power/solar/asylum,
+/turf/simulated/floor/airless{
+	icon_state = "solarbase";
+	name = "solar paneling"
+	},
+/area/station/solar/asylum)
+"vF" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"vP" = (
+/turf/simulated/floor/sanitary/blue,
+/area/station/medical/asylum/bathroom)
+"vX" = (
+/obj/submachine/claw_machine,
+/turf/simulated/floor/carpet/arcade,
+/area/station/medical/asylum/rec)
+"wh" = (
+/obj/machinery/deep_fryer{
+	dir = 8
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/medical/asylum/kitchen)
+"wp" = (
+/obj/machinery/power/smes,
+/obj/cable,
+/turf/simulated/floor/black/grime,
+/area/station/medical/asylum/maintenance)
+"wI" = (
+/obj/stool/bench/blue/auto,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"wP" = (
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/sanitary/blue,
+/area/station/medical/asylum/bathroom)
+"wW" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/medical/asylum/rec)
+"xk" = (
+/obj/item/device/radio/intercom/medical,
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"xr" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"xs" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light_switch/directional/east,
+/turf/simulated/floor/black/grime,
+/area/station/medical/asylum/maintenance)
+"xw" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/wood/five,
+/area/station/medical/asylum/main)
+"yc" = (
+/obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/glass,
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable,
+/turf/simulated/floor/carpet/grime,
+/area/station/medical/asylum/computer)
+"yf" = (
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"yi" = (
+/obj/machinery/light/incandescent,
+/obj/machinery/camera/directional/south{
+	pixel_x = -10
+	},
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"yq" = (
+/obj/machinery/computer/camera_viewer{
+	dir = 4
+	},
+/turf/simulated/floor/black/grime,
+/area/station/medical/asylum/bathroom)
+"yz" = (
+/obj/stool/bench/red,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/medical/asylum/rec)
+"yK" = (
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/obj/stool/bench/blue/auto,
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"yO" = (
+/obj/decal/cleanable/writing/infrared{
+	desc = "Someone's scribblesd something here, with infrared ink. The handwriting is smooth but jagged, as if written by a trained but shaking hand...";
+	pixel_x = -1;
+	pixel_y = 31;
+	words = "To anyone else who can actually read this kind of shit, I have some choice pieces of advice for you. One: If you got in here for telling them you saw something that shouldn't exist by any means, then you and I are in the same boat and this message is for you in particular. To those who have not seen it, this will seem like complete and utter nonsense. Two: Corporate regulations will be the only reason you'll be able to get out of here unharmed, and they can only keep you in here for so long. Stay patient, and stay vigilant. You'll be able to go back there soon, and when you do it will all make sense at last. Three: THE WORDS are as follows: 'The horse was onto something after all.' Yes, that includes the period. Good luck."
+	},
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"yZ" = (
+/obj/disposalpipe/segment/transport,
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"zR" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/table/reinforced/auto,
+/obj/item/boardgame/chess,
+/turf/simulated/floor/wood/five,
+/area/station/medical/asylum/main)
+"Ab" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/medical/asylum/rec)
+"AO" = (
+/obj/machinery/sim/vr_bed{
+	dir = 8
+	},
+/obj/item/clothing/glasses/vr/arcade,
+/turf/simulated/floor/carpet/arcade,
+/area/station/medical/asylum/rec)
+"AV" = (
+/obj/stool/chair/comfy/blue{
+	dir = 8;
+	name = "the other best seat in the house"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/medical/asylum/bathroom)
+"Bm" = (
+/turf/simulated/wall/auto/reinforced/jen/blue,
+/area/station/medical/asylum/bathroom)
+"Bw" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/medical/asylum/rec)
+"Ce" = (
+/obj/mesh/catwalk,
+/obj/cable/yellow{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 6
+	},
+/area/station/solar/asylum)
+"Cn" = (
+/obj/machinery/sink/slim{
+	desc = "It seems a bit busted.";
+	dir = 4;
+	name = "leaky sink";
+	pixel_x = -2
+	},
+/turf/simulated/floor/sanitary/blue,
+/area/station/medical/asylum/bathroom)
+"Cy" = (
+/obj/machinery/disposal/transport{
+	color = "#ff0000";
+	desc = "A transportation unit meant to take permanent residents on a one-way ride to the rest of the asylum.";
+	name = "One Way Ticket"
+	},
+/obj/disposalpipe/trunk/transport{
+	dir = 1
+	},
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"CM" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/space)
+"CY" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/cable/yellow,
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8
+	},
+/area/station/solar/asylum)
+"Db" = (
+/obj/machinery/computer3/terminal/zeta,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/medical/asylum/computer)
+"Df" = (
+/obj/stool/bench/blue/auto,
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"Dl" = (
+/obj/stool/bench/yellow,
+/turf/simulated/floor/wood/five,
+/area/station/medical/asylum/main)
+"DJ" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable,
+/turf/simulated/floor/wood/five,
+/area/station/medical/asylum/main)
+"DP" = (
+/obj/table/reinforced/chemistry/auto{
+	desc = "A black countertop table for storing kitchen-y objects.";
+	name = "kitchen counter"
+	},
+/obj/machinery/glass_recycler{
+	pixel_y = 8
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/medical/asylum/kitchen)
+"EJ" = (
+/obj/cable/yellow,
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/plating/jen,
+/area/station/medical/asylum/maintenance)
+"EN" = (
+/obj/item/device/radio/intercom/medical{
+	dir = 8
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"EU" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/medical/asylum/kitchen)
+"Ff" = (
+/obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/maint,
+/obj/forcefield/energyshield/perma/doorlink,
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"Fg" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/medical/asylum/computer)
+"Fk" = (
+/obj/machinery/camera/directional/south{
+	pixel_x = -10
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/medical/asylum/computer)
+"Fz" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 1;
+	pixel_x = -10;
+	pixel_y = 24
+	},
+/obj/table/reinforced/auto,
+/obj/item/handcuffs,
+/obj/item/clothing/glasses/blindfold,
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"FM" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/firstaid/mental,
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"FR" = (
+/obj/table/reinforced/chemistry/auto{
+	desc = "A black countertop table for storing kitchen-y objects.";
+	name = "kitchen counter"
+	},
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
+/obj/machinery/mixer,
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/medical/asylum/kitchen)
+"Gk" = (
+/obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/glass,
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/medical/asylum/rec)
+"Gp" = (
+/obj/machinery/camera/directional/south{
+	pixel_x = -10
+	},
+/turf/simulated/floor/wood/five,
+/area/station/medical/asylum/main)
+"Gt" = (
+/obj/item/device/radio/intercom/medical,
+/turf/simulated/floor/wood/five,
+/area/station/medical/asylum/main)
+"GA" = (
+/obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/glass,
+/obj/mapping_helper/access,
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"GU" = (
+/obj/machinery/light/small/cool/very{
+	dir = 1
+	},
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/turf/simulated/floor/specialroom/freezer,
+/area/station/medical/asylum/kitchen)
+"Hl" = (
+/obj/machinery/vending/computer3,
+/turf/simulated/floor/carpet/grime,
+/area/station/medical/asylum/computer)
+"Hx" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/medical/asylum/maintenance)
+"Hy" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/cable/yellow,
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8
+	},
+/area/station/solar/asylum)
+"HA" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/camera/directional/south{
+	pixel_x = -10
+	},
+/turf/simulated/floor/wood/five,
+/area/station/medical/asylum/main)
+"HS" = (
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"HU" = (
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/tracker/asylum,
+/turf/simulated/floor/plating/airless,
+/area/station/solar/asylum)
+"HY" = (
+/obj/submachine/chef_oven{
+	dir = 8
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/medical/asylum/kitchen)
+"HZ" = (
+/obj/cable,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/medical/asylum/maintenance)
+"If" = (
+/turf/simulated/wall/auto/reinforced/jen/blue,
+/area/station/medical/asylum/kitchen)
+"Ir" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/asylum/main)
+"IA" = (
+/obj/machinery/computer/solar_control/small_backup1{
+	dir = 4
+	},
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/medical/asylum/maintenance)
+"Jc" = (
+/obj/machinery/light_switch/directional/east,
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"JA" = (
+/obj/table/reinforced/auto,
+/obj/machinery/phone,
+/turf/simulated/floor/wood/five,
+/area/station/medical/asylum/main)
+"JB" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/simulated/wall/auto/reinforced/jen/blue,
+/area/station/medical/asylum/main)
+"Ka" = (
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/medical/asylum/kitchen)
+"Kp" = (
+/turf/simulated/wall/auto/jen/blue,
+/area/station/medical/asylum/main)
+"Lq" = (
+/obj/mesh/catwalk{
+	dir = 9
+	},
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/cable/yellow,
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	icon_state = "catwalk_cross"
+	},
+/area/station/solar/asylum)
+"Lu" = (
+/obj/machinery/vehicle/miniputt/armed{
+	dir = 4
+	},
+/turf/simulated/floor/airless/engine,
+/area/space)
+"Ly" = (
+/obj/machinery/camera/directional/south{
+	pixel_x = -10
+	},
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"LS" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"LU" = (
+/obj/machinery/microwave,
+/obj/table/reinforced/auto,
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor/wood/five,
+/area/station/medical/asylum/main)
+"LZ" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/medical/asylum/computer)
+"Mb" = (
+/obj/submachine/foodprocessor{
+	dir = 4
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/medical/asylum/kitchen)
+"Ml" = (
+/obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/glass,
+/obj/mapping_helper/access,
+/turf/simulated/floor/carpet/arcade,
+/area/station/medical/asylum/kitchen)
+"My" = (
+/obj/cable,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/wood/five,
+/area/station/medical/asylum/main)
+"MQ" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/medical/asylum/rec)
+"MZ" = (
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 9
+	},
+/area/space)
+"Ng" = (
+/obj/decal/poster/wallsign/warning3{
+	desc = "'Personnel who enter through this unit will not be able to escape without destruction of Nanotrasen property. Proceed with extreme caution!'";
+	icon_state = "securearea";
+	layer = 2.9;
+	name = "WARNING - ONE-WAY ENTRY";
+	plane = -101
+	},
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"Nl" = (
+/obj/table/wood/round/auto,
+/obj/item/plate,
+/obj/random_item_spawner/snacks/one_or_zero,
+/turf/simulated/floor/wood/five,
+/area/station/medical/asylum/main)
+"Nr" = (
+/obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/glass,
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/sanitary/blue,
+/area/station/medical/asylum/bathroom)
+"NF" = (
+/turf/simulated/wall/false_wall{
+	color = "#87befd";
+	icon = 'icons/turf/walls/jen.dmi';
+	icon_state = "12"
+	},
+/area/station/medical/asylum/rec)
+"NL" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/medical/asylum/main)
+"NQ" = (
+/obj/item/device/radio/intercom/medical{
+	dir = 4
+	},
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"NS" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/medical/asylum/maintenance)
+"Ol" = (
+/obj/item/clothing/suit/bedsheet,
+/obj/stool/bed,
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"Oo" = (
+/obj/machinery/power/apc/autoname_west,
+/obj/cable,
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/medical/asylum/kitchen)
+"Or" = (
+/obj/kitchenspike,
+/turf/simulated/floor/specialroom/freezer,
+/area/station/medical/asylum/kitchen)
+"Ow" = (
+/obj/decal/stripe_delivery,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4;
+	req_access = null
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/medical/asylum/maintenance)
+"Oy" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/asylum/rec)
+"OA" = (
+/obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/mapping_helper/access,
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"OO" = (
+/obj/machinery/chem_dispenser/chef,
+/obj/mapping_helper/glassware_spawn,
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/medical/asylum/kitchen)
+"OP" = (
+/obj/machinery/light/incandescent/warm,
+/obj/table/reinforced/auto,
+/obj/random_item_spawner/desk_stuff/g_clip_bin_pen/some,
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"OV" = (
+/turf/simulated/floor/black/grime,
+/area/station/medical/asylum/maintenance)
+"OW" = (
+/obj/item/storage/wall/fire{
+	dir = 8;
+	pixel_x = 32
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/medical/asylum/kitchen)
+"OY" = (
+/obj/item/storage/wall/emergency{
+	dir = 8;
+	pixel_x = 32
+	},
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"Pl" = (
+/obj/stool/bench/blue/auto,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/medical/asylum/computer)
+"Po" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/item/device/net_sniffer,
+/obj/machinery/camera/directional/west{
+	pixel_y = 10
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/medical/asylum/computer)
+"Pu" = (
+/obj/machinery/light/incandescent,
+/obj/machinery/vending/cards,
+/turf/simulated/floor/wood/five,
+/area/station/medical/asylum/main)
+"PQ" = (
+/turf/simulated/wall/auto/jen/blue,
+/area/station/medical/asylum/kitchen)
+"PW" = (
+/obj/decal/stripe_delivery,
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"PY" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"QM" = (
+/obj/machinery/computer/arcade,
+/turf/simulated/floor/carpet/arcade,
+/area/station/medical/asylum/rec)
+"RC" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/cable/yellow,
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8
+	},
+/area/station/solar/asylum)
+"Sb" = (
+/obj/stool/bench/red,
+/turf/simulated/floor/carpet/arcade,
+/area/station/medical/asylum/rec)
+"Si" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8
+	},
+/turf/simulated/floor/white/checker,
+/area/station/medical/asylum/main)
+"SB" = (
+/turf/simulated/wall/auto/jen/blue,
+/area/station/medical/asylum/bathroom)
+"Tf" = (
+/turf/simulated/wall/auto/reinforced/jen/blue,
+/area/station/medical/asylum/rec)
+"Tg" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/asylum/main)
+"Tz" = (
+/obj/item/storage/toilet/random/escapetools{
+	dir = 8
+	},
+/turf/simulated/floor/sanitary/blue,
+/area/station/medical/asylum/bathroom)
+"Uw" = (
+/turf/simulated/wall/auto/jen/blue,
+/area/station/medical/asylum/computer)
+"UT" = (
+/obj/machinery/sim/vr_bed{
+	dir = 8
+	},
+/obj/item/clothing/glasses/vr/arcade,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/carpet/arcade,
+/area/station/medical/asylum/rec)
+"UW" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/medical/asylum/main)
+"Vh" = (
+/turf/simulated/wall/auto/jen/blue,
+/area/station/medical/asylum/rec)
+"VK" = (
+/turf/simulated/floor/carpet/arcade,
+/area/station/medical/asylum/rec)
+"WK" = (
+/turf/simulated/floor/wood/five,
+/area/station/medical/asylum/main)
+"WU" = (
+/obj/item/rubberduck,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light_switch/directional/north,
+/turf/simulated/floor/sanitary/blue,
+/area/station/medical/asylum/bathroom)
+"Xb" = (
+/obj/item/clothing/suit/bedsheet,
+/obj/stool/bed,
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"Xd" = (
+/obj/machinery/computer/tetris,
+/turf/simulated/floor/carpet/arcade,
+/area/station/medical/asylum/rec)
+"Xg" = (
+/obj/table/reinforced/auto,
+/obj/machinery/computer3/generic/personal/personel_alt,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"Xh" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/asylum/main)
+"Xk" = (
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/medical/asylum/kitchen)
+"Xm" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/wood/five,
+/area/station/medical/asylum/main)
+"Xv" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/wood/five,
+/area/station/medical/asylum/main)
+"XI" = (
+/obj/stove{
+	pixel_y = 2
+	},
+/obj/item/soup_pot{
+	pixel_x = 1;
+	pixel_y = 12
+	},
+/obj/item/ladle{
+	name = "soup sword";
+	pixel_x = 10;
+	pixel_y = 15
+	},
+/obj/item/matchbook{
+	pixel_x = -7;
+	pixel_y = 6
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/station/medical/asylum/kitchen)
+"XV" = (
+/obj/item/device/radio/intercom/medical{
+	dir = 4
+	},
+/obj/item/storage/box/nerd_kit{
+	pixel_x = 2;
+	pixel_y = 4
+	},
+/obj/table/wood/round/auto,
+/turf/simulated/floor/carpet/arcade,
+/area/station/medical/asylum/rec)
+"XW" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light_switch/directional/east,
+/turf/simulated/floor/carpet/grime,
+/area/station/medical/asylum/computer)
+"XY" = (
+/obj/machinery/vehicle/miniputt/armed{
+	dir = 8
+	},
+/turf/simulated/floor/airless/engine,
+/area/space)
+"Yl" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/machinery/light/incandescent/warm{
+	dir = 1
+	},
+/obj/machinery/light_switch/directional/north,
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+"Yu" = (
+/obj/machinery/communications_dish,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/solar/asylum)
+"Yv" = (
+/obj/machinery/vending/monkey,
+/turf/simulated/floor/specialroom/freezer,
+/area/station/medical/asylum/kitchen)
+"Yx" = (
+/turf/simulated/wall/auto/reinforced/jen/blue,
+/area/station/medical/asylum/computer)
+"YA" = (
+/obj/disposaloutlet{
+	pixel_y = -6
+	},
+/obj/disposalpipe/trunk/transport{
+	dir = 8
+	},
+/turf/simulated/wall/auto/reinforced/jen/blue,
+/area/station/medical/asylum/main)
+"YC" = (
+/obj/table/wood/round/auto,
+/obj/random_item_spawner/med_kit/one,
+/obj/item/paper_bin{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/obj/item/pen{
+	pixel_x = 10;
+	pixel_y = 9
+	},
+/turf/simulated/floor/wood/five,
+/area/station/medical/asylum/main)
+"Zd" = (
+/obj/cable,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/medical/asylum/rec)
+"Zm" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/wood/five,
+/area/station/medical/asylum/main)
+"Zp" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/asylum/rec)
+"ZC" = (
+/turf/simulated/floor/airless/engine,
+/area/space)
+"ZJ" = (
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
+/turf/simulated/floor/white,
+/area/station/medical/asylum/main)
+
+(1,1,1) = {"
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+ds
+RC
+vd
+qL
+ds
+RC
+vd
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+"}
+(2,1,1) = {"
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+ds
+CY
+vd
+HU
+ds
+CY
+vd
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+"}
+(3,1,1) = {"
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+ds
+CY
+vd
+av
+ds
+CY
+vd
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+"}
+(4,1,1) = {"
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+ds
+Hy
+vd
+av
+ds
+Hy
+vd
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+"}
+(5,1,1) = {"
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+fO
+dx
+Lq
+dx
+Ce
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+"}
+(6,1,1) = {"
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+cx
+hL
+sx
+EJ
+cx
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+"}
+(7,1,1) = {"
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+Bm
+Bm
+Bm
+Bm
+cx
+IA
+OV
+ni
+cx
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+"}
+(8,1,1) = {"
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+Bm
+Bm
+lB
+yq
+SB
+qJ
+ql
+Hx
+wp
+cx
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+"}
+(9,1,1) = {"
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+Bm
+fk
+eu
+AV
+SB
+NS
+xs
+HZ
+cx
+If
+If
+If
+If
+If
+If
+If
+aT
+aT
+aT
+"}
+(10,1,1) = {"
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+CM
+CM
+CM
+vF
+vF
+Bm
+Bm
+Bm
+SB
+nq
+SB
+bl
+bl
+Ow
+bl
+Yv
+oa
+PQ
+by
+FR
+be
+If
+If
+aT
+aT
+"}
+(11,1,1) = {"
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+CM
+aT
+xr
+aT
+aT
+Bm
+jF
+wP
+Cn
+mc
+SB
+YC
+Dl
+Xm
+PQ
+GU
+oz
+Ml
+Xk
+Xk
+Xk
+Mb
+If
+aT
+aT
+"}
+(12,1,1) = {"
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+CM
+vF
+Yu
+uH
+uH
+gX
+WU
+eg
+iN
+iN
+Nr
+xw
+DJ
+iw
+PQ
+Or
+Or
+PQ
+uY
+Xk
+Xk
+uq
+If
+aT
+aT
+"}
+(13,1,1) = {"
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+CM
+aT
+xr
+aT
+aT
+Bm
+gY
+vP
+Tz
+dv
+SB
+dQ
+HA
+PQ
+PQ
+PQ
+PQ
+PQ
+DP
+Xk
+Xk
+EU
+If
+aT
+aT
+"}
+(14,1,1) = {"
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+CM
+CM
+CM
+vF
+vF
+Bm
+SB
+SB
+SB
+SB
+SB
+jY
+ns
+eq
+gh
+qV
+Oo
+Xk
+Xk
+Xk
+Xk
+HY
+If
+aT
+aT
+"}
+(15,1,1) = {"
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+Yx
+Yx
+Po
+sh
+Hl
+ge
+Uw
+Gt
+tJ
+gD
+OO
+kJ
+Xk
+Xk
+Ka
+OW
+wh
+If
+If
+aT
+aT
+"}
+(16,1,1) = {"
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+Yx
+Db
+Pl
+da
+Fg
+Fk
+tb
+WK
+Xm
+pm
+XI
+kJ
+Xk
+ug
+PQ
+PQ
+PQ
+If
+aT
+aT
+aT
+"}
+(17,1,1) = {"
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+Yx
+gs
+lw
+lw
+LZ
+XW
+yc
+xw
+My
+Kp
+Kp
+cl
+Kp
+Kp
+Vh
+oi
+XV
+Tf
+Tf
+aT
+aT
+"}
+(18,1,1) = {"
+MZ
+MZ
+MZ
+MZ
+MZ
+MZ
+MZ
+aT
+aT
+aT
+ju
+ju
+Kp
+sH
+UW
+NL
+Kp
+Kp
+bK
+fw
+xw
+xw
+iw
+Kp
+nR
+NF
+VK
+VK
+kp
+Tf
+aT
+aT
+"}
+(19,1,1) = {"
+MZ
+ZC
+ZC
+MZ
+ZC
+Lu
+MZ
+aT
+aT
+ju
+ju
+Fz
+HS
+qk
+qk
+qk
+OP
+Ir
+zR
+My
+WK
+WK
+Gp
+Kp
+Vh
+Vh
+rT
+VK
+kp
+Tf
+aT
+aT
+"}
+(20,1,1) = {"
+MZ
+ZC
+ZC
+MZ
+ZC
+ZC
+MZ
+aT
+aT
+ju
+xk
+HS
+HS
+HS
+HS
+Ng
+HS
+Xh
+aJ
+Xm
+fX
+Nl
+fX
+Xv
+sK
+vX
+Sb
+VK
+kp
+Tf
+aT
+aT
+"}
+(21,1,1) = {"
+MZ
+MZ
+MZ
+MZ
+MZ
+MZ
+MZ
+MZ
+MZ
+Ff
+HS
+bg
+yZ
+yZ
+yZ
+hF
+Cy
+Xh
+WK
+Xm
+fX
+sB
+fX
+ns
+Gk
+wW
+MQ
+VK
+UT
+Tf
+aT
+aT
+"}
+(22,1,1) = {"
+MZ
+ZC
+ZC
+MZ
+ZC
+ZC
+MZ
+aT
+aT
+ju
+HS
+nr
+HS
+HS
+HS
+Ng
+HS
+Xh
+JA
+Xm
+fX
+Nl
+fX
+Xm
+Oy
+Xd
+yz
+VK
+he
+Tf
+aT
+aT
+"}
+(23,1,1) = {"
+MZ
+ZC
+XY
+MZ
+ZC
+ZC
+MZ
+aT
+aT
+ju
+ju
+Yl
+bn
+bn
+bn
+HS
+FM
+Tg
+LU
+ns
+DJ
+DJ
+xw
+Zm
+cL
+QM
+Ab
+VK
+AO
+Tf
+aT
+aT
+"}
+(24,1,1) = {"
+MZ
+MZ
+MZ
+MZ
+MZ
+MZ
+MZ
+aT
+aT
+aT
+ju
+JB
+Si
+Si
+Si
+Kp
+Kp
+Kp
+ho
+Xm
+Xm
+Xm
+Pu
+Kp
+Kp
+Bw
+Zd
+VK
+Tf
+Tf
+aT
+aT
+"}
+(25,1,1) = {"
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+JB
+na
+na
+na
+Kp
+Kp
+Kp
+Kp
+Tg
+PW
+Tg
+Kp
+Kp
+Kp
+Zp
+aK
+sK
+ju
+ju
+ju
+ju
+"}
+(26,1,1) = {"
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+JB
+yK
+Df
+Df
+iI
+NQ
+Xg
+wI
+LS
+nO
+yi
+Kp
+fs
+ZJ
+HS
+HS
+Ly
+ju
+ej
+Xb
+ju
+"}
+(27,1,1) = {"
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+YA
+HS
+HS
+HS
+HS
+HS
+HS
+HS
+HS
+HS
+HS
+HS
+HS
+HS
+HS
+HS
+HS
+GA
+HS
+PY
+ju
+"}
+(28,1,1) = {"
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+ju
+HS
+HS
+HS
+OY
+Jc
+HS
+yf
+HS
+HS
+bS
+HS
+HS
+HS
+HS
+HS
+EN
+ju
+ju
+ju
+ju
+"}
+(29,1,1) = {"
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+ju
+ju
+OA
+Kp
+Kp
+Kp
+OA
+Kp
+OA
+Kp
+Kp
+Kp
+OA
+Kp
+OA
+Kp
+ju
+ju
+aT
+aT
+aT
+"}
+(30,1,1) = {"
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+ju
+ej
+HS
+Kp
+yO
+HS
+Kp
+uP
+HS
+Kp
+ej
+HS
+Kp
+ej
+HS
+ju
+aT
+aT
+aT
+aT
+"}
+(31,1,1) = {"
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+ju
+uN
+Xb
+Kp
+Ol
+HS
+Kp
+hv
+Xb
+Kp
+Ol
+HS
+Kp
+tU
+Xb
+ju
+aT
+aT
+aT
+aT
+"}
+(32,1,1) = {"
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+aT
+ju
+ju
+ju
+ju
+ju
+ju
+ju
+ju
+ju
+ju
+ju
+ju
+ju
+ju
+ju
+ju
+aT
+aT
+aT
+aT
+"}

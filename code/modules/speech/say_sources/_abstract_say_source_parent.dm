@@ -32,8 +32,8 @@ TYPEINFO(/atom/movable/abstract_say_source/radio)
 	var/radio_type = /obj/item/device/radio
 	var/radio_prefix = ";"
 	var/obj/item/device/radio/radio = null
-	var/default_frequency = R_FREQ_DEFAULT
-	var/radio_chat_class = RADIOCL_STANDARD
+	var/default_frequency = RADIO::FREQ::DEFAULT
+	var/radio_chat_class = RADIO::CSS::STANDARD
 	var/radio_icon = null
 	var/radio_icon_tooltip = ""
 

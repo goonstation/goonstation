@@ -14,4 +14,4 @@
 		if (istype(T.loc, /area/station/crewquarters/cryotron))
 			continue
 
-		. += src.format_position(T)
+		. += CI.format_position(T)

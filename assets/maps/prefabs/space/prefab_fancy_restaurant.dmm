@@ -1,0 +1,1579 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ah" = (
+/obj/stool/chair/dining{
+	dir = 8
+	},
+/turf/simulated/floor/wood/six,
+/area/prefab/fancy_restaurant)
+"ar" = (
+/obj/lattice,
+/turf/space,
+/area/noGenerate)
+"cu" = (
+/turf/simulated/floor/wood/six,
+/area/prefab/fancy_restaurant)
+"cH" = (
+/turf/space,
+/area/noGenerate)
+"cN" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/noGenerate)
+"dp" = (
+/obj/railing/reinforced{
+	dir = 1
+	},
+/obj/forcefield/energyshield/perma,
+/turf/simulated/floor/wood/seven,
+/area/prefab/fancy_restaurant)
+"fr" = (
+/obj/machinery/door/airlock/pyro/alt{
+	id = "HG_bathroom2"
+	},
+/turf/simulated/floor/wood/six,
+/area/prefab/fancy_restaurant)
+"fy" = (
+/turf/simulated/floor/white/checker2,
+/area/prefab/fancy_restaurant)
+"fL" = (
+/obj/table/clothred/auto,
+/obj/item/plate{
+	pixel_y = 7
+	},
+/obj/item/kitchen/utensil/fork{
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/obj/item/kitchen/utensil/spoon{
+	pixel_y = 8;
+	pixel_x = -5
+	},
+/obj/item/kitchen/utensil/knife{
+	pixel_y = 9;
+	pixel_x = 11
+	},
+/obj/item/reagent_containers/food/snacks/steak,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/wood/six,
+/area/prefab/fancy_restaurant)
+"fR" = (
+/obj/table/reinforced,
+/obj/item/clothing/head/helmet/welding,
+/obj/item/weldingtool,
+/turf/simulated/floor/industrial,
+/area/prefab/fancy_restaurant)
+"gz" = (
+/obj/machinery/sink,
+/turf/simulated/floor/white/checker2,
+/area/prefab/fancy_restaurant)
+"gF" = (
+/obj/stool/chair/dining{
+	dir = 8
+	},
+/turf/simulated/floor/wood/seven,
+/area/prefab/fancy_restaurant)
+"gZ" = (
+/obj/submachine/chef_oven,
+/turf/simulated/floor/white/checker2,
+/area/prefab/fancy_restaurant)
+"hy" = (
+/obj/table/clothred/auto,
+/obj/item/plate{
+	pixel_y = 7
+	},
+/obj/item/kitchen/utensil/fork{
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/obj/item/kitchen/utensil/spoon{
+	pixel_y = 8;
+	pixel_x = -5
+	},
+/obj/item/kitchen/utensil/knife{
+	pixel_y = 9;
+	pixel_x = 11
+	},
+/turf/simulated/floor/wood/six,
+/area/prefab/fancy_restaurant)
+"hC" = (
+/obj/lattice,
+/obj/warp_beacon{
+	name = "The Hidden Gem Beacon"
+	},
+/turf/space,
+/area/noGenerate)
+"hG" = (
+/obj/table/clothred/auto,
+/obj/item/plate{
+	pixel_y = 7
+	},
+/obj/item/kitchen/utensil/spoon{
+	pixel_y = 8;
+	pixel_x = -5
+	},
+/obj/item/kitchen/utensil/knife{
+	pixel_y = 9;
+	pixel_x = 11
+	},
+/obj/item/kitchen/utensil/fork{
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/wood/six,
+/area/prefab/fancy_restaurant)
+"hI" = (
+/obj/table/clothred/auto,
+/obj/item/kitchen/utensil/fork{
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/obj/item/kitchen/utensil/spoon{
+	pixel_y = 8;
+	pixel_x = -5
+	},
+/obj/item/kitchen/utensil/knife{
+	pixel_y = 9;
+	pixel_x = 11
+	},
+/obj/item/reagent_containers/food/snacks/fruit_salad{
+	pixel_y = 8
+	},
+/turf/simulated/floor/wood/six,
+/area/prefab/fancy_restaurant)
+"ic" = (
+/obj/potted_plant/potted_plant2{
+	dir = 8;
+	pixel_x = -6
+	},
+/turf/simulated/floor/wood/six,
+/area/prefab/fancy_restaurant)
+"ki" = (
+/obj/forcefield/energyshield/perma{
+	dir = 6
+	},
+/turf/simulated/floor/wood/seven,
+/area/prefab/fancy_restaurant)
+"kM" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/noGenerate)
+"ln" = (
+/obj/table/clothred/auto,
+/obj/item/plate{
+	pixel_y = 7
+	},
+/obj/random_item_spawner/snacks/one,
+/obj/item/kitchen/utensil/spoon{
+	pixel_y = 8;
+	pixel_x = -5
+	},
+/obj/item/kitchen/utensil/knife{
+	pixel_y = 9;
+	pixel_x = 11
+	},
+/obj/item/kitchen/utensil/fork{
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/turf/simulated/floor/wood/seven,
+/area/prefab/fancy_restaurant)
+"lr" = (
+/obj/table/clothred/auto,
+/obj/item/plate{
+	pixel_y = 7
+	},
+/obj/item/kitchen/utensil/fork{
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/obj/item/kitchen/utensil/spoon{
+	pixel_y = 8;
+	pixel_x = -5
+	},
+/obj/item/kitchen/utensil/knife{
+	pixel_y = 9;
+	pixel_x = 11
+	},
+/obj/random_item_spawner/snacks/one_or_zero,
+/turf/simulated/floor/wood/seven,
+/area/prefab/fancy_restaurant)
+"lY" = (
+/obj/railing/reinforced{
+	dir = 8
+	},
+/obj/forcefield/energyshield/perma{
+	dir = 8
+	},
+/turf/simulated/floor/wood/seven,
+/area/prefab/fancy_restaurant)
+"me" = (
+/obj/item/instrument/large/jukebox,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/wood/six,
+/area/prefab/fancy_restaurant)
+"mB" = (
+/obj/decal/tile_edge/stripe{
+	dir = 8
+	},
+/turf/simulated/floor/shuttlebay,
+/area/prefab/fancy_restaurant)
+"mI" = (
+/obj/forcefield/energyshield/perma/doorlink,
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	id = "HG_bay"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/prefab/fancy_restaurant)
+"ni" = (
+/obj/stool/chair/dining{
+	dir = 1
+	},
+/turf/simulated/floor/wood/six,
+/area/prefab/fancy_restaurant)
+"nW" = (
+/obj/decoration/floralarrangement{
+	pixel_y = 8
+	},
+/obj/table/endtable_classic,
+/turf/simulated/floor/wood/six,
+/area/prefab/fancy_restaurant)
+"oc" = (
+/obj/forcefield/energyshield/perma{
+	dir = 10
+	},
+/turf/simulated/floor/wood/seven,
+/area/prefab/fancy_restaurant)
+"oG" = (
+/obj/table/reinforced/chemistry/auto{
+	desc = "A black countertop table for storing kitchen-y objects.";
+	name = "kitchen counter"
+	},
+/obj/item/storage/box/cutlery,
+/obj/item/storage/box/cutlery,
+/turf/simulated/floor/white/checker2,
+/area/prefab/fancy_restaurant)
+"py" = (
+/obj/storage/secure/closet/fridge/kitchen,
+/turf/simulated/floor/white/checker2,
+/area/prefab/fancy_restaurant)
+"qg" = (
+/obj/mesh/catwalk,
+/turf/space,
+/area/noGenerate)
+"qI" = (
+/obj/machinery/door/unpowered/wood/pyro,
+/turf/simulated/floor/wood/six,
+/area/prefab/fancy_restaurant)
+"tu" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/wood/six,
+/area/prefab/fancy_restaurant)
+"ty" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"tU" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/noGenerate)
+"tY" = (
+/obj/table/clothred/auto,
+/obj/item/plate{
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/food/snacks/cookie/dog,
+/turf/simulated/floor/wood/six,
+/area/prefab/fancy_restaurant)
+"vJ" = (
+/obj/table/reinforced/chemistry/auto{
+	desc = "A black countertop table for storing kitchen-y objects.";
+	name = "kitchen counter"
+	},
+/obj/machinery/glass_recycler,
+/turf/simulated/floor/white/checker2,
+/area/prefab/fancy_restaurant)
+"wW" = (
+/turf/simulated/wall/auto/jen/dark2,
+/area/prefab/fancy_restaurant)
+"xu" = (
+/obj/item/storage/wall/clothingrack{
+	icon_state = "clothingrack_empty"
+	},
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/wood,
+/area/prefab/fancy_restaurant)
+"xA" = (
+/obj/rack,
+/obj/item/reagent_containers/food/drinks/bottle/wine/white{
+	pixel_y = 6;
+	pixel_x = 4
+	},
+/obj/item/reagent_containers/food/drinks/bottle/wine/white,
+/obj/item/reagent_containers/food/drinks/bottle/wine/white{
+	pixel_y = 6;
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/food/drinks/bottle/wine/white{
+	pixel_y = -1;
+	pixel_x = 8
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/simulated/floor/wood/six,
+/area/prefab/fancy_restaurant)
+"xC" = (
+/turf/simulated/floor/shuttlebay,
+/area/prefab/fancy_restaurant)
+"xS" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/fancy_restaurant)
+"yl" = (
+/obj/table/reinforced/chemistry/auto{
+	desc = "A black countertop table for storing kitchen-y objects.";
+	name = "kitchen counter"
+	},
+/obj/machinery/microwave{
+	pixel_y = 7
+	},
+/turf/simulated/floor/white/checker2,
+/area/prefab/fancy_restaurant)
+"yJ" = (
+/obj/storage/crate/freezer,
+/obj/random_item_spawner/fruits/veggies/lots,
+/turf/simulated/floor/wood/six,
+/area/prefab/fancy_restaurant)
+"zk" = (
+/turf/simulated/floor/wood/seven,
+/area/prefab/fancy_restaurant)
+"zw" = (
+/obj/machinery/chem_dispenser/chef,
+/obj/mapping_helper/glassware_spawn,
+/turf/simulated/floor/white/checker2,
+/area/prefab/fancy_restaurant)
+"zx" = (
+/obj/machinery/r_door_control/podbay{
+	pixel_y = 32;
+	id = "HG_bay"
+	},
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/noGenerate)
+"zD" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/noGenerate)
+"zX" = (
+/obj/table/reinforced/bar/auto{
+	name = "table"
+	},
+/obj/window_blinds/cog2/left{
+	dir = 4
+	},
+/turf/simulated/floor/wood/six,
+/area/prefab/fancy_restaurant)
+"AZ" = (
+/obj/stool/chair/dining{
+	dir = 4
+	},
+/turf/simulated/floor/wood/seven,
+/area/prefab/fancy_restaurant)
+"Ct" = (
+/obj/stool/chair/dining{
+	dir = 1
+	},
+/turf/simulated/floor/wood/seven,
+/area/prefab/fancy_restaurant)
+"Cv" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"Cw" = (
+/obj/machinery/mixer,
+/obj/table/reinforced/chemistry/auto{
+	desc = "A black countertop table for storing kitchen-y objects.";
+	name = "kitchen counter"
+	},
+/turf/simulated/floor/white/checker2,
+/area/prefab/fancy_restaurant)
+"CO" = (
+/obj/machinery/door_control/bolter/new_walls/east{
+	id = "HG_bathroom2"
+	},
+/obj/table/auto,
+/turf/simulated/floor/minitiles/white,
+/area/prefab/fancy_restaurant)
+"CW" = (
+/obj/machinery/vending/air_vendor,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/simulated/floor/industrial,
+/area/prefab/fancy_restaurant)
+"Di" = (
+/obj/stool/chair/dining{
+	dir = 4
+	},
+/turf/simulated/floor/wood/six,
+/area/prefab/fancy_restaurant)
+"Eg" = (
+/obj/table/clothred/auto,
+/obj/item/plate{
+	pixel_y = 7
+	},
+/obj/item/decoration/flower_vase/vase7{
+	icon_state = "vase4";
+	pixel_y = 27;
+	pixel_x = -16
+	},
+/obj/item/kitchen/utensil/fork{
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/obj/item/kitchen/utensil/knife{
+	pixel_y = 9;
+	pixel_x = 11
+	},
+/obj/item/kitchen/utensil/spoon{
+	pixel_y = 8;
+	pixel_x = -5
+	},
+/turf/simulated/floor/wood/six,
+/area/prefab/fancy_restaurant)
+"Ew" = (
+/obj/rack,
+/obj/item/reagent_containers/food/drinks/bottle/wine{
+	pixel_y = 4;
+	pixel_x = 4
+	},
+/obj/item/reagent_containers/food/drinks/bottle/wine{
+	pixel_x = 8;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/wine,
+/obj/item/reagent_containers/food/drinks/bottle/wine{
+	pixel_y = 1;
+	pixel_x = -8
+	},
+/obj/item/reagent_containers/food/drinks/bottle/wine{
+	pixel_y = 4;
+	pixel_x = -3
+	},
+/turf/simulated/floor/wood/six,
+/area/prefab/fancy_restaurant)
+"Fj" = (
+/obj/storage/crate/freezer,
+/obj/item/reagent_containers/food/snacks/ingredient/flour,
+/obj/item/reagent_containers/food/snacks/ingredient/flour,
+/obj/item/reagent_containers/food/snacks/ingredient/flour,
+/obj/item/reagent_containers/food/snacks/ingredient/flour,
+/obj/item/reagent_containers/food/snacks/ingredient/flour,
+/obj/item/reagent_containers/food/snacks/ingredient/flour,
+/obj/item/reagent_containers/food/snacks/ingredient/flour,
+/obj/item/reagent_containers/food/snacks/ingredient/flour/semolina,
+/obj/item/reagent_containers/food/snacks/ingredient/flour/semolina,
+/obj/item/kitchen/egg_box,
+/obj/item/reagent_containers/food/snacks/cheesewheel,
+/obj/machinery/light/small,
+/turf/simulated/floor/wood/six,
+/area/prefab/fancy_restaurant)
+"Fm" = (
+/obj/storage/crate/freezer,
+/obj/random_item_spawner/fruits/lots,
+/turf/simulated/floor/wood/six,
+/area/prefab/fancy_restaurant)
+"FK" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"FP" = (
+/obj/submachine/foodprocessor{
+	dir = 4
+	},
+/turf/simulated/floor/white/checker2,
+/area/prefab/fancy_restaurant)
+"GS" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"Hq" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"HD" = (
+/obj/machinery/door/airlock/pyro/glass,
+/turf/simulated/floor/wood/six,
+/area/prefab/fancy_restaurant)
+"HZ" = (
+/turf/space,
+/area/allowGenerate)
+"IU" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/white/checker2,
+/area/prefab/fancy_restaurant)
+"JF" = (
+/obj/railing/reinforced{
+	dir = 8
+	},
+/obj/railing/reinforced{
+	dir = 1
+	},
+/obj/forcefield/energyshield/perma{
+	dir = 9
+	},
+/turf/simulated/floor/wood/seven,
+/area/prefab/fancy_restaurant)
+"JX" = (
+/obj/table/reinforced/chemistry/auto{
+	desc = "A black countertop table for storing kitchen-y objects.";
+	name = "kitchen counter"
+	},
+/obj/item/kitchen/utensil/knife/cleaver,
+/turf/simulated/floor/white/checker2,
+/area/prefab/fancy_restaurant)
+"Kc" = (
+/obj/stool/chair/dining{
+	dir = 4
+	},
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/wood/six,
+/area/prefab/fancy_restaurant)
+"Lc" = (
+/obj/table/clothred/auto,
+/obj/item/plate{
+	pixel_y = 7
+	},
+/obj/item/kitchen/utensil/fork{
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/obj/item/kitchen/utensil/spoon{
+	pixel_y = 8;
+	pixel_x = -5
+	},
+/obj/item/kitchen/utensil/knife{
+	pixel_y = 9;
+	pixel_x = 11
+	},
+/obj/item/reagent_containers/food/snacks/garlicbread_ch,
+/turf/simulated/floor/wood/six,
+/area/prefab/fancy_restaurant)
+"Ll" = (
+/obj/decal/poster/wallsign/iso/warning/explosion{
+	pixel_y = 0;
+	pixel_x = -32
+	},
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor/industrial,
+/area/prefab/fancy_restaurant)
+"Ln" = (
+/turf/simulated/floor/minitiles/white,
+/area/prefab/fancy_restaurant)
+"Lr" = (
+/obj/stove{
+	pixel_y = 2
+	},
+/obj/item/soup_pot{
+	pixel_x = 1;
+	pixel_y = 12
+	},
+/obj/item/ladle{
+	name = "soup sword";
+	pixel_x = 10;
+	pixel_y = 15
+	},
+/obj/item/matchbook{
+	pixel_x = -7;
+	pixel_y = 6
+	},
+/turf/simulated/floor/white/checker2,
+/area/prefab/fancy_restaurant)
+"Mi" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/noGenerate)
+"Mp" = (
+/obj/stool/chair/dining{
+	dir = 8
+	},
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/wood/six,
+/area/prefab/fancy_restaurant)
+"MV" = (
+/obj/decal/poster/wallsign/no_smoking{
+	pixel_x = 32
+	},
+/turf/simulated/floor/shuttlebay,
+/area/prefab/fancy_restaurant)
+"Ni" = (
+/obj/machinery/sink/slim{
+	dir = 8
+	},
+/turf/simulated/floor/minitiles/white,
+/area/prefab/fancy_restaurant)
+"Ob" = (
+/obj/decoration/toiletholder{
+	dir = 4
+	},
+/turf/simulated/floor/minitiles/white,
+/area/prefab/fancy_restaurant)
+"Oy" = (
+/obj/blind_switch/directional/east,
+/turf/simulated/floor/white/checker2,
+/area/prefab/fancy_restaurant)
+"Pd" = (
+/obj/decal/poster/wallsign/iso/warning/flammable,
+/obj/machinery/vending/air_vendor/plasma,
+/turf/simulated/floor/industrial,
+/area/prefab/fancy_restaurant)
+"PD" = (
+/obj/submachine/chef_oven,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/white/checker2,
+/area/prefab/fancy_restaurant)
+"PK" = (
+/obj/machinery/door/airlock/pyro/alt{
+	id = "HG_bathroom1"
+	},
+/turf/simulated/floor/wood/six,
+/area/prefab/fancy_restaurant)
+"PV" = (
+/obj/machinery/door_control/bolter/new_walls/west{
+	id = "HG_bathroom1"
+	},
+/obj/table/auto,
+/obj/item/reagent_containers/glass/oilcan,
+/turf/simulated/floor/minitiles/white,
+/area/prefab/fancy_restaurant)
+"Qp" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 8
+	},
+/turf/simulated/floor/shuttlebay,
+/area/prefab/fancy_restaurant)
+"QX" = (
+/obj/stool/chair/dining,
+/turf/simulated/floor/wood/six,
+/area/prefab/fancy_restaurant)
+"Rb" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"Ri" = (
+/obj/forcefield/energyshield/perma{
+	dir = 5
+	},
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/simulated/floor/wood/six,
+/area/prefab/fancy_restaurant)
+"Rq" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/simulated/floor/shuttlebay,
+/area/prefab/fancy_restaurant)
+"Rw" = (
+/obj/table/clothred/auto,
+/obj/item/plate{
+	pixel_y = 7
+	},
+/obj/item/kitchen/utensil/fork{
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/obj/item/kitchen/utensil/spoon{
+	pixel_y = 8;
+	pixel_x = -5
+	},
+/obj/item/kitchen/utensil/knife{
+	pixel_y = 9;
+	pixel_x = 11
+	},
+/obj/random_item_spawner/snacks/one,
+/turf/simulated/floor/wood/seven,
+/area/prefab/fancy_restaurant)
+"RZ" = (
+/obj/storage/crate/freezer,
+/obj/random_item_spawner/organs/bloody/one_to_three,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat,
+/obj/item/reagent_containers/food/snacks/ingredient/meatpaste,
+/obj/item/reagent_containers/food/fish/cod,
+/obj/item/reagent_containers/food/fish/catfish,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/pufferfish,
+/turf/simulated/floor/wood/six,
+/area/prefab/fancy_restaurant)
+"Sf" = (
+/obj/table/wood/auto,
+/obj/decoration/pottedfern{
+	pixel_y = 10
+	},
+/turf/simulated/floor/wood/six,
+/area/prefab/fancy_restaurant)
+"Sn" = (
+/obj/machinery/recharge_station,
+/turf/simulated/floor/minitiles/white,
+/area/prefab/fancy_restaurant)
+"SI" = (
+/obj/railing/reinforced{
+	dir = 1
+	},
+/obj/railing/reinforced{
+	dir = 4
+	},
+/obj/forcefield/energyshield/perma{
+	dir = 5
+	},
+/turf/simulated/floor/wood/seven,
+/area/prefab/fancy_restaurant)
+"Tc" = (
+/obj/stool/chair/dining,
+/turf/simulated/floor/wood/seven,
+/area/prefab/fancy_restaurant)
+"Th" = (
+/obj/table/clothred/auto,
+/obj/item/plate{
+	pixel_y = 7
+	},
+/obj/item/kitchen/utensil/fork{
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/obj/item/kitchen/utensil/spoon{
+	pixel_y = 8;
+	pixel_x = -5
+	},
+/obj/item/kitchen/utensil/knife{
+	pixel_y = 9;
+	pixel_x = 11
+	},
+/obj/random_item_spawner/snacks/one_or_zero,
+/turf/simulated/floor/wood/six,
+/area/prefab/fancy_restaurant)
+"Tr" = (
+/obj/lattice/auto/turf_attaching,
+/turf/space,
+/area/noGenerate)
+"Ua" = (
+/obj/table/clothred/auto,
+/obj/item/plate{
+	pixel_y = 7
+	},
+/obj/item/kitchen/utensil/fork{
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/obj/item/kitchen/utensil/spoon{
+	pixel_y = 8;
+	pixel_x = -5
+	},
+/obj/item/kitchen/utensil/knife{
+	pixel_y = 9;
+	pixel_x = 11
+	},
+/obj/random_item_spawner/snacks/one,
+/turf/simulated/floor/wood/six,
+/area/prefab/fancy_restaurant)
+"Ub" = (
+/obj/machinery/door_control/podbay/mainpod2{
+	pixel_y = 28;
+	id = "HG_bay"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/prefab/fancy_restaurant)
+"Un" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4
+	},
+/turf/simulated/floor/wood/six,
+/area/prefab/fancy_restaurant)
+"Uz" = (
+/obj/railing/reinforced{
+	dir = 4
+	},
+/obj/forcefield/energyshield/perma{
+	dir = 8
+	},
+/turf/simulated/floor/wood/seven,
+/area/prefab/fancy_restaurant)
+"UL" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 8
+	},
+/turf/simulated/floor/wood/six,
+/area/prefab/fancy_restaurant)
+"Vd" = (
+/obj/machinery/sink/slim{
+	dir = 4
+	},
+/turf/simulated/floor/minitiles/white,
+/area/prefab/fancy_restaurant)
+"Vq" = (
+/obj/item/storage/wall/clothingrack/hatrack{
+	pixel_x = -7;
+	pixel_y = 5;
+	icon_state = "hatrack-empty"
+	},
+/obj/item/storage/wall/clothingrack/hatrack{
+	pixel_y = 5;
+	pixel_x = 7;
+	icon_state = "hatrack-empty"
+	},
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
+/turf/simulated/floor/wood,
+/area/prefab/fancy_restaurant)
+"Vx" = (
+/obj/machinery/light/small,
+/turf/simulated/floor/minitiles/white,
+/area/prefab/fancy_restaurant)
+"Wa" = (
+/obj/table/reinforced/bar/auto{
+	name = "table"
+	},
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
+/turf/simulated/floor/wood/six,
+/area/prefab/fancy_restaurant)
+"Wo" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"WA" = (
+/obj/item/storage/toilet{
+	dir = 8
+	},
+/turf/simulated/floor/minitiles/white,
+/area/prefab/fancy_restaurant)
+"Yk" = (
+/obj/machinery/light/small/floor/warm/very,
+/turf/simulated/floor/wood/seven,
+/area/prefab/fancy_restaurant)
+"YS" = (
+/obj/table/clothred/auto,
+/obj/item/plate{
+	pixel_y = 7
+	},
+/obj/random_item_spawner/snacks/one_or_zero,
+/obj/item/kitchen/utensil/spoon{
+	pixel_y = 8;
+	pixel_x = -5
+	},
+/obj/item/kitchen/utensil/knife{
+	pixel_y = 9;
+	pixel_x = 11
+	},
+/obj/item/kitchen/utensil/fork{
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/turf/simulated/floor/wood/seven,
+/area/prefab/fancy_restaurant)
+
+(1,1,1) = {"
+HZ
+HZ
+HZ
+cH
+Mi
+FK
+FK
+FK
+FK
+FK
+FK
+FK
+FK
+kM
+cH
+cH
+cH
+cH
+cH
+HZ
+HZ
+HZ
+HZ
+"}
+(2,1,1) = {"
+HZ
+HZ
+HZ
+cH
+Wo
+wW
+wW
+wW
+wW
+wW
+wW
+wW
+wW
+Tr
+FK
+FK
+FK
+FK
+kM
+cH
+HZ
+HZ
+HZ
+"}
+(3,1,1) = {"
+HZ
+HZ
+HZ
+cH
+Wo
+wW
+Cw
+FP
+yl
+vJ
+py
+zw
+wW
+wW
+wW
+wW
+wW
+wW
+Rb
+cH
+HZ
+HZ
+HZ
+"}
+(4,1,1) = {"
+HZ
+HZ
+HZ
+cH
+Wo
+wW
+gZ
+fy
+fy
+fy
+fy
+fy
+wW
+Ew
+cu
+yJ
+Fm
+wW
+Rb
+cH
+cH
+HZ
+HZ
+"}
+(5,1,1) = {"
+HZ
+HZ
+HZ
+cH
+Wo
+wW
+PD
+fy
+fy
+JX
+fy
+IU
+wW
+xA
+cu
+cu
+Fj
+wW
+Rb
+cH
+cH
+HZ
+HZ
+"}
+(6,1,1) = {"
+HZ
+HZ
+HZ
+cH
+Wo
+wW
+gz
+fy
+fy
+oG
+fy
+fy
+HD
+cu
+cu
+cu
+RZ
+wW
+ar
+FK
+kM
+HZ
+HZ
+"}
+(7,1,1) = {"
+HZ
+HZ
+cH
+cH
+Wo
+wW
+Lr
+fy
+Oy
+fy
+fy
+wW
+wW
+wW
+wW
+wW
+wW
+wW
+wW
+wW
+Rb
+HZ
+HZ
+"}
+(8,1,1) = {"
+HZ
+HZ
+cH
+cH
+Wo
+wW
+wW
+Un
+wW
+Wa
+zX
+wW
+QX
+hI
+ni
+wW
+PV
+Ln
+Sn
+wW
+Rb
+HZ
+HZ
+"}
+(9,1,1) = {"
+HZ
+HZ
+cH
+cH
+zD
+ar
+wW
+cu
+cu
+cu
+cu
+tu
+cu
+cu
+cu
+PK
+Ln
+Ni
+Vx
+wW
+Rb
+cH
+HZ
+"}
+(10,1,1) = {"
+HZ
+cH
+cH
+cH
+cH
+Wo
+wW
+hy
+ni
+QX
+hy
+Th
+ni
+cu
+me
+wW
+wW
+wW
+wW
+wW
+Rb
+cH
+HZ
+"}
+(11,1,1) = {"
+HZ
+cH
+cH
+cH
+cH
+Wo
+wW
+fL
+ni
+QX
+Ua
+Eg
+ni
+cu
+cu
+fr
+Ln
+Vd
+Vx
+wW
+Rb
+cH
+HZ
+"}
+(12,1,1) = {"
+cH
+cH
+cH
+JF
+lY
+lY
+wW
+ah
+cu
+cu
+ah
+ah
+cu
+cu
+nW
+wW
+CO
+Ob
+WA
+wW
+Rb
+cH
+HZ
+"}
+(13,1,1) = {"
+cH
+cH
+JF
+ki
+zk
+zk
+wW
+wW
+Di
+cu
+cu
+cu
+cu
+wW
+wW
+wW
+wW
+wW
+wW
+wW
+Rb
+cH
+cH
+"}
+(14,1,1) = {"
+cH
+JF
+ki
+AZ
+Yk
+Tc
+YS
+wW
+Th
+ni
+cu
+cu
+Di
+wW
+Pd
+Ll
+fR
+CW
+wW
+GS
+tU
+cH
+cH
+"}
+(15,1,1) = {"
+cH
+dp
+Tc
+Rw
+Ct
+zk
+gF
+wW
+Mp
+cu
+cu
+QX
+Ua
+wW
+mB
+mB
+mB
+mB
+mI
+cH
+cH
+cH
+cH
+"}
+(16,1,1) = {"
+cH
+dp
+zk
+gF
+zk
+zk
+zk
+qI
+cu
+cu
+cu
+QX
+hG
+wW
+Ub
+xC
+xC
+xC
+mI
+kM
+cH
+Hq
+cH
+"}
+(17,1,1) = {"
+cH
+dp
+zk
+AZ
+zk
+zk
+zk
+qI
+cu
+cu
+cu
+QX
+Lc
+wW
+xS
+xC
+xC
+xC
+mI
+ar
+ty
+hC
+cN
+"}
+(18,1,1) = {"
+cH
+dp
+Tc
+ln
+Ct
+zk
+AZ
+wW
+Kc
+cu
+cu
+QX
+hy
+wW
+xC
+xC
+xC
+xC
+mI
+tU
+cH
+Cv
+cH
+"}
+(19,1,1) = {"
+cH
+SI
+oc
+gF
+Yk
+Tc
+lr
+wW
+tY
+ni
+cu
+cu
+ah
+wW
+xC
+xC
+MV
+Rq
+mI
+cH
+cH
+cH
+cH
+"}
+(20,1,1) = {"
+cH
+cH
+SI
+oc
+zk
+zk
+gF
+wW
+wW
+wW
+UL
+UL
+wW
+wW
+Qp
+Qp
+wW
+wW
+wW
+zx
+cH
+cH
+HZ
+"}
+(21,1,1) = {"
+cH
+cH
+cH
+SI
+Uz
+Uz
+Uz
+wW
+wW
+Vq
+cu
+cu
+ic
+tu
+cu
+cu
+wW
+ar
+GS
+tU
+cH
+HZ
+HZ
+"}
+(22,1,1) = {"
+HZ
+cH
+cH
+cH
+cH
+cH
+cH
+Wo
+wW
+xu
+cu
+cu
+cu
+cu
+cu
+Sf
+wW
+Rb
+cH
+cH
+cH
+HZ
+HZ
+"}
+(23,1,1) = {"
+HZ
+HZ
+HZ
+cH
+cH
+cH
+cH
+Wo
+wW
+wW
+wW
+wW
+Ri
+Ri
+wW
+wW
+wW
+Rb
+cH
+cH
+HZ
+HZ
+HZ
+"}
+(24,1,1) = {"
+HZ
+HZ
+HZ
+HZ
+HZ
+cH
+cH
+zD
+GS
+GS
+qg
+qg
+qg
+qg
+qg
+qg
+GS
+tU
+cH
+cH
+HZ
+HZ
+HZ
+"}
+(25,1,1) = {"
+HZ
+HZ
+HZ
+HZ
+HZ
+HZ
+HZ
+cH
+cH
+cH
+zD
+qg
+qg
+qg
+qg
+tU
+cH
+cH
+cH
+HZ
+HZ
+HZ
+HZ
+"}
+(26,1,1) = {"
+HZ
+HZ
+HZ
+HZ
+HZ
+HZ
+HZ
+HZ
+HZ
+cH
+cH
+zD
+GS
+GS
+tU
+cH
+cH
+HZ
+HZ
+HZ
+HZ
+HZ
+HZ
+"}

@@ -114,6 +114,10 @@
 /obj/item/shipcomponent/engine,
 /turf/simulated/floor,
 /area/station/devzone)
+"xh" = (
+/obj/item/shipcomponent/mainweapon/stasis,
+/turf/simulated/floor,
+/area/station/devzone)
 "yb" = (
 /obj/item/shipcomponent/mainweapon/maser,
 /turf/simulated/floor,
@@ -603,7 +607,7 @@ ha
 ha
 ha
 ha
-ha
+xh
 "}
 (17,1,1) = {"
 ha

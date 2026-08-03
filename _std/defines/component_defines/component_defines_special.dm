@@ -201,3 +201,6 @@
 #define COMSIG_CAMERA_ACTIVE "camera_active"
 ///When a camera coverage emitter stops being viewed at all (no more viewers registered)
 #define COMSIG_CAMERA_DEACTIVE "camera_deactive"
+
+/// When a wraith tries to curse someone (wraith)
+#define COMSIG_TRY_CURSE "try_curse"

@@ -1353,7 +1353,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	max_range = 30
 	cost = 0
 	shot_sound = 'sound/weapons/rocket.ogg'
-	icon = 'icons/obj/large_storage.dmi'
+	icon = 'icons/obj/storage/crate.dmi'
 	icon_state = "attachecase"
 	typetospawn = /obj/lootbox
 	var/explosion_power = 15

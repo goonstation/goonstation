@@ -745,9 +745,7 @@
 	pixel_x = 8;
 	pixel_y = -23
 	},
-/obj/blind_switch/area/south{
-	pixel_y = -22
-	},
+/obj/blind_switch/directional/south,
 /obj/decal/cleanable/blood/tracks{
 	dir = 4
 	},

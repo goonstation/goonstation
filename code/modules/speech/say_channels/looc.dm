@@ -35,8 +35,8 @@
 	src.PassToListeners(message, listen_modules_by_type)
 
 /datum/say_channel/delimited/local/looc/log_message(datum/say_message/message)
-	logTheThing(LOG_OOC, message.speaker, "[uppertext(src.channel_id)]: [message.content] [log_loc(message.speaker)]")
-	phrase_log.log_phrase("looc", message.content)
+	logTheThing(LOG_OOC, message.speaker, "[uppertext(src.channel_id)]: [message.get_original_content()] [log_loc(message.speaker)]")
+	phrase_log.log_phrase("looc", message.get_content())
 
 
 /datum/say_channel/global_channel/looc

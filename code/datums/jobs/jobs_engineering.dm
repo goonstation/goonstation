@@ -10,7 +10,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 /datum/job/engineering/engineer
 	name = "Engineer"
 	limit = 8
-	wages = PAY_TRADESMAN
+	wages = PAY::TRADESMAN
 	trait_list = list("training_engineer")
 	access_string = "Engineer"
 	slot_back = list(/obj/item/storage/backpack/engineering)
@@ -48,7 +48,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 /datum/job/engineering/technical_assistant
 	name = "Technical Trainee"
 	limit = 2
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	trait_list = list("training_engineer")
 	access_string = "Engineer"
 	rounds_allowed_to_play = ROUNDS_MAX_TECHASS
@@ -71,7 +71,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 /datum/job/engineering/quartermaster
 	name = "Quartermaster"
 	limit = 3
-	wages = PAY_TRADESMAN
+	wages = PAY::TRADESMAN
 	trait_list = list("training_quartermaster")
 	access_string = "Quartermaster"
 	slot_glov = list(/obj/item/clothing/gloves/black)
@@ -91,7 +91,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	#else
 	limit = 5
 	#endif
-	wages = PAY_TRADESMAN
+	wages = PAY::TRADESMAN
 	trait_list = list("training_miner")
 	access_string = "Miner"
 	invalid_antagonist_roles = list(ROLE_VAMPIRE)

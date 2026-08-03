@@ -16,16 +16,16 @@ const RpRulesContentWindow = () => {
       Classic servers.
       <Section title="1. Make an effort to roleplay." mt={1}>
         Play a coherent, believable character. Playing a violent or racist
-        character is not allowed. Play your character as though they wish to
-        keep their job at Nanotrasen. This includes listening to security and
-        the chain of command and, if you are a member of command, taking your
-        job as a leader seriously in-character. Only minor crime is permitted
-        for non-antagonists. Avoid memes (e.g. sus, pog, amogus), txt spk (e.g.
-        lol, wtf), and out of game terminology when you are playing your
-        character. LOOC is available if you need to communicate out of
-        character. In addition, if you notice a character who is
-        Afk/disconnected, please do not attack or mess with them beyond taking
-        them to cryo.
+        character is not allowed. Your character should treat the station like
+        it&apos;s a workplace, albeit a sometimes silly one. This includes
+        listening to security and the chain of command and, if you are a member
+        of command, taking your job as a leader seriously in-character. Only
+        minor crime is permitted for non-antagonists. Avoid memes (e.g. sus,
+        pog, amogus), txt spk (e.g. lol, wtf), and out of game terminology when
+        you are playing your character. LOOC is available if you need to
+        communicate out of character. In addition, if you notice a character who
+        is Afk/disconnected, please do not attack or mess with them beyond
+        taking them to cryo.
       </Section>
       <Section title="2. Escalate through roleplay before attacking other players.">
         The goal of the roleplay server is character interaction and interesting

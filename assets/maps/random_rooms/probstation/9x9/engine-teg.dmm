@@ -1,0 +1,557 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"bl" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 9;
+	can_rupture = 0
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "combustion";
+	name = "Combustion Chamber Vent";
+	dir = 8
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/combustion_chamber)
+"bF" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 4
+	},
+/turf/space,
+/area/space)
+"dm" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
+/area/station/engine/core/thermoelectric)
+"eq" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 8
+	},
+/turf/simulated/floor/engine/glow,
+/area/station/engine/core/thermoelectric)
+"gG" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/junction,
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/combustion_chamber)
+"hS" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 4
+	},
+/obj/mapping_helper/access/engineering_engine,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/engine,
+/area/station/engine/core/thermoelectric)
+"hY" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 9
+	},
+/turf/space,
+/area/space)
+"iR" = (
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 1;
+	level = 2
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine/glow,
+/area/station/engine/core/thermoelectric)
+"jF" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/window_blinds/cog2/middle{
+	layer = 2.9;
+	pixel_y = 13
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/core/thermoelectric)
+"jU" = (
+/obj/machinery/atmospherics/binary/valve,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
+/area/station/engine/core/thermoelectric)
+"mb" = (
+/obj/machinery/atmospherics/binary/valve,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
+/area/station/engine/core/thermoelectric)
+"mo" = (
+/obj/machinery/atmospherics/binary/pump/active{
+	id = "Burn Chamber Inlet";
+	frequency = 1227
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
+/area/station/engine/core/thermoelectric)
+"mq" = (
+/obj/cable/orange{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/decal/poster/wallsign/iso/warning/electric,
+/obj/storage/crate/furnacefuel,
+/turf/simulated/floor/engine/glow,
+/area/station/engine/core/thermoelectric)
+"ob" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 4
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/combustion_chamber)
+"og" = (
+/obj/cable/orange{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/decal/poster/wallsign/iso/warning/electric,
+/obj/machinery/computer/atmosphere/pumpcontrol{
+	frequency = 1227
+	},
+/obj/item/paper{
+	icon_state = "postit-writing";
+	info = "why the FUCK do we have a PC on this godforsaken station to control a SINGLE PUMP? NANOTRASEN WHAT THE FUCK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+	},
+/turf/simulated/floor/engine/glow/blue,
+/area/station/engine/core/thermoelectric)
+"oM" = (
+/obj/machinery/atmospherics/binary/circulatorTemp,
+/turf/simulated/floor/engine/glow,
+/area/station/engine/core/thermoelectric)
+"qF" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
+/area/station/engine/core/thermoelectric)
+"qW" = (
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine/glow,
+/area/station/engine/core/thermoelectric)
+"ry" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/turf/simulated/floor/engine/glow,
+/area/station/engine/core/thermoelectric)
+"rF" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 6
+	},
+/turf/simulated/floor/engine/glow/blue,
+/area/station/engine/core/thermoelectric)
+"rJ" = (
+/obj/machinery/power/smes,
+/obj/cable{
+	dir = null
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/engine/glow/blue,
+/area/station/engine/core/thermoelectric)
+"rL" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/window_blinds/cog2/middle{
+	dir = 8
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/core/thermoelectric)
+"sx" = (
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
+/area/station/engine/core/thermoelectric)
+"sU" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
+/area/station/engine/core/thermoelectric)
+"vg" = (
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 4
+	},
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/engine/glow/blue,
+/area/station/engine/core/thermoelectric)
+"vF" = (
+/obj/machinery/atmospherics/binary/circulatorTemp/right,
+/turf/simulated/floor/engine/glow/blue,
+/area/station/engine/core/thermoelectric)
+"vU" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 10
+	},
+/turf/simulated/floor/engine/glow,
+/area/station/engine/core/thermoelectric)
+"xy" = (
+/obj/machinery/atmospherics/unary/furnace_connector,
+/obj/machinery/power/furnace/thermo{
+	fuel = 100
+	},
+/turf/simulated/floor/engine/glow,
+/area/station/engine/core/thermoelectric)
+"xA" = (
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/combustion_chamber)
+"yc" = (
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 1;
+	level = 2
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/engine/glow/blue,
+/area/station/engine/core/thermoelectric)
+"yO" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 5
+	},
+/turf/space,
+/area/space)
+"zd" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
+/area/station/engine/core/thermoelectric)
+"zh" = (
+/turf/space,
+/area/space)
+"Ax" = (
+/obj/machinery/power/generatorTemp,
+/obj/cable/orange,
+/turf/simulated/floor/engine/caution/westeast,
+/area/station/engine/core/thermoelectric)
+"Bj" = (
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 8
+	},
+/obj/machinery/alarm/directional/west,
+/turf/simulated/floor/engine/glow,
+/area/station/engine/core/thermoelectric)
+"Bq" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	dir = 4;
+	level = 2
+	},
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 9
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/combustion_chamber)
+"Ca" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
+/area/station/engine/core/thermoelectric)
+"Cs" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 5
+	},
+/obj/machinery/sparker{
+	id = "eng_ignition";
+	layer = 7;
+	name = "Mounted Igniter";
+	pixel_x = -24
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/combustion_chamber)
+"Fc" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/engine/glow/blue,
+/area/station/engine/core/thermoelectric)
+"FS" = (
+/obj/machinery/atmospherics/binary/volume_pump/active{
+	dir = 1;
+	transfer_rate = 1000
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
+/area/station/engine/core/thermoelectric)
+"HV" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 1;
+	can_rupture = 0
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "combustion";
+	name = "Combustion Chamber Vent";
+	dir = 8
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/combustion_chamber)
+"IA" = (
+/obj/machinery/activation_button/ignition_switch{
+	id = "eng_ignition";
+	name = "Burn Chamber Ignition";
+	pixel_y = -22;
+	pixel_x = -5
+	},
+/obj/machinery/door_control{
+	id = "combustion";
+	name = "Chamber Exhaust";
+	pixel_y = -24;
+	dir = 1;
+	pixel_x = 6
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/light,
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 4
+	},
+/turf/simulated/floor/engine/glow,
+/area/station/engine/core/thermoelectric)
+"Jo" = (
+/obj/machinery/atmospherics/unary/cold_sink/freezer,
+/turf/simulated/floor/engine/glow/blue,
+/area/station/engine/core/thermoelectric)
+"Jv" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine/glow/blue,
+/area/station/engine/core/thermoelectric)
+"KS" = (
+/obj/machinery/computer/power_monitor/smes,
+/obj/cable/orange{
+	icon_state = "0-4"
+	},
+/obj/cable/orange{
+	icon_state = "0-8"
+	},
+/obj/cable/orange{
+	icon_state = "0-2"
+	},
+/obj/blind_switch/directional/north{
+	pixel_x = -8
+	},
+/obj/machinery/light_switch/directional/north{
+	pixel_x = 8
+	},
+/obj/item/device/multitool,
+/turf/simulated/floor/engine/caution/westeast,
+/area/station/engine/core/thermoelectric)
+"Lb" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/core/thermoelectric)
+"MG" = (
+/obj/machinery/atmospherics/pipe/simple/junction,
+/turf/space,
+/area/space)
+"Qy" = (
+/obj/machinery/power/smes,
+/obj/cable{
+	dir = null
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/engine/glow,
+/area/station/engine/core/thermoelectric)
+"Rb" = (
+/obj/machinery/atmospherics/pipe/simple/junction,
+/turf/simulated/floor/engine/vacuum,
+/area/station/engine/combustion_chamber)
+"Uv" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/obj/machinery/light,
+/turf/simulated/floor/engine/glow/blue,
+/area/station/engine/core/thermoelectric)
+"US" = (
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine/glow/blue,
+/area/station/engine/core/thermoelectric)
+"Wt" = (
+/obj/stool/chair/office/yellow{
+	dir = 8
+	},
+/obj/landmark/start/job/engineer,
+/obj/cable/orange{
+	icon_state = "0-2"
+	},
+/obj/cable/orange,
+/turf/simulated/floor/engine/caution/westeast,
+/area/station/engine/core/thermoelectric)
+"Yc" = (
+/obj/machinery/atmospherics/binary/volume_pump/active{
+	transfer_rate = 1000
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
+/area/station/engine/core/thermoelectric)
+"ZI" = (
+/obj/machinery/atmospherics/binary/passive_gate/opened{
+	dir = 1;
+	target_pressure = 1e+031
+	},
+/obj/machinery/firealarm/directional/east,
+/turf/simulated/floor/engine/glow/blue,
+/area/station/engine/core/thermoelectric)
+"ZN" = (
+/obj/machinery/atmospherics/binary/passive_gate/opened{
+	dir = 1;
+	target_pressure = 1e+031
+	},
+/obj/machinery/firealarm/directional/west,
+/turf/simulated/floor/engine/glow,
+/area/station/engine/core/thermoelectric)
+"ZP" = (
+/obj/machinery/atmospherics/unary/portables_connector,
+/turf/simulated/floor/engine/caution/westeast,
+/area/station/engine/core/thermoelectric)
+
+(1,1,1) = {"
+sx
+sx
+sx
+sx
+hS
+sx
+sx
+sx
+sx
+"}
+(2,1,1) = {"
+sx
+xy
+Bj
+ZN
+eq
+mb
+Rb
+Cs
+sx
+"}
+(3,1,1) = {"
+Ca
+Qy
+iR
+qW
+ry
+Lb
+xA
+ob
+sx
+"}
+(4,1,1) = {"
+zd
+mq
+vU
+oM
+IA
+jU
+gG
+Bq
+dm
+"}
+(5,1,1) = {"
+qF
+KS
+Wt
+Ax
+ZP
+mo
+HV
+bl
+sU
+"}
+(6,1,1) = {"
+zd
+og
+rF
+vF
+Uv
+Yc
+MG
+yO
+jF
+"}
+(7,1,1) = {"
+sU
+rJ
+yc
+US
+Fc
+Lb
+zh
+bF
+jF
+"}
+(8,1,1) = {"
+sx
+Jo
+vg
+ZI
+Jv
+FS
+MG
+hY
+jF
+"}
+(9,1,1) = {"
+sx
+sx
+sx
+sx
+hS
+sx
+rL
+rL
+sx
+"}

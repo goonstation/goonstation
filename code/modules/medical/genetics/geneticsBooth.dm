@@ -204,7 +204,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 
 		if(length(offered_genes))
 			. = ""
-			for (var/datum/geneboothproduct/P as() in offered_genes)
+			for (var/datum/geneboothproduct/P as anything in offered_genes)
 				. += "<u>[P.name]</u><small> "
 				. += " * Price: <A href='byond://?src=\ref[src];op=\ref[P];action=price'>[P.cost]</A>"
 				. += " * <A href='byond://?src=\ref[src];op=\ref[P];action=lock'>[P.locked ? "Locked" : "Unlocked"]</A></small><BR/>"
@@ -288,7 +288,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 				if(selected_product?.BE)
 
 					var/datum/bioEffect/NEW = new selected_product.BE.type()
-					copy_datum_vars(selected_product.BE, NEW, blacklist=list("owner", "holder", "dnaBlocks"))
+					copy_datum_vars(selected_product.BE, NEW)
 					occupant.bioHolder.AddEffectInstanceNoDelay(NEW)
 
 					selected_product.uses -= 1

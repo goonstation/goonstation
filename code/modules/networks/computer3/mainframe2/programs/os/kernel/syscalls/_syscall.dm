@@ -19,4 +19,4 @@ ABSTRACT_TYPE(/datum/dwaine_syscall)
 
 /// Execute this system call.
 /datum/dwaine_syscall/proc/execute(sendid, list/data, datum/computer/file/file)
-	return ESIG_SUCCESS
+	return DWAINE::ERR::SIG::SUCCESS

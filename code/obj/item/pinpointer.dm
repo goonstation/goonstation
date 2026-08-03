@@ -1,5 +1,8 @@
 TYPEINFO(/obj/item/pinpointer)
-	mats = 4
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
+	mats = list("metal"=1,
+				"conductive"=2,
+				"crystal"=1)
 
 /obj/item/pinpointer
 	name = "pinpointer"
@@ -268,12 +271,13 @@ TYPEINFO(/obj/item/pinpointer)
 	target_criteria = /obj/gold_bee
 	hudarrow_color = "#e1940d"
 
+TYPEINFO(/obj/item/pinpointer/idtracker)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/pinpointer/idtracker
 	name = "ID pinpointer"
 	icon_state = "id_pinoff"
 	var/mob/owner = null
 	hudarrow_color = "#ffffff"
-	is_syndicate = 1
 	desc = "This little bad-boy has been pre-programmed to display the general direction of any assassination target you choose."
 
 	attack_self(mob/user)
@@ -290,8 +294,7 @@ TYPEINFO(/obj/item/pinpointer)
 					if(ckey(I.registered) == ckey(A.targetname))
 						targets[I] = I
 				LAGCHECK(LAG_LOW)
-			target = null
-			target = input(user, "Which ID do you wish to track?", "Target Locator", null) in targets
+			target = tgui_input_list(user, "Which ID do you wish to track?", "Target Locator", targets)
 			if(!target)
 				boutput(user, SPAN_NOTICE("You activate the target locator. No available targets!"))
 			else
@@ -388,7 +391,7 @@ TYPEINFO(/obj/item/pinpointer)
 			return TRUE
 
 TYPEINFO(/obj/item/pinpointer/secweapons)
-	mats = null
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/item/pinpointer/secweapons
 	name = "security weapon pinpointer"

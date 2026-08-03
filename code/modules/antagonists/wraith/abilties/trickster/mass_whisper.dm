@@ -4,7 +4,7 @@
 	desc = "Send an ethereal message to all close living beings."
 	pointCost = 5
 	targeted = FALSE
-	cooldown = 10 SECONDS
+	cooldown = 0 SECONDS
 
 	proc/ghostify_message(var/message)
 		return message

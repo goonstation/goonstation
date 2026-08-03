@@ -14,6 +14,7 @@ TODO:
 // Incubator
 
 TYPEINFO(/obj/submachine/chicken_incubator)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 8
 
 /obj/submachine/chicken_incubator
@@ -175,6 +176,7 @@ TYPEINFO(/obj/submachine/chicken_incubator)
 // Feed Grinder
 
 TYPEINFO(/obj/submachine/ranch_feed_grinder)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 8
 
 /obj/submachine/ranch_feed_grinder
@@ -605,6 +607,7 @@ TYPEINFO(/obj/submachine/ranch_feed_grinder)
 // Chicken Nesting Box
 
 TYPEINFO(/obj/chicken_nesting_box)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 4
 
 /obj/chicken_nesting_box
@@ -645,6 +648,8 @@ TYPEINFO(/obj/chicken_nesting_box)
 
 		. = ..()
 
+TYPEINFO(/obj/item/old_grenade/chicken)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/old_grenade/chicken
 	name = "Chicken Grenade"
 	desc = "It is set to detonate in 3 seconds."
@@ -653,7 +658,6 @@ TYPEINFO(/obj/chicken_nesting_box)
 	det_time = 3 SECONDS
 	org_det_time = 3 SECONDS
 	alt_det_time = 6 SECONDS
-	is_syndicate = 1
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	tooltip_flags = REBUILD_ALWAYS
 	is_dangerous = TRUE

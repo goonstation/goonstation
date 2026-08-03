@@ -150,6 +150,21 @@ ABSTRACT_TYPE(/obj/item/clothing/under)
 		..()
 		playsound(src.loc, 'sound/items/zipper.ogg', 30, 0.2, pitch = 2)
 
+/obj/item/clothing/proc/update_tail_clothing(var/mob/living/carbon/human/H, var/tail_clothing_state)
+	var/obj/item/organ/tail/our_tail = H.organHolder.tail // visual tail data is stored in the tail
+	H.human_tail_image = image(our_tail.clothing_image_icon, tail_clothing_state)
+	src.copy_appearance_to_image(H.human_tail_image)
+	H.human_tail_image.filters += H.mutantrace?.apply_clothing_filters(src)
+	H.tail_standing.overlays += H.human_tail_image
+	H.tail_standing_oversuit.overlays += H.human_tail_image
+	if(src.worn_material_texture_image)
+		// If the original object has a material texture, apply it
+		var/icon/masked_tail_tex = GetTexturedIcon(H.human_tail_image.icon, src.material.getTexture())
+		var/image/tail_tex_image = image(masked_tail_tex, tail_clothing_state)
+		tail_tex_image.layer = H.human_tail_image.layer + 0.1
+		H.tail_standing_oversuit.overlays += tail_tex_image
+	H.update_tail_overlays()
+	return
 /*
 /obj/item/clothing/fire_burn(obj/fire/raging_fire, datum/air_group/environment)
 	if(raging_fire.internal_temperature > src.s_fire)

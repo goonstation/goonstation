@@ -854,7 +854,7 @@
 	pixel_x = -10
 	},
 /obj/decal/stripe_caution,
-/turf/unsimulated/floor/orangeblack,
+/turf/unsimulated/floor/caution,
 /area/prefab/bee_sanctuary)
 "Jq" = (
 /obj/decal/cleanable/dirt/dirt2,

@@ -18,7 +18,7 @@ TYPEINFO(/datum/component/holdertargeting)
 
 /datum/component/holdertargeting/proc/on_pickup(datum/source, mob/user)
 	if(istype(user, mobtype))
-		RegisterSignal(user, signals, proctype, TRUE)
+		RegisterSignals(user, signals, proctype, TRUE)
 		current_user = user
 	else
 		UnregisterSignal(user, signals)

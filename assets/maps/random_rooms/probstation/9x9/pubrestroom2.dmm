@@ -1,0 +1,335 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/storage/secure/closet/personal,
+/turf/simulated/floor/blue,
+/area/station/crew_quarters/showers)
+"c" = (
+/obj/machinery/light_switch/directional/north,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/blue/side,
+/area/station/crew_quarters/showers)
+"d" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/blue/side,
+/area/station/crew_quarters/showers)
+"f" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/showers)
+"g" = (
+/obj/machinery/light_switch/directional/north,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/showers)
+"h" = (
+/obj/machinery/light/incandescent/cool,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/showers)
+"i" = (
+/obj/machinery/door/airlock/pyro/alt,
+/obj/mapping_helper/firedoor_spawn,
+/obj/disposalpipe/segment/vertical,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/showers)
+"k" = (
+/obj/item/storage/toilet/random{
+	dir = 8;
+	pixel_x = 8
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/showers)
+"l" = (
+/obj/disposalpipe/segment/vertical,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/blue/side{
+	dir = 4
+	},
+/area/station/crew_quarters/showers)
+"m" = (
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/showers)
+"n" = (
+/obj/machinery/light/incandescent/cool,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/blue/side,
+/area/station/crew_quarters/showers)
+"p" = (
+/obj/item/storage/toilet/random{
+	dir = 4;
+	pixel_x = -8
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/showers)
+"q" = (
+/obj/machinery/door/airlock/pyro/alt,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/showers)
+"t" = (
+/obj/machinery/disposal/small/east{
+	pixel_x = -8
+	},
+/obj/disposalpipe/trunk/south,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/blue/side{
+	dir = 4
+	},
+/area/station/crew_quarters/showers)
+"v" = (
+/obj/machinery/sink/slim{
+	dir = 1
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/showers)
+"w" = (
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4;
+	id = "pub_shoilet2-2";
+	name = "Public Shoilet"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/showers)
+"y" = (
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/blue,
+/area/station/crew_quarters/showers)
+"A" = (
+/obj/submachine/laundry_machine,
+/turf/simulated/floor/blue,
+/area/station/crew_quarters/showers)
+"C" = (
+/obj/machinery/light/incandescent/cool,
+/obj/table/auto,
+/obj/linen_bin/towel,
+/turf/simulated/floor/blue,
+/area/station/crew_quarters/showers)
+"F" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/blue/corner,
+/area/station/crew_quarters/showers)
+"G" = (
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/showers)
+"J" = (
+/obj/machinery/shower{
+	pixel_y = -4
+	},
+/obj/machinery/drainage,
+/obj/machinery/door_control/bolter/new_walls/west{
+	id = s
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/showers)
+"K" = (
+/obj/machinery/firealarm/directional/north,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/showers)
+"L" = (
+/obj/machinery/shower{
+	dir = 1;
+	pixel_y = 16
+	},
+/obj/machinery/drainage,
+/obj/machinery/door_control/bolter/new_walls/west{
+	id = "pub_shoilet2-2"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/showers)
+"O" = (
+/obj/machinery/shower{
+	dir = 1;
+	pixel_y = 16
+	},
+/obj/machinery/drainage,
+/obj/machinery/door_control/bolter/new_walls/east{
+	id = "pub_shoilet2-3"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/showers)
+"P" = (
+/turf/simulated/floor/blue,
+/area/station/crew_quarters/showers)
+"Q" = (
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/crew_quarters/showers)
+"S" = (
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4;
+	id = "pub_shoilet2-3";
+	name = "Public Shoilet"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/showers)
+"T" = (
+/obj/machinery/light/incandescent/cool,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/showers)
+"W" = (
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4;
+	id = "pub_shoilet2-1";
+	name = "Public Shoilet"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/showers)
+"Z" = (
+/obj/machinery/sink/slim{
+	pixel_y = 12
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/showers)
+
+(1,1,1) = {"
+Q
+Q
+Q
+Q
+m
+Q
+Q
+Q
+Q
+"}
+(2,1,1) = {"
+Q
+L
+G
+Q
+g
+Q
+G
+J
+Q
+"}
+(3,1,1) = {"
+Q
+k
+v
+Q
+h
+Q
+Z
+k
+Q
+"}
+(4,1,1) = {"
+Q
+Q
+w
+Q
+K
+Q
+W
+Q
+Q
+"}
+(5,1,1) = {"
+q
+T
+f
+f
+F
+t
+l
+l
+i
+"}
+(6,1,1) = {"
+Q
+Q
+S
+Q
+d
+A
+P
+C
+Q
+"}
+(7,1,1) = {"
+Q
+p
+v
+Q
+n
+P
+y
+P
+Q
+"}
+(8,1,1) = {"
+Q
+O
+G
+Q
+c
+a
+a
+a
+Q
+"}
+(9,1,1) = {"
+Q
+Q
+Q
+Q
+m
+Q
+Q
+Q
+Q
+"}

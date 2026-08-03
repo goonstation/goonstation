@@ -6,6 +6,7 @@
 #define CYCLE_TIME 10
 
 TYPEINFO(/obj/submachine/laundry_machine)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 20
 
 /obj/submachine/laundry_machine
@@ -122,7 +123,7 @@ TYPEINFO(/obj/submachine/laundry_machine)
 					// prevents re-washing
 					if (brain.icon_state != "brain2")
 						return
-					brain.icon = "icons/obj/items/organs/brain.dmi"
+					brain.icon = 'icons/obj/items/organs/brain.dmi'
 					brain.icon_state = "smooth_brain"
 					// getting rid of all of those UNSIGHTLY wrinkles heals your brain!
 					brain.heal_damage(brain.brute_dam, brain.burn_dam, brain.tox_dam)

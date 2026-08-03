@@ -148,7 +148,9 @@
 			src.wear_image = image(wear_image_icon)
 			src.inhand_image = image(inhand_image_icon)
 			src.tooltip_rebuild = TRUE
-			usr.set_clothing_icon_dirty()
+			if(ismob(src.loc))
+				var/mob/mob_loc = src.loc
+				mob_loc.set_clothing_icon_dirty()
 
 /obj/item/storage/backpack/chameleon/tactical_belt
 	included_belt = /obj/item/storage/belt/chameleon/tactical
@@ -266,3 +268,9 @@
 		desc = "A fancy designer bag made out of space snake leather and encrusted with plastic expertly made to look like gold."
 		icon_state = "capsatchel"
 		item_state = "capsatchel"
+
+	red
+		name = /obj/item/storage/backpack/red::name
+		desc = /obj/item/storage/backpack/red::desc
+		icon_state = /obj/item/storage/backpack/red::icon_state
+		item_state = /obj/item/storage/backpack/red::item_state

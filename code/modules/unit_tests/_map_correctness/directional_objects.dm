@@ -35,7 +35,7 @@
 		if (istype(area, /area/shuttle/escape))
 			continue
 
-		. += src.format_position(A)
+		. += CI.format_position(A)
 
 
 SET_UP_CI_TRACKING(/datum/component/directional)

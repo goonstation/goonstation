@@ -16,7 +16,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	high_priority_job = TRUE
 	high_priority_limit = 2 //always try to make sure there's at least a couple of secoffs
 	order_priority = 2 //fill secoffs after captain and AI
-	wages = PAY_TRADESMAN
+	wages = PAY::TRADESMAN
 	trait_list = list("training_security")
 	access_string = "Security Officer"
 	can_roll_antag = FALSE
@@ -41,7 +41,7 @@ ABSTRACT_TYPE(/datum/job/security)
 		limit = 3
 		lower_limit = 2
 		high_priority_job = FALSE //nope
-		wages = PAY_UNTRAINED
+		wages = PAY::UNTRAINED
 		access_string = "Security Assistant"
 		receives_implants = list(/obj/item/implant/health/security)
 		slot_back = list(/obj/item/storage/backpack/security)
@@ -79,7 +79,7 @@ ABSTRACT_TYPE(/datum/job/security)
 /datum/job/security/detective
 	name = "Detective"
 	limit = 1
-	wages = PAY_TRADESMAN
+	wages = PAY::TRADESMAN
 	trait_list = list("training_drinker", "training_forensic")
 	access_string = "Detective"
 	badge = /obj/item/clothing/suit/security_badge

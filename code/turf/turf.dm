@@ -608,6 +608,7 @@ var/global/in_replace_with = 0
 
 /turf/proc/ReplaceWith(what, keep_old_material = 0, handle_air = 1, handle_dir = 0, force = 0)
 	var/new_type = ispath(what) ? what : text2path(what)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_TURF_REPLACED, src, what)
 
 	if(ispath(new_type, /turf/variableTurf))
 		var/typeinfo/turf/variableTurf/typeinfo = get_type_typeinfo(new_type)
@@ -863,6 +864,7 @@ var/global/in_replace_with = 0
 			air_master.high_pressure_delta.Remove(src) //lingering references to space turfs kept ending up in atmos lists after simulated turfs got replaced. wack!
 			air_master.active_singletons.Remove(src)
 			air_master.tiles_to_update.Remove(src)
+			air_master.tiles_to_rebuild.Remove(src)
 
 		if (air_master && oldparent) //Handling air parent changes for oldparent for Simulated -> Anything
 			air_master.groups_to_rebuild[oldparent] = null //Puts the oldparent into a queue to update the members.

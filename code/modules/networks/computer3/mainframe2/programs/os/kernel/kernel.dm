@@ -69,12 +69,12 @@
 
 		src.syscalls[syscall.id] = syscall
 
-	src.sys_folder = src.parse_directory(setup_filepath_system, src.holder.root, TRUE)
+	src.sys_folder = src.parse_directory(DWAINE::DIRECTORY::SYSTEM, src.holder.root, TRUE)
 	if (!src.sys_folder)
 		src.max_users = 0
 		return
 
-	src.sys_folder.metadata["permission"] = COMP_HIDDEN
+	src.sys_folder.metadata["permission"] = DWAINE::PERM::DEFAULT::NONE
 
 	src.max_users = max(round((src.holder.file_amount - 128) / 32), 0)
 	// Attempt to start up the kernel. If it fails, return and prevent users from connecting.
@@ -97,7 +97,7 @@
 		return
 
 	if (!src.users[termid])
-		var/datum/computer/file/mainframe_program/driver/driver = src.parse_file_directory("[setup_filepath_drivers]/[termid]", src.holder.root, FALSE)
+		var/datum/computer/file/mainframe_program/driver/driver = src.parse_file_directory("[DWAINE::DIRECTORY::DEVICES]/[termid]", src.holder.root, FALSE)
 		if (istype(driver))
 			driver.terminal_input(data, file)
 
@@ -109,12 +109,12 @@
 		return
 
 	if (is_break)
-		user.current_prog.receive_progsignal(1, list("command" = DWAINE_COMMAND_BREAK, "user" = termid))
+		user.current_prog.receive_progsignal(1, list("command" = DWAINE::SYSCALL::BREAK, "user" = termid))
 		return
 
 	if (user.current_prog)
 		if (file)
-			user.current_prog.receive_progsignal(1, list("command" = DWAINE_COMMAND_RECVFILE, "user" = termid), file)
+			user.current_prog.receive_progsignal(1, list("command" = DWAINE::SYSCALL::RECVFILE, "user" = termid), file)
 		else
 			user.current_prog.input_text(data)
 	else
@@ -155,8 +155,8 @@
 		return
 
 	// Find relevant directories for device initialisation.
-	var/datum/computer/folder/prototype_folder = src.parse_directory(setup_filepath_drivers_proto, src.holder.root, TRUE)
-	var/datum/computer/folder/device_folder = src.parse_directory(setup_filepath_drivers, src.holder.root, TRUE)
+	var/datum/computer/folder/prototype_folder = src.parse_directory(DWAINE::DIRECTORY::DRIVERS, src.holder.root, TRUE)
+	var/datum/computer/folder/device_folder = src.parse_directory(DWAINE::DIRECTORY::DEVICES, src.holder.root, TRUE)
 	if (!prototype_folder || !device_folder)
 		return
 
@@ -182,7 +182,7 @@
 		return
 
 	if (!src.users[conn.net_id])
-		var/datum/computer/file/file = src.parse_file_directory("[setup_filepath_drivers]/[conn.net_id]", src.holder.root, 0)
+		var/datum/computer/file/file = src.parse_file_directory("[DWAINE::DIRECTORY::DEVICES]/[conn.net_id]", src.holder.root, 0)
 		file?.dispose()
 
 	var/datum/mainframe2_user_data/user = src.users[conn.net_id]
@@ -205,7 +205,7 @@
 	if (dd_hasprefix(sendertype, "pnet_"))
 		sendertype = copytext(sendertype, 6)
 
-	if (!src.get_file_name(sendertype, src.parse_directory(setup_filepath_drivers_proto, src.holder.root, FALSE)))
+	if (!src.get_file_name(sendertype, src.parse_directory(DWAINE::DIRECTORY::DRIVERS, src.holder.root, FALSE)))
 		return
 
 	SPAWN(rand(1, 4))
@@ -214,17 +214,17 @@
 // Receive a signal sent by another program or driver on the mainframe. This is where system calls are interpreted.
 /datum/computer/file/mainframe_program/os/kernel/receive_progsignal(sendid, list/data, datum/computer/file/file)
 	if (!src.master || (sendid == src.progid))
-		return ESIG_GENERIC
+		return DWAINE::ERR::SIG::GENERIC
 
 	if (!isnum(data["command"]))
-		return ESIG_GENERIC
+		return DWAINE::ERR::SIG::GENERIC
 
 	if (data["command"] > src.syscalls.len)
-		return ESIG_BADCOMMAND
+		return DWAINE::ERR::SIG::BADCOMMAND
 
 	var/datum/dwaine_syscall/syscall = src.syscalls[data["command"]]
 	if (!istype(syscall))
-		return ESIG_BADCOMMAND
+		return DWAINE::ERR::SIG::BADCOMMAND
 
 	return syscall.execute(sendid, data, file)
 
@@ -250,12 +250,12 @@
 
 	src.users = list()
 
-	var/datum/computer/folder/user_folder = src.parse_directory(setup_filepath_users, src.holder.root, TRUE)
-	var/datum/computer/folder/home_folder = src.parse_directory(setup_filepath_users_home, src.holder.root, TRUE)
+	var/datum/computer/folder/user_folder = src.parse_directory(DWAINE::DIRECTORY::USERS, src.holder.root, TRUE)
+	var/datum/computer/folder/home_folder = src.parse_directory(DWAINE::DIRECTORY::HOME, src.holder.root, TRUE)
 	if (!user_folder || !home_folder)
 		return TRUE
 
-	user_folder.metadata["permission"] = COMP_HIDDEN
+	user_folder.metadata["permission"] = DWAINE::PERM::DEFAULT::NONE
 
 	for (var/i in src.master.terminals)
 		var/datum/terminal_connection/conn = src.master.terminals[i]
@@ -286,10 +286,10 @@
 		new_home = new /datum/computer/folder()
 		new_home.name = "usr[user_record.fields["name"]]"
 		new_home.metadata["owner"] = user_record.fields["name"]
-		new_home.metadata["permission"] = COMP_ROWNER | COMP_WOWNER | COMP_DOWNER
+		new_home.metadata["permission"] = DWAINE::PERM::DEFAULT::ONLY_OWNER_ACCESS
 
 		user_record.metadata["owner"] = user_record.fields["name"]
-		user_record.metadata["permission"] = COMP_ROWNER | COMP_WOWNER
+		user_record.metadata["permission"] = DWAINE::PERM::DEFAULT::ONLY_OWNER_READ_WRITE
 
 		if (!home_folder.add_file(new_home))
 			new_home.dispose()
@@ -331,16 +331,16 @@
 	if (!account || account.full_user || !user_name)
 		return TRUE
 
-	var/datum/computer/folder/user_folder = src.parse_directory(setup_filepath_users, src.holder.root, TRUE)
-	var/datum/computer/folder/home_folder = src.parse_directory(setup_filepath_users_home, src.holder.root, TRUE)
+	var/datum/computer/folder/user_folder = src.parse_directory(DWAINE::DIRECTORY::USERS, src.holder.root, TRUE)
+	var/datum/computer/folder/home_folder = src.parse_directory(DWAINE::DIRECTORY::HOME, src.holder.root, TRUE)
 
 	if (!user_folder || !home_folder || !src.sys_folder)
 		return TRUE
 
 	user_name = global.format_username(user_name)
 
-	user_folder.metadata["permission"] = COMP_HIDDEN
-	home_folder.metadata["permission"] = COMP_ROWNER | COMP_RGROUP | COMP_ROTHER
+	user_folder.metadata["permission"] = DWAINE::PERM::DEFAULT::NONE
+	home_folder.metadata["permission"] = DWAINE::PERM::DEFAULT::ALL_READ_ONLY
 
 	var/name_attempt = 0
 	var/attemptedname = null
@@ -383,7 +383,7 @@
 	user_record.fields["logtime"] = world.realtime
 	user_record.fields["accept_msg"] = "1"
 	user_record.metadata["owner"] = user_record.fields["name"]
-	user_record.metadata["permission"] = COMP_ROWNER | COMP_WOWNER
+	user_record.metadata["permission"] = DWAINE::PERM::DEFAULT::ONLY_OWNER_READ_WRITE
 
 	// If not interactive, no need to create a home directory for the user.
 	if (!interactive)
@@ -396,7 +396,7 @@
 	new_home = new /datum/computer/folder()
 	new_home.name = attemptedname
 	new_home.metadata["owner"] = user_record.fields["name"]
-	new_home.metadata["permission"] = COMP_ROWNER | COMP_WOWNER | COMP_DOWNER
+	new_home.metadata["permission"] = DWAINE::PERM::DEFAULT::ONLY_OWNER_ACCESS
 	if (!home_folder.add_file(new_home))
 		new_home.dispose()
 		return TRUE
@@ -428,12 +428,12 @@
 
 /// Initialise all drivers, setting up driver data and initialising them individually.
 /datum/computer/file/mainframe_program/os/kernel/proc/initialize_drivers()
-	var/datum/computer/folder/prototype_folder = src.parse_directory(setup_filepath_drivers_proto, src.holder.root, TRUE)
-	var/datum/computer/folder/device_folder = src.parse_directory(setup_filepath_drivers, src.holder.root, TRUE)
+	var/datum/computer/folder/prototype_folder = src.parse_directory(DWAINE::DIRECTORY::DRIVERS, src.holder.root, TRUE)
+	var/datum/computer/folder/device_folder = src.parse_directory(DWAINE::DIRECTORY::DEVICES, src.holder.root, TRUE)
 	if (!prototype_folder || !device_folder)
 		return TRUE
 
-	device_folder.metadata["permission"] = COMP_HIDDEN
+	device_folder.metadata["permission"] = DWAINE::PERM::DEFAULT::NONE
 
 	// Clear out any active drivers.
 	for (var/datum/computer/file/mainframe_program/driver/driver in device_folder.contents)

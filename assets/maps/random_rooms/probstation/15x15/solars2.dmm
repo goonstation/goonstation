@@ -1,0 +1,623 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/space,
+/area/space)
+"b" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor/plating,
+/area/station/maintenance/solar/bravo)
+"c" = (
+/obj/mesh/catwalk{
+	dir = 6
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/station/solar/small_backup2)
+"e" = (
+/obj/mesh/catwalk{
+	dir = 6
+	},
+/obj/cable/yellow{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/station/solar/small_backup2)
+"f" = (
+/obj/machinery/power/solar/small_backup2,
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "solarbase";
+	name = "solar paneling"
+	},
+/area/station/solar/small_backup2)
+"h" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"j" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/vertical,
+/obj/machinery/light/incandescent/small,
+/turf/simulated/floor/plating,
+/area/station/maintenance/solar/bravo)
+"k" = (
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/maintenance/solar/bravo)
+"l" = (
+/obj/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/mapping_helper/airlock/cycler/manual{
+	cycle_id = "solars2ext";
+	name = "Solars 2"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/solar/bravo)
+"m" = (
+/obj/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/mapping_helper/access/engineering_power,
+/obj/mapping_helper/airlock/cycler/manual{
+	cycle_id = "solars2int";
+	name = "Solars 2"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/solar/bravo)
+"p" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/camera/directional/east,
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk/south,
+/turf/simulated/floor/plating,
+/area/station/maintenance/solar/bravo)
+"r" = (
+/obj/mesh/catwalk{
+	dir = 6
+	},
+/obj/machinery/power/tracker/small_backup2,
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/station/solar/small_backup2)
+"t" = (
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
+/area/station/maintenance/solar/bravo)
+"u" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/plating,
+/area/station/maintenance/solar/bravo)
+"v" = (
+/obj/machinery/power/smes{
+	chargelevel = 15000;
+	output = 10000
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/solar/bravo)
+"x" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"y" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	dir = 4
+	},
+/obj/mapping_helper/access/engineering_power,
+/obj/disposalpipe/segment/horizontal,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/plating,
+/area/station/maintenance/solar/bravo)
+"z" = (
+/obj/cable/yellow{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/solar/bravo)
+"B" = (
+/obj/cable/yellow{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/solar/bravo)
+"C" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/maintenance/solar/bravo)
+"D" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/vertical,
+/obj/machinery/firealarm/directional/east,
+/turf/simulated/floor/plating,
+/area/station/maintenance/solar/bravo)
+"E" = (
+/obj/mesh/catwalk{
+	dir = 6
+	},
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/cable/yellow,
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/station/solar/small_backup2)
+"F" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/device/light/flashlight,
+/obj/machinery/light/incandescent/small,
+/turf/simulated/floor/plating,
+/area/station/maintenance/solar/bravo)
+"G" = (
+/obj/machinery/computer/power_monitor{
+	name = "Station Power Grid Monitoring";
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/solar/bravo)
+"H" = (
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/solar/bravo)
+"I" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"J" = (
+/obj/mesh/catwalk{
+	dir = 6
+	},
+/obj/cable/yellow,
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/station/solar/small_backup2)
+"K" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/table/reinforced/auto,
+/turf/simulated/floor/plating,
+/area/station/maintenance/solar/bravo)
+"L" = (
+/obj/cable/yellow{
+	icon_state = "1-2"
+	},
+/obj/item/device/radio/intercom/engineering{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/solar/bravo)
+"M" = (
+/obj/mesh/catwalk{
+	dir = 6
+	},
+/obj/cable/yellow,
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/station/solar/small_backup2)
+"N" = (
+/turf/simulated/floor/plating,
+/area/station/maintenance/solar/bravo)
+"O" = (
+/obj/machinery/power/solar/small_backup2,
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "solarbase";
+	name = "solar paneling"
+	},
+/area/station/solar/small_backup2)
+"P" = (
+/obj/machinery/computer/solar_control/small_backup2{
+	dir = 4
+	},
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/solar/bravo)
+"Q" = (
+/obj/machinery/power/solar/small_backup2,
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/airless{
+	icon_state = "solarbase";
+	name = "solar paneling"
+	},
+/area/station/solar/small_backup2)
+"R" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"S" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/solar/bravo)
+"T" = (
+/obj/table/reinforced/auto,
+/obj/machinery/cell_charger,
+/obj/item/cell/supercell/charged,
+/obj/item/cell/supercell/charged,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light/incandescent/small,
+/turf/simulated/floor/plating,
+/area/station/maintenance/solar/bravo)
+"U" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/disposalpipe/segment/bent/north,
+/turf/simulated/floor/plating,
+/area/station/maintenance/solar/bravo)
+"V" = (
+/obj/mesh/catwalk{
+	dir = 6
+	},
+/obj/cable/yellow,
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/station/solar/small_backup2)
+"W" = (
+/obj/cable/yellow{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/solar/bravo)
+"X" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_west,
+/turf/simulated/floor/plating,
+/area/station/maintenance/solar/bravo)
+"Y" = (
+/obj/mesh/catwalk{
+	dir = 6
+	},
+/obj/cable/yellow{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/station/solar/small_backup2)
+"Z" = (
+/obj/cable/yellow{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/incandescent/small,
+/turf/simulated/floor/plating,
+/area/station/maintenance/solar/bravo)
+
+(1,1,1) = {"
+a
+a
+O
+O
+c
+O
+O
+O
+O
+O
+O
+O
+O
+O
+a
+"}
+(2,1,1) = {"
+r
+Y
+V
+V
+M
+V
+V
+V
+V
+V
+V
+V
+V
+J
+a
+"}
+(3,1,1) = {"
+a
+a
+f
+f
+e
+f
+f
+f
+f
+f
+f
+f
+f
+f
+a
+"}
+(4,1,1) = {"
+a
+a
+a
+Q
+J
+x
+a
+a
+a
+a
+R
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+Q
+J
+O
+O
+O
+O
+O
+O
+O
+O
+O
+a
+"}
+(6,1,1) = {"
+a
+a
+a
+Q
+V
+V
+V
+V
+V
+V
+V
+V
+V
+J
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+Q
+J
+f
+f
+f
+f
+f
+e
+f
+f
+f
+a
+"}
+(8,1,1) = {"
+a
+a
+a
+I
+e
+x
+a
+a
+a
+a
+e
+a
+a
+a
+a
+"}
+(9,1,1) = {"
+t
+C
+C
+t
+l
+t
+a
+a
+a
+Q
+E
+O
+O
+O
+a
+"}
+(10,1,1) = {"
+t
+P
+F
+t
+Z
+t
+h
+h
+h
+Q
+V
+V
+V
+J
+a
+"}
+(11,1,1) = {"
+t
+H
+z
+t
+m
+t
+a
+a
+a
+a
+f
+f
+f
+f
+a
+"}
+(12,1,1) = {"
+t
+v
+W
+L
+B
+t
+C
+C
+t
+a
+a
+R
+a
+a
+a
+"}
+(13,1,1) = {"
+t
+S
+N
+u
+N
+X
+N
+G
+C
+a
+a
+R
+a
+a
+a
+"}
+(14,1,1) = {"
+t
+K
+T
+p
+D
+b
+j
+U
+C
+a
+a
+R
+a
+a
+a
+"}
+(15,1,1) = {"
+t
+t
+t
+t
+t
+t
+t
+y
+t
+k
+C
+C
+C
+C
+k
+"}

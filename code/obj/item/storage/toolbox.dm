@@ -299,7 +299,7 @@ TYPEINFO(/obj/item/storage/toolbox/memetic)
 	if(src.find_ailment_by_type(/datum/ailment/disability/memetic_madness))
 		return
 
-	src.resistances -= /datum/ailment/disability/memetic_madness
+	src.remove_ailment_resistance(/datum/ailment/disability/memetic_madness)
 	// just going to have to set it up manually i guess
 	var/datum/ailment_data/memetic_madness/AD = get_disease_from_path(/datum/ailment/disability/memetic_madness).setup_strain()
 

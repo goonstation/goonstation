@@ -1,0 +1,657 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aA" = (
+/obj/disposaloutlet/north,
+/obj/disposalpipe/trunk/ejection{
+	dir = 4
+	},
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/red,
+/area/station/security/brig/genpop)
+"aG" = (
+/obj/table/reinforced/auto,
+/obj/item/boardgame/chess,
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/station/security/brig/genpop)
+"bG" = (
+/obj/disposalpipe/segment/ejection{
+	icon_state = "pipe-c"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/redblack,
+/area/station/security/brig/genpop)
+"bI" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "genpoplockdown";
+	name = "Genpop Lockdown Doors";
+	opacity = 0;
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/security/brig/genpop)
+"dm" = (
+/obj/disposalpipe/segment/ejection{
+	dir = 4
+	},
+/obj/reagent_dispensers/watertank/fountain,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/red/side,
+/area/station/security/brig/genpop)
+"eY" = (
+/obj/disposalpipe/segment/ejection{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/redblack,
+/area/station/security/brig/genpop)
+"fC" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/brig/genpop)
+"fS" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/brig/genpop)
+"gE" = (
+/obj/item/storage/toilet/random{
+	dir = 4;
+	pixel_x = -8
+	},
+/turf/simulated/floor/sanitary,
+/area/station/security/brig/genpop)
+"hG" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/security/brig/genpop)
+"iH" = (
+/obj/disposalpipe/segment/ejection{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light_switch/directional/west{
+	pixel_y = -8
+	},
+/obj/machinery/firealarm/directional/west{
+	pixel_y = 8
+	},
+/turf/simulated/floor/red/side{
+	dir = 10
+	},
+/area/station/security/brig/genpop)
+"jL" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/orange,
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/station/security/brig/genpop)
+"jZ" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/security/brig/genpop)
+"kI" = (
+/obj/machinery/disposal/brig,
+/obj/disposalpipe/trunk/ejection{
+	dir = 8
+	},
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/red/side{
+	dir = 6
+	},
+/area/station/security/brig/genpop)
+"lV" = (
+/obj/machinery/door/airlock/pyro/alt,
+/turf/simulated/floor/sanitary,
+/area/station/security/brig/genpop)
+"nc" = (
+/obj/disposalpipe/segment/ejection,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_west,
+/turf/simulated/floor/red/side{
+	dir = 8
+	},
+/area/station/security/brig/genpop)
+"oa" = (
+/obj/fitness/speedbag,
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/station/security/brig/genpop)
+"oL" = (
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/security,
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	dir = 4;
+	pixel_x = 20
+	},
+/turf/simulated/floor/red,
+/area/station/security/brig/genpop)
+"oU" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/red,
+/area/station/security/brig/genpop)
+"px" = (
+/turf/simulated/floor/red/side{
+	dir = 1
+	},
+/area/station/security/brig/genpop)
+"tr" = (
+/obj/stool,
+/obj/disposalpipe/segment/ejection,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/station/security/brig/genpop)
+"ts" = (
+/obj/disposalpipe/segment/ejection{
+	dir = 4
+	},
+/obj/storage/closet/wardrobe/orange,
+/turf/simulated/floor/red/side,
+/area/station/security/brig/genpop)
+"tw" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/orange,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/redblack{
+	dir = 10
+	},
+/area/station/security/brig/genpop)
+"tO" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/brig/genpop)
+"ub" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/red/side{
+	dir = 1
+	},
+/area/station/security/brig/genpop)
+"vi" = (
+/obj/submachine/ATM{
+	pixel_x = 30
+	},
+/obj/disposalpipe/segment/ejection{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/red,
+/area/station/security/brig/genpop)
+"wg" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 1;
+	icon_state = "pdoor0";
+	id = "genpoplockdown";
+	name = "Genpop Lockdown Doors";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/security/brig/genpop)
+"wv" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/brig/genpop)
+"wA" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/brig/genpop)
+"wM" = (
+/turf/simulated/floor/black,
+/area/station/security/brig/genpop)
+"xI" = (
+/obj/storage/secure/closet/brig_automatic/genpop,
+/turf/simulated/floor/redblack{
+	dir = 6
+	},
+/area/station/security/brig/genpop)
+"xO" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 1;
+	icon_state = "pdoor0";
+	id = "genpoplockdown";
+	name = "Genpop Lockdown Doors";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/security/brig/genpop)
+"xY" = (
+/obj/machinery/floorflusher/genpop,
+/obj/disposalpipe/trunk/ejection{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/security/brig/genpop)
+"yn" = (
+/turf/simulated/floor/redblack/corner,
+/area/station/security/brig/genpop)
+"zJ" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "genpoplockdown";
+	name = "Genpop Lockdown Doors";
+	opacity = 0;
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/security/brig/genpop)
+"BL" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/red,
+/area/station/security/brig/genpop)
+"Cf" = (
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
+/area/station/security/brig/genpop)
+"CP" = (
+/turf/simulated/wall/auto/supernorn/colored/red,
+/area/station/security/brig/genpop)
+"DV" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "genpoplockdown";
+	name = "Genpop Lockdown Doors";
+	opacity = 0;
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/security/brig/genpop)
+"EV" = (
+/obj/machinery/sink/slim{
+	dir = 4;
+	pixel_x = -4
+	},
+/turf/simulated/floor/sanitary,
+/area/station/security/brig/genpop)
+"FF" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/red/side{
+	dir = 4
+	},
+/area/station/security/brig/genpop)
+"FH" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/brig/genpop)
+"FW" = (
+/obj/machinery/door_timer/genpop/new_walls/west{
+	pixel_y = 6
+	},
+/obj/disposalpipe/segment/ejection,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door_control/west{
+	pixel_y = -8;
+	id = "genpoplockdown";
+	name = "Lockdown Door Control"
+	},
+/turf/simulated/floor/red/side{
+	dir = 9
+	},
+/area/station/security/brig/genpop)
+"Gk" = (
+/obj/machinery/door/airlock/pyro/glass/security,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/mapping_helper/access/brig,
+/obj/mapping_helper/firedoor_spawn,
+/obj/disposalpipe/segment/ejection,
+/turf/simulated/floor/red,
+/area/station/security/brig/genpop)
+"HW" = (
+/obj/stool,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/station/security/brig/genpop)
+"Ly" = (
+/obj/submachine/slot_machine,
+/obj/item/device/radio/intercom/brig{
+	dir = 8
+	},
+/turf/simulated/floor/redblack{
+	dir = 5
+	},
+/area/station/security/brig/genpop)
+"OT" = (
+/obj/disposalpipe/segment/ejection{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/redblack,
+/area/station/security/brig/genpop)
+"Qk" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/brig/genpop)
+"Qx" = (
+/turf/simulated/floor/redblack,
+/area/station/security/brig/genpop)
+"Re" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 1;
+	icon_state = "pdoor0";
+	id = "genpoplockdown";
+	name = "Genpop Lockdown Doors";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/security/brig/genpop)
+"Rp" = (
+/obj/landmark/gps_waypoint,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/red,
+/area/station/security/brig/genpop)
+"Sc" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/disposaloutlet/north{
+	pixel_y = 12
+	},
+/obj/disposalpipe/trunk/ejection,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 1;
+	icon_state = "pdoor0";
+	id = "genpoplockdown";
+	name = "Genpop Lockdown Doors";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/security/brig/genpop)
+"Sx" = (
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor/sanitary,
+/area/station/security/brig/genpop)
+"UI" = (
+/obj/machinery/vending/cards,
+/obj/machinery/camera/directional/east,
+/turf/simulated/floor/redblack{
+	dir = 6
+	},
+/area/station/security/brig/genpop)
+"UW" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/orange,
+/obj/machinery/camera/directional/west,
+/turf/simulated/floor/redblack{
+	dir = 9
+	},
+/area/station/security/brig/genpop)
+"Vs" = (
+/obj/fitness/stacklifter,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/station/security/brig/genpop)
+"WT" = (
+/obj/machinery/drainage,
+/obj/machinery/shower{
+	dir = 4;
+	pixel_x = 6
+	},
+/turf/simulated/floor/sanitary,
+/area/station/security/brig/genpop)
+"Xb" = (
+/obj/machinery/door/airlock/pyro/glass/security/alt,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/access/security,
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	pixel_y = -10
+	},
+/turf/simulated/floor/red,
+/area/station/security/brig/genpop)
+"Zi" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/red/side{
+	dir = 5
+	},
+/area/station/security/brig/genpop)
+
+(1,1,1) = {"
+Cf
+Cf
+bI
+DV
+zJ
+Cf
+Cf
+Cf
+Cf
+"}
+(2,1,1) = {"
+Cf
+UW
+jL
+tw
+aA
+CP
+gE
+EV
+Cf
+"}
+(3,1,1) = {"
+Re
+oa
+wM
+eY
+vi
+lV
+Sx
+WT
+Cf
+"}
+(4,1,1) = {"
+xO
+Vs
+wM
+OT
+CP
+CP
+CP
+CP
+Cf
+"}
+(5,1,1) = {"
+Sc
+tr
+xY
+bG
+Gk
+FW
+nc
+iH
+Xb
+"}
+(6,1,1) = {"
+xO
+aG
+yn
+xI
+FH
+px
+oU
+ts
+fC
+"}
+(7,1,1) = {"
+wg
+HW
+Qx
+fS
+jZ
+ub
+Rp
+dm
+wv
+"}
+(8,1,1) = {"
+Cf
+Ly
+UI
+tO
+BL
+Zi
+FF
+kI
+tO
+"}
+(9,1,1) = {"
+Cf
+Cf
+Cf
+Cf
+oL
+Qk
+wA
+hG
+Cf
+"}

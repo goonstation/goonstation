@@ -25,7 +25,7 @@
 		name = "Head Of Security"
 		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/head_of_securityold
 		hat_type = new/datum/chameleon_hat_pattern/HoS_beret
-		suit_type = new/datum/chameleon_suit_pattern/hos_jacket
+		suit_type = new/datum/chameleon_suit_pattern/armor_vest
 		glasses_type = new/datum/chameleon_glasses_pattern/sechud
 		shoes_type = new/datum/chameleon_shoes_pattern/swat
 		gloves_type = new/datum/chameleon_gloves_pattern
@@ -36,7 +36,7 @@
 		name = "Head of Personnel"
 		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/head_of_personnel
 		hat_type = new/datum/chameleon_hat_pattern/fancy
-		suit_type = new/datum/chameleon_suit_pattern/winter_coat_command
+		suit_type = new/datum/chameleon_suit_pattern/hop_jacket
 		glasses_type = new/datum/chameleon_glasses_pattern
 		shoes_type = new/datum/chameleon_shoes_pattern/brown
 		gloves_type = new/datum/chameleon_gloves_pattern
@@ -63,7 +63,7 @@
 		shoes_type = new/datum/chameleon_shoes_pattern
 		gloves_type = new/datum/chameleon_gloves_pattern/latex
 		belt_type = new/datum/chameleon_belt_pattern/medical
-		backpack_type = new/datum/chameleon_backpack_pattern
+		backpack_type = new/datum/chameleon_backpack_pattern/medic
 
 	research_director
 		name = "Research Director"
@@ -74,7 +74,7 @@
 		shoes_type = new/datum/chameleon_shoes_pattern/brown
 		gloves_type = new/datum/chameleon_gloves_pattern/latex
 		belt_type = new/datum/chameleon_belt_pattern
-		backpack_type = new/datum/chameleon_backpack_pattern
+		backpack_type = new/datum/chameleon_backpack_pattern/research
 
 	security_officer
 		name = "Security Officer"
@@ -162,7 +162,7 @@
 		shoes_type = new/datum/chameleon_shoes_pattern/white
 		gloves_type = new/datum/chameleon_gloves_pattern/latex
 		belt_type = new/datum/chameleon_belt_pattern/medical
-		backpack_type = new/datum/chameleon_backpack_pattern/genetics
+		backpack_type = new/datum/chameleon_backpack_pattern/pharmacist
 
 	quartermaster
 		name = "Quartermaster"
@@ -267,12 +267,23 @@
 		name = "Mail Courier"
 		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/courier
 		hat_type = new/datum/chameleon_hat_pattern/postal_cap
-		suit_type = new/datum/chameleon_suit_pattern/hoodie
+		suit_type = new/datum/chameleon_suit_pattern/winter_coat
 		glasses_type = new/datum/chameleon_glasses_pattern
 		shoes_type = new/datum/chameleon_shoes_pattern/brown
-		gloves_type = new/datum/chameleon_gloves_pattern/latex
+		gloves_type = new/datum/chameleon_gloves_pattern
 		belt_type = new/datum/chameleon_belt_pattern
 		backpack_type = new/datum/chameleon_backpack_pattern/satchel
+
+	clown
+		name = "Clown"
+		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/clown
+		hat_type = new/datum/chameleon_hat_pattern/winter_clown_hat //There is no "normal" clown hat, nor chameleon mask
+		suit_type = new/datum/chameleon_suit_pattern/cape_rainbow
+		glasses_type = new/datum/chameleon_glasses_pattern //Prescriptions are close enough
+		shoes_type = new/datum/chameleon_shoes_pattern/clown_shoes
+		gloves_type = new/datum/chameleon_gloves_pattern/latex
+		belt_type = new/datum/chameleon_belt_pattern/funny
+		backpack_type = new/datum/chameleon_backpack_pattern/red
 
 	new_outfit
 		function = "new_outfit"

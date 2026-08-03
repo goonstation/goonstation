@@ -27,7 +27,7 @@
 				has_been_read = 0
 				return
 			user.client.add_to_bank(3500)
-			boutput(user,"You slowly unfurl the the scroll","red")
+			boutput(user,"You slowly unfurl the scroll","red")
 			icon_state = "scroll_open"
 			SPAWN(1 SECOND)
 				boutput(user,"<B>THE HORROR!</B>")

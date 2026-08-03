@@ -345,10 +345,10 @@ var/list/dirty_keystates = list()
 			last_input_loop_time = TIME
 			process_keystates()
 
-			for(var/client/C as anything in clients) // as() is ok here since we nullcheck
+			for(var/client/C as anything in clients) // as anything is ok here since we nullcheck
 				C?.mob?.internal_process_move(C.key_state)
 
-			for(var/datum/aiHolder/ai as anything in ai_move_scheduled) // as() is ok here since we nullcheck
+			for(var/datum/aiHolder/ai as anything in ai_move_scheduled) // as anything is ok here since we nullcheck
 				if (ai?.move_target)
 					ai.move_step()
 

@@ -53,7 +53,7 @@
 		src.throw_type = throw_type
 		if (throw_type & (THROW_PHASE | THROW_NO_CLIP))
 			src.thing.event_handler_flags |= MOVE_NOCLIP
-		if (throw_type & (THROW_ARC))
+		if (throw_type & (THROW_ARC) && !thing.avoid_animating)
 			var/arc_height = (params && params["arc_height"]) ? params["arc_height"] : 24
 			var/arc_duration = (params && params["arc_time"]) ? params["arc_time"] / 2 : 1 SECONDS
 			animate(src.thing, pixel_y = arc_height, time = arc_duration, easing=CUBIC_EASING | EASE_OUT, flags = ANIMATION_PARALLEL)
@@ -138,7 +138,7 @@ var/global/datum/controller/throwing/throwing_controller = new
 				end_throwing = TRUE
 				break
 
-			if ((thr.throw_type & (THROW_ARC)) && ( thr.dist_travelled >= (thr.range * 0.5) ) )
+			if ((thr.throw_type & (THROW_ARC)) && (thr.dist_travelled >= (thr.range * 0.5)) && !thing.avoid_animating)
 				thr.throw_type &= ~THROW_ARC
 				var/arc_duration = (thr.params && thr.params["arc_time"]) ? thr.params["arc_time"] / 2 : 1 SECONDS
 				animate(thing, pixel_y = 0, time = arc_duration, easing=CUBIC_EASING | EASE_IN, flags = ANIMATION_PARALLEL)
@@ -162,7 +162,7 @@ var/global/datum/controller/throwing/throwing_controller = new
 					continue
 			if(!thing || thing.disposed)
 				continue
-			if(!(thr.throw_type & THROW_PEEL_SLIP))
+			if(!(thr.throw_type & THROW_PEEL_SLIP) && !thing.avoid_animating)
 				animate(thing)
 
 			if(isliving(thing) && (thr.throw_type & THROW_PEEL_SLIP))

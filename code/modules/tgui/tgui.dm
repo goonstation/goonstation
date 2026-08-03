@@ -283,6 +283,8 @@
 			"name" = "[user]",
 			"observer" = isobserver(user),
 		),
+		// |GOONSTATION-ADD|
+		"cdn" = global.cdn,
 	)
 	var/data = custom_data || with_data && src_object.ui_data(user)
 	if(data)

@@ -1,0 +1,259 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/wall/auto/supernorn/colored/green,
+/area/station/garden/owlery)
+"b" = (
+/obj/machinery/door/airlock/pyro,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/garden/owlery)
+"c" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/garden/owlery)
+"g" = (
+/obj/shrub{
+	dir = 10
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/garden/owlery)
+"n" = (
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/garden/owlery)
+"p" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/garden/owlery)
+"t" = (
+/obj/critter/madnessowl,
+/obj/machinery/light/small/sticky{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/garden/owlery)
+"v" = (
+/obj/machinery/portableowl/attached{
+	name = "Hootsey McHootus III"
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/garden/owlery)
+"y" = (
+/obj/machinery/portableowl/attached{
+	name = "Hootsey McHootus III"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/garden/owlery)
+"z" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/garden/owlery)
+"B" = (
+/obj/table/wood/round/auto,
+/obj/item/clothing/under/gimmick/owl{
+	pixel_x = -6
+	},
+/obj/item/clothing/mask/owl_mask{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/clothing/under/gimmick/owl,
+/obj/item/clothing/mask/owl_mask{
+	pixel_y = 8
+	},
+/obj/item/clothing/under/gimmick/owl{
+	pixel_x = 6
+	},
+/obj/item/clothing/mask/owl_mask{
+	pixel_x = 6;
+	pixel_y = 8
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/garden/owlery)
+"D" = (
+/turf/simulated/floor/grass/leafy,
+/area/station/garden/owlery)
+"E" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/garden/owlery)
+"G" = (
+/obj/tree{
+	desc = "It's a tree. You see the phrase 'Haine <3 SpyGuy' carved into it."
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/garden/owlery)
+"K" = (
+/obj/machinery/light/small/sticky{
+	dir = 8
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/garden/owlery)
+"L" = (
+/obj/shrub{
+	dir = 6
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/garden/owlery)
+"M" = (
+/obj/critter/madnessowl/switchblade,
+/obj/machinery/light/small/sticky,
+/turf/simulated/floor/plating,
+/area/station/garden/owlery)
+"R" = (
+/obj/shrub{
+	dir = 1
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/garden/owlery)
+"T" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/garden/owlery)
+"X" = (
+/mob/living/critter/small_animal/mouse,
+/turf/simulated/floor/grass/leafy,
+/area/station/garden/owlery)
+"Y" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/garden/owlery)
+"Z" = (
+/obj/shrub{
+	dir = 8
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/garden/owlery)
+
+(1,1,1) = {"
+a
+a
+a
+a
+z
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+t
+T
+Z
+Y
+D
+K
+v
+a
+"}
+(3,1,1) = {"
+a
+T
+a
+D
+y
+D
+D
+D
+a
+"}
+(4,1,1) = {"
+a
+B
+D
+X
+Y
+D
+G
+D
+a
+"}
+(5,1,1) = {"
+b
+E
+E
+E
+p
+E
+E
+E
+b
+"}
+(6,1,1) = {"
+a
+D
+D
+G
+Y
+D
+D
+L
+a
+"}
+(7,1,1) = {"
+a
+D
+D
+D
+y
+D
+a
+T
+a
+"}
+(8,1,1) = {"
+a
+R
+n
+g
+c
+D
+T
+M
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+z
+a
+a
+a
+a
+"}

@@ -21,6 +21,7 @@ ABSTRACT_TYPE(/datum/storyteller)
 	var/alive_antags_threshold = 0.1
 #endif
 	var/minimum_population = 15
+	var/minimum_population_antag_events = 1 // Specifically for antagonist spawn events etc.
 
 	proc/set_active(datum/event_controller/random_events)
 
@@ -90,7 +91,7 @@ ABSTRACT_TYPE(/datum/storyteller)
 		if (!random_events.events_enabled)
 			message_admins(SPAN_INTERNAL("A spawn event would have happened now, but they are disabled!"))
 			do_event = 0
-		if (total_clients() < minimum_population)
+		if (total_clients() < minimum_population_antag_events)
 			message_admins(SPAN_INTERNAL("A spawn event would have happened now, but there is not enough players!"))
 			do_event = 0
 

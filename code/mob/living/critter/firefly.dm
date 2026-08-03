@@ -28,6 +28,7 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 	fits_under_table = 1
 	base_move_delay = 1.5
 	base_walk_delay = 3.5
+	edible_insect = TRUE
 	isFlying = 1
 
 	New()

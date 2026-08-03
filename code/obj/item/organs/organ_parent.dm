@@ -491,3 +491,17 @@
 
 			.+= length(surgery_contexts)
 
+	/// Get TGUI ui_data list for this organ's health
+	proc/ui_organ_data()
+		var/special = ""
+		if (src.robotic)
+			special = "Cybernetic"
+		if (src.synthetic)
+			special = "Synthetic"
+		if (src.unusual)
+			special = "Unusual"
+		return list(
+			"health" = src.get_damage(),
+			"max_health" = src.max_damage,
+			"special" = special
+		)

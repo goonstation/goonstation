@@ -8,7 +8,7 @@
 
 	if (isliving(message.speaker))
 		var/mob/living/M = message.speaker
-		M.last_words = message.content
+		M.last_words = message.get_content()
 
 	if (!src.send_to_global)
 		message.flags |= SAYFLAG_DELIMITED_CHANNEL_ONLY

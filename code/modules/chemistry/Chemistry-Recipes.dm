@@ -118,7 +118,7 @@
 		name = "Lumen"
 		id = "lumen"
 		required_reagents = list("radium" = 1, "omega_mutagen" = 1, "hydrogen" = 1, "helium" = 1, "luminol" = 1)
-		mix_phrase = "The chemicals coalesce and begin to grow rather brightly!"
+		mix_phrase = "The chemicals coalesce and begin to glow rather brightly!"
 		mix_sound = 'sound/voice/heavenly.ogg'
 		result_amount = 3
 		result = "lumen"
@@ -718,7 +718,7 @@
 		id = "milk_powder"
 		result = "milk_powder"
 		required_reagents = list("milk" = 1)
-		inhibitors = list("water")
+		inhibitors = list("water", "sugar")
 		result_amount = 1
 		min_temperature = T0C + 100
 		mix_phrase = "The water boils away, leaving behind a white condensed powder."
@@ -1261,6 +1261,36 @@
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
 		hidden = TRUE
+
+	cocktail_quadruplewaterstable
+		name = "Quadruple Water"
+		id = "cocktail_quadruplewaterstable"
+		result = "cocktail_quadruplewaterstable"
+		required_reagents = list("cocktail_triplewater" = 1, "sodawater" = 1, "uranium" = 0, "stabiliser" = 1)
+		result_amount = 1
+		mix_phrase = "The triple water seems to begrudgingly let the soda water mix in."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
+	cocktail_quadruplewater
+		name = "Quadruple Water Unstable"
+		id = "cocktail_quadruplewater"
+		result = "cocktail_quadruplewater"
+		required_reagents = list("cocktail_triplewater" = 1, "sodawater" = 1, "uranium" = 0)
+		inhibitors = list("stabiliser")
+		result_amount = 1
+		mix_phrase = "The triple water and soda water mix as unsetteling bubbles appear on the surface."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
+	triplewater_reject
+		name = "Triplewater Reject"
+		id = "triplewater_reject"
+		result = "steam"
+		required_reagents = list("cocktail_triplewater" = 1, "sodawater" = 1)
+		inhibitors = list("uranium")
+		result_amount = 2
+		mix_phrase = "The triple water aggressively boils off on contact with the soda water!"
 
 	cocktail_triplewater
 		name = "Triple Water"
@@ -2832,6 +2862,16 @@
 		required_reagents = list("water" = 1, "silicon" = 1, "oxygen" = 1)
 		result_amount = 3
 		mix_phrase = "The substance turns a striking cyan and becomes oily."
+
+	craftglue
+
+		name = "Craft Glue"
+		id = "craftglue"
+		result = "craftglue"
+		inhibitors = list("formaldehyde")
+		required_reagents = list("plasma" = 1, "phenol" = 0.25, "oxygen" = 1, "hydrogen" = 1)
+		result_amount = 3
+		mix_phrase = "The substance turns a bright purple and becomes midly tacky."
 
 	glue
 		name = "Space Glue"
@@ -5569,3 +5609,22 @@
 		mix_phrase = "The mixture coalesces into a dark red liquid."
 		result_amount = 5
 
+	sweetcondensedmilk
+		name = "Sweet Condensed Milk"
+		id = "sweetcondensedmilk"
+		result = "sweetcondensedmilk"
+		required_reagents = list("sugar" = 1, "milk" = 1)
+		min_temperature = T0C + 90
+		result_amount = 1
+		mix_phrase = "The mixture bubbles gently before thickening considerably."
+		drinkrecipe = TRUE
+
+	cafebombon
+		name = "Café Bombón"
+		id = "cafebombon"
+		result = "cafebombon"
+		required_reagents = list("sweetcondensedmilk"=1, "espresso"= 1)
+		result_amount = 2
+		mix_phrase = "The mixture slowly separates into two distinct layers."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE

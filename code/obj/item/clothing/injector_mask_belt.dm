@@ -8,6 +8,7 @@ There's much less duplicate code here than there used to be, it could probably b
 */
 
 TYPEINFO(/obj/item/injector_belt)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 10
 
 /obj/item/injector_belt
@@ -129,6 +130,7 @@ TYPEINFO(/obj/item/injector_belt)
 //////////////////////////////////////
 
 TYPEINFO(/obj/item/clothing/mask/injector_mask)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 10
 
 /obj/item/clothing/mask/injector_mask

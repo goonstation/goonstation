@@ -34,6 +34,9 @@ var/global/newbee_tutorial_enabled = TRUE
 	src.origin_mob.close_spawn_windows()
 	animate(src.origin_mob.client, color = "#000000", time = 5, easing = QUAD_EASING | EASE_IN)
 	src.newbee = new(src.initial_turf, src.origin_mob.client.preferences.AH, src.origin_mob.client.preferences, TRUE)
+	src.newbee.sims?.removeMotive("Hunger")
+	src.newbee.sims?.removeMotive("Thirst")
+
 	src.owner = src.newbee
 
 /datum/tutorial_base/regional/newbee/Start()

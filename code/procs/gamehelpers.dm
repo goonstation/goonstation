@@ -177,6 +177,10 @@ var/stink_remedy = list("some deodorant","a shower","a bath","a spraydown with a
 			if (user in reachable)
 				return TRUE
 
+/// Check if three items are all in interact range (i.e. item, source, target click-drags)
+/proc/in_interact_range_tri(atom/source, atom/user, atom/target)
+	return in_interact_range(source, user) && in_interact_range(source, target) && in_interact_range(target, user)
+
 /proc/test_click(turf/from, turf/target, actually_test_entering=FALSE)
 	var/obj/item/dummy/click_dummy = get_singleton(/obj/item/dummy)
 	click_dummy.set_loc(from)

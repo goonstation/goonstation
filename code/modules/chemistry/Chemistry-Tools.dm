@@ -68,7 +68,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		src.initial_reagents = null // no mo, no mooooo
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(!HAS_FLAG(src.flags, SUPPRESSATTACK))
+			..()
 		return
+
 	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/beaker_lid))
 			try_to_apply_lid(I, user)
@@ -76,6 +79,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			reagents.physical_shock(I.force)
 		return ..()
 	afterattack(obj/target, mob/user , flag)
+		if(!HAS_FLAG(src.flags, SUPPRESSATTACK))
+			..()
 		return
 
 	get_desc(dist, mob/user)

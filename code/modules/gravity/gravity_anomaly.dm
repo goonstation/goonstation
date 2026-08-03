@@ -318,17 +318,7 @@ ABSTRACT_TYPE(/datum/grav_fault/major)
 							F.break_tile()
 				else if (istype(T, /turf/simulated/wall))
 					var/turf/simulated/wall/W = T
-					if (istype(W, /turf/simulated/wall/r_wall) || istype(W, /turf/simulated/wall/auto/reinforced))
-						new /obj/structure/girder/reinforced(W)
-					else
-						new /obj/structure/girder(W)
-					var/obj/item/sheet/S = new /obj/item/sheet(W)
-					if (W.material)
-						S.setMaterial(W.material)
-					else
-						var/datum/material/M = getMaterial("steel")
-						S.setMaterial(M)
-					W.ReplaceWithFloor()
+					W.dismantle_wall()
 	return
 
 /// Everyone throws their items

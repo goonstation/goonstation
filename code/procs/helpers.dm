@@ -617,7 +617,7 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
  */
 /proc/sanitize_frequency(var/f)
 	. = round(f)
-	. = clamp(., R_FREQ_MINIMUM, R_FREQ_MAXIMUM) // 144.1 -148.9
+	. = clamp(., RADIO::FREQ::MINIMUM, RADIO::FREQ::MAXIMUM) // 144.1 -148.9
 	. |= 1 // enforces the number being odd (rightmost bit being 1)
 
 /proc/format_frequency(var/f)
@@ -1577,6 +1577,8 @@ proc/formatTimeText(var/timeValue as num)
 /proc/antag_token_list() //List of all players redeeming antagonist tokens
 	var/list/token_list = list()
 	for(var/mob/new_player/player in mobs)
+		if(length(job_controls.forced_assignments) && (player.ckey in job_controls.forced_assignments))
+			continue
 		if((player.client) && (player.ready_play) && ((player.client.using_antag_token)))
 			token_list += player.mind
 	if (!token_list.len)

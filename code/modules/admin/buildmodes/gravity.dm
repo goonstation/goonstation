@@ -31,10 +31,9 @@ Ctrl + Right Click on Buildmode Button	- Change Z-level gravity values<br>
 				boutput(usr, SPAN_ALERT("Invalid G-force setting '[gforce_to_set]'"))
 				return
 			gforce_to_set *= GFORCE_EARTH_GRAVITY
-			var/update_tethers = tgui_alert(usr, "Tell gravity tethers on same z-level to update?", "Tether Update", list("Yes", "No")) == "Yes"
+			var/update_tethers = tgui_confirm(usr, "Tell gravity tethers on same z-level to update?")
 
-			var/confirm = tgui_alert(usr, "Set Z-level '[zlevel_to_alter]' to [gforce_to_set/GFORCE_EARTH_GRAVITY]G, and [update_tethers ? "" :"do not "]update tethers", "Confirm", list("Confirm", "Cancel")) == "Confirm"
-			if (confirm)
+			if (tgui_confirm(usr, "Set Z-level '[zlevel_to_alter]' to [gforce_to_set/GFORCE_EARTH_GRAVITY]G, and [update_tethers ? "" :"do not "]update tethers"))
 				global.set_zlevel_gforce(zlevel_to_alter, gforce_to_set, update_tethers)
 		else
 			var/gforce_to_set = tgui_input_number(usr, "How much gravity should left-clicking set turf gravity to, in G-Force?", "Turf G-Force", src.gforce_value/GFORCE_EARTH_GRAVITY, 1000, 0, round_input=FALSE)
@@ -72,6 +71,5 @@ Ctrl + Right Click on Buildmode Button	- Change Z-level gravity values<br>
 			boutput(usr, SPAN_ALERT("Invalid G-force setting '[gforce_to_set]'"))
 			return
 
-		var/confirm = tgui_alert(usr, "Set Area '[A]' minimum gravity to [gforce_to_set]?", "Confirm", list("Confirm", "Cancel")) == "Confirm"
-		if (confirm)
+		if (tgui_confirm(usr, "Set Area '[A]' minimum gravity to [gforce_to_set]?"))
 			A.set_gforce_minimum(gforce_to_set * 100)

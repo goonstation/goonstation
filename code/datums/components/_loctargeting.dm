@@ -21,7 +21,7 @@ TYPEINFO(/datum/component/loctargeting)
 		src.on_added(source, old_loc)
 
 /datum/component/loctargeting/proc/on_added(atom/movable/source, atom/old_loc)
-	RegisterSignal(source.loc, signals, proctype, TRUE)
+	RegisterSignals(source.loc, signals, proctype, TRUE)
 
 /datum/component/loctargeting/proc/on_removed(atom/movable/source, atom/old_loc)
 	UnregisterSignal(old_loc, signals)

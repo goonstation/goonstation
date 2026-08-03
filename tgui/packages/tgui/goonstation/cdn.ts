@@ -8,13 +8,9 @@
 import { useBackend } from '../backend';
 import manifest from './cdn-manifest.json';
 
-interface CDNData {
-  cdn: string;
-}
-
 export const resource = (file: string): string => {
-  const { data } = useBackend<CDNData>();
-  const { cdn } = data;
+  const { config } = useBackend();
+  const { cdn } = config;
   if (cdn) {
     if (manifest[file]) file = manifest[file];
     return `${cdn}/${file}`;

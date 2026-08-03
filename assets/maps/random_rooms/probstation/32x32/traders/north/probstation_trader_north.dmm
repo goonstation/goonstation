@@ -1,0 +1,1352 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/space,
+/area/space)
+"b" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor,
+/area/station/hallway/secondary/southwest)
+"c" = (
+/obj/machinery/camera/directional/south,
+/turf/simulated/floor,
+/area/station/hallway/secondary/south)
+"d" = (
+/turf/space,
+/area/shuttle/merchant_shuttle/right_station/cogmap)
+"e" = (
+/obj/machinery/computer/stockexchange{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/stockex)
+"f" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/airlock/cycler/manual{
+	cycle_id = "merchantb";
+	name = "Merchant Shuttle Dock Beta"
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/south)
+"g" = (
+/obj/stool/chair/office{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/stockex)
+"h" = (
+/turf/space,
+/area/shuttle/merchant_shuttle/left_station/cogmap)
+"j" = (
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/stockex)
+"k" = (
+/obj/submachine/ATM{
+	pixel_y = 32
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/south)
+"l" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/stockex)
+"m" = (
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/crew_quarters/observatory)
+"o" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/stockex)
+"p" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/airlock/cycler/manual{
+	cycle_id = "merchanta";
+	name = "Merchant Shuttle Dock Alpha"
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/south)
+"q" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/stockex)
+"t" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_west,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/stockex)
+"u" = (
+/obj/machinery/computer/stockexchange,
+/obj/machinery/light/incandescent/netural{
+	dir = 1;
+	pixel_y = 24
+	},
+/obj/blind_switch/directional/north{
+	pixel_x = 7
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/stockex)
+"v" = (
+/obj/table/auto,
+/obj/random_item_spawner/desk_stuff,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/stockex)
+"w" = (
+/obj/table/auto,
+/obj/item/paper_bin{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/obj/item/stamp{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/machinery/light_switch/directional/north{
+	pixel_x = -9
+	},
+/obj/machinery/camera/directional/north,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/stockex)
+"y" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/stockex)
+"z" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/stockex)
+"A" = (
+/obj/table/auto,
+/obj/item/clipboard,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/stockex)
+"B" = (
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/hallway/secondary/southwest)
+"C" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/south)
+"D" = (
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/crew_quarters/stockex)
+"E" = (
+/obj/storage/closet/wardrobe/black/formalwear,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/stockex)
+"F" = (
+/obj/machinery/firealarm/directional/south,
+/turf/simulated/floor,
+/area/station/hallway/secondary/south)
+"G" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/airlock/cycler/manual{
+	cycle_id = "merchanta";
+	name = "Merchant Shuttle Dock Alpha"
+	},
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/south)
+"H" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/stockex)
+"I" = (
+/obj/stool/chair/office,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/stockex)
+"J" = (
+/obj/machinery/firealarm/directional/south,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/stockex)
+"L" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/stockex)
+"M" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/southwest)
+"N" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/stockex)
+"O" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 1;
+	pixel_y = 24
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/south)
+"P" = (
+/turf/simulated/floor,
+/area/station/hallway/secondary/south)
+"R" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/stockex)
+"S" = (
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/hallway/secondary/south)
+"U" = (
+/obj/table/auto,
+/obj/item/paper_bin{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/obj/item/stamp{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/stockex)
+"W" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/stockex)
+"X" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/stockex)
+"Y" = (
+/obj/decal/stripe_delivery,
+/obj/machinery/light/incandescent/small{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/south)
+"Z" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/airlock/cycler/manual{
+	cycle_id = "merchantb";
+	name = "Merchant Shuttle Dock Beta"
+	},
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/south)
+
+(1,1,1) = {"
+B
+b
+b
+B
+B
+B
+B
+M
+M
+M
+M
+M
+B
+B
+B
+m
+m
+m
+m
+m
+m
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+S
+P
+P
+C
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+C
+P
+P
+C
+a
+a
+h
+h
+h
+h
+h
+h
+h
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+C
+P
+c
+S
+S
+S
+h
+h
+h
+h
+h
+h
+h
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+C
+P
+P
+G
+Y
+p
+h
+h
+h
+h
+h
+h
+h
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+S
+O
+F
+S
+S
+S
+h
+h
+h
+h
+h
+h
+h
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(7,1,1) = {"
+S
+k
+P
+C
+a
+a
+h
+h
+h
+h
+h
+h
+h
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(8,1,1) = {"
+P
+P
+P
+C
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(9,1,1) = {"
+P
+P
+P
+D
+D
+D
+D
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(10,1,1) = {"
+D
+H
+H
+D
+e
+U
+q
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(11,1,1) = {"
+q
+j
+j
+t
+I
+v
+W
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(12,1,1) = {"
+L
+z
+o
+X
+j
+A
+l
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(13,1,1) = {"
+l
+j
+j
+j
+J
+D
+D
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(14,1,1) = {"
+D
+u
+g
+j
+E
+D
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(15,1,1) = {"
+D
+w
+v
+A
+D
+D
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(16,1,1) = {"
+D
+R
+y
+N
+D
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(17,1,1) = {"
+S
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(18,1,1) = {"
+S
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(19,1,1) = {"
+S
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(20,1,1) = {"
+C
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(21,1,1) = {"
+C
+a
+a
+d
+d
+d
+d
+d
+d
+d
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(22,1,1) = {"
+S
+S
+S
+d
+d
+d
+d
+d
+d
+d
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(23,1,1) = {"
+Z
+Y
+f
+d
+d
+d
+d
+d
+d
+d
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(24,1,1) = {"
+S
+S
+S
+d
+d
+d
+d
+d
+d
+d
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(25,1,1) = {"
+C
+a
+a
+d
+d
+d
+d
+d
+d
+d
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(26,1,1) = {"
+C
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(27,1,1) = {"
+S
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(28,1,1) = {"
+S
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(29,1,1) = {"
+S
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(30,1,1) = {"
+S
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(31,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(32,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

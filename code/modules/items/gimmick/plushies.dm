@@ -1,4 +1,5 @@
 TYPEINFO(/obj/submachine/claw_machine)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal" = 5,
 				"conductive" = 5,
 				"crystal" = 5,
@@ -310,6 +311,17 @@ TYPEINFO(/obj/submachine/claw_machine)
 /obj/item/toy/plush/small/tuba
 	name = "Tuba the rat"
 	icon_state = "tuba"
+
+/obj/item/toy/plush/small/tuba/attack_self(mob/user as mob)
+	if (ON_COOLDOWN(src,"squeak",2 SECONDS))
+		return
+	if (ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.sims?.affectMotive("fun", 1)
+	playsound(src, 'sound/voice/animal/mouse_squeak.ogg', 50, TRUE)
+	src.add_fingerprint(user)
+	animate_door_squeeze(src)
+	user.visible_message(SPAN_EMOTE("[user] squeezes [src], and she squeaks. Wow!"))
 
 /obj/item/toy/plush/small/chris
 	name = "Chris the goat"

@@ -554,7 +554,7 @@
 	icon_state = "gibbl1"
 	},
 /obj/decal/stripe_caution,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/prefab/water_treatment)
 "xE" = (
 /obj/map/light/dimred,
@@ -690,7 +690,7 @@
 "JO" = (
 /obj/forcefield/energyshield/perma,
 /obj/decal/stripe_caution,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/prefab/water_treatment)
 "Kk" = (
 /obj/decal/cleanable/blood/tracks{
@@ -783,7 +783,7 @@
 "PJ" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/decal/stripe_caution,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/prefab/water_treatment)
 "QW" = (
 /obj/fakeobject{
@@ -869,7 +869,7 @@
 	powerlevel = 4
 	},
 /obj/decal/stripe_caution,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/prefab/water_treatment)
 "WR" = (
 /obj/machinery/door_control{

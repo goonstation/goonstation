@@ -699,8 +699,8 @@
 
 /obj/item/device/radio/spy/det_only
 	locked_frequency = 1
-	frequency = R_FREQ_DETECTIVE
-	chat_class = RADIOCL_DETECTIVE
+	frequency = RADIO::FREQ::DETECTIVE
+	chat_class = RADIO::CSS::DETECTIVE
 
 ABSTRACT_TYPE(/obj/item/sticker/glow)
 /obj/item/sticker/glow

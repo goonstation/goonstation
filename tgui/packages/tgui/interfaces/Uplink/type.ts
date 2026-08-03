@@ -9,11 +9,15 @@ import { BooleanLike } from 'tgui-core/react';
 
 export interface UplinkData {
   item_entries: Record<string, ItemData[]>;
+  purchased_items: Record<string, number>;
   currency_amount: number;
   currency_name: string;
   title: string;
   theme: string;
   vr: BooleanLike;
+  can_lock: BooleanLike;
+  can_self_destruct: BooleanLike;
+  self_destructing: BooleanLike;
 }
 
 export interface ItemData {
@@ -23,6 +27,9 @@ export interface ItemData {
   cooldown: number | null;
   vr_allowed: BooleanLike;
   icon: string | null;
+  ref: string;
+  type: string;
+  purchase_limit: number;
 }
 
 export interface EnvironmentProps {

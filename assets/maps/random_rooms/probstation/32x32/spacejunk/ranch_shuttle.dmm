@@ -1,0 +1,1805 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ag" = (
+/obj/stool/chair/green{
+	dir = 8
+	},
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/dirt,
+/area/abandonedship)
+"ak" = (
+/obj/decal/cleanable/ash,
+/turf/simulated/floor/plating,
+/area/space)
+"aD" = (
+/obj/machinery/power/solar/alt,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/airless/solar,
+/area/space)
+"bx" = (
+/obj/lattice,
+/obj/item/raw_material/shard/glass,
+/turf/space,
+/area/space)
+"bJ" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/abandonedship)
+"cf" = (
+/obj/machinery/power/solar/alt,
+/obj/cable,
+/turf/simulated/floor/airless/solar,
+/area/space)
+"el" = (
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget,
+/obj/decal/cleanable/blood,
+/obj/decal/cleanable/blood/tracks{
+	dir = 9
+	},
+/obj/item/feather,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
+"eo" = (
+/obj/machinery/shuttle/engine/propulsion{
+	dir = 8;
+	icon_state = "alt_propulsion"
+	},
+/turf/space,
+/area/abandonedship)
+"er" = (
+/obj/decal/floatingtiles,
+/turf/space,
+/area/space)
+"eJ" = (
+/turf/simulated/floor,
+/area/space)
+"eP" = (
+/obj/table/reinforced/auto,
+/obj/railing/orange/reinforced{
+	dir = 8
+	},
+/obj/item/satchel/hydro,
+/obj/item/satchel/hydro,
+/turf/simulated/floor/grasstodirt{
+	dir = 8
+	},
+/area/abandonedship)
+"fc" = (
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
+/obj/machinery/plantpot{
+	anchored = 1
+	},
+/turf/simulated/floor/grasstodirt{
+	dir = 1
+	},
+/area/abandonedship)
+"fN" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/grass/leafy,
+/area/abandonedship)
+"fY" = (
+/obj/decal/cleanable/blood/tracks,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
+"gH" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/abandonedship)
+"gW" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 5
+	},
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
+"hn" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/space,
+/area/space)
+"iL" = (
+/turf/simulated/floor/dirt,
+/area/abandonedship)
+"iT" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/space)
+"iY" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"jD" = (
+/obj/item/rods/steel,
+/turf/space,
+/area/space)
+"ki" = (
+/obj/decal/floatingtiles{
+	dir = 4;
+	icon_state = "floattiles4"
+	},
+/turf/space,
+/area/space)
+"mt" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless/plating/catwalk,
+/area/space)
+"mG" = (
+/obj/item/paper{
+	info = "don't let them take the chickens I can't let";
+	name = "unfinished scrawl"
+	},
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
+"ov" = (
+/obj/item/cable_coil/cut{
+	icon_state = "coil1"
+	},
+/turf/space,
+/area/space)
+"oI" = (
+/turf/simulated/floor/grasstodirt{
+	dir = 10
+	},
+/area/abandonedship)
+"oR" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/power/tracker/alt,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/space,
+/area/space)
+"ph" = (
+/obj/table/glass/auto,
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag{
+	rand_pos = 1
+	},
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag{
+	rand_pos = 1
+	},
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag{
+	rand_pos = 1
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/dirt,
+/area/abandonedship)
+"ps" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/abandonedship)
+"pt" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/space,
+/area/space)
+"qi" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 6
+	},
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
+"qL" = (
+/obj/shrub{
+	dir = 6
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/grass/leafy,
+/area/abandonedship)
+"qM" = (
+/obj/submachine/chicken_incubator,
+/obj/item/reagent_containers/food/snacks/ingredient/egg{
+	rand_pos = 0
+	},
+/turf/simulated/floor/grass/leafy,
+/area/abandonedship)
+"rZ" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/obj/structure/woodwall,
+/obj/disposalpipe/segment/produce{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/abandonedship)
+"sk" = (
+/obj/decal/poster/wallsign/stencil/left/h,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/abandonedship)
+"sZ" = (
+/obj/decal/poster/wallsign/stencil/right/o{
+	pixel_x = 8;
+	pixel_y = 30
+	},
+/turf/space,
+/area/space)
+"tZ" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/dirt,
+/area/abandonedship)
+"vg" = (
+/obj/machinery/sink/slim{
+	pixel_y = 15
+	},
+/turf/simulated/floor/grass/leafy,
+/area/abandonedship)
+"vC" = (
+/obj/item/parts/human_parts/arm/left,
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor4";
+	tag = "icon-floor4"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"vI" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/airlock/cycler/manual{
+	cycle_id = "ranchship";
+	name = "Ranch Ship"
+	},
+/turf/simulated/floor/green,
+/area/abandonedship)
+"ws" = (
+/turf/simulated/floor/grasstodirt{
+	dir = 9
+	},
+/area/abandonedship)
+"wE" = (
+/obj/item/rods/steel,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
+"xf" = (
+/obj/item/feather,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
+"ys" = (
+/obj/submachine/ranch_feed_grinder,
+/obj/item/reagent_containers/food/snacks/plant/corn{
+	doants = 0
+	},
+/turf/simulated/floor/dirt,
+/area/abandonedship)
+"yL" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor4";
+	tag = "icon-floor4"
+	},
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
+"zs" = (
+/obj/lattice,
+/turf/space,
+/area/space)
+"Af" = (
+/obj/decal/poster/wallsign/stencil/left/o{
+	pixel_x = -8
+	},
+/obj/decal/poster/wallsign/stencil/left/r{
+	pixel_x = 5
+	},
+/obj/decal/poster/wallsign/stencil/right/i{
+	pixel_x = 15;
+	pixel_y = 17
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/space)
+"Au" = (
+/turf/simulated/floor/plating,
+/area/space)
+"AM" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/dirt,
+/area/abandonedship)
+"Bb" = (
+/obj/submachine/seed_vendor,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/dirt,
+/area/abandonedship)
+"Bx" = (
+/obj/item/raw_material/shard/glass,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
+"Cd" = (
+/obj/machinery/plantpot{
+	anchored = 1
+	},
+/obj/railing/orange/reinforced,
+/turf/simulated/floor/grasstodirt,
+/area/abandonedship)
+"CU" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"Ej" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/abandonedship)
+"EF" = (
+/obj/decal/poster/wallsign/stencil/left/r,
+/obj/decal/poster/wallsign/stencil/right/a,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/abandonedship)
+"Fa" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/space,
+/area/space)
+"Fl" = (
+/obj/item/feather,
+/obj/decal/cleanable/blood/gibs,
+/obj/decal/cleanable/blood/tracks{
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
+"FA" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles2"
+	},
+/turf/space,
+/area/space)
+"FG" = (
+/obj/chicken_nesting_box,
+/turf/simulated/floor/grass/leafy,
+/area/abandonedship)
+"FR" = (
+/obj/decal/poster/wallsign/stencil/left/n,
+/obj/decal/poster/wallsign/stencil/right/c,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/abandonedship)
+"FX" = (
+/turf/simulated/floor/grass/leafy,
+/area/abandonedship)
+"GY" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/decal/cleanable/blood/tracks{
+	icon_state = "gibmid2"
+	},
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
+"Hj" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/obj/structure/woodwall,
+/turf/simulated/floor/plating,
+/area/abandonedship)
+"Ht" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/external,
+/obj/forcefield/energyshield/perma{
+	desc = "A permanent force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Permanent Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/plating,
+/area/abandonedship)
+"Ic" = (
+/obj/item/raw_material/shard/glass,
+/turf/simulated/floor/plating,
+/area/space)
+"Ik" = (
+/obj/item/feather,
+/obj/machinery/space_heater,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
+"IE" = (
+/turf/simulated/wall/auto/asteroid/lighted,
+/area/space)
+"Ja" = (
+/obj/railing/orange/reinforced{
+	dir = 8
+	},
+/obj/storage/closet{
+	name = "rancher supply closet"
+	},
+/obj/item/paper/image/ranch_guide,
+/obj/item/storage/box/clothing/rancher,
+/obj/item/fishing_rod/basic,
+/obj/item/chicken_carrier,
+/obj/item/clothing/mask/chicken,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/item/reagent_containers/glass/wateringcan{
+	pixel_y = 9
+	},
+/obj/item/sponge,
+/turf/simulated/floor/grasstodirt{
+	dir = 8
+	},
+/area/abandonedship)
+"JV" = (
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/grasstodirt{
+	dir = 1
+	},
+/area/abandonedship)
+"Km" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"Kr" = (
+/obj/decal/poster/wallsign/stencil/left/n{
+	pixel_x = -11
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/space)
+"Lu" = (
+/obj/railing/orange/reinforced,
+/turf/simulated/floor/grasstodirt,
+/area/abandonedship)
+"LC" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 6
+	},
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor4";
+	tag = "icon-floor4"
+	},
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
+"Mu" = (
+/obj/decal/poster/wallsign/stencil/right/h,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/space)
+"MO" = (
+/obj/item/tank/mini/oxygen,
+/turf/space,
+/area/space)
+"NG" = (
+/obj/machinery/light_switch/directional/east,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/dirt,
+/area/abandonedship)
+"NN" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"Ol" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/dirt,
+/area/abandonedship)
+"PZ" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
+"Re" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor4"
+	},
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
+"Ry" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"RK" = (
+/obj/machinery/door/airlock/pyro/glass,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/forcefield/energyshield/perma{
+	desc = "A permanent force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Permanent Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/mapping_helper/airlock/cycler/manual{
+	cycle_id = "ranchship";
+	name = "Ranch Ship"
+	},
+/turf/simulated/floor/plating,
+/area/abandonedship)
+"RR" = (
+/obj/decal/floatingtiles{
+	dir = 8;
+	icon_state = "floattiles3"
+	},
+/turf/space,
+/area/space)
+"RW" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/space,
+/area/space)
+"SK" = (
+/turf/simulated/floor/airless/plating/catwalk,
+/area/space)
+"Tl" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 1
+	},
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
+"Tu" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/space)
+"Tz" = (
+/obj/decal/poster/wallsign/stencil/left/z{
+	pixel_x = -6
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/space)
+"TR" = (
+/obj/fakeobject/shuttleweapon/base{
+	desc = "A futuristic system that collects residual power from chicken alchemy.";
+	dir = 8;
+	name = "Chicken Power Generator"
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/grass/leafy,
+/area/abandonedship)
+"TS" = (
+/obj/machinery/power/smes{
+	chargelevel = 15000;
+	output = 10000
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"TX" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"Uf" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/space,
+/area/space)
+"Um" = (
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget,
+/obj/decal/cleanable/blood/splatter,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
+"VB" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/grass/leafy,
+/area/abandonedship)
+"Wl" = (
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
+"Wz" = (
+/turf/space,
+/area/space)
+"Xp" = (
+/obj/fakeobject/console_radar{
+	desc = "The control panel for a mark 1 rancher minishuttle. It is currently deactivated.";
+	name = "Rancher Shuttle Controls"
+	},
+/turf/simulated/floor/dirt,
+/area/abandonedship)
+"Xq" = (
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gib6"
+	},
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
+"XT" = (
+/obj/shrub,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/grass/leafy,
+/area/abandonedship)
+"XV" = (
+/obj/item/raw_material/shard/glass,
+/turf/space,
+/area/space)
+"Yd" = (
+/obj/item/clothing/mask/breath,
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor4";
+	tag = "icon-floor4"
+	},
+/turf/space,
+/area/space)
+"Ys" = (
+/obj/storage/closet/emergency,
+/turf/simulated/floor/plating,
+/area/space)
+"YD" = (
+/obj/mesh/catwalk,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/space,
+/area/space)
+"Zj" = (
+/obj/fakeobject/skeleton/unanchored,
+/obj/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/decal/cleanable/blood/tracks{
+	icon_state = "gibdown1"
+	},
+/obj/item/clothing/head/westhat{
+	pixel_x = 9;
+	pixel_y = 3;
+	r_speed = 0
+	},
+/obj/item/rubber_chicken,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
+
+(1,1,1) = {"
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+MO
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+"}
+(2,1,1) = {"
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Yd
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+"}
+(3,1,1) = {"
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Au
+Wz
+Wz
+Wz
+Wz
+TX
+RR
+Wz
+Wz
+Wz
+Wz
+XV
+Wz
+Wz
+Wz
+"}
+(4,1,1) = {"
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Au
+Wz
+Wz
+Wz
+Wz
+iY
+er
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+"}
+(5,1,1) = {"
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+ak
+Wz
+Wz
+Wz
+Wz
+Wz
+Ic
+vC
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+"}
+(6,1,1) = {"
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+XV
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+zs
+Wz
+Wz
+Wz
+Wz
+Au
+Wz
+Wz
+Wz
+Wz
+ki
+Wz
+Wz
+Wz
+Wz
+"}
+(7,1,1) = {"
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+eo
+eo
+FA
+zs
+eo
+eo
+iY
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+"}
+(8,1,1) = {"
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+ps
+ps
+gH
+gH
+ps
+ps
+Wz
+Wz
+Wz
+oR
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+"}
+(9,1,1) = {"
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+jD
+Wz
+Wz
+Wz
+SK
+ps
+ps
+TR
+fc
+Cd
+TR
+ps
+ps
+Wz
+aD
+Uf
+cf
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+"}
+(10,1,1) = {"
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Au
+Wz
+Wz
+Wz
+Wz
+Wz
+gH
+qM
+FX
+JV
+Lu
+FX
+qM
+gH
+Wz
+aD
+Uf
+cf
+Wz
+Wz
+Wz
+IE
+IE
+IE
+Wz
+"}
+(11,1,1) = {"
+Wz
+Wz
+IE
+IE
+IE
+Wz
+Wz
+Wz
+Au
+Wz
+zs
+Wz
+Wz
+gH
+FG
+FX
+JV
+Lu
+FX
+FG
+gH
+Wz
+aD
+Uf
+cf
+Wz
+Wz
+IE
+IE
+IE
+IE
+IE
+"}
+(12,1,1) = {"
+Wz
+Wz
+IE
+IE
+IE
+IE
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+bx
+gH
+qL
+FX
+JV
+Lu
+FX
+XT
+gH
+TS
+aD
+Fa
+cf
+Wz
+IE
+IE
+IE
+IE
+IE
+IE
+"}
+(13,1,1) = {"
+Wz
+Wz
+IE
+IE
+IE
+IE
+Wz
+Wz
+Wz
+Wz
+Wz
+ki
+Au
+ps
+ps
+vg
+JV
+Lu
+VB
+fN
+Ht
+NN
+Ry
+pt
+Tu
+Wz
+Wz
+IE
+IE
+IE
+Wz
+Wz
+"}
+(14,1,1) = {"
+Wz
+Wz
+Mu
+IE
+Wz
+IE
+Wz
+Wz
+Wz
+iT
+CU
+Km
+CU
+CU
+ps
+eP
+ws
+oI
+Ja
+ps
+ps
+Au
+IE
+Wz
+Wz
+Wz
+Wz
+IE
+IE
+Wz
+Wz
+Wz
+"}
+(15,1,1) = {"
+Wz
+Wz
+Af
+Wz
+Wz
+Wz
+Wz
+SK
+Wz
+Wz
+Wz
+Ys
+ps
+Hj
+bJ
+Bb
+iL
+tZ
+ph
+EF
+xf
+yL
+IE
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+"}
+(16,1,1) = {"
+Wz
+Wz
+Wz
+Wz
+eJ
+Wz
+Wz
+hn
+ov
+mt
+YD
+YD
+vI
+Ej
+RK
+NG
+Ol
+AM
+ag
+FR
+GY
+IE
+IE
+IE
+Wz
+Wz
+Wz
+Wz
+jD
+Wz
+Wz
+Wz
+"}
+(17,1,1) = {"
+Wz
+Wz
+eJ
+Tz
+sZ
+Wz
+Wz
+jD
+Wz
+Wz
+XV
+Wl
+ps
+rZ
+ps
+ps
+Xp
+ys
+ps
+sk
+PZ
+IE
+IE
+IE
+IE
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+"}
+(18,1,1) = {"
+Wz
+Wz
+Wz
+Kr
+RW
+Wz
+Wz
+Wz
+zs
+Wz
+Wz
+Wl
+fY
+Xq
+Wl
+ps
+gH
+gH
+ps
+Wl
+Bx
+IE
+IE
+IE
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+"}
+(19,1,1) = {"
+Wz
+Wz
+Au
+zs
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+IE
+Ik
+wE
+IE
+gW
+Fl
+Re
+Wl
+Tl
+LC
+IE
+IE
+IE
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+"}
+(20,1,1) = {"
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+IE
+IE
+IE
+IE
+IE
+IE
+mG
+Um
+IE
+IE
+IE
+IE
+Wz
+Wz
+Wz
+Wz
+Wz
+zs
+Wz
+Wz
+Wz
+Wz
+"}
+(21,1,1) = {"
+Wz
+Wz
+Wz
+Wz
+eJ
+Wz
+Wz
+Wz
+Wz
+IE
+IE
+IE
+IE
+IE
+IE
+el
+qi
+IE
+IE
+IE
+IE
+IE
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+"}
+(22,1,1) = {"
+Wz
+Wz
+Wz
+Wz
+Wz
+eJ
+Wz
+Wz
+IE
+IE
+IE
+IE
+IE
+IE
+IE
+Zj
+IE
+IE
+IE
+IE
+IE
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+"}
+(23,1,1) = {"
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+IE
+IE
+IE
+IE
+IE
+IE
+IE
+IE
+IE
+IE
+IE
+IE
+IE
+Wz
+IE
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+"}
+(24,1,1) = {"
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+IE
+IE
+IE
+IE
+IE
+IE
+IE
+IE
+IE
+IE
+IE
+IE
+IE
+Wz
+IE
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+"}
+(25,1,1) = {"
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+IE
+IE
+IE
+IE
+IE
+IE
+IE
+IE
+IE
+IE
+IE
+Wz
+Wz
+Wz
+IE
+IE
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+"}
+(26,1,1) = {"
+eJ
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+IE
+IE
+IE
+IE
+IE
+IE
+IE
+IE
+IE
+IE
+Wz
+Wz
+Wz
+Wz
+IE
+IE
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+"}
+(27,1,1) = {"
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+IE
+IE
+IE
+IE
+IE
+IE
+IE
+IE
+IE
+Wz
+Wz
+Wz
+IE
+IE
+IE
+IE
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+"}
+(28,1,1) = {"
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+IE
+IE
+IE
+IE
+IE
+Wz
+Wz
+Wz
+Wz
+IE
+IE
+IE
+IE
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+"}
+(29,1,1) = {"
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+IE
+IE
+IE
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+"}
+(30,1,1) = {"
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+"}
+(31,1,1) = {"
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+IE
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+"}
+(32,1,1) = {"
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+IE
+IE
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+Wz
+"}

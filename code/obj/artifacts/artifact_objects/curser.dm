@@ -76,6 +76,8 @@
 		for (var/mob/living/carbon/human/H as anything in (picked_to_curse + list(user)))
 			if (!H.last_ckey)
 				continue
+			if (SEND_SIGNAL(H, COMSIG_TRY_CURSE))
+				continue
 			if (H.hasStatus("art_talisman_held"))
 				if (src.chosen_curse != BLOOD_CURSE && src.chosen_curse != AGING_CURSE)
 					boutput(user, SPAN_ALERT("The artifact you're carrying wards you from a curse!"))

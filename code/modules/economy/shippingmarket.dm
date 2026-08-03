@@ -253,6 +253,14 @@
 			else
 				if (prob(T.chance_leave))
 					T.hidden = 1
+				else
+					for (var/datum/commodity/com in T.goods_sell)
+						if (com.amount == -1)
+							continue // infinite
+						if (com.amount >= initial(com.amount))
+							continue // overstock
+						if (prob(T.chance_restock))
+							com.amount = clamp(com.amount + (initial(com.amount) * 0.25), 1,  initial(com.amount))
 
 		// Remove / time out contracts by variant...
 		for(var/datum/req_contract/RC in src.req_contracts)
@@ -286,21 +294,19 @@
 				src.generate_mail()
 		#endif
 
-		SPAWN(5 SECONDS)
-			// 20% chance to shuffle out generic traders for a new one
-			// Do this after a short delay so QMs can finish any last-second deals
-			var/removed_count = 0
-			for (var/datum/trader/generic/GT in src.active_traders)
-				if (prob(20))
-					src.active_traders -= GT
-					removed_count++
+		// 20% chance to shuffle out generic traders for a new one
+		var/removed_count = 0
+		for (var/datum/trader/generic/GT in src.active_traders)
+			if (prob(20))
+				src.active_traders -= GT
+				removed_count++
 
-			while(removed_count > 0)
-				removed_count--
-				src.active_traders += new /datum/trader/generic(src)
+		while(removed_count > 0)
+			removed_count--
+			src.active_traders += new /datum/trader/generic(src)
 
-			update_shipping_data()
-			update_buy_prices()
+		update_shipping_data()
+		update_buy_prices()
 
 	proc/generate_mail()
 		var/alive_players = 0
@@ -379,7 +385,7 @@
 			var/datum/commodity/C1 = src.commodities[ctype]
 			for(var/datum/trader/T in src.active_traders)
 				for(var/datum/commodity/C2 in T.goods_sell)
-					if(C1.comtype == C2.comtype)
+					if(ispath(C2.comtype, C1.comtype))
 						if(C1.indemand)
 							C2.amount = 0
 
@@ -389,7 +395,7 @@
 
 
 	proc/calculate_artifact_price(var/modifier, var/correctness)
-		return ((modifier**1.5) * PAY_EMBEZZLED * correctness)
+		return ((modifier**1.5) * PAY::EMBEZZLED * correctness)
 
 	proc/sell_artifact(obj/sell_art, var/datum/artifact/sell_art_datum)
 		var/price = 0
@@ -434,10 +440,10 @@
 
 		// sell
 		if (scan && account)
-			wagesystem.budgets[BUDGET_CAT_SHIPPING] += price / 2
+			wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] += price / 2
 			account["current_money"] += price / 2
 		else
-			wagesystem.budgets[BUDGET_CAT_SHIPPING] += price
+			wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] += price
 		qdel(sell_art)
 
 		// give PDA group messages
@@ -627,10 +633,12 @@
 				req_contracts -= contract_to_clear
 				complete_orders += contract_to_clear
 				qdel(contract_to_clear)
+				src.update_supply_console_data()
 			else if(special_orders.Find(contract_to_clear))
 				special_orders -= contract_to_clear
 				complete_orders += contract_to_clear
 				qdel(contract_to_clear)
+				src.update_supply_console_data()
 		else
 			duckets += src.appraise_value(sell_crate, commodities_list, 1) + src.points_per_crate
 			qdel(sell_crate)
@@ -643,12 +651,12 @@
 		if(scan && account)
 			var/share_NT = round(duckets / 2,1) // NT gets half the money, decimals rounded up in case of uneven sale price
 			var/share_seller = duckets - share_NT // you get whatever remainds, sorry bud
-			wagesystem.budgets[BUDGET_CAT_SHIPPING] += share_NT
+			wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] += share_NT
 			account["current_money"] += share_seller
 			logTheThing(LOG_STATION, null, "Cargo sale split [share_seller] credits to [scan.registered], whoever that is.")
 			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGT_CARGO, MGA_SALES), "sender"="00000000", "message"="Notification: [duckets] credits earned from [salesource]. Splitting half of profits with [scan.registered].")
 		else
-			wagesystem.budgets[BUDGET_CAT_SHIPPING] += duckets
+			wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] += duckets
 			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGT_CARGO, MGA_SALES), "sender"="00000000", "message"="Notification: [duckets] credits earned from [salesource].")
 
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
@@ -734,9 +742,16 @@
 	//needs to be called whenever active_traders or req_contracts changes
 	proc/update_shipping_data()
 		for_by_tcl(computer, /obj/machinery/computer/barcode)
-			computer.update_static_data()
+			computer.update_static_data_for_all_viewers()
 		for_by_tcl(barcoder, /obj/item/portable_barcoder)
 			barcoder.update_destinations()
+		src.update_supply_console_data(TRUE)
+
+	proc/update_supply_console_data(var/market_reset = FALSE)
+		for_by_tcl(computer, /obj/machinery/computer/supplycomp)
+			computer.update_static_data_for_all_viewers()
+			if(market_reset) //Return to the trader main menu to avoid trying to view a trader that has left
+				computer.set_tgui_shared_state("viewtrader", -1)
 
 // Debugging and admin verbs (mostly coder)
 
@@ -755,17 +770,17 @@
 	ADMIN_ONLY
 	SHOW_VERB_DESC
 	var/payroll = 0
-	var/totalfunds = wagesystem.budgets[BUDGET_CAT_STATION] + wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL] + wagesystem.budgets[BUDGET_CAT_SHIPPING]
+	var/totalfunds = wagesystem.budgets[BUDGET_CAT_PAYROLL] + wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL] + wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] + wagesystem.budgets[BUDGET_CAT_UNION]
 	for(var/datum/db_record/R as anything in data_core.bank.records)
 		payroll += R["wage"]
 
 	var/dat = {"<B>Budget Variables:</B>
 	<BR><BR><u><b>Total Station Funds:</b> [num2text(totalfunds,50)][CREDIT_SIGN]</u>
 	<BR>
-	<BR><b>Current Payroll Budget:</b> [num2text(wagesystem.budgets[BUDGET_CAT_STATION],50)][CREDIT_SIGN]
-	<BR><b>Current Shipping Budget:</b> [num2text(wagesystem.budgets[BUDGET_CAT_SHIPPING],50)][CREDIT_SIGN]
-	<BR><b>Current Union Budget:</b> [num2text(wagesystem.budgets[BUDGET_CAT_UNION],50)][CREDIT_SIGN]
+	<BR><b>Current Payroll Budget:</b> [num2text(wagesystem.budgets[BUDGET_CAT_PAYROLL],50)][CREDIT_SIGN]
+	<BR><b>Current Supply Budget:</b> [num2text(wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY],50)][CREDIT_SIGN]
 	<BR><b>Current Medical Budget:</b> [num2text(wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL],50)][CREDIT_SIGN]
+	<BR><b>Current Union Budget:</b> [num2text(wagesystem.budgets[BUDGET_CAT_UNION],50)][CREDIT_SIGN]
 	<BR>
 	<b>Current Payroll Cost:</b> [payroll][CREDIT_SIGN]<HR>"}
 
@@ -805,11 +820,11 @@
 
 	switch(trans)
 		if("Payroll")
-			wagesystem.budgets[BUDGET_CAT_STATION] += amount
-			if (wagesystem.budgets[BUDGET_CAT_STATION] < 0) wagesystem.budgets[BUDGET_CAT_STATION] = 0
+			wagesystem.budgets[BUDGET_CAT_PAYROLL] += amount
+			if (wagesystem.budgets[BUDGET_CAT_PAYROLL] < 0) wagesystem.budgets[BUDGET_CAT_PAYROLL] = 0
 		if("Shipping")
-			wagesystem.budgets[BUDGET_CAT_SHIPPING] += amount
-			if (wagesystem.budgets[BUDGET_CAT_SHIPPING] < 0) wagesystem.budgets[BUDGET_CAT_SHIPPING] = 0
+			wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] += amount
+			if (wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] < 0) wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] = 0
 		if("Union")
 			wagesystem.budgets[BUDGET_CAT_UNION] += amount
 			if (wagesystem.budgets[BUDGET_CAT_UNION] < 0) wagesystem.budgets[BUDGET_CAT_UNION] = 0

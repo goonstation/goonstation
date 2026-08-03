@@ -13,7 +13,7 @@ var/global/list/z_level_station_outside_area_types = list(
 	/area/station/catwalk,
 	/area/station/com_dish,
 	/area/station/shield_zone,
-	/area/station/engine/singcore,
+	/area/station/engine/core/singularity/external,
 	// generally unconnected to station
 	/area/station/science/testchamber/bombchamber,
 	/area/shuttle/escape/station,

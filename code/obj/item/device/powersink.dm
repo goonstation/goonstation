@@ -4,6 +4,7 @@
 #define POWERSINK_OPERATING 2
 
 TYPEINFO(/obj/item/device/powersink)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal_dense" = 20,
 				"conductive_high" = 20,
 				"crystal" = 10)
@@ -24,7 +25,6 @@ TYPEINFO(/obj/item/device/powersink)
 	var/power_drained = 0 		// has drained this much power
 	var/max_power = 2e8		// maximum power that can be drained before exploding
 	var/mode = POWERSINK_OFF		// 0 = off, 1=clamped (off), 2=operating
-	is_syndicate = 1
 	rand_pos = 0
 	HELP_MESSAGE_OVERRIDE({"To anchor the powersink, use a <b>screwdriver</b> on it while it is on exposed wiring. To turn the powersink on/off click it with an empty hand."})
 
@@ -43,15 +43,19 @@ TYPEINFO(/obj/item/device/powersink)
 			src.add_fingerprint(user)
 			if(mode == POWERSINK_OFF)
 				var/turf/T = loc
+				for (var/obj/item/device/powersink/sink in T)
+					if (sink.anchored)
+						boutput(user, SPAN_ALERT("There's already a powersink attached here!"))
+						return
 				if(isturf(T) && !T.intact)
 					attached = locate() in T
 					if(!attached)
-						boutput(user, "No exposed cable here to attach to.")
+						boutput(user, SPAN_ALERT("No exposed cable here to attach to!"))
 						return
 					else
 						anchored = ANCHORED
 						mode = POWERSINK_CLAMPED
-						boutput(user, "You attach the device to the cable.")
+						boutput(user, SPAN_NOTICE("You attach the device to the cable."))
 						message_ghosts("<b>[src]</b> has been activated at [log_loc(src, ghostjump=TRUE)].")
 						for(var/mob/M in AIviewers(user))
 							if(M == user) continue

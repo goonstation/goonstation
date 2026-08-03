@@ -1,0 +1,352 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/door/airlock/pyro/alt{
+	id = "pub_shoilet1-1";
+	name = "Public Shoilet"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/toilets)
+"b" = (
+/obj/machinery/light/incandescent/cool,
+/obj/table/auto,
+/obj/linen_bin/towel,
+/turf/simulated/floor,
+/area/station/crew_quarters/toilets)
+"c" = (
+/obj/item/storage/toilet/random{
+	pixel_y = 8
+	},
+/obj/item/clothing/head/plunger{
+	pixel_x = -8;
+	pixel_y = 17
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/toilets)
+"d" = (
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor/sanitary/blue,
+/area/station/crew_quarters/toilets)
+"e" = (
+/obj/machinery/firealarm/directional/east,
+/turf/simulated/floor/blue/side,
+/area/station/crew_quarters/toilets)
+"f" = (
+/obj/machinery/manufacturer/uniform,
+/turf/simulated/floor/sanitary/blue,
+/area/station/crew_quarters/toilets)
+"g" = (
+/obj/machinery/shower{
+	dir = 4;
+	pixel_x = 6
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/toilets)
+"h" = (
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/sanitary/blue,
+/area/station/crew_quarters/toilets)
+"k" = (
+/obj/machinery/door/airlock/pyro/alt,
+/obj/mapping_helper/firedoor_spawn,
+/obj/disposalpipe/segment/vertical,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/toilets)
+"m" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/blue/side,
+/area/station/crew_quarters/toilets)
+"n" = (
+/obj/disposalpipe/segment/bent/south,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/blue/side,
+/area/station/crew_quarters/toilets)
+"o" = (
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/toilets)
+"p" = (
+/obj/machinery/door_control/bolter/new_walls/east{
+	id = "pub_shoilet1-1"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/toilets)
+"q" = (
+/obj/machinery/door_control/bolter/new_walls/west{
+	id = "pub_shoilet1-2"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/toilets)
+"r" = (
+/obj/disposalpipe/segment/horizontal,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/blue/side,
+/area/station/crew_quarters/toilets)
+"s" = (
+/obj/submachine/laundry_machine,
+/turf/simulated/floor/sanitary/blue,
+/area/station/crew_quarters/toilets)
+"t" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/toilets)
+"v" = (
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/toilets)
+"w" = (
+/obj/storage/secure/closet/personal,
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/toilets)
+"x" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/crew_quarters/toilets)
+"z" = (
+/obj/machinery/shower{
+	dir = 8;
+	pixel_x = -8
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/toilets)
+"B" = (
+/obj/machinery/sink/slim{
+	dir = 1
+	},
+/turf/simulated/floor/sanitary/blue,
+/area/station/crew_quarters/toilets)
+"D" = (
+/obj/storage/secure/closet/personal,
+/obj/machinery/light_switch/directional/north,
+/turf/simulated/floor,
+/area/station/crew_quarters/toilets)
+"E" = (
+/obj/disposalpipe/segment/horizontal,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/blue/side,
+/area/station/crew_quarters/toilets)
+"H" = (
+/obj/machinery/light/incandescent/cool,
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/toilets)
+"I" = (
+/turf/simulated/floor/sanitary/blue,
+/area/station/crew_quarters/toilets)
+"J" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/blue/side,
+/area/station/crew_quarters/toilets)
+"K" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/crew_quarters/toilets)
+"L" = (
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/crew_quarters/toilets)
+"M" = (
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/toilets)
+"Q" = (
+/obj/item/storage/toilet/random{
+	pixel_y = 8
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/toilets)
+"S" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/toilets)
+"T" = (
+/obj/disposalpipe/segment/vertical,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/sanitary/blue,
+/area/station/crew_quarters/toilets)
+"U" = (
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk/east,
+/turf/simulated/floor/blue/side,
+/area/station/crew_quarters/toilets)
+"V" = (
+/obj/rack,
+/obj/item/sponge{
+	name = "loofah"
+	},
+/obj/item/reagent_containers/glass/bottle/bubblebath{
+	pixel_x = -6
+	},
+/turf/simulated/floor/sanitary/blue,
+/area/station/crew_quarters/toilets)
+"W" = (
+/obj/machinery/door/airlock/pyro/alt{
+	id = "pub_shoilet1-2";
+	name = "Public Shoilet"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/toilets)
+"X" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/toilets)
+"Z" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/crew_quarters/toilets)
+
+(1,1,1) = {"
+L
+L
+L
+L
+v
+L
+L
+L
+L
+"}
+(2,1,1) = {"
+L
+c
+M
+L
+t
+U
+d
+f
+L
+"}
+(3,1,1) = {"
+L
+H
+S
+a
+Z
+r
+h
+s
+L
+"}
+(4,1,1) = {"
+K
+p
+g
+L
+w
+E
+I
+B
+L
+"}
+(5,1,1) = {"
+x
+L
+L
+L
+b
+n
+T
+T
+k
+"}
+(6,1,1) = {"
+L
+q
+z
+L
+D
+J
+I
+B
+L
+"}
+(7,1,1) = {"
+L
+o
+M
+W
+X
+m
+h
+s
+L
+"}
+(8,1,1) = {"
+L
+Q
+M
+L
+t
+e
+d
+V
+L
+"}
+(9,1,1) = {"
+L
+L
+L
+L
+v
+L
+L
+L
+L
+"}

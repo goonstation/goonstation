@@ -52,7 +52,7 @@
 	for (var/i = 2, i <= length(initlist), i++)
 		initlist[i] = ABSOLUTE_PATH(initlist[i], current)
 
-		var/datum/computer/target = src.signal_program(1, list("command" = DWAINE_COMMAND_FGET, "path" = initlist[i]))
+		var/datum/computer/target = src.signal_program(1, list("command" = DWAINE::SYSCALL::FGET, "path" = initlist[i]))
 		if (!istype(target))
 			continue
 

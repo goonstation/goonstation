@@ -372,20 +372,20 @@
 	else
 		var/brute = src.get_brute_damage()
 		if (brute >= 5)
-			if (brute < 30)
-				. += "<br>[SPAN_ALERT("[Noun] looks a little injured.")]"
+			if (brute < 60)
+				. += "<br>[SPAN_ALERT("[Noun] looks quite injured.")]"
 			else
 				. += "<br>[SPAN_ALERT("<B>[Noun] looks severely injured!</B>")]"
 
 		var/burn = src.get_burn_damage()
 		if (burn >= 5)
-			if (burn < 30)
+			if (burn < 60)
 				. += "<br>[SPAN_ALERT("[Noun] looks a little burnt.")]"
 			else
 				. += "<br>[SPAN_ALERT("<B>[Noun] looks severely burned!</B>")]"
 
 		if (src.stat || src.hasStatus("paralysis"))
-			. += "<br>[SPAN_ALERT("[he_or_she_dont_or_doesnt(src)] seem to be responding to anything around [t_him], [t_his] eyes closed as though asleep.")]"
+			. += "<br>[SPAN_ALERT("[capitalize(he_or_she_dont_or_doesnt(src))] seem to be responding to anything around [t_him], [t_his] eyes closed as though asleep.")]"
 		else
 			if (src.get_brain_damage() >= BRAIN_DAMAGE_LETHAL || src.reagents?.has_reagent("expresso"))
 				. += "<br>[SPAN_ALERT("[Noun_has] a blank expression on [t_his] face.")]"
@@ -405,7 +405,7 @@
 
 				if (using_vr_goggles)
 					if (!(src.wear_suit?.hides_from_examine & C_GLASSES) && !(src.head?.hides_from_examine & C_GLASSES))
-						. += "<br><span style='color:#8600C8'>[noun_s] mind is elsewhere.</span>"
+						. += "<br><span style='color:#8600C8'>[Noun_s] mind is elsewhere.</span>"
 				else
 					. += "<br>[Noun] seems to be staring blankly into space. "
 					if (src.last_ckey && src.logout_at)

@@ -45,7 +45,7 @@ TYPEINFO(/datum/random_event/major/law_rack_corruption)
 			if(!length(src.law_text))
 				src.law_text = ticker.ai_law_rack_manager.generate_random_law(src.replace ? src.law_number : src.law_number + 1)
 
-			src.law_text = random_accent_source.process_message(src.law_text).content
+			src.law_text = random_accent_source.process_message(src.law_text).get_content_parsable()
 
 		for_by_tcl(M, /mob/living/silicon/ai)
 			if (M.deployed_to_eyecam && M.eyecam)

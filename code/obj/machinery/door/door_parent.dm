@@ -805,6 +805,7 @@ TYPEINFO(/obj/machinery/door/unpowered/wood)
 	anchored = ANCHORED
 	autoclose = TRUE
 	material_amt = 0.3
+	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_SCREWDRIVER | DECON_WIRECUTTERS
 	var/blocked = null
 	var/simple_lock = 0
 	var/lock_dir = null // what direction you can lock/unlock the door from

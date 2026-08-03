@@ -42,7 +42,8 @@
 			for(var/turf/T in block(A, B))
 				var/turf/at = T
 				T.ReplaceWith(turftype, force=1)
-				at.set_dir(holder.dir)
+				if(src.holder.dir)
+					at.set_dir(holder.dir)
 				blink(at)
 				new /area/adventure(at)
 				at.RL_Reset()

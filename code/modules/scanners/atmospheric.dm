@@ -3,7 +3,7 @@
 // handheld atmos scanner & upgrade chip
 
 // Made this a global proc instead of 10 or so instances of duplicate code spread across the codebase (Convair880).
-/proc/scan_atmospheric(var/atom/A as turf|obj, var/pda_readout = 0, var/simple_output = 0, var/visible = 0, var/alert_output = 0)
+/proc/scan_atmospheric(var/atom/A as turf|obj, var/pda_readout = 0, var/simple_output = 0, var/visible = 0, var/alert_output = 0, var/emagged_analyzer = 0)
 	if (istype(A, /obj/ability_button))
 		return
 	if (!A)
@@ -54,11 +54,11 @@
 			data = "--------------------------------<br>\
 			[SPAN_NOTICE("Atmospheric analysis of <b>[A]</b>")]<br>\
 			<br>\
-			Pressure: [round(pressure, 0.1)] kPa<br>\
-			Temperature: [round(check_me.temperature)] K<br>"
+			Pressure: [emagged_analyzer ? "[round(TO_PSI(pressure), 0.1)] psi" : "[round(pressure, 0.1)] kPa"]<br>\
+			Temperature: [emagged_analyzer ? "[round(TO_FAHRENHEIT(check_me.temperature))] °F" : "[round(check_me.temperature)] K"]<br>"
 			//realistically bubbles should have a constantly changing volume based on their pressure but it doesn't really matter so let's just not report it
 			if (!istype(A, /obj/bubble))
-				data += "Volume: [check_me.volume] L<br>"
+				data += "Volume: [emagged_analyzer ? "[round(TO_GALLONS(check_me.volume))] gal" : "[check_me.volume] L"]<br>"
 			data +=	"[SIMPLE_CONCENTRATION_REPORT(check_me, "<br>")]"
 
 	else
@@ -95,13 +95,14 @@ TYPEINFO(/obj/item/device/analyzer/atmospheric)
 	var/hudarrow_color = "#0df0f0"
 	///We keep track of the airgroup so we can acquire a new breach after the old one is patched, even if the user is standing on space at the time
 	var/datum/air_group/tracking_airgroup = null
+	var/emagged = FALSE
 
 	// Distance upgrade action code
 	pixelaction(atom/target, params, mob/user, reach)
 		var/turf/T = get_turf(target)
 		if ((analyzer_upgrade == 1) && (BOUNDS_DIST(user, T) > 0))
 			user.visible_message(SPAN_NOTICE("<b>[user]</b> takes a distant atmospheric reading of [T]."))
-			boutput(user, scan_atmospheric(T, visible = 1))
+			boutput(user, scan_atmospheric(T, visible = 1, emagged_analyzer = emagged))
 			src.add_fingerprint(user)
 			return
 
@@ -182,7 +183,7 @@ TYPEINFO(/obj/item/device/analyzer/atmospheric)
 
 		if (istype(A, /obj) || isturf(A))
 			user.visible_message(SPAN_NOTICE("<b>[user]</b> takes an atmospheric reading of [A]."))
-			boutput(user, scan_atmospheric(A, visible = 1))
+			boutput(user, scan_atmospheric(A, visible = 1, emagged_analyzer = emagged))
 		src.add_fingerprint(user)
 		return
 
@@ -200,6 +201,26 @@ TYPEINFO(/obj/item/device/analyzer/atmospheric)
 				SPAWN(0)
 					det.detonate()
 		return
+
+	emag_act(var/mob/user, var/obj/item/card/emag/E)
+		if (!src.emagged)
+			if (user)
+				boutput(user, SPAN_NOTICE("You have de-standardized the results provided by the analyzer."))
+			logTheThing(LOG_COMBAT, user, "emagged [src] at [log_loc(src)].")
+			emagged = TRUE
+			return TRUE
+		else
+			if (user)
+				boutput(user, "The analyzer is already de-standardized.")
+			return FALSE
+
+	demag(var/mob/user)
+		if (!src.emagged)
+			return FALSE
+		emagged = FALSE
+		if (user)
+			boutput(user, SPAN_NOTICE("You reconfigure the analyzer to provide standardized readings."))
+		return TRUE
 
 /obj/item/device/analyzer/atmospheric/upgraded //for borgs because JESUS FUCK
 	analyzer_upgrade = 1

@@ -16,10 +16,24 @@ ABSTRACT_TYPE(/datum/plant/weed)
 	endurance = 40
 	cropsize = 3
 	force_seed_on_harvest = 1
-	vending = 2
+	vending = 1
 	genome = 31
 	assoc_reagents = list("space_fungus")
 	mutations = list(/datum/plantmutation/fungus/amanita,/datum/plantmutation/fungus/psilocybin,/datum/plantmutation/fungus/cloak)
+
+/datum/plant/weed/sundew
+	name = "Sundew"
+	seedcolor = "#B9034C"
+	crop = /obj/item/reagent_containers/food/snacks/plant/sundew
+	growtime = 100
+	harvtime = 100
+	harvests = 3
+	cropsize = 1
+	nectarlevel = 5
+	endurance = 5
+	genome = 6
+	assoc_reagents = list("simplesyrup")
+	commuts = list(/datum/plant_gene_strain/metabolism_fast,/datum/plant_gene_strain/reagent_adder/craftglue)
 
 /datum/plant/weed/lasher
 	name = "Lasher"

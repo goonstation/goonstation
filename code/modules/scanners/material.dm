@@ -27,7 +27,7 @@ TYPEINFO(/obj/item/device/matanalyzer)
 				boutput(user, SPAN_NOTICE("<u>The material is:</u>"))
 				for(var/datum/material_property/X in W.material.getMaterialProperties())
 					var/value = W.material.getProperty(X.id)
-					boutput(user, SPAN_NOTICE("• [X.getAdjective(W.material)] ([value])"))
+					boutput(user, SPAN_NOTICE("• [X.getAdjective(W.material)] ([value][X.value_unit])"))
 			else
 				boutput(user, SPAN_NOTICE("<u>The material is completely unremarkable.</u>"))
 		if (istype(target, /obj/machinery/atmospherics/pipe))

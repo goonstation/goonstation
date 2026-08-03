@@ -211,7 +211,7 @@
 	dir = 10;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/prefab/tunnelsnake)
 "aT" = (
 /obj/miningteleporter,
@@ -223,7 +223,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/prefab/tunnelsnake)
 "aW" = (
 /obj/shrub{
@@ -244,7 +244,7 @@
 	dir = 5;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/prefab/tunnelsnake)
 "bb" = (
 /obj/decal/tile_edge/line/green{
@@ -252,10 +252,10 @@
 	dir = 9;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/prefab/tunnelsnake)
 "bc" = (
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/prefab/tunnelsnake)
 "bd" = (
 /obj/decal/tile_edge/line/green{
@@ -268,14 +268,14 @@
 	icon_state = "tube1";
 	nostick = 1
 	},
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/prefab/tunnelsnake)
 "be" = (
 /obj/decal/tile_edge/line/green{
 	color = "#e7c88c";
 	icon_state = "line1"
 	},
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/prefab/tunnelsnake)
 "bg" = (
 /obj/decal/tile_edge/line/green{
@@ -283,7 +283,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/prefab/tunnelsnake)
 "bh" = (
 /turf/simulated/floor/grime,
@@ -295,7 +295,7 @@
 	icon_state = "line1"
 	},
 /obj/stool/bench/auto,
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/prefab/tunnelsnake)
 "bj" = (
 /obj/machinery/light/incandescent/netural,
@@ -315,7 +315,7 @@
 	color = "#e7c88c";
 	icon_state = "line1"
 	},
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/prefab/tunnelsnake)
 "bn" = (
 /obj/machinery/door/airlock/pyro/engineering{
@@ -331,7 +331,7 @@
 	name = "Mining"
 	},
 /obj/mapping_helper/access/mining,
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/prefab/tunnelsnake)
 "bp" = (
 /obj/machinery/drainage,
@@ -359,7 +359,7 @@
 /obj/decal/poster/wallsign/poster_mining{
 	pixel_y = 32
 	},
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/prefab/tunnelsnake)
 "bt" = (
 /obj/decal/tile_edge/line/green{
@@ -367,7 +367,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/prefab/tunnelsnake)
 "bu" = (
 /obj/stool/bed,
@@ -376,7 +376,7 @@
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
 	},
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/prefab/tunnelsnake)
 "bv" = (
 /obj/rack,
@@ -390,7 +390,7 @@
 	},
 /obj/item/tank/pocket/oxygen,
 /obj/item/tank/jetpack,
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/prefab/tunnelsnake)
 "bw" = (
 /obj/machinery/door/airlock/pyro/engineering{
@@ -402,7 +402,7 @@
 /area/prefab/tunnelsnake)
 "bx" = (
 /obj/machinery/light/incandescent/netural,
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/prefab/tunnelsnake)
 "by" = (
 /obj/machinery/door/airlock/pyro/engineering{
@@ -413,7 +413,7 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/access/mining,
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/prefab/tunnelsnake)
 "bz" = (
 /obj/machinery/manufacturer/mining,
@@ -432,7 +432,7 @@
 	dir = 6;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/prefab/tunnelsnake)
 "bC" = (
 /obj/decal/tile_edge/line/green{
@@ -443,14 +443,14 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 4
 	},
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/prefab/tunnelsnake)
 "bD" = (
 /turf/simulated/floor/shuttlebay,
 /area/prefab/tunnelsnake)
 "bF" = (
 /obj/machinery/vending/snack,
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/prefab/tunnelsnake)
 "bG" = (
 /obj/table/auto,
@@ -509,7 +509,7 @@
 /area/prefab/tunnelsnake)
 "bZ" = (
 /obj/stool/bench/auto,
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/prefab/tunnelsnake)
 "ca" = (
 /obj/machinery/door/poddoor/blast/pyro{
@@ -742,7 +742,7 @@
 /area/noGenerate)
 "xX" = (
 /obj/machinery/recharge_station,
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/prefab/tunnelsnake)
 "zw" = (
 /obj/machinery/r_door_control/podbay/mining/new_walls/north{

@@ -1,0 +1,526 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/disposalpipe/segment/vertical,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/purple,
+/area/station/science/chemistry)
+"c" = (
+/obj/disposalpipe/junction/left/south,
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/purple,
+/area/station/science/chemistry)
+"d" = (
+/obj/table/reinforced/chemistry/auto/firstaid,
+/obj/item/storage/toolbox/mechanical,
+/obj/machinery/light_switch/directional/west,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/chemistry)
+"e" = (
+/obj/stool/chair/office/blue{
+	dir = 1
+	},
+/mob/living/carbon/human/npc/monkey,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/engine,
+/area/station/science/chemistry)
+"f" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/chemistry)
+"g" = (
+/obj/machinery/chem_master{
+	dir = 8
+	},
+/obj/machinery/camera/directional/north{
+	pixel_x = 10
+	},
+/obj/machinery/disposal/small/west,
+/obj/disposalpipe/trunk/west,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 4
+	},
+/area/station/science/chemistry)
+"h" = (
+/obj/machinery/camera/directional/south{
+	pixel_x = 10
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/chemistry)
+"j" = (
+/obj/table/reinforced/chemistry/auto/auxsup,
+/obj/machinery/chem_shaker/large/chemistry,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_west,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/chemistry)
+"k" = (
+/obj/item/storage/wall/fire{
+	dir = 4;
+	pixel_x = -32
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine/caution/west,
+/area/station/science/chemistry)
+"l" = (
+/obj/machinery/chem_master,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/chemistry)
+"m" = (
+/obj/machinery/chem_master{
+	dir = 4
+	},
+/obj/machinery/camera/directional/north{
+	pixel_x = -10
+	},
+/obj/machinery/disposal/small/east,
+/obj/disposalpipe/trunk/east,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 8
+	},
+/area/station/science/chemistry)
+"n" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/purple,
+/area/station/science/chemistry)
+"p" = (
+/obj/stool/chair/office/blue{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/science/chemistry)
+"q" = (
+/obj/machinery/chem_dispenser/chemical,
+/obj/mapping_helper/glassware_spawn,
+/turf/simulated/floor/engine/caution/south,
+/area/station/science/chemistry)
+"r" = (
+/obj/machinery/light/small/warm/very{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/table/reinforced/chemistry/auto/drugs,
+/obj/item/storage/box/beakerbox{
+	pixel_x = 6;
+	pixel_y = 7
+	},
+/turf/simulated/floor/engine/caution/east,
+/area/station/science/chemistry)
+"s" = (
+/obj/machinery/computer/chem_request_receiver,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/chemistry)
+"t" = (
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/purple,
+/area/station/science/chemistry)
+"u" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/chemistry)
+"v" = (
+/obj/machinery/light/small/warm/very,
+/obj/machinery/chem_heater/chemistry,
+/turf/simulated/floor/engine/caution/corner,
+/area/station/science/chemistry)
+"w" = (
+/obj/submachine/chem_extractor{
+	dir = 1
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/chemistry)
+"x" = (
+/obj/machinery/firealarm/directional/west,
+/obj/storage/secure/closet/research/chemical,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/chemistry)
+"y" = (
+/obj/machinery/chem_dispenser/chemical,
+/obj/mapping_helper/glassware_spawn,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/chemistry)
+"z" = (
+/obj/machinery/door_control/bolter/new_walls/east{
+	id = "chem_stall_west"
+	},
+/obj/machinery/light/small/warm/very{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/disposalpipe/segment/bent/south,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 4
+	},
+/area/station/science/chemistry)
+"A" = (
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "chem_shutters";
+	layer = 3.2;
+	name = "Chemistry Lab Shutters";
+	opacity = 0
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/plating,
+/area/station/science/chemistry)
+"B" = (
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "chem_shutters";
+	layer = 3.2;
+	name = "Chemistry Lab Shutters";
+	opacity = 0
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/plating,
+/area/station/science/chemistry)
+"C" = (
+/obj/item/storage/wall/fire{
+	dir = 8;
+	pixel_x = 32
+	},
+/obj/disposalpipe/segment/bent/north,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine/caution/east,
+/area/station/science/chemistry)
+"D" = (
+/turf/simulated/wall/auto/reinforced/supernorn/colored/purple,
+/area/station/science/chemistry)
+"E" = (
+/obj/stool/chair/office/purple{
+	dir = 1
+	},
+/obj/landmark/start/job/scientist,
+/obj/machinery/light/small/floor/harsh,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/chemistry)
+"G" = (
+/obj/machinery/firealarm/directional/east,
+/obj/machinery/chem_heater/chemistry,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/chemistry)
+"H" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/chemistry)
+"I" = (
+/obj/machinery/chemicompiler_stationary,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 1
+	},
+/area/station/science/chemistry)
+"J" = (
+/obj/machinery/light/small/warm/very{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/machinery/door_control/bolter/new_walls/west{
+	id = "chem_stall_east"
+	},
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 8
+	},
+/area/station/science/chemistry)
+"L" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/item/reagent_containers/food/drinks/bottle/soda{
+	pixel_x = 4;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/drinks/bottle/soda{
+	pixel_x = -4;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/drinks/bottle/soda{
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/soda{
+	pixel_x = 8;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/soda{
+	pixel_x = -8;
+	pixel_y = -2
+	},
+/obj/storage/crate{
+	desc = "Wow! Crate may or may not still contain bottles.";
+	name = "Bottles in a Crate"
+	},
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = -6
+	},
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 8
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/chemistry)
+"M" = (
+/obj/machinery/door_control{
+	id = "chem_shutters";
+	name = "Chemistry Lab Shutters";
+	pixel_y = 26
+	},
+/obj/table/reinforced/chemistry/auto/clericalsup,
+/obj/machinery/phone,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/chemistry)
+"N" = (
+/obj/item/device/radio/intercom/science,
+/obj/machinery/glass_recycler/chemistry,
+/obj/table/reinforced/chemistry/auto/beakers,
+/obj/table/reinforced/chemistry/auto/basicsup,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/chemistry)
+"O" = (
+/obj/disposalpipe/junction/right/south,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/purple,
+/area/station/science/chemistry)
+"P" = (
+/obj/disposalpipe/segment/horizontal,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine/caution/north,
+/area/station/science/chemistry)
+"Q" = (
+/obj/mapping_helper/access/chemistry,
+/obj/machinery/door/airlock/pyro/sci_alt,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/chemistry)
+"R" = (
+/obj/machinery/chemicompiler_stationary,
+/turf/simulated/floor/engine/caution/corner,
+/area/station/science/chemistry)
+"S" = (
+/obj/machinery/door/airlock/pyro/sci_alt{
+	dir = 1;
+	id = "chem_stall_east"
+	},
+/obj/mapping_helper/access/chemistry,
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/chemistry)
+"T" = (
+/obj/stool/chair/office/purple{
+	dir = 1
+	},
+/obj/landmark/start/job/scientist,
+/obj/machinery/light/small/floor/harsh,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/chemistry)
+"U" = (
+/obj/machinery/door/airlock/pyro/sci_alt{
+	dir = 1;
+	id = "chem_stall_west"
+	},
+/obj/mapping_helper/access/chemistry,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/chemistry)
+"V" = (
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/chemistry)
+"W" = (
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk/south,
+/obj/machinery/light/incandescent/harsh,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/chemistry)
+"X" = (
+/obj/machinery/light/small/warm/very,
+/obj/machinery/chem_heater/chemistry,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 1
+	},
+/area/station/science/chemistry)
+"Y" = (
+/obj/table/reinforced/chemistry/auto/drugs,
+/obj/machinery/light/small/warm/very{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/item/storage/box/beakerbox{
+	pixel_x = 6;
+	pixel_y = 7
+	},
+/turf/simulated/floor/engine/caution/west,
+/area/station/science/chemistry)
+"Z" = (
+/obj/machinery/bot/firebot,
+/obj/landmark/gps_waypoint,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/chemistry)
+
+(1,1,1) = {"
+D
+D
+D
+D
+n
+D
+D
+D
+D
+"}
+(2,1,1) = {"
+A
+d
+j
+x
+n
+m
+Y
+R
+D
+"}
+(3,1,1) = {"
+A
+s
+T
+f
+U
+P
+e
+q
+D
+"}
+(4,1,1) = {"
+D
+N
+V
+L
+D
+z
+C
+X
+D
+"}
+(5,1,1) = {"
+Q
+u
+Z
+W
+t
+O
+c
+a
+a
+"}
+(6,1,1) = {"
+D
+M
+V
+h
+D
+J
+k
+v
+D
+"}
+(7,1,1) = {"
+A
+l
+E
+H
+S
+P
+p
+q
+D
+"}
+(8,1,1) = {"
+A
+w
+y
+G
+n
+g
+r
+I
+D
+"}
+(9,1,1) = {"
+D
+B
+B
+D
+n
+D
+D
+D
+D
+"}

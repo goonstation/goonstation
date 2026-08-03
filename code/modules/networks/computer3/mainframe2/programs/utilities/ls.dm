@@ -20,7 +20,7 @@
 	else
 		initparams = (current || "/")
 
-	var/datum/computer/target = src.signal_program(1, list("command" = DWAINE_COMMAND_FGET, "path" = initparams))
+	var/datum/computer/target = src.signal_program(1, list("command" = DWAINE::SYSCALL::FGET, "path" = initparams))
 
 	if (istype(target, /datum/computer/folder))
 		var/datum/computer/folder/F = target
@@ -67,15 +67,15 @@
 	var/permissions_bitflag = C.metadata["permission"]
 	if (isnum(permissions_bitflag))
 		permissions = {"\
-			[(permissions_bitflag & COMP_DOWNER) ? "s" : "-"]\
-			[(permissions_bitflag & COMP_ROWNER) ? "r" : "-"]\
-			[(permissions_bitflag & COMP_WOWNER) ? "w" : "-"]\
-			[(permissions_bitflag & COMP_DGROUP) ? "s" : "-"]\
-			[(permissions_bitflag & COMP_RGROUP) ? "r" : "-"]\
-			[(permissions_bitflag & COMP_WGROUP) ? "w" : "-"]\
-			[(permissions_bitflag & COMP_DOTHER) ? "s" : "-"]\
-			[(permissions_bitflag & COMP_ROTHER) ? "r" : "-"]\
-			[(permissions_bitflag & COMP_WOTHER) ? "w" : "-"]\
+			[(permissions_bitflag & DWAINE::PERM::BIT::OWNER_EXECUTE) ? "s" : "-"]\
+			[(permissions_bitflag & DWAINE::PERM::BIT::OWNER_READ) ? "r" : "-"]\
+			[(permissions_bitflag & DWAINE::PERM::BIT::OWNER_WRITE) ? "w" : "-"]\
+			[(permissions_bitflag & DWAINE::PERM::BIT::GROUP_EXECUTE) ? "s" : "-"]\
+			[(permissions_bitflag & DWAINE::PERM::BIT::GROUP_READ) ? "r" : "-"]\
+			[(permissions_bitflag & DWAINE::PERM::BIT::GROUP_WRITE) ? "w" : "-"]\
+			[(permissions_bitflag & DWAINE::PERM::BIT::OTHER_EXECUTE) ? "s" : "-"]\
+			[(permissions_bitflag & DWAINE::PERM::BIT::OTHER_READ) ? "r" : "-"]\
+			[(permissions_bitflag & DWAINE::PERM::BIT::OTHER_WRITE) ? "w" : "-"]\
 		"}
 	else
 		permissions = "srwsrwsrw"

@@ -9,7 +9,7 @@ ABSTRACT_TYPE(/datum/req_contract/civilian)
 
 /datum/req_contract/civilian/event_catering
 	name = "Event Catering"
-	payout = PAY_IMPORTANT*10
+	payout = PAY::IMPORTANT*10
 	weight = 40
 	var/list/desc_event = list("reception","formal event","welcoming party","going-away party","commemorative dinner","dinner")
 	var/list/desc_honorific = list("an esteemed","an infamous","a famous","a renowned")
@@ -47,53 +47,53 @@ ABSTRACT_TYPE(/datum/rc_entry/item/caterfood)
 /datum/rc_entry/item/caterfood/sandwich
 	name = "sandwich"
 	typepath = /obj/item/reagent_containers/food/snacks/sandwich
-	feemod = PAY_TRADESMAN*4
+	feemod = PAY::TRADESMAN*4
 
 /datum/rc_entry/item/caterfood/burger
 	name = "burger"
 	typepath = /obj/item/reagent_containers/food/snacks/burger
-	feemod = PAY_TRADESMAN*4
+	feemod = PAY::TRADESMAN*4
 
 /datum/rc_entry/item/caterfood/soup
 	name = "pre-portioned soup bowl"
 	typepath = /obj/item/reagent_containers/food/snacks/soup
-	feemod = PAY_TRADESMAN*4
+	feemod = PAY::TRADESMAN*4
 
 /datum/rc_entry/item/caterfood/salad
 	name = "pre-portioned salad"
 	typepath = /obj/item/reagent_containers/food/snacks/salad
-	feemod = PAY_TRADESMAN*3
+	feemod = PAY::TRADESMAN*3
 
 ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/reagent/caterdrink/appletini
 	name = "appletini"
 	chem_ids = "appletini"
-	feemod = PAY_IMPORTANT/10
+	feemod = PAY::IMPORTANT/10
 
 /datum/rc_entry/reagent/caterdrink/fruitpunch
 	name = "fruit punch"
 	chem_ids = "fruit_punch"
-	feemod = PAY_IMPORTANT/10
+	feemod = PAY::IMPORTANT/10
 
 /datum/rc_entry/reagent/caterdrink/spacecuba
 	name = "space-cuba libre"
 	chem_ids = "libre"
-	feemod = PAY_IMPORTANT/10
+	feemod = PAY::IMPORTANT/10
 
 /datum/rc_entry/reagent/caterdrink/margarita
 	name = "margarita"
 	chem_ids = "margarita"
-	feemod = PAY_IMPORTANT/10
+	feemod = PAY::IMPORTANT/10
 
 /datum/rc_entry/reagent/caterdrink/champagne
 	name = "champagne"
 	chem_ids = "champagne"
-	feemod = PAY_IMPORTANT/10
+	feemod = PAY::IMPORTANT/10
 
 
 /datum/req_contract/civilian/furnishing
 	//name = "Interior Outfitting"
-	payout = PAY_EMBEZZLED
+	payout = PAY::EMBEZZLED
 	var/list/namevary = list("Interior Outfitting","Furnishing Assistance","Interior Decorating","Occupancy Preparations","Last-Minute Furnishing")
 	var/list/desc_whatitdoes = list("A new gaming","An extraction","A medical","A research","A cartographic","A transit")
 	var/list/desc_whatitis = list("vessel","station","platform","outpost")
@@ -131,42 +131,42 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/stack/floortiles
 	name = "floor tile"
 	typepath = /obj/item/tile
-	feemod = PAY_TRADESMAN/5
+	feemod = PAY::TRADESMAN/5
 
 /datum/rc_entry/reagent/carpet
 	name = "liquid carpet"
 	chem_ids = "carpet"
-	feemod = PAY_DOCTORATE/2
+	feemod = PAY::DOCTORATE/2
 
 /datum/rc_entry/item/table
 	name = "table"
 	typepath = /obj/item/furniture_parts/table
-	feemod = PAY_TRADESMAN
+	feemod = PAY::TRADESMAN
 
 /datum/rc_entry/item/rack
 	name = "rack part set"
 	typepath = /obj/item/furniture_parts/rack
-	feemod = PAY_TRADESMAN
+	feemod = PAY::TRADESMAN
 
 /datum/rc_entry/item/chair
 	name = "folding chair"
 	typepath = /obj/item/chair/folded
-	feemod = PAY_TRADESMAN
+	feemod = PAY::TRADESMAN
 
 /datum/rc_entry/item/light_bulb
 	name = "light bulb"
 	typepath = /obj/item/light/bulb
-	feemod = PAY_TRADESMAN/5
+	feemod = PAY::TRADESMAN/5
 
 /datum/rc_entry/item/light_tube
 	name = "light tube"
 	typepath = /obj/item/light/tube
-	feemod = PAY_TRADESMAN/5
+	feemod = PAY::TRADESMAN/5
 
 
 /datum/req_contract/civilian/greytide
 	//name = "Crew Embarcation"
-	payout = PAY_UNTRAINED*10*2
+	payout = PAY::UNTRAINED*10*2
 	var/list/namevary = list("Crew Embarcation","Crew Onboarding","New Hands on Deck","Expedited Outfitting","Personnel Rotation")
 	var/list/desc_task = list("mining","hydroponics","cargo handling","engineering","medical","research","cartographic")
 	var/list/desc_place = list("vessel","station","platform","outpost")
@@ -207,17 +207,17 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/item/jumpsuit
 	name = "black jumpsuit"
 	typepath = /obj/item/clothing/under/color
-	feemod = PAY_TRADESMAN*1.5
+	feemod = PAY::TRADESMAN*1.5
 	exactpath = TRUE
 
 	any
 		name = "single-color jumpsuit"
-		feemod = PAY_TRADESMAN
+		feemod = PAY::TRADESMAN
 		exactpath = FALSE
 
 	scrubs
 		name = "medical scrubs"
-		feemod = PAY_DOCTORATE
+		feemod = PAY::DOCTORATE
 		typepath = /obj/item/clothing/under/scrub
 		exactpath = FALSE
 
@@ -248,33 +248,33 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/item/backpack
 	name = "backpack"
 	typepath = /obj/item/storage/backpack
-	feemod = PAY_TRADESMAN*4
+	feemod = PAY::TRADESMAN*4
 
 /datum/rc_entry/item/shoes
 	name = "pair of shoes"
 	typepath = /obj/item/clothing/shoes
-	feemod = PAY_TRADESMAN
+	feemod = PAY::TRADESMAN
 
 /datum/rc_entry/item/headset
 	name = "radio headset"
 	typepath = /obj/item/device/radio/headset
-	feemod = PAY_IMPORTANT
+	feemod = PAY::IMPORTANT
 
 /datum/rc_entry/food/any
 	name = "solid food, preferably nutritious"
 	typepath = /obj/item/reagent_containers/food/snacks
 	food_integrity = FOOD_REQ_BY_ITEM
-	feemod = PAY_TRADESMAN
+	feemod = PAY::TRADESMAN
 
 /datum/rc_entry/reagent/water
 	name = "water"
 	chem_ids = "water"
-	feemod = PAY_UNTRAINED/15
+	feemod = PAY::UNTRAINED/15
 
 
 /datum/req_contract/civilian/birthdaybash
 	//name = "Birthday Party"
-	payout = PAY_TRADESMAN*10*2
+	payout = PAY::TRADESMAN*10*2
 	hide_item_payouts = TRUE
 	weight = 60
 	var/list/namevary = list("Birthday Party","Birthday Bash","Surprise Party","One Year Older")
@@ -385,46 +385,46 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/item/yourowngift
 	name = "wrapped gift of your choice"
 	typepath = /obj/item/gift
-	feemod = PAY_TRADESMAN*4
+	feemod = PAY::TRADESMAN*4
 
 /datum/rc_entry/food/cake
 	name = "cake"
 	typepath = /obj/item/reagent_containers/food/snacks/cake
-	feemod = PAY_TRADESMAN*4
+	feemod = PAY::TRADESMAN*4
 
 /datum/rc_entry/food/cookie
 	name = "cookie"
 	typepath = /obj/item/reagent_containers/food/snacks/cookie
-	feemod = PAY_TRADESMAN*2
+	feemod = PAY::TRADESMAN*2
 
 /datum/rc_entry/food/pizza
 	name = "bites' worth of whole pizza"
 	commodity = /datum/commodity/
 	typepath = /obj/item/reagent_containers/food/snacks/pizza
 	food_integrity = FOOD_REQ_BY_BITE
-	feemod = PAY_UNTRAINED
+	feemod = PAY::UNTRAINED
 
 /datum/rc_entry/reagent/cola
 	name = "cola"
 	chem_ids = "cola"
-	feemod = PAY_UNTRAINED/10
+	feemod = PAY::UNTRAINED/10
 
 /datum/rc_entry/item/chaps
 	name = "chaps"
 	typepath = /obj/item/clothing/suit/chaps
-	feemod = PAY_EXECUTIVE*2
+	feemod = PAY::EXECUTIVE*2
 
 /datum/rc_entry/food/grapes
 	name = "grapes"
 	commodity = /datum/commodity/produce
 	typepath = /obj/item/reagent_containers/food/snacks/plant/grape
-	feemod = PAY_TRADESMAN
+	feemod = PAY::TRADESMAN
 
 /datum/rc_entry/food/banana
 	name = "banana"
 	commodity = /datum/commodity/produce
 	typepath = /obj/item/reagent_containers/food/snacks/plant/banana
-	feemod = PAY_TRADESMAN
+	feemod = PAY::TRADESMAN
 
 /datum/rc_entry/item/cannabis
 	name = "cannabis"
@@ -434,17 +434,17 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/reagent/glitter
 	name = "glitter"
 	chem_ids = "glitter"
-	feemod = PAY_UNTRAINED
+	feemod = PAY::UNTRAINED
 
 /datum/rc_entry/item/paperhat
 	name = "paper hat"
 	typepath = /obj/item/clothing/head/paper_hat
-	feemod = PAY_UNTRAINED
+	feemod = PAY::UNTRAINED
 
 
 /datum/req_contract/civilian/architecture
 	//name = "Architecture Deluxe"
-	payout = PAY_EMBEZZLED
+	payout = PAY::EMBEZZLED
 	var/list/namevary = list("Structural Setup","Brick by Brick","New Construction","Building Supply","Structure Fabrication","Asset Development")
 	var/list/desc_thingbuilt = list("A planetary habitation site","A new deluxe retreat","A new station wing","An affiliated construction project")
 	var/list/desc_progress = list("currently underway","delayed by supply difficulties","planned for near-term assembly","commissioned by a third party")
@@ -512,46 +512,46 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	name = "rock"
 	commodity = /datum/commodity/ore
 	typepath = /obj/item/raw_material/rock
-	feemod = PAY_UNTRAINED
+	feemod = PAY::UNTRAINED
 
 /datum/rc_entry/plant/seed/grass
 	name = "grass seed"
 	cropname = "Grass"
-	feemod = PAY_TRADESMAN
+	feemod = PAY::TRADESMAN
 
 /datum/rc_entry/reagent/silicate
 	contained_in = /obj/item/reagent_containers/glass
 	container_name = "Bottles"
 	name = "liquid silicate"
 	chem_ids = "silicate"
-	feemod = PAY_DOCTORATE/10
+	feemod = PAY::DOCTORATE/10
 
 /datum/rc_entry/stack/woodsheet
 	name = "wooden sheet"
 	typepath = /obj/item/sheet
 	mat_id = "wood"
-	feemod = PAY_UNTRAINED/2
+	feemod = PAY::UNTRAINED/2
 
 /datum/rc_entry/reagent/acetone
 	name = "acetone"
 	chem_ids = "acetone"
-	feemod = PAY_DOCTORATE/10
+	feemod = PAY::DOCTORATE/10
 
 /datum/rc_entry/stack/cobryl
 	name = "cobryl"
 	commodity = /datum/commodity/ore/cobryl
 	typepath_alt = /obj/item/material_piece/cobryl
-	feemod = PAY_TRADESMAN
+	feemod = PAY::TRADESMAN
 
 /datum/rc_entry/stack/syreline
 	name = "syreline"
 	commodity = /datum/commodity/ore/syreline
 	typepath_alt = /obj/item/material_piece/syreline
-	feemod = PAY_IMPORTANT
+	feemod = PAY::IMPORTANT
 
 /datum/req_contract/civilian/robotics
 	//name = "Borg Buds"
-	payout = PAY_TRADESMAN*10
+	payout = PAY::TRADESMAN*10
 	var/list/namevary = list("Robot Overhaul","Loose Sprockets","Parts Wanted","Servo Service")
 	var/list/desc_whatbork = list("mining operation","security post","automated refueling station","cultivation platform","hazardous material processor")
 	var/list/desc_whatget = list(
@@ -614,13 +614,13 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/item/robot_arm_any
 	name = "robot arm (any grade/facing)"
 	typepath = /obj/item/parts/robot_parts/arm
-	feemod = PAY_TRADESMAN
+	feemod = PAY::TRADESMAN
 
 /datum/rc_entry/item/botpart_std
 	name = "beepy boopy boye (you shouldn't see this)"
 	typepath = /obj/item/parts/robot_parts/drone
 	exactpath = TRUE
-	feemod = PAY_TRADESMAN*2
+	feemod = PAY::TRADESMAN*2
 
 /datum/rc_entry/item/botpart_std/head
 	name = "standard cyborg head"
@@ -649,7 +649,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/item/powercell
 	name = "standard 15000u power cell"
 	typepath = /obj/item/cell
-	feemod = PAY_IMPORTANT
+	feemod = PAY::IMPORTANT
 
 	extra_eval(atom/eval_item)
 		. = FALSE
@@ -660,16 +660,16 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/item/borgmodule
 	name = "cyborg module"
 	typepath = /obj/item/robot_module
-	feemod = PAY_DOCTORATE
+	feemod = PAY::DOCTORATE
 
 /datum/rc_entry/item/prox_sensor
 	name = "proximity sensor"
 	typepath = /obj/item/device/prox_sensor
-	feemod = PAY_TRADESMAN
+	feemod = PAY::TRADESMAN
 
 /datum/req_contract/civilian/pod
 	//name = "Space Hogg"
-	payout = PAY_TRADESMAN*10
+	payout = PAY::TRADESMAN*10
 	var/list/namevary = list("Back in the Shop","Vehicular Teardown","Rebuild Assistance","Nuts and Bolts")
 	var/list/flavor_descs = list(
 		"I'm overhauling my daily driver and my usual suppliers are giving me a lead time of weeks. Get everything together and I'll pay way too much.",
@@ -704,11 +704,11 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 			if(1 to 5)
 				name = "Helios Mark-II engine"
 				typepath = /obj/item/shipcomponent/engine/helios
-				feemod = PAY_TRADESMAN*5
+				feemod = PAY::TRADESMAN*5
 			if(6)
 				name = "Hermes Mark-III engine"
 				typepath = /obj/item/shipcomponent/engine/hermes
-				feemod = PAY_DOCTORATE*5
+				feemod = PAY::DOCTORATE*5
 		..()
 
 /datum/rc_entry/item/pod_mining
@@ -719,15 +719,15 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 			if(1 to 6)
 				name = "magnet link array"
 				typepath = /obj/item/shipcomponent/communications/mining
-				feemod = PAY_TRADESMAN*4
+				feemod = PAY::TRADESMAN*4
 			if(7 to 9)
 				name = "pod-mounted ore scoop with hold"
 				typepath = /obj/item/shipcomponent/secondary_system/orescoop
-				feemod = PAY_TRADESMAN*5
+				feemod = PAY::TRADESMAN*5
 			if(10)
 				name = "pod-mounted geological scanner"
 				typepath = /obj/item/shipcomponent/sensor/mining
-				feemod = PAY_TRADESMAN*12
+				feemod = PAY::TRADESMAN*12
 		..()
 
 /datum/rc_entry/item/pod_tank
@@ -738,15 +738,15 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 			if(1 to 6)
 				name = "pod-compatible gas tank"
 				typepath = /obj/item/tank
-				feemod = PAY_TRADESMAN*2
+				feemod = PAY::TRADESMAN*2
 			if(7 to 9)
 				name = "pod air tank"
 				typepath = /obj/item/tank/air
-				feemod = PAY_TRADESMAN*5
+				feemod = PAY::TRADESMAN*5
 			if(10)
 				name = "pod fuel tank"
 				typepath = /obj/item/tank/plasma
-				feemod = PAY_TRADESMAN*8
+				feemod = PAY::TRADESMAN*8
 		..()
 
 /datum/rc_entry/item/pod_armor
@@ -757,15 +757,15 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 			if(1 to 6)
 				name = "any pod armor"
 				typepath = /obj/item/podarmor
-				feemod = PAY_TRADESMAN*4
+				feemod = PAY::TRADESMAN*4
 			if(7 to 9)
 				name = "heavy pod armor"
 				typepath = /obj/item/podarmor/armor_heavy
-				feemod = PAY_DOCTORATE*5
+				feemod = PAY::DOCTORATE*5
 			if(10)
 				name = "industrial pod armor"
 				typepath = /obj/item/podarmor/armor_industrial
-				feemod = PAY_TRADESMAN*12
+				feemod = PAY::TRADESMAN*12
 		..()
 
 
@@ -777,20 +777,20 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 			if(1 to 11)
 				name = "Mk 1.5 light phaser"
 				typepath = /obj/item/shipcomponent/mainweapon/phaser
-				feemod = PAY_TRADESMAN*2
+				feemod = PAY::TRADESMAN*2
 			if(12 to 19)
 				name = "plasma cutter system"
 				typepath = /obj/item/shipcomponent/mainweapon/mining
-				feemod = PAY_TRADESMAN*5
+				feemod = PAY::TRADESMAN*5
 			if(20)
 				name = "Mk.2 scout laser"
 				typepath = /obj/item/shipcomponent/mainweapon/laser
-				feemod = (PAY_DONTBUYIT*2) + (PAY_DOCTORATE * rand(3,6))
+				feemod = (PAY::DONTBUYIT*2) + (PAY::DOCTORATE * rand(3,6))
 		..()
 
 /datum/rc_entry/item/pod_secondary
 	name = "youshouldn'tseemium dongle"
-	feemod = PAY_TRADESMAN*2
+	feemod = PAY::TRADESMAN*2
 
 	New()
 		switch(rand(1, 10))
@@ -807,7 +807,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 
 
 /datum/req_contract/civilian/botanical
-	payout = PAY_TRADESMAN*15*2
+	payout = PAY::TRADESMAN*15*2
 	var/list/namevary = list("Diplomatic Meal Preparation","High-Grade Dinner Prep","Captain's Meal Ingredients","NT-Official Kitchen","NT Pantry Stocking")
 	var/list/desc_wherebuying = list(
 		"A nearby outpost hosting an NT official",
@@ -865,7 +865,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/plant/civilian
 	name = "genetically fussy plant"
 	cropname = "Durian"
-	feemod = PAY_DOCTORATE
+	feemod = PAY::DOCTORATE
 	// This worked for seeds, but it only works for produce because all fruits and veg products are members of
 	// obj/item/reagent_containers/food/snacks/plant and thus have plant genes. As long as that remains a hard-stuck rule though, this should be fine.
 	var/crop_genpath = /datum/plant

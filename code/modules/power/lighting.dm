@@ -15,6 +15,7 @@
 #define WORN_LIGHT_BREAKPROB 5
 
 TYPEINFO(/obj/item/light_parts)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 4
 
 /obj/item/light_parts
@@ -725,6 +726,7 @@ DEFINE_DELAYS(/obj/machinery/light/traffic_light/medical_pathology)
 	desc = "A large portable light tripod."
 	density = 1
 	anchored = ANCHORED
+	plane = PLANE_DEFAULT
 	icon_state = "tripod1"
 	base_state = "tripod"
 	fitting = "bulb"
@@ -1367,6 +1369,7 @@ DEFINE_DELAYS(/obj/machinery/light/traffic_light/medical_pathology)
 // will fit into empty /obj/machinery/light of the corresponding type
 
 TYPEINFO(/obj/item/light)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 1
 
 /obj/item/light

@@ -73,6 +73,14 @@
 	for (var/datum/tgui/window as anything in open_uis)
 		window.send_full_update()
 
+/// |GOONSTATION-ADD| Sets the given shared state key to the given value
+/datum/proc/set_tgui_shared_state(var/key, var/value)
+	if(!key)
+		return
+	LAZYLISTINIT(src.tgui_shared_states)
+	src.tgui_shared_states[key] = value
+	tgui_process.update_uis(src)
+
 /**
  * public
  *

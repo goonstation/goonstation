@@ -1,4 +1,3 @@
-ABSTRACT_TYPE(/obj/item/flag)
 /obj/item/flag
 	name = "flag"
 	desc = "Neat! It's folded up, ready to deploy."
@@ -6,7 +5,7 @@ ABSTRACT_TYPE(/obj/item/flag)
 	icon_state = "blank"
 	burn_possible = FALSE //sigh
 	/// Must be a type path of `/obj/decal/poster/flag`.
-	var/associated_flag = null
+	var/associated_flag = /obj/decal/poster/flag
 	/// Some flags can be used in-hand to switch to an alternate version. Must be a type path of `/obj/decal/poster/flag`.
 	var/altside_flag = null
 	/// Some flags can be converted into capes; clothing items for the suit or back slot. Must be a type path of `/obj/item/clothing/suit/flag`

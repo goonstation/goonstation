@@ -343,7 +343,7 @@
 /turf/simulated/floor/engine,
 /area/station/devzone)
 "BM" = (
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/station/devzone)
 "Cn" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor{
@@ -412,7 +412,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/station/devzone)
 "Hn" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,

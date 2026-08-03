@@ -156,10 +156,16 @@
 		if (isliving(M))
 			var/mob/living/H = M
 			var/ethanol_amt = holder.get_reagent_amount(src.id)
-			if(H?.reagents.has_reagent("moonshine"))
-				mult *= 7
+			var/has_moonshine = H.reagents.has_reagent("moonshine")
 			var/liver_damage = 0
-			if (!isalcoholresistant(H) || H?.reagents.has_reagent("moonshine"))
+			if(has_moonshine)
+				mult *= 7
+			else
+				ethanol_amt -= GET_ATOM_PROPERTY(M, PROP_MOB_ALCOHOL_RESIST)
+				ethanol_amt = max(ethanol_amt, 0)
+				if (ethanol_amt == 0)
+					return ..()
+			if (!isalcoholresistant(H))
 				if (ethanol_amt >= 15)
 					if(probmult(10)) H.emote(pick("hiccup", "burp", "mumble", "grumble"))
 					H.stuttering += 1

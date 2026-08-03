@@ -2,6 +2,7 @@
 // haine wuz here and tore this file to bits!!!  f u we can have things in their own files and we SHOULD
 // rather than EVERYTHING BEING IN HALLOWEEN.DM AND KEELINSSTUFF.DM OKAY THINGS CAN BE IN OTHER FILES
 
+////TYPEINFO: THIS HAS A TYPEINFO ALREADY IN ATOM.DM, GO READ THERE FOR WHY
 /obj/item/storage
 	name = "storage"
 	icon = 'icons/obj/items/storage.dmi'
@@ -23,7 +24,6 @@
 	move_triggered = 1
 	flags = TABLEPASS | NOSPLASH
 	w_class = W_CLASS_NORMAL
-	mechanics_interaction = MECHANICS_INTERACTION_SKIP_IF_FAIL
 
 		//cogwerks - burn vars
 	burn_point = 2500
@@ -260,7 +260,6 @@
 	icon_state = "briefcase_rd"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "rd-case"
-	max_wclass = W_CLASS_BULKY// parity with secure briefcase
 	desc = "A large briefcase for experimental toxins research."
 	spawn_contents = list(/obj/item/raw_material/molitz_beta = 2, /obj/item/paper/hellburn)
 

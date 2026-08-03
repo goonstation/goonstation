@@ -38,6 +38,16 @@
 	icon_state = "disk_kit"
 	spawn_contents = list(/obj/item/disk/data/floppy = 7)
 
+/obj/item/storage/box/diskbox/programs
+	spawn_contents = list(/obj/item/disk/data/floppy/computer3boot,
+	/obj/item/disk/data/floppy/read_only/terminal_os,
+	/obj/item/disk/data/floppy/read_only/network_progs,
+	/obj/item/disk/data/floppy/read_only/medical_progs,
+	/obj/item/disk/data/floppy/read_only/ext_research_progs,
+	/obj/item/disk/data/floppy/read_only/communications,
+	/obj/item/disk/data/floppy/read_only/engine_prog)
+
+
 /obj/item/storage/box/tapebox
 	name = "\improper ThinkTape box"
 	desc = "A box of magnetic data tapes."

@@ -38,7 +38,7 @@
 
 */
 //-- Reference -----------------------------------------------------------------
-
+dmm_suite
 	verb/read_map(dmm_text as text, coordX as num, coordY as num, coordZ as num)/*
 	Description:
 		Loads maps from DMM formatted text.

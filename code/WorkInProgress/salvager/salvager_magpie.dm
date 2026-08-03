@@ -69,8 +69,6 @@ var/datum/magpie_manager/magpie_man = new
 
 // MAGPIE Equipment
 /obj/machinery/vehicle/miniputt/armed/salvager
-	desc = "A repeatedly rebuilt and refitted pod.  Looks like it has seen some things."
-	color = list(-0.269231,0.75,3.73077,0.269231,-0.249999,-2.73077,1,0.5,0)
 	init_comms_type = /obj/item/shipcomponent/communications/salvager
 
 	health = 250
@@ -84,6 +82,9 @@ var/datum/magpie_manager/magpie_man = new
 		myhud.update_systems()
 		myhud.update_states()
 
+/obj/machinery/vehicle/miniputt/armed/salvager/tinted
+	color = list(-0.269231,0.75,3.73077,0.269231,-0.249999,-2.73077,1,0.5,0)
+
 /datum/manufacture/pod/armor_light/salvager
 	name = "Salvager Pod Armor"
 	item_requirements = list("metal_dense" = 30,
@@ -91,15 +92,15 @@ var/datum/magpie_manager/magpie_man = new
 	item_outputs = list(/obj/item/podarmor/salvager)
 	create = 1
 	time = 20 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /obj/item/podarmor/salvager
 	name = "Salvager Pod Armor"
 	desc = "Exterior plating for vehicle pods."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
-	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/armed/salvager,
-						 "/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/salvsub )
+	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/armed/salvager/tinted,
+						 "/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/salvsub/tinted )
 
 /datum/manufacture/communications/salvager
 	name = "Salvager Communication Array"
@@ -107,7 +108,7 @@ var/datum/magpie_manager/magpie_man = new
 	item_outputs = list(/obj/item/shipcomponent/communications/salvager)
 	time = 12 SECONDS
 	create = 1
-	category = "Resource"
+	category = MANUFACTURER::CATEGORY::RESOURCE
 
 /obj/item/shipcomponent/communications/salvager
 	name = "Salvager Communication Array"
@@ -296,15 +297,15 @@ var/datum/magpie_manager/magpie_man = new
 	maxhealth = 150
 	acid_damage_multiplier = 0.5
 	init_comms_type = /obj/item/shipcomponent/communications/salvager
-	color = list(-0.269231,0.75,3.73077,0.269231,-0.249999,-2.73077,1,0.5,0)
 
 	New()
 		..()
-		name = "salvager minisub"
 		src.install_part(null, new /obj/item/shipcomponent/mainweapon/taser(src), POD_PART_MAIN_WEAPON)
 		src.install_part(null, new /obj/item/shipcomponent/secondary_system/cargo(src), POD_PART_SECONDARY)
 		src.install_part(null, new /obj/item/shipcomponent/secondary_system/lock/bioscan(src), POD_PART_LOCK)
 
+/obj/machinery/vehicle/tank/minisub/salvsub/tinted
+	color = list(-0.269231,0.75,3.73077,0.269231,-0.249999,-2.73077,1,0.5,0)
 
 
 /obj/machinery/manufacturer/hangar/magpie

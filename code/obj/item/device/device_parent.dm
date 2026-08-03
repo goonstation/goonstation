@@ -1,3 +1,4 @@
+////TYPEINFO: THIS HAS A TYPEINFO ALREADY IN ATOM.DM, GO READ THERE FOR WHY
 ABSTRACT_TYPE(/obj/item/device)
 /obj/item/device
 	icon = 'icons/obj/items/device.dmi'

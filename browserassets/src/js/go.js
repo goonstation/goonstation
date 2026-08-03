@@ -10,8 +10,8 @@ var globaly;
 var globaltile;
 
 function byond() {
-  url = '?src=' + srcRef;
-  currentIsKey = true;
+  var url = '?src=' + srcRef;
+  var currentIsKey = true;
   for (var i = 0; i < arguments.length; i++) {
     if (currentIsKey) url += ';';
     else url += '=';

@@ -146,16 +146,16 @@
 /datum/say_channel/delimited/local/outloud/log_message(datum/say_message/message)
 	var/content = ""
 	if (message.flags & SAYFLAG_SINGING)
-		content = "SAY: [html_encode(message.original_content)] [log_loc(message.speaker)]"
-		phrase_log.log_phrase("sing", message.content, user = message.speaker, strip_html = TRUE)
+		content = "SAY: [message.get_original_content()] [log_loc(message.speaker)]"
+		phrase_log.log_phrase("sing", message.get_content(), user = message.speaker)
 
 	else if (message.flags & SAYFLAG_WHISPER)
-		content = "SAY: [html_encode(message.original_content)] (WHISPER) [log_loc(message.speaker)]"
-		phrase_log.log_phrase("whisper", message.content, user = message.speaker, strip_html = TRUE)
+		content = "SAY: [message.get_original_content()] (WHISPER) [log_loc(message.speaker)]"
+		phrase_log.log_phrase("whisper", message.get_content(), user = message.speaker)
 
 	else
-		content = "SAY: [html_encode(message.original_content)] [log_loc(message.speaker)]"
-		phrase_log.log_phrase("say", message.content, user = message.speaker, strip_html = TRUE)
+		content = "SAY: [message.get_original_content()] [log_loc(message.speaker)]"
+		phrase_log.log_phrase("say", message.get_content(), user = message.speaker)
 
 	logTheThing(LOG_SAY, message.speaker, content)
 

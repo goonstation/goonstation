@@ -49,7 +49,7 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 */
 
 TYPEINFO(/obj/machinery/communications_dish/transception)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/machinery/communications_dish/transception
 	name = "Transception Array"

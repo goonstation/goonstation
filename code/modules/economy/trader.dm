@@ -145,6 +145,7 @@
 			name = commodity.comname,
 			description = (selling ? commodity.desc : commodity.desc_buy), //TODO: Demand buy description
 			price = commodity.price,
+			amount_left = commodity.amount,
 			ref = ref(commodity),
 		))
 
@@ -164,13 +165,13 @@
 			if ("viewbought")
 				if(!ON_COOLDOWN(src, "traderviewbuydialogue", 1 SECOND))//Tabs are spammable, voicelines shouldn't be
 					src.trader_response(TRADER_RESPONSE_VIEWING_BOUGHT_ITEMS, usr)
-			if ("purchase")
-				src.handle_purchase(usr, locate(params["ref"]) in (src.goods_sell | src.goods_illegal))
-			if ("haggle")
+			if ("trader_purchase")
+				src.handle_purchase(usr, locate(params["commodity_ref"]) in (src.goods_sell | src.goods_illegal))
+			if ("trader_haggle")
 				var/askingprice = tgui_input_number(usr, "Please enter your asking price.", "Haggle", 0)
 				if(!isnum_safe(askingprice))
 					return
-				var/datum/commodity/commodity = locate(params["ref"]) in (src.goods_buy | src.goods_illegal | src.goods_sell)
+				var/datum/commodity/commodity = locate(params["commodity_ref"]) in (src.goods_buy | src.goods_illegal | src.goods_sell)
 				if(!commodity)
 					return
 				if(src.patience == commodity.haggleattempts)
@@ -180,8 +181,8 @@
 					src.anger()
 				else
 					src.haggle(askingprice, !(commodity in src.goods_buy), commodity, usr)
-			if ("sell")
-				src.handle_sell(usr, locate(params["ref"]) in src.goods_buy)
+			if ("trader_sell")
+				src.handle_sell(usr, locate(params["commodity_ref"]) in src.goods_buy)
 			if ("card")
 				src.card_scan()
 			if ("pickupcart")
@@ -918,22 +919,17 @@ ABSTRACT_TYPE(/obj/npc/trader/robot)
 
 	New()
 		..()
-		var/carlsell = rand(1,10)
+		var/carlsell = rand(1,9)
 		src.goods_illegal += new /datum/commodity/contraband/command_suit(src)
 		src.goods_illegal += new /datum/commodity/contraband/command_helmet(src)
 		src.goods_illegal += new /datum/commodity/contraband/disguiser(src)
 		src.goods_illegal += new /datum/commodity/contraband/birdbomb(src)
 		src.goods_illegal += new /datum/commodity/contraband/syndicate_headset(src)
-		if (carlsell <= 3)
-			src.goods_illegal += new /datum/commodity/contraband/radiojammer(src)
-		if (carlsell >= 2 && carlsell <= 6)
+		src.goods_illegal += new /datum/commodity/contraband/chargedradiojammer(src)
+		if (carlsell <= 6)
 			src.goods_illegal += new /datum/commodity/contraband/stealthstorage(src)
-		if (carlsell >= 5 && carlsell <= 8)
-			src.goods_illegal += new /datum/commodity/contraband/voicechanger(src)
-		if (carlsell >= 9)
-			src.goods_illegal += new /datum/commodity/contraband/radiojammer(src)
-			src.goods_illegal += new /datum/commodity/contraband/stealthstorage(src)
-			src.goods_illegal += new /datum/commodity/contraband/voicechanger(src)
+		if (carlsell >= 4)
+			src.goods_illegal += new /datum/commodity/contraband/voiceanonymizer(src)
 
 		src.goods_sell += new /datum/commodity/contraband/spy_sticker_kit(src)
 		src.goods_sell += new /datum/commodity/contraband/flare(src)
@@ -1148,7 +1144,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 	name = "Geoff Honkington"
 	angrynope = "HO--nngh. Leave me alone."
 	whotext = "Just an honest trader tryin' to make a living. Mind the banana peel, ya hear?"
-	business_card = /obj/item/paper/businesscard/clowntown
+	business_card = /obj/item/paper/image/businesscard/clowntown
 	var/honk = 0
 
 	New()
@@ -1188,6 +1184,9 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		src.goods_sell += new /datum/commodity/toygun(src)
 		src.goods_sell += new /datum/commodity/toygunammo(src)
 		src.goods_sell += new /datum/commodity/clownsabre(src)
+		src.goods_sell += new /datum/commodity/cane/silly/princess(src)
+		src.goods_sell += new /datum/commodity/cane/silly/mime(src)
+		src.goods_sell += new /datum/commodity/cane/silly/clown(src)
 		src.goods_sell += new /datum/commodity/clown_nose(src)
 		src.goods_sell += new /datum/commodity/junk/circus_board(src)
 		src.goods_sell += new /datum/commodity/junk/pie_launcher(src)

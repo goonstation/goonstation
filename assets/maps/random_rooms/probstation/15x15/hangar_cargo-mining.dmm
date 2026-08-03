@@ -1,0 +1,763 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"cG" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"cQ" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
+	},
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor,
+/area/station/hangar/qm)
+"cZ" = (
+/obj/landmark/gps_waypoint,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/bent/north,
+/turf/simulated/floor,
+/area/station/hangar/qm)
+"eo" = (
+/turf/simulated/floor/plating,
+/area/station/hangar/qm)
+"ev" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/bent/south,
+/turf/simulated/floor,
+/area/station/hangar/qm)
+"fX" = (
+/obj/machinery/light_switch/directional/east,
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/simulated/floor,
+/area/station/hangar/qm)
+"gw" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay3,
+/turf/space,
+/area/space)
+"hI" = (
+/obj/rack,
+/obj/item/device/light/flashlight{
+	pixel_x = -6;
+	pixel_y = -4
+	},
+/obj/item/clothing/suit/space/emerg{
+	pixel_x = 6
+	},
+/obj/item/tank/air{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = 5;
+	pixel_y = 1
+	},
+/obj/item/clothing/head/emerg{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/turf/simulated/floor/plating,
+/area/station/hangar/qm)
+"ib" = (
+/obj/table/reinforced/auto,
+/obj/item/sheet/steel{
+	amount = 10;
+	pixel_x = 1;
+	pixel_y = -1
+	},
+/obj/item/sheet/glass/reinforced{
+	amount = 50;
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/machinery/camera/directional/east,
+/turf/simulated/floor,
+/area/station/hangar/qm)
+"ic" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
+	},
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor,
+/area/station/hangar/qm)
+"iz" = (
+/obj/machinery/portable_reclaimer,
+/obj/machinery/door_control/north{
+	dir = 2;
+	id = "hangar_mining"
+	},
+/turf/simulated/floor,
+/area/station/hangar/qm)
+"iN" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
+	},
+/obj/machinery/light/incandescent,
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor,
+/area/station/hangar/qm)
+"iW" = (
+/obj/machinery/r_door_control/podbay/mining/new_walls/north,
+/turf/space,
+/area/space)
+"jy" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/hangar/qm)
+"jQ" = (
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = -9;
+	pixel_y = 8
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/obj/item/storage/toolbox/electrical{
+	pixel_x = 6;
+	pixel_y = -2
+	},
+/obj/item/hand_labeler{
+	pixel_x = -7;
+	pixel_y = -9
+	},
+/turf/simulated/floor,
+/area/station/hangar/qm)
+"kC" = (
+/obj/machinery/firealarm/directional/west,
+/turf/simulated/floor,
+/area/station/hangar/qm)
+"kI" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 6
+	},
+/turf/simulated/floor,
+/area/station/hangar/qm)
+"ln" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/qm)
+"lB" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/hangar/qm)
+"lX" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/qm)
+"nQ" = (
+/obj/machinery/light_switch/directional/west,
+/turf/simulated/floor,
+/area/station/hangar/qm)
+"oo" = (
+/obj/machinery/light/incandescent/small,
+/turf/simulated/floor/plating,
+/area/station/hangar/qm)
+"oR" = (
+/obj/table/reinforced/auto,
+/obj/item/shipcomponent/sensor/mining{
+	pixel_x = 7;
+	pixel_y = 2
+	},
+/turf/simulated/floor,
+/area/station/hangar/qm)
+"qm" = (
+/obj/rack,
+/obj/item/device/light/flashlight{
+	pixel_x = -6;
+	pixel_y = -4
+	},
+/obj/item/clothing/suit/space/emerg{
+	pixel_x = 6
+	},
+/obj/item/extinguisher{
+	pixel_x = 14;
+	pixel_y = -3
+	},
+/obj/item/tank/air{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = 5;
+	pixel_y = 1
+	},
+/obj/item/clothing/head/emerg{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor,
+/area/station/hangar/qm)
+"qV" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor,
+/area/station/hangar/qm)
+"rY" = (
+/obj/machinery/door/airlock/pyro/glass/mining,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/disposalpipe/segment/vertical,
+/obj/mapping_helper/access/cargo,
+/obj/mapping_helper/access/mining,
+/turf/simulated/floor,
+/area/station/hangar/qm)
+"sX" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/station/hangar/qm)
+"sZ" = (
+/turf/simulated/floor/stairs/wide{
+	dir = 4
+	},
+/area/station/hangar/qm)
+"ua" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9
+	},
+/obj/disposalpipe/segment/bent/east,
+/turf/simulated/floor,
+/area/station/hangar/qm)
+"ui" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay4,
+/turf/space,
+/area/space)
+"up" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor,
+/area/station/hangar/qm)
+"wZ" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
+	},
+/obj/disposalpipe/segment/bent/west,
+/turf/simulated/floor,
+/area/station/hangar/qm)
+"yc" = (
+/turf/space,
+/area/space)
+"yk" = (
+/obj/machinery/r_door_control/podbay/mining/new_walls/north,
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/space)
+"yA" = (
+/obj/machinery/camera/directional/north,
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/qm)
+"yI" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay2,
+/turf/space,
+/area/space)
+"zA" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 10
+	},
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk/north,
+/turf/simulated/floor,
+/area/station/hangar/qm)
+"Ay" = (
+/obj/machinery/firealarm/directional/north,
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/qm)
+"AM" = (
+/turf/simulated/floor/stairs/wide/other{
+	dir = 4
+	},
+/area/station/hangar/qm)
+"BL" = (
+/obj/table/reinforced/auto,
+/obj/item/shipcomponent/mainweapon/phaser{
+	pixel_x = 16;
+	pixel_y = 3
+	},
+/obj/machinery/recharger{
+	pixel_x = -5;
+	pixel_y = 2
+	},
+/obj/item/clothing/shoes/magnetic,
+/turf/simulated/floor,
+/area/station/hangar/qm)
+"Cj" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light,
+/turf/space,
+/area/space)
+"De" = (
+/obj/machinery/r_door_control/podbay/mining/new_walls/south,
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/qm)
+"DT" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/disposalpipe/segment/bent/east,
+/turf/simulated/floor,
+/area/station/hangar/qm)
+"EW" = (
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/mining_horizontal,
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/qm)
+"Fo" = (
+/turf/simulated/floor,
+/area/station/hangar/qm)
+"FG" = (
+/obj/machinery/camera/directional/east,
+/obj/shrub/random,
+/turf/simulated/floor,
+/area/station/hangar/qm)
+"Gz" = (
+/obj/machinery/r_door_control/podbay/mining/new_walls/south,
+/obj/machinery/vending/air_vendor/plasma,
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/qm)
+"GJ" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = 1
+	},
+/obj/item/crowbar{
+	pixel_x = -1;
+	pixel_y = 6
+	},
+/obj/item/weldingtool{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor,
+/area/station/hangar/qm)
+"Ho" = (
+/turf/simulated/wall/auto/supernorn/colored/orange,
+/area/station/hangar/qm)
+"Jd" = (
+/obj/warp_beacon/mining{
+	name = "cargo/mining hangar beacon"
+	},
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"Jg" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/turf/simulated/floor,
+/area/station/hangar/qm)
+"Kc" = (
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/hangar/qm)
+"Kq" = (
+/obj/machinery/manufacturer/hangar,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor,
+/area/station/hangar/qm)
+"KL" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/hangar/qm)
+"ON" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
+	},
+/turf/simulated/floor,
+/area/station/hangar/qm)
+"PH" = (
+/turf/simulated/floor/stairs/wide/middle{
+	dir = 4
+	},
+/area/station/hangar/qm)
+"Ru" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"Sa" = (
+/obj/machinery/door_control/west{
+	id = "hangar_mining"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/qm)
+"SX" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/hangar/qm)
+"TP" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/mapping_helper/airlock/cycler/manual{
+	cycle_id = "cargomininghangar";
+	name = "Cargo/Mining Hangar"
+	},
+/turf/simulated/floor/plating,
+/area/station/hangar/qm)
+"TS" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/space)
+"UZ" = (
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/qm)
+"Wt" = (
+/obj/table/reinforced/auto,
+/obj/item/shipcomponent/communications/mining{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/shipcomponent/secondary_system/orescoop{
+	pixel_x = 7;
+	pixel_y = 1
+	},
+/turf/simulated/floor,
+/area/station/hangar/qm)
+"Wv" = (
+/obj/submachine/cargopad{
+	name = "Cargo/Mining Hangar Pad"
+	},
+/turf/simulated/floor,
+/area/station/hangar/qm)
+"WD" = (
+/obj/machinery/vehicle/pod_smooth/industrial,
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/qm)
+"Xm" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_east,
+/turf/simulated/floor,
+/area/station/hangar/qm)
+"Yw" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 10
+	},
+/turf/simulated/floor,
+/area/station/hangar/qm)
+"Zl" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor,
+/area/station/hangar/qm)
+"ZO" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/machinery/firealarm/directional/south,
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor,
+/area/station/hangar/qm)
+
+(1,1,1) = {"
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+yc
+yc
+yc
+yc
+yc
+yc
+"}
+(2,1,1) = {"
+Ho
+UZ
+lX
+UZ
+Sa
+UZ
+lX
+Gz
+Ho
+iW
+yc
+yc
+yc
+yc
+yc
+"}
+(3,1,1) = {"
+Ho
+yA
+WD
+UZ
+UZ
+UZ
+UZ
+UZ
+EW
+yc
+yc
+yc
+yc
+yc
+yc
+"}
+(4,1,1) = {"
+Ho
+UZ
+UZ
+UZ
+UZ
+ln
+UZ
+UZ
+EW
+yc
+yc
+yc
+yc
+cG
+yc
+"}
+(5,1,1) = {"
+Ho
+lX
+UZ
+UZ
+UZ
+UZ
+UZ
+UZ
+EW
+ui
+gw
+yI
+Cj
+Jd
+yc
+"}
+(6,1,1) = {"
+Ho
+UZ
+WD
+UZ
+UZ
+ln
+UZ
+UZ
+EW
+yc
+yc
+yc
+yc
+Ru
+yc
+"}
+(7,1,1) = {"
+Ho
+Ay
+UZ
+UZ
+UZ
+UZ
+UZ
+UZ
+EW
+yc
+yc
+yc
+yc
+yc
+yc
+"}
+(8,1,1) = {"
+Ho
+lX
+UZ
+UZ
+UZ
+UZ
+UZ
+De
+Ho
+yk
+TS
+TS
+yc
+yc
+yc
+"}
+(9,1,1) = {"
+Ho
+cQ
+ON
+sZ
+PH
+AM
+ua
+zA
+Ho
+Kc
+TP
+Kc
+Kc
+yc
+yc
+"}
+(10,1,1) = {"
+Ho
+iz
+Yw
+sX
+sX
+DT
+wZ
+qm
+Ho
+hI
+eo
+oo
+Kc
+yc
+yc
+"}
+(11,1,1) = {"
+Ho
+Kq
+Fo
+kI
+KL
+ic
+fX
+jQ
+Ho
+hI
+eo
+eo
+Kc
+yc
+yc
+"}
+(12,1,1) = {"
+Ho
+BL
+Fo
+Zl
+Wv
+ZO
+Ho
+SX
+Ho
+Kc
+TP
+Kc
+Kc
+yc
+yc
+"}
+(13,1,1) = {"
+Ho
+oR
+Fo
+Yw
+Jg
+iN
+SX
+lB
+kC
+nQ
+Fo
+qV
+jy
+yc
+yc
+"}
+(14,1,1) = {"
+Ho
+Wt
+GJ
+ib
+Xm
+ev
+rY
+cZ
+qV
+Fo
+Fo
+FG
+jy
+yc
+yc
+"}
+(15,1,1) = {"
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+Ho
+up
+Kc
+jy
+jy
+Kc
+Kc
+Kc
+Kc
+"}

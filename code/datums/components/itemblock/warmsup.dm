@@ -9,7 +9,7 @@
 	. = ..()
 	RegisterSignal(parent, COMSIG_ITEM_BLOCK_TOOLTIP_BLOCKING_APPEND, PROC_REF(append_to_tooltip))
 
-//arguments are sent from the the SendSignal() in Life.dm:140
+//arguments are sent from the SendSignal() in Life.dm:140
 //SEND_SIGNAL(src, COMSIG_LIVING_LIFE_TICK, (life_time_passed / tick_spacing))
 //first argument, src, is the atom to be sending the signal to, and is also the first argument of the proc triggered by the signal
 //second argument, COMSIG_LIVING_LIFE_TICK, is the type of signal that was send. This matches the signal we are registered to,

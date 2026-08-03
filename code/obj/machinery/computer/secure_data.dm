@@ -635,23 +635,23 @@
 				if (src.active_record_security)
 					switch(href_list["criminal"])
 						if ("none")
-							src.active_record_security["criminal"] = ARREST_STATE_NONE
+							src.active_record_security["criminal"] = SECURITY::ARREST::STATE::NONE
 						if ("arrest")
-							src.active_record_security["criminal"] = ARREST_STATE_ARREST
+							src.active_record_security["criminal"] = SECURITY::ARREST::STATE::ARREST
 							if (usr && src.active_record_general["name"])
 								logTheThing(LOG_STATION, usr, "[src.active_record_general["name"]] is set to arrest by [usr] (using the ID card of [src.authenticated]) [log_loc(src)]")
 						if ("detain")
-							src.active_record_security["criminal"] = ARREST_STATE_DETAIN
+							src.active_record_security["criminal"] = SECURITY::ARREST::STATE::DETAIN
 							if (usr && src.active_record_general["name"])
 								logTheThing(LOG_STATION, usr, "[src.active_record_general["name"]] is set to detain by [usr] (using the ID card of [src.authenticated]) [log_loc(src)]")
 						if ("suspect")
-							src.active_record_security["criminal"] = ARREST_STATE_SUSPECT
+							src.active_record_security["criminal"] = SECURITY::ARREST::STATE::SUSPECT
 						if ("incarcerated")
-							src.active_record_security["criminal"] = ARREST_STATE_INCARCERATED
+							src.active_record_security["criminal"] = SECURITY::ARREST::STATE::INCARCERATED
 						if ("parolled")
-							src.active_record_security["criminal"] = ARREST_STATE_PAROLE
+							src.active_record_security["criminal"] = SECURITY::ARREST::STATE::PAROLE
 						if ("released")
-							src.active_record_security["criminal"] = ARREST_STATE_RELEASED
+							src.active_record_security["criminal"] = SECURITY::ARREST::STATE::RELEASED
 					src.temp = null
 
 					var/target_name = src.active_record_general["name"]
@@ -721,7 +721,7 @@
 					var/datum/db_record/R = new /datum/db_record(  )
 					R["name"] = src.active_record_general["name"]
 					R["id"] = src.active_record_general["id"]
-					R["criminal"] = ARREST_STATE_NONE
+					R["criminal"] = SECURITY::ARREST::STATE::NONE
 					R["mi_crim"] = "None"
 					R["mi_crim_d"] = "No minor crime convictions."
 					R["ma_crim"] = "None"

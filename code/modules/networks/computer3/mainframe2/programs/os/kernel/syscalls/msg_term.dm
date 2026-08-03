@@ -1,9 +1,9 @@
 /datum/dwaine_syscall/msg_term
-	id = DWAINE_COMMAND_MSG_TERM
+	id = DWAINE::SYSCALL::MSG_TERM
 
 /datum/dwaine_syscall/msg_term/execute(sendid, list/data, datum/computer/file/file)
 	if (!data["term"])
-		return ESIG_NOTARGET
+		return DWAINE::ERR::SIG::NOTARGET
 
 	if (file)
 		return src.kernel.file_term(file, data["term"], data["data"])

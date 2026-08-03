@@ -96,16 +96,12 @@
 	waittimed = TRUE
 
 /datum/game_mode/revolution/proc/send_tracker()
-	command_alert("Foreign mutiny located [station_or_ship()]wide, a program to track revolutionary leaders have been sent to all crew member PDA's.", "Central Command Security Alert", 'sound/misc/announcement_1.ogg', alert_origin = ALERT_WATCHFUL_EYE)
-	command_alert("Relevant biometric signatures of Command have been identified. To aid with the ongoing revolution, station command can now be tracked through the transmitted PDA program.", "Unregistered Signal Insertion", alert_origin = ALERT_EGERIA_PROVIDENCE)
-	var/datum/signal/signal1 = get_free_signal()
-	signal1.data_file = (new /datum/computer/file/pda_program/revheadtracker)
-	signal1.data = list("command"="file_send", "file_name" = "Revolutionary Leader Locater", "file_ext" = "PPROG", "file_size" = "1", "tag" = "auto_fileshare", "sender_name"="Central Command Distribution Line", "sender"="00000000")
-	radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(signal1)
-	var/datum/signal/signal2 = get_free_signal()
-	signal2.data_file = (new /datum/computer/file/pda_program/headtracker)
-	signal2.data = list("command"="file_send", "file_name" = "Nanotrasen Command Tracker", "file_ext" = "PPROG", "file_size" = "1", "tag" = "auto_fileshare", "sender"="00000000")
-	radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(signal2)
+	var/datum/random_event/special/command_tracker/command_distribution = locate() in random_events.special_events
+	if(!command_distribution.already_released)
+		command_distribution.event_effect("Triggered by revolution mode")
+	var/datum/random_event/special/headrev_tracker/headrev_distribution = locate() in random_events.special_events
+	if(!headrev_distribution.already_released)
+		headrev_distribution.event_effect("Triggered by revolution mode")
 	trackertimed = TRUE
 
 #ifndef ME_AND_MY_40_ALT_ACCOUNTS

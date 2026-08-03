@@ -90,6 +90,7 @@
 				src.setMaterial(getMaterial(pick(material_varieties)))
 
 		if (src.icon_state == "fig-floorpills")
+			AddComponent(/datum/component/radioactive, 5, TRUE, FALSE, 0)
 			src.create_reagents(30)
 
 			var/primaries = rand(1,3)
@@ -1143,7 +1144,18 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		name = "\improper Samson"
 		icon_state = "samson"
 		ckey = "zodiadecius"
-
+	idestroykibble
+		name = "\improper Ruud Keydens"
+		icon_state = "ruudkeydens"
+		ckey = "idestroykibble"
+	erikkainn
+		name = "\improper Edwardo Gonzalez"
+		icon_state = "edwardogonzalez"
+		ckey = "erikkainn"
+	vithesilly
+		name = "\improper Vi FizZahrd"
+		icon_state = "vifizzahrd"
+		ckey = "vithesilly"
 /obj/item/item_box/figure_capsule
 	name = "capsule"
 	desc = "A little plastic ball for keeping stuff in. Woah! We're truly in the future with technology like this."
@@ -1204,9 +1216,9 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	var/image/capsule_image = null
 
 	create_products(restocked)
-		product_list += new/datum/data/vending_product(/obj/item/item_box/figure_capsule, 35, cost=PAY_UNTRAINED/5)
-		product_list += new/datum/data/vending_product(/obj/item/satchel/figurines, 2, cost=PAY_UNTRAINED*3)
-		product_list += new/datum/data/vending_product(/obj/item/item_box/figure_capsule/gaming_capsule, rand(4,10), cost=PAY_UNTRAINED/3, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/item_box/figure_capsule, 35, cost=PAY::UNTRAINED/5)
+		product_list += new/datum/data/vending_product(/obj/item/satchel/figurines, 2, cost=PAY::UNTRAINED*3)
+		product_list += new/datum/data/vending_product(/obj/item/item_box/figure_capsule/gaming_capsule, rand(4,10), cost=PAY::UNTRAINED/3, hidden=1)
 		src.base_icon_state = "machine[rand(1,6)]"
 		src.icon_state = src.base_icon_state
 		src.capsule_image = image(src.icon, "m_caps26")

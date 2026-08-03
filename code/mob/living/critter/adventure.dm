@@ -93,7 +93,6 @@ TYPEINFO(/mob/living/critter/crunched)
 ////////// Transposed limb ///////////
 /datum/limb/transposed
 	help(mob/target, var/mob/living/user)
-		..()
 		harm(target, user, 0)
 
 	harm(mob/target, var/mob/living/user)

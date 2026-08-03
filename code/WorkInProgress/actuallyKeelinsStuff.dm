@@ -1586,36 +1586,6 @@ Returns:
 				M.set_dir(direction)
 				M.color = color_new
 
-/obj/floorpillstatue
-	name = "Statue of Dr.Floorpills"
-	desc = "A statue of the most radioactive man alive. Technically alive. Sort of."
-	var/broken = 0
-	icon ='icons/obj/objects.dmi'
-	icon_state = "statuefloorpills"
-	density = 1
-	default_material = "slag"
-
-	New()
-		..()
-		AddComponent(/datum/component/radioactive,20,FALSE,FALSE)
-		name = "Statue of Dr.Floorpills"
-
-	attack_hand(mob/user)
-		boutput(user, "[src] feels oddly warm...")
-		return
-
-	attackby(obj/item/W, mob/user)
-		if(prob(8) && (!broken))
-			for(var/i=0, i<5, i++)
-				new/obj/item/material_piece/slag(src.loc)
-
-			src.visible_message(SPAN_ALERT("<B>[src] breaks into pieces!</B>"))
-			icon_state = "statuefloorpills0"
-
-			broken = 1
-
-		return ..()
-
 /proc/mass_proc_arg()
 	var/type = text2path(input(usr,"Type", "", "/obj"))
 	var/procpath = text2path(input(usr,"ProcPath", "", "/proc"))

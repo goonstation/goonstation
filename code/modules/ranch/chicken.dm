@@ -525,6 +525,7 @@ All other chickens in this file are non-secret. Please be respectful.
 	favorite_flag = "honk"
 	negative_happiness = TRUE
 	base_evolution_type = /datum/ranch/evolution/chicken/feed_threshold/honk
+	can_juggle = TRUE
 
 	New()
 		. = ..()
@@ -1898,6 +1899,7 @@ All other chickens in this file are non-secret. Please be respectful.
 	favorite_flag = "nicotine"
 	attack_ability_type = /datum/targetable/critter/mime_cage
 	happy_pet_message = "looks happy."
+	can_juggle = TRUE
 
 	grow_up()
 		..()

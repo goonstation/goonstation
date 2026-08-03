@@ -91,8 +91,8 @@ ABSTRACT_TYPE(/datum/say_channel)
 
 /// If a message was spoken by a client, logs the message.
 /datum/say_channel/proc/log_message(datum/say_message/message)
-	logTheThing(LOG_SAY, message.speaker, "[uppertext(src.channel_id)]: [message.prefix] [message.content] [log_loc(message.speaker)]")
-	phrase_log.log_phrase("say", message.content)
+	logTheThing(LOG_SAY, message.speaker, "[uppertext(src.channel_id)]: [message.prefix] [message.get_original_content()] [log_loc(message.speaker)]")
+	phrase_log.log_phrase("say", message.get_content())
 
 /// Set up an output module for sending messages over this channel.
 /datum/say_channel/proc/RegisterOutput(datum/speech_module/output/registree)

@@ -7,7 +7,7 @@ Right Mouse Button                     = Show current proc settings (depending o
 Hold down CTRL, ALT or SHIFT to modify, call or view proc bound to those keys.<br>
 ***********************************************************"}
 	icon_state = "buildmode3"
-	admin_level = LEVEL_CODER
+	admin_level = LEVEL_ADMIN
 
 	// no modifier key held down
 	var/procname_n = null

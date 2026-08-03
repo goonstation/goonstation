@@ -34,9 +34,11 @@ TYPEINFO(/datum/component/deconstructing)
 		if(user.a_intent == INTENT_HARM || !isobj(target))
 			return
 		var/obj/O = target
+		var/typeinfo/obj/typeinfo = O.get_typeinfo()
 		if (O.deconstruct_flags == DECON_NONE)
 			return
 
+		var/area/object_area = get_area(O)
 		var/decon_complexity = O.build_deconstruction_buttons()
 		if (!decon_complexity || !O.can_deconstruct(user))
 			if (O.deconstruct_flags & DECON_NULL_ACCESS)
@@ -47,11 +49,11 @@ TYPEINFO(/datum/component/deconstructing)
 			boutput(user, SPAN_ALERT("[decon_complexity]"))
 		else if (issilicon(user) && (O.deconstruct_flags & DECON_NOBORG))
 			boutput(user, SPAN_ALERT("Cyborgs cannot deconstruct this [target]."))
-		else if ((!(O.allowed(user) || O.deconstruct_flags & DECON_NO_ACCESS) || O.is_syndicate) && !(O.deconstruct_flags & DECON_BUILT))
+		else if ((!(O.allowed(user) || O.deconstruct_flags & DECON_NO_ACCESS) || (typeinfo.analyser_flags & ANALYSER_SYNDIE_ONLY)) && !(O.deconstruct_flags & DECON_BUILT))
 			boutput(user, SPAN_ALERT("You cannot deconstruct [target] without sufficient access to operate it."))
 		else if(length(get_all_mobs_in(O)))
 			boutput(user, SPAN_ALERT("You cannot deconstruct [target] while someone is inside it!"))
-		else if (isrestrictedz(O.z) && !isitem(target) && !istype(get_area(O), /area/salvager)) //let salvagers deconstruct on the magpie
+		else if (isrestrictedz(O.z) && !isitem(target) && !(object_area.get_typeinfo().allow_restricted_z_deconstruction)) //let salvagers deconstruct on the magpie
 			boutput(user, SPAN_ALERT("You cannot bring yourself to deconstruct [target] in this area."))
 		else if (O.decon_contexts && length(O.decon_contexts) <= 0) //ready!!!
 			boutput(user, "Deconstructing [O], please remain still...")

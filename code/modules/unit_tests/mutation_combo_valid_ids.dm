@@ -5,5 +5,5 @@
 			if(!(part in bioEffectList))
 				Fail("Combo recipe [G.type] has invalid required effect [part]")
 		var/datum/bioEffect/R = G.result
-		if (IS_ABSTRACT(R) || !(R::id in bioEffectList))
+		if (IS_ABSTRACT(R::type) || !(R::id in bioEffectList))
 			Fail("Combo recipe [G.type] has invalid result [R]")

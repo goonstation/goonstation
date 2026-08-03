@@ -1,0 +1,495 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/cordon,
+/area/cordon/dark)
+"b" = (
+/obj/machinery/door/unpowered/wood,
+/turf/simulated/floor/wood/eight,
+/area/syndicate_station/hideout)
+"d" = (
+/obj/table/wood/auto/desk,
+/obj/decoration/pottedfern{
+	pixel_y = 20;
+	pixel_x = -9
+	},
+/obj/machinery/coffeemaker{
+	pixel_x = 3;
+	pixel_y = 6
+	},
+/turf/simulated/floor/wood/two,
+/area/syndicate_station/hideout)
+"f" = (
+/obj/machinery/door/unpowered/wood,
+/turf/simulated/floor/minitiles,
+/area/syndicate_station/hideout)
+"h" = (
+/obj/machinery/light/small/netural,
+/turf/unsimulated/wall/water/border,
+/area/syndicate_station/hideout)
+"i" = (
+/obj/fakeobject/azarakrocks/rock9,
+/turf/simulated/floor/auto/grass/leafy,
+/area/syndicate_station/hideout)
+"j" = (
+/turf/unsimulated/wall/water/border,
+/area/syndicate_station/hideout)
+"k" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 8
+	},
+/obj/stool/chair/couch/red{
+	dir = 8;
+	pixel_y = 10
+	},
+/turf/simulated/floor/wood/two,
+/area/syndicate_station/hideout)
+"l" = (
+/obj/decoration/pottedfern{
+	pixel_y = 20;
+	pixel_x = 10
+	},
+/obj/table/wood/auto/desk,
+/obj/item/paper_bin{
+	pixel_y = 5;
+	pixel_x = 3
+	},
+/obj/item/pen{
+	pixel_x = 2;
+	pixel_y = 4
+	},
+/obj/item/pen/crayon/red{
+	pixel_y = 2
+	},
+/obj/item/stamp{
+	pixel_x = -8;
+	pixel_y = 1
+	},
+/turf/simulated/floor/wood/two,
+/area/syndicate_station/hideout)
+"m" = (
+/turf/simulated/floor/auto/grass/leafy,
+/area/syndicate_station/hideout)
+"n" = (
+/obj/machinery/computer/camera_viewer{
+	dir = 8;
+	pixel_x = 6
+	},
+/obj/item/device/radio/intercom{
+	dir = 8
+	},
+/turf/simulated/floor/wood/eight,
+/area/syndicate_station/hideout)
+"o" = (
+/turf/simulated/floor/wood/two,
+/area/syndicate_station/hideout)
+"p" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 8
+	},
+/turf/simulated/floor/stairs/wood/wide,
+/area/syndicate_station/hideout)
+"q" = (
+/turf/simulated/floor/wood/eight,
+/area/syndicate_station/hideout)
+"r" = (
+/obj/shrub/random,
+/obj/fakeobject/azarakrocks/rock9,
+/obj/machinery/light/small/netural{
+	dir = 1
+	},
+/turf/simulated/floor/grasstodirt,
+/area/syndicate_station/hideout)
+"s" = (
+/obj/machinery/light/incandescent/warm,
+/obj/stool/chair/office/blue{
+	dir = 4
+	},
+/turf/simulated/floor/wood/eight,
+/area/syndicate_station/hideout)
+"t" = (
+/obj/item/storage/wall,
+/turf/unsimulated/wall/auto/supernorn/wood,
+/area/syndicate_station/hideout)
+"u" = (
+/obj/stool/chair/couch/red{
+	dir = 4;
+	pixel_y = 10
+	},
+/turf/simulated/floor/wood/two,
+/area/syndicate_station/hideout)
+"v" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 1
+	},
+/turf/simulated/floor/auto/grass/leafy,
+/area/syndicate_station/hideout)
+"w" = (
+/obj/decal/lightshaft{
+	pixel_y = 24;
+	pixel_x = 8
+	},
+/turf/simulated/floor/auto/grass/leafy,
+/area/syndicate_station/hideout)
+"x" = (
+/obj/table/wood/auto/desk,
+/turf/simulated/floor/wood/two,
+/area/syndicate_station/hideout)
+"y" = (
+/obj/railing/red/reinforced,
+/turf/simulated/floor/grasstodirt{
+	dir = 1
+	},
+/area/syndicate_station/hideout)
+"z" = (
+/turf/simulated/floor/minitiles,
+/area/syndicate_station/hideout)
+"A" = (
+/turf/unsimulated/wall/auto/hedge,
+/area/syndicate_station/hideout)
+"D" = (
+/obj/storage/closet/dresser,
+/obj/item/clothing/shoes/sandal,
+/obj/item/clothing/suit/nature_robes,
+/obj/item/clothing/head/headscarf/red,
+/obj/item/clothing/head/flower/gardenia,
+/turf/simulated/floor/wood/two,
+/area/syndicate_station/hideout)
+"E" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 8
+	},
+/obj/decoration/pottedfern{
+	pixel_y = 20;
+	pixel_x = -7
+	},
+/turf/simulated/floor/wood/eight,
+/area/syndicate_station/hideout)
+"F" = (
+/obj/machinery/sink{
+	dir = 4
+	},
+/turf/simulated/floor/minitiles,
+/area/syndicate_station/hideout)
+"G" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 1
+	},
+/turf/simulated/floor/wood/eight,
+/area/syndicate_station/hideout)
+"H" = (
+/obj/item/storage/toilet{
+	dir = 8
+	},
+/obj/decoration/toiletholder,
+/turf/simulated/floor/minitiles,
+/area/syndicate_station/hideout)
+"J" = (
+/turf/unsimulated/wall/auto/supernorn/wood,
+/area/syndicate_station/hideout)
+"K" = (
+/obj/stool/bed,
+/obj/machinery/light/small/netural,
+/obj/item/clothing/suit/bedsheet/red,
+/turf/simulated/floor/wood/eight,
+/area/syndicate_station/hideout)
+"L" = (
+/obj/table/wood/auto/desk,
+/obj/item/reagent_containers/food/drinks/tea{
+	pixel_x = -8;
+	pixel_y = 1
+	},
+/obj/item/plate{
+	pixel_y = 10;
+	pixel_x = 1
+	},
+/obj/item/decoration/flower_vase/vase7{
+	pixel_y = 5;
+	pixel_x = 11
+	},
+/obj/item/reagent_containers/food/snacks/burger/tikiburger{
+	pixel_y = 5
+	},
+/turf/simulated/floor/wood/two,
+/area/syndicate_station/hideout)
+"M" = (
+/obj/shrub/random,
+/obj/railing/red/reinforced,
+/turf/simulated/floor/grasstodirt{
+	dir = 1
+	},
+/area/syndicate_station/hideout)
+"N" = (
+/obj/drink_rack/mug,
+/turf/unsimulated/wall/auto/supernorn/wood,
+/area/syndicate_station/hideout)
+"O" = (
+/obj/machinery/door/unpowered/wood{
+	dir = 8
+	},
+/turf/simulated/floor/wood/eight,
+/area/syndicate_station/hideout)
+"P" = (
+/obj/shrub/random,
+/obj/machinery/light/small/netural{
+	dir = 1
+	},
+/turf/simulated/floor/grasstodirt,
+/area/syndicate_station/hideout)
+"Q" = (
+/turf/simulated/floor/stairs/wood/wide{
+	dir = 6
+	},
+/area/syndicate_station/hideout)
+"T" = (
+/obj/fakeobject/azarakrocks/rock6,
+/obj/machinery/light/small/netural,
+/obj/shrub/random,
+/obj/railing/red/reinforced,
+/turf/simulated/floor/grasstodirt{
+	dir = 1
+	},
+/area/syndicate_station/hideout)
+"U" = (
+/obj/table/reinforced/auto,
+/obj/item/clothing/under/towel,
+/obj/item/clothing/under/towel{
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/glass/bottle/bubblebath{
+	pixel_y = 18;
+	pixel_x = 6
+	},
+/obj/item/bandage{
+	pixel_y = 13;
+	pixel_x = -8
+	},
+/turf/simulated/floor/minitiles,
+/area/syndicate_station/hideout)
+"V" = (
+/obj/machinery/disposal/extradimensional/exit{
+	pixel_y = 3
+	},
+/turf/simulated/floor/grasstodirt,
+/area/syndicate_station/hideout)
+"W" = (
+/obj/fakeobject/azarakrocks/rock4,
+/obj/machinery/light/small/netural,
+/obj/shrub/random,
+/obj/railing/red/reinforced,
+/turf/simulated/floor/grasstodirt{
+	dir = 1
+	},
+/area/syndicate_station/hideout)
+"X" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 1
+	},
+/turf/simulated/floor/minitiles,
+/area/syndicate_station/hideout)
+"Y" = (
+/obj/machinery/shower{
+	dir = 8
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/minitiles,
+/area/syndicate_station/hideout)
+"Z" = (
+/obj/decal/poster/flag,
+/turf/unsimulated/wall/auto/supernorn/wood,
+/area/syndicate_station/hideout)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+J
+J
+J
+J
+J
+J
+J
+A
+A
+A
+a
+a
+"}
+(3,1,1) = {"
+a
+J
+Y
+F
+J
+E
+o
+p
+m
+T
+A
+A
+a
+"}
+(4,1,1) = {"
+a
+J
+X
+z
+f
+q
+o
+Q
+m
+M
+j
+A
+a
+"}
+(5,1,1) = {"
+a
+J
+U
+H
+J
+q
+D
+Z
+m
+y
+h
+A
+a
+"}
+(6,1,1) = {"
+a
+J
+J
+J
+J
+G
+L
+J
+v
+y
+j
+A
+a
+"}
+(7,1,1) = {"
+a
+J
+k
+q
+b
+q
+J
+Z
+i
+y
+j
+A
+a
+"}
+(8,1,1) = {"
+a
+J
+u
+q
+J
+G
+J
+P
+w
+y
+h
+A
+a
+"}
+(9,1,1) = {"
+a
+N
+d
+q
+J
+q
+J
+V
+m
+M
+j
+A
+a
+"}
+(10,1,1) = {"
+a
+J
+x
+s
+J
+O
+J
+r
+m
+W
+A
+A
+a
+"}
+(11,1,1) = {"
+a
+J
+l
+n
+t
+K
+J
+A
+A
+A
+A
+a
+a
+"}
+(12,1,1) = {"
+a
+J
+J
+J
+J
+J
+J
+a
+a
+a
+a
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

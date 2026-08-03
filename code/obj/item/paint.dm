@@ -1,23 +1,3 @@
-
-/obj/item/paint // this seems to be a completely different paint can than the standard one, uhh. w/e it gets to live in here too
-	name = "paint can"
-	icon = 'icons/misc/old_or_unused.dmi'
-	icon_state = "paint_neutral"
-	var/paintcolor = "neutral"
-	item_state = "paintcan"
-	w_class = W_CLASS_NORMAL
-	desc = "A can of impossible to remove paint."
-
-/obj/item/paint/attack_self(mob/user as mob)
-
-	var/t1 = input(user, "Please select a color:", "Locking Computer", null) in list( "red", "blue", "green", "yellow", "black", "white", "neutral" )
-	if ((user.equipped() != src || user.stat || user.restrained()))
-		return
-	src.paintcolor = t1
-	src.icon_state = text("paint_[]", t1)
-	add_fingerprint(user)
-	return
-
 /obj/machinery/vending/paint
 	name = "paint dispenser"
 	desc = "Dispenses paint. Derp."

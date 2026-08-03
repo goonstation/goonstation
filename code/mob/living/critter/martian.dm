@@ -24,6 +24,7 @@ TYPEINFO(/mob/living/critter/martian)
 	can_grab = TRUE
 	can_disarm = TRUE
 	can_help = TRUE
+	can_juggle = TRUE
 	health_brute = 50
 	health_brute_vuln = 0.5
 	health_burn = 50

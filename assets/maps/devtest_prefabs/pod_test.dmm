@@ -51,6 +51,10 @@
 /obj/machinery/vehicle/miniputt/armed,
 /turf/space,
 /area/station/devzone)
+"in" = (
+/obj/machinery/vehicle/pod_smooth/heavy/security,
+/turf/space,
+/area/station/devzone)
 "ir" = (
 /obj/item/shipcomponent/secondary_system/shielding/heavy,
 /turf/unsimulated/floor,
@@ -188,6 +192,10 @@
 /area/station/devzone)
 "zR" = (
 /obj/item/shipcomponent/secondary_system/storage,
+/turf/unsimulated/floor,
+/area/station/devzone)
+"Ah" = (
+/obj/item/shipcomponent/mainweapon/stasis,
 /turf/unsimulated/floor,
 /area/station/devzone)
 "Bg" = (
@@ -654,7 +662,7 @@ jH
 jH
 jH
 hr
-vs
+Ah
 "}
 (17,1,1) = {"
 vs
@@ -666,7 +674,7 @@ jH
 jH
 jH
 jH
-jH
+in
 jH
 fR
 jH

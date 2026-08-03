@@ -52,6 +52,9 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 	for (var/client/C)
 		var/mob/new_player/player = C.mob
 		if (!istype(player) || !player.mind) continue
+		if (length(job_controls.forced_assignments) && (player.ckey in job_controls.forced_assignments))
+			unassigned += player
+			continue
 		if ((player.mind.special_role == ROLE_WRAITH) || (player.mind.special_role == ROLE_BLOB) || (player.mind.special_role == ROLE_FLOCKMIND))
 			continue //If they aren't spawning in as crew they shouldn't take a job slot.
 		if (player.ready_play && !player.mind.assigned_role)
@@ -62,12 +65,6 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 
 	if (!length(unassigned))
 		return 0
-
-	// If the mode is construction, ignore all this shit and sort everyone into the construction worker job.
-	if (master_mode == "construction")
-		for (var/mob/new_player/player in unassigned)
-			player.mind.assigned_role = "Construction Worker"
-		return
 
 	#ifdef I_WANNA_BE_THE_JOB
 	for (var/mob/new_player/player in unassigned)
@@ -94,6 +91,16 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		// If it's hi-pri, add it to that list. Simple enough
 		if (JOB.high_priority_job)
 			high_priority_jobs.Add(JOB)
+
+	// Handle forced assignment first, even if someone set the mode to construction for some reason.
+	if (length(job_controls.forced_assignments))
+		unassigned = global.handle_forced_job_assignments(unassigned)
+
+	// If the mode is construction, ignore all this shit and sort everyone into the construction worker job.
+	if (master_mode == "construction")
+		for (var/mob/new_player/player in unassigned)
+			player.mind.assigned_role = "Construction Worker"
+		return
 
 	// Wiggle the players too so that priority isn't determined by key alphabetization
 	shuffle_list(unassigned)
@@ -673,13 +680,34 @@ Equip items from body traits.
 		carrier.trap_mob(pet, src)
 		trinket = carrier
 	else if (src.traitHolder && src.traitHolder.hasTrait("lunchbox"))
-		var/random_lunchbox_path = pick(childrentypesof(/obj/item/storage/lunchbox))
-		trinket = new random_lunchbox_path(src)
+		if (!src.traitHolder.hasTrait("picky_eater"))
+			var/random_lunchbox_path = pick(childrentypesof(/obj/item/storage/lunchbox))
+			trinket = new random_lunchbox_path(src)
+		else // Picky eater trait holders get a custom lunchbox with 3 of their favourite foods
+			var/lunchbox = new /obj/item/storage/lunchbox(src)
+			trinket = lunchbox
+			var/datum/trait/picky_eater/picky_trait = src.traitHolder.getTrait("picky_eater")
+			var/list/fav_foods = picky_trait.fav_foods
+			for (var/i in 1 to 3)
+				var/obj/item/food = fav_foods[i]
+				trinket.storage.add_contents(new food(src))
+			var/list/lunch_list = list(/obj/item/reagent_containers/food/drinks/water,\
+			/obj/item/kitchen/utensil/fork,\
+			/obj/item/kitchen/utensil/spoon,\
+			/obj/item/paper/lunchbox_note)
+			for (var/lunch_item_type in lunch_list)
+				trinket.storage.add_contents(new lunch_item_type(src))
 	else if (src.traitHolder && src.traitHolder.hasTrait("wheelchair"))
 		SPAWN(0) // Ensures wheelchair spawns with you even if you aren't latejoining at arrivals.
 			var/obj/stool/chair/comfy/wheelchair/the_chair = new /obj/stool/chair/comfy/wheelchair(get_turf(src))
 			trinket = the_chair
+			var/datum/trait/artisan/trait_artisan = src.traitHolder?.getTrait("artisan")
+			if(trait_artisan)
+				trait_artisan.apply_trinket_material(src, trinket)
 			the_chair.buckle_in(src, src)
+	else if (src.traitHolder && src.traitHolder.hasTrait("cane"))
+		var/picked = pick(typesof(/obj/item/cane/wooden))
+		trinket = new picked(src)
 	else
 		trinket = new T(src)
 
@@ -705,6 +733,21 @@ Equip items from body traits.
 		allergic_pen.real_name = allergic_pen.name
 		allergic_pen.quality = rand(5,80)
 		trinkets_to_equip += allergic_pen
+
+	var/datum/trait/artisan/trait_artisan = src.traitHolder?.getTrait("artisan")
+	if(trait_artisan)
+		if(src.traitHolder.hasTrait("wheelchair"))
+			// Do nothing. Material will be applied to the wheelchair.
+		else if(trinket)
+			trait_artisan.apply_trinket_material(src, trinket)
+		else if(length(trinkets_to_equip) > 0)
+			trait_artisan.apply_trinket_material(src, pick(trinkets_to_equip))
+		else
+			var/datum/material/mat = trait_artisan.choose_trinket_material(null)
+			var/bar_type = getProcessedMaterialForm(mat)
+			var/obj/item/material_piece/bar = new bar_type
+			bar.setMaterial(mat)
+			trinkets_to_equip += bar
 
 	for (var/obj/item/I in trinkets_to_equip)
 		var/equipped = 0

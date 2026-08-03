@@ -1,5 +1,6 @@
 //Motherboard is just used in assembly/disassembly, doesn't exist in the actual computer object.
 TYPEINFO(/obj/item/motherboard)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 8
 
 /obj/item/motherboard

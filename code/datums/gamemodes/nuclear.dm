@@ -1,5 +1,9 @@
 ///This amount of potential target locations are picked, up to every defined plant spot for the map
+#ifdef MAP_OVERRIDE_PROBSTATION
+#define AMOUNT_OF_VALID_NUKE_PLANT_LOCATIONS 3
+#else
 #define AMOUNT_OF_VALID_NUKE_PLANT_LOCATIONS 2
+#endif
 
 var/global/list/nuke_op_color_matrix = list("#394470","#c65039", "#63662c")
 var/global/list/nuke_op_camo_matrix = null

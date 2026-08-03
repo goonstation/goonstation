@@ -3067,6 +3067,27 @@ var/global/force_radio_maptext = FALSE
 		container.reagents.add_reagent("custom_transmutation", amount, sdata=matId)
 	usr.put_in_hand_or_drop(container)
 
+/// Expell an object from every mail chute on-station.
+/client/proc/expell_object_from_mail_chutes()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Expell Object From Mail Chutes"
+	ADMIN_ONLY
+
+	var/partial_type = global.tgui_input_text(usr, "Object type:", "Expell Object From Mail Chutes")
+	if (!partial_type)
+		return
+
+	var/type = global.get_one_match(partial_type, /atom/movable)
+	if (!type)
+		return
+
+	for_by_tcl(chute, /obj/machinery/disposal/mail)
+		if (chute.z != Z_LEVEL_STATION)
+			continue
+
+		new type(chute)
+		chute.expel_contents()
+
 /client/proc/show_mining_map()
 	set name = "Show Mining Map"
 	set desc = "Show the Z5 Mining Zlevel map."

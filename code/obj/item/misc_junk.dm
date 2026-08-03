@@ -126,9 +126,8 @@
 		user.put_in_hand_or_drop(new /obj/item/clothing/head/party)
 		qdel(src)
 
-TYPEINFO(/obj/item/disk)
-	mats = 8
 
+////TYPEINFO: THIS HAS A TYPEINFO ALREADY IN ATOM.DM, GO READ THERE FOR WHY
 /obj/item/disk
 	name = "disk"
 	icon = 'icons/obj/items/items.dmi'
@@ -319,6 +318,7 @@ TYPEINFO(/obj/item/disk)
 
 
 TYPEINFO(/obj/item/reagent_containers/vape)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/reagent_containers/vape //yeet

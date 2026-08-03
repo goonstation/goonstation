@@ -329,6 +329,7 @@ var/global
 	netpass_medical = null
 	netpass_banking = null
 	netpass_cargo = null
+	netpass_login = null
 	netpass_syndicate = null //Detomatix
 
 	//
@@ -366,6 +367,7 @@ var/global
 
 	datum/dj_panel/dj_panel = new()
 	datum/player_panel/player_panel = new()
+	datum/forced_assignment_panel/forced_assignment_panel = new()
 
 	list/prisonwarped = list()	//list of players already warped
 	bioele_accidents = 0
@@ -379,10 +381,7 @@ var/global
 	datum/configuration/config = null
 	datum/sun/sun = null
 
-	datum/changelog/legacy_changelog = null
 	datum/changelog/changelog = null
-	datum/admin_changelog/legacy_admin_changelog = null
-	datum/admin_changelog/admin_changelog = null
 
 	list/datum/powernet/powernets = null
 
@@ -533,7 +532,7 @@ var/global
 		/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom)
 
 	///radio frequencies unable to be picked up by (empowered) radio_brain
-	list/protected_frequencies = list(R_FREQ_SYNDICATE, R_FREQ_WIZARD, R_FREQ_SALVAGER)
+	list/protected_frequencies = list(RADIO::FREQ::SYNDICATE, RADIO::FREQ::WIZARD, RADIO::FREQ::SALVAGER)
 	///base movedelay threshold for slipping
 	base_slip_delay = BASE_SPEED_SUSTAINED
 

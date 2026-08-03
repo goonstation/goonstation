@@ -103,9 +103,7 @@
 
 		if(src.engine_icon)
 			src.engine_icon.appearance_flags = KEEP_APART | RESET_COLOR | RESET_ALPHA
-			src.engine_icon.color = src.color
-			src.engine_icon.alpha = src.alpha
-			src.engine_icon.filters = src.filters.Copy()
+			src.copy_appearance_to_image(src.engine_icon)
 			ship.AddOverlays(engine_icon, "engine")
 		..()
 

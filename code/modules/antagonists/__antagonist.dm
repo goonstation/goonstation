@@ -157,6 +157,11 @@ ABSTRACT_TYPE(/datum/antagonist)
 			if (!src.owner.assigned_role)
 				message_admins("Antagonist datum of type [src.type] failed to properly late setup after 60 seconds. Report this to a coder.")
 
+		if (do_objectives)
+			src.assign_objectives()
+			if (!src.silent)
+				src.announce_objectives()
+
 		src.did_equip = do_equip
 		if (do_equip)
 			src.give_equipment()
@@ -176,11 +181,6 @@ ABSTRACT_TYPE(/datum/antagonist)
 		if (!src.silent)
 			src.announce()
 			src.do_popup()
-
-		if (do_objectives)
-			src.assign_objectives()
-			if (!src.silent)
-				src.announce_objectives()
 
 		if (do_relocate)
 			src.relocate()

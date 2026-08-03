@@ -337,6 +337,11 @@ ABSTRACT_TYPE(/mob/living/critter/human/cultist)
 			human_to_copy = /mob/living/carbon/human/normal/cultist_imposter/key2
 			corpse_spawner = /obj/mapping_helper/mob_spawn/corpse/human/cultist_imposter/key2
 
+			gib() // cause humans can gib sometimes and this softlocks the azone
+				new /obj/item/cult_sigil(src.loc)
+				..()
+
+
 /mob/living/critter/human/cultist/leader
 	name = "Broken Leader"
 	health_brute = 150
@@ -381,6 +386,10 @@ ABSTRACT_TYPE(/mob/living/critter/human/cultist)
 		key1
 			human_to_copy = /mob/living/carbon/human/normal/cultist/leader/key1
 			corpse_spawner = /obj/mapping_helper/mob_spawn/corpse/human/cultist/leader/key1
+
+			gib()
+				new /obj/item/cult_sigil_pt1(src.loc)
+				..()
 
 
 	pistol

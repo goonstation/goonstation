@@ -2119,7 +2119,7 @@
 	icon_state = "skeleton_s"
 	},
 /obj/item/clothing/under/gimmick/kilt,
-/obj/item/paper/businesscard/bonktek{
+/obj/item/paper/image/businesscard/bonktek{
 	pixel_y = -12
 	},
 /obj/item/stamp/syndicate{
@@ -2335,7 +2335,7 @@
 	})
 "Pg" = (
 /obj/marker/supplymarker,
-/obj/item/paper/businesscard/skulls,
+/obj/item/paper/image/businesscard/skulls,
 /turf/unsimulated/iomoon/ancient_floor{
 	icon_state = "ancientfloor2"
 	},
@@ -2737,7 +2737,7 @@
 /obj/fakeobject/skeleton/decomposed_corpse{
 	icon_state = "body3"
 	},
-/obj/item/paper/xg_tapes,
+/obj/item/paper/image/xg_tapes,
 /obj/item/weldingtool/arcwelder,
 /turf/unsimulated/iomoon/ancient_floor{
 	icon_state = "ancientfloor2"

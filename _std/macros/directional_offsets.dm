@@ -16,7 +16,7 @@
 
 //------------ Macros ------------//
 /// Set up a tuple containing directional offsets. These offsets will also be provided to the corresponding standard directional offsets datum.
-#define SET_UP_STANDARD_DIRECTIONAL_OFFSETS(_NAME, _NX, _NY, _EX, _EY, _SX, _SY, _WX, _WY) \
+#define SET_UP_DIRECTIONAL_OFFSETS(_NAME, _NX, _NY, _EX, _EY, _SX, _SY, _WX, _WY) \
 	STANDARD_OFFSETS(_NAME) { \
 		id = #_NAME; \
 		nx = _NX; \
@@ -31,7 +31,7 @@
 	DEFINE _NAME(x) x(_NX, _NY, _EX, _EY, _SX, _SY, _WX, _WY, #_NAME)
 
 /// Set up another directional offsets datum that should be used under certain circumstances.
-#define SET_UP_OTHER_DIRECTIONAL_OFFSETS(_NAME, _PATH, _NX, _NY, _EX, _EY, _SX, _SY, _WX, _WY) \
+#define SET_UP_DIRECTIONAL_OFFSETS_OTHER(_PATH, _NAME, _NX, _NY, _EX, _EY, _SX, _SY, _WX, _WY) \
 	_PATH(_NAME) { \
 		id = #_NAME; \
 		nx = _NX; \
@@ -76,11 +76,43 @@
 
 
 //------------ Directional Offsets ------------//
-SET_UP_STANDARD_DIRECTIONAL_OFFSETS(OFFSETS_CAMERA, 0, 20, 10, 0, 0, 0, -10, 0)
-SET_UP_OTHER_DIRECTIONAL_OFFSETS(OFFSETS_CAMERA, JEN_WALL_OFFSETS, 0, 24, 12, 0, 0, 0, -12, 0)
+SET_UP_DIRECTIONAL_OFFSETS(OFFSETS_CAMERA, \
+	0, 20,		\
+	10, 0,		\
+	0, 0,		\
+	-10, 0		\
+)
+SET_UP_DIRECTIONAL_OFFSETS_OTHER(JEN_WALL_OFFSETS, OFFSETS_CAMERA, \
+	0, 24,		\
+	12, 0,		\
+	0, 0,		\
+	-12, 0		\
+)
 
-SET_UP_STANDARD_DIRECTIONAL_OFFSETS(OFFSETS_FIREALARM, 0, 30, 24, 0, 0, -22, -24, 0)
+SET_UP_DIRECTIONAL_OFFSETS(OFFSETS_FIREALARM, \
+	0, 30,		\
+	24, 0,		\
+	0, -22,		\
+	-24, 0		\
+)
 
-SET_UP_STANDARD_DIRECTIONAL_OFFSETS(OFFSETS_NOTICEBOARD, 0, 32, 32, 0, 0, 0, -32, 0)
+SET_UP_DIRECTIONAL_OFFSETS(OFFSETS_NOTICEBOARD, \
+	0, 32,		\
+	32, 0,		\
+	0, 0,		\
+	-32, 0		\
+)
 
-SET_UP_STANDARD_DIRECTIONAL_OFFSETS(OFFSETS_AIRALARM, 0, 27, 21, 0, 0, -13, -21, 0)
+SET_UP_DIRECTIONAL_OFFSETS(OFFSETS_AIRALARM, \
+	0, 27,		\
+	21, 0,		\
+	0, -13,		\
+	-21, 0		\
+)
+
+SET_UP_DIRECTIONAL_OFFSETS(OFFSETS_LIGHTSWITCH, \
+	0, 24,		\
+	24, 0,		\
+	0, -24,		\
+	-24, 0		\
+)

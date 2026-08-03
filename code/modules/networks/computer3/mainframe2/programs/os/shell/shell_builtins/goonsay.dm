@@ -19,4 +19,4 @@
 		anger_text += @" __________|n(--[ .]-[ .] /|n(_______0__)"
 		src.shell.message_user(anger_text, "multiline")
 
-	return BUILTIN_SUCCESS
+	return DWAINE::ERR::SHELL::BUILTIN::SUCCESS

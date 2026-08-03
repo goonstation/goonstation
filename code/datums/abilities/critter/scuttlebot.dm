@@ -140,13 +140,7 @@
 				return 1
 
 			var/mob/living/critter/robotic/scuttlebot/E = holder.owner
-			if (!E.controller)
-				boutput(holder.owner, SPAN_ALERT("You didn't have a body to go back to! The scuttlebot shuts down with a sad boop."))
-				holder.owner.ghostize()
-				return 1
-			E.mind.transfer_to(E.controller)
-			E.controller.network_device = null
-			E.controller = null
+			E.return_to_owner()
 		else //In case this ability is put on another mob
 			boutput(holder.owner, SPAN_ALERT("You don't have a body to go back to!"))
 			return 1

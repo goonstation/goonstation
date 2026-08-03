@@ -61,7 +61,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/surgery)
 /datum/req_contract/special/surgery/organ_swap
 	name = "Organ Swap"
 	weight = 50
-	payout = PAY_DOCTORATE*10*2
+	payout = PAY::DOCTORATE*10*2
 	var/mob/living/carbon/human/target
 	var/target_organs = list()
 	sendingCrate = new /obj/storage/crate/wooden
@@ -135,7 +135,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/surgery)
 /datum/req_contract/special/weed_sampler
 	name = "Weed Flight"
 	req_sheet = new /obj/item/paper/requisition/weed_sample
-	payout = PAY_DONTBUYIT*2
+	payout = PAY::DONTBUYIT*2
 
 	New()
 		src.rc_entries += rc_buildentry(/datum/rc_entry/item/megaweed,1)
@@ -163,12 +163,12 @@ ABSTRACT_TYPE(/datum/req_contract/special/surgery)
 /datum/req_contract/special/pizza_party
 	name = "Pizza Party"
 	req_sheet = new /obj/item/paper/requisition/pizza_party
-	payout = PAY_TRADESMAN*10
+	payout = PAY::TRADESMAN*10
 
 	nt
 		name = "Pizza Party (NanoTrasen)"
 		req_sheet = new /obj/item/paper/requisition/pizza_party/nt
-		payout =  PAY_TRADESMAN*10
+		payout =  PAY::TRADESMAN*10
 
 	New()
 		src.rc_entries += rc_buildentry(/datum/rc_entry/food/pizza,rand(10,15)*12)
@@ -180,7 +180,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/surgery)
 ABSTRACT_TYPE(/datum/req_contract/special/chef)
 /datum/req_contract/special/chef
 	weight = 50
-	payout = PAY_DOCTORATE*18*3
+	payout = PAY::DOCTORATE*18*3
 	req_sheet = new /obj/item/paper/requisition/food_order
 	var/mealflag = MEAL_TIME_BREAKFAST
 	var/list/cornucopia = list()
@@ -259,4 +259,4 @@ ABSTRACT_TYPE(/datum/req_contract/special/chef)
 /datum/rc_entry/reagent/blood
 	name = "blood"
 	chem_ids = "blood"
-	feemod = PAY_UNTRAINED/10
+	feemod = PAY::UNTRAINED/10

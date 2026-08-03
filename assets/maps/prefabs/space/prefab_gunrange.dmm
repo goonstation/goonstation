@@ -116,7 +116,7 @@
 	dir = 1
 	},
 /obj/decal/stripe_caution,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/prefab/shooting_range)
 "fD" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
@@ -538,7 +538,7 @@
 /area/prefab/shooting_range)
 "Nk" = (
 /obj/decal/stripe_caution,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/prefab/shooting_range)
 "Oz" = (
 /obj/machinery/light/incandescent/cool/very{
@@ -566,7 +566,7 @@
 	},
 /obj/fakeobject/cargopad,
 /obj/decal/stripe_caution,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/prefab/shooting_range)
 "PM" = (
 /obj/item/casing/cannon,

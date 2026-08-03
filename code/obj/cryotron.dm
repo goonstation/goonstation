@@ -108,7 +108,7 @@
 		folks_to_spawn.Cut(1,2)
 		var/datum/job/job = their_jobs[1]
 		their_jobs.Cut(1,2)
-		var/be_loud = job ? job.radio_announcement : 1
+		var/be_loud = job ? (job.radio_announcement && !job.change_name_on_spawn) : TRUE
 		if (!istype(thePerson) || thePerson.loc != src)
 			busy = 0
 			return (folks_to_spawn.len != 0)

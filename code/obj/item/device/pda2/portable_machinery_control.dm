@@ -108,18 +108,33 @@
 			else
 				for (var/obj/O in src.machinerylist )
 					if (istype(O, src.our_machinery))
-						. += "<A href='byond://?src=\ref[src];op=control;machinery=\ref[O]'>[O] at [get_area(O)]</A><BR>"
+						var/area/A = get_area(O)
+						var/area_string = "Off-[global.station_or_ship()] Location"
+						if (istype(A, /area/station))
+							area_string = A
+						. += "<A href='byond://?src=\ref[src];op=control;machinery=\ref[O]'>[O] at [area_string]</A><BR>"
 
 			. += "<BR><A href='byond://?src=\ref[src];op=scanmachinery'>Scan for linkable machinery</A><BR>"
 
 		else // Control a particular piece of machinery.
 
 			. += "<B>[src.active]</B><BR> Status: (<A href='byond://?src=\ref[src];op=control;machinery=\ref[src.active]'><i>refresh</i></A>)<BR>"
+			var/area_string = "Off-[global.station_or_ship()] Location"
+			var/area/A = get_area(src.active)
+			if (istype(A, /area/station))
+				area_string = A.name
+			var/home_string = "Off-[global.station_or_ship()] Location"
 
 			if (istype(src.active, /obj/machinery/port_a_brig/))
 				var/obj/machinery/port_a_brig/P2 = src.active
+				if (!P2.homeloc)
+					home_string = "N/A"
+				else
+					var/area/home_area = get_area(P2.homeloc)
+					if (istype(home_area, /area/station))
+						home_string = home_area.name
 
-				. += "Location: [get_area(P2)] (Home: [P2.homeloc ? "[get_area(P2.homeloc)]" : "N/A"])<BR>"
+				. += "Location: [area_string] (Home: [home_string])<BR>"
 				. += "Occupant: [P2.occupant ? "[P2.occupant.name]" : "None"] ([P2.locked ? "locked" : "unlocked"])"
 
 				. += "<BR>\[<A href='byond://?src=\ref[src];op=lock'>Toggle lock</A>\] "
@@ -129,8 +144,14 @@
 
 			else if (istype(src.active, /obj/machinery/sleeper/port_a_medbay))
 				var/obj/machinery/sleeper/port_a_medbay/P2 = src.active
+				if (!P2.homeloc)
+					home_string = "N/A"
+				else
+					var/area/home_area = get_area(P2.homeloc)
+					if (istype(home_area, /area/station))
+						home_string = home_area.name
 
-				. += "Location: [get_area(P2)] (Home: [P2.homeloc ? "[get_area(P2.homeloc)]" : "N/A"])<BR>"
+				. += "Location: [area_string] (Home: [home_string])<BR>"
 				. += "Occupant: [P2.occupant ? "[P2.occupant.name]" : "None"]"
 
 				. += "<BR>\[<A href='byond://?src=\ref[src];op=summon'>Summon</A>\] "
@@ -139,8 +160,14 @@
 
 			else if (istype(src.active, /obj/machinery/vending/port_a_nanomed/))
 				var/obj/machinery/vending/port_a_nanomed/P2 = src.active
+				if (!P2.homeloc)
+					home_string = "N/A"
+				else
+					var/area/home_area = get_area(P2.homeloc)
+					if (istype(home_area, /area/station))
+						home_string = home_area.name
 
-				. += "Location: [get_area(P2)] (Home: [P2.homeloc ? "[get_area(P2.homeloc)]" : "N/A"])"
+				. += "Location: [area_string] (Home: [home_string])<BR>"
 
 				. += "<BR>\[<A href='byond://?src=\ref[src];op=summon'>Summon</A>\] "
 				. += "\[<A href='byond://?src=\ref[src];op=return'>Send to home turf</A>\]<BR>"
@@ -148,8 +175,14 @@
 
 			else if (istype(src.active, /obj/storage/closet/port_a_sci/))
 				var/obj/storage/closet/port_a_sci/P2 = src.active
+				if (!P2.homeloc)
+					home_string = "N/A"
+				else
+					var/area/home_area = get_area(P2.homeloc)
+					if (istype(home_area, /area/station))
+						home_string = home_area.name
 
-				. += "Location: [get_area(P2)] (Home: [P2.homeloc ? "[get_area(P2.homeloc)]" : "N/A"])"
+				. += "Location: [area_string] (Home: [home_string])<BR>"
 
 				. += "\[<A href='byond://?src=\ref[src];op=return'>Send to home turf</A>\]<BR>"
 				. += "<HR><A href='byond://?src=\ref[src];op=machinerylist'>Return to list</A>"

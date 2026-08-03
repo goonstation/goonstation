@@ -9,6 +9,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 	// these are booby traps, self-defense mechanisms, hardware faults or just other nasty shit that can fuck you up when you
 	// use the artifact for anything
 	var/type_name = "bad artifact code"
+	var/add_message = "does a thing. This message shouldn't be displayed!" //message displayed when the fault is added by an agitator
 	var/trigger_prob = 0
 	var/tmp/datum/artifact/holder = null
 	var/halt_loop = 0
@@ -21,6 +22,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 /datum/artifact_fault/burn
 	// sets the victim on fire
 	type_name = "Fire"
+	add_message = "seems to burst into flames, before immediately extinguishing itself."
 	trigger_prob = 8
 	var/burn_amount = 40
 
@@ -35,6 +37,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 /datum/artifact_fault/irradiate
 	// irradiates the victim
 	type_name = "Radiation"
+	add_message = "seems to briefly emit a green light." //unsure if this wording is correct
 	trigger_prob = 8
 	var/rads_amount = 2 SIEVERTS
 
@@ -47,6 +50,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 /datum/artifact_fault/shutdown
 	// deactivates the artifact
 	type_name = "Deactivation"
+	add_message = "'s glow seems to dim slightly."
 	trigger_prob = 10
 	halt_loop = 1
 
@@ -61,6 +65,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 /datum/artifact_fault/warp
 	// warps the user off somewhere random
 	type_name = "Teleportation"
+	add_message = "vanishes for a moment, then immediately reappears."
 	trigger_prob = 15
 
 	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
@@ -79,6 +84,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 /datum/artifact_fault/grow
 	// embiggens the artifact
 	type_name = "Growth"
+	add_message = "seems to grow slightly larger."
 	trigger_prob = 10
 
 	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
@@ -101,6 +107,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 /datum/artifact_fault/shrink
 	// ensmallens the artifact
 	type_name = "Shrinkage"
+	add_message = "seems to shrink slightly."
 	trigger_prob = 10
 
 	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
@@ -122,6 +129,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 /datum/artifact_fault/murder
 	// gibs the user
 	type_name = "Vaporization"
+	add_message = "sparks violently!"
 	trigger_prob = 1
 	halt_loop = 1
 
@@ -142,6 +150,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 /datum/artifact_fault/explode
 	// causes an explosion and destroys the artifact
 	type_name = "Explosion"
+	add_message = "shudders violently!"
 	trigger_prob = 1
 	halt_loop = 1
 
@@ -160,6 +169,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 /datum/artifact_fault/zap
 	// electrocutes the user
 	type_name = "Electricity"
+	add_message = "releases sparks."
 	trigger_prob = 6
 
 	deploy(var/obj/O,var/mob/living/user,var/atom/cosmeticSource)
@@ -175,6 +185,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 
 ABSTRACT_TYPE(/datum/artifact_fault/messager/)
 /datum/artifact_fault/messager
+	add_message = "makes a strange noise."
 	trigger_prob = 30
 	var/say_instead = FALSE
 	var/text_style = null
@@ -274,6 +285,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/messager/)
 
 /datum/artifact_fault/poison
 	type_name = "Toxins"
+	add_message = "opens a hidden compartment containing a sharp needle, before closing again."
 	trigger_prob = 8
 	var/poison_type = "toxin"
 	var/poison_amount = 10

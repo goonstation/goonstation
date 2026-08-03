@@ -52,6 +52,7 @@
 		src.icon_state = pick("plant_intestines", "plant_intestines_bloom")
 
 TYPEINFO(/obj/item/organ/intestines/cyber)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/organ/intestines/cyber

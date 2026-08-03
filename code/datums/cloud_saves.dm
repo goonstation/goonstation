@@ -106,7 +106,8 @@
 	proc/putData(key, value)
 		if(value == src.data[key]) //don't bother sending data if we'd be making no change
 			return TRUE
-
+		if (!istext(value) && !isnum_safe(value))
+			CRASH("Attempt to put cloud data with unsupported type, value: [value]")
 		if (src.simulating)
 			// Local fallback, update JSON file
 			src.putSimulatedCloud("data", key, value)

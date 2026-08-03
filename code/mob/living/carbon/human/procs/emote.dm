@@ -650,29 +650,12 @@
 				else
 					src.show_text("You just don't feel kawaii enough to uguu right now!", "red")
 					return
-
 			if ("juggle")
-				if (!src.restrained())
-					if (src.emote_check(voluntary, 25))
+				if (src.can_juggle && src.emote_check(voluntary, 25))
+					if(!src.juggle_emote())
 						m_type = 1
-						if (src.traitHolder?.hasTrait("training_clown") || src.traitHolder?.hasTrait("training_mime") || src.can_juggle)
-							var/obj/item/thing = src.equipped()
-							if (!thing)
-								if (src.l_hand)
-									thing = src.l_hand
-								else if (src.r_hand)
-									thing = src.r_hand
-							if (thing && !thing.cant_drop)
-								if (src.juggling())
-									if (prob(src.juggling.len * 5)) // might drop stuff while already juggling things
-										src.drop_juggle()
-									else
-										src.add_juggle(thing)
-								else
-									src.add_juggle(thing)
-							else
-								message = "<B>[src]</B> wiggles [his_or_her(src)] fingers a bit.[prob(10) ? " Weird." : null]"
-								maptext_out = "<I>wiggles [his_or_her(src)] fingers a bit.</I>"
+						message = "<B>[src]</B> wiggles [his_or_her(src)] fingers a bit.[prob(10) ? " Weird." : null]"
+						maptext_out = "<I>wiggles [his_or_her(src)] fingers a bit.</I>"
 			if ("twirl", "spin")
 				if (!src.restrained())
 					if (src.emote_check(voluntary, 25))
@@ -2394,11 +2377,14 @@
 	torso.render_source = src.render_target
 	torso.filters += filter(type="alpha", icon=icon('icons/mob/humanmasks.dmi', "torso"))
 	torso.appearance_flags = KEEP_APART | PIXEL_SCALE
+	var/image/blank = image(null, src)
+	blank.render_source = src.render_target
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, "dabbify")
 	src.update_canmove()
 	src.set_dir(SOUTH)
 	src.dir_locked = TRUE
 	sleep(0.1) //so the direction setting actually takes place
+	world << blank
 	world << torso
 	world << right_arm
 	world << left_arm
@@ -2414,6 +2400,7 @@
 		animate(left_arm, transform = null, pixel_y = 0, pixel_x = 0, 4, 1, CIRCULAR_EASING)
 		animate(right_arm, transform = null, pixel_y = 0, pixel_x = 0, 4, 1, CIRCULAR_EASING)
 		sleep(0.5 SECONDS)
+		qdel(blank)
 		qdel(torso)
 		qdel(right_arm)
 		qdel(left_arm)

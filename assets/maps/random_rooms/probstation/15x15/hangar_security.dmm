@@ -1,0 +1,968 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ag" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/disposalpipe/segment/bent/north,
+/turf/simulated/floor/stairs{
+	dir = 4
+	},
+/area/station/hangar/sec)
+"aP" = (
+/obj/machinery/floorflusher/minibrig3,
+/obj/disposalpipe/trunk/brig{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/red/checker{
+	dir = 4
+	},
+/area/station/security/checkpoint/podbay)
+"bv" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/security,
+/turf/simulated/floor/red,
+/area/station/security/checkpoint/podbay)
+"cv" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor,
+/area/station/hangar/sec)
+"cE" = (
+/obj/machinery/firealarm/directional/south,
+/turf/simulated/floor/black,
+/area/station/security/checkpoint/podbay)
+"eJ" = (
+/obj/machinery/vehicle/pod_smooth/heavy/security,
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/sec)
+"eN" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay2,
+/turf/space,
+/area/space)
+"fj" = (
+/obj/machinery/door/airlock/pyro/glass/security,
+/obj/mapping_helper/access/brig,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/red,
+/area/station/security/checkpoint/podbay)
+"fH" = (
+/obj/machinery/r_door_control/podbay/security,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
+/area/station/hangar/sec)
+"gS" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 6
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/sec)
+"gY" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/storage/closet/welding_supply,
+/obj/machinery/light_switch/directional/south,
+/turf/simulated/floor,
+/area/station/hangar/sec)
+"io" = (
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk/north,
+/turf/simulated/floor/red/side,
+/area/station/security/checkpoint/podbay)
+"iw" = (
+/obj/machinery/firealarm/directional/north,
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/sec)
+"ix" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/red/side{
+	dir = 1
+	},
+/area/station/security/checkpoint/podbay)
+"je" = (
+/obj/table/reinforced/auto,
+/obj/machinery/recharger,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/red/side{
+	dir = 6
+	},
+/area/station/security/checkpoint/podbay)
+"jh" = (
+/obj/submachine/weapon_vendor/security,
+/obj/machinery/light_switch/directional/south{
+	pixel_x = -8
+	},
+/obj/machinery/firealarm/directional/south{
+	pixel_x = 8
+	},
+/turf/simulated/floor/red/side{
+	dir = 10
+	},
+/area/station/security/checkpoint/podbay)
+"jy" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/machinery/portable_reclaimer,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor,
+/area/station/hangar/sec)
+"jG" = (
+/obj/table/reinforced/auto,
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/red/side{
+	dir = 1
+	},
+/area/station/security/checkpoint/podbay)
+"jN" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/crowbar,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/rack,
+/obj/item/tank/air{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/clothing/suit/space/emerg{
+	pixel_x = 6
+	},
+/obj/item/crowbar{
+	pixel_x = 3;
+	pixel_y = -1
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = 5;
+	pixel_y = 1
+	},
+/obj/item/clothing/head/emerg{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor,
+/area/station/hangar/sec)
+"jX" = (
+/turf/simulated/floor/red/side{
+	dir = 8
+	},
+/area/station/security/checkpoint/podbay)
+"kr" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/red/side,
+/area/station/security/checkpoint/podbay)
+"kA" = (
+/obj/stool/chair/office/red{
+	dir = 4
+	},
+/obj/landmark/start/job/security_officer,
+/turf/simulated/floor/red/side{
+	dir = 4
+	},
+/area/station/security/checkpoint/podbay)
+"kN" = (
+/obj/machinery/computer3/generic/secure_data,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/red/side{
+	dir = 4
+	},
+/area/station/security/checkpoint/podbay)
+"lu" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/machinery/light/small/floor,
+/turf/simulated/floor,
+/area/station/hangar/sec)
+"lF" = (
+/obj/machinery/flasher/minibrig3/new_walls/north,
+/turf/simulated/floor/red/checker{
+	dir = 4
+	},
+/area/station/security/checkpoint/podbay)
+"lJ" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/disposaloutlet/east{
+	pixel_x = 16
+	},
+/obj/disposalpipe/trunk/brig{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/checkpoint/podbay)
+"mT" = (
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/sec)
+"nB" = (
+/obj/machinery/light/incandescent/small,
+/turf/simulated/floor/sanitary,
+/area/station/security/checkpoint/podbay)
+"oy" = (
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/sec)
+"pu" = (
+/turf/simulated/floor/red/checker{
+	dir = 4
+	},
+/area/station/security/checkpoint/podbay)
+"pw" = (
+/obj/stool/bed,
+/obj/item/clothing/glasses/vr/arcade,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/red/checker{
+	dir = 4
+	},
+/area/station/security/checkpoint/podbay)
+"rd" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/table/auto,
+/obj/item/crowbar{
+	pixel_x = 1;
+	pixel_y = 6
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -4;
+	pixel_y = 7
+	},
+/obj/item/hand_labeler{
+	pixel_x = 4
+	},
+/turf/simulated/floor,
+/area/station/hangar/sec)
+"rq" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/junction/left/east,
+/turf/simulated/floor,
+/area/station/security/checkpoint/podbay)
+"rr" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/security/checkpoint/podbay)
+"su" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/hangar/sec)
+"tg" = (
+/obj/table/reinforced/auto,
+/obj/item/folder,
+/turf/simulated/floor/red/side{
+	dir = 9
+	},
+/area/station/security/checkpoint/podbay)
+"tB" = (
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/security_horizontal/vertical,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/sec)
+"tW" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big{
+	dir = 8
+	},
+/obj/machinery/vending/air_vendor/plasma,
+/turf/simulated/floor,
+/area/station/hangar/sec)
+"tY" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 10
+	},
+/obj/machinery/manufacturer/hangar,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor,
+/area/station/hangar/sec)
+"vI" = (
+/obj/vehicle/tug/security,
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/station/security/checkpoint/podbay)
+"wu" = (
+/obj/stool,
+/turf/simulated/floor/red/checker{
+	dir = 4
+	},
+/area/station/security/checkpoint/podbay)
+"xj" = (
+/obj/storage/secure/crate/weapon/confiscated_items,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/station/security/checkpoint/podbay)
+"yd" = (
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
+/area/station/security/checkpoint/podbay)
+"yo" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light,
+/turf/space,
+/area/space)
+"Av" = (
+/obj/machinery/door_timer/minibrig3/new_walls/north{
+	dir = 2
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_east,
+/turf/simulated/floor/red/side{
+	dir = 5
+	},
+/area/station/security/checkpoint/podbay)
+"AK" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/hangar/sec)
+"Ba" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor,
+/area/station/security/checkpoint/podbay)
+"Bx" = (
+/obj/item/storage/toilet{
+	dir = 4
+	},
+/obj/machinery/sink/slim{
+	pixel_y = 12
+	},
+/turf/simulated/floor/sanitary,
+/area/station/security/checkpoint/podbay)
+"Dq" = (
+/obj/machinery/firealarm/directional/south,
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/sec)
+"Em" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/security/checkpoint/podbay)
+"EY" = (
+/obj/storage/secure/crate/weapon/confiscated_items,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/black,
+/area/station/security/checkpoint/podbay)
+"FM" = (
+/obj/machinery/shower{
+	dir = 4;
+	pixel_x = 6
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/sanitary,
+/area/station/security/checkpoint/podbay)
+"GC" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor/red/side{
+	dir = 4
+	},
+/area/station/security/checkpoint/podbay)
+"Hy" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/station/security/checkpoint/podbay)
+"HD" = (
+/obj/machinery/camera/directional/south,
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/sec)
+"Io" = (
+/turf/simulated/wall/auto/supernorn/colored/red,
+/area/station/security/checkpoint/podbay)
+"Iu" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 5
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 6
+	},
+/turf/simulated/floor,
+/area/station/hangar/sec)
+"IO" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/hangar/sec)
+"JP" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/checkpoint/podbay)
+"Kx" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/sec)
+"Nb" = (
+/obj/storage/secure/closet/brig_automatic/minibrig3,
+/obj/disposalpipe/segment/brig{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/red/checker{
+	dir = 4
+	},
+/area/station/security/checkpoint/podbay)
+"OL" = (
+/obj/table/reinforced/auto,
+/obj/machinery/computer3/generic/personal,
+/obj/machinery/phone/wall{
+	pixel_y = 28;
+	name = "Security Hangar Minibrig Phone";
+	phone_id = "Security Hangar Minibrig"
+	},
+/obj/machinery/camera/directional/west,
+/turf/simulated/floor/red/checker{
+	dir = 4
+	},
+/area/station/security/checkpoint/podbay)
+"PY" = (
+/obj/storage/crate,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 9
+	},
+/obj/item/shipcomponent/mainweapon/taser{
+	pixel_x = -8;
+	pixel_y = 6
+	},
+/obj/item/shipcomponent/mainweapon/taser{
+	pixel_x = -10;
+	pixel_y = 2
+	},
+/obj/item/shipcomponent/secondary_system/tractor_beam{
+	pixel_x = 6
+	},
+/obj/item/shipcomponent/secondary_system/tractor_beam{
+	pixel_x = 10;
+	pixel_y = -2
+	},
+/turf/simulated/floor,
+/area/station/hangar/sec)
+"Qd" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/landmark/start/job/security_assistant,
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/station/security/checkpoint/podbay)
+"Qi" = (
+/obj/machinery/door/airlock/pyro/glass/security/alt,
+/obj/mapping_helper/access/security,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/red,
+/area/station/security/checkpoint/podbay)
+"Qm" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor,
+/area/station/security/checkpoint/podbay)
+"QX" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/hangar/sec)
+"Ta" = (
+/obj/storage/secure/closet/security/equipment,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/red/side{
+	dir = 8
+	},
+/area/station/security/checkpoint/podbay)
+"Ti" = (
+/obj/machinery/door/airlock/pyro,
+/turf/simulated/floor/sanitary,
+/area/station/security/checkpoint/podbay)
+"Ui" = (
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/station/security/checkpoint/podbay)
+"Uk" = (
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4
+	},
+/obj/mapping_helper/access/security,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor/red,
+/area/station/hangar/sec)
+"Un" = (
+/turf/space,
+/area/space)
+"Uw" = (
+/obj/machinery/door_control/podbay/security/new_walls/east{
+	pixel_x = 23;
+	pixel_y = 1
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north,
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk/south,
+/turf/simulated/floor,
+/area/station/hangar/sec)
+"Ux" = (
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
+/area/station/hangar/sec)
+"Wp" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor/red/side{
+	dir = 8
+	},
+/area/station/security/checkpoint/podbay)
+"Wr" = (
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor,
+/area/station/security/checkpoint/podbay)
+"Wy" = (
+/obj/warp_beacon/security,
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"WB" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/checkpoint/podbay)
+"WM" = (
+/obj/rack,
+/obj/item/storage/box/evidence,
+/obj/machinery/camera/directional/south,
+/turf/simulated/floor/black,
+/area/station/security/checkpoint/podbay)
+"XY" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/checkpoint/podbay)
+"Yd" = (
+/obj/rack,
+/obj/item/storage/box/evidence,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/black,
+/area/station/security/checkpoint/podbay)
+"ZH" = (
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4
+	},
+/obj/mapping_helper/access/security,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/horizontal,
+/obj/machinery/secscanner{
+	dir = 4;
+	pixel_x = 20
+	},
+/turf/simulated/floor/red,
+/area/station/security/checkpoint/podbay)
+
+(1,1,1) = {"
+Un
+Un
+Un
+Un
+Un
+Un
+Un
+Wy
+Un
+Un
+Un
+Un
+Un
+Un
+Un
+"}
+(2,1,1) = {"
+Un
+Un
+Un
+Un
+Un
+Un
+Un
+yo
+Un
+Un
+Un
+Un
+Un
+Un
+Un
+"}
+(3,1,1) = {"
+Un
+Un
+Un
+Un
+Un
+Un
+Un
+eN
+Un
+Un
+Un
+Un
+Un
+Un
+Un
+"}
+(4,1,1) = {"
+Un
+Un
+Ux
+Ux
+tB
+tB
+tB
+fH
+tB
+tB
+tB
+Ux
+Ux
+Un
+Un
+"}
+(5,1,1) = {"
+Un
+Un
+Ux
+Kx
+oy
+oy
+oy
+tW
+oy
+oy
+oy
+Kx
+Ux
+Un
+Un
+"}
+(6,1,1) = {"
+Un
+Un
+Ux
+oy
+oy
+eJ
+oy
+QX
+oy
+oy
+eJ
+HD
+Ux
+Un
+Un
+"}
+(7,1,1) = {"
+Un
+Un
+Ux
+iw
+oy
+oy
+oy
+lu
+oy
+oy
+oy
+Dq
+Ux
+Un
+Un
+"}
+(8,1,1) = {"
+Un
+Un
+Ux
+Kx
+oy
+oy
+gS
+Iu
+mT
+oy
+oy
+Kx
+Ux
+Un
+Un
+"}
+(9,1,1) = {"
+Un
+Un
+Ux
+Uw
+jN
+jy
+tY
+ag
+PY
+rd
+cv
+gY
+Ux
+Un
+Un
+"}
+(10,1,1) = {"
+Un
+Un
+Ux
+Ux
+IO
+AK
+su
+Uk
+IO
+AK
+su
+Ux
+Ux
+yd
+yd
+"}
+(11,1,1) = {"
+yd
+yd
+yd
+OL
+wu
+WB
+tg
+Wp
+jX
+Ta
+jh
+yd
+vI
+Yd
+yd
+"}
+(12,1,1) = {"
+Io
+Bx
+yd
+lF
+pu
+WB
+jG
+rq
+Wr
+Ba
+io
+JP
+Ui
+WM
+yd
+"}
+(13,1,1) = {"
+Io
+nB
+Ti
+pu
+aP
+fj
+ix
+Qm
+Em
+Hy
+kr
+Qi
+Qd
+cE
+yd
+"}
+(14,1,1) = {"
+Io
+FM
+yd
+pw
+Nb
+yd
+Av
+GC
+kA
+kN
+je
+yd
+xj
+EY
+yd
+"}
+(15,1,1) = {"
+Io
+Io
+yd
+yd
+lJ
+yd
+yd
+ZH
+bv
+XY
+rr
+yd
+XY
+rr
+yd
+"}

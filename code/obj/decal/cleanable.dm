@@ -719,6 +719,17 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	var/artist = null//the key of the one who wrote it
 	real_name = "writing"
 
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/pen)) // stop artist chatspamming everyone
+			var/hits = src
+			if (!src.name && isobj(src))
+				var/obj/self = src
+				hits = "\the [self.real_name]"
+			boutput(user, SPAN_COMBAT("<B>[user] hits [hits] with [W]!</B>"))
+			return
+		. = ..()
+
+
 	get_desc(dist)
 		. = "<br>[SPAN_NOTICE("It says[src.material ? src.material : src.color_name ? " in [src.color_name]" : null]:")]<br>[words]"
 		if (src.reagents?.total_volume)
@@ -1080,6 +1091,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	desc = "A fungal growth. Looks pretty nasty."
 	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "fungus1"
+	default_material = "mycelium"
 	var/amount = 1
 	can_sample = 1
 	sample_reagent = "space_fungus"

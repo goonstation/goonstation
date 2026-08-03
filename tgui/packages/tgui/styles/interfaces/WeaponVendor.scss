@@ -39,7 +39,10 @@ $categories: (
 
 @each $category, $colors in $categories {
   $bg: list.nth($colors, 1);
-  $text: if(list.length($colors) > 1, list.nth($colors, 2), var(--color-white));
+  $text: var(--color-white);
+  @if list.length($colors) > 1 {
+    $text: list.nth($colors, 2);
+  }
   .WeaponVendor__Credits {
     @at-root &--#{$category} {
       color: $bg;

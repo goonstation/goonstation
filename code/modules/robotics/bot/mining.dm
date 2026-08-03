@@ -231,7 +231,7 @@
 
 	onEnd()
 		if(checkStillValid())
-			target.damage_asteroid(bot.diglevel)
+			target.damage_asteroid(bot.diglevel, MINING_DMG_PICKAXE)
 			if(!istype(target, /turf/simulated/wall/auto/asteroid/))
 				bot.target = null
 		if(bot != null)

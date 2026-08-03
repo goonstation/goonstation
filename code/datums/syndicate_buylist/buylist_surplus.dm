@@ -44,12 +44,12 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 	name = "Old Hunting Rifle"
 	items = list(/obj/item/storage/box/hunting_rifle)
 	cost = 6
+	vr_allowed = FALSE // The generic buylist entry handles it showing up there
 	desc = "An old hunting rifle, comes with a scope and eight bullets. Use them wisely."
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP
 
 	spy
 		cost = 5
-		vr_allowed = FALSE
 		not_in_crates = TRUE
 		can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_NUKE_OP
 
@@ -166,3 +166,15 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 	items = list(/obj/item/basketball/lethal)
 	cost = 3
 	desc = "An even more illegal basketball capable of dangerous levels of balling."
+
+/datum/syndicate_buylist/surplus/batong
+	name = "Wind-up stun baton"
+	items = list(/obj/item/baton/windup)
+	cost = 3
+	desc = "An experimental but powerful stun baton. Requires a brief charge-up window to activate."
+
+/datum/syndicate_buylist/surplus/lasershotgun
+	name = "Laser shotgun"
+	cost = 5 //it does a lot of damage but overheats very fast and has limited charge
+	items = list(/obj/item/gun/energy/lasershotgun)
+	desc = "A very large laser shotgun with bouncing projectiles and a tendency to overheat."

@@ -815,6 +815,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/paper)
 	name = "zen garden"
 	icon = 'icons/turf/dojo.dmi'
 	icon_state = "sand"
+	can_dig = TRUE
 
 	horizontal
 		icon_state = "sand_horiz"

@@ -160,6 +160,7 @@
 	color_b = 0.95
 
 TYPEINFO(/obj/item/clothing/mask/moustache)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 2
 
 /obj/item/clothing/mask/moustache
@@ -170,7 +171,6 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 	see_face = FALSE
 	w_class = W_CLASS_TINY
 	c_flags = null
-	is_syndicate = 1
 
 	setupProperties()
 		..()
@@ -273,6 +273,7 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 	color_b = 1
 
 TYPEINFO(/obj/item/clothing/mask/gas/voice)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 6
 
 /obj/item/clothing/mask/gas/voice
@@ -281,20 +282,19 @@ TYPEINFO(/obj/item/clothing/mask/gas/voice)
 	icon_state = "gas_alt"
 	item_state = "gas_alt"
 	//vchange = 1
-	is_syndicate = 1
 
 	New()
 		..()
 		src.vchange = new(src)
 
 TYPEINFO(/obj/item/voice_changer)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 6
 
 /obj/item/voice_changer
 	name = "voice changer"
 	desc = "This voice-modulation device will dynamically disguise your voice to that of whoever is listed on your identification card, via incredibly complex algorithms. Discreetly fits inside most masks, and can be removed with wirecutters."
 	icon_state = "voicechanger"
-	is_syndicate = 1
 	var/permanent = FALSE
 	var/speech_modifiers = list(SPEECH_MODIFIER_VOICE_CHANGER)
 	HELP_MESSAGE_OVERRIDE({"Use the voice changer on a face-concealing mask to fit it inside. You will speak as and appear in chat as the name of your worn ID, or as "unknown" if you aren't wearing your ID. Use wirecutters on the mask to remove the voice changer."})
@@ -302,7 +302,14 @@ TYPEINFO(/obj/item/voice_changer)
 /obj/item/voice_changer/permanent
 	permanent = TRUE
 
+/obj/item/voice_changer/anonymizer
+	name = "voice anonymizer"
+	desc = "This voice-modulation device will scramble your voice such that it is unrecognizable. Discreetly fits inside most masks, and can be removed with wirecutters."
+	speech_modifiers = list(SPEECH_MODIFIER_VOICE_ANONYMIZER)
+	HELP_MESSAGE_OVERRIDE({"Use the voice anonymizer on a face-concealing mask to fit it inside. You will speak as and appear in chat as "unknown". Use wirecutters on the mask to remove the voice changer."})
+
 TYPEINFO(/obj/item/clothing/mask/monkey_translator)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 12	// 2x voice changer cost. It's complicated ok
 
 /obj/item/clothing/mask/monkey_translator
@@ -514,12 +521,88 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 
 /obj/item/clothing/mask/medical
 	name = "medical mask"
-	desc = "This mask does not work very well in low pressure environments."
+	desc = "This mask can have a mini-tank attached, but does not work very well in low pressure environments."
 	icon_state = "medical"
 	item_state = "medical"
 	c_flags = COVERSMOUTH | MASKINTERNALS
 	w_class = W_CLASS_SMALL
+	duration_put = 7 SECONDS
 	protective_temperature = 420
+
+	var/obj/item/tank/attached_tank
+
+	get_help_message(dist, mob/user)
+		. = "Detatch an attached tank with a <b>wrenching</b> tool.<br>Click with a <b>mini-tank</b> in-hand to attach it.<br>Can equip this item on someone else by targeting the <b>head</b> and <b>clicking</b> on [TEXT_INTENT_HELP] intent.<br><b>Does not work in space!</b>"
+
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (user.zone_sel.selecting == "head" && ishuman(target) && user.a_intent == INTENT_HELP)
+			var/mob/living/carbon/human/Htarget = target
+			if(Htarget.wear_mask)
+				boutput(user, SPAN_ALERT("[Htarget] is already wearing something on [his_or_her(Htarget)] face!"))
+				return
+			actions.start(new/datum/action/bar/icon/otherItem(user, Htarget, user.equipped(), SLOT_WEAR_MASK, 10 SECONDS), user) // longer actionbar than regular
+			return
+		..()
+
+	attackby(obj/item/I, mob/user)
+		if (iswrenchingtool(I))
+			if (!src.attached_tank)
+				boutput(user, SPAN_ALERT("There's no tank attached!"))
+				return
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 35, 1)
+			user.put_in_hand_or_drop(src.attached_tank)
+			src.attached_tank = null
+			src.w_class = W_CLASS_SMALL
+			src.UpdateIcon()
+			return
+
+		if (istype(I, /obj/item/tank/mini))
+			if (src.attached_tank)
+				boutput(user, SPAN_ALERT("There's already an attached tank!"))
+				return
+			playsound(src.loc, 'sound/items/Screwdriver2.ogg', 45, 1)
+			I.set_loc(src)
+			user.u_equip(I)
+			src.attached_tank = I
+			src.w_class = W_CLASS_NORMAL
+			src.UpdateIcon()
+			return
+
+		. = ..()
+
+	equipped(mob/user, slot)
+		. = ..()
+		if (slot != SLOT_WEAR_MASK)
+			return
+		SPAWN(1 DECI SECOND) // force equipping others doesn't set the wear_mask var in time
+			src.attached_tank?.toggle_valve()
+
+	get_desc(dist, mob/user)
+		. = ..()
+		if (src.attached_tank)
+			. += " It has [src.attached_tank] attached."
+		else
+			. += " It has no tank attached."
+
+	update_icon(...)
+		if (src.attached_tank)
+			var/image/mask_tank = src.SafeGetOverlayImage("mask_tank", src.attached_tank.icon, src.attached_tank.icon_state, pixel_x = 6, pixel_y = 2)
+			var/matrix/new_transform = mask_tank.transform
+			new_transform.Scale(-1, 1)
+			new_transform.Turn(180)
+			mask_tank.transform = new_transform
+			src.underlays += mask_tank
+		else
+			src.underlays.len = 0
+
+/obj/item/clothing/mask/medical/anesthetic
+	name = "anesthetic mask"
+	desc = "For when you want to put patients to sleep wtihout losing patience. Does not work in low-pressure enviornments."
+
+	New()
+		. = ..()
+		src.attached_tank = new /obj/item/tank/mini/anesthetic(src)
+		src.UpdateIcon()
 
 /obj/item/clothing/mask/muzzle
 	name = "muzzle"

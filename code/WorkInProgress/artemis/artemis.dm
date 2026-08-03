@@ -173,7 +173,8 @@
 				src.ship_marker = T
 
 #ifdef ARTEMIS_LINK_AT_ROUNDSTART
-		if(!is_syndicate && !special_places.Find(src.name))
+		var/typeinfo/obj/typeinfo = src.get_typeinfo()
+		if(!(typeinfo.analyser_flags & ANALYSER_SYNDIE_ONLY)) && !special_places.Find(src.name))
 			special_places.Add(src.name)
 #endif
 
@@ -484,7 +485,8 @@
 		if(back in M.client?.images)
 			M.client.images -= back
 
-
+TYPEINFO(/obj/artemis/arjuna)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/artemis/arjuna
 	name = "Arjuna-"
 	desc = "Arjuna"
@@ -498,7 +500,6 @@
 	vel_angle = 180
 	has_back = 0
 	bottom_x_offset = null
-	is_syndicate = TRUE
 
 	New()
 		..()

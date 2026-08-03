@@ -88,7 +88,9 @@
 			else
 				c_flags &= ~COVERSHAIR
 			src.tooltip_rebuild = TRUE
-			usr.set_clothing_icon_dirty()
+			if(ismob(src.loc))
+				var/mob/mob_loc = src.loc
+				mob_loc.set_clothing_icon_dirty()
 
 ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 /datum/chameleon_suit_pattern
@@ -198,6 +200,15 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_armor.dmi'
 		hides_from_examine = C_UNIFORM|C_SHOES|C_GLOVES
 
+	hop_jacket
+		name = /obj/item/clothing/suit/hopjacket::name
+		desc = /obj/item/clothing/suit/hopjacket::desc
+		icon_state = /obj/item/clothing/suit/hopjacket::icon_state
+		item_state = /obj/item/clothing/suit/hopjacket::item_state
+		sprite_item = /obj/item/clothing/suit/hopjacket::icon
+		sprite_worn = /obj/item/clothing/suit/hopjacket::wear_image_icon
+		sprite_hand = /obj/item/clothing/suit/hopjacket::inhand_image_icon
+
 	hos_cape
 		name = "Head of Security's cape"
 		desc = "A lightly-armored and stylish cape, made of heat-resistant materials. It probably won't keep you warm, but it would make a great security blanket!"
@@ -221,6 +232,12 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 		desc = "Someone who wears this means business."
 		icon_state = "detective"
 		item_state = "det_suit"
+
+	winter_coat
+		name = /obj/item/clothing/suit/wintercoat::name
+		desc = /obj/item/clothing/suit/wintercoat::desc
+		icon_state = /obj/item/clothing/suit/wintercoat::icon_state
+		item_state = /obj/item/clothing/suit/wintercoat::item_state
 
 	winter_coat_medical
 		name = "medical winter coat"
@@ -349,3 +366,9 @@ ABSTRACT_TYPE(/datum/chameleon_suit_pattern)
 		desc = "BuRK BuRK BuRK - Bork Bork Bork!"
 		icon_state = "chef"
 		item_state = "chef"
+
+	cape_rainbow
+		name = /obj/item/clothing/suit/bedsheet/cape/captain::name
+		desc = /obj/item/clothing/suit/bedsheet/cape/captain::desc
+		icon_state = /obj/item/clothing/suit/bedsheet/cape/captain::icon_state
+		item_state = /obj/item/clothing/suit/bedsheet/cape/captain::item_state

@@ -259,13 +259,13 @@
 			..()
 			if (isliving(user))
 				var/mob/living/L = user
-				L.spell_soulguard = SOULGUARD_RING
+				L.spell_soulguard = SOULGUARD::RING
 
 		unequipped(var/mob/user)
 			..()
 			if (isliving(user))
 				var/mob/living/L = user
-				L.spell_soulguard = SOULGUARD_INACTIVE
+				L.spell_soulguard = SOULGUARD::INACTIVE
 
 //random rings
 /obj/wizard_ring_generator

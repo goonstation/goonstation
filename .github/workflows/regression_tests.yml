@@ -1,0 +1,27 @@
+name: Regression Tests
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "15 0 * * *"
+
+jobs:
+  regression_test:
+    name: Regression Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: ./.github/actions/setup-byond
+
+      - name: Setup rust-g
+        run: |
+          tools/ci/install_rust_g.sh
+
+      - name: Build Regression Tests
+        run: |
+          tools/ci/dm.sh -DCIBUILD -DUNIT_TESTS -DUNIT_TESTS_RUN_TILL_COMPLETION -DUNIT_TESTS_REGRESSION_ONLY goonstation.dme
+
+      - name: Run Regression Tests
+        run: |
+          tools/ci/run_server.sh

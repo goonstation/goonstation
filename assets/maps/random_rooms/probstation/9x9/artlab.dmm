@@ -1,0 +1,594 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/table/auto,
+/obj/machinery/recharger,
+/obj/item/pinpointer/category/artifacts/safe{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/hand_labeler{
+	pixel_x = -1
+	},
+/turf/simulated/floor/grey,
+/area/station/science/artifact)
+"c" = (
+/obj/decal/tile_edge/stripe/corner/big2{
+	dir = 10
+	},
+/turf/simulated/floor/grey,
+/area/station/science/artifact)
+"d" = (
+/obj/machinery/light/incandescent/harsh{
+	dir = 4
+	},
+/turf/simulated/floor/grey,
+/area/station/science/artifact)
+"e" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
+/obj/disposalpipe/segment/bent/south,
+/turf/simulated/floor/grey,
+/area/station/science/artifact)
+"f" = (
+/obj/decal/tile_edge/stripe/corner/big2{
+	dir = 6
+	},
+/obj/disposalpipe/segment/bent/north,
+/turf/simulated/floor/grey,
+/area/station/science/artifact)
+"g" = (
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/artifact)
+"h" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/turf/simulated/floor/grey,
+/area/station/science/artifact)
+"i" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/decal/tile_edge/stripe/corner/big2{
+	dir = 9
+	},
+/turf/simulated/floor/grey,
+/area/station/science/artifact)
+"k" = (
+/obj/machinery/networked/test_apparatus/electrobox,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/railing/purple,
+/turf/simulated/floor/grey,
+/area/station/science/artifact)
+"l" = (
+/obj/machinery/networked/test_apparatus/pitching_machine,
+/obj/machinery/power/data_terminal,
+/obj/decal/poster/wallsign/iso/warning,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/grey,
+/area/station/science/artifact)
+"m" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/grey,
+/area/station/science/artifact)
+"n" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/camera/directional/north,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/artifact)
+"o" = (
+/obj/decal/tile_edge/stripe/big,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/grey,
+/area/station/science/artifact)
+"p" = (
+/turf/simulated/wall/auto/supernorn/colored/purple,
+/area/station/science/artifact)
+"q" = (
+/turf/simulated/floor/grey,
+/area/station/science/artifact)
+"r" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/obj/railing/purple,
+/turf/simulated/floor/grey,
+/area/station/science/artifact)
+"s" = (
+/obj/decal/tile_edge/stripe/corner/big2{
+	dir = 5
+	},
+/obj/machinery/light/incandescent/harsh{
+	nostick = 1
+	},
+/turf/simulated/floor/grey,
+/area/station/science/artifact)
+"t" = (
+/obj/machinery/networked/test_apparatus/xraymachine,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/grey,
+/area/station/science/artifact)
+"u" = (
+/obj/machinery/door/airlock/pyro/glass,
+/obj/mapping_helper/access/artlab,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/artifact)
+"v" = (
+/obj/decal/tile_edge/stripe/corner/big2{
+	dir = 5
+	},
+/obj/disposalpipe/trunk/east,
+/obj/machinery/floorflusher{
+	name = "artifact flusher";
+	mail_tag = "artifact_ejector";
+	id = "artchute"
+	},
+/turf/simulated/floor/circuit/purple,
+/area/station/science/artifact)
+"w" = (
+/obj/machinery/computer3/terminal/zeta,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/phone/wall{
+	pixel_y = 30
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/artifact)
+"x" = (
+/obj/machinery/door_control{
+	id = "artlab";
+	name = "Artifact Lab Blast Doors";
+	pixel_y = 26
+	},
+/obj/decal/tile_edge/stripe/big,
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/grey,
+/area/station/science/artifact)
+"y" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/corner/big2{
+	dir = 10
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/grey,
+/area/station/science/artifact)
+"z" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "artlab";
+	opacity = 0;
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/science/artifact)
+"A" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/grey,
+/area/station/science/artifact)
+"B" = (
+/obj/table/auto,
+/obj/item/storage/box/tapebox{
+	pixel_x = 4;
+	pixel_y = 13
+	},
+/obj/item/paper_bin/artifact_paper{
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/obj/item/paper_bin{
+	pixel_x = -7;
+	pixel_y = 2
+	},
+/obj/machinery/light/incandescent/harsh{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/artifact)
+"C" = (
+/obj/machinery/light/incandescent/harsh{
+	nostick = 1
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/circuit/purple,
+/area/station/science/artifact)
+"D" = (
+/obj/machinery/firealarm/directional/east,
+/turf/simulated/floor/grey,
+/area/station/science/artifact)
+"E" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/artifact)
+"F" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/grey,
+/area/station/science/artifact)
+"G" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/disposal/small/east,
+/obj/disposalpipe/trunk,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/artifact)
+"H" = (
+/obj/machinery/light/incandescent/harsh{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe/corner/big2{
+	dir = 6
+	},
+/obj/decal/tile_edge/stripe/corner/big2{
+	dir = 10
+	},
+/obj/disposalpipe/segment/bent/south,
+/turf/simulated/floor/grey,
+/area/station/science/artifact)
+"I" = (
+/obj/machinery/networked/test_apparatus/impact_pad,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/grey,
+/area/station/science/artifact)
+"J" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
+/obj/landmark/spawner/artifact,
+/turf/simulated/floor/grey,
+/area/station/science/artifact)
+"K" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/science/artifact)
+"L" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/grey,
+/area/station/science/artifact)
+"M" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/grey,
+/area/station/science/artifact)
+"N" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/artifact)
+"O" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/grey,
+/area/station/science/artifact)
+"P" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/networked/artifact_console,
+/turf/simulated/floor/grey,
+/area/station/science/artifact)
+"Q" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light_switch/directional/north,
+/turf/simulated/floor/grey,
+/area/station/science/artifact)
+"R" = (
+/obj/submachine/cargopad/artlab,
+/obj/item/cargotele{
+	pixel_x = 5;
+	pixel_y = 8
+	},
+/obj/item/paper{
+	name = "emergency ejection contingency plan";
+	pixel_x = -6;
+	pixel_y = -2
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/artifact)
+"S" = (
+/obj/machinery/firealarm/directional/west,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/storage/tape_drive{
+	bank_id = "Artlab";
+	locked = 0;
+	setup_drive_type = /obj/item/disk/data/tape/artifact_research
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/artifact)
+"T" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/artifact)
+"U" = (
+/obj/stool/chair/office/purple{
+	dir = 1
+	},
+/obj/landmark/start/job/scientist,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/artifact)
+"V" = (
+/obj/machinery/networked/test_apparatus/heater,
+/obj/landmark/spawner/artifact,
+/obj/machinery/light/incandescent/harsh{
+	dir = 8
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/grey,
+/area/station/science/artifact)
+"W" = (
+/obj/machinery/camera/directional/south,
+/obj/decal/tile_edge/stripe/corner/big2{
+	dir = 9
+	},
+/turf/simulated/floor/grey,
+/area/station/science/artifact)
+"X" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/mapping_helper/access/artlab,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/artifact)
+"Y" = (
+/obj/machinery/door/airlock/pyro/glass,
+/obj/mapping_helper/access/artlab,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/artifact)
+"Z" = (
+/obj/decal/tile_edge/stripe/corner/big2{
+	dir = 5
+	},
+/obj/disposalpipe/junction/right/east,
+/obj/machinery/activation_button/flusher_button{
+	id = "artchute";
+	name = "Chute Activator";
+	pixel_y = -21
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/obj/decal/tile_edge/stripe/corner/big2{
+	dir = 9
+	},
+/obj/decal/tile_edge/stripe/corner/big2{
+	dir = 10
+	},
+/turf/simulated/floor/grey,
+/area/station/science/artifact)
+
+(1,1,1) = {"
+p
+p
+p
+p
+X
+z
+z
+z
+p
+"}
+(2,1,1) = {"
+p
+S
+B
+G
+N
+f
+r
+v
+p
+"}
+(3,1,1) = {"
+p
+w
+U
+g
+K
+o
+k
+C
+p
+"}
+(4,1,1) = {"
+p
+n
+T
+R
+K
+H
+M
+Z
+p
+"}
+(5,1,1) = {"
+u
+E
+K
+K
+K
+x
+t
+e
+Y
+"}
+(6,1,1) = {"
+p
+Q
+P
+V
+a
+c
+h
+W
+p
+"}
+(7,1,1) = {"
+p
+F
+y
+L
+i
+O
+m
+s
+p
+"}
+(8,1,1) = {"
+p
+l
+d
+D
+A
+q
+I
+J
+p
+"}
+(9,1,1) = {"
+p
+p
+p
+p
+X
+z
+z
+z
+p
+"}

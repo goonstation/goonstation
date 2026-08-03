@@ -62,7 +62,7 @@ ADMIN_INTERACT_PROCS(/obj/item/genetics_injector/dna_injector, proc/admin_comman
 				return
 
 			var/datum/bioEffect/NEW = new BE.type()
-			copy_datum_vars(BE, NEW, blacklist=list("owner", "holder", "dnaBlocks"))
+			copy_datum_vars(BE, NEW)
 			target.bioHolder.AddEffectInstance(NEW,1)
 			src.uses--
 			src.update_appearance()
@@ -152,6 +152,8 @@ ADMIN_INTERACT_PROCS(/obj/item/genetics_injector/dna_injector, proc/admin_comman
 /obj/item/speed_injector
 	name = "screwdriver"
 	desc = "A hollow tool used to turn slotted screws and other slotted objects."
+	SYNDICATE_STEALTH_DESCRIPTION("There's a hole in the back that is the perfect size to hold DNA injectors.", null)
+	tooltip_flags = REBUILD_USER
 	icon = 'icons/obj/items/tools/screwdriver.dmi'
 	inhand_image_icon = 'icons/mob/inhand/tools/screwdriver.dmi'
 	icon_state = "screwdriver"

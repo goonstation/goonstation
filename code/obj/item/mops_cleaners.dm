@@ -612,6 +612,8 @@ TRASH BAG
 /obj/item/caution/traitor
 	item_function_flags = IMMUNE_TO_ACID
 	var/obj/item/reagent_containers/payload
+	SYNDICATE_STEALTH_DESCRIPTION("A small nozzle can be seen poking out the top.", null)
+	tooltip_flags = REBUILD_USER
 
 	New()
 		. = ..()
@@ -773,6 +775,7 @@ TRASH BAG
 // handheld vacuum
 
 TYPEINFO(/obj/item/handheld_vacuum)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("bamboo" = 3,
 				"metal" = 10)
 /obj/item/handheld_vacuum

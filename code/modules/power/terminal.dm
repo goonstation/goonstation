@@ -156,7 +156,7 @@ TYPEINFO(/obj/machinery/power/data_terminal)
 		alpha = invisibility ? 128 : 255
 
 TYPEINFO(/obj/machinery/power/data_terminal/cable_tray)
-	mats = 0 // uh no thanks
+	analyser_flags = ANALYSER_BLACKLIST // uh no thanks
 
 /obj/machinery/power/data_terminal/cable_tray
 	name = "cable tray"

@@ -127,19 +127,19 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		if(E)
 			switch (mode)
 				if(PRISONER_MODE_NONE)
-					E["criminal"] = ARREST_STATE_NONE
+					E["criminal"] = SECURITY::ARREST::STATE::NONE
 
 				if(PRISONER_MODE_PAROLED)
-					E["criminal"] = ARREST_STATE_PAROLE
+					E["criminal"] = SECURITY::ARREST::STATE::PAROLE
 
 				if(PRISONER_MODE_RELEASED)
-					E["criminal"] = ARREST_STATE_RELEASED
+					E["criminal"] = SECURITY::ARREST::STATE::RELEASED
 
 				if(PRISONER_MODE_INCARCERATED)
-					E["criminal"] = ARREST_STATE_INCARCERATED
+					E["criminal"] = SECURITY::ARREST::STATE::INCARCERATED
 
 				if(PRISONER_MODE_SUSPECT)
-					E["criminal"] = ARREST_STATE_SUSPECT
+					E["criminal"] = SECURITY::ARREST::STATE::SUSPECT
 			E["sec_flag"] = src.sechud_flag
 			target.update_arrest_icon()
 			return
@@ -150,19 +150,19 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		src.active2["id"] = src.active1["id"]
 		switch (mode)
 			if(PRISONER_MODE_NONE)
-				src.active2["criminal"] = ARREST_STATE_ARREST
+				src.active2["criminal"] = SECURITY::ARREST::STATE::ARREST
 
 			if(PRISONER_MODE_PAROLED)
-				src.active2["criminal"] = ARREST_STATE_PAROLE
+				src.active2["criminal"] = SECURITY::ARREST::STATE::PAROLE
 
 			if(PRISONER_MODE_RELEASED)
-				src.active2["criminal"] = ARREST_STATE_RELEASED
+				src.active2["criminal"] = SECURITY::ARREST::STATE::RELEASED
 
 			if(PRISONER_MODE_INCARCERATED)
-				src.active2["criminal"] = ARREST_STATE_INCARCERATED
+				src.active2["criminal"] = SECURITY::ARREST::STATE::INCARCERATED
 
 			if(PRISONER_MODE_SUSPECT)
-				src.active2["criminal"] = ARREST_STATE_SUSPECT
+				src.active2["criminal"] =SECURITY::ARREST::STATE::SUSPECT
 
 		src.active2["sec_flag"] = src.sechud_flag
 		src.active2["mi_crim"] = "None"
@@ -181,7 +181,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 
 	proc/switch_mode(var/mode, set_flag, var/mob/user)
 		if (set_flag)
-			var/flag = tgui_input_text(user, "Flag:", "Set SecHUD Flag", initial(src.sechud_flag), SECHUD_FLAG_MAX_CHARS)
+			var/flag = tgui_input_text(user, "Flag:", "Set SecHUD Flag", initial(src.sechud_flag), SECURITY::ARREST::SECHUD_FLAG_MAX_CHARS)
 			if (!isnull(flag) && src.sechud_flag != flag)
 				src.sechud_flag = flag
 				tooltip_rebuild = TRUE

@@ -2,6 +2,7 @@
 #define STATUS_STRONG 2
 
 TYPEINFO(/obj/table)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SKIP_IF_FAIL
 	/// Determines what types this table will smooth with
 	var/smooth_list = null
 TYPEINFO_NEW(/obj/table)
@@ -20,7 +21,6 @@ TYPEINFO_NEW(/obj/table)
 	layer = OBJ_LAYER-0.1
 	provides_grip = TRUE
 	mat_changename = 1
-	mechanics_interaction = MECHANICS_INTERACTION_SKIP_IF_FAIL
 	material_amt = 0.2
 	var/parts_type = /obj/item/furniture_parts/table
 	default_material = null
@@ -243,7 +243,7 @@ TYPEINFO_NEW(/obj/table)
 			qdel(W)
 			return
 
-		else if (istype(W,/obj/item/sheet/wood))
+		else if (istype(W,/obj/item/sheet) && (W.material?.getMaterialFlags() & MATERIAL_WOOD))
 			if (istype(src, /obj/table/reinforced/bar)) //why must you be so confusing
 				return ..()
 			if (status != STATUS_STRONG || !istype(src, /obj/table/reinforced/auto))
@@ -483,6 +483,19 @@ TYPEINFO_NEW(/obj/table/wood/round)
 
 	auto
 		auto = 1
+
+TYPEINFO(/obj/table/wood/regal)
+TYPEINFO_NEW(/obj/table/wood/regal)
+	. = ..()
+	smooth_list = typecacheof(/obj/table/wood/regal/auto)
+/obj/table/wood/regal
+	name = "fancy wooden table"
+	desc = "A table made from solid oak and polished to within an inch of its life."
+	icon = 'icons/obj/furniture/table_wood_regal.dmi'
+	parts_type = /obj/item/furniture_parts/table/wood/regal
+
+/obj/table/wood/regal/auto
+	auto = TRUE
 
 TYPEINFO(/obj/table/regal)
 TYPEINFO_NEW(/obj/table/regal)
