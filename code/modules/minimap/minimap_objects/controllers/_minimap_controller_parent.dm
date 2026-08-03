@@ -50,15 +50,20 @@
 
 	// Convert from screen (x, y) to map (x, y) coordinates.
 	var/screen_scale = src.displayed_minimap.zoom_coefficient * src.displayed_minimap.map_scale
-	var/x = round((text2num(param_list["icon-x"]) - src.displayed_minimap.minimap_render.pixel_x) / screen_scale) + 1
-	var/y = round((text2num(param_list["icon-y"]) - src.displayed_minimap.minimap_render.pixel_y) / screen_scale) + 1
+	// Keep these fractional so zooming in and back out around the same cursor position is reversible.
+	var/x = ((text2num(param_list["icon-x"]) - src.displayed_minimap.minimap_render.pixel_x) / screen_scale) + 1
+	var/y = ((text2num(param_list["icon-y"]) - src.displayed_minimap.minimap_render.pixel_y) / screen_scale) + 1
 
-	if (dy > 1)
-		src.displayed_minimap.zoom_on_point(src.displayed_minimap.zoom_coefficient * 1.1, x, y)
-		src.controlled_minimap.map.zoom_on_point(src.displayed_minimap.zoom_coefficient, x, y)
-	else if (dy < 1)
-		src.displayed_minimap.zoom_on_point(src.displayed_minimap.zoom_coefficient * 0.9, x, y)
-		src.controlled_minimap.map.zoom_on_point(src.displayed_minimap.zoom_coefficient, x, y)
+	var/new_zoom
+	if (dy > 0)
+		new_zoom = round(src.displayed_minimap.zoom_coefficient * 1.1, 0.001)
+	else if (dy < 0)
+		new_zoom = round(src.displayed_minimap.zoom_coefficient / 1.1, 0.001)
+	else
+		return
+
+	src.displayed_minimap.zoom_on_point(new_zoom, x, y)
+	src.controlled_minimap.map.zoom_on_point(src.displayed_minimap.zoom_coefficient, x, y)
 
 	src.pan_map(0, 0)
 

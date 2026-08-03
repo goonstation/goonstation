@@ -164,9 +164,7 @@ var/global/atom/movable/minimap_ui_handler/observer_minimap/observer_minimap_ui
 			src.update_marker_visibility()
 
 		if ("reset_scale")
-			admin_area_map.find_focal_point()
-			var/datum/minimap/area_map/admin/displayed_area_map = src.admin_controller?.displayed_minimap
-			displayed_area_map?.find_focal_point()
+			src.admin_controller?.reset_scale()
 
 		if ("toggle_players")
 			src.show_players = !src.show_players

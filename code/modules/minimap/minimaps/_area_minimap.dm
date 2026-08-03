@@ -142,6 +142,19 @@
 
 		src.centre_on_point(src.centre_scale, src.centre_focus_x, src.centre_focus_y)
 
+	/// The embedded map control has a fixed ten-tile viewport. Centre the map in that
+	/// viewport rather than in the 300px raster itself, which leaves its centre 10px left/down.
+	centre_on_point(zoom, focus_x, focus_y)
+		. = ..()
+		if (!src.minimap_render)
+			return
+
+		var/viewport_center = world.icon_size * 5
+		var/raster_center = (max(src.x_max, src.y_max) * src.map_scale) / 2
+		var/viewport_offset = viewport_center - raster_center
+		src.minimap_render.pixel_x += viewport_offset
+		src.minimap_render.pixel_y += viewport_offset
+
 /// Checks whether a turf is rendered on this minimap type.
 /datum/minimap/area_map/proc/valid_turf(turf/T)
 	if (!T.loc)
