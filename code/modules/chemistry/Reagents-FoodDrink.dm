@@ -3881,6 +3881,42 @@ datum
 						boutput(M,"<span class= 'notice'>You feel a little less sickly.</span>")
 				..()
 
+		fooddrink/ginger
+			name = "ginger"
+			id = "ginger"
+			description = "Ginger can calm your stomach by speeding your circulation, but overdo it and you might find your blood getting a little too free-flowing."
+			reagent_state = SOLID
+			fluid_r = 225
+			fluid_g = 225
+			fluid_b = 102
+			transparency = 255
+			overdose = 25
+			taste = list("spicy")
+			threshold = THRESHOLD_INIT
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				. = ..()
+				if (!M)
+					M = holder.my_atom
+				if (M && M.hasStatus("nausea") && prob(50))
+					M.nauseate(-1)
+					boutput(M,"<span class= 'notice'>You feel a little less nauseous.</span>")
+
+			do_overdose(var/severity, var/mob/M, var/mult = 1)
+				if (!M)
+					M = holder.my_atom
+				if (!isliving(M))
+					return
+				var/mob/living/H = M
+				if (!H.bleeding)
+					return
+				if (severity == 1 && probmult(2))
+					H.bleeding++
+					boutput(H, SPAN_ALERT("Your wounds seem to be clotting more slowly!"))
+				else if (severity == 2 && probmult(5))
+					H.bleeding++
+					boutput(H, SPAN_ALERT("Your bleeding suddenly worsens!"))
+
 		fooddrink/cinnamon
 			name = "cinnamon"
 			id = "cinnamon"
