@@ -320,8 +320,8 @@ var/list/minimap_z_levels = list(Z_LEVEL_STATION, Z_LEVEL_DEBRIS, Z_LEVEL_MINING
 	if (!src.valid_area_map_z_level(z_level))
 		return
 
-	src.area_map_renders_by_z_level["[z_level]"] = null
-	src.area_map_focal_bounds_by_z_level["[z_level]"] = null
+	src.area_map_renders_by_z_level["[z_level]"] = FALSE
+	src.area_map_focal_bounds_by_z_level["[z_level]"] = FALSE
 
 /// Generates a list of `/atom/movable` objects for each z-level for a specified minimap type.
 /datum/minimap_renderer/proc/generate_minimap_icons(minimap_type)
