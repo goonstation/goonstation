@@ -65,6 +65,7 @@
 					interdicted = TRUE
 					if(prob(40)) //interdictor may sometimes "trip" from the pulse
 						playsound(get_turf(IX), 'sound/effects/electric_shock.ogg', 25, TRUE)
+						animate_little_spark(IX)
 						IX.visible_message(SPAN_ALERT("<B>[IX]</B> shorts out and shuts down!"))
 						IX.stop_interdicting()
 					break
