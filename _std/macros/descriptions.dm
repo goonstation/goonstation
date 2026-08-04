@@ -13,5 +13,5 @@
 	get_desc(dist, mob/user) { \
 		. = ..(); \
 		if(user.traitHolder.hasTrait(trait_id) && length(trait_desc)) {. += (" [trait_desc]")} \
-		else if(length(no_trait_desc)) {. += (" [no_trait_desc]")} \
+		else if(!user.traitHolder.hasTrait(trait_id) && length(no_trait_desc)) {. += (" [no_trait_desc]")} \
 	}
