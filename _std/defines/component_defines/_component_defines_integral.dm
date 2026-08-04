@@ -5,7 +5,7 @@
 /// The datum hosting the signal is automaticaly added as the first argument
 /// Returns a bitfield gathered from all registered procs
 /// Arguments given here are packaged in a list and given to _SendSignal
-#define SEND_SIGNAL(target, sigtype, arguments...) ( !target?.comp_lookup || !target.comp_lookup[sigtype] ? 0 : target._SendSignal(sigtype, list(target, ##arguments)) )
+#define SEND_SIGNAL(target, sigtype, arguments...) ((target?.comp_lookup?[sigtype] && target._SendSignal(sigtype, list(target, ##arguments))) || 0)
 
 #define SEND_COMPLEX_SIGNAL(target, sigtype, arguments...) SEND_SIGNAL(target, (sigtype)::id, ##arguments)
 
