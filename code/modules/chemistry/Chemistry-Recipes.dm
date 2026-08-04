@@ -5642,7 +5642,7 @@
 		drinkrecipe = TRUE
 
 		does_react(datum/reagents/holder)
-			return holder.get_reagent("milk").was_physically_shocked
+			return holder.get_reagent("milk")?.was_physically_shocked
 
 	macchiato
 		name = "Macchiato"
