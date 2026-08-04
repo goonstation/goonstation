@@ -12,6 +12,6 @@
 #define TRAIT_ALTERED_DESCRIPTION(trait_id, trait_desc, no_trait_desc) \
 	get_desc(dist, mob/user) { \
 		. = ..(); \
-		if(user.traitHolder.hasTrait(trait_id)) {. += (" [trait_desc]")} \
+		if(user.traitHolder.hasTrait(trait_id) && length(trait_desc)) {. += (" [trait_desc]")} \
 		else if(length(no_trait_desc)) {. += (" [no_trait_desc]")} \
 	}
