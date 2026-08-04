@@ -593,6 +593,8 @@ CONTAINS:
 /* -------------------- Body Bag -------------------- */
 /* ================================================== */
 
+#define IS_BODYBAG_FOLDED(body_bag) (body_bag.icon_state == "bodybag" && body_bag.w_class == W_CLASS_TINY)
+
 /obj/item/body_bag
 	name = "body bag"
 	desc = "A heavy bag, used for carrying stuff around. The stuff is usually dead bodies. Hence the name."
@@ -644,7 +646,7 @@ CONTAINS:
 
 	attack_hand(mob/user)
 		add_fingerprint(user)
-		if (src.is_folded())
+		if (IS_BODYBAG_FOLDED(src))
 			return ..()
 
 		src.toggle(user)
@@ -741,10 +743,8 @@ CONTAINS:
 			src.open()
 		return TRUE
 
-	proc/is_folded()
-		return src.icon_state == "bodybag" && src.w_class == W_CLASS_TINY
 	proc/try_unfold(mob/user)
-		if (src.is_folded())
+		if (IS_BODYBAG_FOLDED(src))
 			user.visible_message("<b>[user]</b> unfolds [src].",\
 			"You unfold [src].")
 			if(!issilicon(user))
@@ -755,6 +755,8 @@ CONTAINS:
 			return TRUE
 		else
 			return FALSE
+
+#undef IS_BODYBAG_FOLDED
 
 /* ================================================== */
 /* -------------------- Hemostat -------------------- */
