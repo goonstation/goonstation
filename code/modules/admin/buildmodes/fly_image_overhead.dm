@@ -2,6 +2,10 @@
 #define RUN "Run away"
 #define EXPLODE "Explode"
 #define FADE "Fade away"
+#define DIR_LOCKED "Locked Dir"
+#define DIR_UNLOCKED "Unlocked Dir"
+#define DIR_RANDOM "Random Dir"
+
 
 /datum/buildmode/fly_image_overhead
 	name = "Fly Image Overhead"
@@ -23,7 +27,7 @@ Shift + LMB on turf    = Spawn flying object<br>
 	var/turf/target_loc
 	var/audio
 	var/image_layers_over_blackness = FALSE
-	var/dir_input = "Random"
+	var/dir_input = DIR_RANDOM
 	var/end_effect = LEAVE
 	var/spawnpath
 	var/spawnamount = 1
@@ -57,8 +61,8 @@ Shift + LMB on turf    = Spawn flying object<br>
 
 	click_right(atom/object, var/ctrl, var/alt, var/shift)
 		if (shift)
-			src.dir_input = tgui_alert(usr, "Unlocked dir checks YOUR dir whenever you send the pilot, locked dir stays as the dir you have right now", "Direction Choice", list("Dir (LOCKED)", "Dir (UNLOCKED)", "Random Direction"))
-			if (src.dir_input == "Dir (LOCKED)")
+			src.dir_input = tgui_alert(usr, "Unlocked dir checks YOUR dir whenever you send the pilot, locked dir stays as the dir you have right now", "Direction Choice", list(DIR_LOCKED, DIR_UNLOCKED, DIR_RANDOM))
+			if (src.dir_input == DIR_LOCKED)
 				src.dir_input = usr.dir
 			var/speed_choice = tgui_alert(usr, "Choose a set speed or random values", "Choose", list("Set", "Random"))
 			if (speed_choice == "Set")
@@ -80,9 +84,8 @@ Shift + LMB on turf    = Spawn flying object<br>
 				src.spawnamount = 1
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
-		if (shift)
-			src.target_loc = get_turf(object)
-			aim_pilot()
+		src.target_loc = get_turf(object)
+		aim_pilot()
 
 	proc/aim_pilot() // Spawn pilot at edge of zlevel then redirect to target
 		var/turf/start
@@ -93,10 +96,11 @@ Shift + LMB on turf    = Spawn flying object<br>
 		if (!src.audio && !src.image)
 			boutput(usr, "No audio or image file found.")
 			return
+		boutput(usr, "Pilot launch successful.")
 
-		if (src.dir_input == "Dir (UNLOCKED)")
+		if (src.dir_input == DIR_UNLOCKED)
 			new_dir = usr.dir
-		else if (src.dir_input == "Random Direction")
+		else if (src.dir_input == DIR_RANDOM)
 			new_dir = pick(NORTH, SOUTH, EAST, WEST)
 		else
 			new_dir = src.dir_input
