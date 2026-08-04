@@ -2341,25 +2341,9 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	icon_state = "milk_frother"
 	initial_volume = 50
 	can_recycle = FALSE
-	var/list/whitelist = list()
-
-	New()
-		..()
-		src.whitelist = list("milk", "frothedmilk")
-
-	on_reagent_change(add)
-		..()
-		check_whitelist(src, src.whitelist, null, "Why would you put anything other than milk in here?")
 
 	attack_self(mob/user)
-		var/milk_volume = src.reagents.get_reagent_amount("milk")
-		if (milk_volume > 0)
-			user.visible_message("<b>[user.name]</b> turns on the milk frother, producing a pleasant sound as the milk froths.")
-			playsound(src, 'sound/misc/drinkfizz.ogg',100)
-			sleep (1 SECONDS)
-			src.reagents.remove_reagent("milk",milk_volume)
-			src.reagents.add_reagent("frothedmilk",milk_volume)
-		else if (src.reagents.total_volume > 0)
-			user.visible_message("The milk is already frothed.")
-		else
-			user.visible_message("There’s nothing to froth here!")
+		var/temperature_change = T0C + 65 - src.reagents.total_temperature
+		user.visible_message("<b>[user.name]</b> turns on the milk frother, producing a pleasant whirring sound as the contents are agitated and heated.")
+		src.reagents.physical_shock(30)
+		src.reagents.temperature_reagents(exposed_temperature=T0C + 80, change_cap = temperature_change ,change_min = temperature_change)

@@ -5629,6 +5629,21 @@
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
 
+	frothedmilk
+		name = "Frothed Milk"
+		id = "frothedmilk"
+		result = "frothedmilk"
+		required_reagents = list("milk" = 1)
+		result = "frothedmilk"
+		min_temperature = T0C + 65
+		result_amount = 1
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		mix_phrase = "The milk rapidly expands into a smooth, velvety foam."
+		drinkrecipe = TRUE
+
+		does_react(datum/reagents/holder)
+			return holder.get_reagent("milk").was_physically_shocked
+
 	macchiato
 		name = "Macchiato"
 		id = "macchiato"
