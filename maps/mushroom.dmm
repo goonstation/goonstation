@@ -1960,20 +1960,11 @@
 "anL" = (
 /turf/simulated/floor/plating/airless,
 /area/station/com_dish/auxdish)
-"anM" = (
-/obj/cable{
-	icon_state = "4-5"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/north)
 "anW" = (
-/obj/cable{
-	icon_state = "9-10"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
 /obj/disposalpipe/segment/mail,
+/obj/cable{
+	icon_state = "1-10"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "anX" = (
@@ -2203,10 +2194,10 @@
 /area/station/maintenance/solar/west)
 "aoT" = (
 /obj/cable{
-	icon_state = "6-8"
+	icon_state = "2-5"
 	},
 /obj/cable{
-	icon_state = "2-5"
+	icon_state = "5-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
@@ -2372,9 +2363,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/cable{
-	icon_state = "1-5"
-	},
 /obj/landmark/pest,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
@@ -2520,13 +2508,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aqz" = (
-/obj/cable{
-	icon_state = "1-6"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
 /obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "aqA" = (
@@ -2535,13 +2523,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
-"aqC" = (
-/obj/cable{
-	icon_state = "8-10"
-	},
-/obj/disposalpipe/segment/mail,
-/turf/simulated/floor/plating,
-/area/station/maintenance/north)
 "aqD" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -15831,11 +15812,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "ino" = (
-/obj/cable{
-	icon_state = "2-5"
-	},
 /obj/machinery/light/small/frostedred{
 	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
@@ -78486,7 +78467,7 @@ tyw
 ahO
 aiT
 ahU
-anM
+ahU
 aoT
 apS
 aqz
@@ -78791,7 +78772,7 @@ alH
 anW
 aoU
 aoU
-aqC
+aoU
 aoU
 aoU
 alH
