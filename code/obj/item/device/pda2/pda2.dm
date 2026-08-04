@@ -198,14 +198,14 @@
 		mailgroups = list(MGD_COMMAND,MGD_PARTY)
 
 	nt_medical
-		icon_state = "pda-nt"
+		icon_state = "pda-nt_medic"
 		setup_default_pen = /obj/item/pen/fancy
 		setup_default_cartridge = /obj/item/disk/data/cartridge/medical_director
 		mailgroups = list(MGD_MEDICAL, MGD_COMMAND, MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS)
 
 	nt_engineer
-		icon_state = "pda-nt"
+		icon_state = "pda-nt_engineer"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/chiefengineer
 		setup_default_module = /obj/item/device/pda_module/tray
 		mailgroups = list(MGD_ENGINEER, MGD_SUPPLY, MGD_COMMAND, MGD_PARTY)
