@@ -8835,13 +8835,13 @@
 	},
 /area/station/engine/engineering)
 "aSN" = (
-/obj/cable{
-	icon_state = "4-9"
-	},
 /obj/disposalpipe/segment/morgue{
 	dir = 8;
 	icon_state = "pipe-c";
 	name = "crematorium pipe"
+	},
+/obj/cable{
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
@@ -19795,6 +19795,9 @@
 /area/station/maintenance/disposal)
 "bVQ" = (
 /obj/machinery/light_switch/directional/north,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "bVR" = (
@@ -20320,12 +20323,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/secondary/oshan_arrivals)
-"bYd" = (
-/obj/cable{
-	icon_state = "4-9"
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/disposal)
 "bYj" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -20388,12 +20385,6 @@
 	dir = 1
 	},
 /area/station/ai_monitored/armory)
-"bYu" = (
-/obj/cable{
-	icon_state = "1-6"
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/disposal)
 "bYv" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/random,
@@ -27715,7 +27706,7 @@
 /obj/item/device/light/glowstick,
 /obj/decal/cleanable/dirt,
 /obj/cable{
-	icon_state = "2-8"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
@@ -30494,9 +30485,6 @@
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
 "hLG" = (
-/obj/cable{
-	icon_state = "4-6"
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -34173,6 +34161,9 @@
 	},
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
@@ -44303,17 +44294,8 @@
 "sCY" = (
 /obj/storage/crate/freezer,
 /obj/item/reagent_containers/food/drinks/bottle/beer{
-	pixel_x = 4;
-	pixel_y = 2
-	},
-/obj/item/reagent_containers/food/drinks/bottle/beer,
-/obj/item/reagent_containers/food/drinks/bottle/beer{
 	pixel_y = 5;
 	pixel_x = -6
-	},
-/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
-	pixel_y = -1;
-	pixel_x = -3
 	},
 /obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
 	pixel_y = 7;
@@ -91864,7 +91846,7 @@ sPC
 xwV
 phK
 fDJ
-bYu
+bWB
 qIK
 bSA
 bIH
@@ -92167,7 +92149,7 @@ mqf
 phK
 bVQ
 bWB
-bYd
+bWB
 bSA
 lEh
 bNP
@@ -92467,9 +92449,9 @@ nSi
 hXh
 sFb
 xMT
-bXV
-bXV
 fvB
+bWB
+bWB
 bSA
 aud
 vca
