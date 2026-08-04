@@ -3405,6 +3405,8 @@ TYPEINFO(/obj/machinery/vending/janitor)
 
 	update_icon()
 		..()
+		if (src.fallen)
+			src.UpdateOverlays(null, "fill_image")
 		if (status & (BROKEN|NOPOWER))
 			src.UpdateOverlays(null, "fill_image")
 			return
@@ -3465,6 +3467,10 @@ TYPEINFO(/obj/machinery/vending/janitor)
 	power_change()
 		..()
 		src.UpdateIcon()
+
+	fall()
+		src.set_broken() // we do this because the overlays dont work when its on its side. they're just fragile now.
+		..()
 
 /obj/machinery/vending/chapel
 	name = "Deus Ex Machina"
