@@ -5,7 +5,7 @@
 	move_triggered = TRUE
 	can_dip = FALSE
 	tooltip_flags = REBUILD_USER
-	SYNDICATE_STEALTH_DESCRIPTION("It has a rather sharp point.", null)
+	SYNDICATE_STEALTH_DESCRIPTION("It has a rather sharp point.")
 
 	New()
 		..()
