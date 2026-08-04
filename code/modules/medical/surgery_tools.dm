@@ -652,6 +652,9 @@ CONTAINS:
 		src.toggle(user)
 
 	attack_ai(mob/user)
+		if(BOUNDS_DIST(src, user) || isAIeye(user))
+			return
+
 		if (!src.try_unfold())
 			src.toggle(user)
 
