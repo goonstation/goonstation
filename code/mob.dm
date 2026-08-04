@@ -3646,7 +3646,7 @@ TYPEINFO(/mob)
 	var/restricted_z = isrestrictedz(T.z)
 
 	var/see_in_dark_bonus = 0
-	var/neg = 0
+	var/neg_sight = 0
 	var/should_register_signal = FALSE
 	var/datum/vision/modifier
 	var/datum/vision/weightiest_modifier
@@ -3703,6 +3703,7 @@ TYPEINFO(/mob)
 	else if (new_centerlight_icon)
 		src.render_special.set_centerlight_icon(new_centerlight_icon)
 
+	sight &= ~neg_sight
 
 	// hopefully this isn't too spammy, so we can just call the procs and let them return if there's nothing to do
 	if (should_register_signal)
