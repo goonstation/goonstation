@@ -251,10 +251,8 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/station/devzone/no_default_light)
 "iY" = (
-/obj/disposalpipe/switch_junction/left/south{
-	mail_tag = "telescience";
-	name = "mail junction (telescience)"
-	},
+/obj/mapping_helper/mailtag/research/telescience,
+/obj/disposalpipe/switch_junction/left/south,
 /turf/simulated/floor/carpet{
 	icon_state = "carpetW"
 	},

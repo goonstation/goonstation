@@ -1581,10 +1581,17 @@ ABSTRACT_TYPE(/datum/material/organic)
 	mat_id = "blob"
 	name = "blob"
 	desc = "The material of the feared giant space amoeba."
-	color = "#44cc44"
+	color = list(0.50, 0.20, 0.00, 0.00,\
+				0.00, 0.50, 0.00, 0.00,\
+				0.00, 0.20, 0.50, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.10, 0.15, 0.10, 0.00)
+	hsl_color = list(0.00, 0.00, 0.00, 0.00,\
+					0.00, 0.30, 0.00, 0.00,\
+					0.00, 0.00, 1.20, 0.00,\
+					0.00, 0.00, 0.00, 1.00,\
+					0.33, 0.70, -0.10, 0.00)
 	alpha = 180
-	texture = "bubbles"
-	texture_blend = BLEND_ADD
 
 	edible_exact = 0.6 //Just barely edible
 	edible = 1
@@ -1597,6 +1604,9 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("hard", 1)
 		setProperty("flammable", 5)
 		setProperty("melting_point", 400 KELVIN)
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/blob_add())
+		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/blob_remove())
+		addTrigger(TRIGGERS_ON_IMAGE, new /datum/materialProc/honey_image())
 		addTrigger(TRIGGERS_ON_EAT, new /datum/materialProc/oneat_blob())
 
 
@@ -2014,7 +2024,18 @@ ABSTRACT_TYPE(/datum/material/fabric)
 	mat_id = "leather"
 	name = "leather"
 	desc = "Leather is a flexible material derived from processed animal skins."
-	color = "#8A3B11"
+	color = list(0.90, 0.10, 0.20, 0.00,\
+				0.10, 0.70, 0.00, 0.00,\
+				0.20, 0.00, 0.50, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00)
+	hsl_color = list(0.00, 0.00, 0.00, 0.00,\
+					0.00, 0.25, 0.00, 0.00,\
+					0.00, 0.00, 0.60, 0.00,\
+					0.00, 0.00, 0.00, 1.00,\
+					0.13, 0.25, 0.00, 0.00)
+	texture = "leather"
+	texture_blend = BLEND_DEFAULT
 	artisan_trait_weight = MATERIAL_ARTISAN_COMMON
 
 	New()
@@ -2029,7 +2050,18 @@ ABSTRACT_TYPE(/datum/material/fabric)
 	mat_id = "synthleather"
 	name = "synthleather"
 	desc = "Synthleather is an artificial leather."
-	color = "#BB3B11"
+	color = list(0.90, 0.10, 0.20, 0.00,\
+				0.10, 0.70, 0.00, 0.00,\
+				0.20, 0.00, 0.50, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00)
+	hsl_color = list(0.00, 0.00, 0.00, 0.00,\
+					0.00, 0.25, 0.00, 0.00,\
+					0.00, 0.00, 0.70, 0.00,\
+					0.00, 0.00, 0.00, 1.00,\
+					0.10, 0.50, 0.00, 0.00)
+	texture = "synthleather"
+	texture_blend = BLEND_DEFAULT
 	artisan_trait_weight = MATERIAL_ARTISAN_COMMON
 
 	New()
@@ -2044,7 +2076,18 @@ ABSTRACT_TYPE(/datum/material/fabric)
 	mat_id = "brullbarhide"
 	name = "brullbar hide"
 	desc = "The hide of a fearsome brullbar!"
-	color = "#CCCCCC"
+	color = list(1.25, 0.00, 0.00, 0.00,\
+				0.00, 1.25, 0.00, 0.00,\
+				0.00, 0.00, 1.25, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00)
+	hsl_color = list(0.00, 0.00, 0.00, 0.00,\
+					0.00, 0.60, -0.05, 0.00,\
+					0.00, 0.00, 1.25, 0.00,\
+					0.00, 0.00, 0.00, 1.00,\
+					0.00, -0.10, 0.00, 0.00)
+	texture = "leather"
+	texture_blend = BLEND_DEFAULT
 
 	New()
 		..()
@@ -2058,7 +2101,11 @@ ABSTRACT_TYPE(/datum/material/fabric)
 	mat_id = "kingbrullbarhide"
 	name = "king brullbar hide"
 	desc = "The hide of a terrifying brullbar king!!!"
-	color = "#EFEEEE"
+	hsl_color = list(0.00, 0.00, 0.00, 0.00,\
+					0.00, 1.35, -0.25, 0.00,\
+					0.00, 0.00, 1.15, 0.00,\
+					0.00, 0.00, 0.00, 1.00,\
+					0.00, -0.10, 0.00, 0.00)
 	artisan_trait_weight = 0
 
 	New()
