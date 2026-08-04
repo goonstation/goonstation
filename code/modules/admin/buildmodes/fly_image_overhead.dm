@@ -11,9 +11,9 @@ Protip: tinker with this on a local first so you know what you're doing. Images 
 <br>
 RMB on buildmode button                = Set image and ending effect<br>
 Ctrl  + RMB on buildmode button        = Set audio<br>
-Alt   + RMB off of buildmode button    = Set optional obj/mob spawns<br>
-Shift + RMB off of buildmode button    = Set direction and speed<br>
-Shift + LMB off of buildmode button    = Spawn flying object<br>
+Alt   + RMB on turf    = Set optional obj/mob spawns<br>
+Shift + RMB on turf    = Set direction and speed<br>
+Shift + LMB on turf    = Spawn flying object<br>
 ***********************************************************"}
 	// settings. behold my vars
 	icon_state = "flyoverhead"
@@ -58,21 +58,21 @@ Shift + LMB off of buildmode button    = Spawn flying object<br>
 	click_right(atom/object, var/ctrl, var/alt, var/shift)
 		if (shift)
 			src.dir_input = tgui_alert(usr, "Unlocked dir checks YOUR dir whenever you send the pilot, locked dir stays as the dir you have right now", "Direction Choice", list("Dir (LOCKED)", "Dir (UNLOCKED)", "Random Direction"))
-			var/choice = tgui_alert(usr, "Choose a set speed or random values", "Choose", list("Set", "Clear"))
-			var/choice2 = tgui_alert(usr, "Start from edge of zlevel or nearby? (About 2 screens away)", "Choose", list("Edge", "Nearby"))
 			if (src.dir_input == "Dir (LOCKED)")
 				src.dir_input = usr.dir
-			if (choice == "Set")
+			var/speed_choice = tgui_alert(usr, "Choose a set speed or random values", "Choose", list("Set", "Random"))
+			if (speed_choice == "Set")
 				src.move_delay = tgui_input_number(usr, "Enter speed value of image", "Higher is slower, gets very slow by 5", 1)
 			else
-				src.move_delay = 1
-			if (choice2 == "Nearby")
+				src.move_delay = null // pilot will use a random number if delay is null
+			var/spawnloc_choice = tgui_alert(usr, "Start from edge of zlevel or nearby? (About 2 screens away)", "Choose", list("Edge", "Nearby"))
+			if (spawnloc_choice == "Nearby")
 				src.startnearby = TRUE
 			else
 				src.startnearby = FALSE
 		if (alt)
-			var/choice = tgui_input_list(usr, "Spawn mobs/objects or clear?", "Choose", list("Spawn", "Clear"))
-			if (choice == "Spawn")
+			var/spawn_choice = tgui_input_list(usr, "Spawn mobs/objects or clear?", "Choose", list("Spawn", "Clear"))
+			if (spawn_choice == "Spawn")
 				src.spawnpath = get_one_match(input("Type path", "Type path", "[src.spawnpath]"), /atom)
 				src.spawnamount = tgui_input_number(usr, "Amount to spawn", "Amount - Be responsible!!", 1)
 			else
@@ -120,6 +120,9 @@ Shift + LMB off of buildmode button    = Spawn flying object<br>
 		pilot.alpha = 0
 		pilot.set_loc(startloc)
 		animate(pilot, transform = matrix(), alpha = src.alphainput, time = 0.8 SECONDS)
+
+		if (!speedinput)
+			speedinput = rand(1,5)
 
 		if (src.image_layers_over_blackness)
 			pilot.plane = PLANE_ABOVE_BLACKNESS
