@@ -304,6 +304,7 @@ datum
 				new /image('icons/mob/monkey.dmi', "fire3"),
 				new /image('icons/mob/monkey.dmi', "skeleton"),
 				new /image('icons/mob/monkey.dmi', "seamonkey"),
+				new /image('icons/misc/critter.dmi', "gorilla")
 			)
 			var/static/list/critter_image_list = list(
 				new /image('icons/effects/hallucinations.dmi', "spider"),

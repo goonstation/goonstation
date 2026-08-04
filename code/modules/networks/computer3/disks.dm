@@ -75,7 +75,7 @@
 		D.title = src.title
 		D.file_amount = src.file_amount
 		if (src.root)
-			D.root = src.root.copy_folder()
+			D.root = src.root.copy_file()
 			D.root.holder = D
 
 		return D
