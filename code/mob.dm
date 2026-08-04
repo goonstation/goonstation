@@ -3668,7 +3668,7 @@ TYPEINFO(/mob)
 				continue
 
 		sight |= modifier.sight
-		neg |= modifier.neg_sight
+		neg_sight |= modifier.neg_sight
 
 		if (modifier.see_invisible > see_invisible)
 			see_invisible = modifier.see_invisible
