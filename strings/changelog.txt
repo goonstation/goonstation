@@ -1,5 +1,9 @@
 
 (t)tue aug 04 26
+(u)ANNmagedon
+(p)27338
+(e)🎨|C-Sprites
+(+)The NT repair technician & medic pdas have a new sprite to indicate specialization.
 (u)Cheekybrdy
 (p)27255
 (e)🐁|A-Critters
