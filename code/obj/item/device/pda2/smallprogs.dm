@@ -1423,7 +1423,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			// pda alert ////////
 			if (!ON_COOLDOWN(src.master, "spam_cooldown", SPAM_DELAY))
 				var/datum/signal/pdaSignal = get_free_signal()
-				pdaSignal.data = list("address_1"=src.master.net_id, "command"="text_message", "sender_name"="RESEARCH-MAILBOT",  "group"=list(MGD_RESEARCH, MGT_PHARMACY, MGA_CHEMREQUEST), "sender"="00000000", "message"="Notification: [new_req.reagent_name] requested by [new_req.requester_name] at [new_req.area_name].")
+				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="RESEARCH-MAILBOT",  "group"=list(MGD_RESEARCH, MGT_PHARMACY, MGA_CHEMREQUEST), "sender"="00000000", "message"="Notification: [new_req.reagent_name] requested by [new_req.requester_name] at [new_req.area_name].")
 				SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 
 		else if (href_list["reset"])
