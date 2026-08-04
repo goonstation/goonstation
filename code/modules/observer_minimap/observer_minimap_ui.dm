@@ -62,10 +62,11 @@ var/global/atom/movable/minimap_ui_handler/observer_minimap/observer_minimap_ui
 		if (!marker)
 			continue
 
+		var/turf/target_turf = get_turf(target)
 		marker.visible = isobserver(target) ? src.show_observers : src.show_players
 		if (!marker.visible)
 			marker.marker.alpha = 0
-		admin_area_map.set_marker_position(marker, target.x, target.y, target.z)
+		admin_area_map.set_marker_position(marker, target_turf?.x, target_turf?.y, target_turf?.z)
 
 		var/datum/minimap_marker/minimap/displayed_marker = displayed_area_map?.minimap_markers[target]
 		if (!displayed_marker)
@@ -73,7 +74,7 @@ var/global/atom/movable/minimap_ui_handler/observer_minimap/observer_minimap_ui
 		displayed_marker.visible = marker.visible
 		if (!displayed_marker.visible)
 			displayed_marker.marker.alpha = 0
-		displayed_area_map.set_marker_position(displayed_marker, target.x, target.y, target.z)
+		displayed_area_map.set_marker_position(displayed_marker, target_turf?.x, target_turf?.y, target_turf?.z)
 
 /atom/movable/minimap_ui_handler/admin_minimap/disposing()
 	. = ..()
