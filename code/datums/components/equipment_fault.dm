@@ -185,7 +185,7 @@ TYPEINFO(/datum/component/equipment_fault)
 			playsound(target, success_sound, 50, TRUE)
 
 	proc/omnitool_swap(atom/target, mob/user, obj/item/tool/omnitool/omni)
-		if (!(omni_mode in omni.modes))
+		if (!omni.has_mode(src.omni_mode))
 			return FALSE
 		omni.change_mode(omni_mode, user, omni_path)
 		user.show_text("You flip [omni] to [name] mode.", "blue")
@@ -205,7 +205,7 @@ TYPEINFO(/datum/component/equipment_fault)
 		name = "Wrench"
 		desc = "Wrenching required to repair."
 		icon_state = "wrench"
-		omni_mode = OMNI_MODE_WRENCHING
+		omni_mode = OMNITOOL::MODE_WRENCH
 		omni_path = /obj/item/wrench
 		success_text = "You wrench %target%'s bolts. Nice and snug."
 		success_sound = 'sound/items/Ratchet.ogg'
@@ -222,7 +222,7 @@ TYPEINFO(/datum/component/equipment_fault)
 		name = "Cut"
 		desc = "Cutting required to repair."
 		icon_state = "cut"
-		omni_mode = OMNI_MODE_SNIPPING
+		omni_mode = OMNITOOL::MODE_WIRECUTTER
 		omni_path = /obj/item/wirecutters
 		success_text = "You cut some vestigial wires from %target%."
 		success_sound = 'sound/items/Wirecutter.ogg'
@@ -238,7 +238,7 @@ TYPEINFO(/datum/component/equipment_fault)
 		name = "Weld"
 		desc = "Welding required to repair."
 		icon_state = "weld"
-		omni_mode = OMNI_MODE_WELDING
+		omni_mode = OMNITOOL::MODE_WELDER
 		omni_path = /obj/item/weldingtool
 		success_text = "You weld %target% carefully."
 		success_sound = null // sound handled in try_weld
@@ -258,7 +258,7 @@ TYPEINFO(/datum/component/equipment_fault)
 		name = "Pry"
 		desc = "Prying required to repair. Try a crowbar."
 		icon_state = "bar"
-		omni_mode = OMNI_MODE_PRYING
+		omni_mode = OMNITOOL::MODE_CROWBAR
 		omni_path = /obj/item/crowbar
 		success_text = "You pry things back into place on %target% with all your might."
 		success_sound = 'sound/items/Crowbar.ogg'
@@ -274,7 +274,7 @@ TYPEINFO(/datum/component/equipment_fault)
 		name = "Screw"
 		desc = "Screwing required to repair."
 		icon_state = "screw"
-		omni_mode = OMNI_MODE_SCREWING
+		omni_mode = OMNITOOL::MODE_SCREWDRIVER
 		omni_path = /obj/item/screwdriver
 		success_text = "You screw in some of the screws on %target%."
 		success_sound = 'sound/items/Screwdriver.ogg'
@@ -291,7 +291,7 @@ TYPEINFO(/datum/component/equipment_fault)
 		name = "Pulse"
 		desc = "Pulsing required to repair. Try a multitool."
 		icon_state = "pulse"
-		omni_mode = OMNI_MODE_PULSING
+		omni_mode = OMNITOOL::MODE_MULTITOOL
 		omni_path = /obj/item/device/multitool
 		success_text = "You pulse %target%. In a general sense."
 		success_sound = 'sound/items/penclick.ogg'
