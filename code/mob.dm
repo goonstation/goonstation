@@ -125,6 +125,8 @@ TYPEINFO(/mob)
 
 	var/list/movement_modifiers = list()
 
+	var/list/vision_modifiers = list()
+
 	var/misstep_chance = 0
 
 	var/datum/hud/storage/s_active
@@ -3616,3 +3618,97 @@ TYPEINFO(/mob)
 ///"Getter" method so I can private the var
 /mob/proc/has_ailment_resistance(type)
 	return type in src.resistances
+
+
+/mob/proc/apply_vision(var/datum/vision/clue, var/source)
+	if (src.vision_modifiers[clue])
+		src.vision_modifiers[clue] |= source
+	else
+		src.vision_modifiers[clue] = list(source)
+		//No need to meditate for 20-45 minutes, the visions are revealed immediately
+		src.update_vision()
+
+/mob/proc/remove_vision(var/datum/vision/clue, var/source)
+	if (src.vision_modifiers[clue])
+		src.vision_modifiers[clue] -= source
+	if (!length(src.vision_modifiers[clue]))
+		src.vision_modifiers -= clue
+		src.update_vision()
+
+/mob/proc/update_vision()
+
+	see_invisible = initial(see_invisible)
+	sight = initial(sight)
+	see_in_dark = initial(see_in_dark)
+	see_infrared = initial(see_infrared)
+
+	var/turf/T = src.eye ? get_turf(src.eye) : get_turf(src)
+	var/restricted_z = isrestrictedz(T.z)
+
+	var/see_in_dark_bonus = 0
+	var/neg = 0
+	var/should_register_signal = FALSE
+	var/datum/vision/modifier
+	var/datum/vision/weightiest_modifier
+	var/new_centerlight_icon
+	var/list/centerlight_colors = list()
+
+	for(var/type_or_instance in src.vision_modifiers)
+		if (ispath(type_or_instance))
+			modifier = vision_instances[type_or_instance]
+		else
+			modifier = type_or_instance
+
+		if (modifier.z_restricted)
+			should_register_signal = TRUE
+
+			if (restricted_z) // the seeing thing is currently in a restricted Z level, and the modifier does not apply there
+				continue
+
+		sight |= modifier.sight
+		neg |= modifier.neg_sight
+
+		if (modifier.see_invisible > see_invisible)
+			see_invisible = modifier.see_invisible
+
+		if (modifier.see_in_dark > see_in_dark)
+			see_invisible = modifier.see_invisible
+		see_in_dark_bonus += modifier.see_in_dark_bonus
+
+		if (modifier.see_infrared)
+			see_infrared = modifier.see_infrared
+
+		if (modifier.centerlight_icon && (!weightiest_modifier || modifier.weight > weightiest_modifier))
+			new_centerlight_icon = modifier.centerlight_icon
+
+		if (modifier.centerlight_color)
+			centerlight_colors[modifier.centerlight_color] += modifier.weight
+
+	// (would-be) weighed average of colors. We can assume an icon exists if a color exists.
+	if (length(centerlight_colors))
+		/*
+		All the possible colors are the same atm so this is not needed, but it's here when someone adds a space mexico filter
+		if (length(centerlight_colors) > 1)
+			var/list/new_color = list(0,0,0)
+			var/w_divisor = 0
+			for (var/this_color in centerlight_colors)
+				var/color_w = centerlight_colors[this_color]
+				var/list/color_rgb = rgb2num(this_color)
+				new_color[1] += color_rgb[1]*color_w
+				new_color[2] += color_rgb[2]*color_w
+				new_color[3] += color_rgb[3]*color_w
+				w_divisor += color_w
+			new_color = rgb(new_color[0]/w_divisor, new_color[1]/w_divisor, new_color[2]/w_divisor) */
+		src.render_special.set_centerlight_icon(new_centerlight_icon, centerlight_colors[1].centerlight_color, wide = (src.client?.widescreen))
+	else if (new_centerlight_icon)
+		src.render_special.set_centerlight_icon(new_centerlight_icon)
+
+
+	// hopefully this isn't too spammy, so we can just call the procs and let them return if there's nothing to do
+	if (should_register_signal)
+		// if Z changes then we might need to re-evaluate our visions
+		src.RegisterSignal(src, XSIG_MOVABLE_Z_CHANGED, PROC_REF(update_vision))
+	else
+		src.UnregisterSignal(src, XSIG_MOVABLE_Z_CHANGED)
+
+
