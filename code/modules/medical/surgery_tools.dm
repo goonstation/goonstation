@@ -748,9 +748,8 @@ CONTAINS:
 
 	proc/try_unfold(mob/user)
 		if (IS_BODYBAG_FOLDED(src))
-			user.visible_message("<b>[user]</b> unfolds [src].",\
-			"You unfold [src].")
-			if(!issilicon(user))
+			user.visible_message("<b>[user]</b> unfolds [src].", "You unfold [src].")
+			if(!src.cant_drop)
 				user.drop_item()
 			pixel_x = 0
 			pixel_y = 0
