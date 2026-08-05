@@ -1,5 +1,9 @@
 
 (t)wed aug 05 26
+(u)CelineTheYeen
+(p)27264
+(e)🗺|A-Mapping
+(*)Oshan's southern maints, crew lounge and zen garden have recieved a facelift.
 (u)bamlord, sprites by swinglow20
 (p)27335
 (e)🎨🔊📡🐁|C-Sprites, C-Sound, A-AI, A-Critters
