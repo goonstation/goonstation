@@ -434,7 +434,7 @@ TRAYS
 		return 1
 
 /obj/item/kitchen/utensil/knife/pizza_cutter/traitor
-	SYNDICATE_STEALTH_DESCRIPTION("The blade is illegally sharp.", null)
+	SYNDICATE_STEALTH_DESCRIPTION("The blade is illegally sharp.")
 	tooltip_flags = REBUILD_USER
 	var/sharpener_mode = FALSE
 

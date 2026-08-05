@@ -5001,8 +5001,9 @@
 	},
 /obj/table/wood/auto/desk,
 /obj/item_dispenser/icedispenser{
-	dir = 4;
-	pixel_y = 23
+	dir = 8;
+	pixel_y = 23;
+	pixel_x = 20
 	},
 /obj/item/gun/russianrevolver,
 /obj/machinery/partyalarm{

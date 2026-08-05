@@ -2642,7 +2642,11 @@
 	var/mob/living/carbon/human/H
 
 	getTooltip()
-		. = "You are in very bad shape. Max stamina reduced by 100 and stamina regen reduced by 5."
+		. = "You are in very bad shape. Max stamina reduced by 100 and stamina regen reduced by 5. Click to succumb to your wounds and die."
+
+	clicked(list/params)
+		if (H && H.health < 0 && tgui_confirm(H, "Succumb to your injuries? You will die."))
+			H.succumb()
 
 	onAdd(optional=null)
 		. = ..()
