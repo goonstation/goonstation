@@ -15,12 +15,12 @@
 		else
 			src.light.disable()
 
-///Primarily associated with Menhir (used in a random event) but can very rarely appear elsewhere
+///Primarily associated with Menhir (used in a random event)
 /datum/artifact/synthesizer
 	associated_object = /obj/machinery/artifact/synthesizer
 	type_name = "Synthesizer"
 	type_size = ARTIFACT_SIZE_LARGE
-	rarity_weight = 10
+	rarity_weight = 0
 	validtypes = list("precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/cold)
