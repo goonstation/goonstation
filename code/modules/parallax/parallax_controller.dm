@@ -47,9 +47,6 @@
 
 /// Updates the position of the parallax layer relative to the client's eye, taking into account the distance moved and the parallax value.
 /datum/parallax_controller/proc/update_parallax_layers(datum/component/component, turf/old_turf, turf/new_turf)
-	if (!isturf(old_turf) || !isturf(new_turf))
-		return
-
 	// Calculate the number of tiles the client's eye has moved, in pixels.
 	var/x_pixel_change = (old_turf.x - new_turf.x) * world.icon_size
 	var/y_pixel_change = (old_turf.y - new_turf.y) * world.icon_size
@@ -145,7 +142,7 @@
 	src.outermost_movable = new_outermost
 
 /datum/parallax_controller/proc/register_signals(client/C, mob/M)
-	src.RegisterSignal(M, XSIG_MOVABLE_TURF_CHANGED, PROC_REF(update_parallax_layers))
+	src.RegisterSignal(M, XSIG_MOVABLE_TURF_CHANGED_SAFE, PROC_REF(update_parallax_layers))
 	src.RegisterSignal(M, XSIG_MOVABLE_AREA_CHANGED, PROC_REF(update_area_parallax_layers))
 	src.RegisterSignal(M, XSIG_MOVABLE_Z_CHANGED, PROC_REF(update_z_level_parallax_layers))
 	src.RegisterSignal(M, XSIG_OUTERMOST_MOVABLE_CHANGED, PROC_REF(update_outermost_movable))
@@ -158,7 +155,7 @@
 	if (!M?.GetComponent(/datum/component/complexsignal/outermost_movable))
 		return
 
-	src.UnregisterSignal(M, XSIG_MOVABLE_TURF_CHANGED)
+	src.UnregisterSignal(M, XSIG_MOVABLE_TURF_CHANGED_SAFE)
 	src.UnregisterSignal(M, XSIG_MOVABLE_AREA_CHANGED)
 	src.UnregisterSignal(M, XSIG_MOVABLE_Z_CHANGED)
 	src.UnregisterSignal(M, XSIG_OUTERMOST_MOVABLE_CHANGED)
