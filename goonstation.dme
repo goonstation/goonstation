@@ -266,6 +266,7 @@
 #include "code\datums\components\obj_projectile_damage.dm"
 #include "code\datums\components\pitfall.dm"
 #include "code\datums\components\power_cell.dm"
+#include "code\datums\components\pressure_vision.dm"
 #include "code\datums\components\proj_door_breach.dm"
 #include "code\datums\components\proj_mining.dm"
 #include "code\datums\components\proximity.dm"

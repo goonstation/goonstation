@@ -1,67 +1,49 @@
-TYPEINFO(/datum/component/wearertargeting/pressure_vision)
+TYPEINFO(/datum/component/pressure_vision)
 	initialization_args = list(
-		ARG_INFO("valid_slots", DATA_INPUT_LIST_BUILD, "List of wear slots that the component should function in \[1-19\]"),
+		// ARG_INFO("user", DATA_INPUT_MOB_REFERENCE, "The mob to give the vision to"),
+		ARG_INFO("start_active", DATA_INPUT_BOOL, "Does it start immidently or after the first signal")
 	)
 
-/datum/component/wearertargeting/pressure_vision
-	var/list/image/atmos_overlays = list()
+/datum/component/pressure_vision
 	//this is literally just a 32x32 white square, someone please tell me if there's a less dumb way to do this
 	var/icon/overlay_icon = 'icons/effects/effects.dmi'
 	var/overlay_state = "atmos_overlay"
 	var/list/image/atmos_overlays = list()
 
-	var/active
-
-
-	Initialize(_valid_slots)
-		. = ..()
-		if(!isitem(parent))
+	Initialize(start_active)
+		if(!ismob(parent))
 			return COMPONENT_INCOMPATIBLE
 
-		if((SLOT_L_HAND in valid_slots) || (SLOT_R_HAND in valid_slots))
-			parent:c_flags |= EQUIPPED_WHILE_HELD
+		src.toggle(parent, start_active)
+		RegisterSignal(parent, COMSIG_PRESSURE_VISION, PROC_REF(toggle))
+		. = ..()
 
-/datum/component/wearertargeting/pressure_vision/proc/on_equip(datum/source, mob/equipper, slot)
-	var/obj/item/I = parent
-	//ability add
-	. = ..()
 
-/datum/component/wearertargeting/pressure_vision/proc/on_unequip(datum/source, mob/user)
-	var/obj/item/I = parent
-	//ability remove
-	if(src.active)
-		src.turn_off()
-	. = ..()
+	disposing()
+		processing_items -= src
+		. = ..()
 
-/datum/component/wearertargeting/pressure_vision/disposing()
-	processing_items -= src
+	UnregisterFromParent()
+		UnregisterSignal(parent, COMSIG_PRESSURE_VISION)
+		processing_items -= src
+		. = ..()
 
-/datum/component/wearertargeting/energy_shield/proc/turn_off()
-	processing_items -= src
-	src.activate = TRUE
-	toggler.playsound_local(src, 'sound/machines/tone_beep.ogg', 40, TRUE)
-
-/datum/component/wearertargeting/energy_shield/proc/turn_on()
-	processing_items |= src
-	src.activate = FALSE
-	toggler.playsound_local(src, 'sound/machines/tone_beep.ogg', 40, TRUE)
-
-/datum/component/wearertargeting/energy_shield/proc/toggle()
-	if(active)
-		src.turn_off()
+/datum/component/pressure_vision/proc/toggle(mob/parent, var/set_to)
+	if(set_to)
+		processing_items |= src
 	else
-		src.turn_on()
+		processing_items -= src
 
-// Actual pressure vision code:
+// Actual pressure vision process code:
 
-/datum/component/wearertargeting/pressure_vision/proc/process()
-	var/mob/M = src.current_user
+/datum/component/pressure_vision/proc/process()
+	var/mob/M = src.parent
 	if (!istype(M) || !M.client)
 		return
 	src.clear_overlays(M)
 	src.generate_overlays(M)
 
-/datum/component/wearertargeting/pressure_vision/proc/generate_overlays(mob/M)
+/datum/component/pressure_vision/proc/generate_overlays(mob/M)
 	if (!M.client)
 		return
 	for (var/turf/simulated/T in view(M, M.client.view))
@@ -77,7 +59,7 @@ TYPEINFO(/datum/component/wearertargeting/pressure_vision)
 		src.atmos_overlays += new_overlay
 		M.client.images += new_overlay
 
-/datum/component/wearertargeting/pressure_vision/proc/clear_overlays(mob/M)
+/datum/component/pressure_vision/proc/clear_overlays(mob/M)
 	if (!M.client)
 		return
 	for (var/image/image as anything in src.atmos_overlays)
