@@ -4,7 +4,7 @@
 	deconstruct_flags = DECON_NONE
 	_health = 250
 	_max_health = 250
-	SYNDICATE_STEALTH_DESCRIPTION("You can't see the bottom.", null)
+	SYNDICATE_STEALTH_DESCRIPTION("You can't see the bottom.")
 
 /obj/machinery/disposal/extradimensional/absorb_gas(var/datum/gas_mixture/mix)
 	if(mix)

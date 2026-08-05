@@ -4754,13 +4754,6 @@
 	name = "lobby health status screen";
 	pixel_y = -24
 	},
-/obj/health_scanner/wall{
-	dir = 1;
-	find_in_range = 0;
-	id = "lobby";
-	name = "lobby health status screen";
-	pixel_y = -24
-	},
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
