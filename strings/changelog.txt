@@ -1,5 +1,10 @@
 
 (t)wed aug 05 26
+(u)Cheekybrdy
+(p)26873
+(e)🆕🎨💡|C-Feature, C-Sprites, A-Station-Systems
+(*)You can now make chemical requests on your PDA. Scientists/Pharmacists can now reject/fulfil requests on a different PDA app.
+(+)Pharmacist now has a dedicated PDA cartridge.
 (u)CelineTheYeen
 (p)27264
 (e)🗺|A-Mapping
