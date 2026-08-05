@@ -1,10 +1,9 @@
 
 /datum/lifeprocess/critical //for mobs that use crit (humans only right now)
 	process(var/datum/gas_mixture/environment)
-		if (owner.bioHolder?.HasEffect("revenant")) // I don't think the revenant needs any of this crap - Marq
+		if (isdead(src.owner)) //You don't need to do a whole lot of this if the dude's dead.
 			return ..()
-
-		if (isdead(src.owner)) //You also don't need to do a whole lot of this if the dude's dead.
+		if (owner.bioHolder?.HasEffect("revenant")) // I don't think the revenant needs any of this crap - Marq
 			return ..()
 
 		var/mult = get_multiplier()
