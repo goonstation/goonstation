@@ -222,10 +222,10 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/small_animal/mouse, proc/glorp)
 		HH.can_hold_items = 0
 
 	attackby(obj/item/reagent_containers/food/food, mob/user)
-		if (!istype(food) && !istype(food, /obj/item/organ))
+		if (!isalive(src) || !istype(food) && !istype(food, /obj/item/organ))
 			return ..()
 		if (ON_COOLDOWN(src, "consider_food", 5 SECONDS))
-			return
+			return ..()
 		src.visible_message("[src] sniffs \the [food].")
 		var/list/possible_recipes = list()
 		for (var/datum/recipe/recipe in global.oven_recipes)

@@ -7,6 +7,7 @@
 	included_tools = /datum/robot/module_tool_creator/recursive/module/science
 	radio_type = /obj/item/device/radio/headset/research
 	mailgroups = list(MGD_RESEARCH, MGD_SILICON, MGD_PARTY)
+	alertgroups = list(MGA_CHEMREQUEST)
 
 /datum/robot_cosmetic/science
 	ches_mod = "Lab Coat"
