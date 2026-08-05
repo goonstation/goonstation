@@ -380,7 +380,7 @@
 	volume = 60
 	desc_sound = list("patriotic", "rowdy", "wee", "grand", "free", "Glaswegian", "sizzling", "carnal", "hedonistic")
 	pick_random_note = 1
-	note_time = 15 SECONDS
+	note_time = 20 SECONDS
 
 	New()
 		..()
