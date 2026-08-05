@@ -3212,3 +3212,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 	bites_left = 3
 	food_effects = list("food_energized", "food_refreshed")
 	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
+
+/obj/item/reagent_containers/food/snacks/bowl_of_dulce_de_leche
+	name = "bowl of dulce de leche"
+	desc = "A small bowl of rich, sweet dulce de leche."
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "refriedbeans"
+	required_utensil = REQUIRED_UTENSIL_SPOON
+	bites_left = 4
