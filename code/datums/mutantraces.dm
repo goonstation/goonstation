@@ -218,6 +218,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 	var/datum/movement_modifier/movement_modifier
 
+	var/datum/vision/vision_modifier
+
 	var/decomposes = TRUE
 
 	/// List of 0 to 3 strings representing the names for the color channels
@@ -280,6 +282,9 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	proc/on_attach(var/mob/living/carbon/human/M)
 		if (movement_modifier)
 			APPLY_MOVEMENT_MODIFIER(M, movement_modifier, src.type)
+
+		if (vision_modifier)
+			M.apply_vision(vision_modifier, src.type)
 
 		if (!needs_oxy)
 			APPLY_ATOM_PROPERTY(M, PROP_MOB_BREATHLESS, src.type)
@@ -365,6 +370,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 			if (movement_modifier)
 				REMOVE_MOVEMENT_MODIFIER(src.mob, movement_modifier, src.type)
+
+			if (vision_modifier)
+				src.mob.remove_vision(vision_modifier, src.type)
+
 			if (needs_oxy)
 				REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_BREATHLESS, src.type)
 
@@ -2302,6 +2311,7 @@ TYPEINFO(/datum/mutantrace/kudzu)
 	needs_oxy = 0 //get their nutrients from the kudzu
 	understood_languages = list(LANGUAGE_ENGLISH)
 	movement_modifier = /datum/movement_modifier/kudzu
+	vision_modifier = /datum/vision/xray/kudzu
 	genetics_removable = FALSE
 	mutant_folder = 'icons/mob/human.dmi' // vOv
 	mutant_organs = list(\
@@ -2360,8 +2370,6 @@ TYPEINFO(/datum/mutantrace/kudzu)
 				H.setStatus("maxhealth-", null, -50)
 				H.add_stam_mod_max("kudzu", -100)
 				APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "kudzu", -5)
-				APPLY_ATOM_PROPERTY(H, PROP_MOB_NIGHTVISION_WEAK, "kudzu")
-				APPLY_ATOM_PROPERTY(H, PROP_MOB_XRAYVISION, "kudzu")
 				H.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_KUDZUCHAT)
 				H.ensure_listen_tree().AddListenInput(LISTEN_INPUT_KUDZUCHAT)
 
@@ -2374,8 +2382,6 @@ TYPEINFO(/datum/mutantrace/kudzu)
 			var/mob/living/carbon/human/H = src.mob
 			H.remove_stam_mod_max("kudzu")
 			REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "kudzu")
-			REMOVE_ATOM_PROPERTY(H, PROP_MOB_NIGHTVISION_WEAK, "kudzu")
-			REMOVE_ATOM_PROPERTY(H, PROP_MOB_XRAYVISION, "kudzu")
 
 			H.ensure_speech_tree().RemoveSpeechOutput(SPEECH_OUTPUT_KUDZUCHAT)
 			H.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_KUDZUCHAT)

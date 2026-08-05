@@ -74,7 +74,7 @@ TYPEINFO(/mob/living/critter/flock)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_AI_UNTRACKABLE, src)
-	APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION, src)
+	src.apply_vision(/datum/vision/nightvision, src)
 
 	// wait for like one tick for the unit to set up properly before registering
 	SPAWN(1 DECI SECOND)

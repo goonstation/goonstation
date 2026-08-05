@@ -900,7 +900,6 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	remove_lifeprocess(/datum/lifeprocess/hud)
 	remove_lifeprocess(/datum/lifeprocess/mutations)
 	remove_lifeprocess(/datum/lifeprocess/organs)
-	remove_lifeprocess(/datum/lifeprocess/sight)
 	remove_lifeprocess(/datum/lifeprocess/statusupdate)
 	remove_lifeprocess(/datum/lifeprocess/radiation)
 

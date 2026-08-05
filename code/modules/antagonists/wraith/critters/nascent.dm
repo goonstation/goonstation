@@ -45,7 +45,7 @@ TYPEINFO(/mob/living/critter/wraith)
 				M.summons = list()
 			M.summons += src
 
-		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
+		src.apply_vision(/datum/vision/nightvision/weak, src)
 		//Let us spawn as stuff
 		abilityHolder.addAbility(/datum/targetable/critter/nascent/become_spiker)
 		abilityHolder.addAbility(/datum/targetable/critter/nascent/become_voidhound)

@@ -25,7 +25,15 @@
 	///centerlight icon color
 	var/centerlight_color
 	///whether this vision only works in unrestricted Z levels
-	var/z_restricted
+	var/z_restricted = FALSE
+
+/// When the vision is first applied onto the mob
+/datum/vision/proc/on_apply(mob/user, source)
+	return
+
+/// When the last source is removed and the vision itself goes away
+/datum/vision/proc/on_remove(mob/user, source)
+	return
 
 /// X-ray vision, also for dead people
 /datum/vision/xray
@@ -33,6 +41,12 @@
 	see_in_dark = SEE_DARK_FULL
 	z_restricted = TRUE
 	see_invisible = INVIS_MESON
+
+/datum/vision/xray/on_apply(mob/user, source)
+	APPLY_ATOM_PROPERTY(user, PROP_MOB_XRAYVISION, source)
+
+/datum/vision/xray/on_remove(mob/user, source)
+	REMOVE_ATOM_PROPERTY(user, PROP_MOB_XRAYVISION, source)
 
 /// weak X-ray vision
 /datum/vision/xray/weak
@@ -46,12 +60,25 @@
 	centerlight_icon = "thermal"
 	centerlight_color = rgb(0.5 * 255, 0.5 * 255, 0.5 * 255)
 
-/// Mk2 thermalvision, also gives byond infravision
+/// Mk2 thermalvision, also gives byond infravision (see mobs through walls)
 /datum/vision/thermal/mk2
 	see_infrared = 1
 
+/datum/vision/thermal/mk2/on_apply(mob/user, source)
+	get_image_group(CLIENT_IMAGE_GROUP_MOB_OVERLAY).add_mob(user)
+
+/datum/vision/thermal/mk2/on_remove(mob/user, source)
+	get_image_group(CLIENT_IMAGE_GROUP_MOB_OVERLAY).remove_mob(user)
+
 /datum/vision/nightvision
 	centerlight_icon = "nightvision"
+	centerlight_color = rgb(0.5 * 255, 0.5 * 255, 0.5 * 255)
+
+/datum/vision/blob_overmind
+	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
+	see_invisible = INVIS_SPOOKY
+	see_in_dark = SEE_DARK_FULL
+	centerlight_icon = "thermal"
 	centerlight_color = rgb(0.5 * 255, 0.5 * 255, 0.5 * 255)
 
 /datum/vision/nightvision/weak
@@ -65,6 +92,12 @@
 	see_in_dark_bonus = 1
 	centerlight_icon = "nightvision"
 	centerlight_color = rgb(0.5 * 255, 0.5 * 255, 0.5 * 255)
+
+/datum/vision/meson/on_apply(mob/user, source)
+	get_image_group(CLIENT_IMAGE_GROUP_MECHCOMP).add_mob(user)
+
+/datum/vision/meson/on_remove(mob/user, source)
+	get_image_group(CLIENT_IMAGE_GROUP_MECHCOMP).remove_mob(user)
 
 /// Infravision, for some reason this is not the same as byond infravision (see_infrared = 1)
 /datum/vision/infra
@@ -127,7 +160,7 @@
 	see_in_dark = SEE_DARK_HUMAN + 1
 	see_invisible = INVIS_INFRA
 
-// todo: replace with xray
-/datum/vision/kudzu
+/// this is just xray+nightvision
+/datum/vision/xray/kudzu
 	centerlight_icon = "nightvision"
 	centerlight_color = rgb(0.5 * 255, 0.5 * 255, 0.5 * 255)

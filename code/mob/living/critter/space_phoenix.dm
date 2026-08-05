@@ -49,7 +49,7 @@ TYPEINFO(/mob)
 		remove_lifeprocess(/datum/lifeprocess/radiation)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
-		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION, src)
+		src.apply_vision(/datum/vision/nightvision, src)
 
 		QDEL_NULL(src.organHolder)
 

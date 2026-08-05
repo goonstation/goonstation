@@ -21,6 +21,7 @@
 	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
 	see_face = FALSE
 	item_function_flags = IMMUNE_TO_ACID
+	vision_modifier = /datum/vision/thermal/mk2
 
 	New()
 		..()
@@ -29,13 +30,6 @@
 			var/mob/M = src.loc
 			src.AddComponent(/datum/component/self_destruct, M)
 
-	equipped(mob/user)
-		. = ..()
-		APPLY_ATOM_PROPERTY(user, PROP_MOB_THERMALVISION_MK2, src)
-
-	unequipped(mob/user)
-		REMOVE_ATOM_PROPERTY(user, PROP_MOB_THERMALVISION_MK2, src)
-		. = ..()
 
 /obj/item/clothing/under/gimmick/hunter
 	name = "Hunter Suit"

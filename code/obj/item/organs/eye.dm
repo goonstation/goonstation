@@ -19,6 +19,8 @@
 	var/show_on_examine = FALSE
 	///provides sight for blindness checks
 	var/provides_sight = TRUE
+	/// vision modifier to apply
+	var/datum/vision/vision_modifier
 
 	New()
 		..()
@@ -35,11 +37,15 @@
 
 	on_transplant(mob/M)
 		. = ..()
+		if (src.vision_modifier)
+			M.apply_vision(src.vision_modifier, src)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			H.update_face()
 
-	on_removal()
+	on_removal(mob/M)
+		if (src.vision_modifier)
+			M.remove_vision(src.vision_modifier, src)
 		if(ishuman(donor))
 			var/mob/living/carbon/human/H = donor
 			SPAWN(0) //need to delay until after the eye is actually removed from the organholder
@@ -245,14 +251,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/thermal)
 	color_g = 0.9 // red tint
 	color_b = 0.9
 	iris_color = "#a01f1f"
-
-	on_transplant(mob/M)
-		. = ..()
-		APPLY_ATOM_PROPERTY(M, PROP_MOB_THERMALVISION, src)
-
-	on_removal()
-		REMOVE_ATOM_PROPERTY(donor, PROP_MOB_THERMALVISION, src)
-		. = ..()
+	vision_modifier = /datum/vision/thermal
 
 TYPEINFO(/obj/item/organ/eye/cyber/meson)
 	mats = 7
@@ -410,14 +409,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/nightvision)
 	color_g = 1
 	color_b = 0.7
 	iris_color = "#027e17"
-
-	on_transplant(mob/M)
-		. = ..()
-		APPLY_ATOM_PROPERTY(M, PROP_MOB_NIGHTVISION, src)
-
-	on_removal()
-		REMOVE_ATOM_PROPERTY(donor, PROP_MOB_NIGHTVISION, src)
-		. = ..()
+	vision_modifier = /datum/vision/nightvision
 
 TYPEINFO(/obj/item/organ/eye/cyber/laser)
 	mats = 7

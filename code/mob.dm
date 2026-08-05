@@ -3621,24 +3621,33 @@ TYPEINFO(/mob)
 
 
 /mob/proc/apply_vision(var/datum/vision/clue, var/source)
-	if (src.vision_modifiers[clue])
+	if (ispath(clue))
+		clue = get_singleton(clue)
+	if (src.vision_modifiers[clue]) 			// if the modifier already exists, just add a new source
 		src.vision_modifiers[clue] |= source
-	else
+	else										// the modifier was added for the first time
 		src.vision_modifiers[clue] = list(source)
+		clue.on_apply(src, source)
 		//No need to meditate for 20-45 minutes, the visions are revealed immediately
 		src.update_vision()
 
 /mob/proc/remove_vision(var/datum/vision/clue, var/source)
+	if (ispath(clue))
+		clue = get_singleton(clue)
 	if (src.vision_modifiers[clue])
 		src.vision_modifiers[clue] -= source
-	if (!length(src.vision_modifiers[clue]))
+	if (!length(src.vision_modifiers[clue])) // the last source was removed and the modifier needs to go away
 		src.vision_modifiers -= clue
+		clue.on_remove(src, source)
 		src.update_vision()
+
+/mob/proc/update_sight()
+	src.update_vision()
 
 /mob/proc/update_vision()
 
 	see_invisible = initial(see_invisible)
-	sight = initial(sight)
+	sight = initial(sight) | SEE_BLACKNESS
 	see_in_dark = initial(see_in_dark)
 	see_infrared = initial(see_infrared)
 
@@ -3648,16 +3657,11 @@ TYPEINFO(/mob)
 	var/see_in_dark_bonus = 0
 	var/neg_sight = 0
 	var/should_register_signal = FALSE
-	var/datum/vision/modifier
 	var/datum/vision/weightiest_modifier
 	var/new_centerlight_icon
 	var/list/centerlight_colors = list()
 
-	for(var/type_or_instance in src.vision_modifiers)
-		if (ispath(type_or_instance))
-			modifier = vision_instances[type_or_instance]
-		else
-			modifier = type_or_instance
+	for(var/datum/vision/modifier in src.vision_modifiers)
 
 		if (modifier.z_restricted)
 			should_register_signal = TRUE
@@ -3698,8 +3702,8 @@ TYPEINFO(/mob)
 				new_color[2] += color_rgb[2]*color_w
 				new_color[3] += color_rgb[3]*color_w
 				w_divisor += color_w
-			new_color = rgb(new_color[0]/w_divisor, new_color[1]/w_divisor, new_color[2]/w_divisor) */
-		src.render_special.set_centerlight_icon(new_centerlight_icon, centerlight_colors[1].centerlight_color, wide = (src.client?.widescreen))
+			new_color = rgb(new_color[1]/w_divisor, new_color[2]/w_divisor, new_color[3]/w_divisor) */
+		src.render_special.set_centerlight_icon(new_centerlight_icon, centerlight_colors[1], wide = (src.client?.widescreen))
 	else if (new_centerlight_icon)
 		src.render_special.set_centerlight_icon(new_centerlight_icon)
 
