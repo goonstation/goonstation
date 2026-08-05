@@ -957,6 +957,15 @@
 	/obj/item/device/analyzer/healthanalyzer/upgraded,
 	/obj/item/robodefibrillator)
 
+/obj/item/storage/belt/medical/prepared/NT
+	spawn_contents = list(/obj/item/robodefibrillator,
+	/obj/item/device/analyzer/healthanalyzer/upgraded,
+	/obj/item/reagent_containers/mender/both/high_capacity,
+	/obj/item/reagent_containers/mender_refill_cartridge/both/high_capacity,
+	/obj/item/storage/pill_bottle/mutadone,
+	/obj/item/reagent_containers/hypospray,
+	/obj/item/bullet_extractor)
+
 /obj/item/storage/belt/roboticist
 	icon_state = "utilrobotics"
 	name = "Roboticist's belt"
