@@ -84,7 +84,7 @@
 
 
 /obj/item/storage/box/starter/withO2 //use this if the box should not get additional items after the round has passed 20 min
-	spawn_contents = list(/obj/item/clothing/mask/breath, /obj/item/tank/pocket/oxygen, )
+	spawn_contents = list(/obj/item/clothing/mask/breath, /obj/item/tank/pocket/oxygen)
 	make_my_stuff()
 		..(TRUE)
 
