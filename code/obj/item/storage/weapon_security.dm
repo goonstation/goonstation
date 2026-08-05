@@ -222,7 +222,7 @@
 	name = "cleaner grenade box"
 	icon_state = "flashbang"
 	spawn_contents = list(/obj/item/chem_grenade/fcleaner = 5)
-	SYNDICATE_STEALTH_DESCRIPTION("You struggle to keep a good grip on it.", null)
+	SYNDICATE_STEALTH_DESCRIPTION("You struggle to keep a good grip on it.")
 	tooltip_flags = REBUILD_USER
 
 /obj/item/storage/box/grenade_starter_kit
@@ -324,7 +324,7 @@
 	w_class = W_CLASS_SMALL
 	max_wclass = W_CLASS_NORMAL
 	tooltip_flags = REBUILD_USER
-	SYNDICATE_STEALTH_DESCRIPTION("It looks heavy, somehow.", null)
+	SYNDICATE_STEALTH_DESCRIPTION("It looks heavy, somehow.")
 
 	New()
 		..()

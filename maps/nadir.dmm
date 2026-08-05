@@ -17476,6 +17476,9 @@
 	pixel_x = -9;
 	pixel_y = 19
 	},
+/obj/machinery/firealarm/directional/east{
+	pixel_y = -13
+	},
 /turf/simulated/floor/caution,
 /area/station/quartermaster/cargobay{
 	name = "Cargo Primary Endpoint"

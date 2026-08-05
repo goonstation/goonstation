@@ -28,7 +28,7 @@
 		STOP_TRACKING
 
 	attackby(obj/item/I, user)
-		if (issilicon(I) && isscrewingtool(I))
+		if (issilicon(user) && isscrewingtool(I))
 			boutput(user, SPAN_ALERT("The screws on [src] can only be reached by nimble human hands!"))
 			return
 		. = ..()
