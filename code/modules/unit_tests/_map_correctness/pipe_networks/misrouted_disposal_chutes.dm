@@ -1,8 +1,8 @@
-/datum/map_correctness_check/disposal_chutes
-	check_name = "Faulty Disposal Chutes"
+/datum/map_correctness_check/misrouted_disposal_chutes
+	check_name = "Misrouted Disposal Chutes"
 	check_prefabs = FALSE
 
-/datum/map_correctness_check/disposal_chutes/run_check()
+/datum/map_correctness_check/misrouted_disposal_chutes/run_check()
 	. = list()
 
 	global.instant_pipe_network()
@@ -31,7 +31,7 @@
 			continue
 
 		var/endpoint = T ? "([T.x], [T.y], [T.z]) in [T.loc]" : "(null)"
-		. += "[src.format_position(dummy.chute)] sends objects to non-disposals-endpoint at [endpoint]."
+		. += "[CI.format_position(dummy.chute)] sends objects to non-disposals-endpoint at [endpoint]."
 
 
 /obj/landmark/disposals_endpoint

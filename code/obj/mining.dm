@@ -2392,7 +2392,7 @@ TYPEINFO(/obj/item/cargotele)
 	icon_state = "cargotelegreen"
 
 /obj/item/cargotele/traitor
-	SYNDICATE_STEALTH_DESCRIPTION("The targeting system is fluctuating rapidly.", null)
+	SYNDICATE_STEALTH_DESCRIPTION("The targeting system is fluctuating rapidly.")
 	tooltip_flags = REBUILD_USER
 	cost = 15
 	///The account to credit for sales

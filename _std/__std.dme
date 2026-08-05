@@ -202,6 +202,8 @@
 #include "namespaces\dwaine\permissions.dm"
 #include "namespaces\dwaine\shell.dm"
 #include "namespaces\dwaine\syscalls.dm"
+#include "namespaces\ci.dm"
+#include "namespaces\omnitool.dm"
 #include "namespaces\pay.dm"
 #include "namespaces\radio.dm"
 #include "namespaces\RCD.dm"
