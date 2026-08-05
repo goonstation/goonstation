@@ -747,16 +747,17 @@ CONTAINS:
 		return TRUE
 
 	proc/try_unfold(mob/user)
-		if (IS_BODYBAG_FOLDED(src))
-			user.visible_message("<b>[user]</b> unfolds [src].", "You unfold [src].")
-			if(!src.cant_drop)
-				user.drop_item()
-			pixel_x = 0
-			pixel_y = 0
-			src.UpdateIcon()
-			return TRUE
-		else
+		if (!IS_BODYBAG_FOLDED(src))
 			return FALSE
+
+		user.visible_message("<b>[user]</b> unfolds [src].", "You unfold [src].")
+		
+		if(!src.cant_drop)
+			user.u_equip(src)
+		src.set_loc(user.loc)
+		src.UpdateIcon()
+
+		return TRUE
 
 #undef IS_BODYBAG_FOLDED
 
