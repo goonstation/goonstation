@@ -24,6 +24,7 @@
 		object.exhaustion += 1
 		if(object.exhaustion > 10)
 			object.cost = round(object.cost*(1+object.exhaustion/50))
+			global.shippingmarket.update_supply_console_data() //Make sure all consoles show the new price
 
 		return S
 
