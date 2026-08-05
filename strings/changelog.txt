@@ -1,5 +1,8 @@
 
 (t)tue aug 04 26
+(u)glowbold
+(e)💅🔨|C-QoL, A-Player-Actions
+(*)You can succumb to your wounds while in crit by clicking the Critical Condition status effect icon.
 (u)JORJ949
 (e)⚖📦🤖|C-Balance, A-Game-Objects, A-Silicons
 (*)Fixed silicons being able to unscrew the killswitch.
