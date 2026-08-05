@@ -42,6 +42,7 @@
 	src.ai = new /datum/aiHolder/flock/drone(src)
 	..()
 	src.add_ability_holder(/datum/abilityHolder/critter/flockdrone)
+	src.apply_vision(/datum/vision/flock)
 
 	SPAWN(3 SECONDS)
 		//this is terrible, but diffracting a drone immediately causes a runtime
@@ -180,9 +181,6 @@
 	controller = pilot
 	src.flock_name_tag.set_info_tag(src.controller.real_name)
 	src.client?.set_color()
-	//hack to make night vision apply instantly
-	var/datum/lifeprocess/sight/sight_process = src.lifeprocesses[/datum/lifeprocess/sight]
-	sight_process?.Process()
 	src.hud?.update_intent()
 	var/datum/abilityHolder/composite/composite = src.abilityHolder
 	composite.addHolderInstance(pilot.abilityHolder, TRUE)

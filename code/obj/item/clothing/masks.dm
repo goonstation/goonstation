@@ -206,6 +206,7 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 		item_state = "slasher_mask"
 		item_function_flags = IMMUNE_TO_ACID
 		see_face = TRUE
+		vision_modifier = /datum/vision/thermal/mk2
 		setupProperties()
 			..()
 			setProperty("meleeprot_head", 6)
@@ -213,13 +214,6 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 			setProperty("movespeed", 0.2)
 			setProperty("exploprot", 40)
 
-		equipped(mob/user, slot)
-			. = ..()
-			APPLY_ATOM_PROPERTY(user, PROP_MOB_THERMALVISION_MK2, src)
-
-		unequipped(mob/user)
-			. = ..()
-			REMOVE_ATOM_PROPERTY(user, PROP_MOB_THERMALVISION_MK2, src)
 
 	postpossession
 		name = "worn gas mask"

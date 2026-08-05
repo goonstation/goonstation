@@ -39,6 +39,8 @@ ABSTRACT_TYPE(/obj/item/clothing)
 	var/can_stain = 1
 	var/list/datum/stain/stains = null
 
+	var/datum/vision/vision_modifier // vision modifier to apply, mostly for glasses and masks
+
 	New()
 		..()
 		src.real_name = src.name // meh will probably grab any custom names like this
@@ -113,6 +115,24 @@ ABSTRACT_TYPE(/obj/item/clothing)
 			CF.set_loc(get_turf(src))
 		user.u_equip(src)
 		qdel(src)
+
+
+	proc/replace_vision_modifier(mob/user, datum/vision/new_vision_modifier)
+		if (src.equipped_in_slot)
+			user.remove_vision(src.vision_modifier, src)
+			user.apply_vision(new_vision_modifier, src)
+		src.vision_modifier = new_vision_modifier
+
+	equipped(mob/user, slot)
+		. = ..()
+		if (src.vision_modifier)
+			user.apply_vision(src.vision_modifier, src)
+
+	unequipped(mob/user)
+		. = ..()
+		if (src.vision_modifier)
+			user.remove_vision(src.vision_modifier, src)
+
 
 /obj/item/clothing/material_trigger_on_mob_attacked(var/mob/attacker, var/mob/attacked, var/atom/weapon, var/situation_modifier)
 	// if someone wearing this gets attacked, only trigger this if the corresponding zone is hit

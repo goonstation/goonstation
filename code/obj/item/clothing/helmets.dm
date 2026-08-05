@@ -1017,11 +1017,11 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
 
 	proc/apply_visor_effect(var/mob/living/user)
 		user.vision.set_scan(TRUE)
-		APPLY_ATOM_PROPERTY(user, PROP_MOB_THERMALVISION_MK2, src)
+		user.apply_vision(/datum/vision/thermal/mk2, src)
 
 	proc/remove_visor_effect(var/mob/living/user)
 		user.vision.set_scan(FALSE)
-		REMOVE_ATOM_PROPERTY(user, PROP_MOB_THERMALVISION_MK2, src)
+		user.remove_vision(/datum/vision/thermal/mk2, src)
 
 	equipped(var/mob/living/user, var/slot)
 		..()

@@ -590,7 +590,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		src.owner.set_dir(get_dir_accurate(src.owner, target))
 		src.owner.visible_message(SPAN_ALERT("[src.owner]'s eyes emit a weak blue glow."))
 
-		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_XRAYVISION, "xray_gene")
+		src.owner.apply_vision(/datum/vision/xray, "xray_gene")
 		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_CANTMOVE, "xray_gene")
 		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_CANTTURN, "xray_gene")
 
@@ -651,7 +651,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	proc/remove_effects(mob/user)
 		UnregisterSignal(user, COMSIG_MOVABLE_SET_LOC)
 		REMOVE_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "xray_gene")
-		REMOVE_ATOM_PROPERTY(user, PROP_MOB_XRAYVISION, "xray_gene")
+		src.owner.remove_vision(/datum/vision/xray, "xray_gene")
 		REMOVE_ATOM_PROPERTY(user, PROP_MOB_CANTTURN, "xray_gene")
 		user.ClearSpecificOverlays("xray_eyes")
 		var/client/client = user.client || user.last_client
