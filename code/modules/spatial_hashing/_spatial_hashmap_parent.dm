@@ -355,6 +355,7 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
  *	Internal use only.
  */
 /datum/spatial_hashmap/proc/update_z_order(source, new_z_order)
+	PRIVATE_PROC(TRUE)
 	if (new_z_order <= src.z_order)
 		return
 
