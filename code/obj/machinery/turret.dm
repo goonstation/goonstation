@@ -526,7 +526,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/turretid, proc/toggle_active, proc/toggle_le
 		.["locked"] = src.locked
 
 /obj/machinery/turretid/ui_static_data(mob/user)
-	var/area/area = get_area(src)
+	var/area/area = get_area_by_type(src.turretArea) || get_area(src)
 	if (!istype(area))
 		logTheThing(LOG_DEBUG, null, "Turret badly positioned.")
 	. = list(
