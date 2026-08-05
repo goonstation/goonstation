@@ -1,5 +1,9 @@
 
 (t)wed aug 05 26
+(u)Ceres et al.
+(p)27267
+(e)🎨💊|C-Sprites, A-Medical
+(+)Triage tag boxes now have usage information when examined, can be found in NanoMeds instead of the medical apparel vendor, and have a new "Cloned" tag to indicate bodies that have been successfully revived.
 (u)Cheekybrdy
 (p)26873
 (e)🆕🎨💡|C-Feature, C-Sprites, A-Station-Systems
