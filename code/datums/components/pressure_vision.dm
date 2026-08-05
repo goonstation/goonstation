@@ -1,6 +1,5 @@
 TYPEINFO(/datum/component/pressure_vision)
 	initialization_args = list(
-		// ARG_INFO("user", DATA_INPUT_MOB_REFERENCE, "The mob to give the vision to"),
 		ARG_INFO("start_active", DATA_INPUT_BOOL, "Does it start immidently or after the first signal")
 	)
 
