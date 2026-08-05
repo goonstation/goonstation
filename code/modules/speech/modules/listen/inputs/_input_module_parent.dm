@@ -14,6 +14,8 @@ ABSTRACT_TYPE(/datum/listen_module/input)
 	var/datum/say_channel/say_channel
 	/// Whether this listen module should ignore line of sight checks performed during message dissemination.
 	var/ignore_line_of_sight_checks = FALSE
+	/// Logging for failed garbage collection.
+	var/_debug_listener_parent = null
 
 /datum/listen_module/input/New(datum/listen_module_tree/parent)
 	. = ..()
@@ -28,6 +30,8 @@ ABSTRACT_TYPE(/datum/listen_module/input)
 		src.say_channel.RegisterInput(src)
 
 /datum/listen_module/input/disposing()
+	src._debug_listener_parent = "[src.parent_tree.listener_parent]"
+
 	if (src.enabled)
 		src.say_channel.UnregisterInput(src)
 
