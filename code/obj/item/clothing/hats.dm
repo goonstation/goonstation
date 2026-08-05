@@ -1444,6 +1444,12 @@ TYPEINFO(/obj/item/clothing/head/bighat/syndicate)
 	icon_state = "nursehat"
 	item_state = "nursehat"
 
+/obj/item/clothing/head/nursehat/blue
+	name = "nurse hat"
+	desc = "A hat often worn by a nurse. And nurse enthusiasts."
+	icon_state = "nursehat-blue"
+	item_state = "nursehat-blue"
+
 /obj/item/clothing/head/traditionalnursehat
 	name = "Traditional Nurse Hat"
 	desc = "A nurse hat from the past."

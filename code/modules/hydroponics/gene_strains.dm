@@ -356,6 +356,11 @@ ABSTRACT_TYPE(/datum/plant_gene_strain)
 	desc = "Produce harvested from this plant will contain a higher than usual amount of water."
 	var/list/reagents_to_add = list("water")
 
+/datum/plant_gene_strain/reagent_adder/craftglue
+	name = "Enhanced adhesiveness"
+	desc = "Produce harvested from this plant will be much more sticky than usual."
+	reagents_to_add = list ("craftglue")
+
 /datum/plant_gene_strain/reagent_adder/toxic
 	name = "Toxic"
 	desc = "Produce harvested from this plant may contain toxic substances."
