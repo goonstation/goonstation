@@ -751,10 +751,11 @@ CONTAINS:
 			return FALSE
 
 		user.visible_message("<b>[user]</b> unfolds [src].", "You unfold [src].")
-		
-		if(!src.cant_drop)
-			user.u_equip(src)
-		src.set_loc(user.loc)
+
+		user.drop_from_slot(src)
+		src.pixel_x = 0
+		src.pixel_y = 0
+
 		src.UpdateIcon()
 
 		return TRUE
