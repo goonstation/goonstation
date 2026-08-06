@@ -307,11 +307,15 @@ TYPEINFO(/obj/item/tool/omnitool/dualconstruction_device)
 		src.AddComponent(/datum/component/soldering, 1.5 SECONDS)
 		src.AddComponent(/datum/component/deconstructing, 0.5 SECONDS, 1)
 
+TYPEINFO(/obj/item/tool/omnitool/excavator)
+	mats = list("dense_property_ultra" = 10,
+				"heat_dense" = 5,
+				"energy_property" = 5)
 /obj/item/tool/omnitool/excavator
 	name = "omni-excavator"
-	icon_state = "excavator-pick"
+	desc = "A versatile mining tool specialized in digging out more delicate objects, such as fossils."
+	icon_state = "excavator-pickaxe"
 	prefix = "excavator"
-	desc = "A mining tool specialized in digging out more delicate objects, such as fossils."
 	w_class = W_CLASS_NORMAL
 	animated_delay_enter = TRUE
 	animated_delay_exit = TRUE
@@ -327,7 +331,8 @@ TYPEINFO(/obj/item/tool/omnitool/dualconstruction_device)
 
 /obj/item/tool/omnitool/excavator/silicon
 	name = "omni-excavator"
-	icon_state = "silicon-excavator-pick"
+	desc = "A set of various mining tools. Useful for digging out more delicate objects, such as fossils."
+	icon_state = "silicon-excavator-pickaxe"
 	prefix = "silicon-excavator"
 	animated_delay_enter = FALSE
 	animated_delay_exit = FALSE
@@ -492,13 +497,14 @@ ABSTRACT_TYPE(/datum/omnimode)
 		item_type = /obj/item/mining_tool
 		var/mining_type = MINING_DMG_PICKAXE
 		var/sound/mining_sound = 'sound/impact_sounds/Stone_Cut_1.ogg'
+		var/mining_volume = 50
 
 		on_attack_after(var/obj/item/tool/omnitool/omni, atom/target, mob/user, reach, params)
 			. = ..()
 			if(istype(target, /turf/simulated/wall/auto/asteroid))
 				var/turf/simulated/wall/auto/asteroid/AST = target
 				AST.dig_asteroid(user, 2, FALSE, src.mining_type)
-				playsound(user.loc, src.mining_sound, 50, 1)
+				playsound(user.loc, src.mining_sound, src.mining_volume, 1)
 			if(istype(omni, /obj/item/tool/omnitool/excavator/silicon))
 				if(!ON_COOLDOWN(omni, "omnitool_mining_anim", 0.5 SECONDS))
 					flick("[omni.prefix]-[src.mode_id]-mine", omni)
@@ -509,12 +515,14 @@ ABSTRACT_TYPE(/datum/omnimode)
 		context_icon = "mining_pick"
 		mining_type = MINING_DMG_PICKAXE
 		mining_sound = 'sound/items/mining_pick.ogg'
+		mining_volume = 100
 	mining/drill
 		mode_name = "drill"
 		mode_id = OMNITOOL::MODE_MINING_DRILL
 		context_icon = "mining_drill"
 		mining_type = MINING_DMG_DRILL
 		mining_sound = 'sound/items/mining_drill.ogg'
+		mining_volume = 100
 	mining/hammer
 		mode_name = "hammer"
 		mode_id = OMNITOOL::MODE_MINING_HAMMER
@@ -528,12 +536,14 @@ ABSTRACT_TYPE(/datum/omnimode)
 		item_type = /obj/item/shovel
 		mining_type = MINING_DMG_SHOVEL
 		mining_sound = 'sound/items/mining_hammer.ogg'
+		mining_volume = 100
 	mining/laser
 		mode_name = "laser"
 		mode_id = OMNITOOL::MODE_MINING_LASER
 		context_icon = "mining_laser"
 		mining_type = MINING_DMG_LASER
-		mining_sound = 'sound/weapons/laser_d.ogg'
+		mining_sound = 'sound/weapons/laser_f.ogg'
+		mining_volume = 100
 	mining/concussive
 		mode_name = "concussive"
 		mode_id = OMNITOOL::MODE_MINING_CONCUSSIVE

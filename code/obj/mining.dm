@@ -1178,7 +1178,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			var/obj/item/mining_tool/T = W
 			src.dig_asteroid(user, T.get_dig_strength(), T.is_weakener(), T.mining_type)
 			playsound(user.loc, T.get_mining_sound(), 50, 1)
-		else if (istype(W, /obj/item/mining_tools))
+		else if (istype(W, /obj/item/mining_tools) || istype(W, /obj/item/tool/omnitool))
 			return // matsci `mining_tools` handle their own digging
 		else if (istype(W, /obj/item/oreprospector))
 			var/message = "----------------------------------<br>"

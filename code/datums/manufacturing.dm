@@ -2471,6 +2471,16 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	time = 120 SECONDS
 	category = MANUFACTURER::CATEGORY::TOOL
 
+/datum/manufacture/omniexcavator
+	name = "Omni-Excavator"
+	item_requirements = list("dense_property_ultra" = 10,
+							"heat_dense" = 5,
+							"energy_property" = 5)
+	item_outputs = list(/obj/item/tool/omnitool/excavator)
+	create = 1
+	time = 120 SECONDS
+	category = MANUFACTURER::CATEGORY::TOOL
+
 /datum/manufacture/ore_accumulator
 	name = "Mineral Accumulator"
 	item_requirements = list("metal_dense" = 25,
