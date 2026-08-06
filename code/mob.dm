@@ -125,7 +125,8 @@ TYPEINFO(/mob)
 
 	var/list/movement_modifiers = list()
 
-	var/list/vision_modifiers = list()
+	var/list/datum/vision/vision_modifiers = list()
+	var/datum/vision/innate_vision
 
 	var/misstep_chance = 0
 
@@ -256,6 +257,9 @@ TYPEINFO(/mob)
 	huds = new
 	render_special = new
 	traitHolder = new(src)
+
+	if (src.innate_vision)
+		src.apply_vision(innate_vision, "innate")
 
 
 	if (!src.bioHolder)
@@ -495,7 +499,7 @@ TYPEINFO(/mob)
 
 	world.update_status()
 
-	src.sight |= SEE_SELF | SEE_BLACKNESS
+	src.update_vision()
 
 	..()
 
@@ -3649,7 +3653,7 @@ TYPEINFO(/mob)
 /mob/proc/update_vision()
 
 	see_invisible = initial(see_invisible)
-	sight = initial(sight) | SEE_BLACKNESS
+	sight = initial(sight) | SEE_SELF | SEE_BLACKNESS
 	see_in_dark = initial(see_in_dark)
 	see_infrared = initial(see_infrared)
 
@@ -3685,6 +3689,7 @@ TYPEINFO(/mob)
 			see_infrared = modifier.see_infrared
 
 		if (modifier.centerlight_icon && (!weightiest_modifier || modifier.weight > weightiest_modifier))
+			weightiest_modifier = modifier
 			new_centerlight_icon = modifier.centerlight_icon
 
 		if (modifier.centerlight_color)

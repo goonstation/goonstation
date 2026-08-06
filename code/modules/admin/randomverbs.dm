@@ -1057,17 +1057,17 @@
 	if (widescreen)
 		if (src.view == "21x15") //tried using world.view stuff but it was not happy
 			src.view = "28x20"
-			usr.see_in_dark = 10
+			usr.apply_vision(/datum/vision/adminview, src.type)
 		else
 			src.view = "21x15"
-			usr.see_in_dark = initial(usr.see_in_dark)
+			usr.remove_vision(/datum/vision/adminview, src.type)
 	else //not widescreen
 		if (src.view == "15x15")// 15x15 should be default for non-widescreen
 			src.view = "20x20"
-			usr.see_in_dark = 10
+			usr.apply_vision(/datum/vision/adminview, src.type)
 		else
 			src.view = "15x15"
-			usr.see_in_dark = initial(usr.see_in_dark)
+			usr.remove_vision(/datum/vision/adminview, src.type)
 
 
 /client/proc/iddt()

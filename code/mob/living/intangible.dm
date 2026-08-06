@@ -13,15 +13,13 @@ TYPEINFO(/mob/living/intangible)
 	event_handler_flags =  IMMUNE_OCEAN_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP | MOVE_NOCLIP
 	canbegrabbed = FALSE
 	can_lie = FALSE
+	innate_vision = /datum/vision/observer
 
 	New()
 		. = ..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_GHOST)
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE, src)
-		src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
-		src.see_invisible = INVIS_GHOST
-		src.see_in_dark = SEE_DARK_FULL
 		src.flags |= UNCRUSHABLE
 
 	nauseate(stacks)

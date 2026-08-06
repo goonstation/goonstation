@@ -197,18 +197,11 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/meson)
 	color_r = 0.89
 	color_g = 1
 	color_b = 0.85
+	vision_modifier = /datum/vision/ghost
 
 	setupProperties()
 		..()
 		setProperty("disorient_resist_eye", 15)
-
-	equipped(mob/user, slot)
-		. = ..()
-		APPLY_ATOM_PROPERTY(user, PROP_MOB_GHOSTVISION, src)
-
-	unequipped(mob/user)
-		. = ..()
-		REMOVE_ATOM_PROPERTY(user, PROP_MOB_GHOSTVISION, src)
 
 /obj/item/clothing/glasses/regular/ecto/goggles
 	name = "ectoplasmoleic imager"

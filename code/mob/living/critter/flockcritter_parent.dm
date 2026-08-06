@@ -22,7 +22,7 @@ TYPEINFO(/mob/living/critter/flock)
 	custom_vomit_type = /obj/decal/cleanable/flockdrone_debris/fluid
 	mat_changename = FALSE
 	mat_changedesc = FALSE
-	see_invisible = INVIS_FLOCK
+	innate_vision = /datum/vision/flock
 	default_speech_output_channel = SAY_CHANNEL_FLOCK
 	say_language = LANGUAGE_FEATHER
 

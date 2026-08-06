@@ -221,15 +221,14 @@ To remove:
 //-------------------- MOB PROPS -----------------------
 
 // Vision properties
-#define PROP_MOB_NIGHTVISION(x) x("nightvision", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE, PROP_UPDATE_SIGHT)
-#define PROP_MOB_NIGHTVISION_WEAK(x) x("nightvision_weak", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE, PROP_UPDATE_SIGHT)
-#define PROP_MOB_MESONVISION(x) x("mesonvision", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE, PROP_UPDATE_SIGHT)
-#define PROP_MOB_GHOSTVISION(x) x("ghostvision", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE, PROP_UPDATE_SIGHT)
-// Only affects whether the mob can see through its own equipment (= is not blinded by wearing items that block vision)
+
+// Affects whether the mob can see through its own equipment (= is not blinded by wearing items that block vision)
 #define PROP_MOB_XRAYVISION(x) x("xrayvision", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
-#define PROP_MOB_THERMALVISION(x) x("thermalvision", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE, PROP_UPDATE_SIGHT)
-#define PROP_MOB_SPECTRO(x) x("spectrovision", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE, PROP_UPDATE_SIGHT)
+// Affects examine messages and tooltips to show reagents
+#define PROP_MOB_SPECTRO(x) x("spectrovision", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+// Similar to spectroscopic scan except shows phytogenic information about plants
 #define PROP_MOB_PHYTOVISION(x) x("phytovision", APPLY_ATOM_PROPERTY_MAX, REMOVE_ATOM_PROPERTY_MAX)
+
 #define PROP_MOB_EXAMINE_ALL_NAMES(x) x("examine_all", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_EXAMINE_HEALTH(x) x("healthvison", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_EXAMINE_HEALTH_SYNDICATE(x) x("healthvison_syndicate", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE) // doesn't work without PROP_MOB_EXAMINE_HEALTH; TODO rename this to further reduce confusion

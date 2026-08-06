@@ -118,8 +118,24 @@
 	see_invisible = INVIS_CLOAK
 	neg_sight = SEE_OBJS
 
+/// Z-restricted component of AI vision
+/datum/vision/ai_zrestricted
+	z_restricted = TRUE
+	sight = SEE_TURFS | SEE_OBJS | SEE_MOBS
+
+/// unrestricted component of AI vision. Always around.
+/datum/vision/ai
+	see_in_dark = SEE_DARK_FULL
+	see_invisible = INVIS_CLOAK
+
+/// AI cameras have a slightly different one
+/datum/vision/ai_camera
+	sight = SEE_SELF
+	see_invisible = INVIS_AI_EYE
+	see_in_dark = SEE_DARK_FULL
+
 /// vision for AI mainframes and hivebots
-/datum/vision/aibot
+/datum/vision/hivebot
 	see_invisible = INVIS_CLOAK
 
 /// flock vision
@@ -164,3 +180,27 @@
 /datum/vision/xray/kudzu
 	centerlight_icon = "nightvision"
 	centerlight_color = rgb(0.5 * 255, 0.5 * 255, 0.5 * 255)
+
+/datum/vision/new_player
+	sight = SEE_TURFS
+
+/datum/vision/observer
+	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
+	see_invisible = INVIS_SPOOKY
+	see_in_dark = SEE_DARK_FULL
+
+/// NOT observer ghost vision. Grants ability to see ghosts.
+/datum/vision/ghost
+	see_in_dark = 1
+	see_invisible = INVIS_GHOST
+
+/datum/vision/adminview
+	see_in_dark = 10
+
+/datum/vision/buildmode
+	see_in_dark = 10
+	see_invisible = INVIS_ADVENTURE
+
+/datum/vision/ship_sensor
+	see_in_dark = SEE_DARK_HUMAN + 3
+	see_invisible = INVIS_CLOAK
