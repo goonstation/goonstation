@@ -1,5 +1,23 @@
 
+(t)thu aug 06 26
+(u)glowbold
+(p)27404
+(e)🆕💊⚗|C-Feature, A-Medical, A-Chemistry
+(+)Health Analyzer TGUI window shows reagent overdoses.
+(u)Astarthoc
+(p)27412
+(e)💅📦🔬|C-QoL, A-Game-Objects, A-Science
+(+)The elecbox now automatically stops 5 seconds after being activated, removing the need to stop it manually.
 (t)wed aug 05 26
+(u)Ceres et al.
+(p)27267
+(e)🎨💊|C-Sprites, A-Medical
+(+)Triage tag boxes now have usage information when examined, can be found in NanoMeds instead of the medical apparel vendor, and have a new "Cloned" tag to indicate bodies that have been successfully revived.
+(u)Cheekybrdy
+(p)26873
+(e)🆕🎨💡|C-Feature, C-Sprites, A-Station-Systems
+(*)You can now make chemical requests on your PDA. Scientists/Pharmacists can now reject/fulfil requests on a different PDA app.
+(+)Pharmacist now has a dedicated PDA cartridge.
 (u)CelineTheYeen
 (p)27264
 (e)🗺|A-Mapping
