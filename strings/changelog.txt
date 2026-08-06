@@ -1,5 +1,9 @@
 
 (t)thu aug 06 26
+(u)glowbold
+(p)27404
+(e)🆕💊⚗|C-Feature, A-Medical, A-Chemistry
+(+)Health Analyzer TGUI window shows reagent overdoses.
 (u)Astarthoc
 (p)27412
 (e)💅📦🔬|C-QoL, A-Game-Objects, A-Science
