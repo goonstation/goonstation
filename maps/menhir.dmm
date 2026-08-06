@@ -3438,6 +3438,13 @@
 /obj/landmark/start/job/head_of_personnel,
 /turf/simulated/floor/carpet/green/fancy/edge/nw,
 /area/station/crew_quarters/hop)
+"bLV" = (
+/obj/machinery/camera/directional/north,
+/obj/mapping_helper/disable_camera,
+/turf/simulated/floor/shuttlebay{
+	icon_state = "engine_caution_north"
+	},
+/area/research_outpost/limpet/hangar)
 "bMe" = (
 /obj/disposalpipe/junction/middle/north,
 /obj/cable{
@@ -4899,6 +4906,8 @@
 "cBP" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/fluid_pipe/straight/supply,
+/obj/machinery/camera/directional/east,
+/obj/mapping_helper/disable_camera,
 /turf/simulated/floor/white,
 /area/research_outpost/limpet/personnel)
 "cCb" = (
@@ -20810,6 +20819,12 @@
 	},
 /turf/simulated/floor/industrial,
 /area/station/mining/magnet)
+"kQl" = (
+/obj/mesh/catwalk,
+/obj/machinery/camera/directional/north,
+/obj/mapping_helper/disable_camera,
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/research_outpost/limpet)
 "kQm" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -22194,6 +22209,17 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/pharmacy)
+"lAc" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/camera/directional/south,
+/obj/mapping_helper/disable_camera,
+/turf/simulated/floor/darkpurpleblack{
+	dir = 1
+	},
+/area/research_outpost/limpet/personnel)
 "lAh" = (
 /obj/rack,
 /obj/item/clothing/mask/breath,
@@ -40554,6 +40580,8 @@
 	icon_state = "line1"
 	},
 /obj/machinery/recharge_station,
+/obj/machinery/camera/directional/west,
+/obj/mapping_helper/disable_camera,
 /turf/simulated/floor/airless/mauxite,
 /area/research_outpost/limpet)
 "uNh" = (
@@ -40966,6 +40994,8 @@
 	dir = 1;
 	icon_state = "line1"
 	},
+/obj/machinery/camera/directional/north,
+/obj/mapping_helper/disable_camera,
 /turf/simulated/floor/caution/south,
 /area/research_outpost/limpet/maint)
 "uUK" = (
@@ -43438,6 +43468,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/camera/directional/east,
+/obj/mapping_helper/disable_camera,
 /turf/simulated/floor/darkpurpleblack,
 /area/research_outpost/limpet)
 "wgx" = (
@@ -43585,6 +43617,8 @@
 "wiH" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/fluid_pipe/straight/waste,
+/obj/machinery/camera/directional/west,
+/obj/mapping_helper/disable_camera,
 /turf/simulated/floor/darkpurpleblack,
 /area/research_outpost/limpet)
 "wiM" = (
@@ -45968,6 +46002,8 @@
 /area/station/teleporter)
 "xnk" = (
 /obj/decal/cleanable/dirt/jen,
+/obj/machinery/camera/directional/west,
+/obj/mapping_helper/disable_camera,
 /turf/simulated/floor/darkblueblack{
 	dir = 4
 	},
@@ -74840,7 +74876,7 @@ orI
 nlc
 fMu
 nlc
-aBy
+kQl
 aBy
 sEf
 sEf
@@ -77557,7 +77593,7 @@ sfI
 wKU
 fyQ
 itZ
-sed
+lAc
 rTG
 atF
 sDt
@@ -79661,7 +79697,7 @@ sEf
 sEf
 sEf
 wLg
-tQE
+bLV
 xHh
 xHh
 aRl
@@ -80276,7 +80312,7 @@ ikq
 nlc
 fMu
 nlc
-aBy
+kQl
 aBy
 sEf
 sEf
