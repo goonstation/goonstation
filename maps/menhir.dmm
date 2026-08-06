@@ -15710,6 +15710,7 @@
 	},
 /obj/machinery/firealarm/directional/west,
 /obj/item/device/radio/intercom/engineering,
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/yellowblack{
 	dir = 8
 	},
@@ -24345,6 +24346,7 @@
 	name = "Office Shutter Control"
 	},
 /obj/mapping_helper/button/area,
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
@@ -25915,6 +25917,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/camera/directional/west,
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/yellowblack{
 	dir = 8
 	},
@@ -38254,6 +38257,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/alarm/directional/north,
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
@@ -46052,6 +46056,7 @@
 /obj/item/storage/secure/ssafe{
 	pixel_y = 28
 	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/yellow,
 /area/station/crew_quarters/ce)
 "xoo" = (
