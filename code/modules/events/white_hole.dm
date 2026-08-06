@@ -962,6 +962,9 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 	proc/process()
 		var/time_since_start = TIME - start_time
 
+		//Track interdiction this cycle for visual "force feedback"
+		var/interdicted_this_cycle = FALSE
+
 		if(state == "dying")
 			qdel(src)
 
@@ -973,6 +976,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			for_by_tcl(IX, /obj/machinery/interdictor)
 				interdict_cost = 200 + ((50 - interdiction_hp) * 25)
 				if (IX.expend_interdict(interdict_cost, src))
+					interdicted_this_cycle = TRUE
 					if(src.interdiction_hp >= 50)
 						playsound(IX,'sound/machines/alarm_a.ogg',20,FALSE,5,-1.5)
 						IX.visible_message(SPAN_ALERT("<b>[IX] emits an anti-gravitational anomaly warning!</b>"))
@@ -988,6 +992,9 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 
 		if(time_since_start < grow_duration)
 			var/scale = 32 / 160 + (160 - 32) / 160 * clamp(((time_since_start + 3 SECONDS) - grow_duration / 3) / (grow_duration * 2 / 3), 0, 1)
+			if(interdicted_this_cycle) //visually depict the "pinch" on a white hole being interdicted
+				var/scale_adjustor = 0.025 * clamp(src.interdiction_hp,1,40)
+				scale = clamp(scale*scale_adjustor, 0, 1)
 			animate(src, transform = matrix(scale, MATRIX_SCALE), time = 3 SECONDS, loop = 0, easing = LINEAR_EASING)
 
 		if(time_since_start < grow_duration / 3)
