@@ -38,7 +38,6 @@ TYPEINFO(/mob/living/critter/wraith/demon_doll)
 		src.addAbility(/datum/targetable/critter/ouija_speak/demon_doll)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_THERMALVISION, src)
-
 		src.setStatus("dark_affinity")
 
 	say_verb()
