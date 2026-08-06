@@ -1,5 +1,9 @@
 
 (t)thu aug 06 26
+(u)bamlord
+(p)27417
+(e)🐁|A-Critters
+(+)Buffed hippo combat capability
 (u)glowbold
 (p)27404
 (e)🆕💊⚗|C-Feature, A-Medical, A-Chemistry
