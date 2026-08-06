@@ -1499,15 +1499,6 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 	src.removeOverlaysClient(src.client) //ov1
 	..()
 
-/mob/living/silicon/ai/set_eye(atom/new_eye)
-	var/turf/T = new_eye ? get_turf(new_eye) : get_turf(src)
-	if( !(T && isrestrictedz(T.z)) )
-		src.sight |= (SEE_TURFS | SEE_MOBS | SEE_OBJS)
-	else
-		src.sight &= ~(SEE_TURFS | SEE_MOBS | SEE_OBJS)
-
-	..()
-
 /// Handles connecting and disconnecting the AI from data terminals. Calling with disconnect or tryConnect is not required, but useful if you only want one to happen
 /mob/living/silicon/ai/proc/update_terminal(var/disconnect = FALSE, var/tryConnect = FALSE)
 

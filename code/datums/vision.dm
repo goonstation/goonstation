@@ -176,6 +176,11 @@
 	see_in_dark = SEE_DARK_HUMAN + 1
 	see_invisible = INVIS_INFRA
 
+/datum/vision/krampus
+	sight = SEE_MOBS
+	see_in_dark = SEE_DARK_FULL
+	see_invisible = INVIS_INFRA
+
 /// this is just xray+nightvision
 /datum/vision/xray/kudzu
 	centerlight_icon = "nightvision"
@@ -204,3 +209,12 @@
 /datum/vision/ship_sensor
 	see_in_dark = SEE_DARK_HUMAN + 3
 	see_invisible = INVIS_CLOAK
+
+/datum/vision/ship_sensor/ecto
+	see_invisible = INVIS_GHOST
+
+/datum/vision/ship_sensor/mining
+	sight = SEE_TURFS
+	neg_sight = SEE_BLACKNESS
+	centerlight_icon = "thermal"
+	centerlight_color = "#9bdb9b"
