@@ -3216,7 +3216,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 /obj/item/reagent_containers/food/snacks/bowl_of_dulce_de_leche
 	name = "bowl of dulce de leche"
 	desc = "A small bowl of rich, sweet dulce de leche."
-	icon = 'icons/obj/foodNdrink/food_meals.dmi'
-	icon_state = "refriedbeans"
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "dulce_de_leche"
 	required_utensil = REQUIRED_UTENSIL_SPOON
 	bites_left = 4
+	initial_reagents = list("dulcedeleche" = 50)
+	meal_time_flags = MEAL_TIME_SNACK
+	use_bite_mask = FALSE
+	dropped_item = /obj/item/reagent_containers/food/drinks/bowl
