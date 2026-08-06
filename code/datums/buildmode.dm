@@ -262,14 +262,12 @@ ABSTRACT_TYPE(/datum/buildmode)
 		src.show_popup_menus = 1
 		if (!usr.client.holder.buildmode_view)
 			usr.client.cmd_admin_aview()
-		usr.see_in_dark = initial(usr.see_in_dark)
-		usr.see_invisible = INVIS_SPOOKY
+		usr.remove_vision(/datum/vision/buildmode, "buildmode")
 	else
 		src.buildmode.activate()
 		if (!usr.client.holder.buildmode_view)
 			usr.client.cmd_admin_aview()
-		usr.see_in_dark = 10
-		usr.see_invisible = INVIS_ADVENTURE
+		usr.apply_vision(/datum/vision/buildmode, "buildmode")
 		src.show_popup_menus = 0
 
 /atom/movable/screen/buildmode/builddir

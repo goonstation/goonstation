@@ -16,12 +16,7 @@
 #else
 	var/seekrange = 30
 #endif
-	var/sight = SEE_SELF
-	var/see_in_dark = SEE_DARK_HUMAN + 3
-	var/antisight = 0
-	var/centerlight = null
-	var/centerlight_color = "#ffffff"
-	var/see_invisible = INVIS_CLOAK
+    var/datum/vision/vision_modifier = /datum/vision/shipsensor
 	var/scanning = 0
 	var/atom/tracking_target = null
 	var/const/SENSOR_REFRESH_RATE = 10
@@ -41,11 +36,7 @@
 		..()
 
 	mob_deactivate(mob/M as mob)
-		M.sight &= ~SEE_TURFS
-		M.sight &= ~SEE_MOBS
-		M.sight &= ~SEE_OBJS
-		M.see_in_dark = initial(M.see_in_dark)
-		M.see_invisible = INVIS_NONE
+		M.apply_vision()
 		end_tracking()
 		scanning = 0
 

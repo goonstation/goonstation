@@ -260,9 +260,7 @@ TYPEINFO(/mob/dead/observer)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_SPECTRO, src)
 
-	src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
-	src.see_invisible = INVIS_SPOOKY
-	src.see_in_dark = SEE_DARK_FULL
+	src.apply_vision(/datum/vision/observer, "innate")
 	animate_bumble(src) // floaty ghosts  c:
 	src.verbs += /mob/dead/observer/proc/toggle_tgui_auto_open
 	src.verbs += /mob/dead/observer/proc/toggle_ghost_chem_vision

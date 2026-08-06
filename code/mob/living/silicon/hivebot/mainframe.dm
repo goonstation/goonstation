@@ -44,6 +44,8 @@
 	setdead(src)
 	src.canmove = 0
 	vision.set_color_mod("#ffffff") // reset any blindness
+
+	// what on earth is happening here
 	src.sight |= SEE_TURFS
 	src.sight |= SEE_MOBS
 	src.sight |= SEE_OBJS

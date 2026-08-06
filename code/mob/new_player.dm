@@ -40,6 +40,7 @@ TYPEINFO(/mob/new_player)
 
 	New()
 		. = ..()
+		src.apply_vision(/datum/vision/new_player, "innate")
 		START_TRACKING
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_ALWAYS)
 	#ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
@@ -85,7 +86,6 @@ TYPEINFO(/mob/new_player)
 		if (istype(default_loc.loc, /area/cordon))
 			default_loc = pick_landmark(LANDMARK_LATEJOIN, locate(world.maxx/2,world.maxy/2,1))
 		src.set_loc(pick_landmark(LANDMARK_NEW_PLAYER, default_loc))
-		src.sight |= SEE_TURFS
 
 		#if CLIENT_AUTH_PROVIDER_CURRENT == CLIENT_AUTH_PROVIDER_BYOND
 		// byond members get a special join message :]

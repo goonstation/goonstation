@@ -362,14 +362,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/ecto)
 	color_g = 1
 	color_b = 0.925
 	iris_color = "#65e681"
-
-	on_transplant(mob/M)
-		. = ..()
-		APPLY_ATOM_PROPERTY(M, PROP_MOB_GHOSTVISION, src)
-
-	on_removal()
-		REMOVE_ATOM_PROPERTY(donor, PROP_MOB_GHOSTVISION, src)
-		. = ..()
+	vision_modifier = /datum/vision/ghost
 
 TYPEINFO(/obj/item/organ/eye/cyber/camera)
 	mats = 7
