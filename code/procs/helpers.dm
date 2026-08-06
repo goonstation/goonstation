@@ -2641,7 +2641,7 @@ var/atom/movable/abstract_say_source/deadchat/deadchat_announcer = new()
 		if (istype(container, /obj/storage/secure) || istype(container, /obj/storage/crate/loot))
 			continue
 		// listening posts everywhere, martian ship (in station Z-level on Oshan), pasiphae on nadir (starts depowered and part acid flooded)
-		var/storagearea = get_area(container)
+		var/area/storagearea = get_area(container)
 		if (istype(storagearea, /area/listeningpost) || istype(storagearea, /area/evilreaver) || istype(storagearea, /area/pasiphae))
 			continue
 
