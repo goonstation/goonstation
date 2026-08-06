@@ -1146,7 +1146,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			var/mob/living/carbon/human/H = user
 			if (istype(H.gloves, /obj/item/clothing/gloves/concussive))
 				var/obj/item/clothing/gloves/concussive/C = H.gloves
-				src.dig_asteroid(user,C.tool)
+				src.dig_asteroid(user, C.tool.get_dig_strength(), C.tool.is_weakener(), C.tool.mining_type)
+				playsound(user.loc, C.tool.get_mining_sound(), 50, 1)
 				return
 			else if (H.is_hulk())
 				H.visible_message(SPAN_ALERT("<b>[H.name] punches [src] with great strength!"))
@@ -1166,12 +1167,17 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			var/obj/item/held = L.equipped()
 			if(istype(held, /obj/item/mining_tool) || istype(held, /obj/item/mining_tools) || (isnull(held) && H && (H.is_hulk() || istype(H.gloves, /obj/item/clothing/gloves/concussive))))
 				UNLINT(L.click(src, list(), null, null))
+			else if(istype(held, /obj/item/tool/omnitool))
+				var/obj/item/tool/omnitool/omni = held
+				if(istype(omni.mode, /datum/omnimode/mining))
+					UNLINT(L.click(src, list(), null, null))
 			return
 
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/mining_tool/))
 			var/obj/item/mining_tool/T = W
-			src.dig_asteroid(user,T)
+			src.dig_asteroid(user, T.get_dig_strength(), T.is_weakener(), T.mining_type)
+			playsound(user.loc, T.get_mining_sound(), 50, 1)
 		else if (istype(W, /obj/item/mining_tools))
 			return // matsci `mining_tools` handle their own digging
 		else if (istype(W, /obj/item/oreprospector))
@@ -1285,16 +1291,13 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			T.ClearSpecificOverlays("ast_edge_[get_dir(T, src)]")
 		..()
 
-	proc/dig_asteroid(var/mob/living/user, var/obj/item/mining_tool/tool)
-		if (!user || !tool || !istype(src)) return
+	proc/dig_asteroid(var/mob/living/user, var/strength, var/is_weakener, var/mining_type)
+		if (!user || !istype(src)) return
 
 		var/datum/ore/event/E = src.event
-
-		playsound(user.loc, tool.get_mining_sound(), 50, 1)
-		if (tool.is_weakener())
+		if (is_weakener)
 			src.weaken_asteroid()
 
-		var/strength = tool.get_dig_strength()
 		if (iscarbon(user))
 			var/mob/living/carbon/C = user
 			if (C.bioHolder && C.bioHolder.HasOneOfTheseEffects("strong","hulk"))
@@ -1324,7 +1327,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 				dig_feedback = "You can't even make a dent! You need a stronger tool."
 
 		if (prob(dig_chance))
-			destroy_asteroid(user = user, mining_type = tool.mining_type)
+			destroy_asteroid(user = user, mining_type = mining_type)
 		else
 			if (dig_feedback)
 				boutput(user, SPAN_ALERT("[dig_feedback]"))
