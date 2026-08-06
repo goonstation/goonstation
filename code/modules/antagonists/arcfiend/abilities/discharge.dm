@@ -7,6 +7,7 @@
 	target_anything = TRUE
 	targeted = TRUE
 	pointCost = 25
+	target_in_inventory = TRUE
 	///how far to knock mobs away from ourselves
 	var/target_dist = 4
 	///how fast to throw affected mobs away
