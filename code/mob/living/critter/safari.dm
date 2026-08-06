@@ -6,10 +6,10 @@
 	icon = 'icons/misc/bigcritter.dmi'
 	icon_state = "hippo"
 	icon_state_dead = "hippo-dead"
-	health_brute = 125
-	health_burn = 125
+	health_brute = 200
+	health_burn = 200
 	health_brute_vuln = 0.4
-	health_burn_vuln = 1.2
+	health_burn_vuln = 0.8
 	no_stamina_stuns = TRUE
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0
@@ -27,6 +27,7 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "hippo", 40)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_BODY, "hippo", 20)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_BODY_MAX, "hippo", 20)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "hippo", 10)
 		src.add_stam_mod_max("hippo", 100)
 		src.pixel_x -= 16
 

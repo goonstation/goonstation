@@ -638,6 +638,7 @@
 	var/stam_damage_mult = 1
 	var/harm_intent_delay = COMBAT_CLICK_DELAY
 	var/crushing = FALSE
+	var/bleed = 0
 
 	attack_hand(atom/target, var/mob/user, var/reach)
 		if (ismob(target))
@@ -674,6 +675,8 @@
 			msgs.played_sound = src.sound_attack
 			msgs.flush(0)
 			user.HealDamage("All", 2, 0)
+			if(src.bleed)
+				take_bleeding_damage(target, null, bleed, DAMAGE_CUT, bleed-5, get_turf(target))
 		else
 			user.visible_message(SPAN_COMBAT("<b>[user] attempts to bite [target] but misses!</b>"))
 		user.lastattacked = get_weakref(target)
@@ -789,6 +792,18 @@
 	can_beat_up_robots = TRUE
 	miss_prob = 90
 	crushing = TRUE
+	bleed = 20
+
+	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
+		if (issilicon(target))
+			special_attack_silicon(target, user)
+			return
+		. = ..()
+	harm(mob/target, var/mob/user)
+		if (issilicon(target))
+			special_attack_silicon(target, user)
+			return
+		..()
 
 /datum/limb/item
 	can_pickup_item = FALSE
