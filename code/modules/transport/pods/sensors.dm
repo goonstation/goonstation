@@ -16,7 +16,7 @@
 #else
 	var/seekrange = 30
 #endif
-    var/datum/vision/vision_modifier = /datum/vision/shipsensor
+	var/datum/vision/vision_modifier = /datum/vision/ship_sensor
 	var/scanning = 0
 	var/atom/tracking_target = null
 	var/const/SENSOR_REFRESH_RATE = 10
@@ -409,19 +409,16 @@ proc/build_html_gps_form(var/atom/A, var/show_Z=0, var/atom/target)
 /obj/item/shipcomponent/sensor/ecto
 	name = "Ecto-Sensor 900"
 	desc = "The number one choice for reasearchers of the supernatural."
-	see_invisible = INVIS_GHOST
+	vision_modifier = /datum/vision/ship_sensor/ecto
 	power_used = 40
 	icon_state = "sensor-g"
 
 /obj/item/shipcomponent/sensor/mining
 	name = "Conclave A-1984 Sensor System"
 	desc = "Advanced geological meson scanners for ships."
-	sight = SEE_TURFS
-	antisight = SEE_BLACKNESS
-	centerlight = "thermal"
-	centerlight_color = "#9bdb9b"
 	power_used = 35
 	icon_state = "sensor-y"
+	vision_modifier = /datum/vision/ship_sensor/mining
 
 	scan(mob/user as mob)
 		..()

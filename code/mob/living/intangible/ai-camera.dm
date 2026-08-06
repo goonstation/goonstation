@@ -602,9 +602,3 @@ TYPEINFO(/mob/living/intangible/aieye)
 		RegisterSignal(temp, COMSIG_MOVABLE_SET_LOC, PROC_REF(check_eye_z))
 		UnregisterSignal(outer_eye_atom, COMSIG_MOVABLE_SET_LOC)
 		outer_eye_atom = temp
-
-	var/turf/T = get_turf(temp)
-	if(isrestrictedz(T?.z))
-		src.sight &= ~(SEE_TURFS | SEE_MOBS | SEE_OBJS)
-	else
-		src.sight |= (SEE_TURFS | SEE_MOBS | SEE_OBJS)
