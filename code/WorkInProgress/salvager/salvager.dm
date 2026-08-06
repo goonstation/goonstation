@@ -491,6 +491,7 @@
 	drain_rate = 100000		// amount of power to drain per tick
 	max_power = 2e7		// maximum power that can be drained before exploding
 	color = list(1,0,0,-0.00168067,0.998559,0.00168067,0.213445,0.182953,0.786555)
+	tooltip_flags = REBUILD_ALWAYS
 
 	New()
 		. = ..()
