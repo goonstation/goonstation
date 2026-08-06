@@ -50,6 +50,23 @@
 			else
 				boutput(src.holder.owner, SPAN_ALERT("\The [machine] couldn't be overloaded!"))
 				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		else if (isitem(target))
+			var/datum/component/cell_holder/power_cell = target.GetComponent(/datum/component/cell_holder)
+			if (!istype(power_cell))
+				boutput(src.holder.owner, SPAN_ALERT("\The [target] doesn't hold a charge!"))
+				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+			var/chargeable = SEND_SIGNAL(target, COMSIG_CELL_CAN_CHARGE)
+			if (chargeable & CELL_UNCHARGEABLE)
+				boutput(src.holder.owner, SPAN_ALERT("\The [target] couldn't be charged!"))
+				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+			var/list/ret = list()
+			if(SEND_SIGNAL(target, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+				var/amount_to_charge = ret["max_charge"] - ret["charge"]
+				if (src.pointCost + amount_to_charge > src.holder.points)
+					amount_to_charge = src.holder.points - src.pointCost
+				if (amount_to_charge > 0)
+					src.holder.deductPoints(amount_to_charge)
+					SEND_SIGNAL(target, COMSIG_CELL_CHARGE, amount_to_charge)
 		else
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		var/datum/effects/system/spark_spread/S = new /datum/effects/system/spark_spread
