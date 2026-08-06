@@ -1,4 +1,9 @@
 
+(t)thu aug 06 26
+(u)Astarthoc
+(p)27412
+(e)💅📦🔬|C-QoL, A-Game-Objects, A-Science
+(+)The elecbox now automatically stops 5 seconds after being activated, removing the need to stop it manually.
 (t)wed aug 05 26
 (u)Ceres et al.
 (p)27267
