@@ -3348,7 +3348,7 @@
 	},
 /area/station/science/artifact)
 "bJT" = (
-/obj/machinery/computer/supplycomp{
+/obj/machinery/computer/ordercomp{
 	dir = 4
 	},
 /obj/item/device/radio/intercom/cargo{
