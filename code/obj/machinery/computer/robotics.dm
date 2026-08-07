@@ -142,12 +142,11 @@
 				var/mob/living/silicon/robot/robot = locate(params["mob_ref"])
 				if (QDELETED(robot))
 					return
+				var/fake_text = ""
 				if (robot.emagged || robot.syndicate)
-					if (robot.client)
-						boutput(robot, SPAN_NOTICE("<b>Equipment lockdown signal blocked!</b>"))
-						return
+					fake_text = "fake "
 				robot.setStatus("lockdown_robot", ROBOT_LOCKDOWN_DURATION)
-				logTheThing(LOG_COMBAT, usr, "has activated [constructTarget(robot,"combat")]'s equipment lockdown.")
+				logTheThing(LOG_COMBAT, usr, "has activated [constructTarget(robot,"combat")]'s [fake_text]equipment lockdown.")
 				return TRUE
 			if ("stop_silicon_lock")
 				if (!src.can_lockdown)
@@ -155,8 +154,11 @@
 				var/mob/living/silicon/robot/robot = locate(params["mob_ref"])
 				if (QDELETED(robot))
 					return
+				var/fake_text = ""
+				if (robot.emagged || robot.syndicate)
+					fake_text = "fake "
 				robot.delStatus("lockdown_robot")
-				logTheThing(LOG_COMBAT, usr, "has deactivated [constructTarget(robot, "combat")]'s equipment lock.")
+				logTheThing(LOG_COMBAT, usr, "has deactivated [constructTarget(robot, "combat")]'s [fake_text]equipment lock.")
 				return TRUE
 			if ("killswitch_ghostdrone")
 				var/mob/living/silicon/ghostdrone/drone = locate(params["mob_ref"])

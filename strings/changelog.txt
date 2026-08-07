@@ -1,5 +1,15 @@
 
+(t)fri aug 07 26
+(u)JORJ949
+(p)27329
+(e)🤖|A-Silicons
+(*)Silicons now receive a killswitch like timer at the top of their screen for the duration of any equipment lockdowns. Active killswitches will override this timer.
+(*)Syndicate and Emagged cyborgs can be "locked down" by the robotics console, but are immune to the effects of the lockdown.
 (t)thu aug 06 26
+(u)bamlord
+(p)27417
+(e)🐁|A-Critters
+(+)Buffed hippo combat capability
 (u)glowbold
 (p)27404
 (e)🆕💊⚗|C-Feature, A-Medical, A-Chemistry
