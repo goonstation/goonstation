@@ -8,14 +8,6 @@
 
 	. = message
 
-	var/obj/item/phone_handset/handset = src.parent_tree.listener_parent
-	if (!istype(handset))
-		return
-
-	// If held, the handset must be in the speaker's active hand to receive the message.
-	if (ismob(handset.loc) && (astype(message.original_speaker, /mob)?.equipped() != handset))
-		return NO_MESSAGE
-
 	message.flags |= SAYFLAG_NO_MAPTEXT
 	message.flags &= ~(SAYFLAG_WHISPER | SAYFLAG_NO_SAY_VERB)
 	message.heard_range = 0
@@ -37,8 +29,11 @@
 		<b>\
 	"}
 
+	var/list/return_list = list()
+	SEND_SIGNAL(src.parent_tree.listener_parent, COMSIG_PHONE_RETRIEVE_PREFIX, return_list)
+
 	message.format_verb_prefix = {" \
-		\[ <span style=\"color:[handset.parent.stripe_color]\">[bicon(handset.handset_icon)] [handset.parent.phone_id]</span> \]\
+		[return_list["prefix"]]\
 		</b></span> \
 		<span class='message'>\
 	"}
@@ -50,3 +45,14 @@
 	message.format_content_suffix = {"\
 		</span>\
 	"}
+
+// ONLY to be used with atoms
+/datum/listen_module/modifier/phone/inhand
+	id = LISTEN_MODIFIER_PHONE_INHAND
+
+/datum/listen_module/modifier/phone/inhand/process(datum/say_message/message)
+	var/atom/listener_parent = src.parent_tree.listener_parent
+	// If held, the microphone atom must be held in the speaker's active hand for us to receive their speech
+	if (ismob(listener_parent.loc) && (astype(message.original_speaker, /mob)?.equipped() != listener_parent))
+		return NO_MESSAGE
+	. = ..()

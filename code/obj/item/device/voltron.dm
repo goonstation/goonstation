@@ -293,35 +293,41 @@
 			boutput(target, SPAN_NOTICE("You deactivate the [src]."))
 			deactivate()
 		else
-			if(istype(user.l_hand,/obj/item/phone_handset) || istype(user.r_hand,/obj/item/phone_handset)) // travel through space line
-				var/obj/item/phone_handset/PH = null
-				var/obj/item/phone_handset/EXIT = null
-				var/turf/target_loc = null
-				if(istype(user.l_hand,/obj/item/phone_handset))
-					PH = user.l_hand
+			// Since a signal can't return a turf, we give them a list so a turf can be stuffed into it
+			var/list/voltron_list = list("user" = user)
+			var/valid_phone_in_which_hand = null
+			var/return_signal = null
+			var/accepted = FALSE
+			return_signal = SEND_SIGNAL(user.l_hand, COMSIG_PHONE_ATTEMPT_VOLTRON, voltron_list)
+			if(return_signal)
+				valid_phone_in_which_hand = "left"
+				if(return_signal & PHONE_ACCEPTED)
+					accepted = TRUE
+			if(!return_signal)
+				return_signal = SEND_SIGNAL(user.r_hand, COMSIG_PHONE_ATTEMPT_VOLTRON, voltron_list)
+				if(return_signal)
+					valid_phone_in_which_hand = "right"
+					if(return_signal & PHONE_ACCEPTED)
+						accepted = TRUE
+
+			if(valid_phone_in_which_hand && accepted)
+				// We assume that if they've accepted, they've given us valid data
+				var/turf/target_loc = voltron_list["target_loc"]
+				var/atom/target_atom = voltron_list["target_atom"]
+				var/atom/held_phone = null
+				if(valid_phone_in_which_hand == "left")
+					held_phone = user.l_hand
 				else
-					PH = user.r_hand
-				if(PH.parent.linked && PH.parent.linked.handset)
-					if(isturf(PH.parent.linked.handset.loc))
-						target_loc = PH.parent.linked.handset.loc
-					else if(ismob(PH.parent.linked.handset.loc))
-						target_loc = PH.parent.linked.handset.loc.loc
-					else
-						boutput(user, "You can't seem to enter the phone for some reason!")
-						return
-				else
-					boutput(user, "You can't seem to enter the phone for some reason!")
-					return
-				if(isrestrictedz(user.loc.z) || isrestrictedz(target_loc.z))
-					boutput(user, "You can't seem to enter the phone for some reason!")
-					return
-				EXIT = PH.parent.linked.handset
+					held_phone = user.r_hand
 				user.visible_message("[user] enters the phone line using their [src].", "You enter the phone line using your [src].", "You hear a strange sucking noise.")
 				playsound(user.loc, 'sound/effects/singsuck.ogg', 40, 1)
-				user.drop_item(PH)
+				user.drop_item(held_phone)
 				user.set_loc(target_loc)
 				playsound(user.loc, 'sound/effects/singsuck.ogg', 40, 1)
-				user.visible_message("[user] suddenly emerges from the [EXIT]. [pick("","What the fuck?")]", "You emerge from the [EXIT].", "You hear a strange sucking noise.")
+				user.visible_message("[user] suddenly emerges from the [target_atom]. [pick("","What the fuck?")]", "You emerge from the [target_atom].", "You hear a strange sucking noise.")
+			else if(valid_phone_in_which_hand)
+				boutput(user, "You can't seem to enter the phone for some reason!")
+				return
 			else
 				boutput(user, SPAN_NOTICE("You activate the [src]."))
 				activate(user)
