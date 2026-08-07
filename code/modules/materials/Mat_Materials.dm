@@ -670,13 +670,22 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("density", 4)
 		setProperty("chemical", 2)
 		setProperty("melting_point", 1600 KELVIN)
-		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/shock_life(4 SECONDS, 6 SECONDS, 100))
+		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/electrical/shock_life(4 SECONDS, 6 SECONDS, 100))
 
 /datum/material/metal/voltite
 	mat_id = "voltite"
 	name = "voltite"
 	desc = "Energy seems to be flowing around it, chanelled through in an unknown manner."
-	color = "#389fff"
+	color = list(0.55, 0.45, -0.15, 0.00,\
+				0.55, 0.45, -0.10, 0.00,\
+				0.00, 0.35, 1.75, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00)
+	hsl_color = list(0.00, 0.00, 0.00, 0.00,\
+					0.00, 1.50, 0.00, 0.00,\
+					0.00, 0.00, 1.00, 0.00,\
+					0.00, 0.00, 0.00, 1.00,\
+					0.13, -0.10, 0.05, 0.00)
 	artisan_trait_weight = MATERIAL_ARTISAN_RARE
 
 	New()
@@ -686,8 +695,8 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("thermal", 1)
 		setProperty("hard", 1)
 		setProperty("melting_point", 1500 KELVIN)
-		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/shock_life(4 SECONDS, 6 SECONDS, 100))
-		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/arcflash_life(6 SECONDS, 8 SECONDS, 500))
+		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/electrical/shock_life(4 SECONDS, 6 SECONDS, 100))
+		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/electrical/arcflash_life(6 SECONDS, 8 SECONDS, 500))
 
 /datum/material/metal/steel
 	mat_id = "steel"
