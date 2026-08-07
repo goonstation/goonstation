@@ -7,8 +7,9 @@
 		else {. += (" [alt_desc] ")} \
 	}
 
-// Adds to the the description of the type depending on  if the user has the given trait.
-// Do NOT forget to add REBUILD_USER to any items with a trait altered description!
+///Adds to the the description of the type depending on if the user has the given trait.
+/// 
+///Do NOT forget to add REBUILD_USER to any items with a trait altered description!
 #define TRAIT_ALTERED_DESCRIPTION(trait_id, trait_desc, no_trait_desc) \
 	get_desc(dist, mob/user) { \
 		. = ..(); \
