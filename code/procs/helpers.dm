@@ -159,6 +159,8 @@ var/global/obj/fuckyou/flashDummy
 
 	elecflash(target,power = elecflashpower)
 
+/// Modern era note: you probably want `raycast` instead because it's sane and works with things like `get_angle`
+/// Leaving it here because it's still used in a couple of places and I don't want to do trig right now
 proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuff. Takes some sort of bizzaro angles ?! Aahhhhh
 	var/list/crossed = list()
 	var/xPlus=cos(Angle)
