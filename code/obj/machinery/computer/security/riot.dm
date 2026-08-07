@@ -119,7 +119,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/riotgear, proc/authorize, proc/unau
 				if (src.packet_check(signal, returnsignal))
 					returnsignal.data["command"] = "ack"
 					returnsignal.data["data"] = "set_reason"
-					src.auth_reason = signal.data["reason"]
+					src.set_auth_reason(signal.data["reason"])
 			else
 				return //COMMAND NOT RECOGNIZED
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, returnsignal, radiorange)
@@ -140,6 +140,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/riotgear, proc/authorize, proc/unau
 			. = "Three security personnel, or the Head of Security, can authorize armory access."
 			if(!authdisk_authorized)
 				. += "<br>You can also use the <b>Authentication Disk</b> to issue an emergency override."
+
+	proc/set_auth_reason(reason)
+		var/new_reason = strip_html(reason)
+		if(src.auth_reason == new_reason)
+			return
+		src.auth_reason = new_reason
+		logTheThing(LOG_STATION, usr, "set the armory auth reason to [new_reason]")
 
 	proc/authorize()
 		if(src.authed)
@@ -297,11 +304,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/riotgear, proc/authorize, proc/unau
 						src.authdisk_authorized = TRUE
 						src.authorize()
 			if("set_auth_reason")
-				var/new_reason = strip_html(params["value"])
-				if(src.auth_reason == new_reason)
-					return
-				src.auth_reason = new_reason
-				logTheThing(LOG_STATION, user, "set the armory auth reason to [new_reason]")
+				src.set_auth_reason(params["value"])
 			if("repeal_all")
 				if(src.check_access_level(user) < ARMORY_ACCESS_LEVEL_UNRESTRICTED)
 					boutput(user, SPAN_ALERT("You do not have the access to repeal all authorizations!"))

@@ -439,7 +439,12 @@ TYPEINFO(/obj/shrub/syndicateplant)
 /obj/shrub/syndicateplant
 	var/net_id
 
-	SYNDICATE_STEALTH_DESCRIPTION("The latest in syndicate spy technology.", "Is that an antenna?")
+	SYNDICATE_STEALTH_DESCRIPTION("The latest in syndicate spy technology.")
+
+	get_desc(dist, mob/user)
+		. = ..()
+		if(!istrainedsyndie(user) && !isspythief(user))
+			. += "Is that an antenna?"
 
 	New()
 		. = ..()
