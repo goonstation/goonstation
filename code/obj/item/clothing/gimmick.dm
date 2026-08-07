@@ -1430,7 +1430,7 @@ TYPEINFO(/obj/item/clothing/gloves/ring/gold)
 		return ..()
 
 	unequipped(mob/user)
-		user.delStatus("dark_affinity")
+		user.setStatus("dark_affinity", 30 SECONDS)
 		return ..()
 
 
