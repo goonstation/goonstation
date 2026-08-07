@@ -612,7 +612,7 @@ TRASH BAG
 /obj/item/caution/traitor
 	item_function_flags = IMMUNE_TO_ACID
 	var/obj/item/reagent_containers/payload
-	SYNDICATE_STEALTH_DESCRIPTION("A small nozzle can be seen poking out the top.", null)
+	SYNDICATE_STEALTH_DESCRIPTION("A small nozzle can be seen poking out the top.")
 	tooltip_flags = REBUILD_USER
 
 	New()

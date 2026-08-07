@@ -2483,14 +2483,16 @@ proc/can_act(var/mob/M, var/include_cuffs = 1)
 
 /// Returns true if the given mob is incapacitated
 proc/is_incapacitated(mob/M)
+	var/datum/statusEffect/lockdown/lockdown_effect = M.hasStatus("lockdown_robot") || M.hasStatus("lockdown_ai")
+	if(!istype(lockdown_effect) || lockdown_effect?.fake)
+		lockdown_effect = null
 	return (M &&(\
 		M.hasStatus("stunned") || \
 		M.hasStatus("knockdown") || \
 		M.hasStatus("unconscious") || \
 		M.hasStatus("paralysis") || \
 		M.hasStatus("pinned") || \
-		M.hasStatus("lockdown_robot") || \
-		M.hasStatus("lockdown_ai") || \
+		lockdown_effect || \
 		M.hasStatus("no_power_robot") || \
 		M.hasStatus("no_cell_robot") || \
 		M.stat)) && !M.client?.holder?.ghost_interaction
