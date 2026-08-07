@@ -344,13 +344,6 @@
 		fuckup_attack_particle(src)
 		return msgs
 
-	if (target.lying == 1) //roll lying bodies
-		msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
-		msgs.base_attack_message = SPAN_COMBAT("<b>[src] rolls [target] backwards[DISARM_WITH_ITEM_TEXT]!</B>")
-		msgs.disarm_RNG_result |= "shoved"
-		msgs.disarm_RNG_result |= "handle_item_arm"
-		return msgs
-
 	var/damage = rand(base_damage_low, base_damage_high) * extra_damage
 	var/mult = 1
 	var/target_stamina = STAMINA_MAX //uses stamina?
@@ -409,7 +402,17 @@
 		return msgs
 
 	if (is_shove) return msgs
-	var/disarm_success = prob(40 * lerp(clamp(200 - target_stamina, 0, 100)/100, 1, 0.5) * mult)
+	// If shoving fails, attempt to disarm.
+	var/disarm_success_fresh = 20 // base disarm chance when target is at or above 100 stamina
+	var/disarm_success_exhausted = 40 // base disarm chance when target is at 0 stamina
+	// Raising your mood on RP can increase the above.
+	var/floor_bonus = 20 // Flat increased success by this much on floored targets.
+
+	var/disarm_success_prob = lerp(disarm_success_fresh, disarm_success_exhausted, clamp(200 - target_stamina, 0, 100)/100) * mult
+	if (target.lying)
+		disarm_success_prob = clamp(disarm_success_prob + floor_bonus, 0, 100)
+
+	var/disarm_success = prob(disarm_success_prob)
 	if (disarm_success && target.check_block() && !(HAS_ATOM_PROPERTY(target, PROP_MOB_CANTMOVE)))
 		disarm_success = 0
 		msgs.stamina_target -= STAMINA_DEFAULT_BLOCK_COST * 2

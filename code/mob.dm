@@ -1356,6 +1356,11 @@ TYPEINFO(/mob)
 			return src.l_hand
 		else
 			return src.r_hand
+
+//Can this mob pocket/equip items from their containers?
+/mob/proc/can_manipulate_equipment()
+	return !src.restrained() && !is_incapacitated(src) && !src.lying
+
 ///Legally distinct from `equipped_list`, this gets all items from equipment slots and not hands!
 /mob/proc/equipment_list()
 	RETURN_TYPE(/list)

@@ -951,7 +951,7 @@
 	src.throw_mode_off()
 	if (HAS_ATOM_PROPERTY(src, PROP_MOB_CANTTHROW))
 		return
-	if (src.stat)
+	if (src.stat || src.lying)
 		return
 
 	var/obj/item/I = src.equipped()
@@ -1741,6 +1741,18 @@ Attempts to put an item in the hand of a mob, if not possible then stow it, then
 		src.update_clothing()
 	return equipped
 
+/mob/living/carbon/human/proc/attempt_equip(slot, params)
+	var/obj/item/W = src.get_slot(slot)
+	if (!src.can_manipulate_equipment()) // Prevents hiding weapons when you're knocked down
+		return
+	if (W)
+		src.click(W, params)
+	else
+		var/obj/item/I = src.equipped()
+		if (!I || !src.can_equip(I, slot) || istype(I.loc, /obj/item/parts/))
+			return
+		src.u_equip(I)
+		src.force_equip(I, slot)
 
 /mob/living/carbon/human/proc/update_equipment_screen_loc()
 	hud.inventory_items.len = 0

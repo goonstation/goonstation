@@ -977,6 +977,9 @@
 				if (ismob(owner) && !QDELETED(owner))
 					var/mob/mob_owner = owner
 					APPLY_ATOM_PROPERTY(mob_owner, PROP_MOB_CANTMOVE, src.type)
+					if (isliving(owner))
+						var/mob/living/living_owner = owner
+						living_owner.empty_hands()
 
 			onRemove()
 				if (ismob(owner) && !QDELETED(owner))
@@ -1413,6 +1416,7 @@
 		onAdd(optional=null)
 			. = ..()
 			if (isliving(owner))
+				owner.delStatus("standing_up")
 				L = owner
 				L.force_laydown_standup()
 				if(QDELETED(src))
@@ -1441,6 +1445,23 @@
 			if (ishuman(L))
 				var/mob/living/carbon/human/H = L
 				H.hud.update_resting()
+
+	standing_up
+		id = "standing_up"
+		name = "Standing up"
+		desc = "You are standing up. Items disabled & interaction slowed while you get to your feet."
+		icon_state = "standing"
+		unique = 1
+		duration = 1 SECOND
+		maxDuration = 1 SECOND
+		movement_modifier = /datum/movement_modifier/standing_up
+		var/mob/living/L
+
+		onAdd(optional=null)
+			. = ..()
+			if (!isliving(owner))
+				owner.delStatus("standing_up")
+
 
 	ganger
 		id = "ganger"

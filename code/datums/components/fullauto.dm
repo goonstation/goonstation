@@ -175,6 +175,8 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 		src.retarget(user, object, location, control, params)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
+			if (H.lying)
+				return
 			if ((aimer.check_key(KEY_THROW)) || H.in_throw_mode)
 				H.throw_item(target,params)
 				return
