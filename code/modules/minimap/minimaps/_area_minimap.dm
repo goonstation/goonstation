@@ -67,8 +67,8 @@
 		src.set_marker_position(minimap_marker, minimap_marker.target.x, minimap_marker.target.y, minimap_marker.target.z)
 
 /datum/minimap/area_map/admin
-	// hacky raster sampling fix, set just ever so slightly above the parent default of 0.95
-	min_zoom = 0.951
+	// raster from 0.95 makes some of the maps look less nice at default zoom
+	min_zoom = 1
 
 	initialise_minimap_render()
 		src.z_level ||= Z_LEVEL_STATION
