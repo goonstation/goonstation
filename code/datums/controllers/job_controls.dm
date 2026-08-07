@@ -876,7 +876,6 @@ var/datum/job_controller/job_controls
 						src.job_creator.items_in_mob[slot_num] = null
 
 				if("Reselect")
-					var/list/L = list()
 					var/search_for = input(usr, "Search for item (or leave blank for complete list)", "Select item to spawn in mob [slot_num]") as null|text
 					if(!search_for)
 						return
