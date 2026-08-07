@@ -1,5 +1,9 @@
 
 (t)fri aug 07 26
+(u)JORJ949 and Wrastlingcat
+(p)27321
+(e)🆕🤖|C-Feature, A-Silicons
+(*)Robotics consoles now have a "Silicon Broadcast" section, creating a broadcast on the silicon line with a cooldown of 2 minutes per user.
 (u)JORJ949
 (p)27329
 (e)🤖|A-Silicons
