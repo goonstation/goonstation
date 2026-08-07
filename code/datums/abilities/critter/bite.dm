@@ -39,7 +39,7 @@
 		MT.changeStatus("stunned", stun_duration)
 		if(bleed)
 			take_bleeding_damage(MT, null, bleed, DAMAGE_CUT, bleed-5, get_turf(MT))
-		if(gibs)
+		if(gibs && !issilicon(MT))
 			var/gib = make_cleanable(/obj/decal/cleanable/blood/gibs, get_turf(target))
 			playsound(holder.owner.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
 			eat_twitch(holder.owner)
@@ -101,9 +101,9 @@
 	desc = "Crush a target with your colossal bite force"
 	verb_other = "savagely crushes"
 	verb_self = "savagely crush"
-	cooldown = 30 SECONDS
+	cooldown = 20 SECONDS
 	sound_bite = 'sound/impact_sounds/Flesh_Crush_1.ogg'
 	sound_volume = 100
-	brute_damage = 30
-	bleed = 25
+	brute_damage = 40
+	bleed = 50
 	gibs = TRUE
