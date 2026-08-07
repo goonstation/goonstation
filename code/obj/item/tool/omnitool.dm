@@ -313,7 +313,7 @@ TYPEINFO(/obj/item/tool/omnitool/excavator)
 				"energy_property" = 5)
 /obj/item/tool/omnitool/excavator
 	name = "omni-excavator"
-	desc = "A versatile mining tool specialized in digging out more delicate objects, such as fossils."
+	desc = "A versatile mining tool specialized in retrieving delicate objects, such as fossils."
 	icon_state = "excavator-pickaxe"
 	prefix = "excavator"
 	w_class = W_CLASS_NORMAL
@@ -331,7 +331,7 @@ TYPEINFO(/obj/item/tool/omnitool/excavator)
 
 /obj/item/tool/omnitool/excavator/silicon
 	name = "omni-excavator"
-	desc = "A set of various mining tools. Useful for digging out more delicate objects, such as fossils."
+	desc = "A set of various mining tools intended for retrieving delicate objects, such as fossils."
 	icon_state = "silicon-excavator-pickaxe"
 	prefix = "silicon-excavator"
 	animated_delay_enter = FALSE
@@ -515,14 +515,14 @@ ABSTRACT_TYPE(/datum/omnimode)
 		context_icon = "mining_pick"
 		mining_type = MINING_DMG_PICKAXE
 		mining_sound = 'sound/items/mining_pick.ogg'
-		mining_volume = 100
+		mining_volume = 125
 	mining/drill
 		mode_name = "drill"
 		mode_id = OMNITOOL::MODE_MINING_DRILL
 		context_icon = "mining_drill"
 		mining_type = MINING_DMG_DRILL
 		mining_sound = 'sound/items/mining_drill.ogg'
-		mining_volume = 100
+		mining_volume = 125
 	mining/hammer
 		mode_name = "hammer"
 		mode_id = OMNITOOL::MODE_MINING_HAMMER
@@ -536,14 +536,14 @@ ABSTRACT_TYPE(/datum/omnimode)
 		item_type = /obj/item/shovel
 		mining_type = MINING_DMG_SHOVEL
 		mining_sound = 'sound/items/mining_hammer.ogg'
-		mining_volume = 100
+		mining_volume = 125
 	mining/laser
 		mode_name = "laser"
 		mode_id = OMNITOOL::MODE_MINING_LASER
 		context_icon = "mining_laser"
 		mining_type = MINING_DMG_LASER
 		mining_sound = 'sound/weapons/laser_f.ogg'
-		mining_volume = 100
+		mining_volume = 125
 	mining/concussive
 		mode_name = "concussive"
 		mode_id = OMNITOOL::MODE_MINING_CONCUSSIVE
