@@ -1780,6 +1780,7 @@
 /obj/railing/orange/reinforced{
 	dir = 8
 	},
+/obj/railing/orange/reinforced,
 /turf/simulated/floor/wood,
 /area/station/ranch)
 "axw" = (
@@ -6412,7 +6413,7 @@
 /area/station/hydroponics/lobby)
 "bBf" = (
 /obj/machinery/light/incandescent,
-/obj/storage/secure/closet/engineering/cargo,
+/obj/storage/secure/closet/personal,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -8939,6 +8940,21 @@
 /obj/railing/boxing,
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
+"cih" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/mail/vertical,
+/obj/mapping_helper/access/research_foyer,
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/walp/glass/science,
+/obj/mapping_helper/airlock/cycler/manual{
+	cycle_id = "sci";
+	enter_id = "outer";
+	name = "Research Lobby"
+	},
+/turf/simulated/floor/purple/checker,
+/area/station/science/lobby)
 "ciA" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -16863,7 +16879,7 @@
 /area/space)
 "dTF" = (
 /obj/machinery/alarm/directional/west,
-/obj/storage/secure/closet/personal,
+/obj/storage/secure/closet/research/uniform,
 /turf/simulated/floor/twotone/purple,
 /area/station/crew_quarters/lounge/research)
 "dTI" = (
@@ -22532,6 +22548,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
+/obj/storage/secure/closet/personal,
 /turf/simulated/floor/sanitary/white,
 /area/station/engine/engineering/restroom)
 "fhW" = (
@@ -27185,9 +27202,8 @@
 	},
 /area/station/engine/elect)
 "gkh" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Medbay Lobby"
+/obj/machinery/door/airlock/walp/glass/generic{
+	dir = 4
 	},
 /turf/simulated/floor/terrazzo/black,
 /area/station/crew_quarters/jazz)
@@ -30446,6 +30462,9 @@
 	icon_state = "xtra_bigstripe-corner2"
 	},
 /obj/machinery/light/emergency,
+/obj/stool/chair/yellow{
+	dir = 4
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
@@ -39182,9 +39201,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/hangar/science)
 "iWU" = (
-/obj/stool/chair/yellow{
-	dir = 8
-	},
+/obj/storage/secure/closet/personal,
 /turf/simulated/floor/yellowblack/corner{
 	dir = 1
 	},
@@ -45318,7 +45335,7 @@
 /area/research_outpost)
 "kvt" = (
 /obj/machinery/light/incandescent,
-/obj/storage/secure/closet/personal,
+/obj/storage/secure/closet/research/uniform,
 /turf/simulated/floor/twotone/purple,
 /area/station/crew_quarters/lounge/research)
 "kvu" = (
@@ -48513,7 +48530,7 @@
 /turf/simulated/floor/airless/carpet/grime,
 /area/ghostdrone_factory)
 "lji" = (
-/obj/landmark/start/job/security_officer,
+/obj/storage/secure/closet/personal,
 /turf/simulated/floor/minitiles/black,
 /area/station/security/quarters)
 "ljm" = (
@@ -50131,8 +50148,8 @@
 	},
 /area/station/engine/core/nuclear)
 "lxY" = (
-/obj/decoration/pottedfern,
 /obj/item/storage/wall/office,
+/obj/storage/secure/closet/personal,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -52618,10 +52635,12 @@
 /turf/simulated/floor/stairs/wide/middle,
 /area/station/hangar/main)
 "mbM" = (
-/obj/stool/chair/yellow{
-	dir = 4
-	},
 /obj/machinery/light_switch/directional/south,
+/obj/table/auto,
+/obj/item/device/light/flashlight{
+	pixel_y = 11;
+	pixel_x = -4
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
@@ -53747,6 +53766,11 @@
 /obj/mapping_helper/access/research_foyer,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/walp/glass/science,
+/obj/mapping_helper/airlock/cycler/manual{
+	cycle_id = "sci";
+	enter_id = "inner";
+	name = "Research Lobby"
+	},
 /turf/simulated/floor/purple/checker{
 	dir = 1
 	},
@@ -54986,6 +55010,20 @@
 	},
 /turf/simulated/floor/circuit/purple,
 /area/station/science/artifact)
+"mES" = (
+/obj/disposalpipe/segment,
+/obj/mapping_helper/access/research_foyer,
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/walp/glass/science,
+/obj/mapping_helper/airlock/cycler/manual{
+	cycle_id = "sci";
+	enter_id = "outer";
+	name = "Research Lobby"
+	},
+/turf/simulated/floor/purple/checker{
+	dir = 1
+	},
+/area/station/science/lobby)
 "mFc" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -66942,7 +66980,7 @@
 /obj/machinery/firealarm/directional/south{
 	layer = 3.5
 	},
-/obj/storage/secure/closet/personal,
+/obj/storage/secure/closet/medical/uniforms,
 /turf/simulated/floor/carpet/office,
 /area/station/medical/staff)
 "pzs" = (
@@ -68765,11 +68803,11 @@
 	},
 /area/station/mining/magnet_platform)
 "pWq" = (
-/obj/storage/secure/closet/engineering/mining,
 /obj/decal/poster/wallsign/poster_mining{
 	pixel_y = 30
 	},
 /obj/decal/stripe_caution,
+/obj/storage/secure/closet/personal,
 /turf/simulated/floor/black/grime,
 /area/station/mining/staff_room)
 "pWs" = (
@@ -70961,10 +70999,8 @@
 /area/station/maintenance/outer/east)
 "qxX" = (
 /obj/machinery/light/incandescent,
-/obj/table/auto,
-/obj/item/device/light/flashlight{
-	pixel_y = 11;
-	pixel_x = -4
+/obj/stool/chair/yellow{
+	dir = 8
 	},
 /turf/simulated/floor/yellowblack{
 	dir = 1
@@ -72396,8 +72432,6 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "qQB" = (
-/obj/stool/bed/moveable,
-/obj/item/clothing/suit/bedsheet/blue,
 /obj/decal/tile_edge/line/blue{
 	dir = 10;
 	icon_state = "line2"
@@ -72406,7 +72440,7 @@
 	dir = 8;
 	pixel_x = -8
 	},
-/obj/landmark/start/job/medical_doctor,
+/obj/storage/secure/closet/personal,
 /turf/simulated/floor/carpet/office,
 /area/station/medical/staff)
 "qQI" = (
@@ -77027,7 +77061,9 @@
 /area/station/maintenance/outer/east)
 "rQl" = (
 /obj/machinery/light/incandescent,
-/obj/storage/secure/closet/personal/empty,
+/obj/storage/secure/closet/personal/empty{
+	name = "\improper Diplomat's locker"
+	},
 /obj/item/clothing/suit/armor/vest/light,
 /obj/item/device/flash,
 /obj/item/clothing/under/gimmick/red_wcoat,
@@ -86455,6 +86491,10 @@
 "tYT" = (
 /turf/simulated/wall/auto/walp/pink,
 /area/station/maintenance/inner/se)
+"tYX" = (
+/obj/storage/secure/closet/personal,
+/turf/simulated/floor/twotone/purple,
+/area/station/crew_quarters/lounge/research)
 "tYY" = (
 /obj/machinery/light/incandescent,
 /obj/decal/tile_edge/check{
@@ -95110,6 +95150,11 @@
 /obj/mapping_helper/access/research_foyer,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/walp/glass/science,
+/obj/mapping_helper/airlock/cycler/manual{
+	cycle_id = "sci";
+	enter_id = "inner";
+	name = "Research Lobby"
+	},
 /turf/simulated/floor/purple/checker,
 /area/station/science/lobby)
 "wbL" = (
@@ -126172,7 +126217,7 @@ sXp
 jtk
 ouH
 yck
-isw
+wdD
 dIV
 nfj
 tlu
@@ -126474,7 +126519,7 @@ sXp
 wNH
 ouH
 yck
-wdD
+isw
 dIV
 avn
 kjo
@@ -134062,7 +134107,7 @@ ukc
 qkZ
 nBZ
 guq
-ukc
+tYX
 nXR
 sZk
 dbD
@@ -134364,7 +134409,7 @@ ukc
 ukc
 ukc
 guq
-ukc
+tYX
 nXR
 vSb
 dbD
@@ -134947,7 +134992,7 @@ xQQ
 sPb
 mhe
 gvI
-mpz
+mES
 xQh
 xQh
 xQh
@@ -135249,7 +135294,7 @@ ePx
 gKB
 vTr
 pCy
-wbK
+cih
 vMw
 vMw
 vMw
