@@ -2556,7 +2556,6 @@ TYPEINFO(/obj/item/cargotele)
 	mining_marker.plane = PLANE_OVERLAY_EFFECTS
 	mining_marker.alpha = 200
 	get_image_group(CLIENT_IMAGE_GROUP_GEOLOGICAL_ANOMALIES).add_image(mining_marker)
-	get_image_group(CLIENT_IMAGE_GROUP_GEOLOGICAL_ANOMALIES).always_visible = TRUE
 	SPAWN(2 MINUTES)
 		if(AST && AST.marker_expiration_time <= TIME)
 			AST.clear_marker()
