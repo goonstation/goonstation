@@ -5,13 +5,15 @@ var/datum/signal_holder/global_signal_holder = null
 
 /datum
 	/**
-	 *	Any datum registered to receive signals from this datum is in this list.
-	 *
-	 *	Lazy associated list in the structure of `signal:registree/list of registrees`.
+	 *	An associative list of datums registered to receive signals from this datum, indexed by signal type. \
+	 *	Type structure: `/list<sigtype, /datum>` or `/list<sigtype, /list/datum>`
 	 */
 	var/tmp/list/comp_lookup = null
-	/// Lazy associated list in the structure of `signals:proctype` that are run when the datum receives that signal.
-	var/tmp/list/list/datum/callback/signal_procs = null
+	/**
+	 *	An associative list of signal types and the associated proc that is run when this datum receives that signal, indexed by signal source datum. \
+	 *	Type structure: `/list</datum, /list<sigtype, procname>>`
+	 */
+	var/tmp/list/list/signal_procs = null
 
 /**
  *	Internal proc to handle most of the signaling procedure.
