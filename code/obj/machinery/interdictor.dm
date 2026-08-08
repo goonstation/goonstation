@@ -258,7 +258,8 @@
 			radstorm_interdict(src)
 			src.resisted = FALSE
 		if(intcap.charge < intcap.maxcharge && powered())
-			var/amount_to_add = min(round(intcap.maxcharge - intcap.charge, 10), src.chargerate)
+			var/ratelimit = min(max(src.chargerate,src.active_cost*0.8),src.chargerate_max)
+			var/amount_to_add = min(round(intcap.maxcharge - intcap.charge, 10), ratelimit)
 			if(amount_to_add)
 				var/added = intcap.give(amount_to_add)
 				if(!src.canInterdict) //only plays continually during charging phase

@@ -122,6 +122,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 	var/grow_duration = 0
 	var/active_duration = 0
 	var/activity_modifier = 1.0 // multiplies how many objects spawn each "tick"
+	var/interdiction_hp = 50 // it's possible to fully suppress them - but not easy
 	var/datum/light/light = null
 
 	var/static/list/spawn_probs = list(
@@ -961,24 +962,39 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 	proc/process()
 		var/time_since_start = TIME - start_time
 
+		//Track interdiction this cycle for visual "force feedback"
+		var/interdicted_this_cycle = FALSE
+
 		if(state == "dying")
 			qdel(src)
 
 		if(triggered_by_event)
-			//spatial interdictor: can't stop the white hole, but it can mitigate it
-			//consumes 500 units of charge (250,000 joules) to reduce white hole duration
+			//spatial interdictor: attempt to suppress white hole uncollapse, with great difficulty.
+			//50 operational cycles will entirely inhibit uncollapse; base cost of 200 cell units a cycle, +25 per stabilization (up to ~1400 at max)
+			//approx 41k cell units consumed overall
+			var/interdict_cost = 200
 			for_by_tcl(IX, /obj/machinery/interdictor)
-				if (IX.expend_interdict(500, src))
-					if(prob(20))
+				interdict_cost = 200 + ((50 - interdiction_hp) * 25)
+				if (IX.expend_interdict(interdict_cost, src))
+					interdicted_this_cycle = TRUE
+					if(src.interdiction_hp >= 50)
 						playsound(IX,'sound/machines/alarm_a.ogg',20,FALSE,5,-1.5)
 						IX.visible_message(SPAN_ALERT("<b>[IX] emits an anti-gravitational anomaly warning!</b>"))
 					if(state != "active")
 						grow_duration += 4 SECOND
+						interdiction_hp -= 1
+						if(interdiction_hp <= 0)
+							time_since_start = (grow_duration + active_duration) * 2
+							state = "dying"
+							break
 					else
 						active_duration -= 1 SECOND
 
 		if(time_since_start < grow_duration)
 			var/scale = 32 / 160 + (160 - 32) / 160 * clamp(((time_since_start + 3 SECONDS) - grow_duration / 3) / (grow_duration * 2 / 3), 0, 1)
+			if(interdicted_this_cycle) //visually depict the "pinch" on a white hole being interdicted
+				var/scale_adjustor = 0.025 * clamp(src.interdiction_hp,1,40)
+				scale = clamp(scale*scale_adjustor, 0, 1)
 			animate(src, transform = matrix(scale, MATRIX_SCALE), time = 3 SECONDS, loop = 0, easing = LINEAR_EASING)
 
 		if(time_since_start < grow_duration / 3)
@@ -1006,28 +1022,29 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			state = "dying"
 			playsound(src, 'sound/machines/singulo_start.ogg', 90, FALSE, 5, -2)
 
-		// push or throw things away from the white hole
-		for (var/atom/movable/X in range(7,src))
-			if (istype(X, /obj/structure/girder) && prob(40)) //mess up girders too
-				X.ex_act(3)
-			if (X.event_handler_flags & IMMUNE_SINGULARITY || X.anchored)
-				continue
+		if(state != "dying")
+			// push or throw things away from the white hole
+			for (var/atom/movable/X in range(7,src))
+				if (istype(X, /obj/structure/girder) && prob(40)) //mess up girders too
+					X.ex_act(3)
+				if (X.event_handler_flags & IMMUNE_SINGULARITY || X.anchored)
+					continue
 
-			if(prob(30))
-				continue
-			else if(prob(50))
-				step_away(X, src)
-			else
-				X.throw_at( \
-					locate_throw_target(X), \
-					rand(1, 6), \
-					randfloat(1, 3), \
-					bonus_throwforce = 50 / (1 + GET_DIST(X, src)) \
-				)
+				if(prob(30))
+					continue
+				else if(prob(50))
+					step_away(X, src)
+				else
+					X.throw_at( \
+						locate_throw_target(X), \
+						rand(1, 6), \
+						randfloat(1, 3), \
+						bonus_throwforce = 50 / (1 + GET_DIST(X, src)) \
+					)
 
-		for (var/turf/simulated/wall/wall in range(1, src)) //make it a little harder to wall them off
-			wall.ex_act(3)
-			break //just smack one wall at a time
+			for (var/turf/simulated/wall/wall in range(1, src)) //make it a little harder to wall them off
+				wall.ex_act(3)
+				break //just smack one wall at a time
 
 		var/time_interval = 3 SECONDS
 		var/spew_count = round(randfloat(1, 15 * src.activity_modifier))
