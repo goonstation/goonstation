@@ -538,6 +538,8 @@ TYPEINFO(/obj/item/disk)
 //some more of these event handler flag things are handled in set_loc far below . . .
 /atom/movable/New()
 	..()
+	if(istype(src, /atom/movable/hotspot) || istype(src, /atom/movable/light)) //hotspots arent really tangible things, nor are lights
+		return
 	var/typeinfo/obj/typeinfo = src.get_typeinfo()
 	var/override_type = src.type
 	while(!isnull(typeinfo.manufactured_type) && override_type != typeinfo.manufactured_type) //Recursively go up the list of manufacture overrides.
@@ -549,8 +551,6 @@ TYPEINFO(/obj/item/disk)
 
 	src.last_turf = isturf(src.loc) ? src.loc : null
 	//hey this is mbc, there is probably a faster way to do this but i couldnt figure it out yet
-	if(istype(src, /atom/movable/hotspot)) //hotspots arent really tangible things
-		return
 	if (isturf(src.loc))
 		var/turf/T = src.loc
 		if(src.opacity)

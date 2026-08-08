@@ -250,7 +250,7 @@ Returns:
 	usr.client.screen += S
 	S.appearance_flags = KEEP_TOGETHER
 	for(var/atom/movable/MO in orange(2, usr))
-		if(istype(MO, /obj/overlay/tile_effect/)) continue
+		if(istype(MO, /atom/movable/light/robust_light)) continue
 		MO.plane = PLANE_HIDDENGAME
 
 	return
@@ -747,7 +747,7 @@ Returns:
 	var/list/oneTurfsExpend = oneTurfs.Copy()
 	var/list/twoTurfsExpend = twoTurfs.Copy()
 
-	var/list/ignoreTypes = list(/obj/machinery/disposal,/obj/cable,/obj/machinery/power,/obj/machinery/light,/obj/disposalpipe,/obj/mesh/grille,/obj/window,/obj/machinery/door,/obj/machinery/atmospherics,/obj/overlay/tile_effect)
+	var/list/ignoreTypes = list(/obj/machinery/disposal,/obj/cable,/obj/machinery/power,/obj/machinery/light,/obj/disposalpipe,/obj/mesh/grille,/obj/window,/obj/machinery/door,/obj/machinery/atmospherics,/atom/movable/light/robust_light)
 
 	var/oneName = ""
 	var/twoName = ""

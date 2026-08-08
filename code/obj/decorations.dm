@@ -1015,8 +1015,8 @@ SET_UP_DIRECTIONALS(/obj/sign_switch, OFFSETS_LIGHTSWITCH)
 	proc/add_lights()
 		SPAWN(0) //SDMM doesn't seem to understand waitfor sooo
 			for (var/i in 1 to 8)
-				var/type = prob(50) ? pick(concrete_typesof(/obj/overlay/simple_light/disco_lighting/rainbow/random_start)) : pick(concrete_typesof(/obj/overlay/simple_light/disco_lighting/oscillator))
-				var/obj/overlay/simple_light/disco_lighting/overlay = new type()
+				var/type = prob(50) ? pick(concrete_typesof(/atom/movable/light/simple_light/disco_lighting/rainbow/random_start)) : pick(concrete_typesof(/atom/movable/light/simple_light/disco_lighting/oscillator))
+				var/atom/movable/light/simple_light/disco_lighting/overlay = new type()
 				overlay.alpha = 0
 				animate(overlay, alpha = 255, time = 1 SECOND, flags = ANIMATION_PARALLEL)
 

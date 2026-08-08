@@ -164,7 +164,7 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 							for (var/atom/movable/AM as mob|obj in T)
 								if (isobserver(AM))
 									continue // skip ghosties
-								if (istype(AM, /obj/overlay/tile_effect))
+								if (istype(AM, /atom/movable/light/robust_light))
 									continue
 								if (istype(AM, /obj/effects/precipitation))
 									continue

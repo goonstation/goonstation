@@ -533,7 +533,7 @@ proc/fuckup_attack_particle(var/mob/M)
 		y *= 22
 		animate(M.attack_particle, pixel_x = M.attack_particle.pixel_x + x , pixel_y = M.attack_particle.pixel_y + y, time = 5, easing = BOUNCE_EASING, flags = ANIMATION_END_NOW)
 
-var/global/obj/overlay/simple_light/muzzle_simple_light = new	/obj/overlay/simple_light{appearance_flags = RESET_COLOR | NO_CLIENT_COLOR | KEEP_APART}
+var/global/atom/movable/light/simple_light/muzzle_simple_light = new /atom/movable/light/simple_light{appearance_flags = RESET_COLOR | NO_CLIENT_COLOR | KEEP_APART}
 
 var/global/list/default_muzzle_flash_colors = list(
 	"muzzle_flash" = "#FFEE9980",
