@@ -528,8 +528,6 @@
 			src.tooltip_flags &= ~REBUILD_ALWAYS
 
 
-
-
 /obj/item/deployer/barricade/barbed
 	name = "barbed barricade deployer"
 	object_type = /obj/barricade/barbed
