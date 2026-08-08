@@ -254,7 +254,7 @@
 						do_step = 0
 						break
 
-					if(ishuman(src) && !src?.client?.flying && !src.hasStatus("resting") && !src.buckled && !H.limbs.l_leg && !H.limbs.r_leg)	//do this before we move, so we can dump stuff on the old tile. Just to be mean.
+					if(ishuman(src) && !src?.client?.flying && !src.hasStatus("resting") && !src.buckled && !H.limbs.is_limb_functional("l_leg") && !H.limbs.is_limb_functional("r_leg"))	//do this before we move, so we can dump stuff on the old tile. Just to be mean.
 						boutput(src, SPAN_ALERT("Without a leg to walk with, you flop over!"))
 						src.setStatus("resting", duration = INFINITE_STATUS)
 						src.force_laydown_standup()
