@@ -58,12 +58,22 @@
 
 	proc/emp_burst(var/turf/T)
 		if (T)
+			var/interdicted = FALSE
+
+			for_by_tcl(IX, /obj/machinery/interdictor)
+				if (IX.expend_interdict(150,T))
+					interdicted = TRUE
+					if(prob(40)) //interdictor may sometimes "trip" from the pulse
+						playsound(get_turf(IX), 'sound/effects/electric_shock.ogg', 25, TRUE)
+						animate_little_spark(IX)
+						IX.visible_message(SPAN_ALERT("<B>[IX]</B> shorts out and shuts down!"))
+						IX.stop_interdicting()
+					break
+
 			playsound(T, pick(sound_list), 25, TRUE)
 
 			var/reach_rand = rand(6,14) // they don't all need to be max screensize EMPs
 			var/reach = "[reach_rand]x[reach_rand]"
-
-			T.hotspot_expose(700,125)
 
 			var/obj/overlay/pulse = new/obj/overlay(T)
 			pulse.icon = 'icons/effects/effects.dmi'
@@ -73,11 +83,13 @@
 			SPAWN(2 SECONDS)
 				if (pulse) qdel(pulse)
 
-			for (var/turf/tile in range(reach, T))
-				for (var/atom/O in tile.contents)
-					var/area/t = get_area(O)
-					if(t?.sanctuary) continue
-					O.emp_act()
+			if(!interdicted)
+				T.hotspot_expose(700,125)
+				for (var/turf/tile in range(reach, T))
+					for (var/atom/O in tile.contents)
+						var/area/t = get_area(O)
+						if(t?.sanctuary) continue
+						O.emp_act()
 
 /datum/particleSystem/emp_warning
 	New(var/atom/location = null)
