@@ -114,6 +114,13 @@
 		if (!H.lying)
 			H.changeStatus("knockdown", 5 SECONDS)
 			H.force_laydown_standup()
+		if (H.pulled_by)
+			boutput(H.pulled_by, SPAN_ALERT("[src.owner] writhes free of your grip!"))
+			H.pulled_by.remove_pulling()
+		if (length(H.grabbed_by))
+			for (var/obj/item/grab/G in H.grabbed_by) // not necessary to check for blocks here -- the knockdown gets rid of them already
+				boutput(G.assailant, SPAN_ALERT("[src.owner] writhes free of your grip!"))
+				qdel(G)
 		// the goal of piling on all these effects is to make it VERY obvious what's happening
 		// the animations and jittering here have the nice effect of making the convulsing look super inhuman
 		H.make_jittery(1000)
