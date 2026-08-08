@@ -77,6 +77,7 @@
 	<a href='byond://?src=\ref[src];action=plaguebringer'>Plaguebringer wraith</a> |
 	<a href='byond://?src=\ref[src];action=harbinger'>Harbinger wraith</a> |
 	<a href='byond://?src=\ref[src];action=trickster'>Trickster wraith</a> |
+	<a href='byond://?src=\ref[src];action=[ROLE_DEMON_DOLL]'>Demon doll</a> |
 	<a href='byond://?src=\ref[src];action=[ROLE_PLAGUE_RAT]'>Plague rat</a> |
 	<a href='byond://?src=\ref[src];action=[ROLE_ZOMBIE]'>Zombie</a> |
 	<a href='byond://?src=\ref[src];action=[ROLE_PHOENIX]'>Space Phoenix</a>
