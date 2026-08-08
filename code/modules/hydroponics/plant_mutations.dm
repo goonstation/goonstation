@@ -760,6 +760,12 @@ ABSTRACT_TYPE(/datum/plantmutation)
 	crop = /obj/item/raw_material/uqill
 	chance = 5
 
+/datum/plantmutation/rocks/gemstone
+	name_prefix = "Gemstone "
+	dont_rename_crop = TRUE
+	crop = /obj/item/raw_material/gemstone
+	chance = 5
+
 // trees. :effort:
 
 /datum/plantmutation/tree/money

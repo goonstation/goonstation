@@ -154,7 +154,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 	harvests = 8
 	endurance = 40
 	force_seed_on_harvest = 1
-	mutations = list(/datum/plantmutation/rocks/syreline,/datum/plantmutation/rocks/bohrum,/datum/plantmutation/rocks/mauxite,/datum/plantmutation/rocks/uqill)
+	mutations = list(/datum/plantmutation/rocks/syreline,/datum/plantmutation/rocks/bohrum,/datum/plantmutation/rocks/mauxite,/datum/plantmutation/rocks/uqill,/datum/plantmutation/rocks/gemstone)
 
 /datum/plant/artifact/litelotus
 	name = "Light Lotus"
