@@ -437,7 +437,7 @@ ABSTRACT_TYPE(/datum/material)
 			X.execute(location)
 		return
 
-	proc/triggerChem(var/location, var/datum/reagent/chem, var/amount)
+	proc/triggerChem(var/atom/location, var/datum/reagent/chem, var/amount)
 		for(var/datum/materialProc/X in triggersChem)
 			X.execute(location, chem, amount)
 		return
@@ -1198,11 +1198,12 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("electrical", 6)
 		setProperty("radioactive", 8)
 
-		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/erebite_temp())
-		addTrigger(TRIGGERS_ON_EXPLOSION, new /datum/materialProc/erebite_exp())
-		addTrigger(TRIGGERS_ON_ATTACK, new /datum/materialProc/generic_explode_attack(33))
-		addTrigger(TRIGGERS_ON_ATTACKED, new /datum/materialProc/generic_explode_attack(33))
-		addTrigger(TRIGGERS_ON_HIT, new /datum/materialProc/generic_explode_attack(33))
+		// Explodes if you look at it funny
+		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/explosion/heated())
+		addTrigger(TRIGGERS_ON_EXPLOSION, new /datum/materialProc/explosion/exp())
+		addTrigger(TRIGGERS_ON_ATTACK, new /datum/materialProc/explosion/generic())
+		addTrigger(TRIGGERS_ON_ATTACKED, new /datum/materialProc/explosion/generic())
+		addTrigger(TRIGGERS_ON_HIT, new /datum/materialProc/explosion/impact())
 
 
 /datum/material/crystal/plasmastone
