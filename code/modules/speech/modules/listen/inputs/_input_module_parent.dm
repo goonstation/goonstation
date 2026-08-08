@@ -14,6 +14,8 @@ ABSTRACT_TYPE(/datum/listen_module/input)
 	var/datum/say_channel/say_channel
 	/// Whether this listen module should ignore line of sight checks performed during message dissemination.
 	var/ignore_line_of_sight_checks = FALSE
+	/// Logging for failed garbage collection.
+	var/_debug_listener_parent = null
 
 /datum/listen_module/input/New(datum/listen_module_tree/parent)
 	. = ..()
@@ -22,13 +24,18 @@ ABSTRACT_TYPE(/datum/listen_module/input)
 		src.enabled = TRUE
 
 	src.say_channel = global.SpeechManager.GetSayChannelInstance(src.channel)
+	src.RegisterSignal(src.parent_tree, COMSIG_LISTENER_ORIGIN_UPDATED, PROC_REF(update_listener_origin_passthrough))
+
 	if (src.enabled)
 		src.say_channel.RegisterInput(src)
 
 /datum/listen_module/input/disposing()
+	src._debug_listener_parent = "[src.parent_tree.listener_parent]"
+
 	if (src.enabled)
 		src.say_channel.UnregisterInput(src)
 
+	src.UnregisterSignal(src.parent_tree, COMSIG_LISTENER_ORIGIN_UPDATED)
 	src.say_channel = null
 
 	. = ..()
@@ -52,6 +59,10 @@ ABSTRACT_TYPE(/datum/listen_module/input)
 
 	src.enabled = FALSE
 	src.say_channel.UnregisterInput(src)
+
+/// Allows the `COMSIG_LISTENER_ORIGIN_UPDATED` to distribute through a listen tree's listen input modules.
+/datum/listen_module/input/proc/update_listener_origin_passthrough(tree, atom/old_origin, atom/new_origin)
+	SEND_SIGNAL(src, COMSIG_LISTENER_ORIGIN_UPDATED, old_origin, new_origin)
 
 
 ABSTRACT_TYPE(/datum/listen_module/input/bundled)

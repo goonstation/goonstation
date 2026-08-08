@@ -16,20 +16,20 @@
 		src.PassToListeners(message, listen_modules_by_type)
 		return
 
-	listen_modules_by_type = list()
-
 	var/turf/centre = get_turf(message.message_origin)
 	if (!centre)
 		return
 
-	for (var/type in src.listeners)
-		listen_modules_by_type[type] ||= list()
-		for (var/datum/listen_module/input/input as anything in src.listeners[type])
-			// If the listener is in range of the speaker, regardless of how nested they are, the listener may hear the message.
-			if (!INPUT_IN_RANGE(input, centre, LOOC_RANGE))
-				continue
+	listen_modules_by_type = list()
+	for (var/type as anything in src.listeners)
+		listen_modules_by_type[type] = list()
 
-			listen_modules_by_type[type] += input
+	for (var/datum/listen_module/input/input as anything in src.hashmap.vistarget_supremum(centre, LOOC_RANGE))
+		// If the listener is in range of the speaker, regardless of how nested they are, the listener may hear the message.
+		if (!INPUT_IN_RANGE(input, centre, LOOC_RANGE))
+			continue
+
+		listen_modules_by_type[input.type] += input
 
 	src.listener_tick_cache.write_to_cache(message, listen_modules_by_type)
 	src.PassToListeners(message, listen_modules_by_type)
