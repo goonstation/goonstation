@@ -1309,9 +1309,12 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				// if the user drinks milk, they'll be fine
-				if (M.reagents.has_reagent("milk"))
+				if (M.reagents.has_reagent("milk", "super_milk"))
 					boutput(M, SPAN_NOTICE("The milk stops the burning. Ahhh."))
-					M.reagents.del_reagent("milk")
+					if(M.reagents.has_reagent("milk"))
+						M.reagents.del_reagent("milk")
+					else if(M.reagents.has_reagent("super_milk"))
+						M.reagents.del_reagent("super_milk")
 					M.reagents.del_reagent("dbreath")
 				if (probmult(8))
 					boutput(M, SPAN_ALERT("<b>Oh god! Oh GODD!!</b>"))

@@ -1063,7 +1063,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			src.name = "[random_spaghetti_name()] arrabbiata"
 
 	heal(mob/M)
-		if (src.secured && !(M.traitHolder && M.traitHolder.hasTrait("training_security")) && !M.reagents.has_reagent("milk"))
+		if (src.secured && !(M.traitHolder && M.traitHolder.hasTrait("training_security")) && !M.reagents.has_reagent("milk", "super_milk"))
 			random_burn_damage(M, rand(30, 40))
 			boutput(M, SPAN_ALERT("You're not trained to resist this level of spice! No wonder they kept [src] locked up!"))
 		else
