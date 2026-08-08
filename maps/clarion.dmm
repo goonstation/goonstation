@@ -27191,9 +27191,6 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "ojB" = (
-/obj/machinery/camera/directional/west{
-	pixel_y = 5
-	},
 /obj/machinery/light_switch/directional/west,
 /obj/storage/cart/medcart/crash,
 /turf/simulated/floor/bluewhite{

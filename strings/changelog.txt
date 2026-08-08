@@ -1,4 +1,50 @@
 
+(t)sat aug 08 26
+(u)ANNmagedon
+(p)27234
+(e)💊|A-Medical
+(+)Borgs can now unfold and open/close body bags (but not fold).
+(t)fri aug 07 26
+(u)JORJ949 and Wrastlingcat
+(p)27321
+(e)🆕🤖|C-Feature, A-Silicons
+(*)Robotics consoles now have a "Silicon Broadcast" section, creating a broadcast on the silicon line with a cooldown of 2 minutes per user.
+(u)JORJ949
+(p)27329
+(e)🤖|A-Silicons
+(*)Silicons now receive a killswitch like timer at the top of their screen for the duration of any equipment lockdowns. Active killswitches will override this timer.
+(*)Syndicate and Emagged cyborgs can be "locked down" by the robotics console, but are immune to the effects of the lockdown.
+(t)thu aug 06 26
+(u)bamlord
+(p)27417
+(e)🐁|A-Critters
+(+)Buffed hippo combat capability
+(u)glowbold
+(p)27404
+(e)🆕💊⚗|C-Feature, A-Medical, A-Chemistry
+(+)Health Analyzer TGUI window shows reagent overdoses.
+(u)Astarthoc
+(p)27412
+(e)💅📦🔬|C-QoL, A-Game-Objects, A-Science
+(+)The elecbox now automatically stops 5 seconds after being activated, removing the need to stop it manually.
+(t)wed aug 05 26
+(u)Ceres et al.
+(p)27267
+(e)🎨💊|C-Sprites, A-Medical
+(+)Triage tag boxes now have usage information when examined, can be found in NanoMeds instead of the medical apparel vendor, and have a new "Cloned" tag to indicate bodies that have been successfully revived.
+(u)Cheekybrdy
+(p)26873
+(e)🆕🎨💡|C-Feature, C-Sprites, A-Station-Systems
+(*)You can now make chemical requests on your PDA. Scientists/Pharmacists can now reject/fulfil requests on a different PDA app.
+(+)Pharmacist now has a dedicated PDA cartridge.
+(u)CelineTheYeen
+(p)27264
+(e)🗺|A-Mapping
+(*)Oshan's southern maints, crew lounge and zen garden have recieved a facelift.
+(u)bamlord, sprites by swinglow20
+(p)27335
+(e)🎨🔊📡🐁|C-Sprites, C-Sound, A-AI, A-Critters
+(+)Added Hippos, unobtainable for now.
 (t)tue aug 04 26
 (u)glowbold
 (e)💅🔨|C-QoL, A-Player-Actions
