@@ -472,6 +472,7 @@
 #include "code\datums\SCE\components\obj_projectile_damage.dm"
 #include "code\datums\SCE\components\pitfall.dm"
 #include "code\datums\SCE\components\power_cell.dm"
+#include "code\datums\SCE\components\pressure_vision.dm"
 #include "code\datums\SCE\components\proj_door_breach.dm"
 #include "code\datums\SCE\components\proj_mining.dm"
 #include "code\datums\SCE\components\proximity.dm"
