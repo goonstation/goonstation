@@ -593,6 +593,8 @@ CONTAINS:
 /* -------------------- Body Bag -------------------- */
 /* ================================================== */
 
+#define IS_BODYBAG_FOLDED(body_bag) (body_bag.icon_state == "bodybag" && body_bag.w_class == W_CLASS_TINY)
+
 /obj/item/body_bag
 	name = "body bag"
 	desc = "A heavy bag, used for carrying stuff around. The stuff is usually dead bodies. Hence the name."
@@ -639,26 +641,22 @@ CONTAINS:
 			src.w_class = W_CLASS_TINY
 
 	attack_self(mob/user as mob)
-		if (src.icon_state == "bodybag" && src.w_class == W_CLASS_TINY)
-			user.visible_message("<b>[user]</b> unfolds [src].",\
-			"You unfold [src].")
-			user.drop_item()
-			pixel_x = 0
-			pixel_y = 0
-			src.UpdateIcon()
-		else
+		if(!src.try_unfold(user))
 			return
 
 	attack_hand(mob/user)
 		add_fingerprint(user)
-		if (src.icon_state == "bodybag" && src.w_class == W_CLASS_TINY)
+		if (IS_BODYBAG_FOLDED(src))
 			return ..()
-		else if(!ON_COOLDOWN(user, "bodybag_zip", 1 SECOND))
-			if (src.open)
-				src.close()
-			else
-				src.open()
+
+		src.toggle(user)
+
+	attack_ai(mob/user)
+		if(BOUNDS_DIST(src, user) || isintangible(user))
 			return
+
+		if (!src.try_unfold())
+			src.toggle(user)
 
 	relaymove(mob/user as mob)
 		if (user.stat)
@@ -737,6 +735,32 @@ CONTAINS:
 			M.set_loc(src)
 		src.open = 0
 		src.UpdateIcon()
+
+	proc/toggle(mob/user)
+		if(ON_COOLDOWN(user, "bodybag_zip", 1 SECOND))
+			return FALSE
+
+		if (src.open)
+			src.close()
+		else
+			src.open()
+		return TRUE
+
+	proc/try_unfold(mob/user)
+		if (!IS_BODYBAG_FOLDED(src))
+			return FALSE
+
+		user.visible_message("<b>[user]</b> unfolds [src].", "You unfold [src].")
+
+		user.drop_from_slot(src)
+		src.pixel_x = 0
+		src.pixel_y = 0
+
+		src.UpdateIcon()
+
+		return TRUE
+
+#undef IS_BODYBAG_FOLDED
 
 /* ================================================== */
 /* -------------------- Hemostat -------------------- */
