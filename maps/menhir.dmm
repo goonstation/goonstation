@@ -3041,6 +3041,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/minitiles/black,
 /area/station/bridge)
 "bBn" = (
@@ -28471,6 +28472,7 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/light_switch/directional/east,
+/obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/minitiles/black,
 /area/station/bridge)
 "oHj" = (
@@ -32083,7 +32085,7 @@
 /obj/mapping_helper/airlock/cycler/auto/knight{
 	dir = 9
 	},
-/turf/simulated/wall/auto/supernorn,
+/turf/simulated/floor/plating,
 /area/station/maintenance/outer/nw)
 "qwL" = (
 /obj/mesh/catwalk,
@@ -41256,6 +41258,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/minitiles/black,
 /area/station/bridge)
 "vct" = (
