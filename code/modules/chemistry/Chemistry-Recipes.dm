@@ -5628,3 +5628,14 @@
 		mix_phrase = "The mixture slowly separates into two distinct layers."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
+
+	dulcedeleche
+		name = "Dulce de leche"
+		id = "dulcedeleche"
+		result = "dulcedeleche"
+		required_reagents = list("sweetcondensedmilk"=1, "vanilla"= 1)
+		min_temperature = T0C + 85
+		result_amount = 1
+		mix_phrase = "The mixture slowly thickens into a velvety spread."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
