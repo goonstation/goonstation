@@ -8,7 +8,7 @@ var/datum/signal_holder/global_signal_holder = null
 	 *	An associative list of datums registered to receive signals from this datum, indexed by signal type. \
 	 *	Type structure: `/list<sigtype, /datum>` or `/list<sigtype, /list/datum>`
 	 */
-	var/tmp/list/comp_lookup = null
+	var/tmp/list/signal_listeners = null
 	/**
 	 *	An associative list of signal types and the associated proc that is run when this datum receives that signal, indexed by signal source datum. \
 	 *	Type structure: `/list</datum, /list<sigtype, procname>>`
@@ -23,7 +23,7 @@ var/datum/signal_holder/global_signal_holder = null
  *	Use the `SEND_SIGNAL()` define instead.
  */
 /datum/proc/_SendSignal(sigtype, list/arguments)
-	var/target = src.comp_lookup[sigtype]
+	var/target = src.signal_listeners[sigtype]
 	if (!length(target))
 		var/datum/listening_datum = target
 		return 0 | call(listening_datum, listening_datum.signal_procs[src][sigtype])(arglist(arguments))
@@ -76,7 +76,7 @@ var/datum/signal_holder/global_signal_holder = null
 
 	var/list/procs = (src.signal_procs ||= list())
 	var/list/target_procs = (procs[target] ||= list())
-	var/list/lookup = (target.comp_lookup ||= list())
+	var/list/lookup = (target.signal_listeners ||= list())
 
 	if (!override && target_procs[signal_type])
 		global.stack_trace("[signal_type] overridden. Use override = TRUE to suppress this warning.\nTarget: [global.identify_object(target)] Proc: [proctype]")
@@ -132,7 +132,7 @@ var/datum/signal_holder/global_signal_holder = null
 
 	var/list/procs = src.signal_procs
 	var/list/target_procs = procs[target]
-	var/list/lookup = target.comp_lookup
+	var/list/lookup = target.signal_listeners
 	if (!target_procs || !lookup)
 		return
 
@@ -156,7 +156,7 @@ var/datum/signal_holder/global_signal_holder = null
 
 		// If we're the only thing registered and we're in a list, remove the signal type from the lookup. This should never occur.
 		if (1)
-			global.stack_trace("[identify_object(target)] somehow has single length list inside comp_lookup")
+			global.stack_trace("[identify_object(target)] somehow has single length list inside signal_listeners")
 			if (src in looked_up)
 				lookup -= signal_type
 
@@ -171,7 +171,7 @@ var/datum/signal_holder/global_signal_holder = null
 			return
 
 	if (!length(lookup))
-		target.comp_lookup = null
+		target.signal_listeners = null
 
 /// Stop listening to multiple signals from a target.
 /datum/proc/UnregisterSignals(datum/target, list/signal_types)
