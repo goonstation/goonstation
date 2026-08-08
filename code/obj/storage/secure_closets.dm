@@ -702,12 +702,16 @@
 
 /obj/storage/secure/closet/animal
 	name = "\improper Animal Control locker"
+	desc = "A locker containing various methods for subduing and controlling animals."
 	req_access = list(access_medical)
 	spawn_contents = list(/obj/item/device/radio/signaler,
 	/obj/item/device/radio/electropack = 5,
 	/obj/item/clothing/glasses/blindfold = 2,
 	/obj/item/clothing/mask/monkey_translator = 2,
 	/obj/item/pet_carrier)
+
+/obj/storage/secure/closet/animal/research
+	req_access = list(access_research)
 
 /* ==================== */
 /* ----- Research ----- */

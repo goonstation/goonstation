@@ -387,3 +387,7 @@ ABSTRACT_TYPE(/obj/mapping_helper/mailtag/public)
 /obj/mapping_helper/mailtag/public/jazz_lounge
 	name = "Jazz Lounge"
 	mail_tag = "jazz lounge"
+
+/obj/mapping_helper/mailtag/public/rec_hall
+	name = "Rec Hall"
+	mail_tag = "recreation hall"

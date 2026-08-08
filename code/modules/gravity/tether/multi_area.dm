@@ -99,12 +99,14 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether/multi_area)
 	)
 #endif
 
-// cogmap2/kondaru research outpost
+// cogmap2/kondaru/decarabia research outpost
 /obj/machinery/gravity_tether/multi_area/research_outpost
 	name = "Research Outpost gravity tether"
 	req_access = list(access_research_director)
 	base_area_typepath = /area/research_outpost
-
+	base_area_exceptions = list(
+		/area/research_outpost/bomb_test
+	)
 
 // donut2 research station
 /obj/machinery/gravity_tether/multi_area/research_station

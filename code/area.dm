@@ -70,7 +70,7 @@ TYPEINFO(/area)
 	mat_changename = 0
 	mat_changedesc = 0
 	text = ""
-	var/lightswitch = 1
+	var/lightswitch = TRUE //! If TRUE, lights in the area will start on.
 
 	/// If the area is on a restricted z leve, this controls if people can eat within it. (The reason for this might shock you!)
 	var/may_eat_here_in_restricted_z = FALSE
@@ -751,6 +751,12 @@ ABSTRACT_TYPE(/area/shuttle)
 	occlude_foreground_parallax_layers = FALSE
 	#ifdef UNDERWATER_MAP
 	ambient_light_source = AMBIENT_LIGHT_SRC_OCEAN
+	occlude_foreground_parallax_layers = FALSE
+	#elif defined(MAP_OVERRIDE_DONUT3) || defined(MAP_OVERRIDE_DECARABIA)
+	ambient_light_source = AMBIENT_LIGHT_SRC_INVLD
+	occlude_foreground_parallax_layers = TRUE
+	#else
+	occlude_foreground_parallax_layers = FALSE
 	#endif
 
 /area/shuttle/escape/centcom
@@ -909,12 +915,20 @@ ABSTRACT_TYPE(/area/shuttle/merchant_shuttle)
 /area/shuttle/merchant_shuttle/left_station
 	name = "Station Merchant Shuttle Dock Alpha"
 	icon_state = "shuttle2"
+	#ifdef MAP_OVERRIDE_DECARABIA
+	loc_string = "north-west"
+	#else
 	loc_string = "left"
+	#endif
 
 /area/shuttle/merchant_shuttle/right_station
 	name = "Station Merchant Shuttle Dock Beta"
 	icon_state = "shuttle2"
+	#ifdef MAP_OVERRIDE_DECARABIA
+	loc_string = "south"
+	#else
 	loc_string = "right"
+	#endif
 
 /area/shuttle/spacebus
 	name = "Space Bus"
@@ -2430,6 +2444,9 @@ ABSTRACT_TYPE(/area/station/mining)
 	name = "Mining Magnet Control Room"
 	icon_state = "miningp"
 
+/area/station/mining/magnet_platform
+	name = "Mining Magnet Platform"
+
 /area/station/mining/cargo_staff_room
 	name = "Cargo Staff Room"
 
@@ -2504,6 +2521,9 @@ ABSTRACT_TYPE(/area/station/crew_quarters)
 	sound_environment = 4
 	spy_secure_area = TRUE
 	station_map_colour = MAPC_COMMAND
+
+	private
+		name = "Head of Security's Private Quarters"
 
 /area/station/crew_quarters/md
 	name = "Medical Director's Quarters"
@@ -2636,6 +2656,8 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar
 		name = "The Rising Tide"
 
+/area/station/crew_quarters/cafeteria/the_eye_bar
+		name = "The Eye"
 
 /area/station/crew_quarters/kitchen
 	name = "Kitchen"
@@ -2657,6 +2679,10 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 #ifdef UNDERWATER_MAP
 	requires_power = FALSE
 #endif
+
+/area/station/crew_quarters/mime
+	name = "Mime Hovel"
+	icon_state = "mime"
 
 /area/station/crew_quarters/clown/entryway
 	name = "Clown Hole Entrance"
@@ -2818,10 +2844,26 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 	name = "Fuq 3 clothing store"
 	icon_state = "fuq3"
 
+/area/station/crewquarters/clothingstore // Decarabia's clothing store, but also it's generic yippee
+	name = "Nanotrasen Clothing Supplies"
+	icon_state = "clothingstore"
+
 /area/station/crewquarters/cryotron
 	name ="Cryogenic Crew Storage"
 	icon_state = "blue"
 	do_not_irradiate = TRUE
+
+/area/station/crewquarters/escapelounge
+	name ="Escape Lounge"
+	icon_state = "yellow"
+
+/area/station/crewquarters/reccenter
+	name ="Recreation Center"
+	icon_state = "reccenter"
+
+/area/station/crewquarters/laundry
+	name ="Laundry Room"
+	icon_state = "laundry"
 
 ABSTRACT_TYPE(/area/station/com_dish)
 /area/station/com_dish
@@ -3106,7 +3148,7 @@ ABSTRACT_TYPE(/area/station/medical)
 	station_map_colour = MAPC_COMMAND
 
 	private
-		name = "Medical Director's  Private Quarters"
+		name = "Medical Director's Private Quarters"
 
 /area/station/medical/cdc
 	name = "Pathology Research"
@@ -3418,17 +3460,25 @@ TYPEINFO(/area/station/solar/asylum)
 	name = "Research Outpost Solar Array"
 	icon_state = "yellow"
 
+/area/station/solar/zeta/east
+	name = "Research Outpost Solar Array East"
+	icon_state = "yellow"
+
+/area/station/solar/zeta/west
+	name = "Research Outpost Solar Array West"
+	icon_state = "yellow"
+
 ABSTRACT_TYPE(/area/station/quartermaster)
 /area/station/quartermaster
 	name = "Quartermaster's"
 	icon_state = "quart"
 	workplace = 1
 	station_map_colour = MAPC_QUARTERMASTER
+	sound_environment = 10
 
 /area/station/quartermaster/office
 	name = "Quartermaster's Office"
 	icon_state = "quartoffice"
-	sound_environment = 10
 
 /area/station/quartermaster/storage
 	name = "Quartermaster's Storage"
@@ -3438,22 +3488,22 @@ ABSTRACT_TYPE(/area/station/quartermaster)
 /area/station/quartermaster/magnet
 	name = "Magnet Control Room"
 	icon_state = "green"
-	sound_environment = 10
 
 /area/station/quartermaster/refinery
 	name = "Refinery"
 	icon_state = "green"
-	sound_environment = 10
 
 /area/station/quartermaster/cargobay
 	name = "Cargo Bay"
 	icon_state = "quartstorage"
-	sound_environment = 10
 
 /area/station/quartermaster/cargooffice
 	name = "Cargo Bay Office"
 	icon_state = "quartoffice"
-	sound_environment = 10
+
+/area/station/quartermaster/private
+	name = "Quartermaster's Quarters"
+	icon_state = "quartoffice"
 
 ABSTRACT_TYPE(/area/station/janitor)
 /area/station/janitor
@@ -3697,6 +3747,8 @@ ABSTRACT_TYPE(/area/station/hangar)
 		requires_power = 1
 /area/station/hangar/starboard
 		name = "Submarine Bay (Starboard)"
+/area/station/hangar/north
+		name = "North Dock"
 /area/station/hangar/mining
 		name = "Submarine Bay (Mining)"
 		station_map_colour = MAPC_MINING
@@ -3720,6 +3772,10 @@ ABSTRACT_TYPE(/area/station/hangar)
 
 /area/station/hydroponics/lobby
 	name = "Hydroponics Lobby"
+	icon_state = "green"
+
+/area/station/hydroponics/staff
+	name = "Hydroponics Quarters"
 	icon_state = "green"
 
 /area/station/ranch
@@ -3803,6 +3859,14 @@ ABSTRACT_TYPE(/area/station/catwalk)
 /area/station/routing/sortingRoom
 		name = "Mail Sorting Room"
 
+/area/station/summoningchamber
+		name = "Unsettling Storage Room"
+		icon_state = "cursedroom"
+
+/area/station/conveniencestore
+		name = "Convenience Store"
+		icon_state = "yellow"
+
 /// Off-station research outpost. Used for Cog2.
 /area/research_outpost
 	name = "Research Outpost"
@@ -3820,25 +3884,34 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	minimaps_to_render_on = null
 
 /area/research_outpost/hangar
-		name = "Research Outpost Hangar"
-		icon_state = "hangar"
+	name = "Research Outpost Hangar"
+	icon_state = "hangar"
+
+/area/research_outpost/lobby
+	name = "Research Outpost Lobby"
+	icon_state = "blue"
 
 /area/research_outpost/chamber
-		name = "Research Outpost Test Chamber"
-		icon_state = "yellow"
+	name = "Research Outpost Test Chamber"
+	icon_state = "yellow"
 
 /area/research_outpost/maint
-		name = "Research Outpost Maintenance"
-		icon_state = "purple"
-		do_not_irradiate = TRUE
+	name = "Research Outpost Maintenance"
+	icon_state = "purple"
+	do_not_irradiate = TRUE
 
 /area/research_outpost/toxins
-		name = "Research Outpost Toxins"
-		icon_state = "green"
+	name = "Research Outpost Toxins"
+	icon_state = "green"
 
 /area/research_outpost/pathology
-		name = "Research Outpost Pathology"
-		icon_state = "pink"
+	name = "Research Outpost Pathology"
+	icon_state = "pink"
+
+/area/research_outpost/bomb_test
+	name = "Research Outpost Bomb Testing Chamber"
+	minimaps_to_render_on = null
+	icon_state = "red"
 
 // end station areas //
 
