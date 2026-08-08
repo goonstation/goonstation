@@ -21,6 +21,7 @@
 	var/is_nudged = FALSE //! Are the glasses currently nudged upwards?
 	var/flash_state = "flash" //! Icon state to use when nudged and flash compatible
 
+
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/cloth))
 			user.visible_message(SPAN_NOTICE("[user] [pick("polishes", "shines", "cleans", "wipes")] [src] with [W]."))
@@ -196,18 +197,11 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/meson)
 	color_r = 0.89
 	color_g = 1
 	color_b = 0.85
+	vision_modifier = /datum/vision/ghost
 
 	setupProperties()
 		..()
 		setProperty("disorient_resist_eye", 15)
-
-	equipped(mob/user, slot)
-		. = ..()
-		APPLY_ATOM_PROPERTY(user, PROP_MOB_GHOSTVISION, src)
-
-	unequipped(mob/user)
-		. = ..()
-		REMOVE_ATOM_PROPERTY(user, PROP_MOB_GHOSTVISION, src)
 
 /obj/item/clothing/glasses/regular/ecto/goggles
 	name = "ectoplasmoleic imager"
@@ -358,22 +352,8 @@ TYPEINFO(/obj/item/clothing/glasses/thermal)
 	color_r = 1
 	color_g = 0.8 // red tint
 	color_b = 0.8
-	/// For seeing through walls
-	var/upgraded = FALSE
+	vision_modifier = /datum/vision/thermal
 
-	equipped(mob/user, slot)
-		. = ..()
-		if(upgraded)
-			APPLY_ATOM_PROPERTY(user, PROP_MOB_THERMALVISION_MK2, src)
-		else
-			APPLY_ATOM_PROPERTY(user, PROP_MOB_THERMALVISION, src)
-
-	unequipped(mob/user)
-		. = ..()
-		if(upgraded)
-			REMOVE_ATOM_PROPERTY(user, PROP_MOB_THERMALVISION_MK2, src)
-		else
-			REMOVE_ATOM_PROPERTY(user, PROP_MOB_THERMALVISION, src)
 
 	emp_act()
 		if (ishuman(src.loc))
@@ -383,18 +363,13 @@ TYPEINFO(/obj/item/clothing/glasses/thermal)
 				H.take_eye_damage(3, 1)
 				H.change_eye_blurry(5)
 				H.bioHolder.AddEffect("bad_eyesight_temp")
-				if(upgraded)
-					REMOVE_ATOM_PROPERTY(H, PROP_MOB_THERMALVISION_MK2, src)
-				else
-					REMOVE_ATOM_PROPERTY(H, PROP_MOB_THERMALVISION, src)
+				H.remove_vision(src.vision_modifier, src)
+
 
 				SPAWN(10 SECONDS)
 					H.bioHolder.RemoveEffect("bad_eyesight_temp")
 					if(H.glasses == src)
-						if(upgraded)
-							APPLY_ATOM_PROPERTY(H, PROP_MOB_THERMALVISION_MK2, src)
-						else
-							APPLY_ATOM_PROPERTY(H, PROP_MOB_THERMALVISION, src)
+						H.apply_vision(src.vision_modifier, src)
 		return
 
 TYPEINFO(/obj/item/clothing/glasses/thermal/traitor)
@@ -404,7 +379,7 @@ TYPEINFO(/obj/item/clothing/glasses/thermal/traitor)
 	color_r = 1
 	color_g = 0.75 // slightly more red?
 	color_b = 0.75
-	upgraded = TRUE
+	vision_modifier = /datum/vision/thermal/mk2
 
 /obj/item/clothing/glasses/thermal/orange
 	name = "orange-tinted glasses"
@@ -856,14 +831,7 @@ TYPEINFO(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
 	color_g = 1
 	color_b = 0.5
 	wear_layer = MOB_GLASSES_LAYER2
-
-	equipped(mob/user, slot)
-		. = ..()
-		APPLY_ATOM_PROPERTY(user, PROP_MOB_NIGHTVISION, src)
-
-	unequipped(mob/user)
-		. = ..()
-		REMOVE_ATOM_PROPERTY(user, PROP_MOB_NIGHTVISION, src)
+	vision_modifier = /datum/vision/nightvision
 
 	emp_act()
 		if (ishuman(src.loc))

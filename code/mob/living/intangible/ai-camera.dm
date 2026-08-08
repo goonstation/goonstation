@@ -24,7 +24,6 @@ TYPEINFO(/mob/living/intangible/aieye)
 	icon_state = "ai-eye"
 	density = 0
 	layer = 101
-	see_in_dark = SEE_DARK_FULL
 	stat = STAT_ALIVE
 	mob_flags = SEE_THRU_CAMERAS | USR_DIALOG_UPDATES_RANGE
 
@@ -65,8 +64,10 @@ TYPEINFO(/mob/living/intangible/aieye)
 		src.cancel_camera()
 		last_loc = src.loc
 		..()
-		see_invisible = INVIS_AI_EYE
-		sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
+
+		apply_vision(/datum/vision/ai_zrestricted, src.type)
+		apply_vision(/datum/vision/ai_camera, src.type)
+
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_AI_EYE)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
@@ -200,12 +201,6 @@ TYPEINFO(/mob/living/intangible/aieye)
 			..()
 
 	set_eye(atom/new_eye)
-		var/turf/T = new_eye ? get_turf(new_eye) : get_turf(src)
-		if( !(T && isrestrictedz(T.z)) )
-			src.sight |= (SEE_TURFS | SEE_MOBS | SEE_OBJS)
-		else
-			src.sight &= ~(SEE_TURFS | SEE_MOBS | SEE_OBJS)
-
 		if(new_eye && new_eye != src)
 			var/atom/movable/temp = new_eye
 			while(!istype(temp.loc, /turf))
@@ -607,9 +602,3 @@ TYPEINFO(/mob/living/intangible/aieye)
 		RegisterSignal(temp, COMSIG_MOVABLE_SET_LOC, PROC_REF(check_eye_z))
 		UnregisterSignal(outer_eye_atom, COMSIG_MOVABLE_SET_LOC)
 		outer_eye_atom = temp
-
-	var/turf/T = get_turf(temp)
-	if(isrestrictedz(T?.z))
-		src.sight &= ~(SEE_TURFS | SEE_MOBS | SEE_OBJS)
-	else
-		src.sight |= (SEE_TURFS | SEE_MOBS | SEE_OBJS)

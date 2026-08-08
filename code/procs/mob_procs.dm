@@ -223,7 +223,7 @@
 	if (consciousness_check && (src.hasStatus("unconscious") || src.sleeping || src.stat || src.hibernating))
 		return 0
 
-	if(!(HAS_ATOM_PROPERTY(src, PROP_MOB_XRAYVISION) || HAS_ATOM_PROPERTY(src, PROP_MOB_XRAYVISION_WEAK)))
+	if(!(HAS_ATOM_PROPERTY(src, PROP_MOB_XRAYVISION)))
 		for (var/thing in src.get_equipped_items())
 			if (!thing) continue
 			var/obj/item/I = thing

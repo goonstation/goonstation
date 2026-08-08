@@ -40,7 +40,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 
 	New()
 		..()
-		APPLY_ATOM_PROPERTY(src, PROP_MOB_THERMALVISION, src)
+		src.apply_vision(/datum/vision/thermal, src)
 		if (src.uses_eye_light)
 			var/image/eye_light = SafeGetOverlayImage("eye_light", 'icons/mob/critter/robotic/gunbot.dmi', "eye-[base_icon_state]")
 			eye_light.plane = PLANE_SELFILLUM

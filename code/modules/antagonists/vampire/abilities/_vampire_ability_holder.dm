@@ -228,7 +228,7 @@
 			src.last_power = 3
 
 			src.has_thermal = 1
-			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_THERMALVISION_MK2, src)
+			src.owner.apply_vision(/datum/vision/thermal/mk2, src)
 			boutput(src.owner, SPAN_NOTICE("<h3>Your vampiric vision has improved (thermal)!</h3>"))
 
 			src.addAbility(/datum/targetable/vampire/mark_coffin)

@@ -46,7 +46,6 @@
 			bowner.lipids = list()
 			bowner.nuclei = list()
 			bowner.tutorial = null
-			bowner.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 			bowner.starter_buff = 1
 			qdel(src)
 

@@ -57,7 +57,7 @@
 			src.icon_state_dead = "[src.icon_state]-dead"
 
 		src.changeStatus("webwalk", INFINITE_STATUS)
-		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION, src)
+		src.apply_vision(/datum/vision/nightvision, src)
 
 	setup_hands()
 		..()

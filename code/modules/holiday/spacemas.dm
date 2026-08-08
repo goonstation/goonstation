@@ -803,11 +803,7 @@ proc/compare_ornament_score(list/a, list/b)
 	human_compatible = 0
 	uses_human_clothes = 0
 	jerk = 1
-
-	sight_modifier()
-		mob.sight |= SEE_MOBS
-		mob.see_in_dark = SEE_DARK_FULL
-		mob.see_invisible = INVIS_INFRA
+	vision_modifier = /datum/vision/krampus
 
 /mob/living/carbon/human/krampus
 	New()

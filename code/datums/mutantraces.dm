@@ -218,6 +218,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 	var/datum/movement_modifier/movement_modifier
 
+	var/datum/vision/vision_modifier
+
 	var/decomposes = TRUE
 
 	/// List of 0 to 3 strings representing the names for the color channels
@@ -280,6 +282,9 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	proc/on_attach(var/mob/living/carbon/human/M)
 		if (movement_modifier)
 			APPLY_MOVEMENT_MODIFIER(M, movement_modifier, src.type)
+
+		if (vision_modifier)
+			M.apply_vision(vision_modifier, src.type)
 
 		if (!needs_oxy)
 			APPLY_ATOM_PROPERTY(M, PROP_MOB_BREATHLESS, src.type)
@@ -365,6 +370,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 			if (movement_modifier)
 				REMOVE_MOVEMENT_MODIFIER(src.mob, movement_modifier, src.type)
+
+			if (vision_modifier)
+				src.mob.remove_vision(vision_modifier, src.type)
+
 			if (needs_oxy)
 				REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_BREATHLESS, src.type)
 
@@ -734,6 +743,7 @@ TYPEINFO(/datum/mutantrace/flubber)
 	voice_override = "bloop"
 
 	movement_modifier = /datum/movement_modifier/flubber
+	vision_modifier = /datum/vision/flubber
 
 	//override_static = 1
 
@@ -743,9 +753,6 @@ TYPEINFO(/datum/mutantrace/flubber)
 		..()
 		if (src.mob)
 			RegisterSignal(src.mob, COMSIG_MOVABLE_MOVED, PROC_REF(flub))
-
-	sight_modifier()
-		src.mob.see_in_dark = SEE_DARK_FULL
 
 	proc/flub()
 		playsound(src.mob, "sound/misc/boing/[rand(1,6)].ogg", 20, 1 )
@@ -819,11 +826,7 @@ TYPEINFO(/datum/mutantrace/virtual)
 	voice_name = "grey"
 	jerk = TRUE
 	blood_color = "#000000"
-
-	sight_modifier()
-		src.mob.sight |= SEE_MOBS
-		src.mob.see_in_dark = SEE_DARK_FULL
-		src.mob.see_invisible = INVIS_CLOAK
+	vision_modifier = /datum/vision/grey
 
 	emote(act, voluntary)
 		var/message = null
@@ -873,6 +876,7 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 	color_channel_names = list("Episcutus", "Ventral Aberration", "Sagittal Crest")
 	dna_mutagen_banned = FALSE
 	self_click_fluff = "scales"
+	vision_modifier = /datum/vision/lizard
 
 	ghost_icon_state = "ghost-lizard"
 
@@ -895,10 +899,6 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 			H.update_clothing()
 			H.thermoregulation_mult = 0.004
 			H.base_body_temp = T0C + 38
-
-	sight_modifier()
-		src.mob.see_in_dark = SEE_DARK_HUMAN + 1
-		src.mob.see_invisible = INVIS_INFRA
 
 	disposing()
 		if(ishuman(src.mob))
@@ -925,10 +925,12 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 	override_attack = 0
 	needs_oxy = 0
 	movement_modifier = /datum/movement_modifier/zombie
+	vision_modifier = /datum/vision/zombie
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/right/zombie
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/left/zombie
 	persists_on_clone = FALSE
 	var/strain = 0
+
 
 	//this is terrible, but I do anyway.
 	can_infect/bubs
@@ -1014,11 +1016,6 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 
 	proc/add_ability(var/mob/living/carbon/human/H)
 		return
-
-	sight_modifier()
-		src.mob.sight |= SEE_MOBS
-		src.mob.see_in_dark = SEE_DARK_FULL
-		src.mob.see_invisible = INVIS_NONE
 
 	emote(act, voluntary)
 		var/message = null
@@ -1397,6 +1394,7 @@ TYPEINFO_NEW(/datum/mutantrace/werewolf)
 	mutant_organs = list("tail" = /obj/item/organ/tail/wolf)
 	self_click_fluff = "fur"
 	can_walk_on_shards = TRUE
+	vision_modifier = /datum/vision/werewolf
 
 	head_offset = 5
 	hand_offset = 3
@@ -1448,13 +1446,6 @@ TYPEINFO_NEW(/datum/mutantrace/werewolf)
 
 			src.mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
 		. = ..()
-
-	sight_modifier()
-		if (ishuman(src.mob))
-			src.mob.sight |= SEE_MOBS
-			src.mob.see_in_dark = SEE_DARK_FULL
-			src.mob.see_invisible = INVIS_CLOAK
-		return
 
 	// Werewolves (being a melee-focused role) are quite buff.
 	onLife(var/mult = 1)
@@ -1512,6 +1503,7 @@ TYPEINFO(/datum/mutantrace/hunter)
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/hunter/left
 	ignore_missing_limbs = 0
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
+	vision_modifier = /datum/vision/hunter
 
 	// Gave them a minor stamina boost (Convair880).
 	on_attach(var/mob/living/carbon/human/M)
@@ -1525,10 +1517,6 @@ TYPEINFO(/datum/mutantrace/hunter)
 			src.mob.remove_stam_mod_max("hunter")
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STAMINA_REGEN_BONUS, "hunter")
 		return ..()
-
-	sight_modifier()
-		src.mob.see_in_dark = SEE_DARK_FULL
-		return
 
 	say_verb()
 		return "snarls"
@@ -1866,6 +1854,7 @@ TYPEINFO(/datum/mutantrace/roach)
 	dna_mutagen_banned = FALSE
 	self_click_fluff = list("thorax", "exoskeleton", "antenna")
 	blood_id = "hemolymph"
+	vision_modifier = /datum/vision/roach
 
 	ghost_icon_state = "ghost-roach"
 
@@ -1879,10 +1868,6 @@ TYPEINFO(/datum/mutantrace/roach)
 
 	say_verb()
 		return "clicks"
-
-	sight_modifier()
-		src.mob.see_in_dark = SEE_DARK_HUMAN + 1
-		src.mob.see_invisible = INVIS_INFRA
 
 	disposing()
 		if(ishuman(src.mob))
@@ -1910,6 +1895,7 @@ TYPEINFO(/datum/mutantrace/cat)
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
+	vision_modifier = /datum/vision/cat
 
 	on_attach(mob/living/carbon/human/M)
 		. = ..()
@@ -1918,10 +1904,6 @@ TYPEINFO(/datum/mutantrace/cat)
 
 	say_verb()
 		return "meows"
-
-	sight_modifier()
-		src.mob.see_in_dark = SEE_DARK_HUMAN + 1
-		src.mob.see_invisible = INVIS_INFRA
 
 	disposing()
 		if(ishuman(src.mob))
@@ -2302,6 +2284,7 @@ TYPEINFO(/datum/mutantrace/kudzu)
 	needs_oxy = 0 //get their nutrients from the kudzu
 	understood_languages = list(LANGUAGE_ENGLISH)
 	movement_modifier = /datum/movement_modifier/kudzu
+	vision_modifier = /datum/vision/xray/kudzu
 	genetics_removable = FALSE
 	mutant_folder = 'icons/mob/human.dmi' // vOv
 	mutant_organs = list(\
@@ -2360,8 +2343,6 @@ TYPEINFO(/datum/mutantrace/kudzu)
 				H.setStatus("maxhealth-", null, -50)
 				H.add_stam_mod_max("kudzu", -100)
 				APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "kudzu", -5)
-				APPLY_ATOM_PROPERTY(H, PROP_MOB_NIGHTVISION_WEAK, "kudzu")
-				APPLY_ATOM_PROPERTY(H, PROP_MOB_XRAYVISION, "kudzu")
 				H.ensure_speech_tree().AddSpeechOutput(SPEECH_OUTPUT_KUDZUCHAT)
 				H.ensure_listen_tree().AddListenInput(LISTEN_INPUT_KUDZUCHAT)
 
@@ -2374,21 +2355,12 @@ TYPEINFO(/datum/mutantrace/kudzu)
 			var/mob/living/carbon/human/H = src.mob
 			H.remove_stam_mod_max("kudzu")
 			REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "kudzu")
-			REMOVE_ATOM_PROPERTY(H, PROP_MOB_NIGHTVISION_WEAK, "kudzu")
-			REMOVE_ATOM_PROPERTY(H, PROP_MOB_XRAYVISION, "kudzu")
 
 			H.ensure_speech_tree().RemoveSpeechOutput(SPEECH_OUTPUT_KUDZUCHAT)
 			H.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_KUDZUCHAT)
 
 		return ..()
-/* Commented out as this bypasses restricted Z checks. We will just lazily give them xray genes instead
-	// vision modifier (see_mobs, etc i guess)
-	sight_modifier()
-		src.mob.sight |= SEE_TURFS
-		src.mob.sight |= SEE_MOBS
-		src.mob.sight |= SEE_OBJS
-		src.mob.see_in_dark = SEE_DARK_FULL
-*/
+
 	sight_modifier()
 		if (src.mob.client)
 			src.mob.render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
