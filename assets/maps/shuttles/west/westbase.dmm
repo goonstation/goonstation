@@ -393,10 +393,8 @@
 	},
 /area/shuttle/escape/centcom)
 "pj" = (
-/obj/machinery/door/airlock/pyro/security{
-	dir = 4;
-	name = "Secure Transport";
-	hardened = 1
+/obj/machinery/door/airlock/pyro/glass/security{
+	dir = 4
 	},
 /obj/mapping_helper/access/security,
 /turf/unsimulated/floor/shuttle{
