@@ -1,0 +1,62 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/item/casing/shotgun/orange,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"d" = (
+/obj/item/casing/small,
+/obj/item/casing/small,
+/obj/decal/cleanable/blood{
+	can_track = 0;
+	dry = 1
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "floor6";
+	pixel_y = 30;
+	can_track = 0;
+	dry = 1
+	},
+/obj/decoration/bullethole,
+/obj/fakeobject/skeleton{
+	desc = "The remains of a human. There are red scraps of cloth clinging to the bones.";
+	name = "infiltrator skeleton"
+	},
+/obj/item/gun/kinetic/pistol/empty,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"j" = (
+/obj/decal/cleanable/sec_tape,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"z" = (
+/obj/sec_tape{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"L" = (
+/obj/table/syndicate/auto,
+/obj/item/device/radio,
+/obj/decal/cleanable/cobweb2,
+/obj/item/device/audio_log/infiltrator_log,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"O" = (
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+d
+z
+O
+"}
+(2,1,1) = {"
+j
+j
+a
+"}
+(3,1,1) = {"
+L
+O
+O
+"}
