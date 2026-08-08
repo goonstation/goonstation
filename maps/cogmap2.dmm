@@ -46649,9 +46649,6 @@
 /obj/item/reagent_containers/glass/bottle/epinephrine,
 /obj/item/reagent_containers/glass/beaker/large/burn,
 /obj/item/reagent_containers/dropper,
-/obj/item/remote/porter/port_a_nanomed{
-	pixel_x = 16
-	},
 /obj/disposalpipe/segment/mail/bent/north,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
@@ -47142,7 +47139,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
 "dcJ" = (
-/obj/machinery/vending/port_a_nanomed,
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/redwhite{
 	dir = 9

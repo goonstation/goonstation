@@ -10714,10 +10714,6 @@
 	pixel_x = -2;
 	pixel_y = -2
 	},
-/obj/item/remote/porter/port_a_nanomed{
-	pixel_x = 12;
-	pixel_y = 6
-	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "htl" = (
@@ -14942,10 +14938,6 @@
 	},
 /turf/space/fluid,
 /area/space)
-"kia" = (
-/obj/machinery/vending/port_a_nanomed,
-/turf/simulated/floor/bluewhite,
-/area/station/medical/medbay)
 "kiv" = (
 /obj/machinery/door/airlock/pyro/alt,
 /obj/mapping_helper/firedoor_spawn,
@@ -79326,7 +79318,7 @@ xBl
 vvl
 tbR
 dYU
-kia
+jmt
 jDB
 gYT
 jio

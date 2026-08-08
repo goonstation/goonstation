@@ -18828,10 +18828,6 @@
 	pixel_x = 9;
 	pixel_y = 4
 	},
-/obj/item/remote/porter/port_a_nanomed{
-	pixel_x = -1;
-	pixel_y = 2
-	},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/omni,
 /area/station/medical/head)
 "ixl" = (
@@ -39816,7 +39812,6 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/machinery/vending/port_a_nanomed,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},

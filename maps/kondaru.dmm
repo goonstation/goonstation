@@ -23954,7 +23954,6 @@
 	},
 /area/station/medical/medbay)
 "cgM" = (
-/obj/machinery/vending/port_a_nanomed,
 /obj/machinery/camera/directional/south{
 	pixel_x = 10
 	},
@@ -28809,7 +28808,6 @@
 /obj/machinery/firealarm/directional/north,
 /obj/linen_bin/bedsheet,
 /obj/item/device/analyzer/healthanalyzer,
-/obj/item/remote/porter/port_a_nanomed,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/lobby)
 "eku" = (
@@ -40132,7 +40130,6 @@
 /obj/item/device/analyzer/healthanalyzer/upgraded,
 /obj/item/clothing/glasses/visor,
 /obj/item/clothing/glasses/healthgoggles,
-/obj/item/remote/porter/port_a_nanomed,
 /obj/item/reagent_containers/hypospray,
 /obj/machinery/door_control/bolter/new_walls/north{
 	dir = 2

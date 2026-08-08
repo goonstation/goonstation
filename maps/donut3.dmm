@@ -7575,10 +7575,6 @@
 	pixel_x = 9;
 	pixel_y = 4
 	},
-/obj/item/remote/porter/port_a_nanomed{
-	pixel_x = -1;
-	pixel_y = 2
-	},
 /obj/machinery/camera/directional/east{
 	pixel_y = -10
 	},
@@ -10168,7 +10164,6 @@
 	},
 /area/station/crew_quarters/kitchen)
 "daZ" = (
-/obj/machinery/vending/port_a_nanomed,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -25632,7 +25627,6 @@
 /turf/space,
 /area/space)
 "hZG" = (
-/obj/machinery/vending/port_a_nanomed,
 /obj/machinery/light/incandescent/cool{
 	dir = 1
 	},

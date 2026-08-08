@@ -38210,7 +38210,6 @@
 /turf/simulated/floor/plating,
 /area/station/mining/magnet)
 "gDm" = (
-/obj/machinery/vending/port_a_nanomed,
 /obj/machinery/light,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
@@ -53624,7 +53623,6 @@
 /obj/item/clothing/glasses/visor,
 /obj/item/device/radio/headset/deaf,
 /obj/item/robodefibrillator,
-/obj/item/remote/porter/port_a_nanomed,
 /obj/item/device/analyzer/healthanalyzer/upgraded,
 /obj/item/clothing/glasses/healthgoggles,
 /obj/machinery/power/apc/autoname_north,

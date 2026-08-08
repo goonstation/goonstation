@@ -4635,7 +4635,6 @@
 	},
 /area/station/medical/medbay)
 "aBB" = (
-/obj/machinery/vending/port_a_nanomed,
 /turf/simulated/floor/bluewhite{
 	dir = 9
 	},
@@ -21190,10 +21189,6 @@
 /obj/table/wood/auto,
 /obj/item/stamp/md{
 	pixel_x = 5
-	},
-/obj/item/remote/porter/port_a_nanomed{
-	pixel_x = -5;
-	pixel_y = 3
 	},
 /obj/item/remote/porter/port_a_medbay,
 /obj/machinery/camera/directional/south{

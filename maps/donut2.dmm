@@ -21220,7 +21220,6 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "gjw" = (
-/obj/machinery/vending/port_a_nanomed,
 /obj/machinery/light/incandescent,
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -35605,7 +35604,6 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 4
 	},
-/obj/item/remote/porter/port_a_nanomed,
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/blue/checker,

@@ -24,9 +24,9 @@
 		CONTENTS_GT(/obj/item/wrench, 0),
 		// Port-A-Devices & Remotes
 		CONTENTS_EQ(/obj/machinery/sleeper/port_a_medbay, 1),
-		CONTENTS_GT(/obj/machinery/vending/port_a_nanomed, 0),
+		// CONTENTS_GT(/obj/machinery/vending/port_a_nanomed, 0),
 		CONTENTS_EQ(/obj/item/remote/porter/port_a_medbay, 1),
-		CONTENTS_GT(/obj/item/remote/porter/port_a_nanomed, 0),
+		// CONTENTS_GT(/obj/item/remote/porter/port_a_nanomed, 0),
 		// Supplies
 		CONTENTS_GT(/obj/machinery/manufacturer/medical, 0),
 		CONTENTS_EQ(/obj/storage/secure/closet/medical/chemical, 1),
@@ -79,9 +79,9 @@
 		CONTENTS_GT(/obj/item/wrench, 0),
 		// Port-A-Devices & Remotes
 		CONTENTS_EQ(/obj/machinery/sleeper/port_a_medbay, 1),
-		CONTENTS_GT(/obj/machinery/vending/port_a_nanomed, 0),
+		// CONTENTS_GT(/obj/machinery/vending/port_a_nanomed, 0),
 		CONTENTS_EQ(/obj/item/remote/porter/port_a_medbay, 1),
-		CONTENTS_GT(/obj/item/remote/porter/port_a_nanomed, 0),
+		// CONTENTS_GT(/obj/item/remote/porter/port_a_nanomed, 0),
 		// Supplies
 		CONTENTS_GT(/obj/machinery/manufacturer/medical, 0),
 		CONTENTS_EQ(/obj/storage/secure/closet/medical/chemical, 1),

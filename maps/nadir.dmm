@@ -23291,7 +23291,6 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/machinery/vending/port_a_nanomed,
 /turf/simulated/floor/blueblack,
 /area/station/medical/medbay)
 "kes" = (
@@ -35596,10 +35595,6 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/light_switch/directional/east,
-/obj/item/remote/porter/port_a_nanomed{
-	pixel_x = -3;
-	pixel_y = 3
-	},
 /obj/item/reagent_containers/hypospray{
 	pixel_x = 3;
 	pixel_y = 6
@@ -46854,7 +46849,6 @@
 /obj/linen_bin/bedsheet{
 	pixel_y = 7
 	},
-/obj/item/remote/porter/port_a_nanomed,
 /obj/disposalpipe/segment/vertical,
 /obj/machinery/light{
 	dir = 8;
