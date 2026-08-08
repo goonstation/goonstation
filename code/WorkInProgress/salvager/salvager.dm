@@ -518,7 +518,6 @@
 			if(PN)
 				if(!ON_COOLDOWN(src,"noise",rand(1 SECOND, 5 SECONDS)))
 					playsound(src,'sound/machines/engine_highpower.ogg', on_station ? 70 : 50, 1, 3, -2)
-
 		drain_rate = previous_drain_rate
 
 	attackby(obj/item/I, mob/user)
