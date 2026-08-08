@@ -35,6 +35,9 @@
 	STOP_TRACKING
 	. = ..()
 
+/datum/minimap/area_map/proc/refresh_render(datum/callback/on_complete = null)
+	on_complete?.Invoke()
+
 /datum/minimap/area_map/initialise_minimap_render()
 	src.map_icons_by_z_level = global.minimap_renderer.generate_minimap_icons(src.minimap_type)
 	src.dynamic_areas_overlays_by_z_level = global.minimap_renderer.get_minimap_dynamic_area_overlays(src.minimap_type)
@@ -62,6 +65,85 @@
 	for (var/atom/target as anything in src.minimap_markers)
 		var/datum/minimap_marker/minimap/minimap_marker = src.minimap_markers[target]
 		src.set_marker_position(minimap_marker, minimap_marker.target.x, minimap_marker.target.y, minimap_marker.target.z)
+
+/datum/minimap/area_map/admin
+	// raster from 0.95 makes some of the maps look less nice at default zoom
+	min_zoom = 1
+
+	initialise_minimap_render()
+		src.z_level ||= Z_LEVEL_STATION
+		if (!global.minimap_renderer)
+			return
+
+		src.map = new()
+		src.map.vis_flags |= VIS_INHERIT_ID
+		src.map.mouse_opacity = 0
+
+		src.minimap_render = new()
+		src.minimap_render.appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
+		src.minimap_render.mouse_opacity = 0
+
+		src.minimap_render.vis_contents += src.map
+		src.minimap_holder.vis_contents += src.minimap_render
+		src.refresh_render()
+
+	update_z_level(z_level)
+		if (!global.minimap_renderer?.valid_area_map_z_level(z_level))
+			return
+
+		src.z_level = z_level
+		src.centre_focus_x = null
+		src.centre_focus_y = null
+		src.centre_scale = null
+		src.find_focal_point()
+
+		for (var/atom/target as anything in src.minimap_markers)
+			var/datum/minimap_marker/minimap/minimap_marker = src.minimap_markers[target]
+			src.set_marker_position(minimap_marker, minimap_marker.target.x, minimap_marker.target.y, minimap_marker.target.z)
+
+		src.refresh_render()
+
+	refresh_render(datum/callback/on_complete = null)
+		var/render_z_level = src.z_level
+		SPAWN(0)
+			if (QDELETED(src) || !src.map || src.z_level != render_z_level || !global.minimap_renderer)
+				on_complete?.Invoke()
+				return
+			src.map.icon = global.minimap_renderer.get_area_map_icon(render_z_level)
+			on_complete?.Invoke()
+
+	find_focal_point()
+		if (!src.x_max || !src.x_min || !src.y_max || !src.y_min || !src.z_level)
+			return
+
+		var/list/focal_bounds = global.minimap_renderer?.get_area_map_focal_bounds(src.z_level)
+		if (!focal_bounds)
+			return
+
+		var/max_x = focal_bounds["max_x"]
+		var/min_x = focal_bounds["min_x"]
+		var/max_y = focal_bounds["max_y"]
+		var/min_y = focal_bounds["min_y"]
+
+		src.centre_focus_x = ((max_x + min_x) - 1) / 2
+		src.centre_focus_y = ((max_y + min_y) - 1) / 2
+		src.centre_scale = min(world.maxx / ((max_x - min_x) + src.border_width), world.maxy / ((max_y - min_y) + src.border_width))
+		src.centre_scale = clamp(src.centre_scale, src.min_zoom, src.max_zoom)
+
+		src.centre_on_point(src.centre_scale, src.centre_focus_x, src.centre_focus_y)
+
+	/// The embedded map control has a fixed ten-tile viewport. Centre the map in that
+	/// viewport rather than in the 300px raster itself, which leaves its centre 10px left/down.
+	centre_on_point(zoom, focus_x, focus_y)
+		. = ..()
+		if (!src.minimap_render)
+			return
+
+		var/viewport_center = world.icon_size * 5
+		var/raster_center = (max(src.x_max, src.y_max) * src.map_scale) / 2
+		var/viewport_offset = viewport_center - raster_center
+		src.minimap_render.pixel_x += viewport_offset
+		src.minimap_render.pixel_y += viewport_offset
 
 /// Checks whether a turf is rendered on this minimap type.
 /datum/minimap/area_map/proc/valid_turf(turf/T)

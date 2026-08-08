@@ -150,8 +150,10 @@ ABSTRACT_TYPE(/datum/minimap)
 		if (map_marker.visible)
 			map_marker.marker.alpha = map_marker.alpha_value
 		map_marker.on_minimap_z_level = TRUE
-		map_marker.marker.pixel_x = (x * src.zoom_coefficient * src.map_scale) - 16
-		map_marker.marker.pixel_y = (y * src.zoom_coefficient * src.map_scale) - 16
+		var/screen_scale = src.zoom_coefficient * src.map_scale
+		// Turf pixels are drawn from their lower-left edge; place the marker at the turf centre.
+		map_marker.marker.pixel_x = ((x - 0.5) * screen_scale) - 16
+		map_marker.marker.pixel_y = ((y - 0.5) * screen_scale) - 16
 
 /// Removes a minimap marker from this minimap.
 /datum/minimap/proc/remove_minimap_marker(atom/target)
