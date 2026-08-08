@@ -513,7 +513,7 @@
 			src.light.set_color(1, 1, 1)
 		. = ..()
 		if(attached)
-			src.tooltip_flags |= REBUILD_ALWAYS
+			ADD_FLAG(src.tooltip_flags, REBUILD_ALWAYS)
 			var/datum/powernet/PN = attached.get_powernet()
 			if(PN)
 				if(!ON_COOLDOWN(src,"noise",rand(1 SECOND, 5 SECONDS)))
@@ -523,7 +523,7 @@
 	attackby(obj/item/I, mob/user)
 		. = ..()
 		if (src.mode != POWERSINK::OPERATING)
-			src.tooltip_flags &= ~REBUILD_ALWAYS
+			REMOVE_FLAG(src.tooltip_flags, REBUILD_ALWAYS)
 
 
 /obj/item/deployer/barricade/barbed
