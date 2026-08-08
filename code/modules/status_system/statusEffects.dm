@@ -4070,3 +4070,22 @@
 			if (!(emitter in src.current_emitters))
 				emitter.register_user(src.owner)
 				src.current_emitters += emitter
+
+
+/datum/statusEffect/grasped // indicator that a wiznerd has targeted you with telekinetic staff
+
+	id = "telekinetic_grasp"
+	name = "Telekinetic Grasp"
+	desc = "You are being telekinetically grasped by a wizard!"
+	icon_state = "empulsar"
+	maxDuration = 5 SECONDS
+	effect_quality = STATUS_QUALITY_NEUTRAL
+
+	onAdd(optional=null)
+		owner.add_filter("protection", 1, outline_filter(color="#00f7d6c2"))
+		..()
+
+	onRemove()
+		owner.remove_filter("protection")
+		..()
+

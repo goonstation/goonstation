@@ -180,3 +180,87 @@
 				staff.recharge_thunder()
 
 		return 0
+
+/datum/targetable/spell/summon_telekinetic_staff
+	name = "Summon and Recharge telekinetic staff"
+	desc = "Returns the staff to your active hand and restores its charges."
+	icon_state = "staff_tele"
+	targeted = 0
+	cooldown = 1 MINUTE
+	requires_robes = 1
+	maptext_colors = list("#2bc1eb", "#39c6c4", "#1597ae", "#a2f5f5", "#ebf0f2")
+
+	cast(mob/target)
+		var/mob/living/M = holder?.owner
+		if (!ismob(M))
+			return 1
+		if (!can_act(M))
+			boutput(M, SPAN_ALERT("Not when you're incapacitated or restrained."))
+			return 1
+
+		if(!istype(get_area(M), /area/sim/gunsim)) // Avoid dead chat spam
+			M.say("THRO, O'HERE", flags = SAYFLAG_IGNORE_STAMINA, message_params = list("maptext_css_values" = src.maptext_style, "maptext_animation_colours" = src.maptext_colors))
+		..()
+
+		var/list/staves = list()
+		var/we_hold_it = FALSE
+		for_by_tcl(S, /obj/item/staff/telekinesis)
+			if (M.mind?.key == S.wizard_key)
+				if (S == M.find_in_hand(S))
+					we_hold_it = TRUE
+					continue
+				if (!(S in staves))
+					staves["[S.name] #[length(staves) + 1] [ismob(S.loc) ? "carried by [S.loc.name]" : "at [get_area(S)]"]"] += S
+
+		switch (length(staves))
+			if (0)
+				if (we_hold_it)
+					for (var/obj/item/staff/telekinesis/T in M.contents)
+						T.recharge_throws()
+					boutput(M, SPAN_ALERT("You charge your staff in your hand."))
+					return 0
+				else
+					boutput(M, SPAN_ALERT("You summon a new staff to your hands."))
+					var/obj/item/staff/telekinesis/C = new /obj/item/staff/telekinesis(get_turf(M))
+					if(!isvirtual(M))
+						C.wizard_key = M.mind?.key
+					M.put_in_hand_or_drop(C)
+					return 0
+
+			if (1)
+				var/obj/item/staff/telekinesis/staff
+				for (var/C in staves)
+					staff = staves[C]
+					break
+
+				if (!staff || !istype(staff))
+					boutput(M, SPAN_ALERT("You were unable to summon your staff."))
+					return 0
+
+				staff.send_staff_to_target_mob(M)
+				staff.recharge_throws()
+
+
+			if (2 to INFINITY)
+				var/t1 = tgui_input_list(M, "Please select a staff to summon", "Target Selection", staves)
+				if (!t1)
+					return 1
+
+				var/obj/item/staff/telekinesis/staff = staves[t1]
+
+				if (!M)
+					return 0
+				if (!istype(staff))
+					boutput(M, SPAN_ALERT("You were unable to summon your staff."))
+					return 0
+				if (!can_act(M))
+					boutput(M, SPAN_ALERT("Not when you're incapacitated or restrained."))
+					return 0
+				if (M.mind.key != staff.wizard_key)
+					boutput(M, SPAN_ALERT("You were unable to summon your staff."))
+					return 0
+
+				staff.send_staff_to_target_mob(M)
+				staff.recharge_throws()
+
+		return 0
