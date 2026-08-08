@@ -521,7 +521,6 @@
 
 		drain_rate = previous_drain_rate
 
-
 	attackby(obj/item/I, mob/user)
 		. = ..()
 		if (src.mode != POWERSINK::OPERATING)
