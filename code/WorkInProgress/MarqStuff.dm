@@ -450,6 +450,7 @@
 				var/obj/item/implant/projectile/body_visible/arrow/A = new
 				A.material = fusedmaterial
 				A.setMaterial(fusedmaterial, appearance = 0, setname = 0)
+				src.forensic_holder.copy_to(A.forensic_holder)
 				A.arrow = src
 				A.name = name
 				set_loc(A)

@@ -188,7 +188,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 						var/number_of_casings = max(1, src.current_projectile.shot_number)
 						//DEBUG_MESSAGE("Ejected [number_of_casings] casings from [src].")
 						for (var/i in 1 to number_of_casings)
-							new src.current_projectile.casing(T, src)
+							var/atom/casing = new src.current_projectile.casing(T, src)
+							var/datum/forensic_data/basic/gun_profile_data = new(src.forensic_profile, gun_profile_display)
+							casing.add_evidence(gun_profile_data, FORENSIC_GROUP_NOTES)
 			else
 				if (src.casings_to_eject < 0)
 					src.casings_to_eject = 0
@@ -204,7 +206,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 						var/number_of_casings = max(1, src.current_projectile.shot_number)
 						//DEBUG_MESSAGE("Ejected [number_of_casings] casings from [src].")
 						for (var/i in 1 to number_of_casings)
-							new src.current_projectile.casing(T, src)
+							var/atom/casing = new src.current_projectile.casing(T, src)
+							var/datum/forensic_data/basic/gun_profile_data = new(src.forensic_profile, gun_profile_display)
+							casing.add_evidence(gun_profile_data, FORENSIC_GROUP_NOTES)
 			else
 				if (src.casings_to_eject < 0)
 					src.casings_to_eject = 0
@@ -269,7 +273,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			if(T)
 				//DEBUG_MESSAGE("Ejected [src.casings_to_eject] [src.current_projectile.casing] from [src].")
 				while (src.casings_to_eject > 0)
-					new src.current_projectile.casing(T, src)
+					var/atom/casing = new src.current_projectile.casing(T, src)
+					var/datum/forensic_data/basic/gun_profile_data = new(src.forensic_profile, gun_profile_display)
+					casing.add_evidence(gun_profile_data, FORENSIC_GROUP_NOTES)
 					src.casings_to_eject--
 		return
 
@@ -483,7 +489,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	src.pixel_x += rand(-12,12)
 	src.set_dir(pick(alldirs))
 	if(firearm)
-		src.forensic_ID = firearm.forensic_ID
 		//Only include the default name of the gun, some special names set randomly in new are confusing and labels shouldnt be readable
 		src.fired_by = initial(firearm.name)
 
