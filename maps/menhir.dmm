@@ -14288,6 +14288,10 @@
 /obj/machinery/door/airlock/pyro/command,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/heads,
+/obj/disposalpipe/segment/vertical,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/minitiles/black,
 /area/station/bridge)
 "hAY" = (
