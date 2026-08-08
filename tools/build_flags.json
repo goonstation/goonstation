@@ -1,0 +1,534 @@
+{
+	"categories": [
+		"Go Fast",
+		"Convenience / Testing",
+		"Stop Distracting Me",
+		"Profiling",
+		"Debugging Toggles",
+		"Map Overrides",
+		"Unit Test Framework",
+		"Holidays & Seasons"
+	],
+	"flags": [
+		{
+			"id": "gotta_go_fast_zlevels",
+			"define": "GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1",
+			"label": "Only load Devtest map",
+			"category": "Go Fast"
+		},
+		{
+			"id": "im_in_a_hurry",
+			"define": "IM_REALLY_IN_A_FUCKING_HURRY_HERE 1",
+			"label": "I'm really in a hurry",
+			"category": "Go Fast"
+		},
+		{
+			"id": "skip_fea_setup",
+			"define": "SKIP_FEA_SETUP",
+			"label": "Skip atmos setup",
+			"category": "Go Fast"
+		},
+		{
+			"id": "skip_z5_setup",
+			"define": "SKIP_Z5_SETUP",
+			"label": "Skip mining level setup",
+			"category": "Go Fast"
+		},
+		{
+			"id": "skip_planets_setup",
+			"define": "SKIP_PLANETS_SETUP",
+			"label": "Skip planet setup",
+			"category": "Go Fast"
+		},
+		{
+			"id": "skip_camera_coverage",
+			"define": "SKIP_CAMERA_COVERAGE",
+			"label": "Skip camera coverage",
+			"category": "Go Fast"
+		},
+		{
+			"id": "skip_changelogs",
+			"define": "IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME",
+			"label": "Skip changelogs",
+			"category": "Go Fast"
+		},
+		{
+			"id": "auto_ready",
+			"define": "I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO",
+			"label": "Auto-ready up",
+			"category": "Go Fast"
+		},
+		{
+			"id": "disable_devfile",
+			"define": "DISABLE_DEVFILE",
+			"label": "Disable _std/__build.local.dm",
+			"category": "Convenience / Testing"
+		},
+		{
+			"id": "captain_ids",
+			"define": "DEBUG_EVERYONE_GETS_CAPTAIN_ID",
+			"label": "Everyone gets captain ID",
+			"category": "Convenience / Testing"
+		},
+		{
+			"id": "all_access",
+			"define": "I_MEAN_ALL_ACCESS",
+			"label": "Captain IDs get all access",
+			"category": "Convenience / Testing"
+		},
+		{
+			"id": "no_cooldowns",
+			"define": "NO_COOLDOWNS",
+			"label": "No targetable cooldowns",
+			"category": "Convenience / Testing"
+		},
+		{
+			"id": "bonus_points",
+			"define": "BONUS_POINTS",
+			"label": "Bonus points",
+			"category": "Convenience / Testing"
+		},
+		{
+			"id": "medals",
+			"define": "SHUT_UP_AND_GIVE_ME_MEDAL_STUFF",
+			"label": "Force medal grants",
+			"category": "Convenience / Testing"
+		},
+		{
+			"id": "status_effects",
+			"define": "SHOW_ME_STATUSES",
+			"label": "Show status effects",
+			"category": "Convenience / Testing"
+		},
+		{
+			"id": "alt_accounts",
+			"define": "ME_AND_MY_40_ALT_ACCOUNTS",
+			"label": "Ignore player minimums",
+			"category": "Convenience / Testing"
+		},
+		{
+			"id": "wanna_be_job",
+			"define": "I_WANNA_BE_THE_JOB",
+			"label": "Spawn as a specific job",
+			"category": "Convenience / Testing",
+			"type": "text",
+			"valueFormat": "quoted",
+			"default": "IMCODER"
+		},
+		{
+			"id": "wanna_do_crime",
+			"define": "I_WANNA_DO_CRIME",
+			"label": "Spawn as an antagonist",
+			"category": "Convenience / Testing",
+			"type": "text",
+			"valueFormat": "raw",
+			"default": "ROLE_TRAITOR"
+		},
+		{
+			"id": "no_admin_speech",
+			"define": "NO_ADMIN_SPEECH_MODULES",
+			"label": "No admin speech modules",
+			"category": "Convenience / Testing"
+		},
+		{
+			"id": "no_pregame_html",
+			"define": "NO_PREGAME_HTML",
+			"label": "No pregame HTML lobby",
+			"category": "Convenience / Testing"
+		},
+		{
+			"id": "gene_cheat",
+			"define": "I_HATE_WAITING_FOR_GENES",
+			"label": "Gene research cheat",
+			"category": "Convenience / Testing"
+		},
+		{
+			"id": "z_log",
+			"define": "Z_LOG_ENABLE 1",
+			"label": "Enable Z log",
+			"category": "Convenience / Testing"
+		},
+		{
+			"id": "stop_distracting_me",
+			"define": "STOP_DISTRACTING_ME",
+			"label": "Stop distracting me",
+			"category": "Stop Distracting Me"
+		},
+		{
+			"id": "no_secbots",
+			"define": "I_AM_ABOVE_THE_LAW",
+			"label": "No secbots/guardbuddies",
+			"category": "Stop Distracting Me"
+		},
+		{
+			"id": "no_bots",
+			"define": "ALL_ROBOT_AND_COMPUTERS_MUST_SHUT_THE_HELL_UP",
+			"label": "No bots",
+			"category": "Stop Distracting Me"
+		},
+		{
+			"id": "no_monkeys",
+			"define": "BAD_MONKEY_NO_BANANA",
+			"label": "No landmark monkeys",
+			"category": "Stop Distracting Me"
+		},
+		{
+			"id": "no_clone_prebake",
+			"define": "CLONING_IS_A_SIN",
+			"label": "No clone prebake",
+			"category": "Stop Distracting Me"
+		},
+		{
+			"id": "instant_clone",
+			"define": "CLONING_IS_INSTANT",
+			"label": "Instant clones",
+			"category": "Stop Distracting Me"
+		},
+		{
+			"id": "low_security",
+			"define": "LOW_SECURITY",
+			"label": "Low security",
+			"category": "Stop Distracting Me"
+		},
+		{
+			"id": "no_critters",
+			"define": "NO_CRITTERS",
+			"label": "No critters",
+			"category": "Stop Distracting Me"
+		},
+		{
+			"id": "no_random_rooms",
+			"define": "NO_RANDOM_ROOMS",
+			"label": "No random rooms",
+			"category": "Stop Distracting Me"
+		},
+		{
+			"id": "no_random_events",
+			"define": "NO_RANDOM_EVENTS",
+			"label": "No random events",
+			"category": "Stop Distracting Me"
+		},
+		{
+			"id": "no_shuttle_calls",
+			"define": "NO_SHUTTLE_CALLS",
+			"label": "No shuttle calls",
+			"category": "Stop Distracting Me"
+		},
+		{
+			"id": "hackerman",
+			"define": "I_AM_HACKERMAN",
+			"label": "Hackerman varedit",
+			"category": "Stop Distracting Me"
+		},
+		{
+			"id": "check_more_runtimes",
+			"define": "CHECK_MORE_RUNTIMES",
+			"label": "Check more runtimes",
+			"category": "Stop Distracting Me"
+		},
+		{
+			"id": "quick_mob_deletion",
+			"define": "QUICK_MOB_DELETION",
+			"label": "Quick mob deletion",
+			"category": "Stop Distracting Me"
+		},
+		{
+			"id": "no_wages",
+			"define": "SHUT_UP_ABOUT_MY_PAY",
+			"label": "No wage PDA messages",
+			"category": "Stop Distracting Me"
+		},
+		{
+			"id": "no_mail",
+			"define": "FUCK_OFF_WITH_THE_MAIL",
+			"label": "No crew mail",
+			"category": "Stop Distracting Me"
+		},
+		{
+			"id": "no_ghostdrone_factories",
+			"define": "GHOSTDRONES_ON_STRIKE",
+			"label": "No ghostdrone factories",
+			"category": "Stop Distracting Me"
+		},
+		{
+			"id": "no_broken_lights",
+			"define": "STOP_BREAKING_THE_FUCKING_LIGHTS_I_WANT_TO_SEE_SHIT",
+			"label": "Unbreakable lights",
+			"category": "Stop Distracting Me"
+		},
+		{
+			"id": "no_antag_popups",
+			"define": "NO_ANTAG_POPUPS_I_DONT_CARE",
+			"label": "No antag popups",
+			"category": "Stop Distracting Me"
+		},
+		{
+			"id": "tracy_hook",
+			"define": "TRACY_PROFILER_HOOK",
+			"label": "Tracy profiler hook",
+			"category": "Profiling"
+		},
+		{
+			"id": "profile_full_round",
+			"define": "SERVER_SIDE_PROFILING_FULL_ROUND 1",
+			"label": "Profile full round",
+			"category": "Profiling",
+			"conflictsWith": [
+				"profile_pregame",
+				"profile_ingame_only"
+			]
+		},
+		{
+			"id": "profile_pregame",
+			"define": "SERVER_SIDE_PROFILING_PREGAME 1",
+			"label": "Profile pregame",
+			"category": "Profiling",
+			"conflictsWith": [
+				"profile_full_round"
+			]
+		},
+		{
+			"id": "profile_ingame_only",
+			"define": "SERVER_SIDE_PROFILING_INGAME_ONLY 1",
+			"label": "Profile in-game only",
+			"category": "Profiling",
+			"conflictsWith": [
+				"profile_full_round"
+			]
+		},
+		{
+			"id": "delete_queue_debug",
+			"define": "DELETE_QUEUE_DEBUG",
+			"label": "Delete queue debug",
+			"category": "Debugging Toggles"
+		},
+		{
+			"id": "update_queue_debug",
+			"define": "UPDATE_QUEUE_DEBUG",
+			"label": "Update queue debug",
+			"category": "Debugging Toggles"
+		},
+		{
+			"id": "image_del_debug",
+			"define": "IMAGE_DEL_DEBUG",
+			"label": "Image deletion debug",
+			"category": "Debugging Toggles"
+		},
+		{
+			"id": "machine_processing_debug",
+			"define": "MACHINE_PROCESSING_DEBUG",
+			"label": "Machine processing debug",
+			"category": "Debugging Toggles"
+		},
+		{
+			"id": "queue_stat_debug",
+			"define": "QUEUE_STAT_DEBUG",
+			"label": "Queue worker statistics",
+			"category": "Debugging Toggles"
+		},
+		{
+			"id": "test_auth",
+			"define": "TEST_AUTH",
+			"label": "Local test auth",
+			"category": "Debugging Toggles"
+		},
+		{
+			"id": "dont_admin_me",
+			"define": "DONT_ADMIN_MEE",
+			"label": "Don't auto-admin",
+			"category": "Debugging Toggles"
+		},
+		{
+			"id": "abstract_violation_crash",
+			"define": "ABSTRACT_VIOLATION_CRASH",
+			"label": "Abstract violation: crash",
+			"category": "Debugging Toggles",
+			"conflictsWith": [
+				"abstract_violation_warn"
+			]
+		},
+		{
+			"id": "abstract_violation_warn",
+			"define": "ABSTRACT_VIOLATION_WARN",
+			"label": "Abstract violation: warn",
+			"category": "Debugging Toggles",
+			"conflictsWith": [
+				"abstract_violation_crash"
+			]
+		},
+		{
+			"id": "log_hard_delete_refs",
+			"define": "LOG_HARD_DELETE_REFERENCES",
+			"label": "Log hard delete references",
+			"category": "Debugging Toggles"
+		},
+		{
+			"id": "log_hard_delete_refs_2",
+			"define": "LOG_HARD_DELETE_REFERENCES_2_ELECTRIC_BOOGALOO",
+			"label": "Log hard delete references, electric boogaloo",
+			"category": "Debugging Toggles"
+		},
+		{
+			"id": "dispose_is_qdel",
+			"define": "DISPOSE_IS_QDEL",
+			"label": "dispose() is qdel()",
+			"category": "Debugging Toggles"
+		},
+		{
+			"id": "perspective_walls",
+			"define": "USE_PERSPECTIVE_EDITOR_WALLS",
+			"label": "Perspective editor walls",
+			"category": "Debugging Toggles"
+		},
+		{
+			"id": "map_override",
+			"define": "MAP_OVERRIDE",
+			"label": "Map override",
+			"category": "Map Overrides",
+			"description": "Overrides the map used for round start instead of the normal map rotation.",
+			"type": "select",
+			"valueIsDefine": true,
+			"options": [
+				{ "value": "", "label": "Default" },
+				{ "value": "MAP_OVERRIDE_DEVTEST", "label": "Devtest (by cringe)" },
+				{ "value": "MAP_OVERRIDE_CONSTRUCTION", "label": "Construction" },
+				{ "value": "MAP_OVERRIDE_POD_WARS", "label": "Pod Wars (500x500)" },
+				{ "value": "MAP_OVERRIDE_EVENT", "label": "Event (misc. event maps)" },
+				{ "value": "MAP_OVERRIDE_WRESTLEMAP", "label": "Wrestlemap (by Overtone)" },
+				{ "value": "MAP_OVERRIDE_COGMAP", "label": "Cogmap1 (by Dr. Cogwerks)" },
+				{ "value": "MAP_OVERRIDE_COGMAP2", "label": "Cogmap2 (by Dr. Cogwerks)" },
+				{ "value": "MAP_OVERRIDE_DONUT2", "label": "Donut Station 2 (updated, by committee)" },
+				{ "value": "MAP_OVERRIDE_DONUT3", "label": "Donut Station 3 (by Ryumi)" },
+				{ "value": "MAP_OVERRIDE_KONDARU", "label": "Kondaru Station (by Kubius)" },
+				{ "value": "MAP_OVERRIDE_CLARION", "label": "NSS Clarion (by Dionsu and a69andahalf)" },
+				{ "value": "MAP_OVERRIDE_OSHAN", "label": "Oshan Laboratory, Abzu (by committee)" },
+				{ "value": "MAP_OVERRIDE_NADIR", "label": "Nadir Extraction Site (by Kubius)" },
+				{ "value": "MAP_OVERRIDE_NEON", "label": "Neon (by Sord)" },
+				{ "value": "MAP_OVERRIDE_ATLAS", "label": "NCS Atlas (by Gannets and Kubius, discontinued/gimmick)" },
+				{ "value": "MAP_OVERRIDE_CRASH", "label": "Crash (discontinued/gimmick)" },
+				{ "value": "MAP_OVERRIDE_MUSHROOM", "label": "Mushroom (updated, discontinued/gimmick)" },
+				{ "value": "MAP_OVERRIDE_DENSITY2", "label": "Density2 (second smallest, by Emily, discontinued/gimmick)" }
+			]
+		},
+		{
+			"id": "generate_goonhub_map",
+			"define": "GENERATE_GOONHUB_MAP",
+			"label": "Generate goonhub map screenshots",
+			"category": "Map Overrides"
+		},
+		{
+			"id": "unit_tests",
+			"define": "UNIT_TESTS",
+			"label": "Enable unit tests",
+			"category": "Unit Test Framework"
+		},
+		{
+			"id": "unit_tests_run_till_completion",
+			"define": "UNIT_TESTS_RUN_TILL_COMPLETION",
+			"label": "Bypass 10 second limit",
+			"category": "Unit Test Framework",
+			"requires": [
+				"unit_tests"
+			]
+		},
+		{
+			"id": "unit_tests_regression_only",
+			"define": "UNIT_TESTS_REGRESSION_ONLY",
+			"label": "Regression tests only",
+			"category": "Unit Test Framework",
+			"requires": [
+				"unit_tests"
+			]
+		},
+		{
+			"id": "rp_mode",
+			"define": "RP_MODE 1",
+			"label": "RP mode",
+			"category": "Holidays & Seasons"
+		},
+		{
+			"id": "halloween",
+			"define": "HALLOWEEN 1",
+			"label": "Halloween",
+			"category": "Holidays & Seasons"
+		},
+		{
+			"id": "season_override",
+			"define": "SEASON",
+			"label": "Season override",
+			"category": "Holidays & Seasons",
+			"description": "Overrides the season instead of picking one based on the build month.",
+			"type": "select",
+			"valueIsDefine": true,
+			"options": [
+				{ "value": "", "label": "None (based on build month)" },
+				{ "value": "SEASON_WINTER 1", "label": "Winter" },
+				{ "value": "SEASON_SPRING 1", "label": "Spring" },
+				{ "value": "SEASON_SUMMER 1", "label": "Summer" },
+				{ "value": "SEASON_AUTUMN 1", "label": "Autumn" }
+			]
+		},
+		{
+			"id": "xmas",
+			"define": "XMAS 1",
+			"label": "Christmas",
+			"category": "Holidays & Seasons"
+		},
+		{
+			"id": "canada_day",
+			"define": "CANADADAY 1",
+			"label": "Canada Day",
+			"category": "Holidays & Seasons"
+		},
+		{
+			"id": "football_mode",
+			"define": "FOOTBALL_MODE 1",
+			"label": "Football mode",
+			"category": "Holidays & Seasons"
+		},
+		{
+			"id": "enable_artemis",
+			"define": "ENABLE_ARTEMIS",
+			"label": "Enable Artemis",
+			"category": "Holidays & Seasons"
+		},
+		{
+			"id": "midsummer",
+			"define": "MIDSUMMER 1",
+			"label": "Midsummer",
+			"category": "Holidays & Seasons"
+		}
+	],
+	"presets": [
+		{
+			"id": "go_fast",
+			"label": "Go Fast",
+			"flags": [
+				"gotta_go_fast_zlevels",
+				"im_in_a_hurry"
+			]
+		},
+		{
+			"id": "stop_distracting_me",
+			"label": "Stop Distracting Me",
+			"flags": [
+				"stop_distracting_me"
+			]
+		},
+		{
+			"id": "unit_tests",
+			"label": "Unit Tests",
+			"flags": [
+				"unit_tests",
+				"unit_tests_run_till_completion"
+			]
+		},
+		{
+			"id": "ci_runtime_checking",
+			"label": "CI Runtime Checking",
+			"flags": [
+				"check_more_runtimes"
+			]
+		}
+	]
+}
