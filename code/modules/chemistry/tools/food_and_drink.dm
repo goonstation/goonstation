@@ -2333,3 +2333,17 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	initial_volume = 50
 	initial_reagents = list("milk"=40, "sugar"=10)
 	can_recycle = 0
+
+/obj/item/reagent_containers/food/drinks/milkfrother
+	name = "Milk Frother"
+	desc = "A sophisticated machine used to froth milk."
+	icon = 'icons/obj/foodNdrink/bottle.dmi'
+	icon_state = "milk_frother"
+	initial_volume = 50
+	can_recycle = FALSE
+
+	attack_self(mob/user)
+		var/temperature_change = T0C + 65 - src.reagents.total_temperature
+		user.visible_message("<b>[user.name]</b> turns on the milk frother, producing a pleasant whirring sound as the contents are agitated and heated.")
+		src.reagents.physical_shock(30)
+		src.reagents.temperature_reagents(exposed_temperature=T0C + 80, change_cap = temperature_change ,change_min = temperature_change)

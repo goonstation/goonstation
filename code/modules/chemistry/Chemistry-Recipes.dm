@@ -5628,3 +5628,29 @@
 		mix_phrase = "The mixture slowly separates into two distinct layers."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
+
+	frothedmilk
+		name = "Frothed Milk"
+		id = "frothedmilk"
+		result = "frothedmilk"
+		required_reagents = list("milk" = 1)
+		result = "frothedmilk"
+		min_temperature = T0C + 65
+		result_amount = 1
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		mix_phrase = "The milk rapidly expands into a smooth, velvety foam."
+		drinkrecipe = TRUE
+
+		does_react(datum/reagents/holder)
+			var/datum/reagent/fooddrink/milk/milk = holder.get_reagent("milk")
+			return milk && milk.was_physically_shocked
+
+	macchiato
+		name = "Macchiato"
+		id = "macchiato"
+		result = "macchiato"
+		required_reagents = list("frothedmilk"=1, "espresso"= 1)
+		result_amount = 2
+		mix_phrase = "The foam settles gently atop the espresso, leaving a pale mark across its surface."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE

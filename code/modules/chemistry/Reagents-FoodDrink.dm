@@ -95,6 +95,7 @@ datum
 			thirst_value = 0.6
 			viscosity = 0.3
 			var/list/flushed_reagents = list("capsaicin")
+			var/was_physically_shocked = FALSE
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
@@ -113,6 +114,11 @@ datum
 						M.HealDamage("All", clamp(1 * volume, 0, 10), clamp(1 * volume, 0, 10)) //put a cap on instant healing
 						if(prob(15))
 							boutput(M, SPAN_NOTICE("The milk comforts your [pick("boanes","bones","bonez","boens","bowns","beaunes","brones","bonse")]!"))
+
+			physical_shock(force)
+				if(force >= 30)
+					was_physically_shocked = TRUE
+
 		fooddrink/milk_powder
 			name = "milk powder"
 			id = "milk_powder"
@@ -5064,5 +5070,28 @@ datum
 			description = "A deceptively simple coffee with a sweet side."
 			reagent_state = LIQUID
 			taste = "a bit too sweet, but in a good way, somehow"
+			thirst_value = 1
+			caffeine_content = 0.8
+
+		fooddrink/frothedmilk
+			name = "frothed milk"
+			id = "frothedmilk"
+			description = "Silky, airy, and topped with a cloud of tiny bubbles."
+			reagent_state = LIQUID
+			fluid_r = 255
+			fluid_b = 255
+			fluid_g = 255
+			transparency = 200
+			taste = list("creamy", "airy")
+
+		fooddrink/caffeinated/macchiato
+			name = "macchiato"
+			id = "macchiato"
+			fluid_r = 156
+			fluid_g = 114
+			fluid_b = 74
+			description = "A bold espresso marked with a small crown of silky milk foam."
+			reagent_state = LIQUID
+			taste = list("bold", "creamy")
 			thirst_value = 1
 			caffeine_content = 0.8
