@@ -487,6 +487,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/turretid, proc/toggle_active, proc/toggle_le
 	turretArea = /area/station/turret_protected/armory_outside
 	req_access = list(access_armory)
 
+/obj/machinery/turretid/incursion
+	name = "Countermeasure Turret Control"
+	enabled = 0
+	turretArea = /area/station/turret_protected/incursion
+	req_access = list(access_heads)
+
 /obj/machinery/turretid/attackby(obj/item/W, mob/user)
 	if(status & BROKEN) return
 	if (issilicon(user) || isAI(user))
