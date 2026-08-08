@@ -34,4 +34,20 @@ ADD_TO_NAMESPACE(CI, ERRORS)(var/list/mail_chutes = CI_LIST)
 ADD_TO_NAMESPACE(CI, ERRORS)(var/list/mail_junctions = CI_LIST)
 
 
+//------------ Mapping Helper Colours ------------//
+/// Default colours for mapping helpers.
+CREATE_NAMESPACE(CI, COL)
+
+ADD_TO_NAMESPACE(CI, COL)(var/const/CARGO = "#f7e43d")
+ADD_TO_NAMESPACE(CI, COL)(var/const/COMMAND = "#00783c")
+ADD_TO_NAMESPACE(CI, COL)(var/const/ENGINEERING = "#f7af3d")
+ADD_TO_NAMESPACE(CI, COL)(var/const/MAINTENANCE = "#e5ff32")
+ADD_TO_NAMESPACE(CI, COL)(var/const/MEDICAL = "#3daff7")
+ADD_TO_NAMESPACE(CI, COL)(var/const/MORGUE = "#002135")
+ADD_TO_NAMESPACE(CI, COL)(var/const/RESEARCH = "#b23df7")
+ADD_TO_NAMESPACE(CI, COL)(var/const/TOXINS = "#a3f73d")
+ADD_TO_NAMESPACE(CI, COL)(var/const/SECURITY = "#f73d3d")
+ADD_TO_NAMESPACE(CI, COL)(var/const/SPECIAL = "#ffa135")
+
+
 #undef CI_LIST
