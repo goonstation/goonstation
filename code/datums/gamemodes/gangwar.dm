@@ -169,11 +169,12 @@
 		if (istype(winner))
 			boutput(world, "<h2><b>[winner.gang_name], led by [winner.leader.current.real_name], won the round!</b></h2>")
 
-			var/datum/hud/gang_victory/victory_hud = get_singleton(/datum/hud/gang_victory)
-			victory_hud.set_winner(winner)
-			for (var/client/C in clients)
-				victory_hud.add_client(C)
-				C.mob.addAbility(/datum/targetable/toggle_gang_victory_hud)
+			// Gang Victory HUD disabled until it gets fixed, causing runtimes - glowbold 2026-08-07
+			// var/datum/hud/gang_victory/victory_hud = get_singleton(/datum/hud/gang_victory)
+			// victory_hud.set_winner(winner)
+			// for (var/client/C in clients)
+			// 	victory_hud.add_client(C)
+			// 	C.mob.addAbility(/datum/targetable/toggle_gang_victory_hud)
 
 	..()
 
