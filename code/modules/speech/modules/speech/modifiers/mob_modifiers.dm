@@ -90,6 +90,7 @@
 				continue
 
 			APPLY_CALLBACK_TO_MESSAGE_CONTENT(message, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(mufflespeech)))
+			message.speaker_to_display = "Unknown"
 			break
 
 	// Handle Hastur censoring.
