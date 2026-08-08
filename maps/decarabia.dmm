@@ -6335,10 +6335,6 @@
 	},
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
-"bAM" = (
-/obj/machinery/power/apc/autoname_south,
-/turf/simulated/floor/grass/random/walp,
-/area/station/crew_quarters/observatory)
 "bAO" = (
 /obj/table/wood/auto,
 /obj/item/storage/box/crayon{
@@ -34482,14 +34478,6 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/minitiles,
 /area/station/storage/emergency2)
-"hVF" = (
-/obj/machinery/power/apc{
-	areastring = "Medbay Operating Theater";
-	name = "Medbay Operating Theater APC";
-	pixel_y = -24
-	},
-/turf/space,
-/area/space)
 "hVI" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -51986,7 +51974,9 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/machinery/power/apc/autoname_east,
+/obj/machinery/power/apc/autoname_east{
+	areastring = "Owlery"
+	},
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -136632,7 +136622,7 @@ xJC
 xJC
 xJC
 xJC
-hVF
+xJC
 lAx
 rER
 bLo
@@ -142674,7 +142664,7 @@ ncv
 wzX
 mYW
 ufH
-bAM
+eAk
 qMh
 lRa
 hzl
