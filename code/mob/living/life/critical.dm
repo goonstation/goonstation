@@ -1,14 +1,16 @@
 
 /datum/lifeprocess/critical //for mobs that use crit (humans only right now)
 	process(var/datum/gas_mixture/environment)
+		if (isdead(src.owner)) //You don't need to do a whole lot of this if the dude's dead.
+			return ..()
+		if (owner.bioHolder?.HasEffect("revenant")) // I don't think the revenant needs any of this crap - Marq
+			return ..()
+
 		var/mult = get_multiplier()
 		//health_update_queue |= src //#843 uncomment this if things go funky maybe
 		var/death_health = owner.health + (owner.get_oxygen_deprivation() * 0.5) - (owner.get_burn_damage() * 0.67) - (owner.get_brute_damage() * 0.67) //lower weight of oxy, increase weight of brute/burn here
-		// I don't think the revenant needs any of this crap - Marq
-		if (owner.bioHolder && owner.bioHolder.HasEffect("revenant") || isdead(owner)) //You also don't need to do a whole lot of this if the dude's dead.
-			return ..()
 
-		if (owner.health < 0 && !isdead(owner))
+		if (owner.health < 0)
 			owner.changeStatus("critical_condition", 10 SECONDS) // Always receive this when in crit
 			if (probmult(5))
 				owner.emote(pick("faint", "collapse", "cry","moan","gasp","shudder","shiver"))
@@ -65,26 +67,19 @@
 						owner.changeStatus("knockdown", 3 SECONDS)
 
 		var/is_chg = ischangeling(owner)
-		//if (src.brain_op_stage == 4.0) // handled above in handle_organs() now
-			//death()
-		if (owner.get_brain_damage() >= BRAIN_DAMAGE_DEATH || death_health <= -500) //-200) a shitty test here // let's lower the weight of oxy
-			if (!is_chg || owner.suiciding)
-				owner.death()
 
-		if (owner.get_brain_damage() >= BRAIN_DAMAGE_LETHAL) // braindeath
-			if (!is_chg)
-				boutput(owner, SPAN_ALERT("Your head [pick("feels like shit","hurts like fuck","pounds horribly","twinges with an awful pain")]."))
-				owner.losebreath += 10 * mult
-				owner.changeStatus("knockdown", 3 SECONDS * mult)
-		if (owner.health <= -100)
-			if ((owner.reagents && owner.reagents.has_reagent("synaptizine") && owner.reagents.has_reagent("atropine")) || ((owner.bodytemperature < owner.base_body_temp - 100 && owner.bodytemperature > owner.base_body_temp - 275 && !owner.hasStatus("burning")) && (owner.reagents && owner.reagents.has_reagent("cryoxadone"))))
-				var/deathchance = min(99, ((owner.get_brain_damage() * -5) + (owner.health + (owner.get_oxygen_deprivation() / 2))) * -0.001)
-				if (probmult(deathchance))
-					owner.death()
-			else
-				var/deathchance = min(99, ((owner.get_brain_damage() * -5) + (owner.health + (owner.get_oxygen_deprivation() / 2))) * -0.01)
-				if (probmult(deathchance))
-					owner.death()
+		var/death_threshold = -400
+		if (owner.reagents?.has_reagent("synaptizine") && owner.reagents?.has_reagent("atropine"))
+			death_threshold -= 100 // synaptizine && atropine combo
+		if (owner.bodytemperature < owner.base_body_temp - 100 && owner.bodytemperature > owner.base_body_temp - 275 && !owner.hasStatus("burning") && owner.reagents?.has_reagent("cryoxadone"))
+			death_threshold -= 100 // cryotubes at body-relative temps
 
+		if (((!is_chg || owner.suiciding) && owner.get_brain_damage() >= BRAIN_DAMAGE_DEATH) || death_health <= death_threshold)
+			owner.death()
+			return ..()
 
+		if (!is_chg && owner.get_brain_damage() >= BRAIN_DAMAGE_LETHAL) // braindeath
+			boutput(owner, SPAN_ALERT("Your head [pick("feels like shit","hurts like fuck","pounds horribly","twinges with an awful pain")]."))
+			owner.losebreath += 10 * mult
+			owner.changeStatus("knockdown", 3 SECONDS * mult)
 		..()
