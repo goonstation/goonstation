@@ -593,7 +593,9 @@ CONTAINS:
 /* -------------------- Body Bag -------------------- */
 /* ================================================== */
 
-#define IS_BODYBAG_FOLDED(body_bag) (body_bag.icon_state == "bodybag" && body_bag.w_class == W_CLASS_TINY)
+#define BODYBAG_STATE_ITEM "item"
+#define BODYBAG_STATE_CLOSED "closed"
+#define BODYBAG_STATE_OPEN "open"
 
 /obj/item/body_bag
 	name = "body bag"
@@ -610,7 +612,7 @@ CONTAINS:
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 0
-	var/open = 0
+	var/state = BODYBAG_STATE_ITEM
 	var/image/open_image = null
 	var/sound_zipper = 'sound/items/zipper.ogg'
 
@@ -623,30 +625,39 @@ CONTAINS:
 			AM.set_loc(get_turf(src))
 		..()
 
-	update_icon()
-		if (src.open && src.open_image)
-			src.overlays += src.open_image
-			src.icon_state = "bodybag-open"
-			src.w_class = W_CLASS_BULKY
-		else if (!src.open)
-			src.overlays -= src.open_image
-			if (src.contents && length(src.contents))
-				src.icon_state = "bodybag-closed1"
-			else
-				src.icon_state = "bodybag-closed0"
-			src.w_class = W_CLASS_BULKY
-		else
-			src.overlays -= src.open_image
-			src.icon_state = "bodybag"
+	proc/set_state(var/state)
+		if(state == BODYBAG_STATE_ITEM)
 			src.w_class = W_CLASS_TINY
+		else
+			if(src.cant_drop && !isturf(src.loc))
+				src.set_state(BODYBAG_STATE_ITEM)
+				return FALSE
+			src.w_class = W_CLASS_BULKY
+		src.state = state
+		src.UpdateIcon()
+		return TRUE
+
+	update_icon()
+		switch(src.state)
+			if (BODYBAG_STATE_OPEN)
+				src.overlays += src.open_image
+				src.icon_state = "bodybag-open"
+			if (BODYBAG_STATE_CLOSED)
+				src.overlays -= src.open_image
+				if (src.contents && length(src.contents))
+					src.icon_state = "bodybag-closed1"
+				else
+					src.icon_state = "bodybag-closed0"
+			if (BODYBAG_STATE_ITEM)
+				src.overlays -= src.open_image
+				src.icon_state = "bodybag"
 
 	attack_self(mob/user as mob)
-		if(!src.try_unfold(user))
-			return
+		src.try_unfold(user)
 
 	attack_hand(mob/user)
 		add_fingerprint(user)
-		if (IS_BODYBAG_FOLDED(src))
+		if (src.state == BODYBAG_STATE_ITEM)
 			return ..()
 
 		src.toggle(user)
@@ -680,12 +691,10 @@ CONTAINS:
 			return
 		..()
 		if (!length(src.contents) && usr.can_use_hands() && isalive(usr) && BOUNDS_DIST(src, usr) == 0 && !issilicon(usr))
-			if (src.icon_state != "bodybag")
+			if (src.state != BODYBAG_STATE_ITEM)
 				usr.visible_message("<b>[usr]</b> folds up [src].",\
 				"You fold up [src].")
-			src.overlays -= src.open_image
-			src.icon_state = "bodybag"
-			src.w_class = W_CLASS_TINY
+			src.set_state(BODYBAG_STATE_ITEM)
 			src.Attackhand(usr)
 
 	attackby(obj/item/W, mob/user, params)
@@ -714,8 +723,7 @@ CONTAINS:
 			M.changeStatus("knockdown", 0.5 SECONDS)
 			SPAWN(0.3 SECONDS)
 				M.set_loc(src.loc)
-		src.open = 1
-		src.UpdateIcon()
+		src.set_state(BODYBAG_STATE_OPEN)
 
 	proc/close()
 		playsound(src, src.sound_zipper, 100, 1, , 6)
@@ -733,22 +741,23 @@ CONTAINS:
 			if (!(M.lying || (ismobcritter(M) && isdead(M))) || M.anchored || M.buckled)
 				continue
 			M.set_loc(src)
-		src.open = 0
-		src.UpdateIcon()
+		src.set_state(BODYBAG_STATE_CLOSED)
 
 	proc/toggle(mob/user)
-		if(ON_COOLDOWN(user, "bodybag_zip", 1 SECOND))
+		if(ON_COOLDOWN(user, "bodybag_zip", 1 SECOND) || src.state == BODYBAG_STATE_ITEM)
 			return FALSE
 
-		if (src.open)
+		if (src.state == BODYBAG_STATE_OPEN)
 			src.close()
 		else
 			src.open()
 		return TRUE
 
 	proc/try_unfold(mob/user)
-		if (!IS_BODYBAG_FOLDED(src))
+		if (src.state != BODYBAG_STATE_ITEM)
 			return FALSE
+		if(!src.set_state(BODYBAG_STATE_CLOSED))
+			return
 
 		user.visible_message("<b>[user]</b> unfolds [src].", "You unfold [src].")
 
@@ -760,7 +769,9 @@ CONTAINS:
 
 		return TRUE
 
-#undef IS_BODYBAG_FOLDED
+#undef BODYBAG_STATE_ITEM
+#undef BODYBAG_STATE_CLOSED
+#undef BODYBAG_STATE_OPEN
 
 /* ================================================== */
 /* -------------------- Hemostat -------------------- */
