@@ -178,6 +178,7 @@
 		/obj/item/device/gps,
 		/obj/item/extinguisher/large/cyborg,
 		/obj/item/mining_tool/powered/drill,
+		/obj/item/tool/omnitool/excavator/silicon,
 		/obj/item/ore_scoop/borg,
 		/obj/item/cargotele,
 		/obj/item/satchel/mining/large,

@@ -348,6 +348,7 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 		/datum/manufacture/powerhammer,
 		/datum/manufacture/drill,
 		/datum/manufacture/conc_gloves,
+		/datum/manufacture/omniexcavator,
 		/datum/manufacture/digbot,
 		/datum/manufacture/jumpsuit,
 		/datum/manufacture/shoes,

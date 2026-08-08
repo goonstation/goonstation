@@ -7,7 +7,8 @@
 	var/prefix = "omnitool" //! Prefix for the tool's icon_state
 	var/welding = FALSE
 	var/animated_changes = FALSE //! Play an animation after mode is switched
-	var/animated_delay = FALSE //! Play an animation with the action bar (if there is a delay)
+	var/animated_delay_enter = FALSE //! Play an animation with the action bar (if there is a delay)
+	var/animated_delay_exit = FALSE //! Play an animation with the action bar (if there is a delay)
 	var/switch_delay = 0 SECONDS //! Time to manually switch between modes, or 0 for instant switching.
 
 	custom_suicide = 1
@@ -88,11 +89,16 @@
 
 	/// Switch modes with a delay, if it exists
 	proc/change_mode_delayed(var/datum/omnimode/mode_new, var/mob/holder)
-		if(switch_delay)
-			if(animated_delay)
-				flick("[src.prefix]-delay-[mode_new.mode_id]", src)
+		if(src.switch_delay)
+			var/new_icon_state = "[src.prefix]-[mode_new.mode_id]"
+			if(animated_delay_exit)
+				flick("[src.prefix]-[src.mode.mode_id]-exit", src)
 				playsound(src, 'sound/machines/click.ogg', 15, TRUE, pitch = 1.25)
-			actions.start(new/datum/action/bar/icon/omnitool_switch(src, mode_new, "[prefix]-[mode_new.mode_id]", switch_delay, src.animated_delay), holder)
+			var/datum/action/A = actions.start(new/datum/action/bar/icon/omnitool_switch(src, mode_new, new_icon_state, src.switch_delay, src.animated_delay_exit), holder)
+			if(animated_delay_enter)
+				spawn(src.switch_delay / 2)
+					if(A.state != ACTIONSTATE_DELETE && A.state != ACTIONSTATE_INTERRUPTED)
+						flick("[src.prefix]-[mode_new.mode_id]-enter", src)
 		else
 			src.change_mode(mode_new, holder)
 
@@ -292,7 +298,7 @@ TYPEINFO(/obj/item/tool/omnitool/dualconstruction_device)
 	prefix = "salvager-dual"
 	desc = "A handy part of a salvager's toolkit that can swap between the functionality of a deconstruction device or a soldering iron."
 	w_class = W_CLASS_NORMAL
-	animated_delay = TRUE
+	animated_delay_exit = TRUE
 	mode_types = list(/datum/omnimode/deconstruct, /datum/omnimode/solder)
 	switch_delay = 1.5 SECONDS
 
@@ -300,6 +306,37 @@ TYPEINFO(/obj/item/tool/omnitool/dualconstruction_device)
 		..()
 		src.AddComponent(/datum/component/soldering, 1.5 SECONDS)
 		src.AddComponent(/datum/component/deconstructing, 0.5 SECONDS, 1)
+
+TYPEINFO(/obj/item/tool/omnitool/excavator)
+	mats = list("dense_property_ultra" = 10,
+				"heat_dense" = 5,
+				"energy_property" = 5)
+/obj/item/tool/omnitool/excavator
+	name = "omni-excavator"
+	desc = "A versatile mining tool specialized in retrieving delicate objects, such as fossils."
+	icon_state = "excavator-pickaxe"
+	prefix = "excavator"
+	w_class = W_CLASS_NORMAL
+	animated_delay_enter = TRUE
+	animated_delay_exit = TRUE
+	switch_delay = 1.4 SECONDS
+	mode_types = list(
+		/datum/omnimode/mining/pickaxe,
+		/datum/omnimode/mining/drill,
+		/datum/omnimode/mining/hammer,
+		/datum/omnimode/mining/shovel,
+		/datum/omnimode/mining/laser,
+		/datum/omnimode/mining/concussive)
+	switch_delay = 1.4 SECONDS
+
+/obj/item/tool/omnitool/excavator/silicon
+	name = "omni-excavator"
+	desc = "A set of various mining tools intended for retrieving delicate objects, such as fossils."
+	icon_state = "silicon-excavator-pickaxe"
+	prefix = "silicon-excavator"
+	animated_delay_enter = FALSE
+	animated_delay_exit = FALSE
+	switch_delay = 0
 
 // ===========================================================================
 // ========================= Omnitool Mode Datums =========================
@@ -456,6 +493,65 @@ ABSTRACT_TYPE(/datum/omnimode)
 		context_icon = "bottleopener"
 		item_type = /obj/item/kitchen/utensil
 
+	mining
+		item_type = /obj/item/mining_tool
+		var/mining_type = MINING_DMG_PICKAXE
+		var/sound/mining_sound = 'sound/impact_sounds/Stone_Cut_1.ogg'
+		var/mining_volume = 50
+
+		on_attack_after(var/obj/item/tool/omnitool/omni, atom/target, mob/user, reach, params)
+			. = ..()
+			if(istype(target, /turf/simulated/wall/auto/asteroid))
+				var/turf/simulated/wall/auto/asteroid/AST = target
+				AST.dig_asteroid(user, 2, FALSE, src.mining_type)
+				playsound(user.loc, src.mining_sound, src.mining_volume, 1)
+			if(istype(omni, /obj/item/tool/omnitool/excavator/silicon))
+				if(!ON_COOLDOWN(omni, "omnitool_mining_anim", 0.5 SECONDS))
+					flick("[omni.prefix]-[src.mode_id]-mine", omni)
+			return
+	mining/pickaxe
+		mode_name = "pickaxe"
+		mode_id = OMNITOOL::MODE_MINING_PICKAXE
+		context_icon = "mining_pick"
+		mining_type = MINING_DMG_PICKAXE
+		mining_sound = 'sound/items/mining_pick.ogg'
+		mining_volume = 125
+	mining/drill
+		mode_name = "drill"
+		mode_id = OMNITOOL::MODE_MINING_DRILL
+		context_icon = "mining_drill"
+		mining_type = MINING_DMG_DRILL
+		mining_sound = 'sound/items/mining_drill.ogg'
+		mining_volume = 125
+	mining/hammer
+		mode_name = "hammer"
+		mode_id = OMNITOOL::MODE_MINING_HAMMER
+		context_icon = "mining_hammer"
+		mining_type = MINING_DMG_HAMMER
+		mining_sound = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
+	mining/shovel
+		mode_name = "shovel"
+		mode_id = OMNITOOL::MODE_MINING_SHOVEL
+		context_icon = "mining_shovel"
+		item_type = /obj/item/shovel
+		mining_type = MINING_DMG_SHOVEL
+		mining_sound = 'sound/items/mining_hammer.ogg'
+		mining_volume = 125
+	mining/laser
+		mode_name = "laser"
+		mode_id = OMNITOOL::MODE_MINING_LASER
+		context_icon = "mining_laser"
+		mining_type = MINING_DMG_LASER
+		mining_sound = 'sound/weapons/laser_f.ogg'
+		mining_volume = 125
+	mining/concussive
+		mode_name = "concussive"
+		mode_id = OMNITOOL::MODE_MINING_CONCUSSIVE
+		context_icon = "mining_concussive"
+		mining_type = MINING_DMG_CONCUSSIVE
+		mining_sound = 'sound/effects/exlow.ogg'
+
+
 // ===========================================================================
 // ========================= Omnitool Context Actions =========================
 // ===========================================================================
@@ -466,6 +562,7 @@ ABSTRACT_TYPE(/datum/omnimode)
 	close_moved = FALSE
 	desc = ""
 	icon_state = "what"
+	icon_background = "bunsen_bg"
 	var/datum/omnimode/mode = null
 
 	New(var/datum/omnimode/omnimode)

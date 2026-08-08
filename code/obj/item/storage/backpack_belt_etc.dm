@@ -980,7 +980,8 @@
 	item_state = "mining"
 	can_hold = list(
 		/obj/item/mining_tool,
-		/obj/item/mining_tools)
+		/obj/item/mining_tools,
+		/obj/item/tool/omnitool/excavator)
 	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
 
 /obj/item/storage/belt/mining/prepared
