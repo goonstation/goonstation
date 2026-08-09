@@ -202,6 +202,11 @@ ABSTRACT_TYPE(/datum/material)
 			CRASH("Attempted to mutate an immutatble material!")
 		src.color = color
 
+	proc/setColorHSL(var/hsl_color)
+		if(!src.mutable)
+			CRASH("Attempted to mutate an immutatble material!")
+		src.hsl_color = hsl_color
+
 	proc/setCanMix(var/mix)
 		if(!src.mutable)
 			CRASH("Attempted to mutate an immutatble material!")
@@ -1605,6 +1610,9 @@ ABSTRACT_TYPE(/datum/material/organic)
 
 	edible_exact = 0.6 //Just barely edible
 	edible = 1
+	/// The reference to the blob overmind is used for the ID. Make sure it stays in memory.
+	var/mob/living/intangible/blob_overmind/blob_source = null
+	var/original_color = null //! TESTING. Delete this var when done!
 
 	New()
 		..()
@@ -1619,6 +1627,33 @@ ABSTRACT_TYPE(/datum/material/organic)
 		addTrigger(TRIGGERS_ON_IMAGE, new /datum/materialProc/honey_image())
 		addTrigger(TRIGGERS_ON_EAT, new /datum/materialProc/oneat_blob())
 
+	proc/match_to_blob(var/mob/living/intangible/blob_overmind/blob)
+		if(!src.mutable)
+			CRASH("Attempted to mutate an immutatble material!")
+		src.blob_source = blob
+		src.setID("blob_\ref[blob]")
+		src.match_to_blob_color(blob.organ_color)
+
+	proc/match_to_blob_color(var/blob_color)
+		if(!src.mutable)
+			CRASH("Attempted to mutate an immutatble material!")
+
+		if(isnull(src.blob_source))
+			src.setID("blob_[blob_color]")
+		src.original_color = blob_color
+
+		var/h = GetHue(blob_color)
+		var/s = GetSaturation(blob_color)
+		var/l = GetLuminosity(blob_color)
+
+		src.setColor(COLOR_MATRIX_IDENTITY)
+		var/list/hsl_temp
+		hsl_temp = list(0.00, 0.00, 0.00, 0.00,\
+						0.00, 0.3 * s, 0.00, 0.00,\
+						0.00, 0.00, (0.7 * l) + 0.3, 0.00,\
+						0.00, 0.00, 0.00, 1.00,\
+						h, 0.7 * s, 0.00, 0.00)
+		src.setColorHSL(hsl_temp)
 
 
 /datum/material/organic/flesh

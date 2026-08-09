@@ -153,6 +153,8 @@
 			var/image/blob_image
 			if (special_icon)
 				blob_image = image('icons/mob/blob_organs.dmi')
+				if(src.overmind)
+					blob_image.apply_material_appearance(src.overmind.my_material, TRUE)
 			else
 				blob_image = image('icons/mob/blob.dmi')
 			blob_image.appearance_flags |= RESET_COLOR
@@ -167,7 +169,8 @@
 			blob_anim_image.plane = PLANE_ABOVE_LIGHTING
 			blob_anim_image.layer = 100
 
-			blob_anim_image.color = organ_color
+			if(src.overmind)
+				blob_anim_image.apply_material_appearance(src.overmind.my_material, TRUE)
 			blob_anim_image.icon_state = anim_overlay
 			UpdateOverlays(blob_anim_image,"anim_overlay")
 
