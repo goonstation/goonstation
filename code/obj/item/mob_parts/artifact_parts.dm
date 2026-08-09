@@ -160,7 +160,7 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts/arm)
 		return src.bodyImage
 
 	get_limb_print()
-		return build_id_fingerprint(FORENSIC_CHARS_FINGERPRINTS)
+		return build_id_unique(/proc/build_id_fingerprint, FORENSIC_CHARS_FINGERPRINTS)
 
 ABSTRACT_TYPE(/obj/item/parts/artifact_parts/leg)
 /obj/item/parts/artifact_parts/leg

@@ -61,7 +61,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		return ..()
 
 	proc/build_fingerprints()
-		src.default_fingerprints = register_id(build_id_unique(FORENSIC_CHARS_FINGERPRINTS, 16, no_repeat=TRUE, bunch_size=4, separator="-"))
+		src.default_fingerprints = register_id(build_id_unique(/proc/build_id_fingerprint, FORENSIC_CHARS_FINGERPRINTS))
 
 	disposing()
 		for(var/D in effects)
