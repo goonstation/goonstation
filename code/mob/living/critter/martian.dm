@@ -24,6 +24,7 @@ TYPEINFO(/mob/living/critter/martian)
 	can_grab = TRUE
 	can_disarm = TRUE
 	can_help = TRUE
+	can_juggle = TRUE
 	health_brute = 50
 	health_brute_vuln = 0.5
 	health_burn = 50
@@ -139,11 +140,13 @@ TYPEINFO(/mob/living/critter/martian)
 	icon_state_dead = "martianW-dead"
 	health_brute = 100
 	health_burn = 100
+	has_genes = TRUE
 
 	New()
 		..()
 		abilityHolder.addAbility(/datum/targetable/critter/slam)
 		abilityHolder.addAbility(/datum/targetable/critter/tackle)
+		src.bioHolder.AddNewPoolEffect("fitness_buff", scramble=FALSE)
 
 
 	critter_attack(var/mob/target)
@@ -198,12 +201,16 @@ TYPEINFO(/mob/living/critter/martian)
 	health_brute = 33
 	health_burn = 33
 	ai_type = /datum/aiHolder/ranged
+	has_genes = TRUE
 
 	New()
 		..()
 		abilityHolder.addAbility(/datum/targetable/critter/gibstare)
 		abilityHolder.addAbility(/datum/targetable/critter/telepathy)
 		abilityHolder.addAbility(/datum/targetable/critter/scarylook)
+		src.bioHolder.AddNewPoolEffect("telekinesis_drag", scramble=FALSE)
+		src.bioHolder.AddNewPoolEffect("telepathy", scramble=FALSE)
+		src.bioHolder.AddNewPoolEffect("psy_resist", scramble=FALSE)
 
 	critter_attack(var/mob/target)
 		var/datum/targetable/critter/gibstare/gib = src.abilityHolder.getAbility(/datum/targetable/critter/gibstare)

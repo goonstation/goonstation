@@ -1,0 +1,594 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aD" = (
+/obj/shrub,
+/turf/simulated/floor/black,
+/area/station/security/interrogation)
+"bw" = (
+/obj/stool/chair,
+/turf/simulated/floor/black,
+/area/station/security/interrogation)
+"bI" = (
+/obj/stool/chair/red{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/landmark/start/job/security_assistant,
+/turf/simulated/floor/red/side{
+	dir = 1
+	},
+/area/station/security/interrogation)
+"cm" = (
+/obj/machinery/door/airlock/pyro/security/alt{
+	dir = 4
+	},
+/obj/mapping_helper/access/forensics,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
+"cP" = (
+/obj/landmark/gps_waypoint,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/disposalpipe/segment/bent/east,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
+"eD" = (
+/turf/simulated/wall/auto/supernorn/colored/red,
+/area/station/security/detectives_office)
+"fj" = (
+/obj/table/wood/auto,
+/obj/machinery/light/lamp/black{
+	pixel_y = 12;
+	pixel_x = -4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/phone{
+	pixel_x = 9
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
+"gq" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
+"ku" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/disposalpipe/junction/middle,
+/turf/simulated/floor/red,
+/area/station/security/interrogation)
+"lp" = (
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
+"mk" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
+"mZ" = (
+/obj/stool/chair/red{
+	dir = 8
+	},
+/obj/machinery/camera/directional/east,
+/turf/simulated/floor/red/side{
+	dir = 4
+	},
+/area/station/security/interrogation)
+"nj" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	dir = 4;
+	id = "det_interro"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/security/detectives_office)
+"nE" = (
+/obj/reagent_dispensers/watertank/fountain,
+/obj/machinery/firealarm/directional/east,
+/obj/item/device/radio/intercom/security{
+	dir = 1
+	},
+/turf/simulated/floor/red/side{
+	dir = 6
+	},
+/area/station/security/interrogation)
+"oc" = (
+/obj/table/auto,
+/obj/machinery/phone{
+	pixel_x = 9
+	},
+/obj/machinery/light/lamp/black{
+	pixel_y = 12;
+	pixel_x = -4
+	},
+/turf/simulated/floor/redblack,
+/area/station/security/interrogation)
+"of" = (
+/obj/machinery/light_switch/directional/south,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor/red/side{
+	dir = 10
+	},
+/area/station/security/interrogation)
+"og" = (
+/obj/machinery/light/incandescent,
+/obj/stool/chair/comfy,
+/obj/landmark/start/job/detective,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
+"rb" = (
+/obj/machinery/door/airlock/pyro/security/alt,
+/obj/mapping_helper/access/security,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor/red,
+/area/station/security/interrogation)
+"sQ" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/red/side{
+	dir = 5
+	},
+/area/station/security/interrogation)
+"sR" = (
+/obj/machinery/light/incandescent,
+/obj/disposalpipe/segment/bent/west,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
+"to" = (
+/obj/blind_switch/directional/west{
+	id = "det_interro";
+	pixel_y = 6
+	},
+/obj/machinery/vending/security,
+/turf/simulated/floor/red/side{
+	dir = 8
+	},
+/area/station/security/interrogation)
+"yB" = (
+/obj/storage/secure/closet/security/forensics,
+/obj/item/device/radio/intercom/detnet/detective{
+	dir = 1
+	},
+/obj/item/device/audio_log,
+/obj/item/device/detective_scanner,
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
+"yK" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
+/area/station/security/detectives_office)
+"zT" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor,
+/area/station/security/interrogation)
+"zZ" = (
+/obj/machinery/light_switch/directional/east{
+	pixel_y = -4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
+"AG" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/detectives_office)
+"BG" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/security/detectives_office)
+"Cj" = (
+/obj/item/device/radio/intercom/security{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/station/security/interrogation)
+"Fy" = (
+/obj/landmark/gps_waypoint,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/bent/south,
+/turf/simulated/floor,
+/area/station/security/interrogation)
+"FB" = (
+/turf/simulated/floor/black,
+/area/station/security/interrogation)
+"Hb" = (
+/obj/machinery/disposal/small/north{
+	pixel_y = 32
+	},
+/obj/disposalpipe/trunk/south,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
+"Ih" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left{
+	dir = 4;
+	id = "det_interro"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/security/detectives_office)
+"Im" = (
+/obj/machinery/disposal/small/east{
+	pixel_x = -8
+	},
+/obj/disposalpipe/trunk/east,
+/turf/simulated/floor/red/side{
+	dir = 8
+	},
+/area/station/security/interrogation)
+"Jk" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left{
+	dir = 4
+	},
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/security/detectives_office)
+"Kn" = (
+/obj/stool/chair/comfy{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
+"Mb" = (
+/obj/storage/cart/forensic,
+/obj/item/storage/box/evidence,
+/obj/item/hand_labeler,
+/obj/item/spraybottle/detective,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
+"MT" = (
+/obj/stool/chair/comfy{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
+"Nm" = (
+/obj/stool/chair/red{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/landmark/start/job/security_officer,
+/turf/simulated/floor/red/side{
+	dir = 9
+	},
+/area/station/security/interrogation)
+"Np" = (
+/obj/machinery/computer/secure_data/detective_computer,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
+"Po" = (
+/obj/machinery/light/incandescent/harsh,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/disposalpipe/segment/bent/west,
+/turf/simulated/floor/red/side,
+/area/station/security/interrogation)
+"Qd" = (
+/obj/table/wood/auto,
+/obj/item/device/camera_viewer,
+/obj/item/camera,
+/obj/machinery/firealarm/directional/west,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
+"Qm" = (
+/obj/table/wood/auto,
+/obj/item/cigpacket/propuffs{
+	pixel_x = -2
+	},
+/obj/item/cigpacket/propuffs{
+	pixel_y = 4
+	},
+/obj/item/device/light/zippo{
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/vodka{
+	pixel_y = 6;
+	pixel_x = -8
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
+"QD" = (
+/obj/machinery/door/airlock/pyro/security/alt{
+	dir = 4
+	},
+/obj/mapping_helper/access/forensics,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
+"QF" = (
+/obj/machinery/light/incandescent/harsh/very,
+/turf/simulated/floor/black,
+/area/station/security/interrogation)
+"Rg" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/detectives_office)
+"Vh" = (
+/obj/machinery/door/airlock/pyro/glass/security,
+/obj/mapping_helper/access/security,
+/turf/simulated/floor/red,
+/area/station/security/interrogation)
+"VI" = (
+/obj/machinery/port_a_brig,
+/obj/machinery/camera/directional/north,
+/turf/simulated/floor/black,
+/area/station/security/interrogation)
+"VX" = (
+/obj/item/device/radio/intercom/security{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/bent/north,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
+"We" = (
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
+/area/station/security/interrogation)
+"XC" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/detectives_office)
+"YS" = (
+/obj/table/auto,
+/obj/table/auto,
+/obj/item/paper/book/from_file/space_law{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/obj/item/remote/porter/port_a_brig{
+	pixel_x = -7;
+	pixel_y = 3
+	},
+/turf/simulated/floor/redblack,
+/area/station/security/interrogation)
+"Zh" = (
+/obj/machinery/door/airlock/pyro/security/alt{
+	dir = 4
+	},
+/obj/mapping_helper/access/security,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/red,
+/area/station/security/interrogation)
+"Zi" = (
+/obj/machinery/light/incandescent/harsh,
+/turf/simulated/floor/red/side{
+	dir = 4
+	},
+/area/station/security/interrogation)
+"Zj" = (
+/obj/blind_switch/directional/south{
+	id = "det_interro";
+	pixel_x = 6
+	},
+/obj/blind_switch/directional/south{
+	pixel_x = -6
+	},
+/obj/machinery/computer/television,
+/obj/machinery/camera/directional/east,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
+"Zl" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle{
+	dir = 4;
+	id = "det_interro"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/security/detectives_office)
+
+(1,1,1) = {"
+eD
+XC
+BG
+Jk
+cm
+eD
+eD
+eD
+eD
+"}
+(2,1,1) = {"
+Rg
+Np
+fj
+Kn
+gq
+Qd
+Mb
+yB
+eD
+"}
+(3,1,1) = {"
+AG
+og
+Qm
+MT
+cP
+mk
+zZ
+VX
+eD
+"}
+(4,1,1) = {"
+eD
+Hb
+lp
+lp
+sR
+Zj
+eD
+QD
+eD
+"}
+(5,1,1) = {"
+yK
+nj
+Zl
+Zl
+Ih
+eD
+eD
+ku
+rb
+"}
+(6,1,1) = {"
+We
+aD
+FB
+oc
+Nm
+Im
+to
+of
+We
+"}
+(7,1,1) = {"
+We
+QF
+bw
+YS
+bI
+Fy
+zT
+Po
+We
+"}
+(8,1,1) = {"
+We
+VI
+Cj
+Vh
+sQ
+Zi
+mZ
+nE
+We
+"}
+(9,1,1) = {"
+We
+We
+We
+We
+Zh
+We
+We
+We
+We
+"}

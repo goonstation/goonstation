@@ -2036,7 +2036,7 @@ var/global/noir = 0
 				return
 			var/datum/antagonist/antag = locate(href_list["target_antagonist"])
 			var/mob/M = locate(href_list["targetmob"])
-			if (!antag || !M?.mind)
+			if (!istype(antag) || !M?.mind)
 				return
 			if (tgui_alert(usr, "Remove the [antag.display_name] antagonist from [M.real_name] (ckey [M.ckey])?", "antagonist", list("Yes", "Cancel")) != "Yes")
 				return
@@ -2569,7 +2569,7 @@ var/global/noir = 0
 					if ("brick_radios")
 						if (src.level >= LEVEL_PA)
 							if (tgui_alert(usr, "Really brick all radios for all time?", "Are you sure?", list("Yes", "Oops misclick")) == "Yes")
-								no_more_radio()
+								RADIO.no_more_radio()
 								message_admins("[key_name(usr)] bricked all radios forever")
 								logTheThing(LOG_ADMIN, usr, "bricked all radios forever")
 								logTheThing(LOG_DIARY, usr, "bricked all radios forever", "admin")
@@ -3380,8 +3380,7 @@ var/global/noir = 0
 					if("respawn_panel")
 						usr.client.cmd_custom_spawn_event()
 					if("randomevents")
-						//random_events.ui_interact(src.owner.mob)
-						random_events.event_config()
+						random_events.ui_interact(src.owner.mob)
 					if("motives")
 						simsController.showControls(usr)
 					if("regionallocator")

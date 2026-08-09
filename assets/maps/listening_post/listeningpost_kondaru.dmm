@@ -97,6 +97,10 @@
 	pixel_y = 7;
 	pixel_x = 9
 	},
+/obj/item/stamp/syndicate{
+	pixel_x = -6;
+	pixel_y = 5
+	},
 /turf/simulated/floor/caution,
 /area/listeningpost/general)
 "gU" = (
@@ -265,7 +269,7 @@
 "oD" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost/barracks)
 "oO" = (
@@ -461,10 +465,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/light_switch{
-	name = "S light switch";
-	pixel_y = -24
-	},
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor/black,
 /area/listeningpost/general)
 "Bd" = (
@@ -706,7 +707,7 @@
 /obj/table/wood/auto,
 /obj/item/paper_bin,
 /obj/item/pen,
-/obj/item/paper/printout/emerg1,
+/obj/item/paper/image/sstv/emerg1,
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
 "Lu" = (
@@ -770,7 +771,7 @@
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "Om" = (
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /obj/machinery/computer/camera_viewer,
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
@@ -875,7 +876,7 @@
 /obj/item/device/radio/intercom/security{
 	dir = 8
 	},
-/obj/machinery/light_switch/east{
+/obj/machinery/light_switch/directional/east{
 	pixel_y = -16
 	},
 /turf/simulated/floor/black,

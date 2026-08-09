@@ -1076,7 +1076,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			src.labeled = 1
 		else if (istype(W,/obj/item/tool/omnitool))
 			var/obj/item/tool/omnitool/OT = W
-			if (OT.mode == OMNI_MODE_UNCAPPING)
+			if (OT.mode?.mode_id == OMNITOOL::MODE_BOTTLE_OPENER)
 				boutput(user, SPAN_ALERT("It's a screw-top bottle."))
 			else
 				..()
@@ -1635,7 +1635,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	wedge_y_offset = -2
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/shot/syndie
-	SYNDICATE_STEALTH_DESCRIPTION("The label mentions something about \"nearly bottomless mimosas\".", null)
+	SYNDICATE_STEALTH_DESCRIPTION("The label mentions something about \"nearly bottomless mimosas\".")
 	tooltip_flags = parent_type::tooltip_flags | REBUILD_USER
 	amount_per_transfer_from_this = 50
 	gulp_size = 50

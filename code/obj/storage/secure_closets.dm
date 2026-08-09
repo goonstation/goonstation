@@ -2,7 +2,7 @@
 	name = "secure locker"
 	desc = "A card-locked storage locker."
 	icon = 'icons/obj/storage/locker.dmi'
-	object_flags = NO_GHOSTCRITTER
+	object_flags = parent_type::object_flags | NO_GHOSTCRITTER
 	soundproofing = SOUNDPROOFING_INSIDE
 	can_flip_bust = 1
 	p_class = 3
@@ -430,6 +430,23 @@
 	/obj/item/storage/box/luminol_grenade_kit,
 	/obj/item/clipboard)
 
+/obj/storage/secure/closet/iron_safe
+	name = "\improper cast iron safe"
+	desc = "An inordinately heavy and durable safe, no doubt containing something important."
+	req_access = list(access_maxsec)
+	icon_state = "iron_safe"
+	icon_closed = "iron_safe"
+	icon_opened = "iron_safe-open"
+	icon_greenlight = "iron_safe-greenlight"
+	icon_redlight = "iron_safe-redlight"
+	open_sound = 'sound/misc/safe_open.ogg'
+	close_sound = 'sound/misc/safe_close.ogg'
+	_max_health = LOCKER_HEALTH_STRONG
+	_health = LOCKER_HEALTH_STRONG
+	reinforced = TRUE
+	bolted = TRUE
+	radiation_protection = 20
+
 /obj/storage/secure/closet/brig
 	name = "\improper Confiscated Items safe"
 	desc = "A card-locked safe for storage of contraband. Unfortunately it was made by the lowest bidder."
@@ -443,10 +460,12 @@
 	close_sound = 'sound/misc/safe_close.ogg'
 	_max_health = LOCKER_HEALTH_STRONG
 	_health = LOCKER_HEALTH_STRONG
-	reinforced = TRUE
 	bolted = TRUE
 	spawn_contents = list(/obj/item/item_box/contraband)
 	radiation_protection = 20
+
+/obj/storage/secure/closet/brig/empty
+	spawn_contents = list()
 
 // Old Mushroom-era feature I fixed up (Convair880).
 /obj/storage/secure/closet/brig_automatic
@@ -847,7 +866,8 @@
 	/obj/item/clipboard,
 	/obj/item/hand_labeler,
 	/obj/item/cargotele,
-	/obj/item/device/appraisal)
+	/obj/item/device/appraisal,
+	/obj/item/stamp/qm)
 
 /* ==================== */
 /* ----- Civilian ----- */
@@ -879,6 +899,9 @@
 	/obj/item/reagent_containers/glass/wateringcan,
 	/obj/item/paper/book/from_file/hydroponicsguide,
 	/obj/item/device/appraisal)
+
+/obj/storage/secure/closet/civilian/hydro/empty
+	spawn_contents = list()
 
 /obj/storage/secure/closet/civilian/ranch
 	name = "\improper Rancher supplies locker"
@@ -1112,3 +1135,7 @@
 	reinforced = TRUE
 	icon_state = "nanotrasen"
 	icon_closed = "nanotrasen"
+
+/obj/storage/secure/closet/command/nanotrasen/weak
+	req_access = list()
+	reinforced = FALSE

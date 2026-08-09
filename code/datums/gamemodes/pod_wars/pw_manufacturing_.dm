@@ -146,7 +146,7 @@
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/bad_mining)
 	create = 1
 	time = 5 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/pod/weapon/mining_podwars
 	name = "Plasma Cutter System"
@@ -156,7 +156,7 @@
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/mining)
 	create = 1
 	time = 5 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/pod/weapon/taser
 	name = "Mk.1 Combat Taser"
@@ -166,7 +166,7 @@
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/taser)
 	create = 1
 	time = 10 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/pod/weapon/laser
 	name = "Mk.2 Scout Laser"
@@ -176,7 +176,7 @@
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/laser)
 	create = 1
 	time = 10 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/pod/weapon/laser/short
 	name = "Mk.2 CQ Laser"
@@ -195,7 +195,7 @@
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/disruptor)
 	create = 1
 	time = 10 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/pod/weapon/disruptor/light
 	name = "Mk.3 Disruptor"
@@ -205,7 +205,7 @@
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/disruptor_light)
 	create = 1
 	time = 10 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/pod/weapon/ass_laser
 	name = "Mk.4 Assault Laser"
@@ -216,7 +216,7 @@
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/laser_ass)
 	create = 1
 	time = 10 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/pod/weapon/hammer_railgun
 	name = "Hammerhead Railgun"
@@ -226,7 +226,7 @@
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/hammer_railgun)
 	create = 1
 	time = 10 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/pod/weapon/shotgun
 	name = "SPE-12 Ballistic System"
@@ -236,7 +236,7 @@
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/gun/pod_wars)
 	create = 1
 	time = 10 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/pod/weapon/salvo_rockets
 	name = "Cerberus Salvo Rockets"
@@ -247,7 +247,7 @@
 	item_outputs = list(/obj/item/shipcomponent/mainweapon/salvo_rockets)
 	create = 1
 	time = 10 SECONDS
-	category = "Tool"
+	category = MANUFACTURER::CATEGORY::TOOL
 
 ////////////pod-armor///////////////////////
 
@@ -262,7 +262,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 	item_outputs = list(/obj/item/podarmor/armor_light)
 	create = 1
 	time = 20 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/pod_wars/pod/armor_light/nt
 	name = "Light NT Pod Armor"
@@ -280,7 +280,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 	item_outputs = list(/obj/item/podarmor/armor_heavy)
 	create = 1
 	time = 30 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/pod_wars/pod/armor_robust/nt
 	name = "Robust NT Pod Armor"
@@ -298,7 +298,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 	item_outputs = list(/obj/item/tank/jetpack)
 	create = 1
 	time = 60 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/pod_wars/jetpack/syndicate
 	name = "Jetpack"
@@ -307,7 +307,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 	item_outputs = list(/obj/item/tank/jetpack/syndicate)
 	create = 1
 	time = 60 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/pod_wars/industrialboots
 	name = "Mechanised Boots"
@@ -318,7 +318,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 	item_outputs = list(/obj/item/clothing/shoes/industrial)
 	create = 1
 	time = 120 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/pod_wars/accumulator
 	name = "Mineral Accumulator"
@@ -328,7 +328,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 	item_outputs = list(/obj/machinery/oreaccumulator)
 	create = 1
 	time = 120 SECONDS
-	category = "Machinery"
+	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/pod_wars/accumulator/syndicate
 	name = "Syndicate Mineral Accumulator"
@@ -345,7 +345,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 							 "dense" = 20)
 	item_outputs = list(/obj/item/vending/restock_cartridge/medical)
 	time = 60 SECONDS
-	category = "Ammo"
+	category = MANUFACTURER::CATEGORY::AMMO
 
 /obj/machinery/manufacturer/mining/pod_wars/
 	var/team_num = 0
@@ -402,7 +402,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 	item_outputs = list(/obj/item/ammo/power_cell/high_power)
 	create = 1
 	time = 1 SECONDS
-	category = "Ammo"
+	category = MANUFACTURER::CATEGORY::AMMO
 
 /datum/manufacture/pod_wars/cell_higher
 	name = "Standard Bubs Weapon Cell"
@@ -413,7 +413,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 	item_outputs = list(/obj/item/ammo/power_cell/higher_power)
 	create = 1
 	time = 1 SECONDS
-	category = "Ammo"
+	category = MANUFACTURER::CATEGORY::AMMO
 
 ////////////////////////////
 
@@ -426,7 +426,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 	item_outputs = list(/obj/item/ammo/power_cell/self_charging/pod_wars_basic)
 	create = 1
 	time = 1 SECONDS
-	category = "Ammo"
+	category = MANUFACTURER::CATEGORY::AMMO
 
 /datum/manufacture/pod_wars/cell_pod_wars_standard
 	name = "Standard Self-Charging Weapon Cell"
@@ -437,7 +437,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 	item_outputs = list(/obj/item/ammo/power_cell/self_charging/pod_wars_standard)
 	create = 1
 	time = 1 SECONDS
-	category = "Ammo"
+	category = MANUFACTURER::CATEGORY::AMMO
 
 /datum/manufacture/pod_wars/cell_pod_wars_high
 	name = "Robust Self-Charging Weapon Cell"
@@ -448,7 +448,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 	item_outputs = list(/obj/item/ammo/power_cell/self_charging/pod_wars_high)
 	create = 1
 	time = 1 SECONDS
-	category = "Ammo"
+	category = MANUFACTURER::CATEGORY::AMMO
 
 
 
@@ -459,7 +459,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 	item_outputs = list(/obj/item/shipcomponent/secondary_system/lock/pw_id)
 	create = 1
 	time = 1 SECONDS
-	category = "Miscellaneous"
+	category = MANUFACTURER::CATEGORY::MISCELLANEOUS
 
 /datum/manufacture/pod_wars/barricade
 	name = "Deployable Barricade"
@@ -467,7 +467,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 	item_outputs = list(/obj/item/deployer/barricade)
 	create = 1
 	time = 1 SECONDS
-	category = "Miscellaneous"
+	category = MANUFACTURER::CATEGORY::MISCELLANEOUS
 
 /datum/manufacture/pod_wars/energy_concussion_grenade
 	name = "Concussion Grenade"
@@ -477,7 +477,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 	item_outputs = list(/obj/item/old_grenade/energy_concussion)
 	create = 1
 	time = 1 SECONDS
-	category = "Weapon"
+	category = MANUFACTURER::CATEGORY::WEAPON
 
 
 /datum/manufacture/pod_wars/energy_frag_grenade
@@ -488,7 +488,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 	item_outputs = list(/obj/item/old_grenade/energy_frag)
 	create = 1
 	time = 1 SECONDS
-	category = "Weapon"
+	category = MANUFACTURER::CATEGORY::WEAPON
 
 
 /datum/manufacture/pod_wars/handcuffs
@@ -497,7 +497,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 	item_outputs = list(/obj/item/handcuffs)
 	create = 1
 	time = 2 SECONDS
-	category = "Weapon"
+	category = MANUFACTURER::CATEGORY::WEAPON
 
 /datum/manufacture/pod_wars_industrialarmor_NT
 	name = "Industrial Space Armor Set"
@@ -507,7 +507,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 	item_outputs = list(/obj/item/clothing/suit/space/pod_wars/NT/industrial, /obj/item/clothing/head/helmet/space/pod_wars/NT/industrial)
 	create = 1
 	time = 90 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /datum/manufacture/pod_wars_industrialarmor_SY
 	name = "Industrial Space Armor Set"
@@ -517,7 +517,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod_wars/pod)
 	item_outputs = list(/obj/item/clothing/suit/space/pod_wars/SY/industrial, /obj/item/clothing/head/helmet/space/pod_wars/SY/industrial)
 	create = 1
 	time = 90 SECONDS
-	category = "Clothing"
+	category = MANUFACTURER::CATEGORY::CLOTHING
 
 /obj/machinery/chem_dispenser/medical
 	name = "medical reagent dispenser"

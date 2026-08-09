@@ -34,11 +34,11 @@
 			return
 
 	var/current = src.read_user_field("curpath")
-	switch (src.signal_program(1, list("command" = DWAINE_COMMAND_FOWNER, "path" = ABSOLUTE_PATH(initlist[2], current), "owner" = new_owner, "group" = new_group)))
-		if (ESIG_NOFILE, ESIG_NOTARGET)
+	switch (src.signal_program(1, list("command" = DWAINE::SYSCALL::FOWNER, "path" = ABSOLUTE_PATH(initlist[2], current), "owner" = new_owner, "group" = new_group)))
+		if (DWAINE::ERR::SIG::NOFILE, DWAINE::ERR::SIG::NOTARGET)
 			src.message_user("Error: Invalid target path.")
 
-		if (ESIG_GENERIC)
+		if (DWAINE::ERR::SIG::GENERIC)
 			src.message_user("Error: Access denied.")
 
 	mainframe_prog_exit
