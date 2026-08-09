@@ -737,7 +737,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 				boutput(user, SPAN_NOTICE("You scribble on the mask until it's filled in."))
 				src.color = P.font_color
 
-/obj/item/clothing/mask/sunflower_wire
+/obj/item/clothing/mask/sunflowermask
 	name = "Sunflower Mask"
 	desc = "Looking  at it makes you happy. Be careful wearing it around bees, though."
 	icon_state = "sunflower_mask"
