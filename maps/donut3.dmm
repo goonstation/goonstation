@@ -6167,6 +6167,10 @@
 /obj/item/device/radio/intercom/medical{
 	dir = 8
 	},
+/obj/machinery/sink/slim{
+	dir = 4;
+	pixel_x = -4
+	},
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
@@ -15905,7 +15909,14 @@
 /obj/disposalpipe/trunk,
 /obj/table/auto,
 /obj/item/storage/box/body_bag,
+/obj/item/storage/box/biohazard_bags{
+	pixel_y = 6
+	},
 /obj/item/device/detective_scanner,
+/obj/item/spraybottle/cleaner{
+	pixel_x = -8
+	},
+/obj/item/hand_labeler,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "eVS" = (
@@ -34795,6 +34806,9 @@
 	},
 /obj/machinery/drainage,
 /obj/machinery/light/small/floor/cool,
+/obj/machinery/defib_mount{
+	pixel_y = 18
+	},
 /turf/simulated/floor/red/checker,
 /area/station/medical/medbay/treatment2)
 "kSD" = (
@@ -51983,6 +51997,10 @@
 	},
 /obj/machinery/light/incandescent/cool{
 	dir = 1
+	},
+/obj/machinery/sink/slim{
+	dir = 8;
+	pixel_x = 4
 	},
 /turf/simulated/floor/red/checker,
 /area/station/medical/medbay/treatment2)
