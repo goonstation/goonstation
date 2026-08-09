@@ -853,4 +853,5 @@ TYPEINFO(/obj/item/reagent_containers/injector_filler)
 		new /datum/property_setter_property(incrementative = 1, cap = -0.3, property_name = "movespeed", property_value = -0.3, inverse = 1),
 		new /datum/property_setter_property(incrementative = 1, cap = -0.3, property_name = "space_movespeed", property_value = -0.3, inverse = 1),
 		new /datum/property_setter_property(incrementative = 1, cap = 80, property_name = "radprot", property_value = 60),
-		new /datum/property_setter_property(incrementative = 1, cap = 60, property_name = "exploprot", property_value = 30))
+		new /datum/property_setter_property(incrementative = 1, cap = 60, property_name = "exploprot", property_value = 30),
+		new /datum/property_setter_property(incrementative = 1, cap = 100, property_name = "deflection", property_value = 30))
