@@ -94,6 +94,11 @@
 	desc = "A specialized NT emergency kit, containing all you should need to survive during a crisis. Even includes a mandatory ceremonial beret! How optimistic."
 	spawn_contents = list(/obj/item/clothing/mask/breath, /obj/item/tank/pocket/extended/oxygen, /obj/item/clothing/head/NTberet, /obj/item/crowbar)
 
+#ifdef MAP_OVERRIDE_NADIR //guarantee protective gear
+	make_my_stuff()
+		src.storage.add_contents(new /obj/item/clothing/head/emerg(src))
+		src.storage.add_contents(new /obj/item/emergencysuitfolded(src))
+#endif
 /obj/item/storage/pill_bottle
 	name = "pill bottle"
 	icon_state = "pill_canister"
