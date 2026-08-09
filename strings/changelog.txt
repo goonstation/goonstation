@@ -1,5 +1,9 @@
 
 (t)sun aug 09 26
+(u)JORJ949
+(p)27383
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Sleepy pens now only show their "sharp point" description text to syndies.
 (u)Mr. Moriarty
 (p)27183
 (e)💅🔨🐁|C-QoL, A-Player-Actions, A-Critters
