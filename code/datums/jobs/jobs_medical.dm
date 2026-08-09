@@ -5,6 +5,9 @@ ABSTRACT_TYPE(/datum/job/medical)
 	job_category = JOB_MEDICAL
 	email_group = MGD_MEDICAL
 
+	dept_rounds_played(datum/player/player)
+		return player?.get_rounds_participated_medical()
+
 /datum/job/medical/medical_doctor
 	name = "Medical Doctor"
 	limit = 5
@@ -81,7 +84,7 @@ ABSTRACT_TYPE(/datum/job/medical)
 	wages = PAY::UNTRAINED
 	trait_list = list("training_medical")
 	access_string = "Medical Doctor"
-	rounds_allowed_to_play = ROUNDS_MAX_MEDASS
+	rounds_allowed_to_play_dept = ROUNDS_MAX_MEDASS
 	slot_back = list(/obj/item/storage/backpack/medic)
 	slot_belt = list(/obj/item/storage/belt/medical/prepared)
 	slot_foot = list(/obj/item/clothing/shoes/red)

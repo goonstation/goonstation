@@ -71,9 +71,9 @@
 #define ROUNDS_MIN_SECASS 5
 
 // Job round maximum (for newbees)
-#define ROUNDS_MAX_RESASS 75
-#define ROUNDS_MAX_MEDASS 75
-#define ROUNDS_MAX_TECHASS 75
+#define ROUNDS_MAX_RESASS 30
+#define ROUNDS_MAX_MEDASS 30
+#define ROUNDS_MAX_TECHASS 30
 
 // World announcement orders
 // Order in which the "John is the Captain!" world messages show up when multiple heads join at the same time (mainly roundstart)

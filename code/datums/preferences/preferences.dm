@@ -1465,14 +1465,10 @@ var/list/removed_jobs = list(
 					reason_tooltip = "This job requires being on the Head of Security whitelist. Mentors may play this job on Fridays. Anyone may play this job on Saturdays."
 				else if (!job_datum.has_rounds_needed(user.client?.player))
 					var/played_rounds = user.client.player.get_rounds_participated()
-					var/needed_rounds = job_datum.rounds_needed_to_play
-					var/allowed_rounds = job_datum.rounds_allowed_to_play
-
-					if (played_rounds < needed_rounds)
-						reason_tooltip =  "You have only played <b>[played_rounds]</b> round[s_es(played_rounds)], but need to play a minimum of <b>[needed_rounds]</b> rounds to play as this job."
-					else
-						reason_tooltip =  "You have already played <b>[played_rounds]</b> rounds, but this job has a cap of <b>[allowed_rounds]</b> allowed rounds. You should be experienced enough to try the full role!"
-
+					reason_tooltip = "You have only played <b>[played_rounds]</b> round[s_es(played_rounds)], but need to play a minimum of <b>[job_datum.rounds_needed_to_play]</b> rounds to play as this job."
+				else if (job_datum.rounds_allowed_to_play_dept && job_datum.dept_rounds_played(user.client.player) >= job_datum.rounds_allowed_to_play_dept)
+					var/played_rounds_dept = job_datum.dept_rounds_played(user.client.player)
+					reason_tooltip = "You have already played <b>[played_rounds_dept]</b> round[s_es(played_rounds_dept)], but this job has a cap of <b>[job_datum.rounds_allowed_to_play_dept]</b> allowed rounds. You should be experienced enough to try the full role!"
 				if (reason_tooltip)
 					if (category != "unwanted")
 						if (category == "favourite")
@@ -1595,24 +1591,23 @@ var/list/removed_jobs = list(
 #else
 		var/datum/job/temp_job = find_job_in_controller_by_string(job,1)
 #endif
-		if (user.client && !temp_job.has_rounds_needed(user.client.player))
-			var/played_rounds = user.client.player.get_rounds_participated()
-			var/needed_rounds = temp_job.rounds_needed_to_play
-			var/allowed_rounds = temp_job.rounds_allowed_to_play
-			var/reason_msg = ""
-			if (allowed_rounds && !needed_rounds)
-				reason_msg =  "You've already played </b>[played_rounds]</b> rounds, but this job has a cap of <b>[allowed_rounds] allowed rounds. You should be experienced enough!</b>"
-			else if (needed_rounds)
-				reason_msg =  "You've only played </b>[played_rounds]</b> rounds and need to play <b>[needed_rounds].</b>"
-			boutput(user, SPAN_ALERT("<b>You cannot play [temp_job.name].</b> [reason_msg]"))
-			if (occ != 4)
-				switch (occ)
-					if (1) src.job_favorite = null
-					if (2) src.jobs_med_priority -= job
-					if (3) src.jobs_low_priority -= job
-				src.jobs_unwanted += job
-			return
-
+		if (user.client)
+			var/reason_msg = null
+			if (!temp_job.has_rounds_needed(user.client.player))
+				var/played_rounds = user.client.player.get_rounds_participated()
+				reason_msg = "You have only played <b>[played_rounds]</b> round[s_es(played_rounds)], but need to play a minimum of <b>[temp_job.rounds_needed_to_play]</b> rounds to play as this job."
+			if (temp_job.rounds_allowed_to_play_dept && temp_job.dept_rounds_played(user.client.player) >= temp_job.rounds_allowed_to_play_dept)
+				var/played_rounds_dept = temp_job.dept_rounds_played(user.client.player)
+				reason_msg =  "You've already played <b>[played_rounds_dept]</b> rounds in this department, but this job has a cap of <b>[temp_job.rounds_allowed_to_play_dept]</b> allowed rounds. You should be experienced enough to try the full role!"
+			if (reason_msg)
+				boutput(user, SPAN_ALERT("<b>You cannot play [temp_job.name].</b> [reason_msg]"))
+				if (occ != 4)
+					switch (occ)
+						if (1) src.job_favorite = null
+						if (2) src.jobs_med_priority -= job
+						if (3) src.jobs_low_priority -= job
+					src.jobs_unwanted += job
+				return
 		var/picker = "Low Priority"
 		var/datum/job/J = find_job_in_controller_by_string(job)
 		switch (level)

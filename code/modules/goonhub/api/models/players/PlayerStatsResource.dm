@@ -8,6 +8,10 @@
 	var/byond_minor		= null // integer
 	var/played			= null // integer
 	var/played_rp		= null // integer
+	var/played_security	= null // integer
+	var/played_medical	= null // integer
+	var/played_research	= null // integer
+	var/played_engineering	= null // integer
 	var/connected		= null // integer
 	var/connected_rp	= null // integer
 	var/time_played		= null // integer
@@ -22,6 +26,10 @@
 	src.byond_minor = response["byond_minor"]
 	src.played = response["played"]
 	src.played_rp = response["played_rp"]
+	src.played_security = response["played_security"]
+	src.played_medical = response["played_medical"]
+	src.played_research = response["played_research"]
+	src.played_engineering = response["played_engineering"]
 	src.connected = response["connected"]
 	src.connected_rp = response["connected_rp"]
 	src.time_played = response["time_played"]

@@ -7,6 +7,9 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	job_category = JOB_ENGINEERING
 	email_group = MGD_ENGINEER
 
+	dept_rounds_played(datum/player/player)
+		return player?.get_rounds_participated_engineering()
+
 /datum/job/engineering/engineer
 	name = "Engineer"
 	limit = 8
@@ -51,7 +54,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	wages = PAY::UNTRAINED
 	trait_list = list("training_engineer")
 	access_string = "Engineer"
-	rounds_allowed_to_play = ROUNDS_MAX_TECHASS
+	rounds_allowed_to_play_dept = ROUNDS_MAX_TECHASS
 	slot_back = list(/obj/item/storage/backpack/engineering)
 	slot_ears = list(/obj/item/device/radio/headset/engineer)
 	slot_jump = list(/obj/item/clothing/under/color/yellow)

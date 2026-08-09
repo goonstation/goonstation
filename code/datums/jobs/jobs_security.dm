@@ -8,6 +8,9 @@ ABSTRACT_TYPE(/datum/job/security)
 	job_category = JOB_SECURITY
 	email_group = MGD_SECURITY
 
+	dept_rounds_played(datum/player/player)
+		return player?.get_rounds_participated_security()
+
 /datum/job/security/security_officer
 	name = "Security Officer"
 	limit = 5

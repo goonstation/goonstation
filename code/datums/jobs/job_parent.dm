@@ -74,7 +74,7 @@ ABSTRACT_TYPE(/datum/job)
 	var/bio_effects = null
 	var/objective = null
 	var/rounds_needed_to_play = 0 //0 by default, set to the amount of rounds they should have in order to play this
-	var/rounds_allowed_to_play = 0 //0 by default (which means infinite), set to the amount of rounds they are allowed to have in order to play this, primarily for assistant jobs
+	var/rounds_allowed_to_play_dept = 0 //! Maximum rounds allowed to play this job based on total rounds in the department, used for trainee jobs. 0 (default) is infinite.
 	var/map_can_autooverride = TRUE //! Base the initial limit of job slots on the number of map-defined job start locations.
 	/// Does this job use the name and appearance from the character profile? (for tracking respawned names)
 	var/uses_character_profile = TRUE
@@ -217,8 +217,6 @@ ABSTRACT_TYPE(/datum/job)
 	proc/has_rounds_needed(datum/player/player, var/min = 0, var/max = 0)
 		if (src.rounds_needed_to_play)
 			min = src.rounds_needed_to_play
-		if (src.rounds_allowed_to_play)
-			max = src.rounds_allowed_to_play
 		if (!min && !max)
 			return TRUE
 
@@ -230,3 +228,7 @@ ABSTRACT_TYPE(/datum/job)
 		if (round_num >= min && (round_num <= max || !max))
 			return TRUE
 		return FALSE
+
+	/// Get the number of times the player has played in this department. Used for trainee job caps.
+	proc/dept_rounds_played(datum/player/player)
+		return null

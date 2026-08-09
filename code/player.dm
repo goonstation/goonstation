@@ -25,6 +25,14 @@ var/global/list/players = list()
 	VAR_PRIVATE/rounds_participated = null
 	/// how many rounds (rp only) theyve declared ready and joined, null with to differentiate between not set and no participation
 	VAR_PRIVATE/rounds_participated_rp = null
+	/// how many rounds declared ready and joined as security, null with to differentiate between not set and no participation
+	VAR_PRIVATE/rounds_participated_security = null
+	/// how many rounds declared ready and joined as medical, null with to differentiate between not set and no participation
+	VAR_PRIVATE/rounds_participated_medical = null
+	/// how many rounds declared ready and joined as research, null with to differentiate between not set and no participation
+	VAR_PRIVATE/rounds_participated_research = null
+	/// how many rounds declared ready and joined as engineering, null with to differentiate between not set and no participation
+	VAR_PRIVATE/rounds_participated_engineering = null
 	/// how many rounds (total) theyve joined to at least the lobby in, null to differentiate between not set and not seen
 	VAR_PRIVATE/rounds_seen = null
 	/// how many rounds (rp only) theyve joined to at least the lobby in, null to differentiate between not set and not seen
@@ -162,6 +170,10 @@ var/global/list/players = list()
 
 		src.rounds_participated_rp = text2num(playerStats.played_rp)
 		src.rounds_participated = text2num(playerStats.played) + src.rounds_participated_rp //the API counts these separately, but we want a combined number
+		src.rounds_participated_security = text2num(playerStats.played_security)
+		src.rounds_participated_medical = text2num(playerStats.played_medical)
+		src.rounds_participated_research = text2num(playerStats.played_research)
+		src.rounds_participated_engineering = text2num(playerStats.played_engineering)
 		src.rounds_seen_rp = text2num(playerStats.connected_rp)
 		src.rounds_seen = text2num(playerStats.connected) + src.rounds_seen_rp //the API counts these separately, but we want a combined number
 		src.last_seen = playerStats.latest_connection?.created_at
@@ -217,6 +229,30 @@ var/global/list/players = list()
 			if (!src.cache_round_stats_blocking()) //if trying to set them fails
 				return null
 		return src.rounds_participated_rp
+
+	proc/get_rounds_participated_security()
+		if (!src.cached_round_stats) //if the stats havent been cached yet
+			if (!src.cache_round_stats_blocking()) //if trying to set them fails
+				return null
+		return src.rounds_participated_security
+
+	proc/get_rounds_participated_medical()
+		if (!src.cached_round_stats) //if the stats havent been cached yet
+			if (!src.cache_round_stats_blocking()) //if trying to set them fails
+				return null
+		return src.rounds_participated_medical
+
+	proc/get_rounds_participated_research()
+		if (!src.cached_round_stats) //if the stats havent been cached yet
+			if (!src.cache_round_stats_blocking()) //if trying to set them fails
+				return null
+		return src.rounds_participated_research
+
+	proc/get_rounds_participated_engineering()
+		if (!src.cached_round_stats) //if the stats havent been cached yet
+			if (!src.cache_round_stats_blocking()) //if trying to set them fails
+				return null
+		return src.rounds_participated_engineering
 
 	/// returns the number of rounds that the player has at least joined the lobby in
 	proc/get_rounds_seen()
