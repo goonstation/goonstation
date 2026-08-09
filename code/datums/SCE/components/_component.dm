@@ -1,228 +1,204 @@
 /datum
 	/**
-		* Components attached to this datum
-		*
-		* Lazy associated list in the structure of `type:component/list of components`
-		*/
-	var/list/datum_components
+	 *	An associative list of components registered to this datum, indexed by component type. \
+	 *	Type structure: `/list<type, /datum/component>` or `/list<type, /list/datum/component>`
+	 */
+	var/list/datum_components = null
+
 
 TYPEINFO(/datum/component)
-	var/initialization_args = null // let the user select any initialization arguments
+	var/initialization_args = null
 
+ABSTRACT_TYPE(/datum/component)
 /**
-  * # Component
-  *
-  * The component datum
-  *
-  * A component should be a single standalone unit
-  * of functionality, that works by receiving signals from it's parent
-  * object to provide some single functionality (i.e a slippery component)
-  * that makes the object it's attached to cause people to slip over.
-  * Useful when you want shared behaviour independent of type inheritance
-  */
+ *	A component is a single standalone unit of functionality that works by receiving signals from its parent object in order to
+ *	provide some single functionality. For example, a slippery component that makes the object it's attached to cause people to
+ *	slip over.
+ *
+ *	Useful for when you want shared behaviour independent of type inheritance.
+ */
 /datum/component
+	/// The datum that this component belongs to.
+	var/datum/parent = null
+
 	/**
-	  * Defines how duplicate existing components are handled when added to a datum
-	  *
-	  * See [COMPONENT_DUPE_*][COMPONENT_DUPE_ALLOWED] definitions for available options
-	  */
+	 *	Defines how duplicate existing components are handled when added to a datum.
+	 *
+	 *	See the `COMPONENT_DUPE_` defines for available options.
+	 */
 	var/dupe_mode = COMPONENT_DUPE_HIGHLANDER
 
 	/**
-	  * The type to check for duplication
-	  *
-	  * `null` means exact match on `type` (default)
-	  *
-	  * Any other type means that and all subtypes
-	  */
-	var/dupe_type
-
-	/// The datum this components belongs to
-	var/datum/parent
+	 *	The type to check for duplication.
+	 *
+	 *	A `null` value means an exact match on this component's type. Any other type means that and all subtypes.
+	 */
+	var/dupe_type = null
 
 	/**
-	  * Only set to true if you are able to properly transfer this component
-	  *
-	  * At a minimum [RegisterWithParent][/datum/component/proc/RegisterWithParent] and [UnregisterFromParent][/datum/component/proc/UnregisterFromParent] should be used
-	  *
-	  * Make sure you also implement [PostTransfer][/datum/component/proc/PostTransfer] for any post transfer handling
-	  */
+	 *	Only set to `TRUE` if this component can be properly transferred.
+	 *
+	 *	At a minimum `RegisterWithParent()` and `UnregisterFromParent()`should be used. Use `PostTransfer()` for any
+	 *	post-transfer handling.
+	 */
 	var/can_transfer = FALSE
 
 /**
-  * Create a new component.
-  *
-  * Additional arguments are passed to [Initialize()][/datum/component/proc/Initialize]
-  *
-  * Arguments:
-  * * datum/P the parent datum this component reacts to signals from
-  */
+ *	Create a new component.
+ *
+ *	Additional arguments are passed to `Initialize()`.
+ *
+ *	Arguments:
+ *	- `datum/parent`: The parent datum that this component reacts to signals from.
+ */
 /datum/component/New(list/raw_args)
-	..()
-	parent = raw_args[1]
-	var/list/arguments = raw_args.Copy(2)
-	if(Initialize(arglist(arguments)) == COMPONENT_INCOMPATIBLE)
-		var/datum/parent_value = src.parent //qdel nulls parent!!!
-		qdel(src, TRUE, TRUE)
-		CRASH("Incompatible [type] assigned to a [parent_value.type]! args: [json_encode(arguments)]")
+	. = ..()
+	src.parent = raw_args[1]
 
-	_JoinParent(parent)
+	var/list/arguments = raw_args.Copy(2)
+	if (src.Initialize(arglist(arguments)) == COMPONENT_INCOMPATIBLE)
+		global.stack_trace("Incompatible [src.type] assigned to a [src.parent.type]! args: [json_encode(arguments)]")
+		qdel(src.parent)
+
+	src._JoinParent(src.parent)
 
 /**
-  * Called during component creation with the same arguments as in new excluding parent.
-  *
-  * Do not call `qdel(src)` from this function, `return COMPONENT_INCOMPATIBLE` instead
-  */
+ *	Called during `New()` with the same arguments, excluding `parent`.
+ *
+ *	Do not call `qdel(src)` from this function, `return COMPONENT_INCOMPATIBLE` instead.
+ */
 /datum/component/proc/Initialize(...)
 	SHOULD_CALL_PARENT(TRUE)
 	return
 
 /**
-  * Properly removes the component from `parent` and cleans up references
-  *
-  * Arguments:
-  * * force - makes it not check for and remove the component from the parent
-  * * silent - deletes the component without sending a [COMSIG_COMPONENT_REMOVING] signal
-  */
+ *	Properly removes the component from `parent` and cleans up references.
+ */
 /datum/component/disposing()
-	if(parent)
-		_RemoveFromParent()
-	if(parent)
-		SEND_SIGNAL(parent, COMSIG_COMPONENT_REMOVING, src)
-	parent = null
-	return ..()
+	if (src.parent)
+		src._RemoveFromParent()
+		SEND_SIGNAL(src.parent, COMSIG_COMPONENT_REMOVING, src)
+
+	src.parent = null
+	. = ..()
 
 /**
-  * Internal proc to handle behaviour of components when joining a parent
-  */
+ *	Internal proc to handle behaviour when bring added to a parent.
+ */
 /datum/component/proc/_JoinParent()
-	var/datum/P = parent
-	//lazy init the parent's dc list
-	var/list/dc = P.datum_components
-	if(!dc)
-		P.datum_components = dc = list()
+	var/list/dc = (src.parent.datum_components ||= list())
 
-	//set up the typecache
-	var/our_type = type
-	for(var/I in _GetInverseTypeList(our_type))
-		var/test = dc[I]
-		if(test)	//already another component of this type here
-			var/list/components_of_type
-			if(!length(test))
-				components_of_type = list(test)
-				dc[I] = components_of_type
-			else
-				components_of_type = test
-			if(I == our_type)	//exact match, take priority
-				var/inserted = FALSE
-				for(var/J in 1 to components_of_type.len)
-					var/datum/component/C = components_of_type[J]
-					if(C.type != our_type) //but not over other exact matches
-						components_of_type.Insert(J, src)
-						inserted = TRUE
-						break
-				if(!inserted)
-					components_of_type += src
-			else	//indirect match, back of the line with ya
-				components_of_type += src
-		else	//only component of this type, no list
-			dc[I] = src
+	for (var/type as anything in src._GetInverseTypeList())
+		var/list/looked_up = dc[type]
 
-	RegisterWithParent()
+		// If nothing has been registered here yet, register the reference.
+		if (isnull(looked_up))
+			dc[type] = src
+		// If only one other thing has been registered here, replace the reference with a list.
+		else if (!length(looked_up))
+			dc[type] = list(looked_up, src)
+		// If many other things have been registered here, add us to the list.
+		else
+			dc[type] += src
+
+	// Sort the list such that exact type matches take priority.
+	var/list/datum/component/components_of_type = dc[type]
+	var/list_length = length(components_of_type)
+	for (var/i in 1 to list_length)
+		// Do not take priority over other exact matches.
+		if (istype_exact(components_of_type[i], src.type))
+			continue
+
+		components_of_type.Swap(i, list_length)
+		break
+
+	src.RegisterWithParent()
 
 /**
-  * Internal proc to handle behaviour when being removed from a parent
-  */
+ *	Internal proc to handle behaviour when being removed from a parent.
+ */
 /datum/component/proc/_RemoveFromParent()
-	var/datum/P = parent
-	var/list/dc = P.datum_components
-	for(var/I in _GetInverseTypeList())
-		var/list/components_of_type = dc[I]
-		if(length(components_of_type))	//
-			var/list/subtracted = components_of_type - src
-			if(length(subtracted) == 1)	//only 1 guy left
-				dc[I] = subtracted[1]	//make him special
-			else
-				dc[I] = subtracted
-		else	//just us
-			dc -= I
-	if(!dc.len)
-		P.datum_components = null
+	var/list/dc = src.parent.datum_components
 
-	UnregisterFromParent()
+	for (var/type as anything in src._GetInverseTypeList())
+		var/list/looked_up = dc[type]
+
+		switch (length(looked_up))
+			// If only one other thing has been registered, replace the list with a reference to that other registree.
+			if (2)
+				dc[type] = (looked_up - src)[1]
+			// If we're the only thing registered, remove the component type from the lookup.
+			if (1, 0)
+				dc -= type
+			// If many other things have been registered here, remove us from the list.
+			else
+				looked_up -= src
+
+	if (!length(dc))
+		src.parent.datum_components = null
+
+	src.UnregisterFromParent()
 
 /**
-  * Register the component with the parent object
-  *
-  * Use this proc to register with your parent object
-  *
-  * Overridable proc that's called when added to a new parent
-  */
+ *	Register the component with the parent object.
+ *
+ *	Overridable proc that's called when added to a new parent.
+ */
 /datum/component/proc/RegisterWithParent()
 	return
 
 /**
-  * Unregister from our parent object
-  *
-  * Use this proc to unregister from your parent object
-  *
-  * Overridable proc that's called when removed from a parent
-  * *
-  */
+ *	Unregister the component from the parent object.
+ *
+ *	Overridable proc that's called when removed from a parent.
+ */
 /datum/component/proc/UnregisterFromParent()
 	return
 
 /**
-  * Called on a component when a component of the same type was added to the same parent
-  *
-  * See [/datum/component/var/dupe_mode]
-  *
-  * `C`'s type will always be the same of the called component
-  */
+ *	Called on a component when a component of the same type was added to this component's parent. See `dupe_mode`.
+ *
+ *	`C`'s type will always be the same as that of the called component.
+ */
 /datum/component/proc/InheritComponent(datum/component/C, i_am_original)
 	return
 
 /**
-  * Called on a component when a component of the same type was added to the same parent with [COMPONENT_DUPE_SELECTIVE]
-  *
-  * See [/datum/component/var/dupe_mode]
-  *
-  * `C`'s type will always be the same of the called component
-  *
-  * return TRUE if you are absorbing the component, otherwise FALSE if you are fine having it exist as a duplicate component
-  */
+ *	Called on a component when a component of the same type was added to this component's parent with `COMPONENT_DUPE_SELECTIVE`.
+ *
+ *	`C`'s type will always be the same as that of the called component.
+ */
 /datum/component/proc/CheckDupeComponent(datum/component/C, ...)
 	return
 
-
 /**
-  * Callback Just before this component is transferred
-  *
-  * Use this to do any special cleanup you might need to do before being deregged from an object
-  */
+ *	Called before this component is transferred to a new parent.
+ *
+ *	Used for special cleanup before being deregistered from the parent object.
+ */
 /datum/component/proc/PreTransfer()
 	return
 
 /**
-  * Callback Just after a component is transferred
-  *
-  * Use this to do any special setup you need to do after being moved to a new object
-  *
-  * Do not call `qdel(src)` from this function, `return COMPONENT_INCOMPATIBLE` instead
-  */
+ *	Called after this component is transferred to a new parent.
+ *
+ *	Used for special setup after being registered to a new parent object.
+ *
+ *	Do not call `qdel(src)` from this function, `return COMPONENT_INCOMPATIBLE` instead.
+ */
 /datum/component/proc/PostTransfer()
-	return COMPONENT_INCOMPATIBLE //Do not support transfer by default as you must properly support it
+	// Do not support transfer by default as you must properly support it.
+	return COMPONENT_INCOMPATIBLE
 
 /**
-  * Internal proc to create a list of our type and all parent types
-  */
-/datum/component/proc/_GetInverseTypeList(our_type = type)
-	//we can do this one simple trick
-	var/current_type = parent_type
-	. = list(our_type, current_type)
-	//and since most components are root level + 1, this won't even have to run
+ *	Internal proc to create a list of our type and all parent types.
+ */
+/datum/component/proc/_GetInverseTypeList()
+	var/datum/current_type = src.parent_type
+	. = list(src.type, current_type)
+
 	while (current_type != /datum/component)
-		current_type = type2parent(current_type)
+		current_type = current_type::parent_type
 		. += current_type
 
 
