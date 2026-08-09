@@ -29,6 +29,8 @@ TYPEINFO(/mob/living/intangible/flock)
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	speech_verb_say = list("sings", "clicks", "whistles", "intones", "transmits", "submits", "uploads")
 
+	innate_vision = /datum/vision/intangible_flock
+
 	var/compute = 0
 	var/tmp/datum/flock/flock = null
 	var/wear_id = null // to prevent runtimes from AIs tracking down radio signals
@@ -47,8 +49,7 @@ TYPEINFO(/mob/living/intangible/flock)
 	REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_FLOCK)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_AI_UNTRACKABLE, src)
-	src.see_invisible = INVIS_FLOCK
-	src.see_in_dark = SEE_DARK_FULL
+
 	/// funk that color matrix up, my friend
 	src.apply_color_matrix(COLOR_MATRIX_FLOCKMIND, COLOR_MATRIX_FLOCKMIND_LABEL, TRUE)
 	//src.render_special.set_centerlight_icon("flockvision", "#09a68c", BLEND_OVERLAY, PLANE_FLOCKVISION, alpha=196)

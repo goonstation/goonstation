@@ -920,6 +920,7 @@ Frequency:
 			if (src.module)
 				qdel(src.module)
 			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/construction))
+				src.apply_vision(/datum/vision/construction, /datum/game_mode/construction)
 				src.module = new /obj/item/robot_module/construction_ai( src )
 			else
 				src.module = new /obj/item/robot_module/eyebot( src )

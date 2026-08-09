@@ -1100,6 +1100,7 @@
 
 	if (!adventure_view || mob.see_invisible < INVIS_ADVENTURE)
 		adventure_view = 1
+		mob.apply_vision(/datum/vision/adventure, src.type)
 		mob.see_invisible = INVIS_ADVENTURE
 		get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS).add_client(src)
 		boutput(src, "Adventure View activated.")
@@ -1108,10 +1109,7 @@
 		adventure_view = 0
 		get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS).remove_client(src)
 		boutput(src, "Adventure View deactivated.")
-		if (!isliving(mob))
-			mob.see_invisible = INVIS_SPOOKY // this seems to be quasi-standard for dead and wraith mobs? might fuck up target observers but WHO CARES
-		else
-			mob.see_invisible = INVIS_NONE // it'll sort itself out on the next Life() tick anyway
+		mob.remove_vision(/datum/vision/adventure, src.type)
 
 /proc/possess(obj/O as obj in world)
 	set name = "Possess"

@@ -2392,7 +2392,7 @@ Returns:
 			return
 
 		usr.client.view = 12
-		usr.see_in_dark = 12
+		usr.apply_vision(/datum/vision/movable_area_controller, src)
 
 		src.overlays += usr
 		usr.set_loc(src)
@@ -2406,7 +2406,7 @@ Returns:
 			return
 
 		usr.client.view = world.view
-		usr.see_in_dark = initial(usr.see_in_dark)
+		usr.remove_vision(/datum/vision/movable_area_controller, src)
 
 		src.overlays.Cut()
 		usr.set_loc(src.loc)

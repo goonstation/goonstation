@@ -3658,7 +3658,7 @@ TYPEINFO(/mob)
 	see_infrared = initial(see_infrared)
 
 	var/turf/T = src.eye ? get_turf(src.eye) : get_turf(src)
-	var/restricted_z = isrestrictedz(T.z)
+	var/restricted_z = T ? isrestrictedz(T.z) : FALSE
 
 	var/see_in_dark_bonus = 0
 	var/neg_sight = 0
@@ -3719,7 +3719,7 @@ TYPEINFO(/mob)
 	// hopefully this isn't too spammy, so we can just call the procs and let them return if there's nothing to do
 	if (should_register_signal)
 		// if Z changes then we might need to re-evaluate our visions
-		src.RegisterSignal(src, XSIG_MOVABLE_Z_CHANGED, PROC_REF(update_vision))
+		src.RegisterSignal(src, XSIG_MOVABLE_Z_CHANGED, PROC_REF(update_vision), TRUE)
 	else
 		src.UnregisterSignal(src, XSIG_MOVABLE_Z_CHANGED)
 

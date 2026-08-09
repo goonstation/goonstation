@@ -16,8 +16,7 @@
 		src.equip_new_if_possible(/obj/item/clothing/suit/apron/slasher, SLOT_WEAR_SUIT)
 		src.equip_new_if_possible(/obj/item/clothing/mask/gas/emergency/unremovable, SLOT_WEAR_MASK)
 		src.equip_new_if_possible(/obj/item/clothing/gloves/black/slasher, SLOT_GLOVES)
-
-		src.see_invisible = INVIS_GHOST
+		src.apply_vision(/datum/vision/ghost, src.type)
 		src.bioHolder.AddEffect("breathless", 0, 0, 0, 1)
 		src.bioHolder.AddEffect("rad_resist", 0, 0, 0, 1)
 		src.bioHolder.AddEffect("detox", 0, 0, 0, 1)

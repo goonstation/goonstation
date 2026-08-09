@@ -422,6 +422,8 @@
 	boutput(world, "<B>You may now respawn.</B>")
 	machines_may_use_wired_power = 1
 	makepowernets()
+	for(var/mob/living/silicon/hivebot/H in mobs)
+		H.apply_vision(/datum/vision/construction, src.type)
 
 /proc/debug_supply_pack()
 	var/thepath = input("Path", "Path", "/datum/supply_packs") as text

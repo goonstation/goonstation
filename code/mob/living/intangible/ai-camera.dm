@@ -200,18 +200,6 @@ TYPEINFO(/mob/living/intangible/aieye)
 			last_loc = src.loc
 			..()
 
-	set_eye(atom/new_eye)
-		if(new_eye && new_eye != src)
-			var/atom/movable/temp = new_eye
-			while(!istype(temp.loc, /turf))
-				temp = temp.loc
-			UnregisterSignal(outer_eye_atom, COMSIG_MOVABLE_SET_LOC)
-			RegisterSignal(temp, COMSIG_MOVABLE_SET_LOC, PROC_REF(check_eye_z))
-			outer_eye_atom = temp
-		else
-			UnregisterSignal(src.outer_eye_atom, COMSIG_MOVABLE_SET_LOC)
-		. = ..()
-
 
 	click(atom/target, params, location, control)
 		if (!src.mainframe) return
@@ -592,13 +580,3 @@ TYPEINFO(/mob/living/intangible/aieye)
 		if(aiImage)
 			usr.client.show_popup_menus = (length(cameras))
 */
-
-//---MISC---//
-/mob/living/intangible/aieye/proc/check_eye_z(source)
-	var/atom/movable/temp = source
-	while(!istype(temp.loc, /turf))
-		temp = temp.loc
-	if(temp != source)
-		RegisterSignal(temp, COMSIG_MOVABLE_SET_LOC, PROC_REF(check_eye_z))
-		UnregisterSignal(outer_eye_atom, COMSIG_MOVABLE_SET_LOC)
-		outer_eye_atom = temp

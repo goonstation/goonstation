@@ -370,6 +370,7 @@ TYPEINFO(/mob/living/intangible/art_curser_displaced_soul)
 /mob/living/intangible/art_curser_displaced_soul
 	var/list/statusUiElements = list()
 	var/colour = "#7b88ff"
+	innate_vision = /datum/vision/art_curser_displaced_soul
 
 	New(newLoc, mob/living/carbon/human/H)
 		src.name = "soul of [H.name]"
@@ -378,9 +379,6 @@ TYPEINFO(/mob/living/intangible/art_curser_displaced_soul)
 		..()
 		event_handler_flags &= ~MOVE_NOCLIP
 		REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
-		src.sight = 0
-		src.see_invisible = INVIS_NONE
-		src.see_in_dark = SEE_DARK_HUMAN
 
 		var/icon/I = new /icon()
 		I.Insert(H.build_flat_icon(SOUTH), dir = SOUTH)

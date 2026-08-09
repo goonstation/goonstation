@@ -139,8 +139,12 @@
 	see_invisible = INVIS_CLOAK
 
 /// flock vision
-/datum/vision/flock
+/datum/vision/flock // /mob/living/critter/flock
 	see_invisible = INVIS_FLOCK
+
+/datum/vision/intangible_flock // /mob/living/intangible/flock
+	see_invisible = INVIS_FLOCK
+	see_in_dark = SEE_DARK_FULL
 
 /// flubber mutantrace vision
 /datum/vision/flubber
@@ -177,6 +181,11 @@
 	see_invisible = INVIS_INFRA
 
 /datum/vision/krampus
+	sight = SEE_MOBS
+	see_in_dark = SEE_DARK_FULL
+	see_invisible = INVIS_INFRA
+
+/datum/vision/hastur // /mob/living/critter/hastur
 	sight = SEE_MOBS
 	see_in_dark = SEE_DARK_FULL
 	see_invisible = INVIS_INFRA
@@ -218,3 +227,10 @@
 	neg_sight = SEE_BLACKNESS
 	centerlight_icon = "thermal"
 	centerlight_color = "#9bdb9b"
+
+/datum/vision/art_curser_displaced_soul // /mob/living/intangible/art_curser_displaced_soul
+	neg_sight = SEE_BLACKNESS
+	see_in_dark = SEE_DARK_HUMAN
+
+/datum/vision/movable_area_controller // /obj/movable_area_controller
+	see_in_dark = 12

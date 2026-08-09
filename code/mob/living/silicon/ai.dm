@@ -2344,22 +2344,14 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 		return
 	if (can_see)
 		vision.set_color_mod("#ffffff")
-		var/turf/T = src.eye ? get_turf(src.eye) : get_turf(src)
-		src.sight &= ~SEE_TURFS // Reset this first, it's necessary.
-		src.sight &= ~SEE_MOBS
-		src.sight &= ~SEE_OBJS
-		if( !(T && isrestrictedz(T.z)))
-			src.sight |= SEE_TURFS
-			src.sight |= SEE_MOBS
-			src.sight |= SEE_OBJS
-		src.see_in_dark = SEE_DARK_FULL
-		src.see_invisible = INVIS_CLOAK
+		// Kind of unhappy with this but it's better to not get bogged down trying to polish essentially dead code (this branch does run, but the other won't, so the vision mods are never missing)
+		src.apply_vision(/datum/vision/ai, "innate")
+		src.apply_vision(/datum/vision/ai_zrestricted, "innate")
 		src.ear_deaf = 0
 	else
 		vision.set_color_mod("#000000")
-		src.sight = src.sight & ~(SEE_TURFS | SEE_MOBS | SEE_OBJS)
-		src.see_in_dark = 0
-		src.see_invisible = INVIS_NONE
+		src.remove_vision(/datum/vision/ai, "innate")
+		src.remove_vision(/datum/vision/ai_zrestricted, "innate")
 		src.ear_deaf = 1
 
 /mob/living/silicon/ai/verb/open_nearest_door()
