@@ -1,4 +1,13 @@
 
+(t)sun aug 09 26
+(u)Mr. Moriarty
+(p)27183
+(e)💅🔨🐁|C-QoL, A-Player-Actions, A-Critters
+(+)Cloaked players now display maptext when they speak, excluding whispers. This maptext remains on the turf that the user spoke from, rather than following them.
+(u)LorrMaster
+(p)26775
+(e)🆕🧱|C-Feature, A-Materials
+(*)Erebite explosions scale with material amount.
 (t)sat aug 08 26
 (u)ANNmagedon
 (p)27234
