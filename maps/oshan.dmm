@@ -42485,6 +42485,9 @@
 /obj/machinery/computer/announcement/station/catering{
 	dir = 8
 	},
+/obj/machinery/camera/directional/south{
+	pixel_x = -10
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "qYe" = (
