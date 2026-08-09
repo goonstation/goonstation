@@ -5,6 +5,7 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 	start_speech_modifiers = null
 	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
+ADMIN_INTERACT_PROCS(/obj/machinery/computer/riotgear, proc/authorize, proc/unauthorize)
 /obj/machinery/computer/riotgear
 	name = "Armory Control"
 	icon_state = "drawbr"
@@ -118,7 +119,7 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 				if (src.packet_check(signal, returnsignal))
 					returnsignal.data["command"] = "ack"
 					returnsignal.data["data"] = "set_reason"
-					src.auth_reason = signal.data["reason"]
+					src.set_auth_reason(signal.data["reason"])
 			else
 				return //COMMAND NOT RECOGNIZED
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, returnsignal, radiorange)
@@ -140,13 +141,24 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 			if(!authdisk_authorized)
 				. += "<br>You can also use the <b>Authentication Disk</b> to issue an emergency override."
 
+	proc/set_auth_reason(reason)
+		var/new_reason = strip_html(reason)
+		if(src.auth_reason == new_reason)
+			return
+		src.auth_reason = new_reason
+		logTheThing(LOG_STATION, usr, "set the armory auth reason to [new_reason]")
+
 	proc/authorize()
 		if(src.authed)
 			return
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
-		ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
+		var/name = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
+		var/antag_roles = usr?.mind?.list_antagonist_roles()
+		if(antag_roles)
+			name += " \[[antag_roles]\]"
+		ircmsg["name"] = name
 		ircmsg["msg"] = "authorized the armory. Reason: [src.auth_reason || "None"]"
 		ircbot.export_async("admin", ircmsg)
 
@@ -268,6 +280,11 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 		if(!id_card && action != "disk_auth")
 			boutput(user, SPAN_ALERT("You need an ID card to do that!"))
 			return
+		if (action in list("auth", "disk_auth"))
+			if (!src.authed && !length(src.auth_reason))
+				boutput(user, SPAN_ALERT("ERROR: missing or empty authorization reason."))
+				playsound(src, 'sound/machines/buzz-two.ogg', 50, 1)
+				return
 		switch(action)
 			if("disk_auth")
 				if(!istype(user.equipped(), /obj/item/disk/data/floppy/read_only/authentication))
@@ -287,11 +304,7 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 						src.authdisk_authorized = TRUE
 						src.authorize()
 			if("set_auth_reason")
-				var/new_reason = strip_html(params["value"])
-				if(src.auth_reason == new_reason)
-					return
-				src.auth_reason = new_reason
-				logTheThing(LOG_STATION, user, "set the armory auth reason to [new_reason]")
+				src.set_auth_reason(params["value"])
 			if("repeal_all")
 				if(src.check_access_level(user) < ARMORY_ACCESS_LEVEL_UNRESTRICTED)
 					boutput(user, SPAN_ALERT("You do not have the access to repeal all authorizations!"))
@@ -300,10 +313,6 @@ TYPEINFO(/obj/machinery/computer/riotgear)
 				logTheThing(LOG_STATION, user, "repealed all approvals for [src.authed? "un":""]authorizing the armory using [id_card]. [length(src.authorized)] total approvals.")
 				src.clear_authorizations()
 			if("auth") //Handles both Authorization and Revokation depending on src.authed
-				if (!src.authed && !length(src.auth_reason))
-					boutput(user, SPAN_ALERT("ERROR: missing or empty authorization reason."))
-					playsound(src, 'sound/machines/buzz-two.ogg', 50, 1)
-					return
 				var/auths_left = (src.check_access_level(user) == ARMORY_ACCESS_LEVEL_UNRESTRICTED ? 0 : src.auth_need - length(src.authorized))
 				var/auth_or_revoke = src.authed ? "revoke" : "authorize"
 				var/choice = tgui_alert(user, "Would you like to [auth_or_revoke] access to riot gear? [auths_left ? "[auths_left] approval\s are still needed." : null]", src.name, list(capitalize(auth_or_revoke), "Cancel"))

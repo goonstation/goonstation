@@ -1319,7 +1319,7 @@
 /turf/simulated/floor/red,
 /area/listeningpost/tech_room)
 "ZM" = (
-/obj/machinery/disposal,
+/obj/machinery/disposal/ejection,
 /obj/disposalpipe/trunk,
 /obj/securearea{
 	desc = "A warning sign which reads 'DIRECT2TRENCH'";

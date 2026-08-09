@@ -522,8 +522,8 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 /obj/machinery/manufacturer/mechanic
 	name = "reverse-engineering fabricator"
 	desc = "A specialized manufacturing unit designed to create new things (or copies of existing things) from blueprints."
-	icon_state = "fab-hangar"
-	icon_base = "hangar"
+	icon_state = "fab-reverse"
+	icon_base = "reverse"
 	free_resources = list(/obj/item/material_piece/steel = 2,
 		/obj/item/material_piece/copper = 2,
 		/obj/item/material_piece/glass = 2)

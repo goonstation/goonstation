@@ -8,9 +8,11 @@
 /// Maximum air temperature before default lungs start taking damage
 #define DEFAULT_LUNG_AIR_TEMP_TOLERANCE_MAX T0C + 66
 
-#define TRIAGE_REMOVE -1
-#define TRIAGE_MINOR 0
-#define TRIAGE_DELAYED 1
-#define TRIAGE_IMMEDIATE 2
-#define TRIAGE_DECEASED 3
-#define TRIAGE_UNREVIVABLE 4
+// The values of these defines are used to update the icons of triage boxes, so make sure they match in triage.dmi!
+#define TRIAGE_REMOVE "remove"
+#define TRIAGE_MINOR "minor"
+#define TRIAGE_DELAYED "delayed"
+#define TRIAGE_IMMEDIATE "immediate"
+#define TRIAGE_DECEASED "deceased"
+#define TRIAGE_UNREVIVABLE "unrevivable"
+#define TRIAGE_CLONED "cloned"

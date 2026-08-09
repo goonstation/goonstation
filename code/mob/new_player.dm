@@ -404,6 +404,8 @@ TYPEINFO(/mob/new_player)
 		if (!S)
 			return
 
+		src.spawning = 1
+
 		latejoin.activated = TRUE
 		latejoin.name_prefix("activated")
 		latejoin.UpdateName()
@@ -741,7 +743,7 @@ TYPEINFO(/mob/new_player)
 			observer.client.loadResources()
 
 		respawn_controller.unsubscribeRespawnee(observer?.client?.ckey)
-
+		observer.mind.get_player()?.dnr = observer.client?.preferences?.observer_dnr
 		qdel(src)
 
 #ifdef TWITCH_BOT_ALLOWED
