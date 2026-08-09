@@ -132,7 +132,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit)
 
 /obj/item/clothing/suit/hoodie/random
 	New()
-		src.hcolor = pick(null, "blue", "darkblue", "white", "pink", "grey", "dullgrey", "magenta", "green", "yellow", "red")
+		src.hcolor = pick(null, "blue", "darkblue", "white", "pink", "black", "grey", "dullgrey", "magenta", "green", "yellow", "red")
 		..()
 
 /obj/item/clothing/suit/hoodie/large
