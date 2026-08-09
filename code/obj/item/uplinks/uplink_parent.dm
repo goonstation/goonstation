@@ -5,11 +5,7 @@
 	stamina_crit_chance = 0
 
 	var/uses = 12 // Amount of telecrystals.
-	var/list/datum/syndicate_buylist/items_general = list() // See setup() and validate_spawn().
-	var/list/datum/syndicate_buylist/items_job = list()
-	var/list/datum/syndicate_buylist/items_objective = list()
-	var/list/datum/syndicate_buylist/items_telecrystal = list()
-	var/list/datum/syndicate_buylist/items_ammo = list()
+	var/list/datum/syndicate_buylist/buylist_entries = list() // See setup() and validate_spawn().
 	var/is_VR_uplink = 0
 	var/lock_code = null
 	var/lock_code_autogenerate = 0
@@ -21,7 +17,8 @@
 	uses = 9999
 #endif
 
-	var/use_default_GUI = 0 // Use the parent's HTML interface (less repeated code).
+	/// Allow direct UI interaction with this uplink through attackself?
+	var/can_directly_open = FALSE
 	var/temp = null
 	var/selfdestruct = 0
 	var/can_selfdestruct = 0
@@ -40,7 +37,7 @@
 		if (istype(get_area(src), /area/sim/gunsim))
 			src.is_VR_uplink = TRUE
 		SPAWN(1 SECOND)
-			if (src && istype(src) && (!length(src.items_general) && !length(src.items_job) && !length(src.items_objective) && !length(src.items_telecrystal) && !length(src.items_ammo)))
+			if (src && istype(src) && !length(src.buylist_entries))
 				src.setup()
 
 	disposing()
@@ -61,27 +58,14 @@
 
 		src.owner_ckey = ownermind?.ckey
 
-		if (!islist(src.items_general))
-			src.items_general = list()
-		if (!islist(src.items_job))
-			src.items_job = list()
-		if (!islist(src.items_objective))
-			src.items_objective = list()
-		if (!islist(src.items_telecrystal))
-			src.items_telecrystal = list()
-		if (!islist(src.items_ammo))
-			src.items_ammo = list()
+		if (!islist(src.buylist_entries))
+			src.buylist_entries = list()
 
 		for (var/datum/syndicate_buylist/S in syndi_buylist_cache)
 			if (src.is_VR_uplink)
 				if (!S.vr_allowed)
 					continue
-				if (S.objective)
-					src.items_objective.Add(S)
-				else if (S.job)
-					src.items_job.Add(S)
-				else
-					src.items_general.Add(S)
+				src.buylist_entries.Add(S)
 
 			else
 
@@ -91,21 +75,13 @@
 				if (istype(S, /datum/syndicate_buylist/surplus))
 					continue
 
-				if (istype(S, /datum/syndicate_buylist/generic) && !src.items_general.Find(S))
-					if (S.telecrystal)
-						src.items_telecrystal.Add(S)
-						src.items_general.Remove(S)
-					else
-						src.items_general.Add(S)
+				if (istype(S, /datum/syndicate_buylist/generic) && !src.buylist_entries.Find(S))
+					src.buylist_entries.Add(S)
 
 				if (ownermind || istype(ownermind))
 					if (!isnukeop(ownermind.current) && istype(S, /datum/syndicate_buylist/traitor))
-						if (!S.objective && !S.job && !src.items_general.Find(S))
-							src.items_general.Add(S)
-						if (S.ammo)
-							src.items_ammo.Add(S)
-							src.items_general.Remove(S)
-
+						if (!S.objective && !S.job && !src.buylist_entries.Find(S))
+							src.buylist_entries.Add(S)
 
 					if (S.objective)
 						if (ownermind.objectives)
@@ -113,23 +89,23 @@
 							for (var/datum/objective/O in ownermind.objectives)
 								if (istype(O, S.objective))
 									has_objective = 1
-							if (has_objective && !src.items_objective.Find(S))
-								src.items_objective.Add(S)
+							if (has_objective && !src.buylist_entries.Find(S))
+								src.buylist_entries.Add(S)
 
 					if (S.job)
 						for (var/allowedjob in S.job)
-							if (ownermind.assigned_role && ownermind.assigned_role == allowedjob && !src.items_job.Find(S))
-								src.items_job.Add(S)
+							if (ownermind.assigned_role && ownermind.assigned_role == allowedjob && !src.buylist_entries.Find(S))
+								src.buylist_entries.Add(S)
 
 		// Sort alphabetically by item name.
 		var/list/names = list()
 		var/list/namecounts = list()
 
-		if (length(src.items_general))
+		if (length(src.buylist_entries))
 			var/list/sort1 = list()
 
-			for (var/datum/syndicate_buylist/S1 in src.items_general)
-				var/name = S1.name
+			for (var/datum/syndicate_buylist/S in src.buylist_entries)
+				var/name = S.name
 				if (name in names) // Should never, ever happen, but better safe than sorry.
 					namecounts[name]++
 					name = text("[] ([])", name, namecounts[name])
@@ -137,74 +113,10 @@
 					names.Add(name)
 					namecounts[name] = 1
 
-				sort1[name] = S1
+				sort1[name] = S
 
-			src.items_general = sortList(sort1, /proc/cmp_text_asc)
-
-		if (length(src.items_job))
-			var/list/sort2 = list()
-
-			for (var/datum/syndicate_buylist/S2 in src.items_job)
-				var/name = S2.name
-				if (name in names)
-					namecounts[name]++
-					name = text("[] ([])", name, namecounts[name])
-				else
-					names.Add(name)
-					namecounts[name] = 1
-
-				sort2[name] = S2
-
-			src.items_job = sortList(sort2, /proc/cmp_text_asc)
-
-		if (length(src.items_objective))
-			var/list/sort3 = list()
-
-			for (var/datum/syndicate_buylist/S3 in src.items_objective)
-				var/name = S3.name
-				if (name in names)
-					namecounts[name]++
-					name = text("[] ([])", name, namecounts[name])
-				else
-					names.Add(name)
-					namecounts[name] = 1
-
-				sort3[name] = S3
-
-			src.items_objective = sortList(sort3, /proc/cmp_text_asc)
-
-		if (length(src.items_ammo))
-			var/list/sort4 = list()
-
-			for (var/datum/syndicate_buylist/S4 in src.items_ammo)
-				var/name = S4.name
-				if (name in names)
-					namecounts[name]++
-					name = text("[] ([])", name, namecounts[name])
-				else
-					names.Add(name)
-					namecounts[name] = 1
-
-				sort4[name] = S4
-
-			src.items_ammo = sortList(sort4, /proc/cmp_text_asc)
-
-		if (length(src.items_telecrystal))
-			var/list/sort5 = list()
-
-			for (var/datum/syndicate_buylist/S5 in src.items_telecrystal)
-				var/name = S5.name
-				if (name in names)
-					namecounts[name]++
-					name = text("[] ([])", name, namecounts[name])
-				else
-					names.Add(name)
-					namecounts[name] = 1
-
-				sort5[name] = S5
-
-			src.items_telecrystal = sortList(sort5, /proc/cmp_text_asc)
-
+			src.buylist_entries = sortList(sort1, /proc/cmp_text_asc)
+		src.update_static_data_for_all_viewers() //In case someone pulls up the UI in the second before New() calls setup()
 		return
 
 	proc/vr_check(var/mob/user)
@@ -233,12 +145,16 @@
 		return
 
 	attack_self(mob/user as mob)
-		if (src.vr_check(user) != 1)
+		if(!src.can_directly_open)
+			return
+		if (!src.vr_check(user))
 			user.show_text("This uplink only works in virtual reality.", "red")
-		else if (src.use_default_GUI == 1)
-			src.add_dialog(user)
-			src.generate_menu()
-		return
+			return
+		if(src.locked)
+			src.try_unlock(user)
+		if(src.locked)
+			return
+		src.ui_interact(user)
 
 	attackby(obj/item/W, mob/user)
 		if(src.locked)
@@ -257,254 +173,151 @@
 			boutput(user, "You insert [crystal_amount] [syndicate_currency] into the [src].")
 			qdel(W)
 
-	proc/generate_menu()
-		if (src.uses < 0)
-			src.uses = 0
-		if (src.use_default_GUI == 0)
-			return
-
-		var/list/dat = list()
-		if (src.selfdestruct)
-			dat += "Self Destructing..."
-
-		else if (src.locked && !isnull(src.lock_code))
-			dat += "The uplink is locked. <A href='byond://?src=\ref[src];unlock=1'>Enter password</A>.<BR>"
-
-		else if (reading_about)
-			var/item_about = "<b>Error:</b> We're sorry, but there is no current entry for this item!<br>For full information on Syndicate Tools, call 1-555-SYN-DKIT."
-			if(reading_about.desc) item_about = "[reading_about.desc]"
-			dat += "<b>Extended Item Information:</b><hr>[item_about]<hr><A href='byond://?src=\ref[src];back=1'>Back</A>"
-
-		else if(reading_synd_int)
-			dat += "<h4>Syndicate Intelligence</h4>"
-			dat += get_manifest(FALSE, src)
-			dat += "<br>"
-			dat += "<A href='byond://?src=\ref[src];back=1'>Back</A>"
-			dat += "<br>"
-
-		else if(reading_specific_synd_int)
-			var/datum/db_record/staff_record = reading_specific_synd_int
-			dat += "<h4>Syndicate intelligence on [staff_record["name"]]</h4>"
-			dat += staff_record["syndint"]
-			dat += "<br>"
-			dat += "<A href='byond://?src=\ref[src];back=1'>Back</A>"
-			dat += "<br>"
-
-		else
-			if (src.temp)
-				dat += "[src.temp]<BR><BR><A href='byond://?src=\ref[src];temp=1'>Clear</A>"
-			else
-				if (src.is_VR_uplink)
-					dat += "<B><U>Syndicate Simulator 2053!</U></B><BR>"
-					dat += "Buy the Cat Armor DLC today! Only 250 Credits!"
-					dat += "<HR>"
-					dat += "<B>Sandbox mode - Spawn item:</B><BR><table cellspacing=5>"
-				else
-					dat += "<B>Syndicate Uplink Console:</B><BR>"
-					dat += "[syndicate_currency] left: [src.uses]<BR>"
-					dat += "<HR>"
-					dat += "<B>Request item:</B><BR>"
-					dat += "<I>Each item costs a number of [syndicate_currency] as indicated by the number following their name, and if it has a maximum number of times it can be purchased, that will follow the cost. </I><BR><table cellspacing=5>"
-				if (src.items_telecrystal && islist(src.items_telecrystal) && length(src.items_telecrystal))
-					dat += "</table><B>Ejectable [syndicate_currency]:</B><BR><table cellspacing=5>"
-					for (var/T in src.items_telecrystal)
-						var/datum/syndicate_buylist/I4 = src.items_telecrystal[T]
-						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_telecrystal[T]]'>[I4.name]</A> ([I4.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_telecrystal[T]]'>About</A> [I4.max_buy == INFINITY  ? "" :"([src.purchase_log[I4.type] ? src.purchase_log[I4.type] : 0]/[I4.max_buy])"]</td>"
-				if (src.items_objective && islist(src.items_objective) && length(src.items_objective))
-					dat += "</table><B>Objective Specific:</B><BR><table cellspacing=5>"
-					for (var/O in src.items_objective)
-						var/datum/syndicate_buylist/I3 = src.items_objective[O]
-						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_objective[O]]'>[I3.name]</A> ([I3.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_objective[O]]'>About</A> [I3.max_buy == INFINITY  ? "" :"([src.purchase_log[I3.type] ? src.purchase_log[I3.type] : 0]/[I3.max_buy])"]</td>"
-				if (src.items_job && islist(src.items_job) && length(src.items_job))
-					dat += "</table><B>Job Specific:</B><BR><table cellspacing=5>"
-					for (var/J in src.items_job)
-						var/datum/syndicate_buylist/I2 = src.items_job[J]
-						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_job[J]]'>[I2.name]</A> ([I2.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_job[J]]'>About</A> [I2.max_buy == INFINITY  ? "" :"([src.purchase_log[I2.type] ? src.purchase_log[I2.type] : 0]/[I2.max_buy])"]</td>"
-				if (src.items_general && islist(src.items_general) && length(src.items_general))
-					dat += "</table><B>Standard Equipment:</B><BR><table cellspacing=5>"
-					for (var/G in src.items_general)
-						var/datum/syndicate_buylist/I1 = src.items_general[G]
-						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_general[G]]'>[I1.name]</A> ([I1.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_general[G]]'>About</A> [I1.max_buy == INFINITY  ? "" :"([src.purchase_log[I1.type] ? src.purchase_log[I1.type] : 0]/[I1.max_buy])"]</td>"
-				if (src.items_ammo && islist(src.items_ammo) && length(src.items_ammo))
-					dat += "</table><B>Special ammunition:</B><BR><table cellspacing=5>"
-					for (var/A in src.items_ammo)
-						var/datum/syndicate_buylist/I5 = src.items_ammo[A]
-						dat += "<tr><td><A href='byond://?src=\ref[src];spawn=\ref[src.items_ammo[A]]'>[I5.name]</A> ([I5.cost])</td><td><A href='byond://?src=\ref[src];about=\ref[src.items_ammo[A]]'>About</A> [I5.max_buy == INFINITY  ? "" :"([src.purchase_log[I5.type] ? src.purchase_log[I5.type] : 0]/[I5.max_buy])"]</td>"
-				dat += "</table>"
-				var/do_divider = 1
-
-				if(has_synd_int && !is_VR_uplink)
-					dat += "<HR><A href='byond://?src=\ref[src];synd_int=1'>Syndicate Intelligence</A><BR>"
-
-				if (istype(src, /obj/item/uplink/integrated/radio))
-					var/obj/item/uplink/integrated/radio/RU = src
-					if (!isnull(RU.origradio) && istype(RU.origradio, /obj/item/device/radio))
-						dat += "<HR><A href='byond://?src=\ref[src];lock=1'>Lock</A><BR>"
-						do_divider = 0
-				else if (src.is_VR_uplink == 0 && !isnull(src.lock_code))
-					dat += "<HR><A href='byond://?src=\ref[src];lock=1'>Lock</A><BR>"
-					do_divider = 0
-
-				if (src.can_selfdestruct == 1)
-					dat += "[do_divider == 1 ? "<HR>" : ""]<A href='byond://?src=\ref[src];selfdestruct=1'>Self-Destruct</A>"
-
-		usr.Browse(jointext(dat, ""), "window=radio")
-		onclose(usr, "radio")
-		return
-
-
 	// Validates that the user is not trying to spawn something they should not
 	proc/validate_spawn(var/datum/syndicate_buylist/SB)
-
-		for(var/S in items_general)
-			if(SB == items_general[S])
+		for(var/S in src.buylist_entries)
+			if(SB == src.buylist_entries[S])
 				return 1
-
-		for(var/S in items_job)
-			if(SB == items_job[S])
-				return 1
-
-		for(var/S in items_objective)
-			if(SB == items_objective[S])
-				return 1
-
-		for(var/S in items_telecrystal)
-			if(SB == items_telecrystal[S])
-				return 1
-
-		for(var/S in items_ammo)
-			if (SB == items_ammo[S])
-				return 1
-
 		return 0
 
-#define CHECK1 (BOUNDS_DIST(src, usr) > 0 || !usr.contents.Find(src) || !isliving(usr) || iswraith(usr) || isintangible(usr))
-#define CHECK2 (is_incapacitated(usr) || usr.restrained())
-	Topic(href, href_list)
-		..()
-		if (src.uses < 0)
-			src.uses = 0
-		if (src.use_default_GUI == 0)
-			return
-		if (CHECK1)
-			return
-		if (CHECK2)
-			return
-		if (src.vr_check(usr) != 1)
-			usr.show_text("This uplink only works in virtual reality.", "red")
+	proc/try_buy(var/datum/syndicate_buylist/I)
+		if (!I || !istype(I))
+			//usr.show_text("Something went wrong (invalid syndicate_buylist reference). Please try again and contact a coder if the problem persists.", "red")
 			return
 
-		src.add_dialog(usr)
+		// Trying to spawn things you shouldn't, eh?
+		if(!validate_spawn(I))
+			trigger_anti_cheat(usr, "tried to href exploit the syndicate buylist")
+			return
 
-		if (href_list["unlock"] && src.locked && !isnull(src.lock_code))
-			var/the_code = adminscrub(input(usr, "Please enter the password.", "Unlock Uplink", null))
-			if (!src || !istype(src) || !usr || !ismob(usr) || CHECK1 || CHECK2)
+		if (!src.is_VR_uplink)
+			if (src.uses < I.cost)
+				boutput(usr, SPAN_ALERT("The uplink doesn't have enough [syndicate_currency] left for that!"))
 				return
-			if (isnull(the_code) || !cmptext(the_code, src.lock_code))
-				usr.show_text("Incorrect password.", "red")
+			if (src.purchase_log[I.type] >= I.max_buy)
+				boutput(usr, SPAN_ALERT("You have already bought as many of those as you can!"))
 				return
+			src.uses = max(0, src.uses - I.cost)
 
-			src.locked = 0
-			usr.show_text("The uplink beeps softly and unlocks.", "blue")
+			if (src.purchase_flags & UPLINK_TRAITOR)
+				var/datum/antagonist/traitor/antagonist_role = usr.mind?.get_antagonist(ROLE_TRAITOR)
+				if (istype(antagonist_role) && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
+					antagonist_role.purchased_items.Add(I)
 
-		else if (href_list["lock"])
-			if (istype(src, /obj/item/uplink/integrated/radio))
-				var/obj/item/uplink/integrated/radio/RU = src
-				if (!isnull(RU.origradio) && istype(RU.origradio, /obj/item/device/radio))
-					src.remove_dialog(usr)
-					usr.Browse(null, "window=radio")
-					var/obj/item/device/radio/T = RU.origradio
-					RU.set_loc(T)
-					T.set_loc(usr)
-					usr.u_equip(RU)
-					usr.put_in_hand_or_drop(T)
-					RU.set_loc(T)
-					T.set_frequency(initial(T.frequency))
-					T.AttackSelf(usr)
-					return
+			if (src.purchase_flags & UPLINK_HEAD_REV)
+				var/datum/antagonist/head_revolutionary/antagonist_role = usr.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY)
+				if (istype(antagonist_role) && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
+					antagonist_role.purchased_items.Add(I)
 
-			else if (src.locked == 0 && src.is_VR_uplink == 0)
-				src.locked = 1
-				usr.show_text("The uplink is now locked.", "blue")
+			if (src.purchase_flags & UPLINK_NUKE_OP)
+				var/datum/antagonist/nuclear_operative/antagonist_role = usr.mind?.get_antagonist(ROLE_NUKEOP) || usr.mind?.get_antagonist(ROLE_NUKEOP_COMMANDER)
+				if (istype(antagonist_role) && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
+					antagonist_role.uplink_items.Add(I)
 
-		else if (href_list["spawn"])
-			var/datum/syndicate_buylist/I = locate(href_list["spawn"])
-			if (!I || !istype(I))
-				//usr.show_text("Something went wrong (invalid syndicate_buylist reference). Please try again and contact a coder if the problem persists.", "red")
-				return
+			logTheThing(LOG_DEBUG, usr, "bought this from [owner_ckey || "unknown"]'s uplink: [I.name] (in [src.loc])")
 
-			// Trying to spawn things you shouldn't, eh?
-			if(!validate_spawn(I))
-				trigger_anti_cheat(usr, "tried to href exploit the syndicate buylist")
-				return
-
+		if (length(I.items) > 0)
+			for (var/uplink_item in I.items)
+				var/obj/item = new uplink_item(get_turf(src))
+				I.run_on_spawn(item, usr, FALSE, src)
 			if (src.is_VR_uplink == 0)
-				if (src.uses < I.cost)
-					boutput(usr, SPAN_ALERT("The uplink doesn't have enough [syndicate_currency] left for that!"))
-					return
-				if (src.purchase_log[I.type] >= I.max_buy)
-					boutput(usr, SPAN_ALERT("You have already bought as many of those as you can!"))
-					return
-				src.uses = max(0, src.uses - I.cost)
+				var/datum/eventRecord/AntagItemPurchase/antagItemPurchaseEvent = new()
+				antagItemPurchaseEvent.buildAndSend(usr, I.name, I.cost)
+				if (!src.purchase_log[I.type])
+					src.purchase_log[I.type] = 0
+				src.purchase_log[I.type]++
 
-				if (src.purchase_flags & UPLINK_TRAITOR)
-					var/datum/antagonist/traitor/antagonist_role = usr.mind?.get_antagonist(ROLE_TRAITOR)
-					if (istype(antagonist_role) && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
-						antagonist_role.purchased_items.Add(I)
+	proc/lock(mob/user)
+		if(src.locked || src.is_VR_uplink)
+			return FALSE
+		tgui_process.close_uis(src)
+		user.show_text("The uplink is now locked.", "blue")
+		src.locked = 1
+		return TRUE
 
-				if (src.purchase_flags & UPLINK_HEAD_REV)
-					var/datum/antagonist/head_revolutionary/antagonist_role = usr.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY)
-					if (istype(antagonist_role) && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
-						antagonist_role.purchased_items.Add(I)
+	proc/self_destruct()
+		if(!src.can_selfdestruct)
+			return
+		src.selfdestruct = 1
+		logTheThing(LOG_COMBAT, usr, "activates the self destruct on [owner_ckey || "unknown"]'s uplink")
+		SPAWN(10 SECONDS)
+			if (src)
+				src.explode()
 
-				if (src.purchase_flags & UPLINK_NUKE_OP)
-					var/datum/antagonist/nuclear_operative/antagonist_role = usr.mind?.get_antagonist(ROLE_NUKEOP) || usr.mind?.get_antagonist(ROLE_NUKEOP_COMMANDER)
-					if (istype(antagonist_role) && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
-						antagonist_role.uplink_items.Add(I)
+#define CHECK1 (BOUNDS_DIST(src, user) > 0 || !user.contents.Find(src) || !isliving(user) || iswraith(user) || isintangible(user))
+#define CHECK2 (is_incapacitated(user) || user.restrained())
+	proc/try_unlock(mob/user)
+		var/the_code = adminscrub(tgui_input_text(user, "Please enter the password.", "Unlock Uplink", null))
+		if (!src || !istype(src) || !user || !ismob(user) || CHECK1 || CHECK2)
+			return
+		if (isnull(the_code) || !cmptext(the_code, src.lock_code))
+			user.show_text("Incorrect password.", "red")
+			return
 
-				logTheThing(LOG_DEBUG, usr, "bought this from [owner_ckey || "unknown"]'s uplink: [I.name] (in [src.loc])")
-
-			if (length(I.items) > 0)
-				for (var/uplink_item in I.items)
-					var/obj/item = new uplink_item(get_turf(src))
-					I.run_on_spawn(item, usr, FALSE, src)
-				if (src.is_VR_uplink == 0)
-					var/datum/eventRecord/AntagItemPurchase/antagItemPurchaseEvent = new()
-					antagItemPurchaseEvent.buildAndSend(usr, I.name, I.cost)
-					if (!src.purchase_log[I.type])
-						src.purchase_log[I.type] = 0
-					src.purchase_log[I.type]++
-
-		else if (href_list["about"])
-			reading_about = locate(href_list["about"])
-
-		else if (href_list["back"])
-			if(reading_about)
-				reading_about = null
-			if(reading_synd_int)
-				reading_synd_int = FALSE
-			if(reading_specific_synd_int)
-				reading_specific_synd_int = null
-				reading_synd_int = TRUE
-
-		else if (href_list["selfdestruct"] && src.can_selfdestruct == 1)
-			src.selfdestruct = 1
-			SPAWN(10 SECONDS)
-				if (src)
-					src.explode()
-
-		else if (href_list["synd_int"] && !src.is_VR_uplink)
-			reading_synd_int = TRUE
-
-		else if (href_list["select_exp"])
-			var/datum/db_record/staff_record = locate(href_list["select_exp"])
-			reading_specific_synd_int = staff_record
-			reading_synd_int = FALSE
-
-		else if (href_list["temp"])
-			src.temp = null
-
-		src.AttackSelf(usr)
-		return
+		src.locked = 0
+		user.show_text("The uplink beeps softly and unlocks.", "blue")
 #undef CHECK1
 #undef CHECK2
+
+// --- TGUI Uplinks
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if (!ui)
+			ui = new(user, src, "Uplink")
+			ui.open()
+
+	ui_data(mob/user)
+		. = list(
+			"currency_amount" = src.uses,
+			"purchased_items" = src.purchase_log,
+			"self_destructing" = src.selfdestruct,
+		)
+
+	ui_static_data(mob/user)
+		. = list(
+			"title" = "Syndicate Uplink",
+			"theme" = "syndicate",
+			"currency_name" = global.syndicate_currency,
+			"item_entries" = src.get_categorised_item_data(),
+			"vr" = src.is_VR_uplink,
+			"can_lock" = !isnull(src.lock_code) || istype(src, /obj/item/uplink/integrated/radio), //radio uplink codes are on their associated radio
+			"can_self_destruct" = src.can_selfdestruct,
+		)
+
+	proc/get_categorised_item_data()
+		var/list/categorised_data = list()
+		for(var/category in UPLINK.CATEGORY._get_namespace_constants())
+			categorised_data[category] = list()
+		for(var/buylist_name in src.buylist_entries)
+			var/datum/syndicate_buylist/buylist_entry = src.buylist_entries[buylist_name]
+			categorised_data[buylist_entry.get_category()] += src.get_item_data(buylist_entry)
+		for(var/category in categorised_data)
+			if(!length(categorised_data[category]))
+				categorised_data -= category
+		return categorised_data
+
+	proc/get_item_data(var/datum/syndicate_buylist/uplink_item)
+		return list(list(
+			"name" = uplink_item.name,
+			"desc" = uplink_item.desc,
+			"cost" = uplink_item.cost,
+			"icon" = getItemIcon(uplink_item.items[1]),
+			"vr_allowed"= uplink_item.vr_allowed,
+			"ref" = ref(uplink_item),
+			"type" = uplink_item.type,
+			"purchase_limit" = uplink_item.max_buy,
+		))
+
+	ui_act(action, list/params)
+		. = ..()
+		if (.)
+			return
+		switch (action)
+			if ("purchase")
+				src.try_buy(locate(params["item_ref"]))
+			if ("lock")
+				src.lock(usr)
+			if("self_destruct")
+				if(tgui_alert(usr, "Detonate this uplink?", "Self Destruct Confirmation", list("Confirm", "Cancel")) != "Confirm")
+					return
+				src.self_destruct()

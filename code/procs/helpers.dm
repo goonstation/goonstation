@@ -159,6 +159,8 @@ var/global/obj/fuckyou/flashDummy
 
 	elecflash(target,power = elecflashpower)
 
+/// Modern era note: you probably want `raycast` instead because it's sane and works with things like `get_angle`
+/// Leaving it here because it's still used in a couple of places and I don't want to do trig right now
 proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuff. Takes some sort of bizzaro angles ?! Aahhhhh
 	var/list/crossed = list()
 	var/xPlus=cos(Angle)
@@ -617,7 +619,7 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
  */
 /proc/sanitize_frequency(var/f)
 	. = round(f)
-	. = clamp(., R_FREQ_MINIMUM, R_FREQ_MAXIMUM) // 144.1 -148.9
+	. = clamp(., RADIO::FREQ::MINIMUM, RADIO::FREQ::MAXIMUM) // 144.1 -148.9
 	. |= 1 // enforces the number being odd (rightmost bit being 1)
 
 /proc/format_frequency(var/f)
@@ -2483,14 +2485,16 @@ proc/can_act(var/mob/M, var/include_cuffs = 1)
 
 /// Returns true if the given mob is incapacitated
 proc/is_incapacitated(mob/M)
+	var/datum/statusEffect/lockdown/lockdown_effect = M.hasStatus("lockdown_robot") || M.hasStatus("lockdown_ai")
+	if(!istype(lockdown_effect) || lockdown_effect?.fake)
+		lockdown_effect = null
 	return (M &&(\
 		M.hasStatus("stunned") || \
 		M.hasStatus("knockdown") || \
 		M.hasStatus("unconscious") || \
 		M.hasStatus("paralysis") || \
 		M.hasStatus("pinned") || \
-		M.hasStatus("lockdown_robot") || \
-		M.hasStatus("lockdown_ai") || \
+		lockdown_effect || \
 		M.hasStatus("no_power_robot") || \
 		M.hasStatus("no_cell_robot") || \
 		M.stat)) && !M.client?.holder?.ghost_interaction

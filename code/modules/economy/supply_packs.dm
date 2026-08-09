@@ -24,6 +24,7 @@
 		object.exhaustion += 1
 		if(object.exhaustion > 10)
 			object.cost = round(object.cost*(1+object.exhaustion/50))
+			global.shippingmarket.update_supply_console_data() //Make sure all consoles show the new price
 
 		return S
 
@@ -404,7 +405,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	contains = list(/obj/item/storage/toolbox/electrical/orange_tools = 2,
 					/obj/item/device/multitool/orange = 2,
 					/obj/item/clothing/gloves/yellow = 2)
-	cost = PAY::DOCTORATE*2
+	cost = PAY::EXECUTIVE*2
 	containertype = /obj/storage/crate
 	containername = "Electrical Maintenance Crate"
 
@@ -953,6 +954,15 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate/packing
 	containername = "Comedy Equipment"
 
+
+/datum/supply_packs/cane_gaudy
+	name = "Gaudy walking cane"
+	desc = "x1 Walking cane made of pure gold. Put the \"old\" in old money."
+	category = "Medical"
+	contains = list(/obj/item/cane/golden)
+	cost = PAY::DONTBUYIT
+	containertype = /obj/storage/crate
+	containername = "Gaudy walking cane"
 
 /datum/supply_packs/prosphetics
 	name = "Prosthetic Augmentation Kit"
@@ -1674,8 +1684,8 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 					continue
 
 			var/amt = 1
-			if (isnum(frames[path]))
-				amt = abs(frames[path])
+			if (isnum(flatpack_frames[path]))
+				amt = abs(flatpack_frames[path])
 
 			var/atom/template = path
 			var/template_name = initial(template.name)
