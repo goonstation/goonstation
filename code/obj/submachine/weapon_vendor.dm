@@ -317,8 +317,8 @@
 		src.credits[WEAPON_VENDOR_CATEGORY_SIDEARM]++
 		src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]++
 		src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]++
-		//src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]++ //TEMP TEMP TEMP HOLY FUCK DO NOT LET ME FORGET TO UNDO THIS
-		//src.credits[WEAPON_VENDOR_CATEGORY_ARMOR]++
+		src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]++
+		src.credits[WEAPON_VENDOR_CATEGORY_ARMOR]++
 		..()
 
 /obj/submachine/weapon_vendor/podwars/neutral // Neutral for admin gimmicks, spawns non-team aligned gear usable by anyone
@@ -332,12 +332,12 @@
 		materiel_stock += new/datum/materiel/sidearm/knife
 		materiel_stock += new/datum/materiel/sidearm/machete
 		materiel_stock += new/datum/materiel/sidearm/axe
-		//materiel_stock += new/datum/materiel/utility/pw_pouch // TEMP FOR EVENT DONT LET ME FORGET TO UNDO THIS -SORD
-		//materiel_stock += new/datum/materiel/utility/pw_advanced_belt
-		//materiel_stock += new/datum/materiel/utility/preparedtoolbelt
-		//materiel_stock += new/datum/materiel/utility/pw_medical_pouch
+		materiel_stock += new/datum/materiel/utility/pw_pouch
+		materiel_stock += new/datum/materiel/utility/pw_advanced_belt
+		materiel_stock += new/datum/materiel/utility/preparedtoolbelt
+		materiel_stock += new/datum/materiel/utility/pw_medical_pouch
 		materiel_stock += new/datum/materiel/utility/noslip_boots
-		//materiel_stock += new/datum/materiel/utility/beartraps
+		materiel_stock += new/datum/materiel/utility/beartraps
 		materiel_stock += new/datum/materiel/utility/supernightvisiongoggles
 		materiel_stock += new/datum/materiel/utility/comtac
 
