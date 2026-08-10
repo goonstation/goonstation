@@ -74946,6 +74946,7 @@
 	dir = 4;
 	pixel_x = 10
 	},
+/obj/storage/secure/closet/medical/chemical,
 /turf/simulated/floor/twotone/purple,
 /area/station/medical/medbay/pharmacy)
 "ruM" = (
@@ -84644,7 +84645,10 @@
 /obj/item/ammo/bullets/tranq_darts,
 /obj/item/ammo/bullets/tranq_darts,
 /obj/machinery/door/airlock/pyro/glass/windoor,
-/obj/mapping_helper/access/medical_director,
+/obj/mapping_helper/access/medical_director{
+	affected_types = list(/obj/machinery, /obj/storage/secure/crate);
+	override_access = 1
+	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/north,
 /area/station/medical/head/private)
 "tBP" = (
@@ -103551,7 +103555,6 @@
 /area/station/hallway/primary/southeast)
 "yaa" = (
 /obj/machinery/light/incandescent,
-/obj/storage/secure/closet/medical/chemical,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
