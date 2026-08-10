@@ -14,6 +14,7 @@
  *	- `c_type`: The typepath of the component to return a reference to.
  */
 /datum/proc/GetComponent(datum/component/c_type)
+	SHOULD_NOT_OVERRIDE(TRUE)
 	RETURN_TYPE(c_type)
 
 	if ((c_type::dupe_mode == COMPONENT_DUPE_ALLOWED) || (c_type::dupe_mode == COMPONENT_DUPE_SELECTIVE))
@@ -36,6 +37,7 @@
  *	- `c_type`: The typepath of the component to return a reference to.
  */
 /datum/proc/GetExactComponent(datum/component/c_type)
+	SHOULD_NOT_OVERRIDE(TRUE)
 	RETURN_TYPE(c_type)
 
 	if ((c_type::dupe_mode == COMPONENT_DUPE_ALLOWED) || (c_type::dupe_mode == COMPONENT_DUPE_SELECTIVE))
@@ -59,6 +61,9 @@
  *	- `c_type`: The typepath of the components to return a list for.
  */
 /datum/proc/GetComponents(c_type)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	RETURN_TYPE(/list/datum/component)
+
 	var/list/datum/component/components = src.datum_components?[c_type]
 	if (!components)
 		return list()
@@ -72,6 +77,7 @@
  *	- `c_type`: The typepath of the components to remove.
  */
 /datum/proc/RemoveComponentsOfType(c_type)
+	SHOULD_NOT_OVERRIDE(TRUE)
 	for (var/datum/component/C as anything in src.GetComponents(c_type))
 		C.RemoveComponent()
 
@@ -83,6 +89,9 @@
  *	If this tries to add a component to an incompatible type, the component will be deleted and the result will be `null`.
  */
 /datum/proc/_AddComponent(list/raw_args)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	RETURN_TYPE(/datum/component)
+
 	var/datum/component/new_type = raw_args[1]
 
 	if (src.disposed)
@@ -166,6 +175,8 @@
  *	- `...`: Additional arguments to be passed when creating the component if it did not exist.
  */
 /datum/proc/_LoadComponent(list/arguments)
+	SHOULD_NOT_OVERRIDE(TRUE)
+	RETURN_TYPE(/datum/component)
 	return src.GetComponent(arguments[1]) || src._AddComponent(arguments)
 
 /**
@@ -175,6 +186,7 @@
  *	- `target`: The target component to transfer to this datum.
  */
 /datum/proc/TakeComponent(datum/component/target)
+	SHOULD_NOT_OVERRIDE(TRUE)
 	if (!target || (target.parent == src))
 		return
 
@@ -197,6 +209,7 @@
  *	- `target`: The target datum to transfer components to.
  */
 /datum/proc/TransferComponents(datum/target)
+	SHOULD_NOT_OVERRIDE(TRUE)
 	var/list/dc = src.datum_components
 	if (!dc)
 		return
@@ -298,6 +311,7 @@ ABSTRACT_TYPE(/datum/component)
  *	Internal proc to handle behaviour when bring added to a parent.
  */
 /datum/component/proc/_JoinParent()
+	SHOULD_NOT_OVERRIDE(TRUE)
 	var/list/dc = (src.parent.datum_components ||= list())
 
 	for (var/type as anything in src._GetInverseTypeList())
@@ -330,6 +344,7 @@ ABSTRACT_TYPE(/datum/component)
  *	Internal proc to handle behaviour when being removed from a parent.
  */
 /datum/component/proc/_RemoveFromParent()
+	SHOULD_NOT_OVERRIDE(TRUE)
 	var/list/dc = src.parent.datum_components
 
 	for (var/type as anything in src._GetInverseTypeList())
@@ -355,6 +370,7 @@ ABSTRACT_TYPE(/datum/component)
  *	Remove this component from its parent.
  */
 /datum/component/proc/RemoveComponent()
+	SHOULD_NOT_OVERRIDE(TRUE)
 	if (!src.parent)
 		return
 
@@ -419,6 +435,9 @@ ABSTRACT_TYPE(/datum/component)
  *	Internal proc to create a list of our type and all parent types.
  */
 /datum/component/proc/_GetInverseTypeList()
+	PRIVATE_PROC(TRUE)
+	RETURN_TYPE(/list/datum/component)
+
 	var/datum/current_type = src.parent_type
 	. = list(src.type, current_type)
 
