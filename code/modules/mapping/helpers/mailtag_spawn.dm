@@ -41,46 +41,54 @@ ABSTRACT_TYPE(/obj/mapping_helper/mailtag)
 /obj/mapping_helper/mailtag/undeliverable
 	name = "Undeliverable"
 	mail_tag = null
+	color = HELPER_COLOR::MORGUE
 
 /obj/mapping_helper/mailtag/chemlink
 	name = "Dispensary"
 	mail_tag = "chemlink"
+	color = HELPER_COLOR::RESEARCH
 
 /obj/mapping_helper/mailtag/janitor
 	name = "Janitor"
 	mail_tag = "janitor"
 	mailgroup = MGT_JANITOR
 	message = TRUE
+	color = HELPER_COLOR::MAINTENANCE
 
 /obj/mapping_helper/mailtag/kitchen
 	name = "Kitchen"
 	mail_tag = "kitchen"
 	mailgroup = MGT_CATERING
 	message = TRUE
+	color = HELPER_COLOR::MAINTENANCE
 
 /obj/mapping_helper/mailtag/bar
 	name = "Bar"
 	mail_tag = "bar"
 	mailgroup = MGT_CATERING
 	message = TRUE
+	color = HELPER_COLOR::MAINTENANCE
 
 /obj/mapping_helper/mailtag/hydroponics
 	name = "Hydroponics"
 	mail_tag = "hydroponics"
 	mailgroup = MGT_HYDROPONICS
 	message = TRUE
+	color = HELPER_COLOR::MAINTENANCE
 
 /obj/mapping_helper/mailtag/ranch
 	name = "Ranch"
 	mail_tag = "ranch"
 	mailgroup = MGT_HYDROPONICS
 	message = TRUE
+	color = HELPER_COLOR::MAINTENANCE
 
 /obj/mapping_helper/mailtag/security
 	name = "Security"
 	mail_tag = "security"
 	mailgroup = MGD_SECURITY
 	message = TRUE
+	color = HELPER_COLOR::SECURITY
 
 /obj/mapping_helper/mailtag/security/foyer
 	name = "Security Foyer"
@@ -107,18 +115,21 @@ ABSTRACT_TYPE(/obj/mapping_helper/mailtag)
 	mail_tag = "bridge"
 	mailgroup = MGD_COMMAND
 	message = TRUE
+	color = HELPER_COLOR::COMMAND
 
 /obj/mapping_helper/mailtag/chapel
 	name = "Chapel"
 	mail_tag = "chapel"
 	mailgroup = MGT_SPIRITUALAFFAIRS
 	message = TRUE
+	color = HELPER_COLOR::MAINTENANCE
 
 /obj/mapping_helper/mailtag/engineering
 	name = "Engineering"
 	mail_tag = "engineering"
 	mailgroup = MGD_ENGINEER
 	message = TRUE
+	color = HELPER_COLOR::ENGINEERING
 
 /obj/mapping_helper/mailtag/engineering/storage
 	name = "Engineering Storage"
@@ -129,18 +140,21 @@ ABSTRACT_TYPE(/obj/mapping_helper/mailtag)
 	mail_tag = "mechanics"
 	mailgroup = MGD_ENGINEER
 	message = TRUE
+	color = HELPER_COLOR::ENGINEERING
 
 /obj/mapping_helper/mailtag/mining
 	name = "Mining"
 	mail_tag = "mining"
 	mailgroup = MGT_MINING
 	message = TRUE
+	color = HELPER_COLOR::CARGO
 
 /obj/mapping_helper/mailtag/qm
 	name = "QM"
 	mail_tag = "QM"
 	mailgroup = MGT_CARGO
 	message = TRUE
+	color = HELPER_COLOR::CARGO
 
 /obj/mapping_helper/mailtag/qm/refinery
 	name = "Refinery"
@@ -153,16 +167,19 @@ ABSTRACT_TYPE(/obj/mapping_helper/mailtag)
 /obj/mapping_helper/mailtag/tool_storage
 	name = "Tool Storage"
 	mail_tag = "storage"
+	color = HELPER_COLOR::MAINTENANCE
 
 /obj/mapping_helper/mailtag/sorting_room
 	name = "Sorting Room"
 	mail_tag = "sortingroom"
+	color = HELPER_COLOR::MAINTENANCE
 
 /obj/mapping_helper/mailtag/research
 	name = "Research"
 	mail_tag = "research"
 	mailgroup = MGD_RESEARCH
 	message = TRUE
+	color = HELPER_COLOR::RESEARCH
 
 /obj/mapping_helper/mailtag/research/telescience
 	name = "Telescience"
@@ -175,6 +192,7 @@ ABSTRACT_TYPE(/obj/mapping_helper/mailtag)
 /obj/mapping_helper/mailtag/research/toxins
 	name = "Toxins"
 	mail_tag = "toxins"
+	color = HELPER_COLOR::TOXINS
 
 /obj/mapping_helper/mailtag/research/artlab
 	name = "Artifact lab"
@@ -197,6 +215,7 @@ ABSTRACT_TYPE(/obj/mapping_helper/mailtag)
 	mail_tag = "medbay"
 	mailgroup = MGD_MEDICAL
 	message = TRUE
+	color = HELPER_COLOR::MEDICAL
 
 /obj/mapping_helper/mailtag/medbay/robotics
 	name = "Robotics"
@@ -219,6 +238,7 @@ ABSTRACT_TYPE(/obj/mapping_helper/mailtag)
 /obj/mapping_helper/mailtag/medbay/morgue
 	name = "Morgue"
 	mail_tag = "morgue"
+	color = HELPER_COLOR::MORGUE
 
 /obj/mapping_helper/mailtag/medbay/booth
 	name = "Medical Booth"
@@ -231,6 +251,7 @@ ABSTRACT_TYPE(/obj/mapping_helper/mailtag)
 ABSTRACT_TYPE(/obj/mapping_helper/mailtag/command_office)
 /obj/mapping_helper/mailtag/command_office
 	mailgroup = MGD_COMMAND
+	color = HELPER_COLOR::COMMAND
 
 /obj/mapping_helper/mailtag/command_office/cap
 	name = "Captain's Office"
@@ -264,6 +285,7 @@ ABSTRACT_TYPE(/obj/mapping_helper/mailtag/checkpoint)
 	mailgroup = MGD_SECURITY
 	mailgroup2 = MGD_COMMAND
 	message = TRUE
+	color = HELPER_COLOR::SECURITY
 
 /obj/mapping_helper/mailtag/checkpoint/arrivals
 	name = "Arrivals Checkpoint"
@@ -307,6 +329,7 @@ ABSTRACT_TYPE(/obj/mapping_helper/mailtag/checkpoint)
 
 ABSTRACT_TYPE(/obj/mapping_helper/mailtag/public)
 /obj/mapping_helper/mailtag/public
+	color = HELPER_COLOR::MAINTENANCE
 
 /obj/mapping_helper/mailtag/public/crew
 	name = "Crew Quarters"

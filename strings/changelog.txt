@@ -1,5 +1,43 @@
 
+(t)sun aug 09 26
+(u)LeahTheTech
+(+)Hippos now eat vegetables.
+(u)Kubius
+(p)27140
+(e)🗺🔎⚖|A-Mapping, C-Code-Quality, C-Balance
+(*)Nadir's complement of preinstalled door shields has been sharply reduced, primarily to public airlocks and points of exterior contact. A pass has been done over airlock cycler coverage in kind.
+(u)JORJ949
+(p)27383
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Sleepy pens now only show their "sharp point" description text to syndies.
+(u)Mr. Moriarty
+(p)27183
+(e)💅🔨🐁|C-QoL, A-Player-Actions, A-Critters
+(+)Cloaked players now display maptext when they speak, excluding whispers. This maptext remains on the turf that the user spoke from, rather than following them.
+(u)LorrMaster
+(p)26775
+(e)🆕🧱|C-Feature, A-Materials
+(*)Erebite explosions scale with material amount.
+(t)sat aug 08 26
+(u)ANNmagedon
+(p)27234
+(e)💊|A-Medical
+(+)Borgs can now unfold and open/close body bags (but not fold).
+(t)fri aug 07 26
+(u)JORJ949 and Wrastlingcat
+(p)27321
+(e)🆕🤖|C-Feature, A-Silicons
+(*)Robotics consoles now have a "Silicon Broadcast" section, creating a broadcast on the silicon line with a cooldown of 2 minutes per user.
+(u)JORJ949
+(p)27329
+(e)🤖|A-Silicons
+(*)Silicons now receive a killswitch like timer at the top of their screen for the duration of any equipment lockdowns. Active killswitches will override this timer.
+(*)Syndicate and Emagged cyborgs can be "locked down" by the robotics console, but are immune to the effects of the lockdown.
 (t)thu aug 06 26
+(u)bamlord
+(p)27417
+(e)🐁|A-Critters
+(+)Buffed hippo combat capability
 (u)glowbold
 (p)27404
 (e)🆕💊⚗|C-Feature, A-Medical, A-Chemistry

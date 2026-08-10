@@ -24,6 +24,7 @@
 		src.target.linkers -= src
 		src.target = null
 
+	src.contents = null
 	. = ..()
 
 /datum/computer/folder/link/copy_file(depth = 0)

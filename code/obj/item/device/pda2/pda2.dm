@@ -1070,7 +1070,7 @@
 		if (mode)
 			src.current_overlay = mode
 		src.UpdateOverlays(src.overlay_images[src.current_overlay], "screen_overlay")
-		var/image/symbol_overlay = image(src.icon, "symbol-[src.current_overlay]", pixel_x = src.screen_x, pixel_y = src.pixel_y)
+		var/image/symbol_overlay = image(src.icon, "symbol-[src.current_overlay]", pixel_x = src.screen_x, pixel_y = src.screen_y)
 		symbol_overlay.color = src.link_color
 		src.UpdateOverlays(symbol_overlay, "screen_symbol_overlay")
 
