@@ -1,5 +1,7 @@
 
 (t)mon aug 10 26
+(u)Callipygian0
+(*)Clarion's Escape Security checkpoint has an ID computer.
 (u)Ceres et al.
 (p)27462
 (e)|
