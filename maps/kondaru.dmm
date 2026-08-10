@@ -33384,10 +33384,6 @@
 /obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/darkblue,
 /area/station/janitor/office)
-"hiT" = (
-/obj/machinery/light_switch/directional/north,
-/turf/simulated/wall/auto/supernorn,
-/area/station/crew_quarters/arcade)
 "hjz" = (
 /obj/machinery/firealarm/directional/east,
 /turf/simulated/floor/caution/side{
@@ -122509,7 +122505,7 @@ paR
 bfO
 qSI
 sKA
-hiT
+sKA
 sKA
 dgL
 sKA

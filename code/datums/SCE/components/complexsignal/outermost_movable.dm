@@ -61,6 +61,14 @@
 	if (old_turf != new_turf)
 		SEND_COMPLEX_SIGNAL(src, XSIG_MOVABLE_TURF_CHANGED, old_turf, new_turf)
 
+		if (old_turf)
+			if (new_turf)
+				SEND_COMPLEX_SIGNAL(src, XSIG_MOVABLE_TURF_CHANGED_SAFE, old_turf, new_turf)
+			else
+				SEND_COMPLEX_SIGNAL(src, XSIG_MOVABLE_TURF_TO_NULLSPACE, old_turf)
+		else
+			SEND_COMPLEX_SIGNAL(src, XSIG_MOVABLE_NULLSPACE_TO_TURF, new_turf)
+
 		var/area/old_area = get_area(previous_loc)
 		var/area/new_area = get_area(outermost_movable)
 		if (old_area != new_area)

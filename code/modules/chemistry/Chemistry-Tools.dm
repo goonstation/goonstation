@@ -160,7 +160,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 ///Returns a serialized representation of the reagents of an atom for use with the ReagentInfo TGUI components
 ///Note that this is not a built in TGUI proc
-proc/ui_describe_reagents(atom/A)
+proc/ui_describe_reagents(atom/A, show_overdose = FALSE)
 	if (!istype(A))
 		return null
 	var/datum/reagents/R = A.reagents
@@ -188,6 +188,7 @@ proc/ui_describe_reagents(atom/A)
 				colorB = current_reagent.fluid_b,
 				volume = current_reagent.volume,
 				state = current_reagent.reagent_state,
+				overdose = show_overdose ? current_reagent.overdose : null,
 			)))
 	return thisContainerData
 
