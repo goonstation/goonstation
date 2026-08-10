@@ -90,7 +90,6 @@
 			src.root = new /datum/computer/folder
 			src.root.holder = src
 			src.root.name = "root"
-
 			src.name_suffixes = list()
 			src.UpdateName()
 		else
