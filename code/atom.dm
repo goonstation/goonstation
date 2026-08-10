@@ -228,8 +228,7 @@ TYPEINFO(/atom)
 	proc/Translate(var/x = 0, var/y = 0)
 		src.transform = matrix(src.transform, x, y, MATRIX_TRANSLATE)
 
-	proc/assume_air(datum/air_group/giver)
-		giver.dispose()
+	proc/assume_air(datum/gas_mixture/giver)
 		return null
 
 	proc/remove_air(amount)
