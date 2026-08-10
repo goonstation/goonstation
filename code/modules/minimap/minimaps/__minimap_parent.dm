@@ -152,8 +152,9 @@ ABSTRACT_TYPE(/datum/minimap)
 		map_marker.on_minimap_z_level = TRUE
 		var/screen_scale = src.zoom_coefficient * src.map_scale
 		// Turf pixels are drawn from their lower-left edge; place the marker at the turf centre.
-		map_marker.marker.pixel_x = ((x - 0.5) * screen_scale) - 16
-		map_marker.marker.pixel_y = ((y - 0.5) * screen_scale) - 16
+		var/marker_center = (world.icon_size - 1) / 2
+		map_marker.marker.pixel_x = ((x - 0.5) * screen_scale) - marker_center
+		map_marker.marker.pixel_y = ((y - 0.5) * screen_scale) - marker_center
 
 /// Removes a minimap marker from this minimap.
 /datum/minimap/proc/remove_minimap_marker(atom/target)
