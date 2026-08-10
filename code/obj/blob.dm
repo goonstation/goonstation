@@ -182,8 +182,7 @@
 		if (O)
 			overmind = O
 			setMaterial(O.my_material)
-			color = material.getColor()
-			original_color = color
+			original_color = material.getColor()
 			O.blobs |= src
 			onAttach(O)
 			update_overlays(O.organ_color)
