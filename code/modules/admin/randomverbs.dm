@@ -1101,7 +1101,6 @@
 	if (!adventure_view || mob.see_invisible < INVIS_ADVENTURE)
 		adventure_view = 1
 		mob.apply_vision(/datum/vision/adventure, src.type)
-		mob.see_invisible = INVIS_ADVENTURE
 		get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS).add_client(src)
 		boutput(src, "Adventure View activated.")
 

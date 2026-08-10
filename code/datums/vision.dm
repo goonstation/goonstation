@@ -190,6 +190,11 @@
 	see_in_dark = SEE_DARK_FULL
 	see_invisible = INVIS_INFRA
 
+/datum/vision/wraith
+	sight = SEE_SELF
+	see_invisible = INVIS_SPOOKY
+	see_in_dark = SEE_DARK_FULL
+
 /// this is just xray+nightvision
 /datum/vision/xray/kudzu
 	centerlight_icon = "nightvision"
@@ -234,3 +239,6 @@
 
 /datum/vision/movable_area_controller // /obj/movable_area_controller
 	see_in_dark = 12
+
+/datum/vision/ghostdrone_deluxe
+	see_in_dark = SEE_DARK_FULL

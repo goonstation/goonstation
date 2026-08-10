@@ -25,6 +25,7 @@ TYPEINFO(/mob/living/intangible/wraith)
 
 	default_speech_output_channel = SAY_CHANNEL_WRAITH
 	voice_type = null
+	innate_vision = /datum/vision/wraith
 
 	var/deaths = 0
 	var/datum/hud/wraith/hud
@@ -83,10 +84,6 @@ TYPEINFO(/mob/living/intangible/wraith)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
 		src.apply_vision(/datum/vision/nightvision/weak, src)
-		//src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
-		src.sight |= SEE_SELF // let's not make it see through walls
-		src.see_invisible = INVIS_SPOOKY
-		src.see_in_dark = SEE_DARK_FULL
 		src.abilityHolder = new /datum/abilityHolder/wraith(src)
 		AH = src.abilityHolder
 		src.abilityHolder.points = 50
