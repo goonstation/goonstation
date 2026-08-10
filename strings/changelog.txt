@@ -1,4 +1,9 @@
 
+(t)mon aug 10 26
+(u)Ceres et al.
+(p)27462
+(e)|
+(+)Wiping a floppy disk's contents with a multitool now also removes any labels from that disk.
 (t)sun aug 09 26
 (u)LeahTheTech
 (+)Hippos now eat vegetables.
