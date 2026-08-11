@@ -90,11 +90,6 @@ TYPEINFO(/obj/item/device/analyzer/atmospheric)
 	throw_speed = 4
 	throw_range = 20
 	var/analyzer_upgrade = 0
-	///The breach we are currently tracking
-	var/atom/target = null
-	var/hudarrow_color = "#0df0f0"
-	///We keep track of the airgroup so we can acquire a new breach after the old one is patched, even if the user is standing on space at the time
-	var/datum/air_group/tracking_airgroup = null
 	var/emagged = FALSE
 
 	// Distance upgrade action code
@@ -105,74 +100,6 @@ TYPEINFO(/obj/item/device/analyzer/atmospheric)
 			boutput(user, scan_atmospheric(T, visible = 1, emagged_analyzer = emagged))
 			src.add_fingerprint(user)
 			return
-
-	attack_self(mob/user as mob)
-		if (user.stat)
-			return
-
-		src.add_fingerprint(user)
-
-		if (!src.target)
-			src.find_breach()
-			if (src.target)
-				user.AddComponent(/datum/component/tracker_hud, src.target, src.hudarrow_color)
-				src.AddOverlays(image('icons/obj/items/device.dmi', "atmos-tracker"), "breach_tracker")
-		else
-			src.tracker_off(user)
-
-	proc/tracker_off(mob/user)
-		src.ClearSpecificOverlays("breach_tracker")
-		src.UnregisterSignal(src.target, COMSIG_TURF_REPLACED)
-		var/datum/component/tracker_hud/arrow = user.GetComponent(/datum/component/tracker_hud)
-		arrow?.RemoveComponent()
-		src.target = null
-		src.tracking_airgroup = null
-
-	///Search the current airgroup for space borders and point to the closest one
-	proc/find_breach()
-		var/turf/simulated/T = get_turf(src)
-		if (!src.tracking_airgroup)
-			if (!istype(T) || !T.parent)
-				boutput(src.loc, SPAN_ALERT("Unable to read atmospheric flow."))
-				return
-			src.tracking_airgroup = T.parent
-
-		for (var/turf/breach in src.tracking_airgroup?.space_borders)
-			for (var/dir in cardinal)
-				var/turf/space/potential_space = get_step(breach, dir)
-				if (istype(potential_space) && (!src.target || (GET_DIST(src.target, T) > GET_DIST(potential_space, T))))
-					src.target = potential_space
-					break
-		if (!src.target)
-			src.tracking_airgroup = null
-			boutput(src.loc, SPAN_ALERT("No breaches found in current atmosphere."))
-			return
-		if (ismob(src.loc))
-			var/datum/component/tracker_hud/arrow = src.loc.GetComponent(/datum/component/tracker_hud)
-			arrow?.change_target(src.target)
-		src.RegisterSignal(src.target, COMSIG_TURF_REPLACED, PROC_REF(update_breach))
-
-	///When our target is replaced (most likely no longer a breach), pick a new one
-	proc/update_breach(turf/replaced, turf/new_turf)
-		src.UnregisterSignal(src.target, COMSIG_TURF_REPLACED)
-		//the signal has to be sent before the turf is replaced, but we need to search after it has been replaced, hence the accursed SPAWN(1)
-		SPAWN(1)
-			if (!istype(new_turf, /turf/space))
-				src.target = null
-				src.find_breach()
-				if (!src.target)
-					src.tracker_off(src.loc)
-
-	//we duplicate a little pinpointer code
-	pickup(mob/user)
-		. = ..()
-		if (src.target)
-			user.AddComponent(/datum/component/tracker_hud, src.target, src.hudarrow_color)
-
-	dropped(mob/user)
-		. = ..()
-		var/datum/component/tracker_hud/arrow = user?.GetComponent(/datum/component/tracker_hud)
-		arrow?.RemoveComponent()
 
 	attackby(obj/item/W, mob/user)
 		addUpgrade(W, user, src.analyzer_upgrade)
