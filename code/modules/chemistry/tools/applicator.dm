@@ -46,6 +46,7 @@
 
 	update_icon()
 		src.icon_state = "spacelipstick[src.open]"
+
 		if (src.open)
 			ENSURE_IMAGE(src.image_stick, src.icon, "spacelipstick")
 			src.image_stick.color = src.reagents.get_average_rgb()
@@ -64,6 +65,16 @@
 	name = "glue stick"
 	desc = "It's a stick. Of glue. A glue stick."
 	initial_reagents = list("spaceglue" = 30)
+	icon_state = "spaceglue0"
+
+	update_icon()
+		src.icon_state = "spaceglue[src.open]"
+		if (src.open && src.reagents?.total_volume > 0)
+			ENSURE_IMAGE(src.image_stick, src.icon, "spaceglue")
+			src.image_stick.color = src.reagents.get_average_rgb()
+			src.UpdateOverlays(src.image_stick, "stick")
+		else
+			src.UpdateOverlays(null, "stick")
 
 /obj/item/reagent_containers/applicator/stick/glue/craft
 	name = "craft glue stick"
