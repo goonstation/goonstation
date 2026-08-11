@@ -6,12 +6,19 @@
  *	Looks up an element singleton of the given type and attaches it to this datum.
  */
 /datum/proc/_AddElement(list/arguments)
+	SHOULD_NOT_OVERRIDE(TRUE)
 	if (QDELETED(src))
 		CRASH("Attempted to add element [arguments[1]] to a qdeleted datum.")
 
 	var/datum/element/E = DCS.GetElement(arguments)
 	if (!E)
 		return
+
+	var/list/de = (src.datum_elements ||= list())
+	if (de[E.id])
+		return
+
+	de[E.id] = TRUE
 
 	arguments[1] = src
 	if (E.Attach(arglist(arguments)) == DCS::ERR::ELEMENT_INCOMPATIBLE)
@@ -22,12 +29,24 @@
  *	Additional arguments beyond the type only need to be passed if a bespoke element is being removed.
  */
 /datum/proc/_RemoveElement(list/arguments)
+	SHOULD_NOT_OVERRIDE(TRUE)
 	var/datum/element/E = astype(arguments[1]) || DCS.GetElement(arguments, FALSE)
-	E?.Detach(src)
+	if (!E)
+		return
+
+	var/list/de = src.datum_elements
+	if (!de?[E.id])
+		return
+
+	de -= E.id
+	if (!length(de))
+		src.datum_elements = null
+
+	E.Detach(src)
 
 
 TYPEINFO(/datum/element)
-	var/initialization_args = null
+	var/initialization_args = list()
 
 ABSTRACT_TYPE(/datum/element)
 /**
@@ -39,7 +58,7 @@ ABSTRACT_TYPE(/datum/element)
  */
 /datum/element
 	/// The ID that uniquely identifies this element. Usually the typepath unless the element is a bespoke element.
-	VAR_PRIVATE/id = null
+	var/id = null
 	/// Option flags for element behaviour.
 	var/element_flags = 0
 
@@ -54,11 +73,6 @@ ABSTRACT_TYPE(/datum/element)
 /// Activates the functionality defined by the element on the given target datum.
 /datum/element/proc/Attach(datum/target)
 	SHOULD_CALL_PARENT(TRUE)
-	var/list/de = (target.datum_elements ||= list())
-	if (de[src.id])
-		return
-
-	de[src.id] = TRUE
 
 	SEND_SIGNAL(target, COMSIG_ELEMENT_ATTACH, src)
 	if (element_flags & DCS::ELEMENT_FLAG::DETACH_ON_PARENT_DISPOSE)
@@ -67,13 +81,6 @@ ABSTRACT_TYPE(/datum/element)
 /// Deactivates the functionality defined by the element on the given target datum.
 /datum/element/proc/Detach(datum/target)
 	SHOULD_CALL_PARENT(TRUE)
-	var/list/de = target.datum_elements
-	if (!de?[src.id])
-		return
-
-	de -= src.id
-	if (!length(de))
-		target.datum_elements = null
 
 	SEND_SIGNAL(target, COMSIG_ELEMENT_DETACH, src)
 	src.UnregisterSignal(target, COMSIG_PARENT_PRE_DISPOSING)
