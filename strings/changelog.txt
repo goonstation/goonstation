@@ -1,4 +1,9 @@
 
+(t)tue aug 11 26
+(u)JORJ949
+(p)27422
+(e)🔄🧛📦⚗|C-Rework, A-Gamemodes, A-Game-Objects, A-Chemistry
+(*)The portable chemicompiler traitor purchase option has been removed. The portable chemicompiler is instead found in the RD's locker.
 (t)mon aug 10 26
 (u)Callipygian0
 (*)Clarion's Escape Security checkpoint has an ID computer.
