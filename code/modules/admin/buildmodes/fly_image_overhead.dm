@@ -66,7 +66,7 @@ Shift + LMB on turf    = Spawn flying object<br>
 				src.dir_input = usr.dir
 			var/speed_choice = tgui_alert(usr, "Choose a set speed or random values", "Choose", list("Set", "Random"))
 			if (speed_choice == "Set")
-				src.move_delay = tgui_input_number(usr, "Enter speed value of image", "Higher is slower, gets very slow by 5", 1, min_value = 1)
+				src.move_delay = tgui_input_number(usr, "Higher is slower, gets very slow by 5", "Enter speed value of image", 1, min_value = 1)
 			else
 				src.move_delay = null // pilot will use a random number if delay is null
 			var/spawnloc_choice = tgui_alert(usr, "Start from edge of zlevel or nearby? (About 2 screens away)", "Choose", list("Edge", "Nearby"))
@@ -228,3 +228,6 @@ Shift + LMB on turf    = Spawn flying object<br>
 #undef RUN
 #undef EXPLODE
 #undef FADE
+#undef DIR_LOCKED
+#undef DIR_UNLOCKED
+#undef DIR_RANDOM
