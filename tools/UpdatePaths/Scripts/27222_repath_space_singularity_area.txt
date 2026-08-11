@@ -1,0 +1,1 @@
+/area/station/engine/singcore : /area/station/engine/core/singularity/external{@OLD}

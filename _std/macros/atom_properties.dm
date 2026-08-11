@@ -161,6 +161,16 @@ To remove:
 	SEND_SIGNAL(target, COMSIG_ATOM_PROP_MOB_INVISIBILITY, old_val); \
 	} while(0)
 
+#define PROP_UPDATE_INVISIBILITY_CLOAK(target, prop, old_val) do { \
+	var/new_val = GET_ATOM_PROPERTY_RAW(target, prop); \
+	if (isnull(old_val) && !isnull(new_val)) { \
+		target.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_CLOAKED); \
+	} else if (!isnull(old_val) && isnull(new_val)) { \
+		target.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_CLOAKED); \
+	}; \
+	PROP_UPDATE_INVISIBILITY(target, prop, old_val); \
+	} while(0)
+
 #define PROP_UPDATE_SIGHT(target, prop, old_val) do {\
 	if(!isliving(target)) break; \
 	var/mob/living/_living_mob = target; \
@@ -285,6 +295,7 @@ To remove:
 
 //misc properties
 #define PROP_MOB_INVISIBILITY(x) x("invisibility", APPLY_ATOM_PROPERTY_MAX, REMOVE_ATOM_PROPERTY_MAX, PROP_UPDATE_INVISIBILITY)
+#define PROP_MOB_INVISIBILITY_CLOAK(x) x("invisibility_cloak", APPLY_ATOM_PROPERTY_MAX, REMOVE_ATOM_PROPERTY_MAX, PROP_UPDATE_INVISIBILITY_CLOAK)
 #define PROP_MOB_PASSIVE_WRESTLE(x) x("wrassler", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_CANTTHROW(x) x("cantthrow", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_CANT_BE_PINNED(x) x("cantbepinned", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)

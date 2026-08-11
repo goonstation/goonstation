@@ -138,6 +138,12 @@ TYPEINFO(/obj/item/furniture_parts/table/wood)
 	icon = 'icons/obj/furniture/table_wood_round.dmi'
 	furniture_type = /obj/table/wood/round/auto
 
+/obj/item/furniture_parts/table/wood/regal
+	name = "fancy wooden table parts"
+	desc = "A collection of parts that can be used to make a fancy wooden table."
+	icon = 'icons/obj/furniture/table_wood_regal.dmi'
+	furniture_type = /obj/table/wood/regal/auto
+
 /obj/item/furniture_parts/table/wood/desk
 	name = "desk parts"
 	desc = "A collection of parts that can be used to make a wooden desk."
@@ -593,6 +599,16 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 	stamina_cost = 15
 	furniture_type = /obj/stool/chair/comfy/throne_gold
 	furniture_name = "golden throne"
+
+/obj/item/furniture_parts/wood_regalchair
+	name = "fancy wooden chair parts"
+	desc = "A collection of parts that can be used to make a fancy wooden chair."
+	icon = 'icons/obj/furniture/chairs.dmi'
+	icon_state = "wooden_regalchair_parts"
+	stamina_damage = 15
+	stamina_cost = 15
+	furniture_type = /obj/stool/chair/comfy/wood_regal
+	furniture_name = "fancy wooden chair"
 
 /obj/item/furniture_parts/sleekchair
 	name = "comfy sleek chair parts"

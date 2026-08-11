@@ -5,7 +5,7 @@
  * @license MIT
  */
 
-import { Section } from 'tgui-core/components';
+import { Button, Section } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
@@ -21,7 +21,7 @@ import { DisplayVitals } from '../common/health/vitals';
 import { HealthAnalyzerData } from './type';
 
 export const HealthAnalyzer = () => {
-  const { data } = useBackend<HealthAnalyzerData>();
+  const { act, data } = useBackend<HealthAnalyzerData>();
   const { organ_scan_upgrade, reagent_scan_upgrade } = data;
   let height = 350;
   if (organ_scan_upgrade) height += 200;
@@ -83,6 +83,9 @@ export const HealthAnalyzer = () => {
               occupied={data.occupied}
               diseases={data.disease_status}
             />
+            <Button icon="print" onClick={() => act('print')}>
+              Print Report
+            </Button>
           </Section>
         )}
         {!!data.clumsy_scan && (

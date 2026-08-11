@@ -1565,6 +1565,13 @@ TYPEINFO(/mob/living)
 	return shock_damage
 
 /mob/living/hitby(atom/movable/AM, datum/thrown_thing/thr)
+	if(isitem(AM) && src.juggling() && prob(60))
+		if (prob(src.juggling.len * 5))
+			src.drop_juggle()
+		else
+			SPAWN(0)
+				src.add_juggle(AM)
+		return ..()
 	. = 'sound/impact_sounds/Generic_Hit_2.ogg'
 	actions.interrupt(src, INTERRUPT_ATTACKED)
 	if (src.can_bleed && isitem(AM))
@@ -1576,12 +1583,6 @@ TYPEINFO(/mob/living)
 				src.was_harmed(thr.user, AM)
 	if (AM.throwforce > 5) //number
 		src.changeStatus("staggered", 5 SECONDS)
-	if(isobj(AM) && src.can_juggle)
-		if (src.juggling() && prob(src.juggling.len * 5))
-			src.drop_juggle()
-		else
-			SPAWN(0)
-				src.add_juggle(AM)
 	..()
 
 /mob/living/relaymove(mob/user, direction, delay, running)

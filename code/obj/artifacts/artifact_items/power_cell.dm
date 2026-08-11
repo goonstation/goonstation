@@ -2,12 +2,14 @@
 	name = "artifact power cell"
 	icon = 'icons/obj/artifacts/artifactsitemS.dmi'
 	maxcharge = 1
-	var/chargeCap = 10000
-	genrate = 50
+	genrate = 0
 	specialicon = 1
 	artifact = 1
 	mat_changename = 0
 	mat_changedesc = 0
+
+	var/chargeCap = 10000
+	var/activation_genrate = 50
 	var/effectProbModifier = 0
 	var/noise = null
 	var/leakChem = null
@@ -60,12 +62,14 @@
 	ArtifactActivated()
 		. = ..()
 		src.maxcharge = src.chargeCap
+		src.genrate = src.activation_genrate
 		processing_items |= src				// in case someone decides to make big cells work like small cells
 
 	ArtifactDeactivated()
 		. = ..()
+		src.genrate = 0
+		src.charge = 0
 		src.maxcharge = 1
-		src.charge = 1
 
 	reagent_act(reagent_id,volume)
 		if (..())

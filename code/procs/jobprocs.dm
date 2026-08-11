@@ -827,7 +827,7 @@ Equip items from body traits.
 		if(src.mind)
 			src.mind.originalPDA = PDA
 
-		if(src.client?.preferences?.id_starts_in_pda)
+		if(src.client?.preferences?.id_starts_in_pda || JOB.put_id_in_pda)
 			PDA.insert_id_card(C, src)
 			src.u_equip(PDA)
 			src.equip_if_possible(PDA, SLOT_WEAR_ID)

@@ -2956,18 +2956,6 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 /mob/living/carbon/human/hitby(atom/movable/AM, datum/thrown_thing/thr)
 	. = ..()
 
-	if(isobj(AM) && src.juggling())
-		if (prob(40))
-			src.visible_message(SPAN_ALERT("<b>[src]<b> gets hit in the face by [AM]!"))
-			src.TakeDamageAccountArmor("head", AM.throwforce, 0)
-		else
-			if (prob(src.juggling.len * 5)) // might drop stuff while already juggling things
-				src.drop_juggle()
-			else
-				SPAWN(0) //wait for the throw to have fully ended (yes I know this is bad, feel free to fix it if you can figure out how to make throws end early)
-					src.add_juggle(AM)
-		return
-
 	if(((src.in_throw_mode && src.a_intent == "help") || src.client?.check_key(KEY_THROW)) && !src.equipped())
 		if((src.hand && (!src.limbs.l_arm)) || (!src.hand && (!src.limbs.r_arm)) || src.hasStatus("handcuffed") || (prob(60) && src.bioHolder.HasEffect("clumsy")) || ismob(AM) || (thr?.get_throw_travelled() <= 1 && AM.last_throw_x == AM.x && AM.last_throw_y == AM.y))
 			src.visible_message(SPAN_ALERT("[src] has been hit by [AM]."))
