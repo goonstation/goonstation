@@ -384,90 +384,58 @@ proc/debug_map_apc_count(delim,zlim)
 			img.app.desc = ""
 			img.app.color = null
 			img.app.maptext = null
-			if (istype(sim, /turf/simulated))
-				img.app.alpha = 200
+			img.app.alpha = 200
 
-				var/datum/air_group/group = sim.parent
-				var/datum/gas_mixture/air = null
-				var/is_group = 0
-				var/is_group_active = 0
-				if (group)
-					is_group = debug_color_of(group)
-					if (sim.parent.group_processing)
-						is_group_active = 1
-						air = sim.parent.air
-					else
-						air = sim.air
-				else if (sim?.air)
-					air = sim.air
+			var/datum/gas_mixture/air = sim.return_air()
 
-				if (!air)
-					img.app.color = "#6666FF"
-					img.app.desc = "no air mix"
+			var/pressure = MIXTURE_PRESSURE(air)
+			img.app.desc = "[MOLES_REPORT(air)]Temperature=[air.temperature()]<br/>"
+
+			var/breath_pressure = ((TOTAL_MOLES(air) * R_IDEAL_GAS_EQUATION * air.temperature()) * BREATH_PERCENTAGE) / BREATH_VOLUME
+			//Partial pressure of the O2 in our breath
+			var/O2_pp = (TOTAL_MOLES(air)) && (air.oxygen / TOTAL_MOLES(air)) * breath_pressure
+			var/O2_color
+			var/T_color
+			switch (O2_pp)
+				if (17 to INFINITY)
+					O2_color = "#eeeeff"
+				if (9 to 17)
+					O2_color = "#ff8800"
+				if (-INFINITY to 0.01)
+					O2_color = "#888888"
 				else
+					O2_color = "#ff0000"
 
-					var/pressure = MIXTURE_PRESSURE(air)
-					img.app.desc = "Group \ref[group]<br>[MOLES_REPORT(air)]Temperature=[air.temperature()]<br/>"
-
-					var/breath_pressure = ((TOTAL_MOLES(air) * R_IDEAL_GAS_EQUATION * air.temperature()) * BREATH_PERCENTAGE) / BREATH_VOLUME
-					//Partial pressure of the O2 in our breath
-					var/O2_pp = (TOTAL_MOLES(air)) && (air.oxygen / TOTAL_MOLES(air)) * breath_pressure
-					var/O2_color
-					var/T_color
-					switch (O2_pp)
-						if (17 to INFINITY)
-							O2_color = "#eeeeff"
-						if (9 to 17)
-							O2_color = "#ff8800"
-						if (-INFINITY to 0.01)
-							O2_color = "#888888"
-						else
-							O2_color = "#ff0000"
-
+			T_color = "#ffffff"
+			switch (TO_CELSIUS(air.temperature()))
+				if (100 to INFINITY)
+					T_color = "#ff0000"
+				if (75 to 100)
+					T_color = "#ff8800"
+				if (40 to 65)
+					T_color = "#ffff00"
+				if (15 to 40)
 					T_color = "#ffffff"
-					switch (TO_CELSIUS(air.temperature()))
-						if (100 to INFINITY)
-							T_color = "#ff0000"
-						if (75 to 100)
-							T_color = "#ff8800"
-						if (40 to 65)
-							T_color = "#ffff00"
-						if (15 to 40)
-							T_color = "#ffffff"
-						if (-15 to 0)
-							T_color = "#99bbff"
-						if (-40 to -15)
-							T_color = "#5599ff"
-						if (-INFINITY to -40)
-							T_color = "#0000ff"
+				if (-15 to 0)
+					T_color = "#99bbff"
+				if (-40 to -15)
+					T_color = "#5599ff"
+				if (-INFINITY to -40)
+					T_color = "#0000ff"
 
 
-					//mt.maptext = "<span class='pixel r' style='color: white; -dm-text-outline: 1px black;'>[round(TOTAL_MOLES(air), 0.1)]\n[round(pressure, 1)]\n[round(air.temperature() - T0C, 1)]</span>"
-					img.app.overlays = null
-
-					if (is_group)
-						var/image/gt = image('icons/Testing/atmos_testing.dmi', "group[is_group_active ? "" : "-paused"]")
-						gt.appearance_flags = RESET_COLOR
-						gt.color = is_group
-						img.app.overlays += gt
-
-					if (group?.spaced) img.app.overlays += image('icons/misc/debug.dmi', icon_state = "spaced")
-
-					img.app.overlays += src.makeText("<span style='color: [O2_color];'>[round(O2_pp, 0.01)]</span>\n[round(pressure, 0.1)]\n<span style='color: [T_color];'>[round(TO_CELSIUS(air.temperature()), 1)]</span>")
+			//mt.maptext = "<span class='pixel r' style='color: white; -dm-text-outline: 1px black;'>[round(TOTAL_MOLES(air), 0.1)]\n[round(pressure, 1)]\n[round(air.temperature() - T0C, 1)]</span>"
+			img.app.overlays = null
+			img.app.overlays += src.makeText("<span style='color: [O2_color];'>[round(O2_pp, 0.01)]</span>\n[round(pressure, 0.1)]\n<span style='color: [T_color];'>[round(TO_CELSIUS(air.temperature()), 1)]</span>")
 
 
-					if (pressure > ONE_ATMOSPHERE)
-						var/color1 = 255
-						var/color2 = 255 - clamp(((pressure - ONE_ATMOSPHERE) / (ONE_ATMOSPHERE * 4)) * 255, 0, 255)
-						img.app.color = rgb(color1, color2, color2)
-					else
-						var/color1 = clamp(pressure / ONE_ATMOSPHERE * 255, 0, 255)
-						img.app.color = rgb(color1, color1, color1)
-
-
+			if (pressure > ONE_ATMOSPHERE)
+				var/color1 = 255
+				var/color2 = 255 - clamp(((pressure - ONE_ATMOSPHERE) / (ONE_ATMOSPHERE * 4)) * 255, 0, 255)
+				img.app.color = rgb(color1, color2, color2)
 			else
-				img.app.desc = "" //"unsim"
-				img.app.color = "#0000ff"
+				var/color1 = clamp(pressure / ONE_ATMOSPHERE * 255, 0, 255)
+				img.app.color = rgb(color1, color1, color1)
 
 
 	artists

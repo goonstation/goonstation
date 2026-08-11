@@ -295,20 +295,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pressurizer)
 			if(T.air)
 				// Use temporary gas mixture to not dispose air_contents through merge
 				var/datum/gas_mixture/temp = air_contents.remove_ratio(1)
-				if(T.parent?.group_processing)
-					T.parent.air.merge(temp)
-				else
-					var/count = length(T.parent?.members)
-					if(count)
-						if(count>1)
-							temp = temp.remove_ratio(1/count)
-						var/datum/gas_mixture/GM
-						for(var/turf/simulated/MT as anything in T.parent.members)
-							GM = new /datum/gas_mixture
-							GM.copy_from(temp)
-							MT.assume_air(GM)
-					else
-						T.assume_air(temp)
+				T.assume_air(temp)
 
 			if(pressure > (maximum_pressure * BLAST_EFFECT_RATIO))
 				for(var/mob/living/HH in hearers(8, T))

@@ -82,8 +82,6 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 			for(var/turf/simulated/T in maintaining_turfs)
 				if(!T.air && T.density)
 					continue
-				if(T.parent?.group_processing)
-					T.parent.suspend_group_processing()
 				T.stabilize()
 				LAGCHECK(LAG_LOW)
 

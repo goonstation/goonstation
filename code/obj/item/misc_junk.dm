@@ -684,8 +684,6 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	ex_act(severity)
 		// we look for the nearest floor because the jerks are probably gonna blow up a hole under the stone or something, rude
 		for(var/turf/simulated/floor/floor in range(3, get_turf(src)))
-			if(floor.parent?.spaced)
-				continue
 			var/datum/gas_mixture/gas = new
 			gas.radgas = 10 * 2 ** (3 - severity)
 			floor.assume_air(gas)

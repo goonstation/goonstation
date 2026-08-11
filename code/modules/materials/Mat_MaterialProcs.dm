@@ -406,8 +406,6 @@ triggerOnImage(var/image/target, var/datum/material/source)
 				valid_turfs += target
 		if(length(valid_turfs))
 			var/turf/simulated/floor/target = pick(valid_turfs)
-			if(target.parent?.group_processing)
-				target.parent.suspend_group_processing()
 
 			var/datum/gas_mixture/payload = new /datum/gas_mixture
 			payload.toxins = 25 * location.material_amt
@@ -887,8 +885,6 @@ triggerOnImage(var/image/target, var/datum/material/source)
 			return
 		var/datum/gas_mixture/air = T.return_air()
 		if (!air || air.toxins < MINIMUM_REACT_QUANTITY) return
-		if(T.parent?.group_processing)
-			T.parent.suspend_group_processing()
 		/// Mostly bullshit magic because I don't know how radiation works and plasma isn't real, but is how many moles to convert of existing plasma
 		var/moles_to_convert = min(((I.amount * I.material_amt) * (1 + radioactive) * (1 + n_radioactive) * sqrt(temp) / 1000), air.toxins)
 		air.radgas += moles_to_convert

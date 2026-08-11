@@ -836,22 +836,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 
 		if (T && istype(T))
 			if (T.air)
-				if (T.parent?.group_processing)
-					T.parent.air.merge(GM)
-				else
-					var/count = length(T.parent?.members)
-					if (count)
-						var/o2_per = GM.oxygen / count
-						var/co2_per = GM.carbon_dioxide / count
-						for (var/turf/simulated/MT as anything in T.parent.members)
-							if (GM.disposed)
-								GM = new /datum/gas_mixture
-							GM.temperature() = T20C + 15
-							GM.oxygen = o2_per
-							GM.carbon_dioxide = co2_per
-							MT.assume_air(GM)
-					else
-						T.assume_air(GM)
+				T.assume_air(GM)
 
 			for (var/mob/living/HH in hearers(8, T))
 				var/checkdist = GET_DIST(HH.loc, T)
@@ -2289,9 +2274,6 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 			if (plasma)
 				for (var/turf/simulated/floor/target in range(1,origin))
 					if(!target.gas_impermeable && target.air)
-						if(target.parent?.group_processing)
-							target.parent.suspend_group_processing()
-
 						var/datum/gas_mixture/payload = new /datum/gas_mixture
 						payload.toxins = plasma * 100
 						payload.temperature() = T20C

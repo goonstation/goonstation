@@ -643,7 +643,6 @@ var/global/in_replace_with = 0
 			var/turf/simulated/S = src
 			oldair = S.air
 			S.air = null
-			oldparent = S.parent
 
 		else if (istype(src, /turf/unsimulated)) //Apparently unsimulated turfs can have static air as well!
 			#define _OLD_GAS_VAR_ASSIGN(GAS, ...) GAS ## _old = src.GAS;

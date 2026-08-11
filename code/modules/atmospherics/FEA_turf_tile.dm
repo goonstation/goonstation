@@ -201,3 +201,16 @@
 				break //no point continuing if we've dropped below threshold
 
 	return TRUE
+
+
+/// Tells our neighbors it's time to update.
+/turf/proc/update_nearby_tiles(need_rebuild)
+	src.selftilenotify() //used in fluids.dm for displaced fluid
+	
+	if (map_currently_underwater)
+		for(var/direction in cardinal)
+			var/turf/simulated/T = get_step(src, direction)
+			if(istype(T))
+				T.tilenotify(src)
+
+	return TRUE
