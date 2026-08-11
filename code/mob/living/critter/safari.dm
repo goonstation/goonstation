@@ -6,10 +6,10 @@
 	icon = 'icons/misc/bigcritter.dmi'
 	icon_state = "hippo"
 	icon_state_dead = "hippo-dead"
-	health_brute = 125
-	health_burn = 125
+	health_brute = 250
+	health_burn = 250
 	health_brute_vuln = 0.4
-	health_burn_vuln = 1.2
+	health_burn_vuln = 0.8
 	no_stamina_stuns = TRUE
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0
@@ -27,6 +27,7 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "hippo", 40)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_BODY, "hippo", 20)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_BODY_MAX, "hippo", 20)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "hippo", 15)
 		src.add_stam_mod_max("hippo", 100)
 		src.pixel_x -= 16
 
@@ -60,6 +61,12 @@
 		if (length(.) && prob(10))
 			playsound(src.loc, 'sound/voice/animal/hippo_roar.ogg', 75, 1)
 			src.visible_message(SPAN_ALERT("<B>[src]</B> roars!"))
+	seek_food_target(range)
+		. = list()
+		for (var/obj/item/item in view(range, get_turf(src)))
+			//hippos are *mostly* herbivores
+			if (istype(item, /obj/item/reagent_containers/food/snacks/plant))
+				. += item
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
