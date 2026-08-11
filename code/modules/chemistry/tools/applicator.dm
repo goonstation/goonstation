@@ -46,7 +46,6 @@
 
 	update_icon()
 		src.icon_state = "spacelipstick[src.open]"
-
 		if (src.open)
 			ENSURE_IMAGE(src.image_stick, src.icon, "spacelipstick")
 			src.image_stick.color = src.reagents.get_average_rgb()
