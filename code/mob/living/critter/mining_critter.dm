@@ -258,6 +258,7 @@
 	New()
 		..()
 
+		src.pixel_x -= 16
 
 /mob/living/critter/fermid/hulk
 	name = "fermid hulk"
@@ -282,6 +283,8 @@
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/mouth/fermid/fermid_hulk
+		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/big_fermid, src)
+		src.pixel_x -= 16
 	purple
 		recolor = "#b90fab"
 		speed = /datum/movement_modifier/big_fermid_fast

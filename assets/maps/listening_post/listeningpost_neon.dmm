@@ -340,6 +340,7 @@
 /obj/item/paper/pipebombs{
 	pixel_y = 4
 	},
+/obj/item/stamp/syndicate,
 /turf/simulated/floor/black,
 /area/listeningpost/break_room)
 "nh" = (
@@ -1318,7 +1319,7 @@
 /turf/simulated/floor/red,
 /area/listeningpost/tech_room)
 "ZM" = (
-/obj/machinery/disposal,
+/obj/machinery/disposal/ejection,
 /obj/disposalpipe/trunk,
 /obj/securearea{
 	desc = "A warning sign which reads 'DIRECT2TRENCH'";

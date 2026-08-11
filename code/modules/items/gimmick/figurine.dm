@@ -1144,7 +1144,18 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		name = "\improper Samson"
 		icon_state = "samson"
 		ckey = "zodiadecius"
-
+	idestroykibble
+		name = "\improper Ruud Keydens"
+		icon_state = "ruudkeydens"
+		ckey = "idestroykibble"
+	erikkainn
+		name = "\improper Edwardo Gonzalez"
+		icon_state = "edwardogonzalez"
+		ckey = "erikkainn"
+	vithesilly
+		name = "\improper Vi FizZahrd"
+		icon_state = "vifizzahrd"
+		ckey = "vithesilly"
 /obj/item/item_box/figure_capsule
 	name = "capsule"
 	desc = "A little plastic ball for keeping stuff in. Woah! We're truly in the future with technology like this."

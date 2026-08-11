@@ -128,11 +128,11 @@
 		S["notes"] = sec_note
 
 	if (H.traitHolder?.hasTrait("training_clown"))
-		S["criminal"] = ARREST_STATE_CLOWN
+		S["criminal"] = SECURITY::ARREST::STATE::CLOWN
 		S["mi_crim"] = "Clown"
 		H.update_arrest_icon()
 	else
-		S["criminal"] = ARREST_STATE_NONE
+		S["criminal"] = SECURITY::ARREST::STATE::NONE
 		S["mi_crim"] = "None"
 
 	S["mi_crim_d"] = "No minor crime convictions."
@@ -150,7 +150,7 @@
 	B["current_money"] = 100
 	B["pda_net_id"] = pda_net_id
 	// management isn't in the union (they're going to steal it anyway)
-	if (H.traitHolder?.hasTrait("unionized") && (J?.job_category == JOB_COMMAND || istype(J, /datum/job/special/random/vip)))
+	if (H.traitHolder?.hasTrait("unionized") && !(J?.job_category == JOB_COMMAND || istype(J, /datum/job/special/random/vip)))
 		B["unionized"] = "Yes"
 	else
 		B["unionized"] = "No"
@@ -370,8 +370,8 @@
 
 /datum/fine/proc/approve(var/approved_by,var/their_job,var/ticket_level)
 	if(approver || paid) return
-	if (amount > MAX_FINE_NO_APPROVAL && !(ticket_level >= TICKET_LEVEL_FINE_LARGE)) return
-	if (ticket_level < TICKET_LEVEL_FINE_SMALL) return
+	if (amount > SECURITY::TICKET::MAX_FINE_NO_APPROVAL && !(ticket_level >= SECURITY::TICKET::LEVEL::FINE_LARGE)) return
+	if (ticket_level < SECURITY::TICKET::LEVEL::FINE_SMALL) return
 
 	approver = approved_by
 	approver_job = their_job
@@ -385,24 +385,24 @@
 
 	if(bank_record["current_money"] >= amount)
 		bank_record["current_money"] -= amount
-		wagesystem.budgets[BUDGET_CAT_STATION] += amount
+		wagesystem.budgets[BUDGET_CAT_PAYROLL] += amount
 		paid = 1
 		paid_amount = amount
 	else
 		paid_amount += bank_record["current_money"]
-		wagesystem.budgets[BUDGET_CAT_STATION] += bank_record["current_money"]
+		wagesystem.budgets[BUDGET_CAT_PAYROLL] += bank_record["current_money"]
 		bank_record["current_money"] = 0
 		SPAWN(30 SECONDS) process_payment()
 
 /datum/fine/proc/process_payment()
 	if(bank_record["current_money"] >= (amount-paid_amount))
 		bank_record["current_money"] -= (amount-paid_amount)
-		wagesystem.budgets[BUDGET_CAT_STATION] += (amount-paid_amount)
+		wagesystem.budgets[BUDGET_CAT_PAYROLL] += (amount-paid_amount)
 		paid = 1
 		paid_amount = amount
 	else
 		paid_amount += bank_record["current_money"]
-		wagesystem.budgets[BUDGET_CAT_STATION] += bank_record["current_money"]
+		wagesystem.budgets[BUDGET_CAT_PAYROLL] += bank_record["current_money"]
 		bank_record["current_money"] = 0
 		SPAWN(30 SECONDS) process_payment()
 

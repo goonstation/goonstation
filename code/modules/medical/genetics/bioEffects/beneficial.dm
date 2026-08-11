@@ -206,6 +206,15 @@
 	degrade_to = "drunk"
 	icon_state  = "alc_res"
 
+	OnAdd()
+		. = ..()
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_ALCOHOL_RESIST, src, 100)
+
+	OnRemove()
+		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_ALCOHOL_RESIST, src)
+		. = ..()
+
+
 /datum/bioEffect/toxres
 	name = "Toxic Resistance"
 	desc = "Renders the subject's blood immune to toxification. This will not stop other effects of poisons from occurring, however."
@@ -1049,12 +1058,12 @@
 		if (probmult(20))
 			src.active = !src.active
 		if (src.active)
-			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src, INVIS_MESON)
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY_CLOAK, src, INVIS_MESON)
 		else
-			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY_CLOAK, src)
 
 	OnRemove()
-		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
+		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY_CLOAK, src)
 		. = ..()
 
 // hair_override gene

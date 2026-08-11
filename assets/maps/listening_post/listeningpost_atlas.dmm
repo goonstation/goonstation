@@ -92,6 +92,10 @@
 "di" = (
 /obj/table/syndicate/auto,
 /obj/item/paper/pipebombs,
+/obj/item/stamp/syndicate{
+	pixel_x = -5;
+	pixel_y = 8
+	},
 /turf/simulated/floor/circuit/red,
 /area/listeningpost/tech_room)
 "dl" = (
@@ -478,6 +482,15 @@
 "si" = (
 /turf/simulated/floor/black,
 /area/listeningpost/power)
+"sY" = (
+/obj/machinery/recharger/wall/sticky{
+	dir = 4;
+	pixel_x = 20
+	},
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/listeningpost/general)
 "sZ" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -1798,7 +1811,7 @@ Ve
 NE
 tK
 jL
-jL
+sY
 OP
 Jf
 TK

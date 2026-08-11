@@ -169,11 +169,12 @@
 		if (istype(winner))
 			boutput(world, "<h2><b>[winner.gang_name], led by [winner.leader.current.real_name], won the round!</b></h2>")
 
-			var/datum/hud/gang_victory/victory_hud = get_singleton(/datum/hud/gang_victory)
-			victory_hud.set_winner(winner)
-			for (var/client/C in clients)
-				victory_hud.add_client(C)
-				C.mob.addAbility(/datum/targetable/toggle_gang_victory_hud)
+			// Gang Victory HUD disabled until it gets fixed, causing runtimes - glowbold 2026-08-07
+			// var/datum/hud/gang_victory/victory_hud = get_singleton(/datum/hud/gang_victory)
+			// victory_hud.set_winner(winner)
+			// for (var/client/C in clients)
+			// 	victory_hud.add_client(C)
+			// 	C.mob.addAbility(/datum/targetable/toggle_gang_victory_hud)
 
 	..()
 
@@ -2269,17 +2270,17 @@
 	attack(mob/O, mob/user)
 		if (istype(O, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = O
-			if (!H.get_gang() && !H.ghost?.get_gang())
-				boutput(user, SPAN_ALERT("They aren't part of a gang! Janktank is <b><i>too cool</i></b> for them."))
-				return
 			if (H == user)
 				boutput(user, SPAN_ALERT("You're not jamming that in yourself!"))
 				return
+			if (!H.get_gang() && !H.ghost?.get_gang())
+				boutput(user, SPAN_ALERT("[he_or_she_dont_or_doesnt(H)] have a gang affiliation! Janktank is <b><i>too cool</i></b> for [him_or_her(H)]."))
+				return
 			if (H.decomp_stage)
-				boutput(user, SPAN_ALERT("It's too late, they're rotten."))
+				boutput(user, SPAN_ALERT("It's too late, [he_or_she(H)] [is_or_are(H)] rotten."))
 				return
 			if (H.mind?.get_player()?.dnr || H.ghost?.mind?.get_player()?.dnr)
-				boutput(user, SPAN_ALERT("Seems they don't want to come back. Huh."))
+				boutput(user, SPAN_ALERT("Seems [he_or_she_dont_or_doesnt(H)] want to come back. Huh."))
 				return
 			if (isdead(H) || H.health < 0)
 				actions.start(new /datum/action/bar/icon/janktanktwo(user, H, src),user)
@@ -2398,19 +2399,23 @@
 		UpdateIcon()
 
 /obj/item/storage/box/gang_equipment
-	name = "gang equipment case"
+	name = /obj/item/storage/briefcase/instruments::name
 	spawn_contents = list(/obj/item/spray_paint_gang = 3, /obj/item/tool/quickhack = 1, /obj/item/switchblade = 1, /obj/item/tool/janktanktwo = 1)
-	desc = "A briefcase full of neat stuff."
+	desc = "A hardshell case for martial implements."
 	icon_state = "briefcase_black"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "sec-case"
+	tooltip_flags = REBUILD_USER
 
 	var/datum/gang/gang = null
 
 	New(turf/newloc, datum/gang/gang)
 		src.gang = gang
-		src.desc = "A briefcase full of equipment for the [gang.gang_name] gang."
 		..()
+
+	get_desc(dist, mob/user)
+		if (src.gang && user?.get_gang()) // only appears for gang users
+			. += " It belongs to [src.gang.gang_name]."
 
 //items purchasable from gangs
 /datum/gang_item

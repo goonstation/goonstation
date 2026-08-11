@@ -19,8 +19,8 @@
 			light.attach(src)
 			light.set_color(src.color_r, src.color_g, src.color_b)
 			light.set_brightness(src.brightness / 5)
-			light.enable()
-
+			SPAWN(1 DECI SECOND) //Needed so the light properly enables when placed at runtime (e.g. random rooms)
+				light.enable()
 	disposing()
 		qdel(src.light)
 		src.light = null

@@ -246,6 +246,9 @@
 	/// Remove the part from the ship and drop it. Returns the part.
 	proc/eject_part(var/mob/user, var/slot, var/give_message = TRUE)
 		RETURN_TYPE(/obj/item/shipcomponent)
+		if (src.locked)
+			boutput(usr, SPAN_ALERT("You can't modify parts while [src] is locked."))
+			return null
 		var/obj/item/shipcomponent/part = src.get_part(slot)
 		if(!part)
 			return null
@@ -279,6 +282,9 @@
 	proc/install_part(var/mob/user, var/obj/item/shipcomponent/part, var/slot, var/activate = FALSE, var/eject = TRUE)
 		if(!slot)
 			boutput(usr, "Report dev error! Slot not found.")
+			return FALSE
+		if (src.locked)
+			boutput(usr, SPAN_ALERT("You can't modify parts while [src] is locked."))
 			return FALSE
 		if(src.get_part(slot))
 			if(eject)

@@ -61,9 +61,9 @@
 		// Departments
 		MGD_COMMAND, MGD_SECURITY, MGD_MEDICAL, MGD_RESEARCH, MGD_ENGINEER, MGD_SUPPLY, MGD_CIVILIAN, MGD_SILICON,
 		// Teams
-		MGT_GENETICS, MGT_ROBOTICS, MGT_CARGO, MGT_MINING, MGT_CATERING, MGT_HYDROPONICS, MGT_JANITOR, MGT_SPIRITUALAFFAIRS, MGT_AI,
+		MGT_GENETICS, MGT_ROBOTICS, MGT_PHARMACY, MGT_CARGO, MGT_MINING, MGT_CATERING, MGT_HYDROPONICS, MGT_JANITOR, MGT_SPIRITUALAFFAIRS, MGT_AI,
 		// Alerts
-		MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_ENGINE, MGA_RKIT, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_CRISIS, MGA_TRACKING, MGA_SYNDICATE
+		MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_ENGINE, MGA_RKIT, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_CHEMREQUEST, MGA_CRISIS, MGA_TRACKING, MGA_SYNDICATE
 	)
 	var/alertgroups = list(MGA_MAIL, MGA_RADIO) // What mail groups that we're not a member of should we be able to mute?
 	var/bombproof = 0 // can't be destroyed with detomatix
@@ -87,6 +87,7 @@
 																	MGA_SALES = null,\
 																	MGA_SHIPPING = null,\
 																	MGA_CARGOREQUEST = null,\
+																	MGA_CHEMREQUEST = null,\
 																	MGA_CRISIS = null,\
 																	MGA_PLUMBING = null,\
 																	MGA_RADIO = null)
@@ -117,10 +118,10 @@
 			// Departments
 			MGD_COMMAND, MGD_SECURITY, MGD_MEDICAL, MGD_RESEARCH, MGD_ENGINEER, MGD_SUPPLY ,MGD_CIVILIAN, MGD_SILICON, MGD_PARTY,
 			// Teams
-			MGT_GENETICS, MGT_ROBOTICS, MGT_CARGO, MGT_MINING, MGT_CATERING, MGT_HYDROPONICS, MGT_JANITOR, MGT_SPIRITUALAFFAIRS, MGT_AI
+			MGT_GENETICS, MGT_ROBOTICS, MGT_PHARMACY, MGT_CARGO, MGT_MINING, MGT_CATERING, MGT_HYDROPONICS, MGT_JANITOR, MGT_SPIRITUALAFFAIRS, MGT_AI
 		)
-		default_muted_mailgroups = list(MGA_MAIL, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_RKIT)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_ENGINE, MGA_RKIT, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_CRISIS, MGA_PLUMBING) // keep in sync with the list of mail alert groups
+		default_muted_mailgroups = list(MGA_MAIL, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_CHEMREQUEST, MGA_RKIT)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_ENGINE, MGA_RKIT, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_CHEMREQUEST, MGA_CRISIS, MGA_PLUMBING) // keep in sync with the list of mail alert groups
 
 	cyborg // chosen robot module registers the PDA mail/alert groups
 		icon_state = "pda-h"
@@ -160,13 +161,14 @@
 		setup_default_pen = /obj/item/pen/fancy
 		setup_default_cartridge = /obj/item/disk/data/cartridge/research_director
 		mailgroups = list(MGD_RESEARCH,MGD_COMMAND,MGD_PARTY)
+		alertgroups = list(MGA_CHEMREQUEST)
 
 	medical_director
 		icon_state = "pda-md"
 		setup_default_pen = /obj/item/pen/fancy
 		setup_default_cartridge = /obj/item/disk/data/cartridge/medical_director
-		mailgroups = list(MGD_MEDICAL,MGT_GENETICS,MGT_ROBOTICS,MGD_COMMAND,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS)
+		mailgroups = list(MGD_MEDICAL,MGT_GENETICS,MGT_ROBOTICS,MGD_RESEARCH,MGT_PHARMACY,MGD_COMMAND,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS, MGA_CHEMREQUEST)
 
 	chiefengineer
 		icon_state = "pda-ce"
@@ -198,14 +200,14 @@
 		mailgroups = list(MGD_COMMAND,MGD_PARTY)
 
 	nt_medical
-		icon_state = "pda-nt"
+		icon_state = "pda-nt_medic"
 		setup_default_pen = /obj/item/pen/fancy
 		setup_default_cartridge = /obj/item/disk/data/cartridge/medical_director
 		mailgroups = list(MGD_MEDICAL, MGD_COMMAND, MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS)
 
 	nt_engineer
-		icon_state = "pda-nt"
+		icon_state = "pda-nt_engineer"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/chiefengineer
 		setup_default_module = /obj/item/device/pda_module/tray
 		mailgroups = list(MGD_ENGINEER, MGD_SUPPLY, MGD_COMMAND, MGD_PARTY)
@@ -255,15 +257,16 @@
 	pharmacist
 		name = "Pharmacy PDA"
 		icon_state = "pda-pha"
-		setup_default_cartridge = /obj/item/disk/data/cartridge/medical
-		mailgroups = list(MGD_MEDICAL, MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_CRISIS, MGA_MEDCRIT)
+		setup_default_cartridge = /obj/item/disk/data/cartridge/pharma
+		mailgroups = list(MGD_MEDICAL, MGT_PHARMACY, MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_CRISIS, MGA_MEDCRIT, MGA_CHEMREQUEST)
 
 	toxins
 		name = "Research PDA"
 		icon_state = "pda-tox"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/toxins
 		mailgroups = list(MGD_RESEARCH,MGD_PARTY)
+		alertgroups = list(MGA_CHEMREQUEST)
 
 	// Engineering and Supply
 
@@ -456,6 +459,7 @@
 		src.hd.root.add_file(new /datum/computer/file/pda_program/emergency_alert)
 		src.hd.root.add_file(new /datum/computer/file/pda_program/gps)
 		src.hd.root.add_file(new /datum/computer/file/pda_program/cargo_request(src))
+		src.hd.root.add_file(new /datum/computer/file/pda_program/chemical_request(src))
 		if(length(src.default_muted_mailgroups))
 			src.host_program.muted_mailgroups = src.default_muted_mailgroups
 		if(ismob(src.loc))
@@ -869,7 +873,7 @@
 		if (!overlay_images)
 			src.overlay_images = list()
 			overlay_images["idle"] = image('icons/obj/items/pda.dmi', "screen-idle", pixel_x = src.screen_x, pixel_y = src.screen_y)
-			overlay_images["alert"] = image('icons/obj/items/pda.dmi', "screen-message", pixel_x = src.screen_x, pixel_y = src.screen_y)
+			overlay_images["message"] = image('icons/obj/items/pda.dmi', "screen-message", pixel_x = src.screen_x, pixel_y = src.screen_y)
 
 		for (var/k in src.overlay_images)
 			src.overlay_images[k].color = bg
@@ -1066,6 +1070,9 @@
 		if (mode)
 			src.current_overlay = mode
 		src.UpdateOverlays(src.overlay_images[src.current_overlay], "screen_overlay")
+		var/image/symbol_overlay = image(src.icon, "symbol-[src.current_overlay]", pixel_x = src.screen_x, pixel_y = src.screen_y)
+		symbol_overlay.color = src.link_color
+		src.UpdateOverlays(symbol_overlay, "screen_symbol_overlay")
 
 	/// Takes a ringtone datum and outputs the program that supposedly holds it
 	proc/ringtone2program(var/ringtone)
@@ -1178,7 +1185,7 @@
 			//this one prob sloewr
 			//for (var/mob/O in hearers(3, src.loc))
 
-		update_overlay("alert")
+		update_overlay("message")
 		return
 
 	proc/display_message(var/message)

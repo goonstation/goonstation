@@ -161,6 +161,16 @@ To remove:
 	SEND_SIGNAL(target, COMSIG_ATOM_PROP_MOB_INVISIBILITY, old_val); \
 	} while(0)
 
+#define PROP_UPDATE_INVISIBILITY_CLOAK(target, prop, old_val) do { \
+	var/new_val = GET_ATOM_PROPERTY_RAW(target, prop); \
+	if (isnull(old_val) && !isnull(new_val)) { \
+		target.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_CLOAKED); \
+	} else if (!isnull(old_val) && isnull(new_val)) { \
+		target.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_CLOAKED); \
+	}; \
+	PROP_UPDATE_INVISIBILITY(target, prop, old_val); \
+	} while(0)
+
 #define PROP_UPDATE_SIGHT(target, prop, old_val) do {\
 	if(!isliving(target)) break; \
 	var/mob/living/_living_mob = target; \
@@ -281,6 +291,7 @@ To remove:
 
 //misc properties
 #define PROP_MOB_INVISIBILITY(x) x("invisibility", APPLY_ATOM_PROPERTY_MAX, REMOVE_ATOM_PROPERTY_MAX, PROP_UPDATE_INVISIBILITY)
+#define PROP_MOB_INVISIBILITY_CLOAK(x) x("invisibility_cloak", APPLY_ATOM_PROPERTY_MAX, REMOVE_ATOM_PROPERTY_MAX, PROP_UPDATE_INVISIBILITY_CLOAK)
 #define PROP_MOB_PASSIVE_WRESTLE(x) x("wrassler", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_CANTTHROW(x) x("cantthrow", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_CANT_BE_PINNED(x) x("cantbepinned", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
@@ -299,6 +310,8 @@ To remove:
 #define PROP_MOB_SPACE_DAMAGE_IMMUNE(x) x("space_damage_immune", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_NOEXAMINE(x) x("no_examine", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM)
 #define PROP_MOB_MINING_ALERTS(x) x("mining_alerts", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+#define PROP_MOB_LYCANTHROPY_RESIST(x) x("lycanthropy_resist", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE) //resists involuntary transforms
+#define PROP_MOB_ALCOHOL_RESIST(x) x("alcohol_resist", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM)
 
 #define PROP_HUMAN_DROP_BRAIN_ON_GIB(x) x("drop_brain_on_gib", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 

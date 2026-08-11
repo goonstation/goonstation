@@ -494,17 +494,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 							F.break_tile()
 				else if (istype(T, /turf/simulated/wall))
 					var/turf/simulated/wall/W = T
-					if (istype(W, /turf/simulated/wall/r_wall) || istype(W, /turf/simulated/wall/auto/reinforced))
-						new /obj/structure/girder/reinforced(W)
-					else
-						new /obj/structure/girder(W)
-					var/obj/item/sheet/S = new /obj/item/sheet(W)
-					if (W.material)
-						S.setMaterial(W.material)
-					else
-						var/datum/material/M = getMaterial("steel")
-						S.setMaterial(M)
-					W.ReplaceWithFloor()
+					W.dismantle_wall()
 	return
 #endif
 
