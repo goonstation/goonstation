@@ -1,5 +1,9 @@
 
 (t)tue aug 11 26
+(u)Ceres et al.
+(p)27427
+(e)🆕⚖🧛|C-Feature, C-Balance, A-Gamemodes
+(*)Activating Horror Form as a changeling now has a brief (uninterruptible) windup period that's very loud and messy.
 (u)Wrastlingcat
 (p)27456
 (e)🎨|C-Sprites
