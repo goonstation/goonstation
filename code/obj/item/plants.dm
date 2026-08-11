@@ -509,6 +509,7 @@ ABSTRACT_TYPE(/obj/item/plant/flower)
 
 	attackby(var/obj/item/W, mob/user)
 		if (istype(W, /obj/item/cable_coil))
+<<<<<<< HEAD
 			var/obj/item/cable_coil/C = W
 			if (!C.use(1))
 				return
@@ -517,6 +518,16 @@ ABSTRACT_TYPE(/obj/item/plant/flower)
 			qdel(src)
 			user.put_in_hand_or_drop(M)
 			return
+=======
+  			var/obj/item/cable_coil/C = W
+  			if (!C.use(1))
+  				return
+  			user.visible_message("[user] weaves [src] and [W] into a makeshift sunflower mask.")
+  			var/obj/item/clothing/mask/sunflowermask/M = new /obj/item/clothing/mask/sunflowermask(get_turf(src))
+            qdel(src)
+  			user.put_in_hand_or_drop(M)
+  			return
+>>>>>>> 9d35299ca41f5ea20a54dd67ad75cd18b3d4725e
 		. = ..()
 		disperse_seeds(src,user)
 
