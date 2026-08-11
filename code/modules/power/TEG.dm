@@ -209,7 +209,7 @@
 			if(input_starting_pressure < (output_starting_pressure + desired_pressure))
 				// Use maximum of minimum circulator pressure OR calculated pressure required to ensure an amount that won't get rounded away by quantization
 				// Note - ( 5 * ATMOS_EPSILON ) used to allow for a ratio of multiple gas specific heats to be utilized in the mixture
-				pressure_delta = max( desired_pressure, ( ( 5 * ATMOS_EPSILON ) * (src.air1.temperature * R_IDEAL_GAS_EQUATION) / max(src.air2.volume,1) ) )
+				pressure_delta = max( desired_pressure, ( ( 5 * ATMOS_EPSILON ) * (src.air1.temperature() * R_IDEAL_GAS_EQUATION) / max(src.air2.volume,1) ) )
 
 				// P = dp q / μf, q ignored for simplification of system
 				var/total_pressure = (output_starting_pressure + pressure_delta - input_starting_pressure)
@@ -251,7 +251,7 @@
 			else src.use_power(fan_power_draw WATTS)
 
 		// Calculate and perform gas transfer from in to out
-		var/transfer_moles = abs(pressure_delta)*gas_output.volume/max(gas_input.temperature * R_IDEAL_GAS_EQUATION, 1) //Stop annoying runtime errors
+		var/transfer_moles = abs(pressure_delta)*gas_output.volume/max(gas_input.temperature() * R_IDEAL_GAS_EQUATION, 1) //Stop annoying runtime errors
 		src.last_pressure_delta = pressure_delta
 		var/datum/gas_mixture/removed = gas_input.remove(transfer_moles)
 
@@ -331,8 +331,8 @@
 					src.visible_message(SPAN_ALERT("The [src] looks kind of hazey for a moment."))
 
 			if(reaction_temp)
-				gas_passed.temperature += reaction_temp
-				gas_passed.temperature = max(gas_passed.temperature,1)
+				gas_passed.temperature() += reaction_temp
+				gas_passed.temperature() = max(gas_passed.temperature(),1)
 
 	proc/is_circulator_active()
 		return last_pressure_delta > src.min_circ_pressure
@@ -846,7 +846,7 @@ datum/pump_ui/circulator_ui
 
 		var/swapped = 0
 
-		if(hot_air && cold_air && hot_air.temperature < cold_air.temperature)
+		if(hot_air && cold_air && hot_air.temperature() < cold_air.temperature())
 			var/swapTmp = hot_air
 			hot_air = cold_air
 			cold_air = swapTmp
@@ -858,18 +858,18 @@ datum/pump_ui/circulator_ui
 			var/cold_air_heat_capacity = HEAT_CAPACITY(cold_air)
 			var/hot_air_heat_capacity = HEAT_CAPACITY(hot_air)
 
-			var/delta_temperature = hot_air.temperature - cold_air.temperature
+			var/delta_temperature = hot_air.temperature() - cold_air.temperature()
 
 			// uncomment to debug
-			// logTheThing(LOG_DEBUG, null, "pre delta, cold temp = [cold_air.temperature], hot temp = [hot_air.temperature]")
+			// logTheThing(LOG_DEBUG, null, "pre delta, cold temp = [cold_air.temperature()], hot temp = [hot_air.temperature()]")
 			// logTheThing(LOG_DEBUG, null, "pre prod, delta : [delta_temperature], cold cap [cold_air_heat_capacity], hot cap [hot_air_heat_capacity]")
 			if(delta_temperature > 0 && cold_air_heat_capacity > 0 && hot_air_heat_capacity > 0)
 				// carnot efficiency * 65%
-				var/efficiency = (1 - cold_air.temperature/hot_air.temperature) * src.get_efficiency_scale(delta_temperature, hot_air_heat_capacity, cold_air_heat_capacity) //controller expressed as a percentage
+				var/efficiency = (1 - cold_air.temperature()/hot_air.temperature()) * src.get_efficiency_scale(delta_temperature, hot_air_heat_capacity, cold_air_heat_capacity) //controller expressed as a percentage
 
 				// energy transfer required to bring the hot and cold loops to thermal equilibrium (accounting for the energy removed by the engine)
 				var/energy_transfer = delta_temperature * hot_air_heat_capacity * cold_air_heat_capacity / (hot_air_heat_capacity + cold_air_heat_capacity - hot_air_heat_capacity*efficiency)
-				hot_air.temperature -= energy_transfer/hot_air_heat_capacity
+				hot_air.temperature() -= energy_transfer/hot_air_heat_capacity
 
 				lastgen = energy_transfer*efficiency
 				add_avail(lastgen WATTS)
@@ -878,7 +878,7 @@ datum/pump_ui/circulator_ui
 				if (length(src.history) > src.history_max)
 					src.history.Cut(1, 2) //drop the oldest entry
 
-				cold_air.temperature += energy_transfer*(1-efficiency)/cold_air_heat_capacity // pass the remaining energy through to the cold side
+				cold_air.temperature() += energy_transfer*(1-efficiency)/cold_air_heat_capacity // pass the remaining energy through to the cold side
 
 				// uncomment to debug
 				// logTheThing(LOG_DEBUG, null, "POWER: [lastgen] W generated at [efficiency*100]% efficiency and sinks sizes [cold_air_heat_capacity], [hot_air_heat_capacity]")
@@ -1202,8 +1202,8 @@ datum/pump_ui/circulator_ui
 	if(src.circ1)
 		. += list(
 			"hotCircStatus" = src.circ1,
-			"hotInletTemp" = src.circ1.air1.temperature,
-			"hotOutletTemp" = src.circ1.air2.temperature,
+			"hotInletTemp" = src.circ1.air1.temperature(),
+			"hotOutletTemp" = src.circ1.air2.temperature(),
 			"hotInletPres" = MIXTURE_PRESSURE(src.circ1.air1) KILO PASCALS,
 			"hotOutletPres" = MIXTURE_PRESSURE(src.circ1.air2) KILO PASCALS,
 		)
@@ -1218,8 +1218,8 @@ datum/pump_ui/circulator_ui
 	if(src.circ2)
 		. += list(
 			"coldCircStatus" = src.circ2,
-			"coldInletTemp" = src.circ2.air1.temperature,
-			"coldOutletTemp" = src.circ2.air2.temperature,
+			"coldInletTemp" = src.circ2.air1.temperature(),
+			"coldOutletTemp" = src.circ2.air2.temperature(),
 			"coldInletPres" = MIXTURE_PRESSURE(src.circ2.air1) KILO PASCALS,
 			"coldOutletPres" = MIXTURE_PRESSURE(src.circ2.air2) KILO PASCALS,
 		)
@@ -1515,13 +1515,13 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 		if(air_contents)
 			var/air_heat_capacity = HEAT_CAPACITY(air_contents)
 			var/combined_heat_capacity = current_heat_capacity + air_heat_capacity
-			var/old_temperature = air_contents.temperature
+			var/old_temperature = air_contents.temperature()
 
 			if(combined_heat_capacity > 0)
-				var/combined_energy = current_temperature*current_heat_capacity + air_heat_capacity*air_contents.temperature
-				air_contents.temperature = combined_energy/combined_heat_capacity
+				var/combined_energy = current_temperature*current_heat_capacity + air_heat_capacity*air_contents.temperature()
+				air_contents.temperature() = combined_energy/combined_heat_capacity
 
-			if(abs(old_temperature-air_contents.temperature) > 1)
+			if(abs(old_temperature-air_contents.temperature()) > 1)
 				if(network)
 					network.update = 1
 		return 1
@@ -1584,7 +1584,7 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 		var/datum/gas_mixture/environment = src.loc?.return_air()
 		var/ambient_temp = T20C
 		if(environment)
-			ambient_temp = environment.temperature
+			ambient_temp = environment.temperature()
 
 
 		// -(1.2x - 1)^2 + 1 expands to 2.4x-1.44x^2
@@ -1601,7 +1601,7 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 	on_inactive()
 		var/datum/gas_mixture/environment = src.loc?.return_air()
 		if(environment)
-			heat_filter.process(environment.temperature)
+			heat_filter.process(environment.temperature())
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

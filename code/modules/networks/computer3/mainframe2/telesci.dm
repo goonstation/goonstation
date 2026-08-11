@@ -471,7 +471,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 									var/turf/simulated/T = scanTurf
 									if(length(T.active_hotspots))
 										burning = 1
-								message_host("command=scan_reply&[MOLES_REPORT_PACKET(GM)]temp=[GM.temperature]&pressure=[MIXTURE_PRESSURE(GM)][(burning)?("&burning=1"):(null)]")
+								message_host("command=scan_reply&[MOLES_REPORT_PACKET(GM)]temp=[GM.temperature()]&pressure=[MIXTURE_PRESSURE(GM)][(burning)?("&burning=1"):(null)]")
 							else
 								message_host("command=scan_reply&cause=noatmos")
 

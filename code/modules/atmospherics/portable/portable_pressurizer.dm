@@ -123,8 +123,8 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pressurizer)
 			if(FAN_ON_OUTLET)
 				var/pressure_delta = src.release_pressure - MIXTURE_PRESSURE(environment)
 				var/transfer_moles = 0
-				if(air_contents.temperature > 0)
-					transfer_moles = pressure_delta*environment.volume/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
+				if(air_contents.temperature() > 0)
+					transfer_moles = pressure_delta*environment.volume/(air_contents.temperature() * R_IDEAL_GAS_EQUATION)
 					removed = air_contents.remove(transfer_moles)
 					loc.assume_air(removed)
 
@@ -138,7 +138,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pressurizer)
 
 	proc/is_air_safe()
 		var/total_moles = max(TOTAL_MOLES(src.air_contents),1)
-		return(((src.air_contents.toxins/total_moles) < 0.01) && ((src.air_contents.carbon_dioxide/total_moles) < 0.05) && (src.air_contents.temperature < FIRE_MINIMUM_TEMPERATURE_TO_SPREAD))
+		return(((src.air_contents.toxins/total_moles) < 0.01) && ((src.air_contents.carbon_dioxide/total_moles) < 0.05) && (src.air_contents.temperature() < FIRE_MINIMUM_TEMPERATURE_TO_SPREAD))
 
 	proc/process_raw_materials()
 		if(status & NOPOWER)
@@ -163,7 +163,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pressurizer)
 			process_materials = PROCESS_ACTIVE
 			var/progress = min(src.process_rate * 5,100-material_progress)
 			var/datum/gas_mixture/GM = new /datum/gas_mixture
-			GM.temperature = T20C
+			GM.temperature() = T20C
 			if(target_material.material?.getName() in src.whitelist)
 				switch(target_material.material.getName())
 					if("molitz")

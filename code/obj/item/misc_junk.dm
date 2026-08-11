@@ -655,7 +655,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 		. = ..()
 		src.AddComponent(/datum/component/radioactive, 40, FALSE, FALSE, 1)
 		leak_gas.radgas = 100
-		leak_gas.temperature = T20C
+		leak_gas.temperature() = T20C
 		leak_gas.volume = 200 //I guess??
 
 	return_air(direct = FALSE)

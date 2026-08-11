@@ -115,7 +115,7 @@
 		if(G.oxygen_agent_b) .["Oxygen Agent B|mols"] = G.oxygen_agent_b
 
 		.["Pressure|Pa"] = MIXTURE_PRESSURE(G) KILO PASCALS
-		.["Temperature|K"] = G.temperature
+		.["Temperature|K"] = G.temperature()
 		.["Fuel Burnt|units"] = G.fuel_burnt
 		.["Heat Capacity|J/K"] = HEAT_CAPACITY(G)
 		.["Thermal Energy|J"] = THERMAL_ENERGY(G)
@@ -142,12 +142,12 @@
 	. = list()
 
 	.["Output|W"] = teg.lastgen
-	.["Temperature In (Hot)|K"] = teg_hot.air1?.temperature
-	.["Temperature Out (Hot)|K"] = teg_hot.air2?.temperature
+	.["Temperature In (Hot)|K"] = teg_hot.air1?.temperature()
+	.["Temperature Out (Hot)|K"] = teg_hot.air2?.temperature()
 	.["Pressure In (Hot)|Pa"] = teg_hot.air1 ? MIXTURE_PRESSURE(teg_hot.air1) KILO PASCALS : 0
 	.["Pressure Out (Hot)|Pa"] = teg_hot.air2 ? MIXTURE_PRESSURE(teg_hot.air2) KILO PASCALS : 0
-	.["Temperature In (Cold)|K"] = teg_cold.air1?.temperature
-	.["Temperature Out (Cold)|K"] = teg_cold.air2?.temperature
+	.["Temperature In (Cold)|K"] = teg_cold.air1?.temperature()
+	.["Temperature Out (Cold)|K"] = teg_cold.air2?.temperature()
 	.["Pressure In (Cold)|Pa"] = teg_cold.air1 ? MIXTURE_PRESSURE(teg_cold.air1) KILO PASCALS : 0
 	.["Pressure Out (Cold)|Pa"] = teg_cold.air2 ? MIXTURE_PRESSURE(teg_cold.air2) KILO PASCALS : 0
 

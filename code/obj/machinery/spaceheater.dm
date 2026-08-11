@@ -199,7 +199,7 @@ TYPEINFO(/obj/machinery/space_heater)
 				var/turf/simulated/L = loc
 				if(istype(L))
 					var/datum/gas_mixture/env = L.return_air()
-					if(env.temperature < (set_temperature))
+					if(env.temperature() < (set_temperature))
 						heating = TRUE
 					else
 						heating = FALSE
@@ -208,7 +208,7 @@ TYPEINFO(/obj/machinery/space_heater)
 
 					var/datum/gas_mixture/removed = env.remove(transfer_moles)
 
-						//boutput(world, "got [transfer_moles] moles at [removed.temperature]")
+						//boutput(world, "got [transfer_moles] moles at [removed.temperature()]")
 
 					if(removed && TOTAL_MOLES(removed) > 0)
 
@@ -217,18 +217,18 @@ TYPEINFO(/obj/machinery/space_heater)
 						var/current_power = 0
 						if(src.heating)
 							current_power = src.emagged ? src.heating_power * 3: src.heating_power
-							removed.temperature = (removed.temperature*heat_capacity + current_power * src.set_temperature)/heat_capacity
+							removed.temperature() = (removed.temperature()*heat_capacity + current_power * src.set_temperature)/heat_capacity
 						else
 							current_power = src.emagged ? src.cooling_power * 3: src.cooling_power
-							removed.temperature = (removed.temperature*heat_capacity + current_power * src.set_temperature)/heat_capacity
+							removed.temperature() = (removed.temperature()*heat_capacity + current_power * src.set_temperature)/heat_capacity
 
 						src.cell.use(abs(current_power)/20000)
 
-						//boutput(world, "now at [removed.temperature]")
+						//boutput(world, "now at [removed.temperature()]")
 
 					L.assume_air(removed)
 					UpdateIcon()
-					//boutput(world, "turf now at [env.temperature]")
+					//boutput(world, "turf now at [env.temperature()]")
 
 
 			else

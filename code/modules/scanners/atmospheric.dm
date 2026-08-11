@@ -39,15 +39,15 @@
 	if (total_moles > 0)
 		if (pda_readout == 1) // Output goes into PDA interface, not the user's chatbox.
 			data = "Air Pressure: [round(pressure, 0.1)] kPa<br>\
-			Temperature: [round(check_me.temperature)] K<br>\
+			Temperature: [round(check_me.temperature())] K<br>\
 			[CONCENTRATION_REPORT(check_me, "<br>")]"
 
 		else if (simple_output) // For the log_atmos() proc.
-			data = "(<b>Pressure:</b> <i>[round(pressure, 0.1)] kPa</i>, <b>Temp:</b> <i>[round(check_me.temperature)] K</i>\
+			data = "(<b>Pressure:</b> <i>[round(pressure, 0.1)] kPa</i>, <b>Temp:</b> <i>[round(check_me.temperature())] K</i>\
 			, <b>Contents:</b> <i>[CONCENTRATION_REPORT(check_me, ", ")]</i>"
 
 		else if (alert_output) // For the alert_atmos() proc.
-			data = "(<b>Pressure:</b> <i>[round(pressure, 0.1)] kPa</i>, <b>Temp:</b> <i>[round(check_me.temperature)] K</i>\
+			data = "(<b>Pressure:</b> <i>[round(pressure, 0.1)] kPa</i>, <b>Temp:</b> <i>[round(check_me.temperature())] K</i>\
 			, <b>Contents:</b> <i>[SIMPLE_CONCENTRATION_REPORT(check_me, ", ")]</i>"
 
 		else
@@ -55,7 +55,7 @@
 			[SPAN_NOTICE("Atmospheric analysis of <b>[A]</b>")]<br>\
 			<br>\
 			Pressure: [emagged_analyzer ? "[round(TO_PSI(pressure), 0.1)] psi" : "[round(pressure, 0.1)] kPa"]<br>\
-			Temperature: [emagged_analyzer ? "[round(TO_FAHRENHEIT(check_me.temperature))] °F" : "[round(check_me.temperature)] K"]<br>"
+			Temperature: [emagged_analyzer ? "[round(TO_FAHRENHEIT(check_me.temperature()))] °F" : "[round(check_me.temperature())] K"]<br>"
 			//realistically bubbles should have a constantly changing volume based on their pressure but it doesn't really matter so let's just not report it
 			if (!istype(A, /obj/bubble))
 				data += "Volume: [emagged_analyzer ? "[round(TO_GALLONS(check_me.volume))] gal" : "[check_me.volume] L"]<br>"

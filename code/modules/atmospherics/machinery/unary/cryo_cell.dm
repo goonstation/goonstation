@@ -66,12 +66,12 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 	if(src.air_contents)
 		if(src.beaker && TOTAL_MOLES(src.air_contents) >= CRYO_ATMOS_INTERACTION_TRESHOLD)
 			// cryotubes cool people and the chemicals they keep in them
-			src.beaker.reagents.temperature_reagents(src.air_contents.temperature, exposed_volume = (600 + src.beaker.reagents.total_volume * 7.5), change_cap = 30)
-		src.ARCHIVED(temperature) = src.air_contents.temperature
+			src.beaker.reagents.temperature_reagents(src.air_contents.temperature(), exposed_volume = (600 + src.beaker.reagents.total_volume * 7.5), change_cap = 30)
+		src.temperature = src.air_contents.temperature()
 		src.heat_gas_contents()
 		src.expel_gas()
 
-	if(abs(src.ARCHIVED(temperature)-src.air_contents.temperature) > 1 KELVIN)
+	if(abs(src.temperature-src.air_contents.temperature()) > 1 KELVIN)
 		src.network.update = TRUE
 
 	tgui_process.update_uis(src)
@@ -115,7 +115,7 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 	. = list()
 
 	.["occupant"] = src.get_occupant_data()
-	.["cellTemp"] = src.air_contents.temperature
+	.["cellTemp"] = src.air_contents.temperature()
 	.["status"] = src.on
 	.["ejectFullHealthOccupant"] = src.eject_full_health_occupant
 
@@ -319,16 +319,16 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 	if(ishuman(src.occupant))
 		if(isdead(src.occupant))
 			return
-		var/temp_change = 50*(src.air_contents.temperature - src.occupant.bodytemperature)*src.current_heat_capacity/(src.current_heat_capacity + HEAT_CAPACITY(src.air_contents))
-		src.occupant.changeBodyTemp(temp_change, src.air_contents.temperature, src.air_contents.temperature)
+		var/temp_change = 50*(src.air_contents.temperature() - src.occupant.bodytemperature)*src.current_heat_capacity/(src.current_heat_capacity + HEAT_CAPACITY(src.air_contents))
+		src.occupant.changeBodyTemp(temp_change, src.air_contents.temperature(), src.air_contents.temperature())
 		src.occupant.changeStatus("burning", -10 SECONDS)
 		// we burn them alive in the cryotube if we run it over 100 °C
 
-		if(src.air_contents.temperature > T100C)
+		if(src.air_contents.temperature() > T100C)
 			//let's cook the person, depending on how hot we make our cryotube
 			var/burn_damage = rand(4,6)
 			var/output_message = "The heat is quite uncomfortable!"
-			switch(src.air_contents.temperature)
+			switch(src.air_contents.temperature())
 				if((500) to (1500))
 					burn_damage = rand(6,9)
 					output_message = "It burns!"
@@ -377,8 +377,8 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 	var/air_heat_capacity = HEAT_CAPACITY(src.air_contents)
 	var/combined_heat_capacity = src.current_heat_capacity + air_heat_capacity
 	if(combined_heat_capacity > 0)
-		var/combined_energy = T20C*src.current_heat_capacity + air_heat_capacity*src.air_contents.temperature
-		src.air_contents.temperature = combined_energy/combined_heat_capacity
+		var/combined_energy = T20C*src.current_heat_capacity + air_heat_capacity*src.air_contents.temperature()
+		src.air_contents.temperature() = combined_energy/combined_heat_capacity
 
 /// Leaks some gas out.
 /obj/machinery/atmospherics/unary/cryo_cell/proc/expel_gas()
@@ -386,8 +386,8 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 		return
 	var/remove_amount = TOTAL_MOLES(src.air_contents)/100
 	var/datum/gas_mixture/expel_gas = air_contents.remove(remove_amount)
-	if (expel_gas.temperature < T20C)
-		expel_gas.temperature = T20C // Lets expel hot gas and see if that helps people not die as they are removed
+	if (expel_gas.temperature() < T20C)
+		expel_gas.temperature() = T20C // Lets expel hot gas and see if that helps people not die as they are removed
 	loc.assume_air(expel_gas)
 
 /obj/machinery/atmospherics/unary/cryo_cell/verb/move_eject()

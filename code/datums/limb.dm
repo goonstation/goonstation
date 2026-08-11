@@ -594,7 +594,7 @@
 
 		airgas.volume = 1
 		if(src.lit)
-			airgas.temperature = P_special_data["burn_temp"]
+			airgas.temperature() = P_special_data["burn_temp"]
 
 		P_special_data["airgas"] = airgas
 		P_special_data["speed_mult"] = 0.6

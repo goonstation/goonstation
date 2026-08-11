@@ -588,7 +588,7 @@
 					oxy.icon_state = "oxy[environment.oxygen/total*MIXTURE_PRESSURE(environment) < 17]"
 				else
 					oxy.icon_state = "oxy1"
-				switch (environment.temperature)
+				switch (environment.temperature())
 					if (350 to INFINITY)
 						temp.icon_state = "temp1"
 					if (280 to 350)

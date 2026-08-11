@@ -17,11 +17,11 @@
 	var/input_starting_pressure = MIXTURE_PRESSURE(air1)
 
 	//Calculate necessary moles to transfer using PV = nRT
-	ASSERT(air1.temperature >= 0)
+	ASSERT(air1.temperature() >= 0)
 	if(TOTAL_MOLES(air1))
 		var/pressure_delta = (input_starting_pressure - output_starting_pressure)/2
 
-		var/transfer_moles = pressure_delta*air2.volume/(air1.temperature * R_IDEAL_GAS_EQUATION)
+		var/transfer_moles = pressure_delta*air2.volume/(air1.temperature() * R_IDEAL_GAS_EQUATION)
 
 		last_pressure_delta = pressure_delta
 

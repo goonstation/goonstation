@@ -72,7 +72,7 @@ TYPEINFO(/obj/machinery/meter)
 		signal.data["pressure"] = round(env_pressure)
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
-	var/list/signal = list("pressure=[env_pressure]&temperature=[environment.temperature]")
+	var/list/signal = list("pressure=[env_pressure]&temperature=[environment.temperature()]")
 	#define COMPILE_GAS_MOLES(GAS, ...) if(environment.GAS) {signal += "&[#GAS]=[environment.GAS]"}
 	APPLY_TO_GASES(COMPILE_GAS_MOLES)
 	#undef COMPILE_GAS_MOLES

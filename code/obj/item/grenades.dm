@@ -821,7 +821,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	detonate()
 		var/turf/simulated/T = ..()
 		var/datum/gas_mixture/GM = new /datum/gas_mixture
-		GM.temperature = T20C + 15
+		GM.temperature() = T20C + 15
 		GM.oxygen = 1830
 		GM.carbon_dioxide = 20
 
@@ -846,7 +846,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 						for (var/turf/simulated/MT as anything in T.parent.members)
 							if (GM.disposed)
 								GM = new /datum/gas_mixture
-							GM.temperature = T20C + 15
+							GM.temperature() = T20C + 15
 							GM.oxygen = o2_per
 							GM.carbon_dioxide = co2_per
 							MT.assume_air(GM)
@@ -2294,7 +2294,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 
 						var/datum/gas_mixture/payload = new /datum/gas_mixture
 						payload.toxins = plasma * 100
-						payload.temperature = T20C
+						payload.temperature() = T20C
 						payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 						target.air.merge(payload)
 

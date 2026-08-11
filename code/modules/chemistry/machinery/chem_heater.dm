@@ -213,7 +213,7 @@ TYPEINFO(/obj/machinery/chem_heater)
 				var/datum/gas_mixture/removed = environment.remove(transfer_moles)
 				if (removed && TOTAL_MOLES(removed) > 0)
 					var/heat_capacity = HEAT_CAPACITY(removed)
-					removed.temperature = (removed.temperature * heat_capacity + 200 * (src.target_temp-T20C))/heat_capacity
+					removed.temperature() = (removed.temperature() * heat_capacity + 200 * (src.target_temp-T20C))/heat_capacity
 					use_power(2000 WATTS) // early return below stops normal power usage check
 				T.assume_air(removed)
 

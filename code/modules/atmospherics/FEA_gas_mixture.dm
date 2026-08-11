@@ -157,22 +157,22 @@ APPLY_TO_GASES(_CREATE_CHANGE_PROCS)
 	return src.heat_capacity
 
 /datum/gas_mixture/normal/temperature()
-	return src.temperature
+	return src.temperature()
 
 /datum/gas_mixture/normal/set_temperature(value)
-	src.temperature = value
+	src.temperature() = value
 
 /datum/gas_mixture/normal/adjust_temperature(value)
-	src.temperature += value
+	src.temperature() += value
 
 /datum/gas_mixture/normal/thermal_energy()
 	return src.temperature() * src.heat_capacity()
 
 /datum/gas_mixture/normal/set_thermal_energy(value)
-	src.temperature = value / src.heat_capacity()
+	src.temperature() = value / src.heat_capacity()
 
 /datum/gas_mixture/normal/adjust_thermal_energy(value)
-	src.temperature += value / src.heat_capacity()
+	src.temperature() += value / src.heat_capacity()
 
 /datum/gas_mixture/normal/volume()
 	return src.volume
@@ -189,7 +189,7 @@ APPLY_TO_GASES(_CREATE_CHANGE_PROCS)
 	if (map_currently_underwater)
 		src.gases[GAS_OXYGEN] = MOLES_O2STANDARD * 0.5
 		src.gases[GAS_NITROGEN] = MOLES_N2STANDARD * 0.5
-		src.temperature = OCEAN_TEMP
+		src.temperature() = OCEAN_TEMP
 	src.recalculate = TRUE
 
 /// Build bitfield of overlays to use for a gas mixture and determine if graphic should be updated
@@ -305,14 +305,14 @@ APPLY_TO_GASES(_CREATE_CHANGE_PROCS)
 	if(neutron_count && src.gases[GAS_CARBON_DIOXIDE] > 1) //CO2 acts like a gaseous control rod
 		var/co2_react_count = round((src.gases[GAS_CARBON_DIOXIDE] - (src.gases[GAS_CARBON_DIOXIDE] % (NEUTRON_CO2_REACT_MOLS_PER_LITRE*src.volume)))/(NEUTRON_CO2_REACT_MOLS_PER_LITRE*src.volume)) + prob(src.gases[GAS_CARBON_DIOXIDE] % (NEUTRON_CO2_REACT_MOLS_PER_LITRE*src.volume))
 		co2_react_count = rand(0, co2_react_count) //make it a little probabilistic
-		src.temperature += 5*min(neutron_count, co2_react_count)
+		src.temperature() += 5*min(neutron_count, co2_react_count)
 		neutron_count -= min(neutron_count, co2_react_count)
 
 	if(neutron_count && src.gases[GAS_RADGAS] > 1)
 		//rare chance for radgas to decompose into a random gas when hit by a neutron
 		if(prob(src.gases[GAS_RADGAS]))
 			src.gases[GAS_RADGAS] -= 1
-			src.temperature += 5
+			src.temperature() += 5
 			switch(rand(1,5))
 				if(1)
 					src.gases[GAS_OXYGEN] += 0.5
@@ -338,7 +338,7 @@ APPLY_TO_GASES(_CREATE_CHANGE_PROCS)
 		var/giver_heat_capacity = giver.heat_capacity()
 		var/combined_heat_capacity = giver_heat_capacity + self_heat_capacity
 		if(combined_heat_capacity)
-			src.temperature = (giver.temperature()*giver_heat_capacity + src.temperature*self_heat_capacity)/combined_heat_capacity
+			src.temperature() = (giver.temperature()*giver_heat_capacity + src.temperature()*self_heat_capacity)/combined_heat_capacity
 
 	#define _MERGE_GAS(GAS, INDEX, ...) src.gases[INDEX] += giver.get_##GAS();
 	APPLY_TO_GASES(_MERGE_GAS)
@@ -362,7 +362,7 @@ APPLY_TO_GASES(_CREATE_CHANGE_PROCS)
 	APPLY_TO_GASES(_REMOVE_GAS)
 	#undef _REMOVE_GAS
 
-	removed.temperature = src.temperature
+	removed.temperature() = src.temperature()
 	src.recalculate = TRUE
 
 	return removed
@@ -383,7 +383,7 @@ APPLY_TO_GASES(_CREATE_CHANGE_PROCS)
 	APPLY_TO_GASES(_REMOVE_GAS_RATIO)
 	#undef _REMOVE_GAS_RATIO
 
-	removed.temperature = src.temperature
+	removed.temperature() = src.temperature()
 	src.recalculate = TRUE
 
 	return removed
@@ -397,7 +397,7 @@ APPLY_TO_GASES(_CREATE_CHANGE_PROCS)
 	APPLY_TO_GASES(_COPY_GAS)
 	#undef _COPY_GAS
 
-	src.get_temperature() = sample.temperature()
+	src.temperature = sample.temperature()
 	src.recalculate = TRUE
 
 	return TRUE
@@ -411,7 +411,7 @@ APPLY_TO_GASES(_CREATE_CHANGE_PROCS)
 	APPLY_TO_GASES(_DELTA_GAS)
 	#undef _DELTA_GAS
 
-	var/delta_temperature = (src.temperature - sharer.temperature())
+	var/delta_temperature = (src.temperature() - sharer.temperature())
 
 	var/moved_moles = 0 MOLES
 	#define _SHARE_GAS(GAS, INDEX, ...) \
@@ -438,10 +438,10 @@ APPLY_TO_GASES(_CREATE_CHANGE_PROCS)
 		var/new_sharer_heat_capacity = old_sharer_heat_capacity + heat_capacity_self_to_sharer - heat_capacity_sharer_to_self
 
 		if(new_self_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			src.temperature = (old_self_heat_capacity*src.temperature - heat_capacity_self_to_sharer*src.temperature + heat_capacity_sharer_to_self*sharer.temperature())/new_self_heat_capacity
+			src.temperature() = (old_self_heat_capacity*src.temperature() - heat_capacity_self_to_sharer*src.temperature() + heat_capacity_sharer_to_self*sharer.temperature())/new_self_heat_capacity
 
 		if(new_sharer_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			sharer.set_temperature((old_sharer_heat_capacity*sharer.temperature()-heat_capacity_sharer_to_self*sharer.temperature() + heat_capacity_self_to_sharer*src.temperature)/new_sharer_heat_capacity)
+			sharer.set_temperature((old_sharer_heat_capacity*sharer.temperature()-heat_capacity_sharer_to_self*sharer.temperature() + heat_capacity_self_to_sharer*src.temperature())/new_sharer_heat_capacity)
 
 			if(abs(old_sharer_heat_capacity) > MINIMUM_HEAT_CAPACITY && abs(new_sharer_heat_capacity/old_sharer_heat_capacity - 1) < 0.1) // <10% change in sharer heat capacity
 				src.temperature_share(sharer, OPEN_HEAT_TRANSFER_COEFFICIENT)
@@ -456,7 +456,7 @@ APPLY_TO_GASES(_CREATE_CHANGE_PROCS)
 /// Conducts heat between gases.
 /// Conduction_coefficient is a multiplier that determines how well heat equalises, with 0 meaning no heat and 1 meaning perfect equalisation.
 /datum/gas_mixture/normal/temperature_share(datum/gas_mixture/sharer, conduction_coefficient)
-	var/delta_temperature = (src.temperature - sharer.temperature())
+	var/delta_temperature = (src.temperature() - sharer.temperature())
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 		var/self_heat_capacity = src.heat_capacity()
 		var/sharer_heat_capacity = sharer.heat_capacity()

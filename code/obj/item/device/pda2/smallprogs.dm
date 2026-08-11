@@ -600,13 +600,13 @@ Code:
 
 			if(circ1)
 				. += "<B>Hot Loop</B><BR>"
-				. += "Temperature Inlet: [round(circ1.air1?.temperature, 0.1)] K  Outlet: [round(circ1.air2?.temperature, 0.1)] K<BR>"
+				. += "Temperature Inlet: [round(circ1.air1?.temperature(), 0.1)] K  Outlet: [round(circ1.air2?.temperature(), 0.1)] K<BR>"
 				. += "Pressure Inlet: [round(MIXTURE_PRESSURE(circ1?.air1), 0.1)] kPa  Outlet: [round(MIXTURE_PRESSURE(circ1?.air2), 0.1)] kPa<BR>"
 				. += "<BR>"
 
 			if(circ2)
 				. += "<B>Cold Loop</B><BR>"
-				. += "Temperature Inlet: [round(circ2.air1?.temperature, 0.1)] K  Outlet: [round(circ2.air2?.temperature, 0.1)] K<BR>"
+				. += "Temperature Inlet: [round(circ2.air1?.temperature(), 0.1)] K  Outlet: [round(circ2.air2?.temperature(), 0.1)] K<BR>"
 				. += "Pressure Inlet: [round(MIXTURE_PRESSURE(circ2?.air1), 0.1)] kPa  Outlet: [round(MIXTURE_PRESSURE(circ2?.air2), 0.1)] kPa<BR>"
 				. += "<BR>"
 
@@ -642,7 +642,7 @@ Code:
 			. += "Output : [engineering_notation(nuke_turbine.lastgen)]W<BR>"
 			. += "RPM : [engineering_notation(nuke_turbine.RPM)]<BR>"
 			. += "Stator Load: [engineering_notation(nuke_turbine.stator_load)]J/RPM<BR>"
-			. += "Turbine contents temperature : [engineering_notation(nuke_turbine.air_contents?.temperature)] K<BR>"
+			. += "Turbine contents temperature : [engineering_notation(nuke_turbine.air_contents?.temperature())] K<BR>"
 			if (isnull(nuke_reactor))
 				. += "<B>Error!</B> No reactor detected!<BR>"
 			. += "<BR>"

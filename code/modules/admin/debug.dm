@@ -688,7 +688,7 @@ body
 				var/datum/gas_mixture/gas = new /datum/gas_mixture
 				gas.toxins = 33333
 				gas.oxygen = 66666
-				gas.temperature = 100000
+				gas.temperature() = 100000
 				T.assume_air(gas)
 			for_by_tcl(door, /obj/machinery/door)
 				var/turf/T = get_step(door, NORTH)

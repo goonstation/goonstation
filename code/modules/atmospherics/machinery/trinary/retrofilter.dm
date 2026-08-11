@@ -151,8 +151,8 @@
 	var/pressure_delta = src.target_pressure - output_starting_pressure
 	var/transfer_moles = 0
 
-	if(src.air1.temperature)
-		transfer_moles = ((pressure_delta*src.air3.volume)/(src.air1.temperature * R_IDEAL_GAS_EQUATION))
+	if(src.air1.temperature())
+		transfer_moles = ((pressure_delta*src.air3.volume)/(src.air1.temperature() * R_IDEAL_GAS_EQUATION))
 
 	//Actually transfer the gas
 
@@ -160,8 +160,8 @@
 		var/datum/gas_mixture/removed = src.air1.remove_ratio(transfer_ratio)
 
 		var/datum/gas_mixture/filtered_out = new /datum/gas_mixture
-		if(src.air1.temperature)
-			filtered_out.temperature = src.air1.temperature
+		if(src.air1.temperature())
+			filtered_out.temperature() = src.air1.temperature()
 
 		//Unlike the regular filter, we can pick and choose the gas to remove!
 		//One might say that a little filter being this advanced is rather unrealistic

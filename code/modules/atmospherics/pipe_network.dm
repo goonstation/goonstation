@@ -130,14 +130,14 @@ var/global/list/datum/pipe_network/pipe_networks = list()
 		return FALSE
 
 	if(total_heat_capacity > 0)
-		src.air_transient.temperature = total_thermal_energy/total_heat_capacity
+		src.air_transient.temperature() = total_thermal_energy/total_heat_capacity
 
 		//Allow air mixture to react
 		if(src.air_transient.react())
 			src.update = TRUE
 
 	else
-		src.air_transient.temperature = 0 KELVIN
+		src.air_transient.temperature() = 0 KELVIN
 
 	//Update individual gas_mixtures by volume ratio
 	for(var/datum/gas_mixture/gas as anything in src.gases)
@@ -145,7 +145,7 @@ var/global/list/datum/pipe_network/pipe_networks = list()
 		APPLY_TO_GASES(_RECONCILE_AIR_TRANSFER)
 		#undef _RECONCILE_AIR_TRANSFER
 
-		gas.temperature = src.air_transient.temperature
+		gas.temperature() = src.air_transient.temperature()
 	return TRUE
 
 //Perfectly equalises all gases given to us in the list. Fails if volume is negative.
@@ -183,6 +183,6 @@ proc/equalize_gases(list/datum/gas_mixture/gases)
 		APPLY_TO_GASES(_EQUALIZE_GASES_UPDATE)
 		#undef _EQUALIZE_GASES_UPDATE
 
-		gas.temperature = temperature
+		gas.temperature() = temperature
 
 	return TRUE

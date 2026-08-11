@@ -86,10 +86,10 @@
 		for(var/list/entry as anything in gas_safety_levels)
 			.["gasses"][entry["varname"]] = 0
 	else
-		var/env_pressure = (env_moles*R_IDEAL_GAS_EQUATION*environment.temperature)/environment.volume
+		var/env_pressure = (env_moles*R_IDEAL_GAS_EQUATION*environment.temperature())/environment.volume
 		for(var/list/entry as anything in gas_safety_levels)
 			.["gasses"][entry["varname"]] = (environment.vars[entry["varname"]]/env_moles)*env_pressure
-	.["temperature"] = environment?.temperature
+	.["temperature"] = environment?.temperature()
 	.["safe"] = last_safe
 
 
@@ -126,12 +126,12 @@
 		var/env_moles = TOTAL_MOLES(environment)
 		if(env_moles == 0)
 			safe = ALARM_SEVERE //it's a vacuum, you can't breathe that
-		else if (environment.temperature > temp_safe_max || environment.temperature < temp_safe_min)
+		else if (environment.temperature() > temp_safe_max || environment.temperature() < temp_safe_min)
 			safe = ALARM_SEVERE //dangerously hot or cold
 		else
-			if (environment.temperature > temp_good_max || environment.temperature < temp_good_min)
+			if (environment.temperature() > temp_good_max || environment.temperature() < temp_good_min)
 				safe = ALARM_MINOR //uncomfortably hot or cold
-			var/env_pressure = (env_moles*R_IDEAL_GAS_EQUATION*environment.temperature)/environment.volume
+			var/env_pressure = (env_moles*R_IDEAL_GAS_EQUATION*environment.temperature())/environment.volume
 			for(var/list/entry as anything in gas_safety_levels)
 				var/partial_pressure = (environment.vars[entry["varname"]]/env_moles)*env_pressure
 				if(partial_pressure > entry["safe_max"] || partial_pressure < entry["safe_min"])

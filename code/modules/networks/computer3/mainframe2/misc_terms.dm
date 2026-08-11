@@ -4637,7 +4637,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 					sensed = list()
 				if (air_sample)
 					sensed.Add(round(MIXTURE_PRESSURE(air_sample), 0.1))
-					sensed.Add(round(air_sample.temperature, 0.1))
+					sensed.Add(round(air_sample.temperature(), 0.1))
 					#define _SET_SENSED_GAS(GAS, ...) sensed.Add(round(100*air_sample.GAS/total_moles, 0.1));
 					APPLY_TO_GASES(_SET_SENSED_GAS)
 					#undef _SET_SENSED_GAS

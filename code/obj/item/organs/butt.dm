@@ -81,7 +81,7 @@ TYPEINFO(/obj/item/clothing/head/butt)
 			if (issimulatedturf(T))
 				var/datum/gas_mixture/fart_gas = new /datum/gas_mixture
 				fart_gas.farts = 0.17 // A quarter of a normal fart
-				fart_gas.temperature = T20C
+				fart_gas.temperature() = T20C
 				fart_gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 				T.assume_air(fart_gas)
 
@@ -222,7 +222,7 @@ TYPEINFO(/obj/item/clothing/head/butt)
 		if (issimulatedturf(T))
 			var/datum/gas_mixture/fart_gas = new /datum/gas_mixture
 			fart_gas.farts = 3.45 // five times the amount of a normal fart
-			fart_gas.temperature = T20C
+			fart_gas.temperature() = T20C
 			fart_gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 			T.assume_air(fart_gas)
 		qdel(src)

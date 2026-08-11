@@ -33,7 +33,7 @@ var/datum/station_zlevel_repair/station_repair = new
 		default_air = new
 		default_air.oxygen = MOLES_O2STANDARD
 		default_air.nitrogen = MOLES_N2STANDARD
-		default_air.temperature = T20C
+		default_air.temperature() = T20C
 
 	proc/repair_turfs(turf/turfs, clear=FALSE, force_floor=FALSE)
 		if(src.station_generator)
@@ -541,7 +541,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	convert_station_level(params, mob/user)
 		if(..())
 			station_repair.station_generator = new/datum/map_generator/desert_generator
-			station_repair.default_air.temperature = 330
+			station_repair.default_air.temperature() = 330
 
 			var/list/space = list()
 			for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
@@ -902,7 +902,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 			station_repair.default_air.carbon_dioxide = 100
 			station_repair.default_air.nitrogen = 0
 			station_repair.default_air.oxygen = 0
-			station_repair.default_air.temperature = 100
+			station_repair.default_air.temperature() = 100
 
 			if(params["Pitch Black"])
 				station_repair.ambient_light = null
@@ -947,7 +947,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 			station_repair.default_air.carbon_dioxide = 20
 			station_repair.default_air.nitrogen = 0
 			station_repair.default_air.oxygen = 0
-			station_repair.default_air.temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST-1
+			station_repair.default_air.temperature() = FIRE_MINIMUM_TEMPERATURE_TO_EXIST-1
 
 			station_repair.station_generator = new/datum/map_generator/lavamoon_generator
 			var/datum/map_generator/lavamoon_generator/LG = station_repair.station_generator
@@ -1043,7 +1043,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 			station_repair.default_air.carbon_dioxide = 500
 			station_repair.default_air.nitrogen = 0
 			station_repair.default_air.oxygen = 0
-			station_repair.default_air.temperature = 100
+			station_repair.default_air.temperature() = 100
 
 			var/list/space = list()
 			for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
@@ -1177,7 +1177,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 	convert_station_level(params, mob/user)
 		if(..())
 			station_repair.station_generator = new/datum/map_generator/snow_generator
-			station_repair.default_air.temperature = 235
+			station_repair.default_air.temperature() = 235
 
 			var/snow = params["Weather"]
 			snow = (snow == "None") ? null : snow

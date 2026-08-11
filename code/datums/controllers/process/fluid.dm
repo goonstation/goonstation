@@ -119,7 +119,7 @@
 					var/turf/T = F.loc
 					var/target_temp = T20C
 					if (istype(T))
-						target_temp = T.temperature
+						target_temp = T.temperature()
 
 					var/difference = (target_temp - F.reagents.total_temperature)
 					var/change = difference * 0.6 //absorb 60% of the ambient temperature every update

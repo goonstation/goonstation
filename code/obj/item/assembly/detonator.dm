@@ -105,7 +105,7 @@
 		src.attachedTo.overlay_state = null
 		qdel(src)
 		return
-	if (attachedTo.air_contents.temperature < 100000)
+	if (attachedTo.air_contents.temperature() < 100000)
 		src.attachedTo.visible_message(SPAN_ALERT("<b>The ruptured canister shatters from the pressure, but its temperature isn't high enough to create an explosion. Its contents leak into the air.</b>"))
 		src.attachedTo.health = 0
 		src.attachedTo.healthcheck()
@@ -119,7 +119,7 @@
 	message_admins("A canister bomb detonates at [epicenter.loc.name] ([log_loc(epicenter)])")
 	src.attachedTo.visible_message(SPAN_ALERT("<b>The ruptured canister shatters from the pressure, and the hot gas ignites.</b>"))
 
-	var/power = min(850 * (MIXTURE_PRESSURE(attachedTo.air_contents) + attachedTo.air_contents.temperature - 107000) / 233196469.0 + 200, 7000) //the second arg is the max explosion power
+	var/power = min(850 * (MIXTURE_PRESSURE(attachedTo.air_contents) + attachedTo.air_contents.temperature() - 107000) / 233196469.0 + 200, 7000) //the second arg is the max explosion power
 	//if (power == 150000) //they reached the cap SOMEHOW? well dang they deserve a medal
 		//src.builtBy.unlock_medal("", 1) //WIRE TODO: make new medal for this
 	explosion_new(attachedTo, epicenter, power)

@@ -1726,7 +1726,7 @@ TYPEINFO(/obj/vehicle/adminbus)
 
 	GM.oxygen = (oxygen/sum)*breath_request * mult
 	GM.nitrogen = (nitrogen/sum)*breath_request * mult
-	GM.temperature = T20C
+	GM.temperature() = T20C
 
 	return GM
 

@@ -182,8 +182,8 @@
 	if(src.air.temperature() > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 		src.hotspot_expose(air.temperature(), CELL_VOLUME)
 		for(var/atom/movable/AM as anything in src)
-			AM.temperature_expose(src.air, src.air.temperature, CELL_VOLUME)
-		src.temperature_expose(src.air, src.air.temperature, CELL_VOLUME)
+			AM.temperature_expose(src.air, src.air.temperature(), CELL_VOLUME)
+		src.temperature_expose(src.air, src.air.temperature(), CELL_VOLUME)
 
 	if(src.air.radgas >= RADGAS_MINIMUM_CONTAMINATION_MOLES && !ON_COOLDOWN(src, "radgas_contaminate", RADGAS_CONTAMINATION_COOLDOWN)) //if fallout is in the air, contaminate objects on this tile and consume radgas
 		for(var/atom/movable/AM as anything in src)

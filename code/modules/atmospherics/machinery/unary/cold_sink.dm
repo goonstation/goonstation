@@ -26,13 +26,13 @@
 
 	var/air_heat_capacity = HEAT_CAPACITY(src.air_contents)
 	var/combined_heat_capacity = current_heat_capacity + air_heat_capacity
-	var/old_temperature = src.air_contents.temperature
+	var/old_temperature = src.air_contents.temperature()
 
 	if(combined_heat_capacity > 0)
-		var/combined_energy = current_temperature*current_heat_capacity + air_heat_capacity*air_contents.temperature
-		air_contents.temperature = combined_energy/combined_heat_capacity
-		src.use_power(round(abs(old_temperature-air_contents.temperature)), ENVIRON) // watt per degree kelvin changed
+		var/combined_energy = current_temperature*current_heat_capacity + air_heat_capacity*air_contents.temperature()
+		air_contents.temperature() = combined_energy/combined_heat_capacity
+		src.use_power(round(abs(old_temperature-air_contents.temperature())), ENVIRON) // watt per degree kelvin changed
 
-	if(abs(old_temperature-air_contents.temperature) > 1 KELVIN && src.network)
+	if(abs(old_temperature-air_contents.temperature()) > 1 KELVIN && src.network)
 		src.network.update = TRUE
 	return TRUE

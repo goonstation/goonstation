@@ -139,8 +139,8 @@
 	var/pressure = lerp(100*(src.ruptured**2), MIXTURE_PRESSURE(hi_side)*(ruptured/150), 0.1 )
 	pressure = min(pressure,  MIXTURE_PRESSURE(hi_side) - MIXTURE_PRESSURE(lo_side))
 
-	if(pressure > 0 && hi_side.temperature )
-		var/transfer_moles = pressure*lo_side.volume/(hi_side.temperature * R_IDEAL_GAS_EQUATION)
+	if(pressure > 0 && hi_side.temperature() )
+		var/transfer_moles = pressure*lo_side.volume/(hi_side.temperature() * R_IDEAL_GAS_EQUATION)
 		var/datum/gas_mixture/removed = hi_side.remove(transfer_moles)
 		if(removed) lo_side==environment ? loc.assume_air(removed) : lo_side.merge(removed)
 		UpdateIcon()
@@ -358,14 +358,14 @@
 				environment_temperature = loc:temperature
 			else
 				var/datum/gas_mixture/environment = loc.return_air()
-				environment_temperature = environment.temperature
+				environment_temperature = environment.temperature()
 
 		else
 			environment_temperature = loc:temperature
 
 		var/datum/gas_mixture/pipe_air = return_air()
 
-		if(abs(environment_temperature-pipe_air.temperature) > minimum_temperature_difference)
+		if(abs(environment_temperature-pipe_air.temperature()) > minimum_temperature_difference)
 			parent.temperature_interact(loc, volume, src.thermal_conductivity)
 
 /obj/machinery/atmospherics/pipe/simple/ex_act(severity) // cogwerks - adding an override so pda bombs aren't quite so ruinous in the engine

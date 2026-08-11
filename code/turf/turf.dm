@@ -850,8 +850,8 @@ var/global/in_replace_with = 0
 				#define _OLD_GAS_VAR_RESTORE(GAS, ...) N.air.GAS += GAS ## _old;
 
 				APPLY_TO_GASES(_OLD_GAS_VAR_RESTORE)
-				if (!N.air.temperature)
-					N.air.temperature = temp_old
+				if (!N.air.temperature())
+					N.air.set_temperature(temp_old)
 
 				#undef _OLD_GAS_VAR_RESTORE
 			#undef _OLD_GAS_VAR_NOT_NULL

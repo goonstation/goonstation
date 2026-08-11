@@ -53,7 +53,7 @@ ABSTRACT_TYPE(/obj/item/tank)
 		..()
 		src.air_contents = new /datum/gas_mixture
 		src.air_contents.volume = TANK_VOLUME
-		src.air_contents.temperature = T20C
+		src.air_contents.temperature() = T20C
 		processing_items |= src
 		src.create_inventory_counter()
 		BLOCK_SETUP(BLOCK_TANK)
@@ -147,7 +147,7 @@ ABSTRACT_TYPE(/obj/item/tank)
 		if(!air_contents)
 			return null
 		var/tank_pressure = MIXTURE_PRESSURE(air_contents)
-		var/moles_needed = min(distribute_pressure, tank_pressure) *volume_to_return/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+		var/moles_needed = min(distribute_pressure, tank_pressure) *volume_to_return/(R_IDEAL_GAS_EQUATION*air_contents.temperature())
 		return remove_air(moles_needed)
 
 	process()
@@ -242,7 +242,7 @@ ABSTRACT_TYPE(/obj/item/tank)
 	examine(mob/user)
 		. = list()
 		var/can_interact = in_interact_range(src, user) || isobserver(user)
-		var/celsius_temperature = TO_CELSIUS(src.air_contents.temperature)
+		var/celsius_temperature = TO_CELSIUS(src.air_contents.temperature())
 		var/descriptive = "buggy. Report this to a coder."
 		switch (celsius_temperature)
 			if (-INFINITY to -1)
@@ -407,12 +407,12 @@ ABSTRACT_TYPE(/obj/item/tank)
 
 		var/turf/ground_zero = get_turf(loc)
 
-		if(air_contents.temperature > (T0C + 400))
+		if(air_contents.temperature() > (T0C + 400))
 			strength = fuel_moles/8
 
 			explosion(src, ground_zero, strength, strength*2, strength*4, strength*5)
 
-		else if(air_contents.temperature > (T0C + 250))
+		else if(air_contents.temperature() > (T0C + 250))
 			strength = fuel_moles/10
 
 			explosion(src, ground_zero, -1, -1, strength*3, strength*4)
@@ -420,7 +420,7 @@ ABSTRACT_TYPE(/obj/item/tank)
 			air_contents = null
 			ground_zero.hotspot_expose(1000, 125)
 
-		else if(air_contents.temperature > (T0C + 100))
+		else if(air_contents.temperature() > (T0C + 100))
 			strength = fuel_moles/13
 
 			explosion(src, ground_zero, -1, -1, strength*2, strength*3)

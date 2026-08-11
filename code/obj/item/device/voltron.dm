@@ -31,7 +31,7 @@
 	remove_air(amount as num)
 		var/datum/gas_mixture/Air = new /datum/gas_mixture
 		Air.oxygen = amount
-		Air.temperature = 310
+		Air.temperature() = 310
 		return Air
 
 	proc/spawn_sparks()

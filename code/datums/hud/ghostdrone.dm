@@ -333,7 +333,7 @@
 				else
 					oxy.icon_state = "oxy1"
 				var/maptextc = "#ffffff"
-				switch (environment.temperature)
+				switch (environment.temperature())
 					if (773 to INFINITY)
 						temp.icon_state = "temp1"
 						maptextc = "#ff4040"
@@ -347,7 +347,7 @@
 						maptextc = "#9cbcff"
 
 				temp.maptext_y = 19
-				temp.maptext = "<span style='text-align: center; font-family: \"Small Fonts\"; font-size: 7px; font-weight: bold; -dm-text-outline: 1px black; color: [maptextc];'>[environment.temperature >= (1000 + T0C) ? "ERR" : "[round(TO_CELSIUS(environment.temperature))]'"]</span>"
+				temp.maptext = "<span style='text-align: center; font-family: \"Small Fonts\"; font-size: 7px; font-weight: bold; -dm-text-outline: 1px black; color: [maptextc];'>[environment.temperature() >= (1000 + T0C) ? "ERR" : "[round(TO_CELSIUS(environment.temperature()))]'"]</span>"
 
 		update_ability_hotbar()
 			if (!master.client)

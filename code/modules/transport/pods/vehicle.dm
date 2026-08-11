@@ -91,10 +91,10 @@
 				if (atmostank.air_contents.carbon_dioxide > 0)
 					atmostank.air_contents.carbon_dioxide -= HUMAN_NEEDED_OXYGEN * 2
 					atmostank.air_contents.carbon_dioxide = max(atmostank.air_contents.carbon_dioxide, 0)
-				if(atmostank.air_contents.temperature > 310)
-					atmostank.air_contents.temperature -= max(atmostank.air_contents.temperature - 310, 5)
-				if(atmostank.air_contents.temperature < 310)
-					atmostank.air_contents.temperature += max(310 - atmostank.air_contents.temperature, 5)
+				if(atmostank.air_contents.temperature() > 310)
+					atmostank.air_contents.temperature() -= max(atmostank.air_contents.temperature() - 310, 5)
+				if(atmostank.air_contents.temperature() < 310)
+					atmostank.air_contents.temperature() += max(310 - atmostank.air_contents.temperature(), 5)
 
 			return atmostank.remove_air(amount)
 
@@ -1398,7 +1398,7 @@
 			if(unknown_level > 0.01)
 				dat += " OTHER: [round(unknown_level)]%"
 
-		dat += " Temperature: [round(TO_CELSIUS(atmostank.air_contents.temperature))]&deg;C<br>"
+		dat += " Temperature: [round(TO_CELSIUS(atmostank.air_contents.temperature()))]&deg;C<br>"
 	else
 		dat += "<font color=red>No tank installed!</font><BR>"
 	dat += "<B>Fuel Status:</B> "
@@ -1421,7 +1421,7 @@
 			if(unknown_level > 0.01)
 				dat += " OTHER: [round(unknown_level)]%"
 
-		dat += " Temperature: [round(TO_CELSIUS(fueltank.air_contents.temperature))]&deg;C<br>"
+		dat += " Temperature: [round(TO_CELSIUS(fueltank.air_contents.temperature()))]&deg;C<br>"
 	else
 		dat += "<font color=red>No tank installed!</font><BR>"
 

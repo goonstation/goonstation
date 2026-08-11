@@ -62,11 +62,11 @@
 	var/transfer_moles1 = 0
 	var/transfer_moles2 = 0
 
-	if(src.air1.temperature > 0)
-		transfer_moles1 = (src.node1_ratio*pressure_delta)*src.air3.volume/(src.air1.temperature * R_IDEAL_GAS_EQUATION)
+	if(src.air1.temperature() > 0)
+		transfer_moles1 = (src.node1_ratio*pressure_delta)*src.air3.volume/(src.air1.temperature() * R_IDEAL_GAS_EQUATION)
 
-	if(src.air2.temperature > 0)
-		transfer_moles2 = (src.node2_ratio*pressure_delta)*src.air3.volume/(src.air2.temperature * R_IDEAL_GAS_EQUATION)
+	if(src.air2.temperature() > 0)
+		transfer_moles2 = (src.node2_ratio*pressure_delta)*src.air3.volume/(src.air2.temperature() * R_IDEAL_GAS_EQUATION)
 
 	var/air1_moles = TOTAL_MOLES(src.air1)
 	var/air2_moles = TOTAL_MOLES(src.air2)
@@ -163,7 +163,7 @@
 	if(air_total_moles > 0)
 		SET_SIGNAL_MIXTURE(air)
 		.["kpa"] = round(MIXTURE_PRESSURE(air), 0.1)
-		.["temp"] = round(TO_CELSIUS(air.temperature))
+		.["temp"] = round(TO_CELSIUS(air.temperature()))
 	else
 		RESET_SIGNAL_MIXTURE
 	.["gasses"] = gasses

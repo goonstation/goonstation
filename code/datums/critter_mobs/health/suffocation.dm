@@ -53,7 +53,7 @@
 			location_as_object.handle_internal_lifeform(src, breath ? 0 : volume)
 		var/breathing = 0
 		if (isnull(breath)) return //ZeWaka: fix for null.total_moles
-		var/breath_pressure = (TOTAL_MOLES(breath) * R_IDEAL_GAS_EQUATION * breath.temperature) / volume
+		var/breath_pressure = (TOTAL_MOLES(breath) * R_IDEAL_GAS_EQUATION * breath.temperature()) / volume
 		if (breath && TOTAL_MOLES(breath) > 0)
 			var/o2_pp = (breath.oxygen / TOTAL_MOLES(breath)) * breath_pressure
 			var/toxins_pp = (breath.toxins / TOTAL_MOLES(breath)) * breath_pressure
@@ -125,10 +125,10 @@
 
 
 
-			if (breath.temperature > heat_tolerance && !holder.is_heat_resistant())
+			if (breath.temperature() > heat_tolerance && !holder.is_heat_resistant())
 				if (prob(20))
 					boutput(holder, SPAN_ALERT("You feel a searing heat in the air!"))
-				holder.TakeDamage("chest", 0, min((breath.temperature - heat_tolerance) / 3, 10) + 6)
+				holder.TakeDamage("chest", 0, min((breath.temperature() - heat_tolerance) / 3, 10) + 6)
 				// this part is shit and probably should be purged, but generalizing hud might be unwanted
 				var/mob/living/critter/C = holder
 				if (istype(C))

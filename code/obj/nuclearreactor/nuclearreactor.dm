@@ -184,7 +184,7 @@
 		//but we need to express that in moles so,  1/n = RT/PV .. n = PV/RT
 		var/transfer_moles = 0
 		if(input_starting_pressure)
-			transfer_moles = (src.input.air_contents.volume*input_starting_pressure)/(R_IDEAL_GAS_EQUATION*src.input.air_contents.temperature)
+			transfer_moles = (src.input.air_contents.volume*input_starting_pressure)/(R_IDEAL_GAS_EQUATION*src.input.air_contents.temperature())
 		var/datum/gas_mixture/gas_input = src.input.air_contents.remove(transfer_moles)
 		src.air_contents.volume = src.input.air_contents.volume
 		gas_input?.volume = air_contents.volume
@@ -314,10 +314,10 @@
 		if(src.current_gas)
 			//first, define some helpful vars
 			// temperature differential
-			var/deltaT = src.temperature - src.current_gas.temperature
+			var/deltaT = src.temperature - src.current_gas.temperature()
 			// temp differential for radiative heating
 			//this is equivelant to (src.temperature ** 4) - (src.current_gas.temperature ** 4), but factored so its less likely to hit overflow
-			var/deltaTr = (src.temperature + src.current_gas.temperature)*(src.temperature - src.current_gas.temperature)*((src.temperature**2) + (src.current_gas.temperature**2))
+			var/deltaTr = (src.temperature + src.current_gas.temperature())*(src.temperature - src.current_gas.temperature())*((src.temperature**2) + (src.current_gas.temperature()**2))
 
 			//thermal conductivity
 			var/k = calculateHeatTransferCoefficient(null,src.material)
@@ -336,12 +336,12 @@
 			//also radiative heating given by Steffan-Boltzman constant * area * (T1^4 - T2^4)
 			//since this is a discrete approximation, it breaks down when the temperature diffs are low. As such, we linearise the equation
 			//by clamping between hottest and coldest. It's not pretty, but it works.
-			var/hottest = max(src.current_gas.temperature, src.temperature)
-			var/coldest = min(src.current_gas.temperature, src.temperature)
+			var/hottest = max(src.current_gas.temperature(), src.temperature)
+			var/coldest = min(src.current_gas.temperature(), src.temperature)
 			//max limit on the energy transfered is bounded between the coldest and hottest temperature of the thermal mass, to ensure that the
 			//gas can't suck out more heat from the reactor than exists
 			var/max_delta_e = clamp(((k * A * deltaT) + (5.67037442e-8 * A * deltaTr)), src.temperature*src.thermal_mass - hottest*src.thermal_mass, src.temperature*src.thermal_mass - coldest*src.thermal_mass)
-			src.current_gas.temperature = clamp(src.current_gas.temperature + max_delta_e/HEAT_CAPACITY(src.current_gas), coldest, hottest)
+			src.current_gas.set_temperature(clamp(src.current_gas.temperature() + max_delta_e/HEAT_CAPACITY(src.current_gas), coldest, hottest))
 
 			//after we've transferred heat to the gas, we remove that energy from the gas channel to preserve CoE
 			src.temperature = clamp(src.temperature - (THERMAL_ENERGY(current_gas) - thermal_e)/src.thermal_mass, coldest, hottest)
@@ -350,12 +350,12 @@
 			//var/coe2 = (THERMAL_ENERGY(current_gas) + src.temperature*src.thermal_mass)
 			//if(abs(coe2 - coe_check) > 64)
 			//	CRASH("COE VIOLATION REACTOR")
-			if(src.current_gas.temperature <= 0 || src.temperature <= 0)
+			if(src.current_gas.temperature() <= 0 || src.temperature <= 0)
 				CRASH("TEMP WENT NONPOSITIVE (hottest=[hottest], coldest=[coldest], max_delta_e=[max_delta_e], deltaT=[deltaT], deltaTr=[deltaTr])")
 
 			. = src.current_gas
 		if(inGas && (THERMAL_ENERGY(inGas) > 0))
-			src.current_gas = inGas.remove((src.reactor_vessel_gas_volume*MIXTURE_PRESSURE(inGas))/(R_IDEAL_GAS_EQUATION*inGas.temperature))
+			src.current_gas = inGas.remove((src.reactor_vessel_gas_volume*MIXTURE_PRESSURE(inGas))/(R_IDEAL_GAS_EQUATION*inGas.temperature()))
 			if(src.current_gas && TOTAL_MOLES(src.current_gas) < 1)
 				if(istype(., /datum/gas_mixture))
 					var/datum/gas_mixture/result = .
@@ -413,7 +413,7 @@
 						src.current_gas.merge(gascomp.air_contents) //grab all the gas in the channels and put it back in the reactor so it can be vented into engineering
 
 		src.current_gas.radgas += meltdown_badness*15
-		src.current_gas.temperature = max(src.temperature, src.current_gas.temperature)
+		src.current_gas.set_temperature(max(src.temperature, src.current_gas.temperature()))
 		var/turf/current_loc = get_turf(src)
 		current_loc.assume_air(current_gas)
 

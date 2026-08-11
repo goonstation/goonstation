@@ -338,10 +338,10 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 		if(src.air_contents)
 			//first, define some helpful vars
 			// temperature differential
-			var/deltaT = src.temperature - src.air_contents.temperature
+			var/deltaT = src.temperature - src.air_contents.temperature()
 			// temp differential for radiative heating
 			//this is equivelant to (src.temperature ** 4) - (src.current_gas.temperature ** 4), but factored so its less likely to hit overflow
-			var/deltaTr = (src.temperature + src.air_contents.temperature)*(src.temperature - src.air_contents.temperature)*((src.temperature**2) + (src.air_contents.temperature**2))
+			var/deltaTr = (src.temperature + src.air_contents.temperature())*(src.temperature - src.air_contents.temperature())*((src.temperature**2) + (src.air_contents.temperature()**2))
 
 			//thermal conductivity
 			var/k = calculateHeatTransferCoefficient(null,src.material)
@@ -359,12 +359,12 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 			//also radiative heating given by Steffan-Boltzman constant * area * (T1^4 - T2^4) ( + (5.67037442e-8 * A * deltaTr))
 			//since this is a discrete approximation, it breaks down when the temperature diffs are low. As such, we linearise the equation
 			//by clamping between hottest and coldest. It's not pretty, but it works.
-			var/hottest = max(src.air_contents.temperature, src.temperature)
-			var/coldest = min(src.air_contents.temperature, src.temperature)
+			var/hottest = max(src.air_contents.temperature(), src.temperature)
+			var/coldest = min(src.air_contents.temperature(), src.temperature)
 			//max limit on the energy transfered is bounded between the coldest and hottest temperature of the thermal mass, to ensure that the
 			//gas can't suck out more heat from the component than exists
 			var/max_delta_e = clamp(((k * A * deltaT) + (5.67037442e-8 * A * deltaTr)), src.temperature*src.thermal_mass - hottest*src.thermal_mass, src.temperature*src.thermal_mass - coldest*src.thermal_mass)
-			src.air_contents.temperature = clamp(src.air_contents.temperature + max_delta_e/HEAT_CAPACITY(src.air_contents), coldest, hottest)
+			src.air_contents.set_temperature(clamp(src.air_contents.temperature() + max_delta_e/HEAT_CAPACITY(src.air_contents), coldest, hottest))
 			//after we've transferred heat to the gas, we remove that energy from the gas channel to preserve CoE
 			src.temperature = clamp(src.temperature - (THERMAL_ENERGY(air_contents) - thermal_e)/src.thermal_mass, coldest, hottest)
 
@@ -372,7 +372,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 			//var/coe2 = (THERMAL_ENERGY(air_contents) + src.temperature*src.thermal_mass)
 			//if(abs(coe2 - coe_check) > 64)
 			//	CRASH("COE VIOLATION COMPONENT")
-			if(src.air_contents.temperature < 0 || src.temperature < 0)
+			if(src.air_contents.temperature() < 0 || src.temperature < 0)
 				CRASH("TEMP WENT NEGATIVE")
 
 
@@ -383,7 +383,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 			else
 				. = src.air_contents
 		if(inGas && (THERMAL_ENERGY(inGas) > 0))
-			src.air_contents = inGas.remove((src.gas_volume*MIXTURE_PRESSURE(inGas))/(R_IDEAL_GAS_EQUATION*inGas.temperature))
+			src.air_contents = inGas.remove((src.gas_volume*MIXTURE_PRESSURE(inGas))/(R_IDEAL_GAS_EQUATION*inGas.temperature()))
 			src.air_contents?.volume = gas_volume
 			if(src.air_contents && TOTAL_MOLES(src.air_contents) < 1)
 				if(istype(., /datum/gas_mixture))

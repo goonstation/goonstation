@@ -31,7 +31,7 @@
 		air_contents = new /datum/gas_mixture
 
 		air_contents.volume = volume
-		air_contents.temperature = T20C
+		air_contents.temperature() = T20C
 
 		if(init_connected)
 			var/obj/machinery/atmospherics/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/unary/portables_connector) in loc

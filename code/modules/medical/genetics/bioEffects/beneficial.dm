@@ -1264,7 +1264,7 @@
 			if (T)
 				var/datum/gas_mixture/plasma_burp = new()
 				plasma_burp.toxins = 8
-				plasma_burp.temperature = T20C
+				plasma_burp.temperature() = T20C
 				T.assume_air(plasma_burp)
 		src.update_eyes()
 

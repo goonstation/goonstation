@@ -471,9 +471,9 @@ TYPEINFO(/obj/machinery/power/combustion_generator)
 			var/datum/gas_mixture/payload = new /datum/gas_mixture
 			payload.carbon_dioxide = CARBON_OUTPUT_RATE * (src.last_mix * 2) * src.last_inlet * src.output_multiplier * mult
 			if (src.check_tank_oxygen(src.inlet_tank))
-				payload.temperature = clamp(src.inlet_tank.air_contents.temperature + EXHAUST_TEMP_INCREASE, EXHAUST_TEMP_INCREASE, T100C) // hotter than intake
+				payload.temperature() = clamp(src.inlet_tank.air_contents.temperature() + EXHAUST_TEMP_INCREASE, EXHAUST_TEMP_INCREASE, T100C) // hotter than intake
 			else
-				payload.temperature = T.air.temperature
+				payload.temperature() = T.air.temperature()
 
 			T.assume_air(payload)
 

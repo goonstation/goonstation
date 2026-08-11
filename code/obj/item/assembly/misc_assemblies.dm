@@ -888,7 +888,7 @@ Contains:
 	var/obj/item/new_trigger = new /obj/item/device/prox_sensor(src)
 	var/obj/item/new_applier = new /obj/item/device/igniter(src)
 	var/obj/item/tank/plasma/new_target = new /obj/item/tank/plasma(src)
-	new_target.air_contents.temperature = temperature_of_plasma + T0C
+	new_target.air_contents.temperature() = temperature_of_plasma + T0C
 	src.set_up_new(null, new_trigger, new_applier, new_target)
 
 /////////////////////////////////////////////////// Single tank bomb (timer) ////////////////////////////////////
@@ -901,7 +901,7 @@ Contains:
 	var/obj/item/new_trigger = new /obj/item/device/timer(src)
 	var/obj/item/new_applier = new /obj/item/device/igniter(src)
 	var/obj/item/tank/plasma/new_target = new /obj/item/tank/plasma(src)
-	new_target.air_contents.temperature = temperature_of_plasma + T0C
+	new_target.air_contents.temperature() = temperature_of_plasma + T0C
 	src.set_up_new(null, new_trigger, new_applier, new_target)
 
 /////////////////////////////////////////////////// Single tank bomb (remote signaller) ////////////////////////////////////
@@ -914,7 +914,7 @@ Contains:
 	var/obj/item/new_trigger = new /obj/item/device/radio/signaler(src)
 	var/obj/item/new_applier = new /obj/item/device/igniter(src)
 	var/obj/item/tank/plasma/new_target = new /obj/item/tank/plasma(src)
-	new_target.air_contents.temperature = temperature_of_plasma + T0C
+	new_target.air_contents.temperature() = temperature_of_plasma + T0C
 	src.set_up_new(null, new_trigger, new_applier, new_target)
 
 /////////////////////////////////////////////////// Cleaner Grenade Mousetrap ////////////////////////////////////

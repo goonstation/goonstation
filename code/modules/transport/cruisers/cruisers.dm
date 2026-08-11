@@ -308,7 +308,7 @@
 			for(var/turf/simulated/T in interior_area)
 				if(T.density) continue
 				if(T.air)
-					T.air.temperature = life_support.tempreg
+					T.air.temperature() = life_support.tempreg
 					T.oxygen = MOLES_O2STANDARD * 4
 					T.nitrogen = MOLES_N2STANDARD * 4
 		else
@@ -321,7 +321,7 @@
 			if(!atmos_fail_count)
 				for(var/turf/simulated/T in interior_area)
 					if(T.density) continue
-					if(T.air) T.air.temperature = T0C - 100
+					if(T.air) T.air.temperature() = T0C - 100
 					T.remove_air(100)
 
 

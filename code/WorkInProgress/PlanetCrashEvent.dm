@@ -95,33 +95,33 @@ Notes:
 	proc/process()
 		var/datum/gas_mixture/env = src.spot.remove_air(TOTAL_MOLES(src.spot.air))
 		if (env)
-			boutput(world, "Current temp: [env.temperature]")
-			env.temperature += src.heatAmount
+			boutput(world, "Current temp: [env.temperature()]")
+			env.temperature() += src.heatAmount
 			env.react()
 			src.spot.assume_air(env)
-			boutput(world, "New temp: [env.temperature]")
+			boutput(world, "New temp: [env.temperature()]")
 
 		/*
 		if (istype(src.spot))
 			boutput(world, "Operating on [src.spot]")
 			var/datum/gas_mixture/env = src.spot.return_air()
-			if (env.temperature < src.tempTarget)
+			if (env.temperature() < src.tempTarget)
 				var/transfer_moles = TOTAL_MOLES(env)
 				var/datum/gas_mixture/removed = env.remove(transfer_moles)
-				boutput(world, "got [transfer_moles] moles at [removed.temperature]")
+				boutput(world, "got [transfer_moles] moles at [removed.temperature()]")
 
 				if (removed)
 					/*
 					var/heat_capacity = HEAT_CAPACITY(removed)
 					boutput(world, "heating ([heat_capacity])")
 					if (heat_capacity)
-						removed.temperature = (removed.temperature*heat_capacity + src.heatAmount)/heat_capacity
+						removed.temperature() = (removed.temperature()*heat_capacity + src.heatAmount)/heat_capacity
 					*/
 
-					removed.temperature += src.heatAmount
-					boutput(world, "now at [removed.temperature]")
+					removed.temperature() += src.heatAmount
+					boutput(world, "now at [removed.temperature()]")
 				env.merge(removed)
-				boutput(world, "turf now at [env.temperature]")
+				boutput(world, "turf now at [env.temperature()]")
 		*/
 
 

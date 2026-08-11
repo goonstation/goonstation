@@ -23,15 +23,15 @@
 		return FALSE
 	var/air_heat_capacity = HEAT_CAPACITY(src.air_contents)
 	var/combined_heat_capacity = current_heat_capacity + air_heat_capacity
-	var/old_temperature = src.air_contents.temperature
+	var/old_temperature = src.air_contents.temperature()
 
 	if(combined_heat_capacity > 0)
-		var/combined_energy = current_temperature*current_heat_capacity + air_heat_capacity*src.air_contents.temperature
-		src.air_contents.temperature = combined_energy/combined_heat_capacity
+		var/combined_energy = current_temperature*current_heat_capacity + air_heat_capacity*src.air_contents.temperature()
+		src.air_contents.temperature() = combined_energy/combined_heat_capacity
 
 	//todo: have current temperature affected. require power to bring up current temperature again
 
-	if(abs(old_temperature - src.air_contents.temperature) > 1 KELVIN)
+	if(abs(old_temperature - src.air_contents.temperature()) > 1 KELVIN)
 		src.network.update = TRUE
 	return TRUE
 

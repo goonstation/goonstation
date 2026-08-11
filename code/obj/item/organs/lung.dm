@@ -55,7 +55,7 @@
 		var/breath_moles = TOTAL_MOLES(breath)
 		if(breath_moles == 0)
 			breath_moles = ATMOS_EPSILON
-		var/breath_pressure = (breath_moles*R_IDEAL_GAS_EQUATION*breath.temperature)/breath.volume
+		var/breath_pressure = (breath_moles*R_IDEAL_GAS_EQUATION*breath.temperature())/breath.volume
 		//Partial pressure of the O2 in our breath
 		var/O2_pp = (breath.oxygen/breath_moles)*breath_pressure
 		// Same, but for the toxins
@@ -132,9 +132,9 @@
 				if (prob(30))
 					boutput(donor, SPAN_ALERT("Oh god it's so bad you could choke to death in here!"))
 
-		if (breath.temperature > min(temp_tolerance) && !donor.is_heat_resistant()) // Hot air hurts :(
+		if (breath.temperature() > min(temp_tolerance) && !donor.is_heat_resistant()) // Hot air hurts :(
 			//do scaling *before* the clamp
-			var/lung_burn = ((breath.temperature - temp_tolerance)/100) ** 0.5
+			var/lung_burn = ((breath.temperature() - temp_tolerance)/100) ** 0.5
 			lung_burn = clamp(lung_burn, 0, 10)
 			donor.TakeDamage("chest", 0, (lung_burn / LUNG_COUNT), 0, DAMAGE_BURN)
 			if(prob(20))
@@ -317,7 +317,7 @@ TYPEINFO(/obj/item/organ/lung/cyber)
 		var/safe_oxygen_max = 0.4
 
 		var/breath_moles = TOTAL_MOLES(breath)
-		var/breath_pressure = (breath_moles*R_IDEAL_GAS_EQUATION*breath.temperature)/breath.volume
+		var/breath_pressure = (breath_moles*R_IDEAL_GAS_EQUATION*breath.temperature())/breath.volume
 		if(breath_moles == 0)
 			breath_moles = ATMOS_EPSILON
 		var/Toxins_pp = (breath.toxins/breath_moles)*breath_pressure
