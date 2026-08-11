@@ -1284,16 +1284,10 @@
 	},
 /area/station/bridge)
 "arG" = (
-/obj/storage/secure/closet/medical/anesthetic,
 /obj/machinery/light/incandescent/cool/very{
 	dir = 1
 	},
-/obj/machinery/light_switch/directional/north{
-	pixel_x = -4
-	},
-/obj/blind_switch/directional/north{
-	pixel_x = 4
-	},
+/obj/machinery/manufacturer/robotics,
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
@@ -8789,7 +8783,7 @@
 	dir = 1;
 	pixel_y = 24
 	},
-/obj/storage/crate/robotics_supplies,
+/obj/machinery/manufacturer/robotics,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "cCG" = (
@@ -52443,7 +52437,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "qqz" = (
-/obj/machinery/manufacturer/robotics,
+/obj/storage/secure/closet/medical/anesthetic,
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
@@ -75325,13 +75319,15 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
 "xks" = (
-/obj/machinery/manufacturer/robotics,
+/obj/storage/crate/robotics_supplies,
 /obj/machinery/light/incandescent/cool/very{
 	dir = 1
 	},
-/obj/disposalpipe/segment,
-/obj/cable{
-	icon_state = "1-2"
+/obj/machinery/light_switch/directional/north{
+	pixel_x = -4
+	},
+/obj/blind_switch/directional/north{
+	pixel_x = 4
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
@@ -126945,7 +126941,7 @@ bpe
 bpe
 bpe
 bpe
-uvs
+ndN
 wqm
 xDD
 xDD
@@ -127549,7 +127545,7 @@ gqg
 kwP
 gqg
 lBM
-xks
+cHr
 cHr
 cHr
 eKp
@@ -127851,7 +127847,7 @@ sVE
 xkJ
 dxF
 pgO
-ndN
+xks
 uvs
 uvs
 uvs
