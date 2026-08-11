@@ -3668,7 +3668,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/wood/three,
+/turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "arv" = (
 /obj/cable{
@@ -8613,7 +8613,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/wood/three,
+/turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aRD" = (
 /turf/simulated/floor,
@@ -13490,10 +13490,16 @@
 /area/station/crew_quarters/cafeteria)
 "boZ" = (
 /obj/machinery/light/incandescent/warm,
-/turf/simulated/floor/caution/north,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/black,
 /area/station/crew_quarters/fitness)
 "bpa" = (
-/turf/simulated/floor/caution/north,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/black,
 /area/station/crew_quarters/fitness)
 "bpb" = (
 /obj/submachine/slot_machine,
@@ -13783,7 +13789,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor/wood/three,
+/turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "bqu" = (
 /obj/cable{
@@ -13792,13 +13798,10 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor/caution/corner/sw,
-/area/station/crew_quarters/fitness)
-"bqv" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
 	},
-/turf/simulated/floor/caution/south,
+/turf/simulated/floor/black,
 /area/station/crew_quarters/fitness)
 "bqw" = (
 /turf/simulated/floor/twotone/darkblue,
@@ -14185,13 +14188,7 @@
 /obj/decal/stage_edge{
 	dir = 8
 	},
-/turf/simulated/floor/wood/three,
-/area/station/crew_quarters/fitness)
-"bsF" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/wood/three,
+/turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "bsH" = (
 /obj/machinery/light/incandescent/greenish,
@@ -14244,7 +14241,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/wood/three,
+/turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "bsU" = (
 /obj/cable{
@@ -14520,14 +14517,7 @@
 /obj/decal/stage_edge{
 	dir = 8
 	},
-/turf/simulated/floor/wood/three,
-/area/station/crew_quarters/fitness)
-"buh" = (
-/obj/machinery/light/incandescent/warm,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/wood/three,
+/turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "bui" = (
 /obj/disposalpipe/segment/morgue,
@@ -14671,13 +14661,13 @@
 	icon_state = "4-8"
 	},
 /obj/decal/stage_edge,
-/turf/simulated/floor/wood/three,
+/turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "buK" = (
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/wood/three,
+/turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "buL" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -15537,7 +15527,7 @@
 /obj/item/clothing/head/flatcap,
 /obj/item/clothing/under/referee,
 /obj/item/instrument/whistle,
-/turf/simulated/floor/wood/three,
+/turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "byH" = (
 /obj/table/wood/round/auto,
@@ -24285,7 +24275,7 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 9
 	},
-/turf/simulated/floor/wood/three,
+/turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "cTx" = (
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine/safe,
@@ -25292,7 +25282,7 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment,
-/turf/simulated/floor/wood/three,
+/turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "dEj" = (
 /obj/disposalpipe/segment/brig{
@@ -26322,7 +26312,7 @@
 /obj/item/storage/wall/medical{
 	pixel_y = 32
 	},
-/turf/simulated/floor/wood/three,
+/turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "eog" = (
 /obj/disposalpipe/segment/mail{
@@ -30326,9 +30316,10 @@
 /area/station/crew_quarters/cafeteria)
 "hrY" = (
 /obj/machinery/vending/medical_public,
-/turf/simulated/floor/caution/west{
-	dir = 5
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9
 	},
+/turf/simulated/floor/black,
 /area/station/crew_quarters/fitness)
 "hrZ" = (
 /obj/cable{
@@ -30825,7 +30816,7 @@
 	name = "Net Cafe"
 	})
 "hNj" = (
-/turf/simulated/floor/wood/three,
+/turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "hNk" = (
 /obj/item/raw_material/rock{
@@ -34030,7 +34021,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/wood/three,
+/turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "krB" = (
 /obj/decal/tile_edge/line/yellow{
@@ -34099,7 +34090,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/wood/three,
+/turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "ktL" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -34266,7 +34257,7 @@
 	},
 /obj/table,
 /obj/machinery/wrestlingbell,
-/turf/simulated/floor/wood/three,
+/turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "kyL" = (
 /obj/machinery/r_door_control{
@@ -35134,7 +35125,7 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 5
 	},
-/turf/simulated/floor/wood/three,
+/turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "liE" = (
 /obj/machinery/secscanner{
@@ -35150,7 +35141,7 @@
 	icon_state = "4-8"
 	},
 /obj/landmark/gps_waypoint,
-/turf/simulated/floor/wood/three,
+/turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "liU" = (
 /obj/mapping_helper/wingrille_spawn/auto,
@@ -35891,6 +35882,12 @@
 /obj/structure/girder,
 /turf/simulated/floor/mauxite,
 /area/station/maintenance/south)
+"lLa" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "lLb" = (
 /obj/machinery/door_control/bolter/new_walls/west{
 	id = "gym_bath2";
@@ -36268,10 +36265,10 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor{
-	dir = 8;
-	icon_state = "corner_east"
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6
 	},
+/turf/simulated/floor/black,
 /area/station/crew_quarters/fitness)
 "lZB" = (
 /obj/machinery/computer/robotics/lab{
@@ -36722,13 +36719,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
-"mst" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/decal/stage_edge,
-/turf/simulated/floor/wood/three,
-/area/station/crew_quarters/fitness)
 "msw" = (
 /mob/living/carbon/human/npc/monkey/mrs_muggles,
 /obj/disposalpipe/segment/transport{
@@ -39420,6 +39410,10 @@
 	dir = 1
 	},
 /area/station/ranch)
+"oBg" = (
+/obj/decal/boxingrope,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "oBs" = (
 /obj/item/furniture_parts/dining_chair/wood,
 /obj/item/furniture_parts/dining_chair/wood,
@@ -39668,7 +39662,7 @@
 /obj/decal/stage_edge{
 	dir = 9
 	},
-/turf/simulated/floor/wood/three,
+/turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "oLo" = (
 /obj/indestructible/shuttle_corner{
@@ -40853,7 +40847,7 @@
 "pIX" = (
 /obj/disposalpipe/trunk/south,
 /obj/machinery/disposal/small/east,
-/turf/simulated/floor/wood/three,
+/turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "pJb" = (
 /obj/railing/orange/reinforced{
@@ -40881,10 +40875,6 @@
 /obj/chicken_nesting_box,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
-"pJV" = (
-/obj/decal/boxingrope,
-/turf/simulated/floor/wood/three,
-/area/station/crew_quarters/fitness)
 "pJY" = (
 /obj/decal/xmas_lights{
 	pixel_y = 32
@@ -41137,7 +41127,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/wood/three,
+/turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "pUq" = (
 /obj/machinery/sink/slim{
@@ -43387,7 +43377,10 @@
 /area/station/chapel/sanctuary)
 "rBV" = (
 /obj/fitness/weightlifter,
-/turf/simulated/floor/caution/north,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/black,
 /area/station/crew_quarters/fitness)
 "rCm" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
@@ -44273,7 +44266,10 @@
 /area/station/ranch)
 "slt" = (
 /obj/fitness/stacklifter,
-/turf/simulated/floor/caution/north,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/black,
 /area/station/crew_quarters/fitness)
 "sly" = (
 /obj/cable{
@@ -44743,7 +44739,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/wood/three,
+/turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "sAV" = (
 /obj/item/raw_material/bohrum,
@@ -45233,6 +45229,13 @@
 /obj/item/device/radio/intercom/science,
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
+"sRU" = (
+/obj/stool/bench/blue,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "sSf" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -45241,7 +45244,10 @@
 /area/station/maintenance/south)
 "sSi" = (
 /obj/item/device/radio/beacon,
-/turf/simulated/floor/caution/north,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/black,
 /area/station/crew_quarters/fitness)
 "sSK" = (
 /obj/stool/chair/dining/wood{
@@ -46602,13 +46608,6 @@
 	},
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/cafeteria)
-"tTB" = (
-/obj/stool/bench/blue,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/wood/three,
-/area/station/crew_quarters/fitness)
 "tTJ" = (
 /obj/table/reinforced/auto,
 /obj/machinery/computer3/generic/personal{
@@ -47381,6 +47380,13 @@
 	},
 /turf/space/fluid,
 /area/space)
+"uDW" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/stage_edge,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "uEl" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/disposalpipe/segment,
@@ -48137,7 +48143,7 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/light/incandescent/warm,
-/turf/simulated/floor/wood/three,
+/turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "vnf" = (
 /obj/fakeobject/pipe{
@@ -48205,7 +48211,7 @@
 /area/station/hallway/secondary/oshan_arrivals)
 "vow" = (
 /obj/fireworksbox,
-/turf/simulated/floor/wood/three,
+/turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "voS" = (
 /obj/landmark/start/job/rancher,
@@ -49185,7 +49191,7 @@
 /obj/machinery/disposal/mail/small{
 	dir = 4
 	},
-/turf/simulated/floor/wood/three,
+/turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "wdi" = (
 /obj/machinery/conveyor/NS{
@@ -49436,6 +49442,13 @@
 	dir = 4
 	},
 /area/station/chapel/sanctuary)
+"wlN" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/fitness)
 "wlU" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/machinery/door/poddoor/blast/single{
@@ -49544,7 +49557,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/wood/three,
+/turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "wov" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
@@ -50032,6 +50045,13 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
+"wHe" = (
+/obj/machinery/light/incandescent/warm,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "wHj" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor,
@@ -51135,7 +51155,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/turf/simulated/floor/wood/three,
+/turf/simulated/floor/black,
 /area/station/crew_quarters/fitness)
 "xwV" = (
 /obj/table/auto,
@@ -51565,7 +51585,10 @@
 "xOd" = (
 /obj/fitness/speedbag/wizard,
 /obj/machinery/light/incandescent/warm,
-/turf/simulated/floor/caution/corner/ne,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5
+	},
+/turf/simulated/floor/black,
 /area/station/crew_quarters/fitness)
 "xOk" = (
 /obj/table/glass/reinforced/auto,
@@ -84113,7 +84136,7 @@ bsA
 rND
 btG
 bBC
-mst
+uDW
 buL
 btZ
 bJw
@@ -84408,14 +84431,14 @@ bnH
 iCg
 bot
 boZ
-bqv
-tTB
-pJV
+wlN
+sRU
+oBg
 jDV
 nzL
 bsB
 bFZ
-mst
+uDW
 buL
 btZ
 jqt
@@ -84710,14 +84733,14 @@ bnH
 hPi
 pXl
 slt
-bqv
+wlN
 kyJ
-pJV
+oBg
 bsC
 nob
 wem
 bFZ
-mst
+uDW
 buL
 qPW
 bJA
@@ -85012,9 +85035,9 @@ jqw
 uVr
 pXl
 sSi
-bqv
-tTB
-pJV
+wlN
+sRU
+oBg
 jDV
 nzL
 bsB
@@ -85314,14 +85337,14 @@ bnI
 bkL
 pXl
 rBV
-bqv
+wlN
 ktG
 lij
 hKO
 blP
 hvT
 bKO
-mst
+uDW
 buL
 btZ
 bJA
@@ -85616,7 +85639,7 @@ bnJ
 bkT
 pXl
 bpa
-bqv
+wlN
 liS
 vow
 bsE
@@ -85920,11 +85943,11 @@ bot
 xOd
 lZz
 woh
-buh
-bsF
+wHe
+lLa
 pUn
-bsF
-buh
+lLa
+wHe
 buK
 buL
 btZ
