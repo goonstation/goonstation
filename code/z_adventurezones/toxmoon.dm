@@ -538,7 +538,7 @@
 	area_attack(var/mob/summoned_thing, var/drop_prob, var/range_num=14)
 		for(var/turf/T in range(range_num))
 			if(!src.loc && !rand(0,drop_prob))
-				new summoned_thing(src.loc)
+				new summoned_thing(T.loc)
 
 /datum/targetable/critter/aoe/backup_call
 	var/backup_type = null
