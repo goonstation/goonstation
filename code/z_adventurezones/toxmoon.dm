@@ -329,7 +329,7 @@
 			holder.owner.reagents.add_reagent(reagent_id, puke_reagents[reagent_id])
 		var/turf/currentturf
 		var/turf/previousturf
-		for(var/turf/F in	_turfs)
+		for(var/turf/F in_turfs)
 			previousturf = currentturf
 			currentturf = F
 			if(currentturf.density || istype(currentturf, /turf/space))
