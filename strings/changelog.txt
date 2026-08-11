@@ -1,5 +1,14 @@
 
+(t)mon aug 10 26
+(u)Callipygian0
+(*)Clarion's Escape Security checkpoint has an ID computer.
+(u)Ceres et al.
+(p)27462
+(e)|
+(+)Wiping a floppy disk's contents with a multitool now also removes any labels from that disk.
 (t)sun aug 09 26
+(u)LeahTheTech
+(+)Hippos now eat vegetables.
 (u)Kubius
 (p)27140
 (e)🗺🔎⚖|A-Mapping, C-Code-Quality, C-Balance
