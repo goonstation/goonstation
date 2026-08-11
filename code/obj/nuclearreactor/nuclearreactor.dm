@@ -235,23 +235,23 @@
 			if(!src.GetParticles("overheat_smoke"))
 				src.UpdateParticles(new/particles/nuke_overheat_smoke(get_turf(src)),"overheat_smoke")
 				src.visible_message(SPAN_ALERT("<b>The [src] begins to smoke!</b>"))
-				logTheThing(LOG_STATION, src, "[src] is at [temperature]K and may meltdown")
+				logTheThing(LOG_STATION, src, "[src] is at [temperature]K and may overload")
 				if(!ON_COOLDOWN(src, "pda_temp_alert", 30 SECONDS)) //prevent spam when it's on the edge
-					src.alertPDA("ALERT: [src] has reached a dangerous temperature. Intervene immediately to prevent meltdown.")
+					src.alertPDA("ALERT: [src] has reached a dangerous temperature. Intervene immediately to prevent overload.")
 					message_ghosts("<b>[src]</b> is getting dangerously hot! [log_loc(src.loc, ghostjump=TRUE)].")
 			if(temperature >= REACTOR_ON_FIRE_TEMP && !src.GetParticles("overheat_fire"))
 				src.UpdateParticles(new/particles/nuke_overheat_fire(get_turf(src)),"overheat_fire")
 				src.visible_message(SPAN_ALERT("<b>The [src] begins to burn!</b>"))
-				logTheThing(LOG_STATION, src, "[src] is at [temperature]K and is likely to meltdown")
+				logTheThing(LOG_STATION, src, "[src] is at [temperature]K and is likely to overload")
 				if(!ON_COOLDOWN(src, "pda_temp_alert_critical", 30 SECONDS)) //prevent spam when it's on the edge
-					src.alertPDA("ALERT: [src] has reached CRITICAL temperature. MELTDOWN IMMINENT.", crisis = TRUE)
-					message_ghosts("<b>[src]</b> is extremely close to melting down! [log_loc(src.loc, ghostjump=TRUE)].")
+					src.alertPDA("ALERT: [src] has reached CRITICAL temperature. OVERLOAD IMMINENT.", crisis = TRUE)
+					message_ghosts("<b>[src]</b> is extremely close to overloading! [log_loc(src.loc, ghostjump=TRUE)].")
 			else if(temperature < REACTOR_ON_FIRE_TEMP && src.GetParticles("overheat_fire"))
 				src.visible_message(SPAN_ALERT("<b>The [src] stops burning.</b>"))
 				logTheThing(LOG_STATION, src, "[src] is cooling from 2500K")
 				src.ClearSpecificParticles("overheat_fire")
 				if(!ON_COOLDOWN(src, "pda_temp_alert_critical", 30 SECONDS)) //prevent spam when it's on the edge
-					src.alertPDA("ALERT: [src] has cooled below critical temperature. Meltdown averted. Have a nice day.", crisis = TRUE)
+					src.alertPDA("ALERT: [src] has cooled below critical temperature. Overload averted. Have a nice day.", crisis = TRUE)
 		else
 			if(src.GetParticles("overheat_smoke"))
 				src.visible_message(SPAN_ALERT("<b>The [src] stops smoking.</b>"))
@@ -381,14 +381,14 @@
 		for(var/i = min(ceil(rads / 2), 50), i>0, i--)
 			shoot_projectile_XY(src, new /datum/projectile/neutron(max(5, min(rads*2,100))), rand(-10,10), rand(-10,10)) //for once, rand(range) returning int is useful
 
-	proc/catastrophicOverload()
+	proc/catastrophicOverload() //IT'S NOT CALLED A MELTDOWN!
 		world.save_intra_round_value("nuclear_accident_count_[map_settings.name]", 0)
 		var/sound/alarm = sound('sound/machines/meltdown_siren.ogg')
 		alarm.repeat = TRUE
 		alarm.volume = 40
 		alarm.channel = 5
 		world << alarm //ew
-		command_alert("A nuclear reactor aboard the station has catastrophically overloaded. Radioactive debris, nuclear fallout, and coolant fires are likely. Immediate evacuation of the surrounding area is strongly advised.", "NUCLEAR MELTDOWN")
+		command_alert("A nuclear reactor aboard the station has catastrophically overloaded. Radioactive debris, nuclear fallout, and coolant fires are likely. Immediate evacuation of the surrounding area is strongly advised.", "NUCLEAR EXPLOSION")
 
 
 		//explode, throw radioactive components everywhere, dump rad gas, throw radioactive debris everywhere
