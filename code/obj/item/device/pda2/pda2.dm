@@ -190,7 +190,7 @@
 		setup_default_cartridge = /obj/item/disk/data/cartridge/head
 		mailgroups = list(MGD_COMMAND,MGD_PARTY)
 		locked_bg_color = TRUE
-		bg_color = "#5599ff"
+		bg_color = "#1b57b1"
 
 		ntso
 			setup_default_cartridge = /obj/item/disk/data/cartridge/hos //hos cart gives access to manifest compared to regular sec cart, useful for NTSO
