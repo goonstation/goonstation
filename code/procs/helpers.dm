@@ -1353,6 +1353,8 @@ proc/outermost_movable(atom/movable/target)
 	var/lo = text2ascii(hex, 7)
 	return ( ((hi >= 65 ? hi-55 : hi-48)<<4) | (lo >= 65 ? lo-55 : lo-48) )
 
+// HSL values from rgb2hsl() appear to be incorrect?
+
 /// Calculate hue (0 to 1) from RGB hex
 /proc/GetHue(hex)
 	var/r = GetRedPart(hex) / 255
