@@ -294,11 +294,7 @@
 		if (..())
 			return
 		owner.color = input("Select your Color","Blob") as color
-		var/r = hex2num(copytext(owner.color, 2, 4))
-		var/g = hex2num(copytext(owner.color, 4, 6))
-		var/b = hex2num(copytext(owner.color, 6))
-		var/hsv = rgb2hsv(r,g,b)
-		owner.organ_color = hsv2rgb( hsv[1], hsv[2], 100 )
+		owner.organ_color = owner.color
 		owner.my_material.match_to_blob(owner)
 
 /datum/blob_ability/tutorial

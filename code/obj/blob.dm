@@ -4,7 +4,7 @@
 	name = "blob"
 	desc = "A mysterious alien blob-like organism."
 	icon = 'icons/mob/blob.dmi'
-	icon_state = "15"
+	icon_state = "15a"
 	var/state_overlay = null
 	var/anim_overlay = null // hack, there HAS to be a better way of doing this
 
@@ -153,19 +153,18 @@
 			var/image/blob_image
 			if (special_icon)
 				blob_image = image('icons/mob/blob_organs.dmi')
-				if(src.overmind)
-					blob_image.apply_material_appearance(src.overmind.my_material, TRUE)
 			else
 				blob_image = image('icons/mob/blob.dmi')
-			blob_image.appearance_flags |= RESET_COLOR
+			if(src.overmind)
+				blob_image.apply_material_appearance(src.overmind.my_material, TRUE)
+			blob_image.appearance_flags = RESET_COLOR | RESET_ALPHA
 			blob_image.plane = PLANE_ABOVE_LIGHTING
 
-			blob_image.color = organ_color
 			blob_image.icon_state = state_overlay
 			UpdateOverlays(blob_image,"overmind")
 		if ( anim_overlay )
 			var/image/blob_anim_image = image('icons/mob/blob_organs.dmi')
-			blob_anim_image.appearance_flags |= RESET_COLOR
+			blob_anim_image.appearance_flags = RESET_COLOR | RESET_ALPHA
 			blob_anim_image.plane = PLANE_ABOVE_LIGHTING
 			blob_anim_image.layer = 100
 
@@ -506,13 +505,13 @@
 				var/obj/blob/B = T.get_blob_on_this_turf()
 				if (B)
 					dirs |= dir
-			icon_state = num2text(dirs)
+			if(dirs == 15)
+				icon_state = "15[pick("a","b","c","d")]"
+			else
+				icon_state = num2text(dirs)
 			src.surrounded = dirs
-
-		//else if(istext( special_icon ))
-		//	if(!BLOB_OVERLAYS[ special_icon ])
-		//		CRASH( "Invalid blob special icon [special_icon]." )
-		//	else
+		else if(special_icon)
+			icon_state = "empty_15"
 
 
 		src.setMaterial(src.material)
@@ -993,6 +992,7 @@
 // TODO: REPLACE WITH SOMETHING COOLER - URS
 /obj/blob/ribosome
 	name = "ribosome"
+	icon_state = "empty_15"
 	state_overlay = "ribosome"
 	special_icon = 1
 	desc = "It's a protein sequencing cell. It enhances the blob's ability to spread."
@@ -1020,6 +1020,7 @@
 
 /obj/blob/wall
 	name = "thick membrane"
+	icon_state = "empty_15"
 	desc = "This blob is encased in a tough membrane. It'll be harder to get rid of."
 	state_overlay = "wall"
 	opacity = 1
@@ -1050,6 +1051,7 @@
 
 /obj/blob/firewall
 	name = "fire-resistant membrane"
+	icon_state = "empty_15"
 	desc = "This blob is encased in a fireproof membrane."
 	state_overlay = "firewall"
 	opacity = 1

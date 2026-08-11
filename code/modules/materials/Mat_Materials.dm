@@ -1650,7 +1650,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		var/list/hsl_temp
 		hsl_temp = list(0.00, 0.00, 0.00, 0.00,\
 						0.00, 0.3 * s, 0.00, 0.00,\
-						0.00, 0.00, (0.7 * l) + 0.3, 0.00,\
+						0.00, 0.00, (0.6 * l) + 0.35, 0.00,\
 						0.00, 0.00, 0.00, 1.00,\
 						h, 0.7 * s, 0.00, 0.00)
 		src.setColorHSL(hsl_temp)
