@@ -1612,7 +1612,6 @@ ABSTRACT_TYPE(/datum/material/organic)
 	edible = 1
 	/// The reference to the blob overmind is used for the ID. Make sure it stays in memory.
 	var/mob/living/intangible/blob_overmind/blob_source = null
-	var/original_color = null //! TESTING. Delete this var when done!
 
 	New()
 		..()
@@ -1640,7 +1639,6 @@ ABSTRACT_TYPE(/datum/material/organic)
 
 		if(isnull(src.blob_source))
 			src.setID("blob_[blob_color]")
-		src.original_color = blob_color
 
 		var/h = GetHue(blob_color)
 		var/s = GetSaturation(blob_color)
