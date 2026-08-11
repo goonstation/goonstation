@@ -71,7 +71,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 			var/obj/item/bluntwrap/B = W
 			if(B.flavor)
 				doink.flavor = B.flavor
-			doink.name = "[reagent_id_to_name(doink.flavor)]-flavored [src.name] [pick("doink","'Rillo","cigarillo","brumbpo")]"
+			doink.name = reagent_id_to_name(doink.flavor) + "-flavored " + src.name + " " + pick("doink","'Rillo","cigarillo","brumbpo")
 			doink.transform = src.transform
 			doink.reagents.clear_reagents()
 			doink.reagents.maximum_volume = (src.reagents.total_volume + 50)
@@ -509,7 +509,6 @@ ABSTRACT_TYPE(/obj/item/plant/flower)
 
 	attackby(var/obj/item/W, mob/user)
 		if (istype(W, /obj/item/cable_coil))
-<<<<<<< HEAD
 			var/obj/item/cable_coil/C = W
 			if (!C.use(1))
 				return
@@ -518,16 +517,6 @@ ABSTRACT_TYPE(/obj/item/plant/flower)
 			qdel(src)
 			user.put_in_hand_or_drop(M)
 			return
-=======
-  			var/obj/item/cable_coil/C = W
-  			if (!C.use(1))
-  				return
-  			user.visible_message("[user] weaves [src] and [W] into a makeshift sunflower mask.")
-  			var/obj/item/clothing/mask/sunflowermask/M = new /obj/item/clothing/mask/sunflowermask(get_turf(src))
-            qdel(src)
-  			user.put_in_hand_or_drop(M)
-  			return
->>>>>>> 9d35299ca41f5ea20a54dd67ad75cd18b3d4725e
 		. = ..()
 		disperse_seeds(src,user)
 
