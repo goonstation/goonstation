@@ -120,7 +120,7 @@
 				APPLY_TO_GASES(_TRANSFER_GAS_TO_AIR)
 #undef _TRANSFER_GAS_TO_AIR
 
-				air.temperature() = temperature
+				air.set_temperature(temperature)
 
 		if(station_repair.allows_vehicles)
 			src.allows_vehicles = station_repair.allows_vehicles

@@ -11,7 +11,7 @@
 	..()
 	src.AddComponent(/datum/component/obj_projectile_damage)
 	src.air_contents.set_volume(src.volume)
-	src.air_contents.temperature() = T20C
+	src.air_contents.set_temperature(T20C)
 
 /obj/machinery/atmospherics/unary/tank/update_icon()
 	update_pipe_underlay(src.node, src.dir, "long", FALSE)
@@ -57,7 +57,7 @@
 
 /obj/machinery/atmospherics/unary/tank/oxygen_agent_b/New()
 	..()
-	src.air_contents.temperature() = T0C
+	src.air_contents.set_temperature(T0C)
 	src.air_contents.set_oxygen_agent_b((50*ONE_ATMOSPHERE)*(src.air_contents.volume())/(R_IDEAL_GAS_EQUATION*src.air_contents.temperature()))
 
 /obj/machinery/atmospherics/unary/tank/oxygen

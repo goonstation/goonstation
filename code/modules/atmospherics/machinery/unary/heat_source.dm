@@ -27,7 +27,7 @@
 
 	if(combined_heat_capacity > 0)
 		var/combined_energy = current_temperature*current_heat_capacity + air_heat_capacity*src.air_contents.temperature()
-		src.air_contents.temperature() = combined_energy/combined_heat_capacity
+		src.air_contents.set_temperature(combined_energy/combined_heat_capacity)
 
 	//todo: have current temperature affected. require power to bring up current temperature again
 

@@ -53,7 +53,7 @@ ABSTRACT_TYPE(/obj/item/tank)
 		..()
 		src.air_contents = new /datum/gas_mixture
 		src.air_contents.set_volume(TANK_VOLUME)
-		src.air_contents.temperature() = T20C
+		src.air_contents.set_temperature(T20C)
 		processing_items |= src
 		src.create_inventory_counter()
 		BLOCK_SETUP(BLOCK_TANK)

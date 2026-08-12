@@ -163,7 +163,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pressurizer)
 			process_materials = PROCESS_ACTIVE
 			var/progress = min(src.process_rate * 5,100-material_progress)
 			var/datum/gas_mixture/GM = new /datum/gas_mixture
-			GM.temperature() = T20C
+			GM.set_temperature(T20C)
 			if(target_material.material?.getName() in src.whitelist)
 				switch(target_material.material.getName())
 					if("molitz")

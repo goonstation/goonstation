@@ -96,7 +96,7 @@ Notes:
 		var/datum/gas_mixture/env = src.spot.remove_air(TOTAL_MOLES(src.spot.air))
 		if (env)
 			boutput(world, "Current temp: [env.temperature()]")
-			env.temperature() += src.heatAmount
+			env.adjust_temperature(src.heatAmount)
 			env.react()
 			src.spot.assume_air(env)
 			boutput(world, "New temp: [env.temperature()]")

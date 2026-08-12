@@ -3241,7 +3241,7 @@ TYPEINFO(/obj/machinery/vending/janitor)
 	proc/fill()
 		if(!holding) return
 		gas_prototype.set_volume(holding.air_contents.volume())
-		gas_prototype.temperature() = T20C
+		gas_prototype.set_temperature(T20C)
 
 		switch(vend_type)
 			if("oxygen")

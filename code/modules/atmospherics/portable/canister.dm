@@ -776,7 +776,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 /obj/machinery/portable_atmospherics/canister/nitrogen/New()
 	..()
 	if (!src.isempty)
-		src.air_contents.temperature() = 80
+		src.air_contents.set_temperature(80)
 		src.air_contents.set_nitrogen((src.maximum_pressure*filled)*air_contents.volume()/(R_IDEAL_GAS_EQUATION*air_contents.temperature()))
 	src.UpdateIcon()
 	return 1

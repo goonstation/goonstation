@@ -23,7 +23,7 @@
 				prob(20);/obj/bubble_vent/sleepy,\
 			)
 			var/obj/bubble_vent/new_vent = new vent_type(T)
-			new_vent.temperature() = rand(T0C - 10, T0C + 300)
+			new_vent.temperature = rand(T0C - 10, T0C + 300)
 #endif
 
 	doWork()

@@ -133,7 +133,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject, proc/expel
 		air_contents.set_volume(255)
 		air_contents.set_nitrogen(16.5)
 		air_contents.set_oxygen(4.4)
-		air_contents.temperature() = 293.15
+		air_contents.set_temperature(293.15)
 
 	proc/fits_in(atom/movable/AM)
 		return TRUE

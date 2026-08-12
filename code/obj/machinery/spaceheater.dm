@@ -217,10 +217,10 @@ TYPEINFO(/obj/machinery/space_heater)
 						var/current_power = 0
 						if(src.heating)
 							current_power = src.emagged ? src.heating_power * 3: src.heating_power
-							removed.temperature() = (removed.temperature()*heat_capacity + current_power * src.set_temperature)/heat_capacity
+							removed.set_temperature((removed.temperature()*heat_capacity + current_power * src.set_temperature)/heat_capacity)
 						else
 							current_power = src.emagged ? src.cooling_power * 3: src.cooling_power
-							removed.temperature() = (removed.temperature()*heat_capacity + current_power * src.set_temperature)/heat_capacity
+							removed.set_temperature((removed.temperature()*heat_capacity + current_power * src.set_temperature)/heat_capacity)
 
 						src.cell.use(abs(current_power)/20000)
 

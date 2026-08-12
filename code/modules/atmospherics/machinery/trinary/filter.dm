@@ -56,7 +56,7 @@
 	var/datum/gas_mixture/removed = src.air1.remove_ratio(src.transfer_rate/src.air1.volume())
 
 	var/datum/gas_mixture/filtered_out = new /datum/gas_mixture
-	filtered_out.temperature() = removed.temperature()
+	filtered_out.set_temperature(removed.temperature())
 
 	switch(src.filter_type)
 		#define _CREATE_FILTER_TYPES(GAS, _, GASNAME...) if(GASNAME) {filtered_out.set_##GAS(removed.GAS()) ; removed.set_##GAS(0); }

@@ -410,7 +410,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 			var/datum/gas_mixture/payload = new /datum/gas_mixture
 			payload.set_toxins(25 * location.material_amt)
 			total_plasma -= 1
-			payload.temperature() = T20C
+			payload.set_temperature(T20C)
 			payload.set_volume(R_IDEAL_GAS_EQUATION * T20C / 1000)
 			target.air.merge(payload)
 			location.material.setProperty("plasma_offgas", total_plasma)
@@ -454,7 +454,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 		if(agent_b && air.toxins() > MINIMUM_REACT_QUANTITY)
 			payload.adjust_oxygen_agent_b(0.5 * owner.material_amt)
 			payload.set_oxygen(15 * owner.material_amt)
-			payload.temperature() = T0C //reduced temp is supposeed to represent endothermic reaction
+			payload.set_temperature(T0C) //reduced temp is supposeed to represent endothermic reaction
 			air.merge(payload) //add it to the target air
 
 			//sparkles
@@ -464,7 +464,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 				particleMaster.SpawnSystem(new /datum/particleSystem/sparklesagentb(owner))
 		else //no plasma present, or this is just normal molitz - you get just plain oxygen
 			payload.set_oxygen(80 * owner.material_amt)
-			payload.temperature() = temp
+			payload.set_temperature(temp)
 			air.merge(payload) //add it to the target air
 			//blue sparkles
 			animate_flash_color_fill_inherit(owner,"#0000FF",4, 2 SECONDS)
@@ -499,7 +499,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 				playsound(owner, 'sound/effects/molitzcrumble.ogg', 50, TRUE, 5)
 			var/datum/gas_mixture/payload = new /datum/gas_mixture
 			payload.set_oxygen(50)
-			payload.temperature() = T20C
+			payload.set_temperature(T20C)
 			target.assume_air(payload)
 			molitz.setProperty("molitz_bubbles", iterations-2)
 

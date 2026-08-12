@@ -914,8 +914,8 @@
 		for (var/turf/simulated/floor/T in range(protect_range,src))
 			var/datum/gas_mixture/air = T.air
 			if (air.temperature() > T20C)
-				air.temperature() /= 2
-				air.temperature() -= 100
+				air.set_temperature(air.temperature() / 2)
+				air.adjust_temperature(-100)
 				if(air.temperature() > T20C)
 					absorbed_temp += log(2, air.temperature())
 
@@ -955,7 +955,7 @@
 			var/datum/gas_mixture/air = T.air
 			if (air.toxins() > 0)
 				if (air.temperature() > T20C)
-					air.temperature() = T20C + (air.temperature() - T20C) / 1.25
+					air.set_temperature(T20C + (air.temperature() - T20C) / 1.25)
 				toxins_consumed += min(consume_per_tick, air.toxins())
 				air.set_toxins(max(air.toxins() - consume_per_tick, 0))
 		if (!toxins_consumed)

@@ -40,7 +40,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/scrubber)
 	//Filter it
 	var/datum/gas_mixture/filtered_out = new /datum/gas_mixture
 	if (filtered_out && removed)
-		filtered_out.temperature() = removed.temperature()
+		filtered_out.set_temperature(removed.temperature())
 		#define _FILTER_OUT_GAS(GAS, ...) \
 			filtered_out.set_##GAS(removed.GAS()); \
 			removed.set_##GAS(0);

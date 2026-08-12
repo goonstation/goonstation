@@ -161,7 +161,7 @@
 
 		var/datum/gas_mixture/filtered_out = new /datum/gas_mixture
 		if(src.air1.temperature())
-			filtered_out.temperature() = src.air1.temperature()
+			filtered_out.set_temperature(src.air1.temperature())
 
 		//Unlike the regular filter, we can pick and choose the gas to remove!
 		//One might say that a little filter being this advanced is rather unrealistic

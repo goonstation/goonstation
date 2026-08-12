@@ -117,7 +117,7 @@
 					gas.set_nitrous_oxide(src.gas_amount_current)
 				if("fallout")
 					gas.set_radgas(src.gas_amount_current)
-			gas.temperature() = src.gas_temp
+			gas.set_temperature(src.gas_temp)
 			if (L)
 				L.assume_air(gas)
 

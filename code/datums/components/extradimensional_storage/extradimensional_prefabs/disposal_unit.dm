@@ -15,7 +15,7 @@
 	air_mix.set_oxygen(MOLES_O2STANDARD)
 	air_mix.set_nitrogen(MOLES_O2STANDARD)
 	air_mix.fuel_burnt = 0
-	air_mix.temperature() = T20C
+	air_mix.set_temperature(T20C)
 	. = ..(air_mix)
 	qdel(air_mix)
 

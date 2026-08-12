@@ -58,7 +58,7 @@
 
 			//Filter it
 			var/datum/gas_mixture/filtered_out = new /datum/gas_mixture
-			filtered_out.temperature() = removed.temperature()
+			filtered_out.set_temperature(removed.temperature())
 
 			#define _FILTER_OUT_GAS(GAS, ...) \
 				if(scrub_##GAS) { \

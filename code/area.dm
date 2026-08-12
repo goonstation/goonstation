@@ -495,7 +495,7 @@ TYPEINFO(/area)
 				new /obj/effects/precipitation/snow/grey/tile/light(T)
 
 			// about 24 degrees fahrenheit, chosen based off gameplay
-			T.air.temperature() = T0C - 4
+			T.air.set_temperature(T0C - 4)
 
 			LAGCHECK(LAG_LOW)
 

@@ -331,8 +331,8 @@
 					src.visible_message(SPAN_ALERT("The [src] looks kind of hazey for a moment."))
 
 			if(reaction_temp)
-				gas_passed.temperature() += reaction_temp
-				gas_passed.temperature() = max(gas_passed.temperature(),1)
+				gas_passed.adjust_temperature(reaction_temp)
+				gas_passed.set_temperature(max(gas_passed.temperature(),1))
 
 	proc/is_circulator_active()
 		return last_pressure_delta > src.min_circ_pressure
@@ -869,7 +869,7 @@ datum/pump_ui/circulator_ui
 
 				// energy transfer required to bring the hot and cold loops to thermal equilibrium (accounting for the energy removed by the engine)
 				var/energy_transfer = delta_temperature * hot_air_heat_capacity * cold_air_heat_capacity / (hot_air_heat_capacity + cold_air_heat_capacity - hot_air_heat_capacity*efficiency)
-				hot_air.temperature() -= energy_transfer/hot_air_heat_capacity
+				hot_air.adjust_temperature(-energy_transfer/hot_air_heat_capacity)
 
 				lastgen = energy_transfer*efficiency
 				add_avail(lastgen WATTS)
@@ -878,7 +878,7 @@ datum/pump_ui/circulator_ui
 				if (length(src.history) > src.history_max)
 					src.history.Cut(1, 2) //drop the oldest entry
 
-				cold_air.temperature() += energy_transfer*(1-efficiency)/cold_air_heat_capacity // pass the remaining energy through to the cold side
+				cold_air.adjust_temperature(energy_transfer*(1-efficiency)/cold_air_heat_capacity) // pass the remaining energy through to the cold side
 
 				// uncomment to debug
 				// logTheThing(LOG_DEBUG, null, "POWER: [lastgen] W generated at [efficiency*100]% efficiency and sinks sizes [cold_air_heat_capacity], [hot_air_heat_capacity]")
@@ -1519,7 +1519,7 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 
 			if(combined_heat_capacity > 0)
 				var/combined_energy = current_temperature*current_heat_capacity + air_heat_capacity*air_contents.temperature()
-				air_contents.temperature() = combined_energy/combined_heat_capacity
+				air_contents.set_temperature(combined_energy/combined_heat_capacity)
 
 			if(abs(old_temperature-air_contents.temperature()) > 1)
 				if(network)

@@ -593,7 +593,7 @@
 
 			GM.set_oxygen(oxygen/sum)
 			GM.set_nitrogen(nitrogen/sum)
-			GM.temperature() = T20C
+			GM.set_temperature(T20C)
 
 			return GM
 		..()
@@ -608,7 +608,7 @@
 
 			GM.set_oxygen((oxygen/sum)*breath_request * mult)
 			GM.set_nitrogen((nitrogen/sum)*breath_request * mult)
-			GM.temperature() = T20C
+			GM.set_temperature(T20C)
 
 			return GM
 		..()

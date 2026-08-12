@@ -87,8 +87,8 @@
 
 			S.b_stat = 0
 
-			PT.air_contents.temperature() = btemp1 + T0C
-			OT.air_contents.temperature() = btemp2 + T0C
+			PT.air_contents.set_temperature(btemp1 + T0C)
+			OT.air_contents.set_temperature(btemp2 + T0C)
 
 			V.UpdateIcon()
 
@@ -110,8 +110,8 @@
 			OT.master = V
 
 
-			PT.air_contents.temperature() = btemp1 + T0C
-			OT.air_contents.temperature() = btemp2 + T0C
+			PT.air_contents.set_temperature(btemp1 + T0C)
+			OT.air_contents.set_temperature(btemp2 + T0C)
 
 			V.UpdateIcon()
 
@@ -133,8 +133,8 @@
 			OT.master = V
 			T.time = 30
 
-			PT.air_contents.temperature() = btemp1 + T0C
-			OT.air_contents.temperature() = btemp2 + T0C
+			PT.air_contents.set_temperature(btemp1 + T0C)
+			OT.air_contents.set_temperature(btemp2 + T0C)
 
 			V.UpdateIcon()
 	qdel(src)
@@ -158,8 +158,8 @@
 	OT.master = V
 	T.time = 30
 
-	PT.air_contents.temperature() = 170 + T0C
-	OT.air_contents.temperature() = 20 + T0C
+	PT.air_contents.set_temperature(170 + T0C)
+	OT.air_contents.set_temperature(20 + T0C)
 
 	qdel(src)
 

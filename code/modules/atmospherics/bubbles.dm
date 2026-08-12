@@ -133,7 +133,7 @@
 	New(loc)
 		var/datum/gas_mixture/plasma = new()
 		plasma.set_toxins(100)
-		plasma.temperature() = T20C
+		plasma.set_temperature(T20C)
 		..(loc, plasma)
 
 /obj/bubble/current
@@ -182,7 +182,7 @@
 #undef _COUNT_GASES
 		var/total_amount = src.amount + rand(-src.variance, src.variance)
 		var/datum/gas_mixture/gas_mixture = new()
-		gas_mixture.temperature() = src.temperature
+		gas_mixture.set_temperature(src.temperature)
 #define _MAKE_GASES(GAS, ...) if (src.GAS) {gas_mixture.set_##GAS(total_amount/total_gases)};
 		APPLY_TO_GASES(_MAKE_GASES)
 #undef _MAKE_GASES

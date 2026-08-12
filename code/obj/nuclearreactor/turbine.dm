@@ -210,7 +210,7 @@
 			if(input_heat_cap <= 0)
 				input_heat_cap = 1
 			if(air_contents.temperature() > T20C) //only operate on the gas if it's above min temp
-				air_contents.temperature() = round(max((input_starting_energy - ((input_starting_energy - (input_heat_cap*T20C))*0.8))/input_heat_cap,T20C),0.01) //fucking rounding errors
+				air_contents.set_temperature(round(max((input_starting_energy - ((input_starting_energy - (input_heat_cap*T20C))*0.8))/input_heat_cap,T20C),0.01)) //fucking rounding errors
 			var/output_starting_energy = THERMAL_ENERGY(air_contents)
 			var/energy_generated = src.stator_load*(src.RPM/60)
 

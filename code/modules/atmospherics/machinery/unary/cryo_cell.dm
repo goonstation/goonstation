@@ -378,7 +378,7 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 	var/combined_heat_capacity = src.current_heat_capacity + air_heat_capacity
 	if(combined_heat_capacity > 0)
 		var/combined_energy = T20C*src.current_heat_capacity + air_heat_capacity*src.air_contents.temperature()
-		src.air_contents.temperature() = combined_energy/combined_heat_capacity
+		src.air_contents.set_temperature(combined_energy/combined_heat_capacity)
 
 /// Leaks some gas out.
 /obj/machinery/atmospherics/unary/cryo_cell/proc/expel_gas()
@@ -387,7 +387,7 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 	var/remove_amount = TOTAL_MOLES(src.air_contents)/100
 	var/datum/gas_mixture/expel_gas = air_contents.remove(remove_amount)
 	if (expel_gas.temperature() < T20C)
-		expel_gas.temperature() = T20C // Lets expel hot gas and see if that helps people not die as they are removed
+		expel_gas.set_temperature(T20C) // Lets expel hot gas and see if that helps people not die as they are removed
 	loc.assume_air(expel_gas)
 
 /obj/machinery/atmospherics/unary/cryo_cell/verb/move_eject()

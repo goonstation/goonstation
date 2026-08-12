@@ -92,9 +92,9 @@
 					atmostank.air_contents.adjust_carbon_dioxide(-HUMAN_NEEDED_OXYGEN * 2)
 					atmostank.air_contents.set_carbon_dioxide(max(atmostank.air_contents.carbon_dioxide(), 0))
 				if(atmostank.air_contents.temperature() > 310)
-					atmostank.air_contents.temperature() -= max(atmostank.air_contents.temperature() - 310, 5)
+					atmostank.air_contents.adjust_temperature(-max(atmostank.air_contents.temperature() - 310, 5))
 				if(atmostank.air_contents.temperature() < 310)
-					atmostank.air_contents.temperature() += max(310 - atmostank.air_contents.temperature(), 5)
+					atmostank.air_contents.adjust_temperature(max(310 - atmostank.air_contents.temperature(), 5))
 
 			return atmostank.remove_air(amount)
 
