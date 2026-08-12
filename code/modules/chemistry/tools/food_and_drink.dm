@@ -2346,4 +2346,4 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 		var/temperature_change = T0C + 65 - src.reagents.total_temperature
 		user.visible_message("<b>[user.name]</b> turns on the milk frother, producing a pleasant whirring sound as the contents are agitated and heated.")
 		src.reagents.physical_shock(30)
-		src.reagents.temperature_reagents(exposed_temperature=T0C + 80, change_cap = temperature_change ,change_min = temperature_change)
+		src.reagents.temperature_reagents(exposed_temperature = T0C + 80, change_cap = temperature_change ,change_min = temperature_change)
