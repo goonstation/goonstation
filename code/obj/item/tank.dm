@@ -39,7 +39,7 @@ ABSTRACT_TYPE(/obj/item/tank)
 	/// This value is read by get_desc(), and is used by subtypes instead of copy-pasting the entire description with minor changes.
 	var/extra_desc = null
 	/// The air contents of this tank.
-	var/datum/gas_mixture/air_contents = null
+	var/datum/gas_mixture/normal/air_contents = null
 	/// This tank's contents will be released at this pressure. Most subtypes use the minimum breathable value here.
 	var/distribute_pressure = ONE_ATMOSPHERE
 	/// Decremented over time when the tank is overpressurized. A damaged tank will leak or even rupture.
@@ -51,7 +51,7 @@ ABSTRACT_TYPE(/obj/item/tank)
 
 	New()
 		..()
-		src.air_contents = new /datum/gas_mixture
+		src.air_contents = new /datum/gas_mixture/normal
 		src.air_contents.set_volume(TANK_VOLUME)
 		src.air_contents.set_temperature(T20C)
 		processing_items |= src

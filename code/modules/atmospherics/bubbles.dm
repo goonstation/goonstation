@@ -9,7 +9,7 @@
 	///If null, automatically calculate lifetime from size of bubble
 	var/lifetime = null
 
-	var/datum/gas_mixture/air_contents = null
+	var/datum/gas_mixture/normal/air_contents = null
 	///legally distinct from the turf version because this needs to be on a lower plane to work with filters
 	var/static/list/mutable_appearance/gas_overlays = list(
 		#ifdef ALPHA_GAS_OVERLAYS
@@ -131,7 +131,7 @@
 /obj/bubble/plasma
 	lifetime = 30 SECONDS
 	New(loc)
-		var/datum/gas_mixture/plasma = new()
+		var/datum/gas_mixture/normal/plasma = new()
 		plasma.set_toxins(100)
 		plasma.set_temperature(T20C)
 		..(loc, plasma)
@@ -181,7 +181,7 @@
 		APPLY_TO_GASES(_COUNT_GASES)
 #undef _COUNT_GASES
 		var/total_amount = src.amount + rand(-src.variance, src.variance)
-		var/datum/gas_mixture/gas_mixture = new()
+		var/datum/gas_mixture/normal/gas_mixture = new()
 		gas_mixture.set_temperature(src.temperature)
 #define _MAKE_GASES(GAS, ...) if (src.GAS) {gas_mixture.set_##GAS(total_amount/total_gases)};
 		APPLY_TO_GASES(_MAKE_GASES)

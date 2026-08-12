@@ -820,7 +820,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 
 	detonate()
 		var/turf/simulated/T = ..()
-		var/datum/gas_mixture/GM = new /datum/gas_mixture
+		var/datum/gas_mixture/normal/GM = new /datum/gas_mixture/normal
 		GM.set_temperature(T20C + 15)
 		GM.set_oxygen(1830)
 		GM.set_carbon_dioxide(20)
@@ -2274,7 +2274,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 			if (plasma)
 				for (var/turf/simulated/floor/target in range(1,origin))
 					if(!target.gas_impermeable && target.air)
-						var/datum/gas_mixture/payload = new /datum/gas_mixture
+						var/datum/gas_mixture/normal/payload = new /datum/gas_mixture/normal
 						payload.set_toxins(plasma * 100)
 						payload.set_temperature(T20C)
 						payload.set_volume(R_IDEAL_GAS_EQUATION * T20C / 1000)

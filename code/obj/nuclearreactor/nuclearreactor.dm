@@ -36,7 +36,7 @@
 	/// Current gas mixture to process
 	var/datum/gas_mixture/current_gas = null
 	/// gas that has been processed, primarily used for atmos analyser
-	var/datum/gas_mixture/air_contents = null
+	var/datum/gas_mixture/normal/air_contents = null
 	/// Reactor casing temperature
 	var/temperature = T20C
 	/// Thermal mass. Basically how much energy it takes to heat this up 1Kelvin
@@ -82,7 +82,7 @@
 		for(var/turf/simulated/floor/F in src.locs)
 			F.explosion_immune = TRUE
 
-		src.air_contents = new /datum/gas_mixture()
+		src.air_contents = new /datum/gas_mixture/normal()
 
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Control Rods", PROC_REF(_set_controlrods_mechchomp))

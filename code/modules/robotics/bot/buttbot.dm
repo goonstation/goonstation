@@ -284,7 +284,7 @@ TYPEINFO(/obj/machinery/bot/buttbot)
 /// cant possibly be a bad idea
 /obj/machinery/bot/buttbot/proc/robo_expel_fart_gas(var/gross)
 	var/turf/T = get_turf(src)
-	var/datum/gas_mixture/gas = new /datum/gas_mixture
+	var/datum/gas_mixture/normal/gas = new /datum/gas_mixture/normal
 	if(gross == 1)
 		gas.set_farts(0.5)
 	else if(gross == 2)

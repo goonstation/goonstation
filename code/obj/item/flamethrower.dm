@@ -148,7 +148,7 @@ A Flamethrower in various states of assembly
 			if(FLAMER_MODE_BACKTANK)
 				rem_ratio = 0.004
 		var/turf/T = get_turf(src)
-		var/datum/gas_mixture/airgas = new /datum/gas_mixture
+		var/datum/gas_mixture/normal/airgas = new /datum/gas_mixture/normal
 		airgas.set_volume(1)
 		airgas.merge(gastank_aircontents.remove_ratio(rem_ratio * 0.9))
 		T.assume_air(gastank_aircontents.remove_ratio(rem_ratio * 0.1))

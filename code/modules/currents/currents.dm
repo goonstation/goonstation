@@ -131,7 +131,7 @@
 			if (istype(thing, /obj/item/raw_material/scrap_metal))
 				thing.setMaterial(getMaterial(pick("bohrum", "steel", "mauxite")))
 			APPLY_ATOM_PROPERTY(thing, PROP_ATOM_FLOTSAM, src)
-		var/datum/gas_mixture/bubble_gas = new()
+		var/datum/gas_mixture/normal/bubble_gas = new()
 		bubble_gas.set_temperature(T20C)
 		//increasingly rare as we go down the chain
 		if (prob(50))

@@ -577,7 +577,7 @@
 				if (isnum(amt))
 					P.reagents.add_reagent(current_id, amt)
 
-		var/datum/gas_mixture/airgas = new /datum/gas_mixture
+		var/datum/gas_mixture/normal/airgas = new /datum/gas_mixture/normal
 		for(var/gas in src.initial_gas_mixture)
 			switch(gas)
 				if("oxygen")

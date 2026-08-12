@@ -3216,7 +3216,7 @@ TYPEINFO(/obj/machinery/vending/janitor)
 	var/obj/item/tank/holding = null
 
 	// Gas mix to be copied into the target tank
-	var/datum/gas_mixture/gas_prototype = null
+	var/datum/gas_mixture/normal/gas_prototype = null
 
 	var/target_pressure = ONE_ATMOSPHERE
 	var/air_cost = 0.06 // units: credits / ( kPa * L )
@@ -3232,7 +3232,7 @@ TYPEINFO(/obj/machinery/vending/janitor)
 
 	New()
 		..()
-		gas_prototype = new /datum/gas_mixture
+		gas_prototype = new /datum/gas_mixture/normal
 
 	proc/fill_cost()
 		if(!holding) return 0

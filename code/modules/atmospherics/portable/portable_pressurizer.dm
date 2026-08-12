@@ -162,7 +162,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pressurizer)
 		else if(material_progress < 100)
 			process_materials = PROCESS_ACTIVE
 			var/progress = min(src.process_rate * 5,100-material_progress)
-			var/datum/gas_mixture/GM = new /datum/gas_mixture
+			var/datum/gas_mixture/normal/GM = new /datum/gas_mixture/normal
 			GM.set_temperature(T20C)
 			if(target_material.material?.getName() in src.whitelist)
 				switch(target_material.material.getName())

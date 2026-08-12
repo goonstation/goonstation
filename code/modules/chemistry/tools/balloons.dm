@@ -20,7 +20,7 @@
 	var/tied = FALSE
 	/// how many breaths should this balloon fill with at a canister
 	var/breaths = 5
-	var/datum/gas_mixture/air = new
+	var/datum/gas_mixture/normal/air = new
 
 	New()
 		..()

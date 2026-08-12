@@ -159,7 +159,7 @@
 	if(transfer_moles > 0)
 		var/datum/gas_mixture/removed = src.air1.remove_ratio(transfer_ratio)
 
-		var/datum/gas_mixture/filtered_out = new /datum/gas_mixture
+		var/datum/gas_mixture/normal/filtered_out = new /datum/gas_mixture/normal
 		if(src.air1.temperature())
 			filtered_out.set_temperature(src.air1.temperature())
 

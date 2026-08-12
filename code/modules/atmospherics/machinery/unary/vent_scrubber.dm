@@ -57,7 +57,7 @@
 			var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
 
 			//Filter it
-			var/datum/gas_mixture/filtered_out = new /datum/gas_mixture
+			var/datum/gas_mixture/normal/filtered_out = new /datum/gas_mixture/normal
 			filtered_out.set_temperature(removed.temperature())
 
 			#define _FILTER_OUT_GAS(GAS, ...) \

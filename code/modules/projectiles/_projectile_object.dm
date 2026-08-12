@@ -585,7 +585,7 @@
 
 	return_air(direct)
 		if (src.has_atmosphere)
-			var/datum/gas_mixture/GM = new /datum/gas_mixture
+			var/datum/gas_mixture/normal/GM = new /datum/gas_mixture/normal
 
 			var/oxygen = MOLES_O2STANDARD
 			var/nitrogen = MOLES_N2STANDARD
@@ -600,7 +600,7 @@
 
 	handle_internal_lifeform(mob/lifeform_inside_me, breath_request, mult)
 		if (src.has_atmosphere && breath_request > 0)
-			var/datum/gas_mixture/GM = new /datum/gas_mixture
+			var/datum/gas_mixture/normal/GM = new /datum/gas_mixture/normal
 
 			var/oxygen = MOLES_O2STANDARD
 			var/nitrogen = MOLES_N2STANDARD

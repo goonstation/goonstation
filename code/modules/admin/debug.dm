@@ -685,7 +685,7 @@ body
 	switch (selected)
 		if ("Disco Inferno")
 			for (var/turf/T as anything in landmarks[LANDMARK_BLOBSTART]+landmarks[LANDMARK_HALLOWEEN_SPAWN]+landmarks[LANDMARK_PESTSTART])
-				var/datum/gas_mixture/gas = new /datum/gas_mixture
+				var/datum/gas_mixture/normal/gas = new /datum/gas_mixture/normal
 				gas.set_toxins(33333)
 				gas.set_oxygen(66666)
 				gas.set_temperature(100000)

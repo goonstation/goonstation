@@ -1089,7 +1089,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 					SPAWN(randfloat(0.1 SECONDS, 15 SECONDS))
 						artifact?.ArtifactActivated()
 			if("plasma")
-				var/datum/gas_mixture/gas = new
+				var/datum/gas_mixture/normal/gas = new
 				gas.adjust_toxins(rand(1, 10))
 				if(prob(20))
 					gas.adjust_toxins(rand(10, 30))
@@ -1100,7 +1100,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 				var/turf/T = get_turf(src)
 				T.assume_air(gas)
 			if("radgas")
-				var/datum/gas_mixture/gas = new
+				var/datum/gas_mixture/normal/gas = new
 				gas.adjust_radgas(rand(10, 100))
 				if(prob(20))
 					gas.adjust_radgas(rand(100, 500))

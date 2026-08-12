@@ -30,7 +30,7 @@
 		var/turf/current_loc = get_turf(src)
 		if(!current_loc)
 			return
-		var/datum/gas_mixture/current_gas = new/datum/gas_mixture()
+		var/datum/gas_mixture/normal/current_gas = new/datum/gas_mixture/normal()
 		current_gas.adjust_radgas(50)
 		current_gas.set_temperature(1000)
 		current_loc.assume_air(current_gas)

@@ -1,6 +1,6 @@
 /obj/machinery/portable_atmospherics
 	name = "atmoalter"
-	var/datum/gas_mixture/air_contents = null
+	var/datum/gas_mixture/normal/air_contents = null
 
 	var/obj/machinery/atmospherics/unary/portables_connector/connected_port
 	var/obj/item/tank/holding
@@ -28,7 +28,7 @@
 	New()
 		..()
 
-		air_contents = new /datum/gas_mixture
+		air_contents = new /datum/gas_mixture/normal
 
 		air_contents.set_volume(volume)
 		air_contents.set_temperature(T20C)

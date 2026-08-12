@@ -407,7 +407,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 		if(length(valid_turfs))
 			var/turf/simulated/floor/target = pick(valid_turfs)
 
-			var/datum/gas_mixture/payload = new /datum/gas_mixture
+			var/datum/gas_mixture/normal/payload = new /datum/gas_mixture/normal
 			payload.set_toxins(25 * location.material_amt)
 			total_plasma -= 1
 			payload.set_temperature(T20C)
@@ -449,7 +449,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 		if(!owner.material.isMutable()) //this is a little hacky, but basically ensure it's mutable and then do the trigger
 			owner.material = owner.material.getMutable()
 			return owner.material.triggerTemp(owner, temp)
-		var/datum/gas_mixture/payload = new /datum/gas_mixture
+		var/datum/gas_mixture/normal/payload = new /datum/gas_mixture/normal
 
 		if(agent_b && air.toxins() > MINIMUM_REACT_QUANTITY)
 			payload.adjust_oxygen_agent_b(0.5 * owner.material_amt)
@@ -497,7 +497,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 				playsound(owner, 'sound/effects/leakoxygen.ogg', 50, TRUE, 5)
 			if(iterations == 0)
 				playsound(owner, 'sound/effects/molitzcrumble.ogg', 50, TRUE, 5)
-			var/datum/gas_mixture/payload = new /datum/gas_mixture
+			var/datum/gas_mixture/normal/payload = new /datum/gas_mixture/normal
 			payload.set_oxygen(50)
 			payload.set_temperature(T20C)
 			target.assume_air(payload)
