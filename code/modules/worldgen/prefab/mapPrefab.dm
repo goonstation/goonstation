@@ -57,7 +57,7 @@ ABSTRACT_TYPE(/datum/mapPrefab)
 
 		if(!isnull(prefabSizeY))
 			var/bottomY = target.y
-			var/topY = leftY + prefabSizeY - 1
+			var/topY = bottomY + prefabSizeY - 1
 			if(topY > world.maxy)
 				stack_trace("mapPrefab: Prefab '[name]' with path '[prefabPath]' Y size exceeds map size")
 				return null
