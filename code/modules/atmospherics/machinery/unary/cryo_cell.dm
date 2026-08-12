@@ -18,7 +18,7 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 	power_usage = 50 WATTS
 	var/on = FALSE //! Whether the cell is turned on or not
 	var/datum/light/light
-	var/ARCHIVED(temperature)
+	var/temperature
 	var/mob/living/carbon/human/occupant = null //! Mob inside the tube being healed
 	var/obj/item/reagent_containers/glass/beaker = null //! The beaker containing chems which are applied to the occupant. May or may not be present.
 	var/obj/item/robodefibrillator/defib //! The attached defibrillator, if there is one
