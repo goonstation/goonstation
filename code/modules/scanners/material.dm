@@ -8,7 +8,7 @@ TYPEINFO(/obj/item/device/matanalyzer)
 	icon_state = "matanalyzer"
 	name = "material analyzer"
 	desc = "This piece of equipment can detect and analyze materials."
-	flags = EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT | SUPPRESSATTACK
 	w_class = W_CLASS_SMALL
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
@@ -16,20 +16,19 @@ TYPEINFO(/obj/item/device/matanalyzer)
 			boutput(user, SPAN_ALERT("[target] is too far away."))
 			return
 		animate_scanning(target, "#597B6D")
-		analyze_target(target, user)
+		user.visible_message(SPAN_ALERT("[user] scans \the [target] with \the [src]."))
+		var/datum/matsci_scan/scan = new(target, user)
+		boutput(user, scan.report)
 
-	proc/analyze_target_abridged(var/atom/target)
-		var/report_mat = ""
-		if(target.material)
-			report_mat += SPAN_NOTICE("<li><u>Material</u>: [capitalize(target.material.getName())]")
-			report_mat += SPAN_SUBTLE(" ([target.material_amount_total()] units)</li>")
-		else
-			report_mat += SPAN_ALERT("<li>No significant material found in \the [target].</li>")
 
-	proc/analyze_target(var/atom/target, var/mob/user)
+/datum/matsci_scan
+	var/report
+
+	New(var/atom/target, var/mob/user)
+		. = ..()
 		var/report_mat = analyze_material(target)
 		var/report_effects = analyze_effects(target)
-		boutput(user, report_mat + report_effects)
+		src.report = report_mat + report_effects
 
 	proc/analyze_material(var/atom/target)
 		var/datum/material/mat = target.material
@@ -45,11 +44,9 @@ TYPEINFO(/obj/item/device/matanalyzer)
 			report += "</ul>"
 		else
 			report += "<li>The material properties are completely unremarkable.</li>"
-
 		var/report_trigger = analyze_material_triggers(mat)
 		if(report_trigger)
 			report += "<li>[SPAN_NOTICE("Material Effects:")]</li>" + report_trigger
-
 		return report
 
 	proc/analyze_material_triggers(var/datum/material/mat)
