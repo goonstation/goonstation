@@ -1,5 +1,43 @@
 
+(t)tue aug 11 26
+(u)ANNmagedon
+(p)27425
+(e)|
+(+)Fixed salvager powersink's tooltip not updating with charge
+(u)Ceres et al.
+(p)27427
+(e)🆕⚖🧛|C-Feature, C-Balance, A-Gamemodes
+(*)Activating Horror Form as a changeling now has a brief (uninterruptible) windup period that's very loud and messy.
+(u)Wrastlingcat
+(p)27456
+(e)🎨|C-Sprites
+(*)Added a new sunflower mask! pretty! Make it with wire and a sunflower!
+(u)Sord
+(p)27449
+(e)🗺|A-Mapping
+(*)Reworked Donut 3's Medbay
+(u)JORJ949
+(p)27422
+(e)🔄🧛📦⚗|C-Rework, A-Gamemodes, A-Game-Objects, A-Chemistry
+(*)The portable chemicompiler traitor purchase option has been removed. The portable chemicompiler is instead found in the RD's locker.
+(t)mon aug 10 26
+(u)Callipygian0
+(*)Clarion's Escape Security checkpoint has an ID computer.
+(u)Ceres et al.
+(p)27462
+(e)|
+(+)Wiping a floppy disk's contents with a multitool now also removes any labels from that disk.
 (t)sun aug 09 26
+(u)LeahTheTech
+(+)Hippos now eat vegetables.
+(u)Kubius
+(p)27140
+(e)🗺🔎⚖|A-Mapping, C-Code-Quality, C-Balance
+(*)Nadir's complement of preinstalled door shields has been sharply reduced, primarily to public airlocks and points of exterior contact. A pass has been done over airlock cycler coverage in kind.
+(u)JORJ949
+(p)27383
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Sleepy pens now only show their "sharp point" description text to syndies.
 (u)Mr. Moriarty
 (p)27183
 (e)💅🔨🐁|C-QoL, A-Player-Actions, A-Critters
