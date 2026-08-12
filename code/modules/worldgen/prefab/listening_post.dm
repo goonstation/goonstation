@@ -87,6 +87,8 @@ TYPEINFO(/datum/mapPrefab/listening_post)
 	stored_as_subtypes = TRUE
 /// Map Prefabs for runtime listening post loading
 /datum/mapPrefab/listening_post
+	prefabSizeX = 32
+	prefabSizeY = 32
 
 /datum/mapPrefab/listening_post/standard
 	prefabPath = "assets/maps/listening_post/listeningpost_standard.dmm"

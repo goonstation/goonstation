@@ -206,6 +206,7 @@
 #include "namespaces\helper_color.dm"
 #include "namespaces\omnitool.dm"
 #include "namespaces\pay.dm"
+#include "namespaces\powersink.dm"
 #include "namespaces\radio.dm"
 #include "namespaces\RCD.dm"
 #include "namespaces\security.dm"
