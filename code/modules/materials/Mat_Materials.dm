@@ -2503,7 +2503,7 @@ ABSTRACT_TYPE(/datum/material/rubber)
 
 // Placed here because it needs to have /datum/material defined already to work
 /datum/materialProc/batiline_mix
-	desc_scan = "Material radioactivity removed when combined. This increases density and/or reflectivity."
+	desc_scan = "Radioactivity removed when combined with other materials. Lost radioactivity converted into density and/or reflectivity."
 
 	execute(var/datum/material/new_mat, var/datum/material/old_matA, var/datum/material/old_matB, var/bias)
 		var/rads = new_mat.getProperty("radioactive")
