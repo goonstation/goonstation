@@ -45,11 +45,11 @@ ABSTRACT_TYPE(/datum/mapPrefab)
 	proc/adjust_position(turf/target)
 		RETURN_TYPE(/turf)
 		// Fail if prefab doesn't fit
-		if(!isnull(prefabSizeX) && (target.x + prefabSizeX) > (world.maxx - src.required_distance_from_mapedge))
+		if(!isnull(prefabSizeX) && (target.x + prefabSizeX - 1) > (world.maxx - src.required_distance_from_mapedge))
 			stack_trace("mapPrefab: Prefab '[name]' with path '[prefabPath]' X size exceeds map size")
 			return null
 
-		if(!isnull(prefabSizeY) && (target.y + prefabSizeY) > (world.maxy - src.required_distance_from_mapedge))
+		if(!isnull(prefabSizeY) && (target.y + prefabSizeY - 1) > (world.maxy - src.required_distance_from_mapedge))
 			stack_trace("mapPrefab: Prefab '[name]' with path '[prefabPath]' Y size exceeds map size")
 			return null
 
