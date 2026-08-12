@@ -5633,7 +5633,7 @@
 		name = "Dulce de leche"
 		id = "dulcedeleche"
 		result = "dulcedeleche"
-		required_reagents = list("sweetcondensedmilk"=1, "vanilla"= 1)
+		required_reagents = list("sweetcondensedmilk" = 1, "vanilla" = 1)
 		min_temperature = T0C + 85
 		result_amount = 1
 		mix_phrase = "The mixture slowly thickens into a velvety spread."
