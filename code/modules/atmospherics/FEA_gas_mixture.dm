@@ -533,7 +533,7 @@ APPLY_TO_GASES(_CREATE_CHANGE_PROCS)
 
 /// Conducts heat between gases.
 /// Conduction_coefficient is a multiplier that determines how well heat equalises, with 0 meaning no heat and 1 meaning perfect equalisation.
-/datum/gas_mixture/proc/temperature_share(datum/gas_mixture/sharer, conduction_coefficient)
+/datum/gas_mixture/turf_tied/temperature_share(datum/gas_mixture/sharer, conduction_coefficient)
 	var/heat = goonmos_mimic_temperature_exchange(src.our_turf, sharer.temperature(), sharer.heat_capacity(), conduction_coefficient)
 	src.adjust_thermal_energy(-heat)
 	sharer.adjust_thermal_energy(heat)
