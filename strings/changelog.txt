@@ -1,5 +1,9 @@
 
 (t)tue aug 11 26
+(u)ANNmagedon
+(p)27425
+(e)|
+(+)Fixed salvager powersink's tooltip not updating with charge
 (u)Ceres et al.
 (p)27427
 (e)🆕⚖🧛|C-Feature, C-Balance, A-Gamemodes
