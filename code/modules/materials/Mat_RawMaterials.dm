@@ -160,8 +160,6 @@
 						var/datum/material/base_mat = getMaterial("blob")
 						for (var/i in 1 to 10)
 							var/datum/material/organic/blob/new_mat = base_mat.getMutable()
-							if(!istype(new_mat))
-								CRASH("Material with ID \"blob\" is not of the correct type!")
 							new_mat.match_to_blob_color(rgb(rand(0,255), rand(0,255), rand(0,255)))
 							src.random_blob_materials += new_mat
 					var/datum/material/organic/blob/blob_mat = pick(src.random_blob_materials)

@@ -115,8 +115,6 @@ TYPEINFO(/mob/living/intangible/blob_overmind)
 
 		src.initial_material = getMaterial("blob")
 		src.my_material = src.initial_material.getMutable()
-		if(!istype(src.my_material))
-			CRASH("Material with ID \"blob\" is not of the correct type!")
 		src.organ_color = "#ffffff"
 		src.my_material.match_to_blob(src)
 
