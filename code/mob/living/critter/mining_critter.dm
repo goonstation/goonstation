@@ -32,7 +32,7 @@
 
 /mob/living/critter/fermid
 	name = "fermid"
-	desc = "Extremely hostile asteroid-dwelling bugs. Best to avoid them wherever possible."
+	desc = "Extremely hostile asteroid-dwelling bug. Best to avoid them wherever possible."
 	icon_state = "fermid"
 	icon_state_dead = "fermid-dead"
 	speech_verb_say = "clicks"
@@ -149,7 +149,7 @@
 			..()
 			AddComponent(/datum/component/radioactive, 20, TRUE, FALSE, 0)
 /mob/living/critter/fermid/polymorph
-	desc = "Extremely hostile asteroid-dwelling bugs. This one looks particularly annoyed about something."
+	desc = "Extremely hostile asteroid-dwelling bug. This one looks particularly annoyed about something."
 	health_brute = 50
 	health_brute_vuln = 1
 	health_burn = 50
@@ -174,7 +174,7 @@
 
 
 /mob/living/critter/fermid/worker
-	desc = "Extremely hostile asteroid-dwelling bugs. Small, nimble, and a whole lot of mandible."
+	desc = "Extremely hostile asteroid-dwelling bug. Small, nimble, and a whole lot of mandible."
 	icon_state = "fermid-s"
 	icon_state_dead = "fermid-s-dead"
 	health_brute = 20
@@ -196,7 +196,7 @@
 		recolor = "#05da17"
 
 /mob/living/critter/fermid/spitter
-	desc = "Extremely hostile asteroid-dwelling bugs. Best to avoid whatever is in that enlarged gaster."
+	desc = "Extremely hostile asteroid-dwelling bug. Best to avoid whatever is in that enlarged gaster."
 	icon_state = "fermid-r"
 	icon_state_dead = "fermid-r-dead"
 	health_brute = 35

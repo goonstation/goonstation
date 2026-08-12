@@ -33,7 +33,7 @@
 			boutput(holder.owner, SPAN_ALERT("That does not hold reagents, apparently."))
 			return 1
 		if (!downed && !is_incapacitated(MT))
-			boutput(holder.owner, SPAN_ALERT("That is too nimble. Try knocking it down."))
+			boutput(holder.owner, SPAN_ALERT("That target is moving around too much. Try knocking it down."))
 			return 1
 		if (!stealthy)
 			holder.owner.visible_message(SPAN_ALERT("<b>[holder.owner] stings [target]!</b>"))
