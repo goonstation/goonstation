@@ -81,81 +81,6 @@ proc/debug_map_apc_count(delim,zlim)
 
 		usr.Browse(output,"window=generalreport")
 
-	air_report()
-		SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-		ADMIN_ONLY
-		SHOW_VERB_DESC
-
-		if(!processScheduler || !air_master)
-			alert(usr,"processScheduler or air_master not found.","Air Report")
-			return 0
-
-		var/active_groups = 0
-		var/inactive_groups = 0
-		var/active_tiles = 0
-		for(var/datum/air_group/group in air_master.air_groups)
-			if(group.group_processing)
-				active_groups++
-			else
-				inactive_groups++
-				active_tiles += length(group.members)
-
-		var/hotspots = 0
-		for(var/atom/movable/hotspot/hotspot in world)
-			hotspots++
-			LAGCHECK(LAG_LOW)
-
-		var/output = {"<B>AIR SYSTEMS REPORT</B><HR>
-<B>General Processing Data</B><BR>
-<B># of Groups:</B> [air_master.air_groups.len]<BR>
----- <I>Active:</I> [active_groups]<BR>
----- <I>Inactive:</I> [inactive_groups]<BR>
--------- <I>Tiles:</I> [active_tiles]<BR>
-<B># of Active Singletons:</B> [air_master.active_singletons.len]<BR>
-<BR>
-<B>Total # of Gas Mixtures In Existence: </B>[total_gas_mixtures]<BR>
-<B>Special Processing Data</B><BR>
-<B>Hotspot Processing:</B> [hotspots]<BR>
-<B>High Temperature Processing:</B> [air_master.active_super_conductivity.len]<BR>
-<B>High Pressure Processing:</B> [air_master.high_pressure_delta.len] (not yet implemented)<BR>
-<BR>
-<B>Geometry Processing Data</B><BR>
-<B>Group Rebuild:</B> [air_master.groups_to_rebuild.len]<BR>
-<B>Tile Update:</B> [air_master.tiles_to_update.len]<BR>
-[air_histogram()]
-"}
-
-		usr.Browse(output,"window=airreport")
-
-	air_histogram()
-
-		var/html = "<pre>"
-		var/list/ghistogram = new
-		var/list/ughistogram = new
-		var/p
-
-		for(var/datum/air_group/g in air_master.air_groups)
-			if (g.group_processing)
-				for(var/turf/simulated/member in g.members)
-					p = round(max(-1, MIXTURE_PRESSURE(member.air)), 10)/10 + 1
-					if (p > ghistogram.len)
-						ghistogram.len = p
-					ghistogram[p]++
-			else
-				for(var/turf/simulated/member in g.members)
-					p = round(max(-1, MIXTURE_PRESSURE(member.air)), 10)/10 + 1
-					if (p > ughistogram.len)
-						ughistogram.len = p
-					ughistogram[p]++
-
-		html += "Group processing tiles pressure histogram data:\n"
-		for(var/i=1,i<=ghistogram.len,i++)
-			html += "[10*(i-1)]\t\t[ghistogram[i]]\n"
-		html += "Non-group processing tiles pressure histogram data:\n"
-		for(var/i=1,i<=ughistogram.len,i++)
-			html += "[10*(i-1)]\t\t[ughistogram[i]]\n"
-		return html
-
 	air_status(turf/target as turf)
 		SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 		set name = "Air Status"
@@ -172,7 +97,7 @@ proc/debug_map_apc_count(delim,zlim)
 			if(length(T.active_hotspots))
 				burning = 1
 
-		boutput(usr, "<span class='notice'>@[target.x],[target.y] ([GM.group_multiplier])<br>[MOLES_REPORT(GM)] t: [GM.temperature()]&deg;K ([GM.temperature() - T0C]&deg;C), [MIXTURE_PRESSURE(GM)] kPa [(burning)?("<span class='alert'>BURNING</span>"):(null)]</span>")
+		boutput(usr, "<span class='notice'>@[target.x],[target.y] <br>[MOLES_REPORT(GM)] t: [GM.temperature()]&deg;K ([GM.temperature() - T0C]&deg;C), [MIXTURE_PRESSURE(GM)] kPa [(burning)?("<span class='alert'>BURNING</span>"):(null)]</span>")
 
 	fix_next_move()
 		SET_ADMIN_CAT(ADMIN_CAT_DEBUG)

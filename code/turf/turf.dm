@@ -630,7 +630,6 @@ var/global/in_replace_with = 0
 	src.material?.UnregisterSignal(src, COMSIG_ATOM_CROSSED)
 
 	var/datum/gas_mixture/oldair = null //Set if old turf is simulated and has air on it.
-	var/datum/air_group/oldparent = null //Ditto.
 	var/zero_new_turf_air = istype(src, /turf/space)
 
 	//For unsimulated static air tiles such as ice moon surface.
@@ -856,20 +855,6 @@ var/global/in_replace_with = 0
 			#undef _OLD_GAS_VAR_NOT_NULL
 			if(N.air)
 				N.update_visuals(N.air)
-			// tell atmos to update this tile's air settings
-			if (air_master)
-				air_master.tiles_to_update[N] = null
-		else if (air_master)
-			air_master.high_pressure_delta.Remove(src) //lingering references to space turfs kept ending up in atmos lists after simulated turfs got replaced. wack!
-			air_master.active_singletons.Remove(src)
-			air_master.tiles_to_update.Remove(src)
-			air_master.tiles_to_rebuild.Remove(src)
-
-		if (air_master && oldparent) //Handling air parent changes for oldparent for Simulated -> Anything
-			air_master.groups_to_rebuild[oldparent] = null //Puts the oldparent into a queue to update the members.
-			oldparent.members -= src //can we like not have space in these lists pleaseeee :) -cringe
-			oldparent.borders?.Remove(src)
-
 	new_turf.update_nearby_tiles(1)
 
 	#ifdef CHECK_MORE_RUNTIMES
