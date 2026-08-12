@@ -89,6 +89,7 @@ TYPEINFO(/datum/mapPrefab/listening_post)
 /datum/mapPrefab/listening_post
 	prefabSizeX = 32
 	prefabSizeY = 32
+	required_distance_from_mapedge = 1
 
 /datum/mapPrefab/listening_post/standard
 	prefabPath = "assets/maps/listening_post/listeningpost_standard.dmm"
