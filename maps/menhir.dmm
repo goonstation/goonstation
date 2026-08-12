@@ -9612,7 +9612,13 @@
 /obj/cable{
 	icon_state = "8-9"
 	},
-/obj/machinery/bot/floorbot,
+/obj/item/device/calibrator{
+	pixel_y = 6;
+	pixel_x = -1
+	},
+/obj/item/device/radio/signaler{
+	pixel_x = 6
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/sw{
 	name = "Arrivals Auxiliary Arm"
@@ -21327,6 +21333,12 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/storage)
+"lbs" = (
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/se{
+	name = "Southeast Auxiliary Conduit"
+	})
 "lbw" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -31533,18 +31545,9 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/pool)
 "qjy" = (
-/obj/storage/crate,
-/obj/item/peripheral/network/radio{
-	pixel_x = -3;
-	pixel_y = -3
-	},
-/obj/item/device/radio/signaler{
-	pixel_y = 3;
-	pixel_x = 5
-	},
-/obj/item/device/calibrator{
-	pixel_y = 1;
-	pixel_x = -2
+/obj/item/instrument/large/piano{
+	desc = "There's a bit of dust in the nooks and crannies, despite its fairly pristine finish. This seems to have been brought here from somewhere.";
+	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/sw{
@@ -47857,6 +47860,10 @@
 	dir = 8
 	},
 /area/station/medical/medbay)
+"yfB" = (
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "yfD" = (
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/industrial,
@@ -99541,7 +99548,7 @@ bGE
 ngb
 kMq
 nqO
-wZD
+lbs
 ngb
 tIX
 wxr
@@ -101580,7 +101587,7 @@ saH
 qDM
 adR
 fLc
-vKo
+yfB
 rHQ
 jtq
 dNF
@@ -101882,7 +101889,7 @@ fLc
 wQz
 fLc
 fLc
-urA
+vKo
 mwX
 wPH
 taU
