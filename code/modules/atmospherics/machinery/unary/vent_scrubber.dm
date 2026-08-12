@@ -51,7 +51,7 @@
 	if(scrubbing)
 		var/moles = TOTAL_MOLES(environment)
 		if(moles)
-			var/transfer_moles = min(1, volume_rate/environment.volume) * moles
+			var/transfer_moles = min(1, volume_rate/environment.volume()) * moles
 
 			//Take a gas sample
 			var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
@@ -76,7 +76,7 @@
 			network?.update = TRUE
 
 	else //Just siphoning all air
-		var/transfer_moles = TOTAL_MOLES(environment)*(volume_rate/environment.volume)
+		var/transfer_moles = TOTAL_MOLES(environment)*(volume_rate/environment.volume())
 
 		var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
 

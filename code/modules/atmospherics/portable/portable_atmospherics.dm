@@ -30,7 +30,7 @@
 
 		air_contents = new /datum/gas_mixture
 
-		air_contents.volume = volume
+		air_contents.set_volume(volume)
 		air_contents.temperature() = T20C
 
 		if(init_connected)

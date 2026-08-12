@@ -2277,7 +2277,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 						var/datum/gas_mixture/payload = new /datum/gas_mixture
 						payload.set_toxins(plasma * 100)
 						payload.temperature() = T20C
-						payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
+						payload.set_volume(R_IDEAL_GAS_EQUATION * T20C / 1000)
 						target.air.merge(payload)
 
 			if (throw_objs.len && length(throw_objs) > 0)

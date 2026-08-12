@@ -411,7 +411,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 			payload.set_toxins(25 * location.material_amt)
 			total_plasma -= 1
 			payload.temperature() = T20C
-			payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
+			payload.set_volume(R_IDEAL_GAS_EQUATION * T20C / 1000)
 			target.air.merge(payload)
 			location.material.setProperty("plasma_offgas", total_plasma)
 

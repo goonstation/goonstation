@@ -52,7 +52,7 @@ ABSTRACT_TYPE(/obj/item/tank)
 	New()
 		..()
 		src.air_contents = new /datum/gas_mixture
-		src.air_contents.volume = TANK_VOLUME
+		src.air_contents.set_volume(TANK_VOLUME)
 		src.air_contents.temperature() = T20C
 		processing_items |= src
 		src.create_inventory_counter()
@@ -179,7 +179,7 @@ ABSTRACT_TYPE(/obj/item/tank)
 
 			//wooo magic numbers! 70 is the default volume of an air tank and quad rooting it seems to produce pretty reasonable scaling
 			// scale for pocket oxy (3L): ~0.455 | extended pocket oxy (7L): ~0.562 | handheld (70L): 1
-			var/volume_scale = (air_contents.volume / TANK_VOLUME) ** (1/4)
+			var/volume_scale = (air_contents.volume() / TANK_VOLUME) ** (1/4)
 			var/range = (pressure - TANK_FRAGMENT_PRESSURE) * volume_scale / TANK_FRAGMENT_SCALE
 			// (pressure - 5066.25 kpa) divided by 1013.25 kpa
 			range = min(range, 12)
@@ -236,7 +236,7 @@ ABSTRACT_TYPE(/obj/item/tank)
 		var/list/extras = list()
 		if (extra_desc)
 			extras += extra_desc
-		extras += " It is labeled to have a volume of [src.air_contents.volume] litres. " + ..()
+		extras += " It is labeled to have a volume of [src.air_contents.volume()] litres. " + ..()
 		return extras.Join(" ")
 
 	examine(mob/user)
@@ -573,7 +573,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 
 	New()
 		..()
-		src.air_contents.volume = 30
+		src.air_contents.set_volume(30)
 		src.air_contents.set_oxygen((1.7 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C))
 		return
 
@@ -592,7 +592,7 @@ ABSTRACT_TYPE(/obj/item/tank/pocket)
 
 	New()
 		..()
-		src.air_contents.volume = 3
+		src.air_contents.set_volume(3)
 
 /obj/item/tank/pocket/oxygen
 	name = "pocket tank (oxygen)"
@@ -642,7 +642,7 @@ ABSTRACT_TYPE(/obj/item/tank/pocket/extended)
 
 	New()
 		..()
-		src.air_contents.volume = 6
+		src.air_contents.set_volume(6)
 
 /obj/item/tank/pocket/extended/oxygen
 	name = "extended capacity pocket tank (oxygen)"
@@ -700,7 +700,7 @@ ABSTRACT_TYPE(/obj/item/tank/mini)
 
 	New()
 		..()
-		src.air_contents.volume = 15
+		src.air_contents.set_volume(15)
 
 /obj/item/tank/mini/oxygen
 	name = "mini tank (oxygen)"
@@ -730,7 +730,7 @@ ABSTRACT_TYPE(/obj/item/tank/mini)
 
 	New()
 		..()
-		src.air_contents.volume = 10
+		src.air_contents.set_volume(10)
 		src.air_contents.set_toxins((ONE_ATMOSPHERE) * 100 / (R_IDEAL_GAS_EQUATION * T20C))
 		return
 

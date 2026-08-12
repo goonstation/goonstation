@@ -76,7 +76,7 @@
 
 		if(pressure_delta > 0)
 			if(air_contents.temperature() > 0)
-				var/transfer_moles = pressure_delta*environment.volume/(air_contents.temperature() * R_IDEAL_GAS_EQUATION)
+				var/transfer_moles = pressure_delta*environment.volume()/(air_contents.temperature() * R_IDEAL_GAS_EQUATION)
 
 				var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 
@@ -94,7 +94,7 @@
 
 		if(pressure_delta > 0)
 			if(environment.temperature() > 0)
-				var/transfer_moles = pressure_delta*air_contents.volume/(environment.temperature() * R_IDEAL_GAS_EQUATION)
+				var/transfer_moles = pressure_delta*air_contents.volume()/(environment.temperature() * R_IDEAL_GAS_EQUATION)
 
 				var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
 
@@ -275,7 +275,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/New()
 	..()
 
-	air_contents.volume = 1000
+	air_contents.set_volume(1000)
 
 /obj/machinery/atmospherics/unary/vent_pump/high_volume/inactive
 	icon_state = "off-map"

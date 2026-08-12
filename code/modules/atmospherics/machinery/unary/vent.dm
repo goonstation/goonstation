@@ -8,7 +8,7 @@
 
 /obj/machinery/atmospherics/unary/vent/New()
 	..()
-	src.air_contents.volume = 250
+	src.air_contents.set_volume(250)
 
 /obj/machinery/atmospherics/unary/vent/process()
 	..()

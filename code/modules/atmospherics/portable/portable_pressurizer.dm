@@ -124,13 +124,13 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pressurizer)
 				var/pressure_delta = src.release_pressure - MIXTURE_PRESSURE(environment)
 				var/transfer_moles = 0
 				if(air_contents.temperature() > 0)
-					transfer_moles = pressure_delta*environment.volume/(air_contents.temperature() * R_IDEAL_GAS_EQUATION)
+					transfer_moles = pressure_delta*environment.volume()/(air_contents.temperature() * R_IDEAL_GAS_EQUATION)
 					removed = air_contents.remove(transfer_moles)
 					loc.assume_air(removed)
 
 			if(FAN_ON_INLET)
 				var/transfer_rate = 200
-				var/transfer_ratio = max(1, transfer_rate/environment.volume)
+				var/transfer_ratio = max(1, transfer_rate/environment.volume())
 
 				if(MIXTURE_PRESSURE(src.air_contents) < src.maximum_pressure)
 					removed = environment.remove_ratio(transfer_ratio)

@@ -16,7 +16,7 @@
 	src.network?.member_disposing(src)
 	src.network = null
 
-	if(src.air?.volume)
+	if(src.air?.volume())
 		src.temporarily_store_air()
 		qdel(src.air)
 	src.air = null
@@ -53,9 +53,9 @@
 	for(var/obj/machinery/atmospherics/pipe/member as anything in src.members)
 		if (!member.air_temporary)
 			member.air_temporary = new
-		member.air_temporary.set_volume(member.volume())
+		member.air_temporary.set_volume(member.volume)
 
-		#define _TEMPORARILY_STORE_GAS(GAS, ...) member.air_temporary.set_##GAS(src.air.GAS() * member.volume() / src.air.volume());
+		#define _TEMPORARILY_STORE_GAS(GAS, ...) member.air_temporary.set_##GAS(src.air.GAS() * member.volume / src.air.volume());
 		APPLY_TO_GASES(_TEMPORARILY_STORE_GAS)
 		#undef _TEMPORARILY_STORE_GAS
 

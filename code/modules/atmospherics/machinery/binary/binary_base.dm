@@ -19,8 +19,8 @@
 	air1 = new /datum/gas_mixture
 	air2 = new /datum/gas_mixture
 
-	air1.volume = 200
-	air2.volume = 200
+	air1.set_volume(200)
+	air2.set_volume(200)
 
 // Housekeeping and pipe network stuff below
 /obj/machinery/atmospherics/binary/network_disposing(datum/pipe_network/reference)

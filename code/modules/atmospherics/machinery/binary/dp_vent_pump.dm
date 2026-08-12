@@ -78,7 +78,7 @@
 			pressure_delta = min(pressure_delta, (MIXTURE_PRESSURE(air1) - input_pressure_min))
 
 		if(pressure_delta > 0)
-			var/transfer_moles = pressure_delta*environment.volume/(air1.temperature() * R_IDEAL_GAS_EQUATION)
+			var/transfer_moles = pressure_delta*environment.volume()/(air1.temperature() * R_IDEAL_GAS_EQUATION)
 
 			var/datum/gas_mixture/removed = air1.remove(transfer_moles)
 
@@ -95,7 +95,7 @@
 			pressure_delta = min(pressure_delta, (output_pressure_max - MIXTURE_PRESSURE(air2)))
 
 		if(pressure_delta > 0)
-			var/transfer_moles = pressure_delta*air2.volume/(environment.temperature() * R_IDEAL_GAS_EQUATION)
+			var/transfer_moles = pressure_delta*air2.volume()/(environment.temperature() * R_IDEAL_GAS_EQUATION)
 
 			var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
 
@@ -206,8 +206,8 @@
 /obj/machinery/atmospherics/binary/dp_vent_pump/high_volume/New()
 	..()
 
-	air1.volume = 1000
-	air2.volume = 1000
+	air1.set_volume(1000)
+	air2.set_volume(1000)
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/high_volume/releasing
 	icon_state = "out-map"

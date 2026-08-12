@@ -3236,18 +3236,18 @@ TYPEINFO(/obj/machinery/vending/janitor)
 
 	proc/fill_cost()
 		if(!holding) return 0
-		return clamp(round((src.target_pressure - MIXTURE_PRESSURE(src.holding.air_contents)) * src.holding.air_contents.volume * src.air_cost), 0, INFINITY)
+		return clamp(round((src.target_pressure - MIXTURE_PRESSURE(src.holding.air_contents)) * src.holding.air_contents.volume() * src.air_cost), 0, INFINITY)
 
 	proc/fill()
 		if(!holding) return
-		gas_prototype.volume = holding.air_contents.volume
+		gas_prototype.set_volume(holding.air_contents.volume())
 		gas_prototype.temperature() = T20C
 
 		switch(vend_type)
 			if("oxygen")
-				gas_prototype.set_oxygen((target_pressure)*gas_prototype.volume/(R_IDEAL_GAS_EQUATION*gas_prototype.temperature()))
+				gas_prototype.set_oxygen((target_pressure)*gas_prototype.volume()/(R_IDEAL_GAS_EQUATION*gas_prototype.temperature()))
 			if("plasma")
-				gas_prototype.set_toxins((target_pressure)*gas_prototype.volume/(R_IDEAL_GAS_EQUATION*gas_prototype.temperature()))
+				gas_prototype.set_toxins((target_pressure)*gas_prototype.volume()/(R_IDEAL_GAS_EQUATION*gas_prototype.temperature()))
 
 		holding.air_contents.copy_from(gas_prototype)
 		postvend_effect()

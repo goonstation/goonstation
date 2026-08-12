@@ -10,7 +10,7 @@
 /obj/machinery/atmospherics/unary/tank/New()
 	..()
 	src.AddComponent(/datum/component/obj_projectile_damage)
-	src.air_contents.volume = src.volume
+	src.air_contents.set_volume(src.volume)
 	src.air_contents.temperature() = T20C
 
 /obj/machinery/atmospherics/unary/tank/update_icon()
@@ -41,7 +41,7 @@
 
 /obj/machinery/atmospherics/unary/tank/carbon_dioxide/New()
 	..()
-	src.air_contents.set_carbon_dioxide((50*ONE_ATMOSPHERE)*(src.air_contents.volume)/(R_IDEAL_GAS_EQUATION*src.air_contents.temperature()))
+	src.air_contents.set_carbon_dioxide((50*ONE_ATMOSPHERE)*(src.air_contents.volume())/(R_IDEAL_GAS_EQUATION*src.air_contents.temperature()))
 
 /obj/machinery/atmospherics/unary/tank/toxins
 	icon = 'icons/obj/atmospherics/tanks/orange_pipe_tank.dmi'
@@ -49,7 +49,7 @@
 
 /obj/machinery/atmospherics/unary/tank/toxins/New()
 	..()
-	src.air_contents.set_toxins((50*ONE_ATMOSPHERE)*(src.air_contents.volume)/(R_IDEAL_GAS_EQUATION*src.air_contents.temperature()))
+	src.air_contents.set_toxins((50*ONE_ATMOSPHERE)*(src.air_contents.volume())/(R_IDEAL_GAS_EQUATION*src.air_contents.temperature()))
 
 /obj/machinery/atmospherics/unary/tank/oxygen_agent_b
 	icon = 'icons/obj/atmospherics/tanks/red_orange_pipe_tank.dmi'
@@ -58,7 +58,7 @@
 /obj/machinery/atmospherics/unary/tank/oxygen_agent_b/New()
 	..()
 	src.air_contents.temperature() = T0C
-	src.air_contents.set_oxygen_agent_b((50*ONE_ATMOSPHERE)*(src.air_contents.volume)/(R_IDEAL_GAS_EQUATION*src.air_contents.temperature()))
+	src.air_contents.set_oxygen_agent_b((50*ONE_ATMOSPHERE)*(src.air_contents.volume())/(R_IDEAL_GAS_EQUATION*src.air_contents.temperature()))
 
 /obj/machinery/atmospherics/unary/tank/oxygen
 	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi'
@@ -66,7 +66,7 @@
 
 /obj/machinery/atmospherics/unary/tank/oxygen/New()
 	..()
-	src.air_contents.set_oxygen((50*ONE_ATMOSPHERE)*(src.air_contents.volume)/(R_IDEAL_GAS_EQUATION*src.air_contents.temperature()))
+	src.air_contents.set_oxygen((50*ONE_ATMOSPHERE)*(src.air_contents.volume())/(R_IDEAL_GAS_EQUATION*src.air_contents.temperature()))
 
 /obj/machinery/atmospherics/unary/tank/nitrogen
 	icon = 'icons/obj/atmospherics/tanks/red_pipe_tank.dmi'
@@ -74,7 +74,7 @@
 
 /obj/machinery/atmospherics/unary/tank/nitrogen/New()
 	..()
-	src.air_contents.set_nitrogen((50*ONE_ATMOSPHERE)*(src.air_contents.volume)/(R_IDEAL_GAS_EQUATION*src.air_contents.temperature()))
+	src.air_contents.set_nitrogen((50*ONE_ATMOSPHERE)*(src.air_contents.volume())/(R_IDEAL_GAS_EQUATION*src.air_contents.temperature()))
 
 /obj/machinery/atmospherics/unary/tank/sleeping_agent
 	icon = 'icons/obj/atmospherics/tanks/red_white_pipe_tank.dmi'
@@ -82,7 +82,7 @@
 
 /obj/machinery/atmospherics/unary/tank/sleeping_agent/New()
 	..()
-	src.air_contents.set_nitrous_oxide((50*ONE_ATMOSPHERE)*(src.air_contents.volume)/(R_IDEAL_GAS_EQUATION*src.air_contents.temperature()))
+	src.air_contents.set_nitrous_oxide((50*ONE_ATMOSPHERE)*(src.air_contents.volume())/(R_IDEAL_GAS_EQUATION*src.air_contents.temperature()))
 
 /obj/machinery/atmospherics/unary/tank/air
 	icon = 'icons/obj/atmospherics/tanks/white_pipe_tank.dmi'
@@ -90,8 +90,8 @@
 
 /obj/machinery/atmospherics/unary/tank/air/New()
 	..()
-	src.air_contents.set_oxygen((50*ONE_ATMOSPHERE*O2STANDARD)*(src.air_contents.volume)/(R_IDEAL_GAS_EQUATION*src.air_contents.temperature()))
-	src.air_contents.set_nitrogen((50*ONE_ATMOSPHERE*N2STANDARD)*(src.air_contents.volume)/(R_IDEAL_GAS_EQUATION*src.air_contents.temperature()))
+	src.air_contents.set_oxygen((50*ONE_ATMOSPHERE*O2STANDARD)*(src.air_contents.volume())/(R_IDEAL_GAS_EQUATION*src.air_contents.temperature()))
+	src.air_contents.set_nitrogen((50*ONE_ATMOSPHERE*N2STANDARD)*(src.air_contents.volume())/(R_IDEAL_GAS_EQUATION*src.air_contents.temperature()))
 
 // Experiment for improving the usefulness of air hookups. They have twice the capacity of portable
 // canisters and contain 4 times the volume of their default air mixture (Convair880).
@@ -103,8 +103,8 @@
 
 /obj/machinery/atmospherics/unary/tank/air_repressurization/New()
 	..()
-	src.air_contents.set_oxygen((180*ONE_ATMOSPHERE*O2STANDARD)*(src.air_contents.volume)/(R_IDEAL_GAS_EQUATION*src.air_contents.temperature()))
-	src.air_contents.set_nitrogen((180*ONE_ATMOSPHERE*N2STANDARD)*(src.air_contents.volume)/(R_IDEAL_GAS_EQUATION*src.air_contents.temperature()))
+	src.air_contents.set_oxygen((180*ONE_ATMOSPHERE*O2STANDARD)*(src.air_contents.volume())/(R_IDEAL_GAS_EQUATION*src.air_contents.temperature()))
+	src.air_contents.set_nitrogen((180*ONE_ATMOSPHERE*N2STANDARD)*(src.air_contents.volume())/(R_IDEAL_GAS_EQUATION*src.air_contents.temperature()))
 
 
 /obj/machinery/atmospherics/unary/tank/radgas
@@ -113,4 +113,4 @@
 
 /obj/machinery/atmospherics/unary/tank/radgas/New()
 	..()
-	src.air_contents.set_radgas((50*ONE_ATMOSPHERE)*(src.air_contents.volume)/(R_IDEAL_GAS_EQUATION*src.air_contents.temperature()))
+	src.air_contents.set_radgas((50*ONE_ATMOSPHERE)*(src.air_contents.volume())/(R_IDEAL_GAS_EQUATION*src.air_contents.temperature()))

@@ -114,11 +114,11 @@ var/global/list/datum/pipe_network/pipe_networks = list()
 	var/total_heat_capacity = 0
 	if (!src.air_transient)
 		src.air_transient = new()
-	src.air_transient.volume = 0
+	src.air_transient.set_volume(0)
 	ZERO_GASES(src.air_transient)
-
+	var/sum_volume = 0
 	for(var/datum/gas_mixture/gas as anything in src.gases)
-		src.air_transient.volume += gas.volume
+		sum_volume += gas.volume()
 		total_thermal_energy += THERMAL_ENERGY(gas)
 		total_heat_capacity += HEAT_CAPACITY(gas)
 
@@ -126,9 +126,10 @@ var/global/list/datum/pipe_network/pipe_networks = list()
 		APPLY_TO_GASES(_RECONCILE_AIR)
 		#undef _RECONCILE_AIR
 
-	if(src.air_transient.volume <= 0)
+	if(sum_volume <= 0)
 		return FALSE
 
+	src.air_transient.set_volume(sum_volume)
 	if(total_heat_capacity > 0)
 		src.air_transient.temperature() = total_thermal_energy/total_heat_capacity
 
@@ -141,7 +142,7 @@ var/global/list/datum/pipe_network/pipe_networks = list()
 
 	//Update individual gas_mixtures by volume ratio
 	for(var/datum/gas_mixture/gas as anything in src.gases)
-		#define _RECONCILE_AIR_TRANSFER(GAS, ...) gas.set_##GAS(src.air_transient.GAS() * gas.volume / src.air_transient.volume) ;
+		#define _RECONCILE_AIR_TRANSFER(GAS, ...) gas.set_##GAS(src.air_transient.GAS() * gas.volume() / src.air_transient.volume()) ;
 		APPLY_TO_GASES(_RECONCILE_AIR_TRANSFER)
 		#undef _RECONCILE_AIR_TRANSFER
 
@@ -160,7 +161,7 @@ proc/equalize_gases(list/datum/gas_mixture/gases)
 	#undef _EQUALIZE_GASES_TOTAL_DEF
 
 	for(var/datum/gas_mixture/gas as anything in gases)
-		total_volume += gas.volume
+		total_volume += gas.volume()
 		total_thermal_energy += THERMAL_ENERGY(gas)
 		total_heat_capacity += HEAT_CAPACITY(gas)
 
@@ -179,7 +180,7 @@ proc/equalize_gases(list/datum/gas_mixture/gases)
 
 	//Update individual gas_mixtures by volume ratio
 	for(var/datum/gas_mixture/gas as anything in gases)
-		#define _EQUALIZE_GASES_UPDATE(GAS, ...) gas.set_##GAS(total_ ## GAS * gas.volume / total_volume);
+		#define _EQUALIZE_GASES_UPDATE(GAS, ...) gas.set_##GAS(total_ ## GAS * gas.volume() / total_volume);
 		APPLY_TO_GASES(_EQUALIZE_GASES_UPDATE)
 		#undef _EQUALIZE_GASES_UPDATE
 

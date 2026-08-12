@@ -7,7 +7,7 @@
 /obj/item/inflatable_mob/New()
 	. = ..()
 	src.name = "inflatable [src.mob_name]"
-	src.air_contents.volume = 40 LITERS
+	src.air_contents.set_volume(40 LITERS)
 
 /obj/item/inflatable_mob/attackby(obj/item/tank/tank, mob/user, params)
 	if (!istype(tank))

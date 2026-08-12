@@ -592,7 +592,7 @@
 		P_special_data["burn_temp"] = src.base_temperature
 
 
-		airgas.volume = 1
+		airgas.set_volume(1)
 		if(src.lit)
 			airgas.temperature() = P_special_data["burn_temp"]
 

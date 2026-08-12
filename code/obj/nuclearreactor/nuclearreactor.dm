@@ -184,10 +184,10 @@
 		//but we need to express that in moles so,  1/n = RT/PV .. n = PV/RT
 		var/transfer_moles = 0
 		if(input_starting_pressure)
-			transfer_moles = (src.input.air_contents.volume*input_starting_pressure)/(R_IDEAL_GAS_EQUATION*src.input.air_contents.temperature())
+			transfer_moles = (src.input.air_contents.volume()*input_starting_pressure)/(R_IDEAL_GAS_EQUATION*src.input.air_contents.temperature())
 		var/datum/gas_mixture/gas_input = src.input.air_contents.remove(transfer_moles)
-		src.air_contents.volume = src.input.air_contents.volume
-		gas_input?.volume = air_contents.volume
+		src.air_contents.set_volume(src.input.air_contents.volume())
+		gas_input?.set_volume(air_contents.volume())
 		_last_total_coolant_e = gas_input ? THERMAL_ENERGY(gas_input) : 0
 		var/total_thermal_e = 0
 		for(var/x=1 to REACTOR_GRID_WIDTH)
@@ -197,7 +197,7 @@
 					//flow gas through components
 					var/obj/item/reactor_component/comp = src.component_grid[x][y]
 					var/datum/gas_mixture/gas = comp.processGas(gas_input)
-					gas_input?.volume -= comp.gas_volume
+					gas_input?.set_volume(gas_input.volume() - comp.gas_volume)
 					if(gas)
 						src.air_contents.merge(gas)
 
@@ -276,7 +276,7 @@
 
 		src.input.network?.update = TRUE
 		src.output.network?.update = TRUE
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"temp=[temperature]&rads=[tmpRads]&flowrate=[src.air_contents.volume]")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"temp=[temperature]&rads=[tmpRads]&flowrate=[src.air_contents.volume()]")
 		UpdateIcon()
 
 	attackby(obj/item/I, mob/user)
@@ -307,8 +307,8 @@
 				if(src.component_grid[x][y])
 					var/obj/item/reactor_component/comp = src.component_grid[x][y]
 					total_gas_volume += comp.gas_volume
-		src.input.air_contents.volume = total_gas_volume
-		src.air_contents.volume = total_gas_volume
+		src.input.air_contents.set_volume(total_gas_volume)
+		src.air_contents.set_volume(total_gas_volume)
 
 	proc/processCasingGas(var/datum/gas_mixture/inGas)
 		if(src.current_gas)

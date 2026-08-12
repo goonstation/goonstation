@@ -292,7 +292,7 @@ TYPEINFO(/obj/machinery/bot/buttbot)
 	else
 		gas.set_oxygen(1)
 	gas.temperature() = T20C
-	gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
+	gas.set_volume(R_IDEAL_GAS_EQUATION * T20C / 1000)
 	if(T)
 		T.assume_air(gas)
 

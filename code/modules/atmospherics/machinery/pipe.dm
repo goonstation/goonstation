@@ -140,7 +140,7 @@
 	pressure = min(pressure,  MIXTURE_PRESSURE(hi_side) - MIXTURE_PRESSURE(lo_side))
 
 	if(pressure > 0 && hi_side.temperature() )
-		var/transfer_moles = pressure*lo_side.volume/(hi_side.temperature() * R_IDEAL_GAS_EQUATION)
+		var/transfer_moles = pressure*lo_side.volume()/(hi_side.temperature() * R_IDEAL_GAS_EQUATION)
 		var/datum/gas_mixture/removed = hi_side.remove(transfer_moles)
 		if(removed) lo_side==environment ? loc.assume_air(removed) : lo_side.merge(removed)
 		UpdateIcon()

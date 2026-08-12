@@ -55,7 +55,7 @@
 		var/breath_moles = TOTAL_MOLES(breath)
 		if(breath_moles == 0)
 			breath_moles = ATMOS_EPSILON
-		var/breath_pressure = (breath_moles*R_IDEAL_GAS_EQUATION*breath.temperature())/breath.volume
+		var/breath_pressure = (breath_moles*R_IDEAL_GAS_EQUATION*breath.temperature())/breath.volume()
 		//Partial pressure of the O2 in our breath
 		var/O2_pp = (breath.oxygen()/breath_moles)*breath_pressure
 		// Same, but for the toxins
@@ -317,7 +317,7 @@ TYPEINFO(/obj/item/organ/lung/cyber)
 		var/safe_oxygen_max = 0.4
 
 		var/breath_moles = TOTAL_MOLES(breath)
-		var/breath_pressure = (breath_moles*R_IDEAL_GAS_EQUATION*breath.temperature())/breath.volume
+		var/breath_pressure = (breath_moles*R_IDEAL_GAS_EQUATION*breath.temperature())/breath.volume()
 		if(breath_moles == 0)
 			breath_moles = ATMOS_EPSILON
 		var/Toxins_pp = (breath.toxins()/breath_moles)*breath_pressure

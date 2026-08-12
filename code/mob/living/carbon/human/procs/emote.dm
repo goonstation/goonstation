@@ -2355,7 +2355,7 @@
 	if(src.bioHolder?.HasEffect("radioactive_farts"))
 		gas.set_radgas(2)
 	gas.temperature() = T20C
-	gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
+	gas.set_volume(R_IDEAL_GAS_EQUATION * T20C / 1000)
 	if (T)
 		T.assume_air(gas)
 

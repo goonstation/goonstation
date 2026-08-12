@@ -26,7 +26,7 @@
 	New(loc, datum/gas_mixture/gas)
 		. = ..()
 		src.air_contents = gas
-		src.air_contents.volume = 500
+		src.air_contents.set_volume(500)
 		src.appearance_flags |= KEEP_TOGETHER
 		src.update_graphics()
 		animate_bumble(src) //maybe a little busy? Idk let's try it, since we can't really do sprite animations due to alpha masking

@@ -58,7 +58,7 @@
 			Temperature: [emagged_analyzer ? "[round(TO_FAHRENHEIT(check_me.temperature()))] °F" : "[round(check_me.temperature())] K"]<br>"
 			//realistically bubbles should have a constantly changing volume based on their pressure but it doesn't really matter so let's just not report it
 			if (!istype(A, /obj/bubble))
-				data += "Volume: [emagged_analyzer ? "[round(TO_GALLONS(check_me.volume))] gal" : "[check_me.volume] L"]<br>"
+				data += "Volume: [emagged_analyzer ? "[round(TO_GALLONS(check_me.volume()))] gal" : "[check_me.volume()] L"]<br>"
 			data +=	"[SIMPLE_CONCENTRATION_REPORT(check_me, "<br>")]"
 
 	else

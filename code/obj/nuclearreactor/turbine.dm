@@ -184,7 +184,7 @@
 		//Energy generated = stator load * RPM
 		var/transfer_moles = 0
 		if(input_starting_pressure)
-			transfer_moles = (src.input.air_contents.volume*input_starting_pressure)/(R_IDEAL_GAS_EQUATION*src.input.air_contents.temperature())
+			transfer_moles = (src.input.air_contents.volume()*input_starting_pressure)/(R_IDEAL_GAS_EQUATION*src.input.air_contents.temperature())
 		src.air_contents =  src.input.air_contents.remove(transfer_moles)
 
 		src.current_blade?.material_trigger_on_temp(air_contents?.temperature())
@@ -251,8 +251,8 @@
 			src.output.air_contents.merge(air_contents)
 			src.terminal.add_avail(src.lastgen, src.processing_tier)
 
-		src.input.air_contents?.volume = src.flow_rate
-		src.air_contents?.volume = src.flow_rate
+		src.input.air_contents?.set_volume(src.flow_rate)
+		src.air_contents?.set_volume(src.flow_rate)
 
 		src.input.network?.update = TRUE
 		src.output.network?.update = TRUE

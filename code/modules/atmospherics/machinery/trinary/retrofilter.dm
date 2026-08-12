@@ -152,7 +152,7 @@
 	var/transfer_moles = 0
 
 	if(src.air1.temperature())
-		transfer_moles = ((pressure_delta*src.air3.volume)/(src.air1.temperature() * R_IDEAL_GAS_EQUATION))
+		transfer_moles = ((pressure_delta*src.air3.volume())/(src.air1.temperature() * R_IDEAL_GAS_EQUATION))
 
 	//Actually transfer the gas
 

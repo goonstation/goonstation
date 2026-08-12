@@ -149,7 +149,7 @@ A Flamethrower in various states of assembly
 				rem_ratio = 0.004
 		var/turf/T = get_turf(src)
 		var/datum/gas_mixture/airgas = new /datum/gas_mixture
-		airgas.volume = 1
+		airgas.set_volume(1)
 		airgas.merge(gastank_aircontents.remove_ratio(rem_ratio * 0.9))
 		T.assume_air(gastank_aircontents.remove_ratio(rem_ratio * 0.1))
 		if(src.lit)

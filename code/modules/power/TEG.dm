@@ -209,7 +209,7 @@
 			if(input_starting_pressure < (output_starting_pressure + desired_pressure))
 				// Use maximum of minimum circulator pressure OR calculated pressure required to ensure an amount that won't get rounded away by quantization
 				// Note - ( 5 * ATMOS_EPSILON ) used to allow for a ratio of multiple gas specific heats to be utilized in the mixture
-				pressure_delta = max( desired_pressure, ( ( 5 * ATMOS_EPSILON ) * (src.air1.temperature() * R_IDEAL_GAS_EQUATION) / max(src.air2.volume,1) ) )
+				pressure_delta = max( desired_pressure, ( ( 5 * ATMOS_EPSILON ) * (src.air1.temperature() * R_IDEAL_GAS_EQUATION) / max(src.air2.volume(),1) ) )
 
 				// P = dp q / μf, q ignored for simplification of system
 				var/total_pressure = (output_starting_pressure + pressure_delta - input_starting_pressure)
@@ -251,7 +251,7 @@
 			else src.use_power(fan_power_draw WATTS)
 
 		// Calculate and perform gas transfer from in to out
-		var/transfer_moles = abs(pressure_delta)*gas_output.volume/max(gas_input.temperature() * R_IDEAL_GAS_EQUATION, 1) //Stop annoying runtime errors
+		var/transfer_moles = abs(pressure_delta)*gas_output.volume()/max(gas_input.temperature() * R_IDEAL_GAS_EQUATION, 1) //Stop annoying runtime errors
 		src.last_pressure_delta = pressure_delta
 		var/datum/gas_mixture/removed = gas_input.remove(transfer_moles)
 
