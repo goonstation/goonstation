@@ -2503,6 +2503,8 @@ ABSTRACT_TYPE(/datum/material/rubber)
 
 // Placed here because it needs to have /datum/material defined already to work
 /datum/materialProc/batiline_mix
+	desc_scan = "Material radioactivity removed when combined. This increases density and/or reflectivity."
+
 	execute(var/datum/material/new_mat, var/datum/material/old_matA, var/datum/material/old_matB, var/bias)
 		var/rads = new_mat.getProperty("radioactive")
 		var/n_rads = new_mat.getProperty("n_radioactive")
@@ -2517,6 +2519,8 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		return
 
 /datum/materialProc/mycelium_mix
+	desc_scan = "Removes ingestion effects when combined with edible materials"
+
 	execute(var/datum/material/new_mat, var/datum/material/old_matA, var/datum/material/old_matB, var/bias)
 		if(old_matA.getEdible() && old_matB.getEdible())
 			new_mat.overwriteTrigger(TRIGGERS_ON_EAT, list())
