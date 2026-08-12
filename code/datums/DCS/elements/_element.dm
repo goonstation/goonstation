@@ -102,4 +102,5 @@ ABSTRACT_TYPE(/datum/element/bespoke)
 
 /// Using the arguments passed to this element when attached to a datum, create a hash to identify it.
 /datum/element/bespoke/proc/HashArguments(...)
-	return "{}"
+	SHOULD_CALL_PARENT(FALSE)
+	CRASH("[src.type]/HashArguments not implemented!")
