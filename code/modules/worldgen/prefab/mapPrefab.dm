@@ -45,13 +45,25 @@ ABSTRACT_TYPE(/datum/mapPrefab)
 	proc/adjust_position(turf/target)
 		RETURN_TYPE(/turf)
 		// Fail if prefab doesn't fit
-		if(!isnull(prefabSizeX) && (target.x + prefabSizeX) > (world.maxx - src.required_distance_from_mapedge))
-			stack_trace("mapPrefab: Prefab '[name]' with path '[prefabPath]' X size exceeds map size")
-			return null
+		if(!isnull(prefabSizeX))
+			var/leftX = target.x
+			var/rightX = leftX + prefabSizeX - 1
+			if(rightX > world.maxx)
+				stack_trace("mapPrefab: Prefab '[name]' with path '[prefabPath]' X size exceeds map size")
+				return null
+			if(leftX <= src.required_distance_from_mapedge || rightX > (world.maxx - src.required_distance_from_mapedge))
+				stack_trace("mapPrefab: Prefab '[name]' with path '[prefabPath]' spawned too close to the map edge on the X axis")
+				return null
 
-		if(!isnull(prefabSizeY) && (target.y + prefabSizeY) > (world.maxy - src.required_distance_from_mapedge))
-			stack_trace("mapPrefab: Prefab '[name]' with path '[prefabPath]' Y size exceeds map size")
-			return null
+		if(!isnull(prefabSizeY))
+			var/bottomY = target.y
+			var/topY = leftY + prefabSizeY - 1
+			if(topY > world.maxy)
+				stack_trace("mapPrefab: Prefab '[name]' with path '[prefabPath]' Y size exceeds map size")
+				return null
+			if(bottomY <= src.required_distance_from_mapedge || topY > (world.maxy - src.required_distance_from_mapedge))
+				stack_trace("mapPrefab: Prefab '[name]' with path '[prefabPath]' spawned too close to the map edge on the Y axis")
+				return null
 
 		return target
 
