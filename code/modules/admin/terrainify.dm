@@ -31,8 +31,8 @@ var/datum/station_zlevel_repair/station_repair = new
 	New()
 		..()
 		default_air = new
-		default_air.oxygen = MOLES_O2STANDARD
-		default_air.nitrogen = MOLES_N2STANDARD
+		default_air.set_oxygen(MOLES_O2STANDARD)
+		default_air.set_nitrogen(MOLES_N2STANDARD)
 		default_air.temperature() = T20C
 
 	proc/repair_turfs(turf/turfs, clear=FALSE, force_floor=FALSE)
@@ -899,9 +899,9 @@ ABSTRACT_TYPE(/datum/terrainify)
 				else
 					station_repair.weather_effect = /obj/effects/precipitation/snow/grey/tile
 
-			station_repair.default_air.carbon_dioxide = 100
-			station_repair.default_air.nitrogen = 0
-			station_repair.default_air.oxygen = 0
+			station_repair.default_air.set_carbon_dioxide(100)
+			station_repair.default_air.set_nitrogen(0)
+			station_repair.default_air.set_oxygen(0)
 			station_repair.default_air.temperature() = 100
 
 			if(params["Pitch Black"])
@@ -944,9 +944,9 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 	convert_station_level(params, mob/user)
 		if(..())
-			station_repair.default_air.carbon_dioxide = 20
-			station_repair.default_air.nitrogen = 0
-			station_repair.default_air.oxygen = 0
+			station_repair.default_air.set_carbon_dioxide(20)
+			station_repair.default_air.set_nitrogen(0)
+			station_repair.default_air.set_oxygen(0)
 			station_repair.default_air.temperature() = FIRE_MINIMUM_TEMPERATURE_TO_EXIST-1
 
 			station_repair.station_generator = new/datum/map_generator/lavamoon_generator
@@ -1040,9 +1040,9 @@ ABSTRACT_TYPE(/datum/terrainify)
 				station_repair.station_generator = new/datum/map_generator/mars_generator
 			station_repair.overlay_delay = 3.5 SECONDS // Delay to let rocks cull
 
-			station_repair.default_air.carbon_dioxide = 500
-			station_repair.default_air.nitrogen = 0
-			station_repair.default_air.oxygen = 0
+			station_repair.default_air.set_carbon_dioxide(500)
+			station_repair.default_air.set_nitrogen(0)
+			station_repair.default_air.set_oxygen(0)
 			station_repair.default_air.temperature() = 100
 
 			var/list/space = list()

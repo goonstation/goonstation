@@ -654,7 +654,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	New()
 		. = ..()
 		src.AddComponent(/datum/component/radioactive, 40, FALSE, FALSE, 1)
-		leak_gas.radgas = 100
+		leak_gas.set_radgas(100)
 		leak_gas.temperature() = T20C
 		leak_gas.volume = 200 //I guess??
 
@@ -685,7 +685,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 		// we look for the nearest floor because the jerks are probably gonna blow up a hole under the stone or something, rude
 		for(var/turf/simulated/floor/floor in range(3, get_turf(src)))
 			var/datum/gas_mixture/gas = new
-			gas.radgas = 10 * 2 ** (3 - severity)
+			gas.set_radgas(10 * 2 ** (3 - severity))
 			floor.assume_air(gas)
 			break // only the first floor we found
 

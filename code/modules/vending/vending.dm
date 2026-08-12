@@ -3245,9 +3245,9 @@ TYPEINFO(/obj/machinery/vending/janitor)
 
 		switch(vend_type)
 			if("oxygen")
-				gas_prototype.oxygen = (target_pressure)*gas_prototype.volume/(R_IDEAL_GAS_EQUATION*gas_prototype.temperature())
+				gas_prototype.set_oxygen((target_pressure)*gas_prototype.volume/(R_IDEAL_GAS_EQUATION*gas_prototype.temperature()))
 			if("plasma")
-				gas_prototype.toxins = (target_pressure)*gas_prototype.volume/(R_IDEAL_GAS_EQUATION*gas_prototype.temperature())
+				gas_prototype.set_toxins((target_pressure)*gas_prototype.volume/(R_IDEAL_GAS_EQUATION*gas_prototype.temperature()))
 
 		holding.air_contents.copy_from(gas_prototype)
 		postvend_effect()

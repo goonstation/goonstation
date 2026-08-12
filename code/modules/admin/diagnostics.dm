@@ -393,7 +393,7 @@ proc/debug_map_apc_count(delim,zlim)
 
 			var/breath_pressure = ((TOTAL_MOLES(air) * R_IDEAL_GAS_EQUATION * air.temperature()) * BREATH_PERCENTAGE) / BREATH_VOLUME
 			//Partial pressure of the O2 in our breath
-			var/O2_pp = (TOTAL_MOLES(air)) && (air.oxygen / TOTAL_MOLES(air)) * breath_pressure
+			var/O2_pp = (TOTAL_MOLES(air)) && (air.oxygen() / TOTAL_MOLES(air)) * breath_pressure
 			var/O2_color
 			var/T_color
 			switch (O2_pp)

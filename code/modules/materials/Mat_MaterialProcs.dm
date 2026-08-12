@@ -408,7 +408,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 			var/turf/simulated/floor/target = pick(valid_turfs)
 
 			var/datum/gas_mixture/payload = new /datum/gas_mixture
-			payload.toxins = 25 * location.material_amt
+			payload.set_toxins(25 * location.material_amt)
 			total_plasma -= 1
 			payload.temperature() = T20C
 			payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
@@ -451,9 +451,9 @@ triggerOnImage(var/image/target, var/datum/material/source)
 			return owner.material.triggerTemp(owner, temp)
 		var/datum/gas_mixture/payload = new /datum/gas_mixture
 
-		if(agent_b && air.toxins > MINIMUM_REACT_QUANTITY)
-			payload.oxygen_agent_b += 0.5 * owner.material_amt
-			payload.oxygen = 15 * owner.material_amt
+		if(agent_b && air.toxins() > MINIMUM_REACT_QUANTITY)
+			payload.adjust_oxygen_agent_b(0.5 * owner.material_amt)
+			payload.set_oxygen(15 * owner.material_amt)
 			payload.temperature() = T0C //reduced temp is supposeed to represent endothermic reaction
 			air.merge(payload) //add it to the target air
 
@@ -463,7 +463,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 			if(!particleMaster.CheckSystemExists(/datum/particleSystem/sparklesagentb, owner))
 				particleMaster.SpawnSystem(new /datum/particleSystem/sparklesagentb(owner))
 		else //no plasma present, or this is just normal molitz - you get just plain oxygen
-			payload.oxygen = 80 * owner.material_amt
+			payload.set_oxygen(80 * owner.material_amt)
 			payload.temperature() = temp
 			air.merge(payload) //add it to the target air
 			//blue sparkles
@@ -498,7 +498,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 			if(iterations == 0)
 				playsound(owner, 'sound/effects/molitzcrumble.ogg', 50, TRUE, 5)
 			var/datum/gas_mixture/payload = new /datum/gas_mixture
-			payload.oxygen = 50
+			payload.set_oxygen(50)
 			payload.temperature() = T20C
 			target.assume_air(payload)
 			molitz.setProperty("molitz_bubbles", iterations-2)
@@ -884,11 +884,11 @@ triggerOnImage(var/image/target, var/datum/material/source)
 			I.material.removeTrigger(TRIGGERS_ON_TEMP, /datum/materialProc/radioactive_temp)
 			return
 		var/datum/gas_mixture/air = T.return_air()
-		if (!air || air.toxins < MINIMUM_REACT_QUANTITY) return
+		if (!air || air.toxins() < MINIMUM_REACT_QUANTITY) return
 		/// Mostly bullshit magic because I don't know how radiation works and plasma isn't real, but is how many moles to convert of existing plasma
-		var/moles_to_convert = min(((I.amount * I.material_amt) * (1 + radioactive) * (1 + n_radioactive) * sqrt(temp) / 1000), air.toxins)
-		air.radgas += moles_to_convert
-		air.toxins -= moles_to_convert
+		var/moles_to_convert = min(((I.amount * I.material_amt) * (1 + radioactive) * (1 + n_radioactive) * sqrt(temp) / 1000), air.toxins())
+		air.adjust_radgas(moles_to_convert)
+		air.adjust_toxins(-moles_to_convert)
 		// Force mutability
 		if (!I.material.isMutable())
 			I.material = I.material.getMutable()

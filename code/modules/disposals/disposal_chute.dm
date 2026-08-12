@@ -131,8 +131,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject, proc/expel
 	proc/initair()
 		air_contents = new /datum/gas_mixture
 		air_contents.volume = 255
-		air_contents.nitrogen = 16.5
-		air_contents.oxygen = 4.4
+		air_contents.set_nitrogen(16.5)
+		air_contents.set_oxygen(4.4)
 		air_contents.temperature() = 293.15
 
 	proc/fits_in(atom/movable/AM)

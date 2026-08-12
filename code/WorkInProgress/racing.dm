@@ -487,7 +487,7 @@ ABSTRACT_TYPE(/datum/targetable/kart_powerup)
 
 	remove_air(amount as num)
 		var/datum/gas_mixture/Air = new /datum/gas_mixture
-		Air.oxygen = amount
+		Air.set_oxygen(amount)
 		Air.temperature() = 310
 		return Air
 

@@ -42,16 +42,16 @@ TYPEINFO(/obj/machinery/portable_atmospherics/scrubber)
 	if (filtered_out && removed)
 		filtered_out.temperature() = removed.temperature()
 		#define _FILTER_OUT_GAS(GAS, ...) \
-			filtered_out.GAS = removed.GAS; \
-			removed.GAS = 0;
+			filtered_out.set_##GAS(removed.GAS()); \
+			removed.set_##GAS(0);
 		APPLY_TO_GASES(_FILTER_OUT_GAS)
 		#undef _FILTER_OUT_GAS
 
 		// revert for breathable
-		removed.oxygen = filtered_out.oxygen
-		filtered_out.oxygen = 0
-		removed.nitrogen = filtered_out.nitrogen
-		filtered_out.nitrogen = 0
+		removed.set_oxygen(filtered_out.oxygen())
+		filtered_out.set_oxygen(0)
+		removed.set_nitrogen(filtered_out.nitrogen())
+		filtered_out.set_nitrogen(0)
 
 		//Remix the resulting gases
 		air_contents.merge(filtered_out)

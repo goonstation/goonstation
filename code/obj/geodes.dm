@@ -98,7 +98,7 @@ ADMIN_INTERACT_PROCS(/obj/geode, proc/break_open)
 			if (!istype(T))
 				return
 			var/datum/gas_mixture/release_gas = new
-			release_gas.oxygen_agent_b = 400
+			release_gas.set_oxygen_agent_b(400)
 			release_gas.temperature() = T20C
 			T.assume_air(release_gas)
 

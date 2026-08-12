@@ -57,13 +57,13 @@
 			breath_moles = ATMOS_EPSILON
 		var/breath_pressure = (breath_moles*R_IDEAL_GAS_EQUATION*breath.temperature())/breath.volume
 		//Partial pressure of the O2 in our breath
-		var/O2_pp = (breath.oxygen/breath_moles)*breath_pressure
+		var/O2_pp = (breath.oxygen()/breath_moles)*breath_pressure
 		// Same, but for the toxins
-		var/Toxins_pp = (breath.toxins/breath_moles)*breath_pressure
+		var/Toxins_pp = (breath.toxins()/breath_moles)*breath_pressure
 		// And CO2, lets say a PP of more than 10 will be bad (It's a little less really, but eh, being passed out all round aint no fun)
-		var/CO2_pp = (breath.carbon_dioxide/breath_moles)*breath_pressure
-		var/FARD_pp = (breath.farts/breath_moles)*breath_pressure
-		var/Radgas_pp = (breath.radgas/breath_moles)*breath_pressure
+		var/CO2_pp = (breath.carbon_dioxide()/breath_moles)*breath_pressure
+		var/FARD_pp = (breath.farts()/breath_moles)*breath_pressure
+		var/Radgas_pp = (breath.radgas()/breath_moles)*breath_pressure
 		var/oxygen_used
 
 		if(breaths_oxygen)
@@ -76,17 +76,17 @@
 				if (O2_pp > 0)
 					var/ratio = round(safe_oxygen_min/(O2_pp + 0.1))
 					donor.take_oxygen_deprivation(min(5*ratio, 5)/LUNG_COUNT) // Don't fuck them up too fast (space only does 7 after all!)
-					oxygen_used = min(breath.oxygen*ratio/6, breath.oxygen)
+					oxygen_used = min(breath.oxygen()*ratio/6, breath.oxygen())
 				else
 					donor.take_oxygen_deprivation(3 * mult/LUNG_COUNT)
 				update.show_oxy_indicator = TRUE
 			else 									// We're in safe limits
 				. = TRUE
 				donor.take_oxygen_deprivation(-6 * mult/LUNG_COUNT)
-				oxygen_used = breath.oxygen/6
+				oxygen_used = breath.oxygen()/6
 
-			breath.oxygen -= oxygen_used
-			breath.carbon_dioxide += oxygen_used
+			breath.adjust_oxygen(-oxygen_used)
+			breath.adjust_carbon_dioxide(oxygen_used)
 
 		if (CO2_pp > safe_co2_max)
 			if (!donor.co2overloadtime) // If it's the first breath with too much CO2 in it, lets start a counter, then have them pass out after 12s or so.
@@ -102,15 +102,15 @@
 			donor.co2overloadtime = 0
 
 		if (Toxins_pp > safe_toxins_max) // Too much toxins
-			var/ratio = breath.toxins/safe_toxins_max
+			var/ratio = breath.toxins()/safe_toxins_max
 			donor.take_toxin_damage(min(ratio * 125,20) * mult/LUNG_COUNT)
 			update.show_tox_indicator = TRUE
 
 		if (Radgas_pp > 0) //any fallout is too much fallout
 			donor.take_radiation_dose(min(0.03 * Radgas_pp, 0.2) * mult/LUNG_COUNT, internal=TRUE) //not a lethal dose in one second tho
-			breath.radgas *= 0.5 //lets say you keep half of it in your lungs.
+			breath.set_radgas(breath.radgas() * 0.5) //lets say you keep half of it in your lungs.
 
-		var/N2O_pp = (breath.nitrous_oxide/breath_moles)*breath_pressure
+		var/N2O_pp = (breath.nitrous_oxide()/breath_moles)*breath_pressure
 		if (N2O_pp > n2o_para_min) // Enough to make us paralysed for a bit
 			donor.changeStatus("knockdown", 5 SECONDS/LUNG_COUNT)
 			if (N2O_pp > n2o_sleep_min) // Enough to make us sleep as well
@@ -118,8 +118,8 @@
 		else if (N2O_pp > 0.5)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 			if (probmult(20))
 				update.emotes |= pick("giggle", "laugh")
-		breath.nitrogen += breath.nitrous_oxide //it gets converted to nitrogen via magic. I'm no biochemist.
-		breath.nitrous_oxide = 0
+		breath.adjust_nitrogen(breath.nitrous_oxide()) //it gets converted to nitrogen via magic. I'm no biochemist.
+		breath.set_nitrous_oxide(0)
 
 		if (prob(15) && (FARD_pp > fart_smell_min))
 			boutput(donor, SPAN_ALERT("Smells like someone [pick("died","soiled themselves","let one rip","made a bad fart","peeled a dozen eggs")] in here!"))
@@ -257,11 +257,11 @@ TYPEINFO(/obj/item/organ/lung/cyber)
 		src.icon_state = pick("plant_lung_t", "plant_lung_t_bloom")
 
 	breathe(datum/gas_mixture/breath, underwater, mult, datum/organ_status/lung/update)
-		breath.carbon_dioxide /= 2
-		breath.oxygen += breath.carbon_dioxide
+		breath.set_carbon_dioxide(breath.carbon_dioxide() / 2)
+		breath.adjust_oxygen(breath.carbon_dioxide())
 		. = ..()
-		breath.oxygen += breath.carbon_dioxide
-		breath.carbon_dioxide = 0
+		breath.adjust_oxygen(breath.carbon_dioxide())
+		breath.set_carbon_dioxide(0)
 
 /obj/item/organ/lung/synth/left
 	name = "left lung"
@@ -320,8 +320,8 @@ TYPEINFO(/obj/item/organ/lung/cyber)
 		var/breath_pressure = (breath_moles*R_IDEAL_GAS_EQUATION*breath.temperature())/breath.volume
 		if(breath_moles == 0)
 			breath_moles = ATMOS_EPSILON
-		var/Toxins_pp = (breath.toxins/breath_moles)*breath_pressure
-		var/O2_pp = (breath.oxygen/breath_moles)*breath_pressure
+		var/Toxins_pp = (breath.toxins()/breath_moles)*breath_pressure
+		var/O2_pp = (breath.oxygen()/breath_moles)*breath_pressure
 		var/gas_used
 
 		if (Toxins_pp < safe_oxygen_min) 			// Too little plasma
@@ -333,19 +333,19 @@ TYPEINFO(/obj/item/organ/lung/cyber)
 			if (Toxins_pp > 0)
 				var/ratio = round(safe_oxygen_min/(Toxins_pp + 0.1))
 				donor.take_oxygen_deprivation(min(5*ratio, 5)/LUNG_COUNT) // Don't fuck them up too fast (space only does 7 after all!)
-				gas_used = min(breath.toxins*ratio/6, breath.oxygen)
+				gas_used = min(breath.toxins()*ratio/6, breath.oxygen())
 			else
 				donor.take_oxygen_deprivation(3 * mult/LUNG_COUNT)
 			update.show_oxy_indicator = TRUE
 		else 									// We're in safe limits
 			donor.take_oxygen_deprivation(-6 * mult/LUNG_COUNT)
-			gas_used = breath.toxins/6
+			gas_used = breath.toxins()/6
 
-		breath.toxins -= gas_used
-		breath.carbon_dioxide += gas_used
+		breath.adjust_toxins(-gas_used)
+		breath.adjust_carbon_dioxide(gas_used)
 
 		if (O2_pp > safe_oxygen_max) // Too much toxins
-			var/ratio = breath.oxygen/safe_oxygen_max
+			var/ratio = breath.oxygen()/safe_oxygen_max
 			donor.take_toxin_damage(min(ratio * 125,20) * mult/LUNG_COUNT)
 			update.show_tox_indicator = TRUE
 

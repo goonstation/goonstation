@@ -135,12 +135,12 @@
 		bubble_gas.temperature() = T20C
 		//increasingly rare as we go down the chain
 		if (prob(50))
-			bubble_gas.oxygen = rand(20, 40)
+			bubble_gas.set_oxygen(rand(20, 40))
 		else if (prob(60))
-			bubble_gas.toxins = rand(20, 40)
+			bubble_gas.set_toxins(rand(20, 40))
 		else if (prob(50))
-			bubble_gas.nitrogen = rand(20, 40)
+			bubble_gas.set_nitrogen(rand(20, 40))
 		else
-			bubble_gas.oxygen_agent_b = rand(20, 40)
+			bubble_gas.set_oxygen_agent_b(rand(20, 40))
 		new /obj/bubble/current(src.loc, bubble_gas)
 

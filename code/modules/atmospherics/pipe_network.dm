@@ -122,7 +122,7 @@ var/global/list/datum/pipe_network/pipe_networks = list()
 		total_thermal_energy += THERMAL_ENERGY(gas)
 		total_heat_capacity += HEAT_CAPACITY(gas)
 
-		#define _RECONCILE_AIR(GAS, ...) air_transient.GAS += gas.GAS;
+		#define _RECONCILE_AIR(GAS, ...) air_transient.adjust_##GAS(gas.GAS());
 		APPLY_TO_GASES(_RECONCILE_AIR)
 		#undef _RECONCILE_AIR
 
@@ -141,7 +141,7 @@ var/global/list/datum/pipe_network/pipe_networks = list()
 
 	//Update individual gas_mixtures by volume ratio
 	for(var/datum/gas_mixture/gas as anything in src.gases)
-		#define _RECONCILE_AIR_TRANSFER(GAS, ...) gas.GAS = src.air_transient.GAS * gas.volume / src.air_transient.volume ;
+		#define _RECONCILE_AIR_TRANSFER(GAS, ...) gas.set_##GAS(src.air_transient.GAS() * gas.volume / src.air_transient.volume) ;
 		APPLY_TO_GASES(_RECONCILE_AIR_TRANSFER)
 		#undef _RECONCILE_AIR_TRANSFER
 
@@ -164,7 +164,7 @@ proc/equalize_gases(list/datum/gas_mixture/gases)
 		total_thermal_energy += THERMAL_ENERGY(gas)
 		total_heat_capacity += HEAT_CAPACITY(gas)
 
-		#define _EQUALIZE_GASES_ADD_TO_TOTAL(GAS, ...) total_ ## GAS += gas.GAS;
+		#define _EQUALIZE_GASES_ADD_TO_TOTAL(GAS, ...) total_ ## GAS += gas.GAS();
 		APPLY_TO_GASES(_EQUALIZE_GASES_ADD_TO_TOTAL)
 		#undef _EQUALIZE_GASES_ADD_TO_TOTAL
 
@@ -179,7 +179,7 @@ proc/equalize_gases(list/datum/gas_mixture/gases)
 
 	//Update individual gas_mixtures by volume ratio
 	for(var/datum/gas_mixture/gas as anything in gases)
-		#define _EQUALIZE_GASES_UPDATE(GAS, ...) gas.GAS = total_ ## GAS * gas.volume / total_volume;
+		#define _EQUALIZE_GASES_UPDATE(GAS, ...) gas.set_##GAS(total_ ## GAS * gas.volume / total_volume);
 		APPLY_TO_GASES(_EQUALIZE_GASES_UPDATE)
 		#undef _EQUALIZE_GASES_UPDATE
 

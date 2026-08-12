@@ -953,11 +953,11 @@
 		var/toxins_consumed = 0
 		for (var/turf/simulated/floor/T in range(protect_range,src))
 			var/datum/gas_mixture/air = T.air
-			if (air.toxins > 0)
+			if (air.toxins() > 0)
 				if (air.temperature() > T20C)
 					air.temperature() = T20C + (air.temperature() - T20C) / 1.25
-				toxins_consumed += min(consume_per_tick, air.toxins)
-				air.toxins = max(air.toxins - consume_per_tick, 0)
+				toxins_consumed += min(consume_per_tick, air.toxins())
+				air.set_toxins(max(air.toxins() - consume_per_tick, 0))
 		if (!toxins_consumed)
 			return
 		overmind.bio_points = min(overmind.bio_points + round(toxins_consumed / plasma_per_point), overmind.bio_points_max)

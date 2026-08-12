@@ -2646,7 +2646,7 @@ var/atom/movable/abstract_say_source/deadchat/deadchat_announcer = new()
 
 		if (breathable)
 			var/turf/simulated/T = container.loc
-			if(!istype(T) || (T.air?.oxygen <= (MOLES_O2STANDARD - 1) || T.air?.temperature() <= T0C || T.air?.temperature() >= DEFAULT_LUNG_AIR_TEMP_TOLERANCE_MAX))
+			if(!istype(T) || (T.air?.oxygen() <= (MOLES_O2STANDARD - 1) || T.air?.temperature() <= T0C || T.air?.temperature() >= DEFAULT_LUNG_AIR_TEMP_TOLERANCE_MAX))
 				continue
 
 		if (no_others)

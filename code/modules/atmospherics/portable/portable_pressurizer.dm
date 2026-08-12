@@ -138,7 +138,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pressurizer)
 
 	proc/is_air_safe()
 		var/total_moles = max(TOTAL_MOLES(src.air_contents),1)
-		return(((src.air_contents.toxins/total_moles) < 0.01) && ((src.air_contents.carbon_dioxide/total_moles) < 0.05) && (src.air_contents.temperature() < FIRE_MINIMUM_TEMPERATURE_TO_SPREAD))
+		return(((src.air_contents.toxins()/total_moles) < 0.01) && ((src.air_contents.carbon_dioxide()/total_moles) < 0.05) && (src.air_contents.temperature() < FIRE_MINIMUM_TEMPERATURE_TO_SPREAD))
 
 	proc/process_raw_materials()
 		if(status & NOPOWER)
@@ -167,13 +167,13 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pressurizer)
 			if(target_material.material?.getName() in src.whitelist)
 				switch(target_material.material.getName())
 					if("molitz")
-						GM.oxygen += 1500 * progress / 100
+						GM.adjust_oxygen(1500 * progress / 100)
 					if("viscerite")
-						GM.nitrogen += 1500 * progress / 100
+						GM.adjust_nitrogen(1500 * progress / 100)
 					if("char")
-						GM.carbon_dioxide += 500 * progress / 100
+						GM.adjust_carbon_dioxide(500 * progress / 100)
 					if("plasmastone")
-						GM.toxins += 500 * progress / 100
+						GM.adjust_toxins(500 * progress / 100)
 			else
 				playsound(src.loc, 'sound/machines/buzz-two.ogg', 20)
 				process_materials = PROCESS_PAUSED
@@ -274,9 +274,9 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pressurizer)
 
 		var/obj/overlay/poof = new/obj/overlay(get_turf(src))
 		poof.icon = 'icons/obj/atmospherics/atmos.dmi'
-		poof.color=rgb(air_contents.toxins/TOTAL_MOLES(air_contents)*255, 	\
-						air_contents.oxygen/TOTAL_MOLES(air_contents)*255,	\
-						air_contents.oxygen+air_contents.toxins/TOTAL_MOLES(air_contents)*255)
+		poof.color=rgb(air_contents.toxins()/TOTAL_MOLES(air_contents)*255, 	\
+						air_contents.oxygen()/TOTAL_MOLES(air_contents)*255,	\
+						air_contents.oxygen()+air_contents.toxins()/TOTAL_MOLES(air_contents)*255)
 		poof.alpha = clamp(MIXTURE_PRESSURE(src.air_contents)/src.maximum_pressure*180, 90, 220)
 		FLICK("pressurizer-poof", poof)
 		SPAWN(0.8 SECONDS)

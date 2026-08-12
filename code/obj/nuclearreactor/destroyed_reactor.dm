@@ -31,7 +31,7 @@
 		if(!current_loc)
 			return
 		var/datum/gas_mixture/current_gas = new/datum/gas_mixture()
-		current_gas.radgas += 50
+		current_gas.adjust_radgas(50)
 		current_gas.temperature() = 1000
 		current_loc.assume_air(current_gas)
 		for(var/i = 1 to 5)

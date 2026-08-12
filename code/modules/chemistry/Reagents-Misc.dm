@@ -635,7 +635,7 @@ datum
 							var/datum/gas_mixture/lowertemp = T.remove_air( TOTAL_MOLES(T.air) )
 							if (lowertemp)
 								lowertemp.temperature() = FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 200 //T0C - 100
-								lowertemp.toxins = max(lowertemp.toxins-50,0)
+								lowertemp.set_toxins(max(lowertemp.toxins()-50,0))
 								lowertemp.react()
 								T.assume_air(lowertemp)
 					for (var/atom/movable/hotspot/hotspot as anything in hotspots)
@@ -1217,7 +1217,7 @@ datum
 						var/datum/gas_mixture/lowertemp = T.remove_air( TOTAL_MOLES(T.air) )
 						if (lowertemp) //ZeWaka: Fix for null.temperature()
 							lowertemp.temperature() = FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 200 //T0C - 100
-							lowertemp.toxins = max(lowertemp.toxins-50,0)
+							lowertemp.set_toxins(max(lowertemp.toxins()-50,0))
 							lowertemp.react()
 							T.assume_air(lowertemp)
 					for (var/atom/movable/hotspot/hotspot as anything in hotspots)

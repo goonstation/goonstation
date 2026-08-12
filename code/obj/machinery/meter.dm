@@ -73,7 +73,7 @@ TYPEINFO(/obj/machinery/meter)
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 	var/list/signal = list("pressure=[env_pressure]&temperature=[environment.temperature()]")
-	#define COMPILE_GAS_MOLES(GAS, ...) if(environment.GAS) {signal += "&[#GAS]=[environment.GAS]"}
+	#define COMPILE_GAS_MOLES(GAS, ...) if(environment.GAS()) {signal += "&[#GAS]=[environment.GAS()]"}
 	APPLY_TO_GASES(COMPILE_GAS_MOLES)
 	#undef COMPILE_GAS_MOLES
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, signal.Join())

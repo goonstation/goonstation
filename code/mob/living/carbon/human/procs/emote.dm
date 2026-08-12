@@ -2341,19 +2341,19 @@
 	var/turf/T = get_turf(src)
 	var/datum/gas_mixture/gas = new /datum/gas_mixture
 	if(oxyplasmafart == 1)
-		gas.toxins += 1
+		gas.adjust_toxins(1)
 	if(oxyplasmafart == 2)
-		gas.oxygen += 1
+		gas.adjust_oxygen(1)
 	if(src.reagents && src.reagents.get_reagent_amount("fartonium") > 6.9)
-		gas.farts = 6.9
+		gas.set_farts(6.9)
 	else if(src.reagents && src.reagents.get_reagent_amount("egg") > 6.9)
-		gas.farts = 2.69
+		gas.set_farts(2.69)
 	else if(src.reagents && src.reagents.get_reagent_amount("refried_beans") > 6.9)
-		gas.farts = 1.69
+		gas.set_farts(1.69)
 	else
-		gas.farts = 0.69
+		gas.set_farts(0.69)
 	if(src.bioHolder?.HasEffect("radioactive_farts"))
-		gas.radgas = 2
+		gas.set_radgas(2)
 	gas.temperature() = T20C
 	gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 	if (T)

@@ -42,7 +42,7 @@
 			/*  If we have a hotspot with sufficient gas, we set to the exposed_ args if the hotspot is lower and change our colour if needed.
 				My best guess on why we need this is so mounted igniters and such don't cool down hotspots when used, only heating them up.
 				I don't like how much effort was needed in renaming this var from "soh" and figuring out what it does - cringe */
-			if ((air_contents.toxins > 0.5 MOLES) && (air_contents.oxygen > 0.5 MOLES))
+			if ((air_contents.toxins() > 0.5 MOLES) && (air_contents.oxygen() > 0.5 MOLES))
 				for (var/atom/movable/hotspot/hotspot as anything in src.active_hotspots)
 					if (hotspot.temperature < exposed_temperature)
 						hotspot.temperature = exposed_temperature
@@ -51,7 +51,7 @@
 						hotspot.volume = exposed_volume
 		return TRUE
 
-	if ((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && (air_contents.toxins > 0.5) && (air_contents.oxygen > 0.5))
+	if ((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && (air_contents.toxins() > 0.5) && (air_contents.oxygen() > 0.5))
 
 		src.add_hotspot(exposed_temperature, exposed_volume)
 
@@ -459,4 +459,4 @@
 
 // Chemfires don't care about toxins in the atmosphere
 /atom/movable/hotspot/chemfire/is_atmosphere_unsuitable(turf/simulated/floor/location)
-	return (!location.air || location.air.oxygen < 0.5 MOLES)
+	return (!location.air || location.air.oxygen() < 0.5 MOLES)

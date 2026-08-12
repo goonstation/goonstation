@@ -358,7 +358,7 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 		if (H && isalive(H)) H.lastgasp(grunt = pick("GLUB", "blblbl", "BLUH", "BLURGH"))
 		//setunconcious(occupant)
 		if(src.occupant.bodytemperature < T0C)
-			if(src.air_contents.oxygen > 2 MOLES)
+			if(src.air_contents.oxygen() > 2 MOLES)
 				if(src.occupant.get_oxygen_deprivation())
 					src.occupant.take_oxygen_deprivation(-10)
 			else

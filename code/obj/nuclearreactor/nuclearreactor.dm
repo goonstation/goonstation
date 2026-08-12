@@ -412,7 +412,7 @@
 						var/obj/item/reactor_component/gas_channel/gascomp = comp
 						src.current_gas.merge(gascomp.air_contents) //grab all the gas in the channels and put it back in the reactor so it can be vented into engineering
 
-		src.current_gas.radgas += meltdown_badness*15
+		src.current_gas.adjust_radgas(meltdown_badness*15)
 		src.current_gas.set_temperature(max(src.temperature, src.current_gas.temperature()))
 		var/turf/current_loc = get_turf(src)
 		current_loc.assume_air(current_gas)

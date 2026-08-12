@@ -581,11 +581,11 @@
 		for(var/gas in src.initial_gas_mixture)
 			switch(gas)
 				if("oxygen")
-					airgas.oxygen = initial_gas_mixture[gas]
+					airgas.set_oxygen(initial_gas_mixture[gas])
 				if("toxins")
-					airgas.toxins = initial_gas_mixture[gas]
+					airgas.set_toxins(initial_gas_mixture[gas])
 				if("nitrogen")
-					airgas.nitrogen = initial_gas_mixture[gas]
+					airgas.set_nitrogen(initial_gas_mixture[gas])
 
 		P_special_data["proj_color"] = P.reagents.get_average_color()
 		P_special_data["IS_LIT"] = src.lit

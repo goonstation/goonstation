@@ -86,8 +86,8 @@
 		if (length(viewers(world.view, src)))
 			var/obj/effects/bubbles/bubbles = new(get_turf(src))
 			bubbles.Scale(src.scale, src.scale)
-			GAS_MIXTURE_COLOR(bubbles.color, src.air_contents.toxins, "#d27ce4")
-			GAS_MIXTURE_COLOR(bubbles.color, src.air_contents.radgas, "#8cd359")
+			GAS_MIXTURE_COLOR(bubbles.color, src.air_contents.toxins(), "#d27ce4")
+			GAS_MIXTURE_COLOR(bubbles.color, src.air_contents.radgas(), "#8cd359")
 		qdel(src)
 
 	attackby(obj/item/I, mob/user)
@@ -132,7 +132,7 @@
 	lifetime = 30 SECONDS
 	New(loc)
 		var/datum/gas_mixture/plasma = new()
-		plasma.toxins = 100
+		plasma.set_toxins(100)
 		plasma.temperature() = T20C
 		..(loc, plasma)
 
@@ -183,7 +183,7 @@
 		var/total_amount = src.amount + rand(-src.variance, src.variance)
 		var/datum/gas_mixture/gas_mixture = new()
 		gas_mixture.temperature() = src.temperature
-#define _MAKE_GASES(GAS, ...) if (src.GAS) {gas_mixture.GAS = total_amount/total_gases};
+#define _MAKE_GASES(GAS, ...) if (src.GAS) {gas_mixture.set_##GAS(total_amount/total_gases)};
 		APPLY_TO_GASES(_MAKE_GASES)
 #undef _MAKE_GASES
 		new /obj/bubble(src.loc, gas_mixture)

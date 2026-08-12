@@ -12,8 +12,8 @@
 
 	//Always absorb atmosphere at the standard rate
 	var/datum/gas_mixture/air_mix = new
-	air_mix.oxygen = MOLES_O2STANDARD
-	air_mix.nitrogen = MOLES_O2STANDARD
+	air_mix.set_oxygen(MOLES_O2STANDARD)
+	air_mix.set_nitrogen(MOLES_O2STANDARD)
 	air_mix.fuel_burnt = 0
 	air_mix.temperature() = T20C
 	. = ..(air_mix)

@@ -90,7 +90,7 @@
 		src.attachedTo.visible_message(SPAN_ALERT("<b>The cut detonation wire emits a spark. The detonator signal never reached the detonator unit.</b>"))
 		return
 	var/obj/item/tank/plasma_tank = src.part_assembly.target
-	if (MIXTURE_PRESSURE(plasma_tank.air_contents) < 400 || plasma_tank.air_contents.toxins < (4*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C))
+	if (MIXTURE_PRESSURE(plasma_tank.air_contents) < 400 || plasma_tank.air_contents.toxins() < (4*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C))
 		src.attachedTo.visible_message(SPAN_ALERT("<b>A sparking noise is heard as the igniter goes off. The plasma tank fails to explode, merely burning the circuits of the detonator.</b>"))
 		src.attachedTo.det = null
 		src.attachedTo.overlay_state = null

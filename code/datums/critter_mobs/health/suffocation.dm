@@ -55,16 +55,16 @@
 		if (isnull(breath)) return //ZeWaka: fix for null.total_moles
 		var/breath_pressure = (TOTAL_MOLES(breath) * R_IDEAL_GAS_EQUATION * breath.temperature()) / volume
 		if (breath && TOTAL_MOLES(breath) > 0)
-			var/o2_pp = (breath.oxygen / TOTAL_MOLES(breath)) * breath_pressure
-			var/toxins_pp = (breath.toxins / TOTAL_MOLES(breath)) * breath_pressure
-			var/co2_pp = (breath.carbon_dioxide / TOTAL_MOLES(breath)) * breath_pressure
+			var/o2_pp = (breath.oxygen() / TOTAL_MOLES(breath)) * breath_pressure
+			var/toxins_pp = (breath.toxins() / TOTAL_MOLES(breath)) * breath_pressure
+			var/co2_pp = (breath.carbon_dioxide() / TOTAL_MOLES(breath)) * breath_pressure
 			if (((oxygen_min > 0 && oxygen_min <= o2_pp) || oxygen_min <= 0) && ((oxygen_max > 0 && oxygen_max >= o2_pp) || oxygen_max <= 0))
 				if (prime_breathing == "o")
 					breathing = 1
 					var/ratio = round(oxygen_min / (o2_pp + 0.1))
-					var/usage = breath.oxygen*ratio/6
-					breath.oxygen -= usage
-					breath.carbon_dioxide += usage
+					var/usage = breath.oxygen()*ratio/6
+					breath.adjust_oxygen(-usage)
+					breath.adjust_carbon_dioxide(usage)
 				o2_damage = 0
 			else
 				TakeDamage(3 + o2_damage)
@@ -76,9 +76,9 @@
 				if (prime_breathing == "c")
 					breathing = 1
 					var/ratio = round(co2_min / (co2_pp + 0.1))
-					var/usage = breath.carbon_dioxide * ratio / 6
-					breath.oxygen += usage
-					breath.carbon_dioxide -= usage
+					var/usage = breath.carbon_dioxide() * ratio / 6
+					breath.adjust_oxygen(usage)
+					breath.adjust_carbon_dioxide(-usage)
 				co2_damage = 0
 			else
 				TakeDamage(3 + co2_damage)
@@ -90,10 +90,10 @@
 				if (prime_breathing == "t")
 					breathing = 1
 					var/ratio = round(toxins_min / (toxins_pp + 0.1))
-					var/usage = breath.toxins * ratio / 6
-					breath.toxins -= usage
+					var/usage = breath.toxins() * ratio / 6
+					breath.adjust_toxins(-usage)
 					// well it has to make some SOMETHING.
-					breath.carbon_dioxide += usage
+					breath.adjust_carbon_dioxide(usage)
 				toxin_damage = 0
 			else
 				if (toxins_max > 0 && toxins_pp > toxins_max)
@@ -102,7 +102,7 @@
 					TakeDamage(3 + toxin_damage)
 
 			// If there's some other shit in the air lets deal with it here.
-			var/N2O_pp = (breath.nitrous_oxide/TOTAL_MOLES(breath))*breath_pressure
+			var/N2O_pp = (breath.nitrous_oxide()/TOTAL_MOLES(breath))*breath_pressure
 			if (N2O_pp > n2o_para_min) // Enough to make us paralysed for a bit
 				holder.changeStatus("knockdown", 3 SECONDS)
 				if (N2O_pp > n2o_sleep_min) // Enough to make us sleep as well
@@ -111,7 +111,7 @@
 				if (prob(20))
 					holder.emote(pick("giggle", "laugh"))
 
-			var/FARD_pp = (breath.farts/TOTAL_MOLES(breath))*breath_pressure
+			var/FARD_pp = (breath.farts()/TOTAL_MOLES(breath))*breath_pressure
 			if (prob(10) && (FARD_pp > fart_smell_min))
 				boutput(holder, SPAN_ALERT("Smells like someone [pick("died","soiled themselves","let one rip","made a bad fart","peeled a dozen eggs")] in here!"))
 				if (FARD_pp > fart_vomit_min)

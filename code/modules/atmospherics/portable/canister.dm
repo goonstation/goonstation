@@ -755,21 +755,21 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 /obj/machinery/portable_atmospherics/canister/toxins/New()
 	..()
 	if (!src.isempty)
-		src.air_contents.toxins = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature())
+		src.air_contents.set_toxins((src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature()))
 	src.UpdateIcon()
 	return 1
 
 /obj/machinery/portable_atmospherics/canister/oxygen/New()
 	..()
 	if (!src.isempty)
-		src.air_contents.oxygen = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature())
+		src.air_contents.set_oxygen((src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature()))
 	src.UpdateIcon()
 	return 1
 
 /obj/machinery/portable_atmospherics/canister/sleeping_agent/New()
 	..()
 	if (!src.isempty)
-		src.air_contents.nitrous_oxide = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature())
+		src.air_contents.set_nitrous_oxide((src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature()))
 	src.UpdateIcon()
 	return 1
 
@@ -777,36 +777,36 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	..()
 	if (!src.isempty)
 		src.air_contents.temperature() = 80
-		src.air_contents.nitrogen = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature())
+		src.air_contents.set_nitrogen((src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature()))
 	src.UpdateIcon()
 	return 1
 
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide/New()
 	..()
 	if (!src.isempty)
-		src.air_contents.carbon_dioxide = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature())
+		src.air_contents.set_carbon_dioxide((src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature()))
 	src.UpdateIcon()
 	return 1
 
 /obj/machinery/portable_atmospherics/canister/air/New()
 	..()
 	if (!src.isempty)
-		src.air_contents.oxygen = (O2STANDARD*src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature())
-		src.air_contents.nitrogen = (N2STANDARD*src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature())
+		src.air_contents.set_oxygen((O2STANDARD*src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature()))
+		src.air_contents.set_nitrogen((N2STANDARD*src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature()))
 	src.UpdateIcon()
 	return 1
 
 /obj/machinery/portable_atmospherics/canister/poo/New()
 	..()
 	if (!src.isempty)
-		src.air_contents.oxygen = (src.maximum_pressure*filled * (2/3))*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature())
-		src.air_contents.toxins = (src.maximum_pressure*filled * (1/3))*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature())
+		src.air_contents.set_oxygen((src.maximum_pressure*filled * (2/3))*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature()))
+		src.air_contents.set_toxins((src.maximum_pressure*filled * (1/3))*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature()))
 	src.UpdateIcon()
 	return 1
 
 /obj/machinery/portable_atmospherics/canister/methane/New()
 	..()
 	if (!src.isempty)
-		src.air_contents.farts = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature())
+		src.air_contents.set_farts((src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature()))
 	src.UpdateIcon()
 	return 1

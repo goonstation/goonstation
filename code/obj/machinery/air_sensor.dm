@@ -47,13 +47,13 @@ obj/machinery/air_sensor
 				if(total_moles == 0)
 					total_moles = 1
 				if(output&4)
-					signal.data["oxygen"] = round(100*air_sample.oxygen/total_moles)
+					signal.data["oxygen"] = round(100*air_sample.oxygen()/total_moles)
 				if(output&8)
-					signal.data["toxins"] = round(100*air_sample.toxins/total_moles)
+					signal.data["toxins"] = round(100*air_sample.toxins()/total_moles)
 				if(output&16)
-					signal.data["carbon_dioxide"] = round(100*air_sample.carbon_dioxide/total_moles)
+					signal.data["carbon_dioxide"] = round(100*air_sample.carbon_dioxide()/total_moles)
 				if(output&32)
-					signal.data["nitrogen"] = round(100*air_sample.nitrogen/total_moles)
+					signal.data["nitrogen"] = round(100*air_sample.nitrogen()/total_moles)
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 	New()

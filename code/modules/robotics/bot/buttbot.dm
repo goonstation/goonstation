@@ -286,11 +286,11 @@ TYPEINFO(/obj/machinery/bot/buttbot)
 	var/turf/T = get_turf(src)
 	var/datum/gas_mixture/gas = new /datum/gas_mixture
 	if(gross == 1)
-		gas.farts = 0.5
+		gas.set_farts(0.5)
 	else if(gross == 2)
-		gas.farts = 20
+		gas.set_farts(20)
 	else
-		gas.oxygen = 1
+		gas.set_oxygen(1)
 	gas.temperature() = T20C
 	gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 	if(T)

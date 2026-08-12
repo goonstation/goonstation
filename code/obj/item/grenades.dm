@@ -822,8 +822,8 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 		var/turf/simulated/T = ..()
 		var/datum/gas_mixture/GM = new /datum/gas_mixture
 		GM.temperature() = T20C + 15
-		GM.oxygen = 1830
-		GM.carbon_dioxide = 20
+		GM.set_oxygen(1830)
+		GM.set_carbon_dioxide(20)
 
 		var/obj/effects/explosion/E = new /obj/effects/explosion(T)
 		// Uses existing animated icon adjust coloration of explosion to lighter cyan to match oxygen items
@@ -2275,7 +2275,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 				for (var/turf/simulated/floor/target in range(1,origin))
 					if(!target.gas_impermeable && target.air)
 						var/datum/gas_mixture/payload = new /datum/gas_mixture
-						payload.toxins = plasma * 100
+						payload.set_toxins(plasma * 100)
 						payload.temperature() = T20C
 						payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 						target.air.merge(payload)

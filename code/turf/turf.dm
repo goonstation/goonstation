@@ -846,7 +846,7 @@ var/global/in_replace_with = 0
 
 			#define _OLD_GAS_VAR_NOT_NULL(GAS, ...) GAS ## _old ||
 			if (N.air && (APPLY_TO_GASES(_OLD_GAS_VAR_NOT_NULL) 0)) //Unsimulated tile w/ static atmos -> simulated floor handling
-				#define _OLD_GAS_VAR_RESTORE(GAS, ...) N.air.GAS += GAS ## _old;
+				#define _OLD_GAS_VAR_RESTORE(GAS, ...) N.air.adjust_##GAS(GAS ## _old);
 
 				APPLY_TO_GASES(_OLD_GAS_VAR_RESTORE)
 				if (!N.air.temperature())

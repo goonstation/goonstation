@@ -185,7 +185,7 @@
 			AM.temperature_expose(src.air, src.air.temperature(), CELL_VOLUME)
 		src.temperature_expose(src.air, src.air.temperature(), CELL_VOLUME)
 
-	if(src.air.radgas >= RADGAS_MINIMUM_CONTAMINATION_MOLES && !ON_COOLDOWN(src, "radgas_contaminate", RADGAS_CONTAMINATION_COOLDOWN)) //if fallout is in the air, contaminate objects on this tile and consume radgas
+	if(src.air.radgas() >= RADGAS_MINIMUM_CONTAMINATION_MOLES && !ON_COOLDOWN(src, "radgas_contaminate", RADGAS_CONTAMINATION_COOLDOWN)) //if fallout is in the air, contaminate objects on this tile and consume radgas
 		for(var/atom/movable/AM as anything in src)
 			if(isintangible(AM) || isobserver(AM) || IS_OVERLAY_OR_EFFECT(AM) || istype(AM, /atom/movable/hotspot) || istype(AM, /obj/particle))
 				continue
@@ -195,9 +195,9 @@
 			SEND_SIGNAL(AM, COMSIG_ATOM_RADIOACTIVITY, rad_level)
 			if(max(rad_level) > RADGAS_MAXIMUM_CONTAMINATION)
 				continue
-			AM.AddComponent(/datum/component/radioactive,min(src.air.radgas + max(rad_level), max(rad_level) + RADGAS_MAXIMUM_CONTAMINATION_TICK),TRUE,FALSE)
-			src.air.radgas -= min(src.air.radgas, RADGAS_MAXIMUM_CONTAMINATION_TICK)/RADGAS_CONTAMINATION_PER_MOLE
-			if(src.air.radgas < RADGAS_MINIMUM_CONTAMINATION_MOLES)
+			AM.AddComponent(/datum/component/radioactive,min(src.air.radgas() + max(rad_level), max(rad_level) + RADGAS_MAXIMUM_CONTAMINATION_TICK),TRUE,FALSE)
+			src.air.adjust_radgas(-min(src.air.radgas(), RADGAS_MAXIMUM_CONTAMINATION_TICK)/RADGAS_CONTAMINATION_PER_MOLE)
+			if(src.air.radgas() < RADGAS_MINIMUM_CONTAMINATION_MOLES)
 				break //no point continuing if we've dropped below threshold
 
 	return TRUE
@@ -206,7 +206,7 @@
 /// Tells our neighbors it's time to update.
 /turf/proc/update_nearby_tiles(need_rebuild)
 	src.selftilenotify() //used in fluids.dm for displaced fluid
-	
+
 	if (map_currently_underwater)
 		for(var/direction in cardinal)
 			var/turf/simulated/T = get_step(src, direction)

@@ -186,10 +186,10 @@ ABSTRACT_TYPE(/obj/item/tank)
 
 			// Handle the radioactive part of the explosion, if applicable
 			var/rad_damage_multiplier = 0
-			if(src.air_contents.radgas > 0)
+			if(src.air_contents.radgas() > 0)
 				// Most of these, sadly, will end up just irradiating things which immediately are destroyed by the explosion.
 				// Thank goodness there's a lot of them! (With maxcap values you can get around 5.6 mols fallout in here tops, which is ~80 neutrons)
-				var/neutrons_to_emit = 10 * ceil( sqrt( src.air_contents.radgas * range ) )
+				var/neutrons_to_emit = 10 * ceil( sqrt( src.air_contents.radgas() * range ) )
 				for(var/i = 1 to neutrons_to_emit)
 					shoot_projectile_XY(get_turf(src), new /datum/projectile/neutron(), rand(-10,10), rand(-10,10))
 				// Do some flash radiation so that the mobs just out of the gib range still get messed up bad
@@ -344,7 +344,7 @@ ABSTRACT_TYPE(/obj/item/tank)
 
 	New()
 		..()
-		src.air_contents.oxygen = (6 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C)
+		src.air_contents.set_oxygen((6 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C))
 		return
 
 /obj/item/tank/plasma
@@ -356,7 +356,7 @@ ABSTRACT_TYPE(/obj/item/tank)
 
 	New()
 		..()
-		src.air_contents.toxins = (3 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C)
+		src.air_contents.set_toxins((3 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C))
 		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
 		return
 
@@ -388,7 +388,7 @@ ABSTRACT_TYPE(/obj/item/tank)
 	proc/ignite()
 		if (QDELETED(src))
 			return
-		var/fuel_moles = air_contents.toxins + air_contents.oxygen/6
+		var/fuel_moles = air_contents.toxins() + air_contents.oxygen()/6
 		var/strength = 1
 		playsound(src.loc, 'sound/machines/hiss.ogg', 50, TRUE)
 
@@ -445,8 +445,8 @@ ABSTRACT_TYPE(/obj/item/tank)
 
 	New()
 		..()
-		src.air_contents.oxygen = (6 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD
-		src.air_contents.nitrogen = (6 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
+		src.air_contents.set_oxygen((6 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD)
+		src.air_contents.set_nitrogen((6 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD)
 		return
 /obj/item/tank/empty
 	name = "gas tank"
@@ -460,8 +460,8 @@ ABSTRACT_TYPE(/obj/item/tank)
 
 	New()
 		..()
-		src.air_contents.oxygen = (3 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * 0.5
-		src.air_contents.nitrous_oxide = (3 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * 0.5
+		src.air_contents.set_oxygen((3 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * 0.5)
+		src.air_contents.set_nitrous_oxide((3 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * 0.5)
 
 // ==== JETPACKS ====
 
@@ -487,7 +487,7 @@ TYPEINFO(/obj/item/tank/jetpack)
 
 	New()
 		..()
-		src.air_contents.oxygen = (6 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C)
+		src.air_contents.set_oxygen((6 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C))
 		return
 
 	update_wear_image(mob/living/carbon/human/H, override)
@@ -512,16 +512,16 @@ TYPEINFO(/obj/item/tank/jetpack)
 
 		var/datum/gas_mixture/G = src.air_contents.remove(num)
 
-		if (G.oxygen >= 0.01)
+		if (G.oxygen() >= 0.01)
 			return 1
-		if (G.toxins > 0.001)
+		if (G.toxins() > 0.001)
 			if (user)
-				var/d = G.toxins / 2
+				var/d = G.toxins() / 2
 				d = min(abs(user.health + 100), d, 25)
 				user.TakeDamage("chest", 0, d)
-			return (G.oxygen >= 0.0075 ? 0.5 : 0)
+			return (G.oxygen() >= 0.0075 ? 0.5 : 0)
 		else
-			if (G.oxygen >= 0.0075)
+			if (G.oxygen() >= 0.0075)
 				return 0.5
 			else
 				return 0
@@ -574,7 +574,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 	New()
 		..()
 		src.air_contents.volume = 30
-		src.air_contents.oxygen = (1.7 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C)
+		src.air_contents.set_oxygen((1.7 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C))
 		return
 
 // ==== POCKET TANKS ====
@@ -602,7 +602,7 @@ ABSTRACT_TYPE(/obj/item/tank/pocket)
 
 	New()
 		..()
-		src.air_contents.oxygen = (ONE_ATMOSPHERE / 2) * 30 / (R_IDEAL_GAS_EQUATION * T20C)
+		src.air_contents.set_oxygen((ONE_ATMOSPHERE / 2) * 30 / (R_IDEAL_GAS_EQUATION * T20C))
 		return
 
 /obj/item/tank/pocket/plasma
@@ -613,7 +613,7 @@ ABSTRACT_TYPE(/obj/item/tank/pocket)
 
 	New()
 		..()
-		src.air_contents.toxins = (ONE_ATMOSPHERE / 2) * 30 / (R_IDEAL_GAS_EQUATION * T20C)
+		src.air_contents.set_toxins((ONE_ATMOSPHERE / 2) * 30 / (R_IDEAL_GAS_EQUATION * T20C))
 		return
 
 /obj/item/tank/pocket/air
@@ -624,8 +624,8 @@ ABSTRACT_TYPE(/obj/item/tank/pocket)
 
 	New()
 		..()
-		src.air_contents.oxygen = (ONE_ATMOSPHERE / 2) * 30 / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD
-		src.air_contents.nitrogen = (ONE_ATMOSPHERE / 2) * 30 / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
+		src.air_contents.set_oxygen((ONE_ATMOSPHERE / 2) * 30 / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD)
+		src.air_contents.set_nitrogen((ONE_ATMOSPHERE / 2) * 30 / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD)
 		return
 
 /obj/item/tank/pocket/empty
@@ -652,7 +652,7 @@ ABSTRACT_TYPE(/obj/item/tank/pocket/extended)
 
 	New()
 		..()
-		src.air_contents.oxygen = src.default_fill_mols
+		src.air_contents.set_oxygen(src.default_fill_mols)
 
 /obj/item/tank/pocket/extended/plasma
 	name = "extended capacity pocket tank (plasma)"
@@ -662,7 +662,7 @@ ABSTRACT_TYPE(/obj/item/tank/pocket/extended)
 
 	New()
 		..()
-		src.air_contents.toxins = src.default_fill_mols
+		src.air_contents.set_toxins(src.default_fill_mols)
 
 /obj/item/tank/pocket/extended/air
 	name = "extended capacity pocket tank (air mix)"
@@ -672,8 +672,8 @@ ABSTRACT_TYPE(/obj/item/tank/pocket/extended)
 
 	New()
 		..()
-		src.air_contents.oxygen = src.default_fill_mols * O2STANDARD
-		src.air_contents.nitrogen = src.default_fill_mols * N2STANDARD
+		src.air_contents.set_oxygen(src.default_fill_mols * O2STANDARD)
+		src.air_contents.set_nitrogen(src.default_fill_mols * N2STANDARD)
 
 /obj/item/tank/pocket/extended/empty
 	name = "extended capacity pocket tank"
@@ -711,13 +711,13 @@ ABSTRACT_TYPE(/obj/item/tank/mini)
 
 	New()
 		..()
-		src.air_contents.oxygen = (ONE_ATMOSPHERE / 2) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C)
+		src.air_contents.set_oxygen((ONE_ATMOSPHERE / 2) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C))
 		return
 
 	empty // for printed mini tanks
 		New()
 			..()
-			src.air_contents.oxygen = null
+			src.air_contents.set_oxygen(0)
 			return
 
 /obj/item/tank/mini/plasma
@@ -731,13 +731,13 @@ ABSTRACT_TYPE(/obj/item/tank/mini)
 	New()
 		..()
 		src.air_contents.volume = 10
-		src.air_contents.toxins = (ONE_ATMOSPHERE) * 100 / (R_IDEAL_GAS_EQUATION * T20C)
+		src.air_contents.set_toxins((ONE_ATMOSPHERE) * 100 / (R_IDEAL_GAS_EQUATION * T20C))
 		return
 
 	empty // for printed mini tanks
 		New()
 			..()
-			src.air_contents.toxins = null
+			src.air_contents.set_toxins(0)
 			return
 
 /obj/item/tank/mini/air
@@ -749,8 +749,8 @@ ABSTRACT_TYPE(/obj/item/tank/mini)
 
 	New()
 		..()
-		src.air_contents.oxygen = (ONE_ATMOSPHERE / 2) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD
-		src.air_contents.nitrogen = (ONE_ATMOSPHERE / 2) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
+		src.air_contents.set_oxygen((ONE_ATMOSPHERE / 2) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD)
+		src.air_contents.set_nitrogen((ONE_ATMOSPHERE / 2) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD)
 
 /obj/item/tank/mini/anesthetic
 	name = "mini tank (anesthetic)"
@@ -761,8 +761,8 @@ ABSTRACT_TYPE(/obj/item/tank/mini)
 
 	New()
 		..()
-		src.air_contents.oxygen = (ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * 0.5
-		src.air_contents.nitrous_oxide = (ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * 0.5
+		src.air_contents.set_oxygen((ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * 0.5)
+		src.air_contents.set_nitrous_oxide((ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * 0.5)
 
 /obj/item/tank/mini/empty
 	icon_state = "mini_empty"

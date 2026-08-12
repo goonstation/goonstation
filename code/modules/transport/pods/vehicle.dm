@@ -86,11 +86,11 @@
 		if(atmostank?.air_contents)
 			if(life_support_part?.active && MIXTURE_PRESSURE(atmostank.air_contents) < 1000)
 				life_support_part.power_used = 5 * passengers + 15
-				atmostank.air_contents.oxygen += amount / 5
-				atmostank.air_contents.nitrogen += 4 * amount / 5
-				if (atmostank.air_contents.carbon_dioxide > 0)
-					atmostank.air_contents.carbon_dioxide -= HUMAN_NEEDED_OXYGEN * 2
-					atmostank.air_contents.carbon_dioxide = max(atmostank.air_contents.carbon_dioxide, 0)
+				atmostank.air_contents.adjust_oxygen(amount / 5)
+				atmostank.air_contents.adjust_nitrogen(4 * amount / 5)
+				if (atmostank.air_contents.carbon_dioxide() > 0)
+					atmostank.air_contents.adjust_carbon_dioxide(-HUMAN_NEEDED_OXYGEN * 2)
+					atmostank.air_contents.set_carbon_dioxide(max(atmostank.air_contents.carbon_dioxide(), 0))
 				if(atmostank.air_contents.temperature() > 310)
 					atmostank.air_contents.temperature() -= max(atmostank.air_contents.temperature() - 310, 5)
 				if(atmostank.air_contents.temperature() < 310)
@@ -811,7 +811,7 @@
 		if(engine_part?.active)
 			var/usage = src.powercurrent/3000*mult // 0.0333 moles consumed per 100W per tick
 			var/datum/gas_mixture/consumed = src.fueltank?.remove_air(usage)
-			var/toxins = consumed?.toxins
+			var/toxins = consumed?.toxins()
 			if(isnull(toxins))
 				toxins = 0
 			if(usage)
@@ -1387,10 +1387,10 @@
 		dat += "Pressure: [round(pressure,0.1)] kPa"
 
 		if (total_moles)
-			var/o2_level = atmostank.air_contents.oxygen/total_moles
-			var/n2_level = atmostank.air_contents.nitrogen/total_moles
-			var/co2_level = atmostank.air_contents.carbon_dioxide/total_moles
-			var/plasma_level = atmostank.air_contents.toxins/total_moles
+			var/o2_level = atmostank.air_contents.oxygen()/total_moles
+			var/n2_level = atmostank.air_contents.nitrogen()/total_moles
+			var/co2_level = atmostank.air_contents.carbon_dioxide()/total_moles
+			var/plasma_level = atmostank.air_contents.toxins()/total_moles
 			var/unknown_level =  1-(o2_level+n2_level+co2_level+plasma_level)
 
 			dat += " Nitrogen: [round(n2_level*100)]% Oxygen: [round(o2_level*100)]% Carbon Dioxide: [round(co2_level*100)]% Plasma: [round(plasma_level*100)]%"
@@ -1410,10 +1410,10 @@
 		dat += "Pressure: [round(pressure,0.1)] kPa"
 
 		if (total_moles)
-			var/o2_level = fueltank.air_contents.oxygen/total_moles
-			var/n2_level = fueltank.air_contents.nitrogen/total_moles
-			var/co2_level = fueltank.air_contents.carbon_dioxide/total_moles
-			var/plasma_level = fueltank.air_contents.toxins/total_moles
+			var/o2_level = fueltank.air_contents.oxygen()/total_moles
+			var/n2_level = fueltank.air_contents.nitrogen()/total_moles
+			var/co2_level = fueltank.air_contents.carbon_dioxide()/total_moles
+			var/plasma_level = fueltank.air_contents.toxins()/total_moles
 			var/unknown_level =  1-(o2_level+n2_level+co2_level+plasma_level)
 
 			dat += " Nitrogen: [round(n2_level*100)]% Oxygen: [round(o2_level*100)]% Carbon Dioxide: [round(co2_level*100)]% Plasma: [round(plasma_level*100)]%"

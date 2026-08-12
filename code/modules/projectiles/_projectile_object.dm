@@ -591,8 +591,8 @@
 			var/nitrogen = MOLES_N2STANDARD
 			var/sum = oxygen + nitrogen
 
-			GM.oxygen = (oxygen/sum)
-			GM.nitrogen = (nitrogen/sum)
+			GM.set_oxygen(oxygen/sum)
+			GM.set_nitrogen(nitrogen/sum)
 			GM.temperature() = T20C
 
 			return GM
@@ -606,8 +606,8 @@
 			var/nitrogen = MOLES_N2STANDARD
 			var/sum = oxygen + nitrogen
 
-			GM.oxygen = (oxygen/sum)*breath_request * mult
-			GM.nitrogen = (nitrogen/sum)*breath_request * mult
+			GM.set_oxygen((oxygen/sum)*breath_request * mult)
+			GM.set_nitrogen((nitrogen/sum)*breath_request * mult)
 			GM.temperature() = T20C
 
 			return GM

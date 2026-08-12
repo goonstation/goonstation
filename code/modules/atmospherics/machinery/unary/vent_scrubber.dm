@@ -62,8 +62,8 @@
 
 			#define _FILTER_OUT_GAS(GAS, ...) \
 				if(scrub_##GAS) { \
-					filtered_out.GAS = removed.GAS; \
-					removed.GAS = 0; \
+					filtered_out.set_##GAS(removed.GAS()); \
+					removed.set_##GAS(0); \
 				}
 			APPLY_TO_GASES(_FILTER_OUT_GAS)
 			#undef _FILTER_OUT_GAS
