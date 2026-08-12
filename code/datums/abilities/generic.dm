@@ -126,13 +126,12 @@
 			if (check_target_immunity(M, source = src))
 				src.visible_message(SPAN_ALERT("<b>[src] bounces off [M] harmlessly!</b>"))
 				return
-
-			if((istype(M.equipped(), /obj/item/sword) || istype(M.equipped(), /obj/item/heavy_power_sword)) && M.hasStatus("blocking"))
+			var/obj/item/I = M.equipped()
+			if(I?.flags & COUNTER_CHAIRFLIP && M.hasStatus("blocking"))
 				src.visible_message(SPAN_ALERT("<b>[M] skillfully counters [src]'s dive! Holy shit!</b>"))
-				var/obj/item/S = M.equipped()
-				if(S.chokehold) //deletes the block, nothing happens otherwise
-					qdel(S.chokehold)
-				src.Attackby(S, M)
+				if(I.chokehold) //deletes the block, nothing happens otherwise
+					qdel(I.chokehold)
+				src.Attackby(I, M)
 				if (src.hasStatus("knockdown") && src.getStatusDuration("knockdown") < 3 SECONDS * effect_mult)
 					src.setStatus("knockdown", 3 SECONDS * effect_mult)
 				else

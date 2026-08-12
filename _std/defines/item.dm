@@ -46,6 +46,8 @@
 #define CLICK_DELAY_IN_CONTENTS		(1<<21)
 /// If an item cannot be crushed by the crusher
 #define UNCRUSHABLE					(1<<22)
+/// If the item will counterattack chairflips when blocking
+#define COUNTER_CHAIRFLIP			(1<<23)
 
 //Item function flags
 

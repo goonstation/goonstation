@@ -230,6 +230,7 @@ TYPEINFO(/obj/item/sword)
 		src.w_class = W_CLASS_BULKY
 		src.leaves_slash_wound = TRUE
 		src.setItemSpecial(/datum/item_special/swipe/csaber)
+		src.flags |= COUNTER_CHAIRFLIP // enables counter attacking chairflips with block
 		user.unlock_medal("The Force is strong with this one")
 	else
 		src.UpdateIcon()
@@ -246,6 +247,7 @@ TYPEINFO(/obj/item/sword)
 		src.w_class = off_w_class
 		src.leaves_slash_wound = FALSE
 		src.setItemSpecial(null)
+		src.flags &= ~COUNTER_CHAIRFLIP // disables counter attacking chairflips with block
 	user.update_inhands()
 	src.add_fingerprint(user)
 	..()
@@ -1893,6 +1895,7 @@ obj/item/whetstone
 		src.AddComponent(/datum/component/bloodflick)
 		src.setItemSpecial(/datum/item_special/swipe)
 		src.update_special_color()
+		src.flags |= COUNTER_CHAIRFLIP
 		AddComponent(/datum/component/itemblock/reflect/saberblock, null, PROC_REF(get_reflect_color))
 		BLOCK_SETUP(BLOCK_SWORD)
 
