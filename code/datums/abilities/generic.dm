@@ -126,6 +126,20 @@
 			if (check_target_immunity(M, source = src))
 				src.visible_message(SPAN_ALERT("<b>[src] bounces off [M] harmlessly!</b>"))
 				return
+
+			if((istype(M.equipped(), /obj/item/sword) || istype(M.equipped(), /obj/item/heavy_power_sword)) && M.hasStatus("blocking"))
+				src.visible_message(SPAN_ALERT("<b>[M] skillfully counters [src]'s dive! Holy shit!</b>"))
+				var/obj/item/S = M.equipped()
+				if(S.chokehold) //deletes the block, nothing happens otherwise
+					qdel(S.chokehold)
+				src.Attackby(S, M)
+				if (src.hasStatus("knockdown") && src.getStatusDuration("knockdown") < 3 SECONDS * effect_mult)
+					src.setStatus("knockdown", 3 SECONDS * effect_mult)
+				else
+					src.changeStatus("knockdown", 3 SECONDS * effect_mult)
+				src.force_laydown_standup()
+				return
+
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
 
 			logTheThing(LOG_COMBAT, src, "[src] chairflips into [constructTarget(M,"combat")], [log_loc(M)].")
