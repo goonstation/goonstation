@@ -227,7 +227,7 @@
 
 /// Checks if the atmosphere on the tile is unsuitable for hotspot survival
 /atom/movable/hotspot/proc/is_atmosphere_unsuitable(turf/simulated/floor/location)
-	return (!location.air || location.air.get_toxins() < 0.5 MOLES || location.air.get_oxygen() < 0.5 MOLES)
+	return (!location.air || location.air.toxins() < 0.5 MOLES || location.air.oxygen() < 0.5 MOLES)
 
 /atom/movable/hotspot/ex_act()
 	return

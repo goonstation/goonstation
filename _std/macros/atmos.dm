@@ -283,20 +283,20 @@ proc/gas_text_color(gas_id)
 
 // air stats
 
-#define _MOLES_REPORT(GAS, _, NAME, MIXTURE) "[NAME]: [MIXTURE.get_##GAS()]<br>" +
+#define _MOLES_REPORT(GAS, _, NAME, MIXTURE) "[NAME]: [MIXTURE.GAS()]<br>" +
 #define MOLES_REPORT(MIXTURE) (APPLY_TO_GASES(_MOLES_REPORT, MIXTURE) "")
 
-#define _MOLES_REPORT_PACKET(GAS, _, _, MIXTURE) "[#GAS]=[MIXTURE.get_##GAS()]&" +
+#define _MOLES_REPORT_PACKET(GAS, _, _, MIXTURE) "[#GAS]=[MIXTURE.GAS()]&" +
 #define MOLES_REPORT_PACKET(MIXTURE) (APPLY_TO_GASES(_MOLES_REPORT_PACKET, MIXTURE) "")
 
 // requires var/total_moles = TOTAL_MOLES(MIXTURE) defined beforehand
-#define _CONCENTRATION_REPORT(GAS, _, NAME, MIXTURE, SEP) "[NAME]: [round(MIXTURE.get_##GAS() / total_moles * 100)]%[SEP]" +
+#define _CONCENTRATION_REPORT(GAS, _, NAME, MIXTURE, SEP) "[NAME]: [round(MIXTURE.GAS() / total_moles * 100)]%[SEP]" +
 #define CONCENTRATION_REPORT(MIXTURE, SEP) (APPLY_TO_GASES(_CONCENTRATION_REPORT, MIXTURE, SEP) "")
 
-#define _SIMPLE_CONCENTRATION_REPORT(GAS, _, NAME, MIXTURE, SEP) "[(round(MIXTURE.get_##GAS() / total_moles * 100)) ? "[NAME]: [round(MIXTURE.get_##GAS() / total_moles * 100)]%[SEP]" : ""]" +
+#define _SIMPLE_CONCENTRATION_REPORT(GAS, _, NAME, MIXTURE, SEP) "[(round(MIXTURE.GAS() / total_moles * 100)) ? "[NAME]: [round(MIXTURE.GAS() / total_moles * 100)]%[SEP]" : ""]" +
 #define SIMPLE_CONCENTRATION_REPORT(MIXTURE, SEP) (APPLY_TO_GASES(_SIMPLE_CONCENTRATION_REPORT, MIXTURE, SEP) "")
 
-#define _LIST_CONCENTRATION_REPORT(GAS, _, NAME, MIXTURE, LIST) LIST += "[NAME]: [round(MIXTURE.get_##GAS() / total_moles * 100)]%";
+#define _LIST_CONCENTRATION_REPORT(GAS, _, NAME, MIXTURE, LIST) LIST += "[NAME]: [round(MIXTURE.GAS() / total_moles * 100)]%";
 #define LIST_CONCENTRATION_REPORT(MIXTURE, LIST) APPLY_TO_GASES(_LIST_CONCENTRATION_REPORT, MIXTURE, LIST)
 
 //Possible states are "exposed" and "intact". sizes are "short", "medium" and "long". These are strings.

@@ -55,7 +55,7 @@
 			member.air_temporary = new
 		member.air_temporary.set_volume(member.volume())
 
-		#define _TEMPORARILY_STORE_GAS(INDEX, ...) member.air_temporary.set_gas(INDEX, src.air.get_gas(INDEX) * member.volume() / src.air.volume());
+		#define _TEMPORARILY_STORE_GAS(GAS, ...) member.air_temporary.set_##GAS(src.air.GAS() * member.volume() / src.air.volume());
 		APPLY_TO_GASES(_TEMPORARILY_STORE_GAS)
 		#undef _TEMPORARILY_STORE_GAS
 

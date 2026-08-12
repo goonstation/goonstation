@@ -14,9 +14,8 @@ ABSTRACT_TYPE(/datum/gas_mixture)
 	var/tmp/graphic_archived // intentionally NOT using ARCHIVED() because graphic archiving is actually important and shouldn't be turned off
 	/// Rough representation of oxygen and plasma used. Actual usage of plasma is currectly divided by 3 for balance.
 	var/tmp/fuel_burnt = 0
-	VAR_PRIVATE/read_only = TRUE
 
-#define _CREATE_GET_PROCS(GAS, ...) /datum/gas_mixture/proc/get_##GAS() {}
+#define _CREATE_GET_PROCS(GAS, ...) /datum/gas_mixture/proc/##GAS() {}
 APPLY_TO_GASES(_CREATE_GET_PROCS)
 #undef _CREATE_GET_PROCS
 
@@ -112,7 +111,7 @@ APPLY_TO_GASES(_CREATE_CHANGE_PROCS)
 
 /// Checks for, ya know, if the mixture is potentially dangerous.
 /datum/gas_mixture/proc/check_if_dangerous()
-	if(src.moles() && (src.temperature() > T100C || src.temperature() < T0C || src.get_toxins() || src.get_farts() || src.get_carbon_dioxide() || (src.get_nitrogen() && !src.get_oxygen())))
+	if(src.moles() && (src.temperature() > T100C || src.temperature() < T0C || src.toxins() || src.farts() || src.carbon_dioxide() || (src.nitrogen() && !src.oxygen())))
 		return TRUE
 	else
 		return FALSE
@@ -131,7 +130,7 @@ APPLY_TO_GASES(_CREATE_CHANGE_PROCS)
 	src.heat_capacity = values_dot(src.gases, ATMOS::HEAT_CAPACITIES)
 	src.recalculate = FALSE
 
-#define _CREATE_GET_PROCS(GAS, INDEX, ...) /datum/gas_mixture/normal/get_##GAS() { return src.gases[INDEX]; }
+#define _CREATE_GET_PROCS(GAS, INDEX, ...) /datum/gas_mixture/normal/##GAS() { return src.gases[INDEX]; }
 APPLY_TO_GASES(_CREATE_GET_PROCS)
 #undef _CREATE_GET_PROCS
 
@@ -340,7 +339,7 @@ APPLY_TO_GASES(_CREATE_CHANGE_PROCS)
 		if(combined_heat_capacity)
 			src.temperature() = (giver.temperature()*giver_heat_capacity + src.temperature()*self_heat_capacity)/combined_heat_capacity
 
-	#define _MERGE_GAS(GAS, INDEX, ...) src.gases[INDEX] += giver.get_##GAS();
+	#define _MERGE_GAS(GAS, INDEX, ...) src.gases[INDEX] += giver.GAS();
 	APPLY_TO_GASES(_MERGE_GAS)
 	#undef _MERGE_GAS
 	src.recalculate = TRUE
@@ -393,7 +392,7 @@ APPLY_TO_GASES(_CREATE_CHANGE_PROCS)
 	if (!sample)
 		return FALSE
 
-	#define _COPY_GAS(INDEX, ...) src.gases[INDEX] = sample.get_gas(INDEX);
+	#define _COPY_GAS(GAS, INDEX, ...) src.gases[INDEX] = sample.GAS();
 	APPLY_TO_GASES(_COPY_GAS)
 	#undef _COPY_GAS
 
@@ -407,7 +406,7 @@ APPLY_TO_GASES(_CREATE_CHANGE_PROCS)
 /datum/gas_mixture/normal/share(datum/gas_mixture/sharer)
 	if(!sharer)
 		return
-	#define _DELTA_GAS(GAS, INDEX, ...) var/delta_##GAS = QUANTIZE(src.gases[INDEX] - sharer.get_##GAS())/5;
+	#define _DELTA_GAS(GAS, INDEX, ...) var/delta_##GAS = QUANTIZE(src.gases[INDEX] - sharer.GAS())/5;
 	APPLY_TO_GASES(_DELTA_GAS)
 	#undef _DELTA_GAS
 
@@ -470,30 +469,36 @@ APPLY_TO_GASES(_CREATE_CHANGE_PROCS)
 
 
 /datum/gas_mixture/turf_tied
-	VAR_PRIVATE/x = 1
-	VAR_PRIVATE/y = 1
-	VAR_PRIVATE/z = 1
+	VAR_PRIVATE/turf/our_turf = null
+	VAR_PRIVATE/read_only = FALSE
 
-/// Returns the amount of gas at index
-/datum/gas_mixture/turf_tied/get_gas(index)
+#define _CREATE_GET_PROCS(GAS, INDEX, ...) /datum/gas_mixture/turf_tied/##GAS() { return goonmos_get_gas(src.our_turf, INDEX); }
+APPLY_TO_GASES(_CREATE_GET_PROCS)
+#undef _CREATE_GET_PROCS
 
-/// Sets the amount of gas at index to value
-/datum/gas_mixture/turf_tied/set_gas(index, value)
+#define _CREATE_SET_PROCS(GAS, INDEX, ...) /datum/gas_mixture/turf_tied/set_##GAS(value) { if (!src.read_only) { goonmos_set_gas(src.our_turf, INDEX, value); } }
+APPLY_TO_GASES(_CREATE_SET_PROCS)
+#undef _CREATE_SET_PROCS
 
-/// Changes the amount of gas at index by value
-/datum/gas_mixture/turf_tied/adjust_gas(index, value)
+#define _CREATE_CHANGE_PROCS(GAS, INDEX, ...) /datum/gas_mixture/turf_tied/adjust_##GAS(value) { if (!src.read_only) { goonmos_adjust_gas(src.our_turf, INDEX, value); } }
+APPLY_TO_GASES(_CREATE_CHANGE_PROCS)
+#undef _CREATE_CHANGE_PROCS
 
 /// Returns temperature in Kelvin
 /datum/gas_mixture/turf_tied/temperature()
+	goonmos_get_temperature(src.our_turf)
 
 /// Sets the temperature to value
 /datum/gas_mixture/turf_tied/set_temperature(value)
+	goonmos_set_temperature(src.our_turf, value)
 
 /// Changes the temperature by value
 /datum/gas_mixture/turf_tied/adjust_temperature(value)
+	goonmos_adjust_temperature(src.our_turf, value)
 
 /// Returns the thermal energy
 /datum/gas_mixture/turf_tied/thermal_energy()
+
 
 /// Sets the thermal energy to value
 /datum/gas_mixture/turf_tied/set_thermal_energy(value)
@@ -503,21 +508,33 @@ APPLY_TO_GASES(_CREATE_CHANGE_PROCS)
 
 /// Returns the volume
 /datum/gas_mixture/turf_tied/volume()
+	return CELL_VOLUME
 
-/// Sets the volume to value
+/// No-op
 /datum/gas_mixture/turf_tied/set_volume(value)
 
 /// Returns the total moles
 /datum/gas_mixture/turf_tied/moles()
+	return goonmos_get_total_moles(src.our_turf)
 
 /// Returns the pressure
 /datum/gas_mixture/turf_tied/pressure()
+	return goonmos_get_pressure(src.our_turf)
 
 /// Returns the heat capacity
 /datum/gas_mixture/turf_tied/heat_capacity()
+	return 
 
 /// Zeros out the gas mixture
 /datum/gas_mixture/turf_tied/zero_out()
 
 /// Removes all gases except if in an underwater map, in which case the gas is set to be hot low pressure air.
 /datum/gas_mixture/turf_tied/reset_to_space_gas()
+
+/// Conducts heat between gases.
+/// Conduction_coefficient is a multiplier that determines how well heat equalises, with 0 meaning no heat and 1 meaning perfect equalisation.
+/datum/gas_mixture/proc/temperature_share(datum/gas_mixture/sharer, conduction_coefficient)
+	var/heat = goonmos_mimic_temperature_exchange(src.our_turf, sharer.temperature(), sharer.heat_capacity(), conduction_coefficient)
+	src.adjust_thermal_energy(-heat)
+	sharer.adjust_thermal_energy(heat)
+
