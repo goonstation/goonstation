@@ -469,7 +469,7 @@ TYPEINFO(/obj/machinery/bot/buttbot)
 			F.set_loc(src.loc)
 	fartcount++
 	if(fartcount == 69 || fartcount == 420)
-		var/obj/item/paper/grillnasium/fartnasium_recruitment/flyer/F = new(get_turf(src))
+		var/obj/item/paper/image/grillnasium/fartnasium_recruitment/flyer/F = new(get_turf(src))
 		for(var/mob/living/carbon/C in view(2,src))
 			if(C.put_in_hand_or_drop(F))
 				break

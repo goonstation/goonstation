@@ -6,6 +6,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	wages = PAY::IMPORTANT
 	//Emergency responders shouldn't be antags
 	can_roll_antag = FALSE
+	put_id_in_pda = TRUE
 	badge = /obj/item/clothing/suit/security_badge/nanotrasen
 	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
 	access_string = "Nanotrasen Responder" // "All Access" + Centcom
@@ -112,6 +113,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	requires_supervisor_job = "Head of Security"
 	counts_as = "Security Officer"
 	receives_miranda = TRUE
+	put_id_in_pda = FALSE
 	rounds_needed_to_play = ROUNDS_MIN_HIGHSEC
 
 	slot_back = list(/obj/item/storage/backpack/NT)
