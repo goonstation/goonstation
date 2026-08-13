@@ -273,6 +273,7 @@
 		/obj/item/circuitboard/announcement/research,
 		/obj/item/clothing/suit/hazard/bio_suit/rd,
 		/obj/item/clothing/head/bio_hood/rd,
+		/obj/item/device/chemicompiler,
 		)
 
 	make_my_stuff()
