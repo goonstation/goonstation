@@ -53,8 +53,8 @@ export const Minimap = () => {
       height={640}
     >
       <Window.Content>
-        <Flex>
-          <Flex.Item>
+        <Stack>
+          <Stack.Item>
             <ByondUi
               params={{
                 id: minimap_id,
@@ -65,52 +65,44 @@ export const Minimap = () => {
                 height: '600px',
               }}
             />
-          </Flex.Item>
+          </Stack.Item>
           {isAdminMinimap && (
-            <Flex.Item ml={1} style={{ width: '210px' }}>
+            <Stack.Item style={{ width: '210px' }}>
               <Section title="Map Controls">
                 <Stack vertical fill>
-                  <Stack.Item>
-                    <Button
-                      fluid
-                      icon="undo"
-                      color="green"
-                      onClick={() => act('reset_scale')}
-                    >
-                      Reset Zoom &amp; Pan
-                    </Button>
-                  </Stack.Item>
-                  <Stack.Item>
-                    <Button
-                      fluid
-                      icon="refresh"
-                      color="blue"
-                      disabled={isLoading}
-                      onClick={() => act('refresh_map')}
-                    >
-                      Refresh Current Z-Level
-                    </Button>
-                  </Stack.Item>
-                  <Stack.Item>
-                    <Button
-                      fluid
-                      icon={playersVisible ? 'eye' : 'eye-slash'}
-                      color={playersVisible ? 'green' : 'red'}
-                      onClick={() => act('toggle_players')}
-                    >
-                      Show Players
-                    </Button>
-                  </Stack.Item>
-                  <Stack.Item>
-                    <Button
-                      fluid
-                      icon={observersVisible ? 'eye' : 'eye-slash'}
-                      color={observersVisible ? 'green' : 'red'}
-                      onClick={() => act('toggle_observers')}
-                    >
-                      Show Observers
-                    </Button>
-                  </Stack.Item>
+                  <Button
+                    fluid
+                    icon="undo"
+                    color="green"
+                    onClick={() => act('reset_scale')}
+                  >
+                    Reset Zoom &amp; Pan
+                  </Button>
+                  <Button
+                    fluid
+                    icon="refresh"
+                    color="blue"
+                    disabled={isLoading}
+                    onClick={() => act('refresh_map')}
+                  >
+                    Refresh Current Z-Level
+                  </Button>
+                  <Button
+                    fluid
+                    icon={playersVisible ? 'eye' : 'eye-slash'}
+                    color={playersVisible ? 'green' : 'red'}
+                    onClick={() => act('toggle_players')}
+                  >
+                    Show Players
+                  </Button>
+                  <Button
+                    fluid
+                    icon={observersVisible ? 'eye' : 'eye-slash'}
+                    color={observersVisible ? 'green' : 'red'}
+                    onClick={() => act('toggle_observers')}
+                  >
+                    Show Observers
+                  </Button>
                   <Stack.Item>
                     <Box color="label" textAlign="center">
                       Scroll to zoom. Drag to pan. Click to teleport.
@@ -138,9 +130,9 @@ export const Minimap = () => {
                   />
                 </Flex>
               </Section>
-            </Flex.Item>
+            </Stack.Item>
           )}
-        </Flex>
+        </Stack>
       </Window.Content>
     </Window>
   );
