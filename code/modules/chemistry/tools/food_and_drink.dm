@@ -428,6 +428,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		if (src.festivity && !ethereal_eater && !inafterlife(consumer))
 			modify_christmas_cheer(src.festivity)
 		if (!src.bites_left)
+			SEND_SIGNAL(consumer, COMSIG_MOB_ITEM_CONSUMED, feeder, src) //one to the mob
+			SEND_SIGNAL(src, COMSIG_ITEM_CONSUMED, consumer, src) //one to the item
 			if (istype(src, /obj/item/reagent_containers/food/snacks/plant/) && prob(20))
 				var/obj/item/reagent_containers/food/snacks/plant/P = src
 				var/doseed = 1
@@ -444,6 +446,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			feeder.u_equip(src)
 			on_finish(consumer, feeder)
 			qdel(src)
+		else
+			SEND_SIGNAL(consumer, COMSIG_MOB_ITEM_CONSUMED_PARTIAL, feeder, src) //one to the mob
+			SEND_SIGNAL(src, COMSIG_ITEM_CONSUMED_PARTIAL, consumer, src) //one to the item
 
 	afterattack(obj/target, mob/user, flag)
 		return

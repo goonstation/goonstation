@@ -3464,10 +3464,27 @@ datum
 			/// how much ranch must be in a person to avoid making addiction withdrawal actively worse
 			var/minimum_ranch = 30
 
+			proc/on_eat(var/mob/feeder, var/mob/user, var/obj/item/eaten)
+				if (src.pref_state & ZRANCH_ADDICT)
+					var/mob/living/eater = holder.my_atom
+					// attempting to eat something without the chem wont work
+					if (!eaten.reagents?.has_reagent(src.id))
+						eater.vomit()
+						eater.nauseate(5)
+						eater.changeStatus("knockdown", 2 SECONDS)
+						var/msg = pick("You feel it's missing something...","It tastes [pick(list("awful", "disgusting"))] without [src.name]!","You NEED more [src.name]!","Needs more [src.name]. More!", "You're craving more [src.name] dressing on [eaten]!", "[eaten] just isn't [pick(src.taste)] enough!")
+						boutput(eater, SPAN_ALERT(msg), group="addict_[src]")
+
+
 			on_add()
-				if(isliving(holder?.my_atom))
+				if(isliving(holder.my_atom))
 					var/mob/living/M = holder.my_atom
 					src.check_ZRANCH_immunity(M)
+					RegisterSignals(holder.my_atom, list(COMSIG_MOB_ITEM_CONSUMED,COMSIG_MOB_ITEM_CONSUMED_PARTIAL), PROC_REF(on_eat))
+
+			on_remove()
+				if(isliving(holder.my_atom))
+					UnregisterSignals(holder.my_atom, list(COMSIG_MOB_ITEM_CONSUMED,COMSIG_MOB_ITEM_CONSUMED_PARTIAL))
 
 			on_mob_life(mob/M, mult)
 
