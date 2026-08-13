@@ -107,7 +107,7 @@ ABSTRACT_TYPE(/datum/minimap)
 
 	for (var/atom/target as anything in src.minimap_markers)
 		var/datum/minimap_marker/minimap/minimap_marker = src.minimap_markers[target]
-		src.set_marker_position(minimap_marker, minimap_marker.target.x, minimap_marker.target.y, minimap_marker.target.z)
+		src.update_marker_position(minimap_marker)
 
 /// Scale the map, while retaining the original (x, y) position of the bottom left corner.
 /datum/minimap/proc/scale_map(scale)
@@ -124,7 +124,7 @@ ABSTRACT_TYPE(/datum/minimap)
 
 	for (var/atom/target as anything in src.minimap_markers)
 		var/datum/minimap_marker/minimap/minimap_marker = src.minimap_markers[target]
-		src.set_marker_position(minimap_marker, minimap_marker.target.x, minimap_marker.target.y, minimap_marker.target.z)
+		src.update_marker_position(minimap_marker)
 
 /// Creates a minimap marker from a specified target, icon, and icon state. `marker_name` will override the marker inheriting the target's name.
 /datum/minimap/proc/create_minimap_marker(atom/target, icon, icon_state, marker_name, can_be_deleted_by_player = FALSE, list_on_ui = TRUE)
@@ -139,7 +139,12 @@ ABSTRACT_TYPE(/datum/minimap)
 	src.minimap_markers[target] = marker
 
 	src.minimap_render.vis_contents += marker.marker
-	src.set_marker_position(marker, target.x, target.y, target.z)
+	src.update_marker_position(marker)
+
+/// Updates a marker using its target's turf coords
+/datum/minimap/proc/update_marker_position(datum/minimap_marker/minimap/map_marker)
+	var/turf/target_turf = get_turf(map_marker.target)
+	src.set_marker_position(map_marker, target_turf?.x, target_turf?.y, target_turf?.z)
 
 /// Sets the x and y position of a specified minimap marker, in world coordinates.
 /datum/minimap/proc/set_marker_position(datum/minimap_marker/minimap/map_marker, x, y, z)

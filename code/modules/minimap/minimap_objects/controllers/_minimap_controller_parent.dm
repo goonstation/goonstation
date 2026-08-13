@@ -111,7 +111,7 @@
 		src.marker_silhouette.marker.alpha = 175
 
 	src.marker_silhouette.target = map_location
-	src.displayed_minimap.set_marker_position(src.marker_silhouette, src.marker_silhouette.target.x, src.marker_silhouette.target.y, src.displayed_minimap.z_level)
+	src.displayed_minimap.update_marker_position(src.marker_silhouette)
 
 /// Set up this minimap controller's displayed minimap datum and click overlay.
 /obj/minimap_controller/proc/initialise_minimap_controller()

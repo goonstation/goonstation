@@ -64,7 +64,7 @@
 
 	for (var/atom/target as anything in src.minimap_markers)
 		var/datum/minimap_marker/minimap/minimap_marker = src.minimap_markers[target]
-		src.set_marker_position(minimap_marker, minimap_marker.target.x, minimap_marker.target.y, minimap_marker.target.z)
+		src.update_marker_position(minimap_marker)
 
 /datum/minimap/area_map/admin
 	// Renders at full resolution by default.
@@ -99,7 +99,7 @@
 
 		for (var/atom/target as anything in src.minimap_markers)
 			var/datum/minimap_marker/minimap/minimap_marker = src.minimap_markers[target]
-			src.set_marker_position(minimap_marker, minimap_marker.target.x, minimap_marker.target.y, minimap_marker.target.z)
+			src.update_marker_position(minimap_marker)
 
 		src.refresh_render()
 
@@ -210,7 +210,7 @@
 
 	for (var/atom/target as anything in src.minimap_markers)
 		var/datum/minimap_marker/minimap/minimap_marker = src.minimap_markers[target]
-		src.set_marker_position(minimap_marker, minimap_marker.target.x, minimap_marker.target.y, minimap_marker.target.z)
+		src.update_marker_position(minimap_marker)
 
 /datum/minimap/area_map/transparent
 	initialise_minimap_render()
