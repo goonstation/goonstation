@@ -982,8 +982,8 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 						IX.visible_message(SPAN_ALERT("<b>[IX] emits an anti-gravitational anomaly warning!</b>"))
 					if(state != "active")
 						grow_duration += 4 SECOND
-						interdiction_hp -= 1
-						if(interdiction_hp <= 0)
+						src.interdiction_hp--
+						if(src.interdiction_hp <= 0)
 							time_since_start = (grow_duration + active_duration) * 2
 							state = "dying"
 							break
