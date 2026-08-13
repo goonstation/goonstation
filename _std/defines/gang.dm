@@ -170,22 +170,16 @@
 #define GANG_TAG_INFLUENCE_LOCKER 4
 /// Radius of the circle that gang tags can see inside (can't be sprayed inside)
 #define GANG_TAG_SIGHT_RANGE_LOCKER 0
-// keep in mind, smaller maps will still have fewer players & less gangs
 
-// overriding gang tag sizes, 15-8 seems fair for most highpop maps
-#ifdef MAP_OVERRIDE_COGMAP2
-	#define GANG_TAG_INFLUENCE 15
-	#define GANG_TAG_SIGHT_RANGE 8
-
-#elif defined(MAP_OVERRIDE_DONUT3)
-	#define GANG_TAG_INFLUENCE 15
-	#define GANG_TAG_SIGHT_RANGE 8
-#elif defined(MAP_OVERRIDE_OZYMANDIAS) //jesus christ. this is HUGE.
-	#define GANG_TAG_INFLUENCE 20
-	#define GANG_TAG_SIGHT_RANGE 12
-#elif defined(MAP_OVERRIDE_ATLAS)
+#ifdef MAPSIZE_SMALL // keep in mind, smaller maps will still have fewer players & less gangs
 	#define GANG_TAG_INFLUENCE 10
 	#define GANG_TAG_SIGHT_RANGE 5
+#elif defined(MAPSIZE_LARGE) // overriding gang tag sizes, 15-8 seems fair for most highpop maps
+	#define GANG_TAG_INFLUENCE 15
+	#define GANG_TAG_SIGHT_RANGE 8
+#elif defined(MAPSIZE_XLARGE)
+	#define GANG_TAG_INFLUENCE 20
+	#define GANG_TAG_SIGHT_RANGE 12
 #else
 	#define GANG_TAG_INFLUENCE 12
 	#define GANG_TAG_SIGHT_RANGE 6
