@@ -1293,7 +1293,7 @@ datum
 				var/mob/living/H = M
 				var/check = rand(0,100)
 				if (istype(H))
-					if (M.reagents.has_any("milk", "super_milk"))
+					if (M.reagents.has_any(list("milk", "super_milk")))
 						boutput(M, SPAN_NOTICE("The milk stops the burning. Ahhh."))
 						if(M.reagents.has_reagent("milk"))
 							M.reagents.del_reagent("milk")
