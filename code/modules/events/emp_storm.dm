@@ -83,13 +83,15 @@
 			SPAWN(2 SECONDS)
 				if (pulse) qdel(pulse)
 
-			if(!interdicted)
-				T.hotspot_expose(700,125)
-				for (var/turf/tile in range(reach, T))
-					for (var/atom/O in tile.contents)
-						var/area/t = get_area(O)
-						if(t?.sanctuary) continue
-						O.emp_act()
+			if(interdicted)
+				return //visual effects fire off, but the damage doesn't
+
+			T.hotspot_expose(700,125)
+			for (var/turf/tile in range(reach, T))
+				for (var/atom/O in tile.contents)
+					var/area/t = get_area(O)
+					if(t?.sanctuary) continue
+					O.emp_act()
 
 /datum/particleSystem/emp_warning
 	New(var/atom/location = null)
