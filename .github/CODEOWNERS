@@ -25,7 +25,9 @@
 /code/datums/gamemodes/nuclear.dm @Gannets
 
 # Jorj
-/assets/maps/allocated/syndicate_hideouts @JORJ949
+/assets/maps/allocated/syndicate_hideouts/ @JORJ949
+/assets/maps/random_rooms/probstation/ @JORJ949
+/maps/probstation.dmm @JORJ949
 
 # Kyle
 /code/WorkInProgress/JobXpRewards.dm @Kyle2143

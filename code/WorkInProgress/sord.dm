@@ -837,3 +837,21 @@ TYPEINFO(/obj/item/reagent_containers/injector_filler)
 					my_mob.visible_message(SPAN_ALERT("<b>[myitem] lands at [my_mob]'s feet!</b>"))
 				i=100
 			sleep(0.1 SECONDS)
+
+/obj/item/property_setter/overpowered
+	name = "reinforcing hyperfabric"
+	desc = "A piece of fabric that bends the fabric of spacetime, that, when installed in armor, provides a plethora of reinforcing properties. It shimmers faintly."
+	color = "#c4b639"
+	prefix_to_set = "hyper reinforced"
+
+	New()
+		. = ..()
+		properties_to_set = list(new /datum/property_setter_property(incrementative = 1, cap = 8, property_name = "meleeprot", property_value = 8),
+		new /datum/property_setter_property(incrementative = 1, cap = 5, property_name = "rangedprot", property_value = 5),
+		new /datum/property_setter_property(incrementative = 1, cap = 100, property_name = "coldprot", property_value = 100),
+		new /datum/property_setter_property(incrementative = 1, cap = 100, property_name = "heatprot", property_value = 100),
+		new /datum/property_setter_property(incrementative = 1, cap = -0.3, property_name = "movespeed", property_value = -0.3, inverse = 1),
+		new /datum/property_setter_property(incrementative = 1, cap = -0.3, property_name = "space_movespeed", property_value = -0.3, inverse = 1),
+		new /datum/property_setter_property(incrementative = 1, cap = 80, property_name = "radprot", property_value = 60),
+		new /datum/property_setter_property(incrementative = 1, cap = 60, property_name = "exploprot", property_value = 30),
+		new /datum/property_setter_property(incrementative = 1, cap = 100, property_name = "deflection", property_value = 30))

@@ -257,6 +257,10 @@
 	},
 /obj/item/storage/box/cutlery,
 /obj/item/storage/box/cutlery,
+/obj/item/kitchen/rollingpin{
+	pixel_y = -1;
+	pixel_x = -10
+	},
 /turf/simulated/floor/white/checker2,
 /area/prefab/fancy_restaurant)
 "py" = (

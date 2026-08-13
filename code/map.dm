@@ -15,7 +15,6 @@ var/global/list/mapNames = list(
 	//"Construction" =		list("id" = "CONSTRUCTION", "settings" = "construction"),
 	"pod_wars" =			list("id" = "POD_WARS",		"settings" = "pod_wars",		"playerPickable" = FALSE),
 	"Event" =				list("id" = "EVENT",		"settings" = "clarion",			"playerPickable" = FALSE),
-	// "1 pamgoC" =			list("id" = "PAMGOC",		"settings" = "pamgoc",			"playerPickable" = FALSE),
 	"Wrestlemap" =			list("id" = "WRESTLEMAP",	"settings" = "wrestlemap",		"playerPickable" = FALSE),
 	"Probstation" =			list("id" = "PROBSTATION",	"settings" = "probstation",		"playerPickable" = FALSE),
 

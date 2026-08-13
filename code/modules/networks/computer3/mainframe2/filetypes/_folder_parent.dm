@@ -14,11 +14,12 @@
 	src.linkers = list()
 
 /datum/computer/folder/disposing()
-	for (var/datum/computer/C as anything in src.contents)
-		C.dispose()
-
 	for (var/datum/computer/folder/link/L as anything in src.linkers)
 		L.contents.Cut()
+		L.target = null
+
+	for (var/datum/computer/C as anything in src.contents)
+		C.dispose()
 
 	src.contents = null
 	src.linkers = null
