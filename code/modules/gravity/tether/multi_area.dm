@@ -106,21 +106,6 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether/multi_area)
 	base_area_typepath = /area/research_outpost
 
 
-// donut2 research station
-/obj/machinery/gravity_tether/multi_area/research_station
-	name = "Research Station gravity tether"
-	req_access = list(access_research_director)
-	base_area_typepath = /area/station/science
-	base_area_exceptions = list(/area/station/science/testchamber/bombchamber)
-	additional_area_types = list(
-		/area/station/crew_quarters/hor,
-		/area/station/maintenance/scidisposal,
-		/area/station/turret_protected/Zeta,
-		/area/station/crew_quarters/observatory,
-		/area/station/hangar/science,
-	)
-
-
 // asteroid field
 
 // NT Mining outpost

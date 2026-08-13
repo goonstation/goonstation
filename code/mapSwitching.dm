@@ -564,8 +564,8 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 			// 	chosenMap = "1 pamgoC"
 			//if(istype(I, /obj/item/reagent_containers) && I:reagents:has_reagent("ldmatter"))
 				//chosenMap = "Density"
-			if(istype(I, /obj/item/reagent_containers/food/snacks/donut))
-				chosenMap = "Donut 2"
+			// if(istype(I, /obj/item/reagent_containers/food/snacks/donut))
+			// 	chosenMap = "Donut 2"
 			//if(istype(I, /obj/item/grab))
 				//chosenMap = "Wrestlemap"
 
