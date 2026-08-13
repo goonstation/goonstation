@@ -3437,9 +3437,9 @@ datum
 			fluid_b = 165
 			fluid_g = 144
 
-#define RANCH_LIKER (1<<0) // disable bad effects
-#define RANCH_IMMUNE (1<<1) // disable all effects
-#define RANCH_ADDICT (1<<2) // enable addiction effects
+#define ZRANCH_LIKER (1<<0) // disable bad effects
+#define ZRANCH_IMMUNE (1<<1) // disable all effects
+#define ZRANCH_ADDICT (1<<2) // enable addiction effects
 		// highly addictive blood type, but also highly polarizing.
 		// previously had this as a fooddrink subtype but still want vampires to be able to use it and i dont feel like dealing with that
 		blood/zestyranch
@@ -3460,35 +3460,35 @@ datum
 			reagent_state = LIQUID
 
 			/// this controls how the chemical behaves inside the mob
-			var/pref_state = RANCH_LIKER
+			var/pref_state = ZRANCH_LIKER
 			/// how much ranch must be in a person to avoid making addiction withdrawal actively worse
 			var/minimum_ranch = 30
 
 			on_add()
 				if(isliving(holder?.my_atom))
 					var/mob/living/M = holder.my_atom
-					src.check_ranch_immunity(M)
+					src.check_ZRANCH_immunity(M)
 
 			on_mob_life(mob/M, mult)
 
-				if (!(src.pref_state & RANCH_IMMUNE))
+				if (!(src.pref_state & ZRANCH_IMMUNE))
 					var/datum/ailment/addiction/addicted = M.addicted_to_reagent(src)
 					if (addicted)
-						if (!(src.pref_state & RANCH_ADDICT))
-							src.pref_state |= RANCH_ADDICT
+						if (!(src.pref_state & ZRANCH_ADDICT))
+							src.pref_state |= ZRANCH_ADDICT
 					else
-						if ((src.pref_state & RANCH_ADDICT))
-							src.pref_state &= ~RANCH_ADDICT
+						if ((src.pref_state & ZRANCH_ADDICT))
+							src.pref_state &= ~ZRANCH_ADDICT
 
-				if (!(src.pref_state & RANCH_IMMUNE))
-					if (src.pref_state & RANCH_ADDICT)
+				if (!(src.pref_state & ZRANCH_IMMUNE))
+					if (src.pref_state & ZRANCH_ADDICT)
 
 						// instead of being based on like / dislike, its now based on how close we are to running out
 						var/amount = holder.get_reagent_amount(src.id)
 
 						if (amount < src.minimum_ranch)
 							M.make_jittery(10 * mult)
-							if(!ON_COOLDOWN(M, "zestyranch_addict_message", 3 SECONDS))
+							if(!ON_COOLDOWN(M, "zestyZRANCH_addict_message", 3 SECONDS))
 								if (probmult(50))
 									var/msg = pick("You feel like you need more...","You can't imagine a world without [src.name]!","You NEED more [src.name]!","Needs more [src.name]. More!", "You're craving [src.name] dressing!", "Anything else just isn't [pick(src.taste)] enough!")
 									boutput(M, SPAN_ALERT(msg), group="addict_[src]")
@@ -3505,7 +3505,7 @@ datum
 									M.take_toxin_damage(0.3 * mult)
 
 					// good OR bad effects
-					if (src.pref_state & RANCH_LIKER)
+					if (src.pref_state & ZRANCH_LIKER)
 						M.reagents.add_reagent("cholesterol", 0.5 * src.calculate_depletion_rate(M, mult))
 						if (probmult(30))
 							M.reagents.add_reagent("msg", 1 * src.calculate_depletion_rate(M, mult))
@@ -3518,18 +3518,18 @@ datum
 							M.nauseate(rand(1,2))
 				..(M, mult)
 
-			proc/check_ranch_immunity(var/mob/living/M)
-				if (!(src.pref_state & RANCH_IMMUNE))
+			proc/check_ZRANCH_immunity(var/mob/living/M)
+				if (!(src.pref_state & ZRANCH_IMMUNE))
 					// disable addiction, remove effects
 					if (M.blood_id == src.id)
-						src.pref_state |= RANCH_IMMUNE
+						src.pref_state |= ZRANCH_IMMUNE
 				else
 					// revoked
 					if (M.blood_id != src.id)
-						src.pref_state &= ~RANCH_IMMUNE
+						src.pref_state &= ~ZRANCH_IMMUNE
 
 				// keep up to date
-				if (src.pref_state & RANCH_LIKER || src.pref_state & RANCH_IMMUNE)
+				if (src.pref_state & ZRANCH_LIKER || src.pref_state & ZRANCH_IMMUNE)
 					src.taste = list("zesty", "ranchy")
 				else
 					src.taste = list("awful", "disgusting")
@@ -3537,26 +3537,26 @@ datum
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume_passed)
 
 				if(method == INGEST && volume_passed >= 1)
-					src.check_ranch_immunity(M)
-					if (!(src.pref_state & RANCH_IMMUNE))
+					src.check_ZRANCH_immunity(M)
+					if (!(src.pref_state & ZRANCH_IMMUNE))
 						// its either delicious or toxic and disgusting to us, unless we're immune to its effects
-						if (src.pref_state & RANCH_ADDICT)
+						if (src.pref_state & ZRANCH_ADDICT)
 							// too late, to the ranch dungeon with you
-							if (!(src.pref_state & RANCH_LIKER))
+							if (!(src.pref_state & ZRANCH_LIKER))
 								boutput(M, SPAN_NOTICE("You're starting to really appreciate the flavor."))
-								src.pref_state |= RANCH_LIKER
+								src.pref_state |= ZRANCH_LIKER
 								src.taste = list("zesty", "ranchy")
 
 						else
 							// you still have time to change your mind before its too late
-							if (src.pref_state & RANCH_LIKER)
+							if (src.pref_state & ZRANCH_LIKER)
 								if (prob(40))
-									src.pref_state &= ~RANCH_LIKER
+									src.pref_state &= ~ZRANCH_LIKER
 									M.nauseate(rand(2,4))
 									src.taste = list("awful", "disgusting")
 							else
 								if (prob(60))
-									src.pref_state |= RANCH_LIKER
+									src.pref_state |= ZRANCH_LIKER
 									src.taste = list("zesty", "ranchy")
 								else
 									M.nauseate(rand(2,4))
@@ -3565,14 +3565,14 @@ datum
 
 			handle_addiction(var/mob/M, var/rate, var/addProb)
 				// dont addict if the mob doesn't like it, or is immune.
-				if ((src.pref_state & RANCH_IMMUNE) || !(src.pref_state & RANCH_LIKER))
+				if ((src.pref_state & ZRANCH_IMMUNE) || !(src.pref_state & ZRANCH_LIKER))
 					addProb = 0
 					rate = 0
 				..(M, rate, addProb)
 
-#undef RANCH_LIKER
-#undef RANCH_IMMUNE
-#undef RANCH_ADDICT
+#undef ZRANCH_LIKER
+#undef ZRANCH_IMMUNE
+#undef ZRANCH_ADDICT
 
 		vomit
 			name = "vomit"
