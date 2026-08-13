@@ -61,6 +61,12 @@
 		if (length(.) && prob(10))
 			playsound(src.loc, 'sound/voice/animal/hippo_roar.ogg', 75, 1)
 			src.visible_message(SPAN_ALERT("<B>[src]</B> roars!"))
+	seek_food_target(range)
+		. = list()
+		for (var/obj/item/item in view(range, get_turf(src)))
+			//hippos are *mostly* herbivores
+			if (istype(item, /obj/item/reagent_containers/food/snacks/plant))
+				. += item
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
