@@ -1421,6 +1421,19 @@ TYPEINFO(/obj/item/clothing/gloves/ring/gold)
 	mat_changename = 0 // okay let's just be "gold ring" and not "flimsy soft good gold ring" tia
 	default_material = "gold"
 
+/obj/item/clothing/gloves/ring/gold/spooky
+	name = "gold ring?"
+	desc = "It hums with a strange power. Feels surprisingly warm."
+
+	equipped(var/mob/user, var/slot)
+		user.setStatus("dark_affinity")
+		return ..()
+
+	unequipped(mob/user)
+		user.setStatus("dark_affinity", 30 SECONDS)
+		return ..()
+
+
 /obj/item/clothing/gloves/ring/titanium // fancy loot crate ring that gives you hulk, basically. real overpowered?  :T
 	name = "titanium ring"
 	desc = "A little ring with a strange green gem, worn on the ring finger. You absolutely can't wear rings on any other fingers. It's just not possible."

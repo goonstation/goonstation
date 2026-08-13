@@ -10,12 +10,18 @@
 	anchored = ANCHORED
 	var/visible = FALSE
 	var/armed = FALSE
+	var/free_trap = FALSE
 	var/mob/living/intangible/wraith/wraith_trickster/master = null
+	var/mob/living/critter/critter = null
 
-	New(turf/T, mob/living/intangible/wraith/wraith_trickster/W = null, mob/placing_mob)
+	New(turf/T, mob/living/W = null, mob/placing_mob, var/arming_time = 5 SECONDS)
 		..()
-		master = W
-		SPAWN(5 SECONDS)
+		if (istype(W, /mob/living/intangible/wraith/wraith_trickster))
+			master = W
+		else
+			critter = W
+
+		SPAWN(arming_time)
 			if (!QDELETED(src))
 				var/turf/local_turf = get_turf(src)
 				if (local_turf.RL_GetBrightness() < 0.3)
@@ -45,8 +51,13 @@
 		qdel(src)
 
 	disposing()
+		if (src.free_trap)
+			. = ..()
 		if (master != null)
 			master.traps_laid--
+		else
+			var/datum/targetable/critter/demon_doll/devious_song/abil = critter?.getAbility(/datum/targetable/critter/demon_doll/devious_song)
+			abil?.traps_laid--
 		. = ..()
 
 	Crossed(atom/movable/AM)
@@ -68,7 +79,7 @@
 			return
 		if(!isliving(AM))
 			return
-		if(istype(AM, /mob/living/critter/wraith/trickster_puppet))
+		if(istype(AM, /mob/living/critter/wraith))
 			return
 		if(isintangible(AM))
 			return

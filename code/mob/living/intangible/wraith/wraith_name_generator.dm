@@ -86,6 +86,8 @@ ABSTRACT_TYPE(/datum/wraith_name_generator)
 	lower_vowel_prob = 40
 	upper_vowel_prob = 70
 
+/datum/wraith_name_generator/wraith_summon/doll
+	prefixes = list("Doll ")
 
 /datum/wraith_name_generator/wraith_summon/spiker
 	prefixes = list("Spiker ")
