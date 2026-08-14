@@ -246,14 +246,15 @@ datum
 			transparency = 60
 			disease = /datum/ailment/disease/teleportitis
 
-		disease/pubbie_tears // Berserker
-			name = "pubbie tears"
-			id = "pubbie tears"
-			description = "The most bitter of all liquids."
+		disease/angy // Berserker
+			name = "angy"
+			id = "angy"
+			description = "This makes you so hecking mad!! FRICK!!!!!"
 			reagent_state = LIQUID
-			fluid_r = 0
+			taste = "mad. Like, <i>real</i> mad. However that works"
+			fluid_r = 123
 			fluid_g = 0
-			fluid_b = 255
+			fluid_b = 0
 			transparency = 30
 			disease = /datum/ailment/disease/berserker
 

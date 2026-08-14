@@ -634,7 +634,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 				reagent = pick("rainbow fluid", "painbow fluid", "grave dust", "explodingheadjuice")
 
 			if("eldritch") //horrible stuff
-				reagent = pick("gibbis", "pubbie tears", "rat_spit", "loose_screws", "e.coli", "green mucus")
+				reagent = pick("gibbis", "angy", "rat_spit", "loose_screws", "e.coli", "green mucus")
 
 		payload_disease_reagents += reagent
 		log_addendum = "Payload: [reagent]"

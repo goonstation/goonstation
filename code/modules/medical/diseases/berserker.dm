@@ -6,7 +6,7 @@
 	cure_desc = "Haloperidol"
 	reagentcure = list("haloperidol")
 	recureprob = 10
-	associated_reagent = "pubbie tears"
+	associated_reagent = "angy"
 	affected_species = list("Human")
 
 /datum/ailment/disease/berserker/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
