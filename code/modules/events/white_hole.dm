@@ -974,18 +974,18 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			//approx 41k cell units consumed overall
 			var/interdict_cost = 200
 			for_by_tcl(IX, /obj/machinery/interdictor)
-				interdict_cost = 200 + ((50 - interdiction_hp) * 25)
+				interdict_cost = 200 + ((50 - src.interdiction_hp) * 25)
 				if (IX.expend_interdict(interdict_cost, src))
 					interdicted_this_cycle = TRUE
 					if(src.interdiction_hp >= 50)
 						playsound(IX,'sound/machines/alarm_a.ogg',20,FALSE,5,-1.5)
 						IX.visible_message(SPAN_ALERT("<b>[IX] emits an anti-gravitational anomaly warning!</b>"))
-					if(state != "active")
+					if(src.state != "active")
 						grow_duration += 4 SECOND
 						src.interdiction_hp--
 						if(src.interdiction_hp <= 0)
 							time_since_start = (grow_duration + active_duration) * 2
-							state = "dying"
+							src.state = "dying"
 							break
 					else
 						active_duration -= 1 SECOND
