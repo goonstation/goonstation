@@ -727,6 +727,7 @@
 /area/centcom/outside)
 "DC" = (
 /obj/machinery/door/airlock/pyro/glass/security{
+	hardened = 1;
 	dir = 4
 	},
 /obj/mapping_helper/access/security,
