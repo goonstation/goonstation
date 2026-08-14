@@ -5,10 +5,6 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/devzone)
-"ae" = (
-/obj/item/device/radio/intercom/medical,
-/turf/simulated/floor/caution,
-/area/station/devzone)
 "ag" = (
 /obj/machinery/conveyor/NS{
 	id = "cargosell"
@@ -113,7 +109,6 @@
 /area/station/devzone)
 "cH" = (
 /obj/landmark/start/job/security_officer,
-/obj/item/device/radio/intercom/detnet/security,
 /turf/simulated/floor,
 /area/station/devzone)
 "cJ" = (
@@ -983,10 +978,6 @@
 "qI" = (
 /obj/machinery/bot/mulebot/QM1,
 /obj/machinery/navbeacon/mule/QM1_north/west,
-/turf/simulated/floor,
-/area/station/devzone)
-"qL" = (
-/obj/item/device/radio/intercom/brig,
 /turf/simulated/floor,
 /area/station/devzone)
 "qR" = (
@@ -3028,7 +3019,6 @@
 /area/station/devzone)
 "ZX" = (
 /obj/landmark/start/job/security_assistant,
-/obj/item/device/radio/intercom/engineering,
 /turf/simulated/floor,
 /area/station/devzone)
 "ZZ" = (
@@ -4619,7 +4609,7 @@ ng
 ng
 ng
 ng
-ae
+ng
 ng
 Yx
 "}
@@ -4663,7 +4653,7 @@ Cv
 Cv
 AY
 Yx
-qL
+Yx
 kz
 Yx
 "}
