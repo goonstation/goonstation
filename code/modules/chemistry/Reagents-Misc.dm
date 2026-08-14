@@ -3505,31 +3505,42 @@ datum
 
 						if (amount < src.minimum_ranch)
 							M.make_jittery(10 * mult)
-							if(!ON_COOLDOWN(M, "zestyZRANCH_addict_message", 3 SECONDS))
+							// start side effects
+							M.take_toxin_damage(0.5 * mult)
+							if (amount < src.minimum_ranch/2)
+								M.take_toxin_damage(rand(1,2) * mult)
+
+							if(!ON_COOLDOWN(M, "zestyranch_addict_message", 3 SECONDS))
 								if (probmult(50))
 									var/msg = pick("You feel like you need more...","You can't imagine a world without [src.name]!","You NEED more [src.name]!","Needs more [src.name]. More!", "You're craving [src.name] dressing!", "Anything else just isn't [pick(src.taste)] enough!")
 									boutput(M, SPAN_ALERT(msg), group="addict_[src]")
 
+
 								if (amount < src.minimum_ranch/2)
 									// simulated withdrawal
 									if (probmult(40))
-										var/action = weighted_pick(list("scream"=1,"blur"=2,"drool"=3,"shudder"=3,"groan"=3,"shiver"=3,"burp"=3))
+										var/action = weighted_pick(list("scream"=1,"heartbeat"=1,"blur"=2,"drool"=3,"shudder"=3,"groan"=3,"shiver"=3,"burp"=3))
 										if (action == "blur")
-											boutput(M, SPAN_ALERT("Your vision blurs, you REALLY need some [src.name]."), group="addict_[src]")
+											boutput(M, SPAN_ALERT("Your vision blurs, you REALLY need some [src.name]."), group="addict_[src]2")
 											M.change_eye_blurry(rand(7, 10))
+										else if (action == "heartbeat")
+											boutput(M, SPAN_ALERT("<b>You can feel your heartbeat in your throat!</b>"), group="addict_[src]2")
+											M.playsound_local(M.loc, 'sound/effects/heartbeat.ogg', 50, 1)
 										else
 											M.emote(action)
-									M.take_toxin_damage(0.3 * mult)
 
 					// good OR bad effects
 					if (src.pref_state & ZRANCH_LIKER)
 						M.reagents.add_reagent("cholesterol", 0.5 * src.calculate_depletion_rate(M, mult))
 						if (probmult(30))
 							M.reagents.add_reagent("msg", 1 * src.calculate_depletion_rate(M, mult))
-						M.HealDamage("All", 0.2 * mult, 0.2 * mult, 0.1 * mult)
+
+						if (probmult(50))
+							M.HealDamage("All", 1 * mult, 1 * mult, 1 * mult)
 					else
-						M.reagents.add_reagent("cholesterol", 1 * src.calculate_depletion_rate(M, mult))
-						M.take_toxin_damage(0.5 * mult)
+						M.reagents.add_reagent("cholesterol", 1.5 * src.calculate_depletion_rate(M, mult))
+						M.take_toxin_damage(1 * mult)
+
 						// instead of msg you get vomit.
 						if (probmult(30))
 							M.nauseate(rand(1,2))
