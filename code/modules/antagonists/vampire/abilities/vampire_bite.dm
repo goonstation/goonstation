@@ -101,6 +101,27 @@
 				HH.blood_volume = 0
 			else
 				HH.blood_volume -= 20 * mult
+				// Drink a few units from the blood stream
+				var/blood_contents_drank = clamp(mult / 2, 0, HH.reagents.total_volume) // Not going to question all of the magic 20's and 10s here.
+				var/big_content = capitalize(HH.reagents.get_master_reagent_name())
+				boutput(M, SPAN_ITALIC("It has hints of " + big_content + "...")) // Hints of (biggest chemical)
+				if (length(HH.reagents.reagent_list) > 1)
+					var/first_run = TRUE
+					var/undertones = ""
+					for (var/reagent_id as anything in HH.reagents.reagent_list) // Undertones of (all the others)
+						var/datum/reagent/small_content = HH.reagents.reagent_list[reagent_id]
+						var/chemName = capitalize(small_content.name)
+						if (chemName == "Mirabilis" || chemName == big_content)
+							continue
+						if (first_run == FALSE)
+							undertones += "and"
+
+						undertones += " with " + pick("undertones", "scents", "aromas", "tinges", "sounds", "notes") + " of " + chemName
+					capitalize(undertones)
+					undertones += "..."
+					boutput(M, SPAN_ITALIC(undertones))
+				HH.reagents.reaction(M, INGEST, blood_contents_drank)
+				HH.reagents.trans_to(M, blood_contents_drank)
 
 			// Vampire TEG also uses this ability, prevent runtimes
 			if (ismob(src.owner))
