@@ -311,6 +311,20 @@ var/global/list/job_start_locations = list()
 
 /* ===== Misc Spawn/Start ===== */
 
+/obj/landmark/new_player
+	name = LANDMARK_NEW_PLAYER
+	add_to_landmarks = FALSE
+
+/obj/landmark/new_player/init(delay_qdel)
+	var/turf/T = get_turf(src)
+	global.landmarks ||= list()
+	global.landmarks[src.name] = list(T)
+
+	for_by_tcl(new_player, /mob/new_player)
+		new_player.set_loc(T)
+
+	. = ..()
+
 /obj/landmark/pest
 	name = LANDMARK_PESTSTART
 	icon_state = "pest_start"
