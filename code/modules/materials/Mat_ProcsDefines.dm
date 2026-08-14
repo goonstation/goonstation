@@ -148,6 +148,9 @@ var/global/list/material_cache
 		if(mat1.shouldApplyColor())
 			src.alpha = mat1.getAlpha()
 			src.color = mat1.getColor()
+	if(src.color)
+		var/datum/component/radioactive/rad_comp = src.GetComponent(/datum/component/radioactive)
+		rad_comp?.filterize_color(rad_comp.parent)
 
 /// Applies material icon_state override to an /image based on this atom's material (or the material provided)
 /atom/proc/setMaterialAppearanceForImage(image/img, datum/material/mat=null)
@@ -202,7 +205,6 @@ proc/get_icon_states(icon)
 
 	return /obj/item/material_piece
 
-/// Increases generations on material triggers and handles removal if over the generation cap.
 /proc/handleTriggerGenerations(var/list/toDo)
 	for(var/datum/materialProc/current in toDo)
 		if(current.max_generations != -1 && (toDo[current] + 1) > current.max_generations)

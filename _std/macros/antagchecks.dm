@@ -46,3 +46,10 @@
 #define iskudzuman(x) (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/kudzu))
 #define issawfly(x) (istype(x, /mob/living/critter/robotic/sawfly))
 #define iszombie(x) (istype(x, /mob/living/critter/zombie) || istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/zombie))
+
+// Should any revs spawned follow roleplay behaviour?
+#ifdef RP_MODE
+#define ROLEPLAY_REVOLUTIONARIES (!istype_exact(ticker.mode, /datum/game_mode/revolution))
+#else
+#define ROLEPLAY_REVOLUTIONARIES (istype(ticker.mode, /datum/game_mode/revolution/extended))
+#endif

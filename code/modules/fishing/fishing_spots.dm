@@ -264,6 +264,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/mahimahi = 10,\
 	/obj/item/reagent_containers/food/fish/shrimp = 15,\
 	/obj/item/reagent_containers/food/fish/sardine = 20,\
+	/obj/item/reagent_containers/food/fish/long_pike = 1,\
 	/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake = 1)
 
 	generate_fish(var/mob/user, var/obj/item/fishing_rod/fishing_rod, atom/target)
@@ -407,6 +408,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/flounder = 10,\
 	/obj/item/reagent_containers/food/fish/mahimahi = 10,\
 	/obj/item/reagent_containers/food/fish/sardine = 20,\
+	/obj/item/reagent_containers/food/fish/long_pike = 1,\
 	/obj/item/reagent_containers/food/fish/anchovy = 30)
 
 /datum/fishing_spot/watertank
@@ -575,6 +577,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/bass = 30,\
 	/obj/item/reagent_containers/food/fish/real_goldfish = 5,\
 	/obj/item/reagent_containers/food/fish/salmon = 20,\
+	/obj/item/reagent_containers/food/fish/long_pike = 1,\
 	/obj/item/reagent_containers/food/fish/glassfish = 10)
 
 /datum/fishing_spot/drain/New()
@@ -713,6 +716,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/mahimahi = 10,\
 	/obj/item/reagent_containers/food/fish/shrimp = 15,\
 	/obj/item/reagent_containers/food/fish/sardine = 20,\
+	/obj/item/reagent_containers/food/fish/long_pike = 1,\
 	/obj/item/reagent_containers/food/fish/glassfish = 10)
 
 //ainsley
@@ -741,6 +745,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/shrimp = 15,\
 	/obj/item/reagent_containers/food/fish/sardine = 20,\
 	/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake = 1,\
+	/obj/item/reagent_containers/food/fish/long_pike = 1,\
 	/obj/item/reagent_containers/food/fish/glassfish = 10)
 
 	generate_fish(var/mob/user, var/obj/item/fishing_rod/fishing_rod, atom/target)

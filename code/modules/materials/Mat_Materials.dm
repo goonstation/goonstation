@@ -437,7 +437,7 @@ ABSTRACT_TYPE(/datum/material)
 			X.execute(location)
 		return
 
-	proc/triggerChem(var/location, var/datum/reagent/chem, var/amount)
+	proc/triggerChem(var/atom/location, var/datum/reagent/chem, var/amount)
 		for(var/datum/materialProc/X in triggersChem)
 			X.execute(location, chem, amount)
 		return
@@ -670,13 +670,22 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("density", 4)
 		setProperty("chemical", 2)
 		setProperty("melting_point", 1600 KELVIN)
-		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/shock_life(4 SECONDS, 6 SECONDS, 100))
+		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/electrical/shock_life(4 SECONDS, 6 SECONDS, 100))
 
 /datum/material/metal/voltite
 	mat_id = "voltite"
 	name = "voltite"
 	desc = "Energy seems to be flowing around it, chanelled through in an unknown manner."
-	color = "#389fff"
+	color = list(0.55, 0.45, -0.15, 0.00,\
+				0.55, 0.45, -0.10, 0.00,\
+				0.00, 0.35, 1.75, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00)
+	hsl_color = list(0.00, 0.00, 0.00, 0.00,\
+					0.00, 1.50, 0.00, 0.00,\
+					0.00, 0.00, 1.00, 0.00,\
+					0.00, 0.00, 0.00, 1.00,\
+					0.13, -0.10, 0.05, 0.00)
 	artisan_trait_weight = MATERIAL_ARTISAN_RARE
 
 	New()
@@ -686,8 +695,8 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("thermal", 1)
 		setProperty("hard", 1)
 		setProperty("melting_point", 1500 KELVIN)
-		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/shock_life(4 SECONDS, 6 SECONDS, 100))
-		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/arcflash_life(6 SECONDS, 8 SECONDS, 500))
+		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/electrical/shock_life(4 SECONDS, 6 SECONDS, 100))
+		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/electrical/arcflash_life(6 SECONDS, 8 SECONDS, 500))
 
 /datum/material/metal/steel
 	mat_id = "steel"
@@ -1189,11 +1198,12 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("electrical", 6)
 		setProperty("radioactive", 8)
 
-		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/erebite_temp())
-		addTrigger(TRIGGERS_ON_EXPLOSION, new /datum/materialProc/erebite_exp())
-		addTrigger(TRIGGERS_ON_ATTACK, new /datum/materialProc/generic_explode_attack(33))
-		addTrigger(TRIGGERS_ON_ATTACKED, new /datum/materialProc/generic_explode_attack(33))
-		addTrigger(TRIGGERS_ON_HIT, new /datum/materialProc/generic_explode_attack(33))
+		// Explodes if you look at it funny
+		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/explosion/heated())
+		addTrigger(TRIGGERS_ON_EXPLOSION, new /datum/materialProc/explosion/exp())
+		addTrigger(TRIGGERS_ON_ATTACK, new /datum/materialProc/explosion/generic())
+		addTrigger(TRIGGERS_ON_ATTACKED, new /datum/materialProc/explosion/generic())
+		addTrigger(TRIGGERS_ON_HIT, new /datum/materialProc/explosion/impact())
 
 
 /datum/material/crystal/plasmastone
@@ -1581,10 +1591,17 @@ ABSTRACT_TYPE(/datum/material/organic)
 	mat_id = "blob"
 	name = "blob"
 	desc = "The material of the feared giant space amoeba."
-	color = "#44cc44"
+	color = list(0.50, 0.20, 0.00, 0.00,\
+				0.00, 0.50, 0.00, 0.00,\
+				0.00, 0.20, 0.50, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.10, 0.15, 0.10, 0.00)
+	hsl_color = list(0.00, 0.00, 0.00, 0.00,\
+					0.00, 0.30, 0.00, 0.00,\
+					0.00, 0.00, 1.20, 0.00,\
+					0.00, 0.00, 0.00, 1.00,\
+					0.33, 0.70, -0.10, 0.00)
 	alpha = 180
-	texture = "bubbles"
-	texture_blend = BLEND_ADD
 
 	edible_exact = 0.6 //Just barely edible
 	edible = 1
@@ -1597,6 +1614,9 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("hard", 1)
 		setProperty("flammable", 5)
 		setProperty("melting_point", 400 KELVIN)
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/blob_add())
+		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/blob_remove())
+		addTrigger(TRIGGERS_ON_IMAGE, new /datum/materialProc/honey_image())
 		addTrigger(TRIGGERS_ON_EAT, new /datum/materialProc/oneat_blob())
 
 
@@ -2014,7 +2034,18 @@ ABSTRACT_TYPE(/datum/material/fabric)
 	mat_id = "leather"
 	name = "leather"
 	desc = "Leather is a flexible material derived from processed animal skins."
-	color = "#8A3B11"
+	color = list(0.90, 0.10, 0.20, 0.00,\
+				0.10, 0.70, 0.00, 0.00,\
+				0.20, 0.00, 0.50, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00)
+	hsl_color = list(0.00, 0.00, 0.00, 0.00,\
+					0.00, 0.25, 0.00, 0.00,\
+					0.00, 0.00, 0.60, 0.00,\
+					0.00, 0.00, 0.00, 1.00,\
+					0.13, 0.25, 0.00, 0.00)
+	texture = "leather"
+	texture_blend = BLEND_DEFAULT
 	artisan_trait_weight = MATERIAL_ARTISAN_COMMON
 
 	New()
@@ -2029,7 +2060,18 @@ ABSTRACT_TYPE(/datum/material/fabric)
 	mat_id = "synthleather"
 	name = "synthleather"
 	desc = "Synthleather is an artificial leather."
-	color = "#BB3B11"
+	color = list(0.90, 0.10, 0.20, 0.00,\
+				0.10, 0.70, 0.00, 0.00,\
+				0.20, 0.00, 0.50, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00)
+	hsl_color = list(0.00, 0.00, 0.00, 0.00,\
+					0.00, 0.25, 0.00, 0.00,\
+					0.00, 0.00, 0.70, 0.00,\
+					0.00, 0.00, 0.00, 1.00,\
+					0.10, 0.50, 0.00, 0.00)
+	texture = "synthleather"
+	texture_blend = BLEND_DEFAULT
 	artisan_trait_weight = MATERIAL_ARTISAN_COMMON
 
 	New()
@@ -2044,7 +2086,18 @@ ABSTRACT_TYPE(/datum/material/fabric)
 	mat_id = "brullbarhide"
 	name = "brullbar hide"
 	desc = "The hide of a fearsome brullbar!"
-	color = "#CCCCCC"
+	color = list(1.25, 0.00, 0.00, 0.00,\
+				0.00, 1.25, 0.00, 0.00,\
+				0.00, 0.00, 1.25, 0.00,\
+				0.00, 0.00, 0.00, 1.00,\
+				0.00, 0.00, 0.00, 0.00)
+	hsl_color = list(0.00, 0.00, 0.00, 0.00,\
+					0.00, 0.60, -0.05, 0.00,\
+					0.00, 0.00, 1.25, 0.00,\
+					0.00, 0.00, 0.00, 1.00,\
+					0.00, -0.10, 0.00, 0.00)
+	texture = "leather"
+	texture_blend = BLEND_DEFAULT
 
 	New()
 		..()
@@ -2058,7 +2111,11 @@ ABSTRACT_TYPE(/datum/material/fabric)
 	mat_id = "kingbrullbarhide"
 	name = "king brullbar hide"
 	desc = "The hide of a terrifying brullbar king!!!"
-	color = "#EFEEEE"
+	hsl_color = list(0.00, 0.00, 0.00, 0.00,\
+					0.00, 1.35, -0.25, 0.00,\
+					0.00, 0.00, 1.15, 0.00,\
+					0.00, 0.00, 0.00, 1.00,\
+					0.00, -0.10, 0.00, 0.00)
 	artisan_trait_weight = 0
 
 	New()
