@@ -20612,6 +20612,9 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/glassblock/transparent/indigo,
 /area/station/bridge)
 "eLe" = (
@@ -53310,6 +53313,12 @@
 /obj/mapping_helper/access/medical,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/cloner)
+"mmd" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/longtile/black,
+/area/station/bridge)
 "mmi" = (
 /obj/machinery/light/incandescent,
 /obj/table/glass/reinforced/auto,
@@ -70472,6 +70481,20 @@
 	dir = 5
 	},
 /area/station/crew_quarters/mime)
+"qsI" = (
+/obj/decal/stage_edge/alt,
+/obj/table/nanotrasen/auto,
+/obj/machinery/networked/printer{
+	name = "Printer - Bridge";
+	pixel_y = 5;
+	print_id = "Bridge"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/longtile/black,
+/area/station/bridge)
 "qsJ" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/decal/stripe_caution,
@@ -79197,6 +79220,9 @@
 /area/station/maintenance/outer/se)
 "ssN" = (
 /obj/decal/stage_edge/alt,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/longtile/black,
 /area/station/bridge)
 "ssR" = (
@@ -162296,7 +162322,7 @@ ipA
 iAL
 iAL
 eLd
-sCE
+mmd
 sCE
 mom
 aSB
@@ -163202,7 +163228,7 @@ vGa
 bIW
 sqJ
 pXn
-ssN
+qsI
 cFy
 aPI
 dEV
