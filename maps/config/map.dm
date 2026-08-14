@@ -17,8 +17,6 @@
 #elif defined(RANDOM_ROOM_RUNTIME_CHECKING)
 #include "blank.dm"
 
-#elif defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW)
-#include "gottagofast.dm"
 
 // Secret Modes
 #elif defined(SECRET_MAP_OVERRIDE)
@@ -86,6 +84,10 @@
 
 #elif defined(MAP_OVERRIDE_PROBSTATION)
 #include "probstation.dm"
+
+// below maps or it will always include devtest
+#elif defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW)
+#include "gottagofast.dm"
 
 //Entry below is the "default" map
 #else
