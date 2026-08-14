@@ -247,7 +247,7 @@ datum
 			disease = /datum/ailment/disease/teleportitis
 
 		disease/angy // Berserker
-			name = "angy"
+			name = ">:("
 			id = "angy"
 			description = "This makes you so hecking mad!! FRICK!!!!!"
 			reagent_state = LIQUID
