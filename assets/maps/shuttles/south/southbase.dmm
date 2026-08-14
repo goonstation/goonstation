@@ -271,6 +271,14 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
+"ms" = (
+/obj/indestructible/shuttle_window{
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/shuttle/escape/centcom)
 "nb" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
@@ -413,6 +421,14 @@
 "sx" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "13"
+	},
+/area/shuttle/escape/centcom)
+"sY" = (
+/obj/indestructible/shuttle_window{
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor3"
 	},
 /area/shuttle/escape/centcom)
 "uh" = (
@@ -1166,6 +1182,12 @@
 	icon_state = "floor"
 	},
 /area/centcom/outside)
+"We" = (
+/obj/indestructible/shuttle_window,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom)
 "Wl" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1
@@ -1481,7 +1503,7 @@ SL
 fl
 Mq
 Mq
-dw
+sY
 Nt
 Nt
 GM
@@ -1602,7 +1624,7 @@ GM
 GM
 Nt
 Nt
-dw
+We
 fn
 wI
 HA
@@ -1630,7 +1652,7 @@ GM
 GM
 Nt
 Nt
-dw
+We
 fn
 wI
 bM
@@ -1733,7 +1755,7 @@ mh
 ml
 ZL
 ZL
-dw
+ms
 Nt
 Nt
 GM

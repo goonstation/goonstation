@@ -986,6 +986,14 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom)
+"Mv" = (
+/obj/indestructible/shuttle_window{
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/shuttle/escape/centcom)
 "Mx" = (
 /obj/decal/tile_edge/line/orange{
 	dir = 4;
@@ -1081,6 +1089,14 @@
 	icon_state = "floor"
 	},
 /area/centcom/outside)
+"PN" = (
+/obj/indestructible/shuttle_window{
+	dir = 4
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom)
 "PV" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
@@ -1232,6 +1248,14 @@
 "WJ" = (
 /turf/unsimulated/floor/arrival,
 /area/centcom)
+"XO" = (
+/obj/indestructible/shuttle_window{
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom)
 "Yo" = (
 /obj/fakeobject/shuttleengine{
 	dir = 4;
@@ -1507,8 +1531,8 @@ JX
 JX
 JX
 oM
-JX
-JX
+PN
+PN
 oM
 JX
 JX
@@ -1755,7 +1779,7 @@ KC
 iY
 xX
 JX
-JX
+XO
 NZ
 JX
 ez
@@ -1764,7 +1788,7 @@ pI
 ez
 JX
 pj
-JX
+Mv
 JX
 IG
 SG

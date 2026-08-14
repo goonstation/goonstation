@@ -103,6 +103,14 @@
 	icon_state = "floor"
 	},
 /area/centcom/outside)
+"cG" = (
+/obj/indestructible/shuttle_window{
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom)
 "cS" = (
 /obj/decal/tile_edge/line/black{
 	dir = 8;
@@ -224,6 +232,14 @@
 /obj/stool/bench/blue/auto,
 /turf/unsimulated/floor/arrival,
 /area/centcom)
+"fJ" = (
+/obj/indestructible/shuttle_window{
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/shuttle/escape/centcom)
 "fV" = (
 /obj/machinery/light,
 /turf/unsimulated/floor/arrival,
@@ -935,6 +951,12 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
+"Lh" = (
+/obj/indestructible/shuttle_window,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom)
 "Li" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle,
@@ -1501,7 +1523,7 @@ lQ
 sU
 lQ
 lQ
-tU
+fJ
 ML
 ML
 IF
@@ -1604,7 +1626,7 @@ TB
 QD
 dD
 ub
-dB
+Lh
 lQ
 lQ
 sU
@@ -1632,7 +1654,7 @@ TB
 ru
 dD
 ub
-tU
+Lh
 lQ
 lQ
 sU
@@ -1753,7 +1775,7 @@ lQ
 sU
 lQ
 lQ
-dB
+cG
 rU
 rU
 pP

@@ -292,6 +292,12 @@
 	icon_state = "floor3"
 	},
 /area/shuttle/escape/centcom)
+"ip" = (
+/obj/indestructible/shuttle_window,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom)
 "is" = (
 /turf/unsimulated/floor/stairs/dark/wide{
 	dir = 5
@@ -645,6 +651,14 @@
 	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
+"AX" = (
+/obj/indestructible/shuttle_window{
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/shuttle/escape/centcom)
 "Bd" = (
 /obj/decal/tile_edge/line/black{
 	dir = 4;
@@ -910,6 +924,14 @@
 "Ma" = (
 /obj/stool/chair/comfy/shuttle/brown,
 /turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom)
+"Mb" = (
+/obj/indestructible/shuttle_window{
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor3"
+	},
 /area/shuttle/escape/centcom)
 "Ms" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -1515,7 +1537,7 @@ Xp
 Xp
 uW
 uW
-lq
+AX
 OZ
 OZ
 Hy
@@ -1618,7 +1640,7 @@ Ms
 tF
 kI
 Xm
-aQ
+ip
 Az
 ea
 mg
@@ -1646,7 +1668,7 @@ Ms
 hg
 kI
 Xm
-lq
+ip
 SM
 ea
 mg
@@ -1767,7 +1789,7 @@ Xp
 Xp
 yu
 yu
-aQ
+Mb
 kg
 kg
 Zc
