@@ -2918,8 +2918,8 @@ proc/get_mobs_trackable_by_AI()
 		if(!istype(intercom))
 			src.remove_self()
 			return
-		if(GET_DIST(src.owner, src.intercom) > src.max_distance_from_intercom)
-			boutput(user, SPAN_ALERT("You are too far away from that intercom!"))
+		if(GET_DIST(src.owner, intercom) > src.max_distance_from_intercom)
+			boutput(src.owner, SPAN_ALERT("You are too far away from that intercom!"))
 			src.remove_self()
 			return
 		src.intercom = intercom
@@ -2965,8 +2965,10 @@ proc/get_mobs_trackable_by_AI()
 		src.intercom.UpdateOverlays(null, "screen_override")
 
 	onUpdate(timePassed)
+		if(QDELETED(src.intercom))
+			return
 		if(GET_DIST(src.owner, src.intercom) > src.max_distance_from_intercom)
-			boutput(user, SPAN_ALERT("Intercom override range exceeded!"))
+			boutput(src.owner, SPAN_ALERT("Intercom override range exceeded!"))
 			src.remove_self()
 
 	onRemove()
