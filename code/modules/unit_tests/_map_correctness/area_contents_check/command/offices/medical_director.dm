@@ -14,4 +14,3 @@
 		CONTENTS_EQ(/obj/item/device/analyzer/healthanalyzer/upgraded, 1),
 		CONTENTS_EQ(/obj/item/clothing/glasses/healthgoggles/upgraded, 1),
 	)
-
