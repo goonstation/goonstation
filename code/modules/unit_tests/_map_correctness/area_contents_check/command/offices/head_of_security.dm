@@ -10,7 +10,7 @@
 		CONTENTS_EQ(/obj/storage/secure/closet/command/hos, 1),
 		CONTENTS_EQ(/obj/item/stamp/hos, 1),
 		CONTENTS_EQ(/obj/machinery/computer/card/department/security, 1),
-		CONTENTS_EQ(/mob/living/critter/small_animal/turtle/sylvester/HoS, 1)
+		CONTENTS_EQ(/mob/living/critter/small_animal/turtle/sylvester/HoS, 1),
 		CONTENTS_EQ(/obj/decal/poster/wallsign/framed_award/hos_medal, 1),
 
 		// HOS stuff

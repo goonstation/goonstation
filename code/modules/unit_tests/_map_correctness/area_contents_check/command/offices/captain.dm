@@ -18,7 +18,7 @@
 		CONTENTS_EQ(/obj/displaycase/captain, 1),
 		CONTENTS_EQ(/obj/item/storage/toilet/goldentoilet, 1),
 		CONTENTS_EQ(/obj/machinery/recharger, 1),
-		CONTENTS_EQ(/obj/item/storage/secure/ssafe, 1)
+		CONTENTS_EQ(/obj/item/storage/secure/ssafe, 1),
 
 		// computers
 		CONTENTS_EQ(/obj/machinery/computer/announcement/station/captain, 1),
@@ -34,8 +34,8 @@
 		CONTENTS_EQ(/obj/item/storage/photo_album, 1),
 
 		// EVA
-		CONTENTS_EQ(/obj/item/clothing/mask/gas/emergency, 1)
-		CONTENTS_EQ(/obj/item/tank/jetpack, 1)
+		CONTENTS_EQ(/obj/item/clothing/mask/gas/emergency, 1),
+		CONTENTS_EQ(/obj/item/tank/jetpack, 1),
 		CONTENTS_OR(
 			list(
 				CONTENTS_EQ(/obj/item/clothing/suit/space/captain, 1),
