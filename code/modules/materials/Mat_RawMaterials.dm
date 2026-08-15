@@ -11,6 +11,7 @@
 	uses_default_material_appearance = TRUE
 	mat_changename = TRUE //TRUE for generic names such as Bar or Wad.
 	can_arcplate = FALSE
+	var/icon_stack_value = 1
 
 	New()
 		..()
@@ -18,13 +19,53 @@
 		if (material)
 			name = "[mat_changename ? material.getName() : ""] [initial(src.name)]"
 
+	setMaterial(datum/material/mat1, appearance, setname, mutable, use_descriptors)
+		. = ..()
+		var/icon/mat_icon = mat1.getIconFile()
+		if(is_valid_icon_state("[initial(src.icon_state)]_1", mat_icon) || is_valid_icon_state("[initial(src.icon_state)]_1$$[mat1.getID()]", mat_icon))
+			src.icon = mat_icon
+			src.default_material = mat1.getID()
+			src.uses_default_material_appearance = FALSE
+		else
+			src.icon = 'icons/obj/items/materials/materials.dmi'
+			src.uses_default_material_appearance = TRUE
+		UpdateIcon()
+
 	proc/setup_material()
 		.=0
 
+	update_icon()
+		var/potential_new_icon_state = "[initial(src.icon_state)]_[src.icon_stack_value]$$[src.material.getID()]"
+		if(is_valid_icon_state(potential_new_icon_state, src.icon))
+			src.icon_state = potential_new_icon_state
+		else
+			src.icon_state = "[initial(src.icon_state)]_[src.icon_stack_value]"
+
 	_update_stack_appearance()
-		if(material)
-			name = "[amount] [mat_changename ? material.getName() : ""] [initial(src.name)][amount > 1 ? "s":""]"
-		return
+		if(!material)
+			return
+		name = "[amount] [mat_changename ? material.getName() : ""] [initial(src.name)][amount > 1 ? "s":""]"
+		var/icon_stack_new = src.get_stack_value()
+		if(icon_stack_new && icon_stack_new != src.icon_stack_value) // Only update icon_state if it needs updating (0 to ignore)
+			src.icon_stack_value = icon_stack_new
+			UpdateIcon()
+
+	proc/get_stack_value() //! Determines at what stack sizes the icon_state changes
+		// example: src.icon_state = "ore[x]_$$gold"
+		switch(src.amount)
+			if(1)
+				return 1
+			if(2 to 4)
+				return 2
+			if(5 to 9)
+				return 3
+			if(10 to 24)
+				return 4
+			if(25 to 49)
+				return 5
+			else
+				return 6
+
 
 	split_stack(var/toRemove)
 		if(toRemove >= amount || toRemove < 1) return 0
@@ -169,6 +210,9 @@
 		name = "sphere"
 		desc = "A weird sphere of some kind."
 
+		update_icon()
+			src.icon_state = initial(src.icon_state)
+
 	cloth
 		// fabric
 		icon_state = "fabric"
@@ -176,6 +220,9 @@
 		desc = "A weave of some kind."
 		default_material = "cotton"
 		var/in_use = 0
+
+		update_icon()
+			src.icon_state = initial(src.icon_state)
 
 		attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 			if (user.a_intent == INTENT_GRAB)
@@ -302,11 +349,17 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 		reagents.add_reagent("rubber", 10)
 		return ..()
 
+	update_icon()
+		src.icon_state = initial(src.icon_state)
+
 /obj/item/material_piece/rubber/plastic
 	name = "plastic sheet"
 	icon_state = "latex"
 	desc = "A sheet of plastic."
 	default_material = "plastic"
+
+	update_icon()
+		src.icon_state = initial(src.icon_state)
 
 /obj/item/material_piece/organic/wood
 	name = "wooden log"
