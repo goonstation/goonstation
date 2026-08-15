@@ -102,28 +102,35 @@
 			else
 				HH.blood_volume -= 20 * mult
 				// Drink a few units from the blood stream
-				if (prob(30))
-					var/blood_contents_drank = clamp(mult * 3, 0, HH.reagents.total_volume) // Not going to question all of the magic 20's and 10s here.
-					var/big_content = capitalize(HH.reagents.get_master_reagent_name())
-					if (big_content != null)
-						boutput(M, SPAN_ITALIC("It has hints of " + big_content + "...")) // Hints of (biggest chemical)
-						if (length(HH.reagents.reagent_list) > 1)
-							var/first_run = TRUE
-							var/undertones = ""
-							for (var/reagent_id as anything in HH.reagents.reagent_list) // Undertones of (all the others)
-								var/datum/reagent/small_content = HH.reagents.reagent_list[reagent_id]
-								var/chemName = capitalize(small_content.name)
-								if (chemName == "Mirabilis" || chemName == big_content)
-									continue
-								if (first_run == FALSE)
-									undertones += "and"
+				//M:traitHolder.hasTrait("training_bartender")
 
-								undertones += " with " + pick("undertones", "aromas", "tinges", "sounds", "notes") + " of " + chemName
-							capitalize(undertones)
-							undertones += "..."
-							boutput(M, SPAN_ITALIC(undertones))
-						HH.reagents.reaction(M, INGEST, blood_contents_drank)
-						HH.reagents.trans_to(M, blood_contents_drank)
+				var/wine_tasting = M.traitHolder.hasTrait("training_bartender")
+				var/blood_contents_drank = clamp(mult * 3, 0, HH.reagents.total_volume) // Not going to question all of the magic 20's and 10s here.
+				var/big_content = HH.reagents.get_master_reagent_name()
+				if (big_content != null)
+					var/first_run = TRUE
+					var/undertones = "with "
+					for (var/reagent_id as anything in HH.reagents.reagent_list) // Undertones of (all the others)
+						var/datum/reagent/small_content = HH.reagents.reagent_list[reagent_id]
+						var/chemName = small_content.name
+						if (chemName == "holy water") // Only if holy water is present, cause effect (no other poisons, or it gets gamed)
+							M.visible_message(SPAN_ALERT("<b>[M]</b> begins to crisp and burn!"), SPAN_ALERT("There's holy water in their bloodstream! It burns!"))
+							M.emote("scream")
+							M.TakeDamage("chest", 0, 30 * mult)
+							continue
+						if (wine_tasting == FALSE) // Don't bother building the taste if theyre no bartender
+							continue
+
+						if (chemName == "Mirabilis" || chemName == big_content)
+							continue
+						if (first_run == FALSE)
+							undertones += pick("and ", "with ", ", ", "accompanied by")
+						undertones += "[pick("undertones", "aromas", "tinges", "sounds", "notes")] of [chemName]"
+
+					if (wine_tasting == TRUE)
+						boutput(M, SPAN_ITALIC("[HH] has hints of [big_content]... [capitalize(undertones)]...")) // Biggest chemical hinted first
+					//HH.reagents.reaction(M, INGEST, blood_contents_drank) // Was told it would be too unfair to actually have chemical transfer, but keeping it commented out here incase that changes
+					//HH.reagents.trans_to(M, blood_contents_drank)
 
 			// Vampire TEG also uses this ability, prevent runtimes
 			if (ismob(src.owner))
