@@ -563,3 +563,5 @@
 /obj/lead_rubble
 	name = "batiline debris"
 	desc = "Some radiation shielding that fell from a upper level. Might be useful if it doesn't fall apart first."
+	icon = 'icons/obj/decoration.dmi'
+	icon_state = "lead_rubble"
