@@ -191,8 +191,6 @@ proc/get_icon_states(icon)
 
 	// higher on this list means higher priority, be careful with it!
 	if (MAT.getMaterialFlags() & MATERIAL_CRYSTAL)
-		if (istype(MAT, /datum/material/crystal/gemstone))
-			return /obj/item/material_piece/gem
 		return /obj/item/material_piece/block
 	if (MAT.getMaterialFlags() & MATERIAL_ROCK) // Placed above metal for now, since stone is considered a metal
 		return /obj/item/material_piece/brick
