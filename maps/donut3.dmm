@@ -64141,6 +64141,8 @@
 /obj/machinery/camera/directional/north{
 	pixel_x = -10
 	},
+/obj/machinery/networked/nuclear_charge,
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/black/grime,
 /area/station/medical/asylum/bathroom)
 "tVB" = (
