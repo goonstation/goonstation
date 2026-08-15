@@ -2489,6 +2489,7 @@
 #include "code\obj\cement.dm"
 #include "code\obj\cryotron.dm"
 #include "code\obj\deathbutton.dm"
+#include "code\obj\debug_tools.dm"
 #include "code\obj\decal.dm"
 #include "code\obj\decorations.dm"
 #include "code\obj\displaycase.dm"
