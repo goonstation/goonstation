@@ -209,6 +209,7 @@
 		icon_state = "sphere"
 		name = "sphere"
 		desc = "A weird sphere of some kind."
+		icon_stack_value = 0
 
 		update_icon()
 			src.icon_state = initial(src.icon_state)
@@ -219,6 +220,7 @@
 		name = "fabric"
 		desc = "A weave of some kind."
 		default_material = "cotton"
+		icon_stack_value = 0
 		var/in_use = 0
 
 		update_icon()
