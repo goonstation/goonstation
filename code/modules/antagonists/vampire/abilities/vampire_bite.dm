@@ -101,11 +101,9 @@
 				HH.blood_volume = 0
 			else
 				HH.blood_volume -= 20 * mult
-				// Drink a few units from the blood stream
-				//M:traitHolder.hasTrait("training_bartender")
-
+				// Check for holy water in blood, and if bartender training, do some wine tasting :p
 				var/wine_tasting = M.traitHolder.hasTrait("training_bartender") && prob(30)
-				//var/blood_contents_drank = clamp(mult * 3, 0, HH.reagents.total_volume) // Not going to question all of the magic 20's and 10s here.
+				//var/blood_contents_drank = clamp(mult * 3, 0, HH.reagents.total_volume) // For moving reagents
 				var/big_content = HH.reagents.get_master_reagent_name()
 				if (big_content != null)
 					var/first_run = TRUE
