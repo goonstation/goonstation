@@ -101,8 +101,8 @@
 				HH.blood_volume = 0
 			else
 				HH.blood_volume -= 20 * mult
-				// Check for holy water in blood, and if bartender training, do some wine tasting :p
-				var/wine_tasting = M.traitHolder.hasTrait("training_bartender") && prob(30)
+				// Check for holy water in blood, taste the prey!
+				var/wine_tasting = prob(45)
 				//var/blood_contents_drank = clamp(mult * 3, 0, HH.reagents.total_volume) // For moving reagents
 				var/big_content = HH.reagents.get_master_reagent_name()
 				if (big_content != null)
@@ -116,17 +116,23 @@
 							M.emote("scream")
 							M.TakeDamage("chest", 0, 5 * mult)
 							continue
-						if (wine_tasting == FALSE) // Don't bother building the taste if theyre no bartender
+						if (wine_tasting == FALSE && M.traitHolder.hasTrait("training_bartender")) // Don't bother building the wine tasting if theyre no bartender
 							continue
-
 						if (chemName == "Mirabilis" || chemName == big_content)
 							continue
 						if (first_run == FALSE)
 							undertones += " [pick("and", "with")] "
 						undertones += "[pick("undertones", "aromas", "tinges", "notes")] of [chemName]"
 						first_run = FALSE
-					if (wine_tasting == TRUE)
+
+					if (wine_tasting == TRUE &&  M.traitHolder.hasTrait("training_bartender"))
 						boutput(M, SPAN_ITALIC("[HH] has hints of [big_content]... [capitalize(undertones)]...")) // Biggest chemical hinted first
+					else if (wine_tasting == TRUE) // Non bartenders just get a normal taste.
+						var/taste = lowercase_letters(HH.reagents.get_taste_string(M))
+						if (taste != "tastes pretty bland.") // Don't want people to think that blood w/o reagents is bad
+							boutput(M, SPAN_ITALIC(capitalize(("[HH] [taste]"))))
+						else if (HH.traitHolder.hasTrait("training_clown")) // Clowns taste funny
+							boutput(M, SPAN_ITALIC(capitalize("[HH] tastes kind of funny.")))
 					//HH.reagents.reaction(M, INGEST, blood_contents_drank) // Was told it would be too unfair to actually have chemical transfer, but keeping it commented out here incase that changes
 					//HH.reagents.trans_to(M, blood_contents_drank)
 
