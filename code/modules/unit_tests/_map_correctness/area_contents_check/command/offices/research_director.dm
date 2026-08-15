@@ -22,9 +22,7 @@
 
 		// Heisenbee wonderful collection of goods
 		CONTENTS_EQ(/obj/stool/bee_bed/heisenbee, 1),
-		CONTENTS_EQ(/obj/item/reagent_containers/food/snacks/beefood, 1),
-		CONTENTS_EQ(/obj/item/reagent_containers/food/snacks/beefood, 1),
-
+		CONTENTS_EQ(/obj/item/reagent_containers/food/snacks/beefood, 2),
 	)
 
 /datum/map_correctness_check/area_contents/research_director/toxins
@@ -34,6 +32,7 @@
 		// Nadir does not have a toxins lab
 		/datum/map_settings/nadir,
 	)
+	only_check_on = null
 
 	expected_contents = list(
 		CONTENTS_EQ(/obj/item/storage/briefcase/toxins , 1)
