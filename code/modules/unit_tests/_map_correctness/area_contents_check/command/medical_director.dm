@@ -9,12 +9,10 @@
 		CONTENTS_EQ(/obj/machinery/computer/card/department/medical, 1)
 		CONTENTS_EQ(/obj/critter/bat/doctor, 1),
 		CONTENTS_EQ(/obj/mapping_helper/mailtag/command_office/md, 1),
+		CONTENTS_EQ(/obj/decal/poster/wallsign/framed_award/mdlicense, 1),
 
 		// MD stuff
 		CONTENTS_EQ(/obj/item/device/analyzer/healthanalyzer/upgraded, 1),
 		CONTENTS_EQ(/obj/item/clothing/glasses/healthgoggles/upgraded, 1),
-		CONTENTS_OR(
-			CONTENTS_EQ(list(/obj/decal/poster/wallsign/framed_award/mdlicense)),
-			CONTENTS_EQ(list(/obj/item/mdlicense)),
-		)
 	)
+
