@@ -10,7 +10,7 @@
 		CONTENTS_EQ(/mob/living/critter/small_animal/turtle/sylvester/HoS, 1)
 		CONTENTS_EQ(/obj/decal/poster/wallsign/framed_award/hos_medal, 1),
 
-		// hos stuff
+		// HOS stuff
 		CONTENTS_EQ(/obj/machinery/recharger, 1),
 		CONTENTS_EQ(/obj/item/reagent_containers/food/snacks/spaghetti/spicy/security, 1),
 		CONTENTS_EQ(/obj/item/kitchen/utensil/fork, 1), // What is a super spicey pasta, without a fork? but a trap went untriggered?
