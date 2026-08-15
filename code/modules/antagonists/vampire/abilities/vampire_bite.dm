@@ -124,9 +124,9 @@
 						if (chemName == "Mirabilis" || chemName == big_content)
 							continue
 						if (first_run == FALSE)
-							undertones += pick(" and ", " with ", ", ", " accompanied by")
-						undertones += "[pick("undertones", "aromas", "tinges", "sounds", "notes")] of [chemName]"
-
+							undertones += " [pick("and", "with")] "
+						undertones += "[pick("undertones", "aromas", "tinges", "notes")] of [chemName]"
+						first_run = FALSE
 					if (wine_tasting == TRUE)
 						boutput(M, SPAN_ITALIC("[HH] has hints of [big_content]... [capitalize(undertones)]...")) // Biggest chemical hinted first
 					//HH.reagents.reaction(M, INGEST, blood_contents_drank) // Was told it would be too unfair to actually have chemical transfer, but keeping it commented out here incase that changes
