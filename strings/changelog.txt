@@ -1,4 +1,9 @@
 
+(t)thu aug 13 26
+(u)glowbold
+(p)27426
+(e)🆕⚖🧛|C-Feature, C-Balance, A-Gamemodes
+(*)Arcfiend's Discharge ability can recharge items wtih batteries, like stun batons and tasers.
 (t)tue aug 11 26
 (u)ANNmagedon
 (p)27425
