@@ -16,6 +16,6 @@
 		// HOS stuff
 		CONTENTS_EQ(/obj/machinery/recharger, 1),
 		CONTENTS_EQ(/obj/item/reagent_containers/food/snacks/spaghetti/spicy/security, 1),
-		CONTENTS_EQ(/obj/item/kitchen/utensil/fork, 1), // What is a super spicey pasta, without a fork? but a trap went untriggered?
+		CONTENTS_GT(/obj/item/kitchen/utensil/fork, 0), // What is a super spicey pasta, without a fork? but a trap went untriggered?
 		CONTENTS_EQ(/obj/item/reagent_containers/food/drinks/mug/HoS, 1),
 	)

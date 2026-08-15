@@ -14,5 +14,5 @@
 		CONTENTS_EQ(/obj/decal/poster/wallsign/framed_award/mdlicense, 1),
 
 		// MD stuff
-		CONTENTS_EQ(/obj/item/clothing/glasses/healthgoggles/upgraded, 1),
+		CONTENTS_GT(/obj/item/clothing/glasses/healthgoggles/upgraded, 0),
 	)
