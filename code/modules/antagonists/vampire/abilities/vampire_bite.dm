@@ -101,40 +101,35 @@
 				HH.blood_volume = 0
 			else
 				HH.blood_volume -= 20 * mult
-				// Check for holy water in blood, taste the prey!
-				var/wine_tasting = prob(45)
-				//var/blood_contents_drank = clamp(mult * 3, 0, HH.reagents.total_volume) // For moving reagents
-				var/big_content = HH.reagents.get_master_reagent_name()
-				if (big_content != null)
-					var/first_run = TRUE
-					var/undertones = "with "
-					for (var/reagent_id as anything in HH.reagents.reagent_list) // Undertones of (all the others)
-						var/datum/reagent/small_content = HH.reagents.reagent_list[reagent_id]
-						var/chemName = small_content.name
-						if (chemName == "holy water") // Only if holy water is present, cause effect (no other poisons, or it gets gamed)
-							M.visible_message(SPAN_ALERT("<b>[M]</b> begins to crisp and burn!"), SPAN_ALERT("There's holy water in their bloodstream! It burns!"))
-							M.emote("scream")
-							M.TakeDamage("chest", 0, 5 * mult)
-							continue
-						if (wine_tasting == FALSE && M.traitHolder.hasTrait("training_bartender")) // Don't bother building the wine tasting if theyre no bartender
-							continue
-						if (chemName == "Mirabilis" || chemName == big_content)
-							continue
-						if (first_run == FALSE)
-							undertones += " [pick("and", "with")] "
-						undertones += "[pick("undertones", "aromas", "tinges", "notes")] of [chemName]"
-						first_run = FALSE
 
-					if (wine_tasting == TRUE &&  M.traitHolder.hasTrait("training_bartender"))
-						boutput(M, SPAN_ITALIC("[HH] has hints of [big_content]... [capitalize(undertones)]...")) // Biggest chemical hinted first
-					else if (wine_tasting == TRUE) // Non bartenders just get a normal taste.
-						var/taste = lowercase_letters(HH.reagents.get_taste_string(M))
+			// Check reagents
+			var/big_content = HH.reagents.get_master_reagent()
+			if (big_content != null) // There are reagents
+				if (HH.reagents.has_any("holy water")) // If there's holy water, do damage!
+					M.visible_message(SPAN_ALERT("<b>[M]</b> begins to crisp and burn!"), SPAN_ALERT("There's holy water in their bloodstream! It burns!"))
+					M.emote("scream")
+					M.TakeDamage("chest", 0, 5 * mult)
+				else if (prob(45)) // Every so often, have a taste! (Overrided by holy water presence, so they see the message)
+					if (M.traitHolder.hasTrait("training_bartender")) // Bartenders get to wine taste their prey (aquired taste)
+						var/undertones = "with "
+						for (var/reagent_id as anything in HH.reagents.reagent_list)
+							var/datum/reagent/small_content = HH.reagents.reagent_list[reagent_id]
+							var/chemName = small_content.name
+							if (chemName == "mirabilis" || chemName == big_content)
+								continue
+							if (undertones != "with ") // Not on first run of for loop
+								undertones += " [pick("and", "with")] "
+							undertones += "[pick("undertones", "aromas", "tinges", "notes")] of [chemName]"
+						boutput(M, SPAN_ITALIC("[HH] has hints of [big_content]... [capitalize(undertones)]...")) // Biggest chemical hinted first, then others
+					else // Non bartenders just get a normal taste!
+						var/taste = lowertext(HH.reagents.get_taste_string(M))
 						if (taste != "tastes pretty bland.") // Don't want people to think that blood w/o reagents is bad
 							boutput(M, SPAN_ITALIC(capitalize(("[HH] [taste]"))))
-						else if (HH.traitHolder.hasTrait("training_clown")) // Clowns taste funny
+						else if (HH.traitHolder.hasTrait("training_clown")) // Clowns taste funny. Honk.
 							boutput(M, SPAN_ITALIC(capitalize("[HH] tastes kind of funny.")))
-					//HH.reagents.reaction(M, INGEST, blood_contents_drank) // Was told it would be too unfair to actually have chemical transfer, but keeping it commented out here incase that changes
-					//HH.reagents.trans_to(M, blood_contents_drank)
+
+				//HH.reagents.reaction(M, INGEST, blood_contents_drank) // Was told it would be too unfair to actually have chemical transfer, but keeping it commented out here incase that changes
+				//HH.reagents.trans_to(M, blood_contents_drank)
 
 			// Vampire TEG also uses this ability, prevent runtimes
 			if (ismob(src.owner))
