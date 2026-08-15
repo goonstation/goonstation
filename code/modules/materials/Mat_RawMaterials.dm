@@ -1,6 +1,6 @@
 /// Material piece
 /obj/item/material_piece
-	name = "bar"
+	name = "ingot"
 	desc = "Some sort of processed material bar."
 	icon = 'icons/obj/items/materials/materials.dmi'
 	icon_state = "bar"
@@ -21,31 +21,32 @@
 			name = "[mat_changename ? material.getName() : ""] [initial(src.name)]"
 
 	setMaterial(datum/material/mat1, appearance, setname, mutable, use_descriptors)
-		. = ..()
 		var/icon/mat_icon = mat1.getIconFile()
-		if(is_valid_icon_state("[initial(src.icon_state)]_1", mat_icon) || is_valid_icon_state("[initial(src.icon_state)]_1$$[mat1.getID()]", mat_icon))
+		if(is_valid_icon_state("[initial(src.icon_state)]_1$$[mat1.getID()]", mat_icon))
 			src.icon = mat_icon
-			src.default_material = mat1.getID()
-			src.uses_default_material_appearance = FALSE
+			appearance = FALSE
 		else
 			src.icon = 'icons/obj/items/materials/materials.dmi'
-			src.uses_default_material_appearance = TRUE
+			appearance = TRUE
+		. = ..()
 		UpdateIcon()
 
 	proc/setup_material()
 		.=0
 
 	update_icon()
-		var/potential_new_icon_state = "[initial(src.icon_state)]_[src.icon_stack_value]$$[src.material.getID()]"
-		if(is_valid_icon_state(potential_new_icon_state, src.icon))
-			src.icon_state = potential_new_icon_state
+		if(!src.material_applied_appearance)
+			src.icon_state = "[initial(src.icon_state)]_[src.icon_stack_value]$$[src.material.getID()]"
 		else
 			src.icon_state = "[initial(src.icon_state)]_[src.icon_stack_value]"
 
 	_update_stack_appearance()
 		if(!material)
 			return
-		name = "[amount] [mat_changename ? material.getName() : ""] [initial(src.name)][amount > 1 ? "s":""]"
+		if(src.amount > 1)
+			name = "[amount] [mat_changename ? material.getName() : ""] [initial(src.name)]s"
+		else
+			name = "[mat_changename ? material.getName() : ""] [initial(src.name)]"
 		var/icon_stack_new = src.get_stack_value()
 		if(icon_stack_new && icon_stack_new != src.icon_stack_value) // Only update icon_state if it needs updating (0 to ignore)
 			src.icon_stack_value = icon_stack_new
