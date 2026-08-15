@@ -612,6 +612,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "rock"
 	name = "stone"
 	desc = "Near useless asteroid rock with some traces of random metals."
+	material_flags |= MATERIAL_ROCK
 	icon_file = 'icons/obj/items/materials/rocks.dmi'
 	color = list(0.60, 0.60, 0.60, 0.00,\
 				0.35, 0.35, 0.35, 0.00,\

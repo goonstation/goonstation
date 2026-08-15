@@ -6,6 +6,7 @@
 	icon_state = "bar"
 	max_stack = INFINITY
 	stack_type = /obj/item/material_piece
+	max_stack = 50
 	/// used for prefab bars
 	default_material = null
 	uses_default_material_appearance = TRUE
@@ -179,7 +180,13 @@
 		// crystal, rubber
 		name = "block"
 		icon_state = "block"
-		desc = "A nicely cut square brick."
+		desc = "A nicely cut cube."
+
+	brick
+		// stone
+		name = "brick"
+		icon_state = "brick"
+		desc = "A very rough rectangle."
 
 	wad
 		// organic
