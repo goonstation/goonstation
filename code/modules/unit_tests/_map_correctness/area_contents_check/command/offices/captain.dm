@@ -15,7 +15,7 @@
 
 		// CAP stuff (large)
 		CONTENTS_EQ(/obj/shrub/captainshrub, 1),
-		CONTENTS_EQ(/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff, 1)
+		CONTENTS_EQ(/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff, 1),
 		CONTENTS_EQ(/obj/displaycase/captain, 1),
 		CONTENTS_EQ(/obj/item/storage/toilet/goldentoilet, 1),
 		CONTENTS_EQ(/obj/machinery/recharger, 1),
