@@ -116,7 +116,7 @@
 						if (chemName == "holy water") // Only if holy water is present, cause effect (no other poisons, or it gets gamed)
 							M.visible_message(SPAN_ALERT("<b>[M]</b> begins to crisp and burn!"), SPAN_ALERT("There's holy water in their bloodstream! It burns!"))
 							M.emote("scream")
-							M.TakeDamage("chest", 0, 30 * mult)
+							M.TakeDamage("chest", 0, 5 * mult)
 							continue
 						if (wine_tasting == FALSE) // Don't bother building the taste if theyre no bartender
 							continue
@@ -124,7 +124,7 @@
 						if (chemName == "Mirabilis" || chemName == big_content)
 							continue
 						if (first_run == FALSE)
-							undertones += pick("and ", "with ", ", ", "accompanied by")
+							undertones += pick(" and ", " with ", ", ", " accompanied by")
 						undertones += "[pick("undertones", "aromas", "tinges", "sounds", "notes")] of [chemName]"
 
 					if (wine_tasting == TRUE)
