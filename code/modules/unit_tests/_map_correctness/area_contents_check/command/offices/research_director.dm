@@ -1,6 +1,9 @@
 /datum/map_correctness_check/area_contents/research_director
 	check_name = "Research Director's Office Content Check"
-	target_areas = list(/area/station/science/research_director)
+	target_areas = list(
+		/area/station/science/research_director,
+		/area/station/crew_quarters/hor,
+	)
 
 	expected_contents = list(
 		// Generic head stuff
