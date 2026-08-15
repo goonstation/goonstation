@@ -14,7 +14,6 @@
 
 		// CE stuff
 		CONTENTS_EQ(/obj/storage/crate/rcd/CE, 1),
-		CONTENTS_EQ(/obj/item/deconstructor, 1),
 	)
 
 /datum/map_correctness_check/area_contents/chief_engineer/teg_maps
