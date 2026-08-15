@@ -104,8 +104,8 @@
 				// Drink a few units from the blood stream
 				//M:traitHolder.hasTrait("training_bartender")
 
-				var/wine_tasting = M.traitHolder.hasTrait("training_bartender")
-				var/blood_contents_drank = clamp(mult * 3, 0, HH.reagents.total_volume) // Not going to question all of the magic 20's and 10s here.
+				var/wine_tasting = M.traitHolder.hasTrait("training_bartender") && prob(30)
+				//var/blood_contents_drank = clamp(mult * 3, 0, HH.reagents.total_volume) // Not going to question all of the magic 20's and 10s here.
 				var/big_content = HH.reagents.get_master_reagent_name()
 				if (big_content != null)
 					var/first_run = TRUE
