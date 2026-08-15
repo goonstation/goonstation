@@ -8,7 +8,6 @@
 		CONTENTS_EQ(/obj/item/stamp/md, 1),
 		CONTENTS_EQ(/obj/machinery/computer/card/department/medical, 1)
 		CONTENTS_EQ(/obj/critter/bat/doctor, 1),
-		CONTENTS_EQ(/obj/mapping_helper/mailtag/command_office/md, 1),
 		CONTENTS_EQ(/obj/decal/poster/wallsign/framed_award/mdlicense, 1),
 
 		// MD stuff

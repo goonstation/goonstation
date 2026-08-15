@@ -8,7 +8,6 @@
 		CONTENTS_EQ(/obj/item/stamp/rd, 1),
 		CONTENTS_EQ(/obj/machinery/computer/card/department/research, 1)
 		CONTENTS_EQ(/obj/critter/domestic_bee/heisenbee, 1),
-		CONTENTS_EQ(/obj/mapping_helper/mailtag/command_office/rd, 1),
 		CONTENTS_EQ(/obj/decal/poster/wallsign/framed_award/rddiploma, 1),
 
 		// RD stuff
@@ -21,7 +20,7 @@
 		// Heisenbee wonderful collection of goods
 		CONTENTS_EQ(/obj/stool/bee_bed/heisenbee, 1),
 		CONTENTS_EQ(/obj/item/reagent_containers/food/snacks/beefood, 1),
-		CONTENTS_EQ(/obj/item/reagent_containers/food/snacks/beefood, 1)
+		CONTENTS_EQ(/obj/item/reagent_containers/food/snacks/beefood, 1),
 
 	)
 

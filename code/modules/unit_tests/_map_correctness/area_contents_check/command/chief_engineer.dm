@@ -8,7 +8,6 @@
 		CONTENTS_EQ(/obj/item/stamp/ce, 1),
 		CONTENTS_EQ(/obj/machinery/computer/card/department/engineering, 1)
 		CONTENTS_EQ(/obj/item/rocko, 1),
-		CONTENTS_EQ(/obj/mapping_helper/mailtag/command_office/ce, 1),
 
 		// CE stuff
 		CONTENTS_EQ(/obj/storage/crate/rcd/CE, 1),
