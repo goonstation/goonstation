@@ -105,7 +105,7 @@
 			// Check reagents
 			var/big_content = HH.reagents.get_master_reagent()
 			if (big_content != null) // There are reagents
-				if (HH.reagents.has_any("holy water")) // If there's holy water, do damage!
+				if (HH.reagents.has_reagent("water_holy")) // If there's holy water, do damage!
 					M.visible_message(SPAN_ALERT("<b>[M]</b> begins to crisp and burn!"), SPAN_ALERT("There's holy water in their bloodstream! It burns!"))
 					M.emote("scream")
 					M.TakeDamage("chest", 0, 5 * mult)
