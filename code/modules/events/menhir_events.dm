@@ -408,11 +408,11 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 						our_guest.playsound_local_not_inworld(response_tester_sound, 80, 0)
 
 					else //test chemical reaction
-						var/response_tester_reagent = pick("love","colors","transparium","psilocybin","lumen","ethanol")
+						var/response_tester_reagent = pick("love","colors","transparium","psilocybin","lumen","ethanol","solipsizine","catdrugs","THC","reversium")
 						var/quantity = 10
 						switch(response_tester_reagent)
 							if("transparium")
-								quantity = 40
+								quantity = 25
 							if("lumen")
 								quantity = 30
 						our_guest.reagents.add_reagent(response_tester_reagent, quantity)
