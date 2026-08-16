@@ -74,7 +74,7 @@
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/mouth/fermid
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "mouth"
 		HH.name = "mouth"
 		HH.limb_name = "mandibles"
@@ -437,7 +437,7 @@
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/mouth
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "mouth"
 		HH.name = "mouth"
 		HH.limb_name = "teeth"
