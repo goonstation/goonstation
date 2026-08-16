@@ -40667,10 +40667,6 @@
 /obj/item/item_box/postit,
 /obj/item/pen,
 /obj/item/kitchen/food_box/sugar_box,
-/obj/item/stamp/ce{
-	pixel_x = -7;
-	pixel_y = 13
-	},
 /turf/simulated/floor/yellow/checker{
 	dir = 8
 	},
