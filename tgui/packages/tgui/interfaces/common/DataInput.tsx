@@ -118,7 +118,7 @@ const DataInputListEntry = (props) => {
   const { value, name, type, list, byondRef } = props;
   const { act } = useBackend();
   return (
-    <Section fill scrollable height={15}>
+    <Section width={35} fill scrollable height={15}>
       {list.map((item, buttonIndex) => (
         <Button
           fluid

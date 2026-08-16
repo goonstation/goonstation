@@ -230,6 +230,10 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		for (var/X in JOB.items_in_belt)
 			if(ispath(X))
 				H.equip_new_if_possible(X, SLOT_IN_BELT)
+	// Things spawned directly in the mob
+	for(var/type in JOB.items_in_mob)
+		if(ispath(type))
+			new type(H)
 	// Footwear
 	equip_job_item_slot(JOB.slot_foot, H, SLOT_SHOES)
 	// Suit

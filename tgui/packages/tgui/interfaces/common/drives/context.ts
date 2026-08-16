@@ -7,9 +7,7 @@
 
 import { createContext } from 'react';
 
-interface DriveContextType {
-  onContentClick?: () => void;
-}
+import { type DriveContextType } from './type';
 
 const defaultDriveContext: DriveContextType = {
   onContentClick: undefined,
