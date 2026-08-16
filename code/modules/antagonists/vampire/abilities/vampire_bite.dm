@@ -108,10 +108,10 @@
 				if (HH.reagents.has_reagent("water_holy")) // If there's holy water, do damage!
 					if (prob(30))
 						M.visible_message(SPAN_ALERT("<b>[M]</b>'s fangs sizzle, but <b>[M]<b> remains unharmed!"), SPAN_ALERT("There's holy water in their bloodstream! Spicy!"))
-					if (prob(40))
+					if (prob(50))
 						M.visible_message(SPAN_ALERT("<b>[M]<b> coughs out a cloud of smoke!"))
 						var/datum/effects/system/bad_smoke_spread/cough_smoke = new /datum/effects/system/bad_smoke_spread/(M)
-						cough_smoke.set_up(3, 0, M, null, "#a4a2a2")
+						cough_smoke.set_up(4, 0, M, null, "#a4a2a2")
 						cough_smoke.start()
 						M.emote(pick("choke", "gasp", "cough"))
 						M.take_oxygen_deprivation(rand(0,10))
