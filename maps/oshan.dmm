@@ -14883,11 +14883,6 @@
 /obj/stool/bed,
 /obj/machinery/light/incandescent/warm,
 /obj/item/clothing/suit/bedsheet/royal,
-/obj/machinery/recharger/wall/sticky{
-	dir = 1;
-	pixel_x = 1;
-	pixel_y = 25
-	},
 /turf/simulated/floor/carpet/purple/standard/narrow/T_north,
 /area/station/crew_quarters/captain)
 "bwj" = (
@@ -22821,6 +22816,11 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "cje" = (
+/obj/machinery/recharger/wall/sticky{
+	dir = 1;
+	pixel_x = 1;
+	pixel_y = 25
+	},
 /turf/simulated/floor/carpet/purple/standard/narrow/T_north,
 /area/station/crew_quarters/captain)
 "cjf" = (
