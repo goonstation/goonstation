@@ -43,6 +43,7 @@
 	isBad = FALSE
 	probability = 0
 	occur_in_genepools = FALSE
+	curable_by_mutadone = FALSE
 	msgGain = "The shadows will shroud you."
 	msgLose = "You allow your true form to be known."
 	var/is_active = FALSE
