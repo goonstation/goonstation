@@ -1,5 +1,5 @@
 ABSTRACT_TYPE(/mob/living/critter)
-ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_attack, proc/admincmd_reset_task, proc/add_hand_admin)
+ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_attack, proc/admincmd_reset_task, proc/add_hand_admin, proc/remove_hand_admin)
 /mob/living/critter
 	name = "critter"
 	desc = "A beastie!"
@@ -1648,6 +1648,26 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 	src.hands += HH
 	HH.spawn_dummy_holder()
 	//after many hours of careful study I have divined that the best way to update this godforsaken HUD is to delete it and rebuild it from scratch
+	qdel(src.hud)
+	qdel(src.zone_sel)
+	src.init_hud()
+
+/mob/living/critter/proc/remove_hand_admin()
+	set name = "Remove hand"
+	var/list/options = list()
+	for (var/datum/handHolder/HH as anything in src.hands)
+		options += HH.limb.type
+	var/chosen = tgui_input_list(usr, "Hand to remove", "Removing hand", options)
+	if (!chosen)
+		return
+	for (var/datum/handHolder/HH as anything in src.hands)
+		if (HH.limb.type == chosen)
+			src.remove_hand(HH)
+			return
+
+/mob/living/critter/proc/remove_hand(datum/handHolder/hand)
+	src.hands -= hand
+	qdel(hand)
 	qdel(src.hud)
 	qdel(src.zone_sel)
 	src.init_hud()
