@@ -81,6 +81,9 @@
 	centerlight_icon = "thermal"
 	centerlight_color = rgb(0.5 * 255, 0.5 * 255, 0.5 * 255)
 
+/datum/vision/blob_overmind_tutorial
+	neg_sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
+
 /datum/vision/nightvision/weak
 	centerlight_icon = "thermal"
 

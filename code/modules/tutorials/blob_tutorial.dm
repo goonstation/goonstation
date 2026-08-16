@@ -16,9 +16,8 @@
 	Start()
 		if (..())
 			bowner = owner
-			bowner.sight &= ~SEE_TURFS
-			bowner.sight &= ~SEE_MOBS
-			bowner.sight &= ~SEE_OBJS
+			// Removes SEE_TURFS | SEE_MOBS | SEE_OBJS
+			bowner.apply_vision(/datum/vision/blob_overmind_tutorial, "tutorial")
 			bowner.add_ability(/datum/blob_ability/tutorial_exit)
 
 	Finish()

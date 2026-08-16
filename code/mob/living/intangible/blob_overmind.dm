@@ -19,6 +19,7 @@ TYPEINFO(/mob/living/intangible/blob_overmind)
 	use_stamina = 0
 	speech_verb_say = list("wobbles", "wibbles", "jiggles", "wiggles", "undulates", "fidgets", "joggles", "twitches", "waggles", "trembles", "quivers")
 	default_speech_output_channel = SAY_CHANNEL_BLOB
+	innate_vision = /datum/vision/blob_overmind
 
 	var/datum/tutorial_base/regional/blob/tutorial
 	var/attack_power = 1 //! Multiplier value for how much the attack ability hurts
@@ -108,7 +109,6 @@ TYPEINFO(/mob/living/intangible/blob_overmind)
 		src.add_ability(/datum/blob_ability/tutorial)
 		src.add_ability(/datum/blob_ability/help)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_SPOOKY)
-		src.apply_vision(/datum/vision/blob_overmind, src)
 		src.my_material = getMaterial("blob")
 		src.my_material = src.my_material.getMutable()
 		src.my_material.setColor("#ffffff")

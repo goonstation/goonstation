@@ -26,7 +26,6 @@ TYPEINFO(/mob/living/intangible/flock)
 	anchored = ANCHORED
 	use_stamina = 0//no puff tomfuckery
 	respect_view_tint_settings = TRUE
-	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	speech_verb_say = list("sings", "clicks", "whistles", "intones", "transmits", "submits", "uploads")
 
 	innate_vision = /datum/vision/intangible_flock
