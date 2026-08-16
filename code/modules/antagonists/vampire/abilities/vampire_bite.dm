@@ -106,9 +106,18 @@
 			var/big_content = HH.reagents.get_master_reagent()
 			if (big_content != null) // There are reagents
 				if (HH.reagents.has_reagent("water_holy")) // If there's holy water, do damage!
-					M.visible_message(SPAN_ALERT("<b>[M]</b> begins to crisp and burn!"), SPAN_ALERT("There's holy water in their bloodstream! It burns!"))
-					M.emote("scream")
-					M.TakeDamage("chest", 0, 5 * mult)
+					M.visible_message(SPAN_ALERT("<b>[M]</b>'s fangs sizzle, but <b>[M]<b> remains unharmed!"), SPAN_ALERT("There's holy water in their bloodstream! Spicy!"))
+					if (prob(45))
+						var/datum/effects/system/bad_smoke_spread/cough_smoke = new /datum/effects/system/bad_smoke_spread/(M)
+						cough_smoke.set_up(3, 0, M, null, "#a4a2a2")
+						cough_smoke.start()
+						M.emote(pick("choke", "gasp", "cough"))
+						M.take_oxygen_deprivation(rand(0,10))
+					else
+						M.emote(pick("cough", "spit", "cry"))
+						M.stuttering += rand(0,2)
+						M.changeBodyTemp(rand(5,20) KELVIN)
+
 				else if (prob(45)) // Every so often, have a taste! (Overrided by holy water presence, so they see the message)
 					if (M.traitHolder.hasTrait("training_bartender")) // Bartenders get to wine taste their prey (aquired taste)
 						var/undertones = "with "
