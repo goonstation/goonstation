@@ -54,6 +54,8 @@ TYPEINFO(/obj/machinery/conveyor) {
 	var/list/linked_switches
 	/// Stored operating direction for conveyors without linked switches
 	var/stored_operating
+	/// Sushi conveyor attached to a table?
+	var/obj/table/table = null
 
 	New()
 		. = ..()
@@ -218,8 +220,23 @@ TYPEINFO(/obj/machinery/conveyor) {
 	currentdir = dir_out
 	setdir()
 
+/obj/machinery/conveyor/proc/tableify(table)
+	src.table = table
+	src.layer = OBJ_LAYER
+	src.pixel_y = 4
+	src.update()
+
+/obj/machinery/conveyor/proc/untableify()
+	src.table = null
+	src.layer = initial(src.layer)
+	src.pixel_y = initial(src.pixel_y)
+	src.update()
+
 /obj/machinery/conveyor/initialize()
 	..()
+	src.table = locate() in get_turf(src)
+	if (src.table)
+		src.tableify(src.table)
 	// if the conveyor belt does not have dir_in or dir_out set they are calculated here according to the following heuristics
 	if(isnull(dir_in))
 		if(isnull(dir_out))
@@ -334,6 +351,8 @@ TYPEINFO(/obj/machinery/conveyor) {
 			move_thing(A)
 
 	var/new_icon = "conveyor-"
+	if (src.table)
+		new_icon += "thin-"
 
 	var/dir_in_char = "N"
 	switch (dir_in)
@@ -363,14 +382,15 @@ TYPEINFO(/obj/machinery/conveyor) {
 	else if (operating == CONVEYOR_REVERSE)
 		new_icon += dir_out_char + dir_in_char
 
-	if (src.deconstructable)
+	if (src.deconstructable && !src.table)
 		src.icon_state = new_icon + "-map"
 		return
 
-	if (operating == CONVEYOR_STOPPED || (status & NOPOWER))
-		new_icon += "-still"
-	else
-		new_icon += "-run"
+	if (!src.table)
+		if (operating == CONVEYOR_STOPPED || (status & NOPOWER))
+			new_icon += "-still"
+		else
+			new_icon += "-run"
 
 	if (dir_in == dir_out)
 		new_icon = "conveyor-fuck"
@@ -602,6 +622,9 @@ TYPEINFO(/obj/machinery/conveyor) {
 		src.linked_switches += connected_switch
 		connected_switch.conveyors += src
 		user.show_text("You connect \the [src] to \the [connector.connectee].", "blue")
+	else if (src.table)
+		src.table.Attackby(I, user)
+
 // attack with hand, move pulled object onto conveyor
 
 /obj/machinery/conveyor/proc/toggle_deconstructability(var/mob/M)
