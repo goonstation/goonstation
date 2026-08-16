@@ -125,9 +125,9 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		. = ..()
 
 ABSTRACT_TYPE(/obj/item/implant/revenge/spawner)
-/// Abstract type for implants that spawn mobs when you die. Uses mobs not just critters cause monkeys are human. Who knew.
+/// Abstract type for implants that spawn mobs when you die. Power = number of things spawned.
 /obj/item/implant/revenge/spawner
-	var/mob_type = null
+	var/spawned_type = null
 	var/faction = null
 	implanted(mob/M, mob/I)
 		..()
@@ -143,7 +143,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge/spawner)
 		// enjoy your mobs
 		for (var/i in 1 to power)
 			var/throw_type = THROW_NORMAL
-			var/mob/M = new src.mob_type(get_turf(src))
+			var/mob/M = new src.spawned_type(get_turf(src))
 			if (ismob(M))
 				M.lying = TRUE // So mobs dont hit other mobs when being flung
 				SPAWN(1 SECOND)
@@ -160,7 +160,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge/spawner)
 	name = "funny implant"
 	big_message = " squeaks a little."
 	small_message = "emits a loud honk, uh oh!"
-	mob_type = /mob/living/critter/spider/clown
+	spawned_type = /mob/living/critter/spider/clown
 	power = 8
 	faction = FACTION_CLOWN
 
@@ -169,5 +169,5 @@ ABSTRACT_TYPE(/obj/item/implant/revenge/spawner)
 	big_message = " buzzes, what?"
 	small_message = "buzzes loudly, uh oh!"
 	power = 8
-	mob_type = /mob/living/critter/small_animal/wasp/angry
+	spawned_type = /mob/living/critter/small_animal/wasp/angry
 	faction = FACTION_BOTANY
