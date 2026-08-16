@@ -291,7 +291,7 @@
 		M.set_density(TRUE)
 		M.event_handler_flags &= ~MOVE_NOCLIP
 		REMOVE_ATOM_PROPERTY(M, PROP_MOB_INVISIBILITY, M)
-		M.see_invisible = INVIS_NONE
+		M.remove_vision(/datum/vision/wraith_incorporeal, "wraith")
 		M.visible_message(pick(SPAN_ALERT("A horrible apparition fades into view!"), SPAN_ALERT("A pool of shadow forms!")), pick(SPAN_ALERT("A shell of ectoplasm forms around you!"), SPAN_ALERT("You manifest!")))
 
 	onRemove()
@@ -310,7 +310,7 @@
 		M.set_density(FALSE)
 		M.event_handler_flags |= MOVE_NOCLIP
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_INVISIBILITY, M, INVIS_SPOOKY)
-		M.see_invisible = INVIS_SPOOKY
+		M.apply_vision(/datum/vision/wraith_incorporeal, "wraith")
 		M.removeOverlayComposition(/datum/overlayComposition/insanity_light)
 		M.updateOverlaysClient(M.client)
 		. = ..()

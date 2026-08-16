@@ -752,7 +752,8 @@ TYPEINFO(/mob/dead/observer)
 	delete_on_logout_reset = delete_on_logout
 	delete_on_logout = 0
 	if (target?.invisibility)
-		newobs.see_invisible = target.invisibility
+		newobs.observer_vision.see_invisible = target.invisibility
+		newobs.update_vision()
 	if(HAS_ATOM_PROPERTY(src, PROP_MOB_SPECTRO))
 		APPLY_ATOM_PROPERTY(newobs, PROP_MOB_SPECTRO, newobs)
 	if (src.corpse)
@@ -773,7 +774,8 @@ TYPEINFO(/mob/dead/observer)
 	delete_on_logout_reset = delete_on_logout
 	delete_on_logout = 0
 	if (target?.invisibility)
-		newobs.see_invisible = target.invisibility
+		newobs.observer_vision.see_invisible = target.invisibility
+		newobs.update_vision()
 	if (src.corpse)
 		corpse.ghost = newobs
 	if (src.mind)

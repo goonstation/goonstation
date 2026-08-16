@@ -245,7 +245,6 @@ TYPEINFO(/mob/living/critter/hastur)
 			APPLY_ATOM_PROPERTY(H, PROP_MOB_INVISIBILITY_CLOAK, src, INVIS_SPOOKY)
 			H.alpha = 160
 			H.stepsound = null
-			H.see_invisible = INVIS_SPOOKY
 			stage = 1
 
 //TENTACLE LONG RANGE WHIP//

@@ -192,8 +192,10 @@
 
 /datum/vision/wraith
 	sight = SEE_SELF
-	see_invisible = INVIS_SPOOKY
 	see_in_dark = SEE_DARK_FULL
+
+/datum/vision/wraith_incorporeal // Wraiths lose see_invisible when corporeal
+	see_invisible = INVIS_SPOOKY
 
 /// this is just xray+nightvision
 /datum/vision/xray/kudzu

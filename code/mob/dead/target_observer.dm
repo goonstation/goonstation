@@ -15,11 +15,14 @@ TYPEINFO(/mob/dead/target_observer)
 	var/is_respawnable = TRUE
 	/// Is this observer locked to one particular owner?
 	var/locked = FALSE
+	// "Owned" vision that can be modified by observer actions
+	var/datum/vision/observer_vision
 
 	New()
 		..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_GHOST)
+		src.observer_vision = new /datum/vision()
 		START_TRACKING
 
 	disposing()

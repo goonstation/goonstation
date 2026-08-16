@@ -71,7 +71,7 @@
 					APPLY_ATOM_PROPERTY(src, PROP_MOB_NOCLIP, src)
 					src.nodamage = TRUE
 					src.alpha = 160
-					src.see_invisible = INVIS_GHOST
+					src.apply_vision(/datum/vision/ghost, src.type)
 					SPAWN(3 SECONDS)
 						if(O1) //sanity check for it breaking sometime
 							qdel(O1)
@@ -92,7 +92,7 @@
 					REMOVE_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
 					REMOVE_ATOM_PROPERTY(src, PROP_MOB_NOCLIP, src)
 					src.alpha = 254
-					src.see_invisible = INVIS_NONE
+					src.remove_vision(/datum/vision/ghost, src.type)
 					src.visible_message(SPAN_ALERT("[src] appears out of the shadows!"))
 					src.nodamage = FALSE
 					SPAWN(3 SECONDS)

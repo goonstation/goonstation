@@ -80,6 +80,8 @@ TYPEINFO(/mob/living/intangible/wraith)
 		START_TRACKING
 		src.poltergeists = list()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_SPOOKY)
+		// Wraiths start off as incorporeal so they should also have the incorporeal component of their vision
+		src.apply_vision(/datum/vision/wraith_incorporeal, "wraith")
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_AI_UNTRACKABLE, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
