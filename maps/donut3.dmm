@@ -4377,9 +4377,6 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/cable{
-	icon_state = "0-2"
-	},
 /turf/simulated/floor/black/grime,
 /area/station/medical/asylum/maintenance)
 "bpe" = (
@@ -11886,14 +11883,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/hallway/secondary/construction2)
-"dEG" = (
-/obj/machinery/networked/mainframe/zeta{
-	tag = "ZETA_MAINFRAME"
-	},
-/obj/cable,
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/black/grime,
-/area/station/medical/asylum/maintenance)
 "dEN" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/disposalpipe/segment,
@@ -148898,7 +148887,7 @@ jPH
 knx
 uyx
 bpb
-dEG
+tAZ
 wwE
 wwE
 wwE
