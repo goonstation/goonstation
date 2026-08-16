@@ -4,9 +4,8 @@
 	desc = "Some sort of processed material bar."
 	icon = 'icons/obj/items/materials/materials.dmi'
 	icon_state = "bar"
-	max_stack = INFINITY
-	stack_type = /obj/item/material_piece
 	max_stack = 50
+	stack_type = /obj/item/material_piece
 	/// used for prefab bars
 	default_material = null
 	uses_default_material_appearance = TRUE
@@ -276,6 +275,7 @@
 	default_material = "frozenfart"
 	mat_changename = FALSE
 	uses_default_material_appearance = FALSE
+	icon_stack_value = 0
 
 /obj/item/material_piece/steel
 	desc = "A processed bar of Steel, a common metal."
@@ -301,35 +301,13 @@
 
 /obj/item/material_piece/iridiumalloy
 	icon = 'icons/obj/items/materials/iridium.dmi'
+	icon_state = "scrap"
 	name = "plate"
 	desc = "A piece of some sort of iridium alloy plating."
 	default_material = "iridiumalloy"
 	uses_default_material_appearance = TRUE
 	amount = 5
 	stack_type = /obj/item/material_piece/iridiumalloy
-
-	New()
-		..()
-		_update_stack_appearance()
-
-	_update_stack_appearance()
-		..()
-		UpdateIcon()
-
-	update_icon()
-		switch(src.amount)
-			if(1)
-				src.icon_state = "scrap1_$$iridiumalloy"
-			if(2 to 4)
-				src.icon_state = "scrap2_$$iridiumalloy"
-			if(5 to 9)
-				src.icon_state = "scrap3_$$iridiumalloy"
-			if(10 to 14)
-				src.icon_state = "scrap4_$$iridiumalloy"
-			if(15 to 19)
-				src.icon_state = "scrap5_$$iridiumalloy"
-			else
-				src.icon_state = "scrap6_$$iridiumalloy"
 
 /obj/item/material_piece/iridiumalloy/small
 	amount = 1
@@ -353,6 +331,7 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 	desc = "A sheet of latex."
 	icon_state = "latex"
 	default_material = "latex"
+	icon_stack_value = 0
 
 	setup_material()
 		src.create_reagents(10)
@@ -537,18 +516,21 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 	default_material = "bone"
 	uses_default_material_appearance = FALSE
 	mat_changename = FALSE
+	icon_stack_value = 0
 
 /obj/item/material_piece/gnesis
 	name = "wafer"
 	desc = "A warm, pulsing block of weird alien computer crystal stuff."
 	icon_state = "bar"
 	default_material = "gnesis"
+	icon_stack_value = 0
 
 /obj/item/material_piece/gnesisglass
 	name = "wafer"
 	desc = "A shimmering, translucent block of weird alien computer crystal stuff."
 	icon_state = "bar"
 	default_material = "gnesisglass"
+	icon_stack_value = 0
 
 /obj/item/material_piece/coral
 	name = "chunk"
@@ -556,16 +538,19 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 	icon_state = "coral"
 	default_material = "coral"
 	uses_default_material_appearance = FALSE
+	icon_stack_value = 0
 
 /obj/item/material_piece/yuranite
 	desc = "Deadly uranium metal."
 	icon_state = "rod"
 	default_material = "yuranite"
+	icon_stack_value = 0
 
 /obj/item/material_piece/neutrite
 	desc = "A very unstable radioactive metal."
 	icon_state = "rod"
 	default_material = "neutrite"
+	icon_stack_value = 0
 
 /obj/item/material_piece/plasmacoral
 	name = "chunk"
@@ -573,45 +558,26 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 	icon_state = "coral"
 	default_material = "plasmacoral"
 	uses_default_material_appearance = TRUE
+	icon_stack_value = 0
 
 /obj/item/material_piece/neutronium
 	desc = "Neutrons condensed into a solid form."
 	icon_state = "rod"
 	default_material = "neutronium"
+	icon_stack_value = 0
 
 /obj/item/material_piece/plutonium
 	desc = "Reprocessed nuclear fuel, refined into fissile isotopes."
 	icon_state = "rod"
 	default_material = "plutonium"
+	icon_stack_value = 0
 
 /obj/item/material_piece/plutonium_scrap
 	name = "scrap"
+	icon_state = "scrap"
 	desc = "Plutonium metal, commonly used as a power source for engines and machinery alike."
 	icon = 'icons/obj/items/materials/plutonium.dmi'
 	default_material = "plutonium"
-
-	New()
-		..()
-		_update_stack_appearance()
-
-	_update_stack_appearance()
-		..()
-		UpdateIcon()
-
-	update_icon()
-		switch(src.amount)
-			if(1)
-				src.icon_state = "scrap1_$$plutonium"
-			if(2 to 4)
-				src.icon_state = "scrap2_$$plutonium"
-			if(5 to 9)
-				src.icon_state = "scrap3_$$plutonium"
-			if(10 to 14)
-				src.icon_state = "scrap4_$$plutonium"
-			if(15 to 19)
-				src.icon_state = "scrap5_$$plutonium"
-			else
-				src.icon_state = "scrap6_$$plutonium"
 
 /obj/item/material_piece/foolsfoolsgold
 	name = "fool's pyrite bar"

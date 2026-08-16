@@ -18,7 +18,7 @@
 #define MATERIAL_RUBBER 32
 /// Wood, or wood-like
 #define MATERIAL_WOOD 64
-/// Rocks
+/// Rock, slag
 #define MATERIAL_ROCK 128
 
 /// Global static list of rarity color associations

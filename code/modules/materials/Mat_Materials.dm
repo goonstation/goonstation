@@ -1428,6 +1428,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	mat_id = "gnesis"
 	name = "gnesis"
 	desc = "A rare complex crystalline matrix with a lazily shifting internal structure. Not to be confused with gneiss, a metamorphic rock."
+	icon_file = 'icons/obj/items/materials/gnesis.dmi'
 	color = "#1bdebd"
 	texture = "flock"
 	texture_blend = BLEND_OVERLAY
