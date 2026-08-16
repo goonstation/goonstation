@@ -73220,7 +73220,8 @@
 "rcR" = (
 /obj/table/auto,
 /obj/machinery/recharger{
-	pixel_y = 5
+	pixel_y = 5;
+	pixel_x = -5
 	},
 /obj/item/hand_tele{
 	pixel_x = -1;
@@ -73229,6 +73230,10 @@
 /obj/machinery/light/emergency{
 	dir = 4;
 	pixel_x = 10
+	},
+/obj/item/hand_tele{
+	pixel_x = 5;
+	pixel_y = 12
 	},
 /turf/simulated/floor/minitiles/black,
 /area/station/teleporter)
@@ -100453,10 +100458,15 @@
 	icon_state = "0-2"
 	},
 /obj/item/storage/goodybag{
-	pixel_y = 10
+	pixel_y = 10;
+	pixel_x = 6
 	},
 /obj/item/pinpointer/disk{
-	pixel_x = 8
+	pixel_x = 12
+	},
+/obj/item/hand_tele{
+	pixel_x = -8;
+	pixel_y = 10
 	},
 /turf/simulated/floor/marble/black,
 /area/station/bridge/captain)
@@ -102634,8 +102644,9 @@
 	pixel_y = 9
 	},
 /obj/machinery/camera/directional/north{
-	pixel_x = 1
+	pixel_x = -11
 	},
+/obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/marble/black,
 /area/station/bridge/captain)
 "xOL" = (
