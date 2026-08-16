@@ -1,5 +1,9 @@
 
 (t)sun aug 16 26
+(u)Kubius
+(p)27226
+(e)🪲🌠|C-Bug, A-Events
+(*)Interdictors can intercept EMP anomalies from EMP storms.
 (u)JORJ949
 (p)27483
 (e)🎨🧛|C-Sprites, A-Gamemodes
