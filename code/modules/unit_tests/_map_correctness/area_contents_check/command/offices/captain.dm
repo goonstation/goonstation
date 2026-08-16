@@ -11,7 +11,6 @@
 		// Generic head stuff
 		CONTENTS_EQ(/obj/storage/secure/closet/command/captain, 1),
 		CONTENTS_EQ(/obj/item/stamp/cap, 1),
-		CONTENTS_EQ(/mob/living/critter/small_animal/cat/jones, 1),
 
 		// CAP stuff (large)
 		CONTENTS_EQ(/obj/shrub/captainshrub, 1),

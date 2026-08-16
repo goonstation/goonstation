@@ -2422,6 +2422,7 @@
 #include "code\modules\unit_tests\_map_correctness\area_contents_check\command\offices\head_of_security.dm"
 #include "code\modules\unit_tests\_map_correctness\area_contents_check\command\offices\medical_director.dm"
 #include "code\modules\unit_tests\_map_correctness\area_contents_check\command\offices\research_director.dm"
+#include "code\modules\unit_tests\_map_correctness\area_contents_check\command\jones.dm"
 #include "code\modules\unit_tests\_map_correctness\area_contents_check\engineering\mechanic.dm"
 #include "code\modules\unit_tests\_map_correctness\area_contents_check\medical\_medical.dm"
 #include "code\modules\unit_tests\_map_correctness\area_contents_check\medical\cloner.dm"
