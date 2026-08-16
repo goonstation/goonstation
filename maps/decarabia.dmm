@@ -54413,6 +54413,9 @@
 /obj/decal/poster/wallsign/poster_nt{
 	pixel_y = 27
 	},
+/obj/machinery/camera/directional/north{
+	pixel_x = -12
+	},
 /turf/simulated/floor/marble/black,
 /area/station/bridge/captain)
 "myh" = (
@@ -102642,9 +102645,6 @@
 "xOK" = (
 /obj/storage/secure/closet/command/captain{
 	pixel_y = 9
-	},
-/obj/machinery/camera/directional/north{
-	pixel_x = -11
 	},
 /obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/marble/black,
