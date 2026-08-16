@@ -106,8 +106,10 @@
 			var/big_content = HH.reagents.get_master_reagent()
 			if (big_content != null) // There are reagents
 				if (HH.reagents.has_reagent("water_holy")) // If there's holy water, do damage!
-					M.visible_message(SPAN_ALERT("<b>[M]</b>'s fangs sizzle, but <b>[M]<b> remains unharmed!"), SPAN_ALERT("There's holy water in their bloodstream! Spicy!"))
-					if (prob(45))
+					if (prob(30))
+						M.visible_message(SPAN_ALERT("<b>[M]</b>'s fangs sizzle, but <b>[M]<b> remains unharmed!"), SPAN_ALERT("There's holy water in their bloodstream! Spicy!"))
+					if (prob(40))
+						M.visible_message(SPAN_ALERT("<b>[M]<b> coughs out a cloud of smoke!"))
 						var/datum/effects/system/bad_smoke_spread/cough_smoke = new /datum/effects/system/bad_smoke_spread/(M)
 						cough_smoke.set_up(3, 0, M, null, "#a4a2a2")
 						cough_smoke.start()
@@ -115,7 +117,7 @@
 						M.take_oxygen_deprivation(rand(0,10))
 					else
 						M.emote(pick("cough", "spit", "cry"))
-						M.stuttering += rand(0,2)
+						M.stuttering += rand(1,3)
 						M.changeBodyTemp(rand(5,20) KELVIN)
 
 				else if (prob(45)) // Every so often, have a taste! (Overrided by holy water presence, so they see the message)
