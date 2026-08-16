@@ -94,8 +94,10 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt/medic)
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
-	slot_poc1 = list(/obj/item/device/pda2/nt_medical)
-	slot_poc2 = list(/obj/item/storage/ntsc_pouch/medic)
+	slot_poc1 = list(/obj/item/storage/ntsc_pouch/medic)
+	slot_poc2 = list(/obj/item/tank/pocket/extended/oxygen)
+	/// gets placed within the mob's pda id by put_id_in_pda, required because they need both of their pockets for the oxy (on spawn readiness is required) & pouch ("correct" slot for pouch)
+	items_in_mob = list(/obj/item/device/pda2/nt_medical)
 	items_in_backpack = list(/obj/item/device/flash,
 							/obj/item/storage/firstaid/docbag/field_surgeon/NT,
 							/obj/item/extinguisher,
