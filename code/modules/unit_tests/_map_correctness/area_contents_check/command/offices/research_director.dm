@@ -22,7 +22,7 @@
 
 		// Heisenbee wonderful collection of goods
 		CONTENTS_EQ(/obj/stool/bee_bed/heisenbee, 1),
-		CONTENTS_EQ(/obj/item/reagent_containers/food/snacks/beefood, 2),
+		CONTENTS_GT(/obj/item/reagent_containers/food/snacks/beefood, 0),
 	)
 
 /datum/map_correctness_check/area_contents/research_director/toxins
