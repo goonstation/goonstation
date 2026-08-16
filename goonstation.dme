@@ -38,6 +38,7 @@
 #endif
 
 // BEGIN_INCLUDE
+#include "_std\namespaces\icon.dm"
 #include "code\area.dm"
 #include "code\atom.dm"
 #include "code\client.dm"
