@@ -45,6 +45,7 @@
 #define ROLE_HARDMODE_TRAITOR "hard-mode_traitor"
 #define ROLE_MINDHACK "mindhack"
 #define ROLE_NUKEOP_GUNBOT "nukeop_gunbot"
+#define ROLE_NUKEOP_AI "nukeop_ai"
 #define ROLE_ZOMBIE "zombie"
 #define ROLE_BROKEN "broken"
 #define ROLE_KUDZUPERSON "kudzu"

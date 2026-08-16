@@ -953,6 +953,7 @@
 #include "code\modules\antagonists\macho_man\abilities\summon_arena.dm"
 #include "code\modules\antagonists\macho_man\abilities\throw.dm"
 #include "code\modules\antagonists\nuclear_operative\nuclear_operative.dm"
+#include "code\modules\antagonists\nuclear_operative\nuclear_operative_ai.dm"
 #include "code\modules\antagonists\nuclear_operative\nuclear_operative_gunbot.dm"
 #include "code\modules\antagonists\omnitraitor\omnitraitor.dm"
 #include "code\modules\antagonists\pirate\pirate.dm"
