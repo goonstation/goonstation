@@ -26729,6 +26729,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/mob/living/critter/small_animal/cat/jones,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fblue6"
@@ -30306,7 +30307,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/mob/living/critter/small_animal/cat/jones,
 /turf/simulated/floor/carpet{
 	icon_state = "fblue2"
 	},
