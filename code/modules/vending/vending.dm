@@ -701,7 +701,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 						if(ref(R) == params["target"])
 							P.promoimage = R.icon
 							P.promoimage.appearance_flags = KEEP_APART | RESET_COLOR // Promo image should keep original coloring
-							P.updateAppearance()
+							P.power_change()
 		// return cash
 		if("returncash")
 			if (src.credit > 0)
@@ -1480,6 +1480,7 @@ TYPEINFO(/obj/machinery/vending/medical)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/synaptizine, 4)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/spaceacillin, 3)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/coldmedicine, 3)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/formaldehyde, 3)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/mannitol, 8)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/mutadone, 5)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/pill/salbutamol, 8)
@@ -1491,6 +1492,7 @@ TYPEINFO(/obj/machinery/vending/medical)
 		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer_organ_upgrade, 5)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/medical_surgery_guide, 2)
 		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/genetic, 1)
+		product_list += new/datum/data/vending_product(/obj/item/triage_tagger, 10)
 
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/sulfonal, rand(1, 2), hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/bottle/pancuronium, 1, hidden=1)
@@ -2292,7 +2294,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 		crtoverlay.appearance_flags = NO_CLIENT_COLOR | PIXEL_SCALE
 		crtoverlay.mouse_opacity = 0
 		src.registerDisposals()
-		updateAppearance()
+		power_change()
 
 	disposing()
 		src.unregisterDisposals()
@@ -2323,7 +2325,17 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 		itemoverlay.plane = PLANE_DEFAULT
 		return itemoverlay
 
-	proc/updateAppearance()
+	power_change()
+		. = ..()
+		if (src.fallen)
+			src.panel_open = FALSE
+			src.ClearSpecificOverlays("panel")
+			light.disable()
+			if (src.status & BROKEN)
+				icon_state = icon_fallen_broken ? icon_fallen_broken : "[initial(icon_state)]-fallen-broken"
+			else
+				icon_state = icon_fallen ? icon_fallen : "[initial(icon_state)]-fallen"
+			return
 		if (status & BROKEN)
 			setCrtOverlayStatus(FALSE)
 			setItemOverlay(null)
@@ -2467,10 +2479,6 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 	proc/sortProducts()
 		sortList(src.player_list, /proc/cmp_player_product_sort)
 
-	power_change()
-		. = ..()
-		updateAppearance()
-
 	process()
 		. = ..()
 		if (src.static_data_invalid)
@@ -2478,7 +2486,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 			src.update_static_data_for_all_viewers()
 		//Don't update if we're working, always handle that in power_change()
 		if ((status & BROKEN) || status & NOPOWER)
-			updateAppearance()
+			power_change()
 
 	MouseDrop_T(atom/movable/dropped, mob/user)
 		..()
@@ -2982,6 +2990,25 @@ TYPEINFO(/obj/machinery/vending/hydroponics/mean_solarium_bullshit)
 			..()
 			product_list += new/datum/data/vending_product(/obj/item/ammo/bullets/abg/punchy, 2, cost=PAY::TRADESMAN, hidden=1)
 
+/obj/machinery/vending/alcohol/paid
+	create_products(restocked)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/beer, 6, cost=PAY::UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/fancy_beer, 6, cost=PAY::UNTRAINED)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/vodka, 4, cost=PAY::UNTRAINED)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/tequila, 4, cost=PAY::UNTRAINED)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/wine, 4, cost=PAY::UNTRAINED/2)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/wine/white, 4, cost=PAY::UNTRAINED/2)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/cider, 4, cost=PAY::UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/mead, 4, cost=PAY::UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/gin, 4, cost=PAY::UNTRAINED)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/rum, 4, cost=PAY::UNTRAINED)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/champagne, 4, cost=PAY::UNTRAINED*2)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/curacao, 4, cost=PAY::UNTRAINED)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/bojackson, 1, cost=PAY::TRADESMAN)
+
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/hobo_wine, 2, cost=PAY::TRADESMAN, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff, 1, cost=PAY::TRADESMAN, hidden=1)
+
 TYPEINFO(/obj/machinery/vending/chem)
 	analyser_flags = ANALYSER_BLACKLIST
 	start_speech_modifiers = list(SPEECH_MODIFIER_VENDING_MACHINE, SPEECH_MODIFIER_ACCENT_VOID)
@@ -3379,6 +3406,8 @@ TYPEINFO(/obj/machinery/vending/janitor)
 
 	update_icon()
 		..()
+		if (src.fallen)
+			src.UpdateOverlays(null, "fill_image")
 		if (status & (BROKEN|NOPOWER))
 			src.UpdateOverlays(null, "fill_image")
 			return
@@ -3439,6 +3468,10 @@ TYPEINFO(/obj/machinery/vending/janitor)
 	power_change()
 		..()
 		src.UpdateIcon()
+
+	fall()
+		src.set_broken() // we do this because the overlays dont work when its on its side. they're just fragile now.
+		..()
 
 /obj/machinery/vending/chapel
 	name = "Deus Ex Machina"

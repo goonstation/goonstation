@@ -92,6 +92,7 @@ export interface CharacterPreferencesData {
   traitsMax: number;
   traitsPointsTotal: number;
   partsData: Partial<Record<string, CharacterPreferencesPartData>>;
+  observerDnr: BooleanLike;
 }
 export interface CharacterPreferencesPartData {
   id: string;

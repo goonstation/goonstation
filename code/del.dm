@@ -103,7 +103,7 @@ proc/qdel(var/datum/D)
 			qdel(C, FALSE, TRUE)
 		dc.Cut()
 
-	var/list/lookup = comp_lookup
+	var/list/lookup = signal_listeners
 	if(lookup)
 		for(var/sig in lookup)
 			var/list/comps = lookup[sig]
@@ -113,7 +113,7 @@ proc/qdel(var/datum/D)
 			else
 				var/datum/component/comp = comps
 				comp.UnregisterSignal(src, sig)
-		comp_lookup = lookup = null
+		signal_listeners = lookup = null
 
 	for(var/target in signal_procs)
 		UnregisterSignal(target, signal_procs[target])

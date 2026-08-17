@@ -64,6 +64,8 @@ ABSTRACT_TYPE(/datum/job)
 	var/list/slot_rhan = list()
 	var/list/items_in_backpack = list() // stop giving everyone a free airtank gosh
 	var/list/items_in_belt = list() // works the same as above but is for jobs that spawn with a belt that can hold things
+	var/list/items_in_mob = list() //! Items placed directly inside the mob. If a PDA, then can be put in ID slot by player preference or below var
+	var/put_id_in_pda = FALSE //! Job will automatically have their ID in their PDA on spawn. Overrides player preference; use sparingly.
 	var/access_string = null // used to quickly grab access via string, i.e. "Chief Engineer", completely overrides var/list/access if non-null !!!
 	var/list/access = list(access_fuck_all) // Please define in global get_access() proc (access.dm), so it can also be used by bots etc.
 	var/mob/living/mob_type = /mob/living/carbon/human
@@ -180,13 +182,18 @@ ABSTRACT_TYPE(/datum/job)
 				boutput(M, "<B>Your OPTIONAL Crew Objectives are as follows:</b>")
 				boutput(M, "<B>Objective #1</B>: [newObjective.explanation_text]")
 
-			if (M.client && src.change_name_on_spawn && !jobban_isbanned(M, "Custom Names"))
-				//if (ishuman(M)) //yyeah this doesn't work with critters fix later
-				var/default = M.real_name + " the " + src.name
-				var/orig_real = M.real_name
-				M.choose_name(3, src.name, default)
-				if(M.real_name != default && M.real_name != orig_real)
-					phrase_log.log_phrase("name-[ckey(src.name)]", M.real_name, no_duplicates=TRUE)
+			if (M.client && src.change_name_on_spawn)
+				if (!jobban_isbanned(M, "Custom Names"))
+					//if (ishuman(M)) //yyeah this doesn't work with critters fix later
+					var/default = M.real_name + " the " + src.name
+					var/orig_real = M.real_name
+					M.choose_name(3, src.name, default)
+					if(M.real_name != default && M.real_name != orig_real)
+						phrase_log.log_phrase("name-[ckey(src.name)]", M.real_name, no_duplicates=TRUE)
+				if (src.radio_announcement && M.client.player.round_join_time > global.round_start_time)
+					for (var/obj/machinery/computer/announcement/A as anything in machine_registry[MACHINES_ANNOUNCEMENTS])
+						if (!A.status && A.announces_arrivals)
+							A.announce_arrival(M)
 
 	proc/can_be_antag(var/role)
 		if (!src.can_roll_antag)

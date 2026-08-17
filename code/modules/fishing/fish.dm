@@ -20,6 +20,7 @@ Fish lists:
 		Rosefin Shiner
 		Catfish
 		Tiger Oscar
+		Long pike
 
 Ocean saltwater fish:
 	Implemented:
@@ -35,11 +36,11 @@ Ocean saltwater fish:
 		Barracuda
 		Sailfish
 		Glassfish
+		Swordfish
 	Unimplemented:
 		Blue Marlin
 		Red Snapper
 		Ocean Sunfish
-		Swordfish
 
 Aquarium saltwater fish:
 	Implemented:
@@ -58,9 +59,12 @@ Aquarium saltwater fish:
 
 Alien/mutant/other fish:
 	Implemented:
+		Literal Swordfish
 		Meat mutant
 		Eye fish
+		Blood fish
 		Void fish
+		Code worm
 		Sun fish
 		Blobfish
 		Lava fish
@@ -71,8 +75,6 @@ Alien/mutant/other fish:
 		Origami fish
 		Cardboard fish
 		Starstonefish
-	Unimplemented:
-		Blood fish
 */
 
 // These catagories aren't used currently.
@@ -171,7 +173,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish)
 /obj/item/reagent_containers/food/fish/proc/make_reagents()
 	src.reagents.add_reagent("fishoil", 20)
 	return
-
 
 // Freshwater fish
 TYPEINFO(/obj/item/reagent_containers/food/fish/bass)
@@ -284,6 +285,18 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/pike)
 	inhand_color = "#24d10d"
 	category = FISH_CATEGORY_FRESHWATER
 	rarity = ITEM_RARITY_RARE
+
+TYPEINFO(/obj/item/reagent_containers/food/fish/long_pike)
+	appears_in_fish_collection = FALSE
+/obj/item/reagent_containers/food/fish/long_pike
+	name = "long pike"
+	desc = "Named after the long and pointy weapon of war, this one for sure fits the 'long', but not the 'pointy'. Jeez, this thing is long."
+	icon = 'icons/obj/foodNdrink/food_fish_96x32.dmi'
+	icon_state = "pike_long"
+	inhand_color = "#24d10d"
+	category = FISH_CATEGORY_FRESHWATER
+	rarity = ITEM_RARITY_LEGENDARY
+
 
 TYPEINFO(/obj/item/reagent_containers/food/fish/arapaima)
 	appears_in_fish_collection = TRUE
@@ -684,7 +697,52 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/betta)
 	category = FISH_CATEGORY_AQUARIUM
 	rarity = ITEM_RARITY_COMMON
 
+TYPEINFO(/obj/item/reagent_containers/food/fish/swordfish)
+	appears_in_fish_collection = TRUE
+/obj/item/reagent_containers/food/fish/swordfish
+	name = "swordfish"
+	desc = "The swordfish, also known as the broadbill in some countries, are large, highly migratory predatory fish characterized by a long, flat, sword-like, pointed bill."
+	icon = 'icons/obj/foodNdrink/food_fish_48x32.dmi'
+	icon_state = "swordfish"
+	inhand_color = "#908088"
+	attack_verbs = "stabs"
+	category = FISH_CATEGORY_OCEAN
+	rarity = ITEM_RARITY_RARE
+	force = 6
+	hit_type = DAMAGE_STAB
+
+	New()
+		..()
+		REMOVE_FLAG(src.flags, SUPPRESSATTACK)
+		BLOCK_SETUP(BLOCK_KNIFE)
+		setItemSpecial(/datum/item_special/jab)
+
 // adventure zone special fish
+
+TYPEINFO(/obj/item/reagent_containers/food/fish/literal_swordfish)
+	appears_in_fish_collection = TRUE
+/obj/item/reagent_containers/food/fish/literal_swordfish
+	name = " literal swordfish"
+	desc = "Reforged through fire and flounder, the swordfish now resembles its namesake."
+	icon = 'icons/obj/foodNdrink/food_fish_48x32.dmi'
+	icon_state = "literal_swordfish"
+	inhand_color = "#535353"
+	attack_verbs = "stabs"
+	rarity = ITEM_RARITY_LEGENDARY
+	force = 13
+	hit_type = DAMAGE_CUT
+	contraband = 3
+	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
+	slice_product = /obj/item/material_piece/steel
+
+	New()
+		..()
+		REMOVE_FLAG(src.flags, SUPPRESSATTACK)
+		BLOCK_SETUP(BLOCK_SWORD)
+		src.setItemSpecial(/datum/item_special/rangestab) //more of a stab than a swing cuz its a sword you stab with
+
+	get_scent_color()
+		return "steel grey"
 
 //meatzone
 TYPEINFO(/obj/item/reagent_containers/food/fish/meat_mutant)
@@ -699,14 +757,26 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/meat_mutant)
 
 	get_scent_color()
 		return "blood red"
-/*
+
+TYPEINFO(/obj/item/reagent_containers/food/fish/blood_fish)
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/blood_fish
 	name = "blood fish"
 	desc = "A viscous, gory mass of congealed blood. You're really stretching the definition of fish here."
-	icon_state = "bass_old"
-	inhand_color = "#af2323"
+	icon_state = "blood_fish"
+	inhand_color = "#9c0000"
 	rarity = ITEM_RARITY_RARE
-*/
+	slice_product = /obj/item/reagent_containers/food/snacks/condiment/ketchup
+	slice_amount = 2
+	brew_result = list("blood"=20)
+
+	get_scent_color()
+		return "blood red"
+
+	make_reagents()
+		src.reagents.add_reagent("blood", 20)
+		return
+
 TYPEINFO(/obj/item/reagent_containers/food/fish/eye_mutant)
 	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/eye_mutant

@@ -29,9 +29,9 @@ TYPEINFO(/obj/item/device/radio)
 	/// Determines the colour of messages sent by the radio and certain aspects of this device's sprite.
 	var/device_color = null
 	/// The CSS class that should be used for messages sent over the primary channel of this radio. Overridden by `device_color`.
-	var/chat_class = RADIOCL_STANDARD
+	var/chat_class = RADIO::CSS::STANDARD
 	/// The frequency of the primary channel of this radio.
-	var/frequency = R_FREQ_DEFAULT
+	var/frequency = RADIO::FREQ::DEFAULT
 	/// Whether the primary frequency may be changed from its default setting. If TRUE, permits the frequency to exist outside of the default range.
 	var/locked_frequency = FALSE
 
@@ -42,7 +42,7 @@ TYPEINFO(/obj/item/device/radio)
 	var/list/secure_frequencies = null
 	/// The colour that should be used for messages sent over each channel, indexed by channel prefix. Alternatively a single colour may be defined for all channels to use that colour. Overrides `secure_classes`.
 	var/list/secure_colors = list()
-	/// The overriding CSS classes that should be used for messages sent over each channel, indexed by channel prefix. Alternatively a class under the index "all" may be defined for all undefined channels to use that style (e.g. secure_classes = list("all" = RADIOCL_SYNDICATE)). Overridden by `secure_colors`.
+	/// The overriding CSS classes that should be used for messages sent over each channel, indexed by channel prefix. Alternatively a class under the index "all" may be defined for all undefined channels to use that style (e.g. secure_classes = list("all" = RADIO::CSS::SYNDICATE)). Overridden by `secure_colors`.
 	var/list/secure_classes = list()
 
 	// Additional Message Styling Variables:
@@ -102,7 +102,7 @@ TYPEINFO(/obj/item/device/radio)
 /obj/item/device/radio/New()
 	. = ..()
 
-	if (((src.frequency < R_FREQ_MINIMUM) || (src.frequency > R_FREQ_MAXIMUM)) && !src.locked_frequency)
+	if (((src.frequency < RADIO::FREQ::MINIMUM) || (src.frequency > RADIO::FREQ::MAXIMUM)) && !src.locked_frequency)
 		// If the frequency is somehow set outside of the normal range, clamp it back within range.
 		world.log << "[src] ([src.type]) has a frequency of [src.frequency], sanitizing."
 		src.frequency = sanitize_frequency(src.frequency)
@@ -112,7 +112,7 @@ TYPEINFO(/obj/item/device/radio)
 	src.set_secure_frequencies()
 	src.toggle_microphone(src.initial_microphone_enabled)
 	src.toggle_speaker(src.initial_speaker_enabled)
-	src.bricked = global.no_more_radios
+	src.bricked = RADIO.no_more_radios
 	START_TRACKING
 
 /obj/item/device/radio/disposing()
@@ -137,7 +137,7 @@ TYPEINFO(/obj/item/device/radio)
 	if (length(src.secure_frequencies))
 		. += "<br><b>Supplementary channels:</b>"
 		for (var/sayToken in src.secure_frequencies)
-			var/channel_name = global.headset_channel_lookup["[src.secure_frequencies["[sayToken]"]]"] || "???"
+			var/channel_name = RADIO.frequencies_to_names[src.secure_frequencies[sayToken]] || "???"
 			var/frequency = format_frequency(src.secure_frequencies["[sayToken]"])
 			. += "<br>[channel_name]: \[[frequency]\] (Activator: <b>[sayToken]</b>)"
 
@@ -154,6 +154,8 @@ TYPEINFO(/obj/item/device/radio)
 	src.ensure_speech_tree().process(message)
 
 /obj/item/device/radio/attackby(obj/item/W, mob/user)
+	if(src.traitorradio && !src.traitorradio.locked && istype(W, /obj/item/uplink_telecrystal))
+		return src.traitorradio.Attackby(W, user)
 	src.add_dialog(user)
 	if (!isscrewingtool(W))
 		return
@@ -175,6 +177,10 @@ TYPEINFO(/obj/item/device/radio)
 	src.toggle_speaker(FALSE)
 
 /obj/item/device/radio/ui_interact(mob/user, datum/tgui/ui)
+	if(src.traitorradio && !src.traitorradio.locked)
+		src.traitorradio.ui_interact(user)
+		return
+
 	if (src.bricked)
 		user.show_text(src.bricked_msg, "red")
 		return
@@ -204,7 +210,7 @@ TYPEINFO(/obj/item/device/radio)
 	var/list/frequencies = list()
 	for (var/sayToken in src.secure_frequencies)
 		frequencies += list(list(
-			"channel" = global.headset_channel_lookup["[src.secure_frequencies[sayToken]]"] || "???",
+			"channel" = RADIO.frequencies_to_names[src.secure_frequencies[sayToken]] || "???",
 			"frequency" = format_frequency(src.secure_frequencies[sayToken]),
 			"sayToken" = sayToken,
 		))
@@ -232,25 +238,18 @@ TYPEINFO(/obj/item/device/radio)
 		if ("set-frequency")
 			if (src.locked_frequency)
 				return FALSE
-			src.set_frequency(sanitize_frequency(params["value"]))
+
+			var/frequency_to_set = sanitize_frequency(params["value"])
 
 			// The "finish" param indicates that a user has inputted a number or finished dragging the frequency dial.
 			// This makes it more difficult to bruteforce the uplink.
-			if (params["finish"] && !isnull(src.traitorradio) && src.traitor_frequency && src.frequency == src.traitor_frequency)
-				ui.close()
-				src.remove_dialog(usr)
-				usr.Browse(null, WINDOW_OPTIONS)
-				global.onclose(usr, "radio")
-
-				// Transform the regular radio into a disguised Syndicate uplink.
-				var/obj/item/uplink/integrated/radio/T = src.traitorradio
-				var/obj/item/device/radio/R = src
-				R.set_loc(T)
-				usr.u_equip(R)
-				usr.put_in_hand_or_drop(T)
-				R.set_loc(T)
-				T.AttackSelf(usr)
+			if (params["finish"] && !isnull(src.traitorradio) && src.traitor_frequency && frequency_to_set == src.traitor_frequency)
+				tgui_process.close_uis(src)
+				src.traitorradio.locked = FALSE
+				src.ui_interact(usr)
 				return
+
+			src.set_frequency(frequency_to_set)
 
 			return TRUE
 
