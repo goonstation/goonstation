@@ -322,7 +322,10 @@ TYPEINFO(/obj/item/device/radio)
 /// Returns the HTML radio icon and tooltip.
 /obj/item/device/radio/proc/radio_icon(mob/user)
 	if (isAI(user))
-		. = "ai"
+		if(isnukeopai(user))
+			. = "ai_syndie"
+		else
+			. = "ai"
 	else if (isrobot(user))
 		. = "robo"
 	else if (ishorse(user))
