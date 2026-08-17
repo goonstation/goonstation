@@ -12192,7 +12192,8 @@
 /obj/machinery/conveyor_switch{
 	id = "sushi";
 	pixel_y = -9;
-	name = "sushi belt switch"
+	name = "sushi belt switch";
+	slowdown = 8
 	},
 /turf/simulated/floor/wood/eight,
 /area/station/crew_quarters/kitchen)
@@ -12229,8 +12230,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/conveyor/ES{
-	id = "sushi";
-	move_speed = 6
+	id = "sushi"
 	},
 /turf/simulated/floor/wood/eight,
 /area/station/crew_quarters/kitchen)
@@ -12244,8 +12244,7 @@
 	icon_state = "line2"
 	},
 /obj/machinery/conveyor/SW{
-	id = "sushi";
-	move_speed = 6
+	id = "sushi"
 	},
 /turf/simulated/floor/wood/eight,
 /area/station/crew_quarters/kitchen)
@@ -12505,8 +12504,7 @@
 /obj/machinery/light/small/floor/warm,
 /obj/table/wood/auto,
 /obj/machinery/conveyor/NS{
-	id = "sushi";
-	move_speed = 6
+	id = "sushi"
 	},
 /turf/simulated/floor/wood/eight,
 /area/station/crew_quarters/kitchen)
@@ -12517,8 +12515,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/conveyor/SN{
-	id = "sushi";
-	move_speed = 6
+	id = "sushi"
 	},
 /turf/simulated/floor/wood/eight,
 /area/station/crew_quarters/kitchen)
@@ -15315,8 +15312,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/conveyor/NE{
-	id = "sushi";
-	move_speed = 6
+	id = "sushi"
 	},
 /turf/simulated/floor/wood/eight,
 /area/station/crew_quarters/kitchen)
@@ -29917,8 +29913,7 @@
 	icon_state = "line2"
 	},
 /obj/machinery/conveyor/WN{
-	id = "sushi";
-	move_speed = 6
+	id = "sushi"
 	},
 /turf/simulated/floor/wood/eight,
 /area/station/crew_quarters/kitchen)
