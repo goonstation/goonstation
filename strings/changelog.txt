@@ -1,5 +1,14 @@
 
+(t)mon aug 17 26
+(u)TekoTheTeapot
+(p)27354
+(e)🎨|C-Sprites
+(+)Adds a new NT specific emergency box for NT roles and updates their loadouts to reflect the new inventory.
 (t)sun aug 16 26
+(u)Kubius
+(p)27226
+(e)🪲🌠|C-Bug, A-Events
+(*)Interdictors can intercept EMP anomalies from EMP storms.
 (u)JORJ949
 (p)27483
 (e)🎨🧛|C-Sprites, A-Gamemodes
