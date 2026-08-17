@@ -173,7 +173,7 @@ proc/dm_dump(var/x)
 								params.Remove("priority")
 								lines += {"[jointext(path, "") || "src"].add_filter("[name]", [priority], [src.dm_dump(params, list(), list(), return_main=TRUE, can_use_ref=FALSE)])"}
 							continue
-					if("datum_components", "comp_lookup")
+					if("datum_components", "signal_listeners")
 						continue // TODO
 					if("special")
 						if(istype(D, /obj/item))

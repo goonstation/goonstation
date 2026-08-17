@@ -122,7 +122,7 @@
 
 		HH = hands[3]
 		HH.limb = new src.mouth_path
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "mouth"
 		HH.name = "mouth"
 		HH.limb_name = "mandibles"
