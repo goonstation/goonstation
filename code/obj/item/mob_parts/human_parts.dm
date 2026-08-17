@@ -367,7 +367,7 @@
 	get_limb_print()
 		if(holder?.bioHolder?.default_fingerprints)
 			return holder.bioHolder.default_fingerprints.id
-		return build_id_unique(forensic_proc=/proc/build_id_fingerprint, proc_arguments=list(FORENSIC_CHARS_FINGERPRINTS))
+		return build_id_unique(/proc/build_id_fingerprint,FORENSIC_CHARS_FINGERPRINTS)
 
 /obj/item/parts/human_parts/arm/left
 	name = "left arm"
