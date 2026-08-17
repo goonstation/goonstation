@@ -274,6 +274,7 @@ TYPEINFO_NEW(/obj/effects/menhir_fog)
 		src.fx_fallback.alpha = src.fx_image.alpha
 		src.fx_fallback.vis_flags |= VIS_INHERIT_LAYER
 		src.fx_fallback.vis_flags |= VIS_INHERIT_PLANE
+		START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES) //additional discoverability mechanism
 
 	disposing()
 		qdel(src.fx_image)
@@ -311,6 +312,7 @@ TYPEINFO_NEW(/obj/effects/menhir_fog)
 			return
 
 		src.expended = TRUE
+		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES) //the call has concluded
 		ourturf.visible_message("<b>[src] lights up with an unearthly glow!</b>")
 		playsound(ourturf,'sound/machines/ArtifactPre1.ogg', 100, TRUE)
 		src.vis_contents += src.fx_image
