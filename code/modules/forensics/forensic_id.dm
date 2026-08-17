@@ -59,17 +59,18 @@ var/global/list/datum/forensic_id/registered_id_list = new()
 /// Best usage: Write a wrapper build_id proc chaining the above procs together for your forensic item, then pass that wrapper proc to this proc.
 ///
 /// * forensic_proc (proc) [Required] - The proc to call to build the ID. Must return a string.
-/// * char_list (list) [Required] - The list of characters to build the ID from.
-/// * reg_list (list) [Default: global.registered_id_list] - The list of IDs to check against for duplicates. Defaults to the global registered ID list.
-/proc/build_id_unique(forensic_proc, list/char_list, list/reg_list=global.registered_id_list)
-	if (!forensic_proc || !char_list || !reg_list)
-		CRASH("One or more required arguments not passed to build_id_unique")
+/// * proc_arguments (list) [Required] - Proc arguments
+/proc/build_id_unique(forensic_proc, list/proc_arguments)
+	if (!forensic_proc)
+		CRASH("Forensic proc to run not passed to build_id_unique")
 
 	var/new_id = ""
+	var/iterations = 0
 
-	while (TRUE)
-		new_id = call(forensic_proc)(char_list)
-		if (reg_list[new_id])
+	while (iterations < 100)
+		iterations++
+		new_id = call(forensic_proc)(proc_arguments)
+		if (global.registered_id_list[new_id] && global.registered_id_list[new_id].id && global.registered_id_list[new_id].id == new_id)
 			continue
 		break
 
