@@ -204,17 +204,24 @@ TYPEINFO(/obj/item/organ/heart/cyber)
 
 	get_desc(dist, mob/user)
 		. = ..(dist, user)
-		if (broken)
+		if (src.broken)
 			. += " It seems to have clakked its last clak."
 			if (prob(5))
 				. += " Damn."
 
 	breakme()
 		if (..())
-			src.icon_state = initial(src.icon_state) + "_death"
+			var/base_state = initial(src.icon_state)
+			src.icon_state = base_state + "_dying"
+
+			// prevent animation replay issue by waiting out the animation, then switching
+			SPAWN(8)
+				if (src.broken) // sanity check
+					src.icon_state = base_state + "_dead"
+
 
 			// people would probably be able to use this to tell if their heart is failing otherwise
-			if (!donor)
+			if (!src.donor)
 				playsound(src.loc, 'sound/items/Scissor.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 				src.visible_message(SPAN_ALERT("[src] lets out one last clak."))
 
