@@ -1640,9 +1640,10 @@ ABSTRACT_TYPE(/datum/material/organic)
 		if(isnull(src.blob_source))
 			src.setID("blob_[blob_color]")
 
-		var/h = GetHue(blob_color)
-		var/s = GetSaturation(blob_color)
-		var/l = GetLuminosity(blob_color)
+		var/list/color_hsl = rgb2hsl_accurate(GetRedPart(blob_color), GetGreenPart(blob_color), GetBluePart(blob_color))
+		var/h = color_hsl[1]
+		var/s = color_hsl[2]
+		var/l = color_hsl[3]
 
 		src.setColor(COLOR_MATRIX_IDENTITY)
 		var/list/hsl_temp

@@ -1353,53 +1353,41 @@ proc/outermost_movable(atom/movable/target)
 	var/lo = text2ascii(hex, 7)
 	return ( ((hi >= 65 ? hi-55 : hi-48)<<4) | (lo >= 65 ? lo-55 : lo-48) )
 
-// HSL values from rgb2hsl() appear to be incorrect?
-
-/// Calculate hue (0 to 1) from RGB hex
-/proc/GetHue(hex)
-	var/r = GetRedPart(hex) / 255
-	var/g = GetGreenPart(hex) / 255
-	var/b = GetBluePart(hex) / 255
-
+/// This proc produces HSL values that appear more similar to their RGB inputs compared to the Byond version.
+/// No, I don't know why.
+/// Each value is a number between 0 to 1
+/proc/rgb2hsl_accurate(var/r, var/g, var/b)
+	r /= 255
+	g /= 255
+	b /= 255
 	var/rgb_max = max(r, g, b)
 	var/rgb_min = min(r, g, b)
 	if(rgb_max == rgb_min)
-		return 0
+		return list(0, 0, (rgb_max + rgb_min) / 2)
 
-	var/hue = 0
+	var/hue
+	var/saturation
+	var/luminosity
+
+	// Hue
 	if(rgb_max == r)
-		// hue = ((g - b) % 6) / (rgb_max - rgb_min)
 		hue = (g - b) / (rgb_max - rgb_min)
 	else if(rgb_max == g)
 		hue = ((b - r) / (rgb_max - rgb_min)) + 2
 	else
 		hue = ((r - g) / (rgb_max - rgb_min)) + 4
-	hue = fractmodulo(hue * 60, 360)
-	return hue / 360
+	hue = fractmodulo(hue * 60, 360) / 360
 
-/// Calculate saturation (0 to 1) from RGB hex
-/proc/GetSaturation(hex)
-	var/r = GetRedPart(hex) / 255
-	var/g = GetGreenPart(hex) / 255
-	var/b = GetBluePart(hex) / 255
-	var/rgb_max = max(r, g, b)
-	var/rgb_min = min(r, g, b)
-	if(rgb_max == rgb_min)
-		return 0
+	// Luminosity
+	luminosity = (rgb_max + rgb_min) / 2
 
-	var/luminosity = (rgb_max + rgb_min) / 2
+	// Saturation
 	if(luminosity <= 0.5)
-		return (rgb_max - rgb_min) / (rgb_max + rgb_min)
-	return (rgb_max - rgb_min) / (2 - rgb_max - rgb_min)
+		saturation = (rgb_max - rgb_min) / (rgb_max + rgb_min)
+	else
+		saturation = (rgb_max - rgb_min) / (2 - rgb_max - rgb_min)
 
-/// Calculate luminosity (0 to 1) from RGB hex
-/proc/GetLuminosity(hex)
-	var/r = GetRedPart(hex) / 255
-	var/g = GetGreenPart(hex) / 255
-	var/b = GetBluePart(hex) / 255
-	var/rgb_max = max(r, g, b)
-	var/rgb_min = min(r, g, b)
-	return (rgb_max + rgb_min) / 2
+	return list(hue, saturation, luminosity)
 
 /proc/GetColors(hex)
 	hex = uppertext(hex)
