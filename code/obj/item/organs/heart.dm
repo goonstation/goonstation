@@ -200,6 +200,27 @@ TYPEINFO(/obj/item/organ/heart/cyber)
 	icon_state = "heart_skeleton"
 	default_material = "bone"
 	blood_reagent = "calcium"
+	blood_id = "calcium"
+
+	get_desc(dist, mob/user)
+		. = ..(dist, user)
+		if (broken)
+			. += " It seems to have clakked its last clak."
+			if (prob(5))
+				. += " Damn."
+
+	breakme()
+		if (..())
+			src.icon_state = initial(src.icon_state) + "_death"
+
+			// people would probably be able to use this to tell if their heart is failing otherwise
+			if (!donor)
+				playsound(src.loc, 'sound/items/Scissor.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
+				src.visible_message(SPAN_ALERT("[src] lets out one last clak."))
+
+	unbreakme()
+		if (..())
+			src.icon_state = initial(src.icon_state)
 
 /obj/item/organ/heart/martian
 	name = "lavender heap"
