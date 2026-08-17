@@ -84,6 +84,12 @@
 /datum/vision/blob_overmind_tutorial
 	neg_sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
 
+
+// Could perhaps be combined with above
+/datum/vision/flock_tutorial
+	sight = SEE_SELF | SEE_BLACKNESS
+	neg_sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
+
 /datum/vision/nightvision/weak
 	centerlight_icon = "thermal"
 
@@ -126,7 +132,7 @@
 	z_restricted = TRUE
 	sight = SEE_TURFS | SEE_OBJS | SEE_MOBS
 
-/// unrestricted component of AI vision. Always around.
+/// unrestricted component of AI vision. Mostly always around.
 /datum/vision/ai
 	see_in_dark = SEE_DARK_FULL
 	see_invisible = INVIS_CLOAK

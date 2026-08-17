@@ -43,14 +43,7 @@
 /mob/living/silicon/hive_mainframe/death(gibbed)
 	setdead(src)
 	src.canmove = 0
-	vision.set_color_mod("#ffffff") // reset any blindness
 
-	// what on earth is happening here
-	src.sight |= SEE_TURFS
-	src.sight |= SEE_MOBS
-	src.sight |= SEE_OBJS
-	src.see_in_dark = SEE_DARK_FULL
-	src.see_invisible = INVIS_CLOAK
 	src.lying = 1
 	src.icon_state = "hive_main-crash"
 

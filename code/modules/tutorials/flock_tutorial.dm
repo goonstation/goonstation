@@ -36,7 +36,7 @@
 
 	Start()
 		. = ..()
-		src.fowner.sight = SEE_SELF | SEE_BLACKNESS
+		src.fowner.apply_vision(/datum/vision/flock_tutorial, src.type)
 		src.fowner.abilityHolder.addAbility(/datum/targetable/flockmindAbility/tutorial_exit)
 		for (var/mob/living/intangible/flock/trace/trace as anything in src.fowner.flock.traces)
 			boutput(trace, SPAN_NOTICE("You have joined your Flockmind in the tutorial, you will not be able to interact with anything while they complete it."))
@@ -55,7 +55,7 @@
 		fowner.flock.enemies = list()
 		fowner.flock.stats.reset_stats()
 		fowner.tutorial = null
-		fowner.sight = initial(fowner.sight)
+		fowner.remove_vision(/datum/vision/flock_tutorial, src.type)
 		for (var/mob/living/intangible/flock/trace/trace as anything in src.fowner.flock.traces)
 			trace.set_loc(get_turf(src.fowner))
 		qdel(src)

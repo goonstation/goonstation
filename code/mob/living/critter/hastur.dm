@@ -30,7 +30,6 @@ TYPEINFO(/mob/living/critter/hastur)
 
 	New()
 		..()
-		src.see_in_dark = SEE_DARK_FULL
 		northsouth = icon('icons/misc/hastur.dmi')
 		eastwest = icon('icons/misc/hastur.dmi')
 		changeIcon()

@@ -85,13 +85,6 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/hivebot, proc/admin_add_tool, proc/admi
 	setdead(src)
 	src.canmove = 0
 
-	vision.set_color_mod("#ffffff") // reset any blindness
-	src.sight |= SEE_TURFS
-	src.sight |= SEE_MOBS
-	src.sight |= SEE_OBJS
-
-	src.see_in_dark = SEE_DARK_FULL
-	src.see_invisible = INVIS_CLOAK
 	src.UpdateIcon()
 /*
 	if(src.client)
