@@ -534,8 +534,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			if ("reset")
 				// And the other way around (Convair880).
 				if (src.r_limb_arm_type_mutantrace)
-					if ((L.limbs.r_arm && !(L.limbs.r_arm.limb_is_transplanted || L.limbs.r_arm.limb_is_unnatural || !(L.limbs.r_arm in L))) \
-						|| src.ignore_missing_limbs == 1 )
+					if (src.ignore_missing_limbs || src.should_reset_limb(L, L.limbs.r_arm))
 						var/obj/item/parts/human_parts/arm/limb = new /obj/item/parts/human_parts/arm/right(L)
 						if (istype(limb))
 							qdel(L.limbs.r_arm)
@@ -545,8 +544,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 							limb.remove_stage = 0
 
 				if (src.l_limb_arm_type_mutantrace)
-					if ((L.limbs.l_arm && !(L.limbs.l_arm.limb_is_transplanted || L.limbs.l_arm.limb_is_unnatural || !(L.limbs.l_arm in L))) \
-						|| src.ignore_missing_limbs == 1)
+					if (src.ignore_missing_limbs || src.should_reset_limb(L, L.limbs.l_arm))
 						var/obj/item/parts/human_parts/arm/limb = new /obj/item/parts/human_parts/arm/left(L)
 						if (istype(limb))
 							qdel(L.limbs.l_arm)
@@ -557,8 +555,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 				//////////////LEGS//////////////////
 				if (src.r_limb_leg_type_mutantrace)
-					if ((L.limbs.r_leg && !(L.limbs.r_leg.limb_is_transplanted || L.limbs.r_leg.limb_is_unnatural || !(L.limbs.r_leg in L))) \
-						|| src.ignore_missing_limbs == 1)
+					if (src.ignore_missing_limbs || src.should_reset_limb(L, L.limbs.r_leg))
 						var/obj/item/parts/human_parts/leg/limb = new /obj/item/parts/human_parts/leg/right(L)
 						if (istype(limb))
 							qdel(L.limbs.r_leg)
@@ -568,8 +565,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 							limb.remove_stage = 0
 
 				if (src.l_limb_leg_type_mutantrace)
-					if ((L.limbs.l_leg && !(L.limbs.l_leg.limb_is_transplanted || L.limbs.l_leg.limb_is_unnatural || !(L.limbs.l_leg in L))) \
-						|| src.ignore_missing_limbs == 1)
+					if (src.ignore_missing_limbs || src.should_reset_limb(L, L.limbs.l_leg))
 						var/obj/item/parts/human_parts/leg/limb = new /obj/item/parts/human_parts/leg/left(L)
 						if (istype(limb))
 							qdel(L.limbs.l_leg)
@@ -579,6 +575,13 @@ ABSTRACT_TYPE(/datum/mutantrace)
 							limb.remove_stage = 0
 				//////////////HEAD//////////////////
 				L.organHolder?.head?.MakeMutantHead(HEAD_HUMAN, 'icons/mob/human_head.dmi', "head")
+
+	proc/should_reset_limb(mob/living/carbon/human/H, obj/item/parts/limb)
+		if (!limb)
+			return TRUE
+		if (limb.limb_is_transplanted || limb.limb_is_unnatural || !(limb in H))
+			return FALSE
+		return TRUE
 
 	proc/organ_mutator(var/mob/living/carbon/human/O, var/mode as text)
 		if(!ishuman(O) || !(O?.organHolder))
