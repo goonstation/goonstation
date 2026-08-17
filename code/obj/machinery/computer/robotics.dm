@@ -92,7 +92,7 @@
 					boutput(usr, SPAN_ALERT("AI units are unable to access killswitch functionality."))
 					return
 				var/mob/living/silicon/ai/ai_player = locate(params["mob_ref"])
-				if (QDELETED(ai_player))
+				if (QDELETED(ai_player) || ai_player.syndicate)
 					return
 				message_admins(SPAN_ALERT("[key_name(usr)] has activated the AI self destruct on [key_name(ai_player)]."))
 				logTheThing(LOG_COMBAT, usr, "has activated the AI killswitch process on [constructTarget(ai_player,"combat")]")
@@ -217,6 +217,8 @@
 	for_by_tcl(A, /mob/living/silicon/ai)
 		var/datum/statusEffect/killswitch/killswitch_ai_status = A.hasStatus("killswitch_ai")
 		var/brain_status = BRAIN_STATUS_MISSING
+		if(A.syndicate)
+			continue
 		if (A.brain)
 			if (A.deployed_shell)
 				if (A.deployed_shell.client)
