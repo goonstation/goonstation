@@ -1,5 +1,9 @@
 
 (t)mon aug 17 26
+(u)LorrMaster
+(p)27527
+(e)🆕📨|C-Feature, A-Logistics
+(*)Quartermasters now have a chance to be able to buy a fossil from Gragg.
 (u)TekoTheTeapot
 (p)27354
 (e)🎨|C-Sprites
