@@ -325,18 +325,8 @@ TYPEINFO(/obj/item/tool/omnitool/excavator)
 		/datum/omnimode/mining/drill,
 		/datum/omnimode/mining/hammer,
 		/datum/omnimode/mining/shovel,
-		/datum/omnimode/mining/laser,
-		/datum/omnimode/mining/concussive)
+		/datum/omnimode/mining/laser)
 	switch_delay = 1.4 SECONDS
-
-/obj/item/tool/omnitool/excavator/silicon
-	name = "omni-excavator"
-	desc = "A set of various mining tools intended for retrieving delicate objects, such as fossils."
-	icon_state = "silicon-excavator-pickaxe"
-	prefix = "silicon-excavator"
-	animated_delay_enter = FALSE
-	animated_delay_exit = FALSE
-	switch_delay = 0
 
 // ===========================================================================
 // ========================= Omnitool Mode Datums =========================
@@ -505,9 +495,6 @@ ABSTRACT_TYPE(/datum/omnimode)
 				var/turf/simulated/wall/auto/asteroid/AST = target
 				AST.dig_asteroid(user, 2, FALSE, src.mining_type)
 				playsound(user.loc, src.mining_sound, src.mining_volume, 1)
-			if(istype(omni, /obj/item/tool/omnitool/excavator/silicon))
-				if(!ON_COOLDOWN(omni, "omnitool_mining_anim", 0.5 SECONDS))
-					flick("[omni.prefix]-[src.mode_id]-mine", omni)
 			return
 	mining/pickaxe
 		mode_name = "pickaxe"
@@ -544,12 +531,6 @@ ABSTRACT_TYPE(/datum/omnimode)
 		mining_type = MINING_DMG_LASER
 		mining_sound = 'sound/weapons/laser_f.ogg'
 		mining_volume = 125
-	mining/concussive
-		mode_name = "concussive"
-		mode_id = OMNITOOL::MODE_MINING_CONCUSSIVE
-		context_icon = "mining_concussive"
-		mining_type = MINING_DMG_CONCUSSIVE
-		mining_sound = 'sound/effects/exlow.ogg'
 
 
 // ===========================================================================
