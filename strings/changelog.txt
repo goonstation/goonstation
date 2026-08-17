@@ -1,5 +1,40 @@
 
+(t)sun aug 16 26
+(u)Kubius
+(p)27226
+(e)🪲🌠|C-Bug, A-Events
+(*)Interdictors can intercept EMP anomalies from EMP storms.
+(u)JORJ949
+(p)27483
+(e)🎨🧛|C-Sprites, A-Gamemodes
+(*)C.A.R.L. recently got a promotion to [REDACTED]. With this extra funding he bought himself a new paintjob!
+(t)sat aug 15 26
+(u)TekoTheTeapot
+(p)27514
+(e)|
+(+)The espresso machine can now properly spell "Cappuccino".
+(t)thu aug 13 26
+(u)glowbold
+(p)27426
+(e)🆕⚖🧛|C-Feature, C-Balance, A-Gamemodes
+(*)Arcfiend's Discharge ability can recharge items wtih batteries, like stun batons and tasers.
 (t)tue aug 11 26
+(u)ANNmagedon
+(p)27425
+(e)|
+(+)Fixed salvager powersink's tooltip not updating with charge
+(u)Ceres et al.
+(p)27427
+(e)🆕⚖🧛|C-Feature, C-Balance, A-Gamemodes
+(*)Activating Horror Form as a changeling now has a brief (uninterruptible) windup period that's very loud and messy.
+(u)Wrastlingcat
+(p)27456
+(e)🎨|C-Sprites
+(*)Added a new sunflower mask! pretty! Make it with wire and a sunflower!
+(u)Sord
+(p)27449
+(e)🗺|A-Mapping
+(*)Reworked Donut 3's Medbay
 (u)JORJ949
 (p)27422
 (e)🔄🧛📦⚗|C-Rework, A-Gamemodes, A-Game-Objects, A-Chemistry

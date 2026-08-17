@@ -200,7 +200,7 @@ var/global/deathConfettiActive = 0
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/sun
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handzap"
 		HH.name = "solar wind"
 		HH.limb_name = "solar wind"

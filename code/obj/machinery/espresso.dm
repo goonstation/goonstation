@@ -20,7 +20,7 @@ TYPEINFO(/obj/machinery/espresso_machine)
 	var/top_on = 1 //screwed on or screwed off
 	var/cup_name = "espresso cup"
 	var/image/image_cup = null
-	var/list/drink_options = list("Americano", "Cappuchino", "Decaf", "Espresso", "Flat White", "Latte", "Mocha")
+	var/list/drink_options = list("Americano", "Cappuccino", "Decaf", "Espresso", "Flat White", "Latte", "Mocha")
 
 	New()
 		..()
@@ -97,7 +97,7 @@ TYPEINFO(/obj/machinery/espresso_machine)
 							C.reagents.add_reagent("espresso", 4.3)
 							C.reagents.add_reagent("milk", 1.4)
 							C.reagents.add_reagent("chocolate", 4.3)
-					if ("Cappuchino") // 1:1:1 milk foam:milk:espresso
+					if ("Cappuccino") // 1:1:1 milk foam:milk:espresso
 						for(var/obj/item/reagent_containers/food/drinks/espressocup/C in src.contents)
 							C.reagents.add_reagent("espresso", 3.5)
 							C.reagents.add_reagent("milk", 6.5)
