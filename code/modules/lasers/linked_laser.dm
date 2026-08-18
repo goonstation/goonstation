@@ -207,7 +207,7 @@ ABSTRACT_TYPE(/obj/linked_laser)
 	max_length = 20
 
 	extend()
-		sleep(0.5 DECISECONDS)
+		sleep(0.5 DECI SECONDS)
 		..()
 
 /obj/linked_laser/harmless_ptl/fart
