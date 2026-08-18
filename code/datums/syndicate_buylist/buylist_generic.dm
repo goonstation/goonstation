@@ -241,7 +241,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP
 
 	run_on_spawn(obj/item/sword/stabby, mob/living/owner, in_surplus_crate=FALSE) //Nukies get red ones
-		if (isnukeop(owner) || isnukeopgunbot(owner))
+		if (isnukeop(owner) || isnukeopgunbot(owner) || issyndicateagent(owner))
 			stabby.light_c.set_color(255, 0, 0)
 			stabby.bladecolor = "R"
 		..()

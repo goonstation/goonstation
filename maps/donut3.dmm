@@ -19934,11 +19934,7 @@
 /area/station/medical/cdc)
 "giZ" = (
 /obj/table/wood/round/auto,
-/obj/item/reagent_containers/food/snacks/beefood{
-	desc = "A little birthday cupcake for Heisenbee.  May not taste good to non-bees.";
-	icon = 'icons/obj/foodNdrink/food_dessert.dmi';
-	icon_state = "cupcake";
-	name = "Heisenbee's birthday cupcake";
+/obj/item/reagent_containers/food/snacks/beefood/heisenbee{
 	pixel_x = 5;
 	pixel_y = 8
 	},
