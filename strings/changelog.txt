@@ -1,5 +1,9 @@
 
 (t)tue aug 18 26
+(u)Astarthoc
+(p)27410
+(e)🆕🎨⚗🍝|C-Feature, C-Sprites, A-Chemistry, A-Catering
+(*)Added dulce de leche, a delicious dessert recipe that makes use of sweet condensed milk.
 (u)CelineTheYeen
 (p)27444
 (e)🗺|A-Mapping
