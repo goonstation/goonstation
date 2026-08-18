@@ -1,4 +1,13 @@
 
+(t)mon aug 17 26
+(u)LorrMaster
+(p)27527
+(e)🆕📨|C-Feature, A-Logistics
+(*)Quartermasters now have a chance to be able to buy a fossil from Gragg.
+(u)TekoTheTeapot
+(p)27354
+(e)🎨|C-Sprites
+(+)Adds a new NT specific emergency box for NT roles and updates their loadouts to reflect the new inventory.
 (t)sun aug 16 26
 (u)Kubius
 (p)27226
