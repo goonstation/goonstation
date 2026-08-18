@@ -243,7 +243,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.limb = new /datum/limb/sword
 		HH.name = "left hand"
 		HH.suffix = "-L"
@@ -267,7 +267,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.limb = new /datum/limb/gun/kinetic/draco
 		HH.name = "rifle"
 		HH.suffix = "-LR"

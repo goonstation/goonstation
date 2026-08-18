@@ -5,6 +5,7 @@
  * @license MIT
  */
 
+export { DriveContext } from './context';
 export { DiskDrive } from './DiskDrive';
 export { Drive } from './Drive';
 export type { DriveBaseProps, DriveSlotProps } from './type';
