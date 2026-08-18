@@ -35,14 +35,14 @@ ABSTRACT_TYPE(/obj/item/cane)
 
 			var/flags = T?.material?.getMaterialFlags()
 			if (flags & MATERIAL_WOOD)
-				playsound(src, "sound/impact_sounds/Wood_Tap.ogg", 50, TRUE,pitch=0.3)
+				playsound(src, 'sound/impact_sounds/Wood_Tap.ogg', 50, TRUE,pitch=0.3)
 			else if (flags & MATERIAL_METAL)
-				playsound(src,"sound/impact_sounds/metal_thump.ogg", 50, TRUE)
+				playsound(src,'sound/impact_sounds/metal_thump.ogg', 50, TRUE)
 			else
 				if (T.step_material)
 					playsound(src,"[T.step_material]", 50, TRUE)
 				else
-					playsound(src,"sound/impact_sounds/metal_thump.ogg", 50, TRUE)
+					playsound(src,'sound/impact_sounds/metal_thump.ogg', 50, TRUE)
 
 
 			user.visible_message(SPAN_ALERT("[user] taps \the [src] on \the [T]!"),group="cane_tap")
