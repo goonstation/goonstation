@@ -402,6 +402,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 		if (src.brain && src.key)
 			src.brain.name = "neural net processor"
 			src.brain.owner = src.mind
+		src.setup_verbs()
 
 	SPAWN(0.6 SECONDS)
 		src.net_id = format_net_id("\ref[src]")
@@ -424,6 +425,31 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 		src.camera = new /obj/machinery/camera/AI(src)
 		src.camera.c_tag = src.real_name
 		src.camera.network = CAMERA_NETWORK_ROBOTS
+
+/mob/living/silicon/ai/proc/setup_verbs()
+	src.verbs |= /mob/living/silicon/ai/proc/ai_call_shuttle
+	src.verbs |= /mob/living/silicon/ai/proc/show_laws_verb
+	src.verbs |= /mob/living/silicon/ai/proc/reset_apcs
+	src.verbs |= /mob/living/silicon/ai/proc/de_electrify_verb
+	src.verbs |= /mob/living/silicon/ai/proc/unbolt_all_airlocks
+	src.verbs |= /mob/living/silicon/ai/proc/ai_camera_track
+	src.verbs |= /mob/living/silicon/ai/proc/ai_alerts
+	src.verbs |= /mob/living/silicon/ai/proc/ai_camera_list
+	src.verbs |= /mob/living/silicon/ai/proc/ai_statuschange
+	src.verbs |= /mob/living/silicon/ai/proc/ai_state_laws_all
+	src.verbs |= /mob/living/silicon/ai/proc/ai_state_laws_standard
+	src.verbs |= /mob/living/silicon/ai/proc/ai_set_fake_laws
+	src.verbs |= /mob/living/silicon/ai/proc/ai_state_fake_laws
+	src.verbs |= /mob/living/silicon/ai/verb/deploy_to
+	src.verbs |= /mob/living/silicon/ai/proc/ai_view_crew_manifest
+	src.verbs |= /mob/living/silicon/ai/proc/toggle_alerts_verb
+	src.verbs |= /mob/living/silicon/ai/verb/access_internal_radio
+	src.verbs |= /mob/living/silicon/ai/verb/access_internal_pda
+	src.verbs |= /mob/living/silicon/ai/proc/ai_colorchange
+	src.verbs |= /mob/living/silicon/ai/proc/ai_station_announcement
+	src.verbs |= /mob/living/silicon/ai/proc/view_messageLog
+	src.verbs |= /mob/living/silicon/ai/verb/rename_self
+	src.verbs |= /mob/living/silicon/ai/verb/go_offline
 
 //Returns either the AI mainframe or the eyecam mob, depending on whther or not we are deployed
 /mob/living/silicon/ai/proc/get_message_mob()
@@ -583,29 +609,6 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 				src.show_text("To use something, simply click it.")
 				src.show_text("Use the prefix <B>:s</B> to speak to fellow silicons through binary.")
 				src.show_laws()
-				src.verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
-				src.verbs += /mob/living/silicon/ai/proc/show_laws_verb
-				src.verbs += /mob/living/silicon/ai/proc/reset_apcs
-				src.verbs += /mob/living/silicon/ai/proc/de_electrify_verb
-				src.verbs += /mob/living/silicon/ai/proc/unbolt_all_airlocks
-				src.verbs += /mob/living/silicon/ai/proc/ai_camera_track
-				src.verbs += /mob/living/silicon/ai/proc/ai_alerts
-				src.verbs += /mob/living/silicon/ai/proc/ai_camera_list
-				src.verbs += /mob/living/silicon/ai/proc/ai_statuschange
-				src.verbs += /mob/living/silicon/ai/proc/ai_state_laws_all
-				src.verbs += /mob/living/silicon/ai/proc/ai_state_laws_standard
-				src.verbs += /mob/living/silicon/ai/proc/ai_set_fake_laws
-				src.verbs += /mob/living/silicon/ai/proc/ai_state_fake_laws
-				src.verbs += /mob/living/silicon/ai/verb/deploy_to
-				src.verbs += /mob/living/silicon/ai/proc/ai_view_crew_manifest
-				src.verbs += /mob/living/silicon/ai/proc/toggle_alerts_verb
-				src.verbs += /mob/living/silicon/ai/verb/access_internal_radio
-				src.verbs += /mob/living/silicon/ai/verb/access_internal_pda
-				src.verbs += /mob/living/silicon/ai/proc/ai_colorchange
-				src.verbs += /mob/living/silicon/ai/proc/ai_station_announcement
-				src.verbs += /mob/living/silicon/ai/proc/view_messageLog
-				src.verbs += /mob/living/silicon/ai/verb/rename_self
-				src.verbs += /mob/living/silicon/ai/verb/go_offline
 				src.job = "AI"
 				if (src.mind)
 					src.mind.assigned_role = "AI"

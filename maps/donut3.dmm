@@ -19934,11 +19934,7 @@
 /area/station/medical/cdc)
 "giZ" = (
 /obj/table/wood/round/auto,
-/obj/item/reagent_containers/food/snacks/beefood{
-	desc = "A little birthday cupcake for Heisenbee.  May not taste good to non-bees.";
-	icon = 'icons/obj/foodNdrink/food_dessert.dmi';
-	icon_state = "cupcake";
-	name = "Heisenbee's birthday cupcake";
+/obj/item/reagent_containers/food/snacks/beefood/heisenbee{
 	pixel_x = 5;
 	pixel_y = 8
 	},
@@ -23515,6 +23511,10 @@
 /obj/machinery/light/lamp/green{
 	pixel_x = -5;
 	pixel_y = 13
+	},
+/obj/machinery/recharger{
+	pixel_x = 6;
+	pixel_y = 5
 	},
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 5
@@ -36640,6 +36640,10 @@
 	pixel_x = 9;
 	pixel_y = 4
 	},
+/obj/item/stamp/md{
+	pixel_x = -4;
+	pixel_y = -7
+	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_east,
 /area/station/medical/head)
 "lxV" = (
@@ -40520,7 +40524,7 @@
 	pixel_x = 8;
 	pixel_y = 2
 	},
-/obj/item/reagent_containers/food/snacks/spaghetti/spicy{
+/obj/item/reagent_containers/food/snacks/spaghetti/spicy/security{
 	pixel_x = -6;
 	pixel_y = 2
 	},
@@ -49355,6 +49359,10 @@
 /obj/item/reagent_containers/food/drinks/mug/HoS{
 	pixel_x = -8;
 	pixel_y = 15
+	},
+/obj/item/stamp/hos{
+	pixel_x = 5;
+	pixel_y = 10
 	},
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 1
@@ -58971,6 +58979,7 @@
 /area/station/engine/engineering)
 "srQ" = (
 /obj/table/wood/auto,
+/obj/machinery/recharger,
 /turf/simulated/floor/carpet/purple/fancy/junction/nw_e,
 /area/station/crew_quarters/hor)
 "srY" = (
@@ -60934,6 +60943,10 @@
 /area/station/hallway/primary/west)
 "sWR" = (
 /obj/table/wood/auto,
+/obj/item/stamp/hop{
+	pixel_x = -6;
+	pixel_y = 9
+	},
 /obj/item/reagent_containers/food/drinks/rum_spaced,
 /obj/item/pen/fancy{
 	pixel_x = 7;
@@ -68377,6 +68390,10 @@
 "vks" = (
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/machinery/recharger/wall/sticky{
+	dir = 8;
+	pixel_x = -23
 	},
 /turf/simulated/floor/carpet{
 	dir = 8;
@@ -77686,6 +77703,10 @@
 /obj/item/card/id/gold/captains_spare{
 	pixel_x = -13
 	},
+/obj/item/stamp/cap{
+	pixel_x = 7;
+	pixel_y = 8
+	},
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fblue3"
@@ -78977,9 +78998,9 @@
 /obj/item/device/audio_log{
 	pixel_x = -5
 	},
-/obj/item/stamp{
-	pixel_x = -6;
-	pixel_y = 10
+/obj/item/stamp/rd{
+	pixel_x = 12;
+	pixel_y = 7
 	},
 /turf/simulated/floor/carpet/purple/fancy/innercorner{
 	dir = 4
