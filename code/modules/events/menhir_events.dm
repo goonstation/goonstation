@@ -20,7 +20,7 @@ var/global/menhir_candidates_last_built = 0
 		menhir_local_event_candidates = list()
 
 		for (var/mob/living/L in mobs)
-			if(!isalive(L) || !L.client || ismobcritter(L))
+			if(!isalive(L) || !L.client || ismobcritter(L) || isintangible(L))
 				continue
 			var/area/mobarea = get_area(L)
 			if(istype(mobarea,/area/station) || istype(mobarea,/area/unspace) || istype(mobarea, /area/research_outpost) || istype(mobarea, /area/precursor))
