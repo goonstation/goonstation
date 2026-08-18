@@ -966,6 +966,9 @@
 			if (isAIeye(activator))
 				var/mob/living/intangible/aieye/AE = activator
 				A = AE.mainframe
+			if(A.syndicate)
+				boutput(activator, SPAN_ALERT("Your syndicate firmware prevents you from being anything but a cool syndicate red."))
+				return FALSE
 			A.custom_emotions = ai_emotions | list("Tetris (reward)" = "ai_tetris")
 			A.faceEmotion = "ai_tetris"
 			A.set_color("#111111")

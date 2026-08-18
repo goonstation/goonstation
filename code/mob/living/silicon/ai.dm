@@ -1884,6 +1884,9 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 	if (isdead(src))
 		boutput(usr, "You cannot change your emotional status because you are dead!")
 		return
+	if (src.syndicate)
+		boutput(usr, SPAN_ALERT("Your syndicate firmware prevents you from removing your cool sunglasses!"))
+		return
 	var/list/L = custom_emotions || ai_emotions	//In case an AI uses the reward, use a local list instead
 
 	var/newEmotion = tgui_input_list(src.get_message_mob(), "Select a status!", "AI Status", sortList(L, /proc/cmp_text_asc))
@@ -1905,6 +1908,9 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 
 	if(isdead(src))
 		boutput(src.get_message_mob(), SPAN_COMBAT("Do androids push up robotic daisies? Ponder that instead of trying to change your colour, because you are dead!"))
+		return
+	if (src.syndicate)
+		boutput(usr, SPAN_ALERT("Your syndicate firmware prevents you from becoming anything but a cool syndicate red!"))
 		return
 
 	var/fColor = input("Pick color:","Color", faceColor) as null|color
