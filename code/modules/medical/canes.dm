@@ -15,12 +15,36 @@ ABSTRACT_TYPE(/obj/item/cane)
 	stamina_damage = 55
 	stamina_cost = 23
 	stamina_crit_chance = 10
-	var/can_tap = TRUE
+
+	/// sound volume for cane tap
+	var/tap_volume = 70
+
+	proc/do_tap(turf/T, mob/user)
+
+		var/flags = T?.material?.getMaterialFlags()
+
+		// make absolutely sure we're playing glass sounds when we should, they use wood step sounds
+		var/isglass = istype(T, /turf/unsimulated/floor/glassblock) || istype(T, /turf/simulated/floor/glassblock) || istype(T,/turf/simulated/floor/auto/glassblock)
+
+		if (T.step_material == "step_plating" || flags & MATERIAL_METAL)
+			var/metal_sound = pick('sound/impact_sounds/metal_thump.ogg','sound/impact_sounds/Metal_Hit_Lowfi_1.ogg')
+			playsound(src, metal_sound, src.tap_volume, TRUE)
+
+		else if (isglass || flags & MATERIAL_CRYSTAL)
+			playsound(src,'sound/impact_sounds/Crystal_Hit_1.ogg', src.tap_volume, TRUE, pitch = 0.7)
+
+		else if (T.step_material == "step_wood" || flags & MATERIAL_WOOD)
+			playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg', src.tap_volume, TRUE)
+
+		else
+			// we dont know what the floor is, generic noise GO!
+			playsound(src,'sound/impact_sounds/block_blunt.ogg', src.tap_volume/2, TRUE, pitch = 0.7)
+
+
+		user.visible_message(SPAN_ALERT("[user] taps \the [src] on \the [T]!"), group = "cane_tap")
 
 	attack_self(mob/user)
 		. = ..()
-		if (!src.can_tap)
-			return
 
 		var/turf/T = get_turf(user)
 		// if we cant reach the tile for some reason
@@ -28,24 +52,11 @@ ABSTRACT_TYPE(/obj/item/cane)
 			return
 
 		// if we're floating for some god awful reason
-		if (user.no_gravity ||  HAS_ATOM_PROPERTY(user, PROP_ATOM_FLOATING))
+		if (user.traction == TRACTION_NONE ||  HAS_ATOM_PROPERTY(user, PROP_ATOM_FLOATING))
 			return
 
 		if (!ON_COOLDOWN(src,"cane_tap",5 SECONDS))
-
-			var/flags = T?.material?.getMaterialFlags()
-			if (flags & MATERIAL_WOOD)
-				playsound(src, 'sound/impact_sounds/Wood_Tap.ogg', 50, TRUE,pitch=0.3)
-			else if (flags & MATERIAL_METAL)
-				playsound(src,'sound/impact_sounds/metal_thump.ogg', 50, TRUE)
-			else
-				if (T.step_material)
-					playsound(src,"[T.step_material]", 50, TRUE)
-				else
-					playsound(src,'sound/impact_sounds/metal_thump.ogg', 50, TRUE)
-
-
-			user.visible_message(SPAN_ALERT("[user] taps \the [src] on \the [T]!"),group="cane_tap")
+			src.do_tap(T, user)
 
 // Wood crafted below!
 
@@ -72,12 +83,15 @@ ABSTRACT_TYPE(/obj/item/cane)
 
 /obj/item/cane/metal/fourlegged
 	icon_state = "fourlegged"
-	can_tap = FALSE
 
 /obj/item/cane/metal/tennisball
 	icon_state = "tennisball"
 	desc = "Perfect when you need a million balloons!"
-	can_tap = FALSE // too padded
+
+	do_tap(turf/T, mob/user)
+		// extremely padded
+		playsound(src,'sound/impact_sounds/block_blunt.ogg', src.tap_volume/2, TRUE, pitch = 1.1)
+		user.visible_message(SPAN_ALERT("[user] taps \the [src] on \the [T]!"), group = "cane_tap")
 
 // Geoff's funny canes below!
 ABSTRACT_TYPE(/obj/item/cane/silly)
@@ -86,19 +100,27 @@ ABSTRACT_TYPE(/obj/item/cane/silly)
 	name = "clown cane"
 	icon_state = "clown"
 	desc = "My back feels funny."
-	can_tap = FALSE
+
+	do_tap(turf/T, mob/user)
+
+		// clown cane makes a honking noise
+		playsound(src, pick('sound/musical_instruments/Bikehorn_bonk1.ogg', 'sound/musical_instruments/Bikehorn_bonk2.ogg', 'sound/musical_instruments/Bikehorn_bonk3.ogg'), src.tap_volume, TRUE, pitch = 0.7)
+		user.visible_message(SPAN_ALERT("[user] taps \the [src] on \the [T]!"), group = "cane_tap")
 
 /obj/item/cane/silly/mime
 	name = "mime cane"
 	icon_state = "mime"
 	desc = "Suffering in silence."
-	can_tap = FALSE
+
+	do_tap(turf/T, mob/user)
+
+		// mime gets no sound because funny
+		user.visible_message(SPAN_ALERT("[user] taps \the [src] on \the [T]!"), group = "cane_tap")
 
 /obj/item/cane/silly/princess
 	name = "pink cane"
 	icon_state = "princess"
 	desc = "Sparkle! Glimmer! Back pain! Sparkle!"
-	can_tap = FALSE
 
 // Cargo exclusive below!
 
