@@ -3005,7 +3005,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 /obj/item/gun/kinetic/smg
 	name = "\improper Bellatrix submachine gun"
-	desc = "A semi-automatic, 9mm submachine gun, developed by Almagest Weapons Fabrication. Can be held with two hands to reduce recoil and improve accuracy."
+	desc = "A semi-automatic, 9mm submachine gun, developed by Almagest Weapons Fabrication."
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "mp52"
 	w_class = W_CLASS_SMALL
@@ -3021,6 +3021,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammobag_magazines = list(/obj/item/ammo/bullets/bullet_9mm/smg)
 	ammobag_restock_cost = 2
 	recoil_strength = 8
+	
+	HELP_MESSAGE_OVERRIDE("Can be held with two hands to reduce recoil and improve accuracy.")
 
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
