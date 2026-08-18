@@ -1353,9 +1353,9 @@ proc/outermost_movable(atom/movable/target)
 	var/lo = text2ascii(hex, 7)
 	return ( ((hi >= 65 ? hi-55 : hi-48)<<4) | (lo >= 65 ? lo-55 : lo-48) )
 
-/// This proc produces HSL values that appear more similar to their RGB inputs compared to the Byond version.
-/// No, I don't know why.
-/// Each value is a number between 0 to 1
+/// This proc produces HSL values that appear more similar to their RGB inputs compared to the Byond version. No, I don't know why.
+/// Source: https://changingminds.org/explanations/perception/visual/hsl
+/// Each output value is a number between 0 to 1
 /proc/rgb2hsl_accurate(var/r, var/g, var/b)
 	r /= 255
 	g /= 255
