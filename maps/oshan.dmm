@@ -45984,11 +45984,6 @@
 	},
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/cafeteria)
-"tuA" = (
-/obj/machinery/light/incandescent/blueish,
-/obj/machinery/fluid_canister,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/north)
 "tuK" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 10;
@@ -93112,7 +93107,7 @@ afv
 afv
 afq
 afq
-tuA
+atr
 akC
 aif
 amm
