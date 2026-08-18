@@ -1,5 +1,9 @@
 
 (t)tue aug 18 26
+(u)LorrMaster
+(p)27530
+(e)💅🧱|C-QoL, A-Materials
+(*)Silver bars can now be created in the Nano-Crucible
 (u)Astarthoc
 (p)27410
 (e)🆕🎨⚗🍝|C-Feature, C-Sprites, A-Chemistry, A-Catering
