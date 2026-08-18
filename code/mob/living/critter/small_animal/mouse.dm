@@ -294,6 +294,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/small_animal/mouse, proc/glorp)
 		src.name = src.real_name
 		abilityHolder.addAbility(/datum/targetable/critter/mentordisappear)
 		abilityHolder.addAbility(/datum/targetable/critter/mentortoggle)
+		abilityHolder.addAbility(/datum/targetable/critter/mentoreyebeams)
 
 	setup_overlays()
 		if(!src.colorkey_overlays)
@@ -428,7 +429,6 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/small_animal/mouse, proc/glorp)
 /datum/targetable/critter/mentortoggle
 	name = "Toggle Pick Up Requests"
 	desc = "Enable or disable player pick up requests."
-	icon_state = "mentordisappear"
 	icon_state = "mentortoggle"
 	needs_turf = FALSE //always castable
 	do_logs = FALSE
@@ -439,6 +439,35 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/small_animal/mouse, proc/glorp)
 		M.allow_pickup_requests = !M.allow_pickup_requests
 		boutput(M, SPAN_NOTICE("You have toggled pick up requests [M.allow_pickup_requests ? "on" : "off"]"))
 		logTheThing(LOG_ADMIN, src, "Toggled mentor mouse pick up requests [M.allow_pickup_requests ? "on" : "off"]")
+
+	incapacitationCheck()
+		return FALSE
+
+/datum/targetable/critter/mentoreyebeams
+	name = "PTL eyebeams"
+	desc = "Shoot a harmless PTL laser from your eyes."
+	icon_state = "mentoreyebeam"
+	targeted = FALSE
+	target_anything = FALSE
+	var/force_fart = FALSE
+
+	cast()
+		if (..())
+			return 1
+
+		var/obj/linked_laser/harmless_ptl/beam
+
+		if (src.force_fart || prob(5))
+			src.holder.owner.visible_message(SPAN_ALERT("<b>[src.holder.owner.name]</b> shoots a FART BEAM!!"))
+			beam = new /obj/linked_laser/harmless_ptl/fart(get_step(src.holder.owner, src.holder.owner.dir), src.holder.owner.dir, src.holder.owner)
+		else
+			holder.owner.visible_message(SPAN_ALERT("<b>[src.holder.owner.name]</b> shoots eye beams!"))
+			beam = new /obj/linked_laser/harmless_ptl(get_step(holder.owner, holder.owner.dir), holder.owner.dir, holder.owner)
+
+		beam.try_propagate()
+
+		SPAWN(1 SECOND)
+			qdel(beam)
 
 	incapacitationCheck()
 		return FALSE

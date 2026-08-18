@@ -200,3 +200,23 @@ ABSTRACT_TYPE(/obj/linked_laser)
 		//I know SPAWN(0) is cringe but do you really want to see the control logic I'd have to rig up to do this properly?
 		SPAWN(0)
 			src.extend()
+
+// for mentor mouse eye beams
+/obj/linked_laser/harmless_ptl
+	name = "harmless laser"
+	max_length = 20
+
+	extend()
+		sleep(0.5 DECISECONDS)
+		..()
+
+/obj/linked_laser/harmless_ptl/fart
+	name = "fart laser"
+
+	extend()
+		..()
+		playsound(src, 'sound/voice/farts/poo2.ogg', 60, FALSE, 3, channel=VOLUME_CHANNEL_EMOTE)
+
+
+
+
