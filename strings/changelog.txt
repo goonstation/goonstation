@@ -1,4 +1,9 @@
 
+(t)tue aug 18 26
+(u)LeahTheTech
+(p)27526
+(e)🎨🍝💡|C-Sprites, A-Catering, A-Station-Systems
+(*)Conveyor belts placed on the same tile as a table will now become smaller "sushi bar" style belts layered on top of the table.
 (t)mon aug 17 26
 (u)LorrMaster
 (p)27527
