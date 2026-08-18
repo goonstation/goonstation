@@ -3005,7 +3005,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 /obj/item/gun/kinetic/smg
 	name = "\improper Bellatrix submachine gun"
-	desc = "A semi-automatic, 9mm submachine gun, developed by Almagest Weapons Fabrication."
+	desc = "A semi-automatic, 9mm submachine gun, developed by Almagest Weapons Fabrication. Can be held with two hands to reduce recoil and improve accuracy."
 	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "mp52"
 	w_class = W_CLASS_SMALL
