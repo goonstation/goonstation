@@ -13779,7 +13779,6 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "bqt" = (
-/obj/machinery/light/incandescent/warm,
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -14241,6 +14240,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "bsU" = (
@@ -24273,6 +24273,7 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 9
 	},
+/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "cTx" = (
@@ -25068,6 +25069,9 @@
 	dir = 1;
 	icon_state = "line1"
 	},
+/obj/stool/chair/dining/wood{
+	dir = 4
+	},
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/cafeteria)
 "dwO" = (
@@ -25271,7 +25275,6 @@
 /turf/simulated/floor,
 /area/research_outpost/chamber)
 "dDS" = (
-/obj/machinery/light/incandescent/warm,
 /obj/stool/chair/comfy/blue{
 	dir = 4
 	},
@@ -32916,6 +32919,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"jCB" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/fitness)
 "jDH" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/shuttlebay{
@@ -43670,7 +43677,6 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "rNO" = (
@@ -46584,6 +46590,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
+/obj/table/wood/round/auto,
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/cafeteria)
 "tTJ" = (
@@ -48120,7 +48127,6 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "vnf" = (
@@ -49558,6 +49564,9 @@
 	},
 /obj/dartboard{
 	pixel_y = 28
+	},
+/obj/stool/chair/dining/wood{
+	dir = 8
 	},
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/cafeteria)
@@ -83503,7 +83512,7 @@ aak
 bot
 krr
 bqt
-hNj
+jCB
 hNj
 byG
 ars
