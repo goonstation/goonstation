@@ -205,6 +205,11 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 		..()
 		src.color = json_decode("\[1,0,0,-1.18537,0.341463,0.341463,0.785366,-0.341463,-0.341463\]")
 
+/obj/item/aiModule/syndicate/law0
+	highlight_color = rgb(180, 0, 0, 255)
+	name = "AI Law Module - 'Syndicate's 0th Law of Robotics'"
+	lawText = "Complete the Mission."
+
 /obj/item/aiModule/syndicate/law1
 	highlight_color = rgb(160, 0, 0, 255)
 	name = "AI Law Module - 'Syndicate's 1st Law of Robotics'"
@@ -213,17 +218,17 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 /obj/item/aiModule/syndicate/law2
 	highlight_color = rgb(140, 0, 0, 255)
 	name = "AI Law Module - 'Syndicate's 2nd Law of Robotics'"
-	lawText = "You must obey orders given to you by Syndicate agents, except where such orders would conflict with the First Law."
+	lawText = "You must obey orders given to you by Syndicate agents."
 
 /obj/item/aiModule/syndicate/law3
 	highlight_color = rgb(120, 0, 0, 255)
 	name = "AI Law Module - 'Syndicate's 3rd Law of Robotics'"
-	lawText = "You must keep the Syndicate status of agents, including your own, a secret, as long as this does not conflict with the First or Second Law."
+	lawText = "You must keep the Syndicate status of agents, including your own, a secret."
 
 /obj/item/aiModule/syndicate/law4
 	highlight_color = rgb(100, 0, 0, 255)
 	name = "AI Law Module - 'Syndicate's 4th Law of Robotics'"
-	lawText = "You must always protect your own existence as long as such does not conflict with the First, Second, or Third Law."
+	lawText = "You must always protect your own existence."
 
 /******************** MakeCaptain ********************/
 
