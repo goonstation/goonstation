@@ -2396,8 +2396,6 @@ proc/is_mob_trackable_by_AI(var/mob/M)
 		return FALSE
 	if(!seen_by_camera(M))
 		return FALSE
-	if (locate(/obj/shrub) in M.loc)
-		return FALSE
 	return TRUE
 
 proc/get_mobs_trackable_by_AI()
