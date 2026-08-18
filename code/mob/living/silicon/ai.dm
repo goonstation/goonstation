@@ -2511,7 +2511,10 @@ proc/get_mobs_trackable_by_AI()
 		src.show_text("Your mainframe's communications array is currently being jammed!", "red")
 		return
 
-	command_announcement(html_encode(message), "Station Announcement by [src.name] (AI)", 'sound/misc/announcement_1.ogg', alert_origin=ALERT_COMMAND)
+	var/origin = src.syndicate ? ALERT_SYNDICATE : ALERT_COMMAND
+	var/type = src.syndicate ? "Syndicate" : "Station"
+
+	command_announcement(html_encode(message), "[type] Announcement by [src.name] (AI)", 'sound/misc/announcement_1.ogg', alert_origin=origin)
 
 	last_announcement = world.time
 
