@@ -5,6 +5,7 @@ ABSTRACT_TYPE(/obj/item/cane)
 	desc = "A handy walking stick for people who can't walk very well anymore, or just like to beat people with sticks."
 	icon = 'icons/obj/canes.dmi'
 	icon_state = "metal"
+	item_state = "metal"
 	inhand_image_icon = 'icons/mob/inhand/hand_canes.dmi'
 	hitsound = 'sound/impact_sounds/bat_wood.ogg' // Bonk bonk bonk!
 	hit_type = DAMAGE_BLUNT
@@ -56,12 +57,19 @@ ABSTRACT_TYPE(/obj/item/cane)
 			return
 
 		if (!ON_COOLDOWN(src,"cane_tap",5 SECONDS))
-			src.do_tap(T, user)
+			src.item_state = "[src.item_state]_tap"
+			user.update_inhands()
+			// do visual trickery to raise and lower the cane
+			SPAWN(4)
+				src.do_tap(T, user)
+				src.item_state = initial(src.item_state)
+				user.update_inhands()
 
 // Wood crafted below!
 
 /obj/item/cane/wooden
 	icon_state = "wooden"
+	item_state = "wooden"
 	mat_changename = FALSE
 	mat_changeappearance = FALSE
 	default_material = "wood"
@@ -69,23 +77,29 @@ ABSTRACT_TYPE(/obj/item/cane)
 
 /obj/item/cane/wooden/wooden2
 	icon_state = "wooden2"
+	item_state = "wooden2"
 
 /obj/item/cane/wooden/wooden3
 	icon_state = "wooden3"
+	item_state = "wooden3"
 
 /obj/item/cane/wooden/black
 	icon_state = "black"
+	item_state = "black"
 
 // Medbay fabricated below!
 
 /obj/item/cane/metal
 	icon_state = "metal"
+	item_state = "metal"
 
 /obj/item/cane/metal/fourlegged
 	icon_state = "fourlegged"
+	item_state = "fourlegged"
 
 /obj/item/cane/metal/tennisball
 	icon_state = "tennisball"
+	item_state = "tennisball"
 	desc = "Perfect when you need a million balloons!"
 
 	do_tap(turf/T, mob/user)
@@ -99,6 +113,7 @@ ABSTRACT_TYPE(/obj/item/cane/silly)
 /obj/item/cane/silly/clown
 	name = "clown cane"
 	icon_state = "clown"
+	item_state = "clown"
 	desc = "My back feels funny."
 
 	do_tap(turf/T, mob/user)
@@ -110,6 +125,7 @@ ABSTRACT_TYPE(/obj/item/cane/silly)
 /obj/item/cane/silly/mime
 	name = "mime cane"
 	icon_state = "mime"
+	item_state = "mime"
 	desc = "Suffering in silence."
 
 	do_tap(turf/T, mob/user)
@@ -120,6 +136,7 @@ ABSTRACT_TYPE(/obj/item/cane/silly)
 /obj/item/cane/silly/princess
 	name = "pink cane"
 	icon_state = "princess"
+	item_state = "princess"
 	desc = "Sparkle! Glimmer! Back pain! Sparkle!"
 
 // Cargo exclusive below!
@@ -127,6 +144,7 @@ ABSTRACT_TYPE(/obj/item/cane/silly)
 /obj/item/cane/golden
 	name = "golden cane"
 	icon_state = "golden"
+	item_state = "golden"
 	mat_changename = FALSE
 	default_material = "gold"
 	desc = "Now your grandkids won't call you for sure."
