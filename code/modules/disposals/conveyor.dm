@@ -431,6 +431,19 @@ TYPEINFO(/obj/machinery/conveyor) {
 		walk(A, movedir, move_lag, (32 / move_lag) * world.tick_lag)
 		A.glide_size = (32 / move_lag) * world.tick_lag
 
+	//for thinner conveyors, slowly nudge the items towards the center
+	if (src.table && prob(30))
+		if (A.pixel_x >= 7)
+			A.pixel_x--
+		else if (A.pixel_x <= -7)
+			A.pixel_x++
+
+		if (A.pixel_y >= 7)
+			A.pixel_y--
+		else if (A.pixel_y <= -7)
+			A.pixel_y++
+
+
 /obj/machinery/conveyor/Crossed(atom/movable/AM)
 	..()
 	if(status & (BROKEN | NOPOWER))
