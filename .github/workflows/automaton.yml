@@ -37,7 +37,7 @@ jobs:
           ]
         compiletype: ["default"]
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - uses: ./.github/actions/setup-byond
 
@@ -112,7 +112,7 @@ jobs:
         compiletype: ["default"]
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           submodules: true
           token: "${{ secrets.ROBUDDYBOT_PAT }}"
@@ -167,7 +167,7 @@ jobs:
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       - uses: ./.github/actions/setup-byond
 

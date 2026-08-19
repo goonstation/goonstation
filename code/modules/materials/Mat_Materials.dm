@@ -117,7 +117,7 @@ ABSTRACT_TYPE(/datum/material)
 	New()
 		. = ..()
 		for(var/datum/material_property/propPath as anything in concrete_typesof(/datum/material_property))
-			if(initial(propPath.default_value) > 0)
+			if(initial(propPath.default_value) > 0 && initial(propPath.default_value) != INFINITY)
 				src.setProperty(initial(propPath.id), initial(propPath.default_value))
 		if(src.hsl_color)
 			addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/add_color_hsl())
@@ -2521,6 +2521,11 @@ ABSTRACT_TYPE(/datum/material/rubber)
 
 // Placed here because it needs to have /datum/material defined already to work
 /datum/materialProc/batiline_mix
+	desc_scan = "Radioactivity removed when combined with other materials\
+	<ul style='margin-top:0px;margin-bottom:0px;padding-left:20px'>\
+    	<li style='padding-left:0px'>Lost radioactivity converted into density and/or reflectivity</li>\
+    </ul>"
+
 	execute(var/datum/material/new_mat, var/datum/material/old_matA, var/datum/material/old_matB, var/bias)
 		var/rads = new_mat.getProperty("radioactive")
 		var/n_rads = new_mat.getProperty("n_radioactive")
@@ -2535,6 +2540,8 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		return
 
 /datum/materialProc/mycelium_mix
+	desc_scan = "Removes ingestion effects when combined with edible materials"
+
 	execute(var/datum/material/new_mat, var/datum/material/old_matA, var/datum/material/old_matB, var/bias)
 		if(old_matA.getEdible() && old_matB.getEdible())
 			new_mat.overwriteTrigger(TRIGGERS_ON_EAT, list())
