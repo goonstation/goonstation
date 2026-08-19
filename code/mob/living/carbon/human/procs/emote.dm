@@ -1449,8 +1449,14 @@
 									return
 
 						if (M)
-							message = "<b>[src]</b> slaps [M] across the face! Ouch!"
-							maptext_out = "<I>slaps [M] across the face!</I>"
+							if(ishuman(M) && istype(M.wear_mask?, /obj/item/clothing/mask/cigarette))
+								var/obj/item/clothing/mask/cigarette/cig = M.wear_mask
+								M.u_equip(cig)
+								message = "<b>[src]</b> slaps [cig] out of [M]'s mouth!"
+								maptext_out = "<I>slaps [M] across the face!</I>"
+							else
+								message = "<b>[src]</b> slaps [M] across the face! Ouch!"
+								maptext_out = "<I>slaps [M] across the face!</I>"
 						else
 							message = "<b>[src]</b> slaps [himself_or_herself(src)]!"
 							maptext_out = "<I>slaps [himself_or_herself(src)]!</I>"
