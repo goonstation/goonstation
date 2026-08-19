@@ -1,6 +1,9 @@
 /datum/map_correctness_check/area_contents/head_of_personal
 	check_name = "Head of Personal's Office Content Check"
-	target_areas = list(/area/station/crew_quarters/hop)
+	target_areas = list(
+		/area/station/crew_quarters/hop,
+		/area/station/bridge/customs
+	)
 
 	expected_contents = list(
 		// Generic head stuff
