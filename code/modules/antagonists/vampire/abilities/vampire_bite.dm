@@ -51,18 +51,20 @@
 	var/mob/living/carbon/human/M = src.owner
 	var/big_content = HH.reagents.reagent_list[HH.reagents.get_master_reagent()].name
 	if (M.traitHolder.hasTrait("training_bartender")) // Bartenders get to wine taste their prey (aquired taste)
-		var/undertones = "with "
+		var/undertones = ""
 		for (var/reagent_id as anything in HH.reagents.reagent_list)
 			var/datum/reagent/small_content = HH.reagents.reagent_list[reagent_id]
 			var/chemName = small_content.name
 			if (chemName == "mirabilis" || chemName == big_content)
 				continue
-			if (undertones != "with ") // Not on first run of for loop
+			if (undertones != "") // Not on first run of for loop
 				undertones += " [pick("and", "with")] "
+			else
+				undertones += "with "
 			undertones += "[pick("undertones", "aromas", "tinges", "notes")] of [chemName]"
-		if (undertones = "with ")
-			undertones = ""
-		boutput(M, SPAN_ITALIC("[HH] has hints of [big_content]... [capitalize(undertones)]...")) // Biggest chemical hinted first
+		if (undertones != "")
+			undertones += "..."
+		boutput(M, SPAN_ITALIC("[HH] has hints of [big_content]... [capitalize(undertones)]")) // Biggest chemical hinted first
 	else  // Non bartenders just get a normal taste!
 		var/taste = lowertext(HH.reagents.get_taste_string(M))
 		if (taste != "tastes pretty bland.") // Don't want people to think that blood w/o reagents is bad
