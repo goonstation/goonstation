@@ -105,7 +105,7 @@ jobs:
           tag: "latest"
           fileName: "DMCompiler_linux-x64.tar.gz"
           extract: true
-      - run: ./DMCompiler_linux-x64/DMCompiler --suppress-unimplemented goonstation.dme --version=516.1666
+      - run: ./DMCompiler_linux-x64/DMCompiler --suppress-unimplemented goonstation.dme --version=516.1687
 
   compile:
     name: Compile
