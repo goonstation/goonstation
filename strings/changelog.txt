@@ -1,4 +1,10 @@
 
+(t)wed aug 19 26
+(u)Gomp and Astarthoc
+(p)27339
+(e)🆕🎨⚗🍝|C-Feature, C-Sprites, A-Chemistry, A-Catering
+(*)Added Milk Frother, a sophisticated machine that allows bartenders to froth milk.
+(*)Added macchiato, decorate your espresso with frothed milk to get a bold and creamy coffee.
 (t)tue aug 18 26
 (u)LorrMaster
 (p)27479
