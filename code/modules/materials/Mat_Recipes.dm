@@ -110,6 +110,21 @@
 		if(one && two) return TRUE
 		else return FALSE
 
+/datum/material_recipe/silver
+	name = "silver"
+	result_id = "silver"
+
+	validate(var/datum/material/M)
+		var/one = 0
+		var/two = 0
+
+		for(var/datum/material/CM in M.getParentMaterials())
+			if(CM.getID() == "cobryl") one = 1
+			if(CM.getID() == "char") two = 1
+
+		if(one && two) return 1
+		else return 0
+
 /datum/material_recipe/electrum
 	name = "electrum"
 	result_id = "electrum"
@@ -120,7 +135,7 @@
 
 		for(var/datum/material/CM in M.getParentMaterials())
 			if(CM.getID() == "gold") one = 1
-			if(CM.getID() == "cobryl") two = 1
+			if(CM.getID() == "cobryl" || CM.getID() == "silver") two = 1
 
 		if(one && two) return 1
 		else return 0

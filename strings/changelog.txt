@@ -1,5 +1,51 @@
 
+(t)wed aug 19 26
+(u)LeahTheTech
+(+)Mineral accumulators now work considerably faster and have a toggle for collecting junk in the same way as the ore scoop.
+(u)JORJ949
+(p)27544
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Salvager power sink cost increased from 1k > 5k. Purchase limit decreased from 4 > 3
+(u)Gomp and Astarthoc
+(p)27339
+(e)🆕🎨⚗🍝|C-Feature, C-Sprites, A-Chemistry, A-Catering
+(*)Added Milk Frother, a sophisticated machine that allows bartenders to froth milk.
+(*)Added macchiato, decorate your espresso with frothed milk to get a bold and creamy coffee.
+(t)tue aug 18 26
+(u)LorrMaster
+(p)27479
+(e)💅🧱💡📨|C-QoL, A-Materials, A-Station-Systems, A-Logistics
+(*)Material Analyzers now display material trigger effects and how material properties will affect the scanned item.
+(u)LorrMaster
+(p)27530
+(e)💅🧱|C-QoL, A-Materials
+(*)Silver bars can now be created in the Nano-Crucible
+(u)Astarthoc
+(p)27410
+(e)🆕🎨⚗🍝|C-Feature, C-Sprites, A-Chemistry, A-Catering
+(*)Added dulce de leche, a delicious dessert recipe that makes use of sweet condensed milk.
+(u)CelineTheYeen
+(p)27444
+(e)🗺|A-Mapping
+(*)Oshan's cafeteria has been remapped. As part of this the bartender has been kicked out of the kitchen.
+(u)LeahTheTech
+(p)27526
+(e)🎨🍝💡|C-Sprites, A-Catering, A-Station-Systems
+(*)Conveyor belts placed on the same tile as a table will now become smaller "sushi bar" style belts layered on top of the table.
+(t)mon aug 17 26
+(u)LorrMaster
+(p)27527
+(e)🆕📨|C-Feature, A-Logistics
+(*)Quartermasters now have a chance to be able to buy a fossil from Gragg.
+(u)TekoTheTeapot
+(p)27354
+(e)🎨|C-Sprites
+(+)Adds a new NT specific emergency box for NT roles and updates their loadouts to reflect the new inventory.
 (t)sun aug 16 26
+(u)Kubius
+(p)27226
+(e)🪲🌠|C-Bug, A-Events
+(*)Interdictors can intercept EMP anomalies from EMP storms.
 (u)JORJ949
 (p)27483
 (e)🎨🧛|C-Sprites, A-Gamemodes
