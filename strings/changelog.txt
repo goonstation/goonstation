@@ -1,5 +1,7 @@
 
 (t)wed aug 19 26
+(u)LeahTheTech
+(+)Mineral accumulators now work considerably faster and have a toggle for collecting junk in the same way as the ore scoop.
 (u)JORJ949
 (p)27544
 (e)⚖🧛|C-Balance, A-Gamemodes
