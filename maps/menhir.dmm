@@ -10595,6 +10595,7 @@
 /area/station/turret_protected/incursion)
 "fDz" = (
 /obj/machinery/firealarm/directional/north,
+/obj/storage/crate/freezer/organs,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "fDC" = (
@@ -31196,7 +31197,9 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "pZk" = (
-/obj/storage/crate/freezer/organs,
+/obj/machinery/traymachine/morgue{
+	dir = 1
+	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "pZz" = (
