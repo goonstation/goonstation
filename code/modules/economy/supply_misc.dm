@@ -132,6 +132,9 @@ TYPEINFO(/obj/strip_door)
 			M.changeStatus("slowed", 2 SECONDS, density * 2)
 		src.flap_material.triggerOnEntered(src, A)
 
+	on_material_scan()
+		return "Human slowdown effect increases with flap density"
+
 	// Ensure that we're no longer slowed when leaving flaps
 	Uncrossed(atom/A)
 		..()
