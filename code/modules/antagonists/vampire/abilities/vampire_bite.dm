@@ -49,7 +49,7 @@
 /// Gives the vampire a taste of whatever's in the victim's bloodstream w/o transferring any chemicals or side-effects.
 /datum/abilityHolder/vampire/proc/do_taste_bloodstream(var/mob/living/carbon/human/HH)
 	var/mob/living/carbon/human/M = src.owner
-	var/big_content = HH.reagents[HH.reagents.get_master_reagent()].name
+	var/big_content = HH.reagents.reagent_list[HH.reagents.get_master_reagent()].name
 	if (M.traitHolder.hasTrait("training_bartender")) // Bartenders get to wine taste their prey (aquired taste)
 		var/undertones = "with "
 		for (var/reagent_id as anything in HH.reagents.reagent_list)
