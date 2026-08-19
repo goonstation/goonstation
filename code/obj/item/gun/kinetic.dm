@@ -688,7 +688,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 /obj/item/gun/kinetic/silenced_22
 	name = "\improper Orion silenced pistol"
-	desc = "A small pistol with an integrated flash and noise suppressor, bearing the emblem of Sceptre Tactical Laboratories. Uses .22 rounds."
+	desc = "A small pistol with an integrated flash and noise suppressor, bearing the emblem of Spectre Tactical Laboratories. Uses .22 rounds."
 	icon_state = "silenced"
 	w_class = W_CLASS_SMALL
 	silenced = 1
@@ -1401,7 +1401,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon_state = "secure"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "sec-case"
-	desc = "A large briefcase with a digital locking system. This one has a small hole in the side of it and the emblem of Sceptre Tactical Laboratories. Odd."
+	desc = "A large briefcase with a digital locking system. This one has a small hole in the side of it and the emblem of Spectre Tactical Laboratories. Odd."
 	force = MELEE_DMG_SMG
 	ammo_cats = list(AMMO_9MM_ALL)
 	max_ammo_capacity = 30
@@ -3021,7 +3021,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammobag_magazines = list(/obj/item/ammo/bullets/bullet_9mm/smg)
 	ammobag_restock_cost = 2
 	recoil_strength = 8
-	
+
 	HELP_MESSAGE_OVERRIDE("Can be held with two hands to reduce recoil and improve accuracy.")
 
 	New()
