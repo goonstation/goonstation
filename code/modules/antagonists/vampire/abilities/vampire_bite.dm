@@ -120,7 +120,7 @@
 						M.stuttering += rand(1,3)
 						M.changeBodyTemp(rand(5,20) KELVIN)
 
-				else if (prob(45)) // Every so often, have a taste! (Overrided by holy water presence, so they see the message)
+				else if (prob(20)) // Every so often, have a taste! (Overrided by holy water presence, so they see the message)
 					if (M.traitHolder.hasTrait("training_bartender")) // Bartenders get to wine taste their prey (aquired taste)
 						var/undertones = "with "
 						for (var/reagent_id as anything in HH.reagents.reagent_list)
@@ -138,7 +138,6 @@
 							boutput(M, SPAN_ITALIC(capitalize(("[HH] [taste]"))))
 						else if (HH.traitHolder.hasTrait("training_clown")) // Clowns taste funny. Honk.
 							boutput(M, SPAN_ITALIC(capitalize("[HH] tastes kind of funny.")))
-
 				//HH.reagents.reaction(M, INGEST, blood_contents_drank) // Was told it would be too unfair to actually have chemical transfer, but keeping it commented out here incase that changes
 				//HH.reagents.trans_to(M, blood_contents_drank)
 
