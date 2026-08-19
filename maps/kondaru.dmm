@@ -11566,6 +11566,9 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/window_blinds/cog2/right{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/pharmacy)
 "aZw" = (
@@ -11587,7 +11590,8 @@
 "aZx" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/machinery/firealarm/directional/north{
-	pixel_x = 6
+	pixel_x = 9;
+	pixel_y = 30
 	},
 /obj/machinery/glass_recycler{
 	pixel_y = 4
@@ -11595,6 +11599,7 @@
 /obj/machinery/light_switch/directional/north{
 	pixel_x = -8
 	},
+/obj/blind_switch/directional/north,
 /turf/simulated/floor/blueblack,
 /area/station/medical/medbay/pharmacy)
 "aZy" = (
@@ -15977,6 +15982,9 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/window_blinds/cog2/middle{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/pharmacy)
 "bxp" = (
@@ -15985,6 +15993,9 @@
 	icon_state = "0-2"
 	},
 /obj/cable,
+/obj/window_blinds/cog2/middle{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/pharmacy)
 "bxr" = (
@@ -16693,6 +16704,9 @@
 /obj/cable,
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/window_blinds/cog2/middle{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/pharmacy)
@@ -25780,6 +25794,9 @@
 "cqb" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
+/obj/window_blinds/cog2/right{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/pharmacy)
 "cqf" = (
@@ -25793,6 +25810,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/window_blinds/cog2/middle,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/pharmacy)
 "cqj" = (
@@ -25800,6 +25818,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/window_blinds/cog2/right,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/pharmacy)
 "cqk" = (
@@ -30249,6 +30268,14 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"fiy" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable,
+/obj/window_blinds/cog2/left{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/pharmacy)
 "fiz" = (
 /obj/table/auto,
 /obj/machinery/computer3/generic/personal,
@@ -41707,6 +41734,7 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
+/obj/window_blinds/cog2/left,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/pharmacy)
 "mSD" = (
@@ -46675,6 +46703,9 @@
 /obj/item/kitchen/food_box/lollipop{
 	pixel_y = 5
 	},
+/obj/window_blinds/cog2/left{
+	dir = 8
+	},
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/pharmacy)
 "qxl" = (
@@ -49112,6 +49143,16 @@
 	},
 /turf/simulated/floor/white/checker,
 /area/station/crew_quarters/pool)
+"shM" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/pharmacy)
 "shR" = (
 /obj/decal/tile_edge/line/green{
 	dir = 8;
@@ -97728,11 +97769,11 @@ aTC
 jPs
 kTp
 aTC
-bxo
+shM
 bxp
 bAG
 bxp
-cqb
+fiy
 bfa
 bgj
 bhz
