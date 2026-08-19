@@ -14,7 +14,6 @@
 		CONTENTS_EQ(/obj/decal/poster/wallsign/framed_award/rddiploma, 1),
 
 		// RD stuff
-		CONTENTS_EQ(/obj/item/storage/briefcase/toxins, 1),
 		CONTENTS_EQ(/obj/item/remote/porter/port_a_sci, 1),
 		CONTENTS_EQ(/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake, 1),
 		CONTENTS_EQ(/obj/machinery/computer3/terminal/zeta, 1),
