@@ -1456,14 +1456,11 @@
 									dork.drop_item(cig)
 									cig.set_loc(dork.loc)
 									cig.dropped(dork)
-									message = "<b>[src]</b> slaps [cig] out of [M]'s mouth!"
-									maptext_out = "<I>slaps [M] across the face!</I>"
-								else
-									message = "<b>[src]</b> slaps [M] across the face! Ouch!"
-									maptext_out = "<I>slaps [M] across the face!</I>"
-							else
-								message = "<b>[src]</b> slaps [M] across the face! Ouch!"
-								maptext_out = "<I>slaps [M] across the face!</I>"
+									cig.throw_at(get_edge_cheap(dork.loc, turn(get_dir(src, dork), src.hand == LEFT_HAND ? -90 : 90)), 3, 2)
+									SPAWN(0) //SPAWN so this only outputs after the initial emote text
+									dork.visible_message(SPAN_ALERT("[cig] is knocked out of [dork]'s mouth!"))
+							message = "<b>[src]</b> slaps [M] across the face! Ouch!"
+							maptext_out = "<I>slaps [M] across the face!</I>"
 						else
 							message = "<b>[src]</b> slaps [himself_or_herself(src)]!"
 							maptext_out = "<I>slaps [himself_or_herself(src)]!</I>"
