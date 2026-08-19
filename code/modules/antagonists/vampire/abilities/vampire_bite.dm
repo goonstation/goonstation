@@ -46,11 +46,57 @@
 
 	return TRUE
 
+/// Gives the vampire a taste of whatever's in the victim's bloodstream w/o transferring any chemicals or side-effects.
+/datum/abilityHolder/vampire/proc/do_taste_bloodstream(var/mob/living/carbon/human/HH)
+	var/mob/living/carbon/human/M = src.owner
+	var/big_content = HH.reagents.get_master_reagent()
+	if (M.traitHolder.hasTrait("training_bartender")) // Bartenders get to wine taste their prey (aquired taste)
+		var/undertones = "with "
+		for (var/reagent_id as anything in HH.reagents.reagent_list)
+			var/datum/reagent/small_content = HH.reagents.reagent_list[reagent_id]
+			var/chemName = small_content.name
+			if (chemName == "mirabilis" || chemName == big_content)
+				continue
+			if (undertones != "with ") // Not on first run of for loop
+				undertones += " [pick("and", "with")] "
+			undertones += "[pick("undertones", "aromas", "tinges", "notes")] of [chemName]"
+		boutput(M, SPAN_ITALIC("[HH] has hints of [big_content]... [capitalize(undertones)]...")) // Biggest chemical hinted first
+	else  // Non bartenders just get a normal taste!
+		var/taste = lowertext(HH.reagents.get_taste_string(M))
+		if (taste != "tastes pretty bland.") // Don't want people to think that blood w/o reagents is bad
+			boutput(M, SPAN_ITALIC(capitalize(("[HH] [taste]"))))
+		else if (HH.traitHolder.hasTrait("training_clown")) // Clowns taste funny. Honk.
+			boutput(M, SPAN_ITALIC(capitalize("[HH] tastes kind of funny.")))
+
+/// Checks the reagents of a victim for holy water and has a chance of giving them a taste.
+/datum/abilityHolder/vampire/proc/do_check_bloodstream(var/mob/living/carbon/human/HH, var/mult = 1)
+	var/mob/living/carbon/human/M = src.owner
+	var/big_content = HH.reagents.get_master_reagent()
+	if (big_content != null) // There are reagents
+		if (HH.reagents.has_reagent("water_holy"))
+			if (prob(30))
+				M.visible_message(SPAN_ALERT("<b>[M]</b>'s fangs sizzle!"), SPAN_ALERT("There's holy water in their bloodstream! Spicy!"))
+			if (prob(50))
+				M.visible_message(SPAN_ALERT("<b>[M]<b> coughs out a cloud of smoke!"))
+				var/datum/effects/system/bad_smoke_spread/cough_smoke = new /datum/effects/system/bad_smoke_spread/(M)
+				cough_smoke.set_up(4, 0, M, null, "#a4a2a2")
+				cough_smoke.start()
+				M.emote(pick("choke", "gasp", "cough"))
+				M.take_oxygen_deprivation(rand(0,10))
+			else
+				M.emote(pick("cough", "spit", "cry"))
+				M.stuttering += rand(1,3)
+				M.changeBodyTemp(rand(5,20) KELVIN)
+		else if (prob(20))
+			do_taste_bloodstream(HH)
+		//HH.reagents.reaction(M, INGEST, mult)
+		//HH.reagents.trans_to(M, mult) // Was told it would be too unfair to actually have chemical transfer, \
+		but keeping it commented out here incase that changes.
+
 /datum/abilityHolder/vampire/proc/do_bite(var/mob/living/carbon/human/HH, var/mult = 1)
 	.= 1
 	var/mob/living/carbon/human/M = src.owner
 	var/datum/abilityHolder/vampire/H = src
-
 
 	if (HH.blood_volume <= 0 && isdead(HH))
 		boutput(M, SPAN_ALERT("This human is completely void of blood... Wow!"))
@@ -102,45 +148,7 @@
 			else
 				HH.blood_volume -= 20 * mult
 
-			// Check reagents
-			var/big_content = HH.reagents.get_master_reagent()
-			if (big_content != null) // There are reagents
-				if (HH.reagents.has_reagent("water_holy"))
-					if (prob(30))
-						M.visible_message(SPAN_ALERT("<b>[M]</b>'s fangs sizzle!"), SPAN_ALERT("There's holy water in their bloodstream! Spicy!"))
-					if (prob(50))
-						M.visible_message(SPAN_ALERT("<b>[M]<b> coughs out a cloud of smoke!"))
-						var/datum/effects/system/bad_smoke_spread/cough_smoke = new /datum/effects/system/bad_smoke_spread/(M)
-						cough_smoke.set_up(4, 0, M, null, "#a4a2a2")
-						cough_smoke.start()
-						M.emote(pick("choke", "gasp", "cough"))
-						M.take_oxygen_deprivation(rand(0,10))
-					else
-						M.emote(pick("cough", "spit", "cry"))
-						M.stuttering += rand(1,3)
-						M.changeBodyTemp(rand(5,20) KELVIN)
-
-				else if (prob(20)) // Every so often, have a taste! (Overrided by holy water presence, so they see the message)
-					if (M.traitHolder.hasTrait("training_bartender")) // Bartenders get to wine taste their prey (aquired taste)
-						var/undertones = "with "
-						for (var/reagent_id as anything in HH.reagents.reagent_list)
-							var/datum/reagent/small_content = HH.reagents.reagent_list[reagent_id]
-							var/chemName = small_content.name
-							if (chemName == "mirabilis" || chemName == big_content)
-								continue
-							if (undertones != "with ") // Not on first run of for loop
-								undertones += " [pick("and", "with")] "
-							undertones += "[pick("undertones", "aromas", "tinges", "notes")] of [chemName]"
-						boutput(M, SPAN_ITALIC("[HH] has hints of [big_content]... [capitalize(undertones)]...")) // Biggest chemical hinted first, then others
-					else // Non bartenders just get a normal taste!
-						var/taste = lowertext(HH.reagents.get_taste_string(M))
-						if (taste != "tastes pretty bland.") // Don't want people to think that blood w/o reagents is bad
-							boutput(M, SPAN_ITALIC(capitalize(("[HH] [taste]"))))
-						else if (HH.traitHolder.hasTrait("training_clown")) // Clowns taste funny. Honk.
-							boutput(M, SPAN_ITALIC(capitalize("[HH] tastes kind of funny.")))
-				//HH.reagents.reaction(M, INGEST, blood_contents_drank)
-				//HH.reagents.trans_to(M, blood_contents_drank) // Was told it would be too unfair to actually have \
-				chemical transfer, but keeping it commented out here incase that changes.
+			src.do_check_bloodstream(HH, mult)
 
 			// Vampire TEG also uses this ability, prevent runtimes
 			if (ismob(src.owner))
