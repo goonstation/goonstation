@@ -11,6 +11,8 @@ var/global/menhir_candidates_last_built = 0
 #define EVFILTER_ONTURF 2
 //By default, anyone in Precursor areas counts as "present" as well. This filter prevents that.
 #define EVFILTER_NO_MOON 4
+//Does our candidate suffer no direct ill effects from abrupt relocation? (currently excludes thralls)
+#define EVFILTER_YOINK_SAFE 8
 
 ///Grabs (and updates, if necessary) the list of people who are present for on-station events. Provide a filter to narrow the returned pool further.
 /proc/get_menhir_event_candidates(var/filter = 0)
@@ -41,7 +43,10 @@ var/global/menhir_candidates_last_built = 0
 				if(istype(mobarea,/area/precursor))
 					. -= M
 					continue
-
+			if(filter & EVFILTER_YOINK_SAFE)
+				if(isvampiricthrall(M))
+					. -= M
+					continue
 	return
 
 #define MENHIR_STANDARD_ALERT_VOLUME 40
@@ -298,7 +303,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 
 	event_effect()
 		//First see who we can yoink
-		var/list/eligible_examinees = get_menhir_event_candidates(EVFILTER_HUMAN | EVFILTER_ONTURF | EVFILTER_NO_MOON)
+		var/list/eligible_examinees = get_menhir_event_candidates(EVFILTER_HUMAN | EVFILTER_ONTURF | EVFILTER_NO_MOON | EVFILTER_YOINK_SAFE)
 		var/candidate_num = length(eligible_examinees)
 
 		if (candidate_num < src.required_candidates)
