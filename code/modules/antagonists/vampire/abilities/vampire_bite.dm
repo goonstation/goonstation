@@ -49,7 +49,7 @@
 /// Gives the vampire a taste of whatever's in the victim's bloodstream w/o transferring any chemicals or side-effects.
 /datum/abilityHolder/vampire/proc/do_taste_bloodstream(var/mob/living/carbon/human/HH)
 	var/mob/living/carbon/human/M = src.owner
-	var/big_content = HH.reagents.get_master_reagent()
+	var/big_content = HH.reagents[HH.reagents.get_master_reagent()].name
 	if (M.traitHolder.hasTrait("training_bartender")) // Bartenders get to wine taste their prey (aquired taste)
 		var/undertones = "with "
 		for (var/reagent_id as anything in HH.reagents.reagent_list)
@@ -71,8 +71,7 @@
 /// Checks the reagents of a victim for holy water and has a chance of giving them a taste.
 /datum/abilityHolder/vampire/proc/do_check_bloodstream(var/mob/living/carbon/human/HH, var/mult = 1)
 	var/mob/living/carbon/human/M = src.owner
-	var/big_content = HH.reagents.get_master_reagent()
-	if (big_content != null) // There are reagents
+	if (HH.reagents.total_volume != 0) // There are reagents
 		if (HH.reagents.has_reagent("water_holy"))
 			if (prob(30))
 				M.visible_message(SPAN_ALERT("<b>[M]</b>'s fangs sizzle!"), SPAN_ALERT("There's holy water in their bloodstream! Spicy!"))
