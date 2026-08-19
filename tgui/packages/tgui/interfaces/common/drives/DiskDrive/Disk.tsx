@@ -9,7 +9,7 @@
 import { PropsWithChildren, useContext } from 'react';
 import { Box, Button } from 'tgui-core/components';
 
-import { DiskDriveContext } from './context';
+import { DriveContext } from '../context';
 
 interface DiskProps {
   color: string;
@@ -18,7 +18,7 @@ interface DiskProps {
 
 export function Disk(props: PropsWithChildren<DiskProps>) {
   const { children, color, tooltip } = props;
-  const { onDiskClick: onClick } = useContext(DiskDriveContext);
+  const { onContentClick: onClick } = useContext(DriveContext);
   const style = onClick ? { cursor: 'grab' } : undefined;
   return (
     <Button

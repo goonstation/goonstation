@@ -348,6 +348,7 @@ ABSTRACT_TYPE(/datum/omnimode)
 		mode_id = OMNITOOL::MODE_SCREWDRIVER
 		context_icon = "screw"
 		item_type = /obj/item/screwdriver
+		item_special_type = /datum/item_special/jab
 	wirecutters
 		mode_name = "wirecutters"
 		mode_id = OMNITOOL::MODE_WIRECUTTER

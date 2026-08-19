@@ -101,14 +101,14 @@ All other chickens in this file are non-secret. Please be respectful.
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "claw"
 		HH.limb_name = "claws"
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/mouth/small	// if not null, the special limb to use when attack_handing
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
+		HH.icon = 'icons/mob/critter_hands.dmi'	// the icon of the hand UI background
 		HH.icon_state = "mouth"					// the icon state of the hand UI background
 		HH.name = "mouth"						// designation of the hand - purely for show
 		HH.limb_name = "beak"					// name for the dummy holder
