@@ -11,6 +11,7 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 	desc = "A foldable sign for writing annoucements or advertisements."
 	icon = 'icons/obj/furniture/swingsign.dmi'
 	icon_state = "blank"
+	material_amt = MATERIAL::AMOUNT_SHEET * 2
 	throwforce = 10
 	density = TRUE
 	custom_suicide = TRUE
