@@ -11,7 +11,7 @@ var/global/menhir_candidates_last_built = 0
 #define EVFILTER_ONTURF 2
 //By default, anyone in Precursor areas counts as "present" as well. This filter prevents that.
 #define EVFILTER_NO_MOON 4
-//Does our candidate suffer no direct ill effects from abrupt relocation? (currently excludes thralls)
+//Does our candidate suffer no direct ill effects from abrupt relocation? (currently excludes vamp/thralls due to proximity demand)
 #define EVFILTER_YOINK_SAFE 8
 
 ///Grabs (and updates, if necessary) the list of people who are present for on-station events. Provide a filter to narrow the returned pool further.
@@ -44,7 +44,7 @@ var/global/menhir_candidates_last_built = 0
 					. -= M
 					continue
 			if(filter & EVFILTER_YOINK_SAFE)
-				if(isvampiricthrall(M))
+				if(isvampiricthrall(M) || isvampire(M))
 					. -= M
 					continue
 	return
