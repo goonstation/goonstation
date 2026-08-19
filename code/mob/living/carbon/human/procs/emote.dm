@@ -1449,11 +1449,18 @@
 									return
 
 						if (M)
-							if(ishuman(M) && istype(M.wear_mask?, /obj/item/clothing/mask/cigarette))
-								var/obj/item/clothing/mask/cigarette/cig = M.wear_mask
-								M.u_equip(cig)
-								message = "<b>[src]</b> slaps [cig] out of [M]'s mouth!"
-								maptext_out = "<I>slaps [M] across the face!</I>"
+							if(ishuman(M))
+								var/mob/living/carbon/human/dork = M
+								if(istype(dork.wear_mask, /obj/item/clothing/mask/cigarette))
+									var/obj/item/clothing/mask/cigarette/cig = dork.wear_mask
+									dork.drop_item(cig)
+									cig.set_loc(dork.loc)
+									cig.dropped(dork)
+									message = "<b>[src]</b> slaps [cig] out of [M]'s mouth!"
+									maptext_out = "<I>slaps [M] across the face!</I>"
+								else
+									message = "<b>[src]</b> slaps [M] across the face! Ouch!"
+									maptext_out = "<I>slaps [M] across the face!</I>"
 							else
 								message = "<b>[src]</b> slaps [M] across the face! Ouch!"
 								maptext_out = "<I>slaps [M] across the face!</I>"
