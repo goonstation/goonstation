@@ -8,9 +8,10 @@
 
 	/// used for generating the laser width iconstate, higher = wider
 	var/width_num = 4
+	/// maximum beam width that can be used from the dmi
+	var/const/max_width = 4
 	/// used to prevent corners from ceasing being corners when updating width
 	var/corner_facing = null
-	var/is_corner = FALSE
 
 /obj/linked_laser/ptl/New(loc, dir, atom/initial_emitter, power_proc)
 	..()
@@ -24,8 +25,8 @@
 	// should result in 1 at 1e7, 4 at 1e11
 	var/exp = floor(log(10, max(1,src.proportional_power())))
 
-	src.width_num = clamp(exp - 7, 1, 4)
-	if (!src.is_corner)
+	src.width_num = clamp(exp - 6, 1, src.max_width)
+	if (src.corner_facing == null)
 		src.icon_state = src.get_icon_state()
 	else
 		src.icon_state = src.get_corner_icon_state(corner_facing)
@@ -69,7 +70,6 @@
 
 /obj/linked_laser/ptl/get_corner_icon_state(facing)
 	src.corner_facing = facing
-	src.is_corner = TRUE
 	return "ptl_beam_corner[facing][src.width_num]"
 
 /obj/linked_laser/ptl/Crossed(atom/movable/AM)
