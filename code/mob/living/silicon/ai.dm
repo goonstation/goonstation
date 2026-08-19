@@ -1855,6 +1855,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 		if (src.deployed_to_eyecam)
 			src.eyecam.ensure_speech_tree().migrate_speech_tree(src, src, FALSE)
 			src.eyecam.ensure_listen_tree().migrate_listen_tree(src, src, FALSE)
+			src.eyecam.delStatus("ai_intercom_override")
 
 		else if (src.deployed_shell)
 			src.deployed_shell.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_EARS_AI)
