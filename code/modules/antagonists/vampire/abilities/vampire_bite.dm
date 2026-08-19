@@ -60,6 +60,8 @@
 			if (undertones != "with ") // Not on first run of for loop
 				undertones += " [pick("and", "with")] "
 			undertones += "[pick("undertones", "aromas", "tinges", "notes")] of [chemName]"
+		if (undertones = "with ")
+			undertones = ""
 		boutput(M, SPAN_ITALIC("[HH] has hints of [big_content]... [capitalize(undertones)]...")) // Biggest chemical hinted first
 	else  // Non bartenders just get a normal taste!
 		var/taste = lowertext(HH.reagents.get_taste_string(M))
