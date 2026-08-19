@@ -15,7 +15,7 @@
 	var/accessory = FALSE
 	var/face = null
 	block_vision = 1
-	material_amt = 0.2
+	material_amt = MATERIAL::AMOUNT_SHEET * 2
 
 	New()
 		..()

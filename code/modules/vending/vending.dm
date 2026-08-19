@@ -2113,7 +2113,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "standard-frame"
 	density = 1
-	material_amt = 0.3
+	material_amt = MATERIAL::AMOUNT_SHEET * 3
 	var/wrenched = FALSE
 	var/glassed = FALSE
 	var/boardinstalled = FALSE

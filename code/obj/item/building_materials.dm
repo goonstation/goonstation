@@ -55,7 +55,7 @@ MATERIAL
 	stamina_damage = 42
 	stamina_cost = 23
 	stamina_crit_chance = 10
-	material_amt = 0.1
+	material_amt = MATERIAL::AMOUNT_SHEET
 	var/datum/material/reinforcement = null
 	rand_pos = 1
 	inventory_counter_enabled = 1
@@ -611,7 +611,7 @@ MATERIAL
 	stamina_crit_chance = 30
 	rand_pos = 1
 	inventory_counter_enabled = 1
-	material_amt = 0.05
+	material_amt = MATERIAL::AMOUNT_ROD
 	uses_default_material_appearance = TRUE
 	can_arcplate = FALSE
 
@@ -987,7 +987,7 @@ MATERIAL
 	stamina_crit_chance = 15
 	tooltip_flags = REBUILD_DIST
 	inventory_counter_enabled = 1
-	material_amt = 0.025
+	material_amt = MATERIAL::AMOUNT_TILE
 	can_arcplate = FALSE
 
 	New(make_amount = 0)

@@ -196,7 +196,7 @@ TYPEINFO(/obj/item/swingsignfolded)
 	stamina_damage = 45
 	stamina_cost = 21
 	stamina_crit_chance = 10
-	material_amt = 0.1
+	material_amt = MATERIAL::AMOUNT_SHEET * 2
 	hitsound = 'sound/impact_sounds/folding_chair.ogg'
 
 	/// Stored message for the deployed object

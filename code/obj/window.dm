@@ -37,7 +37,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	gas_impermeable = TRUE
 	anchored = ANCHORED
-	material_amt = 0.1
+	material_amt = MATERIAL::AMOUNT_SHEET
 	HELP_MESSAGE_OVERRIDE(null)
 
 	the_tuff_stuff
@@ -123,9 +123,9 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	set_dir(new_dir)
 		. = ..()
 		if(new_dir in cardinal)
-			src.material_amt = 0.1
+			src.material_amt = MATERIAL::AMOUNT_SHEET
 		else
-			src.material_amt = 0.2
+			src.material_amt = MATERIAL::AMOUNT_SHEET * 2
 
 	onMaterialChanged()
 		..()
