@@ -1,5 +1,9 @@
 
 (t)wed aug 19 26
+(u)JORJ949
+(p)27499
+(e)🎨💅🤖|C-Sprites, C-QoL, A-Silicons
+(*)AI intercom overrides no longer have a time limit, instead only ending when the AI's eye leave the intercom's range of 5 tiles and each AI can only override one intercom at a time. AI overriden intercoms also show a little AI face on them while overridden.
 (u)LeahTheTech
 (+)Mineral accumulators now work considerably faster and have a toggle for collecting junk in the same way as the ore scoop.
 (u)JORJ949
