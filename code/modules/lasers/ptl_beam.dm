@@ -6,6 +6,12 @@
 	event_handler_flags = USE_FLUID_ENTER
 	var/obj/machinery/power/pt_laser/source = null
 
+	/// used for generating the laser width iconstate, higher = wider
+	var/width_num = 4
+	/// used to prevent corners from ceasing being corners when updating width
+	var/corner_facing = null
+	var/is_corner = FALSE
+
 /obj/linked_laser/ptl/New(loc, dir, atom/initial_emitter, power_proc)
 	..()
 	src.add_simple_light("laser_beam", list(0, 0.8 * 255, 0.1 * 255, 255))
@@ -14,7 +20,15 @@
 	return src.source.laser_power()
 
 /obj/linked_laser/ptl/proc/update_source_power()
-	src.alpha = clamp(((log(10, max(1,src.proportional_power())) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
+
+	// should result in 1 at 1e7, 4 at 1e11
+	var/exp = floor(log(10, max(1,src.proportional_power())))
+
+	src.width_num = clamp(exp - 7, 1, 4)
+	if (!src.is_corner)
+		src.icon_state = src.get_icon_state()
+	else
+		src.icon_state = src.get_corner_icon_state(corner_facing)
 
 /obj/linked_laser/ptl/try_propagate()
 	. = ..()
@@ -49,6 +63,14 @@
 	if (wonky)
 		new_laser.icon_state = src.get_corner_icon_state(wonky_facing)
 	return new_laser
+
+/obj/linked_laser/ptl/get_icon_state()
+	return "ptl_beam[src.width_num]"
+
+/obj/linked_laser/ptl/get_corner_icon_state(facing)
+	src.corner_facing = facing
+	src.is_corner = TRUE
+	return "ptl_beam_corner[facing][src.width_num]"
 
 /obj/linked_laser/ptl/Crossed(atom/movable/AM)
 	..()
