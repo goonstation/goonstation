@@ -204,6 +204,7 @@
 #include "namespaces\dwaine\syscalls.dm"
 #include "namespaces\ci.dm"
 #include "namespaces\helper_color.dm"
+#include "namespaces\icon.dm"
 #include "namespaces\omnitool.dm"
 #include "namespaces\pay.dm"
 #include "namespaces\powersink.dm"

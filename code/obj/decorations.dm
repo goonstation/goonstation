@@ -81,6 +81,7 @@
 					for (var/i in 0 to 2)
 						var/obj/item/material_piece/organic/wood/log = new(locate(our_turf.x + i, our_turf.y, our_turf.z))
 						log.Turn(90)
+						log.is_rotated = TRUE
 					qdel(src)
 					return
 				src.falling = TRUE

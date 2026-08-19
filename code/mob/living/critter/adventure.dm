@@ -342,7 +342,7 @@ TYPEINFO(/mob/living/critter/robotic/repairbot)
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/arcflash
 		HH.name = "Electric Intruder Countermeasure"
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handzap"
 		HH.limb_name = "Electric Intruder Countermeasure"
 		HH.can_hold_items = FALSE
@@ -487,7 +487,7 @@ TYPEINFO(/mob/living/critter/robotic/repairbot)
 		HH.limb_name = "left arm"
 
 		HH = hands[2]
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.limb = new /datum/limb/sword
 		HH.name = "right hand"
 		HH.suffix = "-R"

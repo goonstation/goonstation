@@ -2,8 +2,8 @@ var/list/minimap_z_levels = list(Z_LEVEL_STATION, Z_LEVEL_DEBRIS, Z_LEVEL_MINING
 
 
 /**
- *	The minimap renderer is responsible for generating partial renders of area minimaps for each minimap type flag and generating
- *	full renders of radar minimaps, alongside updating radar minimaps and dynamic area overlays. In the case of querying for area
+ *	The minimap renderer is responsible for generating partial renders of area minimaps for each minimap type flag, full area-map
+ *	renders, and full renders of radar minimaps, alongside updating radar minimaps and dynamic area overlays. In the case of querying for area
  *	minimaps, a minimap type bitflag may be passed to the renderer, which will then return a full render of the map comprised of
  *	the aforementioned partial renders. In the case of querying for radar minimaps, a minimap `atom/movable` will be returned,
  *	containing both the radar map icon and the radar map markers.
@@ -17,6 +17,18 @@ var/list/minimap_z_levels = list(Z_LEVEL_STATION, Z_LEVEL_DEBRIS, Z_LEVEL_MINING
 	var/list/icon/radar_minimaps_by_z_level
 	/// A list of radar minimap objects. Indexed by z-level.
 	var/list/atom/movable/radar_minimap_objects_by_z_level
+	/// Current colours for dynamic area groups.
+	var/list/dynamic_area_colours
+	/// Lazily generated full area-map icons, indexed by z-level.
+	var/list/icon/area_map_renders_by_z_level
+	/// Whether a full area-map icon is currently being generated for each z-level.
+	var/list/area_map_renders_in_progress_by_z_level
+	/// Cached focal bounds for full area maps, indexed by z-level.
+	var/list/area_map_focal_bounds_by_z_level
+	/// Whether focal bounds are currently being calculated for each z-level.
+	var/list/area_map_focal_bounds_in_progress_by_z_level
+	/// Generated fallback colours for areas without a dedicated minimap colour.
+	var/list/area_colours
 	/// A list of minimap render modifiers, sorted by priority.
 	var/list/datum/minimap_render_modifier/minimap_modifiers
 	/// Does this minimap render space, if so - what color? Null if it renders space as black.
@@ -29,6 +41,12 @@ var/list/minimap_z_levels = list(Z_LEVEL_STATION, Z_LEVEL_DEBRIS, Z_LEVEL_MINING
 	src.dynamic_area_overlays = list()
 	src.radar_minimaps_by_z_level = list()
 	src.radar_minimap_objects_by_z_level = list()
+	src.dynamic_area_colours = list()
+	src.area_map_renders_by_z_level = list()
+	src.area_map_renders_in_progress_by_z_level = list()
+	src.area_map_focal_bounds_by_z_level = list()
+	src.area_map_focal_bounds_in_progress_by_z_level = list()
+	src.area_colours = list()
 
 	src.minimap_modifiers = list()
 	for (var/T in concrete_typesof(/datum/minimap_render_modifier))
@@ -184,13 +202,126 @@ var/list/minimap_z_levels = list(Z_LEVEL_STATION, Z_LEVEL_DEBRIS, Z_LEVEL_MINING
 		return src.render_space_color || "#000000"
 
 	var/area/A = T.loc
-	var/list/turf_hsl = hex_to_hsl_list(A.station_map_colour)
+	return src.apply_minimap_modifiers(T, A.station_map_colour)
+
+/// Apply the shared turf colour modifiers used by all minimap renderers.
+/datum/minimap_renderer/proc/apply_minimap_modifiers(turf/T, colour)
+	var/list/turf_hsl = hex_to_hsl_list(colour)
 	for (var/datum/minimap_render_modifier/modifier as anything in src.minimap_modifiers)
 		if (modifier.is_compatible(T))
 			turf_hsl = modifier.process(turf_hsl)
 			break
 
 	return hsl2rgb(turf_hsl[1], turf_hsl[2], turf_hsl[3])
+
+/// Return a deterministic fallback colour for an area without a dedicated minimap colour.
+/datum/minimap_renderer/proc/area_colour(area/A)
+	if (!A)
+		return
+
+	var/area_type = "[A.type]"
+	if (src.area_colours[area_type])
+		return src.area_colours[area_type]
+
+	var/colour_seed = hex2num(copytext(md5(area_type), 1, 7))
+	var/colour = hsl2rgb(colour_seed % 360, 45, 60)
+	src.area_colours[area_type] = colour
+	return colour
+
+/datum/minimap_renderer/proc/valid_area_map_z_level(z_level)
+	return isnum(z_level) && z_level == round(z_level) && z_level >= 1 && z_level <= world.maxz
+
+/// Find and cache the non-space focal bounds for a full area map Z-level.
+/datum/minimap_renderer/proc/get_area_map_focal_bounds(z_level)
+	if (!src.valid_area_map_z_level(z_level))
+		return
+
+	var/z_level_key = "[z_level]"
+	if (src.area_map_focal_bounds_by_z_level[z_level_key])
+		return src.area_map_focal_bounds_by_z_level[z_level_key]
+
+	if (src.area_map_focal_bounds_in_progress_by_z_level[z_level_key])
+		UNTIL(!src.area_map_focal_bounds_in_progress_by_z_level[z_level_key] || src.area_map_focal_bounds_by_z_level[z_level_key], 0)
+		return src.area_map_focal_bounds_by_z_level[z_level_key]
+
+	src.area_map_focal_bounds_in_progress_by_z_level[z_level_key] = TRUE
+
+	var/max_x = 1
+	var/min_x = world.maxx
+	var/max_y = 1
+	var/min_y = world.maxy
+	var/found_valid_turf = FALSE
+	for (var/turf/T as anything in block(locate(1, 1, z_level), locate(world.maxx, world.maxy, z_level)))
+		LAGCHECK(LAG_LOW)
+		if (!T?.loc || istype(T, /turf/space))
+			continue
+
+		found_valid_turf = TRUE
+		max_x = max(max_x, T.x)
+		min_x = min(min_x, T.x)
+		max_y = max(max_y, T.y)
+		min_y = min(min_y, T.y)
+
+	if (!found_valid_turf)
+		max_x = world.maxx
+		min_x = 1
+		max_y = world.maxy
+		min_y = 1
+
+	src.area_map_focal_bounds_by_z_level[z_level_key] = list(
+		"max_x" = max_x,
+		"min_x" = min_x,
+		"max_y" = max_y,
+		"min_y" = min_y,
+	)
+	src.area_map_focal_bounds_in_progress_by_z_level[z_level_key] = FALSE
+	return src.area_map_focal_bounds_by_z_level[z_level_key]
+
+/// Generate and cache a complete full-area map icon for one Z-level.
+/datum/minimap_renderer/proc/get_area_map_icon(z_level)
+	if (!src.valid_area_map_z_level(z_level))
+		return
+
+	var/z_level_key = "[z_level]"
+	if (src.area_map_renders_by_z_level[z_level_key])
+		return src.area_map_renders_by_z_level[z_level_key]
+
+	if (src.area_map_renders_in_progress_by_z_level[z_level_key])
+		UNTIL(!src.area_map_renders_in_progress_by_z_level[z_level_key] || src.area_map_renders_by_z_level[z_level_key], 0)
+		return src.area_map_renders_by_z_level[z_level_key]
+
+	src.area_map_renders_in_progress_by_z_level[z_level_key] = TRUE
+
+	var/icon/minimap_render = icon('icons/obj/minimap/minimap.dmi', "blank")
+	minimap_render.Scale(world.maxx, world.maxy)
+	minimap_render.SwapColor(rgb(0, 0, 0), rgb(0, 0, 0, 0))
+
+	for (var/turf/T as anything in block(locate(1, 1, z_level), locate(world.maxx, world.maxy, z_level)))
+		LAGCHECK(LAG_LOW)
+		if (!T?.loc || istype(T, /turf/space))
+			continue
+
+		var/area/A = T.loc
+		var/colour = src.dynamic_area_colours["[A.dynamic_map_colour_group]"]
+		if (!colour)
+			colour = A.station_map_colour
+		if (!istext(colour) || !length(colour) || colour == MAPC_DEFAULT)
+			colour = istype(A, /area/station) ? MAPC_DEFAULT : src.area_colour(A)
+		colour = src.apply_minimap_modifiers(T, colour)
+		if (colour)
+			minimap_render.DrawBox(colour, T.x, T.y)
+
+	src.area_map_renders_by_z_level[z_level_key] = minimap_render
+	src.area_map_renders_in_progress_by_z_level[z_level_key] = FALSE
+	return minimap_render
+
+/// Invalidate the cached full-area map render for one Z-level.
+/datum/minimap_renderer/proc/refresh_area_map(z_level)
+	if (!src.valid_area_map_z_level(z_level))
+		return
+
+	src.area_map_renders_by_z_level["[z_level]"] = FALSE
+	src.area_map_focal_bounds_by_z_level["[z_level]"] = FALSE
 
 /// Generates a list of `/atom/movable` objects for each z-level for a specified minimap type.
 /datum/minimap_renderer/proc/generate_minimap_icons(minimap_type)
@@ -224,19 +355,26 @@ var/list/minimap_z_levels = list(Z_LEVEL_STATION, Z_LEVEL_DEBRIS, Z_LEVEL_MINING
 
 /// Recolours a specified dynamic area group to a given colour.
 /datum/minimap_renderer/proc/recolor_area(area_group, colour)
+	src.dynamic_area_colours["[area_group]"] = colour
+
 	for (var/z_level in src.dynamic_area_overlays)
-		for (var/map_type in src.dynamic_area_overlays)
-			if (!src.dynamic_area_overlays[z_level][map_type]["[area_group]"])
+		for (var/map_type in src.dynamic_area_overlays["[z_level]"])
+			if (!src.dynamic_area_overlays["[z_level]"][map_type]["[area_group]"])
 				continue
 
-			var/atom/movable/area_render = src.dynamic_area_overlays[z_level][map_type]["[area_group]"]
+			var/atom/movable/area_render = src.dynamic_area_overlays["[z_level]"][map_type]["[area_group]"]
 			var/icon/area_render_icon = icon(area_render.icon)
 
 			area_render_icon.SetIntensity(0)
 			area_render_icon.SwapColor(rgb(0, 0, 0, 255), colour)
 			area_render.icon = icon(area_render_icon)
 
+	// Invalidate full-area renders and let each area-map subtype refresh itself.
+	src.area_map_renders_by_z_level = list()
+	src.area_map_focal_bounds_by_z_level = list()
+	for_by_tcl(area_map, /datum/minimap/area_map)
+		area_map.refresh_render()
+
 /// Compare the priority of two minimap render modifiers.
 /proc/cmp_minimap_modifiers(datum/minimap_render_modifier/a, datum/minimap_render_modifier/b)
 	return b.priority - a.priority
-

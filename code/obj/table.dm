@@ -64,6 +64,9 @@ TYPEINFO_NEW(/obj/table)
 		for (var/obj/O in loc)
 			if (isitem(O))
 				bonus += 4
+			if (istype(O, /obj/machinery/conveyor))
+				var/obj/machinery/conveyor/conveyor = O
+				conveyor.tableify(src)
 			if (istype(O, /obj/table) && O != src)
 				return
 			if (istype(O, /obj/rack))
@@ -202,7 +205,16 @@ TYPEINFO_NEW(/obj/table)
 			return
 		for(var/atom/movable/AM as anything in src.storage?.get_contents())
 			AM.set_loc(OL)
-		if (!(locate(/obj/table) in OL) && !(locate(/obj/rack) in OL))
+
+		var/other_table = FALSE
+		for (var/obj/O in OL)
+			if (istype(O, /obj/table) || istype(O, /obj/rack))
+				other_table = TRUE
+			else if (istype(O, /obj/machinery/conveyor))
+				var/obj/machinery/conveyor/conveyor = O
+				conveyor.untableify()
+
+		if (!other_table)
 			var/area/Ar = OL.loc
 			for (var/obj/item/I in OL)
 				Ar.sims_score -= 4
