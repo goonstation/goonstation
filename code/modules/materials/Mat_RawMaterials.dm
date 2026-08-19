@@ -16,25 +16,25 @@
 	New()
 		..()
 		setup_material()
-		if (material)
-			name = "[mat_changename ? material.getName() : ""] [initial(src.name)]"
 
 	setMaterial(datum/material/mat1, appearance, setname, mutable, use_descriptors)
 		var/icon/mat_icon = mat1.getIconFile()
-		if(is_valid_icon_state("[initial(src.icon_state)]_1$$[mat1.getID()]", mat_icon))
+		var/potential_icon_state = "[initial(src.icon_state)]_1$$[mat1.getID()]"
+		if(is_valid_icon_state(potential_icon_state, mat_icon))
 			src.icon = mat_icon
-			appearance = FALSE
+			src.icon_state = potential_icon_state
 		else
-			src.icon = 'icons/obj/items/materials/materials.dmi'
-			appearance = TRUE
+			src.icon = initial(src.icon)
 		. = ..()
-		UpdateIcon()
+		UpdateStackAppearance()
 
 	proc/setup_material()
 		.=0
 
 	update_icon()
-		if(!src.material_applied_appearance)
+		if(src.icon_stack_value == 0)
+			src.icon_state = initial(src.icon_state)
+		else if(!src.material_applied_appearance)
 			src.icon_state = "[initial(src.icon_state)]_[src.icon_stack_value]$$[src.material.getID()]"
 		else
 			src.icon_state = "[initial(src.icon_state)]_[src.icon_stack_value]"
@@ -42,17 +42,19 @@
 	_update_stack_appearance()
 		if(!material)
 			return
+		var/matname = (src.material && mat_changename) ? material.getName() : ""
 		if(src.amount > 1)
-			name = "[amount] [mat_changename ? material.getName() : ""] [initial(src.name)]s"
+			name = "[amount] [matname] [initial(src.name)]s"
 		else
-			name = "[mat_changename ? material.getName() : ""] [initial(src.name)]"
+			name = "[matname] [initial(src.name)]"
+
 		var/icon_stack_new = src.get_stack_value()
-		if(icon_stack_new && icon_stack_new != src.icon_stack_value) // Only update icon_state if it needs updating (0 to ignore)
+		if(icon_stack_new && src.icon_stack_value != 0 && icon_stack_new != src.icon_stack_value)
 			src.icon_stack_value = icon_stack_new
 			UpdateIcon()
 
 	proc/get_stack_value() //! Determines at what stack sizes the icon_state changes
-		// example: src.icon_state = "ore[x]_$$gold"
+		// example: src.icon_state = "bar_[x]$$gold"
 		switch(src.amount)
 			if(1)
 				return 1
@@ -218,9 +220,6 @@
 		desc = "A weird sphere of some kind."
 		icon_stack_value = 0
 
-		update_icon()
-			src.icon_state = initial(src.icon_state)
-
 	cloth
 		// fabric
 		icon_state = "fabric"
@@ -229,9 +228,6 @@
 		default_material = "cotton"
 		icon_stack_value = 0
 		var/in_use = 0
-
-		update_icon()
-			src.icon_state = initial(src.icon_state)
 
 		attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 			if (user.a_intent == INTENT_GRAB)
@@ -300,14 +296,12 @@
 	icon_state = "bar"
 
 /obj/item/material_piece/iridiumalloy
-	icon = 'icons/obj/items/materials/iridium.dmi'
-	icon_state = "scrap"
 	name = "plate"
 	desc = "A piece of some sort of iridium alloy plating."
+	icon_state = "scrap"
 	default_material = "iridiumalloy"
-	uses_default_material_appearance = TRUE
-	amount = 5
 	stack_type = /obj/item/material_piece/iridiumalloy
+	amount = 5
 
 /obj/item/material_piece/iridiumalloy/small
 	amount = 1
@@ -338,23 +332,18 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 		reagents.add_reagent("rubber", 10)
 		return ..()
 
-	update_icon()
-		src.icon_state = initial(src.icon_state)
-
 /obj/item/material_piece/rubber/plastic
 	name = "plastic sheet"
 	icon_state = "latex"
 	desc = "A sheet of plastic."
 	default_material = "plastic"
-
-	update_icon()
-		src.icon_state = initial(src.icon_state)
+	icon_stack_value = 0
 
 /obj/item/material_piece/organic/wood
 	name = "wooden log"
 	desc = "Years of genetic engineering mean timber always comes in mostly perfectly shaped cylindrical logs."
 	icon = 'icons/obj/items/materials/wood.dmi'
-	icon_state = "log1"
+	icon_state = "log"
 	default_material = "wood"
 	max_stack = 10
 	uses_default_material_appearance = FALSE
@@ -371,38 +360,38 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 		else
 			..()
 
-	_update_stack_appearance()
+	get_stack_value()
 		switch(src.amount)
 			if(1)
-				src.icon_state = "log1"
+				return 1
 			if(2 to 4)
-				src.icon_state = "log2"
+				return 2
 			if(5 to 7)
-				src.icon_state = "log3"
+				return 3
 			if(8 to 9)
-				src.icon_state = "log4"
+				return 4
 			else
-				src.icon_state = "log5"
+				return 5
 
 /obj/item/material_piece/organic/wood/thin
-	icon_state = "log_thin1"
+	icon_state = "log_thin"
 
-	_update_stack_appearance()
+	get_stack_value()
 		switch(src.amount)
 			if(1)
-				src.icon_state = "log_thin1"
+				return 1
 			if(2)
-				src.icon_state = "log_thin2"
+				return 2
 			if(3 to 4)
-				src.icon_state = "log_thin3"
+				return 3
 			if(5 to 6)
-				src.icon_state = "log_thin4"
+				return 4
 			if(7 to 8)
-				src.icon_state = "log_thin5"
+				return 5
 			if(9)
-				src.icon_state = "log_thin6"
+				return 6
 			else
-				src.icon_state = "log_thin7"
+				return 7
 
 /obj/item/material_piece/organic/bamboo
 	name = "stalk"
@@ -535,6 +524,7 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 /obj/item/material_piece/coral
 	name = "chunk"
 	desc = "A piece of coral. Nice!"
+	icon = 'icons/obj/items/materials/coral.dmi'
 	icon_state = "coral"
 	default_material = "coral"
 	uses_default_material_appearance = FALSE
@@ -555,6 +545,7 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 /obj/item/material_piece/plasmacoral
 	name = "chunk"
 	desc = "A strange piece of coral seemingly infused with plasmastone."
+	icon = 'icons/obj/items/materials/coral.dmi'
 	icon_state = "coral"
 	default_material = "plasmacoral"
 	uses_default_material_appearance = TRUE
@@ -576,7 +567,6 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 	name = "scrap"
 	icon_state = "scrap"
 	desc = "Plutonium metal, commonly used as a power source for engines and machinery alike."
-	icon = 'icons/obj/items/materials/plutonium.dmi'
 	default_material = "plutonium"
 
 /obj/item/material_piece/foolsfoolsgold

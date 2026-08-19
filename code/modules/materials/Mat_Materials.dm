@@ -1036,6 +1036,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	name = "iridium alloy"
 	canMix = 0 //Can not be easily modified.
 	desc = "Some sort of advanced iridium alloy."
+	icon_file = 'icons/obj/items/materials/iridium.dmi'
 	color = list(0.45, 0.40, 0.65, 0.00,\
 				0.45, 0.40, 0.65, 0.00,\
 				0.35, 0.35, 0.65, 0.00,\
