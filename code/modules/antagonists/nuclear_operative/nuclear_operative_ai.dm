@@ -61,6 +61,8 @@
 		//Add whatever the owner's currently in aswell as the mainframe
 		image_group.add_mind_mob_overlay(src.owner, get_antag_icon_image())
 		image_group.add_mind(src.owner)
+		get_image_group(ROLE_TRAITOR).add_mind(src.owner)
+		get_image_group(ROLE_REVOLUTIONARY).add_mind(src.owner)
 
 	proc/add_antag_image_to(var/mob/target)
 
@@ -71,6 +73,8 @@
 		image_group.remove_image(src.mainframe_antag_image)
 		qdel(src.mainframe_antag_image)
 		image_group.remove_mind(src.owner)
+		get_image_group(ROLE_TRAITOR).remove_mind(src.owner)
+		get_image_group(ROLE_REVOLUTIONARY).remove_mind(src.owner)
 
 	assign_objectives()
 		ticker.mode.bestow_objective(src.owner, /datum/objective/specialist/nuclear, src)
