@@ -189,6 +189,8 @@ TYPEINFO(/mob/living/intangible/aieye)
 				src.client.images -= T.aiImage
 
 			for (var/turf/T as anything in (add_block - remove_block))
+				if(!T?.aiImage)
+					continue
 				src.client.images |= T.aiImage
 #endif
 
