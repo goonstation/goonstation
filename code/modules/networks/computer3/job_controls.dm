@@ -128,7 +128,6 @@ var/datum/job/priority_job = null
 					src.print_main_menu()
 					return
 				else if(request_count)
-					request_count = text2num(command)
 					if (request_count > (requested_job.request_limit - requested_job.limit))
 						src.print_text("Error: cannot request that many slots")
 						src.print_text("Enter the number of job openings to request (max [requested_job.request_limit - requested_job.limit]), or type X to cancel")
