@@ -149,6 +149,8 @@ TYPEINFO(/mob/living/intangible/aieye)
 		if (!src.loc || !src.client)
 			return
 		for (var/turf/T as anything in (block(src.loc.x - v_width, src.loc.y - v_height, src.loc.z, src.loc.x + v_width, src.loc.y + v_height, src.loc.z) + src.get_viewport_turfs()))
+			if(!T?.aiImage)
+				continue
 			src.client.images |= T.aiImage
 #endif
 

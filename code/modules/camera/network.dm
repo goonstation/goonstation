@@ -39,6 +39,10 @@
 	#ifdef SKIP_CAMERA_COVERAGE
 	return TRUE
 	#else
+	if(get_z(atom) != Z_LEVEL_STATION && (isnull(usr) || isnukeopai(usr)))
+		if(istype(get_area(atom), /area/braeriach))
+			return TRUE
+		return FALSE
 	var/turf/T = atom
 	if(!istype(T))
 		T = get_turf(atom)
