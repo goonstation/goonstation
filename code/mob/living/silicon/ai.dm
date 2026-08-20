@@ -2380,19 +2380,19 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 
 //just use this proc to make click-track checking easier
 proc/is_mob_trackable_by_AI(var/mob/M)
+	if(get_z(M) != Z_LEVEL_STATION)
+		return FALSE
+	if (M == usr)
+		return FALSE
 	if (istype(M, /mob/new_player))
 		return FALSE
 	if (HAS_ATOM_PROPERTY(M, PROP_MOB_AI_UNTRACKABLE))
-		return FALSE
-	if(get_z(M) != Z_LEVEL_STATION)
 		return FALSE
 	if(!istype(M.loc, /turf)) //in a closet or something, AI can't see him anyways
 		return FALSE
 	if(M.invisibility) //cloaked
 		return FALSE
 	if (ishuman(M) && istype(get_id_card(M:wear_id), /obj/item/card/id/syndicate))
-		return FALSE
-	if (M == usr)
 		return FALSE
 	if(!seen_by_camera(M))
 		return FALSE
