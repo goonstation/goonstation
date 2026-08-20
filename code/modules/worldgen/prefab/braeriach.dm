@@ -4,6 +4,66 @@
 	icon_state = "nuclearbomb_large"
 
 
+// These layer under catwalks. Silly but pretty.
+/obj/cable/braeriach
+#ifndef IN_MAP_EDITOR
+	plane = PLANE_FLOOR
+	layer = CATWALK_LAYER - 0.001
+#endif
+
+
+/turf/simulated/floor/plating/with_grille
+	icon = 'icons/turf/floors.dmi'
+#ifdef IN_MAP_EDITOR
+	icon_state = "plating_grille"
+#else
+	icon_state = "plating_jen"
+#endif
+
+/turf/simulated/floor/plating/with_grille/New()
+	. = ..()
+
+	if (!(locate(/obj/mesh/catwalk/base) in src))
+		new /obj/mesh/catwalk/base(src)
+
+
+/obj/mesh/catwalk/base
+	name = "floor mesh"
+	icon = 'icons/obj/catwalk_base.dmi'
+	icon_state_prefix = "S"
+	icon_state = "S-15"
+
+/obj/mesh/catwalk/base/update_icon()
+	if (src.ruined)
+		return
+
+	var/typeinfo/obj/mesh/typeinfo = src.get_typeinfo()
+	var/connectdir = 0
+	for (var/dir in global.cardinal)
+		var/turf/T = get_step(src, dir)
+		for (var/i in 1 to length(typeinfo.connects_to_obj))
+			var/atom/movable/AM = locate(typeinfo.connects_to_obj[i]) in T
+			if (AM?.anchored)
+				connectdir |= dir
+				break
+
+	var/ordir = null
+	for (var/i = 1 to 4)
+		ordir = global.ordinal[i]
+		if ((ordir & connectdir) != ordir)
+			continue
+		var/turf/OT = get_step(src, ordir)
+		for (var/j in 1 to length(typeinfo.connects_to_obj))
+			var/atom/movable/AM = locate(typeinfo.connects_to_obj[j]) in OT
+			if (AM?.anchored)
+				connectdir |= 8 << i
+				break
+
+	src.icon_state = "[src.icon_state_prefix]-[connectdir]"
+
+
+
+
 
 //------------ Areas ------------//
 ABSTRACT_TYPE(/area/braeriach)
