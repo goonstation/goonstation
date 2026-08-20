@@ -53,12 +53,18 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 
 		qdel(src)
 
+	setMaterial(datum/material/mat1, appearance, setname, mutable, use_descriptors)
+		. = ..()
+		if(heldfly && (heldfly.material != mat1))
+			heldfly.setMaterial(mat1, appearance, FALSE, mutable, TRUE)
+
 TYPEINFO(/obj/item/old_grenade/sawfly/firsttime)
 	manufactured_type = /obj/item/old_grenade/sawfly/firsttime //For subtype, prevents remote clutter if you're making an army
 /obj/item/old_grenade/sawfly/firsttime //super important- traitor uplinks and sawfly pouches use this specific version
 	New()
 
 		heldfly = new /mob/living/critter/robotic/sawfly(src.loc)
+		heldfly.forensic_holder = src.forensic_holder
 		heldfly.ourgrenade = src
 		heldfly.set_loc(src)
 		..()

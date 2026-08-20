@@ -973,8 +973,10 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 
 			SPAWN(rand(4, 30))
 				M.emote("scream")
-			M.mind.add_antagonist(ROLE_ZOMBIE, "Yes", "Yes", ANTAGONIST_SOURCE_MUTANT, FALSE)
-			M.show_antag_popup(ROLE_ZOMBIE)
+			SPAWN(0) // Wait for antag role to be added to their list during setup
+				if(!M.mind.get_antagonist(ROLE_ZOMBIE)) //Mutantrace adds antag role, antag role adds mutantrace, avoid cyclical application from both.
+					M.mind.add_antagonist(ROLE_ZOMBIE, TRUE, TRUE, ANTAGONIST_SOURCE_MUTANT, FALSE)
+					M.show_antag_popup(ROLE_ZOMBIE)
 
 	proc/make_bubs(var/mob/living/carbon/human/M)
 		M.bioHolder.AddEffect("strong", do_stability = FALSE, scannable = FALSE, innate = TRUE)
@@ -1006,6 +1008,8 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 			src.mob.can_bleed = TRUE
 			src.mob.remove_stam_mod_max("zombie")
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STAMINA_REGEN_BONUS, "zombie")
+			if(findtext(src.mob.real_name, "Zombie") && src.mob.bioHolder?.ownerName)
+				src.mob.real_name = src.mob.bioHolder.ownerName
 		..()
 
 	proc/add_ability(var/mob/living/carbon/human/H)
@@ -1934,7 +1938,7 @@ TYPEINFO(/datum/mutantrace/cat/bingus)
 	dna_mutagen_banned = FALSE
 	genetics_removable = FALSE
 	aquaphobic = TRUE
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | HAS_NO_HEAD | USES_STATIC_ICON)
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_EYES | HEAD_HAS_OWN_COLORS | BUILT_FROM_PIECES | WEARS_UNDERPANTS)
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cat/bingus/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cat/bingus/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/bingus/right
@@ -2029,6 +2033,8 @@ TYPEINFO(/datum/mutantrace/frog) /// abstract parent for traits shared across am
 
 	onLife(var/mult = 1)
 		src.dermal_absorbtion(5)
+		if (isdead(src.mob))
+			return
 		if(src.mob.sims.getValue("Thirst") < 25.0) // dehydration effect
 			if (prob(10))
 				src.mob.visible_message(SPAN_EMOTE(pick("[mob] wrinkles up conspicuously.", "[mob] quietly wheezes.", "[mob]'s third eyelids stick to [his_or_her(src.mob)] eyes for a moment.")))

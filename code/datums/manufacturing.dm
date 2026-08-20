@@ -523,9 +523,37 @@
 	time = 8 SECONDS
 	category = MANUFACTURER::CATEGORY::TOOL
 
+/datum/manufacture/dowsing_rod
+	name = "Dowsing Rod"
+	item_outputs = list(/obj/item/heat_dowsing)
+	create = 1
+	time = 8 SECONDS
+	category = MANUFACTURER::CATEGORY::TOOL
+
+/datum/manufacture/capture_unit
+	name = "Unbuilt Vent Capture Unit"
+	item_outputs = list(/obj/item/vent_capture_unbuilt)
+	create = 1
+	time = 12 SECONDS
+	category = MANUFACTURER::CATEGORY::MACHINERY
+
+/datum/manufacture/powered_shovel
+	name = "Power Shovel"
+	item_outputs = list(/obj/item/mining_tool/powered/shovel)
+	create = 1
+	time = 10 SECONDS
+	category = MANUFACTURER::CATEGORY::TOOL
+
 /datum/manufacture/accessgun
 	name = "Access Lite"
 	item_outputs = list(/obj/item/device/accessgun/lite)
+	create = 1
+	time = 7 SECONDS
+	category = MANUFACTURER::CATEGORY::TOOL
+
+/datum/manufacture/pinpointer_apc
+	name = "APC pinpointer"
+	item_outputs = list(/obj/item/pinpointer/category/apcs)
 	create = 1
 	time = 7 SECONDS
 	category = MANUFACTURER::CATEGORY::TOOL
@@ -1567,71 +1595,31 @@
 	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty)
 	create = 1
 	time = 3 SECONDS
-	category = MANUFACTURER::CATEGORY::TOOL
+	category = MANUFACTURER::CATEGORY::MEDICINE
 
 /datum/manufacture/empty_autoinjector/orange
-	name = "Empty Auto-Injector"
-	item_requirements = list("metal" = 1)
 	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/orange)
-	create = 1
-	time = 3 SECONDS
-	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/empty_autoinjector/red
-	name = "Empty Auto-Injector"
-	item_requirements = list("metal" = 1)
 	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/red)
-	create = 1
-	time = 3 SECONDS
-	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/empty_autoinjector/blue
-	name = "Empty Auto-Injector"
-	item_requirements = list("metal" = 1)
 	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/blue)
-	create = 1
-	time = 3 SECONDS
-	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/empty_autoinjector/green
-	name = "Empty Auto-Injector"
-	item_requirements = list("metal" = 1)
 	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/green)
-	create = 1
-	time = 3 SECONDS
-	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/empty_autoinjector/yellow
-	name = "Empty Auto-Injector"
-	item_requirements = list("metal" = 1)
 	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/yellow)
-	create = 1
-	time = 3 SECONDS
-	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/empty_autoinjector/purple
-	name = "Empty Auto-Injector"
-	item_requirements = list("metal" = 1)
 	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/purple)
-	create = 1
-	time = 3 SECONDS
-	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/empty_autoinjector/black
-	name = "Empty Auto-Injector"
-	item_requirements = list("metal" = 1)
 	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/black)
-	create = 1
-	time = 3 SECONDS
-	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/empty_autoinjector/white
-	name = "Empty Auto-Injector"
-	item_requirements = list("metal" = 1)
 	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/white)
-	create = 1
-	time = 3 SECONDS
-	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/gene_booth_frame
 	name = "Genetics Booth Deployer"
@@ -2617,7 +2605,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/reagent_containers/mender)
 	create = 2
 	time = 30 SECONDS
-	category = MANUFACTURER::CATEGORY::RESOURCE
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/mender_refill_cartridge
 	name = "Mender Refill Cartridge"
@@ -2626,7 +2614,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/reagent_containers/mender_refill_cartridge)
 	create = 1
 	time = 3 SECONDS
-	category = MANUFACTURER::CATEGORY::RESOURCE
+	category = MANUFACTURER::CATEGORY::MEDICINE
 
 /datum/manufacture/penlight
 	name = "Penlight"

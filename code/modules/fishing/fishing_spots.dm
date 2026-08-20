@@ -264,6 +264,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/mahimahi = 10,\
 	/obj/item/reagent_containers/food/fish/shrimp = 15,\
 	/obj/item/reagent_containers/food/fish/sardine = 20,\
+	/obj/item/reagent_containers/food/fish/long_pike = 1,\
 	/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake = 1)
 
 	generate_fish(var/mob/user, var/obj/item/fishing_rod/fishing_rod, atom/target)
@@ -407,6 +408,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/flounder = 10,\
 	/obj/item/reagent_containers/food/fish/mahimahi = 10,\
 	/obj/item/reagent_containers/food/fish/sardine = 20,\
+	/obj/item/reagent_containers/food/fish/long_pike = 1,\
 	/obj/item/reagent_containers/food/fish/anchovy = 30)
 
 /datum/fishing_spot/watertank
@@ -575,6 +577,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/bass = 30,\
 	/obj/item/reagent_containers/food/fish/real_goldfish = 5,\
 	/obj/item/reagent_containers/food/fish/salmon = 20,\
+	/obj/item/reagent_containers/food/fish/long_pike = 1,\
 	/obj/item/reagent_containers/food/fish/glassfish = 10)
 
 /datum/fishing_spot/drain/New()
@@ -589,6 +592,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/mob/living/critter/blobman = 5,\
 	/mob/living/critter/blobman/meat = 5,\
 	/obj/item/reagent_containers/food/fish/eye_mutant = 15,\
+	/obj/item/reagent_containers/food/fish/blood_fish = 15,\
 	/obj/item/reagent_containers/food/fish/lingfish = 5,\
 	/obj/decal/cleanable/blood/gibs = 25,\
 	/obj/decal/cleanable/blood/gibs/core = 25)
@@ -617,6 +621,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	fishing_atom_type = /obj/machinery/clonepod
 	rod_tier_required = 2
 	fish_available = list(/obj/item/reagent_containers/food/fish/meat_mutant = 10,\
+	/obj/item/reagent_containers/food/fish/blood_fish = 5,\
 	/mob/living/critter/blobman = 5,\
 	/mob/living/critter/blobman/meat = 5,\
 	/obj/item/parts/human_parts/arm/left = 10,\
@@ -711,6 +716,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/mahimahi = 10,\
 	/obj/item/reagent_containers/food/fish/shrimp = 15,\
 	/obj/item/reagent_containers/food/fish/sardine = 20,\
+	/obj/item/reagent_containers/food/fish/long_pike = 1,\
 	/obj/item/reagent_containers/food/fish/glassfish = 10)
 
 //ainsley
@@ -739,6 +745,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/fish/shrimp = 15,\
 	/obj/item/reagent_containers/food/fish/sardine = 20,\
 	/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake = 1,\
+	/obj/item/reagent_containers/food/fish/long_pike = 1,\
 	/obj/item/reagent_containers/food/fish/glassfish = 10)
 
 	generate_fish(var/mob/user, var/obj/item/fishing_rod/fishing_rod, atom/target)
@@ -959,7 +966,8 @@ datum/fishing_spot/golden_toilet
 	fishing_atom_type = /obj/item/reagent_containers/applicator/condiment/bottle/ketchup
 	rod_tier_required = 3
 	fish_available = list(/obj/item/reagent_containers/food/snacks/condiment/ketchup = 50,\
-	/obj/item/reagent_containers/food/snacks/yuck = 20)
+	/obj/item/reagent_containers/food/snacks/yuck = 20,\
+	/obj/item/reagent_containers/food/fish/blood_fish = 1,) //but of course!
 
 /datum/fishing_spot/mustard
 	fishing_atom_type = /obj/item/reagent_containers/applicator/condiment/bottle/mustard
@@ -1005,6 +1013,7 @@ datum/fishing_spot/golden_toilet
 	fish_available = list(/obj/decal/cleanable/blood/gibs = 25,\
 	/obj/decal/cleanable/blood/gibs/core = 25,\
 	/obj/item/reagent_containers/food/fish/meat_mutant = 10,\
+	/obj/item/reagent_containers/food/fish/blood_fish = 5,\
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat = 10,\
 	/obj/item/clothing/glasses/blindfold = 5,\
 	/obj/item/parts/human_parts/arm/mutant/monkey/left = 5,\

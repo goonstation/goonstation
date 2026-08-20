@@ -95,6 +95,7 @@ datum
 			thirst_value = 0.6
 			viscosity = 0.3
 			var/list/flushed_reagents = list("capsaicin")
+			var/was_physically_shocked = FALSE
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
@@ -113,6 +114,11 @@ datum
 						M.HealDamage("All", clamp(1 * volume, 0, 10), clamp(1 * volume, 0, 10)) //put a cap on instant healing
 						if(prob(15))
 							boutput(M, SPAN_NOTICE("The milk comforts your [pick("boanes","bones","bonez","boens","bowns","beaunes","brones","bonse")]!"))
+
+			physical_shock(force)
+				if(force >= 30)
+					was_physically_shocked = TRUE
+
 		fooddrink/milk_powder
 			name = "milk powder"
 			id = "milk_powder"
@@ -3878,6 +3884,42 @@ datum
 						boutput(M,"<span class= 'notice'>You feel a little less sickly.</span>")
 				..()
 
+		fooddrink/ginger
+			name = "ginger"
+			id = "ginger"
+			description = "Ginger can calm your stomach by speeding your circulation, but overdo it and you might find your blood getting a little too free-flowing."
+			reagent_state = SOLID
+			fluid_r = 225
+			fluid_g = 225
+			fluid_b = 102
+			transparency = 255
+			overdose = 25
+			taste = list("spicy")
+			threshold = THRESHOLD_INIT
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				. = ..()
+				if (!M)
+					M = holder.my_atom
+				if (M && M.hasStatus("nausea") && prob(50))
+					M.nauseate(-1)
+					boutput(M,"<span class= 'notice'>You feel a little less nauseous.</span>")
+
+			do_overdose(var/severity, var/mob/M, var/mult = 1)
+				if (!M)
+					M = holder.my_atom
+				if (!isliving(M))
+					return
+				var/mob/living/H = M
+				if (!H.bleeding)
+					return
+				if (severity == 1 && probmult(2))
+					H.bleeding++
+					boutput(H, SPAN_ALERT("Your wounds seem to be clotting more slowly!"))
+				else if (severity == 2 && probmult(5))
+					H.bleeding++
+					boutput(H, SPAN_ALERT("Your bleeding suddenly worsens!"))
+
 		fooddrink/cinnamon
 			name = "cinnamon"
 			id = "cinnamon"
@@ -4089,6 +4131,17 @@ datum
 			reagent_state = LIQUID
 			thirst_value = 1.5
 			taste = "like water, but more"
+
+		fooddrink/cocktail_quadruplewaterstable
+			name = "Quadruple Water"
+			id = "cocktail_quadruplewaterstable"
+			fluid_r = 10
+			fluid_g = 165
+			fluid_b = 254
+			description = "An even more water dense version of triple water, upon closer analysis its water matrix is neatly arranged."
+			reagent_state = LIQUID
+			thirst_value = 3.2
+			taste = "like a day worth of hydration in one sip"
 
 		fooddrink/lemonade
 			name = "lemonade"
@@ -4996,3 +5049,59 @@ datum
 			taste = "like living in a cottage in the countryside"
 			thirst_value = 1
 			caffeine_content = 0.6
+
+		fooddrink/sweetcondensedmilk
+			name = "sweet condensed milk"
+			id = "sweetcondensedmilk"
+			description = "A thick, sweet, condensed milk."
+			reagent_state = LIQUID
+			fluid_r = 255
+			fluid_b = 255
+			fluid_g = 255
+			transparency = 255
+			taste = "sweet, way too sweet"
+
+		fooddrink/caffeinated/cafebombon
+			name = "café bombón"
+			id = "cafebombon"
+			fluid_r = 125
+			fluid_g = 83
+			fluid_b = 45
+			description = "A deceptively simple coffee with a sweet side."
+			reagent_state = LIQUID
+			taste = "a bit too sweet, but in a good way, somehow"
+			thirst_value = 1
+			caffeine_content = 0.8
+
+		fooddrink/frothedmilk
+			name = "frothed milk"
+			id = "frothedmilk"
+			description = "Silky, airy, and topped with a cloud of tiny bubbles."
+			reagent_state = LIQUID
+			fluid_r = 255
+			fluid_b = 255
+			fluid_g = 255
+			transparency = 200
+			taste = list("creamy", "airy")
+
+		fooddrink/caffeinated/macchiato
+			name = "macchiato"
+			id = "macchiato"
+			fluid_r = 156
+			fluid_g = 114
+			fluid_b = 74
+			description = "A bold espresso marked with a small crown of silky milk foam."
+			reagent_state = LIQUID
+			taste = list("bold", "creamy")
+			thirst_value = 1
+			caffeine_content = 0.8
+      
+		fooddrink/dulcedeleche
+			name = "dulce de leche"
+			id = "dulcedeleche"
+			fluid_r = 184
+			fluid_g = 123
+			fluid_b = 57
+			description = "A thick, velvety spread that clings to everything it touches."
+			reagent_state = SOLID
+			taste = list("rich", "sweet")

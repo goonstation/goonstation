@@ -235,23 +235,23 @@
 			if(!src.GetParticles("overheat_smoke"))
 				src.UpdateParticles(new/particles/nuke_overheat_smoke(get_turf(src)),"overheat_smoke")
 				src.visible_message(SPAN_ALERT("<b>The [src] begins to smoke!</b>"))
-				logTheThing(LOG_STATION, src, "[src] is at [temperature]K and may meltdown")
+				logTheThing(LOG_STATION, src, "[src] is at [temperature]K and may overload")
 				if(!ON_COOLDOWN(src, "pda_temp_alert", 30 SECONDS)) //prevent spam when it's on the edge
-					src.alertPDA("ALERT: [src] has reached a dangerous temperature. Intervene immediately to prevent meltdown.")
+					src.alertPDA("ALERT: [src] has reached a dangerous temperature. Intervene immediately to prevent overload.")
 					message_ghosts("<b>[src]</b> is getting dangerously hot! [log_loc(src.loc, ghostjump=TRUE)].")
 			if(temperature >= REACTOR_ON_FIRE_TEMP && !src.GetParticles("overheat_fire"))
 				src.UpdateParticles(new/particles/nuke_overheat_fire(get_turf(src)),"overheat_fire")
 				src.visible_message(SPAN_ALERT("<b>The [src] begins to burn!</b>"))
-				logTheThing(LOG_STATION, src, "[src] is at [temperature]K and is likely to meltdown")
+				logTheThing(LOG_STATION, src, "[src] is at [temperature]K and is likely to overload")
 				if(!ON_COOLDOWN(src, "pda_temp_alert_critical", 30 SECONDS)) //prevent spam when it's on the edge
-					src.alertPDA("ALERT: [src] has reached CRITICAL temperature. MELTDOWN IMMINENT.", crisis = TRUE)
-					message_ghosts("<b>[src]</b> is extremely close to melting down! [log_loc(src.loc, ghostjump=TRUE)].")
+					src.alertPDA("ALERT: [src] has reached CRITICAL temperature. OVERLOAD IMMINENT.", crisis = TRUE)
+					message_ghosts("<b>[src]</b> is extremely close to overloading! [log_loc(src.loc, ghostjump=TRUE)].")
 			else if(temperature < REACTOR_ON_FIRE_TEMP && src.GetParticles("overheat_fire"))
 				src.visible_message(SPAN_ALERT("<b>The [src] stops burning.</b>"))
 				logTheThing(LOG_STATION, src, "[src] is cooling from 2500K")
 				src.ClearSpecificParticles("overheat_fire")
 				if(!ON_COOLDOWN(src, "pda_temp_alert_critical", 30 SECONDS)) //prevent spam when it's on the edge
-					src.alertPDA("ALERT: [src] has cooled below critical temperature. Meltdown averted. Have a nice day.", crisis = TRUE)
+					src.alertPDA("ALERT: [src] has cooled below critical temperature. Overload averted. Have a nice day.", crisis = TRUE)
 		else
 			if(src.GetParticles("overheat_smoke"))
 				src.visible_message(SPAN_ALERT("<b>The [src] stops smoking.</b>"))
@@ -381,14 +381,14 @@
 		for(var/i = min(ceil(rads / 2), 50), i>0, i--)
 			shoot_projectile_XY(src, new /datum/projectile/neutron(max(5, min(rads*2,100))), rand(-10,10), rand(-10,10)) //for once, rand(range) returning int is useful
 
-	proc/catastrophicOverload()
+	proc/catastrophicOverload() //IT'S NOT CALLED A MELTDOWN!
 		world.save_intra_round_value("nuclear_accident_count_[map_settings.name]", 0)
 		var/sound/alarm = sound('sound/machines/meltdown_siren.ogg')
 		alarm.repeat = TRUE
 		alarm.volume = 40
 		alarm.channel = 5
 		world << alarm //ew
-		command_alert("A nuclear reactor aboard the station has catastrophically overloaded. Radioactive debris, nuclear fallout, and coolant fires are likely. Immediate evacuation of the surrounding area is strongly advised.", "NUCLEAR MELTDOWN")
+		command_alert("A nuclear reactor aboard the station has catastrophically overloaded. Radioactive debris, nuclear fallout, and coolant fires are likely. Immediate evacuation of the surrounding area is strongly advised.", "NUCLEAR EXPLOSION")
 
 
 		//explode, throw radioactive components everywhere, dump rad gas, throw radioactive debris everywhere
@@ -512,16 +512,22 @@
 				var/x = params["x"]
 				var/y = params["y"]
 				if(src.component_grid[x][y])
+					var/obj/item/reactor_component/rod = src.component_grid[x][y]
 					if(issilicon(ui.user))
-						boutput(ui.user,"Your clunky robot hands can't grip the [src.component_grid[x][y]]!")
+						boutput(ui.user,"Your clunky robot hands can't grip the [rod]!")
 						return
 
-					if(src.component_grid[x][y].melted)
-						boutput(ui.user, "The component is melted! It's stuck.")
-						return
+					var/removal_time = 1 SECONDS
+					if(rod.melted)
+						var/melting_point = rod.get_melting_point()
+						if(rod.temperature >= melting_point)
+							boutput(ui.user, "\The [rod] is stuck! The temperature must be below [melting_point - T0C] Celsius to attempt removal.")
+							return
+						removal_time = 10 SECONDS
 
-					ui.user.visible_message(SPAN_ALERT("[ui.user] starts removing a [component_grid[x][y]]!"), SPAN_ALERT("You start removing the [component_grid[x][y]]!"))
-					var/datum/action/bar/icon/callback/A = new(ui.user, src, 1 SECONDS, PROC_REF(remove_comp_callback), list(x,y,ui.user), component_grid[x][y].icon, component_grid[x][y].icon_state,\
+
+					ui.user.visible_message(SPAN_ALERT("[ui.user] starts removing a [rod]!"), SPAN_ALERT("You start removing the [rod]!"))
+					var/datum/action/bar/icon/callback/A = new(ui.user, src, removal_time, PROC_REF(remove_comp_callback), list(x,y,ui.user), rod.icon, rod.icon_state,\
 					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 					A.maximum_range=3
 					actions.start(A,ui.user)
@@ -532,6 +538,10 @@
 
 					if(!istype(equipped,/obj/item/reactor_component) && !istype(equipped,/obj/item/device/light/glowstick))
 						ui.user.visible_message(SPAN_ALERT("[ui.user] tries to shove \a [equipped] into the reactor. Silly [ui.user]!"), SPAN_ALERT("You try to put \a [equipped] into the reactor. You feel very foolish."))
+						return
+					var/obj/item/reactor_component/rod = equipped
+					if(rod.melted)
+						ui.user.visible_message(SPAN_ALERT("[ui.user] tries to insert \a [rod] into the reactor, but it is too deformed to fit!"), SPAN_ALERT("\The [rod] is too deformed to fit inside the reactor!."))
 						return
 
 					ui.user.visible_message(SPAN_ALERT("[ui.user] starts inserting \a [equipped]!"), SPAN_ALERT("You start inserting the [equipped]!"))
@@ -566,10 +576,16 @@
 		UpdateIcon()
 
 	proc/remove_comp_callback(var/x,var/y,var/mob/user)
+		var/obj/item/reactor_component/rod = src.component_grid[x][y]
+		if(rod.melted)
+			if(rod.temperature >= rod.get_melting_point())
+				boutput(user, SPAN_ALERT("\The [rod] is melted and too hot to remove!"))
+				playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 80)
+				return
 		playsound(src, 'sound/machines/law_remove.ogg', 80)
-		logTheThing(LOG_STATION, user, "[constructName(user)] <b>removes</b> component from nuclear reactor([src]): [src.component_grid[x][y]] at slot [x],[y]")
-		user.visible_message(SPAN_ALERT("[user] slides \a [src.component_grid[x][y]] out of the reactor"), SPAN_ALERT("You slide the [src.component_grid[x][y]] out of the reactor."))
-		user.put_in_hand_or_drop(src.component_grid[x][y])
+		logTheThing(LOG_STATION, user, "[constructName(user)] <b>removes</b> component from nuclear reactor([src]): [rod] at slot [x],[y]")
+		user.visible_message(SPAN_ALERT("[user] slides \a [rod] out of the reactor"), SPAN_ALERT("You slide the [rod] out of the reactor."))
+		user.put_in_hand_or_drop(rod)
 		src.component_grid[x][y] = null
 		tgui_process.update_uis(src)
 		_comp_grid_overlay_update = TRUE
