@@ -329,11 +329,13 @@
 		. = ..()
 		if(isliving(AM))
 			APPLY_ATOM_PROPERTY(AM, PROP_MOB_HIDE_ICONS, src)
+			APPLY_ATOM_PROPERTY(AM, PROP_MOB_AI_UNTRACKABLE, src)
 
 	Uncrossed(atom/movable/AM)
 		. = ..()
 		if(isliving(AM))
 			REMOVE_ATOM_PROPERTY(AM, PROP_MOB_HIDE_ICONS, src)
+			REMOVE_ATOM_PROPERTY(AM, PROP_MOB_AI_UNTRACKABLE, src)
 
 	attackby(var/obj/item/W, mob/user)
 		user.lastattacked = get_weakref(src)

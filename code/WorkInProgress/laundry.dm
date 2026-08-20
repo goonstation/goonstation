@@ -120,9 +120,9 @@ TYPEINFO(/obj/submachine/laundry_machine)
 						criminal.apply_automated_arrest("Money laundering.")
 				else if (istype(item, /obj/item/organ/brain))
 					var/obj/item/organ/brain = item
-					// prevents re-washing
+					// prevents re-washing, but IMPORTANTLY DOES NOT BREAK THE LAUNDRY MACHINE BY RETURNING
 					if (brain.icon_state != "brain2")
-						return
+						continue
 					brain.icon = 'icons/obj/items/organs/brain.dmi'
 					brain.icon_state = "smooth_brain"
 					// getting rid of all of those UNSIGHTLY wrinkles heals your brain!
