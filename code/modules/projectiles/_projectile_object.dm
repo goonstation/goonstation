@@ -314,9 +314,8 @@
 			src.icon = 'icons/obj/projectiles.dmi'
 			src.icon_state = null
 			src.invisibility = INVIS_NONE
-			if (!proj_data) return //ZeWaka: Fix for null.override_color
-			if (!proj_data.override_color && !proj_data.material)
-				src.color = "#ffffff"
+			src.color = "#ffffff"
+
 	proc/get_len()
 		return sqrt(src.xo**2 + src.yo**2)
 	// Awful var names. TODO rename pretty much everything here, or at least document the functions

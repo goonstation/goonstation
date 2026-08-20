@@ -122,7 +122,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		if(istype(b, /obj/item/ammo/bullets))
 			if(ON_COOLDOWN(src, "reload_spam", src.reload_cooldown))
 				return
-			switch (src.ammo.loadammo(b,src))
+			var/reload_type = src.ammo.loadammo(b,src)
+			switch (reload_type)
 				if(0)
 					user.show_text("You can't reload this gun.", "red")
 					return
@@ -146,7 +147,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 					src.logme_temp(user, src, b)
 					return
 				if(AMMO_RELOAD_TYPE_SWAP)
-					switch (src.ammo.swap(b,src))
+					var/swap_type = src.ammo.swap(b,src)
+					switch (swap_type)
 						if(AMMO_SWAP_INCOMPATIBLE)
 							user.show_text("This ammo won't fit!", "red")
 							return

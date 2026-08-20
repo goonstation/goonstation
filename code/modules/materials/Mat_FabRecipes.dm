@@ -307,20 +307,47 @@
 /datum/matfab_recipe/bullets_coated
 	name = "Bullet Coating"
 	desc = "Coat bullets in silver."
-	category = "Weapon"
+	category = "Weapons"
 
 	New()
 		..()
 		required_parts.Add(new/datum/matfab_part/ammo_container {part_name = "Ammo"; required_amount = 1; consume = FALSE} ())
-		required_parts.Add(new/datum/matfab_part/silver {part_name = "Silver"; required_amount = 1} ())
+		// Matsci balance isn't quite ready for radioactive bullets yet
+		required_parts.Add(new/datum/matfab_part/silver {part_name = "Coating"; required_amount = 1} ())
+
+	getMaxAmount()
+		var/obj/item/ammo/bullets/ammo = getObjectByPartName("Ammo")
+		var/obj/item/source = getObjectByPartName("Coating")
+		return min(floor(source.material_amount_total() / ammo.ammo_type.material_amt), ammo.amount_left)
+
+	canBuild(var/amount = 1, var/atom/owner)
+		var/obj/item/ammo/bullets/ammo = getObjectByPartName("Ammo")
+		var/obj/item/source = getObjectByPartName("Coating")
+		var/enough_ammo = ammo.amount_left >= amount
+		var/enough_mats = source.material_amount_total() >= (ammo.ammo_type.material_amt * amount)
+		return enough_ammo && enough_mats
 
 	build(amount, var/obj/machinery/nanofab/owner)
-		for(var/i=0, i<amount, i++)
-			var/obj/item/ammo/bullets/ammo = getObjectByPartName("Ammo")
-			var/atom/source = getObjectByPartName("Silver")
-			ammo.ammo_type.material = source.material
-			ammo.ammo_type.material_amt = 1 / ammo.max_amount
-			ammo.set_loc(getOutputLocation(owner))
+		var/obj/item/ammo/bullets/ammo = getObjectByPartName("Ammo")
+		var/obj/item/source = getObjectByPartName("Coating")
+
+		var/obj/item/ammo/bullets/ammo_excess = ammo.split(ammo.amount_left - amount)
+		if(ammo_excess)
+			ammo_excess.set_loc(getOutputLocation(owner))
+		ammo.ammo_type.material = source.material
+		ammo.set_loc(getOutputLocation(owner))
+
+		var/mat_cost = ammo.ammo_type.material_amt * amount
+		var/source_cost_amount = mat_cost / source.material_amt
+		var/source_count_ceil = ceil(source_cost_amount)
+		var/excess_sheet_count = floor((source_count_ceil - source_cost_amount) / 0.1)
+		if(excess_sheet_count)
+			// Output excess material as sheets
+			var/obj/item/sheet/excess_sheets = new()
+			excess_sheets.setMaterial(source.material)
+			excess_sheets.set_stack_amount(excess_sheet_count)
+			excess_sheets.set_loc(getOutputLocation(owner))
+		source.change_stack_amount(-source_count_ceil)
 		return
 
 /datum/matfab_recipe/arrow
