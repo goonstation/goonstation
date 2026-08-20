@@ -66,12 +66,18 @@
 
 
 //------------ Areas ------------//
+/area/space/braeriach
+	name = "space (Braeriach)"
+	area_parallax_render_source_group = /datum/parallax_render_source_group/area/braeriach
+	teleport_blocked = AREA_TELEPORT_BLOCKED
+
+
 ABSTRACT_TYPE(/area/braeriach)
 /area/braeriach
 	name = "Braeriach"
 	icon_state = "red"
 	occlude_foreground_parallax_layers = TRUE
-	area_parallax_render_source_group = /datum/parallax_render_source_group/area/cairngorm
+	area_parallax_render_source_group = /datum/parallax_render_source_group/area/braeriach
 	minimaps_to_render_on = MAP_SYNDICATE
 	station_map_colour = MAPC_SYNDICATE
 	teleport_blocked = AREA_TELEPORT_BLOCKED
