@@ -4,6 +4,7 @@
 (p)27528
 (e)🔎🤖|C-Code-Quality, A-Silicons
 (+)AI tracking should now more consistently kick you out if you can't track someone (e.g. they equipped a syndicate ID or went invisible)
+(+)Teleport components can no longer be anchored inside solid walls.
 (t)wed aug 19 26
 (u)JORJ949
 (p)27499
