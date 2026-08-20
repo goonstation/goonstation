@@ -513,17 +513,7 @@
 	reaction_obj(var/obj/item/I, var/volume)
 		if (I.material && I.material.getID() == "silver")
 			return 1
-
 		.= 1
-
-		if (volume >= 20)
-			if (istype(I, /obj/item/ammo/bullets/bullet_22HP) || istype(I, /obj/item/ammo/bullets/bullet_22) || istype(I, /obj/item/ammo/bullets/a38) || istype(I, /obj/item/ammo/bullets/custom) || istype(I,/datum/projectile/bullet/revolver_38))
-				var/obj/item/ammo/bullets/bullet_holder = I
-				var/datum/projectile/ammo_type = bullet_holder.ammo_type
-				if (ammo_type && !(ammo_type.material && ammo_type.material.getID() == "silver"))
-					ammo_type.material = getMaterial("silver")
-					holder.remove_reagent(src.id, 20)
-					.= 0
 		if (volume >= 50)
 			if (I.type == /obj/item/handcuffs)
 				I.setMaterial(getMaterial("silver"))

@@ -304,6 +304,25 @@
 			newObj.set_loc(getOutputLocation(owner))
 		return
 
+/datum/matfab_recipe/bullets_coated
+	name = "Bullet Coating"
+	desc = "Coat bullets in silver."
+	category = "Weapon"
+
+	New()
+		..()
+		required_parts.Add(new/datum/matfab_part/ammo_container {part_name = "Ammo"; required_amount = 1; consume = FALSE} ())
+		required_parts.Add(new/datum/matfab_part/silver {part_name = "Silver"; required_amount = 1} ())
+
+	build(amount, var/obj/machinery/nanofab/owner)
+		for(var/i=0, i<amount, i++)
+			var/obj/item/ammo/bullets/ammo = getObjectByPartName("Ammo")
+			var/atom/source = getObjectByPartName("Silver")
+			ammo.ammo_type.material = source.material
+			ammo.ammo_type.material_amt = 1 / ammo.max_amount
+			ammo.set_loc(getOutputLocation(owner))
+		return
+
 /datum/matfab_recipe/arrow
 	name = "Arrow"
 	desc = "A simple arrow used as ammunition for bows."

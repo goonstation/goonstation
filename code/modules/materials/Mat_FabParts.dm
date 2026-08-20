@@ -51,6 +51,14 @@
 		if(I.material.getProperty("electrical") < 5) return 0
 		return ..()
 
+/datum/matfab_part/silver
+	name = "Silver"
+	checkMatch(var/obj/item/I)
+		if(!I.material) return 0
+		if(!istype(I, /obj/item/material_piece) && !istype(I, /obj/item/raw_material)) return 0
+		if(I.material.getID() != "silver") return 0
+		return ..()
+
 /datum/matfab_part/charge
 	name = "Explosive Charge"
 	checkMatch(var/obj/item/I)
@@ -183,6 +191,14 @@
 		if(!istype(I, /obj/item/lens) ||  !I.material) return 0
 		return ..()
 
+/datum/matfab_part/ammo_container
+	name = "Ammunition Container"
+	checkMatch(var/obj/item/I)
+		if(!istype(I, /obj/item/ammo/bullets)) return 0
+		var/obj/item/ammo/bullets/ammo = I
+		if(ammo.amount_left == 0) return 0
+		if(ammo.ammo_type.material) return 0
+		return ..()
 
 /datum/matfab_part/chemical
 	name = "Chemical"
@@ -217,6 +233,9 @@
 	var/obj/item/assigned = null
 	/// If TRUE, slot does not have to be filled.
 	var/optional = FALSE
+	/// If FALSE, the assigned item is not destroyed in the building process.
+	/// However, this does not necessarily mean that the assigned item can be used multiple times in the same build cycle.
+	var/consume = TRUE
 
 	/// Does the object match our conditions?
 	proc/checkMatch(var/obj/item/I)

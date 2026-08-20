@@ -308,14 +308,14 @@
 			src.icon = proj_data.icon
 			src.icon_state = proj_data.icon_state
 			src.invisibility = proj_data.invisibility
-			if (!proj_data.override_color)
+			if (!proj_data.override_color && !proj_data.material)
 				src.color = proj_data.color_icon
 		else
 			src.icon = 'icons/obj/projectiles.dmi'
 			src.icon_state = null
 			src.invisibility = INVIS_NONE
 			if (!proj_data) return //ZeWaka: Fix for null.override_color
-			if (!proj_data.override_color)
+			if (!proj_data.override_color && !proj_data.material)
 				src.color = "#ffffff"
 	proc/get_len()
 		return sqrt(src.xo**2 + src.yo**2)

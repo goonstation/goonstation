@@ -184,8 +184,11 @@
 			K.ammo.amount_left = 0
 		if (A.amount_left < 1)
 			return AMMO_RELOAD_SOURCE_EMPTY // Magazine's empty.
+		var/datum/projectile/K_type = K.ammo.ammo_type
+		if(K_type.material != A.ammo_type.material || (K_type.material && (K_type.material_amt != A.ammo_type.material_amt)))
+			return AMMO_RELOAD_TYPE_SWAP // Ammo materials are different
 		if (K.ammo.amount_left >= K.max_ammo_capacity)
-			if (K.ammo.ammo_type.type != A.ammo_type.type)
+			if (K_type.type != A.ammo_type.type)
 				return AMMO_RELOAD_TYPE_SWAP // Call swap().
 			return AMMO_RELOAD_ALREADY_FULL // Gun's full.
 		if (K.ammo.amount_left > 0 && K.ammo.ammo_type.type != A.ammo_type.type)
@@ -262,7 +265,11 @@
 		return
 
 	get_desc()
-		return . += "There [src.amount_left == 1 ? "is" : "are"] [src.amount_left][ammo_type.material && istype(ammo_type.material, /datum/material/metal/silver) ? " silver " : " "]bullet\s left!"
+		if(src.amount_left == 0)
+			return . += "There are no bullets left!"
+		else if(ammo_type.material)
+			return . += "There [src.amount_left == 1 ? "is" : "are"] [src.amount_left] [ammo_type.material.getName()]-coated bullet\s left!"
+		return . += "There [src.amount_left == 1 ? "is" : "are"] [src.amount_left] bullet\s left!"
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		. = ..()
@@ -280,6 +287,11 @@
 					shoot_projectile_DIR(src, src.ammo_type, pick(alldirs))
 					if(src.delete_on_reload && src.amount_left <= 0) //I don't like repeating code, but this is needed to catch if it empties on the second firing
 						qdel(src)
+
+	on_material_scan()
+		. = ..()
+		if(src.ammo_type.material)
+			return "Each bullet is coated in [src.ammo_type.material_amt] unit\s of [src.ammo_type.material]."
 
 
 //no caliber:

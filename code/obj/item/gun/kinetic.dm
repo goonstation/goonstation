@@ -72,7 +72,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		. = ..()
 		if (src.ammo && (src.ammo.amount_left > 0))
 			var/datum/projectile/ammo_type = src.ammo.ammo_type
-			. += "There are [src.ammo.amount_left][(ammo_type.material && istype(ammo_type.material, /datum/material/metal/silver)) ? " silver " : " "]bullets of [src.ammo.sname] left!"
+			if(ammo_type.material)
+				. += "There are [src.ammo.amount_left] [ammo_type.material.getName()]-coated [src.ammo.sname] bullets left!"
+			else
+				. += "There are [src.ammo.amount_left] bullets of [src.ammo.sname] left!"
 		else
 			. += "There are 0 bullets left!"
 		if (current_projectile)
@@ -188,7 +191,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 						var/number_of_casings = max(1, src.current_projectile.shot_number)
 						//DEBUG_MESSAGE("Ejected [number_of_casings] casings from [src].")
 						for (var/i in 1 to number_of_casings)
-							new src.current_projectile.casing(T, src)
+							var/atom/casing = new src.current_projectile.casing(T, src)
+							if(src.ammo.ammo_type.material)
+								casing.material_amt = src.ammo.ammo_type.material_amt * GUN_KINETIC_MATERIAL_RATIO_CASING
+								casing.setMaterial(src.ammo.ammo_type.material)
 			else
 				if (src.casings_to_eject < 0)
 					src.casings_to_eject = 0
@@ -204,7 +210,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 						var/number_of_casings = max(1, src.current_projectile.shot_number)
 						//DEBUG_MESSAGE("Ejected [number_of_casings] casings from [src].")
 						for (var/i in 1 to number_of_casings)
-							new src.current_projectile.casing(T, src)
+							var/atom/casing = new src.current_projectile.casing(T, src)
+							if(src.ammo.ammo_type.material)
+								casing.material_amt = src.ammo.ammo_type.material_amt * GUN_KINETIC_MATERIAL_RATIO_CASING
+								casing.setMaterial(src.ammo.ammo_type.material)
 			else
 				if (src.casings_to_eject < 0)
 					src.casings_to_eject = 0
@@ -219,6 +228,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			user.inertia_dir = get_dir_accurate(target, user)
 			user.inertia_value = 1
 			step(user, user.inertia_dir) // Propel user in opposite direction
+
+	alter_projectile(obj/projectile/P)
+		. = ..()
+		P.material?.triggerTemp(P, 500 KELVIN)
 
 	proc/eject_magazine(mob/user)
 		if (src.ammo.amount_left <= 0)
@@ -269,7 +282,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			if(T)
 				//DEBUG_MESSAGE("Ejected [src.casings_to_eject] [src.current_projectile.casing] from [src].")
 				while (src.casings_to_eject > 0)
-					new src.current_projectile.casing(T, src)
+					var/atom/casing = new src.current_projectile.casing(T, src)
+					if(src.ammo.ammo_type.material)
+						casing.material_amt = src.ammo.ammo_type.material_amt * GUN_KINETIC_MATERIAL_RATIO_CASING
+						casing.setMaterial(src.ammo.ammo_type.material)
 					src.casings_to_eject--
 		return
 
@@ -284,6 +300,11 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			logTheThing(LOG_DEBUG, usr, "<b>Convair880</b>: [usr]'s gun ([src]) ran into the magazine cap, aborting.")
 			return 0
 		return 1
+
+	on_material_scan()
+		. = ..()
+		if(src.ammo?.ammo_type.material)
+			return "Each bullet is coated in [src.ammo.ammo_type.material_amt] unit\s of [src.ammo.ammo_type.material]."
 
 ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 /obj/item/gun/kinetic/single_action
@@ -3021,7 +3042,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammobag_magazines = list(/obj/item/ammo/bullets/bullet_9mm/smg)
 	ammobag_restock_cost = 2
 	recoil_strength = 8
-	
+
 	HELP_MESSAGE_OVERRIDE("Can be held with two hands to reduce recoil and improve accuracy.")
 
 	New()

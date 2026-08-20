@@ -4,6 +4,7 @@
 #ifdef MAP_OVERRIDE_NADIR
 	/datum/matfab_recipe/catarod,
 #endif
+	/datum/matfab_recipe/bullets_coated,
 	/datum/matfab_recipe/spear,
 	/datum/matfab_recipe/arrow,
 	/datum/matfab_recipe/bow,
@@ -331,6 +332,7 @@
 						for(var/datum/matfab_part/P in selectedRecipe.required_parts)
 							if(P.assigned)
 								parts += "[P.part_name]: [P.assigned]"
+							if(P.assigned && P.consume)
 								P.assigned.change_stack_amount(-(P.required_amount*howMany))
 								if(QDELETED(P.assigned))
 									P.assigned = null

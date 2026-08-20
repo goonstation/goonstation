@@ -54,6 +54,7 @@ ABSTRACT_TYPE(/datum/projectile)
 	var/affected_by_gravity = FALSE	 // If a projectile should go shorter or further based on turf G-forces
 
 	var/datum/material/material = null
+	var/material_amt = 1 // How much material is in each bullet
 
 	var/casing = null
 	var/reagent_payload = null
