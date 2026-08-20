@@ -18,6 +18,7 @@
 /area/braeriach/engineering/storage)
 "af" = (
 /obj/storage/secure/closet/fridge/kitchen,
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/white/checker2{
 	dir = 1
 	},
@@ -1260,6 +1261,7 @@
 /obj/cable/braeriach{
 	icon_state = "2-4"
 	},
+/obj/mapping_helper/free_vendor,
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/crew)
 "gL" = (
@@ -1323,6 +1325,7 @@
 /area/braeriach/medbay/surgery)
 "hi" = (
 /obj/machinery/vending/alcohol/with_ammo,
+/obj/mapping_helper/free_vendor,
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/crew/jazz_lounge)
 "hl" = (
@@ -1607,6 +1610,7 @@
 "ip" = (
 /obj/machinery/vending/snack,
 /obj/decal/stripe_caution,
+/obj/mapping_helper/free_vendor,
 /turf/simulated/floor/twotone/black,
 /area/braeriach/engineering)
 "is" = (
@@ -1766,6 +1770,7 @@
 /obj/cable/braeriach{
 	icon_state = "2-8"
 	},
+/obj/mapping_helper/free_vendor,
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/crew)
 "jj" = (
@@ -2710,6 +2715,7 @@
 /area/braeriach/hallway/east)
 "oc" = (
 /obj/machinery/vending/cigarette,
+/obj/mapping_helper/free_vendor,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/crew/jazz_lounge)
 "oh" = (
@@ -3579,6 +3585,7 @@
 "rT" = (
 /obj/machinery/vending/cola/blue,
 /obj/decal/stripe_caution,
+/obj/mapping_helper/free_vendor,
 /turf/simulated/floor/twotone/black,
 /area/braeriach/engineering)
 "rU" = (
@@ -3683,6 +3690,7 @@
 /obj/cable/braeriach{
 	icon_state = "0-4"
 	},
+/obj/mapping_helper/free_vendor,
 /turf/simulated/floor/black,
 /area/braeriach/command/bridge)
 "sA" = (
@@ -3837,6 +3845,7 @@
 "to" = (
 /obj/machinery/vending/cigarette,
 /obj/decal/stripe_caution,
+/obj/mapping_helper/free_vendor,
 /turf/simulated/floor/black,
 /area/braeriach/command/bridge)
 "tq" = (
@@ -3980,6 +3989,7 @@
 /area/braeriach/engineering/power)
 "tQ" = (
 /obj/machinery/vending/cigarette,
+/obj/mapping_helper/free_vendor,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/hallway/east)
 "tR" = (
@@ -5203,6 +5213,7 @@
 "zD" = (
 /obj/decal/stripe_caution,
 /obj/machinery/vending/cigarette,
+/obj/mapping_helper/free_vendor,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -5583,6 +5594,7 @@
 /obj/cable/braeriach{
 	icon_state = "0-4"
 	},
+/obj/mapping_helper/free_vendor,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/secure/firing_range)
 "Bv" = (
@@ -6111,6 +6123,7 @@
 /obj/cable/braeriach{
 	icon_state = "0-8"
 	},
+/obj/mapping_helper/free_vendor,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/hallway/east)
 "Ed" = (
@@ -6875,6 +6888,7 @@
 /obj/cable/braeriach{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/free_vendor,
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/crew)
 "Hl" = (
@@ -7151,6 +7165,7 @@
 /area/braeriach/hallway/south)
 "Is" = (
 /obj/storage/secure/closet/kitchen,
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/white/checker2{
 	dir = 1
 	},
@@ -7690,6 +7705,7 @@
 "Kw" = (
 /obj/decal/stripe_caution,
 /obj/machinery/vending/coffee,
+/obj/mapping_helper/free_vendor,
 /turf/simulated/floor/black,
 /area/braeriach/command/bridge)
 "Ky" = (
@@ -8142,10 +8158,8 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "MA" = (
-/obj/machinery/vending/monkey/kitchen{
-	req_access = null
-	},
 /obj/mapping_helper/access/syndicate,
+/obj/machinery/vending/monkey/kitchen,
 /turf/simulated/floor/specialroom/freezer,
 /area/braeriach/crew/freezer)
 "MB" = (
@@ -8484,6 +8498,7 @@
 	autoclose = 0;
 	dir = 8
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/white/checker2{
 	dir = 1
 	},
@@ -8516,6 +8531,7 @@
 /area/braeriach/crew)
 "Od" = (
 /obj/machinery/vending/coffee,
+/obj/mapping_helper/free_vendor,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/hallway/north)
 "Of" = (
@@ -8807,7 +8823,7 @@
 "PH" = (
 /obj/decal/stripe_caution,
 /obj/machinery/vehicle/pod_smooth/syndicate,
-/obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/shuttlebay,
 /area/braeriach/podbay)
 "PI" = (
@@ -9241,6 +9257,7 @@
 /area/titlescreen)
 "Ro" = (
 /obj/machinery/vending/cigarette,
+/obj/mapping_helper/free_vendor,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/command/war_room)
 "Rq" = (
@@ -9285,6 +9302,7 @@
 /area/titlescreen)
 "Ru" = (
 /obj/machinery/vending/coffee,
+/obj/mapping_helper/free_vendor,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/command/war_room)
 "Rw" = (
@@ -9940,6 +9958,7 @@
 "UN" = (
 /obj/machinery/vending/snack,
 /obj/decal/stripe_caution,
+/obj/mapping_helper/free_vendor,
 /turf/simulated/floor/black,
 /area/braeriach/command/bridge)
 "UO" = (
@@ -10087,7 +10106,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "delivery2"
 	},
-/obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/shuttlebay,
 /area/braeriach/podbay)
 "VH" = (
@@ -10133,6 +10152,7 @@
 /obj/cable/braeriach{
 	icon_state = "0-8"
 	},
+/obj/mapping_helper/free_vendor,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/hallway/south)
 "VW" = (
@@ -10892,6 +10912,7 @@
 /area/braeriach/command/bridge)
 "YU" = (
 /obj/machinery/vending/coffee,
+/obj/mapping_helper/free_vendor,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/crew/jazz_lounge)
 "YW" = (

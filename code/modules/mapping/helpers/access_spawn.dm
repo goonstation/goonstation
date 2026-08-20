@@ -297,7 +297,7 @@
 	affected_types = list(/obj)
 	req_access = list(access_syndicate_commander)
 	override_access = TRUE
-	color = HELPER_COLOR::SECURITY
+	color = HELPER_COLOR::MORGUE
 
 /obj/mapping_helper/access/pirate_ship
 	name = "pirate ship access spawn"

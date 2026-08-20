@@ -1657,6 +1657,7 @@
 #include "code\modules\mapping\helpers\button_helpers.dm"
 #include "code\modules\mapping\helpers\camera.dm"
 #include "code\modules\mapping\helpers\firedoor_spawn.dm"
+#include "code\modules\mapping\helpers\free_vendor.dm"
 #include "code\modules\mapping\helpers\mailtag_spawn.dm"
 #include "code\modules\mapping\helpers\mob_spawn.dm"
 #include "code\modules\mapping\helpers\plant_spawn.dm"
