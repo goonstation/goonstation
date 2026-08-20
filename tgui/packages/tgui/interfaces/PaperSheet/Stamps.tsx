@@ -5,7 +5,6 @@ import { clamp } from 'tgui-core/math';
 import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
 import { sanitizeDefAllowTags, sanitizeText } from '../../sanitize';
-import { GenericVisualMedia } from '../common/media/GenericVisualMedia';
 
 // Paper renders interactive <input> form fields
 const PAPER_ALLOWED_TAGS = [...sanitizeDefAllowTags, 'input'];
@@ -144,7 +143,7 @@ const Stamp: React.FC<StampProps> = (props) => {
   };
 
   return props.image.sprite.match('stamp-.*') ? (
-    <GenericVisualMedia
+    <img
       id={props.activeStamp ? 'stamp' : undefined}
       style={stampTransform}
       className="paper__stamp"
