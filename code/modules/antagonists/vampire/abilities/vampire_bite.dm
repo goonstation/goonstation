@@ -93,8 +93,9 @@
 		else if (prob(20))
 			do_taste_bloodstream(HH)
 		//HH.reagents.reaction(M, INGEST, mult)
-		//HH.reagents.trans_to(M, mult) // Was told it would be too unfair to actually have chemical transfer, \
-		but keeping it commented out here incase that changes.
+		//HH.reagents.trans_to(M, mult)
+		/* Was told it would be too unfair to actually have chemical transfer,
+		but keeping it commented out here incase that changes. */
 
 /datum/abilityHolder/vampire/proc/do_bite(var/mob/living/carbon/human/HH, var/mult = 1)
 	.= 1
