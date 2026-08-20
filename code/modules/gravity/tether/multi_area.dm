@@ -86,6 +86,11 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether/multi_area)
 			return
 		return ..()
 
+/obj/machinery/gravity_tether/multi_area/listening_post/braeriach
+	name = "Braeriach gravity tether"
+	base_area_typepath = /area/braeriach
+	base_area_exceptions = list()
+
 // per-map
 
 // donut3 medical asylum
