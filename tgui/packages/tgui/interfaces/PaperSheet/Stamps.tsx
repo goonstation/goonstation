@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Box } from 'tgui-core/components';
+import { Box, Image } from 'tgui-core/components';
 import { clamp } from 'tgui-core/math';
 
 import { resolveAsset } from '../../assets';
@@ -143,7 +143,7 @@ const Stamp: React.FC<StampProps> = (props) => {
   };
 
   return props.image.sprite.match('stamp-.*') ? (
-    <img
+    <Image
       id={props.activeStamp ? 'stamp' : undefined}
       style={stampTransform}
       className="paper__stamp"
