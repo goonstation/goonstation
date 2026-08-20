@@ -64,8 +64,6 @@
 		get_image_group(ROLE_TRAITOR).add_mind(src.owner)
 		get_image_group(ROLE_REVOLUTIONARY).add_mind(src.owner)
 
-	proc/add_antag_image_to(var/mob/target)
-
 	remove_from_image_groups()
 		. = ..()
 		var/datum/client_image_group/image_group = get_image_group(ROLE_NUKEOP)
@@ -80,4 +78,4 @@
 		ticker.mode.bestow_objective(src.owner, /datum/objective/specialist/nuclear, src)
 
 	relocate()
-		src.owner.current.set_loc(pick_landmark(LANDMARK_SYNDICATE_BOSS)) //TODO: Give its own landmark
+		src.owner.current.set_loc(pick_landmark(LANDMARK_SYNDICATE_AI))

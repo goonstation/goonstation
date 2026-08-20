@@ -243,6 +243,11 @@ var/global/list/job_start_locations = list()
 	name = LANDMARK_SYNDICATE_BOSS
 	icon_state = "commander"
 
+/obj/landmark/antagonist/operative/ai
+	name = LANDMARK_SYNDICATE_AI
+	icon = 'icons/map-editing/job_start.dmi'
+	icon_state = "ai"
+	color = "#ff5555"
 // Pirates
 
 /obj/landmark/antagonist/pirate
