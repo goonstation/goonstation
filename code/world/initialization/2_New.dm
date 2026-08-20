@@ -7,11 +7,6 @@
 	tick_lag = MIN_TICKLAG//0.4//0.25
 //	loop_checks = 0
 
-#ifdef MAP_OVERRIDE_DONUT2
-	Z_LOG_DEBUG("World/Init", "Titlescreen setup...")
-	global.temp_titlescreen = global.get_singleton(/datum/mapPrefab/allocated/temp_titlescreen).load()
-#endif
-
 	if(world.load_intra_round_value("heisenbee_tier") >= 15 && prob(50) || prob(3))
 		lobby_titlecard = new /datum/titlecard/heisenbee()
 	else if (prob(2)) //rare treat

@@ -88,19 +88,6 @@ ABSTRACT_TYPE(/datum/mapPrefab/allocated)
 	prefabSizeY = 33
 	prefabPath = "assets/maps/allocated/salvager_local.dmm"
 
-var/datum/mapPrefab/allocated/temp_titlescreen/temp_titlescreen = null
-/datum/mapPrefab/allocated/temp_titlescreen
-	name = "Titlescreen"
-	prefabSizeX = 25
-	prefabSizeY = 19
-	prefabPath = "assets/maps/allocated/temp_titlescreen.dmm"
-
-/datum/mapPrefab/allocated/braeriach
-	name = "Braeriach"
-	prefabSizeX = 100
-	prefabSizeY = 108
-	prefabPath = "assets/maps/allocated/braeriach.dmm"
-
 // Syndicate Hideouts
 /datum/mapPrefab/allocated/syndicate_hideout
 	name = "Sinister Office"

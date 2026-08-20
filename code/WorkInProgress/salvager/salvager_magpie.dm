@@ -9,7 +9,7 @@ var/datum/magpie_manager/magpie_man = new
 	proc/setup()
 		src.magpie = locate("M4GP13")
 
-		#if !defined(LIVE_SERVER) && !defined(UNIT_TESTS) // don't load the map prefab on live, it's only used for testing
+		#if !defined(LIVE_SERVER) && !defined(UNIT_TESTS) && !defined(MAP_OVERRIDE_DONUT2) // don't load the map prefab on live, it's only used for testing
 		if( !magpie_man.magpie )
 			src.local_prefab = get_singleton(/datum/mapPrefab/allocated/salvager_local).load()
 			src.magpie = locate("M4GP13")
