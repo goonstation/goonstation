@@ -285,6 +285,20 @@
 	req_access = list(access_syndicate_shuttle)
 	color = HELPER_COLOR::SECURITY
 
+/obj/mapping_helper/access/syndicate
+	name = "syndicate operative access spawn"
+	affected_types = list(/obj)
+	req_access = list(access_syndicate_shuttle)
+	override_access = TRUE
+	color = HELPER_COLOR::SECURITY
+
+/obj/mapping_helper/access/syndicate_commander
+	name = "syndicate commander access spawn"
+	affected_types = list(/obj)
+	req_access = list(access_syndicate_commander)
+	override_access = TRUE
+	color = HELPER_COLOR::SECURITY
+
 /obj/mapping_helper/access/pirate_ship
 	name = "pirate ship access spawn"
 	req_access = list(access_pirate)

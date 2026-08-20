@@ -13,6 +13,7 @@
 /obj/cable/braeriach{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/black,
 /area/braeriach/engineering/storage)
 "af" = (
@@ -40,6 +41,7 @@
 /obj/cable/braeriach{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/podbay/armoury)
 "at" = (
@@ -58,6 +60,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/redwhite{
 	dir = 6
 	},
@@ -145,6 +148,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/manufacturer/medical,
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/minitiles/white,
 /area/braeriach/medbay)
 "aZ" = (
@@ -265,6 +269,7 @@
 /obj/cable/braeriach{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/south_east)
 "bH" = (
@@ -343,6 +348,7 @@
 /area/braeriach/medbay)
 "bT" = (
 /obj/machinery/door/airlock/pyro/glass/security,
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/blackwhite{
 	dir = 1
 	},
@@ -435,6 +441,7 @@
 /obj/cable/braeriach{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/black,
 /area/braeriach/secure/armoury)
 "cu" = (
@@ -445,6 +452,7 @@
 	powerlevel = 1;
 	dir = 4
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/shuttlebay,
 /area/braeriach/maintenance/north_east)
 "cA" = (
@@ -469,6 +477,7 @@
 /area/braeriach/crew/bar)
 "cD" = (
 /obj/storage/secure/closet/medical/anesthetic,
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/red/checker,
 /area/braeriach/medbay/surgery)
 "cH" = (
@@ -540,6 +549,7 @@
 /area/braeriach/medbay)
 "dh" = (
 /obj/machinery/vending/janitor,
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/specialroom/arcade,
 /area/braeriach/crew/janitor)
 "dm" = (
@@ -741,6 +751,7 @@
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 4
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/podbay/warehouse)
 "ed" = (
@@ -1036,6 +1047,7 @@
 "fs" = (
 /obj/machinery/door/airlock/pyro/glass/security,
 /obj/disposalpipe/segment,
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/blackwhite{
 	dir = 1
 	},
@@ -1162,6 +1174,7 @@
 /obj/machinery/door/airlock/pyro/glass/security{
 	dir = 4
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/black,
 /area/braeriach/secure/firing_range)
 "gh" = (
@@ -1305,6 +1318,7 @@
 /obj/item_dispenser/latex_gloves{
 	pixel_x = 8
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/red/checker,
 /area/braeriach/medbay/surgery)
 "hi" = (
@@ -1429,6 +1443,7 @@
 /obj/cable/braeriach{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/black,
 /area/braeriach/command/bridge)
 "hS" = (
@@ -1653,6 +1668,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/redwhite{
 	dir = 6
 	},
@@ -2322,6 +2338,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/twotone/white,
 /area/braeriach/medbay)
 "mc" = (
@@ -2371,6 +2388,7 @@
 /obj/cable/braeriach{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/white,
 /area/braeriach/medbay/surgery)
 "ml" = (
@@ -2405,6 +2423,7 @@
 /obj/cable/braeriach{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/black,
 /area/braeriach/teleporter/control)
 "mD" = (
@@ -2633,6 +2652,7 @@
 /obj/cable/braeriach{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/black,
 /area/braeriach/teleporter/control)
 "nL" = (
@@ -2913,6 +2933,7 @@
 /obj/cable/braeriach{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/medbay)
 "px" = (
@@ -3016,6 +3037,7 @@
 	freestuff = 1;
 	req_access = null
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/twotone/white,
 /area/braeriach/crew/kitchen)
 "pU" = (
@@ -3195,6 +3217,7 @@
 /obj/cable/braeriach{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/red,
 /area/braeriach/crew/barracks)
 "qu" = (
@@ -3300,6 +3323,7 @@
 /obj/cable/braeriach{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/grey,
 /area/braeriach/command/foyer)
 "qX" = (
@@ -3316,6 +3340,7 @@
 /area/braeriach/command/bridge)
 "rb" = (
 /obj/machinery/door/airlock/pyro/glass/security,
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/black,
 /area/braeriach/secure/equipment)
 "rf" = (
@@ -3569,6 +3594,7 @@
 /obj/cable/braeriach{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/black,
 /area/braeriach/ai/vestibule)
 "rY" = (
@@ -3605,6 +3631,7 @@
 /obj/cable/braeriach{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/medbay/morgue)
 "sj" = (
@@ -3615,6 +3642,7 @@
 /area/braeriach/secure/armoury)
 "sk" = (
 /obj/machinery/manufacturer/general,
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/black,
 /area/braeriach/engineering)
 "sq" = (
@@ -3636,6 +3664,7 @@
 /area/braeriach/teleporter)
 "su" = (
 /obj/machinery/manufacturer/engineering,
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/yellowblack/corner{
 	dir = 4
 	},
@@ -3764,6 +3793,7 @@
 /obj/item/shipcomponent/mainweapon/gun,
 /obj/item/shipcomponent/mainweapon/gun,
 /obj/item/shipcomponent/mainweapon/gun,
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/shuttlebay,
 /area/braeriach/podbay/armoury)
 "tj" = (
@@ -3845,6 +3875,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/crew/jazz_lounge)
 "tv" = (
@@ -4127,6 +4158,7 @@
 /obj/cable/braeriach{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/black,
 /area/braeriach/secure/firing_range)
 "uv" = (
@@ -4174,6 +4206,7 @@
 /obj/cable/braeriach{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/black,
 /area/braeriach/engineering)
 "uK" = (
@@ -4214,6 +4247,7 @@
 /obj/cable/braeriach{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/west)
 "uM" = (
@@ -4435,6 +4469,7 @@
 	dir = 5;
 	icon_state = "line2"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/red,
 /area/braeriach/podbay)
 "vZ" = (
@@ -4561,6 +4596,7 @@
 /obj/item/ammo/bullets/autocannon,
 /obj/item/ammo/bullets/autocannon,
 /obj/item/ammo/bullets/autocannon,
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/shuttlebay,
 /area/braeriach/podbay/armoury)
 "wJ" = (
@@ -4620,6 +4656,7 @@
 /obj/cable/braeriach{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/blackwhite{
 	dir = 1
 	},
@@ -4819,6 +4856,7 @@
 /obj/cable/braeriach{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/engineering/tether)
 "xM" = (
@@ -4848,6 +4886,7 @@
 /obj/cable/braeriach{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/twotone/white,
 /area/braeriach/medbay)
 "xR" = (
@@ -4946,6 +4985,7 @@
 /obj/cable/braeriach{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/black,
 /area/braeriach/command/war_room)
 "yr" = (
@@ -5048,6 +5088,7 @@
 /area/braeriach/crew/jazz_lounge)
 "yU" = (
 /obj/machinery/manufacturer/gas,
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/black,
 /area/braeriach/engineering/gas_storage)
 "yX" = (
@@ -5258,6 +5299,7 @@
 /obj/cable/braeriach{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/engineering/power)
 "Ab" = (
@@ -5292,6 +5334,7 @@
 /obj/cable/braeriach{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/specialroom/arcade,
 /area/braeriach/crew/janitor)
 "Am" = (
@@ -5718,6 +5761,7 @@
 	dir = 5;
 	icon_state = "line2"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/darkpurple,
 /area/braeriach/medbay/pharmacy)
 "Cp" = (
@@ -6011,6 +6055,7 @@
 /obj/cable/braeriach{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/ai)
 "DE" = (
@@ -6141,6 +6186,7 @@
 /area/space)
 "Eu" = (
 /obj/machinery/manufacturer/robotics,
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/red/checker,
 /area/braeriach/medbay/surgery)
 "Ew" = (
@@ -6216,6 +6262,7 @@
 /area/braeriach/medbay/surgery)
 "EV" = (
 /obj/machinery/manufacturer/science,
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/medbay/pharmacy)
 "EW" = (
@@ -6598,6 +6645,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/disposals)
 "Go" = (
@@ -6679,6 +6727,7 @@
 	powerlevel = 1;
 	dir = 4
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/shuttlebay,
 /area/braeriach/podbay)
 "GL" = (
@@ -6716,6 +6765,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/black,
 /area/braeriach/crew)
 "GQ" = (
@@ -6780,6 +6830,7 @@
 /obj/cable/braeriach{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/syndicate_commander,
 /turf/simulated/floor/black,
 /area/braeriach/armament_depot/vestibule)
 "Hc" = (
@@ -6953,6 +7004,7 @@
 /obj/storage/secure/crate/weapon{
 	name = "MRPT rocket crate"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/shiny,
 /area/braeriach/secure/armoury)
 "HN" = (
@@ -6971,6 +7023,7 @@
 /obj/cable/braeriach{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/engineering/storage)
 "HT" = (
@@ -7243,6 +7296,7 @@
 	powerlevel = 1;
 	dir = 4
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/shuttlebay,
 /area/braeriach/maintenance/south_east)
 "IU" = (
@@ -7558,6 +7612,7 @@
 /obj/cable/braeriach{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/north)
 "Kl" = (
@@ -7772,6 +7827,7 @@
 /obj/cable/braeriach{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/north)
 "Lc" = (
@@ -7792,6 +7848,7 @@
 /area/braeriach/secure/firing_range)
 "Lh" = (
 /obj/storage/secure/closet/medical/medicine,
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/twotone/blue,
 /area/braeriach/medbay)
 "Li" = (
@@ -7954,6 +8011,7 @@
 /obj/cable/braeriach{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/black,
 /area/braeriach/engineering/gas_storage)
 "LT" = (
@@ -8038,6 +8096,7 @@
 /obj/cable/braeriach{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/central)
 "Mo" = (
@@ -8047,6 +8106,7 @@
 /obj/cable/braeriach{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/black,
 /area/braeriach/crew)
 "Mp" = (
@@ -8060,6 +8120,7 @@
 /area/braeriach/teleporter)
 "Mt" = (
 /obj/storage/secure/closet/medical/chemical,
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/twotone/blue,
 /area/braeriach/medbay)
 "Mu" = (
@@ -8084,6 +8145,7 @@
 /obj/machinery/vending/monkey/kitchen{
 	req_access = null
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/specialroom/freezer,
 /area/braeriach/crew/freezer)
 "MB" = (
@@ -8527,6 +8589,7 @@
 /obj/cable/braeriach{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/secure/equipment)
 "OC" = (
@@ -8560,6 +8623,7 @@
 /obj/cable/braeriach{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/specialroom/freezer,
 /area/braeriach/crew/freezer)
 "OI" = (
@@ -8569,6 +8633,7 @@
 /area/titlescreen)
 "OK" = (
 /obj/storage/secure/closet/medical/medkit,
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/twotone/blue,
 /area/braeriach/medbay)
 "OL" = (
@@ -8604,6 +8669,7 @@
 /obj/cable/braeriach{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/black,
 /area/braeriach/engineering/power)
 "Pe" = (
@@ -8705,6 +8771,7 @@
 /obj/cable/braeriach{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/black,
 /area/braeriach/secure)
 "Pz" = (
@@ -8719,6 +8786,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/secure/equipment)
 "PE" = (
@@ -8837,6 +8905,7 @@
 /obj/machinery/door/airlock/pyro/glass/security{
 	dir = 4
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/black,
 /area/braeriach/secure)
 "Qd" = (
@@ -8859,6 +8928,7 @@
 /obj/cable/braeriach{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/ai/upload)
 "Qi" = (
@@ -8982,6 +9052,7 @@
 	name = "crowd control crate"
 	},
 /obj/decal/stripe_caution,
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/shiny,
 /area/braeriach/secure/armoury)
 "QC" = (
@@ -9381,6 +9452,7 @@
 /area/titlescreen)
 "RZ" = (
 /obj/machinery/vending/medical,
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/twotone/blue,
 /area/braeriach/medbay)
 "Sa" = (
@@ -9472,6 +9544,7 @@
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	dir = 4
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/black,
 /area/braeriach/engineering/gas_storage)
 "Sz" = (
@@ -9659,10 +9732,6 @@
 /turf/simulated/floor/bluewhite/corner,
 /area/braeriach/medbay)
 "Tr" = (
-/obj/machinery/handscanner{
-	pixel_x = -24;
-	pixel_y = 0
-	},
 /obj/disposalpipe/segment,
 /obj/cable/braeriach{
 	icon_state = "1-2"
@@ -9784,6 +9853,7 @@
 /obj/cable/braeriach{
 	icon_state = "2-8"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/engineering/tether)
 "Uo" = (
@@ -9818,6 +9888,7 @@
 /obj/cable/braeriach{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/white/checker2{
 	dir = 1
 	},
@@ -9880,6 +9951,7 @@
 	pixel_x = -2;
 	pixel_y = 0
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/red/checker,
 /area/braeriach/medbay/surgery)
 "UR" = (
@@ -9967,6 +10039,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/black,
 /area/braeriach/secure)
 "Vq" = (
@@ -9988,6 +10061,7 @@
 /obj/cable/braeriach{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/darkpurple,
 /area/braeriach/teleporter/control)
 "VC" = (
@@ -10018,6 +10092,7 @@
 /area/braeriach/podbay)
 "VH" = (
 /obj/storage/secure/closet/medical/medicine,
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/red/checker,
 /area/braeriach/medbay/surgery)
 "VI" = (
@@ -10325,6 +10400,7 @@
 /obj/cable/braeriach{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/podbay/warehouse)
 "Xl" = (
@@ -10358,6 +10434,7 @@
 /obj/cable/braeriach{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/access/syndicate_commander,
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/command/war_room/radio)
 "Xs" = (
@@ -10366,6 +10443,7 @@
 /obj/cable/braeriach{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/medbay/morgue)
 "Xt" = (
@@ -10506,6 +10584,7 @@
 /area/braeriach/podbay)
 "XH" = (
 /obj/machinery/door/airlock/pyro,
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/medbay)
 "XI" = (
@@ -10676,6 +10755,7 @@
 /obj/cable/braeriach{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/access/syndicate_commander,
 /turf/simulated/floor/black,
 /area/braeriach/armament_depot/vestibule)
 "Ys" = (
@@ -10829,6 +10909,7 @@
 /obj/cable/braeriach{
 	icon_state = "0-2"
 	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/red/checker,
 /area/braeriach/medbay/surgery)
 "YY" = (
