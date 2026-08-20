@@ -190,7 +190,7 @@
 
 
 		var/failedToTrack = 0
-		if (!is_mob_trackable_by_AI(tracking))
+		if (!is_mob_trackable_by_AI(tracking, owner.eyecam))
 			failedToTrack = 1
 
 		#ifndef UPSCALED_MAP

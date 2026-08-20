@@ -141,7 +141,7 @@ TYPEINFO(/mob/living/intangible/aieye)
 
 		. = ..()
 
-		if(src.loc.z != 1)	//you may only move on the station z level!!!
+		if(src.loc.z != 1 && !src.mainframe?.syndicate)	//you may only move on the station z level!!!
 			src.cancel_camera()
 
 	proc/add_all_statics()
@@ -193,7 +193,7 @@ TYPEINFO(/mob/living/intangible/aieye)
 #endif
 
 	set_loc(atom/newloc)
-		if (isturf(newloc) && newloc.z != Z_LEVEL_STATION) // Sorry!
+		if (isturf(newloc) && newloc.z != Z_LEVEL_STATION && !src.mainframe?.syndicate) // Sorry!
 			src.return_mainframe()
 		else
 			last_loc = src.loc
@@ -246,7 +246,7 @@ TYPEINFO(/mob/living/intangible/aieye)
 				return
 
 			//only allow Click-to-track on mobs. Some of the 'trackable' atoms are also machines that can open a dialog and we don't wanna mess with that!
-			if (src.mainframe && ismob(target) && is_mob_trackable_by_AI(target))
+			if (src.mainframe && ismob(target) && is_mob_trackable_by_AI(target, src))
 				mainframe.ai_actual_track(target)
 			//else if (isturf(target))
 			//	var/turf/T = target

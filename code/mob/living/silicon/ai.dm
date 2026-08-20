@@ -644,7 +644,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 	if (!src.stat)
 		if (!src.client.check_any_key(KEY_EXAMINE | KEY_OPEN | KEY_BOLT | KEY_SHOCK | KEY_POINT) ) // ugh
 			//only allow Click-to-track on mobs. Some of the 'trackable' atoms are also machines that can open a dialog and we don't wanna mess with that!
-			if (ismob(target) && is_mob_trackable_by_AI(target))
+			if (ismob(target) && is_mob_trackable_by_AI(target, src))
 				ai_actual_track(target)
 				return
 	. = ..()
@@ -2386,20 +2386,21 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 	return
 
 //just use this proc to make click-track checking easier
-proc/is_mob_trackable_by_AI(var/mob/M)
-	if(get_z(M) != Z_LEVEL_STATION)
-		return FALSE
+proc/is_mob_trackable_by_AI(var/mob/M, var/mob/user)
 	if (M == usr)
 		return FALSE
 	if (istype(M, /mob/new_player))
 		return FALSE
+	if(!isnukeopai(user))
+		if(get_z(M) != Z_LEVEL_STATION)
+			return FALSE
+		if(M.invisibility) //cloaked
+			return FALSE
+		if (ishuman(M) && istype(get_id_card(M:wear_id), /obj/item/card/id/syndicate))
+			return FALSE
 	if (HAS_ATOM_PROPERTY(M, PROP_MOB_AI_UNTRACKABLE))
 		return FALSE
 	if(!istype(M.loc, /turf)) //in a closet or something, AI can't see him anyways
-		return FALSE
-	if(M.invisibility) //cloaked
-		return FALSE
-	if (ishuman(M) && istype(get_id_card(M:wear_id), /obj/item/card/id/syndicate))
 		return FALSE
 	if(!seen_by_camera(M))
 		return FALSE
@@ -2412,7 +2413,7 @@ proc/get_mobs_trackable_by_AI()
 	var/static/regex/labelled_regex = regex(@"\s*\(.*\)$")
 
 	for (var/mob/living/M in mobs)
-		if(!is_mob_trackable_by_AI(M))
+		if(!is_mob_trackable_by_AI(M, usr))
 			continue
 
 		var/name = M.name
@@ -2471,7 +2472,7 @@ proc/get_mobs_trackable_by_AI()
 	if(src.stat || !can_announce)
 		return
 
-	if(get_z(src) != Z_LEVEL_STATION)
+	if(get_z(src) != Z_LEVEL_STATION && !src.syndicate)
 		src.show_text("Your mainframe was unable to relay this command that far away!", "red")
 		return
 

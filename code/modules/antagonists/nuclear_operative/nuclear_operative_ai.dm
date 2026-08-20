@@ -35,7 +35,7 @@
 		mainframe.syndicate = TRUE
 		mainframe.set_law_rack(ticker.ai_law_rack_manager?.default_ai_rack_syndie)
 		SPAWN(0.7 SECONDS) //Internal camera doesnt exist for .6 seconds guh
-			mainframe.choose_name(0, "Mission Control", TRUE)
+			mainframe.choose_name(3, "Mission Control")
 
 		//Radios
 		mainframe.radio1.icon_tooltip = "Syndicate Mission Control"
@@ -43,6 +43,8 @@
 		mainframe.radio3.icon_tooltip = "Syndicate Mission Control"
 		mainframe.radio1.chat_class = RADIO::CSS::SYNDICATE
 		mainframe.radio1.set_frequency(RADIO::FREQ::SYNDICATE)
+		mainframe.radio2.set_frequency(RADIO::FREQ::SALVAGER)
+		mainframe.radio2.toggle_speaker(TRUE)
 		var/obj/item/device/radio/headset/ai_headset = mainframe.radio3
 		ai_headset.chat_class = RADIO::CSS::SYNDICATE
 		ai_headset.install_radio_upgrade(new/obj/item/device/radio_upgrade/syndicatechannel)
