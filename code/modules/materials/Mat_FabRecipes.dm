@@ -318,13 +318,13 @@
 	getMaxAmount()
 		var/obj/item/ammo/bullets/ammo = getObjectByPartName("Ammo")
 		var/obj/item/source = getObjectByPartName("Coating")
-		return min(floor(source.material_amount_total() / ammo.ammo_type.material_amt), ammo.amount_left)
+		return min(floor(source.material_amount_total() / ammo.ammo_type.coating_amount), ammo.amount_left)
 
 	canBuild(var/amount = 1, var/atom/owner)
 		var/obj/item/ammo/bullets/ammo = getObjectByPartName("Ammo")
 		var/obj/item/source = getObjectByPartName("Coating")
 		var/enough_ammo = ammo.amount_left >= amount
-		var/enough_mats = source.material_amount_total() >= (ammo.ammo_type.material_amt * amount)
+		var/enough_mats = source.material_amount_total() >= (ammo.ammo_type.coating_amount * amount)
 		return enough_ammo && enough_mats
 
 	build(amount, var/obj/machinery/nanofab/owner)
@@ -334,10 +334,10 @@
 		var/obj/item/ammo/bullets/ammo_excess = ammo.split(ammo.amount_left - amount)
 		if(ammo_excess)
 			ammo_excess.set_loc(getOutputLocation(owner))
-		ammo.ammo_type.material = source.material
+		ammo.ammo_type.coating = source.material
 		ammo.set_loc(getOutputLocation(owner))
 
-		var/mat_cost = ammo.ammo_type.material_amt * amount
+		var/mat_cost = ammo.ammo_type.coating_amount * amount
 		var/source_cost_amount = mat_cost / source.material_amt
 		var/source_count_ceil = ceil(source_cost_amount)
 		var/excess_sheet_count = floor((source_count_ceil - source_cost_amount) / 0.1)

@@ -115,10 +115,10 @@
 	P.power = DATA.power
 
 	P.proj_data = DATA
-	if(DATA.material)
+	if(DATA.coating)
 		// alter_projectile may trigger material procs. Add material first
-		P.material_amt = DATA.material_amt * GUN_KINETIC_MATERIAL_RATIO_BULLET // 20% of the material goes to the casing instead
-		P.setMaterial(DATA.material)
+		P.material_amt = DATA.coating_amount * GUN_KINETIC_MATERIAL_RATIO_BULLET // 20% of the material goes to the casing instead
+		P.setMaterial(DATA.coating)
 	alter_proj?.Invoke(P)
 
 	if(QDELETED(P))

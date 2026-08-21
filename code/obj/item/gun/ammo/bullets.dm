@@ -275,7 +275,7 @@
 		ammoDrop.icon = src.icon
 		ammoDrop.icon_state = src.icon_state
 		ammoDrop.ammo_type = new src.ammo_type.type
-		ammoDrop.ammo_type.material = src.ammo_type.material
+		ammoDrop.ammo_type.coating = src.ammo_type.coating
 		ammoDrop.delete_on_reload = src.delete_on_reload
 		src.UpdateIcon()
 		ammoDrop.UpdateIcon()
@@ -284,8 +284,8 @@
 	get_desc()
 		if(src.amount_left == 0)
 			return . += "There are no bullets left!"
-		else if(ammo_type.material)
-			return . += "There [src.amount_left == 1 ? "is" : "are"] [src.amount_left] [ammo_type.material.getName()]-coated bullet\s left!"
+		else if(ammo_type.coating)
+			return . += "There [src.amount_left == 1 ? "is" : "are"] [src.amount_left] [ammo_type.coating.getName()]-coated bullet\s left!"
 		return . += "There [src.amount_left == 1 ? "is" : "are"] [src.amount_left] bullet\s left!"
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
@@ -307,8 +307,8 @@
 
 	on_material_scan()
 		. = ..()
-		if(src.ammo_type.material)
-			return "Each bullet is coated in [src.ammo_type.material_amt] unit\s of [src.ammo_type.material]."
+		if(src.ammo_type.coating)
+			return "Each bullet is coated in [src.ammo_type.coating_amount] unit\s of [src.ammo_type.coating]"
 
 
 //no caliber:
@@ -334,7 +334,7 @@
 	icon_empty = "custom-0"
 
 	onMaterialChanged()
-		ammo_type.material = src.material
+		ammo_type.coating = src.material
 
 		if(src.material)
 			ammo_type.power = round(material.getProperty("density") * 2 + material.getProperty("hard"))

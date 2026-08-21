@@ -72,8 +72,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		. = ..()
 		if (src.ammo && (src.ammo.amount_left > 0))
 			var/datum/projectile/ammo_type = src.ammo.ammo_type
-			if(ammo_type.material)
-				. += "There are [src.ammo.amount_left] [ammo_type.material.getName()]-coated [src.ammo.sname] bullets left!"
+			if(ammo_type.coating)
+				. += "There are [src.ammo.amount_left] [ammo_type.coating.getName()]-coated [src.ammo.sname] bullets left!"
 			else
 				. += "There are [src.ammo.amount_left] bullets of [src.ammo.sname] left!"
 		else
@@ -194,9 +194,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 						//DEBUG_MESSAGE("Ejected [number_of_casings] casings from [src].")
 						for (var/i in 1 to number_of_casings)
 							var/atom/casing = new src.current_projectile.casing(T, src)
-							if(src.ammo.ammo_type.material)
-								casing.material_amt = src.ammo.ammo_type.material_amt * GUN_KINETIC_MATERIAL_RATIO_CASING
-								casing.setMaterial(src.ammo.ammo_type.material)
+							if(src.ammo.ammo_type.coating)
+								casing.material_amt = src.ammo.ammo_type.coating_amount * GUN_KINETIC_MATERIAL_RATIO_CASING
+								casing.setMaterial(src.ammo.ammo_type.coating)
 			else
 				if (src.casings_to_eject < 0)
 					src.casings_to_eject = 0
@@ -213,9 +213,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 						//DEBUG_MESSAGE("Ejected [number_of_casings] casings from [src].")
 						for (var/i in 1 to number_of_casings)
 							var/atom/casing = new src.current_projectile.casing(T, src)
-							if(src.ammo.ammo_type.material)
-								casing.material_amt = src.ammo.ammo_type.material_amt * GUN_KINETIC_MATERIAL_RATIO_CASING
-								casing.setMaterial(src.ammo.ammo_type.material)
+							if(src.ammo.ammo_type.coating)
+								casing.material_amt = src.ammo.ammo_type.coating_amount * GUN_KINETIC_MATERIAL_RATIO_CASING
+								casing.setMaterial(src.ammo.ammo_type.coating)
 			else
 				if (src.casings_to_eject < 0)
 					src.casings_to_eject = 0
@@ -285,9 +285,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				//DEBUG_MESSAGE("Ejected [src.casings_to_eject] [src.current_projectile.casing] from [src].")
 				while (src.casings_to_eject > 0)
 					var/atom/casing = new src.current_projectile.casing(T, src)
-					if(src.ammo.ammo_type.material)
-						casing.material_amt = src.ammo.ammo_type.material_amt * GUN_KINETIC_MATERIAL_RATIO_CASING
-						casing.setMaterial(src.ammo.ammo_type.material)
+					if(src.ammo.ammo_type.coating)
+						casing.material_amt = src.ammo.ammo_type.coating_amount * GUN_KINETIC_MATERIAL_RATIO_CASING
+						casing.setMaterial(src.ammo.ammo_type.coating)
 					src.casings_to_eject--
 		return
 
@@ -305,8 +305,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	on_material_scan()
 		. = ..()
-		if(src.ammo?.ammo_type.material)
-			return "Each bullet is coated in [src.ammo.ammo_type.material_amt] unit\s of [src.ammo.ammo_type.material]."
+		if(src.ammo?.ammo_type.coating)
+			return "Each bullet is coated in [src.ammo.ammo_type.coating_amount] unit\s of [src.ammo.ammo_type.coating]"
 
 ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 /obj/item/gun/kinetic/single_action

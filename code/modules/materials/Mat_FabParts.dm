@@ -197,7 +197,7 @@
 		if(!istype(I, /obj/item/ammo/bullets)) return 0
 		var/obj/item/ammo/bullets/ammo = I
 		if(ammo.amount_left == 0) return 0
-		if(ammo.ammo_type.material) return 0
+		if(ammo.ammo_type.coating) return 0
 		return ..()
 
 /datum/matfab_part/chemical

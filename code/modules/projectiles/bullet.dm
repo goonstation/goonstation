@@ -1858,15 +1858,15 @@ datum/projectile/bullet/autocannon
 					src.CHEM = W
 					src.damage = CHEM.launcher_damage
 					src.has_grenade = 1
-					src.material = CHEM.material
-					src.material_amt = CHEM.material_amt
+					src.coating = CHEM.material
+					src.coating_amount = CHEM.material_amt
 					return 1
 				else if (istype(W, /obj/item/old_grenade))
 					src.OLD = W
 					src.damage = OLD.launcher_damage
 					src.has_grenade = 1
-					src.material = OLD.material
-					src.material_amt = OLD.material_amt
+					src.coating = OLD.material
+					src.coating_amount = OLD.material_amt
 					return 1
 				else
 					return 0
@@ -1882,16 +1882,16 @@ datum/projectile/bullet/autocannon
 					src.CHEM.set_loc(T)
 				src.CHEM = null
 				src.has_grenade = 0
-				src.material = null
-				src.material_amt = initial(src.material_amt)
+				src.coating = null
+				src.coating_amount = initial(src.coating_amount)
 				return 1
 			else if (src.OLD != null)
 				if (T)
 					src.OLD.set_loc(T)
 				src.OLD = null
 				src.has_grenade = 0
-				src.material = null
-				src.material_amt = initial(src.material_amt)
+				src.coating = null
+				src.coating_amount = initial(src.coating_amount)
 				return 1
 			else //how did this happen?
 				return 0
