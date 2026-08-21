@@ -107,10 +107,7 @@
 			H.put_in_hand_or_drop(myHead)
 			playsound(H, 'sound/items/capsule_pop.ogg', 50, TRUE, pitch=0.7)
 
-			if (isskeleton(H))
-				var/datum/mutantrace/skeleton/S = H.mutantrace
-				S.set_head(myHead)
-				S.head_moved(TRUE)
+			ON_SKELETON_HEAD_MOVE(myHead, TRUE)
 			return CAST_ATTEMPT_SUCCESS
 
 		else if (isrobot(src.holder.owner)) // one day

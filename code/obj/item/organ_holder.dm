@@ -752,10 +752,7 @@
 						H.u_equip(W)
 						W.set_loc(myHead)
 						myHead.wear_mask = W
-					if (isskeleton(src.donor) && myHead.head_type == HEAD_SKELETON) // must be skeleton AND have skeleton head
-						var/datum/mutantrace/skeleton/S = H.mutantrace
-						S.set_head(myHead)
-						S.head_moved(TRUE) // update tracking
+					ON_SKELETON_HEAD_MOVE(myHead, TRUE)
 
 				myHead.set_loc(location)
 				myHead.update_head_image()
@@ -1113,12 +1110,7 @@
 						newHead.wear_mask.set_loc(H)
 						newHead.wear_mask = null
 
-					if (isskeleton(H))
-						var/datum/mutantrace/skeleton/S = H.mutantrace
-						if (newHead.head_type == HEAD_SKELETON) // only set head / reset eye if we can link to it
-							S.set_head(newHead)
-							S.head_moved() // update tracking
-					else
+					if (!ON_SKELETON_HEAD_MOVE(newHead, FALSE))
 						H.set_eye(null)
 
 				src.donor.update_body()
@@ -1172,10 +1164,7 @@
 
 				// if the head has a skeleton, and we're not taking it, eject the skeleton out of the head
 				if (src.head.head_type == HEAD_SKELETON)
-					var/mob/living/carbon/human/H = src.head.linked_human
-					if (H && (!isskeleton(src.donor) && H != src.donor))
-						var/datum/mutantrace/skeleton/S = H?.mutantrace
-						S.set_head(null)
+					UNLINK_SKELETON_HEAD(src.head)
 
 				newBrain.set_loc(src.donor)
 				newBrain.holder = src

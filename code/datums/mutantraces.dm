@@ -1112,6 +1112,17 @@ TYPEINFO(/datum/mutantrace/vampiric_thrall)
 		src.mob?.mind?.remove_antagonist(ROLE_VAMPTHRALL, ANTAGONIST_REMOVAL_SOURCE_DEATH)
 		..()
 
+// returns the head if the skeleton is headless, null otherwise
+#define IS_HEADLESS_SKELETON(x) ((istype(x, /mob/living/carbon/human) && istype(x:mutantrace, /datum/mutantrace/skeleton) && x:mutantrace:head_tracker) ? x:mutantrace:head_tracker : null)
+// returns the head if the skeleton is headless, the mob's head if otherwise
+#define FIND_SKELETON_HEAD(x) ((istype(x, /mob/living/carbon/human) && istype(x:mutantrace, /datum/mutantrace/skeleton)) ? x:mutantrace:head_tracker || x:organHolder:head : null)
+
+#define SKELETON_HEAD_SUITABLE(x) (isskeleton(x.donor) && x.head_type == HEAD_SKELETON)
+#define SKELETON_HEAD_LINKED(x) ((isskeleton(x.linked_human) && x.head_type == HEAD_SKELETON))
+// used for surgery checks, generally anywhere where a head is removed or attached
+#define ON_SKELETON_HEAD_MOVE(head, removed) ((SKELETON_HEAD_SUITABLE(head)) ? head.donor:mutantrace:set_head(head) || head.donor:mutantrace:head_moved(removed) || TRUE : FALSE)
+#define UNLINK_SKELETON_HEAD(head) ((SKELETON_HEAD_LINKED(head)) ? head.linked_human:mutantrace:set_head(null) : FALSE)
+
 TYPEINFO(/datum/mutantrace/skeleton)
 	icon = 'icons/mob/skeleton.dmi'
 /datum/mutantrace/skeleton
@@ -1166,16 +1177,22 @@ TYPEINFO(/datum/mutantrace/skeleton)
 			src.mob.set_eye(src.head_tracker)
 			src.mob.ensure_speech_tree().update_speaker_origin(src.head_tracker)
 			src.mob.ensure_listen_tree().update_listener_origin(src.head_tracker)
+			if (src.mob.client)
+				global.client_hashmap.update_tracked_atom(src.mob.client,src.head_tracker)
 
 		else
 			src.mob.set_eye(null)
 			src.mob.ensure_speech_tree().update_speaker_origin(src.mob)
 			src.mob.ensure_listen_tree().update_listener_origin(src.mob)
+			if (src.mob.client)
+				global.client_hashmap.update_tracked_atom(src.mob.client,src.mob)
 
 	proc/set_head(obj/item/organ/head/head)
 		// if the head was previous linked to someone else
 		if (isnull(head))
 			src.mob.set_eye(null)
+			if (src.mob.client)
+				global.client_hashmap.update_tracked_atom(src.mob.client,src.mob)
 
 		if (isskeleton(head?.linked_human) && (src.mob != head.linked_human))
 			var/datum/mutantrace/skeleton/S = head.linked_human.mutantrace
