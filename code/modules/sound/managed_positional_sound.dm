@@ -552,7 +552,7 @@ var/global/list/managed_positional_sound_channels = list()
 	if (!length(src.emitters))
 		src.mute_all(force)
 		return
-	if (!global.client_hashmap)
+	if (!global.sound_hashmap)
 		src.mute_all(force)
 		return
 
