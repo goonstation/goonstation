@@ -59,7 +59,11 @@
 	attackby(obj/b, mob/user)
 		if(istype(b, /obj/item/gun/kinetic) && b:allowReverseReload)
 			b.Attackby(src, user)
-		else if(b.type == src.type)
+			return
+		if(!istype(b, /obj/item/ammo/bullets))
+			return ..()
+		var/obj/item/ammo/bullets/bullets = b
+		if(bullets.ammo_type.is_same_ammo(src.ammo_type))
 			var/obj/item/ammo/bullets/A = b
 			if(A.amount_left<1)
 				user.show_text("There's no ammo left in [A.name].", "red")
@@ -185,25 +189,18 @@
 		if (A.amount_left < 1)
 			return AMMO_RELOAD_SOURCE_EMPTY // Magazine's empty.
 		var/datum/projectile/K_type = K.ammo.ammo_type
-		if(K.ammo.amount_left > 0)
-			if(K_type.material != A.ammo_type.material)
-				return AMMO_RELOAD_TYPE_SWAP // Ammo materials are different
-			if(K_type.material && (K_type.material_amt != A.ammo_type.material_amt))
-				return AMMO_RELOAD_TYPE_SWAP // Different material amounts
 		if (K.ammo.amount_left >= K.max_ammo_capacity)
-			if (K_type.type != A.ammo_type.type)
+			if (!K_type.is_same_ammo(A.ammo_type))
 				return AMMO_RELOAD_TYPE_SWAP // Call swap().
 			return AMMO_RELOAD_ALREADY_FULL // Gun's full.
-		if (K.ammo.amount_left > 0 && K.ammo.ammo_type.type != A.ammo_type.type)
+		if (K.ammo.amount_left > 0 && (!K_type.is_same_ammo(A.ammo_type)))
 			return AMMO_RELOAD_TYPE_SWAP // Call swap().
-
 		else
-
 			// The gun may have been fired; eject casings if so (Convair880).
 			K.ejectcasings()
 
 			// Required for swap() to work properly (Convair880).
-			if (K.ammo.type != A.type || A.force_new_current_projectile)
+			if (!K.ammo.ammo_type.is_same_ammo(A.ammo_type) || A.force_new_current_projectile)
 				var/obj/item/ammo/bullets/ammoGun = new A.type
 				ammoGun.amount_left = K.ammo.amount_left
 				ammoGun.ammo_type = K.ammo.ammo_type

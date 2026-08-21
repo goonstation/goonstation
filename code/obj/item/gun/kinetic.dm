@@ -1038,10 +1038,10 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	//warcrimes brought to you by bullets telling guns how to shoot!
 	attackby(obj/item/ammo/bullets/b, mob/user)
-		var/obj/previous_ammo = ammo
+		var/obj/item/ammo/bullets/previous_ammo = ammo
 		var/mode_was_auto = current_projectile.fullauto_valid
 		..()
-		if(previous_ammo.type != ammo.type)  // we switched ammo types
+		if(!previous_ammo.ammo_type.is_same_ammo(ammo.ammo_type)) // we switched ammo types
 			if(istype(ammo, /obj/item/ammo/bullets/nine_mm_surplus))
 				if(mode_was_auto)
 					set_current_projectile(new/datum/projectile/bullet/nine_mm_surplus/auto)
@@ -1119,9 +1119,9 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	//copy pastes brought to you by bullets telling guns how to shoot!
 	attackby(obj/item/ammo/bullets/b, mob/user)
-		var/obj/previous_ammo = ammo
+		var/obj/item/ammo/bullets/previous_ammo = ammo
 		..()
-		if(previous_ammo.type != ammo.type)  // we switched ammo types
+		if(!previous_ammo.ammo_type.is_same_ammo(ammo.ammo_type))  // we switched ammo types
 			if(istype(ammo, /obj/item/ammo/bullets/nine_mm_surplus))
 				set_current_projectile(new/datum/projectile/bullet/nine_mm_surplus/auto)
 			else if(istype(ammo, /obj/item/ammo/bullets/bullet_9mm/smg))
@@ -3164,10 +3164,10 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 
 	attackby(obj/item/ammo/bullets/b, mob/user)  // has to account for whether regular or armor-piercing ammo is loaded AND which firing mode it's using
-		var/obj/previous_ammo = ammo
+		var/obj/item/ammo/bullets/previous_ammo = ammo
 		var/mode_was_burst = (istype(current_projectile, /datum/projectile/bullet/assault_rifle/burst/))  // was previous mode burst fire?
 		..()
-		if(previous_ammo.type != ammo.type)  // we switched ammo types
+		if(!previous_ammo.ammo_type.is_same_ammo(ammo.ammo_type)) // we switched ammo types
 			if(istype(ammo, /obj/item/ammo/bullets/assault_rifle/armor_piercing)) // we switched from normal to armor_piercing
 				if(mode_was_burst) // we were in burst shot mode
 					set_current_projectile(new/datum/projectile/bullet/assault_rifle/burst/armor_piercing)
@@ -3227,10 +3227,10 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 
 	attackby(obj/item/ammo/bullets/b, mob/user)  // has to account for whether regular or armor-piercing ammo is loaded AND which firing mode it's using
-		var/obj/previous_ammo = ammo
+		var/obj/item/ammo/bullets/previous_ammo = ammo
 		var/mode_was_burst = (istype(current_projectile, /datum/projectile/bullet/assault_rifle/burst))  // was previous mode burst fire?
 		..()
-		if(previous_ammo.type != ammo.type)  // we switched ammo types
+		if(!previous_ammo.ammo_type.is_same_ammo(ammo.ammo_type)) // we switched ammo types
 			if(istype(ammo, /obj/item/ammo/bullets/assault_rifle/armor_piercing)) // we switched from normal to armor_piercing
 				if(mode_was_burst) // we were in burst shot mode
 					set_current_projectile(new/datum/projectile/bullet/assault_rifle/burst/armor_piercing)

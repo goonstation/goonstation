@@ -122,6 +122,9 @@ ABSTRACT_TYPE(/datum/projectile)
 			if("power", "ks_ratio")
 				generate_inverse_stats()
 
+	proc/is_same_ammo(datum/projectile/other)
+		return (src.type == other.type) && (src.material == other.material)
+
 	proc
 		generate_stats()
 			src.power = damage + stun
