@@ -1,5 +1,5 @@
 #define GUN_KINETIC_MATERIAL_RATIO_CASING 0.2
-#define GUN_KINETIC_MATERIAL_RATIO_BULLET 0.8
+#define GUN_KINETIC_MATERIAL_RATIO_BULLET 0.8 // 20% less bullet per bullet
 
 //Global procs for firing, reflecting projectiles
 
@@ -117,7 +117,9 @@
 	P.proj_data = DATA
 	if(DATA.coating)
 		// alter_projectile may trigger material procs. Add material first
-		P.material_amt = DATA.coating_amount * GUN_KINETIC_MATERIAL_RATIO_BULLET // 20% of the material goes to the casing instead
+		P.material_amt = DATA.coating_amount
+		if(DATA.casing)
+			P.material_amt *= GUN_KINETIC_MATERIAL_RATIO_BULLET // Some of the material goes to the casing instead
 		P.setMaterial(DATA.coating)
 	alter_proj?.Invoke(P)
 

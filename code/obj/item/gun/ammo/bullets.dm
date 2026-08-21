@@ -1066,7 +1066,6 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	name = "20mm AP shells"
 	amount_left = 4
 	max_amount = 4
-	material_amt = 0.5
 	icon_state = "40mm_lethal"
 	ammo_type = new/datum/projectile/bullet/cannon
 	ammo_cat = AMMO_CANNON_20MM
@@ -1135,7 +1134,6 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	ammo_type = new/datum/projectile/bullet/four_bore
 	amount_left = 6
 	max_amount = 6
-	material_amt = 0.5
 	ammo_cat = AMMO_FOUR_BORE
 	icon_state = "4b-6"
 	icon_empty = "4b-0"
@@ -1170,7 +1168,6 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	desc = "Some high explosive grenades, for use in 40mm weapons."
 	amount_left = 2
 	max_amount = 2
-	material_amt = 0.5
 	icon_state = "40mm_HE_pod"
 	ammo_type = new/datum/projectile/bullet/autocannon
 	ammo_cat = AMMO_CANNON_40MM
@@ -1195,7 +1192,6 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	desc = "A box of general utility 40mm grenades."
 	amount_left = 8
 	max_amount = 8
-	material_amt = 0.2
 	icon_state = "40mm_lethal"
 	ammo_type = new/datum/projectile/bullet/grenade_round/
 	ammo_cat = AMMO_GRENADE_40MM
@@ -1226,7 +1222,6 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	desc = "Some smoke shells, for the 40mm platform."
 	amount_left = 5
 	max_amount = 5
-	material_amt = 0.2
 	icon_state = "40mm_smoke"
 	ammo_type = new/datum/projectile/bullet/smoke
 	ammo_cat = AMMO_GRENADE_40MM
@@ -1246,7 +1241,6 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	ammo_type = new/datum/projectile/bullet/marker
 	amount_left = 5
 	max_amount = 5
-	material_amt = 0.2
 	icon_state = "40mm_paint"
 	ammo_cat = AMMO_GRENADE_40MM
 	w_class = W_CLASS_NORMAL
@@ -1261,7 +1255,6 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	ammo_type = new/datum/projectile/bullet/pbr
 	amount_left = 2
 	max_amount = 2
-	material_amt = 0.2
 	icon_state = "40mm_nonlethal"
 	ammo_cat = AMMO_GRENADE_40MM
 	w_class = W_CLASS_NORMAL
@@ -1276,7 +1269,6 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	ammo_type = new/datum/projectile/bullet/stunbaton
 	amount_left = 2
 	max_amount = 2
-	material_amt = 0.5
 	icon_state = "40mm_nonlethal"
 	ammo_cat = AMMO_GRENADE_40MM
 	w_class = W_CLASS_NORMAL
@@ -1291,7 +1283,6 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	ammo_type = new/datum/projectile/bullet/breach_flashbang
 	amount_left = 5
 	max_amount = 5
-	material_amt = 0.2
 	icon_state = "40mm_nonlethal"
 	ammo_cat = AMMO_GRENADE_40MM
 	w_class = W_CLASS_NORMAL
@@ -1310,7 +1301,6 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	desc = "A 40mm shell used for converting hand grenades into impact detonation explosive shells"
 	amount_left = 1
 	max_amount = 1
-	material_amt = 0.2
 	icon_state = "paintballr-4"
 	ammo_type = new/datum/projectile/bullet/grenade_shell
 	ammo_cat = AMMO_GRENADE_40MM
@@ -1385,7 +1375,6 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	desc = "A mean high-explosive rocket, guaranteed to cause destruction in a large radius."
 	amount_left = 1
 	max_amount = 1
-	material_amt = 1
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "rpg_rocket"
 	ammo_type = new /datum/projectile/bullet/rpg
@@ -1400,7 +1389,6 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	desc = "A high-explosive missile, equipped with pod-seeking guidance systems."
 	amount_left = 1
 	max_amount = 1
-	material_amt = 1
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "pod_seeking_missile"
 	ammo_type = new /datum/projectile/bullet/homing/pod_seeking_missile
@@ -1414,7 +1402,6 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	name = "MRL rocket pack"
 	amount_left = 6
 	max_amount = 6
-	material_amt = 0.2
 	icon_state = "mrl_rocketpack"
 	ammo_type = new /datum/projectile/bullet/homing/rocket/mrl
 	ammo_cat = AMMO_ROCKET_MRL
@@ -1428,7 +1415,6 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	desc = "An experimental rocket containing an energy payload designed to collapse singularities. It's made mostly of electronics and seems pretty fragile."
 	amount_left = 1
 	max_amount = 1
-	material_amt = 1
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "regularrocket"
 	ammo_type = new /datum/projectile/bullet/antisingularity
@@ -1443,7 +1429,6 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	desc = "I am become mini-death, the destroyer of mini-worlds."
 	amount_left = 1
 	max_amount = 1
-	material_amt = 1
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "mininuke"
 	ammo_type = new /datum/projectile/bullet/mininuke
@@ -1524,7 +1509,6 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	icon_empty = "meow_ammo-0"
 	amount_left = 1
 	max_amount = 1
-	material_amt = 1
 	ammo_type = new/datum/projectile/special/meowitzer
 	ammo_cat = AMMO_HOWITZER
 	w_class = W_CLASS_NORMAL
@@ -1543,7 +1527,6 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	icon_empty = "meow_ammo-0"
 	amount_left = 1
 	max_amount = 1
-	material_amt = 1
 	ammo_type = new/datum/projectile/bullet/howitzer
 	ammo_cat = AMMO_HOWITZER
 	w_class = W_CLASS_NORMAL

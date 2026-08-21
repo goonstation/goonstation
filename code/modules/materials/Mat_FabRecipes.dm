@@ -334,11 +334,13 @@
 		var/obj/item/ammo/bullets/ammo_excess = ammo.split(ammo.amount_left - amount)
 		if(ammo_excess)
 			ammo_excess.set_loc(getOutputLocation(owner))
+		var/datum/projectile/new_ammo_type = new ammo.ammo_type.type // Ammo type might be shared somewhere else
+		ammo.ammo_type = new_ammo_type
 		ammo.ammo_type.coating = source.material
 		ammo.set_loc(getOutputLocation(owner))
 
 		var/mat_cost = ammo.ammo_type.coating_amount * amount
-		var/source_cost_amount = mat_cost / source.material_amt
+		var/source_cost_amount = round(mat_cost / source.material_amt, 0.01)
 		var/source_count_ceil = ceil(source_cost_amount)
 		var/excess_sheet_count = floor((source_count_ceil - source_cost_amount) / 0.1)
 		if(excess_sheet_count)
