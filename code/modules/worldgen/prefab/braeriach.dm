@@ -4,6 +4,22 @@
 	icon_state = "nuclearbomb_large"
 
 
+/obj/machinery/macrofab/syndicate
+	name = "Pod Fabricator"
+	desc = "A sophisticated machine that fabricates vehicles from a nearby reserve of supplies."
+	createdObject = /obj/machinery/vehicle/miniputt/syndiputt
+	itemName = "Syndicate pod"
+	sound_volume = 15
+
+/obj/machinery/macrofab/syndicate/attack_hand(mob/user)
+	if (!user.mind || !(user.mind.get_antagonist(ROLE_NUKEOP) || user.mind.get_antagonist(ROLE_NUKEOP_COMMANDER)))
+		boutput(user, SPAN_ALERT("This machine's design makes no sense to you, you can't figure out how to use it!"))
+		return
+
+	. = ..()
+
+
+
 // These layer under catwalks. Silly but pretty.
 /obj/cable/braeriach
 #ifndef IN_MAP_EDITOR
