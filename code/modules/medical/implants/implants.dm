@@ -291,6 +291,7 @@
 
 	var/healthstring = ""
 	var/affected = "CREW"
+	var/delay = TRUE
 
 	implanted(mob/M, mob/I)
 		..()
@@ -362,7 +363,7 @@
 		if(inafterlife(src.owner))
 			return
 		DEBUG_MESSAGE("[src] calling to report crit")
-		SPAWN(rand(15, 20) SECONDS)
+		SPAWN(src.delay ? rand(15, 20) SECONDS : 0)
 			health_alert()
 		..()
 
@@ -370,7 +371,7 @@
 		if(inafterlife(src.owner))
 			return
 		DEBUG_MESSAGE("[src] calling to report death")
-		SPAWN(rand(15, 25) SECONDS)
+		SPAWN(src.delay ? rand(15, 20) SECONDS : 0)
 			death_alert()
 		..()
 
@@ -395,6 +396,7 @@
 	name = "health implant - syndicate issue"
 	affected = "SYNDICATE"
 	mailgroups = list(MGA_SYNDICATE)
+	delay = FALSE
 
 /obj/item/implant/health/security
 	name = "health implant - security issue"
