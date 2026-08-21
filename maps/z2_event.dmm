@@ -233,6 +233,9 @@
 	dir = 4;
 	icon_state = "line1"
 	},
+/obj/item/device/radio/intercom/syndicate_ai{
+	dir = 8
+	},
 /turf/simulated/floor/glassblock/transparent/grey,
 /area/braeriach/engineering/tether)
 "br" = (
@@ -303,6 +306,9 @@
 /obj/decal/tile_edge/line/black{
 	dir = 8;
 	icon_state = "line1"
+	},
+/obj/item/device/radio/intercom/syndicate_ai{
+	dir = 8
 	},
 /turf/simulated/floor/glassblock/transparent/red,
 /area/braeriach/ai/upload)
@@ -929,6 +935,10 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/wood/two,
 /area/braeriach/crew/jazz_lounge)
+"ey" = (
+/obj/item/device/radio/intercom/syndicate_ai,
+/turf/simulated/floor/black,
+/area/braeriach/engineering/gas_storage)
 "ez" = (
 /obj/machinery/door/poddoor/blast,
 /turf/simulated/floor/plating/with_grille,
@@ -1267,6 +1277,11 @@
 	icon_state = "shore-34"
 	},
 /area/titlescreen)
+"gk" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/item/device/radio/intercom/syndicate_ai,
+/turf/simulated/floor/minitiles/black,
+/area/braeriach/teleporter)
 "gp" = (
 /turf/simulated/floor/redblack{
 	dir = 6
@@ -1329,6 +1344,7 @@
 "gB" = (
 /obj/table/reinforced/industrial/auto,
 /obj/item/paper/image/businesscard/mabinogi,
+/obj/item/device/radio/intercom/syndicate_ai,
 /turf/simulated/floor/industrial,
 /area/braeriach/secure/firing_range)
 "gE" = (
@@ -1495,6 +1511,14 @@
 	dir = 9
 	},
 /area/braeriach/command/bridge)
+"hA" = (
+/obj/item/device/radio/intercom/syndicate_ai{
+	dir = 8
+	},
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/braeriach/hallway/east)
 "hD" = (
 /obj/cable/braeriach{
 	icon_state = "1-2"
@@ -1641,6 +1665,9 @@
 	icon_state = "line1"
 	},
 /obj/disposalpipe/segment,
+/obj/item/device/radio/intercom/syndicate_ai{
+	dir = 4
+	},
 /turf/simulated/floor/white,
 /area/braeriach/medbay)
 "ih" = (
@@ -1782,6 +1809,12 @@
 	},
 /turf/simulated/floor/twotone/black,
 /area/braeriach/secure)
+"iD" = (
+/obj/item/device/radio/intercom/syndicate_ai{
+	dir = 8
+	},
+/turf/simulated/floor/shuttlebay,
+/area/braeriach/podbay)
 "iE" = (
 /obj/machinery/manufacturer/hangar,
 /obj/decal/tile_edge/line/white{
@@ -1913,6 +1946,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/device/radio/intercom/syndicate_ai,
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
@@ -2091,6 +2125,7 @@
 /obj/cable/braeriach{
 	icon_state = "4-8"
 	},
+/obj/item/device/radio/intercom/syndicate_ai,
 /turf/simulated/floor/black,
 /area/braeriach/command/war_room)
 "kj" = (
@@ -2650,6 +2685,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
+/obj/item/device/radio/intercom/syndicate_ai,
 /turf/simulated/floor/redwhite{
 	dir = 9
 	},
@@ -2785,6 +2821,9 @@
 /obj/decal/tile_edge/line/black{
 	dir = 4;
 	icon_state = "line2"
+	},
+/obj/item/device/radio/intercom/syndicate_ai{
+	dir = 8
 	},
 /turf/simulated/floor/glassblock/transparent/red,
 /area/braeriach/ai)
@@ -3152,6 +3191,15 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/black,
 /area/braeriach/command/bridge)
+"pz" = (
+/obj/disposalpipe/segment,
+/obj/item/device/radio/intercom/syndicate_ai{
+	dir = 4
+	},
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/braeriach/secure)
 "pA" = (
 /obj/table/reinforced/industrial/auto,
 /obj/item/paper/cryo{
@@ -3230,6 +3278,9 @@
 /area/braeriach/teleporter/control)
 "pP" = (
 /obj/railing,
+/obj/item/device/radio/intercom/syndicate_ai{
+	dir = 4
+	},
 /turf/simulated/floor/twotone/black,
 /area/braeriach/armament_depot)
 "pQ" = (
@@ -4046,6 +4097,9 @@
 	pixel_x = -9;
 	pixel_y = -7
 	},
+/obj/item/device/radio/intercom/syndicate_ai{
+	dir = 8
+	},
 /turf/simulated/floor/twotone/white,
 /area/braeriach/crew/kitchen)
 "tb" = (
@@ -4158,6 +4212,10 @@
 	icon_state = "shore-45"
 	},
 /area/titlescreen)
+"tw" = (
+/obj/item/device/radio/intercom/syndicate_ai,
+/turf/simulated/floor/redblack,
+/area/braeriach/hallway/south)
 "ty" = (
 /obj/table/wood/round/auto,
 /obj/item/cigarbox{
@@ -4779,6 +4837,7 @@
 /turf/simulated/floor/black,
 /area/braeriach/command/bridge)
 "vR" = (
+/obj/item/device/radio/intercom/syndicate_ai,
 /turf/simulated/floor/carpet/red/fancy/narrow/T_north,
 /area/braeriach/crew/barracks)
 "vT" = (
@@ -5370,6 +5429,17 @@
 	},
 /turf/simulated/floor/twotone/white,
 /area/braeriach/crew/kitchen)
+"yz" = (
+/obj/stool/chair/red{
+	dir = 8
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/item/device/radio/intercom/syndicate_ai,
+/turf/simulated/floor/twotone/red,
+/area/braeriach/crew)
 "yA" = (
 /obj/decal/tile_edge/line/red{
 	dir = 9;
@@ -5733,6 +5803,12 @@
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/jen,
+/area/braeriach/command/war_room)
+"An" = (
+/obj/item/device/radio/intercom/syndicate_ai{
+	dir = 4
+	},
+/turf/simulated/floor/minitiles/black,
 /area/braeriach/command/war_room)
 "Aq" = (
 /obj/item_dispenser/barricade,
@@ -6122,6 +6198,9 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_south/nopoweralert,
+/obj/item/device/radio/intercom/syndicate_ai{
+	dir = 8
+	},
 /turf/simulated/floor/circuit/red,
 /area/braeriach/armament_depot/vestibule)
 "BU" = (
@@ -6187,6 +6266,17 @@
 /obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/darkpurple,
 /area/braeriach/medbay/pharmacy)
+"Co" = (
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/disposalpipe/segment,
+/obj/item/device/radio/intercom/syndicate_ai{
+	dir = 4
+	},
+/turf/simulated/floor/wood/two,
+/area/braeriach/crew/jazz_lounge)
 "Cp" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -6441,6 +6531,9 @@
 	dir = 10;
 	icon_state = "xtra_bigstripe-corner2"
 	},
+/obj/item/device/radio/intercom/syndicate_ai{
+	dir = 4
+	},
 /turf/simulated/floor/shuttlebay,
 /area/braeriach/podbay)
 "Dq" = (
@@ -6463,6 +6556,9 @@
 /obj/decal/tile_edge/line/black{
 	dir = 8;
 	icon_state = "line1"
+	},
+/obj/item/device/radio/intercom/syndicate_ai{
+	dir = 1
 	},
 /turf/simulated/floor/red/redblackchecker,
 /area/braeriach/crew/bar)
@@ -6536,6 +6632,12 @@
 "DT" = (
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/crew/jazz_lounge)
+"DW" = (
+/obj/item/device/radio/intercom/syndicate_ai{
+	dir = 4
+	},
+/turf/simulated/floor/twotone/black,
+/area/braeriach/hallway/east)
 "DX" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 1
@@ -7042,6 +7144,14 @@
 	dir = 8
 	},
 /area/braeriach/ai/vestibule)
+"FW" = (
+/obj/item/device/radio/intercom/syndicate_ai{
+	dir = 4
+	},
+/turf/simulated/floor/redwhite{
+	dir = 1
+	},
+/area/braeriach/medbay/surgery)
 "FZ" = (
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/redblack{
@@ -7595,6 +7705,10 @@
 	dir = 10
 	},
 /area/braeriach/hallway/south)
+"HZ" = (
+/obj/item/device/radio/intercom/syndicate_ai,
+/turf/simulated/floor/redblack,
+/area/braeriach/hallway/north)
 "Ia" = (
 /obj/machinery/power/apc/autoname_east/nopoweralert,
 /obj/cable/braeriach{
@@ -7770,6 +7884,9 @@
 "IE" = (
 /obj/cable/braeriach{
 	icon_state = "1-2"
+	},
+/obj/item/device/radio/intercom/syndicate_ai{
+	dir = 8
 	},
 /turf/simulated/floor/stairs/dark/wide{
 	dir = 6
@@ -8808,6 +8925,9 @@
 /obj/cable/braeriach{
 	icon_state = "0-4"
 	},
+/obj/item/device/radio/intercom/syndicate_ai{
+	dir = 4
+	},
 /turf/simulated/floor/twotone/black{
 	dir = 1
 	},
@@ -9180,6 +9300,24 @@
 	dir = 1
 	},
 /area/braeriach/hallway/north)
+"Og" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
+/obj/item/device/radio/intercom/syndicate_ai,
+/turf/simulated/floor/twotone/white,
+/area/braeriach/medbay)
+"Oj" = (
+/obj/submachine/weapon_vendor/syndicate,
+/obj/item/device/radio/intercom/syndicate_ai{
+	dir = 1
+	},
+/turf/simulated/floor/red/redblackchecker,
+/area/braeriach/secure/equipment)
 "On" = (
 /obj/decal/stripe_delivery,
 /turf/simulated/floor/industrial,
@@ -9444,6 +9582,11 @@
 	icon_state = "shore-18"
 	},
 /area/titlescreen)
+"PB" = (
+/obj/submachine/weapon_vendor/syndicate,
+/obj/item/device/radio/intercom/syndicate_ai,
+/turf/simulated/floor/red/redblackchecker,
+/area/braeriach/secure/equipment)
 "PC" = (
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4
@@ -9669,6 +9812,12 @@
 /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo,
 /turf/simulated/floor/grey,
 /area/braeriach/medbay)
+"Qx" = (
+/obj/item/device/radio/intercom/syndicate_ai{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/braeriach/command/bridge)
 "Qy" = (
 /obj/shrub{
 	icon = 'icons/obj/stationobjs.dmi';
@@ -9810,6 +9959,7 @@
 /obj/item/chem_grenade/cleaner{
 	pixel_x = 9
 	},
+/obj/item/device/radio/intercom/syndicate_ai,
 /turf/simulated/floor/specialroom/arcade,
 /area/braeriach/crew/janitor)
 "QS" = (
@@ -9990,6 +10140,7 @@
 	pixel_y = -5;
 	pixel_x = -7
 	},
+/obj/item/device/radio/intercom/syndicate_ai,
 /turf/simulated/floor/shiny,
 /area/braeriach/secure/armoury)
 "Rt" = (
@@ -10171,6 +10322,10 @@
 	},
 /turf/simulated/floor/minitiles/white,
 /area/braeriach/medbay)
+"RV" = (
+/obj/item/device/radio/intercom/syndicate_ai,
+/turf/simulated/floor/shuttlebay,
+/area/braeriach/podbay)
 "RX" = (
 /turf/unsimulated/wall/auto/sengoku{
 	icon_state = "12";
@@ -10597,6 +10752,7 @@
 /obj/cable/braeriach{
 	icon_state = "0-2"
 	},
+/obj/item/device/radio/intercom/syndicate_ai,
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/engineering/power)
 "Ul" = (
@@ -11018,6 +11174,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/device/radio/intercom/syndicate_ai,
 /turf/simulated/floor/shiny,
 /area/braeriach/medbay/morgue)
 "Wq" = (
@@ -11297,6 +11454,9 @@
 /obj/item/parts/robot_parts/robot_frame/syndicate,
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
+	},
+/obj/item/device/radio/intercom/syndicate_ai{
+	dir = 1
 	},
 /turf/simulated/floor/white,
 /area/braeriach/medbay)
@@ -11754,6 +11914,9 @@
 	dir = 5;
 	pixel_x = 0;
 	pixel_y = 4
+	},
+/obj/item/device/radio/intercom/syndicate_ai{
+	dir = 4
 	},
 /turf/simulated/floor/twotone/black,
 /area/braeriach/engineering)
@@ -18765,7 +18928,7 @@ Yh
 lM
 VW
 VW
-VW
+Co
 Kv
 ex
 mh
@@ -19956,12 +20119,12 @@ LF
 LF
 DX
 iw
-jT
+PB
 GC
 oJ
 oJ
 HF
-jT
+Oj
 BG
 sl
 wp
@@ -22369,7 +22532,7 @@ wJ
 dT
 JU
 JU
-JU
+pz
 JU
 GN
 wJ
@@ -23920,7 +24083,7 @@ rR
 TG
 TG
 rR
-TG
+iD
 TG
 rR
 TG
@@ -24214,7 +24377,7 @@ Pf
 ar
 xw
 xw
-TG
+RV
 TG
 TG
 EB
@@ -24475,7 +24638,7 @@ mx
 OH
 mx
 mx
-tI
+yz
 tI
 tI
 BV
@@ -24506,7 +24669,7 @@ fh
 Vi
 Sk
 Sk
-uI
+tw
 SS
 MT
 Pf
@@ -24788,7 +24951,7 @@ ak
 bY
 qR
 Ns
-EW
+HZ
 TR
 qN
 wb
@@ -27519,7 +27682,7 @@ WL
 ot
 PE
 RL
-zK
+gk
 WM
 Uv
 qA
@@ -29056,7 +29219,7 @@ iF
 iF
 Dh
 UI
-HU
+DW
 XR
 Bg
 Qd
@@ -29624,7 +29787,7 @@ ob
 PL
 ng
 ng
-ng
+hA
 ng
 ng
 nR
@@ -29637,7 +29800,7 @@ ng
 nR
 ng
 ng
-ng
+hA
 ng
 nR
 ng
@@ -30259,7 +30422,7 @@ hH
 QO
 Ih
 ZV
-ZV
+An
 ZV
 Ih
 pt
@@ -32627,7 +32790,7 @@ wp
 hK
 hK
 Mx
-rA
+ey
 rA
 yD
 yD
@@ -32947,7 +33110,7 @@ rj
 DQ
 xT
 RA
-ud
+Og
 nl
 nl
 nl
@@ -34460,7 +34623,7 @@ rS
 rS
 nG
 LT
-nY
+FW
 bz
 fD
 oY
@@ -35686,7 +35849,7 @@ Vm
 Vm
 Jt
 oy
-OS
+Qx
 ni
 OS
 Dx

@@ -21,6 +21,9 @@ TYPEINFO(/obj/item/device/radio/intercom)
 	forced_maptext = TRUE
 	speaker_range = 7
 
+	/// Allows this radio to be overridden by AIs even if `locked_frequency` is set.
+	var/always_override = FALSE
+
 	HELP_MESSAGE_OVERRIDE("Stand next to an intercom and use the prefix <B> :in </B> to speak directly into it.")
 
 /obj/item/device/radio/intercom/proc/update_pixel_offset_dir(obj/item/AM, old_dir, new_dir)
@@ -93,7 +96,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 		return
 
 	if(user.client.check_key(KEY_BOLT))
-		if (src.locked_frequency)
+		if (src.locked_frequency && !src.always_override)
 			boutput(user, SPAN_ALERT("You can't override an intercom with a locked frequency!"))
 			return
 		user.delStatus("ai_intercom_override")
@@ -221,6 +224,19 @@ TYPEINFO(/obj/item/device/radio/intercom)
 
 	initialize()
 		set_frequency(frequency)
+
+// Uses the Salvager frequency in lieu of an actual Syndicate AI intercom frequency.
+/obj/item/device/radio/intercom/syndicate_ai
+	name = "Syndicate Intercom"
+	frequency = RADIO::FREQ::SALVAGER
+	initial_microphone_enabled = TRUE
+	device_color = "#7F7FE2"
+	hardened = TRUE
+	locked_frequency = TRUE
+	always_override = TRUE
+
+/obj/item/device/radio/intercom/syndicate_ai/initialize()
+	src.set_frequency(frequency)
 
 // -------------------- DetNet --------------------
 /obj/item/device/radio/intercom/detnet
