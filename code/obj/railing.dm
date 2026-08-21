@@ -13,7 +13,7 @@
 	object_flags = HAS_DIRECTIONAL_BLOCKING
 	dir = SOUTH
 	custom_suicide = 1
-	material_amt = MATERIAL::AMOUNT_SHEET
+	material_amt = MATERIAL::AMOUNT::SHEET
 	provides_grip = TRUE
 	var/broken = 0
 	var/is_reinforced = 0

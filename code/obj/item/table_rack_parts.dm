@@ -93,7 +93,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 /obj/item/furniture_parts/table
 	name = "table parts"
 	desc = "A collection of parts that can be used to make a table."
-	material_amt = MATERIAL::AMOUNT_SHEET * 2
+	material_amt = MATERIAL::AMOUNT::SHEET * 2
 
 	afterattack(atom/target, mob/user)
 		if (isturf(target) && target == get_turf(user))
@@ -302,7 +302,7 @@ TYPEINFO(/obj/item/furniture_parts/table/glass)
 	stamina_crit_chance = 15
 	furniture_type = /obj/rack
 	furniture_name = "rack"
-	material_amt = MATERIAL::AMOUNT_SHEET
+	material_amt = MATERIAL::AMOUNT::SHEET
 
 /* ------- Single Table Parts ------- */
 
@@ -508,7 +508,7 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 		icon_state = "ichair_parts"
 		furniture_type = /obj/stool/chair/dining/industrial
 		furniture_name = "industrial chair"
-		material_amt = MATERIAL::AMOUNT_SHEET
+		material_amt = MATERIAL::AMOUNT::SHEET
 
 /obj/item/furniture_parts/wheelchair
 	name = "wheelchair parts"

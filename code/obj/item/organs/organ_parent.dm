@@ -21,7 +21,7 @@
 	stamina_damage = 5
 	stamina_cost = 5
 	edible = 1	// currently overridden by material settings
-	material_amt = MATERIAL::AMOUNT_SHEET * 3
+	material_amt = MATERIAL::AMOUNT::SHEET * 3
 	uses_default_material_appearance = FALSE
 	uses_default_material_name = FALSE
 	var/mob/living/carbon/human/donor = null // if I can't use "owner" I can at least use this

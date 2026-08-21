@@ -804,7 +804,7 @@ TYPEINFO(/obj/machinery/door/unpowered/wood)
 	layer = EFFECTS_LAYER_UNDER_1
 	anchored = ANCHORED
 	autoclose = TRUE
-	material_amt = MATERIAL::AMOUNT_SHEET * 3
+	material_amt = MATERIAL::AMOUNT::SHEET * 3
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_SCREWDRIVER | DECON_WIRECUTTERS
 	var/blocked = null
 	var/simple_lock = 0
@@ -823,7 +823,7 @@ TYPEINFO(/obj/machinery/door/unpowered/wood)
 	icon = 'icons/obj/doors/SL_doors.dmi'
 	icon_state = "wood1"
 	icon_base = "wood"
-	material_amt = MATERIAL::AMOUNT_SHEET * 6
+	material_amt = MATERIAL::AMOUNT::SHEET * 6
 
 /obj/machinery/door/unpowered/wood/stall
 	name = "stall door"

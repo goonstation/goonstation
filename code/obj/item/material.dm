@@ -735,7 +735,7 @@
 	stamina_crit_chance = 35
 	burn_possible = FALSE
 	event_handler_flags = USE_FLUID_ENTER
-	material_amt = MATERIAL::AMOUNT_SHEET
+	material_amt = MATERIAL::AMOUNT::SHEET
 	material_name = "Glass"
 	default_material = "glass"
 	mat_changename = TRUE

@@ -15,7 +15,7 @@ TYPEINFO(/obj/storage/closet)
 	volume = 70
 	_max_health = LOCKER_HEALTH_WEAK
 	_health = LOCKER_HEALTH_WEAK
-	material_amt = MATERIAL::AMOUNT_SHEET * 2
+	material_amt = MATERIAL::AMOUNT::SHEET * 2
 	///Will this locker auto-close when someone is flung into it
 	var/auto_close = TRUE
 

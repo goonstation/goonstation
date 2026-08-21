@@ -43,7 +43,7 @@ TYPEINFO(/obj/item/motherboard)
 	name = "Computer-frame"
 	icon = 'icons/obj/computer_frame.dmi'
 	icon_state = "0"
-	material_amt = MATERIAL::AMOUNT_SHEET * 5
+	material_amt = MATERIAL::AMOUNT::SHEET * 5
 	var/state = 0
 	var/obj/item/motherboard/mainboard = null
 	var/obj/item/disk/data/fixed_disk/hd = null
@@ -60,7 +60,7 @@ TYPEINFO(/obj/item/motherboard)
 		icon = 'icons/obj/terminal_frame.dmi'
 		created_icon_state = "dterm"
 		computer_type = /obj/machinery/computer3/terminal
-		material_amt = MATERIAL::AMOUNT_SHEET * 3
+		material_amt = MATERIAL::AMOUNT::SHEET * 3
 		max_peripherals = 2
 		metal_given = 3
 		glass_needed = 1
