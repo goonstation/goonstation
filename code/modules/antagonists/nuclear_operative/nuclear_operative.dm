@@ -9,6 +9,7 @@
 
 	var/static/commander_title
 	var/static/available_callsigns
+	var/static/assigned_callsigns = list()
 	var/list/datum/materiel/purchased_items = list() //Used for adding a nukie's vendor purchases to crew credits. Items are tracked by whoever interacts with the vendor, so if the whole team gives their credits to the commander, the commander will have multiple entries in the crew credits!
 	var/list/datum/syndicate_buylist/uplink_items = list() // Same but for custom uplinks and the commander uplink
 
@@ -56,6 +57,7 @@
 			H.equip_if_possible(new /obj/item/device/nukeop_commander_uplink(H), SLOT_L_HAND)
 			H.equip_if_possible(new /obj/item/pinpointer/disk, SLOT_IN_BACKPACK)
 		else
+			H.equip_if_possible(new /obj/item/clothing/head/beret/syndicate, SLOT_HEAD)
 			H.equip_if_possible(new /obj/item/device/radio/headset/syndicate(H), SLOT_EARS)
 
 		H.equip_sensory_items()
@@ -69,10 +71,12 @@
 
 		H.equip_if_possible(ID, SLOT_WEAR_ID)
 
+		new /obj/item/implant/health/syndicate(H)
 		new /obj/item/implant/revenge/microbomb(H)
 
 		boutput(H, SPAN_ALERT("Your headset allows you to communicate on the Syndicate radio channel by prefacing messages with :z, as (say \":z Agent reporting in!\")."))
 		src.assign_name()
+		src.setup_id()
 
 	add_to_image_groups()
 		. = ..()
@@ -150,13 +154,34 @@
 		if (src.id == ROLE_NUKEOP_COMMANDER)
 			src.owner.current.real_name = "[syndicate_name()] [src.commander_title]"
 		else
-			var/callsign = pick(src.available_callsigns)
-			src.available_callsigns -= callsign
+			var/callsign
+			if(src.owner.ckey in src.assigned_callsigns)
+				callsign = src.assigned_callsigns[src.owner.ckey]
+			else
+				callsign = pick(src.available_callsigns)
+				src.assigned_callsigns[src.owner.ckey] = callsign
+				src.available_callsigns -= callsign
 			src.owner.current.real_name = "[syndicate_name()] Operative [callsign]"
 
 			// Assign a headset icon to the Operative matching the first letter of their callsign.
 			var/obj/item/device/radio/headset/syndicate/headset = src.owner.current.ears
 			headset.icon_override = "syndie_letters/[copytext(callsign, 1, 2)]"
+
+	proc/setup_id()
+		var/mob/living/carbon/human/nukie = src.owner.current
+		var/obj/item/card/id/id_card = nukie.wear_id
+		id_card.registered = nukie.real_name
+		id_card.assignment = "Nuclear Operative"
+		id_card.icon_state = "id_syndie"
+		id_card.update_name()
+		var/obj/item/device/pda2/syndicate/PDA = new(nukie)
+		PDA.insert_id_card(id_card, nukie)
+		PDA.owner = id_card.registered
+		PDA.ownerAssignment = id_card.assignment
+		PDA.name = "PDA-[PDA.owner]"
+		PDA.updateSelfDialog()
+		nukie.u_equip(PDA)
+		nukie.equip_if_possible(PDA, SLOT_WEAR_ID)
 
 /datum/antagonist/nuclear_operative/commander
 	id = ROLE_NUKEOP_COMMANDER

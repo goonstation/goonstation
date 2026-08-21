@@ -215,6 +215,24 @@
 						team.equip_player(src.occupant, FALSE)
 				break
 
+/obj/machinery/clonepod/pod_wars/nukie
+	name = "syndicate cloning pod deluxe"
+
+	growclone_a_ghost()
+		var/list/to_search = get_all_antagonists()
+		for(var/datum/antagonist/antag in to_search)
+			var/datum/mind/mind = antag.owner
+			if(!mind.get_antagonist(ROLE_NUKEOP) && !mind.get_antagonist(ROLE_NUKEOP_COMMANDER))
+				continue
+			if((istype(mind.current, /mob/dead/observer) || isdead(mind.current)) && mind.current.client && !mind.get_player()?.dnr)
+				//prune puritan trait
+				mind.current?.traitHolder.removeTrait("puritan")
+				if (growclone(mind.current, mind.current.real_name, mind, mind.current?.bioHolder, traits=mind.current?.traitHolder.copy()))
+					var/datum/antagonist/role = mind.get_antagonist(ROLE_NUKEOP) || mind.get_antagonist(ROLE_NUKEOP_COMMANDER)
+					SPAWN(1)
+						role.give_equipment()
+				break
+
 ////////////////////////////////////////////////
 
 /obj/forcefield/energyshield/perma/pod_wars
