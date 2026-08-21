@@ -390,6 +390,7 @@
 		r_tone = /datum/ringtone/basic/ring10
 		screen_x = 2
 		window_title = "Personnel Data Actuator"
+		scannable = FALSE
 
 		nuclear
 			owner = "John Doe"

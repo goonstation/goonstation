@@ -391,6 +391,11 @@
 		var/message = "[affected] DEATH ALERT: [src.owner] in [myarea]. [length(cloner_areas) ? "Clone implant detected." : "No cloning implant detected."]"
 		src.send_message(message, MGA_DEATH, "HEALTH-MAILBOT")
 
+/obj/item/implant/health/syndicate
+	name = "health implant - syndicate issue"
+	affected = "SYNDICATE"
+	mailgroups = list(MGA_SYNDICATE)
+
 /obj/item/implant/health/security
 	name = "health implant - security issue"
 	affected = "SECURITY"
