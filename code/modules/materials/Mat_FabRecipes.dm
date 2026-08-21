@@ -311,9 +311,9 @@
 
 	New()
 		..()
-		required_parts.Add(new/datum/matfab_part/ammo_container {part_name = "Ammo"; required_amount = 1; consume = FALSE} ())
-		// Matsci balance isn't quite ready for radioactive bullets yet
-		required_parts.Add(new/datum/matfab_part/silver {part_name = "Coating"; required_amount = 1} ())
+		required_parts.Add(new/datum/matfab_part/ammo_container {part_name = "Ammo"; required_amount = 1; auto_consume = FALSE} ())
+		// Currently only limited to silver for balance reasons
+		required_parts.Add(new/datum/matfab_part/silver {part_name = "Coating"; required_amount = 1; auto_consume = FALSE} ())
 
 	getMaxAmount()
 		var/obj/item/ammo/bullets/ammo = getObjectByPartName("Ammo")
@@ -341,7 +341,7 @@
 		ammo.set_loc(getOutputLocation(owner))
 
 		var/mat_cost = ammo.ammo_type.coating_amount * amount
-		var/source_cost_amount = round(mat_cost / source.material_amt, 0.01)
+		var/source_cost_amount = round(mat_cost / source.material_amt, 0.01) // if math is so amazing, then why do floats exist?
 		var/source_count_ceil = ceil(source_cost_amount)
 		var/excess_sheet_count = floor((source_count_ceil - source_cost_amount) / 0.1)
 		if(excess_sheet_count)

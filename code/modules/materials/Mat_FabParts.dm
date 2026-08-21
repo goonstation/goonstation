@@ -233,9 +233,8 @@
 	var/obj/item/assigned = null
 	/// If TRUE, slot does not have to be filled.
 	var/optional = FALSE
-	/// If FALSE, the assigned item is not destroyed in the building process.
-	/// However, this does not necessarily mean that the assigned item can be used multiple times in the same build cycle.
-	var/consume = TRUE
+	/// If FALSE, the assigned item is not destroyed automatically in the building process
+	var/auto_consume = TRUE
 
 	/// Does the object match our conditions?
 	proc/checkMatch(var/obj/item/I)

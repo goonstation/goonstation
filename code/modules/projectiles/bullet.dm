@@ -17,12 +17,15 @@ ABSTRACT_TYPE(/datum/projectile/bullet)
 
 	// caliber list: update as needed
 	// 0.22 pistol / zipgun
+	// 0.223 - assault rifle
 	// 0.308 - rifles
+	// 0.355 - pistol (9mm)
 	// 0.357 - revolver
 	// 0.38 - detective
 	// 0.40 - blowgun darts
 	// 0.41 - derringer
 	// 0.72 - shotgun shell, 12ga
+	// 1.05  - 4 gauge
 	// 1.57 - grenade shell, 40mm
 	// 1.58 - RPG-7 (Tube is 40mm too, though warheads are usually larger in diameter.)
 	ie_type = "K"

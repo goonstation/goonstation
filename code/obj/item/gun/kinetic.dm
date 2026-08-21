@@ -233,7 +233,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	alter_projectile(obj/projectile/P)
 		. = ..()
-		P.material?.triggerTemp(P, 500 KELVIN)
+		P.material?.triggerTemp(P, 500 KELVIN) // Gun barrels can get pretty hot
 
 	proc/eject_magazine(mob/user)
 		if (src.ammo.amount_left <= 0)
@@ -934,6 +934,13 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			AddComponent(/datum/component/holdertargeting/fullauto, 1.2)
 		..()
 
+	attackby(obj/item/ammo/bullets/b, mob/user)
+		var/obj/item/ammo/bullets/previous_ammo = ammo
+		. = ..()
+		if(!previous_ammo.ammo_type.is_same_ammo(b.ammo_type))
+			for(var/datum/projectile/bullet/proj in src.projectiles)
+				proj.coating = ammo.ammo_type.coating
+
 	attack_self(mob/user as mob)
 		..()	//burst shot has a slight spread.
 		if (istype(current_projectile, /datum/projectile/bullet/nine_mm_NATO/auto))
@@ -1038,11 +1045,11 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	//warcrimes brought to you by bullets telling guns how to shoot!
 	attackby(obj/item/ammo/bullets/b, mob/user)
-		. = ..()
-
-		// This gun has multiple modes, so apparently that means we have to go through this mess (LorrMaster)
 		var/obj/item/ammo/bullets/previous_ammo = ammo
 		var/mode_was_auto = current_projectile.fullauto_valid
+		. = ..()
+
+		// This gun has multiple modes, so apparently that means we have to go through this mess
 		if(!previous_ammo.ammo_type.is_same_ammo(ammo.ammo_type)) // we switched ammo types
 			if(istype(ammo, /obj/item/ammo/bullets/nine_mm_surplus))
 				if(mode_was_auto)
@@ -1373,6 +1380,13 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		set_current_projectile(new/datum/projectile/bullet/veritate)
 		projectiles = list(current_projectile,new/datum/projectile/bullet/veritate/burst)
 		..()
+
+	attackby(obj/item/ammo/bullets/b, mob/user)
+		var/obj/item/ammo/bullets/previous_ammo = ammo
+		. = ..()
+		if(!previous_ammo.ammo_type.is_same_ammo(b.ammo_type))
+			for(var/datum/projectile/bullet/proj in src.projectiles)
+				proj.coating = ammo.ammo_type.coating
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
@@ -3171,11 +3185,11 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 
 	attackby(obj/item/ammo/bullets/b, mob/user)  // has to account for whether regular or armor-piercing ammo is loaded AND which firing mode it's using
-		. = ..()
-
-		// This gun has multiple modes, so apparently that means we have to go through this mess (LorrMaster)
 		var/obj/item/ammo/bullets/previous_ammo = ammo
 		var/mode_was_burst = (istype(current_projectile, /datum/projectile/bullet/assault_rifle/burst/))  // was previous mode burst fire?
+		. = ..()
+
+		// This gun has multiple modes, so apparently that means we have to go through this mess
 		if(!previous_ammo.ammo_type.is_same_ammo(ammo.ammo_type)) // we switched ammo types
 			if(istype(ammo, /obj/item/ammo/bullets/assault_rifle/armor_piercing)) // we switched from normal to armor_piercing
 				if(mode_was_burst) // we were in burst shot mode
@@ -3240,11 +3254,11 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 
 	attackby(obj/item/ammo/bullets/b, mob/user)  // has to account for whether regular or armor-piercing ammo is loaded AND which firing mode it's using
-		. = ..()
-
-		// This gun has multiple modes, so apparently that means we have to go through this mess (LorrMaster)
 		var/obj/item/ammo/bullets/previous_ammo = ammo
 		var/mode_was_burst = (istype(current_projectile, /datum/projectile/bullet/assault_rifle/burst))  // was previous mode burst fire?
+		. = ..()
+
+		// This gun has multiple modes, so apparently that means we have to go through this mess
 		if(!previous_ammo.ammo_type.is_same_ammo(ammo.ammo_type)) // we switched ammo types
 			if(istype(ammo, /obj/item/ammo/bullets/assault_rifle/armor_piercing)) // we switched from normal to armor_piercing
 				if(mode_was_burst) // we were in burst shot mode
@@ -3327,6 +3341,13 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		projectiles = list(current_projectile, new/datum/projectile/bullet/lmg/auto)
 		AddComponent(/datum/component/holdertargeting/fullauto, 1.5 DECI SECONDS)
 		..()
+
+	attackby(obj/item/ammo/bullets/b, mob/user)
+		var/obj/item/ammo/bullets/previous_ammo = ammo
+		. = ..()
+		if(!previous_ammo.ammo_type.is_same_ammo(b.ammo_type))
+			for(var/datum/projectile/bullet/proj in src.projectiles)
+				proj.coating = ammo.ammo_type.coating
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
