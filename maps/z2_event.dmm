@@ -135,6 +135,9 @@
 /turf/simulated/floor/shuttlebay,
 /area/braeriach/podbay)
 "aU" = (
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
 /turf/simulated/floor/stairs/dark/wide,
 /area/braeriach/teleporter)
 "aV" = (
@@ -366,6 +369,7 @@
 	pixel_x = -47;
 	pixel_y = 0
 	},
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/command/war_room)
 "bX" = (
@@ -379,6 +383,9 @@
 	bcolor = "red";
 	icon_state = "bedsheet-red";
 	name = "syndicate bedsheet"
+	},
+/obj/machinery/light/incandescent{
+	dir = 4
 	},
 /turf/simulated/floor/carpet/red/fancy/narrow/T_east,
 /area/braeriach/crew/barracks)
@@ -445,6 +452,15 @@
 /obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/black,
 /area/braeriach/secure/armoury)
+"cr" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/braeriach/hallway/north)
 "cu" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/forcefield/energyshield/perma/doorlink{
@@ -653,10 +669,44 @@
 	},
 /turf/simulated/floor/shiny,
 /area/braeriach/secure/armoury)
+"dA" = (
+/obj/rack,
+/obj/item/tank/air{
+	pixel_x = 2;
+	pixel_y = -2
+	},
+/obj/item/clothing/suit/hazard/fire{
+	pixel_x = -4;
+	pixel_y = -4
+	},
+/obj/item/chem_grenade/firefighting{
+	pixel_x = 13;
+	pixel_y = -6
+	},
+/obj/item/chem_grenade/firefighting{
+	pixel_x = 8;
+	pixel_y = -5
+	},
+/obj/item/clothing/mask/gas/emergency{
+	pixel_y = 8
+	},
+/obj/item/clothing/head/helmet/firefighter{
+	pixel_x = -8;
+	pixel_y = -5
+	},
+/obj/decal/stripe_caution,
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 4
+	},
+/area/braeriach/engineering/storage)
 "dB" = (
 /obj/shrub{
 	dir = 6
 	},
+/obj/machinery/light/small,
 /turf/simulated/floor/wood/two,
 /area/braeriach/crew/jazz_lounge)
 "dD" = (
@@ -719,6 +769,10 @@
 "dU" = (
 /obj/cable/braeriach{
 	icon_state = "1-8"
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/podbay/armoury)
@@ -815,6 +869,9 @@
 /obj/cable/braeriach{
 	icon_state = "0-8"
 	},
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
 /turf/simulated/floor/circuit/red,
 /area/braeriach/armament_depot/vestibule)
 "el" = (
@@ -860,6 +917,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/redblack{
 	dir = 6
 	},
@@ -905,6 +963,12 @@
 	opacity = 0
 	},
 /area/titlescreen)
+"eG" = (
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor/twotone/black,
+/area/braeriach/armament_depot)
 "eJ" = (
 /obj/fakeobject/dreambeach/mercury,
 /turf/unsimulated/floor/dream/beach,
@@ -932,6 +996,7 @@
 	pixel_x = 11;
 	pixel_y = 10
 	},
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/red/checker,
 /area/braeriach/medbay/surgery)
 "eP" = (
@@ -952,6 +1017,9 @@
 	icon_state = "line1"
 	},
 /obj/machinery/sleeper/compact{
+	dir = 4
+	},
+/obj/machinery/light/incandescent{
 	dir = 4
 	},
 /turf/simulated/floor/white,
@@ -1022,6 +1090,9 @@
 /obj/submachine/tape_deck{
 	pixel_x = 5
 	},
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
 /turf/simulated/floor/circuit/red,
 /area/braeriach/command/war_room/radio)
 "fq" = (
@@ -1056,6 +1127,7 @@
 "ft" = (
 /obj/machinery/chem_dispenser/alcohol,
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/red,
 /area/braeriach/crew/bar)
 "fw" = (
@@ -1121,6 +1193,15 @@
 	},
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/central)
+"fS" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
+/area/braeriach/engineering)
 "fV" = (
 /obj/decal/tile_edge/line/black{
 	dir = 8;
@@ -1145,6 +1226,9 @@
 /obj/item/reagent_containers/emergency_injector/high_capacity/atropine,
 /obj/item/reagent_containers/emergency_injector/high_capacity/atropine,
 /obj/item/reagent_containers/emergency_injector/high_capacity/atropine,
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
 /turf/simulated/floor/white,
 /area/braeriach/medbay)
 "fW" = (
@@ -1222,6 +1306,9 @@
 /obj/cable/braeriach{
 	icon_state = "2-8"
 	},
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
 /turf/simulated/floor/black,
 /area/braeriach/secure/firing_range)
 "gw" = (
@@ -1232,6 +1319,13 @@
 	icon_state = "shore-46"
 	},
 /area/titlescreen)
+"gA" = (
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/simulated/floor/plating/with_grille,
+/area/braeriach/maintenance/south_east)
 "gB" = (
 /obj/table/reinforced/industrial/auto,
 /obj/item/paper/image/businesscard/mabinogi,
@@ -1304,6 +1398,13 @@
 	},
 /turf/simulated/floor/circuit/red,
 /area/braeriach/teleporter)
+"he" = (
+/obj/submachine/weapon_vendor/syndicate,
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor/red/redblackchecker,
+/area/braeriach/secure/equipment)
 "hf" = (
 /obj/disposalpipe/segment/bent/east,
 /obj/decal/tile_edge/line/red{
@@ -1360,6 +1461,10 @@
 	dir = 8
 	},
 /area/braeriach/hallway/east)
+"ht" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/black,
+/area/braeriach/crew/bar)
 "hu" = (
 /obj/decal/tile_edge/line/red{
 	icon_state = "line1"
@@ -1478,6 +1583,7 @@
 /obj/decal/tile_edge/line/white{
 	icon_state = "line1"
 	},
+/obj/machinery/light/small,
 /turf/simulated/floor/shiny,
 /area/braeriach/medbay/morgue)
 "ia" = (
@@ -1563,6 +1669,7 @@
 	pixel_x = 9;
 	pixel_y = 6
 	},
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/yellowblack{
 	dir = 10
 	},
@@ -1589,6 +1696,9 @@
 /obj/machinery/deep_fryer{
 	dir = 8
 	},
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
 /turf/simulated/floor/twotone/white,
 /area/braeriach/crew/kitchen)
 "in" = (
@@ -1611,6 +1721,9 @@
 /obj/machinery/vending/snack,
 /obj/decal/stripe_caution,
 /obj/mapping_helper/free_vendor,
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
 /turf/simulated/floor/twotone/black,
 /area/braeriach/engineering)
 "is" = (
@@ -1664,6 +1777,9 @@
 "iz" = (
 /obj/reagent_dispensers/watertank/fountain,
 /obj/decal/stripe_caution,
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
 /turf/simulated/floor/twotone/black,
 /area/braeriach/secure)
 "iE" = (
@@ -1673,6 +1789,9 @@
 	icon_state = "line1"
 	},
 /obj/mapping_helper/access/syndicate,
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
 /turf/simulated/floor/redwhite{
 	dir = 6
 	},
@@ -1738,12 +1857,21 @@
 "iZ" = (
 /turf/unsimulated/floor/red,
 /area/syndicate_station/assault_pod)
+"ja" = (
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor/redblack,
+/area/braeriach/hallway/south)
 "jc" = (
 /obj/decal/tile_edge/line/white{
 	dir = 6;
 	icon_state = "line2"
 	},
 /obj/railing,
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
 /turf/simulated/floor/redwhite{
 	dir = 6
 	},
@@ -1819,6 +1947,16 @@
 	icon_state = "shore-44"
 	},
 /area/titlescreen)
+"jt" = (
+/obj/cable/braeriach{
+	icon_state = "1-2"
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/simulated/floor/minitiles/black,
+/area/braeriach/podbay/armoury)
 "jx" = (
 /obj/decal/cleanable/dirt,
 /obj/cable/braeriach{
@@ -1852,8 +1990,18 @@
 /obj/cable/braeriach{
 	icon_state = "1-8"
 	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 10
+	},
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/central)
+"jI" = (
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/braeriach/armament_depot)
 "jJ" = (
 /obj/storage/crate/wooden,
 /obj/item/storage/box/record/radio/host,
@@ -1928,6 +2076,7 @@
 /obj/cable/braeriach{
 	icon_state = "4-8"
 	},
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/crew)
 "kb" = (
@@ -1959,6 +2108,9 @@
 /obj/machinery/power/data_terminal,
 /obj/cable/braeriach{
 	icon_state = "0-2"
+	},
+/obj/machinery/light/incandescent{
+	dir = 1
 	},
 /turf/simulated/floor/darkpurpleblack{
 	dir = 1
@@ -2022,6 +2174,10 @@
 /area/braeriach/secure)
 "kH" = (
 /obj/storage/closet/emergency,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 10
+	},
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/south_east)
 "kJ" = (
@@ -2111,6 +2267,9 @@
 	pixel_y = -2
 	},
 /obj/table/reinforced/industrial/auto,
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 8
 	},
@@ -2292,6 +2451,10 @@
 	},
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -10
+	},
 /turf/simulated/floor/wood/two,
 /area/braeriach/crew/jazz_lounge)
 "lO" = (
@@ -2573,6 +2736,13 @@
 	},
 /turf/simulated/floor/black,
 /area/braeriach/command/bridge)
+"nk" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor/shuttlebay,
+/area/braeriach/podbay)
 "nl" = (
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/medbay)
@@ -2696,6 +2866,14 @@
 	},
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/secure/armoury)
+"nR" = (
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/braeriach/hallway/east)
 "nW" = (
 /obj/table/wood/auto,
 /obj/submachine/record_player/portable{
@@ -2751,6 +2929,10 @@
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/west)
 "on" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -10
+	},
 /turf/simulated/floor/redblack/corner{
 	dir = 1
 	},
@@ -2758,6 +2940,10 @@
 "op" = (
 /obj/cable/braeriach{
 	icon_state = "4-8"
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
 	},
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/north)
@@ -2786,6 +2972,9 @@
 /obj/machinery/computer/camera_viewer{
 	dir = 8
 	},
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
 /turf/simulated/floor/black,
 /area/braeriach/command/bridge)
 "oE" = (
@@ -2796,6 +2985,15 @@
 	},
 /turf/simulated/floor/twotone/black,
 /area/braeriach/armament_depot)
+"oF" = (
+/obj/decoration/syndiepc/syndiepc9{
+	icon_state = "syndiepc14"
+	},
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor/black,
+/area/braeriach/command/bridge)
 "oH" = (
 /obj/iv_stand,
 /obj/item/reagent_containers/iv_drip/saline,
@@ -2827,6 +3025,10 @@
 	icon_state = "catwalk_cross"
 	},
 /area/space/braeriach)
+"oN" = (
+/obj/machinery/light/small,
+/turf/simulated/floor/plating/with_grille,
+/area/braeriach/maintenance/south_east)
 "oO" = (
 /obj/fakeobject/mantacontainer/upwards,
 /obj/random_item_spawner/junk/maybe_few,
@@ -2915,6 +3117,10 @@
 /area/braeriach/hallway/south)
 "pp" = (
 /obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/south_east)
 "ps" = (
@@ -3069,11 +3275,19 @@
 /area/braeriach/medbay)
 "pW" = (
 /obj/storage/closet/emergency,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 10
+	},
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/north_east)
 "pX" = (
 /obj/cable/braeriach{
 	icon_state = "1-2"
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/shuttlebay,
 /area/braeriach/podbay)
@@ -3173,6 +3387,9 @@
 	dir = 5;
 	icon_state = "line1"
 	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/secure/armoury)
 "qg" = (
@@ -3230,6 +3447,7 @@
 /obj/machinery/conveyor/EW{
 	id = "braeriach_disposals"
 	},
+/obj/machinery/light/small,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/disposals)
 "qv" = (
@@ -3238,10 +3456,17 @@
 	icon_state = "line2"
 	},
 /obj/storage/crate/freezer/organs,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -10
+	},
 /turf/simulated/floor/shiny,
 /area/braeriach/medbay/morgue)
 "qy" = (
 /obj/kitchenspike,
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
 /turf/simulated/floor/specialroom/freezer,
 /area/braeriach/crew/freezer)
 "qA" = (
@@ -3250,6 +3475,15 @@
 	},
 /turf/simulated/floor/circuit/red,
 /area/braeriach/teleporter)
+"qB" = (
+/obj/disposalpipe/segment,
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/braeriach/hallway/east)
 "qF" = (
 /obj/table/syndicate/auto,
 /obj/item/kitchen/utensil/fork{
@@ -3349,6 +3583,14 @@
 /obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/black,
 /area/braeriach/secure/equipment)
+"rc" = (
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/braeriach/secure)
 "rf" = (
 /obj/table/syndicate/auto,
 /obj/item/storage/pouch/bullet_9mm{
@@ -3387,6 +3629,13 @@
 	},
 /turf/space,
 /area/space/braeriach)
+"rl" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor/plating/with_grille,
+/area/braeriach/podbay/warehouse)
 "rm" = (
 /obj/table/reinforced/bar/auto{
 	name = "table"
@@ -3472,6 +3721,10 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 9
 	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 10
+	},
 /turf/simulated/floor/grey,
 /area/braeriach/medbay)
 "rC" = (
@@ -3485,6 +3738,7 @@
 	pixel_x = 8;
 	pixel_y = 8
 	},
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/sanitary,
 /area/braeriach/crew/bathroom)
 "rE" = (
@@ -3578,6 +3832,12 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor/white,
 /area/braeriach/medbay)
+"rR" = (
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
+/turf/simulated/floor/shuttlebay,
+/area/braeriach/podbay)
 "rS" = (
 /obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
@@ -3849,6 +4109,9 @@
 /obj/machinery/vending/cigarette,
 /obj/decal/stripe_caution,
 /obj/mapping_helper/free_vendor,
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
 /turf/simulated/floor/black,
 /area/braeriach/command/bridge)
 "tq" = (
@@ -3863,6 +4126,9 @@
 /obj/decal/stripe_caution,
 /obj/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/light/incandescent{
+	dir = 1
 	},
 /turf/simulated/floor/yellowblack{
 	dir = 1
@@ -3938,6 +4204,7 @@
 	pixel_y = 3
 	},
 /obj/table/syndicate/auto,
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/shiny,
 /area/braeriach/secure/armoury)
 "tG" = (
@@ -3964,6 +4231,7 @@
 /obj/cable/braeriach{
 	icon_state = "4-8"
 	},
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/redblack/corner{
 	dir = 8
 	},
@@ -4013,6 +4281,10 @@
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/north)
 "tS" = (
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 10
+	},
 /turf/simulated/floor/darkpurpleblack/corner,
 /area/braeriach/maintenance/central)
 "tT" = (
@@ -4031,6 +4303,10 @@
 /area/braeriach/crew/kitchen)
 "tV" = (
 /obj/disposalpipe/segment/bent/south,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/west)
 "tY" = (
@@ -4040,6 +4316,14 @@
 /obj/machinery/crusher/slow,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/disposals)
+"tZ" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/simulated/floor/plating/with_grille,
+/area/braeriach/podbay/warehouse)
 "ub" = (
 /obj/lattice,
 /obj/mesh/catwalk{
@@ -4053,6 +4337,7 @@
 /area/space/braeriach)
 "uc" = (
 /obj/reagent_dispensers/foamtank,
+/obj/machinery/light/small,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/south_east)
 "ud" = (
@@ -4114,6 +4399,10 @@
 	pixel_x = 7;
 	pixel_y = 2
 	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/north_east)
 "um" = (
@@ -4150,6 +4439,13 @@
 	dir = 9
 	},
 /area/braeriach/crew/jazz_lounge)
+"uq" = (
+/obj/submachine/weapon_vendor/syndicate,
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
+/turf/simulated/floor/red/redblackchecker,
+/area/braeriach/secure/equipment)
 "ur" = (
 /obj/decal/tile_edge/line/red{
 	dir = 4;
@@ -4201,6 +4497,15 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/yellowblack/corner,
 /area/braeriach/engineering)
+"uB" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/braeriach/hallway/south)
 "uD" = (
 /obj/machinery/conveyor/EN{
 	operating = 1
@@ -4356,6 +4661,7 @@
 	},
 /area/titlescreen)
 "vs" = (
+/obj/machinery/light/small,
 /turf/simulated/floor/stairs/dark/wide{
 	dir = 8
 	},
@@ -4408,6 +4714,9 @@
 /obj/item/storage/box/lightbox/tubes{
 	pixel_x = -9;
 	pixel_y = 4
+	},
+/obj/machinery/light/incandescent{
+	dir = 4
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/braeriach/crew/janitor)
@@ -4469,6 +4778,7 @@
 /obj/disposalpipe/trunk{
 	dir = 1
 	},
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/black,
 /area/braeriach/command/bridge)
 "vR" = (
@@ -4585,6 +4895,7 @@
 /area/braeriach/hallway/east)
 "wv" = (
 /obj/cairngorm_stats/right,
+/obj/map/light/dimred,
 /turf/simulated/floor/circuit/red,
 /area/braeriach/command/foyer)
 "wz" = (
@@ -4699,7 +5010,7 @@
 /obj/cable/braeriach{
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc/autoname_east/nopoweralert,
+/obj/machinery/power/apc/autoname_north/nopoweralert,
 /turf/simulated/floor/twotone/black,
 /area/braeriach/armament_depot)
 "wV" = (
@@ -4852,6 +5163,12 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/south_east)
+"xB" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
+/area/braeriach/engineering)
 "xD" = (
 /obj/fakeobject/dreambeach/big/palm1,
 /turf/unsimulated/floor/dream/beach,
@@ -4871,6 +5188,14 @@
 "xI" = (
 /turf/simulated/wall/auto/reinforced/supernorn/colored,
 /area/braeriach/maintenance/central)
+"xJ" = (
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/braeriach/hallway/south)
 "xK" = (
 /obj/machinery/door/airlock/pyro/engineering,
 /obj/cable/braeriach{
@@ -5000,6 +5325,12 @@
 	},
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/teleporter)
+"yk" = (
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor/shuttlebay,
+/area/braeriach/podbay)
 "yo" = (
 /obj/machinery/door/airlock/pyro/security,
 /obj/cable/braeriach{
@@ -5037,9 +5368,8 @@
 /turf/space,
 /area/syndicate_station/assault_pod)
 "yy" = (
-/obj/machinery/power/apc/autoname_east/nopoweralert,
-/obj/cable/braeriach{
-	icon_state = "0-8"
+/obj/machinery/light/incandescent{
+	dir = 4
 	},
 /turf/simulated/floor/twotone/white,
 /area/braeriach/crew/kitchen)
@@ -5086,10 +5416,8 @@
 /turf/simulated/floor/black,
 /area/braeriach/armament_depot)
 "yQ" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
-	},
-/turf/simulated/floor/minitiles/black,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/plating/with_grille,
 /area/braeriach/secure/armoury)
 "yS" = (
 /obj/cable/braeriach{
@@ -5167,6 +5495,14 @@
 	dir = 9
 	},
 /area/braeriach/engineering/storage)
+"zm" = (
+/obj/machinery/portable_atmospherics/canister/air/large,
+/obj/decal/stripe_caution,
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/braeriach/engineering/gas_storage)
 "zo" = (
 /obj/fakeobject/dreambeach/earth,
 /turf/unsimulated/floor/dream/beach,
@@ -5204,6 +5540,14 @@
 	},
 /turf/simulated/floor/grey,
 /area/braeriach/hallway/east)
+"zy" = (
+/obj/mesh/grille/steel,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/simulated/floor/plating/with_grille,
+/area/braeriach/maintenance/west)
 "zz" = (
 /obj/reagent_dispensers/foamtank,
 /obj/decal/stripe_caution,
@@ -5224,15 +5568,31 @@
 /obj/decal/stripe_caution,
 /obj/machinery/vending/cigarette,
 /obj/mapping_helper/free_vendor,
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
 /area/braeriach/hallway/east)
+"zE" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/minitiles/black,
+/area/braeriach/crew/jazz_lounge)
 "zF" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-28"
 	},
 /area/titlescreen)
+"zH" = (
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
+/turf/simulated/floor/shuttlebay,
+/area/braeriach/podbay)
 "zK" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/minitiles/black,
@@ -5272,6 +5632,19 @@
 	},
 /turf/simulated/floor/black,
 /area/braeriach/engineering)
+"zT" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor/twotone/white,
+/area/braeriach/medbay)
 "zU" = (
 /obj/item/reagent_containers/glass/beaker/large/antitox{
 	pixel_x = -5;
@@ -5343,6 +5716,7 @@
 /area/braeriach/engineering)
 "Ag" = (
 /obj/cairngorm_stats/left,
+/obj/map/light/dimred,
 /turf/simulated/floor/circuit/red,
 /area/braeriach/command/foyer)
 "Ai" = (
@@ -5573,6 +5947,9 @@
 	dir = 4;
 	icon_state = "line1"
 	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/secure/armoury)
 "Bn" = (
@@ -5589,6 +5966,20 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/braeriach/crew/jazz_lounge)
+"Bs" = (
+/obj/decal/tile_edge/line/red{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
+/turf/simulated/floor/twotone/white,
+/area/braeriach/medbay)
 "Bt" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -5659,6 +6050,9 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass/icewater{
 	pixel_x = -11;
 	pixel_y = 11
+	},
+/obj/machinery/light/incandescent{
+	dir = 1
 	},
 /turf/simulated/floor/twotone/red,
 /area/braeriach/crew)
@@ -5757,6 +6151,16 @@
 	},
 /turf/simulated/floor/twotone/yellow,
 /area/braeriach/engineering)
+"Ca" = (
+/obj/decal/tile_edge/line/red{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
+/turf/simulated/floor/minitiles/black,
+/area/braeriach/secure/armoury)
 "Cc" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /obj/machinery/power/apc/autoname_west/nopoweralert,
@@ -5815,6 +6219,9 @@
 	},
 /obj/cable/braeriach{
 	icon_state = "1-2"
+	},
+/obj/machinery/light/incandescent{
+	dir = 8
 	},
 /turf/simulated/floor/white,
 /area/braeriach/medbay)
@@ -5915,6 +6322,10 @@
 	dir = 4
 	},
 /area/braeriach/maintenance/central)
+"CS" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/shuttlebay,
+/area/braeriach/podbay)
 "CT" = (
 /obj/decal/tile_edge/line/red{
 	dir = 8;
@@ -6016,6 +6427,12 @@
 	},
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/crew/jazz_lounge)
+"Dj" = (
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/braeriach/secure/firing_range)
 "Dk" = (
 /obj/cable/braeriach{
 	icon_state = "1-2"
@@ -6059,6 +6476,9 @@
 /obj/machinery/power/data_terminal,
 /obj/cable/braeriach{
 	icon_state = "0-8"
+	},
+/obj/machinery/light/incandescent{
+	dir = 4
 	},
 /turf/simulated/floor/black,
 /area/braeriach/command/bridge)
@@ -6210,6 +6630,9 @@
 "Eu" = (
 /obj/machinery/manufacturer/robotics,
 /obj/mapping_helper/access/syndicate,
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
 /turf/simulated/floor/red/checker,
 /area/braeriach/medbay/surgery)
 "Ew" = (
@@ -6218,6 +6641,15 @@
 	},
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/podbay/armoury)
+"Ey" = (
+/obj/cable/braeriach{
+	icon_state = "1-2"
+	},
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
+/turf/simulated/floor/red/redblackchecker,
+/area/braeriach/secure/equipment)
 "Ez" = (
 /obj/lattice{
 	dir = 5;
@@ -6248,6 +6680,10 @@
 	dir = 10;
 	icon_state = "line1"
 	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/wood/two,
 /area/braeriach/crew/jazz_lounge)
 "EN" = (
@@ -6271,6 +6707,9 @@
 /area/braeriach/command/war_room)
 "ER" = (
 /obj/decal/stage_edge/alt,
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
 /turf/simulated/floor/black,
 /area/braeriach/armament_depot)
 "ET" = (
@@ -6301,6 +6740,7 @@
 	icon_state = "line2"
 	},
 /obj/disposalpipe/segment,
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/darkpurple,
 /area/braeriach/medbay/pharmacy)
 "EZ" = (
@@ -6436,6 +6876,23 @@
 /obj/decoration/syndiepc/syndiepc8,
 /turf/simulated/floor/black,
 /area/braeriach/command/bridge)
+"Fo" = (
+/obj/machinery/traymachine/morgue{
+	dir = 2
+	},
+/obj/decal/tile_edge/line/white{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/shiny,
+/area/braeriach/medbay/morgue)
 "Fp" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -6627,6 +7084,7 @@
 	pixel_x = -3;
 	pixel_y = 6
 	},
+/obj/machinery/light/small,
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/crew/jazz_lounge)
 "Gh" = (
@@ -6634,6 +7092,7 @@
 	dir = 5;
 	icon_state = "xtra_bigstripe-corner2"
 	},
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/black,
 /area/braeriach/armament_depot)
 "Gi" = (
@@ -6645,6 +7104,10 @@
 /obj/decal/tile_edge/line/white{
 	dir = 4;
 	icon_state = "line1"
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/shiny,
 /area/braeriach/medbay/morgue)
@@ -6723,6 +7186,10 @@
 /obj/storage/crate/packing{
 	icon_state = "packingcrate6"
 	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 10
+	},
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/podbay/warehouse)
 "GC" = (
@@ -6773,6 +7240,15 @@
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/red,
 /area/braeriach/crew/bar)
+"GN" = (
+/obj/disposalpipe/segment,
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/braeriach/secure)
 "GO" = (
 /obj/mesh/grille/steel,
 /obj/decal/cleanable/dirt,
@@ -6814,12 +7290,12 @@
 /turf/simulated/floor/white,
 /area/braeriach/medbay)
 "GT" = (
-/obj/machinery/power/apc/autoname_north/nopoweralert,
 /obj/cable/braeriach{
 	icon_state = "2-8"
 	},
-/obj/cable/braeriach{
-	icon_state = "0-8"
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
 	},
 /turf/simulated/floor/black,
 /area/braeriach/command/war_room)
@@ -6831,6 +7307,7 @@
 /area/braeriach/armament_depot)
 "GV" = (
 /obj/cairngorm_stats,
+/obj/map/light/dimred,
 /turf/simulated/floor/circuit/red,
 /area/braeriach/command/foyer)
 "GZ" = (
@@ -6840,6 +7317,9 @@
 	icon_state = "plant";
 	pixel_y = 7;
 	pixel_x = 3
+	},
+/obj/machinery/light/incandescent{
+	dir = 4
 	},
 /turf/simulated/floor/twotone/black,
 /area/braeriach/ai/vestibule)
@@ -6899,8 +7379,17 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/free_vendor,
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/crew)
+"Hk" = (
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/braeriach/engineering/gas_storage)
 "Hl" = (
 /obj/decal/tile_edge/line/white{
 	dir = 1;
@@ -6917,6 +7406,10 @@
 "Hn" = (
 /obj/cable/braeriach{
 	icon_state = "1-2"
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/disposals)
@@ -6991,6 +7484,9 @@
 	dir = 6;
 	icon_state = "line2"
 	},
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
 /turf/simulated/floor/caution,
 /area/braeriach/engineering)
 "HK" = (
@@ -7050,6 +7546,12 @@
 /obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/engineering/storage)
+"HS" = (
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor/yellowblack,
+/area/braeriach/engineering)
 "HT" = (
 /obj/lattice{
 	dir = 4;
@@ -7142,6 +7644,12 @@
 	},
 /turf/simulated/floor/shiny,
 /area/braeriach/secure/armoury)
+"Ih" = (
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
+/turf/simulated/floor/minitiles/black,
+/area/braeriach/command/war_room)
 "Ii" = (
 /obj/decal/tile_edge/line/black{
 	dir = 1;
@@ -7165,6 +7673,16 @@
 	},
 /turf/simulated/floor/circuit/red,
 /area/braeriach/ai/upload)
+"Io" = (
+/obj/disposalpipe/segment,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/braeriach/hallway/east)
 "Iq" = (
 /obj/shrub{
 	dir = 9;
@@ -7176,6 +7694,9 @@
 "Is" = (
 /obj/storage/secure/closet/kitchen,
 /obj/mapping_helper/access/syndicate,
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
 /turf/simulated/floor/white/checker2{
 	dir = 1
 	},
@@ -7271,6 +7792,12 @@
 	},
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/hallway/east)
+"IK" = (
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor/plating/with_grille,
+/area/braeriach/engineering/power)
 "IL" = (
 /obj/table/syndicate/auto,
 /obj/item/storage/grenade_pouch/napalm{
@@ -7284,6 +7811,9 @@
 	},
 /obj/item/storage/grenade_pouch/napalm{
 	pixel_y = -3
+	},
+/obj/machinery/light/incandescent{
+	dir = 1
 	},
 /turf/simulated/floor/shiny,
 /area/braeriach/secure/armoury)
@@ -7400,6 +7930,9 @@
 	icon_state = "bedsheet-red";
 	name = "syndicate bedsheet"
 	},
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
 /turf/simulated/floor/carpet/red/fancy/narrow/T_west,
 /area/braeriach/crew/barracks)
 "Jg" = (
@@ -7436,6 +7969,9 @@
 	},
 /obj/cable/braeriach{
 	icon_state = "1-2"
+	},
+/obj/machinery/light/incandescent{
+	dir = 8
 	},
 /turf/simulated/floor/twotone/red,
 /area/braeriach/crew)
@@ -7530,6 +8066,14 @@
 	},
 /turf/simulated/floor/carpet/red/decal/innercross,
 /area/braeriach/command/bridge)
+"JE" = (
+/obj/stool/bed/moveable/hospital,
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/white,
+/area/braeriach/medbay)
 "JF" = (
 /obj/cable/braeriach{
 	icon_state = "1-2"
@@ -7567,6 +8111,12 @@
 	},
 /turf/simulated/floor/glassblock/transparent/grey,
 /area/braeriach/engineering/tether)
+"JR" = (
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
+/turf/simulated/floor/minitiles/black,
+/area/braeriach/command/war_room)
 "JU" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/redblack{
@@ -7640,6 +8190,17 @@
 /obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/north)
+"Kk" = (
+/obj/decal/cleanable/dirt,
+/obj/cable/braeriach{
+	icon_state = "1-2"
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor/plating/with_grille,
+/area/braeriach/maintenance/north)
 "Kl" = (
 /obj/decal/tile_edge/line/red{
 	dir = 8;
@@ -7695,6 +8256,9 @@
 	dir = 8;
 	icon_state = "line1"
 	},
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/engineering/power)
 "Ku" = (
@@ -7710,6 +8274,10 @@
 	icon_state = "line1"
 	},
 /obj/disposalpipe/segment,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -10
+	},
 /turf/simulated/floor/wood/two,
 /area/braeriach/crew/jazz_lounge)
 "Kw" = (
@@ -7772,6 +8340,9 @@
 	pixel_x = 7;
 	pixel_y = 13
 	},
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
 /turf/simulated/floor/red/redblackchecker,
 /area/braeriach/secure/equipment)
 "KM" = (
@@ -7816,6 +8387,7 @@
 /obj/cable/braeriach{
 	icon_state = "4-8"
 	},
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/white,
 /area/braeriach/medbay)
 "KY" = (
@@ -7835,6 +8407,10 @@
 	},
 /obj/item/plate{
 	pixel_y = 9
+	},
+/obj/machinery/power/apc/autoname_east/nopoweralert,
+/obj/cable/braeriach{
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/twotone/white,
 /area/braeriach/crew/kitchen)
@@ -8004,6 +8580,9 @@
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/medbay/pharmacy)
 "LP" = (
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
 /turf/simulated/floor/stairs/dark/wide{
 	dir = 9
 	},
@@ -8029,6 +8608,9 @@
 /obj/decal/tile_edge/line/white{
 	dir = 8;
 	icon_state = "line1"
+	},
+/obj/cable/braeriach{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/twotone/white,
 /area/braeriach/crew/kitchen)
@@ -8082,6 +8664,9 @@
 	pixel_y = -2;
 	pixel_x = 7
 	},
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
 /turf/simulated/floor/shiny,
 /area/braeriach/secure/armoury)
 "LZ" = (
@@ -8125,6 +8710,30 @@
 /obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/central)
+"Mk" = (
+/obj/machinery/conveyor/WE{
+	id = "braeriach_disposals"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/plating/with_grille,
+/area/braeriach/maintenance/disposals)
+"Mn" = (
+/obj/decal/cleanable/dirt,
+/obj/cable/braeriach{
+	icon_state = "1-2"
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor/plating/with_grille,
+/area/braeriach/maintenance/central)
 "Mo" = (
 /obj/machinery/door/airlock/pyro/glass/security{
 	dir = 4
@@ -8158,6 +8767,9 @@
 "Mv" = (
 /obj/railing,
 /obj/disposalpipe/segment,
+/obj/cable/braeriach{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black,
 /area/braeriach/command/war_room)
 "Mx" = (
@@ -8333,6 +8945,9 @@
 	dir = 1;
 	icon_state = "line1"
 	},
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
 /turf/simulated/floor/redwhite{
 	dir = 9
 	},
@@ -8344,6 +8959,10 @@
 /obj/fakeobject/teleport_pad{
 	desc = "A pad used for cargo teleportation.";
 	name = "cargo teleport pad"
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
 	},
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/secure/armoury)
@@ -8387,6 +9006,10 @@
 /area/braeriach/maintenance/disposals)
 "Nk" = (
 /obj/machinery/recharge_station,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 10
+	},
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/central)
 "Nl" = (
@@ -8415,6 +9038,9 @@
 /obj/disposalpipe/segment/bent/south,
 /obj/cable/braeriach{
 	icon_state = "4-8"
+	},
+/obj/machinery/light/incandescent{
+	dir = 1
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/braeriach/crew/janitor)
@@ -8500,6 +9126,10 @@
 	},
 /obj/table/reinforced/industrial/auto,
 /obj/decal/cleanable/dirt,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 10
+	},
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/south_east)
 "NP" = (
@@ -8682,9 +9312,16 @@
 	dir = 9;
 	icon_state = "xtra_bigstripe-corner2"
 	},
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
 /turf/simulated/floor/shuttlebay,
 /area/braeriach/podbay)
 "OU" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/armament_depot/vestibule)
 "OV" = (
@@ -8742,6 +9379,10 @@
 /obj/decal/tile_edge/line/red{
 	icon_state = "line1"
 	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9;
+	icon_state = "xtra_bigstripe-corner2"
+	},
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/secure/armoury)
 "Pq" = (
@@ -8769,6 +9410,7 @@
 /obj/item/mine/stun{
 	pixel_x = -7
 	},
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/shiny,
 /area/braeriach/secure/armoury)
 "Pt" = (
@@ -8875,6 +9517,9 @@
 /obj/deployable_turret/syndicate/active{
 	dir = 4
 	},
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
 /turf/simulated/floor/red/redblackchecker,
 /area/braeriach/teleporter)
 "PO" = (
@@ -8899,6 +9544,10 @@
 "PT" = (
 /obj/cable/braeriach{
 	icon_state = "2-4"
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/north)
@@ -8934,6 +9583,17 @@
 /obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/black,
 /area/braeriach/secure)
+"Qb" = (
+/obj/railing,
+/obj/cable/braeriach{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/twotone/black,
+/area/braeriach/armament_depot)
 "Qd" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/jen,
@@ -9019,6 +9679,9 @@
 	level = 1.9;
 	pixel_y = 5;
 	pixel_x = 1
+	},
+/obj/machinery/light/incandescent{
+	dir = 4
 	},
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/hallway/east)
@@ -9194,6 +9857,10 @@
 /obj/cable/braeriach{
 	icon_state = "2-9"
 	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 10
+	},
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/north)
 "Ra" = (
@@ -9207,6 +9874,17 @@
 /obj/machinery/dialysis,
 /turf/simulated/floor/red/checker,
 /area/braeriach/medbay/surgery)
+"Rc" = (
+/obj/railing,
+/obj/cable/braeriach{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/black,
+/area/braeriach/command/war_room)
 "Rh" = (
 /obj/item/reagent_containers/food/drinks/mug{
 	pixel_x = 7;
@@ -9244,6 +9922,9 @@
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
 /turf/simulated/floor/redwhite{
 	dir = 9
 	},
@@ -9270,6 +9951,15 @@
 /obj/mapping_helper/free_vendor,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/command/war_room)
+"Rp" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/braeriach/armament_depot)
 "Rq" = (
 /obj/table/syndicate/auto,
 /obj/item/ammo/bullets/buckshot_burst{
@@ -9318,6 +10008,10 @@
 "Rw" = (
 /obj/cable/braeriach{
 	icon_state = "1-6"
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/central)
@@ -9443,6 +10137,15 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/central)
+"RS" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/braeriach/command/foyer)
 "RT" = (
 /obj/item/reagent_containers/glass/beaker/large/burn{
 	pixel_x = -5;
@@ -9481,12 +10184,14 @@
 "RZ" = (
 /obj/machinery/vending/medical,
 /obj/mapping_helper/access/syndicate,
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/twotone/blue,
 /area/braeriach/medbay)
 "Sa" = (
 /obj/cable/braeriach{
 	icon_state = "1-2"
 	},
+/obj/machinery/light/small/floor,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/engineering/tether)
 "Sd" = (
@@ -9507,6 +10212,7 @@
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
 	},
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/minitiles/white,
 /area/braeriach/medbay)
 "Sk" = (
@@ -9525,6 +10231,10 @@
 /obj/item/device/light/flashlight{
 	pixel_x = 4;
 	pixel_y = 3
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
 	},
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/south_east)
@@ -9609,6 +10319,14 @@
 	dir = 1
 	},
 /area/braeriach/teleporter/control)
+"SM" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor/plating/with_grille,
+/area/braeriach/podbay/warehouse)
 "SN" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-37"
@@ -9748,6 +10466,9 @@
 /obj/cable/braeriach{
 	icon_state = "1-2"
 	},
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
 /turf/simulated/floor/redblack{
 	dir = 9
 	},
@@ -9798,6 +10519,11 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 /turf/simulated/floor/red,
 /area/braeriach/crew/bar)
+"TJ" = (
+/obj/submachine/weapon_vendor/syndicate,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/red/redblackchecker,
+/area/braeriach/secure/equipment)
 "TK" = (
 /obj/storage/crate/freezer,
 /obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
@@ -9857,6 +10583,10 @@
 	dir = 6
 	},
 /area/braeriach/podbay)
+"Ue" = (
+/obj/machinery/light/small,
+/turf/simulated/floor/plating/with_grille,
+/area/braeriach/maintenance/north_east)
 "Uf" = (
 /turf/simulated/wall/auto/reinforced/supernorn/colored,
 /area/braeriach/command/foyer)
@@ -9950,6 +10680,7 @@
 "UE" = (
 /obj/machinery/chem_dispenser/alcohol,
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+/obj/machinery/light/small,
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/crew/jazz_lounge)
 "UH" = (
@@ -9969,6 +10700,9 @@
 /obj/machinery/vending/snack,
 /obj/decal/stripe_caution,
 /obj/mapping_helper/free_vendor,
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
 /turf/simulated/floor/black,
 /area/braeriach/command/bridge)
 "UO" = (
@@ -10048,6 +10782,7 @@
 /obj/cable/braeriach{
 	icon_state = "0-8"
 	},
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/circuit/red,
 /area/braeriach/ai/upload)
 "Vl" = (
@@ -10122,6 +10857,9 @@
 "VH" = (
 /obj/storage/secure/closet/medical/medicine,
 /obj/mapping_helper/access/syndicate,
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
 /turf/simulated/floor/red/checker,
 /area/braeriach/medbay/surgery)
 "VI" = (
@@ -10137,6 +10875,12 @@
 	},
 /turf/unsimulated/floor/dream/space,
 /area/titlescreen)
+"VO" = (
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor/redblack,
+/area/braeriach/hallway/north)
 "VQ" = (
 /turf/simulated/wall/auto/reinforced/supernorn/colored,
 /area/braeriach/secure/armoury)
@@ -10306,10 +11050,15 @@
 /obj/disposalpipe/trunk,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/disposals)
+"WB" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/plating/with_grille,
+/area/braeriach/engineering/power)
 "WD" = (
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/redblack/corner{
 	dir = 8
 	},
@@ -10356,6 +11105,9 @@
 /obj/decal/tile_edge/line/red{
 	dir = 4;
 	icon_state = "line1"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
 	},
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/secure/armoury)
@@ -10628,6 +11380,10 @@
 /area/braeriach/medbay/morgue)
 "XK" = (
 /obj/railing,
+/obj/machinery/power/apc/autoname_north/nopoweralert,
+/obj/cable/braeriach{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/black,
 /area/braeriach/command/war_room)
 "XM" = (
@@ -10657,6 +11413,12 @@
 	},
 /turf/simulated/floor/twotone/black,
 /area/braeriach/armament_depot)
+"XR" = (
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
+/turf/simulated/floor/twotone/black,
+/area/braeriach/hallway/east)
 "XS" = (
 /obj/cable/braeriach{
 	icon_state = "4-8"
@@ -10851,12 +11613,19 @@
 	icon_state = "0-4"
 	},
 /obj/landmark/antagonist/operative/ai,
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
 /turf/simulated/floor/circuit/red,
 /area/braeriach/ai)
 "YG" = (
 /obj/decal/cleanable/dirt,
 /obj/cable/braeriach{
 	icon_state = "2-8"
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
 	},
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/north_east)
@@ -10923,6 +11692,7 @@
 "YU" = (
 /obj/machinery/vending/coffee,
 /obj/mapping_helper/free_vendor,
+/obj/machinery/light/small,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/crew/jazz_lounge)
 "YW" = (
@@ -10932,6 +11702,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/engineering/power)
 "YX" = (
@@ -10949,6 +11720,10 @@
 "Za" = (
 /obj/stool/chair/red{
 	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 10
 	},
 /turf/simulated/floor/black,
 /area/braeriach/engineering)
@@ -10972,6 +11747,9 @@
 /obj/cable/braeriach{
 	icon_state = "1-4"
 	},
+/obj/cable/braeriach{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/black,
 /area/braeriach/command/war_room)
 "Zp" = (
@@ -10988,11 +11766,15 @@
 /obj/item/storage/box/mousetraps,
 /obj/item/storage/box/biohazard_bags,
 /obj/item/chem_grenade/cleaner,
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/specialroom/arcade,
 /area/braeriach/crew/janitor)
 "Zw" = (
 /obj/reagent_dispensers/fueltank,
 /obj/decal/stripe_caution,
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
 /turf/simulated/floor/shuttlebay,
 /area/braeriach/podbay)
 "Zx" = (
@@ -11006,6 +11788,10 @@
 /obj/fakeobject/teleport_pad{
 	desc = "A pad used for cargo teleportation.";
 	name = "cargo teleport pad"
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
 	},
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/podbay/warehouse)
@@ -11078,6 +11864,10 @@
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/command/war_room)
 "ZX" = (
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 10
+	},
 /turf/simulated/floor/stairs/dark/wide{
 	dir = 6
 	},
@@ -18265,7 +19055,7 @@ LF
 iw
 BG
 jT
-jT
+uq
 jT
 jT
 BG
@@ -18589,7 +19379,7 @@ Dz
 Cx
 sI
 Yh
-uP
+Mk
 mH
 qu
 Lc
@@ -18867,12 +19657,12 @@ LF
 LF
 aP
 iw
-jT
+he
 HF
 oJ
 oJ
 GC
-jT
+TJ
 iw
 sl
 wp
@@ -18895,11 +19685,11 @@ uP
 mH
 vJ
 Lc
-lP
+rl
 oO
 As
 Lm
-eA
+SM
 dr
 Lc
 Lc
@@ -19155,8 +19945,8 @@ wp
 hK
 hK
 VQ
-yQ
-yQ
+cf
+cf
 yQ
 sQ
 sQ
@@ -19802,7 +20592,7 @@ ze
 mS
 TP
 zz
-eA
+tZ
 XY
 lP
 GA
@@ -20080,7 +20870,7 @@ US
 oJ
 oJ
 GC
-jT
+TJ
 iw
 sl
 sl
@@ -20092,7 +20882,7 @@ sl
 TY
 TY
 Yh
-DT
+zE
 DT
 YU
 Yh
@@ -20409,7 +21199,7 @@ UW
 pX
 FJ
 TG
-TG
+nk
 EB
 Zw
 Mp
@@ -20719,7 +21509,7 @@ zr
 OT
 TG
 TG
-TG
+zH
 TG
 EB
 at
@@ -20977,14 +21767,14 @@ Fu
 jp
 Lg
 xS
-xS
+Dj
 xS
 MO
 rb
 qi
 Dq
 IE
-Ql
+Ey
 Ql
 zO
 BG
@@ -21002,7 +21792,7 @@ pk
 ej
 cP
 RO
-Pw
+zy
 xR
 EB
 AK
@@ -21300,7 +22090,7 @@ Bo
 at
 at
 RO
-uI
+ja
 SS
 ys
 RO
@@ -21584,7 +22374,7 @@ JU
 JU
 JU
 JU
-JU
+GN
 wJ
 Yz
 Oo
@@ -21915,19 +22705,19 @@ mI
 rH
 Ud
 hY
+CS
 TG
 TG
+CS
 TG
 TG
+CS
 TG
 TG
+CS
 TG
 TG
-TG
-TG
-TG
-TG
-TG
+CS
 TG
 iG
 bs
@@ -22177,14 +22967,14 @@ hK
 VQ
 kW
 pZ
-ik
+Ca
 WS
 pU
 sQ
 fr
 VX
 nv
-Xn
+rc
 Ho
 Xn
 Xn
@@ -22509,7 +23299,7 @@ sl
 sl
 RO
 lS
-Ob
+xJ
 Ob
 HY
 hW
@@ -23115,7 +23905,7 @@ Sk
 Sk
 Sk
 Sk
-uI
+ja
 SS
 MT
 EB
@@ -23129,13 +23919,13 @@ TG
 TG
 TG
 TG
+rR
 TG
 TG
+rR
 TG
 TG
-TG
-TG
-TG
+rR
 TG
 fJ
 at
@@ -23426,7 +24216,7 @@ Pf
 Pf
 ar
 xw
-EB
+xw
 TG
 TG
 TG
@@ -23728,8 +24518,8 @@ wF
 wd
 Mu
 rZ
-EB
-TG
+xw
+yk
 TG
 TG
 fJ
@@ -24026,11 +24816,11 @@ SS
 MT
 Pf
 Ia
-Ew
+jt
 Ew
 dU
 rZ
-EB
+xw
 TG
 TG
 TG
@@ -24305,7 +25095,7 @@ Ns
 Ns
 EW
 TR
-qN
+cr
 wb
 wb
 wb
@@ -24323,7 +25113,7 @@ Sk
 Sk
 Sk
 Sk
-uI
+ja
 SS
 MT
 fW
@@ -24907,7 +25697,7 @@ BU
 CI
 rD
 BU
-EW
+VO
 uo
 Iz
 Gb
@@ -24924,12 +25714,12 @@ Sr
 id
 us
 oK
-HB
+Mn
 Mj
 PG
 Or
 vA
-MT
+uB
 fW
 fW
 fW
@@ -25242,11 +26032,11 @@ ER
 JK
 JK
 JK
+jI
 JK
 JK
 JK
-JK
-JK
+jI
 JK
 JK
 JK
@@ -25500,8 +26290,8 @@ SZ
 xh
 oS
 JF
-JF
 tU
+xh
 xh
 iX
 Fc
@@ -25803,7 +26593,7 @@ Gd
 Ei
 sW
 LQ
-Ei
+Gd
 lj
 iX
 op
@@ -25839,7 +26629,7 @@ MT
 fW
 TO
 fW
-ph
+eG
 ph
 oE
 cS
@@ -26137,7 +26927,7 @@ aU
 Tz
 uI
 SS
-MT
+uB
 wj
 se
 wj
@@ -26417,7 +27207,7 @@ vO
 dh
 ND
 ND
-EW
+VO
 TR
 qN
 NM
@@ -26707,7 +27497,7 @@ dx
 vk
 IX
 UX
-fB
+Kk
 Ar
 kM
 Cc
@@ -26748,7 +27538,7 @@ Yr
 Tr
 Xa
 se
-mQ
+Qb
 BC
 jC
 IA
@@ -27054,11 +27844,11 @@ wU
 yK
 eD
 mL
-eD
+Rp
 mL
 eD
 mL
-eD
+Rp
 mL
 eD
 Gl
@@ -27345,7 +28135,7 @@ ZX
 Tz
 uI
 SS
-MT
+uB
 wj
 se
 wj
@@ -27625,7 +28415,7 @@ ET
 ET
 ET
 ET
-EW
+VO
 TR
 qN
 NM
@@ -27930,7 +28720,7 @@ Li
 EW
 TR
 qN
-NM
+ht
 NM
 NM
 NM
@@ -28241,7 +29031,7 @@ iF
 iF
 FO
 Xv
-iF
+Io
 iF
 iF
 iF
@@ -28254,7 +29044,7 @@ zx
 eq
 Ra
 TU
-iF
+qB
 iF
 iF
 Ra
@@ -28262,7 +29052,7 @@ iF
 iF
 iF
 iF
-iF
+qB
 iF
 iF
 iF
@@ -28270,7 +29060,7 @@ iF
 Dh
 UI
 HU
-HU
+XR
 Bg
 Qd
 wp
@@ -28840,19 +29630,19 @@ ng
 ng
 ng
 ng
-ng
+nR
 ng
 GQ
 aE
 IC
 bX
 ng
+nR
 ng
 ng
 ng
 ng
-ng
-ng
+nR
 ng
 PL
 ng
@@ -28862,7 +29652,7 @@ ng
 GQ
 IC
 zu
-ng
+nR
 ng
 ng
 ng
@@ -29121,15 +29911,15 @@ hK
 hK
 hK
 lt
-dw
+IK
 ry
 ry
 ry
-dw
+WB
 bn
 Af
 LE
-JC
+fS
 wf
 wf
 rj
@@ -29470,11 +30260,11 @@ hH
 hH
 hH
 QO
+Ih
 ZV
 ZV
 ZV
-ZV
-ZV
+Ih
 pt
 hH
 Qd
@@ -29731,7 +30521,7 @@ GH
 GH
 GH
 GH
-Af
+HS
 LE
 JC
 rj
@@ -30059,7 +30849,7 @@ HD
 NG
 Sh
 zv
-Wo
+Fo
 uz
 fm
 zv
@@ -30069,9 +30859,9 @@ Uf
 Uf
 Hd
 nC
-wM
+RS
 hH
-XK
+Rc
 fg
 ZV
 ZV
@@ -30346,7 +31136,7 @@ Wv
 ih
 rj
 GO
-fE
+Ue
 ve
 Ck
 wQ
@@ -30941,7 +31731,7 @@ GH
 GH
 Af
 LE
-Ep
+xB
 wf
 jk
 Tf
@@ -31237,7 +32027,7 @@ hK
 hK
 Mx
 Oq
-rA
+Hk
 fw
 TS
 xm
@@ -31277,7 +32067,7 @@ Uf
 Uf
 Sp
 nC
-wM
+RS
 hH
 ki
 lQ
@@ -31845,20 +32635,20 @@ rA
 yD
 yD
 xm
-Af
+HS
 Yi
 Ep
 rj
 ns
 CZ
 Ft
-Ft
+dA
 EZ
 rj
 tA
 XS
 RA
-ud
+zT
 nl
 pK
 nl
@@ -31873,7 +32663,7 @@ Xx
 RA
 RF
 bH
-sU
+gA
 sU
 bH
 kp
@@ -31886,11 +32676,11 @@ kp
 kp
 kp
 el
-ZV
+JR
 ZV
 QS
 ZV
-ZV
+JR
 ZV
 hH
 hK
@@ -32144,7 +32934,7 @@ hK
 Mx
 yU
 rA
-QP
+zm
 QP
 Mx
 su
@@ -32473,7 +33263,7 @@ Lh
 oj
 Kg
 VR
-PR
+JE
 RA
 Sn
 bH
@@ -33068,7 +33858,7 @@ qX
 Vl
 dG
 hN
-hN
+Bs
 hN
 pV
 Sz
@@ -33382,7 +34172,7 @@ Vo
 XH
 bH
 sU
-sU
+oN
 kp
 nE
 Le
@@ -33686,7 +34476,7 @@ kH
 bH
 Zx
 kp
-nE
+oF
 Le
 gE
 Bw
