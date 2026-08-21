@@ -164,11 +164,11 @@
 			return 1
 
 	proc/loadammo(var/obj/item/ammo/bullets/A, var/obj/item/gun/kinetic/K)
-		/* So bullet reloading is using this convoluted system for some reason.
+		/* So bullet reloading is pretty convoluted
 			- From what I can tell, loadammo() gets called first in order to figure out the type of reload.
 			- Most returned cases are just for displaying different kinds of messages.
 			- If the ammo is being swapped, swap() gets called to make the change
-			- THEN swap() has a case where it might call loadammo() AGAIN after it has emptied the gun (I think?) or something of the sort.
+			- THEN swap() may call loadammo() AGAIN to complete the reload.
 			- Maybe it is doing this in case the ammo doesn't fit in a single container?
 			- In short: I recommend nuking the entire reload system. (LorrMaster)
 		*/
