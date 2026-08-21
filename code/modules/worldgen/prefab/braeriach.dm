@@ -1,7 +1,72 @@
-/obj/bomb_placeholder
+/obj/machinery/nuclearbomb/event/large
 	name = "KATABASIS"
 	icon = 'icons/obj/large/64x64.dmi'
-	icon_state = "nuclearbomb_large"
+	icon_state = "nuclear_bomb_large" // Note the underscore: damage sprites check for "nuclearbomb".
+	layer = EFFECTS_LAYER_BASE
+	bound_width = 64
+	bound_height = 32
+	anyone_can_activate = TRUE
+	target_override = /area/station
+	target_override_name = "anywhere"
+
+	var/static/total_bomb_number = 0
+	var/bomb_number = null
+	var/datum/action/bar/healthbar/healthbar = null
+
+/obj/machinery/nuclearbomb/event/large/New()
+	. = ..()
+
+	if (isnum(src.bomb_number))
+		src.total_bomb_number = max(src.total_bomb_number, src.bomb_number)
+	else
+		src.bomb_number = src.total_bomb_number++
+
+	src.name = "KATABASIS " + global.add_zero(src.bomb_number, 2)
+
+	src.maptext_x = 0
+	src.maptext_y = 38
+
+	src.healthbar = new /datum/action/bar/healthbar()
+	src.healthbar.owner = src
+	src.healthbar.onStart()
+	src.healthbar.onUpdate()
+
+/obj/machinery/nuclearbomb/event/large/disposing()
+	QDEL_NULL(src.healthbar)
+	. = ..()
+
+/obj/machinery/nuclearbomb/event/large/update_health()
+	. = ..()
+	src.healthbar.onUpdate()
+
+
+/datum/action/bar/healthbar
+	bar_icon_state = "bar"
+	border_icon_state = "border"
+	color_active = "#9eee80"
+	color_success = "#167935"
+	color_failure = "#8d1422"
+	bar_x_offset = 16
+	bar_y_offset = 26
+
+/datum/action/bar/healthbar/onUpdate()
+	var/obj/O = src.owner
+	if (!istype(O) || !src.bar || !src.border)
+		return
+
+	src.border.invisibility = INVIS_ALWAYS
+	if (O._health == O._max_health)
+		src.bar.invisibility = INVIS_ALWAYS
+	else
+		src.bar.invisibility = INVIS_NONE
+
+	var/complete = O._health / O._max_health
+	src.bar.color = "#00FF00"
+	src.bar.transform = matrix(complete * 2, 1, MATRIX_SCALE)
+	src.bar.pixel_x = src.bar_x_offset - ceil((60 - (60 * complete)) / 2)
+
+
+
 
 
 /obj/machinery/macrofab/syndicate
@@ -12,11 +77,13 @@
 	sound_volume = 15
 
 /obj/machinery/macrofab/syndicate/attack_hand(mob/user)
-	if (!user.mind || !(user.mind.get_antagonist(ROLE_NUKEOP) || user.mind.get_antagonist(ROLE_NUKEOP_COMMANDER)))
+	if (!istrainedsyndie(user))
 		boutput(user, SPAN_ALERT("This machine's design makes no sense to you, you can't figure out how to use it!"))
 		return
 
 	. = ..()
+
+
 
 
 

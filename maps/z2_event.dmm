@@ -2136,6 +2136,12 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/specialroom/arcade,
 /area/braeriach/crew/janitor)
+"ke" = (
+/obj/machinery/nuclearbomb/event/large{
+	bomb_number = 2
+	},
+/turf/simulated/floor/minitiles/black,
+/area/braeriach/armament_depot)
 "ki" = (
 /obj/cable/braeriach{
 	icon_state = "4-8"
@@ -2408,6 +2414,12 @@
 	},
 /turf/simulated/floor/red/redblackchecker,
 /area/braeriach/crew/bar)
+"lx" = (
+/obj/machinery/nuclearbomb/event/large{
+	bomb_number = 3
+	},
+/turf/simulated/floor/minitiles/black,
+/area/braeriach/armament_depot)
 "ly" = (
 /obj/machinery/conveyor/EW{
 	operating = 1
@@ -2610,7 +2622,9 @@
 /turf/simulated/floor/white,
 /area/braeriach/medbay/surgery)
 "ml" = (
-/obj/bomb_placeholder,
+/obj/machinery/nuclearbomb/event/large{
+	bomb_number = 4
+	},
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/armament_depot)
 "mp" = (
@@ -4966,6 +4980,12 @@
 "wp" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space/braeriach)
+"wt" = (
+/obj/machinery/nuclearbomb/event/large{
+	bomb_number = 0
+	},
+/turf/simulated/floor/minitiles/black,
+/area/braeriach/armament_depot)
 "wu" = (
 /turf/simulated/floor/redblack{
 	dir = 1
@@ -5868,6 +5888,12 @@
 	},
 /turf/simulated/floor/black,
 /area/braeriach/command/bridge)
+"Aw" = (
+/obj/machinery/nuclearbomb/event/large{
+	bomb_number = 1
+	},
+/turf/simulated/floor/minitiles/black,
+/area/braeriach/armament_depot)
 "AB" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-49"
@@ -27430,13 +27456,13 @@ Ha
 wj
 mQ
 BC
-ml
+wt
 IA
-ml
+Aw
 IA
-ml
+ke
 IA
-ml
+lx
 IA
 ml
 UT

@@ -390,8 +390,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		else if (P.proj_data.damage_type == D_PIERCING)
 			src.take_damage(damage)
 
+	proc/update_health(new_health)
+		src._health = new_health
+
 	proc/repair_nuke()
-		src._health = min(src._health+5, src._max_health)
+		src.update_health(min(src._health + 5, src._max_health))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 		return
 
@@ -418,7 +421,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 					src.icon_state = "nuclearbomb3"
 		if (!isnum(amount) || amount < 1)
 			return
-		src._health = max(0,src._health - amount)
+		src.update_health(max(0, src._health - amount))
 		if (src._health < 1)
 			var/mode_bomb
 			if(ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
@@ -431,6 +434,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 			logTheThing(LOG_GAMEMODE, null, "[src][mode_bomb] was destroyed at [log_loc(src)].")
 			message_admins("<b>[src][mode_bomb]</b> was destroyed at [log_loc(src)].")
 			message_ghosts("<b>[src]</b> was destroyed at [log_loc(src, ghostjump=TRUE)]!")
+			command_alert("\A [src] has been destroyed in [isturf(src.loc) ? get_area(src) : src.loc]. It was destoyed with [src.get_countdown_timer()] minutes remaining.", "Nuclear Weapon Destroyed", 'sound/misc/announcement_1.ogg')
 			qdel(src)
 
 	proc/explode()
