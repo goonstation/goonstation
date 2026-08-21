@@ -201,16 +201,28 @@ const LoadAdjustmentControls = ({
   <Stack vertical>
     <Stack.Item>
       <Stack align="center">
-        <Input value={`${load / 1000}`} monospace onBlur={onCommit} />
-        <Box>kJ/rev</Box>
+        <Stack.Item>
+          <Input value={`${load / 1000}`} monospace onBlur={onCommit} />
+        </Stack.Item>
+        <Stack.Item>
+          <Box>kJ/rev</Box>
+        </Stack.Item>
       </Stack>
     </Stack.Item>
     <Stack.Item>
       <Stack>
-        <Button onClick={() => onAdjust(0.99)}>-1%</Button>
-        <Button onClick={() => onAdjust(0.9)}>-10%</Button>
-        <Button onClick={() => onAdjust(1.1)}>+10%</Button>
-        <Button onClick={() => onAdjust(1.01)}>+1%</Button>
+        <Stack.Item>
+          <Button onClick={() => onAdjust(0.99)}>-1%</Button>
+        </Stack.Item>
+        <Stack.Item>
+          <Button onClick={() => onAdjust(0.9)}>-10%</Button>
+        </Stack.Item>
+        <Stack.Item>
+          <Button onClick={() => onAdjust(1.1)}>+10%</Button>
+        </Stack.Item>
+        <Stack.Item>
+          <Button onClick={() => onAdjust(1.01)}>+1%</Button>
+        </Stack.Item>
       </Stack>
     </Stack.Item>
   </Stack>
@@ -431,23 +443,28 @@ export const TurbineControl = () => {
             <Section title="History">
               <Stack vertical>
                 {[0, 2, 4].map((row) => (
-                  <Stack key={row}>
-                    {historyPanels.slice(row, row + 2).map((panel) => (
-                      <Stack.Item key={panel.label} grow basis={0}>
-                        <Box color="label">
-                          {panel.label}: {panel.value}
-                        </Box>
-                        <Chart.Line
-                          height="4em"
-                          data={panel.chart.data}
-                          rangeX={[0, Math.max(panel.chart.data.length - 1, 1)]}
-                          rangeY={[0, panel.chart.max]}
-                          strokeColor="rgba(203, 135, 66, 1)"
-                          fillColor="rgba(241, 183, 125, 0.25)"
-                        />
-                      </Stack.Item>
-                    ))}
-                  </Stack>
+                  <Stack.Item key={row}>
+                    <Stack>
+                      {historyPanels.slice(row, row + 2).map((panel) => (
+                        <Stack.Item key={panel.label} grow basis={0}>
+                          <Box color="label">
+                            {panel.label}: {panel.value}
+                          </Box>
+                          <Chart.Line
+                            height="4em"
+                            data={panel.chart.data}
+                            rangeX={[
+                              0,
+                              Math.max(panel.chart.data.length - 1, 1),
+                            ]}
+                            rangeY={[0, panel.chart.max]}
+                            strokeColor="rgba(203, 135, 66, 1)"
+                            fillColor="rgba(241, 183, 125, 0.25)"
+                          />
+                        </Stack.Item>
+                      ))}
+                    </Stack>
+                  </Stack.Item>
                 ))}
               </Stack>
               {!data.history.length && <Box color="label">No samples yet.</Box>}
