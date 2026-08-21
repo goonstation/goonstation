@@ -2609,6 +2609,11 @@
 "mi" = (
 /obj/machinery/light/small/floor,
 /obj/table/syndicate/auto,
+/obj/item/device/radio/intercom/syndicate_ai{
+	dir = 4;
+	pixel_x = 9;
+	pixel_y = 6
+	},
 /turf/simulated/floor/carpet/red/decal/outercross,
 /area/braeriach/command/bridge)
 "mj" = (
@@ -9869,12 +9874,6 @@
 /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo,
 /turf/simulated/floor/grey,
 /area/braeriach/medbay)
-"Qx" = (
-/obj/item/device/radio/intercom/syndicate_ai{
-	dir = 8
-	},
-/turf/simulated/floor/black,
-/area/braeriach/command/bridge)
 "Qy" = (
 /obj/shrub{
 	icon = 'icons/obj/stationobjs.dmi';
@@ -27456,15 +27455,15 @@ Ha
 wj
 mQ
 BC
-wt
-IA
-Aw
-IA
-ke
+ml
 IA
 lx
 IA
-ml
+ke
+IA
+Aw
+IA
+wt
 UT
 fW
 TO
@@ -35907,7 +35906,7 @@ Vm
 Vm
 Jt
 oy
-Qx
+OS
 ni
 OS
 Dx

@@ -404,7 +404,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		user.attach_hud(src.wirepanel)
 
 	proc/get_countdown_timer()
-		var/timeleft = round((det_time - TIME)/10 ,1)
+		var/timeleft = null
+		if (src.det_time)
+			timeleft = round((src.det_time - TIME) / 10, 1)
+		else
+			timeleft = round(src.timer_default / 10, 1)
+
 		timeleft = "[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]"
 		return timeleft
 
