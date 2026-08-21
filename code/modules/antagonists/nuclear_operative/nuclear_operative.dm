@@ -10,11 +10,11 @@
 	var/static/commander_title = "Commander"
 	var/static/available_callsigns
 	var/static/assigned_callsigns = list(
-		"zacattaxx" = "Foxtrot"
-		"torchwick" = "Latrotoxin"
-		"xalibur" = "Behemoth"
-		"ilysen" = "Needletail"
-		"spaghettpasta" = "Pebble"
+		"zacattaxx" = "Foxtrot",
+		"torchwick" = "Latrotoxin",
+		"xalibur" = "Behemoth",
+		"ilysen" = "Needletail",
+		"spaghettpasta" = "Pebble",
 	)
 	var/list/datum/materiel/purchased_items = list() //Used for adding a nukie's vendor purchases to crew credits. Items are tracked by whoever interacts with the vendor, so if the whole team gives their credits to the commander, the commander will have multiple entries in the crew credits!
 	var/list/datum/syndicate_buylist/uplink_items = list() // Same but for custom uplinks and the commander uplink
