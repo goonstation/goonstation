@@ -156,7 +156,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	slot_lhan = list(/obj/item/storage/toolbox/mechanical)
 	slot_poc1 = list(/obj/item/device/analyzer/atmospheric)
 	slot_ears = list(/obj/item/device/radio/headset/engineer)
-	items_in_backpack = list(/obj/item/tank/mini/oxygen,/obj/item/crowbar)
+	items_in_backpack = list(/obj/item/tank/mini/oxygen,/obj/item/places_pipes, /obj/item/rcd_ammo/big)
 	wiki_link = "https://wiki.ss13.co/Atmospheric_Technician"
 	email_group = MGD_ENGINEER
 

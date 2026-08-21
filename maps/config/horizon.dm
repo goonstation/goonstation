@@ -1,4 +1,4 @@
-INCLUDE_MAP("../unused/horizon.dmm")
+INCLUDE_MAP("../horizon.dmm")
 #ifndef GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW
 INCLUDE_MAP("../z2.dmm")
 INCLUDE_MAP("../z3.dmm")

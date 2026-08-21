@@ -38,6 +38,9 @@
 #elif defined(MAP_OVERRIDE_WRESTLEMAP)
 #include "wrestlemap.dm"
 
+#elif defined(MAP_OVERRIDE_HORIZON)
+#include "horizon.dm"
+
 // rotation maps
 #elif defined(MAP_OVERRIDE_COGMAP)
 #include "cogmap.dm"

@@ -25,6 +25,7 @@ var/global/list/mapNames = list(
 #endif
 
 	"Cogmap 2" =			list("id" = "COGMAP2",		"settings" = "cogmap2",			"playerPickable" = TRUE, 	"MinPlayersAllowed" = 40),
+	"Horizon" = 			list("id" = "HORIZON", 		"settings" = "horizon", 		"playerPickable" = TRUE),
 	"Donut 2" =				list("id" = "DONUT2",		"settings" = "donut2",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 80),
 	"Donut 3" =				list("id" = "DONUT3",		"settings" = "donut3",			"playerPickable" = TRUE, 	"MinPlayersAllowed" = 40),
 	"Kondaru" =				list("id" = "KONDARU",		"settings" = "kondaru",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 80),
@@ -289,6 +290,60 @@ var/global/list/mapNames = list(
 
 	valid_nuke_targets = list()
 
+
+/datum/map_settings/horizon
+	name = "HORIZON"
+	display_name = "NSS Horizon"
+	style = "ship"
+	goonhub_map = "/maps/horizon"
+	walls = /turf/simulated/wall/auto/supernorn
+	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
+	windows = /obj/window/auto
+	windows_thin = /obj/window/pyro
+	rwindows = /obj/window/auto/reinforced
+	rwindows_thin = /obj/window/reinforced/pyro
+	windows_crystal = /obj/window/auto/crystal
+	windows_rcrystal = /obj/window/auto/crystal/reinforced
+	window_layer_full = COG2_WINDOW_LAYER
+	window_layer_north = GRILLE_LAYER+0.1
+	window_layer_south = FLY_LAYER+1
+	auto_windows = TRUE
+	airlock_style = "pyro"
+	escape_dir = EAST
+	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
+	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
+	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
+	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
+	valid_nuke_targets = list("the courtroom" = list(/area/station/crew_quarters/courtroom),
+		"the chapel" = list(/area/station/chapel/sanctuary),
+		"the main security room" = list(/area/station/security/main),
+		"the Quartermaster's Store (QM)" = list(/area/station/quartermaster/office),
+		"the Engineering control room" = list(/area/station/engine/power),
+		"that snazzy-lookin' sports bar up front" = list(/area/station/crew_quarters/fitness),
+		"the main medical bay room" = list(/area/station/medical/medbay),
+		"the research artifact lounge" = list(/area/station/science/artifact),
+		"the cloning lab" = list(/area/station/medical/medbay/cloner),
+		"the hot loop" = list(/area/station/engine/hotloop),
+		"the mechanics' lab" = list(/area/station/engine/elect),
+		"the mining staff room" = list(/area/station/mining/staff_room),
+		"the robotics lab" = list(/area/station/medical/robotics),
+		"the crew quarters on the south of the station" = list(/area/station/crew_quarters/quarters_south))
+	job_limits_override = list(
+		/datum/job/civilian/clown = 2,
+		/datum/job/security/security_officer = 6,
+		/datum/job/security/detective = 1,
+		/datum/job/medical/geneticist = 3,
+		/datum/job/medical/roboticist = 3,
+		/datum/job/research/scientist = 6,
+		/datum/job/medical/medical_doctor = 7,
+		/datum/job/engineering/miner = 4,
+		/datum/job/engineering/engineer = 6,
+		/datum/job/civilian/chef = 2,
+		/datum/job/civilian/bartender = 2,
+		/datum/job/civilian/janitor = 3,
+		/datum/job/civilian/chaplain = 2,
+		/datum/job/special/atmospheric_technician = 1
+	)
 
 /datum/map_settings/wrestlemap
 	name = "WRESTLEMAP"

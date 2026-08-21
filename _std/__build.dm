@@ -154,6 +154,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_NEON					// Neon by Sord
 
 //-------Discontinued or gimmick maps:
+//#define MAP_OVERRIDE_HORIZON      // NSS Horizon, by Warcrimes
 //#define MAP_OVERRIDE_ATLAS        // NCS Atlas, by Gannets (and Kubius)
 //#define MAP_OVERRIDE_CRASH        // Stupid Crash Gimmick Map
 //#define MAP_OVERRIDE_MUSHROOM     // Updated Mushroom

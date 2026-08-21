@@ -75,6 +75,12 @@ TYPEINFO(/obj/item/device/camera_viewer)
 	camera_networks = list(CAMERA_NETWORK_STATION, CAMERA_NETWORK_SCIENCE, CAMERA_NETWORK_CARGO, CAMERA_NETWORK_RANCH)
 	color = "#e49191"
 
+/obj/item/device/camera_viewer/cargo
+	name = "cargo monitor"
+	desc = "A portable video monitor, connected to the ranch camera network."
+	camera_networks = list(CAMERA_NETWORK_CARGO)
+	color = "#e4d33d"
+
 /obj/item/device/camera_viewer/ranch
 	name = "baby monitor"
 	desc = "A portable video monitor, connected to the ranch camera network."
