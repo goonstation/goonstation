@@ -170,7 +170,10 @@
 		var/mob/living/carbon/human/nukie = src.owner.current
 		var/obj/item/card/id/id_card = nukie.wear_id
 		id_card.registered = nukie.real_name
-		id_card.assignment = "Nuclear Operative"
+		if(src.id == ROLE_NUKEOP_COMMANDER)
+			id_card.assignment = "Nuclear Commander"
+		else
+			id_card.assignment = "Nuclear Operative"
 		id_card.icon_state = "id_syndie"
 		id_card.update_name()
 		var/obj/item/device/pda2/syndicate/PDA = new(nukie)
