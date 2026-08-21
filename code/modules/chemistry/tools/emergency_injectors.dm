@@ -336,7 +336,7 @@
 	label = "vr2"
 
 /* ======================================================================== */
-/* ------------------- Nuke Ops / NTEP - high-capacity -------------------- */
+/* ------- Nuke Ops Medic / NT emergency paramedic - high-capacity -------- */
 /* ======================================================================== */
 
 /obj/item/reagent_containers/emergency_injector/high_capacity/
