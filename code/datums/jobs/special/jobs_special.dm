@@ -312,6 +312,12 @@ ABSTRACT_TYPE(/datum/job/special)
 			pda.assignment = "Staff Assistant"
 			pda.ownerAssignment = "Staff Assistant"
 
+/datum/job/special/mode
+	name = "MODE"
+	limit = 0
+	wages = 0
+	add_to_manifest = FALSE
+
 /datum/job/special/pathologist
 	name = "Pathologist"
 	limit = 0
