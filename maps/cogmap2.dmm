@@ -19159,6 +19159,10 @@
 /obj/blind_switch/directional/west{
 	pixel_y = 5
 	},
+/obj/item/stamp/hos{
+	pixel_x = 6;
+	pixel_y = -6
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "bkI" = (
@@ -70007,12 +70011,7 @@
 /obj/table/wood/auto,
 /obj/item/paper/book/from_file/dwainedummies,
 /obj/item/disk/data/tape/master/readonly,
-/obj/item/reagent_containers/food/snacks/beefood{
-	desc = "A little birthday cupcake for Heisenbee.  May not taste good to non-bees.";
-	icon = 'icons/obj/foodNdrink/food_dessert.dmi';
-	icon_state = "cupcake";
-	name = "Heisenbee's birthday cupcake"
-	},
+/obj/item/reagent_containers/food/snacks/beefood/heisenbee,
 /obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
