@@ -7,9 +7,15 @@
 	uses_pref_name = FALSE
 	wiki_link = "https://wiki.ss13.co/Nuclear_Operative"
 
-	var/static/commander_title
+	var/static/commander_title = "Commander"
 	var/static/available_callsigns
-	var/static/assigned_callsigns = list()
+	var/static/assigned_callsigns = list(
+		"zacattaxx" = "Foxtrot"
+		"torchwick" = "Latrotoxin"
+		"xalibur" = "Behemoth"
+		"ilysen" = "Needletail"
+		"spaghettpasta" = "Pebble"
+	)
 	var/list/datum/materiel/purchased_items = list() //Used for adding a nukie's vendor purchases to crew credits. Items are tracked by whoever interacts with the vendor, so if the whole team gives their credits to the commander, the commander will have multiple entries in the crew credits!
 	var/list/datum/syndicate_buylist/uplink_items = list() // Same but for custom uplinks and the commander uplink
 
@@ -18,7 +24,7 @@
 			src.commander_title = pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord", "General", "Warlord", "Commissar")
 
 		if (!src.available_callsigns)
-			var/list/callsign_pool_keys = list("nato", "melee_weapons", "colors", "birds", "mammals", "moons", "arthurian")
+			var/list/callsign_pool_keys = list("nato")
 			src.available_callsigns = strings("agent_callsigns.txt", pick(callsign_pool_keys))
 
 		src.owner = new_owner
@@ -156,6 +162,7 @@
 			var/callsign
 			if(src.owner.ckey in src.assigned_callsigns)
 				callsign = src.assigned_callsigns[src.owner.ckey]
+				src.available_callsigns -= callsign
 			else
 				callsign = pick(src.available_callsigns)
 				src.assigned_callsigns[src.owner.ckey] = callsign
