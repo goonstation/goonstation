@@ -2985,7 +2985,7 @@
 /area/braeriach/medbay)
 "ok" = (
 /obj/decal/stage_edge/alt,
-/obj/reagent_dispensers/foamtank,
+/obj/deployable_turret/syndicate/active,
 /turf/simulated/floor/shuttlebay,
 /area/braeriach/podbay)
 "ol" = (
@@ -3203,6 +3203,10 @@
 	},
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/south_east)
+"pr" = (
+/obj/landmark/braeriach_beacon,
+/turf/space,
+/area/space/braeriach)
 "ps" = (
 /obj/cable/braeriach{
 	icon_state = "4-8"
@@ -3378,6 +3382,7 @@
 	dir = 8;
 	pixel_x = -10
 	},
+/obj/storage/closet/fire,
 /turf/simulated/floor/shuttlebay,
 /area/braeriach/podbay)
 "pY" = (
@@ -7210,6 +7215,13 @@
 	dir = 1
 	},
 /area/braeriach/medbay/surgery)
+"FX" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/landmark/braeriach_beacon,
+/turf/space,
+/area/space/braeriach)
 "FZ" = (
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/redblack{
@@ -10946,10 +10958,10 @@
 /turf/simulated/floor/black,
 /area/braeriach/armament_depot)
 "UW" = (
-/obj/storage/closet/fire,
 /obj/cable/braeriach{
 	icon_state = "2-4"
 	},
+/obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/shuttlebay,
 /area/braeriach/podbay)
 "UX" = (
@@ -22640,9 +22652,9 @@ Pv
 Qp
 sl
 sl
-sl
-sl
-sl
+pr
+pr
+pr
 sl
 sl
 sl
@@ -22942,9 +22954,9 @@ Pv
 Bo
 at
 at
-at
+FX
 aA
-sl
+pr
 sl
 sl
 sl
@@ -23244,9 +23256,9 @@ Pv
 Ez
 sl
 sl
-sl
-sl
-sl
+pr
+pr
+pr
 sl
 sl
 sl

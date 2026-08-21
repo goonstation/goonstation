@@ -69,6 +69,90 @@
 
 
 
+/obj/landmark/braeriach_beacon
+	name = LANDMARK_SYNDICATE_POD_RETURN_BEACON
+
+
+/obj/item/shipcomponent/communications/syndicate/activate()
+	var/atom/movable/screen/hud/pod/comms_use = ship.myhud.get_hudzone("main_panel").get_element("return_to_station").screen_obj
+	comms_use.name = "Return to Braeriach"
+	comms_use.desc = "Using this will return you to the Braeriach the next time you fly off the edge of the current level."
+	. = ..()
+
+/obj/item/shipcomponent/communications/syndicate/deactivate()
+	var/atom/movable/screen/hud/pod/comms_use = ship.myhud.get_hudzone("main_panel").get_element("return_to_station").screen_obj
+	comms_use.name = "Return To [capitalize(station_or_ship())]"
+	comms_use.desc = "Using this will place you on the station Z-level the next time you fly off the edge of the current level."
+	. = ..()
+
+/obj/item/shipcomponent/communications/syndicate/go_home()
+	if (!src.active)
+		boutput(usr, "[src.ship.ship_message("Sensors inactive! Unable to calculate trajectory!")]")
+		return TRUE
+
+	var/turf/target = src.get_home_turf()
+	if (!target)
+		boutput(usr, "[src.ship.ship_message("Sensor error! Unable to calculate trajectory!")]")
+		return TRUE
+
+	var/obj/item/shipcomponent/engine/engine_part = src.ship.get_part(POD_PART_ENGINE)
+	if (!engine_part)
+		boutput(usr, "[src.ship.ship_message("Engines missing! Unable to calculate trajectory!")]")
+		return TRUE
+
+	if (!engine_part.active)
+		boutput(usr, "[src.ship.ship_message("Engines inactive! Unable to calculate trajectory!")]")
+		return TRUE
+
+	if (!engine_part.ready)
+		boutput(usr, "[src.ship.ship_message("Engine recharging! Unable to minimize trajectory error!")]")
+		return TRUE
+
+	if (istype(src.ship.movement_controller, /datum/movement_controller/pod))
+		var/datum/movement_controller/pod/MCP = src.ship.movement_controller
+		if (MCP.velocity_x != 0 || MCP.velocity_y != 0)
+			boutput(usr, "[src.ship.ship_message("Ship must have ZERO relative velocity to calculate trajectory to destination!")]")
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 50)
+			return TRUE
+
+	else if (istype(src.ship.movement_controller, /datum/movement_controller/tank))
+		var/datum/movement_controller/tank/MCT = src.ship.movement_controller
+		if (MCT.input_x != 0 || MCT.input_y != 0)
+			boutput(usr, "[src.ship.ship_message("Ship must have ZERO relative velocity (be stopped) to calculate trajectory destination!")]")
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 50)
+			return TRUE
+
+	engine_part.warp_autopilot = TRUE
+	boutput(usr, "[src.ship.ship_message("Charging engines for escape velocity! Overriding manual control!")]")
+
+	var/health_perc = src.ship.health_percentage
+	src.ship.going_home = FALSE
+	sleep(5 SECONDS)
+
+	if (src.ship.health_percentage < (health_perc - 30))
+		boutput(usr, "[src.ship.ship_message("Trajectory calculation failure! Ship characteristics changed from calculations!")]")
+	else if(src.active)
+		var/old_color = src.ship.color
+		animate_teleport(src.ship)
+		sleep(0.8 SECONDS)
+		src.ship.set_loc(target)
+		src.ship.color = old_color // revert color from teleport color-shift
+	else
+		boutput(usr, "[src.ship.ship_message("Trajectory calculation failure! Loss of systems!")]")
+
+	engine_part.ready = FALSE
+	engine_part.warp_autopilot = FALSE
+	engine_part.ready()
+	return TRUE
+
+/obj/item/shipcomponent/communications/syndicate/get_home_turf()
+	if (length(landmarks[LANDMARK_SYNDICATE_POD_RETURN_BEACON]))
+		return pick(landmarks[LANDMARK_SYNDICATE_POD_RETURN_BEACON])
+
+
+
+
+
 /obj/machinery/macrofab/syndicate
 	name = "Pod Fabricator"
 	desc = "A sophisticated machine that fabricates vehicles from a nearby reserve of supplies."

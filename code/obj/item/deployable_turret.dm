@@ -550,14 +550,14 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
-	is_friend(var/mob/living/C)
-		return istype(C.get_id(), /obj/item/card/id/syndicate) || (FACTION_SYNDICATE in C.faction) //dumb lazy
+	is_friend(mob/living/C)
+		return istrainedsyndie(C) || (FACTION_SYNDICATE in C.faction)
 
 /obj/deployable_turret/syndicate/active
 	anchored = ANCHORED
 
-	New(loc)
-		..(src.loc, src.dir)
+	New(loc, direction)
+		..()
 		src.toggle_activated()
 
 /obj/deployable_turret/riot

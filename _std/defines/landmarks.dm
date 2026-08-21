@@ -35,6 +35,7 @@
 #define LANDMARK_NUCLEAR_BOMB "Nuclear-Bomb"
 #define LANDMARK_SYNDICATE_ASSAULT_POD_TELE "Syndicate-Assault-Pod-Tele"
 #define LANDMARK_SYNDICATE_ASSAULT_POD_COMP "Syndicate-Assault-Pod-Comp"
+#define LANDMARK_SYNDICATE_POD_RETURN_BEACON "Syndicate-Pod-Return-Beacon"
 
 //Old nukies
 #define LANDMARK_NUCLEAR_CLOSET "Nuclear-Closet"
