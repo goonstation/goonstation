@@ -1178,21 +1178,21 @@ TYPEINFO(/datum/mutantrace/skeleton)
 			src.mob.ensure_speech_tree().update_speaker_origin(src.head_tracker)
 			src.mob.ensure_listen_tree().update_listener_origin(src.head_tracker)
 			if (src.mob.client)
-				global.client_hashmap.update_tracked_atom(src.mob.client,src.head_tracker)
+				global.sound_hashmap.update_tracked_atom(src.mob.client,src.head_tracker)
 
 		else
 			src.mob.set_eye(null)
 			src.mob.ensure_speech_tree().update_speaker_origin(src.mob)
 			src.mob.ensure_listen_tree().update_listener_origin(src.mob)
 			if (src.mob.client)
-				global.client_hashmap.update_tracked_atom(src.mob.client,src.mob)
+				global.sound_hashmap.update_tracked_atom(src.mob.client,src.mob)
 
 	proc/set_head(obj/item/organ/head/head)
 		// if the head was previous linked to someone else
 		if (isnull(head))
 			src.mob.set_eye(null)
 			if (src.mob.client)
-				global.client_hashmap.update_tracked_atom(src.mob.client,src.mob)
+				global.sound_hashmap.update_tracked_atom(src.mob.client,src.mob)
 
 		if (isskeleton(head?.linked_human) && (src.mob != head.linked_human))
 			var/datum/mutantrace/skeleton/S = head.linked_human.mutantrace

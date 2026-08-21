@@ -15,15 +15,16 @@
 
 /client/New()
 	. = ..()
+	global.client_hashmap.register_hashmap_entry(src, src.mob)
 	// gross hack for audio routing
 	if (isskeleton(src.mob))
 		var/obj/item/organ/head/head = IS_HEADLESS_SKELETON(src.mob)
 		if (head)
-			global.client_hashmap.update_tracked_atom(src, head)
+			global.sound_hashmap.register_hashmap_entry(src, head)
 		else
-			global.client_hashmap.register_hashmap_entry(src, src.mob)
+			global.sound_hashmap.register_hashmap_entry(src, src.mob)
 	else
-		global.client_hashmap.register_hashmap_entry(src, src.mob)
+		global.sound_hashmap.register_hashmap_entry(src, src.mob)
 
 /client/Del()
 	global.client_hashmap.unregister_hashmap_entry(src)
