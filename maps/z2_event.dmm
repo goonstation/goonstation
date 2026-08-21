@@ -131,7 +131,10 @@
 /turf/simulated/floor/industrial,
 /area/braeriach/secure/firing_range)
 "aT" = (
-/obj/decal/stage_edge/alt,
+/obj/decal/stage_edge/alt{
+	density = 0
+	},
+/obj/machinery/macrofab/syndicate,
 /turf/simulated/floor/shuttlebay,
 /area/braeriach/podbay)
 "aU" = (
