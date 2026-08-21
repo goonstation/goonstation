@@ -36,6 +36,8 @@
 		mainframe.set_law_rack(ticker.ai_law_rack_manager?.default_ai_rack_syndie)
 		SPAWN(0.7 SECONDS) //Internal camera doesnt exist for .6 seconds guh
 			mainframe.choose_name(3, "Mission Control")
+		mainframe.internal_pda.scannable = FALSE
+		mainframe.internal_pda.mailgroups |= MGA_SYNDICATE
 
 		//Radios
 		mainframe.radio1.icon_tooltip = "Syndicate Mission Control"

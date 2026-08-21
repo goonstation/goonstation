@@ -139,7 +139,7 @@ TYPEINFO(/obj/machinery/clonepod)
 		newsignal.data["message"] = "[msg]"
 
 		newsignal.data["address_1"] = "00000000"
-		if(src.clonehack)
+		if(src.clonehack || istype(src, /obj/machinery/clonepod/pod_wars/nukie))
 			newsignal.data["group"] = list(MGA_SYNDICATE)
 		else
 			newsignal.data["group"] = mailgroups + MGA_CLONER

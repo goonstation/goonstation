@@ -219,11 +219,9 @@
 	name = "syndicate cloning pod deluxe"
 
 	growclone_a_ghost()
-		var/list/to_search = get_all_antagonists()
+		var/list/to_search = get_all_antagonists(ROLE_NUKEOP) + get_all_antagonists(ROLE_NUKEOP_COMMANDER)
 		for(var/datum/antagonist/antag in to_search)
 			var/datum/mind/mind = antag.owner
-			if(!mind.get_antagonist(ROLE_NUKEOP) && !mind.get_antagonist(ROLE_NUKEOP_COMMANDER))
-				continue
 			if((istype(mind.current, /mob/dead/observer) || isdead(mind.current)) && mind.current.client && !mind.get_player()?.dnr)
 				//prune puritan trait
 				mind.current?.traitHolder.removeTrait("puritan")
