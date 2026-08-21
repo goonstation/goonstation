@@ -445,7 +445,7 @@ var/global/list/nuke_op_camo_matrix = null
 	..()
 	return
 
-var/syndicate_name = "Black Star"
+var/syndicate_name = "Void Star"
 /proc/syndicate_name()
 	if (syndicate_name)
 		return syndicate_name
