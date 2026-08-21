@@ -1038,9 +1038,11 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	//warcrimes brought to you by bullets telling guns how to shoot!
 	attackby(obj/item/ammo/bullets/b, mob/user)
+		. = ..()
+
+		// This gun has multiple modes, so apparently that means we have to go through this mess (LorrMaster)
 		var/obj/item/ammo/bullets/previous_ammo = ammo
 		var/mode_was_auto = current_projectile.fullauto_valid
-		..()
 		if(!previous_ammo.ammo_type.is_same_ammo(ammo.ammo_type)) // we switched ammo types
 			if(istype(ammo, /obj/item/ammo/bullets/nine_mm_surplus))
 				if(mode_was_auto)
@@ -1056,10 +1058,10 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 				else
 					set_current_projectile(new/datum/projectile/bullet/bullet_9mm/smg)
 					projectiles = list(current_projectile, new/datum/projectile/bullet/bullet_9mm/smg/auto)
+
+			// We created brand new ammo types for some reason, so if the ammo being inserted has a material then we have to reapply it (LorrMaster)
 			for(var/datum/projectile/bullet/proj in projectiles)
-				// Eh, good enough for now
 				proj.coating = ammo.ammo_type.coating
-				proj.coating_amount = ammo.ammo_type.coating_amount
 
 /obj/item/gun/kinetic/greasegun
 	name = "\improper Grease Gun"
@@ -1130,8 +1132,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 				set_current_projectile(new/datum/projectile/bullet/nine_mm_surplus/auto)
 			else if(istype(ammo, /obj/item/ammo/bullets/bullet_9mm/smg))
 				set_current_projectile(new/datum/projectile/bullet/bullet_9mm/smg/auto)
-			src.current_projectile.coating = ammo.ammo_type.coating // Eh, good enough for now
-			src.current_projectile.coating_amount = ammo.ammo_type.coating_amount
+			src.current_projectile.coating = ammo.ammo_type.coating // Apply the ammo's material to the newly created ammo type
 
 	proc/set_auto_delay(delay)
 		. = delay * 10
@@ -3170,9 +3171,11 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 
 	attackby(obj/item/ammo/bullets/b, mob/user)  // has to account for whether regular or armor-piercing ammo is loaded AND which firing mode it's using
+		. = ..()
+
+		// This gun has multiple modes, so apparently that means we have to go through this mess (LorrMaster)
 		var/obj/item/ammo/bullets/previous_ammo = ammo
 		var/mode_was_burst = (istype(current_projectile, /datum/projectile/bullet/assault_rifle/burst/))  // was previous mode burst fire?
-		..()
 		if(!previous_ammo.ammo_type.is_same_ammo(ammo.ammo_type)) // we switched ammo types
 			if(istype(ammo, /obj/item/ammo/bullets/assault_rifle/armor_piercing)) // we switched from normal to armor_piercing
 				if(mode_was_burst) // we were in burst shot mode
@@ -3188,10 +3191,10 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 				else // we were in single shot mode
 					set_current_projectile(new/datum/projectile/bullet/assault_rifle)
 					projectiles = list(current_projectile, new/datum/projectile/bullet/assault_rifle/burst)
+
+			// We created brand new ammo types for some reason, so if the ammo being inserted has a material then we have to reapply it (LorrMaster)
 			for(var/datum/projectile/bullet/proj in projectiles)
-				// Eh, good enough for now
 				proj.coating = ammo.ammo_type.coating
-				proj.coating_amount = ammo.ammo_type.coating_amount
 
 	attack_self(mob/user as mob)
 		..()	//burst shot has a slight spread.
@@ -3237,9 +3240,11 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 
 	attackby(obj/item/ammo/bullets/b, mob/user)  // has to account for whether regular or armor-piercing ammo is loaded AND which firing mode it's using
+		. = ..()
+
+		// This gun has multiple modes, so apparently that means we have to go through this mess (LorrMaster)
 		var/obj/item/ammo/bullets/previous_ammo = ammo
 		var/mode_was_burst = (istype(current_projectile, /datum/projectile/bullet/assault_rifle/burst))  // was previous mode burst fire?
-		..()
 		if(!previous_ammo.ammo_type.is_same_ammo(ammo.ammo_type)) // we switched ammo types
 			if(istype(ammo, /obj/item/ammo/bullets/assault_rifle/armor_piercing)) // we switched from normal to armor_piercing
 				if(mode_was_burst) // we were in burst shot mode
@@ -3262,10 +3267,10 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 				else // we were in single shot mode
 					set_current_projectile(new/datum/projectile/bullet/assault_rifle)
 					projectiles = list(current_projectile, new/datum/projectile/bullet/assault_rifle/burst)
+
+			// We created brand new ammo types for some reason, so if the ammo being inserted has a material then we have to reapply it (LorrMaster)
 			for(var/datum/projectile/bullet/proj in projectiles)
-				// Eh, good enough for now
 				proj.coating = ammo.ammo_type.coating
-				proj.coating_amount = ammo.ammo_type.coating_amount
 
 	attack_self(mob/user)
 		..()	//burst shot has a slight spread.

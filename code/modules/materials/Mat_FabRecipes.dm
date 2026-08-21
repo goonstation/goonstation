@@ -337,6 +337,7 @@
 		var/datum/projectile/new_ammo_type = new ammo.ammo_type.type // Ammo type might be shared somewhere else
 		ammo.ammo_type = new_ammo_type
 		ammo.ammo_type.coating = source.material
+		ammo.tooltip_rebuild = TRUE
 		ammo.set_loc(getOutputLocation(owner))
 
 		var/mat_cost = ammo.ammo_type.coating_amount * amount

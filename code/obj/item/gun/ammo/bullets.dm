@@ -164,6 +164,15 @@
 			return 1
 
 	proc/loadammo(var/obj/item/ammo/bullets/A, var/obj/item/gun/kinetic/K)
+		/* So bullet reloading is using this convoluted system for some reason.
+			- From what I can tell, loadammo() gets called first in order to figure out the type of reload.
+			- Most returned cases are just for displaying different kinds of messages.
+			- If the ammo is being swapped, swap() gets called to make the change
+			- THEN swap() has a case where it might call loadammo() AGAIN after it has emptied the gun (I think?) or something of the sort.
+			- Maybe it is doing this in case the ammo doesn't fit in a single container?
+			- In short: I recommend nuking the entire reload system. (LorrMaster)
+		*/
+
 		// Also see attackby() in kinetic.dm.
 		if (!A || !K)
 			return 0 // Error message.
@@ -187,17 +196,21 @@
 		if (K.ammo.amount_left < 0)
 			K.ammo.amount_left = 0
 		if (A.amount_left < 1)
-			return AMMO_RELOAD_SOURCE_EMPTY // Magazine's empty.
+			return AMMO_RELOAD_SOURCE_EMPTY // Trying to reload with an empty magazine
 		var/datum/projectile/K_type = K.ammo.ammo_type
 		if (K.ammo.amount_left >= K.max_ammo_capacity)
+			// The gun is already full
 			if (!K_type.is_same_ammo(A.ammo_type))
-				return AMMO_RELOAD_TYPE_SWAP // Call swap().
-			return AMMO_RELOAD_ALREADY_FULL // Gun's full.
+				return AMMO_RELOAD_TYPE_SWAP // Gun is full but the ammo types are different. Call swap().
+			return AMMO_RELOAD_ALREADY_FULL
 		if (K.ammo.amount_left > 0 && (!K_type.is_same_ammo(A.ammo_type)))
-			return AMMO_RELOAD_TYPE_SWAP // Call swap().
+			return AMMO_RELOAD_TYPE_SWAP //  Gun is not empty. Ammo types are different. Call swap().
 		else
-			// The gun may have been fired; eject casings if so (Convair880).
-			K.ejectcasings()
+			// (LorrMaster) If you are at this point in the code, then that means...
+			// A) The gun is empty and a different type of ammo is being inserted
+			// B) The gun may or may not have ammo, but the ammo being inserted is the same as before
+
+			K.ejectcasings() // The gun may have been fired; eject casings if so (Convair880).
 
 			// Required for swap() to work properly (Convair880).
 			if (!K.ammo.ammo_type.is_same_ammo(A.ammo_type) || A.force_new_current_projectile)
@@ -264,6 +277,8 @@
 	proc/after_unload(mob/user)
 		return
 
+	/// Remove ammo from this container and place it into a new container. Ammo is identical in each.
+	/// Returns the new container that the ammo was moved to, or null if there was no need to move anything
 	proc/split(var/split_amount)
 		RETURN_TYPE(/obj/item/ammo/bullets)
 		if(split_amount >= src.amount_left || split_amount <= 0)
@@ -274,7 +289,7 @@
 		ammoDrop.name = src.name
 		ammoDrop.icon = src.icon
 		ammoDrop.icon_state = src.icon_state
-		ammoDrop.ammo_type = new src.ammo_type.type
+		ammoDrop.ammo_type = new src.ammo_type.type // Creating a new ammo type in case you want to edit something.
 		ammoDrop.ammo_type.coating = src.ammo_type.coating
 		ammoDrop.delete_on_reload = src.delete_on_reload
 		src.UpdateIcon()
@@ -284,7 +299,7 @@
 	get_desc()
 		if(src.amount_left == 0)
 			return . += "There are no bullets left!"
-		else if(ammo_type.coating)
+		if(ammo_type.coating)
 			return . += "There [src.amount_left == 1 ? "is" : "are"] [src.amount_left] [ammo_type.coating.getName()]-coated bullet\s left!"
 		return . += "There [src.amount_left == 1 ? "is" : "are"] [src.amount_left] bullet\s left!"
 
