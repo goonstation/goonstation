@@ -65,11 +65,7 @@ export const getTurbineStatus = (
   if (!data.connected) {
     return 'disconnected';
   }
-  if (
-    data.ruined ||
-    !data.blade?.installed ||
-    !data.stator?.installed
-  ) {
+  if (data.ruined || !data.blade?.installed || !data.stator?.installed) {
     return 'ruined';
   }
   if (data.overspeed) {
@@ -87,7 +83,7 @@ export const getTurbineStatus = (
   if (data.blade?.installed && data.blade.healthPercent <= 50) {
     return 'damaged';
   }
-  if (data.rpm < 1) {
+  if (!data.rpm) {
     return 'idle';
   }
   return 'nominal';
@@ -109,8 +105,7 @@ export const exponentToLoad = (
   maxLoad: number,
 ) => Math.min(Math.max(10 ** exponent, minLoad), maxLoad);
 
-const formatLoad = (load: number) =>
-  `${formatSiUnit(load, 0, 'J')}/revolution`;
+const formatLoad = (load: number) => `${formatSiUnit(load, 0, 'J')}/revolution`;
 
 const formatTemperature = (temperature: number) =>
   `${Math.round(temperature)} K`;
@@ -191,6 +186,35 @@ const bladeStatusColor = (blade: TurbineBladeData | null) => {
   }
   return 'bad';
 };
+
+type LoadAdjustmentControlsProps = {
+  load: number;
+  onCommit: (value: string) => void;
+  onAdjust: (factor: number) => void;
+};
+
+const LoadAdjustmentControls = ({
+  load,
+  onCommit,
+  onAdjust,
+}: LoadAdjustmentControlsProps) => (
+  <Stack vertical>
+    <Stack.Item>
+      <Stack align="center">
+        <Input value={`${load / 1000}`} monospace onBlur={onCommit} />
+        <Box>kJ/rev</Box>
+      </Stack>
+    </Stack.Item>
+    <Stack.Item>
+      <Stack>
+        <Button onClick={() => onAdjust(0.99)}>-1%</Button>
+        <Button onClick={() => onAdjust(0.9)}>-10%</Button>
+        <Button onClick={() => onAdjust(1.1)}>+10%</Button>
+        <Button onClick={() => onAdjust(1.01)}>+1%</Button>
+      </Stack>
+    </Stack.Item>
+  </Stack>
+);
 
 const turbineWindowProps = {
   width: 520,
@@ -273,12 +297,7 @@ export const TurbineControl = () => {
               <Stack>
                 <Stack.Item>
                   <Box color={statusColor[status]} textAlign="center">
-                    <Icon
-                      name="cog"
-                      size={3}
-                      spin={!!data.rpm}
-                      rotation={Math.round(data.rpm) % 360}
-                    />
+                    <Icon name="cog" size={3} spin={!!data.rpm} />
                   </Box>
                 </Stack.Item>
                 <Stack.Item grow>
@@ -320,10 +339,7 @@ export const TurbineControl = () => {
                   <Box textAlign="center">TEMPERATURE</Box>
                   <RoundGauge
                     size={4}
-                    value={Math.min(
-                      data.inletTemperature,
-                      temperatureGaugeMax,
-                    )}
+                    value={Math.min(data.inletTemperature, temperatureGaugeMax)}
                     minValue={0}
                     maxValue={temperatureGaugeMax}
                     alertAfter={data.overtempWarning}
@@ -378,34 +394,11 @@ export const TurbineControl = () => {
                       />
                     </Stack.Item>
                     <Stack.Item grow>
-                      <Stack vertical>
-                        <Stack.Item>
-                          <Stack align="center">
-                            <Input
-                              value={`${data.load / 1000}`}
-                              monospace
-                              onBlur={commitLoad}
-                            />
-                            <Box>kJ/rev</Box>
-                          </Stack>
-                        </Stack.Item>
-                        <Stack.Item>
-                          <Stack>
-                            <Button onClick={() => adjustLoad(0.99)}>
-                              -1%
-                            </Button>
-                            <Button onClick={() => adjustLoad(0.9)}>
-                              -10%
-                            </Button>
-                            <Button onClick={() => adjustLoad(1.1)}>
-                              +10%
-                            </Button>
-                            <Button onClick={() => adjustLoad(1.01)}>
-                              +1%
-                            </Button>
-                          </Stack>
-                        </Stack.Item>
-                      </Stack>
+                      <LoadAdjustmentControls
+                        load={data.load}
+                        onCommit={commitLoad}
+                        onAdjust={adjustLoad}
+                      />
                     </Stack.Item>
                   </Stack>
                 </Stack.Item>
@@ -457,9 +450,7 @@ export const TurbineControl = () => {
                   </Stack>
                 ))}
               </Stack>
-              {!data.history.length && (
-                <Box color="label">No samples yet.</Box>
-              )}
+              {!data.history.length && <Box color="label">No samples yet.</Box>}
             </Section>
           </Stack.Item>
 
