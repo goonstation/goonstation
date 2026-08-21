@@ -8,7 +8,7 @@
 #define issyndicateagent(x) (istype(x, /mob/living/carbon/human) && x:mind && (x:mind:get_antagonist(ROLE_SYNDICATE_AGENT) || x:mind:get_antagonist(ROLE_SYNDICATE_COMMANDER) || x:mind:get_antagonist(ROLE_SYNDICATE_MONKEY)))
 #define isnukeopgunbot(x) (istype(x, /mob/living/critter/robotic/gunbot/syndicate) && x:mind && x:mind:get_antagonist(ROLE_NUKEOP_GUNBOT))
 #define isnukeopai(x) (x:mind && x:mind:get_antagonist(ROLE_NUKEOP_AI))
-#define istrainedsyndie(x) (istraitor(x) || isnukeop(x) || issleeperagent(x) || issyndicateagent(x) || isnukeopgunbot(x) || isomnitraitor(x))
+#define istrainedsyndie(x) (istraitor(x) || isnukeop(x) || issleeperagent(x) || issyndicateagent(x) || isnukeopgunbot(x) || isnukeopai(x) || isomnitraitor(x))
 
 #define isomnitraitor(x) (istype(x, /mob/living/carbon/human) && x:mind && x:mind:get_antagonist(ROLE_OMNITRAITOR))
 #define issawflybuddy(x) (istrainedsyndie(x) || isspythief(x))
