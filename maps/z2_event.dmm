@@ -179,7 +179,9 @@
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/north_east)
 "bf" = (
-/obj/machinery/door/poddoor/blast,
+/obj/machinery/door/poddoor/blast{
+	id = "braeriach_armament_depot"
+	},
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/armament_depot)
 "bg" = (
@@ -252,6 +254,14 @@
 	icon_state = "catwalk_cross"
 	},
 /area/space/braeriach)
+"bx" = (
+/obj/machinery/door_control/west{
+	name = "armament depot door control";
+	id = "braeriach_armament_depot"
+	},
+/obj/mapping_helper/access/syndicate_commander,
+/turf/simulated/floor/black,
+/area/braeriach/armament_depot)
 "by" = (
 /obj/item/kitchen/utensil/knife{
 	pixel_x = 6;
@@ -940,7 +950,9 @@
 /turf/simulated/floor/black,
 /area/braeriach/engineering/gas_storage)
 "ez" = (
-/obj/machinery/door/poddoor/blast,
+/obj/machinery/door/poddoor/blast{
+	id = "braeriach_teleporter"
+	},
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/teleporter)
 "eA" = (
@@ -3003,6 +3015,13 @@
 /obj/stool/chair/office/red{
 	dir = 8
 	},
+/obj/machinery/door_control{
+	pixel_x = 0;
+	pixel_y = 26;
+	id = "braeriach_teleporter";
+	name = "teleporter door control"
+	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/darkpurpleblack{
 	dir = 1
 	},
@@ -5778,6 +5797,11 @@
 	},
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/north)
+"Ae" = (
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/obj/machinery/r_door_control/podbay/syndicate,
+/turf/simulated/floor/plating/jen,
+/area/braeriach/podbay)
 "Af" = (
 /turf/simulated/floor/yellowblack,
 /area/braeriach/engineering)
@@ -9083,6 +9107,10 @@
 	},
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/secure/armoury)
+"Nb" = (
+/obj/machinery/r_door_control/podbay/syndicate,
+/turf/simulated/wall/auto/reinforced/supernorn/colored,
+/area/braeriach/podbay)
 "Nh" = (
 /obj/table/reinforced/industrial/auto,
 /obj/item/extinguisher{
@@ -10650,7 +10678,8 @@
 /area/braeriach/podbay)
 "Tz" = (
 /obj/machinery/door/poddoor/blast{
-	dir = 4
+	dir = 4;
+	id = "braeriach_teleporter"
 	},
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/teleporter)
@@ -21671,7 +21700,7 @@ TG
 TG
 zH
 TG
-EB
+Nb
 at
 at
 My
@@ -24087,7 +24116,7 @@ iD
 TG
 rR
 TG
-fJ
+Ae
 at
 at
 My
@@ -26193,7 +26222,7 @@ JK
 JK
 JK
 jI
-JK
+bx
 JK
 JK
 jI
