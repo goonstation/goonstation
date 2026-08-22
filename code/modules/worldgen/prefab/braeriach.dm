@@ -237,6 +237,7 @@
 	name = "space (Braeriach)"
 	area_parallax_render_source_group = /datum/parallax_render_source_group/area/braeriach
 	teleport_blocked = AREA_TELEPORT_BLOCKED
+	allowed_restricted_z = TRUE
 
 
 ABSTRACT_TYPE(/area/braeriach)
@@ -250,6 +251,7 @@ ABSTRACT_TYPE(/area/braeriach)
 	teleport_blocked = AREA_TELEPORT_BLOCKED
 	do_not_irradiate = TRUE
 	expandable = FALSE
+	allowed_restricted_z = TRUE
 
 
 ABSTRACT_TYPE(/area/braeriach/command)

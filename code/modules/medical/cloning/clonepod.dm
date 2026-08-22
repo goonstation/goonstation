@@ -356,7 +356,7 @@ TYPEINFO(/obj/machinery/clonepod)
 			if (is_puritan)
 				if (clonehack) // If mindhack cloner, bypass puritan stuff.
 					boutput(src.occupant, SPAN_NOTICE("<h3>The mindhack module has forced your body to adapt, bypassing your clone instability!</h3>"))
-				else
+				else if (!src.perfect_clone)
 					src.mess = TRUE
 					// Puritans have a bad time.
 					// This is a little different from how it was before:
