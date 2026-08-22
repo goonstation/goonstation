@@ -935,15 +935,21 @@
 			if (istype(M, /obj/item/wizard_crystal))
 				var/obj/item/wizard_crystal/wc = M
 				wc.setMaterial(getMaterial(wc.assoc_material),0,0,1,0)
-			if (!istype(M.material))
-				M.set_loc(src.loc)
-				src.reject = 1
-				continue
-			else if (istype(M, /obj/item/cable_coil))
+
+			if (istype(M, /obj/item/cable_coil))
 				var/obj/item/cable_coil/C = M
 				reclaim_materials(C.material, C.material_amt * C.amount)
 				reclaim_materials(C.conductor, C.material_amt * C.amount)
 				qdel(C)
+			else if(istype(M, /obj/item/ammo/bullets))
+				var/obj/item/ammo/bullets/ammo = M
+				reclaim_materials(ammo.material, ammo.material_amt * ammo.amount)
+				reclaim_materials(ammo.ammo_type.coating, ammo.ammo_type.coating_amount * ammo.amount_left)
+				qdel(ammo)
+			else if (!istype(M.material))
+				M.set_loc(src.loc)
+				src.reject = 1
+				continue
 			else
 				reclaim_materials(M.material, M.material_amt * M.amount)
 				qdel(M)
@@ -1195,10 +1201,21 @@
 		return output_location
 
 	proc/is_valid(var/obj/item/I)
-		if (!istype(I))
-			return
-		return (I.material && !istype(I,/obj/item/material_piece) && !istype(I,/obj/item/nuclear_waste)) || istype(I,/obj/item/wizard_crystal)
-
+		// Returns TRUE if the item can be reclaimed
+		if (!isitem(I))
+			return FALSE
+		if(istype(I, /obj/item/material_piece))
+			return FALSE
+		if(istype(I, /obj/item/nuclear_waste))
+			return FALSE
+		if(I.material)
+			return TRUE
+		if(istype(I, /obj/item/ammo/bullets))
+			var/obj/item/ammo/bullets/ammo = I
+			return ammo.ammo_type.coating && (ammo.amount_left > 0)
+		if(istype(I, /obj/item/wizard_crystal))
+			return TRUE
+		return FALSE
 	proc/brain_check(var/obj/item/I, var/mob/user, var/ask)
 		if (!istype(I))
 			return
