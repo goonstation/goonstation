@@ -27,6 +27,8 @@
 		SET_UP_HEARD_TURFS(visible_turfs, message.heard_range, centre)
 
 		for (var/datum/listen_module/input/outloud/input as anything in src.hashmap.vistarget_supremum(centre, message.heard_range))
+			INPUT_SAFETY_CHECK(input)
+
 			// If the outermost listener's loc is a turf, perform line of sight and range checks.
 			if (isturf(GET_INPUT_OUTERMOST_LISTENER_LOC(input)))
 				// If the outermost listener's loc is a turf, they must be within the speaker's line of sight to hear the message.
@@ -50,6 +52,8 @@
 
 	else
 		for (var/datum/listen_module/input/outloud/input as anything in src.hashmap.vistarget_point(centre))
+			INPUT_SAFETY_CHECK(input)
+
 			// Determine whether the message can be heard based on a shared loc chain.
 			if (CANNOT_HEAR_MESSAGE_FROM_LOC_CHAIN(input, message))
 				continue
@@ -92,6 +96,8 @@
 		SET_UP_HEARD_DISTORTED_TURFS(heard_distorted_turfs, message.heard_range, centre, heard_clearly_turfs)
 
 		for (var/datum/listen_module/input/outloud/input as anything in src.hashmap.vistarget_supremum(centre, message.heard_range))
+			INPUT_SAFETY_CHECK(input)
+
 			// If the input's hearing range is less than the message's heard range, ensure that the speaker and listener are within that range.
 			if (input.hearing_range < message.heard_range)
 				if (!INPUT_IN_RANGE(input, centre, input.hearing_range))
@@ -127,6 +133,8 @@
 
 	else
 		for (var/datum/listen_module/input/outloud/input as anything in src.hashmap.vistarget_point(centre))
+			INPUT_SAFETY_CHECK(input)
+
 			// Determine whether the message can be heard based on a shared loc chain.
 			if (CANNOT_HEAR_WHISPER_FROM_LOC_CHAIN(input, message))
 				continue

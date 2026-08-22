@@ -17,6 +17,8 @@
 		listen_modules_by_type[type] = list()
 
 	for (var/datum/listen_module/input/input as anything in src.hashmap.vistarget_point(centre))
+		INPUT_SAFETY_CHECK(input)
+
 		// Determine whether the message can be heard based on a shared loc chain.
 		if (CANNOT_HEAR_MESSAGE_FROM_LOC_CHAIN(input, message))
 			continue
