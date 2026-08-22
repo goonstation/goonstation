@@ -384,7 +384,7 @@
 			orig_type = /obj/item/clothing/gloves/ring
 		var/obj/item/new_thing = new orig_type(src)
 		SPAWN(12) //allow item time to set up
-			if(W.reagents) new_thing.reagents = W.reagents
+			if(W.reagents) W.reagents.copy_to(new_thing.reagents)
 			if(W.amount) new_thing.amount = W.amount
 			if(istype(W,/obj/item/clothing/gloves/ring/ominous)) //avarice is tolerated up to a point
 				W:agitation += 110
