@@ -24,9 +24,8 @@
 
 /// Offsets the parallax layer to appear centred when the client is at the initial x and y coordinates.
 /atom/movable/screen/parallax_layer/proc/offset_layer()
-	var/turf/T = get_turf(src.owner.eye)
-	var/x_offset = round((src.parallax_render_source.initial_x_coordinate - T.x) * world.icon_size * src.parallax_render_source.parallax_value, 1)
-	var/y_offset = round((src.parallax_render_source.initial_y_coordinate - T.y) * world.icon_size * src.parallax_render_source.parallax_value, 1)
+	var/x_offset = round((src.parallax_render_source.initial_x_coordinate - 150) * world.icon_size * src.parallax_render_source.parallax_value, 1)
+	var/y_offset = round((src.parallax_render_source.initial_y_coordinate - 150) * world.icon_size * src.parallax_render_source.parallax_value, 1)
 
 	// Offset the parallax layer so that it will be centred on the client's screen when they are at the initial x and y coordinates.
 	if (!src.parallax_render_source.tessellate)

@@ -45,29 +45,6 @@
 
 	. = ..()
 
-/// Updates the position of the parallax layer relative to the client's eye, taking into account the distance moved and the parallax value.
-/datum/parallax_controller/proc/update_parallax_layers(datum/component/component, turf/old_turf, turf/new_turf)
-	// Calculate the number of tiles the client's eye has moved, in pixels.
-	var/x_pixel_change = (old_turf.x - new_turf.x) * world.icon_size
-	var/y_pixel_change = (old_turf.y - new_turf.y) * world.icon_size
-
-	// The time it takes for an atom/movable to move one tile.
-	var/animation_time = src.outermost_movable.glide_size && ((world.icon_size / src.outermost_movable.glide_size) * world.tick_lag)
-
-	for (var/atom/movable/screen/parallax_layer/parallax_layer as anything in src.parallax_layers)
-		// Multiply the pixel change by the parallax value to determine the number of pixels the layer should move by.
-		// Update the position of the parallax layer on the client's screen, and animate the movement, using a time value derived from the client's mob's speed.
-		// Round to one pixel so to not blur sprites.
-		animate(
-			parallax_layer,
-			animation_time,
-			pixel_w = round(x_pixel_change * parallax_layer.parallax_render_source.parallax_value, 1),
-			pixel_z = round(y_pixel_change * parallax_layer.parallax_render_source.parallax_value, 1),
-			flags = ANIMATION_PARALLEL | ANIMATION_RELATIVE,
-		)
-
-		UPDATE_TESSELLATION_ALIGNMENT(parallax_layer)
-
 /// Updates the parallax render sources and layers displayed to a client by a z-level.
 /datum/parallax_controller/proc/update_z_level_parallax_layers(datum/component/component, old_z_level, new_z_level)
 	var/datum/parallax_render_source_group/old_render_source_group = get_parallax_render_source_group(old_z_level)
@@ -138,14 +115,9 @@
 		src.anchor.vis_contents -= render_source
 		src.anchor.vis_contents -= parallax_layer
 
-/datum/parallax_controller/proc/update_outermost_movable(datum/component/component, atom/movable/old_outermost, atom/movable/new_outermost)
-	src.outermost_movable = new_outermost
-
 /datum/parallax_controller/proc/register_signals(client/C, mob/M)
-	src.RegisterSignal(M, XSIG_MOVABLE_TURF_CHANGED_SAFE, PROC_REF(update_parallax_layers))
 	src.RegisterSignal(M, XSIG_MOVABLE_AREA_CHANGED, PROC_REF(update_area_parallax_layers))
 	src.RegisterSignal(M, XSIG_MOVABLE_Z_CHANGED, PROC_REF(update_z_level_parallax_layers))
-	src.RegisterSignal(M, XSIG_OUTERMOST_MOVABLE_CHANGED, PROC_REF(update_outermost_movable))
 
 	src.outermost_movable = global.outermost_movable(M)
 	src.update_area_parallax_layers(null, null, get_area(src.outermost_movable))
@@ -155,10 +127,8 @@
 	if (!M?.GetComponent(/datum/component/complexsignal/outermost_movable))
 		return
 
-	src.UnregisterSignal(M, XSIG_MOVABLE_TURF_CHANGED_SAFE)
 	src.UnregisterSignal(M, XSIG_MOVABLE_AREA_CHANGED)
 	src.UnregisterSignal(M, XSIG_MOVABLE_Z_CHANGED)
-	src.UnregisterSignal(M, XSIG_OUTERMOST_MOVABLE_CHANGED)
 
 
 /atom/movable/screen/parallax_anchor
