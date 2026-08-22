@@ -2379,32 +2379,25 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 	src.open_nearest_door_silicon()
 	return
 
-//just use this proc to make click-track checking easier (I would use this in the below proc that builds a list, but i think the proc call overhead is not worth it)
+//just use this proc to make click-track checking easier
 proc/is_mob_trackable_by_AI(var/mob/M)
-	if (HAS_ATOM_PROPERTY(M, PROP_MOB_AI_UNTRACKABLE))
-		return 0
-	if (istype(M, /mob/new_player))
-		return 0
-	if (ishuman(M) && istype(get_id_card(M:wear_id), /obj/item/card/id/syndicate))
-		return 0
-	if(M.z != 1 && M.z != usr.z)
-		return 0
-	if(!istype(M.loc, /turf)) //in a closet or something, AI can't see him anyways
-		return 0
-	if(M.invisibility) //cloaked
-		return 0
+	if(get_z(M) != Z_LEVEL_STATION)
+		return FALSE
 	if (M == usr)
-		return 0
-
-	var/good_camera = 0 //Can't track a person out of range of a functioning camera
-	for(var/obj/machinery/camera/C in range(M))
-		if ( C?.camera_status )
-			good_camera = 1
-			break
-	if(!good_camera)
-		return 0
-
-	return 1
+		return FALSE
+	if (istype(M, /mob/new_player))
+		return FALSE
+	if (HAS_ATOM_PROPERTY(M, PROP_MOB_AI_UNTRACKABLE))
+		return FALSE
+	if(!istype(M.loc, /turf)) //in a closet or something, AI can't see him anyways
+		return FALSE
+	if(M.invisibility) //cloaked
+		return FALSE
+	if (ishuman(M) && istype(get_id_card(M:wear_id), /obj/item/card/id/syndicate))
+		return FALSE
+	if(!seen_by_camera(M))
+		return FALSE
+	return TRUE
 
 proc/get_mobs_trackable_by_AI()
 	. = list()
@@ -2412,24 +2405,8 @@ proc/get_mobs_trackable_by_AI()
 	var/list/namecounts = list()
 	var/static/regex/labelled_regex = regex(@"\s*\(.*\)$")
 
-	for (var/mob/M in mobs)
-		if (istype(M, /mob/new_player))
-			continue //cameras can't follow people who haven't started yet DUH OR DIDN'T YOU KNOW THAT
-		if (HAS_ATOM_PROPERTY(M, PROP_MOB_AI_UNTRACKABLE))
-			continue
-		if (ishuman(M) && istype(get_id_card(M:wear_id), /obj/item/card/id/syndicate))
-			continue
-		if (istype(M,/mob/living/critter/aquatic) || istype(M, /mob/living/critter/small_animal/ranch_base/chicken))
-			continue
-		if(M.z != 1 && M.z != usr.z)
-			continue
-		if(!istype(M.loc, /turf)) //in a closet or something, AI can't see him anyways
-			continue
-		if(M.invisibility) //cloaked
-			continue
-		if (M == usr)
-			continue
-		if(!seen_by_camera(M))
+	for (var/mob/living/M in mobs)
+		if(!is_mob_trackable_by_AI(M))
 			continue
 
 		var/name = M.name
