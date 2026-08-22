@@ -47,6 +47,8 @@
 		mainframe.radio1.set_frequency(RADIO::FREQ::SYNDICATE)
 		mainframe.radio2.set_frequency(RADIO::FREQ::SALVAGER)
 		mainframe.radio2.toggle_speaker(TRUE)
+		mainframe.ensure_listen_tree().AddListenModifier(LISTEN_MODIFIER_AI_INTERCOM_MAPTEXT)
+
 		var/obj/item/device/radio/headset/ai_headset = mainframe.radio3
 		ai_headset.chat_class = RADIO::CSS::SYNDICATE
 		ai_headset.install_radio_upgrade(new/obj/item/device/radio_upgrade/syndicatechannel)

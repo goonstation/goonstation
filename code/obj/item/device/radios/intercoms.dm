@@ -226,6 +226,9 @@ TYPEINFO(/obj/item/device/radio/intercom)
 		set_frequency(frequency)
 
 // Uses the Salvager frequency in lieu of an actual Syndicate AI intercom frequency.
+TYPEINFO(/obj/item/device/radio/intercom/syndicate_ai)
+	start_listen_modifiers = list(LISTEN_MODIFIER_RADIO, LISTEN_MODIFIER_SMALL_TEXT)
+
 /obj/item/device/radio/intercom/syndicate_ai
 	name = "Syndicate Intercom"
 	frequency = RADIO::FREQ::SALVAGER
