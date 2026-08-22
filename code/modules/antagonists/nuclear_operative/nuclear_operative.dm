@@ -20,6 +20,7 @@
 		"spaghettpasta" = "Pebble",
 		"thebee003" = "Reaper",
 		"mikewastaken" = "Spike",
+		"proffin" = "Trombone",
 		"bamlord" = "Yankee",
 	)
 	var/list/datum/materiel/purchased_items = list() //Used for adding a nukie's vendor purchases to crew credits. Items are tracked by whoever interacts with the vendor, so if the whole team gives their credits to the commander, the commander will have multiple entries in the crew credits!
@@ -32,7 +33,7 @@
 		if (!src.available_callsigns)
 			var/list/callsign_pool_keys = list("nato")
 			src.available_callsigns = strings("agent_callsigns.txt", pick(callsign_pool_keys))
-			src.available_callsigns -= list("Bravo", "Foxtrot", "Golf", "Lima", "November", "Papa", "Romeo", "Sierra", "Yankee") // Letters of predetermined callsigns
+			src.available_callsigns -= list("Bravo", "Foxtrot", "Golf", "Lima", "November", "Papa", "Romeo", "Sierra", "Tango", "Yankee") // Letters of predetermined callsigns
 
 		src.owner = new_owner
 		if (istype(ticker.mode, /datum/game_mode/nuclear))
