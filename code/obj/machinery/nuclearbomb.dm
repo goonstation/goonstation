@@ -466,6 +466,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 
 		var/datum/hud/cinematic/all_clients/nuclear_bomb/cinematic = new
 		cinematic.play()
+		for_by_tcl(objective, /datum/objective/specialist/nuclear)
+			objective.detonation_successful = TRUE //Confirm objectives before ending the round
+			break
 		if(istype(gamemode))
 			gamemode.nuke_detonated = 1
 			gamemode.check_win()
@@ -483,8 +486,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		creepify_station()
 
 		if(!istype(gamemode)) //The station exploded, the cinematic has played, end the round naturally instead of forcing a reboot
-			for_by_tcl(objective, /datum/objective/specialist/nuclear)
-				objective.detonation_successful = TRUE
 			ticker.mode.force_round_finished = TRUE
 
 	proc/change_status_display()

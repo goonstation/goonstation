@@ -673,7 +673,7 @@ ABSTRACT_TYPE(/datum/objective/madness)
 /datum/objective/specialist/nuclear
 	explanation_text = "Destroy the station with a nuclear device."
 	medal_name = "Manhattan Project"
-	var/detonation_successful = FALSE //Completion saved here so that roundending nukes still grant success outside the nuclear emergency mode
+	var/static/detonation_successful = FALSE //Set to TRUE by any nuke that plays the station destruction cinematic
 
 	New(text, datum/mind/owner, datum/antagonist/antag_role)
 		. = ..()
@@ -684,10 +684,6 @@ ABSTRACT_TYPE(/datum/objective/madness)
 		. = ..()
 
 	check_completion()
-		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
-			var/datum/game_mode/nuclear/N = ticker.mode
-			if (N && istype(N) && (N.finished == -1 || N.finished == -2))
-				return TRUE
 		return src.detonation_successful
 
 /datum/objective/specialist/absorb
