@@ -10,3 +10,4 @@
 
 	message.maptext_css_values["color"] = vending_machine.slogan_text_color
 	message.maptext_variables["alpha"] = vending_machine.slogan_text_alpha
+	message.can_relay = FALSE
