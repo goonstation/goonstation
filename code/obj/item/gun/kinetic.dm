@@ -3454,6 +3454,38 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		return
 	. = ..()
 
+/datum/component/holdertargeting/windup/sniper/do_windup(mob/living/L)
+	set waitfor = 0
+	var/obj/item/gun/G = parent
+	winder = new/datum/action/bar/icon/sniper(G, duration)
+	actions.start(winder, L)
+
+/datum/action/bar/icon/sniper //theres gotta be some easier way to hide the icon
+	duration = 1 SECOND
+	interrupt_flags = INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	var/obj/item/gun/ownerGun
+	var/mob/user
+	var/pox = 0
+	var/poy = 0
+	var/target
+	var/do_point_blank = FALSE
+	resumable = FALSE
+
+
+	New(_gun,  _time, _do_point_blank = FALSE)
+		ownerGun = _gun
+		duration = _time
+		do_point_blank = _do_point_blank
+		..()
+
+	onEnd()
+		ownerGun.Shoot(get_turf(target), get_turf(ownerGun), owner, pox, poy)
+		..()
+
+	onStart()
+		. = ..()
+		state = ACTIONSTATE_INFINITE
+
 
 /datum/component/holdertargeting/windup/sniper/end_shootloop(mob/living/user, object, location, control, params) //modifed windup that adds recoil based on action bar completion (or lack there of, rather)
 	if(winder)
