@@ -10,11 +10,12 @@
 	var/static/commander_title = "Commander"
 	var/static/available_callsigns
 	var/static/assigned_callsigns = list(
-		"zacattaxx" = "Foxtrot",
+		"zacattaxx" = "Titania",
 		"torchwick" = "Latrotoxin",
 		"xalibur" = "Behemoth",
 		"ilysen" = "Needletail",
 		"spaghettpasta" = "Pebble",
+		"firekestrel" = "Lynx"
 	)
 	var/list/datum/materiel/purchased_items = list() //Used for adding a nukie's vendor purchases to crew credits. Items are tracked by whoever interacts with the vendor, so if the whole team gives their credits to the commander, the commander will have multiple entries in the crew credits!
 	var/list/datum/syndicate_buylist/uplink_items = list() // Same but for custom uplinks and the commander uplink
@@ -26,6 +27,7 @@
 		if (!src.available_callsigns)
 			var/list/callsign_pool_keys = list("nato")
 			src.available_callsigns = strings("agent_callsigns.txt", pick(callsign_pool_keys))
+			src.available_callsigns -= list("Tango", "Lima", "Bravo", "November", "Papa",) // Letters of predetermined callsigns
 
 		src.owner = new_owner
 		if (istype(ticker.mode, /datum/game_mode/nuclear))
@@ -162,7 +164,6 @@
 			var/callsign
 			if(src.owner.ckey in src.assigned_callsigns)
 				callsign = src.assigned_callsigns[src.owner.ckey]
-				src.available_callsigns -= callsign
 			else
 				callsign = pick(src.available_callsigns)
 				src.assigned_callsigns[src.owner.ckey] = callsign

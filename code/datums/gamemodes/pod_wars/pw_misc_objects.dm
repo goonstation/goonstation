@@ -223,8 +223,6 @@
 		for(var/datum/antagonist/antag in to_search)
 			var/datum/mind/mind = antag.owner
 			if((istype(mind.current, /mob/dead/observer) || isdead(mind.current)) && mind.current.client && !mind.get_player()?.dnr)
-				//prune puritan trait
-				mind.current?.traitHolder.removeTrait("puritan")
 				if (growclone(mind.current, mind.current.real_name, mind, mind.current?.bioHolder, traits=mind.current?.traitHolder.copy()))
 					var/datum/antagonist/role = mind.get_antagonist(ROLE_NUKEOP) || mind.get_antagonist(ROLE_NUKEOP_COMMANDER)
 					SPAWN(1)
