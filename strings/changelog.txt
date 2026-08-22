@@ -1,4 +1,9 @@
 
+(t)sat aug 22 26
+(u)JORJ949
+(p)27551
+(e)🪲🧛|C-Bug, A-Gamemodes
+(+)The Nuclear Operative "Destroy the station with a nuclear device" objective can now be completed outside of the Nuclear Emergency gamemode (if you have the objective and a station-destroying nuke in any other mode).
 (t)thu aug 20 26
 (u)JORJ949
 (p)27528
