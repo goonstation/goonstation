@@ -1195,7 +1195,6 @@
 		return output_location
 
 	proc/is_valid(var/obj/item/I)
-		// Returns TRUE if the item can be reclaimed
 		if (!istype(I))
 			return
 		return (I.material && !istype(I,/obj/item/material_piece) && !istype(I,/obj/item/nuclear_waste)) || istype(I,/obj/item/wizard_crystal)
