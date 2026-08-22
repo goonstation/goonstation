@@ -40,8 +40,9 @@
 					src.landing_area = null
 					return
 				if("Deploy")
-					if(!istype(get_area(user), /area/listeningpost) && !istype(get_area(user), /area/syndicate_station))
-						boutput(user, SPAN_ALERT("You can only deploy from the Cairngorm or Listening Post!"))
+					var/area/A = get_area(user)
+					if(!istype(A, /area/listeningpost) && !istype(A, /area/syndicate_station) && !istype(A, /area/braeriach))
+						boutput(user, SPAN_ALERT("You can only deploy from the Cairngorm, Listening Post, or Braeriach!"))
 						return
 					var/list/chosen_mobs = list()
 					var/is_the_nuke_there = FALSE

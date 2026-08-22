@@ -2816,6 +2816,12 @@
 "nl" = (
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/medbay)
+"no" = (
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/turf/simulated/floor/plating/with_grille,
+/area/braeriach/engineering/power)
 "nq" = (
 /obj/decal/cleanable/dirt,
 /obj/cable/braeriach{
@@ -11031,6 +11037,14 @@
 "Vq" = (
 /turf/unsimulated/floor/dojo/stonestair,
 /area/titlescreen)
+"Vu" = (
+/obj/machinery/sink/slim{
+	dir = 1
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/braeriach/crew/kitchen)
 "Vw" = (
 /turf/simulated/floor/specialroom/arcade,
 /area/braeriach/crew/janitor)
@@ -26521,7 +26535,7 @@ oS
 JF
 tU
 xh
-xh
+Vu
 iX
 Fc
 ND
@@ -30443,9 +30457,9 @@ hK
 hK
 lt
 dw
-dw
-dw
-dw
+no
+no
+no
 dw
 lt
 Af

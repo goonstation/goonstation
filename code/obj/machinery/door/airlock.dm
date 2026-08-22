@@ -82,10 +82,17 @@ var/global/list/cycling_airlocks = list()
 
 /obj/machinery/door/airlock/New()
 	..()
-	if(!isrestrictedz(src.z) && src.name == initial(src.name)) //The second half prevents varedited names being overwritten
-		var/area/station/A = get_area(src)
+
+	if (src.name == initial(src.name))
+		var/area/A = null
+		if (!isrestrictedz(src.z))
+			A = get_area(src)
+		else
+			A = astype(get_area(src), /area/braeriach)
+
 		if (!isnull(A))
 			src.name = A.name
+
 	src.net_access_code = rand(1, NET_ACCESS_OPTIONS)
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle bolts", PROC_REF(mech_toggle_lock))
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"bolt", PROC_REF(mech_lock))
