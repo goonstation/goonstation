@@ -186,6 +186,40 @@
 	product_list += new /datum/data/vending_product(/obj/item/remote/syndicate_teleporter, 1, infinite = TRUE)
 
 
+/obj/machinery/vending/syndicate_injectors
+	name = "Subcutanea Plus"
+	desc = "An ID-selective dispenser for specialist autoinjectors."
+	icon_state = "med"
+	icon_panel = "standard-panel"
+	icon_deny = "med-deny"
+	req_access = list(access_medical_lockers)
+	acceptcard = 0
+	light_r = 1
+	light_g = 0.88
+	light_b = 0.88
+
+/obj/machinery/vending/syndicate_injectors/create_products(restocked)
+	. = ..()
+	product_list += new /datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/high_capacity/epinephrine, 20)
+	product_list += new /datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/high_capacity/salbutamol, 20)
+	product_list += new /datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/high_capacity/salicylic_acid, 20)
+	product_list += new /datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/high_capacity/acetylsalicylic_acid, 20)
+	product_list += new /datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/high_capacity/saline, 20)
+	product_list += new /datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/high_capacity/atropine, 20)
+	product_list += new /datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/high_capacity/pentetic, 20)
+	product_list += new /datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/high_capacity/charcoal, 20)
+	product_list += new /datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/high_capacity/mannitol, 20)
+	product_list += new /datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/high_capacity/cardiac, 20)
+	product_list += new /datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/high_capacity/bloodloss, 20)
+	product_list += new /datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/high_capacity/lifesupport, 20)
+	product_list += new /datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/high_capacity/juggernaut, 20)
+	product_list += new /datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/high_capacity/donk_injector, 20)
+	product_list += new /datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/bloodbak, 20)
+	product_list += new /datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/qwikheal, 20)
+	product_list += new /datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/painstop, 20)
+	product_list += new /datum/data/vending_product(/obj/item/reagent_containers/emergency_injector/bringbak, 20)
+
+
 
 
 

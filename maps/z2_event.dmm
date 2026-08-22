@@ -6872,6 +6872,11 @@
 	},
 /turf/simulated/floor/twotone/white,
 /area/braeriach/crew/kitchen)
+"Ej" = (
+/obj/mapping_helper/access/syndicate,
+/obj/machinery/vending/syndicate_injectors,
+/turf/simulated/floor/twotone/blue,
+/area/braeriach/medbay)
 "El" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -9659,11 +9664,6 @@
 	icon_state = "shore-21"
 	},
 /area/titlescreen)
-"OK" = (
-/obj/storage/secure/closet/medical/medkit,
-/obj/mapping_helper/access/syndicate,
-/turf/simulated/floor/twotone/blue,
-/area/braeriach/medbay)
 "OL" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/stairs/medical/wide,
@@ -33080,7 +33080,7 @@ nl
 Ii
 bS
 xo
-Mt
+Ej
 oj
 Kg
 VR
@@ -33382,7 +33382,7 @@ nl
 Ii
 Ce
 xo
-OK
+Mt
 oj
 Kg
 VR
