@@ -944,11 +944,6 @@
 				reclaim_materials(C.material, C.material_amt * C.amount)
 				reclaim_materials(C.conductor, C.material_amt * C.amount)
 				qdel(C)
-			else if(istype(M, /obj/item/ammo/bullets))
-				var/obj/item/ammo/bullets/ammo = M
-				reclaim_materials(ammo.material, ammo.material_amt * ammo.amount)
-				reclaim_materials(ammo.ammo_type.coating, ammo.ammo_type.coating_amount * ammo.amount_left)
-				qdel(ammo)
 			else
 				reclaim_materials(M.material, M.material_amt * M.amount)
 				qdel(M)
@@ -1202,19 +1197,8 @@
 	proc/is_valid(var/obj/item/I)
 		// Returns TRUE if the item can be reclaimed
 		if (!istype(I))
-			return FALSE
-		if(istype(I, /obj/item/material_piece))
-			return FALSE
-		if(istype(I, /obj/item/nuclear_waste))
-			return FALSE
-		if(I.material)
-			return TRUE
-		if(istype(I, /obj/item/ammo/bullets))
-			var/obj/item/ammo/bullets/ammo = I
-			return ammo.ammo_type.coating && (ammo.amount_left > 0)
-		if(istype(I, /obj/item/wizard_crystal))
-			return TRUE
-		return FALSE
+			return
+		return (I.material && !istype(I,/obj/item/material_piece) && !istype(I,/obj/item/nuclear_waste)) || istype(I,/obj/item/wizard_crystal)
 
 	proc/brain_check(var/obj/item/I, var/mob/user, var/ask)
 		if (!istype(I))
