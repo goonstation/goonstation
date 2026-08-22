@@ -204,7 +204,7 @@
 	Z_LOG_DEBUG("World/Init", "Initializing worldgen...")
 	initialize_worldgen()
 
-	#if !defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW) && !defined(CI_RUNTIME_CHECKING)
+	#if !defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW) && !defined(CI_RUNTIME_CHECKING) && !defined(MAP_OVERRIDE_DONUT2)
 	Z_LOG_DEBUG("World/Init", "Initializing region allocator...")
 	if(length(global.region_allocator.free_nodes) == 0)
 		global.region_allocator.add_z_level()
