@@ -33,8 +33,17 @@
 /obj/cable/braeriach{
 	icon_state = "0-8"
 	},
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/carpet/red/fancy/narrow/ne,
 /area/braeriach/crew/barracks)
+"ap" = (
+/obj/decal/cleanable/dirt,
+/obj/cable/braeriach{
+	icon_state = "4-8"
+	},
+/obj/machinery/light_switch/directional/north,
+/turf/simulated/floor/plating/with_grille,
+/area/braeriach/maintenance/north)
 "ar" = (
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4
@@ -292,6 +301,10 @@
 /obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/south_east)
+"bC" = (
+/obj/machinery/light_switch/directional/north,
+/turf/simulated/floor/shuttlebay,
+/area/braeriach/podbay)
 "bH" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating/with_grille,
@@ -574,6 +587,16 @@
 	dir = 8
 	},
 /area/braeriach/secure)
+"dc" = (
+/obj/stool/chair/red{
+	dir = 4
+	},
+/obj/cable/braeriach{
+	icon_state = "1-2"
+	},
+/obj/machinery/light_switch/directional/west,
+/turf/simulated/floor/twotone/red,
+/area/braeriach/crew)
 "dg" = (
 /obj/decal/tile_edge/line/white{
 	dir = 8;
@@ -946,6 +969,7 @@
 /area/braeriach/crew)
 "ex" = (
 /obj/disposalpipe/segment,
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/wood/two,
 /area/braeriach/crew/jazz_lounge)
 "ey" = (
@@ -1074,8 +1098,16 @@
 	icon_state = "shore-24"
 	},
 /area/titlescreen)
+"fb" = (
+/obj/cable/braeriach{
+	icon_state = "1-2"
+	},
+/obj/machinery/light_switch/directional/west,
+/turf/simulated/floor/plating/with_grille,
+/area/braeriach/maintenance/central)
 "fd" = (
 /obj/storage/closet/fire,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/west)
 "ff" = (
@@ -1971,6 +2003,9 @@
 	dir = 9;
 	icon_state = "line2"
 	},
+/obj/shrub{
+	dir = 1
+	},
 /turf/simulated/floor/black,
 /area/braeriach/engineering/power)
 "jn" = (
@@ -2024,6 +2059,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -2213,6 +2249,15 @@
 	},
 /turf/simulated/floor/grey,
 /area/braeriach/command/foyer)
+"kC" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/light_switch/directional/south,
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/braeriach/hallway/south)
 "kE" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 4
@@ -2256,6 +2301,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/black,
 /area/braeriach/engineering/power)
 "kT" = (
@@ -2548,6 +2594,7 @@
 /area/braeriach/crew)
 "lS" = (
 /obj/machinery/recharge_station,
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/redblack/corner{
 	dir = 4
 	},
@@ -2712,6 +2759,12 @@
 	},
 /turf/simulated/floor/yellowblack,
 /area/braeriach/engineering/storage)
+"mG" = (
+/obj/machinery/light_switch/directional/west,
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/braeriach/secure)
 "mH" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/jen,
@@ -3210,6 +3263,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/south_east)
 "pr" = (
@@ -3283,6 +3337,7 @@
 "pF" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/twotone/black,
 /area/braeriach/armament_depot)
 "pG" = (
@@ -3423,6 +3478,7 @@
 	dir = 6;
 	icon_state = "line2"
 	},
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/shiny,
 /area/braeriach/medbay/morgue)
 "pZ" = (
@@ -3526,6 +3582,7 @@
 "qj" = (
 /obj/table/wood/auto,
 /obj/item/device/radio/intercom/radiostation,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/circuit/red,
 /area/braeriach/command/war_room/radio)
 "qp" = (
@@ -3546,6 +3603,10 @@
 /obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/red,
 /area/braeriach/crew/barracks)
+"qt" = (
+/obj/machinery/light_switch/directional/east,
+/turf/simulated/floor/shuttlebay,
+/area/braeriach/podbay)
 "qu" = (
 /obj/machinery/conveyor/EW{
 	id = "braeriach_disposals"
@@ -3832,6 +3893,7 @@
 /area/braeriach/medbay)
 "rC" = (
 /obj/storage/closet/emergency,
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/central)
 "rD" = (
@@ -3949,6 +4011,7 @@
 /obj/machinery/vending/cola/blue,
 /obj/decal/stripe_caution,
 /obj/mapping_helper/free_vendor,
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/twotone/black,
 /area/braeriach/engineering)
 "rU" = (
@@ -3994,6 +4057,7 @@
 	dir = 6;
 	icon_state = "line1"
 	},
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/glassblock/transparent/red,
 /area/braeriach/ai/upload)
 "si" = (
@@ -4013,6 +4077,7 @@
 "sk" = (
 /obj/machinery/manufacturer/general,
 /obj/mapping_helper/access/syndicate,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/black,
 /area/braeriach/engineering)
 "sl" = (
@@ -4038,6 +4103,7 @@
 "su" = (
 /obj/machinery/manufacturer/engineering,
 /obj/mapping_helper/access/syndicate,
+/obj/item/device/radio/intercom/syndicate_ai,
 /turf/simulated/floor/yellowblack/corner{
 	dir = 4
 	},
@@ -4057,6 +4123,7 @@
 	icon_state = "0-4"
 	},
 /obj/mapping_helper/free_vendor,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/black,
 /area/braeriach/command/bridge)
 "sA" = (
@@ -4401,6 +4468,7 @@
 /obj/railing{
 	dir = 8
 	},
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/secure/equipment)
 "tU" = (
@@ -4575,6 +4643,7 @@
 	dir = 5;
 	icon_state = "line1"
 	},
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor/glassblock/transparent/grey,
 /area/braeriach/engineering/tether)
 "uu" = (
@@ -4828,6 +4897,7 @@
 /obj/machinery/light/incandescent{
 	dir = 4
 	},
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/specialroom/arcade,
 /area/braeriach/crew/janitor)
 "vJ" = (
@@ -4911,6 +4981,7 @@
 	icon_state = "line2"
 	},
 /obj/mapping_helper/access/syndicate,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/red,
 /area/braeriach/podbay)
 "vZ" = (
@@ -4979,6 +5050,12 @@
 	opacity = 0
 	},
 /area/titlescreen)
+"wm" = (
+/obj/cable/braeriach{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/redblack,
+/area/braeriach/command/bridge)
 "wn" = (
 /turf/unsimulated/floor/dream/space,
 /area/titlescreen)
@@ -5047,6 +5124,12 @@
 /obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/shuttlebay,
 /area/braeriach/podbay/armoury)
+"wH" = (
+/obj/machinery/light_switch/directional/west,
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/braeriach/crew/kitchen)
 "wJ" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -5078,6 +5161,10 @@
 "wN" = (
 /turf/simulated/floor/grey,
 /area/braeriach/hallway/east)
+"wP" = (
+/obj/machinery/light_switch/directional/north,
+/turf/simulated/floor/plating/with_grille,
+/area/braeriach/maintenance/south_east)
 "wQ" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -5440,6 +5527,7 @@
 /obj/cable/braeriach{
 	icon_state = "1-2"
 	},
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/teleporter)
 "yk" = (
@@ -5456,6 +5544,12 @@
 /obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/black,
 /area/braeriach/command/war_room)
+"yq" = (
+/obj/cable/braeriach{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/black,
+/area/braeriach/command/bridge)
 "yr" = (
 /obj/shrub{
 	dir = 4;
@@ -5484,6 +5578,10 @@
 	},
 /turf/space,
 /area/syndicate_station/assault_pod)
+"yx" = (
+/obj/machinery/light_switch/directional/north,
+/turf/simulated/floor/redblack,
+/area/braeriach/hallway/north)
 "yy" = (
 /obj/machinery/light/incandescent{
 	dir = 4
@@ -5876,6 +5974,10 @@
 	},
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/command/war_room)
+"Ap" = (
+/obj/machinery/light_switch/directional/north,
+/turf/simulated/floor/redblack,
+/area/braeriach/hallway/south)
 "Aq" = (
 /obj/item_dispenser/barricade,
 /obj/item/deployer/barricade,
@@ -5904,6 +6006,9 @@
 "Au" = (
 /obj/cable/braeriach{
 	icon_state = "1-4"
+	},
+/obj/cable/braeriach{
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/black,
 /area/braeriach/command/bridge)
@@ -6460,6 +6565,7 @@
 /obj/decoration/toiletholder{
 	pixel_y = 32
 	},
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/sanitary,
 /area/braeriach/crew/bathroom)
 "CL" = (
@@ -6700,6 +6806,7 @@
 "DR" = (
 /obj/machinery/portable_reclaimer,
 /obj/decal/stripe_caution,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
@@ -6845,6 +6952,12 @@
 /obj/strip_door,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/secure/armoury)
+"EI" = (
+/obj/machinery/light_switch/directional/east,
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/braeriach/secure)
 "EJ" = (
 /obj/machinery/recharge_station,
 /turf/simulated/floor/twotone/black,
@@ -6886,6 +6999,13 @@
 	},
 /turf/simulated/floor/black,
 /area/braeriach/armament_depot)
+"ES" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/machinery/light_switch/directional/west,
+/turf/simulated/floor/shuttlebay,
+/area/braeriach/podbay/armoury)
 "ET" = (
 /turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
 /area/braeriach/engineering)
@@ -7024,6 +7144,7 @@
 	icon_state = "line1"
 	},
 /obj/disposalpipe/trunk,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/white,
 /area/braeriach/medbay)
 "Fj" = (
@@ -7486,6 +7607,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/black,
 /area/braeriach/command/war_room)
 "GU" = (
@@ -7541,6 +7663,7 @@
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/crew)
 "Hd" = (
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/redblack{
 	dir = 6
 	},
@@ -7725,6 +7848,7 @@
 /obj/cable/braeriach{
 	icon_state = "0-4"
 	},
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor/glassblock/transparent/red,
 /area/braeriach/ai)
 "HO" = (
@@ -8088,6 +8212,7 @@
 	pixel_x = -3;
 	pixel_y = 2
 	},
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/north)
 "IZ" = (
@@ -8372,6 +8497,10 @@
 	dir = 1
 	},
 /area/braeriach/hallway/east)
+"Kf" = (
+/obj/machinery/light_switch/directional/north,
+/turf/simulated/floor/plating/with_grille,
+/area/braeriach/secure/armoury)
 "Kg" = (
 /obj/machinery/atmospherics/unary/cryo_cell,
 /turf/simulated/floor/minitiles/black,
@@ -8675,6 +8804,7 @@
 "Lm" = (
 /obj/storage/crate/wooden,
 /obj/random_item_spawner/junk/maybe_few,
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/podbay/warehouse)
 "Ln" = (
@@ -8822,6 +8952,7 @@
 /obj/machinery/sink/slim{
 	pixel_y = 12
 	},
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/red/checker,
 /area/braeriach/medbay/surgery)
 "LV" = (
@@ -8978,6 +9109,7 @@
 "MA" = (
 /obj/mapping_helper/access/syndicate,
 /obj/machinery/vending/monkey/kitchen,
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/specialroom/freezer,
 /area/braeriach/crew/freezer)
 "MB" = (
@@ -9049,6 +9181,7 @@
 	dir = 6;
 	icon_state = "xtra_bigstripe-corner2"
 	},
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/black,
 /area/braeriach/secure/firing_range)
 "MT" = (
@@ -9065,6 +9198,7 @@
 	glass_amt = 50;
 	pixel_y = 6
 	},
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/medbay/pharmacy)
 "MV" = (
@@ -9353,6 +9487,7 @@
 /area/titlescreen)
 "NY" = (
 /obj/machinery/recharge_station,
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/twotone/black{
 	dir = 1
 	},
@@ -9445,6 +9580,7 @@
 "Ow" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/darkpurpleblack{
 	dir = 5
 	},
@@ -9833,6 +9969,7 @@
 /obj/shrub{
 	dir = 6
 	},
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/hallway/east)
 "Qh" = (
@@ -10438,6 +10575,7 @@
 /obj/cable/braeriach{
 	icon_state = "1-2"
 	},
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/disposals)
 "Sh" = (
@@ -10720,6 +10858,7 @@
 /obj/cable/braeriach{
 	icon_state = "1-4"
 	},
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/black,
 /area/braeriach/armament_depot/vestibule)
 "Ts" = (
@@ -10974,6 +11113,7 @@
 	icon_state = "2-4"
 	},
 /obj/reagent_dispensers/foamtank,
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/shuttlebay,
 /area/braeriach/podbay)
 "UX" = (
@@ -11333,6 +11473,7 @@
 /turf/simulated/floor/carpet/red/fancy/innercorner/omni,
 /area/braeriach/crew/barracks)
 "WS" = (
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/secure/armoury)
 "WT" = (
@@ -11411,6 +11552,7 @@
 /area/braeriach/command/bridge)
 "Xd" = (
 /obj/decal/cleanable/dirt,
+/obj/machinery/light_switch/directional/north,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/north_east)
 "Xj" = (
@@ -11873,6 +12015,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
+/obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/plating/with_grille,
 /area/braeriach/maintenance/north_east)
 "YH" = (
@@ -11890,6 +12033,12 @@
 	},
 /turf/simulated/floor/glassblock/transparent/red,
 /area/braeriach/ai/upload)
+"YI" = (
+/obj/machinery/light_switch/directional/east,
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/braeriach/hallway/east)
 "YK" = (
 /obj/table/reinforced/bar/auto{
 	name = "table"
@@ -11933,6 +12082,7 @@
 	pixel_y = 6
 	},
 /obj/cable/braeriach,
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/circuit/red,
 /area/braeriach/command/bridge)
 "YU" = (
@@ -11986,8 +12136,17 @@
 /area/titlescreen)
 "Zi" = (
 /obj/machinery/chem_heater,
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/red,
 /area/braeriach/crew/bar)
+"Zj" = (
+/obj/decal/cleanable/dirt,
+/obj/cable/braeriach{
+	icon_state = "1-2"
+	},
+/obj/machinery/light_switch/directional/west,
+/turf/simulated/floor/plating/with_grille,
+/area/braeriach/maintenance/north)
 "Zl" = (
 /obj/railing,
 /obj/cable/braeriach{
@@ -20194,7 +20353,7 @@ wp
 hK
 hK
 VQ
-cf
+Kf
 cf
 yQ
 sQ
@@ -22628,7 +22787,7 @@ wJ
 Yz
 Oo
 Wl
-Wl
+mG
 da
 wK
 sl
@@ -23225,7 +23384,7 @@ VX
 nv
 rc
 Ho
-Xn
+EI
 Xn
 Xn
 Nv
@@ -23823,7 +23982,7 @@ Ga
 mx
 ZU
 FI
-FI
+dc
 Jh
 xk
 Rz
@@ -24170,7 +24329,7 @@ TG
 TG
 rR
 TG
-TG
+qt
 rR
 iD
 TG
@@ -24766,7 +24925,7 @@ tb
 wF
 wd
 Mu
-rZ
+ES
 xw
 yk
 TG
@@ -25070,7 +25229,7 @@ Ew
 dU
 rZ
 xw
-TG
+bC
 TG
 TG
 fJ
@@ -25342,7 +25501,7 @@ Ns
 Ns
 Ns
 Ns
-EW
+yx
 TR
 cr
 wb
@@ -25364,7 +25523,7 @@ Sk
 Sk
 ja
 SS
-MT
+kC
 fW
 fW
 fW
@@ -25951,7 +26110,7 @@ uo
 Iz
 Gb
 Mj
-fQ
+fb
 HB
 HB
 Rw
@@ -26234,7 +26393,7 @@ wp
 hK
 iX
 pR
-xh
+wH
 aa
 Is
 af
@@ -26543,7 +26702,7 @@ tU
 xh
 Vu
 iX
-Fc
+ap
 ND
 Nr
 kb
@@ -28057,7 +28216,7 @@ Ad
 fB
 xG
 PT
-fB
+Zj
 La
 yS
 Dk
@@ -28986,7 +29145,7 @@ ez
 ez
 ez
 HV
-uI
+Ap
 SS
 MT
 fW
@@ -29888,7 +30047,7 @@ bX
 ng
 nR
 ng
-ng
+YI
 hA
 ng
 nR
@@ -29902,7 +30061,7 @@ GQ
 IC
 zu
 nR
-ng
+YI
 ng
 ng
 ng
@@ -34118,7 +34277,7 @@ lz
 RA
 RA
 RA
-sU
+wP
 bH
 kp
 Pj
@@ -35036,8 +35195,8 @@ IS
 qh
 Fm
 YN
-OS
-XV
+yq
+wm
 YT
 kp
 hK
@@ -35338,7 +35497,7 @@ iR
 mN
 iR
 Yf
-OS
+Bw
 XV
 Jk
 kp
