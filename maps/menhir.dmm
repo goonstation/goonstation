@@ -21448,10 +21448,6 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "ldf" = (
-/obj/decal/tile_edge/line/black{
-	dir = 1;
-	icon_state = "line1"
-	},
 /obj/stool/chair/dining/wood{
 	dir = 8
 	},
@@ -27840,13 +27836,6 @@
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
 /area/space)
-"oqv" = (
-/obj/decal/tile_edge/line/black{
-	dir = 1;
-	icon_state = "line1"
-	},
-/turf/simulated/floor/black,
-/area/station/crew_quarters/cafeteria)
 "oqS" = (
 /obj/machinery/portable_reclaimer,
 /obj/machinery/light{
@@ -34720,10 +34709,6 @@
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/disposal)
 "rKZ" = (
-/obj/decal/tile_edge/line/black{
-	dir = 1;
-	icon_state = "line1"
-	},
 /obj/table/wood/auto,
 /obj/machinery/computer/television/small{
 	pixel_y = 8
@@ -35253,10 +35238,6 @@
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "sah" = (
-/obj/decal/tile_edge/line/black{
-	dir = 1;
-	icon_state = "line1"
-	},
 /obj/stool/chair/dining/wood{
 	dir = 4
 	},
@@ -38509,10 +38490,6 @@
 /turf/unsimulated/floor/setpieces/bluefloor,
 /area/station/crown)
 "tFx" = (
-/obj/decal/tile_edge/line/black{
-	dir = 1;
-	icon_state = "line1"
-	},
 /obj/table/wood/auto,
 /obj/random_item_spawner/tableware,
 /turf/simulated/floor/black,
@@ -92631,7 +92608,7 @@ dQn
 iec
 muM
 xwd
-oqv
+sCA
 ept
 swZ
 wTQ
