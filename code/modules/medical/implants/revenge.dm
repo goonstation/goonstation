@@ -26,6 +26,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 						revenge_implant.active = TRUE
 						power += revenge_implant.power //tally the total power we're dealing with here
 
+			// No blowing up your own base.
+			if (istype(get_area(src.owner), /area/braeriach))
+				return
+
 			// If you're suiciding and unlucky, all the power just goes out the window and we don't trigger
 			var/mob/living/source = owner
 			// if(source.suiciding && prob(60)) //Probably won't trigger on suicide though
