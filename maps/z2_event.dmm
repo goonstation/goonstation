@@ -10589,7 +10589,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn/colored,
 /area/braeriach/ai/upload)
 "Sm" = (
-/obj/table/syndicate/auto,
+/obj/machinery/vending/syndicate_teleporter,
+/obj/mapping_helper/access/syndicate,
+/obj/mapping_helper/free_vendor,
 /turf/simulated/floor/red/redblackchecker,
 /area/braeriach/teleporter)
 "Sn" = (

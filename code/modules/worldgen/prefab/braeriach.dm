@@ -150,9 +150,6 @@
 		return pick(landmarks[LANDMARK_SYNDICATE_POD_RETURN_BEACON])
 
 
-
-
-
 /obj/machinery/macrofab/syndicate
 	name = "Pod Fabricator"
 	desc = "A sophisticated machine that fabricates vehicles from a nearby reserve of supplies."
@@ -166,6 +163,22 @@
 		return
 
 	. = ..()
+
+
+
+
+
+/obj/machinery/vending/syndicate_teleporter
+	name = "TeleVend"
+	desc = "An ID-selective dispenser for Syndicate teleporter remotes."
+	icon_state = "standard"
+	req_access = list(access_syndicate_shuttle)
+	acceptcard = FALSE
+	pay = FALSE
+
+/obj/machinery/vending/syndicate_teleporter/create_products(restocked)
+	. = ..()
+	product_list += new /datum/data/vending_product(/obj/item/remote/syndicate_teleporter, 1, infinite = TRUE)
 
 
 
