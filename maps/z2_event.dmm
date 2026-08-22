@@ -8856,11 +8856,17 @@
 	icon_state = "line1"
 	},
 /obj/machinery/traymachine/locking/crematorium{
-	id = "syncrematorium"
+	id = "braeriach_cremator"
 	},
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/crema_switch{
+	pixel_x = 0;
+	pixel_y = 24;
+	id = "braeriach_cremator"
+	},
+/obj/mapping_helper/access/syndicate,
 /turf/simulated/floor/shiny,
 /area/braeriach/medbay/morgue)
 "Lv" = (
