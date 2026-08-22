@@ -6216,6 +6216,15 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/braeriach/crew/jazz_lounge)
+"Bq" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/stool/chair/office/red{
+	dir = 8
+	},
+/turf/simulated/floor/minitiles/black,
+/area/braeriach/command/war_room)
 "Bs" = (
 /obj/decal/tile_edge/line/red{
 	dir = 4;
@@ -10108,12 +10117,10 @@
 /turf/simulated/floor/shiny,
 /area/braeriach/secure/armoury)
 "QC" = (
-/obj/table/syndicate/auto,
-/obj/item/nukeop_minimap_controller{
-	pixel_x = 0;
-	pixel_y = 8
-	},
 /obj/disposalpipe/segment/bent/north,
+/obj/machinery/computer/nukeop_minimap_controller{
+	dir = 4
+	},
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/command/war_room)
 "QD" = (
@@ -10978,7 +10985,9 @@
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/engineering/power)
 "Ul" = (
-/obj/minimap/map_computer/nukeop,
+/obj/minimap/map_computer/nukeop{
+	name = "Station Map"
+	},
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/command/war_room)
 "Um" = (
@@ -31877,7 +31886,7 @@ IB
 yo
 Zl
 fg
-Eg
+Bq
 ZV
 ZV
 ZV

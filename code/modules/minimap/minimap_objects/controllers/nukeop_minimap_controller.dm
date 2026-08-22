@@ -37,3 +37,35 @@
 	if (minimap)
 		src.minimap_controller = new(minimap)
 		src.minimap_ui = new(src, "nukeop_map", src.minimap_controller, "Atrium Station Map Controller", "syndicate")
+
+
+
+
+
+/obj/machinery/computer/nukeop_minimap_controller
+	name = "station map controller"
+	icon_state = "s_teleport"
+
+	var/obj/minimap_controller/minimap_controller = null
+	var/atom/movable/minimap_ui_handler/minimap_controller/minimap_ui = null
+
+/obj/machinery/computer/nukeop_minimap_controller/attack_hand(mob/user)
+	if (src.status & (BROKEN | NOPOWER))
+		return
+
+	src.add_fingerprint(user)
+	if ((!src.minimap_controller || !src.minimap_ui) && !src.connect_to_minimap())
+		return
+
+	src.minimap_ui.ui_interact(user)
+
+/obj/machinery/computer/nukeop_minimap_controller/proc/connect_to_minimap()
+	var/obj/minimap/map_computer/nukeop/minimap = null
+	for_by_tcl(map, /obj/minimap/map_computer/nukeop)
+		minimap = map
+		break
+
+	if (minimap)
+		src.minimap_controller = new(minimap)
+		src.minimap_ui = new(src, "nukeop_map", src.minimap_controller, "Station Map Controller", "syndicate")
+		return TRUE
