@@ -594,6 +594,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		desc = "A crate containing a Specialist Operative loadout. Includes a tranquilizer pistol, chameleon outfit, chameleon projector and a DNA scrambler."
 		spawn_contents = list(/obj/item/gun/kinetic/tranq_pistol,
 		/obj/item/storage/pouch/tranq_pistol_dart,
+		/obj/item/card/id/syndicate,
 		/obj/item/pinpointer/disk,
 		/obj/item/dna_scrambler,
 		/obj/item/voice_changer,
