@@ -937,7 +937,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn/colored/cyan,
 /area/braeriach/maintenance/south_east)
 "es" = (
-/obj/railing,
+/obj/railing{
+	dir = 10
+	},
 /obj/cable/braeriach{
 	icon_state = "1-4"
 	},
@@ -1448,9 +1450,11 @@
 	},
 /area/braeriach/maintenance/central)
 "gS" = (
-/obj/railing,
 /obj/disposalpipe/segment{
 	dir = 4
+	},
+/obj/railing{
+	dir = 10
 	},
 /turf/simulated/floor/minitiles/black,
 /area/braeriach/secure/equipment)
@@ -8903,7 +8907,9 @@
 /turf/simulated/floor/twotone/black,
 /area/braeriach/hallway/east)
 "LM" = (
-/obj/railing,
+/obj/railing{
+	dir = 10
+	},
 /obj/decal/tile_edge/line/white{
 	dir = 10;
 	icon_state = "line2"
