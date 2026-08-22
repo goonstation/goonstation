@@ -146,8 +146,13 @@
 	return TRUE
 
 /obj/item/shipcomponent/communications/syndicate/get_home_turf()
-	if (length(landmarks[LANDMARK_SYNDICATE_POD_RETURN_BEACON]))
-		return pick(landmarks[LANDMARK_SYNDICATE_POD_RETURN_BEACON])
+	if (!length(landmarks[LANDMARK_SYNDICATE_POD_RETURN_BEACON]))
+		return
+
+	if (!istrainedsyndie(src.ship.pilot))
+		return
+
+	return pick(landmarks[LANDMARK_SYNDICATE_POD_RETURN_BEACON])
 
 
 /obj/machinery/macrofab/syndicate

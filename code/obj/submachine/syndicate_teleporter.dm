@@ -43,5 +43,9 @@
 	w_class = W_CLASS_SMALL
 
 	attack_self(mob/user as mob)
+		if (!istrainedsyndie(user))
+			boutput(user, SPAN_ALERT("The remote beeps angrily, it doesn't recognise your fingerprint!"))
+			return
+
 		for(var/obj/submachine/syndicate_teleporter/S in get_turf(src))
 			S.teleport(user)
