@@ -98,7 +98,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	wages = PAY::IMPORTANT
 	trait_list = list("training_drinker", "training_security")
 	access_string = "Head of Security"
-	requires_whitelist = REQUIRES_WHITELIST_USUALLY
+	requires_whitelist = REQUIRES_WHITELIST_ALWAYS
 	receives_miranda = TRUE
 	can_roll_antag = FALSE
 	world_announce_priority = ANNOUNCE_ORDER_HOS
