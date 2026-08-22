@@ -47,6 +47,7 @@
 		mainframe.radio1.set_frequency(RADIO::FREQ::SYNDICATE)
 		mainframe.radio2.set_frequency(RADIO::FREQ::SALVAGER)
 		mainframe.radio2.toggle_speaker(TRUE)
+		mainframe.radio2.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_AI_INTERCOM_RADIO)
 		mainframe.ensure_listen_tree().AddListenModifier(LISTEN_MODIFIER_AI_INTERCOM_MAPTEXT)
 
 		var/obj/item/device/radio/headset/ai_headset = mainframe.radio3

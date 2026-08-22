@@ -2206,6 +2206,7 @@
 #include "code\modules\speech\modules\speech\modifiers\_speech_modifier_parent.dm"
 #include "code\modules\speech\modules\speech\modifiers\abstract_radio_source.dm"
 #include "code\modules\speech\modules\speech\modifiers\accents.dm"
+#include "code\modules\speech\modules\speech\modifiers\ai_intercom.dm"
 #include "code\modules\speech\modules\speech\modifiers\bot.dm"
 #include "code\modules\speech\modules\speech\modifiers\bradbury.dm"
 #include "code\modules\speech\modules\speech\modifiers\chemicompiler.dm"
