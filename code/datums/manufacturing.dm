@@ -3203,6 +3203,30 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	time = 5 SECONDS
 	category = MANUFACTURER::CATEGORY::CLOTHING
 
+/datum/manufacture/baseball_staffie
+	name = "Baseball Uniform"
+	item_requirements = list("fabric" = JUMPSUIT_COST)
+	item_outputs = list(/obj/item/clothing/under/baseball/staffie)
+	create = 1
+	time = 5 SECONDS
+	category = MANUFACTURER::CATEGORY::CLOTHING
+
+/datum/manufacture/baseball_command
+	name = "Baseball Uniform"
+	item_requirements = list("fabric" = JUMPSUIT_COST)
+	item_outputs = list(/obj/item/clothing/under/baseball/command)
+	create = 1
+	time = 5 SECONDS
+	category = MANUFACTURER::CATEGORY::CLOTHING
+
+/datum/manufacture/baseball_nt
+	name = "Baseball Uniform"
+	item_requirements = list("fabric" = JUMPSUIT_COST)
+	item_outputs = list(/obj/item/clothing/under/baseball/nt)
+	create = 1
+	time = 5 SECONDS
+	category = MANUFACTURER::CATEGORY::CLOTHING
+
 /datum/manufacture/labcoat
 	name = "Labcoat"
 	item_requirements = list("fabric" = 4)

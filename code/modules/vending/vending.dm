@@ -2801,6 +2801,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/water_pipe, 1, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/seedplanter/hidden, 1, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/seed/grass, rand(3, 6), hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/baseball/botany, 5, hidden=1)
 		if (prob(25))
 			product_list += new/datum/data/vending_product(/obj/item/seed/alien, 1, hidden=1)
 
