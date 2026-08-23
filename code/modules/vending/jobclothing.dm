@@ -36,6 +36,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/satchel/security, 1)
 
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/security/april_fools, 1, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/baseball/security, 5, hidden=1)
 
 #ifdef SEASON_WINTER
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/sec, 2)
@@ -73,6 +74,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/satchel/security, 1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/security/april_fools, 1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/sec, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/baseball/security, 5)
 
 /obj/machinery/vending/jobclothing/medical
 	name = "Medical Apparel"
@@ -132,6 +134,9 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/genetics/april_fools, 1, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/pharmacist/april_fools, 1, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/pharmacist/april_fools, 1, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/baseball/medical, 5, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/baseball/genetics, 5, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/baseball/robotics, 5, hidden=1)
 
 #ifdef SEASON_WINTER
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/med, 2)
@@ -190,6 +195,9 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/pharmacist, 1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/pharmacist/april_fools, 1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/pharmacist/april_fools, 1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/baseball/medical, 5)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/baseball/genetics, 5)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/baseball/robotics, 5)
 
 /obj/machinery/vending/jobclothing/engineering
 	name = "Engineering Apparel"
@@ -232,6 +240,9 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/engineer/april_fools, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/mechanic/april_fools, 2, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/baseball/engineer, 5, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/baseball/mining, 5, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/baseball/cargo, 5, hidden=1)
 
 #ifdef SEASON_WINTER
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/hi_vis/puffer, 2)
@@ -277,6 +288,9 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/mechanic/april_fools, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/hi_vis/puffer, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/engi, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/baseball/engineer, 5)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/baseball/mining, 5)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/baseball/cargo, 5)
 
 /obj/machinery/vending/jobclothing/catering
 	name = "Catering Apparel"
@@ -317,6 +331,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/itamae, 1, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/itamaehat, 1, hidden=1)
 		product_list += new/datum/data/vending_product(pick(/obj/item/clothing/head/headband/nyan/white, /obj/item/clothing/head/headband/nyan/gray, /obj/item/clothing/head/headband/nyan/black), 1, hidden = 1) //Silly headbands (?)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/baseball/catering, 5, hidden=1)
 
 /obj/machinery/vending/jobclothing/afterlife/catering
 	name = "Catering Apparel"
@@ -353,6 +368,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/itamae, 1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/itamaehat, 1)
 		product_list += new/datum/data/vending_product(pick(/obj/item/clothing/head/headband/nyan/white, /obj/item/clothing/head/headband/nyan/gray, /obj/item/clothing/head/headband/nyan/black), 1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/baseball/catering, 5)
 
 /obj/machinery/vending/jobclothing/research
 	name = "Research Apparel"
@@ -389,6 +405,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/scientist/april_fools, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/science/april_fools, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/dan, 1, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/baseball/science, 5, hidden=1)
 
 #ifdef SEASON_WINTER
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/sci, 2)
@@ -427,6 +444,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/science/april_fools, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/dan, 1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/sci, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/baseball/science, 5)
 
 TYPEINFO(/obj/machinery/vending/jobclothing/syndicate)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY //So engineer traitors dont scan it with their PDA
@@ -459,3 +477,4 @@ TYPEINFO(/obj/machinery/vending/jobclothing/syndicate)
 		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/satchel/syndie, 1)
 		product_list += new/datum/data/vending_product(/obj/item/storage/fanny/syndie, 1)
 		product_list += new/datum/data/vending_product(/obj/item/stamp/syndicate, 4)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/baseball/syndicate, 5) // get a bunch of mindhacks and hit the major league
