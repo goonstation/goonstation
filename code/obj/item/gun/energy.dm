@@ -439,7 +439,6 @@ TYPEINFO(/obj/item/gun/energy/crossbow)
 	rechargeable = 0 // Cannot be recharged manually.
 	cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
-	projectiles = null
 	silenced = 1 // No conspicuous text messages, please (Convair880).
 	hide_attack = ATTACK_FULLY_HIDDEN
 	custom_cell_max_capacity = 100 // Those self-charging ten-shot radbows were a bit overpowered (Convair880)
@@ -679,7 +678,6 @@ TYPEINFO(/obj/item/gun/energy/crabgun)
 	rechargeable = 0
 	cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
-	projectiles = null
 	custom_cell_max_capacity = 100 //endless crab
 
 	New()
@@ -1310,7 +1308,6 @@ TYPEINFO(/obj/item/gun/energy/pickpocket)
 	rechargeable = 0 // Cannot be recharged manually.
 	cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
-	projectiles = null
 	silenced = 1
 	hide_attack = ATTACK_FULLY_HIDDEN
 	custom_cell_max_capacity = 100
@@ -1738,7 +1735,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 	cell_type = /obj/item/ammo/power_cell/high_power //300 PU
 	uses_charge_overlay = TRUE
 	charge_icon_state = "pulse_rifle"
-
+	var/emagged = FALSE
 	New()
 		..()
 		set_current_projectile(new/datum/projectile/energy_bolt/pulse)//uses 35PU per shot, so 8 shots
@@ -1746,13 +1743,15 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 		add_firemode(null, new/datum/projectile/energy_bolt/electromagnetic_pulse)
 
 	emag_act(mob/user, obj/item/card/emag/E)
-		if(locate(/datum/projectile/energy_bolt/pulse/pull) in src.projectiles)
+		if(src.emagged)
 			return
+		src.emagged = TRUE
 		boutput(user, SPAN_NOTICE("You run [E] over [src], reversing the polarity!"))
+		src.firemodes = list()
 		var/pullse_projectile = new/datum/projectile/energy_bolt/pulse/pull
 		src.set_current_projectile(pullse_projectile)
-		var/datum/projectile/energy_bolt/electromagnetic_pulse/emp_projectile = locate() in src.projectiles
-		src.projectiles = list(pullse_projectile, emp_projectile)
+		add_firemode(null, pullse_projectile)
+		add_firemode(null, new/datum/projectile/energy_bolt/electromagnetic_pulse)
 
 
 ///////////////////////////////////////Wasp Gun
@@ -1773,7 +1772,6 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 	rechargeable = 0 // Cannot be recharged manually.
 	cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
-	projectiles = null
 	silenced = 1
 	custom_cell_max_capacity = 100
 
@@ -1798,7 +1796,6 @@ TYPEINFO(/obj/item/gun/energy/neutron)
 	rechargeable = 0 // Cannot be recharged manually.
 	cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
-	projectiles = null
 	silenced = 1
 	custom_cell_max_capacity = 100
 
@@ -2558,7 +2555,6 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 
 	New()
 		set_current_projectile(new/datum/projectile/special/piercing/resonator)
-		projectiles = list(new/datum/projectile/special/piercing/resonator)
 		AddComponent(/datum/component/holdertargeting/windup, 1 SECOND)
 		AddComponent(/datum/component/holdertargeting/sniper_scope, 8, 0, /datum/overlayComposition/sniper_scope/resonator, 'sound/machines/found.ogg')
 		..()

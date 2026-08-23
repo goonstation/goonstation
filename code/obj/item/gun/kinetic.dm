@@ -225,14 +225,14 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				var/turf/T = get_turf(src)
 				if(T)
 					if (src.current_projectile.casing && (src.sanitycheck(1, 0) == 1))
-						var/number_of_casings = max(1, src.current_projectile.shot_number)
+						var/number_of_casings = max(1, src.current_firemode.shot_number)
 						//DEBUG_MESSAGE("Ejected [number_of_casings] casings from [src].")
 						for (var/i in 1 to number_of_casings)
 							new src.current_projectile.casing(T, src)
 			else
 				if (src.casings_to_eject < 0)
 					src.casings_to_eject = 0
-				src.casings_to_eject += src.current_projectile.shot_number
+				src.casings_to_eject += src.current_firemode.shot_number
 		. = ..()
 
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
@@ -241,14 +241,14 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				var/turf/T = get_turf(src)
 				if(T)
 					if (src.current_projectile.casing && (src.sanitycheck(1, 0) == 1))
-						var/number_of_casings = max(1, src.current_projectile.shot_number)
+						var/number_of_casings = max(1, src.current_firemode.shot_number)
 						//DEBUG_MESSAGE("Ejected [number_of_casings] casings from [src].")
 						for (var/i in 1 to number_of_casings)
 							new src.current_projectile.casing(T, src)
 			else
 				if (src.casings_to_eject < 0)
 					src.casings_to_eject = 0
-				src.casings_to_eject += src.current_projectile.shot_number
+				src.casings_to_eject += src.current_firemode.shot_number
 
 		if (fire_animation)
 			if(src.ammo?.amount_left >= 1)

@@ -32,7 +32,7 @@ datum/firemode
 
 	five_burst
 		name = "five shot burst"
-		shot_number = 4
+		shot_number = 5
 	ten_burst
 		name = "ten shot burst"
 		shot_number = 10

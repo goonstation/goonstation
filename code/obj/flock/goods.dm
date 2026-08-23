@@ -68,7 +68,6 @@ TYPEINFO(/obj/item/gun/energy/flock)
 	rechargeable = FALSE // yeah this is weird alien technology good fucking luck charging it
 	can_swap_cell = FALSE // No
 	cell_type = /obj/item/ammo/power_cell/self_charging/flockdrone
-	projectiles = null
 	custom_cell_max_capacity = 100
 
 /obj/item/gun/energy/flock/New()

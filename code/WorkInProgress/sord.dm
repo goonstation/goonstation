@@ -137,7 +137,6 @@
 
 	New()
 		set_current_projectile(new/datum/projectile/energy_bolt/stasis)
-		projectiles = list(current_projectile)
 		AddComponent(/datum/component/holdertargeting/windup, 1.5 SECONDS)
 		..()
 
