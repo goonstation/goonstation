@@ -28,6 +28,9 @@
 		if (!target_name)
 			boutput(holder.owner, SPAN_NOTICE("We change our mind."))
 			return 1
+		if (!(target_name in H.absorbed_dna))
+			boutput(holder.owner, SPAN_NOTICE("That face is lost to us."))
+			return 1
 
 		var/datum/absorbedIdentity/current_ident = H.current_ident
 		if (target_name == src.holder.owner.real_name && !current_ident.always_switch)
