@@ -105,6 +105,14 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether/multi_area)
 	req_access = list(access_research_director)
 	base_area_typepath = /area/research_outpost
 
+// menhir's predecessor, the limpet. needs a smidge of effort to power
+/obj/machinery/gravity_tether/multi_area/limpet
+	name = "Limpet gravity tether"
+	req_access = list(access_maint_tunnels)
+	base_area_typepath = /area/research_outpost
+	uses_area_power = TRUE
+	passive_wattage_per_g_quantum = 1 WATTS
+	cell_type_path = /obj/item/cell/custom //to not suck down power forever
 
 // asteroid field
 

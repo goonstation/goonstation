@@ -709,7 +709,7 @@ TYPEINFO(/mob/dead/observer)
 	set category = null
 
 	if (src.see_invisible >= INVIS_GHOST)
-		src.see_invisible = INVIS_NONE
+		src.see_invisible = INVIS_BELOW_GHOST
 		boutput(src, "You can no longer see other ghosts.", group="ghostsight")
 	else if(HAS_FLAG(src.sight, SEE_SELF))
 		src.sight &= ~SEE_SELF

@@ -49,7 +49,7 @@ var/global/lastStationNameChange = 0 //timestamp
 	return station_or_ship
 
 
-/proc/generate_random_station_name()
+/proc/generate_random_station_name(var/always_random_name = FALSE)
 	var/name = ""
 
 	//halloween prefixes, temporary thing
@@ -58,7 +58,7 @@ var/global/lastStationNameChange = 0 //timestamp
 	name += " "
 #endif
 
-	if (map_settings && istext(map_settings.display_name))
+	if (map_settings && istext(map_settings.display_name) && !always_random_name)
 		name += map_settings.display_name
 
 	else

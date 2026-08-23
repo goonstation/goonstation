@@ -1,4 +1,18 @@
 
+(t)sun aug 23 26
+(u)ANNmagedon
+(p)27581
+(e)|
+(+)The civilian module for cyborgs now includes a pitcher.
+(u)ANNmagedon
+(p)27552
+(e)🗺|A-Mapping
+(+)The pharmacy at Kondaru has blinds for photophosphide making, just don't stand too close to the door!
+(u)Kubius
+(p)26362
+(f)https://forum.ss13.co/showthread.php?tid=25085
+(e)🗺🎨🔊🧛🚨⏰🍝🌠🐁|A-Mapping, C-Sprites, C-Sound, A-Gamemodes, A-Admin, A-Status-Effects, A-Catering, A-Events, A-Critters
+(*)Added Menhir, a new low to mid pop map built around and into the massive artifact TOREADOR-7I-22408 (colloquially, the Crown), with its own unique event cycle and an interior to explore.
 (t)sat aug 22 26
 (u)LeahTheTech
 (p)27512
