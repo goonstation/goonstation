@@ -1452,13 +1452,10 @@
 							if(ishuman(M))
 								var/mob/living/carbon/human/dork = M
 								if(istype(dork.wear_mask, /obj/item/clothing/mask/cigarette))
-									var/obj/item/clothing/mask/cigarette/cig = dork.wear_mask
-									dork.drop_item(cig)
-									cig.set_loc(dork.loc)
-									cig.dropped(dork)
-									cig.throw_at(get_edge_cheap(dork.loc, turn(get_dir(src, dork), src.hand == LEFT_HAND ? -90 : 90)), 3, 2)
+									var/obj/item/clothing/cig = dork.wear_mask //saving this as a variable because [dork.wear_mask] in the visible_message doesn't return anything, even though it's called BEFORE the item is removed. weird stuff!
 									SPAWN(0) //SPAWN so this only outputs after the initial emote text
 									dork.visible_message(SPAN_ALERT("[cig] is knocked out of [dork]'s mouth!"))
+									cig.throw_worn_item(get_edge_cheap(dork.loc, turn(get_dir(src, dork), src.hand == LEFT_HAND ? -90 : 90)), 3, 2)
 							message = "<b>[src]</b> slaps [M] across the face! Ouch!"
 							maptext_out = "<I>slaps [M] across the face!</I>"
 						else

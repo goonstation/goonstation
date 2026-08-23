@@ -83,16 +83,12 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 			if(ishuman(target))
 				var/mob/living/carbon/human/dork = target
 				if(istype(dork.wear_mask, /obj/item/clothing/mask/cigarette))
-					var/obj/item/clothing/mask/cigarette/cig = dork.wear_mask
-					dork.drop_item(cig)
-					cig.set_loc(dork.loc)
-					cig.dropped(dork)
+					dork.visible_message(SPAN_ALERT("[dork.wear_mask] is knocked out of [dork]'s mouth!"))
 					if(ismob(challenger))
 						var/mob/slapper = challenger
-						cig.throw_at(get_edge_cheap(dork.loc, turn(get_dir(slapper, dork), slapper.hand == LEFT_HAND ? -90 : 90)), 3, 2)
+						dork.wear_mask.throw_worn_item(get_edge_cheap(dork.loc, turn(get_dir(slapper, dork), slapper.hand == LEFT_HAND ? -90 : 90)), 3, 2)
 					else
-						cig.throw_at(get_edge_cheap(dork.loc, turn(get_dir(challenger, dork), 90)), 3, 2) //just assume they're slapping with their right hand(or whatever appendage they have) since most people are right-handed
-					dork.visible_message(SPAN_ALERT("[cig] is knocked out of [dork]'s mouth!"))
+						dork.wear_mask.throw_worn_item(get_edge_cheap(dork.loc, turn(get_dir(challenger, dork), 90)), 3, 2) //just assume they're slapping with their right hand(or whatever appendage they have) since most people are right-handed
 		else
 			target.visible_message(
 				SPAN_ALERT("<b>[challenger]</b> slaps [target] in the face with [src]!")
