@@ -123,12 +123,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		if(can_shoot_partially)
 			var/ammoCost = firemode.shot_number * src.current_projectile.cost
 			if(src.ammo.use(ammoCost))
-				handle_casings(firemode.shot_number)
 				return 1
 		else
 			if(src.ammo && src.current_projectile)
 				if(src.ammo.use(current_projectile.cost * firemode.shot_number))
-					handle_casings(firemode.shot_number)
 					return 1
 		if (src.click_sound)
 			boutput(user, SPAN_ALERT(src.click_msg))
@@ -188,19 +186,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		else
 			..()
 
-	proc/handle_casings(num)
-		if (src.auto_eject)
-			var/turf/T = get_turf(src)
-			if(T)
-				if (src.current_projectile.casing && (src.sanitycheck(1, 0) == 1))
-					var/number_of_casings = max(1, num)
-					//DEBUG_MESSAGE("Ejected [number_of_casings] casings from [src].")
-					for (var/i in 1 to number_of_casings)
-						new src.current_projectile.casing(T, src.forensic_ID)
-		else
-			if (src.casings_to_eject < 0)
-				src.casings_to_eject = 0
-			src.casings_to_eject += num
 
 	//attack_self(mob/user as mob)
 	//	return

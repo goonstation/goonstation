@@ -1037,10 +1037,10 @@ TYPEINFO(/obj/item/device/geiger)
 		else
 			RemoveComponentsOfType(/datum/component/holdertargeting/windup/timegun)
 
-	/*proc/set_followup_proj(datum/projectile/proj_data)
-		for(var/datum/projectile/special/timegun/ts in src.projectiles)
+	proc/set_followup_proj(datum/projectile/proj_data)
+		for(var/datum/projectile/special/timegun/ts in src.firemodes )
 			ts.followup = proj_data
-*/
+
 /*todo to clean up atom prop define readability (linter does not handle the ##update correctly, and there's no way to sanely unlint this mess afaik)
 #define DEFINE #define
 #define DEFINE_PROP(name, method, update...) DEFINE PROP_##name(x) x(#name, APPLY_ATOM_PROPERTY_##method, REMOVE_ATOM_PROPERTY_##method, ##update)
