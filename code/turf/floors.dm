@@ -2618,8 +2618,40 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 		name = "glowing wall"
 		desc = "It seems to be humming slightly. Huh."
 		luminosity = 2
-		icon_state = "bluewall_glow"
+		icon = 'icons/misc/worlds.dmi'
+		icon_state = "bluedoor_1"
 		can_replace_with_stuff = 1
+
+		// borrowed from /obj/strip_door to make this easier
+		// i dont know why this is a wall, and i dont think i want to know.
+		var/static/list/connects_to = typecacheof(list(
+			/obj/machinery/door,
+			/obj/window,
+			/turf/simulated/wall/auto,
+			/turf/unsimulated/wall/auto,
+			/obj/precursor_puzzle/glowing_door
+		))
+
+		New()
+			..()
+			src.UpdateIcon()
+			// we shouldnt have to update neighbors because nobody's building these
+
+		update_icon()
+			..()
+			var/connectdir = get_connected_directions_bitflag(connects_to)
+			if ((connectdir & NORTH) && (connectdir & SOUTH))
+				src.dir = EAST
+				return
+			if ((connectdir & EAST) && (connectdir & WEST))
+				src.dir = NORTH
+				return
+			if ((connectdir & NORTH) || (connectdir & SOUTH))
+				src.dir = EAST
+				return
+			if ((connectdir & EAST) || (connectdir & WEST))
+				src.dir = NORTH
+				return
 
 		attackby(obj/item/W, mob/user)
 			if (istype(W, /obj/item/device/key/generic/coldsteel))

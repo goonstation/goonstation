@@ -1072,7 +1072,9 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/icemooninterior)
 	. = ..()
 	connects_to = typecacheof(list(
 		/turf/unsimulated/wall/auto/adventure/icemooninterior,
-		/obj/machinery/door/unpowered/blue
+		/obj/machinery/door/unpowered/blue,
+		/turf/unsimulated/wall/setpieces/bluewall_glowing,
+		/obj/precursor_puzzle/glowing_door
 	))
 /turf/unsimulated/wall/auto/adventure/icemooninterior
 	name = "blue wall"
