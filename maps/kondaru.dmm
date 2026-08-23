@@ -8349,14 +8349,19 @@
 /obj/storage/secure/closet/command/medical_director,
 /obj/item/storage/box/beakerbox,
 /obj/item/reagent_containers/glass/beaker/large,
-/obj/machinery/firealarm/directional/east{
-	pixel_y = 4
-	},
 /obj/item/clipboard,
 /obj/item/pen,
-/obj/item/mdlicense,
-/obj/machinery/light_switch/directional/east{
-	pixel_y = -7
+/obj/machinery/firealarm/directional/south{
+	pixel_x = 4;
+	pixel_y = -22
+	},
+/obj/machinery/light_switch/directional/south{
+	pixel_x = -6;
+	pixel_y = -24
+	},
+/obj/decal/poster/wallsign/framed_award/mdlicense{
+	pixel_x = 32;
+	pixel_y = -2
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/md)
@@ -21189,7 +21194,7 @@
 "bSc" = (
 /obj/table/reinforced/auto,
 /obj/machinery/recharger,
-/obj/item/reagent_containers/food/snacks/spaghetti/spicy,
+/obj/item/reagent_containers/food/snacks/spaghetti/spicy/security,
 /obj/item/kitchen/utensil/fork{
 	pixel_x = 9;
 	pixel_y = 3
@@ -33912,6 +33917,10 @@
 /obj/table/wood/auto,
 /obj/machinery/phone,
 /obj/item/pen/crayon/golden,
+/obj/item/reagent_containers/food/drinks/rum_spaced{
+	pixel_x = -17;
+	pixel_y = 6
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hop)
 "hCO" = (
@@ -42297,7 +42306,10 @@
 	icon_state = "bedsheet-captain";
 	name = "special bedsheet"
 	},
-/obj/blind_switch/directional/north,
+/obj/item/storage/secure/ssafe{
+	pixel_x = 0;
+	pixel_y = 25
+	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/bridge/captain)
 "noI" = (
@@ -56948,7 +56960,12 @@
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/space/captain,
 /obj/item/tank/jetpack,
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/light_switch/directional/east{
+	pixel_y = -6
+	},
+/obj/blind_switch/directional/east{
+	pixel_y = 8
+	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/bridge/captain)
 "xtW" = (
