@@ -2772,6 +2772,9 @@
 /area/station/hallway/primary/west)
 "aOO" = (
 /obj/decal/cleanable/dirt,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/sanitary/blue,
 /area/station/medical/asylum/bathroom)
 "aOP" = (
@@ -19468,6 +19471,9 @@
 	dir = 8;
 	name = "the other best seat in the house"
 	},
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/black/grime,
 /area/station/medical/asylum/bathroom)
 "gag" = (
@@ -24084,6 +24090,9 @@
 /turf/simulated/floor/carpet,
 /area/station/security/detectives_office)
 "hvv" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/wall/false_wall{
 	color = "#87befd";
 	icon = 'icons/turf/walls/jen.dmi';
@@ -25954,6 +25963,14 @@
 /obj/machinery/light/traffic_light/trader_left/delay3,
 /turf/space,
 /area/space)
+"idy" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4;
+	name = "kitchen freezer pipe"
+	},
+/obj/machinery/power/data_terminal,
+/turf/space,
+/area/station/turret_protected/AIbaseoutside)
 "idR" = (
 /turf/simulated/floor/caution/corner{
 	dir = 1
@@ -31923,6 +31940,15 @@
 	dir = 4
 	},
 /area/station/hydroponics/bay)
+"jVo" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/sanitary/blue,
+/area/station/medical/asylum/bathroom)
 "jVp" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -64154,6 +64180,11 @@
 /obj/machinery/camera/directional/north{
 	pixel_x = -10
 	},
+/obj/machinery/networked/nuclear_charge,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/black/grime,
 /area/station/medical/asylum/bathroom)
 "tVB" = (
@@ -73359,6 +73390,9 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload_foyer)
 "wGD" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/black/grime,
 /area/station/medical/asylum/bathroom)
 "wGE" = (
@@ -120587,7 +120621,7 @@ nuJ
 llA
 nSh
 nSh
-vVA
+idy
 xms
 nsJ
 qPC
@@ -120889,7 +120923,7 @@ rdj
 rwP
 nSh
 nSh
-vVA
+idy
 xms
 nsJ
 fnD
@@ -148874,7 +148908,7 @@ jPH
 knx
 uyx
 bpb
-aXw
+tAZ
 wwE
 wwE
 wwE
@@ -149775,7 +149809,7 @@ lSP
 bku
 hID
 nWS
-nWS
+jVo
 cVZ
 gjj
 blC

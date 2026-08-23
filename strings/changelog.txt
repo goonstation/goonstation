@@ -1,4 +1,31 @@
 
+(t)sun aug 23 26
+(u)ANNmagedon
+(p)27581
+(e)|
+(+)The civilian module for cyborgs now includes a pitcher.
+(u)ANNmagedon
+(p)27552
+(e)🗺|A-Mapping
+(+)The pharmacy at Kondaru has blinds for photophosphide making, just don't stand too close to the door!
+(u)Kubius
+(p)26362
+(f)https://forum.ss13.co/showthread.php?tid=25085
+(e)🗺🎨🔊🧛🚨⏰🍝🌠🐁|A-Mapping, C-Sprites, C-Sound, A-Gamemodes, A-Admin, A-Status-Effects, A-Catering, A-Events, A-Critters
+(*)Added Menhir, a new low to mid pop map built around and into the massive artifact TOREADOR-7I-22408 (colloquially, the Crown), with its own unique event cycle and an interior to explore.
+(t)sat aug 22 26
+(u)LeahTheTech
+(p)27512
+(e)🗺|A-Mapping
+(*)Moved the spare nuclear charge from donut 2 science to donut 3 asylum.
+(u)LeahTheTech
+(p)27492
+(e)🗺⛔🧛|A-Mapping, C-Removal, A-Gamemodes
+(*)Donut 2 has been rotated out in favour of Menhir.
+(u)JORJ949
+(p)27551
+(e)🪲🧛|C-Bug, A-Gamemodes
+(+)The Nuclear Operative "Destroy the station with a nuclear device" objective can now be completed outside of the Nuclear Emergency gamemode (if you have the objective and a station-destroying nuke in any other mode).
 (t)thu aug 20 26
 (u)JORJ949
 (p)27528
