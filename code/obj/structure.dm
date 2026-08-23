@@ -122,6 +122,10 @@ obj/structure/ex_act(severity)
 			return
 		actions.start(new /datum/action/bar/icon/girder_tool_interact(src, W, GIRDER_SECURE, null, user), user)
 	else if (istype(W, /obj/item/sheet))
+		if (istype(src.loc, /turf/simulated/floor/shuttle/menhir_arm))
+			boutput(user, SPAN_ALERT("You can't get the sheets to stay in one place. Something is vibrating them heavily."))
+			return
+
 		var/obj/item/sheet/S = W
 		if (S.amount < 2)
 			boutput(user, SPAN_ALERT("You need at least two sheets on the stack to do this."))
