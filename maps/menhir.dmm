@@ -26331,6 +26331,9 @@
 	},
 /area/station/hydroponics)
 "nBY" = (
+/obj/machinery/recharger/wall/sticky{
+	dir = 1
+	},
 /mob/living/critter/small_animal/turtle/sylvester/HoS{
 	dir = 8
 	},
@@ -39050,6 +39053,7 @@
 	bcolor = "green";
 	icon_state = "bedsheet-green"
 	},
+/obj/item/reagent_containers/food/drinks/rum_spaced,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hop)
 "tUP" = (
@@ -42409,6 +42413,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/mob/living/critter/small_animal/dog/george/orwell,
 /turf/simulated/floor/carpet/green/fancy/edge/east,
 /area/station/crew_quarters/hop)
 "vGM" = (
