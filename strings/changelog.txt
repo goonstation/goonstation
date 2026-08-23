@@ -1,5 +1,9 @@
 
 (t)sun aug 23 26
+(u)ANNmagedon
+(p)27552
+(e)🗺|A-Mapping
+(+)The pharmacy at Kondaru has blinds for photophosphide making, just don't stand too close to the door!
 (u)Kubius
 (p)26362
 (f)https://forum.ss13.co/showthread.php?tid=25085
