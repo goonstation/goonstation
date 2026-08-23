@@ -77,9 +77,15 @@ export const HelpToolip = () => {
         <Table.Row>
           <Table.Cell>
             <Table>
-              <Table.Row>* List Element 1</Table.Row>
-              <Table.Row>* List Element 2</Table.Row>
-              <Table.Row>* Etc...</Table.Row>
+              <Table.Row>
+                <Table.Cell>* List Element 1</Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell>* List Element 2</Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell>* Etc...</Table.Cell>
+              </Table.Row>
             </Table>
           </Table.Cell>
           <Table.Cell>
@@ -94,9 +100,15 @@ export const HelpToolip = () => {
         <Table.Row>
           <Table.Cell>
             <Table>
-              <Table.Row>1. List Element 1</Table.Row>
-              <Table.Row>2. List Element 2</Table.Row>
-              <Table.Row>3. Etc...</Table.Row>
+              <Table.Row>
+                <Table.Cell>1. List Element 1</Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell>2. List Element 2</Table.Cell>
+              </Table.Row>
+              <Table.Row>
+                <Table.Cell>3. Etc...</Table.Cell>
+              </Table.Row>
             </Table>
           </Table.Cell>
           <Table.Cell>

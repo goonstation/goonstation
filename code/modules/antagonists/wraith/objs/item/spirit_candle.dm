@@ -11,61 +11,67 @@
 	col_r = 0.2
 	col_g = 0.2
 	col_b = 0.8
-	var/sparks = 7
 	var/burn_state = 0
-	var/burnt = FALSE
 	var/light_ticks = 60
+	var/uses = 2
 
 	New()
 		..()
+		src.UpdateIcon()
 
 	attack_self(mob/user)
-		if (src.on)
-			src.visible_message(SPAN_NOTICE("[user] blows on [src], its eyes emit a threatening glow!"))
-			for(var/mob/living/intangible/wraith/W in orange(4, user))
-				//Small grace period to run away after being manifested if you managed to survive so you dont get chain-manifested
-				if ((W.last_spirit_candle_time + (W.forced_haunt_duration + 6 SECONDS)) < TIME)
-					W.last_spirit_candle_time = TIME
-					W.setStatus("corporeal", W.forced_haunt_duration, TRUE)
-					logTheThing(LOG_COMBAT, W, "is forced to manifest at [log_loc(W)] due to a spirit candle used by [user]")
-					boutput(W, SPAN_ALERT("A malignant spirit pulls you into the physical world! You begin to gather your forces to try and escape to the spirit realm..."))
-				else
-					boutput(user, SPAN_NOTICE("[src] vibrates slightly in your hand. A hostile entity lurks nearby but resisted our attempts to reveal it!"))
-			var/turf/T = get_turf(src)
-			playsound(src.loc, 'sound/voice/chanting.ogg', 50, 0)
-			new /obj/overlay/darkness_field(T, 10 SECOND, radius = 5.5, max_alpha = 250)
-			new /obj/overlay/darkness_field{plane = PLANE_SELFILLUM}(T, 10 SECOND, radius = 5.5, max_alpha = 250)
-			src.put_out(user)
+		if (!src.on || uses <= 0)
+			return
+		if (ON_COOLDOWN(src, "spirit_candle_use", 15 SECONDS))
+			boutput(user, SPAN_NOTICE("[src] is still regaining its strength..."))
+			return
+		src.visible_message(SPAN_NOTICE("[user] blows on [src], its eyes emit a threatening glow!"))
+		for(var/mob/living/intangible/wraith/W in orange(4, user))
+			//Small grace period to run away after being manifested if you managed to survive so you dont get chain-manifested
+			if ((W.last_spirit_candle_time + (W.forced_haunt_duration + 6 SECONDS)) < TIME)
+				W.last_spirit_candle_time = TIME
+				W.setStatus("corporeal", W.forced_haunt_duration, TRUE)
+				logTheThing(LOG_COMBAT, W, "is forced to manifest at [log_loc(W)] due to a spirit candle used by [user]")
+				boutput(W, SPAN_ALERT("A malignant spirit pulls you into the physical world! You begin to gather your forces to try and escape to the spirit realm..."))
+			else
+				boutput(user, SPAN_NOTICE("[src] vibrates slightly in your hand. A hostile entity lurks nearby but resisted our attempts to reveal it!"))
+		var/turf/T = get_turf(src)
+		playsound(src.loc, 'sound/voice/chanting.ogg', 50, 0)
+		new /obj/overlay/darkness_field(T, 10 SECOND, radius = 5.5, max_alpha = 250)
+		new /obj/overlay/darkness_field{plane = PLANE_SELFILLUM}(T, 10 SECOND, radius = 5.5, max_alpha = 250)
+		src.uses -= 1
+		src.UpdateIcon()
+		if (src.uses <= 0)
+			SPAWN(4 SECONDS)
+				src.put_out(user)
 
 	attackby(obj/item/W, mob/user)
-		if (!src.on && !burnt)
-			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
-				src.light(user)
-				user.visible_message(SPAN_ALERT("<b>[user]</b> casually lights [src] with [W], what a badass."))
-
-			else if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
-				src.light(user)
-				user.visible_message(SPAN_ALERT("Did [user] just light \his [src] with [W]? Holy Shit."))
-
-			else if (istype(W, /obj/item/device/igniter))
-				src.light(user)
-				user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles around with [W]; sparks erupt from [src]."))
-
-			else if (istype(W, /obj/item/device/light/zippo) && W:on)
-				src.light(user)
-				user.visible_message(SPAN_ALERT("With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool."))
-
-			else if ((istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on)
-				src.light(user)
-				user.visible_message(SPAN_ALERT("<b>[user] lights [src] with [W]."))
-
-			else if (W.burning)
-				src.light(user)
-				user.visible_message(SPAN_ALERT("<b>[user]</b> lights [src] with [W]. Goddamn."))
-		else if (burnt)
-			boutput(user, SPAN_NOTICE("The spirit inside has departed, you cannot use the candle again"))
-		else
+		if (src.on)
 			return ..()
+
+		if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
+			src.light(user)
+			user.visible_message(SPAN_ALERT("<b>[user]</b> casually lights [src] with [W], what a badass."))
+
+		else if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
+			src.light(user)
+			user.visible_message(SPAN_ALERT("Did [user] just light \his [src] with [W]? Holy Shit."))
+
+		else if (istype(W, /obj/item/device/igniter))
+			src.light(user)
+			user.visible_message(SPAN_ALERT("<b>[user]</b> fumbles around with [W]; sparks erupt from [src]."))
+
+		else if (istype(W, /obj/item/device/light/zippo) && W:on)
+			src.light(user)
+			user.visible_message(SPAN_ALERT("With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool."))
+
+		else if ((istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on)
+			src.light(user)
+			user.visible_message(SPAN_ALERT("<b>[user] lights [src] with [W]."))
+
+		else if (W.burning)
+			src.light(user)
+			user.visible_message(SPAN_ALERT("<b>[user]</b> lights [src] with [W]. Goddamn."))
 
 	process()
 		if (src.on)
@@ -95,40 +101,34 @@
 		..()
 
 	proc/light(var/mob/user)
-		if (!src) return
-		if (burnt) return
-		if (!src.on)
-			logTheThing(LOG_COMBAT, user, "lights the [src] at [log_loc(src)].")
-			src.on = 1
-			src.hit_type = DAMAGE_BURN
-			src.force = 3
-			src.icon_state = "unmelted-lit"
-			light.enable()
-			processing_items |= src
-			if(user)
-				user.update_inhands()
-				master = user
-		return
+		if (src.on)
+			return
+		logTheThing(LOG_COMBAT, user, "lights the [src] at [log_loc(src)].")
+		src.on = 1
+		src.hit_type = DAMAGE_BURN
+		src.force = 3
+		src.icon_state = "unmelted-lit"
+		light.enable()
+		processing_items |= src
+		src.UpdateIcon()
+		if(user)
+			user.update_inhands()
+			master = user
 
 	proc/put_out(var/mob/user = null)
-		if (!src) return
-		if (src.on)
-			src.on = 0
-			src.hit_type = DAMAGE_BLUNT
-			src.force = 0
-			switch(burn_state)
-				if(0)
-					src.icon_state = "unmelted-unlit"
-				if(1)
-					src.icon_state = "smelted-unlit"
-				if(2)
-					src.icon_state = "melted-unlit"
-			src.burnt = TRUE
-			light.disable()
-			processing_items -= src
-			if(user)
-				user.update_inhands()
-		return
+		src.visible_message(SPAN_NOTICE("[src] crumbles to dust as the flame goes out."))
+		new /obj/decal/cleanable/ash(get_turf(src))
+		qdel(src)
+
+	update_icon(...)
+		var/image/eye_overlay = null
+		if (!src.on)
+			return
+		if (uses >= 2)
+			eye_overlay = image(src.icon, "eyes")
+		else if (uses >= 1)
+			eye_overlay = image(src.icon, "eye")
+		src.UpdateOverlays(eye_overlay, "eye_overlay")
 
 /obj/decal/wraith_shadow
 	name = "dark shadow"

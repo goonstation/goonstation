@@ -57,6 +57,11 @@
 		. = alert.choice
 		qdel(alert)
 
+// |GOONSTATION-ADD| TGUI confirmation window proc to simplify alerts to confirm actions
+/proc/tgui_confirm(mob/user, message)
+	var/input = tgui_alert(user, message, "Confirm Action",list("Yes", "No"))
+	return (input == "Yes")
+
 /**
  * # tgui_modal
  *
@@ -113,7 +118,7 @@
  * the window was closed by the user.
  */
 /datum/tgui_modal/proc/wait()
-	UNTIL(choice || closed || QDELETED(src))
+	UNTIL(choice || closed || QDELETED(src), 0)
 
 /datum/tgui_modal/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
@@ -142,7 +147,6 @@
 		// |GOONSTATION-ADD| all below
 		"content_window" = content_window,
 		"theme" = theme,
-		"cdn" = cdn,
 		"cant_interact" = cant_interact
 	)
 

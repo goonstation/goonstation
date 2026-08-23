@@ -25,7 +25,7 @@ if grep -P 'step_[xy]' assets/maps/**/*.dmm maps/**/*.dmm;	then
     st=1
 fi;
 
-if grep -P '^\/area(?!\/dmm_suite\/clear_area)' assets/maps/random_rooms/**/*.dmm; then
+if grep -R --exclude-dir=probstation -P '^\/area(?!\/dmm_suite\/clear_area)' assets/maps/random_rooms/; then
     echo "ERROR: random room uses non '/area/dmm_suite/clear' area"
     st=1
 fi;
@@ -71,6 +71,11 @@ fi;
 if grep -P 'as anything in o?(range|hearers)' */**/*.dm;	then
     echo "ERROR: Don't include 'as anything' before o?range|hearers, it disables optimizations."
     st=1
+fi;
+
+if grep -P "(?<!UNLINT\().*name = .*\"\[.*\]'s" */**/*.dm;    then
+	echo "ERROR: Using an apostrophe in a name like [mob]'s brain may cause Byond to get confused between the two objects in click verbs etc. Please use ’ (U+2019) instead."
+	st=1
 fi;
 
 exit $st

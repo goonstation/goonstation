@@ -18,3 +18,7 @@
 
 //human voice stuff
 #define RANDOM_HUMAN_VOICE pick("1", "2", "3", "4")
+
+#define PREFERRED_UPLINK_PDA "PDA"
+#define PREFERRED_UPLINK_RADIO "Radio"
+#define PREFERRED_UPLINK_STANDALONE "Standalone"

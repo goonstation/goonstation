@@ -1,6 +1,5 @@
 /mob/living/critter/robotic/gunbot/meleebot
 	name = "Syndicate CQC Unit"
-	real_name = "Syndicate CQC Unit"
 	icon_state = "clawbot"
 	base_icon_state = "clawbot"
 	desc = "A security robot specially designed for close quarters combat. Prone to overheating.."
@@ -71,7 +70,7 @@
 
 		HH = hands[3]
 		HH.limb = new /datum/limb/small_critter/strong
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "gunbothand"
 		HH.limb_name = "gunbot hands"

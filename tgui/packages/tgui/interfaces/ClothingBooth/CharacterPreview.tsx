@@ -21,11 +21,7 @@ const PreviewImage = (props: PreviewImageProps) => {
   const DEFAULT_PREVIEW_HEIGHT = 64;
   const { height = DEFAULT_PREVIEW_HEIGHT, icon } = props;
   return (
-    <Image
-      pixelated
-      height={`${height * 2}px`}
-      src={`data:image/png;base64,${icon}`}
-    />
+    <Image height={`${height * 2}px`} src={`data:image/png;base64,${icon}`} />
   );
 };
 

@@ -141,7 +141,7 @@
 		if(tube)
 			inUse = TRUE
 			user.set_loc(src)
-			user.override_movement_controller = src.movement_controller
+			user.add_movement_controller(src.movement_controller)
 			user.pixel_y = -8
 			boutput(user, SPAN_HINT("<b>Press Q or E to exit targeting.</b>"))
 			vis_contents += user
@@ -187,7 +187,7 @@
 			if(controller.client && targeter)
 				controller.client.images -= targeter.trgImage
 				controller.client.eye = controller
-			controller.override_movement_controller = null
+			controller.remove_movement_controller(src.movement_controller)
 			controller = null
 			inUse = FALSE
 		return
@@ -484,9 +484,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/torpedo_tube, proc/launch)
 		changeIcon()
 
 	attackby(var/obj/item/I, var/mob/user)
-		if(loaded) return loaded.Attackby(I, user)
-		else return ..()
+		if(loaded)
+			loaded.Attackby(I, user)
+		return ..()
 
+	bullet_act(obj/projectile/P)
+		if(src.loaded)
+			return src.loaded.bullet_act(P)
+		return ..()
 	proc/add(var/obj/torpedo/T)
 		if(loaded) return
 		if(!can_act(usr) || !can_reach(usr, src) || !can_reach(usr, T)) return
@@ -634,10 +639,22 @@ ADMIN_INTERACT_PROCS(/obj/machinery/torpedo_tube, proc/launch)
 		logTheThing(LOG_DIARY, user, " hits [src] with [I] at [log_loc(user)]", "combat")
 		dmg += I.force
 		if(dmg >= dmg_threshold)
-			logTheThing(LOG_COMBAT, user, " caused [src] to detonate at [log_loc(user)]")
-			logTheThing(LOG_DIARY, user, " caused [src] to detonate at [log_loc(user)]", "combat")
+			logTheThing(LOG_COMBAT, user, " caused [src] to launch at [log_loc(user)]")
+			logTheThing(LOG_DIARY, user, " caused [src] to launch at [log_loc(user)]", "combat")
 			breakLaunch()
 		return
+
+	bullet_act(obj/projectile/P)
+		. = ..()
+		if (QDELETED(src))
+			return
+
+		src.dmg += P.power
+		if (src.dmg >= src.dmg_threshold)
+			logTheThing(LOG_COMBAT, null, "\A [P] caused [src] to launch at [log_loc(src)]")
+			src.breakLaunch()
+
+
 
 	proc/changeIcon()
 		icon_state = (fired ? icon_state_fired : icon_state_off_tray)

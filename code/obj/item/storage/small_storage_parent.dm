@@ -2,6 +2,7 @@
 // haine wuz here and tore this file to bits!!!  f u we can have things in their own files and we SHOULD
 // rather than EVERYTHING BEING IN HALLOWEEN.DM AND KEELINSSTUFF.DM OKAY THINGS CAN BE IN OTHER FILES
 
+////TYPEINFO: THIS HAS A TYPEINFO ALREADY IN ATOM.DM, GO READ THERE FOR WHY
 /obj/item/storage
 	name = "storage"
 	icon = 'icons/obj/items/storage.dmi'
@@ -12,7 +13,7 @@
 	var/list/can_hold = null
 	var/list/can_hold_exact = null
 	var/list/prevent_holding = null
-	var/check_wclass = 0
+	var/check_wclass = STORAGE_CHECK_W_CLASS_IGNORE
 	var/datum/hud/storage/hud
 	var/sneaky = 0
 	var/stealthy_storage = FALSE
@@ -23,7 +24,6 @@
 	move_triggered = 1
 	flags = TABLEPASS | NOSPLASH
 	w_class = W_CLASS_NORMAL
-	mechanics_interaction = MECHANICS_INTERACTION_SKIP_IF_FAIL
 
 		//cogwerks - burn vars
 	burn_point = 2500
@@ -61,8 +61,10 @@
 	icon_state = "box"
 	desc = "A box that can hold a number of small items."
 	max_wclass = W_CLASS_SMALL
+	soundproofing = SOUNDPROOFING_MUTE
 
 /obj/item/storage/box/starter // the one you get in your backpack
+	name = "emergency box"
 	icon_state = "emergbox"
 	spawn_contents = list(/obj/item/clothing/mask/breath, /obj/item/tank/pocket/oxygen)
 	make_my_stuff(onlyMaskAndOxygen)
@@ -86,6 +88,17 @@
 	make_my_stuff()
 		..(TRUE)
 
+/obj/item/storage/box/starternt
+	name = "nanotrasen emergency kit"
+	icon_state = "ntebox"
+	desc = "A specialized NT emergency kit, containing all you should need to survive during a crisis. Even includes a mandatory ceremonial beret! How optimistic."
+	spawn_contents = list(/obj/item/clothing/mask/breath, /obj/item/tank/pocket/extended/oxygen, /obj/item/clothing/head/NTberet, /obj/item/crowbar)
+
+#ifdef MAP_OVERRIDE_NADIR //guarantee protective gear
+	make_my_stuff()
+		src.storage.add_contents(new /obj/item/clothing/head/emerg(src))
+		src.storage.add_contents(new /obj/item/emergencysuitfolded(src))
+#endif
 /obj/item/storage/pill_bottle
 	name = "pill bottle"
 	icon_state = "pill_canister"
@@ -147,7 +160,7 @@
 			boutput(user, SPAN_ALERT("[src] is empty!"))
 			return FALSE
 		// clumsy and braindamaged people have a chance to consume multiple pills and spill the rest onto the floor.
-		if(contents.len > 1 && ((user.bioHolder && user.bioHolder.HasEffect("clumsy")) || user.get_brain_damage() > 40) && prob(20))
+		if(contents.len > 1 && ((user.bioHolder && user.bioHolder.HasEffect("clumsy")) || user.get_brain_damage() > BRAIN_DAMAGE_MODERATE) && prob(20))
 			playsound(src.loc, 'sound/effects/pop_pills.ogg', rand(10,50), 1) //range taken from drinking/eating
 			user.visible_message(SPAN_NOTICE("[user] throws the contents of [src] at their own face!"),
 								null, SPAN_NOTICE("Someone pops some pills."))
@@ -258,7 +271,6 @@
 	icon_state = "briefcase_rd"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "rd-case"
-	max_wclass = W_CLASS_BULKY// parity with secure briefcase
 	desc = "A large briefcase for experimental toxins research."
 	spawn_contents = list(/obj/item/raw_material/molitz_beta = 2, /obj/item/paper/hellburn)
 

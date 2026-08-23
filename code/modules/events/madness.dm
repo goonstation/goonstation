@@ -1,20 +1,13 @@
+#ifdef MAP_OVERRIDE_NEON //no, you can't have seamonsters on cogmap!
 //Lovingly Adapted from sleeper agent code
 /datum/random_event/major/antag/madness
-	name = "Megafauna Madness"
-#ifdef MAP_OVERRIDE_NEON
+	name = "Broken Madness"
 	disabled = FALSE
-#else
-	disabled = TRUE
-#endif
 	customization_available = TRUE
 	var/num_victims = 0
 
 	admin_call(source)
 		. = ..()
-#ifndef MAP_OVERRIDE_NEON
-		boutput(usr, "The map is not Neon, aborting.")
-		UNLINT(return)
-#endif
 		src.num_victims = input(usr, "How many minds to break?", src.name, 0) as num|null
 		if (isnull(src.num_victims))
 			return
@@ -27,6 +20,7 @@
 	event_effect(source)
 		set waitfor = FALSE
 		. = ..()
+		src.disabled = TRUE
 
 		src.sound_event()
 
@@ -62,13 +56,13 @@
 
 		src.sound_event()
 
-		if (prob(80)) //sometimes all the paranoia was for nothing...
+		if (prob(95)) //sometimes all the paranoia was for nothing...
 			src.cause_madness(source)
 		else
 			message_admins("[src.name] was just a scare, no madness caused.")
 
 		var/start_time = TIME
-		while (TIME - start_time < 4 MINUTES)
+		while (TIME - start_time < 10 MINUTES)
 			sleep(rand(20, 60) SECONDS)
 			src.sound_event()
 		animate(monster, alpha = 0, time = 10 SECONDS)
@@ -78,6 +72,8 @@
 	proc/cause_madness(source)
 		var/list/potential_victims = list()
 		for (var/mob/living/carbon/human/H in global.mobs)
+			if (get_z(H) != Z_LEVEL_STATION)
+				continue
 			if (H.client && !H.mind?.is_antagonist() && !isVRghost(H) && H.client.preferences.be_misc && isalive(H)) //using "misc" prefs for now
 				potential_victims += H
 		if (src.num_victims <= 0)
@@ -88,9 +84,21 @@
 		src.num_victims = min(src.num_victims, length(potential_victims))
 		//frick u static
 		/datum/antagonist/broken::shared_objective_text = null
+		var/list/actual_victims = list()
 		for (var/i in 1 to src.num_victims)
-			var/mob/living/carbon/human/victim = pick(potential_victims)
-			victim.mind.add_antagonist(ROLE_BROKEN)
+			actual_victims += pick(potential_victims)
+
+		for (var/mob/living/carbon/human/victim in actual_victims)
+			if (!/datum/antagonist/broken::shared_objective_text)
+				var/objective_type = pick(concrete_typesof(/datum/objective/madness))
+				var/datum/objective/madness/objective = new objective_type(null, victim.mind)
+				objective.set_up_from_victims(actual_victims)
+				/datum/antagonist/broken::shared_objective_text = objective.explanation_text
+			else
+				var/datum/objective/specialist/objective = new(null, victim.mind)
+				objective.explanation_text = /datum/antagonist/broken::shared_objective_text
+			//we're handling objectives manually above so that we can pass the list of victims
+			victim.mind.add_antagonist(ROLE_BROKEN, do_objectives = FALSE)
 			message_admins("[key_name(victim)] surrendered to madness and became a broken antagonist. Source: [source ? "[source]" : "random event"]")
 			logTheThing(LOG_ADMIN, victim, "surrendered to madness and became a broken antagonist. Source: [source ? "[source]" : "random event"]")
 			potential_victims -= victim
@@ -135,6 +143,7 @@
 	cleanup()
 		src.num_victims = 0
 
+#endif
 /atom/movable/seamonster_overlay
 	icon = 'icons/misc/1024x1024.dmi'
 	icon_state = "seamonster1"

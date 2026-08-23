@@ -2,7 +2,7 @@
 	set category = "AI Commands"
 	set name = "Call Emergency Shuttle"
 
-	var/call_reason = tgui_input_text(usr, "Please state the nature of your current emergency.", "Emergency Shuttle Call Reason", allowEmpty = TRUE)
+	var/call_reason = strip_html(tgui_input_text(usr, "Please state the nature of your current emergency.", "Emergency Shuttle Call Reason", allowEmpty = TRUE))
 
 	if (isnull(call_reason)) // Cancel
 		return
@@ -10,7 +10,11 @@
 		boutput(usr, "You can't call the shuttle because you are dead!")
 		return
 	if(get_z(src) != Z_LEVEL_STATION)
-		src.show_text("Your mainframe was unable relay this command that far away!", "red")
+		src.show_text("Your mainframe was unable to relay this command that far away!", "red")
+		return
+
+	if(check_for_radio_jammers(src))
+		src.show_text("Your mainframe's communications array is currently being jammed!", "red")
 		return
 
 	if (emergency_shuttle.online)
@@ -48,7 +52,7 @@
 	logTheThing(LOG_STATION, null, "[key_name(user)] called the Emergency Shuttle to the station")
 
 	emergency_shuttle.incall()
-	command_announcement(call_reason + "<br><b>[SPAN_ALERT("It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")]</b>", "The Emergency Shuttle Has Been Called", css_class = "notice")
+	command_announcement(call_reason + "<br><b>[SPAN_ALERT("It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.")]</b>", "The Emergency Shuttle Has Been Called", alert_origin=ALERT_COMMAND)
 	return 0
 
 /proc/cancel_call_proc(var/mob/user)
@@ -63,7 +67,7 @@
 		boutput(user, SPAN_ALERT("Severe signal interference is preventing contact with the Emergency Shuttle."))
 		return 1
 
-	boutput(world, SPAN_NOTICE("<B>Alert: The shuttle is going back!</B>")) //marker4
+	command_announcement("<b>[SPAN_ALERT("Alert: The shuttle is going back!")]</b>", "Emergency Shuttle Recall", alert_origin=ALERT_COMMAND)
 
 	logTheThing(LOG_STATION, user, "recalled the Emergency Shuttle")
 	message_admins(SPAN_INTERNAL("[key_name(user)] recalled the Emergency Shuttle"))

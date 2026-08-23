@@ -1,6 +1,7 @@
 /obj/railing
 	name = "railing"
 	desc = "Two sets of bars shooting onward with the sole goal of blocking you off. They can't stop you from vaulting over them though!"
+	HELP_MESSAGE_OVERRIDE("")
 	anchored = ANCHORED
 	density = 1
 	icon = 'icons/obj/objects.dmi'
@@ -13,6 +14,7 @@
 	dir = SOUTH
 	custom_suicide = 1
 	material_amt = 0.1
+	provides_grip = TRUE
 	var/broken = 0
 	var/is_reinforced = 0
 	var/can_reinforce = TRUE
@@ -58,6 +60,16 @@
 				R.setMaterial(M)
 		qdel(src)
 
+	get_help_message(dist, mob/user)
+		. = ..()
+		if (src.broken)
+			. += "You can use a <b>welding tool</b> to remove this broken railing."
+		else
+			if (src.is_reinforced)
+				. += "You can use <b>wirecutters</b> to remove the reinforcement from this railing, or a <b>welding tool</b> to deconstruct it."
+			else
+				. += "You can use <b>metal rods</b> to reinforce this railing, or a <b>welding tool</b> to deconstruct it."
+
 	ex_act(severity)
 		switch(severity)
 			if(1)
@@ -87,6 +99,8 @@
 		..()
 		if(src.is_reinforced)
 			src.flags |= FLUID_DENSE
+		if(src.broken) // Map varedit broken
+			src.railing_break(src)
 		layerify()
 
 	Turn()
@@ -100,6 +114,9 @@
 			return 1
 		if (O.throwing)
 			return 1
+		if (istype(src, /obj/railing/boxing))
+			if (src.dir == SOUTH) // incase you chairflip yourself next to an entrance rope
+				return 0
 		if (src.dir & get_dir(loc, O))
 			return !density
 		return 1
@@ -117,6 +134,8 @@
 		UNCROSS_BUMP_CHECK(O)
 
 	attackby(obj/item/W as obj, mob/user)
+		if (istype(src, /obj/railing/boxing))
+			return
 		if (isweldingtool(W))
 			if(W:try_weld(user, 1))
 				actions.start(new /datum/action/bar/icon/railing_tool_interact(user, src, W, RAILING_DISASSEMBLE, 3 SECONDS), user)
@@ -142,6 +161,11 @@
 					R.setMaterial(M)
 			else
 				user.show_text("There's no reinforcment on [src] to cut off!", "blue")
+		else if (ispryingtool(W))
+			if(src.anchored)
+				boutput(user, SPAN_NOTICE("\The [src] must be unfastened to rotate!"))
+			else
+				src.set_dir(turn(src.dir, -90))
 		else if (istype(W,/obj/item/rods))
 			if(!src.is_reinforced && can_reinforce)
 				var/obj/item/rods/R = W
@@ -251,7 +275,7 @@
 
 	New(The_Owner, The_Railing, use_owner_dir = FALSE)
 		..()
-		collision_whitelist = typesof(/obj/railing, /obj/decal/stage_edge, /obj/sec_tape)
+		collision_whitelist = typesof(/obj/railing, /obj/decal/stage_edge, /obj/sec_tape,)
 		if (The_Owner)
 			owner = The_Owner
 			ownerMob = The_Owner

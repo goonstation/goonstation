@@ -45,6 +45,10 @@ ABSTRACT_TYPE(/datum/antagonist)
 	var/popup_name_override
 	/// Set when the antagonist is in the process of being removed, to prevent double removals.
 	var/removing = FALSE
+	/// Link to this antagonist's wiki page
+	var/wiki_link = null
+	/// Saved value of `do_equip` so we know if this antag was spawned with gear
+	var/did_equip = FALSE
 
 	New(datum/mind/new_owner, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup)
 		. = ..()
@@ -104,7 +108,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 			if (isnull(antagonists["[src.id]"]))
 				antagonists -= "[src.id]"
 
-			owner.former_antagonist_roles.Add(owner.special_role)
+			owner.former_antagonist_roles.Add(src.id)
 			owner.special_role = null // this isn't ideal, since the system should support multiple antagonists. once special_role is worked around, this won't be an issue
 			if (src.assigned_by == ANTAGONIST_SOURCE_ADMIN)
 				ticker.mode.Agimmicks.Remove(src.owner)
@@ -153,6 +157,12 @@ ABSTRACT_TYPE(/datum/antagonist)
 			if (!src.owner.assigned_role)
 				message_admins("Antagonist datum of type [src.type] failed to properly late setup after 60 seconds. Report this to a coder.")
 
+		if (do_objectives)
+			src.assign_objectives()
+			if (!src.silent)
+				src.announce_objectives()
+
+		src.did_equip = do_equip
 		if (do_equip)
 			src.give_equipment()
 			if (!src.uses_pref_name)
@@ -171,11 +181,6 @@ ABSTRACT_TYPE(/datum/antagonist)
 		if (!src.silent)
 			src.announce()
 			src.do_popup()
-
-		if (do_objectives)
-			src.assign_objectives()
-			if (!src.silent)
-				src.announce_objectives()
 
 		if (do_relocate)
 			src.relocate()

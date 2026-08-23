@@ -8,9 +8,11 @@
 	- Blob men
 */
 /////////////// Transposed scientist ////////////////
+TYPEINFO(/mob/living/critter/crunched)
+	start_speech_modifiers = list(SPEECH_MODIFIER_MOB_MODIFIERS, SPEECH_MODIFIER_ACCENT_VOID)
+
 /mob/living/critter/crunched
 	name = "transposed scientist"
-	real_name = "transposed scientist"
 	desc = "A fellow who seems to have been shunted between dimensions. Not a good state to be in."
 	icon = 'icons/mob/critter/humanoid/crunched.dmi'
 	icon_state = "crunched"
@@ -24,7 +26,6 @@
 	health_brute_vuln = 1
 	health_burn = 25
 	health_burn_vuln = 1
-	speech_void = 1
 	faction = list(FACTION_DERELICT)
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 3
@@ -91,8 +92,11 @@
 
 ////////// Transposed limb ///////////
 /datum/limb/transposed
+	var/limb_cd = 3 SECONDS
+	var/dmg_sound = 'sound/impact_sounds/burn_sizzle.ogg'
+	var/action = "grab"
+
 	help(mob/target, var/mob/living/user)
-		..()
 		harm(target, user, 0)
 
 	harm(mob/target, var/mob/living/user)
@@ -101,18 +105,19 @@
 
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 5, 15, 0, can_punch = FALSE, can_kick = FALSE)
 		user.attack_effects(target, user.zone_sel?.selecting)
-		var/action = "grab"
 		msgs.base_attack_message = SPAN_ALERT("<b>[user] [action]s [target] with [src.holder]!</b>")
-		msgs.played_sound = 'sound/impact_sounds/burn_sizzle.ogg'
+		msgs.played_sound = src.dmg_sound
 		msgs.damage_type = DAMAGE_BURN
 		msgs.flush(SUPPRESS_LOGS)
 		user.lastattacked = get_weakref(target)
-		ON_COOLDOWN(src, "limb_cooldown", 3 SECONDS)
+		ON_COOLDOWN(src, "limb_cooldown", limb_cd)
 
 ////////////// Shades ////////////////
+TYPEINFO(/mob/living/critter/shade)
+	start_speech_modifiers = list(SPEECH_MODIFIER_MOB_MODIFIERS, SPEECH_MODIFIER_ACCENT_VOID)
+
 /mob/living/critter/shade
 	name = "darkness"
-	real_name = "darkness"
 	desc = "Oh god."
 	icon = 'icons/mob/critter/humanoid/shade.dmi'
 	icon_state = "shade"
@@ -127,13 +132,13 @@
 	health_brute_vuln = 0.5
 	health_burn = 10
 	health_burn_vuln = 0
-	speech_void = 1
 	faction = list(FACTION_DERELICT)
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
 	ai_type = /datum/aiHolder/aggressive
 	is_npc = TRUE
+	voice_sound_override = list('sound/voice/creepywhisper_1.ogg', 'sound/voice/creepywhisper_2.ogg', 'sound/voice/creepywhisper_3.ogg')
 
 	setup_hands()
 		..()
@@ -161,10 +166,10 @@
 
 		if (src.ai?.enabled && prob(5))
 			if (src.ai.current_task == "wandering")
-				src.speak(pick("namlugallu ha-lam ina lugal-šaà-lá-sù...","ù da-rí-sè šeš...","á-e-me-en ìri-zé-er igi-bad!","inim...kí ina ki-dul, ina e-ùr, ina ki-bad-rá, hé-àm-me-àm...", "ìri-kúr...díb, ìri...ar, e-zé...", "galam, gamar ganzer, gíbil píri! ul, ul! súkud..."))
+				src.say(pick("namlugallu ha-lam ina lugal-šaà-lá-sù...","ù da-rí-sè šeš...","á-e-me-en ìri-zé-er igi-bad!","inim...kí ina ki-dul, ina e-ùr, ina ki-bad-rá, hé-àm-me-àm...", "ìri-kúr...díb, ìri...ar, e-zé...", "galam, gamar ganzer, gíbil píri! ul, ul! súkud..."))
 				// mankind destroyed the merciful king // sleep forever, brethren // i am one who lost my footing and opened my eyes // to seek or find the right words, the armor, the secret point, the distant places, that is our wish // to ascend, overwhelming darkness, burning bright! shine! shine! shine brightly!
 			else if (prob(50))
-				src.speak(pick("ina urudu e-re-sì-ki-in kala libir arza ina SÚKUD ZAL.", "i.menden ina nam-ab-ba issa, nam-nu-tar  nam-diir, i.menden lúní-áa...","bar...gub ina bàd-šul-hi...","šidim ak ina libir išgal, diir ak ina agrun, ul-šár-ra, zà-mí!", "ùru pàd gíg, ina gidim niin!"))
+				src.say(pick("ina urudu e-re-sì-ki-in kala libir arza ina SÚKUD ZAL.", "i.menden ina nam-ab-ba issa, nam-nu-tar  nam-diir, i.menden lúní-áa...","bar...gub ina bàd-šul-hi...","šidim ak ina libir išgal, diir ak ina agrun, ul-šár-ra, zà-mí!", "ùru pàd gíg, ina gidim niin!"))
 				// the copper servant mends the rights of the FLASH OF DAWN // we are the elder shades, ill-fated divinities, we are the temple servants..., step outside the outer wall
 				// architect of the ancient throne, god of the inner sanctuary, jubilation, praise! // watchfire reveals night, the darkened monstrosity
 
@@ -175,16 +180,16 @@
 	proc/chase_lines(var/mob/target)
 		if(!ON_COOLDOWN(src, "chase_talk", 10 SECONDS))
 			if (target.lying || is_incapacitated(target))
-				src.speak(pick("me-àm ina men-an-uras-a?", "e-zé ina gu-sum... e-zé ina gú-ri-ta!", "e-zé ní-gig, e-zé ní-dím-dím-ma, e-zé šu...bar ina libir lugar!", "namlugallu-zu-ne-ne inim-dirig, namgallu-zu-ne-ne inim-búr-ra, izi te-en ina an!", "ri azag, ri azag, ri azag, ri érim, ri e-zé!", "e-zé, érim diir-da...nu-me-a."))
+				src.say(pick("me-àm ina men-an-uras-a?", "e-zé ina gu-sum... e-zé ina gú-ri-ta!", "e-zé ní-gig, e-zé ní-dím-dím-ma, e-zé šu...bar ina libir lugar!", "namlugallu-zu-ne-ne inim-dirig, namgallu-zu-ne-ne inim-búr-ra, izi te-en ina an!", "ri azag, ri azag, ri azag, ri érim, ri e-zé!", "e-zé, érim diir-da...nu-me-a."))
 				// where is the crown of heaven and earth // you are from the writing... you are from the other side // you abominations, created creatures, you let loose the ancient king
 				// mankind's hubris, mankind's breach of treaty extinguished the heavens // banish the taboo, banish the taboo, banish you // you, enemy, without a god
 			else
-				src.speak(pick("an-zà, bar ina ká, ina ká! ina ká-bar-ra!", "hul-ál. lúír-lá-ene ina im-dugud-ene. n-ene. e-zé.", "ki-lul-la, ki-in-dar, é-a-nir-ra: urudu e-re-sì-ki-in ina úmun, en-nu-ùa-ak ina lúír-lá-ene", "lú-kúr-ra! lú-ní-zuh! lú-ru-gú!"))
+				src.say(pick("an-zà, bar ina ká, ina ká! ina ká-bar-ra!", "hul-ál. lúír-lá-ene ina im-dugud-ene. n-ene. e-zé.", "ki-lul-la, ki-in-dar, é-a-nir-ra: urudu e-re-sì-ki-in ina úmun, en-nu-ùa-ak ina lúír-lá-ene", "lú-kúr-ra! lú-ní-zuh! lú-ru-gú!"))
 				// where heaven ends, the gate, the gate! the outer door! // the evil ones, the butchers on the lumps of stone. humans. you. // in the place of murder, in the crevice, in the house of mourning: the copper servant formed of thought guards against the butchers //
 				// stranger! thief! recalcitrant one! // you don't exist, human!
 
 	death()
-		src.speak(pick("šìr...áa ina šìr-kug záh-bi!", "éd, èd, šu...bar...", "ní-nam-nu-kal...", "lugal-me taru, lugal-me galam!", "me-li-e-a..."))
+		src.say(pick("šìr...áa ina šìr-kug záh-bi!", "éd, èd, šu...bar...", "ní-nam-nu-kal...", "lugal-me taru, lugal-me galam!", "me-li-e-a..."))
 		..()
 		// sing the sacred song to the bitter end // go out, exit, release // nothing is precious // our king will return, our king will ascend // woe is me
 		SPAWN(1.5 SECONDS)
@@ -198,12 +203,135 @@
 		. = ..()
 
 		if (length(.) && prob(5))
-			src.speak(pick("siskur, siskur ina na sukkal...","ára ina gíg, úš ina ur zal...","lú-érim! lú-érim!","áš á-zi-ga...bal, na, e-zé ha-lam ina é si-ga..."))
+			src.say(pick("siskur, siskur ina na sukkal...","ára ina gíg, úš ina ur zal...","lú-érim! lú-érim!","áš á-zi-ga...bal, na, e-zé ha-lam ina é si-ga..."))
 			// sacrifice, sacrifice the human envoy! // praise the night, kill the servant of light // enemy! enemy! // cursed with violence, human, you ruin the quiet house
 
-	proc/speak(var/message)
-		src.say(message)
-		playsound(src.loc, pick('sound/voice/creepywhisper_1.ogg', 'sound/voice/creepywhisper_2.ogg', 'sound/voice/creepywhisper_3.ogg'), 50, 1)
+//menhir shade: in the realm of remembrance, behind a discolored locked door. entrance is inadvisable.
+/mob/living/critter/shade/lordly
+	name = "voice of grief"
+	desc = "They sing for us no longer."
+	health_brute = 600
+	base_move_delay = 1.3
+	base_walk_delay = 2
+	no_stamina_stuns = TRUE
+	can_bleed = FALSE
+	blood_id = "black_goop"
+	var/can_burst = TRUE
+
+	New() //we shall not falter
+		. = ..()
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_CANT_BE_PINNED, "theysing")
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_BODY, "theysing", 100)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_BODY_MAX, "theysing", 100)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "theysing", 100)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "theysing", 100)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "theysing", 100)
+
+	setup_hands() //you will be catching them
+		..()
+		var/datum/handHolder/HH = hands[1]
+		var/datum/limb/transposed/TL = HH.limb
+		TL.limb_cd = COMBAT_CLICK_DELAY
+		TL.dmg_sound = 'sound/impact_sounds/crunchy_sizzle.ogg'
+		TL.action = "strike"
+		HH = hands[2]
+		TL = HH.limb
+		TL.limb_cd = COMBAT_CLICK_DELAY
+		TL.dmg_sound = 'sound/impact_sounds/crunchy_sizzle.ogg'
+		TL.action = "strike"
+
+	critter_basic_attack(mob/target)
+		if (issilicon(target))
+			src.machine_breaker(target)
+			return TRUE
+		else
+			if(src.can_burst)
+				if(src.health < 100)
+					src.extinction_burst(target)
+				else if(prob(50) && !ON_COOLDOWN(src,"shade_wave",30 SECONDS))
+					src.great_dark()
+			return ..()
+
+	proc/machine_breaker(var/mob/living/silicon/silicon) //the machines do not serve us
+		if (isrobot(silicon) && !ON_COOLDOWN(src, "this_place_is_not_for_you", 30 SECONDS))
+			var/mob/living/silicon/robot/cyborg = silicon
+			src.visible_message(SPAN_ALERT("<B>[src] shatters [cyborg.name]'s head with a wave of force! Holy shit!</B>"))
+			playsound(src.loc, 'sound/weapons/energy/LightningCannon.ogg', 50, 1)
+			playsound(src.loc, 'sound/impact_sounds/locker_break.ogg', 70, 1)
+			cyborg.compborg_lose_limb(cyborg.part_head)
+		else
+			src.visible_message(SPAN_ALERT("<B>[src] smashes [silicon] with a wave of force!</B>"))
+			playsound(src.loc, 'sound/impact_sounds/metal_thump.ogg', 50, 1)
+			random_brute_damage(silicon, 15, 0)
+
+	proc/extinction_burst(var/mob/target)
+		if (!target) return
+		src.can_burst = FALSE
+		var/turf/makespot = get_turf(target)
+		var/turf/possible_alternate = get_step(makespot,src.dir)
+		if (!possible_alternate.density) makespot = possible_alternate
+		SPAWN(2)
+			src.visible_message(SPAN_ALERT("<B>[src] fractures into two forms!</B>"))
+			playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 90, 1, pitch = 0.45)
+			new /mob/living/critter/shade/lordly/twinned(makespot)
+			var/half_of_remaining_hp = 0.5 * src.health
+			random_brute_damage(src,half_of_remaining_hp,FALSE)
+
+	proc/great_dark()
+		SPAWN(6)
+			src.visible_message(SPAN_ALERT("<B>A wave of shadow spills forth from [src]!</B>"))
+			new /obj/overlay/darkness_field(get_turf(src), 20 SECONDS, radius = 12)
+
+	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null) // good luck pinning it down
+		. = ..()
+		if(prob(80))
+			var/turf/mobloc = get_turf(M)
+			if(mobloc.z == src.z)
+				M.loc = get_turf(src)
+				var/turf/dest_loc = mobloc
+				if(prob(35))
+					var/turf/possible_alternate = get_step(src,pick(alldirs))
+					if(!possible_alternate.density) dest_loc = possible_alternate
+				src.loc = dest_loc
+				playsound(dest_loc, 'sound/effects/mag_golem.ogg', 18, 1, pitch = 0.7)
+
+	twinned
+		name = "voice of anguish"
+		desc = "A last rebuke."
+		health_brute = 50
+		can_burst = FALSE
+
+		death()
+			var/obj/item/chilly_orb/okfine = new /obj/item/chilly_orb(src.loc)
+			okfine.color = "#f78080"
+			okfine.name = "foreboding orb"
+			okfine.desc = "The cold seems to bite at the air around it. This should have been left undisturbed."
+			okfine.id = "SORROW"
+			. = ..()
+
+		chase_lines(var/mob/target)
+
+//menhir shade: appears only in the case of the invasion event. a bit unstable, can take burn damage
+/mob/living/critter/shade/invader
+	name = "voice of shadow"
+	layer = 3.85
+	health_burn_vuln = 0.1
+
+	examine()
+		src.desc = pick("Why do you defile the heavens?","This place was not for you.","Woe, that the butchers disturb our grieving sleep.")
+		. = ..()
+
+	critter_basic_attack(mob/target)
+		if (issilicon(target))
+			machine_strike(target)
+			return TRUE
+		else
+			return ..()
+
+	proc/machine_strike(var/mob/living/silicon/silicon) //the machines do not serve us
+		src.visible_message(SPAN_ALERT("<B>[src] strikes [silicon] with a wave of force!</B>"))
+		playsound(src.loc, 'sound/impact_sounds/metal_thump.ogg', 50, 1)
+		random_brute_damage(silicon, rand(5,15), 0)
 
 /mob/living/critter/shade/crew
 	name = "faded scientist"
@@ -269,9 +397,11 @@
 			return 1.5
 
 ////////////// Repair bots ////////////////
+TYPEINFO(/mob/living/critter/robotic/repairbot)
+	start_listen_languages = list(LANGUAGE_ENGLISH, LANGUAGE_SILICON, LANGUAGE_BINARY)
+
 /mob/living/critter/robotic/repairbot
 	name = "strange robot"
-	real_name = "strange robot"
 	desc = "It looks like some sort of floating repair bot or something?"
 	icon = 'icons/mob/critter/robotic/ancient/repairbot.dmi'
 	icon_state = "ancient_repairbot"
@@ -292,21 +422,17 @@
 	is_npc = TRUE
 	death_text = "%src% blows apart!"
 	custom_gib_handler = /proc/robogibs
-	say_language = "binary"
 	voice_name = "synthesized voice"
-	speechverb_say = "beeps"
-	speechverb_gasp = "chirps"
-	speechverb_stammer = "beeps"
-	speechverb_exclaim = "beeps"
-	speechverb_ask = "beeps"
+
+	speech_verb_say = "beeps"
+	speech_verb_gasp = "chirps"
+	speech_verb_stammer = "beeps"
+	speech_verb_exclaim = "beeps"
+	speech_verb_ask = "beeps"
+	say_language = LANGUAGE_BINARY
 
 	nice
 		ai_type = /datum/aiHolder/wanderer
-
-	understands_language(var/langname)
-		if (langname == say_language || langname == "silicon" || langname == "binary" || langname == "english")
-			return TRUE
-		return FALSE
 
 	New()
 		..()
@@ -314,12 +440,6 @@
 		src.real_name = src.name
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION, src)
-
-	process_language(var/message)
-		var/datum/language/L = languages.language_cache[say_language]
-		if (!L)
-			L = languages.language_cache["english"]
-		return L.get_messages(message, (1 - health / max_health) * 16)
 
 	death(var/gibbed)
 		elecflash(src, power = 3)
@@ -352,7 +472,7 @@
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/arcflash
 		HH.name = "Electric Intruder Countermeasure"
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handzap"
 		HH.limb_name = "Electric Intruder Countermeasure"
 		HH.can_hold_items = FALSE
@@ -386,7 +506,6 @@
 
 /mob/living/critter/robotic/repairbot/security
 	name = "strange robot"
-	real_name = "strange robot"
 	desc = "A Security Robot, something seems a bit off."
 	icon_state = "ancient_guardbot"
 	health_brute = 15
@@ -396,7 +515,6 @@
 
 /mob/living/critter/robotic/repairbot/helldrone
 	name = "weird machine"
-	real_name = "strange robot"
 	desc = "A machine, of some sort. It's probably off."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "drone_service_bot_off"
@@ -436,7 +554,6 @@
 ////////////// Town guards ////////////////
 /mob/living/critter/townguard
 	name = "town guard"
-	real_name = "town guard"
 	desc = "An angry man dressed in medieval armor."
 	icon = 'icons/mob/critter/humanoid/town_guard.dmi'
 	icon_state = "townguard"
@@ -500,7 +617,7 @@
 		HH.limb_name = "left arm"
 
 		HH = hands[2]
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.limb = new /datum/limb/sword
 		HH.name = "right hand"
 		HH.suffix = "-R"
@@ -544,7 +661,6 @@
 ////////////// Blobman ////////////////
 /mob/living/critter/blobman
 	name = "mutant"
-	real_name = "mutant"
 	desc = "Some sort of horrific, pulsating blob of flesh."
 	icon_state = "blobman"
 	icon_state_dead = "blobman-dead"
@@ -586,13 +702,14 @@
 			return TRUE
 
 /mob/living/critter/blobman/meat
-	real_name = "meaty martha"
+	real_name = "meaty martha" //keeping this because it made me laugh. Overridden by New() anyway
 	death_text = null
 	ai_attacks_per_ability = 3
 
 	New()
 		..()
 		src.name = "[pick("grody", "clotty", "greasy", "meaty", "fleshy", "vile", "chunky", "putrid")] [pick("nugget", "bloblet", "pustule", "corpuscle", "viscera")]"
+		src.real_name = src.name
 		src.icon_state = pick("meaty_mouth", "polyp", "goop")
 
 	critter_ability_attack(var/target) // Kinda hacky

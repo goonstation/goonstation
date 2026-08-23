@@ -45,7 +45,7 @@ datum/mind
 	var/list/intrinsic_verbs = list()
 
 	var/handwriting = null
-	var/color = null
+	var/datum/forensic_id/color = null // What color this player smells like to pugs.
 
 	var/obj/item/organ/brain/brain
 
@@ -69,7 +69,8 @@ datum/mind
 			ckey = M.ckey
 			displayed_key = M.key
 			src.handwriting = pick(handwriting_styles)
-			src.color = pick_string("colors.txt", "colors")
+			var/color_string = pick_string("colors.txt", "colors")
+			src.color = register_id(color_string)
 			SEND_SIGNAL(src, COMSIG_MIND_ATTACH_TO_MOB, M)
 
 	proc/transfer_to(mob/new_character)
@@ -181,7 +182,10 @@ datum/mind
 	proc/get_player()
 		RETURN_TYPE(/datum/player)
 		if(ckey)
-			. = make_player(ckey)
+			. = find_player(ckey)
+			if (!.)
+				stack_trace("find_player for mind with ckey [ckey] returned null, making a new player datum. This probably shouldn't happen!")
+				. = make_player(ckey)
 
 	proc/store_memory(new_text)
 		memory += "[new_text]<BR>"
@@ -327,7 +331,7 @@ datum/mind
 		return FALSE
 
 	/// Attempts to remove existing antagonist datums of ID `role` from this mind, or if provided, a specific instance of an antagonist datum.
-	proc/remove_antagonist(role, source = null, take_gear = TRUE)
+	proc/remove_antagonist(role, source = null, take_gear = TRUE, set_dnr=FALSE)
 		var/datum/antagonist/antagonist_role
 		if (istype(role, /datum/antagonist))
 			antagonist_role = role
@@ -340,6 +344,8 @@ datum/mind
 
 		if (!antagonist_role)
 			return FALSE
+		if (set_dnr)
+			src.get_player()?.dnr = TRUE
 		if (antagonist_role.faction)
 			LAZYLISTREMOVE(antagonist_role.owner.current.faction, antagonist_role.faction)
 		antagonist_role.remove_self(take_gear, source)

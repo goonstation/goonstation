@@ -78,8 +78,10 @@
 	if (issimulatedturf(src))
 		var/turf/simulated/self = src
 		self.processing = TRUE
-		if(!self.parent)
+		if (!self.parent)
 			air_master.active_singletons[src] = null
+		if(self.parent?.group_processing)
+			self.parent.suspend_group_processing()
 	return hotspot
 
 // ABSTRACT_TYPE(/atom/movable/hotspot) // i dont feel like touching code outside of atmos oh well
@@ -100,6 +102,9 @@
 #endif
 	/// Volume to expose to other atoms. Also used while [/atom/movable/hotspot/var/bypassing] is FALSE to act on a volume of gas on our turf.
 	var/volume = 125
+	/// How much the volume of this hotspot is scaled by when affecting gas temperature
+	/// Importantly this is ONLY gas temperature and not other "expose" effects like objects being caught in the fire
+	var/atmos_heating_mult = 1
 	/// Our temperature.
 	var/temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
 	/// If we've just spawned then don't process yet, wait a cycle.
@@ -109,6 +114,12 @@
 	var/bypassing = FALSE
 	/// Are we allowed to pass the temperature limit for non-catalysed fires?
 	var/catalyst_active = FALSE
+
+	// minimum and maximum burning durations applied by the hotspot
+	var/min_status_duration = 30
+	var/max_status_duration = 55
+	// the temperature at which the maximum status duration will be applied
+	var/maximum_status_temp = 5000
 
 /atom/movable/hotspot/New(turf/newLoc, chemfire = null)
 	..()
@@ -149,7 +160,9 @@
 			src.temperature = location.air.temperature
 	else
 		bypassing = FALSE
-		var/datum/gas_mixture/affected = location.air.remove_ratio(src.volume/max((location.air.volume/5),1))
+		var/affected_volume = src.volume/max((location.air.volume/5),1)
+		affected_volume *= src.atmos_heating_mult
+		var/datum/gas_mixture/affected = location.air.remove_ratio(affected_volume)
 
 		affected.temperature = src.temperature
 		if( affected.react() & CATALYST_ACTIVE)
@@ -179,9 +192,7 @@
 	..()
 	A.temperature_expose(null, temperature, volume)
 	if (isliving(A))
-		var/mob/living/H = A
-		var/B = clamp(temperature - 100 / 550, 0, 55)
-		H.update_burning(B)
+		update_status_effect(A)
 
 /// Process fire survival, mob burning, hotspot exposure, and heat radiation.
 /atom/movable/hotspot/proc/process(list/turf/simulated/possible_spread)
@@ -198,12 +209,12 @@
 		qdel(src)
 		return FALSE
 
-	if (!location.air || location.air.toxins < 0.5 MOLES || location.air.oxygen < 0.5 MOLES)
+	if (is_atmosphere_unsuitable(location))
 		qdel(src)
 		return FALSE
 
 	for (var/mob/living/L in src.loc)
-		L.update_burning(clamp(temperature / 60, 5, 33))
+		update_status_effect(L)
 
 	src.perform_exposure()
 	if(src.catalyst_active)
@@ -252,6 +263,16 @@
 
 	return TRUE
 
+/// Applies relevant status effects to mobs when hotspot is stepped into or when a mob remains in it during a process() cycle.
+/// By default applies burning based on temperature.
+/atom/movable/hotspot/proc/update_status_effect(mob/living/target)
+	var/clamped_temp = clamp(temperature, FIRE_MINIMUM_TEMPERATURE_TO_EXIST, maximum_status_temp)
+	var/t = (clamped_temp - FIRE_MINIMUM_TEMPERATURE_TO_EXIST) / (maximum_status_temp - FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+	target.update_burning(lerp(min_status_duration, max_status_duration, t))
+
+/// Checks if the atmosphere on the tile is unsuitable for hotspot survival
+/atom/movable/hotspot/proc/is_atmosphere_unsuitable(turf/simulated/floor/location)
+	return (!location.air || location.air.toxins < 0.5 MOLES || location.air.oxygen < 0.5 MOLES)
 
 /atom/movable/hotspot/ex_act()
 	return
@@ -380,6 +401,8 @@
 	plane = PLANE_NOSHADOW_BELOW
 	layer = OBJ_LAYER - 0.2 // so that part of the fire appears behind objects. 0.2 to account for vending machine, etc layering
 	blend_mode = BLEND_DEFAULT
+	//chemical fires heat things up less than the air itself being on fire, this makes sense I think
+	atmos_heating_mult = 1/20
 
 	var/fire_color = CHEM_FIRE_RED
 
@@ -478,3 +501,7 @@
 			rgb = list(50, 50, 50)
 	src.add_medium_light("fire_lightup", list(65, 65, 65, 100))
 	src.add_medium_light("fire_color_highlight", list(rgb[1], rgb[2], rgb[3], 100))
+
+// Chemfires don't care about toxins in the atmosphere
+/atom/movable/hotspot/chemfire/is_atmosphere_unsuitable(turf/simulated/floor/location)
+	return (!location.air || location.air.oxygen < 0.5 MOLES)

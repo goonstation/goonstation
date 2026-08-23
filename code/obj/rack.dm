@@ -1,3 +1,5 @@
+TYPEINFO(/obj/rack)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SKIP_IF_FAIL
 /obj/rack
 	name = "rack"
 	icon = 'icons/obj/objects.dmi'
@@ -8,7 +10,6 @@
 	anchored = ANCHORED
 	desc = "A metal frame used to hold objects. Can be wrenched and made portable."
 	event_handler_flags = USE_FLUID_ENTER
-	mechanics_interaction = MECHANICS_INTERACTION_SKIP_IF_FAIL
 	material_amt = 0.1
 
 	proc/rackbreak()
@@ -69,7 +70,7 @@
 			user.visible_message(SPAN_NOTICE("[user] dumps out [S]'s contents onto [src]!"))
 			for (var/obj/item/thing in S.contents)
 				thing.set_loc(src.loc)
-			S.tooltip_rebuild = 1
+			S.tooltip_rebuild = TRUE
 			S.UpdateIcon()
 			return
 	if (isrobot(user) || user.equipped() != I || (I.cant_drop || I.cant_self_remove))
@@ -164,6 +165,7 @@
 	var/order_override = "" //! Force a specific organization layout
 	var/shuffle_chance = 1 //! Probability of the card order being shuffled
 #ifdef IN_MAP_EDITOR
+	icon = 'icons/obj/item_spawn.dmi'
 	icon_state = "rack_filled"
 #endif
 
@@ -233,10 +235,11 @@
 		/obj/item/circuitboard/powermonitor_smes,
 	)
 
-/// Includes the transception array board, for maps with transception cargo fulfillment
+/// Includes the transception array & control board, for maps with transception cargo fulfillment
 /obj/rack/organized/techstorage_eng/transception
 	New()
 		src.items_to_spawn += /obj/item/circuitboard/transception
+		src.items_to_spawn += /obj/item/circuitboard/transception_control
 		. = ..()
 
 /// Technical Storage circuit board rack for medical/science/misc
@@ -248,6 +251,7 @@
 		/obj/item/circuitboard/cloning,
 		/obj/item/circuitboard/genetics,
 		/obj/item/circuitboard/robot_module_rewriter,
+		/obj/item/circuitboard/robotics_lab,
 		/obj/item/circuitboard/chem_request,
 		/obj/item/circuitboard/chem_request_receiver,
 	)

@@ -1,8 +1,10 @@
 /datum/antagonist/broken
 	display_name = "broken"
 	id = ROLE_BROKEN
+	antagonist_icon = "broken"
 	remove_on_death = TRUE
 	remove_on_clone = TRUE //just to be sure
+	wiki_link = "https://wiki.ss13.co/Broken"
 	var/static/shared_objective_text = null
 
 /datum/antagonist/broken/announce()
@@ -12,10 +14,12 @@
 /datum/antagonist/broken/assign_objectives()
 	if (!src.shared_objective_text)
 		var/objective_type = pick(concrete_typesof(/datum/objective/madness))
-		var/datum/objective/objective = new objective_type(null, src.owner, src)
+		var/datum/objective/madness/objective = new objective_type(null, src.owner, src)
+		objective.set_up_from_victims(list(src.owner.current))
 		src.shared_objective_text = objective.explanation_text
 	else
 		new /datum/objective/specialist(src.shared_objective_text, src.owner, src)
+	logTheThing(LOG_GAMEMODE, src.owner.current, "gains the Broken objective \"[src.shared_objective_text]\"")
 
 /datum/antagonist/broken/give_equipment()
 	src.alt_equipment()

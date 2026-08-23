@@ -9,11 +9,11 @@ import { useState } from 'react';
 import { Button, LabeledList, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
+import { TankInfo } from '../../components/goonstation/TankInfo';
 import { Window } from '../../layouts';
-import { TankInfo } from '../TTV';
 
 // Returns whether the nth bit starting with 0 for the rightmost is set
-const is_set = (bits, bit) => {
+const is_set = (bits: number, bit: number) => {
   return bits & (1 << bit);
 };
 

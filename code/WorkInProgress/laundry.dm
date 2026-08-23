@@ -6,6 +6,7 @@
 #define CYCLE_TIME 10
 
 TYPEINFO(/obj/submachine/laundry_machine)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 20
 
 /obj/submachine/laundry_machine
@@ -34,6 +35,11 @@ TYPEINFO(/obj/submachine/laundry_machine)
 /obj/submachine/laundry_machine/New()
 	..()
 	src.UpdateIcon()
+	AddComponent(/datum/component/mechanics_holder)
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Toggle Door", PROC_REF(toggle_door))
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Open Door", PROC_REF(open_door))
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Close Door", PROC_REF(close_door))
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Start Cycle", PROC_REF(start_cycle))
 
 /obj/submachine/laundry_machine/disposing()
 	src.unload()
@@ -110,13 +116,22 @@ TYPEINFO(/obj/submachine/laundry_machine)
 						newcash.set_loc(src)
 					//Money laundering is a crime!
 					var/mob/living/carbon/human/criminal = src.activator
-					if (ishuman(criminal) && seen_by_camera(criminal))
-						var/perpname = criminal.name
-						var/datum/db_record/sec_record = data_core.security.find_record("name", perpname)
-						if(sec_record  && sec_record["criminal"] != ARREST_STATE_ARREST)
-							sec_record["criminal"] = ARREST_STATE_ARREST
-							sec_record["mi_crim"] = "Money laundering."
-							criminal.update_arrest_icon()
+					if(criminal)
+						criminal.apply_automated_arrest("Money laundering.")
+				else if (istype(item, /obj/item/organ/brain))
+					var/obj/item/organ/brain = item
+					// prevents re-washing, but IMPORTANTLY DOES NOT BREAK THE LAUNDRY MACHINE BY RETURNING
+					if (brain.icon_state != "brain2")
+						continue
+					brain.icon = 'icons/obj/items/organs/brain.dmi'
+					brain.icon_state = "smooth_brain"
+					// getting rid of all of those UNSIGHTLY wrinkles heals your brain!
+					brain.heal_damage(brain.brute_dam, brain.burn_dam, brain.tox_dam)
+					brain.changeStatus("freshly_laundered", INFINITE_STATUS)
+					// even if it's completely fucked up?
+					if (brain.broken)
+						brain.unbreakme()
+					brain.UpdateIcon()
 			src.activator = null
 			src.cycle = POST
 			src.cycle_current = 0
@@ -229,7 +244,7 @@ TYPEINFO(/obj/submachine/laundry_machine)
 	return 1
 
 /obj/submachine/laundry_machine/attackby(obj/item/W, mob/user)
-	if (istype(W))
+	if (istype(W) && !ispulsingtool(W))
 		if (!src.open)
 			src.visible_message("[user] tries to put [W] into [src], but [src]'s door is closed, so [he_or_she(user)] just smooshes [W] against the door.[prob(40) ? " What a doofus!" : null]")
 			return
@@ -243,7 +258,7 @@ TYPEINFO(/obj/submachine/laundry_machine)
 			src.visible_message("[user] tries [his_or_her(user)] best to put [W] into [src], but [W] is stuck to [him_or_her(user)]!")
 			return
 		else
-			if (istype(W, /obj/item/clothing) || istype(W, /obj/item/currency/spacecash) || istype(W, /obj/item/brick))
+			if (istype(W, /obj/item/clothing) || istype(W, /obj/item/currency/spacecash) || istype(W, /obj/item/brick) || istype(W, /obj/item/organ/brain))
 				user.u_equip(W)
 				W.set_loc(src)
 				src.visible_message("[user] puts [W] into [src].")
@@ -263,11 +278,27 @@ TYPEINFO(/obj/submachine/laundry_machine)
 			M.visible_message(SPAN_ALERT("<B>[M] gets tossed into the washing machine!</B>"))
 			logTheThing(LOG_COMBAT, M, "is thrown into a [src.name] at [log_loc(src)].")
 			M.set_loc(src)
+			M.changeStatus("knockdown", 1.5 SECONDS)
+			src.occupant = M
 			src.open = 0
+			src.cycle = PRE
+			cycle_max = CYCLE_TIME_MOB_INSIDE
+			if (!processing_items.Find(src))
+				processing_items.Add(src)
 			UpdateIcon()
 	else
 		return ..()
 
+/obj/submachine/laundry_machine/relaymove(mob/user as mob)
+	if (src.occupant == user && !src.on)
+		if (!can_act(user))
+			return
+		user.set_loc(src.loc)
+		src.occupant = null
+		src.open = 1
+		src.UpdateIcon()
+		cycle_max = CYCLE_TIME
+		playsound(src, 'sound/machines/click.ogg', 50)
 
 /obj/submachine/laundry_machine/attack_hand(mob/user)
 	if (!can_act(user))
@@ -339,27 +370,48 @@ TYPEINFO(/obj/submachine/laundry_machine)
 		return
 	switch(action)
 		if("door")
-			if (src.on)
+			if(src.on)
 				src.visible_message("[usr] tries to open [src]'s door, but [src] is running and the door is locked!")
 				return
-			else
-				src.open = !src.open
-				. = TRUE
-				src.visible_message("[usr] [src.open ? "opens" : "closes"] [src]'s door.")
-				if (src.open)
-					src.unload()
-					src.cycle = PRE
+			src.toggle_door(ui.user)
+			src.visible_message("[usr] [src.open ? "opens" : "closes"] [src]'s door.")
 		if("cycle")
-			if (!occupant) //You cant turn it on or off if someone is inside to prevent people getting stuck inside
-				src.on = !src.on
-				. = TRUE
-				src.visible_message("[usr] switches [src] [src.on ? "on" : "off"].")
-				src.activator = usr
-				if (src.on)
-					src.cycle = PRE
-					src.open = 0
-					if (!(src in processing_items))
-						processing_items.Add(src)
+			src.start_cycle(ui.user)
+			src.visible_message("[usr] switches [src] [src.on ? "on" : "off"].")
+
+/obj/submachine/laundry_machine/proc/toggle_door()
+	if (src.on)
+		return
+	if(src.open)
+		src.close_door()
+	else
+		src.open_door()
+
+/obj/submachine/laundry_machine/proc/open_door()
+	if(src.open || src.on)
+		return
+	src.open = TRUE
+	src.unload()
+	src.cycle = PRE
+	src.UpdateIcon()
+
+/obj/submachine/laundry_machine/proc/close_door()
+	if(!src.open)
+		return
+	src.open = FALSE
+	src.UpdateIcon()
+
+/obj/submachine/laundry_machine/proc/start_cycle(var/activator)
+	if(src in processing_items)
+		return
+	if(ismob(activator)) //Could also be a mechanics input
+		src.activator = activator
+	src.close_door()
+	src.cycle = PRE
+	src.on = TRUE
+	if (src.occupant)
+		src.cycle_max = CYCLE_TIME_MOB_INSIDE
+	processing_items.Add(src)
 	src.UpdateIcon()
 
 /obj/submachine/laundry_machine/Click(location, control, params)

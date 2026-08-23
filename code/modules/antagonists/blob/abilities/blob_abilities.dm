@@ -12,6 +12,7 @@
 	var/atom/movable/screen/blob/button
 	var/special_screen_loc = null
 	var/helpable = 1
+	var/list/tooltip_options = list()
 
 	New()
 		..()
@@ -21,6 +22,7 @@
 		B.ability = src
 		B.name = src.name
 		B.desc = src.desc
+		B.tooltip_options = src.tooltip_options
 		src.button = B
 
 	disposing()
@@ -150,6 +152,7 @@
 	targeted = 0
 	special_screen_loc = "SOUTH,WEST"
 	helpable = 0
+	tooltip_options = list("align" = TOOLTIP_TOP, "bounds" = list(16, 32))
 
 	onUse(var/turf/T)
 		if (..())
@@ -167,6 +170,7 @@
 	targeted = 0
 	special_screen_loc = "SOUTH,EAST"
 	helpable = 0
+	tooltip_options = list("align" = TOOLTIP_TOP | TOOLTIP_RIGHT)
 
 	onUse(var/turf/T)
 		if (..())
@@ -624,14 +628,14 @@
 
 	onStart()
 		..()
-		if(!target || !owner || GET_DIST(owner, target) > 0 || !blob_o)
+		if(!target || !owner || GET_DIST(owner, target) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		actions.interrupt(target, INTERRUPT_ATTACKED)
 
 	onUpdate()
 		..()
-		if(!target || !owner || GET_DIST(owner, target) > 0 || !blob_o)
+		if(!target || !owner || GET_DIST(owner, target) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (ishuman(target) && target:decomp_stage == DECOMP_STAGE_SKELETONIZED)
@@ -644,7 +648,7 @@
 	onEnd()
 		..()
 		//owner type actually matters here. But it should never not be this anyway...
-		if(!target || !owner || GET_DIST(owner, target) > 0 || !istype (blob_o, /mob/living/intangible/blob_overmind))
+		if(!target || !owner || GET_DIST(owner, target) > 0)
 			return
 
 		//This whole first bit is all still pretty ugly cause this ability works on both critters and humans. I didn't have it in me to rewrite the whole thing - kyle
@@ -667,7 +671,7 @@
 		antag_role?.absorbed_victims += H
 
 		if (!isnpcmonkey(H) || prob(50))
-			blob_o.evo_points += 2
+			blob_o?.evo_points += 2
 			playsound(H.loc, 'sound/voice/blob/blobsucced.ogg', 100, 1)
 		//This is all the animation and stuff making the effect look good crap. Not much to see here.
 
@@ -900,7 +904,7 @@
 /datum/blob_ability/build/ectothermid
 	name = "Build Ectothermid Cell"
 	icon_state = "blob-ectothermid"
-	desc = "This will convert a blob tile into a Ectothermid. Ectothermids provice heat protection in an area at the cost of for biopoints."
+	desc = "This will convert a blob tile into an Ectothermid. Ectothermids provice heat protection in an area at the cost of for biopoints."
 	bio_point_cost = 15
 	gen_rate_invest = 1
 	build_path = /obj/blob/ectothermid
@@ -957,6 +961,7 @@
 	var/atom/movable/screen/blob/button
 	var/upgradename = "upgrade"
 	var/purchased_times = 0 // For crew credits
+	var/list/tooltip_options = list("align" = TOOLTIP_TOP)
 
 	New()
 		..()
@@ -966,6 +971,7 @@
 		B.upgrade = src
 		B.name = src.name
 		B.desc = src.desc
+		B.tooltip_options = src.tooltip_options
 		src.button = B
 
 	disposing()

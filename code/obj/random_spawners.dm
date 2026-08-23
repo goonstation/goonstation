@@ -1,7 +1,7 @@
 
 /obj/random_item_spawner
 	name = "random item spawner"
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/item_spawn.dmi'
 	icon_state = "itemspawn"
 	density = 0
 	anchored = ANCHORED
@@ -11,6 +11,7 @@
 	var/min_amt2spawn = 0
 	var/max_amt2spawn = 0
 	var/rare_chance = 0 // chance (out of 100) that the rare item list will be spawned instead of the common one
+	//the two main spawn lists can be associative to spawn pairs of linked items
 	var/list/items2spawn = list()
 	var/list/rare_items2spawn = list() // things that only rarely appear, independent of how big or small the main item list is
 	var/list/guaranteed = list() // things that will always spawn from this - set to a number to spawn that many of the thing
@@ -67,6 +68,9 @@
 				continue
 
 			closet_check_spawn(new_item)
+			//for associative lists, spawn the associated item!
+			if (ispath(items2spawn[new_item]))
+				closet_check_spawn(items2spawn[new_item])
 
 	proc/closet_check_spawn(var/obj/item/new_item)
 		var/obj/storage/S = locate(/obj/storage) in src.loc
@@ -541,7 +545,8 @@
 	/obj/decal/cleanable/generic,
 	/obj/item/reagent_containers/food/drinks/mug/random_color,
 	/obj/item/item_box/postit,
-	/obj/item/staple_gun/red)
+	/obj/item/staple_gun/red,
+	/obj/item/reagent_containers/applicator/stick/glue)
 
 	one
 		amt2spawn = 1
@@ -795,7 +800,6 @@
 	/obj/item/clothing/mask/surgical,
 	/obj/item/clothing/shoes/black,
 	/obj/item/coin,
-	/obj/item/device/infra_sensor,
 	/obj/item/device/radio,
 	/obj/item/device/timer,
 	/obj/item/folder,
@@ -827,6 +831,7 @@
 	/obj/item/tile/steel)
 
 	rare_items2spawn = list(/obj/item/bluntwrap,
+	/obj/item/device/light/sparkler/firecracker,
 	/obj/item/cell,
 	/obj/item/crowbar,
 	/obj/item/electronics/scanner,
@@ -844,7 +849,8 @@
 	/obj/item/tank/pocket/oxygen,
 	/obj/item/tank/mini/oxygen,
 	/obj/item/weldingtool,
-	/obj/item/wrench)
+	/obj/item/wrench,
+	/obj/item/ammo/power_cell/aa)
 
 	one
 		amt2spawn = 1
@@ -926,7 +932,7 @@
 
 /obj/random_pod_spawner
 	name = "random pod spawner"
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/item_spawn.dmi'
 	icon_state = "podspawn"
 	density = 0
 	anchored = ANCHORED
@@ -989,10 +995,9 @@
 			pod2spawn = new /obj/machinery/vehicle/pod_smooth/light(T)
 
 	proc/spawn_lock()
-		pod2spawn.lock = new /obj/item/shipcomponent/secondary_system/lock(pod2spawn)
-		pod2spawn.lock.ship = pod2spawn
-		pod2spawn.components += pod2spawn.lock
-		pod2spawn.lock.code = random_hex(4)
+		var/obj/item/shipcomponent/secondary_system/lock/lock_part = new(pod2spawn)
+		src.pod2spawn.install_part(null, lock_part, POD_PART_LOCK)
+		lock_part.code = random_hex(4)
 		pod2spawn.locked = 1
 
 	proc/paint_pod()
@@ -1017,42 +1022,18 @@
 		else
 			new_weapon = /obj/item/shipcomponent/mainweapon
 
-		pod2spawn.m_w_system = new new_weapon(pod2spawn)
-		pod2spawn.m_w_system.ship = pod2spawn
-		pod2spawn.components += pod2spawn.m_w_system
-		if (pod2spawn.uses_weapon_overlays)
-			pod2spawn.overlays += image(pod2spawn.icon, "[pod2spawn.m_w_system.appearanceString]")
+		pod2spawn.install_part(null, new new_weapon(pod2spawn), POD_PART_MAIN_WEAPON)
 
 	proc/spawn_engine()
+		pod2spawn.delete_part(POD_PART_ENGINE)
 		if (prob(5))
-			pod2spawn.engine.deactivate()
-			pod2spawn.components -= pod2spawn.engine
-			qdel(pod2spawn.engine)
-
-			pod2spawn.engine = new /obj/item/shipcomponent/engine/hermes(pod2spawn)
-			pod2spawn.engine.ship = pod2spawn
-			pod2spawn.components += pod2spawn.engine
-			pod2spawn.engine.activate()
-
+			pod2spawn.install_part(null, new /obj/item/shipcomponent/engine/hermes(pod2spawn), POD_PART_ENGINE, TRUE)
 		else
-			pod2spawn.engine.deactivate()
-			pod2spawn.components -= pod2spawn.engine
-			qdel(pod2spawn.engine)
-
-			pod2spawn.engine = new /obj/item/shipcomponent/engine/helios(pod2spawn)
-			pod2spawn.engine.ship = pod2spawn
-			pod2spawn.components += pod2spawn.engine
-			pod2spawn.engine.activate()
+			pod2spawn.install_part(null, new /obj/item/shipcomponent/engine/helios(pod2spawn), POD_PART_ENGINE, TRUE)
 
 	proc/spawn_sensor()
-		pod2spawn.sensors.deactivate()
-		pod2spawn.components -= pod2spawn.sensors
-		qdel(pod2spawn.sensors)
-
-		pod2spawn.sensors = new /obj/item/shipcomponent/sensor/mining(pod2spawn)
-		pod2spawn.sensors.ship = pod2spawn
-		pod2spawn.components += pod2spawn.sensors
-		pod2spawn.sensors.activate()
+		pod2spawn.delete_part(POD_PART_SENSORS)
+		pod2spawn.install_part(null, new /obj/item/shipcomponent/sensor/mining(pod2spawn), POD_PART_SENSORS, TRUE)
 
 /obj/random_pod_spawner/random_putt_spawner
 	name = "random miniputt spawner"
@@ -1373,7 +1354,8 @@
 		/obj/item/clothing/under/gimmick/jcdenton,
 		/obj/item/clothing/under/misc/mobster,
 		/obj/item/clothing/under/misc/mobster/alt,
-		/obj/item/clothing/under/gimmick/guybrush)
+		/obj/item/clothing/under/gimmick/guybrush,
+		/obj/item/clothing/suit/gimmick/nightgown)
 
 	one
 		amt2spawn = 1
@@ -1445,7 +1427,8 @@
 						/obj/item/paper_mask,
 						/obj/item/clothing/mask/kitsune,
 						/obj/item/clothing/head/minotaurmask,
-						/obj/item/clothing/mask/tengu)
+						/obj/item/clothing/mask/tengu,
+						/obj/item/clothing/mask/phantom)
 
 	one
 		amt2spawn = 1
@@ -1865,14 +1848,11 @@
 	min_amt2spawn = 1
 	max_amt2spawn = 4
 	items2spawn = list(/obj/item/gun/kinetic/clock_188,
+	/obj/item/gun/kinetic/clock_188,
 	/obj/item/gun/kinetic/clock_188/boomerang,
 	/obj/item/gun/kinetic/derringer,
-	/obj/item/gun/kinetic/derringer/empty,
 	/obj/item/gun/kinetic/detectiverevolver,
-	/obj/item/gun/kinetic/flaregun,
-	/obj/item/gun/kinetic/foamdartgun,
 	/obj/item/gun/kinetic/pistol,
-	/obj/item/gun/kinetic/pistol/empty,
 	/obj/item/gun/kinetic/riot40mm,
 	/obj/item/gun/kinetic/pumpweapon/riotgun,
 	/obj/item/gun/kinetic/pumpweapon/riotgun,
@@ -1892,11 +1872,16 @@
 	/obj/item/gun/kinetic/striker,
 	/obj/item/gun/kinetic/striker,
 	/obj/item/gun/kinetic/webley,
+	/obj/item/gun/kinetic/webley,
+	/obj/item/gun/kinetic/webley,
 	/obj/item/gun/kinetic/lopoint,
 	/obj/item/gun/kinetic/uzi,
 	/obj/item/gun/kinetic/uzi,
 	/obj/item/gun/kinetic/greasegun,
-	/obj/item/gun/kinetic/greasegun
+	/obj/item/gun/kinetic/greasegun,
+	/obj/item/gun/kinetic/breakaction/singleshotrifle,
+	/obj/item/gun/kinetic/draco,
+	/obj/item/gun/kinetic/revolver
 	)
 
 	one
@@ -1931,7 +1916,8 @@
 	icon_state = "rand_gun"
 	amt2spawn = 1
 
-	items2spawn = list(/obj/item/gun/energy/stasis,
+	items2spawn = list(/obj/item/gun/energy/egun,
+	/obj/item/gun/energy/egun,
 	/obj/item/gun/energy/egun,
 	/obj/item/gun/energy/egun_jr,
 	/obj/item/gun/energy/phaser_huge)
@@ -2402,7 +2388,6 @@
 	/obj/item/clothing/mask/surgical,
 	/obj/item/clothing/shoes/black,
 	/obj/item/coin,
-	/obj/item/device/infra_sensor,
 	/obj/item/device/radio,
 	/obj/item/device/timer,
 	/obj/item/folder,
@@ -2554,3 +2539,96 @@
 	one
 		min_amt2spawn = 1
 		max_amt2spawn = 1
+
+/obj/random_item_spawner/menhir
+	name = "treasures of a forgotten time"
+	min_amt2spawn = 1
+	max_amt2spawn = 1
+
+	items2spawn = list(
+	/obj/item/raw_material/cobryl,
+	/obj/item/raw_material/cobryl,
+	/obj/item/raw_material/cobryl,
+	/obj/item/raw_material/miracle,
+	/obj/item/raw_material/gemstone,
+	/obj/item/raw_material/syreline,
+	/obj/item/raw_material/uqill)
+
+	one_or_zero
+		min_amt2spawn = 0
+		max_amt2spawn = 1
+
+	one
+		min_amt2spawn = 1
+		max_amt2spawn = 1
+
+	a_bunch
+		min_amt2spawn = 3
+		max_amt2spawn = 4
+/obj/random_item_spawner/spacesuit
+	min_amt2spawn = 2
+	max_amt2spawn = 2
+
+#ifndef UNDERWATER_MAP
+	items2spawn = list(
+		/obj/item/clothing/suit/space/engineer = /obj/item/clothing/head/helmet/space/engineer,
+		/obj/item/clothing/suit/space/soviet = /obj/item/clothing/head/helmet/space/soviet,
+		/obj/item/clothing/suit/space/emerg = /obj/item/clothing/head/emerg,
+		/obj/item/clothing/suit/space/neon = /obj/item/clothing/head/helmet/space/neon,
+		/obj/item/clothing/suit/space = /obj/item/clothing/head/helmet/space,
+	)
+#else
+	items2spawn = list(
+		/obj/item/clothing/suit/space/diving/civilian = /obj/item/clothing/head/helmet/space/engineer/diving/civilian,
+		/obj/item/clothing/suit/space/diving/engineering = /obj/item/clothing/head/helmet/space/engineer/diving/engineering,
+		/obj/item/clothing/suit/space/diving/command = /obj/item/clothing/head/helmet/space/engineer/diving/command,
+		/obj/item/clothing/suit/space/diving/security = /obj/item/clothing/head/helmet/space/engineer/diving/security,
+		/obj/item/clothing/suit/space/emerg = /obj/item/clothing/head/emerg,
+	)
+#endif
+
+/obj/random_item_spawner/vending
+	name = "random vending machine spawner"
+	icon_state = "rand_vending"
+	min_amt2spawn = 1
+	max_amt2spawn = 1
+
+	items2spawn = list(/obj/machinery/computer/ATM, //Money vendor!!!
+	/obj/machinery/vending/cola/blue,
+	/obj/machinery/vending/cola/red,
+	/obj/machinery/vending/snack,
+	/obj/machinery/vending/air_vendor,
+	/obj/machinery/vending/air_vendor/plasma,
+	/obj/machinery/vending/book,
+	/obj/machinery/vending/alcohol/paid,
+	/obj/machinery/vending/capsule,
+	/obj/machinery/vending/cards,
+	/obj/machinery/vending/cigarette,
+	/obj/machinery/vending/coffee,
+	/obj/machinery/vending/paint/broken,
+	/obj/machinery/vending/pda,
+	/obj/machinery/vending/pizza,
+	/obj/machinery/vending/standard,)
+
+/obj/random_item_spawner/clothing_booth
+	name = "station clothing booth start spot"
+	icon_state = "rand_clothing_booth"
+	var/static/list/booths_not_spawned = list(/obj/machinery/clothingbooth, /obj/machinery/clothingbooth/clothingboothgbr, /obj/machinery/clothingbooth/clothingboothbrg)
+
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
+
+	spawn_items()
+		for(var/booth_type in src.booths_not_spawned)
+			var/obj/random_item_spawner/clothing_booth/booth_spawn = pick(by_type[src.type])
+			new booth_type(get_turf(booth_spawn))
+			src.booths_not_spawned -= booth_type
+			qdel(booth_spawn)
+		if(!(locate(/obj/machinery/clothingbooth) in get_turf(src)))
+			new /obj/random_item_spawner/vending(get_turf(src))
+			qdel(src)

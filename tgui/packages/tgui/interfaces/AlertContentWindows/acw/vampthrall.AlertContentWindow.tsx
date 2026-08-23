@@ -6,9 +6,8 @@
  */
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  title: "You've become the brainwashed thrall of a Vampire!",
-  content: (
+const VampThrallContentWindow = () => {
+  return (
     <div className="traitor-tips">
       <h1 className="center">You have been revived as a thrall!</h1>
       <p>
@@ -21,6 +20,10 @@ export const acw: AlertContentWindow = {
         and straying too far from their power will result in your swift demise.
       </p>
       <p>
+        You can telepathically speak to your master and any other thralls
+        created by your master using the <em>:thrall</em> speech prefix.
+      </p>
+      <p>
         You will slowly lose blood points over time. Your max health will
         decrease as blood points are lost. You can regain blood points by
         drinking the blood of humans or taking an additional donation from your
@@ -31,5 +34,10 @@ export const acw: AlertContentWindow = {
         <a href="https://wiki.ss13.co/index.php?search=Thrall">the wiki</a>
       </p>
     </div>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  title: "You've become the brainwashed thrall of a Vampire!",
+  component: VampThrallContentWindow,
 };

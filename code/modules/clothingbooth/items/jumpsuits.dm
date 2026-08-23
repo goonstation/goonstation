@@ -1,7 +1,7 @@
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform)
 /datum/clothingbooth_item/w_uniform
 	slot = SLOT_W_UNIFORM
-	cost = PAY_UNTRAINED/3
+	cost = PAY::UNTRAINED/3
 
 /datum/clothingbooth_item/w_uniform/bandshirt
 	item_path = /obj/item/clothing/under/misc/bandshirt
@@ -10,7 +10,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform)
 	item_path = /obj/item/clothing/under/misc/bubble
 
 /datum/clothingbooth_item/w_uniform/butler
-	cost = PAY_DOCTORATE/3
+	cost = PAY::DOCTORATE/3
 	item_path = /obj/item/clothing/under/gimmick/butler
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/card_suit_shirt)
@@ -69,7 +69,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/collar_dress)
 		item_path = /obj/item/clothing/under/collardressr
 
 /datum/clothingbooth_item/w_uniform/cwfashion
-	cost = PAY_DOCTORATE/5
+	cost = PAY::DOCTORATE/5
 	item_path = /obj/item/clothing/under/gimmick/cwfashion
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/diner_waitress_dress)
@@ -86,11 +86,28 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/diner_waitress_dress)
 		item_path = /obj/item/clothing/under/gimmick/dinerdress_pink
 
 /datum/clothingbooth_item/w_uniform/dirty_vest
-	item_path = /obj/item/clothing/under/misc/dirty_vest
+	name = "Red Pants"
+	swatch_background_color = "#8d1422"
+	item_path = /obj/item/clothing/under/misc/dirty_vest/
+
+	blackpants
+		name = "Black Jeans"
+		swatch_background_color = "#323232"
+		item_path = /obj/item/clothing/under/misc/dirty_vest/blackpants
+
+	bluepants
+		name = "Blue Jeans"
+		swatch_background_color = "#0f5b70"
+		item_path = /obj/item/clothing/under/misc/dirty_vest/bluepants
+
+	brownpants
+		name = "Brown Pants"
+		swatch_background_color = "#724f29"
+		item_path = /obj/item/clothing/under/misc/dirty_vest/brownpants
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/dress_shirt_wcoat)
 /datum/clothingbooth_item/w_uniform/dress_shirt_wcoat
-	cost = PAY_DOCTORATE/3
+	cost = PAY::DOCTORATE/3
 
 	black
 		name = "Black"
@@ -108,7 +125,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/dress_shirt_wcoat)
 		item_path = /obj/item/clothing/under/gimmick/red_wcoat
 
 /datum/clothingbooth_item/w_uniform/fancy_vest
-	cost = PAY_DOCTORATE/3
+	cost = PAY::DOCTORATE/3
 	item_path = /obj/item/clothing/under/misc/fancy_vest
 
 /datum/clothingbooth_item/w_uniform/fish
@@ -126,7 +143,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/flame_shirt)
 		name = "Rainbow"
 		swatch_foreground_shape = SWATCH_RAINBOW
 		item_path = /obj/item/clothing/under/misc/flame_rainbow
-		cost = PAY_TRADESMAN/3
+		cost = PAY::TRADESMAN/3
 
 /datum/clothingbooth_item/w_uniform/flannel
 	item_path = /obj/item/clothing/under/misc/flannel
@@ -135,12 +152,12 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/flame_shirt)
 	item_path = /obj/item/clothing/under/gimmick/ftuniform
 
 /datum/clothingbooth_item/w_uniform/hawaiian_dress
-	cost = PAY_DOCTORATE/3
+	cost = PAY::DOCTORATE/3
 	item_path = /obj/item/clothing/under/misc/dress/hawaiian
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/little_dress)
 /datum/clothingbooth_item/w_uniform/little_dress
-	cost = PAY_IMPORTANT/3
+	cost = PAY::IMPORTANT/3
 
 	black
 		name = "Black"
@@ -152,16 +169,13 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/little_dress)
 		swatch_background_color = "#c8193a"
 		item_path = /obj/item/clothing/under/misc/dress/red
 
-/datum/clothingbooth_item/w_uniform/long_sleeved_shirt
-	item_path = /obj/item/clothing/suit/lshirt
-
 /datum/clothingbooth_item/w_uniform/maid
-	cost = PAY_TRADESMAN/3
+	cost = PAY::TRADESMAN/3
 	item_path = /obj/item/clothing/under/gimmick/maid
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/masquerade)
 /datum/clothingbooth_item/w_uniform/masquerade
-	cost = PAY_DOCTORATE/3
+	cost = PAY::DOCTORATE/3
 
 	cherryblossom
 		name = "Cherryblossom"
@@ -174,12 +188,12 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/masquerade)
 		item_path = /obj/item/clothing/under/peacockdress
 
 /datum/clothingbooth_item/w_uniform/redtie
-	cost = PAY_TRADESMAN/3
+	cost = PAY::TRADESMAN/3
 	item_path = /obj/item/clothing/under/redtie
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/scifi)
 /datum/clothingbooth_item/w_uniform/scifi
-	cost = PAY_DOCTORATE/3
+	cost = PAY::DOCTORATE/3
 
 	black_and_purple
 		name = "Black and Purple"
@@ -203,7 +217,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/scifi)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/racing)
 /datum/clothingbooth_item/w_uniform/racing
-	cost = PAY_DOCTORATE/3
+	cost = PAY::DOCTORATE/3
 
 	bee
 		name = "Bee"
@@ -279,7 +293,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/shirt_and_jeans)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/shirt_and_pants)
 /datum/clothingbooth_item/w_uniform/shirt_and_pants
-	cost = PAY_TRADESMAN/3
+	cost = PAY::TRADESMAN/3
 
 	black_pants_no_tie
 		name = "Black Pants No Tie"
@@ -363,7 +377,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/shirt_and_pants)
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/skirt_dress)
 /datum/clothingbooth_item/w_uniform/skirt_dress
-	cost = PAY_TRADESMAN/3
+	cost = PAY::TRADESMAN/3
 
 	red
 		name = "Red and Black"
@@ -421,7 +435,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/tshirt_dress)
 
 	bolt
 		name = "Bolt"
-		cost = PAY_TRADESMAN/3
+		cost = PAY::TRADESMAN/3
 		swatch_background_color = "#7c77ad"
 		swatch_foreground_color = "#ffe244"
 		swatch_foreground_shape = SWATCH_BISECT_RIGHT
@@ -429,7 +443,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/tshirt_dress)
 
 	purple_bolt
 		name = "Purple Bolt"
-		cost = PAY_TRADESMAN/3
+		cost = PAY::TRADESMAN/3
 		swatch_background_color = "#b726ff"
 		swatch_foreground_color = "#ecddff"
 		swatch_foreground_shape = SWATCH_BISECT_RIGHT
@@ -437,7 +451,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/tshirt_dress)
 
 	leopard
 		name = "Leopard"
-		cost = PAY_TRADESMAN/3
+		cost = PAY::TRADESMAN/3
 		swatch_background_color = "#f2cb2f"
 		swatch_foreground_color = "#57435f"
 		swatch_foreground_shape = SWATCH_POLKADOTS
@@ -448,28 +462,28 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/tshirt_dress)
 		swatch_background_color = "#cb3083"
 		swatch_foreground_color = "#57435f"
 		swatch_foreground_shape = SWATCH_POLKADOTS
-		cost = PAY_TRADESMAN/3
+		cost = PAY::TRADESMAN/3
 		item_path = /obj/item/clothing/under/misc/casdressleop
 
 /datum/clothingbooth_item/w_uniform/tuxedo
-	cost = PAY_DOCTORATE/3
+	cost = PAY::DOCTORATE/3
 	item_path = /obj/item/clothing/under/rank/bartender/tuxedo
 
 /datum/clothingbooth_item/w_uniform/wedding_dress
-	cost = PAY_IMPORTANT*3
+	cost = PAY::IMPORTANT*3
 	item_path = /obj/item/clothing/under/gimmick/wedding_dress
 
 /datum/clothingbooth_item/w_uniform/western
-	cost = PAY_UNTRAINED/1
+	cost = PAY::UNTRAINED/1
 	item_path = /obj/item/clothing/under/misc/western
 
 /datum/clothingbooth_item/w_uniform/western_dress
-	cost = PAY_UNTRAINED/1
+	cost = PAY::UNTRAINED/1
 	item_path = /obj/item/clothing/under/misc/westerndress
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/yoga)
 /datum/clothingbooth_item/w_uniform/yoga
-	cost = PAY_TRADESMAN/3
+	cost = PAY::TRADESMAN/3
 
 	white
 		name = "White"
@@ -625,3 +639,137 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/collar_shirt)
 		name = "Black"
 		swatch_background_color = "#1d223c"
 		item_path = /obj/item/clothing/under/misc/collar_shirt/black
+
+ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/tea_party_dress)
+/datum/clothingbooth_item/w_uniform/tea_party_dress
+	name = "Tea Party Dress"
+
+	pink
+		name = "Pink"
+		swatch_background_color = "#ffbcea"
+		item_path = /obj/item/clothing/under/misc/tea_party_dress/pink
+
+	pink_and_black
+		name = "Pink and Black"
+		swatch_background_color = "#ffbcea"
+		swatch_foreground_color = "#000000"
+		swatch_foreground_shape = SWATCH_BISECT_RIGHT
+		item_path = /obj/item/clothing/under/misc/tea_party_dress/pink_and_black
+
+	black_and_white
+		name = "Black and White"
+		swatch_background_color = "#000000"
+		swatch_foreground_color = "#ffffff"
+		swatch_foreground_shape = SWATCH_BISECT_RIGHT
+		item_path = /obj/item/clothing/under/misc/tea_party_dress/black_and_white
+
+	black
+		name = "Black"
+		swatch_background_color = "#000000"
+		item_path = /obj/item/clothing/under/misc/tea_party_dress/black
+
+	white
+		name = "White"
+		swatch_background_color = "#ffffff"
+		item_path = /obj/item/clothing/under/misc/tea_party_dress/white
+
+	white_and_black
+		name = "White and Black"
+		swatch_background_color = "#ffffff"
+		swatch_foreground_color = "#000000"
+		swatch_foreground_shape = SWATCH_BISECT_RIGHT
+		item_path = /obj/item/clothing/under/misc/tea_party_dress/white_and_black
+
+	blue
+		name = "Blue"
+		swatch_background_color = "#3946b7"
+		item_path = /obj/item/clothing/under/misc/tea_party_dress/blue
+
+	dark_blue
+		name = "Dark Blue"
+		swatch_background_color = "#1c1192"
+		item_path = /obj/item/clothing/under/misc/tea_party_dress/dark_blue
+
+	light_blue
+		name = "Light Blue"
+		swatch_background_color = "#8bdbf2"
+		item_path = /obj/item/clothing/under/misc/tea_party_dress/light_blue
+
+	cyan
+		name = "Cyan"
+		swatch_background_color = "#9edbdb"
+		item_path = /obj/item/clothing/under/misc/tea_party_dress/cyan
+
+	green
+		name = "Green"
+		swatch_background_color = "#61bf71"
+		item_path = /obj/item/clothing/under/misc/tea_party_dress/green
+
+	light_green
+		name = "Light Green"
+		swatch_background_color = "#8be099"
+		item_path = /obj/item/clothing/under/misc/tea_party_dress/light_green
+
+	orange
+		name = "Orange"
+		swatch_background_color = "#ff9042"
+		item_path = /obj/item/clothing/under/misc/tea_party_dress/orange
+
+	red
+		name = "Red"
+		swatch_background_color = "#bf2a1d"
+		item_path = /obj/item/clothing/under/misc/tea_party_dress/red
+
+	yellow
+		name = "Yellow"
+		swatch_background_color = "#ffe156"
+		item_path = /obj/item/clothing/under/misc/tea_party_dress/yellow
+
+ABSTRACT_TYPE(/datum/clothingbooth_item/w_uniform/hawaiian_shirt)
+/datum/clothingbooth_item/w_uniform/hawaiian_shirt
+	name = "Hawaiian Shirt"
+
+	red
+		name = "Red"
+		swatch_background_color = "#D73715"
+		swatch_foreground_color = "#EBF0F2"
+		swatch_foreground_shape = SWATCH_POLKADOTS
+		item_path = /obj/item/clothing/under/misc/hawaiian_shirt/red
+
+	yellow
+		name = "Yellow"
+		swatch_background_color = "#D3CB21"
+		swatch_foreground_color = "#AE4005"
+		swatch_foreground_shape = SWATCH_POLKADOTS
+		item_path = /obj/item/clothing/under/misc/hawaiian_shirt/yellow
+
+	blue
+		name = "Blue"
+		swatch_background_color = "#24BDC6"
+		swatch_foreground_color = "#004981"
+		swatch_foreground_shape = SWATCH_POLKADOTS
+		item_path = /obj/item/clothing/under/misc/tourist
+
+	pink
+		name = "Pink"
+		swatch_background_color = "#F57382"
+		swatch_foreground_color = "#D3CB21"
+		swatch_foreground_shape = SWATCH_POLKADOTS
+		item_path = /obj/item/clothing/under/misc/hawaiian_shirt/pink
+
+	black
+		name = "Black"
+		swatch_background_color = "#343442"
+		swatch_foreground_color = "#3FB54F"
+		swatch_foreground_shape = SWATCH_POLKADOTS
+		item_path = /obj/item/clothing/under/misc/hawaiian_shirt/black
+
+	jungle
+		name = "Jungle"
+		swatch_background_color = "#167935"
+		swatch_foreground_color = "#1D223C"
+		swatch_foreground_shape = SWATCH_POLKADOTS
+		item_path = /obj/item/clothing/under/misc/tourist/max_payne
+
+/datum/clothingbooth_item/w_uniform/poncho_and_shirt
+	item_path = /obj/item/clothing/under/misc/serpico

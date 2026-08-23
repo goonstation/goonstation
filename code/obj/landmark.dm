@@ -9,6 +9,8 @@ proc/pick_landmark(name, default = null, ignorespecific = list())
 	else
 		return pick(landmarks[name] - ignorespecific)
 
+TYPEINFO(/obj/landmark)
+	analyser_flags = ANALYSER_BLACKLIST //Please stop trying to give these analyzer components
 /obj/landmark
 	name = "landmark"
 	icon = 'icons/map-editing/landmarks.dmi'
@@ -171,6 +173,10 @@ var/global/list/job_start_locations = list()
 /obj/landmark/start/job/roboticist
 	name = "Roboticist"
 	icon_state = "roboticist"
+
+/obj/landmark/start/job/pharmacist
+	name = "Pharmacist"
+	icon_state = "pharmacist"
 
 /obj/landmark/start/job/scientist
 	name = "Scientist"
@@ -356,6 +362,44 @@ var/global/list/job_start_locations = list()
 /obj/landmark/shuttle_transit
 	name = LANDMARK_SHUTTLE_TRANSIT
 
+/obj/landmark/menhir/doorway
+	name = LANDMARK_MENHIR_DOOR
+
+/obj/landmark/menhir/extrusion
+	name = LANDMARK_MENHIR_EXTRUSION
+
+/obj/landmark/menhir/node
+	name = LANDMARK_MENHIR_NODE
+
+/obj/landmark/menhir/outreach
+	name = LANDMARK_MENHIR_OUTREACH
+
+/obj/landmark/menhir/penance
+	name = LANDMARK_MENHIR_PENANCE
+
+/obj/landmark/menhir/coalesce
+	name = LANDMARK_MENHIR_COALESCE
+
+/obj/landmark/menhir/beyond
+	name = LANDMARK_MENHIR_BEYOND
+
+/obj/landmark/menhir/passage
+	name = LANDMARK_MENHIR_PASSAGE
+	icon_state = "x3"
+
+/obj/landmark/menhir/dark
+	name = LANDMARK_MENHIR_DARK
+	icon_state = "x"
+
+/obj/landmark/menhir/stuckscan
+	name = LANDMARK_MENHIR_STUCKSCAN
+	icon_state = "x4"
+
+/obj/landmark/menhir/room
+	name = "room vismirror landmark (tag me)"
+	deleted_on_start = FALSE
+	add_to_landmarks = FALSE
+
 ///emergency shuttle launch sound origin
 /obj/landmark/shuttle_subwoofer
 	name = LANDMARK_SHUTTLE_SOUND
@@ -508,6 +552,16 @@ var/global/list/job_start_locations = list()
 	icon_state = "artifact_10"
 	spawnchance = 10
 
+/obj/landmark/spawner/artifact/more_precursor
+	name = "Artifact Spawn (More Often Precursor)"
+
+	spawn_the_thing()
+		if(prob(40))
+			Artifact_Spawn(get_turf(src),"precursor")
+		else
+			Artifact_Spawn(get_turf(src))
+		qdel(src)
+
 /* ===== LRT Landmarks ===== */
 
 // consider refactoring to be associative the other way around later
@@ -531,6 +585,9 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/lrt/icemoon
 	name = "Senex"
+
+/obj/landmark/lrt/icemoon2
+	name = "Senex II"
 
 /obj/landmark/lrt/solarium
 	name = "Sol"
@@ -611,6 +668,9 @@ var/global/list/job_start_locations = list()
 /obj/landmark/fall/sea/marj
 	name = LANDMARK_FALL_MARJ
 
+/obj/landmark/fall/sea/cult
+	name = LANDMARK_FALL_CULTIST
+
 /* ===== Visual Contents ===== */
 
 /obj/landmark/viscontents_spawn
@@ -626,11 +686,19 @@ var/global/list/job_start_locations = list()
 	/// /y offset relative to the landmark, will cause visual jump effect due to set_loc not gliding
 	var/yOffset = 0
 	add_to_landmarks = FALSE
+	deleted_on_start = FALSE
 	/// modifier for restricting criteria of what gets warped by mirror
 	var/warptarget_modifier = LANDMARK_VM_WARP_ALL
 	var/novis = FALSE
-
 	New(var/loc, var/man_xOffset, var/man_yOffset, var/man_targetZ, var/man_warptarget_modifier)
+		if(global.current_state < GAME_STATE_PREGAME)
+			src.setup(loc, man_xOffset, man_yOffset, man_targetZ, man_warptarget_modifier)
+		else
+			SPAWN(1)
+				src.setup(loc, man_xOffset, man_yOffset, man_targetZ, man_warptarget_modifier)
+		..()
+
+	proc/setup(var/loc, var/man_xOffset, var/man_yOffset, var/man_targetZ, var/man_warptarget_modifier)
 		if (man_xOffset) src.xOffset = man_xOffset
 		if (man_yOffset) src.yOffset = man_yOffset
 		if (man_targetZ) src.targetZ = man_targetZ
@@ -651,7 +719,7 @@ var/global/list/job_start_locations = list()
 				T.updateVis()
 				T.vistarget.fullbright = TRUE
 				T.vistarget.RL_Init()
-		..()
+		qdel(src)
 
 /obj/landmark/viscontents_spawn/no_vis
 	name = "instant hole spawn"

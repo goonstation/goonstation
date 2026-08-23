@@ -11,7 +11,7 @@
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "B" = (
-/obj/submachine/chef_sink,
+/obj/machinery/sink,
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "K" = (

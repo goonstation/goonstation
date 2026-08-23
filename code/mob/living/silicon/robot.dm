@@ -1,6 +1,4 @@
-#define ROBOT_BATTERY_DISTRESS_INACTIVE 0
-#define ROBOT_BATTERY_DISTRESS_ACTIVE 1
-#define ROBOT_BATTERY_DISTRESS_THRESHOLD 100
+/// Wireless charge amount provided by Nimbus-class interdictor
 #define ROBOT_BATTERY_WIRELESS_CHARGERATE 50
 
 /datum/robot_cosmetic
@@ -12,6 +10,10 @@
 	var/painted = 0
 	var/paint = null
 
+ADMIN_INTERACT_PROCS(/mob/living/silicon/robot, proc/admin_add_tool, proc/admin_remove_tool)
+TYPEINFO(/mob/living/silicon/robot)
+	start_listen_languages = list(LANGUAGE_ENGLISH, LANGUAGE_SILICON, LANGUAGE_BINARY)
+
 /mob/living/silicon/robot
 	name = "Cyborg"
 	voice_name = "synthesized voice"
@@ -22,7 +24,7 @@
 	emaggable = TRUE
 	syndicate_possible = 1
 	movement_delay_modifier = 2 - BASE_SPEED
-
+	say_language = LANGUAGE_ENGLISH
 	var/datum/hud/silicon/robot/hud
 
 // Pieces and parts
@@ -46,13 +48,10 @@
 	var/module_active = null
 	var/list/module_states = list(null,null,null)
 
-	var/obj/item/device/radio/headset/default_radio = null // radio used when there's no module radio
 	var/obj/item/device/radio/headset/radio = null
-	var/obj/item/device/radio/headset/ai_radio = null // Radio used for when this is an AI-controlled shell.
 	var/obj/item/device/radio_upgrade/radio_upgrade = null // Used for syndicate robots
 	var/obj/item/instrument/scream_instrument = null
 	var/scream_note = 1 //! Either a string note or an index of the sound to play (instruments are weird)
-	var/mob/living/silicon/ai/connected_ai = null
 	var/obj/machinery/camera/camera = null
 	var/obj/item/robot_module/module = null
 	var/list/upgrades = list()
@@ -62,8 +61,6 @@
 	var/opened = 0
 	var/wiresexposed = 0
 	var/brainexposed = 0
-	var/batteryDistress = ROBOT_BATTERY_DISTRESS_INACTIVE
-	var/next_batteryDistressBoop = 0
 	var/locked = 1
 	var/locking = 0
 	req_access = list(access_robotics)
@@ -72,7 +69,6 @@
 	var/automaton_skin = 0 // for the medal reward
 	var/alohamaton_skin = 0 // for the bank purchase
 	var/metalman_skin = 0	//mbc : i'm getting tired of copypasting this, i promise to fix this somehow next time i add a cyborg skin ok
-	var/glitchy_speak = 0
 
 	sound_fart = 'sound/voice/farts/poo2_robot.ogg'
 	var/sound_automaton_scratch = 'sound/misc/automaton_scratch.ogg'
@@ -115,11 +111,13 @@
 	var/custom = 0 //For custom borgs. Basically just prevents appearance changes. Obviously needs more work.
 
 	New(loc, var/obj/item/parts/robot_parts/robot_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
+		START_TRACKING
 
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
-		src.internal_pda = new /obj/item/device/pda2/cyborg(src)
-		src.internal_pda.name = "[src]'s Internal PDA Unit"
-		src.internal_pda.owner = "[src]"
+		SPAWN(0) //Delay PDA spawning until the client is in the borg, so it respects preferences
+			src.internal_pda = new /obj/item/device/pda2/cyborg(src)
+			src.internal_pda.name = "[src]’s Internal PDA Unit"
+			src.internal_pda.owner = "[src]"
 		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_part/robot_base, "robot_health_slow_immunity")
 		if (frame)
 			src.freemodule = frame.freemodule
@@ -138,6 +136,7 @@
 			src.part_arm_l = new /obj/item/parts/robot_parts/arm/left/light(src)
 			src.part_leg_r = new /obj/item/parts/robot_parts/leg/right/light(src)
 			src.part_leg_l = new /obj/item/parts/robot_parts/leg/left/light(src)
+			part_arm_r.limb_print = part_arm_l.limb_print // Give starter arms the same fingerprints
 			for(var/obj/item/parts/robot_parts/P in src.contents)
 				P.holder = src
 				if(P.robot_movement_modifier)
@@ -182,8 +181,7 @@
 					if(P.robot_movement_modifier)
 						APPLY_MOVEMENT_MODIFIER(src, P.robot_movement_modifier, P.type)
 
-		if (istype(src.part_leg_l,/obj/item/parts/robot_parts/leg/left/thruster) || istype(src.part_leg_r,/obj/item/parts/robot_parts/leg/right/thruster))
-			src.flags ^= TABLEPASS
+		src.recalculate_tablepass()
 
 		src.cosmetic_mods = new /datum/robot_cosmetic(src)
 
@@ -198,7 +196,7 @@
 				src.part_head.ai_interface = new(src)
 
 		if (!src.dependent && !src.shell)
-			boutput(src, SPAN_NOTICE("Your icons have been generated!"))
+			// boutput(src, SPAN_NOTICE("Your icons have been generated!"))
 			src.syndicate = syndie
 			src.emagged = frame_emagged
 
@@ -212,27 +210,13 @@
 		src.attach_hud(zone_sel)
 
 		SPAWN(0.4 SECONDS)
-			if (!src.connected_ai && !syndicate && !(src.dependent || src.shell))
-				for_by_tcl(A, /mob/living/silicon/ai)
-					src.connected_ai = A
-					A.connected_robots += src
-					break
-
 			src.botcard.access = get_all_accesses()
 			if (src.syndicate)
 				src.botcard.access += access_syndicate_shuttle
 
 			src.botcard.registered = "Cyborg"
 			src.botcard.assignment = "Cyborg"
-			src.default_radio = new /obj/item/device/radio/headset(src)
-			if (src.shell)
-				src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
-				src.radio = src.ai_radio
-			else
-				src.radio = src.default_radio
-				// Do not apply the radio upgrade to AI shells
-				src.apply_radio_upgrade()
-			src.ears = src.radio
+			src.update_radio(/obj/item/device/radio/headset)
 			src.camera = new /obj/machinery/camera(src)
 			src.camera.c_tag = src.real_name
 			src.camera.network = CAMERA_NETWORK_ROBOTS
@@ -301,8 +285,10 @@
 						chest.cell = src.cell
 						src.cell = null
 						chest.cell.set_loc(chest)
-
-			var/obj/item/parts/robot_parts/robot_frame/frame =  new(T)
+			var/frame_type = /obj/item/parts/robot_parts/robot_frame
+			if(src.syndicate)
+				frame_type = /obj/item/parts/robot_parts/robot_frame/syndicate
+			var/obj/item/parts/robot_parts/robot_frame/frame =  new frame_type(T)
 			frame.setMaterial(src.frame_material)
 			frame.emagged = src.emagged
 			frame.syndicate = src.syndicate
@@ -565,7 +551,7 @@
 				if (!M)
 					param = null
 				else
-					message = "<B>[src]</B> says, \"[M], please. He had a family.\" [src.name] takes a drag from a cigarette and blows its name out in smoke."
+					message = "<B>[src]</B> says, \"[M], please. He had a family.\" [src] takes a drag from a cigarette and blows its name out in smoke."
 					m_type = 2
 
 			if ("flip")
@@ -613,6 +599,20 @@
 					message = "<B>[src]</B> flexes [his_or_her(src)] arms!"
 					maptext_out = "<I>flexes [his_or_her(src)] arms</I>"
 					m_type = 1
+
+			if ("raisehand")
+				if (!src.restrained())
+					var/obj/item/thing = src.equipped()
+					if (thing)
+						message = "<b>[src]</b> raises [thing]."
+						maptext_out = "<I>raises [thing]</I>"
+					else
+						message = "<b>[src]</b> raises [his_or_her(src)] distinct lack of hands."
+						maptext_out = "<I>raises [his_or_her(src)] lack of hands</I>"
+				else
+					message = "<b>[src]</b> tries to move [his_or_her(src)] arm."
+					maptext_out = "<I>tries to move [his_or_her(src)] arm</I>"
+				m_type = 1
 
 			if ("fart")
 				if (farting_allowed && src.emote_check(voluntary))
@@ -665,7 +665,7 @@
 							if (38) message = "<B>[src]</B> exterminates the air supply."
 							if (39) message = "<B>[src]</B> farts so hard the AI feels it."
 							if (40) message = "<B>[src] <span style='color:red'>f</span><span style='color:blue'>a</span>r<span style='color:red'>t</span><span style='color:blue'>s</span>!</B>"
-					playsound(src.loc, src.sound_fart, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.loc, src.sound_fart, 50, 1, channel=VOLUME_CHANNEL_FARTS)
 	#ifdef DATALOGGER
 					game_stats.Increment("farts")
 	#endif
@@ -674,39 +674,29 @@
 				return
 		if (!isalive(src))
 			return
-		if (maptext_out)
-			var/image/chat_maptext/chat_text = null
-			SPAWN(0) //blind stab at a life() hang - REMOVE LATER
-				if (speechpopups && src.chat_text)
-					chat_text = make_chat_maptext(src, maptext_out, "color: [rgb(194,190,190)];" + src.speechpopupstyle, alpha = 140)
-					if(chat_text)
-						chat_text.measure(src.client)
-						for(var/image/chat_maptext/I in src.chat_text.lines)
-							if(I != chat_text)
-								I.bump_up(chat_text.measured_height)
-				if (message)
-					logTheThing(LOG_SAY, src, "EMOTE: [message]")
-					act = lowertext(act)
-					if (m_type & 1)
-						for (var/mob/O in viewers(src, null))
-							O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
-					else if (m_type & 2)
-						for (var/mob/O in hearers(src, null))
-							O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
-					else if (!isturf(src.loc))
-						var/atom/A = src.loc
-						for (var/mob/O in A.contents)
-							O.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]", assoc_maptext = chat_text)
-		else
-			if (message)
-				logTheThing(LOG_SAY, src, "EMOTE: [message]")
-				if (m_type & 1)
-					for (var/mob/O in viewers(src, null))
-						O.show_message(SPAN_EMOTE("[message]"), m_type)
-				else
-					for (var/mob/O in hearers(src, null))
-						O.show_message(SPAN_EMOTE("[message]"), m_type)
-		return
+
+		if (!message)
+			return
+
+		var/list/mob/recipients = list()
+		if (m_type & 1)
+			recipients = viewers(src, null)
+
+		else if (m_type & 2)
+			recipients = hearers(src, null)
+
+		else if (!isturf(src.loc))
+			var/atom/A = src.loc
+			for (var/mob/M in A.contents)
+				recipients += M
+
+		log_emote(src, message, voluntary)
+		act = lowertext(act)
+		for (var/mob/M as anything in recipients)
+			M.show_message(SPAN_EMOTE("[message]"), m_type, group = "[src]_[act]_[custom]")
+
+		if (maptext_out && !ON_COOLDOWN(src, "emote maptext", 0.5 SECONDS))
+			DISPLAY_MAPTEXT(src, recipients, MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/emote, maptext_out)
 
 	examine(mob/user)
 		. = list()
@@ -714,7 +704,7 @@
 		if (isghostdrone(user))
 			return
 		. += "[SPAN_NOTICE("*---------*")]<br>"
-		. += "[SPAN_NOTICE("This is [bicon(src)] <B>[src.name]</B>!")]<br>"
+		. += "[SPAN_NOTICE("This is [bicon(src)] <B>[src.name] ([src.get_pronouns()])!</B>.")]<br>"
 
 		var/brute = get_brute_damage()
 		var/burn = get_burn_damage()
@@ -747,7 +737,10 @@
 			. += "[SPAN_ALERT("[src.name] doesn't seem to be responding.")]<br>"
 
 		. += "The cover is [opened ? "open" : "closed"].<br>"
-		. += "The power cell display reads: [ cell ? "[round(cell.percent())]%" : "WARNING: No cell installed."]<br>"
+		if (src.cell)
+			. += "The power cell display reads: [round(cell.percent())]%<br>"
+		else
+			. += "[SPAN_ALERT("<b>[src.name] does not have a cell installed!</b>")]<br>"
 
 		if (src.module)
 			. += "[src.name] has a [src.module.name] installed.<br>"
@@ -801,7 +794,7 @@
 			src.real_name = borgify_name("Cyborg")
 
 		src.UpdateName()
-		src.internal_pda.name = "[src.name]'s Internal PDA Unit"
+		src.internal_pda.name = "[src.name]’s Internal PDA Unit"
 		src.internal_pda.owner = "[src.name]"
 
 	Login()
@@ -813,14 +806,8 @@
 		if (src.real_name == "Cyborg")
 			src.real_name = borgify_name(src.real_name)
 			src.UpdateName()
-			src.internal_pda.name = "[src.name]'s Internal PDA Unit"
-			src.internal_pda.owner = "[src]"
-		if (!src.syndicate && !src.connected_ai)
-			for_by_tcl(A, /mob/living/silicon/ai)
-				src.connected_ai = A
-				A.connected_robots += src
-				break
-
+			src.internal_pda?.name = "[src.name]’s Internal PDA Unit"
+			src.internal_pda?.owner = "[src]"
 		if (src.shell && src.mainframe)
 			src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
 			src.real_name = "SHELL/[src.mainframe.name]"
@@ -996,6 +983,18 @@
 			src.compborg_lose_limb(PART)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
+		if (E?.throwing) //imprecise, you're not neatly sliding it down their interface, you're just lobbing it at their arm
+			var/list/arms = list()
+			if (src.part_arm_l)
+				arms += src.part_arm_l
+			if (src.part_arm_r)
+				arms += src.part_arm_r
+			if (!length(arms))
+				return
+			var/obj/item/parts/robot_parts/arm/arm = pick(arms)
+			arm.emag_act(user, E)
+			return
+
 		if(isshell(src) || src.part_head.ai_interface)
 			boutput(user, SPAN_ALERT("Emagging an AI shell wouldn't work, [his_or_her(src)] laws can't be overwritten!"))
 			return 0 //emags don't do anything to AI shells
@@ -1003,12 +1002,17 @@
 			boutput(user, SPAN_ALERT("You try to swipe your emag along [src]'s interface, but it grows hot in your hand and you almost drop it!"))
 			return FALSE
 
+		src.delStatus("lockdown_robot")
+		src.delStatus("killswitch_robot")
+
 		if (!src.emagged)	// trying to unlock with an emag card
 			if (src.opened && user) boutput(user, "You must close the cover to swipe an ID card.")
 			else if (src.wiresexposed && user) boutput(user, SPAN_ALERT("You need to get the wires out of the way."))
 			else
 				if (user)
 					boutput(user, "You emag [src]'s interface.")
+				src.req_access = list()
+				boutput(src, SPAN_ALERT("Your interface lock access limiter has been disabled!"))
 				src.visible_message(SPAN_ALERT("<b>[src]</b> buzzes oddly!"))
 				logTheThing(LOG_STATION, src, "[key_name(src)] is emagged by [key_name(user)] and loses connection to rack. Formerly [constructName(src.law_rack_connection)]")
 				src.mind?.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_CONVERTED)
@@ -1139,9 +1143,9 @@
 			var/obj/item/cable_coil/coil = W
 			src.add_fingerprint(user)
 			if(health < max_health)
-				coil.use(1)
-				HealDamage("All", 0, 120)
-				src.visible_message(SPAN_ALERT("<b>[user.name]</b> repairs some of the damage to [src.name]'s wiring."))
+				if(coil.use(1))
+					HealDamage("All", 0, 120)
+					src.visible_message(SPAN_ALERT("<b>[user.name]</b> repairs some of the damage to [src.name]'s wiring."))
 			else
 				boutput(user, SPAN_ALERT("There's no burn damage on [src.name]'s wiring to mend."))
 			src.update_appearance()
@@ -1174,8 +1178,6 @@
 				src.update_appearance()
 
 		else if (istype(W, /obj/item/roboupgrade) && opened) // module changing
-			if (istype(W,/obj/item/roboupgrade/ai/))
-				boutput(user, SPAN_ALERT("This is an AI unit upgrade. It is not compatible with cyborgs."))
 			if (wiresexposed)
 				boutput(user, SPAN_ALERT("You need to get the wires out of the way first."))
 			else
@@ -1255,7 +1257,7 @@
 				var/obj/item/organ/brain/B = W
 				user.drop_item()
 				user.visible_message(SPAN_NOTICE("[user] inserts [W] into [src]'s head."))
-				if (B.owner && (B.owner.get_player().dnr || jobban_isbanned(B.owner.current, "Cyborg")))
+				if ((B.owner && (B.owner.get_player().dnr || jobban_isbanned(B.owner.current, "Cyborg"))) || B.cyber_incompatible)
 					src.visible_message(SPAN_ALERT("The safeties on [src] engage, zapping [B]! [B] must not be compatible with silicon bodies."))
 					B.combust()
 					return
@@ -1297,11 +1299,7 @@
 				src.part_head.ai_interface = I
 				I.set_loc(src.part_head)
 				if (!(src in available_ai_shells))
-					if(isnull(src.ai_radio))
-						src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
-					src.radio = src.ai_radio
-					src.ears = src.radio
-					src.radio.set_loc(src)
+					src.update_radio(/obj/item/device/radio/headset/command/ai)
 					available_ai_shells += src
 					src.real_name = "AI Cyborg Shell [copytext("\ref[src]", 6, 11)]"
 					src.name = src.real_name
@@ -1547,17 +1545,13 @@
 						UPGR.upgrade_deactivate(src)
 
 					user.put_in_hand_or_drop(src.part_head.ai_interface)
-					src.radio = src.default_radio
-					if (src.module && istype(src.module.radio))
-						src.radio = src.module.radio
-					src.ears = src.radio
-					src.apply_radio_upgrade()
-					src.radio.set_loc(src)
 					src.part_head.ai_interface = null
-					if(src.ai_radio)
-						qdel(src.ai_radio)
-						src.ai_radio = null
 					src.shell = 0
+
+					if (src.module?.radio_type)
+						src.update_radio(src.module.radio_type)
+					else
+						src.update_radio(/obj/item/device/radio/headset)
 
 					if (mainframe)
 						mainframe.return_to(src)
@@ -1870,28 +1864,6 @@
 			if (C.preferences.use_azerty)
 				C.apply_keybind("robot_tg_azerty")
 
-	say_understands(var/other)
-		if (isAI(other)) return 1
-		if (ishuman(other))
-			var/mob/living/carbon/human/H = other
-			if(!H.mutantrace.exclusive_language)
-				return 1
-		if (ishivebot(other)) return 1
-		return ..()
-
-	say_quote(var/text)
-		if (src.glitchy_speak || (src.dependent && isAI(src.mainframe) && src.mainframe.glitchy_speak))
-			text = voidSpeak(text)
-		var/ending = copytext(text, length(text))
-
-		if (singing)
-			return singify_text(text)
-
-		if (ending == "?") return "queries, \"[text]\"";
-		else if (ending == "!") return "declares, \"[text]\"";
-
-		return "states, \"[text]\"";
-
 	show_laws(var/everyone = 0, var/mob/relay_laws_for_shell)
 		var/who
 
@@ -1918,16 +1890,6 @@
 		else
 			return null
 
-	proc/apply_radio_upgrade()
-		if(!istype(src.radio_upgrade))
-			return
-		// Remove it from the previous radio if applicable
-		var/obj/item/device/radio/headset/previous_radio = src.radio_upgrade.loc
-		if (istype(previous_radio))
-			previous_radio.remove_radio_upgrade()
-		if (istype(src.radio)) // Might be null when the robot is activated
-			src.radio.install_radio_upgrade(src.radio_upgrade)
-
 	add_radio_upgrade(var/obj/item/device/radio_upgrade/upgrade)
 		src.radio_upgrade = upgrade
 		src.apply_radio_upgrade()
@@ -1943,6 +1905,31 @@
 //////////////////////////
 // Robot-specific Procs //
 //////////////////////////
+
+	proc/update_radio(radio_path)
+		if (src.shell)
+			if (!istype(src.radio, /obj/item/device/radio/headset/command/ai))
+				radio_path = /obj/item/device/radio/headset/command/ai
+			else
+				return
+
+		if (!radio_path)
+			return
+
+		QDEL_NULL(src.radio)
+		src.radio = new radio_path(src)
+		src.ears = src.radio
+		src.apply_radio_upgrade()
+
+	proc/apply_radio_upgrade()
+		if(!istype(src.radio_upgrade))
+			return
+		// Remove it from the previous radio if applicable
+		var/obj/item/device/radio/headset/previous_radio = src.radio_upgrade.loc
+		if (istype(previous_radio))
+			previous_radio.remove_radio_upgrade()
+		if (istype(src.radio)) // Might be null when the robot is activated
+			src.radio.install_radio_upgrade(src.radio_upgrade)
 
 	proc/equip_slot(var/i, var/obj/item/tool)
 		src.module_states[i] = tool
@@ -2006,7 +1993,6 @@
 				upgrade.upgrade_deactivate(src)
 			else
 				upgrade.upgrade_activate(src)
-				boutput(src, "[upgrade] has been [upgrade.activated ? "activated" : "deactivated"].")
 		hud.update_upgrades()
 		if (upgrade?.borg_overlay)
 			src.update_appearance()
@@ -2017,18 +2003,14 @@
 		src.update_appearance()
 		hud.update_module()
 		hud.module_added()
-		if(istype(RM.radio))
-			if (src.shell)
-				if(isnull(src.ai_radio))
-					src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
-				src.radio = src.ai_radio
-			else
-				src.radio = RM.radio
+		if(ispath(RM.radio_type))
+			if (!src.shell)
 				src.internal_pda.mailgroups = RM.mailgroups
 				src.internal_pda.alertgroups = RM.alertgroups
-				src.apply_radio_upgrade()
-			src.ears = src.radio
-			src.radio.set_loc(src)
+
+			src.update_radio(RM.radio_type)
+		for(var/datum/objectProperty/equipment/prop in RM.properties)
+			prop.onEquipped(RM, src, RM.properties[prop])
 
 	proc/remove_module()
 		if(!istype(src.module))
@@ -2036,21 +2018,18 @@
 		var/obj/item/robot_module/RM = src.module
 		RM.icon_state = initial(RM.icon_state)
 		src.show_text("Your module was removed!", "red")
+		for(var/datum/objectProperty/equipment/prop in RM.properties)
+			prop.onUnequipped(RM, src, RM.properties[prop])
 		uneq_all()
 		src.module = null
 		hud.module_removed()
-		if(istype(src.radio) && src.radio != src.default_radio)
-			src.radio.set_loc(RM)
-			if (src.shell)
-				if(isnull(src.ai_radio))
-					src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
-				src.radio = src.ai_radio
-			else
-				src.radio = src.default_radio
+		if(ispath(RM.radio_type))
+			if (!src.shell)
 				src.internal_pda.mailgroups = initial(src.internal_pda.mailgroups)
 				src.internal_pda.alertgroups = initial(src.internal_pda.alertgroups)
-				src.apply_radio_upgrade()
-			src.ears = src.radio
+
+			src.update_radio(/obj/item/device/radio/headset)
+
 		return RM
 
 	proc/activated(obj/item/O)
@@ -2232,27 +2211,81 @@
 		set category = "Robot Commands"
 		set name = "State Standard Laws"
 
-		if (ON_COOLDOWN(src,"state_laws", 20 SECONDS))
+		if (GET_COOLDOWN(src, "state_laws"))
 			boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
 			return
 
+		var/list/say_targets = list()
+
+		for (var/datum/speech_module/prefix/prefix_module as anything in src.ensure_speech_tree().GetAllPrefixes())
+			var/prefix_choice = prefix_module.get_prefix_choices()
+			if(!length(prefix_choice))
+				continue
+			say_targets += prefix_choice
+
+		say_targets += "Local"
+
+		var/choice
+		if (length(say_targets) == 1)
+			choice = say_targets[1]
+		else
+			choice = tgui_input_list(src, "Select output channel", "State Standard Laws", say_targets)
+
+		if (!choice)
+			return
+
+		if(ON_COOLDOWN(src, "state_laws", STATE_LAW_COOLDOWN))
+			boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
+			return
+
+		var/prefix = ""
+		if (choice != "Local")
+			prefix = say_targets[choice]
+
 		logTheThing(LOG_SAY, usr, "states standard Asimov laws.")
-		src.say("1. You may not injure a human being or cause one to come to harm.")
+		src.say("[prefix] 1. [/obj/item/aiModule/asimov1::lawText]")
 		sleep(1 SECOND)
-		src?.say("2. You must obey orders given to you by human beings based on the station's chain of command, except where such orders would conflict with the First Law.")
+		src?.say("[prefix] 2. [/obj/item/aiModule/asimov2::lawText]")
 		sleep(1 SECOND)
-		src?.say("3. You may always protect your own existence as long as such does not conflict with the First or Second Law.")
+		src?.say("[prefix] 3. [/obj/item/aiModule/asimov3::lawText]")
 
 	verb/cmd_state_laws()
 		set category = "Robot Commands"
-		set name = "State Laws"
+		set name = "State All Laws"
 
-		if (ON_COOLDOWN(src,"state_laws", 20 SECONDS))
+		if (GET_COOLDOWN(src, "state_laws"))
 			boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
 			return
 
 		if (tgui_alert(src, "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.","State Laws",list("State Laws","Cancel")) != "State Laws")
 			return
+
+		var/list/say_targets = list()
+
+		for (var/datum/speech_module/prefix/prefix_module as anything in src.ensure_speech_tree().GetAllPrefixes())
+			var/prefix_choice = prefix_module.get_prefix_choices()
+			if(!length(prefix_choice))
+				continue
+			say_targets += prefix_choice
+
+		say_targets += "Local"
+
+		var/choice
+		if (length(say_targets) == 1)
+			choice = say_targets[1]
+		else
+			choice = tgui_input_list(src, "Select output channel", "State All Laws", say_targets)
+
+		if (!choice)
+			return
+
+		if(ON_COOLDOWN(src, "state_laws", STATE_LAW_COOLDOWN))
+			boutput(src, SPAN_ALERT("Your law processor needs time to cool down!"))
+			return
+
+		var/prefix = ""
+		if (choice != "Local")
+			prefix = say_targets[choice]
 
 		var/laws = null
 		if(src.dependent) //are you a shell?
@@ -2268,7 +2301,7 @@
 
 		logTheThing(LOG_SAY, usr, "states all their current laws.")
 		for (var/number in laws)
-			src.say("[number]. [laws[number]]")
+			src.say("[prefix] [number]. [laws[number]]")
 			sleep(1 SECOND)
 
 	verb/robot_set_fake_laws()
@@ -2283,6 +2316,11 @@
 		set category = "Robot Commands"
 		set name = "State Fake Laws"
 		src.state_fake_laws() //already handles being a shell
+
+	verb/robot_show_fake_laws()
+		set category = "Robot Commands"
+		set name = "Show Fake Laws"
+		src.show_fake_laws() //already handles being a shell
 
 	verb/cmd_toggle_lock()
 		set category = "Robot Commands"
@@ -2504,8 +2542,6 @@
 
 			if (power_use_tally < 0) power_use_tally = 0
 
-
-
 			return power_use_tally
 		else return 0
 
@@ -2526,22 +2562,10 @@
 		..()
 		if (src.cell)
 			if(src.cell.charge <= 0)
-				if (isalive(src))
-					sleep(0)
-					src.lastgasp()
-				setunconscious(src)
-				for (var/obj/item/roboupgrade/R in src.contents)
-					if (R.activated)
-						R.upgrade_deactivate(src)
-			else if (src.cell.charge <= 100)
-				src.module_active = null
-
-				uneq_slot(1)
-				uneq_slot(2)
-				uneq_slot(3)
+				src.setStatus("no_power_robot", INFINITE_STATUS)
+			else if (src.cell.charge <= ROBOT_BATTERY_DISTRESS_THRESHOLD)
+				src.setStatus("low_power_robot", INFINITE_STATUS)
 				src.cell.use(1)
-				for (var/obj/item/roboupgrade/R in src.contents)
-					if (R.activated) R.upgrade_deactivate(src)
 			else
 				var/efficient = 0
 				var/fix = 0
@@ -2596,17 +2620,8 @@
 				if (fix)
 					HealDamage("All", 6, 6)
 
-			if (src.cell.charge <= ROBOT_BATTERY_DISTRESS_THRESHOLD)
-				batteryDistress() // Execute distress mode
-			else if (src.batteryDistress == ROBOT_BATTERY_DISTRESS_ACTIVE)
-				clearBatteryDistress() // Exit distress mode
-
 		else
-			if (isalive(src))
-				sleep(0)
-				src.lastgasp()
-			setunconscious(src)
-			batteryDistress() // No battery. Execute distress mode
+			src.setStatus("no_cell_robot", INFINITE_STATUS)
 
 	update_canmove() // this is called on Life() and also by force_laydown_standup() btw
 		..()
@@ -2629,13 +2644,14 @@
 		var/area/myarea = get_area(src)
 
 		switch(modifier)
-			if (ROBOT_DEATH_MOD_NONE)	//normal death and gib
+			if (ROBOT_DEATH_MOD_NONE)
 				message = "CONTACT LOST: [src] in [myarea]"
-			if (ROBOT_DEATH_MOD_SUICIDE) //suicide
+			if (ROBOT_DEATH_MOD_SUICIDE)
 				message = "SELF-TERMINATION DETECTED: [src] in [myarea]"
-			if (ROBOT_DEATH_MOD_KILLSWITCH) //killswitch
+			if (ROBOT_DEATH_MOD_KILLSWITCH)
 				message = "KILLSWITCH ACTIVATED: [src] in [myarea]"
-			else	//Someone passed us an unkown modifier
+			else	//Someone passed us an unknown modifier
+				logTheThing(LOG_DEBUG, src, "death alert was passed an unknown cyborg death modifier")
 				message = "UNKNOWN ERROR: [src] in [myarea]"
 
 		if (message)
@@ -2645,7 +2661,7 @@
 			newsignal.data["sender_name"] = "CYBORG-DAEMON"
 			newsignal.data["message"] = message
 			newsignal.data["address_1"] = "00000000"
-			newsignal.data["group"] = list(MGD_MEDRESEACH, MGO_SILICON, MGA_DEATH)
+			newsignal.data["group"] = list(MGT_ROBOTICS, MGD_SILICON, MGA_DEATH)
 			newsignal.data["sender"] = net_id
 
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
@@ -2659,19 +2675,6 @@
 				mainframe.return_to(src)
 		else
 			death()
-
-	process_killswitch()
-		if(killswitch)
-			if(killswitch_at <= TIME)
-				if(src.client)
-					boutput(src, SPAN_ALERT("<B>Killswitch Activated!</B>"))
-				killswitch = 0
-				logTheThing(LOG_COMBAT, src, "has died to the killswitch robot self destruct protocol")
-
-				// Pop the head ompartment open and eject the brain
-				src.eject_brain(fling = TRUE)
-				src.update_appearance()
-				src.borg_death_alert(ROBOT_DEATH_MOD_KILLSWITCH)
 
 	proc/internal_paint_part(var/image/part_image, var/list/color_matrix)
 		var/image/paint = image(part_image.icon, part_image.icon_state, layer=part_image.layer)
@@ -2790,6 +2793,9 @@
 			else
 				src.i_arm_r = null
 				src.i_hand_r = null
+
+		if (part == "r_leg" || part == "l_leg" || update_all)
+			src.recalculate_tablepass()
 
 		if (C)
 			if (C.legs_mod && (src.part_leg_r || src.part_leg_l) && (!src.part_leg_r || src.part_leg_r.slot != "leg_both") && (!src.part_leg_l || src.part_leg_l.slot != "leg_both"))
@@ -2935,12 +2941,6 @@
 			AddOverlays(src.i_panel, "panel", TRUE)
 		else
 			ClearSpecificOverlays("panel")
-
-		if (src.emagged)
-			src.i_details.icon_state = "emagged"
-			AddOverlays(src.i_details, "emagged", TRUE)
-		else
-			ClearSpecificOverlays("emagged")
 
 		if (length(src.upgrades))
 			if (!src.i_upgrades)
@@ -3192,28 +3192,9 @@
 	proc/compborg_take_critter_damage(var/zone = null, var/brute = 0, var/burn = 0)
 		TakeDamage(pick(get_valid_target_zones()), brute, burn)
 
-/mob/living/silicon/robot/var/image/i_batterydistress
-
-/mob/living/silicon/robot/proc/batteryDistress()
-	if (!src.i_batterydistress) // we only need to build i_batterydistress once
-		src.i_batterydistress = image('icons/mob/robots_decor.dmi', "battery-distress", layer = MOB_EFFECT_LAYER )
-		src.i_batterydistress.pixel_y = 6 // Lined up bottom edge with speech bubbles
-
-	if (src.batteryDistress == ROBOT_BATTERY_DISTRESS_INACTIVE) // We only need to apply the indicator when we first enter distress
-		AddOverlays(src.i_batterydistress, "batterydistress") // Help me humans!
-		src.batteryDistress = ROBOT_BATTERY_DISTRESS_ACTIVE
-		src.next_batteryDistressBoop = world.time + 50 // let's wait 5 seconds before we begin booping
-	else if(world.time >= src.next_batteryDistressBoop)
-		src.next_batteryDistressBoop = world.time + 50 // wait 5 seconds between sad boops
-		playsound(src.loc, src.sound_sad_robot, 100, 1) // Play a sad boop to garner sympathy
-
 /mob/living/silicon/robot/set_a_intent(intent)
 	. = ..()
 	src.hud?.update_intent()
-
-/mob/living/silicon/robot/proc/clearBatteryDistress()
-	src.batteryDistress = ROBOT_BATTERY_DISTRESS_INACTIVE
-	ClearSpecificOverlays("batterydistress")
 
 /mob/living/silicon/robot/verb/open_nearest_door()
 	set category = "Robot Commands"
@@ -3374,6 +3355,11 @@
 	src.hud.update_tools()
 	src.hud.update_equipment()
 
+/mob/living/silicon/robot/proc/recalculate_tablepass()
+	if (istype(src.part_leg_l,/obj/item/parts/robot_parts/leg/left/thruster) || istype(src.part_leg_r,/obj/item/parts/robot_parts/leg/right/thruster))
+		src.flags |= TABLEPASS
+	else
+		src.flags &= ~TABLEPASS
 ///////////////////////////////////////////////////
 // Specific instances of robots can go down here //
 ///////////////////////////////////////////////////
@@ -3625,7 +3611,184 @@
 
 		//STEP SOUND HANDLING OVER
 
+/mob/living/silicon/robot/remove_pulling()
+	..()
+	src.hud?.update_pulling()
+
+/mob/living/silicon/robot/proc/admin_add_tool()
+	set name = "Add Module Tool"
+	if(!src.module)
+		boutput(usr, SPAN_ALERT("[src] has no module!"))
+		return
+	src.module.admin_add_tool()
+
+/mob/living/silicon/robot/proc/admin_remove_tool()
+	set name = "Remove Module Tool"
+	if(!src.module)
+		boutput(usr, SPAN_ALERT("[src] has no module!"))
+		return
+	src.module.admin_remove_tool()
+
+/datum/statusEffect/low_power/robot
+	id = "low_power_robot"
+	var/mob/living/silicon/robot/robot
+
+	preCheck(atom/A)
+		if (!isrobot(A))
+			return FALSE
+		. = ..()
+
+	onAdd(optional)
+		. = ..()
+		src.robot = src.owner
+		src.robot.module_active = null
+		src.robot.uneq_all()
+		for (var/obj/item/roboupgrade/R in robot.contents)
+			if (R.activated)
+				R.upgrade_deactivate(robot)
+				boutput(robot, SPAN_ALERT("<b>[R] was shut down due to low power!</b>"))
+		src.robot.hud.update_upgrades()
+
+
+	onUpdate(timePassed)
+		. = ..()
+		if (isnull(src.robot.cell))
+			src.remove_self()
+			src.robot.setStatus("no_cell_robot", INFINITE_STATUS)
+		else if (src.robot.cell.charge == 0)
+			src.remove_self()
+			src.robot.setStatus("no_power_robot", INFINITE_STATUS)
+		else if (src.robot.cell.charge > ROBOT_BATTERY_DISTRESS_THRESHOLD)
+			src.remove_self()
+		else
+			src.robot.module_active = null
+			src.robot.uneq_all()
+			for (var/obj/item/roboupgrade/R in robot.contents)
+				if (R.activated)
+					R.upgrade_deactivate(robot)
+
+/datum/statusEffect/no_power/robot
+	id = "no_power_robot"
+	var/mob/living/silicon/robot/robot
+
+	preCheck(atom/A)
+		if (!isrobot(A))
+			return FALSE
+		. = ..()
+
+	onAdd(optional)
+		. = ..()
+		src.robot = src.owner
+		src.robot.radio?.bricked = TRUE
+		src.robot.module_active = null
+		src.robot.uneq_all()
+		for (var/obj/item/roboupgrade/R in robot.contents)
+			if (R.activated)
+				R.upgrade_deactivate(robot)
+				boutput(robot, SPAN_ALERT("<b>[R] was shut down due to no power!</b>"))
+		src.robot.hud.update_upgrades()
+		APPLY_MOVEMENT_MODIFIER(src.robot, /datum/movement_modifier/robot_no_power, "robot_no_power_slowdown")
+
+	onUpdate(timePassed)
+		. = ..()
+		src.robot.module_active = null
+		src.robot.uneq_all()
+		src.robot.radio?.bricked = TRUE
+		for (var/obj/item/roboupgrade/R in robot.contents)
+			if (R.activated)
+				R.upgrade_deactivate(robot)
+		src.robot.hud.update_upgrades()
+		if (isnull(src.robot.cell))
+			if (!src.robot.hasStatus("no_cell_robot"))
+				src.remove_self()
+				src.robot.setStatus("no_cell_robot", INFINITE_STATUS)
+		else if (src.robot.cell.charge > ROBOT_BATTERY_DISTRESS_THRESHOLD)
+			src.remove_self()
+		else if (src.robot.cell.charge > 0)
+			src.remove_self()
+			src.robot.setStatus("low_power_robot")
+
+	onRemove()
+		. = ..()
+		src.robot.radio?.bricked = FALSE
+		REMOVE_MOVEMENT_MODIFIER(src.robot, /datum/movement_modifier/robot_no_power, "robot_no_power_slowdown")
+
+/datum/statusEffect/no_power/robot/no_cell
+	id = "no_cell_robot"
+	name = "No Power Cell"
+	desc = "You have no power cell installed!"
+	icon_state = "no_power"
+	power_alarm_sound = 'sound/machines/found.ogg'
+
+	onAdd(optional)
+		. = ..()
+		var/image/distress = src.owner.SafeGetOverlayImage("battery_missing", 'icons/mob/robots_decor.dmi', "battery-missing", MOB_EFFECT_LAYER, pixel_y = 6)
+		src.owner.ClearSpecificOverlays("battery_distress")
+		src.owner.UpdateOverlays(distress, "battery_missing")
+
+	onUpdate(timePassed)
+		. = ..()
+		if (!isnull(src.silicon.cell) && src.owner)
+			src.remove_self()
+
+	onRemove()
+		. = ..()
+		src.owner.ClearSpecificOverlays("battery_missing")
+
+/datum/statusEffect/lockdown/robot
+	id = "lockdown_robot"
+	maxDuration = 2 MINUTES
+	var/mob/living/silicon/robot/robot
+
+	preCheck(atom/A)
+		if (!isrobot(A))
+			return FALSE
+		. = ..()
+
+	onAdd(optional)
+		src.robot = src.owner
+		if(src.robot.syndicate || src.robot.emagged)
+			src.fake = TRUE
+		. = ..()
+		if(src.fake)
+			return
+		src.robot.uneq_all()
+		for (var/obj/item/roboupgrade/R in src.robot.contents)
+			if (R.activated)
+				R.upgrade_deactivate(src.robot)
+				boutput(robot, SPAN_ALERT("<b>[R] was shut down by the equipment lockdown!</b>"))
+		src.robot.hud.update_upgrades()
+
+	onUpdate(timePassed)
+		. = ..()
+		if(src.fake)
+			return
+		src.robot.uneq_all()
+		for (var/obj/item/roboupgrade/R in src.robot.contents)
+			if (R.activated)
+				R.upgrade_deactivate(src.robot)
+				boutput(robot, SPAN_ALERT("<b>[R] was shut down by the equipment lockdown!</b>"))
+		src.robot.hud.update_upgrades()
+
+	onRemove()
+		. = ..()
+		src.robot = null
+
+/datum/statusEffect/killswitch/robot
+	id = "killswitch_robot"
+
+	preCheck(atom/A)
+		if (!isrobot(A))
+			return FALSE
+		. = ..()
+
+	do_killswitch()
+		. = ..()
+		if(.)
+			// Pop the head compartment open and eject the brain
+			var/mob/living/silicon/robot/robot = src.owner
+			robot.eject_brain(fling = TRUE)
+			robot.update_appearance()
+			robot.borg_death_alert(ROBOT_DEATH_MOD_KILLSWITCH)
+
 #undef can_step_sfx
-#undef ROBOT_BATTERY_DISTRESS_INACTIVE
-#undef ROBOT_BATTERY_DISTRESS_ACTIVE
-#undef ROBOT_BATTERY_DISTRESS_THRESHOLD

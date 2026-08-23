@@ -235,7 +235,7 @@ export const NuclearReactor = () => {
                 minValue={0}
                 maxValue={100}
                 format={(value) => value + '%'}
-                onDrag={(e, value) => act('adjustCR', { crvalue: value })}
+                onChange={(e, value) => act('adjustCR', { crvalue: value })}
               />
             </Flex.Item>
           </Flex>

@@ -7,7 +7,6 @@
  - Hand labeler
  - Clipboard
  - Booklet
- - Sticky notes
  - Folder
 */
 /* --------------------------------- */
@@ -46,7 +45,7 @@
 	"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "Exclamation Point", "Question Mark", "Period", "Comma", "Colon", "Semicolon", "Ampersand", "Left Parenthesis", "Right Parenthesis",
 	"Left Bracket", "Right Bracket", "Percent", "Plus", "Minus", "Times", "Divided", "Equals", "Less Than", "Greater Than")
 	var/static/list/c_symbol = list("Dollar", "Euro", "Credit", "Arrow North", "Arrow East", "Arrow South", "Arrow West",
-	"Square", "Circle", "Triangle", "Heart", "Star", "Smile", "Frown", "Neutral Face", "Bee", "Pentacle", "Skull")
+	"Square", "Circle", "Triangle", "Heart", "Star", "Smile", "Frown", "Neutral Face", "Bee", "Pentacle", "Skull","Cloud","Cross","Steam","Zap","Fire","Radiation","Door","House","Syndicate","Nanotrasen","Stick Figure")
 	var/static/list/c_char_to_symbol = list(
 		"!" = "Exclamation Point",
 		"?" = "Question Mark",
@@ -283,7 +282,7 @@
 			src.change_mode(new_mode, user)
 
 	proc/change_mode(var/new_mode, var/mob/holder)
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		switch (new_mode)
 			if ("pen")
 				src.penmode = "pen"
@@ -432,15 +431,12 @@
 		font_color = "#FF00FF"
 
 	random
-		var/picked_color
-
 		New()
 			..()
-			src.picked_color = random_color()
+			src.color = random_color()
 			src.reset_color()
 
 		reset_color()
-			src.color = picked_color
 			src.font_color = src.color
 			src.name = "[hex2color_name(src.color)] marker"
 
@@ -453,6 +449,7 @@
 	color = "#333333"
 	font = "Comic Sans MS"
 	clicknoise = 0
+	custom_suicide = 1
 	var/maptext_crayon = FALSE
 	var/font_size = 32
 
@@ -536,40 +533,32 @@
 		font_color = "#D20040"
 		default_cleanable = /obj/decal/cleanable/writing/infrared
 
-	random
-		var/picked_color
+	robot
+		desc = "Don't shove it up your nose, no matter how good of an idea that may seem to you. Wait, do you even have a nose? Maybe something else will happen if you try to stick it there."
+		HELP_MESSAGE_OVERRIDE("Use on your character's sprite to choose a new color for your crayon.")
 
+		attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+			if (target == user)
+				src.color = input("Pick crayon color:","Crayon color") as null|color
+				src.reset_color()
+				user.visible_message(SPAN_NOTICE("Your crayon becomes [hex2color_name(src.color)]!"))
+				return
+			return ..()
+
+	random
 		New()
 			..()
-			src.picked_color = random_color()
+			src.color = random_color()
 			src.reset_color()
-
-		reset_color()
-			src.color = src.picked_color
-			src.font_color = src.color
-			src.color_name = hex2color_name(src.color)
-			src.name = "[src.color_name] crayon"
 
 		choose
 			desc = "Don't shove it up your nose, no matter how good of an idea that may seem to you.  You might not get it back. Spin it, go ahead, you know you want to."
 
 			on_spin_emote(var/mob/living/carbon/human/user as mob)
 				..()
-				src.picked_color = random_color()
+				src.color = random_color()
 				src.reset_color()
 				user.visible_message(SPAN_NOTICE("<b>\"Something\" special happens to [src]!</b>"))
-
-		robot
-			desc = "Don't shove it up your nose, no matter how good of an idea that may seem to you. Wait, do you even have a nose? Maybe something else will happen if you try to stick it there."
-
-			attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-				if (target == user)
-					src.picked_color = random_color()
-					src.reset_color()
-					user.visible_message(SPAN_NOTICE("<b>\"Something\" special happens to [src]!</b>"))
-					return
-
-				return ..()
 
 		pixel
 			maptext_crayon = TRUE
@@ -578,7 +567,6 @@
 			New()
 				..()
 				src.name = "[src.color_name] pixel crayon"
-
 
 	rainbow
 		name = "strange crayon"
@@ -602,7 +590,6 @@
 			src.color = src.font_color
 			..()
 
-	custom_suicide = 1
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
@@ -621,6 +608,10 @@
 		. = ..()
 		src.create_inventory_counter()
 
+	reset_color()
+		src.font_color = src.color
+		src.color_name = hex2color_name(src.color)
+		src.name = "[src.color_name] crayon"
 
 	proc/write_input(mob/user)
 		if(src.in_use)
@@ -767,22 +758,24 @@
 	name = "chalk"
 	desc = "A stick of rock and dye that reminds you of your childhood. Don't get too carried away!"
 	icon_state = "chalk-9"
-	color = "#333333"
+	color = "#ffffff"
 	font = "Comic Sans MS"
+	var/true_color
 	var/chalk_health = 10 //10 uses before it snaps
 
 	random
-		var/picked_color
 		New()
+			src.true_color = random_color()
+			src.assign_color(src.true_color)
 			..()
-			src.assign_color(src.picked_color)
 
-		reset_color()
-			src.assign_color(src.picked_color)
+	New()
+		..()
+		src.true_color = src.color
 
 	proc/assign_color(var/color)
 		if(isnull(color))
-			color = "#ffffff"
+			src.color = "#ffffff"
 		src.color = color
 		src.font_color = src.color
 		src.color_name = hex2color_name(color)
@@ -813,7 +806,7 @@
 			src.icon_state = "chalk-[src.chalk_health]"
 
 	reset_color()
-		src.assign_color(initial(src.color))
+		src.assign_color(src.true_color)
 
 	write_on_turf(var/turf/T as turf, var/mob/user as mob)
 		..()
@@ -861,6 +854,7 @@
 	desc = "Make things seem more important than they really are with the hand labeler!<br/>Can also name your fancy new area by naming the fancy new APC you created for it."
 	var/label = null
 	var/labels_left = 10
+	w_class = W_CLASS_POCKET_SIZED
 	flags = TABLEPASS | SUPPRESSATTACK
 	c_flags = ONBELT
 	rand_pos = 1
@@ -901,9 +895,9 @@
 		if(!user.literate)
 			boutput(user, SPAN_ALERT("You don't know how to write."))
 			return
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		var/holder = src.loc
-		var/str = copytext(html_encode(tgui_input_text(user, "Label text?", "Set label", allowEmpty = TRUE, max_length = 30)), 1, 32)
+		var/str = copytext(strip_html_tags(tgui_input_text(user, "Label text?", "Set label", allowEmpty = TRUE, max_length = 30)), 1, 32)
 		if(str)
 			phrase_log.log_phrase("label", str, no_duplicates=TRUE)
 		if (src.loc != holder)
@@ -1228,7 +1222,7 @@
 
 		if(href_list["action"] == "retrieve")
 			usr.put_in_hand_or_drop(src.contents[text2num(href_list["id"])], usr)
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			usr.visible_message("[usr] takes something out of the folder.")
 		else if(href_list["action"] == "peek")
 			var/obj/item/I = src.contents[text2num(href_list["id"])]
@@ -1262,7 +1256,7 @@
 			user.drop_item()
 		W.set_loc(src)
 		src.amount++
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 
 /* =============== BOOKLETS =============== */
 
@@ -1389,57 +1383,6 @@
 		else
 			..()
 		return
-
-/* =============== STICKY NOTES =============== */
-
-/obj/item/postit_stack
-	name = "SHOULDN'T BE SEEING THIS"
-	desc = "OLD AND BAD"
-	icon = 'icons/obj/writing.dmi'
-	icon_state = "postit_stack"
-	/* force = 1
-	throwforce = 1
-	w_class = W_CLASS_TINY
-	amount = 10
-	burn_point = 220
-	burn_output = 200
-	burn_possible = TRUE
-	health = 2
-
-	// @TODO
-	// HOLY SHIT REMOVE THIS THESE OLD POST ITS ARE GONE or something idk fuck
-	New()
-		..()
-		new /obj/item/item_box/postit(get_turf(src))
-
-	afterattack(var/atom/A as mob|obj|turf, var/mob/user as mob, reach, params)
-		if (!A)
-			return
-		if (isarea(A))
-			return
-		if (src.amount < 0)
-			qdel(src)
-			return
-		var/turf/T = get_turf(A)
-		var/obj/decal/cleanable/writing/postit/P = make_cleanable(/obj/decal/cleanable/writing/postit ,T)
-		if (params && islist(params) && params["icon-y"] && params["icon-x"])
-			// oh boy i can't wait to see people make huge post-it note trains across the station somehow!
-			P.pixel_x = text2num(params["icon-x"]) - 16 //round(A.bound_width/2)
-			P.pixel_y = text2num(params["icon-y"]) - 16 //round(A.bound_height/2)
-
-		P.layer = A.layer + 1 //Do this instead so the stickers don't show over bushes and stuff.
-		P.appearance_flags = RESET_COLOR | PIXEL_SCALE
-
-		user.visible_message("<b>[user]</b> sticks a sticky note to [T].",\
-		"You stick a sticky note to [T].")
-		var/obj/item/pen/pen = user.find_type_in_hand(/obj/item/pen)
-		if (pen)
-			P.Attackby(pen, user)
-		src.amount --
-		if (src.amount < 0)
-			qdel(src)
-			return
-*/
 
 /* ============== PRINTERS & TYPEWRITERS ================= */
 

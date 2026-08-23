@@ -34,6 +34,7 @@
 	var/current_preview_direction = SOUTH
 	/// Store this so we can throttle getFlatIcon calls and still have something to show
 	var/icon/last_preview_icon = null
+	var/refresh_preview_icon = FALSE
 	/// If `TRUE`, show the clothing that the occupant is currently wearing on the preview.
 	var/show_clothing = TRUE
 
@@ -165,8 +166,9 @@
 	.["name"] = src.name
 
 /obj/machinery/clothingbooth/ui_data(mob/user)
-	if (!src.last_preview_icon || !ON_COOLDOWN(src, "generate_preview_icon", 1 SECOND))
+	if ((!src.last_preview_icon || src.refresh_preview_icon) && !ON_COOLDOWN(src, "generate_preview_icon", 1 SECOND))
 		src.last_preview_icon = getFlatIcon(src.preview.preview_thing, no_anim = TRUE)
+		src.refresh_preview_icon = FALSE
 	. = list(
 		"accountBalance" = src.accessed_record ? src.accessed_record["current_money"] : 0,
 		"cash" = src.cash,
@@ -412,10 +414,14 @@
 		preview_mob.vars[src.selected_grouping.slot] = src.preview_item //hehe hoohoo
 	var/datum/human_limbs/preview_mob_limbs = preview_mob.limbs
 	// Get those limbs!
-	preview_mob_limbs.replace_with("l_arm", src.occupant.limbs.l_arm.type, show_message = FALSE)
-	preview_mob_limbs.replace_with("r_arm", src.occupant.limbs.r_arm.type, show_message = FALSE)
-	preview_mob_limbs.replace_with("l_leg", src.occupant.limbs.l_leg.type, show_message = FALSE)
-	preview_mob_limbs.replace_with("r_leg", src.occupant.limbs.r_leg.type, show_message = FALSE)
+	if (src.occupant.limbs.l_arm)
+		preview_mob_limbs.replace_with("l_arm", src.occupant.limbs.l_arm.type, show_message = FALSE)
+	if (src.occupant.limbs.r_arm)
+		preview_mob_limbs.replace_with("r_arm", src.occupant.limbs.r_arm.type, show_message = FALSE)
+	if (src.occupant.limbs.l_leg)
+		preview_mob_limbs.replace_with("l_leg", src.occupant.limbs.l_leg.type, show_message = FALSE)
+	if (src.occupant.limbs.r_leg)
+		preview_mob_limbs.replace_with("r_leg", src.occupant.limbs.r_leg.type, show_message = FALSE)
 	src.update_preview()
 
 /obj/machinery/clothingbooth/proc/reset_clothingbooth_parameters()
@@ -429,6 +435,7 @@
 
 /obj/machinery/clothingbooth/proc/update_preview()
 	src.preview.update_appearance(src.occupant.bioHolder.mobAppearance, src.occupant.mutantrace, src.current_preview_direction, src.occupant.real_name)
+	src.refresh_preview_icon = TRUE
 
 /obj/machinery/clothingbooth/free
 	everything_is_free = TRUE

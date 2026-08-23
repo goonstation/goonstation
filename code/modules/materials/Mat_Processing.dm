@@ -17,7 +17,7 @@
 			return ..()
 		if (src.working || src.is_disabled())
 			return
-		if (!I.material || !((I.material.getMaterialFlags() & MATERIAL_METAL) || I.material.getMaterialFlags() & MATERIAL_CRYSTAL))
+		if (!I.material)
 			boutput(user, SPAN_ALERT("[I] doesn't go in there!"))
 			return
 		var/obj/item/material_piece/taken_piece = null
@@ -73,6 +73,7 @@
 	bound_height = 96
 	bound_width = 96
 	density = 1
+	provides_grip = TRUE
 	layer = FLOOR_EQUIP_LAYER1
 
 	var/datum/light/light
@@ -266,38 +267,6 @@
 	ex_act(severity)
 		return
 
-//
-TYPEINFO(/obj/item/device/matanalyzer)
-	mats = 5
-
-/obj/item/device/matanalyzer
-	icon_state = "matanalyzer"
-	name = "material analyzer"
-	desc = "This piece of equipment can detect and analyze materials."
-	flags = EXTRADELAY | TABLEPASS | CONDUCT
-	w_class = W_CLASS_SMALL
-
-	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(GET_DIST(src, target) <= world.view)
-			animate_scanning(target, "#597B6D")
-			var/atom/W = target
-			if(!W.material)
-				boutput(user, SPAN_ALERT("No significant material found in \the [target]."))
-			else
-				boutput(user, SPAN_NOTICE("<u>[capitalize(W.material.getName())]</u>"))
-				boutput(user, SPAN_NOTICE("[W.material.getDesc()]"))
-
-				if(length(W.material.getMaterialProperties()))
-					boutput(user, SPAN_NOTICE("<u>The material is:</u>"))
-					for(var/datum/material_property/X in W.material.getMaterialProperties())
-						var/value = W.material.getProperty(X.id)
-						boutput(user, SPAN_NOTICE("• [X.getAdjective(W.material)] ([value])"))
-				else
-					boutput(user, SPAN_NOTICE("<u>The material is completely unremarkable.</u>"))
-		else
-			boutput(user, SPAN_ALERT("[target] is too far away."))
-		return
-
 /obj/item/slag_shovel
 	name = "slag shovel"
 	desc = "Used to remove slag from the arc smelter."
@@ -307,6 +276,7 @@ TYPEINFO(/obj/item/device/matanalyzer)
 	item_state = "shovel"
 	w_class = W_CLASS_NORMAL
 	c_flags = ONBELT
+	tool_flags = TOOL_DIGGING
 	force = 7 // 15 puts it significantly above most other weapons
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'
 

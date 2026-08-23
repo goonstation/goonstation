@@ -471,10 +471,10 @@ TRASH BAG
 			. |= SPONGE_DRY
 	if (src.reagents.total_volume)
 		. |= SPONGE_WIPE
-		if ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink) || istype(target, /obj/mopbucket))
+		if ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/machinery/sink) || istype(target, /obj/mopbucket))
 			. |= SPONGE_WRING
-	if (src.reagents.total_volume < src.reagents.maximum_volume && ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink)) || istype(target, /obj/mopbucket))
-		if (istype(target, /obj/submachine/chef_sink) || (target.reagents && target.reagents.total_volume))
+	if (src.reagents.total_volume < src.reagents.maximum_volume && ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/machinery/sink)) || istype(target, /obj/mopbucket))
+		if (istype(target, /obj/machinery/sink) || (target.reagents && target.reagents.total_volume))
 			. |= SPONGE_WET
 
 /obj/item/sponge/afterattack(atom/target, mob/user)
@@ -541,7 +541,7 @@ TRASH BAG
 		if (SPONGE_WRING)
 			if (target.reagents)
 				src.reagents.trans_to(target, src.reagents.total_volume)
-			else if(istype(target, /obj/submachine/chef_sink))
+			else if(istype(target, /obj/machinery/sink))
 				src.reagents.clear_reagents()
 
 		if (SPONGE_WET)
@@ -592,6 +592,7 @@ TRASH BAG
 	stamina_damage = 15
 	stamina_cost = 4
 	stamina_crit_chance = 10
+	default_material = "plastic"
 
 	New()
 		..()
@@ -611,6 +612,8 @@ TRASH BAG
 /obj/item/caution/traitor
 	item_function_flags = IMMUNE_TO_ACID
 	var/obj/item/reagent_containers/payload
+	SYNDICATE_STEALTH_DESCRIPTION("A small nozzle can be seen poking out the top.")
+	tooltip_flags = REBUILD_USER
 
 	New()
 		. = ..()
@@ -772,6 +775,7 @@ TRASH BAG
 // handheld vacuum
 
 TYPEINFO(/obj/item/handheld_vacuum)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("bamboo" = 3,
 				"metal" = 10)
 /obj/item/handheld_vacuum
@@ -822,7 +826,7 @@ TYPEINFO(/obj/item/handheld_vacuum)
 			boutput(user, SPAN_NOTICE("You remove \the [removed_things[1]] from \the [src]"))
 		else
 			boutput(user, SPAN_NOTICE("You remove \the [removed_things[1]] and \the [removed_things[2]] from \the [src]"))
-		src.tooltip_rebuild = 1
+		src.tooltip_rebuild = TRUE
 
 	attack_hand(mob/user)
 		if(!(src.loc == user && user.find_in_hand(src)))
@@ -852,7 +856,7 @@ TYPEINFO(/obj/item/handheld_vacuum)
 			for(var/obj/item/I in src.trashbag.storage.get_contents())
 				I.set_loc(storage)
 			boutput(user, SPAN_NOTICE("You empty \the [src] into \the [target]."))
-			src.tooltip_rebuild = 1
+			src.tooltip_rebuild = TRUE
 			return
 		else if(istype(target, /obj/machinery/disposal))
 			var/obj/machinery/disposal/disposal = target
@@ -860,14 +864,14 @@ TYPEINFO(/obj/item/handheld_vacuum)
 				for(var/obj/item/I in src.trashbag.storage.get_contents())
 					I.set_loc(disposal)
 				boutput(user, SPAN_NOTICE("You empty \the [src] into \the [target]."))
-				src.tooltip_rebuild = 1
+				src.tooltip_rebuild = TRUE
 				disposal.update()
 				return
-		else if(istype(target, /obj/submachine/chef_sink))
+		else if(istype(target, /obj/machinery/sink))
 			if(src.bucket.reagents.total_volume > 0)
 				boutput(user, SPAN_NOTICE("You empty \the [src] into \the [target]."))
 				src.bucket.reagents.clear_reagents()
-				src.tooltip_rebuild = 1
+				src.tooltip_rebuild = TRUE
 			else
 				boutput(user, SPAN_NOTICE("[src]'s bucket is empty."))
 			return
@@ -875,7 +879,7 @@ TYPEINFO(/obj/item/handheld_vacuum)
 			if(src.bucket.reagents.total_volume > 0)
 				boutput(user, SPAN_NOTICE("You empty \the [src] into \the [target]."))
 				src.bucket.transfer_all_reagents(target, user)
-				src.tooltip_rebuild = 1
+				src.tooltip_rebuild = TRUE
 			else
 				boutput(user, SPAN_NOTICE("[src]'s bucket is empty."))
 			return
@@ -947,7 +951,7 @@ TYPEINFO(/obj/item/handheld_vacuum)
 							boutput(user, SPAN_NOTICE("[src]'s [src.trashbag] is now full."))
 							break
 
-		src.tooltip_rebuild = 1
+		src.tooltip_rebuild = TRUE
 		. |= success
 
 	attackby(obj/item/W, mob/user, params, is_special=0)
@@ -965,7 +969,7 @@ TYPEINFO(/obj/item/handheld_vacuum)
 				user.put_in_hand_or_drop(old_trashbag)
 			user.u_equip(W)
 			W.dropped(user)
-			src.tooltip_rebuild = 1
+			src.tooltip_rebuild = TRUE
 		else if(istype(W, /obj/item/reagent_containers/glass/bucket))
 			if(isnull(src.bucket))
 				boutput(user, SPAN_NOTICE("You insert \the [W] into \the [src]."))
@@ -980,7 +984,7 @@ TYPEINFO(/obj/item/handheld_vacuum)
 				user.put_in_hand_or_drop(old_bucket)
 			user.u_equip(W)
 			W.dropped(user)
-			src.tooltip_rebuild = 1
+			src.tooltip_rebuild = TRUE
 		else
 			. = ..()
 
@@ -1100,13 +1104,15 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 	name = "trash bag"
 	desc = "A flimsy bag for filling with things that are no longer wanted."
 	icon = 'icons/obj/janitor.dmi'
-	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_gimmick.dmi'	// Avoid icon duplication with the clothing
+	inhand_image_icon = 'icons/mob/inhand/jumpsuits/hand_js_gimmick.dmi'	// Avoid icon duplication with the clothing
 	icon_state = "trashbag-f"
 	item_state = "trashbag"
 	w_class = W_CLASS_TINY
 	rand_pos = TRUE
 	flags = TABLEPASS | NOSPLASH
 	tooltip_flags = REBUILD_DIST
+	default_material = "plastic"
+	material_amt = 0.2
 	var/base_state = "trashbag"
 	var/clothing_type = /obj/item/clothing/under/gimmick/trashsinglet
 

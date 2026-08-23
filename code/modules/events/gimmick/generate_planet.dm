@@ -163,7 +163,7 @@ TYPEINFO(/datum/random_event/major/find_planet)
 
 			var/command_report = pick(reports)
 			command_report += "\n\nTarget data sent to the teleport computer."
-			command_announcement(replacetext(command_report, "\n", "<br>"), title, sound_to_play, do_sanitize=0);
+			command_announcement(replacetext(command_report, "\n", "<br>"), title, sound_to_play, do_sanitize=0,alert_origin=ALERT_ANOMALY);
 
 			post_event()
 

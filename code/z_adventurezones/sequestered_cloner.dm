@@ -88,7 +88,7 @@
     "We hope you can iterate on a DNA pattern,",
     "and produce agents that excel in their",
     "engineering skills, and killing skills.",
-    "Educationl and prooving materials are",
+    "Educational and proving materials are",
     "already setup.",
     "Keep us updated on your progress.",
     "We'll periodically send biomass.")
@@ -124,7 +124,7 @@
     "My good progress has slumped.",
     "Where each iteration was an improvement,",
     "the latest spent the whole test slowly",
-    "dissasembling the floors until they",
+    "disassembling the floors until they",
     "starved.",
     "I've been recycling the bodies, but then",
     "reclaimer is running low.",
@@ -163,9 +163,9 @@
     "FROM: Richard Segway",
     "SUBJECT: Local Fauna Troubles!",
     "-----------------|BODY|-----------------",
-    "Thought the post had been comprimised!",
+    "Thought the post had been compromised!",
     "I've been hearing some scratching outside.",
-    "It's rythmic though, I suspect a space ant",
+    "It's rhythmic though, I suspect a space ant",
     "looking for a new home.",
     "I'll go dispatch it. But if an ant has",
     "found its way here, more may arrive.",
@@ -184,7 +184,7 @@
 		..()
 		var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
 		newfolder.name = "sys"
-		newfolder.metadata["permission"] = COMP_HIDDEN
+		newfolder.metadata["permission"] = DWAINE::PERM::DEFAULT::NONE
 		src.root.add_file( newfolder )
 		newfolder.add_file( new /datum/computer/file/mainframe_program/os/kernel(src) )
 		newfolder.add_file( new /datum/computer/file/mainframe_program/shell(src) )
@@ -205,7 +205,7 @@
 
 		newfolder = new /datum/computer/folder
 		newfolder.name = "bin" //Applications available to all users.
-		newfolder.metadata["permission"] = COMP_ROWNER|COMP_RGROUP|COMP_ROTHER
+		newfolder.metadata["permission"] = DWAINE::PERM::DEFAULT::ALL_READ_ONLY
 		src.root.add_file( newfolder )
 		newfolder.add_file( new /datum/computer/file/mainframe_program/utility/cd(src) )
 		newfolder.add_file( new /datum/computer/file/mainframe_program/utility/ls(src) )
@@ -223,12 +223,12 @@
 
 		newfolder = new /datum/computer/folder
 		newfolder.name = "mnt"
-		newfolder.metadata["permission"] = COMP_ROWNER|COMP_RGROUP|COMP_ROTHER
+		newfolder.metadata["permission"] = DWAINE::PERM::DEFAULT::ALL_READ_ONLY
 		src.root.add_file( newfolder )
 
 		newfolder = new /datum/computer/folder
 		newfolder.name = "conf"
-		newfolder.metadata["permission"] = COMP_ROWNER|COMP_RGROUP|COMP_ROTHER
+		newfolder.metadata["permission"] = DWAINE::PERM::DEFAULT::ALL_READ_ONLY
 		src.root.add_file( newfolder )
 
 		var/datum/computer/file/record/testR = new
@@ -241,7 +241,7 @@
 
 		newfolder = new /datum/computer/folder
 		newfolder.name = "etc"
-		newfolder.metadata["permission"] = COMP_ROWNER|COMP_RGROUP|COMP_ROTHER
+		newfolder.metadata["permission"] = DWAINE::PERM::DEFAULT::ALL_READ_ONLY
 		src.root.add_file( newfolder )
 
 		return

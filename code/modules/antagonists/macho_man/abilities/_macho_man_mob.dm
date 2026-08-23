@@ -36,7 +36,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 		src.equip_new_if_possible(/obj/item/device/radio/headset, SLOT_EARS)
 
 		if(!src.pseudo)
-			for (var/datum/targetable/macho/A as() in concrete_typesof(/datum/targetable/macho))
+			for (var/datum/targetable/macho/A as anything in concrete_typesof(/datum/targetable/macho))
 				src.abilityHolder.addAbility(A)
 
 		else
@@ -336,7 +336,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 			M.targeting_ability = macho_heartpunch
 			M.update_cursor()
 
-	emote(var/act, var/emoteTarget = null)
+	emote(var/act, var/emoteTarget = null, var/dead_check = TRUE)
 		switch(act)
 			if ("scream")
 				if (src.pseudo)

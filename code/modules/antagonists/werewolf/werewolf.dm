@@ -2,6 +2,7 @@
 	id = ROLE_WEREWOLF
 	display_name = "werewolf"
 	antagonist_icon = "werewolf"
+	wiki_link = "https://wiki.ss13.co/Werewolf"
 
 	/// The ability holder of this werewolf, containing their respective abilities.
 	var/datum/abilityHolder/werewolf/ability_holder
@@ -26,14 +27,14 @@
 		src.ability_holder.addAbility(/datum/targetable/werewolf/werewolf_tainted_saliva)
 		src.ability_holder.addAbility(/datum/targetable/werewolf/werewolf_defense)
 		src.ability_holder.addAbility(/datum/targetable/werewolf/werewolf_transform)
-		src.owner.current.resistances += /datum/ailment/disease/lycanthropy
+		src.owner.current.add_ailment_resistance(/datum/ailment/disease/lycanthropy, src)
 
 		src.owner.current.assign_gimmick_skull()
 
 	remove_equipment()
 		var/mob/living/carbon/human/H = src.owner.current
 		if (istype(H.mutantrace, /datum/mutantrace/werewolf))
-			H.werewolf_transform()
+			H.werewolf_transform(TRUE)
 
 		src.ability_holder.removeAbility(/datum/targetable/werewolf/werewolf_feast)
 		src.ability_holder.removeAbility(/datum/targetable/werewolf/werewolf_pounce)
@@ -43,7 +44,7 @@
 		src.ability_holder.removeAbility(/datum/targetable/werewolf/werewolf_defense)
 		src.ability_holder.removeAbility(/datum/targetable/werewolf/werewolf_transform)
 		H.remove_ability_holder(/datum/abilityHolder/werewolf)
-		H.resistances -= /datum/ailment/disease/lycanthropy
+		H.remove_ailment_resistance(/datum/ailment/disease/lycanthropy, src)
 
 		SPAWN(2.5 SECONDS)
 			H.assign_gimmick_skull()

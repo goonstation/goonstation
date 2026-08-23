@@ -10,7 +10,7 @@
 	c_flags = COVERSMOUTH
 	compatible_species = list("human", "cow", "werewolf")
 	wear_layer = MOB_HEAD_LAYER1
-	var/is_muzzle = 0
+	var/is_muzzle = FALSE
 	var/use_bloodoverlay = 1
 	var/stapled = 0
 	var/allow_staple = 1
@@ -26,6 +26,19 @@
 		setProperty("coldprot", 5)
 		setProperty("heatprot", 5)
 		setProperty("meleeprot_head", 2)
+
+	equipped(mob/user, slot)
+		. = ..()
+		if ((slot != SLOT_WEAR_MASK) || !src.vchange)
+			return
+		for(var/modifier in src.vchange.speech_modifiers)
+			user.ensure_speech_tree().AddSpeechModifier(modifier)
+
+	unequipped(mob/user)
+		if ((src.equipped_in_slot == SLOT_WEAR_MASK) && src.vchange)
+			for(var/modifier in src.vchange.speech_modifiers)
+				user.ensure_speech_tree().RemoveSpeechModifier(modifier)
+		. = ..()
 
 /obj/item/clothing/mask/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/voice_changer))
@@ -44,6 +57,9 @@
 			src.vchange = W
 			W.set_loc(src)
 			user.u_equip(W)
+			if(user.get_slot_from_item(src) == SLOT_WEAR_MASK)
+				for(var/modifier in src.vchange.speech_modifiers)
+					user.ensure_speech_tree().AddSpeechModifier(modifier)
 			return
 	else if (issnippingtool(W))
 		if (src.vchange)
@@ -56,6 +72,9 @@
 				return
 			user.show_text("You remove [src.vchange] from [src].", "green")
 			user.put_in_hand_or_drop(src.vchange)
+			if(user.get_slot_from_item(src) == SLOT_WEAR_MASK)
+				for(var/modifier in src.vchange.speech_modifiers)
+					user.ensure_speech_tree().RemoveSpeechModifier(modifier)
 			src.vchange = null
 			return
 		else
@@ -141,6 +160,7 @@
 	color_b = 0.95
 
 TYPEINFO(/obj/item/clothing/mask/moustache)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 2
 
 /obj/item/clothing/mask/moustache
@@ -151,7 +171,6 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 	see_face = FALSE
 	w_class = W_CLASS_TINY
 	c_flags = null
-	is_syndicate = 1
 
 	setupProperties()
 		..()
@@ -254,6 +273,7 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 	color_b = 1
 
 TYPEINFO(/obj/item/clothing/mask/gas/voice)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 6
 
 /obj/item/clothing/mask/gas/voice
@@ -262,27 +282,34 @@ TYPEINFO(/obj/item/clothing/mask/gas/voice)
 	icon_state = "gas_alt"
 	item_state = "gas_alt"
 	//vchange = 1
-	is_syndicate = 1
 
 	New()
 		..()
 		src.vchange = new(src)
 
 TYPEINFO(/obj/item/voice_changer)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 6
 
 /obj/item/voice_changer
 	name = "voice changer"
 	desc = "This voice-modulation device will dynamically disguise your voice to that of whoever is listed on your identification card, via incredibly complex algorithms. Discreetly fits inside most masks, and can be removed with wirecutters."
 	icon_state = "voicechanger"
-	is_syndicate = 1
 	var/permanent = FALSE
+	var/speech_modifiers = list(SPEECH_MODIFIER_VOICE_CHANGER)
 	HELP_MESSAGE_OVERRIDE({"Use the voice changer on a face-concealing mask to fit it inside. You will speak as and appear in chat as the name of your worn ID, or as "unknown" if you aren't wearing your ID. Use wirecutters on the mask to remove the voice changer."})
 
 /obj/item/voice_changer/permanent
 	permanent = TRUE
 
+/obj/item/voice_changer/anonymizer
+	name = "voice anonymizer"
+	desc = "This voice-modulation device will scramble your voice such that it is unrecognizable. Discreetly fits inside most masks, and can be removed with wirecutters."
+	speech_modifiers = list(SPEECH_MODIFIER_VOICE_ANONYMIZER)
+	HELP_MESSAGE_OVERRIDE({"Use the voice anonymizer on a face-concealing mask to fit it inside. You will speak as and appear in chat as "unknown". Use wirecutters on the mask to remove the voice changer."})
+
 TYPEINFO(/obj/item/clothing/mask/monkey_translator)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 12	// 2x voice changer cost. It's complicated ok
 
 /obj/item/clothing/mask/monkey_translator
@@ -294,7 +321,21 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	w_class = W_CLASS_SMALL
 	c_flags = COVERSMOUTH	// NOT usable for internals.
 	compatible_species = list("human", "cow", "werewolf", "martian")
-	var/new_language = "english"	// idk maybe you can varedit one so that humans speak monkey instead. who knows
+	var/new_language = LANGUAGE_ENGLISH	// idk maybe you can varedit one so that humans speak monkey instead. who knows
+
+	equipped(mob/user, slot)
+		. = ..()
+
+		if (slot != SLOT_WEAR_MASK)
+			return
+
+		user.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_TRANSLATOR, language_id = src.new_language)
+
+	unequipped(mob/user)
+		if (src.equipped_in_slot == SLOT_WEAR_MASK)
+			user.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_TRANSLATOR)
+
+		. = ..()
 
 /obj/item/clothing/mask/breath
 	desc = "A close-fitting mask that can be connected to an air supply but does not work very well in hard vacuum without a helmet."
@@ -424,7 +465,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 		. = ..()
 		var/mob/living/carbon/human/H = user
 		if(istype(H) && slot == SLOT_WEAR_MASK)
-			if ( user.mind && user.mind.assigned_role=="Clown" && istraitor(user) )
+			if ( user.mind && user.traitHolder?.hasTrait("training_clown") && istraitor(user) )
 				src.cant_other_remove = 1
 				src.cant_self_remove = 0
 			else
@@ -464,7 +505,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 				src.victim.emote("laugh")
 
 	afterattack(atom/target, mob/user, reach, params)
-		if ( reach <= 1 && user.mind && user.mind.assigned_role == "Clown" && istraitor(user) && istype(user,/mob/living/carbon/human) && istype(target,/mob/living/carbon/human) )
+		if ( reach <= 1 && user.traitHolder?.hasTrait("training_clown") && istraitor(user) && istype(user,/mob/living/carbon/human) && istype(target,/mob/living/carbon/human) )
 			var/mob/living/carbon/human/U = user
 			var/mob/living/carbon/human/T = target
 			if ( U.a_intent != INTENT_HELP && U.zone_sel.selecting == "head" && T.can_equip(src, SLOT_WEAR_MASK) )
@@ -480,12 +521,88 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 
 /obj/item/clothing/mask/medical
 	name = "medical mask"
-	desc = "This mask does not work very well in low pressure environments."
+	desc = "This mask can have a mini-tank attached, but does not work very well in low pressure environments."
 	icon_state = "medical"
 	item_state = "medical"
 	c_flags = COVERSMOUTH | MASKINTERNALS
 	w_class = W_CLASS_SMALL
+	duration_put = 7 SECONDS
 	protective_temperature = 420
+
+	var/obj/item/tank/attached_tank
+
+	get_help_message(dist, mob/user)
+		. = "Detatch an attached tank with a <b>wrenching</b> tool.<br>Click with a <b>mini-tank</b> in-hand to attach it.<br>Can equip this item on someone else by targeting the <b>head</b> and <b>clicking</b> on [TEXT_INTENT_HELP] intent.<br><b>Does not work in space!</b>"
+
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if (user.zone_sel.selecting == "head" && ishuman(target) && user.a_intent == INTENT_HELP)
+			var/mob/living/carbon/human/Htarget = target
+			if(Htarget.wear_mask)
+				boutput(user, SPAN_ALERT("[Htarget] is already wearing something on [his_or_her(Htarget)] face!"))
+				return
+			actions.start(new/datum/action/bar/icon/otherItem(user, Htarget, user.equipped(), SLOT_WEAR_MASK, 10 SECONDS), user) // longer actionbar than regular
+			return
+		..()
+
+	attackby(obj/item/I, mob/user)
+		if (iswrenchingtool(I))
+			if (!src.attached_tank)
+				boutput(user, SPAN_ALERT("There's no tank attached!"))
+				return
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 35, 1)
+			user.put_in_hand_or_drop(src.attached_tank)
+			src.attached_tank = null
+			src.w_class = W_CLASS_SMALL
+			src.UpdateIcon()
+			return
+
+		if (istype(I, /obj/item/tank/mini))
+			if (src.attached_tank)
+				boutput(user, SPAN_ALERT("There's already an attached tank!"))
+				return
+			playsound(src.loc, 'sound/items/Screwdriver2.ogg', 45, 1)
+			I.set_loc(src)
+			user.u_equip(I)
+			src.attached_tank = I
+			src.w_class = W_CLASS_NORMAL
+			src.UpdateIcon()
+			return
+
+		. = ..()
+
+	equipped(mob/user, slot)
+		. = ..()
+		if (slot != SLOT_WEAR_MASK)
+			return
+		SPAWN(1 DECI SECOND) // force equipping others doesn't set the wear_mask var in time
+			src.attached_tank?.toggle_valve()
+
+	get_desc(dist, mob/user)
+		. = ..()
+		if (src.attached_tank)
+			. += " It has [src.attached_tank] attached."
+		else
+			. += " It has no tank attached."
+
+	update_icon(...)
+		if (src.attached_tank)
+			var/image/mask_tank = src.SafeGetOverlayImage("mask_tank", src.attached_tank.icon, src.attached_tank.icon_state, pixel_x = 6, pixel_y = 2)
+			var/matrix/new_transform = mask_tank.transform
+			new_transform.Scale(-1, 1)
+			new_transform.Turn(180)
+			mask_tank.transform = new_transform
+			src.underlays += mask_tank
+		else
+			src.underlays.len = 0
+
+/obj/item/clothing/mask/medical/anesthetic
+	name = "anesthetic mask"
+	desc = "For when you want to put patients to sleep wtihout losing patience. Does not work in low-pressure enviornments."
+
+	New()
+		. = ..()
+		src.attached_tank = new /obj/item/tank/mini/anesthetic(src)
+		src.UpdateIcon()
 
 /obj/item/clothing/mask/muzzle
 	name = "muzzle"
@@ -494,7 +611,22 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	c_flags = COVERSMOUTH
 	w_class = W_CLASS_SMALL
 	desc = "You'd probably say something like 'Hello Clarice.' if you could talk while wearing this."
-	is_muzzle = 1
+	is_muzzle = TRUE
+
+	equipped(mob/user, slot)
+		. = ..()
+
+		if (slot != SLOT_WEAR_MASK)
+			return
+
+		user.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_MUZZLE)
+
+	unequipped(mob/user)
+		if (src.equipped_in_slot == SLOT_WEAR_MASK)
+			user.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_MUZZLE)
+
+		. = ..()
+
 
 /obj/item/clothing/mask/surgical
 	name = "sterile mask"
@@ -516,6 +648,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	item_state = "surgicalshield"
 	w_class = W_CLASS_SMALL
 	c_flags = COVERSMOUTH | COVERSEYES
+	default_material = "plastic"
 	var/bee = FALSE
 	var/randcol
 
@@ -578,12 +711,13 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 		else if (istype(W,/obj/item/cable_coil/))
 			boutput(user, SPAN_NOTICE("You attach the cable to the mask. Looks like you can wear it now."))
 			var/obj/item/cable_coil/C = W
-			C.use(1)
+			if(!C.use(1))
+				return
 			var/obj/item/clothing/mask/paper/M = new /obj/item/clothing/mask/paper(src.loc)
 			user.put_in_hand_or_drop(M)
-			//M.set_loc(get_turf(src)) // otherwise they seem to just vanish into the aether at times
 			if (src.color)
 				M.color = src.color
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, M, user)
 			qdel(src)
 
 /obj/item/clothing/mask/paper
@@ -602,6 +736,14 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 			if (P.font_color)
 				boutput(user, SPAN_NOTICE("You scribble on the mask until it's filled in."))
 				src.color = P.font_color
+
+/obj/item/clothing/mask/sunflowermask
+	name = "Sunflower Mask"
+	desc = "Looking  at it makes you happy. Be careful wearing it around bees, though."
+	icon_state = "sunflower_mask"
+	item_state = "sunflower_mask"
+	see_face = FALSE
+	c_flags = COVERSMOUTH
 
 /obj/item/clothing/mask/melons
 	name = "flimsy 'George Melons' mask"
@@ -757,6 +899,7 @@ ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 	the_handkerchief.setMaterial(src.material)
 	the_handkerchief.color = src.color
 	src.copy_filters_to(the_handkerchief)
+	SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, the_handkerchief, user)
 	qdel(src)
 	user.put_in_hand_or_drop(the_handkerchief)
 	boutput(user, SPAN_NOTICE("You unfold \the [src] into \a [the_handkerchief]."))
@@ -829,7 +972,8 @@ ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 /obj/item/clothing/mask/bandana/random/New()
 	..()
 	var/obj/item/clothing/mask/bandana/bandana_to_spawn = pick(possible_bandana)
-	new bandana_to_spawn(src.loc)
+	var/new_bandana = new bandana_to_spawn(src.loc)
+	SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, new_bandana)
 	qdel(src)
 
 /obj/item/clothing/mask/tengu
@@ -855,3 +999,26 @@ ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 	icon_state = "burnedcultmask"
 	wear_layer = MOB_OVER_TOP_LAYER
 	see_face = FALSE
+
+// Clown nose!!
+
+/obj/item/clothing/mask/clown_nose
+	name = "clown nose"
+	desc = "A classic red clown nose. It even honks!"
+	icon_state = "clown_nose"
+	item_state = "clown_nose"
+	see_face = TRUE
+	c_flags = null
+
+	var/list/sounds_instrument = list('sound/musical_instruments/Bikehorn_1.ogg')
+	var/volume = 50
+	var/randomized_pitch = 1
+
+	proc/honk_nose(mob/user as mob)
+		if (ON_COOLDOWN(src, "clown_nose", 10 SECONDS))
+			return 1
+		src.add_fingerprint(user)
+		user?.visible_message("<B>[user]</B> honks the [src.name]!")
+		playsound(src, islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument, src.volume, src.randomized_pitch)
+		return 0
+

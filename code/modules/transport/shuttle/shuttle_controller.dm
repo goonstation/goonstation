@@ -168,6 +168,10 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 									continue
 								if (istype(AM, /obj/effects/precipitation))
 									continue
+								if (istype(AM, /atom/movable/buried_storage))
+									var/atom/movable/buried_storage/buried_storage = AM
+									buried_storage.move_storage_contents_to_turf(D)
+									continue
 								AM.set_loc(D)
 								// NOTE: Commenting this out to avoid recreating mass driver glitch
 								/*
@@ -175,6 +179,8 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 									AM.throw_at(E, 1, 1)
 									return
 								*/
+
+						end_location.set_gforce_minimum(GFORCE_EARTH_GRAVITY)
 
 						var/filler_turf = text2path(start_location.filler_turf)
 						if (!filler_turf)
@@ -184,6 +190,7 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 							if (istype(P, filler_turf))
 								P.ReplaceWith(src.map_turf, keep_old_material = 0, force = 1)
 
+						start_location.set_gforce_minimum(GFORCE_GRAVITY_MINIMUM)
 
 						settimeleft(SHUTTLELEAVETIME)
 
@@ -191,9 +198,16 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 							for (var/obj/machinery/computer/airbr/S in src.airbridges)
 								S.establish_bridge()
 
-						boutput(world, "<B>The Emergency Shuttle has docked with the station! You have [src.timeleft()/60] minutes to board the Emergency Shuttle.</B>")
+						for(var/client/C in global.clients)
+							if (istype(C.mob, /mob/living/carbon/human/tutorial))
+								C.mob.playsound_local_not_inworld('sound/misc/clock_tick.ogg', 50, FALSE)
+								tgui_alert(C.mob, {"The round is ending in five minutes. You can restart the tutorial next round and use the top-left arrow buttons to skip ahead."}, "Five Minute Warning!")
+
+						command_announcement("The Emergency Shuttle has docked with the station! You have [src.timeleft()/60] minutes to board the Emergency Shuttle.", \
+							"Emergency Shuttle Arrival", \
+							'sound/misc/shuttle_arrive1.ogg', \
+							alert_origin=ALERT_COMMAND);
 						ircbot.event("shuttledock")
-						playsound_global(world, 'sound/misc/shuttle_arrive1.ogg', 100)
 
 						processScheduler.enableProcess("Fluid_Turfs")
 
@@ -205,7 +219,9 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 						var/display_time = round(src.timeleft()/60)
 						//if (display_time <= 0) // The Emergency Shuttle will be entering the wormhole to CentCom in 0 minutes!
 							//display_time = 1 // fuckofffffffffff
-						boutput(world, "<B>The Emergency Shuttle will be entering the Channel in [display_time] minute[s_es(display_time)]! Please prepare for Channel traversal.</B>")
+						command_announcement("The Emergency Shuttle will be entering the Channel in [display_time] minute[s_es(display_time)]! Please prepare for Channel traversal.", \
+							"Emergency Shuttle Departing", \
+							alert_origin=ALERT_COMMAND);
 						src.announcement_done = SHUTTLE_ANNOUNCEMENT_WILL_DEPART_IN
 
 					else if (src.announcement_done < SHUTTLE_ANNOUNCEMENT_SHIP_CHARGE && timeleft < 30)
@@ -284,6 +300,8 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 						if (particle_spawn)
 							particle_spawn.start_particles()
 
+						end_location.set_gforce_minimum(GFORCE_EARTH_GRAVITY)
+
 						DEBUG_MESSAGE("Now moving shuttle!")
 						start_location.move_contents_to(end_location, map_turf, turf_to_skip = list(/turf/simulated/floor/plating, src.map_turf))
 
@@ -292,10 +310,15 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 							if(length(turfs_to_fix))
 								station_repair.repair_turfs(turfs_to_fix, force_floor=TRUE)
 
+						start_location.set_gforce_minimum(GFORCE_GRAVITY_MINIMUM)
+
+
 						DEBUG_MESSAGE("Done moving shuttle!")
 						settimeleft(SHUTTLETRANSITTIME)
-						boutput(world, "<B>The Emergency Shuttle has left for CentCom! It will arrive in [src.timeleft() / 60] minute[s_es(src.timeleft() / 60)]!</B>")
-						playsound_global(world, 'sound/misc/shuttle_enroute.ogg', 100)
+						command_announcement("The Emergency Shuttle has left for CentCom! It will arrive in [src.timeleft() / 60] minute[s_es(src.timeleft() / 60)]!", \
+							"Emergency Shuttle Departed", \
+							'sound/misc/shuttle_enroute.ogg', \
+							alert_origin=ALERT_COMMAND);
 						//online = 0
 
 						return TRUE
@@ -321,12 +344,20 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 						var/filler_turf = text2path(end_location.filler_turf)
 						if (!filler_turf)
 							filler_turf = centcom_turf
+
+						end_location.set_gforce_minimum(GFORCE_EARTH_GRAVITY)
+
 						start_location.move_contents_to(end_location, src.transit_turf, turf_to_skip=/turf/space)
 						for (var/turf/G in end_location)
 							if (istype(G, src.transit_turf))
 								G.ReplaceWith(filler_turf, keep_old_material = 0, force = 1)
-						boutput(world, "<BR><B>The Emergency Shuttle has arrived at CentCom!")
-						playsound_global(world, 'sound/misc/shuttle_centcom.ogg', 100)
+
+						start_location.set_gforce_minimum(GFORCE_GRAVITY_MINIMUM)
+
+						command_announcement("The Emergency Shuttle has arrived at CentCom!", \
+							"Emergency Shuttle at CentCom", \
+							'sound/misc/shuttle_centcom.ogg', \
+							alert_origin=ALERT_COMMAND);
 						logTheThing(LOG_STATION, null, "The emergency shuttle has arrived at Centcom.")
 						src.online = FALSE
 
@@ -348,7 +379,9 @@ var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 						for (var/turf/O in end_location)
 							if (istype(O, transit_turf))
 								O.ReplaceWith(centcom_turf, keep_old_material = 0, force = 1)
-						boutput(world, "<BR><B>The Emergency Shuttle has arrived at CentCom!")
+						command_announcement("The Emergency Shuttle has arrived at CentCom!", \
+							"Emergency Shuttle at CentCom", \
+							alert_origin=ALERT_COMMAND);
 						logTheThing(LOG_STATION, null, "The emergency shuttle has arrived at Centcom.")
 						src.online = FALSE
 						return TRUE

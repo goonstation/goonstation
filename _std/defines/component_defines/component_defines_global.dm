@@ -10,6 +10,14 @@
 /// When a client is calling New() (GLOBAL_SIGNAL, client)
 #define COMSIG_GLOBAL_CLIENT_NEW "global_client_new"
 
+// ---- z-levels ----
+	/// When `world.maxz` is incremented.
+	#define COMSIG_GLOBAL_MAXZ_INCREMENTED "global_maxz_incremented"
+
+// ---- turfs ----
+	/// When any turf is about to be replaced. (GLOBAL_SIGNAL, turf/replaced_turf, replacement_type)
+	#define COMSIG_GLOBAL_TURF_REPLACED "global_turf_replaced"
+
 // ---- cargo pads ----
 
 	/// When a cargo pad is destroyed, deconstructed, or turned off
@@ -53,3 +61,4 @@
 /// ⠀⠀⠀⠀⠀⠀⠀⠈⠛⠻⠿⠿⠿⠿⠋⠁⠀⠀⠀⠀
 #define COMSIG_GLOBAL_SUSSY_PHRASE "sussy"
 #define COMSIG_GLOBAL_UNCOOL_PHRASE "uncool_word"
+#define COMSIG_GLOBAL_MEN_HERE "men_here"

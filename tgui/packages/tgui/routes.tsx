@@ -3,12 +3,20 @@
  * @copyright 2020 Aleksej Komarov
  * @license MIT
  */
-
 import { useBackend } from './backend';
 import { useDebug } from './debug';
 import { Window } from './layouts';
+import {
+  getSecretComponent,
+  loadPersistedSecretID,
+  persistSecretID,
+} from './secret-interfaces';
 
-const requireInterface = require.context('./interfaces');
+const requireInterface = require.context(
+  './interfaces',
+  true,
+  /^(?!.*\.test\.(tsx?|jsx?)).*\.(tsx?|jsx?)$/,
+);
 
 const routingError =
   (type: 'notFound' | 'missingExport', name: string) => () => {
@@ -53,7 +61,7 @@ const RefreshingWindow = () => {
 */
 
 // Get the component for the current route
-export const getRoutedComponent = () => {
+export function getRoutedComponent() {
   const { suspended, config } = useBackend();
   const { kitchenSink = false } = useDebug();
 
@@ -65,20 +73,33 @@ export const getRoutedComponent = () => {
     return RefreshingWindow;
   }
   */
-  if (process.env.NODE_ENV !== 'production') {
-    // Show a kitchen sink
-    if (kitchenSink) {
-      return require('./debug').KitchenSink;
+
+  if (process.env.NODE_ENV !== 'production' && kitchenSink) {
+    const { KitchenSink } = require('./debug');
+    return KitchenSink;
+  }
+
+  const name = config?.interface?.name;
+
+  // |GOONSTATION-ADD| - check if secret interface
+  if (name) {
+    // Should we be loading a secret interface? fallback to sessionStorage
+    const secretId =
+      config?.secretInterfaces?.[name] || loadPersistedSecretID(name);
+
+    if (secretId) {
+      persistSecretID(name, secretId);
+      return getSecretComponent(name, secretId);
     }
   }
 
-  const name = config?.interface;
   const interfacePathBuilders = [
     (name: string) => `./${name}.tsx`,
     (name: string) => `./${name}.jsx`,
     (name: string) => `./${name}/index.tsx`,
     (name: string) => `./${name}/index.jsx`,
   ];
+
   let esModule;
   while (!esModule && interfacePathBuilders.length > 0) {
     const interfacePathBuilder = interfacePathBuilders.shift()!;
@@ -91,12 +112,15 @@ export const getRoutedComponent = () => {
       }
     }
   }
+
   if (!esModule) {
     return routingError('notFound', name);
   }
+
   const Component = esModule[name];
   if (!Component) {
     return routingError('missingExport', name);
   }
+
   return Component;
-};
+}

@@ -1,0 +1,347 @@
+#define WIRE_SIGNAL 1
+#define WIRE_RECEIVE 2
+#define WIRE_TRANSMIT 4
+#define WINDOW_OPTIONS "window=radio;size=280x350"
+
+TYPEINFO(/obj/item/device/radio)
+	mats = 3
+	start_listen_effects = list(LISTEN_EFFECT_RADIO)
+	start_listen_modifiers = list(LISTEN_MODIFIER_RADIO)
+	start_listen_inputs = list(LISTEN_INPUT_EQUIPPED)
+	start_listen_languages = list(LANGUAGE_ALL)
+	start_speech_modifiers = list(SPEECH_MODIFIER_RADIO)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_RADIO, SPEECH_OUTPUT_RADIO_GLOBAL, SPEECH_OUTPUT_RADIO_GLOBAL_DEFAULT_ONLY, SPEECH_OUTPUT_RADIO_GLOBAL_UNPROTECTED_ONLY)
+
+/obj/item/device/radio
+	name = "station bounced radio"
+	desc = "A portable, non-wearable radio for communicating over a specified frequency. Has a microphone and a speaker which can be independently toggled."
+	suffix = "\[3\]"
+	icon_state = "walkietalkie"
+	item_state = "radio"
+	flags = TABLEPASS | CONDUCT
+	c_flags = ONBELT
+	throw_speed = 2
+	throw_range = 9
+	w_class = W_CLASS_SMALL
+	say_language = LANGUAGE_ENGLISH
+
+	// Primary Channel Variables:
+	/// Determines the colour of messages sent by the radio and certain aspects of this device's sprite.
+	var/device_color = null
+	/// The CSS class that should be used for messages sent over the primary channel of this radio. Overridden by `device_color`.
+	var/chat_class = RADIO::CSS::STANDARD
+	/// The frequency of the primary channel of this radio.
+	var/frequency = RADIO::FREQ::DEFAULT
+	/// Whether the primary frequency may be changed from its default setting. If TRUE, permits the frequency to exist outside of the default range.
+	var/locked_frequency = FALSE
+
+	// Secure Channel Variables:
+	/// A list of radio packet componenets that this radio has attached to it, indexed by channel prefix.
+	var/list/datum/component/packet_connected/radio/secure_connections = null
+	/// A list of available secure radio channel frequencies, indexed by channel prefix.
+	var/list/secure_frequencies = null
+	/// The colour that should be used for messages sent over each channel, indexed by channel prefix. Alternatively a single colour may be defined for all channels to use that colour. Overrides `secure_classes`.
+	var/list/secure_colors = list()
+	/// The overriding CSS classes that should be used for messages sent over each channel, indexed by channel prefix. Alternatively a class under the index "all" may be defined for all undefined channels to use that style (e.g. secure_classes = list("all" = RADIO::CSS::SYNDICATE)). Overridden by `secure_colors`.
+	var/list/secure_classes = list()
+
+	// Additional Message Styling Variables:
+	/// If set, this is radio icon that this radio should display on sent messages. See the `browserassets/images/radio_icons` folder.
+	var/icon_override = null
+	/// If set, the tooltip that the radio icon of this radio should use. `null` will result in the radio name being used. "" will result in no tooltip.
+	var/icon_tooltip = null
+	/// Whether this radio will always display maptext.
+	var/forced_maptext = FALSE
+
+	// Microphone Variables:
+	/// Whether this radio should display a microphone component in its UI.
+	var/has_microphone = TRUE
+	/// The listen input module that this radio's microphone should use.
+	var/microphone_listen_input = LISTEN_INPUT_OUTLOUD
+	/// Whether this radio's microphone is enabled. If so, it will be capable of hearing spoken messages within a range around it.
+	var/microphone_enabled = FALSE
+	/// Whether this radio's microphone starts enabled.
+	var/initial_microphone_enabled = FALSE
+
+	// Speaker Variables:
+	/// Whether this radio should display a speaker component in its UI.
+	var/has_speaker = TRUE
+	/// The range in which radio messages received by this radio should be spoken to listeners.
+	var/speaker_range = 2
+	/// Whether this radio's speaker is enabled. If not, received radio messages will not be spoken.
+	var/speaker_enabled = FALSE
+	/// Whether this radio's speaker starts enabled.
+	var/initial_speaker_enabled = FALSE
+
+	// Radio Uplink Variables:
+	/// If TRUE, messages sent over a protected channel cannot be picked up by the `radio_brain` bioeffect.
+	var/protected_radio = FALSE
+	/// The radio frequency that, when this radio is tuned to it, will unlock the traitor uplink.
+	var/traitor_frequency = 0
+	/// The integrated traitor radio uplink.
+	var/obj/item/uplink/integrated/radio/traitorradio = null
+
+	// Miscellaneous Variables:
+	/// The world time of this radio's last transmission.
+	var/last_transmission
+	/// Whether this radio is capable of sending messages during solar flares.
+	var/hardened = TRUE
+	/// If TRUE, this radio will no longer be capable of sending nor receiving messages.
+	var/bricked = FALSE
+	/// The message that should be displayed when an attempt is made to use a bricked radio.
+	var/bricked_msg = "The radio is utterly dead and silent."
+	/// This radio's wires, determining whether it can receive and transmit.
+	var/wires = WIRE_SIGNAL | WIRE_RECEIVE | WIRE_TRANSMIT
+	/// The build status of this radio, determining whether it can be attached to other objects, and other objects attached to it.
+	var/b_stat = FALSE
+	/// The radio has malfunctioned due to an EMP
+	var/emp = FALSE
+	/// The message that should be displayed when attempting to use a radio that is under the effects of an EMP.
+	var/emp_msg = "The radio buzzes softly. Hopefully it kicks back on soon."
+
+/obj/item/device/radio/New()
+	. = ..()
+
+	if (((src.frequency < RADIO::FREQ::MINIMUM) || (src.frequency > RADIO::FREQ::MAXIMUM)) && !src.locked_frequency)
+		// If the frequency is somehow set outside of the normal range, clamp it back within range.
+		world.log << "[src] ([src.type]) has a frequency of [src.frequency], sanitizing."
+		src.frequency = sanitize_frequency(src.frequency)
+
+	MAKE_DEVICE_RADIO_PACKET_COMPONENT(null, "main", src.frequency)
+
+	src.set_secure_frequencies()
+	src.toggle_microphone(src.initial_microphone_enabled)
+	src.toggle_speaker(src.initial_speaker_enabled)
+	src.bricked = RADIO.no_more_radios
+	START_TRACKING
+
+/obj/item/device/radio/disposing()
+	for (var/prefix in src.secure_connections)
+		qdel(src.secure_connections[prefix])
+
+	src.secure_connections = null
+	src.traitorradio = null
+	STOP_TRACKING
+
+	. = ..()
+
+/obj/item/device/radio/examine(mob/user)
+	. = ..()
+
+	if (in_interact_range(src, user) || (src.loc == user))
+		if (src.b_stat)
+			. += "<br>[SPAN_NOTICE("[src] can be attached and modified!")]"
+		else
+			. += "<br>[SPAN_NOTICE("[src] can not be modified or attached!")]"
+
+	if (length(src.secure_frequencies))
+		. += "<br><b>Supplementary channels:</b>"
+		for (var/sayToken in src.secure_frequencies)
+			var/channel_name = RADIO.frequencies_to_names[src.secure_frequencies[sayToken]] || "???"
+			var/frequency = format_frequency(src.secure_frequencies["[sayToken]"])
+			. += "<br>[channel_name]: \[[frequency]\] (Activator: <b>[sayToken]</b>)"
+
+/obj/item/device/radio/receive_signal(datum/signal/signal)
+	if (!src.speaker_enabled || src.bricked || !(src.wires & WIRE_RECEIVE) || !signal.data || !istype(signal.data["message"], /datum/say_message))
+		return TRUE
+
+	var/datum/say_message/message = signal.data["message"]
+	message = message.Copy()
+	message.speaker = src
+	message.message_origin = src
+	message.heard_range = src.speaker_range
+
+	src.ensure_speech_tree().process(message)
+
+/obj/item/device/radio/attackby(obj/item/W, mob/user)
+	if(src.traitorradio && !src.traitorradio.locked && istype(W, /obj/item/uplink_telecrystal))
+		return src.traitorradio.Attackby(W, user)
+	src.add_dialog(user)
+	if (!isscrewingtool(W))
+		return
+	src.b_stat = !src.b_stat
+	if (src.b_stat)
+		user.show_message(SPAN_NOTICE("The radio can now be attached and modified!"))
+	else
+		user.show_message(SPAN_NOTICE("The radio can no longer be modified or attached!"))
+	if (isliving(src.loc))
+		var/mob/living/M = src.loc
+		src.AttackSelf(M)
+	src.add_fingerprint(user)
+
+/obj/item/device/radio/attack_self(mob/user)
+	src.ui_interact(user)
+
+/obj/item/device/radio/emp_act()
+	src.toggle_microphone(FALSE)
+	src.toggle_speaker(FALSE)
+
+/obj/item/device/radio/ui_interact(mob/user, datum/tgui/ui)
+	if(src.traitorradio && !src.traitorradio.locked)
+		src.traitorradio.ui_interact(user)
+		return
+
+	if (src.bricked)
+		user.show_text(src.bricked_msg, "red")
+		return
+
+	if (src.emp)
+		user.show_text(src.emp_msg, "red")
+		return
+
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if (!ui)
+		ui = new(user, src, "Radio")
+		ui.open()
+
+/obj/item/device/radio/ui_state(mob/user)
+	return tgui_physical_state
+
+/obj/item/device/radio/ui_status(mob/user, datum/ui_state/state)
+	if (isAI(user))
+		. = UI_INTERACTIVE
+	else
+		. = min(
+			state.can_use_topic(src, user),
+			tgui_not_incapacitated_state.can_use_topic(src, user)
+		)
+
+/obj/item/device/radio/ui_data(mob/user)
+	var/list/frequencies = list()
+	for (var/sayToken in src.secure_frequencies)
+		frequencies += list(list(
+			"channel" = RADIO.frequencies_to_names[src.secure_frequencies[sayToken]] || "???",
+			"frequency" = format_frequency(src.secure_frequencies[sayToken]),
+			"sayToken" = sayToken,
+		))
+
+	. = list(
+		"name" = src.name,
+		"hasMicrophone" = src.has_microphone,
+		"microphoneEnabled" = src.microphone_enabled,
+		"hasSpeaker" = src.has_speaker,
+		"speakerEnabled" = src.speaker_enabled,
+		"frequency" = src.frequency,
+		"lockedFrequency" = src.locked_frequency,
+		"secureFrequencies" = frequencies,
+		"wires" = src.wires,
+		"modifiable" = src.b_stat,
+	)
+
+/obj/item/device/radio/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+
+	if (. || src.bricked)
+		return
+
+	switch(action)
+		if ("set-frequency")
+			if (src.locked_frequency)
+				return FALSE
+
+			var/frequency_to_set = sanitize_frequency(params["value"])
+
+			// The "finish" param indicates that a user has inputted a number or finished dragging the frequency dial.
+			// This makes it more difficult to bruteforce the uplink.
+			if (params["finish"] && !isnull(src.traitorradio) && src.traitor_frequency && frequency_to_set == src.traitor_frequency)
+				tgui_process.close_uis(src)
+				src.traitorradio.locked = FALSE
+				src.ui_interact(usr)
+				return
+
+			src.set_frequency(frequency_to_set)
+
+			return TRUE
+
+		if ("toggle-microphone")
+			src.toggle_microphone(!src.microphone_enabled)
+			return TRUE
+
+		if ("toggle-speaker")
+			src.toggle_speaker(!src.speaker_enabled)
+			return TRUE
+
+		if ("toggle-wire")
+			if (!(usr.find_tool_in_hand(TOOL_SNIPPING)))
+				return FALSE
+
+			var/wireflip = params["wire"] & (WIRE_SIGNAL | WIRE_RECEIVE | WIRE_TRANSMIT)
+			if (wireflip)
+				src.wires ^= wireflip
+				return TRUE
+
+/// Sets the primary frequency of the radio to a specified frequency.
+/obj/item/device/radio/proc/set_frequency(new_frequency)
+	src.frequency = new_frequency
+	global.get_radio_connection_by_id(src, "main").update_frequency(src.frequency)
+
+/// Initialises the `secure_connections` list from the frequencies listed in `secure_frequencies`.
+/obj/item/device/radio/proc/set_secure_frequencies()
+	if (!length(src.secure_frequencies))
+		return
+
+	src.secure_connections ||= list()
+
+	for (var/sayToken in src.secure_frequencies)
+		var/frequency_id = src.secure_frequencies["[sayToken]"]
+		if (frequency_id)
+			if (!src.secure_connections["[sayToken]"])
+				src.secure_connections["[sayToken]"] = MAKE_DEVICE_RADIO_PACKET_COMPONENT(null, "f[frequency_id]", frequency_id)
+		else
+			src.secure_frequencies -= "[sayToken]"
+
+/// Sets a secure frequency, specified using its channel prefix, to a new frequency.
+/obj/item/device/radio/proc/set_secure_frequency(frequencyToken, newFrequency)
+	if (!frequencyToken || !newFrequency)
+		return
+
+	src.secure_frequencies ||= list()
+	src.secure_connections ||= list()
+
+	qdel(src.secure_connections["[frequencyToken]"])
+	src.secure_connections["[frequencyToken]"] = MAKE_DEVICE_RADIO_PACKET_COMPONENT(null, "f[newFrequency]", newFrequency)
+	src.secure_frequencies["[frequencyToken]"] = newFrequency
+
+/// Toggles the radio microphone, determining whether it is capable of hearing spoken messages within a range around it.
+/obj/item/device/radio/proc/toggle_microphone(microphone_enabled)
+	if (src.microphone_enabled == microphone_enabled)
+		return
+
+	src.microphone_enabled = microphone_enabled
+
+	src.ensure_listen_tree()
+	if (src.microphone_enabled)
+		src.listen_tree.AddListenInput(src.microphone_listen_input)
+	else
+		src.listen_tree.RemoveListenInput(src.microphone_listen_input)
+
+/// Toggles the radio speaker, determining whether received radio messages should be spoken.
+/obj/item/device/radio/proc/toggle_speaker(speaker_enabled)
+	src.speaker_enabled = speaker_enabled
+
+/// Returns the HTML radio icon and tooltip.
+/obj/item/device/radio/proc/radio_icon(mob/user)
+	if (isAI(user))
+		. = "ai"
+	else if (isrobot(user))
+		. = "robo"
+	else if (ishorse(user))
+		. = "horse"
+	else if (icon_override)
+		. = icon_override
+
+	if (.)
+		. = "<img style='position: relative; left: -1px; bottom: -3px;' class='icon misc' src='[resource("images/radio_icons/[.].png")]'>"
+	else
+		. = bicon(src)
+
+	var/tooltip = src.icon_tooltip
+	if (isnull(tooltip))
+		tooltip = src.name
+	if (tooltip)
+		. = "<div class='tooltip'>[.]<span class='tooltiptext'>[tooltip]</span></div>"
+
+#undef WIRE_SIGNAL
+#undef WIRE_RECEIVE
+#undef WIRE_TRANSMIT
+#undef WINDOW_OPTIONS

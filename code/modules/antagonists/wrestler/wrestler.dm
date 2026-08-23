@@ -3,6 +3,7 @@
 	display_name = "wrestler"
 	antagonist_icon = "wrestler"
 	success_medal = "Cream of the Crop"
+	wiki_link = "https://wiki.ss13.co/Wrestler"
 	var/fake = FALSE
 
 	/// The ability holder of this wrestler, containing their respective abilities.

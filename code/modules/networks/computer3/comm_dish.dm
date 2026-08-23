@@ -7,6 +7,7 @@ TYPEINFO(/obj/machinery/communications_dish)
 	icon_state = "def_radar"
 	anchored = ANCHORED
 	density = 1
+	provides_grip = TRUE
 	var/list/messagetitle = list()
 	var/list/messagetext = list()
 	var/list/terminals = list() //list of netIDs of connected terminals.
@@ -80,7 +81,8 @@ TYPEINFO(/obj/machinery/communications_dish)
 			command_alert(message, title, sound_to_play, alert_origin = "Transmission to Central Command")
 			message_admins("[user ? user : "Someone"] sent a message to Central Command:<br>[title]<br><br>[message]")
 			var/ircmsg[] = new()
-			ircmsg["msg"] = "[user ? user : "Unknown"] sent a message to Central Command:\n**[title]**\n[message]"
+			//discord can do their own encoding, bite me
+			ircmsg["msg"] = "[user ? user : "Unknown"] sent a message to Central Command:\n**[title]**\n[html_decode(message)]"
 			ircbot.export_async("admin", ircmsg)
 
 		transmit_to_partner_station(var/title, var/message, var/user)

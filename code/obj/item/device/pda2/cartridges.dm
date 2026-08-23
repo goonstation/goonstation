@@ -17,14 +17,13 @@
 //Ringtone Carts
 
 TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/item/disk/data/cartridge
 	name = "\improper PDA cartridge"
 	desc = "A data cartridge for PDAs."
 	icon = 'icons/obj/items/pda.dmi'
 	icon_state = "cart-blank"
-	item_state = "electronic"
 	file_amount = 32
 	title = "ROM Cart"
 
@@ -40,7 +39,6 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 			src.root.add_file( new /datum/computer/file/pda_program/signaler(src))
 			src.root.add_file( new /datum/computer/file/pda_program/fileshare(src))
 			src.root.add_file( new /datum/computer/file/pda_program/qm_records(src))
-			src.root.add_file( new /datum/computer/file/pda_program/scan/forensic_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/scan/health_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/scan/medrecord_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/records/security(src))
@@ -83,7 +81,6 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 			src.root.add_file( new /datum/computer/file/pda_program/status_display(src))
 			src.root.add_file( new /datum/computer/file/pda_program/qm_records(src))
 			src.root.add_file( new /datum/computer/file/pda_program/fileshare(src))
-			src.root.add_file( new /datum/computer/file/pda_program/scan/forensic_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/records/security(src))
 			src.root.add_file( new /datum/computer/file/pda_program/security_ticket(src))
 			src.root.add_file( new /datum/computer/file/pda_program/power_checker(src))
@@ -101,6 +98,7 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 			src.root.add_file( new /datum/computer/file/pda_program/power_checker(src))
 			src.root.add_file( new /datum/computer/file/pda_program/status_display(src))
 			src.root.add_file( new /datum/computer/file/pda_program/qm_records(src))
+			src.root.add_file( new /datum/computer/file/pda_program/chemical_req_viewer(src))
 			src.root.add_file( new /datum/computer/file/pda_program/pressure_crystal_shopper(src))
 			src.root.add_file( new /datum/computer/file/pda_program/fileshare(src))
 			src.root.add_file( new /datum/computer/file/pda_program/records/security(src))
@@ -130,6 +128,7 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 			src.root.add_file( new /datum/computer/file/pda_program/atmos_alerts(src))
 			src.root.add_file( new /datum/computer/file/pda_program/signaler(src))
 			src.root.add_file( new /datum/computer/file/pda_program/qm_records(src))
+			src.root.add_file( new /datum/computer/file/pda_program/chemical_req_viewer(src))
 			src.root.add_file( new /datum/computer/file/pda_program/fileshare(src))
 			src.root.add_file( new /datum/computer/file/pda_program/records/security(src))
 			src.root.add_file( new /datum/computer/file/pda_program/records/medical(src))
@@ -161,6 +160,7 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 			src.root.add_file( new /datum/computer/file/pda_program/fileshare(src))
 			src.root.add_file( new /datum/computer/file/pda_program/portable_machinery_control/portasci(src))
 			src.root.add_file( new /datum/computer/file/pda_program/pressure_crystal_shopper(src))
+			src.root.add_file( new /datum/computer/file/pda_program/chemical_req_viewer(src))
 			src.read_only = 1
 
 	medical_director
@@ -180,6 +180,7 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 			src.root.add_file( new /datum/computer/file/pda_program/portable_machinery_control/portananomed(src))
 			src.root.add_file( new /datum/computer/file/pda_program/portable_machinery_control/portamedbay(src))
 			src.root.add_file( new /datum/computer/file/pda_program/genebooth_tracker(src))
+			src.root.add_file( new /datum/computer/file/pda_program/chemical_req_viewer(src))
 			src.read_only = 1
 
 
@@ -197,6 +198,19 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 			src.root.add_file( new /datum/computer/file/pda_program/portable_machinery_control/portamedbay(src))
 			src.read_only = 1
 
+	pharma
+		name = "\improper P1LL cartridge"
+		desc = "For being able to tell how immenient your mixture's implosion is."
+		icon_state = "cart-pha"
+		New()
+			..()
+			src.root.add_file( new /datum/computer/file/pda_program/scan/health_scan(src))
+			src.root.add_file( new /datum/computer/file/pda_program/scan/medrecord_scan(src))
+			src.root.add_file( new /datum/computer/file/pda_program/scan/reagent_scan(src))
+			src.root.add_file( new /datum/computer/file/pda_program/records/medical(src))
+			src.root.add_file( new /datum/computer/file/pda_program/chemical_req_viewer(src))
+			src.read_only = 1
+
 	security
 		name = "\improper R.O.B.U.S.T. cartridge"
 		desc = "Reliably Ordered By Useless Security Teams."
@@ -204,7 +218,6 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 
 		New()
 			..()
-			src.root.add_file( new /datum/computer/file/pda_program/scan/forensic_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/scan/secrecord_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/records/security(src))
 			src.root.add_file( new /datum/computer/file/pda_program/bot_control/secbot(src))
@@ -263,6 +276,7 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 			src.root.add_file( new /datum/computer/file/pda_program/scan/reagent_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/signaler(src))
 			src.root.add_file( new /datum/computer/file/pda_program/pressure_crystal_shopper(src))
+			src.root.add_file( new /datum/computer/file/pda_program/chemical_req_viewer(src))
 			src.read_only = 1
 
 	bartender

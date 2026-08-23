@@ -14,6 +14,7 @@
 	anchored = ANCHORED
 	density = 1
 	icon = 'icons/obj/networked.dmi'
+	provides_grip = TRUE
 	var/net_id = null
 	var/host_id = null //Who are we connected to? (If we have a single host)
 	var/old_host_id = null //Were we previously connected to someone?  Do we care?
@@ -1033,6 +1034,7 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 				"metal_superdense" = 25,
 				"conductive_high" = 13,
 				"crystal_dense" = 15) //haha this is a bad idea
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY //^ Agreed
 /obj/machinery/networked/nuclear_charge
 	name = "Nuclear Charge"
 	anchored = ANCHORED_ALWAYS
@@ -1050,7 +1052,6 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 #define DISARM_CUTOFF 10 //Can't disarm past this point! OH NO!
 
 	deconstruct_flags = DECON_NONE
-	is_syndicate = 1 //^ Agreed
 
 	New()
 		..()
@@ -1324,6 +1325,7 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 		var/turf/T = get_turf(src)
 		if(T)
 			admessage += "<b> ([T.x],[T.y],[T.z])</b>"
+		message_ghosts("Network Nuclear Charge armed. [log_loc(T, ghostjump=TRUE)]")
 		message_admins(admessage)
 		//World announcement.
 		if (src.z == Z_LEVEL_STATION)
@@ -1337,6 +1339,7 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 		src.timing = 0
 		src.time = max(src.time,MIN_NUKE_TIME) //so we don't have some jerk letting it tick down to 11 and then saving it for later.
 		src.icon_state = "net_nuke0"
+		message_ghosts("<b>Network Nuclear Charge DISARMED.")
 		//World announcement.
 		if (src.z == Z_LEVEL_STATION)
 			command_alert("The [station_or_ship()]'s detonation has been aborted. Please return to your regular duties.", "Self-Destruct Aborted", alert_origin = ALERT_STATION)
@@ -1347,6 +1350,7 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 		post_display_status(-1)
 
 	proc/detonate()
+		message_ghosts("<b> Network Nuclear Charge blew the FUCK UP! [log_loc(src, ghostjump=TRUE)].")
 		playsound_global(world, 'sound/effects/kaboom.ogg', 70)
 		//explosion(src, src.loc, 10, 20, 30, 35)
 		explosion_new(src, get_turf(src), 10000)
@@ -1702,6 +1706,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 	desc = "A networked printer.  It's designed to print."
 	anchored = ANCHORED
 	density = 1
+	object_flags = NO_BLOCK_TABLE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_DESTRUCT
 	icon_state = "printer0"
 	device_tag = "PNET_PRINTDEVC"
@@ -2179,6 +2184,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 	anchored = ANCHORED
 	density = 1
 	icon_state = "scanner0"
+	object_flags = NO_BLOCK_TABLE
 	deconstruct_flags = DECON_DESTRUCT
 	//device_tag = "PNET_SCANDEVC"
 	var/scanning = 0 //Are we scanning RIGHT NOW?
@@ -3229,7 +3235,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 				var/turf/beamTurf = get_step(src, src.dir)
 				if (!istype(beamTurf) || beamTurf.density)
 					return 0
-				src.beam = new /obj/linked_laser/h7_beam(beamTurf, src.dir)
+				src.beam = new /obj/linked_laser/h7_beam(beamTurf, src.dir, src)
 				src.beam.master = src
 				src.beam.try_propagate()
 			else
@@ -3730,7 +3736,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 						src.visible_message("<b>[src.name]</b> extends its stand.")
 						src.set_density(1)
 						src.setup_base_icon_state = "impactstand"
-						FLICK("impactpad-extend",src)
+						FLICK("impactstand-extend",src)
 						src.UpdateIcon()
 						playsound(src.loc, 'sound/effects/pump.ogg', 50, 1)
 					else
@@ -4050,6 +4056,11 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 					src.electrify_contents()
 					message_host("command=ack")
 					src.UpdateIcon()
+					SPAWN(5 SECONDS)
+						src.visible_message("<b>[src.name]</b> finishes working and shuts down.")
+						playsound(src, 'sound/machines/chime.ogg', 50, TRUE)
+						active = 0
+						src.UpdateIcon()
 				else
 					message_host("command=nack")
 

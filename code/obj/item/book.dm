@@ -108,7 +108,7 @@ Custom Books
 	file_path = "strings/books/matsci_guide_old.txt"
 
 /obj/item/paper/book/from_file/matsci_guide
-	name = "Dummies' Guide to Material Science, 8th Ed."
+	name = "Dummies' Guide to Material Science, 9th Ed."
 	desc = "An explanation of how to work materials and their properties. Nanotrasen missed buying a few editions between the old one and this..."
 	icon_state = "matscibook"
 	file_path = "strings/books/matsci_guide_new.txt"
@@ -155,6 +155,12 @@ Custom Books
 	icon_state = "orangebook"
 	desc = "A book detailing behaviors and operations of Nadir's transception array"
 	file_path = "strings/books/transception_guide.txt"
+
+/obj/item/paper/book/from_file/gravity_tether
+	name = "Gravi-Tonne Tether Manual"
+	icon_state = "tether_book"
+	desc = "An in-depth guide to the monitoring and operation of a Gravity Tether."
+	file_path = "strings/books/tether_manual.txt"
 
 /****Civilian Guides****/
 
@@ -359,11 +365,7 @@ Custom Books
 				return
 
 			jerk.traitHolder?.addTrait("wasitsomethingisaid")
-
-			var/datum/db_record/S = data_core.security.find_record("id", jerk.datacore_id)
-			S?["criminal"] = ARREST_STATE_ARREST
-			S?["mi_crim"] = "Reading highly-confidential private information."
-			jerk.update_arrest_icon()
+			jerk.apply_automated_arrest("Reading highly-confidential private information.", requires_camera_seen = FALSE, use_visible_name = FALSE)
 		else
 			return list("It appears to be heavily encrypted information.")
 
@@ -583,3 +585,25 @@ all for the love of you.</tt>"}
 			I heard something scary, so I leave for a few minutes, leaving my key behind. I come back. AND THEY'RE LOCKED... WITH A NOTE ON THE TABLE
 			SAYING THE KEY'S INSIDE ONE OF THEM. WHY??? I kicked the table, and YES, there is something metal in there. Well... what am I going to do
 			now?"}
+
+/obj/item/paper/book/from_file/horrorcontest
+	name = "Splinters of a Haunted Station"
+	desc = "A book containing a series of short horror stories to tell in the dark."
+	icon_state = "sbook"
+	file_path = "strings/books/three_sentence_horror.txt"
+
+/obj/item/paper/book/charms
+	name = "on charms and talismans"
+	desc = "A well thumbed but not particularly holy looking tome."
+	icon_state = "brownbook"
+	info = {"
+	The spiritually minded have been making charms to ward against all the ills of the world for centuries, despite the best efforts of several major churches.<br>
+	The most common form of charm is a simple piece of paper, inscribed with words of power or faith and folded to contain them.<br>
+	These charms are often stained with sanctified drinks, dipped in holy water, or even blood. Please find below a compiled list of some well known charm beliefs.
+	<ul>
+		<li><b>Blood of a curse victim</b>: protection against further curses.</li>
+		<li><b>Essence of wolfsbane</b>: protection against lycanthropy.</li>
+		<li><b>Dye of the lavender flower</b>: to dispel the foul miasmas and protect against the lesser ills.</li>
+		<li><b>Favoured drink of the faith</b>: to lessen the negative effects of drink upon the person, and to improve their prowess in drunken combat.
+	</ul
+	"}

@@ -30,8 +30,6 @@
 			shuttle = pick("left","right","left","right","diner"); // just making the diner docking a little less common.
 #if defined(MAP_OVERRIDE_OSHAN)
 		var/docked_where = shuttle == "diner" ? "sea diner" : "station";
-#elif defined(MAP_OVERRIDE_MANTA)
-		var/docked_where = shuttle == "diner" ? "sea diner" : "station";
 #elif defined(MAP_OVERRIDE_NADIR)
 		var/docked_where = shuttle == "diner" ? "underdiner" : "station";
 #else
@@ -117,6 +115,7 @@
 
 		end_location.color = null
 
+		end_location.set_gforce_minimum(GFORCE_EARTH_GRAVITY)
 		start_location.move_contents_to(end_location, centcom_turf, turf_to_skip=/turf/unsimulated/outdoors/grass, turftoleave=/turf/unsimulated/outdoors/grass)
 
 		return dest_turfs
@@ -139,6 +138,7 @@
 				O.ReplaceWith(centcom_turf, FALSE, TRUE, FALSE, TRUE)
 
 		end_location.move_contents_to(start_location, map_turf, turf_to_skip=global.map_settings.shuttle_map_turf, turftoleave=global.map_settings.shuttle_map_turf)
+		end_location.set_gforce_minimum(GFORCE_EARTH_GRAVITY)
 
 		#ifdef UNDERWATER_MAP
 		start_location.color = OCEAN_COLOR

@@ -91,7 +91,9 @@
 			player.cooldowns["instrument_play"] += 10 SECONDS
 
 		var/turf/T = get_turf(src)
-		playsound(T, sounds_instrument[note], volume_override || src.volume, randomized_pitch, pitch = pitch_override || pitch_set, channel = VOLUME_CHANNEL_INSTRUMENTS)
+		//mostly people turn their instrument volume down to avoid the mime with 12 pianos and an autotyper, not the secoff with a whistle
+		var/channel = src.pick_random_note ? VOLUME_CHANNEL_GAME : VOLUME_CHANNEL_INSTRUMENTS
+		playsound(T, sounds_instrument[note], volume_override || src.volume, randomized_pitch, pitch = pitch_override || pitch_set, channel = channel)
 
 		if (prob(5))
 			if (src.dog_bark)
@@ -378,6 +380,7 @@
 	volume = 60
 	desc_sound = list("patriotic", "rowdy", "wee", "grand", "free", "Glaswegian", "sizzling", "carnal", "hedonistic")
 	pick_random_note = 1
+	note_time = 20 SECONDS
 
 	New()
 		..()
@@ -586,6 +589,7 @@
 /* -------------------- Dramatic Bike Horn -------------------- */
 
 TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = 2
 
 /obj/item/instrument/bikehorn/dramatic
@@ -635,7 +639,11 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 		src.setProperty("vault_speed",3)
 		src.setProperty("disorient_resist",45)
 
-
+/* --------------- Bike horn: now in blue ------------ */
+/obj/item/instrument/bikehorn/blue
+	name = "blue bike horn"
+	icon_state = "bike_horn_blue"
+	item_state = "bike_horn_blue"
 
 /* -------------------- Harmonica -------------------- */
 
@@ -711,7 +719,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 			if (secbot.emagged)
 				continue
 			secbot.KillPathAndGiveUp(1)
-			secbot.speak("Awaiting command...")
+			secbot.say("Awaiting command...")
 			bots += secbot
 			break
 
@@ -732,7 +740,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 			if (cleanbot.emagged || !cleanbot.on)
 				continue
 			cleanbot.KillPathAndGiveUp(1, TRUE)
-			cleanbot.speak("Awaiting command...")
+			cleanbot.say("Awaiting command...")
 			bots += cleanbot
 			break
 
@@ -854,7 +862,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 			gibs(S.loc, null, bdna, btype)
 
 			S.set_mutantrace(/datum/mutantrace/skeleton)
-			S.real_name = "[S.name]'s skeleton"
+			S.real_name = "[S.name]’s skeleton"
 			S.name = S.real_name
 			S.update_body()
 			S.UpdateName()
@@ -1006,6 +1014,22 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 
 	attack_self(mob/user)
 		return //no imitating borg screams
+
+/obj/item/instrument/keytar
+	name = "keytar"
+	desc = "All the cool factor of being a rock star guitarist with none of the Wonderwall. \
+			Is the iconic 80's synth worth the back pain you'll feel after your shift ends?"
+	icon = 'icons/obj/large/64x32.dmi'
+	icon_state = "keytar"
+	item_state = "keytar"
+	two_handed = TRUE
+	force = 10
+	note_range = list("c2", "c7")
+	instrument_sound_directory = "sound/musical_instruments/keytar/notes/"
+	note_time = 0.18 SECONDS
+	sounds_instrument = null
+	randomized_pitch = FALSE
+	use_new_interface = TRUE
 
 /obj/storage/crate/wooden/instruments
 	name = "instruments box"

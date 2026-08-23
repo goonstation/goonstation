@@ -201,6 +201,13 @@ Running the script will update this into:
 
 Note how since you kept in `{@OLD}`, it was able to retain the re-named variables of the subtypes.
 
+More advanced `@SUBTYPES` syntax:
+- In the old path, the `@SUBTYPES` keyword may be used multiple times. This is useful for finding paths that end in a specific path or contain a specific path.
+- In the new path, the `@SUBTYPES` keyword will refer to the ENTIRE subtype, starting from the first use of @SUBTYPES.
+- If multple `@SUBTYPES` keywords are used in the old path, in the new path the `@SUBTYPES_N` keyword will refer to the Nth subtype path.
+- `/obj/machinery/camera/@SUBTYPES : /obj/machinery/camera/@SUBTYPES/directional` - add the "directional" subtype to every instace (including subtypes that are already directional).
+- `/obj/machinery/camera/@SUBTYPES/directional/@SUBTYPES : /obj/machinery/camera/@SUBTYPES_1` - remove all directional subtypes from every instance.
+
 
 ### Old Path Variable Filtering
 
@@ -343,6 +350,102 @@ You would then get the following output:
 ```
 
 Note how we keep the "Money Hole" intact, while still managing to extrapolate the `dir` variable to 1 on the sink that had absolutely no variables set on it. This is useful for when you want to change a variable that is not shown in the map editor, but you want to keep the rest of the variables intact.
+
+#### Method: Any Value Fits All and Naming Conventions
+
+But what if you just want to rename the variable `maxHealth` to `good_boy_points` for all instances of `/mob/living/github_user`? Using the `@ANY` parameter after a variable name, you can capture any instance that has it edited in a map. While, to set the value of the newly named `good_boy_points` to that of the old `maxHealth`, we can use `@OLD:maxHealth`, put after the name of the new variable to achieve that. The result'll be something like this:
+
+```txt
+/mob/living/github_user{maxHealth=@ANY} : /mob/living/github_user{good_boy_points=@OLD:maxHealth}
+```
+
+Though, If you read about the previous methods, you'd know that without the `@OLD` parameter (the one without colon), every other variable edit will also be discarded, so it's important to add that BEFORE any other parament, as well as `maxHealth=@SKIP` following that since we're renaming that variable. So, take two:
+
+```txt
+/mob/living/github_user{maxHealth=@ANY} : /mob/living/github_user{@OLD; maxHealth=@SKIP; good_boy_points=@OLD:maxHealth}
+```
+
+Perfect, so now let's assume the following map:
+
+```dm
+"a" = (
+/mob/living/basic/mouse{
+	maxHealth = 15
+	},
+/turf/open/floor/iron,
+/area/github),
+"b" = (
+/mob/living/github_user{
+	name = "ShizCalev";
+	desc= "Has more good boy points than a megafauna has health.";
+	maxHealth = 2083
+	},
+/turf/open/floor/iron,
+/area/github),
+```
+
+You would then get the following output:
+
+```dm
+"a" = (
+/mob/living/basic/mouse{
+	maxHealth = 15
+	},
+/turf/open/floor/iron,
+/area/github),
+"b" = (
+/mob/living/github_user{
+	name = "ShizCalev";
+	desc= "Has more good boy points than a megafauna has health.";
+	good_boy_points = 2083
+	},
+/turf/open/floor/iron,
+/area/github),
+```
+
+As an addendum, you don't have to use both `@ANY` and `@OLD:prop_name` together. I'm merely providing a single example for the both of them and their most practical usage.
+
+#### Method: Adding To The Soul
+
+Lets say that you want to offset all instances of `/obj/machinery/camera` to the left by 10 pixels for some godforsaken reason. If you simply try to set `pixel_x` to some arbitrary value, you'll find that cameras that were already offset are being forced to use this `pixel_x` value. Instead, try the following:
+```txt
+/obj/machinery/camera{pixel_x = @ANY} : /obj/machinery/camera{@OLD; pixel_x = @ADD:10}
+/obj/machinery/camera{pixel_x = @UNSET} : /obj/machinery/camera{@OLD; pixel_x = 10}
+```
+
+`@ADD:num` will only add/subtract from variables with a numerical value **that are already present as a varedit**; this is because `UpdatePaths` can't access compile time variable values. This makes using the second path replacement necessary to catch the paths that `@ADD:num` will skip. So, let's assume we have the following script and map file:
+
+```txt
+/obj/machinery/camera{pixel_x = @ANY} : /obj/machinery/camera{@OLD; pixel_x = @ADD:10}
+```
+
+```dm
+"a" = (
+/obj/machinery/camera,
+/turf/floor,
+/area/station/security),
+"b" = (
+/obj/machinery/camera{
+	pixel_x = 8
+	},
+/turf/floor,
+/area/station/security),
+```
+
+You would then get the following output:
+
+```dm
+"a" = (
+/obj/machinery/camera,
+/turf/floor,
+/area/station/security),
+"b" = (
+/obj/machinery/camera{
+	pixel_x = 18
+	},
+/turf/floor,
+/area/station/security),
+```
 
 ### Blend it all together
 

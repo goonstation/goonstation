@@ -89,7 +89,7 @@ TYPEINFO(/obj/machinery/sleep_console)
 		// non-anchored sleeper assumed to be portable, don't want to eject
 		// in case someone is using it for body transport
 		if (isdead(src.our_sleeper.occupant) && src.our_sleeper.anchored)
-			src.our_sleeper.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] beeps, \"Alert! No life signs detected from occupant.\"")) // TODO maptext-ize
+			src.our_sleeper.say("Alert! No life signs detected from occupant.")
 			playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
 			src.time = 0
 			src.timing = 0
@@ -236,6 +236,8 @@ TYPEINFO(/obj/machinery/sleep_console)
 
 TYPEINFO(/obj/machinery/sleeper)
 	mats = 25
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
 /obj/machinery/sleeper
 	name = "sleeper"
@@ -246,6 +248,9 @@ TYPEINFO(/obj/machinery/sleeper)
 	anchored = ANCHORED
 	deconstruct_flags = DECON_CROWBAR | DECON_WIRECUTTERS | DECON_MULTITOOL
 	event_handler_flags = USE_FLUID_ENTER
+	speech_verb_say = "beeps"
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+
 	var/mob/occupant = null
 	var/image/image_lid = null
 	var/obj/machinery/power/data_terminal/link = null
@@ -671,7 +676,7 @@ TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
 	var/homeloc = null
 	allow_self_service = 0
 	/// Mailgroups it'll try to send PDA notifications to
-	var/list/mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH)
+	var/list/mailgroups = list(MGD_MEDICAL)
 
 	New()
 		..()
@@ -681,10 +686,12 @@ TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
 		src.homeloc = src.loc
 		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_GRAVITY_IMMUNE_INSIDE, src)
 		MAKE_SENDER_RADIO_PACKET_COMPONENT(src.net_id, "pda", FREQ_PDA)
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_PORTABLE_MACHINERY)
+		QDEL_NULL(our_console)
 		..()
 
 
@@ -699,7 +706,11 @@ TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
 
 	examine()
 		. = ..()
-		. += "Home turf: [get_area(src.homeloc)]."
+		var/area_string = "Off-[global.station_or_ship()] Location"  // Don't show stuff in "somewhere", okay.
+		var/area/A = get_area(src.homeloc)
+		if (istype(A, /area/station))
+			area_string = A.name
+		. += "Home turf: [area_string]."
 
 	// Could be useful (Convair880).
 	mouse_drop(over_object, src_location, over_location)
@@ -739,8 +750,15 @@ TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
 		return
 	if (!occupant)
 		return
+	var/home_string = "Off-[global.station_or_ship()] Location"
+	if (!src.homeloc) // ???
+		home_string = "N/A"
+	else
+		var/area/home_area = get_area(src.homeloc)
+		if (istype(home_area, /area/station))
+			home_string = home_area.name
 
-	var/PDAalert = "[src.name] has returned to [get_area(src.homeloc)] with a "
+	var/PDAalert = "[src.name] has returned to [home_string] with a "
 	var/alertgroup = MGA_MEDCRIT
 	if (isdead(occupant))
 		PDAalert += "deceased body - please process the occupant as soon as possible."
@@ -767,6 +785,10 @@ TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
 		..()
 		our_console = new /obj/machinery/sleep_console/compact (src)
 		our_console.our_sleeper = src
+
+	disposing()
+		QDEL_NULL(our_console)
+		..()
 
 	attack_hand(mob/user)
 		if (our_console)

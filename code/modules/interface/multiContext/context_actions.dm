@@ -4,7 +4,7 @@
 	var/icon_background = "bg"
 	var/name = ""
 	var/desc = ""
-	var/tooltip_flags = null
+	var/list/tooltip_options = list()
 	var/use_tooltip = TRUE
 	var/close_clicked = TRUE
 	///Does the action close when the mob moves
@@ -40,8 +40,8 @@
 	proc/getDesc(atom/target, mob/user)
 		. = desc
 
-	proc/getTooltipFlags()
-		. = tooltip_flags
+	proc/getTooltipOptions()
+		. = tooltip_options
 
 	expandadd
 		name = "expandadd"
@@ -192,13 +192,13 @@
 	name = "Close"
 	desc = "Close the menu"
 	icon_state = "ghost-close"
-	tooltip_flags = TOOLTIP_LEFT
+	tooltip_options = list("align" = TOOLTIP_LEFT | TOOLTIP_CENTER)
 
 /datum/contextAction/ghost_respawn/virtual_reality
 	name = "Ghost VR"
 	desc = "Enter ghost virtual reality"
 	icon_state = "ghost-vr"
-	tooltip_flags = TOOLTIP_LEFT
+	tooltip_options = list("align" = TOOLTIP_LEFT | TOOLTIP_CENTER)
 
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
@@ -211,7 +211,7 @@
 	name = "Respawn Animal"
 	desc = "Respawn as a tiny critter"
 	icon_state = "respawn-animal"
-	tooltip_flags = TOOLTIP_LEFT
+	tooltip_options = list("align" = TOOLTIP_LEFT | TOOLTIP_CENTER)
 
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
@@ -224,7 +224,7 @@
 	name = "Respawn As a Mentor Mouse"
 	desc = "Respawn as a mentor mouse that people can pick up. You can whisper in their ears and click on their screen to point them in the right direction. Please don't abuse this."
 	icon_state = "respawn-mentor-mouse"
-	tooltip_flags = TOOLTIP_LEFT
+	tooltip_options = list("align" = TOOLTIP_LEFT | TOOLTIP_CENTER)
 
 	checkRequirements(atom/target, mob/user)
 		. = user?.client && (user.client.holder || user.client.player.mentor)
@@ -240,7 +240,7 @@
 	name = "Respawn As an Admin Mouse"
 	desc = "Respawn as an admin mouse that people can pick up (or click on them to climb into their pockets). You can whisper in their ears and click on their screen to point them in the right direction. Be a little critter friend!"
 	icon_state = "respawn-admin-mouse"
-	tooltip_flags = TOOLTIP_LEFT
+	tooltip_options = list("align" = TOOLTIP_LEFT | TOOLTIP_CENTER)
 
 	checkRequirements(atom/target, mob/user)
 		. = user?.client?.holder
@@ -256,7 +256,7 @@
 	name = "Ghost Drone"
 	desc = "Step on the ghost catcher and be added to the ghost drone queue"
 	icon_state = "ghost-drone"
-	tooltip_flags = TOOLTIP_LEFT
+	tooltip_options = list("align" = TOOLTIP_LEFT | TOOLTIP_CENTER)
 
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
@@ -269,7 +269,7 @@
 	name = "Afterlife Bar"
 	desc = "Enter the afterlife Bar"
 	icon_state = "afterlife-bar"
-	tooltip_flags = TOOLTIP_LEFT
+	tooltip_options = list("align" = TOOLTIP_LEFT | TOOLTIP_CENTER)
 
 	execute(atom/target, mob/user)
 		if (user && istype(user, /mob/dead/observer))
@@ -282,11 +282,11 @@
 	// 	name = "Blob Tutorial"
 	// 	desc = "Practice blobbing around"
 	// 	icon_state = "blob-tutorial"
-	// 	tooltip_flags = TOOLTIP_LEFT
+	// 	tooltip_options = list("align" = TOOLTIP_LEFT | TOOLTIP_CENTER)
 
 /datum/contextAction/wraith_spook_button
 	name = "wraith"
-	desc = "Test"
+	desc = ""
 	icon = 'icons/ui/context32x32.dmi'
 	icon_state = "minus"
 	icon_background = ""
@@ -295,6 +295,7 @@
 	New(code as num)
 		..()
 		src.ability_code = code
+		src.tooltip_options = list("align" = TOOLTIP_LEFT | TOOLTIP_CENTER, "theme" = "wraith")
 		switch(code)
 			if (1)
 				name = "Flip light switches"
@@ -325,8 +326,8 @@
 				desc = "Open doors, lockers, crates"
 				icon_state = "wraith-doors"
 			if (8)
-				name = "random"
-				desc = "selects one of the other choices at random to perform."
+				name = "Random"
+				desc = "Selects one of the other choices at random to perform."
 				icon_state = "wraith-random"
 
 	checkRequirements(atom/target, mob/user)
@@ -413,7 +414,6 @@
 			return FALSE
 		if (GBP && GB && (BOUNDS_DIST(target, user) == 0 && isliving(user)) && !GB?.occupant)
 			. = TRUE
-			GB.show_admin_panel(user)
 
 	buildBackgroundIcon(atom/target, mob/user)
 		var/image/background = image('icons/ui/context32x32.dmi', src, "[getBackground(target, user)]0")
@@ -452,7 +452,6 @@
 	desc = "You shouldn't be reading this, bug."
 	icon_state = "wrench"
 	var/omni_mode
-	var/omni_path
 	var/success_text
 	var/success_sound
 
@@ -462,9 +461,9 @@
 			playsound(target, success_sound, 50, TRUE)
 
 	proc/omnitool_swap(atom/target, mob/user, obj/item/tool/omnitool/omni)
-		if (!(omni_mode in omni.modes))
+		if (!omni.has_mode(src.omni_mode))
 			return FALSE
-		omni.change_mode(omni_mode, user, omni_path)
+		omni.change_mode_id(omni_mode, user)
 		user.show_text("You flip [omni] to [name] mode.", "blue")
 		sleep(OMNI_TOOL_WAIT_TIME)
 		return TRUE
@@ -489,15 +488,14 @@
 		//I don't think drones have hands technically but they can only hold one item anyway
 		if(isghostdrone(user))
 			return TRUE
-		if(user.find_type_in_hand(/obj/item/deconstructor/))
+		if(user.find_tool_in_hand(TOOL_DECONSTRUCTING))
 			return TRUE
 
 	wrench
 		name = "Wrench"
 		desc = "Wrenching required to deconstruct."
 		icon_state = "wrench"
-		omni_mode = OMNI_MODE_WRENCHING
-		omni_path = /obj/item/wrench
+		omni_mode = OMNITOOL::MODE_WRENCH
 		success_text = "You wrench %target%'s bolts."
 		success_sound = 'sound/items/Ratchet.ogg'
 
@@ -513,8 +511,7 @@
 		name = "Cut"
 		desc = "Cutting required to deconstruct."
 		icon_state = "cut"
-		omni_mode = OMNI_MODE_SNIPPING
-		omni_path = /obj/item/wirecutters
+		omni_mode = OMNITOOL::MODE_WIRECUTTER
 		success_text = "You cut some vestigial wires from %target%."
 		success_sound = 'sound/items/Wirecutter.ogg'
 
@@ -529,8 +526,7 @@
 		name = "Weld"
 		desc = "Welding required to deconstruct."
 		icon_state = "weld"
-		omni_mode = OMNI_MODE_WELDING
-		omni_path = /obj/item/weldingtool
+		omni_mode = OMNITOOL::MODE_WELDER
 		success_text = "You weld %target% carefully."
 		success_sound = null // sound handled in try_weld
 
@@ -549,8 +545,7 @@
 		name = "Pry"
 		desc = "Prying required to deconstruct. Try a crowbar."
 		icon_state = "bar"
-		omni_mode = OMNI_MODE_PRYING
-		omni_path = /obj/item/crowbar
+		omni_mode = OMNITOOL::MODE_CROWBAR
 		success_text = "You pry on %target% without remorse."
 		success_sound = 'sound/items/Crowbar.ogg'
 
@@ -565,8 +560,7 @@
 		name = "Screw"
 		desc = "Screwing required to deconstruct."
 		icon_state = "screw"
-		omni_mode = OMNI_MODE_SCREWING
-		omni_path = /obj/item/screwdriver
+		omni_mode = OMNITOOL::MODE_SCREWDRIVER
 		success_text = "You unscrew some of the screws on %target%."
 		success_sound = 'sound/items/Screwdriver.ogg'
 
@@ -582,8 +576,7 @@
 		name = "Pulse"
 		desc = "Pulsing required to deconstruct. Try a multitool."
 		icon_state = "pulse"
-		omni_mode = OMNI_MODE_PULSING
-		omni_path = /obj/item/device/multitool
+		omni_mode = OMNITOOL::MODE_MULTITOOL
 		success_text = "You pulse %target%. In a general sense."
 		success_sound = 'sound/items/penclick.ogg'
 
@@ -644,13 +637,14 @@
 
 		checkRequirements(atom/target, mob/user)
 			var/obj/machinery/vehicle/V = target
-			if (V.locked && V.lock)
+			if (V.locked && V.get_part(POD_PART_LOCK))
 				. = ((user.loc != target) && BOARD_DIST_ALLOWED(user,V) && user.equipped() == null && !isAI(user) && user.can_interface_with_pods)
 
 		execute(atom/target, mob/user)
 			..()
 			var/obj/machinery/vehicle/V = target
-			V.lock.show_lock_panel(user,0)
+			var/obj/item/shipcomponent/secondary_system/lock/lock_part = V.get_part(POD_PART_LOCK)
+			lock_part.show_lock_panel(user,0)
 
 	parts
 		name = "Show Parts Panel"
@@ -704,12 +698,12 @@
 
 		checkRequirements(atom/target, mob/user)
 			var/obj/machinery/vehicle/V = target
-			. = ..() && istype(V.sec_system, /obj/item/shipcomponent/secondary_system/thrusters/lateral)
+			. = ..() && istype(V.get_part(POD_PART_SECONDARY), /obj/item/shipcomponent/secondary_system/thrusters/lateral)
 
 		execute(atom/target, mob/user)
 			..()
 			var/obj/machinery/vehicle/V = target
-			var/obj/item/shipcomponent/secondary_system/thrusters/lateral/thrusters = V.sec_system
+			var/obj/item/shipcomponent/secondary_system/thrusters/lateral/thrusters = V.get_part(POD_PART_SECONDARY)
 			thrusters.change_thruster_direction()
 			if (src.icon_state == "thrusters_right")
 				src.desc = "Change the lateral thrusters to move the ship left"
@@ -866,7 +860,7 @@
 			M.set_icon_state("[M.prefix]-remove")
 		else
 			M.set_icon_state("[M.prefix]-[M.setting]")
-		M.tooltip_rebuild = 1
+		M.tooltip_rebuild = TRUE
 
 /datum/contextAction/lamp_manufacturer/col_page_1/to_page_2
 	name = "Page 2"
@@ -1360,7 +1354,7 @@
 	close_clicked = TRUE
 	desc = ""
 	icon_state = "wrench"
-	var/mode = RCD_MODE_FLOORSWALLS
+	var/mode = RCD_MODE::FLOORSWALLS
 
 	execute(var/obj/item/rcd/rcd, var/mob/user)
 		if (!istype(rcd))
@@ -1370,32 +1364,32 @@
 	checkRequirements(var/obj/item/rcd/rcd, var/mob/user)
 		if(!can_act(user) || !in_interact_range(rcd, user))
 			return FALSE
-		return rcd in user
+		return rcd in user.equipped_list()
 
 	deconstruct
 		name = "Deconstruct"
 		icon_state = "close"
-		mode = RCD_MODE_DECONSTRUCT
+		mode = RCD_MODE::DECONSTRUCT
 	airlock
 		name = "Airlocks"
 		icon_state = "door"
-		mode = RCD_MODE_AIRLOCK
+		mode = RCD_MODE::AIRLOCK
 	floorswalls
 		name = "Floors/walls"
 		icon_state = "wall"
-		mode = RCD_MODE_FLOORSWALLS
+		mode = RCD_MODE::FLOORSWALLS
 	lighttubes
 		name = "Light tubes"
 		icon_state = "tube"
-		mode = RCD_MODE_LIGHTTUBES
+		mode = RCD_MODE::LIGHTTUBES
 	lightbulbs
 		name = "Lightbulbs"
 		icon_state = "bulb"
-		mode = RCD_MODE_LIGHTBULBS
+		mode = RCD_MODE::LIGHTBULBS
 	windows
 		name = "Windows"
 		icon_state = "window"
-		mode = RCD_MODE_WINDOWS
+		mode = RCD_MODE::WINDOWS
 
 /datum/contextAction/reagent
 	icon_background = "whitebg"
@@ -2361,8 +2355,9 @@
 		if (!istype(sp, /obj/item/device/speech_pro))
 			return
 		if (!ON_COOLDOWN(user, "use_speech_pro", 3 SECONDS))
-			sp.speak(src.speech_text, user)
+			sp.say(src.speech_text)
 			playsound(sp, src.speech_sound, 50, 1)
+			logTheThing(LOG_DEBUG, sp, "[user] said [src.speech_text] using [sp].")
 		else
 			boutput(user, SPAN_ALERT("Your [sp] is still loading..."))
 
@@ -2454,3 +2449,66 @@
 		phrase = SPEECH_PRO_SAY_SP
 		speech_text = "I am using a Speech Pro."
 		speech_sound = 'sound/misc/talk/cyborg_exclaim.ogg'
+
+/datum/contextAction/triage_tag
+	icon = 'icons/ui/context16x16.dmi'
+	close_clicked = TRUE
+	desc = ""
+	icon_state = "hey"
+	var/level = -1
+
+	execute(var/obj/item/O, var/mob/user)
+		if (istype(O, /obj/item/sticker/postit/triage))
+			var/obj/item/sticker/postit/triage/tag = O
+			tag.set_level(src.level)
+		else if (istype(O, /obj/item/triage_tagger))
+			var/obj/item/triage_tagger/tag = O
+			tag.set_level(src.level)
+
+	checkRequirements(var/obj/O, var/mob/user)
+		if(!can_act(user))
+			return FALSE
+		if(BOUNDS_DIST(O, user) > 0)
+			return FALSE
+		return TRUE
+
+	remove
+		name = "Remove"
+		icon_state = "close"
+		level = TRIAGE_REMOVE
+	minor
+		name = "Minor"
+		icon_state = "letter_m"
+		desc = "Patient has minor injuries."
+		background_color = "#009a08"
+		level = TRIAGE_MINOR
+	delayed
+		name = "Delayed"
+		icon_state = "letter_d_dark"
+		desc = "Patient has non-life-threatening injuries."
+		background_color = "#ffe800"
+		level = TRIAGE_DELAYED
+	immediate
+		name = "Immediate"
+		icon_state = "letter_i"
+		desc = "Patient has life-threatening injuries."
+		background_color = "#ff1414"
+		level = TRIAGE_IMMEDIATE
+	deceased
+		name = "Deceased/Expectant"
+		icon_state = "letter_e"
+		desc = "Patient is deceased or is expected to die even with medical assistance."
+		background_color = "#050504"
+		level = TRIAGE_DECEASED
+	unrevivable
+		name = "Unrevivable"
+		icon_state = "letter_u"
+		desc = "Patient is deceased and cannot be cloned."
+		background_color = "#ab00e3"
+		level = TRIAGE_UNREVIVABLE
+	cloned
+		name = "Cloned"
+		icon_state = "letter_c"
+		desc = "Patient is deceased, but has been cloned and can safely be disposed of."
+		background_color = "#3dB8ff"
+		level = TRIAGE_CLONED

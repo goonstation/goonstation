@@ -17,7 +17,7 @@ export const ChemiCompilerReservoirs = () => {
     <Section title="Reservoirs">
       <Stack wrap justify="center">
         {reservoirs.map((reservoir, index) => (
-          <Stack.Item key={index} m={0.5}>
+          <Stack.Item key={index} m={0.2}>
             <Button
               key={index}
               onClick={() => act('reservoir', { index })}

@@ -80,7 +80,8 @@ TYPEINFO(/turf/simulated/floor/feather)
 	off()
 	icon_state = "floor-broken"
 	broken = TRUE
-	src.flock.all_owned_tiles -= src
+	if (src.flock)
+		src.flock.all_owned_tiles -= src
 	for (var/mob/living/critter/flock/drone/flockdrone in src.contents)
 		if (flockdrone.floorrunning)
 			flockdrone.end_floorrunning()
@@ -197,6 +198,7 @@ TYPEINFO(/turf/simulated/wall/auto/feather)
 	default_material = "gnesis"
 	broken = FALSE
 	var/on = FALSE
+	help_message = null
 
 	// update_icon()
 	// 	..()
@@ -390,3 +392,9 @@ TYPEINFO(/turf/simulated/wall/auto/feather)
 /turf/simulated/wall/auto/feather/proc/off()
 	src.on = FALSE
 	src.UpdateIcon()
+
+/turf/simulated/wall/auto/feather/strong
+	name = "strong glowing wall"
+	desc = "You can feel it thrumming and pulsing. It looks very strong, you probably won't be able to tear it down."
+	health = INFINITY
+	max_health = INFINITY

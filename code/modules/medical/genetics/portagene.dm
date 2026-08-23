@@ -64,15 +64,15 @@
 			logTheThing(LOG_STATION, usr, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
 		return
 
-	relaymove(mob/usr as mob, dir)
-		if (!isalive(usr))
+	relaymove(mob/user as mob, dir)
+		if (!isalive(user))
 			return
 		if (src.locked)
-			boutput(usr, SPAN_ALERT("<b>The scanner door is locked!</b>"))
+			boutput(user, SPAN_ALERT("<b>The scanner door is locked!</b>"))
 			return
 
 		src.go_out()
-		add_fingerprint(usr)
+		add_fingerprint(user)
 		playsound(src.loc, 'sound/machines/sleeper_open.ogg', 50, 1)
 		return
 
@@ -113,7 +113,7 @@
 			return 0
 		if(ismobcritter(target))
 			if(!genResearch.isResearched(/datum/geneticsResearchEntry/critter_scanner))				 // CHANGE TO CHECK FOR MODULE?
-				boutput(M, SPAN_ALERT("<B>The scanner doesn't support this body type.</B>"))
+				boutput(M, SPAN_ALERT("<B>More research is required to support this body type.</B>"))
 				return 0
 		else if(!iscarbon(target) )
 			boutput(M, SPAN_ALERT("<B>The scanner supports only carbon based lifeforms.</B>"))

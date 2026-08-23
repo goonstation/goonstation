@@ -1,6 +1,5 @@
 /mob/living/critter/robotic/gunbot/riotbot
 	name = "Syndicate Suppression Unit"
-	real_name = "Syndicate Suppression Unit"
 	icon_state = "riotbot"
 	base_icon_state = "riotbot"
 	desc = "A sturdy version with a shield for increased survivability. Not nearly as lethal as the others though."
@@ -24,7 +23,7 @@
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/gun/kinetic/abg
 		HH.name = "ABG Riot Suppression Appendage"
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handabg"
 		HH.limb_name = "ABG Riot Suppression Appendage"
 		HH.can_hold_items = FALSE
@@ -34,7 +33,7 @@
 		HH = hands[2]
 		HH.limb = new /datum/limb/gun/kinetic/abg
 		HH.name = "ABG Riot Suppression Appendage"
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handabg"
 		HH.limb_name = "ABG Riot Suppression Appendage"
 		HH.can_hold_items = FALSE
@@ -69,7 +68,7 @@
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/gun/kinetic/abg/no_reload
 		HH.name = "ABG Riot Suppression Appendage"
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handabg"
 		HH.limb_name = "ABG Riot Suppression Appendage"
 		HH.can_hold_items = FALSE
@@ -79,7 +78,7 @@
 		HH = hands[2]
 		HH.limb = new /datum/limb/syndie_shield
 		HH.name = "Mod. 81 Alcor Shield"
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "shield"
 		HH.limb_name = "Mod. 81 Alcor Shield"
 		HH.can_hold_items = FALSE
@@ -88,7 +87,7 @@
 
 		HH = hands[3]
 		HH.limb = new /datum/limb/small_critter/strong
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "gunbothand"
 		HH.limb_name = "gunbot hands"

@@ -1,5 +1,6 @@
 #define TURF_SPAWN_EDGE_LIMIT 5
 
+ABSTRACT_TYPE(/datum/mining_encounter)
 /datum/mining_encounter
 	var/name = null
 	var/info = null
@@ -293,17 +294,6 @@
 				new_crate.set_loc(pick(floors))
 				new_enemy.set_loc(pick(floors))
 
-/datum/mining_encounter/zombie
-	name = "Hollow Asteroid"
-	rarity_tier = 3
-
-	generate(obj/magnet_target_marker/target)
-		if (..())
-			return
-
-		var/dmm_suite/asset_loader = new
-		asset_loader.read_map(file2text("assets/maps/mining_magnet/zombie.dmm"), target.x, target.y, target.z)
-
 /datum/mining_encounter/artifact
 	name = "Fluctuating Asteroid"
 	rarity_tier = 2
@@ -315,6 +305,57 @@
 
 		Turfspawn_Asteroid_SeedOre(generated_turfs, rand(2, 6), rand(0, 40))
 		Turfspawn_Asteroid_SeedArtifacts(generated_turfs, rand(7, 10))
+
+// One-shot encounters - only occur once per round
+
+ABSTRACT_TYPE(/datum/mining_encounter/oneshot)
+/datum/mining_encounter/oneshot
+	generate(obj/magnet_target_marker/target)
+		if(..())
+			return
+
+		switch (src.rarity_tier)
+			if (-1)
+				mining_controls.small_encounters -= src
+			if (1)
+				mining_controls.mining_encounters_common -= src
+			if (2)
+				mining_controls.mining_encounters_uncommon -= src
+			if (3)
+				mining_controls.mining_encounters_rare -= src
+
+/datum/mining_encounter/oneshot/zombie
+	name = "Hollow Asteroid"
+	rarity_tier = 3
+
+	generate(obj/magnet_target_marker/target)
+		if (..())
+			return
+
+		var/dmm_suite/asset_loader = new
+		asset_loader.read_map(file2text("assets/maps/mining_magnet/zombie.dmm"), target.x, target.y, target.z)
+
+/datum/mining_encounter/oneshot/flock
+	name = "Flock Asteroid"
+	rarity_tier = 3
+
+	generate(obj/magnet_target_marker/target)
+		if (..())
+			return
+
+		var/dmm_suite/asset_loader = new
+		asset_loader.read_map(file2text("assets/maps/mining_magnet/flock.dmm"), target.x, target.y, target.z)
+
+/datum/mining_encounter/oneshot/syndicate
+	name = "Blocked Signal"
+	rarity_tier = 3
+
+	generate(obj/magnet_target_marker/target)
+		if (..())
+			return
+
+		var/dmm_suite/asset_loader = new
+		asset_loader.read_map(file2text("assets/maps/mining_magnet/syndicate.dmm"), target.x, target.y, target.z)
 
 /////////////TELESCOPE ENCOUNTERS BELOW
 
@@ -480,6 +521,19 @@
 		var/list/generated_turfs = src.create_round_asteroid(target)
 
 		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"starstone",rand(1,2))
+
+/datum/mining_encounter/tel_batiline
+	name = "Batiline asteroid"
+	rarity_tier = 1
+	no_pick = 1
+
+	generate(var/obj/magnet_target_marker/target)
+		if (..())
+			return
+		var/list/generated_turfs = src.create_round_asteroid(target)
+
+		Turfspawn_Asteroid_SeedSpecificOre(generated_turfs,"batiline",rand(2,5))
+		Turfspawn_Asteroid_SeedEvents(Turfspawn_Asteroid_CheckForModifiableTurfs(generated_turfs),rand(1,9))
 // Terrain Gen Procs
 
 /// ASTEROIDS ///
@@ -593,8 +647,8 @@
 	var/current_range = 0
 	var/list/generated_turfs = list()
 
-	var/turf/simulated/wall/auto/asteroid/A
-	A = new base_rock(locate(center.x, center.y, center.z),0)
+	var/turf/simulated/wall/auto/asteroid/A = locate(center.x, center.y, center.z)
+	A.ReplaceWith(base_rock)
 	generated_turfs += A
 	var/turf/simulated/wall/auto/asteroid/B
 
@@ -611,7 +665,8 @@
 					continue
 				if (area_restriction && S.loc.type != area_restriction)
 					continue
-				B = new base_rock(locate(S.x, S.y, S.z),0)
+				B = locate(S.x, S.y, S.z)
+				B.ReplaceWith(base_rock)
 				generated_turfs += B
 
 	return generated_turfs
@@ -925,6 +980,7 @@
 			turfs -= AST
 			amount++
 			continue
+		E.set_up(AST.ore)
 		AST.set_event(E)
 
 /proc/Turfspawn_Asteroid_SeedArtifacts(list/turfs, num_artifacts)

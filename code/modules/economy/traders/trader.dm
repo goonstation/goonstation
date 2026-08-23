@@ -8,6 +8,7 @@
 	var/hidden = 0              // Makes the trader not show up on the QM console
 	var/chance_leave = 35       // Chance for a trader to go hidden during a market shift
 	var/chance_arrive = 45      // Chance for a trader to stop hiding during a market shift
+	var/chance_restock = 35		// Chance for a trader to restock goods (per good) during a market shift
 	var/asshole = 0 // will accept wrong-direction haggles
 
 	///A business card or other item type to occasionally include with orders
@@ -23,7 +24,7 @@
 	var/rarities = list(TRADER_RARITY_COMMON, TRADER_RARITY_UNCOMMON, TRADER_RARITY_RARE)
 	// list to determine how many items per rarity we have
 	// it's cumulative, meaning we will have at least X common, Y uncommon, etc.
-	var/list/amount_of_items_per_rarity = list(
+	var/list/amount_of_items_per_rarity = alist(
 		TRADER_RARITY_COMMON = 3,
 		TRADER_RARITY_UNCOMMON = 2,
 		TRADER_RARITY_RARE = 1,
@@ -99,10 +100,10 @@
 		src.patience = rand(src.base_patience[1],src.base_patience[2])
 		src.set_up_goods()
 
-	proc/set_up_goods()
+	proc/set_up_goods(var/should_reset_buylist = TRUE)
 		// This is called in New and also when the trader comes back from being away for a while
 		// It basically clears out and rejumbles their commodity lists to keep things fresh
-		src.goods_buy = new/list()
+		if (should_reset_buylist) src.goods_buy = new/list()
 		src.goods_sell = new/list()
 		src.wipe_cart()
 
@@ -119,7 +120,7 @@
 		// Iterate over all rarities and pick the corresponding amount of items from the respective lists
 		for (var/rarity in src.rarities)
 			for (var/i in 1 to src.amount_of_items_per_rarity[rarity])
-				if(length(goods_buy_temp[rarity]) >= i)
+				if(should_reset_buylist && length(goods_buy_temp[rarity]) >= i)
 					var/buy_com = pick(goods_buy_temp[rarity])
 					var/datum/commodity/new_buy_com = new buy_com(src)
 					src.goods_buy += new_buy_com
@@ -208,14 +209,15 @@
 
 		invoice.info += "<br>Final Cost of Goods: [total_price] credits."
 
-		wagesystem.shipping_budget -= total_price
+		wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] -= total_price
 
 		src.wipe_cart(1) //This tells wipe_cart to not increase the amount in stock when clearing it out.
 		src.currently_selling = 0 //At this point the shopping cart has been processed
 		var/datum/signal/pdaSignal = get_free_signal()
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="Deal with \"[src.name]\" concluded. Total Cost: [total_price] credits")
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGT_CARGO, MGA_SALES), "sender"="00000000", "message"="Deal with \"[src.name]\" concluded. Total Cost: [total_price] credits")
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 		shippingmarket.receive_crate(S)
+		global.shippingmarket.update_supply_console_data()
 
 	proc/wipe_cart(var/sold_stuff)
 		for (var/datum/commodity/trader/incart/COM in src.shopping_cart)
@@ -225,6 +227,20 @@
 			COM.amount = 0
 			src.shopping_cart -= COM
 		src.shopping_cart.Cut()
+
+/datum/trader/proc/fetch_commodities_data(var/list/commodities)
+	. = list()
+	for (var/datum/commodity/trader/commodity in commodities)
+		.+= list(src.fetch_commodity_data(commodity))
+
+/datum/trader/proc/fetch_commodity_data(var/datum/commodity/trader/commodity)
+	return list(
+		"name" = commodity.comname,
+		"description" = commodity.listed_name,
+		"price" = commodity.price,
+		"amount_left" = commodity.amount,
+		"ref" = ref(commodity),
+	)
 
 /datum/commodity/trader
 	var/listed_name = "a thing!!!"   // What it shows up as outside the shopping cart

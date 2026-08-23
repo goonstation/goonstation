@@ -118,7 +118,7 @@
 		name = "Lumen"
 		id = "lumen"
 		required_reagents = list("radium" = 1, "omega_mutagen" = 1, "hydrogen" = 1, "helium" = 1, "luminol" = 1)
-		mix_phrase = "The chemicals coalesce and begin to grow rather brightly!"
+		mix_phrase = "The chemicals coalesce and begin to glow rather brightly!"
 		mix_sound = 'sound/voice/heavenly.ogg'
 		result_amount = 3
 		result = "lumen"
@@ -252,7 +252,6 @@
 			if (holder)
 				holder.del_reagent("lumen")
 				holder.del_reagent("fluorosurfactant")
-				holder.del_reagent("water")
 			var/location = get_turf(holder.my_atom)
 			playsound(location, 'sound/weapons/flashbang.ogg', 25, TRUE)
 			elecflash(location)
@@ -280,7 +279,6 @@
 			if (holder)
 				holder.del_reagent("pyrosium")
 				holder.del_reagent("fluorosurfactant")
-				holder.del_reagent("water")
 			return
 
 /*		The smoke reaction now deletes pyrosium (thalmerite) to prevent it from spreading everywhere without blocking delayed smoke reactions - IM
@@ -328,7 +326,6 @@
 				holder.del_reagent("aranesp")
 				holder.del_reagent("booster_enzyme")
 				holder.del_reagent("fluorosurfactant")
-				holder.del_reagent("water")
 			return
 
 	booster_enzyme
@@ -706,12 +703,22 @@
 		max_temperature = T0C + 100
 		mix_phrase = "The powder dissolves, turning the solution milky."
 
+	barbecue_sauce
+		name = "Barbecue Sauce"
+		id = "barbecue_sauce"
+		required_reagents = list("capsaicin" = 1, "lemonade" = 1, "pepper" = 1, "ketchup" = 1, "grease" = 1, "mustard" = 1)
+		result = "barbecue_sauce"
+		result_amount = 7
+		instant = 0
+		min_temperature = T0C + 50
+		mix_phrase = "The flavor ions attempt to pass through the transitory BBQ stage, but fail. Seems your sauce might be missing something that could make it even more delicious!"
+
 	powder_milk
 		name = "Milk powder"
 		id = "milk_powder"
 		result = "milk_powder"
 		required_reagents = list("milk" = 1)
-		inhibitors = list("water")
+		inhibitors = list("water", "sugar")
 		result_amount = 1
 		min_temperature = T0C + 100
 		mix_phrase = "The water boils away, leaving behind a white condensed powder."
@@ -1254,6 +1261,46 @@
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
 		hidden = TRUE
+
+	cocktail_quadruplewaterstable
+		name = "Quadruple Water"
+		id = "cocktail_quadruplewaterstable"
+		result = "cocktail_quadruplewaterstable"
+		required_reagents = list("cocktail_triplewater" = 1, "sodawater" = 1, "uranium" = 0, "stabiliser" = 1)
+		result_amount = 1
+		mix_phrase = "The triple water seems to begrudgingly let the soda water mix in."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
+	cocktail_quadruplewater
+		name = "Quadruple Water Unstable"
+		id = "cocktail_quadruplewater"
+		result = "cocktail_quadruplewater"
+		required_reagents = list("cocktail_triplewater" = 1, "sodawater" = 1, "uranium" = 0)
+		inhibitors = list("stabiliser")
+		result_amount = 1
+		mix_phrase = "The triple water and soda water mix as unsetteling bubbles appear on the surface."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
+	triplewater_reject
+		name = "Triplewater Reject"
+		id = "triplewater_reject"
+		result = "steam"
+		required_reagents = list("cocktail_triplewater" = 1, "sodawater" = 1)
+		inhibitors = list("uranium")
+		result_amount = 2
+		mix_phrase = "The triple water aggressively boils off on contact with the soda water!"
+
+	cocktail_triplewater
+		name = "Triple Water"
+		id = "cocktail_triplewater"
+		result = "cocktail_triplewater"
+		required_reagents = list("water" = 1, "water_holy" = 1, "tonic" = 1)
+		result_amount = 1
+		mix_phrase = "The diffrent water molecules seem to intertwine as the drink increases in density."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
 
 	cocktail_beach
 		name = "Bliss on the Beach"
@@ -2336,7 +2383,7 @@
 		result = "pumpkinspicelatte"
 		required_reagents = list("juice_pumpkin"=1, "milk"= 2, "espresso"=1, "cinnamon"=1)
 		result_amount = 5
-		mix_phrase = "The drink smells vaguely like artifical autumn."
+		mix_phrase = "The drink smells vaguely like artificial autumn."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 
 	lavenderlatte
@@ -2815,6 +2862,16 @@
 		required_reagents = list("water" = 1, "silicon" = 1, "oxygen" = 1)
 		result_amount = 3
 		mix_phrase = "The substance turns a striking cyan and becomes oily."
+
+	craftglue
+
+		name = "Craft Glue"
+		id = "craftglue"
+		result = "craftglue"
+		inhibitors = list("formaldehyde")
+		required_reagents = list("plasma" = 1, "phenol" = 0.25, "oxygen" = 1, "hydrogen" = 1)
+		result_amount = 3
+		mix_phrase = "The substance turns a bright purple and becomes midly tacky."
 
 	glue
 		name = "Space Glue"
@@ -3309,6 +3366,31 @@
 			if(force > 3)
 				was_physically_shocked = TRUE
 
+	acetylsalicylic_acid
+		name = "Acetylsalicylic Acid"
+		id = "acetylsalicylic_acid"
+		eventual_result = list("acetylsalicylic_acid", "water")
+		required_reagents = list("salicylic_acid" = 0, "acetic_acid" = 0)
+		reaction_speed = 1
+		result_amount = 1
+		reaction_volume_dependant = FALSE
+		mix_phrase = "A pinkish-white precipitate forms."
+		instant = FALSE
+
+		on_reaction(var/datum/reagents/holder, var/created_volume)
+			holder.remove_reagent("salicylic_acid", created_volume)
+			holder.remove_reagent("acetic_acid", created_volume)
+			holder.add_reagent("water", created_volume, chemical_reaction = TRUE, chem_reaction_priority = 1)
+			holder.add_reagent("acetylsalicylic_acid", created_volume, chemical_reaction = TRUE, chem_reaction_priority = 2)
+
+		get_reaction_speed_multiplicator(var/datum/reagents/holder)
+			. = ..()
+			. *= (holder.has_reagent("acid", 1) ? 4 : 1)
+			. *= (10 / (holder.get_reagent_amount("water") + 10))
+			. *= (holder.total_temperature/T20C)
+			. = round(.-0.05, 0.01) //reduce the float rounding error a bit.
+
+
 	perfluorodecalin // COGWERKS CHEM REVISION PROJECT:marked for revision
 		name = "Perfluorodecalin"
 		id = "perfluorodecalin"
@@ -3344,24 +3426,30 @@
 		var/is_currently_exploding = FALSE //so it doesn't explode multiple times during the slight activation delay
 
 		on_reaction(var/datum/reagents/holder, var/created_volume)
-			if(src.is_currently_exploding)
+			if (src.is_currently_exploding)
 				return
+
+			if (istype(holder.my_atom.loc, /obj/disposalholder) || istype(holder.my_atom.loc, /obj/machinery/chemicompiler_stationary))
+				return
+
 			var/turf/T = get_turf(holder.my_atom)
-			if (istype(T) && T.is_lit(0.1) && !istype(holder.my_atom.loc, /obj/disposalholder))
-				var/obj/particle/chemical_shine/shine = new /obj/particle/chemical_shine
-				is_currently_exploding = TRUE
-				shine.set_loc(T)
-				playsound(get_turf(holder.my_atom), 'sound/effects/sparks6.ogg', 50, 1) //this could be better with a bespoke sound eventually, didn't want to steal vampire glare sound but similar-ish?
-				SPAWN(6 DECI SECONDS) //you get a slight moment to react/be surprised
-					T = get_turf(holder.my_atom) //may have moved
-					qdel(shine)
-					holder.del_reagent("photophosphide")
-					explosion(holder.my_atom, T, -1,-1,0,1)
-					playsound(T, 'sound/effects/Explosion1.ogg', 50, 1)
-					fireflash(T, 0, chemfire = CHEM_FIRE_RED)
-					if(istype(holder.my_atom, /obj))
-						var/obj/container = holder.my_atom
-						container.shatter_chemically(projectiles = TRUE)
+			if (!istype(T) || !T.is_lit(0.1))
+				return
+
+			var/obj/particle/chemical_shine/shine = new /obj/particle/chemical_shine
+			is_currently_exploding = TRUE
+			shine.set_loc(T)
+			playsound(get_turf(holder.my_atom), 'sound/effects/sparks6.ogg', 50, 1) //this could be better with a bespoke sound eventually, didn't want to steal vampire glare sound but similar-ish?
+			SPAWN(6 DECI SECONDS) //you get a slight moment to react/be surprised
+				T = get_turf(holder.my_atom) //may have moved
+				qdel(shine)
+				holder.del_reagent("photophosphide")
+				explosion(holder.my_atom, T, -1,-1,0,1)
+				playsound(T, 'sound/effects/Explosion1.ogg', 50, 1)
+				fireflash(T, 0, chemfire = CHEM_FIRE_RED)
+				if(istype(holder.my_atom, /obj))
+					var/obj/container = holder.my_atom
+					container.shatter_chemically(projectiles = TRUE)
 
 	photophosphide_decay //decays in low amounts
 		name = "Photophosphide Decay"
@@ -3491,7 +3579,7 @@
 		instant = 0
 		reaction_speed = 1
 		max_temperature = T0C + 50
-		mix_phrase = "The solution bubbles as frost precipitates from the sorrounding air."
+		mix_phrase = "The solution bubbles as frost precipitates from the surrounding air."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		reaction_icon_state = list("reaction_ice-1", "reaction_ice-2")
 		reaction_icon_color = "#24ccff"
@@ -3955,6 +4043,18 @@
 			var/turf/location = pick(holder.covered_turf())
 			location.fluid_react_single("miasma", created_volume, airborne = 1)
 
+	parazamine
+		name = "parazamine"
+		id = "parazamine"
+		result = "parazamine"
+		required_reagents = list("space_fungus" = 0.1, "cryoxadone" = 1, "atropine" = 1)
+		instant = 0
+		reaction_speed = 2
+		result_amount = 2
+		max_temperature = (T0C - 25)
+		reaction_icon_state = list("reaction_puff-1", "reaction_puff-2")
+		mix_phrase = "The particles of fungus begin to slowly dissolve in the cold solution."
+
 	lungrot
 		name = "lungrot"
 		id = "lungrot"
@@ -4074,7 +4174,6 @@
 		min_temperature = T0C + 100
 		result_amount = 1
 		mix_phrase = "The mixture bubbles and white crystals form."
-		hidden = TRUE
 		on_reaction(var/datum/reagents/holder, var/created_volume)
 			holder.add_reagent("nitrogen_dioxide", created_volume, , holder.total_temperature, chem_reaction_priority = 2)
 			holder.add_reagent("water", created_volume, , holder.total_temperature, chem_reaction_priority = 3)
@@ -4195,7 +4294,8 @@
 				var/datum/effects/system/foam_spread/s = new()
 				s.set_up(created_volume, location, holder, 0)
 				s.start()
-				holder.clear_reagents()
+				holder.remove_reagent("fluorosurfactant", created_volume)
+				holder.remove_reagent("water", created_volume)
 			else
 				var/amt = clamp(holder.covered_cache.len/100, 1, 10)
 				for (var/i = 0, i < amt && holder.covered_cache.len, i++)
@@ -4204,7 +4304,8 @@
 					var/datum/effects/system/foam_spread/s = new()
 					s.set_up(created_volume/holder.covered_cache.len, location, holder, 0, carry_volume = (created_volume / max(length(holder.covered_cache),1)))
 					s.start()
-				holder.clear_reagents()
+				holder.remove_reagent("fluorosurfactant", created_volume)
+				holder.remove_reagent("water", created_volume)
 			return
 
 	metalfoam
@@ -4863,6 +4964,28 @@
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		hidden = TRUE
 
+	deageinium
+		name = "Deageinium"
+		id = "deageinium"
+		result = "deageinium"
+		required_reagents = list("sugar" = 1, "epinephrine" = 1, "juice_apple" = 1, "chickensoup" = 1, "milk_powder" = 1)
+		result_amount = 3
+		min_temperature = T0C + 21
+		mix_phrase = "The bubbling mixture gives off a scent of angst, sickeningly sweet soda and life."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		hidden = TRUE
+
+	deageinium_alt
+		name = "Deageinium"
+		id = "deageinium_alt"
+		result = "deageinium"
+		required_reagents = list("ageinium" = 1, "reversium" = 1)
+		result_amount = 1
+		min_temperature = T0C + 21
+		mix_phrase = "The bubbling mixture gives off a scent of angst, sickeningly sweet soda and life."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		hidden = TRUE
+
 	//Hello, here are some fake werewolf serum precursors
 	werewolf_serum_fake1
 		name = "Werewolf Serum Precursor Alpha"
@@ -5025,6 +5148,16 @@
 		mix_phrase = "The solution makes a little 'chirp' noise and settles."
 		hidden = TRUE
 
+	painbow_eggs
+		name = "painbow eggs"
+		id = "painbow_eggs"
+		result = "painbow_eggs"
+		required_reagents = list("painbow fluid" = 1, "spiders" = 2, "helium" = 1)
+		result_amount = 1
+		mix_phrase = "The painbow and the spider concoct into a horrific mix."
+		hidden = TRUE
+		mix_sound = 'sound/musical_instruments/Boathorn_1.ogg'
+
 	mewtini
 		name = "Mewtini"
 		id = "mewtini"
@@ -5164,7 +5297,7 @@
 			for(var/turf/T in range(1, get_turf(holder.my_atom)))
 				for(var/mob/mob in T)
 					if(!mob.is_heat_resistant())
-						mob.bodytemperature += 10
+						mob.changeBodyTemp(10 KELVIN)
 				T.hotspot_expose(1000, 100, holder.my_atom)
 				var/obj/particle/heat_swirl/swirl = new /obj/particle/heat_swirl
 				swirl.set_loc(T)
@@ -5216,7 +5349,7 @@
 			for(var/turf/T in range(1, get_turf(holder.my_atom)))
 				for(var/mob/mob in T)
 					if(!mob.is_cold_resistant() || ischangeling(mob))
-						mob.bodytemperature -= 10
+						mob.changeBodyTemp(-10 KELVIN)
 				T.hotspot_expose(0, 100, holder.my_atom)
 				var/obj/particle/cryo_sparkle/sparkle = new /obj/particle/cryo_sparkle
 				sparkle.set_loc(T)
@@ -5293,6 +5426,13 @@
 		mix_phrase = "The mixture turns yellowish and emits a loud grumping sound"
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		hidden = TRUE
+		var/static/caused_gravity_disturbance = FALSE
+
+		on_reaction(datum/reagents/holder, created_volume)
+			. = ..()
+			if (!caused_gravity_disturbance && holder.my_atom.z == Z_LEVEL_STATION)
+				SEND_GLOBAL_SIGNAL(COMSIG_GRAVITY_EVENT, GRAVITY_EVENT_DISRUPT, -1) // alerts ALL tethers, once.
+				caused_gravity_disturbance = TRUE
 
 	flubber
 		name = "Liquified Space Rubber"
@@ -5460,3 +5600,66 @@
 		mix_phrase = "The mixture emits a sudden whine of static and forms into swirling, many faceted shapes that hurt to look at."
 		result_amount = 2
 		mix_sound = 'sound/effects/radio_sweep1.ogg'
+
+	explodingheadjuice
+		name = "Juice That Makes Your Head Explode"
+		id = "explodingheadjuice"
+		result = "explodingheadjuice"
+		required_reagents = list("blackpowder" = 1, "hard_punch" = 1, "juice_raspberry" = 1, "prions" = 1, "sonicpowder" = 1)
+		mix_phrase = "The mixture coalesces into a dark red liquid."
+		result_amount = 5
+
+	sweetcondensedmilk
+		name = "Sweet Condensed Milk"
+		id = "sweetcondensedmilk"
+		result = "sweetcondensedmilk"
+		required_reagents = list("sugar" = 1, "milk" = 1)
+		min_temperature = T0C + 90
+		result_amount = 1
+		mix_phrase = "The mixture bubbles gently before thickening considerably."
+		drinkrecipe = TRUE
+
+	cafebombon
+		name = "Café Bombón"
+		id = "cafebombon"
+		result = "cafebombon"
+		required_reagents = list("sweetcondensedmilk"=1, "espresso"= 1)
+		result_amount = 2
+		mix_phrase = "The mixture slowly separates into two distinct layers."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
+	frothedmilk
+		name = "Frothed Milk"
+		id = "frothedmilk"
+		result = "frothedmilk"
+		required_reagents = list("milk" = 1)
+		result = "frothedmilk"
+		min_temperature = T0C + 65
+		result_amount = 1
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		mix_phrase = "The milk rapidly expands into a smooth, velvety foam."
+		drinkrecipe = TRUE
+
+		does_react(datum/reagents/holder)
+			var/datum/reagent/fooddrink/milk/milk = holder.get_reagent("milk")
+			return milk && milk.was_physically_shocked
+
+	macchiato
+		name = "Macchiato"
+		id = "macchiato"
+		result = "macchiato"
+		required_reagents = list("frothedmilk" = 1, "espresso" = 1)
+		result_amount = 2
+		mix_phrase = "The foam settles gently atop the espresso, leaving a pale mark across its surface."
+    
+	dulcedeleche
+		name = "Dulce de leche"
+		id = "dulcedeleche"
+		result = "dulcedeleche"
+		required_reagents = list("sweetcondensedmilk" = 1, "vanilla" = 1)
+		min_temperature = T0C + 85
+		result_amount = 1
+		mix_phrase = "The mixture slowly thickens into a velvety spread."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE

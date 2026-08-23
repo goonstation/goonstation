@@ -27,7 +27,7 @@
 			))
 
 		var/html = src.get_html()
-		src.owner.Browse(html, "window=[src.window];titlebar=0;can_close=0;can_resize=0;border=0")
+		src.owner << browse(html, "window=[src.window];titlebar=0;can_close=0;can_resize=0;border=0")
 
 	proc/get_html()
 		. = grabResource(src.htmlFile)

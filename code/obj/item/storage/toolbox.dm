@@ -168,6 +168,10 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 
 /* -------------------- Memetic Toolbox -------------------- */
 
+TYPEINFO(/obj/item/storage/toolbox/memetic)
+	start_listen_effects = list(LISTEN_EFFECT_MEMETIC_TOOLBOX)
+	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD)
+
 /obj/item/storage/toolbox/memetic
 	name = "artistic toolbox"
 	desc = "His Grace."
@@ -291,24 +295,11 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 		..()
 		return
 
-	hear_talk(var/mob/living/carbon/speaker, messages, real_name, lang_id)
-		if(!speaker || !messages)
-			return
-		if(src.loc != speaker) return
-		for(var/datum/ailment_data/A in src.servantlinks)
-			var/mob/living/M = A.affected_mob
-			if(!M || M == speaker)
-				continue
-
-			boutput(M, "<i><b><font color=blue face = Tempus Sans ITC>[messages[1]]</font></b></i>")
-
-		return
-
 /mob/living/proc/contract_memetic_madness(var/obj/item/storage/toolbox/memetic/newprogenitor)
 	if(src.find_ailment_by_type(/datum/ailment/disability/memetic_madness))
 		return
 
-	src.resistances -= /datum/ailment/disability/memetic_madness
+	src.remove_ailment_resistance(/datum/ailment/disability/memetic_madness)
 	// just going to have to set it up manually i guess
 	var/datum/ailment_data/memetic_madness/AD = get_disease_from_path(/datum/ailment/disability/memetic_madness).setup_strain()
 

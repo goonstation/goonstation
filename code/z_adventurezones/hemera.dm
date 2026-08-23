@@ -10,7 +10,7 @@ Obsidian Crown
 	name = "Hemera VII"
 	icon_state = "yellow"
 	sound_environment = 12
-	teleport_blocked = 1
+	teleport_blocked = AREA_TELEPORT_BLOCKED
 	skip_sims = 1
 	sims_score = 30
 
@@ -66,7 +66,7 @@ Obsidian Crown
 		..()
 		var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
 		newfolder.name = "sys"
-		newfolder.metadata["permission"] = COMP_HIDDEN
+		newfolder.metadata["permission"] = DWAINE::PERM::DEFAULT::NONE
 		src.root.add_file( newfolder )
 		newfolder.add_file( new /datum/computer/file/mainframe_program/os/kernel(src) )
 		newfolder.add_file( new /datum/computer/file/mainframe_program/shell(src) )
@@ -89,7 +89,7 @@ Obsidian Crown
 
 		newfolder = new /datum/computer/folder
 		newfolder.name = "bin" //Applications available to all users.
-		newfolder.metadata["permission"] = COMP_ROWNER|COMP_RGROUP|COMP_ROTHER
+		newfolder.metadata["permission"] = DWAINE::PERM::DEFAULT::ALL_READ_ONLY
 		src.root.add_file( newfolder )
 		newfolder.add_file( new /datum/computer/file/mainframe_program/utility/cd(src) )
 		newfolder.add_file( new /datum/computer/file/mainframe_program/utility/ls(src) )
@@ -108,12 +108,12 @@ Obsidian Crown
 
 		newfolder = new /datum/computer/folder
 		newfolder.name = "mnt"
-		newfolder.metadata["permission"] = COMP_ROWNER|COMP_RGROUP|COMP_ROTHER
+		newfolder.metadata["permission"] = DWAINE::PERM::DEFAULT::ALL_READ_ONLY
 		src.root.add_file( newfolder )
 
 		newfolder = new /datum/computer/folder
 		newfolder.name = "conf"
-		newfolder.metadata["permission"] = COMP_ROWNER|COMP_RGROUP|COMP_ROTHER
+		newfolder.metadata["permission"] = DWAINE::PERM::DEFAULT::ALL_READ_ONLY
 		src.root.add_file( newfolder )
 
 		var/datum/computer/file/record/testR = new
@@ -126,7 +126,7 @@ Obsidian Crown
 
 		newfolder = new /datum/computer/folder
 		newfolder.name = "etc"
-		newfolder.metadata["permission"] = COMP_ROWNER|COMP_RGROUP|COMP_ROTHER
+		newfolder.metadata["permission"] = DWAINE::PERM::DEFAULT::ALL_READ_ONLY
 		src.root.add_file( newfolder )
 
 		newfolder.add_file( new /datum/computer/file/guardbot_task/bodyguard(src) )
@@ -436,6 +436,10 @@ Obsidian Crown
 					boutput(M, SPAN_NOTICE("You are caught in a magical warp field!"))
 					M.visible_message(SPAN_COMBAT("[M] is warped away!"))
 					playsound(M.loc, 'sound/effects/mag_warp.ogg', 25, 1, -1)
+					var/turf/destination = pick(randomturfs)
+					if(ishuman(M))
+						var/mob/living/carbon/human/H = M
+						H.shoes?.magnetic_teleport_check(H, get_turf(H), destination)
 					M.set_loc(pick(randomturfs))
 					logTheThing(LOG_COMBAT, M, "is warped away by [constructTarget(host,"combat")]'s obsidian crown to [log_loc(M)].")
 

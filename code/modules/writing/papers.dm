@@ -1,35 +1,28 @@
 // This file is for premade paper/pamphlet things
 
-//the size of the paper includes the 32px wide bar at the top, so we need to account for that here if we want the image to fit exactly
-#define IMAGE_OFFSET_X 0 //x one kept just in case and because I like symmetry :)
-#define IMAGE_OFFSET_Y 32
-
 /obj/item/paper/alchemy
 	name = "'Chemistry Information'"
 
 /// Cloning Manual -- A big ol' manual.
 /obj/item/paper/Cloning
-	name = "H-87 Cloning Apparatus Manual"
+	name = "H-86 Cloning Apparatus Manual"
 	info = {"<h4>Getting Started</h4>
-	Congratulations, your station has purchased the H-87 industrial cloning device!<br>
-	Using the H-87 is almost as simple as brain surgery! Simply insert the target humanoid into the scanning chamber and select the scan option to create a new profile!<br>
+	Congratulations, your station has purchased the H-86 industrial cloning device!<br>
+	Using the H-86 is almost as simple as brain surgery! Simply insert a disk into the marked slot (cut corner on the RIGHT hand side), shove the target humanoid into the scanning chamber, and select the scan option to write their genetic data to the disk!<br>
 	<b>That's all there is to it!</b><br>
-	<i>Notice, cloning system cannot scan inorganic life or small primates.  Scan may fail if subject has suffered extreme brain damage.</i><br>
-	<p>Clone profiles may be viewed through the profiles menu. Scanning implants a complementary CLONING RECORDS IMPLANT into the subject, which may be viewed from the cloning console.
-	Profile Deletion has been restricted to \[Station Head\] level access.</p>
-	<h4>Cloning from a profile</h4>
-	Cloning is as simple as pressing the CLONE option to the right of the desired profile.<br>
-	Per your company's EMPLOYEE PRIVACY RIGHTS agreement, the H-87 has been blocked from cloning crewmembers while they are still alive.<br>
+	<i>Notice, cloning system cannot scan inorganic life or small animals. At minimum a torso is required to create a cloning record (head optional).</i><br>
+	<p>Clone disks should be properly labelled and stored in the provided rack. Scanning implants a complementary CLONING RECORDS IMPLANT into the subject, which sends a "keep alive!" signal back to the rack. Note: a red warning light indicates a lack of "keep alive!" signal and may indicate the subject's death, unauthorized implant removal, or solar flare interference.
+	<h4>Cloning from a disk</h4>
+	Cloning is as simple as inserting the disk back into the console and hitting the clone button.<br>
+	Per your company's EMPLOYEE PRIVACY RIGHTS agreement, the H-86 has been blocked from cloning crewmembers while they are still alive.<br>
 	<br>
 	<p>The provided CLONEPOD SYSTEM will produce the desired clone.  Standard clone maturation times (with SPEEDCLONE technology) are roughly 90 seconds.
-	The cloning pod may be unlocked early with any \[Medical Researcher\] ID after initial maturation is complete.</p><br>
+	The cloning pod may be unlocked early with any \[Medical\] ID after initial maturation is complete.</p><br>
 	<i>Please note that resulting clones may have a small DEVELOPMENTAL DEFECT as a result of genetic drift.</i><br>
-	<h4>Profile Management</h4>
-	<p>The H-87 (as well as your station's standard genetics machine) can accept STANDARD DATA DISKETTES.
-	These diskettes are used to transfer genetic information between machines and profiles.
-	A load/save dialog will become available in each profile if a disk is inserted.</p><br>
-	<i>A good diskette is a great way to counter aforementioned genetic drift!</i><br>
-	<br>
+	<h4>Cloning Biomatter Supply</h4>
+	<p>To ensure prompt and swift generation of new clones, be sure to feed organs and limbs of deceased personnel into the enzymatic reclaimer.<br>
+	By inducing a stem-cell like effect in reclaimed biomatter, a single set of humanoid organs can provide resources for multiple new clones.
+	<hr>
 	<font size=1>This technology produced under license from Thinktronic Systems, LTD.</font>"}
 
 /obj/item/paper/Wizardry101
@@ -42,7 +35,7 @@
 	<li>Teleportation scroll</li><dd><i>- Allows instant teleportation to an area of your choice. The scroll has four charges. Don't lose it though, or you can't get back to the shuttle without knowing the <b><i>teleport</b></i> spell, or dying while <b><i>soulguard</b></i> is active!</i></dd>
 	<li>Spellbook</li><dd><i>- This is your personal spellbook that gives you access to the Wizarding Archives, allowing you to choose 4 spells with which to complete your objectives. The spellbook only works for you, and can be discarded after its uses are expended.</i></dd>
 	<br><br><br><hr>Spells every wizard starts with:<br><br>
-	<li>Magic missile (20 seconds)</li><dd><i>- This spell fires several slow-moving projectiles at nearby targets. If they hit a target, it is stunned and takes minor damage.</i></dd>
+	<li>Magic missile (25 seconds)</li><dd><i>- This spell fires several slow-moving projectiles at nearby targets. If they hit a target, it is stunned and takes minor damage.</i></dd>
 	<li>Phase shift (30 seconds)</li><dd><i>- This spell briefly turns your form ethereal, allowing you to pass invisibly through anything.</i></dd>
 	<li>Clairvoyance (60 seconds)</li><dd><i>- This spell will tell you the location of those you target with it. It will also inform you if they are hiding inside something, or are dead.</i></dd>
 	<br><br><br>Click the question mark in your <b>spellbook</b> to learn more about certain spells.<br>Recommended loadout for beginners: <b><i>ice burst, blink, shocking touch, blind</i></b>
@@ -51,7 +44,7 @@
 
 /obj/item/paper/Internal
 	name = "'Internal Atmosphere Operating Instructions'"
-	info = "Equipment:<BR>\n\t1+ Tank(s) with appropriate atmosphere<BR>\n\t1 Gas Mask w regulator (standard issue)<BR>\n<BR>\nProcedure:<BR>\n\t1. Wear mask<BR>\n\t2. Attach oxygen tank pipe to regulator (automatic))<BR>\n\t3. Set internal!<BR>\n<BR>\nNotes:<BR>\n\tDon't forget to stop internal when tank is low by<BR>\n\tremoving internal!<BR>\n<BR>\n\tDo not use a tank that has a high concentration of toxins.<BR>\n\tThe filters shut down on internal mode!<BR>\n<BR>\n\tWhen exiting a high danger environment it is advised<BR>\n\tthat you exit through a decontamination zone!<BR>\n<BR>\n\tRefill a tank at a oxygen canister by equiping the tank (Double Click)<BR>\n\tthen 'attacking' the canister (Double Click the canister)."
+	info = "Equipment:<BR>\n\t1+ Tank(s) with appropriate atmosphere<BR>\n\t1 Gas Mask w regulator (standard issue)<BR>\n<BR>\nProcedure:<BR>\n\t1. Wear mask<BR>\n\t2. Attach oxygen tank pipe to regulator (automatic))<BR>\n\t3. Set internal!<BR>\n<BR>\nNotes:<BR>\n\tDon't forget to stop internal when tank is low by<BR>\n\tremoving internal!<BR>\n<BR>\n\tDo not use a tank that has a high concentration of toxins.<BR>\n\tThe filters shut down on internal mode!<BR>\n<BR>\n\tWhen exiting a high danger environment it is advised<BR>\n\tthat you exit through a decontamination zone!<BR>\n<BR>\n\tRefill a tank at an oxygen canister by equiping the tank (Double Click)<BR>\n\tthen 'attacking' the canister (Double Click the canister)."
 
 /obj/item/paper/Court
 	name = "'Judgement'"
@@ -194,7 +187,7 @@
 
 	New()
 		. = ..()
-		src.stamp(200, 20, rand(-5,5), "stamp-qm.png", "stamp-qm")
+		src.stamp(200, 20, rand(-5,5), "[resource("images/tgui/stamp_icons/stamp-qm.png")]", "stamp-qm")
 
 /obj/item/paper/engine
 	name = "'Generator Startup Procedure'"
@@ -451,6 +444,59 @@ Only trained personnel should operate station systems. Follow all procedures car
 	icon_state = "postit-writing"
 	info ={"Congaline"}
 
+/obj/item/paper/cultbase_skeptic
+	name = "hastily scrawn note"
+	icon_state = "paper"
+	info = {"I've finally gotten a pen and paper together, they don't want us initiates documenting anything.<br>
+	The leader in charge of us initiates has told us simply to "experiment with the doctrine", and seems to be hiding something behind his dresser. I hear odd noises at night,<br>
+	screams going straight into my head. With everyone getting acting stranger everyday hopefully this air will get me far enough to create<br>
+	a distress call. If you see this note and aren't one of them, <i>GO THE OTHER WAY<i>."}
+
+/obj/item/paper/cultbase_observations
+	name = "ritual progress notes"
+	icon_state = "paper"
+	info = {"The initiates have tried textbook methods to commune with the deep using the plasmacoral as an amplifier. <br>
+	Limited success in operations of this scale, although there has been slight reactions from subject D-01 during initiate <br>
+	sermons, more data needed."}
+
+/obj/item/paper/cultbase_initiate_leader
+	name = "Update: Initiate Training"
+	icon_state = "paper"
+	info = {"The initiates are getting rowdy, the only successful ritual that they've improvised is from the one that's now <br>
+	bolted themself in the freezer. Food is getting tight here, with one of the initiates throwing food in anger. I need to keep an eye on that one. <br>
+	Operations in the back are going well though, although I think that one is catching on."}
+
+/obj/item/paper/cultbase_acolyte_notes
+	name = "The state of the Deep."
+	icon_state = "paper"
+	info = {"The leaders have been misguided, they rave and rant about their new calling, like a rabid dog on a straining chain.<br>
+	One of them went crazy and ran out into the sea in the ritual site for our section, the rest of them went into lockdown in their private wing.<br>
+	We're going to break in after this through the wall in the bathroom quarters, should go right in."}
+
+/obj/item/paper/cultbase_boardroom
+	name = "Board Room Notes"
+	icon_state = "paper"
+	info = {"The meeting with REDACTED was more complicated then usual, they put their stuff in the coolers, I gave them the blood samples of the members.<br>
+	Its absurd, they have more interest on their drug then the divine being literally outside, well if they keep supplies coming in I guess I'll manage."}
+
+/obj/item/paper/cultbase_leader_ramblings
+	name = "Truth."
+	icon_state = "paper"
+	info = {"It calls, it is our divine avatar of the waking dream. I can't grasp its meaning, it yearns... it desires. We must gather its power to uproot this corporate war. <br>
+	We must create a condition, an ultimatium, the weak of our people must be culled, tested. <i> I'm going to enjoy this! <i>"}
+
+/obj/item/paper/cultbase_creature_notes
+	name = "Observations and topics of investigation."
+	icon_state = "paper"
+	info = {"Subject appears to be held effectively within this particular frequency of sonar waves. Form appears to be semi-corporal, and appears to be otherwise entirely invisible to all kinds of vision or sensors. <br>
+	Strongest concentration of manifestions appear to be related to the concentration of plasma reactions near the liquid containing the subject. From this information I hypothesise that these creatures are only <br>
+	visible here due to the presence of plasmacoral in the region granting the conditions for their seen presence."}
+
+/obj/item/paper/cultbase_backscratcher
+	name = "We can't use it so I am."
+	icon_state = "paper"
+	info = {"This thing is too good as a backscratcher, I'm keeping it until you get the power source for its main use. -M"}
+
 /obj/item/paper/telecrystal_update
 	name = "email printout"
 	info = {"
@@ -546,7 +592,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 	info = {"<center><h2>Finally, my own ship!</h2></center>
 	<hr>
 	<i>This is the begining of my log, I figured since I made it rich after all this time, I ought to recount my thoughts now in a log of sorts.
-	Years of working in a damm cubicle, my only worthwile cash comming from transfering dead crew members credits to my own account.
+	Years of working in a damm cubicle, my only worthwile cash comming from transferring dead crew members credits to my own account.
 	But it has all paid off, I got a beautiful ship, my dog, a whole damm vault, and plenty of room for guests!
 	I even got this bottle of blue label! I was going to save it for my first cruise with others, but I suppose it wont hurt to dip into a bit of it.</i>
 	"}
@@ -648,60 +694,208 @@ Only trained personnel should operate station systems. Follow all procedures car
 	exposed to overconfident outbursts on the part of individuals unqualifed to embody the law; in event of such explosion, run.
 	"}
 
-/obj/item/paper/postcard/mushroom
-	name = "Mushroom Station postcard"
-	desc = "Just four pals hangin' out havin' a good time. Looks like they're welded into the bathroom? Why?!"
-	icon_state = "postcard-mushroom"
-	sizex = 174 + IMAGE_OFFSET_X
-	sizey = 247 + IMAGE_OFFSET_Y
-	scrollbar = FALSE
+/obj/item/paper/postcard/beach
+	name = "tropical postcard"
+	desc = {"A postcard depicting a picturesque beach scene. The back side has a groan-worthy pun."}
+	icon_state = "postcard-beach"
+	info = {"Wish you were here to <font color='#0026FF'>sea</font> this!<br><br>
+	National Notary Supply Corporation<br>
+	Image #06019"}
 
-	New()
-		..()
-		pixel_x = rand(-8, 8)
-		pixel_y = rand(-8, 8)
-		info = PAPER_IMAGE_RENDER("images/arts/mushroom_station.png")
+/obj/item/paper/postcard/mountain
+	name = "alpine postcard"
+	desc = {"A postcard depicting a snow-capped mountain emitting a thin column of smoke. There's a bad joke on the back."}
+	icon_state = "postcard-mountain"
+	info = {"Is that mountain supposed to be smoking?<br><br>
+	National Notary Supply Corporation<br>
+	Image #06129"}
 
-/obj/item/paper/botany_guide
-	name = "Botany Field Guide"
-	desc = "Some kinda informative poster. Or is it a pamphlet? Either way, it wants to teach you things. About plants."
-	icon_state = "botany_guide"
-	sizex = 965 + IMAGE_OFFSET_X
-	sizey = 682 + IMAGE_OFFSET_Y
-	scrollbar = FALSE
+/obj/item/paper/postcard/canyon
+	name = "canyon postcard"
+	desc = "A postcard depicting a river flowing through a sun-bleached canyon"
+	icon_state = "postcard-canyon"
+	info = {"Grand Canyon National Park, USA, Earth - River View 1<br>
+	National Notary Supply Corporation<br>
+	Image #05641"}
 
-	New()
-		..()
-		pixel_x = rand(-8, 8)
-		pixel_y = rand(-8, 8)
-		info = PAPER_IMAGE_RENDER("images/pocket_guides/botanyguide.png")
+/obj/item/paper/postcard/lovemd
+	name = "I Love Maryland postcard"
+	desc = "A postcard expressing admiration for the US state of Maryland, abbreviated MD. The back contains a tourist blurb about the state."
+	icon_state = "postcard-maryland" //deliberately uses the "MD" state abbreviation for laffes
+	info = {"There is much to love about the \"Old Line State\", one of the oldest states in the United States.
+	From the majestic Appalachian Mountains to the breath-taking Chesapeake Bay, every inch of Maryland
+	is blessed with natural beauty. Every year, thousands of history buffs make a pilgrimage to Fort McHenry,
+	the site of the battle that inspired the anthem of the United States, and Maryland's warm and generous
+	people welcome such storied institutions and corporations as the United States Naval Academy, John Hopkins
+	University, and National Notary. Truly there is something for everyone in Maryland.<br><br>
+	I Heart Maryland<br>
+	National Notary Supply Corporation<br>
+	Image #01309"}
 
-/obj/item/paper/ranch_guide
-	name = "Ranch Field Guide"
-	desc = "Some kinda informative poster. Or is it a pamphlet? Either way, it wants to teach you things. About chickens."
-	icon_state = "ranch_guide"
-	sizex = 1100
-	sizey = 800
-	scrollbar = FALSE
+/obj/item/paper/postcard/mdstatehouse
+	name = "Maryland State House postcard"
+	desc = "A postcard showing the Maryland State House in Annapolis. The back explains the building's significance."
+	icon_state = "postcard-md-state-house"
+	info = {"In addition to hosting the United States Naval Academy and the headquarters of the National
+	Notary Supply Corporation, Annapolis is also the capital of the US state of Maryland. The Maryland
+	State House, depicted on this postcard, is the oldest state legislature building still in continuous use
+	and once served as the national capitol, during the city's nine months as the capital of the United States.
+	<br><br>
+	Maryland State House<br>
+	National Notary Supply Corporation<br>
+	Image #01311"}
 
-	New()
-		..()
-		pixel_x = rand(-8, 8)
-		pixel_y = rand(-8, 8)
-		//ranch guide actually needs to be scaled down, so we just let it do its own styling here
-		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/pocket_guides/ranchguide.png")]'></body></html>"
+/obj/item/paper/postcard/apollo
+	name = "Apollo 11 postcard"
+	desc = "A postcard showing the crew of Apollo 11, the first three modern men to land on the moon."
+	icon_state = "postcard-apollo"
+	info = {"<font face='Arial'><h3>MEET THE MEN WHO MADE A GIANT LEAP FOR MANKIND</h3>
+	When the three crew members of American spaceflight Apollo 11 landed on Earth's moon in July 1969,
+	the roughly 22 hours they spent on the lunar surface would totally reshape human history forever.
+	Their trip to the moon and back rocked the scientific world and paved the way for the ground-breaking
+	discovery of FAAE, the miracle substance popularly known as "plasma". Learn about Apollo 11,
+	plasma, and more at the Museum of Lunar History!<br><br><br><br><br><hr>
+	Printed by Aurora Lithographics<hr></font>"}
 
-/obj/item/paper/siphon_guide
-	name = "Harmonic Siphon Brief"
-	desc = "A very official-looking sheet full of information you may or may not be able to wrap your head around."
-	icon_state = "postcard-owlery"
-	sizex = 1192 + IMAGE_OFFSET_X
-	sizey = 600 + IMAGE_OFFSET_Y
-	scrollbar = FALSE
+/obj/item/paper/postcard/moonfootprint
+	name = "Lunar bootprint postcard"
+	desc = "A postcard telling readers that they should \"see Neil Armstrong's genuine lunar bootprint\" at the Museum of Lunar History"
+	icon_state = "postcard-moon-footprint"
+	info = {"<font face='Arial'><h3>SEE NEIL ARMSTRONG'S GENUINE LUNAR BOOTPRINT</h3>
+	When American astronaut Neil Armstrong took a small step out of the lunar lander on that fateful day
+	in July 20, 1969, he made a giant leap for humankind by becoming one of the first modern humans
+	to set foot on Earth's moon. Retrace his steps and see Neil Armstrong's genuine lunar bootprint,
+	only at the Museum of Lunar History!<br><br><br><br><br><hr>
+	Printed by Aurora Lithographics<hr></font>"}
 
-	New()
-		..()
-		info = PAPER_IMAGE_RENDER("images/pocket_guides/siphonguide.png")
+/obj/item/paper/postcard/shelterfrogking //by SnugglyCactus
+	name = "\"Remember Who You Are\""
+	desc ="A postcard with an iconic scene from... The Shelterfrog King? Huh?"
+	icon_state = "postcard-shelter-king"
+	info = {"<i>Remember who you are.</i>
+	<br><br>
+	The Shelterfrog King - Remember Who You Are<br>
+	National Notary Supply Corporation<br>
+	Image #25222"}
+
+/obj/item/paper/postcard/cowbee //by Whele
+	name = "\"Ride 'Em, Cowbee!\""
+	desc = "A postcard featuring a rugged-looking cowpoke in front of a gorgeous sunset. An obligatory cactus stands tall in the center."
+	icon_state = "postcard-cowbee"
+	info = {"Ride 'Em, Cowbee!<br>
+	National Notary Supply Corporation<br>
+	Image #25216"}
+
+/obj/item/paper/postcard/believe //by Scientifically
+	name ="\"Believe\""
+	desc = "A postcard showing a painting of a UFO above a forest, with the caption \"Believe\"."
+	icon_state = "postcard-believe"
+	info = {"Ancient aliens, it's all true,<br>
+	I'm an expert just like you!
+	<br><br><br><br><br><hr>
+	<font face='Arial'>Printed by Aurora Lithographics</font><hr>"}
+
+/obj/item/paper/postcard/silicongreeting //by Mailman T
+	name = "\"A Silicon Greeting\""
+	desc = "A postcard with some cyborgs. It has a message on the back written in binary."
+	icon_state = "postcard-silicon-greeting"
+	info = {"<font face='Courier New'>1001110 1101001 1100011 1100101 100000
+			1100010 1101001 1101110 1100001 1110010 1111001 100000 1100011
+			1101111 1101110 1110110 1100101 1110010 1110100 1100101 1110010</font>"}
+
+/obj/item/paper/postcard/thundrando //by Shiiba
+	name = "\"Greetings from Thundrando!\""
+	desc = "...Thundrando? What kind of name is that?"
+	icon_state = "postcard-thundrando"
+	info = {"<font color='#1A378D'>Greetings from Thundrando!</font>"}
+
+/obj/item/paper/postcard/pumpkinpatch //by IncendiaryCrocs
+	name = "pumpkin patch postcard"
+	desc = {"A postcard with some spooky pumpkins, set against a night sky.
+			The back contains a sinister letter, written as if from their point of view."}
+	icon_state = "postcard-pumpkin-patch"
+	info = {"Wishing you many terrifying honks.<br><br>
+	Many Disgraces,<br>
+	The Pumpkin Patch
+	<br><br>
+	Pumpkins #13<br>
+	National Notary Supply Corporation<br>
+	Image #25234"}
+
+/obj/item/paper/postcard/chicago //by Frank_Stein
+	name = "Chicago postcard"
+	desc = "A postcard showing the city of Chicago on Earth, most of it blocked out by a big hot dog. The back has a terrible tourist slogan."
+	icon_state = "postcard-chicago"
+	info = {"<font face='Comic Sans MS'>Visit Chicago! Try the hot dogs!</font>
+	<br><br><br><br><br><hr>
+	<font face='Arial'>Printed by Aurora Lithographics</font><hr>"}
+
+/obj/item/paper/postcard/sadcrab //by Elskrises
+	name = "\"Greetings from the Rave Beach.\""
+	desc = {"An image of the amazing Rave Beach. It even has an adorable crab playing a violin! Wait, is that crab crying?
+			The back of the card has a message in messy, shaky writing."}
+	icon_state = "postcard-sad-crab"
+	info = {"<font face='Brush Script MT' size=4>Cherish your happiest memories.</font>"}
+
+/obj/item/paper/postcard/spacequebec //by Gamb1t
+	name = "\"De Magnifique Vacances!\""
+	desc = {"A postcard featuring a pair of mountains by a lake on the chilly planet Mundus.
+			The back features images of frontier vacationers hiking, camping, and skiing."}
+	icon_state = "postcard-space-quebec"
+	info = {"Visit beautiful Space Quebec!
+	<br><br>
+	"De Magnifique Vacances!"<br>
+	National Notary Supply Corporation<br>
+	Image #25204"}
+
+/obj/item/paper/postcard/pyramid //by RubberRats
+	name = "New Memphis postcard"
+	desc = "A postcard with a ground-view photograph of the BonkTek Consortium's massive pyramid-shaped shopping center on the planet Fatuus."
+	icon_state = "postcard-pyramid"
+	info = {"<font face='Arial'>Greetings from New Memphis, home of the BonkTek Pyramid!
+	<br><br><br><br><br><hr>
+	<font face='Arial'>Printed by Aurora Lithographics</font><hr>"}
+
+/obj/item/paper/resonator_type_ax
+	name = "printed card"
+	icon_state = "index_card"
+	info = {"TYPE-AX - AXIAL RESONATOR<br>
+	Provides lateral and vertical resonance, multiplied based on distance from axial pinch points (8x > 4x > 2x > 1x)<br>
+	Maximum 4 intensity"}
+
+/obj/item/paper/resonator_type_sm
+	name = "printed card"
+	icon_state = "index_card"
+	info = {"TYPE-SM - SHEAR MITIGATOR<br>
+	Reduces shear by intensity, based on radial distance from siphon (8x > 4x > 2x > 1x)<br>
+	Maximum 3 intensity"}
+
+/obj/item/paper/resonator_type_fq
+	name = "printed card"
+	icon_state = "index_card"
+	info = {"TYPE-FQ - FIELD QUANTIZER<br>
+	<span style="color:red;">WARNING: PROTOTYPE ONLY FOR USE BY ADVANCED TECHNICIANS</span><br>
+	Provides field dilation, with secondary consequence to axial resonances (see database)<br>
+	Maximum 7 intensity"}
+
+/obj/item/paper/catalytic_guide
+	name = "printed card"
+	icon_state = "index_card"
+	info = {"ANODE PARAMETERS<br>
+	Base efficacy percentage is conductivity x 17;<br>
+	energetic properties, at any concentration, confer 1.3x bonus.<br>
+	<br>
+	CATHODE PARAMETERS<br>
+	5 Density recommended, with Hardness as close to 5 as possible.<br>
+	<br>
+	Rods decay at a diminishing rate;<br>
+	corrosion resistance slows rate of decay.<br>
+	<br>
+	Engineering co-operates the Harmonic Siphon<br>
+	and is authorized to use its products<br>
+	in furtherance of generator operation and Site upkeep."}
+
+
 
 /obj/item/paper/iou
 	name = "IOU"
@@ -770,14 +964,6 @@ Only trained personnel should operate station systems. Follow all procedures car
 	Needless to say, I'm not a fan.<br>
 	I mean, just making these telecrystals the right color is a pain in the ass, requiring this bulky machine I hardly know how to operate take HOURS per crystal!<br><br>
 	Well, here's to hoping infusing these things with black powder won't blow up in my face."}
-
-//is this a bit extra? Yeess but I wanted it on a random table okay!
-proc/spawn_kitchen_note()
-	for_by_tcl(table, /obj/table)
-		if (istype(get_area(table), /area/station/crew_quarters/kitchen) && prob(50))
-			var/type = pick(concrete_typesof(/obj/item/paper/recipe) - /obj/item/paper/recipe)
-			new type(get_turf(table))
-			return
 
 /obj/item/paper/recipe/tandoori
 	name = "stained recipe clipping"
@@ -878,216 +1064,6 @@ proc/spawn_kitchen_note()
 
 	Ovidius Gotdam<br>
 	NT Marching Band Director
-	"}
-
-
-/obj/item/paper/businesscard
-	name = "business card"
-	icon_state = "businesscard"
-	desc = "A generic looking business card, offering printing services for more business cards."
-
-	sizex = 600 + IMAGE_OFFSET_X
-	sizey = 346 + IMAGE_OFFSET_Y
-	scrollbar = FALSE
-
-
-	New()
-		..()
-		//note that the margin styling here does not work, I'm just leaving it here to indicate that there is indeed a problem with the margins that someone smarter than me should fix
-		info = PAPER_IMAGE_RENDER("images/arts/business_blank.png")
-
-
-/obj/item/paper/businesscard/banjo
-	name = "business card - Tum Tum Phillips"
-	icon_state = "businesscard"
-	desc = "A business card for the famous Tum Tum Phillips, Frontier banjoist."
-
-	New()
-		..()
-		info = PAPER_IMAGE_RENDER("images/arts/business_banjo.png")
-
-
-/obj/item/paper/businesscard/biteylou
-	name = "business card - Bitey Lou's Bodyshop"
-	icon_state = "businesscard"
-	desc = "A business card for some sorta mechanic's shop."
-	color = "gray"
-
-	New()
-		..()
-		info = PAPER_IMAGE_RENDER("images/arts/business_biteylou.png")
-
-
-/obj/item/paper/businesscard/bonktek
-	name = "business card - Bonktek Shopping Pyramid"
-	icon_state = "businesscard"
-	desc = "A business card for the Bonktek Shopping Pyramid of New Memphis."
-
-	New()
-		..()
-		info = PAPER_IMAGE_RENDER("images/arts/business_bonktek.png")
-
-/obj/item/paper/businesscard/clowntown
-	name = "business card - Clown Town"
-	icon_state = "businesscard-clowntown"
-	desc = "A business card for the Clown Town Autonomous Collective."
-	sizey = 341 + IMAGE_OFFSET_Y
-
-	New()
-		..()
-		info = PAPER_IMAGE_RENDER("images/arts/business_clowntown.png")
-
-/obj/item/paper/businesscard/cosmicacres
-	name = "business card - Cosmic Acres"
-	icon_state = "businesscard-alt"
-	desc = "A business card for a retirement community on Earth's moon."
-
-	New()
-		..()
-		info = PAPER_IMAGE_RENDER("images/arts/business_cosmicacres.png")
-
-/obj/item/paper/businesscard/ezekian
-	name = "business card - Ezekian Veterinary Clinic"
-	icon_state = "businesscard"
-	desc = "A business card for a Frontier veterinarian's office."
-	color = "gray"
-
-	New()
-		..()
-		info = PAPER_IMAGE_RENDER("images/arts/business_ezekian.png")
-
-/obj/item/paper/businesscard/gragg1
-	name = "business card - Amantes Mini Golf"
-	icon_state = "businesscard-alt"
-	desc = "A business card for a mini golf course."
-
-	New()
-		..()
-		info = PAPER_IMAGE_RENDER("images/arts/business_gragg1.png")
-
-/obj/item/paper/businesscard/gragg2
-	name = "business card - Amantes Rock Shop"
-	icon_state = "businesscard-alt"
-	desc = "A business card for a rock collector's shop."
-
-	New()
-		..()
-		info = PAPER_IMAGE_RENDER("images/arts/business_gragg2.png")
-
-/obj/item/paper/businesscard/josh
-	name = "business card - Josh"
-	icon_state = "businesscard-josh"
-	desc = "A business card for someone's personal business. Looks like it's based at a flea market, in space. Hopefully there aren't any space fleas there."
-
-	New()
-		..()
-		info = PAPER_IMAGE_RENDER("images/arts/business_josh.png")
-
-/obj/item/paper/businesscard/lawyers
-	name = "business card - Hogge & Wylde"
-	icon_state = "businesscard-alt"
-	desc = "A business card for a personal injury law firm. You've heard their ads way, way too many times."
-
-	New()
-		..()
-		info = PAPER_IMAGE_RENDER("images/arts/business_law.png")
-
-/obj/item/paper/businesscard/hemera_rcd
-	name = "info card - Rapid Construction Device"
-	icon_state = "businesscard-hemera"
-	desc = "An information card for the Mark III Rapid Construction Device from Hemera Astral Research Corporation."
-
-	New()
-		..()
-		info = PAPER_IMAGE_RENDER("images/arts/business_RCD.png")
-
-
-/obj/item/paper/businesscard/skulls
-	name = "business card - Skulls for Cash"
-	icon_state = "businesscard"
-	desc = "A business card for someone's personal business. Looks like it's based at a flea market, in space. Hopefully there aren't any space fleas there."
-
-	New()
-		..()
-		info = PAPER_IMAGE_RENDER("images/arts/business_skulls.png")
-
-/obj/item/paper/businesscard/taxi
-	name = "business card - Old Fortuna Taxi Company"
-	icon_state = "businesscard"
-	desc = "A business card for a Frontier space-taxi and shuttle company."
-	color = "yellow"
-
-	New()
-		..()
-		info = PAPER_IMAGE_RENDER("images/arts/business_taxi.png")
-
-/obj/item/paper/businesscard/vurdulak
-	name = "business card - Emporium Vurdulak"
-	icon_state = "businesscard-vurdulak"
-	desc = "A business card for someone's personal business. Looks like it's based at a flea market, in space. Hopefully there aren't any space fleas there."
-
-	New()
-		..()
-		info = PAPER_IMAGE_RENDER("images/arts/business_vurdulak.png")
-
-/obj/item/paper/businesscard/seneca
-	name = "business card - Seneca Falls"
-	desc = "A dog-eared blue and gold business card from a staff recruitment agency."
-	icon_state = "businesscard-seneca"
-	//slightly smaller because a staffie left it in their pocket and it shrunk in the wash and also cog can't get the original resolution right now
-	sizex = 408 + IMAGE_OFFSET_X
-	sizey = 233 + IMAGE_OFFSET_Y
-
-	New()
-		..()
-		info = PAPER_IMAGE_RENDER("images/arts/business_seneca.png")
-
-/obj/item/paper/businesscard/cans
-	name = "business card - Dented Cans"
-	desc = "A dodgy looking flyer for what you hope is a scrap metal business."
-	sizey = 345 + IMAGE_OFFSET_Y
-
-	New()
-		..()
-		info = PAPER_IMAGE_RENDER("images/arts/business_dentedcans.png")
-
-/obj/item/paper/businesscard/mabinogi
-	name = "business card - Mabinogi"
-	desc = "A sleek red and black business card for the Mabinogi Firearms Company."
-	icon_state = "businesscard-mabinogi"
-	sizey = 343 + IMAGE_OFFSET_Y
-
-	New()
-		..()
-		info = PAPER_IMAGE_RENDER("images/arts/business_mabinogi.png")
-
-
-/obj/item/paper/donut2smesinstructions
-	name = "Donut 2 SMES Units and YOU"
-	icon_state = "paper"
-	info = {"
-	----------------------------------------<br><br>
-	Donut 2 SMES Units and YOU<br><br>
-
-	A full guide to ensuring the station is powered up properly<br>
-	----------------------------------------<br><br>
-	Howdy Engineer, so you just set up this here SMES unit and you think you're done? Boy howdy do I have some news for you!<br><br>
-
-	This here station has not just ONE, not just TWO, but FOUR SMES units set up to power up the entire main station. You might be thinking, 'So,
-	Ms. Mysterious Engineer Who Knows Way More Than I Do, what does that mean?'<br><br>
-
-	WELL! It means there's four SMES units and four power grids on the station! Finding them is pretty damn simple if I do say so myself, all you
-	gotta do is walk around the inner loop of maintenance and find the SMES rooms. There's one just east of medbay, one just below arrivals and QM
-	and one direction west of the bridge! Oh, there's also, uhh, you know, the one in Engineering.<br><br>
-
-	Once you've got those four SMES units set you're all good. The singularity is a MARVEL of modern engineering and produces near ENDLESS power!<br><br>
-
-	Oh, couple small things to add. There are a few solar panel groups in outer maintenance, but they're not wired to power the whole station at once
-	so you would have to connect the four grids if you wanted, or needed, to run the station that way. Research Outpost Zeta also has its own solar
-	panel setup, but it comes preconfigured and should last them well through any single shift, so you don't gotta worry about that none.<br><br><br>
-
-	Keep that power flowing,<br>
-	S.L.
 	"}
 
 #ifdef NIGHTSHADE
@@ -1362,23 +1338,6 @@ proc/spawn_kitchen_note()
 			T.visible_message(SPAN_ALERT("\The [src] blows the heck up! Holy dang!!"))
 			qdel(src)
 
-/obj/item/paper/xg_tapes
-	name = "XIANG|GIESEL Onboarding Course"
-	desc = "A cover sheet meant to accompany a set of corporate training materials."
-	icon_state = "paper_burned"
-	sizex = 718 + IMAGE_OFFSET_X
-	sizey = 1023 + IMAGE_OFFSET_Y
-	scrollbar = FALSE
-
-	New()
-		..()
-		pixel_x = rand(-8, 8)
-		pixel_y = rand(-8, 8)
-		info = PAPER_IMAGE_RENDER("images/arts/xg_tapes.png")
-
-#undef IMAGE_OFFSET_X
-#undef IMAGE_OFFSET_Y
-
 /obj/item/paper/wanderpoem
 	name = "A freshly written poem"
 	icon = 'icons/misc/wander_stuff.dmi'
@@ -1424,6 +1383,7 @@ proc/spawn_kitchen_note()
 				</tr>
 
 			<tr><td>PDAs</td><td>[format_frequency(FREQ_PDA)]kHz</td></tr>
+			<tr><td>Cloner implants</td><td>[format_frequency(FREQ_CLONER_IMPLANT)]kHz</td></tr>
 			<tr><td>Gas pumps</td><td>[format_frequency(FREQ_PUMP_CONTROL)]kHz</td></tr>
 			<tr><td>Airlocks</td><td>[format_frequency(FREQ_AIRLOCK)]kHz</td></tr>
 			<tr><td>Designated free frequency</td><td>[format_frequency(FREQ_FREE)]kHz</td></tr>
@@ -1481,7 +1441,7 @@ proc/spawn_kitchen_note()
 		Remember you can usually only fit three items total into a pipe frame.<br>
 		<b>Step 4:</b> Pour something flammable into the frame. Generally the more angrily it burns the bigger the boom you'll make.<br>
 		<b>Step 5:</b> Tangle some wires around it. Don't worry about wiring diagrams, this thing only has to work <i>once.</i><br>
-		<b>FINAL STEP:</b> Stick a timer on it and resist pressing the button until you're near your target.<br><br>
+		<b>FINAL STEP:</b> Attach a detonator. The gold standard is a timer/igniter assembly, but anything stuck to an igniter will make it go boom. <b>Make sure to secure the assembly to your bomb with a screwdriver!</b><br><br>
 
 		Good luck, agent. Try not to blow the bloody doors off the listening post this time.
 		"}
@@ -1505,3 +1465,124 @@ proc/spawn_kitchen_note()
 /obj/item/paper/zombie_mining_magnet
 	name = "blood stained note"
 	info = {"i was used as bait. whatever you do don't trust N"}
+
+/obj/item/paper/flock_mining_magnet
+	name = "gnesis covered note"
+	info = {"day 1<br>
+	they trapped me here... my memory is foggy and it's so hard to think, all i hear is radio chatter and weird noises... something about a signal.
+	and- and an overwhelming feeling of homesickness, longing for a world ive never seen and can't remember.<br>
+	it's in my head. it's so loud. the geneticists let me hear radios. GOD i wish they hadn't...<br><br>
+	day 3<br>
+	i'm starving now. i'm going to die here aren't i? some memories came drifting back through the pain though. i'm a researcher. i thought i could study them
+	but somehow they- they looked back, saw me through the twisted lens of a radio antenna. then the Signal was in my head, screaming and tearing through my thoughts<br>
+	most of my tools are.. are liquid now but i was left with my backup RCD. unfortunately it doesn't work on these walls. i don't know what to do<br><br>
+	day 4<br>
+	in a brief moment of madness or lucidity i tried introducing some of the teal goo to my rcd out of desperation. the rcd is clearly
+	altered, but in a way i do not understand. it still won't work on the walls but it thrums with power and a purpose i can almost grasp. fuck.<br><br>
+	day 7? 10?<br>
+	i have no food. i've had no choice but to drink the teal goo for hydration. it tastes of paint and static. the radio chatter is louder now, drowning out my vision... all i can think
+	about is the Signal. the Homeworld. the Intruder. i can feel their fear.<br><br>
+	day 13<br>
+	the signal  it calls to me  it will set me free"}
+
+/obj/item/paper/current_turbines
+	name = "NT40 current turbine operating manual"
+	icon_state = "turbine_book"
+	New()
+		. = ..()
+		info = {"
+			<h2>Standard startup procedure</h2>
+			<b>Step 1:</b> Operate the turbine base to extend the turbine into the current. Do NOT over-extend the shaft. If you do, see "I fucked up" section 1.
+			<br>
+			<b>Step 2:</b> If necessary, add more shaft segments onto the reverse side of the turbine base and carefully secure them with a wrench.
+			<h2><s>"I fucked up"</s> Troubleshooting</h2>
+			<h3>Section 1: Overextension (AKA: it's whirring angrily and I'm scared)</h3>
+			If the turbine base emits an angry, pathetic or judgemental whirring sound then you have over-extended the turbine shaft. In this event, simply slide another shaft into the reverse side of the turbine base and anchor it in place with a wrench. The wrench can be used on either the shaft or the turbine base to secure it.
+			<h3>Section 2: Lost in the current</h3>
+			If at any time you manage to lose your state of the art NT40 turbine by unsecuring it inside the current, the standard procedure is to run after it like an idiot. If that fails and it falls in the trench then you will need to fabricate another one at your nearest Nanotrasen™ Engineering Specialist Manufacturer. All attempts to winch the heavy turbine out of the trench are now prohibited following safety incident NDR-23b.
+			<h3>Section 3: Safety</h3>
+			All user contact with the blades of a spinning turbine is prohibited and may result in a fine of up to 400[CREDIT_SIGN], the loss of 1-4 limbs, or death.
+		"}
+
+/obj/item/paper/syndicate_mining_magnet_1
+	name = "syndicate leadership memo"
+	info = {"<h2>Attention Syndicate outpost-62 members:<br></h2>
+	You've been stationed in this concealed outpost inside an artificial comet inbound for listening post 6678 in approximately one half (1/2) of a year.
+	You are to observe Nanotrasen facilities through Nanotrasen occupied space along the way and record your findings. Please help yourself to the
+	given amenities for enjoyment during your stay. Provided is 100k credits in bullion and cash to acquire asset Omicron upon arrival. You are to return
+	back using the comet.<br><br>Repeat, REPEAT, do not use the provided goods for any reason other than to acquire asset Omicron."}
+
+/obj/item/paper/syndicate_mining_magnet_2
+	name = "stern note"
+	info = {"so um. i spent all of our money that we were told not to spend, only after reading our leadership's note. we are so fucked. anyways, i
+	went out for a short bit and will be back in a day's time.<br><br>no, you are the one who is fucked. i'm out of here."}
+
+/obj/item/paper/motel_noise_complaint
+	name = "customer complaint"
+	desc = "This looks written hastily."
+	icon_state = "thermal_paper"
+	info = {"
+	I couldn't sleep! Shut the ice maker off at <u>NIGHT</u> when people <u>SLEEP</u>. Management refused to move me out of room 1 - 0/10 would not return!
+	"}
+
+/obj/item/paper/menhir_advisory
+	name = "TOREADOR-7I-22408 report sheet"
+	icon_state = "toreador_report"
+	info ={"
+	<h1>ARTIFACT ANALYSIS<br>TOREADOR-7I-22408</h1><br>
+	<h2>ORIGIN</h2>
+	Presumed Precursor; terahertz-band scanning has received responses consistent with cobryl and iridium composition, matching other known Precursor artifacts.<br>
+	<br>
+	<h2>TYPE</h2>
+	Unable to ascertain thus far; large size and presence of a point of ingress suggest possible use as a station, vessel or repository of some sort.<br>
+	<br>
+	<h2>TRIGGERS</h2>
+	Majority of casing appears unresponsive to, and unaffected by, all test stimuli; point of ingress contains small protrusions with psychic projection capabilities, whose function in the larger complex is uncertain as of yet.<br>
+	<br>
+	<h2>FAULTS</h2>
+	None detected within gamut of known Precursor artifact faults<br>
+	<br>
+	<h2>ADDITIONAL INFORMATION</h2>
+	NT administration responsible for site have made the executive determination that the point of ingress is the likely origin of any hazards that may arise if the artifact is activated; attempts to activate TOREADOR-7I-22408 at other points of its casing are considered inadvisable and unlikely to produce results.<br>
+	"}
+
+/obj/item/paper/menhir_contingency
+	name = "TOREADOR-7I-22408 contingency brief"
+	icon_state = "toreador_report"
+	info ={"
+	<h1>DATA CONTINGENCY PROCEDURE</h1>
+	The nearby ThinkTape bay, identifier 'Contingency', has been made available to increase the odds of successful data recovery in the event of unexpectedly hostile artifact activation.<br>
+	<br>
+	Before any attempts are made to activate TOREADOR-7I-22408, a crewmember trained in pod flight should be posted in this location.<br>
+	<br>
+	In the event TOREADOR-7I-22408 undergoes an activation event, the stimuli that prompted this should <b>immediately</b> be recorded to the preinstalled tape, which is then taken off-site by the crewmember. <b>DO NOT WAIT FOR ARTIFACT EFFECTS TO APPEAR - BY THE TIME ANY HOSTILE EFFECTS MANIFEST, ESCAPE MAY NO LONGER BE POSSIBLE.</b><br>"}
+
+/obj/item/paper/menhir_toreador_extra
+	name = "TOREADOR administrative advisory"
+	icon_state = "toreador_report"
+	info ={"
+	<h1>FOR RELEASE TO MENHIR RESEARCH ENCLAVE</h1>
+	<h1>COMMAND STAFF ONLY</h1>
+	TOREADOR project personnel operating previous 7I-22408 provisional facility (designated Limpet) have experienced adverse psychological effects during prolonged staffing tours.<br>
+	<br>
+	While it is expected that this is solely the consequence of isolation in a provisional facility for extended periods, we have been unable to rule out a wide-area emanation from 7I-22408.<br>
+	<br>
+	With the construction of the Menhir Research Enclave, standard personnel rotations are expected to ameliorate this possibility; however, vigilance remains advised.<br>
+	<br>
+	<b>MANDATE: Under no circumstances is any individual going by the name of Alessi Kondaru permitted to make ingress to TOREADOR-7I-22408.</b><br>
+	Do not attempt to confine them if they have boarded incidentally, but docking requests should be turned down on any other procedural basis, or Protocol 7I should other basis be unavailable. Any record of contact with this individual should be expunged.<br>
+	"}
+
+/obj/item/paper/menhir_limpet_note
+	name = "crumpled note"
+	desc = "This looks written hastily."
+	icon_state = "paper_caution_crumple"
+	info = {"
+	<span style="font-family:Lucida Handwriting;">
+	shipping out soon<br>
+	they're going to take all the logs, no one outside hq will probably see them again<br>
+	IT IS NOT INACTIVE<br>
+	if they tell you it is, they're lying<br>
+	it understands you<br>
+	don't let it go<br>
+	"}

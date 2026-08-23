@@ -32,6 +32,7 @@ var/list/hex_digit_values = list("0" = 0, "1" = 1, "2" = 2, "3" = 3, "4" = 4, "5
 	icon_state = "genericsmall0"
 	plane = PLANE_DEFAULT
 	process_fast = TRUE
+	mechanically_copyable = FALSE // no
 	var/ROM = ""
 	var/ioPins = 1 //Bitfield. Low byte is IO, high byte is internal memory flags, lowest bit is read as complement of RR
 	var/RR = 0 //Result register.  It's the accumulator.  Look, motorola picked these names.
@@ -251,14 +252,12 @@ function update_mem_lights(mem)
 					if (lastSignal)
 						lastSignal.signal = "[.]:[RR ? 1 : 0]"
 						SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,lastSignal)
-						program_counter = INSTRUCTIONS_PER_PROCESS
 						lastSignal = null
 						if (src.dbgmode)
 							boutput(world, "OUTe: [.]:[RR ? 1 : 0]")
 
 					else
 						SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[.]:[RR ? 1 : 0]")
-						program_counter = INSTRUCTIONS_PER_PROCESS
 						if (src.dbgmode)
 							boutput(world, "OUT: [.]:[RR ? 1 : 0]")
 
@@ -276,14 +275,12 @@ function update_mem_lights(mem)
 					if (lastSignal)
 						lastSignal.signal = "[.]:[RR ? 0 : 1]"
 						SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,lastSignal)
-						program_counter = INSTRUCTIONS_PER_PROCESS
 						lastSignal = null
 						if (src.dbgmode)
 							boutput(world, "OUTe: [.]:[RR ? 0 : 1]")
 
 					else
 						SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[.]:[RR ? 0 : 1]")
-						program_counter = INSTRUCTIONS_PER_PROCESS
 						if (src.dbgmode)
 							boutput(world, "OUT: [.]:[RR ? 0 : 1]")
 

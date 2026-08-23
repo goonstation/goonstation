@@ -116,7 +116,7 @@ interface SubjectRecord {
 }
 
 interface Subject {
-  preview: string | null;
+  preview: string;
   name: string;
   stat: Stat;
   health: number;
@@ -149,11 +149,11 @@ interface ModifyAppearance {
   style1: string;
   style2: string;
   style3: string;
-  fixColors: BooleanLike;
   hasEyes: BooleanLike;
   hasSkin: BooleanLike;
   hasHair: BooleanLike;
   channels: string[];
 }
 
+// eslint-disable-next-line sonarjs/redundant-type-aliases
 type Ref = string;

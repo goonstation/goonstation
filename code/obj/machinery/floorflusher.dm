@@ -23,7 +23,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 	var/mail_tag = null // mail_tag to apply on next flush
 	var/mail_id = null // id for linking a flusher for mail tagging
 	var/emagged = FALSE
-	HELP_MESSAGE_OVERRIDE({"You can use a <b>crowbar</b> to pry it open."})
+	HELP_MESSAGE_OVERRIDE({"Pry it open with a <b>crowbar</b>.<br>If open, crawl inside with an <b>empty hand</b>."})
 	// Please keep synchronizied with these lists for easy map changes:
 	// /obj/storage/secure/closet/brig_automatic (secure_closets.dm)
 	// /obj/machinery/door_timer (door_timer.dm)
@@ -136,6 +136,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 		//you can only fall in if its open
 		if (open != 1)
 			return
+		return_if_overlay_or_effect(AM)
 		if (istype(AM, /obj/projectile))
 			return
 		if (isobj(AM))
@@ -148,7 +149,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 
 		if (isliving(AM))
 			if (AM:anchored >= ANCHORED_ALWAYS) return
-			if (isintangible(AM)) // STOP EATING BLOB OVERMINDS ALSO
+			if (AM.gforce <= 0) return
+			if (HAS_ATOM_PROPERTY(AM, PROP_ATOM_FLOATING)) // STOP EATING BLOB OVERMINDS ALSO
 				return
 			var/mob/living/M = AM
 			if (M.buckled)
@@ -217,6 +219,15 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 			src.remove_dialog(user)
 			return
 
+		if (can_act(user))
+			boutput(user, SPAN_ALERT("You climb into \the [src]!"))
+			user.set_loc(src)
+			for (var/mob/C in AIviewers(src))
+				if(C == user)
+					continue
+				C.show_message("[user] climbs into \the [src]!", 3)
+			src.flush = TRUE
+			src.update()
 
 	// eject the contents of the unit
 	proc/eject()
@@ -252,9 +263,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 					// unless your face is obstructed, then it works normally by taking your visible name, with intended or unintended results
 					nameToCheck = H.face_visible() ? H.real_name : H.name
 					var/datum/db_record/R = data_core.security.find_record("name", nameToCheck)
-					if(!isnull(R) && ((R["criminal"] == ARREST_STATE_INCARCERATED) || (R["criminal"] == ARREST_STATE_ARREST) || (R["criminal"] == ARREST_STATE_DETAIN)))
-						R["criminal"] = ARREST_STATE_RELEASED
+					if(!isnull(R) && ((R["criminal"] == SECURITY::ARREST::STATE::INCARCERATED) || (R["criminal"] == SECURITY::ARREST::STATE::ARREST) || (R["criminal"] == SECURITY::ARREST::STATE::DETAIN)))
+						R["criminal"] = SECURITY::ARREST::STATE::RELEASED
 						H.update_arrest_icon()
+
+			if (global.instant_pipe_network)
+				src.process()
 
 	// timed process
 	// charge the gas reservoir and perform flush if ready
@@ -293,7 +307,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 
 		flushing = 1
 
-		closeup()
+		if (!global.instant_pipe_network)
+			closeup()
+
 		var/obj/disposalholder/H = new /obj/disposalholder	// virtual holder object which actually
 																// travels through the pipes.
 		H.mail_tag = src.mail_tag // apply mail_tag
@@ -302,9 +318,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/floorflusher, proc/flush)
 
 		ZERO_GASES(air_contents)
 
-		sleep(1 SECOND)
-		playsound(src, 'sound/machines/disposalflush.ogg', 50, FALSE, 0)
-		sleep(0.5 SECONDS) // wait for animation to finish
+		if (!global.instant_pipe_network)
+			sleep(1 SECOND)
+			playsound(src, 'sound/machines/disposalflush.ogg', 50, FALSE, 0)
+			sleep(0.5 SECONDS) // wait for animation to finish
 
 
 		H.start(src) // start the holder processing movement

@@ -3,12 +3,14 @@ triggerOnAttacked(var/obj/item/owner, var/mob/attacker, var/mob/attacked, var/at
 triggerOnAttack(var/obj/item/owner, var/mob/attacker, var/mob/attacked)
 triggerOnLife(var/mob/M, var/obj/item/I)
 triggerOnAdd(var/owner)
-triggerChem(var/location, var/chem, var/amount)
+triggerChem(var/atom/location, var/datum/reagent/chem, var/amount)
 triggerPickup(var/mob/M, var/obj/item/I)
 triggerDrop(var/mob/M, var/obj/item/I)
 triggerTemp(var/owner, var/temp)
 triggerExp(var/owner, var/severity)
 triggerOnEntered(var/atom/owner, var/atom/entering)
+triggerOnMix(var/datum/material/new_mat, var/datum/material/old_matA, var/datum/material/old_matB, var/bias)
+triggerOnImage(var/image/target, var/datum/material/source)
 */
 
 // THINGS LIKE GOLD SPARKLES ARE NOT REMOVED WHEN MATERIAL CHANGES!. MOVE THESE TO NEW APPEARANCE SYSTEM.
@@ -18,9 +20,14 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	var/max_generations = 2
 	/// Optional simple sentence that describes how the traits appears on the material. i.e. "It is shiny."
 	var/desc = ""
+	/// Optional sentence that describes what the materialProc does in more detail.
+	var/desc_scan = ""
 
 	proc/execute()
 		return
+
+	proc/get_scan_desc()
+		return desc_scan
 /*
 /datum/materialProc/oneat_flesh
 	max_generations = -1
@@ -45,6 +52,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/oneat_viscerite
 	max_generations = -1
+	desc_scan = "Risk of food poisoning when ingested"
 
 	execute(var/mob/M, var/obj/item/I)
 		M.reagents.add_reagent("loose_screws", 15)
@@ -52,6 +60,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/oneat_blob
 	max_generations = -1
+	desc_scan = "Risk of food poisoning when ingested"
 
 	execute(var/mob/M, var/obj/item/I)
 		M.TakeDamage("chest", 10, 0)
@@ -60,6 +69,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/ethereal_add
 	desc = "It is almost impossible to grasp."
+	desc_scan = "Traversable by solid matter"
 	max_generations = 1
 	execute(var/atom/owner)
 		APPLY_ATOM_PROPERTY(owner, PROP_ATOM_NEVER_DENSE, "ethereal")
@@ -71,6 +81,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	max_generations = 1
 
 /datum/materialProc/ffart_pickup
+	desc_scan = "Difficult to grasp"
 	execute(var/mob/M, var/obj/item/I)
 		if(!I.cant_drop)
 			SPAWN(2 SECOND) //1 second is a little to harsh to since it slips right out of the nanofab/cruicble
@@ -112,38 +123,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				attacked.reagents.add_reagent(reagent_id, reagent_amount, null, T0C)
 		return
 
-/datum/materialProc/generic_explode_attack
-	var/trigger_chance = 100
-	var/explode_limit = 0
-	var/explode_count = 0
-	var/lastTrigger = 0
-
-	desc = "It looks dangerously unstable."
-
-	New(var/chance = 100, var/limit = 0)
-		trigger_chance = chance
-		explode_limit = limit
-		..()
-
-	execute(var/atom/owner)
-		if(explode_limit && explode_count >= explode_limit) return
-		if(world.time - lastTrigger < 50) return
-		lastTrigger = world.time
-		if(prob(trigger_chance))
-			explode_count++
-			var/turf/tloc = get_turf(owner)
-			explosion(owner, tloc, 0, 1, 2, 3)
-			tloc.visible_message(SPAN_ALERT("[owner] explodes!"))
-			if(isitem(owner))
-				var/obj/item/deleted_item = owner
-				qdel(deleted_item)
-			if(owner && istype(owner, /turf/simulated/wall))
-				//if an erebite wall is exploded and still standing, let's rather dismantle it
-				//noone would like repeatable exploding of reinforced erebite walls
-				var/turf/simulated/wall/dismantled_wall = owner
-				dismantled_wall.dismantle_wall(1)
-		return
-
 /datum/materialProc/generic_fireflash
 	execute(var/atom/owner, var/temp)
 		if(temp < T0C + 200)
@@ -155,6 +134,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/generic_itchy_onlife
 	desc = "It makes your hands itch."
+	desc_scan = "Severe skin irritant"
 
 	execute(var/mob/M, var/obj/item/I, mult)
 		if(issilicon(M)) return // silicons can't get itchy
@@ -285,11 +265,39 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		for(var/turf/T in view(1, attacked))
 			harmless_smoke_puff(get_turf(T))
 
-/datum/materialProc/gold_add
+/datum/materialProc/sparkles_add
 	desc = "It's very shiny."
-	execute(var/location)
+	execute(var/atom/location)
 		if(!particleMaster.CheckSystemExists(/datum/particleSystem/sparkles, location))
 			particleMaster.SpawnSystem(new /datum/particleSystem/sparkles(location))
+		return
+
+/datum/materialProc/sparkles_remove
+	desc = "All that glitters is not gold."
+	execute(var/atom/location)
+		if(particleMaster.CheckSystemExists(/datum/particleSystem/sparkles, location))
+			particleMaster.RemoveSystem(/datum/particleSystem/sparkles, location)
+		return
+
+/datum/materialProc/radiation_immune_add
+	desc_scan = "Cannot be irradiated"
+	// Radiation component will check for this matProc to prevent radiation effects from being added later
+	execute(var/atom/location)
+		var/datum/component/radioactive/rad_comp = location.GetComponent(/datum/component/radioactive)
+		rad_comp?.RemoveComponent()
+		if(ismob(location))
+			// Have mobs made out of batiline be immune to radiation
+			var/mob/M = location
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, src, 100)
+		return
+
+/datum/materialProc/radiation_immune_remove
+	execute(var/atom/location)
+		var/datum/component/radioactive/rad_comp = location.GetComponent(/datum/component/radioactive)
+		rad_comp?.RemoveComponent() // Can still get a radiation component after the material is added
+		if(ismob(location))
+			var/mob/M = location
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, src)
 		return
 
 /datum/materialProc/telecrystal_entered
@@ -313,6 +321,20 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	execute(var/atom/owner, var/mob/attacker, var/atom/attacked)
 		var/turf/T = get_turf(attacked)
 		var/mob/attacked_mob = attacked
+		if (isobj(attacked)) // teleportationally unstable artifacts react to telecrystals so that scientists can determine that they are
+			var/obj/target = attacked
+			if (target.artifact?.activated && target.artifact?.teleportationally_unstable)
+				attacker.visible_message(SPAN_ALERT("[attacked] reacts to [owner]!"))
+				if (target.anchored) // anchored artis shouldn't move, but there should still be feedback for the purpose of reactivity testing
+					if (!ON_COOLDOWN(attacked, "telecrystal_warp", 3 SECONDS)) // reduce potential for sound spam
+						playsound(target.loc, "warp", 50)
+					return
+				. = get_offset_target_turf(get_turf(attacked), rand(-2, 2), rand(-2, 2))
+				playsound(target.loc, "warp", 50) // No cooldown on this one because the teleportyness makes it difficult to spam already
+				if(attacker.is_that_in_this(target))
+					attacker.drop_item(target)
+				target.set_loc(.)
+				return
 		if(!istype(attacked_mob) || attacked_mob.anchored || ON_COOLDOWN(attacked_mob, "telecrystal_warp", 1 SECOND))
 			return
 		if(prob(33) && !isrestrictedz(T.z)) // Haine fix for undefined proc or verb /turf/simulated/floor/set loc()
@@ -330,6 +352,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			attacked_mob.set_loc(.)
 
 /datum/materialProc/telecrystal_life
+	desc_scan = "Contact results in unstable teleportation"
+
 	execute(var/mob/M, var/obj/item/I, mult)
 		if(M.anchored || ON_COOLDOWN(M, "telecrystal_warp", 1 SECOND))
 			return
@@ -343,6 +367,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		return
 
 /datum/materialProc/plasmastone
+	desc_scan = "Releases plasma gas when damaged"
+
 	execute(var/atom/location) //exp and temp both have the location as first argument so i can use this for both.
 		var/turf/T = get_turf(location)
 		if(!T || T.density || !istype(location))
@@ -376,6 +402,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/molitz_temp
 	max_generations = 1
+	desc_scan = "Releases oxygen agent B when heated above 500K"
 
 	proc/find_molitz(datum/material/material)
 		if (istype(material, /datum/material/crystal/molitz))
@@ -411,7 +438,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		var/datum/gas_mixture/payload = new /datum/gas_mixture
 
 		if(agent_b && air.toxins > MINIMUM_REACT_QUANTITY)
-			payload.oxygen_agent_b += 0.18 * owner.material_amt
+			payload.oxygen_agent_b += 0.5 * owner.material_amt
 			payload.oxygen = 15 * owner.material_amt
 			payload.temperature = T0C //reduced temp is supposeed to represent endothermic reaction
 			air.merge(payload) //add it to the target air
@@ -470,66 +497,82 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/radioactive_add
 	execute(var/atom/location)
-		animate_flash_color_fill_inherit(location, "#1122EE", -1, 40)
 		location.AddComponent(/datum/component/radioactive, location.material.getProperty("radioactive")*10, FALSE, FALSE, 1)
 		return
 
 /datum/materialProc/radioactive_remove
 	execute(var/atom/location)
-		animate_flash_color_fill_inherit(location, "#1122EE", -1, 40)
+		if (!isturf(location))
+			animate(location)
 		var/datum/component/radioactive/R = location.GetComponent(/datum/component/radioactive)
 		R?.RemoveComponent()
 		return
 
 /datum/materialProc/n_radioactive_add
 	execute(var/atom/location)
-		animate_flash_color_fill_inherit(location, "#1122EE", -1, 40)
 		location.AddComponent(/datum/component/radioactive, location.material.getProperty("n_radioactive")*10, FALSE, TRUE, 1)
 		return
 
 /datum/materialProc/n_radioactive_remove
 	execute(var/atom/location)
-		animate_flash_color_fill_inherit(location, "#1122EE", -1, 40)
+		if (!isturf(location))
+			animate(location)
 		var/datum/component/radioactive/R = location.GetComponent(/datum/component/radioactive)
 		R?.RemoveComponent()
 		return
 
-/datum/materialProc/erebite_flash
-	execute(var/location)
-		animate_flash_color_fill_inherit(location,"#FF7711",-1,10)
-		return
+/datum/materialProc/explosion
+	desc = "It looks dangerously unstable."
 
-/datum/materialProc/erebite_temp
-	execute(var/atom/owner, var/temp)
-		if(temp < T0C + 900) return
-		if(ON_COOLDOWN(owner, "erebite_temp", 10 SECONDS))
+	proc/material_explode(var/atom/owner)
+		if(ON_COOLDOWN(owner, "material_explode", 5 SECONDS))
 			return
-		if((temp < T0C + 1200) && prob(80)) return //some leeway for triggering at lower temps
-		var/turf/tloc = get_turf(owner)
-		explosion(owner, tloc, 0, 1, 2, 3)
+		var/datum/material/material = owner.material
+		var/material_amount = owner.material_amount_total()
+		var/rads = material.getProperty("radioactive")
+		var/n_rads = material.getProperty("n_radioactive")
+		var/power = (rads + (n_rads * 1.2)) * material_amount * 0.25
+		var/brisance_bonus = n_rads / 9
+		explosion_new(owner, get_turf(owner), 0.25 + power, 1 + brisance_bonus)
+		if(owner && istype(owner, /turf/simulated/wall))
+			//if an erebite wall is exploded and still standing, let's rather dismantle it
+			//noone would like repeatable exploding of reinforced erebite walls
+			var/turf/simulated/wall/dismantled_wall = owner
+			dismantled_wall.dismantle_wall(1)
 		owner.visible_message(SPAN_ALERT("[owner] explodes!"))
+		qdel(owner)
+
+/datum/materialProc/explosion/generic
+	execute(var/atom/owner)
+		material_explode(owner)
 		return
 
-/datum/materialProc/erebite_exp
-	execute(var/atom/owner, var/sev)
-		if(ON_COOLDOWN(owner, "erebite_exp", 10 SECONDS))
+/datum/materialProc/explosion/heated
+	desc_scan = "Chance to explode when heated above 1173K"
+	execute(var/atom/owner, var/temp)
+		if(temp < T0C + 900)
 			return
-		var/turf/tloc = get_turf(owner)
+		// Chance to explode. Guaranteed when temp hits 1473 kelvin.
+		if(prob(20 + (((temp - 900 - T0C)/(1200 - 900 - T0C)) * 80)))
+			material_explode(owner)
+		return
+
+/datum/materialProc/explosion/impact
+	desc_scan = "Explodes on kinetic impact"
+	execute(var/atom/owner, var/atom/attackatom, var/mob/attacker, var/meleeorthrow)
+		if(meleeorthrow != 2)
+			return
+		material_explode(owner)
+
+/datum/materialProc/explosion/exp
+	execute(var/atom/owner, var/sev)
 		if(sev > 0 && sev < 4)
-			owner.visible_message(SPAN_ALERT("[owner] explodes!"))
-			switch(sev)
-				if(1)
-					explosion(owner, tloc, 0, 1, 2, 3)
-				if(2)
-					explosion(owner, tloc, -1, 0, 1, 2)
-				if(3)
-					explosion(owner, tloc, -1, -1, 0, 1)
-			qdel(owner)
+			material_explode(owner)
 		return
 
 /datum/materialProc/slippery_attack
 	execute(var/atom/owner, var/mob/attacker, var/atom/attacked)
-		if (isitem(owner) && prob(20) && (owner in attacker.equipped_list()))
+		if (isitem(owner) && prob(20) && (owner in attacker?.equipped_list()))
 			var/obj/item/handled_item = owner
 			boutput(attacker, SPAN_ALERT("[handled_item] slips right out of your hand!"))
 			handled_item.set_loc(attacker.loc)
@@ -551,9 +594,8 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	execute(var/mob/M, var/obj/item/I, mult)
 		if (iscarbon(M))
 			var/mob/living/carbon/C = M
-			if (C.bodytemperature > 0)
-				C.bodytemperature -= 2
-			if (C.bodytemperature > T0C && probmult(4))
+			C.changeBodyTemp(-2 KELVIN)
+			if (C.bodytemperature > I.material.getProperty("melting_point") && probmult(4))
 				boutput(C, "Your [I] melts from your body heat!")
 				qdel(I)
 		return
@@ -562,7 +604,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	desc = "It would melt when exposed to heat."
 
 	execute(var/atom/owner, var/temp)
-		if(temp < T0C) return // less than reaction temp
+		if(temp < owner.material.getProperty("melting_point")) return // less than reaction temp
 
 		var/turf/T = get_turf(owner)
 
@@ -577,6 +619,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			qdel(owner)
 
 /datum/materialProc/soulsteel_entered
+	desc_scan = "May be possessed by the dead"
 	execute(var/obj/item/owner, var/atom/movable/entering)
 		if (!isobj(owner) || owner.anchored >= ANCHORED_ALWAYS) return
 		if (istype(entering, /mob/dead/observer) && prob(33))
@@ -591,7 +634,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				var/mob/living/object/OB = new/mob/living/object(owner.loc, owner, mobenter)
 				OB.health = 8
 				OB.max_health = 8
-				OB.canspeak = 0
+				OB.can_use_say = FALSE
 				OB.show_antag_popup("soulsteel")
 
 /datum/materialProc/reflective_onbullet
@@ -603,20 +646,96 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		return
 
 /datum/materialProc/negative_add
+	desc_scan = "Gravitationally unstable"
 	execute(var/atom/owner)
 		if(isitem(owner))
 			var/obj/item/I = owner
 			I.no_gravity = 1
 			I.AddComponent(/datum/component/loctargeting/no_gravity)
-			animate_levitate(owner)
 		return
+
+// Apply a secondary HSL colorspace matrix.
+// Typically used for turning all non-grayscale colors into a single color, or having a secondary highlight color.
+/datum/materialProc/add_color_hsl
+	execute(var/atom/owner)
+		var/added_mat_id = owner.material.getID()
+		if(!owner.material.hsl_color)
+			return
+		if(!owner.mat_changeappearance)
+			return
+		if(endswith(owner.icon_state, "$$[added_mat_id]")) // Ignore if it is a material version of a sprite
+			return
+		if(owner.default_material == added_mat_id && !owner.uses_default_material_appearance)
+			return
+		var/color_filter = color_matrix_filter(owner.material.hsl_color, FILTER_COLOR_HSL)
+		owner.add_filter("[added_mat_id]_hsl_color", 5, color_filter)
+		return
+
+/datum/materialProc/remove_color_hsl
+	execute(atom/owner)
+		owner.remove_filter("[owner.material.getID()]_hsl_color")
 
 /datum/materialProc/spacelag_add
 	execute(atom/owner)
+		if(endswith(owner.icon_state, "$$spacelag"))
+			return
 		if (!isturf(owner))
 			animate_lag(owner)
+			var/outline_filter = outline_filter(1, "#003800", OUTLINE_SHARP) // Outline color gets changed by material color
+			owner.add_filter("spacelag_outline", 20, outline_filter)
+		return
+
+/datum/materialProc/spacelag_remove
+	execute(var/atom/location)
+		location.remove_filter("spacelag_outline")
+		return
+
+/datum/materialProc/honey_add
+	execute(var/atom/location)
+		if(endswith(location.icon_state, "$$honey") || ("honey" in location.get_typeinfo().mat_appearances_to_ignore))
+			return
+		var/offset = 0
+		if(!isturf(location))
+			offset = rand()
+		var/wave_filter = wave_filter(16, 16, 1, offset, flags = WAVE_SIDEWAYS | WAVE_BOUNDED)
+		location.add_filter("honey_wave", 4, wave_filter)
+		return
+
+/datum/materialProc/honey_remove
+	execute(var/atom/location)
+		location.remove_filter("honey_wave")
+		return
+
+/datum/materialProc/honey_image
+	execute(var/image/target, var/datum/material/source)
+		var/wave_filter = wave_filter(16, 16, 1, rand(), flags = WAVE_SIDEWAYS | WAVE_BOUNDED)
+		target.filters = wave_filter + target.filters
+		return
+
+/datum/materialProc/blob_add
+	execute(var/atom/location)
+		if(endswith(location.icon_state, "$$blob") || ("blob" in location.get_typeinfo().mat_appearances_to_ignore))
+			return
+		var/wave_filter = wave_filter(16, 16, 0.6, 0, flags = WAVE_SIDEWAYS | WAVE_BOUNDED)
+		location.add_filter("blob_wave", 4, wave_filter)
+		var/filter = location.get_filter("blob_wave")
+
+		location.avoid_animating = TRUE
+		var/datum/material/blob_mat = location.material
+		var/wiggle_time = round(5 * (blob_mat.getProperty("density") ** 1.4), 1)
+		var/blob_offset = TIME % wiggle_time
+		animate(filter, offset = blob_offset, time = 0, loop = -1, flags = ANIMATION_PARALLEL)
+		animate(offset = blob_offset + 1, time = wiggle_time, loop = -1)
+		return
+
+/datum/materialProc/blob_remove
+	execute(var/atom/location)
+		location.remove_filter("blob_wave")
+		location.avoid_animating = FALSE
+		return
 
 /datum/materialProc/temp_miraclium
+	desc_scan = "Unpredicatable transmuation when heated above 373K"
 	execute(var/atom/location, var/temp)
 		if(temp < T0C + 100)
 			return
@@ -624,7 +743,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		SPAWN(1 SECOND)
 			if(location?.material?.getID() == "miracle")
 				location.visible_message(SPAN_NOTICE("[location] bends and twists, changing colors rapidly."))
-				var/chosen = pick(prob(100); "mauxite",prob(100); "pharosium",prob(100); "cobryl",prob(100); "bohrum",prob(80); "cerenkite",prob(50); "syreline",prob(20); "slag",prob(3); "spacelag",prob(5); "soulsteel",prob(100); "molitz",prob(50); "claretine",prob(5); "erebite",prob(10); "quartz",prob(5); "uqill",prob(10); "telecrystal",prob(1); "starstone",prob(5); "blob",prob(8); "koshmarite",prob(20); "chitin",prob(4); "pizza",prob(15); "beewool",prob(6); "ectoplasm")
+				var/chosen = pick(prob(100); "mauxite",prob(100); "pharosium",prob(100); "cobryl",prob(100); "bohrum",prob(80); "batiline",prob(80); "cerenkite",prob(50); "syreline",prob(20); "slag",prob(3); "spacelag",prob(5); "soulsteel",prob(100); "molitz",prob(50); "claretine",prob(5); "erebite",prob(10); "quartz",prob(5); "uqill",prob(10); "telecrystal",prob(1); "starstone",prob(5); "blob",prob(8); "koshmarite",prob(20); "chitin",prob(4); "pizza",prob(15); "beewool",prob(6); "negativematter",prob(6); "ectoplasm")
 				location.setMaterial(getMaterial(chosen), appearance = 1, setname = 1)
 		return
 
@@ -793,3 +912,61 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			I.material.setProperty("n_radioactive", n_radioactive - min(n_radioactive, moles_to_convert/(50*I.amount)))
 		else
 			I.material.removeProperty("n_radioactive")
+
+/datum/materialProc/electrical
+	proc/shock_animate(var/atom/target)
+		var/potential_flick_state = "[target.icon_state]_matshock"
+		if(target.is_valid_icon_state(potential_flick_state))
+			FLICK(potential_flick_state, target)
+		else if(!target.avoid_animating)
+			var/dm_filter/shock_filter = target.get_filter("material_shock_outline")
+			if(!shock_filter)
+				target.add_filter("material_shock_outline", 90, outline_filter(size=1, color="#fbfbd2", flags=OUTLINE_SQUARE))
+				shock_filter = target.get_filter("material_shock_outline")
+			shock_filter.size = 1
+			shock_filter.color = "#fbfbd2"
+			animate(shock_filter, size = 0, color="#868606", time = 2 SECONDS, easing = LINEAR_EASING, tag = "material_shock_outline", flags = ANIMATION_END_NOW)
+
+/datum/materialProc/electrical/shock_life
+	desc_scan = "Releases electrical discharges during contact"
+	var/cd_min
+	var/cd_max
+	var/wattage
+
+	New(cd_min, cd_max, wattage)
+		..()
+		src.cd_min = cd_min
+		src.cd_max = cd_max
+		src.wattage = wattage
+
+	execute(mob/living/L, obj/item/I, mult)
+		if (ON_COOLDOWN(I, "material_shock", rand(src.cd_min, src.cd_max)))
+			return
+		if (!istype(L))
+			return
+		src.shock_animate(I)
+		L.shock(I, src.wattage, "All", 1, FALSE)
+
+/datum/materialProc/electrical/arcflash_life
+	desc_scan = "Releases electrical discharges during contact"
+	var/cd_min
+	var/cd_max
+	var/wattage
+
+	New(cd_min, cd_max, wattage)
+		..()
+		src.cd_min = cd_min
+		src.cd_max = cd_max
+		src.wattage = wattage
+
+	execute(mob/living/L, obj/item/I, mult)
+		if (ON_COOLDOWN(I, "material_arcflash", rand(cd_min, cd_max)))
+			return
+		if (!istype(L))
+			return
+		src.shock_animate(I)
+		if (!isturf(L.loc) || prob(10))
+			L.shock(I, src.wattage, "All", 1.5, TRUE)
+		else
+			var/turf/target = pick(block(L.x - 5, L.y - 5, L.z, L.x + 5, L.y + 5, L.z))
+			arcFlashTurf(L, target, src.wattage, 100)

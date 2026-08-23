@@ -15,6 +15,7 @@
 	health_burn = 90
 	health_burn_vuln = 0.3
 	can_bleed = FALSE
+	name_generator_path = /datum/wraith_name_generator/wraith_summon/commander
 	var/mob/living/intangible/wraith/master = null
 	var/deathsound = "sound/impact_sounds/plate_break.ogg"
 
@@ -60,7 +61,7 @@
 		HH.limb_name = "left arm"
 
 		HH = hands[2]
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.limb = new /datum/limb/halberd
 		HH.name = "halberd"
 		HH.suffix = "-R"

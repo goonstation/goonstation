@@ -777,6 +777,83 @@ proc/debug_map_apc_count(delim,zlim)
 				// staging this gradient to scale for 1-5 cameras
 				img.app.color = hsv2rgb(clamp(200 - (length(theTurf.camera_coverage_emitters) * 40), 0, 200), 85, 100)
 
+	managed_positional_sounds
+		name = "managed positional sounds"
+		help = {"Shows managed positional sound emitter fields.<br>
+		Brighter tiles have a stronger blended field.<br>
+		Numbers show blended stored volume. Tooltips show final pan. E# marks emitter turfs."}
+		restricted = 1
+
+		var/datum/controller/process/managed_positional_sounds/sound_process
+		var/query_range = 0
+
+		OnStartRendering(client/C)
+			src.sound_process = global.managed_positional_sound_process
+			src.query_range = src.sound_process?.max_query_range || 0
+
+		OnFinishRendering(client/C)
+			src.sound_process = null
+
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			if (!src.sound_process?.emitter_hashmap || !src.query_range)
+				img.app.alpha = 0
+				return
+
+			var/list/emitters_by_sound = list()
+			var/emitters_on_turf = 0
+			for (var/datum/managed_positional_sound_emitter/emitter as anything in src.sound_process.emitter_hashmap.exact_supremum(theTurf, src.query_range))
+				var/datum/managed_positional_sound/managed_sound = emitter.managed_sound
+				if (!managed_sound?.active)
+					continue
+
+				if (get_turf(emitter.source) == theTurf)
+					emitters_on_turf++
+
+				emitters_by_sound[managed_sound] ||= list()
+				emitters_by_sound[managed_sound] += emitter
+
+			if (!length(emitters_by_sound))
+				img.app.alpha = 0
+				return
+
+			var/list/best_field = null
+			var/list/desc_lines = list()
+			var/field_count = 0
+			for (var/datum/managed_positional_sound/managed_sound as anything in emitters_by_sound)
+				var/list/field = managed_sound.get_debug_blended_field_for_turf(theTurf, emitters_by_sound[managed_sound])
+				if (!field)
+					continue
+
+				field_count++
+				if (!best_field || field["stored_volume"] > best_field["stored_volume"])
+					best_field = field
+
+				if (length(desc_lines) < 8)
+					var/field_volume = round(field["stored_volume"], 0.1)
+					var/field_emitters = field["emitter_count"]
+					var/field_sound_pan = round(field["sound_pan"], 0.1)
+					desc_lines += "\ref[managed_sound] ch[managed_sound.sound_channel] vol [field_volume] emitters [field_emitters] pan [field_sound_pan]"
+
+			if (!best_field)
+				img.app.alpha = 0
+				return
+
+			var/normalized_volume = clamp(best_field["stored_volume"] / best_field["volume_cap"], 0, 1)
+			var/red = round(min(255, normalized_volume * 510))
+			var/green = round(min(255, (1 - normalized_volume) * 510))
+			img.app.color = rgb(red, green, 40)
+			img.app.alpha = round(clamp(40 + (normalized_volume * 160), 40, 200))
+
+			var/best_volume = round(best_field["stored_volume"])
+			if (emitters_on_turf)
+				img.app.overlays = list(src.makeText("E[emitters_on_turf]<br>[best_volume]", RESET_ALPHA | RESET_COLOR))
+			else
+				img.app.overlays = list(src.makeText(best_volume, RESET_ALPHA | RESET_COLOR))
+
+			if (field_count > length(desc_lines))
+				desc_lines += "...[field_count - length(desc_lines)] more managed sound fields"
+			img.app.desc = desc_lines.Join("<br>")
+
 	atmos_pipes
 		name = "atmos pipes"
 		help = {"highlights all atmos machinery<br>pipe color - the pipeline to which it belongs<br>numbers:<br>temperature<br>moles<br>pressure"}
@@ -936,23 +1013,17 @@ proc/debug_map_apc_count(delim,zlim)
 		help = {"Shows the ckey of the last person to touch stuff on a turf. If multiple peeople the tile is red and you need to hover over it to see a list.<br>Uses the View Fingerprints last_touched thing and a bunch of interactions don't do fingerprints so don't rely on this."}
 		GetInfo(turf/theTurf, image/debugoverlay/img)
 			var/list/lines = list()
-			var/toucher = null
 			for(var/atom/A in list(theTurf) + theTurf.contents)
-				if(is_ok(A) && A.fingerprintslast)
-					if(isnull(toucher))
-						toucher = A.fingerprintslast
-					else if(toucher != A.fingerprintslast)
-						toucher = -1
-					lines += "[A.name] - [A.fingerprintslast]"
-			if(isnull(toucher))
-				img.app.alpha = 0
-				return
-			img.app.desc = lines.Join("<br>\n")
-			if(toucher == -1)
+				if(!is_ok(A))
+					continue
+				var/last_ckey = A.get_last_ckey()
+				if(!last_ckey)
+					continue
+				lines += "[A.name]: [replace_if_false(last_ckey, "None")]"
+			if(lines.len == 0)
+				lines += "None"
 				img.app.color = "#FF0000"
-			else
-				img.app.color = debug_color_of(toucher)
-				img.app.overlays = list(src.makeText(toucher, RESET_ALPHA | RESET_COLOR))
+			img.app.desc = lines.Join("<br>\n")
 		proc/is_ok(atom/A)
 			return TRUE
 
@@ -1278,13 +1349,13 @@ proc/debug_map_apc_count(delim,zlim)
 			. = ..()
 			seed = tgui_input_number(C.mob, "Enter a seed value", "Seed Selection", seed, 50000,0)
 			if (isnull(seed)) seed = initial(seed)
-			accuracy = tgui_input_number(C.mob, "Enter a accuracy value, how close to perlin", "Accuracy", accuracy, 500, 1)
+			accuracy = tgui_input_number(C.mob, "Enter an accuracy value, how close to perlin", "Accuracy", accuracy, 500, 1)
 			if (isnull(accuracy)) accuracy = initial(accuracy)
 			stamp_size = tgui_input_number(C.mob, "Enter a stamp_size value, ??? ", "Stamp Size Selection", stamp_size, 32, 1)
 			if (isnull(stamp_size)) stamp_size = initial(stamp_size)
 			lower_range = tgui_input_number(C.mob, "Enter a lower_range value, Lower range to be active.", "Lower Range Selection", lower_range, 1.0, 0.0, round_input=FALSE)
 			if (isnull(lower_range)) lower_range = initial(lower_range)
-			upper_range = tgui_input_number(C.mob, "Enter a upper_range value, Upper range to be active.", "Upper Range Selection", upper_range, 1.0, 0.0, round_input=FALSE)
+			upper_range = tgui_input_number(C.mob, "Enter an upper_range value, Upper range to be active.", "Upper Range Selection", upper_range, 1.0, 0.0, round_input=FALSE)
 			if (isnull(upper_range)) upper_range = initial(upper_range)
 			world_size = world.maxx
 			noise_cache = rustg_dbp_generate("[src.seed]", "[src.accuracy]", "[src.stamp_size]", "[src.world_size]", "[src.lower_range]", "[src.upper_range]")
@@ -1450,19 +1521,18 @@ proc/debug_map_apc_count(delim,zlim)
 		name = "spatial hashmap count"
 		help = "Displays the amount of objects in the spatial hashmap on each turf"
 
-		var/hashmap_type = null
+		var/datum/spatial_hashmap/hashmap = null
 
-		OnEnabled(var/client/C)
+		OnEnabled(client/C)
 			usr = C.mob
-			hashmap_type = get_one_match(null, /datum/spatial_hashmap)
+			src.hashmap = global.tgui_input_list(C, "Which spatial hashmap do you wish to view?", "Select Spatial Hashmap", global.by_type[/datum/spatial_hashmap])
 
 		GetInfo(turf/theTurf, image/debugoverlay/img)
-			if(isnull(hashmap_type))
+			if (isnull(src.hashmap))
 				img.app.alpha = 0
 				return
-			var/datum/spatial_hashmap/map = get_singleton(hashmap_type)
-			var/list/things_nearby = map.get_nearby(theTurf, 0)
-			var/count = length(things_nearby)
+
+			var/count = length(src.hashmap.fast_manhattan(theTurf, 0))
 			img.app.alpha = 120
 			img.app.color = rgb(count * 10, count * 10, count * 10)
 			img.app.overlays = list(src.makeText(count, RESET_ALPHA | RESET_COLOR))
@@ -1471,21 +1541,30 @@ proc/debug_map_apc_count(delim,zlim)
 		name = "spatial hashmap in range"
 		help = "Displays the amount of objects in certain range in a selected hashmap on each turf"
 
-		var/hashmap_type = null
+		var/datum/spatial_hashmap/hashmap = null
+		var/norm = null
 		var/range = null
 
 		OnEnabled(var/client/C)
 			usr = C.mob
-			hashmap_type = get_one_match(null, /datum/spatial_hashmap)
-			range = tgui_input_number(C.mob, "Enter a range", "Range Selection", 5, 100, 1)
+			src.hashmap = global.tgui_input_list(C, "Which spatial hashmap do you wish to view?", "Select Spatial Hashmap", global.by_type[/datum/spatial_hashmap])
+			src.norm = global.tgui_input_list(C, "Select a norm to use", "Norm Selection", list("Manhattan", "Supremum", "Exact Supremum"))
+			src.range = global.tgui_input_number(C, "Enter a range", "Range Selection", 5, 100, 1)
 
 		GetInfo(turf/theTurf, image/debugoverlay/img)
-			if(isnull(hashmap_type))
+			if (isnull(src.hashmap))
 				img.app.alpha = 0
 				return
-			var/datum/spatial_hashmap/map = get_singleton(hashmap_type)
-			var/list/things_nearby = map.get_nearby_atoms_exact(theTurf, range)
-			var/count = length(things_nearby)
+
+			var/count = 0
+			switch (src.norm)
+				if ("Manhattan")
+					count = length(src.hashmap.fast_manhattan(theTurf, src.range))
+				if ("Supremum")
+					count = length(src.hashmap.supremum(theTurf, src.range))
+				if ("Exact Supremum")
+					count = length(src.hashmap.exact_supremum(theTurf, src.range))
+
 			img.app.alpha = 120
 			img.app.color = rgb(count * 10, count * 10, count * 10)
 			img.app.overlays = list(src.makeText(count, RESET_ALPHA | RESET_COLOR))
@@ -1529,7 +1608,22 @@ proc/debug_map_apc_count(delim,zlim)
 				img.app.alpha = 100
 			else
 				img.app.alpha = 0
-
+	fluid_pipes
+		name = "fluid pipes"
+		help = {"highlights fluid pipes<br>pipe color - the pipeline to which it belongs<br>numbers:<br>total units<br>maximum units<br>% filled"}
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			img.app.color = "#ffffff"
+			img.app.overlays = list()
+			img.app.alpha = 0
+			for(var/obj/fluid_pipe/pipe in theTurf)
+				var/image/pipe_image = image(pipe.icon, icon_state = pipe.icon_state, dir = pipe.dir)
+				pipe_image.alpha = 200
+				pipe_image.appearance_flags = RESET_ALPHA | RESET_COLOR
+				img.app.alpha = 80
+				pipe_image.color = debug_color_of(pipe.network)
+				pipe_image.maptext = "<span class='pixel r ol'>[round(pipe.network.reagents.total_volume,0.1)]<br>[round(pipe.network.reagents.maximum_volume,1)]<br>[round(100*pipe.network.reagents.total_volume/pipe.network.reagents.maximum_volume,0.1)]%</span>"
+				pipe_image.maptext_x = -3
+				img.app.overlays += pipe_image
 
 /client/var/list/infoOverlayImages
 /client/var/datum/infooverlay/activeOverlay
@@ -1683,16 +1777,17 @@ proc/info_overlay_choices()
 			var/y = text2num(splittext(offs[2], ":")[1])
 			var/image/im = usr.client.infoOverlayImages["[x]-[y]"]
 			if(im?.desc)
-				usr.client.tooltipHolder.transient.show(src, list(
-					"params" = params,
-					"title" = "Diagnostics",
-					"content" = (im.desc)
-				))
+				usr.client.tooltips.show(
+					TOOLTIP_HOVER, src,
+					mouse = params,
+					title = "Diagnostics",
+					content = (im.desc)
+				)
 		else
 			.=..()
 	MouseExited()
 		if(usr.client.activeOverlay)
-			usr.client.tooltipHolder.transient.hide()
+			usr.client.tooltips.hide(TOOLTIP_HOVER)
 		else
 			.=..()
 

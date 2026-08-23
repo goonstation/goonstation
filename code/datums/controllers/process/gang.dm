@@ -62,7 +62,7 @@
 					locker.toggle_hide(TRUE)
 
 			if (locker.stored_cash < 1)
-				locker.default_screen_overlay = image('icons/obj/large_storage.dmi', "gang_overlay_yellow")
+				locker.default_screen_overlay = image('icons/obj/storage/locker.dmi', "gang_overlay_yellow")
 				locker.UpdateIcon()
 				continue
 
@@ -74,14 +74,14 @@
 			var/amount = round(min(locker.stored_cash, launder_rate))
 			var/points = round(amount/GANG_CASH_DIVISOR) // only launder full points
 			if (points < 1)
-				locker.default_screen_overlay = image('icons/obj/large_storage.dmi', "gang_overlay_yellow")
+				locker.default_screen_overlay = image('icons/obj/storage/locker.dmi', "gang_overlay_yellow")
 				locker.UpdateIcon()
 				continue
 
 			if (locker.superlaunder_stacks)
-				locker.default_screen_overlay = image('icons/obj/large_storage.dmi', "gang_overlay_superlaunder")
+				locker.default_screen_overlay = image('icons/obj/storage/locker.dmi', "gang_overlay_superlaunder")
 			else
-				locker.default_screen_overlay = image('icons/obj/large_storage.dmi', "gang_overlay_launder")
+				locker.default_screen_overlay = image('icons/obj/storage/locker.dmi', "gang_overlay_launder")
 			locker.UpdateIcon()
 			locker.stored_cash -= (points*GANG_CASH_DIVISOR)
 			locker.gang.score_cash += points
@@ -242,7 +242,7 @@
 				broadcast += "<br>"
 			if (vandalism_broadcasts[targetGang])
 				broadcast += " - [vandalism_broadcasts[targetGang]]"
-			targetGang.broadcast_to_gang(broadcast)
+			targetGang.announcer_say_source.say(broadcast, flags = SAYFLAG_IGNORE_HTML)
 
 	proc/doDuffles(gang_duffle_list)
 		var/datum/game_mode/gang/gamemode = ticker.mode

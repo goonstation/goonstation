@@ -1,6 +1,7 @@
 /obj/storage/secure/crate
 	desc = "A secure crate."
 	name = "Secure crate"
+	icon = 'icons/obj/storage/crate.dmi'
 	icon_state = "securecrate"
 	icon_opened = "securecrateopen"
 	icon_closed = "securecrate"
@@ -33,14 +34,30 @@
 	icon_opened = "weaponcrateopen"
 	icon_closed = "weaponcrate"
 
+	sec_weapons
+	name = "Security Weapons Crate"
+	req_access = list(access_securitylockers)
+	icon_state = "sec_weapons"
+	icon_opened = "sec_weaponsopen"
+	icon_closed = "sec_weapons"
+
 	confiscated_items
 		name = "confiscated items crate"
 		desc = "Secure storage for confiscated contraband."
 		req_access = list(access_brig)
+		icon_opened = "sec_contrabandopen"
+		icon_closed = "sec_contraband"
+		icon_state = "sec_contraband"
+
+		owlery
+			req_access = list(access_owlerysec)
 
 	armory
 		name = "secure weapons crate"
 		req_access = list(access_armory)
+		icon_opened = "sec_armoryopen"
+		icon_closed = "sec_armory"
+		icon_state = "sec_armory"
 
 		tranquilizer
 			name = "tranquilizer crate"
@@ -61,6 +78,7 @@
 			name = "pod weapons crate"
 			spawn_contents = list(/obj/item/shipcomponent/mainweapon/disruptor_light = 2,\
 			/obj/item/shipcomponent/mainweapon/laser = 2,\
+			/obj/item/shipcomponent/mainweapon/stasis = 2,\
 			/obj/item/storage/box/missile_launcher)
 
 /obj/storage/secure/crate/plasma
@@ -137,6 +155,7 @@
 	spawn_contents = list(/obj/item/requisition_token/security = 2,
 	/obj/item/requisition_token/security/assistant = 2,
 	/obj/item/turret_deployer/riot = 2,
+	/obj/item/gun/energy/stasis,
 	/obj/random_item_spawner/armoryweapon/one)
 
 /obj/storage/secure/crate/gear/armory/equipment/looted
@@ -166,6 +185,10 @@
 					carton.ourEgg.blog += blog
 				return 1
 
+	locked
+		name = "Hydroponics Transfer crate"
+		req_access = list(access_hydro)
+
 /obj/storage/secure/crate/eng
 	name = "Engineering crate"
 	desc = "A yellow crate."
@@ -173,6 +196,10 @@
 	density = 1
 	icon_opened = "engcrate-open"
 	icon_closed = "engcrate"
+
+	locked
+		name = "Secure Engineering crate"
+		req_access = list(access_engineering)
 
 	explosives
 		name = "engineering explosive crate"
@@ -225,3 +252,21 @@
 		name = "Lab Monkey Crate"
 		desc = "Warning: Contains live monkeys!"
 		req_access = list(access_medical_lockers, access_tox_storage)
+
+/obj/storage/secure/crate/research
+	name = "research crate"
+	desc = "A secure research crate."
+	icon_state = "lootsci"
+	icon_opened = "lootsciopen"
+	icon_closed = "lootsci"
+	icon_greenlight = "lootcratelocklight"
+	icon_redlight = "lootcratelocklight"
+
+	update_icon()
+		. = ..()
+		var/image/light_image = image(src.icon, src.icon_redlight)
+		if(src.locked)
+			light_image.color = "#cc0000"
+		else
+			light_image.color = "#00ff00"
+		src.UpdateOverlays(light_image, "light")

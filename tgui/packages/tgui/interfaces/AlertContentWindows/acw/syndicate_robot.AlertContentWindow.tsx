@@ -6,10 +6,8 @@
  */
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  title: 'Syndicate Robot Tips!',
-  theme: 'syndicate',
-  content: (
+const SyndibotContentWindow = () => {
+  return (
     <div className="traitor-tips">
       <h1 className="center">You are a Syndicate Robot!</h1>
 
@@ -35,5 +33,11 @@ export const acw: AlertContentWindow = {
         </p>
       </p>
     </div>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  title: 'Syndicate Robot Tips!',
+  theme: 'syndicate',
+  component: SyndibotContentWindow,
 };

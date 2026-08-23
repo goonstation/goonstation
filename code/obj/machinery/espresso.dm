@@ -13,13 +13,14 @@ TYPEINFO(/obj/machinery/espresso_machine)
 	anchored = ANCHORED
 	flags = NOSPLASH | TGUI_INTERACTIVE
 	event_handler_flags = NO_MOUSEDROP_QOL
+	object_flags = NO_BLOCK_TABLE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS
 	var/cupslimit = 2
 	var/cupsinside = 0
 	var/top_on = 1 //screwed on or screwed off
 	var/cup_name = "espresso cup"
 	var/image/image_cup = null
-	var/list/drink_options = list("Americano", "Cappuchino", "Decaf", "Espresso", "Flat White", "Latte", "Mocha")
+	var/list/drink_options = list("Americano", "Cappuccino", "Decaf", "Espresso", "Flat White", "Latte", "Mocha")
 
 	New()
 		..()
@@ -96,7 +97,7 @@ TYPEINFO(/obj/machinery/espresso_machine)
 							C.reagents.add_reagent("espresso", 4.3)
 							C.reagents.add_reagent("milk", 1.4)
 							C.reagents.add_reagent("chocolate", 4.3)
-					if ("Cappuchino") // 1:1:1 milk foam:milk:espresso
+					if ("Cappuccino") // 1:1:1 milk foam:milk:espresso
 						for(var/obj/item/reagent_containers/food/drinks/espressocup/C in src.contents)
 							C.reagents.add_reagent("espresso", 3.5)
 							C.reagents.add_reagent("milk", 6.5)
@@ -120,12 +121,9 @@ TYPEINFO(/obj/machinery/espresso_machine)
 				user.show_text("The [src.name] can't hold any more [src.cup_name]s, doofus!")
 				return ..()
 			else
-				src.cupsinside += 1
 				user.drop_item()
-				W.set_loc(src)
+				add_cup(W)
 				user.show_text ("You place the [src.cup_name] into [src].")
-				src.update()
-				tgui_process.update_uis(src)
 				return ..()
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
@@ -164,6 +162,13 @@ TYPEINFO(/obj/machinery/espresso_machine)
 		qdel(src)
 		return
 
+	/// Proc for adding a cup to an espresso machine.
+	proc/add_cup(var/obj/item/reagent_containers/food/drinks/espressocup/cup)
+		src.cupsinside += 1
+		cup.set_loc(src)
+		src.update()
+		tgui_process.update_uis(src)
+
 	proc/update()
 		if (src.cupsinside == 1)
 			src.image_cup = image(src.icon, icon_state = "cupoverlay")
@@ -190,6 +195,7 @@ TYPEINFO(/obj/machinery/coffeemaker)
 	density = 1
 	anchored = ANCHORED
 	flags = NOSPLASH
+	object_flags = NO_BLOCK_TABLE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS
 	var/carafe_name = "coffee carafe"
 	var/image/image_top = null

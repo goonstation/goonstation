@@ -2,6 +2,7 @@
 	name = "crate"
 	desc = "A big metal box that you can put things into. Who knows, it might even have things already in it."
 	is_short = 1
+	icon = 'icons/obj/storage/crate.dmi'
 	#ifdef XMAS
 	icon_state = "xmascrate"
 	icon_opened = "xmascrateopen"
@@ -12,12 +13,13 @@
 	icon_opened = "crateopen"
 	#endif
 	icon_welded = "welded-crate"
-	soundproofing = 3
+	soundproofing = SOUNDPROOFING_STORAGE
 	throwforce = 50 //ouch
 	can_flip_bust = 1
 	object_flags = NO_GHOSTCRITTER
 	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
 	pass_unstable = TRUE
+	material_amt = 0.1 // Matched to their cost in QM/crate fabricators.
 
 	get_desc()
 		. = ..()
@@ -125,7 +127,7 @@
 	make_my_stuff()
 		. = ..()
 		if (prob(30))
-			new /obj/item/paper/businesscard/hemera_rcd(src)
+			new /obj/item/paper/image/businesscard/hemera_rcd(src)
 
 /obj/storage/crate/rcd/CE
 	name = "\improper RCD crate"
@@ -173,6 +175,36 @@
 	icon_opened = "biohazardcrateopen"
 	icon_closed = "biohazardcrate"
 	weld_image_offset_Y = -2
+
+/obj/storage/crate/freezer/organs
+	name = "Freezer - Spare Parts"
+
+	make_my_stuff()
+		if(..())
+			var/i = 0
+			var/limit = rand(5,7)
+			while(i < limit)
+				i++
+				switch(rand(1,9))
+					if(1)
+						new /obj/item/organ/appendix(src)
+					if(2)
+						new /obj/item/organ/heart(src)
+					if(3)
+						new /obj/item/organ/intestines(src)
+					if(4)
+						new /obj/item/organ/kidney(src)
+					if(5)
+						new /obj/item/organ/liver(src)
+					if(6)
+						new /obj/item/organ/stomach(src)
+					if(7)
+						new /obj/item/organ/spleen(src)
+					if(8)
+						new /obj/item/organ/pancreas(src)
+					if(9)
+						new /obj/item/organ/eye(src)
+			return TRUE
 
 /obj/storage/crate/freezer/milk
 	spawn_contents = list(/obj/item/reagent_containers/food/drinks/milk = 10, \
@@ -256,13 +288,13 @@
 	/obj/item/clothing/shoes/clown_shoes/autumn,
 	/obj/item/clothing/head/clown_autumn_hat,
 	/obj/item/clothing/mask/clown_hat/autumn,
-	/obj/item/clothing/under/gimmick/clown_autumn,
+	/obj/item/clothing/under/misc/clown/autumn,
 	#endif
 	#ifdef SEASON_WINTER
 	/obj/item/clothing/shoes/clown_shoes/winter,
 	/obj/item/clothing/head/clown_winter_hat,
 	/obj/item/clothing/mask/clown_hat/winter,
-	/obj/item/clothing/under/gimmick/clown_winter,
+	/obj/item/clothing/under/misc/clown/winter,
 	#endif
 	/obj/item/storage/box/balloonbox)
 
@@ -294,7 +326,7 @@
  */
 
 /obj/storage/crate/haunted
-	icon = 'icons/obj/large_storage.dmi'
+	icon = 'icons/obj/storage/crate.dmi'
 	icon_state = "bloodycrate"
 	icon_opened = "bloodycrateopen"
 	icon_closed = "bloodycrate"
@@ -418,6 +450,7 @@
 /obj/storage/crate/packing
 	name = "packing crate"
 	desc = "A packing crate."
+	icon = 'icons/obj/storage/crate_wood.dmi'
 	icon_state = "packingcrate1"
 
 	New()
@@ -440,6 +473,7 @@
 /obj/storage/crate/wooden
 	name = "wooden crate"
 	desc = "A wooden crate."
+	icon = 'icons/obj/storage/crate_wood.dmi'
 	icon_state = "woodencrate1"
 	New()
 		var/n = rand(1,9)
@@ -564,7 +598,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		/obj/item/dna_scrambler,
 		/obj/item/voice_changer,
 		/obj/item/card/emag,
-		/obj/item/storage/backpack/chameleon,
+		/obj/item/storage/backpack/chameleon/tactical_belt,
 		/obj/item/device/chameleon,
 		/obj/item/clothing/suit/space/syndicate/specialist,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/infiltrator)
@@ -806,7 +840,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		/obj/item/chem_grenade/cryo = 4)
 
 	weapons3
-		spawn_contents = list(/obj/item/barrier,
+		spawn_contents = list(/obj/item/barrier/collapsible/security,
 		/obj/item/chem_grenade/shock = 2)
 
 	weapons4
@@ -860,3 +894,15 @@ TYPEINFO(/obj/storage/crate/chest)
 		shotgun_gen.place_loot_instance(src,1,1, new /obj/loot_spawner/medium/ks23_shrapnel)
 		shotgun_gen.place_loot_instance(src,3,1, new /obj/loot_spawner/medium/ks23_slug)
 		..()
+
+/obj/storage/crate/eng_reinforcedcables
+	name = "reinforced cable crate"
+	spawn_contents = list(
+		/obj/item/storage/box/cablesbox/reinforced = 4
+	)
+
+/obj/storage/crate/eng_dowsingrods
+	name = "dowsing rod crate"
+	spawn_contents = list(
+		/obj/item/heat_dowsing = 10
+	)

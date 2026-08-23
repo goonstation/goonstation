@@ -5,7 +5,7 @@
  * @license ISC
  */
 
-import { KeyboardEvent, useState } from 'react';
+import { useState } from 'react';
 import { Box, Section, Stack, TextArea } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
@@ -36,12 +36,10 @@ export const SwingSignTIM = () => {
     isValid: allowEmpty || !!message,
     error: null,
   });
-  const onType = (event) => {
-    event.preventDefault();
-    const target = event.target;
-    target.value = trimText(target.value, rows, columns);
-    setInputIsValid(validateInput(target.value, max_length, rows));
-    setInput(target.value);
+  const onType = (value: string) => {
+    const trimmedValue = trimText(value, rows, columns);
+    setInputIsValid(validateInput(trimmedValue, max_length, rows));
+    setInput(trimmedValue);
   };
   // Dynamically changes the window height based on the message.
   const windowHeight = 130 + Math.ceil(message.length / 5) + 75;
@@ -70,7 +68,7 @@ export const SwingSignTIM = () => {
 
 interface InputAreaProps {
   input: string;
-  onType: (e: KeyboardEvent<HTMLTextAreaElement>) => void;
+  onType: (value: string) => void;
 }
 
 /** Gets the user input and invalidates if there's a constraint. */
@@ -88,10 +86,11 @@ const InputArea = (props: InputAreaProps) => {
     <Stack.Item grow>
       <TextArea
         autoFocus
+        fluid
         height="100%"
         textAlign="center"
         fontFamily="Consolas"
-        onInput={onType}
+        onChange={onType}
         onEnter={() => {
           act('submit', { entry: input });
         }}

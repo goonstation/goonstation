@@ -95,24 +95,6 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 		logTheThing(LOG_ADMIN, usr, "created a poster[print_or_place == "Print" ? " at all printers" : null]")
 		message_admins("[key_name(usr)] created a poster[print_or_place == "Print" ? " at all printers" : null]")
 
-/proc/create_jailbird_wanted_poster(mob/living/carbon/human/H)
-	var/reason = "Previous criminal activity."
-	if (H.job == "Stowaway")
-		reason = "Unauthorized boarding of a Nanotrasen [station_or_ship()]."
-	else
-		var/datum/db_record/sec_record = data_core.security.find_record("id", H.datacore_id)
-		if (sec_record)
-			reason = "[sec_record["ma_crim"]] [sec_record["mi_crim"]]"
-	mass_print_wanted_poster(
-		uppertext(H.real_name),
-		H.build_flat_icon(),
-		"FROM CAMERA FOOTAGE",
-		"WANTED: ALIVE",
-		null, // no bounty
-		"<b>WANTED FOR:</b> [reason]",
-		"<center><i>NANOTRASEN AUTOMATED NOTICE</i></center>"
-	)
-
 /// Print a wanted poster to all station-level printers
 /proc/mass_print_wanted_poster(name, wanted_image, subtitle, dead_or_alive, bounty, wanted_for, notes)
 	for_by_tcl(P, /obj/machinery/networked/printer)
@@ -402,7 +384,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 		C.Browse(src.poster_HTML, "window=[src.line_title]_poster;size=[src.imgw]x[src.imgh];title=[src.line_title]")
 
 	proc/generate_poster()
-		src.poster_HTML = {"<html><head><meta http-equiv=\"X-UA-Compatible\" content=\"IE=8\"/></head><body><title>Poster</title>\
+		src.poster_HTML = {"<html><body><title>Poster</title>\
 		[src.line_title ? "<h2><center><b>[src.line_title]</b></center></h2>" : null]<hr>\
 		[src.poster_image ? "<center><img style=\"-ms-interpolation-mode:nearest-neighbor;\" src=posterimage.png height=96 width=96></center><br>" : null]\
 		[src.line_photo_subtitle ? "<center><small><sup>[src.line_photo_subtitle]</sup></small></center>" : null]<hr>\
@@ -418,6 +400,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 	icon_state = "wall_poster_nt-rip2"
 
 TYPEINFO(/obj/submachine/poster_creator)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/submachine/poster_creator
@@ -425,6 +408,7 @@ TYPEINFO(/obj/submachine/poster_creator)
 	desc = "A machine that can design and print out wanted posters."
 	density = 1
 	anchored = ANCHORED
+	object_flags = NO_GHOSTCRITTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "poster_printer"
@@ -509,7 +493,7 @@ TYPEINFO(/obj/submachine/poster_creator)
 	proc/generate_html()
 		src.ensure_plist()
 
-		src.pdata = "<html><head><meta http-equiv=\"X-UA-Compatible\" content=\"IE=8\"/></head><body><title>Wanted Poster</title>"
+		src.pdata = "<html><body><title>Wanted Poster</title>"
 		src.pdata += "<right><A href='byond://?src=\ref[src];print=1'>PRINT</A></right><br>"
 		src.pdata += "<h2><center><b><A href='byond://?src=\ref[src];entername=1'>NAME: [src.plist["name"]]</A></b></center></h2><hr>"
 		src.pdata += "<center><img style=\"-ms-interpolation-mode:nearest-neighbor;\" src=pm_posterimage.png height=96 width=96></center><br>"

@@ -6,6 +6,7 @@
 	var/list/whoAdmins = list()
 	var/list/whoMentors = list()
 	var/list/whoNormies = list()
+	var/list/whoPreAuth = list()
 
 	for (var/client/C as anything in clients)
 		if (!C || !C.mob) continue
@@ -62,6 +63,12 @@
 			thisW += C.key + (usr.client.holder ? "</a>" : "</span>")
 			whoNormies += thisW
 
+	// Pre-auth clients
+	if (isadmin(usr))
+		for (var/client/C as anything in pre_auth_clients)
+			if (!C) continue
+			whoPreAuth += "<a href='byond://?src=\ref[usr.client.holder];action=adminplayeropts;targetckey=[C.ckey]' class='ooc text-normal'>[C.ckey]</a>"
+
 	if (length(whoAdmins))
 		sortList(whoAdmins, /proc/cmp_text_asc)
 		rendered += "<b>Admins:</b>"
@@ -77,6 +84,11 @@
 		rendered += "<b>Normal:</b>"
 		for (var/aNormie in whoNormies)
 			rendered += aNormie
+	if (length(whoPreAuth))
+		sortList(whoPreAuth, /proc/cmp_text_asc)
+		rendered += "<b>Pre-auth:</b>"
+		for (var/aPreAuth in whoPreAuth)
+			rendered += aPreAuth
 
 	rendered += "<b>Total Players: [length(whoAdmins) + length(whoMentors) + length(whoNormies)]</b>"
 	rendered += "</div>"

@@ -710,6 +710,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	throw_range = 5
 	w_class = W_CLASS_SMALL
 	flags = TABLEPASS
+	default_material = "plastic"
 	stamina_damage = 15
 	stamina_cost = 8
 	stamina_crit_chance = 10
@@ -1302,53 +1303,6 @@ var/obj/manta_speed_lever/mantaLever = null
 			command_alert("The Magnetic tether has been successfully repaired. Magnetic attachment points are online once again.", "Magnetic Tether Repaired", alert_origin = ALERT_STATION)
 			return
 
-#ifdef MOVING_SUB_MAP //Defined in the map-specific .dm configuration file.
-/datum/random_event/special/mantacommsdown
-	name = "Communications Malfunction"
-
-	event_effect(var/source)
-		..()
-		if (random_events.announce_events)
-			command_alert("Communication tower has been severely damaged aboard NSS Manta. Ships automated communication system will now attempt to re-establish signal through backup channel. We estimate this will take eight to ten minutes.", "Communications Malfunction", alert_origin = ALERT_STATION)
-			playsound_global(world, 'sound/effects/commsdown.ogg', 100)
-			sleep(rand(80,100))
-			signal_loss += 100
-			sleep(rand(4800,6000))
-			signal_loss -= 100
-
-			if (random_events.announce_events)
-				command_alert("Communication link has been established with Oshan Laboratory through backkup channel. Communications should be restored to normal aboard NSS Manta.", "Communications Restored", alert_origin = ALERT_STATION)
-			else
-				message_admins(SPAN_INTERNAL("Manta Comms event ceasing."))
-
-
-/datum/random_event/major/electricmalfunction
-	name = "Electrical Malfunction"
-
-	event_effect()
-		..()
-		var/obj/machinery/junctionbox/J = pick(by_type[/obj/machinery/junctionbox])
-		if (J.broken)
-			return
-		J.Breakdown()
-		command_alert("Certain junction boxes are malfunctioning around NSS Manta. Please seek out and repair the malfunctioning junction boxes before they lead to power outages.", "Electrical Malfunction", alert_origin = ALERT_STATION)
-
-/datum/random_event/special/namepending
-	name = "Name Pending"
-
-	event_effect()
-		..()
-		var/list/eligible = by_type[/obj/machinery/mantapropulsion].Copy()
-		for(var/i=0, i<3, i++)
-			var/obj/machinery/mantapropulsion/big/P = pick(eligible)
-			P.Breakdown()
-			eligible.Remove(P)
-			sleep(1 SECOND)
-
-		new /obj/effect/boommarker(pick_landmark(LANDMARK_BIGBOOM))
-#endif
-
-
 //-------------------------------------------- MANTA COMPATIBLE AREAS HERE --------------------------------------------
 //Also ugh, duplicate code.
 
@@ -1393,7 +1347,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 
 /area/supply/sell_point/manta
-	ambient_light = OCEAN_LIGHT
+	ambient_light_source = AMBIENT_LIGHT_SRC_OCEAN
 
 	Entered(atom/movable/Obj,atom/OldLoc)
 		addManta(Obj)
@@ -1486,7 +1440,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	name = "Wreck of the NSS Polaris"
 	icon_state = "green"
 	sound_group = "polaris"
-	teleport_blocked = 1
+	teleport_blocked = AREA_TELEPORT_BLOCKED
 	sound_loop = 'sound/ambience/loop/Polarisloop.ogg'
 
 /area/wrecknsspolaris/vault
@@ -1496,7 +1450,7 @@ var/obj/manta_speed_lever/mantaLever = null
 /area/wrecknsspolaris/outside
 	name = "Ouside the Wreck"
 	icon_state = "blue"
-	ambient_light = OCEAN_LIGHT
+	ambient_light_source = AMBIENT_LIGHT_SRC_OCEAN
 
 /area/wrecknsspolaris/outside/teleport
 	name = "Outer Wreck (with teleport)"
@@ -1592,7 +1546,7 @@ var/obj/manta_speed_lever/mantaLever = null
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "blackbox"
-	desc = "A flight recorder is an electronic recording device placed in an spacecraft for the purpose of facilitating the investigation of accidents and incidents. Someone from Nanotrasen would surely want to see this."
+	desc = "A flight recorder is an electronic recording device placed in a spacecraft for the purpose of facilitating the investigation of accidents and incidents. Someone from Nanotrasen would surely want to see this."
 	item_state = "electropack"
 	force = 5
 
@@ -1624,6 +1578,14 @@ var/obj/manta_speed_lever/mantaLever = null
 		pitwall
 			icon_state = "pit_wall"
 
+	cult
+		name = "ominious abyss"
+		desc = "The water below vibrates with a tension, as though it was raging."
+		falltarget = LANDMARK_FALL_CULTIST
+
+		pitwall
+			icon_state = "pit_wall"
+
 //-------------------------------------------- NSS MANTA SECRET VAULT --------------------------------------------
 
 /obj/vaultdoor
@@ -1644,7 +1606,7 @@ var/obj/manta_speed_lever/mantaLever = null
 /area/mantavault
 	name = "NSS Manta Secret Vault"
 	icon_state = "red"
-	teleport_blocked = 1
+	teleport_blocked = AREA_TELEPORT_BLOCKED
 	sound_loop = 'sound/ambience/loop/manta_vault.ogg'
 	sound_group = "vault"
 

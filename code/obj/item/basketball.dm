@@ -182,20 +182,32 @@
 
 /obj/item/bballbasket
 	name = "basketball hoop" // it's a hoop you nerd, not a basket
-	desc = "Can be mounted on walls."
+	desc = "Ideal for dunking basketballs, among other things."
 	opacity = 0
 	density = 0
 	anchored = UNANCHORED
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/gym_objs.dmi'
 	icon_state = "bbasket0"
 	event_handler_flags = USE_FLUID_ENTER
 	var/mounted = 0
 	var/active = 0
 	var/probability = 40
+	HELP_MESSAGE_OVERRIDE("Use on a wall to mount it. Use a <b>wrench</b> to unmount it from the wall.")
 
 	New()
 		..()
+		AddComponent(/datum/component/mechanics_holder)
 		BLOCK_SETUP(BLOCK_ALL)
+
+	pickup(mob/user)
+		if (!src.mounted)
+			SEND_SIGNAL(src, COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
+		return ..()
+
+	dropped(mob/user)
+		if (!src.mounted)
+			SEND_SIGNAL(src, COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
+		return ..()
 
 	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W) && mounted)
@@ -204,6 +216,7 @@
 			src.pixel_x = 0
 			src.anchored = UNANCHORED
 			src.mounted = 0
+			SEND_SIGNAL(src, COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
 		else if (src.mounted && !istype(W, /obj/item/bballbasket))
 			if (W.cant_drop) return
 			src.visible_message(SPAN_NOTICE("<b>[user]</b> jumps up and tries to dunk [W] into [src]!"))
@@ -227,7 +240,6 @@
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (!mounted && GET_DIST(src, target) == 1)
 			if (isturf(target) && target.density)
-				//if (get_dir(src,target) == NORTH || get_dir(src,target) == EAST || get_dir(src,target) == SOUTH || get_dir(src,target) == WEST)
 				if (get_dir(src,target) in cardinal)
 					src.visible_message(SPAN_NOTICE("<b>[user] mounts [src] on [target].</b>"))
 					user.drop_item()
@@ -248,9 +260,9 @@
 
 	Crossed(atom/movable/A)
 		..()
-		if (src.active)
+		if (src.active || !src.mounted)
 			return
-		if (istype(A, /obj/item/bballbasket)) // oh for FUCK'S SAKE
+		if (istypes(A, list(/obj/item/bballbasket, /obj/item/dummy))) // oh for FUCK'S SAKE
 			return // NO
 		if (isitem(A))
 			src.shoot(A)
@@ -303,6 +315,23 @@
 		SPAWN(2.3 SECONDS)
 			A.invisibility = INVIS_NONE
 			src.active = 0
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "scored_with=[A.name]")
+
+/obj/item/bballbasket/mounted
+	anchored = ANCHORED
+	mounted = TRUE
+
+	New()
+		. = ..()
+		switch (src.dir)
+			if (NORTH)
+				src.pixel_y = 20
+			if (SOUTH)
+				src.pixel_y = -20
+			if (EAST)
+				src.pixel_x = 20
+			if (WEST)
+				src.pixel_x = -20
 
 /obj/item/bballbasket/testing
 	probability = 100

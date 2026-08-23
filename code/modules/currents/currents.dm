@@ -112,7 +112,7 @@
 		/obj/item/reagent_containers/food/snacks/ingredient/seaweed = 2, //I know these are pressed sheets but shhh, pretend they fell off a sushi boat or something
 		/obj/item/reagent_containers/food/fish/shrimp = 2,
 		/obj/item/raw_material/gold = 1,
-		/obj/naval_mine/rusted = 0.1, //hehehe - won't damage turbines but will look scary
+		/obj/naval_mine/rusted = 0.3, //hehehe - won't damage turbines but will look scary
 	)
 
 	New()

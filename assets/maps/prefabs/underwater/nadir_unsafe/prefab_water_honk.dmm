@@ -148,7 +148,7 @@
 /area/prefab/slimy_honk)
 "aH" = (
 /obj/item/cigbutt,
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	icon_state = "sink";
 	dir = 4
 	},
@@ -171,6 +171,7 @@
 /obj/machinery/light/small/floor/warm,
 /obj/machinery/chem_dispenser/soda,
 /obj/decal/cleanable/slime,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -379,7 +380,7 @@
 /obj/item/reagent_containers/food/snacks/candy/candy_apple,
 /obj/item/reagent_containers/food/snacks/condiment/ketchup,
 /obj/item/reagent_containers/food/snacks/condiment/ketchup,
-/obj/item/shaker/ketchup,
+/obj/item/reagent_containers/applicator/condiment/bottle/ketchup,
 /turf/simulated/floor/carpet,
 /area/prefab/slimy_honk)
 "bu" = (
@@ -895,8 +896,8 @@
 	},
 /area/prefab/slimy_honk)
 "Mr" = (
-/obj/item/shaker/ketchup,
-/obj/item/shaker/ketchup,
+/obj/item/reagent_containers/applicator/condiment/bottle/ketchup,
+/obj/item/reagent_containers/applicator/condiment/bottle/ketchup,
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor/carpet,
 /area/prefab/slimy_honk)

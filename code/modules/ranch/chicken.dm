@@ -26,9 +26,9 @@ All other chickens in this file are non-secret. Please be respectful.
 	icon = 'icons/mob/ranch/chickens.dmi'
 	//icon_state = "chick"
 	icon_state_dead = "chick-dead"
-	speechverb_say = "chirps"
-	speechverb_exclaim = "cheeps"
-	speechverb_ask = "boks"
+	speech_verb_say = "chirps"
+	speech_verb_exclaim = "cheeps"
+	speech_verb_ask = "boks"
 	health_brute = 10
 	health_burn = 10
 	flags = TABLEPASS | DOORPASS
@@ -42,7 +42,7 @@ All other chickens in this file are non-secret. Please be respectful.
 
 	is_npc = 0
 
-	butcherable = 1
+	butcherable = BUTCHER_ALLOWED
 	butcher_time = 0.2 SECONDS
 	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget
 
@@ -101,14 +101,14 @@ All other chickens in this file are non-secret. Please be respectful.
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "claw"
 		HH.limb_name = "claws"
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/mouth/small	// if not null, the special limb to use when attack_handing
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
+		HH.icon = 'icons/mob/critter_hands.dmi'	// the icon of the hand UI background
 		HH.icon_state = "mouth"					// the icon state of the hand UI background
 		HH.name = "mouth"						// designation of the hand - purely for show
 		HH.limb_name = "beak"					// name for the dummy holder
@@ -525,6 +525,7 @@ All other chickens in this file are non-secret. Please be respectful.
 	favorite_flag = "honk"
 	negative_happiness = TRUE
 	base_evolution_type = /datum/ranch/evolution/chicken/feed_threshold/honk
+	can_juggle = TRUE
 
 	New()
 		. = ..()
@@ -1695,12 +1696,15 @@ All other chickens in this file are non-secret. Please be respectful.
 	happiness = 0
 	favorite_flag = "peas"
 	open_to_sound = TRUE
+	var/obj/machinery/camera/ranch/pigeon/camera = null
 
 	New()
 		. = ..()
-		var/obj/item/device/radio/pigeon/P = new/obj/item/device/radio/pigeon(src)
-		P.broadcasting = FALSE
+		camera = new(src, prob(0.1) ? "NTSO Security Van" : "Camera [\ref(src)]")
 
+	death(gibbed, do_drop_equipment)
+		QDEL_NULL(camera)
+		. = ..()
 
 	grow_up()
 		..()
@@ -1713,9 +1717,6 @@ All other chickens in this file are non-secret. Please be respectful.
 			real_name = "Messenger Pigeon Hen"
 			desc = "It hatched from a chicken egg, but that's no hen!"
 		return
-
-	change_happiness(var/amt)
-		..()
 
 	rooster
 		is_masc = 1
@@ -1898,6 +1899,7 @@ All other chickens in this file are non-secret. Please be respectful.
 	favorite_flag = "nicotine"
 	attack_ability_type = /datum/targetable/critter/mime_cage
 	happy_pet_message = "looks happy."
+	can_juggle = TRUE
 
 	grow_up()
 		..()

@@ -34,6 +34,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/traymachine, proc/eject_tray, proc/collect_t
 	icon_state = "morgue1"
 	density = TRUE
 	anchored = ANCHORED
+	provides_grip = TRUE
 	power_usage = 50
 
 	//tray related variables
@@ -538,7 +539,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		for (var/mob/M in contents)
 			if (isliving(M))
 				var/mob/living/L = M
-				for (var/i = 1 SECOND, i <= src.settime; i += 1 SECOND)
+				for (var/i = 1 SECOND; i <= src.settime; i += 1 SECOND)
 					sleep(1 SECOND)
 					if(ishuman(L))
 						var/mob/living/carbon/human/H = L
@@ -739,12 +740,13 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		dat += "<A href='byond://?src=\ref[src];settime=1'>Increase Time</A><BR>"
 		dat += "<A href='byond://?src=\ref[src];unsettime=1'>Decrease Time</A><BR>"
 
-		if (user.client?.tooltipHolder)
-			user.client.tooltipHolder.showClickTip(src, list(
-				"params" = params,
-				"title" = src.name,
-				"content" = dat,
-			))
+		if (user.client?.tooltips)
+			user.client.tooltips.show(
+				TOOLTIP_PINNED, src,
+				mouse = params,
+				title = src.name,
+				content = dat,
+			)
 
 		return
 

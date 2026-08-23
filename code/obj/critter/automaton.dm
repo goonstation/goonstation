@@ -295,7 +295,7 @@ var/global/the_automaton = null
 				SPAN_ALERT("<b>[src]</b> ignores you.  Perhaps it's not time for that?"))
 				return
 
-			if (!istype(W, /obj/item/skull/crystal) || W.icon_state != "skull_crystal")
+			if (!istype(W, /obj/item/skull/omnitraitor) || W.icon_state != "skull_omnitraitor")
 				src.visible_message(SPAN_ALERT("<b>[src]</b> holds [W] out for a moment, staring into its empty face, then hands it back "))
 				return
 

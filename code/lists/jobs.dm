@@ -34,40 +34,27 @@ var/list/assistant_occupations = list(
 //	"Mechanic",
 //	"Atmospheric Technician","Atmospheric Technician","Atmospheric Technician",
 
-var/list/job_mailgroup_list = list(
-	"Captain" = MGD_COMMAND,
-	"Head of Personnel" = MGD_COMMAND,
-	"Head of Security" = MGD_COMMAND,
-	"Medical Director" = MGD_COMMAND,
-	"Research Director" = MGD_COMMAND,
-	"Chief Engineer" = MGD_COMMAND,
-	"Quartermaster" = MGD_CARGO,
-	"Engineer" = MGD_STATIONREPAIR,
-	"Technical Trainee" = MGD_STATIONREPAIR,
-	"Janitor" = MGD_STATIONREPAIR,
-	"Miner" = MGD_MINING,
-	"Botanist" = MGD_BOTANY,
-	"Medical Director" = MGD_MEDRESEACH,
-	"Roboticist" = MGD_MEDRESEACH,
-	"Geneticist" = MGD_MEDRESEACH,
-	"Pathologist" = MGD_MEDRESEACH,
-	"Medical Doctor" = MGD_MEDBAY,
-	"Medical Trainee" = MGD_MEDBAY,
-	"Chaplain" = MGD_SPIRITUALAFFAIRS)
-
-//Used for PDA department paging.
+/// Map of departments to their mailgroup
 var/list/page_departments = list(
 	"Command" = MGD_COMMAND,
 	"Security" = MGD_SECURITY,
-	"Medbay" = MGD_MEDBAY,
-	"Med Research" = MGD_MEDRESEACH,
-	"Research" = MGD_SCIENCE,
-	"Station Repair" = MGD_STATIONREPAIR,
-	"Cargo" = MGD_CARGO,
-	"Botany" = MGD_BOTANY,
-	"Bar / Kitchen" = MGD_KITCHEN,
-	"Spiritual Affairs" = MGD_SPIRITUALAFFAIRS,
-	"Mining" = MGD_MINING)
+	"Medical" = MGD_MEDICAL,
+	"Research" = MGD_RESEARCH,
+	"Engineering" = MGD_ENGINEER,
+	"Supply" = MGD_SUPPLY,
+	"Civilian" = MGD_CIVILIAN,
+)
+/// Map of department sub-teams to their mailgroup
+var/list/page_teams = list(
+	"Robotics" = MGT_ROBOTICS,
+	"Genetics" = MGT_GENETICS,
+	"Cargo" = MGT_CARGO,
+	"Mining" = MGT_MINING,
+	"Catering" = MGT_CATERING,
+	"Hydroponics" = MGT_HYDROPONICS,
+	"Janitor" = MGT_JANITOR,
+	"Spiritual Affairs" = MGT_SPIRITUALAFFAIRS,
+)
 
 /proc/get_all_jobs()
 	var/all_jobs = list()
@@ -87,7 +74,6 @@ var/list/command_jobs = list(
 	"Head of Personnel",
 	"Head of Security",
 	"Chief Engineer",
-	"Communications Officer",
 	/*"Clown"*/
 )
 var/list/security_jobs = list(
@@ -108,6 +94,7 @@ var/list/engineering_jobs = list(
 var/list/medical_jobs = list(
 	"Medical Director",
 	"Medical Doctor",
+	"Pharmacist",
 	"Roboticist",
 	"Geneticist",
 	"Medical Trainee",
@@ -127,12 +114,16 @@ var/list/service_jobs = list(
 	"Clown",
 	"Chaplain",
 	"Janitor",
+	"Mail Courier",
+	"Head of Deliverying",
+	"Mail Bringer",
 )
 
 // we have to include alt names for jobs or they won't be sorted into categories correctly
 var/list/command_gimmicks = list(
 	"Head of Mining",
 	"Nanotrasen Security Consultant" /* NTSC isn't a gimmick role, but for the sake of sorting, it practically is*/,
+	"Communications Officer",
 )
 var/list/security_gimmicks = list(
 	"Vice Officer",
@@ -161,7 +152,6 @@ var/list/medical_gimmicks = list(
 	"Ophthalmic Specialist",
 	"Orthopaedic Specialist",
 	"Otorhinolaryngology Specialist",
-	"Pharmacist",
 	"Plastic Surgeon",
 	"Psychiatrist",
 	"Psychologist",
@@ -177,10 +167,9 @@ var/list/science_gimmicks = list(
 )
 var/list/service_gimmicks = list(
 	"Lawyer",
+	"Attorney",
 	"Barber",
-	"Mail Courier",
-	"Head of Deliverying",
-	"Mail Bringer",
+	"Hairdresser",
 	"Mime",
 	"Musician",
 	"Apiculturist",

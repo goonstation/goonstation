@@ -1,4 +1,5 @@
 TYPEINFO(/obj/submachine/seed_manipulator)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 10
 
 /obj/submachine/seed_manipulator
@@ -260,7 +261,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 						boutput(ui.user, SPAN_ALERT("No viable seeds found in [I]."))
 					else
 						boutput(ui.user, SPAN_NOTICE("Extracted [give] seeds from [I]."))
-						var/obj/item/seed/S = HYPgenerateseedcopy(DNA, stored, P.generation, src, give)
+						var/obj/item/seed/S = HYPgenerateseedcopy(DNA, stored, P.generation, src, give, allele_override = TRUE)
 						if (!src.output_externally)
 							src.seeds.Add(S)
 						else
@@ -546,7 +547,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 				else
 					boutput(user, SPAN_ALERT("No items were loaded from the satchel!"))
 				S.UpdateIcon()
-				S.tooltip_rebuild = 1
+				S.tooltip_rebuild = TRUE
 				src.update_static_data_for_all_viewers()
 				tgui_process.update_uis(src)
 		else ..()
@@ -672,6 +673,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 			src.updateUsrDialog()
 
 TYPEINFO(/obj/submachine/seed_vendor)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/submachine/seed_vendor
@@ -911,7 +913,7 @@ TYPEINFO(/obj/submachine/seed_vendor)
 
 
 TYPEINFO(/obj/submachine/seed_manipulator/kudzu)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/submachine/seed_manipulator/kudzu
 	name = "KudzuMaster V1"

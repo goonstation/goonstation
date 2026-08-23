@@ -110,6 +110,21 @@
 		if(one && two) return TRUE
 		else return FALSE
 
+/datum/material_recipe/silver
+	name = "silver"
+	result_id = "silver"
+
+	validate(var/datum/material/M)
+		var/one = 0
+		var/two = 0
+
+		for(var/datum/material/CM in M.getParentMaterials())
+			if(CM.getID() == "cobryl") one = 1
+			if(CM.getID() == "char") two = 1
+
+		if(one && two) return 1
+		else return 0
+
 /datum/material_recipe/electrum
 	name = "electrum"
 	result_id = "electrum"
@@ -120,10 +135,26 @@
 
 		for(var/datum/material/CM in M.getParentMaterials())
 			if(CM.getID() == "gold") one = 1
-			if(CM.getID() == "cobryl") two = 1
+			if(CM.getID() == "cobryl" || CM.getID() == "silver") two = 1
 
 		if(one && two) return 1
 		else return 0
+
+/datum/material_recipe/voltite
+	name = "voltite"
+	result_id = "voltite"
+
+	validate(datum/material/M)
+		var/has_electrum = FALSE
+		var/has_veranium = FALSE
+
+		for (var/datum/material/mat in M.getParentMaterials())
+			if (mat.getID() == "electrum")
+				has_electrum = TRUE
+			else if (mat.getID() == "veranium")
+				has_veranium = TRUE
+
+		return has_electrum && has_veranium
 
 /datum/material_recipe/plasmasteel
 	name = "plasmasteel"
@@ -139,6 +170,38 @@
 
 		if(one && two) return 1
 		else return 0
+
+/datum/material_recipe/neutrite
+	name = "neutrite"
+	result_id = "neutrite"
+
+	validate(datum/material/M)
+		var/has_yuranite = FALSE
+		var/has_plutonium = FALSE
+
+		for (var/datum/material/mat in M.getParentMaterials())
+			if (mat.getID() == "yuranite")
+				has_yuranite = TRUE
+			else if (mat.getID() == "plutonium")
+				has_plutonium = TRUE
+
+		return has_yuranite && has_plutonium
+
+/datum/material_recipe/neutronium
+	name = "neutronium"
+	result_id = "neutronium"
+
+	validate(datum/material/M)
+		var/has_neutrite = FALSE
+		var/has_erebite = FALSE
+
+		for (var/datum/material/mat in M.getParentMaterials())
+			if (mat.getID() == "neutrite")
+				has_neutrite = TRUE
+			else if (mat.getID() == "erebite")
+				has_erebite = TRUE
+
+		return has_neutrite && has_erebite
 
 // Glass
 

@@ -29,8 +29,7 @@ export const GameSettingsTab = () => {
           }
         >
           <Box mb="5px" color="label">
-            Changes the font size used in popup windows. Only works when CHUI is
-            disabled.
+            Changes the font size used in some popup windows.
           </Box>
           <Button onClick={() => act('update-fontSize')}>
             {data.fontSize ? data.fontSize + '%' : 'Default'}
@@ -261,6 +260,20 @@ export const GameSettingsTab = () => {
               Use AZERTY Keyboard Layout
             </Button.Checkbox>
           </Box>
+          <Box mb="5px" color="label">
+            Usually middle mouse is a handy shortcut to open and close lockers.
+            Tick this to enable the legacy behaviour of it swapping hands
+            instead.
+          </Box>
+          <Box mb="5px">
+            <Button.Checkbox
+              checked={data.middleMouseSwap}
+              onClick={() => act('update-middleMouseSwap')}
+              tooltip="Middle mouse swaps hands"
+            >
+              Middle mouse swaps hands.
+            </Button.Checkbox>
+          </Box>
           <Box color="label">
             Familiar with /tg/station controls? You can enable/disable them
             under the Game/Interface menu in the top left.
@@ -330,6 +343,16 @@ export const GameSettingsTab = () => {
             tooltipPosition="top"
           >
             See help messages when you examine?
+          </Button.Checkbox>
+        </LabeledList.Item>
+        <LabeledList.Item label="Observer">
+          <Button.Checkbox
+            checked={data.observerDnr}
+            onClick={() => act('update-observerDnr')}
+            tooltip="Automatically set yourself to DNR when joining as observer, will prevent some ghost spawn roles. Only applies when joining as observer from the lobby, not on death."
+            tooltipPosition="top"
+          >
+            Automatically set DNR when joining as an observer
           </Button.Checkbox>
         </LabeledList.Item>
       </LabeledList>

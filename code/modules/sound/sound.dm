@@ -1,39 +1,3 @@
-#define TOO_QUIET 0.9 //experimentally found to be 0.6 - raised due to lag, I don't care if it's super quiet because there's already shitloads of other sounds playing
-#define SPACE_ATTEN_MIN 0.5
-#define EARLY_RETURN_IF_QUIET(v) if (v < TOO_QUIET) return
-#define EARLY_CONTINUE_IF_QUIET(v) if (v < TOO_QUIET) continue
-
-#define SOURCE_ATTEN(A) do {\
-	if (A <= SPACE_ATTEN_MIN){\
-		vol *= SPACE_ATTEN_MIN;\
-		extrarange = clamp(-MAX_SOUND_RANGE + MAX_SPACED_RANGE + extrarange, -32,-20);\
-		spaced_source = 1;\
-	}\
-	else{\
-		vol *= A\
-	}\
-} while(FALSE)
-
-#define LISTENER_ATTEN(A) do {\
-	if (A <= SPACE_ATTEN_MIN){\
-		if (!spaced_source && dist >= MAX_SPACED_RANGE){\
-			ourvolume = 0;\
-		}\
-		else{\
-			spaced_env = 1;\
-			ourvolume = clamp(ourvolume + 95, 25,200);\
-		}\
-	}\
-	else{\
-		ourvolume *= A\
-	}\
-} while(FALSE)
-
-#define MAX_SPACED_RANGE 6 //diff range for when youre in a vaccuum
-#define CLIENT_IGNORES_SOUND(C) (C?.ignore_sound_flags && ((ignore_flag && C.ignore_sound_flags & ignore_flag) || C.ignore_sound_flags & SOUND_ALL))
-
-#define SOUNDIN_ID (istype(soundin, /sound) ? soundin:file : (islist(soundin) ? ref(soundin) : soundin))
-
 /// returns 0 to 1 based on air pressure in turf
 /proc/attenuate_for_location(var/atom/loc)
 	var/attenuate = 1
@@ -61,7 +25,7 @@ var/global/ECHO_CLOSE = list(0,0,0,0,0,0,0,0.25,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
 var/global/list/falloff_cache = list()
 
 //default volumes
-var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1)
+var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1, 1)
 
 //volumous hair with l'orial paris
 /client/var/list/volumes
@@ -69,7 +33,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1)
 
 /// Returns a list of friendly names for available sound channels
 /client/proc/getVolumeNames()
-	return list("Game", "Ambient", "Radio", "Admin", "Emote", "Mentor PM", "Instruments")
+	return list("Game", "Ambient", "Radio", "Admin", "Emote", "Mentor PM", "Instruments", "Farts")
 
 /// Returns the default volume for a channel, unattenuated for the master channel (0-1)
 /client/proc/getDefaultVolume(channel)
@@ -77,7 +41,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1)
 
 /// Returns a list of friendly descriptions for available sound channels
 /client/proc/getVolumeDescriptions()
-	return list("This will affect all sounds.", "Most in-game audio will use this channel.", "Ambient background music in various areas will use this channel.", "Any music played from the radio station", "Any music or sounds played by admins.", "Screams and farts.", "Mentor PM notification sound.", "Music from in-game instruments.")
+	return list("This will affect all sounds.", "Most in-game audio will use this channel.", "Ambient background music in various areas will use this channel.", "Any music played from the radio station", "Any music or sounds played by admins.", "Screams and other emotes.", "Mentor PM notification sound.", "Music from in-game instruments.", "Farts. Only farts.")
 
 /// Get the friendly description for a specific sound channel.
 /client/proc/getVolumeChannelDescription(channel)
@@ -104,7 +68,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1)
 	volume = clamp(volume, 0, 2)
 	volumes[channel + 1] = volume
 
-	src.player.cloudSaves.putData("audio_volume", json_encode(volumes))
+	src.player?.cloudSaves.putData("audio_volume", json_encode(volumes))
 
 	var/list/playing = src.SoundQuery()
 	if( channel == VOLUME_CHANNEL_MASTER )
@@ -174,7 +138,7 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1)
 
 	// at this multiple of the max range the sound will be below TOO_QUIET level, derived from falloff equation lower in the code
 	var/rangemult = 0.18/(-(TOO_QUIET + 0.0542  * vol)/(TOO_QUIET - vol))**(10/17)
-	for (var/client/C in GET_NEARBY(/datum/spatial_hashmap/clients, source_turf, rangemult * (MAX_SOUND_RANGE + extrarange)))
+	for (var/client/C as anything in global.client_hashmap.fast_manhattan(source_turf, rangemult * (MAX_SOUND_RANGE + extrarange)))
 		var/mob/M = C.mob
 		if (!C)
 			continue
@@ -232,6 +196,12 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1)
 			//boutput(world, "for client [C] updating volume [storedVolume] to [ourvolume] for channel [channel]")
 
 			EARLY_CONTINUE_IF_QUIET(ourvolume)
+
+			//potentially expensive, do not use for commonly played sounds
+			if (flags & SOUND_DO_LOS)
+				//we return to dumb Byond builtins
+				if (!(M in hearers(MAX_SOUND_RANGE, source)))
+					continue
 
 			//sadly, we must generate
 			if (!S) S = generate_sound(source, soundin, vol, vary, extrarange, pitch)
@@ -417,7 +387,11 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1)
 		else
 			CRASH("Incorrect object in target list `[target[1]]` in playsound_global.")
 	else if(target == world)
-		clients = global.clients
+		clients = list()
+		for (var/client/C in global.clients)
+			if (istype(C.mob, /mob/living/carbon/human/tutorial))
+				continue
+			clients += C
 	else if(isnum(target))
 		clients = list()
 		for(var/client/client as anything in global.clients)
@@ -528,6 +502,7 @@ var/global/number_of_sound_generated = 0
 			if ("step_heavyboots") soundin = pick(sounds_step_heavyboots)
 			if ("step_military") soundin = pick(sounds_step_military)
 			if ("step_snow") soundin = pick(sounds_step_snow)
+			if ("chute_insert") soundin = pick(sounds_chute_insert)
 
 	if(islist(soundin))
 		soundin = pick(soundin)
@@ -746,6 +721,7 @@ proc/narrator_mode_sound_file(sound_file)
 /var/global/list/sounds_warp = list(sound('sound/effects/warp1.ogg'),sound('sound/effects/warp2.ogg'))
 /var/global/list/sounds_engine = list(sound('sound/machines/tractor_running2.ogg'),sound('sound/machines/tractor_running3.ogg'))
 /var/global/list/sounds_keyboard = list(sound('sound/machines/keyboard1.ogg'),sound('sound/machines/keyboard2.ogg'),sound('sound/machines/keyboard3.ogg'))
+/var/global/list/sounds_chute_insert = list(sound('sound/effects/chute_place_1.ogg'),sound('sound/effects/chute_place_2.ogg'),sound('sound/effects/chute_place_3.ogg'),sound('sound/effects/chute_place_4.ogg'))
 
 /var/global/list/sounds_enginegrump = list(sound('sound/machines/engine_grump1.ogg'),sound('sound/machines/engine_grump2.ogg'),sound('sound/machines/engine_grump3.ogg'),sound('sound/machines/engine_grump4.ogg'))
 
@@ -776,6 +752,12 @@ proc/narrator_mode_sound_file(sound_file)
 /var/global/list/ambience_computer = list(sound('sound/ambience/station/Machinery_Computers1.ogg'),sound('sound/ambience/station/Machinery_Computers2.ogg'),sound('sound/ambience/station/Machinery_Computers3.ogg'))
 /var/global/list/ambience_atmospherics = list(sound('sound/ambience/loop/Wind_Low.ogg'))
 /var/global/list/ambience_engine = list(sound('sound/ambience/loop/Wind_Low.ogg'))
+/var/global/list/ambience_gravity = list(
+		sound('sound/ambience/station/underwater/sub_ambi2.ogg'),
+		sound('sound/ambience/station/underwater/sub_ambi3.ogg'),
+		sound('sound/ambience/station/underwater/sub_ambi4.ogg'),
+		sound('sound/ambience/station/underwater/sub_ambi6.ogg'),
+		sound('sound/ambience/station/underwater/sub_ambi8.ogg'))
 
 /var/global/list/ghostly_sounds = list('sound/effects/ghostambi1.ogg', 'sound/effects/ghostambi2.ogg', 'sound/effects/ghostbreath.ogg', 'sound/effects/ghostlaugh.ogg', 'sound/effects/ghostvoice.ogg')
 
@@ -811,7 +793,10 @@ proc/narrator_mode_sound_file(sound_file)
 		"pug" = sound('sound/misc/talk/pug.ogg'),	"pug!" = sound('sound/misc/talk/pug_exclaim.ogg'),"pug?" = sound('sound/misc/talk/pug_ask.ogg'), \
 		"pugg" = sound('sound/misc/talk/pugg.ogg'),	"pugg!" = sound('sound/misc/talk/pugg_exclaim.ogg'),"pugg?" = sound('sound/misc/talk/pugg_ask.ogg'), \
 		"roach" = sound('sound/misc/talk/roach.ogg'),	"roach!" = sound('sound/misc/talk/roach_exclaim.ogg'),"roach?" = sound('sound/misc/talk/roach_ask.ogg'), \
+		"monkey" = sound('sound/misc/talk/monkey.ogg'),	"monkey!" = sound ('sound/misc/talk/monkey_exclaim.ogg'),"monkey?" = sound('sound/misc/talk/monkey_ask.ogg'), \
+		"amphibian" = sound('sound/misc/talk/amphibian.ogg'),	"amphibian!" = sound ('sound/misc/talk/amphibian_exclaim.ogg'),"amphibian?" = sound('sound/misc/talk/amphibian_ask.ogg'), \
 		"cyborg" = sound('sound/misc/talk/cyborg.ogg'),	"cyborg!" = sound('sound/misc/talk/cyborg_exclaim.ogg'),"cyborg?" = sound('sound/misc/talk/cyborg_ask.ogg'), \
+		"cyborg_distorted" = sound('sound/misc/talk/cyborg_distorted.ogg'),	"cyborg_distorted!" = sound('sound/misc/talk/cyborg_exclaim_distorted.ogg'),"cyborg_distorted?" = sound('sound/misc/talk/cyborg_ask_distorted.ogg'), \
  		"radio" = sound('sound/misc/talk/radio.ogg')\
  		)
 

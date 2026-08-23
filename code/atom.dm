@@ -38,20 +38,20 @@ TYPEINFO(/atom)
 
 	/// Should points thrown at this take into account the click pixel value
 	var/pixel_point = FALSE
-
-	/// If hear_talk is triggered on this object, make my contents hear_talk as well
-	var/open_to_sound = 0
+	var/tmp/avoid_animating = FALSE //! Animating this atom will probably break an existing animation. Try to skip them if possible.
 
 	var/interesting = ""
-	var/stops_space_move = 0
-	/// Anything can speak... if it can speak
-	var/obj/chat_maptext_holder/chat_text
+	/// Atom provides grip to neighboring tiles in zero-G
+	var/provides_grip = FALSE
 
 	/// A multiplier that changes how an atom stands up from resting. Yes.
 	var/rest_mult = 0
 
 	proc/RawClick(location,control,params)
 		return
+
+	/// Use this if you want people to be able to open the inventory of contained mobs
+	var/open_inv_within = FALSE
 
 	/// If atmos should be blocked by this - special behaviours handled in gas_cross() overrides
 	var/gas_impermeable = FALSE
@@ -82,7 +82,6 @@ TYPEINFO(/atom)
 	var/list/name_suffixes = null
 	var/num_allowed_prefixes = 10
 	var/num_allowed_suffixes = 5
-	var/image/worn_material_texture_image = null
 
 	/// Whether the last material applied updated appearance. Used for re-applying material appearance on icon update
 	var/material_applied_appearance = FALSE
@@ -128,7 +127,7 @@ TYPEINFO(/atom)
 		if (istext(text_to_add) && length(text_to_add) && islist(src.name_suffixes))
 			if (length(src.name_suffixes) >= src.num_allowed_suffixes)
 				src.remove_suffixes(1)
-			src.name_suffixes += strip_html(text_to_add)
+			src.name_suffixes += strip_html_tags(text_to_add)
 		if (return_suffixes)
 			var/amt_suffixes = 0
 			for (var/i in src.name_suffixes)
@@ -194,18 +193,14 @@ TYPEINFO(/atom)
 		if (temp_flags & (HAS_BAD_SMOKE))
 			ClearBadsmokeRefs(src)
 
-		fingerprints_full = null
 		tag = null
+		src.forensic_holder = null
 
 		if(length(src.statusEffects))
 			for(var/datum/statusEffect/effect as anything in src.statusEffects)
 				src.delStatus(effect)
 			src.statusEffects = null
 		ClearAllParticles()
-
-		if (!isnull(chat_text))
-			qdel(chat_text)
-			chat_text = null
 
 		atom_properties = null
 		if(!ismob(src)) // I want centcom cloner to look good, sue me
@@ -478,10 +473,37 @@ TYPEINFO(/atom)
 	master = null
 	..()
 
+
+
 TYPEINFO(/atom/movable)
 	/// A key-value list of match property or material IDs and an amount required to construct the item
 	/// See `/datum/manufacturing_requirement/match_property` for match properties
 	var/list/mats = null
+	/// Dictates how this object behaves when scanned with a device analyzer or equivalent - see "_std/defines/mechanics.dm" for docs
+	var/analyser_flags = ANALYSER_ALLOWED | ANALYSER_FAILFEEDBACK
+
+	/// If defined, you will override device analyzer scans to yield this typepath (instead of the default, which is just the object's type itself)
+	/// WARNING: If you override, the system uses analyser_flags from the override, not the original
+	var/manufactured_type = null
+
+	/// Dummy proc for all /atom/movable typeinfos to be overriden and called to see
+	/// if an object type can be built somewhere, before instantiating the object itself.
+	proc/can_build(turf/T, direction)
+		return TRUE
+
+
+
+//Wow why are these TYPEINFOs here? Because parent_type:: depends on file load order :))))
+TYPEINFO(/obj/item/device)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_DEVICE
+TYPEINFO(/obj/machinery)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_MACHINERY
+TYPEINFO(/obj/item/storage)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SKIP_IF_FAIL
+TYPEINFO(/obj/item/disk)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
+	mats = 8
+
 
 /atom/movable
 	layer = OBJ_LAYER
@@ -498,7 +520,6 @@ TYPEINFO(/atom/movable)
 	/// Temporary value to smuggle newloc to Uncross during Move-related procs
 	var/tmp/atom/movement_newloc = null
 
-	var/soundproofing = 5
 	appearance_flags = LONG_GLIDE | PIXEL_SCALE
 	var/l_spd = 0
 
@@ -513,20 +534,19 @@ TYPEINFO(/atom/movable)
 	/// whether it uses p_class regardless of pull_slowing.
 	var/always_slow_pull = FALSE
 
-	// Enables mobs and objs to be mechscannable
-	/// Can this only be scanned with a syndicate mech scanner?
-	var/is_syndicate = FALSE
-	/// Dictates how this object behaves when scanned with a device analyzer or equivalent - see "_std/defines/mechanics.dm" for docs
-	var/mechanics_interaction = MECHANICS_INTERACTION_ALLOWED
-	/// If defined, device analyzer scans will yield this typepath (instead of the default, which is just the object's type itself)
-	var/mechanics_type_override = null
 
 //some more of these event handler flag things are handled in set_loc far below . . .
 /atom/movable/New()
 	..()
 	var/typeinfo/obj/typeinfo = src.get_typeinfo()
-	if (typeinfo.mats && !src.mechanics_interaction != MECHANICS_INTERACTION_BLACKLISTED)
-		src.AddComponent(/datum/component/analyzable, !isnull(src.mechanics_type_override) ? src.mechanics_type_override : src.type)
+	var/override_type = src.type
+	while(!isnull(typeinfo.manufactured_type) && override_type != typeinfo.manufactured_type) //Recursively go up the list of manufacture overrides.
+		override_type = typeinfo.manufactured_type
+		typeinfo = get_type_typeinfo(override_type)
+
+	if (typeinfo.analyser_flags & (ANALYSER_ALLOWED | ANALYSER_SKIP_IF_FAIL | ANALYSER_FAILFEEDBACK)) // typeinfo.mats &&
+		src.AddComponent(/datum/component/analyzable, override_type)
+
 	src.last_turf = isturf(src.loc) ? src.loc : null
 	//hey this is mbc, there is probably a faster way to do this but i couldnt figure it out yet
 	if(istype(src, /atom/movable/hotspot)) //hotspots arent really tangible things
@@ -539,6 +559,9 @@ TYPEINFO(/atom/movable)
 			for(var/turf/covered_turf as anything in src.locs)
 				covered_turf.pass_unstable += src.pass_unstable
 				covered_turf.passability_cache = null
+		if (src.provides_grip)
+			for(var/turf/covered_turf as anything in src.locs)
+				covered_turf.grip_atom_count += 1
 	if(!isnull(src.loc))
 		src.loc.Entered(src, null)
 		if(isturf(src.loc)) // call it on the area too
@@ -551,6 +574,10 @@ TYPEINFO(/atom/movable)
 /atom/movable/disposing()
 	if (temp_flags & SPACE_PUSHING)
 		EndSpacePush(src)
+	if (temp_flags & DRIFT_ANIMATION)
+		StopDriftFloat(src)
+	if (temp_flags & GRAVITY_SUBSCRIBER)
+		UnsubscribeGravity(src)
 
 	src.attached_objs?.Cut()
 	src.attached_objs = null
@@ -641,8 +668,7 @@ TYPEINFO(/atom/movable)
 		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, A, direct)
 		src.last_move = get_dir(A, src.loc)
 		if (length(src.attached_objs))
-			for (var/atom/movable/M as anything in attached_objs)
-				M.set_loc(src.loc)
+			src.move_attached_objs()
 		if (islist(src.tracked_blood))
 			src.track_blood()
 		actions.interrupt(src, INTERRUPT_MOVE)
@@ -656,11 +682,17 @@ TYPEINFO(/atom/movable)
 			for(var/turf/covered_turf as anything in old_locs)
 				covered_turf.pass_unstable -= src.pass_unstable
 				covered_turf.passability_cache = null
+		if (src.provides_grip)
+			for(var/turf/covered_turf as anything in old_locs)
+				covered_turf.grip_atom_count -= 1
 	if(isturf(src.loc))
 		if(src.pass_unstable || src.density)
 			for(var/turf/covered_turf as anything in src.locs)
 				covered_turf.pass_unstable += src.pass_unstable
 				covered_turf.passability_cache = null
+		if (src.provides_grip)
+			for(var/turf/covered_turf as anything in src.locs)
+				covered_turf.grip_atom_count += 1
 
 	last_turf = isturf(src.loc) ? src.loc : null
 
@@ -676,6 +708,12 @@ TYPEINFO(/atom/movable)
   * called via pulls and mob steps
 	*/
 /atom/movable/proc/OnMove(source = null)
+
+/// Moves attached objects with this atom, keeping their glide_size in sync.
+/atom/movable/proc/move_attached_objs()
+	for (var/atom/movable/M as anything in src.attached_objs)
+		M.glide_size = src.glide_size
+		M.set_loc(src.loc)
 
 /// Base pull proc, returns 1 if the various checks for pulling fail, so that it can be overriden to add extra functionality without rewriting all the conditions.
 /atom/movable/proc/pull(mob/user)
@@ -712,6 +750,7 @@ TYPEINFO(/atom/movable)
 		user.set_pulling(src)
 
 		SEND_SIGNAL(user, COMSIG_MOB_TRIGGER_THREAT)
+		SEND_SIGNAL(src, COMSIG_MOB_PULL_TRIGGER, user)
 
 /atom/movable/set_dir(new_dir)
 	..()
@@ -771,7 +810,11 @@ TYPEINFO(/atom/movable)
 	if(special_description)
 		return list(special_description)
 
-	. = list("This is \an [src.name].")
+	var/name_to_use = src.name
+	if (isliving(src) && !isobserver(user) && !isintangible(user) && !HAS_ATOM_PROPERTY(user, PROP_MOB_EXAMINE_ALL_NAMES) && dist > MAX_NAMETAG_RANGE)
+		. = list("This is someone.")
+	else
+		. = list("This is \an [name_to_use].")
 
 	// Added for forensics (Convair880).
 	if (isitem(src) && src.blood_DNA)
@@ -859,107 +902,32 @@ TYPEINFO(/atom/movable)
 ///internal proc for when an atom is attacked by an item. Override this, but do not call it,
 /atom/proc/attackby(obj/item/W, mob/user, params, is_special = 0, silent = FALSE)
 	PROTECTED_PROC(TRUE)
-	if (src.storage?.storage_item_attack_by(W, user))
+	if (!W || !user || src.storage?.storage_item_attack_by(W, user) || W.should_suppress_attack(src, user, params))
 		return
+	W.material_on_attack_use(user, src)
 	src.material_trigger_when_attacked(W, user, 1)
-	if (user && W && !(W.flags & SUPPRESSATTACK) && !silent)
-		var/hits = src
-		if (!src.name && isobj(src)) //shut up
-			var/obj/self = src
-			hits = "\the [self.real_name]"
-		user.visible_message(SPAN_COMBAT("<B>[user] hits [hits] with [W]!</B>"))
+	if (silent)
+		return
+	var/hits = src
+	if (!src.name && isobj(src)) // shut up
+		var/obj/self = src
+		hits = "\the [self.real_name]"
+	user.visible_message(SPAN_COMBAT("<B>[user] hits [hits] with [W]!</B>"))
 
-//This will looks stupid on objects larger than 32x32. Might have to write something for that later. -Keelin
+/// Note: Texture is only applied if the object is 64x64 or smaller
 /atom/proc/setTexture(var/texture, var/blendMode = BLEND_MULTIPLY, var/key = "texture")
 	var/image/I = isnull(texture) ? null : getTexturedImage(src, texture, blendMode)//, key)
 	src.UpdateOverlays(I, key)
 
-	if(isitem(src) && key == "material")
-		worn_material_texture_image = isnull(texture) ? null : getTexturedWornImage(src, texture, blendMode)
-	return
-
-/proc/getTexturedIcon(var/atom/A, var/texture = "damaged")//, var/key = "texture")
+/proc/getTexturedImage(var/atom/A, var/texture = "damaged", var/blendMode = BLEND_MULTIPLY)
 	if (!A)
 		return
-	var/icon/tex = null
-
-	//Try to find an appropriately sized icon.
-	if(istype(A, /atom/movable))
-		var/atom/movable/M = A
-		if(A.texture_size == 32 || ((M.bound_height == 32 && M.bound_width == 32) && !A.texture_size))
-			tex = icon('icons/effects/atom_textures_32.dmi', texture)
-		else if(A.texture_size == 64 || ((M.bound_height == 64 && M.bound_width == 64) && !A.texture_size))
-			tex = icon('icons/effects/atom_textures_64.dmi', texture)
-		else
-			tex = icon('icons/effects/atom_textures_32.dmi', texture)
-	else if (isicon(A))
-		var/icon/I = A
-		if(I.Height() > 32)
-			tex = icon('icons/effects/atom_textures_64.dmi', texture)
-		else
-			tex = icon('icons/effects/atom_textures_32.dmi', texture)
-	else
-		if(A.texture_size == 32)
-			tex = icon('icons/effects/atom_textures_32.dmi', texture)
-		else if(A.texture_size == 64)
-			tex = icon('icons/effects/atom_textures_64.dmi', texture)
-		else
-			tex = icon('icons/effects/atom_textures_32.dmi', texture)
-
-	var/icon/mask = null
-	mask = new(isicon(A) ? A : A.icon)
-	mask.MapColors(1,1,1, 1,1,1, 1,1,1, 1,1,1)
-	mask.Blend(tex, ICON_MULTIPLY)
-	//mask is now a cut-out of the texture shaped like the object.
-	return mask
-
-/proc/getTexturedImage(var/atom/A, var/texture = "damaged", var/blendMode = BLEND_MULTIPLY)//, var/key = "texture")
-	if (!A)
+	var/mask = GetTexturedIcon(A.icon, texture) // mask is a cut-out of the texture shaped like the object.
+	if(!mask)
 		return
-	var/mask = getTexturedIcon(A, texture)
-	//mask is now a cut-out of the texture shaped like the object.
 	var/image/finished = image(mask,"")
 	finished.blend_mode = blendMode
 	return finished
-
-/proc/getTexturedWornImage(var/obj/item/A, var/texture = "damaged", var/blendMode = BLEND_MULTIPLY)
-	if (!A)
-		return
-	var/icon/tex = null
-
-	//Try to find an appropriately sized icon.
-	if(istype(A, /atom/movable))
-		var/atom/movable/M = A
-		if(A.texture_size == 32 || ((M.bound_height == 32 && M.bound_width == 32) && !A.texture_size))
-			tex = icon('icons/effects/atom_textures_32.dmi', texture)
-		else if(A.texture_size == 64 || ((M.bound_height == 64 && M.bound_width == 64) && !A.texture_size))
-			tex = icon('icons/effects/atom_textures_64.dmi', texture)
-		else
-			tex = icon('icons/effects/atom_textures_32.dmi', texture)
-	else if (isicon(A))
-		var/icon/I = A
-		if(I.Height() > 32)
-			tex = icon('icons/effects/atom_textures_64.dmi', texture)
-		else
-			tex = icon('icons/effects/atom_textures_32.dmi', texture)
-	else
-		if(A.texture_size == 32)
-			tex = icon('icons/effects/atom_textures_32.dmi', texture)
-		else if(A.texture_size == 64)
-			tex = icon('icons/effects/atom_textures_64.dmi', texture)
-		else
-			tex = icon('icons/effects/atom_textures_32.dmi', texture)
-
-	if (A?.wear_image) //Wire: Fix for: Cannot read null.icon
-		var/icon/mask = null
-		mask = icon(A.wear_image.icon, A.wear_image.icon_state)
-		mask.MapColors(1,1,1, 1,1,1, 1,1,1, 1,1,1)
-		mask.Blend(tex, ICON_MULTIPLY)
-		var/image/finished = image(mask,"")
-		finished.blend_mode = blendMode
-		return finished
-
-	return null
 
 /// Override mouse_drop instead of this. Call this instead of mouse_drop, but you probably shouldn't!
 /atom/MouseDrop(atom/over_object, src_location, over_location, src_control, over_control, params)
@@ -1104,6 +1072,9 @@ TYPEINFO(/atom/movable)
 			for(var/turf/covered_turf as anything in oldlocs)
 				covered_turf.pass_unstable -= src.pass_unstable
 				covered_turf.passability_cache = null
+		if (src.provides_grip)
+			for(var/turf/covered_turf as anything in oldlocs)
+				covered_turf.grip_atom_count -= 1
 		for(var/atom/A in oldloc)
 			if(A != src)
 				A.Uncrossed(src)
@@ -1116,9 +1087,12 @@ TYPEINFO(/atom/movable)
 
 	if(isturf(newloc))
 		if(src.pass_unstable || src.density)
-			for(var/turf/covered_turf as anything in src.locs)
+			for(var/turf/covered_turf in src.locs)
 				covered_turf.pass_unstable += src.pass_unstable
 				covered_turf.passability_cache = null
+		if (src.provides_grip)
+			for(var/turf/covered_turf in src.locs)
+				covered_turf.grip_atom_count += 1
 		for(var/atom/A in newloc)
 			if(A != src)
 				A.Crossed(src)
@@ -1128,8 +1102,7 @@ TYPEINFO(/atom/movable)
 		new_area.Entered(src, oldloc)
 
 	if (islist(src.attached_objs) && length(attached_objs))
-		for (var/atom/movable/M in src.attached_objs)
-			M.set_loc(src.loc)
+		src.move_attached_objs()
 	else
 		last_turf = null
 
@@ -1375,7 +1348,7 @@ TYPEINFO(/atom/movable)
 	else
 		G.icon_state = "[gift_type]-[style]"
 	G.gift = src
-
+	G.RegisterSignal(G.gift, COMSIG_MOVABLE_SET_LOC, TYPE_PROC_REF(/obj/item/gift, item_moved))
 	return G
 
 /atom/onVarChanged(variable, oldval, newval)
@@ -1393,6 +1366,10 @@ TYPEINFO(/atom/movable)
 		if("icon_state")
 			src.icon_state = oldval
 			src.set_icon_state(newval)
+		if("open_to_sound") //otherwise it doesn't update properly
+			for (var/atom/movable/AM in src)
+				AM.outermost_listener_tracker?.update_outermost_listener()
+
 
 /atom/movable/proc/is_that_in_this(atom/movable/target)
 	if (target.loc == src)

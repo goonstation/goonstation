@@ -28,6 +28,7 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 	w_class = W_CLASS_NORMAL
 	burn_possible = FALSE
 	var/random_code = FALSE // sets things to already have a randomized code on spawning
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_CROWBAR
 
 /obj/item/storage/secure/New()
 	..()
@@ -161,6 +162,9 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 	. = TRUE
 
 
+/obj/item/storage/secure/ui_state(action, params)
+	. = tgui_physical_state // safes require physical access
+
 /obj/item/storage/secure/proc/add_input(var/key)
 	var/key_len = length(key)
 	var/guess_len = length(src.guess)
@@ -264,6 +268,7 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 // SECURE BRIEFCASE
 
 TYPEINFO(/obj/item/storage/secure/sbriefcase)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 8
 
 /obj/item/storage/secure/sbriefcase
@@ -277,13 +282,16 @@ TYPEINFO(/obj/item/storage/secure/sbriefcase)
 	throw_speed = 1
 	throw_range = 4
 	w_class = W_CLASS_BULKY
+	max_wclass = /obj/item/storage/briefcase::max_wclass
 	spawn_contents = list(/obj/item/paper,\
 	/obj/item/pen)
-	check_wclass = TRUE
-	can_hold = list(/obj/item/stamped_bullion)
+
+	HELP_MESSAGE_OVERRIDE("Set or enter a code by <b>using in-hand</b>.<br>View contents by <b>click-dragging</b> from the briefcase to your character.")
 
 TYPEINFO(/obj/item/storage/secure/ssafe)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 8
+	manufactured_type = /obj/item/storage/secure/ssafe //For subtypes
 
 /obj/item/storage/secure/ssafe
 	name = "secure safe"
@@ -296,8 +304,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 	w_class = W_CLASS_BULKY
 	anchored = ANCHORED
 	density = 0
-	desc = "A extremely tough secure safe."
-	mechanics_type_override = /obj/item/storage/secure/ssafe
+	desc = "An extremely tough secure safe."
 
 	attack_hand(mob/user)
 		return src.AttackSelf(user)
@@ -308,7 +315,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 
 	make_my_stuff()
 		..()
-		var/loot = rand(1,9)
+		var/loot = rand(1,11)
 		switch (loot)
 			if (1)
 				src.storage.add_contents(new /obj/item/stamped_bullion(src))
@@ -399,6 +406,47 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 					else // if what we selected wasn't a valid path
 						i++ // try again
 
+			if (10) // weaker power eggs
+				var/list/eggs_weak = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/purple,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/mime,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/plant,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/candy,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/knight,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/wizard,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/ghost)
+
+				for (var/i=rand(1,rand(3,5)), i>0, i--)
+					var/egg = pick(eggs_weak)
+					if (ispath(egg))
+						src.storage.add_contents(new egg(src))
+				for (var/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/E in src.contents)
+					E.infertile = TRUE
+
+			if (11) // strong power eggs
+				var/list/eggs_strong = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/robot,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/cockatrice,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dream,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/popsicle)
+				#ifdef SECRETS_ENABLED
+				eggs_strong += list(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dragon,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/coral,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/phoenix,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/zappy)
+				#endif
+				var/list/eggs_junk = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/nicespider,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/spider,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown,\
+				/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/cluwne)
+				for(var/i=rand(1,2), i>0, i--)
+					var/egg = pick(eggs_strong)
+					if (ispath(egg))
+						src.storage.add_contents(new egg(src))
+				for (var/i=rand(2,rand(3,4)), i>0, i--)
+					var/junk_egg = pick(eggs_junk)
+					if (ispath(junk_egg))
+						src.storage.add_contents(new junk_egg(src))
+				for (var/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/E in src.contents)
+					E.infertile = TRUE
 /obj/item/paper/IOU
 	name = "paper- 'IOU'"
 	New()
@@ -628,6 +676,16 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 	configure_mode = FALSE
 	random_code = TRUE
 	spawn_contents = list(/obj/item/paper/IOU, /obj/item/device/key/generic/larrys, /obj/item/currency/buttcoin, /obj/item/currency/buttcoin)
+
+/obj/item/storage/secure/ssafe/syndicate_mining_encounter
+	configure_mode = FALSE
+	random_code = TRUE
+	spawn_contents = list(/obj/item/stamped_bullion, /obj/item/currency/spacecash/thousand, /obj/item/device/pda2/syndicate)
+
+	New()
+		..()
+		for (var/i in 1 to rand(2, 3))
+			src.storage.add_contents(new /obj/item/uplink_telecrystal/trick(src))
 
 #undef KEYPAD_ERR
 #undef KEYPAD_SET

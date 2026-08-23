@@ -22,6 +22,7 @@
 			chicken_egg_props = new egg_props_path(src)
 		src.setup_special_effects()
 		src.UpdateIcon()
+		src.food_color = global.get_average_color(global.getFlatIcon(src))
 	update_icon()
 		if (egg_props_path)
 			src.icon_state = "egg-[chicken_egg_props.chicken_id]"
@@ -92,6 +93,9 @@
 		egg_props_path = /datum/chicken_egg_props/honk
 	cluwne
 		egg_props_path = /datum/chicken_egg_props/cluwne
+		New()
+			. = ..()
+			src.reagents.add_reagent("painbow_eggs",10)
 	raptor
 		egg_props_path = /datum/chicken_egg_props/raptor
 	plant
@@ -607,10 +611,7 @@ ABSTRACT_TYPE(/datum/chicken_egg_props)
 		var/mob/M = owner
 		if(istype(M))
 			boutput(M, SPAN_ALERT("<B>You feel as if you are one with everything.</B>"))
-			if(M.bioHolder.HasEffect("xray"))
-				already_had_xray = TRUE
-			else
-				M.bioHolder.AddEffect("xray")
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_XRAYVISION, src)
 
 	onUpdate(var/timePassed)
 		. = ..()
@@ -621,8 +622,7 @@ ABSTRACT_TYPE(/datum/chicken_egg_props)
 	onRemove()
 		. = ..()
 		var/mob/M = owner
-		if (M?.bioHolder && !already_had_xray)
-			M.bioHolder.RemoveEffect("xray")
+		REMOVE_ATOM_PROPERTY(M, PROP_MOB_XRAYVISION, src)
 
 /datum/statusEffect/chicken_power/lesser
 	id = "c_power_lesser"
@@ -1030,12 +1030,26 @@ ABSTRACT_TYPE(/datum/chicken_egg_props)
 	protected_radio = 1
 	frequency = 1420
 	locked_frequency = 1
-	broadcasting = 1
-	listening = 1
+	initial_microphone_enabled = TRUE
+	initial_speaker_enabled = FALSE
 	speaker_range = 0
 	icon_tooltip = "Pigeon?"
 	icon = 'icons/mob/ranch/chickens.dmi'
 	icon_state = "egg-pigeon"
+
+/obj/item/device/radio/pigeon/status
+	initial_microphone_enabled = FALSE
+	initial_speaker_enabled = TRUE
+
+/obj/machinery/camera/ranch/pigeon
+	name = null
+	c_tag = null
+	has_light = FALSE
+
+	New(loc, passed_name)
+		. = ..()
+		name = "[passed_name] - ranch"
+		c_tag = passed_name
 
 /datum/statusEffect/pigeon
 	id = "pigeon"
@@ -1045,12 +1059,12 @@ ABSTRACT_TYPE(/datum/chicken_egg_props)
 	duration = 600 SECONDS
 	maxDuration = 600 SECONDS
 	visible = 1
-	var/obj/item/device/radio/pigeon/peasradio = null
+	var/obj/item/device/radio/pigeon/status/peasradio = null
 	var/already_open = FALSE
 
 	onAdd(var/optional=null)
 		. = ..()
-		peasradio = new/obj/item/device/radio/pigeon(owner)
+		peasradio = new(owner)
 
 		if(owner.open_to_sound)
 			already_open = TRUE

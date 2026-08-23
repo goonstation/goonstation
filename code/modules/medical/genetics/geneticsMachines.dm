@@ -4,6 +4,9 @@
 #define GENETICS_EMITTERS 3
 #define GENETICS_RECLAIMER 4
 
+#define GENETICS_DATA_MUTATIONS "data_mutations"
+#define GENETICS_DATA_CHROMOSOMES "data_chromosomes"
+
 /obj/machinery/computer/genetics
 	name = "genetics console"
 	icon = 'icons/obj/computer.dmi'
@@ -14,7 +17,7 @@
 	circuit_type = /obj/item/circuitboard/genetics
 	/// Linked scanner. For scanning.
 	var/obj/machinery/genetics_scanner/scanner = null
-	var/list/equipment = list(
+	var/list/equipment = alist(
 		GENETICS_INJECTORS = 0,
 		GENETICS_ANALYZER = 0,
 		GENETICS_EMITTERS = 0,
@@ -36,6 +39,8 @@
 	var/decrypt_correct_char = "?"
 	var/decrypt_correct_pos = "?"
 	var/datum/genetics_appearancemenu/modify_appearance = null
+	var/emitter_radiation_minimum_strength = 0 //! modifies the scrambler power. Used for the emag-effect
+	var/emitter_cooldown_multiplier = 1 //! modifies the scrambler cooldown. Used for the emag-effect
 
 	var/registered_id = null
 
@@ -44,6 +49,24 @@
 	START_TRACKING
 	SPAWN(0.5 SECONDS)
 		connection_scan()
+	#ifdef I_HATE_WAITING_FOR_GENES
+		var/list/chromosome_types = list(
+			/datum/dna_chromosome/, //stabilizer
+			/datum/dna_chromosome/anti_mutadone,
+			/datum/dna_chromosome/reclaimer,
+			/datum/dna_chromosome/stealth,
+			/datum/dna_chromosome/power_enhancer,
+			/datum/dna_chromosome/cooldown_reducer,
+			/datum/dna_chromosome/safety
+		)
+		var/how_many_chromosomes = 20
+		for (var/chrom_path in chromosome_types)
+			for (var/i, i<how_many_chromosomes, i++)
+				var/datum/dna_chromosome/C = new chrom_path(src)
+				src.saved_chromosomes += C
+		genResearch.lock_breakers = 999
+		genResearch.researchMaterial = 999
+	#endif
 
 /obj/machinery/computer/genetics/connection_scan()
 	src.scanner = locate(/obj/machinery/genetics_scanner, orange(1,src))
@@ -51,6 +74,40 @@
 /obj/machinery/computer/genetics/disposing()
 	STOP_TRACKING
 	..()
+
+/obj/machinery/computer/genetics/emag_act(var/mob/user, var/obj/item/card/emag/used_emag)
+	if(src.emagged)
+		return FALSE
+	src.emagged = TRUE
+	src.visible_message(SPAN_ALERT("[src]'s radiation dose control seems to malfunction. That doesn't look safe..."))
+	//This is 33% stronger than the emitters baseline radiation, before research. This makes sure that our clown inside comes out well done.
+	src.emitter_radiation_minimum_strength = 100
+	src.emitter_cooldown_multiplier = 0.5
+	return TRUE
+
+/obj/machinery/computer/genetics/demag(var/mob/user)
+	if(!src.emagged)
+		return FALSE
+	src.emitter_radiation_minimum_strength = initial(src.emitter_radiation_minimum_strength)
+	src.emitter_cooldown_multiplier = initial(src.emitter_cooldown_multiplier)
+	src.emagged = FALSE
+	return TRUE
+
+/obj/machinery/computer/genetics/save_board_data(obj/item/circuitboard/circuitboard)
+	. = ..()
+	circuitboard.saved_data = list(
+		GENETICS_DATA_MUTATIONS = src.saved_mutations,
+		GENETICS_DATA_CHROMOSOMES = src.saved_chromosomes,
+	)
+
+/obj/machinery/computer/genetics/load_board_data(obj/item/circuitboard/circuitboard)
+	if(..())
+		return
+
+	if (islist(circuitboard.saved_data[GENETICS_DATA_MUTATIONS]))
+		src.saved_mutations = circuitboard.saved_data[GENETICS_DATA_MUTATIONS]
+	if (islist(circuitboard.saved_data[GENETICS_DATA_CHROMOSOMES]))
+		src.saved_chromosomes = circuitboard.saved_data[GENETICS_DATA_CHROMOSOMES]
 
 /obj/machinery/computer/genetics/attackby(obj/item/W, mob/user)
 	if (istype(W,/obj/item/genetics_injector/dna_activator))
@@ -312,18 +369,20 @@
 			amount = min(
 				round(amount),
 				genResearch.max_material - genResearch.researchMaterial,
-				round(wagesystem.research_budget / 50),
+				round(wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL] / 50),
 			)
 			if (amount > 0)
 				var/cost = amount * 50
-				wagesystem.research_budget -= cost
+				wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL] -= cost
 				genResearch.researchMaterial += amount
 				on_ui_interacted(ui.user)
 		if("research")
 			. = TRUE
 			var/datum/geneticsResearchEntry/E = locate(params["ref"])
 			if (!research_sanity_check(E))
-				if (genResearch.addResearch(E))
+				if (E.isResearched)
+					scanner_alert(ui.user, "Research already in progress.", error = TRUE)
+				else if (genResearch.addResearch(E))
 					scanner_alert(ui.user, "Research initiated successfully.")
 				else
 					scanner_alert(ui.user, "Unable to begin research.", error = TRUE)
@@ -378,13 +437,17 @@
 			var/obj/item/genetics_injector/dna_injector/I = new /obj/item/genetics_injector/dna_injector(src.loc)
 			I.name = "dna injector - [E.name]"
 			var/datum/bioEffect/NEW = new E.type(I)
-			copy_datum_vars(E, NEW, blacklist=list("owner", "holder", "dnaBlocks"))
+			copy_datum_vars(E, NEW)
 			I.BE = NEW
 			on_ui_interacted(ui.user)
 			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 		if("researchmut")
 			. = TRUE
 			var/datum/bioEffect/E = locate(params["ref"])
+			var/datum/bioEffect/GBE = GetBioeffectFromGlobalListByID(E.id)
+			if(GBE.research_level > EFFECT_RESEARCH_NONE)
+				scanner_alert(ui.user, "Research already in progress.", error = TRUE)
+				return
 			if (params["sample"])
 				if (bioEffect_sanity_check(E, 0))
 					return
@@ -561,9 +624,10 @@
 			subject.bioHolder.BuildEffectPool()
 			if (addEffect) // re-mutantify if we would have been able to anyway
 				subject.bioHolder.AddEffect(addEffect)
-			if (genResearch.emitter_radiation > 0)
-				subject.take_radiation_dose((genResearch.emitter_radiation/75) * 1.5 SIEVERTS)
-			src.equipment_cooldown(GENETICS_EMITTERS, 1200)
+			var/radiation_strength = max(src.emitter_radiation_minimum_strength, genResearch.emitter_radiation)
+			if (radiation_strength > 0)
+				subject.take_radiation_dose((radiation_strength/75) * 1.5 SIEVERTS)
+			src.equipment_cooldown(GENETICS_EMITTERS, 1200 * src.emitter_cooldown_multiplier)
 			scanner_alert(ui.user, "Genes successfully scrambled.")
 			on_ui_interacted(ui.user)
 			play_emitter_sound()
@@ -580,11 +644,12 @@
 			if(subject.stat)
 				return
 			src.log_me(subject, "gene scrambled", E)
-			if (genResearch.emitter_radiation > 0)
-				subject.take_radiation_dose((genResearch.emitter_radiation/75) * 0.4 SIEVERTS)
+			var/radiation_strength = max(src.emitter_radiation_minimum_strength, genResearch.emitter_radiation)
+			if (radiation_strength > 0)
+				subject.take_radiation_dose((radiation_strength/75) * 0.4 SIEVERTS)
 			subject.bioHolder.RemovePoolEffect(E)
 			subject.bioHolder.AddRandomNewPoolEffect()
-			src.equipment_cooldown(GENETICS_EMITTERS, 600)
+			src.equipment_cooldown(GENETICS_EMITTERS, 600 * src.emitter_cooldown_multiplier)
 			scanner_alert(ui.user, "Gene successfully scrambled.")
 			on_ui_interacted(ui.user)
 			play_emitter_sound()
@@ -625,7 +690,7 @@
 						break
 				if (!already_has)
 					var/datum/bioEffect/NEW = new E.type(GB)
-					copy_datum_vars(E, NEW, blacklist=list("owner", "holder", "dnaBlocks"))
+					copy_datum_vars(E, NEW)
 					GB.offered_genes += new /datum/geneboothproduct(NEW,booth_effect_desc,booth_effect_cost,registered_id)
 					if (length(GB.offered_genes) == 1)
 						GB.select_product(GB.offered_genes[1])
@@ -928,7 +993,7 @@
 		"materialCur" = genResearch.researchMaterial,
 		"mutationsResearched" = genResearch.mutations_researched,
 		"autoDecryptors" = genResearch.lock_breakers,
-		"budget" = wagesystem.research_budget,
+		"budget" = wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL],
 		"costPerMaterial" = 50,
 		"researchCost" = mut_research_cost,
 		"toSplice" = src.to_splice?.name,
@@ -1154,6 +1219,9 @@
 	var/datum/movable_preview/character/multiclient/P = src.get_occupant_preview()
 	P?.remove_client(user?.client)
 	src.modify_appearance?.ui_close(user)
+
+#undef GENETICS_DATA_MUTATIONS
+#undef GENETICS_DATA_CHROMOSOMES
 
 #undef GENETICS_INJECTORS
 #undef GENETICS_ANALYZER

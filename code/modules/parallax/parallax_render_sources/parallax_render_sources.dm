@@ -30,6 +30,8 @@
 	scroll_speed = 240
 	scroll_angle = 270
 
+/atom/movable/screen/parallax_render_source/space_2/menhir
+	parallax_value = 0.02
 
 // Ocean Caustics
 /atom/movable/screen/parallax_render_source/foreground/caustics
@@ -65,13 +67,13 @@
 	initial_x_coordinate = 150
 	initial_y_coordinate = 500
 
-/atom/movable/screen/parallax_render_source/typhon/donut2
-	initial_x_coordinate = 300
-	initial_y_coordinate = 350
-
 /atom/movable/screen/parallax_render_source/typhon/donut3
 	initial_x_coordinate = -50
 	initial_y_coordinate = 350
+
+/atom/movable/screen/parallax_render_source/typhon/menhir
+	initial_x_coordinate = 200
+	initial_y_coordinate = 600
 
 
 // Planets
@@ -87,6 +89,19 @@
 /atom/movable/screen/parallax_render_source/planet/gimmick4
 /atom/movable/screen/parallax_render_source/planet/gimmick5
 
+/// welcome to earf
+
+/atom/movable/screen/parallax_render_source/planet/earth
+	parallax_icon = 'icons/obj/large/160x160.dmi'
+	parallax_icon_state = "earth"
+	initial_x_coordinate = 0
+	initial_y_coordinate = 0
+	parallax_value = 0.03
+	visible_to_gps = TRUE
+	name = "Earth"
+	desc = "SILICATE PLANET<br>\
+		NT Headquarters: Central Command at Seneca Spaceport, New York<br>\
+		The human homeworld is noted for an overabundance of space owls."
 
 /// inner system - Diner debris belt
 

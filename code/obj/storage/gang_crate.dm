@@ -118,19 +118,20 @@
 	New()
 		..()
 		START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
-		src.light = image('icons/obj/large_storage.dmi',"gangcratefulllight")
+		src.light = image('icons/obj/storage/locker.dmi',"gangcratefulllight")
+		src.name = pick(list("Legitimate Business Crate", "Legal Supply Crate", "Digestive Biscuit Supply Crate", "Innocuous Goods Crate", "Inconspicuous Crate"))
 		if (locked)
 			SPAWN(GANG_CRATE_LOCK_TIME/3)
-				src.light = image('icons/obj/large_storage.dmi',"gangcratehalflight")
+				src.light = image('icons/obj/storage/locker.dmi',"gangcratehalflight")
 				UpdateIcon()
 			SPAWN(2*GANG_CRATE_LOCK_TIME/3 )
-				src.light = image('icons/obj/large_storage.dmi',"gangcratelowlight")
+				src.light = image('icons/obj/storage/locker.dmi',"gangcratelowlight")
 				UpdateIcon()
 			SPAWN((GANG_CRATE_LOCK_TIME - 3 SECONDS) )
-				src.light = image('icons/obj/large_storage.dmi',"gangcrateblinkinglight")
+				src.light = image('icons/obj/storage/locker.dmi',"gangcrateblinkinglight")
 				UpdateIcon()
 			SPAWN(GANG_CRATE_LOCK_TIME)
-				src.light = image('icons/obj/large_storage.dmi',"gangcratefulllight")
+				src.light = image('icons/obj/storage/locker.dmi',"gangcratefulllight")
 				anchored = FALSE
 				UpdateIcon()
 
@@ -138,6 +139,10 @@
 		return
 	emag_act()
 		return
+
+	pull(mob/user)
+		. = ..()
+		logTheThing(LOG_GAMEMODE, user, "starts pulling [src] at [log_loc(src)].")
 
 	proc/attempt_open(mob/user)
 		for (var/obj/ganglocker/locker in range(1,src))
@@ -147,7 +152,7 @@
 				locker.gang.add_points(GANG_CRATE_SCORE, user, get_turf(locker), showText = TRUE)
 				locker.gang.score_event += GANG_CRATE_SCORE
 				var/datum/gang/userGang = user.get_gang()
-				userGang.broadcast_to_gang("[user.name] just opened a gang crate! Keep what's inside, everyone earns [GANG_CRATE_SCORE] points.",locker.gang)
+				userGang.announcer_say_source.say("[user.name] just opened a gang crate! Keep what's inside, everyone earns [GANG_CRATE_SCORE] points.")
 				logTheThing(LOG_GAMEMODE, src, "[src] is unlocked by [user.mind.ckey]/[user.name] at the [locker], for [locker.gang.gang_name].")
 				return TRUE
 		return FALSE
@@ -274,7 +279,7 @@
 			var/area/area = get_area(src)
 			playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 			boutput(user, SPAN_ALERT("As you pick up \the [src.name], a series of barbs emerge from the handle, lodging in your hand!"))
-			src.owning_gang.broadcast_to_gang("The bag [src.informant] knew about has just been stolen! Looks like it was in \the [area.name]")
+			src.owning_gang.announcer_say_source.say("The bag [src.informant] knew about has just been stolen! Looks like it was in \the [area.name]")
 			ON_COOLDOWN(src,"bleed_msg", 30 SECONDS) //set a 30 second timer to remind players to remove this
 			idiot.setStatus("gang_trap", duration = INFINITE_STATUS)
 			H.emote("scream")
@@ -304,7 +309,7 @@
 			UnregisterSignal(src, XSIG_MOVABLE_AREA_CHANGED)
 
 	proc/alert_gang(datum/component/component, area/old_area, area/new_area)
-		src.owning_gang.broadcast_to_gang("The bag [src.informant] knew about is being moved! Looks like it's been moved to \the [new_area.name]")
+		src.owning_gang.announcer_say_source.say("The bag [src.informant] knew about is being moved! Looks like it's been moved to \the [new_area.name]")
 		toggle_tracking(FALSE)
 
 	proc/unhook()
@@ -1092,7 +1097,7 @@ ABSTRACT_TYPE(/obj/loot_spawner/random/medium)
 		tier = GANG_CRATE_GEAR
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
 			var/obj/item/tool/omnitool/syndietool = spawn_item(C,I,/obj/item/tool/omnitool/syndicate,scale_y=0.75,rot=90)
-			syndietool.change_mode(OMNI_MODE_PULSING, null, /obj/item/device/multitool)
+			syndietool.change_mode_id(OMNITOOL::MODE_MULTITOOL, null)
 
 	cigar
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
@@ -1113,6 +1118,10 @@ ABSTRACT_TYPE(/obj/loot_spawner/random/medium)
 			spawn_item(C,I,/obj/item/reagent_containers/emergency_injector/random,off_y=4,rot=45,scale_x=0.75,scale_y=0.75)
 			spawn_item(C,I,/obj/item/reagent_containers/emergency_injector/random,off_y=0,rot=45,scale_x=0.75,scale_y=0.75)
 			spawn_item(C,I,/obj/item/reagent_containers/emergency_injector/random,off_y=-4,rot=45,scale_x=0.75,scale_y=0.75)
+
+	flatcap
+		spawn_loot(loc, datum/loot_spawner_info/I)
+			spawn_item(loc, I, /obj/item/clothing/head/flatcap/razor)
 
 
 ABSTRACT_TYPE(/obj/loot_spawner/random/long)
@@ -1217,7 +1226,7 @@ ABSTRACT_TYPE(/obj/loot_spawner/random/short_tall)
 		tier = GANG_CRATE_GEAR
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
 			var/obj/item/tool/omnitool/syndietool = spawn_item(C,I,/obj/item/tool/omnitool/syndicate,scale_y=0.75)
-			syndietool.change_mode(OMNI_MODE_PULSING, null, /obj/item/device/multitool)
+			syndietool.change_mode_id(OMNITOOL::MODE_MULTITOOL, null)
 	autos
 		tier = GANG_CRATE_GEAR
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
@@ -1296,7 +1305,7 @@ ABSTRACT_TYPE(/obj/loot_spawner/random/medium_tall)
 	helmet
 		tier = GANG_CRATE_GEAR
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			var/helmet = pick(filtered_concrete_typesof(/obj/item/clothing/head/helmet, PROC_REF(filter_trait_hats)))
+			var/helmet = pick(filtered_concrete_typesof(/obj/item/clothing/head/helmet, GLOBAL_PROC_REF(filter_trait_hats)))
 			spawn_item(C,I,helmet,off_y=-2,scale_x=0.7,scale_y=0.7)
 			spawn_item(C,I,helmet,off_y=0,scale_x=0.7,scale_y=0.7)
 			spawn_item(C,I,helmet,off_y=2,scale_x=0.7,scale_y=0.7)
@@ -1317,9 +1326,10 @@ ABSTRACT_TYPE(/obj/loot_spawner/random/medium_tall)
 
 	hat
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
-			spawn_item(C,I,pick(filtered_concrete_typesof(/obj/item/clothing/head, PROC_REF(filter_trait_hats))),off_y=-2,scale_x=0.7,scale_y=0.7)
-			spawn_item(C,I,pick(filtered_concrete_typesof(/obj/item/clothing/head, PROC_REF(filter_trait_hats))),off_y=0,scale_x=0.7,scale_y=0.7)
-			spawn_item(C,I,pick(filtered_concrete_typesof(/obj/item/clothing/head, PROC_REF(filter_trait_hats))),off_y=2,scale_x=0.7,scale_y=0.7)
+			//always at least one if we get hats
+			spawn_item(C,I,/obj/item/clothing/head/flatcap/razor,off_y=-2,scale_x=0.7,scale_y=0.7)
+			spawn_item(C,I,pick(filtered_concrete_typesof(/obj/item/clothing/head, GLOBAL_PROC_REF(filter_trait_hats))),off_y=0,scale_x=0.7,scale_y=0.7)
+			spawn_item(C,I,pick(filtered_concrete_typesof(/obj/item/clothing/head, GLOBAL_PROC_REF(filter_trait_hats))),off_y=2,scale_x=0.7,scale_y=0.7)
 	medkits
 		spawn_loot(var/C,var/datum/loot_spawner_info/I)
 			spawn_item(C,I,/obj/item/storage/firstaid/crit,off_y=2)

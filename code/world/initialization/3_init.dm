@@ -8,12 +8,14 @@
 	game_start_countdown = new()
 	UPDATE_TITLE_STATUS("Initializing world")
 
-	Z_LOG_DEBUG("World/Init", "Loading admins...")
-	load_admins()//UGH
-	Z_LOG_DEBUG("World/Init", "Loading whitelist...")
-	load_whitelist() //WHY ARE WE UGH-ING
-	Z_LOG_DEBUG("World/Init", "Loading playercap bypass keys...")
+	#if CLIENT_AUTH_PROVIDER_CURRENT == CLIENT_AUTH_PROVIDER_BYOND
+	Z_LOG_DEBUG("World/Init", "Loading access lists...")
+	load_admins()
+	load_mentors()
+	load_hos()
+	load_whitelist()
 	load_playercap_bypass()
+	#endif
 
 	Z_LOG_DEBUG("World/Init", "Notifying hub of new round")
 	roundManagement.recordStart()
@@ -59,8 +61,6 @@
 		if (config.server_name != null && config.server_suffix && world.port > 0)
 			config.server_name += " #[serverKey]"
 
-		precache_create_txt()
-
 	mapSwitcher = new()
 
 	Z_LOG_DEBUG("World/Init", "Telemanager setup...")
@@ -74,20 +74,6 @@
 	mining_controls.setup_mining_landmarks()
 
 	createRenderSourceHolder()
-
-	// Set this stupid shit up here because byond's object tree output can't
-	// cope with a list initializer that contains "[constant]" keys
-	headset_channel_lookup = list(
-		"[R_FREQ_RESEARCH]" = "Research",
-		"[R_FREQ_MEDICAL]" = "Medical",
-		"[R_FREQ_ENGINEERING]" = "Engineering",
-		"[R_FREQ_NANOTRASEN]" = "NanoTrasen",
-		"[R_FREQ_COMMAND]" = "Command",
-		"[R_FREQ_SECURITY]" = "Security",
-		"[R_FREQ_CIVILIAN]" = "Civilian",
-		"[R_FREQ_DEFAULT]" = "General",
-		"[R_FREQ_INTERCOM_AI]" = "AI Intercom",
-		)
 
 	UPDATE_TITLE_STATUS("Starting processes")
 	Z_LOG_DEBUG("World/Init", "Process scheduler setup...")
@@ -117,13 +103,14 @@
 	logTheThing(LOG_STATION, null, "Map: [getMapNameFromID(map_setting)]")
 #endif
 
-	if (time2text(world.realtime,"DDD") == "Fri")
-		NT |= mentors
-
 	Z_LOG_DEBUG("World/Init", "Loading intraround jars...")
 	load_intraround_jars()
 	load_intraround_eggs()
-	spawn_kitchen_note()
+
+	area_table_spawn(/area/station/crew_quarters/kitchen, pick(childrentypesof(/obj/item/paper/recipe)))
+#ifdef SEASON_AUTUMN
+	area_table_spawn(/area/station/crew_quarters/barber_shop, /obj/item/paper/hair_fall)
+#endif
 
 	//SpyStructures and caches live here
 	UPDATE_TITLE_STATUS("Updating cache")
@@ -133,7 +120,6 @@
 	build_reagent_cache()
 	build_supply_pack_cache()
 	build_syndi_buylist_cache()
-	build_manufacturer_icons()
 	build_clothingbooth_caches()
 	initialize_biomes()
 
@@ -154,6 +140,11 @@
 	makeMiningLevel()
 	#endif
 
+	UPDATE_TITLE_STATUS("Loading crime")
+	Z_LOG_DEBUG("World/Init", "Loading listening post...")
+	load_listening_post()
+	makepowernets()
+
 	if (derelict_mode)
 		Z_LOG_DEBUG("World/Init", "Derelict mode stuff")
 		creepify_station()
@@ -161,11 +152,6 @@
 		signal_loss = 80 // heh
 		bust_lights()
 		master_mode = "disaster" // heh pt. 2
-
-	UPDATE_TITLE_STATUS("Generating minimaps")
-	Z_LOG_DEBUG("World/Init", "Generating minimaps...")
-	minimap_renderer = new /datum/minimap_renderer()
-	minimap_renderer.initialise_minimaps()
 
 	UPDATE_TITLE_STATUS("Lighting up")
 	Z_LOG_DEBUG("World/Init", "RobustLight2 init...")
@@ -177,6 +163,11 @@
 	buildRandomRooms()
 	makepowernets()
 	#endif
+
+	UPDATE_TITLE_STATUS("Generating minimaps")
+	Z_LOG_DEBUG("World/Init", "Generating minimaps...")
+	minimap_renderer = new /datum/minimap_renderer()
+	minimap_renderer.initialise_minimaps()
 
 	#ifdef SECRETS_ENABLED
 	UPDATE_TITLE_STATUS("Loading gallery artwork")
@@ -201,10 +192,6 @@
 	build_camera_network()
 	camera_coverage_controller.setup()
 
-	UPDATE_TITLE_STATUS("Preloading client data...")
-	Z_LOG_DEBUG("World/Init", "Transferring manuf. icons to clients...")
-	sendItemIconsToAll()
-
 	UPDATE_TITLE_STATUS("Starting processes")
 	Z_LOG_DEBUG("World/Init", "Setting up process scheduler...")
 	processScheduler.setup()
@@ -223,6 +210,10 @@
 		global.region_allocator.add_z_level()
 	#endif
 
+	UPDATE_TITLE_STATUS("Processing gravity")
+	Z_LOG_DEBUG("World/Init", "Processing gravity...")
+	global.configure_zero_g_areas()
+
 	UPDATE_TITLE_STATUS("Ready")
 	current_state = GAME_STATE_PREGAME
 	Z_LOG_DEBUG("World/Init", "Now in pre-game state.")
@@ -231,11 +222,6 @@
 	for (var/thing in by_cat[TR_CAT_DELETE_ME])
 		qdel(thing)
 	#endif
-
-#ifdef MOVING_SUB_MAP
-	Z_LOG_DEBUG("World/Init", "Making Manta start moving...")
-	mantaSetMove(moving=1, doShake=0)
-#endif
 
 #ifdef TWITCH_BOT_ALLOWED
 	for (var/client/C)
@@ -278,29 +264,8 @@
 
 #undef UPDATE_TITLE_STATUS
 
-
-
 // dsingh for faster create panel loads
-/world/proc/precache_create_txt()
-	set background = 1
-	if (!create_mob_html)
-		var/mobjs = null
-		mobjs = jointext(typesof(/mob), ";")
-		create_mob_html = grabResource("html/admin/create_object.html")
-		create_mob_html = replacetext(create_mob_html, "null /* object types */", "\"[mobjs]\"")
-
-	if (!create_object_html)
-		var/objectjs = null
-		objectjs = jointext(typesof(/obj), ";")
-		create_object_html = grabResource("html/admin/create_object.html")
-		create_object_html = replacetext(create_object_html, "null /* object types */", "\"[objectjs]\"")
-
-	if (!create_turf_html)
-		var/turfjs = null
-		turfjs = jointext(typesof(/turf), ";")
-		create_turf_html = grabResource("html/admin/create_object.html")
-		create_turf_html = replacetext(create_turf_html, "null /* object types */", "\"[turfjs]\"")
-
+// /world/proc/precache_create_txt() was here
 
 /proc/createRenderSourceHolder()
 	if(!renderSourceHolder)

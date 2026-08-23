@@ -86,7 +86,7 @@
 			if(jobban_isbanned(M, "NanoTrasen Pod Commander")) continue
 			if(jobban_isbanned(M, "Syndicate Pod Commander")) continue
 
-			if ((M.ready) && !candidates.Find(M.mind))
+			if ((M.ready_play) && !candidates.Find(M.mind))
 				switch(priority)
 					if (1)
 						if (M.client.preferences.job_favorite == commander_job_title)

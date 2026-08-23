@@ -18,6 +18,7 @@
 	health_brute_vuln = 0.7
 	health_burn = 40
 	health_burn_vuln = 1
+	name_generator_path = /datum/wraith_name_generator/wraith_summon/hound
 	var/mob/living/intangible/wraith/master = null
 	var/cloaked = FALSE
 
@@ -39,7 +40,7 @@
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/claw
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "claw"
 		HH.limb_name = "claws"

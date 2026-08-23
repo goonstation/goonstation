@@ -43,7 +43,7 @@
 /area/dmm_suite/clear_area)
 "E" = (
 /obj/fitness/speedbag/clown,
-/obj/item/paper/businesscard/clowntown{
+/obj/item/paper/image/businesscard/clowntown{
 	pixel_x = -12;
 	pixel_y = 4
 	},
@@ -61,7 +61,10 @@
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/machinery/disposal,
+/obj/machinery/disposal/ejection{
+	name = "disposal chute";
+	desc = "A pressurized trashcan that flushes things you put into it through pipes, usually to disposals."
+	},
 /obj/decal/poster/wallsign/poster_clown{
 	pixel_y = -2;
 	pixel_x = 3

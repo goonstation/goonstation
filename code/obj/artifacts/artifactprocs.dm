@@ -62,12 +62,11 @@
 		qdel(src)
 		return
 	A.artitype = AO
-	A.scramblechance = AO.scramblechance
 	// Refers to the artifact datum's list of origins it's allowed to be from and selects one at random. This way we can avoid
 	// stuff that doesn't make sense like ancient robot plant seeds or eldritch healing devices
 
 	var/datum/artifact_origin/appearance = artifact_controls.get_origin_from_string(AO.name)
-	if (prob(A.scramblechance))
+	if (prob(AO.scramblechance))
 		appearance = null
 	// rare-ish chance of an artifact appearing to be a different origin, just to throw things off
 
@@ -77,6 +76,7 @@
 			all_origin_names += O.name
 		appearance = artifact_controls.get_origin_from_string(pick(all_origin_names))
 
+	A.artiappear = appearance
 	var/name1 = pick(appearance.adjectives)
 	var/name2 = "thingy"
 	if (isitem(src))
@@ -93,6 +93,8 @@
 	if (isitem(src))
 		var/obj/item/I = src
 		I.item_state = appearance.name
+
+	A.teleportationally_unstable = prob(A.teleportationally_unstable_chance)
 
 	A.fx_image = new
 	A.fx_image.icon = src.icon
@@ -118,11 +120,10 @@
 	A.fault_types |= AO.fault_types - A.fault_blacklist
 	A.internal_name = AO.generate_name()
 	A.used_names[AO.type_name] = A.internal_name
-	A.nofx = AO.nofx
 
 	ArtifactDevelopFault(10)
 
-	if (A.automatic_activation)
+	if(A.automatic_activation)
 		src.ArtifactActivated()
 
 	var/list/valid_triggers = A.validtriggers
@@ -132,7 +133,7 @@
 		trigger_amount--
 		selection = pick(valid_triggers)
 		if (ispath(selection))
-			var/datum/artifact_trigger/AT = new selection
+			var/datum/artifact_trigger/AT = new selection(src)
 			A.triggers += AT
 			valid_triggers -= selection
 
@@ -157,7 +158,7 @@
 		var/turf/T = get_turf(src)
 		if (T) T.visible_message("<b>[src] [A.activ_text]</b>") //ZeWaka: Fix for null.visible_message()
 	A.activated = 1
-	if (A.nofx)
+	if (A.artitype.nofx)
 		src.icon_state = src.icon_state + "fx"
 	else
 		A.show_fx(src)
@@ -185,7 +186,7 @@
 		var/turf/T = get_turf(src)
 		T.visible_message("<b>[src] [A.deact_text]</b>")
 	A.activated = 0
-	if (A.nofx)
+	if (A.artitype.nofx)
 		src.icon_state = src.icon_state - "fx"
 	else
 		A.hide_fx(src)
@@ -266,7 +267,7 @@
 		var/datum/artifact/activator_key/K = ACT.artifact
 
 		if (K.activated)
-			if (K.universal || A.artitype == K.artitype)
+			if (K.universal || A.artitype == K.activating_origin)
 				if (K.activator && !A.activated)
 					src.ArtifactActivated()
 					if(K.corrupting && length(A.faults) < 10) // there's only so much corrupting you can do ok
@@ -525,28 +526,6 @@
 		src.ArtifactDestroyed()
 	return
 
-/obj/hear_talk(mob/M, text, real_name, lang_id)
-	if (!src.artifact || src.artifact.activated)
-		return ..()
-	var/datum/artifact_trigger/language/trigger = locate(/datum/artifact_trigger/language) in src.artifact.triggers
-	if (!trigger || GET_DIST(M, src) > 2)
-		return
-	if (isghostcritter(M))
-		return
-	if (ON_COOLDOWN(src, "speech_act_cd", 2 SECONDS))
-		return
-	var/result = trigger.speech_act(text)
-	if (!result)
-		return
-	if (result == "error")
-		src.visible_message("[src] gives a <b>dull</b> chime.", "[src] gives a <b>dull</b> chime.")
-	else if (result == "hint")
-		src.visible_message("<b>[src]</b> [src.artifact.hint_text]", "<b>[src]</b> [src.artifact.hint_text]")
-	else if (result == "correct")
-		src.ArtifactStimulus("language", 1)
-	else
-		src.visible_message("[src] [result]", "[src] [result]")
-
 /// Removes all artifact forms attached to this and makes them fall to the floor
 /// Because artifacts often like to disappear in mysterious ways
 /obj/proc/remove_artifact_forms()
@@ -584,6 +563,7 @@
 	src.remove_artifact_forms()
 
 	src.ArtifactDeactivated()
+	src.artifact.pre_destroyed(src)
 
 	ArtifactLogs(usr, null, src, "destroyed", null, 0)
 
@@ -592,7 +572,7 @@
 	qdel(src)
 	return
 
-/obj/proc/ArtifactDevelopFault(var/faultprob)
+/obj/proc/ArtifactDevelopFault(var/faultprob, var/messageprob = 5)
 	// This proc is used for randomly giving an artifact a fault. It's usually used in the New() proc of an artifact so that
 	// newly spawned artifacts have a chance of being faulty by default, though this can also be called whenever an artifact is
 	// damaged or otherwise poorly handled, so you could potentially turn a good artifact into a dangerous piece of shit if you
@@ -613,6 +593,10 @@
 		var/new_fault = weighted_pick(A.fault_types)
 		if (ispath(new_fault))
 			var/datum/artifact_fault/F = new new_fault(A)
+			if (A.activated && prob(messageprob))
+				var/turf/T = get_turf(src)
+				if (T)
+					T.visible_message(SPAN_NOTICE("The [src.name] [F.add_message]"))
 			F.holder = A
 			A.faults += F
 
@@ -626,9 +610,9 @@
 	if ((target && ismob(target)) && type_of_action == "weapon")
 		logTheThing(LOG_COMBAT, user, "attacks [constructTarget(target,"combat")] with an active artifact ([A.type_name])[special_addendum ? ", [special_addendum]" : ""] at [log_loc(target)].")
 	else
-		logTheThing(type_of_action == "detonated" ? LOG_BOMBING : LOG_STATION, user, "an artifact ([A.type_name]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [target && isturf(target) ? "[log_loc(target)]" : "[log_loc(O)]"].[type_of_action == "detonated" ? " Last touched by: [O.fingerprintslast ? "[O.fingerprintslast]" : "*null*"]" : ""]")
+		logTheThing(type_of_action == "detonated" ? LOG_BOMBING : LOG_STATION, user, "an artifact ([A.type_name]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [target && isturf(target) ? "[log_loc(target)]" : "[log_loc(O)]"].[type_of_action == "detonated" ? " Last touched by: [replace_if_false(O.get_last_ckey(), "None")]" : ""]")
 
 	if (trigger_alert)
-		message_admins("An <a href='byond://?src=%client_ref%;Refresh=\ref[O]'>artifact</a> ([A.type_name]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [log_loc(O)]. Last touched by: [key_name(O.fingerprintslast)]")
+		message_admins("An <a href='byond://?src=%client_ref%;Refresh=\ref[O]'>artifact</a> ([A.type_name]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [log_loc(O)]. Last touched by: [key_name(O.get_last_ckey())]")
 
 	return

@@ -1,6 +1,5 @@
 /mob/living/critter/fire_elemental
 	name = "fire elemental"
-	real_name = "fire elemental"
 	desc = "You can't tell if this person is on fire, or made of it. Or both."
 	icon = 'icons/mob/critter/humanoid/elemental/fire.dmi'
 	icon_state = "fire_elemental"
@@ -39,7 +38,7 @@
 		HH.name = "control of fire"
 		HH.limb = new /datum/limb/gun/kinetic/fire_elemental
 		HH.icon_state = "fire_essence"
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.limb_name = "fire essence"
 		HH.can_hold_items = 0
 		HH.can_attack = 1
@@ -100,7 +99,7 @@
 	goes_through_walls = 0
 	//goes_through_mobs = 1
 	auto_find_targets = 0
-	silentshot = 1
+	no_hit_message = 1
 	pierces = 0
 	max_range = 6
 	shot_sound = null

@@ -1,6 +1,5 @@
 /mob/living/critter/mechmonstrosity
 	name = "mechanical monstrosity"
-	real_name = "mechanical monstrosity"
 	desc = "A severely disfigured human torso which is forcibly kept alive by the mechanical parts.."
 	density = TRUE
 	icon = 'icons/mob/critter/robotic/mechanical/monstrosity.dmi'
@@ -13,11 +12,11 @@
 	can_disarm = FALSE
 	can_help = FALSE
 	blood_id = "oil"
-	speechverb_say = "states"
-	speechverb_gasp = "states"
-	speechverb_stammer = "states"
-	speechverb_exclaim = "declares"
-	speechverb_ask = "queries"
+	speech_verb_say = "states"
+	speech_verb_gasp = "states"
+	speech_verb_stammer = "states"
+	speech_verb_exclaim = "declares"
+	speech_verb_ask = "queries"
 	faction = list(FACTION_DERELICT)
 
 	setup_healths()
@@ -90,7 +89,6 @@
 
 /mob/living/critter/mechmonstrosity/medical
 	name = "V.I.V.I-SECT-10N"
-	real_name = "V.I.V.I-SECT-10N"
 	desc = "You better wish that apples will keep this thing away from you.."
 	icon = 'icons/mob/critter/robotic/mechanical/vivisection.dmi'
 	icon_state = "vivisection"
@@ -104,7 +102,7 @@
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.name = "Syringe Injector"					// designation of the hand - purely for show
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
+		HH.icon = 'icons/mob/critter_hands.dmi'	// the icon of the hand UI background
 		HH.icon_state = "syringegun"				// the icon state of the hand UI background
 		HH.limb_name = "Injector"					// name for the dummy holder
 		HH.limb = new /datum/limb/gun/kinetic/syringe	// if not null, the special limb to use when attack_handing
@@ -114,7 +112,7 @@
 
 		HH = hands[2]
 		HH.name = "Dual Saw"					// designation of the hand - purely for show
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
+		HH.icon = 'icons/mob/critter_hands.dmi'	// the icon of the hand UI background
 		HH.icon_state = "saw"				// the icon state of the hand UI background
 		HH.limb_name = "Dual Saw"					// name for the dummy holder
 		HH.limb = new /datum/limb/dualsaw	// if not null, the special limb to use when attack_handing
@@ -285,7 +283,7 @@
 			playsound(ownerMob, 'sound/items/hypo.ogg', 80, FALSE)
 
 			var/mob/living/critter/robotic/crawler/crawler = new /mob/living/critter/robotic/crawler(get_turf(target))
-			crawler.name = "[target]'s crawling head"
+			crawler.name = "[target]’s crawling head"
 			crawler.desc = "A horrible crawling monstrosity, ravaged from the corpse of [target]."
 			crawler.revivalChance = 100
 
@@ -472,7 +470,7 @@
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.limb = new /datum/limb/sword
 		HH.icon_state = "blade"
 		HH.limb_name = "serrated claws"
@@ -514,11 +512,11 @@
 	base_move_delay = 5
 	base_walk_delay = 5
 	blood_id = "oil"
-	speechverb_say = "states"
-	speechverb_gasp = "states"
-	speechverb_stammer = "states"
-	speechverb_exclaim = "declares"
-	speechverb_ask = "queries"
+	speech_verb_say = "states"
+	speech_verb_gasp = "states"
+	speech_verb_stammer = "states"
+	speech_verb_exclaim = "declares"
+	speech_verb_ask = "queries"
 	bound_height = 32
 	bound_width = 32
 	var/icon/northsouth = null

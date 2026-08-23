@@ -7,7 +7,7 @@ Shield and graivty well generators
 /obj/shieldgen
 	name = "shield generator"
 	desc = "Used to seal minor hull breaches."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/shield_gen.dmi'
 	icon_state = "shieldoff"
 
 	density = 1
@@ -157,6 +157,7 @@ Shield and graivty well generators
 		return 1
 
 TYPEINFO(/obj/gravity_well_generator)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 14
 
 /obj/gravity_well_generator

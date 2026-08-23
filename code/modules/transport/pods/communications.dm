@@ -1,13 +1,10 @@
+TYPEINFO(/obj/item/device/radio/intercom/ship)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_RADIO)
+
 /obj/item/device/radio/intercom/ship
 	name = "Communication Panel"
 	anchored = ANCHORED
-
-/obj/item/device/radio/intercom/ship/send_hear()
-	if (src.listening)
-		var/list/shiphears = list()
-		for(var/mob/M in src.loc)
-			shiphears += M
-		return shiphears
+	speaker_range = 0
 
 /obj/item/shipcomponent/communications
 	power_used = 10
@@ -19,6 +16,9 @@
 	color = "#16CC77"
 	var/list/access_type = list(POD_ACCESS_STANDARD)
 	var/obj/item/device/ship_radio_control/rc_ship = null
+
+	get_install_slot()
+		return POD_PART_COMMS
 
 	mining
 		name = "NT Magnet Link Array"
@@ -72,7 +72,7 @@
 
 	wizard
 		name = "MagicaTech Communication Array"
-		desc = "A expensive magical-looking shipboard communicator. Often used by those who shoot fireballs!"
+		desc = "An expensive magical-looking shipboard communicator. Often used by those who shoot fireballs!"
 		color = "#E62DE6"
 		access_type = list(POD_ACCESS_WIZARDS)
 
@@ -89,8 +89,8 @@
 	deactivate()
 		..()
 		if(ship.intercom)
-			ship.intercom.broadcasting = 0
-			ship.intercom.listening = 0
+			ship.intercom.toggle_microphone(FALSE)
+			ship.intercom.toggle_speaker(FALSE)
 
 	New()
 		..()
@@ -99,7 +99,7 @@
 		return
 
 	proc/External()
-		var/broadcast = copytext(html_encode(input(usr, "Please enter what you want to say over the external speaker.", "[src.name]")), 1, MAX_MESSAGE_LEN)
+		var/broadcast = tgui_input_text(usr, "Please enter what you want to say over the external speaker:", "External Speaker", null, MAX_MESSAGE_LEN, TRUE)
 		if(!broadcast || usr.loc != src.ship) // need to check if something wasn't entered or if user isn't in a vehicle
 			return
 		logTheThing(LOG_DIARY, usr, "(POD) : [broadcast]", "say")
@@ -150,14 +150,12 @@
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
-	proc/open_hangar(mob/user as mob)
-		var/pass = input(user, "Please enter panel access number.", "Access Number") as text
-		pass = copytext(html_encode(pass), 1, 32)
+	proc/toggle_hangar_door(mob/user as mob, var/pass)
 		if(!pass)
 			return
 
 		var/datum/signal/newsignal = get_free_signal()
-		newsignal.data["command"] = "open door"
+		newsignal.data["command"] = "toggle_hangar_door"
 		if (com)
 			newsignal.data["access_type"] = jointext(com.access_type,";")
 		newsignal.data["doorpass"] = pass

@@ -8,7 +8,7 @@
 	//var/list/desync = list()
 
 	proc/uisetup()
-		usr << browse(replacetext(replacetext(grabResource("html/go.htm"), "honk", json_encode(piecelist)), "!!SRC_REF!!", "\ref[src]"), "window=go;size=595x595;border=0;can_resize=0;can_minimize=1;")
+		usr << browse(replacetext(replacetext(grabResource("html/go.html"), "honk", json_encode(piecelist)), "!!SRC_REF!!", "\ref[src]"), "window=go;size=595x595;border=0;can_resize=0;can_minimize=1;")
 
 	attack_hand(mob/user)
 		if(!(user in src.openwindows) && istype(user,/mob/living/carbon/human) && !(src in user.contents))

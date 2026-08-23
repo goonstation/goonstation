@@ -1,4 +1,5 @@
 TYPEINFO(/obj/submachine/claw_machine)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal" = 5,
 				"conductive" = 5,
 				"crystal" = 5,
@@ -25,7 +26,8 @@ TYPEINFO(/obj/submachine/claw_machine)
 	/obj/item/toy/plush/small/kitten/wizard,\
 	/obj/item/toy/plush/small/monkey/assistant,\
 	/obj/item/toy/plush/small/bunny/mask,\
-	/obj/item/toy/plush/small/penguin/cool)
+	/obj/item/toy/plush/small/penguin/cool,\
+	/obj/item/toy/plush/small/shelterfrog)
 	var/list/prizes_ultra_rare = list(/obj/item/toy/plush/small/orca,\
 	/obj/item/toy/plush/small/tuba,\
 	/obj/item/toy/plush/small/chris,\
@@ -179,6 +181,7 @@ TYPEINFO(/obj/submachine/claw_machine)
 /obj/item/toy/plush
 	name = "plush toy"
 	icon = 'icons/obj/plushies.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_plushie.dmi'
 	icon_state = "bear"
 	desc = "A cute and cuddly plush toy!"
 	throwforce = 3
@@ -281,6 +284,26 @@ TYPEINFO(/obj/submachine/claw_machine)
 	name = "super cool penguin plush toy"
 	icon_state = "penguin_cool"
 
+/obj/item/toy/plush/small/shelterfrog
+	name = "shelterfrog plush toy"
+	icon_state = "shelterfrog"
+
+/obj/item/toy/plush/small/shelterfrog/attack_self(mob/user as mob)
+	if (!ON_COOLDOWN(src,"ribbit",2 SECONDS))
+		if (ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if (H.sims)
+				H.sims.affectMotive("fun", 1)
+		src.ribbit()
+		src.add_fingerprint(user)
+		animate_door_squeeze(src)
+		user.visible_message(SPAN_EMOTE("[user] squeezes [src], and it croaks. Wow!"))
+	return
+
+/obj/item/toy/plush/small/shelterfrog/proc/ribbit()
+	playsound(src, 'sound/misc/croak.ogg', 50, TRUE)
+
+
 /obj/item/toy/plush/small/orca
 	name = "Lilac the orca"
 	icon_state = "orca"
@@ -288,6 +311,17 @@ TYPEINFO(/obj/submachine/claw_machine)
 /obj/item/toy/plush/small/tuba
 	name = "Tuba the rat"
 	icon_state = "tuba"
+
+/obj/item/toy/plush/small/tuba/attack_self(mob/user as mob)
+	if (ON_COOLDOWN(src,"squeak",2 SECONDS))
+		return
+	if (ishuman(user))
+		var/mob/living/carbon/human/H = user
+		H.sims?.affectMotive("fun", 1)
+	playsound(src, 'sound/voice/animal/mouse_squeak.ogg', 50, TRUE)
+	src.add_fingerprint(user)
+	animate_door_squeeze(src)
+	user.visible_message(SPAN_EMOTE("[user] squeezes [src], and she squeaks. Wow!"))
 
 /obj/item/toy/plush/small/chris
 	name = "Chris the goat"
@@ -320,17 +354,20 @@ TYPEINFO(/obj/submachine/claw_machine)
 	desc = "Talk and fidget things out. It'll be okay."
 	icon_state = "stress_ball"
 	throw_range = 10
+	default_material = "synthrubber_yellow"
 
 /obj/item/toy/plush/small/stress_ball/attack_self(mob/user as mob)
-	var/menuchoice = tgui_alert(user, "What would you like to do with [src]?", "Use [src]", list("Fidget", "Say"))
-	if (!menuchoice)
+	animate_door_squeeze(src) //squish
+	if (ON_COOLDOWN(src, "squish", 1 SECOND))
 		return
-	if (menuchoice == "Fidget")
-		animate_door_squeeze(src) //squish
-		user.visible_message(SPAN_EMOTE("[user] fidgets with [src]."))
-		boutput(user, SPAN_NOTICE("You feel [pick("a bit", "slightly", "a teeny bit", "somewhat", "surprisingly", "")] [pick("better", "more calm", "more composed", "less stressed")]."))
-	else if (menuchoice == "Say")
-		src.say_something(user)
+
+	if (prob(50) && isliving(user))
+		var/mob/living/stressed_person = user
+		if (stressed_person.blood_volume > 500 && !ON_COOLDOWN(src, "lower_blood_pressure", 10 SECONDS))
+			stressed_person.blood_volume -= rand(3,7)
+			boutput(user, SPAN_NOTICE(pick("Your head hurts a little less.", "You breathe a little easier.", "The pain in your chest lessens.")))
+
+	user.visible_message(SPAN_EMOTE("[user] fidgets with [src]."), "You squeeze [src]. <br> [SPAN_NOTICE("You feel [pick("a bit", "slightly", "a teeny bit", "somewhat", "surprisingly", "")] [pick("better", "more calm", "more composed", "less stressed")].")]", group = "stress_ball")
 
 /obj/item/toy/plush/small/deneb
 	name = "Deneb the swan"

@@ -1,4 +1,4 @@
-// Singleton instance of game_controller_new, setup in world.New()
+// Singleton instance set up in /world/proc/init()
 var/global/datum/controller/processScheduler/processScheduler
 
 /datum/controller/processScheduler

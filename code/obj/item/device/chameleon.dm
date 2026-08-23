@@ -4,7 +4,7 @@
 	object_flags = NO_GHOSTCRITTER
 	density = 0
 	anchored = ANCHORED
-	soundproofing = -1
+	soundproofing = SOUNDPROOFING_NOT_ON
 	var/can_move = 1
 	var/obj/item/device/chameleon/master = null
 
@@ -66,6 +66,7 @@
 		return
 
 TYPEINFO(/obj/item/device/chameleon)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 14
 
 /obj/item/device/chameleon
@@ -73,7 +74,7 @@ TYPEINFO(/obj/item/device/chameleon)
 	icon_state = "shield0"
 	flags = TABLEPASS | CONDUCT | EXTRADELAY | SUPPRESSATTACK
 	c_flags = ONBELT
-	item_state = "electronic"
+	item_state = "accessgun"
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
@@ -85,8 +86,6 @@ TYPEINFO(/obj/item/device/chameleon)
 	var/active = 0
 	tooltip_flags = REBUILD_DIST
 	HELP_MESSAGE_OVERRIDE({"Use the chameleon projector on any object to copy it's appearance. Use it in hand to appear as that object indefinitely. The disguise will be removed if you interact with anything else or are hit."})
-
-	is_syndicate = 1
 
 	New()
 		..()
@@ -139,11 +138,10 @@ TYPEINFO(/obj/item/device/chameleon)
 			if(!testIcon) //weird edgecases
 				return
 
-			if (!cham)
+			if (!cham || src.cham.qdeled || src.cham.disposed)
 				cham = new(src)
 				cham.master = src
 
-			playsound(src, 'sound/weapons/flash.ogg', 100, TRUE, 1)
 			boutput(user, SPAN_NOTICE("Scanned [target]."))
 			cham.name = target.name
 			cham.real_name = target.name
@@ -152,7 +150,7 @@ TYPEINFO(/obj/item/device/chameleon)
 			cham.icon = testIcon
 			cham.set_dir(target.dir)
 			can_use = 1
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 		else
 			user.show_text("\The [target] is not compatible with the scanner.", "red")
 
@@ -163,6 +161,12 @@ TYPEINFO(/obj/item/device/chameleon)
 		if (!anim)
 			anim = new(src)
 
+		if (!src.cham || src.cham.qdeled || src.cham.disposed) //Stop sending people to nullspace after the dummy is destroyed >:(
+			boutput(user, SPAN_ALERT("[src] detects an error in its projection registry and performs an emergency factory reset!"))
+			src.disrupt()
+			src.cham = null
+			src.can_use = FALSE //Go scan something to get a new dummy object
+			return
 		if (active) //active_dummy)
 			active = 0
 			playsound(src, 'sound/effects/pop.ogg', 100, TRUE, 1)
@@ -199,10 +203,10 @@ TYPEINFO(/obj/item/device/chameleon)
 				A.set_loc(get_turf(cham))
 			cham.set_loc(src)
 			can_use = 0
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			SPAWN(10 SECONDS)
 				can_use = 1
-				tooltip_rebuild = 1
+				tooltip_rebuild = TRUE
 
 /obj/item/device/chameleon/bomb
 	name = "chameleon bomb"

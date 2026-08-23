@@ -34,8 +34,11 @@ var/global/datum/unit_test_controller/unit_tests = new()
 
 #ifdef UNIT_TEST_TYPES
 	var/tests_to_run = list(UNIT_TEST_TYPES)
+#elif defined(UNIT_TESTS_REGRESSION_ONLY)
+	var/tests_to_run = childrentypesof(/datum/unit_test/regression)
 #else
 	var/tests_to_run = childrentypesof(/datum/unit_test)
+	tests_to_run -= typesof(/datum/unit_test/regression)
 #endif
 	for (var/_test_to_run in tests_to_run)
 		var/datum/unit_test/test_to_run = _test_to_run
@@ -146,6 +149,8 @@ var/global/datum/unit_test_controller/unit_tests = new()
 	var/instance = new type(arglist(arguments))
 	allocated += instance
 	return instance
+
+/datum/unit_test/regression
 
 /area/testroom
 /obj/landmark/unit_test_top_right

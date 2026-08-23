@@ -146,7 +146,7 @@ export const TrscArray = () => {
                 step={1000}
                 stepPixelSize={4}
                 format={(drawRateTarget) => formatPower(drawRateTarget)}
-                onDrag={setDrawRate}
+                onChange={setDrawRate}
               />
             </Flex.Item>
             <Flex.Item>
@@ -161,7 +161,7 @@ export const TrscArray = () => {
                 step={5000}
                 stepPixelSize={4}
                 format={(surplusThreshold) => formatPower(surplusThreshold)}
-                onDrag={setSurplus}
+                onChange={setSurplus}
               />
             </Flex.Item>
           </Flex>

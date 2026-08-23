@@ -1,6 +1,6 @@
-///
 
 TYPEINFO(/obj/item/rcd)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal_superdense" = 20,
 				"crystal_dense" = 10,
 				"conductive_high" = 10,
@@ -108,9 +108,9 @@ TYPEINFO(/obj/item/rcd)
 	var/tmp/list/working_on = list()
 
 	/// The modes that this RCD has available to it
-	var/list/modes = list(RCD_MODE_FLOORSWALLS, RCD_MODE_AIRLOCK, RCD_MODE_DECONSTRUCT, RCD_MODE_WINDOWS, RCD_MODE_LIGHTBULBS, RCD_MODE_LIGHTTUBES)
+	var/list/modes = list(RCD_MODE::FLOORSWALLS, RCD_MODE::AIRLOCK, RCD_MODE::DECONSTRUCT, RCD_MODE::WINDOWS, RCD_MODE::LIGHTBULBS, RCD_MODE::LIGHTTUBES)
 	/// The selected mode
-	var/mode = RCD_MODE_FLOORSWALLS
+	var/mode = RCD_MODE::FLOORSWALLS
 
 	/// do we really actually for real want this to work in adventure zones?? just do this with varedit dont make children with this on
 	var/really_actually_bypass_z_restriction = FALSE
@@ -118,24 +118,34 @@ TYPEINFO(/obj/item/rcd)
 	/// Custom contextActions list so we can handle opening them ourselves
 	var/list/datum/contextAction/contexts = list()
 
+	///Walls that the RCD probably shouldn't be interacting with. Mostly ones that can't be deconstructed normally
+	var/list/forbidden_walltypes = list(
+		/turf/simulated/wall/airbridge,
+		/turf/simulated/wall/ancient,
+		/turf/simulated/wall/void,
+		/turf/simulated/wall/auto/asteroid,
+		/turf/simulated/wall/auto/feather/strong,
+		/turf/simulated/wall/auto/shuttle
+	)
+
 	get_desc()
 		. += "<br>It holds [matter]/[max_matter] [istype(src, /obj/item/rcd/material) ? material_name : "matter"]  units. It is currently set to "
 		switch (src.mode)
-			if (RCD_MODE_FLOORSWALLS)
+			if (RCD_MODE::FLOORSWALLS)
 				. += "Floors/Walls"
-			if (RCD_MODE_AIRLOCK)
+			if (RCD_MODE::AIRLOCK)
 				. += "Airlocks"
-			if (RCD_MODE_DECONSTRUCT)
+			if (RCD_MODE::DECONSTRUCT)
 				. += "Deconstruct"
-			if (RCD_MODE_WINDOWS)
+			if (RCD_MODE::WINDOWS)
 				. += "Windows"
-			if (RCD_MODE_PODDOORCONTROL)
+			if (RCD_MODE::PODDOORCONTROL)
 				. += "Pod Door Controls"
-			if (RCD_MODE_PODDOOR)
+			if (RCD_MODE::PODDOOR)
 				. += "Pod Doors"
-			if (RCD_MODE_LIGHTBULBS)
+			if (RCD_MODE::LIGHTBULBS)
 				. += "Light Bulb Fixture"
-			if (RCD_MODE_LIGHTTUBES)
+			if (RCD_MODE::LIGHTTUBES)
 				. += "Light Tube Fixture"
 			else
 				. += "???"
@@ -175,7 +185,7 @@ TYPEINFO(/obj/item/rcd)
 					src.matter += R.matter
 					R.matter = 0
 					qdel(R)
-				R.tooltip_rebuild = 1
+				R.tooltip_rebuild = TRUE
 				src.UpdateIcon()
 				playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 				boutput(user, "\The [src] now holds [src.matter]/[src.max_matter] matter-units.")
@@ -195,27 +205,27 @@ TYPEINFO(/obj/item/rcd)
 		src.mode = mode
 
 		switch (mode)
-			if (RCD_MODE_AIRLOCK)
+			if (RCD_MODE::AIRLOCK)
 				boutput(user, "Changed mode to 'Airlock'")
 
-			if (RCD_MODE_DECONSTRUCT)
+			if (RCD_MODE::DECONSTRUCT)
 				boutput(user, "Changed mode to 'Deconstruct'")
 
-			if (RCD_MODE_WINDOWS)
+			if (RCD_MODE::WINDOWS)
 				boutput(user, "Changed mode to 'Windows'")
 
-			if (RCD_MODE_FLOORSWALLS)
+			if (RCD_MODE::FLOORSWALLS)
 				boutput(user, "Changed mode to 'Floors and Walls'")
 
-			if (RCD_MODE_PODDOORCONTROL)
+			if (RCD_MODE::PODDOORCONTROL)
 				boutput(user, "Changed mode to 'Pod Door Control'")
 				boutput(user, SPAN_NOTICE("Place a door control on a wall, then place any amount of pod doors on floors."))
 				boutput(user, SPAN_NOTICE("You can also select an existing door control by whacking it with \the [src]."))
 
-			if (RCD_MODE_LIGHTBULBS)
+			if (RCD_MODE::LIGHTBULBS)
 				boutput(user, "Changed mode to 'Light Bulb Fixture'")
 
-			if (RCD_MODE_LIGHTTUBES)
+			if (RCD_MODE::LIGHTTUBES)
 				boutput(user, "Changed mode to 'Light Tube Fixture'")
 
 		src.UpdateIcon()
@@ -262,7 +272,7 @@ TYPEINFO(/obj/item/rcd)
 			return
 
 		if (istype(A, /turf/simulated/wall))
-			if (istype(A, /turf/simulated/wall/r_wall) || istype(A, /turf/simulated/wall/auto/reinforced) || istype(A, /turf/simulated/wall/auto/shuttle))
+			if (istype(A, /turf/simulated/wall/r_wall) || istype(A, /turf/simulated/wall/auto/reinforced) || istypes(A, src.forbidden_walltypes))
 				// You can't reinforce walls that are already reinforced
 				return
 
@@ -444,33 +454,35 @@ TYPEINFO(/obj/item/rcd)
 			return
 
 		switch(src.mode)
-			if (RCD_MODE_FLOORSWALLS)
+			if (RCD_MODE::FLOORSWALLS)
 				handle_floors_and_walls(A, user)
 
-			if (RCD_MODE_AIRLOCK)
+			if (RCD_MODE::AIRLOCK)
 				// create_door handles all the other stuff.
-				SPAWN(0) //let's not lock the entire attack call and let people attack with zero delay
-					create_door(A, user)
+				if (istypes(A, list(/turf/simulated/floor, /turf/unsimulated/floor)))
+					SPAWN(0) //let's not lock the entire attack call and let people attack with zero delay
+						create_door(A, user)
+					return
 
-				return
-
-			if (RCD_MODE_DECONSTRUCT)
+			if (RCD_MODE::DECONSTRUCT)
 				if (length(restricted_materials) && !(A.material?.getID() in restricted_materials))
 					boutput(user, "Target object is not made of a material this RCD can deconstruct.")
+					return
+				if (istypes(A, src.forbidden_walltypes))
 					return
 
 				handle_deconstruct(A, user)
 				return
 
-			if (RCD_MODE_WINDOWS)
+			if (RCD_MODE::WINDOWS)
 				handle_windows(A, user)
 				return
 
-			if (RCD_MODE_LIGHTBULBS)
+			if (RCD_MODE::LIGHTBULBS)
 				handle_light_bulbs(A, user)
 				return
 
-			if (RCD_MODE_LIGHTTUBES)
+			if (RCD_MODE::LIGHTTUBES)
 				handle_light_tubes(A, user)
 				return
 
@@ -527,7 +539,7 @@ TYPEINFO(/obj/item/rcd)
 		else if(ishuman(target))
 			var/mob/living/carbon/human/H = target
 			var/obj/item/parts/surgery_target = null
-			if (surgeryCheck(H, user) && (user.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg", "chest")) && (src.mode == RCD_MODE_DECONSTRUCT)) //In surgery conditions and aiming for a limb or an ass in deconstruction mode? Time for ghetto surgery
+			if (surgeryCheck(H, user) && (user.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg", "chest")) && (src.mode == RCD_MODE::DECONSTRUCT)) //In surgery conditions and aiming for a limb or an ass in deconstruction mode? Time for ghetto surgery
 				if (user.zone_sel.selecting == "chest") //Ass begone
 					if (H.organHolder.butt == null)
 						user.visible_message(SPAN_ALERT("<b>Tries to remove [target]'s butt, but it's already gone!</b> "))
@@ -651,7 +663,7 @@ TYPEINFO(/obj/item/rcd)
 		if (GetOverlayImage("mode"))
 			src.ClearSpecificOverlays("mode")
 		var/ammo_amt = 0
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		switch (round((src.matter / src.max_matter) * 100)) //is the round() necessary? yell at me if it isnt
 			if (10 to 34)
 				ammo_amt = 1
@@ -666,21 +678,21 @@ TYPEINFO(/obj/item/rcd)
 
 		var/mode = ""
 		switch (src.mode)
-			if (RCD_MODE_FLOORSWALLS)
+			if (RCD_MODE::FLOORSWALLS)
 				mode = "standard"
-			if (RCD_MODE_AIRLOCK)
+			if (RCD_MODE::AIRLOCK)
 				mode = "doors"
-			if (RCD_MODE_DECONSTRUCT)
+			if (RCD_MODE::DECONSTRUCT)
 				mode = "decon"
-			if (RCD_MODE_WINDOWS)
+			if (RCD_MODE::WINDOWS)
 				mode = "window"
-			if (RCD_MODE_PODDOORCONTROL)
+			if (RCD_MODE::PODDOORCONTROL)
 				mode = "poddoors"
-			if (RCD_MODE_PODDOOR)
+			if (RCD_MODE::PODDOOR)
 				mode = "poddoors"
-			if (RCD_MODE_LIGHTBULBS)
+			if (RCD_MODE::LIGHTBULBS)
 				mode = "lights"
-			if (RCD_MODE_LIGHTTUBES)
+			if (RCD_MODE::LIGHTTUBES)
 				mode = "lights"
 			else
 				mode = "standard"

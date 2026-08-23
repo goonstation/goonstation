@@ -207,6 +207,11 @@
 		if(!can_lie && !isdead(src))
 			can_lie = 1
 
+	get_desc(dist, mob/user)
+		. = ..()
+		if (src.stage == RANCH_STAGE_SENIOR)
+			. += "<br>This animal looks rather old and probably won't be able to produce anything."
+
 	reduce_lifeprocess_on_death()
 		. = ..()
 		remove_lifeprocess(/datum/lifeprocess/ranch/age)
@@ -433,6 +438,10 @@
 			if(C.reagents.has_reagent("ageinium"))
 				C.age += get_multiplier()*2
 
+			else if(C.reagents.has_reagent("deageinium"))
+				if(C.age > 10)
+					C.age -= get_multiplier()
+
 			else if (C.named)
 				C.age += get_multiplier()/20
 			else
@@ -451,14 +460,16 @@
 /datum/lifeprocess/ranch/crowding
 	process()
 		var/mob/living/critter/small_animal/ranch_base/C = critter_owner
-		if(istype(C))
-			if(isalive(C))
-				var/turf/T = get_turf(C)
-				var/num_neighbors = length(get_singleton(/datum/spatial_hashmap/by_type/alive_mob/ranch_animals).get_nearby_atoms_exact(T, 5))
-				if(num_neighbors > C.crowded_minimum)
-					C.change_happiness(-(num_neighbors-C.crowded_minimum)*C.crowding_coefficient)
-					if(prob(20))
-						C.visible_message(SPAN_ALERT("[C] looks upset at their crowded conditions."))
+		if (!istype(C) || !isalive(C))
+			return
+
+		var/num_neighbors = length(global.ranch_animal_hashmap.exact_supremum(get_turf(C), 5))
+		if (num_neighbors <= C.crowded_minimum)
+			return
+
+		C.change_happiness((C.crowded_minimum - num_neighbors) * C.crowding_coefficient)
+		if (prob(20))
+			C.visible_message(SPAN_ALERT("[C] looks upset at their crowded conditions."))
 
 /datum/lifeprocess/ranch/hunger
 	process()

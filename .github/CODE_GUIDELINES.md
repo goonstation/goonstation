@@ -507,8 +507,8 @@ There exists a project to provide an incredibly more advanced real-time profiler
 
 ![](https://i.imgur.com/1CEwo0g.png)
 
-To operate this, you will need to do three things: download [the tracy 'viewer' application v0.11.x](https://github.com/wolfpld/tracy), and either compile or download the byond-tracy library.
-* The first can be downloaded here: https://github.com/wolfpld/tracy/releases/tag/v0.11.1 (download the .7z and unzip it, it's portable)
+To operate this, you will need to do three things: download [the tracy 'viewer' application v0.13.x](https://github.com/wolfpld/tracy), and either compile or download the byond-tracy library.
+* The first can be downloaded here: https://github.com/wolfpld/tracy/releases/tag/v0.13.1 (download the .7z and unzip it, it's portable)
 * The second can be trivially compiled from the C source above or downloaded from the [releases](https://github.com/spacestation13/byond-tracy/releases/latest). The .dll just goes in the root folder of the game.
 * Uncomment `#define TRACY_PROFILER_HOOK` in `_std/__build.dm`
 
@@ -559,6 +559,22 @@ for (var/mob/living/jellyfish in world)
 for (var/mob/living/jellyfish/jelly in by_type[/mob/living/jellyfish])
         ...
 ```
+
+## Git Hooks
+
+The repository includes several Git hooks to automate common tasks:
+
+### Installation
+Run the installer to set up hooks at `tools/hooks/install`
+
+### Available Hooks
+* **Map merging** - Automatically reduces map file diffs on commit
+* **Icon merging** - Resolves `.dmi` file conflicts during merges
+* **TGUI building** - Automatically rebuilds TGUI bundles after merges/rebases and resolves bundle conflicts
+
+**Note**: TGUI hooks require Node.js. If you don't have it installed or don't work on TGUI, you can safely skip these hooks.
+
+See `tools/hooks/README.md` for more details.
 
 # Unit Test Woes
 

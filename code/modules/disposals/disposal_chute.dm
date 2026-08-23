@@ -15,7 +15,7 @@
 
 TYPEINFO(/obj/machinery/disposal)
 	mats = 20			// whats the point of letting people build trunk pipes if they cant build new disposals?
-ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
+ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject, proc/expel_contents)
 /obj/machinery/disposal
 	name = "disposal unit"
 	desc = "A pressurized trashcan that flushes things you put into it through pipes, usually to disposals."
@@ -24,6 +24,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	anchored = ANCHORED
 	density = 1
 	flags = NOSPLASH | TGUI_INTERACTIVE
+	object_flags = NO_GHOSTCRITTER | GHOSTDRONE_ALLOWED
+	provides_grip = TRUE
 	var/datum/gas_mixture/air_contents	// internal reservoir
 	var/mode = DISPOSAL_CHUTE_CHARGING	// item mode 0=off 1=charging 2=charged
 	var/flush = 0	// true if flush handle is pulled
@@ -39,6 +41,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	var/repressure_speed = 0.1
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_SCREWDRIVER
 	power_usage = 100
+	_health = LOCKER_HEALTH_AVERAGE // TODO: balance health
+	_max_health = LOCKER_HEALTH_AVERAGE
 
 	var/is_processing = 1 //optimization thingy. kind of dumb. mbc fault. only process chute when flushed or recharging.
 
@@ -113,7 +117,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
 		. = ..()
 
-	HELP_MESSAGE_OVERRIDE("Place held satches, boxes, and bags by clicking with the <b>Disarm</b>, <b>Grab</b>, or <b>Harm</b> intent.")
+	HELP_MESSAGE_OVERRIDE("Drag held boxes, bags, and satchels onto this to empty them out.")
 
 	get_help_message(dist, mob/user)
 		. = ..()
@@ -134,9 +138,31 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	proc/fits_in(atom/movable/AM)
 		return TRUE
 
+	proc/bash(obj/item/I, mob/user)
+		user.lastattacked = get_weakref(src)
+		var/damage
+		var/damage_text
+		if (I.force < 10)
+			damage = round(I.force * 0.6)
+			damage_text = " It's not very effective."
+		else
+			damage = I.force
+		user.visible_message(SPAN_ALERT("<b>[user]</b> hits [src]! [damage_text]"))
+		attack_particle(user,src)
+		hit_twitch(src)
+		src.take_damage(clamp(damage, 1, 20), user, I, null)
+		playsound(src.loc, 'sound/impact_sounds/locker_hit.ogg', 90, 1)
+
+	proc/take_damage(amount, mob/user, obj/item/I, obj/projectile/P)
+		if (!isnum(amount) || amount <= 0)
+			return
+		src._health -= amount
+		if(_health <= 0)
+			_health = 0
+			src.set_broken()
+
 	// attack by item places it in to disposal
-	attackby(var/obj/item/I, var/mob/user)
-		var/obj/item/storage/mechanics/mechitem = null
+	attackby(var/obj/item/I, var/mob/user, params)
 		if(status & BROKEN)
 			switch(src.repair_step)
 				if(DISPOSAL_REPAIR_STEP_SCREWDRIVER)
@@ -159,47 +185,15 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 					else
 						boutput(user, SPAN_HINT("You need to <b>pry</b> the locking panels."))
 			return
-		if (istype(I, /obj/item/handheld_vacuum))
+		// snowest of snowflake
+		if (islivingobject(user) && I.force > 0)
+			src.bash(I, user)
+			update()
 			return
-		if (istype(I,/obj/item/satchel/) && I.contents.len)
-			var/action = input(user, "What do you want to do with the satchel?") in list("Place it in the Chute","Empty it into the Chute","Never Mind")
-			if (!action || action == "Never Mind")
-				return
-			if (!in_interact_range(src, user))
-				boutput(user, SPAN_ALERT("You need to be closer to the chute to do that."))
-				return
-			if (action == "Empty it into the Chute")
-				var/obj/item/satchel/S = I
-				for(var/obj/item/O in S.contents)
-					if (src.fits_in(O))
-						O.set_loc(src)
-				S.UpdateIcon()
-				S.tooltip_rebuild = 1
-				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
-				src.update()
-				return
-		if(istype(I, /obj/item/storage/mechanics))
-			mechitem = I
-		//first time they click with a storage, it gets dumped. second time container itself is added
-		if (length(I.storage?.get_contents()) && user.a_intent == INTENT_HELP && (!mechitem || mechitem.open)) //if they're not on help intent it'll default to placing it in while full.
-			if(istype(I, /obj/item/storage/secure))
-				var/obj/item/storage/secure/secS = I
-				if (!src.fits_in(secS))
-					return
-				if(secS.locked)
-					user.visible_message("[user.name] places \the [secS] into \the [src].",\
-						"You place \the [secS] into \the [src].")
-					user.drop_item()
-					secS.set_loc(src)
-					actions.interrupt(user, INTERRUPT_ACT)
-					src.update()
-					return
-			for(var/obj/item/O in I.storage.get_contents())
-				if (src.fits_in(O))
-					I.storage.transfer_stored_item(O, src, user = user)
-			user.visible_message("<b>[user.name]</b> dumps out [I] into [src].")
-			actions.interrupt(user, INTERRUPT_ACT)
-			src.update()
+		if (istype(I, /obj/item/handheld_vacuum) || istype(I, /obj/item/device/disposals_hijacker))
+			return
+		// Mousedropping storage items will dump the contents during MouseDrop_T instead
+		if (istype(I, /obj/item/storage/mechanics) || (islist(params) && params["dragged"]))
 			return
 
 		var/obj/item/magtractor/mag
@@ -216,14 +210,19 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 				if (istype(src, /obj/machinery/disposal/mail) && !GM.canRideMailchutes() || !src.fits_in(GM))
 					boutput(user, SPAN_ALERT("That won't fit!"))
 					return
+				if (GM.buckled || GM.anchored)
+					return
 				actions.start(new/datum/action/bar/icon/shoveMobIntoChute(src, GM, user), user)
-				qdel(G)
 		else
+			if (src._health < src._max_health && iswrenchingtool(I))
+				src.visible_message("[user] uses [I] to tighten the retaining screws on [src], repairing it.")
+				src._health = src._max_health // TODO: balance, actionbar
 			if (istype(mag))
 				actions.stopId(/datum/action/magPickerHold, user)
 			else if (!src.fits_in(I) || !user.drop_item())
 				return
 			I.set_loc(src)
+			src.play_item_insert_sound(I, user)
 			user.visible_message("[user.name] places \the [I] into \the [src].",\
 			"You place \the [I] into \the [src].")
 			actions.interrupt(user, INTERRUPT_ACT)
@@ -240,9 +239,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			return
 		if(user.restrained() && (user.pulled_by || length(user.grabbed_by)))
 			return
+		if (HAS_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE))
+			return
 		if (istype(target, /obj/machinery/bot))
 			var/obj/machinery/bot/bot = target
 			bot.set_loc(src)
+			src.play_item_insert_sound(bot, user)
 			return
 		if (iscritter(target))
 			var/obj/critter/corpse = target
@@ -250,11 +252,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 				corpse.set_loc(src)
 				user.visible_message("[user.name] places \the [corpse] into \the [src].")
 				actions.interrupt(user, INTERRUPT_ACT)
+				src.play_item_insert_sound(corpse)
 			return
 
 		if (isliving(target))
 			var/mob/living/mobtarget = target
-			if  (mobtarget.buckled || isAI(mobtarget))
+			if (mobtarget.buckled || isAI(mobtarget) || mobtarget.anchored)
 				return
 
 			if (istype(src, /obj/machinery/disposal/mail))
@@ -264,6 +267,33 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 					return
 
 			actions.start(new/datum/action/bar/icon/shoveMobIntoChute(src, mobtarget, user), user)
+
+		if (!target.storage)
+			return
+		else if (!length(target.storage.get_contents()))
+			boutput(user, SPAN_ALERT("There's nothing in [target] to empty out!"))
+			return
+		else if (!istype(target, /obj/item/storage/mechanics) && user.is_in_hands(target))
+			if(istype(target, /obj/item/storage/secure))
+				var/obj/item/storage/secure/secS = target
+				if (!src.fits_in(secS))
+					return
+				if(secS.locked)
+					user.visible_message("[user.name] places \the [secS] into \the [src].",\
+						"You place \the [secS] into \the [src].")
+					user.drop_item()
+					secS.set_loc(src)
+					actions.interrupt(user, INTERRUPT_ACT)
+					src.play_item_insert_sound(target)
+					src.update()
+					return
+			for(var/obj/item/O in target.storage.get_contents())
+				if (src.fits_in(O))
+					target.storage.transfer_stored_item(O, src, user = user)
+			user.visible_message("<b>[user.name]</b> dumps out [target] into [src].")
+			actions.interrupt(user, INTERRUPT_ACT)
+			src.update()
+			return
 
 	hitby(atom/movable/MO, datum/thrown_thing/thr)
 		if (!src.fits_in(MO))
@@ -287,11 +317,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			var/obj/item/I = MO
 			I.set_loc(src)
 			update()
+			src.play_item_insert_sound(I)
 			src.visible_message(SPAN_ALERT("\The [I] lands cleanly in \the [src]!"))
 
 		else if (istype(MO, /mob/living))
 			var/mob/living/H = MO
 			H.visible_message(SPAN_ALERT("<B>[H] falls into the disposal outlet!</B>"))
+			src.play_item_insert_sound(H)
 			logTheThing(LOG_COMBAT, H, "is thrown into a [src.name] at [log_loc(src)].")
 			H.set_loc(src)
 			if(prob(10) || H.bioHolder?.HasEffect("clumsy"))
@@ -488,31 +520,26 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		if(flush && MIXTURE_PRESSURE(air_contents) >= 2*ONE_ATMOSPHERE)	// flush can happen even without power
 			SPAWN(0) //Quit holding up the process you fucker
 				flush()
+		src.absorb_gas()
+		return
 
-		if(status & NOPOWER)			// won't charge if no power
-			return
+	proc/absorb_gas(var/datum/gas_mixture/env)
+		if(!src.loc) return // Nullspaced, no point in trying.
+		if(src.status & NOPOWER) return // Won't charge without power
+		if(src.mode != DISPOSAL_CHUTE_CHARGING)	return // if off or ready, no need to charge
 
-		if (!loc) return
-
-		if(mode != DISPOSAL_CHUTE_CHARGING)		// if off or ready, no need to charge
-			return
-
-		var/atom/L = loc						// recharging from loc turf
-		var/datum/gas_mixture/env = L.return_air()
-		if (!air_contents)
-			air_contents = new /datum/gas_mixture
+		env ||= src.loc.return_air()
+		src.air_contents ||= new /datum/gas_mixture
 		var/pressure_delta = (3.5 * ONE_ATMOSPHERE) - MIXTURE_PRESSURE(air_contents) // purposefully trying to overshoot the target of 2 atmospheres to make it faster
 
 		if(env.temperature > 0)
 			var/transfer_moles = src.repressure_speed * pressure_delta*air_contents.volume/(env.temperature * R_IDEAL_GAS_EQUATION)
-
 			//Actually transfer the gas
 			var/datum/gas_mixture/removed = env.remove(transfer_moles)
 			air_contents.merge(removed)
 
-
 		// if full enough, switch to ready mode
-		if(MIXTURE_PRESSURE(air_contents) >= 2*ONE_ATMOSPHERE)
+		if(MIXTURE_PRESSURE(air_contents) >= 2.5*ONE_ATMOSPHERE)
 			mode = DISPOSAL_CHUTE_CHARGED
 			power_usage = 100
 			update()
@@ -536,10 +563,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 
 		ZERO_GASES(src.air_contents)
 
-		sleep(1 SECOND)
-		playsound(src, 'sound/machines/disposalflush.ogg', 50, FALSE, 0)
-		sleep(0.5 SECONDS) // wait for animation to finish
-
+		if (!global.instant_pipe_network)
+			sleep(1 SECOND)
+			playsound(src, 'sound/machines/disposalflush.ogg', 50, FALSE, 0)
+			sleep(0.5 SECONDS) // wait for animation to finish
 
 		H.start(src) // start the holder processing movement
 		flushing = 0
@@ -576,6 +603,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		H.vent_gas(loc)
 		qdel(H)
 
+	proc/expel_contents()
+		var/obj/disposalholder/H = new /obj/disposalholder()
+		H.init(src)
+		src.expel(H)
+
 	custom_suicide = 1
 	suicide(var/mob/living/carbon/human/user as mob)
 		if (!istype(user) || !src.user_can_suicide(user))
@@ -600,10 +632,48 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		if (!direct)
 			return src.loc?.return_air()
 
+	/// Plays the item insert sound with variations depending on item. If user is given, plays localised and with a lower volume, to imply sneakyness
+	proc/play_item_insert_sound(var/thing, var/mob/user = null)
+		var/pitch = 1
+		var/volume = 50
+		if (isitem(thing))
+			var/obj/item/itm = thing
+			switch(itm.w_class)
+				if (W_CLASS_TINY)
+					pitch = 1.4
+					volume = 25
+				if (W_CLASS_SMALL)
+					pitch = 1.1
+					volume = 40
+				if (W_CLASS_BULKY)
+					pitch = 0.8
+					volume = 100
+				if (W_CLASS_HUGE)
+					pitch = 0.5
+					volume = 300
+				if (W_CLASS_GIGANTIC)
+					pitch = 0.3
+					volume = 300
+				if (W_CLASS_BUBSIAN)
+					pitch = 0.1
+					volume = 400
+		else if (iscritter(thing) || ismobcritter(thing))
+			pitch = 0.7
+			volume = 100
+		else if (ismob(thing))
+			pitch = 0.4
+			volume = 300
+		if (user)
+			volume = min(volume * 0.5, 20)
+			user.playsound_local(src.loc, "chute_insert", volume, 1, 0, pitch)
+		else
+			playsound(src, "chute_insert", volume, 1, 0, pitch)
+
 /obj/machinery/disposal/small
 	icon = 'icons/obj/disposal_small.dmi'
 	handle_normal_state = "disposal-handle"
 	density = 0
+	provides_grip = FALSE
 
 	north
 		dir = NORTH
@@ -624,6 +694,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	icon = 'icons/obj/disposal_small.dmi'
 	handle_normal_state = "brig-handle"
 	density = 0
+	provides_grip = FALSE
 
 	north
 		dir = NORTH
@@ -634,10 +705,38 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	west
 		dir = WEST
 
+/obj/machinery/disposal/ejection
+	name = "ejection chute"
+	desc = "A pneumatic delivery chute for ejecting things from a department."
+
+/obj/machinery/disposal/ejection/small
+	icon = 'icons/obj/disposal_small.dmi'
+	handle_normal_state = "disposal-handle"
+	density = 0
+	provides_grip = FALSE
+
+	north
+		dir = NORTH
+	east
+		dir = EAST
+	south
+		dir = SOUTH
+	west
+		dir = WEST
+
+/obj/machinery/disposal/ejection/space
+	desc = "A pneumatic delivery chute for sending things directly to the cold hard void of space."
+
 /obj/machinery/disposal/morgue
 	name = "morgue chute"
 	icon_state = "morguechute"
 	desc = "A pneumatic delivery chute for sending things directly to the morgue."
+	icon_style = "morgue"
+
+/obj/machinery/disposal/crematorium
+	name = "crematorium chute"
+	icon_state = "morguechute"
+	desc = "A pneumatic delivery chute for sending things directly to the crematorium."
 	icon_style = "morgue"
 
 /obj/machinery/disposal/sci
@@ -646,11 +745,35 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	desc = "A pneumatic delivery chute for sending completed research to the public."
 	icon_style = "sci"
 
+/obj/machinery/disposal/sci/monkey_dome
+	name = "monkey dome chute"
+	desc = "A pneumatic delivery chute for sending things directly to the monkey dome."
+
+/obj/machinery/disposal/sci/test_chamber
+	name = "test chamber chute"
+	desc = "A pneumatic delivery chute for sending things directly to the research test chamber."
+
 /obj/machinery/disposal/botany
 	name = "produce chute"
 	icon_state = "botanchute"
 	desc = "A pneumatic delivery chute for sending produce to the kitchen."
 	icon_style = "botan"
+
+/obj/machinery/disposal/kitchen
+	icon_state = "botanchute"
+	icon_style = "botan"
+
+/obj/machinery/disposal/kitchen/brig
+	name = "brig meal-line chute"
+	desc = "A pneumatic delivery chute for sending food to the brig."
+
+/obj/machinery/disposal/kitchen/cafeteria
+	name = "cafeteria meal-line chute"
+	desc = "A pneumatic delivery chute for sending food to the cafeteria."
+
+/obj/machinery/disposal/kitchen/freezer
+	name = "kitchen freezer chute"
+	desc = "A pneumatic delivery chute for sending \"food\" to the freezer."
 
 /obj/machinery/disposal/ore
 	name = "ore chute"
@@ -662,6 +785,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	icon = 'icons/obj/disposal_small.dmi'
 	handle_normal_state = "ore-handle"
 	density = 0
+	provides_grip = FALSE
 
 	north
 		dir = NORTH
@@ -944,12 +1068,17 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			if(target == user)
 				msg = "[user.name] climbs into the [chute]."
 				boutput(user, "You climb into the [chute].")
+
 			else if(target != user && !user.restrained())
+				chute.play_item_insert_sound(target)
 				msg = "[user.name] stuffs [target.name] into the [chute]!"
 				boutput(user, "You stuff [target.name] into the [chute]!")
 				if(istype(chute, /obj/machinery/disposal/brig))
 					user.unlock_medal("Suitable? How about the Oubliette?!", 1)
 				logTheThing(LOG_COMBAT, user, "places [constructTarget(target,"combat")] into [chute] at [log_loc(chute)].")
+				if (length(target.grabbed_by))
+					for (var/obj/item/grab/grab in target.grabbed_by)
+						qdel(grab)
 			else
 				..()
 				return
@@ -971,7 +1100,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			interrupt(INTERRUPT_ALWAYS)
 			return FALSE
 		return TRUE
-
 
 #undef DISPOSAL_REPAIR_STEP_FIXED
 #undef DISPOSAL_REPAIR_STEP_SCREWDRIVER

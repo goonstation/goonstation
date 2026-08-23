@@ -21,6 +21,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	var/operating = FALSE
 	var/operation_time = 1 SECOND
 	anchored = ANCHORED
+	layer = DOOR_LAYER
 	var/autoclose = FALSE
 	var/interrupt_autoclose = FALSE
 	var/last_used = 0
@@ -35,6 +36,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	var/has_crush = TRUE //flagged to true when the door has a secret admirer. also if the var == 1 then the door does have the ability to crush items.
 	var/close_trys = 0
 	var/autoclose_delay = 15 SECONDS
+	var/autoclose_timer = 0
 
 	var/health = 400
 	var/health_max = 400
@@ -105,7 +107,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		var/mob/living/carbon/human/H = user
 		if (isdead(H)) //No need to call for dead people!
 			return 0
-		if (H.get_brain_damage() >= 60)
+		if (H.get_brain_damage() >= BRAIN_DAMAGE_MAJOR)
 			// No text spam, please. Bumped() is called more than once by some doors, though.
 			// If we just return 0, they will be able to bump-open the door and get past regardless
 			// because mob paralysis doesn't take effect until the next tick.
@@ -171,7 +173,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	..()
 	UnsubscribeProcess()
 	AddComponent(/datum/component/mechanics_holder)
-	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", PROC_REF(toggleinput))
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle open/close", PROC_REF(mech_toggle))
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"open", PROC_REF(mech_open))
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"close", PROC_REF(mech_close))
 	AddComponent(/datum/component/bullet_holes, 15, src.hardened ? 999 : 5) // no bullet holes if hardened; wouldn't want to get their hopes up
 	src.update_nearby_tiles(need_rebuild=1)
 	START_TRACKING
@@ -195,16 +199,35 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	if(src.dir != NORTH)
 		garland.dir = src.dir
 
-/obj/machinery/door/proc/toggleinput()
-	if(src.cant_emag || (src.req_access && !(src.operating == -1)))
+/// Checks if we should listen to a mechcomp signal, and handles signal failure
+/// Returns -1 if door broke/inherently ignores mechcomp, 0 if access denied, 1 if successful
+/obj/machinery/door/proc/try_mech_signal(var/datum/mechanicsMessage/input)
+	. = DOOR_MECHCOMP_DENIED
+	if(src.cant_emag)
 		if (src.density) //only play if it's closed
 			play_animation("deny")
-		return
-	if(density)
-		open()
-	else
-		close()
-	return
+		return DOOR_MECHCOMP_FAILED
+	if(src.operating == -1)
+		return DOOR_MECHCOMP_FAILED
+	if(!src.req_access)
+		return DOOR_MECHCOMP_SUCCESS
+
+/obj/machinery/door/proc/mech_toggle(var/datum/mechanicsMessage/input)
+	if(src.try_mech_signal(input) == DOOR_MECHCOMP_SUCCESS)
+		if(src.density)
+			open()
+		else
+			close()
+
+/obj/machinery/door/proc/mech_open(var/datum/mechanicsMessage/input)
+	if(src.try_mech_signal(input) == DOOR_MECHCOMP_SUCCESS)
+		if(src.density)
+			open()
+
+/obj/machinery/door/proc/mech_close(var/datum/mechanicsMessage/input)
+	if(src.try_mech_signal(input) == DOOR_MECHCOMP_SUCCESS)
+		if(!src.density)
+			close()
 
 /obj/machinery/door/meteorhit(obj/M as obj)
 	if (isrestrictedz(src.z))
@@ -618,8 +641,19 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 			src.operating = 0
 
 /obj/machinery/door/proc/opened()
-	if(autoclose)
+	if(!autoclose)
+		return
+
+	// Create a local copy of the autoclose timer to detect changes if it has changed outside this proc
+	src.autoclose_timer = TIME
+	var/lcl_autoclose = src.autoclose_timer
+
+	while(autoclose && !density && !QDELETED(src))
 		sleep(src.autoclose_delay)
+
+		if(lcl_autoclose != src.autoclose_timer) //newer open command received,  don't autoclose
+			break
+
 		if(interrupt_autoclose)
 			interrupt_autoclose = 0
 		else
@@ -771,6 +805,7 @@ TYPEINFO(/obj/machinery/door/unpowered/wood)
 	anchored = ANCHORED
 	autoclose = TRUE
 	material_amt = 0.3
+	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_SCREWDRIVER | DECON_WIRECUTTERS
 	var/blocked = null
 	var/simple_lock = 0
 	var/lock_dir = null // what direction you can lock/unlock the door from

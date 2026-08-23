@@ -6,8 +6,8 @@
  */
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  content: (
+const PlaguebringerContentWindow = () => {
+  return (
     <div className="traitor-tips">
       <h1 className="center">You become a Plaguebringer!</h1>
       <p>1. Spread disease using your abilities</p>
@@ -37,5 +37,9 @@ export const acw: AlertContentWindow = {
         </a>
       </p>
     </div>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  component: PlaguebringerContentWindow,
 };

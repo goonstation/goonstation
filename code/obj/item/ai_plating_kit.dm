@@ -44,3 +44,9 @@ ABSTRACT_TYPE(/obj/item/ai_plating_kit)
 	desc = "A kit for putting the plating on an AI! It feels squishy."
 	icon_state = "kit_pumpkin"
 	skin = "pumpkin"
+
+/obj/item/ai_plating_kit/regal
+	name = "Regal AI Frame Plating Kit"
+	desc = "A kit for putting the plating on an AI! Fit for a monarch."
+	icon_state = "kit_regal"
+	skin = "regal"

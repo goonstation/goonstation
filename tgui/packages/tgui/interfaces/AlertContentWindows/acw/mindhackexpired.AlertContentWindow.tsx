@@ -6,9 +6,8 @@
  */
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  title: 'Mindhack Implant Expired!',
-  content: (
+const MindhackExpiredContentWindow = () => {
+  return (
     <div className="traitor-tips">
       <h1 className="center">You are no longer mindhacked!</h1>
       <p>
@@ -16,5 +15,10 @@ export const acw: AlertContentWindow = {
         obey your former mindhacker&apos;s orders.
       </p>
     </div>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  title: 'Mindhack Implant Expired!',
+  component: MindhackExpiredContentWindow,
 };

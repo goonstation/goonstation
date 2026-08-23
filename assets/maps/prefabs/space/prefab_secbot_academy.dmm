@@ -44,8 +44,8 @@
 /turf/simulated/floor/white,
 /area/prefab/secbot_academy)
 "cq" = (
-/obj/machinery/shower/puzzle,
 /obj/machinery/drainage,
+/obj/machinery/shower,
 /turf/simulated/floor/white,
 /area/prefab/secbot_academy)
 "cN" = (
@@ -60,10 +60,10 @@
 /turf/simulated/floor/sanitary,
 /area/prefab/secbot_academy)
 "cY" = (
-/obj/machinery/shower/puzzle{
+/obj/machinery/drainage,
+/obj/machinery/shower{
 	dir = 1
 	},
-/obj/machinery/drainage,
 /turf/simulated/floor/white,
 /area/prefab/secbot_academy)
 "du" = (
@@ -74,7 +74,7 @@
 /area/noGenerate)
 "dv" = (
 /obj/machinery/light/incandescent,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/prefab/secbot_academy)
 "dx" = (
 /turf/simulated/floor/sanitary,
@@ -204,7 +204,7 @@
 	},
 /area/prefab/secbot_academy)
 "ib" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	dir = 4;
 	name = "sink"
 	},
@@ -391,6 +391,10 @@
 	},
 /turf/simulated/floor/carpet/purple/fancy,
 /area/prefab/secbot_academy)
+"pH" = (
+/obj/machinery/loudspeaker,
+/turf/simulated/floor/wood/two,
+/area/prefab/secbot_academy)
 "pY" = (
 /obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk/auto,
@@ -434,7 +438,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "te" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /turf/simulated/floor/white,
@@ -459,7 +463,7 @@
 	name = "Personal wall locker";
 	spawn_contents = null
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/prefab/secbot_academy)
 "uY" = (
 /turf/simulated/floor/carpet/purple/fancy/edge/south,
@@ -510,7 +514,7 @@
 /area/noGenerate)
 "wS" = (
 /obj/potted_plant/potted_plant5,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/prefab/secbot_academy)
 "xl" = (
 /obj/mapping_helper/wingrille_spawn/auto/tuff,
@@ -520,7 +524,7 @@
 /obj/decal/poster/wallsign/poster_y4nt{
 	pixel_y = 32
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/prefab/secbot_academy)
 "xx" = (
 /turf/simulated/floor/blueblack{
@@ -563,13 +567,6 @@
 	dir = 1
 	},
 /turf/simulated/floor/sanitary,
-/area/prefab/secbot_academy)
-"Ai" = (
-/obj/item/wrestlingbell{
-	desc = "A bell used to signal the start and end of classes, wait a minute this is just a stolen wrestling bell!";
-	name = "School bell"
-	},
-/turf/simulated/wall/auto/supernorn,
 /area/prefab/secbot_academy)
 "Ar" = (
 /obj/machinery/door/unpowered/wood/stall,
@@ -653,7 +650,7 @@
 /area/prefab/secbot_academy)
 "FQ" = (
 /obj/mapping_helper/wingrille_spawn/auto/tuff,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/prefab/secbot_academy)
 "FY" = (
 /obj/cabinet/psychiatry,
@@ -695,6 +692,13 @@
 /obj/item/paper,
 /obj/item/pen,
 /turf/simulated/floor/wood,
+/area/prefab/secbot_academy)
+"HB" = (
+/obj/machinery/wrestlingbell{
+	desc = "A bell used to signal the start and end of classes, wait a minute this is just a stolen wrestling bell!";
+	name = "School bell"
+	},
+/turf/simulated/wall/auto/supernorn,
 /area/prefab/secbot_academy)
 "HL" = (
 /turf/simulated/floor/carpet/purple/fancy/edge/se,
@@ -978,11 +982,11 @@
 /turf/simulated/floor/wood,
 /area/prefab/secbot_academy)
 "SF" = (
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/prefab/secbot_academy)
 "SZ" = (
 /obj/machinery/light/small/floor,
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/prefab/secbot_academy)
 "Ti" = (
 /obj/stool/chair/comfy{
@@ -1038,7 +1042,7 @@
 	name = "Personal wall locker";
 	spawn_contents = null
 	},
-/turf/simulated/floor/darkblue/checker,
+/turf/simulated/floor/twotone/darkblue,
 /area/prefab/secbot_academy)
 "Vg" = (
 /obj/health_scanner/floor,
@@ -1116,10 +1120,6 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/noGenerate)
-"YS" = (
-/obj/loudspeaker,
-/turf/simulated/floor/wood/two,
-/area/prefab/secbot_academy)
 "Za" = (
 /obj/decal/tile_edge/stripe{
 	dir = 4
@@ -1570,7 +1570,7 @@ Hf
 IM
 Hf
 IM
-Ai
+HB
 Wc
 SF
 Wc
@@ -1744,7 +1744,7 @@ Uk
 Uk
 Uk
 Ek
-YS
+pH
 XC
 XC
 UO
@@ -1939,7 +1939,7 @@ Uk
 Uk
 Uk
 Ek
-YS
+pH
 XC
 XC
 Bj

@@ -2,6 +2,7 @@
 	id = ROLE_SPY_THIEF
 	display_name = "spy thief"
 	antagonist_icon = "spy_thief"
+	wiki_link = "https://wiki.ss13.co/Spy_Thief"
 
 	/// A list of mutable appearnces of items that this traitor has stolen using their uplink. This tracks items stolen with any uplink, so if a spy thief steals another spy thief's uplink, stolen items will show up here too!
 	/// Associative list of string names to mutable appearances
@@ -85,7 +86,7 @@
 			var/obj/item/uplink/integrated/pda/spy/uplink = new /obj/item/uplink/integrated/pda/spy(PDA)
 			uplink.setup(H.mind, PDA)
 
-			boutput(H, "The Syndicate have cunningly disguised a spy thief uplink as your [uplink_source.name] [loc_string]. Simply enter the the code <b>\"[uplink.lock_code]\"</b> as the ringtone in its Messenger app to unlock its hidden features.")
+			boutput(H, "The Syndicate have cunningly disguised a spy thief uplink as your [uplink_source.name] [loc_string]. Simply enter the code <b>\"[uplink.lock_code]\"</b> as the ringtone in its Messenger app to unlock its hidden features.")
 			logTheThing(LOG_DEBUG, H, "Spy Thief PDA uplink created: [uplink_source.name]. Location given: [loc_string]. Code: [uplink.lock_code]")
 			src.owner.store_memory("<b>Uplink password:</b> [uplink.lock_code].")
 
@@ -103,12 +104,6 @@
 	assign_objectives()
 		var/datum/objective_set/objective_set_path = pick(typesof(/datum/objective_set/spy_theft))
 		new objective_set_path(src.owner, src)
-
-	handle_round_end()
-		. = ..()
-
-		if (length(src.stolen_items) >= 7)
-			src.owner.current.unlock_medal("Professional Thief", TRUE)
 
 	get_statistics()
 		var/list/stolen_items = list()
@@ -140,12 +135,12 @@
 
 		return list(
 			list(
-				"name" = "Stolen Items",
+				"name" = "[length(stolen_items)] Stolen Items",
 				"type" = "itemList",
 				"value" = stolen_items,
 			),
 			list(
-				"name" = "Redeemed Items",
+				"name" = "[length(redeemed_items)] Redeemed Items",
 				"type" = "itemList",
 				"value" = redeemed_items,
 			),

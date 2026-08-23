@@ -41,6 +41,8 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	var/inert = 0
 
 	var/list/addiction_tally = null
+	/// Cache for misc addiction changes, this value will be added to every addiction's meter and then reset to 0 every life tick
+	var/addiction_cache = 0
 
 	var/tmp/list/datum/chemical_reaction/possible_reactions = list()
 	var/tmp/list/datum/chemical_reaction/active_reactions = list()
@@ -163,6 +165,8 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 		handle_reactions()
 
+	/// Removes a certain amount of reagents, prorated by their current volume. Returns the amount removed.
+	/// This simulates pouring fluids, and thus will often not completely remove any one reagent until the total volume approaches 0.
 	proc/remove_any(var/amount=1)
 		if(amount > total_volume) amount = total_volume
 		if(amount <= 0) return
@@ -179,11 +183,11 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 		return amount
 
-	proc/remove_any_to(var/amount=1)
+	proc/remove_any_to(var/amount=1, var/dontreact = FALSE)
 		if(amount > total_volume) amount = total_volume
 		if(amount <= 0) return
 
-		var/datum/reagents/R = new()
+		var/datum/reagents/R = new(amount)
 
 		var/remove_ratio = amount/total_volume
 
@@ -191,7 +195,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 			var/datum/reagent/current_reagent = reagent_list[reagent_id]
 			if(current_reagent)
 				var/transfer_amt = current_reagent.volume*remove_ratio
-				R.add_reagent(reagent_id, transfer_amt, current_reagent.data)
+				R.add_reagent(reagent_id, transfer_amt, current_reagent.data, src.total_temperature, dontreact)
 				src.remove_reagent(reagent_id, transfer_amt)
 
 		src.update_total()
@@ -222,6 +226,28 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		src.update_total()
 
 		return amount
+
+	/// Similar to remove_any, but a portion of the reagent is removed non-proportional to its volume.
+	/// This is useful when reagents are binary and simulating fluid mechanics fully is undesirable.
+	/// This is not intended for transferring reagents, there is no support for remembering the removed reagent amounts.
+	proc/consume_any(var/amount=1, var/consumption_ratio = 0.5, var/exception = null)
+		var/total_consumption_amount = amount * consumption_ratio
+		var/remove_amount = amount - total_consumption_amount
+		if (remove_amount > 0)
+			// little bit inefficient to call this rather than implement it in the loop below, but cleaner and probably not a performance issue
+			src.remove_any_except(remove_amount, exception)
+		if (total_consumption_amount <= 0)
+			return amount
+		if (length(reagent_list) <= 0)
+			return
+		var/consumption_per_reagent = total_consumption_amount / length(reagent_list)
+		for(var/reagent_id in reagent_list)
+			if (reagent_id == exception)
+				continue
+			var/datum/reagent/current_reagent = reagent_list[reagent_id]
+			if(current_reagent)
+				src.remove_reagent(reagent_id, consumption_per_reagent)
+
 
 	proc/get_master_reagent_name()
 		var/largest_name = null
@@ -299,20 +325,21 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 	/// index = which reagent to transfer (0 = all)
 	proc/trans_to(var/obj/target, var/amount=1, var/multiplier=1, var/do_fluid_react=1, var/index=0, var/exception=0)
-		if(amount > total_volume) amount = total_volume
-		if(amount <= 0) return
+		amount = clamp(amount, 0, total_volume)
+		if(amount <= CHEM_EPSILON) return
 		if(!target) return
+
+		amount = round(amount, CHEM_EPSILON)
+
+		if (do_fluid_react && issimulatedturf(target))
+			var/turf/simulated/T = target
+			return T.fluid_react(src, amount, index = index)
 
 		if (isnull(target.reagents))
 			target.create_reagents()
 
 		var/datum/reagents/target_reagents = target.reagents
-		amount = min(amount, target_reagents.maximum_volume - target_reagents.total_volume)
-		if(amount <= 0) return
-
-		if (do_fluid_react && issimulatedturf(target))
-			var/turf/simulated/T = target
-			return T.fluid_react(src, amount, index = index)
+		amount = clamp(amount, 0, target_reagents.maximum_volume - target_reagents.total_volume)
 
 		return trans_to_direct(target_reagents, amount, multiplier, index = index, exception = exception)
 
@@ -321,6 +348,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	proc/trans_to_direct(var/datum/reagents/target_reagents, var/amount=1, var/multiplier=1, var/update_target_reagents = 1, var/update_self_reagents = 1, var/index = 0, var/exception = null)
 		if (!target_reagents || !total_volume) //Wire & ZeWaka: Fix for Division by zero
 			return
+		amount = clamp(amount, 0, total_volume)
 		var/transfer_ratio = amount/total_volume
 
 		if(!index)
@@ -527,9 +555,11 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 			if (processing_reactions)
 				processing_reactions = 0
 				active_reagent_holders -= src
+				SEND_SIGNAL(src, COMSIG_REAGENTS_PROCESSING_REACTIONS_CHANGE)
 		else if (!processing_reactions)
 			processing_reactions = 1
 			active_reagent_holders += src
+			SEND_SIGNAL(src, COMSIG_REAGENTS_PROCESSING_REACTIONS_CHANGE)
 		return 1
 
 	proc/process_reactions()
@@ -584,6 +614,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		else if (!active_reactions.len && processing_reactions)
 			processing_reactions = 0
 			active_reagent_holders -= src
+			SEND_SIGNAL(src, COMSIG_REAGENTS_PROCESSING_REACTIONS_CHANGE)
 
 	proc/isolate_reagent(var/reagent)
 		for(var/current_id in reagent_list)
@@ -636,7 +667,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 					total_volume += current_reagent.volume
 		if(isitem(my_atom))
 			var/obj/item/I = my_atom
-			I.tooltip_rebuild = 1
+			I.tooltip_rebuild = TRUE
 		return 0
 
 	proc/clear_reagents()
@@ -696,13 +727,13 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 							boutput(H, SPAN_ALERT("You are scalded by the hot chemicals!"))
 							H.TakeDamage("head", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN) // lol this caused brute damage
 							H.emote("scream")
-							H.bodytemperature += clamp((temp_to_burn_with - (H.base_body_temp + (H.temp_tolerance * 4))) - 20, 5, 500)
+							H.changeBodyTemp(clamp((temp_to_burn_with - (H.base_body_temp + (H.temp_tolerance * 4))) - 20, 5, 500))
 					else if(temp_to_burn_with < H.base_body_temp - (H.temp_tolerance * 4) && !H.is_cold_resistant())
 						if (chem_helmet_check(H, "cold"))
 							boutput(H, SPAN_ALERT("You are frostbitten by the freezing cold chemicals!"))
 							H.TakeDamage("head", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN)
 							H.emote("scream")
-							H.bodytemperature -= clamp((H.base_body_temp - (H.temp_tolerance * 4)) - temp_to_burn_with - 20, 5, 500)
+							H.changeBodyTemp(-clamp((H.base_body_temp - (H.temp_tolerance * 4)) - temp_to_burn_with - 20, 5, 500))
 
 				for(var/current_id in reagent_list)
 					if (current_id == exception)
@@ -754,11 +785,11 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 							if(temp_to_burn_with > C.scald_temp() && !C.is_heat_resistant())
 								boutput(C, SPAN_ALERT("You scald yourself trying to consume the boiling hot substance!"))
 								C.TakeDamage("chest", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN)
-								C.bodytemperature += clamp((temp_to_burn_with - T0C) - 20, 5, 700)
+								C.changeBodyTemp(clamp((temp_to_burn_with - T0C) - 20, 5, 700))
 							else if(temp_to_burn_with < C.frostburn_temp() && !C.is_cold_resistant())
 								boutput(C, SPAN_ALERT("You frostburn yourself trying to consume the freezing cold substance!"))
 								C.TakeDamage("chest", 0, 7 * dmg_multiplier, 0, DAMAGE_BURN)
-								C.bodytemperature -= clamp((temp_to_burn_with - T0C) - 20, 5, 700)
+								C.changeBodyTemp(-clamp((temp_to_burn_with - T0C) - 20, 5, 700))
 
 
 				// These spawn calls were breaking stuff elsewhere. Since they didn't appear to be necessary and
@@ -869,6 +900,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	proc/remove_reagent(var/reagent, var/amount, var/update_total = 1, var/reagents_change = 1)
 
 		if(!isnum(amount)) return 1
+		amount = round(amount, CHEM_EPSILON)
 
 		if (istype(reagent, /datum/reagent))
 			CRASH("Attempt to remove reagent by ref")
@@ -878,7 +910,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		if(current_reagent)
 			current_reagent.volume -= amount
 			current_reagent.check_threshold()
-			if(current_reagent.volume <= 0 && (reagents_change || update_total))
+			if(current_reagent.volume <= CHEM_EPSILON && (reagents_change || update_total))
 				del_reagent(reagent)
 
 			if (update_total)
@@ -890,7 +922,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 	// removed a check if reagent_list existed here in the interest of performance
 	// if this happens again try to figure out why the fuck reagent_list would go null
-	proc/has_reagent(var/reagent, var/amount=0)
+	proc/has_reagent(var/reagent, var/amount=CHEM_EPSILON)
 		var/datum/reagent/current_reagent = reagent_list[reagent]
 		return current_reagent && current_reagent.volume >= amount
 
@@ -900,7 +932,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 				return TRUE
 		return FALSE
 
-	proc/has_active_reaction(var/reaction_id, var/amount=0)
+	proc/has_active_reaction(var/reaction_id, var/amount=CHEM_EPSILON)
 		for(var/datum/chemical_reaction/C in src.active_reactions)
 			if(C.id == reaction_id)
 				return C && C.result_amount >= amount
@@ -1204,7 +1236,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 		var/turf/T = length(covered) ? covered[1] : 0
 		var/mob/our_user = null
-		var/our_fingerprints = null
+		var/last_ckey = "None"
 
 		// Sadly, we don't automatically get a mob reference under most circumstances.
 		// If there's an existing lookup proc and/or better solution, I haven't found it yet.
@@ -1216,20 +1248,20 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 				our_user = my_atom.loc
 			else
 				our_user = usr
-				if (my_atom.fingerprintslast) // Our container. You don't necessarily have to pick it up to transfer stuff.
-					our_fingerprints = my_atom.fingerprintslast
-				else if (my_atom.loc.fingerprintslast) // Backpacks etc.
-					our_fingerprints = my_atom.loc.fingerprintslast
+				if (my_atom.get_last_ckey()) // Our container. You don't necessarily have to pick it up to transfer stuff.
+					last_ckey = my_atom.get_last_ckey()
+				else if (my_atom.loc.get_last_ckey()) // Backpacks etc.
+					last_ckey = my_atom.loc.get_last_ckey()
 
-		//DEBUG_MESSAGE("Heat-triggered smoke powder reaction: our user is [our_user ? "[our_user]" : "*null*"].[our_fingerprints ? " Fingerprints: [our_fingerprints]" : ""]")
+		//DEBUG_MESSAGE("Heat-triggered smoke powder reaction: our user is [our_user ? "[our_user]" : "*null*"].[last_ckey]")
 		if (our_user && ismob(our_user))
 			logTheThing(LOG_CHEMISTRY, our_user, "Smoke reaction ([my_atom ? log_reagents(my_atom) : log_reagents(src)]) at [T ? "[log_loc(T)]" : "null"].")
 			if(istype(src.my_atom, /obj/item/reagent_containers) && !locate(/obj/machinery/chem_dispenser) in get_turf(src.my_atom))
 				message_admins("[key_name(our_user)] caused a smoke reaction [my_atom ? log_reagents(my_atom) : log_reagents(src)] at [T ? "[log_loc(T)]" : "null"].")
 		else
-			logTheThing(LOG_CHEMISTRY, our_user, "Smoke reaction ([my_atom ? log_reagents(my_atom) : log_reagents(src)]) at [T ? "[log_loc(T)]" : "null"].[our_fingerprints ? " Container last touched by: [our_fingerprints]." : ""]")
-			if(our_fingerprints && istype(src.my_atom, /obj/item/reagent_containers) && !locate(/obj/machinery/chem_dispenser) in get_turf(src.my_atom))
-				message_admins("Smoke reaction [my_atom ? log_reagents(my_atom) : log_reagents(src)] at [T ? "[log_loc(T)]" : "null"]. Container last touched by: [key_name(our_fingerprints)].")
+			logTheThing(LOG_CHEMISTRY, our_user, "Smoke reaction ([my_atom ? log_reagents(my_atom) : log_reagents(src)]) at [T ? "[log_loc(T)]" : "null"]. Container last touched by: [replace_if_false(last_ckey, "None")]")
+			if(last_ckey && istype(src.my_atom, /obj/item/reagent_containers) && !locate(/obj/machinery/chem_dispenser) in get_turf(src.my_atom))
+				message_admins("Smoke reaction [my_atom ? log_reagents(my_atom) : log_reagents(src)] at [T ? "[log_loc(T)]" : "null"]. Container last touched by: [key_name(last_ckey)].")
 
 		if (classic)
 			classic_smoke_reaction(src, min(round(volume / 5), 4), location = my_atom ? get_turf(my_atom) : 0)
@@ -1238,6 +1270,14 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 	proc/is_airborne()
 		return FALSE
+
+	proc/on_forensic_scan_reagent(datum/forensic_scan/scan)
+		if(src.has_reagent("blood"))
+			var/datum/reagent/blood/B = src.reagent_list["blood"]
+			if (B && istype(B.data, /datum/bioHolder))
+				var/datum/bioHolder/BH = B.data
+				if (BH.Uid)
+					scan.add_text("[BH.Uid] (Reagents)", FORENSIC_HEADER_DNA)
 
 ///////////////////////////////////////////////////////////////////////////////////
 

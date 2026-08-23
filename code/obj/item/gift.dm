@@ -47,7 +47,7 @@
 						boutput(user, SPAN_NOTICE("You need more paper!"))
 						return
 					src.amount -= a_used
-					tooltip_rebuild = 1
+					tooltip_rebuild = TRUE
 					user.drop_item()
 					qdel(W)
 					var/obj/item/clothing/head/apprentice/A = new /obj/item/clothing/head/apprentice(src.loc)
@@ -57,6 +57,7 @@
 						user.u_equip(src)
 						var/obj/item/c_tube/C = new /obj/item/c_tube(src.loc)
 						user.put_in_hand_or_drop(C)
+						SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, C, user)
 						qdel(src)
 					return
 			if(istype(W, /obj/item/phone_handset/))
@@ -68,7 +69,7 @@
 				return
 			else
 				src.amount -= a_used
-				tooltip_rebuild = 1
+				tooltip_rebuild = TRUE
 				user.drop_item()
 				var/obj/item/gift/G = W.gift_wrap(src.style)
 				G.add_fingerprint(user)
@@ -80,6 +81,7 @@
 				user.u_equip(src)
 				var/obj/item/c_tube/C = new /obj/item/c_tube(src.loc)
 				user.put_in_hand_or_drop(C)
+				SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, C, user)
 				qdel(src)
 				return
 		else
@@ -101,7 +103,7 @@
 			var/obj/spresent/present = new /obj/spresent (target.loc)
 			present.icon_state = "strange-[src.style]"
 			src.amount -= 2
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 
 			target.set_loc(present)
 		else
@@ -141,8 +143,14 @@
 
 
 	modify_christmas_cheer(2)
+	SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, src.gift, user)
 	qdel(src)
 	return
+
+/obj/item/gift/proc/item_moved(obj/item/item)
+	if (item.loc != src)
+		UnregisterSignal(item, COMSIG_MOVABLE_SET_LOC)
+		qdel(src)
 
 /obj/item/a_gift
 	name = "gift"
@@ -206,6 +214,7 @@
 	M.u_equip(src)
 	M.put_in_hand_or_drop(prize)
 	modify_christmas_cheer(2)
+	SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, prize, M)
 	qdel(src)
 
 /obj/item/a_gift/ex_act()
@@ -330,7 +339,8 @@ var/global/list/generic_gift_paths = list(/obj/item/basketball,
 	/obj/item/storage/pill_bottle/cyberpunk,
 	/obj/item/toy/sword,
 	/obj/item/stg_box,
-	/obj/item/clothing/suit/jacket/plastic/random_color)
+	/obj/item/clothing/suit/jacket/plastic/random_color,
+	/obj/item/record/lay_egg_is_true)
 
 var/global/list/questionable_generic_gift_paths = list(/obj/item/relic,
 	/obj/item/stimpack,

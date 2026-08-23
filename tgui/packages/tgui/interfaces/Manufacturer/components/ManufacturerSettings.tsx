@@ -69,7 +69,7 @@ export const ManufacturerSettings = (props: ManufacturerSettingsProps) => {
                   maxValue={max_speed}
                   step={1}
                   stepPixelSize={50}
-                  onChange={(_e: any, value: number) => onSpeedSet(value)}
+                  onChange={(_e, value) => onSpeedSet(value)}
                 />
               </Stack.Item>
               <Stack.Item>

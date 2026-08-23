@@ -207,7 +207,7 @@ ADMIN_INTERACT_PROCS(/obj/item/chem_grenade, proc/arm, proc/explode)
 	else
 		src.grenade_time += src.interval_grenade_time
 	boutput(user, SPAN_NOTICE("You set [src] to detonate in [src.grenade_time / (1 SECOND)] seconds."))
-	src.tooltip_rebuild = 1
+	src.tooltip_rebuild = TRUE
 	return TRUE
 
 
@@ -219,6 +219,7 @@ ADMIN_INTERACT_PROCS(/obj/item/chem_grenade, proc/arm, proc/explode)
 // If it's not, the foam resp. smoke reaction occurs prematurely without carrying the target reagents with them.
 
 TYPEINFO(/obj/item/chem_grenade/custom)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal_dense" = 4,
 				"energy" = 2)
 /obj/item/chem_grenade/custom
@@ -227,7 +228,6 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 	desc = "A kit for the construction of a chemical grenade. Use it in hand to begin assembling it."
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state_armed = "grenade-chem-armed"
-	is_syndicate = 1
 	/// maximum beaker size when assemblying beaker into custom grenades
 	var/custom_grenade_max_beaker_volume = 50
 	/// the stage of the current assembly
@@ -315,7 +315,7 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 	src.AddComponent(/datum/component/assembly, list(/obj/item/reagent_containers/glass), PROC_REF(chem_grenade_filling), TRUE)
 	// unsecured grenade + wrench -> disassembling of the grenade
 	src.AddComponent(/datum/component/assembly, TOOL_WRENCHING, PROC_REF(disassembly_filled), FALSE)
-	src.tooltip_rebuild = 1
+	src.tooltip_rebuild = TRUE
 
 /// chem grenade filling proc
 /obj/item/chem_grenade/custom/proc/chem_grenade_filling(var/atom/to_combine_atom, var/mob/user)
@@ -353,7 +353,7 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 	src.icon_state = "grenade-chem3"
 	src.desc = "A chemical grenade. Use it to unleash chemicals over whoever you see fit."
 	src.stage = 2
-	src.tooltip_rebuild = 1
+	src.tooltip_rebuild = TRUE
 	//Since we changed the state, remove all assembly components and add the next state ones
 	src.RemoveComponentsOfType(/datum/component/assembly)
 	// completed grenade + screwdriver -> adjusting of the arming time
@@ -379,7 +379,7 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 	src.grenade_time = src.grenade_time_standard
 	//Since we changed the state, remove all assembly components
 	src.RemoveComponentsOfType(/datum/component/assembly)
-	src.tooltip_rebuild = 1
+	src.tooltip_rebuild = TRUE
 	return TRUE
 
 
@@ -448,6 +448,8 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 /obj/item/chem_grenade/fcleaner
 	name = "cleaner grenade"
 	desc = "BLAM!-brand foaming space cleaner. In a special applicator for rapid cleaning of wide areas."
+	SYNDICATE_STEALTH_DESCRIPTION("You struggle to keep a good grip on it.")
+	tooltip_flags = REBUILD_USER
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "cleaner"
 	icon_state_armed = "cleaner1"
@@ -467,6 +469,7 @@ TYPEINFO(/obj/item/chem_grenade/custom)
 	src.beakers += B2
 
 TYPEINFO(/obj/item/chem_grenade/flashbang)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 6
 
 /obj/item/chem_grenade/flashbang
@@ -475,7 +478,6 @@ TYPEINFO(/obj/item/chem_grenade/flashbang)
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "flashbang"
 	icon_state_armed = "flashbang1"
-	is_syndicate = 1
 	is_dangerous = FALSE
 
 /obj/item/chem_grenade/flashbang/New()
@@ -499,7 +501,7 @@ TYPEINFO(/obj/item/chem_grenade/flashbang)
 
 
 TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
-	mats = null
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/item/chem_grenade/flashbang/revolution //convertssss
 
@@ -600,7 +602,7 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 
 /obj/item/chem_grenade/pepper
 	name = "crowd dispersal grenade"
-	desc = "An non-lethal grenade for use against protests, riots, vagrancy and loitering. Not to be used as a food additive."
+	desc = "A non-lethal grenade for use against protests, riots, vagrancy and loitering. Not to be used as a food additive."
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "pepper"
 	icon_state_armed = "pepper1"

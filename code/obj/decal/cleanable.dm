@@ -691,7 +691,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		return 0
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/sponge) || istype(W, /obj/item/mop))
+		if (istype(W, /obj/item/sponge) || istype(W, /obj/item/mop) || (W.is_open_container() && W.reagents))
 			..()
 		else
 			src.loc.Attackby(user.equipped(), user)
@@ -718,6 +718,17 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	var/color_name = null
 	var/artist = null//the key of the one who wrote it
 	real_name = "writing"
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/pen)) // stop artist chatspamming everyone
+			var/hits = src
+			if (!src.name && isobj(src))
+				var/obj/self = src
+				hits = "\the [self.real_name]"
+			boutput(user, SPAN_COMBAT("<B>[user] hits [hits] with [W]!</B>"))
+			return
+		. = ..()
+
 
 	get_desc(dist)
 		. = "<br>[SPAN_NOTICE("It says[src.material ? src.material : src.color_name ? " in [src.color_name]" : null]:")]<br>[words]"
@@ -747,80 +758,6 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	infra_luminosity = 4
 	invisibility = INVIS_INFRA
 	font_color = "#D20040"
-
-/obj/decal/cleanable/writing/postit
-	name = "sticky note"
-	desc = "Someone's stuck a little note here."
-	icon_state = "postit"
-	random_icon_states = list()
-	color = null
-	words = ""
-	var/max_message = 128
-
-	New()
-		..()
-		pixel_y += rand(-12,12)
-		pixel_x += rand(-12,12)
-
-	attackby(obj/item/W, mob/living/user)
-		if (istype(W, /obj/item/stamp))
-
-			var/obj/item/stamp/S = W
-			switch (S.current_mode)
-				if ("Granted")
-					src.icon_state = "postit-approved"
-				if ("Denied")
-					src.icon_state = "postit-rejected"
-				if ("Void")
-					src.icon_state = "postit-void"
-				if ("X")
-					src.icon_state = "postit-x"
-				else
-					boutput(user, "It doesn't look like that kind of stamp fits here...")
-					return
-
-			// words here, info there, result is same: SCREEAAAAAAAMMMMMMMMMMMMMMMMMMM
-			src.words += "<br>\[[S.current_mode]\]<br>"
-			boutput(user, SPAN_NOTICE("You stamp \the [src]."))
-
-
-		else if (istype(W, /obj/item/pen))
-			if(!user.literate)
-				boutput(user, SPAN_ALERT("You don't know how to write."))
-				return ..()
-			var/obj/item/pen/pen = W
-			pen.in_use = 1
-			var/t = input(user, "What do you want to write?", null, null) as null|text
-			if (!t)
-				pen.in_use = 0
-				return
-			if ((length(src.words) + length(t)) > src.max_message)
-				user.show_text("All that won't fit on [src]!", "red")
-				pen.in_use = 0
-				return
-			logTheThing(LOG_STATION, user, "writes on [src] with [pen] at [log_loc(src)]: [t]")
-			t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
-			if (pen.uses_handwriting && user?.mind?.handwriting)
-				src.font = user.mind.handwriting
-				src.webfont = 1
-			else if (pen.font)
-				src.font = pen.font
-				if (pen.webfont)
-					src.webfont = 1
-			if (src.words)
-				src.words += "<br>"
-			if (src.icon_state == initial(src.icon_state))
-				var/search_t = lowertext(t)
-				if (copytext(search_t, -1) == "?")
-					src.icon_state = "postit-quest"
-				else if (copytext(search_t, -1) == "!")
-					src.icon_state = "postit-excl"
-				else
-					src.icon_state = "postit-writing"
-			src.words += "[t]"
-			pen.in_use = 0
-		else
-			return ..()
 
 /obj/decal/cleanable/water
 	name = "water"
@@ -1154,6 +1091,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	desc = "A fungal growth. Looks pretty nasty."
 	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "fungus1"
+	default_material = "mycelium"
 	var/amount = 1
 	can_sample = 1
 	sample_reagent = "space_fungus"
@@ -1361,6 +1299,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	sample_reagent = "salt"
 	sample_verb = "scrape"
 	var/health = 30
+	var/bump_stacks = 0
 
 	New()
 		..()
@@ -1376,6 +1315,27 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		var/turf/T = get_turf(src)
 		if (T)
 			updateSurroundingSalt(T)
+
+	/// When a wraith or similar bumps into this, returns TRUE if destroyed
+	proc/wraith_bump(mob/living/intangible/wraith/wraith)
+		if (ON_COOLDOWN(src, "wraith_bumped", 1 SECOND))
+			return
+		hit_twitch(src)
+		src.bump_stacks += 1
+		if (src.bump_stacks >= 3)
+			new /obj/effects/impact_energy/smoke(get_turf(src))
+			qdel(src)
+			boutput(wraith, SPAN_NOTICE("You force your way past the holy barrier, losing some of your life force in the process."))
+			return TRUE
+		global.processing_items |= src
+		boutput(wraith, SPAN_NOTICE("The salt stings, but it gives a little as you exert your will against it..."))
+		return FALSE
+
+	process()
+		if (!GET_COOLDOWN(src, "wraith_bumped"))
+			src.bump_stacks -= 1
+			if (src.bump_stacks <= 0)
+				global.processing_items -= src
 
 	Crossed(atom/movable/AM as mob|obj)
 		..()

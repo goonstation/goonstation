@@ -59,7 +59,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 	return FALSE
 
 /obj/machinery/recharge_station/relaymove(mob/user as mob)
-	if (src.conversion_chamber && !isrobot(user))
+	if (src.conversion_chamber && !isrobot(user) && !isshell(user))
 		boutput(user, SPAN_ALERT("You're trapped inside!"))
 		return
 	src.go_out()
@@ -139,11 +139,10 @@ TYPEINFO(/obj/machinery/recharge_station)
 
 	else if (istype(W, /obj/item/cable_coil))
 		var/obj/item/cable_coil/C = W
-		src.cabling += C.amount
-		boutput(user, "You insert [W]. [src] now has [src.cabling] cable available.")
-		if (user.contents.Find(W))
-			user.drop_item()
-		qdel(W)
+		var/cable_amount = C.amount
+		if (C.use(C.amount))
+			src.cabling += cable_amount
+			boutput(user, "You insert [W]. [src] now has [src.cabling] cable available.")
 
 	//this is defined here instead of just using OPENCONTAINER because we want to be able to dump large amounts of reagents at once
 	else if (istype(W, /obj/item/reagent_containers/glass) || istype(W, /obj/item/reagent_containers/food/drinks))
@@ -244,7 +243,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			if (isunconscious(user))
 				return
 			else
-				user.visible_message("<b>[user]</b> moves [R] into  [src].")
+				user.visible_message("<b>[user]</b> moves [R] into [src].")
 		R.remove_pulling()
 		R.set_loc(src)
 		src.occupant = R
@@ -276,9 +275,10 @@ TYPEINFO(/obj/machinery/recharge_station)
 		actions.start(try_convert, user)
 
 /obj/machinery/recharge_station/receive_silicon_hotkey(mob/user)
-	. = ..()
+	if(..())
+		return
 
-	if (!isAI(user))
+	if (!isAI(user)) // this is AI only
 		return
 
 	var/mob/living/silicon/ai/mainframe = null
@@ -429,6 +429,9 @@ TYPEINFO(/obj/machinery/recharge_station)
 	if (src.occupant)
 		boutput(usr, SPAN_ALERT("\The [src] is already occupied!"))
 		return
+	if(ishuman(usr))
+		src.move_human_inside(usr, usr)
+		return
 	usr.remove_pulling()
 	usr.set_loc(src)
 	src.occupant = usr
@@ -436,11 +439,13 @@ TYPEINFO(/obj/machinery/recharge_station)
 	src.add_fingerprint(usr)
 	src.UpdateIcon()
 
+TYPEINFO(/obj/machinery/recharge_station/syndicate)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/machinery/recharge_station/syndicate
 	conversion_chamber = 1
-	is_syndicate = 1
 	anchored = UNANCHORED
 	p_class = 1.5
+	SYNDICATE_STEALTH_DESCRIPTION("It is full of sharp instruments designed to tear open human flesh.")
 
 /obj/machinery/recharge_station/syndicate/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W))
@@ -703,7 +708,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			R.real_name = "[newname]"
 			R.UpdateName()
 			if (R.internal_pda)
-				R.internal_pda.name = "[R.name]'s Internal PDA Unit"
+				R.internal_pda.name = "[R.name]’s Internal PDA Unit"
 				R.internal_pda.owner = "[R.name]"
 			. = TRUE
 		if("occupant-eject")
@@ -874,6 +879,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			for (var/obj/item/parts/robot_parts/RP in R.contents)
 				RP.ropart_mend_damage(usage, 0)
 			src.reagents.remove_reagent("fuel", usage)
+			health_update_queue |= R
 			R.update_appearance()
 			. = TRUE
 
@@ -894,6 +900,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			src.cabling -= usage
 			if (src.cabling < 0)
 				src.cabling = 0
+			health_update_queue |= R
 			R.update_appearance()
 			. = TRUE
 

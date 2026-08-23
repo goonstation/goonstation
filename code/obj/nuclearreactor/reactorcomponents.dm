@@ -2,6 +2,9 @@
 // Defintion for the nuclear reactor engine internal components
 // ----------------------------------------------------- //
 
+// Melting point for materials without a melting point. 1700K is the melting point of steel.
+#define MELTING_POINT_DEFAULT 1700 KELVIN
+
 ABSTRACT_TYPE(/obj/item/reactor_component)
 /obj/item/reactor_component //base component
 	name = "base reactor component"
@@ -33,8 +36,6 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	var/melt_health = 100
 	///If this component is melted, you can't take it out of the reactor and it might do some weird stuff
 	var/melted = FALSE
-	/// The dangerous temperature above which this component starts to melt. 1700K is the melting point of steel
-	var/melting_point = 1700
 	/// INTERNAL: cache of base64 encoded UI icons, so we don't have to store one copy for every component, just the types
 	var/static/list/ui_image_base64_cache = list()
 	/// How much gas this component can hold, and will be processed per tick
@@ -86,7 +87,8 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 						if(BLEND_MULTIPLY) icon_mode = ICON_MULTIPLY
 						if(BLEND_INSET_OVERLAY) icon_mode = ICON_OVERLAY
 
-					src.cap_icon.Blend(getTexturedIcon(src.cap_icon, mat1.getTexture()), icon_mode)
+					var/icon/tex = GetTexturedIcon(src.cap_icon, mat1.getTexture())
+					src.cap_icon.Blend(tex, icon_mode)
 
 				if(length(setcolor) > 4) //ie, if it's a color matrix
 					src.cap_icon.MapColors(arglist(setcolor))
@@ -98,9 +100,10 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 			return
 		src.melted = TRUE
 		src.name = "melted "+src.name
+		src.icon_state = "fuel_rod_melted"
 		src.icon_state_cap += "_melted_[rand(1,4)]"
 		src.setMaterial(src.material, TRUE, FALSE, FALSE)
-		var/obj/machinery/atmospherics/binary/nuclear_reactor/parent = src.loc
+		var/obj/machinery/nuclear_reactor/parent = src.loc
 		if(istype(parent))
 			parent.MarkGridForUpdate()
 			parent.UpdateIcon()
@@ -133,7 +136,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 			RC.material_trigger_on_temp(RC.temperature)
 			src.material_trigger_on_temp(src.temperature)
 		//heat transfer with reactor vessel
-		var/obj/machinery/atmospherics/binary/nuclear_reactor/holder = src.loc
+		var/obj/machinery/nuclear_reactor/holder = src.loc
 		if(istype(holder))
 			var/deltaT = src.temperature - holder.temperature
 			var/k = calculateHeatTransferCoefficient(holder.material,src.material)
@@ -145,11 +148,17 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 
 			holder.material_trigger_on_temp(holder.temperature)
 			src.material_trigger_on_temp(src.temperature)
-		if((src.temperature > src.melting_point) && (src.melt_health > 0))
+		var/melting_point = src.get_melting_point()
+		if((src.temperature > melting_point) && (src.melt_health > 0))
 			src.melt_health -= rand(10,50)
 		if(src.melt_health <= 0)
 			src.melt() //oh no
 
+	proc/get_melting_point()
+		var/melting_point = src.material?.getProperty("melting_point", VALUE_CURRENT)
+		if(melting_point == INFINITY || melting_point == 0)
+			melting_point = MELTING_POINT_DEFAULT
+		return melting_point
 
 	proc/processNeutrons(var/list/datum/neutron/inNeutrons)
 		for(var/datum/neutron/N as anything in inNeutrons)
@@ -247,7 +256,6 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 /obj/item/reactor_component/fuel_rod/glowsticks
 	name = "makeshift fuel rod"
 	desc = "A fuel rod fo- hey this is just a squashed glowstick!"
-	melting_point = T0C+400 //plastic glowsticks melt easy
 
 	New(material)
 		if(isnull(material))
@@ -459,6 +467,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 		15;"frozenfart",\
 		5;"negativematter",\
 		5;"plutonium",\
+		5;"yuranite",\
 		100; "glowstick"
 
 /obj/item/reactor_component/fuel_rod/random_material
@@ -475,3 +484,4 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 		..(pick(SANE_COMPONENT_MATERIALS))
 
 #undef SANE_COMPONENT_MATERIALS
+#undef MELTING_POINT_DEFAULT

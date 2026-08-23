@@ -1,0 +1,28 @@
+# Skulls
+
+/obj/item/skull/strange : /obj/item/skull/hunter{@OLD}
+/obj/item/skull/peculiar : /obj/item/skull/wizard{@OLD}
+/obj/item/skull/noface : /obj/item/skull/cluwne{@OLD}
+/obj/item/skull/crystal : /obj/item/skull/omnitraitor{@OLD}
+/obj/item/skull/gold : /obj/item/skull/macho{@OLD}
+/obj/item/skull/odd : /obj/item/skull/changeling{@OLD}
+/obj/item/skull/menacing : /obj/item/skull/vampire{@OLD}
+
+# Chalices
+
+/obj/item/reagent_containers/food/drinks/skull_chalice/strange : /obj/item/reagent_containers/food/drinks/skull_chalice/hunter{@OLD}
+/obj/item/reagent_containers/food/drinks/skull_chalice/odd : /obj/item/reagent_containers/food/drinks/skull_chalice/changeling{@OLD}
+/obj/item/reagent_containers/food/drinks/skull_chalice/peculiar : /obj/item/reagent_containers/food/drinks/skull_chalice/wizard{@OLD}
+/obj/item/reagent_containers/food/drinks/skull_chalice/menacing : /obj/item/reagent_containers/food/drinks/skull_chalice/vampire{@OLD}
+/obj/item/reagent_containers/food/drinks/skull_chalice/crystal : /obj/item/reagent_containers/food/drinks/skull_chalice/omnitraitor{@OLD}
+/obj/item/reagent_containers/food/drinks/skull_chalice/gold : /obj/item/reagent_containers/food/drinks/skull_chalice/macho{@OLD}
+/obj/item/reagent_containers/food/drinks/skull_chalice/noface : /obj/item/reagent_containers/food/drinks/skull_chalice/cluwne{@OLD}
+
+# Skullbots
+
+/obj/machinery/bot/skullbot/crystal : /obj/machinery/bot/skullbot/omnitraitor{@OLD}
+/obj/machinery/bot/skullbot/strange : /obj/machinery/bot/skullbot/hunter{@OLD}
+/obj/machinery/bot/skullbot/peculiar : /obj/machinery/bot/skullbot/wizard{@OLD}
+/obj/machinery/bot/skullbot/odd : /obj/machinery/bot/skullbot/changeling{@OLD}
+/obj/machinery/bot/skullbot/faceless : /obj/machinery/bot/skullbot/cluwne{@OLD}
+/obj/machinery/bot/skullbot/gold : /obj/machinery/bot/skullbot/macho{@OLD}

@@ -10,7 +10,6 @@
 	rand_pos = 0
 	c_flags = ONBELT
 	wear_layer = MOB_BELT_LAYER
-	force = 3
 	var/obj/item/card/id/ID_card = null // slap an ID card into that thang
 	var/datum/db_record/accessed_record = null // the bank account on the id card
 	var/obj/item/pen = null // slap a pen into that thang
@@ -45,7 +44,6 @@
 	var/linkbg_color = "#565D4B"
 	///is the background colour of this PDA locked due to annoying propreitary software
 	var/locked_bg_color = FALSE
-	var/graphic_mode = 0
 
 	var/screen_x = 0
 	var/screen_y = 0
@@ -57,15 +55,15 @@
 	var/setup_system_os_path = /datum/computer/file/pda_program/os/main_os //Needs an operating system to...operate!!
 	var/setup_scanner_on = 1 //Do we search the cart for a scanprog to start loaded?
 	var/setup_default_module = /obj/item/device/pda_module/flashlight //Module to have installed on spawn.
-	var/mailgroups = list(MGO_STAFF,MGD_PARTY) //What default mail groups the PDA is part of.
+	var/mailgroups = list(MGD_PARTY) //What default mail groups the PDA is part of.
 	var/default_muted_mailgroups = list() //What mail groups should the PDA ignore by default
 	var/reserved_mailgroups = list( // Job-specific mailgroups that cannot be joined or left
 		// Departments
-		MGD_COMMAND, MGD_SECURITY, MGD_MEDBAY, MGD_MEDRESEACH, MGD_SCIENCE, MGD_CARGO, MGD_STATIONREPAIR, MGD_BOTANY, MGD_MINING, MGD_KITCHEN, MGD_SPIRITUALAFFAIRS,
-		// Other
-		MGO_STAFF, MGO_AI, MGO_SILICON, MGO_JANITOR, MGO_ENGINEER,
+		MGD_COMMAND, MGD_SECURITY, MGD_MEDICAL, MGD_RESEARCH, MGD_ENGINEER, MGD_SUPPLY, MGD_CIVILIAN, MGD_SILICON,
+		// Teams
+		MGT_GENETICS, MGT_ROBOTICS, MGT_PHARMACY, MGT_CARGO, MGT_MINING, MGT_CATERING, MGT_HYDROPONICS, MGT_JANITOR, MGT_SPIRITUALAFFAIRS, MGT_AI,
 		// Alerts
-		MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_ENGINE, MGA_RKIT, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_CRISIS, MGA_TRACKING, MGA_SYNDICATE
+		MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_ENGINE, MGA_RKIT, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_CHEMREQUEST, MGA_CRISIS, MGA_TRACKING, MGA_SYNDICATE
 	)
 	var/alertgroups = list(MGA_MAIL, MGA_RADIO) // What mail groups that we're not a member of should we be able to mute?
 	var/bombproof = 0 // can't be destroyed with detomatix
@@ -89,7 +87,9 @@
 																	MGA_SALES = null,\
 																	MGA_SHIPPING = null,\
 																	MGA_CARGOREQUEST = null,\
+																	MGA_CHEMREQUEST = null,\
 																	MGA_CRISIS = null,\
+																	MGA_PLUMBING = null,\
 																	MGA_RADIO = null)
 
 	/// mailgroup-specific ringtones, added on the fly!
@@ -104,68 +104,8 @@
  *	Types of pda, for the different jobs and stuff
  */
 /obj/item/device/pda2
-	captain
-		icon_state = "pda-c"
-		setup_default_pen = /obj/item/pen/fancy
-		setup_default_cartridge = /obj/item/disk/data/cartridge/captain
-		setup_drive_size = 32
-		mailgroups = list(MGD_COMMAND,MGD_PARTY)
 
-	heads
-		icon_state = "pda-h"
-		setup_default_pen = /obj/item/pen/fancy
-		setup_default_cartridge = /obj/item/disk/data/cartridge/head
-		setup_drive_size = 32
-		mailgroups = list(MGD_COMMAND,MGD_PARTY)
-
-	hop
-		icon_state = "pda-hop"
-		setup_default_pen = /obj/item/pen/fancy
-		setup_default_cartridge = /obj/item/disk/data/cartridge/hop
-		setup_drive_size = 32
-		mailgroups = list(MGD_COMMAND,MGD_PARTY)
-
-	hos
-		icon_state = "pda-hos"
-		setup_default_pen = /obj/item/pen/fancy
-		setup_default_cartridge = /obj/item/disk/data/cartridge/hos
-		setup_default_module = /obj/item/device/pda_module/alert
-		setup_drive_size = 32
-		mailgroups = list(MGD_SECURITY,MGD_COMMAND,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_CRISIS, MGA_TRACKING)
-
-	ntso
-		icon_state = "pda-nt"
-		setup_default_pen = /obj/item/pen/fancy
-		setup_default_cartridge = /obj/item/disk/data/cartridge/hos //hos cart gives access to manifest compared to regular sec cart, useful for NTSO
-		setup_default_module = /obj/item/device/pda_module/alert
-		setup_drive_size = 32
-		mailgroups = list(MGD_SECURITY,MGD_COMMAND,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_CRISIS, MGA_TRACKING)
-
-
-	ntofficial
-		icon_state = "pda-nt"
-		setup_default_pen = /obj/item/pen/fancy
-		setup_default_cartridge = /obj/item/disk/data/cartridge/head
-		setup_drive_size = 32
-		mailgroups = list(MGD_COMMAND,MGD_PARTY)
-
-	nt_medical
-		icon_state = "pda-nt"
-		setup_default_pen = /obj/item/pen/fancy
-		setup_default_cartridge = /obj/item/disk/data/cartridge/medical_director
-		setup_drive_size = 32
-		mailgroups = list(MGD_MEDBAY,MGD_COMMAND,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS)
-
-	nt_engineer
-		icon_state = "pda-nt"
-		setup_default_cartridge = /obj/item/disk/data/cartridge/chiefengineer
-		setup_default_module = /obj/item/device/pda_module/tray
-		mailgroups = list(MGO_ENGINEER,MGD_STATIONREPAIR,MGD_CARGO,MGD_COMMAND,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS, MGA_RKIT)
-
+	// Silicons
 
 	ai
 		icon_state = "pda-h"
@@ -176,95 +116,211 @@
 		bombproof = 1
 		mailgroups = list( // keep in sync with the list of reserved mail groups
 			// Departments
-			MGD_COMMAND, MGD_SECURITY, MGD_MEDBAY, MGD_MEDRESEACH, MGD_SCIENCE, MGD_CARGO, MGD_MINING, MGD_STATIONREPAIR, MGD_BOTANY, MGD_KITCHEN, MGD_SPIRITUALAFFAIRS,
-			// Other
-			MGO_STAFF, MGO_AI, MGO_SILICON, MGO_JANITOR, MGO_ENGINEER,
-			// start in party line by default
-			MGD_PARTY,
+			MGD_COMMAND, MGD_SECURITY, MGD_MEDICAL, MGD_RESEARCH, MGD_ENGINEER, MGD_SUPPLY ,MGD_CIVILIAN, MGD_SILICON, MGD_PARTY,
+			// Teams
+			MGT_GENETICS, MGT_ROBOTICS, MGT_PHARMACY, MGT_CARGO, MGT_MINING, MGT_CATERING, MGT_HYDROPONICS, MGT_JANITOR, MGT_SPIRITUALAFFAIRS, MGT_AI
 		)
-		default_muted_mailgroups = list(MGA_MAIL, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_RKIT)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_ENGINE, MGA_RKIT, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_CRISIS) // keep in sync with the list of mail alert groups
+		default_muted_mailgroups = list(MGA_MAIL, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_CHEMREQUEST, MGA_RKIT)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_ENGINE, MGA_RKIT, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_CHEMREQUEST, MGA_CRISIS, MGA_PLUMBING) // keep in sync with the list of mail alert groups
 
-	cyborg
+	cyborg // chosen robot module registers the PDA mail/alert groups
 		icon_state = "pda-h"
 		setup_default_pen = null // you don't even have hands
 		setup_default_cartridge = /obj/item/disk/data/cartridge/cyborg
 		ejectable_cartridge = 0
 		setup_drive_size = 1024
 		bombproof = 1
-		mailgroups = list(MGO_SILICON,MGD_PARTY)
+		mailgroups = list(MGD_SILICON,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH)
 		default_muted_mailgroups = list(MGA_RKIT)
+
+	// Command
+
+	captain
+		icon_state = "pda-c"
+		setup_default_pen = /obj/item/pen/fancy
+		setup_default_cartridge = /obj/item/disk/data/cartridge/captain
+		mailgroups = list(MGD_COMMAND,MGD_PARTY)
+
+	hop
+		icon_state = "pda-hop"
+		setup_default_pen = /obj/item/pen/fancy
+		setup_default_cartridge = /obj/item/disk/data/cartridge/hop
+		mailgroups = list(MGD_CIVILIAN,MGD_COMMAND,MGD_PARTY)
+
+	hos
+		icon_state = "pda-hos"
+		setup_default_pen = /obj/item/pen/fancy
+		setup_default_cartridge = /obj/item/disk/data/cartridge/hos
+		setup_default_module = /obj/item/device/pda_module/flashlight
+		mailgroups = list(MGD_SECURITY,MGD_COMMAND,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_CRISIS, MGA_TRACKING)
 
 	research_director
 		icon_state = "pda-rd"
 		setup_default_pen = /obj/item/pen/fancy
 		setup_default_cartridge = /obj/item/disk/data/cartridge/research_director
-		setup_drive_size = 32
-		mailgroups = list(MGD_SCIENCE,MGD_COMMAND,MGD_PARTY)
+		mailgroups = list(MGD_RESEARCH,MGD_COMMAND,MGD_PARTY)
+		alertgroups = list(MGA_CHEMREQUEST)
 
 	medical_director
 		icon_state = "pda-md"
 		setup_default_pen = /obj/item/pen/fancy
 		setup_default_cartridge = /obj/item/disk/data/cartridge/medical_director
-		setup_drive_size = 32
-		mailgroups = list(MGD_MEDRESEACH,MGD_MEDBAY,MGD_COMMAND,MGD_PARTY)
+		mailgroups = list(MGD_MEDICAL,MGT_GENETICS,MGT_ROBOTICS,MGD_RESEARCH,MGT_PHARMACY,MGD_COMMAND,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS, MGA_CHEMREQUEST)
+
+	chiefengineer
+		icon_state = "pda-ce"
+		setup_default_cartridge = /obj/item/disk/data/cartridge/chiefengineer
+		setup_default_module = /obj/item/device/pda_module/tray
+		mailgroups = list(MGD_ENGINEER,MGD_SUPPLY,MGT_MINING,MGT_CARGO,MGD_COMMAND,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS, MGA_SALES, MGA_CARGOREQUEST, MGA_SHIPPING, MGA_RKIT)
+
+	heads // generic heads PDA
+		icon_state = "pda-h"
+		setup_default_pen = /obj/item/pen/fancy
+		setup_default_cartridge = /obj/item/disk/data/cartridge/head
+		mailgroups = list(MGD_COMMAND,MGD_PARTY)
+
+	// NT Officials
+
+	ntso
+		icon_state = "pda-nt"
+		setup_default_pen = /obj/item/pen/fancy
+		setup_default_cartridge = /obj/item/disk/data/cartridge/hos //hos cart gives access to manifest compared to regular sec cart, useful for NTSO
+		setup_default_module = /obj/item/device/pda_module/flashlight
+		mailgroups = list(MGD_SECURITY,MGD_COMMAND,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_CRISIS, MGA_TRACKING)
+
+	ntofficial
+		icon_state = "pda-nt"
+		setup_default_pen = /obj/item/pen/fancy
+		setup_default_cartridge = /obj/item/disk/data/cartridge/head
+		mailgroups = list(MGD_COMMAND,MGD_PARTY)
+
+	nt_medical
+		icon_state = "pda-nt_medic"
+		setup_default_pen = /obj/item/pen/fancy
+		setup_default_cartridge = /obj/item/disk/data/cartridge/medical_director
+		mailgroups = list(MGD_MEDICAL, MGD_COMMAND, MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS)
 
-	medical
-		name = "Medical PDA"
-		icon_state = "pda-m"
-		setup_default_cartridge = /obj/item/disk/data/cartridge/medical
-		mailgroups = list(MGD_MEDBAY ,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS)
+	nt_engineer
+		icon_state = "pda-nt_engineer"
+		setup_default_cartridge = /obj/item/disk/data/cartridge/chiefengineer
+		setup_default_module = /obj/item/device/pda_module/tray
+		mailgroups = list(MGD_ENGINEER, MGD_SUPPLY, MGD_COMMAND, MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS, MGA_RKIT)
 
-		robotics
-			name = "Robotics PDA"
-			mailgroups = list(MGD_MEDRESEACH,MGD_PARTY, MGO_SILICON)
-			alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS, MGA_SALES)
-			default_muted_mailgroups = list(MGA_SALES)
-
-	genetics
-		name = "Genetics PDA"
-		icon_state = "pda-gen"
-		setup_default_cartridge = /obj/item/disk/data/cartridge/genetics
-		mailgroups = list(MGD_MEDBAY,MGD_MEDRESEACH,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES)
+	// Security
 
 	security
 		name = "Security PDA"
 		icon_state = "pda-s"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/security
-		setup_default_module = /obj/item/device/pda_module/alert
-		mailgroups = list(MGD_SECURITY,MGD_PARTY)
+		setup_default_module = /obj/item/device/pda_module/flashlight
+		mailgroups = list(MGD_SECURITY, MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_CRISIS, MGA_TRACKING)
 
 	forensic
 		name = "Forensic PDA"
-		icon_state = "pda-s"
+		icon_state = "pda-forensic"
 		setup_default_pen = /obj/item/clothing/mask/cigarette
 		setup_default_cartridge = /obj/item/disk/data/cartridge/forensic
-		mailgroups = list(MGD_SECURITY,MGD_PARTY)
+		mailgroups = list(MGD_SECURITY, MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_CRISIS, MGA_TRACKING)
 
+	// Medical and Research
+
+	medical
+		name = "Medical PDA"
+		icon_state = "pda-m"
+		setup_default_cartridge = /obj/item/disk/data/cartridge/medical
+		mailgroups = list(MGD_MEDICAL, MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS)
+
+	robotics
+		name = "Robotics PDA"
+		icon_state = "pda-robotics"
+		setup_default_cartridge = /obj/item/disk/data/cartridge/medical
+		mailgroups = list(MGD_MEDICAL, MGT_ROBOTICS, MGD_PARTY, MGD_SILICON)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_CLONER, MGA_CRISIS)
+
+	genetics
+		name = "Genetics PDA"
+		icon_state = "pda-gen"
+		setup_default_cartridge = /obj/item/disk/data/cartridge/genetics
+		mailgroups = list(MGD_MEDICAL, MGT_GENETICS, MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_SALES, MGA_CRISIS, MGA_CLONER)
+
+	pharmacist
+		name = "Pharmacy PDA"
+		icon_state = "pda-pha"
+		setup_default_cartridge = /obj/item/disk/data/cartridge/pharma
+		mailgroups = list(MGD_MEDICAL, MGT_PHARMACY, MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_CRISIS, MGA_MEDCRIT, MGA_CHEMREQUEST)
+
 	toxins
+		name = "Research PDA"
 		icon_state = "pda-tox"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/toxins
-		mailgroups = list(MGD_SCIENCE,MGD_PARTY)
+		mailgroups = list(MGD_RESEARCH,MGD_PARTY)
+		alertgroups = list(MGA_CHEMREQUEST)
+
+	// Engineering and Supply
+
+	atmos
+		name = "Atmos PDA"
+		icon_state = "pda-a"
+		setup_default_cartridge = /obj/item/disk/data/cartridge/atmos
+		mailgroups = list(MGD_ENGINEER,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS)
+
+	engine
+		name = "Engineer PDA"
+		icon_state = "pda-e"
+		setup_default_cartridge = /obj/item/disk/data/cartridge/engineer
+		setup_default_module = /obj/item/device/pda_module/tray //mechanics used to have these
+		mailgroups = list(MGD_ENGINEER,MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_RKIT, MGA_CRISIS)
+
+	mining
+		name = "Mining PDA"
+		icon_state = "pda-mining"
+		setup_default_cartridge = /obj/item/disk/data/cartridge/miner
+		mailgroups = list(MGD_SUPPLY,MGT_MINING, MGD_PARTY)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES)
 
 	quartermaster
 		name = "Quartermaster PDA"
 		icon_state = "pda-q"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/quartermaster
-		mailgroups = list(MGD_CARGO,MGD_PARTY)
+		mailgroups = list(MGD_SUPPLY,MGT_CARGO,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST)
 
+	// Civilian
+
 	clown
+		name = "Funny! PDA"
 		icon_state = "pda-clown"
 		desc = "A portable microcomputer by Thinktronic Systems, LTD. The surface is coated with polytetrafluoroethylene and banana drippings."
 		setup_default_pen = /obj/item/pen/crayon/random
 		setup_default_cartridge = /obj/item/disk/data/cartridge/clown
 		event_handler_flags = USE_FLUID_ENTER
+		mailgroups = list(MGD_CIVILIAN, MGD_PARTY)
+
+		blue
+			icon_state = "pda-clown-blue"
+
+		purple
+			icon_state = "pda-clown-purple"
+
+		pink
+			icon_state = "pda-clown-pink"
+
+		green
+			icon_state = "pda-clown-green"
 
 		proc/on_mob_throw_end(mob/M)
 			UnregisterSignal(M, COMSIG_MOVABLE_THROW_END)
@@ -289,60 +345,39 @@
 					src.on_mob_throw_end(M)
 
 	janitor
+		name = "Janitor PDA"
 		icon_state = "pda-j"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/janitor
-		mailgroups = list(MGO_JANITOR,MGD_STATIONREPAIR,MGD_PARTY)
+		mailgroups = list(MGT_JANITOR,MGD_CIVILIAN,MGD_PARTY, MGA_PLUMBING)
 
 	chaplain
+		name = "Blessed PDA"
 		icon_state = "pda-holy"
-		mailgroups = list(MGD_SPIRITUALAFFAIRS,MGD_PARTY)
+		mailgroups = list(MGT_SPIRITUALAFFAIRS,MGD_CIVILIAN,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT)
 
-	atmos
-		name = "Atmos PDA"
-		icon_state = "pda-a"
-		setup_default_cartridge = /obj/item/disk/data/cartridge/atmos
-
-	engine
-		name = "Engineer PDA"
-		icon_state = "pda-e"
-		setup_default_cartridge = /obj/item/disk/data/cartridge/engineer
-		setup_default_module = /obj/item/device/pda_module/tray //mechanics used to have these
-		mailgroups = list(MGO_ENGINEER,MGD_STATIONREPAIR,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_RKIT, MGA_CRISIS)
-
-	technical_assistant
-		name = "Technical Assistant PDA"
-		icon_state = "pda-e" //tech ass is too broad to have a set cartridge but should get alerts
-		mailgroups = list(MGD_STATIONREPAIR,MGD_PARTY)
-		setup_default_module = /obj/item/device/pda_module/tray
-		alertgroups = list(MGA_MAIL,MGA_RADIO)
-
-	mining
-		name = "Mining PDA"
-		icon_state = "pda-q"
-		setup_default_cartridge = /obj/item/disk/data/cartridge/miner
-		mailgroups = list(MGD_MINING,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES)
-
-	chiefengineer
-		icon_state = "pda-ce"
-		setup_default_cartridge = /obj/item/disk/data/cartridge/chiefengineer
-		setup_default_module = /obj/item/device/pda_module/tray
-		mailgroups = list(MGO_ENGINEER,MGD_MINING,MGD_STATIONREPAIR,MGD_CARGO,MGD_COMMAND,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS, MGA_SALES, MGA_CARGOREQUEST, MGA_SHIPPING, MGA_RKIT)
-
 	chef
-		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
+		name = "Catering PDA"
+		icon_state = "pda-catering"
+		mailgroups = list(MGT_CATERING,MGD_CIVILIAN,MGD_PARTY)
 
 	bartender
+		name = "Bartending PDA"
+		icon_state = "pda-bartender"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/bartender
-		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
+		mailgroups = list(MGT_CATERING,MGD_CIVILIAN,MGD_PARTY)
 
 	botanist
+		name = "Hydroponics PDA"
 		icon_state = "pda-hydro"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/botanist
-		mailgroups = list(MGD_BOTANY,MGD_PARTY)
+		mailgroups = list(MGT_HYDROPONICS,MGD_CIVILIAN,MGD_PARTY)
+
+	computeroperator
+		name = "Diagnostic PDA"
+		setup_default_cartridge = /obj/item/disk/data/cartridge/diagnostics
+
+	// Syndicate
 
 	syndicate
 		icon_state = "pda-syn"
@@ -405,8 +440,9 @@
 	src.linkbg_color = rgb(color_vals[1] * 0.8, color_vals[2] * 0.8, color_vals[3] * 0.8)
 	src.update_colors(src.bg_color, src.linkbg_color)
 
-	src.hd = new /obj/item/disk/data/fixed_disk(src)
+	src.hd = new /obj/item/disk/data/fixed_disk/hd32(src)
 	src.hd.file_amount = src.setup_drive_size
+	src.hd.max_file_amount = src.setup_drive_size
 	src.hd.name = "Minidrive"
 	src.hd.title = "Minidrive"
 
@@ -423,6 +459,7 @@
 		src.hd.root.add_file(new /datum/computer/file/pda_program/emergency_alert)
 		src.hd.root.add_file(new /datum/computer/file/pda_program/gps)
 		src.hd.root.add_file(new /datum/computer/file/pda_program/cargo_request(src))
+		src.hd.root.add_file(new /datum/computer/file/pda_program/chemical_request(src))
 		if(length(src.default_muted_mailgroups))
 			src.host_program.muted_mailgroups = src.default_muted_mailgroups
 		if(ismob(src.loc))
@@ -519,92 +556,74 @@
 	if(wincheck != "MAIN")
 		winclone(user, "pda2", "pda2_\ref[src]")
 	winset(user, "pda2_\ref[src]", "title=\"[src.window_title]\"")
-	var/display_mode = src.graphic_mode
-	if(!src.host_program || !owner)
-		display_mode = 0
 
-	if (display_mode)
-		winset(user, "pda2_\ref[src].texto","is-visible=false")
-		winset(user, "pda2_\ref[src].grido","is-visible=true")
+	winset(user, "pda2_\ref[src].texto","is-visible=true")
+	winset(user, "pda2_\ref[src].grido","is-visible=false")
 
-		if(src.active_program)
-			src.active_program.build_grid(user, "pda2_\ref[src].grido")
-		else
-			if(src.host_program)
-				src.run_program(src.host_program)
-				src.active_program.build_grid(user, "pda2_\ref[src].grido")
-
-
-	else
-		winset(user, "pda2_\ref[src].texto","is-visible=true")
-		winset(user, "pda2_\ref[src].grido","is-visible=false")
-
-		var/dat = {"<!doctype html>
+	var/dat = {"<!doctype html>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<style type='text/css'>
-		hr {
-			color:#000;
-			background-color:#000;
-			height:2px;
-			border-width:0;
-		}
-		h1,h2,h3,h4,h5,h6 { margin: 0.5em 0; padding: 0; }
-		ul, ol { margin: 0.5em; }
-		body {
-			background-color: [src.bg_color];
-			color: [src.link_color];
-			font-family: Tahoma, sans-serif;
-			font-size: [(user?.client?.preferences && user?.client?.preferences.font_size) ? "[user?.client?.preferences.font_size]%" : "10pt"];
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style type='text/css'>
+	hr {
+		color:#000;
+		background-color:#000;
+		height:2px;
+		border-width:0;
+	}
+	h1,h2,h3,h4,h5,h6 { margin: 0.5em 0; padding: 0; }
+	ul, ol { margin: 0.5em; }
+	body {
+		background-color: [src.bg_color];
+		color: [src.link_color];
+		font-family: Tahoma, sans-serif;
+		font-size: [(user?.client?.preferences && user?.client?.preferences.font_size) ? "[user?.client?.preferences.font_size]%" : "10pt"];
 ;
-		}
-		a {
-			background-color: [src.linkbg_color];
-			color: [src.link_color];
-			text-decoration: none;
-			padding: 0.0em 0.2em;
-		}
-		a:hover   { background-color: [src.link_color];   color: [src.bg_color]; }
+	}
+	a {
+		background-color: [src.linkbg_color];
+		color: [src.link_color];
+		text-decoration: none;
+		padding: 0.0em 0.2em;
+	}
+	a:hover   { background-color: [src.link_color];   color: [src.bg_color]; }
 
-	</style>
-	<script>
-		function updateScroll() {window.name = document.documentElement.scrollTop || document.body.scrollTop;}
-		window.addEventListener("beforeunload", updateScroll);
-		window.addEventListener("scroll", updateScroll);
-		window.addEventListener("load", function() {document.documentElement.scrollTop = document.body.scrollTop = window.name;});
-	</script>
+</style>
+<script>
+	function updateScroll() {window.name = document.documentElement.scrollTop || document.body.scrollTop;}
+	window.addEventListener("beforeunload", updateScroll);
+	window.addEventListener("scroll", updateScroll);
+	window.addEventListener("load", function() {document.documentElement.scrollTop = document.body.scrollTop = window.name;});
+</script>
 </head>
 <body>"}
 
-		// you can just use the windows close button for this...
-		// dat += "<a href='byond://?src=\ref[src];close=1'>Close</a>"
+	// you can just use the windows close button for this...
+	// dat += "<a href='byond://?src=\ref[src];close=1'>Close</a>"
 
-		if (!src.owner)
-			if (src.cartridge && src.ejectable_cartridge)
-				dat += "<a href='byond://?src=\ref[src];eject_cart=1'>Eject [stripTextMacros(src.cartridge.name)]</a><br>"
-			if (src.ID_card)
-				dat += "<a href='byond://?src=\ref[src];eject_id_card=1'>Eject [src.ID_card]</a><br>"
-			dat += "<br>Warning: No owner information entered.  Please swipe card.<br><br>"
-			dat += "<a href='byond://?src=\ref[src];refresh=1'>Retry</a>"
+	if (!src.owner)
+		if (src.cartridge && src.ejectable_cartridge)
+			dat += "<a href='byond://?src=\ref[src];eject_cart=1'>Eject [stripTextMacros(src.cartridge.name)]</a><br>"
+		if (src.ID_card)
+			dat += "<a href='byond://?src=\ref[src];eject_id_card=1'>Eject [src.ID_card]</a><br>"
+		dat += "<br>Warning: No owner information entered.  Please swipe card.<br><br>"
+		dat += "<a href='byond://?src=\ref[src];refresh=1'>Retry</a>"
+	else
+		if (src.active_program)
+			dat += src.active_program.return_text()
 		else
-			if (src.active_program)
+			if (src.host_program)
+				src.run_program(src.host_program)
 				dat += src.active_program.return_text()
 			else
-				if (src.host_program)
-					src.run_program(src.host_program)
-					dat += src.active_program.return_text()
-				else
-					if (src.cartridge && src.ejectable_cartridge)
-						dat += "<a href='byond://?src=\ref[src];eject_cart=1'>Eject [stripTextMacros(src.cartridge.name)]</a><br>"
-					if (src.ID_card)
-						dat += "<a href='byond://?src=\ref[src];eject_id_card=1'>Eject [src.ID_card]</a><br>"
-					dat += "<center><font color=red>Fatal Error 0x17<br>"
-					dat += "No System Software Loaded</font></center>"
+				if (src.cartridge && src.ejectable_cartridge)
+					dat += "<a href='byond://?src=\ref[src];eject_cart=1'>Eject [stripTextMacros(src.cartridge.name)]</a><br>"
+				if (src.ID_card)
+					dat += "<a href='byond://?src=\ref[src];eject_id_card=1'>Eject [src.ID_card]</a><br>"
+				dat += "<center><font color=red>Fatal Error 0x17<br>"
+				dat += "No System Software Loaded</font></center>"
 
-		user.Browse(dat, "window=pda2_\ref[src].texto")
-
+	user.Browse(dat, "window=pda2_\ref[src].texto")
 
 	winshow(user,"pda2_\ref[src]",1)
 
@@ -713,14 +732,7 @@
 				src.insert_id_card(ID, user)
 				boutput(user, SPAN_NOTICE("You insert [ID] into [src]."))
 
-	else if (istype(C, /obj/item/uplink_telecrystal))
-		if (src.uplink && src.uplink.active)
-			var/crystal_amount = C.amount
-			src.uplink.uses = src.uplink.uses + crystal_amount
-			boutput(user, "You insert [crystal_amount] [syndicate_currency] into the [src].")
-			qdel(C)
-
-	else if (istype(C, /obj/item/explosive_uplink_telecrystal))
+	else if (istype(C, /obj/item/uplink_telecrystal/trick))
 		if (src.uplink && src.uplink.active)
 			boutput(user, SPAN_ALERT("The [C] explodes!"))
 			var/turf/T = get_turf(C.loc)
@@ -728,6 +740,13 @@
 				T.hotspot_expose(700,125)
 				explosion(C, T, -1, -1, 2, 3) //about equal to a PDA bomb
 			C.set_loc(user.loc)
+			qdel(C)
+
+	else if (istype(C, /obj/item/uplink_telecrystal))
+		if (src.uplink && src.uplink.active)
+			var/crystal_amount = C.amount
+			src.uplink.uses = src.uplink.uses + crystal_amount
+			boutput(user, "You insert [crystal_amount] [syndicate_currency] into the [src].")
 			qdel(C)
 
 	else if (istype(C, /obj/item/pen) || istype(C, /obj/item/clothing/mask/cigarette) || istype(C, /obj/item/device/light/flashlight/penlight))
@@ -773,7 +792,12 @@
 	if (istype(uplink,/obj/item/uplink/integrated/pda/spy))
 		var/obj/item/uplink/integrated/pda/spy/U = uplink
 		var/datum/bounty_claim/claim = U.bounty_is_claimable(O, user)
-		if (claim)
+		var/confirmed_redeem = TRUE
+		if(O == src) //Warn the user before claiming their own uplink
+			confirmed_redeem = FALSE
+			if(tgui_alert(user, "Are you sure you'd like to claim your own uplink? You won't be able to replace it!", "Redeem Uplink?", list("Ok", "Cancel")) == "Ok")
+				confirmed_redeem = TRUE
+		if (claim && confirmed_redeem)
 			actions.start(new/datum/action/bar/private/spy_steal(claim.delivery, U), user)
 			return
 	..()
@@ -849,7 +873,7 @@
 		if (!overlay_images)
 			src.overlay_images = list()
 			overlay_images["idle"] = image('icons/obj/items/pda.dmi', "screen-idle", pixel_x = src.screen_x, pixel_y = src.screen_y)
-			overlay_images["alert"] = image('icons/obj/items/pda.dmi', "screen-message", pixel_x = src.screen_x, pixel_y = src.screen_y)
+			overlay_images["message"] = image('icons/obj/items/pda.dmi', "screen-message", pixel_x = src.screen_x, pixel_y = src.screen_y)
 
 		for (var/k in src.overlay_images)
 			src.overlay_images[k].color = bg
@@ -1046,6 +1070,9 @@
 		if (mode)
 			src.current_overlay = mode
 		src.UpdateOverlays(src.overlay_images[src.current_overlay], "screen_overlay")
+		var/image/symbol_overlay = image(src.icon, "symbol-[src.current_overlay]", pixel_x = src.screen_x, pixel_y = src.screen_y)
+		symbol_overlay.color = src.link_color
+		src.UpdateOverlays(symbol_overlay, "screen_symbol_overlay")
 
 	/// Takes a ringtone datum and outputs the program that supposedly holds it
 	proc/ringtone2program(var/ringtone)
@@ -1158,7 +1185,7 @@
 			//this one prob sloewr
 			//for (var/mob/O in hearers(3, src.loc))
 
-		update_overlay("alert")
+		update_overlay("message")
 		return
 
 	proc/display_message(var/message)
@@ -1226,7 +1253,7 @@
 		return 1
 
 	proc/explode()
-		if (src.bombproof)
+		if (src.bombproof || src.uplink)
 			if (ismob(src.loc))
 				boutput(src.loc, SPAN_ALERT("<b>ALERT:</b> An attempt to run malicious explosive code on your PDA has been blocked."))
 			return

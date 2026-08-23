@@ -12,20 +12,26 @@
 	on_life(var/mult = 1)
 		if (!..())
 			return 0
-		if(!emagged) //emagged pancreas doesn't regulate sugar for you anymore.
-			if (donor.reagents && donor.reagents.get_reagent_amount("sugar") > 80)
-				if (prob(50))
-					donor.reagents.add_reagent("insulin", 1 * mult)
-					if(!robotic) //don't kill a cyberpancreas
-						src.take_damage(0, 0, 10)
-				else if (prob(50))
-					if (donor.reagents.get_reagent_amount("sugar") > 200)
-						donor.reagents.add_reagent("insulin", 2 * mult)
-						if(!robotic)
-							src.take_damage(0, 0, 40)
+		if (donor.reagents)
+			var/sugar_dose = donor.reagents.get_reagent_amount("sugar") //variable to check for whether and how much the donor is overdosing on sugar, with respect for chemical weakness defect and chemical resistant trait.
+			if(donor.traitHolder.hasTrait("chemresist"))
+				sugar_dose *= 0.65
+			if(HAS_ATOM_PROPERTY(donor, PROP_MOB_OVERDOSE_WEAKNESS))
+				sugar_dose *= 2
+			if(!emagged) //emagged pancreas doesn't regulate sugar for you anymore.
+				if (sugar_dose > 80)
+					if (prob(50))
+						donor.reagents.add_reagent("insulin", 1 * mult)
+						if(!robotic) //don't kill a cyberpancreas
+							src.take_damage(0, 0, 10)
+					else if (prob(50))
+						if (sugar_dose > 160)
+							donor.reagents.add_reagent("insulin", 2 * mult)
+							if(!robotic)
+								src.take_damage(0, 0, 40)
 
-			if (src.get_damage() >= 65 && prob(src.get_damage() * 0.2))
-				donor.contract_disease(failure_disease,null,null,1)
+		if (src.get_damage() >= 65 && prob(src.get_damage() * 0.2))
+			donor.contract_disease(failure_disease,null,null,1)
 		return 1
 
 	disposing()
@@ -45,6 +51,7 @@
 		src.icon_state = pick("plant_pancreas", "plant_pancreas_bloom")
 
 TYPEINFO(/obj/item/organ/pancreas/cyber)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/organ/pancreas/cyber
@@ -70,4 +77,22 @@ TYPEINFO(/obj/item/organ/pancreas/cyber)
 			if(donor.reagents.get_reagent_amount("ephedrine") < 10) //this is maybe a bad idea. leaving it in for now
 				donor.reagents.add_reagent("ephedrine", 1 * mult)
 
+/obj/item/organ/pancreas/amphibian
+	name = "amphibian pancreas"
+	organ_name = "amphibian pancreas"
+	icon_state = "amphibian_pancreas"
+	desc = "Are you sure this is a pancreas?"
 
+/obj/item/organ/pancreas/skeleton
+	name = "skeleton pancreas"
+	desc = "This is, allegedly, a skeleton pancreas. Not that you'd be able to tell by looking."
+	icon_state = "skeleton_pancreas"
+	default_material = "bone"
+	blood_reagent = "calcium"
+
+/obj/item/organ/pancreas/martian
+	name = "pliable lump"
+	desc = "This is... probably a pancreas."
+	icon_state = "martian_pancreas"
+	created_decal = /obj/decal/cleanable/martian_viscera/fluid
+	default_material = "viscerite"

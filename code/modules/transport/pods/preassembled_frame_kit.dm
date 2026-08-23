@@ -10,8 +10,7 @@ ABSTRACT_TYPE(/obj/item/preassembled_frame_box)
 		boutput(user, SPAN_NOTICE("You dump out the box of parts onto the floor."))
 		var/obj/O = new frame_type( get_turf(user) )
 		logTheThing(LOG_STATION, user, "builds [O] in [get_area(user)] ([log_loc(user)])")
-		O.fingerprints = src.fingerprints
-		O.fingerprints_full = src.fingerprints_full
+		O.forensic_holder = src.forensic_holder
 		qdel(src)
 
 /obj/item/preassembled_frame_box/putt
@@ -145,7 +144,7 @@ ABSTRACT_TYPE(/obj/structure/preassembeled_vehicleframe)
 				user.visible_message("[user] begins screwing down the frame's circuit boards and its engine...")
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				action_bar.proc_path = /obj/structure/preassembeled_vehicleframe/proc/step_screw_1
-				action_bar.end_message = "[user] finishes screwing the the frame's circuit boards and its engine."
+				action_bar.end_message = "[user] finishes screwing the frame's circuit boards and its engine."
 				actions.start(action_bar, user)
 			else
 				boutput(user, "You need a screwdriver to screw the circuit boards and the engine together.")
@@ -272,16 +271,14 @@ ABSTRACT_TYPE(/obj/structure/preassembeled_vehicleframe)
 	var/obj/O
 	if (src.stage >= BUILD_STEP_ARMOR)
 		O = new src.armor_type( get_turf(src) )
-		O.fingerprints = src.fingerprints
-		O.fingerprints_full = src.fingerprints_full
+		O.forensic_holder = src.forensic_holder
 		if (istype(O,/obj/item/podarmor/armor_custom))
 			O.setMaterial(src.material)
 			src.removeMaterial()
 
 	O = new src.box_type( get_turf(src) )
 	logTheThing(LOG_STATION, user, "deconstructs [src] in [get_area(user)] ([log_loc(user)])")
-	O.fingerprints = src.fingerprints
-	O.fingerprints_full = src.fingerprints_full
+	O.forensic_holder = src.forensic_holder
 	qdel(src)
 
 

@@ -49,7 +49,7 @@
 
 /datum/observe_menu/ui_static_data(mob/user)
 	var/list/all_observables = machine_registry[MACHINES_BOTS] + by_cat[TR_CAT_GHOST_OBSERVABLES]
-	var/DNRSet = user.mind?.get_player()?.dnr
+	var/DNRSet = user.mind?.get_player()?.dnr || isadminghost(user)
 
 	var/list/uidata = list()
 	var/list/namecounts = list()
@@ -84,7 +84,7 @@
 			obs_data["player"] = (M.client != null || M.ghost != null) //okay, I know this is just !npc, but it won't ever get set for objects, so it's needed
 			if(DNRSet)
 				for(var/datum/antagonist/antagdatum in M.mind?.antagonists)
-					if(!antagdatum.vr) //if we have one valid antag, that counts
+					if(!(antagdatum.vr || antagdatum.pseudo)) //if we have one valid antag, that counts
 						obs_data["antag"] = antagdatum.display_name
 						break
 

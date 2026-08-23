@@ -18,6 +18,7 @@
 	<a href='byond://?src=\ref[src];action=traitorhard'>Hard Mode</a> |
 	<a href='byond://?src=\ref[src];action=[ROLE_OMNITRAITOR]'>Omnitraitor</a> |
 	<a href='byond://?src=\ref[src];action=traitorgeneric'>Generic</a> |
+	<a href='byond://?src=\ref[src];action=traitormonkey'>Syndicate Monkey</a> |
 	<a href='byond://?src=\ref[src];action=[ROLE_SLEEPER_AGENT]'>Sleeper agent</a>
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Mindhack</b>
@@ -69,7 +70,7 @@
 	<a href='byond://?src=\ref[src];action=[ROLE_WRESTLER]'>Wrestler</a> |
 	<a href='byond://?src=\ref[src];action=battle'>Battle Royale</a> |
 	<a href='byond://?src=\ref[src];action=martian'>Martian</a> |
-	<a href='byond://?src=\ref[src];action=kudzu'>Kudzu Person</a> |
+	<a href='byond://?src=\ref[src];action=[ROLE_KUDZUPERSON]'>Kudzu Person</a> |
 	<a href='byond://?src=\ref[src];action=[ROLE_SLASHER]'>The Slasher</a> |
 	<a href='byond://?src=\ref[src];action=[ROLE_SALVAGER]'>Salvagers</a> |
 	<a href='byond://?src=\ref[src];action=[ROLE_ARCFIEND]'>Arcfiend Person</a> |
@@ -127,9 +128,11 @@
 	* @param set_last_popup whether to modify the mob's last_antag_popup entry (used for the admin display)
 	*/
 	proc/show_antag_popup(var/popup_name, var/set_last_popup = TRUE)
+		#ifndef NO_ANTAG_POPUPS_I_DONT_CARE
 		if (set_last_popup)
 			src.last_antag_popup = popup_name
 		get_singleton(/datum/antagPopups).show_popup(src, popup_name)
+		#endif
 
 	verb/reopen_antag_popup()
 		set name = "Special role popup"

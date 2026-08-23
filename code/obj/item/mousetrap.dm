@@ -89,7 +89,7 @@
 			src.set_armer(user)
 		else
 			src.icon_state = "mousetrap"
-			if (user && (user.get_brain_damage() >= 60 || user.bioHolder.HasEffect("clumsy")) && prob(50))
+			if (user && (user.get_brain_damage() >= BRAIN_DAMAGE_MAJOR || user.bioHolder.HasEffect("clumsy")) && prob(50))
 				var/which_hand = "l_arm"
 				if (!user.hand)
 					which_hand = "r_arm"
@@ -128,7 +128,7 @@
 				critter.show_text(SPAN_ALERT("<b>Sensing the danger, you shy away from [src].</b>"))
 				return
 		if (src.armed)
-			if ((user.get_brain_damage() >= 60 || user.bioHolder.HasEffect("clumsy")) && prob(50))
+			if ((user.get_brain_damage() >= BRAIN_DAMAGE_MAJOR || user.bioHolder.HasEffect("clumsy")) && prob(50))
 				var/which_hand = "l_arm"
 				if (!user.hand)
 					which_hand = "r_arm"
@@ -316,10 +316,12 @@
 			src.frame = new_frame
 		else
 			src.frame = new /obj/item/pipebomb/frame
+		src.w_class = max(src.payload.w_class, W_CLASS_TINY)
 		src.frame.set_loc(src)
 		src.frame.master = src
 		// mousetrap roller + wrench -> disassembly
 		src.AddComponent(/datum/component/assembly, TOOL_WRENCHING, PROC_REF(disassemble), FALSE)
+		src.tooltip_rebuild = TRUE
 
 	disposing()
 		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ON_PART_DISPOSAL)
@@ -337,9 +339,11 @@
 		var/turf/target_turf = get_turf(src)
 		if (user)
 			user.visible_message("<b>[user]</b> disassembles [src].","You disassemble [src].")
+		var/list/items_disassembled_into = list()
 		for(var/obj/item/affected_item in list(src.frame,src.payload))
 			if(!affected_item.qdeled && !affected_item.disposed)
 				affected_item.set_loc(target_turf)
+				items_disassembled_into.Add(affected_item)
 			affected_item.master = null
 		if (src.payload)
 			src.payload.vis_flags &= ~(VIS_INHERIT_ID | VIS_INHERIT_PLANE |  VIS_INHERIT_LAYER)
@@ -347,6 +351,7 @@
 			src.vis_contents -= src.payload
 		src.payload = null
 		src.frame = null
+		SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, items_disassembled_into, user)
 		qdel(src)
 		return TRUE
 

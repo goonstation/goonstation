@@ -14,6 +14,7 @@ TODO:
 // Incubator
 
 TYPEINFO(/obj/submachine/chicken_incubator)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 8
 
 /obj/submachine/chicken_incubator
@@ -22,17 +23,21 @@ TYPEINFO(/obj/submachine/chicken_incubator)
 	icon = 'icons/obj/ranch/ranch_obj.dmi'
 	icon_state = "incubator"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	var/obj/item/reagent_containers/food/snacks/ingredient/egg/my_egg = null
 	var/incubate_count = 0
 	var/image/egg_overlay = null
+	var/image/egg_overlay_secret = null
 	var/image/lights_overlay = null
 	var/heating = 0
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
 
 	New()
 		..()
-		src.egg_overlay = image('icons/obj/ranch/ranch_obj.dmi', src, "incubator-egg")
+#ifdef SECRETS_ENABLED
+		src.egg_overlay_secret = image('+secret/icons/obj/chickens_secret.dmi', src, "incubator-egg")
+#endif
+		src.egg_overlay = image('icons/mob/ranch/chickens.dmi', src, "incubator-egg")
 		src.lights_overlay = image('icons/obj/ranch/ranch_obj.dmi', src, "incubator-lights")
 		processing_items |= src
 
@@ -40,6 +45,7 @@ TYPEINFO(/obj/submachine/chicken_incubator)
 		processing_items.Remove(src)
 		my_egg = null
 		egg_overlay = null
+		egg_overlay_secret = null
 		lights_overlay = null
 		..()
 
@@ -60,6 +66,7 @@ TYPEINFO(/obj/submachine/chicken_incubator)
 						make_chooken()
 					incubate_count = 0
 					ClearSpecificOverlays("egg_overlay")
+					ClearSpecificOverlays("egg_overlay_secret")
 				else
 					incubate_count++
 			else
@@ -90,7 +97,7 @@ TYPEINFO(/obj/submachine/chicken_incubator)
 			if ((user.loc == T && user.equipped() == W))
 				user.visible_message(SPAN_NOTICE("<b>[user]</b> disassembles [src]"),SPAN_NOTICE("You disassemble [src]"))
 				var/obj/chicken_nesting_box/N = new /obj/chicken_nesting_box(get_turf(src))
-				N.anchored = 1
+				N.anchored = ANCHORED
 				new /obj/item/incubator_parts(get_turf(src))
 				qdel(src)
 			return
@@ -100,15 +107,28 @@ TYPEINFO(/obj/submachine/chicken_incubator)
 				boutput(user, SPAN_ALERT("<b>There's already an egg in there!</b>"))
 			else
 				var/obj/item/reagent_containers/food/snacks/ingredient/egg/E = W
+				if (E.infertile)
+					boutput(user, SPAN_ALERT("<b>This egg is infertile and cannot be used!</b>"))
+					return
 				user.u_equip(E)
 				E.set_loc(src)
 				my_egg = E
 				if (istype(E, /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken))
 					var/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/chicken_egg = E
-					egg_overlay.icon_state = "incubator-egg-[chicken_egg.chicken_egg_props.chicken_id]"
+					if(chicken_egg.chicken_egg_props.is_secret)
+#ifdef SECRETS_ENABLED
+						egg_overlay_secret.icon_state = "incubator-egg-[chicken_egg.chicken_egg_props.chicken_id]"
+						UpdateOverlays(egg_overlay_secret, "egg_overlay_secret")
+#else
+						egg_overlay.icon_state = "incubator-egg-[chicken_egg.chicken_egg_props.chicken_id]"
+						UpdateOverlays(egg_overlay, "egg_overlay")
+#endif
+					else
+						egg_overlay.icon_state = "incubator-egg-[chicken_egg.chicken_egg_props.chicken_id]"
+						UpdateOverlays(egg_overlay, "egg_overlay")
 				else
 					egg_overlay.icon_state = "incubator-egg-white"
-				UpdateOverlays(egg_overlay, "egg_overlay")
+					UpdateOverlays(egg_overlay, "egg_overlay")
 				incubate_count = 0
 		else if(istype(W,/obj/item/space_thing))
 			boutput(user, SPAN_ALERT("<b>[W] opens to reveal some sort of egg!</b>"))
@@ -123,7 +143,6 @@ TYPEINFO(/obj/submachine/chicken_incubator)
 				E = new /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/space(src)
 			my_egg = E
 			egg_overlay.icon_state = "incubator-egg-[E.chicken_egg_props.chicken_id]"
-
 			UpdateOverlays(egg_overlay, "egg_overlay")
 			incubate_count = 0
 
@@ -133,6 +152,7 @@ TYPEINFO(/obj/submachine/chicken_incubator)
 	attack_hand(mob/user)
 		if(my_egg)
 			ClearSpecificOverlays("egg_overlay")
+			ClearSpecificOverlays("egg_overlay_secret")
 			user.put_in_hand_or_drop(my_egg)
 			my_egg = null
 			incubate_count = 0
@@ -156,24 +176,30 @@ TYPEINFO(/obj/submachine/chicken_incubator)
 // Feed Grinder
 
 TYPEINFO(/obj/submachine/ranch_feed_grinder)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 8
 
 /obj/submachine/ranch_feed_grinder
 	name = "feed grinder"
 	icon = 'icons/obj/ranch/ranch_obj.dmi'
-	icon_state = "feed_grinder"
+	icon_state = "feed_grinder-off"
 	density = 1
-	anchored = 1
-	var/work_cycle = 0
+	anchored = ANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER
+
+	var/work_cycle = 0
 	var/obj/item/reagent_containers/food/current_food = null
+	var/image/feed_grinder_overlay = null
 
 	New()
 		..()
 		processing_items |= src
+		src.feed_grinder_overlay = image('icons/obj/ranch/ranch_obj.dmi', src, "feed_grinder_overlay")
+		src.feed_grinder_overlay.color = "#FFFF00"
 
 	disposing()
 		processing_items.Remove(src)
+		feed_grinder_overlay = null
 		..()
 
 	attackby(obj/item/W, mob/user)
@@ -192,7 +218,7 @@ TYPEINFO(/obj/submachine/ranch_feed_grinder)
 				for(var/obj/item/O in S.contents)
 					src.add_item(O)
 				S.UpdateIcon()
-				S.tooltip_rebuild = 1
+				S.tooltip_rebuild = TRUE
 				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
 				return
 
@@ -205,7 +231,7 @@ TYPEINFO(/obj/submachine/ranch_feed_grinder)
 		src.add_item(W)
 
 	proc/add_item(var/obj/item/item)
-		if(istype(item,/obj/item/reagent_containers/food))
+		if(istype(item, /obj/item/reagent_containers/food))
 			item.set_loc(src)
 		else
 			var/obj/item/reagent_containers/food/F = src.preprocess(item)
@@ -258,6 +284,9 @@ TYPEINFO(/obj/submachine/ranch_feed_grinder)
 				if(0)
 					if(QDELETED(current_food))
 						current_food = locate(/obj/item/reagent_containers/food) in src.contents
+						src.icon_state = "feed_grinder-on"
+						feed_grinder_overlay.color = current_food.food_color
+						UpdateOverlays(feed_grinder_overlay, "feed_grinder_overlay")
 						work_cycle++
 				if(1 to 2)
 					playsound(src.loc, 'sound/machines/mixer.ogg', 50, 1)
@@ -271,6 +300,8 @@ TYPEINFO(/obj/submachine/ranch_feed_grinder)
 					make_feed(current_food)
 					current_food = null
 					playsound(src.loc, 'sound/machines/ding.ogg', 100, 1)
+					src.icon_state = "feed_grinder-off"
+					ClearSpecificOverlays("feed_grinder_overlay")
 					work_cycle = 0
 					return
 
@@ -540,6 +571,19 @@ TYPEINFO(/obj/submachine/ranch_feed_grinder)
 		else
 			. = ..()
 
+	loot_age
+		name = "Dehab Mortality Feed"
+		desc = "A hand-knitted bag of feed which somehow creaks, it has a small label mentioning rapid ageing."
+		feed_flags = list("clockwork")
+		food_color = "#a0c0c0"
+		initial_reagents = list("ageinium", 40)
+
+	loot_antiage // for mining crates
+		name = "Ambrosia Immortality Feed"
+		desc = "A commercial feed bag plastered with adverts on anti-ageing effects."
+		feed_flags = list("ageless", "chicken_egg")
+		food_color = "#DDBB00"
+
 /obj/decal/cleanable/ranch_feed
 	name = "feed"
 	icon = 'icons/obj/ranch/ranch_obj.dmi'
@@ -563,6 +607,7 @@ TYPEINFO(/obj/submachine/ranch_feed_grinder)
 // Chicken Nesting Box
 
 TYPEINFO(/obj/chicken_nesting_box)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 4
 
 /obj/chicken_nesting_box
@@ -571,7 +616,7 @@ TYPEINFO(/obj/chicken_nesting_box)
 	icon = 'icons/obj/ranch/ranch_obj.dmi'
 	icon_state = "box"
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER
 
 	attackby(obj/item/W, mob/user)
@@ -603,6 +648,8 @@ TYPEINFO(/obj/chicken_nesting_box)
 
 		. = ..()
 
+TYPEINFO(/obj/item/old_grenade/chicken)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/old_grenade/chicken
 	name = "Chicken Grenade"
 	desc = "It is set to detonate in 3 seconds."
@@ -611,7 +658,6 @@ TYPEINFO(/obj/chicken_nesting_box)
 	det_time = 3 SECONDS
 	org_det_time = 3 SECONDS
 	alt_det_time = 6 SECONDS
-	is_syndicate = 1
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	tooltip_flags = REBUILD_ALWAYS
 	is_dangerous = TRUE

@@ -1,9 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Box } from 'tgui-core/components';
 import { clamp } from 'tgui-core/math';
 
 import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
+import { sanitizeDefAllowTags, sanitizeText } from '../../sanitize';
+
+// Paper renders interactive <input> form fields
+const PAPER_ALLOWED_TAGS = [...sanitizeDefAllowTags, 'input'];
+// Paper needs inline `style` for color/font/width,
+// only forbid `class` and `background` for now.
+// We should fix this in the future.
+const PAPER_FORBID_ATTRS = ['class', 'background'];
 
 const WINDOW_TITLEBAR_HEIGHT = 30;
 
@@ -172,12 +180,16 @@ const setInputReadonly = (text, readonly) => {
 export const PaperSheetView = (props) => {
   const { value = '', stamps = [], backgroundColor, readOnly } = props;
   const stampList = stamps || [];
-  const textHtml = {
-    __html:
-      '<span class="paper-text">' +
-      setInputReadonly(value, readOnly) +
-      '</span>',
-  };
+  const textHtml = useMemo(
+    () => ({
+      // `value` is untrusted server data and may contain stored XSS payloads
+      __html: `<span class="paper-text">${setInputReadonly(
+        sanitizeText(value, false, PAPER_ALLOWED_TAGS, PAPER_FORBID_ATTRS),
+        readOnly,
+      )}</span>`,
+    }),
+    [readOnly, value],
+  );
   return (
     <Box
       className="paper__page"

@@ -19,6 +19,7 @@
 	tooltip_flags = REBUILD_ALWAYS //TODO: handle better??
 	max_damage = INFINITY
 	throw_speed = 1
+	open_to_sound = FALSE
 
 	var/obj/item/organ/brain/brain = null
 	var/obj/item/skull/skull = null
@@ -75,8 +76,6 @@
 				src.donor.set_eye(null)
 		else
 			src.UpdateIcon(/*makeshitup*/ 1)
-		if (!src.chat_text)
-			src.chat_text = new(null, src)
 
 	throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
 			allow_anchored = UNANCHORED, bonus_throwforce = 0, end_throw_callback = null)
@@ -87,10 +86,7 @@
 		if (src.linked_human)
 			if (isskeleton(src.linked_human))
 				var/datum/mutantrace/skeleton/S = src.linked_human.mutantrace
-				S.head_tracker = null
-			src.UnregisterSignal(src.linked_human, COMSIG_CREATE_TYPING)
-			src.UnregisterSignal(src.linked_human, COMSIG_REMOVE_TYPING)
-			src.UnregisterSignal(src.linked_human, COMSIG_SPEECH_BUBBLE)
+				S.set_head(null)
 		if (holder)
 			holder.head = null
 		if (donor_original?.eye == src)
@@ -106,7 +102,6 @@
 		wear_mask = null
 		glasses = null
 		linked_human = null
-		chat_text = null
 
 		..()
 
@@ -183,7 +178,7 @@
 				src.skintone = AHead.s_tone
 			src.head_image.color = src.skintone
 			if(src.donor_name)
-				src.name = "[src.donor_name]'s [src.organ_name]"
+				src.name = "[src.donor_name]’s [src.organ_name]"
 			else
 				src.name = src.organ_name
 
@@ -220,6 +215,11 @@
 			src.head_image_nose.color = src.skintone
 		else
 			src.head_image_nose = null
+
+		// Lightens eyes if appearance flag is active
+		if (src.head_appearance_flags & LIGHT_EYES)
+			src.head_image_eyes_L.color = light_colors(src.head_image_eyes_L.color)
+			src.head_image_eyes_R.color = light_colors(src.head_image_eyes_R.color)
 
 		// Remove their hair first
 		src.head_image_cust_one = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
@@ -317,7 +317,7 @@
 		else if (src.head && src.head.wear_image_icon)
 			actual_head.overlays += image(src.head.wear_image_icon, src.head.icon_state, layer = MOB_HEAD_LAYER2)
 
-		if(!(src.head && src.head.seal_hair))
+		if(!(src.head && src.head.c_flags & COVERSHAIR))
 			if(src.donor_appearance?.mob_appearance_flags & HAS_HUMAN_HAIR || src.donor?.hair_override)
 				src.head_image_cust_one.pixel_x = 0
 				src.head_image_cust_one.pixel_y = 0
@@ -357,18 +357,9 @@
 		// we will move the head's appearance onto its new owner's mobappearance and then update its appearance reference to that
 		src.donor.bioHolder.mobAppearance.CopyOtherHeadAppearance(currentHeadAppearanceOwner)
 		src.donor_appearance = src.donor.bioHolder.mobAppearance
-	on_removal()
-		src.transplanted = 1
-		if (src.linked_human && (src.donor == src.linked_human))
-		 	// if we're typing, attempt to seamlessly transfer it
-			if (src.linked_human.has_typing_indicator && isskeleton(src.linked_human))
-				src.linked_human.remove_typing_indicator()
-				src.linked_human.has_typing_indicator = TRUE // proc above removes it
-				src.create_typing_indicator()
 
-			src.RegisterSignal(src.linked_human, COMSIG_CREATE_TYPING, PROC_REF(create_typing_indicator))
-			src.RegisterSignal(src.linked_human, COMSIG_REMOVE_TYPING, PROC_REF(remove_typing_indicator))
-			src.RegisterSignal(src.linked_human, COMSIG_SPEECH_BUBBLE, PROC_REF(speech_bubble))
+	on_removal()
+		src.transplanted = TRUE
 		. = ..()
 
 	///Taking items off a head
@@ -533,10 +524,10 @@
 	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
 		/* Overrides parent function to handle special case for attaching heads. */
 
-		if (src.linked_human && isskeleton(M))// return the typing indicator to the human only if we're put on a skeleton
-			src.UnregisterSignal(src.linked_human, COMSIG_CREATE_TYPING)
-			src.UnregisterSignal(src.linked_human, COMSIG_REMOVE_TYPING)
-			src.UnregisterSignal(src.linked_human, COMSIG_SPEECH_BUBBLE)
+		if (isskeleton(src.linked_human) && isskeleton(M))// return the typing indicator to the human only if we're put on a skeleton
+			var/datum/mutantrace/skeleton/S = src.linked_human.mutantrace
+			S.set_head(null)
+
 		var/mob/living/carbon/human/H = M
 		if (!isskeleton(M) && !src.can_attach_organ(H, user))
 			return 0
@@ -630,7 +621,6 @@
 				if(HEAD_ROACH)
 					src.organ_name = "roach head"
 					src.desc = "Not the biggest bug you'll seen today, nor the last."
-					src.setMaterial(getMaterial("chitin"))
 
 				if(HEAD_FROG)
 					src.organ_name = "frog head"
@@ -670,3 +660,6 @@
 		if(!skip_update)
 			src.UpdateIcon(/*makeshitup*/ 0)	// so our head actually looks like the thing its supposed to be
 		// though if our head's a transplant, lets run it anyway, in case their hair changed or something
+
+	find_radio()
+		return astype(src.ears, /obj/item/device/radio)

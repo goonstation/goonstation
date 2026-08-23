@@ -385,7 +385,7 @@
 /obj/item/reagent_containers/food/snacks/ingredient/gcheese,
 /obj/item/reagent_containers/food/snacks/ingredient/meatpaste,
 /obj/item/reagent_containers/food/drinks/milk/rancid,
-/obj/item/kitchen/food_box/egg_box,
+/obj/item/kitchen/egg_box,
 /obj/storage/secure/closet/fridge/kitchen{
 	locked = 0
 	},
@@ -445,11 +445,11 @@
 /area/shuttle/sea_elevator)
 "pO" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/shaker/pepper{
+/obj/item/reagent_containers/applicator/condiment/shaker/pepper{
 	pixel_x = -2;
 	pixel_y = 7
 	},
-/obj/item/shaker/salt{
+/obj/item/reagent_containers/applicator/condiment/shaker/salt{
 	pixel_x = 6
 	},
 /turf/simulated/floor/specialroom/bar/edge,
@@ -479,7 +479,7 @@
 /turf/simulated/floor/industrial,
 /area/shuttle/sea_elevator)
 "rO" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 8
 	},
@@ -624,7 +624,7 @@
 	pixel_x = 8;
 	pixel_y = 3
 	},
-/obj/machinery/computer/security/wooden_tv/public,
+/obj/machinery/computer/television/public,
 /turf/simulated/floor/black/grime,
 /area/tech_outpost{
 	name = "The Recluse"
@@ -783,7 +783,7 @@
 /area/shuttle/sea_elevator)
 "Av" = (
 /obj/decal/cleanable/blood/tracks,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -8
 	},
@@ -1020,11 +1020,13 @@
 /area/skeleton_trader)
 "Jj" = (
 /obj/machinery/chem_dispenser/soda,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/black/grime,
 /area/diner/kitchen)
 "Jn" = (
 /obj/machinery/chem_dispenser/alcohol,
 /obj/decal/cleanable/dirt/dirt2,
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/black/grime,
 /area/diner/kitchen)
 "Jv" = (
@@ -1298,11 +1300,11 @@
 /area/diner/dining)
 "Rd" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/shaker/ketchup{
+/obj/item/reagent_containers/applicator/condiment/bottle/ketchup{
 	pixel_x = -4;
 	pixel_y = 1
 	},
-/obj/item/shaker/mustard{
+/obj/item/reagent_containers/applicator/condiment/bottle/mustard{
 	pixel_x = 3
 	},
 /turf/simulated/floor/specialroom/bar/edge,
@@ -1577,9 +1579,9 @@
 	name = "Space Diner Backhall"
 	})
 "XJ" = (
-/obj/machinery/vending/coffee,
 /obj/decal/tile_edge/check/purple,
 /obj/decal/cleanable/dirt,
+/obj/machinery/vending/cigarette,
 /turf/simulated/floor/black/grime,
 /area/diner/dining)
 "XK" = (

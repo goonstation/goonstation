@@ -6,6 +6,7 @@ TYPEINFO(/obj/item/device/borg_linker)
 	icon_state = "cyborg_linker"
 	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
+	tooltip_flags = REBUILD_ALWAYS //Our rack may have moved somehow
 	force = 5
 	w_class = W_CLASS_SMALL
 	throwforce = 5
@@ -15,6 +16,21 @@ TYPEINFO(/obj/item/device/borg_linker)
 	m_amt = 50
 	g_amt = 20
 	var/obj/machinery/lawrack/linked_rack = null
+
+	New()
+		. = ..()
+		START_TRACKING
+		if(ticker.ai_law_rack_manager.default_ai_rack)
+			src.linked_rack = ticker.ai_law_rack_manager.default_ai_rack
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
+
+	get_desc(dist, mob/user)
+		if(src.linked_rack)
+			var/area/rack_area = get_area(src.linked_rack)
+			. += " It is linked to a law rack at [rack_area.name]"
 
 	attack_self(var/mob/user)
 		if(src.linked_rack)

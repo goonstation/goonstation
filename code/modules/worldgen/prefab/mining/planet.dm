@@ -22,8 +22,8 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 		if(!check_biome_requirements(T))
 			return
 
-		for(var/x=0, x<prefabSizeX; x++)
-			for(var/y=0, y<prefabSizeY; y++)
+		for(var/x=0; x < prefabSizeX; x++)
+			for(var/y=0; y<prefabSizeY; y++)
 				var/turf/L = locate(T.x+x, T.y+y, T.z)
 
 				var/area/map_gen/planet/P = get_area(L)

@@ -130,6 +130,10 @@
 			else // 1mil bby
 				src.icon_state = "cashrbow"
 
+	one
+		default_min_amount = 1
+		default_max_amount = 1
+
 	five
 		default_min_amount = 5
 		default_max_amount = 5
@@ -174,8 +178,8 @@
 
 // That's what tourists spawn with.
 	tourist
-		default_min_amount = PAY_TRADESMAN
-		default_max_amount = PAY_EXECUTIVE
+		default_min_amount = PAY::TRADESMAN
+		default_max_amount = PAY::EXECUTIVE
 
 // for couches
 	small
@@ -270,7 +274,7 @@
 		set_amt(amt)
 
 	set_amt(amt = 1)
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		src.amount = amt
 		src.UpdateStackAppearance()
 
@@ -356,7 +360,7 @@ TYPEINFO(/obj/item/stamped_bullion)
 /obj/item/stamped_bullion //*not* a material piece - therefore doesn't stack, needs to be refined, etc. etc. etc.
 	name = "stamped bullion"
 	desc = "Oh wow! This stuff's got to be worth a lot of money!"
-	icon = 'icons/obj/materials.dmi'
+	icon = 'icons/obj/items/materials/materials.dmi'
 	icon_state = "stamped_gold"
 	force = 4
 	throwforce = 6

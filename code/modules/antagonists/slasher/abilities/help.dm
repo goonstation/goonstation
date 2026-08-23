@@ -6,6 +6,7 @@
 	cooldown = 5 SECONDS
 	helpable = FALSE
 	special_screen_loc = "SOUTH,EAST"
+	tooltip_options = list("align" = TOOLTIP_TOP | TOOLTIP_RIGHT)
 
 	cast(atom/target)
 		if (..())

@@ -9,18 +9,6 @@
 	SPAWN(seconds * 10)
 		src.fakeloss -= amount
 
-/mob/proc/false_death(var/seconds)
-	if (!seconds)
-		return
-
-	src.fakedead = 1
-	boutput(src, "<B>[src]</B> seizes up and falls limp, [his_or_her(src)] eyes dead and lifeless...")
-	src.changeStatus("knockdown", 5 SECONDS)
-
-	SPAWN(seconds * 10)
-		src.fakedead = 0
-		src.delStatus("knockdown")
-
 /proc/get_mobs_of_type_at_point_blank(var/atom/object,var/mob_path)
 	var/list/returning_list = list()
 	if (!object || !mob_path)
@@ -329,10 +317,6 @@
 			steps_until_pressable--
 			return
 		if (istype(W,/obj/item/paint_can) && steps_until_pressable == 3)
-			boutput(user, SPAN_NOTICE("You paint the butOH FOR FUCKS SAKE JUST STOP LIKE IVE BEEN ASKING YOU TO"))
-			steps_until_pressable--
-			return
-		if (istype(W,/obj/item/paint) && steps_until_pressable == 3)
 			boutput(user, SPAN_NOTICE("You paint the butOH FOR FUCKS SAKE JUST STOP LIKE IVE BEEN ASKING YOU TO"))
 			steps_until_pressable--
 			return

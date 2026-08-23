@@ -2,6 +2,7 @@
 #define STATUS_STRONG 2
 
 TYPEINFO(/obj/table)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SKIP_IF_FAIL
 	/// Determines what types this table will smooth with
 	var/smooth_list = null
 TYPEINFO_NEW(/obj/table)
@@ -15,11 +16,11 @@ TYPEINFO_NEW(/obj/table)
 	density = 1
 	anchored = ANCHORED
 	flags = NOSPLASH
+	appearance_flags = parent_type::appearance_flags | KEEP_TOGETHER
 	event_handler_flags = USE_FLUID_ENTER
 	layer = OBJ_LAYER-0.1
-	stops_space_move = TRUE
+	provides_grip = TRUE
 	mat_changename = 1
-	mechanics_interaction = MECHANICS_INTERACTION_SKIP_IF_FAIL
 	material_amt = 0.2
 	var/parts_type = /obj/item/furniture_parts/table
 	default_material = null
@@ -44,7 +45,8 @@ TYPEINFO_NEW(/obj/table)
 		START_TRACKING
 		if (src.has_drawer)
 			src.create_storage(/datum/storage/unholdable, spawn_contents = src.drawer_contents, slots = 13, max_wclass = W_CLASS_SMALL)
-
+			src.storage.open_sound = 'sound/effects/drawer_open.ogg'
+			src.storage.close_sound = 'sound/effects/drawer_close.ogg'
 		#ifdef XMAS
 		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
 			xmasify()
@@ -62,6 +64,9 @@ TYPEINFO_NEW(/obj/table)
 		for (var/obj/O in loc)
 			if (isitem(O))
 				bonus += 4
+			if (istype(O, /obj/machinery/conveyor))
+				var/obj/machinery/conveyor/conveyor = O
+				conveyor.tableify(src)
 			if (istype(O, /obj/table) && O != src)
 				return
 			if (istype(O, /obj/rack))
@@ -200,7 +205,16 @@ TYPEINFO_NEW(/obj/table)
 			return
 		for(var/atom/movable/AM as anything in src.storage?.get_contents())
 			AM.set_loc(OL)
-		if (!(locate(/obj/table) in OL) && !(locate(/obj/rack) in OL))
+
+		var/other_table = FALSE
+		for (var/obj/O in OL)
+			if (istype(O, /obj/table) || istype(O, /obj/rack))
+				other_table = TRUE
+			else if (istype(O, /obj/machinery/conveyor))
+				var/obj/machinery/conveyor/conveyor = O
+				conveyor.untableify()
+
+		if (!other_table)
 			var/area/Ar = OL.loc
 			for (var/obj/item/I in OL)
 				Ar.sims_score -= 4
@@ -241,7 +255,7 @@ TYPEINFO_NEW(/obj/table)
 			qdel(W)
 			return
 
-		else if (istype(W,/obj/item/sheet/wood))
+		else if (istype(W,/obj/item/sheet) && (W.material?.getMaterialFlags() & MATERIAL_WOOD))
 			if (istype(src, /obj/table/reinforced/bar)) //why must you be so confusing
 				return ..()
 			if (status != STATUS_STRONG || !istype(src, /obj/table/reinforced/auto))
@@ -251,9 +265,6 @@ TYPEINFO_NEW(/obj/table)
 				boutput(user, SPAN_NOTICE("You need at least 5 planks to furnish the whole table."))
 				return
 			actions.start(new /datum/action/bar/icon/furnish_table(src,W), user)
-
-		else if (istype(W, /obj/item/paint_can))
-			return
 
 		else if (isscrewingtool(W) && user.a_intent == INTENT_HARM)
 			if (src.has_drawer && src.drawer_locked)
@@ -285,24 +296,17 @@ TYPEINFO_NEW(/obj/table)
 				boutput(user, SPAN_ALERT("[K] doesn't seem to fit in [src]'s desk drawer lock."))
 			return
 
-		else if (istype(W, /obj/item/cloth/towel))
-			user.visible_message(SPAN_NOTICE("[user] wipes down [src] with [W]."))
-
 		else if (istype(W) && src.place_on(W, user, params))
-			return
-		// chance to smack satchels against a table when dumping stuff out of them, because that can be kinda funny
-		else if (istype(W, /obj/item/satchel) && (user.get_brain_damage() <= 40 && rand(1, 10) < 10))
 			return
 
 		else
 			return ..()
 
 	attack_hand(mob/user)
-		if (user.is_hulk() && !hulk_immune)
+		if ((user.is_hulk() || isabomination(user)) && !src.hulk_immune)
 			user.visible_message(SPAN_ALERT("[user] destroys the table!"))
-			if (prob(40))
-				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
-			logTheThing(LOG_COMBAT, user, "uses hulk to smash a table at [log_loc(src)].")
+			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
+			logTheThing(LOG_COMBAT, user, "uses [user.is_hulk() ? "hulk" : isabomination(user) ? "changeling abomination form" : "unknown"] to smash a table at [log_loc(src)].")
 			deconstruct()
 			return
 
@@ -353,23 +357,10 @@ TYPEINFO_NEW(/obj/table)
 			return
 
 		var/obj/item/I = O
-		if(I.equipped_in_slot && I.cant_self_remove)
-			return
-		I.stored?.transfer_stored_item(I, get_turf(I), user = user)
-		if (istype(I,/obj/item/satchel))
-			var/obj/item/satchel/S = I
-			if (length(S.contents) < 1)
-				boutput(user, SPAN_ALERT("There's nothing in [S]!"))
-			else
-				user.visible_message(SPAN_NOTICE("[user] dumps out [S]'s contents onto [src]!"))
-				for (var/obj/item/thing in S.contents)
-					thing.set_loc(src.loc)
-				S.tooltip_rebuild = 1
-				S.UpdateIcon()
-				return
 		if (isrobot(user) || user.equipped() != I || (I.cant_drop || I.cant_self_remove))
 			return
 
+		I.stored?.transfer_stored_item(I, get_turf(I), user = user)
 		src.place_on(I, user, params, TRUE)
 
 
@@ -504,6 +495,19 @@ TYPEINFO_NEW(/obj/table/wood/round)
 
 	auto
 		auto = 1
+
+TYPEINFO(/obj/table/wood/regal)
+TYPEINFO_NEW(/obj/table/wood/regal)
+	. = ..()
+	smooth_list = typecacheof(/obj/table/wood/regal/auto)
+/obj/table/wood/regal
+	name = "fancy wooden table"
+	desc = "A table made from solid oak and polished to within an inch of its life."
+	icon = 'icons/obj/furniture/table_wood_regal.dmi'
+	parts_type = /obj/item/furniture_parts/table/wood/regal
+
+/obj/table/wood/regal/auto
+	auto = TRUE
 
 TYPEINFO(/obj/table/regal)
 TYPEINFO_NEW(/obj/table/regal)
@@ -852,8 +856,8 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 	drawer_contents = list(/obj/item/paper/book/from_file/pharmacopia,
 				/obj/item/storage/box/beakerbox,
 				/obj/item/reagent_containers/glass/beaker/large = 2,
-				/obj/item/clothing/glasses/spectro,
-				/obj/item/device/reagentscanner = 2,
+				/obj/item/clothing/glasses/spectro = 2,
+				/obj/item/device/reagentscanner = 3,
 				/obj/item/reagent_containers/dropper/mechanical = 2,
 				/obj/item/reagent_containers/dropper = 2)
 
@@ -862,8 +866,6 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 	desc = "Extra supplies for the discerning chemist."
 	drawer_contents = list(/obj/item/storage/box/patchbox,
 				/obj/item/storage/box/syringes,
-				/obj/item/clothing/glasses/spectro,
-				/obj/item/device/reagentscanner,
 				/obj/item/bunsen_burner,
 				/obj/item/reagent_containers/dropper/mechanical,
 				/obj/item/storage/box/lglo_kit,

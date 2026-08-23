@@ -10,32 +10,28 @@ import { Box, Button, NumberInput, Section, Table } from 'tgui-core/components';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
-interface NumberInputCellProps {
+interface AbilityNumberInputProps {
   number: number;
   unit?: string;
   onChange: (abilityRef: string, value: number) => void;
   abilityRef: string;
 }
 
-const NumberInputCell = ({
+const AbilityNumberInput = ({
   number,
   unit,
   onChange,
   abilityRef,
-}: NumberInputCellProps) => (
-  <Table.Cell py="0.5em" collapsing>
-    <Box align="center">
-      <NumberInput
-        minValue={0}
-        maxValue={Infinity}
-        unit={unit}
-        width="5em"
-        value={number}
-        step={1}
-        onChange={(value) => onChange(abilityRef, value)}
-      />
-    </Box>
-  </Table.Cell>
+}: AbilityNumberInputProps) => (
+  <NumberInput
+    minValue={0}
+    maxValue={Infinity}
+    unit={unit}
+    width="5em"
+    value={number}
+    step={1}
+    onChange={(value) => onChange(abilityRef, value)}
+  />
 );
 
 const HeaderCell = ({ children }) => (
@@ -69,6 +65,7 @@ export const AbilityManager = () => {
     act('updatePointCost', { abilityRef, value });
   const updateCooldown = (abilityRef, value) =>
     act('updateCooldown', { abilityRef, value });
+  const resetCooldown = (abilityRef) => act('resetCooldown', { abilityRef });
   const manageAbility = (abilityRef) => act('manageAbility', { abilityRef });
   const renameAbility = (abilityRef) => act('renameAbility', { abilityRef });
   const deleteAbility = (abilityRef) => act('deleteAbility', { abilityRef });
@@ -97,17 +94,25 @@ export const AbilityManager = () => {
                   <Table.Row key={ability.abilityRef}>
                     <Table.Cell py="0.5em">{ability.name}</Table.Cell>
                     <Table.Cell py="0.5em">{ability.subtype}</Table.Cell>
-                    <NumberInputCell
-                      number={ability.pointCost}
-                      onChange={updatePointCost}
-                      abilityRef={ability.abilityRef}
-                    />
-                    <NumberInputCell
-                      number={ability.cooldown}
-                      unit="ds"
-                      onChange={updateCooldown}
-                      abilityRef={ability.abilityRef}
-                    />
+                    <Table.Cell collapsing>
+                      <AbilityNumberInput
+                        number={ability.pointCost}
+                        onChange={updatePointCost}
+                        abilityRef={ability.abilityRef}
+                      />
+                    </Table.Cell>
+                    <Table.Cell collapsing>
+                      <AbilityNumberInput
+                        onChange={updateCooldown}
+                        number={ability.cooldown}
+                        abilityRef={ability.abilityRef}
+                      />
+                      <Button
+                        icon="rotate-right"
+                        tooltip="Reset cooldown"
+                        onClick={() => resetCooldown(ability.abilityRef)}
+                      />
+                    </Table.Cell>
                     {/* Buttons for managing and deleting the ability */}
                     <Table.Cell py="0.5em" collapsing>
                       <Box align="center" nowrap>

@@ -19,10 +19,10 @@
 /// This proc checks for all the conditionals that could apply to a fishing spot. Modify that for special conditions.
 /datum/fishing_lootpool/proc/check_conditionals(var/mob/user, var/obj/item/fishing_rod/fishing_rod)
 	. = TRUE
-	if(fishing_rod.tier < src.minimum_rod_tier || fishing_rod.tier > src.maximum_rod_tier)
+	if(fishing_rod?.tier < src.minimum_rod_tier || fishing_rod?.tier > src.maximum_rod_tier)
 		return FALSE
 	if (required_lure != null)
-		var/obj/item/lure = fishing_rod.get_lure()
+		var/obj/item/lure = fishing_rod?.get_lure()
 		if (!istype(lure, required_lure)) return FALSE
 
 /// This proc generates a new loottable out of a given current one
@@ -52,7 +52,8 @@
 	/obj/item/reagent_containers/food/fish/bass = 30,\
 	/obj/item/reagent_containers/food/fish/salmon = 20,\
 	/obj/item/reagent_containers/food/fish/herring = 15,\
-	/obj/item/reagent_containers/food/fish/sardine = 20)
+	/obj/item/reagent_containers/food/fish/sardine = 20,\
+	/obj/item/reagent_containers/food/fish/anchovy = 10)
 
 ///lava fish as T3 fish for fire-sources
 /datum/fishing_lootpool/lava_fish
@@ -101,3 +102,8 @@
 /datum/fishing_lootpool/igneous_fish
 	minimum_rod_tier = 2
 	fish_available = list(/obj/item/reagent_containers/food/fish/igneous_fish = 10)
+
+///gotta put the "fake" one in to get the real one
+/datum/fishing_lootpool/literal_swordfish
+	required_lure = /obj/item/reagent_containers/food/fish/swordfish
+	fish_available = list(/obj/item/reagent_containers/food/fish/literal_swordfish = 25)

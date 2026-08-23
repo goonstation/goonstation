@@ -49,6 +49,7 @@
 	icon_state = "tree" // changed from 0
 	anchored = ANCHORED
 	layer = EFFECTS_LAYER_UNDER_3
+	provides_grip = TRUE
 
 	pixel_x = -20
 	density = 1
@@ -80,6 +81,7 @@
 					for (var/i in 0 to 2)
 						var/obj/item/material_piece/organic/wood/log = new(locate(our_turf.x + i, our_turf.y, our_turf.z))
 						log.Turn(90)
+						log.is_rotated = TRUE
 					qdel(src)
 					return
 				src.falling = TRUE
@@ -226,7 +228,7 @@
 	flags = FLUID_SUBMERGE
 	text = "<font color=#5c5>s"
 	var/health = 50
-	var/destroyed = 0 // Broken shrubs are unable to vend prizes, this is also used to track a objective.
+	var/destroyed = 0 // Broken shrubs are unable to vend prizes, this is also used to track an objective.
 	var/max_uses = 0 // The maximum amount of time one can try to shake this shrub for something.
 	var/spawn_chance = 0 // How likely is this shrub to spawn something?
 	var/last_use = 0 // To prevent spam.
@@ -247,6 +249,7 @@
 		spawn_chance = rand(1, 40)
 		if (prob(5))
 			is_plastic = TRUE
+			setMaterial(getMaterial("plastic"), FALSE, FALSE, use_descriptors = FALSE)
 		#ifdef XMAS
 		if(src.z == Z_LEVEL_STATION)
 			src.UpdateOverlays(image(src.icon, "[icon_state]-xmas"), "xmas")
@@ -326,11 +329,13 @@
 		. = ..()
 		if(isliving(AM))
 			APPLY_ATOM_PROPERTY(AM, PROP_MOB_HIDE_ICONS, src)
+			APPLY_ATOM_PROPERTY(AM, PROP_MOB_AI_UNTRACKABLE, src)
 
 	Uncrossed(atom/movable/AM)
 		. = ..()
 		if(isliving(AM))
 			REMOVE_ATOM_PROPERTY(AM, PROP_MOB_HIDE_ICONS, src)
+			REMOVE_ATOM_PROPERTY(AM, PROP_MOB_AI_UNTRACKABLE, src)
 
 	attackby(var/obj/item/W, mob/user)
 		user.lastattacked = get_weakref(src)
@@ -422,21 +427,22 @@
 
 //It'll show up on multitools
 TYPEINFO(/obj/shrub/syndicateplant)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 2
 /obj/shrub/syndicateplant
 	var/net_id
-	is_syndicate = TRUE
+
+	SYNDICATE_STEALTH_DESCRIPTION("The latest in syndicate spy technology.")
+
+	get_desc(dist, mob/user)
+		. = ..()
+		if(!istrainedsyndie(user) && !isspythief(user))
+			. += "Is that an antenna?"
 
 	New()
 		. = ..()
 		src.net_id = generate_net_id(src)
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(src.net_id, "control", FREQ_HYDRO)
-
-	get_desc(dist, mob/user)
-		if(istrainedsyndie(user))
-			. += SPAN_ALERT("<b>The latest in syndicate spy technology. </b>")
-		else
-			. += "Is that an antenna? "
 
 	proc/fuck_up()
 		var/datum/effects/system/spark_spread/S = new
@@ -472,12 +478,15 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "bonsai"
 	desc = "The Captain's most prized possession. Don't touch it. Don't even look at it."
+	health = 5 //Fragile tree
 	anchored = ANCHORED
 	density = 1
 	layer = EFFECTS_LAYER_UNDER_1
 	dir = EAST
 
 	destroy()
+		if(src.destroyed)
+			return
 		src.set_dir(NORTHEAST)
 		src.destroyed = 1
 		src.set_density(0)
@@ -505,8 +514,12 @@ TYPEINFO(/obj/shrub/syndicateplant)
 		else
 			boutput(user, SPAN_ALERT("I don't think the Captain is going to be too happy about this..."))
 			user.visible_message(SPAN_ALERT("<b>[user] violently grazes on [src]!</b>"), SPAN_NOTICE("You voraciously devour the bonzai, what a feast!"))
+			if (ishuman(user))
+				var/mob/living/carbon/human/H = user
+				H.sims?.affectMotive("Hunger", 30)
 			src.interesting = "Inexplicably, the genetic code of the bonsai tree has the words 'fuck [user.real_name]' encoded in it over and over again."
 			src.destroy()
+			logTheThing(LOG_COMBAT, src, "was eaten by [constructTarget(user,"combat")] at [log_loc(src)].")
 			user.changeStatus("food_deep_burp", 2 MINUTES)
 			user.changeStatus("food_hp_up", 2 MINUTES)
 			user.changeStatus("food_energized", 2 MINUTES)
@@ -518,28 +531,31 @@ TYPEINFO(/obj/shrub/syndicateplant)
 		if (inafterlife(user))
 			boutput(user, "You can't bring yourself to hurt such a beautiful thing!")
 			return
-		if (src.destroyed) return
 		if (user.mind && user.mind.assigned_role == "Captain")
 			if (issnippingtool(W))
 				boutput(user, SPAN_NOTICE("You carefully and lovingly sculpt your bonsai tree."))
 			else
 				boutput(user, SPAN_ALERT("Why would you ever destroy your precious bonsai tree?"))
-		else if(isitem(W) && (user.mind && user.mind.assigned_role != "Captain"))
-			src.destroy()
+			return
+		var/was_destroyed = src.destroyed
+		. = ..()
+		if(src.destroyed && !was_destroyed)
 			boutput(user, SPAN_ALERT("I don't think the Captain is going to be too happy about this..."))
 			src.visible_message(SPAN_ALERT("<b>[user] ravages [src] with [W].</b>"))
+			logTheThing(LOG_COMBAT, src, "was destroyed by [constructTarget(user,"combat")] with [W] at [log_loc(src)].")
 			src.interesting = "Inexplicably, the genetic code of the bonsai tree has the words 'fuck [user.real_name]' encoded in it over and over again."
-		return
 
 	meteorhit(obj/O as obj)
 		src.visible_message(SPAN_ALERT("<b>The meteor smashes right through [src]!</b>"))
 		src.destroy()
+		logTheThing(LOG_COMBAT, src, "was destroyed by a meteor at [log_loc(src)].")
 		src.interesting = "Looks like it was crushed by a giant fuck-off meteor."
 		return
 
 	ex_act(severity)
 		src.visible_message(SPAN_ALERT("<b>[src] is ripped to pieces by the blast!</b>"))
 		src.destroy()
+		logTheThing(LOG_COMBAT, src, "was destroyed by an explosion at [log_loc(src)].")
 		src.interesting = "Looks like it was blown to pieces by some sort of explosive."
 		return
 
@@ -582,6 +598,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 			src.UpdateIcon()
 			boutput(user, SPAN_ALERT("I don't think the Captain is going to be too happy about this..."))
 			src.visible_message(SPAN_ALERT("<b>[user] ravages the [src] with [W].</b>"))
+			logTheThing(LOG_COMBAT, src, "was destroyed by [constructTarget(user,"combat")] with [W] at [log_loc(src)].")
 			src.interesting = "Inexplicably, the signal flags on the shattered mast just say 'fuck [user.real_name]'."
 		return
 
@@ -648,6 +665,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	density = 0
 	opacity = 0
 	layer = EFFECTS_LAYER_UNDER_3 // below lights, above windoors
+	default_material = "plastic"
 	var/base_state = "blindsH"
 	var/open = 1
 	var/id = null
@@ -786,6 +804,7 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	icon_state = "blind1"
 	anchored = ANCHORED
 	density = 0
+	var/working = TRUE
 	var/on = 0
 	var/id = null
 
@@ -796,8 +815,6 @@ TYPEINFO(/obj/shrub/syndicateplant)
 				src.initialize()
 
 	initialize()
-		if (!src.name || (src.name in list("N blind switch", "E blind switch", "S blind switch", "W blind switch")))//== "N light switch" || name == "E light switch" || name == "S light switch" || name == "W light switch")
-			src.name = "blind switch"
 		if (!src.id)
 			var/area/blind_area = get_area(src)
 			src.id = blind_area.name
@@ -821,7 +838,8 @@ TYPEINFO(/obj/shrub/syndicateplant)
 		src.UpdateIcon()
 
 	proc/toggle_group()
-		switched_obj_toggle(SWOB_BLINDS,src.id,!(src.on))
+		if (src.working)
+			switched_obj_toggle(SWOB_BLINDS,src.id,!(src.on))
 
 	attack_hand(mob/user)
 		. = ..()
@@ -835,80 +853,14 @@ TYPEINFO(/obj/shrub/syndicateplant)
 		. = ..()
 		src.toggle_group()
 
-/obj/blind_switch/north
-	name = "N blind switch"
-	dir = NORTH
-	pixel_y = 24
+SET_UP_DIRECTIONALS(/obj/blind_switch, OFFSETS_LIGHTSWITCH)
 
-	on
-		on = 1
-		icon_state = "blind0"
+/obj/blind_switch/on
+	icon_state = "blind0"
+	on = TRUE
 
-/obj/blind_switch/east
-	name = "E blind switch"
-	dir = EAST
-	pixel_x = 24
+SET_UP_DIRECTIONALS(/obj/blind_switch/on, OFFSETS_LIGHTSWITCH)
 
-	on
-		on = 1
-		icon_state = "blind0"
-
-/obj/blind_switch/south
-	name = "S blind switch"
-	dir = SOUTH
-	pixel_y = -24
-
-	on
-		on = 1
-		icon_state = "blind0"
-
-/obj/blind_switch/west
-	name = "W blind switch"
-	dir = WEST
-	pixel_x = -24
-
-	on
-		on = 1
-		icon_state = "blind0"
-
-// left in for existing map compatibility; subsequent update could unify blind and sign switches codewise, and eliminate this subtype
-/obj/blind_switch/area
-
-/obj/blind_switch/area/north
-	name = "N blind switch"
-	dir = NORTH
-	pixel_y = 24
-
-	on
-		on = 1
-		icon_state = "blind0"
-
-/obj/blind_switch/area/east
-	name = "E blind switch"
-	dir = EAST
-	pixel_x = 24
-
-	on
-		on = 1
-		icon_state = "blind0"
-
-/obj/blind_switch/area/south
-	name = "S blind switch"
-	dir = SOUTH
-	pixel_y = -24
-
-	on
-		on = 1
-		icon_state = "blind0"
-
-/obj/blind_switch/area/west
-	name = "W blind switch"
-	dir = WEST
-	pixel_x = -24
-
-	on
-		on = 1
-		icon_state = "blind0"
 
 /obj/sign_switch
 	name = "sign switch"
@@ -927,8 +879,6 @@ TYPEINFO(/obj/shrub/syndicateplant)
 				src.initialize()
 
 	initialize()
-		if (!src.name || (src.name in list("N sign switch", "E sign switch", "S sign switch", "W sign switch")))
-			src.name = "sign switch"
 		if (!src.id)
 			var/area/sign_area = get_area(src)
 			src.id = sign_area.name
@@ -965,21 +915,8 @@ TYPEINFO(/obj/shrub/syndicateplant)
 	attackby(obj/item/W, mob/user)
 		src.toggle_group()
 
-/obj/sign_switch/north
-	name = "N sign switch"
-	pixel_y = 24
+SET_UP_DIRECTIONALS(/obj/sign_switch, OFFSETS_LIGHTSWITCH)
 
-/obj/sign_switch/east
-	name = "E sign switch"
-	pixel_x = 24
-
-/obj/sign_switch/south
-	name = "S sign switch"
-	pixel_y = -24
-
-/obj/sign_switch/west
-	name = "W sign switch"
-	pixel_x = -24
 
 /obj/machinery/illuminated_sign
 	name = "illuminated sign"
@@ -1287,6 +1224,11 @@ TYPEINFO(/obj/shrub/syndicateplant)
 			name = "Space Station 10"
 			desc = "Looks like the regional Nanotrasen hub station passing by your orbit."
 			icon_state = "ss10"
+	earth
+		name = "Earth"
+		desc = "Oh shit, it's Earth!"
+		icon = 'icons/obj/large/160x160.dmi'
+		icon_state = "earthrise"
 
 obj/decoration
 
@@ -1624,6 +1566,7 @@ obj/decoration/gibberBroken
 	mouse_opacity = 0
 
 /obj/decoration/damagedchair
+	name = "damaged chair"
 	anchored = ANCHORED_ALWAYS
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "damagedchair"

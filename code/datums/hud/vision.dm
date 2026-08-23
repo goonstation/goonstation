@@ -106,14 +106,15 @@
 			remove_screen(dither)
 
 /datum/hud/vision/add_screen(atom/movable/screen/S)
-	if(S == "flash" && !(flash in src.objects))
-		src.objects += flash
-		src.objects += flash_dark
-		for (var/client/C in src.clients)
-			if(C.dark_screenflash)
-				C.screen += flash_dark
-			else
-				C.screen += flash
+	if(S == "flash")
+		if (!(flash in src.objects))
+			src.objects += flash
+			src.objects += flash_dark
+			for (var/client/C in src.clients)
+				if(C.dark_screenflash)
+					C.screen += flash_dark
+				else
+					C.screen += flash
 	else
 		. = ..()
 

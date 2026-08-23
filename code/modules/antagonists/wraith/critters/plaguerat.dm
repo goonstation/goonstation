@@ -1,5 +1,8 @@
 //Add death
 ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
+TYPEINFO(/mob/living/critter/wraith/plaguerat)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN, SPEECH_OUTPUT_EQUIPPED, SPEECH_OUTPUT_WRAITHCHAT_PLAGUE_RAT)
+
 /mob/living/critter/wraith/plaguerat
 	name = "plague rat"
 	real_name = "plague rat"
@@ -25,7 +28,6 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 	health_brute_vuln = 0.45
 	health_burn = 50
 	health_burn_vuln = 0.65
-	var/obj/machinery/wraith/rat_den/linked_den = null
 	reagent_capacity = 100
 	var/mob/living/intangible/wraith/master = null
 
@@ -38,6 +40,7 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 	max_skins = 1
 
 	faction = list(FACTION_WRAITH)
+	name_generator_path = /datum/wraith_name_generator/plague_rat
 
 	blood_id = "miasma"
 	/// venom injected per bite
@@ -62,14 +65,14 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "paw"
 		HH.limb_name = "claws"
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/mouth/small
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "mouth"
 		HH.name = "mouth"
 		HH.limb_name = "teeth"
@@ -178,14 +181,14 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "paw"
 		HH.limb_name = "claws"
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/mouth/small
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "mouth"
 		HH.name = "mouth"
 		HH.limb_name = "teeth"
@@ -217,14 +220,14 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter/med
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "paw"
 		HH.limb_name = "claws"
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/mouth/small
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "mouth"
 		HH.name = "mouth"
 		HH.limb_name = "teeth"
@@ -254,14 +257,14 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "paw"
 		HH.limb_name = "claws"
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/mouth/small
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "mouth"
 		HH.name = "mouth"
 		HH.limb_name = "teeth"

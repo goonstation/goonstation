@@ -6,9 +6,8 @@
  */
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  title: "You've been polymorphed!",
-  content: (
+const PolymorphContentWindow = () => {
+  return (
     <div className="traitor-tips">
       <h1 className="center">You have been polymorphed!</h1>
 
@@ -24,5 +23,10 @@ export const acw: AlertContentWindow = {
         critter, talk to them first!
       </p>
     </div>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  title: "You've been polymorphed!",
+  component: PolymorphContentWindow,
 };

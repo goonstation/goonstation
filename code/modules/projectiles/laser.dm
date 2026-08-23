@@ -92,15 +92,23 @@ toxic - poisons
 	damage = 80
 	cost = 50
 	dissipation_delay = 10
-	brightness = 0
 	sname = "heavy laser"
 	shot_sound = 'sound/weapons/Laser.ogg'
 	color_red = 0
 	color_green = 0
 	color_blue = 1
 
-/datum/projectile/laser/heavy/law_safe //subclass of heavy laser that can't damage the law rack - for AI turrets
+/datum/projectile/laser/heavy/ai_turret //subclass of heavy laser that can't damage the law rack - for AI turrets
 	name = "heavy laser"
+	icon_state ="laser_big"
+	law_rack_safe = TRUE
+	brightness = 0.8
+	color_red = 1
+	color_green = 0.2
+	color_blue = 0.2
+
+/datum/projectile/laser/heavy/emitter
+	law_rack_safe = TRUE
 
 /datum/projectile/laser/diffuse
 	sname = "diffuse laser"
@@ -215,7 +223,7 @@ toxic - poisons
 
 		on_launch(obj/projectile/O)
 			. = ..()
-			O.AddComponent(/datum/component/proj_mining, 0.2, 5)
+			O.AddComponent(/datum/component/proj_mining, 0.2, 5, MINING_DMG_LASER)
 
 		on_hit(atom/hit)
 			if (istype(hit,/obj/critter)) //MBC : if there was a cleaner way to do this, I couldn't find it.
@@ -298,8 +306,9 @@ toxic - poisons
 				var/mob/M = vehicle.pilot
 				if (istype(M))
 					var/damage_pilot = TRUE
-					if (istype(vehicle.sec_system, /obj/item/shipcomponent/secondary_system/shielding))
-						var/obj/item/shipcomponent/secondary_system/shielding/shielding = vehicle.sec_system
+					var/sec_part = vehicle.get_part(POD_PART_SECONDARY)
+					if (istype(sec_part, /obj/item/shipcomponent/secondary_system/shielding))
+						var/obj/item/shipcomponent/secondary_system/shielding/shielding = sec_part
 						if (shielding.active)
 							damage_pilot = FALSE
 					if (damage_pilot)
@@ -632,7 +641,7 @@ toxic - poisons
 
 	on_launch(obj/projectile/O)
 		. = ..()
-		O.AddComponent(/datum/component/proj_mining, 0.2, 2)
+		O.AddComponent(/datum/component/proj_mining, 0.2, 2, MINING_DMG_LASER)
 
 /datum/projectile/laser/drill
 	name = "drill bit"
@@ -655,7 +664,7 @@ toxic - poisons
 	var/hit_human_sound = 'sound/impact_sounds/Slimy_Splat_1.ogg'
 	on_launch(obj/projectile/O)
 		. = ..()
-		O.AddComponent(/datum/component/proj_mining, 0.15, 0)
+		O.AddComponent(/datum/component/proj_mining, 0.15, 0, MINING_DMG_DRILL)
 
 	on_hit(atom/hit)
 		if (ishuman(hit))

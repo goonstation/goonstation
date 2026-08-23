@@ -29,7 +29,10 @@ var/global/datum/apiHandler/apiHandler
 			src.enabled = FALSE
 			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: Goonhub endpoint doesn't exist, disabled api handler")
 			logTheThing(LOG_DIARY, null, "API Error: Goonhub endpoint doesn't exist, disabled api handler", "debug")
-
+		if (!config.goonhub_api_token)
+			src.enabled = FALSE
+			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: Goonhub API token is not set, disabled api handler")
+			logTheThing(LOG_DIARY, null, "API Error: Goonhub API token is not set, disabled api handler", "debug")
 
 	/// Build and throw an error exception
 	proc/apiError(list/data, source)
@@ -123,7 +126,8 @@ var/global/datum/apiHandler/apiHandler
 		var/headers = list(
 			"Accept" = "application/json",
 			"Content-Type" = "application/json",
-			"Authorization" = config.goonhub_api_token
+			"Authorization" = config.goonhub_api_token,
+			"X-Server-Id" = config.server_id,
 		)
 
 		src.lazy_waiting_counter++
@@ -141,7 +145,7 @@ var/global/datum/apiHandler/apiHandler
 		if (src.debug) src.debugLogRequest(route.method, req_route, req_body)
 		var/time_started = TIME
 		var/time_started_unix = rustg_unix_timestamp()
-		UNTIL(request.is_complete() || (TIME - time_started) > 10 SECONDS)
+		UNTIL(request.is_complete(), 10 SECONDS)
 		if (!request.is_complete())
 			src.trackRecentError()
 			var/msg = "Request timed out during [req_route] (Attempt: [attempt]; recent errors: [src.emergency_shutoff_counter], concurrent: [src.lazy_concurrent_counter])"

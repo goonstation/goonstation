@@ -138,7 +138,6 @@
 	depletion_rate = 0.05 // ethanol depletes slower but is formed in smaller quantities
 	overdose = 100 // ethanol poisoning
 	thirst_value = -0.02
-	bladder_value = -0.2
 	hygiene_value = 1
 	target_organs = list("liver")	//heart,  "stomach", "intestines", "left_kidney", "right_kidney"
 
@@ -157,10 +156,16 @@
 		if (isliving(M))
 			var/mob/living/H = M
 			var/ethanol_amt = holder.get_reagent_amount(src.id)
-			if(H?.reagents.has_reagent("moonshine"))
-				mult *= 7
+			var/has_moonshine = H.reagents.has_reagent("moonshine")
 			var/liver_damage = 0
-			if (!isalcoholresistant(H) || H?.reagents.has_reagent("moonshine"))
+			if(has_moonshine)
+				mult *= 7
+			else
+				ethanol_amt -= GET_ATOM_PROPERTY(M, PROP_MOB_ALCOHOL_RESIST)
+				ethanol_amt = max(ethanol_amt, 0)
+				if (ethanol_amt == 0)
+					return ..()
+			if (!isalcoholresistant(H))
 				if (ethanol_amt >= 15)
 					if(probmult(10)) H.emote(pick("hiccup", "burp", "mumble", "grumble"))
 					H.stuttering += 1
@@ -558,7 +563,7 @@
 	fluid_g = 255
 	fluid_b = 255
 	transparency = 255
-	overdose = 200
+	overdose = 80
 	hunger_value = 0.098
 	thirst_value = -0.098
 	taste = "sweet"
@@ -613,12 +618,12 @@
 
 				responseBee.visible_message("<b>[responseBee]</b> [ pick("looks confused.", "appears to undergo a metaphysical crisis.  What is human?  What is space bee?<br>Or it might just have gas.", "looks perplexed.", "bumbles in a confused way.", "holds out its forelegs, staring into its little bee-palms and wondering what is real.") ]")
 
-		else
+		else if (severity == 2)
 			if (!M.getStatusDuration("unconscious"))
 				boutput(M, SPAN_ALERT("You pass out from hyperglycemic shock!"))
 				M.emote("collapse")
 				//M.changeStatus("unconscious", ((2 * severity)*15) * mult)
-				M.changeStatus("knockdown", ((4 * severity)*1.5 SECONDS) * mult)
+				M.changeStatus("knockdown", ((6 SECONDS) * mult))
 
 			if (prob(8))
 				M.take_toxin_damage(severity * mult)
@@ -649,7 +654,7 @@
 	fluid_g = 250
 	fluid_b = 160
 	transparency = 155
-	data = null
+	threshold_volume = 40
 
 	on_add()
 		if(ismob(holder?.my_atom))
@@ -664,6 +669,18 @@
 			if(M?.bioHolder.HasEffect("quiet_voice"))
 				M.bioHolder.RemoveEffect("quiet_voice")
 		..()
+
+	cross_threshold_over()
+		. = ..()
+		if (ismob(holder?.my_atom))
+			var/mob/M = holder.my_atom
+			APPLY_ATOM_PROPERTY(M, PROP_ATOM_FLOATING, "reagent_[src.id]")
+
+	cross_threshold_under()
+		. = ..()
+		if (ismob(holder?.my_atom))
+			var/mob/M = holder.my_atom
+			REMOVE_ATOM_PROPERTY(M, PROP_ATOM_FLOATING, "reagent_[src.id]")
 
 /datum/reagent/radium
 	name = "radium"
@@ -744,7 +761,6 @@
 	transparency = 80
 	thirst_value = 0.8909
 	hygiene_value = 1.33
-	bladder_value = -0.2
 	taste = "bland"
 	minimum_reaction_temperature = -INFINITY
 	target_organs = list("left_kidney", "right_kidney")
@@ -831,12 +847,34 @@
 				else
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
+						var/removed_curse = FALSE
 						if(H.bioHolder?.HasEffect("blood_curse") || H.bioHolder?.HasEffect("blind_curse") || H.bioHolder?.HasEffect("weak_curse") || H.bioHolder?.HasEffect("rot_curse") || H.bioHolder?.HasEffect("death_curse"))
-							H.bioHolder.RemoveEffect("blood_curse")
-							H.bioHolder.RemoveEffect("blind_curse")
-							H.bioHolder.RemoveEffect("weak_curse")
-							H.bioHolder.RemoveEffect("rot_curse")
-							H.bioHolder.RemoveEffect("death_curse")
+							if(raw_volume < 10)
+								H.visible_message("The liquid sizzles a bit as it touches [M], then stops.")
+								playsound(H, 'sound/impact_sounds/burn_sizzle.ogg', 100, TRUE)
+							else
+								H.bioHolder.RemoveEffect("blood_curse")
+								H.bioHolder.RemoveEffect("blind_curse")
+								H.bioHolder.RemoveEffect("weak_curse")
+								H.bioHolder.RemoveEffect("rot_curse")
+								H.bioHolder.RemoveEffect("death_curse")
+								removed_curse = TRUE
+						else if(M.hasStatus("art_blood_curse") || M.hasStatus("art_aging_curse") || M.hasStatus("art_nightmare_curse") || M.hasStatus("art_maze_curse") || M.hasStatus("art_displacement_curse") || M.hasStatus("art_light_curse"))
+							if(raw_volume < 10)
+								H.visible_message("The liquid sizzles a bit as it touches [M], then stops.")
+								playsound(H, 'sound/impact_sounds/burn_sizzle.ogg', 100, TRUE)
+							else
+								M.delStatus("art_blood_curse")
+								M.delStatus("art_aging_curse")
+								M.delStatus("art_nightmare_curse")
+								M.delStatus("art_maze_curse")
+								M.delStatus("art_displacement_curse")
+								M.delStatus("art_light_curse")
+								playsound(H, 'sound/effects/lit.ogg', 100, TRUE)
+								removed_curse = TRUE
+						else
+							boutput(M, SPAN_NOTICE("You feel somewhat purified... but mostly just wet."))
+						if(removed_curse)
 							H.visible_message("[H] screams as some black smoke exits their body.")
 							H.emote("scream")
 							random_burn_damage(H, 5)
@@ -846,8 +884,6 @@
 								if (S)
 									S.set_up(5, 0, T, null, "#3b3b3b")
 									S.start()
-						else
-							boutput(M, SPAN_NOTICE("You feel somewhat purified... but mostly just wet."))
 					else
 						boutput(M, SPAN_NOTICE("You feel somewhat purified... but mostly just wet."))
 					M.take_brain_damage(0 - clamp(volume, 0, 10))
@@ -868,7 +904,6 @@
 	reagent_state = LIQUID
 	thirst_value = 0.8909
 	hygiene_value = 0.75
-	bladder_value = -0.25
 	taste = "bitter"
 
 	reaction_temperature(exposed_temperature, exposed_volume) //Just an example.
@@ -908,7 +943,6 @@
 	reagent_state = LIQUID
 	thirst_value = -0.3 //Sea water actually slowly dehydrates you because you use more liquid to get rid of the salt then you gain.
 	hygiene_value = 0.3
-	bladder_value = -0.5
 	taste = "gross"
 
 /datum/reagent/ice
@@ -921,7 +955,6 @@
 	fluid_b = 250
 	transparency = 200
 	thirst_value = 0.8909
-	bladder_value = -0.2
 	minimum_reaction_temperature = T0C+1 // if it adds 1'C water, 1'C is good enough.
 	taste = "cold"
 
@@ -951,7 +984,6 @@
 	fluid_b = 247
 	transparency = 180
 	thirst_value = 0.3
-	bladder_value = -0.1
 	taste = "steamy"
 
 	reaction_turf(var/turf/t, var/volume)

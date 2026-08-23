@@ -35,7 +35,7 @@ var/list/all_slots = list(SLOT_BACK, SLOT_WEAR_MASK, SLOT_L_HAND, SLOT_R_HAND, S
 #define MASKINTERNALS				(1<<1)
 /// covers the person's eyes
 #define COVERSEYES					(1<<2)
-// covers the person's mouth
+/// covers the person's mouth
 #define COVERSMOUTH					(1<<3)
 /// for galoshes/magic sandals/etc that prevent slipping on things
 #define NOSLIP						(1<<4)
@@ -69,6 +69,8 @@ var/list/all_slots = list(SLOT_BACK, SLOT_WEAR_MASK, SLOT_L_HAND, SLOT_R_HAND, S
 #define ONBELT						(1<<18)
 /// block miasma inhalations (sterile mask)
 #define BLOCKMIASMA					(1<<19)
+// covers the person's hair
+#define COVERSHAIR					(1<<20)
 
 //Suit blood flags
 #define SUITBLOOD_ARMOR 1

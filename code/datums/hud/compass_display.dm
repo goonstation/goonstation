@@ -41,18 +41,17 @@ atom/movable/screen/compass_display
 
 	//WIRE TOOLTIPS
 	MouseEntered(location, control, params)
-		if (usr.client.tooltipHolder && control == "mapwindow.map")
-
-			usr.client.tooltipHolder.showHover(src, list(
-				"params" = params,
-				"title" = "HuD Compass",
-				"content" = "It points towards [target].",
-				"theme" = null
-			))
+		if (usr.client.tooltips && control == "mapwindow.map")
+			usr.client.tooltips.show(
+				TOOLTIP_HOVER, src,
+				mouse = params,
+				title = "HuD Compass",
+				content = "It points towards [src.target].",
+			)
 
 	MouseExited()
-		if (usr.client.tooltipHolder)
-			usr.client.tooltipHolder.hideHover()
+		if (usr.client.tooltips)
+			usr.client.tooltips.hide(TOOLTIP_HOVER)
 
 // /mob
 // 	verb/test_compass()

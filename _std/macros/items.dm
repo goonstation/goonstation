@@ -8,6 +8,7 @@
 #define ispryingtool(x) (istool(x, TOOL_PRYING))
 #define ispulsingtool(x) (istool(x, TOOL_PULSING))
 #define issawingtool(x) (istool(x, TOOL_SAWING))
+#define isdeconstructingtool(x) (istool(x, TOOL_DECONSTRUCTING))
 #define isscrewingtool(x) (istool(x, TOOL_SCREWING) || (istype(x, /obj/item/reagent_containers) && x:reagents:has_reagent("screwdriver")) ) //the joke is too good
 #define issnippingtool(x) (istool(x, TOOL_SNIPPING))
 #define isspooningtool(x) (istool(x, TOOL_SPOONING))
@@ -17,6 +18,7 @@
 #define issolderingtool(x) (istool(x, TOOL_SOLDERING))
 #define iswiringtool(x) (istool(x, TOOL_WIRING))
 #define isassemblyapplier(x) (istool(x, TOOL_ASSEMBLY_APPLIER))
+#define isdiggingtool(x) (istool(x, TOOL_DIGGING))
 
 /// Returns true if the given x is a grab (obj/item/grab)
 #define isgrab(x) (istype(x, /obj/item/grab/))
@@ -33,3 +35,8 @@
 	)
 
 #define cangunpoint(x) (istype(x, /obj/item/gun) || istype(x, /obj/item/bang_gun))
+
+/// Randomizes an item's pixel offset within the given range
+#define RANDOMIZE_PIXEL_OFFSET(item, range) \
+    item.pixel_x = rand(-(range), (range)); \
+    item.pixel_y = rand(-(range), (range))

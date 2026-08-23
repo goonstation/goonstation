@@ -29,7 +29,6 @@
 		if (HAS_FLAG(object_flags, HAS_DIRECTIONAL_BLOCKING))
 			var/turf/T = get_turf(src)
 			T?.UpdateDirBlocks()
-		src.update_access_from_txt()
 #ifdef CHECK_MORE_RUNTIMES
 		if (src.req_access && !islist(src.req_access))
 			stack_trace("[src] ([src.type]) initialized at \[[src.x], [src.y], [src.z]\] with non-list req_access >:(")
@@ -129,6 +128,11 @@
 		if (isnull(src.real_name) && !isnull(src.name))
 			src.real_name = src.name
 		src.name = "[name_prefix(null, 1)][src.real_name || initial(src.name)][name_suffix(null, 1)]"
+
+	on_forensic_scan(datum/forensic_scan/scan)
+		. = ..()
+		if(src.forensic_ID)
+			scan.add_text("Forensic profile: [src.forensic_ID]")
 
 	proc/can_access_remotely(mob/user)
 		. = FALSE
@@ -282,7 +286,7 @@
 	pass_unstable = FALSE
 	mat_changename = 0
 	mat_changedesc = 0
-	event_handler_flags = IMMUNE_OCEAN_PUSH | IMMUNE_TRENCH_WARP
+	event_handler_flags = IMMUNE_OCEAN_PUSH | IMMUNE_TRENCH_WARP | IMMUNE_MINERAL_MAGNET
 	density = 0
 
 	updateHealth()
@@ -357,8 +361,7 @@
 			W.set_dir(dirbuffer)
 		W.set_loc(src.loc)
 		if (imprecise) // place item imprecisely by randomising offset
-			W.pixel_x = rand(-10, 10) // offsets avoid the edges just for niceness
-			W.pixel_y = rand(-10, 10)
+			RANDOMIZE_PIXEL_OFFSET(W, 10)
 		else if (islist(params) && params["icon-y"] && params["icon-x"])
 			W.pixel_x = text2num(params["icon-x"]) - 16
 			W.pixel_y = text2num(params["icon-y"]) - 16
@@ -369,6 +372,10 @@
 /obj/proc/receive_silicon_hotkey(var/mob/user)
 	//A wee stub to handle other objects implementing the AI keys
 	//DEBUG_MESSAGE("[src] got a silicon hotkey from [user], containing: [user.client.check_key(KEY_OPEN) ? "KEY_OPEN" : ""] [user.client.check_key(KEY_BOLT) ? "KEY_BOLT" : ""] [user.client.check_key(KEY_SHOCK) ? "KEY_SHOCK" : ""]")
+	if (!isAI(user) && !issilicon(user))
+		return TRUE
+	if (!can_act(user))
+		return TRUE
 	return 0
 
 /obj/proc/mob_flip_inside(var/mob/user)
@@ -400,31 +407,6 @@
 	replacer.disguise_as(src)
 	qdel(src)
 
-
-/obj/proc/admin_command_obj_speak()
-	set name = "Object Speak"
-	var/msg = tgui_input_text(usr, "Speak message through [src]", "Speak", "")
-	if (msg)
-		src.obj_speak(msg)
-
-/obj/proc/obj_speak(message)
-	var/image/chat_maptext/chat_text = make_chat_maptext(src, message, "color: '#DDDDDD';", alpha = 255)
-
-	var/list/mob/targets = null
-	var/mob/holder = src
-	while(holder && !istype(holder))
-		holder = holder.loc
-	ENSURE_TYPE(holder)
-	if(!holder)
-		targets = hearers(src, null)
-	else
-		targets = list(holder)
-		chat_text.plane = PLANE_HUD
-		chat_text.layer = 999
-
-	for(var/mob/O in targets)
-		O.show_message(SPAN_SAY("[SPAN_NAME("[src.name]")] says, [SPAN_MESSAGE("\"[message]\"")]"), 2, assoc_maptext = chat_text)
-
 /obj/proc/ghost_observe_occupant(mob/viewer, mob/occupant)
 	if(istype(viewer, /mob/dead/observer) && viewer.client && !viewer.client.keys_modifier && occupant)
 		var/mob/dead/observer/O = viewer
@@ -451,6 +433,7 @@
 		F = new /obj/item/electronics/frame/flatpack(target_loc)
 	else
 		F = new(target_loc)
+	F.forensic_holder = src.forensic_holder // keep forensic evidence when deconstructed
 	F.name = "[src.name] frame"
 	if(src.deconstruct_flags & DECON_DESTRUCT)
 		F.store_type = src.type
@@ -470,6 +453,8 @@
 		F.icon_state = "dbox_big"
 	F.w_class = W_CLASS_BULKY
 	if(!QDELETED(src))
+		src.pixel_x = initial(src.pixel_x)
+		src.pixel_y = initial(src.pixel_y)
 		src.was_deconstructed_to_frame(user)
 		F.RegisterSignal(src, COMSIG_ATOM_ENTERED, TYPE_PROC_REF(/obj/item/electronics/frame, kickout))
 	return F

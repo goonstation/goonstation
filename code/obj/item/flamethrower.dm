@@ -83,7 +83,7 @@ A Flamethrower in various states of assembly
 			return TRUE
 
 	log_shoot(mob/user, turf/T, obj/projectile/P)
-		logTheThing(LOG_COMBAT, user, "fires \a [src] ([lit ? "lit, " : ""][MODE_TO_STRING(mode)]) from [log_loc(user)], vector: ([T.x - user.x], [T.y - user.y]), dir: <I>[dir2text(get_dir(user, T))]</I>, reagents: [log_reagents(src.fueltank)] with chamber volume [amt_chem]")
+		logTheThing(LOG_COMBAT, user, "fires \a [src] ([lit ? "lit, " : ""][MODE_TO_STRING(mode)]) from [log_loc(user)], vector: ([T.x - user.x], [T.y - user.y]), dir: <I>[dir2text(get_dir_accurate(user, T))]</I>, reagents: [log_reagents(src.fueltank)] with chamber volume [amt_chem]")
 
 	/// allow refilling the fuel tank by simply clicking the reagent dispensers
 	afterattack(atom/target, mob/user, flag)
@@ -244,12 +244,15 @@ A Flamethrower in various states of assembly
 				flamer.gastank = src
 				flamer.fueltank = src
 		if(src.loc == user && linkedflamer && W == linkedflamer)
-			boutput(user, SPAN_NOTICE("You stow [W] into your [src.name]."))
-			user.u_equip(W)
-			W.set_loc(src)
-			tooltip_rebuild = TRUE
+			src.insert_flamer(W, user)
 		else
 			..()
+
+	proc/insert_flamer(var/obj/item/gun/flamethrower/backtank/flamer, var/mob/user)
+		boutput(user, SPAN_NOTICE("You stow [flamer] into your [src.name]."))
+		user.u_equip(flamer)
+		flamer.set_loc(src)
+		tooltip_rebuild = TRUE
 
 	attack_hand(mob/user)
 		if(src.loc == user && linkedflamer && (linkedflamer in src.contents))
@@ -585,7 +588,8 @@ ABSTRACT_TYPE(/obj/item/gun/flamethrower/backtank)
 	// PantsNote: Flamethrower disassmbly.
 	else if (isscrewingtool(W))
 		var/obj/item/gun/flamethrower/assembled/S = src
-		if (( S.gastank ))
+		if (( S.gastank || S.fueltank ))
+			boutput(user, SPAN_ALERT("You can't disassemble [src] while it has an attached tank!"))
 			return
 		var/obj/item/flamethrower_construction/new_construction = new /obj/item/flamethrower_construction (null, S.welder, S.rod, S.igniter)
 		user.u_equip(S)

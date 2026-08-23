@@ -19,8 +19,6 @@
  * of a proc listed in forbidden_procs that is not explicitly allowed in permitted_instability.
  */
 /datum/unit_test/passability_cache/Run()
-	generate_procs_by_type()
-
 	// var/list/empty_list = list()
 	var/list/unstable_types = list()
 
@@ -33,7 +31,7 @@
 			direct_parent = direct_parent_path
 		var/stable = !initial(atom_type.pass_unstable)
 
-		// Fail if this type is the first descendant of a unstable lineage to claim to be stable.
+		// Fail if this type is the first descendant of an unstable lineage to claim to be stable.
 		if(stable && direct_parent && initial(direct_parent.pass_unstable))
 			var/unstable_parent = predecessor_path_in_list(type, unstable_types)
 			if(unstable_parent)
@@ -41,7 +39,7 @@
 				var/blocking_procs = istype(blocking_procs_list) ? blocking_procs_list.Join(", ") : "forbidden procs"
 				Fail("[type] cannot possibly be stable because [unstable_parent] implements [blocking_procs]")
 
-		var/procs = procs_by_type[type]
+		var/procs = global.get_singleton(/datum/proc_ownership_cache).procs_by_type[type]
 		if(!procs)
 			continue
 		var/permitted_procs = src.permitted_instability[type]

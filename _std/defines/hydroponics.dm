@@ -5,3 +5,8 @@
 #define HYP_GROWTH_GROWING 2 //! second growthstage, not fully matured, but on the way there
 #define HYP_GROWTH_MATURED 3 //! matured, but not harvestable right now
 #define HYP_GROWTH_HARVESTABLE 4 //! completely harvestable plant
+
+// Phytoscopic glasses
+#define PHYTOVISION_NONE 0
+#define PHYTOVISION_NORMAL 1
+#define PHYTOVISION_UPGRADED 2

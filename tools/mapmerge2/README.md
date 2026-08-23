@@ -57,7 +57,7 @@ Implementation modules:
 * `mapmerge.py` includes the implementation of the map merge operation.
 * `frontend.py` includes the common code for the frontend scripts.
 
-`precommit.py` is run by the [Git hooks] if installed, and merges the new
+`pre-commit.py` is run by the [Git hooks] if installed, and merges the new
 version of any map saved in the index (`git add`ed) with the old version stored
 in Git when run.
 

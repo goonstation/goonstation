@@ -1,10 +1,13 @@
 TYPEINFO(/mob/living/critter/robotic/gunbot)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal_dense" = 12,
 				"conductive_high" = 12,
 				"dense" = 6)
+	start_speech_modifiers = list(SPEECH_MODIFIER_MOB_MODIFIERS, SPEECH_MODIFIER_ACCENT_ERROR)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_LOCAL, SPEECH_OUTPUT_EQUIPPED)
+
 /mob/living/critter/robotic/gunbot
 	name = "robot"
-	real_name = "robot"
 	desc = "A Security Robot, something seems a bit off."
 	icon = 'icons/mob/critter/robotic/gunbot.dmi'
 	icon_state = "gunbot"
@@ -18,17 +21,19 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 	health_brute_vuln = 1
 	health_burn = 20
 	health_burn_vuln = 0.5
-	speechverb_say = "states"
-	speechverb_gasp = "states"
-	speechverb_stammer = "states"
-	speechverb_exclaim = "declares"
-	speechverb_ask = "queries"
-	is_syndicate = TRUE
+	voice_type = "cyborg_distorted"
+	speech_verb_say = "blares"
+	speech_verb_gasp = "states"
+	speech_verb_stammer = "states"
+	speech_verb_exclaim = "declares"
+	speech_verb_ask = "queries"
 
 	ai_retaliates = FALSE
 	ai_type = /datum/aiHolder/ranged
 	faction = list(FACTION_DERELICT)
 	is_npc = TRUE
+
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 
 	var/speak_lines = TRUE
 	var/uses_eye_light = TRUE
@@ -62,7 +67,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/gun/kinetic/arm38/fast
 		HH.name = ".38 Anti-Personnel Arm"
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "hand38"
 		HH.limb_name = ".38 Anti-Personnel Arm"
 		HH.can_hold_items = FALSE
@@ -71,7 +76,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/small_critter/strong
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "gunbothand"
 		HH.limb_name = "gunbot hands"
@@ -147,32 +152,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 		. = ..()
 
 		if (length(.) && prob(10) && src.speak_lines)
-			src.speak(pick("SECURITY OPERATION IN PROGRESS.","WARNING - YOU ARE IN A SECURITY ZONE.","ALERT - ALL OUTPOST PERSONNEL ARE TO MOVE TO A SAFE ZONE.","WARNING: THREAT RECOGNIZED AS NANOTRASEN, ESPONIAGE DETECTED","THIS IS FOR THE FREE MARKET","NANOTRASEN BETRAYED YOU."))
-
-	proc/speak(var/message) // Come back and make this use say after speech rework is in
-		var/fontSize = 2
-		var/fontIncreasing = 1
-		var/fontSizeMax = 2
-		var/fontSizeMin = -2
-		var/messageLen = length(message)
-		var/processedMessage = ""
-
-		for (var/i = 1, i <= messageLen, i++)
-			processedMessage += "<font size=[fontSize]>[copytext(message, i, i+1)]</font>"
-			if (fontIncreasing)
-				fontSize = min(fontSize+1, fontSizeMax)
-				if (fontSize >= fontSizeMax)
-					fontIncreasing = 0
-			else
-				fontSize = max(fontSize-1, fontSizeMin)
-				if (fontSize <= fontSizeMin)
-					fontIncreasing = 1
-			if(prob(10))
-				processedMessage += pick("%","##A","-","- - -","ERROR")
-
-		src.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] blares, \"<B>[processedMessage]</B>\""))
-
-		return
+			src.say(pick("SECURITY OPERATION IN PROGRESS.","WARNING - YOU ARE IN A SECURITY ZONE.","ALERT - ALL OUTPOST PERSONNEL ARE TO MOVE TO A SAFE ZONE.","WARNING: THREAT RECOGNIZED AS NANOTRASEN, ESPONIAGE DETECTED","THIS IS FOR THE FREE MARKET","NANOTRASEN BETRAYED YOU."))
 
 /mob/living/critter/robotic/gunbot/strong // Midrounds
 	hand_count = 3
@@ -190,7 +170,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 		HH = hands[2]
 		HH.limb = new /datum/limb/gun/kinetic/abg
 		HH.name = "ABG Riot Suppression Appendage"
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handabg"
 		HH.limb_name = "ABG Riot Suppression Appendage"
 		HH.can_hold_items = FALSE
@@ -199,7 +179,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 
 		HH = hands[3]
 		HH.limb = new /datum/limb/small_critter/strong
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "gunbothand"
 		HH.limb_name = "gunbot hands"
@@ -210,9 +190,15 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 	get_ranged_protection()
 		return 2
 
+/mob/living/critter/robotic/gunbot/syndicate_mining_encounter
+	name = "\improper Syndicate robot"
+	desc = "A retrofitted Syndicate gunbot, it seems angry."
+	icon_state = "nukebot"
+	base_icon_state = "nukebot"
+	faction = list(FACTION_SYNDICATE)
+
 /mob/living/critter/robotic/gunbot/syndicate
 	name = "\improper Syndicate robot"
-	real_name = "\improper Syndicate robot"
 	desc = "A retrofitted Syndicate gunbot, it seems angry."
 	icon_state = "nukebot"
 	base_icon_state = "nukebot"
@@ -231,14 +217,14 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/gun/kinetic/rifle
 		HH.name = "5.56 Rifle Arm"
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handrifle"
 		HH.limb_name = "5.56 Rifle Arm"
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/gun/kinetic/abg
 		HH.name = "ABG Riot Suppression Appendage"
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handabg"
 		HH.limb_name = "ABG Riot Suppression Appendage"
 		HH.can_hold_items = FALSE
@@ -247,7 +233,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 
 		HH = hands[3]
 		HH.limb = new /datum/limb/small_critter/strong
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "gunbothand"
 		HH.limb_name = "gunbot hands"
@@ -263,7 +249,6 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 
 /mob/living/critter/robotic/gunbot/syndicate/polaris
 	name = "\improper unmarked robot"
-	real_name = "\improper unmarked robot"
 	desc = "Painted in red and black, all identifying marks have been scraped off. Darn."
 	health_brute = 20
 	health_burn = 20
@@ -296,12 +281,13 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/gun/kinetic/smg
 		HH.name = "9mm Anti-Personnel Arm"
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "hand38"
 		HH.limb_name = "9mm Anti-Personnel Arm"
 
 
 TYPEINFO(/mob/living/critter/robotic/gunbot/mrl)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal_dense" = 16,
 				"conductive_high" = 12,
 				"dense_super" = 6,
@@ -313,13 +299,14 @@ TYPEINFO(/mob/living/critter/robotic/gunbot/mrl)
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/gun/kinetic/mrl
 		HH.name = "Fomalhaut MRL Arm"
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "hand38"
 		HH.limb_name = "Fomalhaut MRL Arm"
 
 		src.UpdateOverlays(image(src.icon,"gunbot-mrls"), "guns")
 
 TYPEINFO(/mob/living/critter/robotic/gunbot/flame)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal_dense" = 12,
 				"conductive_high" = 12,
 				"dense" = 6,
@@ -331,13 +318,14 @@ TYPEINFO(/mob/living/critter/robotic/gunbot/flame)
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/gun/fluid/flamethrower
 		HH.name = "Vega flamethrower Arm"
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "hand38"
 		HH.limb_name = "Vega flamethrower Arm"
 
 		src.UpdateOverlays(image(src.icon, "gunbot-flamethrower"), "guns")
 
 TYPEINFO(/mob/living/critter/robotic/gunbot/cannon)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal_superdense" = 12,
 				"conductive_high" = 12,
 				"dense" = 6,
@@ -349,7 +337,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot/cannon)
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/gun/kinetic/cannon
 		HH.name = "Alphard 20mm cannon Arm"
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "hand38"
 		HH.limb_name = "Alphard 20mm cannon Arm"
 
@@ -362,13 +350,14 @@ TYPEINFO(/mob/living/critter/robotic/gunbot/cannon)
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/gun/kinetic/striker
 		HH.name = "Striker-7 Arm"
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "hand38"
 		HH.limb_name = "Striker-7 Arm"
 
 		src.UpdateOverlays(image(src.icon, "gunbot-striker"), "guns")
 
 TYPEINFO(/mob/living/critter/robotic/gunbot/minigun)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal_dense" = 18,
 				"conductive_high" = 12,
 				"dense" = 6,
@@ -381,13 +370,14 @@ TYPEINFO(/mob/living/critter/robotic/gunbot/minigun)
 		HH.limb = new /datum/limb/gun/kinetic/minigun
 
 		HH.name = "Alpha Hydrae minigun Arm"
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "hand38"
 		HH.limb_name = "Alpha Hydrae minigun Arm"
 
 		src.UpdateOverlays(image(src.icon, "gunbot-heavy"), "guns")
 
 TYPEINFO(/mob/living/critter/robotic/gunbot/chainsaw)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal_superdense" = 12,
 				"conductive_high" = 12,
 				"dense" = 6,
@@ -401,7 +391,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot/chainsaw)
 		HH.item = new /obj/item/saw/syndie(src)
 		HH.icon_state = "saw"
 		HH.name = "red chainsaw Arm"
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.limb_name = "red chainsaw Arm"
 
 		var/obj/item/saw/S = HH.item
@@ -423,7 +413,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot/chainsaw)
 	bound_width = 64
 	bound_height = 32
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	var/minimum_gunbots = 1
 	var/building = FALSE
 	var/progress = 0

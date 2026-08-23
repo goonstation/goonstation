@@ -44,7 +44,7 @@ var/global/area/current_battle_spawn = null
 		var/mob/new_player/player = C.mob
 		if (!istype(player)) continue
 
-		if (player.ready)
+		if (player.ready_play)
 			src.traitors.Add(player)
 			if(player.mind)
 				player.mind.assigned_role = "MODE"
@@ -152,6 +152,10 @@ var/global/area/current_battle_spawn = null
 				qdel(machine)
 			if (/obj/deployable_turret/riot)
 				qdel(machine)
+			if (/obj/machinery/computer/transit_shuttle/mining)
+				qdel(machine)
+			if (/obj/machinery/computer/shuttle)
+				qdel(machine)
 
 	for_by_tcl(circuitboard, /obj/item/circuitboard)
 		qdel(circuitboard)
@@ -168,6 +172,12 @@ var/global/area/current_battle_spawn = null
 
 	for_by_tcl(obj_vehicle, /obj/vehicle)
 		qdel(obj_vehicle)
+
+	for (var/obj/machinery/gravity_tether/tether as anything in by_cat[TR_CAT_GRAVITY_TETHERS])
+		if (tether.z == Z_LEVEL_STATION)
+			qdel(tether)
+
+	global.set_zlevel_gforce(Z_LEVEL_STATION, GFORCE_EARTH_GRAVITY, FALSE)
 
 	hide_weapons_everywhere(length(living_battlers))
 	next_storm = world.time + rand(MIN_TIME_BETWEEN_STORMS,MAX_TIME_BETWEEN_STORMS)
@@ -191,6 +201,10 @@ var/global/area/current_battle_spawn = null
 
 	for (var/client/C in clients)
 		battlersleft_hud.add_client(C)
+
+#ifdef MAP_OVERRIDE_MENHIR
+	random_events.menhir_events_enabled = 0
+#endif
 
 /datum/game_mode/battle_royale/proc/battle_shuttle_spawn(var/datum/mind/player)
 	bestow_objective(player,/datum/objective/battle_royale/win)
@@ -240,9 +254,11 @@ var/global/area/current_battle_spawn = null
 	for (var/client/C in clients)
 		battlersleft_hud.remove_client(C)
 	boutput(world,"<h2>BATTLE COMPLETE</h2>")
-	if(length(living_battlers) == 1)
-		boutput(world,"<h2 class='alert'>[living_battlers[1].current.name] (played by [living_battlers[1].current.ckey]) has won!</h2>")
-		boutput(living_battlers[1].current,"<h1 class='notice'>Holy shit you won!!!</h1>")
+	if(length(living_battlers) == 1 && ishuman(living_battlers[1].current))
+		var/mob/living/carbon/human/winner = living_battlers[1].current
+		boutput(world,"<h2 class='alert'>[winner.name] (played by [winner.ckey]) has won!</h2>")
+		boutput(winner,"<h1 class='notice'>Holy shit you won!!!</h1>")
+		winner.unlock_medal("#1 Victory Royale", TRUE)
 	else
 		boutput(world,"<h2 class='alert'>Literally everyone died. wow.</h2>")
 
@@ -336,13 +352,28 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	weapon_supplies.Add(/obj/item/gun/kinetic/airzooka)
 	weapon_supplies.Add(/obj/item/gun/kinetic/grenade_launcher)
 	weapon_supplies.Add(/obj/item/gun/kinetic/gyrojet)
+	weapon_supplies.Add(/obj/item/gun/kinetic/makarov)
+	weapon_supplies.Add(/obj/item/gun/kinetic/webley)
+	weapon_supplies.Add(/obj/item/gun/kinetic/american180)
+	weapon_supplies.Add(/obj/item/gun/kinetic/draco)
+	weapon_supplies.Add(/obj/item/gun/kinetic/greasegun)
+	weapon_supplies.Add(/obj/item/gun/kinetic/uzi)
+	weapon_supplies.Add(/obj/item/gun/kinetic/striker)
+	weapon_supplies.Add(/obj/item/gun/kinetic/pumpweapon/ks23)
+	weapon_supplies.Add(/obj/item/gun/kinetic/m16)
+	weapon_supplies.Add(/obj/item/gun/energy/lasergat)
+	weapon_supplies.Add(/obj/item/storage/backpack/satchel/flintlock_pistol_satchel)
+	weapon_supplies.Add(/obj/item/gun/energy/lasershotgun)
 	weapon_supplies.Add(/obj/item/gun/energy/phaser_small)
 	weapon_supplies.Add(/obj/item/gun/energy/phaser_huge)
+	weapon_supplies.Add(/obj/item/gun/energy/phaser_gun)
 	weapon_supplies.Add(/obj/item/gun/energy/alastor)
 	weapon_supplies.Add(/obj/item/gun/energy/heavyion)
+	weapon_supplies.Add(/obj/item/gun/energy/resonator)
 	weapon_supplies.Add(/obj/item/bat)
 	weapon_supplies.Add(/obj/item/ratstick)
 	weapon_supplies.Add(/obj/item/saw)
+	weapon_supplies.Add(/obj/item/baton/windup)
 	weapon_supplies.Add(/obj/item/sword/discount)
 	weapon_supplies.Add(/obj/item/nunchucks)
 	weapon_supplies.Add(/obj/item/quarterstaff)
@@ -358,6 +389,7 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	weapon_supplies.Add(/obj/item/storage/grenade_pouch/incendiary)
 	weapon_supplies.Add(/obj/item/storage/grenade_pouch/mixed_explosive)
 	weapon_supplies.Add(/obj/item/storage/beartrap_pouch)
+	weapon_supplies.Add(/obj/item/razor_blade/barberang)
 
 	var/list/armor_supplies = list()
 	// Feel free to add more!
@@ -388,6 +420,34 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	armor_supplies.Add(/obj/item/clothing/head/helmet/viking)
 	armor_supplies.Add(/obj/item/clothing/head/helmet/football)
 	armor_supplies.Add(/obj/item/clothing/head/helmet/batman)
+	armor_supplies.Add(/obj/item/clothing/head/flatcap/razor)
+
+	var/list/utility_supplies = list()
+	utility_supplies.Add(/obj/item/barrier/collapsible/security)
+	utility_supplies.Add(/obj/item/barrier/void)
+	utility_supplies.Add(/obj/item/clothing/glasses/thermal/traitor)
+	utility_supplies.Add(/obj/item/clothing/glasses/nightvision)
+	utility_supplies.Add(/obj/item/clothing/glasses/sunglasses)
+	utility_supplies.Add(/obj/item/device/energy_shield/viking)
+	utility_supplies.Add(/obj/item/reagent_containers/patch/synthflesh)
+	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/plant/tomato/incendiary)
+	// Ranch Eggs
+	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/cockatrice)
+	utility_supplies.Add(/obj/item/kitchen/egg_box/rancher/plant)
+	utility_supplies.Add(/obj/item/kitchen/egg_box/rancher/void) // table ambushes ig
+	utility_supplies.Add(/obj/item/kitchen/egg_box/rancher/snow)
+	utility_supplies.Add(/obj/item/kitchen/egg_box/rancher/wizard)
+	utility_supplies.Add(/obj/item/kitchen/egg_box/rancher/knight)
+	utility_supplies.Add(/obj/item/kitchen/egg_box/rancher/mime)
+	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/robot)
+	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/candy) // Keeping this a one off cause I know someone will kill themselves and be salty
+	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dream)
+#ifdef SECRETS_ENABLED
+	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dragon)
+	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/phoenix)
+	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/coral)
+	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/zappy)
+#endif
 
 
 	var/total_storage
@@ -428,6 +488,9 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 					if (prob(25))
 						weapon = pick(weapon_supplies)
 						new weapon(locker)
+					if (prob(15))
+						var/obj/utility = pick(utility_supplies)
+						new utility(locker)
 				else
 					// Misc weapon and armor chests
 					var/obj/storage/crate/chest/chest = new /obj/storage/crate/chest(T)
@@ -438,6 +501,9 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 						new armor(chest)
 					if (prob(33))
 						new /obj/item/reagent_containers/patch/mini/synthflesh(chest)
+					if (prob(25))
+						var/obj/utility = pick(utility_supplies)
+						new utility(chest)
 
 proc/equip_battler(mob/living/carbon/human/battler)
 	if (!ishuman(battler))

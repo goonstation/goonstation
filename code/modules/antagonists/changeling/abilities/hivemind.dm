@@ -58,7 +58,9 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 		mind.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
 		mind.add_subordinate_antagonist(src.antag_role, source = ANTAGONIST_SOURCE_SUMMONED, master = src.holder.owner.mind)
 		logTheThing(LOG_COMBAT, holder.owner, "drops \an [src.antag_role] [key_name(mind.current)] as a changeling [log_loc(src.holder.owner)].")
-
+		if (ismobcritter(mind.current))
+			var/mob/living/critter/critter = mind.current
+			critter.original_name = use_mob_name
 		return FALSE
 
 	proc/available_bodypart()
@@ -216,36 +218,6 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 
 		return original_butt
 
-
-/datum/targetable/changeling/hivesay
-	name = "Speak Hivemind"
-	desc = "Speak to your own collected minds telepathically."
-	icon_state = "hivesay"
-	cooldown = 0
-	targeted = 0
-	target_anything = 0
-	human_only = 0
-	can_use_in_container = 1
-	interrupt_action_bars = 0
-	lock_holder = FALSE
-	do_logs = FALSE
-	interrupt_action_bars = FALSE
-
-	incapacitationCheck()
-		return 0
-
-	cast(atom/target)
-		if (..())
-			return 1
-
-		var/message = html_encode(tgui_input_text(usr, "Choose something to say:", "Enter Message."))
-		if (!message)
-			return
-		logTheThing(LOG_SAY, holder.owner, "<b>(HIVESAY):</b> [message]")
-		//logTheThing(LOG_DIARY, holder.owner, "(HIVEMIND): [message]", "hivesay")
-		.= holder.owner.say_hive(message, holder)
-
-		return 0
 
 /datum/targetable/changeling/boot
 	name = "Silence Hivemind Member"

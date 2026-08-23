@@ -4,7 +4,7 @@
 	icon = 'icons/obj/items/device.dmi'
 	desc = "A handheld monocular device with a laser built into it, used for calling in fire support."
 	icon_state = "laser_designator"
-	item_state = "electronic"
+	item_state = "accessgun"
 	w_class = W_CLASS_SMALL
 	/// How many times can this be used?
 	var/uses = 1
@@ -16,6 +16,7 @@
 	var/ship_looking_for = ""
 	/// Overlay sprite for where the strike will land, set to null for no overlay
 	var/image/target_overlay = null
+	abilities = list(/obj/ability_button/toggle_scope)
 
 	New()
 		..()
@@ -26,6 +27,10 @@
 	disposing()
 		linked_gun = null
 		target_overlay = null
+		..()
+	dropped(mob/user as mob)
+		var/obj/ability_button/toggle_scope/scope = locate(/obj/ability_button/toggle_scope) in src.ability_buttons
+		scope?.icon_state = "scope_on"
 		..()
 
 	proc/airstrike(atom/target, params, mob/user, reach)

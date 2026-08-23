@@ -2,9 +2,10 @@
 	hand_count = 0
 	pull_w_class = W_CLASS_TINY
 	ghost_spawned = 1
-	canspeak = 0
 	health_brute = 40
 	health_burn = 40
+	can_use_say = FALSE
+
 	use_stunned_icon = FALSE
 	var/being_seen = FALSE
 	var/mob/last_witness
@@ -47,7 +48,7 @@
 			eye_light.plane = PLANE_SELFILLUM
 			set_glowing_eyes(FALSE)
 
-		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/plushie_talk)
+		abilityHolder.addAbility(/datum/targetable/critter/ouija_speak)
 		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/movement_override)
 		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/teleportation/blink)
 		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/teleportation/disappear)
@@ -145,14 +146,6 @@
 			<br>[SPAN_NOTICE("Set Glowing Eyes Color lets you set your eyes' glowing color.")]
 			<br>[SPAN_NOTICE("Access special emotes through *scream, *dance and *snap.")]"})
 
-	proc/plushie_speech(var/text_to_say)
-		src.speechpopupstyle = "font-style: italic; font-family: 'XFont 6x9'; font-size: 7px;"
-		if(prob(20))
-			src.speechpopupstyle += " color: red !important"
-		src.canspeak = 1
-		src.say(text_to_say)
-		src.canspeak = 0
-
 	proc/set_glowing_eyes(var/enabled)
 		if (eye_light)
 			if(enabled)
@@ -164,14 +157,6 @@
 				boutput(src, SPAN_NOTICE("Glowing eyes disabled."))
 			glowing_eyes_active = enabled
 			src.UpdateOverlays(eye_light, "eye_light")
-
-	say(message) // gross workaround to allow emotes despite canspeak = 0
-		if(dd_hasprefix(message, "*"))
-			canspeak = 1
-			. = ..()
-			canspeak = 0
-		else
-			. = ..()
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -269,34 +254,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 			if(!our_plushie)
 				qdel(src)
 
-/datum/targetable/critter/cryptid_plushie/plushie_talk // mostly stolen from ouija board
-	name = "Plushie Talk"
-	desc = "Communicate."
-	icon_state = "corruption"
-	cooldown = 50
-	qdel_itself_if_not_attached_to_plushie = 1
-	var/words_min = 7
-	var/words_max = 10
-
-	cast(atom/target)
-		if (..())
-			return 1
-
-		var/selected
-		do
-			var/list/words = list("*REFRESH*") + get_ouija_word_list(src, words_min, words_max,
-				filename="plush_toy_words.txt", strings_category="plush_toy_words")
-			selected = tgui_input_list(usr, "Select a word:", src.name, words, allowIllegal=FALSE)
-		while(selected == "*REFRESH*")
-		if(!selected)
-			return
-		if(!holder || !holder.owner)
-			return
-		playsound(holder.owner, 'sound/misc/automaton_scratch.ogg', 50, 1)
-		selected = uppertext(selected)
-		our_plushie.plushie_speech(selected)
-		return 0
-
 /datum/targetable/critter/cryptid_plushie/movement_override
 	name = "Override Sensors"
 	desc = "Be able to move a few steps in spite of whether you're being looked at."
@@ -391,11 +348,11 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 
 		if(say_gibberish && prob(75))
 			var/list/last_words = list("FAILED TO RESOLVE ERROR, REBOOTING", "INITIATING REBOOT", "AVAILABLE IN STORES NOW", "AVAILABLE IN SEVERAL MODELS", "HELP")
-			our_plushie.plushie_speech(pick(last_words))
+			our_plushie.say(pick(last_words))
 		our_plushie.transform = original_transform
 
 	proc/plushie_says_gibberish_word()
-		our_plushie.plushie_speech(pick(generate_gibberish_words()))
+		our_plushie.say(pick(generate_gibberish_words()))
 
 	proc/generate_gibberish_words()
 		var/list/words = list()

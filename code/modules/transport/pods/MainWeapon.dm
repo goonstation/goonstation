@@ -22,6 +22,33 @@
 
 	power_used = 65
 	system = "Main Weapon"
+
+	can_install(var/mob/user, var/obj/machinery/vehicle/vehicle)
+		if(vehicle.weapon_class == 0)
+			boutput(user, SPAN_ALERT("Weapons cannot be installed in this ship!"))
+			return FALSE
+		var/obj/item/shipcomponent/mainweapon/current_weapon = vehicle.get_part(POD_PART_MAIN_WEAPON)
+		if(current_weapon && !current_weapon.removable)
+			boutput(user, SPAN_ALERT("[current_weapon] is fused to the hull and cannot be removed."))
+			return FALSE
+		return TRUE
+
+	get_install_slot()
+		return POD_PART_MAIN_WEAPON
+
+	ship_install()
+		..()
+		if(src.ship.uses_weapon_overlays && src.appearanceString)
+			var/image/weap_image = image('icons/effects/64x64.dmi', "[src.appearanceString]")
+			weap_image.appearance_flags = KEEP_APART | RESET_COLOR | RESET_ALPHA
+			src.copy_appearance_to_image(weap_image)
+			src.ship.UpdateOverlays(weap_image, "mainweapon")
+
+	ship_uninstall()
+		..()
+		if (src.ship.uses_weapon_overlays && src.appearanceString)
+			src.ship.UpdateOverlays(null, "mainweapon")
+
 	opencomputer(mob/user as mob)
 		if(user.loc != src.ship)
 			return
@@ -65,7 +92,7 @@
 
 /obj/item/shipcomponent/mainweapon/buildTooltipContent()
 	. = ..() + src.current_projectile?.get_tooltip_content()
-	. += "<br><img style=\"display:inline;margin:0\" src=\"[resource("images/tooltips/frenzy.png")]\" width=\"10\" height=\"10\" /> Firerate: [src.firerate / 10] seconds"
+	. += "<br><img src=\"[resource("images/tooltips/frenzy.png")]\" class='icon' style='width: .8em; height: .8em;' /> Firerate: [src.firerate / 10] seconds"
 	src.lastTooltipContent = .
 
 /obj/item/shipcomponent/mainweapon/proc/Fire(var/mob/user,var/shot_dir_override = -1)
@@ -77,7 +104,11 @@
 			boutput(user, "[ship.ship_message("You need [ship.AmmoPerShot()] to fire the weapon. You currently have [remaining_ammunition] loaded.")]")
 			return
 		else
-			boutput(user, "[ship.ship_message("[remaining_ammunition] shots remaining.")]")
+			if(remaining_ammunition <= ship.AmmoPerShot())  //Janky because this gets called before ammo is decremented by shooting.
+				boutput(user, "[ship.ship_message("<b>All ammunition expended.</b>")]")
+			else
+				boutput(user, "[ship.ship_message("[remaining_ammunition - ship.AmmoPerShot()] shots remaining.")]")
+
 
 	var/rdir = ship.dir
 	if (shot_dir_override > 1)
@@ -203,6 +234,15 @@
 	icon_state = "disruptor-l"
 	muzzle_flash = "muzzle_flash_plaser"
 
+/obj/item/shipcomponent/mainweapon/stasis
+	name = "Stasis Charger"
+	desc = "An energy projectile weapon that holds a target in place for a limited amount of time."
+	weapon_score = 0.6
+	firerate = 25
+	current_projectile = new/datum/projectile/energy_bolt/stasis
+	icon_state = "assult-laser"
+	muzzle_flash = "muzzle_flash_plaser"
+
 /obj/item/shipcomponent/mainweapon/precursor
 	name = "IRIDIUM Spheroid Projector"
 	desc = "****CLASSIFIED: THANOTECH APPLIED RESEARCH DIVISION, Y-LEVEL CLEARANCE REQUIRED****."
@@ -221,6 +261,10 @@
 	firerate = 10
 	icon_state = "spes"
 	muzzle_flash = "muzzle_flash"
+	contraband = 8
+
+/obj/item/shipcomponent/mainweapon/gun/pod_wars //normal nukies can have the fun version
+	firerate = 20
 
 /obj/item/shipcomponent/mainweapon/minigun
 	name = "Minigun"
@@ -232,6 +276,7 @@
 	current_projectile = new/datum/projectile/bullet/akm/pod
 	icon_state = "minigun"
 	muzzle_flash = "muzzle_flash"
+	contraband = 6
 
 /obj/item/shipcomponent/mainweapon/gun_9mm
 	name = "PEP-9 Ballistic System"
@@ -243,6 +288,7 @@
 	firerate = 10
 	icon_state = "spes"
 	muzzle_flash = "muzzle_flash"
+	contraband = 5
 
 /obj/item/shipcomponent/mainweapon/gun_9mm/uses_ammo
 	name = "PEP-9L Ballistic System"
@@ -261,6 +307,7 @@
 	firerate = 10
 	icon_state = "spes"
 	muzzle_flash = "muzzle_flash"
+	contraband = 4
 
 /obj/item/shipcomponent/mainweapon/gun_22/uses_ammo
 	name = "PEP-22L Ballistic System"
@@ -280,6 +327,7 @@
 	firerate = 10 SECONDS
 	spread = 30
 	large_pod_compatible = FALSE
+	contraband = 10
 
 /obj/item/shipcomponent/mainweapon/laser_ass // hehhh
 	name = "Mk.4 Assault Laser"
@@ -301,6 +349,7 @@
 	appearanceString = "pod_weapon_hammer_railgun"
 	icon_state = "hammer-railgun"
 	muzzle_flash = "muzzle_flash_launch"
+	contraband = 8
 
 /obj/item/shipcomponent/mainweapon/rockdrills
 	name = "Rock Drilling Rig"
@@ -335,6 +384,7 @@
 	firerate = 100
 	icon_state = "grenade-launcher"
 	muzzle_flash = "muzzle_flash_launch"
+	contraband = 10
 
 	lower_ammo
 		remaining_ammunition = 6
@@ -501,6 +551,7 @@
 #define LOAD_SUCCESS 2
 
 TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal_superdense" = 50, "claretine" = 20, "electrum" = 10)
 
 /obj/item/shipcomponent/mainweapon/constructor
@@ -1095,6 +1146,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 	desc = "An unfinished pod weapon, the blueprints for which have been plundered from a raid on a now-destroyed Syndicate base. Requires a unique power source to function."
 	current_projectile = new/datum/projectile/laser/drill/cutter
 	firerate = 100
+	contraband = 100
 	var/increment
 	var/pod_is_large = FALSE
 	var/core_inserted = FALSE
@@ -1182,7 +1234,7 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 			user.put_in_hand_or_drop(new /obj/item/sword_core)
 			user.show_message(SPAN_NOTICE("You remove the SWORD core from the Syndicate Purge System!"), 1)
 			desc = "After a delay, fires a destructive beam capable of penetrating walls. The core is missing."
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			return
 		else if ((istype(W,/obj/item/sword_core) && !core_inserted))
 			core_inserted = TRUE
@@ -1190,14 +1242,14 @@ TYPEINFO(/obj/item/shipcomponent/mainweapon/constructor)
 			set_icon_state("SPS")
 			user.show_message(SPAN_NOTICE("You insert the SWORD core into the Syndicate Purge System!"), 1)
 			desc = "After a delay, fires a destructive beam capable of penetrating walls. The core is installed."
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			return
 
 	proc/purge_sps(var/point_x, var/point_y)
 		for (var/mob/M in locate(point_x,point_y,ship.loc.z))
 			random_burn_damage(M, 60)
 			M.changeStatus("knockdown", 2 SECOND)
-			INVOKE_ASYNC(M, TYPE_PROC_REF(/mob, emote), "scream")
+			INVOKE_ASYNC(M, TYPE_PROC_REF(/atom, emote), "scream")
 			playsound(M.loc, 'sound/impact_sounds/burn_sizzle.ogg', 70, 1)
 		var/turf/simulated/T = locate(point_x,point_y,ship.loc.z)
 		if(T && prob(100 - (10 * increment)))

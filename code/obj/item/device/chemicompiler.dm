@@ -11,9 +11,12 @@
 /datum/chemicompiler_core/portableCore
 	maxReservoir = 6
 
+TYPEINFO(/obj/item/device/chemicompiler)
+	start_speech_modifiers = list(SPEECH_MODIFIER_CHEMICOMPILER)
+
 /obj/item/device/chemicompiler
-	name = "sloppy-looking hackjob of a device"
-	desc = "you have no earthy idea what this pile of junk could be for."
+	name = "portable ChemiCompiler CCX7620"
+	desc = "An extremely complex device for mixing, heating, or otherwise manipulating chemical mixes."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "chemicompiler"
 	var/datum/chemicompiler_executor/executor
@@ -39,7 +42,6 @@
 
 	ui_data(mob/user)
 		. = executor.get_ui_data()
-		.["theme"] = "syndicate"
 
 	ui_act(action, list/params)
 		. = ..()

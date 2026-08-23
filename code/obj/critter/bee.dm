@@ -1,5 +1,7 @@
-
 ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
+TYPEINFO(/obj/critter/domestic_bee)
+	start_speech_modifiers = list(SPEECH_MODIFIER_ACCENT_COMIC)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
 /obj/critter/domestic_bee
 	name = "greater domestic space-bee"
@@ -22,6 +24,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 	flying = 1
 	min_quality = -60
 	p_class = 2
+	speech_verb_say = "buzzes"
 
 	var/honey_production_amount = 50
 	var/nectar_check = 10
@@ -880,7 +883,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 				hat.transform = trans
 				trans.Translate(0, -7 * ((ubertier - 4) / 3 - 1))
 				hat.wear_image.transform = trans
-		hat.name = "[src]'s [hat.name]"
+		hat.name = "[src]’s [hat.name]"
 		src.original_hat = hat
 		src.hat_that_bee(hat)
 		src.UpdateIcon()
@@ -2073,6 +2076,13 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 		reagents.add_reagent("honey", 10)
 		reagents.add_reagent("cornstarch", 5)
 		reagents.add_reagent("pollen", 20)
+
+/obj/item/reagent_containers/food/snacks/beefood/heisenbee
+	name = "Heisenbee's birthday cupcake"
+	desc = "A little birthday cupcake for Heisenbee. May not taste good to non-bees.";
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi';
+	icon_state = "cupcake";
+
 
 /* -------------------- END -------------------- */
 

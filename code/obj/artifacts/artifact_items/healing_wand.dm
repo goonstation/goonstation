@@ -4,17 +4,6 @@
 	associated_datum = /datum/artifact/healing_wand
 	click_delay = COMBAT_CLICK_DELAY
 
-	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
-		if (!src.ArtifactSanityCheck())
-			return
-		var/datum/artifact/A = src.artifact
-		if (A.activated)
-			A.effect_melee_attack(src,user,target)
-			src.ArtifactFaultUsed(user)
-			src.ArtifactFaultUsed(target)
-		else
-			..()
-
 /datum/artifact/healing_wand
 	associated_object = /obj/item/artifact/healing_wand
 	type_name = "Healing Wand"
@@ -63,6 +52,7 @@
 			var/mob/living/carbon/C = target
 			C.HealDamage("All", heal_amt, heal_amt)
 			O.ArtifactFaultUsed(C)
+			O.ArtifactFaultUsed(user)
 			boutput(C, SPAN_NOTICE("Soothing energy saturates your body, making you feel refreshed and healthy."))
 			playsound(O.loc, src.healsound, 50, 1, -1)
 			logTheThing(LOG_COMBAT, user, "heals [target] ([log_loc(target)]) with \the [src] healing wand artifact at [log_loc(user)] ([src.heal_amt] damage healed).")

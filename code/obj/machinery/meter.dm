@@ -6,16 +6,23 @@
 	plane = PLANE_NOSHADOW_BELOW
 	anchored = ANCHORED
 	power_usage = 5
+	deconstruct_flags = DECON_WRENCH | DECON_WELDER
 	var/frequency = 0
 	var/id
 	var/noiselimiter = 0
 
+TYPEINFO(/obj/machinery/meter)
+	mats = 1
+
 /obj/machinery/meter/New()
 	..()
-	SPAWN(1 SECOND)
-		src.target = locate(/obj/machinery/atmospherics/pipe) in loc
+	src.attach_to_pipe()
 	MAKE_SENDER_RADIO_PACKET_COMPONENT(null, null, frequency)
 	AddComponent(/datum/component/mechanics_holder)
+
+/obj/machinery/meter/proc/attach_to_pipe()
+	SPAWN(1 SECOND)
+		src.target = locate(/obj/machinery/atmospherics/pipe) in loc
 
 /obj/machinery/meter/process()
 	if(!target)
@@ -85,6 +92,14 @@
 			. += "The sensor error light is blinking."
 	else
 		. += "The connect error light is blinking."
+
+/obj/machinery/meter/was_built_from_frame()
+	. = ..()
+	src.attach_to_pipe()
+
+/obj/machinery/meter/was_deconstructed_to_frame(mob/user)
+	. = ..()
+	src.target = null
 
 
 /obj/machinery/meter/attack_hand(mob/user)

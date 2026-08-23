@@ -295,15 +295,17 @@
 			LAGCHECK(LAG_LOW)
 			var/score = 0
 			var/multiplier = P.armor_score_multiplier
-			if (P.m_w_system)
-				score += P.m_w_system.weapon_score
+			var/obj/item/shipcomponent/mainweapon/main_weapon = P.get_part(POD_PART_MAIN_WEAPON)
+			if (main_weapon)
+				score += main_weapon.weapon_score
 			pod_score += score * multiplier
 		for (var/obj/machinery/vehicle/miniputt/P in world)
 			LAGCHECK(LAG_LOW)
 			var/score = 0
 			var/multiplier = P.armor_score_multiplier
-			if (P.m_w_system)
-				score += P.m_w_system.weapon_score
+			var/obj/item/shipcomponent/mainweapon/main_weapon = P.get_part(POD_PART_MAIN_WEAPON)
+			if (main_weapon)
+				score += main_weapon.weapon_score
 			pod_score += score * multiplier * 0.5
 		logTheThing(LOG_DEBUG, null, "<B>Marquesas/Progress</B>: Pod score is [pod_score].")
 		if (pod_score >= pod_score_required)

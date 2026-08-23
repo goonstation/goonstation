@@ -262,6 +262,14 @@ meaty thoughts from cogwerks to his spacepal aibm:
 
 #define MEATHEAD_MAX_CUSTOM_UTTERANCES 32
 
+TYPEINFO(/obj/critter/monster_door/meat_head)
+	start_listen_effects = list(LISTEN_EFFECT_MEAT_HEAD)
+	start_listen_modifiers = null
+	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD)
+	start_listen_languages = list(LANGUAGE_ALL)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_LOCAL)
+
 /obj/critter/monster_door/meat_head //Clash at Meathead
 	name = "Something"
 	desc = "jesus fuck"
@@ -276,6 +284,11 @@ meaty thoughts from cogwerks to his spacepal aibm:
 	bound_height = 64
 	bound_width = 64
 	angertext = "shakes and wobbles furiously at"
+
+	speech_verb_say = list("mutters", "gurgles", "whimpers")
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
+	say_language = LANGUAGE_ENGLISH
+
 	var/list/dialog = null
 	var/obj/item/clothing/head/hat = null
 	var/static/list/meathead_noises = list('sound/misc/meat_gargle.ogg', 'sound/misc/meat_hork.ogg', 'sound/misc/meat_plop.ogg', 'sound/misc/meat_splat.ogg')
@@ -328,8 +341,11 @@ meaty thoughts from cogwerks to his spacepal aibm:
 			return ..()
 		else
 			src.icon_state = initial(src.icon_state)
-			if (prob(10) && length(dialog))
-				speak(pick(dialog))
+			if (prob(10) && length(src.dialog) && src.alive)
+				FLICK("meatboss_chatter", src)
+				playsound(src.loc, pick(src.meathead_noises), 40, 1)
+				src.say(pick(src.dialog))
+
 			return ..()
 
 	CritterAttack(mob/M)
@@ -382,12 +398,6 @@ meaty thoughts from cogwerks to his spacepal aibm:
 
 		return 0
 
-	hear_talk(var/mob/living/carbon/speaker, messages, real_name, lang_id)
-		if (prob(20))
-			update_meat_head_dialog(messages[1])
-
-			return
-
 	attackby(obj/item/O, mob/user)
 		if (istype(O, /obj/item/clothing/head))
 			user.visible_message("[user] tosses [O] onto [src]!", "You toss [O] onto [src].")
@@ -420,20 +430,9 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		else
 			return ..()
 
-	proc/speak(var/message)
-		if(!src.alive || !message)
-			return
-
-		FLICK("meatboss_chatter", src)
-		playsound(src.loc, pick(meathead_noises), 40, 1)
-
-		for(var/mob/O in hearers(src, null)) //Todo: gnarly font of some sort
-			O.show_message(SPAN_SAY("[SPAN_NAME("[src]")] [prob(33) ? "mutters" : (prob(50) ? "gurgles" : "whimpers")], \"[message]\""), 2)
-		return
-
 #undef MEATHEAD_MAX_CUSTOM_UTTERANCES
 
-/obj/item/disk/data/fixed_disk/meatland
+/obj/item/disk/data/fixed_disk/hd64/meatland
 
 	New()
 		..()
@@ -458,7 +457,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		newfolder.add_file( new /datum/computer/file/record/meatland/technobabble_bs (src))
 		newfolder.add_file( new /datum/computer/file/record/meatland/david_is_dead (src))
 
-/obj/item/disk/data/fixed_disk/meatland_medical
+/obj/item/disk/data/fixed_disk/hd64/meatland_medical
 
 	New()
 		..()
@@ -481,10 +480,10 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		newfolder.add_file( new /datum/computer/file/record/meatland/whiskerdeath1 (src))
 
 /obj/machinery/computer3/generic/personal/meatland
-	setup_drive_type = /obj/item/disk/data/fixed_disk/meatland
+	setup_drive_type = /obj/item/disk/data/fixed_disk/hd64/meatland
 
 /obj/machinery/computer3/generic/personal/meatland_medical
-	setup_drive_type = /obj/item/disk/data/fixed_disk/meatland_medical
+	setup_drive_type = /obj/item/disk/data/fixed_disk/hd64/meatland_medical
 
 //Computer logs
 /datum/computer/file/record/meatland
@@ -1028,10 +1027,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 	base_icon_state = "cheget"
 	setup_starting_os = /datum/computer/file/terminal_program/os/cheget
 	temp = ""
-	setup_idscan_path = null
-	setup_has_internal_disk = 0
-	setup_starting_peripheral1 = /obj/item/peripheral/cheget_key
-	setup_starting_peripheral2 = /obj/item/peripheral/cheget_key
+	setup_starting_peripherals = list(/obj/item/peripheral/cheget_key,/obj/item/peripheral/cheget_key)
 
 /datum/computer/file/terminal_program/os/cheget
 	name = "AUTH2"
@@ -1121,7 +1117,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 				qdel(O)
 
 				src.visible_message(SPAN_ALERT("Something pops out of [src]!"))
-				new /obj/item/skull/crystal(get_turf(src))
+				new /obj/item/skull/omnitraitor(get_turf(src))
 
 			else
 				boutput(user, SPAN_ALERT("It doesn't fit.  Dang."))

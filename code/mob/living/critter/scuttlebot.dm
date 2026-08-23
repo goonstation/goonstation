@@ -5,14 +5,15 @@
 	icon_state = "scuttlebot"
 	flags = TABLEPASS | DOORPASS
 	hand_count = 1
+	density = FALSE
 	can_help = TRUE
 	can_throw = TRUE
 	can_grab = FALSE
 	can_disarm = TRUE
 	fits_under_table = TRUE
-	speechverb_say = "beeps"
-	speechverb_exclaim = "boops"
-	speechverb_ask = "beeps curiously"
+	speech_verb_say = "beeps"
+	speech_verb_exclaim = "boops"
+	speech_verb_ask = "beeps curiously"
 	add_abilities = list(/datum/targetable/critter/takepicture,
 						/datum/targetable/critter/flash,
 						/datum/targetable/critter/scuttle_scan,
@@ -25,20 +26,23 @@
 	var/obj/item/clothing/head/det_hat/linked_hat = null
 	var/mob/living/carbon/human/controller = null //Who's controlling us? Lets keep track so we can put them back in their body
 
-	New()
+	New(var/loc, var/mob/living/carbon/human/creator = null)
 		..()
 		//Comes with the goggles
-		src.spawn_goggles()
+		src.spawn_goggles(creator)
 
-	proc/spawn_goggles()
+	proc/spawn_goggles(var/mob/living/carbon/human/creator = null)
 		var/obj/item/clothing/glasses/scuttlebot_vr/R = new /obj/item/clothing/glasses/scuttlebot_vr(src.loc)
 		R.connected_scuttlebot = src
+		//If a person transformed the hat (most cases), let's be nice and put the controller in their hand.
+		if(creator)
+			creator.put_in_hand_or_eject(R)
 
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter/med
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "claw"
 		HH.limb_name = "claws"
@@ -81,7 +85,7 @@
 	death(var/gibbed)
 		if (controller != null)//Lets put the person back in their body first to avoid death messages
 			if (!controller.mind)
-				src.mind.transfer_to(controller)
+				src.return_to_owner()
 			else
 				boutput(src, SPAN_ALERT("Your conscience tries to reintegrate your body, but its already possessed by something!"))
 
@@ -101,16 +105,36 @@
 			playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 			make_cleanable(/obj/decal/cleanable/oil,src.loc)
 
+	// Modifies the scuttlebot return_to_owner proc to properly handle edge cases, and updates various pieces of scuttlebot code to use this proc instead of their own code.
 	proc/return_to_owner()
-		if (controller != null)
-			if(!controller.loc)
-				boutput(src, SPAN_ALERT("A horrible sense of dread looms over you. You feel like your body has disappeared."))
-			else if (!isalive(controller))
-				boutput(src, SPAN_ALERT("A horrible sense of dread looms over you. Your real body is dead! The scuttlebot's advanced AI takes over and retains your conscience."))
-			else
-				src.mind.transfer_to(controller)
-			controller.network_device = null
-			controller = null
+		if (!src.controller)
+			return
+
+		var/ghostize_owner = FALSE
+		var/mob/living/corpse = null
+		var/message = null
+
+		if (QDELETED(src.controller) || src.controller.disposed || !src.controller.loc)
+			ghostize_owner = TRUE
+			message = "A horrible sense of dread looms over you. You feel like your body has disappeared!"
+		else if (!isalive(src.controller) && !isunconscious(src.controller))
+			ghostize_owner = TRUE
+			corpse = src.controller
+			message = "A horrible sense of dread looms over you. Your real body is dead!"
+
+		if (ghostize_owner)
+			boutput(src, SPAN_ALERT(message))
+
+			var/mob/dead/observer/spawned_ghost = src.ghostize()
+			if (spawned_ghost)
+				spawned_ghost.corpse = corpse
+
+			src.controller = null
+			return
+
+		src.mind.transfer_to(src.controller)
+		src.controller.network_device = null
+		src.controller = null
 
 	proc/make_inspector()
 		icon_state = "scuttlebot_inspector"
@@ -123,6 +147,35 @@
 						/datum/targetable/critter/control_owner)
 
 	setup_hands()
+
+/mob/living/critter/robotic/scuttlebot/mail
+	name = "\improper CARR13R P1G30N"
+	desc = "A pigeon that must've escaped from the ranch and been trained to deliver mail... wait why is 8G labeled on its leg?"
+	icon = 'icons/mob/critter/robotic/scuttlebot.dmi'
+	icon_state = "pigeon"
+	speech_verb_say = "tweets"
+	speech_verb_exclaim = "chirps"
+	speech_verb_ask = "tweets curiously"
+	var/obj/item/clothing/suit/pigeon/linked_pigeon = null
+
+	add_abilities = list(/datum/targetable/critter/control_owner/mail)
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/small_critter/mail
+		HH.icon = 'icons/mob/critter_hands.dmi'
+		HH.icon_state = "handn"
+		HH.name = "claw"
+		HH.limb_name = "claws"
+
+	spawn_goggles()
+		var/obj/item/clothing/glasses/scuttlebot_vr/mail/R = new /obj/item/clothing/glasses/scuttlebot_vr/mail(src.loc)
+		R.connected_scuttlebot = src
+
+	make_inspector()
+		return
+
 
 /mob/living/critter/robotic/scuttlebot/ghostplayable // admin gimmick ghost spawnable version
 

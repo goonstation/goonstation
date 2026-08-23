@@ -32,27 +32,6 @@
 	var/burn_prot = 0
 	var/tox_prot = 0
 
-	attack_self(mob/user)
-		. = ..()
-		if (!src.artifact.activated)
-			return
-		var/msg
-		switch(src.associated_effect)
-			if (SWIFTNESS)
-				msg = "You feel drafts of air..."
-			if (FORTUNE)
-				msg = "You feel lucky somehow."
-			if (SPACEFARING)
-				msg = "[src] feels ice cold."
-			if (ELEMENTS)
-				msg = "[src] feels warm and cold in different spots.[prob(99) ? null : " Sort of like that honk-pocket you once had..."]"
-			if (STRENGTH)
-				msg = "Holding [src] makes you feel strong."
-			if (PROTECTION)
-				msg = "You feel safe holding [src]."
-
-		boutput(user, SPAN_NOTICE(msg))
-
 	set_loc(newloc, storage_check)
 		..()
 		src.refresh_user()
@@ -199,6 +178,27 @@
 		var/mob/living/carbon/human/H = art.active_user
 		if (istype(H))
 			art.remove_effect_from_user()
+
+	effect_attack_self(mob/user)
+		if (..())
+			return
+		var/obj/item/artifact/talisman/talisman = src.holder
+		var/msg
+		switch(talisman.associated_effect)
+			if (SWIFTNESS)
+				msg = "You feel drafts of air..."
+			if (FORTUNE)
+				msg = "You feel lucky somehow."
+			if (SPACEFARING)
+				msg = "[talisman] feels ice cold."
+			if (ELEMENTS)
+				msg = "[talisman] feels warm and cold in different spots.[prob(99) ? null : " Sort of like that honk-pocket you once had..."]"
+			if (STRENGTH)
+				msg = "Holding [talisman] makes you feel strong."
+			if (PROTECTION)
+				msg = "You feel safe holding [talisman]."
+
+		boutput(user, SPAN_NOTICE(msg))
 
 #undef SWIFTNESS
 #undef FORTUNE

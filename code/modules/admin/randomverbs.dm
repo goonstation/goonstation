@@ -6,27 +6,6 @@
 	else
 		world.Reboot()
 
-/client/proc/rebuild_flow_networks()
-	set name = "Rebuild Flow Networks"
-	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-	make_fluid_networks()
-
-/client/proc/print_flow_networks()
-	set name = "Print Flow Networks"
-	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-	DEBUG_MESSAGE("Dumping flow network refs")
-	for_by_tcl(network, /datum/flow_network)
-		DEBUG_MESSAGE_VARDBG("[showCoords(network.nodes[1].x,network.nodes[1].y,network.nodes[1].z)]", network)
-	for_by_tcl(network, /datum/flow_network)
-		DEBUG_MESSAGE("Printing flow network rooted at [showCoords(network.nodes[1].x,network.nodes[1].y,network.nodes[1].z)] (\ref[network])")
-		// Clear DFS flags
-		network.clear_DFS_flags()
-		DFS_LOUD(network.nodes[1])
-
 /client/proc/cmd_admin_drop_everything(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 0
@@ -359,7 +338,9 @@
 			var/path = text2path(split[i])
 			if(ispath(path, /obj/item/aiModule))
 				var/obj/item/aiModule/module = new path(ticker.ai_law_rack_manager.default_ai_rack)
-				ticker.ai_law_rack_manager.default_ai_rack.SetLaw(module, i, TRUE, TRUE)
+				if (module.wonky)
+					module.pixel_x = rand(-2, 2)
+				ticker.ai_law_rack_manager.default_ai_rack.SetLaw(module, i, module.can_be_secured, module.can_be_secured)
 				if(istype(module,/obj/item/aiModule/hologram_expansion))
 					var/obj/item/aiModule/hologram_expansion/holo = module
 					ticker.ai_law_rack_manager.default_ai_rack.holo_expansions |= holo.expansion
@@ -471,88 +452,6 @@
 	logTheThing(LOG_ADMIN, usr, "stabilized [constructTarget(M,"admin")]")
 	logTheThing(LOG_DIARY, usr, "stabilized [constructTarget(M,"diary")]", "admin")
 	message_admins(SPAN_ALERT("Admin [key_name(usr)] stabilized [key_name(M)]!"))
-
-/client/proc/cmd_admin_create_centcom_report()
-	SET_ADMIN_CAT(ADMIN_CAT_FUN)
-	set name = "Create Command Report"
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-	var/input = input(usr, "Enter the text for the alert. Anything. Serious.", "What?", "") as null|message
-	if(!input)
-		return
-	var/input2 = input(usr, "Add a headline for this alert? leaving this blank creates no headline", "What?", "") as null|text
-	var/input3 = input(usr, "Add an origin to the transmission, leaving this blank 'Central Command Update'", "What?", "") as null|text
-	if(!input3)
-		input3 = "Central Command Update"
-
-	if (alert(src, "Origin: [input3 ? "\"[input3]\"" : "None"]\nHeadline: [input2 ? "\"[input2]\"" : "None"]\nBody: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
-		for_by_tcl(C, /obj/machinery/communications_dish)
-			C.add_centcom_report(input2, input)
-
-		var/sound_to_play = 'sound/misc/announcement_1.ogg'
-		command_alert(input, input2, sound_to_play, alert_origin = input3);
-
-		logTheThing(LOG_ADMIN, src, "has created a command report: [input]")
-		logTheThing(LOG_DIARY, src, "has created a command report: [input]", "admin")
-		message_admins("[key_name(src)] has created a command report")
-
-/client/proc/cmd_admin_create_advanced_centcom_report()
-	SET_ADMIN_CAT(ADMIN_CAT_FUN)
-	set name = "Adv. Command Report"
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-
-	var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as null|message
-	if (!input)
-		return
-	var/input2 = input(usr, "Add a headline for this alert?", "What?", "") as null|text
-	if (alert(src, "Headline: [input2 ? "\"[input2]\"" : "None"] | Body: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
-		var/sound_to_play = 'sound/misc/announcement_1.ogg'
-		advanced_command_alert(input, input2, sound_to_play);
-
-		logTheThing(LOG_ADMIN, src, "has created an advanced command report: [input]")
-		logTheThing(LOG_DIARY, src, "has created an advanced command report: [input]", "admin")
-		message_admins("[key_name(src)] has created an advanced command report")
-
-/client/proc/cmd_admin_advanced_centcom_report_help()
-	SET_ADMIN_CAT(ADMIN_CAT_FUN)
-	set name = "Adv. Command Report - Help"
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-
-	var/T = {"<TT><h1>Advanced Command Report</h1><hr>
-	This report works exactly like the normal report, except it sends a tailored message
-	to each mob in the world, replacing some values with values applicable to them.
-	If you're not planning to use this feature, then I recommend the normal command report as it is
-	less demanding on resources.
-	<table border=1>
-		<tr>
-			<td>%name%
-			<td>The name of the mob currently viewing the report
-		<tr>
-			<td>%key%
-			<td>The key of the mob currently viewing the report
-		<tr>
-			<td>%job%
-			<td>The job of the mob currently viewing the report
-		<tr>
-			<td>%area_name%
-			<td>The name of the area where the mob currently viewing the report is.
-		<tr>
-			<td>%srand_name%
-			<td>The name of a random player, this is the same for everyone viewing the report.
-		<tr>
-			<td>%srand_job%
-			<td>The job of a random player, this is the same for everyone viewing the report.
-		<tr>
-			<td>%mrand_name%
-			<td>The name of a random player, this is <B>different</B> for everyone viewing the report.
-		<tr>
-			<td>%mrand_job%
-			<td>The job of a random player, this is <B>different</B> for everyone viewing the report.
-
-		</table>"}
-	usr.Browse(T, "window=adv_com_help;size=700x500")
 
 /client/proc/cmd_admin_delete(atom/O as obj|mob|turf in world)
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
@@ -905,7 +804,7 @@
 				if (new_race == "Remove")
 					src.mutantrace = null
 			else
-				boutput(src, "You must be at least a Administrator to polymorph mutantraces.")
+				boutput(src, "You must be at least an Administrator to polymorph mutantraces.")
 
 		else if(href_list["apply"])
 			src.copy_to_target()
@@ -960,7 +859,7 @@
 		dat += "Skin Tone: <a href='byond://?src=\ref[src];s_tone=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[src.tf_holder.mobAppearance.s_tone]\"><table bgcolor=\"[src.tf_holder.mobAppearance.s_tone]\"><tr><td>ST</td></tr></table></font><br>"
 		dat += "Mutant Hair: <a href='byond://?src=\ref[src];hair_override=1'>[src.hair_override ? "YES" : "NO"]</a><br>"
 
-		if (usr.client.holder.level >= LEVEL_ADMIN)
+		if (usercl.holder.level >= LEVEL_ADMIN)
 			dat += "Mutant Race: <a href='byond://?src=\ref[src];mutantrace=1'>[src.mutantrace ? capitalize(src.mutantrace.name) : "None"]</a><br>"
 
 		dat += "Update ID/PDA/Manifest: <a href='byond://?src=\ref[src];updateid=1'>[src.update_wearid ? "YES" : "NO"]</a><br>"
@@ -1359,6 +1258,20 @@
 
 	src.check_reagents_internal(target)
 
+/client/proc/cmd_change_addiction(var/atom/target as null|mob in world)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set popup_menu = 0
+	set name = "Adjust Addictions"
+	set desc = "Increase the addiction meter of all of someone's addictions by an amount."
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+
+	if (!ismob(target))
+		return
+	var/value = input("Value:", "Increase all active addiction meters by value", "0") as num
+	var/mob/mobtarget = target
+	mobtarget.try_affect_all_addictions(value)
+
 /client/proc/check_reagents_internal(var/atom/target as null|mob|obj|turf in world, refresh = 0)
 	if (!target)
 		return
@@ -1381,6 +1294,9 @@
 			var/obj/fluid/F = target
 			if (F.group && F.group.reagents)
 				reagents = F.group.reagents
+		if (istype(target, /obj/fluid_pipe))
+			var/obj/fluid_pipe/pipe = target
+			reagents = pipe.network.reagents
 		if (!reagents)
 			boutput(usr, SPAN_NOTICE("<b>[target] contains no reagents.</b>"))
 			return
@@ -1564,6 +1480,9 @@
 	if(istype(A, /obj/fluid))
 		var/obj/fluid/fluid = A
 		reagents = fluid.group?.reagents
+	else if (istype(A, /obj/fluid_pipe))
+		var/obj/fluid_pipe/pipe = A
+		reagents = pipe.network.reagents
 	else if(!A.reagents)
 		A.create_reagents(100) // we don't ask for a specific amount since if you exceed 100 it gets asked about below
 		reagents = A.reagents
@@ -1627,6 +1546,27 @@
 		return
 	A.setMaterial(material_selected)
 	boutput(src, "Set material of [A] to [material_selected]")
+
+/client/proc/cmd_say(atom/A)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "Say"
+	set desc = "Force an atom to say a line of text."
+	set popup_menu = 0
+
+	var/message = tgui_input_text(src, "Force [A] to say something:", "Say", "")
+
+	if (!message)
+		return
+
+	A.say(message)
+
+	message = copytext(sanitize(message), 1, MAX_MESSAGE_LEN)
+	logTheThing(LOG_ADMIN, usr, "forced [constructTarget(A, "admin")] to say: [message]")
+	logTheThing(LOG_DIARY, usr, "forced [constructTarget(A, "diary")] to say: [message]", "admin")
+
+	var/mob/M = A
+	if(istype(M) && M.client)
+		message_admins("<span class='internal'>[key_name(src)] forced [key_name(M)] to say: [message]</span>")
 
 /client/proc/cmd_cat_county()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
@@ -2511,7 +2451,8 @@ var/global/night_mode_enabled = 0
 		old_key = input("Enter old account ckey", "Old account ckey", null) as null|text
 	if (!new_key)
 		new_key = input("Enter new account ckey", "New account ckey", null) as null|text
-
+	old_key = ckey(old_key)
+	new_key = ckey(new_key)
 	try
 		var/datum/apiRoute/players/medals/transfer/transferMedals = new
 		transferMedals.buildBody(old_key, new_key)
@@ -2590,8 +2531,7 @@ var/global/night_mode_enabled = 0
 	logTheThing(LOG_ADMIN, usr, "has toggled [constructTarget(C.mob,"admin")]'s text mode to [!is_text]")
 	logTheThing(LOG_DIARY, usr, "has toggled [constructTarget(C.mob,"diary")]'s text mode to [!is_text]", "admin")
 	message_admins("[key_name(usr)] has toggled [key_name(C.mob)]'s text mode to [!is_text]")
-	winset(C, "mapwindow.map", "text-mode=[is_text ? "false" : "true"]" )
-
+	C.set_text_mode(!is_text)
 
 /client/proc/retreat_to_office()
 	set name = "Retreat To Office"
@@ -3127,6 +3067,27 @@ var/global/force_radio_maptext = FALSE
 		var/amount = tgui_input_number(src, "Please select reagent amount:", "Reagent Amount", 1, container.reagents.maximum_volume, 1)
 		container.reagents.add_reagent("custom_transmutation", amount, sdata=matId)
 	usr.put_in_hand_or_drop(container)
+
+/// Expell an object from every mail chute on-station.
+/client/proc/expell_object_from_mail_chutes()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Expell Object From Mail Chutes"
+	ADMIN_ONLY
+
+	var/partial_type = global.tgui_input_text(usr, "Object type:", "Expell Object From Mail Chutes")
+	if (!partial_type)
+		return
+
+	var/type = global.get_one_match(partial_type, /atom/movable)
+	if (!type)
+		return
+
+	for_by_tcl(chute, /obj/machinery/disposal/mail)
+		if (chute.z != Z_LEVEL_STATION)
+			continue
+
+		new type(chute)
+		chute.expel_contents()
 
 /client/proc/show_mining_map()
 	set name = "Show Mining Map"

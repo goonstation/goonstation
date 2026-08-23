@@ -20,6 +20,18 @@
 	proc/get_machinery()
 		return
 
+	///Used for get_machinery polling; returns TRUE when passed a turf that exists and isn't in a restricted Z (with some special exemptions for Menhir if pertinent)
+	proc/loc_eval(var/turf/T)
+		. = FALSE
+		if(!T || !isturf(T)) return
+		if(isrestrictedz(T.z))
+#ifdef MAP_OVERRIDE_MENHIR
+			if (in_menhir_zone(T))
+				. = TRUE
+#endif
+			return
+		return TRUE
+
 	// As to avoid a separate lookup for every remote.
 	proc/teleport_sanity_check(var/obj/machinery/test_machinery, var/mob/test_mob, var/turf/test_turf, var/no_zlevel_check = 0)
 		// Failure states:
@@ -59,7 +71,8 @@
 		if (test_turf)
 			if (test_turf.loc:teleport_blocked == 2) return 0
 			if (!no_zlevel_check && (isrestrictedz(test_turf.z) || isrestrictedz(our_loc.z))) // Somebody will find a way to abuse it if I don't put this here.
-				return 0
+				if (!in_menhir_zone(test_turf)) //Special Exemption
+					return 0
 			if (test_turf.density)
 				return 5
 			for (var/obj/thing in view(0, test_turf))
@@ -74,7 +87,8 @@
 			if (!our_loc || !isturf(our_loc))
 				return 0
 			if (!no_zlevel_check && isrestrictedz(our_loc.z)) // Somebody will find a way to abuse it if I don't put this here.
-				return 0
+				if (!in_menhir_zone(test_turf)) //Special Exemption
+					return 0
 			if (our_loc.density)
 				return 4
 			for (var/obj/thing2 in view(0, our_loc))
@@ -108,18 +122,44 @@
 			else
 				for (var/obj/O in src.machinerylist )
 					if (istype(O, src.our_machinery))
-						. += "<A href='byond://?src=\ref[src];op=control;machinery=\ref[O]'>[O] at [get_area(O)]</A><BR>"
+						var/area/A = get_area(O)
+						var/area_string = "Off-[global.station_or_ship()] Location"
+						if (istype(A, /area/station))
+							area_string = A
+#ifdef MAP_OVERRIDE_MENHIR
+						if (istype(A, /area/precursor/menhir) || istype(A,/area/station/crown) || istype(A,/area/unspace))
+							area_string = "TOREADOR-7I-22408"
+#endif
+						. += "<A href='byond://?src=\ref[src];op=control;machinery=\ref[O]'>[O] at [area_string]</A><BR>"
 
 			. += "<BR><A href='byond://?src=\ref[src];op=scanmachinery'>Scan for linkable machinery</A><BR>"
 
 		else // Control a particular piece of machinery.
 
 			. += "<B>[src.active]</B><BR> Status: (<A href='byond://?src=\ref[src];op=control;machinery=\ref[src.active]'><i>refresh</i></A>)<BR>"
+			var/area_string = "Off-[global.station_or_ship()] Location"
+			var/area/A = get_area(src.active)
+			if (istype(A, /area/station))
+				area_string = A.name
+			#ifdef MAP_OVERRIDE_MENHIR
+			if (istypes(A, list(/area/precursor/menhir, /area/station/crown, /area/unspace)))
+				area_string = "TOREADOR-7I-22408"
+			#endif
+			var/home_string = "Off-[global.station_or_ship()] Location"
 
 			if (istype(src.active, /obj/machinery/port_a_brig/))
 				var/obj/machinery/port_a_brig/P2 = src.active
-
-				. += "Location: [get_area(P2)] (Home: [P2.homeloc ? "[get_area(P2.homeloc)]" : "N/A"])<BR>"
+				if (!P2.homeloc)
+					home_string = "N/A"
+				else
+					var/area/home_area = get_area(P2.homeloc)
+					if (istype(home_area, /area/station))
+						home_string = home_area.name
+					#ifdef MAP_OVERRIDE_MENHIR
+					if (istypes(home_area, list(/area/precursor/menhir, /area/station/crown, /area/unspace)))
+						home_string = "TOREADOR-7I-22408"
+					#endif
+				. += "Location: [area_string] (Home: [home_string])<BR>"
 				. += "Occupant: [P2.occupant ? "[P2.occupant.name]" : "None"] ([P2.locked ? "locked" : "unlocked"])"
 
 				. += "<BR>\[<A href='byond://?src=\ref[src];op=lock'>Toggle lock</A>\] "
@@ -129,8 +169,14 @@
 
 			else if (istype(src.active, /obj/machinery/sleeper/port_a_medbay))
 				var/obj/machinery/sleeper/port_a_medbay/P2 = src.active
+				if (!P2.homeloc)
+					home_string = "N/A"
+				else
+					var/area/home_area = get_area(P2.homeloc)
+					if (istype(home_area, /area/station))
+						home_string = home_area.name
 
-				. += "Location: [get_area(P2)] (Home: [P2.homeloc ? "[get_area(P2.homeloc)]" : "N/A"])<BR>"
+				. += "Location: [area_string] (Home: [home_string])<BR>"
 				. += "Occupant: [P2.occupant ? "[P2.occupant.name]" : "None"]"
 
 				. += "<BR>\[<A href='byond://?src=\ref[src];op=summon'>Summon</A>\] "
@@ -139,8 +185,14 @@
 
 			else if (istype(src.active, /obj/machinery/vending/port_a_nanomed/))
 				var/obj/machinery/vending/port_a_nanomed/P2 = src.active
+				if (!P2.homeloc)
+					home_string = "N/A"
+				else
+					var/area/home_area = get_area(P2.homeloc)
+					if (istype(home_area, /area/station))
+						home_string = home_area.name
 
-				. += "Location: [get_area(P2)] (Home: [P2.homeloc ? "[get_area(P2.homeloc)]" : "N/A"])"
+				. += "Location: [area_string] (Home: [home_string])<BR>"
 
 				. += "<BR>\[<A href='byond://?src=\ref[src];op=summon'>Summon</A>\] "
 				. += "\[<A href='byond://?src=\ref[src];op=return'>Send to home turf</A>\]<BR>"
@@ -148,8 +200,14 @@
 
 			else if (istype(src.active, /obj/storage/closet/port_a_sci/))
 				var/obj/storage/closet/port_a_sci/P2 = src.active
+				if (!P2.homeloc)
+					home_string = "N/A"
+				else
+					var/area/home_area = get_area(P2.homeloc)
+					if (istype(home_area, /area/station))
+						home_string = home_area.name
 
-				. += "Location: [get_area(P2)] (Home: [P2.homeloc ? "[get_area(P2.homeloc)]" : "N/A"])"
+				. += "Location: [area_string] (Home: [home_string])<BR>"
 
 				. += "\[<A href='byond://?src=\ref[src];op=return'>Send to home turf</A>\]<BR>"
 				. += "<HR><A href='byond://?src=\ref[src];op=machinerylist'>Return to list</A>"
@@ -197,7 +255,7 @@
 				var/turf/our_loc = get_turf(PDA)
 				if (isAIeye(usr))
 					our_loc = get_turf(usr)
-					if (!(our_loc.camera_coverage_emitters && length(our_loc.camera_coverage_emitters)))
+					if (!seen_by_camera(our_loc))
 						boutput(usr, SPAN_ALERT("This area is not within your range of influence."))
 						return
 
@@ -302,7 +360,7 @@
 
 		for (var/obj/machinery/port_a_brig/M in by_cat[TR_CAT_PORTABLE_MACHINERY])
 			var/turf/M_loc = get_turf(M)
-			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
+			if (M && !src.loc_eval(M_loc)) // Don't show stuff in "somewhere", okay.
 				continue
 			if (!(M in src.machinerylist))
 				src.machinerylist += M
@@ -320,7 +378,7 @@
 
 		for (var/obj/machinery/sleeper/port_a_medbay/M in by_cat[TR_CAT_PORTABLE_MACHINERY])
 			var/turf/M_loc = get_turf(M)
-			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
+			if (M && !src.loc_eval(M_loc)) // Don't show stuff in "somewhere", okay.
 				continue
 			if (!(M in src.machinerylist))
 				src.machinerylist += M
@@ -338,7 +396,7 @@
 
 		for (var/obj/machinery/vending/port_a_nanomed/M in by_cat[TR_CAT_PORTABLE_MACHINERY])
 			var/turf/M_loc = get_turf(M)
-			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
+			if (M && !src.loc_eval(M_loc)) // Don't show stuff in "somewhere", okay.
 				continue
 			if (!(M in src.machinerylist))
 				src.machinerylist += M
@@ -357,7 +415,7 @@
 
 		for (var/obj/storage/closet/port_a_sci/M in by_cat[TR_CAT_PORTABLE_MACHINERY])
 			/*var/turf/M_loc = get_turf(M)
-			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
+			if (M && !src.loc_eval(M_loc)) // Don't show stuff in "somewhere", okay.
 				continue*/
 			if (!(M in src.machinerylist))
 				src.machinerylist += M

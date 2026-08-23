@@ -96,7 +96,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 				var/mob/living/carbon/human/H = M
 				if (H.sims)
 					H.sims.affectMotive("Hunger", healing * 6)
-					H.sims.affectMotive("Bladder", -healing * 0.2)
 
 			if (quality >= 5)
 				boutput(M, SPAN_NOTICE("That tasted amazing!"))
@@ -135,24 +134,22 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			src.reagents?.inert = 1 // If this would be missing, the main food would begin reacting just after the first slice received its chems
 			src.onSlice(user)
 			//the hacky place_on zone of sadness
-			var/obj/surgery_tray/tray = locate() in src.loc
-			if (!tray || !(src in tray.attached_objs))
-				tray = null
 			var/obj/item/plate/plate = src.loc
 			if (istype(plate))
 				plate.remove_contents(src)
 			else
 				plate = null
+			var/list/new_items = list()
 			for (var/i in 1 to src.slice_amount)
 				var/atom/slice_result = new src.slice_product(T)
 				if(istype(slice_result, /obj/item/reagent_containers/food))
 					var/obj/item/reagent_containers/food/slice = slice_result
 					src.process_sliced_products(slice, amount_to_transfer)
-				//try to put it on the plate/tray if we're on one
-				if (tray && tray.place_on(slice_result))
-					tray.attach(slice_result)
-				else if (plate)
+				new_items.Add(slice_result)
+				//try to put it on the plate if we're on one
+				if (plate)
 					plate.add_contents(slice_result)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, new_items, user)
 			qdel (src)
 		else
 			..()
@@ -194,6 +191,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	edible = 1
 	rand_pos = 1
 	var/has_cigs = 0
+	var/crunchy = FALSE
 
 	var/use_bite_mask = TRUE
 	var/current_mask = 5
@@ -279,8 +277,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 	Eat(var/mob/M as mob, var/mob/user, var/bypass_utensils = FALSE)
 		// in this case m is the consumer and user is the one holding it
-		if (!src.edible)
-			return 0
 		if(!M?.bioHolder.HasEffect("mattereater") && ON_COOLDOWN(M, "eat", EAT_COOLDOWN))
 			return 0
 		if (!src.bites_left)
@@ -424,7 +420,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				else
 					logTheThing(LOG_DEBUG, src, "Empty favorite foods list for [src] despite having the picky_eater trait.")
 		src.heal(consumer)
-		playsound(consumer.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
+		if(src.crunchy)
+			playsound(consumer.loc,'sound/items/eatfoodshort.ogg', rand(10,50), 1)
+		else
+			playsound(consumer.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 		on_bite(consumer, feeder, ethereal_eater)
 		if (src.festivity && !ethereal_eater && !inafterlife(consumer))
 			modify_christmas_cheer(src.festivity)
@@ -1073,6 +1072,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 			src.name = t
 			src.labeled = 1
+		else if (istype(W,/obj/item/tool/omnitool))
+			var/obj/item/tool/omnitool/OT = W
+			if (OT.mode?.mode_id == OMNITOOL::MODE_BOTTLE_OPENER)
+				boutput(user, SPAN_ALERT("It's a screw-top bottle."))
+			else
+				..()
 		else
 			..()
 			return
@@ -1086,7 +1091,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			stamina_damage = 15
 			stamina_cost = 15
 			stamina_crit_chance = 50
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 
 			if (src.shatter >= rand(2,12))
 				var/turf/U = user.loc
@@ -1104,9 +1109,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			else
 				src.shatter++
 				user.visible_message(SPAN_ALERT("<b>[user]</b> [pick("shanks","stabs","attacks")] [target] with the broken [src.name]!"))
-				logTheThing(LOG_COMBAT, user, "attacks [constructTarget(target,"combat")] with a broken [src] at [log_loc(user)].")
 				playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, TRUE)
 				var/damage = rand(1,10)
+				logTheThing(LOG_COMBAT, user, "attacks [constructTarget(target,"combat")] with a broken [src] for [damage] brute damage at [log_loc(user)].")
 				random_brute_damage(target, damage)//shiv that nukie/secHoP
 				take_bleeding_damage(target, null, damage)
 		..()
@@ -1226,7 +1231,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 				var/x_offset = 0
 				var/y_offset = 0
 
-				if (istype(in_glass, /obj/item/cocktail_stuff/drink_umbrella))
+				if (istype(in_glass, /obj/item/cocktail_stuff/drink_umbrella) || istype(in_glass, /obj/item/cocktail_stuff/eyestalk))
 					x_offset = src.umbrella_x_offset
 					y_offset = src.umbrella_y_offset
 				else
@@ -1342,16 +1347,17 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 			src.UpdateIcon()
 			return
 
-		else if (istype(W, /obj/item/shaker/salt))
-			var/obj/item/shaker/salt/S = W
-			if (S.shakes >= 15)
+		// applicators are not open containers, special handling here
+		else if (istype(W, /obj/item/reagent_containers/applicator/condiment/shaker/salt))
+			var/obj/item/reagent_containers/applicator/condiment/shaker/salt/S = W
+			if (S.reagents.total_volume < 2)
 				boutput(user, SPAN_ALERT("There isn't enough salt in here to salt the rim!"))
 				return
 			else
 				boutput(user, SPAN_NOTICE("You salt the rim of [src]."))
 				src.salted = 1
+				S.reagents.remove_any(2)
 				src.UpdateIcon()
-				S.shakes ++
 				return
 
 		else if (istype(W, /obj/item/reagent_containers) && W.is_open_container() && W.reagents.has_reagent("salt"))
@@ -1531,6 +1537,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 		var/turf/last_turf = get_turf(source_table)
 		SPAWN(0)
 			var/max_iterations = 20
+			src.inertia_value = 1
 			for(var/turf/T in path)
 				if(max_iterations-- <= 0)
 					break
@@ -1626,6 +1633,8 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	wedge_y_offset = -2
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/shot/syndie
+	SYNDICATE_STEALTH_DESCRIPTION("The label mentions something about \"nearly bottomless mimosas\".")
+	tooltip_flags = parent_type::tooltip_flags | REBUILD_USER
 	amount_per_transfer_from_this = 50
 	gulp_size = 50
 	initial_volume = 50
@@ -1943,55 +1952,55 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	item_state = "skullchalice"
 	can_recycle = FALSE
 
-/obj/item/reagent_containers/food/drinks/skull_chalice/strange
+/obj/item/reagent_containers/food/drinks/skull_chalice/hunter
 	name = "strange skull chalice"
 	desc = "This is one ugly drinking vessel."
-	icon_state = "skullchaliceP"
+	icon_state = "skullchalice_hunter"
 	item_state = "skullchalice"
 	can_recycle = FALSE
 
-/obj/item/reagent_containers/food/drinks/skull_chalice/odd
+/obj/item/reagent_containers/food/drinks/skull_chalice/changeling
 	name = "odd skull chalice"
 	desc = "A thing which you can drink fluids out of. Um. It's made from a skull. This one's got fewer holes and more room. Convenient!"
-	icon_state = "skullchaliceA"
+	icon_state = "skullchalice_changeling"
 	item_state = "skullchalice"
 	can_recycle = FALSE
 	initial_volume = 60
 
-/obj/item/reagent_containers/food/drinks/skull_chalice/peculiar
+/obj/item/reagent_containers/food/drinks/skull_chalice/wizard
 	name = "peculiar skull chalice"
 	desc = "A thing which you can drink fluids out of. Um. It's made from a skull. The magic keeps the contents from spilling out."
-	icon_state = "skullchalice_strange"
+	icon_state = "skullchalice_wizard"
 	item_state = "skullchalice"
 	can_recycle = FALSE
 
-/obj/item/reagent_containers/food/drinks/skull_chalice/menacing
+/obj/item/reagent_containers/food/drinks/skull_chalice/vampire
 	name = "menacing skull chalice"
 	desc = "In Space Soviet Russia, chalice drink out of YOU!"
-	icon_state = "skullchalice_menacing"
+	icon_state = "skullchalice_vampire"
 	item_state = "skullchalice"
 	can_recycle = FALSE
 	initial_reagents = list("blood" = 50)
 
-/obj/item/reagent_containers/food/drinks/skull_chalice/crystal
+/obj/item/reagent_containers/food/drinks/skull_chalice/omnitraitor
 	name = "skull chalice"
 	desc = "A thing which you can drink fluids out of. Um. It's made from a skull. You have an odd urge to serve champagne in this."
-	icon_state = "skullchalice_crystal"
-	item_state = "skullchalice_crystal"
+	icon_state = "skullchalice_omnitraitor"
+	item_state = "skullchalice_omnitraitor"
 	can_recycle = FALSE
 	initial_volume = 60
 
-/obj/item/reagent_containers/food/drinks/skull_chalice/gold
+/obj/item/reagent_containers/food/drinks/skull_chalice/macho
 	name = "golden skull chalice"
 	desc = "A thing which you can drink fluids out of. Um. It's made from a skull. Smells a bit like processed meat snacks."
-	icon_state = "skullchalice_gold"
-	item_state = "skullchalice_gold"
+	icon_state = "skullchalice_macho"
+	item_state = "skullchalice_macho"
 	can_recycle = FALSE
 
-/obj/item/reagent_containers/food/drinks/skull_chalice/noface
+/obj/item/reagent_containers/food/drinks/skull_chalice/cluwne
 	name = "faceless skull chalice"
 	desc = "A thing which you can drink fluids out of. Maybe. Possibly. Hypothetically."
-	icon_state = "skullchalice_noface"
+	icon_state = "skullchalice_cluwne"
 	item_state = "skullchalice"
 	can_recycle = FALSE
 	initial_volume = 5
@@ -2022,16 +2031,31 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	desc = ""
 	icon_state = "HoSMug"
 	item_state = "mug"
+	var/emagged = FALSE
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		if(src.emagged)
+			return
+		src.emagged = TRUE
+		boutput(user, SPAN_NOTICE("You scratch some of the white paint off [src] with [E]"))
+		src.icon_state += "Two"
 
 	get_desc(var/dist, var/mob/user)
 		if (user.mind?.assigned_role == "Head of Security")
-			. = "Its your favourite mug! It reads 'Galaxy's Number One HoS!' on the front. You remember when you got it last Spacemas from a secret admirer."
+			. = "Its your favourite mug! It reads 'Galaxy's Number [src.emagged ? "Two" : "One"] HoS!' on the front. [src.emagged ? SPAN_ALERT("WHAT!!!") : "You remember when you got it last Spacemas from a secret admirer."]"
 		else
-			. = "It reads 'Galaxy's Number One HoS!' on the front. You remember finding the receipt for it in disposals when the HoS bought it for themselves last Spacemas."
+			. = "It reads 'Galaxy's Number [src.emagged ? "Two" : "One"] HoS!' on the front. [src.emagged ? "Hah!" : "You remember finding the receipt for it in disposals when the HoS bought it for themselves last Spacemas."]"
 
 /obj/item/reagent_containers/food/drinks/mug/HoS/blue
 	icon_state = "HoSMugBlue"
 	item_state = "mug"
+
+/obj/item/reagent_containers/food/drinks/mug/HoS/blue/emagged
+	icon_state = "HoSMugBlueTwo"
+	emagged = TRUE
+
+/obj/item/reagent_containers/food/drinks/mug/HoS/blue/emagged/mint_tea
+	initial_reagents = list("mint_tea" = 50)
 
 /obj/item/reagent_containers/food/drinks/mug/random_color
 	New()
@@ -2307,3 +2331,17 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	initial_volume = 50
 	initial_reagents = list("milk"=40, "sugar"=10)
 	can_recycle = 0
+
+/obj/item/reagent_containers/food/drinks/milkfrother
+	name = "Milk Frother"
+	desc = "A sophisticated machine used to froth milk."
+	icon = 'icons/obj/foodNdrink/bottle.dmi'
+	icon_state = "milk_frother"
+	initial_volume = 50
+	can_recycle = FALSE
+
+	attack_self(mob/user)
+		var/temperature_change = T0C + 65 - src.reagents.total_temperature
+		user.visible_message("<b>[user.name]</b> turns on the milk frother, producing a pleasant whirring sound as the contents are agitated and heated.")
+		src.reagents.physical_shock(30)
+		src.reagents.temperature_reagents(exposed_temperature = T0C + 80, change_cap = temperature_change ,change_min = temperature_change)

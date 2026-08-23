@@ -21,6 +21,17 @@
 			overlay_image.color = "#FFA200"
 
 		..()
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type, 25 * src.power)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type, 25 * newval)
+
+	OnRemove()
+		..()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type)
+		return
 
 /datum/bioEffect/coldres
 	name = "Cold Resistance"
@@ -42,6 +53,17 @@
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 			overlay_image.color = "#009DFF"
 		..()
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type, 25 * src.power)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type, 25 * newval)
+
+	OnRemove()
+		..()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type)
+		return
 
 /datum/bioEffect/thermalres
 	name = "Thermal Resistance"
@@ -66,15 +88,24 @@
 		if(overlay_image_two)
 			var/mob/living/L = owner
 			L.UpdateOverlays(overlay_image_two, id + "2")
-		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type, 50)
-		APPLY_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type, 50)
-		owner.temp_tolerance *= 10
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type, 25 * src.power)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type, 25 * src.power)
+		owner.temp_tolerance *= 5 * src.power
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type)
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type, 25 * newval)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type, 25 * newval)
+		owner.temp_tolerance /= 5 * oldval
+		owner.temp_tolerance *= 5 * newval
 
 	OnRemove()
 		..()
 		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_HEATPROT, src.type)
 		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_COLDPROT, src.type)
-		owner.temp_tolerance /= 10
+		owner.temp_tolerance /= 5 * src.power
 		if(overlay_image_two)
 			if(isliving(owner))
 				var/mob/living/L = owner
@@ -123,8 +154,8 @@
 		. = ..()
 		if(ismob(owner))
 			if(src.power > 1)
-				APPLY_ATOM_PROPERTY(owner, PROP_MOB_DISORIENT_RESIST_BODY, src, 40)
-				APPLY_ATOM_PROPERTY(owner, PROP_MOB_DISORIENT_RESIST_BODY_MAX, src, 40)
+				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_DISORIENT_RESIST_BODY, src)
+				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_DISORIENT_RESIST_BODY_MAX, src)
 
 	heal
 		id = "resist_electric_heal"
@@ -174,6 +205,15 @@
 	msgLose = "You feel like you could use a stiff drink."
 	degrade_to = "drunk"
 	icon_state  = "alc_res"
+
+	OnAdd()
+		. = ..()
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_ALCOHOL_RESIST, src, 100)
+
+	OnRemove()
+		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_ALCOHOL_RESIST, src)
+		. = ..()
+
 
 /datum/bioEffect/toxres
 	name = "Toxic Resistance"
@@ -278,6 +318,7 @@
 	msgGain = "Your mind feels closed."
 	msgLose = "You feel oddly exposed."
 	degrade_to = "screamer"
+	icon_state = "meta_neural"
 
 /////////////
 // Healing //
@@ -303,6 +344,7 @@
 	var/heal_per_tick = 0.66
 	var/regrow_prob = 250
 	var/roundedmultremainder
+	var/blood_regen_amt = 1
 	degrade_to = "mutagenic_field"
 	icon_state  = "regen"
 	effect_group = "regen"
@@ -311,13 +353,16 @@
 		if(..()) return
 		var/mob/living/L = owner
 		L.HealDamage("All", heal_per_tick * mult * power, heal_per_tick * power)
+		if (L.blood_volume < initial(L.blood_volume) && L.blood_volume > 0)
+			L.blood_volume += 1*mult*power
+
 		var/roundedmult = round(mult)
 		roundedmultremainder += (mult % 1)
 		if (roundedmultremainder >= 1)
 			roundedmult += round(roundedmultremainder)
 			roundedmultremainder = roundedmultremainder % 1
 		for (roundedmult = roundedmult, roundedmult > 0, roundedmult --)
-			if (rand(1, regrow_prob) <= power)
+			if (regrow_prob && rand(1, regrow_prob) <= power)
 				if (ishuman(L))
 					var/mob/living/carbon/human/H = L
 					if (H.limbs)
@@ -341,6 +386,7 @@
 	msgLose = "Your flesh stops mending itself together."
 	heal_per_tick = 7 // decrease to 5 if extreme narcolepsy doesn't counterbalance this enough
 	regrow_prob = 50 //increase to 100 if not counterbalanced
+	blood_regen_amt = 2
 
 /datum/bioEffect/regenerator/wolf
 	name = "Lupine Regeneration"
@@ -361,6 +407,7 @@
 	heal_per_tick = 2
 	regrow_prob = 50
 	acceptable_in_mutini = 0 // fun is banned
+	blood_regen_amt = 8
 
 	OnAdd()
 		. = ..()
@@ -387,7 +434,7 @@
 	var/remove_per_tick = 3.3
 	stability_loss = 10
 	degrade_to = "toxification"
-	icon_state  = "tox_res"
+	icon_state  = "anti_tox"
 
 	OnAdd()
 		. = ..()
@@ -423,7 +470,28 @@
 	lockedTries = 6
 	stability_loss = 5
 	icon_state  = "haze"
-	isBad = 1
+
+	OnAdd()
+		. = ..()
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_NOEXAMINE, src, src.power)
+		if (ismob(src.owner))
+			var/mob/M = src.owner
+			M.UpdateName()
+
+	OnRemove()
+		. = ..()
+		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_NOEXAMINE, src)
+		if (ismob(src.owner))
+			var/mob/M = src.owner
+			M.UpdateName()
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_NOEXAMINE, src)
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_NOEXAMINE, src, newval)
+		if (ismob(src.owner))
+			var/mob/M = src.owner
+			M.UpdateName()
 
 /datum/bioEffect/dead_scan
 	name = "Pseudonecrosis"
@@ -433,7 +501,6 @@
 	probability = 99
 	stability_loss = 5
 	icon_state  = "dead"
-	isBad = 1
 
 /datum/bioEffect/noir
 	name = "Noir"
@@ -528,19 +595,36 @@
 	stability_loss = 5
 	degrade_to = "involuntary_teleporting"
 	icon_state  = "radiobrain"
+	var/current_module = null
 
 	OnAdd()
-		radio_brains[owner] = power
+		src.onPowerChange(0, src.power)
+
 		. = ..()
 
 	onPowerChange(oldval, newval)
-		radio_brains[owner] = newval
+		if (src.owner && src.current_module)
+			src.owner.ensure_listen_tree().RemoveListenInput(src.current_module)
+
+		switch (newval)
+			if (1)
+				src.current_module = LISTEN_INPUT_RADIO_GLOBAL_DEFAULT_ONLY
+			if (2)
+				src.current_module = LISTEN_INPUT_RADIO_GLOBAL_UNPROTECTED_ONLY
+			else
+				src.current_module = LISTEN_INPUT_RADIO_GLOBAL
+
+		if (src.owner)
+			src.owner.listen_tree.AddListenInput(src.current_module)
 
 	OnRemove()
-		. = ..()
-		radio_brains -= owner
+		if (!src.owner || !src.current_module)
+			return
 
-var/list/radio_brains = list()
+		src.owner.ensure_listen_tree().RemoveListenInput(src.current_module)
+
+		. = ..()
+
 
 /datum/bioEffect/hulk
 	name = "Gamma Ray Exposure"
@@ -597,10 +681,6 @@ var/list/radio_brains = list()
 				HAH.customizations["hair_middle"].color = HAH.customizations["hair_middle"].color_original
 				HAH.customizations["hair_top"].color = HAH.customizations["hair_top"].color_original
 				HAH.s_tone = HAH.s_tone_original
-				if(HAH.mob_appearance_flags & FIX_COLORS) // human -> hulk -> lizard -> nothulk is *bright*
-					HAH.customizations["hair_bottom"].color = fix_colors(HAH.customizations["hair_bottom"].color)
-					HAH.customizations["hair_middle"].color = fix_colors(HAH.customizations["hair_middle"].color)
-					HAH.customizations["hair_top"].color = fix_colors(HAH.customizations["hair_top"].color)
 			H.update_colorful_parts()
 			H.set_body_icon_dirty()
 
@@ -637,56 +717,6 @@ var/list/radio_brains = list()
 	can_scramble = 0
 	curable_by_mutadone = 0
 
-/datum/bioEffect/xray
-	name = "X-Ray Vision"
-	desc = "Enhances the subject's optic nerves, allowing them to see on x-ray wavelengths."
-	id = "xray"
-	effectType = EFFECT_TYPE_POWER
-	probability = 33
-	blockCount = 3
-	blockGaps = 5
-	reclaim_mats = 40
-	msgGain = "You suddenly seem to be able to see through everything."
-	msgLose = "Your vision fades back to normal."
-	lockProb = 40
-	lockedGaps = 1
-	lockedDiff = 3
-	lockedChars = list("G","C","A","T")
-	lockedTries = 8
-	stability_loss = 20
-	degrade_to = "bad_eyesight"
-	icon_state  = "eye"
-	effect_group = "vision"
-
-	OnAdd()
-		. = ..()
-		if(ismob(owner))
-			if(power == 1)
-				APPLY_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION_WEAK, src)
-			else
-				APPLY_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION, src)
-
-	onPowerChange(oldval, newval)
-		. = ..()
-		if(ismob(owner))
-			if(oldval == 1)
-				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION_WEAK, src)
-			else
-				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION, src)
-
-			if(newval == 1)
-				APPLY_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION_WEAK, src)
-			else
-				APPLY_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION, src)
-
-	OnRemove()
-		. = ..()
-		if(ismob(owner))
-			if(power == 1)
-				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION_WEAK, src)
-			else
-				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION, src)
-
 /datum/bioEffect/nightvision
 	name = "Night Vision"
 	desc = "Enhances the subject's optic nerves, allowing them to see in the dark."
@@ -705,7 +735,7 @@ var/list/radio_brains = list()
 	lockedTries = 8
 	stability_loss = 15
 	degrade_to = "bad_eyesight"
-	icon_state  = "eye"
+	icon_state  = "eye_night"
 
 	OnAdd()
 		. = ..()
@@ -770,7 +800,7 @@ var/list/radio_brains = list()
 	lockedDiff = 3
 	lockedTries = 8
 	stability_loss = 5
-	icon_state  = "strong"
+	icon_state  = "fit"
 	effect_group = "fit"
 
 	OnAdd()
@@ -817,9 +847,10 @@ var/list/radio_brains = list()
 ///////////////////////////
 
 /datum/bioEffect/claws
-	name = "Manusclavis felidunguus"
+	name = "Manusclavis Felidunguus"
 	desc = "Subject arms change into a more animalistic form over time."
 	id = "claws"
+	icon_state = "armadillo"
 	occur_in_genepools = 0
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "Your arms start to feel strange and clumsy."
@@ -848,6 +879,7 @@ var/list/radio_brains = list()
 	name = "Manuschela Crustaceaformis"
 	desc = "Subject's arm changes into a pincer."
 	id = "claws_pincer"
+	icon_state ="big_meaty_claws"
 	msgGain = "You feel like your arms are oddly firm."
 	msgLose = "You are once again feel comfortable with your arms."
 
@@ -870,6 +902,7 @@ var/list/radio_brains = list()
 	name = "Chitinoarmis Durescutis "
 	desc = "Subject skin develops into a hardened carapace."
 	id = "carapace"
+	icon_state = "armadillo2"
 	occur_in_genepools = 0
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "You feel your skin harden."
@@ -900,6 +933,7 @@ var/list/radio_brains = list()
 	name = "Lateral Undulation"
 	desc = "Subject muscles develop the ability to perform a serpentine locomation."
 	id = "slither"
+	icon_state = "undulation"
 	occur_in_genepools = 0
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "You feel like you could propel yourself on your belly with a good wiggle."
@@ -922,6 +956,7 @@ var/list/radio_brains = list()
 	name = "Lipid Stores"
 	desc = "Subject gains the ability to improve the nourishment available from their lipid stores."
 	id = "camel_fat"
+	icon_state = "lipid"
 	probability = 10
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "You feel like you can store away some food and drink for later."
@@ -1023,12 +1058,12 @@ var/list/radio_brains = list()
 		if (probmult(20))
 			src.active = !src.active
 		if (src.active)
-			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src, INVIS_MESON)
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY_CLOAK, src, INVIS_MESON)
 		else
-			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY_CLOAK, src)
 
 	OnRemove()
-		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
+		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY_CLOAK, src)
 		. = ..()
 
 // hair_override gene
@@ -1052,9 +1087,9 @@ var/list/radio_brains = list()
 		if (ishuman(owner))
 			var/mob/living/carbon/human/M = owner
 			if (M.AH_we_spawned_with)
-				M.bioHolder.mobAppearance.customizations["hair_bottom"].color 	= fix_colors(M.AH_we_spawned_with.customizations["hair_bottom"].color)
-				M.bioHolder.mobAppearance.customizations["hair_middle"].color 	= fix_colors(M.AH_we_spawned_with.customizations["hair_middle"].color)
-				M.bioHolder.mobAppearance.customizations["hair_top"].color 	= fix_colors(M.AH_we_spawned_with.customizations["hair_top"].color)
+				M.bioHolder.mobAppearance.customizations["hair_bottom"].color 	= M.AH_we_spawned_with.customizations["hair_bottom"].color
+				M.bioHolder.mobAppearance.customizations["hair_middle"].color 	= M.AH_we_spawned_with.customizations["hair_middle"].color
+				M.bioHolder.mobAppearance.customizations["hair_top"].color 	= M.AH_we_spawned_with.customizations["hair_top"].color
 				M.bioHolder.mobAppearance.customizations["hair_bottom"].style 			= M.AH_we_spawned_with.customizations["hair_bottom"].style
 				M.bioHolder.mobAppearance.customizations["hair_middle"].style 			= M.AH_we_spawned_with.customizations["hair_middle"].style
 				M.bioHolder.mobAppearance.customizations["hair_top"].style 			= M.AH_we_spawned_with.customizations["hair_top"].style
@@ -1077,8 +1112,9 @@ var/list/radio_brains = list()
 
 /datum/bioEffect/skitter
 	id = "skitter"
-	name = "Insectoid locomotion"
+	name = "Insectoid Locomotion"
 	desc = "The subject is capable of skittering across the floor like a bug."
+	icon_state = "locomotion"
 	occur_in_genepools = 0
 
 	OnAdd()
@@ -1092,7 +1128,7 @@ var/list/radio_brains = list()
 		if (!isturf(src.owner.loc))
 			return
 		var/turf/T = get_turf(src.owner)
-		if (!istype(T) || T.throw_unlimited)
+		if (!istype(T) || src.owner.traction == TRACTION_NONE)
 			return
 		if (ON_COOLDOWN(src.owner, "skitter", 7 SECONDS))
 			return
@@ -1105,7 +1141,18 @@ var/list/radio_brains = list()
 		var/stop_delay = 0
 		for (var/i in 1 to 4)
 			src.owner.glide_size = (32 / 1) * world.tick_lag
-			step(src.owner, src.owner.dir)
+			var/move_dir = src.owner.dir
+			var/misstep_angle = 0
+			if (prob(owner.misstep_chance)) // 1.5 beecause going off straight chance felt weird; I don't want to totally nerf effects that rely on this
+				misstep_angle += randfloat(0,owner.misstep_chance*1.5)  // 66% Misstep Chance = 9% chance of 90 degree turn
+
+			if(misstep_angle)
+				misstep_angle = min(misstep_angle,90)
+				var/move_angle = dir2angle(move_dir)
+				move_angle += pick(-misstep_angle,misstep_angle)
+				move_dir = angle2dir(move_angle)
+
+			step(src.owner, move_dir)
 			if (locate(/obj/table) in src.owner.loc)
 				stop_delay = 1 SECOND
 				break
@@ -1125,8 +1172,9 @@ var/list/radio_brains = list()
 
 /datum/bioEffect/plasma_metabolism
 	id = "plasma_metabolism"
-	name = "Plasma metabolism"
+	name = "Plasma Metabolism"
 	desc = "The subject's body is capable of metabolising solid and liquid forms of plasma into electric charge."
+	icon_state = "plasma_metabolism"
 	occur_in_genepools = FALSE
 	effectType = EFFECT_TYPE_POWER
 	msgGain = "You feel a sudden hunger for plasma..."
@@ -1138,6 +1186,8 @@ var/list/radio_brains = list()
 	VAR_PRIVATE/burp_counter = 0
 	///Stored to keep UpdateOverlays calls to a minimum
 	VAR_PRIVATE/eye_state = -1
+	//Doesn't drain, doesn't generate electricity, just does the weird plasma effects
+	var/passive = FALSE
 
 	OnLife(mult)
 		. = ..()
@@ -1154,8 +1204,11 @@ var/list/radio_brains = list()
 		if (prob(20))
 			return
 		ON_COOLDOWN(src.owner, "plasma_electricity", 7 SECONDS)
-		src.material -= 5
+		if (!src.passive || src.material > 20)
+			src.material -= 5
 		src.update_eyes()
+		if (src.passive)
+			return
 		var/obj/item/found_item = null
 		if (prob(15)) //most of the time we try to ground into an item, sometimes it misses
 			boutput(src.owner, SPAN_ALERT("Electricty arcs wildly from your fingers!"))
@@ -1190,14 +1243,14 @@ var/list/radio_brains = list()
 	proc/absorb_tasty_rock(obj/item/rock)
 		if (ishuman(src.owner))
 			var/mob/living/carbon/human/human = src.owner
-			human.sims.affectMotive("Hunger", rock.w_class * 3)
+			human.sims?.affectMotive("Hunger", rock.w_class * 3)
 		src.gain_material(rock.w_class * 10)
 		qdel(rock)
 
 	proc/absorb_liquid_plasma(amount)
 		if (ishuman(src.owner))
 			var/mob/living/carbon/human/human = src.owner
-			human.sims.affectMotive("Thirst", amount)
+			human.sims?.affectMotive("Thirst", amount)
 		src.gain_material(amount)
 
 	proc/gain_material(amount)
@@ -1220,7 +1273,7 @@ var/list/radio_brains = list()
 			return
 		var/new_eye_state
 		switch (src.material)
-			if (1 to 20)
+			if (1 to 15)
 				new_eye_state = 1
 			if (15 to INFINITY)
 				new_eye_state = 2
@@ -1241,7 +1294,7 @@ var/list/radio_brains = list()
 		if (src.eye_state >= 2 && prob(10))
 			src.owner.AddComponent(\
 				/datum/component/hallucination/random_image_override,\
-				timeout = 20,\
+				timeout = 15,\
 				image_list = list(\
 					image('icons/turf/floors.dmi', "void")\
 				),\
@@ -1258,3 +1311,12 @@ var/list/radio_brains = list()
 		src.owner.ClearSpecificOverlays("plasma_eyes")
 		src.owner.remove_color_matrix(COLOR_MATRIX_PLASMA_MADNESS_LABEL, 1 SECOND)
 		. = ..()
+
+/datum/bioEffect/plasma_metabolism/passive
+	id = "plasma_metabolism_passive"
+	passive = TRUE
+	effect_group = null
+
+	New(for_global_list)
+		. = ..()
+		src.material = 16

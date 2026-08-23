@@ -9,6 +9,8 @@
 
 	if(world.load_intra_round_value("heisenbee_tier") >= 15 && prob(50) || prob(3))
 		lobby_titlecard = new /datum/titlecard/heisenbee()
+	else if (prob(2)) //rare treat
+		lobby_titlecard = new /datum/titlecard/test()
 	else
 		lobby_titlecard = new /datum/titlecard()
 
@@ -22,7 +24,6 @@
 	roundManagement = new()
 	participationRecorder = new()
 	antagWeighter = new()
-	if (!chui) chui = new()
 
 	station_name() // generate station name and set it
 
@@ -31,10 +32,7 @@
 	makepowernets()
 
 	Z_LOG_DEBUG("World/New", "Setting up changelogs...")
-	legacy_changelog = new /datum/changelog()
-	changelog = new /datum/changelog(TRUE)
-	legacy_admin_changelog = new /datum/admin_changelog()
-	admin_changelog = new /datum/admin_changelog(TRUE)
+	changelog = new /datum/changelog()
 
 #ifdef DATALOGGER
 	game_stats = new

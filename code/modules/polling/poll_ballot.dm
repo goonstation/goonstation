@@ -22,6 +22,7 @@
 	return tgui_always_state.can_use_topic(src, user)
 
 /datum/poll_ballot/ui_interact(mob/user, datum/tgui/ui)
+	if (!user?.client?.player) return
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if (!ui)
 		ui = new(user, src, "PollBallot")

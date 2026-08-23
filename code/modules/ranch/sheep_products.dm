@@ -1,7 +1,3 @@
-/obj/item/reagent_containers/food/snacks/ingredient/meat/sheep
-	name = "Lamb chop."
-	desc = "Mysteriously, it looks a lot like steak."
-
 /// Sheep Egg for spawning
 
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/sheep

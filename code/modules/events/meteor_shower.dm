@@ -532,6 +532,10 @@ var/global/meteor_shower_active = 0
 		var/shatter_types = list(/obj/newmeteor/shark, /obj/newmeteor/small/shark)
 
 		shatter()
+			if (prob(0.5))
+				new /obj/critter/gunbot/drone/gunshark(get_turf(src))
+				..()
+				return
 			for(var/A in alldirs)
 				if(prob(15))
 					continue

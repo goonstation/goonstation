@@ -7,9 +7,8 @@
 
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  title: 'The madness receeds',
-  content: (
+const BrokenRemovedContentWindow = () => {
+  return (
     <div className="traitor-tips">
       <h1 className="center">You are no longer broken!</h1>
       <p>
@@ -17,5 +16,10 @@ export const acw: AlertContentWindow = {
         <b>You are no longer an antagonist.</b>
       </p>
     </div>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  title: 'The madness receeds',
+  component: BrokenRemovedContentWindow,
 };

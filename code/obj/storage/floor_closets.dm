@@ -5,7 +5,7 @@
 	icon_state = "closedf"
 	icon_closed = "closedf"
 	density = 0
-	soundproofing = 15
+	soundproofing = SOUNDPROOFING_FLOOR_CLOSET
 	p_class = 1
 	plane = PLANE_DEFAULT
 
@@ -13,21 +13,25 @@
 		..()
 		src.UpdateIcon()
 
-	close()
+	close(entanglelogic, mob/user)
 		..()
+		if (user)
+			logTheThing(LOG_STATION, user, " closed a syndicate floor closet at [log_loc(src)]")
 		src.UpdateIcon()
 
 	open(entanglelogic, mob/user)
 		if (src.welded)
 			return
 		..()
+		if (user)
+			logTheThing(LOG_STATION, user, " opened a syndicate floor closet at [log_loc(src)]")
 		src.UpdateIcon()
 
 	update_icon(turf/turf_override = null)
 		. = ..()
 		if (src.open)
 			src.name = "closet"
-			src.icon = 'icons/obj/large_storage.dmi'
+			src.icon = 'icons/obj/storage/locker.dmi'
 			src.plane = initial(src.plane)
 			src.desc = initial(src.desc)
 			src.set_icon_state(src.icon_opened)
@@ -43,7 +47,7 @@
 				src.set_dir(T.dir)
 			else
 				src.name = "steel floor"
-				src.icon = 'icons/obj/large_storage.dmi'
+				src.icon = 'icons/obj/storage/locker.dmi'
 				src.icon_closed = "closedf"
 				src.desc = "This is a floor.<br>It is made of steel. It looks odd."
 				src.set_icon_state(src.icon_closed)
@@ -75,6 +79,6 @@
 			src.name = T.name
 			src.plane = T.plane
 		else
-			src.icon = 'icons/obj/large_storage.dmi'
+			src.icon = 'icons/obj/storage/locker.dmi'
 			src.icon_closed = "closedf"
 

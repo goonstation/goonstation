@@ -149,26 +149,50 @@
 	anchored = ANCHORED
 	density = 1
 	flags = TGUI_INTERACTIVE
+	/// A static list of mixingdesk permitted accent IDs, indexed by their name.
 	var/static/list/accents
-	var/list/voices
-	var/selected_voice = 0
+	/// The maximum number of voices that this mixing desk may store.
 	var/const/max_voices = 9
+	/// A list of name/accent pairs to be displayed on the UI.
+	var/list/voices
+	/// A list of abstract say sources to be used for each voice.
+	var/list/atom/movable/abstract_say_source/mixing_desk/voice_say_sources
+	/// The index of the current voice selected.
+	var/selected_voice = 0
+	/// Whether the UI should display a say popup window.
 	var/say_popup = FALSE
 
 /obj/submachine/mixing_desk/New()
 	. = ..()
 	src.voices = list()
-	if(!src.accents)
-		src.accents = list()
-		for(var/bio_type in concrete_typesof(/datum/bioEffect/speech, FALSE))
-			var/datum/bioEffect/speech/effect = new bio_type()
-			if(!effect.acceptable_in_mutini || !effect.occur_in_genepools || !effect.mixingdesk_allowed)
-				continue
-			var/name = effect.id
-			if(length(name) >= 7 && copytext(name, 1, 8) == "accent_")
-				name = copytext(name, 8)
-			name = replacetext(name, "_", " ")
-			accents[name] = effect
+	src.voice_say_sources = list()
+
+	if (src.accents)
+		return
+
+	src.accents = list()
+	for (var/datum/bioEffect/speech/effect_type as anything in concrete_typesof(/datum/bioEffect/speech))
+		if (!effect_type::acceptable_in_mutini || !effect_type::occur_in_genepools || !effect_type::mixingdesk_allowed)
+			continue
+
+		var/name = effect_type::id
+		if ((length(name) >= 7) && findtext(name, "accent_", 1, 8))
+			name = copytext(name, 8)
+
+		name = replacetext(name, "_", " ")
+		src.accents[name] = effect_type::id
+
+/obj/submachine/mixing_desk/attack_hand(mob/user)
+	if (isghostcritter(user) || isghostdrone(user))
+		boutput(user, SPAN_ALERT("This thing looks way too complex to use."))
+		return
+	. = ..()
+
+/obj/submachine/mixing_desk/attackby(obj/item/I, mob/user)
+	if (isghostcritter(user) || isghostdrone(user))
+		boutput(user, SPAN_ALERT("This thing looks way too complex to use."))
+		return
+	. = ..()
 
 /obj/submachine/mixing_desk/ui_status(mob/user, datum/ui_state/state)
 	return min(
@@ -190,65 +214,82 @@
 	)
 
 /obj/submachine/mixing_desk/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
-	if(..())
+	if (..())
 		return
-	switch(action)
-		if("add_voice")
-			if(length(src.voices) >= src.max_voices)
+
+	switch (action)
+		if ("add_voice")
+			if (length(src.voices) >= src.max_voices)
 				return FALSE
-			var/name = strip_html(input("Enter voice name:", "Voice name"))
-			if(!name)
+
+			var/name = tgui_input_text(usr, "Enter voice name:", "Voice Name", max_length = FULLNAME_MAX)
+			if (!name)
 				return FALSE
-			phrase_log.log_phrase("voice-radiostation", name, no_duplicates=TRUE)
-			if(length(name) > FULLNAME_MAX)
-				name = copytext(name, 1, FULLNAME_MAX)
-			name = strip_html(name)
-			var/accent = input("Pick an accent:", "Accent") as null|anything in list("none") + src.accents
-			if(accent == "none")
+
+			phrase_log.log_phrase("voice-radiostation", name, no_duplicates = TRUE)
+
+			var/accent = tgui_input_list(usr, "Pick an accent:", "Accent", list("None") + src.accents)
+			if (accent == "None")
 				accent = null
-			src.voices += list(list("name"=name, "accent"=accent))
+				src.voice_say_sources += new /atom/movable/abstract_say_source/mixing_desk(src, name)
+			else
+				src.voice_say_sources += new /atom/movable/abstract_say_source/mixing_desk(src, name, src.accents[accent])
+
+			src.voices += list(list(
+				"name" = name,
+				"accent" = accent,
+			))
+
 			. = TRUE
+
 		if("remove_voice")
 			var/id = params["id"]
-			if(id <= 0 || id > length(voices))
+			if ((id <= 0) || (id > length(src.voices)))
 				return FALSE
-			if(id == src.selected_voice)
+
+			if (id == src.selected_voice)
 				src.selected_voice = 0
-			else if(id < src.selected_voice)
-				src.selected_voice--
+			else if (id < src.selected_voice)
+				src.selected_voice -= 1
+
 			src.voices.Cut(id, id + 1)
+			qdel(src.voice_say_sources[id])
+
 			. = TRUE
+
 		if("switch_voice")
 			var/id = params["id"]
-			if(id <= 0 || id > length(voices))
+			if ((id <= 0) || (id > length(src.voices)))
 				src.selected_voice = 0
 			else
 				src.selected_voice = id
+
 			. = TRUE
+
 		if("say_popup")
 			if("id" in params)
 				src.selected_voice = params["id"]
+
 			src.say_popup = TRUE
 			. = TRUE
+
 		if("cancel_say")
 			src.say_popup = FALSE
 			. = TRUE
+
 		if("say")
 			src.say_popup = FALSE
 			var/message = strip_html(params["message"])
-			if(src.selected_voice <= 0 || src.selected_voice > length(voices))
-				usr.say(message)
+			if ((src.selected_voice <= 0) || (src.selected_voice > length(src.voices)))
+				usr.say(message, flags = SAYFLAG_SPOKEN_BY_PLAYER)
 				return TRUE
-			var/name = voices[src.selected_voice]["name"]
-			var/accent_id = voices[src.selected_voice]["accent"]
-			if(!isnull(accent_id))
-				var/datum/bioEffect/speech/accent = src.accents[accent_id]
-				message = accent.OnSpeak(message)
-			logTheThing(LOG_SAY, usr, "SAY: [message] (Synthesizing the voice of <b>([constructTarget(name,"say")])</b> with accent [accent_id])")
-			var/original_name = usr.real_name
-			usr.real_name = copytext(name, 1, MOB_NAME_MAX_LENGTH)
-			usr.say(message)
-			usr.real_name = original_name
+
+			src.voice_say_sources[src.selected_voice].say(message, flags = SAYFLAG_SPOKEN_BY_PLAYER | SAYFLAG_IGNORE_POSITION)
+
+			var/name = src.voices[src.selected_voice]["name"]
+			var/accent_id = src.accents[src.voices[src.selected_voice]["accent"]]
+			logTheThing(LOG_SAY, usr, "SAY: [message] (Synthesizing the voice of <b>([constructTarget(name, "say")])</b> with accent [accent_id])")
+
 			. = TRUE
 
 // Record player
@@ -277,6 +318,9 @@
 		. = ..()
 
 /obj/submachine/record_player/attackby(obj/item/W, mob/user)
+	if (isghostcritter(user) || isghostdrone(user))
+		boutput(user, SPAN_ALERT("This thing looks way too complex to use."))
+		return
 	if (istype(W, /obj/item/record))
 		if (!src.can_play_music)
 			boutput(user, SPAN_ALERT("You insert the record into the record player, but it won't turn on."))
@@ -319,7 +363,7 @@
 				user.client.play_music_radio(record_inside.song, html_encode(record_name))
 			/// PDA message ///
 			var/datum/signal/pdaSignal = get_free_signal()
-			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [record_name].", "group" = MGA_RADIO)
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [inserted_record.record_name] ([record_name]).", "group" = MGA_RADIO)
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 #ifdef UNDERWATER_MAP
 			EXTEND_COOLDOWN(global, "music", 500 SECONDS)
@@ -405,111 +449,123 @@ ABSTRACT_TYPE(/obj/item/record/random)
 	song = 'sound/radio_station/music/dance_on_a_space_volcano.ogg'
 
 /obj/item/record/random/adventure_1
-	name = "record - \"adventure track #1\""
-	record_name = "adventure track #1"
+	name = "record - \"Adventure Track #1\""
+	record_name = "Adventure Track #1"
 	song = "sound/radio_station/music/adventure_1.mod"
 
 /obj/item/record/random/adventure_2
-	name = "record - \"adventure track #2\""
-	record_name = "adventure track #2"
+	name = "record - \"Adventure Track #2\""
+	record_name = "Adventure Track #2"
 	song = "sound/radio_station/music/adventure_2.s3m"
 
 /obj/item/record/random/adventure_3
-	name = "record - \"adventure track #3\""
-	record_name = "adventure track #3"
+	name = "record - \"Adventure Track #3\""
+	record_name = "Adventure Track #3"
 	song = 'sound/radio_station/music/adventure_3.ogg'
 
 /obj/item/record/random/adventure_4
-	name = "record - \"adventure track #4\""
-	record_name = "adventure track #4"
+	name = "record - \"Adventure Track #4\""
+	record_name = "Adventure Track #4"
 	song = 'sound/radio_station/music/adventure_4.ogg'
 
 /obj/item/record/random/adventure_5
-	name = "record - \"adventure track #5\""
-	record_name = "adventure track #5"
+	name = "record - \"Adventure Track #5\""
+	record_name = "Adventure Track #5"
 	song = 'sound/radio_station/music/adventure_5.ogg'
 
 /obj/item/record/random/adventure_6
-	name = "record - \"adventure track #6\""
-	record_name = "adventure track #6"
+	name = "record - \"Adventure Track #6\""
+	record_name = "Adventure Track #6"
 	song = "sound/radio_station/music/adventure_6.mod"
 
 /obj/item/record/random/upbeat_1
-	name = "record - \"upbeat track #1\""
-	record_name = "upbeat track #1"
+	name = "record - \"Upbeat Track #1\""
+	record_name = "Upbeat Track #1"
 	song = 'sound/radio_station/music/upbeat_1.ogg'
 
 /obj/item/record/random/upbeat_2
-	name = "record - \"upbeat track #2\""
-	record_name = "upbeat track #2"
+	name = "record - \"Upbeat Track #2\""
+	record_name = "Upbeat Track #2"
 	song = 'sound/radio_station/music/upbeat_2.ogg'
 
 /obj/item/record/random/chill_1
-	name = "record - \"chill track #1\""
-	record_name = "chill track #1"
+	name = "record - \"Chill Track #1\""
+	record_name = "Chill Track #1"
 	song = 'sound/radio_station/music/chill_1.ogg'
 
 /obj/item/record/random/chill_2
-	name = "record - \"chill track #2\""
-	record_name = "chill track #2"
+	name = "record - \"Chill Track #2\""
+	record_name = "Chill Track #2"
 	song = 'sound/radio_station/music/chill_2.ogg'
 
 /obj/item/record/random/chill_3
-	name = "record - \"chill track #3\""
-	record_name = "chill track #3"
+	name = "record - \"Chill Track #3\""
+	record_name = "Chill Track #3"
 	song = 'sound/radio_station/music/chill_3.ogg'
 
 /obj/item/record/random/chill_4
-	name = "record - \"chill track #4\""
-	record_name = "chill track #4"
+	name = "record - \"Chill Track #4\""
+	record_name = "Chill Track #4"
 	song = 'sound/radio_station/music/chill_4.ogg'
 
 /obj/item/record/random/january
-	record_name = "january"
+	name = "record - \"January\""
+	record_name = "January"
 	song = "sound/radio_station/music/january.xm"
 
 /obj/item/record/random/february
-	record_name = "february"
+	name = "record - \"February\""
+	record_name = "February"
 	song = "sound/radio_station/music/february.xm"
 
 /obj/item/record/random/march
-	record_name = "march"
+	name = "record - \"March\""
+	record_name = "March"
 	song = "sound/radio_station/music/march.xm"
 
 /obj/item/record/random/april
-	record_name = "april"
+	name = "record - \"April\""
+	record_name = "April"
 	song = "sound/radio_station/music/april.xm"
 
 /obj/item/record/random/may
-	record_name = "may"
+	name = "record - \"May\""
+	record_name = "May"
 	song = "sound/radio_station/music/may.xm"
 
 /obj/item/record/random/june
-	record_name = "june"
+	name = "record - \"June\""
+	record_name = "June"
 	song = "sound/radio_station/music/june.xm"
 
 /obj/item/record/random/july
-	record_name = "july"
+	name = "record - \"July\""
+	record_name = "July"
 	song = "sound/radio_station/music/july.xm"
 
 /obj/item/record/random/august
-	record_name = "august"
+	name = "record - \"August\""
+	record_name = "August"
 	song = "sound/radio_station/music/august.xm"
 
 /obj/item/record/random/september
-	record_name = "september"
+	name = "record - \"September\""
+	record_name = "September"
 	song = "sound/radio_station/music/september.xm"
 
 /obj/item/record/random/october
-	record_name = "october"
+	name = "record - \"October\""
+	record_name = "October"
 	song = "sound/radio_station/music/october.xm"
 
 /obj/item/record/random/november
-	record_name = "november"
+	name = "record - \"November\""
+	record_name = "November"
 	song = "sound/radio_station/music/november.xm"
 
 /obj/item/record/random/december
-	record_name = "december"
+	name = "record - \"December\""
+	record_name = "December"
 	song = "sound/radio_station/music/december.xm"
 
 /obj/item/record/spacebux // Many thanks to Camryn Buttes!!
@@ -584,8 +640,8 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 	song = 'sound/radio_station/music/riverdancer.ogg'
 
 /obj/item/record/random/key_lime
-	name = "record - \"key_lime #1\""
-	record_name = "key lime #1"
+	name = "record - \"Key Lime #1\""
+	record_name = "Key Lime #1"
 	song = 'sound/radio_station/music/key_lime.ogg'
 	add_overlay = FALSE
 
@@ -602,6 +658,11 @@ ABSTRACT_TYPE(/obj/item/record/random/chronoquest)
 
 	New()
 		..()
+#ifdef NIGHTSHADE
+		//apparently second reality has copyright issues, not allowed on streamer servers
+		qdel(src)
+		return
+#endif
 		var/image/overlay = new /image(src.icon, "record_3")
 		overlay.color = list(1.5, 0, 0, 0, 0, 0, 0, 0, 0) // very red
 		src.UpdateOverlays(overlay, "recordlabel")
@@ -666,22 +727,27 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 		src.desc += {" A record from the Aquario and Not Tom Mixtape, looks pretty old!"}
 
 /obj/item/record/random/notaquario/beaches
+	name = "record - \"Beaches\""
 	record_name = "Beaches"
 	song = 'sound/radio_station/music/beaches.ogg'
 
 /obj/item/record/random/notaquario/graveyard
+	name = "record - \"Graveyard\""
 	record_name = "Graveyard"
 	song = 'sound/radio_station/music/graveyard.ogg'
 
 /obj/item/record/random/notaquario/floaty
-	record_name = "I'm Floaty In Space But Thats Ok"
+	name = "record - \"I'm Floaty In Space But That's Ok\""
+	record_name = "I'm Floaty In Space But That's Ok"
 	song = 'sound/radio_station/music/floaty.ogg'
 
 /obj/item/record/random/notaquario/repose
+	name = "record - \"Repose\""
 	record_name = "Repose"
 	song = 'sound/radio_station/music/repose.ogg'
 
 /obj/item/record/random/notaquario/biodome
+	name = "record - \"Biodome\""
 	record_name = "Biodome"
 	song = 'sound/radio_station/music/biodome.ogg'
 
@@ -728,6 +794,12 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	add_overlay = 0
 	icon_state = "record_fruit"
 	song = 'sound/radio_station/music/honkmas.ogg'
+
+/obj/item/record/lay_egg_is_true
+	desc = "This egg seems to be laid particularly TRUE!!!"
+	add_overlay = 0
+	icon_state = "record_duck"
+	song = 'sound/radio_station/music/lay_egg_is_true.ogg'
 
 /obj/item/record/clown_collection // By Arborinus. Honk!
 	add_overlay = 0
@@ -1153,9 +1225,9 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 
 //Computer, disk and files.
 
-/obj/item/disk/data/fixed_disk/radioship
+/obj/item/disk/data/fixed_disk/hd32/radioship
 
-/obj/item/disk/data/fixed_disk/radioship/New()
+/obj/item/disk/data/fixed_disk/hd32/radioship/New()
 	..()
 
 	var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
@@ -1175,7 +1247,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	newfolder.add_file( new /datum/computer/file/record/radioship/testlog2 (src))
 
 /obj/machinery/computer3/generic/personal/radioship
-	setup_drive_type = /obj/item/disk/data/fixed_disk/radioship
+	setup_drive_type = /obj/item/disk/data/fixed_disk/hd32/radioship
 
 /datum/computer/file/record/radioship
 
@@ -1195,7 +1267,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 
 
 TYPEINFO(/obj/item/device/radio/intercom/radiostation)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 /obj/item/device/radio/intercom/radiostation
 	name = "broadcast radio"
 	desc = "A powerful radio transmitter. Enable the microphone to begin broadcasting your radio show."

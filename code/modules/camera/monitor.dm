@@ -5,7 +5,7 @@ TYPEINFO(/obj/item/device/camera_viewer)
 	name = "camera monitor"
 	desc = "A portable video monitor, connected to a security camera network."
 	icon_state = "monitor"
-	item_state = "electronic"
+	item_state = "accessgun"
 	w_class = W_CLASS_SMALL
 	abilities = list(/obj/ability_button/reset_view)
 	var/list/camera_networks = list(CAMERA_NETWORK_STATION)
@@ -71,8 +71,8 @@ TYPEINFO(/obj/item/device/camera_viewer)
 
 /obj/item/device/camera_viewer/security
 	name = "security monitor"
-	desc = "A portable video monitor, connected to the security camera network."
-	camera_networks = list(CAMERA_NETWORK_STATION, CAMERA_NETWORK_SCIENCE, CAMERA_NETWORK_MINING)
+	desc = "A portable video monitor, connected to the station's security cameras."
+	camera_networks = list(CAMERA_NETWORK_STATION, CAMERA_NETWORK_SCIENCE, CAMERA_NETWORK_CARGO, CAMERA_NETWORK_RANCH)
 	color = "#e49191"
 
 /obj/item/device/camera_viewer/ranch

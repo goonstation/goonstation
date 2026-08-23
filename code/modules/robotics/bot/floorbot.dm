@@ -99,12 +99,13 @@
 		dat += "Finds tiles: \[<A href='byond://?src=\ref[src];operation=tiles'>[src.eattiles ? "Yes" : "No"]</A>\]<BR>"
 		dat += "Make single pieces of metal into tiles when empty: \[<A href='byond://?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>\]"
 
-	if (user.client?.tooltipHolder)
-		user.client.tooltipHolder.showClickTip(src, list(
-			"params" = params,
-			"title" = "Repairbot v1.0 controls",
-			"content" = dat,
-		))
+	if (user.client?.tooltips)
+		user.client.tooltips.show(
+			TOOLTIP_PINNED, src,
+			mouse = params,
+			title = "Repairbot v1.0 controls",
+			content = dat,
+		)
 
 	return
 
@@ -331,7 +332,7 @@
 		while(!isnull(A) && !istype(A.loc, /turf) && !ishuman(A.loc))
 			A = A.loc
 		if (ishuman(A?.loc) && prob(30))
-			speak(pick(src.chase_lines))
+			src.say(pick(src.chase_lines))
 		src.doing_something = 1
 		src.search_range = 1
 	else

@@ -1,18 +1,18 @@
 
 // Compatibility checks
-#if ((DM_VERSION < 515) || (DM_VERSION > 515)) && !defined(SPACEMAN_DMM)
-	#if (DM_VERSION == 516)
-		#warn ======================================================================================
-		#warn  Building the game with BYOND 516 will not work as expected, and is **NOT SUPPORTED**
-		#warn  We currently only support the BYOND 515 stable version, details in /buildByond.conf
-		#warn ======================================================================================
-		#define BYOND_VERSION_OK
-	#else
+#if ((DM_VERSION < 516) || (DM_VERSION > 516)) && !defined(SPACEMAN_DMM)
+	// #if (DM_VERSION  516)
+	// 	#warn ======================================================================================
+	// 	#warn  Building the game with BYOND 517 will not work as expected, and is **NOT SUPPORTED**
+	// 	#warn  We currently only support the BYOND 516 stable version, details in /buildByond.conf
+	// 	#warn ======================================================================================
+	// 	#define BYOND_VERSION_OK
+	// #else
 		#error =======================================================================================
 		#error Please update your BYOND to the version in /buildByond.conf in order to build the game.
-		#error Yes, this means the BYOND 515 stable version.
+		#error Yes, this means the BYOND 516 stable version.
 		#error =======================================================================================
-	#endif
+	// #endif
 #else
 	#define BYOND_VERSION_OK
 #endif

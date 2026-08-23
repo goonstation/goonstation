@@ -6,9 +6,8 @@
  */
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  title: 'Leaving the Hivemind',
-  content: (
+const HivemindLeaveContentWindow = () => {
+  return (
     <div className="traitor-tips">
       <h1 className="center">You are no longer a member of the hivemind!</h1>
       <p>
@@ -16,5 +15,10 @@ export const acw: AlertContentWindow = {
         of the changeling hivemind.
       </p>
     </div>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  title: 'Leaving the Hivemind',
+  component: HivemindLeaveContentWindow,
 };

@@ -42,6 +42,8 @@ TYPEINFO(/obj/machinery/power/tracker)
 		id = "small_backup3"
 	small_backup4
 		id = "small_backup4"
+	asylum
+		id = "asylum"
 	diner
 		id = "diner"
 	silverglass
@@ -101,6 +103,7 @@ TYPEINFO(/obj/machinery/power/solar)
 	density = 1
 	directwired = 1
 	processing_tier = PROCESSING_EIGHTH
+	provides_grip = TRUE
 	var/health = 10
 	var/id = 1 // nolonger used, kept for map compatibility
 	var/obscured = 0
@@ -129,6 +132,8 @@ TYPEINFO(/obj/machinery/power/solar)
 		id = "small_backup3"
 	small_backup4
 		id = "small_backup4"
+	asylum
+		id = "asylum"
 	diner
 		id = "diner"
 	silverglass
@@ -265,7 +270,6 @@ TYPEINFO(/obj/machinery/power/solar)
 	var/lastgen = 0
 	var/active = TRUE
 	var/obj/machinery/power/tracker/tracker
-	var/emagged = FALSE
 
 	north
 		solar_id = "north"
@@ -285,6 +289,8 @@ TYPEINFO(/obj/machinery/power/solar)
 		solar_id = "small_backup3"
 	small_backup4
 		solar_id = "small_backup4"
+	asylum
+		id = "asylum"
 	diner
 		solar_id = "diner"
 	silverglass
@@ -424,7 +430,7 @@ TYPEINFO(/obj/machinery/power/solar)
 // solar panels which ignore occlusion
 
 TYPEINFO(/obj/machinery/power/solar/owl_cheat)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/machinery/power/solar/owl_cheat
 	id = "owl"

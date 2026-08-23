@@ -5,6 +5,8 @@
 //Status display controller
 //Remote signaling program
 //Cargo orders monitor
+//Chemicals order requester
+//Chemicals order manager
 //Bicycle Horn Synth
 //Janitor mop-locating program
 //Remote door control program
@@ -561,8 +563,8 @@ Code:
 	var/obj/machinery/power/pt_laser/laser
 	var/obj/machinery/power/generatorTemp/generator
 	var/obj/machinery/carouselpower/carousel
-	var/obj/machinery/atmospherics/binary/reactor_turbine/nuke_turbine
-	var/obj/machinery/atmospherics/binary/nuclear_reactor/nuke_reactor
+	var/obj/machinery/reactor_turbine/nuke_turbine
+	var/obj/machinery/nuclear_reactor/nuke_reactor
 
 	proc/find_machinery(obj/ref, type)
 		if(!ref || ref.disposed)
@@ -584,8 +586,8 @@ Code:
 			circ2 = generator.circ2
 
 		//NUKE
-		nuke_turbine = find_machinery(nuke_turbine, /obj/machinery/atmospherics/binary/reactor_turbine)
-		nuke_reactor = find_machinery(nuke_reactor, /obj/machinery/atmospherics/binary/nuclear_reactor)
+		nuke_turbine = find_machinery(nuke_turbine, /obj/machinery/reactor_turbine)
+		nuke_reactor = find_machinery(nuke_reactor, /obj/machinery/nuclear_reactor)
 		//PTL
 		laser = find_machinery(laser, /obj/machinery/power/pt_laser)
 
@@ -835,12 +837,12 @@ Code:
 		var/alert_sound
 		switch (round(mailgroupNum))
 			if (-INFINITY to 1)
-				mailgroup = MGD_MEDBAY
+				mailgroup = MGD_MEDICAL
 				alert_color = "#337296"
 				alert_title = "Medical"
 				alert_sound = 'sound/items/medical_alert.ogg'
 			if (2)
-				mailgroup = MGO_ENGINEER
+				mailgroup = MGD_ENGINEER
 				alert_color = "#a8732b"
 				alert_title = "Engineering"
 				alert_sound = 'sound/items/engineering_alert.ogg'
@@ -850,7 +852,7 @@ Code:
 				alert_title = "Security"
 				alert_sound = 'sound/items/security_alert.ogg'
 			if (4 to INFINITY)
-				mailgroup = MGO_JANITOR
+				mailgroup = MGT_JANITOR
 				alert_color = "#993399"
 				alert_title = "Janitor"
 				alert_sound = 'sound/items/janitor_alert.ogg'
@@ -870,7 +872,7 @@ Code:
 
 		if (isAIeye(usr))
 			var/turf/eye_loc = get_turf(usr)
-			if (length(eye_loc.camera_coverage_emitters))
+			if (seen_by_camera(eye_loc))
 				an_area = get_area(eye_loc)
 
 		signal.data["message"] = "***CRISIS ALERT*** Location: [an_area ? an_area.name : "nowhere"]!"
@@ -880,10 +882,7 @@ Code:
 
 		if(isliving(usr) && !remote)
 			playsound(src.master, alert_sound, 60)
-			var/map_text = null
-			map_text = make_chat_maptext(usr, "[alert_title] Emergency alert sent.", "color: [alert_color]; font-size: 6px;", alpha = 215)
-			for (var/mob/O in hearers(usr))
-				O.show_message(assoc_maptext = map_text)
+			DISPLAY_MAPTEXT(usr, hearers(usr), MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/alert, "[alert_title] Emergency alert sent.", alert_color)
 			usr.visible_message(SPAN_ALERT("[usr] presses a red button on the side of their [src.master]."),
 			SPAN_NOTICE("You press the \"Alert\" button on the side of your [src.master]."),
 			SPAN_ALERT("You see [usr] press a button on the side of their [src.master]."))
@@ -1012,6 +1011,18 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 	var/mode = 0
 	var/message = null
 
+	proc/get_ticket_level()
+		. = SECURITY::TICKET::LEVEL::NONE
+		var/obj/item/card/id/ID = src.master.ID_card
+		if(!ID || !istype(ID))
+			return SECURITY::TICKET::LEVEL::NONE
+		if(access_ticket in ID.access)
+			. = SECURITY::TICKET::LEVEL::TICKET
+		if(access_fine_small in ID.access)
+			. = SECURITY::TICKET::LEVEL::FINE_SMALL
+		if(access_fine_large in ID.access)
+			. = SECURITY::TICKET::LEVEL::FINE_LARGE
+
 	return_text()
 		if(..())
 			return
@@ -1019,6 +1030,9 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 		var/dat = src.return_text_header()
 
 		if(!message)
+			if (!src.master.ID_card)
+				dat += "<br><br>You must insert an ID to use this program.<br><br>"
+				return dat
 			switch(mode)
 				if(0) //menu
 					dat += "<br><br>\[ <a href='byond://?src=\ref[src];ticket=1'>Issue Ticket</a> \]<br>"
@@ -1043,18 +1057,18 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 								dat += "[T.text]<br>"
 
 				if(2) //requested fines
-
-					var/PDAowner = src.master.owner
-					var/PDAownerjob = data_core.general.find_record("name", PDAowner)?["rank"] || "Unknown Job"
-
 					dat += "<br><br><a href='byond://?src=\ref[src];back=1'>Back</a>"
 
 					dat += "<h4>Fine Request List</h4>"
+					var/ticket_level = src.get_ticket_level()
+					if (ticket_level < 2)
+						dat += "<br><br>Please insert an ID with fining access to approve fines.<br><br>"
+						dat += "<br><br>"
 
 					for (var/datum/fine/F in data_core.fines)
 						if(!F.approver)
 							dat += "[F.target]: [F.amount] credits<br>Reason: [F.reason]<br>Requested by: [F.issuer] - [F.issuer_job]"
-							if((PDAownerjob in JOBS_CAN_TICKET_BIG) || ((PDAownerjob in JOBS_CAN_TICKET_SMALL) && F.amount <= MAX_FINE_NO_APPROVAL)) dat += "<br><a href='byond://?src=\ref[src];approve=\ref[F]'>Approve Fine</a>"
+							if((ticket_level >= SECURITY::TICKET::LEVEL::FINE_LARGE) || ((ticket_level >= SECURITY::TICKET::LEVEL::FINE_SMALL) && F.amount <= SECURITY::TICKET::MAX_FINE_NO_APPROVAL)) dat += "<br><a href='byond://?src=\ref[src];approve=\ref[F]'>Approve Fine</a>"
 							dat += "<br><br>"
 
 				if(3) //unpaid fines
@@ -1086,7 +1100,11 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 
 		if(href_list["ticket"])
 			var/PDAowner = src.master.owner
-			var/PDAownerjob = data_core.general.find_record("name", PDAowner)?["rank"] || "Unknown Job"
+			var/PDAownerjob = src.master.ID_card.assignment
+			if(!src.get_ticket_level())
+				message = "Error: You are not authorised to issue tickets."
+				src.master.updateSelfDialog()
+				return
 
 			var/ticket_target = input(usr, "Ticket recipient:",src.name) as text | null
 			if(!ticket_target) return
@@ -1126,7 +1144,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 
 		else if(href_list["fine"])
 			var/PDAowner = src.master.owner
-			var/PDAownerjob = data_core.general.find_record("name", PDAowner)?["rank"] || "Unknown Job"
+			var/PDAownerjob = src.master.ID_card.assignment
 
 			var/ticket_target = input(usr, "Fine recipient:",src.name) as text | null
 			if(!ticket_target) return
@@ -1153,33 +1171,34 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			F.target_byond_key = get_byond_key(F.target)
 			F.issuer_byond_key = usr.key
 			data_core.fines += F
+			var/ticket_level = src.get_ticket_level()
 
 			logTheThing(LOG_ADMIN, usr, "requested a fine using [PDAowner]([PDAownerjob])'s PDA. It is a [fine_amount] credit fine on <b>[ticket_target]</b> with the reason: [ticket_reason].")
-			if((fine_amount <= MAX_FINE_NO_APPROVAL && (PDAownerjob in JOBS_CAN_TICKET_SMALL)) || (PDAownerjob in JOBS_CAN_TICKET_BIG))
+			if((fine_amount <= SECURITY::TICKET::MAX_FINE_NO_APPROVAL && (ticket_level >= SECURITY::TICKET::LEVEL::FINE_SMALL)) || (ticket_level >= SECURITY::TICKET::LEVEL::FINE_LARGE))
 				var/ticket_text = "[ticket_target] has been fined [fine_amount] credits by Nanotrasen Corporate Security for [ticket_reason] on [time2text(world.realtime, "DD/MM/53")].<br>Issued and approved by: [PDAowner] - [PDAownerjob]<br>"
 				playsound(src.master, 'sound/machines/printer_thermal.ogg', 50, 1)
 				SPAWN(3 SECONDS)
-					F.approve(PDAowner,PDAownerjob)
+					F.approve(PDAowner,PDAownerjob,ticket_level)
 					var/obj/item/paper/p = new /obj/item/paper
 					usr.put_in_hand_or_drop(p)
 					p.name = "Official Fine Notification - [ticket_target]"
 					p.info = ticket_text
 					p.icon_state = "paper_caution"
 
-			else if(fine_amount <= MAX_FINE_NO_APPROVAL)
-				message = "Fine request created, awaiting approval from the [english_list(JOBS_CAN_TICKET_SMALL, "nobody", " or ")]."
+			else if(fine_amount <= SECURITY::TICKET::MAX_FINE_NO_APPROVAL)
+				message = "Fine request created, awaiting approval for a small fine."
 			else
-				message = "Fine request created, awaiting approval from the [english_list(JOBS_CAN_TICKET_BIG, "nobody", " or ")]."
+				message = "Fine request created, awaiting approval for a large fine."
 
 		else if(href_list["approve"])
 			var/PDAowner = src.master.owner
-			var/PDAownerjob = data_core.general.find_record("name", PDAowner)?["rank"] || "Unknown Job"
+			var/PDAownerjob = src.master.ID_card.assignment
 
 			var/datum/fine/F = locate(href_list["approve"])
 
 			playsound(src.master, 'sound/machines/printer_thermal.ogg', 50, 1)
 			SPAWN(3 SECONDS)
-				F.approve(PDAowner,PDAownerjob)
+				F.approve(PDAowner,PDAownerjob,src.get_ticket_level())
 				var/ticket_text = "[F.target] has been fined [F.amount] credits by Nanotrasen Corporate Security for [F.reason] on [time2text(world.realtime, "DD/MM/53")].<br>Requested by: [F.issuer] - [F.issuer_job]<br>Approved by: [PDAowner] - [PDAownerjob]<br>"
 				var/obj/item/paper/p = new /obj/item/paper
 				usr.put_in_hand_or_drop(p)
@@ -1222,7 +1241,6 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 	name = "Cargo Request"
 	size = 2
 	var/tmp/temp = null
-	var/tmp/antispam = 0
 
 	return_text()
 		if(..())
@@ -1233,7 +1251,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			dat += "<br>[src.temp]"
 		else
 			dat += {"<br><B>Supply Ordering Program</B><HR>
-			<B>Shipping Budget:</B> [wagesystem.shipping_budget] Credits<BR>
+			<B>Supply Budget:</B> [wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY]] Credits<BR>
 			<A href='byond://?src=\ref[src];viewrequests=1'>View Requests</A><BR>
 			<A href='byond://?src=\ref[src];order=1'>Request Items</A><BR>"}
 		return dat
@@ -1244,7 +1262,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			return
 
 		if (href_list["order"])
-			src.temp = {"<B>Shipping Budget:</B> [wagesystem.shipping_budget] Credits<BR><HR>
+			src.temp = {"<B>Supply Budget:</B> [wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY]] Credits<BR><HR>
 			<B>Please select the Supply Package you would like to request:</B><BR><BR>"}
 			src.temp += search_snippet("background-color: #6F7961; color: #000;")
 			src.temp += "<BR><BR>"
@@ -1278,10 +1296,9 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			src.temp = "Request sent to Supply Console. The Quartermasters will process your request as soon as possible.<BR>"
 
 			// pda alert ////////
-			if (!antispam || (antispam < (ticker.round_elapsed_ticks)) )
-				antispam = ticker.round_elapsed_ticks + SPAM_DELAY
+			if (!ON_COOLDOWN(src.master, "spam_cooldown", SPAM_DELAY))
 				var/datum/signal/pdaSignal = get_free_signal()
-				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_CARGOREQUEST), "sender"="00000000", "message"="Notification: [O.object] requested by [O.orderedby] at [O.console_location].")
+				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGT_CARGO, MGA_CARGOREQUEST), "sender"="00000000", "message"="Notification: [O.object] requested by [O.orderedby] at [O.console_location].")
 				SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 
 			//////////////////
@@ -1300,7 +1317,183 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 		src.master.add_fingerprint(usr)
 		src.master.updateSelfDialog()
 		return
+
+// Chemical Request
+/datum/computer/file/pda_program/chemical_request
+	name = "Chemical Request"
+	size = 2
+	var/tmp/temp = null
+	var/tmp/note = null
+	var/tmp/quantity = 5
+	var/tmp/reagent_color = null
+	var/static/list/datum/reagent/chems = list()
+
+	proc/generate_list()
+		for (var/id in chem_reactions_by_id)
+			var/datum/chemical_reaction/reaction = chem_reactions_by_id[id]
+			if (reaction.hidden)
+				continue
+			//eventual_result overrides the actual result
+			var/result = reaction.eventual_result || reaction.result
+			if (!result)
+				continue
+			if (!islist(result))
+				result = list(result)
+			for (var/result_id in result)
+				var/datum/reagent/reagent = reagents_cache[result_id]
+				if (reagent && !istype(reagent, /datum/reagent/fooddrink) && !(reagent in chems)) //all the cocktails clog the UI
+					chems += reagent
+		for (var/id in basic_elements)
+			var/datum/reagent/reagent = reagents_cache[id]
+			if (!(reagent in chems))
+				chems += reagent
+		// Sort alphabetically by item name.
+		var/list/names = list()
+		var/list/namecounts = list()
+
+		if (length(chems))
+			var/list/sort = list()
+
+			for (var/datum/reagent/R in chems)
+				var/name = R.name
+				if (name in names) // Should never, ever happen, but better safe than sorry.
+					namecounts[name]++
+					name = text("[] ([])", name, namecounts[name])
+				else
+					names.Add(name)
+					namecounts[name] = 1
+
+				sort[name] = R
+			chems = sortList(sort, /proc/cmp_text_asc)
+
+	return_text()
+		if(..())
+			return
+
+		var/dat = src.return_text_header()
+		if (src.temp)
+			dat += "<br>[src.temp]"
+			src.temp = null
+		else
+			if(!length(chems)) // checking if its still base value
+				src.generate_list()
+			dat += {"<BR><B>Please select the Chemical you would like to request:</B><BR><BR>"}
+			dat += search_snippet("background-color: #6F7961; color: #000;")
+			dat += "<BR><BR>"
+
+			for(var/C in chems)
+				var/datum/reagent/chem = chems[C]
+				dat += {"<div class='supply-package'><A href='byond://?src=\ref[src];doorder=[chem.type]'><B><U>[chem.name]</U></B></A><BR>
+				<B>Contents:</B> [chem.description]<BR><BR></div>"}
+
+		return dat
+
+	Topic(href, href_list)
+
+		if(..())
+			return
+
+		if (href_list["doorder"])
+			var/datum/chem_request/new_req = new/datum/chem_request ()
+			var/chemreg = href_list["doorder"]
+			var/datum/reagent/req_reagent_pre = new chemreg ()
+			var/datum/reagent/req_reagent = reagents_cache[req_reagent_pre.id]
+
+			if (!dd_hasprefix(chemreg, "/datum/reagent"))
+				qdel(new_req)
+				return
+
+			note = input("Add a Note (Optional)", "Enter Message Text", note) as text|null
+			quantity = input("Enter request amount (Max [CHEM::REQUEST::AMOUNT::MAX])", "Enter Amount", quantity) as num|null
+			if(!quantity) return
+			if(!isnum_safe(quantity)) return
+			quantity = clamp(quantity,1,CHEM::REQUEST::AMOUNT::MAX)
+
+			new_req.reagent_name = req_reagent.name
+			new_req.reagent_color = list(req_reagent.fluid_r, req_reagent.fluid_g, req_reagent.fluid_b)
+			new_req.requester_name = src.master.owner
+			new_req.volume = quantity
+			new_req.note = src.note
+			new_req.address = src.master.net_id
+			new_req.area_name = get_area(src.master)
+			chem_requests["[new_req.id]"] = new_req
+			src.temp = {"Request sent to Chemical Request Console. The Chemists/Pharmacists will process your request as soon as possible.<BR>
+			<A href='byond://?src=\ref[src];reset=1'>New Order</A>"}
+
+			// pda alert ////////
+			if (!ON_COOLDOWN(src.master, "spam_cooldown", SPAM_DELAY))
+				var/datum/signal/pdaSignal = get_free_signal()
+				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="RESEARCH-MAILBOT",  "group"=list(MGD_RESEARCH, MGT_PHARMACY, MGA_CHEMREQUEST), "sender"="00000000", "message"="Notification: [new_req.reagent_name] requested by [new_req.requester_name] at [new_req.area_name].")
+				SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
+
+		else if (href_list["reset"])
+			src.temp = null
+			return_text()
+
+		src.master.add_fingerprint(usr)
+		src.master.updateSelfDialog()
+		return
+
 #undef SPAM_DELAY
+
+/datum/computer/file/pda_program/chemical_req_viewer
+	name = "Chemical Request Viewer"
+	size = 1
+	var/tmp/temp = null
+
+	init()
+		src.refresh()
+		..()
+
+	return_text()
+		if(..())
+			return
+
+		var/dat = src.return_text_header()
+		dat += "<BR><B>Current Requests:</B> <a href='byond://?src=\ref[src];refresh=1'>Refresh Requests</a><BR>"
+		if (src.temp)
+			dat += "<br>[src.temp]"
+
+		return dat
+
+	Topic(href, href_list)
+		var/req_id = href
+		var/datum/chem_request/request = chem_requests[req_id]
+		if(..())
+			return
+
+		if (href_list["refresh"])
+			refresh()
+
+		if (href_list["deny"])
+			if (request)
+				logTheThing(LOG_STATION, src, "[src.master.owner] denied [request.requester_name]'s chemical request for [request.volume] units of [request.reagent_id] at [log_loc(src)]")
+				request.state = CHEM::REQUEST::STATE::DENIED
+
+		if (href_list["fulfil"])
+			if (request)
+				logTheThing(LOG_STATION, src, "[src.master.owner] fulfilled [request.requester_name]'s chemical request for [request.volume] units of [request.reagent_id] at [log_loc(src)]")
+				request.state = CHEM::REQUEST::STATE::FULFILLED
+
+		if(request.address && href["deny"] || href["fulfil"])
+			var/datum/signal/pdaSignal = get_free_signal()
+			pdaSignal.data = list("address_1"=request.address, "command"="text_message", "sender_name"="RESEARCH-MAILBOT", "sender"="00000000", "message"="Notification: request for [request.volume]u of [request.reagent_name] was DENIED.")
+			radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
+		refresh()
+
+		src.master.add_fingerprint(usr)
+		src.master.updateSelfDialog()
+		return
+
+	proc/refresh()
+		for (var/request_id in chem_requests)
+			temp = null
+			var/datum/chem_request/request = chem_requests[request_id]
+			src.temp += "[request.volume] units of [request.reagent_name] requested by [request.requester_name] from [request.area_name].<BR>"
+			src.temp += "STATUS: [request.state]"
+			if(request.state == "pending")
+				src.temp += "<a href='byond://?src=\ref[src];deny=[request.id]'>Deny</a> <a href='byond://?src=\ref[src];fulfil=[request.id]'>Fulfil</a>"
+			src.temp += "<BR>"
 
 /datum/computer/file/pda_program/station_name
 	name = "Station Namer"
@@ -1435,10 +1628,6 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 
 		var/dat = src.return_text_header()
 
-		if (!istype(ticker.mode, /datum/game_mode/revolution))
-			dat += "<h4>Watchful Eye infrared tracking not available at this time</h4>"
-			return dat
-
 		dat += "<h4>Watchful Eye Revolutionary Leader Tracker</h4>"
 
 		dat += "<a href='byond://?src=\ref[src];gethead=1'>Track nearest revolutionary leader</a>"
@@ -1453,29 +1642,21 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			return
 
 		if (href_list["gethead"])
-			pressed = 1
-			if (istype(ticker.mode, /datum/game_mode/revolution))
-				var/datum/game_mode/revolution/R = ticker.mode
-				var/list/datum/mind/heads = R.head_revolutionaries
-				var/turf/Turf = get_turf(usr)
-				nearest_head_location = null
-
-				for (var/datum/mind/Mind in heads)
-					if(!Mind.current)
-						continue
-					if(!istype(Mind.current, /mob/living/carbon/human))
-						continue
-					var/MindMob = Mind.current
-					var/turf/MindTurf = get_turf(MindMob)
-					if(!isalive(Mind.current) || MindTurf.z != 1)
-						continue
-					if(GET_DIST(Turf, MindTurf) <= GET_DIST(Turf, nearest_head_location))
-						nearest_head_location = MindTurf
-
-				if(nearest_head_location != null)
-					direction = dir2text(get_dir(Turf, nearest_head_location))
-					distance = GET_DIST(Turf, nearest_head_location)
-
+			src.pressed = TRUE
+			src.nearest_head_location = null
+			var/turf/scanning_from = get_turf(src.master)
+			for(var/datum/antagonist/headrev_role in get_all_antagonists(ROLE_HEAD_REVOLUTIONARY))
+				var/mob/headrev_mob = headrev_role.owner?.current
+				if(!headrev_mob || !ishuman(headrev_mob) || !isalive(headrev_mob))
+					continue
+				if(get_z(headrev_mob) != Z_LEVEL_STATION)
+					continue
+				var/turf/headrev_turf = get_turf(headrev_mob)
+				if(GET_DIST(scanning_from, headrev_turf) <= GET_DIST(scanning_from, src.nearest_head_location))
+					src.nearest_head_location = headrev_turf
+			if(!isnull(src.nearest_head_location))
+				src.direction = dir2text(get_dir(scanning_from, src.nearest_head_location))
+				src.distance = GET_DIST(scanning_from, src.nearest_head_location)
 
 		src.master.add_fingerprint(usr)
 		src.master.updateSelfDialog()
@@ -1495,10 +1676,6 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 
 		var/dat = src.return_text_header()
 
-		if (!istype(ticker.mode, /datum/game_mode/revolution))
-			dat += "<h4>Egeria Providence Array infrared tracking not available at this time</h4>"
-			return dat
-
 		dat += "<h4>Egeria Providence Array Command Tracker</h4>"
 
 		dat += "<a href='byond://?src=\ref[src];gethead=1'>Track nearest head</a>"
@@ -1514,28 +1691,21 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			return
 
 		if (href_list["gethead"])
-			pressed = 1
-			if (istype(ticker.mode, /datum/game_mode/revolution))
-				var/datum/game_mode/revolution/R = ticker.mode
-				var/list/datum/mind/heads = R.get_all_heads()
-				var/turf/Turf = get_turf(usr)
-				nearest_head_location = null
-
-				for (var/datum/mind/Mind in heads)
-					if(!Mind.current)
-						continue
-					if(!istype(Mind.current, /mob/living/carbon/human))
-						continue
-					var/MindMob = Mind.current
-					var/turf/MindTurf = get_turf(MindMob)
-					if(!isalive(Mind.current) || MindTurf.z != 1)
-						continue
-					if(GET_DIST(Turf, MindTurf) <= GET_DIST(Turf, nearest_head_location))
-						nearest_head_location = MindTurf
-
-				if(nearest_head_location != null)
-					direction = dir2text(get_dir(Turf, nearest_head_location))
-					distance = GET_DIST(Turf, nearest_head_location)
+			src.pressed = TRUE
+			src.nearest_head_location = null
+			var/turf/scanning_from = get_turf(src.master)
+			for(var/datum/mind/head_mind in ticker.mode?.get_living_heads())
+				var/mob/head_mob = head_mind.current
+				if(!head_mob || !ishuman(head_mob) || !isalive(head_mob))
+					continue
+				if(get_z(head_mob) != Z_LEVEL_STATION)
+					continue
+				var/turf/head_turf = get_turf(head_mob)
+				if(GET_DIST(scanning_from, head_turf) <= GET_DIST(scanning_from, src.nearest_head_location))
+					src.nearest_head_location = head_turf
+			if(!isnull(src.nearest_head_location))
+				src.direction = dir2text(get_dir(scanning_from, src.nearest_head_location))
+				src.distance = GET_DIST(scanning_from, src.nearest_head_location)
 
 		src.master.add_fingerprint(usr)
 		src.master.updateSelfDialog()

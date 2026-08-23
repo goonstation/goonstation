@@ -316,14 +316,12 @@
 	access = list(access_owlerymaint)
 	registered = null
 	assignment = null
-	title = null
 
 /obj/item/card/id/owlsecurity
 	icon_state = "id_sec"
 	access = list(access_owlerysec)
 	registered = null
 	assignment = null
-	title = null
 
 /obj/item/card/id/owlgold
 	name = "identification card"
@@ -333,11 +331,10 @@
 	access = list(access_owlerycommand, access_owlerysec, access_owlerymaint)
 	registered = null
 	assignment = null
-	title = null
 
 /obj/fakeobject/bustedpod
 	name = "Busted Escape Pod"
-	desc = "A escape pod for escaping. It seems to be busted."
+	desc = "An escape pod for escaping. It seems to be busted."
 	icon = 'icons/obj/ship.dmi'
 	icon_state = "escape"
 	density = 1
@@ -701,6 +698,10 @@
 			name = "Not so Disabled Animatronic Owl"
 			src.flash()
 
+TYPEINFO(/obj/critter/owl_presentor)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_LOCAL)
+
 /obj/critter/owl_presentor
 	name = "Professor Hootens"
 	desc = "It's Professor Hootens! The leading expert on Space Owls, if it was the real Hootens of course. This is just an animatronic stand-in."
@@ -720,7 +721,7 @@
 	death_text = "%src% tips over, its joints seizing and locking up.  It does not move again."
 	angertext = "seems to stare at"
 	is_pet = 0
-
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 	var/does_creepy_stuff = 1
 	var/typeName = "Generic"
 
@@ -732,7 +733,7 @@
 
 		if (prob(5))
 			playsound(src.loc, 'sound/misc/automaton_ratchet.ogg', 50, 1)
-			src.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] says, \"[pick("The Owls are fine!", "Welcome to the Frontier Space Owlery, please follow the glowing signs. A tour guide will be waiting for you.", "Did you know? By 2063, it is expected that there will be more owls on Earth than human beings.", "Remember, do not touch the owls. Ddon't do it.", "By entering the 50 square kilometers surrounding the Frontier Space Owlery you agree to remove your right to file a civil lawsuit against the owlery for any reason including death.", "Please keep all pets away from Owl feed or the Owls.", "Remember to say 'HI!' to Greg, our friendly cyborg.", "The Frontier Space Owlery thanks our generous benefactors at Donk Co., LLC. The sole creators and copyright holders of Donk Pockets TM!")]\""))
+			src.say("[pick("The Owls are fine!", "Welcome to the Frontier Space Owlery, please follow the glowing signs. A tour guide will be waiting for you.", "Did you know? By 2063, it is expected that there will be more owls on Earth than human beings.", "Remember, do not touch the owls. Ddon't do it.", "By entering the 50 square kilometers surrounding the Frontier Space Owlery you agree to remove your right to file a civil lawsuit against the owlery for any reason including death.", "Please keep all pets away from Owl feed or the Owls.", "Remember to say 'HI!' to Greg, our friendly cyborg.", "The Frontier Space Owlery thanks our generous benefactors at Donk Co., LLC. The sole creators and copyright holders of Donk Pockets TM!")]")
 		if (prob(5))
 			playsound(src.loc, 'sound/misc/automaton_scratch.ogg', 50, 1)
 			src.visible_message(SPAN_ALERT("<b>[src]</b> [pick("turns", "pivots", "twitches", "spins")]."))
@@ -1206,7 +1207,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 /area/owlery
 	name = "owl fuckery"
 	sound_group = "owl"
-	teleport_blocked = 1
+	teleport_blocked = AREA_TELEPORT_BLOCKED
 	sound_environment = 12
 	area_parallax_render_source_group = /datum/parallax_render_source_group/area/owlery
 
@@ -1277,7 +1278,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	icon_state = "yellow"
 	requires_power = 0
 	luminosity = 1
-	teleport_blocked = 0
+	teleport_blocked = AREA_TELEPORT_ALLOWED
 
 /area/owlery/Owlmait2
 	name = "River Loop Maintenance"
@@ -1318,7 +1319,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 
 	the_item.remove_item_ability(the_mob, src.type)
 	APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "owlslam") //you cannot move while doing this
-	logTheThing(LOG_COMBAT, M, "<b>triggers a owl slam in [M.loc.loc] ([log_loc(M)])!</b>")
+	logTheThing(LOG_COMBAT, M, "<b>triggers an owl slam in [M.loc.loc] ([log_loc(M)])!</b>")
 
 	M.visible_message(SPAN_ALERT("[M] flies through the ceiling!"))
 	playsound(M.loc, 'sound/effects/bionic_sound.ogg', 50)
@@ -1332,7 +1333,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	siren.repeat = 1
 	siren.channel = 5
 	world << siren
-	command_alert("A massive influx of Owl Quarks has been detected in [get_area(M)]. A Owl Slam is imminent. All personnel currently on [station_name()] have 10 seconds to reach minimum safe distance. This is not a test.")
+	command_alert("A massive influx of Owl Quarks has been detected in [get_area(M)]. An Owl Slam is imminent. All personnel currently on [station_name()] have 10 seconds to reach minimum safe distance. This is not a test.")
 	for(var/mob/N in mobs)
 		SPAWN(0)
 			shake_camera(N, 120, 24)
@@ -1357,7 +1358,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	siren.status = SOUND_UPDATE
 	siren.channel = 5
 	world << siren
-	M.visible_message(SPAN_ALERT("[M] successfully executes a Owl Slam!"))
+	M.visible_message(SPAN_ALERT("[M] successfully executes an Owl Slam!"))
 	REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "owlslam")
 	explosion_new(M, get_turf(M), 1, 75)
 	for(var/mob/living/carbon/human/M1 in range(5, M))
@@ -1410,8 +1411,6 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 
 		greeting= {"Hey there kid! Welcome to the gift shop. Im Greg, Professor Hootens loveable assistant! And this little fella on my hand is Howard the Hooter, say "Hi" Howard!."}
 
-		portrait_setup = "<img src='[resource("images/traders/[src.picture]")]'><HR><B>[src.name]</B><HR>"
-
 		sell_dialogue = "Howards lost some of his eggs, can you find them all?."
 
 		buy_dialogue = "Are you interested in some Owl accessories?"
@@ -1429,12 +1428,18 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 
 		pickupdialoguefailure = "I don't believe you have added anything to your virtu-cart."
 
+TYPEINFO(/obj/item/lilgreg)
+	start_listen_effects = list(LISTEN_EFFECT_LIL_GREG)
+	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD)
+	start_speech_modifiers = null
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_LOCAL)
+
 /obj/item/lilgreg
 	name = "Greg Jr"
 	desc = "Gregs adopted son! He seems to have gotten caught up with a bad crowd."
 	icon = 'icons/misc/owlzone.dmi'
 	icon_state = "gregjr"
-
+	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 	var/seensol = 0
 	var/cantalk = 1
 
@@ -1450,21 +1455,16 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 				user.visible_message(SPAN_ALERT("[user] pull the string located at the back of Greg Jr."))
 				sleep(3 SECONDS)
 				if (istype(get_area(src), /area/solarium) && seensol == 0)
-					user.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] says, \"Woah, so thats what the sun looks like. It's kind of smaller then I expected though?\""))
+					src.say("Woah, so thats what the sun looks like. It's kind of smaller then I expected though?")
 					sleep(1 SECOND)
-					user.visible_message("<B>[src]</b> says, \"Hm, looks like my internal camera is out of storage. Mind holding this tape real quick while I add some film?\"")
+					src.say("Hm, looks like my internal camera is out of storage. Mind holding this tape real quick while I add some film?")
 					new /obj/item/audio_tape/beepoker(get_turf(user))
 					seensol = 1
 					cantalk = 1
 					return
 				else
-					user.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] says, \"[pick("Hey there pal! How's your day been?", "You ever been to that weird satilite with the giant guardbuddy?", "Hey have you ever heard about Greg? He's a real swell guy.", "Ever eaten a Lemon Square? I haven't, I wonder what they taste like.","Did you catch last nights Professor Hootens story hour? I must have missed it.", "Those darn Owls scratched my paintjob.", "Ever meet that guy with the big beard and giant heart?", "I wonder where Greg is today, have you seen him?", "I wish I could see that sun thing people keep talking about.")]\""))
+					src.say("[pick("Hey there pal! How's your day been?", "You ever been to that weird satilite with the giant guardbuddy?", "Hey have you ever heard about Greg? He's a real swell guy.", "Ever eaten a Lemon Square? I haven't, I wonder what they taste like.","Did you catch last nights Professor Hootens story hour? I must have missed it.", "Those darn Owls scratched my paintjob.", "Ever meet that guy with the big beard and giant heart?", "I wonder where Greg is today, have you seen him?", "I wish I could see that sun thing people keep talking about.")]")
 					sleep(3 SECONDS)
 					cantalk = 1
 					sleep(2 SECONDS)
 					return
-
-	hear_talk(var/mob/living/carbon/speaker, text, real_name)
-		if(prob(10))
-			usr.visible_message(SPAN_SAY("[SPAN_NAME("[src]")] says, \"Woah [real_name] thats [pick("radical", "awesome", "sweet", "delicious", "100% spectacular", "better then sliced bread", "hootacular", "horrible", "hootastic", "dab worthy")]!\""))
-			return

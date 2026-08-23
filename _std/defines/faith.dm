@@ -9,3 +9,9 @@
 #define FAITH_HEAL_USE_FRACTION 0.025
 #define FAITH_HEAL_CAP 125 // in used faith
 #define FAITH_HEAL_BONUS 0.2 // multiplied by used faith
+
+// charms
+#define FAITH_CHARM_CREATION 300
+
+//teg bless
+#define FAITH_TEG_BLESS 500

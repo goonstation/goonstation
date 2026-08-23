@@ -18,6 +18,7 @@
 
 /// Cyalume saber/esword, famed traitor item
 TYPEINFO(/obj/item/sword)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal" = 5,
 				"conductive_high" = 5,
 				"energy_extreme" = 10)
@@ -43,7 +44,6 @@ TYPEINFO(/obj/item/sword)
 	w_class = W_CLASS_SMALL
 	flags = TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
-	is_syndicate = 1
 	contraband = 5
 	desc = "An illegal, recalled Super Protector Friend glow sword. When activated, uses energized cyalume to create an extremely dangerous saber. Can be concealed when deactivated."
 	stamina_damage = 40 // This gets applied by obj/item/attack, regardless of if the saber is active.
@@ -66,6 +66,7 @@ TYPEINFO(/obj/item/sword)
 
 	New()
 		..()
+		src.AddComponent(/datum/component/log_item_pickup, first_time_only=FALSE, authorized_job=null, message_admins_too=FALSE)
 		if(src.bladecolor == "invalid")
 			src.bladecolor = pick(valid_colors)
 		var/r = 0
@@ -213,7 +214,7 @@ TYPEINFO(/obj/item/sword)
 		take_bleeding_damage(user, user, 5)
 		JOB_XP(user, "Clown", 1)
 	src.active = !( src.active )
-	tooltip_rebuild = 1
+	tooltip_rebuild = TRUE
 	if (src.active)
 		src.UpdateIcon()
 		SET_BLOCKS(BLOCK_ALL)
@@ -416,7 +417,7 @@ TYPEINFO(/obj/item/sword)
 	bladecolor = "Pi"
 
 TYPEINFO(/obj/item/sword/pink/angel)
-	mats = null
+	analyser_flags = ANALYSER_BLACKLIST
 /obj/item/sword/pink/angel
 	name = "The Nyasaber"
 	desc = "A strange colour of saber, for a sith. You sense the dark side of the nya within it..."
@@ -603,7 +604,6 @@ TYPEINFO(/obj/item/sword/pink/angel)
 
 /obj/item/dagger/throwing_knife
 	name = "cheap throwing knife"
-	// icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "throwing_knife"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "ninjaknife"
@@ -654,6 +654,53 @@ TYPEINFO(/obj/item/sword/pink/angel)
 			return
 		usr.set_loc(get_turf(src))
 		usr.put_in_hand(src)
+
+/obj/item/dagger/silver
+	name = "silver dagger"
+	icon_state = "dagger-silver"
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	item_state = "dagger-silver"
+	force = 8
+	desc = "A silver dagger made to be used against creatures of the night."
+	HELP_MESSAGE_OVERRIDE({"Throw the dagger at someone to take out a chunk of their stamina."})
+
+	New()
+		..()
+		src.setMaterial(getMaterial("silver"))
+
+	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		..()
+		if (iswerewolf(target))
+			target.changeStatus("werewolf_bane", 6 SECONDS)
+
+	throw_impact(atom/A, datum/thrown_thing/thr)
+		if(iscarbon(A))
+			var/mob/living/carbon/C = A
+			C.do_disorient(stamina_damage = 40, knockdown = 0, stunned = 0, disorient = 20, remove_stamina_below_zero = 1)
+			C.emote("twitch_v")
+			A:lastattacker = usr
+			A:lastattackertime = world.time
+			random_brute_damage(C, throwforce, 1)
+
+			take_bleeding_damage(A, null, 5, DAMAGE_CUT)
+			playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, TRUE)
+		if(iswerewolf(A))
+			var/mob/living/carbon/human/H = A
+			H.changeStatus("knockdown", 4 SECONDS)
+			H.force_laydown_standup()
+			H.changeStatus("werewolf_bane", 15 SECONDS)
+
+
+	attack_hand(var/mob/user)
+		if(iswerewolf(user))
+			var/mob/living/carbon/human/H = user
+			H.emote("scream")
+			H.changeStatus("knockdown", 1 SECONDS)
+			H.force_laydown_standup()
+			H.visible_message(SPAN_ALERT("[H] is burned by the silver!"))
+			return
+
+		return ..(user)
 
 // Revolutionary sign.
 /obj/item/revolutionary_sign
@@ -1045,7 +1092,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 			stamina_damage = 25
 			stamina_cost = 15
 			stamina_crit_chance = 5
-		tooltip_rebuild = 1
+		tooltip_rebuild = TRUE
 		return
 
 	attack_self(mob/user as mob)
@@ -1078,6 +1125,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 ///////////////////////////////// Baseball Bat ////////////////////////////////////////////////////////////
 
 TYPEINFO(/obj/item/bat)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = list("wood" = 8)
 /obj/item/bat
 	name = "Baseball Bat"
@@ -1153,6 +1201,8 @@ TYPEINFO(/obj/item/bat)
 
 /////////////////////////////////////////////////// Swords ////////////////////////////////////////////
 //You probably want to spawn the sheath in instead of this.
+TYPEINFO(/obj/item/swords)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/swords
 	name = "youshouldntseeme sword"
 	icon = 'icons/obj/items/weapons.dmi'
@@ -1168,7 +1218,6 @@ TYPEINFO(/obj/item/bat)
 	contraband = 4
 	attack_verbs = "slashes"
 	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
-	is_syndicate = TRUE
 	leaves_slash_wound = TRUE
 	var/delimb_prob = 1
 	var/midair_fruit_slice = FALSE //! if this is TRUE, blocking with this weapon can slice thrown food items midair
@@ -1177,6 +1226,7 @@ TYPEINFO(/obj/item/bat)
 
 /obj/item/swords/New()
 	src.AddComponent(/datum/component/bloodflick)
+	src.AddComponent(/datum/component/log_item_pickup, first_time_only=FALSE, authorized_job=null, message_admins_too=FALSE)
 	..()
 
 /obj/item/swords/proc/handle_parry(mob/target, mob/user)
@@ -1275,6 +1325,7 @@ TYPEINFO(/obj/item/bat)
 
 //PS the description can be shortened if you find it annoying and you are a jerk.
 TYPEINFO(/obj/item/swords/katana)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = list("metal_superdense" = 20,
 				"fabric" = 5)
 /obj/item/swords/katana
@@ -1298,10 +1349,12 @@ TYPEINFO(/obj/item/swords/katana)
 
 	crafted
 		name = "handcrafted katana"
-		delimb_prob = 2
+		delimb_prob = 20
 
 		force = 12
 		contraband = 5
+		HELP_MESSAGE_OVERRIDE({"Hit someone while aiming at a specific limb for a chance to slice off the targeted limb. If both arms and legs are sliced off, you can decapitate your target by aiming for the head.\n
+								While on any intent other than <span class='help'>help</span>, click a tile away from you to quickly dash forward to it's location, slicing those in the way."})
 
 	New()
 		..()
@@ -1364,7 +1417,18 @@ TYPEINFO(/obj/item/swords/katana)
 		..()
 		src.setItemSpecial(/datum/item_special/katana_dash/reverse)
 
+/obj/item/swords/katana/thundering
+	name = "thundering katana"
+	icon_state = "katana_thundering"
+	rarity = ITEM_RARITY_LEGENDARY
+	hit_type = DAMAGE_BURN
+
+	New()
+		..()
+		src.setItemSpecial(/datum/item_special/katana_dash/thundering)
+
 TYPEINFO(/obj/item/swords/captain)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = list("metal_dense" = 15)
 /obj/item/swords/captain
 	icon_state = "cap_sword"
@@ -1448,6 +1512,7 @@ TYPEINFO(/obj/item/swords/captain)
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/rangestab)
+		src.RemoveComponentsOfType(/datum/component/log_item_pickup) //Its a silly sword that does minimal damage, no need.
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(ismob(target))
@@ -1468,6 +1533,8 @@ TYPEINFO(/obj/item/swords/captain)
 				user.death()
 
 
+TYPEINFO(/obj/item/swords_sheaths)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/swords_sheaths //blegh, keeping naming consistent
 	name = "youshouldntseemieum sheath"
 	icon = 'icons/obj/items/weapons.dmi'
@@ -1487,7 +1554,6 @@ TYPEINFO(/obj/item/swords/captain)
 	var/ih_sheathed_state = "sheathedhand"
 	var/ih_sheath_state = "sheathhand"
 	var/sword_path = /obj/item/swords
-	is_syndicate = TRUE
 
 	New()
 		..()
@@ -1495,6 +1561,7 @@ TYPEINFO(/obj/item/swords/captain)
 		sword_inside = K
 		K.set_loc(src)
 		BLOCK_SETUP(BLOCK_ROD)
+		src.AddComponent(/datum/component/log_item_pickup, first_time_only=FALSE, authorized_job=null, message_admins_too=FALSE)
 
 	attack_hand(mob/living/carbon/human/user)
 		if(src.sword_inside && (user.r_hand == src || user.l_hand == src || user.belt == src))
@@ -1667,6 +1734,10 @@ TYPEINFO(/obj/item/swords/captain)
 	ih_sheathed_state = "scabbard-clown1"
 	ih_sheath_state = "scabbard-clown0"
 	sword_path = /obj/item/swords/clown
+
+	New()
+		. = ..()
+		src.RemoveComponentsOfType(/datum/component/log_item_pickup)
 
 /*
  *							--- Non-electronic Swords ---

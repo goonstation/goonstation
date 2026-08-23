@@ -53,11 +53,12 @@
 		if(!particleMaster.CheckSystemExists(/datum/particleSystem/bhole_warning, src))
 			particleMaster.SpawnSystem(new /datum/particleSystem/bhole_warning(src))
 
-		var/turf/T = get_turf(src)
-		for (var/client/C in GET_NEARBY(/datum/spatial_hashmap/clients, T, 15))
+		for_clients_in_range(C, get_turf(src), 15)
 			boutput(C, SPAN_ALERT("The air grows heavy and thick. Something feels terribly wrong."))
 			shake_camera(C.mob, 5, 16)
+
 		playsound(src,'sound/effects/creaking_metal1.ogg',100,FALSE,5,0.5)
+		SEND_GLOBAL_SIGNAL(COMSIG_GRAVITY_EVENT, GRAVITY_EVENT_DISRUPT, src.z)
 
 		sleep(lifespan / 2)
 		if (!stable)
@@ -218,8 +219,10 @@
 	proc/shred_terrain(var/turf/simulated/T)
 		if (!T)
 			return
+		if (!issimulatedturf(T))
+			return
 
-		if(istype(T,/turf/simulated/floor))
+		if (istype(T,/turf/simulated/floor))
 			var/turf/simulated/floor/F = T
 			if(!F.broken)
 				if(prob(80))
@@ -235,22 +238,9 @@
 			else
 				F.ReplaceWithSpace()
 
-		else if (istype(T,/turf/simulated/wall))
-			var/atom/A = new /obj/structure/girder/reinforced(T)
-
-			var/atom/movable/B = new /obj/item/raw_material/scrap_metal
-			B.set_loc(T)
-
-			if(T.material)
-				A.setMaterial(T.material)
-				B.setMaterial(T.material)
-			else
-				var/datum/material/M = getMaterial("steel")
-				A.setMaterial(M)
-				B.setMaterial(M)
-
-			T.ReplaceWithFloor()
-
+		else if (istype(T, /turf/simulated/wall))
+			var/turf/simulated/wall/W = T
+			W.dismantle_wall()
 		else
 			return
 

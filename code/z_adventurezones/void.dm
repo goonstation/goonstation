@@ -43,13 +43,13 @@ CONTENTS:
 	name = "unknown dimension"
 	ambient_light = null
 	area_parallax_render_source_group = null
-	teleport_blocked = 2
+	teleport_blocked = AREA_TELEPORT_AND_PORTER_BLOCKED
 
 /area/crunch/art_labyrinth
 	name = "unknown pocket dimension"
 	icon_state = ""
 	filler_turf = null
-	teleport_blocked = 2
+	teleport_blocked = AREA_TELEPORT_AND_PORTER_BLOCKED
 	allowed_restricted_z = TRUE
 	ambient_light = null
 	area_parallax_render_source_group = null

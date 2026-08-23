@@ -6,9 +6,8 @@
  */
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  title: 'Posession!',
-  content: (
+const PossessionContentWindow = () => {
+  return (
     <div className="traitor-tips">
       <h1 className="center">You have possessed a soulsteel item!</h1>
 
@@ -18,5 +17,10 @@ export const acw: AlertContentWindow = {
         spook the crew, not kill them!
       </p>
     </div>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  title: 'Posession!',
+  component: PossessionContentWindow,
 };

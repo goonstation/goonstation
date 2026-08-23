@@ -15,7 +15,7 @@
 /obj/machinery/atmospherics/unary/portables_connector/hide(var/intact) //to make the little pipe section invisible, the icon changes.
 	var/hide_pipe = CHECKHIDEPIPE(src)
 	icon_state = "[hide_pipe ? "h" : "" ]connector"
-	SET_PIPE_UNDERLAY(src.node, src.dir, "medium", issimplepipe(src.node) ?  src.node.color : null, hide_pipe)
+	update_pipe_underlay(src.node, src.dir, "medium", hide_pipe)
 
 /obj/machinery/atmospherics/unary/portables_connector/process()
 	..()

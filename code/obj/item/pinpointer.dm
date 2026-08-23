@@ -1,5 +1,8 @@
 TYPEINFO(/obj/item/pinpointer)
-	mats = 4
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
+	mats = list("metal"=1,
+				"conductive"=2,
+				"crystal"=1)
 
 /obj/item/pinpointer
 	name = "pinpointer"
@@ -8,7 +11,8 @@ TYPEINFO(/obj/item/pinpointer)
 	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
-	item_state = "electronic"
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	item_state = "accessgun"
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 500
@@ -135,6 +139,8 @@ TYPEINFO(/obj/item/pinpointer)
 			if(A.disposed || isnull(T))
 				continue
 			if(!isnull(z_locked) && z_locked != T.z)
+				continue
+			if(isnull(z_locked) && T.z != Z_LEVEL_STATION)
 				continue
 			var/dist = GET_DIST(A, src)
 			if(!isnull(max_range) && dist > max_range)
@@ -265,12 +271,13 @@ TYPEINFO(/obj/item/pinpointer)
 	target_criteria = /obj/gold_bee
 	hudarrow_color = "#e1940d"
 
+TYPEINFO(/obj/item/pinpointer/idtracker)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/pinpointer/idtracker
 	name = "ID pinpointer"
 	icon_state = "id_pinoff"
 	var/mob/owner = null
 	hudarrow_color = "#ffffff"
-	is_syndicate = 1
 	desc = "This little bad-boy has been pre-programmed to display the general direction of any assassination target you choose."
 
 	attack_self(mob/user)
@@ -287,8 +294,7 @@ TYPEINFO(/obj/item/pinpointer)
 					if(ckey(I.registered) == ckey(A.targetname))
 						targets[I] = I
 				LAGCHECK(LAG_LOW)
-			target = null
-			target = input(user, "Which ID do you wish to track?", "Target Locator", null) in targets
+			target = tgui_input_list(user, "Which ID do you wish to track?", "Target Locator", targets)
 			if(!target)
 				boutput(user, SPAN_NOTICE("You activate the target locator. No available targets!"))
 			else
@@ -354,7 +360,7 @@ TYPEINFO(/obj/item/pinpointer)
 			blood_dna = A.blood_DNA
 		else if (CHECK_LIQUID_CLICK(A))
 			var/turf/T = get_turf(A)
-			blood_dna = T.active_liquid.blood_DNA // I guess this prevents you from scanning the blood in a gas? so rarely relevant I don't care
+			blood_dna = T.active_liquid?.blood_DNA // I guess this prevents you from scanning the blood in a gas? so rarely relevant I don't care
 		if(!blood_dna)
 			var/datum/reagents/reagents = A.reagents
 			if(isturf(A))
@@ -385,7 +391,7 @@ TYPEINFO(/obj/item/pinpointer)
 			return TRUE
 
 TYPEINFO(/obj/item/pinpointer/secweapons)
-	mats = null
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/item/pinpointer/secweapons
 	name = "security weapon pinpointer"

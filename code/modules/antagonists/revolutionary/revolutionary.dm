@@ -5,6 +5,7 @@
 	antagonist_panel_tab_type = /datum/antagonist_panel_tab/bundled/revolution
 	succinct_end_of_round_antagonist_entry = TRUE
 	remove_on_death = TRUE
+	wiki_link = "https://wiki.ss13.co/Revolutionary"
 
 	New()
 		. = ..()
@@ -17,6 +18,12 @@
 		var/obj/itemspecialeffect/derev/E = new /obj/itemspecialeffect/derev
 		E.color = "#FF5555"
 		E.setup(src.owner.current.loc)
+		if (isliving(src.owner.current))
+			//if we got here then the implant must be disabled, so just destroy it
+			var/mob/living/living_owner = src.owner.current
+			var/obj/item/implant/counterrev/implant = locate() in living_owner
+			implant.on_remove(living_owner)
+			qdel(implant)
 
 	disposing()
 		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))

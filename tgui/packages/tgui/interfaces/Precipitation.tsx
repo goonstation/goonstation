@@ -39,11 +39,11 @@ export const Precipitation = () => {
                 minValue={0}
                 maxValue={Infinity}
                 step={1}
-                onChange={(value) =>
+                onChange={(value) => {
                   act('set-cooldown', {
                     value,
-                  })
-                }
+                  });
+                }}
               />
             </Box>
           </Tooltip>
@@ -56,11 +56,11 @@ export const Precipitation = () => {
                 minValue={0}
                 maxValue={100}
                 step={1}
-                onChange={(value) =>
+                onChange={(value) => {
                   act('set-probability', {
                     value,
-                  })
-                }
+                  });
+                }}
               />
             </Box>
           </Tooltip>
@@ -74,11 +74,11 @@ export const Precipitation = () => {
                 minValue={0}
                 maxValue={100}
                 step={1}
-                onChange={(value) =>
+                onChange={(value) => {
                   act('set-poolDepth', {
                     value,
-                  })
-                }
+                  });
+                }}
               />
             </Box>
           </Tooltip>

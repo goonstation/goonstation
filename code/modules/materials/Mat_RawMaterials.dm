@@ -2,7 +2,7 @@
 /obj/item/material_piece
 	name = "bar"
 	desc = "Some sort of processed material bar."
-	icon = 'icons/obj/materials.dmi'
+	icon = 'icons/obj/items/materials/materials.dmi'
 	icon_state = "bar"
 	max_stack = INFINITY
 	stack_type = /obj/item/material_piece
@@ -10,10 +10,13 @@
 	default_material = null
 	uses_default_material_appearance = TRUE
 	mat_changename = TRUE //TRUE for generic names such as Bar or Wad.
+	can_arcplate = FALSE
 
 	New()
 		..()
 		setup_material()
+		if (material)
+			name = "[mat_changename ? material.getName() : ""] [initial(src.name)]"
 
 	proc/setup_material()
 		.=0
@@ -54,7 +57,7 @@
 			..(user)
 
 	attackby(obj/item/W, mob/user)
-		if(W.type == src.type)
+		if(W.stack_type == src.stack_type)
 			stack_item(W)
 			if(!user.is_in_hands(src))
 				user.put_in_hand(src)
@@ -240,12 +243,36 @@
 	icon_state = "bar"
 
 /obj/item/material_piece/iridiumalloy
-	icon_state = "iridium"
+	icon = 'icons/obj/items/materials/iridium.dmi'
 	name = "plate"
-	desc = "A chunk of some sort of iridium alloy plating."
+	desc = "A piece of some sort of iridium alloy plating."
 	default_material = "iridiumalloy"
-	uses_default_material_appearance = FALSE
+	uses_default_material_appearance = TRUE
 	amount = 5
+	stack_type = /obj/item/material_piece/iridiumalloy
+
+	New()
+		..()
+		_update_stack_appearance()
+
+	_update_stack_appearance()
+		..()
+		UpdateIcon()
+
+	update_icon()
+		switch(src.amount)
+			if(1)
+				src.icon_state = "scrap1_$$iridiumalloy"
+			if(2 to 4)
+				src.icon_state = "scrap2_$$iridiumalloy"
+			if(5 to 9)
+				src.icon_state = "scrap3_$$iridiumalloy"
+			if(10 to 14)
+				src.icon_state = "scrap4_$$iridiumalloy"
+			if(15 to 19)
+				src.icon_state = "scrap5_$$iridiumalloy"
+			else
+				src.icon_state = "scrap6_$$iridiumalloy"
 
 /obj/item/material_piece/iridiumalloy/small
 	amount = 1
@@ -284,10 +311,13 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 /obj/item/material_piece/organic/wood
 	name = "wooden log"
 	desc = "Years of genetic engineering mean timber always comes in mostly perfectly shaped cylindrical logs."
-	icon_state = "log"
+	icon = 'icons/obj/items/materials/wood.dmi'
+	icon_state = "log1"
 	default_material = "wood"
+	max_stack = 10
 	uses_default_material_appearance = FALSE
 	mat_changename = FALSE
+	var/is_rotated = FALSE // Logs are rotated after being felled. Need to unrotate them after stacking.
 
 	attackby(obj/item/W, mob/user)
 		if ((istool(W, TOOL_CUTTING | TOOL_SAWING)))
@@ -299,6 +329,44 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 				qdel (src)
 		else
 			..()
+
+	_update_stack_appearance()
+		..()
+		if(src.is_rotated)
+			src.Turn(-90)
+			src.is_rotated = FALSE
+		switch(src.amount)
+			if(1)
+				src.icon_state = "log1"
+			if(2 to 4)
+				src.icon_state = "log2"
+			if(5 to 7)
+				src.icon_state = "log3"
+			if(8 to 9)
+				src.icon_state = "log4"
+			else
+				src.icon_state = "log5"
+
+/obj/item/material_piece/organic/wood/thin
+	icon_state = "log_thin1"
+
+	_update_stack_appearance()
+		..()
+		switch(src.amount)
+			if(1)
+				src.icon_state = "log_thin1"
+			if(2)
+				src.icon_state = "log_thin2"
+			if(3 to 4)
+				src.icon_state = "log_thin3"
+			if(5 to 6)
+				src.icon_state = "log_thin4"
+			if(7 to 8)
+				src.icon_state = "log_thin5"
+			if(9)
+				src.icon_state = "log_thin6"
+			else
+				src.icon_state = "log_thin7"
 
 /obj/item/material_piece/organic/bamboo
 	name = "stalk"
@@ -432,6 +500,16 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 	default_material = "coral"
 	uses_default_material_appearance = FALSE
 
+/obj/item/material_piece/yuranite
+	desc = "Deadly uranium metal."
+	icon_state = "rod"
+	default_material = "yuranite"
+
+/obj/item/material_piece/neutrite
+	desc = "A very unstable radioactive metal."
+	icon_state = "rod"
+	default_material = "neutrite"
+
 /obj/item/material_piece/plasmacoral
 	name = "chunk"
 	desc = "A strange piece of coral seemingly infused with plasmastone."
@@ -451,12 +529,45 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 
 /obj/item/material_piece/plutonium_scrap
 	name = "scrap"
-	icon_state = "plutonium"
 	desc = "Plutonium metal, commonly used as a power source for engines and machinery alike."
+	icon = 'icons/obj/items/materials/plutonium.dmi'
 	default_material = "plutonium"
+
+	New()
+		..()
+		_update_stack_appearance()
+
+	_update_stack_appearance()
+		..()
+		UpdateIcon()
+
+	update_icon()
+		switch(src.amount)
+			if(1)
+				src.icon_state = "scrap1_$$plutonium"
+			if(2 to 4)
+				src.icon_state = "scrap2_$$plutonium"
+			if(5 to 9)
+				src.icon_state = "scrap3_$$plutonium"
+			if(10 to 14)
+				src.icon_state = "scrap4_$$plutonium"
+			if(15 to 19)
+				src.icon_state = "scrap5_$$plutonium"
+			else
+				src.icon_state = "scrap6_$$plutonium"
 
 /obj/item/material_piece/foolsfoolsgold
 	name = "fool's pyrite bar"
 	desc = "It's gold that isn't. Except it is. MINDFUCK"
 	icon_state = "bar"
 	default_material = "gold"
+
+/obj/item/material_piece/veranium
+	desc = "Veranium metal, shocking to the touch."
+	icon_state = "bar"
+	default_material = "veranium"
+
+/obj/item/material_piece/voltite
+	desc = "A highly energetic bar of voltite."
+	icon_state = "bar"
+	default_material = "voltite"

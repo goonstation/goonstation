@@ -60,10 +60,10 @@
 			return
 
 		if(get_z(src) != Z_LEVEL_STATION)
-			src.show_text("Your mainframe was unable relay this command that far away!", "red")
+			src.show_text("Your mainframe was unable to relay this command that far away!", "red")
 			return
 
-		if (!istype(T) || length(T?.camera_coverage_emitters) == 0)
+		if (!istype(T) || !seen_by_camera(T))
 			boutput(eyecam, "No camera available to project a hologram from.")
 			return
 

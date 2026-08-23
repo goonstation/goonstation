@@ -1,12 +1,13 @@
 /// Melee attack. Shocks a targeted mob, or can be used on an airlock to temporarily cut its power.
 /datum/targetable/arcfiend/discharge
 	name = "Discharge"
-	desc = "Run a powerful current through a target in melee range. Mobs will be shocked and knocked back a short distance, airlocks will be briefly depowered, and machines will overload."
+	desc = "Run a powerful current through a target in melee range. Mobs will be shocked and knocked back a short distance, airlocks will be briefly depowered, and machines will overload. Items with batteries can be recharged."
 	icon_state = "discharge"
 	cooldown = 15 SECONDS
 	target_anything = TRUE
 	targeted = TRUE
 	pointCost = 25
+	target_in_inventory = TRUE
 	///how far to knock mobs away from ourselves
 	var/target_dist = 4
 	///how fast to throw affected mobs away
@@ -45,9 +46,28 @@
 				playsound(src.holder.owner, 'sound/effects/electric_shock.ogg', 50, TRUE)
 				machine.add_fingerprint(src.holder.owner)
 				machine.visible_message(SPAN_ALERT("\The [machine] sparks as [src.holder.owner] strikes it!"))
+				var/datum/abilityHolder/arcfiend/AH = src.holder
+				AH.machines_overloaded++
 			else
 				boutput(src.holder.owner, SPAN_ALERT("\The [machine] couldn't be overloaded!"))
 				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		else if (isitem(target))
+			var/datum/component/cell_holder/power_cell = target.GetComponent(/datum/component/cell_holder)
+			if (!istype(power_cell))
+				boutput(src.holder.owner, SPAN_ALERT("\The [target] doesn't hold a charge!"))
+				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+			var/chargeable = SEND_SIGNAL(target, COMSIG_CELL_CAN_CHARGE)
+			if (chargeable & CELL_UNCHARGEABLE)
+				boutput(src.holder.owner, SPAN_ALERT("\The [target] couldn't be charged!"))
+				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
+			var/list/ret = list()
+			if(SEND_SIGNAL(target, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+				var/amount_to_charge = ret["max_charge"] - ret["charge"]
+				if (src.pointCost + amount_to_charge > src.holder.points)
+					amount_to_charge = src.holder.points - src.pointCost
+				if (amount_to_charge > 0)
+					src.holder.deductPoints(amount_to_charge)
+					SEND_SIGNAL(target, COMSIG_CELL_CHARGE, amount_to_charge)
 		else
 			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		var/datum/effects/system/spark_spread/S = new /datum/effects/system/spark_spread

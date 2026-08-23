@@ -36,6 +36,47 @@
 		ID.desc = "A Syndicate Agent Identification card."
 		src.equip_if_possible(ID, SLOT_WEAR_ID)
 
+/mob/living/carbon/human/normal/cultist
+	New()
+		..()
+		src.equip_if_possible(new /obj/item/storage/backpack/green, SLOT_BACK)
+		src.equip_if_possible(new /obj/item/clothing/under/color/green, SLOT_W_UNIFORM)
+		src.equip_if_possible(new /obj/item/clothing/shoes/brown, SLOT_SHOES)
+		src.equip_if_possible(new /obj/item/clothing/mask/greencultmask, SLOT_WEAR_MASK)
+
+	initiate
+		New()
+			..()
+			src.equip_if_possible(new /obj/item/clothing/suit/bedsheet/green, SLOT_WEAR_SUIT)
+
+	acolyte
+		New()
+			..()
+			src.equip_if_possible(new /obj/item/clothing/suit/cultist, SLOT_WEAR_SUIT)
+
+	leader
+		New()
+			..()
+			src.equip_if_possible(new /obj/item/clothing/suit/green_robes, SLOT_WEAR_SUIT)
+
+		key1
+			New()
+				..()
+				src.equip_if_possible(new /obj/item/cult_sigil_pt1, SLOT_L_STORE)
+
+/mob/living/carbon/human/normal/cultist_imposter
+	New()
+		..()
+		src.equip_new_if_possible(/obj/item/clothing/mask/hastur, SLOT_WEAR_MASK)
+		src.equip_new_if_possible(/obj/item/clothing/under/color/yellow, SLOT_W_UNIFORM)
+		src.equip_if_possible(new /obj/item/clothing/shoes/orange, SLOT_SHOES)
+		src.equip_new_if_possible(/obj/item/clothing/suit/cultist/hastur, SLOT_WEAR_SUIT)
+
+	key2
+		New()
+			..()
+			src.equip_if_possible(new /obj/item/cult_sigil, SLOT_L_STORE)
+
 /mob/living/carbon/human/normal/captain
 	New()
 		..()
@@ -151,6 +192,11 @@
 		..()
 		JobEquipSpawned("Roboticist")
 
+/mob/living/carbon/human/normal/pharmacist
+	New()
+		..()
+		JobEquipSpawned("Pharmacist")
+
 /mob/living/carbon/human/normal/chemist
 	New()
 		..()
@@ -197,7 +243,7 @@
 		if(C)
 			C.registered = src.real_name
 			C.assignment = "NT-SO Rescue Worker"
-			C.name = "[C.registered]'s ID Card ([C.assignment])"
+			C.name = "[C.registered]’s ID Card ([C.assignment])"
 			C.access = get_all_accesses()
 
 		update_clothing()
@@ -223,7 +269,7 @@
 		if(C)
 			C.registered = src.real_name
 			C.assignment = "NT-SO Special Operative"
-			C.name = "[C.registered]'s ID Card ([C.assignment])"
+			C.name = "[C.registered]’s ID Card ([C.assignment])"
 			var/list/ntso_access = get_all_accesses()
 			ntso_access += access_armory // This makes sense, right? They're highly trained and trusted.
 			C.access = ntso_access

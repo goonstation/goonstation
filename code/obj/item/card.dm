@@ -26,6 +26,7 @@ GAUNTLET CARDS
 		..()
 
 TYPEINFO(/obj/item/card/emag)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 8
 
 /obj/item/card/emag
@@ -35,7 +36,6 @@ TYPEINFO(/obj/item/card/emag)
 	item_state = "card-id"
 	flags = TABLEPASS | SUPPRESSATTACK
 	layer = 6.0 // TODO fix layer
-	is_syndicate = 1
 	contraband = 6
 
 	afterattack(var/atom/A, var/mob/user)
@@ -45,6 +45,23 @@ TYPEINFO(/obj/item/card/emag)
 
 	attack()	//Fucking attack messages up in this joint.
 		return
+
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
+		..()
+		if(!hit_atom || !thr)
+			return
+		hit_atom.emag_act(thr.user, src)
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		. = ..()
+		if(!src.throw_return)
+			boutput(user, SPAN_ALERT("You run [E] over [src], causing an internal magnetisim feedback loop!"))
+			src.throw_return = TRUE
+			return
+
+	demag(mob/user)
+		. = ..()
+		src.throw_return = FALSE
 
 /obj/item/card/emag/attack_self(mob/user as mob)
 	if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
@@ -79,14 +96,13 @@ TYPEINFO(/obj/item/card/emag)
 	icon_state = "id_basic"
 	item_state = "card-id"
 	desc = "A standardized NanoTrasen microchipped identification card that contains data that is scanned when attempting to access various doors and computers."
-	flags = TABLEPASS | ATTACK_SELF_DELAY
+	flags = TABLEPASS | ATTACK_SELF_DELAY | SUPPRESSATTACK
 	click_delay = 0.4 SECONDS
 	wear_layer = MOB_BELT_LAYER
 	var/datum/pronouns/pronouns = null
 	var/list/access = list()
 	var/registered = null
 	var/assignment = null
-	var/title = null
 	var/emagged = 0
 	var/datum/reagent_group_account/reagent_account = null
 	/// this determines if the icon_state of the ID changes if it is given a new job
@@ -97,11 +113,8 @@ TYPEINFO(/obj/item/card/emag)
 	var/money = 0
 	var/pin = 0000
 
-	//It's a..smart card.  Sure.
-	var/datum/computer/file/cardfile = null
-
 	proc/update_name()
-		name = "[src.registered]'s ID Card ([src.assignment])"
+		name = "[src.registered]’s ID Card ([src.assignment])"
 
 	get_desc()
 		. = ..()
@@ -325,8 +338,10 @@ TYPEINFO(/obj/item/card/emag)
 		switch (color)
 			if ("clown")
 				src.icon_state = "id_clown"
+				src.keep_icon = TRUE
 			if ("golden")
 				src.icon_state = "id_gold"
+				src.keep_icon = TRUE
 			if ("No band")
 				src.icon_state = "id_basic"
 			if ("civilian")
@@ -343,13 +358,15 @@ TYPEINFO(/obj/item/card/emag)
 				src.icon_state = "id_eng"
 			if ("nanotrasen")
 				src.icon_state = "id_nanotrasen"
+				src.keep_icon = TRUE
 			if ("syndicate")
 				src.icon_state = "id_syndie"
+				src.keep_icon = TRUE
 			else
 				return // Abort process.
 		src.registered = reg
 		src.assignment = ass
-		src.name = "[src.registered]'s ID Card ([src.assignment])"
+		src.name = "[src.registered]’s ID Card ([src.assignment])"
 		boutput(user, SPAN_NOTICE("You successfully forge the ID card."))
 	else
 		..()
@@ -434,7 +451,7 @@ TYPEINFO(/obj/item/card/emag)
 				assignment = "loading arena matches..."
 				tag = "gauntlet-id-[user.client.key]"
 				queryGauntletMatches(user.client.key)
-		name = "[registered]'s ID Card ([assignment])"
+		name = "[registered]’s ID Card ([assignment])"
 
 	proc/SetMatchCount(var/matches)
 		switch (matches)
@@ -461,7 +478,7 @@ TYPEINFO(/obj/item/card/emag)
 				assignment = "Legendary Gladiator ([matches] rounds played)"
 			else
 				assignment = "what the fuck ([matches] rounds played)"
-		name = "[registered]'s ID Card ([assignment])"
+		name = "[registered]’s ID Card ([assignment])"
 
 // Experimental item that may be made into a 100k spacebux reward in the future?
 /obj/item/card/license_to_kill

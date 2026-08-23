@@ -198,7 +198,7 @@
 
 /proc/omega_hairgrownium_drop_hair(var/mob/living/carbon/human/H)
 	H.visible_message("<strong style='font-size: 170%;'>[H.name] [H.is_bald()?"hairn't":"hair"] hair fall out!!</strong>", "<strong style='font-size: 170%;'>you [H.is_bald()?"hairn't":"hair"] fall out!!</strong>")
-	var/obj/item/I = new /obj/item
+	var/obj/item/I
 	if(H.is_bald())
 		I = new /obj/item/clothing/head/bald_cap
 	else

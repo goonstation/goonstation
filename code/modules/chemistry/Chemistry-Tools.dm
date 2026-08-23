@@ -68,7 +68,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		src.initial_reagents = null // no mo, no mooooo
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(!HAS_FLAG(src.flags, SUPPRESSATTACK))
+			..()
 		return
+
 	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/beaker_lid))
 			try_to_apply_lid(I, user)
@@ -76,6 +79,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			reagents.physical_shock(I.force)
 		return ..()
 	afterattack(obj/target, mob/user , flag)
+		if(!HAS_FLAG(src.flags, SUPPRESSATTACK))
+			..()
 		return
 
 	get_desc(dist, mob/user)
@@ -155,7 +160,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 ///Returns a serialized representation of the reagents of an atom for use with the ReagentInfo TGUI components
 ///Note that this is not a built in TGUI proc
-proc/ui_describe_reagents(atom/A)
+proc/ui_describe_reagents(atom/A, show_overdose = FALSE)
 	if (!istype(A))
 		return null
 	var/datum/reagents/R = A.reagents
@@ -183,6 +188,7 @@ proc/ui_describe_reagents(atom/A)
 				colorB = current_reagent.fluid_b,
 				volume = current_reagent.volume,
 				state = current_reagent.reagent_state,
+				overdose = show_overdose ? current_reagent.overdose : null,
 			)))
 	return thisContainerData
 
@@ -288,7 +294,7 @@ proc/ui_describe_reagents(atom/A)
 				F.group.update_amt_per_tile()
 				var/amt = min(F.group.amt_per_tile, reagents.maximum_volume - reagents.total_volume)
 				boutput(user, SPAN_NOTICE("You fill [src] with [amt] units of [F]."))
-				F.group.drain(F, amt / F.group.amt_per_tile, src) // drain uses weird units
+				if (amt) F.group.drain(F, amt / F.group.amt_per_tile, src) // drain uses weird units
 			else //trans_to to the FLOOR of the liquid, not the liquid itself. will call trans_to() for turf which has a little bit that handles turf application -> fluids
 				logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src] [log_reagents(src)] to [F] at [log_loc(user)].") // Added reagents (Convair880).
 				var/trans = src.reagents.trans_to(target_turf, src.splash_all_contents ? src.reagents.total_volume : src.amount_per_transfer_from_this)
@@ -468,7 +474,7 @@ proc/ui_describe_reagents(atom/A)
 		else if (istype(I, /obj/item/ammo/bullets/bullet_22HP) ||istype(I, /obj/item/ammo/bullets/bullet_22) || istype(I, /obj/item/ammo/bullets/a38) || istype(I, /obj/item/ammo/bullets/custom) || (I.type == /obj/item/handcuffs) || istype(I,/datum/projectile/bullet/revolver_38))
 			if ("silver" in src.reagents.reaction(I, react_volume = src.reagents.total_volume))
 				user.visible_message(SPAN_ALERT("<b>[user]</b> dips [I] into [src] coating it in silver. Watch out, evil creatures!"))
-				I.tooltip_rebuild = 1
+				I.tooltip_rebuild = TRUE
 			else
 				if(istype(I, /obj/item/ammo/bullets))
 					var/obj/item/ammo/A = I
@@ -573,6 +579,7 @@ proc/ui_describe_reagents(atom/A)
 	initial_volume = 120
 	flags = OPENCONTAINER | SUPPRESSATTACK
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+	default_material = "plastic"
 	can_recycle = FALSE
 	var/helmet_bucket_type = /obj/item/clothing/head/helmet/bucket
 	var/hat_bucket_type = /obj/item/clothing/head/helmet/bucket/hat
@@ -584,6 +591,7 @@ proc/ui_describe_reagents(atom/A)
 			user.u_equip(D)
 			user.put_in_hand_or_drop(B)
 			user.show_text("You add the sensor to the bucket")
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, B, user)
 			qdel(D)
 			qdel(src)
 
@@ -607,6 +615,7 @@ proc/ui_describe_reagents(atom/A)
 			user.show_text("You cut eyeholes into [src].")
 			var/obj/item/clothing/head/helmet/bucket/B = new helmet_bucket_type(src.loc)
 			user.put_in_hand_or_drop(B)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, B, user)
 			qdel(src)
 		else
 			return ..()
@@ -626,6 +635,7 @@ proc/ui_describe_reagents(atom/A)
 		var/obj/item/clothing/head/helmet/bucket/hat/B = new hat_bucket_type(src.loc)
 		user.u_equip(src)
 		user.put_in_hand_or_drop(B)
+		SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, B, user)
 		qdel(src)
 
 	afterattack(obj/target, mob/user, flag)
@@ -682,6 +692,7 @@ proc/ui_describe_reagents(atom/A)
 					bucket_hat.set_loc(get_turf(H))
 					H.visible_message(SPAN_ALERT("[src] falls from \the [targetDoor], [splash? "splashing" : "bouncing off"] [H] and falling to the floor."), \
 										SPAN_ALERT("[src] falls from \the [targetDoor], [splash? "splashing you and " : ""]bouncing off your hat."))
+				SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, bucket_hat)
 				qdel(src) //it's a hat now
 			else
 				//aw, fine, it just falls on the floor
@@ -742,6 +753,8 @@ proc/ui_describe_reagents(atom/A)
 	icon = 'icons/obj/items/chemistry_glassware.dmi'
 	icon_state = "lid"
 	w_class = W_CLASS_TINY
+	default_material = "synthrubber_blue"
+	material_amt = 0.2
 
 	attackby(obj/item/reagent_containers/container, mob/user)
 		if (istype(container))
@@ -762,6 +775,8 @@ proc/ui_describe_reagents(atom/A)
 		if (istype(over_object, /obj/item/reagent_containers) && (over_object.is_open_container()))
 			try_adding_container(over_object, usr)
 		if (istype(over_object, /obj/reagent_dispensers/chemicalbarrel)) //barrels don't need to be open for condensers because it would be annoying I think
+			try_adding_container(over_object, usr)
+		if (istype(over_object, /obj/machinery/fluid_machinery/unary/input)) //hehe
 			try_adding_container(over_object, usr)
 
 	set_loc(newloc, storage_check)
@@ -1006,7 +1021,7 @@ proc/ui_describe_reagents(atom/A)
 		var/number = tgui_input_number(user,"Set flow rate, per beaker", "Set flow rate (1-10)",flow_rate,10,1,FALSE,TRUE)
 		if (number && flow_rate != number)
 			flow_rate = number
-		src.tooltip_rebuild = 1
+		src.tooltip_rebuild = TRUE
 	proc/set_flow(var/desired_state)
 		if (!desired_state && open)
 			processing_items -= src
@@ -1085,9 +1100,10 @@ proc/ui_describe_reagents(atom/A)
 			fabrication_tick += 1
 			if (fabrication_tick >= ticks_to_fabricate)
 				fabrication_tick = 0
-				var/reagents_per_container = flow_rate / length(connected_containers)
-				for(var/obj/container in connected_containers)
-					container.reagents.add_reagent(reagent_to_fabricate, reagents_per_container)
+				if(length(src.connected_containers))
+					var/reagents_per_container = flow_rate / length(src.connected_containers)
+					for(var/obj/container in src.connected_containers)
+						container.reagents.add_reagent(reagent_to_fabricate, reagents_per_container)
 			update_visuals()
 
 
@@ -1134,7 +1150,7 @@ proc/ui_describe_reagents(atom/A)
 			reagent_to_fabricate = reagent
 		if (number && flow_rate != number)
 			flow_rate = number
-		src.tooltip_rebuild = 1
+		src.tooltip_rebuild = TRUE
 		update_visuals()
 
 	proc/set_flow(var/desired_state)
@@ -1550,6 +1566,7 @@ proc/ui_describe_reagents(atom/A)
 /obj/item/reagent_containers/glass/vial/plastic
 	name = "plastic vial"
 	desc = "A 3D-printed vial. Can hold up to 5 units. Barely."
+	default_material = "plastic"
 	can_recycle = FALSE
 
 	New()

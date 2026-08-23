@@ -109,6 +109,7 @@
 		var/image/suit_image
 		wear_sanity_check(src.w_uniform)
 		suit_image = src.w_uniform.wear_image
+		src.w_uniform.copy_appearance_to_image(suit_image)
 		suit_image.filters = src.w_uniform.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.w_uniform)
 
 		var/wear_state = src.w_uniform.wear_state || src.w_uniform.icon_state
@@ -120,8 +121,6 @@
 		suit_image.icon_state = wear_state
 
 		suit_image.layer = src.w_uniform.wear_layer
-		suit_image.alpha = src.w_uniform.alpha
-		suit_image.color = src.w_uniform.color
 		src.w_uniform.update_wear_image(src, src.w_uniform.wear_image.icon != src.w_uniform.wear_image_icon)
 		src.AddOverlays(suit_image, "suit_image1")
 
@@ -152,8 +151,7 @@
 			src.wear_id.wear_image.pixel_y = head_offset
 
 		src.wear_id.wear_image.layer = src.wear_id.wear_layer
-		src.wear_id.wear_image.color = src.wear_id.color
-		src.wear_id.wear_image.alpha = src.wear_id.alpha
+		src.wear_id.copy_appearance_to_image(src.wear_id.wear_image)
 		src.wear_id.wear_image.filters = src.wear_id.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.wear_id)
 		src.AddOverlays(src.wear_id.wear_image, "wear_id")
 	else
@@ -166,6 +164,7 @@
 		var/icon_name = src.gloves.wear_state || src.gloves.item_state || src.gloves.icon_state
 		var/no_offset = FALSE
 		src.gloves.wear_image.layer = src.gloves.wear_layer
+		src.gloves.copy_appearance_to_image(src.gloves.wear_image)
 		src.gloves.wear_image.filters = src.gloves.filters.Copy() + src.mutantrace.apply_clothing_filters(src.gloves)
 		var/typeinfo/datum/mutantrace/typeinfo = src.mutantrace?.get_typeinfo()
 		if (src.limbs && src.limbs.l_arm && src.limbs.l_arm.accepts_normal_human_overlays) //src.bioHolder && !src.bioHolder.HasEffect("robot_left_arm"))
@@ -178,8 +177,6 @@
 			else
 				src.gloves.wear_image.icon = src.gloves.wear_image_icon
 			src.gloves.wear_image.icon_state = "left_[icon_local]"
-			src.gloves.wear_image.color = src.gloves.color
-			src.gloves.wear_image.alpha = src.gloves.alpha
 			src.gloves.update_wear_image(src, src.gloves.wear_image.icon != src.gloves.wear_image_icon)
 			src.AddOverlays(src.gloves.wear_image, "wear_gloves_l")
 		else
@@ -242,11 +239,13 @@
 				else
 					src.shoes.wear_image.icon = src.shoes.wear_image_icon
 				var/image/right_shoe_overlay = image(src.shoes.wear_image.icon, "right_[wear_state]")
+				src.shoes.copy_appearance_to_image(right_shoe_overlay)
 				right_shoe_overlay.filters = src.shoes.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.shoes)
 				src.shoes.wear_image.overlays += right_shoe_overlay
 
 
 		if(shoes_count)
+			src.shoes.copy_appearance_to_image(src.shoes.wear_image)
 			src.shoes.wear_image.filters = src.shoes.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.shoes)
 			src.AddOverlays(src.shoes.wear_image, "wear_shoes")
 		else
@@ -259,8 +258,8 @@
 	if (src.wear_suit)
 		wear_sanity_check(src.wear_suit)
 		src.wear_suit.wear_image.layer = src.wear_suit.wear_layer
+		src.wear_suit.copy_appearance_to_image(src.wear_suit.wear_image)
 		src.wear_suit.wear_image.filters = src.wear_suit.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.wear_suit)
-		//src.wear_suit.wear_image.filters += src.mutantrace?.apply_clothing_filters(src.wear_suit)
 		var/typeinfo/datum/mutantrace/typeinfo = src.mutantrace?.get_typeinfo()
 		var/wear_state = src.wear_suit.wear_state || src.wear_suit.icon_state
 		if (wear_state in typeinfo?.clothing_icon_states["overcoats"])
@@ -270,10 +269,8 @@
 		src.wear_suit.wear_image.icon_state = wear_state
 
 		src.wear_suit.update_wear_image(src, src.wear_suit.wear_image.icon != src.wear_suit.wear_image_icon)
-		src.wear_suit.wear_image.color = src.wear_suit.color
-		src.wear_suit.wear_image.alpha = src.wear_suit.alpha
 
-		if (src.organHolder?.tail) update_tail_clothing(wear_state)
+		if (src.organHolder?.tail) update_tail_clothing(wear_state, src.wear_suit)
 
 		src.AddOverlays(src.wear_suit.wear_image, "wear_suit")
 
@@ -321,9 +318,8 @@
 		src.back.wear_image.layer = src.back.wear_layer
 		if(src.back.wear_image.layer == MOB_CLOTHING_LAYER) // if default let's assume you actually want this on back
 			src.back.wear_image.layer = MOB_BACK_LAYER
-		src.back.wear_image.color = src.back.color
-		src.back.wear_image.alpha = src.back.alpha
 		src.back.update_wear_image(src, src.back.wear_image.icon != src.back.wear_image_icon)
+		src.back.copy_appearance_to_image(src.back.wear_image)
 		src.back.wear_image.filters = src.back.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.back)
 		src.AddOverlays(src.back.wear_image, "wear_back")
 
@@ -354,9 +350,8 @@
 		if (!no_offset)
 			src.glasses.wear_image.pixel_x = 0
 			src.glasses.wear_image.pixel_y = head_offset
-		src.glasses.wear_image.color = src.glasses.color
-		src.glasses.wear_image.alpha = src.glasses.alpha
 		src.glasses.update_wear_image(src, src.glasses.wear_image.icon != src.glasses.wear_image_icon)
+		src.glasses.copy_appearance_to_image(src.glasses.wear_image)
 		src.glasses.wear_image.filters = src.glasses.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.glasses)
 		src.AddOverlays(src.glasses.wear_image, "wear_glasses")
 		if (src.glasses.worn_material_texture_image != null)
@@ -385,8 +380,7 @@
 		if (!no_offset)
 			src.ears.wear_image.pixel_x = 0
 			src.ears.wear_image.pixel_y = head_offset
-		src.ears.wear_image.color = src.ears.color
-		src.ears.wear_image.alpha = src.ears.alpha
+		src.ears.copy_appearance_to_image(src.ears.wear_image)
 		src.ears.wear_image.filters = src.ears.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.ears)
 		src.AddOverlays(src.ears.wear_image, "wear_ears")
 		if (src.ears.worn_material_texture_image != null)
@@ -418,9 +412,8 @@
 			src.wear_mask.wear_image.pixel_x = 0
 			src.wear_mask.wear_image.pixel_y = head_offset
 		src.wear_mask.wear_image.layer = src.wear_mask.wear_layer
-		src.wear_mask.wear_image.color = src.wear_mask.color
-		src.wear_mask.wear_image.alpha = src.wear_mask.alpha
 		src.wear_mask.update_wear_image(src, src.wear_mask.wear_image.icon != src.wear_mask.wear_image_icon)
+		src.wear_mask.copy_appearance_to_image(src.wear_mask.wear_image)
 		src.wear_mask.wear_image.filters = src.wear_mask.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.wear_mask)
 		src.AddOverlays(src.wear_mask.wear_image, "wear_mask")
 		if (src.wear_mask.worn_material_texture_image != null)
@@ -452,9 +445,8 @@
 		if (!no_offset)
 			src.head.wear_image.pixel_x = 0
 			src.head.wear_image.pixel_y = head_offset
-		src.head.wear_image.color = src.head.color
-		src.head.wear_image.alpha = src.head.alpha
 		src.head.update_wear_image(src, src.head.wear_image.icon != src.head.wear_image_icon)
+		src.head.copy_appearance_to_image(src.head.wear_image)
 		src.head.wear_image.filters = src.head.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.head)
 		src.AddOverlays(src.head.wear_image, "wear_head")
 		if (src.head.worn_material_texture_image != null)
@@ -485,8 +477,7 @@
 		src.belt.wear_image.layer = src.belt.wear_layer
 		if(src.belt.wear_image.layer == MOB_CLOTHING_LAYER) // if default let's assume you actually want this on back
 			src.belt.wear_image.layer = MOB_BELT_LAYER
-		src.belt.wear_image.color = src.belt.color
-		src.belt.wear_image.alpha = src.belt.alpha
+		src.belt.copy_appearance_to_image(src.belt.wear_image)
 		src.belt.wear_image.filters = src.belt.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.belt)
 		src.AddOverlays(src.belt.wear_image, "wear_belt")
 		if (src.belt.worn_material_texture_image != null)
@@ -503,9 +494,17 @@
 		src.remove_pulling()
 		var/image/handcuff_img = SafeGetOverlayImage("handcuffs", 'icons/mob/mob.dmi', "handcuff1", MOB_HANDCUFF_LAYER)
 		handcuff_img.pixel_y = hand_offset
+		if(src.handcuffs)
+			src.handcuffs.copy_appearance_to_image(handcuff_img)
+			handcuff_img.filters = src.handcuffs.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.handcuffs)
 		src.AddOverlays(handcuff_img, "handcuffs")
+		if (src.handcuffs.worn_material_texture_image)
+			src.handcuffs.worn_material_texture_image.layer = src.handcuffs.wear_image.layer + 0.1
+			src.AddOverlays(src.handcuffs.worn_material_texture_image, "material_handcuffs")
+		else
+			src.ClearSpecificOverlays("material_handcuffs")
 	else
-		src.ClearSpecificOverlays("handcuffs")
+		src.ClearSpecificOverlays("handcuffs", "material_handcuffs")
 
 /mob/living/carbon/human/proc/update_implants()
 	for (var/I in implant_images)
@@ -520,7 +519,7 @@
 #undef wear_sanity_check
 #undef inhand_sanity_check
 
-/mob/living/carbon/human/proc/update_tail_clothing(var/icon_state)
+/mob/living/carbon/human/proc/update_tail_clothing(var/icon_state, var/obj/item/clothing/tail_clothing)
 	src.tail_standing = SafeGetOverlayImage("tail", 'icons/mob/human.dmi', "blank", MOB_TAIL_LAYER1)
 	src.tail_standing.overlays.len = 0
 	src.tail_standing_oversuit = SafeGetOverlayImage("tail_oversuit", 'icons/mob/human.dmi', "blank", MOB_OVERSUIT_LAYER1)
@@ -531,11 +530,7 @@
 	if(our_tail.clothing_image_icon && icon_state)
 		var/tail_overrides = get_icon_states(our_tail.clothing_image_icon)
 		if (islist(tail_overrides) && (icon_state in tail_overrides))
-			human_tail_image = image(our_tail.clothing_image_icon, icon_state)
-			src.tail_standing.overlays += human_tail_image
-			src.tail_standing_oversuit.overlays += human_tail_image
-			src.update_tail_overlays()
-			return
+			tail_clothing.update_tail_clothing(src, icon_state)
 
 	human_tail_image = our_tail.tail_image_1
 	src.tail_standing.overlays += human_tail_image
@@ -561,8 +556,8 @@
 	ClearSpecificOverlays(TRUE, "hair_one", "hair_two", "hair_three", "hair_special_one", "hair_special_two", "hair_special_three")
 
 	var/obj/item/clothing/suit/back_clothing = src.back // typed version of back to check hair sealage; might not be clothing, we check type below
-	var/seal_hair = ((src.wear_suit && src.wear_suit.over_hair) || (src.head && src.head.seal_hair) \
-						|| (src.wear_suit && src.wear_suit.body_parts_covered & HEAD) || (istype(back_clothing) && back_clothing.over_hair))
+	var/seal_hair = ((src.wear_suit && src.wear_suit.c_flags & COVERSHAIR) || (src.head && src.head.c_flags & COVERSHAIR) || (src.wear_mask && src.wear_mask.c_flags & COVERSHAIR) \
+						|| (istype(back_clothing) && back_clothing.c_flags & COVERSHAIR))
 	var/hooded = (src.wear_suit && src.wear_suit.hooded)
 	var/obj/item/organ/head/my_head
 	if (src?.organHolder?.head)
@@ -740,7 +735,7 @@
 	UpdateOverlays(i_l_hand, "i_l_hand")
 
 /mob/living/carbon/human/proc/update_hair_layer()
-	if ((src.wear_suit && src.wear_suit.over_hair) || (src.head && src.head.seal_hair) || (src.wear_suit && src.wear_suit.body_parts_covered & HEAD))
+	if ((src.wear_suit && src.wear_suit.c_flags & COVERSHAIR) || (src.head && src.head.c_flags & COVERSHAIR))
 		src.image_cust_one?.layer = MOB_HAIR_LAYER1
 		src.image_cust_two?.layer = MOB_HAIR_LAYER1
 		src.image_cust_three?.layer = MOB_HAIR_LAYER1
@@ -751,6 +746,21 @@
 
 
 var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_leg_left", "r_arm" = "stump_arm_right", "l_arm" = "stump_arm_left")
+
+/// takes one of CUST_1, CUST_2, CUST_3 and returns the corrected colour for that part
+/mob/living/carbon/human/proc/get_body_custom_color(slot)
+	switch(slot)
+		if(CUST_1)
+			. = src.bioHolder.mobAppearance.customizations["hair_bottom"].color
+		if(CUST_2)
+			. = src.bioHolder.mobAppearance.customizations["hair_middle"].color
+		if(CUST_3)
+			. = src.bioHolder.mobAppearance.customizations["hair_top"].color
+		else
+			return "#FFFFFF"
+	if (src.mutantrace?.mutant_appearance_flags & FIX_COLORS)
+		return fix_colors(.)
+	return .
 
 /mob/living/carbon/human/update_body(force = FALSE)
 	..()
@@ -830,28 +840,12 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 				// all this shit goes on the torso anyway
 				if(AHOLD.mob_appearance_flags & HAS_EXTRA_DETAILS)
 					human_image = image(AHOLD.mob_detail_1_icon, AHOLD.mob_detail_1_state, MOB_BODYDETAIL_LAYER1)
-					switch(AHOLD.mob_detail_1_color_ref)
-						if(CUST_1)
-							human_image.color = AHOLD.customizations["hair_bottom"].color
-						if(CUST_2)
-							human_image.color = AHOLD.customizations["hair_middle"].color
-						if(CUST_3)
-							human_image.color = AHOLD.customizations["hair_top"].color
-						else
-							human_image.color = "#FFFFFF"
+					human_image.color = src.get_body_custom_color(AHOLD.mob_detail_1_color_ref)
 					src.body_standing.overlays += human_image
 
 				if(AHOLD.mob_appearance_flags & HAS_OVERSUIT_DETAILS)	// need more oversuits? Make more of these!
 					human_detail_image = image(AHOLD.mob_oversuit_1_icon, AHOLD.mob_oversuit_1_state, layer = MOB_OVERSUIT_LAYER1)
-					switch(AHOLD.mob_oversuit_1_color_ref)
-						if(CUST_1)
-							human_detail_image.color = AHOLD.customizations["hair_bottom"].color
-						if(CUST_2)
-							human_detail_image.color = AHOLD.customizations["hair_middle"].color
-						if(CUST_3)
-							human_detail_image.color = AHOLD.customizations["hair_top"].color
-						else
-							human_detail_image.color = "#FFFFFF"
+					human_image.color = src.get_body_custom_color(AHOLD.mob_detail_1_color_ref)
 					src.detail_standing_oversuit.overlays += human_detail_image
 					AddOverlays(src.detail_standing_oversuit, "detail_oversuit")
 				else // ^^ up here because peoples' bodies turn invisible if it down there with the rest of em
@@ -882,7 +876,6 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 
 				human_decomp_image.icon_state = "body_decomp[src.decomp_stage]"
 				src.body_standing.overlays += human_decomp_image
-
 			if (src.limbs)
 				src.limbs.reset_stone()
 
@@ -1120,7 +1113,7 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 					heart_image.pixel_y = body_offset
 					src.body_standing.overlays += heart_image
 
-			if (src.decomp_stage < DECOMP_STAGE_HIGHLY_DECAYED && ((AHOLD.underwear && AHOLD.mob_appearance_flags & WEARS_UNDERPANTS) || src.underpants_override)) // no more bikini werewolves
+			if (src.decomp_stage < DECOMP_STAGE_HIGHLY_DECAYED && !(src.w_uniform?.hide_underwear) && ((AHOLD.underwear && AHOLD.mob_appearance_flags & WEARS_UNDERPANTS) || src.underpants_override)) // no more bikini werewolves
 				undies_image.icon_state = underwear_styles[AHOLD.underwear]
 				undies_image.color = AHOLD.u_color
 				undies_image.pixel_y = body_offset

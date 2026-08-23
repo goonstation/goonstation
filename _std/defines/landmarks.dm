@@ -74,8 +74,52 @@
 #define LANDMARK_TELEPORT_SCROLL "Teleport-Scroll" // waldo scrolls
 #define LANDMARK_AI_GUNBOT_SHUTTLE "AIgunbotshuttle" // MALF AI module thing
 #define LANDMARK_BIGBOOM "bigboom" // unfinished Manta event
+
+// Tutorials
 #define LANDMARK_TUTORIAL_START "tutorial_start_marker"
 #define LANDMARK_TUTORIAL_FLOCK_CONVERSION "tutorial_flock_conversion"
+#define LANDMARK_TUTORIAL_NEWBEE_BASIC_MOVEMENT "tutorial_newbee_basic_movement"
+#define LANDMARK_TUTORIAL_NEWBEE_POWERED_DOORS "tutorial_newbee_powered_doors"
+#define LANDMARK_TUTORIAL_NEWBEE_PICKUP_ID_CARD "tutorial_newbee_pickup_id_card"
+#define LANDMARK_TUTORIAL_NEWBEE_IDLOCK_DOORS "tutorial_newbee_idlock_doors"
+#define LANDMARK_TUTORIAL_NEWBEE_PICKUP_CAN "tutorial_newbee_pickup_can"
+#define LANDMARK_TUTORIAL_NEWBEE_CAN_THROW "tutorial_newbee_can_throw"
+#define LANDMARK_TUTORIAL_NEWBEE_PICKUP_CROWBAR "tutorial_newbee_pickup_crowbar"
+#define LANDMARK_TUTORIAL_NEWBEE_UNPOWERED_DOORS "tutorial_newbee_unpowered_doors"
+#define LANDMARK_TUTORIAL_NEWBEE_HELP_PERSON "tutorial_newbee_help_person"
+#define LANDMARK_TUTORIAL_NEWBEE_DISARM_PERSON "tutorial_newbee_disarm_person"
+#define LANDMARK_TUTORIAL_NEWBEE_GRAB_PERSON "tutorial_newbee_grab_person"
+#define LANDMARK_TUTORIAL_NEWBEE_MOUSE "tutorial_newbee_mouse"
+#define LANDMARK_TUTORIAL_NEWBEE_EXIT_INTENTS "tutorial_newbee_exit_intents"
+#define LANDMARK_TUTORIAL_NEWBEE_CHECK_HEALTH "tutorial_newbee_check_health"
+#define LANDMARK_TUTORIAL_NEWBEE_PICKUP_BRUTE_FIRST_AID "tutorial_newbee_pickup_brute_first_aid"
+#define LANDMARK_TUTORIAL_NEWBEE_PICKUP_FIRE_FIRST_AID "tutorial_newbee_pickup_fire_first_aid"
+#define LANDMARK_TUTORIAL_NEWBEE_EXIT_HEALTH "tutorial_newbee_exit_health"
+#define LANDMARK_TUTORIAL_NEWBEE_PICKUP_TOOLBOX "tutorial_newbee_pickup_toolbox"
+#define LANDMARK_TUTORIAL_NEWBEE_DECON_GIRDER "tutorial_newbee_destroy_girder"
+#define LANDMARK_TUTORIAL_NEWBEE_PICKUP_FLASHLIGHT "tutorial_newbee_flashlight"
+#define LANDMARK_TUTORIAL_NEWBEE_ENTER_MAINTS "tutorial_newbee_enter_maints"
+#define LANDMARK_TUTORIAL_NEWBEE_TRAVERSE_MAINTS "tutorial_newbee_traverse_maints"
+#define LANDMARK_TUTORIAL_NEWBEE_EMERGENCY_SUPPLY_CLOSET "tutorial_newbee_emergency_supply_closet"
+#define LANDMARK_TUTORIAL_NEWBEE_ENTER_SPACE "tutorial_newbee_enter_space"
+#define LANDMARK_TUTORIAL_NEWBEE_TRAVERSE_SPACE "tutorial_newbee_traverse_space"
+#define LANDMARK_TUTORIAL_NEWBEE_PICKUP_BACKPACK "tutorial_newbee_pickup_backpack"
+#define LANDMARK_TUTORIAL_NEWBEE_EXIT_STORAGE "tutorial_newbee_exit_storage"
+#define LANDMARK_TUTORIAL_NEWBEE_PICKUP_WELDING_MASK "tutorial_newbee_pickup_welding_mask"
+#define LANDMARK_TUTORIAL_NEWBEE_PICKUP_WELDINGTOOL "tutorial_newbee_pickup_weldingtool"
+#define LANDMARK_TUTORIAL_NEWBEE_PICKUP_WRENCH "tutorial_newbee_pickup_wrench"
+#define LANDMARK_TUTORIAL_NEWBEE_DECON_WALL "tutorial_newbee_decon_wall"
+#define LANDMARK_TUTORIAL_NEWBEE_LAYING_DOWN "tutorial_newbee_laying_down"
+#define LANDMARK_TUTORIAL_NEWBEE_SPRINTING "tutorial_newbee_sprinting"
+#define LANDMARK_TUTORIAL_NEWBEE_WALKING "tutorial_newbee_walking"
+#define LANDMARK_TUTORIAL_NEWBEE_EXIT_MOVEMENT "tutorial_newbee_exit_movement"
+#define LANDMARK_TUTORIAL_NEWBEE_PICKUP_HEADSET "tutorial_newbee_pickup_headset"
+#define LANDMARK_TUTORIAL_NEWBEE_EXIT_RADIO "tutorial_newbee_exit_radio"
+#define LANDMARK_TUTORIAL_NEWBEE_WATER_TANK "tutorial_newbee_water_tank"
+#define LANDMARK_TUTORIAL_NEWBEE_PULL_TARGET "tutorial_newbee_pull_target"
+#define LANDMARK_TUTORIAL_NEWBEE_FINAL_ROOM "tutorial_newbee_final_room"
+#define LANDMARK_TUTORIAL_NEWBEE_CLOWN_MURDER "tutorial_newbee_clown_murder"
+
 #define LANDMARK_CRUISER_ENTRANCE "cruiser_entrance"
 #define LANDMARK_CRUISER_CENTER "cruiser_center"
 
@@ -93,6 +137,7 @@
 // falling down holes
 #define LANDMARK_FALL_DEBUG "pit_debug" // locations to fall if you fucked up the warptarget on a hole_xy
 #define LANDMARK_FALL_ICE "icefall" // locations for people to fall if they enter the deep abyss on the ice moon
+#define LANDMARK_FALL_CULTIST "cultfall" // locations for people to fall if they enter the deep in the trench
 #define LANDMARK_FALL_POLARIS "polarisfall" // locations for people to fall if they enter the deep in the trench
 #define LANDMARK_FALL_MARJ "marjfall" // locations for people to fall if they enter the deep in the trench
 #define LANDMARK_FALL_DEEP "deepfall" // locations for people to fall into the precursor pit area
@@ -126,3 +171,18 @@
 #define LANDMARK_HTR_TEAM "HTR_TEAM"
 #define LANDMARK_HTR_VENDOR "HTR_VENDOR"
 #define LANDMARK_HTR_BOTS "HTR_BOTS"
+
+//Menhir map
+#define LANDMARK_MENHIR_DOOR "menhir_door"
+#define LANDMARK_MENHIR_EXTRUSION "menhir_extrusion"
+#define LANDMARK_MENHIR_NODE "menhir_node"
+#define LANDMARK_MENHIR_OUTREACH "menhir_outreach"
+#define LANDMARK_MENHIR_PENANCE "menhir_penance"
+#define LANDMARK_MENHIR_COALESCE "menhir_coalesce"
+#define LANDMARK_MENHIR_BEYOND "menhir_beyond"
+#define LANDMARK_MENHIR_PASSAGE "menhir_passage"
+#define LANDMARK_MENHIR_DARK "menhir_dark"
+#define LANDMARK_MENHIR_STUCKSCAN "menhir_stuckscan"
+
+// Map Correctness
+#define LANDMARK_DISPOSALS_ENDPOINT "disposals endpoint"

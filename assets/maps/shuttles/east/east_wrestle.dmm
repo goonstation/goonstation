@@ -303,14 +303,6 @@
 	icon_state = "floor"
 	},
 /area/centcom)
-"jx" = (
-/obj/machinery/light{
-	dir = 4;
-	pixel_x = 10
-	},
-/obj/loudspeaker,
-/turf/unsimulated/floor/wood/three,
-/area/shuttle/escape/centcom)
 "jS" = (
 /obj/stool/bench/blue/auto,
 /obj/machinery/light{
@@ -378,10 +370,6 @@
 	},
 /turf/unsimulated/floor/grey,
 /area/shuttle/escape/centcom)
-"lk" = (
-/obj/decal/boxingropeenter,
-/turf/unsimulated/floor/specialroom/gym,
-/area/shuttle/escape/centcom)
 "lK" = (
 /obj/machinery/computer/shuttle{
 	dir = 8
@@ -446,6 +434,14 @@
 	dir = 4
 	},
 /turf/unsimulated/floor/white/checker2,
+/area/shuttle/escape/centcom)
+"pw" = (
+/obj/machinery/light{
+	dir = 4;
+	pixel_x = 10
+	},
+/obj/machinery/loudspeaker,
+/turf/unsimulated/floor/wood/three,
 /area/shuttle/escape/centcom)
 "px" = (
 /obj/stool/chair/comfy/shuttle/pilot{
@@ -656,6 +652,11 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
+"uF" = (
+/obj/table/auto,
+/obj/machinery/wrestlingbell,
+/turf/unsimulated/floor/white,
+/area/shuttle/escape/centcom)
 "uY" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "delivery2"
@@ -768,12 +769,6 @@
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
-"zx" = (
-/obj/decal/boxingropeenter,
-/turf/unsimulated/floor/stairs{
-	dir = 1
-	},
-/area/shuttle/escape/centcom)
 "zy" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
@@ -830,6 +825,16 @@
 "BP" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor/shiny,
+/area/shuttle/escape/centcom)
+"BV" = (
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/obj/decal/stage_edge,
+/obj/machinery/loudspeaker,
+/turf/unsimulated/floor/wood/three,
 /area/shuttle/escape/centcom)
 "CC" = (
 /obj/decal/tile_edge/stripe/extra_big,
@@ -965,16 +970,6 @@
 	icon_state = "10"
 	},
 /area/shuttle/escape/centcom)
-"Ib" = (
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/obj/decal/stage_edge,
-/obj/loudspeaker,
-/turf/unsimulated/floor/wood/three,
-/area/shuttle/escape/centcom)
 "If" = (
 /turf/unsimulated/floor/white,
 /area/shuttle/escape/centcom)
@@ -1037,11 +1032,6 @@
 	hardened = 1
 	},
 /obj/mapping_helper/access/heads,
-/turf/unsimulated/floor/white,
-/area/shuttle/escape/centcom)
-"JK" = (
-/obj/table/auto,
-/obj/item/wrestlingbell,
 /turf/unsimulated/floor/white,
 /area/shuttle/escape/centcom)
 "JP" = (
@@ -1233,6 +1223,12 @@
 	},
 /turf/unsimulated/floor/white/checker2,
 /area/shuttle/escape/centcom)
+"Pl" = (
+/obj/railing/boxing,
+/turf/unsimulated/floor/stairs{
+	dir = 1
+	},
+/area/shuttle/escape/centcom)
 "PL" = (
 /obj/fakeobject/tallsmes,
 /turf/unsimulated/floor{
@@ -1333,6 +1329,10 @@
 	icon_state = "floor"
 	},
 /area/centcom/outside)
+"Uq" = (
+/obj/railing/boxing,
+/turf/unsimulated/floor/specialroom/gym,
+/area/shuttle/escape/centcom)
 "Uw" = (
 /obj/stool/chair/couch/blue{
 	dir = 8
@@ -1918,14 +1918,14 @@ IV
 wT
 SU
 Il
-zx
+Pl
 ay
 ay
 ay
 ay
 ay
 ay
-lk
+Uq
 Tg
 tC
 wT
@@ -1945,7 +1945,7 @@ pm
 IV
 eu
 oO
-jx
+pw
 Kc
 ay
 aA
@@ -1954,7 +1954,7 @@ ay
 aA
 ay
 Zx
-Ib
+BV
 rZ
 Er
 IV
@@ -2005,7 +2005,7 @@ RC
 aQ
 If
 xw
-JK
+uF
 sT
 xw
 If

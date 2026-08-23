@@ -12,6 +12,7 @@
 	shot_sound = 'sound/effects/syringeproj.ogg'
 	default_firemode = /datum/firemode/single
 	damage_type = D_TOXIC //needed for reagent shit
+	affected_by_gravity = TRUE
 
 	syringe_barbed
 		icon_state = "syringeproj_barbed"

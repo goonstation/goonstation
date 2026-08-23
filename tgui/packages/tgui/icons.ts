@@ -6,7 +6,6 @@ export function loadIconRefMap() {
   if (Object.keys(Byond.iconRefMap).length > 0) {
     return;
   }
-  return;
 
   // fetchRetry(resolveAsset('icon_ref_map.json')) // ZEWAKA TODO: yeah this would be sick
   //   .then((res) => res.json())

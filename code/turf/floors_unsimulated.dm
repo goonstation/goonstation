@@ -13,6 +13,7 @@
 	// Related to overlay application in break/burn_tile() only
 	can_burn = TRUE
 	can_break = TRUE
+	provides_grip = FALSE
 
 /turf/unsimulated/floor/attackby(obj/item/C, mob/user, params)
 
@@ -153,6 +154,9 @@
 		UpdateOverlays(damage_overlay,"damage")
 
 /turf/unsimulated/floor/plating/random
+#ifdef IN_MAP_EDITOR
+	icon_state = "plating_random"
+#endif
 	New()
 		..()
 		if (prob(20))
@@ -346,12 +350,6 @@
 /turf/unsimulated/floor/darkblue
 	icon_state = "fulldblue"
 
-/turf/unsimulated/floor/darkblue/checker
-	icon_state = "blue-dblue"
-
-/turf/unsimulated/floor/darkblue/checker/other
-	icon_state = "blue-dblue2"
-
 /turf/unsimulated/floor/darkblue/side
 	icon_state = "dblue"
 
@@ -493,6 +491,24 @@
 /turf/unsimulated/floor/yellowblack/corner
 	icon_state = "yellowblackcorner"
 
+
+/turf/unsimulated/floor/yellowwhite
+	icon_state = "yellowwhite"
+
+/turf/unsimulated/floor/yellowwhite/corner
+	icon_state = "yellowwhitecorner"
+
+/////////////////////////////////////////
+
+/turf/unsimulated/floor/lightyellow
+	icon_state = "fulllyellow"
+
+/turf/unsimulated/floor/lightyellow/side
+	icon_state = "lyellow"
+
+/turf/unsimulated/floor/lightyellow/corner
+	icon_state = "lyellowcorner"
+
 /////////////////////////////////////////
 
 /turf/unsimulated/floor/orange
@@ -504,20 +520,38 @@
 /turf/unsimulated/floor/orange/corner
 	icon_state = "orangecorner"
 
+/turf/unsimulated/floor/orange/checker
+	icon_state = "orangechecker"
+
 
 /turf/unsimulated/floor/orangeblack
-	icon_state = "fullcaution"
-
-/turf/unsimulated/floor/orangeblack/side
-	icon_state = "caution"
-
-/turf/unsimulated/floor/orangeblack/side/white
-	icon_state = "cautionwhite"
+	icon_state = "orangeblack"
 
 /turf/unsimulated/floor/orangeblack/corner
+	icon_state = "orangeblackcorner"
+
+
+/turf/unsimulated/floor/orangewhite
+	icon_state = "orangewhite"
+
+/turf/unsimulated/floor/orangewhite/corner
+	icon_state = "orangewhitecorner"
+
+/////////////////////////////////////////
+
+/turf/unsimulated/floor/caution
+	icon_state = "fullcaution"
+
+/turf/unsimulated/floor/caution/side
+	icon_state = "caution"
+
+/turf/unsimulated/floor/caution/white
+	icon_state = "cautionwhite"
+
+/turf/unsimulated/floor/caution/corner
 	icon_state = "cautioncorner"
 
-/turf/unsimulated/floor/orangeblack/corner/white
+/turf/unsimulated/floor/caution/corner/white
 	icon_state = "cautionwhitecorner"
 
 /////////////////////////////////////////
@@ -981,6 +1015,7 @@ TYPEINFO(/turf/unsimulated/floor/wood)
 	icon_state = "snow1"
 	step_material = "step_snow"
 	turf_flags = MOB_STEP
+	can_dig = TRUE
 
 	New()
 		..()
@@ -999,6 +1034,7 @@ TYPEINFO(/turf/unsimulated/floor/wood)
 /turf/unsimulated/floor/snow/green
 	name = "snow-covered floor"
 	icon_state = "snowgreen"
+	can_dig = FALSE
 
 /turf/unsimulated/floor/snow/green/corner
 	name = "snow-covered floor"
@@ -1185,6 +1221,20 @@ TYPEINFO(/turf/unsimulated/floor/auto)
 					edge_overlay.plane = PLANE_FLOOR
 					T.UpdateOverlays(edge_overlay, "edge_[direction]")
 
+/turf/unsimulated/floor/auto/grass
+	name = "grass"
+	icon = 'icons/turf/outdoors.dmi'
+	#ifdef SEASON_AUTUMN
+	icon_state = "grass_autumn"
+	#else
+	icon_state = "grass"
+	#endif
+	mat_changename = 0
+	mat_changedesc = 0
+	step_material = "step_outdoors"
+	step_priority = STEP_PRIORITY_MED
+	can_dig = TRUE
+
 /turf/unsimulated/floor/auto/grass/swamp_grass
 	name = "swamp grass"
 	desc = "Grass. In a swamp. Truly fascinating."
@@ -1219,6 +1269,7 @@ TYPEINFO(/turf/unsimulated/floor/auto)
 	icon_state_edge = "dirtedge"
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
+	can_dig = TRUE
 
 /turf/unsimulated/floor/auto/sand
 	name = "sand"
@@ -1228,6 +1279,7 @@ TYPEINFO(/turf/unsimulated/floor/auto)
 	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_DIRT + 1
 	icon_state_edge = "sand_edge"
 	var/tuft_prob = 2
+	can_dig = TRUE
 
 	New()
 		..()
@@ -1330,6 +1382,7 @@ TYPEINFO(/turf/unsimulated/floor/auto/water/ice)
 	step_material = "step_snow"
 	step_priority = STEP_PRIORITY_MED
 	turf_flags = MOB_STEP
+	can_dig = TRUE
 
 	New()
 		. = ..()

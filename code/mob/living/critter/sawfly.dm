@@ -18,9 +18,9 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	var/datum/weakref/master = null //first friendly they imprint upon for /datum/aiTask/timed/targeted/follower
 	var/obj/item/old_grenade/sawfly/ourgrenade = null
 
-	speechverb_say = "whirrs"
-	speechverb_exclaim = "buzzes"
-	speechverb_ask = "hums"
+	speech_verb_say = "whirrs"
+	speech_verb_exclaim = "buzzes"
+	speech_verb_ask = "hums"
 	health = 50 //this value's pretty arbitrary, since it's overridden when they get their healtholders
 	var/beeps = list('sound/machines/sawfly1.ogg','sound/machines/sawfly2.ogg','sound/machines/sawfly3.ogg')
 	var/retaliate = FALSE
@@ -65,7 +65,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new/datum/limb/sawfly_blades
 		HH.name = "sawfly blades"
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "sawflysaw"
 		HH.limb_name = HH.name
 		HH.can_hold_items = FALSE
@@ -87,6 +87,9 @@ This file is the critter itself, and all the custom procs it needs in order to f
 			return
 		else
 			var/obj/item/old_grenade/sawfly/N = new /obj/item/old_grenade/sawfly(get_turf(src))
+			N.forensic_holder = src.forensic_holder
+			if(src.material)
+				N.setMaterial(src.material)
 			// pass our name and health
 			N.name = "Compact [name]"
 			N.desc = "A self-deploying antipersonnel robot. This one has seen some use."

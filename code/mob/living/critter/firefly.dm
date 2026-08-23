@@ -16,9 +16,9 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 	var/image/bulb
 	var/image/bulb_light
 
-	speechverb_say = "bzzs"
-	speechverb_exclaim = "bzzts"
-	speechverb_ask = "hums"
+	speech_verb_say = "bzzs"
+	speech_verb_exclaim = "bzzts"
+	speech_verb_ask = "hums"
 
 	health_brute = 10
 	health_burn = 10
@@ -28,6 +28,7 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 	fits_under_table = 1
 	base_move_delay = 1.5
 	base_walk_delay = 3.5
+	edible_insect = TRUE
 	isFlying = 1
 
 	New()
@@ -287,9 +288,9 @@ TYPEINFO(/mob/living/critter/small_animal/dragonfly)
 	icon_state = "dragonfly"
 	blood_id = "hemolymph"
 
-	speechverb_say = "bzzs"
-	speechverb_exclaim = "bzzts"
-	speechverb_ask = "hums"
+	speech_verb_say = "bzzs"
+	speech_verb_exclaim = "bzzts"
+	speech_verb_ask = "hums"
 
 	health_brute = 10
 	health_burn = 10

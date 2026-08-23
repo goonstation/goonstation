@@ -9,7 +9,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pump)
 	dir = NORTH //so it spawns with the fan side showing
 	density = 1
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER
-	var/on = 0
+	var/on = FALSE
 	var/direction_out = 0 //0 = siphoning, 1 = releasing
 	var/target_pressure = 100
 	var/image/tank_hatch
@@ -168,6 +168,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pump)
 				. = TRUE
 		if("eject-tank")
 			src.eject_tank()
+			src.turn_off()
 			. = TRUE
 
 /obj/machinery/portable_atmospherics/pump/suicide(var/mob/living/carbon/human/user)

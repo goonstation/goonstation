@@ -2,12 +2,14 @@
 	name = "artifact power cell"
 	icon = 'icons/obj/artifacts/artifactsitemS.dmi'
 	maxcharge = 1
-	var/chargeCap = 10000
-	genrate = 50
+	genrate = 0
 	specialicon = 1
 	artifact = 1
 	mat_changename = 0
 	mat_changedesc = 0
+
+	var/chargeCap = 10000
+	var/activation_genrate = 50
 	var/effectProbModifier = 0
 	var/noise = null
 	var/leakChem = null
@@ -60,12 +62,14 @@
 	ArtifactActivated()
 		. = ..()
 		src.maxcharge = src.chargeCap
+		src.genrate = src.activation_genrate
 		processing_items |= src				// in case someone decides to make big cells work like small cells
 
 	ArtifactDeactivated()
 		. = ..()
+		src.genrate = 0
+		src.charge = 0
 		src.maxcharge = 1
-		src.charge = 1
 
 	reagent_act(reagent_id,volume)
 		if (..())
@@ -83,7 +87,6 @@
 	type_size = ARTIFACT_SIZE_TINY
 	rarity_weight = 350
 	validtypes = list("ancient","martian","wizard","precursor")
-	automatic_activation = 0
 	react_elec = list("equal",0,10)
 	react_xray = list(10,80,95,11,"SEGMENTED")
 	examine_hint = "It kinda looks like it's supposed to be inserted into something."
@@ -95,8 +98,7 @@
 	post_setup()
 		..()
 		var/obj/item/cell/artifact/O = src.holder
-		O.chargeCap = rand(15,1000)
-		O.chargeCap *= 100
+		O.chargeCap = rand(15,1000) * 100
 		src.react_elec[2] = O.chargeCap
 
 		// effects
@@ -109,12 +111,12 @@
 			if ("wizard")
 				O.noise = pick('sound/weapons/airzooka.ogg', 'sound/misc/chair/glass/scoot5.ogg', 'sound/misc/chair/glass/scoot2.ogg')
 			if ("precursor") // what does precursor stuff even sound like???
-				O.noise = pick('sound/effects/singsuck.ogg', 'sound/effects/screech_tone.ogg')
+				O.noise = pick('sound/effects/singsuck.ogg', 'sound/effects/screech_tone.ogg','sound/effects/gust.ogg')
 
-		if(prob(O.chargeCap/1000)) 			// the more charge the bigger the chance it does dumb stuff
+		if(prob(O.chargeCap/1000)) // the more charge the bigger the chance it does dumb stuff
 			switch(src.artitype.name) 		// leakage
 				if ("martian")
-					O.leakChem = pick("space_fungus","blood","vomit","gvomit","meat_slurry","grease","butter","synthflesh","bread","poo","ants","spiders")
+					O.leakChem = pick("space_fungus","blood","vomit","gvomit","meat_slurry","grease","butter","synthflesh","bread","poo","ants","spiders","slime")
 				if ("ancient")
 					O.leakChem = pick("voltagen","ash","cleaner", "oil", "thermite", "acid", "fuel", "nanites", "radium", "mercury")
 				if ("wizard")

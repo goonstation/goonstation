@@ -5,7 +5,7 @@
 #define SMESMAXOUTPUT 200000
 
 TYPEINFO(/obj/machinery/power/smes/magical)
-	mats = null
+	analyser_flags = ANALYSER_BLACKLIST
 /obj/machinery/power/smes/magical
 	name = "magical power storage unit"
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit. Magically produces power, using magic."
@@ -28,6 +28,7 @@ TYPEINFO(/obj/machinery/power/smes)
 	icon_state = "smes"
 	density = 1
 	anchored = ANCHORED
+	provides_grip = TRUE
 	requires_power = FALSE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL | DECON_CROWBAR | DECON_WELDER
 	var/output = 30000
@@ -135,8 +136,13 @@ TYPEINFO(/obj/machinery/power/smes)
 /obj/machinery/power/smes/update_icon()
 	if (status & (BROKEN|POWEROFF))
 		ClearAllOverlays()
+		if (status & BROKEN)
+			src.icon_state = "smes-broken"
 		return
+	src.icon_state = "smes"
+	src.update_overlays()
 
+/obj/machinery/power/smes/proc/update_overlays()
 	var/image/I = SafeGetOverlayImage("operating", 'icons/obj/power.dmi', "smes-op[online]")
 	UpdateOverlays(I, "operating")
 
@@ -387,6 +393,11 @@ TYPEINFO(/obj/machinery/power/smes)
 	capacity = 1e7
 	charge = 15e5
 
+/obj/machinery/power/smes/smart/update_icon()
+	if (status & (BROKEN|POWEROFF))
+		ClearAllOverlays()
+		return
+	src.update_overlays()
 
 /obj/machinery/power/smes/smart/charge(mult)
 	var/excess = terminal.surplus()

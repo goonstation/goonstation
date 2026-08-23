@@ -28,7 +28,7 @@
 				var/icon/hud_style = hud_style_selection[get_hud_style(src.holder.owner)]
 				if (isicon(hud_style))
 					src.icon = hud_style
-					hud.tooltipTheme = hud_style
+					hud.tooltip_options = list("theme" = hud_style)
 			hud.name = name
 			hud.icon = icon
 			hud.icon_state = icon_state
@@ -210,6 +210,16 @@
 		icon_state = "social"
 		depletion_rate = 0.18
 		var/criminal = -1 //-1 unset, 0 law-abiding citizen, 1 traitor
+
+		New()
+			. = ..()
+
+			SPAWN(0)
+				src.holder?.owner?.ensure_listen_tree().AddListenEffect(LISTEN_EFFECT_SIMS_SOCIAL_MOTIVE)
+
+		disposing()
+			src.holder?.owner?.ensure_listen_tree().RemoveListenEffect(LISTEN_EFFECT_SIMS_SOCIAL_MOTIVE)
+			. = ..()
 
 		mayStandardDeplete()
 			if (..())

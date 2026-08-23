@@ -11,6 +11,7 @@ TYPEINFO(/obj/machinery/optable)
 	density = 1
 	anchored = ANCHORED
 	event_handler_flags = USE_FLUID_ENTER
+	provides_grip = TRUE
 	var/mob/living/carbon/human/victim = null
 	var/strapped = 0
 
@@ -60,10 +61,9 @@ TYPEINFO(/obj/machinery/optable)
 /obj/machinery/optable/proc/check_victim()
 	if(locate(/mob/living/carbon/human, src.loc))
 		var/mob/M = locate(/mob/living/carbon/human, src.loc)
-		if(M.hasStatus("resting") || isunconscious(M) ||  M.traitHolder.hasTrait("training_medical"))
-			src.victim = M
-			icon_state = "table2-active"
-			return 1
+		src.victim = M
+		icon_state = "table2-active"
+		return 1
 	if (src.victim)
 		src.victim = null
 		src.computer?.victim = null

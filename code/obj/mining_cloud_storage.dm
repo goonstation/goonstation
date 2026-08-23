@@ -222,15 +222,16 @@
 				src.load_item(R, user)
 				amtload++
 			satchel.UpdateIcon()
-			satchel.tooltip_rebuild = 1
+			satchel.tooltip_rebuild = TRUE
 			if (amtload)
 				boutput(user, SPAN_NOTICE("[amtload] materials loaded from [satchel]!"))
 			else
 				boutput(user, SPAN_ALERT("[satchel] is empty!"))
 		else if (!broken)
-			if (W.hitsound)
-				playsound(src.loc, W.hitsound, 50, 1)
+			user.lastattacked = get_weakref(src)
 			if (W.force)
+				if (W.hitsound)
+					playsound(src.loc, W.hitsound, 50, 1)
 				src.health = max(src.health - randfloat(W.force/1.5, W.force),0)
 
 				attack_particle(user,src)

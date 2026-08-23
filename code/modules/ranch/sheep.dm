@@ -5,9 +5,9 @@
 	real_name = "lamb"
 	desc = "On the lamb."
 	icon = 'icons/mob/ranch/sheep.dmi'
-	speechverb_say = "baas"
-	speechverb_exclaim = "screams"
-	speechverb_ask = "bleats"
+	speech_verb_say = "baas"
+	speech_verb_exclaim = "screams"
+	speech_verb_ask = "bleats"
 	health_brute = 30
 	health_burn = 30
 	hand_count = 2
@@ -17,7 +17,7 @@
 	can_disarm = 1
 	can_help = 1
 
-	butcherable = 1
+	butcherable = BUTCHER_ALLOWED
 	butcher_time = 0.2 SECONDS
 	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/sheep
 
@@ -39,6 +39,8 @@
 	var/wool_grown = 0
 
 	var/wool_type = /obj/item/material_piece/cloth/wool/white
+
+	var/custom_icon = FALSE
 
 	species_type = /mob/living/critter/small_animal/ranch_base/sheep
 
@@ -84,34 +86,36 @@
 		remove_lifeprocess(/datum/lifeprocess/ranch/sheep/grow_wool)
 
 	update_icon()
-		var/growth = null
-		if (stage == RANCH_STAGE_CHILD)
-			growth = "lamb"
-		else
-			if(is_masc)
-				growth = "ram"
+
+		if(!custom_icon)
+			var/growth = null
+			if (stage == RANCH_STAGE_CHILD)
+				growth = "lamb"
 			else
-				growth = "ewe"
+				if(is_masc)
+					growth = "ram"
+				else
+					growth = "ewe"
 
-		var/wool = null
+			var/wool = null
 
-		if(!wool_grown && stage != RANCH_STAGE_CHILD)
-			wool = "-shorn"
+			if(!wool_grown && stage != RANCH_STAGE_CHILD)
+				wool = "-shorn"
 
-		if(isalive(src))
-			icon_state = "sheep-[sheep_id]-[growth][wool]"
-			icon_state_alive = icon_state
-		icon_state_dead = "sheep-[sheep_id]-[growth]-dead"
-		icon_state_ghost = "sheep-[sheep_id]-[growth][wool]"
-		if(!isalive(src))
-			icon_state = icon_state_dead
+			if(isalive(src))
+				icon_state = "sheep-[sheep_id]-[growth][wool]"
+				icon_state_alive = icon_state
+			icon_state_dead = "sheep-[sheep_id]-[growth]-dead"
+			icon_state_ghost = "sheep-[sheep_id]-[growth][wool]"
+			if(!isalive(src))
+				icon_state = icon_state_dead
 
 
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		var/datum/limb/small_critter/LSC = HH.limb
 		LSC.actions = list("hoofs", "kicks", "bashes", "stomps on")
 		HH.icon_state = "handn"
@@ -121,7 +125,7 @@
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/mouth/small	// if not null, the special limb to use when attack_handing
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
+		HH.icon = 'icons/mob/critter_hands.dmi'	// the icon of the hand UI background
 		HH.icon_state = "mouth"					// the icon state of the hand UI background
 		HH.name = "mouth"						// designation of the hand - purely for show
 		HH.limb_name = "mouth"					// name for the dummy holder

@@ -1,3 +1,5 @@
+TYPEINFO(/obj/item/sword_core)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/sword_core
 	name = "SWORD core"
 	desc = "An incredibly advanced power core created by the Syndicate."
@@ -8,10 +10,10 @@
 	w_class = W_CLASS_SMALL
 	throw_speed = 4
 	throw_range = 20
-	is_syndicate = 1
 	contraband = 5
 
 TYPEINFO(/obj/item/syndicate_destruction_system)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 18
 
 /obj/item/syndicate_destruction_system
@@ -29,7 +31,6 @@ TYPEINFO(/obj/item/syndicate_destruction_system)
 	w_class = W_CLASS_SMALL	//Becomes 5.0 when the core is inserted.
 	flags = TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING  | TOOL_CHOPPING | TOOL_SAWING
-	is_syndicate = 1
 	contraband = 10
 	two_handed = 1
 	stamina_damage = 5
@@ -74,7 +75,7 @@ TYPEINFO(/obj/item/syndicate_destruction_system)
 
 			user.show_message(SPAN_NOTICE("You remove the SWORD core from the Syndicate Destruction System!"), 1)
 			desc = "After a delay, scans nearby tiles, damaging walls and enemies. The core is missing."
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			return
 		else if ((istype(W,/obj/item/sword_core) && !core_inserted))
 			core_inserted = TRUE
@@ -93,7 +94,7 @@ TYPEINFO(/obj/item/syndicate_destruction_system)
 
 			user.show_message(SPAN_NOTICE("You insert the SWORD core into the Syndicate Destruction System!"), 1)
 			desc = "After a delay, scans nearby tiles, damaging walls and enemies. The core is installed."
-			tooltip_rebuild = 1
+			tooltip_rebuild = TRUE
 			return
 
 	attack_self(mob/user as mob)
@@ -148,7 +149,7 @@ TYPEINFO(/obj/item/syndicate_destruction_system)
 				else
 					random_burn_damage(scan_target, 30)
 					scan_target.changeStatus("knockdown", 2 SECOND)
-				INVOKE_ASYNC(scan_target, TYPE_PROC_REF(/mob, emote), "scream")
+				INVOKE_ASYNC(scan_target, TYPE_PROC_REF(/atom, emote), "scream")
 				playsound(scan_target.loc, 'sound/impact_sounds/burn_sizzle.ogg', 70, 1)
 			else if (istype(scan_target, /obj/structure/girder))
 				create_scan_decal = TRUE

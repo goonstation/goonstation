@@ -82,7 +82,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		hit.damage_cold(projectile.power / 10)
 		if (ishuman(hit))
 			var/mob/living/L = hit
-			L.bodytemperature -= projectile.power
+			L.changeBodyTemp(-projectile.power)
 
 /datum/projectile/special/material_changer
 	name = "transmutation bolt"
@@ -125,6 +125,22 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	damage_type = D_ENERGY
 	goes_through_walls = 1
 
+/datum/projectile/special/piercing/resonator
+	name = "eldritch hyperecho"
+	sname = "eldritch hyperecho"
+	icon_state = "hyperecho"
+	damage_type = D_TOXIC
+	window_pass = 1
+	damage = 30
+	pierces = -1
+	goes_through_walls = 1
+	cost = 100
+	shot_sound = 'sound/machines/sweep.ogg'
+
+	on_hit(atom/hit, direction, var/obj/projectile/projectile)
+		..()
+		hit.damage_blunt(3) // Small additional brute so it works with critters (most don't have toxic damage handlers)
+
 // Mildly crazy shit
 
 /datum/projectile/special/spreader
@@ -135,7 +151,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/spread_projectile_type = /datum/projectile/bullet/flak_chunk
 	var/split_type = 0
 	var/pellet_shot_volume = 0
-	silentshot = 1
+	no_hit_message = 1
 	has_impact_particles = TRUE
 	// 0 = on spawn
 	// 1 = on impact
@@ -211,7 +227,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		var/obj/projectile/FC = initialize_projectile(PT, F, P.xo, P.yo, P.shooter)
 		FC.rotateDirection(rand(0-spread_angle_variance,spread_angle_variance))
 		FC.internal_speed = rand(speed_min,speed_max)
-		FC.travelled = rand(0,dissipation_variance)
+		var/dissipation_ratio = (FC.internal_speed-speed_min) / (speed_max-speed_min)
+		FC.travelled = dissipation_variance * (1-dissipation_ratio)
 		FC.launch()
 		FC.spread = P.spread + dissipation_variance
 /datum/projectile/special/spreader/buckshot_burst/plasglass
@@ -232,13 +249,13 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	name = "glass"
 	sname = "glass"
 	cost = 1
-	pellets_to_fire = 7
+	pellets_to_fire = 12
 	casing = /obj/item/casing/shotgun/pipe
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	speed_max = 36
-	speed_min = 28
-	spread_angle_variance = 30
-	dissipation_variance = 40
+	speed_min = 20
+	spread_angle_variance = 20
+	dissipation_variance = 96
 
 /datum/projectile/special/spreader/buckshot_burst/scrap
 	spread_projectile_type = /datum/projectile/bullet/improvscrap
@@ -261,10 +278,10 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	pellets_to_fire = 3
 	casing = /obj/item/casing/shotgun/pipe
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
-	speed_max = 30
-	speed_min = 20
+	speed_max = 40
+	speed_min = 30
 	spread_angle_variance = 25
-	dissipation_variance = 40
+	dissipation_variance = 20
 
 /datum/projectile/special/spreader/buckshot_burst/nails
 	name = "nails"
@@ -736,7 +753,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	goes_through_walls = 1
 	goes_through_mobs = 1
 
-	silentshot = 1
+	no_hit_message = 1
 
 
 	on_hit(atom/hit, direction, var/obj/projectile/P)
@@ -784,7 +801,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	goes_through_mobs = 1
 	smashes_glasses = FALSE
 
-	silentshot = 1
+	no_hit_message = 1
 	var/obj/effect/eye_glider
 	var/turf/starting_turf
 
@@ -793,7 +810,11 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		src.starting_turf = get_turf(P)
 		src.eye_glider = new(get_turf(P))
 		src.eye_glider.flags |= UNCRUSHABLE
+		src.eye_glider.event_handler_flags |= IMMUNE_MINERAL_MAGNET
+		P.event_handler_flags |= IMMUNE_MINERAL_MAGNET
 		src.eye_glider.anchored = ANCHORED_ALWAYS
+		APPLY_ATOM_PROPERTY(P, PROP_ATOM_FLOATING, src)
+		APPLY_ATOM_PROPERTY(P, PROP_ATOM_GRAVITY_IMMUNE_INSIDE, src)
 		for (var/mob/M in P.contents)
 			if(M.client)
 				M.client.eye = src.eye_glider
@@ -821,14 +842,16 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	on_end(obj/projectile/P)
 		for (var/atom/movable/AM in P.contents)
 			AM.set_loc(get_turf(P))
-			AM.delStatus("teleporting")
-			if (istype(AM, /mob))
-				var/mob/M = AM
-				if (M.client)
-					M.client.eye = M
 		qdel(src.eye_glider)
 		src.eye_glider = null
 		..()
+
+	on_exited(obj/projectile/P, atom/movable/AM)
+		AM.delStatus("teleporting")
+		if (istype(AM, /mob))
+			var/mob/M = AM
+			if (M.client)
+				M.client.eye = M
 
 /datum/projectile/special/homing/magicmissile
 	name = "magic missile"
@@ -919,9 +942,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 	goes_through_walls = 1
 
-	var/radius = 1.4
+	/// how many degrees of rotation are added per process tick
 	var/ang_inc = 15
-
 
 	on_launch(var/obj/projectile/P)
 		..()
@@ -938,6 +960,14 @@ ABSTRACT_TYPE(/datum/projectile/special)
 				P.special_data["orbit_angle"] -= 360
 
 			var/atom/target = P.targets[1]
+			if (istype(target.loc, /obj/dummy/spell_batpoof))
+				target = target.loc
+
+			if (!isturf(target.loc))
+				P.special_data["diss_count"] += 1
+				if (P.special_data["diss_count"] > 40)
+					P.die()
+				return 1
 
 			//var/ang_between = get_angle(target,P)
 			var/tx = target.x + cos(P.special_data["orbit_angle"])
@@ -946,6 +976,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			desired_x = (tx - P.x)
 			desired_y = (ty - P.y)
 
+			P.special_data["diss_count"] = 0
 			.= 1
 		else
 			P.special_data["diss_count"] += 1
@@ -954,6 +985,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 
 /datum/projectile/special/homing/orbiter/spiritbat
+
+/datum/projectile/special/homing/orbiter/spiritbat/frost
 	name = "frost bat"
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "spiritbat"
@@ -978,16 +1011,19 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 		if (istype(hit, /obj/projectile))
 			var/obj/projectile/pass_proj = hit
+			if (istype(pass_proj.proj_data, /datum/projectile/special/homing/orbiter/spiritbat))
+				return
+			if (istype(pass_proj.proj_data, /datum/projectile/special/homing/vamp_blood))
+				return
 			if (pass_proj.proj_data.hit_object_sound)
 				playsound(pass_proj.loc, pass_proj.proj_data.hit_object_sound, 60, 0.5)
-			if (pass_proj.proj_data.name != src.name)
-				pass_proj.die()
+			pass_proj.die()
 			return
 
 		hit.damage_cold(temp_reduc / 10)
 		if (isliving(hit))
 			var/mob/living/L = hit
-			L.bodytemperature -= temp_reduc
+			L.changeBodyTemp(-temp_reduc)
 			L.TakeDamage("All", 3, 1, 0, 0)//magic
 
 			var/atom/targetTurf = 0
@@ -1005,7 +1041,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if (P != passing_thing)
 			if (istype(passing_thing, /obj/projectile))
 				var/obj/projectile/pass_proj = passing_thing
-				return (istype(pass_proj.proj_data, src.type) || pass_proj.goes_through_walls)
+				return (istype(pass_proj.proj_data, /datum/projectile/special/homing/orbiter/spiritbat) || pass_proj.goes_through_walls)
 
 			if (isitem(passing_thing))
 				var/obj/item/I = passing_thing
@@ -1013,8 +1049,61 @@ ABSTRACT_TYPE(/datum/projectile/special)
 					return 0
 		.= 1
 
-//place coffin. then, we travel to it in prjoectile form and it heals us while people can beat it
-//cofin is anchored, rises outta ground at spot
+/datum/projectile/special/homing/orbiter/spiritbat/disorient
+	name = "spirit bat"
+	icon = 'icons/misc/critter.dmi'
+	icon_state = "vampbat"
+	color_blue = 50
+	color_red = 200
+	color_green = 200
+	rotate_proj = 0
+	face_desired_dir = TRUE
+	goes_through_walls = 1
+	is_magical = 1
+
+	shot_sound = 0
+	hit_mob_sound = 'sound/effects/throw.ogg'
+	hit_object_sound = 'sound/effects/throw.ogg'
+
+	on_launch(var/obj/projectile/P)
+		..()
+		P.collide_with_other_projectiles = 1
+		P.alpha = 200
+
+	on_hit(atom/hit, direction, var/obj/projectile/P)
+		..()
+
+		if (istype(hit, /obj/projectile))
+			var/obj/projectile/pass_proj = hit
+			if (istype(pass_proj.proj_data, /datum/projectile/special/homing/orbiter/spiritbat))
+				return
+			if (istype(pass_proj.proj_data, /datum/projectile/special/homing/vamp_blood))
+				return
+			if (pass_proj.proj_data.hit_object_sound)
+				playsound(pass_proj.loc, pass_proj.proj_data.hit_object_sound, 60, 0.5)
+			pass_proj.die()
+			var/obj/itemspecialeffect/poof/poof = new /obj/itemspecialeffect/poof
+			poof.setup(P.loc)
+			playsound(P.loc, 'sound/effects/poff.ogg', 50, 1, pitch = 1)
+			P.die()
+			return
+
+		if (isliving(hit))
+			var/mob/living/L = hit
+			L.changeStatus("slowed", 2 SECONDS)
+			L.do_disorient(stamina_damage = 30, knockdown = 0, stunned = 0, disorient = 20, remove_stamina_below_zero = 0)
+
+	on_canpass(var/obj/projectile/P, atom/movable/passing_thing)
+		if (P != passing_thing)
+			if (istype(passing_thing, /obj/projectile))
+				var/obj/projectile/pass_proj = passing_thing
+				return (istype(pass_proj.proj_data, /datum/projectile/special/homing/orbiter/spiritbat) || pass_proj.goes_through_walls)
+
+			if (isitem(passing_thing))
+				var/obj/item/I = passing_thing
+				if (I.throwing)
+					return 0
+		.= 1
 
 /datum/projectile/special/spreader/tasershotgunspread //Used in Azungar's taser shotgun.
 	name = "energy bolt"
@@ -1114,7 +1203,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	sname = "4 space wasp eggs"
 	shot_sound = null
 	default_firemode = /datum/firemode/single
-	silentshot = 1 //any noise will be handled by the egg splattering anyway
+	no_hit_message = 1 //any noise will be handled by the egg splattering anyway
 	damage = 60
 	cost = 60
 	dissipation_rate = 70
@@ -1123,6 +1212,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	spread_projectile_type = /datum/projectile/special/spawner/wasp
 	pellets_to_fire = 4
 	has_impact_particles = FALSE
+	affected_by_gravity = TRUE
 	var/spread_angle = 60
 	var/current_angle = 0
 	var/angle_adjust_per_pellet = 0
@@ -1151,6 +1241,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	implanted= null
 	casing = null
 	impact_image_state = null
+	affected_by_gravity = TRUE
 	var/typetospawn = null
 	var/hit_sound = null
 	///Do we get our icon from typetospawn?
@@ -1202,7 +1293,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	sname = "space wasp egg"
 	shot_sound = null
 	default_firemode = /datum/firemode/single
-	silentshot = 1 //any noise will be handled by the egg splattering anyway
+	no_hit_message = 1 //any noise will be handled by the egg splattering anyway
 	hit_ground_chance = 0
 	damage_type = D_SPECIAL
 	damage = 15
@@ -1262,7 +1353,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	max_range = 30
 	cost = 0
 	shot_sound = 'sound/weapons/rocket.ogg'
-	icon = 'icons/obj/large_storage.dmi'
+	icon = 'icons/obj/storage/crate.dmi'
 	icon_state = "attachecase"
 	typetospawn = /obj/lootbox
 	var/explosion_power = 15
@@ -1285,7 +1376,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	dissipation_delay = 0
 	hit_ground_chance = 0 // burn right over em
 	max_range = 10
-	silentshot = 1 // Mr. Muggles is hit by the chemical bolt x99999
+	no_hit_message = 1 // Mr. Muggles is hit by the chemical bolt x99999
 	var/can_spawn_fluid = FALSE
 
 
@@ -1313,13 +1404,11 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 		var/datum/reagents/copied = new/datum/reagents(amt_to_emit)
 		copied = chemR.copy_to(copied, amt_to_emit/chemR.total_volume, copy_temperature = 1)
-
-		if(!T.reagents) // first get the turf
-			T.create_reagents(100)
-		copied.copy_to(T.reagents, 1, copy_temperature = 1)
+		//now we create a temporary chemistry holder so we don't need to inject chems into turfs but still can handle delayed reactions
+		T.AddComponent(/datum/component/temp_reagent_holder, copied)
 		copied.reaction(T, TOUCH, 0, src.can_spawn_fluid)
 		if(special_data["IS_LIT"]) // Heat if needed
-			T.reagents?.set_reagent_temp(special_data["burn_temp"], TRUE)
+			copied.set_reagent_temp(special_data["burn_temp"], TRUE)
 		for(var/atom/A in T.contents) // then all the stuff in the turf
 			if(istype(A, /obj/overlay) || istype(A, /obj/projectile))
 				continue

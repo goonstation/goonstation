@@ -92,6 +92,12 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 	id = "conductive_high"
 	property_threshold = 8
 
+/datum/manufacturing_requirement/match_property/thermal_conductive
+	name = "Thermally Conductive"
+	id = "heat"
+	property_id = "thermal"
+	property_threshold = 6
+
 /datum/manufacturing_requirement/match_property/dense
 	name = "High Density Matter"
 	id = "dense"
@@ -200,6 +206,11 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_flags)
 	id = "rubber"
 	material_flags = MATERIAL_RUBBER
 
+/datum/manufacturing_requirement/match_flags/metal_or_wood
+	name = "Metal or Wood"
+	id = "metal_or_wood"
+	material_flags = MATERIAL_METAL | MATERIAL_WOOD
+
 /datum/manufacturing_requirement/match_flags/organic_or_rubber
 	name = "Organic or Rubber"
 	id = "organic_or_rubber"
@@ -277,6 +288,14 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/mixed)
 		"crystal",
 	)
 
+/datum/manufacturing_requirement/mixed/dense_thermal
+	name = "Very High Density Thermal Conductor"
+	id = "heat_dense"
+	requirement_ids = list(
+		"dense_super",
+		"heat",
+	)
+
 /datum/manufacturing_requirement/mixed/metal
 	name = "Metal"
 	id = "metal"
@@ -289,6 +308,14 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/mixed)
 	id = "metal_dense"
 	requirement_ids = list(
 		"metal_flag",
+		"tough",
+	)
+
+/datum/manufacturing_requirement/mixed/metal_or_wood_tough
+	name = "Sturdy Metal or Wood"
+	id = "metal_or_wood_dense"
+	requirement_ids = list(
+		"metal_or_wood",
 		"tough",
 	)
 

@@ -1,0 +1,20 @@
+<style>
+.btn-group > .btn {
+	white-space: nowrap;
+}
+</style>
+
+<div style="display: flex; margin-bottom: .75em;">
+	<div class="box <%= it.is_on ? 'box--success' : 'box--error' %>" style="width: 100%; margin: 0 .5em 0 0;">
+		<%= it.is_on ? 'Active' : 'Inactive' %>
+	</div>
+	<a class="btn btn--small" href="ui_target=pump_ui&ui_action=toggle_power" data-call-src="href">Toggle</a>
+</div>
+<div style="margin-bottom: .25em;"><%= it.value_name %></div>
+<div class='btn-group'>
+	<a class='btn btn--small' href="ui_target=pump_ui&ui_action=bump_value&bump_value=-<%= it.incr_lg %>" data-call-src="href">--</a>
+	<a class='btn btn--small' href="ui_target=pump_ui&ui_action=bump_value&bump_value=-<%= it.incr_sm %>" data-call-src="href">-</a>
+	<a class='btn btn--small' href="ui_target=pump_ui&ui_action=set_value" data-call-src="href"><%= it.value %> <%= it.value_units %></a>
+	<a class='btn btn--small' href="ui_target=pump_ui&ui_action=bump_value&bump_value=<%= it.incr_sm %>" data-call-src="href">+</a>
+	<a class='btn btn--small' href="ui_target=pump_ui&ui_action=bump_value&bump_value=<%= it.incr_lg %>" data-call-src="href">++</a>
+</div>

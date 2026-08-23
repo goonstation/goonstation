@@ -1,9 +1,8 @@
 /mob/living/critter/robotic/gunbot/engineerbot
 	name = "Syndicate MULTI Unit"
-	real_name = "Syndicate MULTI Unit"
 	icon_state = "engineerbot"
 	base_icon_state = "engineerbot"
-	desc = "An engnieering unit, you can somehow feel that it's angry at you."
+	desc = "An engineering unit, you can somehow feel that it's angry at you."
 	health_brute = 20
 	health_burn = 10
 	health_burn_vuln = 0.8
@@ -19,14 +18,14 @@
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/solder
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "welderhand"
 		HH.name = "Soldering Iron"
 		HH.limb_name = "soldering iron"
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/solder
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "hand_martian"
 		HH.name = "Soldering Iron"
 		HH.limb_name = "soldering iron"
@@ -58,14 +57,14 @@
 		. = ..()
 		var/datum/handHolder/HH = hands[2]
 		HH.limb = new /datum/limb/deconstructor
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "hand_martian"
 		HH.name = "Deconstructor"
 		HH.limb_name = "deconstructor"
 
 		HH = hands[3]
 		HH.limb = new /datum/limb/small_critter/strong
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "gunbothand"
 		HH.limb_name = "gunbot hands"

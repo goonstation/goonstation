@@ -1,0 +1,2 @@
+/obj/machinery/atmospherics/binary/nuclear_reactor : /obj/machinery/nuclear_reactor{dir=@OLD}
+/obj/machinery/atmospherics/binary/nuclear_turbine : /obj/machinery/nuclear_turbine{dir=@OLD}

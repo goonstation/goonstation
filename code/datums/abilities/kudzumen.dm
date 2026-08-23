@@ -39,7 +39,7 @@
 
 /* 	/		/		/		/		/		/		Ability Holder		/		/		/		/		/		/		/		/		*/
 
-/datum/abilityHolder/kudzu
+/datum/abilityHolder/mutantrace/kudzu
 	usesPoints = 1
 	regenRate = 0
 	tabName = "kudzu"
@@ -94,7 +94,7 @@
 	cooldown = 0
 	last_cast = 0
 	pointCost = 0
-	preferred_holder_type = /datum/abilityHolder/kudzu
+	preferred_holder_type = /datum/abilityHolder/mutantrace/kudzu
 	var/when_stunned = 0 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
 	var/not_when_handcuffed = 0
 	var/unlock_message = null
@@ -164,8 +164,8 @@
 
 	cast(atom/target)
 		. = ..()
-		if (istype(holder, /datum/abilityHolder/kudzu))
-			var/datum/abilityHolder/kudzu/KAH = holder
+		if (istype(holder, /datum/abilityHolder/mutantrace/kudzu))
+			var/datum/abilityHolder/mutantrace/kudzu/KAH = holder
 			KAH.nutrients_meter.update()
 		actions.interrupt(holder.owner, INTERRUPT_ACT)
 		return
@@ -265,7 +265,7 @@
 
 	cast(atom/T)
 		. = ..()
-		var/datum/abilityHolder/kudzu/HK = holder
+		var/datum/abilityHolder/mutantrace/kudzu/HK = holder
 		if (!HK.stealthed)
 			HK.stealthed = 1
 			boutput(holder.owner, SPAN_HINT("You secrete nutrients to refract light."))
@@ -289,6 +289,9 @@
 	cast(atom/target)
 		if (..())
 			return 1
+		if (!(target.hasStatus("kudzuwalk") || iskudzuman(target)))
+			boutput(holder.owner, SPAN_ALERT("[target] is not attuned to the kudzu!"))
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 
 		if (target == holder.owner)
 			heal_coef = round(heal_coef/2)
@@ -319,34 +322,11 @@
 
 			//Transfer nutrients to our brethren.
 			var/mob/living/carbon/human/H = target
-			if (istype(H) && istype(H.mutantrace, /datum/mutantrace/kudzu) && istype(H.abilityHolder, /datum/abilityHolder/kudzu))
-				var/datum/abilityHolder/kudzu/KAH = H.abilityHolder
+			if (istype(H) && istype(H.mutantrace, /datum/mutantrace/kudzu) && istype(H.abilityHolder, /datum/abilityHolder/mutantrace/kudzu))
+				var/datum/abilityHolder/mutantrace/kudzu/KAH = H.abilityHolder
 				H.abilityHolder.points = min(KAH.MAX_POINTS, KAH.points + 20)
 				H.changeStatus("knockdown", -3 SECONDS)
 		return
-
-/datum/targetable/kudzu/kudzusay
-	name = "Speak Kudzu"
-	desc = "Speak to your collective consciousness."
-	icon_state = "kudzu-say"
-	cooldown = 0
-	pointCost = 0
-	targeted = 0
-	target_anything = 0
-	interrupt_action_bars = 0
-	lock_holder = FALSE
-	can_cast_anytime = 1
-	cast(atom/target)
-		if (..())
-			return 1
-
-		var/message = html_encode(input("Choose something to say:","Enter Message.","") as null|text)
-		if (!message)
-			return
-		logTheThing(LOG_SAY, holder.owner, "[message]")
-		.= holder.owner.say_kudzu(message, holder)
-
-		return 0
 
 /datum/targetable/kudzu/seed
 	name = "Manipulate Seed"
@@ -493,6 +473,40 @@
 				new/obj/spacevine/living(loc=T, to_spread=5)
 				boutput(holder.owner, SPAN_NOTICE("Some of the kudzu soaked in nutrients attached to your body detaches and finds a new home on [T]."))
 
+/datum/targetable/kudzu/thorn_shot
+	name = "Thorn shot"
+	desc = "Fire a thorn loaded with harmful irritants."
+	icon_state = "thorn"
+	targeted = 1
+	target_anything = 1
+	cooldown = 10 SECONDS
+	pointCost = 20
+	var/current_projectile
+
+	New()
+		. = ..()
+		src.current_projectile = new/datum/projectile/syringe/kudzu_thorn
+
+	cast(atom/target)
+		. = ..()
+		var/obj/projectile/P = shoot_projectile_ST_pixel_spread(src.holder.owner, src.current_projectile, target)
+		if (!P)
+			return
+		src.holder.owner.visible_message(SPAN_ALERT("<b>[src.holder.owner] fires [P] at [target]!</b>"))
+
+/datum/projectile/syringe/kudzu_thorn
+	name = "sharp thorn"
+	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
+	icon_state = "seedproj"
+	implanted = /obj/item/implant/projectile/body_visible/syringe/kudzu_thorn
+	reagent_payload = "itching"
+
+/obj/item/implant/projectile/body_visible/syringe/kudzu_thorn
+	name = "sharp thorn"
+	pull_out_name = "thorn"
+	desc = "A sharp thorn. It was likely loaded with some bad stuff..."
+	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
+	icon_state = "seedproj"
 
 /datum/targetable/kudzu/vine_appendage
 	name = "Use-Vine"
@@ -506,7 +520,7 @@
 	var/obj/item/kudzu/kudzumen_vine/vine = null
 	var/active = 0
 
-	New(var/datum/abilityHolder/kudzu/holder)
+	New(var/datum/abilityHolder/mutantrace/kudzu/holder)
 		..(holder)
 
 		vine = new/obj/item/kudzu/kudzumen_vine(holder?.owner)		//make the vine item in
@@ -567,9 +581,9 @@
 			return 1
 
 /atom/movable/screen/kudzu
-	var/datum/abilityHolder/kudzu/holder
+	var/datum/abilityHolder/mutantrace/kudzu/holder
 
-	New(var/datum/abilityHolder/kudzu/holder)
+	New(var/datum/abilityHolder/mutantrace/kudzu/holder)
 		..()
 		src.holder = holder
 
@@ -585,19 +599,18 @@
 
 	//WIRE TOOLTIPS
 	MouseEntered(location, control, params)
-		if (usr.client.tooltipHolder && control == "mapwindow.map")
-			var/theme = src.theme
-
-			usr.client.tooltipHolder.showHover(src, list(
-				"params" = params,
-				"title" = "Nutrients Meter",//src.name,
-				"content" = "[holder.points] Points",//(src.desc ? src.desc : null),
-				"theme" = theme
-			))
+		if (usr.client.tooltips && control == "mapwindow.map")
+			usr.client.tooltips.show(
+				TOOLTIP_HOVER, src,
+				mouse = params,
+				title = "Nutrients Meter",
+				content = "[holder.points] Points",
+				theme = src.theme
+			)
 
 	MouseExited()
-		if (usr.client.tooltipHolder)
-			usr.client.tooltipHolder.hideHover()
+		if (usr.client.tooltips)
+			usr.client.tooltips.hide(TOOLTIP_HOVER)
 
 	proc/update()		//getting weird numbers in here
 		cur_meter_location = clamp(round((max(holder?.points,0)/holder?.MAX_POINTS)*11), 0, 11)	//length of meter
@@ -615,7 +628,7 @@
 	var/datum/controller/process/kudzu/kudzu_controller
 	var/amount = 0
 
-	New(var/datum/abilityHolder/kudzu/holder, var/datum/controller/process/kudzu/K)
+	New(var/datum/abilityHolder/mutantrace/kudzu/holder, var/datum/controller/process/kudzu/K)
 		..(holder)
 		if (istype(K))
 			kudzu_controller = K
@@ -630,19 +643,18 @@
 
 	//WIRE TOOLTIPS
 	MouseEntered(location, control, params)
-		if (usr.client.tooltipHolder && control == "mapwindow.map")
-			var/theme = src.theme
-
-			usr.client.tooltipHolder.showHover(src, list(
-				"params" = params,
-				"title" = "Size of Kudzu Growth",
-				"content" = "[amount] tiles",
-				"theme" = theme
-			))
+		if (usr.client.tooltips && control == "mapwindow.map")
+			usr.client.tooltips.show(
+				TOOLTIP_HOVER, src,
+				mouse = params,
+				title = "Size of Kudzu Growth",
+				content = "[amount] tiles",
+				theme = src.theme
+			)
 
 	MouseExited()
-		if (usr.client.tooltipHolder)
-			usr.client.tooltipHolder.hideHover()
+		if (usr.client.tooltips)
+			usr.client.tooltips.hide(TOOLTIP_HOVER)
 
 	proc/update()
 		amount = length(kudzu_controller.kudzu)
@@ -702,7 +714,7 @@
 
 			//This isn't supposed to be dropped. We'll try to cast the ability to sync it if it does though.
 			// //find abilityholder and cast ability to put it back in the guy.
-			// var/datum/abilityHolder/kudzu/KH = user.get_ability_holder(/datum/abilityHolder/kudzu)
+			// var/datum/abilityHolder/mutantrace/kudzu/KH = user.get_ability_holder(/datum/abilityHolder/mutantrace/kudzu)
 			// if (istype(KH))
 			// 	var/datum/targetable/kudzu/vine_appendage/VA = KH.getAbility(/datum/targetable/kudzu/vine_appendage)
 			// 	VA.cast()

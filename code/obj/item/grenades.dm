@@ -10,6 +10,7 @@ PIPE BOMBS + CONSTRUCTION
 ////////////////////////////// Old-style grenades ///////////////////////////////////////
 
 TYPEINFO(/obj/item/old_grenade)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = 6
 
 ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
@@ -31,7 +32,6 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 	flags = TABLEPASS | CONDUCT | EXTRADELAY
 	tool_flags = TOOL_ASSEMBLY_APPLIER
 	c_flags = ONBELT
-	is_syndicate = FALSE
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 0
@@ -161,13 +161,15 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 				message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing(LOG_COMBAT, user, "primes a grenade ([src.type]) at [log_loc(user)].")
 
+TYPEINFO(/obj/item/old_grenade/spawner)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 /obj/item/old_grenade/spawner
 	desc = "It is set to detonate in 3 seconds."
 	det_time = 3 SECONDS
 	org_det_time = 3 SECONDS
 	alt_det_time = 6 SECONDS
-	is_syndicate = TRUE
+
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	is_dangerous = FALSE
 	var/payload = null
@@ -228,6 +230,8 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	payload =/mob/living/critter/small_animal/wasp/angry
 	is_dangerous = TRUE
 
+TYPEINFO(/obj/item/old_grenade/thing_thrower)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/old_grenade/thing_thrower
 	desc = "It is set to detonate in 3 seconds."
 	name = "banana grenade"
@@ -236,12 +240,12 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	alt_det_time = 6 SECONDS
 	icon_state = "banana"
 	item_state = "banana"
-	is_syndicate = TRUE
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "banana1"
 	is_dangerous = FALSE
-	var/payload = /obj/item/reagent_containers/food/snacks/plant/tomato
+	var/payload = /obj/item/bananapeel
 	var/count = 7
+	var/throw_radius = 5
 
 	detonate()
 		var/turf/T = ..()
@@ -249,10 +253,13 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			playsound(T, 'sound/weapons/flashbang.ogg', 25, TRUE)
 			for(var/i = 1; i <= src.count; i++)
 				var/atom/movable/thing = new payload(T)
-				var/turf/target = locate(T.x + rand(-4, 4), T.y + rand(-4, 4), T.z)
+				var/turf/target = locate(T.x + rand(-throw_radius, throw_radius), T.y + rand(-throw_radius, throw_radius), T.z)
 				if(target)
-					thing.throw_at(target, rand(0, 10), rand(1, 4))
+					before_throwing(thing, target)
+					thing.throw_at(target, rand(0, 10), rand(1, throw_radius))
+
 		qdel(src)
+
 
 	launcher_clone() //for varedit shenanigans
 		var/obj/item/old_grenade/thing_thrower/out = ..()
@@ -260,7 +267,77 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		out.count = src.count
 		return out
 
+	proc/before_throwing(var/thing, var/turf/target)
+		return
+
+/obj/item/old_grenade/thing_thrower/aconite
+	desc = "It is set to detonate in 3 seconds."
+	name = "aconite grenade"
+	icon_state = "aconite"
+	icon_state_armed = "aconite1"
+
+	payload = /obj/item/plant/herb/aconite
+	count = 8
+
+/obj/item/old_grenade/thing_thrower/garlic
+	desc = "It is set to detonate in 3 seconds."
+	name = "garlic grenade"
+	icon_state = "garlic"
+	icon_state_armed = "garlic1"
+
+	payload = /obj/item/reagent_containers/food/snacks/plant/garlic
+	count = 16
+
+/obj/item/old_grenade/thing_thrower/csword
+	desc = "It is set to detonate in 3 seconds."
+	name = "cyalume saber grenade"
+	icon_state = "fragnade"
+	icon_state_armed = "fragnade"
+	payload = /obj/item/sword
+	count = 12
+
+	before_throwing(var/thing, var/turf/target)
+		if (istype(thing, /obj/item/sword))
+			var/obj/item/sword/sword = thing
+			sword.active = TRUE
+			sword.UpdateIcon()
+			// SET_BLOCKS(BLOCK_ALL)
+			sword.throwforce = 15
+			sword.hit_type = DAMAGE_CUT
+			sword.stamina_damage = sword.active_stamina_dmg
+			if(prob(50))
+				playsound(target,'sound/weapons/male_cswordturnon.ogg', 70, FALSE, 5, clamp(1.0 , 0.7, 1.2))
+			else
+				playsound(target,'sound/weapons/female_cswordturnon.ogg' , 100, 0, 5, clamp(1.0, 0.7, 1.4))
+			sword.force = sword.active_force
+			sword.stamina_cost = sword.active_stamina_cost
+			sword.w_class = W_CLASS_BULKY
+			sword.leaves_slash_wound = TRUE
+			sword.setItemSpecial(/datum/item_special/swipe/csaber)
+
+		return
+
+/obj/item/old_grenade/thing_thrower/pie
+	desc = "It is set to detonate in 3 seconds."
+	name = "pie grenade"
+	icon_state = "fragnade"
+	icon_state_armed = "fragnade"
+
+	payload = /obj/item/reagent_containers/food/snacks/pie/cream
+	count = 20
+
+
+/obj/item/old_grenade/thing_thrower/shuriken
+	desc = "It is set to detonate in 3 seconds."
+	name = "shuriken grenade"
+	icon_state = "fragnade"
+	icon_state_armed = "fragnade"
+
+	payload = /obj/item/implant/projectile/shuriken
+	count = 12
+
 TYPEINFO(/obj/item/old_grenade/graviton)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 12
 
 /obj/item/old_grenade/graviton //ITS SPELT GRAVITON
@@ -271,7 +348,6 @@ TYPEINFO(/obj/item/old_grenade/graviton)
 	alt_det_time = 6 SECONDS
 	icon_state = "graviton"
 	item_state = "emp" //TODO: grenades REALLY need custom inhands, but I'm not submitting them in this PR
-	is_syndicate = TRUE
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "graviton1"
 	var/icon_state_exploding = "graviton2"
@@ -329,6 +405,7 @@ TYPEINFO(/obj/item/old_grenade/graviton)
 		return
 
 TYPEINFO(/obj/item/old_grenade/singularity)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 12
 
 /obj/item/old_grenade/singularity
@@ -339,7 +416,6 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 	alt_det_time = 6 SECONDS
 	icon_state = "graviton"
 	item_state = "emp"
-	is_syndicate = TRUE
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "graviton1"
 	var/icon_state_exploding = "graviton2"
@@ -397,6 +473,9 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 			icon_state = "Field_Gen +a"
 		qdel(src)
 
+TYPEINFO(/obj/item/old_grenade/smoke)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
+
 /obj/item/old_grenade/smoke
 	desc = "It is set to detonate in 2 seconds."
 	name = "smoke grenade"
@@ -405,7 +484,6 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 	org_det_time = 2 SECONDS
 	alt_det_time = 6 SECONDS
 	item_state = "flashbang"
-	is_syndicate = TRUE
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "smoke1"
 	var/datum/effects/system/bad_smoke_spread/smoke
@@ -478,7 +556,6 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 	org_det_time = 3 SECONDS
 	alt_det_time = 6 SECONDS
 	item_state = "fragnade"
-	is_syndicate = FALSE
 	sound_armed = 'sound/weapons/pindrop.ogg'
 	icon_state_armed = "fragnade1"
 	var/custom_projectile_type = /datum/projectile/bullet/stinger_ball
@@ -557,7 +634,6 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 	org_det_time = 3 SECONDS
 	alt_det_time = 6 SECONDS
 	item_state = "fragnade"
-	is_syndicate = FALSE
 	sound_armed = 'sound/weapons/pindrop.ogg'
 	launcher_damage = 30
 
@@ -584,6 +660,8 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 			qdel(src)
 		return
 
+TYPEINFO(/obj/item/old_grenade/sonic)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/old_grenade/sonic
 	name = "sonic grenade"
 	desc = "It is set to detonate in 3 seconds."
@@ -592,7 +670,6 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 	org_det_time = 3 SECONDS
 	alt_det_time = 6 SECONDS
 	item_state = "flashbang"
-	is_syndicate = TRUE
 	sound_armed = 'sound/effects/screech.ogg'
 	icon_state_armed = "sonic1"
 
@@ -669,6 +746,8 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 		out.pellets_to_fire = src.pellets_to_fire
 		return out
 
+TYPEINFO(/obj/item/old_grenade/emp)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/old_grenade/emp
 	desc = "It is set to detonate in 5 seconds."
 	name = "emp grenade"
@@ -677,7 +756,6 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 	alt_det_time = 3 SECONDS
 	icon_state = "emp"
 	item_state = "emp"
-	is_syndicate = TRUE
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "emp1"
 
@@ -765,7 +843,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 					if (count)
 						var/o2_per = GM.oxygen / count
 						var/co2_per = GM.carbon_dioxide / count
-						for (var/turf/simulated/MT as() in T.parent.members)
+						for (var/turf/simulated/MT as anything in T.parent.members)
 							if (GM.disposed)
 								GM = new /datum/gas_mixture
 							GM.temperature = T20C + 15
@@ -794,10 +872,12 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 			animate(E, alpha=0, time=2 SECONDS)
 			playsound(T, 'sound/weapons/flashbang.ogg', 15, TRUE)
 
-		E.fingerprintslast = src.fingerprintslast
+		src.forensic_holder.copy_to(E.forensic_holder, null, TRUE)
 		qdel(src)
 		return
 
+TYPEINFO(/obj/item/old_grenade/moustache)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/old_grenade/moustache
 	name = "moustache grenade"
 	desc = "It is set to detonate in 3 seconds."
@@ -806,7 +886,6 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	alt_det_time = 6 SECONDS
 	icon_state = "moustache"
 	item_state = "flashbang"
-	is_syndicate = TRUE
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "moustache1"
 	launcher_damage = 10
@@ -833,7 +912,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 
 			playsound(T, 'sound/effects/Explosion2.ogg', 100, TRUE)
 			var/obj/effects/explosion/E = new /obj/effects/explosion(T)
-			E.fingerprintslast = src.fingerprintslast
+			src.forensic_holder.copy_to(E.forensic_holder, null, TRUE)
 
 		qdel(src)
 		return
@@ -984,7 +1063,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 		playsound(src.loc, sound_explode, 45, 1)
 
 		var/obj/effects/explosion/E = new /obj/effects/explosion(get_turf(src))
-		E.fingerprintslast = src.fingerprintslast
+		src.forensic_holder.copy_to(E.forensic_holder, null, TRUE)
 
 		invisibility = INVIS_ALWAYS_ISH
 		SPAWN(15 SECONDS)
@@ -1008,12 +1087,12 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 				message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing(LOG_COMBAT, user, "primes a grenade ([src.type]) at [log_loc(user)].")
 
-	proc/arm(mob/usr as mob)
+	proc/arm(mob/user as mob)
 
-		usr.show_message(SPAN_ALERT("<B>You have armed the [src.name]!"))
-		for(var/mob/O in viewers(usr))
+		user.show_message(SPAN_ALERT("<B>You have armed the [src.name]!"))
+		for(var/mob/O in viewers(user))
 			if (O.client)
-				O.show_message(SPAN_ALERT("<B>[usr] has armed the [src.name]! Run!</B>"), 1)
+				O.show_message(SPAN_ALERT("<B>[user] has armed the [src.name]! Run!</B>"), 1)
 
 		if (icon_state_armed)
 			icon_state = icon_state_armed
@@ -1102,6 +1181,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 		for(var/mob/living/carbon/human/M in range(5, get_turf(src)))
 			var/area/t = get_area(M)
 			if(t?.sanctuary) continue
+			if (isnukeop(M)) continue
 			src.dress_up(M)
 		..()
 
@@ -1777,6 +1857,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 	icon = 'icons/obj/items/assemblies.dmi'
 	item_state = "r_hands"
 	duration_put = 0.5 SECONDS //crime
+	can_arcplate = FALSE
 
 /obj/item/pipebomb/frame
 	name = "pipe frame"
@@ -1856,7 +1937,9 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 		user.u_equip(src)
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
 		var/obj/item/gun/kinetic/zipgun/new_gun = new/obj/item/gun/kinetic/zipgun
+		logTheThing(LOG_STATION, user, "crafts a zipgun at [log_loc(user)]")
 		user.put_in_hand_or_drop(new_gun)
+		SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, new_gun, user)
 		qdel(to_combine_atom)
 		qdel(src)
 
@@ -1868,7 +1951,9 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 			user.u_equip(to_combine_atom)
 			playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
 			var/obj/item/gun/kinetic/slamgun/S = new/obj/item/gun/kinetic/slamgun
+			logTheThing(LOG_STATION, user, "crafts a slamgun at [log_loc(user)]")
 			user.put_in_hand_or_drop(S)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, S, user)
 			qdel(to_combine_atom)
 			qdel(src)
 			// Since the assembly was done, return TRUE
@@ -1974,7 +2059,8 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 				qdel(src.reagents)
 				//make the hulls
 				boutput(user, SPAN_NOTICE("You add some propellant to the hulls."))
-				new /obj/item/pipehulls(get_turf(src))
+				var/pipehulls = new /obj/item/pipehulls(get_turf(src))
+				SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, pipehulls, user)
 				qdel(src)
 		// Since the assembly was done, return TRUE
 		// We return true here even if the volatility was not high enough, so we don't spill chemicals on the frame for no reason
@@ -1988,11 +2074,13 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 			var/turf/target_turf = get_turf(src)
 			var/obj/item/pipebomb/bomb/complete_bomb = new /obj/item/pipebomb/bomb(target_turf)
 			complete_bomb.strength = src.strength
+			logTheThing(LOG_STATION, user, "crafts a pipe bomb at [log_loc(user)], power: [complete_bomb.strength], modifiers: [length(src.item_mods) ? english_list(src.item_mods) : "none"]")
 			if (src.material)
 				complete_bomb.setMaterial(src.material)
 			//add properties from item mods to the finished pipe bomb
 			complete_bomb.set_up_special_ingredients(src.item_mods)
 			user.u_equip(src)
+			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, complete_bomb, user)
 			qdel(src)
 			used_cables.change_stack_amount(-3)
 			user.put_in_hand_or_drop(complete_bomb)

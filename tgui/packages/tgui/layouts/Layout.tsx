@@ -4,16 +4,15 @@
  * @license MIT
  */
 
-import { classes } from 'common/react';
 import { useEffect, useRef } from 'react';
+import type { Box } from 'tgui-core/components';
+import { addScrollableNode, removeScrollableNode } from 'tgui-core/events';
+import { classes } from 'tgui-core/react';
+import { computeBoxClassName, computeBoxProps } from 'tgui-core/ui';
 
 import { WindowMode } from '../backend'; // |GOONSTATION-ADD|
-import {
-  BoxProps,
-  computeBoxClassName,
-  computeBoxProps,
-} from '../components/Box';
-import { addScrollableNode, removeScrollableNode } from '../events';
+
+type BoxProps = React.ComponentProps<typeof Box>;
 
 type Props = Partial<{
   theme: string;
@@ -25,14 +24,20 @@ export function Layout(props: Props) {
   const {
     className,
     theme = 'nanotrasen',
-    mode = 'dark',
+    mode = 'dark', // |GOONSTATION-ADD|
     children,
     ...rest
   } = props;
 
   // |GOONSTATION-CHANGE|
+  const styleClasses = `theme-${theme} mode-${mode}`;
+
+  useEffect(() => {
+    document.documentElement.className = styleClasses;
+  }, [styleClasses]);
+
   return (
-    <div className={classes(['theme-' + theme, 'mode-' + mode])}>
+    <div className={styleClasses}>
       <div
         className={classes(['Layout', className, computeBoxClassName(rest)])}
         {...computeBoxProps(rest)}

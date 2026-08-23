@@ -21,8 +21,8 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining)
 		return locate(adjustX, adjustY, target.z)
 
 	verify_position(turf/target)
-		for(var/x=0, x<prefabSizeX; x++)
-			for(var/y=0, y<prefabSizeY; y++)
+		for(var/x=0; x < prefabSizeX; x++)
+			for(var/y=0; y<prefabSizeY; y++)
 				var/turf/L = locate(target.x+x, target.y+y, target.z)
 				if(L?.loc && ((L.loc.type != /area/space) && !istype(L.loc , /area/allowGenerate)))
 					return FALSE
@@ -276,6 +276,13 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining/space)
 		prefabPath = "assets/maps/prefabs/space/prefab_merc_outpost.dmm"
 		prefabSizeX = 25
 		prefabSizeY = 25
+
+	fancy_restaurant // CelineTheYeen's top of the line pretentious space restaurant
+		maxNum = 1
+		probability = 20
+		prefabPath = "assets/maps/prefabs/space/prefab_fancy_restaurant.dmm"
+		prefabSizeX = 26
+		prefabSizeY = 23
 
 // Drone Spawners
 	drone_common

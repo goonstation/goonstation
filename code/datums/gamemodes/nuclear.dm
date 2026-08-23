@@ -1,5 +1,9 @@
 ///This amount of potential target locations are picked, up to every defined plant spot for the map
+#ifdef MAP_OVERRIDE_PROBSTATION
+#define AMOUNT_OF_VALID_NUKE_PLANT_LOCATIONS 3
+#else
 #define AMOUNT_OF_VALID_NUKE_PLANT_LOCATIONS 2
+#endif
 
 var/global/list/nuke_op_color_matrix = list("#394470","#c65039", "#63662c")
 var/global/list/nuke_op_camo_matrix = null
@@ -18,7 +22,6 @@ var/global/list/nuke_op_camo_matrix = null
 	var/list/datum/mind/syndicates = list()
 	var/finished = 0
 	var/nuke_detonated = 0 //Has the nuke gone off?
-	var/agent_radiofreq = 0 //:h for syndies, randomized per round
 	var/obj/machinery/nuclearbomb/the_bomb = null
 	var/bomb_check_timestamp = 0 // See check_finished().
 	var/minimum_players = 15 // Minimum ready players for the mode
@@ -106,17 +109,6 @@ var/global/list/nuke_op_camo_matrix = null
 			"the artifact lab" = list(/area/station/science/artifact),
 			"the robotics lab" = list(/area/station/medical/robotics))
 
-		else if (ismap ("DONUT2"))
-			target_locations = list("the cargo bay (QM)" = list(/area/station/quartermaster/office),
-			"the public market" = list(/area/station/crew_quarters/market),
-			"the stock exchange" = list(/area/station/crew_quarters/stockex),
-			"the chapel" = list(/area/station/chapel/sanctuary),
-			"the bridge" = list(/area/station/bridge),
-			"the crew lounge" = list(/area/station/crew_quarters/quarters),
-			"the main brig area" = list(/area/station/security/brig),
-			"the main station pod bay" = list(/area/station/hangar/main))
-
-
 		else // COG1
 			target_locations = list("the main security room" = list(/area/station/security/main),
 			"the central research sector hub" = list(/area/station/science/lobby),
@@ -181,9 +173,6 @@ var/global/list/nuke_op_camo_matrix = null
 		syndicate.assigned_role = "MODE" //So they aren't chosen for other jobs.
 		syndicate.special_role = ROLE_NUKEOP
 		possible_syndicates.Remove(syndicate)
-
-	agent_radiofreq = random_radio_frequency()
-	protected_frequencies += agent_radiofreq
 
 	return 1
 
@@ -402,15 +391,6 @@ var/global/list/nuke_op_camo_matrix = null
 
 /datum/game_mode/nuclear/send_intercept()
 	..(ticker.minds)
-/datum/game_mode/nuclear/proc/random_radio_frequency()
-	. = 0
-	var/list/blacklisted = list(0, 1451, 1457) // The old blacklist was rather incomplete and thus ineffective (Convair880).
-	blacklisted.Add(R_FREQ_BLACKLIST)
-
-	do
-		. = rand(1352, 1439)
-
-	while (. in blacklisted)
 
 /datum/game_mode/nuclear/proc/create_plant_location_markers(var/list/target_locations, var/list/target_location_names)
 	// Find the centres of the plant sites.

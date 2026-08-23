@@ -6,6 +6,7 @@
 
 	New()
 		. = ..()
+		src.AddComponent(/datum/component/deconstructing)
 		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(pre_attackby), override=TRUE)
 
 	pre_attackby(source, atom/target, mob/user)
@@ -16,8 +17,8 @@
 			F.deploy(user)
 			return ATTACK_PRE_DONT_ATTACK
 
-		finish_decon(target, user)
-		return ATTACK_PRE_DONT_ATTACK
+		var/datum/component/deconstructing/decon_comp = src.GetComponent(/datum/component/deconstructing)
+		return decon_comp.finish_decon(target, user, src)
 
 /obj/item/paper/artemis_todo
 	icon = 'icons/obj/electronics.dmi';
@@ -54,7 +55,7 @@
 	item_outputs = list(/obj/item/shipcomponent/locomotion/treads)
 	create = 1
 	time = 5 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 /datum/manufacture/sub/wheels
 	name = "Vehicle Wheels"
@@ -63,7 +64,7 @@
 	item_outputs = list(/obj/item/shipcomponent/locomotion/wheels)
 	create = 1
 	time = 5 SECONDS
-	category = "Component"
+	category = MANUFACTURER::CATEGORY::COMPONENT
 
 
 /obj/machinery/plantpot/bareplant/swamp_flora
@@ -148,8 +149,8 @@
 	attacked_proc = 1
 	harvestable = 0
 	starthealth = 40
-	growtime = 80
-	harvtime = 120
+	growtime = 5
+	harvtime = 10
 	cropsize = 1
 	harvests = 0
 	endurance = 5
@@ -182,7 +183,7 @@
 			if(prob(20))
 				return
 
-		if (POT.growth > (P.HYPget_growth_to_harvestable(DNA) + 5))
+		if (POT.growth > (P.HYPget_growth_to_harvestable(DNA)))
 			var/list/stuffnearby = list()
 			for (var/mob/living/X in view(7,POT.loc))
 				if(isalive(X) && (X != POT.loc) && !iskudzuman(X))
@@ -191,9 +192,9 @@
 				var/mob/living/target = pick(stuffnearby)
 				var/datum/callback/C = new(src, PROC_REF(alter_projectile), DNA)
 				if(prob(10))
-					shoot_projectile_ST_pixel_spread(POT, projectile, get_step(target, pick(ordinal)), alter_proj=C)
+					shoot_projectile_ST_pixel_spread(get_turf(POT), projectile, get_step(target, pick(ordinal)), alter_proj=C)
 				else
-					shoot_projectile_ST_pixel_spread(POT, projectile, target, alter_proj=C)
+					shoot_projectile_ST_pixel_spread(get_turf(POT), projectile, target, alter_proj=C)
 				POT.growth -= rand(1,5)
 			return
 
@@ -207,6 +208,7 @@
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	icon_state = "seedproj"
 	implanted = /obj/item/implant/projectile/body_visible/seed/spitter_pod
+	damage = 15
 
 /obj/item/implant/projectile/body_visible/seed/spitter_pod
 	name = "strange seed pod"
@@ -214,41 +216,10 @@
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	desc = "A small hollow pod."
 	icon_state = "seedproj"
-	var/dig_ticker = 25
 
 	New()
 		..()
 		implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "dart_stick_[rand(0, 4)]", layer = MOB_EFFECT_LAYER)
-
-	do_process()
-		src.dig_ticker = max(src.dig_ticker-1, 0)
-		if(!src.dig_ticker)
-			online = FALSE
-			if(prob(80))
-				var/mob/living/carbon/human/H = src.owner
-				var/obj/item/implant/projectile/spitter_pod/implant = new
-				implant.implanted(H)
-				boutput(src.owner,SPAN_ALERT("You feel something work its way into your body from \the [src]."))
-
-	on_death()
-		if(!online)
-			return
-		if(prob(80))
-			var/mob/living/carbon/human/H = src.owner
-			var/obj/item/implant/projectile/spitter_pod/implant = new
-			implant.implanted(H)
-			SPAWN(rand(5 SECONDS, 30 SECONDS))
-				if(!QDELETED(H) && !QDELETED(implant))
-					implant.on_death()
-
-/obj/item/implant/projectile/spitter_pod
-	name = "strange seed pod"
-	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
-	desc = "A small hollow pod."
-	icon_state = "seedproj"
-
-	var/heart_ticker = 35
-	online = TRUE
 
 	implanted(mob/M, mob/Implanter)
 		..()
@@ -258,6 +229,7 @@
 	on_death()
 		if(!online)
 			return
+		. = ..()
 		var/atom/movable/P = locate(/obj/machinery/plantpot/bareplant) in src.owner
 
 		// Uhhh.. just one thanks, don't need a pew pew army growing out of someone
@@ -271,31 +243,6 @@
 				P.pixel_x = 15 * -P.rest_mult
 				P.transform = P.transform.Turn(P.rest_mult * -90)
 				animate(P, alpha=255, time=2 SECONDS)
-
-	do_process()
-		heart_ticker = max(heart_ticker-1, 0)
-		if(!isalive(src.owner))
-			online = FALSE
-			return
-		if(heart_ticker & prob(60) && !ON_COOLDOWN(src,"[src] spam", 5 SECONDS) )
-			if(prob(30))
-				boutput(src.owner,SPAN_ALERT("You feel as though something moving towards your heart... That can't be good."))
-			else
-				boutput(src.owner,SPAN_ALERT("You feel as though something is working its way through your chest."))
-		else if(!heart_ticker)
-			if(!ON_COOLDOWN(src,"[src] spam", 8 SECONDS))
-				var/mob/living/carbon/human/H = src.owner
-				if(istype(H))
-					H.organHolder.damage_organs(rand(1,5)/2, 0, 1, list("heart"))
-				else
-					src.owner.TakeDamage("All", 1, 0)
-
-				if(prob(5))
-					boutput(src.owner,SPAN_ALERT("AAHRRRGGGG something is trying to dig your heart out from the inside?!?!"))
-					src.owner.emote("scream")
-					src.owner.changeStatus("stunned", rand(1 SECOND, 2 SECONDS))
-				else if(prob(40))
-					boutput(src.owner,SPAN_ALERT("You feel a sharp pain in your chest."))
 
 /datum/gimmick_event
 	var/interaction = 0
@@ -710,6 +657,15 @@
 				animate(A, color="#666666", time=10 SECONDS)
 			else
 				animate(A, color="#222222", time=10 SECONDS)
+		else
+			var/controller_id = map_settings.z_level_ambient_lighting["[src.z]"]
+			if(controller_id)
+				var/datum/daynight_controller/controller = daynight_controllers[controller_id]
+				if(istype(controller))
+					if( controller.current_color == "#222222" )
+						controller.manual_animate_colors(list("#666666"), list(10 SECONDS))
+					else
+						controller.manual_animate_colors(list("#222222"), list(10 SECONDS))
 
 	proc/lightning(fadeout=3 SECONDS, flash_color="#ccf")
 		var/obj/ambient/A = locate() in vis_contents
@@ -729,6 +685,20 @@
 			playsound(src, pick('sound/effects/thunder.ogg','sound/ambience/nature/Rain_ThunderDistant.ogg'), 75, 1)
 			SPAWN(fadeout + (1.5 SECONDS))
 				A.color = old_color
+		else
+			var/controller_id = map_settings.z_level_ambient_lighting["[src.z]"]
+			if(controller_id)
+				var/datum/daynight_controller/controller = daynight_controllers[controller_id]
+				if(istype(controller))
+					var/old_color = controller.current_color
+					var/first_flash_low = "#666666"
+					var/list/L1 = hex_to_rgb_list(old_color)
+					var/list/L2 = hex_to_rgb_list(flash_color)
+					if(!isnull(L1) && !isnull(L2))
+						first_flash_low = rgb(lerp(L1[1],L2[1],0.8), lerp(L1[1],L2[1],0.8), lerp(L1[1],L2[1],0.8))
+					color_shift_lights(list(flash_color, first_flash_low, flash_color, old_color), list(0.5, 0.75 SECONDS, 0.75, fadeout))
+					SPAWN(fadeout + (1.5 SECONDS))
+						controller.active = TRUE
 
 	proc/color_shift_lights(colors, durations)
 		var/obj/ambient/A = locate() in vis_contents
@@ -739,12 +709,18 @@
 					animate(A, color=colors[i], time=durations[i])
 				else
 					animate(color=colors[i], time=durations[i])
+		else
+			var/controller_id = map_settings.z_level_ambient_lighting["[src.z]"]
+			if(controller_id)
+				var/datum/daynight_controller/controller = daynight_controllers[controller_id]
+				if(istype(controller))
+					controller.manual_animate_colors(colors, durations)
 
 	proc/sunset()
-		color_shift_lights(list("#AAA", "#c53a8b", "#b13333", "#444","#222"), list(0, 25 SECONDS, 25 SECONDS, 20 SECONDS, 25 SECONDS))
+		color_shift_lights(list("#AAA", "#c53a8b", "#b13333", "#444","#222"), list(5 SECONDS, 25 SECONDS, 25 SECONDS, 20 SECONDS, 25 SECONDS))
 
 	proc/sunrise()
-		color_shift_lights(list("#222", "#444","#ca2929", "#c4b91f", "#AAA", ), list(0, 10 SECONDS, 20 SECONDS, 15 SECONDS, 25 SECONDS))
+		color_shift_lights(list("#222", "#444","#ca2929", "#c4b91f", "#AAA", ), list(5 SECONDS, 10 SECONDS, 20 SECONDS, 15 SECONDS, 25 SECONDS))
 
 	proc/set_color()
 		var/color = input(usr, "Please select ambient light color.", "Color Menu") as color
@@ -1363,6 +1339,7 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 		..()
 
 	unequipped(var/mob/user)
+		user.remove_ability_holder(/datum/abilityHolder/dancing)
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (H.hud)

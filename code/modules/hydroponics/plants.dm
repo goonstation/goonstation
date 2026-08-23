@@ -37,6 +37,8 @@ ABSTRACT_TYPE(/datum/plant)
 	var/genome = 0 // Used for splicing - how "similar" the plants are = better odds of splice
 	var/stop_size_scaling // Stops the enlarging of sprites based on quality
 	var/no_extract // Stops the extraction of seeds in the PlantMaster
+	var/yield_multi = 2 	// What % increase of produce count does a single point of yield represent? A value of 1 means 100 yield
+							// increases base produce count by 100%; 0.5 means 50%; 2 means 200% etc.
 
 	var/special_proc = 0 // Does this plant do something special when it's in the pot?
 	var/attacked_proc = 0 // Does this plant react if you try to attack it?
@@ -254,16 +256,18 @@ ABSTRACT_TYPE(/datum/plant)
 				if (prob(5))
 					HYPaddCommut(DNA,/datum/plant_gene_strain/accelerator)
 			if ("potash")
-				DNA.cropsize += rand(1,4)
-				DNA.harvests -= rand(0,2)
+				DNA.cropsize += rand(1,7)
+				DNA.harvests -= rand(0,1)
 			if ("saltpetre")
 				DNA.potency += rand(2,8)
-				DNA.cropsize += rand(0,2)
+				DNA.cropsize -= rand(0,5)
 			if ("space_fungus")
 				DNA.endurance += rand(1,3)
 				if (prob(3))
 					HYPaddCommut(DNA,/datum/plant_gene_strain/damage_res)
 			if ("mutadone")
+				if (prob(8))
+					HYPaddCommut(DNA,/datum/plant_gene_strain/stable_alleles)
 				if (DNA.growtime < 0)
 					DNA.growtime++
 				if (DNA.harvtime < 0)

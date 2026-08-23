@@ -6,8 +6,8 @@
  */
 import { AlertContentWindow } from '../types';
 
-export const acw: AlertContentWindow = {
-  content: (
+const PlagueRatContentWindow = () => {
+  return (
     <div className="traitor-tips">
       <h1 className="center">You are a plague rat!</h1>
       <p>1. Spread disease using your abilities</p>
@@ -29,14 +29,16 @@ export const acw: AlertContentWindow = {
           Make a rat den that will spawn small aggressive mice, and heal you
           when close-by.
         </li>
+        <li>Slip into disposal chutes and sneak around wherever you please.</li>
       </ul>
       <h3>Adult rat</h3>
       <ul>
-        <li>
-          Summon another plague rat! You need to be in your rat den to do this.
-        </li>
         <li>Slam into an unfortunate human and stun you both.</li>
       </ul>
     </div>
-  ),
+  );
+};
+
+export const acw: AlertContentWindow = {
+  component: PlagueRatContentWindow,
 };

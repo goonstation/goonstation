@@ -15,6 +15,12 @@ ABSTRACT_TYPE(/obj/item/plant)
 		..()
 		make_reagents()
 
+	get_desc(dist, mob/user)
+		. = ..()
+		if (dist >= 5)
+			return
+		HYPphytoscopic_scan(user, src)
+
 	proc/make_reagents()
 		if (!src.reagents)
 			src.create_reagents(100)
@@ -38,7 +44,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 		if (!src.reagents)
 			src.make_reagents()
 
-		if (istype(W, /obj/item/currency/spacecash) || istype(W, /obj/item/paper))
+		if (istype(W, /obj/item/currency/spacecash) || istype(W, /obj/item/paper) || istype (W, /obj/item/poster/))
 			boutput(user, SPAN_ALERT("You roll up [W] into a cigarette."))
 			var/obj/item/clothing/mask/cigarette/custom/P = new(user.loc)
 			if(istype(W, /obj/item/currency/spacecash))
@@ -46,6 +52,8 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 				P.item_state = "cig-[W.icon_state]"
 				P.litstate = "ciglit-[W.icon_state]"
 				P.buttstate = "cigbutt-[W.icon_state]"
+			else if (istype(W, /obj/item/poster/titled_photo))
+				P.contraband += 2 // its made of CRIME
 			P.name = build_name(W)
 			P.transform = src.transform
 			P.reagents.maximum_volume = src.reagents.total_volume
@@ -63,7 +71,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 			var/obj/item/bluntwrap/B = W
 			if(B.flavor)
 				doink.flavor = B.flavor
-			doink.name = "[reagent_id_to_name(doink.flavor)]-flavored [src.name] [pick("doink","'Rillo","cigarillo","brumbpo")]"
+			doink.name = reagent_id_to_name(doink.flavor) + "-flavored " + src.name + " " + pick("doink","'Rillo","cigarillo","brumbpo")
 			doink.transform = src.transform
 			doink.reagents.clear_reagents()
 			doink.reagents.maximum_volume = (src.reagents.total_volume + 50)
@@ -425,6 +433,8 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 		if (iswerewolf(user))
 			user.changeStatus("knockdown", 4 SECONDS)
 			user.TakeDamage("All", 0, 10, 0, DAMAGE_BURN)
+			user.changeStatus("werewolf_bane", 20 SECONDS)
+
 			boutput(user, SPAN_ALERT("You try to pick up [src], but it hurts and you fall over!"))
 			return
 		else ..()
@@ -436,6 +446,8 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 			if (!GET_COOLDOWN(M, "aconite_stun"))
 				var/datum/statusEffect/stun_effect = M.changeStatus("knockdown", 4 SECONDS)
 				M.TakeDamage("All", 0, 10, 0, DAMAGE_BURN)
+				M.changeStatus("werewolf_bane", 20 SECONDS)
+
 				M.visible_message(SPAN_ALERT("The [M] steps too close to [src] and falls down!"))
 				if (stun_effect)
 					stun_duration = stun_effect.duration //makes cooldown last the same as stun because the actual duration of applied effect is lower
@@ -461,10 +473,12 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	//stolen from dagger, not much too it
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		if(iswerewolf(A))
+			var/mob/living/carbon/human/H = A
+			H.changeStatus("staggered", 2 SECONDS)
+
 			if (istype(usr, /mob))
 				A:lastattacker = usr
 				A:lastattackertime = world.time
-			A:weakened += 15
 
 	pull(mob/user)
 		if (!istype(user))
@@ -494,6 +508,15 @@ ABSTRACT_TYPE(/obj/item/plant/flower)
 		disperse_seeds(user,user)
 
 	attackby(var/obj/item/W, mob/user)
+		if (istype(W, /obj/item/cable_coil))
+			var/obj/item/cable_coil/C = W
+			if (!C.use(1))
+				return
+			user.visible_message("[user] weaves [src] and [W] into a makeshift sunflower mask.")
+			var/obj/item/clothing/mask/sunflowermask/M = new /obj/item/clothing/mask/sunflowermask(get_turf(src))
+			qdel(src)
+			user.put_in_hand_or_drop(M)
+			return
 		. = ..()
 		disperse_seeds(src,user)
 

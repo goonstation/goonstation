@@ -16,6 +16,7 @@
 
 	can_burn = TRUE
 	can_break = TRUE
+	provides_grip = FALSE
 	/// if this floor can be pried up
 	var/pryable = TRUE
 	var/has_material = TRUE
@@ -180,6 +181,9 @@
 	step_priority = STEP_PRIORITY_MED
 
 /turf/simulated/floor/plating/random
+#ifdef IN_MAP_EDITOR
+	icon_state = "plating_random"
+#endif
 	New()
 		..()
 		if (prob(20))
@@ -352,6 +356,83 @@
 
 /////////////////////////////////////////
 
+/turf/simulated/floor/color_coded_hall
+	icon_state = "whitehall" //Default for mapping purposes
+	var/is_corner = FALSE
+	///Associated list of icon states into color name
+	var/static/list/turf_edge_options = list("blue" = "Blue",
+											"arrival" = "Blue and White",
+											"escape" = "Red and White",
+											"blugreen" = "Blue and Green",
+											"dblue" = "Dark Blue",
+											"dpurple" = "Dark Purple",
+											"green" = "Green",
+											"orange" = "Orange",
+											"caution" = "Yellow and Black",
+											"purple" = "Purple",
+											"red" = "Red",
+											"yellow" = "Yellow",
+											"whitehall" = "White")
+	///Floor icons which don't have the usual [color]corner name
+	var/static/list/corner_icon_overrides = list("whitehall" = "whitecorner")
+	///These are super evil and have their outer corners in the corner sprite unlike the rest
+	var/static/list/inverted_corners = list("dblue", "dpurple")
+	///Associated list of area name = color
+	var/static/list/hallway_to_color = list()
+
+	New()
+		. = ..()
+		var/area/room = get_area(src)
+		if(!(room.name in src.hallway_to_color))
+			var/chosen_colour = pick(src.turf_edge_options)
+			//Probstation halls get their name from their color instead of their compass directions
+#ifdef MAP_OVERRIDE_PROBSTATION
+			if(istype(room, /area/station/hallway) && room.name == initial(room.name))
+				room.name = "[src.turf_edge_options[chosen_colour]] Hallway"
+#endif
+			src.turf_edge_options -= chosen_colour
+			src.hallway_to_color |= list(room.name = chosen_colour)
+		src.icon_state = src.hallway_to_color[room.name]
+		//Some icon states are evil and fucked up
+		if(src.icon_state in src.inverted_corners)
+			if(src.is_corner)
+				src.is_corner = FALSE
+				var/dir_to_set = src.dir
+				switch(src.dir)
+					if(NORTH)
+						dir_to_set = NORTHWEST
+					if(SOUTH)
+						dir_to_set = SOUTHWEST
+					if(EAST)
+						dir_to_set = NORTHEAST
+					if(WEST)
+						dir_to_set = SOUTHEAST
+				src.dir = dir_to_set
+			else if(!is_cardinal(src.dir))
+				src.is_corner = TRUE
+				var/dir_to_set = src.dir
+				switch(src.dir)
+					if(NORTHWEST)
+						dir_to_set = SOUTH
+					if(NORTHEAST)
+						dir_to_set = EAST
+					if(SOUTHWEST)
+						dir_to_set = WEST
+					if(SOUTHEAST)
+						dir_to_set = NORTH
+				src.dir = dir_to_set
+		//Not all corner sprites use the naming convention
+		if(src.is_corner)
+			src.icon_state = src.corner_icon_overrides[src.icon_state] || "[src.icon_state]corner"
+		//WAAAAAAAAAAAGH
+		if(src.icon_state == "purplecorner" && (src.dir in list(EAST, WEST)))
+			src.dir = turn(src.dir, 180)
+
+/turf/simulated/floor/color_coded_hall/corner
+	icon_state = "whitecorner" //Default for mapping purposes
+	is_corner = TRUE
+
+/////////////////////////////////////////
 /turf/simulated/floor/neutral
 	icon_state = "fullneutral"
 
@@ -502,19 +583,13 @@
 /turf/simulated/floor/darkblue
 	icon_state = "fulldblue"
 
-/turf/simulated/floor/darkblue/checker
-	icon_state = "blue-dblue"
-
-/turf/simulated/floor/darkblue/checker/other
-	icon_state = "blue-dblue2"
-
 /turf/simulated/floor/darkblue/side
 	icon_state = "dblue"
 
 /turf/simulated/floor/darkblue/corner
 	icon_state = "dbluecorner"
 
-/turf/simulated/floor/darkblue/checker/white
+/turf/simulated/floor/darkblue/checker
 	icon_state = "dbluechecker"
 
 /turf/simulated/floor/darkblueblack
@@ -653,6 +728,23 @@
 /turf/simulated/floor/yellowblack/corner
 	icon_state = "yellowblackcorner"
 
+/turf/simulated/floor/yellowwhite
+	icon_state = "yellowwhite"
+
+/turf/simulated/floor/yellowwhite/corner
+	icon_state = "yellowwhitecorner"
+
+/////////////////////////////////////////
+
+/turf/simulated/floor/lightyellow
+	icon_state = "fulllyellow"
+
+/turf/simulated/floor/lightyellow/side
+	icon_state = "lyellow"
+
+/turf/simulated/floor/lightyellow/corner
+	icon_state = "lyellowcorner"
+
 /////////////////////////////////////////
 
 /turf/simulated/floor/orange
@@ -664,20 +756,38 @@
 /turf/simulated/floor/orange/corner
 	icon_state = "orangecorner"
 
+/turf/simulated/floor/orange/checker
+	icon_state = "orangechecker"
+
 
 /turf/simulated/floor/orangeblack
-	icon_state = "fullcaution"
-
-/turf/simulated/floor/orangeblack/side
-	icon_state = "caution"
-
-/turf/simulated/floor/orangeblack/side/white
-	icon_state = "cautionwhite"
+	icon_state = "orangeblack"
 
 /turf/simulated/floor/orangeblack/corner
+	icon_state = "orangeblackcorner"
+
+
+/turf/simulated/floor/orangewhite
+	icon_state = "orangewhite"
+
+/turf/simulated/floor/orangewhite/corner
+	icon_state = "orangewhitecorner"
+
+/////////////////////////////////////////
+
+/turf/simulated/floor/caution
+	icon_state = "fullcaution"
+
+/turf/simulated/floor/caution/side
+	icon_state = "caution"
+
+/turf/simulated/floor/caution/white
+	icon_state = "cautionwhite"
+
+/turf/simulated/floor/caution/corner
 	icon_state = "cautioncorner"
 
-/turf/simulated/floor/orangeblack/corner/white
+/turf/simulated/floor/caution/corner/white
 	icon_state = "cautionwhitecorner"
 
 /////////////////////////////////////////
@@ -871,11 +981,20 @@ DEFINE_FLOORS(twotone/blue,
 DEFINE_FLOORS(twotone/yellow,
 	icon_state = "twotone_yellow")
 
+DEFINE_FLOORS(twotone/orange,
+	icon_state = "twotone_orange")
+
 DEFINE_FLOORS(twotone/white,
 	icon_state = "twotone_white")
 
 DEFINE_FLOORS(twotone/black,
 	icon_state = "twotone_black")
+
+DEFINE_FLOORS(twotone/darkblue,
+	icon_state = "twotone_dblue")
+
+DEFINE_FLOORS(twotone/darkpurple,
+	icon_state = "twotone_dpurple")
 
 /////////////////////////////////////////
 
@@ -1047,6 +1166,16 @@ DEFINE_FLOORS(minitiles/black,
 /turf/simulated/floor/specialroom/gym
 	name = "boxing mat"
 	icon_state = "boxing"
+
+	Entered(atom/movable/M, atom/OldLoc)
+		..()
+		if (!istype(OldLoc, /turf/simulated/floor/specialroom/gym) && M.hasStatus("wrestler"))
+			M.changeStatus("wrestler", INFINITE_STATUS, M)
+
+	Exited(atom/movable/M, atom/newloc)
+		..()
+		if (!istype(newloc, /turf/simulated/floor/specialroom/gym) && M.hasStatus("wrestler"))
+			M.changeStatus("wrestler", 5 SECONDS, M)
 
 /turf/simulated/floor/specialroom/gym/alt
 	name = "gym mat"
@@ -1402,6 +1531,7 @@ TYPEINFO(/turf/simulated/floor/snow)
 	icon_state = "snow1"
 	step_material = "step_snow"
 	step_priority = STEP_PRIORITY_MED
+	can_dig = TRUE
 
 	New()
 		..()
@@ -1426,6 +1556,7 @@ TYPEINFO(/turf/simulated/floor/snow)
 /turf/simulated/floor/snow/green
 	name = "snow-covered floor"
 	icon_state = "snowgreen"
+	can_dig = FALSE
 
 /turf/simulated/floor/snow/green/corner
 	name = "snow-covered floor"
@@ -1436,7 +1567,8 @@ DEFINE_FLOORS(snowcalm,
 	icon = 'icons/turf/floors.dmi';\
 	icon_state = "snow_calm";\
 	step_material = "step_snow";\
-	step_priority = STEP_PRIORITY_MED)
+	step_priority = STEP_PRIORITY_MED;\
+	can_dig = TRUE)
 
 DEFINE_FLOORS(snowcalm/border,
 	icon_state = "snow_calm_border")
@@ -1446,7 +1578,8 @@ DEFINE_FLOORS(snowrough,
 	icon = 'icons/turf/floors.dmi';\
 	icon_state = "snow_rough";\
 	step_material = "step_snow";\
-	step_priority = STEP_PRIORITY_MED)
+	step_priority = STEP_PRIORITY_MED;\
+	can_dig = TRUE)
 
 DEFINE_FLOORS(snowrough/border,
 	icon_state = "snow_rough_border")
@@ -1530,7 +1663,8 @@ TYPEINFO(/turf/simulated/floor/grass)
 	mat_changedesc = 0
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
-	default_material = "synthrubber"
+	default_material = "synthrubber_green"
+	can_dig = TRUE
 
 	#ifdef SEASON_WINTER
 	New()
@@ -1647,8 +1781,9 @@ TYPEINFO(/turf/simulated/floor/grass)
 
 /obj/effect/snow_step
 	icon = 'icons/obj/decals/blood/blood.dmi'
+	anchored = ANCHORED_ALWAYS
 	layer = DECAL_LAYER
-	plane = PLANE_FLOOR
+	plane = PLANE_NOSHADOW_BELOW
 	appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | TILE_BOUND
 	color = "#91b8d0"
 
@@ -1723,6 +1858,7 @@ TYPEINFO(/turf/simulated/floor/grasstodirt)
 	#endif
 	mat_changename = 0
 	mat_changedesc = 0
+	can_dig = TRUE
 
 TYPEINFO(/turf/simulated/floor/dirt)
 	mat_appearances_to_ignore = list("steel","synthrubber")
@@ -1732,6 +1868,7 @@ TYPEINFO(/turf/simulated/floor/dirt)
 	icon_state = "dirt"
 	mat_changename = 0
 	mat_changedesc = 0
+	can_dig = TRUE
 
 /////////////////////////////////////////
 
@@ -1746,6 +1883,7 @@ TYPEINFO(/turf/simulated/floor/marslike)
 	icon_state = "placeholder"
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
+	can_dig = TRUE
 
 /turf/simulated/floor/marslike/t1
 	icon_state = "t1"
@@ -1809,7 +1947,8 @@ DEFINE_FLOORS(grasslush,
 	mat_changename = 0;\
 	mat_changedesc = 0;\
 	step_material = "step_outdoors";\
-	step_priority = STEP_PRIORITY_MED)
+	step_priority = STEP_PRIORITY_MED;\
+	can_dig = TRUE)
 
 DEFINE_FLOORS(grasslush/border,
 	icon_state = "grass_lush_border")
@@ -1951,8 +2090,9 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	if (!src.allows_vehicles && (istype(mover, /obj/machinery/vehicle) && !istype(mover,/obj/machinery/vehicle/tank)))
 		if (!( locate(/obj/machinery/mass_driver, src) ))
 			var/obj/machinery/vehicle/O = mover
-			if (istype(O?.sec_system, /obj/item/shipcomponent/secondary_system/crash)) //For ships crashing with the SEED
-				var/obj/item/shipcomponent/secondary_system/crash/I = O.sec_system
+			var/sec_system = O?.get_part(POD_PART_SECONDARY)
+			if (istype(sec_system, /obj/item/shipcomponent/secondary_system/crash)) //For ships crashing with the SEED
+				var/obj/item/shipcomponent/secondary_system/crash/I = sec_system
 				if (I.crashable)
 					mover.Bump(src)
 					return TRUE
@@ -2314,9 +2454,8 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 			K.Attackby(C, user, params)
 
 	else if (!user.pulling || user.pulling.anchored || (user.pulling.loc != user.loc && BOUNDS_DIST(user, user.pulling) > 0)) // this seemed like the neatest way to make attack_hand still trigger when needed
+		..()
 		src.material_trigger_when_attacked(C, user, 1)
-	else
-		return attack_hand(user)
 
 /turf/simulated/floor/proc/reinforce(obj/item/rods/I)
 	src.ReplaceWithEngineFloor()
@@ -2366,7 +2505,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 
 /turf/simulated/floor/restore_tile(do_hide = TRUE)
 	..()
-	if (!do_hide)
+	if (!do_hide || (locate(/obj/table) in src))
 		return
 	for (var/obj/item/item in src.contents)
 		if (item.w_class <= W_CLASS_TINY && !item.anchored) //I wonder if this will cause problems
@@ -2678,6 +2817,20 @@ TYPEINFO(/turf/simulated/floor/auto)
 				edge_overlay.plane = PLANE_FLOOR
 				T.AddOverlays(edge_overlay, "edge_[direction]")
 
+/turf/simulated/floor/auto/grass
+	name = "grass"
+	icon = 'icons/turf/outdoors.dmi'
+	#ifdef SEASON_AUTUMN
+	icon_state = "grass_autumn"
+	#else
+	icon_state = "grass"
+	#endif
+	mat_changename = 0
+	mat_changedesc = 0
+	step_material = "step_outdoors"
+	step_priority = STEP_PRIORITY_MED
+	can_dig = TRUE
+
 /turf/simulated/floor/auto/grass/swamp_grass
 	name = "swamp grass"
 	desc = "Grass. In a swamp. Truly fascinating."
@@ -2710,6 +2863,7 @@ TYPEINFO(/turf/simulated/floor/auto)
 	icon_state = "dirt"
 	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_DIRT
 	icon_state_edge = "dirtedge"
+	can_dig = TRUE
 
 /turf/simulated/floor/auto/sand
 	name = "sand"
@@ -2718,6 +2872,7 @@ TYPEINFO(/turf/simulated/floor/auto)
 	icon_state = "sand_other"
 	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_DIRT + 1
 	icon_state_edge = "sand_edge"
+	can_dig = TRUE
 	var/tuft_prob = 2
 
 	New()
@@ -2820,6 +2975,7 @@ TYPEINFO(/turf/simulated/floor/auto/water/ice)
 	icon_state_edge = "snow_edge"
 	step_material = "step_snow"
 	step_priority = STEP_PRIORITY_MED
+	can_dig = TRUE
 
 	New()
 		. = ..()
@@ -2848,6 +3004,7 @@ TYPEINFO(/turf/simulated/floor/auto/water/ice)
 	desc = ""
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "swampgrass"
+	can_dig = TRUE
 
 	New()
 		..()
@@ -2859,6 +3016,7 @@ TYPEINFO(/turf/simulated/floor/auto/water/ice)
 	desc = ""
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "swampgrass_edge"
+	can_dig = TRUE
 
 TYPEINFO(/turf/simulated/floor/auto/glassblock)
 	mat_appearances_to_ignore = list("steel","synthrubber","glass")

@@ -148,10 +148,6 @@
 		.["Blood:"] = round(src.points)
 		.["Max HP:"] = round(src.owner.max_health)
 
-	proc/msg_to_master(var/msg)
-		if (master)
-			master.transmit_thrall_msg(msg,owner)
-
 	proc/change_vampire_blood(var/change = 0, var/total_blood = 0, var/set_null = 0)
 		if(!total_blood)
 			if (src.points < 0)

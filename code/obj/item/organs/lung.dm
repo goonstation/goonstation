@@ -18,7 +18,7 @@
 	var/safe_co2_max = 9 // Yes it's an arbitrary value who cares?
 	var/safe_toxins_max = 0.4
 	var/n2o_para_min = 1
-	var/n2o_sleep_min = 5
+	var/n2o_sleep_min = 18
 	var/fart_smell_min = 0.69 // don't ask ~warc
 	var/fart_vomit_min = 6.9
 	var/fart_choke_min = 16.9
@@ -112,7 +112,7 @@
 
 		var/N2O_pp = (breath.nitrous_oxide/breath_moles)*breath_pressure
 		if (N2O_pp > n2o_para_min) // Enough to make us paralysed for a bit
-			donor.changeStatus("unconscious", 5 SECONDS/LUNG_COUNT)
+			donor.changeStatus("knockdown", 5 SECONDS/LUNG_COUNT)
 			if (N2O_pp > n2o_sleep_min) // Enough to make us sleep as well
 				donor.sleeping = max(donor.sleeping, 2)
 		else if (N2O_pp > 0.5)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
@@ -133,8 +133,10 @@
 					boutput(donor, SPAN_ALERT("Oh god it's so bad you could choke to death in here!"))
 
 		if (breath.temperature > min(temp_tolerance) && !donor.is_heat_resistant()) // Hot air hurts :(
-			var/lung_burn = clamp(breath.temperature - temp_tolerance, 0, 30) / 3
-			donor.TakeDamage("chest", 0, (lung_burn / LUNG_COUNT) + 3, 0, DAMAGE_BURN)
+			//do scaling *before* the clamp
+			var/lung_burn = ((breath.temperature - temp_tolerance)/100) ** 0.5
+			lung_burn = clamp(lung_burn, 0, 10)
+			donor.TakeDamage("chest", 0, (lung_burn / LUNG_COUNT), 0, DAMAGE_BURN)
 			if(prob(20))
 				boutput(donor, SPAN_ALERT("This air is searing hot!"))
 				if (prob(80))
@@ -172,6 +174,7 @@
 	failure_disease = /datum/ailment/disease/respiratory_failure/right
 
 TYPEINFO(/obj/item/organ/lung/cyber)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/organ/lung/cyber
@@ -364,6 +367,77 @@ TYPEINFO(/obj/item/organ/lung/cyber)
 	body_side = R_ORGAN
 	failure_disease = /datum/ailment/disease/respiratory_failure/right
 
+obj/item/organ/lung/amphibian
+	name = "amphibian lungs"
+	icon_state = "amphibian_lungs_t"
+	desc = "These aren't actually really used by amphibians to breathe underwater. The process you're probably looking for is called cutaneous respiration."
+	failure_disease = /datum/ailment/disease/respiratory_failure
+
+/obj/item/organ/lung/amphibian/left
+	name = "left lung"
+	organ_name = "amphibian_lung_L"
+	icon_state = "amphibian_lung_L"
+	desc = "These aren't actually really used by amphibians to breathe underwater. The process you're probably looking for is called cutaneous respiration. This is a left lung, since it has three lobes. Hopefully whoever used to have this one doesn't need it anymore."
+	organ_holder_name = "left_lung"
+	body_side = L_ORGAN
+	failure_disease = /datum/ailment/disease/respiratory_failure/left
+
+/obj/item/organ/lung/amphibian/right
+	name = "right lung"
+	organ_name = "amphibian_lung_R"
+	icon_state = "amphibian_lung_R"
+	desc = "These aren't actually really used by amphibians to breathe underwater. The process you're probably looking for is called cutaneous respiration. This is a right lung, since it has two lobes and a cardiac notch, where the heart would be. Hopefully whoever used to have this one doesn't need it anymore."
+	organ_holder_name = "right_lung"
+	body_side = R_ORGAN
+	failure_disease = /datum/ailment/disease/respiratory_failure/right
+
+obj/item/organ/lung/skeleton
+	name = "skeleton lungs"
+	icon_state = "skeleton_lungs_t"
+	desc = "How do these hold air?!"
+	failure_disease = /datum/ailment/disease/respiratory_failure
+
+/obj/item/organ/lung/skeleton/left
+	name = "left lung"
+	organ_name = "skeleton_lung_L"
+	icon_state = "skeleton_lung_L"
+	desc = "How do these hold air?! This is a left lung, since it... since you found it on that side, you guess. Hopefully whoever used to have this one doesn't need it anymore."
+	organ_holder_name = "left_lung"
+	body_side = L_ORGAN
+	failure_disease = /datum/ailment/disease/respiratory_failure/left
+
+/obj/item/organ/lung/skeleton/right
+	name = "right lung"
+	organ_name = "skeleton_lung_R"
+	icon_state = "skeleton_lung_R"
+	desc = "How do these hold air?! This is a right lung, since it... since you found it on that side, you guess. Hopefully whoever used to have this one doesn't need it anymore."
+	organ_holder_name = "right_lung"
+	body_side = R_ORGAN
+	failure_disease = /datum/ailment/disease/respiratory_failure/right
+
+obj/item/organ/lung/martian
+	name = "violet sacs"
+	icon_state = "martian_lungs_t"
+	desc = "Oh, look. Lungs, probably."
+	failure_disease = /datum/ailment/disease/respiratory_failure
+
+/obj/item/organ/lung/martian/left
+	name = "left violet sac"
+	organ_name = "martian_lung_L"
+	icon_state = "martian_lung_L"
+	desc = "Oh, look. Lungs, probably. This is a left lung, since it... since you found it on that side, you guess. Hopefully whoever used to have this one doesn't need it anymore."
+	organ_holder_name = "left_lung"
+	body_side = L_ORGAN
+	failure_disease = /datum/ailment/disease/respiratory_failure/left
+
+/obj/item/organ/lung/martian/right
+	name = "right violet sac"
+	organ_name = "martian_lung_R"
+	icon_state = "martian_lung_R"
+	desc = "Oh, look. Lungs, probably. This is a right lung, since it... since you found it on that side, you guess. Hopefully whoever used to have this one doesn't need it anymore."
+	organ_holder_name = "right_lung"
+	body_side = R_ORGAN
+	failure_disease = /datum/ailment/disease/respiratory_failure/right
 
 /datum/organ_status/lung
 	var/show_oxy_indicator = FALSE
