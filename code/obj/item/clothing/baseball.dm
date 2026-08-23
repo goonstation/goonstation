@@ -4,7 +4,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/baseball)
 /obj/item/clothing/under/baseball
 	name = "schroedinger's baseball uniform"
 	icon = 'icons/obj/clothing/item_under.dmi'
-	wear_image_icon = 'icons/mob/clothing/jumpsuits/item_js_athletic.dmi'
+	wear_image_icon = 'icons/obj/clothing/jumpsuits/item_js_athletic.dmi'
 	desc = "not supposed to be seen. if you see this shit ingame bug report it IMMEDIATELY"
 	icon_state = "item_baseball_off"
 	item_state = "baseball_newmemphis"
