@@ -329,7 +329,7 @@
 			holder.owner.reagents.add_reagent(reagent_id, puke_reagents[reagent_id])
 		var/turf/currentturf
 		var/turf/previousturf
-		for(var/turf/F in_turfs)
+		for(var/turf/F in line_turfs)
 			previousturf = currentturf
 			currentturf = F
 			if(currentturf.density || istype(currentturf, /turf/space))
@@ -465,7 +465,6 @@
 
 /datum/aiTask/prioritizer/critter/noxia/New()
 	..()
-	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/critter/turf_attack, list(src.holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/critter/range_attack, list(src.holder, src))
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------//
@@ -535,33 +534,46 @@
 
 
 /datum/targetable/critter/aoe
-	area_attack(var/mob/summoned_thing, var/drop_prob, var/range_num=14)
-		for(var/turf/T in range(range_num))
-			if(!src.loc && !rand(0,drop_prob))
-				new summoned_thing(T.loc)
+	cast(atom/target)
+		area_attack()
+		..()
+
+/datum/targetable/critter/aoe/area_attack(var/mob/summoned_thing, var/drop_prob, var/radius=14)
+	for(var/turf/T in range(radius))
+		if(!holder.composite_owner.loc && !rand(0,drop_prob))
+			new summoned_thing(T.loc)
 
 /datum/targetable/critter/aoe/backup_call
 	var/backup_type = null
-	if(src.area_attack)
-		var/type_modifier = rand(1,10)
-		if (type_modifier == 7 || 8)
-			backup_type = /mob/living/critter/radthing
-		else if (type_modifier == 9)
-			backup_type = /mob/living/critter/radthing/spitter
-		else if (type_modifier == 10)
-			backup_type = /mob/living/critter/radthing/neutron
-		else
-			backup_type = /mob/living/critter/zombie/radiation
-		area_attack(backup_type, 98)
+	var/type_modifier = rand(1,10)
+	if (type_modifier == 7 || type_modifier == 8)
+		backup_type = /mob/living/critter/radthing
+	else if (type_modifier == 9)
+		backup_type = /mob/living/critter/radthing/spitter
+	else if (type_modifier == 10)
+		backup_type = /mob/living/critter/radthing/neutron
+	else
+		backup_type = /mob/living/critter/zombie
+	area_attack(backup_type, 98)
 
 /datum/targetable/critter/aoe/acid
-	if(src.area_attack)
+	cast(atom/target)
 		area_attack(/obj/decal/acid_splash, 19) //1/10
+		..()
 
 /datum/targetable/critter/aoe/radiation
+	cast(atom/target)
+		area_attack(/obj/lead_rubble, 38) //1/5
+		..()
 
 /obj/lead_rubble
 	name = "batiline debris"
 	desc = "Some radiation shielding that fell from a upper level. Might be useful if it doesn't fall apart first."
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "lead_rubble"
+	var/break_timer = 30 SECONDS
+
+	New()
+		..()
+
+/obj/acid_splash
