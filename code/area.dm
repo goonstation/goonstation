@@ -2651,6 +2651,10 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 		name = "The Rusty Krab"
 		icon_state = "kitchen"
 
+/area/station/crew_quarters/kitchen/backroom
+	name = "Kitchen Back Room"
+	icon_state = "red"
+
 /area/station/crew_quarters/clown
 	name = "Clown Hole"
 	icon_state = "storage"

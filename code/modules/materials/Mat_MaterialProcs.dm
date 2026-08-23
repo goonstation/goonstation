@@ -20,9 +20,14 @@ triggerOnImage(var/image/target, var/datum/material/source)
 	var/max_generations = 2
 	/// Optional simple sentence that describes how the traits appears on the material. i.e. "It is shiny."
 	var/desc = ""
+	/// Optional sentence that describes what the materialProc does in more detail.
+	var/desc_scan = ""
 
 	proc/execute()
 		return
+
+	proc/get_scan_desc()
+		return desc_scan
 /*
 /datum/materialProc/oneat_flesh
 	max_generations = -1
@@ -47,6 +52,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 
 /datum/materialProc/oneat_viscerite
 	max_generations = -1
+	desc_scan = "Risk of food poisoning when ingested"
 
 	execute(var/mob/M, var/obj/item/I)
 		M.reagents.add_reagent("loose_screws", 15)
@@ -54,6 +60,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 
 /datum/materialProc/oneat_blob
 	max_generations = -1
+	desc_scan = "Risk of food poisoning when ingested"
 
 	execute(var/mob/M, var/obj/item/I)
 		M.TakeDamage("chest", 10, 0)
@@ -62,6 +69,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 
 /datum/materialProc/ethereal_add
 	desc = "It is almost impossible to grasp."
+	desc_scan = "Traversable by solid matter"
 	max_generations = 1
 	execute(var/atom/owner)
 		APPLY_ATOM_PROPERTY(owner, PROP_ATOM_NEVER_DENSE, "ethereal")
@@ -73,6 +81,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 	max_generations = 1
 
 /datum/materialProc/ffart_pickup
+	desc_scan = "Difficult to grasp"
 	execute(var/mob/M, var/obj/item/I)
 		if(!I.cant_drop)
 			SPAWN(2 SECOND) //1 second is a little to harsh to since it slips right out of the nanofab/cruicble
@@ -125,6 +134,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 
 /datum/materialProc/generic_itchy_onlife
 	desc = "It makes your hands itch."
+	desc_scan = "Severe skin irritant"
 
 	execute(var/mob/M, var/obj/item/I, mult)
 		if(issilicon(M)) return // silicons can't get itchy
@@ -270,6 +280,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 		return
 
 /datum/materialProc/radiation_immune_add
+	desc_scan = "Cannot be irradiated"
 	// Radiation component will check for this matProc to prevent radiation effects from being added later
 	execute(var/atom/location)
 		var/datum/component/radioactive/rad_comp = location.GetComponent(/datum/component/radioactive)
@@ -341,6 +352,8 @@ triggerOnImage(var/image/target, var/datum/material/source)
 			attacked_mob.set_loc(.)
 
 /datum/materialProc/telecrystal_life
+	desc_scan = "Contact results in unstable teleportation"
+
 	execute(var/mob/M, var/obj/item/I, mult)
 		if(M.anchored || ON_COOLDOWN(M, "telecrystal_warp", 1 SECOND))
 			return
@@ -354,6 +367,8 @@ triggerOnImage(var/image/target, var/datum/material/source)
 		return
 
 /datum/materialProc/plasmastone
+	desc_scan = "Releases plasma gas when damaged"
+
 	execute(var/atom/location) //exp and temp both have the location as first argument so i can use this for both.
 		var/turf/T = get_turf(location)
 		if(!T || T.density || !istype(location))
@@ -387,6 +402,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 
 /datum/materialProc/molitz_temp
 	max_generations = 1
+	desc_scan = "Releases oxygen agent B when heated above 500K"
 
 	proc/find_molitz(datum/material/material)
 		if (istype(material, /datum/material/crystal/molitz))
@@ -532,6 +548,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 		return
 
 /datum/materialProc/explosion/heated
+	desc_scan = "Chance to explode when heated above 1173K"
 	execute(var/atom/owner, var/temp)
 		if(temp < T0C + 900)
 			return
@@ -541,6 +558,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 		return
 
 /datum/materialProc/explosion/impact
+	desc_scan = "Explodes on kinetic impact"
 	execute(var/atom/owner, var/atom/attackatom, var/mob/attacker, var/meleeorthrow)
 		if(meleeorthrow != 2)
 			return
@@ -601,6 +619,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 			qdel(owner)
 
 /datum/materialProc/soulsteel_entered
+	desc_scan = "May be possessed by the dead"
 	execute(var/obj/item/owner, var/atom/movable/entering)
 		if (!isobj(owner) || owner.anchored >= ANCHORED_ALWAYS) return
 		if (istype(entering, /mob/dead/observer) && prob(33))
@@ -627,6 +646,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 		return
 
 /datum/materialProc/negative_add
+	desc_scan = "Gravitationally unstable"
 	execute(var/atom/owner)
 		if(isitem(owner))
 			var/obj/item/I = owner
@@ -715,6 +735,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 		return
 
 /datum/materialProc/temp_miraclium
+	desc_scan = "Unpredicatable transmuation when heated above 373K"
 	execute(var/atom/location, var/temp)
 		if(temp < T0C + 100)
 			return
@@ -907,6 +928,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 			animate(shock_filter, size = 0, color="#868606", time = 2 SECONDS, easing = LINEAR_EASING, tag = "material_shock_outline", flags = ANIMATION_END_NOW)
 
 /datum/materialProc/electrical/shock_life
+	desc_scan = "Releases electrical discharges during contact"
 	var/cd_min
 	var/cd_max
 	var/wattage
@@ -926,6 +948,7 @@ triggerOnImage(var/image/target, var/datum/material/source)
 		L.shock(I, src.wattage, "All", 1, FALSE)
 
 /datum/materialProc/electrical/arcflash_life
+	desc_scan = "Releases electrical discharges during contact"
 	var/cd_min
 	var/cd_max
 	var/wattage

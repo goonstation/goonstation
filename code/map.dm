@@ -25,7 +25,6 @@ var/global/list/mapNames = list(
 #endif
 
 	"Cogmap 2" =			list("id" = "COGMAP2",		"settings" = "cogmap2",			"playerPickable" = TRUE, 	"MinPlayersAllowed" = 40),
-	"Donut 2" =				list("id" = "DONUT2",		"settings" = "donut2",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 80),
 	"Donut 3" =				list("id" = "DONUT3",		"settings" = "donut3",			"playerPickable" = TRUE, 	"MinPlayersAllowed" = 40),
 	"Kondaru" =				list("id" = "KONDARU",		"settings" = "kondaru",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 80),
 	"Clarion" =				list("id" = "CLARION",		"settings" = "clarion",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 60),
@@ -452,66 +451,6 @@ var/global/list/mapNames = list(
 		/area/station/turret_protected/Zeta,
 		/area/station/turret_protected/ai_upload_foyer,
 		/area/station/turret_protected/ai_upload,
-		/area/station/turret_protected/ai,
-	)
-
-/datum/map_settings/donut2
-	name = "DONUT2"
-	goonhub_map = "/maps/donut2"
-	walls = /turf/simulated/wall/auto/supernorn
-	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-
-	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list(
-		/atom/movable/screen/parallax_render_source/space_1,
-		/atom/movable/screen/parallax_render_source/space_2,
-		/atom/movable/screen/parallax_render_source/typhon/donut2,
-		/atom/movable/screen/parallax_render_source/planet/fatuus,
-		/atom/movable/screen/parallax_render_source/asteroids_near/sparse,
-		)
-
-	escape_dir = NORTH
-
-	windows = /obj/window/auto
-	windows_thin = /obj/window/pyro
-	rwindows = /obj/window/auto/reinforced
-	rwindows_thin = /obj/window/reinforced/pyro
-	windows_crystal = /obj/window/auto/crystal
-	windows_rcrystal = /obj/window/auto/crystal/reinforced
-	window_layer_full = COG2_WINDOW_LAYER
-	window_layer_north = GRILLE_LAYER+0.1
-	window_layer_south = FLY_LAYER+1
-	auto_windows = TRUE
-
-	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/donut2
-	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/donut2
-	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/donut2
-	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/donut2
-
-	valid_nuke_targets = list("the cargo bay (QM)" = list(/area/station/quartermaster/office),
-		"the public market" = list(/area/station/crew_quarters/market),
-		"the stock exchange" = list(/area/station/crew_quarters/stockex),
-		"the chapel" = list(/area/station/chapel/sanctuary),
-		"the bridge" = list(/area/station/bridge),
-		"the crew lounge" = list(/area/station/crew_quarters/quarters),
-		"the brig" = list(/area/station/security/processing, /area/station/security/brig),
-		"the main station pod bay" = list(/area/station/hangar/main))
-
-	job_limits_override = list(
-		/datum/job/civilian/rancher = 2,
-	)
-
-	// donut2 research station
-	station_tether_ignore_area_types = list(
-		/area/station/crew_quarters/hor,
-		/area/station/maintenance/scidisposal,
-		/area/station/turret_protected/Zeta,
-		/area/station/crew_quarters/observatory,
-		/area/station/hangar/science,
-		/area/station/science,
-	)
-
-	ai_satellite_area_types = list(
-		/area/station/turret_protected/AIsat,
 		/area/station/turret_protected/ai,
 	)
 

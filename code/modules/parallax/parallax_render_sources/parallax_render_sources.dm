@@ -67,10 +67,6 @@
 	initial_x_coordinate = 150
 	initial_y_coordinate = 500
 
-/atom/movable/screen/parallax_render_source/typhon/donut2
-	initial_x_coordinate = 300
-	initial_y_coordinate = 350
-
 /atom/movable/screen/parallax_render_source/typhon/donut3
 	initial_x_coordinate = -50
 	initial_y_coordinate = 350
