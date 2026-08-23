@@ -1,5 +1,9 @@
 
 (t)sat aug 22 26
+(u)LeahTheTech
+(p)27492
+(e)🗺⛔🧛|A-Mapping, C-Removal, A-Gamemodes
+(*)Donut 2 has been rotated out in favour of Menhir.
 (u)JORJ949
 (p)27551
 (e)🪲🧛|C-Bug, A-Gamemodes
