@@ -30823,7 +30823,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
 	},
-/obj/item/reagent_containers/food/snacks/spaghetti/spicy,
+/obj/item/reagent_containers/food/snacks/spaghetti/spicy/security,
 /obj/item/kitchen/utensil/fork{
 	pixel_x = 9;
 	pixel_y = 3
