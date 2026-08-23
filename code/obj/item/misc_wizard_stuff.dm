@@ -326,6 +326,8 @@
 		. = ..()
 		src.setItemSpecial(/datum/item_special/launch_projectile/monkey_organ)
 
+
+// Telekinesis staff. Drag over tiles with the staff in active hand to throw people in that direction.
 /obj/item/staff/telekinesis
 
 	name = "telekinetic staff"
@@ -338,9 +340,8 @@
 	icon_state = "stafftelekinesis"
 	item_state = "staff_telekinesis"
 	var/throw_charges = 4 // how many times we can throw before recharging
-	var/throw_mode = FALSE // throwmode is FALSE when no target is selected, TRUE when clicking somewhere will throw the target
-	var/mob/living/victim = null // the person about to be flung into a vending machine
 	var/prob_clonk = 0
+	var/super_throw_chance = 5 // chance to send victim flying through wall
 
 	New()
 		. = ..()
@@ -354,73 +355,13 @@
 		visible_message(SPAN_ALERT("[user] waves the [src.name] in [target]'s face!"))
 		return
 
- // clicking on a mob selects them as target and switches to throw mode. clicking somewhere when throw mode is enabled throws the victim.
-	pixelaction(atom/target, params, mob/user, reach)
-		if(!IN_RANGE(user, target, WIDE_TILE_WIDTH / 2))
-			return
-		if (!user.wizard_castcheck())
-			return
-		var/area/A = get_area(target)
-		if (istype(A, /area/station/chapel))
-			boutput(user, SPAN_ALERT("You cannot throw people on holy ground!"))
-			return
-		if (A?.sanctuary || istype(A, /area/wizard_station))
-			boutput(user, SPAN_ALERT("You cannot throw people here!"))
-			return
-		if (throw_charges <= 0)
-			boutput(user, SPAN_ALERT("[src.name] is out of charges! Magically recall it to restore it's power."))
-			return
-
-		if (!src.throw_mode && !ON_COOLDOWN(src, "select_target", 3 SECONDS)) // select target
-			if(ismob(target) && !isintangible(target))
-				src.victim = target
-				if(victim.anchored)
-					return
-				if(victim?.traitHolder?.hasTrait("training_chaplain"))
-					victim.visible_message("<spab class='alert'>A divine light shields [victim] from harm!</span>")
-					return
-				if(iswizard(victim) && victim != user)
-					victim.visible_message("<spab class='alert'>A magical light shields [victim] from harm!</span>")
-					return
-				else
-					src.throw_mode = TRUE
-					boutput(user, SPAN_ALERT("Target selected!"))
-					boutput(target, SPAN_ALERT("You feel a gripping force take hold of you!"))
-					user.set_cursor(cursors_selection[user.client.preferences.target_cursor])
-					victim.changeStatus("telekinetic_grasp", 3 SECONDS)
-					playsound(user.loc, 'sound/impact_sounds/Energy_Hit_2.ogg', 50, 1)
-
-					SPAWN(3 SECONDS) // You have three seconds to fling the target or it resets
-						if(src.victim && src.throw_mode)
-							victim.changeStatus("telekinetic_grasp", -5 SECONDS)
-							src.victim = null
-							src.throw_mode = FALSE
-							user.update_cursor()
-
-		else if(src.throw_mode && src.victim) // throw target
-			if(!IN_RANGE(user, victim, WIDE_TILE_WIDTH / 2))
-				src.throw_mode = FALSE
-				src.victim = null
-				user.update_cursor()
-			else
-				var/turf/T = get_turf(target)
-				playsound(victim.loc, "swing_hit", 50, 1)
-				src.throw_charges -= 1
-				victim.throw_at(T, 8, 2)
-				victim.changeStatus("knockdown", 1 SECOND)
-				victim.force_laydown_standup()
-				victim.visible_message(SPAN_ALERT("<B>[victim] is thrown by a mysterious force!</b>"))
-				src.throw_mode = FALSE
-				src.victim = null
-				user.update_cursor()
+	pickup(mob/user)
+		. = ..()
+		RegisterSignal(user, COMSIG_MOB_MOUSEDROP, PROC_REF(tk_drag), override = TRUE)
 
 	dropped(mob/user) // when staff is dropped, resets stuff
 		. = ..()
-		if(src.victim && src.throw_mode)
-			victim.changeStatus("telekinetic_grasp", -5 SECONDS)
-			src.victim = null
-			src.throw_mode = FALSE
-			user.update_cursor()
+		UnregisterSignal(user, COMSIG_MOB_MOUSEDROP)
 
 	pull(mob/user)
 		if(check_target_immunity(user))
@@ -482,6 +423,69 @@
 					prob_clonk = max(prob_clonk - 5, 0)
 
 		return ..(hit_atom)
+
+	proc/tk_drag(mob/user, src_object, over_object, turf/src_location, turf/over_location, src_control, over_control, params)
+		. = FALSE
+		if (!istype(src_location) || !istype(over_location))
+			return
+		if (src != user.equipped())
+			return
+		if (!IN_RANGE(user, over_location, WIDE_TILE_WIDTH / 2) || !IN_RANGE(user, src_location, WIDE_TILE_WIDTH / 2))
+			return
+		if (!user.wizard_castcheck())
+			return
+		var/area/A = get_area(over_location)
+		if (istype(A, /area/station/chapel))
+			boutput(user, SPAN_ALERT("You cannot throw people on holy ground!"))
+			return TRUE
+		if (A?.sanctuary || istype(A, /area/wizard_station))
+			boutput(user, SPAN_ALERT("You cannot throw people here!"))
+			return TRUE
+		if (src.throw_charges <= 0)
+			boutput(user, SPAN_ALERT("[src.name] is out of charges! Magically recall it to restore its power."))
+			return TRUE
+
+		var/list/mob/found_mobs	= list()
+		var/list/turf/crossed_turfs = raytrace(src_location, over_location)
+
+		for (var/turf/T as anything in crossed_turfs)
+			for (var/mob/M in range(1, T))
+				if (M == user || M.anchored || isintangible(M) || !isturf(M.loc))
+					continue
+				if (M.traitHolder?.hasTrait("training_chaplain"))
+					M.visible_message(SPAN_ALERT("A divine light shields [M] from harm!"))
+					continue
+				if (iswizard(M))
+					M.visible_message(SPAN_ALERT("A magical light shields [M] from harm!"))
+					continue
+				if (ishuman(M))
+					var/mob/living/carbon/human/H = M
+					if(H.shoes?.magnetic) // dependent on how balanced this is, should maybe add chance to go wrong so this isn't a 100% counter?
+						H.visible_message(SPAN_ALERT("[M]'s magnetic shoes resist the telekinetic pull!"))
+						continue
+				found_mobs |= M
+
+		if (!length(found_mobs))
+			return
+
+		src.throw_charges -= 1
+		playsound(user.loc, 'sound/impact_sounds/Energy_Hit_2.ogg', 50, TRUE)
+		for (var/mob/M as anything in found_mobs)
+			//try to maintain the relative offset of thrown mobs, ie throw them straight instead of at the center tile
+			var/turf/throwable_turf = get_turf(M)
+			var/turf/relative_turf = locate(over_location.x + (throwable_turf.x - src_location.x), over_location.y + (throwable_turf.y - src_location.y), over_location.z)
+			//might be off the edge of a z level, default to throwing at the centerpoint in that event
+			relative_turf ||= over_location
+			M.changeStatus("telekinetic_grasp", 1 SECOND) // visual effect
+			if(prob(super_throw_chance)) // rare chance to throw thru wall
+				M.throw_at(get_edge_cheap(M, get_dir(M, relative_turf)), 30, 2, throw_type = THROW_THROUGH_WALL)
+			else
+				M.throw_at(relative_turf, 15, 2, throw_type = THROW_NORMAL)
+			playsound(M.loc, "swing_hit", 50, 1)
+			M.changeStatus("knockdown", 1 SECOND)
+			M.force_laydown_standup()
+			M.visible_message(SPAN_ALERT("<B>[M] is thrown by a mysterious force!</B>"))
+		return TRUE
 
 	proc/fling_person(var/mob/target) // the effect when a non wizard fool tries to pick up or move the staff
 		if(!target.anchored)

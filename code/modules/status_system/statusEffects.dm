@@ -4068,7 +4068,7 @@
 				src.current_emitters += emitter
 
 
-/datum/statusEffect/grasped // indicator that a wiznerd has targeted you with telekinetic staff
+/datum/statusEffect/grasped // visual indicator that a wiznerd is throwing you with telekinetic staff
 
 	id = "telekinetic_grasp"
 	name = "Telekinetic Grasp"

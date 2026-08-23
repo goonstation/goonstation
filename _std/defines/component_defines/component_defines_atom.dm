@@ -284,6 +284,8 @@
 	#define COMSIG_MOB_SHOCKED_DEFIB "mob_shocked"
 	/// Sent to mob when client lifts the mouse button
 	#define COMSIG_MOB_MOUSEUP "mob_mouseup"
+	/// sent when a mob's client click drags
+	#define COMSIG_MOB_MOUSEDROP "mob_mousedrop"
 	/// Sent when a mob is grabbed by another mob, and when the grab is upgraded (grab object)
 	#define COMSIG_MOB_GRABBED "mob_grabbed"
 	/// Sent when a mob emotes (emote, voluntary, emote target)

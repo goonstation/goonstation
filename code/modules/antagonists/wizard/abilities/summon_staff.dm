@@ -205,12 +205,11 @@
 		var/list/staves = list()
 		var/we_hold_it = FALSE
 		for_by_tcl(S, /obj/item/staff/telekinesis)
-			if (M.mind?.key == S.wizard_key)
-				if (S == M.find_in_hand(S))
-					we_hold_it = TRUE
-					continue
-				if (!(S in staves))
-					staves["[S.name] #[length(staves) + 1] [ismob(S.loc) ? "carried by [S.loc.name]" : "at [get_area(S)]"]"] += S
+			if (S == M.find_in_hand(S))
+				we_hold_it = TRUE
+				continue
+			if (!(S in staves))
+				staves["[S.name] #[length(staves) + 1] [ismob(S.loc) ? "carried by [S.loc.name]" : "at [get_area(S)]"]"] += S
 
 		switch (length(staves))
 			if (0)
