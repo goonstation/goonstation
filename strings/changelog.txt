@@ -1,6 +1,10 @@
 
 (t)sat aug 22 26
 (u)LeahTheTech
+(p)27512
+(e)🗺|A-Mapping
+(*)Moved the spare nuclear charge from donut 2 science to donut 3 asylum.
+(u)LeahTheTech
 (p)27492
 (e)🗺⛔🧛|A-Mapping, C-Removal, A-Gamemodes
 (*)Donut 2 has been rotated out in favour of Menhir.
