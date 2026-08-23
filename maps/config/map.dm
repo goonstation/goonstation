@@ -54,6 +54,9 @@
 #elif defined(MAP_OVERRIDE_CLARION)
 #include "clarion.dm"
 
+#elif defined(MAP_OVERRIDE_MENHIR)
+#include "menhir.dm"
+
 #elif defined(MAP_OVERRIDE_OSHAN)
 #include "oshan.dm"
 
