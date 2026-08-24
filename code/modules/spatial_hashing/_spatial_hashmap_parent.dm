@@ -307,13 +307,15 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 	else
 		src.tracked_atoms_with_subcount[tracked_atom] += 1
 
+	// Get the turf of the tracked atom directly from the XSIG component.
+	var/turf/T = tracked_atom.GetComponent(/datum/component/complexsignal/outermost_movable).previous_turf
+
 	// Associate the hashmap entry with the tracked atom and vice versa.
 	src.atoms_by_entry[entry] = tracked_atom
 	src.entries_by_atom[tracked_atom] ||= list()
 	src.entries_by_atom[tracked_atom] += entry
 
 	// Provided the tracked atom isn't in nullspace, add it to the hashmap data structure.
-	var/turf/T = get_turf(tracked_atom)
 	if (T?.z && (T.z <= src.z_order))
 		var/x = ceil(T.x / src.cell_size)
 		var/y = ceil(T.y / src.cell_size)
@@ -326,6 +328,10 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 	var/atom/tracked_atom = src.atoms_by_entry[entry]
 	if (!istype(tracked_atom))
 		return
+
+	// Get the turf of the tracked atom directly from the XSIG component.
+	// This ensures that the entry is removed from the correct cell in cases where it is removed after its loc is updated but before the hashmap is.
+	var/turf/T = tracked_atom.GetComponent(/datum/component/complexsignal/outermost_movable).previous_turf
 
 	// Decrement a tracked atom's signal subscription count.
 	src.tracked_atoms_with_subcount[tracked_atom] -= 1
@@ -342,7 +348,6 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 		src.entries_by_atom -= tracked_atom
 
 	// Provided the tracked atom isn't in nullspace, remove it from the hashmap data structure.
-	var/turf/T = get_turf(tracked_atom)
 	if (T?.z && (T.z <= src.z_order))
 		var/x = ceil(T.x / src.cell_size)
 		var/y = ceil(T.y / src.cell_size)
