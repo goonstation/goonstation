@@ -1966,7 +1966,7 @@
 		else if (istype(item, /obj/item/gun))
 			if (istype(item, /obj/item/gun/kinetic))
 				var/obj/item/gun/kinetic/G = item
-				if (G.ammo_cats && AMMO_FOAMDART in G.ammo_cats)
+				if (G.ammo_cats && (AMMO_FOAMDART in G.ammo_cats))
 					boutput(user, SPAN_ALERT("<b>You cant stash toy guns in the locker</b>"))
 					return
 
