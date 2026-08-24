@@ -15243,6 +15243,7 @@
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
+/obj/item/toy/plush/small/possum/md,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
 "eJM" = (
@@ -69860,6 +69861,7 @@
 	dir = 8
 	},
 /obj/item/clothing/suit/bedsheet/black,
+/obj/item/toy/plush/small/bee/rd,
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_west,
 /area/station/medical/head)
 "vFi" = (
