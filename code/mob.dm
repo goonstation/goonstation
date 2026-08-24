@@ -3650,10 +3650,10 @@ TYPEINFO(/mob)
 
 /mob/proc/update_vision()
 
-	see_invisible = initial(see_invisible)
-	sight = initial(sight) | SEE_SELF | SEE_BLACKNESS
-	see_in_dark = initial(see_in_dark)
-	see_infrared = initial(see_infrared)
+	src.see_invisible = initial(see_invisible)
+	src.sight = initial(sight) | SEE_SELF | SEE_BLACKNESS
+	src.see_in_dark = initial(see_in_dark)
+	src.see_infrared = initial(see_infrared)
 
 	var/turf/T = src.eye ? get_turf(src.eye) : get_turf(src)
 	var/restricted_z = T ? isrestrictedz(T.z) : FALSE
@@ -3673,14 +3673,15 @@ TYPEINFO(/mob)
 			if (restricted_z) // the seeing thing is currently in a restricted Z level, and the modifier does not apply there
 				continue
 
-		sight |= modifier.sight
+		src.sight |= modifier.sight
 		neg_sight |= modifier.neg_sight
 
 		if (modifier.see_invisible > see_invisible)
 			see_invisible = modifier.see_invisible
 
-		if (modifier.see_in_dark > see_in_dark)
-			see_invisible = modifier.see_invisible
+		if (modifier.see_in_dark > src.see_in_dark)
+			see_in_dark = modifier.see_in_dark
+
 		see_in_dark_bonus += modifier.see_in_dark_bonus
 
 		if (modifier.see_infrared)
