@@ -106,6 +106,7 @@ TYPEINFO(/mob/living/silicon/ai)
 	icon_state = "ai"
 	anchored = ANCHORED
 	density = 1
+	default_material = "steel"
 	emaggable = 0 // Can't be emagged...
 	syndicate_possible = 1 // ...but we can become a rogue computer.
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
@@ -2624,6 +2625,7 @@ proc/get_mobs_trackable_by_AI()
 	desc = "A frame for an AI core."
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "frame"
+	default_material = "steel"
 	var/build_step = 0
 	var/obj/item/cell/cell = null
 	var/has_radios = 0
