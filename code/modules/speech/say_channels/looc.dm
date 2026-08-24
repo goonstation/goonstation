@@ -25,8 +25,6 @@
 		listen_modules_by_type[type] = list()
 
 	for (var/datum/listen_module/input/input as anything in src.hashmap.vistarget_supremum(centre, LOOC_RANGE))
-		INPUT_SAFETY_CHECK(input)
-
 		// If the listener is in range of the speaker, regardless of how nested they are, the listener may hear the message.
 		if (!INPUT_IN_RANGE(input, centre, LOOC_RANGE))
 			continue

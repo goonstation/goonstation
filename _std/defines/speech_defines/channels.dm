@@ -7,9 +7,6 @@
 /// Accesses a say message datum's outermost listener's loc.
 #define GET_MESSAGE_OUTERMOST_LISTENER_LOC(MESSAGE) MESSAGE.message_origin.outermost_listener_tracker.outermost_listener.loc
 
-
-#define INPUT_SAFETY_CHECK(INPUT) if (QDELETED(input) || !input.parent_tree) continue
-
 /**
  *	Returns `TRUE` if a say message datum cannot be heard by an input module datum, where both the speaker and listener are nested in the same loc chain.
  *	Checks the following conditions:
