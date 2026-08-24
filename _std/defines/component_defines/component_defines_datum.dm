@@ -32,6 +32,8 @@
 	#define COMSIG_AREA_ENTERED_BY_MOB "mob_entered_area"
 	/// whenever a mob exits an area (exited mob)
 	#define COMSIG_AREA_EXITED_BY_MOB "mob_exited_area"
+	/// whenever an atom enters the area indirectly (i.e. through teleportation or phase shift)
+	#define COMSIG_AREA_INDIRECT_ENTRY "atom_indirect_entry"
 
 // ---- TGUI signals ----
 	/// A TGUI window was opened by a user (receives tgui datum)

@@ -69,4 +69,5 @@
 			var/mob/living/carbon/human/H = target
 			H.shoes?.magnetic_teleport_check(H, get_turf(H), destination)
 		logTheThing(LOG_COMBAT, holder.owner, "warped [constructTarget(target,"combat")] from [log_loc(target)] to [log_loc(destination)].")
+		SEND_SIGNAL(src, COMSIG_AREA_INDIRECT_ENTRY, target, "warp")
 		target.set_loc(destination)
