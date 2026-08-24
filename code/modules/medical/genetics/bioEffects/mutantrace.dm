@@ -188,6 +188,15 @@
 	reclaim_fail = 100
 	icon_state  = "monkey"
 
+	gorilla //reward if someone gets a gorilla in a scanner somehow
+		id = "seamonkey-loot"
+		scanner_visibility = 1
+		can_research = 1
+		can_make_injector = 1
+		can_copy = 1
+		can_reclaim = 1
+		can_scramble = 1
+
 /datum/bioEffect/mutantrace/cat
 	name = "Feline Genetics"
 	desc = "Morphs the subject's traits to appear more feline in nature."
@@ -239,6 +248,16 @@
 	msgGain = "You feel like barking up the wrong tree."
 	msgLose = "Dog treats no longer look appealing."
 	icon_state  = "pug"
+
+/datum/bioEffect/mutantrace/frog
+	name = "Anuran Genetics"
+	desc = "The subject's genetics are hybridized with an alien Abzunian amphibian.'"
+	id = "frog"
+	mutantrace_option = "Amphibian"
+	mutantrace_path = /datum/mutantrace/frog/amphibian
+	msgGain = "You feel compelled to start constantly ribbiting."
+	msgLose = "A part of your soul has croaked."
+	icon_state  = "frog"
 
 /datum/bioEffect/mutantrace/chicken
 	name = "Experimental Strain Epsilon Gamma Gamma #5"

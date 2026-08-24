@@ -80,7 +80,29 @@
 			src.wear_image = image(wear_image_icon)
 			src.inhand_image = image(inhand_image_icon)
 			src.tooltip_rebuild = TRUE
-			usr.set_clothing_icon_dirty()
+			if(ismob(src.loc))
+				var/mob/mob_loc = src.loc
+				mob_loc.set_clothing_icon_dirty()
+
+/obj/item/storage/belt/chameleon/tactical
+	name = "syndicate chameleon espionage belt pack XL"
+	desc = "It's different than a fanny pack. It's bigger, tactical, action-packed, and filled with the latest syndicate chameleon technology!"
+	icon_state = /obj/item/storage/fanny/syndie/large::icon_state
+	item_state = /obj/item/storage/fanny/syndie/large::item_state
+	max_wclass = W_CLASS_NORMAL
+	slots = 7
+
+	New()
+		. = ..()
+		var/datum/chameleon_belt_pattern/P = new /datum/chameleon_belt_pattern(src)
+		P.name = src.name
+		P.desc = src.desc
+		P.icon_state = src.icon_state
+		P.item_state = src.item_state
+		P.sprite_item = src.icon
+		P.sprite_worn = src.wear_image_icon
+		P.sprite_hand = src.inhand_image_icon
+		src.clothing_choices += P
 
 /datum/chameleon_belt_pattern
 	var/name = "utility belt"
@@ -131,3 +153,9 @@
 		desc = "A sturdy belt with hooks for chicken carriers."
 		icon_state = "rancherbelt"
 		item_state = "rancher"
+
+	funny
+		name = /obj/item/storage/fanny/funny::name
+		desc = /obj/item/storage/fanny/funny::desc
+		icon_state = /obj/item/storage/fanny/funny::icon_state
+		item_state = /obj/item/storage/fanny/funny::item_state

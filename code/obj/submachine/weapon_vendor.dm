@@ -332,7 +332,6 @@
 		materiel_stock += new/datum/materiel/sidearm/knife
 		materiel_stock += new/datum/materiel/sidearm/machete
 		materiel_stock += new/datum/materiel/sidearm/axe
-
 		materiel_stock += new/datum/materiel/utility/pw_pouch
 		materiel_stock += new/datum/materiel/utility/pw_advanced_belt
 		materiel_stock += new/datum/materiel/utility/preparedtoolbelt

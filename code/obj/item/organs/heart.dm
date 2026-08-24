@@ -119,6 +119,7 @@
 		src.icon_state = pick("plant_heart", "plant_heart_bloom")
 
 TYPEINFO(/obj/item/organ/heart/cyber)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 8
 
 /obj/item/organ/heart/cyber
@@ -199,6 +200,34 @@ TYPEINFO(/obj/item/organ/heart/cyber)
 	icon_state = "heart_skeleton"
 	default_material = "bone"
 	blood_reagent = "calcium"
+	blood_id = "calcium"
+
+	get_desc(dist, mob/user)
+		. = ..(dist, user)
+		if (src.broken)
+			. += " It seems to have clakked its last clak."
+			if (prob(5))
+				. += " Damn."
+
+	breakme()
+		if (..())
+			var/base_state = initial(src.icon_state)
+			src.icon_state = base_state + "_dying"
+
+			// prevent animation replay issue by waiting out the animation, then switching
+			SPAWN(8)
+				if (src.broken) // sanity check
+					src.icon_state = base_state + "_dead"
+
+
+			// people would probably be able to use this to tell if their heart is failing otherwise
+			if (!src.donor)
+				playsound(src.loc, 'sound/items/Scissor.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
+				src.visible_message(SPAN_ALERT("[src] lets out one last clak."))
+
+	unbreakme()
+		if (..())
+			src.icon_state = initial(src.icon_state)
 
 /obj/item/organ/heart/martian
 	name = "lavender heap"

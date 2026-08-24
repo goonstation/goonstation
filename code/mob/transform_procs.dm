@@ -121,37 +121,6 @@
 
 	O.show_laws()
 	boutput(O, SPAN_HINT("<b>These laws may be changed by other players.</b>"))
-
-	O.verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
-	O.verbs += /mob/living/silicon/ai/proc/show_laws_verb
-	O.verbs += /mob/living/silicon/ai/proc/reset_apcs
-	O.verbs += /mob/living/silicon/ai/proc/de_electrify_verb
-	O.verbs += /mob/living/silicon/ai/proc/unbolt_all_airlocks
-	O.verbs += /mob/living/silicon/ai/proc/ai_camera_track
-	O.verbs += /mob/living/silicon/ai/proc/ai_alerts
-	O.verbs += /mob/living/silicon/ai/proc/ai_camera_list
-	// See file code/game/verbs/ai_lockdown.dm for next two
-	//O.verbs += /mob/living/silicon/ai/proc/lockdown
-	//O.verbs += /mob/living/silicon/ai/proc/disablelockdown
-	O.verbs += /mob/living/silicon/ai/proc/ai_statuschange
-	O.verbs += /mob/living/silicon/ai/proc/ai_state_laws_all
-	O.verbs += /mob/living/silicon/ai/proc/ai_state_laws_standard
-	O.verbs += /mob/living/silicon/ai/proc/ai_set_fake_laws
-	O.verbs += /mob/living/silicon/ai/proc/ai_state_fake_laws
-	//O.verbs += /mob/living/silicon/ai/proc/ai_toggle_arrival_alerts
-	//O.verbs += /mob/living/silicon/ai/proc/ai_custom_arrival_alert
-//	O.verbs += /mob/living/silicon/ai/proc/hologramize
-	O.verbs += /mob/living/silicon/ai/verb/deploy_to
-//	O.verbs += /mob/living/silicon/ai/proc/ai_cancel_call
-	O.verbs += /mob/living/silicon/ai/proc/ai_view_crew_manifest
-	O.verbs += /mob/living/silicon/ai/proc/toggle_alerts_verb
-	O.verbs += /mob/living/silicon/ai/verb/access_internal_radio
-	O.verbs += /mob/living/silicon/ai/verb/access_internal_pda
-	O.verbs += /mob/living/silicon/ai/proc/ai_colorchange
-	O.verbs += /mob/living/silicon/ai/proc/ai_station_announcement
-	O.verbs += /mob/living/silicon/ai/proc/view_messageLog
-	O.verbs += /mob/living/silicon/ai/verb/rename_self
-	O.verbs += /mob/living/silicon/ai/verb/go_offline
 	O.job = "AI"
 
 	SPAWN(0)
@@ -562,6 +531,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 
 	C.mind.assigned_role = "Animal"
 	C.say_language = LANGUAGE_ANIMAL
+	C.ensure_listen_tree().AddKnownLanguage(LANGUAGE_ANIMAL)
 	C.literate = 0
 	C.original_name = selfmob.real_name
 	C.is_npc = FALSE
@@ -596,7 +566,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 
 	var/mob/selfmob = src
 	src = null
-	var/mob/living/critter/C = selfmob.make_critter(/mob/living/critter/small_animal/mouse/weak/mentor/admin, spawnpoint, ghost_spawned=TRUE)
+	var/mob/living/critter/C = selfmob.make_critter(/mob/living/critter/small_animal/mouse/weak/mentor/admin, spawnpoint, ghost_spawned=FALSE)
 	C.mind.assigned_role = "Animal"
 	C.literate = 1
 	C.original_name = selfmob.real_name

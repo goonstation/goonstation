@@ -68,7 +68,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		src.initial_reagents = null // no mo, no mooooo
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
+		if(!HAS_FLAG(src.flags, SUPPRESSATTACK))
+			..()
 		return
+
 	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/beaker_lid))
 			try_to_apply_lid(I, user)
@@ -76,6 +79,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			reagents.physical_shock(I.force)
 		return ..()
 	afterattack(obj/target, mob/user , flag)
+		if(!HAS_FLAG(src.flags, SUPPRESSATTACK))
+			..()
 		return
 
 	get_desc(dist, mob/user)
@@ -155,7 +160,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 ///Returns a serialized representation of the reagents of an atom for use with the ReagentInfo TGUI components
 ///Note that this is not a built in TGUI proc
-proc/ui_describe_reagents(atom/A)
+proc/ui_describe_reagents(atom/A, show_overdose = FALSE)
 	if (!istype(A))
 		return null
 	var/datum/reagents/R = A.reagents
@@ -183,6 +188,7 @@ proc/ui_describe_reagents(atom/A)
 				colorB = current_reagent.fluid_b,
 				volume = current_reagent.volume,
 				state = current_reagent.reagent_state,
+				overdose = show_overdose ? current_reagent.overdose : null,
 			)))
 	return thisContainerData
 
@@ -573,6 +579,7 @@ proc/ui_describe_reagents(atom/A)
 	initial_volume = 120
 	flags = OPENCONTAINER | SUPPRESSATTACK
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
+	default_material = "plastic"
 	can_recycle = FALSE
 	var/helmet_bucket_type = /obj/item/clothing/head/helmet/bucket
 	var/hat_bucket_type = /obj/item/clothing/head/helmet/bucket/hat
@@ -746,6 +753,8 @@ proc/ui_describe_reagents(atom/A)
 	icon = 'icons/obj/items/chemistry_glassware.dmi'
 	icon_state = "lid"
 	w_class = W_CLASS_TINY
+	default_material = "synthrubber_blue"
+	material_amt = 0.2
 
 	attackby(obj/item/reagent_containers/container, mob/user)
 		if (istype(container))
@@ -1557,6 +1566,7 @@ proc/ui_describe_reagents(atom/A)
 /obj/item/reagent_containers/glass/vial/plastic
 	name = "plastic vial"
 	desc = "A 3D-printed vial. Can hold up to 5 units. Barely."
+	default_material = "plastic"
 	can_recycle = FALSE
 
 	New()

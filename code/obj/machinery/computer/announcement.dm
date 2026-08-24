@@ -22,12 +22,20 @@
 	var/area_name = null
 	/// Determines colors for alert text
 	var/alert_origin = ALERT_COMMAND
+	/// You can toggle is_anonymous through the TGUI interface
+	var/can_change_anonymous = FALSE
+	/// Does the announcement computer remove the header ID Name/Job addendum
+	var/is_anonymous = FALSE
 	req_access = list(access_heads)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 
 	light_r =0.6
 	light_g = 1
 	light_b = 0.1
+
+	get_help_message(dist, mob/user)
+		. = ..()
+		. += "<br/>Insert an <b>ID Card</b> and click with an <b>open hand</b> to send an announcement to all players."
 
 	New()
 		. = ..()
@@ -63,7 +71,9 @@
 			"time" = get_time(user) SECONDS,
 			"announces_arrivals" = 	src.announces_arrivals,
 			"arrivalalert" = src.arrivalalert,
-			"max_length" = src.max_length
+			"max_length" = src.max_length,
+			"can_change_anonymous" = src.can_change_anonymous,
+			"is_anonymous" = src.is_anonymous
 		)
 
 	ui_act(action, params, datum/tgui/ui)
@@ -101,7 +111,10 @@
 				src.set_arrival_alert(usr, params["value"])
 				. = TRUE
 			if ("log")
-				logTheThing(LOG_STATION, ui.user, "Sets an announcement message to \"[params["value"]]\" from \"[params["old"]]\".")
+				logTheThing(LOG_STATION, ui.user, "Sets an announcement message to \"[sanitize(adminscrub(params["value"]))]\" from \"[sanitize(adminscrub(params["old"]))]\".")
+			if("toggleAnonymous")
+				if (src.can_change_anonymous)
+					src.is_anonymous = !src.is_anonymous
 
 	proc/update_status()
 		if(!src.ID)
@@ -115,7 +128,7 @@
 		if(!message || length_char(message) > max_length || !unlocked || get_time(user) > 0)
 			return
 
-		message = user.say(message, flags = SAYFLAG_DO_NOT_OUTPUT)?.content
+		message = user.say(message, flags = SAYFLAG_DO_NOT_OUTPUT)?.get_content()
 		if (!message)
 			return
 
@@ -129,7 +142,10 @@
 			msg_sound = 'sound/misc/flockmind/flockmind_caw.ogg'
 
 		var/area/A = get_area(src)
-		var/header = "[src.area_name || A.name] Announcement by [ID.registered] ([ID.assignment])"
+		var/header = "[src.area_name || A.name] Announcement"
+		if (!src.is_anonymous)
+			header += " by [ID.registered] ([ID.assignment])"
+
 		command_announcement(message, header, msg_sound, volume = src.sound_volume, alert_origin = src.alert_origin)
 		ON_COOLDOWN(user,"announcement_computer",announcement_delay)
 		return TRUE
@@ -284,6 +300,7 @@
 	req_access = list(access_syndicate_shuttle)
 	circuit_type = /obj/item/circuitboard/announcement/syndicate
 	alert_origin = ALERT_SYNDICATE
+	can_change_anonymous = TRUE
 
 	commander
 		area_name = null
@@ -363,6 +380,7 @@
 	circuit_type = null //Prevents deconstructing via screwdriver
 	explodes = FALSE
 	density = 0
+	glow_in_dark_screen = FALSE
 
 	New()
 		..()

@@ -84,6 +84,8 @@
 		/datum/manufacture/fiddle,
 		/datum/manufacture/whistle)
 
+TYPEINFO(/obj/machinery/manufacturer/general/grody)
+	manufactured_type = /obj/machinery/manufacturer/general
 /obj/machinery/manufacturer/general/grody
 	name = "grody manufacturer"
 	desc = "It's covered in more gunk than a truck stop ashtray. Is this thing even safe?"
@@ -91,7 +93,6 @@
 	free_resources = list()
 	malfunction = TRUE
 	wires = 15 & ~(1 << 3) // This cuts the malfunction wire, so the fab malfunctions immediately
-	mechanics_type_override = /obj/machinery/manufacturer/general
 
 /obj/machinery/manufacturer/robotics
 	name = "robotics fabricator"
@@ -162,6 +163,7 @@
 		/datum/manufacture/robup_speed,
 		/datum/manufacture/robup_mag,
 		/datum/manufacture/robup_meson,
+		/datum/manufacture/robup_pressure,
 		/datum/manufacture/robup_aware,
 		/datum/manufacture/robup_physshield,
 		/datum/manufacture/robup_fireshield,
@@ -220,9 +222,12 @@
 		/datum/manufacture/visor,
 		/datum/manufacture/deafhs,
 		/datum/manufacture/wheelchair,
+		/datum/manufacture/roller_bed,
+		/datum/manufacture/iv_stand,
 		/datum/manufacture/hypospray,
 		/datum/manufacture/patch,
 		/datum/manufacture/mender,
+		/datum/manufacture/mender_refill_cartridge,
 		/datum/manufacture/penlight,
 		/datum/manufacture/stethoscope,
 		/datum/manufacture/empty_autoinjector/orange,
@@ -262,7 +267,10 @@
 		/datum/manufacture/chembarrel/red,
 		/datum/manufacture/rods2,
 		/datum/manufacture/metal,
-		/datum/manufacture/glass
+		/datum/manufacture/glass,
+		/datum/manufacture/cane,
+		/datum/manufacture/cane/fourlegged,
+		/datum/manufacture/cane/tennisball
 	)
 
 	hidden = list()
@@ -333,6 +341,7 @@
 		/obj/item/material_piece/copper = 2,
 		/obj/item/material_piece/glass = 2)
 	available = list(/datum/manufacture/pick,
+		/datum/manufacture/powered_shovel,
 		/datum/manufacture/powerpick,
 		/datum/manufacture/blastchargeslite,
 		/datum/manufacture/blastcharges,
@@ -513,8 +522,8 @@
 /obj/machinery/manufacturer/mechanic
 	name = "reverse-engineering fabricator"
 	desc = "A specialized manufacturing unit designed to create new things (or copies of existing things) from blueprints."
-	icon_state = "fab-hangar"
-	icon_base = "hangar"
+	icon_state = "fab-reverse"
+	icon_base = "reverse"
 	free_resources = list(/obj/item/material_piece/steel = 2,
 		/obj/item/material_piece/copper = 2,
 		/obj/item/material_piece/glass = 2)
@@ -541,7 +550,7 @@
 //combine personnel + uniform manufactuer here. this is 'cause destiny doesn't have enough room! arrg!
 /obj/machinery/manufacturer/hop_and_uniform
 	name = "personnel manufacturer"
-	supplemental_desc = "This one is an multi-purpose model, and is able to produce uniforms, headsets, and identification equipment."
+	supplemental_desc = "This one is a multi-purpose model, and is able to produce uniforms, headsets, and identification equipment."
 	icon_state = "fab-access"
 	icon_base = "access"
 	free_resources = list(/obj/item/material_piece/steel = 5,
@@ -579,9 +588,27 @@
 		/datum/manufacture/crate/secure/engineering,
 		/datum/manufacture/crate/secure/medical,
 		/datum/manufacture/crate/secure/hydroponics,
+		/datum/manufacture/cart,
+		/datum/manufacture/cart/forensic,
+		/datum/manufacture/cart/mechanic,
+		/datum/manufacture/cart/medical,
+		/datum/manufacture/cart/trash,
+		/datum/manufacture/locker/secure,
+		/datum/manufacture/locker/secure/command,
+		/datum/manufacture/locker/secure/security,
+		/datum/manufacture/locker/secure/contraband,
+		/datum/manufacture/locker/secure/research,
+		/datum/manufacture/locker/secure/engineering,
+		/datum/manufacture/locker/secure/medical,
+		/datum/manufacture/locker/secure/hydroponics,
 		)
 
-	hidden = list(/datum/manufacture/crate/class, /datum/manufacture/crate/secure/syndicate)
+	hidden = list(
+		/datum/manufacture/crate/class,
+		/datum/manufacture/crate/secure/syndicate,
+		/datum/manufacture/cart/hotdog,
+		/datum/manufacture/locker/secure/nanotrasen,
+		)
 
 /obj/machinery/manufacturer/zombie_survival
 	name = "\improper Uber-Extreme Survival Manufacturer"
@@ -647,6 +674,8 @@
 		/datum/manufacture/soldering,
 		/datum/manufacture/multitool,
 		/datum/manufacture/t_scanner,
+		/datum/manufacture/accessgun,
+		/datum/manufacture/pinpointer_apc,
 		/datum/manufacture/gravity_scanner,
 		/datum/manufacture/RCD,
 		/datum/manufacture/places_pipes,
@@ -654,6 +683,7 @@
 		/datum/manufacture/RCDammomedium,
 		/datum/manufacture/RCDammolarge,
 		/datum/manufacture/atmos_goggles,
+		/datum/manufacture/eyes_meson,
 		/datum/manufacture/engivac,
 		/datum/manufacture/lampmanufacturer,
 		/datum/manufacture/pod/weapon/efif1,
@@ -675,9 +705,6 @@
 #else
 		/datum/manufacture/mechanics/gravity_tether_area,
 #endif
-#ifdef MAP_OVERRIDE_OSHAN
-		/datum/manufacture/cable/reinforced,
-#endif
 		/datum/manufacture/mechanics/laser_mirror,
 		/datum/manufacture/mechanics/laser_splitter,
 		/datum/manufacture/interdictor_kit,
@@ -688,7 +715,13 @@
 		/datum/manufacture/interdictor_rod_lambda,
 		/datum/manufacture/interdictor_rod_sigma,
 		/datum/manufacture/interdictor_rod_epsilon,
-		/datum/manufacture/interdictor_rod_phi
+		/datum/manufacture/interdictor_rod_phi,
+#ifdef HOTSPOTS_ENABLED
+	/datum/manufacture/dowsing_rod,
+	/datum/manufacture/capture_unit,
+	/datum/manufacture/powered_shovel,
+	/datum/manufacture/cable/reinforced,
+#endif
 	)
 
 	New()

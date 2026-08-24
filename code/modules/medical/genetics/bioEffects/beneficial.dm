@@ -154,8 +154,8 @@
 		. = ..()
 		if(ismob(owner))
 			if(src.power > 1)
-				APPLY_ATOM_PROPERTY(owner, PROP_MOB_DISORIENT_RESIST_BODY, src, 40)
-				APPLY_ATOM_PROPERTY(owner, PROP_MOB_DISORIENT_RESIST_BODY_MAX, src, 40)
+				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_DISORIENT_RESIST_BODY, src)
+				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_DISORIENT_RESIST_BODY_MAX, src)
 
 	heal
 		id = "resist_electric_heal"
@@ -205,6 +205,15 @@
 	msgLose = "You feel like you could use a stiff drink."
 	degrade_to = "drunk"
 	icon_state  = "alc_res"
+
+	OnAdd()
+		. = ..()
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_ALCOHOL_RESIST, src, 100)
+
+	OnRemove()
+		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_ALCOHOL_RESIST, src)
+		. = ..()
+
 
 /datum/bioEffect/toxres
 	name = "Toxic Resistance"
@@ -353,7 +362,7 @@
 			roundedmult += round(roundedmultremainder)
 			roundedmultremainder = roundedmultremainder % 1
 		for (roundedmult = roundedmult, roundedmult > 0, roundedmult --)
-			if (rand(1, regrow_prob) <= power)
+			if (regrow_prob && rand(1, regrow_prob) <= power)
 				if (ishuman(L))
 					var/mob/living/carbon/human/H = L
 					if (H.limbs)
@@ -708,56 +717,6 @@
 	can_scramble = 0
 	curable_by_mutadone = 0
 
-/datum/bioEffect/xray
-	name = "X-Ray Vision"
-	desc = "Enhances the subject's optic nerves, allowing them to see on x-ray wavelengths."
-	id = "xray"
-	effectType = EFFECT_TYPE_POWER
-	probability = 33
-	blockCount = 3
-	blockGaps = 5
-	reclaim_mats = 40
-	msgGain = "You suddenly seem to be able to see through everything."
-	msgLose = "Your vision fades back to normal."
-	lockProb = 40
-	lockedGaps = 1
-	lockedDiff = 3
-	lockedChars = list("G","C","A","T")
-	lockedTries = 8
-	stability_loss = 20
-	degrade_to = "bad_eyesight"
-	icon_state  = "eye"
-	effect_group = "vision"
-
-	OnAdd()
-		. = ..()
-		if(ismob(owner))
-			if(power == 1)
-				APPLY_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION_WEAK, src)
-			else
-				APPLY_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION, src)
-
-	onPowerChange(oldval, newval)
-		. = ..()
-		if(ismob(owner))
-			if(oldval == 1)
-				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION_WEAK, src)
-			else
-				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION, src)
-
-			if(newval == 1)
-				APPLY_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION_WEAK, src)
-			else
-				APPLY_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION, src)
-
-	OnRemove()
-		. = ..()
-		if(ismob(owner))
-			if(power == 1)
-				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION_WEAK, src)
-			else
-				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION, src)
-
 /datum/bioEffect/nightvision
 	name = "Night Vision"
 	desc = "Enhances the subject's optic nerves, allowing them to see in the dark."
@@ -1099,12 +1058,12 @@
 		if (probmult(20))
 			src.active = !src.active
 		if (src.active)
-			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src, INVIS_MESON)
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY_CLOAK, src, INVIS_MESON)
 		else
-			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY_CLOAK, src)
 
 	OnRemove()
-		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
+		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY_CLOAK, src)
 		. = ..()
 
 // hair_override gene

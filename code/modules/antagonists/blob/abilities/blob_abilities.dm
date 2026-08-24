@@ -628,14 +628,14 @@
 
 	onStart()
 		..()
-		if(!target || !owner || GET_DIST(owner, target) > 0 || !blob_o)
+		if(!target || !owner || GET_DIST(owner, target) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		actions.interrupt(target, INTERRUPT_ATTACKED)
 
 	onUpdate()
 		..()
-		if(!target || !owner || GET_DIST(owner, target) > 0 || !blob_o)
+		if(!target || !owner || GET_DIST(owner, target) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (ishuman(target) && target:decomp_stage == DECOMP_STAGE_SKELETONIZED)
@@ -648,7 +648,7 @@
 	onEnd()
 		..()
 		//owner type actually matters here. But it should never not be this anyway...
-		if(!target || !owner || GET_DIST(owner, target) > 0 || !istype (blob_o, /mob/living/intangible/blob_overmind))
+		if(!target || !owner || GET_DIST(owner, target) > 0)
 			return
 
 		//This whole first bit is all still pretty ugly cause this ability works on both critters and humans. I didn't have it in me to rewrite the whole thing - kyle
@@ -671,7 +671,7 @@
 		antag_role?.absorbed_victims += H
 
 		if (!isnpcmonkey(H) || prob(50))
-			blob_o.evo_points += 2
+			blob_o?.evo_points += 2
 			playsound(H.loc, 'sound/voice/blob/blobsucced.ogg', 100, 1)
 		//This is all the animation and stuff making the effect look good crap. Not much to see here.
 
@@ -904,7 +904,7 @@
 /datum/blob_ability/build/ectothermid
 	name = "Build Ectothermid Cell"
 	icon_state = "blob-ectothermid"
-	desc = "This will convert a blob tile into a Ectothermid. Ectothermids provice heat protection in an area at the cost of for biopoints."
+	desc = "This will convert a blob tile into an Ectothermid. Ectothermids provice heat protection in an area at the cost of for biopoints."
 	bio_point_cost = 15
 	gen_rate_invest = 1
 	build_path = /obj/blob/ectothermid

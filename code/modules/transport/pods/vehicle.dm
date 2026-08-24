@@ -246,6 +246,9 @@
 	/// Remove the part from the ship and drop it. Returns the part.
 	proc/eject_part(var/mob/user, var/slot, var/give_message = TRUE)
 		RETURN_TYPE(/obj/item/shipcomponent)
+		if (src.locked)
+			boutput(usr, SPAN_ALERT("You can't modify parts while [src] is locked."))
+			return null
 		var/obj/item/shipcomponent/part = src.get_part(slot)
 		if(!part)
 			return null
@@ -280,6 +283,9 @@
 		if(!slot)
 			boutput(usr, "Report dev error! Slot not found.")
 			return FALSE
+		if (src.locked)
+			boutput(usr, SPAN_ALERT("You can't modify parts while [src] is locked."))
+			return FALSE
 		if(src.get_part(slot))
 			if(eject)
 				src.eject_part(user, slot)
@@ -289,6 +295,8 @@
 		if(user) //This mean it's going on during the game!
 			user.drop_item(part)
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 0)
+			if (slot == POD_PART_MAIN_WEAPON)
+				logTheThing(LOG_VEHICLE, user, "Installed weapon [part] into pod [src].")
 		part.set_loc(src)
 		src.installed_parts[slot] = part
 		part.ship = src

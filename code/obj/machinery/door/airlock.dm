@@ -87,6 +87,9 @@ var/global/list/cycling_airlocks = list()
 		if (!isnull(A))
 			src.name = A.name
 	src.net_access_code = rand(1, NET_ACCESS_OPTIONS)
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle bolts", PROC_REF(mech_toggle_lock))
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"bolt", PROC_REF(mech_lock))
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"unbolt", PROC_REF(mech_unlock))
 	START_TRACKING
 
 
@@ -103,6 +106,43 @@ var/global/list/cycling_airlocks = list()
 	if (src.no_access) //nope :)
 		return 0
 	.= ..()
+
+/obj/machinery/door/airlock/try_mech_signal(var/datum/mechanicsMessage/input)
+	if (!src.arePowerSystemsOn() || (src.status & NOPOWER))
+		. = DOOR_MECHCOMP_FAILED
+	else
+		. = ..()
+	if (. != DOOR_MECHCOMP_DENIED)
+		return
+	if (!src.requiresID())
+		return DOOR_MECHCOMP_SUCCESS
+	var/access_code = text2num(input.signal)
+	if (src.net_access_code == access_code)
+		return DOOR_MECHCOMP_SUCCESS
+	else
+		if(!ON_COOLDOWN(src, "mechcomp_play_deny", 50)) // 5 second cooldown seems reasonable
+			src.play_deny()
+			// solely to make it not-trivial to make a machine that spams the loud-as-fuck deny sound
+		else if (src.density) //only play if it's closed
+			play_animation("deny")
+
+
+/obj/machinery/door/airlock/proc/mech_lock(var/datum/mechanicsMessage/input)
+	if(src.try_mech_signal(input) == DOOR_MECHCOMP_SUCCESS)
+		if(!src.locked)
+			src.set_locked()
+
+/obj/machinery/door/airlock/proc/mech_unlock(var/datum/mechanicsMessage/input)
+	if(src.try_mech_signal(input) == DOOR_MECHCOMP_SUCCESS)
+		if(src.locked)
+			src.set_unlocked()
+
+/obj/machinery/door/airlock/proc/mech_toggle_lock(var/datum/mechanicsMessage/input)
+	if(src.try_mech_signal(input) == DOOR_MECHCOMP_SUCCESS)
+		if(src.locked)
+			src.set_unlocked()
+		else
+			src.set_locked()
 
 // ================= airlock wire panel procs ==================
 
@@ -893,6 +933,26 @@ var/global/list/cycling_airlocks = list()
 			..()
 	return
 
+/obj/machinery/door/airlock/proc/bolt_open(senderid = null)
+	set waitfor = FALSE
+
+	if(src.locked && !src.density)
+		sleep(src.operation_time)
+		if (senderid)
+			src.send_status(,senderid)
+		return
+	if(src.locked && !src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
+		src.set_unlocked()
+
+	src.open(surpress_send = 1)
+	sleep(0.5 SECONDS)
+
+	if(!src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
+		src.set_locked()
+	sleep(src.operation_time)
+	if (senderid)
+		src.send_status(,senderid)
+
 // ========== mechcomp duplicate code ============
 
 TYPEINFO(/obj/machinery/door/airlock)
@@ -1005,21 +1065,7 @@ TYPEINFO(/obj/machinery/door/airlock)
 				src.send_status()
 
 			if("secure_open")
-				SPAWN(0)
-					if(src.locked && !src.density)
-						sleep(src.operation_time)
-						send_status(,senderid)
-						return
-					if(src.locked && !src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
-						src.set_unlocked()
-
-					src.open(surpress_send = 1)
-					sleep(0.5 SECONDS)
-
-					if(!src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
-						src.set_locked()
-					sleep(src.operation_time)
-					src.send_status(,senderid)
+				src.bolt_open(senderid)
 
 			if("secure_close")
 				SPAWN(0)
@@ -1151,6 +1197,7 @@ TYPEINFO(/obj/machinery/door/airlock)
 	if (prob(20) && (src.density && src.cant_emag != 1 && src.isblocked() != 1))
 		src.open()
 		src.operating = -1
+		src.deconstruct_flags |= DECON_NO_ACCESS
 	if(prob(40))
 		if(src.secondsElectrified == 0)
 			src.secondsElectrified = -1

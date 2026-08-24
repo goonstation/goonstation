@@ -75,20 +75,6 @@
 
 	createRenderSourceHolder()
 
-	// Set this stupid shit up here because byond's object tree output can't
-	// cope with a list initializer that contains "[constant]" keys
-	headset_channel_lookup = list(
-		"[R_FREQ_RESEARCH]" = "Research",
-		"[R_FREQ_MEDICAL]" = "Medical",
-		"[R_FREQ_ENGINEERING]" = "Engineering",
-		"[R_FREQ_NANOTRASEN]" = "NanoTrasen",
-		"[R_FREQ_COMMAND]" = "Command",
-		"[R_FREQ_SECURITY]" = "Security",
-		"[R_FREQ_CIVILIAN]" = "Civilian",
-		"[R_FREQ_DEFAULT]" = "General",
-		"[R_FREQ_INTERCOM_AI]" = "AI Intercom",
-		)
-
 	UPDATE_TITLE_STATUS("Starting processes")
 	Z_LOG_DEBUG("World/Init", "Process scheduler setup...")
 	processScheduler = new /datum/controller/processScheduler
@@ -167,11 +153,6 @@
 		bust_lights()
 		master_mode = "disaster" // heh pt. 2
 
-	UPDATE_TITLE_STATUS("Generating minimaps")
-	Z_LOG_DEBUG("World/Init", "Generating minimaps...")
-	minimap_renderer = new /datum/minimap_renderer()
-	minimap_renderer.initialise_minimaps()
-
 	UPDATE_TITLE_STATUS("Lighting up")
 	Z_LOG_DEBUG("World/Init", "RobustLight2 init...")
 	RL_Start()
@@ -182,6 +163,11 @@
 	buildRandomRooms()
 	makepowernets()
 	#endif
+
+	UPDATE_TITLE_STATUS("Generating minimaps")
+	Z_LOG_DEBUG("World/Init", "Generating minimaps...")
+	minimap_renderer = new /datum/minimap_renderer()
+	minimap_renderer.initialise_minimaps()
 
 	#ifdef SECRETS_ENABLED
 	UPDATE_TITLE_STATUS("Loading gallery artwork")

@@ -36,6 +36,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	/// req_access is used to lock out specific features and not limit deconstruction therefore DECON_NO_ACCESS is required
 	req_access = list(access_heads)
 	event_handler_flags = NO_MOUSEDROP_QOL
+	object_flags = NO_GHOSTCRITTER | GHOSTDRONE_ALLOWED
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_NO_ACCESS
 	flags = NOSPLASH | FLUID_SUBMERGE
 	layer = STORAGE_LAYER
@@ -73,7 +74,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/original_duration = 0 //! Original duration of the currently queued print, used to keep track of progress when M.time gets modified weirdly in queueing
 	var/time_left = 0 //! Time left until the current blueprint is complete. Updated on pausing and on starting a new blueprint.
 	var/time_started = 0 //! Time the blueprint was queued, or if paused/resumed, the time we resumed the blueprint.
-	var/speed = DEFAULT_SPEED //! Controls how fast blueprints are produced. Higher speed settings have a exponential effect on power use.
+	var/speed = DEFAULT_SPEED //! Controls how fast blueprints are produced. Higher speed settings have an exponential effect on power use.
 	var/repeat = FALSE //! Controls whether or not to repeat the first item in the queue while working.
 	var/output_cap = MAX_OUTPUT //! The maximum amount of produce this can dispense on outputting a blueprint's chosen outputs.
 	var/list/datum/manufacture/queue = list() //! A list of manufacture datums in the form of a queue. Blueprints are taken from index 1 and added at the last index
@@ -99,8 +100,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/stored_previous_blueprint_data = "" //! JSON-encoded string of the blueprint data. used for comparisons in get_producibility_for_blueprints
 
 	/* Production options */
-	/// A list of valid categories the manufacturer will use. Any invalid provided categories are assigned "Miscellaneous".
-	var/list/categories = list("Tool", "Clothing", "Resource", "Component", "Organ", "Machinery", "Medicine", "Miscellaneous", "Downloaded")
+	/// A list of valid categories the manufacturer will use. Any invalid provided categories are assigned MANUFACTURER::CATEGORY::MISCELLANEOUS. Defined in New()
+	var/list/categories = null
 	var/accept_blueprints = TRUE //! Whether or not we accept blueprints from the ruk kit into this manufacturer.
 
 	var/list/available = list() //! A list of every manufacture datum typepath available in this unit subtype by default
@@ -129,6 +130,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	New()
 		START_TRACKING
+		categories = MANUFACTURER.CATEGORY._get_namespace_constants()
+
 		if (src.share_id)
 			var/tracking_id = TR_CAT_MANUFACTURER_LINK + src.share_id
 			for (var/obj/machinery/manufacturer/other as anything in by_cat[tracking_id])
@@ -442,7 +445,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		var/list/as_list = list()
 		for (var/datum/manufacture/M as anything in L)
 			if (isnull(M.category) || !(M.category in src.categories)) // fix for not displaying blueprints/manudrives
-				M.category = "Miscellaneous"
+				M.category = MANUFACTURER::CATEGORY::MISCELLANEOUS
 				logTheThing(LOG_DEBUG, src, "Manufacturing blueprint [M] has category [M.category], which is not on the list of categories for [src]!")
 			if (length(as_list[M.category]) == 0)
 				as_list[M.category] = list()
@@ -564,6 +567,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (!(status & NOPOWER || status & BROKEN))
 				if (src.shock(user, 33))
 					return
+		src.add_fingerprint(user)
 		src.ui_interact(user)
 
 	proc/is_electrified()
@@ -834,28 +838,29 @@ TYPEINFO(/obj/machinery/manufacturer)
 					account["current_money"] -= total
 					storage.eject_ores(ore_name, get_output_location(), quantity, transmit=1, user=usr)
 
-						// This next bit is stolen from PTL Code
+					// This next bit is stolen from PTL Code
 					var/list/accounts = \
 						data_core.general.find_records("rank", "Chief Engineer") + \
 						data_core.general.find_records("rank", "Miner")
 
-
 					var/datum/signal/minerSignal = get_free_signal()
 					minerSignal.source = src
-					//any non-divisible amounts go to the shipping budget
+					//any non-divisible amounts go to the supply budget
 					var/leftovers = 0
 					if(length(accounts))
 						leftovers = subtotal % length(accounts)
 						var/divisible_amount = subtotal - leftovers
 						if(divisible_amount)
 							var/amount_per_account = divisible_amount/length(accounts)
-							for(var/datum/db_record/t as anything in accounts)
-								t["current_money"] += amount_per_account
-							minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX™-MAILBOT",  "group"=list(MGT_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [amount_per_account] credits earned from Rockbox™ sale, deposited to your account.")
+							for(var/datum/db_record/gen_rec as anything in accounts)
+								var/datum/db_record/bank_rec = global.data_core.bank.find_record("id", gen_rec["id"])
+								if (istype(bank_rec))
+									bank_rec["current_money"] += amount_per_account
+									minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX™-MAILBOT",  "group"=list(MGT_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [amount_per_account] credits earned from Rockbox™ sale, deposited to your account.")
 					else
 						leftovers = subtotal
-						minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX™-MAILBOT",  "group"=list(MGT_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [leftovers + sum_taxes] credits earned from Rockbox™ sale, deposited to the shipping budget.")
-					wagesystem.budgets[BUDGET_CAT_SHIPPING] += (leftovers + sum_taxes)
+						minerSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="ROCKBOX™-MAILBOT",  "group"=list(MGT_MINING, MGA_SALES), "sender"=src.net_id, "message"="Notification: [leftovers + sum_taxes] credits earned from Rockbox™ sale, deposited to the supply budget.")
+					wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] += (leftovers + sum_taxes)
 					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, minerSignal)
 					src.should_update_static = TRUE
 				else
@@ -1543,6 +1548,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		switch(wireIndex)
 			if(WIRE_EXTEND)
 				src.hacked = FALSE
+				src.UpdateOverlays(null, "indicator-hacked")
 			if(WIRE_SHOCK)
 				src.time_left_electrified = 0
 			if(WIRE_MALF)
@@ -1575,6 +1581,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 				src.hacked = !src.hacked
 				if(src.hacked)
 					src.AddOverlays(image(src.icon, null, "indicator-hacked", layer = src.layer + 0.0001), "indicator-hacked")
+				else
+					src.UpdateOverlays(null, "indicator-hacked")
 			if (WIRE_SHOCK)
 				src.time_left_electrified = 30
 			if (WIRE_MALF)
@@ -1827,12 +1835,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if (ispath(product))
 			if (istype(M,/datum/manufacture/))
 				A = new product(src)
-				if (isitem(A))
-					var/obj/item/I = A
-					M.modify_output(src, I, materials_used)
-					I.set_loc(src.get_output_location(I))
-				else
-					A.set_loc(src.get_output_location(A))
+				M.modify_output(src, A, materials_used)
+				A.set_loc(src.get_output_location(A))
 			else
 				A = new product(get_output_location())
 

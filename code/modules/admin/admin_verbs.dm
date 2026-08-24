@@ -11,13 +11,14 @@ var/list/admin_verbs = list(
 
 	list(
 		// LEVEL_MOD, moderator
-		/client/proc/admin_changes,
 		/client/proc/admin_play,
 		/client/proc/admin_observe,
 		/client/proc/admin_invisible,
 		/client/proc/game_panel,
 		/client/proc/game_panel_but_called_secrets,
 		/client/proc/player_panel,
+		/client/proc/cmd_forced_assignment_panel,
+		/client/proc/cmd_notify_forced_assignment_holders,
 		/client/proc/cmd_admin_view_playernotes,
 		/client/proc/cmd_whois,
 		/client/proc/cmd_whodead,
@@ -66,6 +67,9 @@ var/list/admin_verbs = list(
 		/client/proc/enableDrunkMode,
 		/client/proc/forceDrunkMode,
 
+#ifdef MAP_OVERRIDE_MENHIR
+		/client/proc/cmd_admin_vislayer,
+#endif
 		/client/proc/cmd_unshame_cube,
 		/client/proc/cmd_shame_cube,
 		/client/proc/removeSelf,
@@ -115,9 +119,7 @@ var/list/admin_verbs = list(
 		/client/proc/fix_powernets,
 		/datum/admins/proc/delay_start,
 		/datum/admins/proc/delay_end,
-		/client/proc/cmd_admin_create_centcom_report,
-		/client/proc/cmd_admin_create_advanced_centcom_report,
-		/client/proc/cmd_admin_advanced_centcom_report_help,
+		/client/proc/cmd_admin_command_report_panel,
 		/client/proc/warn,
 		/client/proc/cmd_admin_playeropt,
 		/client/proc/popt_key,
@@ -309,6 +311,7 @@ var/list/admin_verbs = list(
 		/client/proc/show_admin_lag_hacks,
 		/client/proc/spawn_survival_shit,
 		/client/proc/spawn_custom_transmutation,
+		/client/proc/expell_object_from_mail_chutes,
 		/client/proc/respawn_cinematic,
 		/client/proc/idkfa,
 		/client/proc/cmd_move_lobby,
@@ -366,6 +369,7 @@ var/list/admin_verbs = list(
 		/client/proc/respawn_as,
 		/client/proc/whitelist_add_temp,
 		/client/proc/whitelist_toggle,
+		/client/proc/mentor_whitelist_toggle,
 		/client/proc/list_adminteract_buttons,
 
 		/client/proc/general_report,
@@ -501,7 +505,6 @@ var/list/admin_verbs = list(
 		/client/proc/delete_profiling_logs,
 		/client/proc/cause_lag,
 		/client/proc/persistent_lag,
-		/client/proc/dbg_disposal_system,
 
 #ifdef MACHINE_PROCESSING_DEBUG
 		/client/proc/cmd_display_detailed_machine_stats,
@@ -635,8 +638,7 @@ var/list/special_pa_observing_verbs = list(
 			src.holder.level = LEVEL_BABBY
 
 		if ("Inactive")
-			src.holder.dispose()
-			src.holder = null
+			src.clear_admin()
 			boutput(src, "<span style='color:red;font-size:150%'><b>You are set to Inactive admin status! Please join the Goonstation Discord if you would like to become active again!</b></span>")
 			return
 
@@ -1531,40 +1533,6 @@ var/list/fun_images = list()
 	logTheThing(LOG_DIARY, src, "spawned a custom grenade at [usr.loc]", "admin")
 	message_admins("[key_name(src)] spawned a custom grenade at [usr.loc].")
 
-/client/proc/admin_changes()
-	set category = "Commands"
-	set name = "Admin Changelog"
-	set desc = "Show or hide the admin changelog"
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-
-	if (winexists(src, "adminchanges") && winget(src, "adminchanges", "is-visible") == "true")
-		src.Browse(null, "window=adminchanges")
-	else
-		var/changelogHtml
-		var/data
-		if (src.byond_version >= 516)
-			changelogHtml = grabResource("html/changelog.html")
-			data = admin_changelog.html
-		else
-			changelogHtml = grabResource("html/legacy_changelog.html")
-			data = legacy_admin_changelog.html
-		var/fontcssdata = {"
-				<style type="text/css">
-				@font-face {
-					font-family: 'Twemoji';
-					src: url('[resource("css/fonts/twemoji.woff2")]') format('woff2');
-					text-rendering: optimizeLegibility;
-				}
-				</style>
-		"}
-		changelogHtml = replacetext(changelogHtml, "<!-- CSS INJECT GOES HERE -->", fontcssdata)
-		changelogHtml = replacetext(changelogHtml, "<!-- HTML GOES HERE -->", "[data]")
-		if (src.byond_version >= 516 && global.tgui_process)
-			message_modal(src, changelogHtml, "Admin Changelog", width = 500, height = 650, sanitize = FALSE)
-		else
-			src.Browse(changelogHtml, "window=adminchanges;size=500x650;title=Admin+Changelog;", 1)
-
 /client/proc/removeSelf()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Remove Self"
@@ -2241,6 +2209,8 @@ proc/alert_all_ghosts(atom/target, message)
 			C.cmd_emag_target(A)
 		if ("Pixel Offset")
 			new /datum/pixel_offset(A, C.mob)
+		if ("Debug Appearance")
+			C.cmd_debug_appearance(A)
 		if ("Set Material")
 			C.cmd_set_material(A)
 		if ("Activate Artifact")
@@ -2417,6 +2387,22 @@ proc/alert_all_ghosts(atom/target, message)
 		world.save_intra_round_value("whitelist_disabled", 0)
 
 	set_station_name(src.mob, manual=FALSE, name=station_name)
+
+/client/proc/mentor_whitelist_toggle()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
+	set name = "Toggle whitelisted mentors"
+	set desc = "Toggle if Mentors bypass the whitelist"
+	ADMIN_ONLY
+	SHOW_VERB_DESC
+	DENY_TEMPMIN
+
+	var/current_status = config.mentors_bypass_whitelist ? "enabled" : "disabled"
+
+	if(tgui_alert(src, "Mentors bypassing the whitelist is currently [current_status]. Toggle for this round?", "Toggle whitelisted mentors?", list("Yes", "No")) != "Yes")
+		return
+	config.mentors_bypass_whitelist = !config.mentors_bypass_whitelist
+	message_admins("[src] has [config.mentors_bypass_whitelist ? "enabled" : "disabled"] mentors bypassing the whitelist for this round.")
+	logTheThing(LOG_ADMIN, src, "[config.mentors_bypass_whitelist ? "Enabled" : "Disabled"] mentors bypassing the whitelist for this round.")
 
 /client/proc/set_conspiracy_objective()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)

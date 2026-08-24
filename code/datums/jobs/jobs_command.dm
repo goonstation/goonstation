@@ -20,7 +20,7 @@ ABSTRACT_TYPE(/datum/job/command)
 /datum/job/command/captain
 	name = "Captain"
 	limit = 1
-	wages = PAY_EXECUTIVE
+	wages = PAY::EXECUTIVE
 	access_string = "Captain"
 	high_priority_job = TRUE
 	receives_miranda = TRUE
@@ -42,6 +42,13 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_poc1 = list(/obj/item/disk/data/floppy/read_only/authentication)
 	items_in_backpack = list(/obj/item/storage/box/id_kit,/obj/item/device/flash)
 	rounds_needed_to_play = ROUNDS_MIN_CAPTAIN
+
+	special_setup(var/mob/living/carbon/human/M)
+		. = ..()
+		//already a disk? No disk for u
+		if (length(by_type[/obj/item/disk/data/floppy/read_only/authentication]) > 1)
+			logTheThing(LOG_DEBUG, M, "would have spawned with the authentication disk, but one already existed!")
+			M.l_store.safe_delete()
 
 	derelict
 		//name = "NT-SO Commander"
@@ -67,7 +74,7 @@ ABSTRACT_TYPE(/datum/job/command)
 /datum/job/command/head_of_personnel
 	name = "Head of Personnel"
 	limit = 1
-	wages = PAY_IMPORTANT
+	wages = PAY::IMPORTANT
 	access_string = "Head of Personnel"
 	wiki_link = "https://wiki.ss13.co/Head_of_Personnel"
 
@@ -79,6 +86,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_back = list(/obj/item/storage/backpack)
 	slot_belt = list(/obj/item/device/pda2/hop)
 	slot_jump = list(/obj/item/clothing/under/suit/hop)
+	slot_suit = list(/obj/item/clothing/suit/hopjacket)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_ears = list(/obj/item/device/radio/headset/command/hop)
 	slot_poc1 = list(/obj/item/pocketwatch)
@@ -87,10 +95,10 @@ ABSTRACT_TYPE(/datum/job/command)
 /datum/job/command/head_of_security
 	name = "Head of Security"
 	limit = 1
-	wages = PAY_IMPORTANT
+	wages = PAY::IMPORTANT
 	trait_list = list("training_drinker", "training_security")
 	access_string = "Head of Security"
-	requires_whitelist = TRUE
+	requires_whitelist = REQUIRES_WHITELIST_USUALLY
 	receives_miranda = TRUE
 	can_roll_antag = FALSE
 	world_announce_priority = ANNOUNCE_ORDER_HOS
@@ -100,6 +108,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	receives_implants = list(/obj/item/implant/health/security/anti_mindhack/command)
 	items_in_backpack = list(/obj/item/device/flash)
 	wiki_link = "https://wiki.ss13.co/Head_of_Security"
+	rounds_needed_to_play = ROUNDS_MIN_HIGHSEC
 
 	slot_jump = list(/obj/item/clothing/under/rank/head_of_security)
 	slot_suit = list(/obj/item/clothing/suit/armor/vest)
@@ -135,7 +144,7 @@ ABSTRACT_TYPE(/datum/job/command)
 /datum/job/command/chief_engineer
 	name = "Chief Engineer"
 	limit = 1
-	wages = PAY_IMPORTANT
+	wages = PAY::IMPORTANT
 	trait_list = list("training_engineer")
 	access_string = "Chief Engineer"
 	wiki_link = "https://wiki.ss13.co/Chief_Engineer"
@@ -173,7 +182,7 @@ ABSTRACT_TYPE(/datum/job/command)
 /datum/job/command/research_director
 	name = "Research Director"
 	limit = 1
-	wages = PAY_IMPORTANT
+	wages = PAY::IMPORTANT
 	trait_list = list("training_scientist")
 	access_string = "Research Director"
 	wiki_link = "https://wiki.ss13.co/Research_Director"
@@ -198,7 +207,7 @@ ABSTRACT_TYPE(/datum/job/command)
 /datum/job/command/medical_director
 	name = "Medical Director"
 	limit = 1
-	wages = PAY_IMPORTANT
+	wages = PAY::IMPORTANT
 	trait_list = list("training_medical")
 	access_string = "Medical Director"
 	wiki_link = "https://wiki.ss13.co/Medical_Director"

@@ -24,24 +24,12 @@ var/global/list/material_cache
 
 /proc/mergeProperties(var/list/leftProps, var/list/rightProps, var/rightBias=0.5)
 	var/leftBias = 1 - rightBias
+	var/list/merged = rightProps | leftProps
 
-	var/list/merged = list()
-
-	for(var/o in leftProps)
-		//merged.Add(o)
-		merged[o] = leftProps[o] * leftBias
-
-	if(rightProps)
-		for(var/x in rightProps)
-			if(x in merged)
-				merged[x] += rightProps[x] * rightBias
-			else
-				merged.Add(x)
-				merged[x] = rightProps[x] * rightBias
-
-	for(var/x in merged)
-		merged[x] = round(merged[x])
-
+	for(var/datum/material_property/prop in merged)
+		var/value_left = (prop in leftProps) ? leftProps[prop] : prop.default_value
+		var/value_right = (prop in rightProps) ? rightProps[prop] : prop.default_value
+		merged[prop] = prop.getValueMerged(value_left, value_right, leftBias, rightBias)
 	return merged
 
 
@@ -160,6 +148,9 @@ var/global/list/material_cache
 		if(mat1.shouldApplyColor())
 			src.alpha = mat1.getAlpha()
 			src.color = mat1.getColor()
+	if(src.color)
+		var/datum/component/radioactive/rad_comp = src.GetComponent(/datum/component/radioactive)
+		rad_comp?.filterize_color(rad_comp.parent)
 
 /// Applies material icon_state override to an /image based on this atom's material (or the material provided)
 /atom/proc/setMaterialAppearanceForImage(image/img, datum/material/mat=null)
@@ -214,7 +205,6 @@ proc/get_icon_states(icon)
 
 	return /obj/item/material_piece
 
-/// Increases generations on material triggers and handles removal if over the generation cap.
 /proc/handleTriggerGenerations(var/list/toDo)
 	for(var/datum/materialProc/current in toDo)
 		if(current.max_generations != -1 && (toDo[current] + 1) > current.max_generations)
@@ -254,6 +244,19 @@ proc/get_icon_states(icon)
 /proc/getFusedMaterial(var/datum/material/mat1,var/datum/material/mat2)
 	return new /datum/material/interpolated(mat1, mat2, 0.5)
 
+/atom/proc/material_amount_total()
+	if(src.material)
+		return src.material_amt
+	return 0
+
+/obj/item/material_amount_total()
+	if(src.material)
+		return src.material_amt * src.amount
+	return 0
+/// Use to share type-specific material information when scanned.
+/atom/proc/on_material_scan()
+	return null
+
 //custom matsci event procs
 //Use these if you want the stom in general to interact in a special way with the items procs e.g. spears on attack triggering the tip, but on pickup the shafts material
 //situation_modifier is for when you want something like specifying "chest" or "L_hand" for clothes
@@ -270,8 +273,8 @@ proc/get_icon_states(icon)
 		src.material.triggerOnBullet(src, attacked, projectile)
 	return
 
-/// Called when an atom is hit by a bullet for mat effects
-/atom/proc/material_trigger_on_chems(var/chem, var/amount)
+/// Called when an atom comes into contact with reagents for mat effects
+/atom/proc/material_trigger_on_chems(var/datum/reagent/chem, var/amount)
 	if (src.material)
 		src.material.triggerChem(src, chem, amount)
 	return
@@ -282,7 +285,7 @@ proc/get_icon_states(icon)
 		src.material.triggerOnBlobHit(src, blobPower)
 	return
 
-/// Called when an atom is used for an attack a atom for mat effects
+/// Called when an atom is used to attack an atom for mat effects
 /atom/proc/material_on_attack_use(var/mob/attacker, var/atom/attacked)
 	if (src.material)
 		src.material.triggerOnAttack(src, attacker, attacked)

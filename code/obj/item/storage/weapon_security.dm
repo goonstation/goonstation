@@ -222,6 +222,8 @@
 	name = "cleaner grenade box"
 	icon_state = "flashbang"
 	spawn_contents = list(/obj/item/chem_grenade/fcleaner = 5)
+	SYNDICATE_STEALTH_DESCRIPTION("You struggle to keep a good grip on it.")
+	tooltip_flags = REBUILD_USER
 
 /obj/item/storage/box/grenade_starter_kit
 	name = "grenade starter kit"
@@ -321,6 +323,8 @@
 	var/cloaked = 0
 	w_class = W_CLASS_SMALL
 	max_wclass = W_CLASS_NORMAL
+	tooltip_flags = REBUILD_USER
+	SYNDICATE_STEALTH_DESCRIPTION("It looks heavy, somehow.")
 
 	New()
 		..()
@@ -340,8 +344,7 @@
 				return
 			src.name = W.name
 			src.real_name = W.name
-			src.desc = "[W.desc] It looks heavy, somehow."
-			src.real_desc = "[W.desc] It looks heavy, somehow."
+			src.desc = W.desc
 			src.icon = W.icon
 			src.icon_state = W.icon_state
 			src.item_state = W.item_state
@@ -439,7 +442,7 @@
 	/obj/item/storage/pouch/poison_dart = 2)
 
 /obj/item/storage/briefcase/instruments/blowgun/tranq
-	spawn_contents = list(/obj/item/gun/kinetic/blowgun/tranq, /obj/item/ammo/bullets/tranq_darts/blow_darts/ketamine = 2)
+	spawn_contents = list(/obj/item/gun/kinetic/blowgun/tranq, /obj/item/ammo/bullets/tranq_darts/blow_darts/thio = 2)
 
 /obj/item/storage/box/chameleonbomb
 	name = "chameleon bomb case"

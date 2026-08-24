@@ -1,4 +1,5 @@
 TYPEINFO(/obj/item/gun/energy)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 32
 
 /obj/item/gun/energy
@@ -217,7 +218,7 @@ TYPEINFO(/obj/item/gun/energy)
 
 ////////////////////////////////////// Antique laser gun
 TYPEINFO(/obj/item/gun/energy/antique)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 /obj/item/gun/energy/antique
 	HELP_MESSAGE_OVERRIDE("You can use a <b>screwdriver</b> to open or close the maintenance panel. While the panel is open, you can insert lens and small coil to upgrade the weapon.")
 	name = "antique laser gun"
@@ -422,6 +423,7 @@ TYPEINFO(/obj/item/gun/energy/phaser_huge)
 
 ///////////////////////////////////////Rad Crossbow
 TYPEINFO(/obj/item/gun/energy/crossbow)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal" = 5,
 				"conductive_high" = 5,
 				"energy_high" = 10)
@@ -438,7 +440,6 @@ TYPEINFO(/obj/item/gun/energy/crossbow)
 	cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	projectiles = null
-	is_syndicate = 1
 	silenced = 1 // No conspicuous text messages, please (Convair880).
 	hide_attack = ATTACK_FULLY_HIDDEN
 	custom_cell_max_capacity = 100 // Those self-charging ten-shot radbows were a bit overpowered (Convair880)
@@ -486,6 +487,7 @@ TYPEINFO(/obj/item/gun/energy/egun)
 		projectiles = list(current_projectile,new/datum/projectile/laser)
 		RegisterSignal(src, COMSIG_ATOM_ANALYZE, PROC_REF(noreward))
 		src.verbs -= /obj/item/gun/energy/egun/verb/claim_lawbringer
+		src.verbs -= /obj/item/gun/energy/egun/verb/claim_sword
 		..()
 	update_icon()
 		if (current_projectile.type == /datum/projectile/laser)
@@ -541,9 +543,12 @@ TYPEINFO(/obj/item/gun/energy/egun)
 		desc = "The Five Points Armory Energy Gun. Double emitters with switchable fire modes, for stun bolts or lethal laser fire. 'HOS' is engraved in the side."
 		icon_state = "energy-hos"
 
+		New()
+			. = ..()
+			src.verbs -= /obj/item/gun/energy/egun/verb/claim_sword
 
 TYPEINFO(/obj/item/gun/energy/egun_jr)
-	mats = null
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/item/gun/energy/egun_jr
 	name = "energy gun junior"
@@ -636,6 +641,7 @@ TYPEINFO(/obj/item/gun/energy/egun_jr)
 
 ////////////////////////////////////VUVUV
 TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal" = 5,
 				"conductive_high" = 5,
 				"energy_high" = 10)
@@ -645,7 +651,6 @@ TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
 	item_state = "bike_horn"
 	desc = "BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZT, *fart*"
 	cell_type = /obj/item/ammo/power_cell/med_power
-	is_syndicate = 1
 	uses_charge_overlay = TRUE
 	charge_icon_state = "vuvuzela"
 
@@ -655,6 +660,8 @@ TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
 		..()
 
 //////////////////////////////////////Crabgun
+TYPEINFO(/obj/item/gun/energy/crabgun)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/gun/energy/crabgun
 	name = "a strange crab"
 	desc = "Years of extreme genetic tinkering have finally led to the feared combination of crab and gun."
@@ -670,7 +677,6 @@ TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
 	cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	projectiles = null
-	is_syndicate = 1
 	custom_cell_max_capacity = 100 //endless crab
 
 	New()
@@ -759,7 +765,7 @@ TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
 
 ///////////////////////////////////////Telegun
 TYPEINFO(/obj/item/gun/energy/teleport)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/item/gun/energy/teleport
 	name = "teleport gun"
@@ -894,7 +900,7 @@ TYPEINFO(/obj/item/gun/energy/teleport)
 
 ///////////////////////////////////////Ghost Gun
 TYPEINFO(/obj/item/gun/energy/ghost)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/item/gun/energy/ghost
 	name = "ectoplasmic destabilizer"
@@ -917,7 +923,7 @@ TYPEINFO(/obj/item/gun/energy/ghost)
 
 ///////////////////////////////////////Particle Blasters
 TYPEINFO(/obj/item/gun/energy/blaster_pistol)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/item/gun/energy/blaster_pistol
 	name = "GRF Zap-Pistole"
@@ -982,7 +988,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pistol)
 			src.overlays += icon('icons/obj/items/gun_mod.dmi',converter_mod.overlay_name)*/
 
 TYPEINFO(/obj/item/gun/energy/blaster_smg)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/item/gun/energy/blaster_smg
 	name = "GRF Zap-Maschine"
@@ -1056,7 +1062,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 ///////////modular components - putting them here so it's easier to work on for now////////
 /*
 TYPEINFO(/obj/item/gun_parts)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/item/gun_parts
 	name = "gun parts"
@@ -1252,7 +1258,7 @@ TYPEINFO(/obj/item/gun/energy/plasma_gun)
 	charge_icon_state = "wavegun"
 
 TYPEINFO(/obj/item/gun/energy/plasma_gun/hunter)
-	mats = null
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/item/gun/energy/plasma_gun/hunter
 	name = "Hunter's plasma rifle"
@@ -1281,6 +1287,7 @@ TYPEINFO(/obj/item/gun/energy/plasma_gun/hunter)
 
 /////////////////////////////////////// Pickpocket Grapple, Grayshift's grif gun
 TYPEINFO(/obj/item/gun/energy/pickpocket)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal" = 5,
 				"conductive_high" = 5,
 				"energy_high" = 10)
@@ -1297,7 +1304,6 @@ TYPEINFO(/obj/item/gun/energy/pickpocket)
 	cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	projectiles = null
-	is_syndicate = 1
 	silenced = 1
 	hide_attack = ATTACK_FULLY_HIDDEN
 	custom_cell_max_capacity = 100
@@ -1392,6 +1398,7 @@ TYPEINFO(/obj/item/gun/energy/pickpocket)
 	cell_type = /obj/item/ammo/power_cell/self_charging/big
 
 TYPEINFO(/obj/item/gun/energy/alastor)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal_dense" = 15,
 				"conductive_high" = 10,
 				"energy_high" = 10)
@@ -1407,7 +1414,6 @@ TYPEINFO(/obj/item/gun/energy/alastor)
 	cell_type = /obj/item/ammo/power_cell/med_power
 	desc = "A gun that produces a harmful laser, causing substantial damage."
 	muzzle_flash = "muzzle_flash_laser"
-	is_syndicate = 1
 
 	New()
 		set_current_projectile(new/datum/projectile/laser/alastor)
@@ -1728,9 +1734,19 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 		set_current_projectile(new/datum/projectile/energy_bolt/pulse)//uses 35PU per shot, so 8 shots
 		projectiles = list(new/datum/projectile/energy_bolt/pulse, new/datum/projectile/energy_bolt/electromagnetic_pulse)
 
+	emag_act(mob/user, obj/item/card/emag/E)
+		if(locate(/datum/projectile/energy_bolt/pulse/pull) in src.projectiles)
+			return
+		boutput(user, SPAN_NOTICE("You run [E] over [src], reversing the polarity!"))
+		var/pullse_projectile = new/datum/projectile/energy_bolt/pulse/pull
+		src.set_current_projectile(pullse_projectile)
+		var/datum/projectile/energy_bolt/electromagnetic_pulse/emp_projectile = locate() in src.projectiles
+		src.projectiles = list(pullse_projectile, emp_projectile)
+
 
 ///////////////////////////////////////Wasp Gun
 TYPEINFO(/obj/item/gun/energy/wasp)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal" = 5,
 				"conductive_high" = 5,
 				"energy_high" = 10)
@@ -1747,7 +1763,6 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 	cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	projectiles = null
-	is_syndicate = 1
 	silenced = 1
 	custom_cell_max_capacity = 100
 
@@ -1758,6 +1773,8 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 
 ///Crossbow that fires irradiating neutron projectiles like the nuclear reactor
 ///DEBUG ITEM - don't actually use this for things. Unless you really want to, or it might be funny.
+TYPEINFO(/obj/item/gun/energy/neutron)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/gun/energy/neutron
 	name = "mini neutron-crossbow"
 	desc = "A weapon that fires irradiating neutrons. Because it makes sense that a crossbow can fire subatomic particles at relativistic speeds."
@@ -1771,7 +1788,6 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 	cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/slowcharge
 	projectiles = null
-	is_syndicate = 1
 	silenced = 1
 	custom_cell_max_capacity = 100
 
@@ -2072,7 +2088,7 @@ TYPEINFO(/obj/item/gun/energy/vexillifer4)
 #define HEAT_REMOVED_PER_PROCESS 30
 #define FIRE_THRESHOLD 125
 TYPEINFO(/obj/item/gun/energy/makeshift)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/item/gun/energy/makeshift
 	name = "makeshift laser rifle"
@@ -2425,7 +2441,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 
 
 TYPEINFO(/obj/item/gun/energy/lasershotgun)
-	mats = null
+	analyser_flags = ANALYSER_BLACKLIST
 /obj/item/gun/energy/lasershotgun
 	name = "Mod. 77 'Nosaxa'"
 	cell_type = /obj/item/ammo/power_cell/high_power
@@ -2503,17 +2519,13 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 		src.rack(user)
 
 	proc/rack(var/mob/user)
-		if (src.overheated)
-			if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, amount) & CELL_INSUFFICIENT_CHARGE)
-				boutput(user, "<span class ='notice'>You are out of energy!</span>")
-			else
-				boutput(user, "<span class='notice'>You release some heat from the shotgun!</span>")
-				playsound(src, 'sound/effects/steamrelease.ogg', 70, 1)
-				ON_COOLDOWN(src, "rack delay", 1 SECONDS)
-				SPAWN(1 SECOND)
-					src.overheated = FALSE
-					src.shotcount = 0
-					src.UpdateParticles(null, "overheat_steam")
+		if (src.shotcount > 0 && !ON_COOLDOWN(src, "rack delay", 1 SECONDS))
+			boutput(user, "<span class='notice'>You release some heat from the shotgun!</span>")
+			playsound(src, 'sound/effects/steamrelease.ogg', 70, 1)
+			SPAWN(1 SECOND)
+				src.overheated = FALSE
+				src.shotcount = 0
+				src.UpdateParticles(null, "overheat_steam")
 
 /obj/item/gun/energy/resonator
 	name = "Resonator"

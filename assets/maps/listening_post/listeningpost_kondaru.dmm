@@ -41,7 +41,7 @@
 /obj/cable/black{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/general)
 "dO" = (
 /obj/machinery/door/airlock,
@@ -97,7 +97,11 @@
 	pixel_y = 7;
 	pixel_x = 9
 	},
-/turf/simulated/floor/orangeblack,
+/obj/item/stamp/syndicate{
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/turf/simulated/floor/caution,
 /area/listeningpost/general)
 "gU" = (
 /obj/machinery/power/rtg/erebite_loaded,
@@ -176,7 +180,7 @@
 /obj/cable/black{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/general)
 "lo" = (
 /turf/unsimulated/floor/shuttle/red{
@@ -196,10 +200,6 @@
 /area/listeningpost/break_room)
 "lY" = (
 /obj/machinery/vending/jobclothing/syndicate,
-/obj/cable/black{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc/autoname_west/hardened,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost/barracks)
 "mh" = (
@@ -242,7 +242,7 @@
 /obj/cable/black{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/general)
 "nC" = (
 /obj/machinery/vending/floppy{
@@ -263,20 +263,13 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/item/peripheral/network/radio/locked,
-/obj/item/aiModule/hologram_expansion/syndicate{
-	pixel_x = -2;
-	pixel_y = 10
-	},
+/obj/machinery/recharger,
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
 "oD" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
-/obj/machinery/light_switch/west,
-/obj/cable/black{
-	icon_state = "1-4"
-	},
+/obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost/barracks)
 "oO" = (
@@ -347,7 +340,7 @@
 /obj/cable/black{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/general)
 "tz" = (
 /obj/mesh/grille/steel,
@@ -374,20 +367,15 @@
 /obj/table/wood/auto,
 /obj/item/storage/firstaid/regular,
 /obj/item/bandage,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/general)
 "va" = (
 /obj/machinery/light/small{
 	dir = 4
 	},
-/obj/storage/crate,
-/obj/item/shipcomponent/secondary_system/crash,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost/barracks)
 "vx" = (
-/obj/cable/black{
-	icon_state = "2-8"
-	},
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
@@ -407,9 +395,6 @@
 /obj/cable/black{
 	icon_state = "2-4"
 	},
-/obj/cable/black{
-	icon_state = "1-4"
-	},
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
@@ -428,6 +413,7 @@
 /obj/cable/black{
 	icon_state = "0-4"
 	},
+/obj/item/shipcomponent/secondary_system/crash,
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "wk" = (
@@ -452,6 +438,17 @@
 	},
 /turf/variableTurf/clear,
 /area/space)
+"xQ" = (
+/obj/table/wood/auto,
+/obj/item/uplink_telecrystal{
+	pixel_y = -1
+	},
+/obj/item/uplink_telecrystal{
+	pixel_y = 5;
+	pixel_x = 7
+	},
+/turf/simulated/floor/carpet/grime,
+/area/listeningpost/barracks)
 "xR" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -468,10 +465,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/light_switch{
-	name = "S light switch";
-	pixel_y = -24
-	},
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor/black,
 /area/listeningpost/general)
 "Bd" = (
@@ -489,7 +483,7 @@
 /obj/cable/black{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/general)
 "BP" = (
 /obj/machinery/shuttle/engine/heater{
@@ -502,7 +496,7 @@
 /obj/item/reagent_containers/food/drinks/bottle/tequila,
 /obj/item/card_group/plain,
 /obj/item/currency/spacecash/hundred,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/general)
 "Dh" = (
 /obj/item/storage/toilet{
@@ -514,6 +508,11 @@
 "Dm" = (
 /turf/simulated/floor/airless/engine,
 /area/listeningpost/landing_bay)
+"Dp" = (
+/obj/table/wood/auto,
+/obj/item/turret_deployer/syndicate,
+/turf/simulated/floor/carpet/grime,
+/area/listeningpost/barracks)
 "DE" = (
 /obj/marker/supplymarker,
 /obj/decal/poster/wallsign/poster_nt{
@@ -521,7 +520,7 @@
 	name = "defaced NanoTrasen poster";
 	pixel_y = 28
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/general)
 "DN" = (
 /obj/machinery/door/airlock,
@@ -592,11 +591,8 @@
 	},
 /area/listeningpost/general)
 "Gx" = (
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate/listeningpost/inner{
 	dir = 4
-	},
-/obj/cable/black{
-	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost/barracks)
@@ -625,7 +621,7 @@
 	},
 /obj/machinery/bot/medbot/no_camera,
 /obj/noticeboard/directional/north,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/general)
 "Hu" = (
 /obj/storage/secure/crate/gear/syndicate,
@@ -663,9 +659,6 @@
 	name = "Dubious Hand Scanner";
 	pixel_x = -32
 	},
-/obj/cable/black{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
@@ -693,7 +686,7 @@
 /obj/cable/black{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/general)
 "KG" = (
 /obj/table/wood/auto,
@@ -705,14 +698,16 @@
 /area/listeningpost/barracks)
 "KM" = (
 /obj/table/wood/auto,
-/obj/machinery/recharger,
-/turf/simulated/floor/orangeblack,
+/obj/machinery/codereader/syndicate{
+	pixel_y = 5
+	},
+/turf/simulated/floor/caution,
 /area/listeningpost/general)
 "Lf" = (
 /obj/table/wood/auto,
 /obj/item/paper_bin,
 /obj/item/pen,
-/obj/item/paper/printout/emerg1,
+/obj/item/paper/image/sstv/emerg1,
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
 "Lu" = (
@@ -724,9 +719,9 @@
 /area/listeningpost/general)
 "MN" = (
 /obj/table/auto,
-/obj/item/device/t_scanner,
-/obj/item/wrench,
-/obj/item/mining_tools/pick,
+/obj/random_item_spawner/spacesuit,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
 /turf/simulated/floor/caution/east{
 	dir = 8
 	},
@@ -738,11 +733,11 @@
 /turf/simulated/floor/airless/plating,
 /area/listeningpost/comm_dish)
 "Nm" = (
-/obj/machinery/computer/announcement/syndicate,
 /obj/cable/black{
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_north/hardened,
+/obj/machinery/computer/announcement/syndicate,
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
 "NF" = (
@@ -776,7 +771,7 @@
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
 "Om" = (
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/directional/north,
 /obj/machinery/computer/camera_viewer,
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
@@ -881,7 +876,7 @@
 /obj/item/device/radio/intercom/security{
 	dir = 8
 	},
-/obj/machinery/light_switch/east{
+/obj/machinery/light_switch/directional/east{
 	pixel_y = -16
 	},
 /turf/simulated/floor/black,
@@ -893,9 +888,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
 "VQ" = (
-/obj/item/sheet/steel{
-	amount = 50
-	},
+/obj/item/tank/jetpack,
 /obj/machinery/light/small,
 /obj/cable/black{
 	icon_state = "1-4"
@@ -921,7 +914,7 @@
 /area/space)
 "WU" = (
 /obj/stool/chair/comfy,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/listeningpost/general)
 "XA" = (
 /obj/table/wood/auto,
@@ -929,12 +922,13 @@
 /obj/item/pinpointer/disk,
 /obj/item/disk/data/cartridge/captain,
 /obj/item/disk/data/cartridge/captain,
+/obj/item/aiModule/hologram_expansion/syndicate{
+	pixel_x = -2;
+	pixel_y = 10
+	},
 /turf/simulated/floor/black,
 /area/listeningpost/tech_room)
 "XW" = (
-/obj/cable/black{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost/barracks)
 "XY" = (
@@ -1271,8 +1265,8 @@ sT
 sT
 sT
 sT
-sT
-sT
+WC
+WC
 lt
 Dm
 Dm
@@ -1302,8 +1296,8 @@ sT
 sT
 sT
 sT
-sT
-sT
+WC
+WC
 WC
 WC
 WC
@@ -1335,10 +1329,10 @@ sT
 sT
 sT
 sT
-sT
-sT
 WC
 WC
+KJ
+KJ
 KJ
 KJ
 KJ
@@ -1369,11 +1363,11 @@ sT
 sT
 sT
 sT
-sT
-WC
 WC
 WC
 KJ
+xQ
+Dp
 lY
 oD
 KJ
@@ -1405,9 +1399,9 @@ sT
 WC
 WC
 WC
-WC
-WC
 KJ
+XW
+XW
 va
 XW
 KJ

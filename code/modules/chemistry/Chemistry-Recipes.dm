@@ -118,7 +118,7 @@
 		name = "Lumen"
 		id = "lumen"
 		required_reagents = list("radium" = 1, "omega_mutagen" = 1, "hydrogen" = 1, "helium" = 1, "luminol" = 1)
-		mix_phrase = "The chemicals coalesce and begin to grow rather brightly!"
+		mix_phrase = "The chemicals coalesce and begin to glow rather brightly!"
 		mix_sound = 'sound/voice/heavenly.ogg'
 		result_amount = 3
 		result = "lumen"
@@ -718,7 +718,7 @@
 		id = "milk_powder"
 		result = "milk_powder"
 		required_reagents = list("milk" = 1)
-		inhibitors = list("water")
+		inhibitors = list("water", "sugar")
 		result_amount = 1
 		min_temperature = T0C + 100
 		mix_phrase = "The water boils away, leaving behind a white condensed powder."
@@ -1261,6 +1261,36 @@
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
 		hidden = TRUE
+
+	cocktail_quadruplewaterstable
+		name = "Quadruple Water"
+		id = "cocktail_quadruplewaterstable"
+		result = "cocktail_quadruplewaterstable"
+		required_reagents = list("cocktail_triplewater" = 1, "sodawater" = 1, "uranium" = 0, "stabiliser" = 1)
+		result_amount = 1
+		mix_phrase = "The triple water seems to begrudgingly let the soda water mix in."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
+	cocktail_quadruplewater
+		name = "Quadruple Water Unstable"
+		id = "cocktail_quadruplewater"
+		result = "cocktail_quadruplewater"
+		required_reagents = list("cocktail_triplewater" = 1, "sodawater" = 1, "uranium" = 0)
+		inhibitors = list("stabiliser")
+		result_amount = 1
+		mix_phrase = "The triple water and soda water mix as unsetteling bubbles appear on the surface."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
+	triplewater_reject
+		name = "Triplewater Reject"
+		id = "triplewater_reject"
+		result = "steam"
+		required_reagents = list("cocktail_triplewater" = 1, "sodawater" = 1)
+		inhibitors = list("uranium")
+		result_amount = 2
+		mix_phrase = "The triple water aggressively boils off on contact with the soda water!"
 
 	cocktail_triplewater
 		name = "Triple Water"
@@ -2833,6 +2863,16 @@
 		result_amount = 3
 		mix_phrase = "The substance turns a striking cyan and becomes oily."
 
+	craftglue
+
+		name = "Craft Glue"
+		id = "craftglue"
+		result = "craftglue"
+		inhibitors = list("formaldehyde")
+		required_reagents = list("plasma" = 1, "phenol" = 0.25, "oxygen" = 1, "hydrogen" = 1)
+		result_amount = 3
+		mix_phrase = "The substance turns a bright purple and becomes midly tacky."
+
 	glue
 		name = "Space Glue"
 		id = "spaceglue"
@@ -3325,6 +3365,31 @@
 		physical_shock(var/force, var/datum/reagents/holder)
 			if(force > 3)
 				was_physically_shocked = TRUE
+
+	acetylsalicylic_acid
+		name = "Acetylsalicylic Acid"
+		id = "acetylsalicylic_acid"
+		eventual_result = list("acetylsalicylic_acid", "water")
+		required_reagents = list("salicylic_acid" = 0, "acetic_acid" = 0)
+		reaction_speed = 1
+		result_amount = 1
+		reaction_volume_dependant = FALSE
+		mix_phrase = "A pinkish-white precipitate forms."
+		instant = FALSE
+
+		on_reaction(var/datum/reagents/holder, var/created_volume)
+			holder.remove_reagent("salicylic_acid", created_volume)
+			holder.remove_reagent("acetic_acid", created_volume)
+			holder.add_reagent("water", created_volume, chemical_reaction = TRUE, chem_reaction_priority = 1)
+			holder.add_reagent("acetylsalicylic_acid", created_volume, chemical_reaction = TRUE, chem_reaction_priority = 2)
+
+		get_reaction_speed_multiplicator(var/datum/reagents/holder)
+			. = ..()
+			. *= (holder.has_reagent("acid", 1) ? 4 : 1)
+			. *= (10 / (holder.get_reagent_amount("water") + 10))
+			. *= (holder.total_temperature/T20C)
+			. = round(.-0.05, 0.01) //reduce the float rounding error a bit.
+
 
 	perfluorodecalin // COGWERKS CHEM REVISION PROJECT:marked for revision
 		name = "Perfluorodecalin"
@@ -4109,7 +4174,6 @@
 		min_temperature = T0C + 100
 		result_amount = 1
 		mix_phrase = "The mixture bubbles and white crystals form."
-		hidden = TRUE
 		on_reaction(var/datum/reagents/holder, var/created_volume)
 			holder.add_reagent("nitrogen_dioxide", created_volume, , holder.total_temperature, chem_reaction_priority = 2)
 			holder.add_reagent("water", created_volume, , holder.total_temperature, chem_reaction_priority = 3)
@@ -5545,3 +5609,57 @@
 		mix_phrase = "The mixture coalesces into a dark red liquid."
 		result_amount = 5
 
+	sweetcondensedmilk
+		name = "Sweet Condensed Milk"
+		id = "sweetcondensedmilk"
+		result = "sweetcondensedmilk"
+		required_reagents = list("sugar" = 1, "milk" = 1)
+		min_temperature = T0C + 90
+		result_amount = 1
+		mix_phrase = "The mixture bubbles gently before thickening considerably."
+		drinkrecipe = TRUE
+
+	cafebombon
+		name = "Café Bombón"
+		id = "cafebombon"
+		result = "cafebombon"
+		required_reagents = list("sweetcondensedmilk"=1, "espresso"= 1)
+		result_amount = 2
+		mix_phrase = "The mixture slowly separates into two distinct layers."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
+	frothedmilk
+		name = "Frothed Milk"
+		id = "frothedmilk"
+		result = "frothedmilk"
+		required_reagents = list("milk" = 1)
+		result = "frothedmilk"
+		min_temperature = T0C + 65
+		result_amount = 1
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		mix_phrase = "The milk rapidly expands into a smooth, velvety foam."
+		drinkrecipe = TRUE
+
+		does_react(datum/reagents/holder)
+			var/datum/reagent/fooddrink/milk/milk = holder.get_reagent("milk")
+			return milk && milk.was_physically_shocked
+
+	macchiato
+		name = "Macchiato"
+		id = "macchiato"
+		result = "macchiato"
+		required_reagents = list("frothedmilk" = 1, "espresso" = 1)
+		result_amount = 2
+		mix_phrase = "The foam settles gently atop the espresso, leaving a pale mark across its surface."
+    
+	dulcedeleche
+		name = "Dulce de leche"
+		id = "dulcedeleche"
+		result = "dulcedeleche"
+		required_reagents = list("sweetcondensedmilk" = 1, "vanilla" = 1)
+		min_temperature = T0C + 85
+		result_amount = 1
+		mix_phrase = "The mixture slowly thickens into a velvety spread."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE

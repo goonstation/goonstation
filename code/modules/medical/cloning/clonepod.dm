@@ -1,3 +1,8 @@
+#define CLONEPOD_ACTION_REMOVE_IV "Remove IV"
+#define CLONEPOD_ACTION_EJECT_CLONE "Eject Clone"
+#define CLONEPOD_ACTION_AUTOMODE "Auto-Mode"
+#define CLONEPOD_ACTION_NOTHING "Nothing"
+
 TYPEINFO(/obj/machinery/clonepod)
 	mats = list("metal" = 35,
 				"honey" = 5)
@@ -9,11 +14,13 @@ TYPEINFO(/obj/machinery/clonepod)
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "pod_0_lowmeat"
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
+	flags = FLUID_SUBMERGE | TGUI_INTERACTIVE | ACCEPTS_MOUSEDROP_REAGENTS | OPENCONTAINER
 	var/meat_used_per_tick = DEFAULT_MEAT_USED_PER_TICK
 	var/mob/living/carbon/human/occupant
 	var/heal_level = 10 //The clone is released once its health^W damage (maxHP - HP) reaches this level.
 	var/locked = 0
 	var/obj/machinery/computer/cloning/connected = null //So we remember the connected clone machine.
+	var/obj/item/reagent_containers/iv_drip/drip = null //! The inserted IV drip (mmmm yummy blood)
 	var/mess = 0 //Need to clean out it if it's full of exploded clone.
 	var/attempting = 0 // Are we cloning an actual person now?
 	var/time_started = 0 // When did we start cloning the actual person?
@@ -31,7 +38,7 @@ TYPEINFO(/obj/machinery/clonepod)
 
 	var/gen_bonus = 1 //Normal generation speed
 	var/speed_bonus = DEFAULT_SPEED_BONUS // Multiplier that can be modified by modules
-	var/auto_mode = 1
+	var/auto_mode = TRUE //! Automatically pre-bake clones when the pod is empty
 	var/auto_delay = 10
 
 	power_usage = 200
@@ -49,7 +56,7 @@ TYPEINFO(/obj/machinery/clonepod)
 	///Total meat used to grow the current clone
 	var/meat_used
 
-	var/static/list/clonepod_accepted_reagents = list("blood"=0.5,"synthflesh"=1,"beff"=0.75,"pepperoni"=0.5,"meat_slurry"=1,"bloodc"=0.5)
+	var/static/list/clonepod_accepted_reagents = list("blood"=0.25,"bloodc"=0.25,"synthflesh"=2,"beff"=0.75,"pepperoni"=0.5,"meat_slurry"=2)
 
 	// Copied from manufacturer.dm, except -- get this -- used for functioning, not MALfunctioning. wow.
 	var/static/list/sounds_function = list('sound/machines/engine_grump1.ogg','sound/machines/engine_grump2.ogg','sound/machines/engine_grump3.ogg',
@@ -57,12 +64,20 @@ TYPEINFO(/obj/machinery/clonepod)
 
 	var/perfect_clone = FALSE		//if TRUE, then clones always keep normal name and receive no health debuffs
 
+	HELP_MESSAGE_OVERRIDE({"The clone pod will convert inserted blood, synthflesh, and meat slurry into biomatter.
+	Convert 10 units of reagents to biomatter by <b>clicking</b> with a <b>beaker in-hand</b>.
+	Convert all reagents in a beaker to biomatter by <b>click-dragging</b> from container to the clone pod.
+	Transfer reagents over time to uncompleted clones by <b>clicking</b> with an <b>IV bag in-hand</b>.
+	Access extra functions by <b>clicking</b> with an <b>open hand</b>.
+	"})
+
 	New()
 		..()
 		req_access = list(access_medical_lockers) //For premature unlocking.
 		mailgroups = list(MGD_MEDICAL)
 
 		src.create_reagents(100)
+		src.drip = new(src)
 
 		src.UpdateIcon()
 		genResearch.clonepods.Add(src) //This will be used for genetics bonuses when cloning
@@ -88,6 +103,8 @@ TYPEINFO(/obj/machinery/clonepod)
 		connected = null
 		occupant?.set_loc(get_turf(src.loc))
 		occupant = null
+		drip?.set_loc(get_turf(src.loc))
+		drip = null
 		..()
 
 	was_deconstructed_to_frame(mob/user)
@@ -133,6 +150,47 @@ TYPEINFO(/obj/machinery/clonepod)
 	attack_hand(mob/user)
 		interact_particle(user, src)
 		src.examine(user)
+		var/list/options = list()
+		if (isintangible(user))
+			return
+
+		if (src.drip)
+			options.Add(CLONEPOD_ACTION_REMOVE_IV)
+
+		if (src.allowed(user))
+			options.Add(CLONEPOD_ACTION_EJECT_CLONE)
+			options.Add(CLONEPOD_ACTION_AUTOMODE)
+		else
+			options.Add(CLONEPOD_ACTION_EJECT_CLONE + " (unauthorized)")
+			options.Add(CLONEPOD_ACTION_AUTOMODE + " (unauthorized)")
+
+		if (length(options) == 0)
+			return
+
+		options.Add(CLONEPOD_ACTION_NOTHING)
+
+		var/chosen_option = null
+
+		chosen_option = tgui_input_list(user, "What do you want to do?", "[src]", options, CLONEPOD_ACTION_NOTHING)
+		if (!in_interact_range(src, user))
+			return
+		switch (chosen_option)
+			if(CLONEPOD_ACTION_REMOVE_IV)
+				if (src.drip)
+					if (tgui_alert(user, "Take \the [src.drip] out of [src]?", "Clone Pod IV Drip", list("Yes", "Cancel")) == "Yes")
+						user.put_in_hand_or_drop(src.drip)
+						src.drip = null
+				return
+			if(CLONEPOD_ACTION_EJECT_CLONE)
+				if (src.allowed(user))
+					src.eject(user)
+				return
+			if(CLONEPOD_ACTION_AUTOMODE)
+				if (src.allowed(user))
+					src.toggle_auto(user)
+				return
+			if(CLONEPOD_ACTION_NOTHING)
+				return
 
 	get_desc(dist, mob/user)
 		. = ""
@@ -144,13 +202,18 @@ TYPEINFO(/obj/machinery/clonepod)
 
 		if (src.meat_level <= 1)
 			. += "<br>[SPAN_ALERT("Alert: Biomatter reserves depleted.")]"
-		else if (src.meat_level <= MEAT_LOW_LEVEL)
-			. += "<br>[SPAN_ALERT("Alert: Biomatter reserves are low ([meat_pct]% full).")]"
+		else if (src.meat_level < MEAT_NEEDED_TO_CLONE)
+			. += "<br>[SPAN_ALERT("Alert: Biomatter reserves are too low to clone ([meat_pct]% full)")]"
 		else
 			. += "<br>Biomatter reserves are [meat_pct]% full."
 
-	is_open_container()
-		return 2
+		if (src.drip)
+			if (src.drip.reagents.total_volume > 0)
+				. += "<br>\The [src.drip] is installed."
+			else
+				. += "<br>\The [src.drip] is empty."
+		else
+			. += "<br>There is no internal IV drip hooked up."
 
 	update_icon()
 		if (src.portable) // no need here
@@ -158,10 +221,10 @@ TYPEINFO(/obj/machinery/clonepod)
 		if (src.mess)
 			src.icon_state = "pod_g"
 		else
-			src.icon_state = "pod_[src.occupant ? "1" : "0"][src.meat_level ? "" : "_lowmeat"][src.clonehack ? "_mindhack" : "" ][src.connected?.mindwipe ? "_mindwipe" : ""]"
+			src.icon_state = "pod_[src.occupant ? "1" : "0"][src.meat_level >= MEAT_NEEDED_TO_CLONE ? "" : "_lowmeat"][src.clonehack ? "_mindhack" : "" ][src.connected?.mindwipe ? "_mindwipe" : ""]"
 
 
-	proc/start_clone(force = 0)
+	proc/start_clone(auto_generate=FALSE)
 		// Returns 1 if we started a clone or 0 if we couldn't due to meat reasons
 
 		// Reset the time until the next automatic start.
@@ -170,12 +233,12 @@ TYPEINFO(/obj/machinery/clonepod)
 		if (src.occupant)
 			// If we already have an occupant then we don't really need to start it, do we?
 			return 1
-		if ((force && src.meat_level < MEAT_NEEDED_TO_CLONE) || (!force && src.meat_level < initial(meat_level)))
-			// Don't actually start cloning if we don't have enough meat.
-			// For forced clones, this is the minimum needed to start (as usual)
-			// For auto-generated clones, it's the initial meat level (25%)
-			// Reason? Mostly just keeping it from beeping about low biomatter...
-			return 0
+		if (auto_generate)
+			if (src.meat_level < (MEAT_NEEDED_TO_CLONE + MINIMUM_MEAT_USED))
+				return 0 // auto-generated clones need a tiny bit of additional meat to form
+		else
+			if (src.meat_level < MEAT_NEEDED_TO_CLONE)
+				return 0
 
 		// Create a new human and grow it while we wait for a mind
 		src.occupant = new /mob/living/carbon/human/clone(src)
@@ -215,8 +278,8 @@ TYPEINFO(/obj/machinery/clonepod)
 			return 0
 
 		//if (src.meat_level < MEAT_NEEDED_TO_CLONE)
-		if (!src.start_clone(1))
-			src.connected_message("Insufficient biomatter to begin.", "warning")
+		if (!src.start_clone())
+			src.connected_message("Insufficient biomatter to begin, regenerating base biomass.", "warning")
 			return 0
 
 		src.attempting = 1 //One at a time!!
@@ -497,6 +560,9 @@ TYPEINFO(/obj/machinery/clonepod)
 				if (src.occupant.reagents.get_reagent_amount("mannitol") < 6)
 					src.occupant.reagents.add_reagent("mannitol", 2 * mult)
 
+				// Let doctors slap an IV bag in to "help" clones get healed quickly.
+				src.drip?.reagents.trans_to(src.occupant, src.drip.amount_per_transfer_from_this, mult)
+
 				//Also heal some oxy ourselves because epinephrine is so bad at preventing it!!
 				src.occupant.take_oxygen_deprivation(-10 * mult) // cogwerks: speeding this up too
 
@@ -554,6 +620,8 @@ TYPEINFO(/obj/machinery/clonepod)
 				return ..()
 
 		else
+			if (src.meat_level < MEAT_NEEDED_TO_CLONE)
+				src.meat_level += FREE_MEAT_RATE // slow regeneration to minimum stable clone
 			src.occupant = null
 			src.operating = 0
 			src.attempting = 0
@@ -569,7 +637,7 @@ TYPEINFO(/obj/machinery/clonepod)
 				// Attempt to start a new clone (if possible)
 				src.auto_delay -= mult
 				if (src.auto_delay < 0)
-					src.start_clone()
+					src.start_clone(auto_generate=TRUE)
 			#endif
 
 			return ..()
@@ -588,24 +656,12 @@ TYPEINFO(/obj/machinery/clonepod)
 
 	//Let's unlock this early I guess.
 	attackby(obj/item/W, mob/user)
-		var/obj/item/card/id/id_card = get_id_card(W)
-		if (istype(id_card))
-			W = id_card
-		if (istype(W, /obj/item/card/id))
-			if (!src.check_access(W))
-				boutput(user, SPAN_ALERT("Access Denied."))
-				return
-			if ((!src.locked) || (isnull(src.occupant)))
-				return
-			if ((src.occupant.health < -20) && (!isdead(src.occupant)))
-				boutput(user, SPAN_ALERT("Access Refused."))
-				return
-			else
-				src.locked = 0
-				boutput(user, "System unlocked.")
-		else if (istype(W, /obj/item/card/emag))	//This is needed to suppress the SYNDI CAT HITS CLONING POD message *cry
+		if (istype(W, /obj/item/card/emag))	//This is needed to suppress the SYNDI CAT HITS CLONING POD message *cry
 			return
 		else if (istype(W, /obj/item/reagent_containers/glass))
+			return
+		else if (istype(W, /obj/item/reagent_containers/iv_drip))
+			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/machinery/clonepod/proc/install_iv, list(user, W), W.icon, "IV", null, null)
 			return
 		else if (istype(W, /obj/item/cloneModule/speedyclone)) // speed module
 			if (is_speedy)
@@ -713,10 +769,8 @@ TYPEINFO(/obj/machinery/clonepod)
 				if (theReagent)
 					src.meat_level = min(src.meat_level + (theReagent.volume * clonepod_accepted_reagents[reagent_id]), MAXIMUM_MEAT_LEVEL)
 					src.reagents.del_reagent(reagent_id)
-
-		if (src.occupant)
-			src.reagents.reaction(src.occupant, INGEST, 1000)
-			src.reagents.trans_to(src.occupant, 1000)
+			else
+				src.reagents.del_reagent(reagent_id)
 
 	//Put messages in the connected computer's temp var for display.
 	proc/connected_message(var/message, status)
@@ -733,29 +787,18 @@ TYPEINFO(/obj/machinery/clonepod)
 				src.connected.currentStatusMessage["status"] = ""
 				tgui_process.update_uis(src)
 
-	verb/eject()
-		set src in oview(1)
-		set category = "Local"
-
-		if (!isalive(usr) || iswraith(usr))
+	proc/eject(mob/user)
+		if (!can_act(user) || !in_interact_range(src, user))
 			return
 		var/mob/occupant = src.occupant
-		if (src.go_out())
-			logTheThing(LOG_STATION, src, "[key_name(occupant)] was ejected from [src] by [key_name(usr)]")
-		add_fingerprint(usr)
-		return
+		if (src.go_out(1))
+			logTheThing(LOG_STATION, src, "[key_name(occupant)] was ejected from [src] by [key_name(user)] at [log_loc(src)].")
 
-	verb/toggle_auto()
-		set src in oview(1)
-		set name = "Toggle Auto Mode"
-		set category = "Local"
-
-		if (!isalive(usr) && !isAIeye(usr))
+	proc/toggle_auto(mob/user)
+		if (!can_act(user) || !in_interact_range(src, user))
 			return
-		src.auto_mode = 1 - src.auto_mode
-		boutput(usr, SPAN_NOTICE("\The [src] will [src.auto_mode ? "automatically" : "no longer"] automatically prepare new bodies for clones."))
-		add_fingerprint(usr)
-		return
+		src.auto_mode = !src.auto_mode
+		boutput(user, SPAN_NOTICE("\The [src] will [src.auto_mode ? "automatically" : "no longer automatically"] prepare new bodies for clones."))
 
 	proc/go_out(unlock = 0)
 		if (unlock)
@@ -800,7 +843,8 @@ TYPEINFO(/obj/machinery/clonepod)
 			return
 
 		for (var/obj/O in src)
-			O.set_loc(get_turf(src))
+			if (O != src.drip)
+				O.set_loc(get_turf(src))
 
 		if (src.occupant.get_oxygen_deprivation())
 			src.occupant.take_oxygen_deprivation(-INFINITY)
@@ -891,9 +935,29 @@ TYPEINFO(/obj/machinery/clonepod)
 
 		return round(clamp(100 - ((src.occupant.max_health - src.occupant.health) - src.heal_level), 0, 100))
 
-	//SOME SCRAPS I GUESS
-	/* EMP grenade/spell effect
-			if(istype(A, /obj/machinery/clonepod))
-				A:malfunction()
-	*/
+/obj/machinery/clonepod/proc/install_iv(mob/user, obj/item/reagent_containers/iv_drip/new_drip)
+	if (!istype(user) || !istype(new_drip))
+		return
+	if (new_drip.cant_drop || new_drip.cant_other_remove || new_drip.cant_self_remove)
+		boutput(user, SPAN_ALERT("You can't insert [new_drip] while it is part of your body!"))
+		return
+	if (user.l_hand != new_drip && user.r_hand != new_drip)
+		boutput(user, SPAN_ALERT("You must be holding [new_drip] to insert it!"))
+		return
+	var/obj/item/reagent_containers/iv_drip/old_drip = null
+	if (src.drip)
+		old_drip = src.drip
+		src.drip = null
 
+	new_drip.stop_transfusion()
+	user.drop_item(new_drip)
+	new_drip.set_loc(src)
+	src.drip = new_drip
+	if (old_drip)
+		user.put_in_hand_or_drop(old_drip)
+	playsound(src, 'sound/items/towel.ogg', 40)
+
+#undef CLONEPOD_ACTION_REMOVE_IV
+#undef CLONEPOD_ACTION_EJECT_CLONE
+#undef CLONEPOD_ACTION_AUTOMODE
+#undef CLONEPOD_ACTION_NOTHING

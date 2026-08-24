@@ -103,6 +103,9 @@ TYPEINFO(/mob/living/silicon)
 /mob/living/silicon/proc/show_laws()
 	return
 
+/mob/living/silicon/on_close_viewport(datum/viewport/vp)
+	src.mainframe?.on_close_viewport(vp)
+
 /mob/living/silicon/proc/return_mainframe()
 	if (mainframe)
 		mainframe.return_to(src)
@@ -791,18 +794,26 @@ var/global/list/module_editors = list()
 	icon_state = "handcuffed"
 	unique = TRUE
 	effect_quality = STATUS_QUALITY_NEGATIVE
+	/// Is the owner of this lockdown immune to its effects and currently faking the signal of it to the robotics console
+	var/fake = FALSE
 
 	onAdd(optional)
 		. = ..()
 		if (ismob(src.owner))
 			var/mob/M = src.owner
-			M.show_text(SPAN_ALERT("<b>Equipment lockdown engaged!</b>"))
+			if(src.fake)
+				M.show_text(SPAN_ALERT(SPAN_BOLD("Equipment lockdown signal received and overriden.")))
+			else
+				M.show_text(SPAN_ALERT(SPAN_BOLD("Equipment lockdown engaged!")))
 
 	onRemove()
 		. = ..()
-		if (ismob(src.owner))
+		if (ismob(src.owner) && !src.fake)
 			var/mob/M = src.owner
-			M.show_text(SPAN_ALERT("<b>Equipment lockdown disengaged!</b>"))
+			if(src.fake)
+				M.show_text(SPAN_ALERT(SPAN_BOLD("Attempted lockdown signal timer expired.")))
+			else
+				M.show_text(SPAN_ALERT(SPAN_BOLD("Equipment lockdown disengaged!")))
 
 /datum/statusEffect/killswitch
 	id = "killswitch"

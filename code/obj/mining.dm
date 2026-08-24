@@ -934,7 +934,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 					AddOverlays(algea, "glow_algae")
 					add_medium_light("glow_algae", color_vals)
 
-		destroy_asteroid(dropOre, var/mob/user)
+		destroy_asteroid(dropOre, var/mob/user, var/mining_type)
 			ClearSpecificOverlays("glow_algae")
 			remove_medium_light("glow_algae")
 			var/list/turf/neighbors = getNeighbors(src, alldirs)
@@ -1076,7 +1076,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			AddOverlays(algea, "glow_algae")
 			add_medium_light("glow_algae", color_vals)
 
-		destroy_asteroid(dropOre, var/mob/user)
+		destroy_asteroid(dropOre, var/mob/user, var/mining_type)
 			ClearSpecificOverlays("glow_algae")
 			remove_medium_light("glow_algae")
 			var/list/turf/neighbors = getNeighbors(src, alldirs)
@@ -1111,19 +1111,19 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	ex_act(severity)
 		switch(severity)
 			if(1)
-				src.damage_asteroid(7)
+				src.damage_asteroid(7, MINING_DMG_CONCUSSIVE)
 			if(2)
-				src.damage_asteroid(5)
+				src.damage_asteroid(5, MINING_DMG_CONCUSSIVE)
 			if(3)
-				src.damage_asteroid(3)
+				src.damage_asteroid(3, MINING_DMG_CONCUSSIVE)
 		return
 
 	meteorhit(obj/M as obj)
-		src.damage_asteroid(5)
+		src.damage_asteroid(5, MINING_DMG_HAMMER)
 
 	blob_act(var/power)
 		if(prob(power))
-			src.damage_asteroid(7)
+			src.damage_asteroid(7, MINING_DMG_SHOVEL)
 
 	dismantle_wall()
 		return src.destroy_asteroid()
@@ -1151,7 +1151,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			else if (H.is_hulk())
 				H.visible_message(SPAN_ALERT("<b>[H.name] punches [src] with great strength!"))
 				playsound(H.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 100, 1)
-				src.damage_asteroid(3)
+				src.damage_asteroid(3, MINING_DMG_CONCUSSIVE)
 				return
 		..()
 
@@ -1195,6 +1195,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		else
 			boutput(user, SPAN_ALERT("You hit the [src.name] with [W], but nothing happens!"))
 		return
+
+	ReplaceWithFloor()
+		src.destroy_asteroid()
 
 	proc/change_health(var/amount=0)
 		if(amount != 0)
@@ -1321,7 +1324,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 				dig_feedback = "You can't even make a dent! You need a stronger tool."
 
 		if (prob(dig_chance))
-			destroy_asteroid(user = user)
+			destroy_asteroid(user = user, mining_type = tool.mining_type)
 		else
 			if (dig_feedback)
 				boutput(user, SPAN_ALERT("[dig_feedback]"))
@@ -1338,7 +1341,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			src.hardness = 0
 		src.AddOverlays(image('icons/turf/walls/asteroid.dmi', "weakened"), "asteroid_weakened")
 
-	proc/damage_asteroid(var/power,var/allow_zero = 0)
+	proc/damage_asteroid(var/power, var/mining_type = 0, var/allow_zero = 0)
 		// use this for stuff that arent mining tools but still attack asteroids
 		if (!isnum(power) || (power <= 0 && !allow_zero))
 			return
@@ -1353,14 +1356,14 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			E.onHit(src)
 
 		if (difference <= 0)
-			destroy_asteroid()
+			destroy_asteroid(mining_type = mining_type)
 		else
 			if (rand(1,difference) == 1)
 				weaken_asteroid()
 
 		return
 
-	proc/destroy_asteroid(var/dropOre=1, var/mob/user)
+	proc/destroy_asteroid(var/dropOre=1, var/mob/user, var/mining_type = 0)
 		var/image/weather = GetOverlayImage("weather")
 		var/image/ambient = GetOverlayImage("ambient")
 
@@ -1369,6 +1372,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		if (src.invincible)
 			return
 		if (E)
+			E.onExcavate(src, user, mining_type)
 			var/user_has_mining_alert = (user && HAS_ATOM_PROPERTY(user, PROP_MOB_MINING_ALERTS))
 			if (user_has_mining_alert && E.mining_alert_string)
 				src.tri_message(user, E.excavation_string ? SPAN_ALERT("[E.excavation_string]") : null, null, "IMA says, \"[E.mining_alert_string]\"")
@@ -1377,12 +1381,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			if (user_has_mining_alert && E.excavation_alert_sound)
 				SPAWN(0.2 SECONDS) // this spawn desyncs the alert sound and the mining-tool sfx, which gives a better sense of cause and effect
 					user.playsound_local(user, E.excavation_alert_sound, 50, 1)
-			E.onExcavate(src)
 		var/ore_to_create = src.default_ore
 		if (ispath(ore_to_create) && dropOre)
 			if (O)
 				ore_to_create = O.output
-				O.onExcavate(src, user)
+				O.onExcavate(src, user, mining_type)
 			var/makeores
 			for(makeores = src.amount, makeores > 0, makeores--)
 				new ore_to_create(src)
@@ -1492,7 +1495,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	proc/destroy_asteroid()
 		return
 
-	proc/damage_asteroid(var/power)
+	proc/damage_asteroid(var/power, var/mining_type = 0, var/allow_zero = 0)
 		return
 
 	proc/weaken_asteroid()
@@ -1612,11 +1615,17 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	proc/destroy_asteroid()
 		return
 
-	proc/damage_asteroid(var/power)
+	proc/damage_asteroid(var/power, var/mining_type = 0, var/allow_zero = 0)
 		return
 
 	proc/weaken_asteroid()
 		return
+
+	ReplaceWithFloor()
+		src.ReplaceWithSpace()
+
+	break_tile_to_plating()
+		src.ReplaceWithSpace()
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/tile/))
@@ -1743,6 +1752,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	VAR_PROTECTED/dig_strength = 1
 	VAR_PROTECTED/weakener = FALSE //does this thing weaken asteroids when you hit them?
 	VAR_PROTECTED/sound/mining_sound = 'sound/impact_sounds/Stone_Cut_1.ogg'
+	var/mining_type = MINING_DMG_PICKAXE
 
 	New()
 		..()
@@ -1750,6 +1760,9 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 
 	proc/get_dig_strength()
 		return src.dig_strength
+
+	proc/set_dig_strength(var/new_strength)
+		src.dig_strength = new_strength
 
 	proc/get_mining_sound()
 		return src.mining_sound
@@ -1762,6 +1775,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	desc = "you shouldn't see this"
 	dig_strength = 3
 	mining_sound = 'sound/impact_sounds/Stone_Cut_1.ogg'
+	mining_type = MINING_DMG_CONCUSSIVE
 
 /obj/item/mining_tool/powered
 	name = "power pick"
@@ -1816,7 +1830,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 		. = ..()
 		var/list/ret = list()
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
-			. += "The [src] is turned [src.is_on ? "on" : "off"]. There are [ret["charge"]]/[ret["max_charge"]] PUs left!"
+			. += "[src] is turned [src.is_on ? "on" : "off"]. There are [ret["charge"]]/[ret["max_charge"]] PUs left!"
 
 	attack_self(mob/user)
 		..()
@@ -1919,6 +1933,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	robot_power_usage = 50
 	default_cell = /obj/item/ammo/power_cell
 	powered_overlay = null
+	mining_type = MINING_DMG_PICKAXE
 
 	New()
 		src.powered_overlay = image('icons/obj/items/mining.dmi', "pp-glow")
@@ -1939,6 +1954,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	power_usage = 1
 	robot_power_usage = 30
 	default_cell = /obj/item/ammo/power_cell
+	mining_type = MINING_DMG_DRILL
 
 	New()
 		src.powered_overlay = image('icons/obj/items/mining.dmi', "pd-glow")
@@ -1961,10 +1977,15 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	robot_power_usage = 75
 	default_cell = /obj/item/ammo/power_cell
 	powered_item_special = /datum/item_special/slam
+	mining_type = MINING_DMG_HAMMER
 
 	New()
 		src.powered_overlay = image('icons/obj/items/mining.dmi', "ph-glow")
 		..()
+
+TYPEINFO(/obj/item/mining_tool/powered/shovel)
+	mats = list("metal_dense" = 2,
+				"conductive" = 5)
 
 /obj/item/mining_tool/powered/shovel
 	name = "power shovel"
@@ -1983,12 +2004,14 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	robot_power_usage = 50
 	default_cell = /obj/item/ammo/power_cell
 	powered_item_special = /datum/item_special/swipe
+	mining_type = MINING_DMG_SHOVEL
 
 	New()
 		powered_overlay = image('icons/obj/items/mining.dmi', "ps-glow")
 		..()
 
 TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal_dense" = 15,
 				"conductive" = 8,
 				"claretine" = 10,
@@ -2010,6 +2033,7 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 	power_usage = 1
 	robot_power_usage = 50
 	default_cell = /obj/item/ammo/power_cell/self_charging/tricklecharge
+	mining_type = MINING_DMG_LASER
 
 	examine(mob/user)
 		. = ..()
@@ -2178,11 +2202,11 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 		playsound(src.loc, 'sound/weapons/flashbang.ogg', 50, 1)
 		for (var/turf/simulated/wall/auto/asteroid/A in range(src.expl_flash,src))
 			if(GET_DIST(src,A) <= src.expl_heavy)
-				A.damage_asteroid(4)
+				A.damage_asteroid(4, MINING_DMG_CONCUSSIVE)
 			if(GET_DIST(src,A) <= src.expl_light)
-				A.damage_asteroid(3)
+				A.damage_asteroid(3, MINING_DMG_CONCUSSIVE)
 			if(GET_DIST(src,A) <= src.expl_flash)
-				A.damage_asteroid(2)
+				A.damage_asteroid(2, MINING_DMG_CONCUSSIVE)
 
 		for(var/mob/living/carbon/C in range(src.expl_flash, src))
 			if (!isdead(C) && C.client) shake_camera(C, 3, 2)
@@ -2202,6 +2226,7 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 #define SILICON_POWER_COST_MOD 10
 
 TYPEINFO(/obj/item/cargotele)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 4
 
 /obj/item/cargotele
@@ -2367,6 +2392,8 @@ TYPEINFO(/obj/item/cargotele)
 	icon_state = "cargotelegreen"
 
 /obj/item/cargotele/traitor
+	SYNDICATE_STEALTH_DESCRIPTION("The targeting system is fluctuating rapidly.")
+	tooltip_flags = REBUILD_USER
 	cost = 15
 	///The account to credit for sales
 	var/datum/db_record/account = null
@@ -2537,12 +2564,26 @@ TYPEINFO(/obj/item/cargotele)
 	density = 1
 	opacity = 0
 	anchored = UNANCHORED
+	processing_tier = PROCESSING_HALF
 	var/active = FALSE
 	var/obj/item/cell/cell = null
 	var/target = null
 	var/group = null
 	var/image/hatch_image = null //no connected magnet = hatch closed cuz it won't take ore in
 	var/image/powercell_image = null
+	var/collect_junk = FALSE
+	/// Number of items we can move per cycle
+	var/move_limit = 10
+	var/list/allowed_types = list(
+		/obj/item/raw_material,
+		/obj/item/scrap,
+		/obj/decal/cleanable/machine_debris,
+		/obj/decal/cleanable/robot_debris,
+	)
+	var/list/disallowed_types = list(
+		/obj/item/raw_material/rock,
+		/obj/item/raw_material/ice,
+	)
 
 	New()
 		var/obj/item/cell/P = new/obj/item/cell(src)
@@ -2578,19 +2619,27 @@ TYPEINFO(/obj/item/cargotele)
 
 
 	attack_hand(var/mob/user)
-		if (!src.cell) boutput(user, SPAN_ALERT("It won't work without a power cell!"))
-		else
-			var/action = tgui_input_list(user, "What do you want to do?", "Mineral Accumulator", list("Flip the power switch","Change the destination","Remove the power cell"))
-			if (action == "Remove the power cell")
+		if (!src.cell)
+			boutput(user, SPAN_ALERT("It won't work without a power cell!"))
+			return
+		var/list/options = list(
+			"Flip the power switch",
+			"Change the destination",
+			"Remove the power cell",
+			"Toggle collecting junk",
+		)
+		var/action = tgui_input_list(user, "What do you want to do?", "Mineral Accumulator", options)
+		switch(action)
+			if ("Remove the power cell")
 				var/obj/item/cell/PCEL = src.cell
 				boutput(user, "You remove [cell].")
 				if (PCEL) //ZeWaka: fix for null.updateicon
 					PCEL.UpdateIcon()
 				user.put_in_hand_or_drop(PCEL)
 				src.cell = null
-			else if (action == "Change the destination")
+			if ("Change the destination")
 				src.change_dest(user)
-			else if (action == "Flip the power switch")
+			if ("Flip the power switch")
 				if (!src.active)
 					user.visible_message("[user] powers up [src].", "You power up [src].")
 					src.active = TRUE
@@ -2599,9 +2648,12 @@ TYPEINFO(/obj/item/cargotele)
 					user.visible_message("[user] shuts down [src].", "You shut down [src].")
 					src.active = FALSE
 					src.anchored = UNANCHORED
+			if ("Toggle collecting junk")
+				src.collect_junk = !src.collect_junk
+				boutput(user, SPAN_NOTICE("[src.collect_junk ? "Now" : "No longer"] collecting junk."))
 			else
 				user.visible_message("[user] stares at [src] in confusion!", "You're not sure what that did.")
-			UpdateIcon()
+		UpdateIcon()
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/cell/))
@@ -2611,61 +2663,44 @@ TYPEINFO(/obj/item/cargotele)
 				W.set_loc(src)
 				cell = W
 				user.visible_message("[user] inserts [W] into [src].", "You insert [W] into [src].")
-		else ..()
+		else
+			..()
 		UpdateIcon()
 
 	process()
 		var/moved = 0
-		if (src.active)
-			if (!src.cell)
-				src.visible_message(SPAN_ALERT("[src] instantly shuts itself down."))
-				src.active = FALSE
-				src.anchored = UNANCHORED
-				UpdateIcon()
-				return
-			var/obj/item/cell/PCEL = src.cell
-			if (PCEL.charge <= 0)
-				src.visible_message(SPAN_ALERT("[src] runs out of power and shuts down."))
-				src.active = FALSE
-				src.anchored = UNANCHORED
-				UpdateIcon()
-				return
-			PCEL.use(5)
-			if (src.target)
-				for(var/obj/item/raw_material/O in orange(1,src))
-					if (istype(O,/obj/item/raw_material/rock)) continue
-					PCEL.use(2)
+		if (!src.active)
+			return
+		if (!src.cell)
+			src.visible_message(SPAN_ALERT("[src] instantly shuts itself down."))
+			src.active = FALSE
+			src.anchored = UNANCHORED
+			UpdateIcon()
+			return
+		var/obj/item/cell/PCEL = src.cell
+		if (PCEL.charge <= 0)
+			src.visible_message(SPAN_ALERT("[src] runs out of power and shuts down."))
+			src.active = FALSE
+			src.anchored = UNANCHORED
+			UpdateIcon()
+			return
+
+		PCEL.use(5)
+
+		if (src.target)
+			for (var/obj/O in range(1, src))
+				if (src.can_collect(O))
 					O.set_loc(src.target)
-				for(var/obj/item/scrap/S in orange(1,src))
-					PCEL.use(2)
-					S.set_loc(src.target)
-				for(var/obj/decal/cleanable/machine_debris/D in orange(1,src))
-					PCEL.use(2)
-					D.set_loc(src.target)
-				for(var/obj/decal/cleanable/robot_debris/R in orange(1,src))
-					PCEL.use(2)
-					R.set_loc(src.target)
-			for(var/obj/item/raw_material/O in range(6,src))
-				if (moved >= 10)
-					break
-				if (istype(O,/obj/item/raw_material/rock)) continue
+
+		for(var/obj/O in range(6,src))
+			if (moved >= src.move_limit)
+				break
+			if (src.can_collect(O))
 				step_towards(O, src.loc)
 				moved++
-			for(var/obj/item/scrap/S in range(6,src))
-				if (moved >= 10)
-					break
-				step_towards(S, src.loc)
-				moved++
-			for(var/obj/decal/cleanable/machine_debris/D in range(6,src))
-				if (moved >= 10)
-					break
-				step_towards(D, src.loc)
-				moved++
-			for(var/obj/decal/cleanable/robot_debris/R in range(6, src))
-				if (moved >= 10)
-					break
-				step_towards(R, src.loc)
-				moved++
+
+	proc/can_collect(obj/O)
+		return istypes(O, src.allowed_types) && (!istypes(O, src.disallowed_types) || src.collect_junk)
 
 	proc/change_dest(mob/user as mob)
 		if (!length(cargo_pad_manager.pads))
@@ -2720,6 +2755,7 @@ TYPEINFO(/obj/item/cargotele)
 var/global/datum/cargo_pad_manager/cargo_pad_manager
 
 TYPEINFO(/obj/submachine/cargopad)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 10 //I don't see the harm in re-adding this. -ZeWaka
 
 /obj/submachine/cargopad
@@ -2746,6 +2782,9 @@ TYPEINFO(/obj/submachine/cargopad)
 	artlab
 		mailgroup = MGD_RESEARCH
 		name = "Artifact Lab Pad"
+	catering
+		mailgroup = MGT_CATERING
+		name = "Catering Hangar Pad"
 	engineering
 		mailgroup = MGD_ENGINEER
 		name = "Engineering Pad"
@@ -2758,17 +2797,23 @@ TYPEINFO(/obj/submachine/cargopad)
 	miningoutpost
 		mailgroup = MGT_MINING
 		name = "Mining Outpost Pad"
+	miningstaff
+		mailgroup = MGT_MINING
+		name = "Mining Staff Room Pad"
 	qm
 		mailgroup = MGT_CARGO
-		name = "QM Pad"
+		name = "Cargo Office Pad"
 	qm2
 		mailgroup = MGT_CARGO
-		name = "QM Pad 2"
+		name = "Export Pad"
 	researchoutpost
 		mailgroup = MGD_RESEARCH
 		name = "Research Outpost Pad"
 	radio
 		name = "Radio Station Pad"
+	security
+		mailgroup = MGD_SECURITY
+		name = "Security Pad"
 
 	New()
 		..()
@@ -2836,6 +2881,7 @@ TYPEINFO(/obj/submachine/cargopad)
 // satchels -> obj/item/satchel.dm
 
 TYPEINFO(/obj/item/ore_scoop)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/ore_scoop
@@ -2885,7 +2931,11 @@ TYPEINFO(/obj/item/ore_scoop)
 
 	attack_self(var/mob/user as mob)
 		if(issilicon(user))
-			boutput(user, SPAN_ALERT("The satchel is firmly secured to the scoop."))
+			src.collect_junk = !src.collect_junk
+			if (src.collect_junk)
+				boutput(user, SPAN_NOTICE("Now collecting junk."))
+			else
+				boutput(user, SPAN_NOTICE("No longer collecting junk."))
 			return
 		if (!satchel)
 			src.collect_junk = !src.collect_junk

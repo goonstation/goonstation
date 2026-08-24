@@ -268,6 +268,7 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 // SECURE BRIEFCASE
 
 TYPEINFO(/obj/item/storage/secure/sbriefcase)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 8
 
 /obj/item/storage/secure/sbriefcase
@@ -281,15 +282,16 @@ TYPEINFO(/obj/item/storage/secure/sbriefcase)
 	throw_speed = 1
 	throw_range = 4
 	w_class = W_CLASS_BULKY
+	max_wclass = /obj/item/storage/briefcase::max_wclass
 	spawn_contents = list(/obj/item/paper,\
 	/obj/item/pen)
-	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
-	can_hold = list(/obj/item/stamped_bullion)
 
 	HELP_MESSAGE_OVERRIDE("Set or enter a code by <b>using in-hand</b>.<br>View contents by <b>click-dragging</b> from the briefcase to your character.")
 
 TYPEINFO(/obj/item/storage/secure/ssafe)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 8
+	manufactured_type = /obj/item/storage/secure/ssafe //For subtypes
 
 /obj/item/storage/secure/ssafe
 	name = "secure safe"
@@ -302,8 +304,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 	w_class = W_CLASS_BULKY
 	anchored = ANCHORED
 	density = 0
-	desc = "A extremely tough secure safe."
-	mechanics_type_override = /obj/item/storage/secure/ssafe
+	desc = "An extremely tough secure safe."
 
 	attack_hand(mob/user)
 		return src.AttackSelf(user)
@@ -679,11 +680,10 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 /obj/item/storage/secure/ssafe/syndicate_mining_encounter
 	configure_mode = FALSE
 	random_code = TRUE
+	spawn_contents = list(/obj/item/stamped_bullion, /obj/item/currency/spacecash/thousand, /obj/item/device/pda2/syndicate)
 
 	New()
 		..()
-		for (var/i in 1 to rand(2, 3))
-			src.storage.add_contents(new /obj/item/stamped_bullion(src))
 		for (var/i in 1 to rand(2, 3))
 			src.storage.add_contents(new /obj/item/uplink_telecrystal/trick(src))
 

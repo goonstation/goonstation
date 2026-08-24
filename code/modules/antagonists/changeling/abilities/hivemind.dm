@@ -58,7 +58,9 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 		mind.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
 		mind.add_subordinate_antagonist(src.antag_role, source = ANTAGONIST_SOURCE_SUMMONED, master = src.holder.owner.mind)
 		logTheThing(LOG_COMBAT, holder.owner, "drops \an [src.antag_role] [key_name(mind.current)] as a changeling [log_loc(src.holder.owner)].")
-
+		if (ismobcritter(mind.current))
+			var/mob/living/critter/critter = mind.current
+			critter.original_name = use_mob_name
 		return FALSE
 
 	proc/available_bodypart()

@@ -141,15 +141,15 @@
 
 
 						if (iscluwne(src))
-							playsound(src, 'sound/voice/farts/poo.ogg', 50, TRUE, channel=VOLUME_CHANNEL_EMOTE)
+							playsound(src, 'sound/voice/farts/poo.ogg', 50, TRUE, channel=VOLUME_CHANNEL_FARTS)
 						else if (src.organ_istype("butt", /obj/item/clothing/head/butt/cyberbutt))
-							playsound(src, 'sound/voice/farts/poo2_robot.ogg', 50, TRUE, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+							playsound(src, 'sound/voice/farts/poo2_robot.ogg', 50, TRUE, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_FARTS)
 						else if (src.reagents && src.reagents.has_reagent("honk_fart"))
-							playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1, channel=VOLUME_CHANNEL_EMOTE)
+							playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1, channel=VOLUME_CHANNEL_FARTS)
 						else if (src.getStatusDuration("food_deep_fart"))
-							playsound(src, src.sound_fart, 50, 0, 0, src.get_age_pitch() - 0.3, channel=VOLUME_CHANNEL_EMOTE)
+							playsound(src, src.sound_fart, 50, 0, 0, src.get_age_pitch() - 0.3, channel=VOLUME_CHANNEL_FARTS)
 						else
-							playsound(src, src.sound_fart, 50, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+							playsound(src, src.sound_fart, 50, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_FARTS)
 
 						var/fart_on_other = 0
 						for (var/atom/A as anything in src.loc)
@@ -181,7 +181,7 @@
 									var/mob/M = V.cursed_dude
 									if (!M || !M.lying)
 										continue
-									playsound(M, src.sound_fart, 20, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+									playsound(M, src.sound_fart, 20, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_FARTS)
 									switch(rand(1, 7))
 										if (1) M.visible_message(SPAN_EMOTE("<b>[M]</b> suddenly radiates an unwelcoming odor."))
 										if (2) M.visible_message(SPAN_EMOTE("<b>[M]</b> is visited by ethereal incontinence."))
@@ -291,7 +291,7 @@
 						src.stamina_stun()
 						fartcount++
 						if(fartcount == 69 || fartcount == 420)
-							var/obj/item/paper/grillnasium/fartnasium_recruitment/flyer/F = new(get_turf(src))
+							var/obj/item/paper/image/grillnasium/fartnasium_recruitment/flyer/F = new(get_turf(src))
 							src.put_in_hand_or_drop(F)
 							src.visible_message("<b>[src]</B> farts out a... wait is this viral marketing?")
 #if defined(MAP_OVERRIDE_POD_WARS)
@@ -650,29 +650,12 @@
 				else
 					src.show_text("You just don't feel kawaii enough to uguu right now!", "red")
 					return
-
 			if ("juggle")
-				if (!src.restrained())
-					if (src.emote_check(voluntary, 25))
+				if (src.can_juggle && src.emote_check(voluntary, 25))
+					if(!src.juggle_emote())
 						m_type = 1
-						if (src.traitHolder?.hasTrait("training_clown") || src.traitHolder?.hasTrait("training_mime") || src.can_juggle)
-							var/obj/item/thing = src.equipped()
-							if (!thing)
-								if (src.l_hand)
-									thing = src.l_hand
-								else if (src.r_hand)
-									thing = src.r_hand
-							if (thing && !thing.cant_drop)
-								if (src.juggling())
-									if (prob(src.juggling.len * 5)) // might drop stuff while already juggling things
-										src.drop_juggle()
-									else
-										src.add_juggle(thing)
-								else
-									src.add_juggle(thing)
-							else
-								message = "<B>[src]</B> wiggles [his_or_her(src)] fingers a bit.[prob(10) ? " Weird." : null]"
-								maptext_out = "<I>wiggles [his_or_her(src)] fingers a bit.</I>"
+						message = "<B>[src]</B> wiggles [his_or_her(src)] fingers a bit.[prob(10) ? " Weird." : null]"
+						maptext_out = "<I>wiggles [his_or_her(src)] fingers a bit.</I>"
 			if ("twirl", "spin")
 				if (!src.restrained())
 					if (src.emote_check(voluntary, 25))
@@ -2394,11 +2377,14 @@
 	torso.render_source = src.render_target
 	torso.filters += filter(type="alpha", icon=icon('icons/mob/humanmasks.dmi', "torso"))
 	torso.appearance_flags = KEEP_APART | PIXEL_SCALE
+	var/image/blank = image(null, src)
+	blank.render_source = src.render_target
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, "dabbify")
 	src.update_canmove()
 	src.set_dir(SOUTH)
 	src.dir_locked = TRUE
 	sleep(0.1) //so the direction setting actually takes place
+	world << blank
 	world << torso
 	world << right_arm
 	world << left_arm
@@ -2414,6 +2400,7 @@
 		animate(left_arm, transform = null, pixel_y = 0, pixel_x = 0, 4, 1, CIRCULAR_EASING)
 		animate(right_arm, transform = null, pixel_y = 0, pixel_x = 0, 4, 1, CIRCULAR_EASING)
 		sleep(0.5 SECONDS)
+		qdel(blank)
 		qdel(torso)
 		qdel(right_arm)
 		qdel(left_arm)

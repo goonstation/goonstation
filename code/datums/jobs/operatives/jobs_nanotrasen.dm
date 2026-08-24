@@ -3,14 +3,15 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	ui_colour = TGUI_COLOUR_NAVY
 	job_category = JOB_NANOTRASEN
 	limit = 0
-	wages = PAY_IMPORTANT
+	wages = PAY::IMPORTANT
 	//Emergency responders shouldn't be antags
 	can_roll_antag = FALSE
+	put_id_in_pda = TRUE
 	badge = /obj/item/clothing/suit/security_badge/nanotrasen
 	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
 	access_string = "Nanotrasen Responder" // "All Access" + Centcom
 
-	slot_back = list(/obj/item/storage/backpack/NT)
+	slot_back = list(/obj/item/storage/backpack/NT/ERT)
 	slot_jump = list(/obj/item/clothing/under/misc/turds)
 	slot_foot = list(/obj/item/clothing/shoes/swat)
 	slot_glov = list(/obj/item/clothing/gloves/swat/NT)
@@ -30,13 +31,12 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
 	slot_poc1 = list(/obj/item/device/pda2/ntso)
 	slot_poc2 = list(/obj/item/storage/ntsc_pouch/ntso)
-	items_in_backpack = list(/obj/item/storage/firstaid/regular,
-							/obj/item/clothing/head/NTberet)
+	items_in_backpack = list(/obj/item/storage/firstaid/regular)
 
 /datum/job/special/nt/commander
 	name = "Nanotrasen Commander"
 	trait_list = list("training_security", "training_medical")
-	wages = PAY_EXECUTIVE //The big boss
+	wages = PAY::EXECUTIVE //The big boss
 	receives_miranda = TRUE
 	receives_disk = /obj/item/disk/data/floppy/sec_command
 
@@ -106,14 +106,17 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	name = "Nanotrasen Security Consultant"
 	limit = 1 // backup during HELL WEEK. players will probably like it
 	unique = TRUE
-	wages = PAY_TRADESMAN
+	wages = PAY::TRADESMAN
 	trait_list = list("training_security")
 	access_string = "Nanotrasen Security Consultant"
-	requires_whitelist = TRUE
+	requires_whitelist = REQUIRES_WHITELIST_ALWAYS
 	requires_supervisor_job = "Head of Security"
 	counts_as = "Security Officer"
 	receives_miranda = TRUE
+	put_id_in_pda = FALSE
+	rounds_needed_to_play = ROUNDS_MIN_HIGHSEC
 
+	slot_back = list(/obj/item/storage/backpack/NT)
 	slot_belt = list(/obj/item/storage/belt/security/ntsc)
 	slot_suit = list(/obj/item/clothing/suit/space/ntso)
 	slot_head = list(/obj/item/clothing/head/NTberet)

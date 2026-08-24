@@ -140,10 +140,8 @@
 				src.donor_AH = src.donor.bioHolder.mobAppearance
 			if (src.donor.real_name)
 				src.donor_name = src.donor.real_name
-				src.name = "[src.donor_name]’s [initial(src.name)]"
 			else if (src.donor.name)
 				src.donor_name = src.donor.name
-				src.name = "[src.donor_name]’s [initial(src.name)]"
 			src.donor_DNA = src.donor.bioHolder ? src.donor.bioHolder.Uid : null
 			src.blood_DNA = src.donor_DNA
 			src.blood_type = src.donor.bioHolder?.bloodType
@@ -446,3 +444,41 @@
 					src.add_ability(A, abil)
 			src.broken = 0
 			return TRUE
+
+	proc/build_organ_buttons()
+		.= 0
+
+		if (surgery_flags)
+			.= 1
+
+			if (src.surgery_contexts != null)
+				return
+
+			src.surgery_contexts = list()
+
+			if (surgery_flags & SURGERY_CUTTING)
+				var/datum/contextAction/organ_surgery/cut/action = new
+				surgery_contexts += action
+			if (surgery_flags & SURGERY_SNIPPING)
+				var/datum/contextAction/organ_surgery/snip/action = new
+				surgery_contexts += action
+			if (surgery_flags & SURGERY_SAWING)
+				var/datum/contextAction/organ_surgery/saw/action = new
+				surgery_contexts += action
+
+			.+= length(surgery_contexts)
+
+	/// Get TGUI ui_data list for this organ's health
+	proc/ui_organ_data()
+		var/special = ""
+		if (src.robotic)
+			special = "Cybernetic"
+		if (src.synthetic)
+			special = "Synthetic"
+		if (src.unusual)
+			special = "Unusual"
+		return list(
+			"health" = src.get_damage(),
+			"max_health" = src.max_damage,
+			"special" = special
+		)

@@ -41,7 +41,12 @@
 /obj/linked_laser/h7_beam/proc/telehop(atom/movable/hopAtom as mob|obj, hopOffset=1, varyZ=0)
 	var/targetZLevel = hopAtom.z
 	if (varyZ)
-		targetZLevel = pick(1,3,4,5)
+		// Matches isrestrictedz(x) in macros/map.dm
+#ifdef UNDERWATER_MAP
+		targetZLevel = pick(Z_LEVEL_STATION, Z_LEVEL_MINING)
+#else
+		targetZLevel = pick(Z_LEVEL_STATION, Z_LEVEL_DEBRIS, Z_LEVEL_MINING)
+#endif
 
 	hopOffset *= 3
 

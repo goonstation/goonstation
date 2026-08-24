@@ -87,3 +87,62 @@ ABSTRACT_TYPE(/datum/mapPrefab/allocated)
 	prefabSizeX = 31
 	prefabSizeY = 33
 	prefabPath = "assets/maps/allocated/salvager_local.dmm"
+
+// Syndicate Hideouts
+/datum/mapPrefab/allocated/syndicate_hideout
+	name = "Sinister Office"
+	prefabSizeX = 13
+	prefabSizeY = 13
+	prefabPath = "assets/maps/allocated/syndicate_hideouts/sinister_office.dmm"
+
+/datum/mapPrefab/allocated/syndicate_hideout/trash
+	name = "Trash Pit"
+	prefabPath = "assets/maps/allocated/syndicate_hideouts/trash_pit.dmm"
+
+/datum/mapPrefab/allocated/syndicate_hideout/cafe
+	name = "Syndicafé"
+	prefabPath = "assets/maps/allocated/syndicate_hideouts/syndicafe.dmm"
+  
+/datum/mapPrefab/allocated/syndicate_hideout/dojo
+	name = "Dojo"
+	prefabPath = "assets/maps/allocated/syndicate_hideouts/dojo.dmm"
+
+/datum/mapPrefab/allocated/syndicate_hideout/retreat
+	name = "Retreat"
+	prefabPath = "assets/maps/allocated/syndicate_hideouts/retreat.dmm"
+
+/datum/mapPrefab/allocated/menhir_room_medical
+	name = "menhir_room_medical"
+	prefabSizeX = 20
+	prefabSizeY = 15
+	prefabPath = "assets/maps/allocated/menhir_room_medical.dmm"
+
+/datum/mapPrefab/allocated/menhir_room_lounge
+	name = "menhir_room_lounge"
+	prefabSizeX = 20
+	prefabSizeY = 19
+	prefabPath = "assets/maps/allocated/menhir_room_lounge.dmm"
+
+/datum/mapPrefab/allocated/menhir_room_botany
+	name = "menhir_room_botany"
+	prefabSizeX = 20
+	prefabSizeY = 15
+	prefabPath = "assets/maps/allocated/menhir_room_botany.dmm"
+
+/datum/mapPrefab/allocated/menhir_room_cavern
+	name = "menhir_room_cavern"
+	prefabSizeX = 20
+	prefabSizeY = 28
+	prefabPath = "assets/maps/allocated/menhir_room_cavern.dmm"
+
+/datum/mapPrefab/allocated/menhir_room_bball
+	name = "menhir_room_bball"
+	prefabSizeX = 18
+	prefabSizeY = 29
+	prefabPath = "assets/maps/allocated/menhir_room_bball.dmm"
+
+/datum/mapPrefab/allocated/menhir_room_sepulchre
+	name = "menhir_room_sepulchre"
+	prefabSizeX = 32
+	prefabSizeY = 23
+	prefabPath = "assets/maps/allocated/menhir_room_sepulchre.dmm"

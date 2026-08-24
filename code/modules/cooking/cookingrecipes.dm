@@ -2090,6 +2090,14 @@ ABSTRACT_TYPE(/datum/recipe/sandwich)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/raw_flan = 1)
 	output = /obj/item/reagent_containers/food/snacks/flan
 
+/datum/recipe/fruit_salad
+	recipe_instructions = list(/datum/recipe_instructions/cooking/oven/fruit_salad)
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/plant/apple = 1,
+	/obj/item/reagent_containers/food/snacks/plant/banana = 1,
+	/obj/item/reagent_containers/food/snacks/plant/grape = 1,
+	/obj/item/reagent_containers/food/snacks/plant/melonslice = 1)
+	output = /obj/item/reagent_containers/food/snacks/fruit_salad
 // Yuck is the generic invalid-recipe output for the oven. This recipe is for making sure the same singular instance of yuck that's put in is spat
 // out again.
 /datum/recipe/yuck
@@ -2100,3 +2108,11 @@ ABSTRACT_TYPE(/datum/recipe/sandwich)
 	recipe_instructions = list(/datum/recipe_instructions/cooking/oven/pigblanket)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/dough_strip = 1, /obj/item/reagent_containers/food/snacks/hotdog_half =1)
 	output = /obj/item/reagent_containers/food/snacks/pigblanket
+
+/datum/recipe/bowl_of_dulce_de_leche
+	recipe_instructions = list(/datum/recipe_instructions/cooking/oven/bowl_of_dulce_de_leche)
+	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1,
+	/obj/item/reagent_containers/food/drinks/milk = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/vanilla_extract = 1,
+	/obj/item/reagent_containers/food/drinks/bowl = 1)
+	output = /obj/item/reagent_containers/food/snacks/bowl_of_dulce_de_leche

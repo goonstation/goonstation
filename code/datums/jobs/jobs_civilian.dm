@@ -9,7 +9,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/civilian/chef
 	name = "Chef"
 	limit = 1
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	trait_list = list("training_chef")
 	access_string = "Chef"
 	slot_belt = list(/obj/item/device/pda2/chef)
@@ -25,7 +25,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	name = "Bartender"
 	alias_names = list("Barman")
 	limit = 1
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	trait_list = list("training_drinker", "training_bartender")
 	access_string = "Bartender"
 	slot_belt = list(/obj/item/device/pda2/bartender)
@@ -35,19 +35,19 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_ears = list(/obj/item/device/radio/headset/civilian/catering)
 	slot_poc1 = list(/obj/item/cloth/towel/bar)
 	slot_poc2 = list(/obj/item/reagent_containers/food/drinks/cocktailshaker)
-	items_in_backpack = list(/obj/item/gun/kinetic/sawnoff, /obj/item/ammo/bullets/abg, /obj/item/paper/book/from_file/pocketguide/bartending)
+	items_in_backpack = list(/obj/item/gun/kinetic/sawnoff, /obj/item/ammo/bullets/abg/punchy, /obj/item/paper/book/from_file/pocketguide/bartending)
 	wiki_link = "https://wiki.ss13.co/Bartender"
 
 /datum/job/civilian/botanist
 	name = "Botanist"
 	limit = 5
-	wages = PAY_TRADESMAN
+	wages = PAY::TRADESMAN
 	access_string = "Botanist"
 	slot_belt = list(/obj/item/device/pda2/botanist)
 	slot_jump = list(/obj/item/clothing/under/rank/hydroponics)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_glov = list(/obj/item/clothing/gloves/black)
-	slot_poc1 = list(/obj/item/paper/botany_guide)
+	slot_poc1 = list(/obj/item/paper/image/botany_guide)
 	slot_poc2 = list(/obj/item/plantanalyzer)
 	slot_ears = list(/obj/item/device/radio/headset/civilian/hydroponics)
 	wiki_link = "https://wiki.ss13.co/Botanist"
@@ -57,14 +57,14 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/civilian/rancher
 	name = "Rancher"
 	limit = 1
-	wages = PAY_TRADESMAN
+	wages = PAY::TRADESMAN
 	access_string = "Rancher"
 	slot_belt = list(/obj/item/storage/belt/rancher/prepared)
 	slot_jump = list(/obj/item/clothing/under/rank/rancher)
 	slot_head = list(/obj/item/clothing/head/cowboy)
 	slot_foot = list(/obj/item/clothing/shoes/westboot/brown/rancher)
 	slot_glov = list(/obj/item/clothing/gloves/black)
-	slot_poc1 = list(/obj/item/paper/ranch_guide)
+	slot_poc1 = list(/obj/item/paper/image/ranch_guide)
 	slot_poc2 = list(/obj/item/device/pda2/botanist)
 	slot_ears = list(/obj/item/device/radio/headset/civilian/hydroponics)
 	items_in_backpack = list(/obj/item/device/camera_viewer/ranch,/obj/item/storage/box/knitting)
@@ -73,7 +73,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/civilian/janitor
 	name = "Janitor"
 	limit = 3
-	wages = PAY_TRADESMAN
+	wages = PAY::TRADESMAN
 	access_string = "Janitor"
 	slot_belt = list(/obj/item/storage/fanny/janny)
 	slot_jump = list(/obj/item/clothing/under/rank/janitor)
@@ -88,7 +88,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/civilian/chaplain
 	name = "Chaplain"
 	limit = 1
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	trait_list = list("training_chaplain")
 	access_string = "Chaplain"
 	slot_jump = list(/obj/item/clothing/under/rank/chaplain)
@@ -104,7 +104,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 /datum/job/civilian/staff_assistant
 	name = "Staff Assistant"
-	wages = PAY_UNTRAINED
+	wages = PAY::UNTRAINED
 	access_string = "Staff Assistant"
 	no_jobban_from_this_job = TRUE
 	low_priority_job = TRUE
@@ -118,13 +118,13 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	special_setup(mob/living/carbon/human/M, no_special_spawn)
 		..()
 		if (prob(20))
-			M.stow_in_available(new /obj/item/paper/businesscard/seneca)
+			M.stow_in_available(new /obj/item/paper/image/businesscard/seneca)
 
 
 /datum/job/civilian/mail_courier
 	name = "Mail Courier"
 	alias_names = "Mailman"
-	wages = PAY_TRADESMAN
+	wages = PAY::TRADESMAN
 	access_string = "Mail Courier"
 	limit = 1
 	slot_jump = list(/obj/item/clothing/under/misc/mail/syndicate)
@@ -141,9 +141,9 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/civilian/clown
 	name = "Clown"
 	limit = 1
-	wages = PAY_DUMBCLOWN
+	wages = PAY::DUMBCLOWN
 	request_limit = 3 //this is definitely a bad idea
-	request_cost = PAY_TRADESMAN*4
+	request_cost = PAY::TRADESMAN*4
 	trait_list = list("training_clown")
 	access_string = "Clown"
 	ui_colour = TGUI_COLOUR_PINK
@@ -158,6 +158,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_card = /obj/item/card/id/clown
 	slot_ears = list(/obj/item/device/radio/headset/clown)
 	items_in_belt = list(/obj/item/cloth/towel/clown)
+	items_in_mob = list(/obj/item/currency/spacecash/one)
 	change_name_on_spawn = TRUE
 	wiki_link = "https://wiki.ss13.co/Clown"
 

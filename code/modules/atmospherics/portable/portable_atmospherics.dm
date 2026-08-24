@@ -25,6 +25,9 @@
 			maximum_pressure = max((src.material.getProperty("hard") * 4 + src.material.getProperty("density")) * ONE_ATMOSPHERE, ONE_ATMOSPHERE * 2)
 		return
 
+	on_material_scan()
+		return "May contain a maximum pressure of [src.maximum_pressure]KPa"
+
 	New()
 		..()
 
@@ -107,7 +110,7 @@
 /obj/machinery/portable_atmospherics/attackby(var/obj/item/W, var/mob/user)
 	if(istype(W, /obj/item/tank))
 		if(!src.holding)
-			boutput(user, SPAN_NOTICE("You attach the [W.name] to the the [src.name]"))
+			boutput(user, SPAN_NOTICE("You attach the [W.name] to the [src.name]"))
 			user.drop_item()
 			W.set_loc(src)
 			src.holding = W

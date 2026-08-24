@@ -1,5 +1,6 @@
 //Motherboard is just used in assembly/disassembly, doesn't exist in the actual computer object.
 TYPEINFO(/obj/item/motherboard)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 8
 
 /obj/item/motherboard
@@ -11,7 +12,6 @@ TYPEINFO(/obj/item/motherboard)
 	item_state = "electronics"
 	w_class = W_CLASS_SMALL
 	var/created_name = null //If defined, result computer will have this name.
-	var/integrated_floppy = 1 //Does the resulting computer have a built-in disk drive?
 	var/font_color = "#19A319"
 	var/bg_color = "#1B1E1B"
 	var/bios_version = "<b>Thinktronic BIOS V2.1</b>"
@@ -47,7 +47,7 @@ TYPEINFO(/obj/item/motherboard)
 	var/state = 0
 	var/obj/item/motherboard/mainboard = null
 	var/obj/item/disk/data/fixed_disk/hd = null
-	var/max_peripherals = 3
+	var/max_peripherals = 4
 	var/list/peripherals = list()
 	var/created_icon_state = "computer_generic"
 	var/computer_type = /obj/machinery/computer3
@@ -70,7 +70,7 @@ TYPEINFO(/obj/item/motherboard)
 		icon = 'icons/obj/computer_frame_desk.dmi'
 		created_icon_state = "old"
 		computer_type = /obj/machinery/computer3/generic/personal/personel_alt
-		max_peripherals = 3
+		max_peripherals = 4
 		metal_given = 3
 		glass_needed = 1
 		object_flags = NO_BLOCK_TABLE
@@ -80,7 +80,7 @@ TYPEINFO(/obj/item/motherboard)
 		name = "Terminal Frame"
 		icon = 'icons/obj/computerpanel_upper.dmi'
 		created_icon_state = "4"
-		max_peripherals = 3
+		max_peripherals = 4
 		metal_given = 3
 		glass_needed = 1
 
@@ -88,7 +88,7 @@ TYPEINFO(/obj/item/motherboard)
 		name = "Terminal Frame"
 		icon = 'icons/obj/computerpanel_lower.dmi'
 		created_icon_state = "4"
-		max_peripherals = 3
+		max_peripherals = 4
 		metal_given = 3
 		glass_needed = 1
 
@@ -316,7 +316,6 @@ TYPEINFO(/obj/item/motherboard)
 				C.setup_frame_type = src.type
 				if(src.mainboard)
 					C.mainboard = src.mainboard
-					if(mainboard.integrated_floppy) C.setup_has_internal_disk = 1
 
 				if(hd)
 					C.hd = hd

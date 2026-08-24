@@ -65,9 +65,10 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 
 /obj/item/turret_deployer/syndicate
 	name = "NAS-T Deployer"
-	desc = "A Nuclear Agent Sentry Turret Deployer. Use it in your hand to deploy."
+	desc = "A Syndicate Sentry Turret Deployer."
 	turret_health = 250
 	icon_tag = "st"
+	icon_state = "st_deployer"
 	quick_deploy_fuel = 2
 	associated_turret = /obj/deployable_turret/syndicate
 	HELP_MESSAGE_OVERRIDE("Use in-hand to deploy. Alternatively, throw it at location to auto-deploy it, fully activated, in the direction thrown.")
@@ -81,6 +82,7 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 		..()
 
 TYPEINFO(/obj/item/turret_deployer/riot)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("insulated" = 10,
 				"conductive" = 10,
 				"crystal" = 3,
@@ -89,10 +91,9 @@ TYPEINFO(/obj/item/turret_deployer/riot)
 	name = "N.A.R.C.S. Deployer"
 	desc = "A Nanotrasen Automatic Riot Control System Deployer. Use it in your hand to deploy."
 	turret_health = 125
-	icon_state = "st_deployer"
+	icon_state = "nt_deployer"
 	w_class = W_CLASS_BULKY
 	icon_tag = "nt"
-	is_syndicate = 1
 	associated_turret = /obj/deployable_turret/riot
 	HELP_MESSAGE_OVERRIDE("Use in-hand to deploy.")
 
@@ -539,6 +540,7 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 	projectile_type = /datum/projectile/bullet/akm
 	icon_tag = "st"
 	associated_deployer = /obj/item/turret_deployer/syndicate
+	burst_size = 4
 
 	New(loc, direction)
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)

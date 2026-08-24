@@ -1,6 +1,7 @@
 //WIP tugs
 
 TYPEINFO(/obj/tug_cart)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = 10
 
 /obj/tug_cart
@@ -12,7 +13,7 @@ TYPEINFO(/obj/tug_cart)
 	layer = MOB_LAYER + 1
 
 	MouseDrop_T(var/atom/movable/C, mob/user)
-		if (!in_interact_range(user, src) || !in_interact_range(user, C) || user.restrained() || user.getStatusDuration("unconscious") || user.sleeping || user.stat || user.lying)
+		if (!in_interact_range_tri(C, user, src) || !can_act(user) || user.sleeping || user.lying)
 			return
 
 		if (!istype(C)|| C.anchored || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(src, C) > 0 )
@@ -25,7 +26,7 @@ TYPEINFO(/obj/tug_cart)
 			user.show_text("\The [C] is too heavy for \the [src]!", "red")
 			return
 
-		if (istype(C, /obj/tug_cart) && in_interact_range(C, src))
+		if (istype(C, /obj/tug_cart))
 			var/obj/tug_cart/connecting = C
 			if (src == connecting) //Wire: Fix for mass recursion runtime (carts connected to themselves)
 				return
@@ -41,7 +42,7 @@ TYPEINFO(/obj/tug_cart)
 				user.show_text("\The [src] already has a cart connected to it!", "red")
 				return
 
-		if (istype(C, /obj/storage/cart) && in_interact_range(C, src))
+		if (istypes(C, list(/obj/storage/cart, /obj/storage/secure/cart)))
 			var/obj/storage/cart/connecting = C
 			if (src == connecting) //Wire: Fix for mass recursion runtime (carts connected to themselves)
 				return
@@ -161,6 +162,7 @@ TYPEINFO(/obj/tug_cart)
 
 
 TYPEINFO(/obj/vehicle/tug)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 10
 
 /obj/vehicle/tug
@@ -263,10 +265,10 @@ TYPEINFO(/obj/vehicle/tug)
 			return
 
 	MouseDrop_T(var/atom/movable/C, mob/user)
-		if (!in_interact_range(user, src) || !in_interact_range(user, C) || user.restrained() || user.getStatusDuration("unconscious") || user.sleeping || user.stat || user.lying)
+		if (!in_interact_range_tri(user, C, src) || !can_act(user) || user.sleeping || user.lying)
 			return
 
-		if (istype(C, /obj/tug_cart) && in_interact_range(C, src))
+		if (istype(C, /obj/tug_cart))
 			if (src == C) //Wire: Fix for mass recursion runtime (carts connected to themselves)
 				return
 			else if (!src.cart)

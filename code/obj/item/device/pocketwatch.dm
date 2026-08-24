@@ -30,7 +30,7 @@
 	var/list/clock_modes = list("Time Keeping",
 	"Total Station Budget Monitor",
 	"Payroll Budget Monitor",
-	"Cargo Budget Monitor",
+	"Supply Budget Monitor",
 	"Union Budget Monitor",
 	"Medical Budget Monitor",
 	"Total PTL Net Income",
@@ -123,13 +123,13 @@
 				text_to_display = "[hour_display] [hour_minute_divider] [minute_display]"
 
 			if("Total Station Budget Monitor")
-				text_to_display = wagesystem.budgets[BUDGET_CAT_STATION] + wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL] + wagesystem.budgets[BUDGET_CAT_SHIPPING]
+				text_to_display = wagesystem.budgets[BUDGET_CAT_PAYROLL] + wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL] + wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY]
 
 			if("Payroll Budget Monitor")
-				text_to_display = wagesystem.budgets[BUDGET_CAT_STATION]
+				text_to_display = wagesystem.budgets[BUDGET_CAT_PAYROLL]
 
-			if("Cargo Budget Monitor")
-				text_to_display = wagesystem.budgets[BUDGET_CAT_SHIPPING]
+			if("Supply Budget Monitor")
+				text_to_display = wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY]
 
 			if("Union Budget Monitor")
 				text_to_display = wagesystem.budgets[BUDGET_CAT_UNION]

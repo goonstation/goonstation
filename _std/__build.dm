@@ -54,6 +54,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define I_WANNA_DO_CRIME ROLE_TRAITOR // Spawn as the matching antagonist role as defined in _std\defines\roles.dm
 //#define NO_ADMIN_SPEECH_MODULES // Loads the admin speech and listen module trees without any modules.
 //#define NO_PREGAME_HTML // Don't spawn the HTML pregame browser lobby screen
+//#define I_HATE_WAITING_FOR_GENES // Marks nearly all genes as researched, gives chromosomes/materials/autodecryptors, increases gene storage cap, and removes time/cost limitations on the gene console
 
 //#define STOP_DISTRACTING_ME //All of the below
 
@@ -144,19 +145,20 @@ o+`        `-` ``..-:yooos-..----------..`
 //-------Rotation maps:
 //#define MAP_OVERRIDE_COGMAP       // Cogmap1, by Dr. Cogwerks
 //#define MAP_OVERRIDE_COGMAP2      // Cogmap2, by Dr. Cogwerks
-//#define MAP_OVERRIDE_DONUT2       // Updated Donut Station 2, by committee.
 //#define MAP_OVERRIDE_DONUT3       // Donut Station 3, by Ryumi
 //#define MAP_OVERRIDE_KONDARU      // Kondaru Station, by Kubius
 //#define MAP_OVERRIDE_CLARION      // NSS Clarion (Used to be Destiny's Alt), by Dionsu and a69andahalf.
 //#define MAP_OVERRIDE_OSHAN        // Oshan Laboratory, Abzu, by committee
 //#define MAP_OVERRIDE_NADIR        // Nadir Extraction Site by Kubius
 //#define MAP_OVERRIDE_NEON					// Neon by Sord
+//#define MAP_OVERRIDE_MENHIR       // The one with the big artifact in it
 
 //-------Discontinued or gimmick maps:
 //#define MAP_OVERRIDE_ATLAS        // NCS Atlas, by Gannets (and Kubius)
 //#define MAP_OVERRIDE_CRASH        // Stupid Crash Gimmick Map
 //#define MAP_OVERRIDE_MUSHROOM     // Updated Mushroom
 //#define MAP_OVERRIDE_DENSITY2     // Density2 (second smallest map), by Emily
+//#define MAP_OVERRIDE_PROBSTATION  // Randomly generated map
 
 //#define GENERATE_GOONHUB_MAP // Generate map screenshots for goonhub map viewer (NOT USED NORMALLY). Use with a map override.
 
@@ -164,6 +166,7 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //#define UNIT_TESTS
 //#define UNIT_TESTS_RUN_TILL_COMPLETION // Bypass 10 Second Limit
+//#define UNIT_TESTS_REGRESSION_ONLY // Only run /datum/unit_test/regression subtypes
 //#define UNIT_TEST_TYPES /datum/unit_test/explosion_test, /datum/unit_test/deletion_regressions // Only run tests of these types - comma separated list of types
 
 #ifdef CI_RUNTIME_CHECKING

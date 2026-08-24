@@ -85,20 +85,6 @@
 #define TOOL_DECONSTRUCTING (1<<15)
 #define TOOL_CAUTERY    (1<<16)
 
-//omnitool flags
-#define OMNI_MODE_PRYING 1
-#define OMNI_MODE_SNIPPING 2
-#define OMNI_MODE_WRENCHING 3
-#define OMNI_MODE_SCREWING 4
-#define OMNI_MODE_PULSING 5
-#define OMNI_MODE_CUTTING 6
-#define OMNI_MODE_WELDING 7
-#define OMNI_MODE_DECON 8
-#define OMNI_MODE_SOLDERING 9
-#define OMNI_MODE_SPOONING 10
-#define OMNI_MODE_UNCAPPING 11
-#define OMNI_MODE_SAWING 12
-
 //fluid_canister flags
 #define FLUID_CANISTER_MODE_OFF 1
 #define FLUID_CANISTER_MODE_SLURP 2
@@ -209,6 +195,7 @@
                        HAS_FLAG(x:kind_of_limb, LIMB_HEAVY) |\
                        HAS_FLAG(x:kind_of_limb, LIMB_HEAVIER) |\
                        HAS_FLAG(x:kind_of_limb, LIMB_TREADS))
+#define isartifactlimb(x) HAS_FLAG(x:kind_of_limb, LIMB_ARTIFACT)
 
 #define W_CLASS_TINY 1
 #define W_CLASS_SMALL 2
@@ -238,9 +225,6 @@
 #define MATCH_UNLIT 0
 #define MATCH_LIT 1
 #define MATCH_INERT 2 /// broken or burn out
-
-/// Macro for rendering an image fullsize on paper
-#define PAPER_IMAGE_RENDER(image) "<img style='position: absolute; top: 0; left: 0' src='[resource(image)]'>"
 
 // implant stuff
 #define IMPLANT_SCAN_CATEGORY_OTHER "other"

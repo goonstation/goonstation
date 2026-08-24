@@ -453,88 +453,6 @@
 	logTheThing(LOG_DIARY, usr, "stabilized [constructTarget(M,"diary")]", "admin")
 	message_admins(SPAN_ALERT("Admin [key_name(usr)] stabilized [key_name(M)]!"))
 
-/client/proc/cmd_admin_create_centcom_report()
-	SET_ADMIN_CAT(ADMIN_CAT_FUN)
-	set name = "Create Command Report"
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-	var/input = input(usr, "Enter the text for the alert. Anything. Serious.", "What?", "") as null|message
-	if(!input)
-		return
-	var/input2 = input(usr, "Add a headline for this alert? leaving this blank creates no headline", "What?", "") as null|text
-	var/input3 = input(usr, "Add an origin to the transmission, leaving this blank '[ALERT_CENTCOM]'", "What?", "") as null|text
-	if(!input3)
-		input3 = ALERT_CENTCOM
-
-	if (alert(src, "Origin: [input3 ? "\"[input3]\"" : "None"]\nHeadline: [input2 ? "\"[input2]\"" : "None"]\nBody: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
-		for_by_tcl(C, /obj/machinery/communications_dish)
-			C.add_centcom_report(input2, input)
-
-		var/sound_to_play = 'sound/misc/announcement_1.ogg'
-		command_alert(input, input2, sound_to_play, alert_origin = input3);
-
-		logTheThing(LOG_ADMIN, src, "has created a command report: [input]")
-		logTheThing(LOG_DIARY, src, "has created a command report: [input]", "admin")
-		message_admins("[key_name(src)] has created a command report")
-
-/client/proc/cmd_admin_create_advanced_centcom_report()
-	SET_ADMIN_CAT(ADMIN_CAT_FUN)
-	set name = "Adv. Command Report"
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-
-	var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as null|message
-	if (!input)
-		return
-	var/input2 = input(usr, "Add a headline for this alert?", "What?", "") as null|text
-	if (alert(src, "Headline: [input2 ? "\"[input2]\"" : "None"] | Body: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
-		var/sound_to_play = 'sound/misc/announcement_1.ogg'
-		advanced_command_alert(input, input2, sound_to_play);
-
-		logTheThing(LOG_ADMIN, src, "has created an advanced command report: [input]")
-		logTheThing(LOG_DIARY, src, "has created an advanced command report: [input]", "admin")
-		message_admins("[key_name(src)] has created an advanced command report")
-
-/client/proc/cmd_admin_advanced_centcom_report_help()
-	SET_ADMIN_CAT(ADMIN_CAT_FUN)
-	set name = "Adv. Command Report - Help"
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-
-	var/T = {"<TT><h1>Advanced Command Report</h1><hr>
-	This report works exactly like the normal report, except it sends a tailored message
-	to each mob in the world, replacing some values with values applicable to them.
-	If you're not planning to use this feature, then I recommend the normal command report as it is
-	less demanding on resources.
-	<table border=1>
-		<tr>
-			<td>%name%
-			<td>The name of the mob currently viewing the report
-		<tr>
-			<td>%key%
-			<td>The key of the mob currently viewing the report
-		<tr>
-			<td>%job%
-			<td>The job of the mob currently viewing the report
-		<tr>
-			<td>%area_name%
-			<td>The name of the area where the mob currently viewing the report is.
-		<tr>
-			<td>%srand_name%
-			<td>The name of a random player, this is the same for everyone viewing the report.
-		<tr>
-			<td>%srand_job%
-			<td>The job of a random player, this is the same for everyone viewing the report.
-		<tr>
-			<td>%mrand_name%
-			<td>The name of a random player, this is <B>different</B> for everyone viewing the report.
-		<tr>
-			<td>%mrand_job%
-			<td>The job of a random player, this is <B>different</B> for everyone viewing the report.
-
-		</table>"}
-	usr.Browse(T, "window=adv_com_help;size=700x500")
-
 /client/proc/cmd_admin_delete(atom/O as obj|mob|turf in world)
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "Delete"
@@ -886,7 +804,7 @@
 				if (new_race == "Remove")
 					src.mutantrace = null
 			else
-				boutput(src, "You must be at least a Administrator to polymorph mutantraces.")
+				boutput(src, "You must be at least an Administrator to polymorph mutantraces.")
 
 		else if(href_list["apply"])
 			src.copy_to_target()
@@ -2533,7 +2451,8 @@ var/global/night_mode_enabled = 0
 		old_key = input("Enter old account ckey", "Old account ckey", null) as null|text
 	if (!new_key)
 		new_key = input("Enter new account ckey", "New account ckey", null) as null|text
-
+	old_key = ckey(old_key)
+	new_key = ckey(new_key)
 	try
 		var/datum/apiRoute/players/medals/transfer/transferMedals = new
 		transferMedals.buildBody(old_key, new_key)
@@ -3148,6 +3067,27 @@ var/global/force_radio_maptext = FALSE
 		var/amount = tgui_input_number(src, "Please select reagent amount:", "Reagent Amount", 1, container.reagents.maximum_volume, 1)
 		container.reagents.add_reagent("custom_transmutation", amount, sdata=matId)
 	usr.put_in_hand_or_drop(container)
+
+/// Expell an object from every mail chute on-station.
+/client/proc/expell_object_from_mail_chutes()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Expell Object From Mail Chutes"
+	ADMIN_ONLY
+
+	var/partial_type = global.tgui_input_text(usr, "Object type:", "Expell Object From Mail Chutes")
+	if (!partial_type)
+		return
+
+	var/type = global.get_one_match(partial_type, /atom/movable)
+	if (!type)
+		return
+
+	for_by_tcl(chute, /obj/machinery/disposal/mail)
+		if (chute.z != Z_LEVEL_STATION)
+			continue
+
+		new type(chute)
+		chute.expel_contents()
 
 /client/proc/show_mining_map()
 	set name = "Show Mining Map"

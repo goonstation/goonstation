@@ -229,7 +229,9 @@ TYPEINFO(/mob/new_player)
 			else if(istype(ticker.mode, /datum/game_mode/battle_royale))
 				var/datum/game_mode/battle_royale/battlemode = ticker.mode
 				if (current_state < GAME_STATE_FINISHED)
-					battlemode.battlersleft_hud.add_client(character.client)
+					var/datum/player/player = make_player(character.key, character.client)
+					if (!player?.tutorial)
+						battlemode.battlersleft_hud.add_client(character.client)
 				if(ticker.round_elapsed_ticks > 3000) // no new people after 5 minutes
 					boutput(character.mind.current,"<h3 class='notice'>You've arrived on a station with a battle royale in progress! Feel free to spectate!</h3>")
 					character.ghostize()
@@ -402,6 +404,8 @@ TYPEINFO(/mob/new_player)
 		if (!S)
 			return
 
+		src.spawning = 1
+
 		latejoin.activated = TRUE
 		latejoin.name_prefix("activated")
 		latejoin.UpdateName()
@@ -413,7 +417,7 @@ TYPEINFO(/mob/new_player)
 			logTheThing(LOG_STATION, src, "[key_name(S)] late-joins as an emagged cyborg.")
 			S.mind?.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
 		else if (S.syndicate)
-			logTheThing(LOG_STATION, src, "[key_name(S)] late-joins as an syndicate cyborg.")
+			logTheThing(LOG_STATION, src, "[key_name(S)] late-joins as a syndicate cyborg.")
 			S.mind?.add_antagonist(ROLE_SYNDICATE_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
 
 		if (isAI(S))
@@ -714,6 +718,10 @@ TYPEINFO(/mob/new_player)
 		close_spawn_windows()
 		boutput(src, SPAN_NOTICE("Now teleporting."))
 		logTheThing(LOG_DEBUG, src, "observes.")
+#ifndef NIGHTSHADE
+		if(global.player_capa)
+			message_admins("[key_name(src)] chooses to observe with the player cap enabled.")
+#endif
 		var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 		if (ASLoc)
 			observer.set_loc(ASLoc)
@@ -735,7 +743,7 @@ TYPEINFO(/mob/new_player)
 			observer.client.loadResources()
 
 		respawn_controller.unsubscribeRespawnee(observer?.client?.ckey)
-
+		observer.mind.get_player()?.dnr = observer.client?.preferences?.observer_dnr
 		qdel(src)
 
 #ifdef TWITCH_BOT_ALLOWED

@@ -56,7 +56,7 @@
 
 		src.sound_event()
 
-		if (prob(80)) //sometimes all the paranoia was for nothing...
+		if (prob(95)) //sometimes all the paranoia was for nothing...
 			src.cause_madness(source)
 		else
 			message_admins("[src.name] was just a scare, no madness caused.")

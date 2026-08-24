@@ -1,6 +1,6 @@
 /datum/targetable/spell/shock
 	name = "Shocking Touch"
-	desc = "Shocks the victim with electrical power, which can arc to nearby people and stun them. Takes a few seconds to cast."
+	desc = "Shocks the victim with electrical power."
 	icon_state = "grasp"
 	targeted = 1
 	max_range = 2
@@ -12,59 +12,86 @@
 	voice_grim = 'sound/voice/wizard/ShockingGraspGrim.ogg'
 	voice_fem = 'sound/voice/wizard/ShockingGraspFem.ogg'
 	voice_other = 'sound/voice/wizard/ShockingGraspLoud.ogg'
-	var/wattage = 100000
-	var/burn_damage = 100
-	var/target_damage_modifier = 1.95
-	var/arc_range = 3
 	maptext_colors = list("#ebb02b", "#fcf574", "#ebb02b", "#fcf574", "#ebf0f2")
+	voice_on_cast_start = FALSE
 
 	cast(mob/target)
 		if(!holder)
-			return
-		if(!istype(target))
 			return 1
-		if(!IN_RANGE(target, holder.owner, max_range))
+
+		if (!ishuman(target))
+			boutput(holder.owner, "Your target must be human!")
 			return 1
-		playsound(holder.owner.loc, 'sound/effects/elec_bzzz.ogg', 25, 1, -1)
-		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("EI NATH", flags = SAYFLAG_IGNORE_STAMINA, message_params = list("maptext_css_values" = src.maptext_style, "maptext_animation_colours" = src.maptext_colors))
+
+		if(!can_act(holder.owner))
+			boutput(holder.owner, "You can't cast this whilst incapacitated!")
+			return 1
+
+		. = ..()
+		var/mob/living/carbon/human/H = target
+
+		if (targetSpellImmunity(H, TRUE, 2))
+			return 1
+
+		holder.owner.visible_message(SPAN_ALERT("<b>[holder.owner] begins to cast a spell on [H]!</b>"))
+		actions.start(new/datum/action/bar/shocking_touch(usr, target, src), holder.owner)
+
+/datum/action/bar/shocking_touch
+	duration = 0.6 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+
+	var/datum/targetable/spell/shock/spell
+	var/mob/living/carbon/human/target
+	var/datum/abilityHolder/A
+	var/mob/living/M
+
+	New(Source, Target, Spell)
+		target = Target
+		spell = Spell
+		A = spell.holder
+		M = Source
 		..()
 
-		playsound(holder.owner.loc, 'sound/effects/elec_bigzap.ogg', 25, 1, -1)
 
-		if (ishuman(target))
-			if (target.traitHolder.hasTrait("training_chaplain"))
-				boutput(holder.owner, SPAN_ALERT("[target] has divine protection from magic."))
-				target.visible_message(SPAN_ALERT("The electric charge courses through [target] harmlessly!"))
-				JOB_XP(target, "Chaplain", 2)
-				return
-			else if (iswizard(target))
-				target.visible_message(SPAN_ALERT("The electric charge somehow completely misses [target]!"))
-				return
+	onStart()
+		..()
 
-		if (holder.owner.wizard_spellpower(src))
-			elecflash(target,power = 4, exclude_center = 0)
-			//target.elecgib()
-			arcFlash(holder.owner, target, 0) // we just want the effect, the damage is taken care of below
-			var/target_damage = burn_damage / target_damage_modifier
-			target.TakeDamage("chest", 0, target_damage, 0, DAMAGE_BURN)
-			var/count = 0
-			for (var/mob/living/L in oview(src.arc_range, target))
-				if (iswizard(L))
-					continue
-				count++
-			for (var/mob/living/L in oview(src.arc_range, target))
-				if (iswizard(L))
-					continue
-				arcFlash(target, L, max(src.wattage / count, 1)) // adds some randomness to the damage
-				L.TakeDamage("chest", 0, min(burn_damage / count, target_damage), 0, DAMAGE_BURN)
+		if (isnull(A) || GET_DIST(M, target) > spell.max_range || isnull(M) || !ishuman(target) || !M.wizard_castcheck(spell))
+			interrupt(INTERRUPT_ALWAYS)
+
+	onUpdate()
+		..()
+
+		if (isnull(A) || GET_DIST(M, target) > spell.max_range || isnull(M) || !ishuman(target) || !M.wizard_castcheck(spell))
+			interrupt(INTERRUPT_ALWAYS)
+
+	onEnd()
+		..()
+
+		if(!istype(get_area(M), /area/sim/gunsim))
+			M.say("EI NATH", flags = SAYFLAG_IGNORE_STAMINA, message_params = list("maptext_css_values" = spell.maptext_style, "maptext_animation_colours" = spell.maptext_colors))
+
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(spell.voice_grim && H && istype(H.wear_suit, /obj/item/clothing/suit/wizrobe/necro) && istype(H.head, /obj/item/clothing/head/wizard/necro))
+				playsound(H.loc, spell.voice_grim, 50, 0, -1)
+			else if(spell.voice_fem && H.gender == "female")
+				playsound(H.loc, spell.voice_fem, 50, 0, -1)
+			else if (spell.voice_other)
+				playsound(H.loc, spell.voice_other, 50, 0, -1)
+
+		playsound(M.loc, 'sound/effects/elec_bigzap.ogg', 35, 1, -1)
+
+		if (M.wizard_spellpower(src))
+			elecflash(target, power = 4, exclude_center = 0)
+			arcFlash(M, target, 0) // aesthetic
+			target.TakeDamage("chest", 0, 101, 0, DAMAGE_BURN)
+			target.changeStatus("stunned", 3 SECONDS)
+			target.changeStatus("knockdown", 3 SECONDS)
+			target.stuttering += 6 SECONDS
+
 		else
-			elecflash(target,power = 2)
-			boutput(holder.owner, SPAN_ALERT("Your spell is weak without a staff to focus it!"))
-			target.visible_message(SPAN_ALERT("[target] is severely burned by an electrical charge!"))
-			target.lastattacker = get_weakref(holder.owner)
-			target.lastattackertime = world.time
+			elecflash(target, power = 4, exclude_center = 0)
+			boutput(M, SPAN_ALERT("Your spell is weak without a staff to focus it!"))
 			target.TakeDamage("chest", 0, 40, 0, DAMAGE_BURN)
-			target.changeStatus("stunned", 6 SECONDS)
-			target.changeStatus("knockdown", 6 SECONDS)
-			target.stuttering += 10
+

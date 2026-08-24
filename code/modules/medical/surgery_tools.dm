@@ -573,6 +573,10 @@ CONTAINS:
 /* -------------------- Body Bag -------------------- */
 /* ================================================== */
 
+#define BODYBAG_STATE_ITEM "item"
+#define BODYBAG_STATE_CLOSED "closed"
+#define BODYBAG_STATE_OPEN "open"
+
 /obj/item/body_bag
 	name = "body bag"
 	desc = "A heavy bag, used for carrying stuff around. The stuff is usually dead bodies. Hence the name."
@@ -588,7 +592,7 @@ CONTAINS:
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 0
-	var/open = 0
+	var/state = BODYBAG_STATE_ITEM
 	var/image/open_image = null
 	var/sound_zipper = 'sound/items/zipper.ogg'
 
@@ -601,44 +605,49 @@ CONTAINS:
 			AM.set_loc(get_turf(src))
 		..()
 
-	update_icon()
-		if (src.open && src.open_image)
-			src.overlays += src.open_image
-			src.icon_state = "bodybag-open"
-			src.w_class = W_CLASS_BULKY
-		else if (!src.open)
-			src.overlays -= src.open_image
-			if (src.contents && length(src.contents))
-				src.icon_state = "bodybag-closed1"
-			else
-				src.icon_state = "bodybag-closed0"
-			src.w_class = W_CLASS_BULKY
-		else
-			src.overlays -= src.open_image
-			src.icon_state = "bodybag"
+	proc/set_state(var/state)
+		if(state == BODYBAG_STATE_ITEM)
 			src.w_class = W_CLASS_TINY
+		else
+			if(src.cant_drop && !isturf(src.loc))
+				src.set_state(BODYBAG_STATE_ITEM)
+				return FALSE
+			src.w_class = W_CLASS_BULKY
+		src.state = state
+		src.UpdateIcon()
+		return TRUE
+
+	update_icon()
+		switch(src.state)
+			if (BODYBAG_STATE_OPEN)
+				src.overlays += src.open_image
+				src.icon_state = "bodybag-open"
+			if (BODYBAG_STATE_CLOSED)
+				src.overlays -= src.open_image
+				if (src.contents && length(src.contents))
+					src.icon_state = "bodybag-closed1"
+				else
+					src.icon_state = "bodybag-closed0"
+			if (BODYBAG_STATE_ITEM)
+				src.overlays -= src.open_image
+				src.icon_state = "bodybag"
 
 	attack_self(mob/user as mob)
-		if (src.icon_state == "bodybag" && src.w_class == W_CLASS_TINY)
-			user.visible_message("<b>[user]</b> unfolds [src].",\
-			"You unfold [src].")
-			user.drop_item()
-			pixel_x = 0
-			pixel_y = 0
-			src.UpdateIcon()
-		else
-			return
+		src.try_unfold(user)
 
 	attack_hand(mob/user)
 		add_fingerprint(user)
-		if (src.icon_state == "bodybag" && src.w_class == W_CLASS_TINY)
+		if (src.state == BODYBAG_STATE_ITEM)
 			return ..()
-		else if(!ON_COOLDOWN(user, "bodybag_zip", 1 SECOND))
-			if (src.open)
-				src.close()
-			else
-				src.open()
+
+		src.toggle(user)
+
+	attack_ai(mob/user)
+		if(BOUNDS_DIST(src, user) || isintangible(user))
 			return
+
+		if (!src.try_unfold())
+			src.toggle(user)
 
 	relaymove(mob/user as mob)
 		if (user.stat)
@@ -662,12 +671,10 @@ CONTAINS:
 			return
 		..()
 		if (!length(src.contents) && usr.can_use_hands() && isalive(usr) && BOUNDS_DIST(src, usr) == 0 && !issilicon(usr))
-			if (src.icon_state != "bodybag")
+			if (src.state != BODYBAG_STATE_ITEM)
 				usr.visible_message("<b>[usr]</b> folds up [src].",\
 				"You fold up [src].")
-			src.overlays -= src.open_image
-			src.icon_state = "bodybag"
-			src.w_class = W_CLASS_TINY
+			src.set_state(BODYBAG_STATE_ITEM)
 			src.Attackhand(usr)
 
 	attackby(obj/item/W, mob/user, params)
@@ -696,8 +703,7 @@ CONTAINS:
 			M.changeStatus("knockdown", 0.5 SECONDS)
 			SPAWN(0.3 SECONDS)
 				M.set_loc(src.loc)
-		src.open = 1
-		src.UpdateIcon()
+		src.set_state(BODYBAG_STATE_OPEN)
 
 	proc/close()
 		playsound(src, src.sound_zipper, 100, 1, , 6)
@@ -715,8 +721,37 @@ CONTAINS:
 			if (!(M.lying || (ismobcritter(M) && isdead(M))) || M.anchored || M.buckled)
 				continue
 			M.set_loc(src)
-		src.open = 0
+		src.set_state(BODYBAG_STATE_CLOSED)
+
+	proc/toggle(mob/user)
+		if(ON_COOLDOWN(user, "bodybag_zip", 1 SECOND) || src.state == BODYBAG_STATE_ITEM)
+			return FALSE
+
+		if (src.state == BODYBAG_STATE_OPEN)
+			src.close()
+		else
+			src.open()
+		return TRUE
+
+	proc/try_unfold(mob/user)
+		if (src.state != BODYBAG_STATE_ITEM)
+			return FALSE
+		if(!src.set_state(BODYBAG_STATE_CLOSED))
+			return
+
+		user.visible_message("<b>[user]</b> unfolds [src].", "You unfold [src].")
+
+		user.drop_from_slot(src)
+		src.pixel_x = 0
+		src.pixel_y = 0
+
 		src.UpdateIcon()
+
+		return TRUE
+
+#undef BODYBAG_STATE_ITEM
+#undef BODYBAG_STATE_CLOSED
+#undef BODYBAG_STATE_OPEN
 
 /* ================================================== */
 /* -------------------- Hemostat -------------------- */
@@ -950,13 +985,18 @@ TYPEINFO(/obj/item/device/light/flashlight/penlight)
 
 					var/the_brain = H.get_organ("brain") // don't need to know anything about it other than "is it there?"
 					var/braind = H.get_brain_damage()
+					var/unresponsive = isdead(H) //Tracks being regular dead or braindead - neither should respond to the penlight.
 					if (!the_brain || isnum(braind))
-						if (!the_brain || braind >= BRAIN_DAMAGE_LETHAL) // braindead as heck
-							if (leye) lmove = "[His_Her] left eye doesn't follow the light at all!"
-							if (reye) rmove = "[His_Her] right eye doesn't follow the light at all!"
-							if (!the_brain)
-								if (leye) lpreact = "doesn't react to the light at all!"
-								if (reye) rpreact = "doesn't react to the light at all!"
+						if (!the_brain || braind >= BRAIN_DAMAGE_LETHAL || unresponsive) // braindead as heck
+							unresponsive = TRUE
+							if(!rpstatus) rpstatus = " The pupil " // If you have drugs in your system, keep the description of the pupils.
+							if(!lpstatus) lpstatus = " The pupil "
+							if (leye)
+								lmove = "[His_Her] left eye doesn't follow the light at all!"
+								lpreact = "doesn't react to the light at all!"
+							if (reye)
+								rmove = "[His_Her] right eye doesn't follow the light at all!"
+								rpreact = "doesn't react to the light at all!"
 						else if (braind >= BRAIN_DAMAGE_MAJOR) // when one becomes a gibbering mess
 							if (reye)
 								rmove = "[His_Her] right eye doesn't follow the light at all!"
@@ -974,7 +1014,7 @@ TYPEINFO(/obj/item/device/light/flashlight/penlight)
 						lmove = SPAN_ALERT("[He_She] has no left eye!")
 						lpstatus = null
 						lpreact = null
-					else
+					else if(!unresponsive)
 						if (!lmove) lmove = "[His_Her] left eye follows the light easily."
 						if (!lpstatus) lpstatus = " The pupil "
 						if (!lpreact) lpreact = "constricts normally."
@@ -983,7 +1023,7 @@ TYPEINFO(/obj/item/device/light/flashlight/penlight)
 						rmove = SPAN_ALERT("[He_She] has no right eye!")
 						rpstatus = null
 						rpreact = null
-					else
+					else if(!unresponsive)
 						if (!rmove) rmove = "[His_Her] right eye follows the light easily."
 						if (!rpstatus) rpstatus = " The pupil "
 						if (!rpreact) rpreact = "constricts normally."

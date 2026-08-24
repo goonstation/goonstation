@@ -7,6 +7,8 @@
 	var/wizard_key = ""
 	var/uses = 6
 	var/list/spells = list()
+	/// Associative list, where keys are /datum/SWFuplinkspell types and values are the number of purchases.
+	var/list/purchased_spells = list()
 	flags = TABLEPASS | TGUI_INTERACTIVE
 	c_flags = ONBELT
 	throwforce = 5
@@ -35,12 +37,13 @@
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if (!ui)
-			ui = new(user, src, "WizardSpellbook")
+			ui = new(user, src, "Uplink")
 			ui.open()
 
 	ui_data(mob/user)
 		. = list(
-			"spell_slots" = src.uses
+			"currency_amount" = src.uses,
+			"purchased_items" = src.purchased_spells,
 		)
 
 	ui_static_data(mob/user)
@@ -55,20 +58,25 @@
 				var/datum/targetable/spell/spell_ability_datum = spell.assoc_spell
 				// convert deciseconds to seconds
 				cooldown_contents = initial(spell_ability_datum.cooldown) / 10
-				spell_icon = icon2base64(icon(initial(spell_ability_datum.icon), initial(spell_ability_datum.icon_state), frame=6))
+				spell_icon = "\ref[spell_ability_datum.icon]?state=[spell_ability_datum.icon_state]&frame=6"
 			else if (spell.icon && spell.icon_state)
-				spell_icon = icon2base64(icon(initial(spell.icon), initial(spell.icon_state), frame=1))
+				spell_icon = "\ref[spell.icon]?state=[spell.icon_state]"
 			spellbook_contents[spell.eqtype] += list(list(
-				cooldown = cooldown_contents,
-				cost = spell.cost,
-				desc = spell.desc,
-				name = spell.name,
-				spell_img = spell_icon,
-				vr_allowed = spell.vr_allowed,
+				"cooldown" = cooldown_contents,
+				"cost" = spell.cost,
+				"desc" = spell.desc,
+				"name" = spell.name,
+				"icon" = spell_icon,
+				"vr_allowed" = spell.vr_allowed,
+				"ref" = ref(spell),
+				"type" = spell.type,
+				"purchase_limit" = 1,
 			))
 		. = list(
-			"owner_name" = src.wizard_name,
-			"spellbook_contents" = spellbook_contents,
+			"title" = "[src.wizard_name]'s Spellbook",
+			"theme" = "wizard",
+			"currency_name" = "spell slot",
+			"item_entries" = spellbook_contents,
 			"vr" = src.vr
 		)
 
@@ -85,14 +93,16 @@
 		if (.)
 			return
 		switch (action)
-			if ("buyspell")
-				var/datum/SWFuplinkspell/chosen_spell = params["spell"]
-				for (var/datum/SWFuplinkspell/spell in src.spells)
-					if (spell.name == chosen_spell)
-						chosen_spell = spell
-						break
+			if ("purchase")
+				var/datum/SWFuplinkspell/chosen_spell = locate(params["item_ref"]) in src.spells
+				if(!chosen_spell || !istype(chosen_spell))
+					boutput(usr, SPAN_ALERT("Oops, couldn't find that spell, call an Archmage Coder!"))
+					return
 				if (chosen_spell.SWFspell_CheckRequirements(usr,src))
+					src.purchased_spells[chosen_spell.type] ||= 0
+					src.purchased_spells[chosen_spell.type] += 1
 					chosen_spell.SWFspell_Purchased(usr,src)
+					tgui_process.update_uis(src) //Force an update to prevent spam purchases
 
 ///////////////////////////////////////// Wizard's spells ///////////////////////////////////////////////////
 ABSTRACT_TYPE(/datum/SWFuplinkspell)
@@ -114,6 +124,8 @@ ABSTRACT_TYPE(/datum/SWFuplinkspell)
 			return FALSE // unknown error
 		if (book.vr && !src.vr_allowed)
 			return FALSE // Unavailable in VR
+		if (src.type in book.purchased_spells)
+			return FALSE // Already purchased
 		if (src.assoc_spell)
 			if (book.antag_datum.ability_holder.getAbility(assoc_spell))
 				return FALSE // Already have this spell
@@ -149,7 +161,7 @@ ABSTRACT_TYPE(/datum/SWFuplinkspell)
 
 	SWFspell_Purchased(var/mob/living/carbon/human/user,var/obj/item/SWF_uplink/book)
 		..()
-		user.spell_soulguard = SOULGUARD_SPELL
+		user.spell_soulguard = SOULGUARD::SPELL
 
 //------------ EQUIPMENT SPELLS ------------//
 /datum/SWFuplinkspell/staffofcthulhu
@@ -205,7 +217,7 @@ ABSTRACT_TYPE(/datum/SWFuplinkspell)
 /datum/SWFuplinkspell/shockingtouch
 	name = "Shocking Touch"
 	eqtype = "Offensive"
-	desc = "This spell cannot be used on a moving target due to the need for a very short charging sequence, but will instantly put them in critical condition, and shock and stun anyone close to them."
+	desc = "This spell cannot be used on a moving target due to the need for a very short charging sequence, but will instantly burn your victim into critical condition."
 	assoc_spell = /datum/targetable/spell/shock
 
 /datum/SWFuplinkspell/iceburst

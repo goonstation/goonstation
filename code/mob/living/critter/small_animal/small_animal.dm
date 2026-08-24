@@ -87,6 +87,8 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	///Do we randomize stuff?
 	var/generic = TRUE
 	var/drop_contents_on_death = FALSE // Drop everything on death?
+	/// Small and insectoid enough to be eaten by a frog in one gulp
+	var/edible_insect = FALSE
 
 	New(loc)
 		if(isnull(src.is_pet))
@@ -197,20 +199,20 @@ proc/filter_carrier_pets(var/type)
 			src.ClearSpecificOverlays("bowtie")
 
 	proc/bow_icon_state()
-		return "[replacetext(src.bow.icon_state, "hbow", "bowtie")][isdead(src) ? "-dead" : ""]"
+		return "bowtie-[src.bow.bowcolour][isdead(src) ? "-dead" : ""]"
 
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "paw"
 		HH.limb_name = "claws"
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/mouth/small	// if not null, the special limb to use when attack_handing
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
+		HH.icon = 'icons/mob/critter_hands.dmi'	// the icon of the hand UI background
 		HH.icon_state = "mouth"					// the icon state of the hand UI background
 		HH.name = "mouth"						// designation of the hand - purely for show
 		HH.limb_name = "teeth"					// name for the dummy holder
@@ -441,10 +443,12 @@ proc/filter_carrier_pets(var/type)
 	random_name = FALSE
 	random_look = FALSE
 	desc = "Although this cat is vegan, it's still a carnivore."
+	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat
 
 /* -------------------- Jones -------------------- */
 
 TYPEINFO(/mob/living/critter/small_animal/cat/jones)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("viscerite" = 25)
 /mob/living/critter/small_animal/cat/jones
 	name = "Jones"
@@ -456,7 +460,6 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	health_burn = 30
 	is_annoying = TRUE
 	is_pet = 2
-	is_syndicate = 1
 	player_can_spawn_with_pet = FALSE
 	var/swiped = 0
 
@@ -537,14 +540,14 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter/med
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "paw"
 		HH.limb_name = "claws"
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/mouth/small	// if not null, the special limb to use when attack_handing
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
+		HH.icon = 'icons/mob/critter_hands.dmi'	// the icon of the hand UI background
 		HH.icon_state = "mouth"					// the icon state of the hand UI background
 		HH.name = "mouth"						// designation of the hand - purely for show
 		HH.limb_name = "teeth"					// name for the dummy holder
@@ -900,14 +903,14 @@ TYPEINFO(/mob/living/critter/small_animal/dog/reverse)
 			HH.limb = new /datum/limb/small_critter/med
 		else
 			HH.limb = new /datum/limb/small_critter
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "claw"
 		HH.limb_name = "claws"
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/mouth/small	// if not null, the special limb to use when attack_handing
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
+		HH.icon = 'icons/mob/critter_hands.dmi'	// the icon of the hand UI background
 		HH.icon_state = "mouth"					// the icon state of the hand UI background
 		HH.name = "mouth"						// designation of the hand - purely for show
 		HH.limb_name = "beak"					// name for the dummy holder
@@ -1543,14 +1546,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "foot"
 		HH.limb_name = "claws"
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/mouth/small	// if not null, the special limb to use when attack_handing
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
+		HH.icon = 'icons/mob/critter_hands.dmi'	// the icon of the hand UI background
 		HH.icon_state = "beak"					// the icon state of the hand UI background
 		HH.name = "beak"						// designation of the hand - purely for show
 		HH.limb_name = "beak"					// name for the dummy holder
@@ -1614,8 +1617,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	flags = TABLEPASS | DOORPASS
 	faction = list(FACTION_NEUTRAL)
 	fits_under_table = 1
-	ai_type = /datum/aiHolder/roach
+	ai_type = /datum/aiHolder/hungry_critter
 	ai_retaliates = FALSE
+	edible_insect = TRUE
 	player_can_spawn_with_pet = TRUE
 
 	New()
@@ -1658,7 +1662,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "weird grabby foot thing"
 		HH.limb_name = "foot"
@@ -1734,7 +1738,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter/pincers
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "pincers"
 		HH.name = "pincers"
 		HH.limb_name = "pincers"
@@ -1860,7 +1864,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/mouth
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "mouth"
 		HH.name = "mouth"
 		HH.limb_name = "teeth"
@@ -1995,7 +1999,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter/med
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "weird grabby foot thing"
 		HH.limb_name = "foot"
@@ -2012,7 +2016,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			..()
 			var/datum/handHolder/HH = hands[1]
 			HH.limb = new /datum/limb/small_critter
-			HH.icon = 'icons/mob/critter_ui.dmi'
+			HH.icon = 'icons/mob/critter_hands.dmi'
 			HH.icon_state = "handn"
 			HH.name = "weird grabby foot thing"
 			HH.limb_name = "foot"
@@ -2047,14 +2051,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "paw"
 		HH.limb_name = "claws"
 		HH = hands[2]
 
 		HH.limb = new /datum/limb/mouth/small	// if not null, the special limb to use when attack_handing
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
+		HH.icon = 'icons/mob/critter_hands.dmi'	// the icon of the hand UI background
 		HH.icon_state = "mouth"					// the icon state of the hand UI background
 		HH.name = "mouth"						// designation of the hand - purely for show
 		HH.limb_name = "teeth"					// name for the dummy holder
@@ -2124,14 +2128,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "foot"
 		HH.limb_name = "pads"
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/mouth/small
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "mouth"
 		HH.name = "mouth"
 		HH.limb_name = "mouth"
@@ -2183,14 +2187,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..() // both of these do no damage (in return, possums are basically immortal)
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter/possum
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "paw"
 		HH.limb_name = "claws"
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/mouth/small/possum
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "mouth"
 		HH.name = "mouth"
 		HH.limb_name = "teeth"
@@ -2269,7 +2273,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/armadillo
 	name = "space armadillo"
-	desc = "A armadillo that came from space. Or maybe went to space. Who knows how it got here?"
+	desc = "An armadillo that came from space. Or maybe went to space. Who knows how it got here?"
 	icon_state = "armadillo"
 	icon_state_dead = "armadillo-dead"
 	hand_count = 2
@@ -2300,14 +2304,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "paw"
 		HH.limb_name = "claws"
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/mouth/small
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "mouth"
 		HH.name = "mouth"
 		HH.limb_name = "teeth"
@@ -2441,14 +2445,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "paw"
 		HH.limb_name = "claws"
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/mouth/small
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "mouth"
 		HH.name = "mouth"
 		HH.limb_name = "teeth"
@@ -2544,14 +2548,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "flipper"
 		HH.limb_name = "flipper"
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/mouth/small
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "mouth"
 		HH.name = "mouth"
 		HH.limb_name = "mouth"
@@ -2657,14 +2661,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "flipper"
 		HH.limb_name = "flipper"
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/mouth/small
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "mouth"
 		HH.name = "mouth"
 		HH.limb_name = "mouth"
@@ -2689,7 +2693,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "weird tentacle things"
 		HH.limb_name = "tentacles"
@@ -2754,14 +2758,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "paw"
 		HH.limb_name = "claws"
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/mouth/small	// if not null, the special limb to use when attack_handing
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
+		HH.icon = 'icons/mob/critter_hands.dmi'	// the icon of the hand UI background
 		HH.icon_state = "mouth"					// the icon state of the hand UI background
 		HH.name = "mouth"						// designation of the hand - purely for show
 		HH.limb_name = "teeth"					// name for the dummy holder
@@ -2883,7 +2887,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "weird grabby foot thing"
 		HH.limb_name = "foot"
@@ -2957,7 +2961,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "weird grabby foot thing"
 		HH.limb_name = "foot"
@@ -3010,14 +3014,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter/med
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "paw"
 		HH.limb_name = "claws"
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/mouth/small	// if not null, the special limb to use when attack_handing
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
+		HH.icon = 'icons/mob/critter_hands.dmi'	// the icon of the hand UI background
 		HH.icon_state = "mouth"					// the icon state of the hand UI background
 		HH.name = "mouth"						// designation of the hand - purely for show
 		HH.limb_name = "teeth"					// name for the dummy holder
@@ -3066,6 +3070,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	var/slime_chance = 22
 	butcherable = BUTCHER_ALLOWED
 	name_the_meat = FALSE
+	ai_type = /datum/aiHolder/hungry_critter
 	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/lesserSlug
 	player_can_spawn_with_pet = TRUE
 
@@ -3073,16 +3078,54 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	New()
 		..()
 		AddComponent(/datum/component/floor_slime, "slime", slime_chance, 10)
+		RegisterSignal(src, COMSIG_MOB_ITEM_CONSUMED_PRE, PROC_REF(edibility_check))
+
+	disposing()
+		UnregisterSignal(src, COMSIG_MOB_ITEM_CONSUMED_PRE)
+		. = ..()
 
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/mouth/small	// if not null, the special limb to use when attack_handing
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
+		HH.icon = 'icons/mob/critter_hands.dmi'	// the icon of the hand UI background
 		HH.icon_state = "mouth"					// the icon state of the hand UI background
 		HH.name = "mouth"						// designation of the hand - purely for show
 		HH.limb_name = "mouth thing"			// name for the dummy holder
 		HH.can_hold_items = FALSE
+
+#define SLUG_ITEM_EDIBLE(O) (istype(O, /obj/item/plant)\
+	|| istype(O, /obj/item/reagent_containers/food) && !istype(O, /obj/item/reagent_containers/food/drinks)\
+	|| istype(O, /obj/item/seed))
+
+	seek_food_target(range)
+		. = list()
+		var/eat_plant = !GET_COOLDOWN(src, "ate_plant")
+		for (var/obj/O in view(range, get_turf(src)))
+			if (SLUG_ITEM_EDIBLE(O))
+				. += O
+			else if (istype(O, /obj/machinery/plantpot) && eat_plant)
+				var/obj/machinery/plantpot/tray = O
+				if (tray.current)
+					. += O
+
+	proc/edibility_check(_,__, obj/item/item)
+		return SLUG_ITEM_EDIBLE(item)
+
+	critter_eat(obj/target)
+		if (isitem(target))
+			var/obj/item/item = target
+			item.Eat(src, src, TRUE, TRUE)
+		else if (istype(target, /obj/machinery/plantpot))
+			var/obj/machinery/plantpot/tray = target
+			if (!tray.current)
+				return
+			playsound(src.loc, 'sound/items/eatfood.ogg', 50, 1)
+			eat_twitch(src)
+			tray.HYPdestroyplant()
+			ON_COOLDOWN(src, "ate_plant", 15 SECONDS) //let's not be tooo too mean
+
+#undef SLUG_ITEM_EDIBLE
 
 /* -------------------- Snail -------------------- */
 
@@ -3117,7 +3160,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	New()
 		..()
-		var/image/bow = image('icons/obj/clothing/item_hats.dmi', "hbow-mint")
+		var/image/bow = image('icons/obj/clothing/item_hats_bows.dmi', "hbow-high-mint")
 		bow.appearance_flags = KEEP_TOGETHER
 		bow.pixel_y = 7
 		bow.pixel_x = 1
@@ -3152,6 +3195,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 8
 	var/butterflytype = 1
 	isFlying = TRUE
+	edible_insect = TRUE
 	player_can_spawn_with_pet = TRUE
 
 	New()
@@ -3169,7 +3213,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "delicate limb things"
 		HH.limb_name = "legs"
@@ -3177,7 +3221,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/mouth/small
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "mouth"
 		HH.name = "proboscis"
 		HH.limb_name = "mouth"
@@ -3251,6 +3295,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 8
 	health_burn = 8
 	isFlying = TRUE
+	edible_insect = TRUE
 	add_abilities = list(/datum/targetable/critter/vomit)
 
 	New(loc)
@@ -3269,7 +3314,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "conniving crawlers"
 		HH.limb_name = "arms"
@@ -3277,7 +3322,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/mouth/small
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "mouth"
 		HH.name = "proboscis"
 		HH.limb_name = "mouth"
@@ -3316,6 +3361,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 8
 	health_burn = 8
 	isFlying = TRUE
+	edible_insect = TRUE
 	add_abilities = list(/datum/targetable/critter/blood_bite)
 
 	New(loc)
@@ -3334,7 +3380,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "conniving crawlers"
 		HH.limb_name = "arms"
@@ -3342,7 +3388,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/mouth/small
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "mouth"
 		HH.name = "proboscis"
 		HH.limb_name = "mouth"
@@ -3382,14 +3428,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/claw
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "lobster claw"
 		HH.limb_name = "lobster claw"
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/claw
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "lobster claw"
 		HH.limb_name = "lobster claw"
@@ -3537,7 +3583,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "tiny hand"
 		HH.limb_name = "tiny hand"
@@ -3597,14 +3643,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "tiny hand"
 		HH.limb_name = "tiny hand"
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/small_critter
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "tiny hand"
 		HH.limb_name = "tiny hand"
@@ -3705,14 +3751,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "tiny hand"
 		HH.limb_name = "tiny hand"
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/small_critter
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "tiny hand"
 		HH.limb_name = "tiny hand"
@@ -3766,14 +3812,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "beak"
 		HH.name = "left claw"
 		HH.limb_name = "claw"
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/small_critter
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "beak"
 		HH.name = "right claw"
 		HH.limb_name = "claw"
@@ -3897,7 +3943,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter/med/dash
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "mouth"
 		HH.limb_name = "mouth"
@@ -3975,7 +4021,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/gun/kinetic/spike
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handzap"
 		HH.name = "spikes"
 		HH.limb_name = "spikes"
@@ -4042,7 +4088,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter/med
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "body"
 		HH.limb_name = "body"
@@ -4236,14 +4282,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "paw"
 		HH.limb_name = "claws"
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/mouth/small	// if not null, the special limb to use when attack_handing
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
+		HH.icon = 'icons/mob/critter_hands.dmi'	// the icon of the hand UI background
 		HH.icon_state = "mouth"					// the icon state of the hand UI background
 		HH.name = "mouth"						// designation of the hand - purely for show
 		HH.limb_name = "teeth"					// name for the dummy holder
@@ -4331,7 +4377,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/arcflash
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handzap"
 		HH.name = "tendrils"
 		HH.limb_name = "tendrils"
@@ -4388,7 +4434,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter/med
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "tendrils"
 		HH.limb_name = "tendrils"

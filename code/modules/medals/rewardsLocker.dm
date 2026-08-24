@@ -991,7 +991,7 @@
 
 /datum/achievementReward/goldenGun
 	title = "Golden Gun"
-	desc = "Gold plates a shotgun, hunting rifle, detective revolver, or AK-47 you're holding."
+	desc = "Gold plates a shotgun, hunting rifle, detective revolver, Colt SAA, or AK-47 you're holding."
 	required_medal = "Helios"
 
 	rewardActivate(var/mob/activator)
@@ -1083,21 +1083,13 @@
 	pixel_y = -16
 
 /datum/achievementReward/participantribbon
-	title = "(Transformation) Participation Ribbon"
-	desc = "Turn into a living participation ribbon. No refunds!"
+	title = "(Item) Participation Ribbon"
+	desc = "Receive a participation ribbon. No refunds!"
 	required_medal = "Fun Times"
-	mobonly = 0
 
 	rewardActivate(var/mob/activator)
-		if (!isobserver(activator))
-			boutput(activator, SPAN_ALERT("You gotta be dead to use this, you goof!"))
-			return
-		if(istype(activator, /mob/dead/target_observer) && !istype_exact(activator, /mob/dead/target_observer))
-			boutput(activator, SPAN_ALERT("You gotta be a ghost to use this, you goof!"))
-			return
-		var/mob/living/object/O = new /mob/living/object(get_turf(usr), new /obj/item/sticker/ribbon/participant, usr)
-		O.say_language = LANGUAGE_ANIMAL
-		O.literate = 0
+		var/ribbon = new/obj/item/sticker/ribbon/participant(get_turf(activator))
+		activator.put_in_hand_or_drop(ribbon)
 		return 1
 
 /datum/achievementReward/goldbud
@@ -1217,6 +1209,21 @@
 		else
 			boutput(activator, SPAN_ALERT("Unable to redeem... you need to have a welding helmet in your hands."))
 			return
+
+/datum/achievementReward/fishing_rod
+	title = "(Skin) Gilded Fishing Rod"
+	desc = "One use, requires you to hold a fishing rod."
+	required_medal = "So Long, and Thanks for All the Fish"
+
+	rewardActivate(mob/activator)
+		var/obj/item/fishing_rod/rod = activator.find_type_in_hand(/obj/item/fishing_rod) || activator.find_type_in_hand(/obj/item/syndie_fishing_rod)
+		if (!rod)
+			boutput(activator, SPAN_ALERT("Unable to redeem... You must have a fishing rod in your hands!"))
+			return null
+		rod.gilded = TRUE
+		rod.UpdateIcon()
+		activator.update_inhands()
+		return TRUE
 
 // Reward management stuff
 

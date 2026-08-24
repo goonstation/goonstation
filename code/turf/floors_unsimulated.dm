@@ -154,6 +154,9 @@
 		UpdateOverlays(damage_overlay,"damage")
 
 /turf/unsimulated/floor/plating/random
+#ifdef IN_MAP_EDITOR
+	icon_state = "plating_random"
+#endif
 	New()
 		..()
 		if (prob(20))
@@ -347,12 +350,6 @@
 /turf/unsimulated/floor/darkblue
 	icon_state = "fulldblue"
 
-/turf/unsimulated/floor/darkblue/checker
-	icon_state = "blue-dblue"
-
-/turf/unsimulated/floor/darkblue/checker/other
-	icon_state = "blue-dblue2"
-
 /turf/unsimulated/floor/darkblue/side
 	icon_state = "dblue"
 
@@ -494,6 +491,24 @@
 /turf/unsimulated/floor/yellowblack/corner
 	icon_state = "yellowblackcorner"
 
+
+/turf/unsimulated/floor/yellowwhite
+	icon_state = "yellowwhite"
+
+/turf/unsimulated/floor/yellowwhite/corner
+	icon_state = "yellowwhitecorner"
+
+/////////////////////////////////////////
+
+/turf/unsimulated/floor/lightyellow
+	icon_state = "fulllyellow"
+
+/turf/unsimulated/floor/lightyellow/side
+	icon_state = "lyellow"
+
+/turf/unsimulated/floor/lightyellow/corner
+	icon_state = "lyellowcorner"
+
 /////////////////////////////////////////
 
 /turf/unsimulated/floor/orange
@@ -505,20 +520,38 @@
 /turf/unsimulated/floor/orange/corner
 	icon_state = "orangecorner"
 
+/turf/unsimulated/floor/orange/checker
+	icon_state = "orangechecker"
+
 
 /turf/unsimulated/floor/orangeblack
-	icon_state = "fullcaution"
-
-/turf/unsimulated/floor/orangeblack/side
-	icon_state = "caution"
-
-/turf/unsimulated/floor/orangeblack/side/white
-	icon_state = "cautionwhite"
+	icon_state = "orangeblack"
 
 /turf/unsimulated/floor/orangeblack/corner
+	icon_state = "orangeblackcorner"
+
+
+/turf/unsimulated/floor/orangewhite
+	icon_state = "orangewhite"
+
+/turf/unsimulated/floor/orangewhite/corner
+	icon_state = "orangewhitecorner"
+
+/////////////////////////////////////////
+
+/turf/unsimulated/floor/caution
+	icon_state = "fullcaution"
+
+/turf/unsimulated/floor/caution/side
+	icon_state = "caution"
+
+/turf/unsimulated/floor/caution/white
+	icon_state = "cautionwhite"
+
+/turf/unsimulated/floor/caution/corner
 	icon_state = "cautioncorner"
 
-/turf/unsimulated/floor/orangeblack/corner/white
+/turf/unsimulated/floor/caution/corner/white
 	icon_state = "cautionwhitecorner"
 
 /////////////////////////////////////////

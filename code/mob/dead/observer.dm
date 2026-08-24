@@ -307,8 +307,7 @@ TYPEINFO(/mob/dead/observer)
 			var/confirm = tgui_alert(src, "Are you sure you want to ghost? You won't be able to exit cryogenic storage, DNR status will be set, and you will be an observer the rest of the round.", "Observe?", list("Yes", "No"))
 			if(confirm == "Yes")
 				respawn_controller.subscribeNewRespawnee(src.ckey)
-				for(var/datum/antagonist/antagonist as anything in src.mind?.antagonists)
-					antagonist.handle_perma_cryo()
+				src.handle_perma_cryo()
 				src.mind?.get_player()?.dnr = TRUE
 				src.ghostize()
 				qdel(src)
@@ -710,7 +709,7 @@ TYPEINFO(/mob/dead/observer)
 	set category = null
 
 	if (src.see_invisible >= INVIS_GHOST)
-		src.see_invisible = INVIS_NONE
+		src.see_invisible = INVIS_BELOW_GHOST
 		boutput(src, "You can no longer see other ghosts.", group="ghostsight")
 	else if(HAS_FLAG(src.sight, SEE_SELF))
 		src.sight &= ~SEE_SELF

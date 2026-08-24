@@ -4,6 +4,7 @@ ABSTRACT_TYPE(/datum/reagent/fooddrink)
 ABSTRACT_TYPE(/datum/reagent/fooddrink/alcoholic)
 ABSTRACT_TYPE(/datum/reagent/fooddrink/temp_bioeffect)
 ABSTRACT_TYPE(/datum/reagent/fooddrink/caffeinated)
+ABSTRACT_TYPE(/datum/reagent/fooddrink/alcoholic/hardcoffee)
 
 datum
 	reagent
@@ -94,6 +95,7 @@ datum
 			thirst_value = 0.6
 			viscosity = 0.3
 			var/list/flushed_reagents = list("capsaicin")
+			var/was_physically_shocked = FALSE
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
@@ -112,6 +114,11 @@ datum
 						M.HealDamage("All", clamp(1 * volume, 0, 10), clamp(1 * volume, 0, 10)) //put a cap on instant healing
 						if(prob(15))
 							boutput(M, SPAN_NOTICE("The milk comforts your [pick("boanes","bones","bonez","boens","bowns","beaunes","brones","bonse")]!"))
+
+			physical_shock(force)
+				if(force >= 30)
+					was_physically_shocked = TRUE
+
 		fooddrink/milk_powder
 			name = "milk powder"
 			id = "milk_powder"
@@ -143,6 +150,13 @@ datum
 			reagent_state = LIQUID
 			thirst_value = 0.75
 			value = 3 // 1 2
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				M.changeBodyTemp(5 KELVIN * mult, max_temp = M.base_body_temp)
+				M.reagents.add_reagent("sugar", 1 * src.calculate_depletion_rate(M, mult))
+				if (ispug(M) || istype(M, /mob/living/critter/small_animal/dog))
+					M.changeStatus("poisoned", 4 SECONDS * mult)
+				..()
 
 		fooddrink/milk/strawberry_milk
 			name = "strawberry milk"
@@ -261,7 +275,7 @@ datum
 			fluid_g = 255
 			fluid_b = 129
 			taste = list("tropical", "zesty")
-			description = "An fusion of sweet banana, tropical coconut, zesty lime, and bubbly tonic."
+			description = "A fusion of sweet banana, tropical coconut, zesty lime, and bubbly tonic."
 			reagent_state = LIQUID
 			thirst_value = 2
 			value = 3
@@ -309,6 +323,16 @@ datum
 				// Yes. Its 21. This is Space America. That is canon now.
 				if(gen_record && text2num(gen_record["age"]) < 21)
 					H.apply_automated_arrest("Underage drinking.")
+
+		fooddrink/alcoholic/hardcoffee
+			name = "alcoholic caffeinated reagent parent"
+			description = "You shouldn't be seeing this ingame. If you do, report it to a coder."
+
+			var/caffeine_content = 0.6 //same caffeine content as espresso
+			on_mob_life(var/mob/M, var/mult = 1)
+				..()
+				M.reagents.add_reagent("caffeine", caffeine_content * src.calculate_depletion_rate(M, mult))
+
 
 		fooddrink/alcoholic/hard_punch
 			name = "hard punch"
@@ -1130,7 +1154,7 @@ datum
 			description = "Nice drink, Dude."
 			reagent_state = LIQUID
 
-		fooddrink/alcoholic/b_russian
+		fooddrink/alcoholic/hardcoffee/b_russian
 			name = "Black Russian"
 			id = "b_russian"
 			fluid_r = 99
@@ -1140,7 +1164,7 @@ datum
 			description = "A vodka-infused coffee cocktail. Supposedly created in honor of a US Ambassador that no one remembers."
 			reagent_state = LIQUID
 
-		fooddrink/alcoholic/irishcoffee
+		fooddrink/alcoholic/hardcoffee/irishcoffee
 			name = "Irish Coffee"
 			id = "irishcoffee"
 			fluid_r = 54
@@ -1255,7 +1279,7 @@ datum
 			reagent_state = LIQUID
 			taste = "medicinal"
 
-		fooddrink/alcoholic/eraser
+		fooddrink/alcoholic/hardcoffee/eraser
 			name = "Mind Eraser"
 			id = "eraser"
 			fluid_r = 90
@@ -1512,7 +1536,7 @@ datum
 				..()
 				return
 
-		fooddrink/alcoholic/bull
+		fooddrink/alcoholic/hardcoffee/bull
 			name = "Brave Bull"
 			id = "bull"
 			fluid_r = 60
@@ -2011,7 +2035,10 @@ datum
 			description = "¡Una cerveza preparada de perfecta para los sedientos habitantes de la estación espacial que quieren algo con un bocado!"
 			reagent_state = LIQUID
 
-		fooddrink/alcoholic/espressomartini
+
+
+
+		fooddrink/alcoholic/hardcoffee/espressomartini
 			name = "Espresso Martini"
 			id = "espressomartini"
 			fluid_r = 93
@@ -3857,6 +3884,42 @@ datum
 						boutput(M,"<span class= 'notice'>You feel a little less sickly.</span>")
 				..()
 
+		fooddrink/ginger
+			name = "ginger"
+			id = "ginger"
+			description = "Ginger can calm your stomach by speeding your circulation, but overdo it and you might find your blood getting a little too free-flowing."
+			reagent_state = SOLID
+			fluid_r = 225
+			fluid_g = 225
+			fluid_b = 102
+			transparency = 255
+			overdose = 25
+			taste = list("spicy")
+			threshold = THRESHOLD_INIT
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				. = ..()
+				if (!M)
+					M = holder.my_atom
+				if (M && M.hasStatus("nausea") && prob(50))
+					M.nauseate(-1)
+					boutput(M,"<span class= 'notice'>You feel a little less nauseous.</span>")
+
+			do_overdose(var/severity, var/mob/M, var/mult = 1)
+				if (!M)
+					M = holder.my_atom
+				if (!isliving(M))
+					return
+				var/mob/living/H = M
+				if (!H.bleeding)
+					return
+				if (severity == 1 && probmult(2))
+					H.bleeding++
+					boutput(H, SPAN_ALERT("Your wounds seem to be clotting more slowly!"))
+				else if (severity == 2 && probmult(5))
+					H.bleeding++
+					boutput(H, SPAN_ALERT("Your bleeding suddenly worsens!"))
+
 		fooddrink/cinnamon
 			name = "cinnamon"
 			id = "cinnamon"
@@ -4069,6 +4132,17 @@ datum
 			thirst_value = 1.5
 			taste = "like water, but more"
 
+		fooddrink/cocktail_quadruplewaterstable
+			name = "Quadruple Water"
+			id = "cocktail_quadruplewaterstable"
+			fluid_r = 10
+			fluid_g = 165
+			fluid_b = 254
+			description = "An even more water dense version of triple water, upon closer analysis its water matrix is neatly arranged."
+			reagent_state = LIQUID
+			thirst_value = 3.2
+			taste = "like a day worth of hydration in one sip"
+
 		fooddrink/lemonade
 			name = "lemonade"
 			id = "lemonade"
@@ -4119,7 +4193,7 @@ datum
 			viscosity = 0.1
 			taste = "refreshing"
 
-		fooddrink/laurapalmer
+		fooddrink/caffeinated/laurapalmer
 			name = "laura palmer"
 			id = "laurapalmer"
 			fluid_r = 132
@@ -4201,7 +4275,7 @@ datum
 			reagent_state = LIQUID
 			thirst_value = 0.8
 
-		fooddrink/cafe_gele
+		fooddrink/caffeinated/cafe_gele
 			name = "cafe gele"
 			id = "cafe_gele"
 			fluid_r = 140
@@ -4707,7 +4781,7 @@ datum
 			reagent_state = LIQUID
 			taste = list("sweet", "sour")
 
-		fooddrink/alcoholic/duckfart
+		fooddrink/alcoholic/hardcoffee/duckfart
 			name = "Duck Fart"
 			id = "duckfart"
 			fluid_r = 253
@@ -4840,7 +4914,7 @@ datum
 				flush(holder, 3 * mult, flushed_reagents)
 				..()
 
-		fooddrink/coconutmilkespresso
+		fooddrink/caffeinated/espresso/coconutmilkespresso
 			name = "iced coconut milk espresso"
 			id = "icedcoconutmilkespresso"
 			fluid_r = 177
@@ -4852,7 +4926,7 @@ datum
 			reagent_state = LIQUID
 			thirst_value = 0.8
 
-		fooddrink/pineapplematcha
+		fooddrink/caffeinated/matchatea/pineapplematcha
 			name = "iced pineapple matcha"
 			id = "icedpineapplematcha"
 			fluid_r = 152
@@ -4862,9 +4936,18 @@ datum
 			taste = list("earthy")
 			description = "Tangy, yet refreshingly earthy."
 			reagent_state = LIQUID
-			thirst_value = 0.8
 
-		fooddrink/thaicoffee
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
+				if (!M)
+					M = holder.my_atom
+				if(istype(M, /mob/living/carbon/human))
+					var/mob/living/carbon/human/H = M
+					if (H.bioHolder.age < 57 && H.bioHolder.age > 41)
+						H.take_toxin_damage(-1)
+
+
+		fooddrink/caffeinated/thaicoffee
 			name = "Thai iced coffee"
 			id = "thaiicedcoffee"
 			fluid_r = 218
@@ -4876,7 +4959,7 @@ datum
 			reagent_state = LIQUID
 			thirst_value = 0.8
 
-		fooddrink/pepperminthotchocolate
+		fooddrink/milk/chocolate_milk/pepperminthotchocolate
 			name = "peppermint hot chocolate"
 			id = "pepperminthotchocolate"
 			fluid_r = 147
@@ -4888,7 +4971,7 @@ datum
 			reagent_state = LIQUID
 			thirst_value = 0.8
 
-		fooddrink/mexicanhotchocolate
+		fooddrink/milk/chocolate_milk/mexicanhotchocolate
 			name = "Mexican hot chocolate"
 			id = "mexicanhotchocolate"
 			fluid_r = 76
@@ -4900,7 +4983,7 @@ datum
 			reagent_state = LIQUID
 			thirst_value = 0.75
 
-		fooddrink/pumpkinspicelatte
+		fooddrink/caffeinated/pumpkinspicelatte
 			name = "pumpkin spice latte"
 			id = "pumpkinspicelatte"
 			fluid_r = 231
@@ -4910,6 +4993,7 @@ datum
 			reagent_state = LIQUID
 			taste = list("earthy", "sweet")
 			thirst_value = 1
+			caffeine_content = 0.6
 
 		fooddrink/lavender_essence
 			name = "lavender essence"
@@ -4954,7 +5038,7 @@ datum
 					src.holder.remove_reagent("miasma", (src.holder.get_reagent_amount("lavender_essence")) * 2)
 					src.holder.remove_reagent("lavender_essence", miasma_amount/2)
 
-		fooddrink/lavenderlatte
+		fooddrink/caffeinated/lavenderlatte
 			name = "lavender latte"
 			id = "lavender_latte"
 			fluid_r = 157
@@ -4964,3 +5048,60 @@ datum
 			reagent_state = LIQUID
 			taste = "like living in a cottage in the countryside"
 			thirst_value = 1
+			caffeine_content = 0.6
+
+		fooddrink/sweetcondensedmilk
+			name = "sweet condensed milk"
+			id = "sweetcondensedmilk"
+			description = "A thick, sweet, condensed milk."
+			reagent_state = LIQUID
+			fluid_r = 255
+			fluid_b = 255
+			fluid_g = 255
+			transparency = 255
+			taste = "sweet, way too sweet"
+
+		fooddrink/caffeinated/cafebombon
+			name = "café bombón"
+			id = "cafebombon"
+			fluid_r = 125
+			fluid_g = 83
+			fluid_b = 45
+			description = "A deceptively simple coffee with a sweet side."
+			reagent_state = LIQUID
+			taste = "a bit too sweet, but in a good way, somehow"
+			thirst_value = 1
+			caffeine_content = 0.8
+
+		fooddrink/frothedmilk
+			name = "frothed milk"
+			id = "frothedmilk"
+			description = "Silky, airy, and topped with a cloud of tiny bubbles."
+			reagent_state = LIQUID
+			fluid_r = 255
+			fluid_b = 255
+			fluid_g = 255
+			transparency = 200
+			taste = list("creamy", "airy")
+
+		fooddrink/caffeinated/macchiato
+			name = "macchiato"
+			id = "macchiato"
+			fluid_r = 156
+			fluid_g = 114
+			fluid_b = 74
+			description = "A bold espresso marked with a small crown of silky milk foam."
+			reagent_state = LIQUID
+			taste = list("bold", "creamy")
+			thirst_value = 1
+			caffeine_content = 0.8
+      
+		fooddrink/dulcedeleche
+			name = "dulce de leche"
+			id = "dulcedeleche"
+			fluid_r = 184
+			fluid_g = 123
+			fluid_b = 57
+			description = "A thick, velvety spread that clings to everything it touches."
+			reagent_state = SOLID
+			taste = list("rich", "sweet")

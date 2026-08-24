@@ -22,6 +22,7 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
   */
 TYPEINFO(/area)
 	var/valid_bounty_area = FALSE
+	var/allow_restricted_z_deconstruction = FALSE
 /area
 
 	/// TRUE if a dude is here (DOES NOT APPLY TO THE "SPACE" AREA)
@@ -1347,6 +1348,7 @@ ABSTRACT_TYPE(/area/adventure)
 /area/spacehabitat
 	name = "Habitat Dome"
 	icon_state = "green"
+	requires_power = FALSE
 
 /area/spacehabitat/beach
 	name = "Habitat Dome Beach"
@@ -1356,13 +1358,11 @@ ABSTRACT_TYPE(/area/adventure)
 /area/spacehabitat/pool
 	name = "Pool Room"
 	icon_state = "yellow"
-	requires_power = FALSE
 
 /area/spacehabitat/owlery
 	name = "Owlery"
 	icon_state = "yellow"
 	sound_environment = 15
-	requires_power = FALSE
 
 /area/salyut
 	name = "Soviet derelict"
@@ -1623,6 +1623,10 @@ ABSTRACT_TYPE(/area/prefab)
 /area/prefab/merc_outpost
 	name = "Frontier Outpost 8"
 	icon_state = "red"
+
+/area/prefab/fancy_restaurant
+	name = "The Hidden Gem"
+	icon_state = "green"
 
 // Sealab trench areas //
 
@@ -1962,6 +1966,19 @@ TYPEINFO(/area/station/maintenance)
 	do_not_irradiate = TRUE
 	station_map_colour = MAPC_MAINTENANCE
 
+//Randomly name the maintenance tunnels on probstation to enhance confusion.
+#ifdef MAP_OVERRIDE_PROBSTATION
+	var/static/list/unused_greek_letters
+	New()
+		. = ..()
+		if(!src.unused_greek_letters)
+			src.unused_greek_letters = strings("station_name.txt", "greek")
+		if(src.name == initial(src.name))
+			var/chosen_letter = pick(src.unused_greek_letters)
+			src.unused_greek_letters -= chosen_letter
+			src.name = "[chosen_letter] Maintenance"
+#endif
+
 /area/station/maintenance/northwest
 	name = "North West Maintenance"
 	icon_state = "NWmaint"
@@ -2019,6 +2036,15 @@ ABSTRACT_TYPE(/area/station/maintenance/solar)
 /area/station/maintenance/solar/north
 	name = "North Solar Maintenance"
 	icon_state = "SolarcontrolN"
+
+/area/station/maintenance/solar/alpha
+	name = "Alpha Solar Maintenance"
+	icon_state = "SolarcontrolW"
+
+/area/station/maintenance/solar/bravo
+	name = "Bravo Solar Maintenance"
+	icon_state = "SolarcontrolW"
+
 ABSTRACT_TYPE(/area/station/maintenance/inner)
 /area/station/maintenance/inner
 	name = "Inner Maintenance"
@@ -2073,6 +2099,9 @@ TYPEINFO(/area/station/medical/asylum)
 /area/station/medical/asylum
 	name = "Asylum Mini-Station"
 	icon_state = "blue"
+#ifdef MAP_OVERRIDE_PROBSTATION
+	minimaps_to_render_on = 0
+#endif
 
 /area/station/medical/asylum/main
 
@@ -2410,6 +2439,9 @@ ABSTRACT_TYPE(/area/station/mining)
 	sound_environment = 4
 	station_map_colour = MAPC_COMMAND
 
+/area/station/bridge/map_control
+	name = "Map Control Center"
+
 /area/station/bridge/united_command //currently only on atlas - ET
     name = "United Command"
     icon_state ="bridge"
@@ -2568,6 +2600,11 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 	icon_state = "purple"
 	sound_environment = 5
 
+/area/station/crew_quarters/aquarium
+	name = "Aquarium"
+	icon_state = "blue"
+	sound_environment = 4
+
 /area/station/crew_quarters/data
 	name = "Data Center"
 	icon_state = "purple"
@@ -2614,12 +2651,20 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 		name = "The Rusty Krab"
 		icon_state = "kitchen"
 
+/area/station/crew_quarters/kitchen/backroom
+	name = "Kitchen Back Room"
+	icon_state = "red"
+
 /area/station/crew_quarters/clown
 	name = "Clown Hole"
 	icon_state = "storage"
 #ifdef UNDERWATER_MAP
 	requires_power = FALSE
 #endif
+
+/area/station/crew_quarters/clown/entryway
+	name = "Clown Hole Entrance"
+	icon_state = "pink"
 
 /area/station/crew_quarters/catering
 	name = "Catering Storage"
@@ -2643,6 +2688,10 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 /area/station/crew_quarters/info
 	name = "Information Office"
 	icon_state = "purple"
+
+/area/station/crew_quarters/map_atrium
+	name = "Mapping Atrium"
+	icon_state = "park"
 
 /area/station/crew_quarters/bar
 	name= "Bar"
@@ -2756,6 +2805,9 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 /area/station/crew_quarters/garden
 	name = "Public Garden"
 	icon_state = "park"
+
+/area/station/crew_quarters/garden/shrub_hall
+	name = "Shrub Hall"
 
 /area/station/crew_quarters/garden/sunlight
 	name = "Public Garden"
@@ -2872,12 +2924,13 @@ TYPEINFO(/area/station/engine/power/transmission)
 	name = "Engineering Gravity Tether"
 	icon_state = "engineering"
 
-TYPEINFO(/area/station/engine/singcore)
+TYPEINFO(/area/station/engine/core/singularity/external)
 	valid_bounty_area = FALSE
-/area/station/engine/singcore
+/area/station/engine/core/singularity/external
 	name = "Singularity Core"
 	icon_state = "red"
 	requires_power = FALSE
+	sound_environment = 10
 
 /area/station/engine/eva
 	name = "Engineering EVA"
@@ -3207,6 +3260,8 @@ ABSTRACT_TYPE(/area/station/security)
 		name = "Security Foyer Checkpoint"
 /area/station/security/checkpoint/sec_foyer/no_teleblock
 	teleport_blocked = AREA_TELEPORT_ALLOWED
+/area/station/security/checkpoint/generic
+		name = "Security Checkpoint"
 /area/station/security/checkpoint/podbay
 		name = "Pod Bay Security Checkpoint"
 /area/station/security/checkpoint/chapel
@@ -3350,6 +3405,15 @@ TYPEINFO(/area/station/solar/small_backup3)
 	name = "Emergency Solar Array 3"
 	icon_state = "yellow"
 
+TYPEINFO(/area/station/solar/asylum)
+	valid_bounty_area = FALSE
+/area/station/solar/asylum
+	name = "Asylum Solar Array"
+	icon_state = "yellow"
+#ifdef MAP_OVERRIDE_PROBSTATION
+	minimaps_to_render_on = 0
+#endif
+
 /area/station/solar/aisat
 	name = "AI Satellite Solar Array"
 	icon_state = "yellow"
@@ -3467,6 +3531,10 @@ ABSTRACT_TYPE(/area/station/science)
 	name = "Science Teleporter"
 	icon_state = "telelab"
 	station_map_colour = MAPC_TELESCI
+
+/area/station/science/teleporter/foyer
+	name = "Science Teleporter Foyer"
+	icon_state = "purple"
 
 /area/station/science/research_director
 	name = "Research Director's Office"
@@ -3776,8 +3844,29 @@ ABSTRACT_TYPE(/area/station/catwalk)
 		name = "Research Outpost Pathology"
 		icon_state = "pink"
 
+/area/research_outpost/limpet
+	name = "The Limpet"
+	minimaps_to_render_on = null
+	do_not_irradiate = FALSE
+
+/area/research_outpost/limpet/hangar
+	name = "Limpet Hangar"
+	icon_state = "hangar"
+	do_not_irradiate = TRUE
+
+/area/research_outpost/limpet/maint
+	name = "Limpet Equipment Room"
+	icon_state = "purple"
+	do_not_irradiate = TRUE
+
+/area/research_outpost/limpet/personnel
+	name = "Limpet Personnel Wing"
+	icon_state = "pink"
+
 // end station areas //
 
+TYPEINFO(/area/salvager)
+	allow_restricted_z_deconstruction = TRUE
 // Salvager Spawn
 /area/salvager
 	name = "Salvager Vessel Magpie"
@@ -3852,6 +3941,12 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	name = "medical bay"
 	icon_state = "purple"
 
+TYPEINFO(/area/syndicate_station/hideout)
+	allow_restricted_z_deconstruction = TRUE
+/area/syndicate_station/hideout
+	name = "Mysterious Hideout"
+	icon_state = "red"
+
 // end syndie //
 
 /// Wizard den area for the wizard shuttle spawn
@@ -3903,59 +3998,6 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 	icon_state = "storage"
 	sound_environment = 12
 
-/area/station/ai_monitored/armory
-	name = "Armory"
-	icon_state = "armory"
-	sound_environment = 2
-	teleport_blocked = AREA_TELEPORT_BLOCKED
-	spy_secure_area = TRUE
-	station_map_colour = MAPC_ARMOURY
-	var/static/list/entered_ckeys = list()
-	var/armory_auth = FALSE
-
-	proc/authorize()
-		armory_auth = TRUE
-
-	proc/unauthorize()
-		armory_auth = FALSE
-
-	New()
-		..()
-		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_ARMORY_AUTH, PROC_REF(authorize))
-		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_ARMORY_UNAUTH, PROC_REF(unauthorize))
-		SPAWN(5 SECONDS) // This delay should allow for armory items to be created and log component for every pickup to be added to guns
-			var/area/A = locate(/area/station/ai_monitored/armory)
-			for(var/obj/item/O in A)
-				O.AddComponent(/datum/component/log_item_pickup, first_time_only=TRUE, authorized_job=null, message_admins_too=FALSE)
-
-	Entered(atom/movable/A, atom/oldloc)
-		. = ..()
-		if (current_state == GAME_STATE_PLAYING) //Don't worry about this in setup.
-			var/obj/O = A
-			if (istype(O))
-				if(access_armory in O.req_access) // Auto update access for armory stuff when it enters armory if it mismatches current auth status
-					if(src.armory_auth && !(access_security in O.req_access))
-						O.req_access += access_security
-						O.visible_message(SPAN_NOTICE("[O]'s access is automatically updated!"))
-						playsound(O, 'sound/machines/chime.ogg', 50)
-					else if (!src.armory_auth && (access_security in O.req_access))
-						O.req_access = list(access_armory)
-						O.visible_message(SPAN_NOTICE("[O]'s access is automatically reset!"))
-						playsound(O, 'sound/machines/chime.ogg', 50)
-		if (current_state < GAME_STATE_FINISHED)
-			if(istype(A, /mob/living) && !istype(A, /mob/living/intangible))
-				var/mob/living/M = A
-				if(!M.client)
-					return
-				if(M.client.holder)
-					return
-				if(M.client.ckey in entered_ckeys)
-					return
-				var/ckey = M.client.ckey
-				entered_ckeys += ckey
-				SPAWN(120 SECONDS)
-					entered_ckeys -= ckey
-				logTheThing(LOG_STATION, M, "entered the Armory [log_loc(M)].[armory_auth ? "" : " - Armory unauthorized."]")
 // // // // // //
 
 /// Turret protected areas, will activate AI turrets to pop up when entered, and vice-versa when exited.
@@ -4056,6 +4098,11 @@ TYPEINFO(/area/station/turret_protected/AIbaseoutside)
 	name = "AI Upload Foyer Starboard"
 	sound_environment = 12
 	icon_state = "ai_foyer"
+
+/area/station/turret_protected/incursion
+	name = "Incursion Staging Area"
+	icon_state = "purple"
+	sound_environment = 12
 
 /area/station/turret_protected/armory_outside
 	name = "Armory Outer Perimeter"
@@ -4588,7 +4635,11 @@ ABSTRACT_TYPE(/area/mining)
 
 // pod_wars Areas
 /area/pod_wars
+#ifdef MAP_OVERRIDE_PROBSTATION
+	minimaps_to_render_on = 0
+#else
 	minimaps_to_render_on = MAP_POD_WARS_NANOTRASEN | MAP_POD_WARS_SYNDICATE | MAP_OBSERVER
+#endif
 
 /area/pod_wars/team1
 	station_map_colour = MAPC_NANOTRASEN

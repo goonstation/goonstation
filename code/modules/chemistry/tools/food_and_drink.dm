@@ -277,8 +277,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 	Eat(var/mob/M as mob, var/mob/user, var/bypass_utensils = FALSE)
 		// in this case m is the consumer and user is the one holding it
-		if (!src.edible)
-			return 0
 		if(!M?.bioHolder.HasEffect("mattereater") && ON_COOLDOWN(M, "eat", EAT_COOLDOWN))
 			return 0
 		if (!src.bites_left)
@@ -1076,7 +1074,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			src.labeled = 1
 		else if (istype(W,/obj/item/tool/omnitool))
 			var/obj/item/tool/omnitool/OT = W
-			if (OT.mode == OMNI_MODE_UNCAPPING)
+			if (OT.mode?.mode_id == OMNITOOL::MODE_BOTTLE_OPENER)
 				boutput(user, SPAN_ALERT("It's a screw-top bottle."))
 			else
 				..()
@@ -1349,16 +1347,17 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 			src.UpdateIcon()
 			return
 
-		else if (istype(W, /obj/item/shaker/salt))
-			var/obj/item/shaker/salt/S = W
-			if (S.shakes >= 15)
+		// applicators are not open containers, special handling here
+		else if (istype(W, /obj/item/reagent_containers/applicator/condiment/shaker/salt))
+			var/obj/item/reagent_containers/applicator/condiment/shaker/salt/S = W
+			if (S.reagents.total_volume < 2)
 				boutput(user, SPAN_ALERT("There isn't enough salt in here to salt the rim!"))
 				return
 			else
 				boutput(user, SPAN_NOTICE("You salt the rim of [src]."))
 				src.salted = 1
+				S.reagents.remove_any(2)
 				src.UpdateIcon()
-				S.shakes ++
 				return
 
 		else if (istype(W, /obj/item/reagent_containers) && W.is_open_container() && W.reagents.has_reagent("salt"))
@@ -1634,6 +1633,8 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	wedge_y_offset = -2
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/shot/syndie
+	SYNDICATE_STEALTH_DESCRIPTION("The label mentions something about \"nearly bottomless mimosas\".")
+	tooltip_flags = parent_type::tooltip_flags | REBUILD_USER
 	amount_per_transfer_from_this = 50
 	gulp_size = 50
 	initial_volume = 50
@@ -2330,3 +2331,17 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	initial_volume = 50
 	initial_reagents = list("milk"=40, "sugar"=10)
 	can_recycle = 0
+
+/obj/item/reagent_containers/food/drinks/milkfrother
+	name = "Milk Frother"
+	desc = "A sophisticated machine used to froth milk."
+	icon = 'icons/obj/foodNdrink/bottle.dmi'
+	icon_state = "milk_frother"
+	initial_volume = 50
+	can_recycle = FALSE
+
+	attack_self(mob/user)
+		var/temperature_change = T0C + 65 - src.reagents.total_temperature
+		user.visible_message("<b>[user.name]</b> turns on the milk frother, producing a pleasant whirring sound as the contents are agitated and heated.")
+		src.reagents.physical_shock(30)
+		src.reagents.temperature_reagents(exposed_temperature = T0C + 80, change_cap = temperature_change ,change_min = temperature_change)

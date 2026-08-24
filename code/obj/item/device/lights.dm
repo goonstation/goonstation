@@ -302,7 +302,7 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/glowstick, proc/turnon, proc/burst)
 /obj/item/device/light/glowstick/purple
 	base_state = "glowstick-purple"
 	icon_state = "glowstick-purple0"
-	desc = "A emergency glowstick, designed by the legendary Samuel L. Jackson."
+	desc = "An emergency glowstick, designed by the legendary Samuel L. Jackson."
 	col_r = 0.6
 	col_g = 0.1
 	col_b = 0.9

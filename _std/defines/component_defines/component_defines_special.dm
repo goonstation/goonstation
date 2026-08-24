@@ -172,7 +172,7 @@
 #define COMSIG_SPEAKER_ORIGIN_UPDATED "speaker_origin_updated"
 /// When a listen module tree's listener origin is updated. (listen tree, old_listener_origin, new_listener_origin)
 #define COMSIG_LISTENER_ORIGIN_UPDATED "listener_origin_updated"
-/// When a listen module tree's listener parent is updated. (listen tree, old_listener_origin, new_listener_origin)
+/// When a listen module tree's listener parent is updated. (listen tree, old_listener_parent, new_listener_parent)
 #define COMSIG_LISTENER_PARENT_UPDATED "listener_parent_updated"
 /// Flush all message buffers associated with the target datum.
 #define COMSIG_FLUSH_MESSAGE_BUFFER "flush_message_buffer"
@@ -194,3 +194,13 @@
 // ---- Gravity Events ----
 /// When gravity events occur (source, type) (see _std/defines/gravity.dm )
 #define COMSIG_GRAVITY_EVENT "gravity_event"
+
+// ---- Camera coverage signals
+
+///When a camera coverage emitter starts being viewed (subsequent viewers will not trigger a re-signal)
+#define COMSIG_CAMERA_ACTIVE "camera_active"
+///When a camera coverage emitter stops being viewed at all (no more viewers registered)
+#define COMSIG_CAMERA_DEACTIVE "camera_deactive"
+
+/// When a wraith tries to curse someone (wraith)
+#define COMSIG_TRY_CURSE "try_curse"

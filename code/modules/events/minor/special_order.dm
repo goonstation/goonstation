@@ -51,7 +51,7 @@
 	New()
 		..()
 		info = replacetext(info, "%TARGET%", pick("X̶e̸e̶ ̵P̶'̸X'", "TOM", "Smith Smithington", "Mx. Grey"))
-		src.stamp(rand(50,160), rand(50,90), rand(-20,20), "stamp-gtc.png", "stamp-syndicate")
+		src.stamp(rand(50,160), rand(50,90), rand(-20,20), "[resource("images/tgui/stamp_icons/stamp-gtc.png")]", "stamp-syndicate")
 
 /obj/item/paper/requisition/pizza_party
 	info = {"We have quite the situation where all our pizza ovens are having a fit.  We a number of orders to fill and could really use your help, my manager said by any means necessary!  We have quotas to meet! We have <i>guarantee</i> to uphold!<BR>
@@ -69,7 +69,7 @@
 		target_name += " [pick_string_autokey("names/last.txt")]"
 		info = replacetext(info, "%TARGET%", target_name)
 		if(src.type == /obj/item/paper/requisition/pizza_party)
-			src.stamp(rand(50,160), rand(50,90), rand(-20,20), "stamp-gtc.png", "stamp-syndicate")
+			src.stamp(rand(50,160), rand(50,90), rand(-20,20), "[resource("images/tgui/stamp_icons/stamp-gtc.png")]", "stamp-syndicate")
 
 	nt
 		info = {"TO: Space Station 13<BR/>
@@ -87,7 +87,7 @@
 				target_name = pick_string_autokey("names/first_male.txt")
 			target_name += " [pick_string_autokey("names/last.txt")]"
 			info = replacetext(info, "%BDAY%", target_name)
-			src.stamp(rand(130,180), rand(160,190), rand(-40,40), "stamp-req-nt.png", "stamp-centcom")
+			src.stamp(rand(130,180), rand(160,190), rand(-40,40), "[resource("images/tgui/stamp_icons/stamp-req-nt.png")]", "stamp-centcom")
 
 
 /obj/item/paper/requisition/blood
@@ -104,9 +104,9 @@
 				info += "Alucard"
 			else
 				info += "V. D."
-		src.stamp(rand(50,160), rand(50,90), rand(-60,-20), "stamp-gtc.png", "stamp-syndicate")
-		src.stamp(rand(50,160), rand(190,290), rand(-40,40), "stamp-gtc.png", "stamp-syndicate")
-		src.stamp(rand(120,260), rand(50,390), rand(20,60), "stamp-gtc.png", "stamp-syndicate")
+		src.stamp(rand(50,160), rand(50,90), rand(-60,-20), "[resource("images/tgui/stamp_icons/stamp-gtc.png")]", "stamp-syndicate")
+		src.stamp(rand(50,160), rand(190,290), rand(-40,40), "[resource("images/tgui/stamp_icons/stamp-gtc.png")]", "stamp-syndicate")
+		src.stamp(rand(120,260), rand(50,390), rand(20,60), "[resource("images/tgui/stamp_icons/stamp-gtc.png")]", "stamp-syndicate")
 
 /obj/item/paper/requisition/surgery/organ_swap
 	info = {"TO: Space Station 13<BR/>
@@ -119,7 +119,7 @@
 	<i>All information included or obtained regarding the individual should be ignored and are all part of the training exercise.</i>"}
 	New()
 		..()
-		src.stamp(rand(90,160), rand(120,160), rand(-20,20), "stamp-classified.png", "stamp-syndicate")
+		src.stamp(rand(90,160), rand(120,160), rand(-20,20), "[resource("images/tgui/stamp_icons/stamp-classified.png")]", "stamp-syndicate")
 
 
 /obj/item/paper/requisition/food_order
@@ -133,7 +133,7 @@
 		..()
 
 		info = replacetext(info, "%FOOD_COMPANY%", pick(company))
-		src.stamp(rand(90,260), rand(150,390), rand(-20,20), "stamp-gtc.png", "stamp-syndicate")
+		src.stamp(rand(90,260), rand(150,390), rand(-20,20), "[resource("images/tgui/stamp_icons/stamp-gtc.png")]", "stamp-syndicate")
 
 //non-integrated special order system
 

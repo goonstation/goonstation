@@ -2,6 +2,7 @@
 
 ABSTRACT_TYPE(/datum/reagent/cement)
 ABSTRACT_TYPE(/datum/reagent/concrete)
+ABSTRACT_TYPE(/datum/reagent/glue)
 
 datum
 	reagent
@@ -533,9 +534,9 @@ datum
 				if (volume_passed < 1)
 					return
 				if (isdead(M) || istype(get_area(M),/area/afterlife/bar))
-					var/came_back_wrong = 0
+					var/came_back_wrong = FALSE
 					if (M.get_brute_damage() + M.get_burn_damage() >= 150)
-						came_back_wrong = 1
+						came_back_wrong = TRUE
 					if (ismobcritter(M))
 						M.full_heal() // same as with objcritters basically
 					else
@@ -561,8 +562,18 @@ datum
 								H.visible_message(SPAN_ALERT("<b>[H]</b> seems to prefer the afterlife!"))
 							H.make_jittery(1000)
 							SPAWN(rand(20, 100))
-								logTheThing(LOG_COMBAT, H, "is gibbed by puritan when resuscitated with strange reagent at [log_loc(H)].")
-								H.gib()
+								if (H)
+									var/gib_reason = "unknown"
+									if (came_back_wrong)
+										gib_reason = "too much damage"
+									else if (H.decomp_stage)
+										gib_reason = "decomposition"
+									else if (G?.mind?.get_player()?.dnr)
+										gib_reason = "DNR set"
+									else if (is_puritan)
+										gib_reason = "puritan trait"
+									logTheThing(LOG_COMBAT, H, "is gibbed due to [gib_reason] when resuscitated with strange reagent at [log_loc(H)].")
+									H.gib()
 							return
 					else // else just get whoever's the mind
 						G = find_ghost_by_key(M.mind?.key)
@@ -847,9 +858,9 @@ datum
 					simulated_target.wetify(-1, 60 SECONDS, rgb(164,188,98))
 
 		glue
-			name = "space glue"
-			id = "spaceglue"
-			description = "Industrial superglue that is sure to stick to everything."
+			name = "abstract glue parent"
+			id = "glue_parent"
+			description = "God's Lavish Unholy Excrement"
 			reagent_state = LIQUID
 			depletion_rate = 0.6
 			fluid_r = 230
@@ -859,24 +870,17 @@ datum
 			viscosity = 0.8
 			block_slippy = 1
 			var/counter
+			var/max_duration = null
+
+			proc/check_valid_obj(obj/O, volume)
+				if (O.anchored)
+					return FALSE
+				return TRUE
 
 			reaction_turf(var/turf/target, var/volume)
 				if (istype(target, /turf/simulated))
 					var/turf/simulated/simulated_target = target
 					simulated_target.wetify(-2, 60 SECONDS)
-
-			on_mob_life(var/mob/M, var/mult = 1, var/method, var/volume_passed)
-				if (!M) M = holder.my_atom
-				if (!counter) counter = 1
-				switch(counter += (1 * mult))
-					if(20 to INFINITY)
-						M.druggy = max(M.druggy, 15)
-						if (M.canmove && prob(20))
-							M.change_misstep_chance(5 * mult)
-						if(probmult(5)) M.emote(pick("twitch","drool","moan"))
-
-				..()
-				return
 
 			reaction_obj(obj/O, volume)
 				if(volume < 5)
@@ -887,6 +891,8 @@ datum
 					return
 				if(O.invisibility >= INVIS_ALWAYS_ISH)
 					return
+				if (!src.check_valid_obj(O, volume))
+					return
 				var/silent = FALSE
 				var/list/covered = holder.covered_turf()
 				if (length(covered) > 5)
@@ -896,12 +902,67 @@ datum
 					volume = min(volume, src.volume / (2 + 3 / length(covered)))
 				if(volume < 5)
 					return
-				O.AddComponent(/datum/component/glue_ready, null, clamp(volume/4, 3, 15) SECONDS)
+				O.AddComponent(/datum/component/glue_ready, max_duration, clamp(volume/4, 3, 15) SECONDS)
 				var/turf/T = get_turf(O)
 				if(!silent)
 					T.visible_message(SPAN_NOTICE("\The [O] is coated in a layer of glue!"))
 				if(istype(holder, /datum/reagents/fluid_group))
 					holder.remove_reagent(src.id, min(volume, src.volume - 4))
+
+			spaceglue
+				name = "space glue"
+				id = "spaceglue"
+				description = "Strong glue that is sure to stick to most things."
+
+				check_valid_obj(obj/O, volume)
+					if (!isitem(O))
+						return FALSE
+					. = ..()
+
+				on_mob_life(var/mob/M, var/mult = 1, var/method, var/volume_passed)
+					if (!M) M = holder.my_atom
+					if (!counter) counter = 1
+					switch(counter += (1 * mult))
+						if(20 to INFINITY)
+							M.druggy = max(M.druggy, 15)
+							if (M.canmove && prob(20))
+								M.change_misstep_chance(5 * mult)
+							if(probmult(5)) M.emote(pick("twitch","drool","moan"))
+					. = ..()
+
+			superglue
+				name = "super glue"
+				id = "superglue"
+				description = "Industrial superglue that is sure to stick to everything."
+
+				check_valid_obj(obj/O, volume)
+					return TRUE
+
+				on_mob_life(var/mob/M, var/mult = 1, var/method, var/volume_passed)
+					if (!M) M = holder.my_atom
+					if (!counter) counter = 1
+					switch(counter += (1 * mult))
+						if(20 to INFINITY)
+							M.druggy = max(M.druggy, 15)
+							if (M.canmove && prob(20))
+								M.change_misstep_chance(5 * mult)
+							if(probmult(5)) M.emote(pick("twitch","drool","moan"))
+					. = ..()
+
+			craftglue
+				name = "craft glue"
+				id = "craftglue"
+				fluid_r = 230
+				fluid_b = 230
+				fluid_g = 60
+				description = "Non-toxic craft glue suitable for consumption by children and adults alike."
+				max_duration = 10 MINUTES
+
+				check_valid_obj(obj/O, volume)
+					if (!isitem(O))
+						return FALSE
+					. = ..()
+
 
 // metal foaming agent
 // this is lithium hydride. Add other recipies (e.g. MiH + H2O -> MiOH + H2) eventually
@@ -911,7 +972,7 @@ datum
 		/*foaming_agent
 			name = "foaming agent"
 			id = "foaming_agent"
-			description = "A agent that yields metallic foam when mixed with light metal and a strong acid."
+			description = "An agent that yields metallic foam when mixed with light metal and a strong acid."
 			reagent_state = SOLID
 			fluid_r = 100
 			fluid_g = 90
@@ -1175,7 +1236,7 @@ datum
 			transparency = 255
 			viscosity = 0.15
 			depletion_rate = 1
-			var/static/list/booster_enzyme_reagents_to_check = list("charcoal","synaptizine","styptic_powder","teporone","salbutamol","methamphetamine","omnizine","perfluorodecalin","penteticacid","oculine","epinephrine","mannitol","synthflesh", "saline", "anti_rad", "salicylic_acid", "menthol", "silver_sulfadiazine"/*,"coffee", "sugar", "espresso", "energydrink", "ephedrine", "crank"*/) //these last ones are probably an awful idea. Uncomment to buff booster a decent amount
+			var/static/list/booster_enzyme_reagents_to_check = list("charcoal","synaptizine","styptic_powder","teporone","salbutamol","methamphetamine","omnizine","perfluorodecalin","penteticacid","oculine","epinephrine","mannitol","synthflesh", "saline", "anti_rad", "salicylic_acid", "acetylsalicylic_acid", "menthol", "silver_sulfadiazine"/*,"coffee", "sugar", "espresso", "energydrink", "ephedrine", "crank"*/) //these last ones are probably an awful idea. Uncomment to buff booster a decent amount
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				for (var/i = 1, i <= booster_enzyme_reagents_to_check.len, i++)
@@ -4005,6 +4066,8 @@ datum
 				if(!volume_passed)
 					return
 				if (M.bioHolder && M.bioHolder.HasEffect("toxic_farts"))
+					return
+				if (istype(M, /mob/living/critter/changeling))
 					return
 
 				if (M?.reagents)

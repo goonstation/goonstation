@@ -13,6 +13,7 @@
 
 #define MGT_ROBOTICS "robotics"
 #define MGT_GENETICS "genetics"
+#define MGT_PHARMACY "pharmacy"
 #define MGT_CARGO "cargo"
 #define MGT_MINING "mining"
 #define MGT_CATERING "catering" // chef/bartender
@@ -34,6 +35,7 @@
 #define MGA_SALES "Sales Alert"
 #define MGA_SHIPPING "Shipping Alert"
 #define MGA_CARGOREQUEST "Cargo Request"
+#define MGA_CHEMREQUEST "Chemical Request"
 #define MGA_CRISIS "Crisis Alert"
 #define MGA_RADIO "Radio Alert"
 #define MGA_TRACKING "Tracking Alert"
@@ -52,6 +54,7 @@
 #define JOB_NANOTRASEN "nanotrasen"
 #define JOB_SYNDICATE "syndicate"
 #define JOB_HALLOWEEN "halloween"
+#define JOB_CLOWN "clown"
 #define JOB_RANDOM "random"
 #define JOB_DAILY "daily"
 
@@ -61,7 +64,8 @@
 #define HIDDEN_JOBS (1<<2)
 
 // Job round requirements
-#define ROUNDS_MIN_CAPTAIN 30 // captains should know what they're doing (they won't)
+#define ROUNDS_MIN_CAPTAIN 50 // captains should know what they're doing (they won't)
+#define ROUNDS_MIN_HIGHSEC 50 // HoS, NTSC
 #define ROUNDS_MIN_SECURITY 30 // higher barrier of entry than before but now with a trainee job to get into the rythym of things to compensate
 #define ROUNDS_MIN_DETECTIVE 15 // half of sec, please stop shooting people with lethals
 #define ROUNDS_MIN_SECASS 5
@@ -79,3 +83,7 @@
 #define ANNOUNCE_ORDER_HEADS 2
 #define ANNOUNCE_ORDER_LAST 1
 #define ANNOUNCE_ORDER_NEVER 0
+
+//Job whitelist requirements
+#define REQUIRES_WHITELIST_ALWAYS 2 // NTSC
+#define REQUIRES_WHITELIST_USUALLY 1 //Used for no hos whitelist saturday
