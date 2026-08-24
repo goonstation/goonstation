@@ -540,7 +540,7 @@ TYPEINFO(/obj/item/rcd)
 			var/mob/living/carbon/human/H = target
 			var/obj/item/parts/surgery_target = null
 
-			if ((user.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg", "chest")) && (src.mode == RCD_MODE_DECONSTRUCT)) //In surgery conditions and aiming for a limb or an ass in deconstruction mode? Time for ghetto surgery
+			if ((user.zone_sel.selecting in list("l_arm","r_arm","l_leg","r_leg", "chest")) && (src.mode == RCD_MODE::DECONSTRUCT)) //In surgery conditions and aiming for a limb or an ass in deconstruction mode? Time for ghetto surgery
 				if (user.zone_sel.selecting == "chest") //Ass begone
 					var/datum/surgery/surg = H.surgeryHolder?.get_surgery("butt_surgery")
 					if (surg.surgery_possible(user))

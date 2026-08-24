@@ -20,6 +20,7 @@
 	infer_surgery_stage()
 		var/mob/living/carbon/human/C = patient
 		surgery_steps[1].finished = (length(C.implant) == 0)
+		..()
 
 	on_complete(mob/surgeon, obj/item/tool)
 		for (var/obj/item/implant/projectile/I in patient.implant)

@@ -235,16 +235,12 @@
 
 
 	generate_surgery_steps()
+		add_free_step(new /datum/surgery_step/organ/grab(src, organ_var_name))
 		add_next_step(new /datum/surgery_step/organ/cut(src, organ_var_name)) // Makes the organ count as 'in surgery'
 		add_next_step(new /datum/surgery_step/organ/snip(src, organ_var_name)) // Makes the organ unsecure
 		add_next_step(new /datum/surgery_step/organ/remove(src, organ_var_name)) // Removes the organ
 
-	surgery_clicked(mob/living/surgeon, obj/item/tool)
-		var/obj/item/organ = patient.organHolder.get_organ(organ_var_name)
-		if (!tool)
-			actions.start(new/datum/action/bar/icon/remove_organ(surgeon, patient, organ_var_name, patient.name, src, TRUE, organ.icon, organ.icon_state), surgeon)
-			return
-		..()
+
 	heart
 		id = "heart_surgery"
 		name = "Heart Surgery"
@@ -374,7 +370,7 @@
 			var/mob/living/carbon/human/C = patient
 			var/organ = C.organHolder.get_organ(organ_var_name)
 			surgery_steps[1].finished = (organ == null)
-			return
+			return ..()
 		surgery_possible(mob/living/surgeon)
 			if (surgeon?.a_intent != INTENT_GRAB)
 				return FALSE
@@ -395,6 +391,7 @@
 			var/organ = C.organHolder.get_organ(organ_var_name)
 			if (organ)
 				surgery_steps[2].finished = (!organ)
+			..()
 		surgery_possible(mob/living/surgeon)
 			if (surgeon.zone_sel.selecting != "head")
 				return FALSE
@@ -425,7 +422,7 @@
 			var/mob/living/carbon/human/C = patient
 			var/organ = C.organHolder.get_organ(organ_var_name)
 			surgery_steps[1].finished = (organ == null)
-			return
+			..()
 		cancel_possible()
 			return FALSE
 		surgery_possible(mob/living/surgeon)
@@ -448,7 +445,7 @@
 				surgery_steps[4].finished = FALSE
 			else
 				surgery_steps[4].finished = TRUE
-			return
+			..()
 		generate_surgery_steps()
 			add_next_step(new /datum/surgery_step/organ/brain/cut(src, organ_var_name))
 			add_next_step(new /datum/surgery_step/organ/brain/saw(src, organ_var_name))
@@ -498,7 +495,7 @@
 			var/mob/living/carbon/human/C = patient
 			var/no_head = !C.organHolder.get_organ(organ_var_name)
 			surgery_steps[4].finished = no_head
-			return
+			..()
 		generate_surgery_steps()
 			add_next_step(new /datum/surgery_step/head/cut(src, organ_var_name))
 			add_next_step(new /datum/surgery_step/head/saw(src, organ_var_name))
@@ -527,14 +524,14 @@
 	id = "organ_addition"
 	name = "Organ Addition"
 	desc = "Replace the patients' organs."
-	visible = FALSE
+	visible = TRUE
 	implicit = TRUE
 	exit_when_finished = TRUE
 	infer_surgery_stage()
 		var/mob/living/carbon/human/C = patient
 		var/organ = C.organHolder.get_organ(organ_var_name)
 		surgery_steps[1].finished = (organ != null)
-
+		..()
 	generate_surgery_steps()
 		add_next_step(new /datum/surgery_step/organ/add(src,organ_var_name))
 	surgery_possible(mob/living/surgeon)

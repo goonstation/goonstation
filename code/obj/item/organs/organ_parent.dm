@@ -456,16 +456,6 @@
 
 			src.surgery_contexts = list()
 
-			if (surgery_flags & SURGERY_CUTTING)
-				var/datum/contextAction/organ_surgery/cut/action = new
-				surgery_contexts += action
-			if (surgery_flags & SURGERY_SNIPPING)
-				var/datum/contextAction/organ_surgery/snip/action = new
-				surgery_contexts += action
-			if (surgery_flags & SURGERY_SAWING)
-				var/datum/contextAction/organ_surgery/saw/action = new
-				surgery_contexts += action
-
 			.+= length(surgery_contexts)
 
 	/// Get TGUI ui_data list for this organ's health

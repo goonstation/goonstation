@@ -108,7 +108,7 @@
 
 
 	/// Trigger a surgery's context clicked action. Returns TRUE if a context menu was shown.
-	proc/surgery_clicked(datum/surgery/surgery, mob/living/surgseon, obj/item/I)
+	proc/surgery_clicked(datum/surgery/surgery, mob/living/surgeon, obj/item/I)
 		if (!surgery)
 			return FALSE
 		return surgery.surgery_clicked(surgeon, I)

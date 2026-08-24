@@ -81,7 +81,7 @@
 		var/mob/living/carbon/human/C = patient
 		var/no_head = !C.organHolder.get_organ("head")
 		surgery_steps[3].finished = no_head
-		return
+		..()
 
 	generate_surgery_steps()
 		add_next_step(new/datum/surgery_step/head/skeleton/wrench(src))
@@ -112,6 +112,7 @@
 		var/mob/living/carbon/human/C = patient
 		var/organ = C.organHolder.get_organ(organ_var_name)
 		surgery_steps[1].finished = (organ == null)
+		..()
 	generate_surgery_steps()
 		add_next_step(new/datum/surgery_step/organ/skeleton_tail/crowbar(src))
 	surgery_conditions_met(mob/surgeon, obj/item/tool)

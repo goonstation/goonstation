@@ -143,6 +143,15 @@
 		src.affected_organ = the_organ
 		..(parent_surgery)
 
+	grab
+		name = "Grab"
+		desc = "Attempt to violently rip the organ out of the patient."
+		icon_state = "harm"
+		optional = TRUE
+		do_surgery_step(mob/surgeon, obj/item/tool)
+			var/mob/living/carbon/human/patient = parent_surgery.patient
+			var/obj/item/organ = patient.organHolder.get_organ(affected_organ)
+			actions.start(new/datum/action/bar/icon/remove_organ(surgeon, patient, affected_organ, patient.name, src.parent_surgery, TRUE, organ.icon, organ.icon_state), surgeon)
 	snip
 		name = "Snip"
 		desc = "Disconnect the organ."

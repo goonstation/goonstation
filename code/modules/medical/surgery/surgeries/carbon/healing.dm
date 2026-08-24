@@ -77,6 +77,7 @@
 
 		infer_surgery_stage()
 			surgery_steps[1].finished = (patient.surgeryHolder.get_surgery_progress("brain_surgery") == 0)
+			..()
 
 		surgery_possible(mob/living/surgeon)
 			if (surgeon.zone_sel.selecting != "head" || !patient.organHolder || !patient.organHolder?.head || patient.surgeryHolder.get_surgery_progress("brain_surgery") == 0)
@@ -95,6 +96,7 @@
 		desc = "Remove bleeding with a cautery."
 		infer_surgery_stage()
 			surgery_steps[1].finished = (patient.bleeding == 0)
+			..()
 
 		generate_surgery_steps()
 			add_next_step( new/datum/surgery_step/cauterize/bleeding(src))

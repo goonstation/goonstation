@@ -48,6 +48,7 @@
 		surgery_steps[1].finished = (!limb || limb?.remove_stage >= 1)
 		surgery_steps[2].finished = (!limb || limb?.remove_stage >= 2)
 		surgery_steps[3].finished = (!limb)
+		..()
 
 	cancel_possible()
 		var/mob/living/carbon/human/C = patient
