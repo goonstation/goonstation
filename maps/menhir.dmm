@@ -185,8 +185,16 @@
 	pixel_y = 3
 	},
 /obj/item/pen/fancy{
-	pixel_y = 6;
-	pixel_x = 1
+	pixel_y = 5;
+	pixel_x = 5
+	},
+/obj/item/stamp/hos{
+	pixel_y = 23;
+	pixel_x = 9
+	},
+/obj/item/decoration/ashtray{
+	pixel_x = -7;
+	pixel_y = 29
 	},
 /turf/simulated/floor/carpet/red/fancy/innercorner/omni,
 /area/station/security/hos)
@@ -3289,11 +3297,8 @@
 	pixel_x = 5
 	},
 /obj/item/paper/menhir_toreador_extra{
-	pixel_y = 11;
+	pixel_y = 2;
 	pixel_x = -5
-	},
-/obj/item/decoration/ashtray{
-	pixel_x = -7
 	},
 /turf/simulated/floor/black/grime,
 /area/station/security/hos)
@@ -17681,6 +17686,10 @@
 	pixel_y = 6
 	},
 /obj/item/device/radio/intercom/security,
+/obj/item/reagent_containers/food/drinks/mug/HoS{
+	pixel_y = 8;
+	pixel_x = 10
+	},
 /turf/simulated/floor/carpet/red/fancy/edge/north,
 /area/station/security/hos)
 "jiy" = (
@@ -26331,9 +26340,6 @@
 	},
 /area/station/hydroponics)
 "nBY" = (
-/obj/machinery/recharger/wall/sticky{
-	dir = 1
-	},
 /mob/living/critter/small_animal/turtle/sylvester/HoS{
 	dir = 8
 	},
@@ -30823,14 +30829,21 @@
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
 	},
-/obj/item/reagent_containers/food/snacks/spaghetti/spicy/security,
-/obj/item/kitchen/utensil/fork{
-	pixel_x = 9;
-	pixel_y = 3
+/obj/item/reagent_containers/food/snacks/spaghetti/spicy/security{
+	pixel_x = -4;
+	pixel_y = -10
 	},
-/obj/item/reagent_containers/food/drinks/mug/HoS{
-	pixel_y = 16;
-	pixel_x = -6
+/obj/item/kitchen/utensil/fork{
+	pixel_x = 10;
+	pixel_y = -7
+	},
+/obj/item/item_box/gold_star{
+	pixel_y = 12;
+	pixel_x = 8
+	},
+/obj/item/storage/box/revimp_kit{
+	pixel_y = 9;
+	pixel_x = -7
 	},
 /turf/simulated/floor/black/grime,
 /area/station/security/hos)
@@ -33612,18 +33625,6 @@
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
 	},
-/obj/item/stamp/hos{
-	pixel_y = -10;
-	pixel_x = 8
-	},
-/obj/item/storage/box/revimp_kit{
-	pixel_y = 4;
-	pixel_x = -7
-	},
-/obj/item/item_box/gold_star{
-	pixel_y = 9;
-	pixel_x = 8
-	},
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
@@ -33639,6 +33640,7 @@
 	pixel_x = 24
 	},
 /obj/mapping_helper/button/area,
+/obj/machinery/recharger,
 /turf/simulated/floor/black/grime,
 /area/station/security/hos)
 "rlG" = (
