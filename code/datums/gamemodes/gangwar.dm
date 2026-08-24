@@ -1218,6 +1218,7 @@
 	var/datum/gang/gang
 	/// when our next spray sound can beplayed
 	var/next_spray = 0 DECI SECONDS
+	var/tagging_over = FALSE
 
 	New(var/turf/target_turf as turf, var/obj/item/spray_paint_gang/can, var/tag_over)
 		src.target_turf = target_turf
@@ -1225,6 +1226,7 @@
 		src.spraycan = can
 		if (tag_over)
 			src.duration = GANG_SPRAYPAINT_TAG_REPLACE_TIME
+			tagging_over = TRUE
 		..()
 
 	onStart()
@@ -1234,17 +1236,17 @@
 			if (ismob(owner))
 				M = owner
 				src.gang = M?.get_gang()
-			if (gang && src.duration == GANG_SPRAYPAINT_TAG_REPLACE_TIME)
+			if (gang && src.tagging_over)
 				icon = 'icons/obj/decals/gang_tags.dmi'
 				icon_state = "gangtag[src.gang.gang_tag]"
 				var/speedup = src.gang.gear_worn(M)
 				switch (speedup)
 					if (1)
-						duration *= 0.8
+						duration *= 0.9
 					if (2)
-						duration *= 0.6
+						duration *= 0.8
 					if (3)
-						duration *= 0.4
+						duration *= 0.7
 			..()
 		catch(var/exception/e)
 			..()
