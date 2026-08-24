@@ -2741,6 +2741,7 @@ proc/get_mobs_trackable_by_AI()
 		if (src.build_step >= 2)
 			if (src.has_radios < 3)
 				src.build_step++
+				W.forensic_holder.copy_to(src.forensic_holder)
 				boutput(user, "You add \the [W] to [src]!")
 				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 				src.has_radios++
@@ -2759,6 +2760,7 @@ proc/get_mobs_trackable_by_AI()
 		if (src.build_step >= 2)
 			if (!src.has_interface)
 				src.build_step++
+				W.forensic_holder.copy_to(src.forensic_holder)
 				boutput(user, "You add \the [W] to [src]!")
 				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 				src.has_interface = 1
