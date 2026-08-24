@@ -72,6 +72,13 @@ TYPEINFO(/mob/living/critter/gorilla)
 		else
 			return ..()
 
+	hand_attack(atom/target, params) // feedback for smashing windows and such
+		if(istype(target, /obj/window) || istype(target, /obj/mesh/grille) || istype(target, /obj/table) || istype(target, /obj/blob))
+			if(!ON_COOLDOWN(src, "gorilla_ook", 5 SECONDS))
+				src.visible_message(SPAN_ALERT("<b>[src] screeches!</b>"))
+				playsound(src.loc, 'sound/voice/screams/monkey_scream.ogg', 90, 1, pitch=0.3)
+		..()
+
 	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/roar = src.abilityHolder.getAbility(/datum/targetable/critter/roar)
 		if (!roar.disabled && roar.cooldowncheck())
