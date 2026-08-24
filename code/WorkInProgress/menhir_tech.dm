@@ -50,7 +50,7 @@ TYPEINFO_NEW(/obj/effects/menhir_fog)
 #ifdef IN_MAP_EDITOR
 	icon_state = "old_floor2"
 #else
-	icon_state = "bluefloor"
+	icon_state = "bluefloor_exterior"
 #endif
 
 /turf/unsimulated/floor/setpieces/menhir_cavepool
