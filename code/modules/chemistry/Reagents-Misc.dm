@@ -534,9 +534,9 @@ datum
 				if (volume_passed < 1)
 					return
 				if (isdead(M) || istype(get_area(M),/area/afterlife/bar))
-					var/came_back_wrong = 0
+					var/came_back_wrong = FALSE
 					if (M.get_brute_damage() + M.get_burn_damage() >= 150)
-						came_back_wrong = 1
+						came_back_wrong = TRUE
 					if (ismobcritter(M))
 						M.full_heal() // same as with objcritters basically
 					else
@@ -562,8 +562,18 @@ datum
 								H.visible_message(SPAN_ALERT("<b>[H]</b> seems to prefer the afterlife!"))
 							H.make_jittery(1000)
 							SPAWN(rand(20, 100))
-								logTheThing(LOG_COMBAT, H, "is gibbed by puritan when resuscitated with strange reagent at [log_loc(H)].")
-								H.gib()
+								if (H)
+									var/gib_reason = "unknown"
+									if (came_back_wrong)
+										gib_reason = "too much damage"
+									else if (H.decomp_stage)
+										gib_reason = "decomposition"
+									else if (G?.mind?.get_player()?.dnr)
+										gib_reason = "DNR set"
+									else if (is_puritan)
+										gib_reason = "puritan trait"
+									logTheThing(LOG_COMBAT, H, "is gibbed due to [gib_reason] when resuscitated with strange reagent at [log_loc(H)].")
+									H.gib()
 							return
 					else // else just get whoever's the mind
 						G = find_ghost_by_key(M.mind?.key)

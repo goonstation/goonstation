@@ -74,7 +74,7 @@
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/mouth/fermid
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "mouth"
 		HH.name = "mouth"
 		HH.limb_name = "mandibles"
@@ -231,6 +231,7 @@
 	New()
 		..()
 		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/big_fermid, src)
+		src.pixel_x -= 16
 
 /mob/living/critter/fermid/hulk
 	name = "fermid hulk"
@@ -247,7 +248,7 @@
 	New()
 		..()
 		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/big_fermid, src)
-
+		src.pixel_x -= 16
 	purple
 		recolor = "#b90fab"
 
@@ -436,7 +437,7 @@
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/mouth
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "mouth"
 		HH.name = "mouth"
 		HH.limb_name = "teeth"

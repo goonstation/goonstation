@@ -15,6 +15,7 @@ TYPEINFO(/obj/storage/closet)
 	volume = 70
 	_max_health = LOCKER_HEALTH_WEAK
 	_health = LOCKER_HEALTH_WEAK
+	material_amt = MATERIAL::AMOUNT::SHEET * 2
 	///Will this locker auto-close when someone is flung into it
 	var/auto_close = TRUE
 
@@ -606,6 +607,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 	icon_opened = "open-white"
 	desc = "A handy medical locker for storing your doctoring apparel."
 	spawn_contents = list(/obj/item/clothing/head/nursehat = 2,
+					/obj/item/clothing/head/nursehat/blue = 2,
 					/obj/item/clothing/head/traditionalnursehat = 2,
 					/obj/item/clothing/suit/nursedress = 3,
 					/obj/item/clothing/suit/wintercoat/medical = 3,

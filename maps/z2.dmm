@@ -5779,18 +5779,6 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
-"aCo" = (
-/obj/fakeobject/airlock_broken/firelock{
-	dir = 4;
-	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "fdoor0"
-	},
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4;
-	name = "Surface Airlock"
-	},
-/turf/unsimulated/floor/orange,
-/area/iomoon/base)
 "aCr" = (
 /turf/unsimulated/floor/plating/scorched,
 /area/hospital/underground)
@@ -6370,6 +6358,10 @@
 /obj/machinery/vending/cola/red,
 /turf/unsimulated/floor/grey/checker,
 /area/moon/museum)
+"aFo" = (
+/obj/blind_switch/directional/north,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/lobby)
 "aFx" = (
 /obj/landmark/viscontents_spawn{
 	targetZ = 4
@@ -35448,21 +35440,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/owlery/office)
-"cGG" = (
-/obj/fakeobject{
-	anchored = 1;
-	density = 1;
-	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
-	dir = 8;
-	icon = 'icons/obj/computer.dmi';
-	icon_state = "offbroken";
-	name = "broken computer"
-	},
-/obj/blind_switch/north{
-	id = "owl"
-	},
-/turf/unsimulated/floor/wood/two,
-/area/owlery/office)
 "cGH" = (
 /obj/stool/chair/office{
 	dir = 8
@@ -47721,6 +47698,12 @@
 	},
 /turf/unsimulated/floor/carpet/office,
 /area/centcom/offices/gerhazo)
+"dyg" = (
+/obj/blind_switch/directional/north,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "dyh" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/cal)
@@ -48172,6 +48155,9 @@
 /obj/critter/domestic_bee/fancy,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/aibm)
+"dzZ" = (
+/turf/unsimulated/floor/lightyellow,
+/area/iomoon/base)
 "dAb" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 4;
@@ -53948,6 +53934,9 @@
 /obj/decal/stripe_caution,
 /turf/unsimulated/floor/plating,
 /area/crater/biodome/research)
+"dXs" = (
+/turf/unsimulated/wall/auto/adventure/icemoon,
+/area/precursor/menhir)
 "dXD" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -54391,6 +54380,11 @@
 /obj/item/currency/buttcoin,
 /turf/unsimulated/floor/plating,
 /area/afterlife/bar)
+"eli" = (
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 8
+	},
+/area/precursor/menhir)
 "elx" = (
 /turf/unsimulated/floor/grey/corner,
 /area/centcom/offices{
@@ -54988,6 +54982,14 @@
 	dir = 9
 	},
 /area/iomoon/base)
+"eMP" = (
+/turf/unsimulated/floor/setpieces/bluefloor{
+	icon_state = "black";
+	density = 1;
+	desc = "The silence is deafening.";
+	name = "nothing"
+	},
+/area/precursor/menhir)
 "eNc" = (
 /obj/creepy_sound_trigger,
 /turf/unsimulated/floor/setpieces{
@@ -55321,12 +55323,6 @@
 	dir = 8
 	},
 /area/precursor)
-"eWY" = (
-/obj/blind_switch/area/north,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/offices{
-	icon_state = "blue"
-	})
 "eXf" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -55340,10 +55336,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
-"eXz" = (
-/obj/fakeobject/lightbulb_broken,
-/turf/unsimulated/floor/orange,
-/area/iomoon/base)
 "eYl" = (
 /obj/stool/chair/comfy/red{
 	dir = 8
@@ -55360,6 +55352,12 @@
 /obj/decal/cleanable/oil,
 /turf/space,
 /area/watchful_eye_sensor)
+"eYt" = (
+/obj/map/light/cyan{
+	brightness = 7
+	},
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/precursor/menhir)
 "eYK" = (
 /obj/decal/poster/wallsign/fire,
 /turf/unsimulated/wall/auto/lead/gray,
@@ -55436,6 +55434,12 @@
 /obj/machinery/light/incandescent/broken,
 /turf/unsimulated/floor/blackwhite/whitegrime,
 /area/observatory)
+"fdz" = (
+/obj/machinery/door/unpowered/blue{
+	dir = 4
+	},
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/precursor/menhir)
 "fdC" = (
 /turf/unsimulated/floor/caution/west,
 /area/observatory)
@@ -55452,6 +55456,16 @@
 /obj/structure/woodwall,
 /turf/unsimulated/floor/plating,
 /area/retentioncenter)
+"fep" = (
+/obj/item/chilly_orb{
+	id = "DECEIT";
+	color = "#f7e0e0";
+	desc = "Your eyes can't quite seem to focus on it. Something is wrong here."
+	},
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 8
+	},
+/area/precursor/menhir)
 "feE" = (
 /obj/machinery/door/airlock/pyro/command{
 	name = "Research Director's Office"
@@ -55499,6 +55513,14 @@
 	dir = 4
 	},
 /area/owlery/office)
+"fge" = (
+/obj/precursor_puzzle/innervator{
+	vision_description = "Again and again, light passes over a sundial. Once and once, light passes over an orb. The orb is remembered. The door is remembered."
+	},
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 8
+	},
+/area/precursor/menhir)
 "fgg" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -55645,6 +55667,12 @@
 /obj/item/bananapeel,
 /turf/unsimulated/floor/black/side,
 /area/iomoon/base)
+"fkk" = (
+/obj/random_item_spawner/menhir/a_bunch,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/precursor/menhir)
 "fks" = (
 /obj/table/auto,
 /obj/item/paper/image/businesscard/mabinogi,
@@ -55752,6 +55780,15 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mrfishstick)
+"foy" = (
+/obj/precursor_puzzle/sphere,
+/obj/map/light/cyan{
+	brightness = 8
+	},
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/precursor/menhir)
 "foM" = (
 /obj/mesh/catwalk{
 	dir = 4
@@ -56019,6 +56056,18 @@
 	icon_state = "logo_xg7"
 	},
 /area/iomoon/base)
+"fBP" = (
+/obj/fakeobject{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 4;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/unsimulated/floor/lightyellow,
+/area/iomoon/base)
 "fBX" = (
 /obj/item/cigbutt{
 	pixel_x = -5;
@@ -56086,6 +56135,19 @@
 	},
 /turf/unsimulated/wall/auto/adventure/icemooninterior,
 /area/precursor)
+"fEd" = (
+/obj/machinery/door/unpowered/blue{
+	friendly_object = /obj/item/raw_material/cobryl;
+	color = "#f79090";
+	name = "thrumming edifice";
+	desc = "The fissures and seams run red. That can't be good.";
+	tag = "vestibule_of_grief";
+	locks_on_open = 1
+	},
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/precursor/menhir)
 "fEh" = (
 /obj/decal/poster/wallsign/framed_award/mdlicense{
 	desc = "This is Sirka Greenest's Head Surgeon medical licence. Worth nothing these days.";
@@ -56342,6 +56404,10 @@
 "fQk" = (
 /turf/unsimulated/floor/black/corner,
 /area/iomoon/base)
+"fQM" = (
+/obj/precursor_puzzle/innervator/red_east,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/precursor/menhir)
 "fRh" = (
 /obj/map/light/graveyard,
 /obj/tree{
@@ -56678,6 +56744,14 @@
 	dir = 6
 	},
 /area/crypt/graveyard)
+"gci" = (
+/obj/machinery/door/unpowered/blue{
+	dir = 4
+	},
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/precursor/menhir)
 "gcn" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom)
@@ -56722,6 +56796,27 @@
 "gec" = (
 /turf/unsimulated/wall/auto/adventure/fake_window,
 /area/owlery/staffhall)
+"geK" = (
+/obj/decal/carpet{
+	pixel_x = 16;
+	pixel_y = 16;
+	dir = 10
+	},
+/obj/table/wood/regal,
+/obj/machinery/light_switch/directional/west,
+/obj/machinery/phone/unlisted{
+	pixel_x = -5;
+	pixel_y = 7;
+	stripe_color = "#ff0000"
+	},
+/obj/item/reagent_containers/food/drinks/teapot{
+	name = "teapot";
+	pixel_x = 6;
+	pixel_y = 1;
+	initial_reagents = list("tea"=50)
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/moriarty)
 "geL" = (
 /obj/computer3frame/terminal{
 	anchored = 1;
@@ -57016,6 +57111,40 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
+"gpT" = (
+/obj/table/wood/regal{
+	icon_state = "4"
+	},
+/obj/machinery/light/lamp/green{
+	dir = 4;
+	pixel_x = -1;
+	pixel_y = 19;
+	layer = 3;
+	switchon = 1
+	},
+/obj/item/paper{
+	icon_state = "paper";
+	pixel_x = 7;
+	pixel_y = -1
+	},
+/obj/decoration/paperstack/small{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/paper{
+	name = "booklet";
+	desc = "A stack of papers stapled together in a sequence intended for reading in.";
+	icon_state = "stamped-thin";
+	pixel_x = 14;
+	pixel_y = 9
+	},
+/obj/item/pen{
+	pixel_x = 10;
+	pixel_y = 1;
+	layer = 3.1
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/moriarty)
 "gqy" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -57053,6 +57182,12 @@
 /obj/decal/cleanable/dirt/dirt5,
 /turf/unsimulated/floor/plating,
 /area/sim/gunsim/lobby)
+"gtp" = (
+/obj/map/light/cyan{
+	brightness = 7
+	},
+/turf/unsimulated/wall/auto/adventure/icemooninterior,
+/area/precursor/menhir)
 "gtA" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -57106,6 +57241,12 @@
 /obj/machinery/navbeacon/lunar/tour6,
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
+"guK" = (
+/obj/precursor_puzzle/innervator{
+	vision_description = "éd, èd, lú-kúr-ra..."
+	},
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/precursor/menhir)
 "guT" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
@@ -57263,6 +57404,18 @@
 	},
 /turf/simulated/floor/white/grime,
 /area/observatory)
+"gzG" = (
+/obj/precursor_puzzle/orb_stand{
+	id = "LAMENT";
+	target_id = "KINSHIP";
+	safeish = 1;
+	assembled = 1;
+	ready = 1;
+	invisibility = 101;
+	density = 0
+	},
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/precursor)
 "gzH" = (
 /obj/machinery/computer/camera_viewer{
 	dir = 8
@@ -57511,6 +57664,12 @@
 "gGM" = (
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/teleport)
+"gHj" = (
+/obj/map/light/dimred,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/precursor/menhir)
 "gHt" = (
 /obj/mesh/grille/steel,
 /turf/unsimulated/floor/plating,
@@ -58106,6 +58265,12 @@
 	},
 /turf/unsimulated/wall/auto/adventure/iomoon/interior,
 /area/iomoon/robot_ruins)
+"hik" = (
+/obj/map/light/dimred,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 8
+	},
+/area/precursor/menhir)
 "hir" = (
 /obj/lattice{
 	dir = 1;
@@ -58302,6 +58467,12 @@
 /obj/item/extinguisher,
 /turf/unsimulated/floor/damaged1,
 /area/watchful_eye_sensor)
+"hpW" = (
+/mob/living/critter/shade/lordly,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 8
+	},
+/area/precursor/menhir)
 "hqg" = (
 /obj/fakeobject/dreambeach/mercury,
 /turf/unsimulated/floor/dream/beach,
@@ -58570,6 +58741,11 @@
 	dir = 5
 	},
 /area/centcom/offices/aloe)
+"hyO" = (
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/precursor/menhir)
 "hzi" = (
 /obj/decal/poster/wallsign/stencil/left/six,
 /turf/unsimulated/floor/setpieces/gauntlet,
@@ -59385,6 +59561,9 @@
 /obj/mapping_helper/access/owlmaint,
 /turf/unsimulated/floor/plating,
 /area/owlery/staffhall)
+"ikq" = (
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/precursor/menhir)
 "iku" = (
 /obj/stool/chair/office/blue{
 	dir = 4;
@@ -59904,6 +60083,12 @@
 "iDk" = (
 /turf/unsimulated/floor/grime,
 /area/sim/gunsim/lobby)
+"iDu" = (
+/obj/precursor_puzzle/innervator{
+	vision_description = "e-zé ina gú-ri-ta..."
+	},
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/precursor/menhir)
 "iDD" = (
 /obj/landmark/lrt/io,
 /turf/unsimulated/iomoon/plating,
@@ -60150,6 +60335,63 @@
 	icon_state = "floor5"
 	},
 /area/wizard_station)
+"iNp" = (
+/obj/noticeboard/directional/north{
+	pixel_x = -8;
+	pixel_y = 32;
+	icon_state = "nboard05";
+	layer = 2.9
+	},
+/obj/table/wood/regal{
+	icon_state = "8"
+	},
+/obj/item/decoration/flower_vase{
+	icon_state = "vase7";
+	pixel_x = 7;
+	pixel_y = 18
+	},
+/obj/item/paper{
+	name = "paper-'say rework schematics'";
+	desc = "A fiendishly complicated system of trees, modules, channels, languages, and sources covers the page. It's beautiful.";
+	icon = 'icons/obj/electronics.dmi';
+	icon_state = "blueprint";
+	item_state = "sheet";
+	pixel_x = -4;
+	pixel_y = 2
+	},
+/obj/item/paper{
+	name = "paper-'minimap blueprints'";
+	desc = "This one appears to have been redrawn several times. A note at the bottom suggests that it needs to be redrawn again.";
+	icon = 'icons/obj/electronics.dmi';
+	icon_state = "blueprint";
+	item_state = "sheet";
+	pixel_x = -12;
+	pixel_y = 7
+	},
+/obj/item/paper{
+	name = "paper-'parallax maths'";
+	desc = "Uh oh.";
+	icon = 'icons/obj/electronics.dmi';
+	icon_state = "blueprint";
+	item_state = "sheet";
+	pixel_x = -10;
+	pixel_y = 5
+	},
+/obj/item/paper{
+	name = "paper-'namespace implementation'";
+	desc = "Behind a relatively short and simple \"usage\" section lies a sprawling network of self-referential patterns and substitutions.";
+	icon = 'icons/obj/electronics.dmi';
+	icon_state = "blueprint";
+	item_state = "sheet";
+	pixel_x = -6;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/food/drinks/mug{
+	pixel_x = -7;
+	pixel_y = 12
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/moriarty)
 "iNq" = (
 /obj/decoration/ntcrate,
 /turf/unsimulated/floor/darkblueblack{
@@ -60847,10 +61089,6 @@
 	icon_state = "red2"
 	},
 /area/void_diner)
-"jiS" = (
-/obj/blind_switch/area/north,
-/turf/unsimulated/floor/wood/two,
-/area/centcom/lobby)
 "jiZ" = (
 /obj/fakeobject{
 	anchored = 1;
@@ -60886,6 +61124,14 @@
 /obj/machinery/door/window/westright,
 /turf/unsimulated/floor,
 /area/centcom/lounge)
+"jkW" = (
+/obj/precursor_puzzle/orb_stand{
+	id = "FORGOTTEN";
+	target_id = "FORLORN";
+	safeish = 1
+	},
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/precursor/menhir)
 "jla" = (
 /obj/fakeobject{
 	anchored = 1;
@@ -60946,6 +61192,13 @@
 /obj/decal/cleanable/blood/tracks,
 /turf/unsimulated/floor/plating,
 /area/hospital/underground)
+"jmd" = (
+/obj/decoration/decorativeplant/plant7{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/turf/unsimulated/floor/wood/seven,
+/area/sim/gunsim/lobby)
 "jmi" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
@@ -61707,6 +61960,9 @@
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
 /area/syndicate_station_space)
+"jQt" = (
+/turf/unsimulated/wall/auto/adventure/icemooninterior,
+/area/precursor/menhir)
 "jQN" = (
 /obj/mesh/catwalk,
 /obj/cable{
@@ -62629,6 +62885,17 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/guts)
+"kyH" = (
+/obj/admin_plaque{
+	name = "Moriarty's Office";
+	pixel_x = 32
+	},
+/turf/unsimulated/floor/grey/side{
+	dir = 4
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "kzk" = (
 /obj/admin_plaque{
 	desc = "<< sound not welcome";
@@ -62671,6 +62938,10 @@
 /obj/lattice,
 /turf/space,
 /area/watchful_eye_sensor)
+"kzZ" = (
+/obj/map/light/cyan,
+/turf/unsimulated/wall/auto/adventure/icemoon,
+/area/precursor/menhir)
 "kAr" = (
 /turf/unsimulated/floor/grey/side{
 	dir = 4
@@ -62801,6 +63072,12 @@
 	icon_state = "shore-22"
 	},
 /area/titlescreen)
+"kDb" = (
+/obj/random_item_spawner/menhir/one,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/precursor/menhir)
 "kDP" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -63044,6 +63321,27 @@
 /mob/living/critter/zombie/scientist,
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/lab)
+"kNF" = (
+/obj/fakeobject{
+	anchored = 1;
+	density = 1;
+	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
+	dir = 8;
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "offbroken";
+	name = "broken computer"
+	},
+/obj/blind_switch/directional/north{
+	id = "owl"
+	},
+/turf/unsimulated/floor/wood/two,
+/area/owlery/office)
+"kNK" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4
+	},
+/turf/unsimulated/floor/lightyellow,
+/area/iomoon/base)
 "kNP" = (
 /obj/fakeobject/lightbulb_broken{
 	dir = 8
@@ -63566,6 +63864,24 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/centcom/lobby)
+"lka" = (
+/obj/table/wood/regal{
+	icon_state = "12"
+	},
+/obj/machinery/computer3/generic/personal/personel_alt{
+	pixel_y = 9
+	},
+/obj/decoration/clock{
+	pixel_x = -12;
+	pixel_y = 32
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/moriarty)
+"lkr" = (
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/precursor/menhir)
 "lkO" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /turf/unsimulated/floor/plating,
@@ -63617,6 +63933,10 @@
 	dir = 1
 	},
 /area/meat_derelict/entry)
+"lmA" = (
+/obj/map/light/dimred,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/precursor/menhir)
 "lmT" = (
 /obj/mapping_helper/wingrille_spawn/auto/tuff,
 /turf/unsimulated/floor/wood/three,
@@ -64151,6 +64471,11 @@
 "lGN" = (
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel)
+"lGO" = (
+/obj/rack/precursor,
+/obj/item/raw_material/cobryl,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/precursor/menhir)
 "lGP" = (
 /turf/unsimulated/floor/logo_xg{
 	icon_state = "logo_xg14"
@@ -64206,6 +64531,9 @@
 	},
 /turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
+"lKO" = (
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/moriarty)
 "lLg" = (
 /turf/unsimulated/wall/generic{
 	desc = "It won't budge.";
@@ -65083,6 +65411,16 @@
 	},
 /turf/unsimulated/floor,
 /area/iomoon/base)
+"mwT" = (
+/obj/map/light/dimred,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/precursor/menhir)
+"mwW" = (
+/obj/rack/precursor,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/precursor/menhir)
 "mxo" = (
 /obj/admin_plaque{
 	name = "Azrun's Office";
@@ -65216,6 +65554,18 @@
 	},
 /turf/space,
 /area/wizard_station_space)
+"mAW" = (
+/obj/fakeobject/airlock_broken/firelock{
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
+	},
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4;
+	name = "Surface Airlock"
+	},
+/turf/unsimulated/floor/lightyellow,
+/area/iomoon/base)
 "mCX" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
@@ -65802,6 +66152,9 @@
 	},
 /turf/space,
 /area/syndicate_station_space)
+"ncb" = (
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/precursor/menhir)
 "ndE" = (
 /obj/lattice{
 	dir = 6;
@@ -65974,6 +66327,15 @@
 	name = "strange surface"
 	},
 /area/crater/cave/lower)
+"nkT" = (
+/obj/transposition_trigger{
+	go_to = "a_crown_of_silver";
+	tag = "a_quiet_repose"
+	},
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 8
+	},
+/area/precursor/menhir)
 "nlC" = (
 /turf/unsimulated/floor/black/corner{
 	dir = 1
@@ -66149,6 +66511,20 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
+"nuu" = (
+/obj/rack/precursor/pressure/ringstand{
+	tag = "menhir_plinth"
+	},
+/obj/item/clothing/gloves/ring/ominous{
+	pixel_y = 11;
+	rand_pos = 0
+	},
+/obj/precursor_puzzle/innervator{
+	vision_description = "A vast eye of shining silver fixes its gaze, incandescent as the noon sun, on the pedestal before you. A familiar orb rests upon it.";
+	pixel_y = -15
+	},
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/precursor/menhir)
 "nuO" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -66399,6 +66775,10 @@
 "nzY" = (
 /turf/space,
 /area/watchful_eye_sensor)
+"nAc" = (
+/obj/precursor_puzzle/innervator/red_west,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/precursor/menhir)
 "nAf" = (
 /turf/unsimulated/floor/dojo/stonestair,
 /area/titlescreen)
@@ -67356,6 +67736,13 @@
 /obj/table/auto,
 /turf/unsimulated/floor/blackwhite/whitegrime,
 /area/observatory)
+"ofp" = (
+/obj/machinery/door/unpowered/blue,
+/obj/map/light/dimred,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 8
+	},
+/area/precursor/menhir)
 "ofy" = (
 /obj/machinery/door/airlock/pyro{
 	name = "Crew Quarters"
@@ -67545,12 +67932,6 @@
 	dir = 8
 	},
 /area/precursor)
-"onI" = (
-/obj/ladder{
-	id = "iomoon"
-	},
-/turf/unsimulated/floor/orange,
-/area/iomoon/base)
 "onV" = (
 /obj/stool/chair/dining/regal{
 	anchored = 1;
@@ -67646,6 +68027,12 @@
 	},
 /turf/unsimulated/floor/arctic/plating,
 /area/upper_arctic/exterior/abyss)
+"orr" = (
+/mob/living/critter/shade,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/precursor/menhir)
 "ors" = (
 /turf/unsimulated/floor/carpet{
 	dir = 4;
@@ -68066,6 +68453,11 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/shuttle/merchant_shuttle/right_centcom/cogmap2)
+"oKb" = (
+/obj/rack/precursor,
+/obj/random_item_spawner/menhir/one_or_zero,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/precursor/menhir)
 "oKc" = (
 /obj/decal/poster/wallsign/stencil/right/three,
 /turf/unsimulated/floor/setpieces/gauntlet,
@@ -68898,6 +69290,17 @@
 	},
 /turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
+"poE" = (
+/obj/decal/carpet{
+	pixel_x = 16;
+	pixel_y = 16
+	},
+/obj/decoration/decorativeplant/plant7{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/moriarty)
 "poK" = (
 /obj/item/paper/book/from_file/pharmacopia{
 	pixel_x = -8;
@@ -69586,18 +69989,6 @@
 /obj/reagent_dispensers/watertank/fountain,
 /turf/unsimulated/floor/wood/seven,
 /area/sim/gunsim/lobby)
-"pQI" = (
-/obj/fakeobject{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 4;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
-	},
-/turf/unsimulated/floor/orange,
-/area/iomoon/base)
 "pQJ" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -69612,6 +70003,14 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital)
+"pQM" = (
+/obj/decal/carpet{
+	pixel_x = 16;
+	pixel_y = 16;
+	dir = 9
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/moriarty)
 "pRB" = (
 /turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
@@ -69899,6 +70298,14 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/engine,
 /area/shuttle/merchant_shuttle/left_centcom/cogmap2)
+"qbm" = (
+/obj/precursor_puzzle/orb_stand{
+	id = "THEN";
+	target_id = "NOW";
+	safeish = 1
+	},
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/precursor/menhir)
 "qbv" = (
 /obj/stool/chair/couch{
 	dir = 4;
@@ -70660,6 +71067,14 @@
 	name = "blast door"
 	},
 /area/meat_derelict/entry)
+"qFK" = (
+/obj/rack/precursor,
+/obj/item/chilly_orb{
+	pixel_y = 9;
+	id = "THEN"
+	},
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/precursor/menhir)
 "qFV" = (
 /obj/table/auto,
 /obj/item/paper{
@@ -71420,10 +71835,6 @@
 	icon_state = "fred1"
 	},
 /area/iomoon/base)
-"rlz" = (
-/obj/decoration/decorativeplant/plant7,
-/turf/unsimulated/floor/wood/seven,
-/area/sim/gunsim/lobby)
 "rlL" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -71732,6 +72143,15 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital)
+"rwz" = (
+/obj/precursor_puzzle/orb_stand{
+	id = "FORLORN";
+	target_id = "FORBIDDEN";
+	safeish = 1;
+	receive_only = 1
+	},
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/precursor/menhir)
 "rwD" = (
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 4
@@ -73246,6 +73666,17 @@
 	dir = 6
 	},
 /area/centcom/offices/katzen)
+"szB" = (
+/obj/decal/carpet{
+	pixel_x = 16;
+	pixel_y = 16;
+	dir = 5
+	},
+/obj/stool/chair/comfy/wood_regal{
+	dir = 1
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/moriarty)
 "szE" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -73532,6 +73963,25 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital)
+"sMi" = (
+/obj/table/wood/regal/bookshelf{
+	layer = 1
+	},
+/obj/item/paper/postcard/thundrando{
+	pixel_x = 14;
+	pixel_y = 27
+	},
+/obj/decoration/pottedfern{
+	pixel_x = -6;
+	pixel_y = 33
+	},
+/obj/item/decoration/flower_vase{
+	icon_state = "vase6";
+	pixel_x = 7;
+	pixel_y = 15
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/moriarty)
 "sMO" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/pink,
@@ -73606,6 +74056,18 @@
 	},
 /turf/unsimulated/floor/carpet/red/decal,
 /area/centcom/offices/grifflez)
+"sPZ" = (
+/obj/rack/precursor,
+/obj/map/light/dimred,
+/obj/item/chilly_orb{
+	id = "TREPID";
+	color = "#f7e0e0";
+	desc = "Your eyes can't quite seem to focus on it. Something is wrong here."
+	},
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/precursor/menhir)
 "sQe" = (
 /obj/fakeobject/dreambeach/biggest/big_palm,
 /turf/unsimulated/floor/dream/beach,
@@ -74048,6 +74510,12 @@
 /obj/machinery/light/small/floor/harsh,
 /turf/unsimulated/floor/plating,
 /area/centcom/lobby)
+"tkB" = (
+/obj/machinery/door/unpowered/blue,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 8
+	},
+/area/precursor/menhir)
 "tkW" = (
 /obj/fakeobject/teleport_pad,
 /turf/unsimulated/floor/shuttle{
@@ -74058,12 +74526,6 @@
 /mob/living/carbon/human/npc/monkey/oppenheimer,
 /turf/unsimulated/floor/black,
 /area/syndicate_station/battlecruiser)
-"tlI" = (
-/obj/machinery/door/airlock/pyro{
-	dir = 4
-	},
-/turf/unsimulated/floor/orange,
-/area/iomoon/base)
 "tma" = (
 /obj/storage/crate/bin{
 	dir = 8
@@ -74074,6 +74536,10 @@
 /obj/decal/poster/wallsign/stencil/right/one,
 /turf/unsimulated/floor/setpieces/gauntlet,
 /area/sim/racing_track)
+"tmP" = (
+/obj/random_item_spawner/menhir/one,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/precursor/menhir)
 "tnk" = (
 /obj/machinery/chem_dispenser/chemical,
 /obj/decal/stripe_delivery,
@@ -74385,6 +74851,14 @@
 "tGB" = (
 /turf/unsimulated/floor/grey/side,
 /area/centcom/offices/cogwerks)
+"tGP" = (
+/obj/precursor_puzzle/innervator{
+	vision_description = "An arc of blued silver, whispering the names of places. It calls from another time."
+	},
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/precursor/menhir)
 "tGW" = (
 /obj/machinery/r_door_control/podbay/wizard,
 /turf/unsimulated/wall/auto/supernorn/wood,
@@ -74863,6 +75337,12 @@
 	},
 /turf/unsimulated/floor/carpet/arcade,
 /area/hospital)
+"ubK" = (
+/obj/landmark/menhir/penance,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 8
+	},
+/area/precursor/menhir)
 "uca" = (
 /obj/fakeobject/pipe{
 	color = "b4b4b4";
@@ -75147,6 +75627,10 @@
 	name = "strange surface"
 	},
 /area/crater/cave/lower)
+"uod" = (
+/obj/storage/secure/closet/iron_safe/moriarty,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/moriarty)
 "uox" = (
 /obj/effects/precipitation/snow/grey/tile,
 /obj/decoration/syndcorpse10{
@@ -75304,6 +75788,15 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum/west)
+"uuy" = (
+/obj/decal/carpet{
+	pixel_x = 16;
+	pixel_y = 16;
+	dir = 6
+	},
+/obj/machinery/light/incandescent/netural,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/moriarty)
 "uuH" = (
 /obj/machinery/optable,
 /obj/random_item_spawner/organs{
@@ -75764,6 +76257,14 @@
 /obj/mesh/grille/steel,
 /turf/space,
 /area/watchful_eye_sensor)
+"uLm" = (
+/obj/map/light/cyan{
+	brightness = 7
+	},
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/precursor/menhir)
 "uLU" = (
 /obj/mesh/catwalk{
 	dir = 4
@@ -75810,6 +76311,13 @@
 /obj/fakeobject/synthomatic,
 /turf/unsimulated/floor/white,
 /area/owlery/lab)
+"uNL" = (
+/obj/map/light/cyan{
+	brightness = 7
+	},
+/obj/precursor_puzzle/innervator/ring_east,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/precursor/menhir)
 "uNO" = (
 /obj/item/sticker/gold_star{
 	anchored = 1;
@@ -75830,6 +76338,12 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"uOr" = (
+/mob/living/critter/shade,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/precursor/menhir)
 "uOT" = (
 /obj/mesh/catwalk,
 /obj/cable{
@@ -76218,6 +76732,14 @@
 	dir = 8
 	},
 /area/owlery/gangzone)
+"vfG" = (
+/obj/machinery/door/unpowered/blue{
+	friendly_object = /obj/item/clothing/gloves/ring/ominous
+	},
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/precursor/menhir)
 "vfY" = (
 /obj/fitness/speedbag/captain,
 /turf/unsimulated/floor/wood/eight{
@@ -76544,6 +77066,12 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/watchful_eye_sensor)
+"voa" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/lightyellow,
+/area/iomoon/base)
 "vod" = (
 /obj/rack,
 /obj/item/storage/toolbox/mechanical,
@@ -76657,6 +77185,12 @@
 	},
 /turf/unsimulated/floor/wood/seven,
 /area/sim/gunsim/lobby)
+"vqB" = (
+/obj/ladder{
+	id = "iomoon"
+	},
+/turf/unsimulated/floor/lightyellow,
+/area/iomoon/base)
 "vqK" = (
 /obj/mesh/catwalk,
 /obj/mesh/catwalk,
@@ -76911,6 +77445,11 @@
 /obj/machinery/light/runway_light/delay3,
 /turf/space,
 /area/space)
+"vzY" = (
+/obj/rack/precursor,
+/obj/random_item_spawner/menhir/one,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/precursor/menhir)
 "vAR" = (
 /obj/storage/closet/syndicate/personal,
 /turf/unsimulated/floor/redblack{
@@ -77171,6 +77710,10 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/afterlife/bar)
+"vKK" = (
+/obj/machinery/door/unpowered/blue,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/precursor/menhir)
 "vKW" = (
 /obj/machinery/sink/slim{
 	dir = 1;
@@ -77404,6 +77947,14 @@
 /obj/machinery/door/airlock/pyro/maintenance,
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
+"vRZ" = (
+/obj/map/light/cyan{
+	brightness = 7
+	},
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/precursor/menhir)
 "vSm" = (
 /mob/living/critter/small_animal/cat{
 	desc = "This is Eloisa. She looks old, but sweet.";
@@ -78133,6 +78684,13 @@
 /obj/item/clothing/gloves/sailormoon,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/katzen)
+"wsr" = (
+/obj/map/light/cyan{
+	brightness = 7
+	},
+/obj/precursor_puzzle/innervator/ring_west,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/precursor/menhir)
 "wsB" = (
 /obj/map/light/graveyard,
 /mob/living/critter/zombie/scientist,
@@ -78783,9 +79341,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
-"wOp" = (
-/turf/unsimulated/floor/orange,
-/area/iomoon/base)
 "wOC" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
@@ -78880,6 +79435,14 @@
 "wSI" = (
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
+"wSQ" = (
+/obj/machinery/door/unpowered/wood{
+	dir = 8;
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 4
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/moriarty)
 "wTN" = (
 /obj/channel{
 	required_to_pass = 1e+009
@@ -78909,6 +79472,9 @@
 /obj/mapping_helper/access/armory,
 /turf/unsimulated/floor/plating,
 /area/hospital)
+"wTV" = (
+/turf/cordon,
+/area/precursor/menhir)
 "wUb" = (
 /obj/decal/poster/wallsign/escape_sign{
 	pixel_y = 16;
@@ -79340,6 +79906,12 @@
 /obj/item/clothing/glasses/monocle,
 /turf/unsimulated/floor/wood/two,
 /area/owlery/staffhall)
+"xmo" = (
+/obj/machinery/door/unpowered/blue,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/precursor/menhir)
 "xnd" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -79720,6 +80292,14 @@
 /obj/item/cell/supercell/charged,
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
+"xxb" = (
+/obj/decal/carpet{
+	pixel_x = 16;
+	pixel_y = 16;
+	dir = 1
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/moriarty)
 "xxs" = (
 /obj/table/wood/auto/desk,
 /obj/item/clothing/mask/mime{
@@ -79859,6 +80439,12 @@
 	},
 /turf/unsimulated/floor/feather,
 /area/centcom/offices/leah)
+"xza" = (
+/obj/random_item_spawner/menhir/one,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/precursor/menhir)
 "xzj" = (
 /mob/living/critter/shade,
 /turf/unsimulated/floor/void{
@@ -79974,6 +80560,10 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/donut2)
+"xBy" = (
+/mob/living/critter/shade,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/precursor/menhir)
 "xBV" = (
 /obj/storage/crate/xmas,
 /turf/unsimulated/floor/shuttle{
@@ -80387,6 +80977,10 @@
 	opacity = 0
 	},
 /area/centcom/gallery)
+"xRP" = (
+/obj/fakeobject/lightbulb_broken,
+/turf/unsimulated/floor/lightyellow,
+/area/iomoon/base)
 "xSb" = (
 /obj/lattice{
 	dir = 4;
@@ -80558,12 +81152,6 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
-"xXq" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/unsimulated/floor/orange,
-/area/iomoon/base)
 "xXx" = (
 /obj/storage/closet/coffin,
 /obj/item/alchemy/symbol/proj,
@@ -88431,7 +89019,7 @@ bvk
 bvM
 izT
 izT
-aCo
+mAW
 izT
 bzk
 boV
@@ -88733,7 +89321,7 @@ bvl
 btR
 izT
 xnq
-wOp
+dzZ
 izT
 bql
 boV
@@ -89035,7 +89623,7 @@ bqZ
 bsX
 izT
 diC
-eXz
+xRP
 izT
 bvM
 bzK
@@ -89337,7 +89925,7 @@ izT
 izT
 izT
 diC
-wOp
+dzZ
 izT
 btR
 bqZ
@@ -89639,7 +90227,7 @@ gdS
 xwW
 izT
 diC
-wOp
+dzZ
 izT
 bsX
 bpD
@@ -89941,7 +90529,7 @@ oJz
 uqj
 bxq
 diC
-wOp
+dzZ
 izT
 izT
 izT
@@ -90243,7 +90831,7 @@ qBF
 vUu
 izT
 diC
-wOp
+dzZ
 izT
 izT
 izT
@@ -90545,7 +91133,7 @@ twn
 gUJ
 izT
 nlC
-wOp
+dzZ
 jqz
 buK
 doQ
@@ -90840,14 +91428,14 @@ bsg
 bsG
 bxq
 pOy
-onI
-wOp
-wOp
-wOp
-wOp
-wOp
-wOp
-wOp
+vqB
+dzZ
+dzZ
+dzZ
+dzZ
+dzZ
+dzZ
+dzZ
 sZf
 xqr
 vOL
@@ -91149,14 +91737,14 @@ vxT
 vxT
 vxT
 nEi
-wOp
-wOp
-wOp
-pQI
-wOp
-wOp
-wOp
-wOp
+dzZ
+dzZ
+dzZ
+fBP
+dzZ
+dzZ
+dzZ
+dzZ
 izT
 izT
 izT
@@ -91451,7 +92039,7 @@ bxm
 buK
 buK
 diC
-wOp
+dzZ
 fQk
 vxT
 sQP
@@ -91753,7 +92341,7 @@ izT
 bvR
 izT
 jBW
-wOp
+dzZ
 jqz
 buK
 doQ
@@ -92055,7 +92643,7 @@ buK
 buK
 izT
 aPA
-wOp
+dzZ
 jqz
 izT
 izT
@@ -92357,7 +92945,7 @@ ghc
 izT
 izT
 bwC
-tlI
+kNK
 bwC
 izT
 bzM
@@ -92659,7 +93247,7 @@ izT
 izT
 mLm
 txc
-wOp
+dzZ
 wfm
 izT
 izT
@@ -92800,7 +93388,7 @@ cYv
 cYv
 cUL
 cYI
-cGG
+kNF
 cGf
 cGF
 cGF
@@ -92961,7 +93549,7 @@ izT
 bvS
 bwu
 diC
-wOp
+dzZ
 jqz
 buK
 hUO
@@ -93263,7 +93851,7 @@ eMD
 bvT
 rhp
 eUA
-wOp
+dzZ
 jqz
 buK
 eYW
@@ -93565,7 +94153,7 @@ jyd
 buK
 bww
 gjN
-xXq
+voa
 jgR
 bAC
 bzP
@@ -93867,7 +94455,7 @@ bvq
 buK
 fmt
 vrn
-wOp
+dzZ
 jqz
 bxm
 bzQ
@@ -94169,7 +94757,7 @@ bvr
 bvV
 jXl
 psH
-wOp
+dzZ
 jqz
 buK
 bzR
@@ -94471,7 +95059,7 @@ izT
 pKM
 bwy
 diC
-wOp
+dzZ
 jqz
 buK
 eJo
@@ -94773,7 +95361,7 @@ izT
 izT
 qZP
 xdA
-wOp
+dzZ
 pXE
 izT
 izT
@@ -95075,7 +95663,7 @@ vKW
 izT
 izT
 bwC
-tlI
+kNK
 bwC
 izT
 bzT
@@ -95377,7 +95965,7 @@ bum
 izT
 bwA
 txc
-wOp
+dzZ
 fjp
 izT
 bwv
@@ -95679,7 +96267,7 @@ bvs
 izT
 bwB
 diC
-wOp
+dzZ
 jqz
 bxq
 bwv
@@ -95981,7 +96569,7 @@ buK
 buK
 buK
 diC
-wOp
+dzZ
 vMW
 bzm
 bzV
@@ -96283,7 +96871,7 @@ buK
 buK
 buK
 diC
-wOp
+dzZ
 fyt
 izT
 izT
@@ -96585,7 +97173,7 @@ izT
 mwF
 bwC
 izT
-wOp
+dzZ
 iGD
 izT
 izT
@@ -98977,7 +99565,7 @@ bfQ
 bfQ
 bfQ
 bfQ
-bfQ
+gzG
 bfQ
 bZH
 bZH
@@ -99304,7 +99892,7 @@ wpP
 oUu
 izT
 nEi
-wOp
+dzZ
 izT
 izT
 bAJ
@@ -99606,7 +100194,7 @@ oko
 izT
 izT
 diC
-wOp
+dzZ
 izT
 izT
 izT
@@ -99908,7 +100496,7 @@ izT
 izT
 bxs
 diC
-wOp
+dzZ
 xLa
 jbK
 oJz
@@ -100210,7 +100798,7 @@ izT
 izT
 izT
 diC
-wOp
+dzZ
 izT
 oJz
 oJz
@@ -152550,7 +153138,7 @@ fjo
 xxJ
 mKt
 mKt
-rlz
+jmd
 uCm
 clv
 clv
@@ -154534,37 +155122,37 @@ aaa
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 cnw
 cnw
 cnw
@@ -154836,37 +155424,37 @@ aaa
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -155138,37 +155726,37 @@ aaa
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+jQt
+jQt
+jQt
+jQt
+lmA
+ikq
+ikq
+ikq
+ikq
+ikq
+lmA
+jQt
+jQt
+jQt
+jQt
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -155440,37 +156028,37 @@ aaa
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+wTV
+wTV
+wTV
+wTV
+jQt
+jQt
+jQt
+ikq
+ikq
+jQt
+ikq
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+ikq
+ikq
+jQt
+jQt
+jQt
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -155742,37 +156330,37 @@ aaa
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+wTV
+wTV
+wTV
+jQt
+jQt
+gHj
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+hyO
+jQt
+hyO
+hyO
+uOr
+jQt
+ikq
+jQt
+jQt
+lmA
+jQt
+jQt
+wTV
+wTV
+wTV
+wTV
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -156044,37 +156632,37 @@ aaa
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+wTV
+wTV
+jQt
+jQt
+ikq
+hyO
+ikq
+jQt
+vzY
+jQt
+mwW
+jQt
+ikq
+jQt
+ikq
+ikq
+ikq
+jQt
+ikq
+ikq
+jQt
+ikq
+ikq
+jQt
+jQt
+wTV
+wTV
+wTV
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -156346,37 +156934,37 @@ aaa
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+wTV
+wTV
+jQt
+mwT
+lkr
+fep
+lkr
+lkr
+lkr
+lkr
+mwT
+xmo
+lkr
+xmo
+lkr
+mwT
+lkr
+jQt
+jQt
+jQt
+jQt
+jQt
+ikq
+lmA
+jQt
+wTV
+wTV
+wTV
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -156648,37 +157236,37 @@ aaa
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+wTV
+jQt
+jQt
+jQt
+ikq
+hyO
+ikq
+jQt
+mwW
+jQt
+lGO
+jQt
+nAc
+jQt
+ikq
+ikq
+ikq
+vKK
+ikq
+vKK
+ikq
+jQt
+jQt
+jQt
+jQt
+jQt
+wTV
+wTV
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -156950,37 +157538,37 @@ aaa
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+wTV
+jQt
+tmP
+jQt
+jQt
+gHj
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+hyO
+jQt
+hyO
+hyO
+hyO
+jQt
+mwW
+jQt
+qFK
+jQt
+ikq
+jQt
+ikq
+jQt
+wTV
+wTV
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -157252,37 +157840,37 @@ aaa
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+wTV
+jQt
+mwT
+fkk
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+ikq
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+ikq
+jQt
+ikq
+jQt
+wTV
+wTV
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -157476,7 +158064,7 @@ aES
 aES
 aES
 sWb
-jiS
+aFo
 dMj
 dMM
 dMM
@@ -157554,37 +158142,37 @@ aaa
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+jQt
+jQt
+ikq
+lmA
+tmP
+jQt
+lkr
+xmo
+orr
+jQt
+mwT
+jQt
+lkr
+jQt
+lkr
+jQt
+mwT
+jQt
+lkr
+jQt
+lkr
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+wTV
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -157856,37 +158444,37 @@ aaa
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+jQt
+hik
+lkr
+lkr
+jQt
+jQt
+ikq
+jQt
+ikq
+tkB
+ikq
+ikq
+ikq
+gHj
+ikq
+ikq
+ikq
+tkB
+ikq
+ikq
+lmA
+eli
+ikq
+ikq
+jQt
+ikq
+jQt
+dXs
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -158115,7 +158703,7 @@ lmi
 rER
 dxn
 rER
-rER
+kyH
 rER
 rER
 rER
@@ -158158,37 +158746,37 @@ aaa
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+jQt
+hyO
+jQt
+jQt
+jQt
+lkr
+lkr
+jQt
+lkr
+jQt
+iDu
+ikq
+ikq
+hyO
+ikq
+ikq
+ikq
+jQt
+lkr
+jQt
+lkr
+jQt
+fdz
+jQt
+jQt
+ikq
+jQt
+kzZ
+dXs
+aaa
 cnw
 cnw
 cnw
@@ -158418,7 +159006,7 @@ xsg
 wel
 wel
 wel
-oaN
+wSQ
 wel
 wel
 wel
@@ -158460,37 +159048,37 @@ aaa
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+jQt
+hyO
+jQt
+hyO
+xBy
+ikq
+jQt
+jQt
+jQt
+jQt
+jQt
+ikq
+eli
+lkr
+eli
+ikq
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+lkr
+lkr
+jQt
+jQt
+jQt
+ncb
+dXs
+aaa
 cnw
 cnw
 cnw
@@ -158719,9 +159307,9 @@ vgQ
 fcy
 iNq
 wel
-dvW
-dvW
-dvW
+sMi
+pQM
+geK
 wel
 dvW
 dvW
@@ -158762,37 +159350,37 @@ aaa
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+jQt
+fge
+vfG
+eli
+jQt
+jQt
+jQt
+ikq
+ikq
+jQt
+foy
+lkr
+hyO
+qbm
+hyO
+lkr
+foy
+jQt
+ikq
+ikq
+jQt
+sPZ
+ikq
+ikq
+ofp
+ikq
+ofp
+ncb
+dXs
+aaa
 cnw
 cnw
 cnw
@@ -159021,9 +159609,9 @@ xtj
 vjZ
 jLf
 wel
-dvW
-dvW
-dvW
+gpT
+xxb
+poE
 wel
 dvW
 dvW
@@ -159064,37 +159652,37 @@ aaa
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+jQt
+hyO
+jQt
+tGP
+ikq
+ikq
+jQt
+jQt
+jQt
+jQt
+jQt
+ikq
+eli
+lkr
+eli
+ikq
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+lkr
+lkr
+jQt
+jQt
+jQt
+ncb
+dXs
+aaa
 cnw
 cnw
 cnw
@@ -159323,9 +159911,9 @@ fBu
 sge
 eFT
 wel
-lRO
-dvW
-dvW
+lka
+szB
+uuy
 wel
 lRO
 dvW
@@ -159351,7 +159939,7 @@ dRD
 dEQ
 vij
 wel
-eWY
+dyg
 dvW
 dFj
 wel
@@ -159366,37 +159954,37 @@ aaa
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+jQt
+hyO
+jQt
+jQt
+jQt
+lkr
+orr
+jQt
+lkr
+jQt
+guK
+ikq
+ikq
+hyO
+ikq
+ikq
+ikq
+jQt
+lkr
+jQt
+lkr
+jQt
+fdz
+jQt
+jQt
+ikq
+jQt
+kzZ
+dXs
+aaa
 cnw
 cnw
 cnw
@@ -159625,9 +160213,9 @@ exk
 wOQ
 ssz
 wel
-dvW
-dvW
-dvW
+iNp
+lKO
+uod
 wel
 dvW
 dvW
@@ -159668,37 +160256,37 @@ aaa
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+jQt
+hik
+lkr
+lkr
+jQt
+jQt
+ikq
+jQt
+ikq
+tkB
+ikq
+ikq
+ikq
+gHj
+ikq
+ikq
+ikq
+tkB
+ikq
+ikq
+lmA
+eli
+ikq
+ikq
+jQt
+ikq
+jQt
+dXs
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -159970,37 +160558,37 @@ aaa
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+jQt
+jQt
+ikq
+lmA
+tmP
+jQt
+lkr
+xmo
+lkr
+jQt
+mwT
+jQt
+lkr
+jQt
+lkr
+jQt
+mwT
+jQt
+lkr
+jQt
+lkr
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+wTV
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -160272,37 +160860,37 @@ aaa
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+wTV
+jQt
+mwT
+fkk
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+ikq
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+ikq
+jQt
+ikq
+jQt
+wTV
+wTV
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -160574,37 +161162,37 @@ aaa
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+wTV
+jQt
+tmP
+jQt
+jQt
+gHj
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+hyO
+jQt
+hyO
+hyO
+hyO
+jQt
+vzY
+jQt
+vzY
+jQt
+ikq
+jQt
+ikq
+jQt
+wTV
+wTV
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -160876,37 +161464,37 @@ aaa
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+wTV
+jQt
+jQt
+jQt
+ikq
+xza
+ikq
+jQt
+oKb
+jQt
+oKb
+jQt
+fQM
+jQt
+ikq
+ikq
+ikq
+vKK
+xBy
+vKK
+ikq
+jQt
+jQt
+jQt
+jQt
+jQt
+wTV
+wTV
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -161178,37 +161766,37 @@ aaa
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+wTV
+wTV
+jQt
+mwT
+kDb
+hpW
+lkr
+lkr
+lkr
+lkr
+mwT
+fEd
+lkr
+xmo
+lkr
+mwT
+lkr
+jQt
+jQt
+jQt
+jQt
+jQt
+ikq
+lmA
+jQt
+wTV
+wTV
+wTV
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -161480,37 +162068,37 @@ aaa
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+wTV
+wTV
+jQt
+jQt
+ikq
+xza
+ikq
+jQt
+oKb
+jQt
+oKb
+jQt
+ikq
+jQt
+ikq
+ikq
+ikq
+jQt
+ikq
+ikq
+jQt
+ikq
+ikq
+jQt
+jQt
+wTV
+wTV
+wTV
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -161782,37 +162370,37 @@ aaa
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+wTV
+wTV
+wTV
+jQt
+jQt
+gHj
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+hyO
+jQt
+hyO
+hyO
+hyO
+jQt
+ikq
+jQt
+jQt
+lmA
+jQt
+jQt
+wTV
+wTV
+wTV
+wTV
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -162084,37 +162672,37 @@ aaa
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+wTV
+wTV
+wTV
+wTV
+jQt
+jQt
+jQt
+ikq
+ikq
+jQt
+ikq
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+ikq
+ikq
+jQt
+jQt
+jQt
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -162386,37 +162974,37 @@ aaa
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+jQt
+jQt
+jQt
+jQt
+lmA
+ikq
+ikq
+ikq
+ikq
+ikq
+lmA
+jQt
+jQt
+jQt
+jQt
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -162688,37 +163276,37 @@ aaa
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -162990,37 +163578,37 @@ aaa
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
+aaa
 cnw
 cnw
 cnw
@@ -163292,35 +163880,35 @@ aaa
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -163594,35 +164182,35 @@ aaa
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+jQt
+jQt
+jQt
+jQt
+uLm
+jQt
+ikq
+jQt
+eMP
+eMP
+eMP
+jQt
+jQt
+jQt
+jQt
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -163896,35 +164484,35 @@ aaa
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+wTV
+wTV
+wTV
+wTV
+jQt
+jQt
+jQt
+eMP
+eMP
+jQt
+hyO
+jQt
+jQt
+jQt
+eMP
+eMP
+eMP
+jQt
+ikq
+ikq
+jQt
+jQt
+jQt
+wTV
+wTV
+wTV
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -164198,35 +164786,35 @@ aaa
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+wTV
+wTV
+wTV
+jQt
+jQt
+eMP
+ubK
+eMP
+eMP
+jQt
+hyO
+jQt
+hyO
+jQt
+jQt
+jQt
+gci
+jQt
+jQt
+jQt
+jQt
+gtp
+jQt
+jQt
+wTV
+wTV
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -164500,35 +165088,35 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+wTV
+wTV
+jQt
+jQt
+eMP
+eMP
+eMP
+eMP
+eMP
+jQt
+hyO
+jQt
+ikq
+jQt
+ikq
+jQt
+hyO
+jQt
+ikq
+jQt
+ikq
+jQt
+ikq
+jQt
+jQt
+wTV
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -164802,35 +165390,35 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+wTV
+wTV
+jQt
+eMP
+eMP
+eMP
+eMP
+eMP
+eMP
+jQt
+uLm
+xmo
+lkr
+xmo
+lkr
+vRZ
+eli
+lkr
+lkr
+lkr
+lkr
+lkr
+lkr
+vRZ
+jQt
+wTV
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -165104,35 +165692,35 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+wTV
+jQt
+jQt
+jQt
+jQt
+jQt
+gci
+jQt
+jQt
+jQt
+hyO
+jQt
+ikq
+jQt
+ikq
+jQt
+hyO
+jQt
+ikq
+jQt
+ikq
+jQt
+ikq
+jQt
+jQt
+jQt
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -165406,35 +165994,35 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+wTV
+jQt
+lkr
+kDb
+lkr
+vRZ
+eli
+lkr
+lkr
+lkr
+eli
+jQt
+hyO
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -165708,35 +166296,35 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+wTV
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+ikq
+jQt
+jQt
+jQt
+jQt
+jQt
+ikq
+ikq
+eYt
+ikq
+ikq
+ikq
+eYt
+jQt
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -166010,35 +166598,35 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+jQt
+jQt
+jQt
+ikq
+ikq
+jQt
+lkr
+xmo
+lkr
+jQt
+lkr
+jQt
+lkr
+jQt
+lkr
+jQt
+lkr
+xmo
+lkr
+jQt
+lkr
+lkr
+lkr
+lkr
+lkr
+jQt
+jQt
+aaa
 cnw
 cnw
 cnw
@@ -166312,35 +166900,35 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+jQt
+eYt
+jQt
+ikq
+jQt
+jQt
+ikq
+jQt
+ikq
+tkB
+ikq
+ikq
+ikq
+uLm
+ikq
+ikq
+ikq
+jQt
+jQt
+jQt
+eMP
+eMP
+eMP
+eMP
+eMP
+eMP
+jQt
+aaa
 cnw
 cnw
 cnw
@@ -166614,35 +167202,35 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+jQt
+ikq
+jQt
+jQt
+jQt
+lkr
+lkr
+jQt
+lkr
+jQt
+wsr
+ikq
+ikq
+hyO
+ikq
+ikq
+eYt
+jQt
+ikq
+jQt
+eMP
+eMP
+eMP
+eMP
+eMP
+eMP
+jQt
+aaa
 cnw
 cnw
 cnw
@@ -166916,35 +167504,35 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+jQt
+ikq
+jQt
+hyO
+ikq
+ikq
+jQt
+jQt
+jQt
+jQt
+jQt
+ikq
+eli
+lkr
+eli
+ikq
+jQt
+jQt
+eli
+vRZ
+eli
+eMP
+eMP
+eli
+vRZ
+eli
+jQt
+aaa
 cnw
 cnw
 cnw
@@ -167218,35 +167806,35 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+jQt
+ikq
+jQt
+nkT
+jQt
+jQt
+jQt
+ikq
+ikq
+jQt
+lkr
+lkr
+hyO
+jkW
+hyO
+lkr
+lkr
+vfG
+hyO
+nuu
+hyO
+lkr
+lkr
+hyO
+rwz
+hyO
+jQt
+aaa
 cnw
 cnw
 cnw
@@ -167520,35 +168108,35 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+jQt
+ikq
+jQt
+hyO
+ikq
+ikq
+jQt
+jQt
+jQt
+jQt
+jQt
+ikq
+eli
+lkr
+eli
+ikq
+jQt
+jQt
+eli
+vRZ
+eli
+eMP
+eMP
+eli
+vRZ
+eli
+jQt
+aaa
 cnw
 cnw
 cnw
@@ -167822,35 +168410,35 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+jQt
+ikq
+jQt
+jQt
+jQt
+lkr
+lkr
+jQt
+lkr
+jQt
+uNL
+ikq
+ikq
+hyO
+ikq
+ikq
+eYt
+jQt
+ikq
+jQt
+eMP
+eMP
+eMP
+eMP
+eMP
+eMP
+jQt
+aaa
 cnw
 cnw
 cnw
@@ -168124,35 +168712,35 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+jQt
+eYt
+jQt
+ikq
+jQt
+jQt
+ikq
+jQt
+ikq
+tkB
+ikq
+ikq
+ikq
+uLm
+ikq
+ikq
+ikq
+jQt
+jQt
+jQt
+eMP
+eMP
+eMP
+eMP
+eMP
+eMP
+jQt
+aaa
 cnw
 cnw
 cnw
@@ -168426,35 +169014,35 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+jQt
+jQt
+jQt
+ikq
+ikq
+jQt
+lkr
+xmo
+lkr
+jQt
+lkr
+jQt
+lkr
+jQt
+lkr
+jQt
+lkr
+xmo
+lkr
+jQt
+lkr
+lkr
+lkr
+lkr
+lkr
+jQt
+jQt
+aaa
 cnw
 cnw
 cnw
@@ -168728,35 +169316,35 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+wTV
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+ikq
+jQt
+jQt
+jQt
+jQt
+jQt
+ikq
+ikq
+eYt
+ikq
+ikq
+ikq
+eYt
+jQt
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -169030,35 +169618,35 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+wTV
+jQt
+lkr
+kDb
+lkr
+vRZ
+eli
+lkr
+lkr
+lkr
+eli
+jQt
+hyO
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -169332,35 +169920,35 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+wTV
+jQt
+jQt
+jQt
+jQt
+jQt
+gci
+jQt
+jQt
+jQt
+hyO
+jQt
+ikq
+jQt
+ikq
+jQt
+hyO
+jQt
+ikq
+jQt
+ikq
+jQt
+ikq
+jQt
+jQt
+jQt
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -169634,35 +170222,35 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+wTV
+wTV
+jQt
+eMP
+eMP
+eMP
+eMP
+eMP
+eMP
+jQt
+uLm
+xmo
+lkr
+xmo
+lkr
+vRZ
+eli
+lkr
+lkr
+lkr
+lkr
+lkr
+lkr
+vRZ
+jQt
+wTV
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -169936,35 +170524,35 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+wTV
+wTV
+jQt
+jQt
+eMP
+eMP
+eMP
+eMP
+eMP
+jQt
+hyO
+jQt
+ikq
+jQt
+ikq
+jQt
+hyO
+jQt
+ikq
+jQt
+ikq
+jQt
+ikq
+jQt
+jQt
+wTV
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -170238,35 +170826,35 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+wTV
+wTV
+wTV
+jQt
+jQt
+eMP
+ubK
+eMP
+eMP
+jQt
+hyO
+jQt
+hyO
+jQt
+jQt
+jQt
+gci
+jQt
+jQt
+jQt
+jQt
+gtp
+jQt
+jQt
+wTV
+wTV
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -170540,35 +171128,35 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+wTV
+wTV
+wTV
+wTV
+jQt
+jQt
+jQt
+eMP
+eMP
+jQt
+hyO
+jQt
+jQt
+jQt
+eMP
+eMP
+eMP
+jQt
+ikq
+ikq
+jQt
+jQt
+jQt
+wTV
+wTV
+wTV
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -170842,35 +171430,35 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+jQt
+jQt
+jQt
+jQt
+uLm
+jQt
+ikq
+jQt
+eMP
+eMP
+eMP
+jQt
+jQt
+jQt
+jQt
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+aaa
 cnw
 cnw
 cnw
@@ -171144,35 +171732,35 @@ cnw
 cnw
 cnw
 cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
+aaa
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+jQt
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+wTV
+aaa
 cnw
 cnw
 cnw

@@ -2036,7 +2036,7 @@ var/global/noir = 0
 				return
 			var/datum/antagonist/antag = locate(href_list["target_antagonist"])
 			var/mob/M = locate(href_list["targetmob"])
-			if (!antag || !M?.mind)
+			if (!istype(antag) || !M?.mind)
 				return
 			if (tgui_alert(usr, "Remove the [antag.display_name] antagonist from [M.real_name] (ckey [M.ckey])?", "antagonist", list("Yes", "Cancel")) != "Yes")
 				return
@@ -3380,8 +3380,7 @@ var/global/noir = 0
 					if("respawn_panel")
 						usr.client.cmd_custom_spawn_event()
 					if("randomevents")
-						//random_events.ui_interact(src.owner.mob)
-						random_events.event_config()
+						random_events.ui_interact(src.owner.mob)
 					if("motives")
 						simsController.showControls(usr)
 					if("regionallocator")

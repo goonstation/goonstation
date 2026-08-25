@@ -2540,6 +2540,31 @@
 		min_amt2spawn = 1
 		max_amt2spawn = 1
 
+/obj/random_item_spawner/menhir
+	name = "treasures of a forgotten time"
+	min_amt2spawn = 1
+	max_amt2spawn = 1
+
+	items2spawn = list(
+	/obj/item/raw_material/cobryl,
+	/obj/item/raw_material/cobryl,
+	/obj/item/raw_material/cobryl,
+	/obj/item/raw_material/miracle,
+	/obj/item/raw_material/gemstone,
+	/obj/item/raw_material/syreline,
+	/obj/item/raw_material/uqill)
+
+	one_or_zero
+		min_amt2spawn = 0
+		max_amt2spawn = 1
+
+	one
+		min_amt2spawn = 1
+		max_amt2spawn = 1
+
+	a_bunch
+		min_amt2spawn = 3
+		max_amt2spawn = 4
 /obj/random_item_spawner/spacesuit
 	min_amt2spawn = 2
 	max_amt2spawn = 2
@@ -2561,3 +2586,49 @@
 		/obj/item/clothing/suit/space/emerg = /obj/item/clothing/head/emerg,
 	)
 #endif
+
+/obj/random_item_spawner/vending
+	name = "random vending machine spawner"
+	icon_state = "rand_vending"
+	min_amt2spawn = 1
+	max_amt2spawn = 1
+
+	items2spawn = list(/obj/machinery/computer/ATM, //Money vendor!!!
+	/obj/machinery/vending/cola/blue,
+	/obj/machinery/vending/cola/red,
+	/obj/machinery/vending/snack,
+	/obj/machinery/vending/air_vendor,
+	/obj/machinery/vending/air_vendor/plasma,
+	/obj/machinery/vending/book,
+	/obj/machinery/vending/alcohol/paid,
+	/obj/machinery/vending/capsule,
+	/obj/machinery/vending/cards,
+	/obj/machinery/vending/cigarette,
+	/obj/machinery/vending/coffee,
+	/obj/machinery/vending/paint/broken,
+	/obj/machinery/vending/pda,
+	/obj/machinery/vending/pizza,
+	/obj/machinery/vending/standard,)
+
+/obj/random_item_spawner/clothing_booth
+	name = "station clothing booth start spot"
+	icon_state = "rand_clothing_booth"
+	var/static/list/booths_not_spawned = list(/obj/machinery/clothingbooth, /obj/machinery/clothingbooth/clothingboothgbr, /obj/machinery/clothingbooth/clothingboothbrg)
+
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
+
+	spawn_items()
+		for(var/booth_type in src.booths_not_spawned)
+			var/obj/random_item_spawner/clothing_booth/booth_spawn = pick(by_type[src.type])
+			new booth_type(get_turf(booth_spawn))
+			src.booths_not_spawned -= booth_type
+			qdel(booth_spawn)
+		if(!(locate(/obj/machinery/clothingbooth) in get_turf(src)))
+			new /obj/random_item_spawner/vending(get_turf(src))
+			qdel(src)

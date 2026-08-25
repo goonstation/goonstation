@@ -15,8 +15,8 @@ var/global/list/mapNames = list(
 	//"Construction" =		list("id" = "CONSTRUCTION", "settings" = "construction"),
 	"pod_wars" =			list("id" = "POD_WARS",		"settings" = "pod_wars",		"playerPickable" = FALSE),
 	"Event" =				list("id" = "EVENT",		"settings" = "clarion",			"playerPickable" = FALSE),
-	// "1 pamgoC" =			list("id" = "PAMGOC",		"settings" = "pamgoc",			"playerPickable" = FALSE),
 	"Wrestlemap" =			list("id" = "WRESTLEMAP",	"settings" = "wrestlemap",		"playerPickable" = FALSE),
+	"Probstation" =			list("id" = "PROBSTATION",	"settings" = "probstation",		"playerPickable" = FALSE),
 
 #ifdef RP_MODE
 	"Cogmap 1" =			list("id" = "COGMAP",		"settings" = "cogmap",			"playerPickable" = TRUE,	"MinPlayersAllowed" = 14),
@@ -25,13 +25,13 @@ var/global/list/mapNames = list(
 #endif
 
 	"Cogmap 2" =			list("id" = "COGMAP2",		"settings" = "cogmap2",			"playerPickable" = TRUE, 	"MinPlayersAllowed" = 40),
-	"Donut 2" =				list("id" = "DONUT2",		"settings" = "donut2",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 80),
 	"Donut 3" =				list("id" = "DONUT3",		"settings" = "donut3",			"playerPickable" = TRUE, 	"MinPlayersAllowed" = 40),
 	"Kondaru" =				list("id" = "KONDARU",		"settings" = "kondaru",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 80),
 	"Clarion" =				list("id" = "CLARION",		"settings" = "clarion",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 60),
 	"Oshan Laboratory" = 	list("id" = "OSHAN",		"settings" = "oshan",			"playerPickable" = TRUE,	"MinPlayersAllowed" = 14),
 	"Nadir" =				list("id" = "NADIR",		"settings" = "nadir",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 70),
 	"Neon" = 				list("id" = "NEON", 		"settings" = "neon", 			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 30),
+	"Menhir" =				list("id" = "MENHIR",		"settings" = "menhir",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 60),
 
 	"Crash" = 				list("id" = "CRASH",		"settings" = "crash",			"playerPickable" = FALSE),
 	"Atlas" =				list("id" = "ATLAS",		"settings" = "atlas",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 30),
@@ -454,66 +454,6 @@ var/global/list/mapNames = list(
 		/area/station/turret_protected/ai,
 	)
 
-/datum/map_settings/donut2
-	name = "DONUT2"
-	goonhub_map = "/maps/donut2"
-	walls = /turf/simulated/wall/auto/supernorn
-	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-
-	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list(
-		/atom/movable/screen/parallax_render_source/space_1,
-		/atom/movable/screen/parallax_render_source/space_2,
-		/atom/movable/screen/parallax_render_source/typhon/donut2,
-		/atom/movable/screen/parallax_render_source/planet/fatuus,
-		/atom/movable/screen/parallax_render_source/asteroids_near/sparse,
-		)
-
-	escape_dir = NORTH
-
-	windows = /obj/window/auto
-	windows_thin = /obj/window/pyro
-	rwindows = /obj/window/auto/reinforced
-	rwindows_thin = /obj/window/reinforced/pyro
-	windows_crystal = /obj/window/auto/crystal
-	windows_rcrystal = /obj/window/auto/crystal/reinforced
-	window_layer_full = COG2_WINDOW_LAYER
-	window_layer_north = GRILLE_LAYER+0.1
-	window_layer_south = FLY_LAYER+1
-	auto_windows = TRUE
-
-	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/donut2
-	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/donut2
-	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/donut2
-	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/donut2
-
-	valid_nuke_targets = list("the cargo bay (QM)" = list(/area/station/quartermaster/office),
-		"the public market" = list(/area/station/crew_quarters/market),
-		"the stock exchange" = list(/area/station/crew_quarters/stockex),
-		"the chapel" = list(/area/station/chapel/sanctuary),
-		"the bridge" = list(/area/station/bridge),
-		"the crew lounge" = list(/area/station/crew_quarters/quarters),
-		"the brig" = list(/area/station/security/processing, /area/station/security/brig),
-		"the main station pod bay" = list(/area/station/hangar/main))
-
-	job_limits_override = list(
-		/datum/job/civilian/rancher = 2,
-	)
-
-	// donut2 research station
-	station_tether_ignore_area_types = list(
-		/area/station/crew_quarters/hor,
-		/area/station/maintenance/scidisposal,
-		/area/station/turret_protected/Zeta,
-		/area/station/crew_quarters/observatory,
-		/area/station/hangar/science,
-		/area/station/science,
-	)
-
-	ai_satellite_area_types = list(
-		/area/station/turret_protected/AIsat,
-		/area/station/turret_protected/ai,
-	)
-
 /datum/map_settings/donut3
 	name = "DONUT3"
 	goonhub_map = "/maps/donut3"
@@ -636,6 +576,51 @@ var/global/list/mapNames = list(
 	job_limits_override = list(
 		/datum/job/civilian/rancher = 2,
 	)
+
+/datum/map_settings/menhir
+	name = "MENHIR"
+	display_name = "Menhir Research Enclave"
+	goonhub_map = "/maps/menhir"
+	walls = /turf/simulated/wall/auto/supernorn
+	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
+
+	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list(
+		/atom/movable/screen/parallax_render_source/space_1,
+		/atom/movable/screen/parallax_render_source/space_2/menhir,
+		/atom/movable/screen/parallax_render_source/typhon/menhir,
+		)
+
+	windows = /obj/window/auto
+	windows_thin = /obj/window/pyro
+	rwindows = /obj/window/auto/reinforced
+	rwindows_thin = /obj/window/reinforced/pyro
+	windows_crystal = /obj/window/auto/crystal
+	windows_rcrystal = /obj/window/auto/crystal/reinforced
+	window_layer_full = COG2_WINDOW_LAYER
+	window_layer_north = GRILLE_LAYER+0.1
+	window_layer_south = FLY_LAYER+1
+	auto_windows = TRUE
+
+	listening_post_prefab = /datum/mapPrefab/listening_post/kondaru
+
+	escape_dir = SOUTH
+
+	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap2
+	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap2
+	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap2
+	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap2
+
+	valid_nuke_targets = list("the main security hall" = list(/area/station/security/secwing),
+		"the quartermaster's front office" = list(/area/station/quartermaster/office),
+		"the courtroom" = list(/area/station/crew_quarters/courtroom),
+		"the refinery (arc smelter)" = list(/area/station/mining/refinery),
+		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/surgery),
+		"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria),
+		"the artifact lab" = list(/area/station/science/artifact),
+		"the janitor's office" = list(/area/station/janitor/office),
+		"the telescience lab" = list(/area/station/science/teleporter),
+		"the chapel" = list(/area/station/chapel/sanctuary),
+		"the fitness room" = list(/area/station/crew_quarters/fitness))
 
 /datum/map_settings/atlas
 	name = "ATLAS"
@@ -976,6 +961,54 @@ var/global/list/mapNames = list(
 	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
 		"the cargo bay (QM)" = list(/area/station/quartermaster/office),
 		"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria))
+
+/datum/map_settings/probstation
+	name = "probstation"
+	goonhub_map = "/maps/probstation" //good fucking luck
+	arrivals_type = MAP_SPAWN_CRYO
+	walls = /turf/simulated/wall/auto/supernorn/colored
+	rwalls = /turf/simulated/wall/auto/reinforced/supernorn/colored
+
+	windows = /obj/window/auto
+	windows_thin = /obj/window/pyro
+	rwindows = /obj/window/auto/reinforced
+	rwindows_thin = /obj/window/reinforced/pyro
+	windows_crystal = /obj/window/auto/crystal
+	windows_rcrystal = /obj/window/auto/crystal/reinforced
+	window_layer_full = COG2_WINDOW_LAYER
+	window_layer_north = GRILLE_LAYER+0.1
+	window_layer_south = FLY_LAYER+1
+	auto_windows = TRUE
+
+	escape_dir = EAST
+
+	listening_post_prefab = list(
+		/datum/mapPrefab/listening_post/standard,
+		/datum/mapPrefab/listening_post/atlas,
+		/datum/mapPrefab/listening_post/donut3,
+		/datum/mapPrefab/listening_post/kondaru,
+	)
+
+	cargo_shipping_method = SHIPPING_METHOD_TRANSCEPTION
+
+	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
+	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
+	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
+	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
+
+	valid_nuke_targets = list("the shrub hallway" = list(/area/station/crew_quarters/garden/shrub_hall),
+		"the luxury seating area" = list(/area/station/crew_quarters/lounge/luxury_seating),
+		"the observatory" = list(/area/station/crew_quarters/observatory),
+		"the waste disposal room" = list(/area/station/maintenance/disposal),
+		"the central mapping atrium" = list(/area/station/crew_quarters/map_atrium),
+		"the entrance to the clown hole" = list(/area/station/crew_quarters/clown/entryway),
+		"the genetics lab" = list(/area/station/medical/research),)
+
+	station_tether_ignore_area_types = list(
+		/area/station/medical/asylum,
+		/area/station/engine/proto,
+		/area/station/engine/proto_gangway,
+	)
 
 /datum/map_settings/devtest
 	name = "DEVTEST"

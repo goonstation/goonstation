@@ -10,7 +10,7 @@
 	Congratulations, your station has purchased the H-86 industrial cloning device!<br>
 	Using the H-86 is almost as simple as brain surgery! Simply insert a disk into the marked slot (cut corner on the RIGHT hand side), shove the target humanoid into the scanning chamber, and select the scan option to write their genetic data to the disk!<br>
 	<b>That's all there is to it!</b><br>
-	<i>Notice, cloning system cannot scan inorganic life or small primates.  Scan may fail if subject has suffered extreme brain damage.</i><br>
+	<i>Notice, cloning system cannot scan inorganic life or small animals. At minimum a torso is required to create a cloning record (head optional).</i><br>
 	<p>Clone disks should be properly labelled and stored in the provided rack. Scanning implants a complementary CLONING RECORDS IMPLANT into the subject, which sends a "keep alive!" signal back to the rack. Note: a red warning light indicates a lack of "keep alive!" signal and may indicate the subject's death, unauthorized implant removal, or solar flare interference.
 	<h4>Cloning from a disk</h4>
 	Cloning is as simple as inserting the disk back into the console and hitting the clone button.<br>
@@ -19,7 +19,10 @@
 	<p>The provided CLONEPOD SYSTEM will produce the desired clone.  Standard clone maturation times (with SPEEDCLONE technology) are roughly 90 seconds.
 	The cloning pod may be unlocked early with any \[Medical\] ID after initial maturation is complete.</p><br>
 	<i>Please note that resulting clones may have a small DEVELOPMENTAL DEFECT as a result of genetic drift.</i><br>
-	<br>
+	<h4>Cloning Biomatter Supply</h4>
+	<p>To ensure prompt and swift generation of new clones, be sure to feed organs and limbs of deceased personnel into the enzymatic reclaimer.<br>
+	By inducing a stem-cell like effect in reclaimed biomatter, a single set of humanoid organs can provide resources for multiple new clones.
+	<hr>
 	<font size=1>This technology produced under license from Thinktronic Systems, LTD.</font>"}
 
 /obj/item/paper/Wizardry101
@@ -184,7 +187,7 @@
 
 	New()
 		. = ..()
-		src.stamp(200, 20, rand(-5,5), "stamp-qm.png", "stamp-qm")
+		src.stamp(200, 20, rand(-5,5), "[resource("images/tgui/stamp_icons/stamp-qm.png")]", "stamp-qm")
 
 /obj/item/paper/engine
 	name = "'Generator Startup Procedure'"
@@ -1063,35 +1066,6 @@ Only trained personnel should operate station systems. Follow all procedures car
 	NT Marching Band Director
 	"}
 
-
-/obj/item/paper/donut2smesinstructions
-	name = "Donut 2 SMES Units and YOU"
-	icon_state = "paper"
-	info = {"
-	----------------------------------------<br><br>
-	Donut 2 SMES Units and YOU<br><br>
-
-	A full guide to ensuring the station is powered up properly<br>
-	----------------------------------------<br><br>
-	Howdy Engineer, so you just set up this here SMES unit and you think you're done? Boy howdy do I have some news for you!<br><br>
-
-	This here station has not just ONE, not just TWO, but FOUR SMES units set up to power up the entire main station. You might be thinking, 'So,
-	Ms. Mysterious Engineer Who Knows Way More Than I Do, what does that mean?'<br><br>
-
-	WELL! It means there's four SMES units and four power grids on the station! Finding them is pretty damn simple if I do say so myself, all you
-	gotta do is walk around the inner loop of maintenance and find the SMES rooms. There's one just east of medbay, one just below arrivals and QM
-	and one direction west of the bridge! Oh, there's also, uhh, you know, the one in Engineering.<br><br>
-
-	Once you've got those four SMES units set you're all good. The singularity is a MARVEL of modern engineering and produces near ENDLESS power!<br><br>
-
-	Oh, couple small things to add. There are a few solar panel groups in outer maintenance, but they're not wired to power the whole station at once
-	so you would have to connect the four grids if you wanted, or needed, to run the station that way. Research Outpost Zeta also has its own solar
-	panel setup, but it comes preconfigured and should last them well through any single shift, so you don't gotta worry about that none.<br><br><br>
-
-	Keep that power flowing,<br>
-	S.L.
-	"}
-
 #ifdef NIGHTSHADE
 /obj/item/paper/gallery
 	name = "Gallery submission guide"
@@ -1549,4 +1523,66 @@ Only trained personnel should operate station systems. Follow all procedures car
 	icon_state = "thermal_paper"
 	info = {"
 	I couldn't sleep! Shut the ice maker off at <u>NIGHT</u> when people <u>SLEEP</u>. Management refused to move me out of room 1 - 0/10 would not return!
+	"}
+
+/obj/item/paper/menhir_advisory
+	name = "TOREADOR-7I-22408 report sheet"
+	icon_state = "toreador_report"
+	info ={"
+	<h1>ARTIFACT ANALYSIS<br>TOREADOR-7I-22408</h1><br>
+	<h2>ORIGIN</h2>
+	Presumed Precursor; terahertz-band scanning has received responses consistent with cobryl and iridium composition, matching other known Precursor artifacts.<br>
+	<br>
+	<h2>TYPE</h2>
+	Unable to ascertain thus far; large size and presence of a point of ingress suggest possible use as a station, vessel or repository of some sort.<br>
+	<br>
+	<h2>TRIGGERS</h2>
+	Majority of casing appears unresponsive to, and unaffected by, all test stimuli; point of ingress contains small protrusions with psychic projection capabilities, whose function in the larger complex is uncertain as of yet.<br>
+	<br>
+	<h2>FAULTS</h2>
+	None detected within gamut of known Precursor artifact faults<br>
+	<br>
+	<h2>ADDITIONAL INFORMATION</h2>
+	NT administration responsible for site have made the executive determination that the point of ingress is the likely origin of any hazards that may arise if the artifact is activated; attempts to activate TOREADOR-7I-22408 at other points of its casing are considered inadvisable and unlikely to produce results.<br>
+	"}
+
+/obj/item/paper/menhir_contingency
+	name = "TOREADOR-7I-22408 contingency brief"
+	icon_state = "toreador_report"
+	info ={"
+	<h1>DATA CONTINGENCY PROCEDURE</h1>
+	The nearby ThinkTape bay, identifier 'Contingency', has been made available to increase the odds of successful data recovery in the event of unexpectedly hostile artifact activation.<br>
+	<br>
+	Before any attempts are made to activate TOREADOR-7I-22408, a crewmember trained in pod flight should be posted in this location.<br>
+	<br>
+	In the event TOREADOR-7I-22408 undergoes an activation event, the stimuli that prompted this should <b>immediately</b> be recorded to the preinstalled tape, which is then taken off-site by the crewmember. <b>DO NOT WAIT FOR ARTIFACT EFFECTS TO APPEAR - BY THE TIME ANY HOSTILE EFFECTS MANIFEST, ESCAPE MAY NO LONGER BE POSSIBLE.</b><br>"}
+
+/obj/item/paper/menhir_toreador_extra
+	name = "TOREADOR administrative advisory"
+	icon_state = "toreador_report"
+	info ={"
+	<h1>FOR RELEASE TO MENHIR RESEARCH ENCLAVE</h1>
+	<h1>COMMAND STAFF ONLY</h1>
+	TOREADOR project personnel operating previous 7I-22408 provisional facility (designated Limpet) have experienced adverse psychological effects during prolonged staffing tours.<br>
+	<br>
+	While it is expected that this is solely the consequence of isolation in a provisional facility for extended periods, we have been unable to rule out a wide-area emanation from 7I-22408.<br>
+	<br>
+	With the construction of the Menhir Research Enclave, standard personnel rotations are expected to ameliorate this possibility; however, vigilance remains advised.<br>
+	<br>
+	<b>MANDATE: Under no circumstances is any individual going by the name of Alessi Kondaru permitted to make ingress to TOREADOR-7I-22408.</b><br>
+	Do not attempt to confine them if they have boarded incidentally, but docking requests should be turned down on any other procedural basis, or Protocol 7I should other basis be unavailable. Any record of contact with this individual should be expunged.<br>
+	"}
+
+/obj/item/paper/menhir_limpet_note
+	name = "crumpled note"
+	desc = "This looks written hastily."
+	icon_state = "paper_caution_crumple"
+	info = {"
+	<span style="font-family:Lucida Handwriting;">
+	shipping out soon<br>
+	they're going to take all the logs, no one outside hq will probably see them again<br>
+	IT IS NOT INACTIVE<br>
+	if they tell you it is, they're lying<br>
+	it understands you<br>
+	don't let it go<br>
 	"}
