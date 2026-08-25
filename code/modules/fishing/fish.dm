@@ -1083,12 +1083,12 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/borgfish)
 	get_scent_color()
 		return "dusty grey"
 
-TYPEINFO(/obj/item/reagent_containers/food/fish/clown_fish)
+TYPEINFO(/obj/item/reagent_containers/food/fish/toonclown_fish)
 	appears_in_fish_collection = TRUE
-/obj/item/reagent_containers/food/fish/clown_fish
+/obj/item/reagent_containers/food/fish/toonclown_fish
 	name = "clown fish"
 	desc = "This little guy came a long, long way to make your day!"
-	icon_state = "clown_fish"
+	icon_state = "toonclown_fish"
 	inhand_color = "#6DD361"
 	slice_product = /obj/item/clothing/mask/clown_nose //feel free to change this if theres something funnier
 	rarity = ITEM_RARITY_LEGENDARY

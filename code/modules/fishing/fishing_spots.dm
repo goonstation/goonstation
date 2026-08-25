@@ -1086,4 +1086,4 @@ datum/fishing_spot/golden_toilet
 	/obj/item/reagent_containers/food/fish/clownfish = 20,
 	/obj/item/clothing/shoes/clown_shoes = 10, //they fell in :(
 	/mob/living/critter/spider/baby/nice = 5,
-	/obj/item/reagent_containers/food/fish/clown_fish = 5)
+	/obj/item/reagent_containers/food/fish/toonclown_fish = 5)
