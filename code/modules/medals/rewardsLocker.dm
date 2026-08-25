@@ -1225,6 +1225,30 @@
 		activator.update_inhands()
 		return TRUE
 
+/datum/achievementReward/colorfulberet
+	title = "(Skin) Big Fish Fear Me Hat"
+	desc = "With the power of every fish there is, turns your hat into the ultimate anglers headgear. If you have a hat."
+	required_medal = "So Long, and Thanks for All the Fish"
+
+	rewardActivate(var/mob/activator)
+		if (ishuman(activator))
+			var/mob/living/carbon/human/H = activator
+			if (!istype(H.head, /obj/item/clothing/head/helmet) && !istype(H.head, /obj/item/clothing/head/headband && istype(H.head, /obj/item/clothing/head))) // ha...
+				var/obj/item/clothing/head/M = H.head
+				M.icon = 'icons/obj/clothing/item_hats.dmi'
+				M.icon_state = "fishdreadme"
+				M.item_state = "fishdreadme"
+				M.wear_state = "fishdreadme"
+				M.wear_image_icon = 'icons/mob/clothing/head.dmi'
+				M.name = "'WOMEN FEAR ME. ENBIES FEAR ME. FISH DREAD ME. MEN TURN THEIR EYES AWAY FROM ME, AS I WALK. NO BEASTS DARE MAKE A SOUND IN MY PRESENCE. I AM ALONE ON THIS BARREN STATION' hat"
+				M.desc = "Was kidnapping all of those fish really worth it for this hat? Absolutely."
+				return 1
+			boutput(activator, SPAN_ALERT("Unable to redeem... are you wearing a hat?"))
+		else
+			boutput(activator, SPAN_ALERT("Unable to redeem... only humans can redeem this."))
+
+		return 0
+
 // Reward management stuff
 
 /datum/achievementReward/contributor
