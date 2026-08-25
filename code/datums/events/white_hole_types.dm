@@ -7,6 +7,8 @@ ABSTRACT_TYPE(/datum/whitehole_spawner)
 	/// - If the type is of "/datum/projectile", that projectile will be launched
 	/// - If the type is of "/datum/reagent", that reagent will be released
 	var/list/spawn_probs = list()
+	var/name = "untitled"
+	var/icon_view = "" //! The icon_state of the image that will be used inside the white hole
 
 	/// Pick something for the white hole to do. If a movable atom was released, it should return that atom.
 	proc/unleash(var/obj/whitehole/whitehole)
@@ -31,7 +33,7 @@ ABSTRACT_TYPE(/datum/whitehole_spawner)
 			spawner.reagent_probs = list(spawn_type = 1)
 			return spawner.unleash()
 
-		var/atom/movable/AM = new spawn_type
+		var/atom/movable/AM = new spawn_type(whitehole.loc)
 		return AM
 
 	proc/unleash_projectile(var/obj/whitehole/whitehole, var/proj_path, var/target_prob)
@@ -49,6 +51,8 @@ ABSTRACT_TYPE(/datum/whitehole_spawner)
 ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 /datum/whitehole_spawner/main
 /datum/whitehole_spawner/main/artlab
+	name = "artlab"
+	icon_view = "artlab"
 	spawn_probs = list(
 		/datum/whitehole_spawner/artifact = 60,
 		/datum/whitehole_spawner/written_paper = 5,
@@ -72,6 +76,8 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	)
 
 /datum/whitehole_spawner/main/teg
+	name = "TEG"
+	icon_view = "teg"
 	spawn_probs = list(
 		/datum/whitehole_spawner/gas/plasma_mix_small = 40,
 		/datum/whitehole_spawner/gas/plasma_large = 10,
@@ -113,6 +119,8 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	)
 
 /datum/whitehole_spawner/main/flock
+	name = "flock"
+	icon_view = "flock"
 	spawn_probs = list(
 		/datum/whitehole_spawner/flock_converted = 15,
 
@@ -143,6 +151,8 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	)
 
 /datum/whitehole_spawner/main/chapel
+	name = "chapel"
+	icon_view = "chapel"
 	spawn_probs = list(
 		/datum/whitehole_spawner/written_paper = 3,
 		/datum/whitehole_spawner/written_postit = 1,
@@ -186,6 +196,8 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	)
 
 /datum/whitehole_spawner/main/trench
+	name = "trench"
+	icon_view = "trench"
 	spawn_probs = list(
 		/datum/whitehole_spawner/ore/random = 5,
 		/datum/whitehole_spawner/parent/trench_loot = 5,
@@ -240,6 +252,8 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	)
 
 /datum/whitehole_spawner/main/asteroid
+	name = "asteroid"
+	icon_view = "asteroid"
 	spawn_probs = list(
 		/datum/whitehole_spawner/ore/random = 200,
 
@@ -267,6 +281,8 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	)
 
 /datum/whitehole_spawner/main/cafeteria
+	name = "cafeteria"
+	icon_view = "cafeteria"
 	spawn_probs = list(
 		/datum/whitehole_spawner/deep_fried = 2,
 		/datum/whitehole_spawner/written_paper = 3,
@@ -307,6 +323,8 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	)
 
 /datum/whitehole_spawner/main/singulo
+	name = "singulo"
+	icon_view = "singulo"
 	spawn_probs = list(
 		/datum/whitehole_spawner/arcflash = 5,
 		/datum/whitehole_spawner/written_paper = 3,
@@ -331,6 +349,8 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	)
 
 /datum/whitehole_spawner/main/plasma
+	name = "plasma"
+	icon_view = "plasma"
 	spawn_probs = list(
 		/datum/whitehole_spawner/gas/plasma_mix_small = 80,
 		/datum/whitehole_spawner/gas/plasma_large = 20,
@@ -341,6 +361,8 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	)
 
 /datum/whitehole_spawner/main/nukies
+	name = "nukies"
+	icon_view = "nukies"
 	spawn_probs = list(
 		/datum/projectile/bullet/minigun = 5,
 		/datum/projectile/energy_bolt = 5,
@@ -372,6 +394,8 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	)
 
 /datum/whitehole_spawner/main/hell
+	name = "hell"
+	icon_view = "hell"
 	spawn_probs = list(
 		/datum/whitehole_spawner/fireflash = 15,
 		/datum/whitehole_spawner/corpse = 5,
@@ -393,6 +417,8 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	)
 
 /datum/whitehole_spawner/main/botany
+	name = "botany"
+	icon_view = "botany"
 	spawn_probs = list(
 		/datum/whitehole_spawner/plant = 100,
 		/datum/whitehole_spawner/written_paper = 3,
@@ -427,6 +453,8 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	)
 
 /datum/whitehole_spawner/main/maint
+	name = "maintanence"
+	icon_view = "maint"
 	spawn_probs = list(
 		/datum/whitehole_spawner/written_paper = 5,
 		/datum/whitehole_spawner/written_postit = 1,
@@ -466,6 +494,8 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	)
 
 /datum/whitehole_spawner/main/ai
+	name = "AI"
+	icon_view = "ai"
 	spawn_probs = list(
 		/datum/whitehole_spawner/written_paper = 2,
 
@@ -507,6 +537,8 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	)
 
 /datum/whitehole_spawner/main/bridge
+	name = "bridge"
+	icon_view = "bridge"
 	spawn_probs = list(
 		/datum/whitehole_spawner/written_paper = 6,
 		/datum/whitehole_spawner/written_postit = 4,
@@ -544,6 +576,8 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	)
 
 /datum/whitehole_spawner/main/clown
+	name = "clown"
+	icon_view = "clown"
 	spawn_probs = list(
 		/datum/whitehole_spawner/written_paper = 1,
 		/datum/whitehole_spawner/written_postit = 1,
@@ -588,6 +622,8 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	)
 
 /datum/whitehole_spawner/main/medbay
+	name = "medbay"
+	icon_view = "medbay"
 	spawn_probs = list(
 		/datum/whitehole_spawner/bot_named/medbot = 6,
 		/datum/whitehole_spawner/parent/medicine = 20,
@@ -618,6 +654,8 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	)
 
 /datum/whitehole_spawner/main/security
+	name = "security"
+	icon_view = "security"
 	spawn_probs = list(
 		/datum/whitehole_spawner/bot_named = 4,
 		/datum/whitehole_spawner/written_paper = 1,
@@ -647,6 +685,8 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	)
 
 /datum/whitehole_spawner/main/cargo
+	name = "cargo"
+	icon_view = "cargo"
 	spawn_probs = list(
 		/datum/whitehole_spawner/written_paper = 15,
 
@@ -680,10 +720,12 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	)
 
 /datum/whitehole_spawner/main/nuclear
+	name = "nuclear reactor"
+	icon_view = "nuclear"
 	spawn_probs = list(
 		/datum/whitehole_spawner/gas/radgas_small = 40,
 		/datum/whitehole_spawner/gas/radgas_large = 10,
-		/datum/whitehole_spawner/gas/plasma_small = 25,
+		/datum/whitehole_spawner/gas/plasma_mix_small = 25,
 		/datum/whitehole_spawner/gas/plasma_large = 5,
 
 		/obj/item/reactor_component/control_rod/random_material = 20,
@@ -718,6 +760,8 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	)
 
 /datum/whitehole_spawner/main/janitorial
+	name = "janitorial"
+	icon_view = "janitorial"
 	spawn_probs = list(
 		/datum/whitehole_spawner/corpse/bagged = 2,
 
@@ -749,6 +793,8 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	)
 
 /datum/whitehole_spawner/main/wizard
+	name = "wizard"
+	icon_view = "wizard"
 	spawn_probs = list(
 		/datum/whitehole_spawner/snake = 10,
 		/obj/item/wizard_crystal = 1,
@@ -788,6 +834,8 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	)
 
 /datum/whitehole_spawner/main/spacemas
+	name = "spacemas"
+	icon_view = "spacemas"
 	spawn_probs = list(
 		/datum/whitehole_spawner/gift = 25,
 
@@ -821,6 +869,8 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	)
 
 /datum/whitehole_spawner/main/basketball
+	name = "basketball"
+	icon_view = "basketball"
 	spawn_probs = list(
 		/obj/item/basketball = 15,
 		/obj/item/bballbasket = 4,
@@ -850,11 +900,12 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 /// Used to return random objects for transforming, deep frying, gift wrapping, or whatever else.
 /// Will avoid anything that is not a movable atom, including projectiles.
 /datum/whitehole_spawner/random_object
+	name = "random object"
 	unleash(var/obj/whitehole/whitehole)
 		RETURN_TYPE(/atom/movable)
-		var/selected = null
-		while(!ispath(selected, /atom/movable))
-			var/spawn_type = pick(concrete_typesof(/datum/whitehole_spawner/main) - list(/datum/whitehole_spawner/main/flock))
+		var/spawn_type = null
+		while(!ispath(spawn_type, /atom/movable))
+			spawn_type = pick(concrete_typesof(/datum/whitehole_spawner/main) - list(/datum/whitehole_spawner/main/flock))
 			while(ispath(spawn_type, /datum/whitehole_spawner))
 				// Keep looking through spawners until you find something or nothing
 				var/datum/whitehole_spawner/spawner = new spawn_type
@@ -863,6 +914,8 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		return AM
 
 /datum/whitehole_spawner/artifact
+	name = "random artifact"
+	icon_view = "artlab"
 	var/force_origin = null //! If set with an ID, will force the artifact to be of that origin
 	var/auto_activate_prob = 25 //! Percent chance that the artifact will activate itself
 	var/auto_activate_delay_max = 15 SECONDS //! Maximum delay before the artifact self-activates
@@ -876,6 +929,7 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		return artifact
 
 /datum/whitehole_spawner/ore
+	name = "ore"
 	var/stack_max = 1
 	var/stack_min = 1
 
@@ -888,6 +942,7 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		return selected
 
 	random
+		name = "ore random"
 		spawn_probs = list(
 			/obj/item/raw_material/rock = 100,
 			/obj/item/raw_material/ice = 50,
@@ -929,45 +984,47 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/gas)
 		T.assume_air(gas)
 		return null
 
-	var/set_gases(var/datum/gas_mixture/gas)
+	proc/set_gases(var/datum/gas_mixture/mixture)
 		for(var/gas in src.gas_list)
 			switch(gas)
 				if("oxygen")
-					airgas.oxygen = gas_list[gas] * rand(1, src.amount_mult_max)
+					mixture.oxygen = gas_list[gas] * rand(1, src.amount_mult_max)
 				if("plasma")
-					airgas.toxins = gas_list[gas] * rand(1, src.amount_mult_max)
+					mixture.toxins = gas_list[gas] * rand(1, src.amount_mult_max)
 				if("radgas")
-					airgas.radgas = gas_list[gas] * rand(1, src.amount_mult_max)
+					mixture.radgas = gas_list[gas] * rand(1, src.amount_mult_max)
 				if("nitrogen")
-					airgas.nitrogen = gas_list[gas] * rand(1, src.amount_mult_max)
+					mixture.nitrogen = gas_list[gas] * rand(1, src.amount_mult_max)
 
-	var/set_temperature(var/datum/gas_mixture/gas)
+	proc/set_temperature(var/datum/gas_mixture/gas)
 		gas.temperature = rand(src.temperature_max, temperature_min)
 
 	plasma_mix_small
-		name = "Some Plasma"
+		name = "gas: plasma small"
 		gas_list = list("plasma" = 1, "oxygen" = 1)
 		amount_mult_max = 10
 
 	plasma_large
-		name = "A lot of Plasma"
+		name = "gas: plasma large"
 		gas_list = list("plasma" = 10)
 		amount_mult_max = 3
 		temperature_max = 300
 
 	radgas_small
-		name = "Some Fallout"
+		name = "gas: fallout small"
 		gas_list = list("radgas" = 10)
 		amount_mult_max = 10
 		temperature_max = 300
 
 	radgas_large
-		name = "Some Fallout"
+		name = "gas: fallout large"
 		gas_list = list("radgas" = 100)
 		amount_mult_max = 5
 		temperature_max = 300
 
 /datum/whitehole_spawner/plant
+	name = "random plant"
+	icon_view = "botany"
 	spawn_probs = list(
 		/obj/item/reagent_containers/food/snacks/plant = 1,
 		/obj/item/plant = 1,
@@ -975,6 +1032,7 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/gas)
 	)
 
 /datum/whitehole_spawner/corpse
+	name = "corpse"
 	spawn_probs = list(
 		/mob/living/carbon/human/normal = 6,
 		/mob/living/carbon/human/normal/assistant = 1,
@@ -991,16 +1049,6 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/gas)
 	unleash(var/obj/whitehole/whitehole)
 		. = ..()
 		var/mob/living/carbon/human/H = .
-
-		if(istype(M, /mob/living/carbon/human/normal/clown) && prob(80))
-			M.real_name = phrase_log.random_phrase("name-clown")
-		else if(istype(M, /mob/living/carbon/human) && prob(80))
-			M.real_name = phrase_log.random_phrase("name-human")
-		if(!M.real_name)
-			M.real_name = M.name // revert in case of a fail
-		M.name = M.real_name
-		M.choose_name(1, null, M.real_name, force_instead=TRUE)
-
 		H.decomp_stage = rand(src.decomp_min, src.decomp_max)
 		for (var/i in 1 to rand(1, 4))
 			var/obj/item/organ/organ = H.drop_organ(pick("left_eye","right_eye","left_lung","right_lung","butt","left_kidney","right_kidney","liver","stomach","intestines","spleen","pancreas","appendix"))
@@ -1015,9 +1063,11 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/gas)
 		return H
 
 /datum/whitehole_spawner/corpse/bagged
+	name = "corpse: bagged"
 	bagged = TRUE
 
 /datum/whitehole_spawner/gene_injector
+	name = "gene injector"
 	var/unlabeled_prob = 50 //! Percent chance that the injector will be labed as "???"
 
 	unleash(var/obj/whitehole/whitehole)
@@ -1027,15 +1077,16 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/gas)
 			var/datum/dna_chromosome/chromosome = new chromosome_type()
 			// yes we skipping the apply_check here, the other dimension can break laws of genetics
 			chromosome.apply(effect)
-		var/obj/item/genetics_injector/dna_injector/inj = new(src.loc)
+		var/obj/item/genetics_injector/dna_injector/inj = new(whitehole.loc)
 		if(prob(src.unlabeled_prob))
 			inj.name = "dna injector - [effect.name]"
 		else
 			inj.name = "dna injector - ???"
 		inj.BE = effect
-		return = inj
+		return inj
 
 /datum/whitehole_spawner/arcflash
+	name = "arcflash"
 	var/watts_max = 6 KILO WATTS
 	var/watts_min = 4 KILO WATTS
 	var/target_chance = 60
@@ -1050,6 +1101,7 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/gas)
 		return null
 
 /datum/whitehole_spawner/fireflash
+	name = "fireflash"
 	var/radius_max = 6
 	var/radius_min = 1
 	var/temperature_max = 3000 KELVIN
@@ -1071,7 +1123,8 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/reagent)
 	var/amount_min = 20
 
 	unleash(var/obj/whitehole/whitehole)
-		var/datum/reagent/dummy = spawn_type
+		var/reagent_type = weighted_pick(src.reagent_probs)
+		var/datum/reagent/dummy = new reagent_type
 		var/reagent_id = initial(dummy.id)
 		var/amount = rand(20, 150)
 		if(prob(10))
@@ -1094,15 +1147,20 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/child_types)
 		return ..()
 
 	sticker
+		name = "random sticker"
 		spawn_probs_parents = list(/obj/item/sticker = 1)
 	medicine
+		name = "random medicine"
 		spawn_probs_parents = list(/obj/item/reagent_containers/glass/bottle = 1)
 	organ
+		name = "random organ"
 		spawn_probs_parents = list(/obj/item/organ = 1)
 	trench_loot
+		name = "random trench loot"
 		spawn_probs_parents = list(/obj/storage/crate/trench_loot = 1)
 
 /datum/whitehole_spawner/gift
+	name = "random gift"
 	spawn_probs = list(/datum/whitehole_spawner/random_object = 1)
 
 	unleash(var/obj/whitehole/whitehole)
@@ -1110,9 +1168,10 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/child_types)
 		if(istype(selected, /atom/movable))
 			var/atom/movable/AM = selected
 			return AM.gift_wrap(xmas_style = TRUE)
-		return new /obj/item/a_gift/festive(src.loc)
+		return new /obj/item/a_gift/festive(whitehole.loc)
 
 /datum/whitehole_spawner/flock_converted
+	name = "converted flock"
 	spawn_probs = list(/datum/whitehole_spawner/random_object = 1)
 
 	unleash(var/obj/whitehole/whitehole)
@@ -1123,6 +1182,7 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/child_types)
 		return selected
 
 /datum/whitehole_spawner/deep_fried
+	name = "deep fried"
 	spawn_probs = list(/datum/whitehole_spawner/random_object = 1)
 
 	unleash(var/obj/whitehole/whitehole)
@@ -1159,26 +1219,25 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/child_types)
 		return fryholder
 
 /datum/whitehole_spawner/written_postit
-	spawn_probs = list(
-		/obj/item/sticker/postit = 1
-	)
+	name = "written sticky note"
 
 	unleash(var/obj/whitehole/whitehole)
 		// Done like this in case alternative postit note types are added in the future
-		var/obj/item/sticker/postit/postit = ..()
+		var/obj/item/sticker/postit/postit = new(whitehole.loc)
 		if(length(postit.words) == 0)
 			postit.words = phrase_log.random_phrase("paper")
 			postit.icon_state = "postit-writing"
+		return postit
 
 /datum/whitehole_spawner/written_paper
-	spawn_probs = list(
-		/obj/item/paper/paper = 1
-	)
+	name = "written paper"
 
 	unleash(var/obj/whitehole/whitehole)
-		var/obj/item/paper/paper/paper = ..()
+		var/obj/item/paper/paper = new(whitehole.loc)
 		if(length(paper.info) == 0)
 			paper.info = phrase_log.random_phrase("paper")
+		return paper
+
 ABSTRACT_TYPE(/datum/whitehole_spawner/bot_named)
 /datum/whitehole_spawner/bot_named
 	var/name_category = null
@@ -1191,39 +1250,51 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/bot_named)
 		return B
 
 	firebot
+		name = "bot: firebot"
 		spawn_probs = list(/obj/machinery/bot/firebot = 1)
 		name_category = "name-firebot"
+	floorbot
+		name = "bot: floorbot"
+		spawn_probs = list(/obj/machinery/bot/floorbot = 1)
+		name_category = "name-floorbot"
 	secbot
+		name = "bot: secbot"
 		spawn_probs = list(
 			/obj/machinery/bot/secbot = 1,
 			/obj/machinery/bot/secbot/emagged = 3,
 		)
 		name_category = "name-secbot"
 	cleanbot
+		name = "bot: cleanbot"
 		spawn_probs = list(
 			/obj/machinery/bot/cleanbot = 5,
 			/obj/machinery/bot/cleanbot/emagged = 3
 		)
 		name_category = "name-cleanbot"
 	mulebot
+		name = "bot: mulebot"
 		spawn_probs = list(/obj/machinery/bot/mulebot = 1)
 		name_category = "name-mulebot"
 	medbot
+		name = "bot: medbot"
 		spawn_probs = list(
 			/obj/machinery/bot/medbot = 5,
 			/obj/machinery/bot/medbot/mysterious/emagged = 1,
 		)
 		name_category = "name-medbot"
 	cambot
+		name = "bot: cambot"
 		spawn_probs = list(/obj/machinery/bot/cambot = 1)
 		name_category = "name-cambot"
 	duckbot
+		name = "bot: duckbot"
 		spawn_probs = list(/obj/machinery/bot/duckbot = 1)
 		name_category = "name-duckbot"
 
 /datum/whitehole_spawner/snake
+	name = "wizard snake"
 	spawn_probs = list(
-		/datum/whitehole_spawner/wizard
+		/datum/whitehole_spawner/main/wizard
 	)
 
 	unleash(var/obj/whitehole/whitehole)
@@ -1235,5 +1306,7 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/bot_named)
 			return selected
 		if(istype(AM, /obj/projectile))
 			return selected
-		var/mob/living/critter/small_animal/snake/snake = new(src.loc, AM)
+		var/mob/living/critter/small_animal/snake/snake = new(whitehole.loc, AM)
 		snake.start_expiration(2 MINUTES)
+
+
