@@ -1225,7 +1225,7 @@
 		activator.update_inhands()
 		return TRUE
 
-/datum/achievementReward/colorfulberet
+/datum/achievementReward/fishdreadmehat
 	title = "(Skin) Big Fish Fear Me Hat"
 	desc = "With the power of every fish there is, turns your hat into the ultimate anglers headgear. If you have a hat."
 	required_medal = "So Long, and Thanks for All the Fish"
