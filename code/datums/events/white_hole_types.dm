@@ -13,25 +13,27 @@ ABSTRACT_TYPE(/datum/whitehole_spawner)
 	/// Pick something for the white hole to do. If a movable atom was released, it should return that atom.
 	proc/unleash(var/obj/whitehole/whitehole)
 		if(length(src.spawn_probs) == 0)
+			boutput(world, "Test B")
 			return null
 		var/spawn_type = weighted_pick(src.spawn_probs)
+		boutput(world, "Test: [spawn_type]")
 
 		if(IS_ABSTRACT(spawn_type))
 			spawn_type = pick(concrete_typesof(spawn_type))
 		if(ispath(spawn_type, /datum/whitehole_spawner))
 			var/datum/whitehole_spawner/spawner = new spawn_type
-			return spawner.unleash()
+			return spawner.unleash(whitehole)
 		else if(ispath(spawn_type, /datum/projectile))
 			return src.unleash_projectile(whitehole, spawn_type, 60)
 		else if(ispath(spawn_type, /datum/reagent))
 			// Can use the reagent datum as a lazy way to spawn reagents without creating a new spawner
 			var/datum/whitehole_spawner/reagent/spawner = new()
-			if(prob(10))
-				spawner.amount_max *= 10
-			if(prob(10))
-				spawner.amount_max *= 10
 			spawner.reagent_probs = list(spawn_type = 1)
-			return spawner.unleash()
+			if(prob(10))
+				spawner.amount_max *= 10
+			if(prob(10))
+				spawner.amount_max *= 10
+			return spawner.unleash(whitehole)
 
 		var/atom/movable/AM = new spawn_type(whitehole.loc)
 		return AM
@@ -903,14 +905,15 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	name = "random object"
 	unleash(var/obj/whitehole/whitehole)
 		RETURN_TYPE(/atom/movable)
+		var/list/availible_types = concrete_typesof(/datum/whitehole_spawner/main)
 		var/spawn_type = null
 		while(!ispath(spawn_type, /atom/movable))
-			spawn_type = pick(concrete_typesof(/datum/whitehole_spawner/main) - list(/datum/whitehole_spawner/main/flock))
+			spawn_type = pick(availible_types)
 			while(ispath(spawn_type, /datum/whitehole_spawner))
 				// Keep looking through spawners until you find something or nothing
 				var/datum/whitehole_spawner/spawner = new spawn_type
 				spawn_type = weighted_pick(spawner.spawn_probs)
-		var/atom/movable/AM = new spawn_type
+		var/atom/movable/AM = new spawn_type(whitehole.loc)
 		return AM
 
 /datum/whitehole_spawner/artifact
@@ -977,27 +980,29 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/gas)
 	var/temperature_min = 0
 
 	unleash(var/obj/whitehole/whitehole)
-		var/datum/gas_mixture/gas = new
-		src.set_gases(gas)
-		src.set_temperature(gas)
+		var/datum/gas_mixture/mixture = new()
+		src.set_gases(mixture)
+		src.set_temperature(mixture)
+		boutput(world, "Mixture: [mixture.oxygen], [mixture.toxins], [mixture.radgas], [mixture.nitrogen] | [mixture.temperature]")
 		var/turf/T = get_turf(whitehole)
-		T.assume_air(gas)
+		T.assume_air(mixture)
 		return null
 
 	proc/set_gases(var/datum/gas_mixture/mixture)
 		for(var/gas in src.gas_list)
+			boutput(world, "Test: [gas] | [src.gas_list[gas]]")
 			switch(gas)
 				if("oxygen")
-					mixture.oxygen = gas_list[gas] * rand(1, src.amount_mult_max)
+					mixture.oxygen = src.gas_list[gas] * rand(1, src.amount_mult_max)
 				if("plasma")
-					mixture.toxins = gas_list[gas] * rand(1, src.amount_mult_max)
+					mixture.toxins = src.gas_list[gas] * rand(1, src.amount_mult_max)
 				if("radgas")
-					mixture.radgas = gas_list[gas] * rand(1, src.amount_mult_max)
+					mixture.radgas = src.gas_list[gas] * rand(1, src.amount_mult_max)
 				if("nitrogen")
-					mixture.nitrogen = gas_list[gas] * rand(1, src.amount_mult_max)
+					mixture.nitrogen = src.gas_list[gas] * rand(1, src.amount_mult_max)
 
-	proc/set_temperature(var/datum/gas_mixture/gas)
-		gas.temperature = rand(src.temperature_max, temperature_min)
+	proc/set_temperature(var/datum/gas_mixture/mixture)
+		mixture.temperature = rand(src.temperature_min, temperature_max)
 
 	plasma_mix_small
 		name = "gas: plasma small"
@@ -1116,7 +1121,6 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/gas)
 		fireflash_melting(whitehole, radius, temperature, falloff)
 		return null
 
-ABSTRACT_TYPE(/datum/whitehole_spawner/reagent)
 /datum/whitehole_spawner/reagent
 	var/list/reagent_probs = list()
 	var/amount_max = 150
@@ -1126,13 +1130,14 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/reagent)
 		var/reagent_type = weighted_pick(src.reagent_probs)
 		var/datum/reagent/dummy = new reagent_type
 		var/reagent_id = initial(dummy.id)
-		var/amount = rand(20, 150)
+		var/amount = rand(src.amount_min, src.amount_max)
 		if(prob(10))
 			amount *= 10
 		if(prob(10))
 			amount *= 10
 		var/turf/T = get_turf(src)
 		T.fluid_react_single(reagent_id, amount)
+		return null
 
 ABSTRACT_TYPE(/datum/whitehole_spawner/child_types)
 /// Used to spawn child types of a thing instead of the type itself
@@ -1140,10 +1145,7 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/child_types)
 	var/list/spawn_probs_parents = list()
 
 	unleash(var/obj/whitehole/whitehole)
-		var/selected = weighted_pick(src.spawn_probs_parents)
-		if(ispath(selected))
-			selected = pick(concrete_typesof(selected))
-		src.spawn_probs = list(selected = 1)
+		src.spawn_probs = list(pick(concrete_typesof(weighted_pick(src.spawn_probs_parents))) = 1)
 		return ..()
 
 	sticker
@@ -1294,7 +1296,7 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/bot_named)
 /datum/whitehole_spawner/snake
 	name = "wizard snake"
 	spawn_probs = list(
-		/datum/whitehole_spawner/main/wizard
+		/datum/whitehole_spawner/main/wizard = 1
 	)
 
 	unleash(var/obj/whitehole/whitehole)

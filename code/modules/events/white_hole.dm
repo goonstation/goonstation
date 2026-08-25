@@ -5,7 +5,7 @@ TYPEINFO(/datum/random_event/major/white_hole)
 		EVENT_INFO_EXT("grow_duration", DATA_INPUT_NUM, "White Hole Growth Time", 0, 1 HOUR),
 		EVENT_INFO_EXT("duration", DATA_INPUT_NUM, "White Hole Duration", 0, 1 HOUR),
 		EVENT_INFO_EXT("activity_modifier", DATA_INPUT_NUM, "White Hole Activity Modifier", 0, 250),
-		EVENT_INFO_EXT("source_location", DATA_INPUT_LIST_PROVIDED, "Pick source location", null)
+		EVENT_INFO_EXT("source_location", DATA_INPUT_LIST_CHILDREN_OF, "Pick source location", /datum/whitehole_spawner)
 	)
 
 
@@ -17,13 +17,12 @@ TYPEINFO(/datum/random_event/major/white_hole)
 	var/turf/target_turf
 	var/grow_duration = 2 MINUTES
 	var/duration = 40 SECONDS
-	var/source_location
+	var/source_location = null
 	var/activity_modifier = 1
 
 	admin_call(source)
 		if (..())
 			return
-
 		var/datum/random_event_editor/E = new /datum/random_event_editor(usr, src)
 		if(E)
 			E.ui_interact(usr)
@@ -50,7 +49,6 @@ TYPEINFO(/datum/random_event/major/white_hole)
 				boutput(usr, SPAN_ALERT("Cancelled."))
 				return
 
-			source_location = null
 			switch(tgui_alert(usr, "Do you want to pick white hole source location?", "Pick source location", list("Pick", "Subtype", "Random", "Cancel")))
 				if("Pick")
 					var/list/spawner_list = concrete_typesof(/datum/whitehole_spawner/main)
@@ -142,9 +140,13 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			active_duration = rand(5 SECONDS, 40 SECONDS)
 		src.active_duration = active_duration
 
-		if(isnull(spawner_set))
-			spawner_set = choose_location()
-		src.spawner = spawner_set
+		if(ispath(text2path(spawner_set), /datum/whitehole_spawner))
+			var/datum/whitehole_spawner/new_spawner = new spawner_set
+			src.spawner = new_spawner
+		else if(isnull(spawner_set))
+			src.spawner = choose_location()
+		else
+			src.spawner = spawner_set
 
 		var/image/illum = image(src.icon, src.icon_state)
 		illum.plane = PLANE_LIGHTING
@@ -306,7 +308,6 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 
 	proc/generate_thing(var/datum/whitehole_spawner/spawner)
 		var/atom/movable/AM = spawner.unleash(src)
-		boutput(world, "Unleashing: [AM]")
 
 		if(istype(AM, /obj/item))
 			var/obj/item/I = AM
@@ -428,7 +429,6 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 		animate(transform = matrix(1, MATRIX_SCALE), time = 0.1 SECONDS, loop = 0, easing = SINE_EASING)
 
 		var/atom/movable/thing = generate_thing(spawner)
-		boutput(world, "Spewing: [thing]")
 		if(!thing)
 			return
 
