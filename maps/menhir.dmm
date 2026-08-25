@@ -188,14 +188,6 @@
 	pixel_y = 5;
 	pixel_x = 5
 	},
-/obj/item/stamp/hos{
-	pixel_y = 23;
-	pixel_x = 9
-	},
-/obj/item/decoration/ashtray{
-	pixel_x = -7;
-	pixel_y = 29
-	},
 /turf/simulated/floor/carpet/red/fancy/innercorner/omni,
 /area/station/security/hos)
 "afp" = (
@@ -3299,6 +3291,10 @@
 /obj/item/paper/menhir_toreador_extra{
 	pixel_y = 2;
 	pixel_x = -5
+	},
+/obj/item/reagent_containers/food/drinks/mug/HoS{
+	pixel_y = 14;
+	pixel_x = -6
 	},
 /turf/simulated/floor/black/grime,
 /area/station/security/hos)
@@ -17686,9 +17682,13 @@
 	pixel_y = 6
 	},
 /obj/item/device/radio/intercom/security,
-/obj/item/reagent_containers/food/drinks/mug/HoS{
-	pixel_y = 8;
-	pixel_x = 10
+/obj/item/stamp/hos{
+	pixel_x = 8;
+	pixel_y = -6
+	},
+/obj/item/decoration/ashtray{
+	pixel_x = -7;
+	pixel_y = -1
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/north,
 /area/station/security/hos)
