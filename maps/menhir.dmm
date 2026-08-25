@@ -2595,6 +2595,7 @@
 	icon_state = "line1"
 	},
 /obj/storage/cart/trash,
+/obj/machinery/camera/directional/east,
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)
 "bop" = (
@@ -2959,6 +2960,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/camera/directional/south,
 /turf/simulated/floor/carpet/red/fancy/edge/south,
 /area/station/security/hos)
 "bym" = (
@@ -10216,7 +10218,6 @@
 /obj/cable/yellow{
 	icon_state = "1-8"
 	},
-/obj/machinery/camera/directional/east,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "fps" = (
@@ -23719,6 +23720,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/camera/directional/south,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "mhK" = (
@@ -25223,6 +25225,7 @@
 /obj/item/peripheral/printer{
 	pixel_y = -2
 	},
+/obj/machinery/camera/directional/west,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "mWN" = (
@@ -25378,7 +25381,6 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/machinery/camera/directional/north,
 /obj/stool/chair,
 /obj/landmark/bill_spawn,
 /turf/simulated/floor/grime,
@@ -31108,7 +31110,7 @@
 	name = "wooden table"
 	},
 /obj/item/card/id/gold/captains_spare{
-	pixel_y = 12
+	pixel_y = 10
 	},
 /obj/item/pinpointer/disk{
 	pixel_y = 1;
@@ -31512,9 +31514,6 @@
 	})
 "qig" = (
 /obj/machinery/vending/computer3,
-/obj/machinery/camera/directional/east{
-	pixel_y = 10
-	},
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/storage/tech)
 "qih" = (
@@ -35634,7 +35633,6 @@
 /obj/cable{
 	icon_state = "5-8"
 	},
-/obj/machinery/camera/directional/south,
 /turf/simulated/floor/carpet/red/fancy/edge/south,
 /area/station/security/hos)
 "sjK" = (
