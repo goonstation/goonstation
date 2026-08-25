@@ -1,5 +1,21 @@
 
+(t)tue aug 25 26
+(u)TDHooligan
+(p)27600
+(e)🪲🧛|C-Bug, A-Gamemodes
+(+)Fix: Gangs should now only take 3 seconds to spray a tag in an unoccupied space, instead of 15/12/9 seconds.
+(+)Fix: Gangs can no longer hand in foam dart guns.
+(+)Tagging over rival tags now takes slightly longer.
+(t)mon aug 24 26
+(u)ANNmagedon
+(p)27603
+(e)🗺|A-Mapping
+(+)A familiar pair of plushies previously lost with the end of donut 2 has appeared on donut 3.
 (t)sun aug 23 26
+(u)ANNmagedon + ZeWaka
+(p)26916
+(e)🎨🧛📨|C-Sprites, A-Gamemodes, A-Logistics
+(+)A new stamp of the flock has been added! its a bit odd and can be created by the flock or bought in deep space.
 (u)ANNmagedon
 (p)27581
 (e)|
