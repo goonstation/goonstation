@@ -287,7 +287,7 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/pike)
 	rarity = ITEM_RARITY_RARE
 
 TYPEINFO(/obj/item/reagent_containers/food/fish/long_pike)
-	appears_in_fish_collection = FALSE
+	appears_in_fish_collection = TRUE
 /obj/item/reagent_containers/food/fish/long_pike
 	name = "long pike"
 	desc = "Named after the long and pointy weapon of war, this one for sure fits the 'long', but not the 'pointy'. Jeez, this thing is long."

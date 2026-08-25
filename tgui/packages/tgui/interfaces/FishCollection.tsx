@@ -13,6 +13,8 @@ import { Window } from '../layouts';
 interface FishCollectionData {
   fish_data: FishData[];
   collected: string[];
+  width: number;
+  height: number;
 }
 
 interface FishData {
@@ -24,10 +26,10 @@ interface FishData {
 export const FishCollection = (props) => {
   const { act, data } = useBackend<FishCollectionData>();
 
-  const { fish_data, collected } = data;
+  const { fish_data, collected, width, height } = data;
 
   return (
-    <Window title="Fish Collection" theme="ntos" width={420} height={320}>
+    <Window title="Fish Collection" theme="ntos" width={width} height={height}>
       <Window.Content>
         Collected fish: {collected?.length ?? 0}/{fish_data.length}
         <Divider />
