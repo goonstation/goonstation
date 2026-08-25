@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2026
+ * @author Sovexe (https://github.com/Sovexe)
+ * @license ISC
+ */
+
 import { useEffect, useState } from 'react';
 import {
   Box,

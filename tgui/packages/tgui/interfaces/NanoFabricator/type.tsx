@@ -1,4 +1,11 @@
 /**
+ * @file
+ * @copyright 2026
+ * @author Sovexe (https://github.com/Sovexe)
+ * @license ISC
+ */
+
+/**
  * Backend data types for the nanofabricator interface.
  */
 
