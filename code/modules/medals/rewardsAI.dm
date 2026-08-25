@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/datum/achievementReward/aicase)
 /datum/achievementReward/aicase
 	var/aiskin = "default"
 
