@@ -2,6 +2,7 @@
 ABSTRACT_TYPE(/datum/achievementReward/aicase)
 /datum/achievementReward/aicase
 	var/aiskin = "default"
+	category = MEDAL::REWARD::CATEGORY::SILICON
 
 	rewardActivate(mob/activator)
 		if (isAI(activator))

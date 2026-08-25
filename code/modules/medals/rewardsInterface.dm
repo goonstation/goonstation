@@ -1,6 +1,7 @@
 /datum/medal_rewards
 	/// Generate the medal data itself once then never again. Availability per medal determined independently.
 	var/list/reward_data = list()
+	var/list/reward_categories = list()
 	/// Only refresh availability when the user earns a medal or manually refreshes the menu.
 	var/list/cached_eligibility_by_ckey = list()
 
@@ -21,7 +22,7 @@
 /datum/medal_rewards/ui_static_data(mob/user)
 	if(!length(src.reward_data))
 		src.generate_reward_data()
-	return list("rewards" = src.reward_data)
+	return list("rewards" = src.reward_data, "categories" = src.reward_categories)
 
 /datum/medal_rewards/proc/generate_reward_data()
 	src.reward_data = list()
@@ -31,8 +32,10 @@
 			"type" = reward_type,
 			"title" = reward.title,
 			"desc" = reward.desc,
-			"icon" = "\ref[reward.icon]?state=[reward.icon_state]"
+			"icon" = "\ref[reward.icon]?state=[reward.icon_state]",
+			"category" = reward.category,
 		))
+	src.reward_categories = MEDAL.REWARD.CATEGORY._get_namespace_constants()
 
 // Per user data
 /datum/medal_rewards/ui_data(mob/user)
