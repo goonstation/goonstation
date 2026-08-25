@@ -1,4 +1,11 @@
 
+(t)tue aug 25 26
+(u)TDHooligan
+(p)27600
+(e)🪲🧛|C-Bug, A-Gamemodes
+(+)Fix: Gangs should now only take 3 seconds to spray a tag in an unoccupied space, instead of 15/12/9 seconds.
+(+)Fix: Gangs can no longer hand in foam dart guns.
+(+)Tagging over rival tags now takes slightly longer.
 (t)mon aug 24 26
 (u)ANNmagedon
 (p)27603
