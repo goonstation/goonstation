@@ -34,11 +34,15 @@ interface RewardData {
 export const MedalRewards = () => {
   const { data } = useBackend<MedalRewardsData>();
   const [searchQuery, setSearchQuery] = useState('');
-  const filteredRewards = data.rewards.filter((reward) =>
-    (reward.title + reward.desc)
-      .toLocaleLowerCase()
-      .includes(searchQuery.toLocaleLowerCase()),
-  );
+  const filteredRewards = data.rewards
+    .filter((reward) =>
+      data.eligible_rewards.find((type) => reward.type === type),
+    )
+    .filter((reward) =>
+      (reward.title + reward.desc)
+        .toLocaleLowerCase()
+        .includes(searchQuery.toLocaleLowerCase()),
+    );
   return (
     <Window width={600} height={800} title="Medal Rewards">
       <Window.Content>
@@ -74,26 +78,23 @@ const ICON_SIZE = '48px';
 const Reward = (props: RewardProps) => {
   const { act, data } = useBackend<MedalRewardsData>();
   const { reward } = props;
-  const eligible = !!data.eligible_rewards.find((type) => reward.type === type);
   return (
-    eligible && (
-      <Table.Row className="candystripe">
-        <Stack py="5px" align="center">
-          <Stack.Item>
-            <Image width={ICON_SIZE} height={ICON_SIZE} src={reward.icon} />
-          </Stack.Item>
-          <Stack.Item grow>
-            <b>{reward.title}</b>
-            <br />
-            <BlockQuote py="2px">{reward.desc}</BlockQuote>
-          </Stack.Item>
-          <Stack.Item>
-            <Button onClick={() => act('redeem', { reward_type: reward.type })}>
-              Redeem
-            </Button>
-          </Stack.Item>
-        </Stack>
-      </Table.Row>
-    )
+    <Table.Row className="candystripe">
+      <Stack py="5px" align="center">
+        <Stack.Item>
+          <Image width={ICON_SIZE} height={ICON_SIZE} src={reward.icon} />
+        </Stack.Item>
+        <Stack.Item grow>
+          <b>{reward.title}</b>
+          <br />
+          <BlockQuote py="2px">{reward.desc}</BlockQuote>
+        </Stack.Item>
+        <Stack.Item>
+          <Button onClick={() => act('redeem', { reward_type: reward.type })}>
+            Redeem
+          </Button>
+        </Stack.Item>
+      </Stack>
+    </Table.Row>
   );
 };
