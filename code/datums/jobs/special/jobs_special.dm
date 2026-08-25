@@ -365,3 +365,15 @@ ABSTRACT_TYPE(/datum/job/special)
 		/obj/item/handcuffs/silver,
 		/obj/item/handcuffs/silver,
 	)
+
+/datum/job/special/goon
+	name = "Goon"
+	access_string = "Staff Assistant"
+	limit = 0
+	slot_head = list(/obj/item/clothing/head/flatcap/razor)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	slot_jump = list(/obj/item/clothing/under/suit/pinstripe)
+	slot_back = list(/obj/item/storage/backpack = 1, /obj/item/storage/backpack/studdedblack = 2)
+	slot_foot = list(/obj/item/clothing/shoes/black = 1, /obj/item/clothing/shoes/brown = 1, /obj/item/clothing/shoes/cowboy = 1, /obj/item/clothing/shoes/detective = 1)
+	items_in_backpack = list(/obj/item/handcuffs/tape_roll, /obj/item/bat)
+
