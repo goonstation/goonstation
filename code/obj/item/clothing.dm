@@ -42,6 +42,7 @@ ABSTRACT_TYPE(/obj/item/clothing)
 	New()
 		..()
 		src.real_name = src.name // meh will probably grab any custom names like this
+		src.setup_components()
 
 	disposing()
 		if (ismob(src.loc))
@@ -63,6 +64,8 @@ ABSTRACT_TYPE(/obj/item/clothing)
 		if(src.material?.usesSpecialNaming())
 			src.name = src.material.specialNaming(src)
 		src.name = "[name_prefix(null, 1)][src.get_stain_names()][src.name][name_suffix(null, 1)]"
+
+	proc/setup_components()
 
 	///Add a stain to this clothing piece
 	proc/add_stain(stain_type)
@@ -178,3 +181,177 @@ ABSTRACT_TYPE(/obj/item/clothing/under)
 		return 0
 	return 1
 */ //TODO FIX
+
+/datum/component/clothing
+	dupe_mode = COMPONENT_DUPE_HIGHLANDER
+
+	var/obj/item/item
+
+	var/wear_image_icon
+	var/wear_state
+	var/wear_layer
+
+	var/image/wear_image = null
+	var/image/worn_material_texture_image = null
+	var/list/filters = null
+
+	var/list/properties = null
+	var/c_flags = 0
+
+	var/see_face = TRUE
+	///Makes it so the item doesn't show up upon examining, currently only applied for gloves
+	//var/nodescripition = FALSE
+
+	//for clothing that covers other clothing from examines
+	var/hides_from_examine = 0
+
+	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
+	//var/c_flags = null // these don't need to be in the general flags when they only apply to clothes  :I
+	// mbc moived c flags up to item bewcause some wearaables things are items and not clothign :)
+
+	var/color_r = 1 // used for vision stuff, see human/handle_regular_hud_updates()
+	var/color_g = 1 // (why were these only on crafted glasses?  they could have just been used on the parent like this from the start  :V)
+	var/color_b = 1
+
+	var/protective_temperature = 0
+	//var/magical = 0 // for wizard item spell power check
+	//var/chemicalprotection = 0 //chemsuit and chemhood in combination grant this
+
+	/// allow mutantraces to wear certain garments, see [/datum/mutantrace/var/uses_human_clothes]
+	var/list/compatible_species = list("human", "cow")
+
+	//var/fallen_offset_x = 1
+	//var/fallen_offset_z = -6
+	/// we want to use Z rather than Y incase anything gets rotated, it would look all jank
+
+	Initialize(wear_state, wear_image_icon, c_flags=src.c_flags, see_face = src.see_face, hides_from_examine=src.hides_from_examine, \
+		body_parts_covered=src.body_parts_covered, color_r=src.color_r, color_b=src.color_b, color_g=src.color_g,\
+		protective_temperature=src.protective_temperature, properties=src.properties)
+
+		src.item = parent
+		src.wear_state = wear_state
+		src.wear_image_icon = wear_image_icon
+		src.c_flags = c_flags
+		src.see_face = see_face
+		src.hides_from_examine = hides_from_examine
+		src.body_parts_covered = body_parts_covered
+		src.color_r = color_r
+		src.color_g = color_r
+		src.color_b = color_b
+		src.protective_temperature = protective_temperature
+		src.properties = properties
+
+		src.wear_image = image(wear_image_icon, icon_state = src.wear_state)
+		..()
+
+//TODO: check this works
+	disposing()
+		if (ismob(src.item.loc))
+			var/mob/M = src.item.loc
+			M.u_equip(src.item)
+
+			if (ishuman(src.item.loc))
+				var/mob/living/carbon/human/H = src.item.loc
+				for (var/datum/hud/hud in H.huds)
+					if (src in hud.objects)
+						hud.remove_object(src)
+				H.hud.remove_object(src)
+		//fucky way of doing this but whatever
+		..()
+
+//TODO: Implement
+
+///datum/component/clothing/material_trigger_on_mob_attacked(var/mob/attacker, var/mob/attacked, var/atom/weapon, var/situation_modifier)
+//	// if someone wearing this gets attacked, only trigger this if the corresponding zone is hit
+//	if (src.parent.material && (src.parent.equipped_in_slot))
+//		var/targeted_zone = "chest"
+//		if (situation_modifier && istext(situation_modifier))
+//			targeted_zone = parse_zone(situation_modifier)
+//		if (src.check_for_covered(targeted_zone))
+//			src.parent.material.triggerOnAttacked(src, attacker, attacked, weapon)
+//		return
+//	..()
+
+	proc/update_wear_image(mob/living/carbon/human/H, override)
+		return
+
+	proc/copy_appearance_to_image(image/other_img)
+		other_img.color = src.wear_image.color
+		other_img.alpha = src.wear_image.alpha
+		if(!src.wear_image.filters)
+			return
+		other_img.filters = src.wear_image.filters.Copy()
+
+	proc/setupProperties() //Should always be called by new(). This will contain all the default property initializations for objects.
+		SHOULD_CALL_PARENT(TRUE)
+		return
+
+	proc/setProperty(var/propId, var/propVal=null) //Adds or sets property.
+		propListCheck()
+
+		if(src.properties == null)
+			src.properties = list()
+
+		if(globalPropList[propId] != null)
+			for(var/datum/objectProperty/X in src.properties)
+				if(X.id == propId)
+					X.onChange(src, src.properties[X], ((propVal != null) ? propVal : X.defaultValue))
+					src.properties[X] = propVal
+					return X
+
+			var/datum/objectProperty/P = globalPropList[propId]
+
+			src.properties.Add(P)
+			src.properties[P] = ((propVal != null) ? propVal : P.defaultValue)
+			P.onAdd(src, propVal)
+			return P
+		else
+			throw EXCEPTION("Invalid property ID passed to setProperty ([propId])")
+
+	proc/getProperty(var/propId) //Gets property value.
+		.= null
+		if(src.properties && length(src.properties))
+			var/datum/objectProperty/X = globalPropList[propId]
+			return src.properties[X]
+		/*
+		if(src.properties && length(src.properties))
+			for(var/datum/objectProperty/X in src.properties)
+				if(X.id == propId)
+					.= src.properties[X] //Assoc. value of property is the value.
+		*/
+
+	proc/delProperty(var/propId) //Removes property.
+		if(src.properties && length(src.properties))
+			for(var/datum/objectProperty/X in src.properties)
+				if(X.id == propId)
+					. = X
+					X.onRemove(src, src.properties[X])
+					src.properties.Remove(X)
+
+	proc/hasProperty(var/propId) //Checks if property is on object.
+		.= 0
+		if(src.properties && length(src.properties))
+			for(var/datum/objectProperty/X in src.properties)
+				if(X.id == propId)
+					.= 1
+
+///This proc returns true if the zone specified is covered by the clothing in question
+/datum/component/clothing/proc/check_for_covered(var/checked_zone)
+	if (!istext(checked_zone))
+		return FALSE
+	var/target_zone = parse_zone(checked_zone)
+	var/list/head_list = list("head", "brain", "left eye", "right eye", "both eyes")
+	var/list/torso_list = list("torso", "butt", "heart", "left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")
+	var/list/legs_list = list("left leg", "right leg", "both legs")
+	var/list/arms_list = list("right arm", "left arm", "both arms")
+	if ((src && src.body_parts_covered & HEAD) && (target_zone in head_list))
+		return TRUE
+	if ((src && src.body_parts_covered & TORSO) && (target_zone in torso_list))
+		return TRUE
+	if ((src && src.body_parts_covered & LEGS) && (target_zone in legs_list))
+		return TRUE
+	if ((src && src.body_parts_covered & ARMS) && (target_zone in arms_list))
+		return TRUE
+	return FALSE
+
+/datum/component/clothing/head

@@ -82,7 +82,7 @@
 		else
 			. += "<br><span class='[src.wear_suit.blood_DNA ? "alert" : "notice"]'>[Noun_has] [bicon(src.wear_suit)] \an [src.wear_suit.name] on.</span>"
 
-	if (src.ears && !(src.wear_suit?.hides_from_examine & C_EARS) && !(src.head?.hides_from_examine & C_EARS))
+	if (src.ears && !(src.wear_suit?.hides_from_examine & C_EARS) && !((HatComponent(src.head))?.hides_from_examine & C_EARS))
 		if (show_vague)
 			. += "<br>[SPAN_NOTICE("[Noun_has] a headset by [t_his] mouth.</span>")]"
 		else if (istype(src.ears, /obj/item/clothing/))
@@ -96,7 +96,7 @@
 		else
 			. += "<br><span class='[src.head.blood_DNA ? "alert" : "notice"]'>[Noun_has] [bicon(src.head)] \an [src.head.name] on [t_his] head.</span>"
 
-	if (src.wear_mask && !(src.wear_suit?.hides_from_examine & C_MASK) && !(src.head?.hides_from_examine & C_MASK))
+	if (src.wear_mask && !(src.wear_suit?.hides_from_examine & C_MASK) && !((HatComponent(src.head))?.hides_from_examine & C_MASK))
 		if (show_vague)
 			. += "<br>[SPAN_NOTICE("[Noun_has] a face mask on.</span>")]"
 		else if (istype(src.wear_mask, /obj/item/clothing/))
@@ -104,7 +104,7 @@
 		else
 			. += "<br><span class='[src.wear_mask.blood_DNA ? "alert" : "notice"]'>[Noun_has] [bicon(src.wear_mask)] \an [src.wear_mask.name] on [t_his] face.</span>"
 
-	if (src.glasses && !(src.wear_suit?.hides_from_examine & C_GLASSES) && !(src.head?.hides_from_examine & C_GLASSES))
+	if (src.glasses && !(src.wear_suit?.hides_from_examine & C_GLASSES) && !((HatComponent(src.head))?.hides_from_examine & C_GLASSES))
 		if (face_visible() && !show_vague)
 			. += "<br><span class='[src.glasses.blood_DNA ? "alert" : "notice"]'>[Noun_has] [bicon(src.glasses)] \an [src.glasses.name] on [t_his] face.</span>"
 
@@ -404,7 +404,7 @@
 						using_vr_goggles = TRUE
 
 				if (using_vr_goggles)
-					if (!(src.wear_suit?.hides_from_examine & C_GLASSES) && !(src.head?.hides_from_examine & C_GLASSES))
+					if (!(src.wear_suit?.hides_from_examine & C_GLASSES) && !((HatComponent(src.head))?.hides_from_examine & C_GLASSES))
 						. += "<br><span style='color:#8600C8'>[Noun_s] mind is elsewhere.</span>"
 				else
 					. += "<br>[Noun] seems to be staring blankly into space. "

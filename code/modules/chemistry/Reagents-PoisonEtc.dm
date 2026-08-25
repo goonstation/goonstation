@@ -995,7 +995,7 @@ datum
 								else
 									H.visible_message("<span class='alert>The blueish acidic substance slides off \the [D] harmlessly.</span>", SPAN_ALERT("Your [H.head] protects you from the acid!"))
 								blocked = 1
-							if (!(H.head?.c_flags & SPACEWEAR) || !(H.head?.item_function_flags & IMMUNE_TO_ACID))
+							if (!((HatComponent(H.head))?.c_flags & SPACEWEAR) || !(H.head?.item_function_flags & IMMUNE_TO_ACID))
 								if (H.wear_mask)
 									var/obj/item/clothing/mask/K = H.wear_mask
 									if (!(K.item_function_flags & IMMUNE_TO_ACID) && K.getProperty("chemprot") <= raw_volume * 2)
@@ -1165,7 +1165,7 @@ datum
 									else
 										H.visible_message("<span class='alert>The blueish acidic substance slides off \the [D] harmlessly.</span>", SPAN_ALERT("Your [H.head] protects you from the acid!"))
 									blocked = TRUE
-								if (!(H.head?.c_flags & SPACEWEAR) || !(H.head?.item_function_flags & IMMUNE_TO_ACID))
+								if (!((HatComponent(H.head))?.c_flags & SPACEWEAR) || !(H.head?.item_function_flags & IMMUNE_TO_ACID))
 									if (H.wear_mask)
 										var/obj/item/clothing/mask/K = H.wear_mask
 										if (!(K.item_function_flags & IMMUNE_TO_ACID))

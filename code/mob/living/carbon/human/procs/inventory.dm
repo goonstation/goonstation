@@ -8,4 +8,4 @@
     if (!src.wear_suit || !src.head)
         return FALSE
 
-    return ((src.wear_suit.c_flags & SPACEWEAR) && (src.head.c_flags & SPACEWEAR))
+    return ((src.wear_suit.c_flags & SPACEWEAR) && ((HatComponent(src.head)).c_flags & SPACEWEAR))

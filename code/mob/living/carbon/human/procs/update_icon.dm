@@ -427,31 +427,32 @@
 /mob/living/carbon/human/proc/update_head(head_offset)
 	src.update_bloody_head()
 	if (src.head)
-		wear_sanity_check(src.head)
+		var/datum/component/clothing/head/hat = HatComponent(src.head)
+		wear_sanity_check(hat)
 
 		var/no_offset = FALSE
-		var/wear_state = src.head.wear_state || src.head.icon_state
+		var/wear_state = hat.wear_state
 		var/typeinfo/datum/mutantrace/typeinfo = src.mutantrace?.get_typeinfo()
 		if (wear_state in typeinfo?.clothing_icon_states["head"])
-			src.head.wear_image.icon = typeinfo.clothing_icons["head"]
+			hat.wear_image.icon = typeinfo.clothing_icons["head"]
 			no_offset = TRUE
-			src.head.wear_image.pixel_x = initial(src.head.wear_image.pixel_x)
-			src.head.wear_image.pixel_y = initial(src.head.wear_image.pixel_y)
+			hat.wear_image.pixel_x = 0
+			hat.wear_image.pixel_y = 0
 		else
-			src.head.wear_image.icon = src.head.wear_image_icon
-		src.head.wear_image.icon_state = wear_state
+			hat.wear_image.icon = hat.wear_image_icon
+		hat.wear_image.icon_state = wear_state
 
-		src.head.wear_image.layer = src.head.wear_layer
+		hat.wear_image.layer = hat.wear_layer
 		if (!no_offset)
-			src.head.wear_image.pixel_x = 0
-			src.head.wear_image.pixel_y = head_offset
-		src.head.update_wear_image(src, src.head.wear_image.icon != src.head.wear_image_icon)
-		src.head.copy_appearance_to_image(src.head.wear_image)
-		src.head.wear_image.filters = src.head.filters.Copy() + src.mutantrace?.apply_clothing_filters(src.head)
-		src.AddOverlays(src.head.wear_image, "wear_head")
-		if (src.head.worn_material_texture_image != null)
-			src.head.worn_material_texture_image.layer = src.head.wear_image.layer + 0.1
-			src.AddOverlays(src.head.worn_material_texture_image, "material_head")
+			hat.wear_image.pixel_x = 0
+			hat.wear_image.pixel_y = head_offset
+		hat.update_wear_image(src, hat.wear_image.icon != hat.wear_image_icon)
+		//hat.copy_appearance_to_image(hat.wear_image)
+		//hat.wear_image.filters = hat.filters.Copy() + src.mutantrace?.apply_clothing_filters(hat)
+		src.AddOverlays(hat.wear_image, "wear_head")
+		if (hat.worn_material_texture_image != null)
+			hat.worn_material_texture_image.layer = hat.wear_image.layer + 0.1
+			src.AddOverlays(hat.worn_material_texture_image, "material_head")
 		else
 			src.ClearSpecificOverlays("material_head")
 	else
@@ -556,7 +557,7 @@
 	ClearSpecificOverlays(TRUE, "hair_one", "hair_two", "hair_three", "hair_special_one", "hair_special_two", "hair_special_three")
 
 	var/obj/item/clothing/suit/back_clothing = src.back // typed version of back to check hair sealage; might not be clothing, we check type below
-	var/seal_hair = ((src.wear_suit && src.wear_suit.c_flags & COVERSHAIR) || (src.head && src.head.c_flags & COVERSHAIR) || (src.wear_mask && src.wear_mask.c_flags & COVERSHAIR) \
+	var/seal_hair = ((src.wear_suit && src.wear_suit.c_flags & COVERSHAIR) || src.head && ((HatComponent(src.head)).c_flags & COVERSHAIR) || (src.wear_mask && src.wear_mask.c_flags & COVERSHAIR) \
 						|| (istype(back_clothing) && back_clothing.c_flags & COVERSHAIR))
 	var/hooded = (src.wear_suit && src.wear_suit.hooded)
 	var/obj/item/organ/head/my_head
@@ -735,7 +736,7 @@
 	UpdateOverlays(i_l_hand, "i_l_hand")
 
 /mob/living/carbon/human/proc/update_hair_layer()
-	if ((src.wear_suit && src.wear_suit.c_flags & COVERSHAIR) || (src.head && src.head.c_flags & COVERSHAIR))
+	if ((src.wear_suit && src.wear_suit.c_flags & COVERSHAIR) || ((HatComponent(src.head))?.c_flags & COVERSHAIR))
 		src.image_cust_one?.layer = MOB_HAIR_LAYER1
 		src.image_cust_two?.layer = MOB_HAIR_LAYER1
 		src.image_cust_three?.layer = MOB_HAIR_LAYER1

@@ -1477,7 +1477,7 @@
 	proc/can_cpr()
 		if (ishuman(owner))
 			var/mob/living/carbon/human/human_owner = owner
-			if (human_owner.head && (human_owner.head.c_flags & COVERSMOUTH))
+			if (human_owner.head && ((HatComponent(human_owner.head)).c_flags & COVERSMOUTH))
 				boutput(human_owner, SPAN_ALERT("You need to take off your headgear before you can give CPR!"))
 				return FALSE
 
@@ -1493,7 +1493,7 @@
 
 		if (ishuman(target))
 			var/mob/living/carbon/human/human_target = target
-			if (human_target.head && (human_target.head.c_flags & COVERSMOUTH))
+			if (human_target.head && ((HatComponent(human_target.head)).c_flags & COVERSMOUTH))
 				boutput(owner, SPAN_ALERT("You need to take off [human_target]'s headgear before you can give CPR!"))
 				return FALSE
 

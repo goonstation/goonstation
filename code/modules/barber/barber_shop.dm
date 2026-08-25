@@ -376,7 +376,7 @@
 		return 0
 	else //if(istype(M.buckled, /obj/stool/chair/comfy/barber_chair))
 		var/mob/living/carbon/human/H = M
-		if(ishuman(M) && ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES)))
+		if(ishuman(M) && ((H.head && (HatComponent(H.head)).c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES)))
 			// you can't stab someone in the eyes wearing a mask! - please do not stab people in the eyes with a dye bottle tia
 			boutput(user, SPAN_HINT("You're going to need to remove that mask/helmet first."))
 			return 0

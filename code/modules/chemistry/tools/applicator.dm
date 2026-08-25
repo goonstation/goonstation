@@ -141,7 +141,7 @@
 	verbiage_viewer = "shakes"
 
 	proc/headwear_check(mob/user, mob/living/carbon/human/target)
-		if ((target.head && target.head.c_flags & COVERSEYES) || (target.wear_mask && target.wear_mask.c_flags & COVERSEYES) || (target.glasses && target.glasses.c_flags & COVERSEYES))
+		if ((target.head && (HatComponent(target.head)).c_flags & COVERSEYES) || (target.wear_mask && target.wear_mask.c_flags & COVERSEYES) || (target.glasses && target.glasses.c_flags & COVERSEYES))
 			target.tri_message(user, SPAN_ALERT("<b>[user]</b> uselessly [src.verbiage_viewer]s some [src.reagents.get_master_reagent_name()] onto [target]'s headgear!"),\
 				SPAN_ALERT("[target == user ? "You uselessly [src.verbiage_user]" : "[user] uselessly [src.verbiage_viewer]"] some [src.reagents.get_master_reagent_name()] onto your headgear! Okay then."),\
 				SPAN_ALERT("You uselessly [src.verbiage_user] some [src.reagents.get_master_reagent_name()] onto [user == target ? "your" : "[target]'s"] headgear![user == target ? " Okay then." : null]"))

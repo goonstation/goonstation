@@ -636,8 +636,9 @@
 	// unused???
 	proc/get_fire_protection(temp)
 		if (head)
-			if (head.protective_temperature > temp)
-				. += (head.protective_temperature/10)
+			var/datum/component/clothing/head/hat_component = HatComponent(head)
+			if (hat_component.protective_temperature > temp)
+				. += (hat_component.protective_temperature/10)
 		if (wear_mask)
 			if (wear_mask.protective_temperature > temp)
 				. += (wear_mask.protective_temperature/10)

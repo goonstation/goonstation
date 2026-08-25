@@ -1236,13 +1236,14 @@
 	return 0
 
 /mob/living/carbon/human/get_head_pierce_prot()
-	if ((head && head.body_parts_covered & HEAD) || (wear_mask && wear_mask.body_parts_covered & HEAD))
+	var/datum/component/clothing/head/hat_component = HatComponent(head)
+	if ((head && hat_component.body_parts_covered & HEAD) || (wear_mask && wear_mask.body_parts_covered & HEAD))
 		if (head && !wear_mask)
-			return max(0, head.getProperty("pierceprot"))
+			return max(0, hat_component.getProperty("pierceprot"))
 		else if (!head && wear_mask)
 			return max(0, wear_mask.getProperty("pierceprot"))
 		else if (head && wear_mask)
-			return max(0, max(head.getProperty("pierceprot"), wear_mask.getProperty("pierceprot")))
+			return max(0, max(hat_component.getProperty("pierceprot"), wear_mask.getProperty("pierceprot")))
 	return 0
 
 /mob/proc/get_chest_pierce_prot()

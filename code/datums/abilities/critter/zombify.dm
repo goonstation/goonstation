@@ -110,15 +110,15 @@
 						zombie.UpdateOverlays(src.mask, "mask")
 						if (H.wear_mask.c_flags & COVERSEYES)
 							stealthy += 2
-						if (H.head.c_flags & COVERSMOUTH)
+						if ((HatComponent(H.head)).c_flags & COVERSMOUTH)
 							stealthy += 2
 				//Head
 				if (H.head)
-					ENSURE_IMAGE(src.head, H.head.wear_image_icon, H.head.icon_state)
+					var/datum/component/clothing/head/hat = HatComponent(H.head)
 					zombie.UpdateOverlays(src.head, "head")
-					if (H.head.c_flags & COVERSEYES)
+					if (hat.c_flags & COVERSEYES)
 						stealthy += 2
-					if (H.head.c_flags & COVERSMOUTH)
+					if (hat.c_flags & COVERSMOUTH)
 						stealthy += 2
 
 			if(stealthy >= 10)

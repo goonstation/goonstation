@@ -51,9 +51,9 @@
 					color_mod_g *= human_owner.wear_mask.color_g
 					color_mod_b *= human_owner.wear_mask.color_b
 				if (istype(human_owner.head))
-					color_mod_r *= human_owner.head.color_r
-					color_mod_g *= human_owner.head.color_g
-					color_mod_b *= human_owner.head.color_b
+					color_mod_r *= (HatComponent(human_owner.head)).color_r
+					color_mod_g *= (HatComponent(human_owner.head)).color_g
+					color_mod_b *= (HatComponent(human_owner.head)).color_b
 				var/obj/item/organ/eye/L_E = human_owner.get_organ("left_eye")
 				if (istype(L_E))
 					color_mod_r *= L_E.color_r

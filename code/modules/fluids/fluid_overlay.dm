@@ -51,7 +51,7 @@
 		if (src.back)
 			body.Blend(src.back.wear_image.icon,ICON_OVERLAY)
 		if (src.head)
-			body.Blend(src.head.wear_image.icon,ICON_OVERLAY)
+			body.Blend((HatComponent(src.head)).wear_image.icon,ICON_OVERLAY)
 
 		I.Blend(body, ICON_MULTIPLY)
 

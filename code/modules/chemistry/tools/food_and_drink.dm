@@ -1642,7 +1642,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		if(ishuman(A))
 			var/mob/living/carbon/human/H = A
-			var/lolwtf = prob(5) && ((H.head?.c_flags & COVERSMOUTH) || (H.wear_mask?.c_flags & COVERSMOUTH))
+			var/lolwtf = prob(5) && (((HatComponent(H.head))?.c_flags & COVERSMOUTH) || (H.wear_mask?.c_flags & COVERSMOUTH))
 			H.visible_message("<span class = 'alert'>[src] flies stright into [H]'s mouth! [lolwtf ? " How the hell does that work?":""]</span>", "<span class = 'alert'>[src] flies stright into your mouth! [lolwtf ? " How the hell did that happen?":""]</span>", "You hear breaking glass.")
 			if (src.reagents.total_volume)
 				logTheThing(LOG_CHEMISTRY, H, "is forced to drink from [src] [log_reagents(src)] at [log_loc(H)] thrown by [constructTarget(thr.thrown_by, "combat")].")

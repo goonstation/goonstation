@@ -330,7 +330,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 		if (!grab || grab.affecting != target || grab.state < GRAB_AGGRESSIVE)
 			return ..()
 		//anything covering their eyes?
-		if (target.wear_mask?.c_flags & COVERSEYES || target.head?.c_flags & COVERSEYES || target.glasses?.c_flags & COVERSEYES)
+		if (target.wear_mask?.c_flags & COVERSEYES || (HatComponent(target.head))?.c_flags & COVERSEYES || target.glasses?.c_flags & COVERSEYES)
 			return ..()
 		//don't let them do this more than once
 		if ((!target.organHolder.left_eye || target.organHolder.left_eye.broken) && (!target.organHolder.right_eye || target.organHolder.right_eye.broken))

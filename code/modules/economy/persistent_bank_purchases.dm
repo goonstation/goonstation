@@ -364,13 +364,14 @@ var/global/list/persistent_bank_purchaseables =	list(\
 						succ = 1
 
 				if (H.head && istype(H.head, /obj/item/clothing/head))
-					var/obj/item/clothing/head/origin = text2path("[H.head.type]/april_fools")
+					var/obj/item/clothing/head/hat = H.head
+					var/obj/item/clothing/head/origin = text2path("[hat.type]/april_fools")
 					if (ispath(origin))
-						H.head.icon_state = origin.icon_state
-						H.head.item_state = origin.item_state
-						H.head.desc = initial(origin.desc)
-						if (istype(H.head, /obj/item/clothing/head/helmet/space/engineer))
-							var/obj/item/clothing/head/helmet/space/engineer/helmet_with_flashlight = H.head
+						hat.icon_state = origin.icon_state
+						hat.item_state = origin.item_state
+						hat.desc = initial(origin.desc)
+						if (istype(hat, /obj/item/clothing/head/helmet/space/engineer))
+							var/obj/item/clothing/head/helmet/space/engineer/helmet_with_flashlight = hat
 							var/obj/item/clothing/head/helmet/space/engineer/orig = origin
 							helmet_with_flashlight.base_icon_state = orig.base_icon_state
 						succ = 1

@@ -56,7 +56,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	if (!ishuman(patient)) // is the patient not a human?
 		return FALSE // head surgery is not okay
 
-	if (patient.head && patient.head.c_flags & COVERSEYES) // does the patient have a head, and on their head they have something covering their eyes?
+	if (patient.head && (HatComponent(patient.head)).c_flags & COVERSEYES) // does the patient have a head, and on their head they have something covering their eyes?
 		return FALSE // head surgery is not okay
 	else if (patient.wear_mask && patient.wear_mask.c_flags & COVERSEYES) // does the patient have a mask, and their mask covers their eyes?
 		return FALSE // head surgery is not okay

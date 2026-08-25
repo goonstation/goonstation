@@ -121,7 +121,7 @@
 					M.reagents.add_reagent("helium", 30)
 					M.emote("scream")
 				if ("head")
-					if (M.head && ((M.head.c_flags & COVERSEYES) || !M.glasses)) // Dislodge eye-blocking hats, or other hats if target is not wearing eyewear
+					if (M.head && (((HatComponent(M.head)).c_flags & COVERSEYES) || !M.glasses)) // Dislodge eye-blocking hats, or other hats if target is not wearing eyewear
 						var/obj/item/clothing/head/hat = M.head
 						boutput(M, "Your [hat] is dislodged and sent flying by a sudden force!")
 						M.u_equip(hat)

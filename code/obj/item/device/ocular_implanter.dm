@@ -38,7 +38,7 @@ TYPEINFO(/obj/item/device/ocular_implanter)
 		if(H.glasses)
 			boutput(H, SPAN_ALERT("You need to remove your eyewear first."))
 			return
-		if (H.head && H.head.c_flags & COVERSEYES)
+		if (H.head && (HatComponent(H.head)).c_flags & COVERSEYES)
 			boutput(H, SPAN_ALERT("Your headwear covers your eyes, you need to remove it first."))
 			return
 		//

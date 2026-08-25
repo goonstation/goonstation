@@ -255,7 +255,7 @@
 
 	switch(zone)
 		if ("head")
-			if ((((src.head && src.head.body_parts_covered & HEAD) || (src.wear_mask && src.wear_mask.body_parts_covered & HEAD)) && prob(99)))
+			if ((((src.head && (HatComponent(src.head))?.body_parts_covered & HEAD) || (src.wear_mask && src.wear_mask.body_parts_covered & HEAD)) && prob(99)))
 				if (prob(45))
 					src.TakeDamage("head", damage, 0, 0, DAMAGE_BLUNT)
 				else

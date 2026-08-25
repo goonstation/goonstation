@@ -28,7 +28,7 @@
 			boutput(M, SPAN_ALERT("You are already draining someone's blood!"))
 			return FALSE
 
-	if (is_pointblank && target.head && target.head.c_flags & (BLOCKCHOKE))
+	if (is_pointblank && target.head && (HatComponent(target.head)).c_flags & (BLOCKCHOKE))
 		boutput(M, SPAN_ALERT("You need to remove [his_or_her(target)] headgear first."))
 		return FALSE
 
@@ -162,7 +162,7 @@
 			boutput(M, SPAN_ALERT("You are already draining someone's blood!"))
 			return 0
 
-	if (is_pointblank && target.head && target.head.c_flags & (BLOCKCHOKE))
+	if (is_pointblank && target.head && (HatComponent(target.head)).c_flags & (BLOCKCHOKE))
 		boutput(M, SPAN_ALERT("You need to remove [his_or_her(target)] headgear first."))
 		return 0
 

@@ -26,7 +26,7 @@
 	var/obj/item/belt = null
 	var/obj/item/clothing/gloves/gloves = null
 	var/obj/item/clothing/glasses/glasses = null
-	var/obj/item/clothing/head/head = null
+	var/obj/item/head = null
 	var/obj/item/wear_id = null
 	var/obj/item/r_store = null
 	var/obj/item/l_store = null
@@ -1133,7 +1133,7 @@
 	. = TRUE
 	if (istype(src.wear_mask) && !src.wear_mask.see_face)
 		return FALSE
-	else if (istype(src.head) && !src.head.see_face)
+	else if (istype(src.head) && !(HatComponent(src.head)).see_face)
 		return FALSE
 	else if (istype(src.wear_suit) && !src.wear_suit.see_face)
 		return FALSE
@@ -1849,9 +1849,9 @@ Attempts to put an item in the hand of a mob, if not possible then stow it, then
 		if (SLOT_HEAD)
 			if (!src.organHolder.head)
 				return FALSE
-			if (istype(I, /obj/item/clothing/head))
-				var/obj/item/clothing/H = I
-				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in H.compatible_species)))
+			var/datum/component/clothing/head/component = HatComponent(I)
+			if (component)
+				if ((src.mutantrace && !src.mutantrace.uses_human_clothes && !(src.mutantrace.name in component.compatible_species)))
 					//DEBUG_MESSAGE("[src] can't wear [I].")
 					return FALSE
 				else if (src.wear_suit?.hooded)
@@ -2312,7 +2312,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		space_suit++
 	if (w_uniform && (w_uniform.c_flags & SPACEWEAR))
 		space_suit++
-	if (head && (head.c_flags & SPACEWEAR))
+	if (head && ((HatComponent(src.head)).c_flags & SPACEWEAR))
 		space_suit++
 	else if (wear_mask && (wear_mask.c_flags & SPACEWEAR))
 		space_suit++

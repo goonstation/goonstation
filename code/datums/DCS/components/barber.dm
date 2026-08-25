@@ -128,7 +128,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 
 	var/non_murderous_failure = 0
 	var/mob/living/carbon/human/H = M
-	if(ishuman(M) && ((H.head && H.head.c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES) || (H.glasses && H.glasses.c_flags & COVERSEYES)))
+	if(ishuman(M) && ((H.head && (HatComponent(H.head)).c_flags & COVERSEYES) || (H.wear_mask && H.wear_mask.c_flags & COVERSEYES) || (H.glasses && H.glasses.c_flags & COVERSEYES)))
 		// you can't stab someone in the eyes wearing a mask!
 		boutput(user, SPAN_NOTICE("You're going to need to remove that mask/helmet/glasses first."))
 		non_murderous_failure = BARBERY_FAILURE
@@ -166,7 +166,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 
 	var/non_murderous_failure = 0
 	var/mob/living/carbon/human/H = M
-	if(ishuman(M) && ((H.head && H.head.c_flags & COVERSMOUTH) || (H.wear_mask &&  H.wear_mask.c_flags & COVERSMOUTH) || (H.glasses && H.glasses.c_flags & COVERSMOUTH)))
+	if(ishuman(M) && ((H.head && (HatComponent(H.head)).c_flags & COVERSMOUTH) || (H.wear_mask &&  H.wear_mask.c_flags & COVERSMOUTH) || (H.glasses && H.glasses.c_flags & COVERSMOUTH)))
 		// you can't stab someone in the eyes wearing a mask!
 		boutput(user, SPAN_NOTICE("You're going to need to remove that mask/helmet/glasses first."))
 		non_murderous_failure = BARBERY_FAILURE

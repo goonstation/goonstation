@@ -21,6 +21,10 @@
 		setProperty("heatprot", 5)
 		setProperty("meleeprot_head", 1)
 
+	setup_components()
+		src.AddComponent(/datum/component/clothing/head, src.wear_state || src.icon_state, src.wear_image_icon, src.c_flags, src.see_face,\
+			src.hides_from_examine, src.body_parts_covered, src.color_r, src.color_g, src.color_b, src.protective_temperature, src.properties)
+
 proc/filter_trait_hats(var/type)
 	var/obj/item/clothing/head/coolhat = type
 	return !initial(coolhat.blocked_from_petasusaphilic)

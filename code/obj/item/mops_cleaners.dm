@@ -436,7 +436,7 @@ TRASH BAG
 			var/mob/living/carbon/human/DUDE = hit
 			hit.visible_message(SPAN_ALERT("<b>[src] hits [DUDE] squarely in the face!</b>"))
 			playsound(DUDE.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
-			if(DUDE.wear_mask || (DUDE.head && DUDE.head.c_flags & COVERSEYES))
+			if(DUDE.wear_mask || (DUDE.head && (HatComponent(DUDE.head)).c_flags & COVERSEYES))
 				boutput(DUDE, SPAN_ALERT("Your headgear protects you! PHEW!!!"))
 				SPAWN(1 DECI SECOND) src.reagents.clear_reagents()
 				return

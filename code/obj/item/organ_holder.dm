@@ -1729,7 +1729,7 @@
 				I = H.glasses
 			else if (istype(H.wear_mask) && H.wear_mask.c_flags & COVERSEYES)
 				I = H.wear_mask
-			else if (istype(H.head) && H.head.c_flags & COVERSEYES)
+			else if (istype(H.head) && (HatComponent(H.head)).c_flags & COVERSEYES)
 				I = H.head
 			else if (istype(H.wear_suit) && H.wear_suit.c_flags & COVERSEYES)
 				I = H.wear_suit

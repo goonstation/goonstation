@@ -478,7 +478,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			var/obj/item/I
 			if (istype(H.wear_mask) && H.wear_mask.c_flags & COVERSMOUTH)
 				I = H.wear_mask
-			else if (istype(H.head) && H.head.c_flags & COVERSMOUTH)
+			else if (istype(H.head) && (HatComponent(H.head)).c_flags & COVERSMOUTH)
 				I = H.head
 			if (istype(I)) // or it might go
 				holder.owner.visible_message(SPAN_COMBAT("[holder.owner]'s tongue is blocked by the [I.name]!"),\
@@ -1360,7 +1360,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 				I = H.glasses
 			else if (istype(H.wear_mask) && H.wear_mask.c_flags & COVERSEYES)
 				I = H.wear_mask
-			else if (istype(H.head) && H.head.c_flags & COVERSEYES)
+			else if (istype(H.head) && (HatComponent(H.head)).c_flags & COVERSEYES)
 				I = H.head
 			else if (istype(H.wear_suit) && H.wear_suit.c_flags & COVERSEYES)
 				I = H.wear_suit

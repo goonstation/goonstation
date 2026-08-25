@@ -106,3 +106,7 @@ var/list/all_slots = list(SLOT_BACK, SLOT_WEAR_MASK, SLOT_L_HAND, SLOT_R_HAND, S
 //glove side for iconstate stuff
 #define GLOVE_HAS_LEFT 1
 #define GLOVE_HAS_RIGHT 2
+
+//component wrappers
+#define HatComponent(atom) (atom && atom.GetComponent(/datum/component/clothing/head))
+

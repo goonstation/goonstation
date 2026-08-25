@@ -958,7 +958,7 @@ TYPEINFO(/obj/item/device/light/flashlight/penlight)
 				results_msg = "&emsp;[SPAN_ALERT("It's hard to accurately judge how [H]'s eyes reacted through [his_or_her(H)] [H.glasses.name]!")]"
 			else if (istype(H.wear_mask) && H.wear_mask.c_flags & COVERSEYES)
 				results_msg = "&emsp;[SPAN_ALERT("It's hard to accurately judge how [H]'s eyes reacted through [his_or_her(H)] [H.wear_mask.name]!")]"
-			else if (istype(H.head) && H.head.c_flags & COVERSEYES)
+			else if (istype(H.head) && (HatComponent(H.head)).c_flags & COVERSEYES)
 				results_msg = "&emsp;[SPAN_ALERT("It's hard to accurately judge how [H]'s eyes reacted through [his_or_her(H)] [H.head.name]!")]"
 			else if (istype(H.wear_suit) && H.wear_suit.c_flags & COVERSEYES)
 				results_msg = "&emsp;[SPAN_ALERT("It's hard to accurately judge how [H]'s eyes reacted through [his_or_her(H)] [H.wear_suit.name]!")]"

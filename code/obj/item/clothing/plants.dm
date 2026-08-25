@@ -207,7 +207,7 @@
 		..()
 
 	attack(mob/living/carbon/human/M, mob/user, def_zone)
-		if (istype(M) && !(M.head?.c_flags & BLOCKCHOKE) && def_zone == "head")
+		if (istype(M) && !((HatComponent(M.head))?.c_flags & BLOCKCHOKE) && def_zone == "head")
 			M.tri_message(user, "<span class='alert'>[user] holds [src] to [M]'s nose, letting [him_or_her(M)] take in the fragrance.</span>",
 				"<span class='alert'>[user] holds [src] to your nose, letting you take in the fragrance.</span>",
 				"<span class='alert'>You hold [src] to [M]'s nose, letting [him_or_her(M)] take in the fragrance.</span>"
