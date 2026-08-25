@@ -79,24 +79,17 @@
 	anchored = ANCHORED
 	density = 1
 	layer = FLOOR_EQUIP_LAYER1
-	flags = NOSPLASH
+	flags = NOSPLASH | TGUI_INTERACTIVE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 
 	/// Produced objects are fed back into the fabricator.
-	var/outputInternal = 0
-
-	var/list/queue = list()
-	/// recipes,storage,selected,part
-	var/tab = "recipes"
+	var/outputInternal = FALSE
 
 	var/datum/matfab_recipe/selectedRecipe = null
 	var/list/recipes = list()
 
 	var/datum/matfab_part/selectingPart = null
 	var/list/selectingPartList = list()
-
-	var/filter_category = null
-	var/filter_string = null
 
 	var/list/blueprints = list()
 
@@ -107,16 +100,44 @@
 			recipes.Add(new R())
 		..()
 
-	attack_hand(mob/user)
-		var/html = buildHtml()
-		if (!user.client)
-			return
-		if (user.client.byond_version >= 516)
-			html = "<link rel='stylesheet' type='text/css' href='[resource("css/mat_fabricator.css")]' />" + html
-			user.Browse(html, "window=nfab;size=600x680;title=Nano-fabricator;fade_in=0;can_resize=0")
-		else
-			user.Browse(html, "window=nfab;size=550x650;title=Nano-fabricator;fade_in=0;can_resize=0", 1)
-		return
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if (!ui)
+			ui = new(user, src, "NanoFabricator", src.name)
+			ui.open()
+
+	proc/get_recipe_icon(datum/matfab_recipe/recipe)
+		if (!recipe)
+			return null
+		return recipe.get_recipe_icon()
+
+	proc/get_item_icon(var/obj/item/item)
+		if (!item)
+			return null
+		var/icon/item_icon = getFlatIcon(item, no_anim = TRUE)
+		var/icon_key = "nanofab-item-\ref[item]"
+		return "data:image/png;base64,[icon2base64(item_icon, icon_key)]"
+
+	/// Returns the current storage items that can be assigned to the selected component
+	proc/get_selecting_part_options()
+		var/list/valid_options = list()
+		if (!src.selectingPart || !src.selectedRecipe \
+			|| !(src.selectingPart in src.selectedRecipe.required_parts))
+			return valid_options
+		// Begin with all stored items, then remove incompatible or empty entries
+		valid_options.Add(src.contents)
+		for (var/obj/item/I in valid_options)
+			if (!I.amount)
+				valid_options.Remove(I)
+				continue
+			var/matchlevel = src.selectingPart.checkMatch(I)
+			if (matchlevel == 0)
+				valid_options.Remove(I)
+			// Include material already assigned to other components when checking this stack's remaining amount
+			else if (matchlevel == -1 || src.selectedRecipe.get_assigned_amount(I, src.selectingPart) \
+				+ src.selectingPart.required_amount > I.amount)
+				valid_options[I] = 1
+		return valid_options
 
 	mouse_drop(over_object, src_location, over_location)
 		if(over_object == src)
@@ -182,166 +203,181 @@
 		else
 			return src.loc
 
-	proc/buildHtml()
-		var/html = list()
-		html += "<a href='byond://?src=\ref[src];tab=recipes'><i class='icon-list'></i> Blueprints</a>  "
-		html += "<a href='byond://?src=\ref[src];tab=storage'><i class='icon-folder-open'></i> Storage</a>  "
-		html += "<a href='byond://?src=\ref[src];tab=progress'><i class='icon-cog'></i> Progress</a>  "
-		html += "<a href='byond://?src=\ref[src];tab=settings'><i class='icon-wrench'></i> Settings</a>"
-		html += "<hr>"
+	ui_static_data(mob/user)
+		var/list/recipe_data = list()
+		var/list/categories = list()
+		for (var/datum/matfab_recipe/R as anything in src.recipes)
+			var/list/part_data = list()
+			for (var/datum/matfab_part/P as anything in R.required_parts)
+				part_data += list(list(
+					"ref" = "\ref[P]",
+					"name" = P.name,
+					"part_name" = P.part_name,
+					"amount" = P.required_amount,
+					"optional" = P.optional,
+				))
+			recipe_data += list(list(
+				"ref" = "\ref[R]",
+				"name" = R.name,
+				"description" = R.desc,
+				"category" = R.category,
+				"img" = src.get_recipe_icon(R),
+				"parts" = part_data,
+			))
+			if (!(R.category in categories))
+				categories += R.category
+		return list(
+			"recipes" = recipe_data,
+			"categories" = categories,
+		)
 
-		html += "<div>"
-		switch(tab)
-			if("settings")
-				html += "Output into fabricator: <a href='byond://?src=\ref[src];toggleoutput=1'>[outputInternal ? "ON":"OFF"]</a><br>"
-			if("recipes")
-				if(filter_category)
-					html += "<i class='icon-exclamation-sign'></i> Filtering by Category: [filter_category] <a href='byond://?src=\ref[src];filteroff=1'><i class='icon-remove-sign'></i></a>"
-				else if (filter_string)
-					html += "<i class='icon-exclamation-sign'></i> Filtering by Name: [filter_string] <a href='byond://?src=\ref[src];filteroff=1'><i class='icon-remove-sign'></i></a>"
-				else
-					html += "<i class='icon-search'></i> Category: "
-					var/list/categories = list()
-					for(var/datum/matfab_recipe/E in recipes)
-						if(!(E.category in categories))
-							categories.Add(E.category)
-							html += "<a href='byond://?src=\ref[src];filtercat=[E.category]'>[E.category]</a> "
-					html += "<i class='icon-caret-right'></i> <a href='byond://?src=\ref[src];filterstr=1'>Name</a>"
-				html += "<hr>"
+	ui_data(mob/user)
+		var/list/storage_data = list()
+		for (var/obj/item/I in src)
+			if (!I.amount)
+				continue
+			storage_data += list(list(
+				"ref" = "\ref[I]",
+				"name" = I.name,
+				"amount" = I.amount,
+				"img" = src.get_item_icon(I),
+			))
 
-				html += "<div style='overflow-y: auto; height:500px;'>"
-				for(var/datum/matfab_recipe/R in recipes)
-					if(filter_category && R.category != filter_category) continue
-					if(filter_string && !findtext(lowertext(R.name), lowertext(filter_string)) ) continue
-					html += "<i class='icon-caret-right'></i> <a href='byond://?src=\ref[src];select=\ref[R]'>[R.name]</a><br>"
-					html += " Materials: "
-					var/commanow = 0
-					for(var/datum/matfab_part/P in R.required_parts)
-						html += "[commanow ? ", ":""]([P.required_amount]) [P.name]"
-						commanow = 1
-					html += "<br>"
-					html += " [R.desc]<br><br>"
-				html +=  "</div>"
-			if("progress")
-				html += "Current production queue:<br><br>"
-				for(var/X in queue)
-					html += "[X]<br>" // The queue doesn't exist yet so this doesn't do anything :/
-			if("storage")
-				var/count = 0
-				for(var/obj/item/I in src)
-					if(!I.amount) continue
-					html += "<a href='byond://?src=\ref[src];eject=\ref[I]'><i class='icon-signout'></i></a> [I.name]<br>"
-					count++
-				if(!count)
-					html += "<i class='icon-exclamation-sign'></i> No objects found in storage.<br>"
-			if("selected")
-				if(!selectedRecipe) html += "ERROR: No recipe selected."
-				else
-					html += "[selectedRecipe.name] :<br>"
-					var/complete = 1
-					for(var/datum/matfab_part/P in selectedRecipe.required_parts)
-						html += "<i class='icon-chevron-sign-right'></i> [P.required_amount] [P.name] <i class='icon-chevron-sign-right'></i> [P.part_name] <i class='icon-chevron-sign-right'></i> "
-						html += "<a href='byond://?src=\ref[src];selectpart=\ref[P]'>[P.assigned ? P.assigned.name : "(EMPTY)"]</a>"
-						html += "<br>"
-						if(!P.assigned && !P.optional) complete = 0
-					if(complete)
-						html += "<br><a href='byond://?src=\ref[src];build=1'><i class='icon-cogs'></i> BUILD</a>"
-			if("part")
-				if(selectedRecipe && selectingPart)
-					if(!selectingPartList.len)
-						html += "<i class='icon-exclamation-sign'></i> No valid components found for this slot.<br>"
-						html += "<br><a href='byond://?src=\ref[src];partreturn=1'>Return</a>"
-					else
-						for(var/obj/item/I in selectingPartList)
-							if(selectingPartList[I]) //If this is set to 1, we dont have enough of the material.
-								html += "<p style='color:red;display: inline;'><i class='icon-plus'></i> [I.name] (Insufficient amount)</p><br>"
-							else
-								html += "<a href='byond://?src=\ref[src];choosepart=\ref[I]'><i class='icon-plus'></i></a> [I.name]<br>"
-						html += "<br><a href='byond://?src=\ref[src];partreturn=1'>Return</a>"
-		html += "</div>"
-		return jointext(html, "")
+		var/list/data = list(
+			"outputInternal" = !!src.outputInternal,
+			"storage" = storage_data,
+			"selectedRecipe" = null,
+			"selectingPart" = null,
+			"partOptions" = list(),
+		)
+		if (src.selectedRecipe)
+			var/list/part_data = list()
+			for (var/datum/matfab_part/P as anything in src.selectedRecipe.required_parts)
+				var/list/assigned_data = null
+				if (P.assigned && (P.assigned in src))
+					assigned_data = list(
+						"name" = P.assigned.name,
+						"amount" = P.assigned.amount,
+						"img" = src.get_item_icon(P.assigned),
+					)
+				part_data += list(list(
+					"ref" = "\ref[P]",
+					"name" = P.name,
+					"part_name" = P.part_name,
+					"amount" = P.required_amount,
+					"optional" = P.optional,
+					"assigned" = assigned_data,
+				))
+			data["selectedRecipe"] = list(
+				"ref" = "\ref[src.selectedRecipe]",
+				"name" = src.selectedRecipe.name,
+				"description" = src.selectedRecipe.desc,
+				"img" = src.get_recipe_icon(src.selectedRecipe),
+				"complete" = !!src.selectedRecipe.canBuild(1, src),
+				"maxAmount" = src.selectedRecipe.getMaxAmount(),
+				"parts" = part_data,
+			)
 
-	Topic(href, href_list)
-		if(BOUNDS_DIST(usr, src) > 0 || usr.z != src.z) return
+		if (src.selectingPart && src.selectedRecipe)
+			var/list/current_part_options = src.get_selecting_part_options()
+			src.selectingPartList = current_part_options
+			data["selectingPart"] = list(
+				"ref" = "\ref[src.selectingPart]",
+				"name" = src.selectingPart.name,
+				"part_name" = src.selectingPart.part_name,
+			)
+			var/list/options = list()
+			for (var/obj/item/I as anything in current_part_options)
+				options += list(list(
+					"ref" = "\ref[I]",
+					"name" = I.name,
+					"amount" = I.amount,
+					"img" = src.get_item_icon(I),
+					"insufficient" = !!current_part_options[I],
+				))
+			data["partOptions"] = options
+		return data
 
-		if(href_list["tab"])
-			tab = href_list["tab"]
-		else if(href_list["filteroff"])
-			filter_category = null
-			filter_string = null
-		else if(href_list["filtercat"])
-			filter_category = strip_html(href_list["filtercat"])
-			filter_string = null
-		else if(href_list["filterstr"])
-			filter_category = null
-			filter_string = strip_html(input(usr,"Search for:","Search",""))
-		else if(href_list["toggleoutput"])
-			outputInternal = !outputInternal
-		else if(href_list["select"])
-			var/datum/matfab_recipe/R = locate(href_list["select"]) in recipes
-			if(R)
-				selectedRecipe = R
-				selectedRecipe.clear()
-				tab = "selected"
-		else if(href_list["eject"])
-			var/obj/item/L = locate(href_list["eject"]) in src.contents
-			if(!(L in src)) return
-			L.set_loc(src.get_output_location())
-		else if(href_list["selectpart"])
-			if(selectedRecipe)
-				var/datum/matfab_part/P = locate(href_list["selectpart"]) in selectedRecipe.required_parts
-				if(P)
-					selectingPart = P
-					var/list/validOptions = list()
-					validOptions.Add(src.contents)
-					for(var/datum/matfab_part/RP in selectedRecipe.required_parts)
-						if(RP == P) continue
-						if(RP.assigned) validOptions.Remove(RP.assigned)
-					for(var/obj/item/I in validOptions)
-						if(!I.amount)
-							validOptions.Remove(I)
-						var/matchlevel = P.checkMatch(I)
-						if(matchlevel == 0)
-							validOptions.Remove(I)
-						if(matchlevel == -1)
-							validOptions[I] = 1
-
-					selectingPartList = validOptions
-					tab = "part"
-		else if(href_list["partreturn"])
-			tab = "selected"
-			selectingPart = null
-			selectingPartList.Cut()
-		else if(href_list["choosepart"])
-			var/obj/item/L = locate(href_list["choosepart"]) in selectingPartList
-			if(!(L in src) || !L) return
-			selectingPart.assigned = L
-			tab = "selected"
-			selectingPart = null
-			selectingPartList.Cut()
-		else if(href_list["build"])
-			if(selectedRecipe)
-				var/maxAmt = selectedRecipe.getMaxAmount()
-				if(maxAmt)
-					var/howMany = input(usr, "How many ([maxAmt] max)?", "Select amount", maxAmt)
-					if(howMany > maxAmt || !selectedRecipe) return //ZeWaka: Fix for null.canBuild
-					if(selectedRecipe.canBuild(howMany, src))
-						selectedRecipe.build(howMany, src)
-						var/list/parts = list()
-						for(var/datum/matfab_part/P in selectedRecipe.required_parts)
-							if(P.assigned)
-								parts += "[P.part_name]: [P.assigned]"
-								P.assigned.change_stack_amount(-(P.required_amount*howMany))
-								if(QDELETED(P.assigned))
-									P.assigned = null
-						logTheThing(LOG_STATION, usr, "printed [howMany] [selectedRecipe.name] (parts: [jointext(parts, ", ")])")
-
-						tab = "recipes"
-						selectingPart = null
-						selectingPartList.Cut()
-						selectedRecipe = null
-						FLICK("fab2-work", src)
-		src.Attackhand(usr)
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
+		if (.)
+			return
+		var/mob/user = ui?.user
+		if (!user)
+			return
+		switch (action)
+			if ("select_recipe")
+				var/datum/matfab_recipe/R = locate(params["ref"]) in src.recipes
+				if (!R)
+					return
+				src.selectedRecipe = R
+				R.clear()
+				src.selectingPart = null
+				src.selectingPartList.Cut()
+				. = TRUE
+			if ("eject")
+				var/obj/item/I = locate(params["ref"]) in src.contents
+				if (!I)
+					return
+				I.set_loc(src.get_output_location())
+				. = TRUE
+			if ("toggle_output")
+				src.outputInternal = !src.outputInternal
+				. = TRUE
+			if ("select_part")
+				if (!src.selectedRecipe)
+					return
+				var/datum/matfab_part/P = locate(params["ref"]) in src.selectedRecipe.required_parts
+				if (!P)
+					return
+				src.selectingPart = P
+				src.selectingPartList = src.get_selecting_part_options()
+				. = TRUE
+			if ("cancel_part")
+				src.selectingPart = null
+				src.selectingPartList.Cut()
+				. = TRUE
+			if ("choose_part")
+				if (!src.selectedRecipe || !src.selectingPart)
+					return
+				var/list/current_part_options = src.get_selecting_part_options()
+				var/obj/item/I = locate(params["ref"]) in current_part_options
+				if (!I || !(I in src) || current_part_options[I] || src.selectingPart.checkMatch(I) != 1)
+					return
+				src.selectingPart.assigned = I
+				src.selectingPart = null
+				src.selectingPartList.Cut()
+				. = TRUE
+			if ("build")
+				if (!src.selectedRecipe)
+					return
+				var/datum/matfab_recipe/build_recipe = src.selectedRecipe
+				var/max_amount = build_recipe.getMaxAmount()
+				if (max_amount <= 0)
+					return
+				var/how_many = params["amount"]
+				if (isnull(how_many) || build_recipe != src.selectedRecipe)
+					return
+				max_amount = build_recipe.getMaxAmount()
+				if (!isnum_safe(how_many) || how_many < 1 || how_many > max_amount \
+					|| !build_recipe.canBuild(how_many, src))
+					return
+				build_recipe.build(how_many, src)
+				var/list/parts = list()
+				var/list/required_amounts = build_recipe.get_assigned_amounts()
+				for (var/datum/matfab_part/P as anything in build_recipe.required_parts)
+					if (P.assigned)
+						parts += "[P.part_name]: [P.assigned]"
+				for (var/obj/item/I as anything in required_amounts)
+					I.change_stack_amount(-(required_amounts[I] * how_many))
+				for (var/datum/matfab_part/P as anything in build_recipe.required_parts)
+					if (P.assigned && QDELETED(P.assigned))
+						P.assigned = null
+				logTheThing(LOG_STATION, user, "printed [how_many] [build_recipe.name] (parts: [jointext(parts, ", ")])")
+				src.selectingPart = null
+				src.selectingPartList.Cut()
+				FLICK("fab2-work", src)
+				. = TRUE
 
 	proc/addMaterial(var/obj/item/W, var/mob/user)
 		for(var/obj/item/A in src)
