@@ -8,6 +8,7 @@
 import {
   BlockQuote,
   Button,
+  Image,
   Section,
   Stack,
   Table,
@@ -25,20 +26,19 @@ interface RewardData {
   type: string;
   title: string;
   desc: string;
+  icon: string;
 }
 
 export const MedalRewards = () => {
   const { data } = useBackend<MedalRewardsData>();
   return (
-    <Window width={600} height={800}>
-      <Window.Content>
-        <Section title="Medal Rewards" scrollable fill>
-          <Table>
-            {data.rewards.map((reward) => (
-              <Reward reward={reward} />
-            ))}
-          </Table>
-        </Section>
+    <Window width={600} height={800} title="Medal Rewards">
+      <Window.Content scrollable>
+        <Table>
+          {data.rewards.map((reward) => (
+            <Reward key={reward.type} reward={reward} />
+          ))}
+        </Table>
       </Window.Content>
     </Window>
   );
@@ -48,6 +48,7 @@ interface RewardProps {
   reward: RewardData;
 }
 
+const ICON_SIZE = '32px';
 const Reward = (props: RewardProps) => {
   const { act, data } = useBackend<MedalRewardsData>();
   const { reward } = props;
@@ -56,12 +57,15 @@ const Reward = (props: RewardProps) => {
     eligible && (
       <Table.Row className="candystripe">
         <Stack py="5px">
+          <Stack.Item>
+            <Image width={ICON_SIZE} height={ICON_SIZE} src={reward.icon} />
+          </Stack.Item>
           <Stack.Item grow>
             <b>{reward.title}</b>
             <br />
-            <BlockQuote>{reward.desc}</BlockQuote>
+            <BlockQuote py="2px">{reward.desc}</BlockQuote>
           </Stack.Item>
-          <Stack.Item align="right">
+          <Stack.Item>
             <Button onClick={() => act('redeem', { reward_type: reward.type })}>
               Redeem
             </Button>

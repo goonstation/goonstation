@@ -3,6 +3,10 @@ ABSTRACT_TYPE(/datum/achievementReward)
 	var/title = ""
 	var/desc = ""
 	var/required_medal = null
+
+	var/icon = 'icons/ui/jobxp.dmi'
+	var/icon_state = "?"
+
 	var/once_per_round = 1   //Can only be claimed once per round.
 	var/mobonly = 1 //If the reward can only be redeemed if the player has a /mob/living.
 
@@ -13,13 +17,14 @@ ABSTRACT_TYPE(/datum/achievementReward)
 		//You could even make one-time reward by stripping their medal here.
 		return
 
-
+#define COPY_ATOM_ICON(path) icon=path::icon; icon_state=path::icon_state
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// Rewards below
 /datum/achievementReward/satchel
 	title = "(Skin) Satchel"
 	desc = "Converts whatever backpack you're wearing into a satchel. Requires that you're wearing a backpack."
 	required_medal = "Fish"
 	once_per_round = 0
+	COPY_ATOM_ICON(/obj/item/storage/backpack/satchel)
 
 	rewardActivate(var/mob/activator)
 		if (!istype(activator))
@@ -44,6 +49,8 @@ ABSTRACT_TYPE(/datum/achievementReward)
 	title = "(Skin) HighTech Pod"
 	desc = "Gives you a Kit that allows you to change the appearance of a Pod."
 	required_medal = "Newton's Crew"
+	icon = 'icons/obj/ship.dmi'
+	icon_state = "pod_skinAc"
 
 	rewardActivate(var/mob/activator)
 		boutput(usr, SPAN_NOTICE("The Kit has been dropped at your current location."))
@@ -55,6 +62,7 @@ ABSTRACT_TYPE(/datum/achievementReward)
 	desc = "Turns a gas mask you're wearing into a high-tech particle-filtered version."
 	required_medal = "Old Enemy"
 	once_per_round = FALSE
+	COPY_ATOM_ICON(/obj/item/clothing/mask/gas/respirator)
 
 	rewardActivate(var/mob/activator)
 		if (!istype(activator))
@@ -80,6 +88,7 @@ ABSTRACT_TYPE(/datum/achievementReward)
 	title = "(Skin) SWAT Gas Mask"
 	desc = "Turns your Gas Mask into a SWAT Gas Mask. If you're wearing one."
 	required_medal = "Leave no man behind!"
+	COPY_ATOM_ICON(/obj/item/clothing/mask/gas/swat/NT)
 
 	rewardActivate(var/mob/activator)
 		if (!istype(activator))
@@ -104,6 +113,7 @@ ABSTRACT_TYPE(/datum/achievementReward)
 	title = "(Skin) Colorful Beret"
 	desc = "Turns your hat into a colorful beret. If you're wearing one."
 	required_medal = "Monkey Duty"
+	COPY_ATOM_ICON(/obj/item/clothing/head/beret)
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
@@ -132,6 +142,7 @@ ABSTRACT_TYPE(/datum/achievementReward)
 	desc = "Requires you to be holding a large beaker."
 	required_medal = "We didn't start the fire"
 	once_per_round = 0
+	COPY_ATOM_ICON(/obj/item/reagent_containers/glass/beaker/large/round)
 
 	rewardActivate(var/mob/activator)
 		if (!istype(activator))
@@ -169,6 +180,7 @@ ABSTRACT_TYPE(/datum/achievementReward)
 	desc = "Requires you to be holding a bucket."
 	required_medal = "Spotless"
 	once_per_round = 1
+	COPY_ATOM_ICON(/obj/item/reagent_containers/glass/bucket/red)
 
 	rewardActivate(var/mob/activator)
 		if (!istype(activator))
@@ -198,6 +210,8 @@ ABSTRACT_TYPE(/datum/achievementReward)
 	title = "(Skin) Pilot Suit"
 	desc = "Requires that you wear something in your jumpsuit slot."
 	required_medal = "It's not 'Door to Heaven'"
+	icon = 'icons/obj/clothing/jumpsuits/item_js_misc.dmi'
+	icon_state = "mechanic-reward"
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
@@ -228,6 +242,7 @@ ABSTRACT_TYPE(/datum/achievementReward)
 	desc = "Requires that you wear medical scrubs in your jumpsuit slot."
 	required_medal = "Primum non nocere"
 	once_per_round = 0
+	COPY_ATOM_ICON(/obj/item/clothing/under/scrub/flower)
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
@@ -258,6 +273,8 @@ ABSTRACT_TYPE(/datum/achievementReward)
 	title = "(Skin) Relic Security Jumpsuit"
 	desc = "Requires that you wear a security officer or Head of Security uniform in your jumpsuit slot."
 	required_medal = "Dead or alive, you're coming with me"
+	icon = 'icons/obj/clothing/jumpsuits/item_js_rank.dmi'
+	icon_state = "security-old"
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
@@ -297,6 +314,7 @@ ABSTRACT_TYPE(/datum/achievementReward)
 	desc = "Requires that you wear a medical labcoat in your suit slot."
 	required_medal = "Patchwork"
 	once_per_round = 0
+	COPY_ATOM_ICON(/obj/item/clothing/suit/labcoat/medical/cool)
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
@@ -326,6 +344,7 @@ ABSTRACT_TYPE(/datum/achievementReward)
 	desc = "Requires that you wear a labcoat in your suit slot."
 	required_medal = "Meth is a hell of a drug"
 	once_per_round = 0
+	COPY_ATOM_ICON(/obj/item/clothing/suit/labcoat/science)
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
@@ -368,6 +387,8 @@ ABSTRACT_TYPE(/datum/achievementReward)
 	desc = "Requires that you wear a labcoat in your suit slot."
 	required_medal = "Illuminated"
 	once_per_round = 0
+	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
+	icon_state = "alchrobe"
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
@@ -399,6 +420,8 @@ ABSTRACT_TYPE(/datum/achievementReward)
 	title = "(Skin) Strange Vampire Outfit"
 	desc = "Requires that you wear a vampire cape in your suit slot."
 	required_medal = "Dracula Jr."
+	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
+	icon_state = "vclothes"
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
@@ -426,6 +449,7 @@ ABSTRACT_TYPE(/datum/achievementReward)
 	title = "Clown College Regalia"
 	desc = "Spawns you your clown college graduation cap and diploma."
 	required_medal = "Unlike the director, I went to college"
+	COPY_ATOM_ICON(/obj/item/toy/diploma)
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
@@ -445,6 +469,8 @@ ABSTRACT_TYPE(/datum/achievementReward)
 	title = "(Skin) Aerostatic Pilot Jacket"
 	desc = "Turns your detective's coat into an orange pilot jacket"
 	required_medal = "Deep Freeze"
+	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
+	icon_state = "detective_kim"
 
 	rewardActivate(var/mob/activator)
 		var/mob/living/carbon/human/H = activator
@@ -472,6 +498,8 @@ ABSTRACT_TYPE(/datum/achievementReward)
 	desc = "Will change the skin of a detective's coat, hats, gloves, shoes, jumpsuit, and holster."
 	required_medal = "Neither fashionable noir stylish"
 	once_per_round = FALSE
+	icon = 'icons/obj/clothing/jumpsuits/item_js_misc.dmi'
+	icon_state = "inspectorj"
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
@@ -591,6 +619,7 @@ ABSTRACT_TYPE(/datum/achievementReward)
 	desc = "Will change the skin of captain hats, captain armor/spacesuits, cap backpacks, captain gloves, sabres and captain uniforms."
 	required_medal = "Icarus"
 	once_per_round = FALSE
+	COPY_ATOM_ICON(/obj/item/clothing/head/centhat)
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
@@ -768,6 +797,7 @@ ABSTRACT_TYPE(/datum/achievementReward)
 	desc = "Will change the skin of captain hats, captain armor/spacesuits, cap backpacks, captain gloves, sabres and captain uniforms."
 	required_medal = "Brown Pants" //Red shirt, brown pants.
 	once_per_round = FALSE
+	COPY_ATOM_ICON(/obj/item/clothing/head/centhat/red)
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
@@ -941,6 +971,8 @@ ABSTRACT_TYPE(/datum/achievementReward)
 	title = "(AI Face) Malfunction"
 	desc = "Turns you into a scary malfunctioning AI! Only in appearance, of course."
 	required_medal = "HUMANOID MUST NOT ESCAPE"
+	icon = 'icons/mob/ai.dmi'
+	icon_state = "ai_Red"
 
 	rewardActivate(var/mob/activator)
 		if (isAI(activator))
@@ -960,6 +992,8 @@ ABSTRACT_TYPE(/datum/achievementReward)
 	title = "(AI Face) Tetris"
 	desc = "Turns you into a tetris-playing machine!"
 	required_medal = "Block Stacker"
+	icon = 'icons/mob/ai.dmi'
+	icon_state = "ai_tetris"
 
 	rewardActivate(var/mob/activator)
 		if (isAI(activator))
@@ -980,6 +1014,8 @@ ABSTRACT_TYPE(/datum/achievementReward)
 	title = "(Cyborg Skin) Automaton"
 	desc = "Turns you into the mysterious Automaton! Only in appearance, of course. Keys not included."
 	required_medal = "Icarus"
+	icon = 'icons/mob/robots.dmi'
+	icon_state = "automaton"
 
 	rewardActivate(var/mob/activator)
 		if (isrobot(activator))
@@ -994,6 +1030,8 @@ ABSTRACT_TYPE(/datum/achievementReward)
 	title = "Golden Gun"
 	desc = "Gold plates a shotgun, hunting rifle, detective revolver, Colt SAA, or AK-47 you're holding."
 	required_medal = "Helios"
+	icon = 'icons/obj/items/guns/kinetic.dmi'
+	icon_state = "colt_saa-golden"
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
@@ -1024,6 +1062,8 @@ ABSTRACT_TYPE(/datum/achievementReward)
 	title = "Golden Carrier"
 	desc = "Gold plates a pet carrier."
 	required_medal = "Noah's Shuttle"
+	icon = 'icons/obj/items/pet_carrier.dmi'
+	icon_state = "carrier-full-golden"
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
@@ -1056,6 +1096,7 @@ ABSTRACT_TYPE(/datum/achievementReward)
 	title = "(Emote) Smug"
 	desc = "Gives you the ability to be all smug about something. I bet nobody likes you."
 	required_medal = ":10bux:"
+	COPY_ATOM_ICON(/obj/effect/smug)
 
 	rewardActivate(var/mob/activator)
 		if (!istype(activator))
@@ -1067,6 +1108,7 @@ ABSTRACT_TYPE(/datum/achievementReward)
 	title = "(Emote) Shelterbee"
 	desc = "Shelterbee expresses what you cannot. And it's also pretty dang cute."
 	required_medal = "Too Cool"
+	COPY_ATOM_ICON(/obj/effect/shelterbee)
 
 	rewardActivate(var/mob/activator)
 		if (!istype(activator))
@@ -1087,6 +1129,7 @@ ABSTRACT_TYPE(/datum/achievementReward)
 	title = "(Item) Participation Ribbon"
 	desc = "Receive a participation ribbon. No refunds!"
 	required_medal = "Fun Times"
+	COPY_ATOM_ICON(/obj/item/sticker/ribbon/participant)
 
 	rewardActivate(var/mob/activator)
 		var/ribbon = new/obj/item/sticker/ribbon/participant(get_turf(activator))
@@ -1098,6 +1141,7 @@ ABSTRACT_TYPE(/datum/achievementReward)
 	desc = "Gold plates a held PR-4 Guardbuddy frame."
 	required_medal = "Ol' buddy ol' pal"
 	once_per_round = 1
+	COPY_ATOM_ICON(/obj/item/guardbot_frame/old/golden)
 
 	rewardActivate(var/mob/activator)
 		if (!istype(activator))
@@ -1147,6 +1191,7 @@ ABSTRACT_TYPE(/datum/achievementReward)
 	title = "(Reagent) Bee"
 	desc = "You're gonna burp one up, probably."
 	required_medal = "Bombini is Missing!"
+	COPY_ATOM_ICON(/obj/npc/trader/bee)
 
 	rewardActivate(var/mob/activator)
 		if (!activator.reagents) return
@@ -1158,6 +1203,7 @@ ABSTRACT_TYPE(/datum/achievementReward)
 	title = "(Fancy Gib) Plague of Blood"
 	desc = "This will cleanse you of Original Sin (permanently)."
 	required_medal = "Original Sin"
+	COPY_ATOM_ICON(/obj/item/skull/vampire)
 	// once_per_round = 0
 
 	rewardActivate(var/mob/activator)
@@ -1195,6 +1241,7 @@ ABSTRACT_TYPE(/datum/achievementReward)
 	desc = "Requires you to hold a welding helmet."
 	required_medal = "Slow Burn"
 	once_per_round = 0
+	COPY_ATOM_ICON(/obj/item/clothing/head/helmet/welding/fire)
 
 	rewardActivate(var/mob/activator)
 		if (!istype(activator))
@@ -1215,6 +1262,8 @@ ABSTRACT_TYPE(/datum/achievementReward)
 	title = "(Skin) Gilded Fishing Rod"
 	desc = "One use, requires you to hold a fishing rod."
 	required_medal = "So Long, and Thanks for All the Fish"
+	icon = 'icons/obj/items/fishing_gear.dmi'
+	icon_state = "reward_icon"
 
 	rewardActivate(mob/activator)
 		var/obj/item/fishing_rod/rod = activator.find_type_in_hand(/obj/item/fishing_rod) || activator.find_type_in_hand(/obj/item/syndie_fishing_rod)
@@ -1234,6 +1283,7 @@ ABSTRACT_TYPE(/datum/achievementReward)
 	required_medal = "Contributor"
 	once_per_round = 0
 	mobonly = 0
+	COPY_ATOM_ICON(/obj/item/organ/heart)
 
 	rewardActivate(mob/user)
 		ui_interact(user)
@@ -1285,3 +1335,5 @@ ABSTRACT_TYPE(/datum/achievementReward)
 		else
 			boutput( usr, SPAN_ALERT("Hmm.. I can't set the scream sound of that!") )
 			return 0
+
+#undef COPY_ATOM_ICON

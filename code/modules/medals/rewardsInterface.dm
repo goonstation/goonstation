@@ -31,6 +31,7 @@
 			"type" = reward_type,
 			"title" = reward.title,
 			"desc" = reward.desc,
+			"icon" = "\ref[reward.icon]?state=[reward.icon_state]"
 		))
 
 // Per user data
@@ -63,7 +64,7 @@
 	. = ..()
 	switch(action)
 		if("redeem")
-			src.try_redeem_reward(ui.user, params["reward_type"])
+			src.try_redeem_reward(ui.user, text2path(params["reward_type"]))
 
 /datum/medal_rewards/proc/try_redeem_reward(var/mob/user, var/reward_type)
 	var/datum/achievementReward/reward = global.rewardDB[reward_type] //TODO: reward_type being a string here breaks this
