@@ -32,7 +32,7 @@
 			"type" = reward_type,
 			"title" = reward.title,
 			"desc" = reward.desc,
-			"medal" = reward.required_medal
+			"medal" = reward.required_medal,
 			"icon" = "\ref[reward.icon]?state=[reward.icon_state]",
 			"category" = reward.category,
 		))
