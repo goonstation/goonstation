@@ -1039,6 +1039,11 @@ TYPEINFO(/obj/item/disk)
 	if(QDELETED(src) && !isnull(newloc))
 		CRASH("Tried to call set_loc on disposed movable [identify_object(src)] to non-null location: [identify_object(newloc)]")
 
+#ifdef CHECK_MORE_RUNTIMES
+	if (HAS_ATOM_PROPERTY(src, PROP_MOVABLE_DO_NOT_SET_LOC))
+		CRASH("Tried to call set_loc on movable with PROP_MOVABLE_DO_NOT_SET_LOC set.")
+#endif
+
 	if (loc == newloc)
 		SEND_SIGNAL(src, COMSIG_MOVABLE_SET_LOC, loc)
 		return src
