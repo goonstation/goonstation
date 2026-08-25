@@ -5,6 +5,7 @@
  * @license ISC
  */
 
+import { useState } from 'react';
 import {
   BlockQuote,
   Button,
@@ -18,7 +19,6 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { useState } from 'react';
 
 interface MedalRewardsData {
   rewards: RewardData[];
@@ -30,6 +30,7 @@ interface RewardData {
   type: string;
   title: string;
   desc: string;
+  medal: string;
   icon: string;
   category: string;
 }
@@ -116,7 +117,13 @@ const Reward = (props: RewardProps) => {
         <Stack.Item grow>
           <b>{reward.title}</b>
           <br />
-          <BlockQuote py="2px">{reward.desc}</BlockQuote>
+          <BlockQuote>
+            {'Earned from medal "'}
+            {reward.medal}
+            {'"'}
+            <br />
+            {reward.desc}
+          </BlockQuote>
         </Stack.Item>
         <Stack.Item>
           <Button onClick={() => act('redeem', { reward_type: reward.type })}>
