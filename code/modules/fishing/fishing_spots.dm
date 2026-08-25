@@ -1081,9 +1081,9 @@ datum/fishing_spot/golden_toilet
 	/obj/item/dice/magic8ball = 25,
 	/obj/item/toy/plush/small/stress_ball = 25,
 	/obj/item/paper/folded/ball = 25,
-	/obj/pool/ball = 25,
 	/obj/item/reagent_containers/food/snacks/rice_ball = 25,
 	/obj/item/reagent_containers/food/snacks/meatball = 25,
+	/obj/item/reagent_containers/food/fish/clownfish = 20,
 	/obj/item/clothing/shoes/clown_shoes = 10, //they fell in :(
 	/mob/living/critter/spider/baby/nice = 5,
 	/obj/item/reagent_containers/food/fish/clown_fish = 5)
