@@ -8,8 +8,6 @@
 import {
   BlockQuote,
   Button,
-  Dimmer,
-  Divider,
   Section,
   Stack,
   Table,
@@ -64,7 +62,9 @@ const Reward = (props: RewardProps) => {
             <BlockQuote>{reward.desc}</BlockQuote>
           </Stack.Item>
           <Stack.Item align="right">
-            <Button>Redeem</Button>
+            <Button onClick={() => act('redeem', { reward_type: reward.type })}>
+              Redeem
+            </Button>
           </Stack.Item>
         </Stack>
       </Table.Row>
