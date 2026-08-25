@@ -205,6 +205,7 @@
 	//The pick-variant has a mining animation, but the drill variant does not - and overrides icon_state
 	var/obj/machinery/bot/mining/bot
 	var/turf/simulated/wall/auto/asteroid/target
+	var/mining_type = MINING_DMG_PICKAXE
 
 	New(var/obj/machinery/bot/mining/bot, var/turf/simulated/wall/auto/asteroid/target)
 		..()
@@ -231,7 +232,7 @@
 
 	onEnd()
 		if(checkStillValid())
-			target.damage_asteroid(bot.diglevel, MINING_DMG_PICKAXE)
+			target.damage_asteroid(bot.diglevel, src.mining_type)
 			if(!istype(target, /turf/simulated/wall/auto/asteroid/))
 				bot.target = null
 		if(bot != null)
@@ -255,6 +256,7 @@
 
 /datum/action/bar/icon/digbotdig/drill
 	icon_state = "lasdrill-old"
+	mining_type = MINING_DMG_DRILL
 
 
 //////////////////////////////////////
@@ -318,6 +320,7 @@
 			if (src.build_step == 0)
 				if (user.r_hand == T) user.u_equip(T)
 				else user.u_equip(T)
+				T.forensic_holder.copy_to(src.forensic_holder)
 				qdel(T)
 				src.build_step = 1
 				src.name = "hard hat/sensor/robot arm assembly"
@@ -331,8 +334,11 @@
 				if (user.r_hand == T) user.u_equip(T)
 				else user.u_equip(T)
 				boutput(user,  "You add [T.name]. Now you have a finished mining bot! Hooray!")
+				var/obj/machinery/bot/mining/drill/drillbot = new(user.loc)
+				drillbot.setMaterial(src.material)
+				drillbot.forensic_holder = src.forensic_holder
+				T.forensic_holder.copy_to(drillbot.forensic_holder)
 				qdel(T)
-				new /obj/machinery/bot/mining/drill(user.loc)
 				qdel(src)
 			else
 				boutput(user,  "It's not ready for that part yet.")
@@ -342,8 +348,11 @@
 				if (user.r_hand == T) user.u_equip(T)
 				else user.u_equip(T)
 				boutput(user,  "You add [T.name]. Now you have a finished mining bot! Hooray!")
+				var/obj/machinery/bot/mining/miningbot = new(get_turf(src))
+				miningbot.setMaterial(T.material)
+				miningbot.forensic_holder = src.forensic_holder
+				T.forensic_holder.copy_to(miningbot.forensic_holder)
 				qdel(T)
-				new /obj/machinery/bot/mining(get_turf(src))
 				qdel(src)
 			else
 				boutput(user,  "It's not ready for that part yet.")

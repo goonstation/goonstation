@@ -458,8 +458,7 @@ TYPEINFO(/mob)
 	if(isclient(src.client) && isnull(src.client?.tg_layout))
 		var/tg_layout_enabled = winget(src.client, "menu.tg_layout", "is-checked") == "true"
 		// winget sleeps :{
-		if (src.client)
-			src.client.tg_layout = tg_layout_enabled
+		src.client?.tg_layout = tg_layout_enabled
 	src.client?.set_layout(src.client?.tg_layout)
 	if(src.skipped_mobs_list)
 		var/area/AR = get_area(src)
