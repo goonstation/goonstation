@@ -62,9 +62,9 @@
 
 ///extra loot from their shoes for clowns only
 /datum/fishing_lootpool/clown_shoes_loot
-	fish_available = list(/obj/item/bananapeel = 60, \
-	/obj/item/instrument/bikehorn = 40, \
-	/obj/item/instrument/bikehorn/dramatic = 10, \
+	fish_available = list(/obj/item/bananapeel = 40, \
+	/obj/item/instrument/bikehorn = 20, \
+	/obj/item/instrument/bikehorn/dramatic = 5, \
 	/obj/item/reagent_containers/food/fish/clown_fish = 3)
 
 /datum/fishing_lootpool/clown_shoes_loot/check_conditionals(mob/user, obj/item/fishing_rod/fishing_rod)
