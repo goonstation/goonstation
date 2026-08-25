@@ -972,7 +972,7 @@ ABSTRACT_TYPE(/datum/achievementReward)
 	desc = "Turns you into a scary malfunctioning AI! Only in appearance, of course."
 	required_medal = "HUMANOID MUST NOT ESCAPE"
 	icon = 'icons/mob/ai.dmi'
-	icon_state = "ai_Red"
+	icon_state = "ai_malf"
 
 	rewardActivate(var/mob/activator)
 		if (isAI(activator))

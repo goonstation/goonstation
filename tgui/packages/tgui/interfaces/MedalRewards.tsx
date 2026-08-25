@@ -9,6 +9,7 @@ import {
   BlockQuote,
   Button,
   Image,
+  Input,
   Section,
   Stack,
   Table,
@@ -16,6 +17,7 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { useState } from 'react';
 
 interface MedalRewardsData {
   rewards: RewardData[]; // 0 when all accesses needed, true when any
@@ -31,14 +33,34 @@ interface RewardData {
 
 export const MedalRewards = () => {
   const { data } = useBackend<MedalRewardsData>();
+  const [searchQuery, setSearchQuery] = useState('');
+  const filteredRewards = data.rewards.filter((reward) =>
+    (reward.title + reward.desc)
+      .toLocaleLowerCase()
+      .includes(searchQuery.toLocaleLowerCase()),
+  );
   return (
     <Window width={600} height={800} title="Medal Rewards">
-      <Window.Content scrollable>
-        <Table>
-          {data.rewards.map((reward) => (
-            <Reward key={reward.type} reward={reward} />
-          ))}
-        </Table>
+      <Window.Content>
+        <Stack vertical fill>
+          <Stack.Item>
+            <Input
+              fluid
+              value={searchQuery}
+              onChange={setSearchQuery}
+              placeholder="Filter Rewards"
+            />
+          </Stack.Item>
+          <Stack.Item grow>
+            <Section scrollable fill>
+              <Table>
+                {filteredRewards.map((reward) => (
+                  <Reward key={reward.type} reward={reward} />
+                ))}
+              </Table>
+            </Section>
+          </Stack.Item>
+        </Stack>
       </Window.Content>
     </Window>
   );
@@ -48,7 +70,7 @@ interface RewardProps {
   reward: RewardData;
 }
 
-const ICON_SIZE = '32px';
+const ICON_SIZE = '48px';
 const Reward = (props: RewardProps) => {
   const { act, data } = useBackend<MedalRewardsData>();
   const { reward } = props;
@@ -56,7 +78,7 @@ const Reward = (props: RewardProps) => {
   return (
     eligible && (
       <Table.Row className="candystripe">
-        <Stack py="5px">
+        <Stack py="5px" align="center">
           <Stack.Item>
             <Image width={ICON_SIZE} height={ICON_SIZE} src={reward.icon} />
           </Stack.Item>
