@@ -1092,6 +1092,17 @@
 		activator.put_in_hand_or_drop(ribbon)
 		return 1
 
+/datum/achievementReward/participantribbon
+	title = "(Item) Xenoarchaeologist Hat"
+	desc = "Receive a hat that shows your love of space relics."
+	required_medal = "Licensed Archaeologist"
+	once_per_round = TRUE
+
+	rewardActivate(var/mob/activator)
+		var/hat = new/obj/item/clothing/head/safari/artsci(get_turf(activator))
+		activator.put_in_hand_or_drop(hat)
+		return TRUE
+
 /datum/achievementReward/goldbud
 	title = "(Skin) Golden PR-4 Guardbuddy Frame"
 	desc = "Gold plates a held PR-4 Guardbuddy frame."
