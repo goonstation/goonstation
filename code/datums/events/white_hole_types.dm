@@ -1,3 +1,6 @@
+#define WHITEHOLE_COMMON 100
+#define WHITEHOLE_UNCOMMON 30
+#define WHITEHOLE_RARE 10
 
 ABSTRACT_TYPE(/datum/whitehole_spawner)
 /datum/whitehole_spawner
@@ -8,15 +11,19 @@ ABSTRACT_TYPE(/datum/whitehole_spawner)
 	/// - If the type is of "/datum/reagent", that reagent will be released
 	var/list/spawn_probs = list()
 	var/name = "untitled"
-	var/icon_view = "" //! The icon_state of the image that will be used inside the white hole
+	var/icon_view = "" //! The icon_state of the image that will be displayed inside the white hole
+	var/ignore_datums = FALSE //! Ignore gasses, reagents, projectiles, spawner effects, or anything that isn't a movable atom
+	var/weight_rarity = 0 //! How likely that this type of white hole is going to be chosen randomly
 
 	/// Pick something for the white hole to do. If a movable atom was released, it should return that atom.
 	proc/unleash(var/obj/whitehole/whitehole)
 		if(length(src.spawn_probs) == 0)
-			boutput(world, "Test B")
 			return null
-		var/spawn_type = weighted_pick(src.spawn_probs)
-		boutput(world, "Test: [spawn_type]")
+		var/spawn_type = null
+		if(ignore_datums)
+			spawn_type = src.pick_movable_atom(whitehole)
+		else
+			spawn_type = weighted_pick(src.spawn_probs)
 
 		if(IS_ABSTRACT(spawn_type))
 			spawn_type = pick(concrete_typesof(spawn_type))
@@ -38,6 +45,19 @@ ABSTRACT_TYPE(/datum/whitehole_spawner)
 		var/atom/movable/AM = new spawn_type(whitehole.loc)
 		return AM
 
+	/// Used to return something for transforming, deep frying, gift wrapping, or whatever else.
+	/// Will ignore anything that is not a movable atom, including projectiles.
+	proc/pick_movable_atom(var/obj/whitehole/whitehole)
+		var/datum/whitehole_spawner/spawner = src
+		var/spawn_type = null
+		while(!ispath(spawn_type, /atom/movable))
+			spawn_type = weighted_pick(src.spawn_probs)
+			while(ispath(spawn_type, /datum/whitehole_spawner))
+				// Keep looking through spawners until you find something or nothing
+				spawner = new spawn_type
+				spawn_type = weighted_pick(spawner.spawn_probs)
+		return spawn_type
+
 	proc/unleash_projectile(var/obj/whitehole/whitehole, var/proj_path, var/target_prob)
 		var/atom/target = null
 		if(prob(target_prob))
@@ -52,6 +72,8 @@ ABSTRACT_TYPE(/datum/whitehole_spawner)
 
 ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 /datum/whitehole_spawner/main
+	weight_rarity = WHITEHOLE_COMMON
+
 /datum/whitehole_spawner/main/artlab
 	name = "artlab"
 	icon_view = "artlab"
@@ -899,22 +921,12 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 // ============================== Spawner Subtypes ===============================
 // ===============================================================================
 
-/// Used to return random objects for transforming, deep frying, gift wrapping, or whatever else.
-/// Will avoid anything that is not a movable atom, including projectiles.
+/// Pick something out of any type of white hole
 /datum/whitehole_spawner/random_object
 	name = "random object"
-	unleash(var/obj/whitehole/whitehole)
-		RETURN_TYPE(/atom/movable)
-		var/list/availible_types = concrete_typesof(/datum/whitehole_spawner/main)
-		var/spawn_type = null
-		while(!ispath(spawn_type, /atom/movable))
-			spawn_type = pick(availible_types)
-			while(ispath(spawn_type, /datum/whitehole_spawner))
-				// Keep looking through spawners until you find something or nothing
-				var/datum/whitehole_spawner/spawner = new spawn_type
-				spawn_type = weighted_pick(spawner.spawn_probs)
-		var/atom/movable/AM = new spawn_type(whitehole.loc)
-		return AM
+	New()
+		. = ..()
+		src.spawn_probs = concrete_typesof(/datum/whitehole_spawner/main)
 
 /datum/whitehole_spawner/artifact
 	name = "random artifact"
@@ -933,6 +945,7 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 
 /datum/whitehole_spawner/ore
 	name = "ore"
+	icon_view = "asteroid"
 	var/stack_max = 1
 	var/stack_min = 1
 
@@ -974,6 +987,7 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 
 ABSTRACT_TYPE(/datum/whitehole_spawner/gas)
 /datum/whitehole_spawner/gas
+	icon_view = "plasma"
 	var/list/gas_list = null //! Which gases will be released and how much
 	var/amount_mult_max = 1 //! Randomly multiplies the amount of each gas by 1 to "mult_max"
 	var/temperature_max = 0
@@ -1036,6 +1050,7 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/gas)
 
 /datum/whitehole_spawner/corpse
 	name = "corpse"
+	icon_view = "chapel"
 	spawn_probs = list(
 		/mob/living/carbon/human/normal = 6,
 		/mob/living/carbon/human/normal/assistant = 1,
@@ -1071,6 +1086,7 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/gas)
 
 /datum/whitehole_spawner/gene_injector
 	name = "gene injector"
+	icon_view = "medbay"
 	var/unlabeled_prob = 50 //! Percent chance that the injector will be labed as "???"
 
 	unleash(var/obj/whitehole/whitehole)
@@ -1090,6 +1106,7 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/gas)
 
 /datum/whitehole_spawner/arcflash
 	name = "arcflash"
+	icon_view = "teg"
 	var/watts_max = 6 KILO WATTS
 	var/watts_min = 4 KILO WATTS
 	var/target_chance = 60
@@ -1105,6 +1122,7 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/gas)
 
 /datum/whitehole_spawner/fireflash
 	name = "fireflash"
+	icon_view = "teg"
 	var/radius_max = 6
 	var/radius_min = 1
 	var/temperature_max = 3000 KELVIN
@@ -1161,7 +1179,9 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/child_types)
 
 /datum/whitehole_spawner/gift
 	name = "random gift"
+	icon_view = "spacemas"
 	spawn_probs = list(/datum/whitehole_spawner/random_object = 1)
+	ignore_datums = TRUE
 
 	unleash(var/obj/whitehole/whitehole)
 		var/selected = ..()
@@ -1172,7 +1192,9 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/child_types)
 
 /datum/whitehole_spawner/flock_converted
 	name = "converted flock"
+	icon_view = "flock"
 	spawn_probs = list(/datum/whitehole_spawner/random_object = 1)
+	ignore_datums = TRUE
 
 	unleash(var/obj/whitehole/whitehole)
 		var/selected = ..()
@@ -1183,7 +1205,9 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/child_types)
 
 /datum/whitehole_spawner/deep_fried
 	name = "deep fried"
+	icon_view = "cafeteria"
 	spawn_probs = list(/datum/whitehole_spawner/random_object = 1)
+	ignore_datums = TRUE
 
 	unleash(var/obj/whitehole/whitehole)
 		var/selected = ..()
@@ -1220,6 +1244,7 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/child_types)
 
 /datum/whitehole_spawner/written_postit
 	name = "written sticky note"
+	icon_view = "bridge"
 
 	unleash(var/obj/whitehole/whitehole)
 		// Done like this in case alternative postit note types are added in the future
@@ -1231,6 +1256,7 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/child_types)
 
 /datum/whitehole_spawner/written_paper
 	name = "written paper"
+	icon_view = "bridge"
 
 	unleash(var/obj/whitehole/whitehole)
 		var/obj/item/paper/paper = new(whitehole.loc)
@@ -1240,6 +1266,7 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/child_types)
 
 ABSTRACT_TYPE(/datum/whitehole_spawner/bot_named)
 /datum/whitehole_spawner/bot_named
+	icon_view = "medbay"
 	var/name_category = null
 	var/name_prob = 33
 
@@ -1293,6 +1320,7 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/bot_named)
 
 /datum/whitehole_spawner/snake
 	name = "wizard snake"
+	icon_view = "wizard"
 	spawn_probs = list(
 		/datum/whitehole_spawner/main/wizard = 1
 	)
@@ -1308,5 +1336,9 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/bot_named)
 			return selected
 		var/mob/living/critter/small_animal/snake/snake = new(whitehole.loc, AM)
 		snake.start_expiration(2 MINUTES)
+		return snake
 
 
+#undef WHITEHOLE_COMMON
+#undef WHITEHOLE_UNCOMMON
+#undef WHITEHOLE_RARE

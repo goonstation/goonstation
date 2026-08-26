@@ -444,9 +444,13 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 		thing.throw_at(T, throw_range, throw_speed, allow_anchored=TRUE, bonus_throwforce=30, throw_type=THROW_PHASE)
 
 	proc/choose_location()
-		var/selected_location = pick(concrete_typesof(/datum/whitehole_spawner/main))
-		var/datum/whitehole_spawner/main/location = new selected_location
-		return location
+		var/list/locations_list = concrete_typesof(/datum/whitehole_spawner)
+		var/list/weighted_locations = list()
+		for(var/location_type in locations_list)
+			var/datum/whitehole_spawner/main/location = new location_type
+			if(location.weight_rarity > 0)
+				weighted_locations[location] = location.weight_rarity
+		return weighted_pick(weighted_locations)
 
 	disposing()
 		if(src.light)
