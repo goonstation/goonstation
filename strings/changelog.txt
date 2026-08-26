@@ -1,4 +1,34 @@
 
+(t)tue aug 25 26
+(u)TDHooligan
+(p)27600
+(e)🪲🧛|C-Bug, A-Gamemodes
+(+)Fix: Gangs should now only take 3 seconds to spray a tag in an unoccupied space, instead of 15/12/9 seconds.
+(+)Fix: Gangs can no longer hand in foam dart guns.
+(+)Tagging over rival tags now takes slightly longer.
+(t)mon aug 24 26
+(u)ANNmagedon
+(p)27603
+(e)🗺|A-Mapping
+(+)A familiar pair of plushies previously lost with the end of donut 2 has appeared on donut 3.
+(t)sun aug 23 26
+(u)ANNmagedon + ZeWaka
+(p)26916
+(e)🎨🧛📨|C-Sprites, A-Gamemodes, A-Logistics
+(+)A new stamp of the flock has been added! its a bit odd and can be created by the flock or bought in deep space.
+(u)ANNmagedon
+(p)27581
+(e)|
+(+)The civilian module for cyborgs now includes a pitcher.
+(u)ANNmagedon
+(p)27552
+(e)🗺|A-Mapping
+(+)The pharmacy at Kondaru has blinds for photophosphide making, just don't stand too close to the door!
+(u)Kubius
+(p)26362
+(f)https://forum.ss13.co/showthread.php?tid=25085
+(e)🗺🎨🔊🧛🚨⏰🍝🌠🐁|A-Mapping, C-Sprites, C-Sound, A-Gamemodes, A-Admin, A-Status-Effects, A-Catering, A-Events, A-Critters
+(*)Added Menhir, a new low to mid pop map built around and into the massive artifact TOREADOR-7I-22408 (colloquially, the Crown), with its own unique event cycle and an interior to explore.
 (t)sat aug 22 26
 (u)LeahTheTech
 (p)27512

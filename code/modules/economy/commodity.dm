@@ -1813,6 +1813,12 @@ datum/commodity/drugs/sell/poppies
 	desc = "Prior to our mass-energy conversion technology, we used these chambers to charge our drones. Now padded with feather-down cushions for comfort."
 	price = PAY::UNTRAINED
 
+/datum/commodity/flock/tech/stamp
+	comname = "Flockstamp"
+	comtype = /obj/item/stamp/flock
+	desc = "We know your kind assigns meaning to symbols on paper, we learned to show meaning through it by observing. This one means hope." // supposed to symbolize a relay, a hope of survival
+	price = PAY::UNTRAINED
+
 /datum/commodity/flock/tech/gnesis
 	comname = "Gnesis"
 	comtype = /obj/item/material_piece/gnesis

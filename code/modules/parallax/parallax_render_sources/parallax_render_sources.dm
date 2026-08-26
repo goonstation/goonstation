@@ -30,6 +30,8 @@
 	scroll_speed = 240
 	scroll_angle = 270
 
+/atom/movable/screen/parallax_render_source/space_2/menhir
+	parallax_value = 0.02
 
 // Ocean Caustics
 /atom/movable/screen/parallax_render_source/foreground/caustics
@@ -68,6 +70,10 @@
 /atom/movable/screen/parallax_render_source/typhon/donut3
 	initial_x_coordinate = -50
 	initial_y_coordinate = 350
+
+/atom/movable/screen/parallax_render_source/typhon/menhir
+	initial_x_coordinate = 200
+	initial_y_coordinate = 600
 
 
 // Planets

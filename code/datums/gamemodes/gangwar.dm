@@ -1218,6 +1218,7 @@
 	var/datum/gang/gang
 	/// when our next spray sound can beplayed
 	var/next_spray = 0 DECI SECONDS
+	var/tagging_over = FALSE
 
 	New(var/turf/target_turf as turf, var/obj/item/spray_paint_gang/can, var/tag_over)
 		src.target_turf = target_turf
@@ -1225,6 +1226,7 @@
 		src.spraycan = can
 		if (tag_over)
 			src.duration = GANG_SPRAYPAINT_TAG_REPLACE_TIME
+			tagging_over = TRUE
 		..()
 
 	onStart()
@@ -1234,17 +1236,17 @@
 			if (ismob(owner))
 				M = owner
 				src.gang = M?.get_gang()
-			if (gang)
+			if (gang && src.tagging_over)
 				icon = 'icons/obj/decals/gang_tags.dmi'
 				icon_state = "gangtag[src.gang.gang_tag]"
 				var/speedup = src.gang.gear_worn(M)
 				switch (speedup)
 					if (1)
-						duration = 13 SECONDS
+						duration *= 0.9
 					if (2)
-						duration = 9 SECONDS
+						duration *= 0.8
 					if (3)
-						duration = 6 SECONDS
+						duration *= 0.7
 			..()
 		catch(var/exception/e)
 			..()
@@ -1962,10 +1964,11 @@
 
 		//gun score
 		else if (istype(item, /obj/item/gun))
-			if(istype(item, /obj/item/gun/kinetic/foamdartgun))
-				boutput(user, SPAN_ALERT("<b>You cant stash toy guns in the locker</b>"))
-
-				return
+			if (istype(item, /obj/item/gun/kinetic))
+				var/obj/item/gun/kinetic/G = item
+				if (G.ammo_cats && (AMMO_FOAMDART in G.ammo_cats))
+					boutput(user, SPAN_ALERT("<b>You cant stash toy guns in the locker</b>"))
+					return
 
 			if(istype(item, /obj/item/gun/kinetic/slamgun) || istype(item, /obj/item/gun/kinetic/zipgun))
 				boutput(user, SPAN_ALERT("<b>This shoddy firearm isn't worth selling.</b>"))
