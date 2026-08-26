@@ -67,7 +67,11 @@ export const KeyHealthIndicators = (props: KeyHealthIndicatorsProps) => {
           optimal_temp={optimal_temp}
           bleeding={bleeding}
         />
-        <DisplayRads rad_stage={rad_stage} rad_dose={rad_dose} />
+        <DisplayRads
+          occupied={occupied}
+          rad_stage={rad_stage}
+          rad_dose={rad_dose}
+        />
         <DisplayBrain occupied={occupied} brain_damage={brain_damage} />
       </Table>
       {!!occupied && (
@@ -230,16 +234,16 @@ const DisplayBleeding = (props: DisplayBloodLossProps) => {
   );
 };
 
-interface DisplayRadsProps {
+interface DisplayRadsProps extends DisplayOccupiedProps {
   rad_stage: number;
   rad_dose: number;
 }
 
 const DisplayRads = (props: DisplayRadsProps) => {
-  const { rad_stage, rad_dose } = props;
+  const { occupied, rad_stage, rad_dose } = props;
   let color: string | undefined;
   let bold = false;
-  if (!rad_dose || rad_dose === 0 || rad_dose === null) {
+  if (!occupied || !rad_dose || rad_dose === 0 || rad_dose === null) {
     return null;
   }
   switch (rad_stage) {
