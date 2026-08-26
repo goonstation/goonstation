@@ -7,7 +7,7 @@
 		. = ..()
 		light = new /datum/light/point
 		light.set_brightness(1.5)
-		light.set_height(.0.5)
+		light.set_height(0.5)
 		light.attach(src)
 
 	proc/lightset(var/state)
