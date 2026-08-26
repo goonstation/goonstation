@@ -6,7 +6,8 @@
 	New()
 		. = ..()
 		light = new /datum/light/point
-		light.set_brightness(0.8)
+		light.set_brightness(1.5)
+		light.set_height(.0.5)
 		light.attach(src)
 
 	proc/lightset(var/state)
@@ -82,8 +83,7 @@
 		PN.newload += drained
 		drawn_energy += drained
 
-		var/soundlevel = min(current_draw / 8000, 35)
-		playsound(O.loc, 'sound/machines/interdictor_operate.ogg', soundlevel, 0, pitch = 0.55, extrarange = 8)
+		playsound(O.loc, 'sound/machines/interdictor_operate.ogg', 1, 0, pitch = 0.55, extrarange = 8)
 
 		if(drained < current_draw)
 			//check how much power we need to hit the desired rate
