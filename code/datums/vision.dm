@@ -1,10 +1,3 @@
-/var/vision_instances = build_vision_instances()
-
-/proc/build_vision_instances()
-	. = list()
-	for(var/type in (typesof(/datum/vision)-/datum/vision))
-		.[type] = new type
-
 /datum/vision
 	/// relative weight of the vision modifier, affects mostly centerlight icon and color calculations
 	var/weight = 1
