@@ -12,7 +12,9 @@ ABSTRACT_TYPE(/datum/whitehole_spawner)
 	var/list/spawn_probs = list()
 	var/name = "untitled"
 	var/icon_view = "" //! The icon_state of the image that will be displayed inside the white hole
-	var/ignore_datums = FALSE //! Ignore gasses, reagents, projectiles, spawner effects, or anything that isn't a movable atom
+	/// Ignore gasses, reagents, projectiles, spawner effects, or anything that isn't a movable atom.
+	/// For white hole spawners, will select from their "spawn_probs" list directly instead of calling "unleash()".
+	var/ignore_datums = FALSE
 	var/weight_rarity = 0 //! How likely that this type of white hole is going to be chosen randomly
 
 	/// Pick something for the white hole to do. If a movable atom was released, it should return that atom.
@@ -58,8 +60,14 @@ ABSTRACT_TYPE(/datum/whitehole_spawner)
 	proc/add_spawn(var/weight, var/datum/whitehole_spawner/new_spawner)
 		src.spawn_probs[new_spawner] = weight
 
+	/// Adds a reagent spawner.
 	proc/add_reagent(var/weight, var/reagent_type)
 		src.add_spawn(weight, new /datum/whitehole_spawner/reagent(reagent_type))
+
+	/// Adds a gas spawner. If in a list, gases should be weighted based on their relative ratios.
+	proc/add_gas(var/weight, var/gases, var/amount_min, var/amount_max, var/temp_min, var/temp_max)
+		var/datum/whitehole_spawner/gas/gas_spawner = new(gases, amount_min, amount_max, temp_min, temp_max)
+		src.add_spawn(weight, gas_spawner)
 
 	proc/unleash_projectile(var/obj/whitehole/whitehole, var/proj_path, var/target_prob)
 		var/atom/target = null
@@ -106,8 +114,6 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	name = "TEG"
 	icon_view = "teg"
 	spawn_probs = list(
-		/datum/whitehole_spawner/gas/plasma_mix_small = 40,
-		/datum/whitehole_spawner/gas/plasma_large = 10,
 		/datum/whitehole_spawner/arcflash = 30,
 		/datum/whitehole_spawner/written_paper = 2,
 		/datum/whitehole_spawner/hotspot = 90,
@@ -147,6 +153,8 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	New()
 		. = ..()
 		add_spawn(5, new /datum/whitehole_spawner/grenade_armed(/obj/item/chem_grenade/firefighting))
+		add_gas(40, list("plasma" = 1, "oxygen" = 1), 1, 20, 0 KELVIN, 100 KELVIN)
+		add_gas(10, "plasma", 10, 30, 0 KELVIN, 300 KELVIN)
 
 /datum/whitehole_spawner/main/flock
 	name = "flock"
@@ -396,13 +404,16 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	name = "plasma"
 	icon_view = "plasma"
 	spawn_probs = list(
-		/datum/whitehole_spawner/gas/plasma_mix_small = 80,
-		/datum/whitehole_spawner/gas/plasma_large = 20,
-
 		/obj/critter/spore = 3,
 		/obj/item/raw_material/shard/plasmacrystal = 1,
 		/obj/item/raw_material/plasmastone = 1,
 	)
+
+	New()
+		. = ..()
+		add_spawn(5, new /datum/whitehole_spawner/grenade_armed(/obj/item/chem_grenade/firefighting))
+		add_gas(80, list("plasma" = 1, "oxygen" = 1), 1, 20, 0 KELVIN, 100 KELVIN)
+		add_gas(20, "plasma", 10, 30, 0 KELVIN, 300 KELVIN)
 
 /datum/whitehole_spawner/main/nukies
 	name = "nukies"
@@ -783,11 +794,6 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	name = "nuclear reactor"
 	icon_view = "nuclear"
 	spawn_probs = list(
-		/datum/whitehole_spawner/gas/radgas_small = 40,
-		/datum/whitehole_spawner/gas/radgas_large = 10,
-		/datum/whitehole_spawner/gas/plasma_mix_small = 25,
-		/datum/whitehole_spawner/gas/plasma_large = 5,
-
 		/obj/item/reactor_component/control_rod/random_material = 20,
 		/obj/item/reactor_component/fuel_rod/random_material = 20,
 		/obj/item/reactor_component/gas_channel/random_material= 20,
@@ -821,6 +827,10 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	New()
 		. = ..()
 		add_spawn(5, new /datum/whitehole_spawner/grenade_armed(/obj/item/chem_grenade/firefighting))
+		add_gas(40, "radgas", 10, 100, 0 KELVIN, 300 KELVIN)
+		add_gas(10, "radgas", 100, 500, 0 KELVIN, 300 KELVIN)
+		add_gas(25, list("plasma" = 1, "oxygen" = 1), 1, 20, 0 KELVIN, 100 KELVIN)
+		add_gas(5, "plasma", 10, 30, 0 KELVIN, 300 KELVIN)
 
 /datum/whitehole_spawner/main/janitorial
 	name = "janitorial"
@@ -969,9 +979,13 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 /// Pick something out of any type of white hole
 /datum/whitehole_spawner/random_object
 	name = "random object"
+	icon_view = "cargo"
+
 	New()
 		. = ..()
-		src.spawn_probs = concrete_typesof(/datum/whitehole_spawner/main)
+		for(var/spawner_type in concrete_typesof(/datum/whitehole_spawner/main))
+			var/datum/whitehole_spawner/spawner = spawner_type
+			src.spawn_probs[spawner_type] = initial(spawner.weight_rarity)
 
 /datum/whitehole_spawner/artifact
 	name = "random artifact"
@@ -1030,59 +1044,51 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 			/obj/item/raw_material/gemstone = 3,
 		)
 
-ABSTRACT_TYPE(/datum/whitehole_spawner/gas)
 /datum/whitehole_spawner/gas
 	icon_view = "plasma"
-	var/list/gas_list = null //! Which gases will be released and how much
-	var/amount_mult_max = 1 //! Randomly multiplies the amount of each gas by 1 to "mult_max"
+	var/list/gas_list = list() //! Which gases will be released. Weights are their relative ratios.
+	var/amount_max = 10
+	var/amount_min = 1
 	var/temperature_max = 0
 	var/temperature_min = 0
 
+	New(var/gases, var/amount_min, var/amount_max, var/temp_min, var/temp_max)
+		. = ..()
+		if(!islist(gases))
+			gas_list[gases] = 1
+		else
+			src.gas_list = gases
+		src.amount_min = amount_min
+		src.amount_max = amount_max
+		src.temperature_min = temp_min
+		src.temperature_max = temp_max
+
 	unleash(var/obj/whitehole/whitehole)
 		var/datum/gas_mixture/mixture = new()
-		src.set_gases(mixture)
-		src.set_temperature(mixture)
+		src.setup_gases(mixture, rand(src.amount_min, src.amount_max))
+		mixture.temperature = rand(src.temperature_min, src.temperature_max)
 		var/turf/T = get_turf(whitehole)
 		T.assume_air(mixture)
 		return null
 
-	proc/set_gases(var/datum/gas_mixture/mixture)
+	proc/setup_gases(var/datum/gas_mixture/mixture, var/amount)
+		var/ratio_div = 0
 		for(var/gas in src.gas_list)
+			ratio_div += src.gas_list[gas]
+		if(ratio_div == 0)
+			ratio_div = 1
+		for(var/gas in src.gas_list)
+			var/gas_amount = (src.gas_list[gas] / ratio_div) * amount
 			switch(gas)
-				if("oxygen")
-					mixture.oxygen = src.gas_list[gas] * rand(1, src.amount_mult_max)
-				if("plasma")
-					mixture.toxins = src.gas_list[gas] * rand(1, src.amount_mult_max)
-				if("radgas")
-					mixture.radgas = src.gas_list[gas] * rand(1, src.amount_mult_max)
-				if("nitrogen")
-					mixture.nitrogen = src.gas_list[gas] * rand(1, src.amount_mult_max)
+				if("oxygen") mixture.oxygen = gas_amount
+				if("plasma") mixture.toxins = gas_amount
+				if("radgas") mixture.radgas = gas_amount
+				if("nitrogen") mixture.nitrogen = gas_amount
+				if("co2") mixture.carbon_dioxide = gas_amount
+				if("farts") mixture.farts = gas_amount
+				if("n2o") mixture.nitrous_oxide = gas_amount
+				if("oxygen_b") mixture.oxygen_agent_b = gas_amount
 
-	proc/set_temperature(var/datum/gas_mixture/mixture)
-		mixture.temperature = rand(src.temperature_min, temperature_max)
-
-	plasma_mix_small
-		name = "gas: plasma small"
-		gas_list = list("plasma" = 1, "oxygen" = 1)
-		amount_mult_max = 10
-
-	plasma_large
-		name = "gas: plasma large"
-		gas_list = list("plasma" = 10)
-		amount_mult_max = 3
-		temperature_max = 300
-
-	radgas_small
-		name = "gas: fallout small"
-		gas_list = list("radgas" = 10)
-		amount_mult_max = 10
-		temperature_max = 300
-
-	radgas_large
-		name = "gas: fallout large"
-		gas_list = list("radgas" = 100)
-		amount_mult_max = 5
-		temperature_max = 300
 
 /datum/whitehole_spawner/plant
 	name = "random plant"
@@ -1232,8 +1238,13 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/gas)
 /datum/whitehole_spawner/flock_converted
 	name = "converted flock"
 	icon_view = "flock"
-	spawn_probs = list(/datum/whitehole_spawner/random_object = 1)
 	ignore_datums = TRUE
+
+	New()
+		. = ..()
+		var/datum/whitehole_spawner/random_object/rand_spawner = new()
+		rand_spawner.spawn_probs[/datum/whitehole_spawner/main/flock] = 0 // Don't flock convert flock stuff
+		add_spawn(1, rand_spawner)
 
 	unleash(var/obj/whitehole/whitehole)
 		var/selected = ..()
