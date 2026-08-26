@@ -4,11 +4,11 @@
 
 ABSTRACT_TYPE(/datum/whitehole_spawner)
 /datum/whitehole_spawner
-	/// A list of types that will be used to spawn stuff
-	/// - If the type is abstract, a random concrete subtype will be chosen
-	/// - If the type is of "/datum/whitehole_spawner", the unleash() proc will be called on that spawner
-	/// - If the type is of "/datum/projectile", that projectile will be launched
-	/// - If the type is of "/datum/reagent", that reagent will be released
+	/// A weighted list that will be used to spawn stuff
+	/// - If an instance of "/datum/whitehole_spawner", call unleash() on it
+	/// - If an abstract path, a random subtype will be chosen
+	/// - If the path is of "/datum/whitehole_spawner", create and call unleash() on it
+	/// - If the path is of "/datum/projectile", that projectile will be launched
 	var/list/spawn_probs = list()
 	var/name = "untitled"
 	var/icon_view = "" //! The icon_state of the image that will be displayed inside the white hole
@@ -19,12 +19,17 @@ ABSTRACT_TYPE(/datum/whitehole_spawner)
 	proc/unleash(var/obj/whitehole/whitehole)
 		if(length(src.spawn_probs) == 0)
 			return null
-		var/spawn_type = null
+		var/selected = null
 		if(ignore_datums)
-			spawn_type = src.pick_movable_atom(whitehole)
+			selected = src.pick_movable_atom(whitehole)
 		else
-			spawn_type = weighted_pick(src.spawn_probs)
+			selected = weighted_pick(src.spawn_probs)
 
+		if(istype(selected, /datum/whitehole_spawner))
+			var/datum/whitehole_spawner/spawner = selected
+			return spawner.unleash(whitehole)
+
+		var/spawn_type = selected
 		if(IS_ABSTRACT(spawn_type))
 			spawn_type = pick(concrete_typesof(spawn_type))
 		if(ispath(spawn_type, /datum/whitehole_spawner))
@@ -32,15 +37,6 @@ ABSTRACT_TYPE(/datum/whitehole_spawner)
 			return spawner.unleash(whitehole)
 		else if(ispath(spawn_type, /datum/projectile))
 			return src.unleash_projectile(whitehole, spawn_type, 60)
-		else if(ispath(spawn_type, /datum/reagent))
-			// Can use the reagent datum as a lazy way to spawn reagents without creating a new spawner
-			var/datum/whitehole_spawner/reagent/spawner = new()
-			spawner.reagent_probs = list(spawn_type = 1)
-			if(prob(10))
-				spawner.amount_max *= 10
-			if(prob(10))
-				spawner.amount_max *= 10
-			return spawner.unleash(whitehole)
 
 		var/atom/movable/AM = new spawn_type(whitehole.loc)
 		return AM
@@ -49,14 +45,21 @@ ABSTRACT_TYPE(/datum/whitehole_spawner)
 	/// Will ignore anything that is not a movable atom, including projectiles.
 	proc/pick_movable_atom(var/obj/whitehole/whitehole)
 		var/datum/whitehole_spawner/spawner = src
-		var/spawn_type = null
-		while(!ispath(spawn_type, /atom/movable))
-			spawn_type = weighted_pick(src.spawn_probs)
-			while(ispath(spawn_type, /datum/whitehole_spawner))
+		var/selected = null
+		while(!ispath(selected, /atom/movable))
+			selected = weighted_pick(src.spawn_probs)
+			while(ispath(selected, /datum/whitehole_spawner) || istype(selected, /datum/whitehole_spawner))
 				// Keep looking through spawners until you find something or nothing
-				spawner = new spawn_type
-				spawn_type = weighted_pick(spawner.spawn_probs)
-		return spawn_type
+				if(ispath(selected, /datum/whitehole_spawner))
+					spawner = new selected
+				selected = weighted_pick(spawner.spawn_probs)
+		return selected
+
+	proc/add_spawn(var/weight, var/datum/whitehole_spawner/new_spawner)
+		src.spawn_probs[new_spawner] = weight
+
+	proc/add_reagent(var/weight, var/reagent_type)
+		src.add_spawn(weight, new /datum/whitehole_spawner/reagent(reagent_type))
 
 	proc/unleash_projectile(var/obj/whitehole/whitehole, var/proj_path, var/target_prob)
 		var/atom/target = null
@@ -107,8 +110,8 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/datum/whitehole_spawner/gas/plasma_large = 10,
 		/datum/whitehole_spawner/arcflash = 30,
 		/datum/whitehole_spawner/written_paper = 2,
+		/datum/whitehole_spawner/hotspot = 90,
 
-		/atom/movable/hotspot/gasfire = 90,
 		/obj/item/wrench/yellow = 10,
 		/obj/item/weldingtool/yellow = 10,
 		/obj/item/crowbar/yellow = 10,
@@ -126,7 +129,6 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/obj/machinery/portable_atmospherics/canister/nitrogen = 2,
 		/obj/machinery/portable_atmospherics/canister/carbon_dioxide = 2,
 		/obj/item/paper/engine = 5,
-		/obj/item/chem_grenade/firefighting = 5,
 		/obj/item/clothing/mask/gas = 2,
 		/obj/item/clothing/head/helmet/hardhat = 2,
 		/obj/item/clothing/gloves/yellow = 1,
@@ -141,6 +143,10 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/mob/living/carbon/human/normal/chiefengineer = 0.1,
 		/mob/living/carbon/human/npc/monkey/mr_rathen = 0.5,
 	)
+
+	New()
+		. = ..()
+		add_spawn(5, new /datum/whitehole_spawner/grenade_armed(/obj/item/chem_grenade/firefighting))
 
 /datum/whitehole_spawner/main/flock
 	name = "flock"
@@ -171,8 +177,11 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/obj/item/gun/energy/flock = 0.05,
 		/obj/item/material_piece/gnesisglass = 5,
 		/obj/item/material_piece/gnesis = 5,
-		/datum/reagent/flockdrone_fluid = 3,
 	)
+
+	New()
+		. = ..()
+		add_reagent(3, /datum/reagent/flockdrone_fluid)
 
 /datum/whitehole_spawner/main/chapel
 	name = "chapel"
@@ -213,20 +222,21 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/mob/living/critter/skeleton = 1,
 		/obj/item/gun/energy/ghost = 0.2,
 		/obj/item/reagent_containers/food/snacks/ectoplasm = 4,
-		/datum/reagent/water/water_holy = 1,
-		/datum/reagent/blood = 1,
 		/obj/item/kitchen/utensil/knife = 1,
 		/obj/critter/spirit = 1,
 	)
+
+	New()
+		. = ..()
+		add_reagent(1, /datum/reagent/water/water_holy)
+		add_reagent(1, /datum/reagent/blood)
 
 /datum/whitehole_spawner/main/trench
 	name = "trench"
 	icon_view = "trench"
 	spawn_probs = list(
 		/datum/whitehole_spawner/ore/random = 5,
-		/datum/whitehole_spawner/parent/trench_loot = 5,
 
-		/datum/reagent/water/sea = 20,
 		/obj/item/seashell = 2,
 		/mob/living/critter/aquatic/shark = 1,
 		/obj/critter/gunbot/drone/gunshark = 0.5,
@@ -274,6 +284,11 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/mob/living/carbon/human/normal/miner = 0.1,
 		/obj/machinery/vehicle/tank/minisub/mining = 0.5,
 	)
+
+	New()
+		. = ..()
+		add_spawn(5, new /datum/whitehole_spawner/concrete_typesof(/obj/storage/crate/trench_loot))
+		add_reagent(20, /datum/reagent/water/sea)
 
 /datum/whitehole_spawner/main/asteroid
 	name = "asteroid"
@@ -334,8 +349,6 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/obj/item/reagent_containers/food/drinks/tea = 1,
 		/obj/item/reagent_containers/food/drinks/coffee = 1,
 
-		/datum/reagent/vomit = 0.1,
-
 		/obj/stool/bar = 5,
 		/obj/item/decoration/ashtray = 1,
 		/mob/living/carbon/human/normal/chef = 0.1,
@@ -345,6 +358,10 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau = 0.5,
 		/obj/decal/cleanable/vomit = 0.5,
 	)
+
+	New()
+		. = ..()
+		add_reagent(0.1, /datum/reagent/vomit)
 
 /datum/whitehole_spawner/main/singulo
 	name = "singulo"
@@ -365,12 +382,15 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/mob/living/carbon/human/normal/chiefengineer = 0.1,
 		/mob/living/carbon/human/npc/monkey/mr_rathen = 0.5,
 		/obj/item/clothing/glasses/toggleable/meson = 0.5,
-		/obj/item/old_grenade/graviton = 0.2,
 		/obj/gravity_well_generator = 0.5,
 		/obj/item/raw_material/scrap_metal = 4,
 		/obj/item/raw_material/shard/glass = 5,
 		/obj/item/raw_material/shard/plasmacrystal = 3,
 	)
+
+	New()
+		. = ..()
+		add_spawn(0.2, new /datum/whitehole_spawner/grenade_armed(/obj/item/old_grenade/graviton))
 
 /datum/whitehole_spawner/main/plasma
 	name = "plasma"
@@ -402,20 +422,24 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/obj/item/mine/incendiary/armed = 1,
 		/obj/item/mine/radiation/armed = 1,
 		/obj/item/mine/stun/armed = 1,
-		/obj/item/old_grenade/stinger/frag = 1,
-		/obj/item/old_grenade/stinger = 1,
-		/obj/item/chem_grenade/very_incendiary = 0.5,
-		/obj/item/chem_grenade/incendiary = 1,
 		/obj/stool/chair/office/syndie = 1,
 		/obj/item/paper/book/from_file/syndies_guide = 0.5,
 		/obj/item/beartrap/armed = 1,
-		/datum/reagent/harmful/saxitoxin = 0.1,
-		/datum/reagent/blood = 1,
 		/mob/living/critter/robotic/sawfly = 2,
 		/obj/item/reagent_containers/food/snacks/donkpocket_w = 1,
 		/obj/bomb_decoy = 0.4,
 		/obj/machinery/nuclearbomb/event/micronuke = 0.05,
 	)
+
+	New()
+		. = ..()
+		add_spawn(1, new /datum/whitehole_spawner/grenade_armed(/obj/item/old_grenade/stinger))
+		add_spawn(1, new /datum/whitehole_spawner/grenade_armed(/obj/item/old_grenade/stinger/frag))
+		add_spawn(1, new /datum/whitehole_spawner/grenade_armed(/obj/item/chem_grenade/incendiary))
+		add_spawn(0.5, new /datum/whitehole_spawner/grenade_armed(/obj/item/chem_grenade/very_incendiary))
+
+		add_reagent(0.1, /datum/reagent/harmful/saxitoxin)
+		add_reagent(1, /datum/reagent/blood)
 
 /datum/whitehole_spawner/main/hell
 	name = "hell"
@@ -424,8 +448,8 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/datum/whitehole_spawner/fireflash = 15,
 		/datum/whitehole_spawner/corpse = 5,
 		/datum/whitehole_spawner/written_paper = 3,
+		/datum/whitehole_spawner/hotspot = 10,
 
-		/atom/movable/hotspot/gasfire = 10,
 		/mob/living/critter/small_animal/crab/lava = 5,
 		/obj/submachine/slot_machine = 5,
 		#ifdef SECRETS_ENABLED
@@ -457,9 +481,6 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat = 50,
 		/obj/critter/domestic_bee = 10,
 		/obj/critter/domestic_bee_larva = 10,
-		/datum/reagent/fooddrink/juice_tomato = 1,
-		/datum/reagent/drug/THC = 1,
-		/datum/reagent/poo = 1,
 		/obj/item/reagent_containers/food/snacks/plant/melonslice = 10,
 		/obj/item/reagent_containers/food/snacks/plant/melon = 20,
 		/obj/item/reagent_containers/food/snacks/plant/melon/bowling = 20,
@@ -475,6 +496,12 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/mob/living/critter/plant/maneater = 0.3,
 		/obj/item/plant/tumbling_creeper = 3,
 	)
+
+	New()
+		. = ..()
+		add_reagent(1, /datum/reagent/fooddrink/juice_tomato)
+		add_reagent(1, /datum/reagent/drug/THC)
+		add_reagent(1, /datum/reagent/poo)
 
 /datum/whitehole_spawner/main/maint
 	name = "maintanence"
@@ -566,7 +593,6 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	spawn_probs = list(
 		/datum/whitehole_spawner/written_paper = 6,
 		/datum/whitehole_spawner/written_postit = 4,
-		/datum/whitehole_spawner/parent/sticker = 4,
 
 		/obj/item/reagent_containers/food/drinks/drinkingglass/flute = 10,
 		/obj/item/reagent_containers/food/drinks/bottle/champagne = 3,
@@ -599,13 +625,16 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/obj/machinery/manufacturer/hop_and_uniform = 0.5,
 	)
 
+	New()
+		. = ..()
+		add_spawn(4, new /datum/whitehole_spawner/concrete_typesof(/obj/item/sticker))
+
 /datum/whitehole_spawner/main/clown
 	name = "clown"
 	icon_view = "clown"
 	spawn_probs = list(
 		/datum/whitehole_spawner/written_paper = 1,
 		/datum/whitehole_spawner/written_postit = 1,
-		/datum/whitehole_spawner/parent/sticker = 3,
 
 		/obj/item/bananapeel = 20,
 		/obj/item/instrument/bikehorn = 10,
@@ -645,13 +674,15 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/mob/living/critter/spider/clownqueen = 0.1,
 	)
 
+	New()
+		. = ..()
+		add_spawn(3, new /datum/whitehole_spawner/concrete_typesof(/obj/item/sticker))
+
 /datum/whitehole_spawner/main/medbay
 	name = "medbay"
 	icon_view = "medbay"
 	spawn_probs = list(
 		/datum/whitehole_spawner/bot_named/medbot = 6,
-		/datum/whitehole_spawner/parent/medicine = 20,
-		/datum/whitehole_spawner/parent/organ = 20,
 		/datum/whitehole_spawner/corpse = 2,
 		/datum/whitehole_spawner/gene_injector = 3,
 		/datum/whitehole_spawner/written_paper = 1,
@@ -673,9 +704,14 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/obj/item/storage/firstaid/regular = 4,
 		/obj/item/storage/firstaid/toxin = 4,
 		/obj/machinery/manufacturer/medical = 2,
-		/datum/reagent/blood = 5,
-		/datum/reagent/fooddrink/caffeinated/coffee = 2,
 	)
+
+	New()
+		. = ..()
+		add_spawn(20, new /datum/whitehole_spawner/concrete_typesof(/obj/item/reagent_containers/glass/bottle))
+		add_spawn(20, new /datum/whitehole_spawner/concrete_typesof(/obj/item/organ))
+		add_reagent(5, /datum/reagent/blood)
+		add_reagent(2, /datum/reagent/fooddrink/caffeinated/coffee)
 
 /datum/whitehole_spawner/main/security
 	name = "security"
@@ -777,11 +813,14 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/obj/machinery/portable_atmospherics/canister/nitrogen = 2,
 		/obj/machinery/portable_atmospherics/canister/carbon_dioxide = 2,
 		/obj/item/paper/book/from_file/nuclear_engineering = 10,
-		/obj/item/chem_grenade/firefighting = 5,
 		/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake = 1,
 		/obj/item/material_piece/plutonium = 1,
 		/obj/item/raw_material/cerenkite = 10,
 	)
+
+	New()
+		. = ..()
+		add_spawn(5, new /datum/whitehole_spawner/grenade_armed(/obj/item/chem_grenade/firefighting))
 
 /datum/whitehole_spawner/main/janitorial
 	name = "janitorial"
@@ -798,10 +837,7 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/obj/item/reagent_containers/glass/bottle/acetone/janitors = 3,
 		/obj/item/mop = 5,
 		/obj/item/sponge = 5,
-		/datum/reagent/water = 10,
-		/datum/reagent/space_cleaner = 5,
 		/obj/item/mousetrap/armed = 5,
-		/obj/item/chem_grenade/cleaner = 10,
 		/obj/item/clothing/gloves/long = 3,
 		/obj/item/clothing/suit/hazard/bio_suit = 1,
 		/obj/item/clothing/head/bio_hood = 1,
@@ -815,6 +851,12 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/obj/vehicle/floorbuffer = 1,
 		/obj/item/handheld_vacuum = 1
 	)
+
+	New()
+		. = ..()
+		add_spawn(10, new /datum/whitehole_spawner/grenade_armed(/obj/item/chem_grenade/cleaner))
+		add_reagent(10, /datum/reagent/water)
+		add_reagent(5, /datum/reagent/space_cleaner)
 
 /datum/whitehole_spawner/main/wizard
 	name = "wizard"
@@ -889,8 +931,11 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		#ifdef XMAS
 		/datum/figure_info/santa = 1,
 		#endif
-		/datum/reagent/fooddrink/alcoholic/mulled_wine = 2,
 	)
+
+	New()
+		. = ..()
+		add_reagent(2, /datum/reagent/fooddrink/alcoholic/mulled_wine)
 
 /datum/whitehole_spawner/main/basketball
 	name = "basketball"
@@ -1138,44 +1183,38 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/gas)
 		return null
 
 /datum/whitehole_spawner/reagent
-	var/list/reagent_probs = list()
+	var/reagent_type = null
 	var/amount_max = 150
 	var/amount_min = 20
+	var/flood_prob = 10 PERCENT
+
+	New(var/reagent_type)
+		. = ..()
+		src.reagent_type = reagent_type
 
 	unleash(var/obj/whitehole/whitehole)
-		var/reagent_type = weighted_pick(src.reagent_probs)
-		var/datum/reagent/dummy = new reagent_type
+		var/datum/reagent/dummy = new src.reagent_type
 		var/reagent_id = initial(dummy.id)
 		var/amount = rand(src.amount_min, src.amount_max)
-		if(prob(10))
+		if(prob(src.flood_prob))
 			amount *= 10
-		if(prob(10))
+		if(prob(src.flood_prob))
 			amount *= 10
-		var/turf/T = get_turf(src)
+		var/turf/T = get_turf(whitehole)
 		T.fluid_react_single(reagent_id, amount)
 		return null
 
-ABSTRACT_TYPE(/datum/whitehole_spawner/child_types)
 /// Used to spawn child types of a thing instead of the type itself
-/datum/whitehole_spawner/parent
-	var/list/spawn_probs_parents = list()
+/datum/whitehole_spawner/concrete_typesof
+	var/source_type = null
+
+	New(var/source_type)
+		. = ..()
+		src.source_type = source_type
 
 	unleash(var/obj/whitehole/whitehole)
-		src.spawn_probs = list(pick(concrete_typesof(weighted_pick(src.spawn_probs_parents))) = 1)
-		return ..()
-
-	sticker
-		name = "random sticker"
-		spawn_probs_parents = list(/obj/item/sticker = 1)
-	medicine
-		name = "random medicine"
-		spawn_probs_parents = list(/obj/item/reagent_containers/glass/bottle = 1)
-	organ
-		name = "random organ"
-		spawn_probs_parents = list(/obj/item/organ = 1)
-	trench_loot
-		name = "random trench loot"
-		spawn_probs_parents = list(/obj/storage/crate/trench_loot = 1)
+		var/chosen_type = pick(concrete_typesof(src.source_type))
+		return new chosen_type(whitehole.loc)
 
 /datum/whitehole_spawner/gift
 	name = "random gift"
@@ -1338,6 +1377,51 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/bot_named)
 		snake.start_expiration(2 MINUTES)
 		return snake
 
+/datum/whitehole_spawner/hotspot
+	name = "hotspot"
+	icon_view = "hell"
+
+	unleash(var/obj/whitehole/whitehole)
+		// We don't want hotspots getting deep fried or anything, so create one directly
+		var/atom/movable/hotspot/gasfire/hotspot = new(whitehole.loc)
+		hotspot.temperature = rand(FIRE_MINIMUM_TEMPERATURE_TO_EXIST, 6000)
+		hotspot.set_real_color()
+		SPAWN(rand(10 SECONDS, 2 MINUTES))
+			if(!QDELETED(hotspot))
+				qdel(hotspot)
+		return hotspot
+
+/datum/whitehole_spawner/grenade_armed
+	name = "grenade"
+	icon_view = "nukies"
+	var/arm_chance = 50 PERCENT
+	var/explode_delay_max = 10 SECONDS
+	var/explode_delay_min = 1 SECOND
+
+	New(var/grenade_type)
+		. = ..()
+		if(grenade_type)
+			src.spawn_probs[grenade_type] = 1
+		else
+			add_spawn(1, new /datum/whitehole_spawner/concrete_typesof(/obj/item/old_grenade))
+			add_spawn(1, new /datum/whitehole_spawner/concrete_typesof(/obj/item/chem_grenade))
+
+	unleash(var/obj/whitehole/whitehole)
+		var/selected = ..()
+		src.arm_grenade(selected)
+		return selected
+
+	proc/arm_grenade(var/selected)
+		if(!prob(arm_chance))
+			return
+		if(istype(selected, /obj/item/old_grenade))
+			var/obj/item/old_grenade/grenade = selected
+			SPAWN(rand(src.explode_delay_min, src.explode_delay_max))
+				if(!QDELETED(grenade))
+					grenade.detonate()
+		else if(istype(selected, /obj/item/chem_grenade))
+			var/obj/item/chem_grenade/grenade = selected
+			grenade.arm()
 
 #undef WHITEHOLE_COMMON
 #undef WHITEHOLE_UNCOMMON

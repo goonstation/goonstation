@@ -49,16 +49,9 @@ TYPEINFO(/datum/random_event/major/white_hole)
 				boutput(usr, SPAN_ALERT("Cancelled."))
 				return
 
-			switch(tgui_alert(usr, "Do you want to pick white hole source location?", "Pick source location", list("Pick", "Subtype", "Random", "Cancel")))
+			switch(tgui_alert(usr, "Do you want to pick white hole source location?", "Pick source location", list("Pick", "Random", "Cancel")))
 				if("Pick")
 					var/list/spawner_list = concrete_typesof(/datum/whitehole_spawner/main)
-					var/list/datum/whitehole_spawner/pick_list = list()
-					for(var/spawner_type in spawner_list)
-						var/datum/whitehole_spawner/spawner = new spawner_type
-						pick_list[spawner.name] = spawner
-					source_location = tgui_input_list(usr, "Which white hole source location?", "White Hole Source Location", pick_list)
-				if("Subtype")
-					var/list/spawner_list = concrete_typesof(/datum/whitehole_spawner) - concrete_typesof(/datum/whitehole_spawner/main)
 					var/list/datum/whitehole_spawner/pick_list = list()
 					for(var/spawner_type in spawner_list)
 						var/datum/whitehole_spawner/spawner = new spawner_type
@@ -94,9 +87,9 @@ TYPEINFO(/datum/random_event/major/white_hole)
 
 		var/obj/whitehole/whitehole = new (T, grow_duration, duration, source_location, TRUE)
 		whitehole.activity_modifier = activity_modifier
-		message_admins("White Hole anomaly with origin [whitehole.spawner.name] spawning in [log_loc(T)]")
-		message_ghosts("<b>\A [whitehole.spawner.name] white hole</b> is spawning at [log_loc(T, ghostjump=TRUE)].")
-		logTheThing(LOG_ADMIN, usr, "Spawned a white hole anomaly with origin [whitehole.spawner.name] at [log_loc(T)]")
+		message_admins("White Hole anomaly with origin [whitehole.source_location.name] spawning in [log_loc(T)]")
+		message_ghosts("<b>\A [whitehole.source_location.name] white hole</b> is spawning at [log_loc(T, ghostjump=TRUE)].")
+		logTheThing(LOG_ADMIN, usr, "Spawned a white hole anomaly with origin [whitehole.source_location.name] at [log_loc(T)]")
 		src.cleanup()
 
 	cleanup()
@@ -121,7 +114,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 	event_handler_flags = IMMUNE_SINGULARITY
 	plane = PLANE_NOSHADOW_BELOW
 	pixel_point = TRUE
-	var/datum/whitehole_spawner/spawner = null
+	var/datum/whitehole_spawner/source_location = null
 	var/start_time
 	var/state = "static"
 	var/triggered_by_event = FALSE
@@ -142,11 +135,11 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 
 		if(ispath(text2path(spawner_set), /datum/whitehole_spawner))
 			var/datum/whitehole_spawner/new_spawner = new spawner_set
-			src.spawner = new_spawner
+			src.source_location = new_spawner
 		else if(isnull(spawner_set))
-			src.spawner = choose_location()
+			src.source_location = choose_location()
 		else
-			src.spawner = spawner_set
+			src.source_location = spawner_set
 
 		var/image/illum = image(src.icon, src.icon_state)
 		illum.plane = PLANE_LIGHTING
@@ -159,7 +152,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 		light.attach(src)
 		light.enable()
 
-		var/image/location_image = image('icons/effects/white_hole_views96x96.dmi', src.spawner.icon_view)
+		var/image/location_image = image('icons/effects/white_hole_views96x96.dmi', src.source_location.icon_view)
 		location_image.alpha = 160
 		location_image.pixel_x = 32
 		location_image.pixel_y = 32
@@ -285,13 +278,13 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 
 		var/time_interval = 3 SECONDS
 		var/spew_count = round(randfloat(1, 15 * src.activity_modifier))
-		spew_out_stuff(src.spawner)
+		spew_out_stuff(src.source_location)
 		if(spew_count > 1)
 			SPAWN(time_interval / spew_count)
 				for(var/i = 1 to spew_count - 1)
 					if(QDELETED(src) || state == "dying")
 						return
-					spew_out_stuff(src.spawner)
+					spew_out_stuff(src.source_location)
 					sleep(time_interval / spew_count)
 
 
@@ -321,8 +314,8 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 				L.TakeDamage("chest", rand(0, 15), rand(0, 15), rand(0, 15))
 			else
 				L.TakeDamage("chest", rand(0, 80), rand(0, 80), rand(0, 80))
-			if(ishuman(.))
-				var/mob/living/carbon/human/H = .
+			if(ishuman(AM))
+				var/mob/living/carbon/human/H = AM
 				H.is_npc = TRUE
 				SPAWN(1)
 					var/list/limbs = list("l_arm", "r_arm", "l_leg", "r_leg")
@@ -340,22 +333,6 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 								H.say(phrase_log.random_phrase("say"))
 							else
 								H.emote("me", TRUE, phrase_log.random_phrase("emote"))
-		else if(istype(AM, /atom/movable/hotspot/gasfire))
-			var/atom/movable/hotspot/gasfire/hotspot = AM
-			hotspot.temperature = rand(FIRE_MINIMUM_TEMPERATURE_TO_EXIST, 6000)
-			hotspot.set_real_color()
-			SPAWN(rand(10 SECONDS, 2 MINUTES))
-				if(!QDELETED(hotspot))
-					qdel(hotspot)
-		else if(istype(AM, /obj/item/old_grenade))
-			var/obj/item/old_grenade/grenade = AM
-			if(prob(50))
-				SPAWN(rand(1 SECOND, 10 SECONDS))
-					grenade.detonate()
-		else if(istype(AM, /obj/item/chem_grenade))
-			var/obj/item/chem_grenade/grenade = AM
-			if(prob(50))
-				grenade.arm()
 		else if(istype(AM, /obj/item/reagent_containers/food/snacks/plant/tomato))
 			var/obj/item/reagent_containers/food/snacks/plant/tomato/tomato = AM
 			tomato.reagents.add_reagent("juice_tomato", rand(5, 15))
@@ -518,7 +495,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 		var/obj/whitehole/whitehole = target
 		if(!istype(whitehole))
 			CRASH("generate_fish called on whitehole fishing spot with non-whitehole target")
-		var/atom/fish = whitehole.generate_thing(whitehole.spawner)
+		var/atom/fish = whitehole.generate_thing(whitehole.source_location)
 		fish.name += "fish"
 		return fish
 
@@ -529,7 +506,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			if(!istype(whitehole))
 				CRASH("try_fish called on whitehole fishing spot with non-whitehole target")
 			if(prob(5))
-				whitehole.spew_out_stuff(whitehole.spawner)
+				whitehole.spew_out_stuff(whitehole.source_location)
 			if(whitehole.state in list("static", "growing"))
 				whitehole.grow_duration += 10 SECONDS
 				boutput(user, SPAN_NOTICE("You feel the white hole shrink a little."))

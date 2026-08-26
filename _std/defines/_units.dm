@@ -70,3 +70,5 @@
 #define ATTO  *(10**-18)
 #define ZEPTO *(10**-21)
 #define YOCTO *(10**-24)
+
+#define PERCENT *1
