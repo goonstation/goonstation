@@ -43,6 +43,18 @@ ABSTRACT_TYPE(/datum/whitehole_spawner)
 		var/atom/movable/AM = new spawn_type(whitehole.loc)
 		return AM
 
+	proc/add_spawn(var/weight, var/datum/whitehole_spawner/new_spawner)
+		src.spawn_probs[new_spawner] = weight
+
+	/// Adds a reagent spawner.
+	proc/add_reagent(var/weight, var/reagent_type)
+		src.add_spawn(weight, new /datum/whitehole_spawner/reagent(reagent_type))
+
+	/// Adds a gas spawner. If in a list, gases should be weighted based on their relative ratios.
+	proc/add_gas(var/weight, var/gases, var/amount_min, var/amount_max, var/temp_min, var/temp_max)
+		var/datum/whitehole_spawner/gas/gas_spawner = new(gases, amount_min, amount_max, temp_min, temp_max)
+		src.add_spawn(weight, gas_spawner)
+
 	/// Used to return something for transforming, deep frying, gift wrapping, or whatever else.
 	/// Will ignore anything that is not a movable atom, including projectiles.
 	proc/pick_movable_atom(var/obj/whitehole/whitehole)
@@ -56,18 +68,6 @@ ABSTRACT_TYPE(/datum/whitehole_spawner)
 					spawner = new selected
 				selected = weighted_pick(spawner.spawn_probs)
 		return selected
-
-	proc/add_spawn(var/weight, var/datum/whitehole_spawner/new_spawner)
-		src.spawn_probs[new_spawner] = weight
-
-	/// Adds a reagent spawner.
-	proc/add_reagent(var/weight, var/reagent_type)
-		src.add_spawn(weight, new /datum/whitehole_spawner/reagent(reagent_type))
-
-	/// Adds a gas spawner. If in a list, gases should be weighted based on their relative ratios.
-	proc/add_gas(var/weight, var/gases, var/amount_min, var/amount_max, var/temp_min, var/temp_max)
-		var/datum/whitehole_spawner/gas/gas_spawner = new(gases, amount_min, amount_max, temp_min, temp_max)
-		src.add_spawn(weight, gas_spawner)
 
 	proc/unleash_projectile(var/obj/whitehole/whitehole, var/proj_path, var/target_prob)
 		var/atom/target = null
@@ -424,7 +424,6 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/datum/projectile/bullet/rpg = 0.5,
 		/datum/projectile/bullet/assault_rifle = 5,
 		/datum/projectile/bullet/grenade_round/explosive = 0.5,
-		/obj/machinery/bot/secbot = 2,
 		/obj/machinery/bot/guardbot = 2,
 		/obj/barricade = 1,
 		/obj/item/deployer/barricade = 0.5,
@@ -444,6 +443,8 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 
 	New()
 		. = ..()
+		add_spawn(2, new /datum/whitehole_spawner/bot_named(/obj/machinery/bot/secbot, "name-secbot"))
+
 		add_spawn(1, new /datum/whitehole_spawner/grenade_armed(/obj/item/old_grenade/stinger))
 		add_spawn(1, new /datum/whitehole_spawner/grenade_armed(/obj/item/old_grenade/stinger/frag))
 		add_spawn(1, new /datum/whitehole_spawner/grenade_armed(/obj/item/chem_grenade/incendiary))
@@ -520,9 +521,6 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	spawn_probs = list(
 		/datum/whitehole_spawner/written_paper = 5,
 		/datum/whitehole_spawner/written_postit = 1,
-		/datum/whitehole_spawner/bot_named/firebot = 2,
-		/datum/whitehole_spawner/bot_named/cleanbot = 2,
-		/datum/whitehole_spawner/bot_named/floorbot = 2,
 
 		/obj/decal/cleanable/rust = 10,
 		/obj/decal/cleanable/dirt = 10,
@@ -554,6 +552,12 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/mob/living/critter/legman = 1,
 		#endif
 	)
+
+	New()
+		. = ..()
+		add_spawn(2, new /datum/whitehole_spawner/bot_named(/obj/machinery/bot/firebot, "name-firebot"))
+		add_spawn(2, new /datum/whitehole_spawner/bot_named(/obj/machinery/bot/cleanbot, "name-cleanbot"))
+		add_spawn(2, new /datum/whitehole_spawner/bot_named(/obj/machinery/bot/floorbot, "name-floorbot"))
 
 /datum/whitehole_spawner/main/ai
 	name = "AI"
@@ -652,7 +656,6 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/obj/item/toy/sword = 3,
 		/obj/item/rubber_chicken = 1,
 		/obj/item/rubber_hammer = 1,
-		/obj/machinery/bot/duckbot = 1,
 		/obj/item/a_gift/easter = 1,
 		/obj/item/paper/book/from_file/the_trial = 1,
 		/obj/item/reagent_containers/food/snacks/pie/cream = 5,
@@ -687,13 +690,13 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 
 	New()
 		. = ..()
+		add_spawn(1, new /datum/whitehole_spawner/bot_named(/obj/machinery/bot/duckbot, "name-duckbot"))
 		add_spawn(3, new /datum/whitehole_spawner/concrete_typesof(/obj/item/sticker))
 
 /datum/whitehole_spawner/main/medbay
 	name = "medbay"
 	icon_view = "medbay"
 	spawn_probs = list(
-		/datum/whitehole_spawner/bot_named/medbot = 6,
 		/datum/whitehole_spawner/corpse = 2,
 		/datum/whitehole_spawner/gene_injector = 3,
 		/datum/whitehole_spawner/written_paper = 1,
@@ -719,6 +722,9 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 
 	New()
 		. = ..()
+		add_spawn(5, new /datum/whitehole_spawner/bot_named(/obj/machinery/bot/medbot, "name-medbot"))
+		add_spawn(1, new /datum/whitehole_spawner/bot_named(/obj/machinery/bot/medbot/emagged, "name-medbot"))
+		add_spawn(2, new /datum/whitehole_spawner/bot_named(/obj/machinery/bot/firebot, "name-firebot"))
 		add_spawn(20, new /datum/whitehole_spawner/concrete_typesof(/obj/item/reagent_containers/glass/bottle))
 		add_spawn(20, new /datum/whitehole_spawner/concrete_typesof(/obj/item/organ))
 		add_reagent(5, /datum/reagent/blood)
@@ -728,7 +734,6 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	name = "security"
 	icon_view = "security"
 	spawn_probs = list(
-		/datum/whitehole_spawner/bot_named = 4,
 		/datum/whitehole_spawner/written_paper = 1,
 		/datum/whitehole_spawner/written_postit = 0.5,
 
@@ -754,6 +759,11 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/datum/projectile/energy_bolt/tasershotgun = 3,
 		/datum/projectile/energy_bolt/bouncy = 3,
 	)
+
+	New()
+		. = ..()
+		add_spawn(1, new /datum/whitehole_spawner/bot_named(/obj/machinery/bot/secbot, "name-secbot"))
+		add_spawn(3, new /datum/whitehole_spawner/bot_named(/obj/machinery/bot/secbot/emagged, "name-secbot"))
 
 /datum/whitehole_spawner/main/cargo
 	name = "cargo"
@@ -789,6 +799,10 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/obj/machinery/bot/mulebot = 0.3,
 		/obj/vehicle/forklift = 0.2
 	)
+
+	New()
+		. = ..()
+		add_spawn(2, new /datum/whitehole_spawner/bot_named(/obj/machinery/bot/mulebot, "name-mulebot"))
 
 /datum/whitehole_spawner/main/nuclear
 	name = "nuclear reactor"
@@ -838,8 +852,6 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	spawn_probs = list(
 		/datum/whitehole_spawner/corpse/bagged = 2,
 
-		/obj/machinery/bot/cleanbot = 5,
-		/obj/machinery/bot/cleanbot/emagged = 3,
 		/obj/item/caution = 10,
 		/obj/item/caution/traitor = 2,
 		/obj/item/spraybottle/cleaner = 5,
@@ -864,6 +876,8 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 
 	New()
 		. = ..()
+		add_spawn(5, new /datum/whitehole_spawner/bot_named(/obj/machinery/bot/cleanbot, "name-cleanbot"))
+		add_spawn(3, new /datum/whitehole_spawner/bot_named(/obj/machinery/bot/cleanbot/emagged, "name-cleanbot"))
 		add_spawn(10, new /datum/whitehole_spawner/grenade_armed(/obj/item/chem_grenade/cleaner))
 		add_reagent(10, /datum/reagent/water)
 		add_reagent(5, /datum/reagent/space_cleaner)
@@ -1314,59 +1328,22 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 			paper.info = phrase_log.random_phrase("paper")
 		return paper
 
-ABSTRACT_TYPE(/datum/whitehole_spawner/bot_named)
 /datum/whitehole_spawner/bot_named
+	name = "named bot"
 	icon_view = "medbay"
 	var/name_category = null
-	var/name_prob = 33
+	var/name_prob = 33 PERCENT
+
+	New(var/bot_type, var/name_category)
+		. = ..()
+		src.spawn_probs[bot_type] = 1
+		src.name_category = name_category
 
 	unleash(var/obj/whitehole/whitehole)
 		var/obj/machinery/bot/B = ..()
 		if(prob(name_prob))
 			B.name = phrase_log.random_phrase(name_category)
 		return B
-
-	firebot
-		name = "bot: firebot"
-		spawn_probs = list(/obj/machinery/bot/firebot = 1)
-		name_category = "name-firebot"
-	floorbot
-		name = "bot: floorbot"
-		spawn_probs = list(/obj/machinery/bot/floorbot = 1)
-		name_category = "name-floorbot"
-	secbot
-		name = "bot: secbot"
-		spawn_probs = list(
-			/obj/machinery/bot/secbot = 1,
-			/obj/machinery/bot/secbot/emagged = 3,
-		)
-		name_category = "name-secbot"
-	cleanbot
-		name = "bot: cleanbot"
-		spawn_probs = list(
-			/obj/machinery/bot/cleanbot = 5,
-			/obj/machinery/bot/cleanbot/emagged = 3
-		)
-		name_category = "name-cleanbot"
-	mulebot
-		name = "bot: mulebot"
-		spawn_probs = list(/obj/machinery/bot/mulebot = 1)
-		name_category = "name-mulebot"
-	medbot
-		name = "bot: medbot"
-		spawn_probs = list(
-			/obj/machinery/bot/medbot = 5,
-			/obj/machinery/bot/medbot/mysterious/emagged = 1,
-		)
-		name_category = "name-medbot"
-	cambot
-		name = "bot: cambot"
-		spawn_probs = list(/obj/machinery/bot/cambot = 1)
-		name_category = "name-cambot"
-	duckbot
-		name = "bot: duckbot"
-		spawn_probs = list(/obj/machinery/bot/duckbot = 1)
-		name_category = "name-duckbot"
 
 /datum/whitehole_spawner/snake
 	name = "wizard snake"
