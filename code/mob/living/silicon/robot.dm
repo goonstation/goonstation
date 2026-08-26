@@ -2896,6 +2896,9 @@ TYPEINFO(/mob/living/silicon/robot)
 				clothed_image.alpha = U.alpha
 				clothed_image.color = U.color
 				clothed_image.layer = U.wear_layer
+				if (U.worn_material_texture_image)
+					U.worn_material_texture_image.layer = clothed_image.layer + 0.1
+					clothed_image.overlays += U.worn_material_texture_image
 
 				if (istype(U, /obj/item/clothing/under))
 					src.i_under = clothed_image
