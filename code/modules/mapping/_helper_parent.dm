@@ -28,7 +28,14 @@ ABSTRACT_TYPE(/obj/mapping_helper)
 	if (QDELETED(src))
 		return
 
+#ifdef CI_RUNTIME_CHECKING
+	var/error = src.setup()
+	if (length(error)) // Admits text and lists.
+		CI.ERRORS.mapping_helpers += error
+#else
 	src.setup()
+#endif
+
 	if (src.deleted_on_start)
 		qdel(src)
 
