@@ -20,7 +20,7 @@
 			return
 		src.custom_msg = SPAN_COMBAT("<b>[user] bites [target] with [his_or_her(user)] [pick(src.bite_adjectives)] mandibles!</b>")
 		..()
-		if (ishuman(target) && tears_off_limbs && prob(15))
+		if (ishuman(target) && tears_off_limbs && prob(20))
 			var/mob/living/carbon/human/limb_loser = target
 			if(limb_loser.limbs)
 				limb_loser.sever_limb(pick(list("l_arm", "r_arm", "l_leg", "r_leg")))
