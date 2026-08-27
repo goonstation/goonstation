@@ -49,7 +49,7 @@ ABSTRACT_TYPE(/datum/whitehole_spawner)
 	proc/add_spawn(var/weight, var/datum/whitehole_spawner/new_spawner)
 		src.spawn_probs[new_spawner] = weight
 
-	/// Adds a reagent spawner.
+	/// Easy way to spawn reagents out of the white hole.
 	proc/add_reagent(var/weight, var/reagent_type)
 		src.add_spawn(weight, new /datum/whitehole_spawner/reagent(reagent_type))
 
@@ -58,7 +58,7 @@ ABSTRACT_TYPE(/datum/whitehole_spawner)
 		var/datum/whitehole_spawner/gas/gas_spawner = new(gases, amount_min, amount_max, temp_min, temp_max)
 		src.add_spawn(weight, gas_spawner)
 
-	/// Renames the mob and such
+	/// Easy way to spawn mobs out of the white hole. Renames and damages them.
 	proc/add_mob(var/weight, var/mob_type, var/name_category = null)
 		var/datum/whitehole_spawner/damager/dmg_spawner
 		if(name_category)
@@ -96,6 +96,8 @@ ABSTRACT_TYPE(/datum/whitehole_spawner)
 // =========================== Main White Hole Types =============================
 // ===============================================================================
 
+/// A type that is just used to store primary locations that will likely be used by the white hole.
+/// "/datum/whitehole_spawner/random_object" will pick something stored in these types.
 ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 /datum/whitehole_spawner/main
 	weight_rarity = WHITEHOLE_COMMON
@@ -264,7 +266,7 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	name = "trench"
 	icon_view = "trench"
 	spawn_probs = list(
-		/datum/whitehole_spawner/ore/random = 5,
+		/datum/whitehole_spawner/ore = 5,
 
 		/obj/item/seashell = 2,
 		/obj/critter/gunbot/drone/gunshark = 0.5,
@@ -320,12 +322,9 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	name = "asteroid"
 	icon_view = "asteroid"
 	spawn_probs = list(
-		/datum/whitehole_spawner/ore/random = 200,
+		/datum/whitehole_spawner/ore = 200,
 
-		/mob/living/critter/rockworm = 3,
-		/mob/living/critter/fermid = 10,
 		/obj/storage/crate/loot = 4,
-		/mob/living/carbon/human/normal/miner = 0.1,
 		/obj/item/raw_material/scrap_metal = 4,
 		/obj/machinery/portable_reclaimer = 1,
 		/obj/item/mining_tool/powered/drill = 0.5,
@@ -410,9 +409,6 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/obj/window = 2,
 		/obj/machinery/emitter = 0.3,
 		/obj/item/toy/plush/small/singuloose = 0.1,
-		/mob/living/carbon/human/normal/engineer = 0.5,
-		/mob/living/carbon/human/normal/chiefengineer = 0.1,
-		/mob/living/carbon/human/npc/monkey/mr_rathen = 0.5,
 		/obj/item/clothing/glasses/toggleable/meson = 0.5,
 		/obj/gravity_well_generator = 0.5,
 		/obj/item/raw_material/scrap_metal = 4,
@@ -574,13 +570,6 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/obj/item/storage/pill_bottle/cyberpunk = 10,
 		/obj/item/reagent_containers/food/drinks/bottle/hobo_wine = 10,
 		/obj/item/plant/herb/cannabis/spawnable = 5,
-		/mob/living/critter/spider/baby = 2,
-		/mob/living/critter/spider/nice = 2,
-		/mob/living/carbon/human/npc/assistant = 2,
-		/mob/living/carbon/human/normal/assistant = 2,
-		#ifdef SECRETS_ENABLED
-		/mob/living/critter/legman = 1,
-		#endif
 	)
 
 	New()
@@ -1063,44 +1052,31 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 /datum/whitehole_spawner/ore
 	name = "ore"
 	icon_view = "asteroid"
-	var/stack_max = 1
-	var/stack_min = 1
+	spawn_probs = list(
+		/obj/item/raw_material/rock = 100,
+		/obj/item/raw_material/ice = 50,
 
-	unleash(var/obj/whitehole/whitehole)
-		var/selected = ..()
-		if(isitem(selected))
-			var/obj/item/I = selected
-			var/stack_size = min(rand(src.stack_min, src.stack_max), I.max_stack)
-			I.set_stack_amount(stack_size)
-		return selected
-
-	random
-		name = "ore random"
-		spawn_probs = list(
-			/obj/item/raw_material/rock = 100,
-			/obj/item/raw_material/ice = 50,
-
-			/obj/item/raw_material/mauxite = 20,
-			/obj/item/raw_material/pharosium = 20,
-			/obj/item/raw_material/uqill = 0.5,
-			/obj/item/raw_material/fibrilith = 3,
-			/obj/item/raw_material/molitz = 20,
-			/obj/item/raw_material/char = 5,
-			/obj/item/raw_material/cobryl = 3,
-			/obj/item/raw_material/bohrum = 2,
-			/obj/item/raw_material/claretine = 5,
-			/obj/item/raw_material/martian = 5,
-			/obj/item/raw_material/syreline = 2,
-			/obj/item/raw_material/cerenkite = 1,
-			/obj/item/raw_material/plasmastone = 1,
-			/obj/item/raw_material/eldritch = 1,
-			/obj/item/raw_material/gold = 2,
-			/obj/item/raw_material/miracle = 1,
-			/obj/item/raw_material/erebite = 0.5,
-			/obj/item/raw_material/starstone = 0.01,
-			/obj/item/material_piece/cloth/carbon = 0.02,
-			/obj/item/raw_material/gemstone = 3,
-		)
+		/obj/item/raw_material/mauxite = 20,
+		/obj/item/raw_material/pharosium = 20,
+		/obj/item/raw_material/uqill = 0.5,
+		/obj/item/raw_material/fibrilith = 3,
+		/obj/item/raw_material/molitz = 20,
+		/obj/item/raw_material/char = 5,
+		/obj/item/raw_material/cobryl = 3,
+		/obj/item/raw_material/bohrum = 2,
+		/obj/item/raw_material/claretine = 5,
+		/obj/item/raw_material/martian = 5,
+		/obj/item/raw_material/syreline = 2,
+		/obj/item/raw_material/cerenkite = 1,
+		/obj/item/raw_material/plasmastone = 1,
+		/obj/item/raw_material/eldritch = 1,
+		/obj/item/raw_material/gold = 2,
+		/obj/item/raw_material/miracle = 1,
+		/obj/item/raw_material/erebite = 0.5,
+		/obj/item/raw_material/starstone = 0.01,
+		/obj/item/material_piece/cloth/carbon = 0.02,
+		/obj/item/raw_material/gemstone = 3,
+	)
 
 /datum/whitehole_spawner/gas
 	icon_view = "plasma"
