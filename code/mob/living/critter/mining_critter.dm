@@ -257,6 +257,7 @@
 		..()
 
 		src.pixel_x -= 16
+		src.add_stam_mod_max("queen", 50)
 
 /mob/living/critter/fermid/hulk
 	name = "fermid hulk"
@@ -283,6 +284,7 @@
 		HH.limb = new /datum/limb/mouth/fermid/fermid_hulk
 		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/big_fermid, src)
 		src.pixel_x -= 16
+		src.add_stam_mod_max("hulk", 50)
 	purple
 		recolor = "#b90fab"
 		speed = /datum/movement_modifier/big_fermid_fast
