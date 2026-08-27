@@ -11,7 +11,7 @@
 	var/list/bite_adjectives = list("vicious","vengeful","violent")
 	sound_attack = 'sound/impact_sounds/Flesh_Tear_1.ogg'
 	can_beat_up_robots = TRUE //angry space ants
-	var/tears_off_limbs = FALSE
+	var/tears_off_limbs = FALSE //Basically checks if the attack should tear off limbs (Only available to Hulk Fermids at this time)
 	harm(mob/target, var/mob/user)
 		if (!user || !target)
 			return 0
@@ -59,7 +59,7 @@
 	add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/sting/fermid)
 	no_stamina_stuns = TRUE
 	var/recolor = null
-	var/speed = /datum/movement_modifier/fermid
+	var/speed = /datum/movement_modifier/fermid //Variable that can be used to modify the speed for variants of fermids. Defined further down for different weight classes.
 	New()
 		..()
 		LAZYLISTADDUNIQUE(src.faction, FACTION_FERMID)
@@ -191,7 +191,6 @@
 		. = ..()
 	New()
 		..()
-		//APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/small_fermid, src)
 	green
 		recolor = "#05da17"
 
