@@ -1,4 +1,25 @@
 
+(t)wed aug 26 26
+(u)ANNmagedon
+(p)27594
+(e)🗺|A-Mapping
+(+)The hop of menhir, in their infinite greed, has obtained another dog.
+(u)LorrMaster
+(p)27601
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)The duration of a white hole from bursting singularities now depends on the largest size that the singularity has reached
+(u)bamlord
+(p)27550
+(e)🏅|A-Medal
+(+)Added a new medal for winning the lottery. What lottery? THE lottery.
+(u)bamlord
+(p)27611
+(e)⚖|C-Balance
+(+)Syndicate cyborgs are now counted as trained syndicates for the purposes of targeting and item descriptions etc.
+(u)Muzcl
+(p)27609
+(e)🎨|C-Sprites
+(+)A new fish has spawned in the clown's shoes and central command ballpit.
 (t)tue aug 25 26
 (u)TDHooligan
 (p)27600
