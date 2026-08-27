@@ -552,7 +552,7 @@ var/global/list/managed_positional_sound_channels = list()
 	if (!length(src.emitters))
 		src.mute_all(force)
 		return
-	if (!global.sound_hashmap)
+	if (!global.client_hashmap)
 		src.mute_all(force)
 		return
 
@@ -563,7 +563,7 @@ var/global/list/managed_positional_sound_channels = list()
 		if (!source_turf)
 			continue
 
-		for (var/client/C as anything in global.sound_hashmap.exact_supremum(source_turf, src.get_query_range()))
+		for (var/client/C as anything in global.client_hashmap.exact_supremum(source_turf, src.get_query_range()))
 			emitters_by_client[C] ||= list()
 			emitters_by_client[C] += emitter
 
