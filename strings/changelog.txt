@@ -1,4 +1,10 @@
 
+(t)thu aug 27 26
+(u)swinglow20
+(p)27480
+(e)🎨🐁|C-Sprites, A-Critters
+(*)Changed how Fermids' combat works in game and slightly buffs them. Watch out, mining!
+(+)Changed movement speed, health, and abilities for four of the Fermid subtypes: Workers, Drones, Spitters, and Hulks
 (t)wed aug 26 26
 (u)ANNmagedon
 (p)27594
