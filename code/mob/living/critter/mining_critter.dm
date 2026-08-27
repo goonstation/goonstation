@@ -11,7 +11,7 @@
 	var/list/bite_adjectives = list("vicious","vengeful","violent")
 	sound_attack = 'sound/impact_sounds/Flesh_Tear_1.ogg'
 	can_beat_up_robots = TRUE //angry space ants
-	var/fermid_hulk_mode = 0
+	var/tears_off_limbs = FALSE
 	harm(mob/target, var/mob/user)
 		if (!user || !target)
 			return 0
@@ -19,12 +19,12 @@
 			return
 		src.custom_msg = SPAN_COMBAT("<b>[user] bites [target] with [his_or_her(user)] [pick(src.bite_adjectives)] mandibles!</b>")
 		..()
-		if (ishuman(target) && fermid_hulk_mode && prob(15))
+		if (ishuman(target) && tears_off_limbs && prob(15))
 			var/mob/living/carbon/human/limb_loser = target
 			if(limb_loser.limbs)
 				limb_loser.sever_limb(pick(list("l_arm", "r_arm", "l_leg", "r_leg")))
 /datum/limb/mouth/fermid/fermid_hulk
-	fermid_hulk_mode = TRUE
+	tears_off_limbs = TRUE
 
 ///////////////////////////////////////////////
 // FERMID
