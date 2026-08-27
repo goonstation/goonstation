@@ -22,9 +22,7 @@ export const StorageView = (props: { storage: NanoStorageData[] }) => {
   const { act } = useBackend<NanoFabricatorData>();
   const { storage } = props;
   const sortedStorage = [...storage].sort((a, b) =>
-    a.name
-      .replace(/^\d+\s+/, '')
-      .localeCompare(b.name.replace(/^\d+\s+/, '')),
+    a.name.replace(/^\d+\s+/, '').localeCompare(b.name.replace(/^\d+\s+/, '')),
   );
 
   return (
@@ -34,9 +32,7 @@ export const StorageView = (props: { storage: NanoStorageData[] }) => {
           {sortedStorage.map((item) => (
             <Stack.Item key={item.ref}>
               <Stack align="center">
-                <Stack.Item>
-                  {item.img && <Image src={item.img} />}
-                </Stack.Item>
+                <Stack.Item>{item.img && <Image src={item.img} />}</Stack.Item>
                 <Stack.Item grow overflow="hidden">
                   <Box
                     nowrap

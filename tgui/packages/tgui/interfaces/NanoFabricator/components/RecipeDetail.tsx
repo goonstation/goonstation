@@ -61,9 +61,7 @@ export const RecipeDetail = (props: RecipeDetailProps) => {
     (part) => part.ref === selectingPart?.ref,
   );
   const sortedPartOptions = [...partOptions].sort((a, b) =>
-    a.name
-      .replace(/^\d+\s+/, '')
-      .localeCompare(b.name.replace(/^\d+\s+/, '')),
+    a.name.replace(/^\d+\s+/, '').localeCompare(b.name.replace(/^\d+\s+/, '')),
   );
 
   return (
@@ -73,10 +71,7 @@ export const RecipeDetail = (props: RecipeDetailProps) => {
           <Stack align="center">
             <Stack.Item>
               {selectedRecipe.img && (
-                <Image
-                  src={selectedRecipe.img}
-                  height={RECIPE_ICON_SIZE}
-                />
+                <Image src={selectedRecipe.img} height={RECIPE_ICON_SIZE} />
               )}
             </Stack.Item>
             <Stack.Item grow>
@@ -111,7 +106,6 @@ export const RecipeDetail = (props: RecipeDetailProps) => {
                     <Stack.Item>
                       <Button
                         width={COMPONENT_BUTTON_WIDTH}
-                        ellipsis
                         selected={part.ref === selectingPart?.ref}
                         tooltip={
                           part.assigned
@@ -133,8 +127,11 @@ export const RecipeDetail = (props: RecipeDetailProps) => {
                                 </Stack.Item>
                               </Stack>
                             </Stack.Item>
-                            <Stack.Item grow>
+                            <Stack.Item grow overflow="hidden">
                               <Box
+                                nowrap
+                                overflow="hidden"
+                                style={{ textOverflow: 'ellipsis' }}
                                 color={
                                   part.assigned.amount < part.amount
                                     ? 'bad'
@@ -143,9 +140,7 @@ export const RecipeDetail = (props: RecipeDetailProps) => {
                               >
                                 {part.assigned.name}
                               </Box>
-                              <Box italic>
-                                {part.assigned.amount} available
-                              </Box>
+                              <Box italic>{part.assigned.amount} available</Box>
                             </Stack.Item>
                           </Stack>
                         ) : part.optional ? (
@@ -153,18 +148,13 @@ export const RecipeDetail = (props: RecipeDetailProps) => {
                             <Stack.Item minWidth={COMPONENT_ICON_SIZE}>
                               <Stack justify="center">
                                 <Stack.Item>
-                                  <Icon
-                                    name="spinner"
-                                    spin={1}
-                                  />
+                                  <Icon name="spinner" spin={1} />
                                 </Stack.Item>
                               </Stack>
                             </Stack.Item>
                             <Stack.Item grow>
                               <Box>Choose component</Box>
-                              <Box italic>
-                                Optional
-                              </Box>
+                              <Box italic>Optional</Box>
                             </Stack.Item>
                           </Stack>
                         ) : (
@@ -176,19 +166,14 @@ export const RecipeDetail = (props: RecipeDetailProps) => {
                                     content="Select a component for this required slot"
                                     position="bottom"
                                   >
-                                    <Icon
-                                      name="spinner"
-                                      spin={1}
-                                    />
+                                    <Icon name="spinner" spin={1} />
                                   </Tooltip>
                                 </Stack.Item>
                               </Stack>
                             </Stack.Item>
                             <Stack.Item grow>
                               <Box>Choose component</Box>
-                              <Box italic>
-                                Required
-                              </Box>
+                              <Box italic>Required</Box>
                             </Stack.Item>
                           </Stack>
                         )}
@@ -208,7 +193,9 @@ export const RecipeDetail = (props: RecipeDetailProps) => {
                   Ready to build up to {selectedRecipe.maxAmount}.
                 </Box>
               ) : (
-                <Box color="label">Assign all required components to build.</Box>
+                <Box color="label">
+                  Assign all required components to build.
+                </Box>
               )}
             </Stack.Item>
             <Stack.Item grow>
@@ -263,10 +250,7 @@ export const RecipeDetail = (props: RecipeDetailProps) => {
                         >
                           Clear
                         </Button>
-                        <Button
-                          icon="times"
-                          onClick={() => act('cancel_part')}
-                        >
+                        <Button icon="times" onClick={() => act('cancel_part')}>
                           Close
                         </Button>
                       </>
@@ -282,7 +266,6 @@ export const RecipeDetail = (props: RecipeDetailProps) => {
                             <Button
                               fluid
                               disabled={option.insufficient}
-                              ellipsis
                               onClick={() =>
                                 act('choose_part', { ref: option.ref })
                               }
@@ -291,8 +274,14 @@ export const RecipeDetail = (props: RecipeDetailProps) => {
                                 <Stack.Item>
                                   {option.img && <Image src={option.img} />}
                                 </Stack.Item>
-                                <Stack.Item grow>
-                                  <Box>{option.name}</Box>
+                                <Stack.Item grow overflow="hidden">
+                                  <Box
+                                    nowrap
+                                    overflow="hidden"
+                                    style={{ textOverflow: 'ellipsis' }}
+                                  >
+                                    {option.name}
+                                  </Box>
                                   <Box italic>{option.amount} available</Box>
                                 </Stack.Item>
                               </Stack>
