@@ -1,6 +1,10 @@
 
 (t)thu aug 27 26
 (u)LorrMaster
+(p)27587
+(e)📦👮|A-Game-Objects, A-Security
+(+)Securitron construction maintains material and forensic data.
+(u)LorrMaster
 (p)27591
 (e)📦🤖|A-Game-Objects, A-Silicons
 (+)Material and forensic data is now maintained for the construction process of various robots
