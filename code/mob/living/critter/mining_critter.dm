@@ -189,8 +189,6 @@
 			frenzy.handleCast(target)
 			return TRUE
 		. = ..()
-	New()
-		..()
 	green
 		recolor = "#05da17"
 
