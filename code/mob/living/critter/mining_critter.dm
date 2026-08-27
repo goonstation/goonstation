@@ -135,11 +135,6 @@
 			bite.handleCast(target)
 			return TRUE
 
-	critter_basic_attack(mob/target)
-		if(prob(30))
-			src.swap_hand()
-		return ..()
-
 	death()
 		src.reagents.add_reagent("atropine", 50, null)
 		src.reagents.add_reagent("haloperidol", 50, null)
