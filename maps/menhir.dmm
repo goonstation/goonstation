@@ -26600,6 +26600,12 @@
 	},
 /turf/simulated/floor/white,
 /area/research_outpost/limpet/personnel)
+"nzL" = (
+/obj/decal/cleanable/writing/infrared{
+	words = "the sound never repeats how can it never repeat"
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/storage/emergency)
 "nzR" = (
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 1
@@ -89632,7 +89638,7 @@ jri
 wom
 vWa
 fin
-xgI
+nzL
 cLw
 tLD
 lQe
