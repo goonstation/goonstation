@@ -1,5 +1,9 @@
 
 (t)wed aug 26 26
+(u)LorrMaster
+(p)27601
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)The duration of a white hole from bursting singularities now depends on the largest size that the singularity has reached
 (u)bamlord
 (p)27550
 (e)🏅|A-Medal
