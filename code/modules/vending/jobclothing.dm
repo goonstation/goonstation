@@ -289,8 +289,6 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/hi_vis/puffer, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/puffer/engi, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/baseball/engineer, 5)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/under/baseball/mining, 5)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/under/baseball/cargo, 5)
 
 /obj/machinery/vending/jobclothing/catering
 	name = "Catering Apparel"

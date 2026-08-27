@@ -386,6 +386,8 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 		/datum/manufacture/mining_magnet
 #endif
 		)
+	hidden = list(/datum/manufacture/baseball_mining
+	)
 
 /obj/machinery/manufacturer/hangar
 	name = "ship component fabricator"
@@ -611,7 +613,7 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 		/datum/manufacture/crate/secure/syndicate,
 		/datum/manufacture/cart/hotdog,
 		/datum/manufacture/locker/secure/nanotrasen,
-		)
+		/datum/manufacture/baseball_cargo)
 
 /obj/machinery/manufacturer/zombie_survival
 	name = "\improper Uber-Extreme Survival Manufacturer"
