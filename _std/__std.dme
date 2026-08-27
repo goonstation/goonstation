@@ -203,6 +203,7 @@
 #include "namespaces\dwaine\shell.dm"
 #include "namespaces\dwaine\syscalls.dm"
 #include "namespaces\ci.dm"
+#include "namespaces\dcs.dm"
 #include "namespaces\helper_color.dm"
 #include "namespaces\icon.dm"
 #include "namespaces\material.dm"
