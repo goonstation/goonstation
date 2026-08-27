@@ -342,9 +342,9 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 	src.local_apc = get_local_apc(src)
 	src.power_area = get_area(src.local_apc)
 	src.cell = new /obj/item/cell(src)
-	src.radio1 = new /obj/item/device/radio(src)
-	src.radio2 = new /obj/item/device/radio(src)
-	src.radio3 = new /obj/item/device/radio/headset/command/ai(src)
+	src.radio1 = new /obj/item/device/radio/ai/primary(src)
+	src.radio2 = new /obj/item/device/radio/ai/intercom(src)
+	src.radio3 = new /obj/item/device/radio/ai/secure(src)
 
 	src.tracker = new /datum/ai_camera_tracker(src)
 	src.coreSkin = skinToApply
@@ -382,19 +382,6 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 		src.botcard.registered = "AI"
 		src.botcard.assignment = "AI"
 		src.cell.charge = src.cell.maxcharge
-		src.radio1.name = "Primary Radio"
-		src.radio1.icon_tooltip = "Artificial Intelligence"
-		src.radio1.toggle_microphone(FALSE)
-		src.radio1.toggle_speaker(FALSE)
-		src.radio2.name = "AI Intercom Monitor"
-		src.radio2.icon_tooltip = "Artificial Intelligence"
-		src.radio2.device_color = "#7F7FE2"
-		src.radio2.set_frequency(RADIO::FREQ::INTERCOM::AI)
-		src.radio2.toggle_microphone(FALSE)
-		src.radio2.toggle_speaker(FALSE)
-		src.radio3.name = "Secure Channels Monitor"
-		src.radio3.icon_tooltip = "Artificial Intelligence"
-		src.radio3.toggle_microphone(FALSE)
 		//Spawn the PDA here after the client is already in the AI.
 		src.internal_pda = new /obj/item/device/pda2/ai(src)
 		src.internal_pda.name = "AI's Internal PDA Unit"
@@ -2886,6 +2873,7 @@ proc/get_mobs_trackable_by_AI()
 	/// Intercom presently being overriden
 	var/obj/item/device/radio/intercom/intercom
 	var/intercom_original_frequency
+	var/intercom_original_color
 	var/intercom_original_microphone
 	var/intercom_original_speaker
 
@@ -2905,6 +2893,7 @@ proc/get_mobs_trackable_by_AI()
 			return
 		src.intercom = intercom
 		src.intercom_original_frequency = src.intercom.frequency
+		src.intercom_original_color = src.intercom.device_color
 		src.intercom_original_microphone = src.intercom.microphone_enabled
 		src.intercom_original_speaker = src.intercom.speaker_enabled
 		RegisterSignal(src.owner, COMSIG_MOB_DEATH, PROC_REF(remove_self))
@@ -2919,6 +2908,7 @@ proc/get_mobs_trackable_by_AI()
 			var/mob/living/intangible/aieye/eye = src.owner
 			mainframe = eye.mainframe
 		src.intercom.set_frequency(mainframe.radio2.frequency)
+		src.intercom.device_color = "#7F7FE2"
 		src.intercom.toggle_microphone(TRUE)
 		src.intercom.toggle_speaker(TRUE)
 
@@ -2941,6 +2931,7 @@ proc/get_mobs_trackable_by_AI()
 			return
 		src.intercom.locked_frequency = FALSE // safe as long as we can't control locked frequencies in the first place
 		src.intercom.set_frequency(src.intercom_original_frequency)
+		src.intercom.device_color = src.intercom_original_color
 		src.intercom.toggle_microphone(src.intercom_original_microphone)
 		src.intercom.toggle_speaker(src.intercom_original_speaker)
 		src.intercom.UpdateOverlays(null, "screen_override")
