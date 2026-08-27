@@ -1,5 +1,42 @@
 
+(t)wed aug 26 26
+(u)ANNmagedon
+(p)27594
+(e)🗺|A-Mapping
+(+)The hop of menhir, in their infinite greed, has obtained another dog.
+(u)LorrMaster
+(p)27601
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)The duration of a white hole from bursting singularities now depends on the largest size that the singularity has reached
+(u)bamlord
+(p)27550
+(e)🏅|A-Medal
+(+)Added a new medal for winning the lottery. What lottery? THE lottery.
+(u)bamlord
+(p)27611
+(e)⚖|C-Balance
+(+)Syndicate cyborgs are now counted as trained syndicates for the purposes of targeting and item descriptions etc.
+(u)Muzcl
+(p)27609
+(e)🎨|C-Sprites
+(+)A new fish has spawned in the clown's shoes and central command ballpit.
+(t)tue aug 25 26
+(u)TDHooligan
+(p)27600
+(e)🪲🧛|C-Bug, A-Gamemodes
+(+)Fix: Gangs should now only take 3 seconds to spray a tag in an unoccupied space, instead of 15/12/9 seconds.
+(+)Fix: Gangs can no longer hand in foam dart guns.
+(+)Tagging over rival tags now takes slightly longer.
+(t)mon aug 24 26
+(u)ANNmagedon
+(p)27603
+(e)🗺|A-Mapping
+(+)A familiar pair of plushies previously lost with the end of donut 2 has appeared on donut 3.
 (t)sun aug 23 26
+(u)ANNmagedon + ZeWaka
+(p)26916
+(e)🎨🧛📨|C-Sprites, A-Gamemodes, A-Logistics
+(+)A new stamp of the flock has been added! its a bit odd and can be created by the flock or bought in deep space.
 (u)ANNmagedon
 (p)27581
 (e)|
