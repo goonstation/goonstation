@@ -739,6 +739,8 @@
 
 		. = block(locate(min_x, min_y, Z_LEVEL_STATION), locate(max_x, max_y, Z_LEVEL_STATION))
 
+// Data handling for UIs showing shipping market and other relevant data
+
 	//needs to be called whenever active_traders or req_contracts changes
 	proc/update_shipping_data()
 		for_by_tcl(computer, /obj/machinery/computer/barcode)
@@ -754,6 +756,33 @@
 				computer.set_tgui_shared_state("viewtrader", -1)
 		for_by_tcl(computer, /obj/machinery/computer/ordercomp)
 			computer.update_static_data_for_all_viewers()
+
+/datum/shipping_market/proc/fetch_supply_entry_data(var/include_syndicate = FALSE)
+	. = list()
+	for (var/datum/supply_packs/supply_pack in global.qm_supply_cache)
+		if(supply_pack.hidden)
+			continue
+		if(supply_pack.syndicate && !include_syndicate)
+			continue
+		.+= list(list(
+			"name" = supply_pack.name,
+			"desc" = supply_pack.desc,
+			"category" = supply_pack.category,
+			"cost" = supply_pack.cost,
+			"ref" = ref(supply_pack),
+		))
+		LAGCHECK(LAG_LOW)
+
+/datum/shipping_market/proc/fetch_supply_request_data()
+	. = list()
+	for(var/datum/supply_order/SO in src.supply_requests)
+		.+= list(list(
+			"supply_name" = SO.object.name,
+			"order_ref" = ref(SO),
+			"requester" = SO.orderedby,
+			"cost" = SO.object.cost,
+			"console_location" = SO.console_location,
+		))
 
 // Debugging and admin verbs (mostly coder)
 
