@@ -301,58 +301,11 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 
 	proc/generate_thing(var/datum/whitehole_spawner/spawner)
 		var/atom/movable/AM = spawner.unleash(src)
-
 		if(istype(AM, /obj/item))
 			var/obj/item/I = AM
 			if(I.pixel_x == 0 && I.pixel_y == 0)
 				I.pixel_x = rand(-16, 16)
 				I.pixel_y = rand(-16, 16)
-
-		if(istype(AM, /mob/living))
-			var/mob/living/L = AM
-			if(ismobcritter(L))
-				L.TakeDamage("chest", rand(0, 15), rand(0, 15), rand(0, 15))
-			else
-				L.TakeDamage("chest", rand(0, 80), rand(0, 80), rand(0, 80))
-			if(ishuman(AM))
-				var/mob/living/carbon/human/H = AM
-				H.is_npc = TRUE
-				SPAWN(1)
-					var/list/limbs = list("l_arm", "r_arm", "l_leg", "r_leg")
-					shuffle_list(limbs)
-					for(var/i in 1 to pick(5; 0,   10; 1,   10; 2,   5; 3,   2; 4))
-						H.limbs?.sever(limbs[i])
-					if(prob(25))
-						H.emote("scream")
-					if(prob(25))
-						for(var/i in 1 to 20)
-							sleep(rand(3 SECONDS, 35 SECONDS))
-							if(isdead(H))
-								break
-							if(prob(90))
-								H.say(phrase_log.random_phrase("say"))
-							else
-								H.emote("me", TRUE, phrase_log.random_phrase("emote"))
-		else if(istype(AM, /obj/item/reagent_containers/food/snacks/plant/tomato))
-			var/obj/item/reagent_containers/food/snacks/plant/tomato/tomato = AM
-			tomato.reagents.add_reagent("juice_tomato", rand(5, 15))
-
-		// renaming
-		if(istype(AM, /mob))
-			var/mob/M = AM
-			if(istype(M, /mob/living/silicon/ai) && prob(80))
-				M.real_name = phrase_log.random_phrase("name-ai")
-			else if(istype(M, /mob/living/silicon/robot) && prob(80))
-				M.real_name = phrase_log.random_phrase("name-cyborg")
-			else if(istype(M, /mob/living/carbon/human/normal/clown) && prob(80))
-				M.real_name = phrase_log.random_phrase("name-clown")
-			else if(istype(M, /mob/living/carbon/human) && prob(80))
-				M.real_name = phrase_log.random_phrase("name-human")
-			if(!M.real_name)
-				M.real_name = M.name // revert in case of a fail
-			M.name = M.real_name
-			M.choose_name(1, null, M.real_name, force_instead=TRUE)
-
 		return AM
 
 	proc/locate_throw_target(atom/thrown, turf_search_dist = 64)

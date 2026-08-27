@@ -5,10 +5,10 @@
 ABSTRACT_TYPE(/datum/whitehole_spawner)
 /datum/whitehole_spawner
 	/// A weighted list that will be used to spawn stuff
-	/// - If an instance of "/datum/whitehole_spawner", call unleash() on it
-	/// - If an abstract path, a random subtype will be chosen
-	/// - If the path is of "/datum/whitehole_spawner", create and call unleash() on it
-	/// - If the path is of "/datum/projectile", that projectile will be launched
+	/// - Pick instance of "/datum/whitehole_spawner": Call unleash() on it
+	/// - Pick abstract path: Pick a random subtype
+	/// - Pick path of "/datum/whitehole_spawner": Create and call unleash() on it
+	/// - Pick path of "/datum/projectile": Launch that projectile
 	var/list/spawn_probs = list()
 	var/name = "untitled"
 	var/icon_view = "" //! The icon_state of the image that will be displayed inside the white hole
@@ -17,7 +17,10 @@ ABSTRACT_TYPE(/datum/whitehole_spawner)
 	var/ignore_datums = FALSE
 	var/weight_rarity = 0 //! How likely that this type of white hole is going to be chosen randomly
 
-	/// Pick something for the white hole to do. If a movable atom was released, it should return that atom.
+	/// The white hole will call this proc whenever it needs something to spew out.
+	/// The proc will either get something, or call "unleash()" on another nested spawner to get something.
+	/// When a spawner finally picks a non-spawner, it will create a new instance of that thing.
+	/// That thing will then be returned (and possibly modified) back up the chain until it is passed over to the white hole.
 	proc/unleash(var/obj/whitehole/whitehole)
 		if(length(src.spawn_probs) == 0)
 			return null
@@ -55,8 +58,18 @@ ABSTRACT_TYPE(/datum/whitehole_spawner)
 		var/datum/whitehole_spawner/gas/gas_spawner = new(gases, amount_min, amount_max, temp_min, temp_max)
 		src.add_spawn(weight, gas_spawner)
 
+	/// Renames the mob and such
+	proc/add_mob(var/weight, var/mob_type, var/name_category = null)
+		var/datum/whitehole_spawner/damager/dmg_spawner
+		if(name_category)
+			var/datum/whitehole_spawner/renamer/rename_spawner = new(mob_type, name_category, 80 PERCENT)
+			dmg_spawner = new(rename_spawner)
+		else
+			dmg_spawner = new(mob_type)
+		src.add_spawn(weight, dmg_spawner)
+
 	/// Used to return something for transforming, deep frying, gift wrapping, or whatever else.
-	/// Will ignore anything that is not a movable atom, including projectiles.
+	/// Will skip over unleash() procs and ignore anything that is not a movable atom, including projectiles.
 	proc/pick_movable_atom(var/obj/whitehole/whitehole)
 		var/datum/whitehole_spawner/spawner = src
 		var/selected = null
@@ -66,6 +79,8 @@ ABSTRACT_TYPE(/datum/whitehole_spawner)
 				// Keep looking through spawners until you find something or nothing
 				if(ispath(selected, /datum/whitehole_spawner))
 					spawner = new selected
+				else
+					spawner = selected
 				selected = weighted_pick(spawner.spawn_probs)
 		return selected
 
@@ -103,12 +118,15 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/obj/stool/chair/office = 10,
 		/obj/item/cargotele = 2,
 		/obj/item/disk/data/tape = 2,
-		/mob/living/carbon/human/npc/monkey = 0.5,
-		/mob/living/carbon/human/normal/scientist = 0.5,
-		#ifdef SECRETS_ENABLED
-		/mob/living/carbon/human/npc/monkey/extremely_fast = 0.05,
-		#endif
 	)
+
+	New()
+		. = ..()
+		add_mob(0.5, /mob/living/carbon/human/npc/monkey)
+		#ifdef SECRETS_ENABLED
+		add_mob(0.05, /mob/living/carbon/human/npc/monkey/extremely_fast)
+		#endif
+		add_mob(0.5, /mob/living/carbon/human/normal/scientist, "name-human")
 
 /datum/whitehole_spawner/main/teg
 	name = "TEG"
@@ -153,6 +171,9 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	New()
 		. = ..()
 		add_spawn(5, new /datum/whitehole_spawner/grenade_armed(/obj/item/chem_grenade/firefighting))
+		add_mob(0.5, /mob/living/carbon/human/normal/engineer, "name-human")
+		add_mob(0.1, /mob/living/carbon/human/normal/chiefengineer, "name-human")
+		add_mob(0.5, /mob/living/carbon/human/npc/monkey/mr_rathen)
 		add_gas(40, list("plasma" = 1, "oxygen" = 1), 1, 20, 0 KELVIN, 100 KELVIN)
 		add_gas(10, "plasma", 10, 30, 0 KELVIN, 300 KELVIN)
 
@@ -162,7 +183,6 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	spawn_probs = list(
 		/datum/whitehole_spawner/flock_converted = 15,
 
-		/mob/living/critter/flock/drone = 2,
 		/obj/flock_structure/egg/bit = 2,
 		/obj/item/organ/brain/flockdrone = 2,
 		/obj/item/organ/flock_crystal = 2,
@@ -189,6 +209,7 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 
 	New()
 		. = ..()
+		add_mob(2, /mob/living/critter/flock/drone)
 		add_reagent(3, /datum/reagent/flockdrone_fluid)
 
 /datum/whitehole_spawner/main/chapel
@@ -212,7 +233,6 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/obj/stool/chair/pew = 3,
 		/obj/item/ghostboard = 5,
 		/obj/item/ghostboard/emouija = 1,
-		/mob/living/critter/aquatic/fish/nautilus = 2,
 		/obj/item/instrument/large/piano = 3,
 		/obj/storage/closet/dresser = 3,
 		/obj/machinery/traymachine/morgue = 1,
@@ -226,8 +246,6 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/obj/item/skull/omnitraitor = 0.1,
 		/obj/item/skull/macho = 0.1,
 		/obj/item/skull/cluwne = 0.1,
-		/mob/living/carbon/human/normal/chaplain = 0.2,
-		/mob/living/critter/skeleton = 1,
 		/obj/item/gun/energy/ghost = 0.2,
 		/obj/item/reagent_containers/food/snacks/ectoplasm = 4,
 		/obj/item/kitchen/utensil/knife = 1,
@@ -236,6 +254,9 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 
 	New()
 		. = ..()
+		add_mob(2, /mob/living/critter/aquatic/fish/nautilus)
+		add_mob(0.2, /mob/living/carbon/human/normal/chaplain, "name-human")
+		add_mob(1, /mob/living/critter/skeleton)
 		add_reagent(1, /datum/reagent/water/water_holy)
 		add_reagent(1, /datum/reagent/blood)
 
@@ -246,37 +267,11 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/datum/whitehole_spawner/ore/random = 5,
 
 		/obj/item/seashell = 2,
-		/mob/living/critter/aquatic/shark = 1,
 		/obj/critter/gunbot/drone/gunshark = 0.5,
 		/obj/critter/gunbot/drone/buzzdrone/fish = 0.8,
 		/obj/naval_mine/standard = 0.2,
 		/obj/naval_mine/vandalized = 0.2,
 		/obj/naval_mine/rusted = 0.2,
-		/mob/living/critter/small_animal/pikaia = 1,
-		/mob/living/critter/small_animal/hallucigenia = 1,
-		/mob/living/critter/small_animal/trilobite = 1,
-
-		/mob/living/critter/aquatic/fish/jellyfish = 1,
-		/mob/living/critter/aquatic/king_crab = 0.01,
-
-		/mob/living/critter/aquatic/fish/butterfly = 0.5,
-		/mob/living/critter/aquatic/fish/butterfly/copperbanded = 0.5,
-		/mob/living/critter/aquatic/fish/butterfly/addis = 0.5,
-		/mob/living/critter/aquatic/fish/butterfly/spotted = 0.5,
-		/mob/living/critter/aquatic/fish/butterfly/forceps = 0.5,
-		/mob/living/critter/aquatic/fish/tang = 0.5,
-		/mob/living/critter/aquatic/fish/tang/powderblue = 0.5,
-		/mob/living/critter/aquatic/fish/tang/bluesailfin = 0.5,
-		/mob/living/critter/aquatic/fish/tang/purplesailfin = 0.5,
-		/mob/living/critter/aquatic/fish/tang/regal = 0.5,
-		/mob/living/critter/aquatic/fish/angel = 0.5,
-		/mob/living/critter/aquatic/fish/angel/french = 0.5,
-		/mob/living/critter/aquatic/fish/damsel = 0.5,
-		/mob/living/critter/aquatic/fish/damsel/blue = 0.5,
-		/mob/living/critter/aquatic/fish/gamma = 0.5,
-		/mob/living/critter/aquatic/fish/clown = 0.5,
-		/mob/living/critter/aquatic/fish/nautilus = 0.5,
-
 		/obj/sea_plant/kelp = 0.5,
 		/obj/sea_plant/seaweed = 0.5,
 		/obj/sea_plant/tubesponge = 0.5,
@@ -288,8 +283,6 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/obj/sea_plant/bulbous = 0.5,
 		/obj/nadir_doodad/sinkspires = 0.5,
 		/obj/nadir_doodad/bitelung = 0.5,
-
-		/mob/living/carbon/human/normal/miner = 0.1,
 		/obj/machinery/vehicle/tank/minisub/mining = 0.5,
 	)
 
@@ -297,6 +290,31 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		. = ..()
 		add_spawn(5, new /datum/whitehole_spawner/concrete_typesof(/obj/storage/crate/trench_loot))
 		add_reagent(20, /datum/reagent/water/sea)
+
+		add_mob(1, /mob/living/critter/aquatic/shark)
+		add_mob(1, /mob/living/critter/small_animal/pikaia)
+		add_mob(1, /mob/living/critter/small_animal/hallucigenia)
+		add_mob(1, /mob/living/critter/small_animal/trilobite)
+		add_mob(1, /mob/living/critter/aquatic/fish/jellyfish)
+		add_mob(0.01, /mob/living/critter/aquatic/king_crab)
+		add_mob(0.5, /mob/living/critter/aquatic/fish/butterfly)
+		add_mob(0.5, /mob/living/critter/aquatic/fish/butterfly/copperbanded)
+		add_mob(0.5, /mob/living/critter/aquatic/fish/butterfly/addis)
+		add_mob(0.5, /mob/living/critter/aquatic/fish/butterfly/spotted)
+		add_mob(0.5, /mob/living/critter/aquatic/fish/butterfly/forceps)
+		add_mob(0.5, /mob/living/critter/aquatic/fish/tang)
+		add_mob(0.5, /mob/living/critter/aquatic/fish/tang/powderblue)
+		add_mob(0.5, /mob/living/critter/aquatic/fish/tang/bluesailfin)
+		add_mob(0.5, /mob/living/critter/aquatic/fish/tang/purplesailfin)
+		add_mob(0.5, /mob/living/critter/aquatic/fish/tang/regal)
+		add_mob(0.5, /mob/living/critter/aquatic/fish/angel)
+		add_mob(0.5, /mob/living/critter/aquatic/fish/angel/french)
+		add_mob(0.5, /mob/living/critter/aquatic/fish/damsel)
+		add_mob(0.5, /mob/living/critter/aquatic/fish/damsel/blue)
+		add_mob(0.5, /mob/living/critter/aquatic/fish/gamma)
+		add_mob(0.5, /mob/living/critter/aquatic/fish/clown)
+		add_mob(0.5, /mob/living/critter/aquatic/fish/nautilus)
+		add_mob(0.1, /mob/living/carbon/human/normal/miner, "name-human")
 
 /datum/whitehole_spawner/main/asteroid
 	name = "asteroid"
@@ -326,6 +344,12 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/obj/critter/gunbot/drone/assdrone = 0.1,
 		/obj/critter/gunbot/drone/aciddrone = 0.1,
 	)
+
+	New()
+		. = ..()
+		add_mob(3, /mob/living/critter/rockworm)
+		add_mob(10, /mob/living/critter/fermid)
+		add_mob(0.1, /mob/living/carbon/human/normal/miner, "name-human")
 
 /datum/whitehole_spawner/main/cafeteria
 	name = "cafeteria"
@@ -359,9 +383,6 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 
 		/obj/stool/bar = 5,
 		/obj/item/decoration/ashtray = 1,
-		/mob/living/carbon/human/normal/chef = 0.1,
-		/mob/living/carbon/human/normal/bartender = 0.1,
-		/mob/living/carbon/human/npc/monkey/angry = 0.1,
 		/obj/item/reagent_containers/food/snacks/ingredient/egg = 1,
 		/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau = 0.5,
 		/obj/decal/cleanable/vomit = 0.5,
@@ -369,6 +390,9 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 
 	New()
 		. = ..()
+		add_mob(0.1, /mob/living/carbon/human/normal/chef, "name-human")
+		add_mob(0.1, /mob/living/carbon/human/normal/bartender, "name-human")
+		add_mob(0.1, /mob/living/carbon/human/npc/monkey/angry)
 		add_reagent(0.1, /datum/reagent/vomit)
 
 /datum/whitehole_spawner/main/singulo
@@ -399,6 +423,9 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	New()
 		. = ..()
 		add_spawn(0.2, new /datum/whitehole_spawner/grenade_armed(/obj/item/old_grenade/graviton))
+		add_mob(0.5, /mob/living/carbon/human/normal/engineer, "name-human")
+		add_mob(0.1, /mob/living/carbon/human/normal/chiefengineer, "name-human")
+		add_mob(0.5, /mob/living/carbon/human/npc/monkey/mr_rathen)
 
 /datum/whitehole_spawner/main/plasma
 	name = "plasma"
@@ -427,7 +454,6 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/obj/machinery/bot/guardbot = 2,
 		/obj/barricade = 1,
 		/obj/item/deployer/barricade = 0.5,
-		/mob/living/carbon/human/npc/monkey/oppenheimer = 0.5,
 		/obj/item/mine/blast/armed = 1,
 		/obj/item/mine/incendiary/armed = 1,
 		/obj/item/mine/radiation/armed = 1,
@@ -435,7 +461,6 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/obj/stool/chair/office/syndie = 1,
 		/obj/item/paper/book/from_file/syndies_guide = 0.5,
 		/obj/item/beartrap/armed = 1,
-		/mob/living/critter/robotic/sawfly = 2,
 		/obj/item/reagent_containers/food/snacks/donkpocket_w = 1,
 		/obj/bomb_decoy = 0.4,
 		/obj/machinery/nuclearbomb/event/micronuke = 0.05,
@@ -443,7 +468,9 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 
 	New()
 		. = ..()
-		add_spawn(2, new /datum/whitehole_spawner/bot_named(/obj/machinery/bot/secbot, "name-secbot"))
+		add_spawn(2, new /datum/whitehole_spawner/renamer(/obj/machinery/bot/secbot, "name-secbot", 33 PERCENT))
+		add_mob(0.5, /mob/living/carbon/human/npc/monkey/oppenheimer)
+		add_mob(2, /mob/living/critter/robotic/sawfly)
 
 		add_spawn(1, new /datum/whitehole_spawner/grenade_armed(/obj/item/old_grenade/stinger))
 		add_spawn(1, new /datum/whitehole_spawner/grenade_armed(/obj/item/old_grenade/stinger/frag))
@@ -462,19 +489,22 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/datum/whitehole_spawner/written_paper = 3,
 		/datum/whitehole_spawner/hotspot = 10,
 
-		/mob/living/critter/small_animal/crab/lava = 5,
 		/obj/submachine/slot_machine = 5,
 		#ifdef SECRETS_ENABLED
 		/obj/critter/slime/magma = 2,
 		/obj/critter/slime/large/magma = 0.3,
 		#endif
 		/obj/decal/cleanable/ash = 10,
-		/mob/living/carbon/human/normal = 5,
 		/obj/decal/stalagmite = 5,
 		/obj/decal/cleanable/molten_item = 10,
 		/obj/critter/bat/hellbat = 5,
 		// yeah idk where I was going with "hell" either
 	)
+
+	New()
+		. = ..()
+		add_mob(5, /mob/living/critter/small_animal/crab/lava)
+		add_mob(5, /mob/living/carbon/human/normal, "name-human")
 
 /datum/whitehole_spawner/main/botany
 	name = "botany"
@@ -504,13 +534,13 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/obj/item/reagent_containers/glass/water_pipe = 1,
 		/obj/item/device/light/lava_lamp = 1,
 		/obj/critter/killertomato = 0.5,
-		/mob/living/critter/small_animal/cat/synth = 1,
-		/mob/living/critter/plant/maneater = 0.3,
 		/obj/item/plant/tumbling_creeper = 3,
 	)
 
 	New()
 		. = ..()
+		add_mob(1, /mob/living/critter/small_animal/cat/synth)
+		add_mob(0.3, /mob/living/critter/plant/maneater)
 		add_reagent(1, /datum/reagent/fooddrink/juice_tomato)
 		add_reagent(1, /datum/reagent/drug/THC)
 		add_reagent(1, /datum/reagent/poo)
@@ -555,9 +585,16 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 
 	New()
 		. = ..()
-		add_spawn(2, new /datum/whitehole_spawner/bot_named(/obj/machinery/bot/firebot, "name-firebot"))
-		add_spawn(2, new /datum/whitehole_spawner/bot_named(/obj/machinery/bot/cleanbot, "name-cleanbot"))
-		add_spawn(2, new /datum/whitehole_spawner/bot_named(/obj/machinery/bot/floorbot, "name-floorbot"))
+		add_spawn(2, new /datum/whitehole_spawner/renamer(/obj/machinery/bot/firebot, "name-firebot", 33 PERCENT))
+		add_spawn(2, new /datum/whitehole_spawner/renamer(/obj/machinery/bot/cleanbot, "name-cleanbot", 33 PERCENT))
+		add_spawn(2, new /datum/whitehole_spawner/renamer(/obj/machinery/bot/floorbot, "name-floorbot", 33 PERCENT))
+		add_mob(2, /mob/living/critter/spider/baby)
+		add_mob(2, /mob/living/critter/spider/nice)
+		add_mob(2, /mob/living/carbon/human/npc/assistant, "name-human")
+		add_mob(2, /mob/living/carbon/human/normal/assistant, "name-human")
+		#ifdef SECRETS_ENABLED
+		add_mob(1, /mob/living/critter/legman)
+		#endif
 
 /datum/whitehole_spawner/main/ai
 	name = "AI"
@@ -568,9 +605,7 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/datum/projectile/laser/heavy/ai_turret = 30,
 		/datum/projectile/energy_bolt/robust = 30,
 		/obj/item/aiModule/random = 20,
-		/mob/living/silicon/hivebot/eyebot = 10,
 		/obj/item/circuitboard/robotics = 2,
-		/mob/living/silicon/ai/latejoin = 1,
 		/obj/item/storage/box/diskbox = 1,
 		/obj/item/storage/box/tapebox = 1,
 		/obj/item/paper/book/from_file/guardbot_guide = 1,
@@ -601,6 +636,11 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/obj/item/aiModule/ability_expansion/doctor_vision = 0.5,
 		/obj/item/aiModule/ability_expansion/proto_teleman = 0.2
 	)
+
+	New()
+		. = ..()
+		add_mob(10, /mob/living/silicon/hivebot/eyebot)
+		add_mob(1, /mob/living/silicon/ai/latejoin, "name-ai")
 
 /datum/whitehole_spawner/main/bridge
 	name = "bridge"
@@ -643,6 +683,7 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	New()
 		. = ..()
 		add_spawn(4, new /datum/whitehole_spawner/concrete_typesof(/obj/item/sticker))
+		add_mob(5, /mob/living/critter/small_animal/cat/jones)
 
 /datum/whitehole_spawner/main/clown
 	name = "clown"
@@ -683,15 +724,15 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/obj/item/storage/box/costume/clown = 2,
 		/obj/item/reagent_containers/food/drinks/milk/clownspider = 1,
 		/obj/item/ai_plating_kit/clown = 0.5,
-		/mob/living/carbon/human/normal/clown = 1,
-		/mob/living/critter/spider/clown = 1,
-		/mob/living/critter/spider/clownqueen = 0.1,
 	)
 
 	New()
 		. = ..()
-		add_spawn(1, new /datum/whitehole_spawner/bot_named(/obj/machinery/bot/duckbot, "name-duckbot"))
+		add_spawn(1, new /datum/whitehole_spawner/renamer(/obj/machinery/bot/duckbot, "name-duckbot", 33 PERCENT))
 		add_spawn(3, new /datum/whitehole_spawner/concrete_typesof(/obj/item/sticker))
+		add_mob(1, /mob/living/carbon/human/normal/clown, "name-clown")
+		add_mob(1, /mob/living/critter/spider/clown)
+		add_mob(0.1, /mob/living/critter/spider/clownqueen)
 
 /datum/whitehole_spawner/main/medbay
 	name = "medbay"
@@ -722,9 +763,9 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 
 	New()
 		. = ..()
-		add_spawn(5, new /datum/whitehole_spawner/bot_named(/obj/machinery/bot/medbot, "name-medbot"))
-		add_spawn(1, new /datum/whitehole_spawner/bot_named(/obj/machinery/bot/medbot/emagged, "name-medbot"))
-		add_spawn(2, new /datum/whitehole_spawner/bot_named(/obj/machinery/bot/firebot, "name-firebot"))
+		add_spawn(5, new /datum/whitehole_spawner/renamer(/obj/machinery/bot/medbot, "name-medbot", 33 PERCENT))
+		add_spawn(1, new /datum/whitehole_spawner/renamer(/obj/machinery/bot/medbot/mysterious/emagged, "name-medbot", 33 PERCENT))
+		add_spawn(2, new /datum/whitehole_spawner/renamer(/obj/machinery/bot/firebot, "name-firebot", 33 PERCENT))
 		add_spawn(20, new /datum/whitehole_spawner/concrete_typesof(/obj/item/reagent_containers/glass/bottle))
 		add_spawn(20, new /datum/whitehole_spawner/concrete_typesof(/obj/item/organ))
 		add_reagent(5, /datum/reagent/blood)
@@ -753,7 +794,6 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/obj/item/clothing/head/helmet/siren = 2,
 		/obj/machinery/flasher/portable = 1,
 		/obj/item/barrier/collapsible/security = 1,
-		/mob/living/carbon/human/npc/monkey/stirstir = 1,
 		/datum/projectile/energy_bolt = 3,
 		/datum/projectile/energy_bolt/burst = 3,
 		/datum/projectile/energy_bolt/tasershotgun = 3,
@@ -762,8 +802,9 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 
 	New()
 		. = ..()
-		add_spawn(1, new /datum/whitehole_spawner/bot_named(/obj/machinery/bot/secbot, "name-secbot"))
-		add_spawn(3, new /datum/whitehole_spawner/bot_named(/obj/machinery/bot/secbot/emagged, "name-secbot"))
+		add_spawn(1, new /datum/whitehole_spawner/renamer(/obj/machinery/bot/secbot, "name-secbot", 33 PERCENT))
+		add_spawn(3, new /datum/whitehole_spawner/renamer(/obj/machinery/bot/secbot/emagged, "name-secbot", 33 PERCENT))
+		add_mob(1, /mob/living/carbon/human/npc/monkey/stirstir)
 
 /datum/whitehole_spawner/main/cargo
 	name = "cargo"
@@ -802,7 +843,7 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 
 	New()
 		. = ..()
-		add_spawn(2, new /datum/whitehole_spawner/bot_named(/obj/machinery/bot/mulebot, "name-mulebot"))
+		add_spawn(2, new /datum/whitehole_spawner/renamer(/obj/machinery/bot/mulebot, "name-mulebot", 33 PERCENT))
 
 /datum/whitehole_spawner/main/nuclear
 	name = "nuclear reactor"
@@ -876,8 +917,8 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 
 	New()
 		. = ..()
-		add_spawn(5, new /datum/whitehole_spawner/bot_named(/obj/machinery/bot/cleanbot, "name-cleanbot"))
-		add_spawn(3, new /datum/whitehole_spawner/bot_named(/obj/machinery/bot/cleanbot/emagged, "name-cleanbot"))
+		add_spawn(5, new /datum/whitehole_spawner/renamer(/obj/machinery/bot/cleanbot, "name-cleanbot", 33 PERCENT))
+		add_spawn(3, new /datum/whitehole_spawner/renamer(/obj/machinery/bot/cleanbot/emagged, "name-cleanbot", 33 PERCENT))
 		add_spawn(10, new /datum/whitehole_spawner/grenade_armed(/obj/item/chem_grenade/cleaner))
 		add_reagent(10, /datum/reagent/water)
 		add_reagent(5, /datum/reagent/space_cleaner)
@@ -932,7 +973,6 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/obj/item/reagent_containers/food/snacks/breadloaf/fruit_cake = 4,
 		/obj/item/reagent_containers/food/snacks/breadslice/fruit_cake = 7,
 		/obj/item/reagent_containers/food/snacks/turkey = 5,
-		/mob/living/critter/small_animal/bird/turkey = 1,
 		/obj/item/reagent_containers/food/snacks/candy/candy_cane = 5,
 		/obj/item/reagent_containers/food/snacks/candy/nougat = 3,
 		/obj/item/reagent_containers/food/snacks/candy/negativeonebar = 3,
@@ -945,7 +985,6 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/obj/item/reagent_containers/food/snacks/plant/orange = 3,
 		/obj/item/reagent_containers/food/snacks/snowball = 15,
 		/obj/decal/wreath = 1,
-		/mob/living/critter/small_animal/bunny/hare = 1,
 		/obj/item/raw_material/char = 3,
 		/obj/critter/domestic_bee/reindeer = 1,
 		/obj/critter/domestic_bee/santa = 1,
@@ -960,6 +999,8 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	New()
 		. = ..()
 		add_reagent(2, /datum/reagent/fooddrink/alcoholic/mulled_wine)
+		add_mob(1, /mob/living/critter/small_animal/bird/turkey)
+		add_mob(1, /mob/living/critter/small_animal/bunny/hare)
 
 /datum/whitehole_spawner/main/basketball
 	name = "basketball"
@@ -983,8 +1024,11 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/obj/item/reagent_containers/food/drinks/energyshake = 3,
 		/obj/item/reagent_containers/pill/crank = 2,
 		/obj/item/reagent_containers/pill/methamphetamine = 4,
-		/mob/living/carbon/human/referee = 1
 	)
+
+	New()
+		. = ..()
+		add_mob(1, /mob/living/carbon/human/referee, "name-human")
 
 // ===============================================================================
 // ============================== Spawner Subtypes ===============================
@@ -1113,21 +1157,29 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		/obj/item/clothing/head/flower = 1
 	)
 
+	unleash(obj/whitehole/whitehole)
+		var/atom/movable/AM = ..()
+		if(istype(AM, /obj/item/reagent_containers/food/snacks/plant/tomato))
+			var/obj/item/reagent_containers/food/snacks/plant/tomato/tomato = AM
+			tomato.reagents.add_reagent("juice_tomato", rand(5, 15))
+		return AM
+
 /datum/whitehole_spawner/corpse
 	name = "corpse"
 	icon_view = "chapel"
-	spawn_probs = list(
-		/mob/living/carbon/human/normal = 6,
-		/mob/living/carbon/human/normal/assistant = 1,
-		/mob/living/carbon/human/normal/clown = 1,
-		/mob/living/carbon/human/normal/chef = 1,
-		/mob/living/carbon/human/normal/botanist = 1,
-		/mob/living/carbon/human/normal/janitor = 1,
-		/mob/living/carbon/human/normal/miner = 1
-	)
 	var/bagged = FALSE
 	var/decomp_max = DECOMP_STAGE_SKELETONIZED
 	var/decomp_min = DECOMP_STAGE_NO_ROT
+
+	New()
+		. = ..()
+		add_mob(6, /mob/living/carbon/human/normal, "name-human")
+		add_mob(1, /mob/living/carbon/human/normal/assistant, "name-human")
+		add_mob(1, /mob/living/carbon/human/normal/clown, "name-clown")
+		add_mob(1, /mob/living/carbon/human/normal/chef, "name-human")
+		add_mob(1, /mob/living/carbon/human/normal/botanist, "name-human")
+		add_mob(1, /mob/living/carbon/human/normal/janitor, "name-human")
+		add_mob(1, /mob/living/carbon/human/normal/miner, "name-human")
 
 	unleash(var/obj/whitehole/whitehole)
 		. = ..()
@@ -1152,7 +1204,7 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 /datum/whitehole_spawner/gene_injector
 	name = "gene injector"
 	icon_view = "medbay"
-	var/unlabeled_prob = 50 //! Percent chance that the injector will be labed as "???"
+	var/unlabeled_prob = 50 PERCENT //! Chance that the injector will be labed as "???"
 
 	unleash(var/obj/whitehole/whitehole)
 		var/datum/bioEffect/effect = global.mutini_effects[pick(global.mutini_effects)]
@@ -1224,7 +1276,7 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		T.fluid_react_single(reagent_id, amount)
 		return null
 
-/// Used to spawn child types of a thing instead of the type itself
+/// Used to spawn subtypes of a thing instead of the type itself
 /datum/whitehole_spawner/concrete_typesof
 	var/source_type = null
 
@@ -1239,8 +1291,11 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 /datum/whitehole_spawner/gift
 	name = "random gift"
 	icon_view = "spacemas"
-	spawn_probs = list(/datum/whitehole_spawner/random_object = 1)
 	ignore_datums = TRUE
+
+	New()
+		. = ..()
+		add_spawn(1, new /datum/whitehole_spawner/random_object())
 
 	unleash(var/obj/whitehole/whitehole)
 		var/selected = ..()
@@ -1270,13 +1325,18 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 /datum/whitehole_spawner/deep_fried
 	name = "deep fried"
 	icon_view = "cafeteria"
-	spawn_probs = list(/datum/whitehole_spawner/random_object = 1)
 	ignore_datums = TRUE
+
+	New()
+		. = ..()
+		add_spawn(1, new /datum/whitehole_spawner/random_object())
 
 	unleash(var/obj/whitehole/whitehole)
 		var/selected = ..()
 		if(!istype(selected, /atom/movable))
 			return null
+		if(istype(selected, /obj/item/reagent_containers/food/snacks/shell/deepfry))
+			return selected
 		var/atom/movable/AM = selected
 		var/obj/item/reagent_containers/food/snacks/shell/deepfry/fryholder = new(whitehole.loc)
 		var/icon/composite = new(AM.icon, AM.icon_state)
@@ -1328,22 +1388,74 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 			paper.info = phrase_log.random_phrase("paper")
 		return paper
 
-/datum/whitehole_spawner/bot_named
-	name = "named bot"
+/// Used to rename mobs before unleashing them
+/datum/whitehole_spawner/renamer
+	name = "mob"
 	icon_view = "medbay"
-	var/name_category = null
-	var/name_prob = 33 PERCENT
+	var/rename_category = null
+	var/rename_chance = 33 PERCENT
 
-	New(var/bot_type, var/name_category)
+	New(var/input_type, var/rename_category, var/rename_chance = 100 PERCENT)
 		. = ..()
-		src.spawn_probs[bot_type] = 1
-		src.name_category = name_category
+		src.spawn_probs[input_type] = 1
+		src.rename_category = rename_category
+		src.rename_chance = rename_chance
 
 	unleash(var/obj/whitehole/whitehole)
-		var/obj/machinery/bot/B = ..()
-		if(prob(name_prob))
-			B.name = phrase_log.random_phrase(name_category)
-		return B
+		var/atom/movable/AM = ..()
+		if(!prob(rename_chance))
+			return AM
+		var/new_name = phrase_log.random_phrase(src.rename_category)
+		if(!new_name)
+			return AM
+		AM.name = new_name
+		if(ismob(AM))
+			var/mob/M = AM
+			M.real_name = new_name
+			M.choose_name(1, null, M.real_name, force_instead=TRUE)
+		return AM
+
+/// Break some bones before launching.
+/datum/whitehole_spawner/damager
+	name = "damaged"
+	icon_view = "medbay"
+
+	New(var/input_type)
+		. = ..()
+		src.spawn_probs[input_type] = 1
+
+	unleash(var/obj/whitehole/whitehole)
+		var/atom/movable/AM = ..()
+		if(istype(AM, /mob/living))
+			damage_mob(AM)
+		return AM
+
+	proc/damage_mob(var/mob/living/L)
+		if(ismobcritter(L))
+			L.TakeDamage("chest", rand(0, 15), rand(0, 15), rand(0, 15))
+		else
+			L.TakeDamage("chest", rand(0, 80), rand(0, 80), rand(0, 80))
+
+		if(!ishuman(L))
+			return
+		var/mob/living/carbon/human/H = L
+		H.is_npc = TRUE
+		SPAWN(1)
+			var/list/limbs = list("l_arm", "r_arm", "l_leg", "r_leg")
+			shuffle_list(limbs)
+			for(var/i in 1 to pick(5; 0,   10; 1,   10; 2,   5; 3,   2; 4))
+				H.limbs?.sever(limbs[i])
+			if(prob(25))
+				H.emote("scream")
+			if(prob(25))
+				for(var/i in 1 to 20)
+					sleep(rand(3 SECONDS, 35 SECONDS))
+					if(isdead(H))
+						break
+					if(prob(90))
+						H.say(phrase_log.random_phrase("say"))
+					else
+						H.emote("me", TRUE, phrase_log.random_phrase("emote"))
 
 /datum/whitehole_spawner/snake
 	name = "wizard snake"
