@@ -9,10 +9,12 @@
  * Backend data types for the nanofabricator interface.
  */
 
+import type { BooleanLike } from 'tgui-core/react';
+
 export interface NanoPartData {
   amount: number;
   name: string;
-  optional: boolean;
+  optional: BooleanLike;
   part_name: string;
   ref: string;
 }
@@ -44,7 +46,7 @@ export interface NanoSelectedPartData extends NanoPartData {
 }
 
 export interface NanoSelectedRecipeData {
-  complete: boolean;
+  complete: BooleanLike;
   description: string;
   img: string | null;
   maxAmount: number;
@@ -56,7 +58,7 @@ export interface NanoSelectedRecipeData {
 export interface NanoPartOptionData {
   amount: number;
   img: string | null;
-  insufficient: boolean;
+  insufficient: BooleanLike;
   name: string;
   ref: string;
 }
@@ -69,7 +71,7 @@ export interface NanoSelectingPartData {
 
 export interface NanoFabricatorData {
   categories: string[];
-  outputInternal: boolean;
+  outputInternal: BooleanLike;
   partOptions: NanoPartOptionData[];
   recipes: NanoRecipeData[];
   selectedRecipe: NanoSelectedRecipeData | null;

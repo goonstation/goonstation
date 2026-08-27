@@ -73,7 +73,7 @@
 /// Material science fabricator
 /obj/machinery/nanofab
 	name = "Nano-fabricator"
-	desc = "A more complicated sibling to the manufacturers, this machine can make things that inherit material properties."// this isnt super good but it's better than what it was
+	desc = "A more complicated sibling to the manufacturers, this machine can make things that inherit material properties."
 	icon = 'icons/obj/crafting.dmi'
 	icon_state = "fab2-on"
 	anchored = ANCHORED
@@ -89,7 +89,6 @@
 	var/list/recipes = list()
 
 	var/datum/matfab_part/selectingPart = null
-	var/list/selectingPartList = list()
 
 	var/list/blueprints = list()
 
@@ -105,11 +104,6 @@
 		if (!ui)
 			ui = new(user, src, "NanoFabricator", src.name)
 			ui.open()
-
-	proc/get_recipe_icon(datum/matfab_recipe/recipe)
-		if (!recipe)
-			return null
-		return recipe.get_recipe_icon()
 
 	proc/get_item_icon(var/obj/item/item)
 		if (!item)
@@ -221,7 +215,7 @@
 				"name" = R.name,
 				"description" = R.desc,
 				"category" = R.category,
-				"img" = src.get_recipe_icon(R),
+				"img" = R.get_recipe_icon(),
 				"parts" = part_data,
 			))
 			if (!(R.category in categories))
@@ -272,7 +266,7 @@
 				"ref" = "\ref[src.selectedRecipe]",
 				"name" = src.selectedRecipe.name,
 				"description" = src.selectedRecipe.desc,
-				"img" = src.get_recipe_icon(src.selectedRecipe),
+				"img" = src.selectedRecipe.get_recipe_icon(),
 				"complete" = !!src.selectedRecipe.canBuild(1, src),
 				"maxAmount" = src.selectedRecipe.getMaxAmount(),
 				"parts" = part_data,
@@ -280,7 +274,6 @@
 
 		if (src.selectingPart && src.selectedRecipe)
 			var/list/current_part_options = src.get_selecting_part_options()
-			src.selectingPartList = current_part_options
 			data["selectingPart"] = list(
 				"ref" = "\ref[src.selectingPart]",
 				"name" = src.selectingPart.name,
@@ -313,7 +306,6 @@
 				src.selectedRecipe = R
 				R.clear()
 				src.selectingPart = null
-				src.selectingPartList.Cut()
 				. = TRUE
 			if ("eject")
 				var/obj/item/I = locate(params["ref"]) in src.contents
@@ -331,11 +323,15 @@
 				if (!P)
 					return
 				src.selectingPart = P
-				src.selectingPartList = src.get_selecting_part_options()
 				. = TRUE
 			if ("cancel_part")
 				src.selectingPart = null
-				src.selectingPartList.Cut()
+				. = TRUE
+			if ("clear_part")
+				if (!src.selectedRecipe || !src.selectingPart \
+					|| !(src.selectingPart in src.selectedRecipe.required_parts))
+					return
+				src.selectingPart.clear()
 				. = TRUE
 			if ("choose_part")
 				if (!src.selectedRecipe || !src.selectingPart)
@@ -346,19 +342,15 @@
 					return
 				src.selectingPart.assigned = I
 				src.selectingPart = null
-				src.selectingPartList.Cut()
 				. = TRUE
 			if ("build")
 				if (!src.selectedRecipe)
 					return
 				var/datum/matfab_recipe/build_recipe = src.selectedRecipe
-				var/max_amount = build_recipe.getMaxAmount()
-				if (max_amount <= 0)
-					return
 				var/how_many = params["amount"]
-				if (isnull(how_many) || build_recipe != src.selectedRecipe)
+				if (isnull(how_many))
 					return
-				max_amount = build_recipe.getMaxAmount()
+				var/max_amount = build_recipe.getMaxAmount()
 				if (!isnum_safe(how_many) || how_many < 1 || how_many > max_amount \
 					|| !build_recipe.canBuild(how_many, src))
 					return
@@ -375,7 +367,6 @@
 						P.assigned = null
 				logTheThing(LOG_STATION, user, "printed [how_many] [build_recipe.name] (parts: [jointext(parts, ", ")])")
 				src.selectingPart = null
-				src.selectingPartList.Cut()
 				FLICK("fab2-work", src)
 				. = TRUE
 
@@ -405,15 +396,6 @@
 
 		user.visible_message(SPAN_NOTICE("[user] puts \the [W] in \the [src]."))
 		addMaterial(W, user)
-		/*
-		if(W.material != null)
-			user.visible_message(SPAN_NOTICE("[user] puts \the [W] in \the [src]."))
-			if( W.material )
-				addMaterial(W, user)
-			else
-				boutput(user, SPAN_ALERT("The fabricator can only use material-based objects."))
-				return
-		*/
 		return
 
 	ex_act(severity)
