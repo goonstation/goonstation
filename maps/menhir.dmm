@@ -19582,10 +19582,12 @@
 	pixel_x = -2;
 	pixel_y = 11
 	},
-/obj/machinery/disposal/small/east{
-	pixel_x = -9
-	},
 /obj/disposalpipe/trunk/east,
+/obj/machinery/disposal/ejection/small/east{
+	pixel_x = -9;
+	name = "recycling disposal unit";
+	desc = "Sends food waste to be turned into nutricious, delicious prison loaf. Current or former sapient creatures are not food waste and will be disposed of instead."
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "kee" = (
