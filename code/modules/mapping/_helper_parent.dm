@@ -12,6 +12,7 @@ ABSTRACT_TYPE(/obj/mapping_helper)
 	anchored = ANCHORED_ALWAYS
 	invisibility = INVIS_ALWAYS
 	layer = OBJ_LAYER + 1 // yeah let's consistently be above doors
+	var/initialised = FALSE
 #ifdef CI_RUNTIME_CHECKING
 	var/deleted_on_start = FALSE
 #else
@@ -25,7 +26,7 @@ ABSTRACT_TYPE(/obj/mapping_helper)
 
 /obj/mapping_helper/initialize()
 	. = ..()
-	if (QDELETED(src))
+	if (QDELETED(src) || src.initialised)
 		return
 
 #ifdef CI_RUNTIME_CHECKING
@@ -36,6 +37,7 @@ ABSTRACT_TYPE(/obj/mapping_helper)
 	src.setup()
 #endif
 
+	src.initialised = TRUE
 	if (src.deleted_on_start)
 		qdel(src)
 
