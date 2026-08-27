@@ -101,7 +101,7 @@ TYPEINFO(/atom)
 		if (istext(src.default_material))
 			return src.default_material
 		var/datum/material/default_mat = src.default_material
-		if (default_mat)
+		if (istype(default_mat))
 			return default_mat.getID()
 		return null
 
