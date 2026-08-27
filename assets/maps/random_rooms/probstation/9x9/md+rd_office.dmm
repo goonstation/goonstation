@@ -53,6 +53,7 @@
 "fP" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/pink,
+/obj/item/toy/plush/small/possum/md,
 /turf/simulated/floor/carpet/purple/fancy/edge/east,
 /area/station/crew_quarters/hor)
 "gq" = (
@@ -417,6 +418,7 @@
 "Pt" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/blue,
+/obj/item/toy/plush/small/bee/rd,
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
 /area/station/medical/head)
 "PG" = (

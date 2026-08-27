@@ -158,6 +158,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_card = /obj/item/card/id/clown
 	slot_ears = list(/obj/item/device/radio/headset/clown)
 	items_in_belt = list(/obj/item/cloth/towel/clown)
+	items_in_mob = list(/obj/item/currency/spacecash/one)
 	change_name_on_spawn = TRUE
 	wiki_link = "https://wiki.ss13.co/Clown"
 

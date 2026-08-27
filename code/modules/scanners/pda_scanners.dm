@@ -167,16 +167,6 @@
 		scan_atom(atom/A as mob|obj|turf|area)
 			if(..())
 				return
-
-			if(!A.material)
-				. = "No significant material found in \the [A]."
-				return
-
-			. = "<u>[capitalize(A.material.getName())]</u><br>[A.material.getDesc()]<br><br>"
-			if (length(A.material.getMaterialProperties()))
-				for(var/datum/material_property/mat in A.material.getMaterialProperties())
-					var/value = A.material.getProperty(mat.id)
-					. += "• [mat.getAdjective(A.material)] ([value][mat.value_unit])<br>"
-			else
-				. += "The material is completely unremarkable."
+			var/datum/matsci_scan/scan = new(A, usr)
+			return scan.report
 
