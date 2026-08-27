@@ -4,7 +4,7 @@ TYPEINFO(/datum/component/pressure_vision)
 	)
 
 /datum/component/pressure_vision
-	//this is literally just a 32x32 white square, someone please tell me if there's a less dumb way to do this
+	//this is literally just a 32x32 white square, someone please tell me if there's a less dumb way to do this -TobleroneSwordfish
 	var/icon/overlay_icon = 'icons/effects/effects.dmi'
 	var/overlay_state = "atmos_overlay"
 	var/list/image/atmos_overlays = list()
