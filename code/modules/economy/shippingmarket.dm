@@ -752,6 +752,8 @@
 			computer.update_static_data_for_all_viewers()
 			if(market_reset) //Return to the trader main menu to avoid trying to view a trader that has left
 				computer.set_tgui_shared_state("viewtrader", -1)
+		for_by_tcl(computer, /obj/machinery/computer/ordercomp)
+			computer.update_static_data_for_all_viewers()
 
 // Debugging and admin verbs (mostly coder)
 

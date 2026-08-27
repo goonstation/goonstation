@@ -104,7 +104,7 @@ export const SupplyConsole = () => {
   );
 };
 
-const MarketInformation = () => {
+export const MarketInformation = () => {
   const { data } = useBackend<SupplyConsoleData>();
   return (
     <Stack vertical fill>
@@ -164,7 +164,7 @@ const RockboxControls = () => {
   );
 };
 
-const SupplyConsoleTab = (props) => {
+export const SupplyConsoleTab = (props) => {
   const { tabID, tabName } = props;
   const [viewing_tab, setTab] = useSharedState(
     'viewtab',

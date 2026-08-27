@@ -2,7 +2,7 @@
 	name = "supply request console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "QMreq"
-	var/temp = null
+	var/temp
 	var/obj/item/card/id/scan = null
 	var/console_location = null
 	circuit_type = /obj/item/circuitboard/qmorder
@@ -22,6 +22,55 @@
 /obj/machinery/computer/ordercomp/console_lower
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "qmreq1"
+
+/obj/machinery/computer/ordercomp/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "SupplyConsole", src.name)
+		ui.open()
+
+/obj/machinery/computer/ordercomp/ui_static_data(mob/user)
+	. = list()
+	.["supply_categories"] = global.QM_CategoryList
+	.["supply_entries"] = src.fetch_supply_entry_data()
+
+/obj/machinery/computer/ordercomp/proc/fetch_supply_entry_data()
+	. = list()
+	for (var/datum/supply_packs/supply_pack in qm_supply_cache)
+		if(supply_pack.syndicate || supply_pack.hidden)
+			continue
+		.+= list(list(
+			"name" = supply_pack.name,
+			"desc" = supply_pack.desc,
+			"category" = supply_pack.category,
+			"cost" = supply_pack.cost,
+			"ref" = ref(supply_pack),
+		))
+		LAGCHECK(LAG_LOW)
+
+/obj/machinery/computer/ordercomp/ui_data(mob/user)
+	. = list()
+	.["shipping_budget"] = global.wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY]
+	.["market_reset_timer"] = global.shippingmarket.get_market_timeleft()
+	.["requests"] = src.fetch_supply_request_data()
+	.["signal_loss"] = global.signal_loss
+	if(src.scan)
+		.["scanned_name"] = src.scan.registered
+		.["scanned_job"] = src.scan.assignment
+		var/datum/db_record/account = FindBankAccountByName(src.scan.registered)
+		if(account)
+			.["scanned_credits"] = account["current_money"]
+
+/obj/machinery/computer/ordercomp/proc/fetch_supply_request_data()
+	. = list()
+	for(var/datum/supply_order/SO in shippingmarket.supply_requests)
+		.+= list(list(
+			"supply_name" = SO.object.name,
+			"order_ref" = ref(SO),
+			"requester" = SO.orderedby,
+			"cost" = SO.object.cost,
+			"console_location" = SO.console_location,
+		))
 
 /obj/machinery/computer/ordercomp/attack_hand(var/mob/user)
 	if(..())
