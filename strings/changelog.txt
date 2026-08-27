@@ -1,5 +1,9 @@
 
 (t)wed aug 26 26
+(u)ANNmagedon
+(p)27594
+(e)🗺|A-Mapping
+(+)The hop of menhir, in their infinite greed, has obtained another dog.
 (u)LorrMaster
 (p)27601
 (e)🆕📦|C-Feature, A-Game-Objects
