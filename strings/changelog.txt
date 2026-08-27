@@ -1,5 +1,95 @@
 
+(t)wed aug 26 26
+(u)LorrMaster
+(p)27601
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)The duration of a white hole from bursting singularities now depends on the largest size that the singularity has reached
+(u)bamlord
+(p)27550
+(e)🏅|A-Medal
+(+)Added a new medal for winning the lottery. What lottery? THE lottery.
+(u)bamlord
+(p)27611
+(e)⚖|C-Balance
+(+)Syndicate cyborgs are now counted as trained syndicates for the purposes of targeting and item descriptions etc.
+(u)Muzcl
+(p)27609
+(e)🎨|C-Sprites
+(+)A new fish has spawned in the clown's shoes and central command ballpit.
+(t)tue aug 25 26
+(u)TDHooligan
+(p)27600
+(e)🪲🧛|C-Bug, A-Gamemodes
+(+)Fix: Gangs should now only take 3 seconds to spray a tag in an unoccupied space, instead of 15/12/9 seconds.
+(+)Fix: Gangs can no longer hand in foam dart guns.
+(+)Tagging over rival tags now takes slightly longer.
+(t)mon aug 24 26
+(u)ANNmagedon
+(p)27603
+(e)🗺|A-Mapping
+(+)A familiar pair of plushies previously lost with the end of donut 2 has appeared on donut 3.
+(t)sun aug 23 26
+(u)ANNmagedon + ZeWaka
+(p)26916
+(e)🎨🧛📨|C-Sprites, A-Gamemodes, A-Logistics
+(+)A new stamp of the flock has been added! its a bit odd and can be created by the flock or bought in deep space.
+(u)ANNmagedon
+(p)27581
+(e)|
+(+)The civilian module for cyborgs now includes a pitcher.
+(u)ANNmagedon
+(p)27552
+(e)🗺|A-Mapping
+(+)The pharmacy at Kondaru has blinds for photophosphide making, just don't stand too close to the door!
+(u)Kubius
+(p)26362
+(f)https://forum.ss13.co/showthread.php?tid=25085
+(e)🗺🎨🔊🧛🚨⏰🍝🌠🐁|A-Mapping, C-Sprites, C-Sound, A-Gamemodes, A-Admin, A-Status-Effects, A-Catering, A-Events, A-Critters
+(*)Added Menhir, a new low to mid pop map built around and into the massive artifact TOREADOR-7I-22408 (colloquially, the Crown), with its own unique event cycle and an interior to explore.
+(t)sat aug 22 26
+(u)LeahTheTech
+(p)27512
+(e)🗺|A-Mapping
+(*)Moved the spare nuclear charge from donut 2 science to donut 3 asylum.
+(u)LeahTheTech
+(p)27492
+(e)🗺⛔🧛|A-Mapping, C-Removal, A-Gamemodes
+(*)Donut 2 has been rotated out in favour of Menhir.
+(u)JORJ949
+(p)27551
+(e)🪲🧛|C-Bug, A-Gamemodes
+(+)The Nuclear Operative "Destroy the station with a nuclear device" objective can now be completed outside of the Nuclear Emergency gamemode (if you have the objective and a station-destroying nuke in any other mode).
+(t)thu aug 20 26
+(u)JORJ949
+(p)27528
+(e)🔎🤖|C-Code-Quality, A-Silicons
+(+)AI tracking should now more consistently kick you out if you can't track someone (e.g. they equipped a syndicate ID or went invisible)
+(+)Teleport components can no longer be anchored inside solid walls.
+(t)wed aug 19 26
+(u)JORJ949
+(p)27499
+(e)🎨💅🤖|C-Sprites, C-QoL, A-Silicons
+(*)AI intercom overrides no longer have a time limit, instead only ending when the AI's eye leave the intercom's range of 5 tiles and each AI can only override one intercom at a time. AI overriden intercoms also show a little AI face on them while overridden.
+(u)LeahTheTech
+(+)Mineral accumulators now work considerably faster and have a toggle for collecting junk in the same way as the ore scoop.
+(u)JORJ949
+(p)27544
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Salvager power sink cost increased from 1k > 5k. Purchase limit decreased from 4 > 3
+(u)Gomp and Astarthoc
+(p)27339
+(e)🆕🎨⚗🍝|C-Feature, C-Sprites, A-Chemistry, A-Catering
+(*)Added Milk Frother, a sophisticated machine that allows bartenders to froth milk.
+(*)Added macchiato, decorate your espresso with frothed milk to get a bold and creamy coffee.
 (t)tue aug 18 26
+(u)LorrMaster
+(p)27479
+(e)💅🧱💡📨|C-QoL, A-Materials, A-Station-Systems, A-Logistics
+(*)Material Analyzers now display material trigger effects and how material properties will affect the scanned item.
+(u)LorrMaster
+(p)27530
+(e)💅🧱|C-QoL, A-Materials
+(*)Silver bars can now be created in the Nano-Crucible
 (u)Astarthoc
 (p)27410
 (e)🆕🎨⚗🍝|C-Feature, C-Sprites, A-Chemistry, A-Catering

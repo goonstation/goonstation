@@ -19159,6 +19159,10 @@
 /obj/blind_switch/directional/west{
 	pixel_y = 5
 	},
+/obj/item/stamp/hos{
+	pixel_x = 6;
+	pixel_y = -6
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "bkI" = (

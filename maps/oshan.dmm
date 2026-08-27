@@ -3933,6 +3933,7 @@
 	},
 /area/station/medical/head)
 "asB" = (
+/obj/critter/bat/doctor,
 /turf/simulated/floor/carpet{
 	icon_state = "fblue2"
 	},
@@ -4039,6 +4040,10 @@
 	},
 /obj/item/pen/crayon/random{
 	pixel_x = 2
+	},
+/obj/item/stamp/rd{
+	pixel_x = 11;
+	pixel_y = 7
 	},
 /turf/simulated/floor/carpet{
 	dir = 10;
@@ -15106,6 +15111,10 @@
 /area/station/mining/staff_room)
 "bwL" = (
 /obj/machinery/light/incandescent/warm,
+/obj/item/storage/secure/ssafe{
+	pixel_x = 0;
+	pixel_y = 26
+	},
 /turf/simulated/floor/carpet/purple/standard/narrow/nw,
 /area/station/crew_quarters/captain)
 "bwM" = (
@@ -20005,7 +20014,7 @@
 /obj/machinery/recharger{
 	pixel_y = 9
 	},
-/obj/item/reagent_containers/food/snacks/spaghetti/spicy,
+/obj/item/reagent_containers/food/snacks/spaghetti/spicy/security,
 /obj/item/kitchen/utensil/fork{
 	dir = 8;
 	pixel_y = -7
@@ -22953,6 +22962,11 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "cje" = (
+/obj/machinery/recharger/wall/sticky{
+	dir = 1;
+	pixel_x = 1;
+	pixel_y = 25
+	},
 /turf/simulated/floor/carpet/purple/standard/narrow/T_north,
 /area/station/crew_quarters/captain)
 "cjf" = (
@@ -32986,6 +33000,10 @@
 /obj/item/rocko{
 	pixel_x = -2;
 	pixel_y = 12
+	},
+/obj/item/stamp/ce{
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/ce)
@@ -50340,7 +50358,6 @@
 /area/station/chapel/sanctuary)
 "wSI" = (
 /obj/machinery/power/apc/autoname_west,
-/obj/critter/bat/doctor,
 /obj/cable{
 	icon_state = "0-4"
 	},
