@@ -1,5 +1,9 @@
 
 (t)thu aug 27 26
+(u)LorrMaster
+(p)27591
+(e)📦🤖|A-Game-Objects, A-Silicons
+(+)Material and forensic data is now maintained for the construction process of various robots
 (u)swinglow20
 (p)27480
 (e)🎨🐁|C-Sprites, A-Critters
