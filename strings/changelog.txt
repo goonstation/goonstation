@@ -1,5 +1,9 @@
 
 (t)thu aug 27 26
+(u)Skeletonman0
+(p)27536
+(e)🆕🎨💊|C-Feature, C-Sprites, A-Medical
+(+)You can now use canes in your active hand to tap them on the ground and make a noise.
 (u)LorrMaster
 (p)27587
 (e)📦👮|A-Game-Objects, A-Security
