@@ -84,7 +84,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 /obj/machinery/computer/supplycomp/ui_static_data(mob/user)
 	. = list()
 	.["supply_categories"] = global.QM_CategoryList
-	.["supply_entries"] = global.shipping_market.fetch_supply_entry_data(include_syndicate = src.hacked)
+	.["supply_entries"] = global.shippingmarket.fetch_supply_entry_data(include_syndicate = src.hacked)
 	.["market_data"] = src.fetch_market_data()
 	.["trader_data"] = src.fetch_trader_data()
 	.["requisition_data"] = src.fetch_requisition_data()
@@ -155,7 +155,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 	.["shipping_budget"] = global.wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY]
 	.["market_reset_timer"] = global.shippingmarket.get_market_timeleft()
 	.["order_history"] = src.fetch_order_history_data()
-	.["requests"] = global.shipping_market.fetch_supply_request_data()
+	.["requests"] = global.shippingmarket.fetch_supply_request_data()
 	.["signal_loss"] = global.signal_loss
 	.["rockbox_transaction_percent_fee"] = global.rockbox_globals.rockbox_client_fee_pct
 	.["rockbox_transaction_minimum_fee"] = global.rockbox_globals.rockbox_client_fee_min

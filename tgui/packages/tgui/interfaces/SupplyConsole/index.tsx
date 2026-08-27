@@ -33,7 +33,7 @@ import {
 export const SupplyConsole = () => {
   return (
     <ConsoleMenu
-      see_rockbox={true}
+      see_rockbox
       see_account={false}
       shown_tabs={[
         SupplyConsoleTabKeys.Requests,
@@ -82,6 +82,7 @@ export const ConsoleMenu = (props: SupplyConsoleProps) => {
                   <Tabs vertical fill>
                     {shown_tabs.map((tab) => (
                       <SupplyConsoleTab
+                        key={tab}
                         tabID={tab}
                         tabName={
                           tab === SupplyConsoleTabKeys.Requests

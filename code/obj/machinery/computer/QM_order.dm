@@ -32,7 +32,7 @@
 /obj/machinery/computer/ordercomp/ui_static_data(mob/user)
 	. = list()
 	.["supply_categories"] = global.QM_CategoryList
-	.["supply_entries"] = global.shipping_market.fetch_supply_entry_data(include_syndicate = FALSE)
+	.["supply_entries"] = global.shippingmarket.fetch_supply_entry_data(include_syndicate = FALSE)
 
 /obj/machinery/computer/ordercomp/ui_data(mob/user)
 	. = list()

@@ -101,7 +101,7 @@ export enum SupplyConsoleTabKeys {
 }
 
 export const SupplyConsoleTabKeysToTitles: string[] = [
-  'Requests', //Edited for rendering to show pending request count
+  'Requests', // Edited for rendering to show pending request count
   'Place Order',
   'Order History',
   'Shipping Market',
