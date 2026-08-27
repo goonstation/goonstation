@@ -26,7 +26,7 @@
 /obj/machinery/computer/ordercomp/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "SupplyConsole", src.name)
+		ui = new(user, src, "SupplyRequestConsole", src.name)
 		ui.open()
 
 /obj/machinery/computer/ordercomp/ui_static_data(mob/user)
