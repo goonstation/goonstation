@@ -190,8 +190,7 @@
 			return TRUE
 		. = ..()
 	New()
-
-			..()
+		..()
 		//APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/small_fermid, src)
 	green
 		recolor = "#05da17"
