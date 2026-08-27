@@ -1,6 +1,10 @@
 
 (t)wed aug 26 26
 (u)bamlord
+(p)27550
+(e)🏅|A-Medal
+(+)Added a new medal for winning the lottery. What lottery? THE lottery.
+(u)bamlord
 (p)27611
 (e)⚖|C-Balance
 (+)Syndicate cyborgs are now counted as trained syndicates for the purposes of targeting and item descriptions etc.
