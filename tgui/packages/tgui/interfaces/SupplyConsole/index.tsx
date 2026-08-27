@@ -7,6 +7,8 @@
 
 import {
   BlockQuote,
+  Button,
+  LabeledList,
   NumberInput,
   Section,
   Stack,
@@ -22,14 +24,41 @@ import { SupplyConsoleRequestsTab } from './RequestsTab';
 import { SupplyConsoleRequisitionsTab } from './RequisitionsTab';
 import { SupplyConsoleSuppliesTab } from './SuppliesTab';
 import { SupplyConsoleTradersTab } from './TradersTab';
-import { SupplyConsoleData, SupplyConsoleTabKeys } from './type';
+import {
+  SupplyConsoleData,
+  SupplyConsoleTabKeys,
+  SupplyConsoleTabKeysToTitles,
+} from './type';
 
 export const SupplyConsole = () => {
+  return (
+    <ConsoleMenu
+      see_rockbox={true}
+      see_account={false}
+      shown_tabs={[
+        SupplyConsoleTabKeys.Requests,
+        SupplyConsoleTabKeys.Supplies,
+        SupplyConsoleTabKeys.History,
+        SupplyConsoleTabKeys.Market,
+        SupplyConsoleTabKeys.Traders,
+        SupplyConsoleTabKeys.Requisitions,
+      ]}
+    />
+  );
+};
+
+interface SupplyConsoleProps {
+  see_rockbox: boolean;
+  see_account: boolean;
+  shown_tabs: number[];
+}
+export const ConsoleMenu = (props: SupplyConsoleProps) => {
   const { data, act } = useBackend<SupplyConsoleData>();
   const [viewing_tab, setTab] = useSharedState(
     'viewtab',
     SupplyConsoleTabKeys.Requests,
   );
+  const { see_rockbox, see_account, shown_tabs } = props;
   return (
     <Window theme={'retro-dark'} width={900} height={500}>
       <Window.Content>
@@ -41,41 +70,36 @@ export const SupplyConsole = () => {
                   <MarketInformation />
                 </Section>
               </Stack.Item>
+              {see_account && (
+                <Stack.Item>
+                  <Section title="User Account">
+                    <UserAccount />
+                  </Section>
+                </Stack.Item>
+              )}
               <Stack.Item grow>
                 <Section title="Menu Selection" fill>
                   <Tabs vertical fill>
-                    <SupplyConsoleTab
-                      tabID={SupplyConsoleTabKeys.Requests}
-                      tabName={`Requests (${data.requests.length})`}
-                    />
-                    <SupplyConsoleTab
-                      tabID={SupplyConsoleTabKeys.Supplies}
-                      tabName={'Place Order'}
-                    />
-                    <SupplyConsoleTab
-                      tabID={SupplyConsoleTabKeys.History}
-                      tabName={'Order History'}
-                    />
-                    <SupplyConsoleTab
-                      tabID={SupplyConsoleTabKeys.Market}
-                      tabName={'Shipping Market'}
-                    />
-                    <SupplyConsoleTab
-                      tabID={SupplyConsoleTabKeys.Traders}
-                      tabName={'Traders'}
-                    />
-                    <SupplyConsoleTab
-                      tabID={SupplyConsoleTabKeys.Requisitions}
-                      tabName={'Requisitions'}
-                    />
+                    {shown_tabs.map((tab) => (
+                      <SupplyConsoleTab
+                        tabID={tab}
+                        tabName={
+                          tab === SupplyConsoleTabKeys.Requests
+                            ? `Requests (${data.requests.length})`
+                            : SupplyConsoleTabKeysToTitles[tab]
+                        }
+                      />
+                    ))}
                   </Tabs>
                 </Section>
               </Stack.Item>
-              <Stack.Item>
-                <Section title="Rockbox Controls">
-                  <RockboxControls />
-                </Section>
-              </Stack.Item>
+              {see_rockbox && (
+                <Stack.Item>
+                  <Section title="Rockbox Controls">
+                    <RockboxControls />
+                  </Section>
+                </Stack.Item>
+              )}
             </Stack>
           </Stack.Item>
           <Stack.Item grow>
@@ -104,7 +128,7 @@ export const SupplyConsole = () => {
   );
 };
 
-export const MarketInformation = () => {
+const MarketInformation = () => {
   const { data } = useBackend<SupplyConsoleData>();
   return (
     <Stack vertical fill>
@@ -164,7 +188,39 @@ const RockboxControls = () => {
   );
 };
 
-export const SupplyConsoleTab = (props) => {
+const UserAccount = () => {
+  const { data, act } = useBackend<SupplyConsoleData>();
+  return (
+    <Stack>
+      {!!data.account_data.scanned_name && (
+        <Stack vertical>
+          <LabeledList>
+            <LabeledList.Item label="Name">
+              {data.account_data.scanned_name}
+            </LabeledList.Item>
+            <LabeledList.Item label="Rank">
+              {data.account_data.scanned_job}
+            </LabeledList.Item>
+            <LabeledList.Item label="Credits">
+              {data.account_data.scanned_credits}
+            </LabeledList.Item>
+          </LabeledList>
+          <Button width="100%" onClick={() => act('contribute')} icon="coins">
+            Donate to Supply Budget
+          </Button>
+        </Stack>
+      )}
+
+      {!data.account_data.scanned_name && (
+        <Button width="100%" onClick={() => act('scan_id')} icon="id-card">
+          Swipe ID
+        </Button>
+      )}
+    </Stack>
+  );
+};
+
+const SupplyConsoleTab = (props) => {
   const { tabID, tabName } = props;
   const [viewing_tab, setTab] = useSharedState(
     'viewtab',

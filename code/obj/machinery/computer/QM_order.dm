@@ -54,12 +54,14 @@
 	.["market_reset_timer"] = global.shippingmarket.get_market_timeleft()
 	.["requests"] = src.fetch_supply_request_data()
 	.["signal_loss"] = global.signal_loss
+	var/list/account_data = list()
 	if(src.scan)
-		.["scanned_name"] = src.scan.registered
-		.["scanned_job"] = src.scan.assignment
+		account_data["scanned_name"] = src.scan.registered
+		account_data["scanned_job"] = src.scan.assignment
 		var/datum/db_record/account = FindBankAccountByName(src.scan.registered)
 		if(account)
-			.["scanned_credits"] = account["current_money"]
+			account_data["scanned_credits"] = account["current_money"]
+	.["account_data"] = account_data
 
 /obj/machinery/computer/ordercomp/proc/fetch_supply_request_data()
 	. = list()
