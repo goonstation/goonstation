@@ -191,6 +191,7 @@
 						wagesystem.lotteryJackpot -= I:winner
 					else
 						wagesystem.lotteryJackpot = 0
+					user.unlock_medal("Guess who won the lottery!", TRUE)
 				else
 					boutput(user, SPAN_ALERT("This ticket isn't a winner. Better luck next time!"))
 				qdel(I)
