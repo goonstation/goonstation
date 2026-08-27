@@ -74,7 +74,7 @@ TYPEINFO(/obj/machinery/bot/skullbot)
 /obj/machinery/bot/skullbot/omnitraitor
 	name = "crystal skullbot"
 	icon_state = "skullbot_omnitraitor"
-	default_material = "molitz"
+	default_material = "starstone"
 
 /obj/machinery/bot/skullbot/hunter
 	name = "strange skullbot"
