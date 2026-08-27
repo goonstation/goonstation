@@ -144,7 +144,7 @@
 	frenzy_low = 2
 	frenzy_high = 4
 	frenzy_damage = 3
-	knockdown_dur = 0.25 SECONDS
+	knockdown_dur = 1.2 SECONDS
 	bleed_prob = 10
 	bleed_damage = 7
 	bleed_amount = 5
