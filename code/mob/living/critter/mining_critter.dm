@@ -246,9 +246,9 @@
 	icon = 'icons/misc/bigcritter.dmi'
 	icon_state = "fermid-queen"
 	icon_state_dead = "fermid-queen-dead"
-	health_brute = 50
+	health_brute = 100
 	health_brute_vuln = 0.6
-	health_burn = 25
+	health_burn = 50
 	health_burn_vuln = 0.1
 	pull_w_class = W_CLASS_BULKY
 	speed = /datum/movement_modifier/big_fermid
@@ -264,9 +264,9 @@
 	icon = 'icons/misc/bigcritter.dmi'
 	icon_state = "fermid-hulk"
 	icon_state_dead = "fermid-hulk-dead"
-	health_brute = 40
+	health_brute = 90
 	health_brute_vuln = 0.5
-	health_burn = 25
+	health_burn = 50
 	health_burn_vuln = 0.1
 	pull_w_class = W_CLASS_BULKY
 	add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/slam/fermid)
