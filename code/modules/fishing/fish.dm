@@ -20,6 +20,7 @@ Fish lists:
 		Rosefin Shiner
 		Catfish
 		Tiger Oscar
+		Long pike
 
 Ocean saltwater fish:
 	Implemented:
@@ -74,6 +75,7 @@ Alien/mutant/other fish:
 		Origami fish
 		Cardboard fish
 		Starstonefish
+		Clown fish
 */
 
 // These catagories aren't used currently.
@@ -284,6 +286,18 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/pike)
 	inhand_color = "#24d10d"
 	category = FISH_CATEGORY_FRESHWATER
 	rarity = ITEM_RARITY_RARE
+
+TYPEINFO(/obj/item/reagent_containers/food/fish/long_pike)
+	appears_in_fish_collection = FALSE
+/obj/item/reagent_containers/food/fish/long_pike
+	name = "long pike"
+	desc = "Named after the long and pointy weapon of war, this one for sure fits the 'long', but not the 'pointy'. Jeez, this thing is long."
+	icon = 'icons/obj/foodNdrink/food_fish_96x32.dmi'
+	icon_state = "pike_long"
+	inhand_color = "#24d10d"
+	category = FISH_CATEGORY_FRESHWATER
+	rarity = ITEM_RARITY_LEGENDARY
+
 
 TYPEINFO(/obj/item/reagent_containers/food/fish/arapaima)
 	appears_in_fish_collection = TRUE
@@ -1068,3 +1082,19 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/borgfish)
 
 	get_scent_color()
 		return "dusty grey"
+
+TYPEINFO(/obj/item/reagent_containers/food/fish/toonclown_fish)
+	appears_in_fish_collection = TRUE
+/obj/item/reagent_containers/food/fish/toonclown_fish
+	name = "clown fish"
+	desc = "This little guy came a long, long way to make your day!"
+	icon_state = "toonclown_fish"
+	inhand_color = "#6DD361"
+	slice_product = /obj/item/clothing/mask/clown_nose //feel free to change this if theres something funnier
+	rarity = ITEM_RARITY_LEGENDARY
+
+	slapsound()
+		playsound(src, pick('sound/musical_instruments/Bikehorn_bonk1.ogg', 'sound/musical_instruments/Bikehorn_bonk2.ogg', 'sound/musical_instruments/Bikehorn_bonk3.ogg'), 50, 1, -1)
+
+	get_scent_color()
+		return "minty green"

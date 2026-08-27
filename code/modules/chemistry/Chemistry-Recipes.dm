@@ -718,7 +718,7 @@
 		id = "milk_powder"
 		result = "milk_powder"
 		required_reagents = list("milk" = 1)
-		inhibitors = list("water")
+		inhibitors = list("water", "sugar")
 		result_amount = 1
 		min_temperature = T0C + 100
 		mix_phrase = "The water boils away, leaving behind a white condensed powder."
@@ -5609,3 +5609,57 @@
 		mix_phrase = "The mixture coalesces into a dark red liquid."
 		result_amount = 5
 
+	sweetcondensedmilk
+		name = "Sweet Condensed Milk"
+		id = "sweetcondensedmilk"
+		result = "sweetcondensedmilk"
+		required_reagents = list("sugar" = 1, "milk" = 1)
+		min_temperature = T0C + 90
+		result_amount = 1
+		mix_phrase = "The mixture bubbles gently before thickening considerably."
+		drinkrecipe = TRUE
+
+	cafebombon
+		name = "Café Bombón"
+		id = "cafebombon"
+		result = "cafebombon"
+		required_reagents = list("sweetcondensedmilk"=1, "espresso"= 1)
+		result_amount = 2
+		mix_phrase = "The mixture slowly separates into two distinct layers."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
+	frothedmilk
+		name = "Frothed Milk"
+		id = "frothedmilk"
+		result = "frothedmilk"
+		required_reagents = list("milk" = 1)
+		result = "frothedmilk"
+		min_temperature = T0C + 65
+		result_amount = 1
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		mix_phrase = "The milk rapidly expands into a smooth, velvety foam."
+		drinkrecipe = TRUE
+
+		does_react(datum/reagents/holder)
+			var/datum/reagent/fooddrink/milk/milk = holder.get_reagent("milk")
+			return milk && milk.was_physically_shocked
+
+	macchiato
+		name = "Macchiato"
+		id = "macchiato"
+		result = "macchiato"
+		required_reagents = list("frothedmilk" = 1, "espresso" = 1)
+		result_amount = 2
+		mix_phrase = "The foam settles gently atop the espresso, leaving a pale mark across its surface."
+    
+	dulcedeleche
+		name = "Dulce de leche"
+		id = "dulcedeleche"
+		result = "dulcedeleche"
+		required_reagents = list("sweetcondensedmilk" = 1, "vanilla" = 1)
+		min_temperature = T0C + 85
+		result_amount = 1
+		mix_phrase = "The mixture slowly thickens into a velvety spread."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE

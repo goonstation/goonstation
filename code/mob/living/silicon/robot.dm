@@ -3749,8 +3749,12 @@ TYPEINFO(/mob/living/silicon/robot)
 		. = ..()
 
 	onAdd(optional)
-		. = ..()
 		src.robot = src.owner
+		if(src.robot.syndicate || src.robot.emagged)
+			src.fake = TRUE
+		. = ..()
+		if(src.fake)
+			return
 		src.robot.uneq_all()
 		for (var/obj/item/roboupgrade/R in src.robot.contents)
 			if (R.activated)
@@ -3760,6 +3764,8 @@ TYPEINFO(/mob/living/silicon/robot)
 
 	onUpdate(timePassed)
 		. = ..()
+		if(src.fake)
+			return
 		src.robot.uneq_all()
 		for (var/obj/item/roboupgrade/R in src.robot.contents)
 			if (R.activated)
