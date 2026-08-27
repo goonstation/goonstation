@@ -24,6 +24,9 @@
 
 		if(istype(I, /obj/item/parts/robot_parts/arm))
 			var/obj/machinery/bot/cleanbot/A = new created_cleanbot_type
+			A.setMaterial(src.material)
+			A.forensic_holder = src.forensic_holder
+			I.forensic_holder.copy_to(A.forensic_holder)
 			if (user.r_hand == src || user.l_hand == src)
 				A.set_loc(get_turf(user))
 			else
@@ -63,6 +66,7 @@
 	layer = 5
 	density = 0
 	anchored = UNANCHORED
+	default_material = "plastic"
 	var/icon_state_base // defined in new, this is the base of the icon_state with the suffix removed, i.e. "cleanbot" without the "0", for easier modification of icon_states so long as the convention is followed
 
 	on = 1

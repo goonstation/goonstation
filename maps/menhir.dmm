@@ -1315,7 +1315,9 @@
 /obj/item/reagent_containers/food/drinks/bottle/tequila{
 	pixel_x = -5
 	},
-/obj/mapping_helper/access/engineering_chief,
+/obj/mapping_helper/access/engineering_chief{
+	affected_types = list(/obj/storage/secure)
+	},
 /obj/item/reagent_containers/food/drinks/bottle/beer{
 	pixel_x = 6;
 	pixel_y = -4

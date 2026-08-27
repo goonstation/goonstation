@@ -588,6 +588,9 @@ proc/ui_describe_reagents(atom/A, show_overdose = FALSE)
 	attackby(var/obj/item/D, mob/user as mob)
 		if (istype(D, /obj/item/device/prox_sensor))
 			var/obj/item/bucket_sensor/B = new bucket_sensor_type
+			B.setMaterial(src.material)
+			B.forensic_holder = src.forensic_holder
+			D.forensic_holder.copy_to(B.forensic_holder)
 			user.u_equip(D)
 			user.put_in_hand_or_drop(B)
 			user.show_text("You add the sensor to the bucket")
