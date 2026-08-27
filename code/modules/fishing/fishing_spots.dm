@@ -1071,3 +1071,19 @@ datum/fishing_spot/golden_toilet
 	rod_tier_required = 3
 	fish_available = list(/obj/item/raw_material/rock = 30,
 	/obj/item/reagent_containers/food/fish/starstonefish = 5)
+
+/datum/fishing_spot/ballpit
+	fishing_atom_type = /turf/unsimulated/floor/ballpit
+	rod_tier_required = 3
+	fish_available = list(/obj/item/beach_ball = 25, //BALL pit
+	/obj/item/basketball = 25,
+	/obj/item/football = 25,
+	/obj/item/dice/magic8ball = 25,
+	/obj/item/toy/plush/small/stress_ball = 25,
+	/obj/item/paper/folded/ball = 25,
+	/obj/item/reagent_containers/food/snacks/rice_ball = 25,
+	/obj/item/reagent_containers/food/snacks/meatball = 25,
+	/obj/item/reagent_containers/food/fish/clownfish = 20,
+	/obj/item/clothing/shoes/clown_shoes = 10, //they fell in :(
+	/mob/living/critter/spider/baby/nice = 5,
+	/obj/item/reagent_containers/food/fish/toonclown_fish = 5)
