@@ -282,9 +282,9 @@
 		src.message_user("tar: Stack overflow.")
 		return
 
-	if (istype(to_copy, /datum/computer/file/archive))
-		src.message_user("tar: Cannot handle file [current_path][to_copy]")
-		return
+	// there may need to be a check here to avoid copying an archive into itself
+	// but when this proc is currently called, at time of writing,
+	// the archive is not actually on the filesystem and so cannot be archived
 
 	// avoid copying files we don't have permission for
 	// this can happen if you copy /, which you can see, which contains /proc, which you need superuser for
