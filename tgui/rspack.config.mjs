@@ -164,6 +164,12 @@ export default (env = {}, argv) => {
     },
     optimization: {
       emitOnErrors: false,
+      /**
+        * |GOONSTATION-CHANGE| Define `process.env.NODE_ENV` from build mode.
+       *
+        * Keeps React's JSX runtime in sync with Rspack.
+       */
+      nodeEnv: env.NODE_ENV || mode,
     },
     performance: {
       hints: false,
@@ -173,7 +179,7 @@ export default (env = {}, argv) => {
     stats: createStats(true),
     plugins: [
       new rspack.EnvironmentPlugin({
-        NODE_ENV: env.NODE_ENV || mode,
+        // |GOONSTATION-CHANGE| NODE_ENV comes from `optimization.nodeEnv`.
         WEBPACK_HMR_ENABLED: env.WEBPACK_HMR_ENABLED || argv.hot || false,
         DEV_SERVER_IP: env.DEV_SERVER_IP || null,
       }),
