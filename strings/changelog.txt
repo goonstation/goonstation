@@ -1,5 +1,9 @@
 
 (t)thu aug 27 26
+(u)LeahTheTech
+(p)27630
+(e)⛔⚗|C-Removal, A-Chemistry
+(+)Fliptonium can no longer be used with smoke powder.
 (u)Kubius
 (p)27626
 (e)🗺|A-Mapping
