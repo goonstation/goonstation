@@ -2,7 +2,7 @@
 	// Totally human person and not a ling wearing a smiley mask
 	// Buys brains and stuff reminding them of themselves or icemoon, sells some "normal" organic stuff & friends from home.
 	name = "Human Steve"
-	picture = "shambles.png"
+	picture = "shambles.png" // art by cogworks
 	crate_tag = "STEVE"
 	hiketolerance = 10
 	base_patience = list(4,6)
