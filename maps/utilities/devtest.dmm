@@ -2668,15 +2668,6 @@
 /obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor,
 /area/station/devzone)
-"Sm" = (
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/machinery/computer3/terminal/zeta{
-	dir = 8;
-	setup_os_string = "ZETA_MAINFRAME";
-	setup_frame_type = /obj/computer3frame
-	},
-/turf/unsimulated/floor/caution,
-/area/station/devzone)
 "Sw" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -5060,7 +5051,7 @@ Yx
 dq
 xg
 WN
-Sm
+yl
 Yx
 Yx
 Yx
