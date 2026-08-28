@@ -89,6 +89,7 @@
 /datum/commodity/trader/steve/lingmeat
 	comname = "Normal meat"
 	comtype = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/changeling
+	amount = 120
 	price_boundary = list(PAY::TRADESMAN*0.8,PAY::TRADESMAN*1.5)
 	possible_names = list("Very normal meat! We- I promise it only sometimes bite!",
 	"Just regular good ol' meat, dont ask why it has legs please!")
@@ -96,6 +97,7 @@
 /datum/commodity/trader/steve/lingblood
 	comname = "Normal Human Blood"
 	comtype = /obj/item/reagent_containers/iv_drip/blood/ling
+	amount = 120
 	price_boundary = list(PAY::DOCTORATE*2,PAY::DOCTORATE*3)
 	possible_names = list("We love to donate blood! Put our blood in everyone!",
 	"Normal human blood donated by ourselves, please do not heat it.")
@@ -103,6 +105,7 @@
 /datum/commodity/trader/steve/live_brullbar
 	comname = "Pale Humanoid"
 	comtype = /mob/living/critter/brullbar
+	amount = 1
 	price_boundary = list(PAY::DONTBUYIT*0.8,PAY::DONTBUYIT*1.2)
 	possible_names = list("Pale creature from homeworld, very loud.",
 	"Creature from homeworld, cries too much, please buy.")
