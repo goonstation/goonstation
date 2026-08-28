@@ -114,7 +114,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 	event_handler_flags = IMMUNE_SINGULARITY
 	plane = PLANE_NOSHADOW_BELOW
 	pixel_point = TRUE
-	var/datum/whitehole_spawner/source_location = null
+	var/datum/whitehole_spawner/source_location = null //! Decides what the white hole will release.
 	var/start_time
 	var/state = "static"
 	var/triggered_by_event = FALSE
@@ -373,6 +373,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			return
 		thing.throw_at(T, throw_range, throw_speed, allow_anchored=TRUE, bonus_throwforce=30, throw_type=THROW_PHASE)
 
+	/// Pick a spawner that will determine what kind of white hole this is.
 	proc/choose_location()
 		var/list/locations_list = concrete_typesof(/datum/whitehole_spawner)
 		var/list/weighted_locations = list()

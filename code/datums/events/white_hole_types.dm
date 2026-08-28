@@ -472,7 +472,6 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		add_spawn(1, new /datum/whitehole_spawner/grenade_armed(/obj/item/old_grenade/stinger/frag))
 		add_spawn(1, new /datum/whitehole_spawner/grenade_armed(/obj/item/chem_grenade/incendiary))
 		add_spawn(0.5, new /datum/whitehole_spawner/grenade_armed(/obj/item/chem_grenade/very_incendiary))
-
 		add_reagent(0.1, /datum/reagent/harmful/saxitoxin)
 		add_reagent(1, /datum/reagent/blood)
 
@@ -1130,7 +1129,7 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 	spawn_probs = list(
 		/obj/item/reagent_containers/food/snacks/plant = 1,
 		/obj/item/plant = 1,
-		/obj/item/clothing/head/flower = 1
+		// /obj/item/clothing/head/flower = 1
 	)
 
 	unleash(obj/whitehole/whitehole)
@@ -1143,7 +1142,7 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 /datum/whitehole_spawner/corpse
 	name = "corpse"
 	icon_view = "chapel"
-	var/bagged = FALSE
+	var/bagged_chance = 0 PERCENT
 	var/decomp_max = DECOMP_STAGE_SKELETONIZED
 	var/decomp_min = DECOMP_STAGE_NO_ROT
 
@@ -1165,7 +1164,7 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 			var/obj/item/organ/organ = H.drop_organ(pick("left_eye","right_eye","left_lung","right_lung","butt","left_kidney","right_kidney","liver","stomach","intestines","spleen","pancreas","appendix"))
 			qdel(organ)
 		H.death()
-		if(src.bagged)
+		if(prob(src.bagged_chance))
 			var/obj/item/body_bag/bag = new(whitehole.loc)
 			bag.UpdateIcon()
 			H.is_npc = TRUE // NPC is set for direct mob returns separately
@@ -1174,8 +1173,8 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		return H
 
 /datum/whitehole_spawner/corpse/bagged
-	name = "corpse: bagged"
-	bagged = TRUE
+	name = "bagged corpse"
+	bagged_chance = 100 PERCENT
 
 /datum/whitehole_spawner/gene_injector
 	name = "gene injector"
