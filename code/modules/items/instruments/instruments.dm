@@ -554,6 +554,9 @@
 			logTheThing(LOG_STATION, user, "builds an amusing duck at [log_loc(src)]")
 			var/obj/machinery/bot/duckbot/D = new /obj/machinery/bot/duckbot
 			D.eggs = rand(2,5) // LAY EGG IS TRUE!!!
+			D.setMaterial(src.material)
+			D.forensic_holder = src.forensic_holder
+			W.forensic_holder.copy_to(D.forensic_holder)
 			boutput(user, SPAN_NOTICE("You add [W] to [src]."))
 			D.set_loc(get_turf(user))
 			qdel(W)
@@ -606,6 +609,9 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 			return
 		else
 			var/obj/machinery/bot/chefbot/D = new /obj/machinery/bot/chefbot
+			D.setMaterial(src.material)
+			D.forensic_holder = src.forensic_holder
+			W.forensic_holder.copy_to(D.forensic_holder)
 			boutput(user, SPAN_NOTICE("You add [W] to [src]."))
 			D.set_loc(get_turf(user))
 			qdel(W)

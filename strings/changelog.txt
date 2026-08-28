@@ -1,4 +1,30 @@
 
+(t)thu aug 27 26
+(u)LeahTheTech
+(p)27630
+(e)⛔⚗|C-Removal, A-Chemistry
+(+)Fliptonium can no longer be used with smoke powder.
+(u)Kubius
+(p)27626
+(e)🗺|A-Mapping
+(+)Menhir's got a loafer now! And a particular disk drive of potential importance to shifty individuals.
+(u)Skeletonman0
+(p)27536
+(e)🆕🎨💊|C-Feature, C-Sprites, A-Medical
+(+)You can now use canes in your active hand to tap them on the ground and make a noise.
+(u)LorrMaster
+(p)27587
+(e)📦👮|A-Game-Objects, A-Security
+(+)Securitron construction maintains material and forensic data.
+(u)LorrMaster
+(p)27591
+(e)📦🤖|A-Game-Objects, A-Silicons
+(+)Material and forensic data is now maintained for the construction process of various robots
+(u)swinglow20
+(p)27480
+(e)🎨🐁|C-Sprites, A-Critters
+(*)Changed how Fermids' combat works in game and slightly buffs them. Watch out, mining!
+(+)Changed movement speed, health, and abilities for four of the Fermid subtypes: Workers, Drones, Spitters, and Hulks
 (t)wed aug 26 26
 (u)ANNmagedon
 (p)27594
