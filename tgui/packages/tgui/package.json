@@ -8,6 +8,7 @@
     "dayjs": "1.11.20",
     "dompurify": "^3.4.5",
     "highlight.js": "^11.11.1",
+    "jotai": "^2.16.0",
     "js-yaml": "^4.1.1",
     "marked": "^15.0.12",
     "marked-base-url": "^1.1.9",

@@ -10,27 +10,20 @@ import './styles/main.scss';
 import { perf } from 'common/perf';
 import { setupHotReloading } from 'tgui-dev-server/link/client.mjs';
 
-import { setGlobalStore } from './backend';
-import { setupGlobalEvents } from './events';
+import { App } from './App';
+import { setDebugHotKeys } from './debug';
+import { bus } from './events/listeners';
+import { setupGlobalEvents } from './global-events';
 import { setupHotKeys } from './hotkeys';
 import { loadIconRefMap } from './icons';
 import { captureExternalLinks } from './links';
 import { createRenderer } from './renderer';
-import { getRoutedComponent } from './routes';
-import { configureStore } from './store';
+import { createStackAugmentor } from './stack';
 
 perf.mark('inception', window.performance?.timing?.navigationStart);
 perf.mark('init');
 
-const store = configureStore();
-
-const renderApp = createRenderer(() => {
-  setGlobalStore(store);
-  loadIconRefMap();
-
-  const Component = getRoutedComponent();
-  return <Component />;
-});
+const renderApp = createRenderer(() => <App />);
 
 function setupApp() {
   // Delay setup
@@ -39,15 +32,21 @@ function setupApp() {
     return;
   }
 
+  window.__augmentStack__ = createStackAugmentor();
+
   setupGlobalEvents();
   setupHotKeys();
   captureExternalLinks();
+  loadIconRefMap();
 
-  // Re-render UI on store updates
-  store.subscribe(renderApp);
+  if (process.env.NODE_ENV !== 'production') {
+    setDebugHotKeys();
+  }
 
-  // Dispatch incoming messages as store actions
-  Byond.subscribe((type, payload) => store.dispatch({ type, payload }));
+  // Dispatch incoming messages to their handlers
+  Byond.subscribe((type, payload) => bus.dispatch({ type, payload }));
+
+  renderApp();
 
   // Enable hot module reloading
   if (module.hot) {
@@ -55,9 +54,9 @@ function setupApp() {
     // prettier-ignore
     module.hot.accept([
       './components',
-      './debug',
       './layouts',
       './routes',
+      './App',
     ], () => {
       renderApp();
     });

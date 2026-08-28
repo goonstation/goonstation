@@ -17,14 +17,14 @@ import { UI_DISABLED, UI_INTERACTIVE } from 'tgui-core/constants';
 import { type BooleanLike, classes } from 'tgui-core/react';
 import { decodeHtmlEntities } from 'tgui-core/string';
 
-import { backendSuspendStart, globalStore, useBackend } from '../backend';
-import { useDebug } from '../debug';
+import { useBackend } from '../backend';
 import {
   dragStartHandler,
   recallWindowGeometry,
   resizeStartHandler,
   setWindowKey,
 } from '../drag';
+import { suspendStart } from '../events/handlers/suspense';
 import { createLogger } from '../logging';
 import { Layout } from './Layout';
 import { TitleBar } from './TitleBar';
@@ -53,8 +53,7 @@ export const Window = (props: Props) => {
     height,
   } = props;
 
-  const { config, suspended } = useBackend();
-  const { debugLayout = false } = useDebug();
+  const { config, suspended, debug } = useBackend();
   const [isReadyToRender, setIsReadyToRender] = useState(false);
 
   // We need to set the window to be invisible before we can set its geometry
@@ -66,20 +65,20 @@ export const Window = (props: Props) => {
     setIsReadyToRender(true);
   }, []);
 
-  const { scale } = config.window;
+  const scale = config?.window?.scale;
 
   useEffect(() => {
     if (!suspended && isReadyToRender) {
       const updateGeometry = () => {
         const options = {
-          ...config.window,
+          ...config?.window,
           size: DEFAULT_SIZE,
         };
 
         if (width && height) {
           options.size = [width, height];
         }
-        if (config.window?.key) {
+        if (config?.window?.key) {
           setWindowKey(config.window.key);
         }
         recallWindowGeometry(options);
@@ -101,13 +100,12 @@ export const Window = (props: Props) => {
     }
   }, [isReadyToRender, width, height, scale]);
 
-  const dispatch = globalStore.dispatch;
-  const fancy = config.window?.fancy;
-  const mode = config.window?.mode; /* |GOONSTATION-ADD| */
+  const fancy = config?.window?.fancy;
+  const mode = config?.window?.mode; /* |GOONSTATION-ADD| */
 
   // Determine when to show dimmer
   const showDimmer =
-    config.user &&
+    config?.user &&
     (config.user.observer
       ? config.status < UI_DISABLED
       : config.status < UI_INTERACTIVE);
@@ -115,20 +113,22 @@ export const Window = (props: Props) => {
   return suspended ? null : (
     <Layout className="Window" theme={theme} mode={mode}>
       <TitleBar
-        title={title || decodeHtmlEntities(config.title)}
-        status={config.status}
+        title={title || decodeHtmlEntities(config?.title ?? '')}
+        status={config?.status}
         fancy={fancy}
-        refreshing={config.refreshing ? true : false} /* |GOONSTATION-ADD| */
+        refreshing={!!config?.refreshing} /* |GOONSTATION-ADD| */
         onDragStart={dragStartHandler}
-        onClose={() => {
-          logger.log('pressed close');
-          dispatch(backendSuspendStart());
-        }}
+        onClose={suspendStart}
         canClose={canClose}
       >
         {buttons}
       </TitleBar>
-      <div className={classes(['Window__rest', debugLayout && 'debug-layout'])}>
+      <div
+        className={classes([
+          'Window__rest',
+          debug.debugLayout && 'debug-layout',
+        ])}
+      >
         {!suspended && children}
         {showDimmer && <div className="Window__dimmer" />}
       </div>

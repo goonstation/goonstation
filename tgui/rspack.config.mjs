@@ -64,7 +64,6 @@ export default (env = {}, argv) => {
     ],
     entry: {
       tgui: ['./packages/tgui'],
-      // 'tgui-panel': ['./packages/tgui-panel'], // |GOONSTATION-CHANGE| Not used by us yet
       // 'tgui-say': ['./packages/tgui-say'], // |GOONSTATION-CHANGE| Not used by us yet
     },
     output: {

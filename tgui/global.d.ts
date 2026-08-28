@@ -202,8 +202,7 @@ const Byond: ByondType;
 
 interface Window {
   Byond: ByondType;
-  __store__: Store<unknown, AnyAction>;
-  __augmentStack__: (store: Store) => StackAugmentor;
+  __augmentStack__: (stack: string, error?: Error) => string;
 
   // 516 byondstorage API.
   hubStorage: Storage;

@@ -25,7 +25,7 @@ This project uses React. Take your time to read the guide:
 - [Component Reference](docs/component-reference.md) - UI building blocks
 - [Tgui Core](https://github.com/tgstation/tgui-core) - The component library for tgui.
 - [Using TGUI and Byond API for custom HTML popups](docs/tgui-for-custom-html-popups.md)
-- [Chat Embedded Components](docs/chat-embedded-components.md)
+- [Tgui Event Dispatch](packages/tgui/events/README.md) - how DM messages reach the store
 - [Writing Tests](docs/writing-tests.md)
 
 ## Pre-requisites
