@@ -124,4 +124,4 @@
 	comtype = /obj/item/instrument/ling_recording
 	amount = 3
 	price_boundary = list(PAY::DONTBUYIT*0.5,PAY::DONTBUYIT*0.6)
-	possible_names = list("Recording of us. We- I, a human who use singular pronouns singing. We feel sheepish about selling this.")
+	possible_names = list("The recording of us- me, a human who is a singular person, singing. We feel sheepish about selling this.")
