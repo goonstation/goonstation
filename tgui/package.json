@@ -22,9 +22,9 @@
     "tgui:normalize-svgs": "node normalize-svgs.mjs"
   },
   "dependencies": {
-    "@rspack/cli": "^2.0.4",
-    "@rspack/core": "^2.0.4",
-    "@rspack/dev-server": "^2.0.1",
+    "@rspack/cli": "^2.2.1",
+    "@rspack/core": "^2.2.1",
+    "@rspack/dev-server": "^2.2.1",
     "@typescript-eslint/parser": "^8.59.4",
     "@typescript-eslint/utils": "^8.59.4",
     "css-loader": "^7.1.4",
