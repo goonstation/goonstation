@@ -5,17 +5,28 @@
  * @license ISC
  */
 
-import { configAtom, store } from '../events/store';
+import { atom, useAtomValue } from 'jotai';
+import { useCallback } from 'react';
+
+import { configAtom } from '../events/store';
 import manifest from './cdn-manifest.json';
 
-export const resource = (file: string): string => {
-  // Not a hook: `resource()` is called from event handlers and plain helpers.
-  const { cdn } = store.get(configAtom);
-  if (cdn) {
-    if (manifest[file]) file = manifest[file];
-    return `${cdn}/${file}`;
-  } else {
+/** Keep CDN updates scoped to asset URLs. */
+const cdnAtom = atom((get) => get(configAtom).cdn);
+
+/** Pure. Depends on nothing but its arguments. */
+function resolve(file: string, cdn: string): string {
+  if (!cdn) {
     const parts = file.split('/');
     return parts[parts.length - 1];
   }
-};
+
+  return `${cdn}/${manifest[file] || file}`;
+}
+
+/** Resolves assets against the current CDN base. */
+export function useResource(): (file: string) => string {
+  const cdn = useAtomValue(cdnAtom);
+
+  return useCallback((file: string) => resolve(file, cdn), [cdn]);
+}
