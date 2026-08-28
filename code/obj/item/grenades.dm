@@ -504,25 +504,25 @@ TYPEINFO(/obj/item/old_grenade/smoke)
 
 			SPAWN(0)
 				if (src)
-					if (M && istype(M, /obj/item/old_grenade/smoke/mustard))
+					if (M?.mustard_gas && istype(M, /obj/item/old_grenade/smoke/mustard))
 						M.mustard_gas.start()
 					else
 						src.smoke.start()
 
 					sleep(1 SECOND)
-					if (M && istype(M, /obj/item/old_grenade/smoke/mustard))
+					if (M?.mustard_gas && istype(M, /obj/item/old_grenade/smoke/mustard))
 						M.mustard_gas.start()
 					else
 						src.smoke.start()
 
 					sleep(1 SECOND)
-					if (M && istype(M, /obj/item/old_grenade/smoke/mustard))
+					if (M?.mustard_gas && istype(M, /obj/item/old_grenade/smoke/mustard))
 						M.mustard_gas.start()
 					else
 						src.smoke.start()
 
 					sleep(1 SECOND)
-					if (M && istype(M, /obj/item/old_grenade/smoke/mustard))
+					if (M?.mustard_gas && istype(M, /obj/item/old_grenade/smoke/mustard))
 						M.mustard_gas.start()
 					else
 						src.smoke.start()
