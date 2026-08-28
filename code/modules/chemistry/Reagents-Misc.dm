@@ -2464,6 +2464,7 @@ datum
 			fluid_r = 209
 			fluid_g = 31
 			fluid_b = 117
+			fluid_flags = FLUID_SMOKE_BANNED
 			transparency = 175
 			addiction_prob = 0.2
 			addiction_min = 10

@@ -32463,7 +32463,7 @@
 /area/ghostdrone_factory)
 "jiU" = (
 /obj/strip_door,
-/obj/mapping_helper/access/tech_storage,
+/obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor,
 /area/station/storage/tech)
 "jjc" = (
@@ -47716,7 +47716,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/plating,
 /area/station/security/beepsky)
 "uQH" = (

@@ -466,6 +466,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 
 		var/datum/hud/cinematic/all_clients/nuclear_bomb/cinematic = new
 		cinematic.play()
+		for_by_tcl(objective, /datum/objective/specialist/nuclear)
+			objective.detonation_successful = TRUE //Confirm objectives before ending the round
+			break
 		if(istype(gamemode))
 			gamemode.nuke_detonated = 1
 			gamemode.check_win()

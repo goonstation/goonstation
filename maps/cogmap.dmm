@@ -54993,7 +54993,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
 /turf/simulated/floor/grime,
 /area/station/hallway/primary/east)
 "rPa" = (
@@ -59394,7 +59396,7 @@
 "uHb" = (
 /obj/strip_door,
 /obj/disposalpipe/segment,
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/plating,
 /area/station/security/beepsky)
 "uHm" = (

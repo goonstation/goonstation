@@ -2007,7 +2007,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 
 			usr.visible_message(SPAN_ALERT("[usr] finishes [pick("taking bites out of","chomping","chewing","biting","eating","gnawing")] [H]. That was [pick("gross","horrific","disturbing","weird","horrible","funny","strange","odd","creepy","bloody","gory","shameful","awkward","unusual")]!"))
 
-			if (prob(10) && !H.mutantrace)
+			if (prob(10) && !istype(H.mutantrace,/datum/mutantrace/ithillid))
 				usr.reagents.add_reagent("prions", 10)
 				SPAWN(rand(20,50)) boutput(usr, SPAN_ALERT("You don't feel so good."))
 

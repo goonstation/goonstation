@@ -592,7 +592,10 @@
 	attackby(var/obj/item/T, mob/user as mob)
 		if(istype(T, /obj/item/device/prox_sensor) && src.type == /obj/item/clothing/head/helmet/hardhat) //No derivatives
 			boutput(user,  "You attach the proximity sensor to the hard hat. Now you need to add a robot arm.")
-			new /obj/item/digbotassembly(get_turf(src))
+			var/obj/item/digbotassembly/digbot = new(get_turf(src))
+			digbot.setMaterial(src.material)
+			digbot.forensic_holder = src.forensic_holder
+			T.forensic_holder.copy_to(digbot.forensic_holder)
 			qdel(T)
 			qdel(src)
 			return
