@@ -88,7 +88,9 @@ export const ListInputModal = (props: ListInputModalProps) => {
     if (newSelected < 0) newSelected = 0;
     if (newSelected > len) newSelected = len;
     setSelectedIndex(newSelected);
-    document!.getElementById(newSelected.toString())?.focus();
+    const selectedElement = document!.getElementById(newSelected.toString());
+    selectedElement?.focus({ preventScroll: true });
+    selectedElement?.scrollIntoView({ behavior: 'smooth' });
   };
   // User selects an item with mouse
   const onClick = (index: number) => {
@@ -152,10 +154,14 @@ export const ListInputModal = (props: ListInputModalProps) => {
     let newSelected = newDisplayed.indexOf(currentSelectedText);
     if (newSelected === -1 && newDisplayed.length > 0) {
       setSelectedIndex(0);
-      document!.getElementById('0')?.scrollIntoView();
+      document!
+        .getElementById('0')
+        ?.scrollIntoView({ behavior: 'smooth' });
     } else if (newDisplayed.length !== 0) {
       setSelectedIndex(newSelected);
-      document!.getElementById(newSelected.toString())?.scrollIntoView();
+      document!
+        .getElementById(newSelected.toString())
+        ?.scrollIntoView({ behavior: 'smooth' });
     }
     setSearchQuery(query);
   };
