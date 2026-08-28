@@ -164,11 +164,8 @@ export default (env = {}, argv) => {
     },
     optimization: {
       emitOnErrors: false,
-      /**
-        * |GOONSTATION-CHANGE| Define `process.env.NODE_ENV` from build mode.
-       *
-        * Keeps React's JSX runtime in sync with Rspack.
-       */
+      // |GOONSTATION-CHANGE| Define `process.env.NODE_ENV` from build mode.
+      // Keeps React's JSX runtime in sync with Rspack.
       nodeEnv: env.NODE_ENV || mode,
     },
     performance: {

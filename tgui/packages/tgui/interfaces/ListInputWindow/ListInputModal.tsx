@@ -154,9 +154,7 @@ export const ListInputModal = (props: ListInputModalProps) => {
     let newSelected = newDisplayed.indexOf(currentSelectedText);
     if (newSelected === -1 && newDisplayed.length > 0) {
       setSelectedIndex(0);
-      document!
-        .getElementById('0')
-        ?.scrollIntoView({ behavior: 'smooth' });
+      document!.getElementById('0')?.scrollIntoView({ behavior: 'smooth' });
     } else if (newDisplayed.length !== 0) {
       setSelectedIndex(newSelected);
       document!
