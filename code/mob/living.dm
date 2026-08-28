@@ -1803,7 +1803,7 @@ TYPEINFO(/mob/living)
 	src.setStatusMin("slowed", 2 SECONDS, 15)
 	src.emote("scream", FALSE)
 	playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_1.ogg', 40, 1)
-	logTheThing(LOG_COMBAT, clamper, "CLAMPS [key_name(src)] with [clamp] at [log_log(src)]")
+	logTheThing(LOG_COMBAT, clamper, "CLAMPS [key_name(src)] with [clamp] at [log_loc(src)]")
 	return TRUE
 
 /mob/living/HealBleeding(amt)
