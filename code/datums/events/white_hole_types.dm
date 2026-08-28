@@ -436,7 +436,7 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		. = ..()
 		add_spawn(5, new /datum/whitehole_spawner/grenade_armed(/obj/item/chem_grenade/firefighting))
 		add_gas(80, list("plasma" = 1, "oxygen" = 1), 1, 20, 0 KELVIN, 100 KELVIN)
-		add_gas(20, "plasma", 10, 30, 0 KELVIN, 300 KELVIN)
+		add_gas(20, "plasma", 11, 40, 0 KELVIN, 300 KELVIN)
 
 /datum/whitehole_spawner/main/nukies
 	name = "nukies"
@@ -871,7 +871,7 @@ ABSTRACT_TYPE(/datum/whitehole_spawner/main)
 		. = ..()
 		add_spawn(5, new /datum/whitehole_spawner/grenade_armed(/obj/item/chem_grenade/firefighting))
 		add_gas(40, "radgas", 10, 100, 0 KELVIN, 300 KELVIN)
-		add_gas(10, "radgas", 100, 500, 0 KELVIN, 300 KELVIN)
+		add_gas(10, "radgas", 100, 600, 0 KELVIN, 500 KELVIN)
 		add_gas(25, list("plasma" = 1, "oxygen" = 1), 1, 20, 0 KELVIN, 100 KELVIN)
 		add_gas(5, "plasma", 10, 30, 0 KELVIN, 300 KELVIN)
 
