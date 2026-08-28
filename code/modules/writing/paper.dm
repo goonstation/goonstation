@@ -728,6 +728,7 @@
 	user.TakeDamage("head", 250, 0)
 	return 1
 
+/// Optional side effect to trigger when successfully stamping a piece of paper
 /obj/item/stamp/proc/on_stamp(obj/item/paper/stamped_paper, mob/user)
 	return
 
