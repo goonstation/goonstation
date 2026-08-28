@@ -1510,7 +1510,7 @@ datum/commodity/drugs/sell/poppies
 /datum/commodity/costume/vampire
 	comname = "Vampire Costume"
 	comtype = /obj/item/storage/box/costume/vampire
-	desc = "A bunch of clothing that kinda resembles a vampire from some old piece of cinema, along some old themed trash i found."
+	desc = "A bunch of clothing that kinda resembles a vampire from some old piece of cinema, along with some old-themed trash I found."
 	price = PAY::TRADESMAN*2
 
 /datum/commodity/costume/abomination

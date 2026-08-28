@@ -861,13 +861,10 @@
 			if(!user || !isliving(user) || issilicon(user))
 				return
 
-			if(prob(60))
-				if(isvampire(user))
-					boutput(user, SPAN_SUBTLE("You being one with the darkness successfully dodged the innanimate object's sharp parts."))
-				else
-					bleed(user, 1, 3)
-					boutput(user, SPAN_COMBAT("<b>The [src]'s wings are too sharp and cut you! why would they put them on the handle!?</b>"))
-					user.emote("scream")
+			if(prob(20) && !isvampire(user))
+				bleed(user, 1, 3)
+				boutput(user, SPAN_COMBAT("\The [src]'s wings are too sharp and cut you! why would they put them on the handle!?"))
+				user.emote("scream")
 
 
 
