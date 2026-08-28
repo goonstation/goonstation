@@ -12,7 +12,6 @@ import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { BlueprintCatalog } from './components/BlueprintCatalog';
 import { RecipeDetail } from './components/RecipeDetail';
-import { StorageView } from './components/StorageView';
 import type { NanoFabricatorData } from './type';
 
 export const NanoFabricator = () => {
@@ -66,21 +65,15 @@ export const NanoFabricator = () => {
           <Stack.Item grow>
             <Stack fill>
               <Stack.Item width="20em">
-                <Stack fill vertical>
-                  <Stack.Item grow>
-                    <BlueprintCatalog
-                      recipes={visibleRecipes}
-                      onSelectRecipe={(ref) => act('select_recipe', { ref })}
-                    />
-                  </Stack.Item>
-                  <Stack.Item basis="34%">
-                    <StorageView storage={data.storage} />
-                  </Stack.Item>
-                </Stack>
+                <BlueprintCatalog
+                  recipes={visibleRecipes}
+                  onSelectRecipe={(ref) => act('select_recipe', { ref })}
+                />
               </Stack.Item>
               <Stack.Item grow>
                 <RecipeDetail
                   partOptions={data.partOptions}
+                  storage={data.storage}
                   selectedRecipe={data.selectedRecipe}
                   selectingPart={data.selectingPart}
                 />

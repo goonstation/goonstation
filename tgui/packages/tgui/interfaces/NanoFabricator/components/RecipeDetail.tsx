@@ -9,7 +9,6 @@ import { useEffect, useState } from 'react';
 import {
   Box,
   Button,
-  Dimmer,
   Icon,
   Image,
   NoticeBox,
@@ -25,22 +24,24 @@ import type {
   NanoPartOptionData,
   NanoSelectedRecipeData,
   NanoSelectingPartData,
+  NanoStorageData,
 } from '../type';
+import { MaterialStorage } from './MaterialStorage';
 
 const RECIPE_ICON_SIZE = '64px';
 const COMPONENT_BUTTON_WIDTH = 15;
-const MATERIAL_BUTTON_WIDTH = 15;
 const COMPONENT_ICON_SIZE = '32px';
 
 interface RecipeDetailProps {
   partOptions: NanoPartOptionData[];
+  storage: NanoStorageData[];
   selectedRecipe: NanoSelectedRecipeData | null;
   selectingPart: NanoSelectingPartData | null;
 }
 
 export const RecipeDetail = (props: RecipeDetailProps) => {
   const { act } = useBackend<NanoFabricatorData>();
-  const { partOptions, selectedRecipe, selectingPart } = props;
+  const { partOptions, storage, selectedRecipe, selectingPart } = props;
   const [buildAmount, setBuildAmount] = useState(1);
 
   useEffect(() => {
@@ -59,9 +60,6 @@ export const RecipeDetail = (props: RecipeDetailProps) => {
   const selectedBuildAmount = Math.min(buildAmount, maxBuildAmount);
   const selectingPartData = selectedRecipe.parts.find(
     (part) => part.ref === selectingPart?.ref,
-  );
-  const sortedPartOptions = [...partOptions].sort((a, b) =>
-    a.name.replace(/^\d+\s+/, '').localeCompare(b.name.replace(/^\d+\s+/, '')),
   );
 
   return (
@@ -127,20 +125,25 @@ export const RecipeDetail = (props: RecipeDetailProps) => {
                                 </Stack.Item>
                               </Stack>
                             </Stack.Item>
-                            <Stack.Item grow overflow="hidden">
+                            <Stack.Item grow minWidth="0px" overflow="hidden">
                               <Box
+                                width="100%"
                                 nowrap
                                 overflow="hidden"
                                 style={{ textOverflow: 'ellipsis' }}
+                              >
+                                {part.assigned.name}
+                              </Box>
+                              <Box
+                                italic
                                 color={
                                   part.assigned.amount < part.amount
                                     ? 'bad'
                                     : undefined
                                 }
                               >
-                                {part.assigned.name}
+                                {part.assigned.amount} available
                               </Box>
-                              <Box italic>{part.assigned.amount} available</Box>
                             </Stack.Item>
                           </Stack>
                         ) : part.optional ? (
@@ -228,78 +231,14 @@ export const RecipeDetail = (props: RecipeDetailProps) => {
             </Stack.Item>
           </Stack>
         </Stack.Item>
-        {selectingPart && (
-          <Stack.Item>
-            <Dimmer
-              position="relative"
-              width="100%"
-              style={{ display: 'block' }}
-            >
-              <Stack width="100%" p={0.5}>
-                <Stack.Item width="100%">
-                  <Section
-                    m={0}
-                    title={`Choose ${selectingPart.part_name || selectingPart.name}`}
-                    buttons={
-                      <>
-                        <Button
-                          icon="eraser"
-                          color="bad"
-                          disabled={!selectingPartData?.assigned}
-                          onClick={() => act('clear_part')}
-                        >
-                          Clear
-                        </Button>
-                        <Button icon="times" onClick={() => act('cancel_part')}>
-                          Close
-                        </Button>
-                      </>
-                    }
-                  >
-                    {partOptions.length ? (
-                      <Stack wrap="wrap" g={0.5}>
-                        {sortedPartOptions.map((option) => (
-                          <Stack.Item
-                            key={option.ref}
-                            width={MATERIAL_BUTTON_WIDTH}
-                          >
-                            <Button
-                              fluid
-                              disabled={option.insufficient}
-                              onClick={() =>
-                                act('choose_part', { ref: option.ref })
-                              }
-                            >
-                              <Stack align="center">
-                                <Stack.Item>
-                                  {option.img && <Image src={option.img} />}
-                                </Stack.Item>
-                                <Stack.Item grow overflow="hidden">
-                                  <Box
-                                    nowrap
-                                    overflow="hidden"
-                                    style={{ textOverflow: 'ellipsis' }}
-                                  >
-                                    {option.name}
-                                  </Box>
-                                  <Box italic>{option.amount} available</Box>
-                                </Stack.Item>
-                              </Stack>
-                            </Button>
-                          </Stack.Item>
-                        ))}
-                      </Stack>
-                    ) : (
-                      <NoticeBox>
-                        No valid components are available for this slot.
-                      </NoticeBox>
-                    )}
-                  </Section>
-                </Stack.Item>
-              </Stack>
-            </Dimmer>
-          </Stack.Item>
-        )}
+        <Stack.Item>
+          <MaterialStorage
+            partOptions={partOptions}
+            selectedPart={selectingPartData}
+            selectingPart={selectingPart}
+            storage={storage}
+          />
+        </Stack.Item>
       </Stack>
     </Section>
   );
