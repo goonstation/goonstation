@@ -75,6 +75,7 @@
 #include "code\datums\banking.dm"
 #include "code\datums\browserOutput.dm"
 #include "code\datums\buildmode.dm"
+#include "code\datums\cable_placement.dm"
 #include "code\datums\callback.dm"
 #include "code\datums\changelog.dm"
 #include "code\datums\character_preview.dm"
