@@ -68,7 +68,6 @@ TYPEINFO(/datum/component/pressure_vision)
 	if (!M.client)
 		return
 
-	for (var/image/image as anything in src.atmos_overlays)
-		M.client.images -= image
+	M.client.images -= src.atmos_overlays
 
 	src.atmos_overlays = list()
