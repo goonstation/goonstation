@@ -286,6 +286,11 @@
 		src.message_user("tar: Cannot handle file [current_path][to_copy]")
 		return
 
+	// avoid copying files we don't have permission for
+	// this can happen if you copy /, which you can see, which contains /proc, which you need superuser for
+	if (!src.check_read_permission(to_copy, src.useracc))
+		return
+
 	if (istype(to_copy, /datum/computer/folder))
 		var/datum/computer/folder/folder_to_copy = to_copy
 		var/datum/computer/folder/folder_copy = new()
