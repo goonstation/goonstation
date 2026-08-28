@@ -55,6 +55,7 @@
 	C.holding_folder = src
 
 	if (src.gen)
+		C.metadata ||= list()
 		if (isnull(C.metadata["owner"]))
 			C.metadata["owner"] = src.metadata["owner"]
 		if (isnull(C.metadata["group"]))
