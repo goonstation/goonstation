@@ -158,7 +158,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	slot_glov = list(/obj/item/clothing/gloves/black)
 	slot_poc1 = list(/obj/item/device/pda2/atmos)
 	slot_ears = list(/obj/item/device/radio/headset/engineer)
-	items_in_backpack = list(/obj/item/clothing/mask/gas/emergency)
+	items_in_backpack = list(/obj/item/clothing/mask/gas/emergency, /obj/item/rcd_ammo/big)
 	wiki_link = "https://wiki.ss13.co/Atmospheric_Technician"
 	email_group = MGD_ENGINEER
 
