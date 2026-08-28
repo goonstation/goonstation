@@ -8,15 +8,22 @@
 	/// Completely override any existing accesses on the target or just add to it?
 	var/override_access = FALSE
 
-	setup()
-		for (var/obj/O in src.loc)
-			if(!istypes(O, src.affected_types))
-				continue
-			if (!O.req_access || src.override_access)
-				O.req_access = src.req_access
-			else
-				O.req_access += src.req_access
-			//todo : autoname doors	here too. var editing is illegal!
+// todo : autoname doors here too. var editing is illegal!
+/obj/mapping_helper/access/setup()
+	var/object_found = FALSE
+	for (var/obj/O in src.loc)
+		if (!istypes(O, src.affected_types))
+			continue
+
+		if (!O.req_access || src.override_access)
+			O.req_access = src.req_access
+		else
+			O.req_access += src.req_access
+
+		object_found = TRUE
+
+	if (!object_found)
+		return "[CI.format_position(src)] could not locate any objects of type [CI.type_list(src.affected_types, " or ")]."
 
 //////////// Security ////
 /obj/mapping_helper/access/security
@@ -296,11 +303,17 @@
 	affected_types = list(/obj)
 	admin_access_override = ADMIN_ACCESS_OVERRIDE_BYPASS
 
-	setup()
-		for (var/obj/O in src.loc)
-			if(!istypes(O, src.affected_types))
-				continue
-			O.admin_access_override = src.admin_access_override
+/obj/mapping_helper/access/admin_override/setup()
+	var/object_found = FALSE
+	for (var/obj/O in src.loc)
+		if (!istypes(O, src.affected_types))
+			continue
+
+		O.admin_access_override = src.admin_access_override
+		object_found = TRUE
+
+	if (!object_found)
+		return "[CI.format_position(src)] could not locate any objects of type [CI.type_list(src.affected_types, " or ")]."
 
 /obj/mapping_helper/access/admin_override/admin_only //Deny access to any non-admins
 	name = "admin only access spawn"
@@ -309,14 +322,10 @@
 
 /obj/mapping_helper/access/public
 	name = "public access spawn"
+	req_access = null
 	color = HELPER_COLOR::SPECIAL
 	affected_types = list(/obj)
-
-	setup()
-		for (var/obj/O in src.loc)
-			if(!istypes(O, src.affected_types))
-				continue
-			O.req_access = null
+	override_access = TRUE
 
 //////////////////////owlzone access///////
 /obj/mapping_helper/access/owlmaint

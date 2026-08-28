@@ -75,6 +75,7 @@ Alien/mutant/other fish:
 		Origami fish
 		Cardboard fish
 		Starstonefish
+		Clown fish
 */
 
 // These catagories aren't used currently.
@@ -1081,3 +1082,19 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/borgfish)
 
 	get_scent_color()
 		return "dusty grey"
+
+TYPEINFO(/obj/item/reagent_containers/food/fish/toonclown_fish)
+	appears_in_fish_collection = TRUE
+/obj/item/reagent_containers/food/fish/toonclown_fish
+	name = "clown fish"
+	desc = "This little guy came a long, long way to make your day!"
+	icon_state = "toonclown_fish"
+	inhand_color = "#6DD361"
+	slice_product = /obj/item/clothing/mask/clown_nose //feel free to change this if theres something funnier
+	rarity = ITEM_RARITY_LEGENDARY
+
+	slapsound()
+		playsound(src, pick('sound/musical_instruments/Bikehorn_bonk1.ogg', 'sound/musical_instruments/Bikehorn_bonk2.ogg', 'sound/musical_instruments/Bikehorn_bonk3.ogg'), 50, 1, -1)
+
+	get_scent_color()
+		return "minty green"
