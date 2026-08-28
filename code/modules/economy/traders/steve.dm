@@ -104,7 +104,7 @@
 
 /datum/commodity/trader/steve/live_brullbar
 	comname = "Pale Humanoid"
-	comtype = /mob/living/critter/brullbar
+	comtype = /mob/living/critter/brullbar // lol, lmao even -ANNmagedon
 	amount = 1
 	price_boundary = list(PAY::DONTBUYIT*0.8,PAY::DONTBUYIT*1.2)
 	possible_names = list("Pale creature from homeworld, very loud.",
