@@ -129,7 +129,7 @@ TYPEINFO(/mob/living/critter/robotic/probe)
 
 /datum/projectile/laser/precursor/probe
 	damage = 6
-	shot_number = 5
+	default_firemode = /datum/firemode/five_burst
 	shot_sound = 'sound/weapons/laser_b.ogg'
 	shot_volume = 50
 

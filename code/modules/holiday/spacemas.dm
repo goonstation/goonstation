@@ -262,7 +262,7 @@ TYPEINFO(/obj/machinery/bot/guardbot/xmas)
 	dissipation_delay = 4
 	sname = "stun"
 	shot_sound = 'sound/effects/pop.ogg'
-	shot_number = 1
+	default_firemode = /datum/firemode/single
 	damage_type = 0
 	hit_ground_chance = 0
 	window_pass = 0

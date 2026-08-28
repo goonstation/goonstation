@@ -5,7 +5,7 @@
 	cost = 100
 	sname = "plasma blast"
 	shot_sound = null
-	shot_number = 1
+	default_firemode = /datum/firemode/single
 	brightness = 0.8
 	color_red = 0
 	color_green = 0.9

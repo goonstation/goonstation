@@ -77,7 +77,7 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 			hudSquares += hudSquare
 			hudCenter = hudSquare
 
-			RegisterSignal(G, COMSIG_GUN_PROJECTILE_CHANGED, PROC_REF(toggle_fullauto_firemode))
+			RegisterSignal(G, COMSIG_GUN_FIREMODE_CHANGED, PROC_REF(toggle_fullauto_firemode))
 			RegisterSignal(G, COMSIG_SCOPE_TOGGLED, PROC_REF(scope_toggled))
 
 			if(src.toggle)
@@ -87,7 +87,7 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 					on_pickup(null, G.loc)
 
 	UnregisterFromParent()
-		UnregisterSignal(parent, list(COMSIG_GUN_PROJECTILE_CHANGED, COMSIG_ITEM_SWAP_TO, COMSIG_ITEM_SWAP_AWAY, COMSIG_SCOPE_TOGGLED))
+		UnregisterSignal(parent, list(COMSIG_GUN_FIREMODE_CHANGED, COMSIG_ITEM_SWAP_TO, COMSIG_ITEM_SWAP_AWAY, COMSIG_SCOPE_TOGGLED))
 		for(var/hudSquare in hudSquares)
 			aimer?.screen -= hudSquares[hudSquare]
 		aimer?.screen -= hudCenter
@@ -108,13 +108,13 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 	on_pickup(datum/source, mob/user)
 		var/obj/item/gun/G = parent
 		. = ..()
-		if(G?.current_projectile?.fullauto_valid)
+		if(G?.current_firemode.full_auto)
 			if(toggle)
 				if(user.equipped() == parent)
 					init_fullauto_mode(source, user)
 			else
 				if(user.equipped() == parent)
-					toggle_fullauto_firemode(source, G.current_projectile)
+					toggle_fullauto_firemode(source, G.current_firemode)
 
 
 	on_dropped(datum/source, mob/user)
@@ -135,9 +135,9 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 		aimer.screen -= hudCenter
 		return
 
-/datum/component/holdertargeting/fullauto/proc/toggle_fullauto_firemode(datum/source, datum/projectile/newProj)
+/datum/component/holdertargeting/fullauto/proc/toggle_fullauto_firemode(datum/source, datum/firemode/newFiremode)
 	var/obj/item/gun/G = parent
-	if(current_user && newProj.fullauto_valid != toggle)
+	if(current_user && newFiremode.full_auto != toggle)
 		toggle = !toggle
 
 		if(toggle)

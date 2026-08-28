@@ -478,8 +478,8 @@
 
 		src.create_projectile(src, user, PROJ, shoot_dir, spread)
 
-		for (var/i in 1 to (num_shots - 1))
-			sleep(PROJ.shot_delay)
+		for (var/i in 1 to (PROJ.firemode.shot_number - 1))
+			sleep(PROJ.firemode.shot_delay)
 			src.create_projectile(src, user, PROJ, shoot_dir, spread)
 
 	proc/create_projectile(atom/proj_start, mob/user, datum/projectile/PROJ, shoot_dir, spread = -1)
