@@ -19,6 +19,8 @@
 	VAR_PRIVATE/tmp/opt_verbose = null
 	/// Whether `tar` should extract the contents of an existing archive. Mutually exclusive with `opt_create` and `opt_list`.
 	VAR_PRIVATE/tmp/opt_extract = null
+	/// The current archive being created, used to prevent storing an archive inside itself.
+	VAR_PRIVATE/tmp/datum/computer/file/archive/current_archive = null
 
 /datum/computer/file/mainframe_program/utility/tar/initialize(initparams)
 	if (..())
@@ -134,7 +136,7 @@
 			mainframe_prog_exit
 			return
 
-		var/datum/computer/file/archive/archive = new()
+		src.current_archive = new /datum/computer/file/archive()
 		for (var/path as anything in unaffected)
 			var/datum/computer/C = src.signal_program(1, list("command" = DWAINE::SYSCALL::FGET, "path" = ABSOLUTE_PATH(path, current)))
 			if (!istype(C))
@@ -148,16 +150,16 @@
 				mainframe_prog_exit
 				return
 
-			archive.add_file(copy)
+			src.current_archive.add_file(copy)
 
 		var/list/separated_filepath = splittext(archive_path, "/")
 		var/path_length = length(separated_filepath)
-		archive.name = separated_filepath[path_length]
+		src.current_archive.name = separated_filepath[path_length]
 		separated_filepath.Cut(path_length)
 
 		var/new_path = jointext(separated_filepath, "/") || "/"
 
-		switch (src.signal_program(1, list("command" = DWAINE::SYSCALL::FWRITE, "path" = new_path, "mkdir" = TRUE, "replace" = TRUE), archive))
+		switch (src.signal_program(1, list("command" = DWAINE::SYSCALL::FWRITE, "path" = new_path, "mkdir" = TRUE, "replace" = TRUE), src.current_archive))
 			if (DWAINE::ERR::SIG::NOWRITE)
 				src.message_user("tar: Cannot write destination [src.opt_file]")
 			if (DWAINE::ERR::SIG::NOTARGET)
@@ -193,6 +195,11 @@
 /datum/computer/file/mainframe_program/utility/tar/message_user(msg, render, file)
 	if (src.opt_quiet)
 		return
+
+	. = ..()
+
+/datum/computer/file/mainframe_program/utility/tar/disposing()
+	src.current_archive = null // just in case
 
 	. = ..()
 
@@ -282,9 +289,12 @@
 		src.message_user("tar: Stack overflow.")
 		return
 
-	// there may need to be a check here to avoid copying an archive into itself
-	// but when this proc is currently called, at time of writing,
-	// the archive is not actually on the filesystem and so cannot be archived
+	// at time of writing, the archive is not actually on the filesystem during its creation
+	// and so cannot be stored in itself. but better safe than sorry,
+	// since maybe tar will be able to add files to an archive someday
+	if (to_copy == src.current_archive)
+		src.message_user("tar: Cannot handle file [current_path][to_copy]")
+		return
 
 	// avoid copying files we don't have permission for
 	// this can happen if you copy /, which you can see, which contains /proc, which you need superuser for
