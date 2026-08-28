@@ -2,7 +2,6 @@
 	name = "supply request console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "QMreq"
-	var/temp
 	var/obj/item/card/id/scan = null
 	var/console_location = null
 	circuit_type = /obj/item/circuitboard/qmorder
@@ -15,6 +14,11 @@
 		..()
 		console_location = get_area(src)
 		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, "pda", FREQ_PDA)
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 /obj/machinery/computer/ordercomp/console_upper
 	icon = 'icons/obj/computerpanel.dmi'
