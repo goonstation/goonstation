@@ -35,6 +35,7 @@ export const SupplyConsole = () => {
     <ConsoleMenu
       see_rockbox
       see_account={false}
+      can_accept_orders
       shown_tabs={[
         SupplyConsoleTabKeys.Requests,
         SupplyConsoleTabKeys.Supplies,
@@ -51,6 +52,7 @@ interface SupplyConsoleProps {
   see_rockbox: boolean;
   see_account: boolean;
   shown_tabs: number[];
+  can_accept_orders: boolean;
 }
 export const ConsoleMenu = (props: SupplyConsoleProps) => {
   const { data, act } = useBackend<SupplyConsoleData>();
@@ -58,7 +60,7 @@ export const ConsoleMenu = (props: SupplyConsoleProps) => {
     'viewtab',
     SupplyConsoleTabKeys.Requests,
   );
-  const { see_rockbox, see_account, shown_tabs } = props;
+  const { see_rockbox, see_account, shown_tabs, can_accept_orders } = props;
   return (
     <Window theme={'retro-dark'} width={900} height={500}>
       <Window.Content>
@@ -105,7 +107,7 @@ export const ConsoleMenu = (props: SupplyConsoleProps) => {
           </Stack.Item>
           <Stack.Item grow>
             {viewing_tab === SupplyConsoleTabKeys.Requests && (
-              <SupplyConsoleRequestsTab />
+              <SupplyConsoleRequestsTab can_accept_orders={can_accept_orders} />
             )}
             {viewing_tab === SupplyConsoleTabKeys.Supplies && (
               <SupplyConsoleSuppliesTab />
@@ -208,6 +210,9 @@ const UserAccount = () => {
           </LabeledList>
           <Button width="100%" onClick={() => act('contribute')} icon="coins">
             Donate to Supply Budget
+          </Button>
+          <Button width="100%" onClick={() => act('logout')} icon="minus">
+            Log Out
           </Button>
         </Stack>
       )}

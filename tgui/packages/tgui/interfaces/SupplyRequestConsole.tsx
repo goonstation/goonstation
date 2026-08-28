@@ -12,6 +12,7 @@ export const SupplyRequestConsole = () => {
     <ConsoleMenu
       see_rockbox={false}
       see_account
+      can_accept_orders={false}
       shown_tabs={[
         SupplyConsoleTabKeys.Requests,
         SupplyConsoleTabKeys.Supplies,
