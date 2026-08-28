@@ -33,6 +33,12 @@
 	copy.name = src.name
 	copy.holder = src.holder
 
+	copy.metadata ||= list()
+	if (src.metadata)
+		copy.metadata["owner"] = src.metadata["owner"]
+		copy.metadata["permission"] = src.metadata["permission"]
+		copy.metadata["group"] = src.metadata["group"]
+
 	depth += 1
 	for (var/datum/computer/C as anything in src.contents)
 		copy.add_file(C.copy_file(depth))
