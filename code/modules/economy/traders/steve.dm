@@ -12,20 +12,21 @@
 
 	base_goods_buy = alist(
 		TRADER_RARITY_COMMON = list(/datum/commodity/trader/steve/brains,
-			/datum/commodity/trader/steve/brain_burgers,
 			/datum/commodity/trader/steve/ice,
 			/datum/commodity/trader/steve/fire_suit
 		),
-		TRADER_RARITY_UNCOMMON = list(/datum/commodity/trader/steve/dna),
+		TRADER_RARITY_UNCOMMON = list(/datum/commodity/trader/steve/dna,
+						/datum/commodity/trader/steve/brain_burgers,
+		),
 		TRADER_RARITY_RARE = list(/datum/commodity/trader/steve/lingfish)
 	)
 
 	base_goods_sell = alist(
-		TRADER_RARITY_COMMON = list(/datum/commodity/trader/steve/lingmeat
-
-		),
+		TRADER_RARITY_COMMON = list(/datum/commodity/trader/steve/lingmeat),
 		TRADER_RARITY_UNCOMMON = list(/datum/commodity/trader/steve/lingblood),
-		TRADER_RARITY_RARE = list(/datum/commodity/trader/steve/live_brullbar)
+		TRADER_RARITY_RARE = list(/datum/commodity/trader/steve/live_brullbar,
+			/datum/commodity/trader/steve/ling_recording
+		)
 	)
 
 	dialogue_greet = list("Hello fellow human friend! We- I would like to participate in human trade!",
@@ -117,3 +118,10 @@
 	price_boundary = list(PAY::DONTBUYIT*0.8,PAY::DONTBUYIT*1.2)
 	possible_names = list("Pale creature from homeworld, very loud.",
 	"Creature from homeworld, cries too much, please buy.")
+
+/datum/commodity/trader/steve/ling_recording
+	comname = "Our Mixtape"
+	comtype = /obj/item/instrument/ling_recording
+	amount = 3
+	price_boundary = list(PAY::DONTBUYIT*0.5,PAY::DONTBUYIT*0.6)
+	possible_names = list("Recording of us. We- I, a human who use singular pronouns singing. We feel sheepish about selling this.")
