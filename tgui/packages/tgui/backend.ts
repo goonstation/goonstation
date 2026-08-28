@@ -11,12 +11,14 @@
  * @license MIT
  */
 
+import { useAtomValue } from 'jotai';
+
 import { sendAct } from './events/act';
 import { backendStateAtom, sharedAtom, store } from './events/store';
 import type { BackendState } from './events/types';
 
 /**
- * Backend state accessor. Please use a type to define what the data is
+ * Backend state hook. Please use a type to define what the data is
  * intended to be, e.g.:
  *
  * ```ts
@@ -32,7 +34,8 @@ import type { BackendState } from './events/types';
 export function useBackend<
   TData extends Record<string, any> = Record<string, any>,
 >(): BackendState<TData> {
-  const state = store.get(backendStateAtom);
+  /* GOONSTATION-CHANGE: Subscribe so memoized consumers get updates. */
+  const state = useAtomValue(backendStateAtom);
 
   return {
     act: sendAct,
@@ -63,7 +66,8 @@ export const useLocalState = <T>(
   key: string,
   initialState: T,
 ): StateWithSetter<T> => {
-  const sharedStates = store.get(sharedAtom);
+  /* GOONSTATION-CHANGE: Subscribe so memoized consumers get updates. */
+  const sharedStates = useAtomValue(sharedAtom);
   const sharedState = key in sharedStates ? sharedStates[key] : initialState;
 
   return [
@@ -97,7 +101,8 @@ export const useSharedState = <T>(
   key: string,
   initialState: T,
 ): StateWithSetter<T> => {
-  const sharedStates = store.get(sharedAtom);
+  /* GOONSTATION-CHANGE: Subscribe so memoized consumers get updates. */
+  const sharedStates = useAtomValue(sharedAtom);
   const sharedState = key in sharedStates ? sharedStates[key] : initialState;
 
   return [

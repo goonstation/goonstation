@@ -6,6 +6,7 @@ import js from '@eslint/js';
 import tsParser from '@typescript-eslint/parser';
 import { defineConfig, globalIgnores } from 'eslint/config';
 import react from 'eslint-plugin-react';
+import reactHooks from 'eslint-plugin-react-hooks';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import sonarjs from 'eslint-plugin-sonarjs';
 import unusedImports from 'eslint-plugin-unused-imports';
@@ -43,6 +44,7 @@ export default defineConfig([
 
     plugins: {
       react,
+      'react-hooks': reactHooks,
       'unused-imports': unusedImports,
       'simple-import-sort': simpleImportSort,
     },
@@ -296,6 +298,10 @@ export default defineConfig([
       'react/jsx-uses-react': 'error',
       'react/jsx-uses-vars': 'error',
       'react/jsx-wrap-multilines': 'error',
+
+      // Backend hooks need a component to subscribe.
+      'react-hooks/rules-of-hooks': 'error',
+
       'unused-imports/no-unused-imports': 'error',
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',

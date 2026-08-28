@@ -5,12 +5,12 @@
  * @license ISC
  */
 
-import { useBackend } from '../backend';
+import { configAtom, store } from '../events/store';
 import manifest from './cdn-manifest.json';
 
 export const resource = (file: string): string => {
-  const { config } = useBackend();
-  const { cdn } = config;
+  // Not a hook: `resource()` is called from event handlers and plain helpers.
+  const { cdn } = store.get(configAtom);
   if (cdn) {
     if (manifest[file]) file = manifest[file];
     return `${cdn}/${file}`;
