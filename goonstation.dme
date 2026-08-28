@@ -1879,6 +1879,7 @@
 #include "code\modules\networks\computer3\mainframe2\programs\os\kernel\syscalls\fwrite.dm"
 #include "code\modules\networks\computer3\mainframe2\programs\os\kernel\syscalls\mount.dm"
 #include "code\modules\networks\computer3\mainframe2\programs\os\kernel\syscalls\msg_term.dm"
+#include "code\modules\networks\computer3\mainframe2\programs\os\kernel\syscalls\pget.dm"
 #include "code\modules\networks\computer3\mainframe2\programs\os\kernel\syscalls\tfork.dm"
 #include "code\modules\networks\computer3\mainframe2\programs\os\kernel\syscalls\tkill.dm"
 #include "code\modules\networks\computer3\mainframe2\programs\os\kernel\syscalls\tlist.dm"
