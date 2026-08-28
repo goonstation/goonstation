@@ -1489,6 +1489,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		src.hsl_color[11] = (((getProperty("chemical") - 1) / (8 - 1)) * 0.5) + 0.75 // Luminosity
 
 		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/miracle_add())
+		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/miracle_remove())
 		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/temp_miraclium())
 
 

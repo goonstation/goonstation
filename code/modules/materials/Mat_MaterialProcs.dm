@@ -505,10 +505,16 @@ triggerOnImage(var/image/target, var/datum/material/source)
 		var/list/color_end = color_start.Copy()
 		color_end[17] = 1
 
+		location.avoid_animating = TRUE
 		var/loop_length = (location.material.getProperty("reflective") - 1) / (location.material.getProperty("reflective", VALUE_MAX) - 1)
-		loop_length = (((1 - loop_length) * 17) + 3) SECONDS
+		loop_length = (((1 - loop_length) * 17) + 5) SECONDS
 		animate(filter, color = color_end, time = loop_length, loop = -1, easing = LINEAR_EASING)
 		animate(color = color_start, time = 0, loop = -1, easing = JUMP_EASING)
+		return
+
+/datum/materialProc/miracle_remove
+	execute(var/atom/location)
+		location.avoid_animating = FALSE
 		return
 
 /datum/materialProc/radioactive_add
