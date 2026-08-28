@@ -1087,3 +1087,24 @@ datum/fishing_spot/golden_toilet
 	/obj/item/clothing/shoes/clown_shoes = 10, //they fell in :(
 	/mob/living/critter/spider/baby/nice = 5,
 	/obj/item/reagent_containers/food/fish/toonclown_fish = 5)
+
+/datum/fishing_spot/robustris
+	fishing_atom_type = /obj/machinery/computer/tetris
+	rod_tier_required = 2
+	fish_available = list(/obj/item/coin = 25,
+	/obj/item/reagent_containers/food/drinks/cola = 25,
+	/obj/item/currency/spacecash/really_small = 20,
+	/obj/item/cigbutt = 20,
+	/obj/item/cable_coil/cut = 20,
+	/obj/item/reagent_containers/food/snacks/chips = 10,
+	/obj/item/paper/folded/ball = 10,
+	/mob/living/critter/small_animal/cockroach = 10,
+	/obj/item/currency/buttcoin = 5,
+	/obj/item/reagent_containers/food/fish/tetraminnow/tshaped = 5,
+	/obj/item/reagent_containers/food/fish/tetraminnow/sshaped = 5,
+	/obj/item/reagent_containers/food/fish/tetraminnow/zshaped = 5,
+	/obj/item/reagent_containers/food/fish/tetraminnow/square = 5,
+	/obj/item/reagent_containers/food/fish/tetraminnow/line = 5,
+	/obj/item/reagent_containers/food/fish/tetraminnow/lshaped = 5,
+	/obj/item/reagent_containers/food/fish/tetraminnow/jshaped = 5,
+	/obj/item/circuitboard/tetris = 1)

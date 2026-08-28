@@ -1098,3 +1098,116 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/toonclown_fish)
 
 	get_scent_color()
 		return "minty green"
+
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish/tetraminnow)
+/obj/item/reagent_containers/food/fish/tetraminnow
+	name = "Tetra Minnow"
+	desc = "A strange shape that seems like it came right out of an arcade game. Hates being lined up."
+	icon_state = "rosefin_shiner"
+	inhand_color = "#2963b4"
+	rarity = ITEM_RARITY_UNCOMMON
+	/// will immediately cease to exist if this many are within a tile of it
+	var/const/max_allowed = 4
+
+	var/extra_desc = "You shouldn't see this!"
+
+	New()
+		..()
+		START_TRACKING
+
+		src.try_implode()
+
+	get_desc(dist, mob/user)
+		. = ..()
+
+		. += src.extra_desc
+
+
+	dropped(mob/user)
+		. = ..()
+		src.try_implode()
+
+
+	proc/try_implode()
+		var/list/to_explode = list()
+
+		for_by_tcl(C, /obj/item/reagent_containers/food/fish/tetraminnow)
+			if (GET_DIST(C,src) <= 1)
+				to_explode += C
+
+		if (length(to_explode) < src.max_allowed)
+			return
+		src.visible_message(SPAN_ALERT("The Tetra Minnow form a line and start to dissapear!"))
+
+		SPAWN(1 SECOND)
+			// blinding light
+			playsound(src.loc, 'sound/weapons/flashbang.ogg', 25, TRUE)
+			for (var/mob/N in viewers(src, null))
+				if (GET_DIST(N, src) <= 6)
+					N.flash(3 SECONDS)
+
+			for (var/obj/item/reagent_containers/food/fish/tetraminnow/fish in to_explode)
+				qdel(fish)
+
+			qdel(src)
+
+	disposing()
+		STOP_TRACKING
+		..()
+
+TYPEINFO(/obj/item/reagent_containers/food/fish/tetraminnow/tshaped)
+	appears_in_fish_collection = TRUE
+/obj/item/reagent_containers/food/fish/tetraminnow/tshaped
+	name = "T-Shaped Tetra Minnow"
+	icon_state = "tetra_t"
+	inhand_color = "#7732ac"
+	extra_desc = "This one is roughly T-Shaped."
+
+TYPEINFO(/obj/item/reagent_containers/food/fish/tetraminnow/sshaped)
+	appears_in_fish_collection = TRUE
+/obj/item/reagent_containers/food/fish/tetraminnow/sshaped
+	name = "S-Shaped Tetra Minnow"
+	icon_state = "tetra_s"
+	inhand_color = "#6abe30"
+	extra_desc = "This one is roughly S-Shaped."
+
+TYPEINFO(/obj/item/reagent_containers/food/fish/tetraminnow/zshaped)
+	appears_in_fish_collection = TRUE
+/obj/item/reagent_containers/food/fish/tetraminnow/zshaped
+	name = "Z-Shaped Tetra Minnow"
+	icon_state = "tetra_z"
+	inhand_color = "#be3a30"
+	extra_desc = "This one is roughly Z-Shaped."
+
+TYPEINFO(/obj/item/reagent_containers/food/fish/tetraminnow/square)
+	appears_in_fish_collection = TRUE
+/obj/item/reagent_containers/food/fish/tetraminnow/square
+	name = "Square-Shaped Tetra Minnow"
+	icon_state = "tetra_square"
+	inhand_color = "#bbbe30"
+	extra_desc = "This one is roughly Square-Shaped."
+
+TYPEINFO(/obj/item/reagent_containers/food/fish/tetraminnow/line)
+	appears_in_fish_collection = TRUE
+/obj/item/reagent_containers/food/fish/tetraminnow/line
+	name = "Line-Shaped Tetra Minnow"
+	icon_state = "tetra_line"
+	icon = 'icons/obj/foodNdrink/food_fish_48x32.dmi'
+	inhand_color = "#168c74"
+	extra_desc = "This one is roughly Line-Shaped."
+
+TYPEINFO(/obj/item/reagent_containers/food/fish/tetraminnow/lshaped)
+	appears_in_fish_collection = TRUE
+/obj/item/reagent_containers/food/fish/tetraminnow/lshaped
+	name = "L-Shaped Tetra Minnow"
+	icon_state = "tetra_l"
+	inhand_color = "#ff8133"
+	extra_desc = "This one is roughly L-Shaped."
+
+TYPEINFO(/obj/item/reagent_containers/food/fish/tetraminnow/jshaped)
+	appears_in_fish_collection = TRUE
+/obj/item/reagent_containers/food/fish/tetraminnow/jshaped
+	name = "J-Shaped Tetra Minnow"
+	icon_state = "tetra_j"
+	inhand_color = "#4064ff"
+	extra_desc = "This one is roughly J-Shaped."
