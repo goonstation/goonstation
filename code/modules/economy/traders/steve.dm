@@ -1,6 +1,6 @@
 /datum/trader/steve
 	// Totally human person and not a ling wearing a smiley mask
-	// Always buys brains and derived products, sells some "normal" organic stuff & friends from home.
+	// Buys brains and stuff reminding them of themselves or icemoon, sells some "normal" organic stuff & friends from home.
 	name = "Human Steve"
 	picture = "shambles.png"
 	crate_tag = "STEVE"
@@ -24,7 +24,7 @@
 
 		),
 		TRADER_RARITY_UNCOMMON = list(/datum/commodity/trader/steve/lingblood),
-		TRADER_RARITY_RARE = list()
+		TRADER_RARITY_RARE = list(/datum/commodity/trader/steve/live_brullbar)
 	)
 
 	dialogue_greet = list("Hello fellow human friend! We- I would like to participate in human trade!",
@@ -44,8 +44,7 @@
 	dialogue_wrong_haggle_accept = list("Yes yes yes! Sure we accept- Customer's brain to dumb to assimilate- Shut up us!")
 	dialogue_wrong_haggle_reject = list("What?")
 	dialogue_cant_afford_that = list("You don't have enough human money! We are disappointed in your inability to- Broke! Broke human! Ew!- I'm sorry...",
-	"More! More More More More More! Get us more credits first!",
-	"Oh my. Not enough credits! That's a shame, such a shame. I thought you had more business sense than this, my good friend!")
+	"More! More More More More More! Get us more credits first!")
 	dialogue_out_of_stock = list("Sorry, We're sorry friend- Your gluttony sickens us! We mean, we ran out of the thing you want human friend...",
 	"We- I ran of this! We hunt for more later!")
 
@@ -80,7 +79,7 @@
 	"Injector of human DNA. Give it to us! Give!")
 
 /datum/commodity/trader/steve/lingfish
-	comname = "Fish shaped like steve"
+	comname = "Fish Shaped Like Steve"
 	comtype = /obj/item/reagent_containers/food/fish/lingfish
 	price_boundary = list(PAY::DOCTORATE*2,PAY::DOCTORATE*2.5)
 	possible_names = list("We heard, heard of fish shaped like us! We want!")
@@ -95,8 +94,15 @@
 	"Just regular good ol' meat, dont ask why it has legs please!")
 
 /datum/commodity/trader/steve/lingblood
-	comname = "Normal human blood"
+	comname = "Normal Human Blood"
 	comtype = /obj/item/reagent_containers/iv_drip/blood/ling
 	price_boundary = list(PAY::DOCTORATE*2,PAY::DOCTORATE*3)
 	possible_names = list("We love to donate blood! Put our blood in everyone!",
 	"Normal human blood donated by ourselves, please do not heat it.")
+
+/datum/commodity/trader/steve/live_brullbar
+	comname = "Pale Humanoid"
+	comtype = /mob/living/critter/brullbar
+	price_boundary = list(PAY::DONTBUYIT*0.8,PAY::DONTBUYIT*1.2)
+	possible_names = list("Pale creature from homeworld, very loud.",
+	"Creature from homeworld, cries too much, please buy.")
