@@ -15,7 +15,6 @@ import { setDebugHotKeys } from './debug';
 import { bus } from './events/listeners';
 import { setupGlobalEvents } from './global-events';
 import { setupHotKeys } from './hotkeys';
-import { loadIconRefMap } from './icons';
 import { captureExternalLinks } from './links';
 import { createRenderer } from './renderer';
 import { createStackAugmentor } from './stack';
@@ -37,7 +36,6 @@ function setupApp() {
   setupGlobalEvents();
   setupHotKeys();
   captureExternalLinks();
-  loadIconRefMap();
 
   if (process.env.NODE_ENV !== 'production') {
     setDebugHotKeys();
