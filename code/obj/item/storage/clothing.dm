@@ -436,7 +436,8 @@
 	name = "vampire costume set"
 	desc = "Blah blah blah."
 	spawn_contents = list(/obj/item/clothing/under/gimmick/vampire,
-	/obj/item/clothing/suit/gimmick/vampire)
+	/obj/item/clothing/suit/gimmick/vampire,
+	/obj/item/stamp/vampire)
 
 /obj/item/storage/box/costume/abomination
 	name = "abomination costume set"
