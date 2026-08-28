@@ -13,7 +13,8 @@
 	base_goods_buy = alist(
 		TRADER_RARITY_COMMON = list(/datum/commodity/trader/steve/brains,
 			/datum/commodity/trader/steve/brain_burgers,
-			/datum/commodity/trader/steve/ice
+			/datum/commodity/trader/steve/ice,
+			/datum/commodity/trader/steve/fire_suit
 		),
 		TRADER_RARITY_UNCOMMON = list(/datum/commodity/trader/steve/dna),
 		TRADER_RARITY_RARE = list(/datum/commodity/trader/steve/lingfish)
@@ -63,6 +64,13 @@
 	price_boundary = list(PAY::DOCTORATE*1.2,PAY::DOCTORATE*2)
 	possible_names = list("Brains yes, Cooked ones this time!",
 	"Please don't ask why we want them human person friend.")
+
+/datum/commodity/trader/steve/fire_suit
+	comname = "Fire Fighter's Suit"
+	comtype = /obj/item/clothing/suit/hazard/fire
+	price_boundary = list(PAY::TRADESMAN*2.5,PAY::TRADESMAN*3) // They *really* hate fire
+	possible_names = list("Suit that stops fire? Need! We need! Give it to us!",
+	"Fire is bad! Bad bad bad! We want- NEED! DEMEND! REQUIRE! Erm, just sell those to us please")
 
 /datum/commodity/trader/steve/ice
 	comname = "Ice"
