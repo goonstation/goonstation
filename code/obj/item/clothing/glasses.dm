@@ -974,7 +974,6 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/atmos)
 	flash_compatible = TRUE
 	abilities = list(/obj/ability_button/atmos_goggle_toggle)
 
-
 	toggle(var/mob/toggler)
 		..()
 		toggler.playsound_local(src, 'sound/machines/tone_beep.ogg', 40, TRUE)
