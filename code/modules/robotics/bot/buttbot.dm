@@ -19,6 +19,7 @@ TYPEINFO(/obj/machinery/bot/buttbot)
 	bot_move_delay = BUTTBOT_MOVE_SPEED
 	density = 0
 	anchored = UNANCHORED
+	default_material = "butt"
 	on = 1
 	health = 5
 	no_camera = 1
@@ -74,6 +75,7 @@ TYPEINFO(/obj/machinery/bot/buttbot)
 /obj/machinery/bot/buttbot/cyber
 	name = "robuttbot"
 	icon_state = "cyberbuttbot"
+	default_material = "pharosium"
 	default_butt = /obj/item/clothing/head/butt/cyberbutt
 
 /obj/machinery/bot/buttbot/text2speech
@@ -469,7 +471,7 @@ TYPEINFO(/obj/machinery/bot/buttbot)
 			F.set_loc(src.loc)
 	fartcount++
 	if(fartcount == 69 || fartcount == 420)
-		var/obj/item/paper/grillnasium/fartnasium_recruitment/flyer/F = new(get_turf(src))
+		var/obj/item/paper/image/grillnasium/fartnasium_recruitment/flyer/F = new(get_turf(src))
 		for(var/mob/living/carbon/C in view(2,src))
 			if(C.put_in_hand_or_drop(F))
 				break

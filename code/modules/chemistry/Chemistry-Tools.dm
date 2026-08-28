@@ -160,7 +160,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 ///Returns a serialized representation of the reagents of an atom for use with the ReagentInfo TGUI components
 ///Note that this is not a built in TGUI proc
-proc/ui_describe_reagents(atom/A)
+proc/ui_describe_reagents(atom/A, show_overdose = FALSE)
 	if (!istype(A))
 		return null
 	var/datum/reagents/R = A.reagents
@@ -188,6 +188,7 @@ proc/ui_describe_reagents(atom/A)
 				colorB = current_reagent.fluid_b,
 				volume = current_reagent.volume,
 				state = current_reagent.reagent_state,
+				overdose = show_overdose ? current_reagent.overdose : null,
 			)))
 	return thisContainerData
 
@@ -587,6 +588,9 @@ proc/ui_describe_reagents(atom/A)
 	attackby(var/obj/item/D, mob/user as mob)
 		if (istype(D, /obj/item/device/prox_sensor))
 			var/obj/item/bucket_sensor/B = new bucket_sensor_type
+			B.setMaterial(src.material)
+			B.forensic_holder = src.forensic_holder
+			D.forensic_holder.copy_to(B.forensic_holder)
 			user.u_equip(D)
 			user.put_in_hand_or_drop(B)
 			user.show_text("You add the sensor to the bucket")
@@ -1570,7 +1574,7 @@ proc/ui_describe_reagents(atom/A)
 
 	New()
 		. = ..()
-		AddComponent(/datum/component/biodegradable)
+		AddElement(/datum/element/biodegradable)
 
 /obj/item/reagent_containers/glass/petridish
 	name = "Petri Dish"

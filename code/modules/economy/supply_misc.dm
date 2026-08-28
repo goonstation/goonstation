@@ -54,7 +54,7 @@ TYPEINFO(/obj/strip_door)
 	layer = EFFECTS_LAYER_UNDER_1
 	event_handler_flags = USE_FLUID_ENTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS
-	material_amt = 0.1
+	material_amt = MATERIAL::AMOUNT::SHEET
 	var/datum/material/flap_material = null
 	var/flap_amount = 4 // just in case
 
@@ -131,6 +131,9 @@ TYPEINFO(/obj/strip_door)
 			var/density = src.flap_material.hasProperty("density") ? src.flap_material.getProperty("density") : 3
 			M.changeStatus("slowed", 2 SECONDS, density * 2)
 		src.flap_material.triggerOnEntered(src, A)
+
+	on_material_scan()
+		return "Human slowdown effect increases with flap density"
 
 	// Ensure that we're no longer slowed when leaving flaps
 	Uncrossed(atom/A)

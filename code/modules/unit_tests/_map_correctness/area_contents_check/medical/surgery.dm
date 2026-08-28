@@ -37,5 +37,7 @@
 	)
 	skip_check_on = null
 	target_areas = list(
-		/area/station/medical/medbay/treatment,
+		/area/station/medical/medbay/treatment, // left this just in case it gets reused idk
+		/area/station/medical/medbay/treatment1,
+		/area/station/medical/medbay/treatment2,
 	)

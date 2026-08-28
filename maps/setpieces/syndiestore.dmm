@@ -1,0 +1,4713 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ae" = (
+/obj/item/clothing/suit/space/syndicate/specialist/medic{
+	pixel_x = 8
+	},
+/obj/item/clothing/head/helmet/space/syndicate/specialist/medic{
+	pixel_y = 14;
+	pixel_x = 6
+	},
+/obj/rack,
+/obj/item/storage/belt/syndicate_medic_belt{
+	pixel_x = -7;
+	pixel_y = 8
+	},
+/obj/item/storage/medical_pouch{
+	pixel_x = -6;
+	pixel_y = -5
+	},
+/obj/item/storage/belt/medical/prepared,
+/obj/item/clothing/glasses/healthgoggles/upgraded,
+/turf/simulated/floor/sanitary/white,
+/area/listeningpost/break_room{
+	name = "Syndicate Hideout Medbay";
+	unlocks_post = 0
+	})
+"al" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/plating,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"am" = (
+/turf/simulated/floor/redblack{
+	dir = 3
+	},
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"aD" = (
+/obj/storage/crate/packing,
+/obj/random_item_spawner/desk_stuff/four,
+/obj/random_item_spawner/mask/four,
+/obj/item/clothing/mask/gas/swat/rainbow,
+/obj/item/clothing/mask/gas/swat/rainbow,
+/obj/item/clothing/mask/gas/swat/rainbow,
+/obj/item/clothing/mask/gas/swat/rainbow,
+/obj/item/clothing/mask/gas/swat/rainbow,
+/obj/item/clothing/mask/gas/swat/rainbow,
+/obj/item/clothing/mask/gas/swat/rainbow,
+/obj/item/clothing/mask/injector_mask,
+/obj/item/clothing/mask/injector_mask,
+/obj/item/clothing/mask/skull/changeling,
+/obj/item/clothing/mask/skull/changeling,
+/obj/machinery/light/small/sticky/warm,
+/turf/simulated/floor/plating/jen,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"aL" = (
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor/sanitary,
+/area/listeningpost/break_room{
+	name = "Syndicate Hideout Medbay";
+	unlocks_post = 0
+	})
+"aT" = (
+/obj/decoration/bookcase{
+	pixel_y = 21
+	},
+/obj/machinery/computer/camera_viewer,
+/turf/simulated/floor/black,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"bo" = (
+/obj/railing/reinforced,
+/turf/simulated/floor/plating/jen,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"br" = (
+/turf/simulated/floor/stairs/dark{
+	dir = 6
+	},
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"bv" = (
+/turf/simulated/floor/black{
+	icon_state = "cairngorm19"
+	},
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"bD" = (
+/obj/decal/tile_edge/line/black{
+	dir = 6;
+	icon_state = "line2"
+	},
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/red,
+/obj/blind_switch/directional/east,
+/obj/machinery/light_switch/directional/east{
+	pixel_y = 11
+	},
+/turf/simulated/floor/carpet/grime,
+/area/listeningpost/barracks{
+	unlocks_post = 0;
+	name = "Syndicate Hideout Barracks"
+	})
+"bJ" = (
+/obj/machinery/manufacturer/medical,
+/turf/simulated/floor/sanitary/white,
+/area/listeningpost/break_room{
+	name = "Syndicate Hideout Medbay";
+	unlocks_post = 0
+	})
+"bT" = (
+/obj/decal/tile_edge/line/red{
+	icon_state = "line1"
+	},
+/turf/simulated/floor/circuit/red,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"bZ" = (
+/obj/fluid_spawner{
+	amount = 200;
+	delay = 200
+	},
+/turf/simulated/floor/sand,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"cj" = (
+/obj/mapping_helper/wingrille_spawn/auto/hardened/tuff,
+/turf/simulated/floor/plating,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"cp" = (
+/turf/unsimulated/wall/auto/lead/gray,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"cu" = (
+/obj/decal/stage_edge,
+/obj/rack,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/wood,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"cF" = (
+/obj/machinery/computer/announcement/station{
+	area_name = "Fenrir Shopping Centre";
+	name = "Shopping Store Announcement Computer";
+	dir = 8
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/obj/machinery/light/incandescent/warm,
+/obj/machinery/light_switch/directional/east{
+	pixel_y = 12
+	},
+/turf/simulated/floor/black,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"cO" = (
+/obj/decal/poster/wallsign/stencil/left/n{
+	pixel_x = -4
+	},
+/obj/decal/poster/wallsign/stencil/left/r{
+	pixel_x = 7
+	},
+/obj/decal/poster/wallsign/stencil/left/i{
+	pixel_x = 15
+	},
+/obj/decal/poster/wallsign/stencil/left/r{
+	pixel_x = 22
+	},
+/turf/unsimulated/wall/auto/lead/gray,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"cZ" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/simulated/floor/redblack{
+	dir = 3
+	},
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"de" = (
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "delivery2"
+	},
+/obj/table/reinforced/industrial/auto,
+/obj/decal/tile_edge/line/red{
+	dir = 8;
+	icon_state = "line2"
+	},
+/obj/item/mine/blast{
+	pixel_y = 9;
+	pixel_x = -7
+	},
+/obj/item/mine/blast{
+	pixel_x = 9;
+	pixel_y = 9
+	},
+/obj/item/mine/blast{
+	pixel_x = -7
+	},
+/obj/item/mine/blast{
+	pixel_x = 9
+	},
+/turf/simulated/floor/circuit/red,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"dj" = (
+/turf/simulated/floor/black{
+	icon_state = "cairngorm17"
+	},
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"dE" = (
+/obj/machinery/door/airlock/pyro/weapons/secure{
+	aiHacking = 1
+	},
+/obj/mapping_helper/airlock/bolter,
+/obj/mapping_helper/button/area,
+/obj/mapping_helper/airlock/aiDisabler,
+/turf/simulated/floor/wood,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"dG" = (
+/obj/item/clothing/suit/space/industrial/syndicate{
+	pixel_x = 5
+	},
+/obj/item/clothing/head/helmet/space/industrial/syndicate{
+	pixel_x = 5;
+	pixel_y = 12
+	},
+/obj/item/clothing/suit/space/syndicate/specialist/commissar_greatcoat{
+	pixel_y = -2;
+	pixel_x = -6
+	},
+/obj/item/clothing/head/helmet/space/syndicate/specialist/commissar_cap{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/storage/closet/syndicate,
+/obj/item/clothing/suit/armor/NT,
+/obj/item/swords_sheaths/nukeop,
+/turf/simulated/floor/black{
+	icon_state = "cairngorm2"
+	},
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"dU" = (
+/obj/table/syndicate/auto,
+/obj/item/boardgame/chess{
+	pixel_y = 5
+	},
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"ea" = (
+/obj/railing/reinforced{
+	dir = 4
+	},
+/obj/rack,
+/turf/simulated/floor/wood/two,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"ei" = (
+/obj/decal/poster/wallsign/medbay,
+/turf/unsimulated/wall/auto/lead/gray,
+/area/listeningpost/break_room{
+	name = "Syndicate Hideout Medbay";
+	unlocks_post = 0
+	})
+"el" = (
+/obj/item/card/id/syndicate/commander{
+	pixel_y = 9
+	},
+/obj/item/device/radio/headset/syndicate/leader{
+	pixel_y = 7
+	},
+/obj/table/monodesk/auto,
+/obj/item/radiojammer{
+	pixel_x = -5;
+	pixel_y = -1
+	},
+/obj/item/dagger/syndicate{
+	pixel_x = 4;
+	pixel_y = -8
+	},
+/turf/simulated/floor/carpet/red,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"ew" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/window_blinds/cog2/left,
+/turf/simulated/floor/plating,
+/area/listeningpost/barracks{
+	unlocks_post = 0;
+	name = "Syndicate Hideout Barracks"
+	})
+"ex" = (
+/obj/decal/tile_edge/line/green{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/shrub/random{
+	pixel_x = -4
+	},
+/turf/simulated/floor/grass,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"eJ" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
+	aiHacking = 1
+	},
+/obj/mapping_helper/airlock/aiDisabler,
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/simulated/floor/black,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"eN" = (
+/obj/decoration/decorativeplant/plant4,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"fw" = (
+/turf/simulated/floor/black{
+	icon_state = "cairngorm16"
+	},
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"fD" = (
+/obj/mapping_helper/wingrille_spawn/auto/hardened/tuff,
+/obj/window_blinds/cog2/right,
+/turf/simulated/floor/plating,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"fO" = (
+/turf/simulated/floor/plating,
+/area/space)
+"fQ" = (
+/obj/table/sleek/auto,
+/obj/item/cash_briefcase/syndicate{
+	pixel_x = -6;
+	pixel_y = 10
+	},
+/obj/item/cash_briefcase/syndicate{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/cash_briefcase/syndicate{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/cash_briefcase/syndicate{
+	pixel_x = -6;
+	pixel_y = -2
+	},
+/obj/item/clothing/head/bighat/syndicate{
+	pixel_x = 7
+	},
+/turf/simulated/floor/minitiles/black,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"fU" = (
+/turf/unsimulated/wall/auto/lead/gray,
+/area/listeningpost/barracks{
+	unlocks_post = 0;
+	name = "Syndicate Hideout Barracks"
+	})
+"gq" = (
+/obj/decal/stage_edge,
+/obj/machinery/vending/cards,
+/turf/simulated/floor/wood,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"gz" = (
+/obj/landmark/antagonist/operative/commander,
+/obj/stool/chair/comfy/sleek,
+/turf/simulated/floor/carpet/red/fancy/edge/north,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"gE" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1";
+	dir = 8
+	},
+/obj/table/reinforced/bar/auto,
+/obj/item/currency/spacecash/twothousandfivehundred,
+/obj/item/currency/spacecash/twothousandfivehundred{
+	pixel_y = 6;
+	pixel_x = 2
+	},
+/obj/item/currency/spacecash/twothousandfivehundred{
+	pixel_y = 11
+	},
+/turf/simulated/floor/carpet/grime,
+/area/listeningpost/barracks{
+	unlocks_post = 0;
+	name = "Syndicate Hideout Barracks"
+	})
+"gI" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"gQ" = (
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 4
+	},
+/turf/simulated/floor/wood/two,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"gW" = (
+/obj/machinery/vending/jobclothing/syndicate,
+/obj/decal/tile_edge/line/black{
+	dir = 9;
+	icon_state = "line2"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/listeningpost/barracks{
+	unlocks_post = 0;
+	name = "Syndicate Hideout Barracks"
+	})
+"ha" = (
+/obj/mapping_helper/wingrille_spawn/auto/hardened/tuff,
+/obj/window_blinds/cog2/left,
+/turf/simulated/floor/plating,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"hf" = (
+/obj/item_dispenser/barricade,
+/turf/simulated/floor/industrial,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"hg" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/carpet/red/fancy/edge/south,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"hk" = (
+/obj/railing/reinforced,
+/obj/machinery/manufacturer/general,
+/turf/simulated/floor/plating/jen,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"hz" = (
+/obj/rack,
+/turf/simulated/floor/wood,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"hM" = (
+/obj/machinery/light/incandescent/warm,
+/obj/table/reinforced/industrial/auto,
+/obj/item/storage/belt/gun/pistol{
+	icon_state = "pistol_belt-1";
+	pixel_y = 8;
+	pixel_x = -12
+	},
+/obj/item/storage/belt/gun/pistol{
+	icon_state = "pistol_belt-1";
+	pixel_x = -15;
+	pixel_y = 2
+	},
+/obj/item/storage/belt/gun/pistol{
+	icon_state = "pistol_belt-1";
+	pixel_y = -4;
+	pixel_x = -18
+	},
+/obj/item/storage/belt/gun/revolver{
+	icon_state = "revolver_belt-1";
+	pixel_y = 8;
+	pixel_x = 6
+	},
+/obj/item/storage/belt/gun/revolver{
+	icon_state = "revolver_belt-1";
+	pixel_y = 2;
+	pixel_x = 3
+	},
+/obj/item/storage/belt/gun/revolver{
+	icon_state = "revolver_belt-1";
+	pixel_y = -4
+	},
+/obj/decal/tile_edge/line/red{
+	dir = 1;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/circuit/red,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"hO" = (
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "delivery2"
+	},
+/obj/table/reinforced/industrial/auto,
+/obj/decal/tile_edge/line/red{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/line/red{
+	icon_state = "line1"
+	},
+/turf/simulated/floor/circuit/red,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"ii" = (
+/obj/cabinet/restrictedmedical,
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor/sanitary/white,
+/area/listeningpost/break_room{
+	name = "Syndicate Hideout Medbay";
+	unlocks_post = 0
+	})
+"iI" = (
+/obj/decal/tile_edge/line/red{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/table/reinforced/industrial/auto,
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = -6
+	},
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = -6;
+	pixel_y = 12
+	},
+/obj/item/clothing/glasses/thermal/traitor{
+	pixel_x = 6;
+	pixel_y = -2
+	},
+/obj/item/clothing/glasses/thermal/traitor{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/obj/item/clothing/glasses/thermal/traitor{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/clothing/glasses/thermal/traitor{
+	pixel_x = 6;
+	pixel_y = 10
+	},
+/turf/simulated/floor/circuit/red,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"ji" = (
+/obj/table/sleek/auto,
+/obj/item/tool/quickhack/syndicate{
+	pixel_x = -2;
+	pixel_y = 11
+	},
+/obj/item/tool/quickhack/syndicate{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/obj/item/tool/quickhack/syndicate{
+	pixel_x = -4;
+	pixel_y = 1
+	},
+/obj/item/tool/quickhack/syndicate{
+	pixel_x = -5;
+	pixel_y = -4
+	},
+/obj/item/tool/omnitool/syndicate{
+	pixel_x = 9;
+	pixel_y = 1
+	},
+/obj/item/tool/omnitool/syndicate{
+	pixel_x = 14;
+	pixel_y = 5
+	},
+/turf/simulated/floor/minitiles/black,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"jR" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"kc" = (
+/obj/table/sleek/auto,
+/obj/item/tool/omnitool/syndicate{
+	pixel_x = -14;
+	pixel_y = 1
+	},
+/obj/item/tool/omnitool/syndicate{
+	pixel_x = -9;
+	pixel_y = 5
+	},
+/obj/item/storage/pouch/highcap{
+	pixel_x = 8;
+	pixel_y = 9
+	},
+/obj/item/storage/pouch/highcap{
+	pixel_x = 8;
+	pixel_y = 3
+	},
+/obj/item/storage/pouch/highcap{
+	pixel_x = 8;
+	pixel_y = -3
+	},
+/obj/item/tool/omnitool/syndicate{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/obj/item/tool/omnitool/syndicate{
+	pixel_x = -1;
+	pixel_y = 5
+	},
+/obj/item/storage/pouch/highcap{
+	pixel_x = 8;
+	pixel_y = -3
+	},
+/obj/machinery/light/small/sticky/warm,
+/turf/simulated/floor/minitiles/black,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"kH" = (
+/turf/simulated/floor/wood,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"lt" = (
+/obj/fluid_spawner{
+	amount = 200;
+	delay = 200
+	},
+/mob/living/critter/aquatic/fish/nautilus{
+	name = "Jacques"
+	},
+/turf/simulated/floor/sand,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"lx" = (
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 1
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
+/turf/simulated/floor/wood,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"lI" = (
+/obj/shrub/random{
+	pixel_x = -4
+	},
+/obj/decal/tile_edge/line/green{
+	dir = 4;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/grass,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"lK" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/window_blinds/cog2/middle{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/listeningpost/break_room{
+	name = "Syndicate Hideout Medbay";
+	unlocks_post = 0
+	})
+"lW" = (
+/obj/storage/crate/robotics_supplies_borg,
+/obj/item/paper/manufacturer_blueprint/thrusters,
+/obj/item/roboupgrade/teleport{
+	pixel_x = 5;
+	pixel_y = 2
+	},
+/obj/item/roboupgrade/teleport,
+/obj/item/roboupgrade/expand{
+	pixel_x = -3
+	},
+/obj/item/roboupgrade/expand{
+	pixel_x = -5;
+	pixel_y = -5
+	},
+/obj/item/disk/data/floppy/manudrive/law_rack/singleuse{
+	pixel_y = 4
+	},
+/obj/item/disk/data/floppy/manudrive/ai{
+	pixel_x = -7;
+	pixel_y = 6
+	},
+/turf/simulated/floor/plating/jen,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"mr" = (
+/obj/rack,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/wood,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"ms" = (
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "delivery2"
+	},
+/obj/table/reinforced/industrial/auto,
+/obj/decal/tile_edge/line/red{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/line/red{
+	icon_state = "line1"
+	},
+/obj/item/storage/box/antiair,
+/turf/simulated/floor/circuit/red,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"my" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/wood/two,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"mE" = (
+/obj/table/syndicate/auto,
+/obj/machinery/coffeemaker/security{
+	pixel_x = -2;
+	pixel_y = 1
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"mF" = (
+/obj/submachine/syndicate_teleporter{
+	id = "escape";
+	name = "Odd Teleporter"
+	},
+/obj/machinery/light/small/sticky/cool,
+/turf/simulated/floor/plating,
+/area/space)
+"mG" = (
+/obj/decal/tile_edge/line/red{
+	dir = 4;
+	icon_state = "tile1"
+	},
+/turf/simulated/floor/industrial,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"mO" = (
+/obj/table/syndicate/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8;
+	aiHacking = 1
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/obj/item/paper_bin,
+/obj/mapping_helper/airlock/aiDisabler,
+/turf/simulated/floor/black,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"mW" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"nc" = (
+/obj/decoration/bookcase{
+	pixel_y = 21
+	},
+/obj/machinery/computer/announcement/station{
+	area_name = "Fenrir Shopping Centre";
+	name = "Shopping Store Announcement Computer"
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/simulated/floor/black,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"nd" = (
+/obj/storage/crate/packing{
+	icon_state = "packingcrate6"
+	},
+/obj/random_item_spawner/junk/seven,
+/obj/random_item_spawner/junk/seven,
+/obj/decal/stage_edge/alt,
+/turf/simulated/floor/plating/jen,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"nn" = (
+/turf/simulated/floor/redblack/corner{
+	dir = 4
+	},
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"nq" = (
+/obj/machinery/door/airlock/pyro/weapons/secure{
+	aiHacking = 1
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
+/turf/simulated/floor/black,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"nv" = (
+/obj/table/auto,
+/obj/item/handcuffs/tape_roll{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/obj/item/handcuffs/tape_roll{
+	pixel_x = -7;
+	pixel_y = 6
+	},
+/obj/item/device/flash{
+	pixel_x = 9
+	},
+/obj/item/device/flash{
+	pixel_x = 4
+	},
+/obj/item/device/flash{
+	pixel_x = -1
+	},
+/obj/item/device/flash{
+	pixel_x = -6
+	},
+/turf/simulated/floor/circuit/red,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"nx" = (
+/turf/simulated/floor/sanitary/white,
+/area/listeningpost/break_room{
+	name = "Syndicate Hideout Medbay";
+	unlocks_post = 0
+	})
+"nG" = (
+/turf/simulated/floor/black{
+	icon_state = "cairngorm15"
+	},
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"nJ" = (
+/obj/table/auto,
+/obj/item/remote/syndicate_teleporter{
+	pixel_x = 5;
+	pixel_y = 13
+	},
+/obj/item/remote/syndicate_teleporter{
+	pixel_x = 5;
+	pixel_y = 8
+	},
+/obj/item/remote/syndicate_teleporter{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/item/remote/syndicate_teleporter{
+	pixel_x = -4;
+	pixel_y = 13
+	},
+/obj/item/remote/syndicate_teleporter{
+	pixel_x = -4;
+	pixel_y = 8
+	},
+/obj/item/remote/syndicate_teleporter{
+	pixel_x = -4;
+	pixel_y = 3
+	},
+/turf/simulated/floor/circuit/red,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"nY" = (
+/obj/storage/crate/clown,
+/obj/machinery/light/small/sticky/warm,
+/obj/random_item_spawner/dressup/few,
+/obj/random_item_spawner/formalclothes/few,
+/obj/item/clothing/gloves/swat/NT,
+/obj/item/clothing/gloves/swat/NT,
+/turf/simulated/floor/plating/jen,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"oi" = (
+/obj/cabinet/medicalmenders,
+/turf/simulated/floor/sanitary/white,
+/area/listeningpost/break_room{
+	name = "Syndicate Hideout Medbay";
+	unlocks_post = 0
+	})
+"oj" = (
+/turf/simulated/floor/black{
+	icon_state = "cairngorm6"
+	},
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"ow" = (
+/obj/machinery/light_switch/directional/west{
+	pixel_y = 11
+	},
+/obj/blind_switch/directional/west,
+/turf/simulated/floor/sanitary/white,
+/area/listeningpost/break_room{
+	name = "Syndicate Hideout Medbay";
+	unlocks_post = 0
+	})
+"oX" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 4
+	},
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"qj" = (
+/obj/decal/tile_edge/line/red{
+	dir = 1;
+	icon_state = "tile1"
+	},
+/turf/simulated/floor/industrial,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"ql" = (
+/obj/table/sleek/auto,
+/obj/item/gun/energy/pickpocket{
+	pixel_y = 8;
+	pixel_x = -6
+	},
+/obj/item/gun/energy/pickpocket{
+	pixel_y = 4;
+	pixel_x = -5
+	},
+/obj/item/gun/energy/pickpocket{
+	pixel_x = -4
+	},
+/turf/simulated/floor/minitiles/black,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"qx" = (
+/obj/item/circular_saw{
+	pixel_x = 3;
+	pixel_y = 12
+	},
+/obj/item/scalpel,
+/obj/item/staple_gun{
+	pixel_x = 5
+	},
+/obj/item/weldingtool,
+/obj/item/hemostat,
+/obj/item/surgical_spoon,
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "bot2"
+	},
+/obj/item/suture,
+/obj/item/scissors/surgical_scissors,
+/obj/table/auto,
+/obj/machinery/defib_mount{
+	pixel_y = 5;
+	pixel_x = 3
+	},
+/turf/simulated/floor/sanitary/white,
+/area/listeningpost/break_room{
+	name = "Syndicate Hideout Medbay";
+	unlocks_post = 0
+	})
+"qZ" = (
+/obj/stool/chair/office/red{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/west,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"rc" = (
+/turf/simulated/floor/carpet/red,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"re" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/industrial,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"ri" = (
+/turf/simulated/wall/auto/asteroid/mountain,
+/area/space)
+"rj" = (
+/obj/rack,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/wood/two,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"rG" = (
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "delivery2"
+	},
+/obj/item/old_grenade/stinger{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/obj/item/old_grenade/stinger{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/old_grenade/stinger{
+	pixel_x = -8
+	},
+/obj/item/old_grenade/stinger,
+/obj/table/reinforced/industrial/auto,
+/obj/decal/tile_edge/line/red{
+	dir = 4;
+	icon_state = "line2"
+	},
+/turf/simulated/floor/circuit/red,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"rH" = (
+/obj/railing/reinforced,
+/obj/rack,
+/turf/simulated/floor/black,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"rU" = (
+/obj/stool/chair/red{
+	dir = 8
+	},
+/obj/landmark/antagonist/operative,
+/turf/simulated/floor/carpet/red/fancy/edge/east,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"rW" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/simulated/floor/redblack{
+	dir = 3
+	},
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"sa" = (
+/turf/unsimulated/floor/grasslush/thin,
+/area/space)
+"sg" = (
+/obj/table/syndicate/auto,
+/obj/item/megaphone/syndicate,
+/turf/simulated/floor/carpet/red/fancy/edge/north,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"sm" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 1;
+	pixel_y = 18
+	},
+/obj/decal/tile_edge/line/red{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/table/reinforced/industrial/auto,
+/obj/item/card/emag{
+	pixel_y = 9
+	},
+/obj/item/card/emag{
+	pixel_y = 2
+	},
+/obj/item/card/emag{
+	pixel_y = -5
+	},
+/turf/simulated/floor/circuit/red,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"sw" = (
+/obj/storage/crate/trench_loot/ship,
+/obj/machinery/light/small/sticky/warm,
+/obj/item/shipcomponent/communications/security,
+/obj/item/shipcomponent/communications/security,
+/obj/item/shipcomponent/mainweapon/gun_22,
+/obj/item/shipcomponent/mainweapon/gun_22,
+/obj/item/shipcomponent/mainweapon/laser,
+/obj/item/shipcomponent/mainweapon/laser,
+/obj/item/shipcomponent/secondary_system/cloak,
+/obj/item/shipcomponent/secondary_system/cloak,
+/obj/item/shipcomponent/secondary_system/crash,
+/obj/item/shipcomponent/secondary_system/trailblazer,
+/obj/item/shipcomponent/secondary_system/trailblazer,
+/turf/simulated/floor/plating/jen,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"sC" = (
+/obj/machinery/conveyor/EN{
+	operating = 1
+	},
+/turf/simulated/floor/plating/jen,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"sO" = (
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "delivery2"
+	},
+/obj/table/reinforced/industrial/auto,
+/obj/decal/tile_edge/line/red{
+	dir = 8;
+	icon_state = "line2"
+	},
+/obj/item/gun/kinetic/rpg7/loaded,
+/turf/simulated/floor/circuit/red,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"sQ" = (
+/obj/decoration/decorativeplant/plant2,
+/turf/simulated/floor/redblack{
+	dir = 3
+	},
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"sW" = (
+/obj/decal/tile_edge/line/black{
+	dir = 10;
+	icon_state = "line2"
+	},
+/obj/item/vending/restock_cartridge/jobclothing/syndicate,
+/obj/item/vending/restock_cartridge/jobclothing/syndicate,
+/obj/item/vending/restock_cartridge/jobclothing/syndicate,
+/obj/item/vending/restock_cartridge/jobclothing/syndicate,
+/obj/item/vending/restock_cartridge/jobclothing/syndicate,
+/obj/item/vending/restock_cartridge/jobclothing/syndicate,
+/obj/item/vending/restock_cartridge/jobclothing/syndicate,
+/obj/item/vending/restock_cartridge/jobclothing/syndicate,
+/obj/item/vending/restock_cartridge/jobclothing/syndicate,
+/obj/item/vending/restock_cartridge/jobclothing/syndicate,
+/obj/storage/crate/classcrate{
+	name = "vendor restock crate"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/listeningpost/barracks{
+	unlocks_post = 0;
+	name = "Syndicate Hideout Barracks"
+	})
+"sX" = (
+/turf/simulated/floor/black{
+	icon_state = "cairngorm7"
+	},
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"sY" = (
+/obj/table/syndicate/auto,
+/obj/item/device/audio_log/radioship/small{
+	pixel_x = -8
+	},
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/carpet/red/fancy/edge/north,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"tb" = (
+/turf/simulated/floor/black,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"to" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1";
+	dir = 1
+	},
+/obj/storage/crate,
+/obj/item/device/radio/headset,
+/obj/item/device/radio/headset,
+/obj/item/device/radio/headset,
+/obj/item/device/radio_upgrade/syndicatechannel,
+/obj/item/device/radio_upgrade/syndicatechannel,
+/obj/item/device/radio_upgrade/syndicatechannel,
+/turf/simulated/floor/carpet/grime,
+/area/listeningpost/barracks{
+	unlocks_post = 0;
+	name = "Syndicate Hideout Barracks"
+	})
+"tK" = (
+/obj/mapping_helper/wingrille_spawn/auto/hardened/tuff,
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/plating,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"tM" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/carpet/red/fancy/edge/east,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"tW" = (
+/obj/decal/poster/wallsign/teleport_sign{
+	pixel_y = -4
+	},
+/obj/decal/poster/wallsign/escape_sign{
+	pixel_y = 7;
+	pixel_x = 1
+	},
+/turf/unsimulated/wall/auto/lead/gray,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"uo" = (
+/obj/storage/crate/materials,
+/obj/item/sheet/plastic/fullstack,
+/obj/item/sheet/electrum{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/obj/item/storage/box/cablesbox/reinforced,
+/obj/item/sheet/glass/crystal/reinforced/fullstack,
+/obj/item/sheet/steel/fullstack{
+	pixel_x = -9
+	},
+/obj/item/sheet/steel/reinforced/fullstack{
+	pixel_x = -4;
+	pixel_y = 11
+	},
+/obj/item/storage/box/cablesbox/black{
+	pixel_x = -3;
+	pixel_y = -3
+	},
+/obj/item/storage/box/cablesbox/black{
+	pixel_x = 6;
+	pixel_y = -4
+	},
+/turf/simulated/floor/plating/jen,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"up" = (
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "delivery2"
+	},
+/obj/table/reinforced/industrial/auto,
+/obj/decal/tile_edge/line/red{
+	dir = 4;
+	icon_state = "line2"
+	},
+/obj/item/uplink/syndicate/nukeop{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/item/uplink/syndicate/nukeop{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/turf/simulated/floor/circuit/red,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"ut" = (
+/obj/item/device/radio/intercom{
+	dir = 8
+	},
+/obj/storage/crate/bin/trash,
+/turf/simulated/floor/carpet/red/fancy/edge/ne,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"uz" = (
+/obj/mapping_helper/wingrille_spawn/auto/hardened/tuff,
+/turf/simulated/floor/plating,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"uL" = (
+/turf/simulated/floor/black{
+	icon_state = "cairngorm20"
+	},
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"uP" = (
+/obj/item/storage/belt/security/shoulder_holster/inspector,
+/obj/storage/secure/crate/weapon,
+/obj/item/storage/belt/security/shoulder_holster/inspector,
+/obj/item/storage/belt/security/shoulder_holster/inspector,
+/obj/item/gun/energy/phaser_small,
+/obj/item/gun/energy/phaser_small,
+/obj/item/gun/energy/phaser_small,
+/obj/item/gun/energy/phaser_small,
+/obj/item/gun/energy/phaser_gun,
+/obj/item/gun/energy/phaser_gun,
+/obj/item/gun/kinetic/clock_188/boomerang,
+/obj/item/gun/kinetic/clock_188/boomerang,
+/obj/item/gun/kinetic/sawnoff,
+/obj/item/ammo/bullets/bullet_9mm,
+/obj/item/ammo/bullets/bullet_9mm,
+/obj/item/ammo/bullets/bullet_9mm,
+/obj/item/ammo/bullets/abg,
+/obj/machinery/light/small/sticky/warm,
+/obj/item/gun/kinetic/sawnoff,
+/obj/item/ammo/bullets/abg,
+/obj/item/ammo/bullets/abg,
+/turf/simulated/floor/plating/jen,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"uV" = (
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor/sanitary/white,
+/area/listeningpost/break_room{
+	name = "Syndicate Hideout Medbay";
+	unlocks_post = 0
+	})
+"vx" = (
+/turf/simulated/floor/carpet/red/fancy/edge/east,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"vD" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/window_blinds/cog2/right,
+/turf/simulated/floor/plating,
+/area/listeningpost/break_room{
+	name = "Syndicate Hideout Medbay";
+	unlocks_post = 0
+	})
+"vU" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir";
+	tag = "icon-lattice-dir (SOUTHWEST)"
+	},
+/turf/unsimulated/floor/grasslush/thin,
+/area/space)
+"vY" = (
+/obj/decal/tile_edge/line/red{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/deployable_turret/syndicate/active,
+/turf/simulated/floor/circuit/red,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"wn" = (
+/obj/machinery/light_switch/directional/west,
+/turf/simulated/floor/black,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"wq" = (
+/obj/fluid_spawner{
+	amount = 200;
+	delay = 200
+	},
+/mob/living/critter/aquatic/fish/nautilus{
+	desc = "Or just 'Alph' for short.";
+	name = "Alphonzo"
+	},
+/turf/simulated/floor/sand,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"wr" = (
+/obj/random_item_spawner/snacks/six,
+/obj/storage/crate/packing{
+	icon_state = "packingcrate6"
+	},
+/obj/item/storage/box/popsicles{
+	pixel_x = -4
+	},
+/obj/item/storage/box/popsicles{
+	pixel_x = -8;
+	pixel_y = 10
+	},
+/obj/item/storage/box/random_colas{
+	pixel_y = 10
+	},
+/obj/item/storage/box/random_colas{
+	pixel_x = 10;
+	pixel_y = 9
+	},
+/obj/item/storage/box/sushi_box{
+	pixel_x = 7;
+	pixel_y = -8
+	},
+/turf/simulated/floor/plating/jen,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"wW" = (
+/obj/table/monodesk/auto,
+/obj/decoration/paperstack/large{
+	pixel_y = 14;
+	pixel_x = -6
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/north,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"xc" = (
+/obj/table/syndicate/auto,
+/obj/machinery/light/incandescent/warm,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -15
+	},
+/obj/item/reagent_containers/food/drinks/mug/random_color{
+	pixel_y = 6;
+	pixel_x = -6
+	},
+/obj/item/kitchen/food_box/sugar_box,
+/obj/item/reagent_containers/food/drinks/mug/random_color{
+	pixel_y = 8;
+	pixel_x = 4
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"xg" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1";
+	tag = "icon-line1 (NORTH)"
+	},
+/obj/machinery/traymachine/morgue,
+/turf/simulated/floor/sanitary,
+/area/listeningpost/break_room{
+	name = "Syndicate Hideout Medbay";
+	unlocks_post = 0
+	})
+"xn" = (
+/obj/machinery/light/incandescent/warm,
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/red,
+/turf/simulated/floor/carpet/grime,
+/area/listeningpost/barracks{
+	unlocks_post = 0;
+	name = "Syndicate Hideout Barracks"
+	})
+"xw" = (
+/turf/simulated/floor/stairs/dark/wide,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"xB" = (
+/turf/unsimulated/wall/auto/lead/gray,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"xE" = (
+/obj/storage/crate/packing{
+	icon_state = "packingcrate12"
+	},
+/obj/item/swingsignfolded,
+/obj/item/swingsignfolded,
+/obj/item/swingsignfolded,
+/obj/item/furniture_parts/comfy_chair/red,
+/obj/item/furniture_parts/comfy_chair/red,
+/obj/item/furniture_parts/comfy_chair/red,
+/obj/item/furniture_parts/office_chair/red,
+/obj/item/furniture_parts/office_chair/red,
+/obj/item/furniture_parts/office_chair/red,
+/obj/item/furniture_parts/office_chair/red,
+/obj/item/furniture_parts/podium_wood/syndie,
+/obj/item/furniture_parts/podium_wood/syndie,
+/obj/item/furniture_parts/podium_white/syndie,
+/obj/item/furniture_parts/podium_white/syndie,
+/obj/item/furniture_parts/table/clothred,
+/obj/item/furniture_parts/table/clothred,
+/obj/item/furniture_parts/table/monodesk,
+/obj/item/furniture_parts/table/monodesk,
+/obj/item/furniture_parts/table/monodesk,
+/obj/item/furniture_parts/table/syndicate,
+/obj/item/furniture_parts/table/syndicate,
+/obj/item/furniture_parts/table/syndicate,
+/obj/item/furniture_parts/table/sleek,
+/obj/item/furniture_parts/table/sleek,
+/obj/item/furniture_parts/table/sleek,
+/obj/item/furniture_parts/table/sleek,
+/obj/item/furniture_parts/table/sleek,
+/obj/random_item_spawner/furniture_parts/six,
+/turf/simulated/floor/plating/jen,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"xK" = (
+/obj/machinery/light/flamp,
+/turf/unsimulated/floor/grasslush/thin,
+/area/space)
+"xM" = (
+/obj/submachine/weapon_vendor/syndicate,
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "delivery2"
+	},
+/obj/decal/tile_edge/line/red{
+	dir = 1;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/circuit/red,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"xN" = (
+/obj/decal/stage_edge,
+/obj/machinery/vending/coffee,
+/turf/simulated/floor/wood,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"xO" = (
+/obj/machinery/light/incandescent/warm,
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1";
+	dir = 8
+	},
+/obj/machinery/clothingbooth/clothingboothgbr{
+	color = #990000
+	},
+/turf/simulated/floor/carpet/grime,
+/area/listeningpost/barracks{
+	unlocks_post = 0;
+	name = "Syndicate Hideout Barracks"
+	})
+"xP" = (
+/obj/decal/tile_edge/line/black{
+	dir = 5;
+	icon_state = "line2"
+	},
+/turf/simulated/floor/sanitary,
+/area/listeningpost/break_room{
+	name = "Syndicate Hideout Medbay";
+	unlocks_post = 0
+	})
+"ye" = (
+/obj/machinery/conveyor/EW{
+	operating = 1
+	},
+/obj/strip_door{
+	dir = 4
+	},
+/turf/simulated/floor/plating/jen,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"yf" = (
+/obj/item/old_grenade/stinger/frag{
+	pixel_y = 5;
+	pixel_x = -4
+	},
+/obj/item/old_grenade/stinger/frag{
+	pixel_x = -8
+	},
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "delivery2"
+	},
+/obj/item/old_grenade/stinger/frag{
+	pixel_y = 5;
+	pixel_x = 4
+	},
+/obj/item/old_grenade/stinger/frag,
+/obj/table/reinforced/industrial/auto,
+/obj/decal/tile_edge/line/red{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/line/red{
+	icon_state = "line1"
+	},
+/turf/simulated/floor/circuit/red,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"yk" = (
+/obj/decoration/decorativeplant/plant6,
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"yr" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor/redblack{
+	dir = 3
+	},
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"yx" = (
+/obj/railing/reinforced,
+/turf/simulated/floor/black,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"yN" = (
+/obj/storage/crate/trench_loot/clothes2,
+/obj/random_item_spawner/shoe/seven,
+/obj/item/clothing/shoes/swat/heavy,
+/obj/item/clothing/shoes/swat/heavy,
+/obj/item/clothing/shoes/swat/heavy,
+/obj/item/clothing/shoes/swat/heavy/clown,
+/obj/item/clothing/shoes/swat/heavy/clown,
+/obj/item/clothing/shoes/swat/heavy/clown,
+/obj/item/clothing/shoes/clown_shoes/pink/waddle,
+/obj/item/clothing/shoes/chameleon,
+/obj/item/clothing/shoes/chameleon,
+/obj/item/clothing/shoes/chameleon,
+/obj/decal/stage_edge/alt,
+/turf/simulated/floor/plating/jen,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"yW" = (
+/obj/machinery/light/incandescent/warm,
+/obj/decoration/wineholder{
+	pixel_y = 16
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/nw,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"zh" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1";
+	dir = 1
+	},
+/turf/simulated/floor/carpet/grime,
+/area/listeningpost/barracks{
+	unlocks_post = 0;
+	name = "Syndicate Hideout Barracks"
+	})
+"zP" = (
+/obj/decal/poster/wallsign/stencil/left/f{
+	pixel_x = 6
+	},
+/obj/decal/poster/wallsign/stencil/left/e{
+	pixel_x = 17
+	},
+/turf/unsimulated/wall/auto/lead/gray,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"zQ" = (
+/obj/item/organ/appendix/cyber,
+/obj/item/organ/appendix/cyber,
+/obj/item/organ/eye/cyber/laser,
+/obj/item/organ/eye/cyber/laser,
+/obj/item/organ/eye/cyber/sunglass,
+/obj/item/organ/eye/cyber/sunglass,
+/obj/item/organ/heart/cyber,
+/obj/item/organ/heart/cyber,
+/obj/item/organ/intestines/cyber,
+/obj/item/organ/intestines/cyber,
+/obj/item/organ/kidney/cyber/left,
+/obj/item/organ/kidney/cyber/right,
+/obj/item/organ/liver/cyber,
+/obj/item/organ/lung/cyber/left,
+/obj/item/organ/lung/cyber/right,
+/obj/item/organ/pancreas/cyber,
+/obj/item/organ/spleen/cyber,
+/obj/item/organ/stomach/cyber,
+/obj/storage/crate/classcrate{
+	name = "cyberparts";
+	desc = "It's gonna get bad."
+	},
+/obj/item/parts/robot_parts/arm/left/heavy,
+/obj/item/parts/robot_parts/arm/left/heavy,
+/obj/item/parts/robot_parts/arm/left/heavy,
+/obj/item/parts/robot_parts/arm/left/heavy,
+/obj/item/parts/robot_parts/arm/right/heavy,
+/obj/item/parts/robot_parts/arm/right/heavy,
+/obj/item/parts/robot_parts/arm/right/heavy,
+/obj/item/parts/robot_parts/arm/right/heavy,
+/obj/item/parts/robot_parts/robot_frame/syndicate,
+/obj/item/parts/robot_parts/robot_frame/syndicate,
+/turf/simulated/floor/sanitary/white,
+/area/listeningpost/break_room{
+	name = "Syndicate Hideout Medbay";
+	unlocks_post = 0
+	})
+"zT" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"Af" = (
+/obj/decal/tile_edge/line/black{
+	dir = 5;
+	icon_state = "line2"
+	},
+/obj/storage/closet/syndicate,
+/obj/item/clothing/suit/armor/tacticalvest,
+/obj/item/clothing/suit/armor/tacticalvest,
+/obj/item/clothing/suit/armor/tacticalvest,
+/obj/item/clothing/suit/armor/tacticalvest,
+/obj/item/clothing/suit/armor/tacticalvest,
+/obj/item/clothing/suit/armor/tacticalvest,
+/turf/simulated/floor/carpet/grime,
+/area/listeningpost/barracks{
+	unlocks_post = 0;
+	name = "Syndicate Hideout Barracks"
+	})
+"Ap" = (
+/obj/decal/poster/wallsign/stencil/left/s{
+	pixel_x = 5
+	},
+/obj/decal/poster/wallsign/stencil/left/h{
+	pixel_x = 16
+	},
+/turf/unsimulated/wall/auto/lead/gray,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"As" = (
+/obj/table/sleek/auto,
+/obj/item/device/fingerprinter,
+/obj/item/device/fingerprinter,
+/obj/item/device/fingerprinter,
+/obj/item/device/fingerprinter,
+/obj/item/device/fingerprinter,
+/obj/item/device/fingerprinter,
+/turf/simulated/floor/minitiles/black,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"AG" = (
+/obj/stool/chair/red{
+	dir = 8
+	},
+/obj/landmark/antagonist/operative,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/carpet/red/fancy/edge/east,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"Bg" = (
+/obj/table/reinforced/industrial/auto,
+/obj/item/storage/belt/gun/smartgun{
+	icon_state = "smartgun_belt-1";
+	pixel_y = 8
+	},
+/obj/item/storage/belt/gun/smartgun{
+	icon_state = "smartgun_belt-1";
+	pixel_y = 2;
+	pixel_x = -3
+	},
+/obj/item/storage/belt/gun/smartgun{
+	icon_state = "smartgun_belt-1";
+	pixel_y = -4;
+	pixel_x = -6
+	},
+/obj/decal/tile_edge/line/red{
+	dir = 9;
+	icon_state = "line2"
+	},
+/turf/simulated/floor/circuit/red,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"Bu" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/wood,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"BG" = (
+/obj/item/nukeop_minimap_controller,
+/obj/table/syndicate/auto,
+/obj/item/reagent_containers/food/drinks/coffee{
+	pixel_x = 14
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/north,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"BL" = (
+/obj/lattice,
+/turf/unsimulated/floor/grasslush/thin,
+/area/space)
+"BM" = (
+/obj/storage/crate/bin,
+/obj/machinery/door_control/bolter/new_walls/east{
+	name = "shopfront bolter";
+	pixel_y = 7
+	},
+/obj/mapping_helper/button/area,
+/obj/blind_switch/directional/east{
+	pixel_y = -6
+	},
+/turf/simulated/floor/black,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"Cb" = (
+/obj/machinery/bot/medbot/head_surgeon/no_camera{
+	name = "Medibot - 'Combat Surgeon'"
+	},
+/turf/simulated/floor/sanitary/white,
+/area/listeningpost/break_room{
+	name = "Syndicate Hideout Medbay";
+	unlocks_post = 0
+	})
+"Cc" = (
+/obj/storage/crate/trench_loot/drug,
+/obj/item/storage/pill_bottle/methamphetamine{
+	pixel_x = 8;
+	pixel_y = 3
+	},
+/obj/item/storage/pill_bottle/methamphetamine{
+	pixel_y = 9
+	},
+/obj/item/storage/pill_bottle/catdrugs{
+	pixel_x = -9;
+	pixel_y = 8
+	},
+/obj/item/storage/pill_bottle/catdrugs{
+	pixel_x = 2
+	},
+/obj/item/storage/pill_bottle/crank{
+	pixel_x = -7;
+	pixel_y = 4
+	},
+/obj/item/storage/pill_bottle/crank{
+	pixel_x = -10;
+	pixel_y = 2
+	},
+/obj/item/storage/pill_bottle/CBD{
+	pixel_x = -9;
+	pixel_y = -4
+	},
+/obj/item/storage/pill_bottle/CBD{
+	pixel_x = -2;
+	pixel_y = -9
+	},
+/obj/item/storage/pill_bottle/CBD{
+	pixel_x = 5;
+	pixel_y = -6
+	},
+/obj/item/reagent_containers/emergency_injector/methamphetamine,
+/obj/item/reagent_containers/emergency_injector/methamphetamine{
+	pixel_x = 4
+	},
+/obj/item/reagent_containers/emergency_injector/random{
+	pixel_y = 7;
+	pixel_x = -11
+	},
+/obj/item/reagent_containers/emergency_injector/random{
+	pixel_y = 7;
+	pixel_x = -4
+	},
+/obj/item/reagent_containers/emergency_injector/random{
+	pixel_y = 7;
+	pixel_x = -8
+	},
+/obj/item/clothing/mask/cigarette/cigar/gold,
+/obj/item/clothing/mask/cigarette/cigar{
+	pixel_x = -2;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/cigarette/cigar{
+	pixel_x = -5;
+	pixel_y = -9
+	},
+/turf/simulated/floor/plating/jen,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"CF" = (
+/obj/decal/tile_edge/line/red{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/table/reinforced/industrial/auto,
+/obj/item/breaching_charge/thermite{
+	pixel_x = -8;
+	pixel_y = 2
+	},
+/obj/item/breaching_charge/thermite{
+	pixel_y = 2
+	},
+/obj/item/breaching_charge/thermite{
+	pixel_y = 2;
+	pixel_x = 8
+	},
+/obj/machinery/light/incandescent/warm,
+/obj/item/breaching_charge/thermite{
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/obj/item/breaching_charge/thermite{
+	pixel_y = 8
+	},
+/obj/item/breaching_charge/thermite{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/turf/simulated/floor/circuit/red,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"CM" = (
+/obj/table/syndicate/auto,
+/obj/item/paper_bin{
+	pixel_x = -14
+	},
+/obj/item/clipboard{
+	pixel_x = 3;
+	pixel_y = 7
+	},
+/obj/item/paper{
+	pixel_y = 1
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/ne,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"Da" = (
+/turf/unsimulated/floor/auto/dirt,
+/area/space)
+"Dc" = (
+/obj/machinery/conveyor/SN{
+	operating = 1
+	},
+/obj/strip_door,
+/turf/simulated/floor/plating/jen,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"Dq" = (
+/turf/unsimulated/wall/auto/lead/gray,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"DE" = (
+/obj/decal/poster/wallsign/stencil/left/n{
+	pixel_x = 0
+	},
+/obj/decal/poster/wallsign/stencil/left/g{
+	pixel_x = 11
+	},
+/turf/unsimulated/wall/auto/lead/gray,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"Ek" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/window_blinds/cog2/right,
+/turf/simulated/floor/plating,
+/area/listeningpost/barracks{
+	unlocks_post = 0;
+	name = "Syndicate Hideout Barracks"
+	})
+"Ep" = (
+/turf/simulated/floor/carpet/red/fancy/edge/se,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"Ft" = (
+/obj/decal/poster/wallsign/stencil/left/o{
+	pixel_x = -5
+	},
+/obj/decal/poster/wallsign/stencil/left/p{
+	pixel_x = 5
+	},
+/obj/decal/poster/wallsign/stencil/left/p{
+	pixel_x = 16
+	},
+/obj/decal/poster/wallsign/stencil/left/i{
+	pixel_x = 25
+	},
+/turf/unsimulated/wall/auto/lead/gray,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"Fx" = (
+/turf/simulated/floor/industrial,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"FE" = (
+/turf/simulated/floor/carpet/red/fancy/edge/west,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"Ga" = (
+/obj/table/reinforced/industrial/auto,
+/obj/item/ammo/bullets/a12/bird/four{
+	pixel_x = -5;
+	pixel_y = 11
+	},
+/obj/item/ammo/bullets/a12/bird/four{
+	pixel_x = 5;
+	pixel_y = 11
+	},
+/obj/item/ammo/bullets/a12/bird/four{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/ammo/bullets/a12/bird/four{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/ammo/bullets/a12/bird/four{
+	pixel_x = -5;
+	pixel_y = -1
+	},
+/obj/item/ammo/bullets/a12/bird/four{
+	pixel_x = 5;
+	pixel_y = -1
+	},
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/circuit/red,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"Gs" = (
+/obj/storage/crate/packing{
+	icon_state = "packingcrate12"
+	},
+/obj/random_item_spawner/peripherals/four,
+/obj/random_item_spawner/circuitboards/two,
+/obj/random_item_spawner/ai_experimental/two,
+/turf/simulated/floor/plating/jen,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"Gt" = (
+/obj/minimap/map_computer/nukeop,
+/turf/simulated/floor/carpet/red,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"GQ" = (
+/obj/table/syndicate/auto,
+/obj/item/paper/book/from_file/syndies_guide,
+/turf/simulated/floor/carpet/red/fancy/edge/nw,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"Hc" = (
+/turf/simulated/floor/carpet/red/fancy/edge/sw,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"Hr" = (
+/turf/simulated/floor/stairs/wood/wide{
+	dir = 6
+	},
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"HC" = (
+/obj/decal/stage_edge,
+/obj/rack,
+/turf/simulated/floor/wood,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"Iu" = (
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"Iw" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1";
+	dir = 1
+	},
+/obj/storage/crate/wooden{
+	name = "disguise crate"
+	},
+/obj/item/storage/backpack/chameleon,
+/obj/item/storage/backpack/chameleon,
+/obj/item/storage/backpack/chameleon,
+/obj/item/storage/backpack/chameleon,
+/obj/item/storage/backpack/chameleon,
+/obj/item/storage/backpack/chameleon,
+/turf/simulated/floor/carpet/grime,
+/area/listeningpost/barracks{
+	unlocks_post = 0;
+	name = "Syndicate Hideout Barracks"
+	})
+"IB" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/redblack{
+	dir = 3
+	},
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"IL" = (
+/obj/decal/poster/wallsign/security{
+	name = "Syndicate"
+	},
+/turf/unsimulated/wall/auto/lead/gray,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"IW" = (
+/turf/simulated/floor/stairs/wood/wide,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"Js" = (
+/obj/railing/reinforced,
+/obj/rack,
+/turf/simulated/floor/wood/two,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"Kc" = (
+/obj/decal/tile_edge/line/red{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/table/reinforced/industrial/auto,
+/obj/item/device/radio/headset/syndicate/comtac{
+	pixel_x = -5
+	},
+/obj/item/device/radio/headset/syndicate/comtac{
+	pixel_x = 1
+	},
+/obj/item/device/radio/headset/syndicate/comtac{
+	pixel_x = 8
+	},
+/obj/item/device/radio/headset/syndicate/comtac{
+	pixel_x = -5;
+	pixel_y = -6
+	},
+/obj/item/device/radio/headset/syndicate/comtac{
+	pixel_x = 1;
+	pixel_y = -6
+	},
+/obj/item/device/radio/headset/syndicate/comtac{
+	pixel_x = 8;
+	pixel_y = -6
+	},
+/turf/simulated/floor/circuit/red,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"Kz" = (
+/obj/window_blinds/cog2/middle{
+	dir = 4
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/plating,
+/area/listeningpost/break_room{
+	name = "Syndicate Hideout Medbay";
+	unlocks_post = 0
+	})
+"KG" = (
+/obj/machinery/door/airlock/pyro/weapons/secure{
+	dir = 4;
+	aiHacking = 1
+	},
+/obj/mapping_helper/airlock/aiDisabler,
+/obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/cycler/manual{
+	cycle_id = "syndiestorestairs";
+	enter_id = "lower";
+	name = "syndiestorestairs"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"KM" = (
+/obj/decal/stage_edge,
+/obj/machinery/vending/alcohol,
+/turf/simulated/floor/wood,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"KT" = (
+/obj/item/paper_bin{
+	pixel_y = -4;
+	pixel_x = 5
+	},
+/obj/decoration/paperstack/small{
+	pixel_x = -7;
+	pixel_y = 12
+	},
+/obj/item/stamp/syndicate{
+	pixel_x = -7;
+	pixel_y = -7
+	},
+/obj/item/pen,
+/obj/item/pen/crayon/red{
+	pixel_y = -5
+	},
+/obj/table/monodesk/auto,
+/obj/decoration/paperstack/mid{
+	pixel_x = 6;
+	pixel_y = 16
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/north,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"Lg" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/turf/simulated/floor/red,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"Lp" = (
+/obj/stool/chair/office/syndie{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/red,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"LA" = (
+/turf/simulated/floor/stairs/dark/wide{
+	dir = 6
+	},
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"LP" = (
+/obj/machinery/traymachine/morgue,
+/turf/simulated/floor/sanitary,
+/area/listeningpost/break_room{
+	name = "Syndicate Hideout Medbay";
+	unlocks_post = 0
+	})
+"LS" = (
+/turf/unsimulated/wall/auto/lead/gray,
+/area/listeningpost/break_room{
+	name = "Syndicate Hideout Medbay";
+	unlocks_post = 0
+	})
+"Mj" = (
+/obj/random_item_spawner/medicine/four,
+/obj/item/storage/box/morphineinjectors{
+	pixel_x = -7
+	},
+/obj/item/storage/firstaid/docbag{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/storage/crate/trench_loot/meds,
+/obj/random_item_spawner/med_tool/five,
+/turf/simulated/floor/plating/jen,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"ML" = (
+/obj/storage/crate/freezer/milk,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/ranch_chicken/spicy{
+	pixel_x = 7
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/ranch_chicken/spicy,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/ranch_chicken/spicy{
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/changeling{
+	pixel_x = 5;
+	pixel_y = -9
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/changeling{
+	pixel_x = 4;
+	pixel_y = -5
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/changeling{
+	pixel_x = 5
+	},
+/turf/simulated/floor/plating/jen,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"MQ" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/black,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"Nr" = (
+/turf/simulated/floor/black,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"Nx" = (
+/obj/decoration/decorativeplant/plant5,
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"Nz" = (
+/obj/storage/crate/packing,
+/obj/random_item_spawner/flowers/seven,
+/obj/item/plant/herb/mint,
+/obj/item/plant/herb/mint,
+/obj/item/plant/herb/mint,
+/obj/item/plant/herb/poppy/spawnable,
+/obj/item/plant/herb/poppy/spawnable,
+/obj/item/plant/herb/poppy/spawnable,
+/obj/item/reagent_containers/food/snacks/plant/coffeeberry/latte,
+/obj/item/reagent_containers/food/snacks/plant/coffeeberry/latte,
+/obj/item/reagent_containers/food/snacks/plant/coffeeberry/latte,
+/obj/item/reagent_containers/food/snacks/plant/glowfruit/spawnable,
+/obj/item/reagent_containers/food/snacks/plant/glowfruit/spawnable,
+/obj/item/reagent_containers/food/snacks/plant/lemon,
+/obj/item/reagent_containers/food/snacks/plant/lemon,
+/obj/item/reagent_containers/food/snacks/plant/lemon,
+/obj/item/reagent_containers/food/snacks/plant/melon,
+/obj/item/reagent_containers/food/snacks/plant/melon,
+/obj/item/reagent_containers/food/snacks/plant/melon,
+/obj/item/reagent_containers/food/snacks/plant/melon/george,
+/obj/item/reagent_containers/food/snacks/plant/orange/blood,
+/obj/item/reagent_containers/food/snacks/plant/orange/blood,
+/obj/item/reagent_containers/food/snacks/plant/peas,
+/obj/item/reagent_containers/food/snacks/plant/peas,
+/obj/item/reagent_containers/food/snacks/plant/pumpkin/pumpkinlatte,
+/obj/item/reagent_containers/food/snacks/plant/pumpkin/pumpkinlatte,
+/obj/item/reagent_containers/food/snacks/plant/pumpkin/pumpkinlatte,
+/obj/item/reagent_containers/food/snacks/plant/strawberry,
+/obj/item/reagent_containers/food/snacks/plant/strawberry,
+/obj/item/reagent_containers/food/snacks/plant/strawberry,
+/obj/item/reagent_containers/food/snacks/plant/strawberry,
+/obj/item/reagent_containers/food/snacks/plant/strawberry,
+/obj/item/seed/maneater,
+/obj/item/seed/maneater,
+/obj/item/seed/alien,
+/obj/item/seed/alien,
+/obj/item/seed/alien,
+/obj/item/seed/alien,
+/obj/item/seed/alien,
+/obj/item/seed/alien,
+/obj/decal/stage_edge/alt,
+/turf/simulated/floor/plating/jen,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"NB" = (
+/turf/simulated/floor/stairs/dark{
+	dir = 6
+	},
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"NG" = (
+/obj/storage/crate/chest/coins,
+/obj/item/currency/spacecash/fifty{
+	pixel_y = 12;
+	pixel_x = -4
+	},
+/obj/item/stamped_bullion,
+/obj/item/stamped_bullion{
+	pixel_x = -9
+	},
+/obj/item/currency/spacecash/fivehundred{
+	pixel_x = -6;
+	pixel_y = -4
+	},
+/obj/item/wrench/gold,
+/obj/item/clothing/head/that/gold{
+	pixel_x = 6;
+	pixel_y = 12
+	},
+/obj/item/item_box/gold_star{
+	pixel_x = 7;
+	pixel_y = -5
+	},
+/obj/item/currency/spacecash/hundred{
+	pixel_x = 9
+	},
+/obj/machinery/light/small/sticky/warm,
+/turf/simulated/floor/plating/jen,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"NP" = (
+/obj/machinery/weapon_stand/shotgun_rack,
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/simulated/floor/circuit/red,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"NQ" = (
+/obj/table/sleek/auto,
+/obj/item/device/chameleon,
+/obj/item/device/chameleon,
+/obj/item/device/chameleon,
+/obj/item/device/chameleon,
+/obj/item/device/chameleon,
+/obj/item/device/chameleon,
+/obj/machinery/light/small/sticky/warm,
+/turf/simulated/floor/minitiles/black,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"NW" = (
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	name = "reinforced internal airlock";
+	dir = 4;
+	opacity = 0
+	},
+/obj/mapping_helper/button/area,
+/obj/mapping_helper/airlock/bolter,
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/simulated/floor/red,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"Oo" = (
+/obj/machinery/door_control/bolter/new_walls/east{
+	single_use = 1
+	},
+/obj/decal/tile_edge/line/red{
+	icon_state = "line1"
+	},
+/obj/mapping_helper/button/area,
+/turf/simulated/floor/circuit/red,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"OD" = (
+/obj/item/clothing/suit/bedsheet/red,
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/stool/bed,
+/turf/simulated/floor/carpet/grime,
+/area/listeningpost/barracks{
+	unlocks_post = 0;
+	name = "Syndicate Hideout Barracks"
+	})
+"OV" = (
+/turf/simulated/floor/stairs/dark/wide{
+	dir = 6
+	},
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"OX" = (
+/obj/iv_stand,
+/obj/item/reagent_containers/iv_drip/blood,
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor/sanitary/white,
+/area/listeningpost/break_room{
+	name = "Syndicate Hideout Medbay";
+	unlocks_post = 0
+	})
+"Pl" = (
+/turf/simulated/floor/minitiles/black,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"Po" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"Pt" = (
+/obj/rack,
+/turf/simulated/floor/black,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"Pv" = (
+/obj/table/syndicate/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8;
+	aiHacking = 1
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/obj/item/clipboard,
+/obj/item/pen/red,
+/obj/mapping_helper/airlock/aiDisabler,
+/turf/simulated/floor/black,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"PE" = (
+/turf/simulated/floor/plating/jen,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"PL" = (
+/obj/railing/reinforced{
+	dir = 4
+	},
+/obj/railing/reinforced{
+	dir = 1
+	},
+/obj/rack,
+/turf/simulated/floor/wood/two,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"Qf" = (
+/obj/machinery/light_switch/directional/north,
+/turf/simulated/floor/black,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"Qj" = (
+/turf/simulated/floor/black{
+	icon_state = "cairngorm3"
+	},
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"Qo" = (
+/obj/item/ammo/bullets/rpg{
+	pixel_x = -8
+	},
+/obj/item/ammo/bullets/rpg{
+	pixel_x = -12
+	},
+/obj/item/ammo/bullets/rpg{
+	pixel_x = -16
+	},
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "delivery2"
+	},
+/obj/table/reinforced/industrial/auto,
+/obj/decal/tile_edge/line/red{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/line/red{
+	icon_state = "line1"
+	},
+/turf/simulated/floor/circuit/red,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"QS" = (
+/obj/storage/closet/dresser,
+/obj/item/clothing/under/misc/lawyer/red{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/clothing/under/blossomdress{
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/obj/item/clothing/under/misc/collar_shirt/red{
+	pixel_x = 6;
+	pixel_y = -2
+	},
+/obj/item/clothing/under/misc/blouse_skirt/red{
+	pixel_x = 5;
+	pixel_y = -6
+	},
+/obj/item/clothing/under/suit/red{
+	pixel_x = -7;
+	pixel_y = -4
+	},
+/obj/item/clothing/under/gimmick/red_wcoat{
+	pixel_x = -6;
+	pixel_y = -9
+	},
+/turf/simulated/floor/black{
+	icon_state = "cairngorm1"
+	},
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"Rt" = (
+/obj/table/syndicate/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8;
+	aiHacking = 1
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/obj/machinery/cashreg,
+/obj/mapping_helper/airlock/aiDisabler,
+/turf/simulated/floor/black,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"Rv" = (
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	name = "reinforced internal airlock";
+	opacity = 0
+	},
+/obj/mapping_helper/button/area,
+/obj/mapping_helper/airlock/bolter,
+/obj/mapping_helper/access/syndie_shuttle,
+/turf/simulated/floor/red,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"RD" = (
+/obj/rack,
+/turf/simulated/floor/wood/two,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"RZ" = (
+/obj/table/syndicate/auto,
+/obj/item/cigpacket{
+	pixel_x = -8
+	},
+/obj/item/decoration/ashtray{
+	pixel_x = 6
+	},
+/obj/item/matchbook{
+	pixel_x = 6;
+	pixel_y = 10
+	},
+/obj/drink_rack/mug{
+	pixel_x = 26;
+	pixel_y = 5
+	},
+/turf/simulated/floor/black,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"Sf" = (
+/turf/simulated/floor/carpet/grime,
+/area/listeningpost/barracks{
+	unlocks_post = 0;
+	name = "Syndicate Hideout Barracks"
+	})
+"Sl" = (
+/obj/machinery/light/incandescent/warm,
+/obj/rack,
+/turf/simulated/floor/wood,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"Sn" = (
+/obj/machinery/door/airlock/pyro/weapons/secure{
+	aiHacking = 1
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
+/turf/simulated/floor/sanitary/white,
+/area/listeningpost/break_room{
+	name = "Syndicate Hideout Medbay";
+	unlocks_post = 0
+	})
+"Sp" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 8
+	},
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"SO" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/carpet/red/fancy/edge/sw,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"SR" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
+	aiHacking = 1
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
+/turf/simulated/floor/black,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"Tc" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"Ti" = (
+/obj/storage/crate/rcd,
+/obj/item/mining_tools/blaster,
+/obj/item/mining_tools/blaster{
+	pixel_y = -3
+	},
+/obj/item/mining_tools/blaster{
+	pixel_x = -1;
+	pixel_y = -5
+	},
+/obj/item/mining_tool/powered/hedron_beam{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/mining_tool/powered/hedron_beam{
+	pixel_x = 6;
+	pixel_y = -1
+	},
+/obj/item/mining_tool/powered/hedron_beam{
+	pixel_x = 6;
+	pixel_y = -6
+	},
+/turf/simulated/floor/plating/jen,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"Tk" = (
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"TA" = (
+/obj/machinery/door/airlock/pyro/glass{
+	aiHacking = 1;
+	name = "illegal goods"
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
+/turf/simulated/floor/minitiles/black,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"TB" = (
+/obj/storage/crate/wooden/instruments,
+/obj/item/instrument/bagpipe,
+/obj/item/instrument/banjo,
+/obj/item/instrument/bass,
+/obj/item/instrument/bikehorn,
+/obj/item/instrument/bikehorn/airhorn,
+/obj/item/instrument/bikehorn/blue,
+/obj/item/instrument/bikehorn/dramatic,
+/obj/item/instrument/bikehorn/dramatic,
+/obj/item/instrument/cowbell,
+/obj/item/instrument/electricguitar,
+/obj/item/instrument/fiddle,
+/obj/item/instrument/glockenspiel,
+/obj/item/instrument/guitar,
+/obj/item/instrument/harmonica,
+/obj/item/instrument/keytar,
+/obj/item/instrument/saxophone,
+/obj/item/instrument/tambourine,
+/obj/item/instrument/triangle,
+/obj/item/instrument/trumpet,
+/obj/item/instrument/vuvuzela,
+/obj/item/instrument/whistle,
+/obj/item/storage/briefcase/instruments,
+/obj/item/storage/briefcase/instruments,
+/turf/simulated/floor/plating/jen,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"TG" = (
+/obj/machinery/manufacturer/robotics,
+/turf/simulated/floor/sanitary/white,
+/area/listeningpost/break_room{
+	name = "Syndicate Hideout Medbay";
+	unlocks_post = 0
+	})
+"TI" = (
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"TY" = (
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "delivery2"
+	},
+/obj/table/reinforced/industrial/auto,
+/obj/decal/tile_edge/line/red{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/line/red{
+	icon_state = "line1"
+	},
+/obj/item/mine/stun{
+	pixel_x = -7;
+	pixel_y = 9
+	},
+/obj/item/mine/stun{
+	pixel_x = 9;
+	pixel_y = 9
+	},
+/obj/item/mine/stun{
+	pixel_x = 9
+	},
+/obj/item/mine/stun{
+	pixel_x = -7
+	},
+/turf/simulated/floor/circuit/red,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"Ue" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/window_blinds/cog2/left,
+/turf/simulated/floor/plating,
+/area/listeningpost/break_room{
+	name = "Syndicate Hideout Medbay";
+	unlocks_post = 0
+	})
+"Uk" = (
+/turf/simulated/floor/black{
+	icon_state = "cairngorm5"
+	},
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"UJ" = (
+/obj/decoration/decorativeplant/plant7,
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"Vf" = (
+/obj/table/syndicate/auto,
+/obj/item/device/camera_viewer,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/carpet/red/fancy/edge/north,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"Vh" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/listeningpost/break_room{
+	name = "Syndicate Hideout Medbay";
+	unlocks_post = 0
+	})
+"Vj" = (
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "delivery2"
+	},
+/obj/table/reinforced/industrial/auto,
+/obj/decal/tile_edge/line/red{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/decal/tile_edge/line/red{
+	icon_state = "line1"
+	},
+/obj/item/storage/box/capella,
+/turf/simulated/floor/circuit/red,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"Vl" = (
+/obj/decal/tile_edge/line/red{
+	dir = 10;
+	icon_state = "line2"
+	},
+/turf/simulated/floor/circuit/red,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"Vp" = (
+/obj/decoration/bookcase{
+	pixel_y = 21
+	},
+/obj/machinery/computer/announcement/syndicate,
+/turf/simulated/floor/black,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"VM" = (
+/obj/submachine/syndicate_teleporter{
+	id = "escape";
+	name = "Syndicate Escape Teleporter"
+	},
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/circuit/red,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"VY" = (
+/turf/simulated/floor/carpet/red/fancy/edge/south,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"Wp" = (
+/turf/simulated/floor/black,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"Wt" = (
+/obj/table/reinforced/industrial/auto,
+/obj/item/ammo/bullets/a12/bird/four{
+	pixel_x = -5;
+	pixel_y = 11
+	},
+/obj/item/ammo/bullets/a12/bird/four{
+	pixel_x = 5;
+	pixel_y = 11
+	},
+/obj/item/ammo/bullets/a12/bird/four{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/ammo/bullets/a12/bird/four{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/ammo/bullets/a12/bird/four{
+	pixel_x = -5;
+	pixel_y = -1
+	},
+/obj/item/ammo/bullets/a12/bird/four{
+	pixel_x = 5;
+	pixel_y = -1
+	},
+/turf/simulated/floor/circuit/red,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"Wv" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/black,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"WC" = (
+/obj/machinery/light_switch/directional/east,
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"WV" = (
+/turf/simulated/floor/redblack/corner{
+	dir = 1
+	},
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"Xc" = (
+/obj/machinery/door/airlock/pyro/weapons/secure{
+	dir = 4;
+	aiHacking = 1
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
+/obj/mapping_helper/airlock/cycler/manual{
+	cycle_id = "syndiestorestairs";
+	enter_id = "upper";
+	name = "syndiestorestairs"
+	},
+/turf/simulated/floor/black,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"Xv" = (
+/obj/machinery/door/airlock/pyro/weapons/secure{
+	aiHacking = 1
+	},
+/obj/mapping_helper/access/syndie_shuttle,
+/obj/mapping_helper/airlock/aiDisabler,
+/turf/simulated/floor/black,
+/area/listeningpost/barracks{
+	unlocks_post = 0;
+	name = "Syndicate Hideout Barracks"
+	})
+"XA" = (
+/turf/simulated/floor/wood/two,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"XE" = (
+/turf/simulated/floor/black{
+	icon_state = "cairngorm21"
+	},
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"XL" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/window_blinds/cog2/left{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/listeningpost/break_room{
+	name = "Syndicate Hideout Medbay";
+	unlocks_post = 0
+	})
+"Yu" = (
+/obj/machinery/conveyor/NS{
+	operating = 1
+	},
+/obj/fakeobject/teleport_pad{
+	desc = "A pad used for cargo teleportation.";
+	name = "cargo teleport pad"
+	},
+/turf/simulated/floor/plating/jen,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"Yz" = (
+/obj/machinery/conveyor/SN{
+	operating = 1
+	},
+/turf/simulated/floor/plating/jen,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"YB" = (
+/turf/simulated/floor/stairs/dark/wide,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"YD" = (
+/obj/machinery/conveyor/NW{
+	operating = 1
+	},
+/turf/simulated/floor/plating/jen,
+/area/listeningpost/tech_room{
+	name = "Normal Store Warehouse";
+	unlocks_post = 0
+	})
+"YF" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1";
+	tag = "icon-line1"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/listeningpost/barracks{
+	unlocks_post = 0;
+	name = "Syndicate Hideout Barracks"
+	})
+"YP" = (
+/obj/machinery/drainage/big{
+	pixel_y = -8;
+	pixel_x = -1
+	},
+/obj/machinery/optable,
+/turf/simulated/floor/sanitary/white,
+/area/listeningpost/break_room{
+	name = "Syndicate Hideout Medbay";
+	unlocks_post = 0
+	})
+"YZ" = (
+/obj/machinery/computer/ATM{
+	dir = 4
+	},
+/turf/simulated/floor/wood/two,
+/area/listeningpost{
+	unlocks_post = 0;
+	name = "Fenrir Shopping Centre"
+	})
+"Zx" = (
+/obj/item/device/nukeop_commander_uplink{
+	pixel_x = 5
+	},
+/obj/item/megaphone/syndicate{
+	pixel_y = 9;
+	pixel_x = -4
+	},
+/obj/table/monodesk/auto,
+/turf/simulated/floor/carpet/red,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+"ZJ" = (
+/obj/decal/tile_edge/line/red{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/storage/crate/stxcrate{
+	name = "crowd control grenade crate"
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = -12;
+	pixel_y = 6
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_y = 6
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = 12;
+	pixel_y = 6
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = -12
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = -6
+	},
+/obj/item/chem_grenade/pepper,
+/obj/item/chem_grenade/pepper{
+	pixel_x = 6
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = 12
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = -12;
+	pixel_y = -6
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_y = -6
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_y = -6;
+	pixel_x = 6
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_y = -6;
+	pixel_x = 12
+	},
+/turf/simulated/floor/circuit/red,
+/area/listeningpost/general{
+	unlocks_post = 0;
+	name = "Syndicate Hideout"
+	})
+
+(1,1,1) = {"
+ri
+ri
+ri
+ri
+ri
+ri
+ri
+ri
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+ri
+ri
+sa
+sa
+sa
+sa
+sa
+ri
+ri
+ri
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+Da
+Da
+Da
+"}
+(2,1,1) = {"
+ri
+ri
+fO
+fO
+fO
+BL
+BL
+ri
+ri
+sa
+sa
+sa
+sa
+sa
+ri
+ri
+ri
+ri
+ri
+sa
+sa
+sa
+ri
+ri
+ri
+ri
+ri
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+Da
+Da
+Da
+Da
+"}
+(3,1,1) = {"
+ri
+mF
+fO
+ri
+ri
+ri
+BL
+vU
+sa
+sa
+ri
+ri
+ri
+ri
+ri
+ri
+ri
+ri
+ri
+ri
+ri
+ri
+ri
+ri
+ri
+ri
+ri
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+xK
+Da
+Da
+Da
+Da
+"}
+(4,1,1) = {"
+ri
+ri
+ri
+ri
+ri
+ri
+ri
+ri
+ri
+ri
+ri
+ri
+ri
+ri
+ri
+Dq
+Dq
+Dq
+ri
+ri
+ri
+ri
+ri
+ri
+ri
+ri
+ri
+ri
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+Da
+Da
+Da
+Da
+Da
+"}
+(5,1,1) = {"
+fU
+fU
+fU
+fU
+fU
+fU
+xB
+xB
+xB
+xB
+xB
+xB
+xB
+xB
+xB
+xB
+YZ
+Dq
+Dq
+Dq
+Dq
+Dq
+Dq
+ri
+ri
+ri
+ri
+ri
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+Da
+Da
+Da
+Da
+sa
+"}
+(6,1,1) = {"
+fU
+gW
+xO
+gE
+sW
+ew
+ex
+ex
+lI
+xB
+sm
+Kc
+ZJ
+iI
+CF
+xB
+gQ
+Dq
+RD
+RD
+rj
+RD
+Dq
+Dq
+Dq
+Dq
+Dq
+Dq
+Dq
+sa
+sa
+sa
+sa
+xK
+Da
+Da
+Da
+Da
+Da
+xK
+"}
+(7,1,1) = {"
+fU
+zh
+Sf
+Sf
+YF
+Ek
+Tk
+tb
+am
+xB
+Fx
+Fx
+Fx
+Fx
+Fx
+xB
+my
+XA
+XA
+XA
+XA
+XA
+IW
+kH
+hz
+mr
+hz
+hz
+ha
+sa
+sa
+sa
+sa
+Da
+Da
+Da
+Da
+Da
+sa
+sa
+"}
+(8,1,1) = {"
+fU
+to
+Sf
+Sf
+YF
+Xv
+Tk
+tb
+IB
+xB
+hf
+sO
+Fx
+de
+Fx
+xB
+XA
+XA
+XA
+XA
+XA
+XA
+Hr
+kH
+kH
+kH
+kH
+kH
+tK
+sa
+sa
+sa
+sa
+Da
+Da
+Da
+Da
+sa
+sa
+sa
+"}
+(9,1,1) = {"
+fU
+Iw
+Sf
+Sf
+YF
+ew
+oX
+tb
+rW
+xB
+re
+hO
+Fx
+TY
+re
+xB
+XA
+PL
+ea
+XA
+XA
+Js
+HC
+kH
+kH
+kH
+kH
+kH
+fD
+sa
+sa
+xK
+Da
+Da
+Da
+Da
+Da
+xK
+sa
+sa
+"}
+(10,1,1) = {"
+fU
+Af
+xn
+OD
+bD
+Ek
+dU
+tb
+yr
+Rv
+qj
+Qo
+Fx
+ms
+Fx
+xB
+my
+XA
+XA
+XA
+XA
+Js
+HC
+kH
+kH
+hz
+kH
+Bu
+Dq
+Dq
+Da
+Da
+Da
+Da
+Da
+Da
+sa
+sa
+sa
+sa
+"}
+(11,1,1) = {"
+fU
+fU
+fU
+fU
+fU
+fU
+Sp
+tb
+yr
+Rv
+qj
+yf
+Fx
+Vj
+Fx
+xB
+Rt
+Pv
+mO
+uz
+SR
+Dq
+cu
+kH
+kH
+hz
+kH
+kH
+kH
+dE
+Da
+Da
+Da
+Da
+Da
+sa
+sa
+sa
+sa
+sa
+"}
+(12,1,1) = {"
+LS
+oi
+ow
+xg
+LP
+LS
+Tc
+tb
+cZ
+xB
+re
+rG
+Fx
+up
+re
+xB
+Wp
+Wp
+Wp
+Wp
+Wp
+yx
+xN
+kH
+kH
+kH
+kH
+kH
+kH
+dE
+Da
+Da
+Da
+Da
+xK
+sa
+sa
+sa
+sa
+sa
+"}
+(13,1,1) = {"
+LS
+ii
+nx
+xP
+aL
+ei
+Tk
+tb
+sQ
+xB
+Fx
+Fx
+Fx
+Fx
+Fx
+xB
+MQ
+Wp
+Wp
+Wp
+Wp
+yx
+gq
+kH
+kH
+kH
+Bu
+Dq
+Dq
+Dq
+Da
+Da
+Da
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+"}
+(14,1,1) = {"
+LS
+qx
+Cb
+nx
+nx
+Sn
+Tk
+tb
+am
+xB
+vY
+Vl
+Fx
+Fx
+Bg
+xB
+Qf
+Wp
+BM
+cF
+Pt
+rH
+KM
+kH
+kH
+kH
+kH
+hz
+ha
+sa
+sa
+xK
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+"}
+(15,1,1) = {"
+LS
+YP
+nx
+nx
+nx
+Sn
+Tk
+tb
+am
+xB
+Ga
+bT
+Fx
+Fx
+hM
+xB
+Xc
+Xc
+Dq
+Dq
+Dq
+Dq
+zP
+hz
+kH
+kH
+kH
+hz
+fD
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+"}
+(16,1,1) = {"
+LS
+OX
+nx
+nx
+uV
+Ue
+Tk
+tb
+IB
+xB
+NP
+bT
+Fx
+Fx
+xM
+cp
+Nr
+Nr
+YB
+YB
+Nr
+Wv
+cO
+Sl
+kH
+kH
+Dq
+Dq
+Dq
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+"}
+(17,1,1) = {"
+LS
+ae
+zQ
+TG
+bJ
+vD
+Nx
+tb
+am
+xB
+Wt
+Oo
+mG
+mG
+xM
+cp
+Wv
+Nr
+OV
+OV
+Nr
+Nr
+Ap
+hz
+kH
+kH
+uz
+mr
+ha
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+"}
+(18,1,1) = {"
+LS
+Vh
+Kz
+lK
+XL
+ei
+Tk
+tb
+am
+xB
+xB
+xB
+NW
+NW
+xB
+cp
+cp
+cp
+cp
+cp
+KG
+KG
+Ft
+hz
+kH
+kH
+lx
+hz
+tK
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+"}
+(19,1,1) = {"
+xB
+nv
+xw
+Iu
+zT
+UJ
+WV
+tb
+nn
+Iu
+zT
+gI
+Po
+Po
+eN
+cp
+Nr
+Wv
+YB
+wn
+Nr
+Nr
+DE
+hz
+Bu
+kH
+uz
+hz
+fD
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+"}
+(20,1,1) = {"
+tW
+VM
+br
+tb
+tb
+tb
+tb
+tb
+tb
+tb
+tb
+tb
+tb
+tb
+tb
+nq
+Nr
+Nr
+NB
+Nr
+Nr
+Nr
+Dq
+Dq
+Dq
+Dq
+Dq
+Dq
+Dq
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+"}
+(21,1,1) = {"
+xB
+nJ
+LA
+TI
+TI
+TI
+TI
+jR
+TI
+TI
+WC
+TI
+TI
+jR
+yk
+cp
+Nr
+Nr
+OV
+Nr
+Nr
+Wv
+cj
+ql
+fQ
+ji
+cp
+ri
+ri
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+"}
+(22,1,1) = {"
+xB
+xB
+xB
+Lg
+Lg
+Lg
+xB
+xB
+xB
+xB
+xB
+al
+eJ
+al
+al
+cp
+xE
+bo
+yN
+PE
+PE
+PE
+TA
+Pl
+Pl
+kc
+cp
+ri
+ri
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+"}
+(23,1,1) = {"
+xB
+GQ
+FE
+FE
+FE
+FE
+FE
+Hc
+mE
+xB
+nc
+bv
+nG
+Uk
+QS
+IL
+nY
+bo
+Nz
+PE
+PE
+Gs
+cj
+Pl
+Pl
+cp
+cp
+ri
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+"}
+(24,1,1) = {"
+xB
+Vf
+rc
+rc
+rc
+rc
+Gt
+VY
+xc
+xB
+aT
+uL
+fw
+oj
+dG
+cp
+NG
+hk
+nd
+PE
+PE
+uP
+cj
+Pl
+Pl
+cp
+ri
+ri
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+"}
+(25,1,1) = {"
+xB
+sg
+rc
+rc
+rc
+rc
+rc
+VY
+RZ
+xB
+Vp
+XE
+dj
+sX
+Qj
+cp
+cp
+cp
+cp
+PE
+PE
+Cc
+cj
+As
+NQ
+cp
+ri
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+"}
+(26,1,1) = {"
+xB
+gz
+rc
+rc
+rc
+rc
+rc
+VY
+xB
+xB
+xB
+yW
+qZ
+FE
+SO
+mW
+bZ
+cp
+wr
+PE
+PE
+lW
+cp
+cp
+cp
+cp
+ri
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+"}
+(27,1,1) = {"
+xB
+BG
+rc
+rc
+rc
+rc
+rc
+VY
+xB
+bZ
+mW
+KT
+el
+Zx
+VY
+mW
+bZ
+cp
+aD
+PE
+PE
+PE
+Yz
+Dc
+sC
+cp
+ri
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+"}
+(28,1,1) = {"
+xB
+sY
+rc
+rc
+rc
+rc
+rc
+hg
+xB
+lt
+mW
+wW
+Lp
+rc
+VY
+mW
+wq
+cp
+uo
+PE
+PE
+sw
+cp
+cp
+ye
+cp
+ri
+ri
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+"}
+(29,1,1) = {"
+xB
+CM
+rU
+rU
+AG
+rU
+rU
+Ep
+xB
+bZ
+mW
+ut
+tM
+vx
+Ep
+mW
+bZ
+cp
+Ti
+Mj
+ML
+TB
+cp
+Yu
+YD
+cp
+ri
+ri
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+"}
+(30,1,1) = {"
+xB
+xB
+xB
+xB
+xB
+xB
+xB
+xB
+xB
+xB
+xB
+xB
+xB
+xB
+xB
+xB
+xB
+cp
+cp
+cp
+cp
+cp
+cp
+cp
+cp
+cp
+ri
+ri
+ri
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+sa
+"}

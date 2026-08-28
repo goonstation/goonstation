@@ -18,9 +18,9 @@
 	/// The time to wait till we send out the tracker time
 	var/trackertime = 0
 	/// lower bound on time before intercept arrives (in tenths of seconds)
-	var/const/trackertime_min = 27 MINUTES
+	var/trackertime_min = 27 MINUTES
 	/// upper bound on time before intercept arrives (in tenths of seconds)
-	var/const/trackertime_max = 30 MINUTES
+	var/trackertime_max = 30 MINUTES
 	/// Has the tracker been sent out yet
 	var/trackertimed = FALSE
 	var/const/min_revheads = 3
@@ -33,10 +33,13 @@
 	do_antag_random_spawns = 0
 	escape_possible = 0
 
-/datum/game_mode/revolution/extended //Does not end prematurely
-	name = "Revolution (no time limit)"
+//Has several changes to accomodate the RP experience. See ROLEPLAY_REVOLUTIONARIES define for changes.
+/datum/game_mode/revolution/extended
+	name = "Revolution (Roleplay)"
 	config_tag = "revolution_extended"
 	regular = FALSE
+	trackertime_min = 60 MINUTES
+	trackertime_max = 75 MINUTES
 
 /datum/game_mode/revolution/announce()
 	boutput(world, "<B>The current game mode is - Revolution!</B>")
@@ -107,7 +110,7 @@
 #ifndef ME_AND_MY_40_ALT_ACCOUNTS
 /datum/game_mode/revolution/process()
 	..()
-	if (!istype(ticker.mode, /datum/game_mode/revolution/extended) && ticker.round_elapsed_ticks >= round_limit && !gibwave_started)
+	if (!ROLEPLAY_REVOLUTIONARIES && ticker.round_elapsed_ticks >= round_limit && !gibwave_started)
 		gibwave_started = TRUE
 		start_gibwave()
 	if (ticker.round_elapsed_ticks > win_check_freq)
@@ -129,7 +132,9 @@
 	return
 
 /datum/game_mode/revolution/check_finished()
-	if(finished != 0)
+	if(ROLEPLAY_REVOLUTIONARIES) //Allow an admin or the shuttle call to determine the end instead of automatically ending.
+		return 0
+	else if(finished != 0)
 		return 1
 	else
 		return 0

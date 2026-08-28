@@ -81,6 +81,7 @@
 					for (var/i in 0 to 2)
 						var/obj/item/material_piece/organic/wood/log = new(locate(our_turf.x + i, our_turf.y, our_turf.z))
 						log.Turn(90)
+						log.is_rotated = TRUE
 					qdel(src)
 					return
 				src.falling = TRUE
@@ -328,11 +329,13 @@
 		. = ..()
 		if(isliving(AM))
 			APPLY_ATOM_PROPERTY(AM, PROP_MOB_HIDE_ICONS, src)
+			APPLY_ATOM_PROPERTY(AM, PROP_MOB_AI_UNTRACKABLE, src)
 
 	Uncrossed(atom/movable/AM)
 		. = ..()
 		if(isliving(AM))
 			REMOVE_ATOM_PROPERTY(AM, PROP_MOB_HIDE_ICONS, src)
+			REMOVE_ATOM_PROPERTY(AM, PROP_MOB_AI_UNTRACKABLE, src)
 
 	attackby(var/obj/item/W, mob/user)
 		user.lastattacked = get_weakref(src)
@@ -429,7 +432,12 @@ TYPEINFO(/obj/shrub/syndicateplant)
 /obj/shrub/syndicateplant
 	var/net_id
 
-	SYNDICATE_STEALTH_DESCRIPTION("The latest in syndicate spy technology.", "Is that an antenna?")
+	SYNDICATE_STEALTH_DESCRIPTION("The latest in syndicate spy technology.")
+
+	get_desc(dist, mob/user)
+		. = ..()
+		if(!istrainedsyndie(user) && !isspythief(user))
+			. += "Is that an antenna?"
 
 	New()
 		. = ..()

@@ -1038,8 +1038,8 @@ ABSTRACT_TYPE(/datum/commodity/magpie/sell)
 		comname = "Power Sink and Storage"
 		comtype = /obj/item/device/powersink/salvager
 		desc = "A device that can be used to drain power and sell it back to the M4GP13."
-		price = 1000
-		amount = 4
+		price = 5000
+		amount = 3
 
 	crank
 		comname = "Crank (5x pills)"

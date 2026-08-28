@@ -67,6 +67,9 @@ var/list/admin_verbs = list(
 		/client/proc/enableDrunkMode,
 		/client/proc/forceDrunkMode,
 
+#ifdef MAP_OVERRIDE_MENHIR
+		/client/proc/cmd_admin_vislayer,
+#endif
 		/client/proc/cmd_unshame_cube,
 		/client/proc/cmd_shame_cube,
 		/client/proc/removeSelf,
@@ -2206,6 +2209,8 @@ proc/alert_all_ghosts(atom/target, message)
 			C.cmd_emag_target(A)
 		if ("Pixel Offset")
 			new /datum/pixel_offset(A, C.mob)
+		if ("Debug Appearance")
+			C.cmd_debug_appearance(A)
 		if ("Set Material")
 			C.cmd_set_material(A)
 		if ("Activate Artifact")

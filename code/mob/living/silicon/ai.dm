@@ -402,6 +402,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 		if (src.brain && src.key)
 			src.brain.name = "neural net processor"
 			src.brain.owner = src.mind
+		src.setup_verbs()
 
 	SPAWN(0.6 SECONDS)
 		src.net_id = format_net_id("\ref[src]")
@@ -424,6 +425,31 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 		src.camera = new /obj/machinery/camera/AI(src)
 		src.camera.c_tag = src.real_name
 		src.camera.network = CAMERA_NETWORK_ROBOTS
+
+/mob/living/silicon/ai/proc/setup_verbs()
+	src.verbs |= /mob/living/silicon/ai/proc/ai_call_shuttle
+	src.verbs |= /mob/living/silicon/ai/proc/show_laws_verb
+	src.verbs |= /mob/living/silicon/ai/proc/reset_apcs
+	src.verbs |= /mob/living/silicon/ai/proc/de_electrify_verb
+	src.verbs |= /mob/living/silicon/ai/proc/unbolt_all_airlocks
+	src.verbs |= /mob/living/silicon/ai/proc/ai_camera_track
+	src.verbs |= /mob/living/silicon/ai/proc/ai_alerts
+	src.verbs |= /mob/living/silicon/ai/proc/ai_camera_list
+	src.verbs |= /mob/living/silicon/ai/proc/ai_statuschange
+	src.verbs |= /mob/living/silicon/ai/proc/ai_state_laws_all
+	src.verbs |= /mob/living/silicon/ai/proc/ai_state_laws_standard
+	src.verbs |= /mob/living/silicon/ai/proc/ai_set_fake_laws
+	src.verbs |= /mob/living/silicon/ai/proc/ai_state_fake_laws
+	src.verbs |= /mob/living/silicon/ai/verb/deploy_to
+	src.verbs |= /mob/living/silicon/ai/proc/ai_view_crew_manifest
+	src.verbs |= /mob/living/silicon/ai/proc/toggle_alerts_verb
+	src.verbs |= /mob/living/silicon/ai/verb/access_internal_radio
+	src.verbs |= /mob/living/silicon/ai/verb/access_internal_pda
+	src.verbs |= /mob/living/silicon/ai/proc/ai_colorchange
+	src.verbs |= /mob/living/silicon/ai/proc/ai_station_announcement
+	src.verbs |= /mob/living/silicon/ai/proc/view_messageLog
+	src.verbs |= /mob/living/silicon/ai/verb/rename_self
+	src.verbs |= /mob/living/silicon/ai/verb/go_offline
 
 //Returns either the AI mainframe or the eyecam mob, depending on whther or not we are deployed
 /mob/living/silicon/ai/proc/get_message_mob()
@@ -583,29 +609,6 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 				src.show_text("To use something, simply click it.")
 				src.show_text("Use the prefix <B>:s</B> to speak to fellow silicons through binary.")
 				src.show_laws()
-				src.verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
-				src.verbs += /mob/living/silicon/ai/proc/show_laws_verb
-				src.verbs += /mob/living/silicon/ai/proc/reset_apcs
-				src.verbs += /mob/living/silicon/ai/proc/de_electrify_verb
-				src.verbs += /mob/living/silicon/ai/proc/unbolt_all_airlocks
-				src.verbs += /mob/living/silicon/ai/proc/ai_camera_track
-				src.verbs += /mob/living/silicon/ai/proc/ai_alerts
-				src.verbs += /mob/living/silicon/ai/proc/ai_camera_list
-				src.verbs += /mob/living/silicon/ai/proc/ai_statuschange
-				src.verbs += /mob/living/silicon/ai/proc/ai_state_laws_all
-				src.verbs += /mob/living/silicon/ai/proc/ai_state_laws_standard
-				src.verbs += /mob/living/silicon/ai/proc/ai_set_fake_laws
-				src.verbs += /mob/living/silicon/ai/proc/ai_state_fake_laws
-				src.verbs += /mob/living/silicon/ai/verb/deploy_to
-				src.verbs += /mob/living/silicon/ai/proc/ai_view_crew_manifest
-				src.verbs += /mob/living/silicon/ai/proc/toggle_alerts_verb
-				src.verbs += /mob/living/silicon/ai/verb/access_internal_radio
-				src.verbs += /mob/living/silicon/ai/verb/access_internal_pda
-				src.verbs += /mob/living/silicon/ai/proc/ai_colorchange
-				src.verbs += /mob/living/silicon/ai/proc/ai_station_announcement
-				src.verbs += /mob/living/silicon/ai/proc/view_messageLog
-				src.verbs += /mob/living/silicon/ai/verb/rename_self
-				src.verbs += /mob/living/silicon/ai/verb/go_offline
 				src.job = "AI"
 				if (src.mind)
 					src.mind.assigned_role = "AI"
@@ -1855,6 +1858,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 		if (src.deployed_to_eyecam)
 			src.eyecam.ensure_speech_tree().migrate_speech_tree(src, src, FALSE)
 			src.eyecam.ensure_listen_tree().migrate_listen_tree(src, src, FALSE)
+			src.eyecam.delStatus("ai_intercom_override")
 
 		else if (src.deployed_shell)
 			src.deployed_shell.ensure_listen_tree().RemoveListenInput(LISTEN_INPUT_EARS_AI)
@@ -2375,32 +2379,25 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 	src.open_nearest_door_silicon()
 	return
 
-//just use this proc to make click-track checking easier (I would use this in the below proc that builds a list, but i think the proc call overhead is not worth it)
+//just use this proc to make click-track checking easier
 proc/is_mob_trackable_by_AI(var/mob/M)
-	if (HAS_ATOM_PROPERTY(M, PROP_MOB_AI_UNTRACKABLE))
-		return 0
-	if (istype(M, /mob/new_player))
-		return 0
-	if (ishuman(M) && istype(get_id_card(M:wear_id), /obj/item/card/id/syndicate))
-		return 0
-	if(M.z != 1 && M.z != usr.z)
-		return 0
-	if(!istype(M.loc, /turf)) //in a closet or something, AI can't see him anyways
-		return 0
-	if(M.invisibility) //cloaked
-		return 0
+	if(get_z(M) != Z_LEVEL_STATION)
+		return FALSE
 	if (M == usr)
-		return 0
-
-	var/good_camera = 0 //Can't track a person out of range of a functioning camera
-	for(var/obj/machinery/camera/C in range(M))
-		if ( C?.camera_status )
-			good_camera = 1
-			break
-	if(!good_camera)
-		return 0
-
-	return 1
+		return FALSE
+	if (istype(M, /mob/new_player))
+		return FALSE
+	if (HAS_ATOM_PROPERTY(M, PROP_MOB_AI_UNTRACKABLE))
+		return FALSE
+	if(!istype(M.loc, /turf)) //in a closet or something, AI can't see him anyways
+		return FALSE
+	if(M.invisibility) //cloaked
+		return FALSE
+	if (ishuman(M) && istype(get_id_card(M:wear_id), /obj/item/card/id/syndicate))
+		return FALSE
+	if(!seen_by_camera(M))
+		return FALSE
+	return TRUE
 
 proc/get_mobs_trackable_by_AI()
 	. = list()
@@ -2408,24 +2405,8 @@ proc/get_mobs_trackable_by_AI()
 	var/list/namecounts = list()
 	var/static/regex/labelled_regex = regex(@"\s*\(.*\)$")
 
-	for (var/mob/M in mobs)
-		if (istype(M, /mob/new_player))
-			continue //cameras can't follow people who haven't started yet DUH OR DIDN'T YOU KNOW THAT
-		if (HAS_ATOM_PROPERTY(M, PROP_MOB_AI_UNTRACKABLE))
-			continue
-		if (ishuman(M) && istype(get_id_card(M:wear_id), /obj/item/card/id/syndicate))
-			continue
-		if (istype(M,/mob/living/critter/aquatic) || istype(M, /mob/living/critter/small_animal/ranch_base/chicken))
-			continue
-		if(M.z != 1 && M.z != usr.z)
-			continue
-		if(!istype(M.loc, /turf)) //in a closet or something, AI can't see him anyways
-			continue
-		if(M.invisibility) //cloaked
-			continue
-		if (M == usr)
-			continue
-		if(!seen_by_camera(M))
+	for (var/mob/living/M in mobs)
+		if(!is_mob_trackable_by_AI(M))
 			continue
 
 		var/name = M.name
@@ -2506,6 +2487,10 @@ proc/get_mobs_trackable_by_AI()
 	if(message_len != length(message))
 		if(tgui_alert(src.get_message_mob(), "Your message was shortened to: \"[message]\", continue anyway?", "Too wordy!", list("Yes", "No")) != "Yes")
 			return
+
+	if(check_for_radio_jammers(src))
+		src.show_text("Your mainframe's communications array is currently being jammed!", "red")
+		return
 
 	command_announcement(html_encode(message), "Station Announcement by [src.name] (AI)", 'sound/misc/announcement_1.ogg', alert_origin=ALERT_COMMAND)
 
@@ -2892,6 +2877,86 @@ proc/get_mobs_trackable_by_AI()
 			src.ai.brain.take_damage(20, 20)
 			src.ai.TakeDamage(null, src.ai.health, src.ai.fire_res_on_core ? 0 : src.ai.health)
 			src.ai.eject_brain()
+
+/datum/statusEffect/ai_intercom_override
+	id = "ai_intercom_override"
+	visible = FALSE
+	/// How far the owner can be from the intercom before the effect is removed.
+	var/max_distance_from_intercom = 5
+	/// Intercom presently being overriden
+	var/obj/item/device/radio/intercom/intercom
+	var/intercom_original_frequency
+	var/intercom_original_microphone
+	var/intercom_original_speaker
+
+	preCheck(atom/A)
+		if (!isAI(A))
+			return FALSE
+		. = ..()
+
+	onAdd(var/obj/item/device/radio/intercom/intercom)
+		. = ..()
+		if(!istype(intercom))
+			src.remove_self()
+			return
+		if(GET_DIST(src.owner, intercom) > src.max_distance_from_intercom)
+			boutput(src.owner, SPAN_ALERT("You are too far away from that intercom!"))
+			src.remove_self()
+			return
+		src.intercom = intercom
+		src.intercom_original_frequency = src.intercom.frequency
+		src.intercom_original_microphone = src.intercom.microphone_enabled
+		src.intercom_original_speaker = src.intercom.speaker_enabled
+		RegisterSignal(src.owner, COMSIG_MOB_DEATH, PROC_REF(remove_self))
+		src.start_intercom_override()
+
+	proc/start_intercom_override()
+		if(QDELETED(src.intercom))
+			return
+		src.intercom.locked_frequency = TRUE // lockdown; saves us from clickspam
+		var/mob/living/silicon/ai/mainframe = src.owner
+		if(isAIeye(src.owner))
+			var/mob/living/intangible/aieye/eye = src.owner
+			mainframe = eye.mainframe
+		src.intercom.set_frequency(mainframe.radio2.frequency)
+		src.intercom.toggle_microphone(TRUE)
+		src.intercom.toggle_speaker(TRUE)
+
+		var/message_params = list(
+			"say_sound" = 'sound/misc/talk/bottalk_3.ogg',
+			"maptext_css_values" = list("color" = "#CC3FCC"),
+			"relay_flags" = SAY_RELAY_RADIO,
+		)
+		src.intercom.say("AI override engaged!", message_params = message_params)
+		src.intercom.show_speech_bubble(image('icons/mob/mob.dmi', "ai"))
+
+		if(src.intercom.icon_state != "intercom")
+			return
+		var/image/screen_image = image(src.intercom.icon, "intercom-screen_override")
+		src.intercom.UpdateOverlays(screen_image, "screen_override")
+
+
+	proc/stop_intercom_override()
+		if(QDELETED(src.intercom))
+			return
+		src.intercom.locked_frequency = FALSE // safe as long as we can't control locked frequencies in the first place
+		src.intercom.set_frequency(src.intercom_original_frequency)
+		src.intercom.toggle_microphone(src.intercom_original_microphone)
+		src.intercom.toggle_speaker(src.intercom_original_speaker)
+		src.intercom.UpdateOverlays(null, "screen_override")
+
+	onUpdate(timePassed)
+		if(QDELETED(src.intercom))
+			return
+		if(GET_DIST(src.owner, src.intercom) > src.max_distance_from_intercom)
+			boutput(src.owner, SPAN_ALERT("Intercom override range exceeded!"))
+			src.remove_self()
+
+	onRemove()
+		src.stop_intercom_override()
+		src.intercom = null
+		. = ..()
+
 #undef AI_DISMANTLE_STAGE_LOCKED
 #undef AI_DISMANTLE_STAGE_UNLOCKED
 #undef AI_DISMANTLE_STAGE_COVER_OPEN
