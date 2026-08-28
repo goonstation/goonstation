@@ -139,9 +139,6 @@
 /obj/cable{
 	dir = null
 	},
-/obj/cable{
-	icon_state = "1-4"
-	},
 /turf/simulated/floor,
 /area/station/devzone)
 "dp" = (
@@ -210,19 +207,6 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/devzone)
-"dQ" = (
-/obj/machinery/networked/storage/tape_drive{
-	bank_id = "Control";
-	locked = 0;
-	name = "Databank - Control";
-	setup_drive_type = /obj/item/disk/data/tape/master
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor,
 /area/station/devzone)
 "eo" = (
 /obj/machinery/conveyor/ES{
@@ -313,6 +297,18 @@
 /obj/machinery/manufacturer/general,
 /turf/simulated/floor,
 /area/station/devzone)
+"gA" = (
+/obj/machinery/networked/storage/tape_drive{
+	name = "Databank - Test";
+	bank_id = "Test";
+	locked = 0
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor,
+/area/station/devzone)
 "gF" = (
 /obj/machinery/teleport/portal_ring,
 /obj/item/hand_tele{
@@ -399,19 +395,6 @@
 /obj/cable,
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
-"hQ" = (
-/obj/machinery/networked/storage/tape_drive{
-	bank_id = "Artlab";
-	locked = 0;
-	name = "Databank - Artlab";
-	setup_drive_type = /obj/item/disk/data/tape/artifact_research
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor,
-/area/station/devzone)
 "hR" = (
 /turf/space,
 /area/station/devzone)
@@ -467,9 +450,6 @@
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
-	},
-/obj/cable{
-	icon_state = "0-4"
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -699,6 +679,21 @@
 /obj/disposalpipe/segment/mail/bent/west,
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
+"mX" = (
+/obj/machinery/computer3/terminal/zeta{
+	dir = 8;
+	setup_os_string = "ZETA_MAINFRAME";
+	setup_frame_type = /obj/computer3frame;
+	setup_starting_peripherals = list(/obj/item/peripheral/card_scanner,/obj/item/peripheral/network/powernet_card/terminal,/obj/item/peripheral/drive);
+	name = "varedited DWAINE terminal of nerdery";
+	desc = "This computer has one (1) more periphal than normal. Holy FUCK"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor,
+/area/station/devzone)
 "nd" = (
 /obj/machinery/computer/general_alert,
 /turf/simulated/floor,
@@ -887,6 +882,12 @@
 /obj/item/rcd_ammo/big,
 /turf/unsimulated/floor/caution,
 /area/station/devzone)
+"pC" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/station/devzone)
 "pE" = (
 /obj/machinery/door_control{
 	id = "tele";
@@ -1064,6 +1065,16 @@
 /obj/item/rcd/construction/chiefEngineer,
 /turf/unsimulated/floor/caution,
 /area/station/devzone)
+"sy" = (
+/obj/machinery/vending/floppy/free{
+	slogan_chance = 0;
+	extended_inventory = 1
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor,
+/area/station/devzone)
 "sG" = (
 /obj/machinery/door/poddoor/pyro{
 	autoclose = 1;
@@ -1154,6 +1165,15 @@
 /obj/railing/red/reinforced,
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
+"ux" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/station/devzone)
 "uE" = (
 /obj/item/device/radio/beacon,
 /turf/simulated/floor,
@@ -1224,6 +1244,15 @@
 /obj/landmark/supply_delivery,
 /turf/simulated/floor,
 /area/station/devzone)
+"wh" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/devzone)
 "wj" = (
 /mob/living/critter/small_animal/ranch_base/chicken,
 /turf/simulated/floor/grass/leafy,
@@ -1255,9 +1284,29 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/engine,
 /area/station/devzone)
+"wN" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor,
+/area/station/devzone)
 "wY" = (
 /obj/machinery/conveyor/SN{
 	id = "test"
+	},
+/turf/simulated/floor,
+/area/station/devzone)
+"wZ" = (
+/obj/machinery/networked/radio,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
 	},
 /turf/simulated/floor,
 /area/station/devzone)
@@ -1315,6 +1364,15 @@
 	},
 /obj/window/crystal/reinforced/west,
 /turf/unsimulated/floor/engine,
+/area/station/devzone)
+"xO" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
 /area/station/devzone)
 "yc" = (
 /obj/window/crystal/reinforced/west,
@@ -1451,6 +1509,15 @@
 	dir = 8
 	},
 /turf/simulated/floor/blue,
+/area/station/devzone)
+"Aa" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/caution,
 /area/station/devzone)
 "Ae" = (
 /obj/disposalpipe/type_sensing_outlet/drone_factory{
@@ -1804,14 +1871,6 @@
 	},
 /turf/simulated/floor,
 /area/station/devzone)
-"EY" = (
-/obj/machinery/networked/radio,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor,
-/area/station/devzone)
 "Fe" = (
 /obj/machinery/chem_master,
 /turf/simulated/floor,
@@ -1833,16 +1892,26 @@
 "Fo" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/station/devzone)
+"FD" = (
+/obj/machinery/computer3/generic/radio{
+	dir = 4
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor,
+/area/station/devzone)
 "FJ" = (
 /obj/machinery/computer/telescope,
 /turf/simulated/floor,
 /area/station/devzone)
 "FP" = (
 /obj/machinery/networked/artifact_console,
-/obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor,
 /area/station/devzone)
 "FQ" = (
@@ -1877,6 +1946,14 @@
 /area/station/devzone)
 "GZ" = (
 /obj/machinery/manufacturer/mining,
+/turf/simulated/floor,
+/area/station/devzone)
+"Ha" = (
+/obj/machinery/communications_dish,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor,
 /area/station/devzone)
 "Hb" = (
@@ -1956,20 +2033,24 @@
 	},
 /turf/simulated/floor,
 /area/station/devzone)
-"Ic" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor,
-/area/station/devzone)
 "Id" = (
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
 	},
 /obj/machinery/portable_atmospherics/canister/toxins,
+/turf/simulated/floor,
+/area/station/devzone)
+"IF" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/storage/tape_drive{
+	bank_id = "Artlab";
+	locked = 0;
+	name = "Databank - Artlab";
+	setup_drive_type = /obj/item/disk/data/tape/artifact_research
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor,
 /area/station/devzone)
 "II" = (
@@ -2145,14 +2226,6 @@
 	},
 /turf/simulated/floor,
 /area/station/devzone)
-"LH" = (
-/obj/machinery/communications_dish,
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/turf/simulated/floor,
-/area/station/devzone)
 "LJ" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -2283,6 +2356,15 @@
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
+/area/station/devzone)
+"NM" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor,
 /area/station/devzone)
 "NU" = (
 /obj/machinery/chem_dispenser/soda,
@@ -2566,6 +2648,13 @@
 	icon_state = "engine_caution_corners"
 	},
 /area/station/devzone)
+"RY" = (
+/obj/table/folding,
+/obj/item/disk/data/tape,
+/obj/item/device/multitool,
+/obj/item/screwdriver,
+/turf/simulated/floor,
+/area/station/devzone)
 "Sd" = (
 /obj/storage/secure/closet/engineering/mining,
 /turf/simulated/floor,
@@ -2578,6 +2667,15 @@
 "Si" = (
 /obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor,
+/area/station/devzone)
+"Sm" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/computer3/terminal/zeta{
+	dir = 8;
+	setup_os_string = "ZETA_MAINFRAME";
+	setup_frame_type = /obj/computer3frame
+	},
+/turf/unsimulated/floor/caution,
 /area/station/devzone)
 "Sw" = (
 /obj/cable{
@@ -2662,6 +2760,12 @@
 	},
 /turf/simulated/floor/red/redblackchecker,
 /area/station/devzone)
+"TZ" = (
+/obj/machinery/vending/computer3/free{
+	extended_inventory = 1
+	},
+/turf/simulated/floor,
+/area/station/devzone)
 "Uj" = (
 /obj/item/cargotele{
 	pixel_x = -6;
@@ -2700,6 +2804,19 @@
 /area/station/devzone)
 "UM" = (
 /obj/minimap/map_computer/htr_team,
+/turf/simulated/floor,
+/area/station/devzone)
+"UP" = (
+/obj/machinery/networked/storage/tape_drive{
+	bank_id = "Control";
+	locked = 0;
+	name = "Databank - Control";
+	setup_drive_type = /obj/item/disk/data/tape/master
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor,
 /area/station/devzone)
 "UT" = (
@@ -3982,9 +4099,9 @@ ot
 ot
 Cb
 ii
-Ic
-Ic
-Dz
+Cv
+Cv
+ux
 DE
 di
 Yx
@@ -4025,12 +4142,12 @@ Yx
 Rs
 Rs
 HC
+Yx
+Yx
+Yx
+Yx
 kV
-kV
-kV
-kV
-kV
-kV
+Yx
 Yx
 ng
 AL
@@ -4069,12 +4186,12 @@ Yx
 Rs
 Rs
 DP
-LH
-dQ
-hQ
-tD
+Yx
+Yx
+Yx
+Yx
 FP
-EY
+Yx
 Yx
 ng
 gF
@@ -4103,7 +4220,7 @@ GZ
 ng
 UT
 Yx
-pL
+Aa
 hS
 hS
 hS
@@ -4147,7 +4264,7 @@ qd
 ng
 Vl
 oL
-ng
+DP
 ng
 Rq
 Be
@@ -4191,7 +4308,7 @@ gk
 ng
 Hy
 Yx
-ng
+DP
 ng
 Rq
 lp
@@ -4235,7 +4352,7 @@ ng
 ng
 ng
 ng
-ng
+DP
 ng
 Rq
 Rq
@@ -4279,7 +4396,7 @@ Yx
 Yx
 Yx
 Yx
-Yx
+DP
 ng
 ng
 ng
@@ -4323,11 +4440,11 @@ Yx
 Yx
 Yx
 Yx
+DP
+Ha
 Yx
-Yx
-Yx
-Yx
-Yx
+IF
+UP
 ng
 fT
 nY
@@ -4367,11 +4484,11 @@ Yx
 Yx
 Yx
 Yx
-Yx
-Yx
-Yx
-Yx
-Yx
+pL
+wN
+Cv
+wh
+pC
 ng
 fT
 VJ
@@ -4411,11 +4528,11 @@ Yx
 Yx
 Yx
 Yx
-Yx
-Yx
-Yx
-Yx
-Yx
+ng
+kV
+RY
+FD
+TZ
 ng
 fT
 nY
@@ -4455,11 +4572,11 @@ Yx
 Yx
 Yx
 Yx
-Yx
-Yx
-Yx
-Yx
-Yx
+ng
+NM
+xO
+Dz
+sy
 ng
 cx
 pO
@@ -4499,11 +4616,11 @@ Yx
 Yx
 Yx
 Yx
-Yx
-Yx
-Yx
-Yx
-Yx
+ng
+tD
+wZ
+mX
+gA
 ng
 VO
 Lf
@@ -4543,7 +4660,7 @@ Yx
 Yx
 Yx
 Yx
-Yx
+ng
 ng
 ng
 ng
@@ -4943,7 +5060,7 @@ Yx
 dq
 xg
 WN
-yl
+Sm
 Yx
 Yx
 Yx
