@@ -29,7 +29,7 @@
 
 	dialogue_greet = list("Hello fellow human friend! We- I would like to participate in human trade!",
 	"Yes, yes we're just a normal guy man person! You're always invited to our ship friend- MEAT! FLESH! BRAIN- we mean um.. uh...",
-	"We are many! Join us- Err, in trade of course! Yes, trade... What did we mean by join? We... I mean I ment join in commercial partnership!")
+	"We are many! Join us- Err, in trade of course! Yes, trade... What did we mean by join? We... I mean I meant join in commercial partnership!")
 	dialogue_leave = list("Mean human! Bad human! We hate you! *steve spits something green at the console and the connection cuts*",
 	"Sorry fellow human person earthling, We... We mean I must go on a hunt! We, um, errr we mean go for a human pizza lunch break!",
 	"We go! We leave! We stop trade now! We don't want to perscive you now! We- *connection terminated*")
@@ -89,7 +89,7 @@
 /datum/commodity/trader/steve/lingmeat
 	comname = "Normal meat"
 	comtype = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/changeling
-	amount = 120
+	amount = 30
 	price_boundary = list(PAY::TRADESMAN*0.8,PAY::TRADESMAN*1.5)
 	possible_names = list("Very normal meat! We- I promise it only sometimes bite!",
 	"Just regular good ol' meat, dont ask why it has legs please!")
@@ -97,7 +97,7 @@
 /datum/commodity/trader/steve/lingblood
 	comname = "Normal Human Blood"
 	comtype = /obj/item/reagent_containers/iv_drip/blood/ling
-	amount = 120
+	amount = 25
 	price_boundary = list(PAY::DOCTORATE*2,PAY::DOCTORATE*3)
 	possible_names = list("We love to donate blood! Put our blood in everyone!",
 	"Normal human blood donated by ourselves, please do not heat it.")
