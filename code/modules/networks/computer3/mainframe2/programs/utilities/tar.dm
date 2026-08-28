@@ -120,7 +120,7 @@
 			target_path = current
 
 		if (!istype(src.signal_program(1, list("command" = DWAINE::SYSCALL::FGET, "path" = target_path)), /datum/computer/folder))
-			src.message_user("tar: cannot read target directory [target_path]")
+			src.message_user("tar: Cannot read target directory [target_path]")
 			mainframe_prog_exit
 			return
 
@@ -137,7 +137,33 @@
 			mainframe_prog_exit
 			return
 
-		src.current_archive = new /datum/computer/file/archive()
+		var/datum/computer/file/archive/archive = new /datum/computer/file/archive()
+		// we have to get the destination (or its existing parent folder) here to ensure holder is set properly
+		// otherwise folders in the archive will fail to copy/extract
+		var/list/separated_filepath = splittext(archive_path, "/")
+		var/path_length = length(separated_filepath)
+		archive.name = separated_filepath[path_length]
+		separated_filepath.Cut(path_length)
+		var/new_path = jointext(separated_filepath, "/") || "/"
+		var/datum/computer/folder/output_parent = src.signal_program(1, list("command" = DWAINE::SYSCALL::PGET, "path" = new_path))
+		switch(output_parent)
+			if (DWAINE::ERR::SIG::NOFILE) // no part of the given directory exists
+				src.message_user("tar: Cannot find directory [separated_filepath[1]]")
+				mainframe_prog_exit
+				return
+			if (DWAINE::ERR::SIG::NOTARGET)
+				src.message_user("tar: Invalid output path [archive_path]")
+				mainframe_prog_exit
+				return
+			if (DWAINE::ERR::SIG::GENERIC)
+				src.message_user("tar: Error while finding output directory [new_path]")
+				mainframe_prog_exit
+				return
+		// if we're still here, we must have a destination, or at least a parent dir for it
+		archive.holder = output_parent.holder
+		// set current_archive so deep_copy can check it
+		src.current_archive = archive
+
 		for (var/path as anything in unaffected)
 			var/datum/computer/C = src.signal_program(1, list("command" = DWAINE::SYSCALL::FGET, "path" = ABSOLUTE_PATH(path, current)))
 			if (!istype(C))
@@ -152,13 +178,6 @@
 				return
 
 			src.current_archive.add_file(copy)
-
-		var/list/separated_filepath = splittext(archive_path, "/")
-		var/path_length = length(separated_filepath)
-		src.current_archive.name = separated_filepath[path_length]
-		separated_filepath.Cut(path_length)
-
-		var/new_path = jointext(separated_filepath, "/") || "/"
 
 		switch (src.signal_program(1, list("command" = DWAINE::SYSCALL::FWRITE, "path" = new_path, "mkdir" = TRUE, "replace" = TRUE), src.current_archive))
 			if (DWAINE::ERR::SIG::NOWRITE)
@@ -296,9 +315,11 @@
 
 	if (istype(to_copy, /datum/computer/folder))
 		var/datum/computer/folder/folder_to_copy = to_copy
+		// we can't just use copy_file for folders because we have to check read perms and filetype
 		var/datum/computer/folder/folder_copy = new()
 
 		folder_copy.name = folder_to_copy.name
+		folder_copy.holder = src.current_archive.holder
 		for (var/datum/computer/C as anything in folder_to_copy.contents)
 			var/datum/computer/copy = src.deep_copy(C, "[current_path][to_copy.name]/", depth + 1)
 			if (istype(copy))
