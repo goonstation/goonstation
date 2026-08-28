@@ -7,7 +7,6 @@
 	var/uncompressed_size = 0
 	// Generally assumed that all contained files will be expendable copies.
 	var/tmp/list/contained_files = null
-	var/tmp/max_depth = 0
 	var/max_contained_size = 48
 
 /datum/computer/file/archive/New()
@@ -31,7 +30,7 @@
 	return copy
 
 /datum/computer/file/archive/proc/add_file(datum/computer/C)
-	if (!C || ((src.uncompressed_size + C.size) > src.max_contained_size))
+	if (!C || ((src.uncompressed_size + C.get_archive_size()) > src.max_contained_size))
 		return FALSE
 
 	if (C == src) // An archive cannot contain itself
@@ -40,3 +39,6 @@
 	src.contained_files += C
 	src.uncompressed_size += C.size
 	return TRUE
+
+/datum/computer/file/archive/get_archive_size()
+	return uncompressed_size
