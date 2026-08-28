@@ -6879,6 +6879,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"tgui-core@npm:~6.1.2":
+  version: 6.1.2
+  resolution: "tgui-core@npm:6.1.2"
+  dependencies:
+    "@floating-ui/react": "npm:^0.27.16"
+    "@nozbe/microfuzz": "npm:^1.0.0"
+  peerDependencies:
+    react: ^19.1.0
+    react-dom: ^19.1.0
+  checksum: 10c0/42b42be176b5d06ff5c074fda1fe66f9af4e8cb8b3eaa4821f34a00969ec4ab38916aa2673ba6213baca018c77afade14ec5aa00ff003f0117226de372417428
+  languageName: node
+  linkType: hard
+
 "tgui-dev-server@workspace:*, tgui-dev-server@workspace:packages/tgui-dev-server":
   version: 0.0.0-use.local
   resolution: "tgui-dev-server@workspace:packages/tgui-dev-server"
@@ -6959,7 +6972,7 @@ __metadata:
     react-dom: "npm:^19.2.6"
     react-json-tree: "npm:^0.20.0"
     remarkable: "npm:^2.0.1"
-    tgui-core: "npm:~5.10.0"
+    tgui-core: "npm:~6.1.2"
     tgui-dev-server: "workspace:*"
     vitest: "npm:^4.1.7"
   languageName: unknown
