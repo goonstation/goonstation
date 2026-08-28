@@ -1303,6 +1303,7 @@
 #include "code\modules\economy\traders\gragg.dm"
 #include "code\modules\economy\traders\josh.dm"
 #include "code\modules\economy\traders\pianzi_hundan.dm"
+#include "code\modules\economy\traders\steve.dm"
 #include "code\modules\economy\traders\trader.dm"
 #include "code\modules\economy\traders\vurdalak.dm"
 #include "code\modules\events\antag_ghost_respawn.dm"
