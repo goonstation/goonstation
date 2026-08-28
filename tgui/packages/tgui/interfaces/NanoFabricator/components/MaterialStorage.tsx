@@ -31,7 +31,7 @@ interface MaterialStorageProps {
 }
 
 const getSortableMaterialName = (name: string) =>
-  name.replace(MATERIAL_NAME_PREFIX_REGEX, '');
+  name.replace(MATERIAL_NAME_PREFIX_REGEX, '').trim().toLowerCase();
 
 const sortMaterialOptions = (a: MaterialOptionData, b: MaterialOptionData) =>
   getSortableMaterialName(a.name).localeCompare(
@@ -41,9 +41,9 @@ const sortMaterialOptions = (a: MaterialOptionData, b: MaterialOptionData) =>
 export const MaterialStorage = (props: MaterialStorageProps) => {
   const { act } = useBackend<NanoFabricatorData>();
   const { partOptions, selectedPart, selectingPart, storage } = props;
-  const materialOptions: MaterialOptionData[] = [
-    ...(selectingPart ? partOptions : storage),
-  ].sort(sortMaterialOptions);
+  const sortedPartOptions = [...partOptions].sort(sortMaterialOptions);
+  const sortedStorage = [...storage].sort(sortMaterialOptions);
+  const materialOptions = selectingPart ? sortedPartOptions : sortedStorage;
 
   const materialSection = (
     <Section
@@ -55,19 +55,23 @@ export const MaterialStorage = (props: MaterialStorageProps) => {
       }
       buttons={
         selectingPart ? (
-          <>
-            <Button
-              icon="eraser"
-              color="bad"
-              disabled={!selectedPart?.assigned}
-              onClick={() => act('clear_part')}
-            >
-              Clear
-            </Button>
-            <Button icon="times" onClick={() => act('cancel_part')}>
-              Close
-            </Button>
-          </>
+          <Stack>
+            <Stack.Item>
+              <Button
+                icon="eraser"
+                color="bad"
+                disabled={!selectedPart?.assigned}
+                onClick={() => act('clear_part')}
+              >
+                Clear
+              </Button>
+            </Stack.Item>
+            <Stack.Item>
+              <Button icon="times" onClick={() => act('cancel_part')}>
+                Close
+              </Button>
+            </Stack.Item>
+          </Stack>
         ) : undefined
       }
     >
