@@ -853,6 +853,8 @@
 		special_mode = "Vamp"
 		icon_state = "stamp-vamp"
 		assignment = "stamp-vamp"
+		hit_type = DAMAGE_STAB
+		force = 5
 
 		New()
 			..()
