@@ -8,8 +8,8 @@
 	name = "mainframe program"
 	extension = "MPG"
 
-	/// The mainframe computer that this program is bring run by.
-	var/obj/machinery/networked/mainframe/master = null
+	/// The mainframe computer that this program is being run by.
+	var/tmp/obj/machinery/networked/mainframe/master = null // should not be copied because it's recreated on New anyway
 	/// Whether this program can be executed by the kernel.
 	var/executable = TRUE
 	/// Whether this program requires a holder data disc.
