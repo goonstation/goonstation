@@ -26,6 +26,8 @@
 				limb_loser.sever_limb(pick(list("l_arm", "r_arm", "l_leg", "r_leg")))
 /datum/limb/mouth/fermid/fermid_hulk
 	tears_off_limbs = TRUE
+	dam_low = 5
+	dam_high = 12
 
 ///////////////////////////////////////////////
 // FERMID
