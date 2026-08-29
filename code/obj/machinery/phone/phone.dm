@@ -66,12 +66,12 @@ TYPEINFO(/obj/machinery/phone)
 	src.UpdateOverlays(stripe_image, "stripe")
 	UpdateIcon()
 
-	RegisterSignal(src, COMSIG_CORD_RETRACT, PROC_REF(hang_up))
-	RegisterSignal(src, COMSIG_PHONE_INBOUND_CONNECTION_CHECK, PROC_REF(inbound_connection_check))
-	RegisterSignal(src, COMSIG_PHONE_OUTBOUND_CONNECTION_CHECK, PROC_REF(outbound_connection_check))
-	RegisterSignal(src, COMSIG_PHONE_RING_START, PROC_REF(ring_start))
-	RegisterSignal(src, COMSIG_PHONE_RING_STOP, PROC_REF(ring_stop))
-	RegisterSignal(src, COMSIG_PHONE_INFO_UPDATED, PROC_REF(info_updated))
+	src.RegisterSignal(src, COMSIG_CORD_RETRACT, PROC_REF(hang_up))
+	src.RegisterSignal(src, COMSIG_PHONE_INBOUND_CONNECTION_CHECK, PROC_REF(inbound_connection_check))
+	src.RegisterSignal(src, COMSIG_PHONE_OUTBOUND_CONNECTION_CHECK, PROC_REF(outbound_connection_check))
+	src.RegisterSignal(src, COMSIG_PHONE_RING_START, PROC_REF(ring_start))
+	src.RegisterSignal(src, COMSIG_PHONE_RING_STOP, PROC_REF(ring_stop))
+	src.RegisterSignal(src, COMSIG_PHONE_INFO_UPDATED, PROC_REF(info_updated))
 	START_TRACKING
 	src.handset = new /obj/item/phone_handset(src)
 	src.AddComponent(/datum/component/phone_controller, phone_id, phone_category, can_talk_across_z_levels, unlisted, stripe_color)
@@ -84,12 +84,14 @@ TYPEINFO(/obj/machinery/phone)
 	src.RemoveComponentsOfType(/datum/component/phone_ui)
 	src.RemoveComponentsOfType(/datum/component/phone_ringer)
 	qdel(src.handset)
-	UnregisterSignal(src, COMSIG_CORD_RETRACT)
-	UnregisterSignal(src, COMSIG_PHONE_RING_START)
-	UnregisterSignal(src, COMSIG_PHONE_RING_STOP)
-	UnregisterSignal(src, COMSIG_PHONE_INFO_UPDATED)
-	UnregisterSignal(src, COMSIG_PHONE_INBOUND_CONNECTION_CHECK)
-	UnregisterSignal(src, COMSIG_PHONE_OUTBOUND_CONNECTION_CHECK)
+	src.UnregisterSignals(src, list(
+		COMSIG_CORD_RETRACT,
+		COMSIG_PHONE_RING_START,
+		COMSIG_PHONE_RING_STOP,
+		COMSIG_PHONE_INFO_UPDATED,
+		COMSIG_PHONE_INBOUND_CONNECTION_CHECK,
+		COMSIG_PHONE_OUTBOUND_CONNECTION_CHECK
+	))
 	STOP_TRACKING
 	. = ..()
 
