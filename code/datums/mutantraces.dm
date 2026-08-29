@@ -2036,15 +2036,7 @@ TYPEINFO(/datum/mutantrace/frog) /// abstract parent for traits shared across am
 		if (isdead(src.mob))
 			return
 		if(src.mob.sims.getValue("Thirst") < 25.0) // dehydration effect
-			if (prob(10))
-				src.mob.visible_message(SPAN_EMOTE(pick("[mob] wrinkles up conspicuously.", "[mob] quietly wheezes.", "[mob]'s third eyelids stick to [his_or_her(src.mob)] eyes for a moment.")))
-		if(src.mob.sims.getValue("Thirst") < 1.0)
-			if (prob(50))
-				src.mob.take_oxygen_deprivation(15)
-			if (prob(10))
-				src.mob.visible_message(SPAN_ALERT(pick("[mob] struggles to breathe!", "[mob] gasps for air!")))
-			if (prob(20))
-				src.mob.emote(pick("choke","gasp"))
+			src.mob.contract_disease(/datum/ailment/disease/dehydration, null, null, 1)
 
 	proc/dermal_absorbtion(var/absorbtion_rate) // it's actually spelled "absorption" but every other absorption proc is misspelled too
 		if(!src.mob)
