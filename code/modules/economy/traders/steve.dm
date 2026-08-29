@@ -76,7 +76,7 @@
 /datum/commodity/trader/steve/ice
 	comname = "Ice"
 	comtype = /obj/item/raw_material/ice
-	price_boundary = list(PAY::UNTRAINED*0.3,PAY::UNTRAINED*0.5)
+	price_boundary = list(PAY::UNTRAINED/10,PAY::UNTRAINED/5)
 	possible_names = list("Cold! We love cold! give us cold cold water!",
 	"Ice! Yes yes! Reminds us of homeworld! Erm, We mean earth of course!")
 
