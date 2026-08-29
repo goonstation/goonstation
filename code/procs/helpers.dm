@@ -414,13 +414,13 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 /proc/dd_hasPrefix(text, prefix)
 	var/start = 1
 	var/end = length(prefix) + 1
-	. = findtext(text, prefix, start, end) //was findtextEx
+	. = findtextEx(text, prefix, start, end)
 
 /proc/dd_hassuffix(text, suffix)
 	. = findtext(text, suffix, -length(suffix), null)
 
 /proc/dd_hasSuffix(text, suffix)
-	. = findtext(text, suffix, -length(suffix), null) //was findtextEx
+	. = findtextEx(text, suffix, -length(suffix), null)
 
 /proc/dd_centertext(message, length)
 	. = length(message)
