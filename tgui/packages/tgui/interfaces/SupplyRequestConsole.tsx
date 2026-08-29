@@ -4,8 +4,7 @@
  * @author JORJ949 (https://github.com/JORJ949)
  * @license MIT
  */
-import { SupplyConsoleMenu } from './SupplyConsole/index';
-import { SupplyConsoleTabKeys } from './SupplyConsole/type';
+import { SupplyConsoleMenu, SupplyConsoleTabKeys } from './SupplyConsole';
 
 const shown_tabs = [
   SupplyConsoleTabKeys.Requests,
