@@ -2735,6 +2735,7 @@
 #include "code\obj\item\boardgame\gameclock.dm"
 #include "code\obj\item\boardgame\boards\chessboard.dm"
 #include "code\obj\item\clothing\armor.dm"
+#include "code\obj\item\clothing\baseball.dm"
 #include "code\obj\item\clothing\cardboard.dm"
 #include "code\obj\item\clothing\ears.dm"
 #include "code\obj\item\clothing\fruithat.dm"
