@@ -434,7 +434,7 @@ TRAYS
 		return 1
 
 /obj/item/kitchen/utensil/knife/pizza_cutter/traitor
-	SYNDICATE_STEALTH_DESCRIPTION("The blade is illegally sharp.", null)
+	SYNDICATE_STEALTH_DESCRIPTION("The blade is illegally sharp.")
 	tooltip_flags = REBUILD_USER
 	var/sharpener_mode = FALSE
 
@@ -483,6 +483,18 @@ TRAYS
 		contained_food = /obj/item/reagent_containers/food/snacks/candy/sugar_cube
 		allowed_food = /obj/item/reagent_containers/food/snacks/candy/sugar_cube
 		contained_food_name = "sugar cube"
+		w_class = W_CLASS_SMALL
+
+	candycorn
+		name = "Discount Dan's Candy Corn Cornucopia"
+		desc = "It's a candy corn jar. ...Somebody bought one of these on purpose?"
+		icon_state = "candycorn"
+		count = 9
+		max_count = 9
+		box_type = "candycorn"
+		contained_food = /obj/item/reagent_containers/food/snacks/candy/candy_corn
+		allowed_food = /obj/item/reagent_containers/food/snacks/candy/candy_corn
+		contained_food_name = "candycorn"
 		w_class = W_CLASS_SMALL
 
 	New()

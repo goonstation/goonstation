@@ -22,6 +22,7 @@
 	"Centcom" = "stamp-sprite-centcom",\
 	"Syndicate" = "stamp-sprite-syndicate",\
 	"Void" = "stamp-sprite-void",\
+	"Flock" = "stamp-sprite-flock",\
 	"Your Name" = "stamp-text-name",\
 	"Current Time" = "stamp-text-time",)
 
@@ -296,6 +297,7 @@
 		"stamp-sprite-stain-2" = "[resource("images/tgui/stamp_icons/stamp-stain-2.png")]",
 		"stamp-sprite-stain-3" = "[resource("images/tgui/stamp_icons/stamp-stain-3.png")]",
 		"stamp-sprite-gtc" = "[resource("images/tgui/stamp_icons/stamp-gtc.png")]",
+		"stamp-sprite-flock" = "[resource("images/tgui/stamp_icons/stamp-flock.apng")]",
 		"stamp-text-time" =  T,
 		"stamp-text-name" = user.name
 	)
@@ -826,6 +828,16 @@
 		special_mode = "Security"
 		is_reassignable = 0
 		assignment = "stamp-law"
+	flock
+		name = "\improper Inky Antenna"
+		desc = "It looks kinda like a National Notary stamp of an unfamilar model. Theres small rods sticking out of it though. You doubt you can use it for whatever important documents you've gotten your hands on"
+		icon_state = "stamp-flock"
+		special_mode = "Flock"
+		is_reassignable = 0
+		assignment = "stamp-flock"
+		mat_changename = FALSE
+		mat_changedesc = FALSE
+		default_material = "gnesis"
 
 /obj/item/paper/folded
 	name = "folded paper"

@@ -1,0 +1,572 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/pharmacy,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/cashreg,
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/pharmacy)
+"b" = (
+/obj/landmark/start/job/medical_trainee,
+/obj/disposalpipe/segment,
+/turf/simulated/floor/white/checker,
+/area/station/medical/medbay/surgery/storage)
+"c" = (
+/obj/storage/secure/closet/research/chemical/pharmacy,
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/pharmacy)
+"d" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/disposalpipe/segment/bent/south,
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/pharmacy)
+"e" = (
+/obj/submachine/chem_extractor,
+/obj/machinery/camera/directional/east,
+/obj/item/device/radio/intercom/medical,
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/pharmacy)
+"f" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/disposalpipe/junction/middle/south,
+/turf/simulated/floor/white/checker,
+/area/station/medical/medbay/surgery/storage)
+"g" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/white/checker,
+/area/station/medical/medbay/surgery/storage)
+"h" = (
+/obj/machinery/chem_heater,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north,
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/pharmacy)
+"i" = (
+/obj/machinery/manufacturer/medical,
+/obj/machinery/light_switch/directional/west,
+/obj/machinery/camera/directional/west{
+	pixel_y = 10
+	},
+/obj/item/device/radio/intercom/medical{
+	dir = 1
+	},
+/turf/simulated/floor/white/checker,
+/area/station/medical/medbay/surgery/storage)
+"j" = (
+/obj/stool/chair/office/blue,
+/obj/landmark/start/job/pharmacist,
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/pharmacy)
+"k" = (
+/turf/simulated/wall/auto/supernorn/colored/cyan,
+/area/station/medical/medbay/surgery/storage)
+"l" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/white/checker,
+/area/station/medical/medbay/surgery/storage)
+"m" = (
+/obj/table/auto,
+/obj/item/storage/box/stma_kit{
+	pixel_x = -5
+	},
+/obj/item/storage/box/patchbox{
+	pixel_x = 5
+	},
+/obj/item/clothing/glasses/healthgoggles{
+	pixel_x = 7;
+	pixel_y = 3
+	},
+/obj/item/clothing/glasses/healthgoggles{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/item/robodefibrillator,
+/obj/machinery/camera/directional/east{
+	pixel_y = 10
+	},
+/obj/machinery/recharger/defibrillator{
+	pixel_y = 7
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/white/checker,
+/area/station/medical/medbay/surgery/storage)
+"n" = (
+/obj/machinery/light/incandescent,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/pharmacy)
+"o" = (
+/obj/machinery/chem_dispenser/chemical,
+/obj/machinery/firealarm/directional/south,
+/obj/machinery/phone/wall{
+	pixel_x = 28;
+	pixel_y = 4
+	},
+/obj/machinery/light_switch/directional/south{
+	pixel_x = -11
+	},
+/obj/mapping_helper/glassware_spawn,
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/pharmacy)
+"p" = (
+/obj/machinery/door/airlock/pyro/medical/alt2,
+/obj/mapping_helper/access/medlocker,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/white/checker,
+/area/station/medical/medbay/surgery/storage)
+"q" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/pharmacy)
+"r" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/pharmacy)
+"s" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/surgery/storage)
+"t" = (
+/obj/machinery/door/airlock/pyro/glass/med{
+	dir = 4
+	},
+/obj/mapping_helper/access/medlocker,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/white/checker,
+/area/station/medical/medbay/surgery/storage)
+"u" = (
+/obj/landmark/start/job/medical_doctor,
+/obj/disposalpipe/segment/bent/north,
+/turf/simulated/floor/white/checker,
+/area/station/medical/medbay/surgery/storage)
+"v" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/white/checker,
+/area/station/medical/medbay/surgery/storage)
+"w" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/pharmacy)
+"x" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/white/checker,
+/area/station/medical/medbay/surgery/storage)
+"y" = (
+/obj/machinery/chem_master,
+/obj/machinery/disposal/small/south,
+/obj/disposalpipe/trunk/north,
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/pharmacy)
+"z" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/pharmacy)
+"A" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/surgery/storage)
+"B" = (
+/obj/machinery/light/incandescent/cool,
+/obj/machinery/vending/jobclothing/medical,
+/turf/simulated/floor/white/checker,
+/area/station/medical/medbay/surgery/storage)
+"C" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/pharmacy)
+"D" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/pharmacy)
+"E" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/pharmacy)
+"F" = (
+/obj/stool/chair/office/blue{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/pharmacy)
+"G" = (
+/obj/table/auto,
+/obj/item/reagent_containers/glass/beaker/large/epinephrine{
+	pixel_x = -7;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/hypospray{
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/obj/machinery/firealarm/directional/south,
+/obj/item/reagent_containers/glass/beaker/large/brute{
+	pixel_x = -1;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/glass/beaker/large/antitox{
+	pixel_x = -7
+	},
+/obj/item/reagent_containers/glass/beaker/large/burn{
+	pixel_x = -1
+	},
+/obj/item/reagent_containers/hypospray{
+	pixel_x = 11;
+	pixel_y = 5
+	},
+/turf/simulated/floor/white/checker,
+/area/station/medical/medbay/surgery/storage)
+"H" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/surgery/storage)
+"I" = (
+/obj/machinery/door/airlock/pyro/medical/alt2,
+/obj/mapping_helper/access/pharmacy,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/pharmacy)
+"J" = (
+/obj/table/reinforced/chemistry/auto/basicsup,
+/obj/machinery/light/incandescent,
+/obj/item/storage/box/beakerbox{
+	pixel_x = 6;
+	pixel_y = 7
+	},
+/obj/machinery/glass_recycler/chemistry,
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/pharmacy)
+"K" = (
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/pharmacy)
+"L" = (
+/obj/machinery/door/airlock/pyro/glass/med{
+	dir = 4
+	},
+/obj/mapping_helper/access/pharmacy,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/pharmacy)
+"M" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/white/checker,
+/area/station/medical/medbay/surgery/storage)
+"N" = (
+/obj/rack,
+/obj/item/storage/belt/medical{
+	pixel_x = -6;
+	pixel_y = -4
+	},
+/obj/item/storage/belt/medical{
+	pixel_x = 6;
+	pixel_y = -4
+	},
+/obj/item/clothing/suit/hazard/paramedic{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/clothing/suit/hazard/paramedic{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/robodefibrillator,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/white/checker,
+/area/station/medical/medbay/surgery/storage)
+"O" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/pharmacy)
+"P" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/pharmacy)
+"Q" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/pharmacy)
+"R" = (
+/obj/item_dispenser/latex_gloves,
+/obj/machinery/light/incandescent/cool,
+/obj/machinery/disposal/small/east,
+/obj/disposalpipe/trunk,
+/obj/machinery/vending/port_a_nanomed,
+/turf/simulated/floor/white/checker,
+/area/station/medical/medbay/surgery/storage)
+"S" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/mapping_helper/access/pharmacy,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/pharmacy)
+"T" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/white/checker,
+/area/station/medical/medbay/surgery/storage)
+"U" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/pharmacy)
+"V" = (
+/obj/disposalpipe/segment,
+/turf/simulated/floor/white/checker,
+/area/station/medical/medbay/surgery/storage)
+"W" = (
+/turf/simulated/wall/auto/supernorn/colored/cyan,
+/area/station/medical/medbay/pharmacy)
+"X" = (
+/obj/machinery/light/incandescent/cool,
+/obj/disposalpipe/segment,
+/turf/simulated/floor/white/checker,
+/area/station/medical/medbay/surgery/storage)
+"Y" = (
+/obj/storage/secure/closet/medical/chemical,
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/pharmacy)
+"Z" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north,
+/obj/storage/secure/closet/medical/medkit,
+/turf/simulated/floor/white/checker,
+/area/station/medical/medbay/surgery/storage)
+
+(1,1,1) = {"
+k
+k
+H
+s
+t
+s
+A
+k
+k
+"}
+(2,1,1) = {"
+k
+R
+V
+b
+T
+X
+u
+i
+k
+"}
+(3,1,1) = {"
+k
+Z
+m
+N
+g
+l
+v
+G
+k
+"}
+(4,1,1) = {"
+W
+P
+q
+q
+S
+O
+M
+B
+k
+"}
+(5,1,1) = {"
+I
+E
+z
+F
+K
+D
+f
+x
+p
+"}
+(6,1,1) = {"
+W
+Y
+K
+C
+K
+Q
+L
+r
+W
+"}
+(7,1,1) = {"
+W
+h
+E
+U
+w
+n
+d
+y
+W
+"}
+(8,1,1) = {"
+W
+e
+J
+c
+C
+K
+j
+o
+W
+"}
+(9,1,1) = {"
+W
+W
+P
+q
+a
+q
+r
+W
+W
+"}

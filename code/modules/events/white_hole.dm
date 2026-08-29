@@ -505,7 +505,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			#endif
 		),
 		"ai" = list(
-			/datum/projectile/laser/heavy/law_safe = 30,
+			/datum/projectile/laser/heavy/ai_turret = 30,
 			/datum/projectile/energy_bolt/robust = 30,
 			/obj/item/aiModule/random = 20,
 			/mob/living/silicon/hivebot/eyebot = 10,

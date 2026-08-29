@@ -1,0 +1,387 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/crew_quarters/baroffice)
+"b" = (
+/obj/reagent_dispensers/still,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
+"c" = (
+/obj/storage/secure/closet/kitchen,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/catering)
+"d" = (
+/obj/machinery/chem_master,
+/obj/machinery/camera/directional/west,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
+"e" = (
+/obj/machinery/door/airlock/pyro/alt{
+	name = "Chef's Quarters"
+	},
+/obj/mapping_helper/access/kitchen,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/catering)
+"f" = (
+/obj/machinery/door/airlock/pyro/alt,
+/obj/mapping_helper/access/bar,
+/obj/mapping_helper/access/kitchen,
+/obj/mapping_helper/firedoor_spawn,
+/obj/disposalpipe/segment/vertical,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
+"g" = (
+/obj/table/auto,
+/obj/machinery/glass_recycler/bar{
+	glass_amt = 10
+	},
+/obj/item/clothing/glasses/spectro{
+	pixel_y = 11
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
+"h" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/catering)
+"i" = (
+/obj/reagent_dispensers/beerkeg,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
+"j" = (
+/obj/machinery/vending/jobclothing/catering,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
+"k" = (
+/obj/machinery/door/airlock/pyro/alt,
+/obj/mapping_helper/access/bar,
+/obj/mapping_helper/access/kitchen,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
+"l" = (
+/obj/machinery/chem_dispenser/chef,
+/obj/machinery/camera/directional/east,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
+"n" = (
+/obj/disposalpipe/segment/vertical,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
+"o" = (
+/obj/submachine/chem_extractor{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
+"p" = (
+/obj/machinery/light/incandescent/warm,
+/obj/landmark/gps_waypoint,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/baroffice)
+"q" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
+"s" = (
+/obj/machinery/door/airlock/pyro/alt{
+	name = "Bartender's Quarters"
+	},
+/obj/mapping_helper/access/bar,
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/baroffice)
+"t" = (
+/obj/machinery/firealarm/directional/east,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
+"u" = (
+/obj/machinery/light/incandescent,
+/obj/landmark/gps_waypoint,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
+"v" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
+"x" = (
+/obj/storage/secure/closet/civilian/bartender,
+/obj/item/reagent_containers/glass/beaker/large,
+/obj/item/reagent_containers/glass/beaker/large,
+/obj/item/reagent_containers/dropper,
+/obj/item/hand_labeler,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/storage/firstaid/toxin,
+/obj/machinery/light_switch/directional/east,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/baroffice)
+"y" = (
+/obj/machinery/light_switch/directional/east,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/catering)
+"z" = (
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/catering)
+"B" = (
+/obj/machinery/chem_dispenser/chemical,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
+"C" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/baroffice)
+"D" = (
+/obj/machinery/vending/alcohol,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/baroffice)
+"E" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
+"F" = (
+/obj/table/auto,
+/obj/machinery/microwave,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
+"H" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/black,
+/obj/landmark/start/job/chef,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/catering)
+"I" = (
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
+"J" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/crew_quarters/catering)
+"K" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/crew_quarters/baroffice)
+"L" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
+"N" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/black,
+/obj/landmark/start/job/bartender,
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/baroffice)
+"O" = (
+/obj/machinery/chem_heater,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
+"P" = (
+/obj/table/auto,
+/obj/item/kitchen/rollingpin{
+	pixel_y = 7
+	},
+/obj/item/paper/book/from_file/cookbook,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/catering)
+"Q" = (
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
+"S" = (
+/obj/table/auto,
+/obj/item/storage/box/glassbox,
+/turf/simulated/floor/carpet/grime,
+/area/station/crew_quarters/baroffice)
+"V" = (
+/obj/machinery/disposal/small/east{
+	pixel_x = -8
+	},
+/obj/disposalpipe/trunk/south,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
+"W" = (
+/obj/machinery/computer/announcement/station/catering,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
+"X" = (
+/obj/machinery/light_switch/directional/east,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
+"Y" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
+"Z" = (
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/crew_quarters/catering)
+
+(1,1,1) = {"
+Z
+Z
+Z
+Z
+J
+Z
+Z
+Z
+Z
+"}
+(2,1,1) = {"
+Z
+d
+I
+j
+J
+c
+z
+P
+Z
+"}
+(3,1,1) = {"
+Z
+B
+E
+L
+e
+y
+h
+H
+Z
+"}
+(4,1,1) = {"
+Z
+O
+q
+W
+Z
+Z
+Z
+Z
+Z
+"}
+(5,1,1) = {"
+k
+L
+X
+t
+u
+Y
+V
+n
+f
+"}
+(6,1,1) = {"
+a
+a
+a
+a
+a
+i
+Q
+F
+Z
+"}
+(7,1,1) = {"
+a
+N
+p
+C
+s
+v
+Q
+g
+Z
+"}
+(8,1,1) = {"
+a
+S
+x
+D
+K
+b
+o
+l
+Z
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+K
+Z
+Z
+Z
+Z
+"}

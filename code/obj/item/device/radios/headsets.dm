@@ -364,6 +364,7 @@
 	desc = "For communication with higher powers, the clown, or both." // Higher powers, aka Command.
 	icon_override = "chaplain"
 	icon_state = "chaplain headset"
+	secure_frequencies = list("c" = RADIO::FREQ::CIVILIAN, "m" = RADIO::FREQ::MEDICAL)
 	icon_tooltip = "Chaplain"
 
 /obj/item/device/radio/headset/civilian/hydroponics

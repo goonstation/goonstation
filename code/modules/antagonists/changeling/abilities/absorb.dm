@@ -83,12 +83,11 @@
 		target.full_heal()
 		ownerMob.mind.transfer_to(target)
 		C.composite_owner.removeHolder(C.type)
-		if (!istype(target.abilityHolder, /datum/abilityHolder/composite))
-			C.transferOwnership(target)
-		else
+		if (istype(target.abilityHolder, /datum/abilityHolder/composite))
 			var/datum/abilityHolder/composite/target_composite = target.abilityHolder
-			target_composite.removeHolder(C.type) //in case they're already a changeling
+			target_composite.removeHolder(src.preferred_holder_type) //in case they're already a changeling
 			target_composite.addHolderInstance(C)
+		C.transferOwnership(target)
 		ownerMob.dna_to_absorb = 0
 		ownerMob.death(FALSE)
 		ownerMob.disfigured = TRUE

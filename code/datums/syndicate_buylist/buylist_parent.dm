@@ -28,10 +28,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist)
 	var/list/job = null
 	/// For items that only can be purchased when you have a specfic objective. Needs to be a type, e.g. `/datum/objective/assassinate`
 	var/datum/objective/objective = null
-	/// Is this buylist entry for ejecting TC from an uplink?
-	var/telecrystal = FALSE
-	/// Is this buylist entry ammo for another weapon?
-	var/ammo = FALSE
 	/// If the item should be allowed to be purchased in the VR murderbox
 	var/vr_allowed = TRUE
 	/// If the item can be created as loot in Battle Royale
@@ -41,7 +37,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist)
 	/// How often should this show up in a surplus crate/spy bounty?
 	var/surplus_weight = 50
 	/// The category of the item, currently unused (somewhat used in the Nukeop Commander uplink)
-	var/category
+	var/category = UPLINK::CATEGORY::MISC
 	/// Bitflags for what uplinks can buy this item (see `_std/defines/uplink.dm` for flags)
 	var/can_buy
 	/// The maximum amount a given uplink can buy this item
@@ -60,14 +56,21 @@ ABSTRACT_TYPE(/datum/syndicate_buylist)
 		if(!in_surplus_crate)
 			owner.put_in_hand_or_drop(item)
 
+	proc/get_category()
+		if(length(src.job))
+			return UPLINK::CATEGORY::JOB
+		if(src.objective)
+			return UPLINK::CATEGORY::OBJECTIVE
+		return src.category
+
 //////////////////////////////////////////////// Special ammunition //////////////////////////////////////////////
 
 /datum/syndicate_buylist/traitor/ammo_38AP // 2 TC for 1 speedloader was very poor value compared to other guns and traitor items in general (Convair880).
 	name = ".38 AP ammo box"
 	items = list(/obj/item/storage/box/ammo38AP)
 	cost = 2
-	ammo = TRUE
 	desc = "Armor-piercing ammo for a .38 Special or Kestrel revolver (not included)."
+	category = UPLINK::CATEGORY::AMMO
 	can_buy = UPLINK_TRAITOR
 
 	run_on_spawn(obj/item/the_thing, mob/living/owner, in_surplus_crate)
@@ -80,8 +83,8 @@ ABSTRACT_TYPE(/datum/syndicate_buylist)
 	name = ".38 Ricochet ammo box"
 	items = list(/obj/item/storage/box/ammo38ricochet)
 	cost = 2
-	ammo = TRUE
 	desc = "Bouncy ammo for a .38 Special or Kestrel revolver (not included)."
+	category = UPLINK::CATEGORY::AMMO
 	can_buy = UPLINK_TRAITOR
 
 	run_on_spawn(obj/item/the_thing, mob/living/owner, in_surplus_crate)
@@ -138,10 +141,9 @@ ABSTRACT_TYPE(/datum/syndicate_buylist)
 	items = list(/obj/item/uplink_telecrystal)
 	cost = 1
 	desc = "A pure Telecrystal, orignating from plasma giants. Used as currency in Syndicate Uplinks."
-
-	telecrystal = TRUE
 	vr_allowed = FALSE
 	not_in_crates = TRUE
+	category = UPLINK::CATEGORY::TELECRYSTAL
 	can_buy = UPLINK_TRAITOR | UPLINK_HEAD_REV | UPLINK_NUKE_OP
 
 	New()
@@ -157,9 +159,9 @@ ABSTRACT_TYPE(/datum/syndicate_buylist)
 	items = list(/obj/item/uplink_telecrystal/trick)
 	cost = 1
 	desc = "A small, highly volatile explosive designed to look like a pure Telecrystal."
-	telecrystal = TRUE
 	vr_allowed = FALSE
 	not_in_crates = TRUE
+	category = UPLINK::CATEGORY::TELECRYSTAL
 	can_buy = UPLINK_TRAITOR | UPLINK_HEAD_REV
 
 	New()

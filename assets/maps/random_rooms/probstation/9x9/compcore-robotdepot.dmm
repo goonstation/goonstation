@@ -1,0 +1,584 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/table/reinforced,
+/obj/item/disk/data/floppy/read_only/communications,
+/obj/item/disk/data/floppy/read_only/network_progs{
+	pixel_x = -7;
+	pixel_y = 10
+	},
+/obj/item/circuitboard/robotics,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
+"c" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
+"d" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor,
+/area/station/science/bot_storage)
+"e" = (
+/obj/machinery/firealarm/directional/west,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
+"f" = (
+/obj/storage/crate{
+	name = "Spare Parts"
+	},
+/obj/item/guardbot_frame,
+/obj/item/device/guardbot_tool/taser{
+	pixel_x = -8;
+	pixel_y = -4
+	},
+/obj/item/guardbot_core,
+/obj/item/sheet/steel{
+	amount = 50
+	},
+/obj/item/device/guardbot_tool/xmas,
+/obj/item/parts/robot_parts/arm/right/standard,
+/obj/item/parts/robot_parts/arm/right/standard,
+/obj/item/reagent_containers/food/drinks/fueltank,
+/obj/disposalpipe/segment,
+/turf/simulated/floor,
+/area/station/science/bot_storage)
+"g" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/guardbot_dock,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/firealarm/directional/east,
+/turf/simulated/floor/plating,
+/area/station/science/bot_storage)
+"h" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/turret_protected/Zeta)
+"i" = (
+/obj/disposalpipe/segment/bent/west,
+/turf/simulated/wall/auto/supernorn/colored/purple,
+/area/station/science/bot_storage)
+"j" = (
+/obj/machinery/door/airlock/pyro/glass/command{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/mapping_helper/access/computer_core,
+/obj/mapping_helper/access/ai_upload,
+/turf/simulated/floor,
+/area/station/turret_protected/Zeta)
+"k" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/guardbot_dock,
+/obj/machinery/bot/guardbot/gunner,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/science/bot_storage)
+"l" = (
+/obj/machinery/door/airlock/pyro/sci_alt{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/robotdepot,
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/computer_core,
+/obj/mapping_helper/access/ai_upload,
+/turf/simulated/floor,
+/area/station/science/bot_storage)
+"m" = (
+/turf/simulated/wall/auto/supernorn/colored/purple,
+/area/station/science/bot_storage)
+"n" = (
+/obj/machinery/computer3/generic/radio,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor,
+/area/station/science/bot_storage)
+"o" = (
+/obj/strip_door,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/science/bot_storage)
+"p" = (
+/obj/machinery/computer/robotics,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
+"q" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor,
+/area/station/science/bot_storage)
+"r" = (
+/obj/machinery/turret,
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
+"s" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/science/bot_storage)
+"t" = (
+/obj/machinery/networked/storage/tape_drive{
+	bank_id = "Control";
+	locked = 0;
+	name = "Databank - Control";
+	setup_drive_type = /obj/item/disk/data/tape/master
+	},
+/obj/machinery/camera/directional/west{
+	pixel_y = 10
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/light_switch/directional/west,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
+"u" = (
+/obj/machinery/networked/radio,
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
+"w" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor,
+/area/station/science/bot_storage)
+"x" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
+"y" = (
+/obj/machinery/computer3/terminal/zeta/os_loaded,
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/item/device/radio/intercom/science,
+/turf/simulated/floor,
+/area/station/science/bot_storage)
+"z" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/science/bot_storage)
+"A" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/door/poddoor/pyro{
+	dir = 4;
+	id = "auxcommsshield";
+	name = "Communication Mast Shield";
+	tag = "icon-pdoor1 (EAST)"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/turret_protected/Zeta)
+"B" = (
+/obj/machinery/computer3/terminal/zeta/os_loaded,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/door_control{
+	id = "auxcommsshield";
+	name = "Communication Mast Shield Control";
+	pixel_y = 24
+	},
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
+"C" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/science/bot_storage)
+"D" = (
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
+"E" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/guardbot_dock,
+/obj/machinery/bot/guardbot,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/plating,
+/area/station/science/bot_storage)
+"F" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
+"G" = (
+/obj/table/reinforced,
+/obj/item/paper/book/from_file/dwainedummies{
+	pixel_x = -7;
+	pixel_y = 9
+	},
+/obj/item/paper/book/from_file/guardbot_guide{
+	pixel_x = 5;
+	pixel_y = 1
+	},
+/obj/item/disk/data/tape/master/readonly{
+	pixel_y = 7;
+	pixel_x = 6
+	},
+/obj/item/disk/data/tape{
+	layer = 3.5;
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/obj/item/device/radio/intercom/AI{
+	dir = 1
+	},
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
+"H" = (
+/obj/machinery/light/incandescent/cool,
+/obj/machinery/turret,
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
+"I" = (
+/obj/table/reinforced,
+/obj/item/storage/box/tapebox{
+	pixel_x = -5;
+	pixel_y = 9
+	},
+/obj/item/storage/box/diskbox,
+/obj/item/device/multitool{
+	pixel_x = 7;
+	pixel_y = -2
+	},
+/obj/item/device/radio/intercom/bridge{
+	dir = 1
+	},
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
+"J" = (
+/obj/table/reinforced/auto,
+/obj/item/paper/book/from_file/guardbot_guide,
+/obj/machinery/camera/directional/west{
+	pixel_y = 10
+	},
+/obj/item/paper/book/from_file/dwainedummies{
+	pixel_x = -7;
+	pixel_y = 9
+	},
+/obj/item/clothing/suit/robuddy,
+/turf/simulated/floor,
+/area/station/science/bot_storage)
+"K" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor,
+/area/station/science/bot_storage)
+"M" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/guardbot_dock,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/turretid/computer_core{
+	pixel_x = -24;
+	pixel_y = 20
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/plating,
+/area/station/science/bot_storage)
+"N" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/guardbot_dock,
+/obj/machinery/light/incandescent/cool,
+/obj/machinery/camera/directional/east,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/science/bot_storage)
+"O" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
+"P" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor,
+/area/station/science/bot_storage)
+"Q" = (
+/obj/table/reinforced/auto,
+/obj/machinery/cell_charger,
+/obj/item/cell/supercell/charged,
+/obj/item/cell/supercell/charged,
+/obj/item/cell/supercell/charged,
+/obj/item/device/radio/signaler,
+/obj/item/device/radio/signaler,
+/obj/item/device/multitool{
+	pixel_x = -7;
+	pixel_y = 1
+	},
+/turf/simulated/floor,
+/area/station/science/bot_storage)
+"R" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
+"S" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/turret_protected/Zeta)
+"T" = (
+/obj/disposalpipe/segment/bent/east,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/blue,
+/area/station/turret_protected/Zeta)
+"U" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/guardbot_dock,
+/obj/machinery/bot/guardbot/ranger,
+/obj/machinery/light/incandescent/cool,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/light_switch/directional/east,
+/turf/simulated/floor/plating,
+/area/station/science/bot_storage)
+"V" = (
+/obj/machinery/light/incandescent/cool,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/disposalpipe/trunk,
+/obj/machinery/disposal/small/north{
+	pixel_y = 28
+	},
+/turf/simulated/floor,
+/area/station/science/bot_storage)
+"W" = (
+/turf/simulated/wall/auto/reinforced/supernorn/colored/blue,
+/area/station/turret_protected/Zeta)
+"X" = (
+/obj/machinery/networked/mainframe/zeta{
+	tag = "ZETA_MAINFRAME"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/circuit/green,
+/area/station/turret_protected/Zeta)
+"Y" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/blue,
+/area/station/turret_protected/Zeta)
+"Z" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor,
+/area/station/science/bot_storage)
+
+(1,1,1) = {"
+W
+W
+W
+W
+A
+W
+W
+W
+W
+"}
+(2,1,1) = {"
+W
+p
+e
+t
+X
+u
+a
+W
+W
+"}
+(3,1,1) = {"
+W
+B
+R
+O
+c
+F
+D
+G
+W
+"}
+(4,1,1) = {"
+W
+W
+W
+r
+x
+D
+H
+I
+W
+"}
+(5,1,1) = {"
+o
+K
+W
+S
+j
+h
+h
+Y
+T
+"}
+(6,1,1) = {"
+m
+V
+q
+M
+P
+E
+E
+f
+i
+"}
+(7,1,1) = {"
+m
+y
+w
+s
+Z
+C
+d
+J
+m
+"}
+(8,1,1) = {"
+m
+n
+k
+N
+z
+g
+U
+Q
+m
+"}
+(9,1,1) = {"
+m
+m
+m
+m
+l
+m
+m
+m
+m
+"}

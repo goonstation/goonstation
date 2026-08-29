@@ -229,6 +229,8 @@
 			if (ismob(D))
 				html += " &middot; <a href='byond://?src=\ref[src];PlayerOptions=\ref[D]'>Player Options</a>"
 	if (istype(D, /datum))
+		html += " &middot; <a href='byond://?src=\ref[src];AddElement=\ref[D]'>Add Element</a>"
+		html += " &middot; <a href='byond://?src=\ref[src];RemoveElement=\ref[D]'>Remove Element</a>"
 		html += " &middot; <a href='byond://?src=\ref[src];AddComponent=\ref[D]'>Add Component</a>"
 		html += " &middot; <a href='byond://?src=\ref[src];RemoveComponent=\ref[D]'>Remove Component</a>"
 	html += "<br><a href='byond://?src=\ref[src];Delete=\ref[D]'>Delete</a>"
@@ -569,6 +571,20 @@
 				usr.Browse("<title>DM dump of [target] \ref[target]</title><pre>[dump]</pre>", "window=dm_dump_\ref[target];size=500x700")
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to DM dump something all rude-like.")
+		return
+	if (href_list["AddElement"])
+		USR_ADMIN_ONLY
+		if (src.holder && (src.holder.level >= LEVEL_PA))
+			src.debugAddElement(locate(href_list["AddElement"]))
+		else
+			src.audit(AUDIT_ACCESS_DENIED, "tried to add a element to something all rude-like.")
+		return
+	if (href_list["RemoveElement"])
+		USR_ADMIN_ONLY
+		if (src.holder && (src.holder.level >= LEVEL_PA))
+			src.debugRemoveElement(locate(href_list["RemoveElement"]))
+		else
+			src.audit(AUDIT_ACCESS_DENIED, "tried to remove a element from something all rude-like.")
 		return
 	if (href_list["AddComponent"])
 		USR_ADMIN_ONLY

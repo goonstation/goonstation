@@ -16,28 +16,34 @@
 
 	proc/update_health()
 		var/datum/statusEffect/killswitch/killswitch_status
-		if (isrobot(silicon))
-			var/mob/living/silicon/robot/robot = silicon
-			if (robot.mainframe)
-				killswitch_status = robot.mainframe.hasStatus("killswitch_ai")
-			else
-				killswitch_status = silicon.hasStatus("killswitch_robot")
-		else if (isshell(silicon))
-			var/mob/living/silicon/hivebot/eyebot/eyebot = silicon
-			if (eyebot.mainframe)
-				killswitch_status = eyebot.mainframe.hasStatus("killswitch_ai")
-		else if (isAI(silicon))
-			killswitch_status = silicon.hasStatus("killswitch_ai")
+		killswitch_status = silicon.hasStatus("killswitch_robot") || silicon.hasStatus("killswitch_ai") || silicon.mainframe?.hasStatus("killswitch_ai")
+		var/datum/statusEffect/lockdown/lockdown_status
+		lockdown_status = silicon.hasStatus("lockdown_robot") || silicon.hasStatus("lockdown_ai") || silicon.mainframe?.hasStatus("lockdown_ai")
 
 		if (killswitch_status)
-			var/timeleft = round((killswitch_status.duration)/10, 1)
-			timeleft = "[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]"
-
-			killswitch.invisibility = INVIS_NONE
-			if(killswitch_status.owner_is_immune())
-				killswitch.maptext = "<span class='vga vt c ol' style='color: green;'>KILLSWITCH TIMER: [timeleft]\n You are immune!</span>"
-			else
-				killswitch.maptext = "<span class='vga vt c ol' style='color: red;'>KILLSWITCH TIMER\n<span style='font-size: 24px;'>[timeleft]</span></span>"
+			src.handle_killswitch_timer(killswitch_status)
+		else if (lockdown_status)
+			src.handle_lockdown_timer(lockdown_status)
 		else
 			killswitch.invisibility = INVIS_ALWAYS
 			killswitch.maptext = ""
+
+	proc/handle_killswitch_timer(var/datum/statusEffect/killswitch/killswitch_status)
+		var/timeleft = round((killswitch_status.duration)/10, 1)
+		timeleft = "[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]"
+
+		killswitch.invisibility = INVIS_NONE
+		if(killswitch_status.owner_is_immune())
+			killswitch.maptext = "<span class='vga vt c ol' style='color: green;'>KILLSWITCH TIMER: [timeleft]\n You are immune!</span>"
+		else
+			killswitch.maptext = "<span class='vga vt c ol' style='color: red;'>KILLSWITCH TIMER\n<span style='font-size: 24px;'>[timeleft]</span></span>"
+
+	proc/handle_lockdown_timer(var/datum/statusEffect/lockdown/lockdown_status)
+		var/timeleft = round((lockdown_status.duration)/10, 1)
+		timeleft = "[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]"
+
+		killswitch.invisibility = INVIS_NONE
+		if(lockdown_status.fake)
+			killswitch.maptext = "<span class='vga vt c ol' style='color: green;'>LOCKDOWN TIMER: [timeleft]\n You are immune!</span>"
+		else
+			killswitch.maptext = "<span class='vga vt c ol' style='color: yellow;'>LOCKDOWN TIMER\n<span style='font-size: 24px;'>[timeleft]</span></span>"

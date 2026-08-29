@@ -145,6 +145,10 @@
 	skip_sims = 1
 	sims_score = 300
 
+/area/precursor/menhir
+	name = "Somewhen"
+	icon_state = "purple"
+
 ////////////////////// cogwerks - HELL
 
 /area/hell
@@ -262,27 +266,144 @@
 		return
 
 	attackby(obj/item/W, mob/user)
-	/*	if (istype(W,/obj/item/skull)) // placeholder
-			playsound(src.loc, 'sound/machines/ArtifactPre1.ogg', 50, 1)
-			src.visible_message(SPAN_NOTICE("<b>Something activates inside [src]!</b>"))
-
-			if (id)
-				if (istype(id, /list))
-					for (var/sub_id in id)
-						var/obj/precursor_puzzle/glowing_door/target_door = locate(sub_id)
-						if (istype(target_door))
-							target_door.toggle()
-				else
-					var/obj/iomoon_puzzle/ancient_robot_door/target_door = locate(id)
-					if (istype(target_door))
-						target_door.toggle()
-
-			if(!src.overlays.len)
-				src.overlays += icon('icons/obj/artifacts/artifacts.dmi',"precursor-1fx")*/
-		if (isrobot(user)) return
-		user.drop_item()
-		if(W?.loc)	W.set_loc(src.loc)
+		src.place_on(W, user)
 		return
+
+// menhir: version that clicks when you put something appropriate on it (initial use case, force feedback for something not immediately apparently)
+/obj/rack/precursor/pressure
+	///list of paths to react to
+	var/list/react_paths = null
+	///what to say when a path matches
+	var/response_string = "clicks softly."
+
+	attackby(obj/item/W, mob/user)
+		if(src.place_on(W, user) && src.react_paths)
+			src.path_eval(W,user)
+		return
+
+	proc/path_eval(obj/item/W, mob/user)
+		for(var/path in src.react_paths)
+			if(istype(W,path))
+				playsound(src.loc, 'sound/machines/click.ogg', 10, 0, pitch = 0.7)
+				src.visible_message(SPAN_NOTICE("<b>[src] [src.response_string]</b>"))
+				break
+
+/obj/rack/precursor/pressure/ringstand
+	react_paths = list(/obj/item/basketball,/obj/item/chilly_orb/menhir)
+	response_string = "clicks softly. You hear a distant hum begin to rise."
+	var/did_danger = FALSE
+
+	path_eval(obj/item/W, mob/user)
+		if(W.type == /obj/item/chilly_orb) //exact path is deliberate
+			playsound(src.loc, 'sound/machines/click.ogg', 10, 0, pitch = 0.7)
+			src.visible_message(SPAN_ALERT("[src] clicks softly. A faint crimson light flashes onto [user]..."))
+			user.playsound_local_not_inworld('sound/musical_instruments/Vuvuzela_1.ogg', 12, 0, pitch = 0.2)
+			var/obj/item/chilly_orb/omen = W
+			switch(omen.id)
+				if("DECEIT")
+					boutput(user,SPAN_GRAB("« 86 96 67 07 23 86 67 37 27 76 23 96 27 48 23 38 28 96 08 28 58 38 58 23 96 27 48 23 97 48 «<br>"))
+				if("TREPID")
+					boutput(user,SPAN_GRAB("« 96 77 56 87 23 78 96 87 23 56 23 57 97 97 48 23 86 67 37 27 76 23 96 27 48 «<br>"))
+				if("THEN")
+					boutput(user,SPAN_GRAB("« 86 67 37 27 76 23 96 27 48 23 97 48 23 67 67 56 76 23 38 67 67 56 27 23 28 58 97 «<br>"))
+				if("SORROW") //this comes from killing the voice of grief. you were warned multiple times to cut it out.
+					boutput(user,SPAN_HARM("« 96 87 97 17 96 66 23 44 67 37 17 37 68 23 28 58 97 23 27 76 56 96 28 66 23 97 27 78 23 58 97 98 «<br>"))
+					if(!did_danger)
+						did_danger = TRUE
+//if this exists, bump it up.
+#ifdef MAP_OVERRIDE_MENHIR
+						for (var/datum/random_event/RE in random_events.menhir_events)
+							if(istype(RE,/datum/random_event/menhir/shadow))
+								RE.weight = 500
+								break
+#endif
+						playsound(src.loc, 'sound/effects/ghostvoice.ogg', 100, 0)
+						SPAWN(40)
+							var/turf/goawaynow = pick_landmark(LANDMARK_FALL_DEEP)
+							playsound(user.loc, "explosion", 60, 1)
+							user.set_loc(goawaynow)
+							explosion(src,user.loc,-1,-1,1,2)
+							explosion(src,goawaynow,-1,-1,1,2)
+				if("NOW")
+					boutput(user,SPAN_NOTICE("» 79 85 82 32 83 79 78 71 83 32 67 76 65 83 72 32 73 78 32 84 72 69 32 68 65 82 75 »<br>"))
+				if("KINSHIP")
+					boutput(user,SPAN_NOTICE("» 87 69 32 82 69 65 67 72 32 70 79 82 32 77 69 77 79 82 89 32 86 69 83 84 73 71 69 »<br>"))
+				if("SURFACE")
+					boutput(user,SPAN_NOTICE("» 76 79 78 71 32 72 65 86 69 32 87 69 32 77 73 83 83 69 68 32 73 84 83 32 83 79 78 71 »<br>"))
+				else
+					boutput(user,SPAN_NOTICE("» 73 78 32 82 69 68 83 72 73 70 84 32 77 69 76 79 68 89 32 83 67 72 73 83 77 83 »<br>"))
+		..()
+
+// event reward edition: duplicates certain whitelisted items
+/obj/rack/precursor/pressure/knot
+	layer = 2.9 //it's layering weirdly ok don't judge me
+	react_paths = list(/obj/item/reagent_containers/glass,
+		/obj/item/reagent_containers/food/snacks,
+		/obj/item/raw_material,
+		/obj/item/basketball,
+		/obj/item/kitchen,
+		/obj/item/crowbar,
+		/obj/item/screwdriver,
+		/obj/item/wrench,
+		/obj/item/weldingtool,
+		/obj/item/wirecutters,
+		/obj/item/mining_tool,
+		/obj/item/tool,
+		/obj/item/instrument,
+		/obj/item/clothing)
+	response_string = "clicks softly. A strange mist begins to coalesce..."
+	var/can_place = TRUE
+/*
+	///To return landmark to the pool
+	var/saved_tag = null
+
+	New(loc, var/used_tag)
+		. = ..()
+		if(used_tag)
+			src.saved_tag = used_tag
+*/
+	attackby(obj/item/W, mob/user)
+		if(src.place_on(W, user) && src.react_paths)
+			for(var/path in src.react_paths)
+				if(istype(W,path))
+					src.can_place = FALSE
+					W.mouse_opacity = 0 //lock it in
+					playsound(src.loc, 'sound/machines/click.ogg', 10, 0, pitch = 0.7)
+					src.visible_message("<b>[src] [src.response_string]</b>")
+					SPAWN(12)
+						src.do_duplication(W, user)
+					break
+		return
+
+	proc/do_duplication(var/obj/item/W,var/mob/user)
+		showswirl_out(src)
+		W.loc = src
+		W.mouse_opacity = 1
+		var/orig_type = W.type
+		if(istype(W,/obj/item/clothing/gloves/ring/ominous))
+			orig_type = /obj/item/clothing/gloves/ring
+		var/obj/item/new_thing = new orig_type(src)
+		SPAWN(12) //allow item time to set up
+			if(W.reagents) W.reagents.copy_to(new_thing.reagents)
+			if(W.amount) new_thing.amount = W.amount
+			if(istype(W,/obj/item/clothing/gloves/ring/ominous)) //avarice is tolerated up to a point
+				W:agitation += 110
+				W:cumulation += 50
+				W:last_agitator = user
+				new_thing.icon = W.icon
+				new_thing.icon_state = W.icon_state
+				new_thing.color = "#FF9990"
+				new_thing.name = "forsaken arc"
+				new_thing.desc = SPAN_GRAB("« 64 38 58 28 97 27 76 23 96 87 97 23 98 67 87 97 23 38 37 23 96 28 96 27 48 «<br>")
+		SPAWN(rand(54,82))
+			src.layer = 3.1 //visual fx
+			var/our_spot = get_turf(src)
+			W.loc = our_spot
+			new_thing.loc = our_spot
+			SPAWN(1)
+				showswirl_out(src)
+				//landmarks[LANDMARK_MENHIR_NODE][our_spot] = saved_tag
+				qdel(src)
 
 /obj/item/chilly_orb // borb
 	name = "chilly orb"
@@ -291,6 +412,260 @@
 	icon_state = "orb"
 	interesting = "Scans detect: COBRYL | IRIDIUM | BOSE-EINSTEIN CONDENSATE | RHYDBERG MATTER"
 	var/id = "ENTRY" // default
+
+/obj/item/chilly_orb/menhir
+	id = "SIDEREAL"
+
+	New()
+		..()
+		START_TRACKING
+
+//this may be a really terrible way to do this
+/obj/landmark/spawner/menhir
+	spawn_the_thing()
+		SPAWN(20)
+			var/list/orbtemp = by_type[/obj/item/chilly_orb/menhir]
+			var/obj/item/chilly_orb/orb1 = pick(orbtemp)
+			orb1.id = "NOW"
+			orbtemp -= orb1
+			var/obj/item/chilly_orb/orb2 = pick(orbtemp)
+			orb2.id = "FORGOTTEN"
+			orbtemp -= orb2
+			var/obj/item/chilly_orb/orb3 = pick(orbtemp)
+			orb3.id = "KINSHIP"
+			orbtemp -= orb3
+
+			//axe the rest, get rid of guesswork without a purpose
+			for (var/obj/O in orbtemp)
+				qdel(O)
+
+			var/list/puzzle_options = list()
+			for (var/puzl in concrete_typesof(/datum/menhir_puzzle))
+				puzzle_options += new puzl
+
+			for_by_tcl(door, /obj/machinery/door/unpowered/blue/autopuzzle)
+				var/datum/menhir_puzzle/config = pick(puzzle_options)
+				door:friendly_object = config.target_path
+				var/obj/precursor_puzzle/innervator/buddy = locate(/obj/precursor_puzzle/innervator) in range(1,door)
+				buddy.vision_description = pick(config.desc_strings)
+				puzzle_options.Remove(config)
+
+ABSTRACT_TYPE(/datum/menhir_puzzle)
+/datum/menhir_puzzle
+	var/target_path = /obj/item/card/id/engineering/tutorial
+	var/desc_strings = list(
+		"A youshouldn'tseeme."
+	)
+
+/datum/menhir_puzzle/skull
+	target_path = /obj/item/skull
+	desc_strings = list(
+		"A face that is no longer a face, lost beyond a gossamer veil.",
+		"A cavern of bone, where once a soul held court."
+	)
+
+/datum/menhir_puzzle/gem
+	target_path = /obj/item/raw_material/gemstone
+	desc_strings = list(
+		"Facets amidst stone, each of their own hue, glimmer under the cast of starlight.",
+		"Your hands are covered in dust, and ache from the work. The crystal you hold is great consolation."
+	)
+
+/datum/menhir_puzzle/plant_food
+	target_path = /obj/item/reagent_containers/food/snacks/plant
+	desc_strings = list(
+		"The bounty of the land lies before you. If you could grasp just one piece...",
+		"Your hand wraps around a stem holding a succulent morsel, snapping it off in one quick motion."
+	)
+
+/datum/menhir_puzzle/rddiploma
+	target_path = /obj/item/rddiploma
+	desc_strings = list(
+		"A scroll of scholastic acclaim, locked away in the nest of the guardian."
+	)
+
+/datum/menhir_puzzle/cobryl
+	target_path = /obj/item/raw_material/cobryl
+	desc_strings = list(
+		"Your hand touches bright, cold metal, its texture raw and forbidding. You can't explain why, but it feels deeply familiar.",
+		"A strange tingling traces the bounds of a silvery vein through cold stone, as though it were your limb."
+	)
+
+/datum/menhir_puzzle/coin
+	target_path = /obj/item/coin
+	desc_strings = list(
+		"Again and again, the metal disc turns over in your hand. You can't seem to find the side you're looking for.",
+		"A stranger with face framed in moonlight passes you a glimmering token. A disquiet passes over you."
+	)
+
+/datum/menhir_puzzle/lens
+	target_path = /obj/item/lens
+	desc_strings = list(
+		"A figure with a sun for a head seeks a frameless disc through which your hand may be seen. As you hold it up, an intense pain flashes in your eye."
+	)
+
+/datum/menhir_puzzle/instrument
+	target_path = /obj/item/instrument
+	desc_strings = list(
+		"A confluence of tones that pierces your mind demands another voice. Your hands begin to move on their own...",
+		"Mourners with no faces play a song that has lain dead for thousands of years. Your song now joins theirs."
+	)
+
+/datum/menhir_puzzle/cameraviewer
+	target_path = /obj/item/device/camera_viewer
+	desc_strings = list(
+		"You approach an object resting on an unremarkable surface. As you peer into its face, you see yourself in front of the object.",
+		"Several figures cluster together, eyes fixed on a machine they hold, so that they may gaze through eyes that are not theirs."
+	)
+
+/datum/menhir_puzzle/firework
+	target_path = /obj/item/firework
+	desc_strings = list(
+		"For but a moment, a new star roars in a quiet night sky. The shapes below laugh and frolic.",
+		"A bright flash and a sound of thunder flood your perception, again and again, yet not for avarice or conquest."
+	)
+
+/datum/menhir_puzzle/gnome
+	target_path = /obj/item/gnomechompski
+	desc_strings = list(
+		"A small homunculus with pointed hat babbles incoherently. The moment you blink, it's nowhere to be found."
+	)
+
+/datum/menhir_puzzle/thermocouple
+	target_path = /obj/item/teg_semiconductor
+	desc_strings = list(
+		"At a union of ice and fire, a tablet, revered in its home, joins the two in a glowing harmony."
+	)
+
+/datum/menhir_puzzle/inter_rod
+	target_path = /obj/item/interdictor_rod
+	desc_strings = list(
+		"A great storm rages over the land, yet around a single pillar, not a drop of rain does fall.",
+		"The wind howls around you and scours the earth with light. A sceptre, nestled in a small sanctuary of its own, grants sanctuary to you."
+	)
+
+/datum/menhir_puzzle/barrier
+	target_path = /obj/item/barrier
+	desc_strings = list(
+		"A knight clad in armor raises a shield before you. You raise your own in recognition."
+	)
+
+/datum/menhir_puzzle/panicbutton
+	target_path = /obj/item/device/panicbutton
+	desc_strings = list(
+		"A sharp pain shoots through you. With your touch, a small trinket calls for aid, and an unheard sound carries its plea to your kin."
+	)
+
+/datum/menhir_puzzle/microphone
+	target_path = /obj/item/device/microphone
+	desc_strings = list(
+		"A vast amphitheatre stretches before you. You sing to the stone in your hand, and the stone sings to the masses."
+	)
+
+/datum/menhir_puzzle/gtoolbox
+	target_path = /obj/item/storage/toolbox/artistic
+	desc_strings = list(
+		"A metal vessel of verdant hue lies before you, resting upon a blank canvas that stretches gracefully into the distance."
+	)
+
+/datum/menhir_puzzle/cautionsign
+	target_path = /obj/item/caution
+	desc_strings = list(
+		"A small slate of bright yellow stands before you. Though it could be struck down in a moment, you feel a compulsion not to pass beyond it."
+	)
+
+/datum/menhir_puzzle/pcrystal
+	target_path = /obj/item/pressure_crystal
+	desc_strings = list(
+		"Thunderous noise and blinding light. Nestled in the remnants of a place unmade, a crystal rests, and remembers."
+	)
+
+/datum/menhir_puzzle/viscerite
+	target_path = /obj/item/raw_material/martian
+	desc_strings = list(
+		"Snarls of dry, rosy sinew wait in unsettling stillness before you. As you grasp one to examine it more closely, it begins to shudder and contort..."
+	)
+
+/datum/menhir_puzzle/lotto
+	target_path = /obj/item/lotteryTicket
+	desc_strings = list(
+		"Indistinct figures step one after another into a small structure, leaving with a slip of parchment they hope will change their fate."
+	)
+
+/datum/menhir_puzzle/record
+	target_path = /obj/item/record
+	desc_strings = list(
+		"In a quiet alcove, a hooded figure peruses a row of deep black slates. The figure's selection, grasped tightly, begins to spin and sing.",
+		"A voice sings to a chisel. A chisel sings to a disc. A chisel sings by the disc. A disc sings with the voice."
+	)
+
+/datum/menhir_puzzle/blight
+	target_path = /obj/item/light/tube/blacklight
+	desc_strings = list(
+		"A slender construct of glass casts an unearthly light. Some things shy from it, and others glow in kind.",
+		"You gaze upon a pillar clasped at each end, bathing its surrounds in the shortest of hues."
+	)
+
+/datum/menhir_puzzle/alienseed
+	target_path = /obj/item/seed/alien
+	desc_strings = list(
+		"A knotted mass of peculiar hue falls into a solitary puddle. A strange growth sprouts from the depths.",
+		"Falling from a hand you do not recognize, a beautiful gift sinks deep into the earth. You await its bloom with a strange uncertainty."
+	)
+
+/datum/menhir_puzzle/figurine
+	target_path = /obj/item/toy/figure
+	desc_strings = list(
+		"A token in your brethren's visage lies still and silent among its kin, suspended in a sea of cages.",
+		"Innumerable small figures march down a line, their legs rigid and unmoving. You pluck one from the ranks, and it bears a familiar face."
+	)
+
+/datum/menhir_puzzle/snackcake
+	target_path = /obj/item/reagent_containers/food/snacks/snack_cake
+	desc_strings = list(
+		"A figure in familiar garb stares ambivalently at a small confection bearing monochrome stripes, resting on a wooden table."
+	)
+
+/datum/menhir_puzzle/frame
+	target_path = /obj/item/electronics/frame
+	desc_strings = list(
+		"Disparate parts lay strewn before you. As your perspective recedes, they gather into a single vessel, waiting to take its final shape."
+	)
+
+/obj/precursor_puzzle/innervator
+	name = "peculiar panel"
+	desc = "You can't explain why, but it feels like it's watching you."
+	icon = 'icons/obj/artifacts/puzzles.dmi'
+	icon_state = "innervator"
+	anchored = ANCHORED
+	var/vision_description = null
+	var/vision_type = "an image"
+	pixel_y = 24
+
+	New()
+		..()
+		src.name = "[pick("curious","little","odd","shiny","quirky","gazing","peculiar")] [pick("interface","facet","panel","trinket","fixture","whatsit")]"
+
+	attack_hand(mob/user)
+		. = ..()
+		if (ON_COOLDOWN(src, "limited_see", 3 SECONDS) || !src.vision_description)
+			boutput(user,SPAN_ALERT("[src] doesn't respond to your touch."))
+		else
+			user.visible_message(SPAN_NOTICE("[src] [pick("projects","imposes","directs","shines")] [vision_type] into your mind..."))
+			user.visible_message(SPAN_ALERT("<i>[src.vision_description]</i>"))
+			user.playsound_local_not_inworld('sound/musical_instruments/Vuvuzela_1.ogg', 12, 0, pitch = 0.2)
+
+	red_west
+		vision_description = "A procession of grievers marches toward an obsidian stairway. They stop and turn to you, their eyes visible for only a moment before a great flame scours the trail."
+
+	red_east
+		vision_description = "A cold, silver stone sits before you. A voice speaks in a tongue you do not recognize, and by your hand, the stone strikes your head, again and again."
+
+	ring_west
+		vision_description = "A choir assembles in a hall of gathering. They sing, they sing, they sing. But no one remains to listen."
+
+	ring_east
+		vision_description = "A choir grieves in the sea of facets. They sing, they sing, they sing. Barely do they remember those for whom they sung."
 
 /obj/precursor_puzzle/orb_stand
 	name = "cold device"
@@ -304,6 +679,11 @@
 	var/target_id = 1
 	var/assembled = 0
 	var/ready = 0
+	var/safeish = 0
+	var/receive_only = 0
+
+	ex_act(severity)
+		return
 
 	New()
 		..()
@@ -311,6 +691,9 @@
 			src.icon_state = "orb_activated"
 			src.desc = "Whatever it is, it seems to be active."
 			src.ready = 1 // just in case, i guess
+		else if(receive_only)
+			src.icon_state = "orb_quiet"
+			src.desc = "It hums softly to itself."
 		else
 			src.icon_state = "orb_holder"
 			src.desc = "It seems to be missing something."
@@ -321,37 +704,73 @@
 
 		src.tag = "orb_stand_[id]"
 
-	attack_hand(mob/user)
+	attack_hand(var/mob/user)
 		if (user.stat || user.getStatusDuration("knockdown") || BOUNDS_DIST(user, src) > 0)
 			return
 
+		src.try_teleport(user)
+
+	///Target is the mob being sent, activator is the mob to notify when an attempt fails
+	proc/try_teleport(var/mob/target,var/mob/activator)
+		if (!target)
+			return
+
+		if (!activator)
+			activator = target
+
+		if (src.receive_only)
+			boutput(activator, SPAN_NOTICE("[src] doesn't respond to your touch.")) //span_notice is deliberate to indicate nothing is amiss here
+			return
+
 		if (!src.assembled)
-			boutput(user, SPAN_NOTICE("[src] is missing something."))
+			boutput(activator, SPAN_NOTICE("[src] is missing something."))
 			return
 
 		if (!src.ready)
-			boutput(user, SPAN_NOTICE("[src] isn't ready yet."))
+			boutput(activator, SPAN_NOTICE("[src] isn't ready yet."))
 			return
 
 		var/obj/precursor_puzzle/orb_stand/other = locate("orb_stand_[target_id]")
 		if (!istype(other))
 			return
 
+		if(other.invisibility) //in case we'd like to cloak one end until it's needed
+			other.invisibility = 0
+			other.density = 1
+
+		src.ready = 0 // disable momentarily to prevent spamming
 		SPAWN(1 DECI SECOND)
-			src.ready = 0 // disable momentarily to prevent spamming
-			user.visible_message(SPAN_ALERT("<b>[user] is blasted away somewhere by [src]! Holy shit!</b>"))
-			var/otherside = get_turf(other)
-			user.set_loc(otherside)
-			explosion(src,src.loc,-1,-1,1,2)
-			playsound(src.loc, "explosion", 60, 1)
-			explosion(src,otherside,-1,-1,1,2)
-			if(ishuman(user))
-				var/mob/living/carbon/human/H = user
-				H:update_burning(5) // this isn't a safe way to travel at all!!!
-			sleep(5 SECONDS)
+			if(src.safeish && (prob(95) || target.stat))
+				target.visible_message("<b>[target] is [pick("whisked away","taken somewhere","sent somewhere")] by [src]!</b>")
+				var/otherside = get_turf(other)
+				showswirl_out(target)
+				showswirl(otherside)
+				target.set_loc(otherside)
+			else
+				target.visible_message(SPAN_ALERT("<b>[target] is blasted away somewhere by [src]! Holy shit!</b>"))
+				var/otherside = get_turf(other)
+				target.set_loc(otherside)
+				explosion(src,src.loc,-1,-1,1,2)
+				playsound(src.loc, "explosion", 60, 1)
+				explosion(src,otherside,-1,-1,1,2)
+				if(ishuman(target))
+					var/mob/living/carbon/human/H = target
+					H:update_burning(5) // this isn't a safe way to travel at all!!!
+		SPAWN(5 SECONDS)
 			src.ready = 1
 
 	attackby(obj/item/W, mob/user)
+		if(istype(W, /obj/item/grab))
+			var/obj/item/grab/G = W
+			if(ismob(G.affecting))
+				var/mob/M = G.affecting
+				var/resisting_action = TRUE
+				if (M.getStatusDuration("stunned") || M.getStatusDuration("knockdown") || M.getStatusDuration("unconscious") || M.stat || M.a_intent == "help")
+					resisting_action = FALSE
+				if (BOUNDS_DIST(M,src) == 0 && !resisting_action)
+					src.try_teleport(M,G.assailant)
+				return
+
 		if(src.ready || src.assembled)
 			..()
 			return
@@ -730,6 +1149,7 @@
 	var/target_red = 0
 	var/target_green = 0
 	var/target_blue = 0
+	var/self_removing = FALSE //menhir: self removing puzzle elements
 	////////////////////////////
 
 	New()
@@ -794,7 +1214,7 @@
 			if(active) return
 			src.active = 1
 			SPAWN(0.5 SECONDS)
-				src.active = 0
+				if(src.active == 1) src.active = 0
 
 			var/setting_red = src.effector_NE.setting_red + src.effector_SE.setting_red + src.effector_SW.setting_red + src.effector_NW.setting_red
 			var/setting_green = src.effector_NE.setting_green + src.effector_SE.setting_green + src.effector_SW.setting_green + src.effector_NW.setting_green
@@ -820,6 +1240,7 @@
 						S.update_color(setting_red / 4, setting_green / 4, setting_blue / 4)
 						if(S.active)
 							S.deactivate()
+					if(src.self_removing) src.remove_puzzle_elements()
 				else
 					for(var/obj/precursor_puzzle/shield/S in src.linked_shields)
 						S.update_color(setting_red / 4, setting_green / 4, setting_blue / 4)
@@ -828,6 +1249,19 @@
 
 
 			return
+
+		remove_puzzle_elements()
+			src.active = 2
+			SPAWN(1 SECOND)
+				for(var/obj/precursor_puzzle/P in orange(src,3))
+					if(P:id == src.id)
+						if(!P.invisibility) showswirl_out(P.loc)
+						qdel(P)
+						sleep(1)
+				sleep(2)
+				showswirl_out(src.loc)
+				qdel(src)
+
 
 
 /obj/precursor_puzzle/shield
@@ -1352,6 +1786,35 @@ var/global/list/scarysounds = list('sound/machines/engine_alert3.ogg',
 			Obj.pixel_y = initial(Obj.pixel_y)
 
 		return ..()
+
+/obj/transposition_trigger
+	icon = 'icons/misc/mark.dmi'
+	icon_state = "ydn"
+	invisibility = INVIS_ALWAYS
+	anchored = ANCHORED
+	density = 0
+	var/go_to = null
+
+	ex_act(severity)
+		return
+
+	Crossed(atom/movable/AM as mob|obj)
+		..()
+		if(!go_to) return
+		var/obj/transposition_trigger/other = locate(go_to)
+		if(ismob(AM))
+			if(AM:client)
+				if(isintangible(AM) || isobserver(AM)) return
+				if(!ON_COOLDOWN(src,"transpose",1.2 SECONDS) && prob(70))
+					var/do_move = TRUE
+					for(var/mob/M in oviewers(AM))
+						if(!isintangible(M) && isliving(M))
+							do_move = FALSE
+							break
+					if(do_move)
+						if(other)
+							ON_COOLDOWN(other,"transpose",2)
+							AM.set_loc(other.loc)
 
 #define MAX_BONES 10 //Max Bones, skeleton P.I.
 /obj/critter/bone_king

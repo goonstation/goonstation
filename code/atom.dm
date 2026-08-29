@@ -38,6 +38,7 @@ TYPEINFO(/atom)
 
 	/// Should points thrown at this take into account the click pixel value
 	var/pixel_point = FALSE
+	var/tmp/avoid_animating = FALSE //! Animating this atom will probably break an existing animation. Try to skip them if possible.
 
 	var/interesting = ""
 	/// Atom provides grip to neighboring tiles in zero-G
@@ -1086,11 +1087,11 @@ TYPEINFO(/obj/item/disk)
 
 	if(isturf(newloc))
 		if(src.pass_unstable || src.density)
-			for(var/turf/covered_turf as anything in src.locs)
+			for(var/turf/covered_turf in src.locs)
 				covered_turf.pass_unstable += src.pass_unstable
 				covered_turf.passability_cache = null
 		if (src.provides_grip)
-			for(var/turf/covered_turf as anything in src.locs)
+			for(var/turf/covered_turf in src.locs)
 				covered_turf.grip_atom_count += 1
 		for(var/atom/A in newloc)
 			if(A != src)

@@ -1,0 +1,9 @@
+/turf/simulated/floor/orange : /turf/simulated/floor/lightyellow{@OLD}
+/turf/simulated/floor/airless/orange : /turf/simulated/floor/airless/lightyellow{@OLD}
+/turf/unsimulated/floor/orange : /turf/unsimulated/floor/lightyellow{@OLD}
+/turf/simulated/floor/orange/side : /turf/simulated/floor/lightyellow/side{@OLD}
+/turf/simulated/floor/airless/orange/side : /turf/simulated/floor/airless/lightyellow/side{@OLD}
+/turf/unsimulated/floor/orange/side : /turf/unsimulated/floor/lightyellow/side{@OLD}
+/turf/simulated/floor/orange/corner : /turf/simulated/floor/lightyellow/corner{@OLD}
+/turf/simulated/floor/airless/orange/corner : /turf/simulated/floor/airless/lightyellow/corner{@OLD}
+/turf/unsimulated/floor/orange/corner : /turf/unsimulated/floor/lightyellow/corner{@OLD}

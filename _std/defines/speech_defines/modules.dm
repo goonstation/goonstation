@@ -42,6 +42,7 @@
 #define SPEECH_OUTPUT_RADIO_GLOBAL_UNPROTECTED_ONLY "global_radio_unprotected"
 #define SPEECH_OUTPUT_SILICONCHAT "siliconchat"
 #define SPEECH_OUTPUT_SILICONCHAT_ADMIN "admin_siliconchat"
+#define SPEECH_OUTPUT_SILICONCHAT_BROADCAST "broadcast_siliconchat"
 #define SPEECH_OUTPUT_SPOKEN "spoken"
 #define SPEECH_OUTPUT_SPOKEN_AUDIO_LOG "audio_log_spoken"
 #define SPEECH_OUTPUT_SPOKEN_DEVICE "device_spoken"
@@ -123,7 +124,7 @@
 #define SPEECH_MODIFIER_BOT_SOVIET "soviet_bot"
 #define SPEECH_MODIFIER_BOT_XMAS "xmas_bot"
 #define SPEECH_MODIFIER_CHEMICOMPILER "chemicompiler"
-#define SPEECH_MODIFIER_CRYPTID_PLUSHIE "cryptid_plushie"
+#define SPEECH_MODIFIER_CLOAKED "cloaked"
 #define SPEECH_MODIFIER_DECTALK_BOT "bot_dectalk"
 #define SPEECH_MODIFIER_DECTALK_HEAD_SURGEON "head_surgeon_dectalk"
 #define SPEECH_MODIFIER_DISPLACED_SOUL "displaced_soul"
@@ -150,8 +151,8 @@
 #define SPEECH_MODIFIER_TEST_DUMMY "test_dummy"
 #define SPEECH_MODIFIER_TRANSLATOR "translator"
 #define SPEECH_MODIFIER_VENDING_MACHINE "vending_machine"
-#define SPEECH_MODIFIER_VOICE_CHANGER "voice_changer"
 #define SPEECH_MODIFIER_VOICE_ANONYMIZER "voice_anonymizer"
+#define SPEECH_MODIFIER_VOICE_CHANGER "voice_changer"
 
 
 //------------ Speech Prefixes ------------//

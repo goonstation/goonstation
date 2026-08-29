@@ -3,7 +3,7 @@
 /obj/cable,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "ab" = (
 /obj/cable/orange{
 	icon_state = "1-2"
@@ -14,27 +14,27 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "ac" = (
 /obj/cable/orange{
 	icon_state = "1-2"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "ad" = (
 /obj/cable/orange{
 	icon_state = "1-2"
 	},
 /obj/storage/crate/furnacefuel,
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "ae" = (
 /obj/cable/orange{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "af" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -47,7 +47,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "ag" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -60,14 +60,14 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "ah" = (
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "ai" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -78,14 +78,14 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "aj" = (
 /obj/cable{
 	icon_state = "0-4"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "ak" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -96,27 +96,27 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "al" = (
 /obj/cable{
 	icon_state = "0-8"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "am" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "an" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "ao" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -125,7 +125,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "ap" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -134,7 +134,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "aq" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -143,7 +143,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "ar" = (
 /obj/decal/stripe_delivery,
 /obj/stool/chair{
@@ -156,7 +156,7 @@
 	name = "Engineer"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "as" = (
 /obj/decal/stripe_delivery,
 /turf/simulated/floor/grey,
@@ -174,7 +174,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "au" = (
 /obj/item/extinguisher,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
@@ -183,7 +183,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "av" = (
 /obj/machinery/atmospherics/binary/circulatorTemp/right{
 	icon_state = "circ1-off";
@@ -194,7 +194,7 @@
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "aw" = (
 /obj/machinery/atmospherics/binary/circulatorTemp{
 	icon_state = "circ2-off";
@@ -205,62 +205,62 @@
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "ax" = (
 /obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 4;
 	target_pressure = 1e+031
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "ay" = (
 /obj/machinery/atmospherics/binary/passive_gate/opened{
 	dir = 8;
 	target_pressure = 1e+031
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "az" = (
 /obj/machinery/atmospherics/binary/passive_gate/opened{
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "aA" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 8;
 	name = "cold loop inlet valve"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "aB" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 8;
 	name = "cold loop outlet valve"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "aC" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 8;
 	name = "hot loop auxillary east"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "aD" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 8;
 	name = "hot loop inlet valve"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "aE" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 8;
 	name = "hot loop outlet valve"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "aF" = (
 /obj/machinery/atmospherics/binary/valve{
 	name = "outlet purge valve"
@@ -285,7 +285,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "aI" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
@@ -298,14 +298,14 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "aJ" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
 	level = 2
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "aK" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 8;
@@ -315,19 +315,19 @@
 	pixel_y = 1
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "aL" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 8;
 	level = 2
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "aM" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "aN" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/machinery/power/stats_meter{
@@ -339,7 +339,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "aO" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/machinery/power/stats_meter{
@@ -348,7 +348,7 @@
 	tag = "Cold Loop Inlet Meter"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "aP" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/machinery/power/stats_meter{
@@ -363,7 +363,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "aQ" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
@@ -374,7 +374,7 @@
 	pixel_y = -7
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "aR" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0
@@ -390,7 +390,7 @@
 	},
 /obj/decal/stripe_delivery,
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "aS" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 8
@@ -399,13 +399,13 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "aT" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 8
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "aU" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 9
@@ -417,7 +417,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "aV" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
@@ -429,7 +429,7 @@
 	tag = "Hot Loop Inlet Meter"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "aW" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
@@ -442,7 +442,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "aX" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
@@ -453,7 +453,7 @@
 	pixel_y = -7
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "aY" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0
@@ -466,7 +466,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "aZ" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 8
@@ -475,13 +475,13 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "ba" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 8
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "bb" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer{
 	dir = 4
@@ -490,13 +490,13 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "bc" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer{
 	dir = 4
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "bd" = (
 /obj/machinery/atmospherics/unary/furnace_connector{
 	dir = 8
@@ -506,14 +506,14 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "be" = (
 /obj/machinery/atmospherics/unary/furnace_connector{
 	dir = 8
 	},
 /obj/machinery/power/furnace/thermo,
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "bf" = (
 /obj/machinery/atmospherics/unary/portables_connector{
 	dir = 8
@@ -525,7 +525,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "bg" = (
 /obj/machinery/camera/directional/north{
 	pixel_x = -10
@@ -538,7 +538,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "bh" = (
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	name = "Core Access";
@@ -548,7 +548,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "bi" = (
 /obj/machinery/firealarm/directional/south{
 	layer = 3.5
@@ -558,7 +558,7 @@
 	name = "cold loop auxillary east"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "bj" = (
 /obj/machinery/firealarm/directional/north,
 /obj/machinery/atmospherics/binary/valve{
@@ -569,14 +569,14 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "bk" = (
 /obj/machinery/light,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "bl" = (
 /obj/machinery/light/emergency{
 	dir = 1;
@@ -629,7 +629,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "br" = (
 /obj/machinery/portable_atmospherics/pump,
 /obj/machinery/light/small{
@@ -654,7 +654,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/engine,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "bt" = (
 /obj/machinery/power/generatorTemp,
 /obj/item/paper/engine,
@@ -667,7 +667,7 @@
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "bu" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
@@ -675,7 +675,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "bv" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
@@ -683,7 +683,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "bw" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -691,14 +691,14 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "bx" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "by" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -706,13 +706,13 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 "bz" = (
 /turf/simulated/floor/grey,
 /area/station/engine/inner)
 "bA" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/core)
+/area/station/engine/core/thermoelectric)
 
 (1,1,1) = {"
 bn

@@ -313,10 +313,17 @@ proc/load_intraround_jars()
 			src.form_fields = pickled.form_fields?.Copy()
 			src.field_counter = pickled.field_counter
 
-			for(var/i in 1 to 3)
-				if(prob(60))
-					var/list/stain_info = list(list("stamp-stain-[i].png", rand(0, sizex || 400), rand(0, sizey || 500), rand(360)))
-					LAZYLISTADD(src.stamps, stain_info)
+			if(prob(60))
+				var/list/stain_info = list(list("[resource("images/tgui/stamp_icons/stamp-stain-1.png")]", rand(0, sizex || 400), rand(0, sizey || 500), rand(360)))
+				LAZYLISTADD(src.stamps, stain_info)
+
+			if(prob(60))
+				var/list/stain_info = list(list("[resource("images/tgui/stamp_icons/stamp-stain-2.png")]", rand(0, sizex || 400), rand(0, sizey || 500), rand(360)))
+				LAZYLISTADD(src.stamps, stain_info)
+
+			if(prob(60))
+				var/list/stain_info = list(list("[resource("images/tgui/stamp_icons/stamp-stain-3.png")]", rand(0, sizex || 400), rand(0, sizey || 500), rand(360)))
+				LAZYLISTADD(src.stamps, stain_info)
 
 	attack_self(mob/user)
 		// show both the text and take a bite! consuming both information and food at the same time!

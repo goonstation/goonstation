@@ -1,0 +1,749 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aF" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 10
+	},
+/turf/simulated/floor,
+/area/station/science/lab)
+"bm" = (
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/machinery/meter{
+	pixel_y = 8
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/purple,
+/area/station/science/lab)
+"eg" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/purple,
+/area/station/science/lab)
+"eD" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/purple/side{
+	dir = 4
+	},
+/area/station/science/lab)
+"fB" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "cold loop valve"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/landmark/start/job/research_trainee,
+/turf/simulated/floor,
+/area/station/science/lab)
+"gA" = (
+/obj/machinery/door/airlock/pyro/toxins_alt{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/tox,
+/turf/simulated/floor/purple,
+/area/station/science/lab)
+"gQ" = (
+/obj/machinery/atmospherics/pipe/quadway/overfloor,
+/obj/machinery/meter,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor,
+/area/station/science/lab)
+"iv" = (
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 4
+	},
+/obj/cable,
+/obj/machinery/power/apc/autoname_south,
+/turf/simulated/floor/purple/side,
+/area/station/science/lab)
+"iV" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable,
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/plating,
+/area/station/science/lab)
+"jU" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 4
+	},
+/turf/space,
+/area/space)
+"lP" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/window_blinds/cog2/middle{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/science/lab)
+"lR" = (
+/obj/machinery/door/airlock/pyro/toxins_alt,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/tox,
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor/purple,
+/area/station/science/lab)
+"mW" = (
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 8
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/purple/side{
+	dir = 4
+	},
+/area/station/science/lab)
+"ne" = (
+/obj/machinery/atmospherics/pipe/simple/junction{
+	dir = 1
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/door/poddoor/pyro/shutters{
+	name = "Heat Shield Shutters";
+	id = "toxheatshield"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/science/lab)
+"nE" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "input valve"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/station/science/lab)
+"nM" = (
+/obj/machinery/disposal/small/west{
+	pixel_x = 8
+	},
+/obj/disposalpipe/trunk/west,
+/obj/machinery/computer/atmosphere/pumpcontrol{
+	frequency = 1229;
+	dir = 8
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/purple/side{
+	dir = 4
+	},
+/area/station/science/lab)
+"oC" = (
+/turf/simulated/wall/auto/reinforced/supernorn/colored/purple,
+/area/station/science/lab)
+"qr" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 5
+	},
+/obj/machinery/meter,
+/obj/machinery/light_switch/directional/west{
+	pixel_y = 8
+	},
+/obj/machinery/dispenser,
+/turf/simulated/floor/purple/side{
+	dir = 8
+	},
+/area/station/science/lab)
+"qF" = (
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/horizontal,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor,
+/area/station/science/lab)
+"qT" = (
+/obj/machinery/camera/directional/south{
+	pixel_x = 12
+	},
+/obj/machinery/networked/storage/bomb_tester{
+	bank_id = "Mixer"
+	},
+/obj/item/clothing/glasses/vr/bomb{
+	pixel_y = -3
+	},
+/obj/item/clothing/glasses/vr/bomb,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 5
+	},
+/turf/simulated/floor/purple/side,
+/area/station/science/lab)
+"qY" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/purple,
+/area/station/science/lab)
+"ry" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 10
+	},
+/turf/space,
+/area/space)
+"sm" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 5
+	},
+/obj/machinery/meter,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/portable_atmospherics/pump,
+/turf/simulated/floor/purple/side{
+	dir = 1
+	},
+/area/station/science/lab)
+"sw" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 10
+	},
+/obj/machinery/sparker{
+	id = "toxinsigniter";
+	layer = 7;
+	name = "Mounted Igniter";
+	pixel_x = 22;
+	dir = 8;
+	pixel_y = 12
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/science/lab)
+"sE" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "mixing valve"
+	},
+/obj/machinery/firealarm/directional/south,
+/turf/simulated/floor/purple/side,
+/area/station/science/lab)
+"tk" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "heat exchanger valve"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor/purple/corner{
+	dir = 1
+	},
+/area/station/science/lab)
+"uJ" = (
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor/purple/side,
+/area/station/science/lab)
+"vM" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 4
+	},
+/obj/table/reinforced/auto,
+/obj/item/extinguisher{
+	pixel_x = -3;
+	pixel_y = 5
+	},
+/obj/item/clothing/mask/gas,
+/obj/item/chem_grenade/firefighting{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/chem_grenade/firefighting{
+	pixel_x = 6;
+	pixel_y = 3
+	},
+/obj/item/chem_grenade/firefighting{
+	pixel_x = 6
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/purple/side{
+	dir = 1
+	},
+/area/station/science/lab)
+"vZ" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/science/lab)
+"ws" = (
+/obj/machinery/atmospherics/binary/valve,
+/obj/machinery/door_control/bolter/new_walls/west{
+	name = "Interior Heat Shield";
+	id = "toxheatshield"
+	},
+/turf/simulated/floor/purple/side{
+	dir = 9
+	},
+/area/station/science/lab)
+"ym" = (
+/obj/machinery/atmospherics/pipe/simple/junction{
+	dir = 8
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/networked/test_apparatus/gas_sensor,
+/turf/simulated/floor/engine/vacuum,
+/area/station/science/lab)
+"zW" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 10
+	},
+/obj/machinery/vending/standard/toxins,
+/turf/simulated/floor/purple/side{
+	dir = 9
+	},
+/area/station/science/lab)
+"DO" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 5
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/purple,
+/area/station/science/lab)
+"Eb" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "purge valve"
+	},
+/obj/disposalpipe/segment/horizontal,
+/obj/landmark/start/job/scientist,
+/turf/simulated/floor,
+/area/station/science/lab)
+"EG" = (
+/turf/space,
+/area/space)
+"Ff" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/science/lab)
+"FV" = (
+/obj/blind_switch/directional/south,
+/obj/machinery/atmospherics/unary/tank{
+	dir = 8
+	},
+/turf/simulated/floor/purple/side{
+	dir = 6
+	},
+/area/station/science/lab)
+"Gc" = (
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 1
+	},
+/obj/table/reinforced/auto,
+/obj/item/screwdriver{
+	pixel_y = 10;
+	pixel_x = -6
+	},
+/obj/item/wrench{
+	pixel_x = -6
+	},
+/obj/item/device/prox_sensor{
+	pixel_x = 8;
+	pixel_y = -4
+	},
+/obj/item/device/prox_sensor{
+	pixel_x = 8;
+	pixel_y = -4
+	},
+/obj/item/reagent_containers/food/drinks/fueltank,
+/obj/item/hand_labeler,
+/obj/item/device/analyzer/atmospheric/upgraded,
+/turf/simulated/floor/purple/side{
+	dir = 1
+	},
+/area/station/science/lab)
+"Jc" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/obj/window_blinds/cog2/middle{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/science/lab)
+"PJ" = (
+/obj/machinery/atmospherics/pipe/manifold/overfloor,
+/obj/machinery/door_control/bolter/new_walls/north{
+	dir = 2;
+	pixel_x = 6;
+	name = "Vent Controls";
+	id = "toxvent"
+	},
+/obj/machinery/activation_button/ignition_switch{
+	pixel_y = 25;
+	pixel_x = -8;
+	id = "toxinsigniter"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/simulated/floor/purple/side{
+	dir = 1
+	},
+/area/station/science/lab)
+"Rq" = (
+/obj/machinery/light/incandescent,
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "pressure tank valve"
+	},
+/turf/simulated/floor/purple/side,
+/area/station/science/lab)
+"RK" = (
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "toxvent";
+	name = "Vent Shutters"
+	},
+/obj/mesh/grille/steel,
+/turf/simulated/floor/engine/vacuum,
+/area/station/science/lab)
+"RO" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/purple,
+/area/station/science/lab)
+"RR" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 6
+	},
+/turf/space,
+/area/space)
+"RW" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/purple,
+/area/station/science/lab)
+"Sn" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/atmospherics/pipe/simple/junction{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/science/lab)
+"Tk" = (
+/obj/machinery/atmospherics/unary/vent,
+/turf/space,
+/area/space)
+"TT" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/window_blinds/cog2/right,
+/turf/simulated/floor/plating,
+/area/station/science/lab)
+"Ud" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 9
+	},
+/obj/table/reinforced/auto,
+/obj/item/device/transfer_valve{
+	pixel_y = 9
+	},
+/obj/item/device/transfer_valve{
+	pixel_y = 6
+	},
+/obj/item/device/transfer_valve{
+	pixel_y = 3
+	},
+/obj/item/device/transfer_valve,
+/obj/machinery/phone/wall{
+	pixel_x = 22;
+	pixel_y = 5
+	},
+/turf/simulated/floor/purple/side{
+	dir = 5
+	},
+/area/station/science/lab)
+"Ui" = (
+/obj/machinery/atmospherics/binary/pump{
+	id = "Heat Exchanger Pump";
+	frequency = 1229
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/purple,
+/area/station/science/lab)
+"Um" = (
+/obj/disposalpipe/segment/bent/east,
+/turf/simulated/floor/purple/side{
+	dir = 8
+	},
+/area/station/science/lab)
+"UM" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/atmospherics/pipe/simple/junction{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/science/lab)
+"Vf" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 6
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/science/lab)
+"Wp" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/plating,
+/area/station/science/lab)
+"XF" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/purple,
+/area/station/science/lab)
+"Ye" = (
+/obj/machinery/atmospherics/binary/pump{
+	frequency = 1229;
+	id = "Chamber One Inlet";
+	on = 1;
+	target_pressure = 500;
+	dir = 1
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/door/poddoor/pyro/shutters{
+	name = "Heat Shield Shutters";
+	id = "toxheatshield"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/science/lab)
+"YO" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 5
+	},
+/obj/machinery/atmospherics/unary/outlet_injector/overfloor/active,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/science/lab)
+"Zc" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/window_blinds/cog2/left,
+/turf/simulated/floor/plating,
+/area/station/science/lab)
+"Zv" = (
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 1
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/purple/side{
+	dir = 10
+	},
+/area/station/science/lab)
+"ZW" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/purple,
+/area/station/science/lab)
+
+(1,1,1) = {"
+eg
+Jc
+RO
+RO
+RW
+oC
+oC
+oC
+oC
+"}
+(2,1,1) = {"
+Zc
+EG
+RK
+Vf
+YO
+Ye
+ws
+Zv
+oC
+"}
+(3,1,1) = {"
+Wp
+EG
+RK
+ym
+sw
+ne
+sm
+iv
+oC
+"}
+(4,1,1) = {"
+Wp
+Tk
+qY
+DO
+Ui
+bm
+PJ
+sE
+oC
+"}
+(5,1,1) = {"
+iV
+RR
+UM
+zW
+qr
+Um
+tk
+uJ
+lR
+"}
+(6,1,1) = {"
+Wp
+jU
+Ff
+vM
+aF
+Eb
+gQ
+qT
+oC
+"}
+(7,1,1) = {"
+Wp
+jU
+vZ
+Gc
+fB
+qF
+nE
+Rq
+oC
+"}
+(8,1,1) = {"
+TT
+ry
+Sn
+Ud
+eD
+nM
+mW
+FV
+oC
+"}
+(9,1,1) = {"
+ZW
+lP
+XF
+oC
+gA
+oC
+oC
+oC
+oC
+"}

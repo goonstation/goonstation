@@ -4056,6 +4056,11 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 					src.electrify_contents()
 					message_host("command=ack")
 					src.UpdateIcon()
+					SPAWN(5 SECONDS)
+						src.visible_message("<b>[src.name]</b> finishes working and shuts down.")
+						playsound(src, 'sound/machines/chime.ogg', 50, TRUE)
+						active = 0
+						src.UpdateIcon()
 				else
 					message_host("command=nack")
 

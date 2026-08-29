@@ -27,7 +27,7 @@
 		mainframe_prog_exit
 		return
 
-	if (src.signal_program(1, list("command" = DWAINE_COMMAND_DSCAN)) == ESIG_SUCCESS)
+	if (src.signal_program(1, list("command" = DWAINE::SYSCALL::DSCAN)) == DWAINE::ERR::SIG::SUCCESS)
 		src.message_user("Now scanning for devices -- This may take a few seconds.")
 	else
 		src.message_user("Scan already in progress -- Please be patient.")

@@ -1,0 +1,494 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/simulated/floor/black/grime,
+/area/station/science/storage)
+"b" = (
+/obj/barber_pole{
+	pixel_x = 10
+	},
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/crew_quarters/barber_shop)
+"c" = (
+/obj/item/clothing/head/wig,
+/obj/item/dye_bottle,
+/obj/item/clothing/under/misc/barber,
+/obj/item/scissors,
+/obj/item/razor_blade,
+/obj/item/clothing/head/bald_cap,
+/obj/storage/closet,
+/obj/machinery/power/apc/autoname_west,
+/obj/cable,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fred2"
+	},
+/area/station/crew_quarters/barber_shop)
+"e" = (
+/obj/stool/chair/comfy/barber_chair{
+	dir = 8
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/crew_quarters/barber_shop)
+"f" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/blind_switch/directional/west{
+	pixel_y = 6
+	},
+/obj/machinery/light_switch/directional/west{
+	pixel_y = -5
+	},
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fred2"
+	},
+/area/station/crew_quarters/barber_shop)
+"g" = (
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/crew_quarters/barber_shop)
+"h" = (
+/obj/machinery/manufacturer/gas,
+/turf/simulated/floor/black/grime,
+/area/station/science/storage)
+"i" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/obj/window_blinds/cog2/left,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/barber_shop)
+"k" = (
+/obj/table/auto,
+/obj/item/razor_blade{
+	pixel_x = 6;
+	pixel_y = -2
+	},
+/obj/item/scissors{
+	pixel_y = 9
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/crew_quarters/barber_shop)
+"l" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/science/storage)
+"m" = (
+/obj/machinery/manufacturer/science,
+/turf/simulated/floor/black/grime,
+/area/station/science/storage)
+"n" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	name = "Fire Cuts"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fred2"
+	},
+/area/station/crew_quarters/barber_shop)
+"o" = (
+/obj/stool/chair/comfy/barber_chair,
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/crew_quarters/barber_shop)
+"p" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/obj/window_blinds/cog2/left{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/barber_shop)
+"q" = (
+/obj/machinery/door/airlock/pyro/sci_alt{
+	dir = 4
+	},
+/obj/mapping_helper/access/tox_storage,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/science/storage)
+"r" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/tug_cart,
+/turf/simulated/floor/black/grime,
+/area/station/science/storage)
+"s" = (
+/obj/machinery/vending/jobclothing/research,
+/turf/simulated/floor/black/grime,
+/area/station/science/storage)
+"t" = (
+/obj/machinery/atmospherics/unary/outlet_injector/active,
+/obj/decal/tile_edge/line/black{
+	dir = 10;
+	icon_state = "line2"
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/crew_quarters/barber_shop)
+"u" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/black/grime,
+/area/station/science/storage)
+"v" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/simulated/floor/black/grime,
+/area/station/science/storage)
+"w" = (
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 4;
+	name = "Barbershop Repressurization"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/science/storage)
+"x" = (
+/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/camera/directional/west,
+/turf/simulated/floor/black/grime,
+/area/station/science/storage)
+"y" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/black/grime,
+/area/station/science/storage)
+"z" = (
+/turf/simulated/wall/auto/reinforced/supernorn/colored/purple,
+/area/station/science/storage)
+"A" = (
+/obj/machinery/portable_atmospherics/canister/toxins,
+/turf/simulated/floor/black/grime,
+/area/station/science/storage)
+"B" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/barber_shop)
+"C" = (
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/turf/simulated/floor/black/grime,
+/area/station/science/storage)
+"D" = (
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/disposalpipe/segment/bent/east,
+/turf/simulated/wall/auto/supernorn/colored/purple,
+/area/station/science/storage)
+"E" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/light/incandescent/netural{
+	dir = 4
+	},
+/turf/simulated/floor/black/grime,
+/area/station/science/storage)
+"F" = (
+/obj/machinery/camera/directional/south,
+/turf/simulated/floor/black/grime,
+/area/station/science/storage)
+"G" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/science/storage)
+"H" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/barber_shop)
+"I" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/black/grime,
+/area/station/science/storage)
+"J" = (
+/obj/machinery/door/airlock/pyro/sci_alt,
+/obj/mapping_helper/access/tox_storage,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/black/grime,
+/area/station/science/storage)
+"K" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet{
+	icon_state = "fred2"
+	},
+/area/station/crew_quarters/barber_shop)
+"L" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/crew_quarters/barber_shop)
+"M" = (
+/obj/machinery/light_switch/directional/west,
+/turf/simulated/floor/black/grime,
+/area/station/science/storage)
+"N" = (
+/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/turf/simulated/floor/black/grime,
+/area/station/science/storage)
+"O" = (
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 9
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/incandescent/netural,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/hair_dye_dispenser,
+/turf/simulated/floor/carpet{
+	icon_state = "fred2"
+	},
+/area/station/crew_quarters/barber_shop)
+"P" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/obj/window_blinds/cog2/middle{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/barber_shop)
+"Q" = (
+/obj/table/auto,
+/obj/item/dye_bottle{
+	pixel_x = -4
+	},
+/obj/item/storage/pill_bottle/hairgrownium{
+	pixel_x = 8
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/crew_quarters/barber_shop)
+"R" = (
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+/turf/simulated/floor/black/grime,
+/area/station/science/storage)
+"S" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/trunk/west,
+/obj/machinery/disposal/small/south,
+/turf/simulated/floor/carpet{
+	icon_state = "fred2"
+	},
+/area/station/crew_quarters/barber_shop)
+"T" = (
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
+	},
+/turf/simulated/wall/auto/supernorn/colored/purple,
+/area/station/science/storage)
+"U" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/crew_quarters/barber_shop)
+"V" = (
+/obj/machinery/sink/slim{
+	dir = 4;
+	pixel_x = -9
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fred2"
+	},
+/area/station/crew_quarters/barber_shop)
+"W" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/obj/window_blinds/cog2/right,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/barber_shop)
+"X" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 8;
+	name = "Fire Cuts"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet{
+	icon_state = "fred2"
+	},
+/area/station/crew_quarters/barber_shop)
+"Y" = (
+/turf/simulated/wall/auto/supernorn/colored/purple,
+/area/station/science/storage)
+"Z" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/obj/machinery/firealarm/directional/north,
+/turf/simulated/wall/auto/supernorn/colored/purple,
+/area/station/science/storage)
+
+(1,1,1) = {"
+z
+z
+z
+z
+q
+z
+z
+z
+z
+"}
+(2,1,1) = {"
+z
+N
+x
+M
+G
+C
+C
+m
+z
+"}
+(3,1,1) = {"
+z
+A
+A
+h
+w
+l
+y
+R
+z
+"}
+(4,1,1) = {"
+z
+Y
+Y
+Y
+T
+s
+G
+R
+z
+"}
+(5,1,1) = {"
+n
+f
+V
+c
+D
+Z
+I
+u
+J
+"}
+(6,1,1) = {"
+i
+o
+g
+t
+O
+Y
+r
+F
+z
+"}
+(7,1,1) = {"
+B
+k
+L
+U
+S
+Y
+a
+v
+z
+"}
+(8,1,1) = {"
+W
+Q
+e
+U
+K
+Y
+E
+a
+z
+"}
+(9,1,1) = {"
+b
+H
+P
+p
+X
+z
+z
+z
+z
+"}

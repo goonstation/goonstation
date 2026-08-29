@@ -9,11 +9,11 @@
 			if (O.anchored)
 				continue
 
-			. += src.format_position(O)
+			. += CI.format_position(O)
 
 	for (var/turf/unsimulated/wall/T in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 		for (var/obj/O in T)
 			if (O.anchored)
 				continue
 
-			. += src.format_position(O)
+			. += CI.format_position(O)

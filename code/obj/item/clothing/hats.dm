@@ -1444,6 +1444,12 @@ TYPEINFO(/obj/item/clothing/head/bighat/syndicate)
 	icon_state = "nursehat"
 	item_state = "nursehat"
 
+/obj/item/clothing/head/nursehat/blue
+	name = "nurse hat"
+	desc = "A hat often worn by a nurse. And nurse enthusiasts."
+	icon_state = "nursehat-blue"
+	item_state = "nursehat-blue"
+
 /obj/item/clothing/head/traditionalnursehat
 	name = "Traditional Nurse Hat"
 	desc = "A nurse hat from the past."
@@ -1564,7 +1570,6 @@ TYPEINFO(/obj/item/clothing/head/bighat/syndicate)
 	name = "HoS Hat"
 	icon_state = "hoscap"
 	item_state = "hoscap"
-	c_flags = SPACEWEAR
 	var/folds = 0
 	desc = "Actually, this hat is from a fast-food restaurant, that's why it folds like it was made of paper."
 	setupProperties()

@@ -140,6 +140,9 @@
 	spawn_contents = list(/obj/item/storage/box/starter)
 	satchel_variant = /obj/item/storage/backpack/satchel/NT
 
+	ERT
+		spawn_contents = list(/obj/item/storage/box/starternt)
+
 /obj/item/storage/backpack/syndie
 	name = "\improper Syndicate backpack"
 	desc = "A stylish red, evil, thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on an operative's back."
@@ -501,6 +504,9 @@
 	icon_state = "NTsatchel"
 	item_state = "NTsatchel"
 	spawn_contents = list(/obj/item/storage/box/starter)
+
+	ERT
+		spawn_contents = list(/obj/item/storage/box/starternt)
 
 /obj/item/storage/backpack/satchel/captain
 	name = "Captain's Satchel"
@@ -1116,7 +1122,6 @@
 		spawn_contents = list(/obj/item/gun/energy/cornicen3,
 		/obj/item/old_grenade/energy_frag = 2,
 		/obj/item/old_grenade/energy_concussion = 2,
-		/obj/item/tank/pocket/extended/oxygen,
 		/obj/item/reagent_containers/food/snacks/donkpocket/warm)
 
 	baton

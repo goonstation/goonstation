@@ -1,5 +1,5 @@
 /datum/dwaine_syscall/dlist
-	id = DWAINE_COMMAND_DLIST
+	id = DWAINE::SYSCALL::DLIST
 
 /datum/dwaine_syscall/dlist/execute(sendid, list/data, datum/computer/file/file)
 	var/list/driver_list = list()
@@ -27,6 +27,6 @@
 		driver_list["[D.name]"] = D.status
 
 	if (!length(driver_list))
-		return ESIG_GENERIC
+		return DWAINE::ERR::SIG::GENERIC
 
 	return driver_list

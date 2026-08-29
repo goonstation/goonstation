@@ -557,6 +557,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 			src.recipes += new /datum/recipe/rice_bowl(src)
 			src.recipes += new /datum/recipe/flan(src)
 			src.recipes += new /datum/recipe/yuck(src)
+			src.recipes += new /datum/recipe/bowl_of_dulce_de_leche(src)
 
 			// store the list for later
 			oven_recipes = src.recipes

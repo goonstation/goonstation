@@ -42,6 +42,8 @@ TYPEINFO(/obj/machinery/power/tracker)
 		id = "small_backup3"
 	small_backup4
 		id = "small_backup4"
+	asylum
+		id = "asylum"
 	diner
 		id = "diner"
 	silverglass
@@ -130,6 +132,8 @@ TYPEINFO(/obj/machinery/power/solar)
 		id = "small_backup3"
 	small_backup4
 		id = "small_backup4"
+	asylum
+		id = "asylum"
 	diner
 		id = "diner"
 	silverglass
@@ -285,6 +289,8 @@ TYPEINFO(/obj/machinery/power/solar)
 		solar_id = "small_backup3"
 	small_backup4
 		solar_id = "small_backup4"
+	asylum
+		id = "asylum"
 	diner
 		solar_id = "diner"
 	silverglass

@@ -303,7 +303,7 @@ var/list/access_all_actually = null
 		return
 
 	access_name_lookup = list()
-	var/list/accesses = get_all_accesses()
+	var/list/accesses = get_all_accesses() | access_armory | access_maxsec
 	for (var/accessNum in accesses)
 		access_name_lookup += "[get_access_desc(accessNum)]"
 

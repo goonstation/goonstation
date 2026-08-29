@@ -23,7 +23,6 @@ If these features do not work in the current codebase then your map PR will be *
 - Crates should be able to be ordered and sold from cargo, and arrive where expected **without player intervention**. Sitting in a few-tile conveyor "airlock"  is fine, when waiting to come in or out (see Destiny), sitting outside/inside because the door did not open at all is not; missing the conveyor entirely is definitely not fine.
 - **Access levels** (for both doors and machinery, e.g. NanoMeds, AI turrets) should be correct. Missing a small handful is acceptable, but if excess access levels are incorrect (at the coders' discretion) the map will be rejected. Using the new access_spawn objects is required. :door: 
 - Wiring and pipes (disposals, mail, brig, and morgue/crematorium, if present) should be **complete and error-free** for the most part. Obviously, it is okay if you are missing a single wire or something.
-    - Note to above: SpyGuy and Haine made a wonderful tool to test disposal networks, it is included in the maps/ folder.
 - The disposals crusher blast door should be **closed** at round start (i.e. anything put down disposals at round start should not be crushed without someone opening the door).
 - **All areas** on station should be powered. APCs should be able to be charging if the appropriate SMES are set to output. :control_knobs:
 - Networked equipment should be **functional**. Specifically: telescience teleporter, communications consoles/dishes.

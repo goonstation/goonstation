@@ -2108,3 +2108,11 @@ ABSTRACT_TYPE(/datum/recipe/sandwich)
 	recipe_instructions = list(/datum/recipe_instructions/cooking/oven/pigblanket)
 	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/dough_strip = 1, /obj/item/reagent_containers/food/snacks/hotdog_half =1)
 	output = /obj/item/reagent_containers/food/snacks/pigblanket
+
+/datum/recipe/bowl_of_dulce_de_leche
+	recipe_instructions = list(/datum/recipe_instructions/cooking/oven/bowl_of_dulce_de_leche)
+	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1,
+	/obj/item/reagent_containers/food/drinks/milk = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/vanilla_extract = 1,
+	/obj/item/reagent_containers/food/drinks/bowl = 1)
+	output = /obj/item/reagent_containers/food/snacks/bowl_of_dulce_de_leche

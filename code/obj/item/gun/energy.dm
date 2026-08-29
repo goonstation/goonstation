@@ -1734,6 +1734,15 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 		set_current_projectile(new/datum/projectile/energy_bolt/pulse)//uses 35PU per shot, so 8 shots
 		projectiles = list(new/datum/projectile/energy_bolt/pulse, new/datum/projectile/energy_bolt/electromagnetic_pulse)
 
+	emag_act(mob/user, obj/item/card/emag/E)
+		if(locate(/datum/projectile/energy_bolt/pulse/pull) in src.projectiles)
+			return
+		boutput(user, SPAN_NOTICE("You run [E] over [src], reversing the polarity!"))
+		var/pullse_projectile = new/datum/projectile/energy_bolt/pulse/pull
+		src.set_current_projectile(pullse_projectile)
+		var/datum/projectile/energy_bolt/electromagnetic_pulse/emp_projectile = locate() in src.projectiles
+		src.projectiles = list(pullse_projectile, emp_projectile)
+
 
 ///////////////////////////////////////Wasp Gun
 TYPEINFO(/obj/item/gun/energy/wasp)

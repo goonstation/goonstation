@@ -24,7 +24,7 @@
 	var/list/list/lone_IDs = blind_IDs ^ switch_IDs
 	for (var/id in lone_IDs)
 		for (var/obj/O as anything in lone_IDs[id])
-			. += "[src.format_position(O)] has ID \"[id]\", but no associated [istype(O, /obj/window_blinds) ? "switch" : "blinds"]"
+			. += "[CI.format_position(O)] has ID \"[id]\", but no associated [istype(O, /obj/window_blinds) ? "switch" : "blinds"]"
 
 
 SET_UP_CI_TRACKING(/obj/window_blinds)

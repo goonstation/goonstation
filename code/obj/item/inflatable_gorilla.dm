@@ -29,12 +29,14 @@
 	var/matrix/original_transform = mob_instance.transform
 	mob_instance.transform = matrix(mob_instance.transform, 0.1,0.1, MATRIX_SCALE)
 
-	animate(mob_instance, transform = original_transform, time = 5 SECONDS)
+	animate(mob_instance, transform = original_transform, time = 5 SECONDS, flags = ANIMATION_END_NOW)
 	SPAWN(1 SECOND) //the longest sound effect I could find is still sliiightly too short
 		playsound(mob_instance, 'sound/effects/inflate.ogg', 50, 1)
 	SPAWN(5 SECONDS)
 		REMOVE_ATOM_PROPERTY(mob_instance, PROP_MOB_CANTMOVE, src)
 		mob_instance.ai?.enable()
+		if(mob_instance.material)
+			mob_instance.setMaterial(src.material) // May have broken material animations
 		tank.set_loc(get_turf(mob_instance))
 		qdel(src)
 

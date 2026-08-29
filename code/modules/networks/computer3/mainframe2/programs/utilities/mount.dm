@@ -30,7 +30,7 @@
 		mainframe_prog_exit
 		return
 
-	if (src.signal_program(1, list("command" = DWAINE_COMMAND_MOUNT, "id" = driver_id, "link" = mount_name)) != ESIG_SUCCESS)
+	if (src.signal_program(1, list("command" = DWAINE::SYSCALL::MOUNT, "id" = driver_id, "link" = mount_name)) != DWAINE::ERR::SIG::SUCCESS)
 		src.message_user("Error: Could not mount filesystem.")
 
 	mainframe_prog_exit

@@ -1,0 +1,264 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/space,
+/area/station/engine/inner{
+	name = "Transception Array Control"
+	})
+"b" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/station/engine/inner{
+	name = "Transception Array Control"
+	})
+"e" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/station/engine/inner{
+	name = "Transception Array Control"
+	})
+"g" = (
+/obj/mesh/catwalk,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/station/engine/inner{
+	name = "Transception Array Control"
+	})
+"h" = (
+/obj/mesh/catwalk,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/station/engine/inner{
+	name = "Transception Array Control"
+	})
+"p" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/station/engine/inner{
+	name = "Transception Array Control"
+	})
+"q" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/station/engine/inner{
+	name = "Transception Array Control"
+	})
+"r" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/glass/engineering,
+/obj/mapping_helper/access/cargo,
+/obj/forcefield/energyshield/perma/doorlink,
+/turf/simulated/floor/plating,
+/area/station/engine/inner{
+	name = "Transception Array Control"
+	})
+"w" = (
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/station/engine/inner{
+	name = "Transception Array Control"
+	})
+"y" = (
+/obj/mesh/catwalk,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/station/engine/inner{
+	name = "Transception Array Control"
+	})
+"D" = (
+/obj/machinery/communications_dish/transception,
+/obj/mesh/catwalk,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/station/engine/inner{
+	name = "Transception Array Control"
+	})
+"G" = (
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/cargo,
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner{
+	name = "Transception Array Control"
+	})
+"O" = (
+/obj/mesh/catwalk,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/station/engine/inner{
+	name = "Transception Array Control"
+	})
+"S" = (
+/obj/machinery/door/airlock/pyro/glass/engineering,
+/obj/mapping_helper/access/cargo,
+/obj/forcefield/energyshield/perma/doorlink,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner{
+	name = "Transception Array Control"
+	})
+"U" = (
+/obj/mesh/catwalk,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/station/engine/inner{
+	name = "Transception Array Control"
+	})
+"V" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/plating,
+/area/station/engine/inner{
+	name = "Transception Array Control"
+	})
+"Z" = (
+/turf/simulated/wall/auto/supernorn/colored/yellow,
+/area/station/engine/inner{
+	name = "Transception Array Control"
+	})
+
+(1,1,1) = {"
+Z
+Z
+V
+Z
+G
+Z
+V
+Z
+Z
+"}
+(2,1,1) = {"
+Z
+a
+a
+a
+y
+a
+a
+a
+Z
+"}
+(3,1,1) = {"
+V
+a
+a
+q
+y
+p
+a
+a
+V
+"}
+(4,1,1) = {"
+Z
+a
+q
+w
+D
+O
+p
+a
+Z
+"}
+(5,1,1) = {"
+S
+U
+U
+U
+h
+g
+U
+U
+r
+"}
+(6,1,1) = {"
+Z
+a
+e
+w
+y
+w
+b
+a
+Z
+"}
+(7,1,1) = {"
+V
+a
+a
+e
+y
+b
+a
+a
+V
+"}
+(8,1,1) = {"
+Z
+a
+a
+a
+y
+a
+a
+a
+Z
+"}
+(9,1,1) = {"
+Z
+Z
+V
+Z
+G
+Z
+V
+Z
+Z
+"}

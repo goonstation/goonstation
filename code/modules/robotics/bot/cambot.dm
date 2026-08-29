@@ -323,6 +323,9 @@
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/prox_sensor))
 			var/obj/machinery/bot/cambot/B = new /obj/machinery/bot/cambot(get_turf(src))
+			B.setMaterial(src.material)
+			B.forensic_holder = src.forensic_holder
+			W.forensic_holder.copy_to(src.forensic_holder)
 			B.name = src.created_name
 			user.u_equip(W)
 			user.u_equip(src)

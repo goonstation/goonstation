@@ -500,6 +500,17 @@
 
 /////////////////////////////////////////
 
+/turf/unsimulated/floor/lightyellow
+	icon_state = "fulllyellow"
+
+/turf/unsimulated/floor/lightyellow/side
+	icon_state = "lyellow"
+
+/turf/unsimulated/floor/lightyellow/corner
+	icon_state = "lyellowcorner"
+
+/////////////////////////////////////////
+
 /turf/unsimulated/floor/orange
 	icon_state = "fullorange"
 
@@ -508,6 +519,23 @@
 
 /turf/unsimulated/floor/orange/corner
 	icon_state = "orangecorner"
+
+/turf/unsimulated/floor/orange/checker
+	icon_state = "orangechecker"
+
+
+/turf/unsimulated/floor/orangeblack
+	icon_state = "orangeblack"
+
+/turf/unsimulated/floor/orangeblack/corner
+	icon_state = "orangeblackcorner"
+
+
+/turf/unsimulated/floor/orangewhite
+	icon_state = "orangewhite"
+
+/turf/unsimulated/floor/orangewhite/corner
+	icon_state = "orangewhitecorner"
 
 /////////////////////////////////////////
 

@@ -1,5 +1,9 @@
 ///This amount of potential target locations are picked, up to every defined plant spot for the map
+#ifdef MAP_OVERRIDE_PROBSTATION
+#define AMOUNT_OF_VALID_NUKE_PLANT_LOCATIONS 3
+#else
 #define AMOUNT_OF_VALID_NUKE_PLANT_LOCATIONS 2
+#endif
 
 var/global/list/nuke_op_color_matrix = list("#394470","#c65039", "#63662c")
 var/global/list/nuke_op_camo_matrix = null
@@ -104,17 +108,6 @@ var/global/list/nuke_op_camo_matrix = null
 			"the EVA storage" = list(/area/station/ai_monitored/storage/eva),
 			"the artifact lab" = list(/area/station/science/artifact),
 			"the robotics lab" = list(/area/station/medical/robotics))
-
-		else if (ismap ("DONUT2"))
-			target_locations = list("the cargo bay (QM)" = list(/area/station/quartermaster/office),
-			"the public market" = list(/area/station/crew_quarters/market),
-			"the stock exchange" = list(/area/station/crew_quarters/stockex),
-			"the chapel" = list(/area/station/chapel/sanctuary),
-			"the bridge" = list(/area/station/bridge),
-			"the crew lounge" = list(/area/station/crew_quarters/quarters),
-			"the main brig area" = list(/area/station/security/brig),
-			"the main station pod bay" = list(/area/station/hangar/main))
-
 
 		else // COG1
 			target_locations = list("the main security room" = list(/area/station/security/main),

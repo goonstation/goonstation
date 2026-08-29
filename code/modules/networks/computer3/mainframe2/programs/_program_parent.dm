@@ -162,15 +162,15 @@
 /// Instruct the parent task to pass an output string to the user terminal, with optional render options. This allows for piping operations.
 /datum/computer/file/mainframe_program/proc/message_user(msg, render, file)
 	if (!src.useracc)
-		return ESIG_NOTARGET
+		return DWAINE::ERR::SIG::NOTARGET
 
 	if (src.parent_task)
 		if (render)
-			return src.signal_program(src.parent_task.progid, list("command" = DWAINE_COMMAND_MSG_TERM, "data" = msg, "term" = src.useracc.user_id, "render" = render), file)
+			return src.signal_program(src.parent_task.progid, list("command" = DWAINE::SYSCALL::MSG_TERM, "data" = msg, "term" = src.useracc.user_id, "render" = render), file)
 		else
-			return src.signal_program(src.parent_task.progid, list("command" = DWAINE_COMMAND_MSG_TERM, "data" = msg, "term" = src.useracc.user_id), file)
+			return src.signal_program(src.parent_task.progid, list("command" = DWAINE::SYSCALL::MSG_TERM, "data" = msg, "term" = src.useracc.user_id), file)
 
-	return ESIG_GENERIC
+	return DWAINE::ERR::SIG::GENERIC
 
 /// Read a field from the current user's user file.
 /datum/computer/file/mainframe_program/proc/read_user_field(field)
@@ -229,7 +229,7 @@
 	if (!istype(target) || !islist(target.metadata))
 		return FALSE
 
-	var/permissions = COMP_ALLACC
+	var/permissions = DWAINE::PERM::DEFAULT::ALLACCESS
 	if (isnum(target.metadata["permission"]))
 		permissions = target.metadata["permission"]
 
@@ -239,13 +239,13 @@
 		if (user.user_file.fields["group"] == 0)
 			return TRUE
 
-		if (target.metadata["owner"] && (user.user_file.fields["name"] == target.metadata["owner"]) && (permissions & COMP_ROWNER))
+		if (target.metadata["owner"] && (user.user_file.fields["name"] == target.metadata["owner"]) && (permissions & DWAINE::PERM::BIT::OWNER_READ))
 			return TRUE
 
-		if (target.metadata["group"] && (user.user_file.fields["group"] == target.metadata["group"]) && (permissions & COMP_RGROUP))
+		if (target.metadata["group"] && (user.user_file.fields["group"] == target.metadata["group"]) && (permissions & DWAINE::PERM::BIT::GROUP_READ))
 			return TRUE
 
-	return (permissions & COMP_ROTHER)
+	return (permissions & DWAINE::PERM::BIT::OTHER_READ)
 
 /// Check that the specified user has the required permissions to write to the target file or folder.
 /datum/computer/file/mainframe_program/proc/check_write_permission(datum/computer/target, datum/mainframe2_user_data/user)
@@ -260,7 +260,7 @@
 	if (!istype(target) || !islist(target.metadata))
 		return FALSE
 
-	var/permissions = COMP_ALLACC
+	var/permissions = DWAINE::PERM::DEFAULT::ALLACCESS
 	if (isnum(target.metadata["permission"]))
 		permissions = target.metadata["permission"]
 
@@ -270,13 +270,13 @@
 		if (user.user_file.fields["group"] == 0)
 			return TRUE
 
-		if (target.metadata["owner"] && (user.user_file.fields["name"] == target.metadata["owner"]) && (permissions & COMP_WOWNER))
+		if (target.metadata["owner"] && (user.user_file.fields["name"] == target.metadata["owner"]) && (permissions & DWAINE::PERM::BIT::OWNER_WRITE))
 			return TRUE
 
-		if (target.metadata["group"] && (user.user_file.fields["group"] == target.metadata["group"]) && (permissions & COMP_WGROUP))
+		if (target.metadata["group"] && (user.user_file.fields["group"] == target.metadata["group"]) && (permissions & DWAINE::PERM::BIT::GROUP_WRITE))
 			return TRUE
 
-		return (permissions & COMP_WOTHER)
+		return (permissions & DWAINE::PERM::BIT::OTHER_WRITE)
 
 	return FALSE
 
@@ -293,7 +293,7 @@
 	if (!istype(target) || !islist(target.metadata))
 		return FALSE
 
-	var/permissions = COMP_ALLACC
+	var/permissions = DWAINE::PERM::DEFAULT::ALLACCESS
 	if (isnum(target.metadata["permission"]))
 		permissions = target.metadata["permission"]
 
@@ -303,13 +303,13 @@
 		if (user.user_file.fields["group"] == 0)
 			return TRUE
 
-		if (target.metadata["owner"] && (user.user_file.fields["name"] == target.metadata["owner"]) && (permissions & COMP_DOWNER) && (permissions & COMP_WOWNER))
+		if (target.metadata["owner"] && (user.user_file.fields["name"] == target.metadata["owner"]) && (permissions & DWAINE::PERM::BIT::OWNER_EXECUTE) && (permissions & DWAINE::PERM::BIT::OWNER_WRITE))
 			return TRUE
 
-		if (target.metadata["group"] && (user.user_file.fields["group"] == target.metadata["group"]) && (permissions & COMP_DGROUP) && (permissions & COMP_WGROUP))
+		if (target.metadata["group"] && (user.user_file.fields["group"] == target.metadata["group"]) && (permissions & DWAINE::PERM::BIT::GROUP_EXECUTE) && (permissions & DWAINE::PERM::BIT::GROUP_WRITE))
 			return TRUE
 
-		return ((permissions & COMP_DOTHER) && (permissions & COMP_WOTHER))
+		return ((permissions & DWAINE::PERM::BIT::OTHER_EXECUTE) && (permissions & DWAINE::PERM::BIT::OTHER_WRITE))
 
 	return FALSE
 

@@ -1,5 +1,5 @@
 ABSTRACT_TYPE(/mob/living/critter)
-ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_attack, proc/admincmd_reset_task)
+ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_attack, proc/admincmd_reset_task, proc/add_hand_admin, proc/remove_hand_admin)
 /mob/living/critter
 	name = "critter"
 	desc = "A beastie!"
@@ -141,13 +141,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 
 	..()
 
-	hud = new custom_hud_type(src)
-	src.attach_hud(hud)
-	src.zone_sel = new(src, "CENTER[hud.next_right()], SOUTH")
-	src.zone_sel.change_hud_style('icons/mob/hud_human.dmi')
-
-	if (src.stamina_bar)
-		hud.add_object(src.stamina_bar, initial(src.stamina_bar.layer), "EAST-1, NORTH")
+	src.init_hud()
 
 	health_update_queue |= src
 
@@ -1077,6 +1071,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 			u_equip(I)
 
 /mob/living/critter/empty_hands()
+	..()
 	for (var/datum/handHolder/HH in hands)
 		if (HH.item)
 			if (!HH.item.qdeled && !HH.item.disposed && istype(HH.item, /obj/item/grab))
@@ -1193,7 +1188,13 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 					else
 						message = "<b>[src]</B> does a flip!"
 						animate_spin(src, pick("L", "R"), 1, 0)
-
+				src.drop_juggle()
+			if ("juggle")
+				if (src.can_juggle && src.emote_check(voluntary, 25))
+					if(!src.juggle_emote())
+						m_type = 1
+						message = "<B>[src]</B> wiggles [his_or_her(src)] fingers a bit.[prob(10) ? " Weird." : null]"
+						maptext_out = "<I>wiggles [his_or_her(src)] fingers a bit.</I>"
 	if (!message)
 		return
 
@@ -1621,6 +1622,65 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 
 /mob/living/critter/has_genetics()
 	return has_genes
+
+/mob/living/critter/proc/add_hand_admin()
+	set name = "Add hand"
+	var/pickable_states = list()
+	for (var/icon_state in ICON.get_icon_states('icons/mob/critter_hands.dmi'))
+		if (copytext(icon_state, -1) in list("1", "0"))
+			pickable_states |= copytext(icon_state, 1, length(icon_state))
+	var/list/data = usr.client.get_proccall_arglist(list(
+		ARG_INFO("limb_type", DATA_INPUT_LIST_PROVIDED, "Limb type", concrete_typesof(/datum/limb)),
+		ARG_INFO("icon_state", DATA_INPUT_LIST_PROVIDED, "Icon state from critter_hands.dmi", pickable_states),
+		ARG_INFO("range_attack", DATA_INPUT_BOOL, "Can range attack?", FALSE), //why isn't this defined on the limbs??
+		ARG_INFO("name", DATA_INPUT_TEXT, "Name", "hand"),
+	))
+	src.add_hand(arglist(data))
+
+/mob/living/critter/proc/add_hand(limb_type, icon_state, range_attack = FALSE, name = "hand")
+	var/datum/handHolder/HH = new()
+	HH.limb = new limb_type()
+	HH.icon = 'icons/mob/critter_hands.dmi'
+	HH.icon_state = icon_state
+	HH.can_range_attack = range_attack
+	HH.limb_name = name
+	HH.name = name
+	src.hands += HH
+	HH.spawn_dummy_holder()
+	//after many hours of careful study I have divined that the best way to update this godforsaken HUD is to delete it and rebuild it from scratch
+	qdel(src.hud)
+	qdel(src.zone_sel)
+	src.init_hud()
+
+/mob/living/critter/proc/remove_hand_admin()
+	set name = "Remove hand"
+	var/list/options = list()
+	for (var/datum/handHolder/HH as anything in src.hands)
+		options += HH.limb.type
+	var/chosen = tgui_input_list(usr, "Hand to remove", "Removing hand", options)
+	if (!chosen)
+		return
+	for (var/datum/handHolder/HH as anything in src.hands)
+		if (HH.limb.type == chosen)
+			src.remove_hand(HH)
+			return
+
+/mob/living/critter/proc/remove_hand(datum/handHolder/hand)
+	src.hands -= hand
+	qdel(hand)
+	qdel(src.hud)
+	qdel(src.zone_sel)
+	src.init_hud()
+
+/mob/living/critter/proc/init_hud()
+	src.hud = new custom_hud_type(src)
+	src.attach_hud(hud)
+
+	src.zone_sel = new(src, "CENTER[src.hud.next_right()], SOUTH")
+	src.zone_sel.change_hud_style('icons/mob/hud_human.dmi')
+
+	if (src.stamina_bar)
+		hud.add_object(src.stamina_bar, initial(src.stamina_bar.layer), "EAST-1, NORTH")
 
 ABSTRACT_TYPE(/mob/living/critter/robotic)
 /// Parent for robotic critters. Handles some traits that robots should have- damaged by EMPs, immune to fire and rads

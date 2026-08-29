@@ -130,6 +130,10 @@
 			else // 1mil bby
 				src.icon_state = "cashrbow"
 
+	one
+		default_min_amount = 1
+		default_max_amount = 1
+
 	five
 		default_min_amount = 5
 		default_max_amount = 5

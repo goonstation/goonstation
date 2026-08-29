@@ -86,7 +86,7 @@
 		inventory_counter.update_number(fakeshots)
 
 	pixelaction(atom/target, params, mob/user, reach)
-		if(target.loc != user)
+		if(target.loc != user && !(reach && target.storage)) //don't blow people's brains out for trying to put this in a bag
 			if(src.fire_gun(user))
 				user.show_text("That gun DID look a bit dodgy, after all!", "red")
 				user.playsound_local(user, 'sound/musical_instruments/Trombone_Failiure.ogg', 50, 1)

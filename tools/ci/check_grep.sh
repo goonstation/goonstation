@@ -25,7 +25,7 @@ if grep -P 'step_[xy]' assets/maps/**/*.dmm maps/**/*.dmm;	then
     st=1
 fi;
 
-if grep -P '^\/area(?!\/dmm_suite\/clear_area)' assets/maps/random_rooms/**/*.dmm; then
+if grep -R --exclude-dir=probstation -P '^\/area(?!\/dmm_suite\/clear_area)' assets/maps/random_rooms/; then
     echo "ERROR: random room uses non '/area/dmm_suite/clear' area"
     st=1
 fi;

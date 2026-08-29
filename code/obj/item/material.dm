@@ -25,8 +25,9 @@
 
 	New()
 		..()
-		src.pixel_x = rand(0 - wiggle, wiggle)
-		src.pixel_y = rand(0 - wiggle, wiggle)
+		if(wiggle)
+			src.pixel_x = rand(0 - wiggle, wiggle)
+			src.pixel_y = rand(0 - wiggle, wiggle)
 		setup_material()
 		if(src.material?.getName())
 			initial_material_name = src.material.getName()
@@ -734,7 +735,7 @@
 	stamina_crit_chance = 35
 	burn_possible = FALSE
 	event_handler_flags = USE_FLUID_ENTER
-	material_amt = 0.1
+	material_amt = MATERIAL::AMOUNT::SHEET
 	material_name = "Glass"
 	default_material = "glass"
 	mat_changename = TRUE

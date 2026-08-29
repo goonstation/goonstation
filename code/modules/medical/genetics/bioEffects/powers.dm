@@ -643,6 +643,11 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 				return
 			src.remove_effects(user)
 
+	disposing()
+		if (!QDELETED(src.holder) && !QDELETED(src.holder.owner))
+			src.remove_effects(src.holder.owner)
+		. = ..()
+
 	proc/remove_effects(mob/user)
 		UnregisterSignal(user, COMSIG_MOVABLE_SET_LOC)
 		REMOVE_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "xray_gene")
@@ -2089,10 +2094,10 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 
 		var/mob/living/L = owner
 		if (which_way == 1)
-			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src, INVIS_MESON)
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY_CLOAK, src, INVIS_MESON)
 			L.UpdateOverlays(overlay_image, id)
 		else
-			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY_CLOAK, src)
 			L.UpdateOverlays(null, id)
 
 	OnAdd()
@@ -2184,7 +2189,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		if (isliving(owner))
 			var/mob/living/L = owner
 			L.UpdateOverlays(null, id)
-			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY_CLOAK, src)
 		if (src.active)
 			src.UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_ATTACKED_PRE))
 		return
@@ -2196,14 +2201,14 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			var/mob/living/L = owner
 			if (TIME - last_moved >= 3 SECONDS && can_act(owner))
 				L.UpdateOverlays(overlay_image, id)
-				APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src, INVIS_MESON)
+				APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY_CLOAK, src, INVIS_MESON)
 
 	proc/decloak()
 		if(isliving(owner))
 			var/mob/living/L = owner
 			last_moved = TIME
 			L.UpdateOverlays(null, id)
-			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY_CLOAK, src)
 
 /datum/targetable/geneticsAbility/chameleon
 	name = "Chameleon"

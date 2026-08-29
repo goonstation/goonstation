@@ -2,11 +2,11 @@
 	name = list("man", "help")
 
 /datum/dwaine_shell_builtin/man/execute(list/command_list, list/piped_list)
-	var/datum/computer/file/record/help_record = src.shell.signal_program(1, list("command" = DWAINE_COMMAND_CONFGET, "fname" = "help"))
+	var/datum/computer/file/record/help_record = src.shell.signal_program(1, list("command" = DWAINE::SYSCALL::CONFGET, "fname" = "help"))
 
 	if (!istype(help_record))
 		src.shell.message_user("Error: Help library missing or invalid.")
-		return BUILTIN_SUCCESS
+		return DWAINE::ERR::SHELL::BUILTIN::SUCCESS
 
 	var/target_entry = "index"
 	if (length(command_list) && ckey(command_list[1]))
@@ -17,4 +17,4 @@
 	else
 		src.shell.message_user("Error: Unknown topic.")
 
-	return BUILTIN_SUCCESS
+	return DWAINE::ERR::SHELL::BUILTIN::SUCCESS

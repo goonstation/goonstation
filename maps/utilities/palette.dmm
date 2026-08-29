@@ -334,7 +334,7 @@
 /turf/simulated/floor/black,
 /area/space)
 "bi" = (
-/obj/machinery/disposal/mail/autoname,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/segment/auto/mail,
 /turf/simulated/floor,
 /area/space)
@@ -1949,10 +1949,7 @@
 /turf/simulated/floor/plating/random,
 /area/space)
 "id" = (
-/obj/disposalpipe/switch_junction/right/north{
-	mail_tag = "place";
-	name = "Mail Junction - place"
-	},
+/obj/disposalpipe/switch_junction/right/north,
 /turf/simulated/floor/yellow,
 /area/space)
 "if" = (
@@ -3363,7 +3360,7 @@
 /turf/simulated/floor,
 /area/space)
 "nq" = (
-/turf/simulated/floor/airless/orange,
+/turf/simulated/floor/airless/lightyellow,
 /area/space)
 "ns" = (
 /turf/simulated/floor/carpet/green/fancy/junction/nw_s,
@@ -4609,10 +4606,7 @@
 /turf/simulated/floor/plating/random,
 /area/space)
 "sk" = (
-/obj/disposalpipe/switch_junction/left/west{
-	mail_tag = "place";
-	name = "Mail Junction - place"
-	},
+/obj/disposalpipe/switch_junction/left/west,
 /turf/simulated/floor/yellow,
 /area/space)
 "sm" = (
@@ -4714,10 +4708,7 @@
 	},
 /area/space)
 "sD" = (
-/obj/disposalpipe/switch_junction/right/east{
-	mail_tag = "place";
-	name = "Mail Junction - place"
-	},
+/obj/disposalpipe/switch_junction/right/east,
 /turf/simulated/floor/yellow,
 /area/space)
 "sE" = (
@@ -6310,10 +6301,7 @@
 	},
 /area/space)
 "yZ" = (
-/obj/disposalpipe/switch_junction/right/west{
-	mail_tag = "place";
-	name = "Mail Junction - place"
-	},
+/obj/disposalpipe/switch_junction/right/west,
 /turf/simulated/floor/yellow,
 /area/space)
 "za" = (
@@ -6724,10 +6712,7 @@
 /turf/simulated/floor,
 /area/space)
 "AE" = (
-/obj/disposalpipe/switch_junction/left/south{
-	mail_tag = "place";
-	name = "Mail Junction - place"
-	},
+/obj/disposalpipe/switch_junction/left/south,
 /turf/simulated/floor/yellow,
 /area/space)
 "AH" = (
@@ -8697,10 +8682,7 @@
 	},
 /area/space)
 "Jm" = (
-/obj/disposalpipe/switch_junction/left/north{
-	mail_tag = "place";
-	name = "Mail Junction - place"
-	},
+/obj/disposalpipe/switch_junction/left/north,
 /turf/simulated/floor/yellow,
 /area/space)
 "Jq" = (
@@ -9950,10 +9932,7 @@
 /turf/simulated/floor/carpet/green/fancy/innercorner/se_triple,
 /area/space)
 "Oh" = (
-/obj/disposalpipe/switch_junction/left/east{
-	mail_tag = "place";
-	name = "Mail Junction - place"
-	},
+/obj/disposalpipe/switch_junction/left/east,
 /turf/simulated/floor/yellow,
 /area/space)
 "Oi" = (

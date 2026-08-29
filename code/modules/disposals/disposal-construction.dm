@@ -182,7 +182,7 @@
 						src.mail_tag.Remove(to_remove)
 			return
 		var/turf/T = src.loc
-		if(T.intact && (iswrenchingtool(I) || isweldingtool(I))) //to stop it from screaming about it when rotating the pipe with crowbar
+		if(T.intact && !istype(T, /turf/space) && (iswrenchingtool(I) || isweldingtool(I))) //to stop it from screaming about it when rotating the pipe with crowbar
 			boutput(user, "You can only attach the pipe if the floor plating is removed.")
 			return
 

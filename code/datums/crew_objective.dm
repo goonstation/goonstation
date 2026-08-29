@@ -161,14 +161,14 @@ ABSTRACT_TYPE(/datum/objective/crew/chiefengineer)
 					break
 			return check_result
 /datum/objective/crew/chiefengineer/ptl
-	explanation_text = "Earn at least a million credits via the PTL."
+	explanation_text = "Earn at least one hundred thousand credits via the PTL."
 	medal_name = "1.21 Jiggawatts"
 	var/static/check_result = null
 	check_completion()
 		if(isnull(check_result))
 			check_result = FALSE
 			for(var/obj/machinery/power/pt_laser/P in machine_registry[MACHINES_POWER])
-				if(P.lifetime_earnings >= 1 MEGA)
+				if(P.lifetime_earnings >= 100 KILO)
 					check_result = TRUE
 		return check_result
 

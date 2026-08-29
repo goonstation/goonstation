@@ -24,7 +24,8 @@ ABSTRACT_TYPE(/obj/item/roboupgrade)
 /obj/item/roboupgrade/proc/upgrade_activate(mob/living/silicon/robot/user)
 	if (!user)
 		return ROBOT_UPGRADE_FAIL_DISABLED
-	if(user.hasStatus("upgrade_disabled") || user.hasStatus("lockdown_robot") || user.hasStatus("no_cell_robot"))
+	var/datum/statusEffect/lockdown/lockdown_effect = user.hasStatus("lockdown_robot")
+	if(user.hasStatus("upgrade_disabled") || (lockdown_effect && !lockdown_effect.fake) || user.hasStatus("no_cell_robot"))
 		boutput(user, SPAN_ALERT("Your modules are currently disabled!"))
 		return ROBOT_UPGRADE_FAIL_DISABLED
 	if(user.hasStatus("low_power_robot") ||  user.hasStatus("no_power_robot"))

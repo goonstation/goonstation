@@ -608,6 +608,7 @@ var/global/in_replace_with = 0
 
 /turf/proc/ReplaceWith(what, keep_old_material = 0, handle_air = 1, handle_dir = 0, force = 0)
 	var/new_type = ispath(what) ? what : text2path(what)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_TURF_REPLACED, src, what)
 
 	if(ispath(new_type, /turf/variableTurf))
 		var/typeinfo/turf/variableTurf/typeinfo = get_type_typeinfo(new_type)
@@ -697,7 +698,7 @@ var/global/in_replace_with = 0
 	var/old_process_cell_operations = src.process_cell_operations
 #endif
 
-	var/old_comp_lookup = src.comp_lookup
+	var/old_signal_listeners = src.signal_listeners
 
 	if (new_type)
 		if(ispath(new_type, /turf/space) && !ispath(new_type, /turf/space/fluid) && delay_space_conversion()) return
@@ -806,25 +807,25 @@ var/global/in_replace_with = 0
 	new_turf.process_cell_operations = old_process_cell_operations
 #endif
 
-	//combine the old comp_lookup with the new one because turfs sometimes register signals in New
-	if (!src.comp_lookup)
-		src.comp_lookup = old_comp_lookup
+	//combine the old signal_listeners with the new one because turfs sometimes register signals in New
+	if (!src.signal_listeners)
+		src.signal_listeners = old_signal_listeners
 	else
-		for (var/signal_type in old_comp_lookup)
+		for (var/signal_type in old_signal_listeners)
 			//nothing there, just copy the old one
-			if (!src.comp_lookup[signal_type])
-				src.comp_lookup[signal_type] = old_comp_lookup[signal_type]
+			if (!src.signal_listeners[signal_type])
+				src.signal_listeners[signal_type] = old_signal_listeners[signal_type]
 			//it's a list, append (this is byond so it shouldn't matter if the old one was a list or not)
-			else if (islist(comp_lookup[signal_type]))
-				logTheThing(LOG_DEBUG, null, "turf/ReplaceWith signal shit: [new_turf]: [json_encode(comp_lookup)] + [json_encode(old_comp_lookup)]")
+			else if (islist(signal_listeners[signal_type]))
+				logTheThing(LOG_DEBUG, null, "turf/ReplaceWith signal shit: [new_turf]: [json_encode(signal_listeners)] + [json_encode(old_signal_listeners)]")
 
-				src.comp_lookup[signal_type] |= old_comp_lookup[signal_type]
+				src.signal_listeners[signal_type] |= old_signal_listeners[signal_type]
 			//it's just a datum
 			else
-				if (islist(old_comp_lookup[signal_type])) //but the old one was a list, so append
-					src.comp_lookup[signal_type] = (old_comp_lookup[signal_type] | src.comp_lookup[signal_type])
+				if (islist(old_signal_listeners[signal_type])) //but the old one was a list, so append
+					src.signal_listeners[signal_type] = (old_signal_listeners[signal_type] | src.signal_listeners[signal_type])
 				else //the old one wasn't a list, make it so
-					src.comp_lookup[signal_type] = (list(old_comp_lookup[signal_type]) | src.comp_lookup[signal_type])
+					src.signal_listeners[signal_type] = (list(old_signal_listeners[signal_type]) | src.signal_listeners[signal_type])
 
 
 	new_turf.RL_Init()

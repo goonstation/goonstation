@@ -61,7 +61,10 @@
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/machinery/disposal,
+/obj/machinery/disposal/ejection{
+	name = "disposal chute";
+	desc = "A pressurized trashcan that flushes things you put into it through pipes, usually to disposals."
+	},
 /obj/decal/poster/wallsign/poster_clown{
 	pixel_y = -2;
 	pixel_x = 3

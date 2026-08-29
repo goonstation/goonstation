@@ -16,15 +16,15 @@
 	initlist[1] = ABSOLUTE_PATH(initlist[1], current)
 	initlist[2] = ABSOLUTE_PATH(initlist[2], current)
 
-	var/datum/computer/file/target = src.signal_program(1, list("command" = DWAINE_COMMAND_FGET, "path" = initlist[1]))
+	var/datum/computer/file/target = src.signal_program(1, list("command" = DWAINE::SYSCALL::FGET, "path" = initlist[1]))
 	if (!istype(target))
 		src.message_user("Error: Invalid target path.")
 		mainframe_prog_exit
 		return
 
 	var/copy_name = null
-	var/dest_check = src.signal_program(1, list("command" = DWAINE_COMMAND_FGET, "path" = initlist[2]))
-	if (dest_check != ESIG_NOFILE)
+	var/dest_check = src.signal_program(1, list("command" = DWAINE::SYSCALL::FGET, "path" = initlist[2]))
+	if (dest_check != DWAINE::ERR::SIG::NOFILE)
 		if (istype(dest_check, /datum/computer/folder) && !src.get_computer_datum(target.name, dest_check))
 			copy_name = target.name
 
@@ -44,8 +44,8 @@
 	var/datum/computer/file/copy = target.copy_file()
 	copy.name = copy_name
 	copy.metadata["owner"] = src.read_user_field("name")
-	copy.metadata["permission"] = COMP_ALLACC
-	if (src.signal_program(1, list("command" = DWAINE_COMMAND_FWRITE, "path" = initlist[2]), copy) != ESIG_SUCCESS)
+	copy.metadata["permission"] = DWAINE::PERM::DEFAULT::ALLACCESS
+	if (src.signal_program(1, list("command" = DWAINE::SYSCALL::FWRITE, "path" = initlist[2]), copy) != DWAINE::ERR::SIG::SUCCESS)
 		copy.dispose()
 		src.message_user("Error: Could not copy file.")
 

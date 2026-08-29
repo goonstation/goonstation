@@ -1,0 +1,474 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/clonepod,
+/turf/simulated/floor/black,
+/area/station/medical/medbay/cloner)
+"b" = (
+/obj/machinery/door/airlock/pyro/medical/alt,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/medlab,
+/turf/simulated/floor/black,
+/area/station/medical/research)
+"e" = (
+/obj/machinery/computer/genetics,
+/obj/item/cloneModule/genepowermodule,
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/greenblack{
+	dir = 1
+	},
+/area/station/medical/research)
+"f" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/greenblack,
+/area/station/medical/research)
+"g" = (
+/obj/decal/tile_edge/line/green{
+	dir = 1;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/black,
+/area/station/medical/medbay/cloner)
+"h" = (
+/obj/machinery/firealarm/directional/east,
+/turf/simulated/floor/greenblack{
+	dir = 6
+	},
+/area/station/medical/research)
+"i" = (
+/turf/simulated/floor/bluewhite{
+	dir = 9
+	},
+/area/station/medical/medbay/cloner)
+"j" = (
+/obj/spawner/clone_rack,
+/turf/simulated/floor/bluewhite{
+	dir = 10
+	},
+/area/station/medical/medbay/cloner)
+"k" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay/cloner)
+"l" = (
+/obj/table/auto,
+/obj/item/hand_labeler{
+	pixel_x = 5;
+	pixel_y = 9
+	},
+/obj/item/storage/box/diskbox{
+	pixel_x = -6;
+	pixel_y = 12
+	},
+/obj/machinery/phone{
+	pixel_x = 7;
+	pixel_y = -4
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 6
+	},
+/area/station/medical/medbay/cloner)
+"m" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay/cloner)
+"n" = (
+/obj/machinery/genetics_scanner,
+/turf/simulated/floor/greenblack{
+	dir = 9
+	},
+/area/station/medical/research)
+"o" = (
+/obj/decal/tile_edge/line/green{
+	dir = 10;
+	icon_state = "line2"
+	},
+/obj/storage/secure/closet/medical/cloning,
+/obj/machinery/power/apc/autoname_west,
+/obj/cable,
+/turf/simulated/floor/black,
+/area/station/medical/medbay/cloner)
+"p" = (
+/obj/decal/tile_edge/line/green{
+	dir = 5;
+	icon_state = "line2"
+	},
+/turf/simulated/floor/black,
+/area/station/medical/medbay/cloner)
+"q" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle{
+	id = "genetics"
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/research)
+"r" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay/cloner)
+"s" = (
+/turf/simulated/floor/bluewhite{
+	dir = 8
+	},
+/area/station/medical/medbay/cloner)
+"t" = (
+/turf/simulated/floor/greenblack,
+/area/station/medical/research)
+"u" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/bent/south,
+/turf/simulated/floor/white,
+/area/station/medical/medbay/cloner)
+"v" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay/cloner)
+"w" = (
+/obj/decal/tile_edge/line/green{
+	icon_state = "line1"
+	},
+/obj/storage/secure/closet/medical/cloning,
+/turf/simulated/floor/black,
+/area/station/medical/medbay/cloner)
+"x" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/medical/research)
+"y" = (
+/turf/simulated/floor/bluewhite{
+	dir = 1
+	},
+/area/station/medical/medbay/cloner)
+"z" = (
+/obj/machinery/clone_scanner,
+/obj/machinery/firealarm/directional/east,
+/turf/simulated/floor/bluewhite{
+	dir = 5
+	},
+/area/station/medical/medbay/cloner)
+"A" = (
+/obj/monkeyplant,
+/obj/machinery/light_switch/directional/north,
+/turf/simulated/floor/greenblack{
+	dir = 1
+	},
+/area/station/medical/research)
+"B" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 8;
+	id = "scanning_exit"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/medical,
+/turf/simulated/floor/white,
+/area/station/medical/medbay/cloner)
+"C" = (
+/obj/decal/tile_edge/line/green{
+	dir = 6;
+	icon_state = "line2"
+	},
+/obj/machinery/camera/directional/south,
+/obj/disposalpipe/trunk/east,
+/obj/machinery/disposal,
+/turf/simulated/floor/black,
+/area/station/medical/medbay/cloner)
+"D" = (
+/obj/machinery/door/airlock/pyro/glass{
+	id = "scanning_exit"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/medical,
+/obj/disposalpipe/segment,
+/turf/simulated/floor/white,
+/area/station/medical/medbay/cloner)
+"E" = (
+/obj/decal/tile_edge/line/green{
+	dir = 9;
+	icon_state = "line2"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door_control{
+	id = "scanning_exit";
+	name = "Clone-Scanning Exit Door Control";
+	pixel_x = -24;
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/station/medical/medbay/cloner)
+"F" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left{
+	id = "genetics"
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/research)
+"G" = (
+/obj/stool/chair/office/green{
+	dir = 4
+	},
+/obj/landmark/start/job/geneticist,
+/turf/simulated/floor/white,
+/area/station/medical/medbay/cloner)
+"H" = (
+/obj/stool/chair/office/green{
+	dir = 1
+	},
+/obj/landmark/start/job/geneticist,
+/turf/simulated/floor/greenblack,
+/area/station/medical/research)
+"I" = (
+/obj/table/auto,
+/obj/item/storage/pill_bottle/mutadone{
+	pixel_y = 13;
+	pixel_x = -7
+	},
+/obj/item/storage/pill_bottle/mutadone{
+	pixel_y = 8;
+	pixel_x = -5
+	},
+/obj/item/clothing/glasses/blindfold{
+	pixel_x = 1;
+	pixel_y = -2
+	},
+/obj/blind_switch/directional/north{
+	id = "genetics"
+	},
+/obj/machinery/phone{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/turf/simulated/floor/greenblack{
+	dir = 1
+	},
+/area/station/medical/research)
+"J" = (
+/obj/machinery/drainage,
+/obj/decal/tile_edge/line/green{
+	dir = 4;
+	icon_state = "line1"
+	},
+/turf/simulated/floor/black,
+/area/station/medical/medbay/cloner)
+"L" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/medical/research)
+"M" = (
+/obj/stool/chair/office/green{
+	dir = 1
+	},
+/obj/landmark/start/job/geneticist,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/greenblack,
+/area/station/medical/research)
+"N" = (
+/obj/machinery/genetics_scanner,
+/obj/machinery/camera/directional/east,
+/turf/simulated/floor/greenblack{
+	dir = 5
+	},
+/area/station/medical/research)
+"O" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light/small/floor/blueish,
+/turf/simulated/floor/white,
+/area/station/medical/medbay/cloner)
+"P" = (
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/greenblack{
+	dir = 10
+	},
+/area/station/medical/research)
+"S" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	id = "genetics"
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/research)
+"T" = (
+/obj/machinery/computer/genetics,
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/greenblack{
+	dir = 1
+	},
+/area/station/medical/research)
+"U" = (
+/obj/machinery/light/incandescent/netural,
+/obj/machinery/clonegrinder,
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
+/area/station/medical/medbay/cloner)
+"V" = (
+/obj/machinery/computer/cloning,
+/turf/simulated/floor/bluewhite,
+/area/station/medical/medbay/cloner)
+"W" = (
+/turf/simulated/wall/auto/supernorn/colored/cyan,
+/area/station/medical/research)
+"X" = (
+/turf/simulated/wall/auto/supernorn/colored/cyan,
+/area/station/medical/medbay/cloner)
+"Y" = (
+/obj/machinery/drainage,
+/obj/decal/tile_edge/line/green{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/machinery/light/incandescent/netural,
+/obj/machinery/light_switch/directional/west,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/medical/medbay/cloner)
+"Z" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/cloner)
+
+(1,1,1) = {"
+W
+W
+W
+W
+B
+X
+X
+X
+X
+"}
+(2,1,1) = {"
+F
+n
+P
+F
+m
+E
+Y
+o
+Z
+"}
+(3,1,1) = {"
+S
+T
+M
+q
+r
+g
+a
+w
+Z
+"}
+(4,1,1) = {"
+W
+A
+f
+S
+r
+p
+J
+C
+X
+"}
+(5,1,1) = {"
+b
+L
+x
+b
+k
+O
+v
+u
+D
+"}
+(6,1,1) = {"
+W
+I
+t
+F
+r
+i
+s
+j
+X
+"}
+(7,1,1) = {"
+F
+e
+H
+q
+r
+y
+G
+V
+Z
+"}
+(8,1,1) = {"
+S
+N
+h
+S
+r
+z
+U
+l
+Z
+"}
+(9,1,1) = {"
+W
+W
+W
+W
+B
+X
+X
+X
+X
+"}

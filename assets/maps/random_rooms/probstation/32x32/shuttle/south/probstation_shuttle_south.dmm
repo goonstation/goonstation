@@ -1,0 +1,1801 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aK" = (
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
+/area/station/hallway/secondary/northwest)
+"bI" = (
+/obj/stool/chair/office/red{
+	dir = 4
+	},
+/turf/unsimulated/floor/minitiles/black,
+/area/station/maintenance/outer/nw)
+"bS" = (
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
+/area/station/hallway/secondary/northwest)
+"cg" = (
+/obj/machinery/light/small/frostedred,
+/turf/unsimulated/floor/minitiles/black,
+/area/station/maintenance/outer/nw)
+"cH" = (
+/obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/drinks/tea{
+	pixel_x = -14;
+	pixel_y = 18
+	},
+/obj/item/reagent_containers/food/drinks/water{
+	pixel_y = 9;
+	pixel_x = -3
+	},
+/turf/simulated/floor/wood,
+/area/station/hallway/secondary/exit)
+"dg" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 1;
+	pixel_y = 24
+	},
+/turf/simulated/floor/red/side{
+	dir = 1
+	},
+/area/station/security/checkpoint/escape)
+"dE" = (
+/obj/table/reinforced/auto,
+/obj/machinery/cashreg,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 4
+	},
+/obj/mapping_helper/access/security,
+/obj/item/paper_bin{
+	pixel_y = 17;
+	pixel_x = -3
+	},
+/obj/item/pen{
+	pixel_y = 15
+	},
+/turf/simulated/floor/red,
+/area/station/security/checkpoint/escape)
+"dH" = (
+/turf/simulated/floor/red/side{
+	dir = 4
+	},
+/area/station/security/checkpoint/escape)
+"dJ" = (
+/obj/landmark/shuttle_subwoofer,
+/turf/space,
+/area/space)
+"eW" = (
+/obj/stool/chair/couch{
+	dir = 8
+	},
+/turf/simulated/floor/wood,
+/area/station/hallway/secondary/exit)
+"fJ" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/escape{
+	dir = 8
+	},
+/area/station/hallway/secondary/exit)
+"fL" = (
+/obj/machinery/door/poddoor/blast/pyro{
+	autoclose = 1;
+	dir = 4;
+	icon_state = "bdoormid1"
+	},
+/turf/simulated/floor/shuttlebay{
+	icon_state = "engine_caution_east"
+	},
+/area/station/hallway/secondary/exit)
+"ha" = (
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	dir = 4
+	},
+/obj/mapping_helper/airlock/welder,
+/turf/simulated/floor/plating,
+/area/station/maintenance/outer/nw)
+"io" = (
+/obj/machinery/computer/camera_viewer{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/power/apc/autoname_west,
+/turf/simulated/floor/red/side{
+	dir = 8
+	},
+/area/station/security/checkpoint/escape)
+"iW" = (
+/obj/airbridge_controller{
+	id = "escape2";
+	tunnel_width = 3
+	},
+/turf/space,
+/area/space)
+"iX" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/wood,
+/area/station/hallway/secondary/exit)
+"jg" = (
+/obj/decal/poster/wallsign/space,
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/hallway/secondary/exit)
+"jQ" = (
+/obj/machinery/door/airlock/pyro/security/alt,
+/obj/mapping_helper/access/security,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/secscanner{
+	pixel_y = -10
+	},
+/turf/simulated/floor/red,
+/area/station/security/checkpoint/escape)
+"jT" = (
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/hallway/secondary/northwest)
+"jY" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/escape{
+	dir = 8
+	},
+/area/station/hallway/secondary/exit)
+"lA" = (
+/obj/machinery/light/small/frostedred{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/unsimulated/floor/minitiles/black,
+/area/station/maintenance/outer/nw)
+"lJ" = (
+/obj/stool/chair/office/red{
+	dir = 4;
+	tag = "icon-office_chair_red (EAST)"
+	},
+/turf/simulated/floor/red/side{
+	dir = 4
+	},
+/area/station/security/checkpoint/escape)
+"ms" = (
+/obj/stool/chair/blue{
+	dir = 8
+	},
+/turf/simulated/floor/escape{
+	dir = 8
+	},
+/area/station/hallway/secondary/exit)
+"my" = (
+/obj/machinery/light/small/frostedred{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/unsimulated/floor/minitiles/black,
+/area/station/maintenance/outer/nw)
+"nX" = (
+/obj/table/syndicate/auto,
+/obj/item/paper{
+	info = "syndies rule, NT droolz";
+	name = "Scrawled Note";
+	pixel_y = 4;
+	pixel_x = -4
+	},
+/turf/unsimulated/floor/minitiles/black,
+/area/station/maintenance/outer/nw)
+"oM" = (
+/obj/machinery/door/airlock/pyro/maintenance/alt,
+/obj/mapping_helper/airlock/welder,
+/turf/simulated/floor/plating,
+/area/station/maintenance/outer/nw)
+"pc" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
+"po" = (
+/turf/simulated/floor/stairs/wood2/wide{
+	dir = 4
+	},
+/area/station/hallway/secondary/exit)
+"qb" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/decal/stripe_delivery,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 8
+	},
+/area/station/hallway/secondary/northwest)
+"qM" = (
+/obj/stool/chair/couch{
+	dir = 4
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 1;
+	pixel_y = 24
+	},
+/obj/machinery/firealarm/directional/east,
+/turf/simulated/floor/wood,
+/area/station/hallway/secondary/exit)
+"rG" = (
+/obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/drinks/coffee{
+	pixel_y = 6;
+	pixel_x = 2
+	},
+/turf/simulated/floor/wood,
+/area/station/hallway/secondary/exit)
+"sl" = (
+/turf/simulated/floor/wood,
+/area/station/hallway/secondary/exit)
+"sy" = (
+/turf/simulated/floor/stairs/wood2/wide{
+	dir = 5
+	},
+/area/station/hallway/secondary/exit)
+"tG" = (
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/maintenance/outer/nw)
+"ug" = (
+/obj/machinery/computer/airbr/emergency_shuttle{
+	density = 0;
+	id = "escape";
+	pixel_y = 32
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
+"up" = (
+/obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/drinks/tea{
+	pixel_x = 2;
+	pixel_y = 11
+	},
+/turf/simulated/floor/wood,
+/area/station/hallway/secondary/exit)
+"uM" = (
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/wood,
+/area/station/hallway/secondary/exit)
+"vl" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/exit)
+"vC" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/escape{
+	dir = 8
+	},
+/area/station/hallway/secondary/exit)
+"vF" = (
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
+"vH" = (
+/obj/machinery/door/airlock/pyro/glass,
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	pixel_y = -10
+	},
+/turf/simulated/floor/stairs/wood2/wide,
+/area/station/hallway/secondary/exit)
+"yG" = (
+/obj/airbridge_controller{
+	id = "escape";
+	tunnel_width = 3
+	},
+/turf/space,
+/area/space)
+"zn" = (
+/obj/machinery/vehicle/escape_pod{
+	dir = 4
+	},
+/turf/simulated/floor/shuttlebay{
+	icon_state = "engine_caution_west"
+	},
+/area/station/hallway/secondary/exit)
+"Al" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/decal/stripe_delivery,
+/obj/machinery/secscanner{
+	pixel_y = -10
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 8
+	},
+/area/station/hallway/secondary/northwest)
+"Bc" = (
+/obj/airbridge_controller{
+	id = "escape";
+	primary_controller = 1
+	},
+/turf/space,
+/area/space)
+"BJ" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 1;
+	pixel_y = 24
+	},
+/obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/drinks/tea{
+	pixel_x = 2;
+	pixel_y = 11
+	},
+/turf/simulated/floor/wood,
+/area/station/hallway/secondary/exit)
+"BN" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/escape{
+	dir = 4
+	},
+/area/station/hallway/secondary/exit)
+"CI" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay2,
+/turf/space,
+/area/space)
+"De" = (
+/turf/simulated/wall/auto/supernorn/colored/red,
+/area/station/security/checkpoint/escape)
+"Ez" = (
+/obj/table/syndicate/auto,
+/obj/machinery/computer/television/small{
+	pixel_y = 4
+	},
+/turf/unsimulated/floor/minitiles/black,
+/area/station/maintenance/outer/nw)
+"EE" = (
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/wood,
+/area/station/hallway/secondary/exit)
+"Fo" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/decal/stripe_delivery,
+/obj/machinery/secscanner{
+	pixel_y = -10
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
+/area/station/hallway/secondary/northwest)
+"FK" = (
+/turf/simulated/floor/bluewhite{
+	dir = 8
+	},
+/area/station/hallway/secondary/northwest)
+"Hj" = (
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/bluewhite{
+	dir = 8
+	},
+/area/station/hallway/secondary/northwest)
+"HA" = (
+/turf/simulated/floor/red/side{
+	dir = 6
+	},
+/area/station/security/checkpoint/escape)
+"Ij" = (
+/obj/machinery/firealarm/directional/east,
+/turf/simulated/floor/escape{
+	dir = 4
+	},
+/area/station/hallway/secondary/exit)
+"IO" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/wood,
+/area/station/hallway/secondary/exit)
+"Ka" = (
+/obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/snacks/salad{
+	pixel_y = 6;
+	pixel_x = -3
+	},
+/turf/simulated/floor/wood,
+/area/station/hallway/secondary/exit)
+"Kk" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor,
+/area/station/security/checkpoint/escape)
+"Lo" = (
+/obj/item/device/radio/intercom/security,
+/turf/simulated/floor/red/side{
+	dir = 5
+	},
+/area/station/security/checkpoint/escape)
+"LN" = (
+/obj/machinery/computer/airbr/emergency_shuttle{
+	density = 0;
+	id = "escape2";
+	pixel_y = 32
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
+"LP" = (
+/obj/stool/chair/couch{
+	dir = 4
+	},
+/turf/simulated/floor/wood,
+/area/station/hallway/secondary/exit)
+"LQ" = (
+/turf/simulated/floor/escape{
+	dir = 8
+	},
+/area/station/hallway/secondary/exit)
+"Mh" = (
+/turf/space,
+/area/shuttle/escape/station)
+"Mv" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor/escape{
+	dir = 8
+	},
+/area/station/hallway/secondary/exit)
+"NX" = (
+/turf/space,
+/area/space)
+"Ox" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/security/checkpoint/escape)
+"PC" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"PF" = (
+/obj/machinery/door/airlock/pyro/security/alt{
+	dir = 8
+	},
+/obj/mapping_helper/access/security,
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	dir = 4;
+	pixel_x = 20
+	},
+/turf/simulated/floor/red,
+/area/station/security/checkpoint/escape)
+"PZ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/glass,
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	pixel_y = -10
+	},
+/turf/simulated/floor/stairs/wood2/wide{
+	dir = 6
+	},
+/area/station/hallway/secondary/exit)
+"QA" = (
+/obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/snacks/sandwich/cheese{
+	pixel_y = 8
+	},
+/turf/simulated/floor/wood,
+/area/station/hallway/secondary/exit)
+"Rq" = (
+/obj/machinery/door/airlock/pyro/glass,
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	pixel_y = -10
+	},
+/turf/simulated/floor/escape{
+	dir = 4
+	},
+/area/station/hallway/secondary/exit)
+"Rr" = (
+/obj/machinery/firealarm/directional/west,
+/obj/machinery/computer/card{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/light_switch/directional/west{
+	pixel_y = -10
+	},
+/turf/simulated/floor/red/side{
+	dir = 8
+	},
+/area/station/security/checkpoint/escape)
+"Ry" = (
+/obj/storage/closet/syndicate,
+/obj/item/clothing/under/gimmick/red_wcoat,
+/obj/item/clothing/shoes/black{
+	pixel_x = -1;
+	pixel_y = -10
+	},
+/turf/unsimulated/floor/minitiles/black,
+/area/station/maintenance/outer/nw)
+"RN" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/red/side,
+/area/station/security/checkpoint/escape)
+"RT" = (
+/obj/stool/chair/couch{
+	dir = 9
+	},
+/turf/simulated/floor/wood,
+/area/station/hallway/secondary/exit)
+"Sa" = (
+/obj/machinery/door/airlock/pyro/glass,
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/secscanner{
+	pixel_y = -10
+	},
+/turf/simulated/floor/escape{
+	dir = 8
+	},
+/area/station/hallway/secondary/exit)
+"Sd" = (
+/obj/machinery/alarm/directional/north,
+/obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/snacks/sandwich/cheese{
+	pixel_y = 8
+	},
+/turf/simulated/floor/wood,
+/area/station/hallway/secondary/exit)
+"St" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor/escape{
+	dir = 4
+	},
+/area/station/hallway/secondary/exit)
+"Tp" = (
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
+"Um" = (
+/obj/airbridge_controller{
+	id = "escape2";
+	primary_controller = 1
+	},
+/turf/space,
+/area/space)
+"Uz" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/security/checkpoint/escape)
+"UA" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/wood,
+/area/station/hallway/secondary/exit)
+"Vu" = (
+/obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/snacks/donut/custom/frosted{
+	pixel_y = 6
+	},
+/turf/simulated/floor/wood,
+/area/station/hallway/secondary/exit)
+"VM" = (
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/hallway/secondary/exit)
+"Wu" = (
+/obj/table/syndicate/auto,
+/obj/item/cigarbox/gold{
+	pixel_y = 9
+	},
+/turf/unsimulated/floor/minitiles/black,
+/area/station/maintenance/outer/nw)
+"WT" = (
+/turf/unsimulated/floor/minitiles/black,
+/area/station/maintenance/outer/nw)
+"Xg" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/maintenance/outer/nw)
+"XC" = (
+/obj/machinery/camera/directional/west,
+/obj/machinery/computer3/generic/secure_data{
+	dir = 4;
+	tag = ""
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/red/side{
+	dir = 9
+	},
+/area/station/security/checkpoint/escape)
+"XT" = (
+/obj/stool/chair/couch{
+	dir = 8
+	},
+/obj/machinery/camera/directional/north,
+/turf/simulated/floor/wood,
+/area/station/hallway/secondary/exit)
+"XY" = (
+/obj/table/reinforced/auto,
+/obj/machinery/phone,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 4
+	},
+/obj/mapping_helper/access/security,
+/turf/simulated/floor/red,
+/area/station/security/checkpoint/escape)
+"Yd" = (
+/obj/stool/chair/couch{
+	dir = 5
+	},
+/turf/simulated/floor/wood,
+/area/station/hallway/secondary/exit)
+"Yk" = (
+/turf/simulated/floor/escape{
+	dir = 4
+	},
+/area/station/hallway/secondary/exit)
+"Ys" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/decal/stripe_delivery,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
+/area/station/hallway/secondary/northwest)
+"YZ" = (
+/obj/stool/chair/couch{
+	dir = 4
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/wood,
+/area/station/hallway/secondary/exit)
+"Zi" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/storage/secure/closet/security/equipment,
+/turf/simulated/floor/red/side{
+	dir = 10
+	},
+/area/station/security/checkpoint/escape)
+
+(1,1,1) = {"
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+tG
+tG
+tG
+tG
+ha
+tG
+tG
+"}
+(2,1,1) = {"
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+Xg
+Ry
+WT
+lA
+tG
+"}
+(3,1,1) = {"
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+Xg
+Wu
+WT
+WT
+tG
+"}
+(4,1,1) = {"
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+Xg
+Ez
+bI
+cg
+tG
+"}
+(5,1,1) = {"
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+Xg
+nX
+WT
+WT
+oM
+"}
+(6,1,1) = {"
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+Xg
+my
+WT
+WT
+tG
+"}
+(7,1,1) = {"
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+tG
+tG
+tG
+tG
+tG
+"}
+(8,1,1) = {"
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+tG
+"}
+(9,1,1) = {"
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+tG
+"}
+(10,1,1) = {"
+NX
+NX
+NX
+NX
+Mh
+Mh
+Mh
+NX
+NX
+NX
+NX
+Mh
+Mh
+Mh
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+jT
+"}
+(11,1,1) = {"
+NX
+NX
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+NX
+dJ
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+jT
+jT
+jT
+jT
+jT
+"}
+(12,1,1) = {"
+NX
+NX
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+qb
+Hj
+Al
+FK
+FK
+"}
+(13,1,1) = {"
+NX
+NX
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+Ys
+bS
+Fo
+aK
+aK
+"}
+(14,1,1) = {"
+NX
+NX
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+De
+De
+De
+De
+De
+De
+"}
+(15,1,1) = {"
+NX
+NX
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+Uz
+XC
+io
+Rr
+Zi
+De
+"}
+(16,1,1) = {"
+NX
+NX
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+Uz
+dg
+Kk
+Ox
+RN
+jQ
+"}
+(17,1,1) = {"
+NX
+NX
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+Uz
+Lo
+lJ
+dH
+HA
+De
+"}
+(18,1,1) = {"
+NX
+NX
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+NX
+NX
+NX
+NX
+NX
+jg
+VM
+VM
+VM
+VM
+De
+XY
+dE
+De
+PF
+De
+"}
+(19,1,1) = {"
+NX
+NX
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+yG
+NX
+NX
+NX
+Bc
+vC
+LQ
+LQ
+Mv
+fJ
+LQ
+LQ
+ms
+fJ
+LQ
+Sa
+"}
+(20,1,1) = {"
+NX
+NX
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+NX
+NX
+NX
+NX
+NX
+VM
+ug
+vF
+vl
+vF
+vF
+vF
+vF
+vF
+vF
+vl
+"}
+(21,1,1) = {"
+NX
+NX
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+NX
+NX
+NX
+NX
+NX
+VM
+LN
+vF
+vl
+vF
+vF
+Tp
+vF
+vF
+vF
+vl
+"}
+(22,1,1) = {"
+NX
+NX
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+iW
+NX
+NX
+NX
+Um
+BN
+Yk
+Yk
+St
+Yk
+Yk
+Yk
+Yk
+Yk
+Ij
+Rq
+"}
+(23,1,1) = {"
+NX
+NX
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+NX
+NX
+NX
+NX
+VM
+jg
+pc
+pc
+VM
+vl
+vl
+po
+sy
+vl
+VM
+VM
+"}
+(24,1,1) = {"
+NX
+NX
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+NX
+NX
+NX
+NX
+VM
+jY
+LQ
+LQ
+VM
+BJ
+RT
+sl
+sl
+eW
+Vu
+VM
+"}
+(25,1,1) = {"
+NX
+NX
+NX
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+NX
+NX
+NX
+NX
+NX
+VM
+zn
+zn
+zn
+VM
+Sd
+Yd
+sl
+sl
+LP
+cH
+VM
+"}
+(26,1,1) = {"
+NX
+NX
+NX
+NX
+NX
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+VM
+fL
+fL
+fL
+VM
+sl
+sl
+sl
+sl
+sl
+uM
+VM
+"}
+(27,1,1) = {"
+NX
+NX
+NX
+NX
+NX
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+PC
+NX
+NX
+NX
+VM
+XT
+rG
+RT
+sl
+sl
+sl
+vH
+"}
+(28,1,1) = {"
+NX
+NX
+NX
+NX
+NX
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+CI
+NX
+NX
+NX
+vl
+LP
+Ka
+Yd
+UA
+IO
+IO
+PZ
+"}
+(29,1,1) = {"
+NX
+NX
+NX
+NX
+NX
+NX
+Mh
+Mh
+Mh
+Mh
+Mh
+Mh
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+vl
+sl
+sl
+sl
+iX
+sl
+sl
+VM
+"}
+(30,1,1) = {"
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+vl
+eW
+rG
+RT
+iX
+eW
+up
+VM
+"}
+(31,1,1) = {"
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+VM
+qM
+Ka
+Yd
+EE
+YZ
+QA
+VM
+"}
+(32,1,1) = {"
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+NX
+VM
+VM
+VM
+VM
+VM
+VM
+VM
+VM
+"}

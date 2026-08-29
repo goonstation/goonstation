@@ -217,6 +217,7 @@
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGT_CARGO, MGA_SALES), "sender"="00000000", "message"="Deal with \"[src.name]\" concluded. Total Cost: [total_price] credits")
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 		shippingmarket.receive_crate(S)
+		global.shippingmarket.update_supply_console_data()
 
 	proc/wipe_cart(var/sold_stuff)
 		for (var/datum/commodity/trader/incart/COM in src.shopping_cart)
@@ -226,6 +227,20 @@
 			COM.amount = 0
 			src.shopping_cart -= COM
 		src.shopping_cart.Cut()
+
+/datum/trader/proc/fetch_commodities_data(var/list/commodities)
+	. = list()
+	for (var/datum/commodity/trader/commodity in commodities)
+		.+= list(src.fetch_commodity_data(commodity))
+
+/datum/trader/proc/fetch_commodity_data(var/datum/commodity/trader/commodity)
+	return list(
+		"name" = commodity.comname,
+		"description" = commodity.listed_name,
+		"price" = commodity.price,
+		"amount_left" = commodity.amount,
+		"ref" = ref(commodity),
+	)
 
 /datum/commodity/trader
 	var/listed_name = "a thing!!!"   // What it shows up as outside the shopping cart

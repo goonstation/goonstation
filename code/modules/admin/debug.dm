@@ -1263,6 +1263,32 @@ var/datum/flock/testflock
 		fdel(fname)
 #endif
 
+/client/proc/debugAddElement(datum/target)
+	var/partial_type = global.tgui_input_text(usr, "Part of element path:", "Add Element") || "/"
+	var/element_type = global.get_one_match(partial_type, /datum/element)
+	if (!element_type)
+		return
+
+	var/typeinfo/datum/element/typeinfo = global.get_type_typeinfo(element_type)
+	var/list/arguments = src.get_proccall_arglist(typeinfo.initialization_args)
+	arguments.Insert(1, element_type)
+
+	target._AddElement(arguments)
+	boutput(usr, SPAN_NOTICE("Added [element_type] to [target]."))
+
+/client/proc/debugRemoveElement(datum/target)
+	var/list/de = target.datum_elements
+	if (!de)
+		boutput(usr, SPAN_NOTICE("No elements present on [target]."))
+		return
+
+	var/id = global.tgui_input_list(usr, "Select an element to remove:", "Remove Element", de)
+	if (!id)
+		return
+
+	target.RemoveElement(DCS._elements_by_id[id])
+	boutput(usr, SPAN_NOTICE("Removed [id] from [target]."))
+
 /client/proc/debugAddComponent(var/datum/target = null)
 	var/pathpart = input("Part of component path.", "Part of component path.", "") as null|text
 	if(!pathpart)
@@ -1380,28 +1406,6 @@ var/datum/flock/testflock
 
 	lines += "</body></html>"
 	src.Browse(lines.Join(), "window=adminteract_buttons;size=300x800")
-
-// see code/modules/disposals/disposal_test.dm for documentation
-/client/proc/dbg_disposal_system()
-	set name ="Test Disposal System"
-	set desc = "Test disposal and mail chutes for broken routing."
-	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-	ADMIN_ONLY
-	SHOW_VERB_DESC
-
-	var/input_x = input(usr, "Enter X coordinate") as null | num
-	if(isnull(input_x))
-		return
-	var/input_y = input(usr, "Enter Y coordinate") as null | num
-	if(isnull(input_y))
-		return
-	var/sleep_time = input(usr, "Enter time to sleep (in seconds)", null, 120) as null | num
-	if(isnull(sleep_time))
-		return
-	var/include_mail = alert(usr, "Test mail system?", null, "Yes", "No")
-	if(isnull(include_mail)) // somehow
-		return
-	test_disposal_system(input_x, input_y, sleep_time SECONDS, include_mail == "Yes" ? TRUE : FALSE)
 
 
 #undef ARG_INFO_NAME

@@ -458,6 +458,9 @@
 	if (!istype(D, /obj/item/device/prox_sensor))
 		return
 	var/obj/item/toolbox_tiles_sensor/B = new /obj/item/toolbox_tiles_sensor
+	B.setMaterial(src.material)
+	B.forensic_holder = src.forensic_holder
+	D.forensic_holder.copy_to(B.forensic_holder)
 	if(src.color_overlay)
 		B.UpdateOverlays(image(B.icon, icon_state = src.color_overlay), "coloroverlay")
 		B.color_overlay = src.color_overlay
@@ -474,6 +477,9 @@
 	if (!istype(P, /obj/item/parts/robot_parts/arm/))
 		return
 	var/obj/machinery/bot/floorbot/A = new /obj/machinery/bot/floorbot
+	A.setMaterial(src.material)
+	A.forensic_holder = src.forensic_holder
+	P.forensic_holder.copy_to(A.forensic_holder)
 	if(src.color_overlay)
 		A.UpdateOverlays(image(A.icon, icon_state = src.color_overlay), "coloroverlay")
 		A.color_overlay = src.color_overlay

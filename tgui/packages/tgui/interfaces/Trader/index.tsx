@@ -72,6 +72,8 @@ export const Trader = () => {
                       key={commodity.ref}
                       commodity={commodity}
                       view_type={'selling'}
+                      currency_name={data.currency_name}
+                      trader_ref={null}
                     />
                   ))}
                 </Table>
@@ -83,6 +85,8 @@ export const Trader = () => {
                       key={commodity.ref}
                       commodity={commodity}
                       view_type={'buying'}
+                      currency_name={data.currency_name}
+                      trader_ref={null}
                     />
                   ))}
                 </Table>
@@ -176,14 +180,20 @@ const TraderInfo = () => {
   );
 };
 
+// trader_ref is used by the QM console which has multiple traders in one UI
 type CommodityProps = {
   commodity: CommodityData;
   view_type: string;
+  currency_name: string;
+  trader_ref: string | null;
 };
 
-const CommodityEntry = (props: CommodityProps) => {
-  const { commodity, view_type } = props;
-  const { data, act } = useBackend<TraderData>();
+// Also used by QM console traders
+export const CommodityEntry = (props: CommodityProps) => {
+  const { commodity, view_type, currency_name, trader_ref } = props;
+  const { act } = useBackend();
+  const formattedCurrency =
+    currency_name === '⪽' ? currency_name : ' ' + currency_name;
   return (
     <Table.Row className="candystripe">
       <Table.Cell py="5px">
@@ -201,21 +211,26 @@ const CommodityEntry = (props: CommodityProps) => {
               icon={view_type === 'selling' ? 'cart-shopping' : 'coins'}
               disabled={commodity.amount_left === 0}
               onClick={() =>
-                act(view_type === 'selling' ? 'purchase' : 'sell', {
-                  ref: commodity.ref,
-                })
+                act(
+                  view_type === 'selling' ? 'trader_purchase' : 'trader_sell',
+                  {
+                    commodity_ref: commodity.ref,
+                    trader_ref: trader_ref,
+                  },
+                )
               }
             >
-              {view_type === 'selling' ? 'Buy' : 'Sell'} {commodity.price}{' '}
-              {data.currency_name}
+              {view_type === 'selling' ? 'Buy' : 'Sell'} {commodity.price}
+              {formattedCurrency}
             </Button>
           </Stack.Item>
           <Stack.Item>
             <Button
               icon="comments"
               onClick={() =>
-                act('haggle', {
-                  ref: commodity.ref,
+                act('trader_haggle', {
+                  commodity_ref: commodity.ref,
+                  trader_ref: trader_ref,
                 })
               }
             >

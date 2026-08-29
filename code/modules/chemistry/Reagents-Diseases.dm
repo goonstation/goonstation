@@ -559,4 +559,15 @@ datum
 			disease = /datum/ailment/disease/exploding_head_syndrome
 			minimum_to_infect = 4
 
-
+		disease/cocktail_quadruplewater
+			name = "Quadruple Water"
+			id = "cocktail_quadruplewater"
+			description = "An even more water dense version of triple water, upon closer analysis its water matrix is highly unstable."
+			reagent_state = LIQUID
+			fluid_r = 10
+			fluid_g = 165
+			fluid_b = 254
+			taste = "like a day worth of hydration in one sip"
+			minimum_to_infect = 25
+			thirst_value = 3.2
+			disease = /datum/ailment/disease/water_poisoning

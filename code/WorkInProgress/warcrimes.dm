@@ -419,7 +419,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 				say("One of them [JOHN_PICK("people")] folks from the station helped us raise the cash. Lil bro been dreamin bout it fer years.")
 			return
 		#ifdef SECRETS_ENABLED
-		if (istype(W, /obj/item/paper/grillnasium/fartnasium_recruitment))
+		if (istype(W, /obj/item/paper/image/grillnasium/fartnasium_recruitment))
 			if(ON_COOLDOWN(src, "attackby_chatter", 3 SECONDS)) return
 			boutput(M, SPAN_NOTICE("<b>You show [W] to [src]</b> "))
 			SPAWN(1 SECOND)

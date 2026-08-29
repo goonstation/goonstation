@@ -8,7 +8,7 @@ TYPEINFO(/obj/item/device/matanalyzer)
 	icon_state = "matanalyzer"
 	name = "material analyzer"
 	desc = "This piece of equipment can detect and analyze materials."
-	flags = EXTRADELAY | TABLEPASS | CONDUCT
+	flags = EXTRADELAY | TABLEPASS | CONDUCT | SUPPRESSATTACK
 	w_class = W_CLASS_SMALL
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
@@ -16,21 +16,69 @@ TYPEINFO(/obj/item/device/matanalyzer)
 			boutput(user, SPAN_ALERT("[target] is too far away."))
 			return
 		animate_scanning(target, "#597B6D")
-		var/atom/W = target
-		if(!W.material)
-			boutput(user, SPAN_ALERT("No significant material found in \the [target]."))
-		else
-			boutput(user, SPAN_NOTICE("<u>[capitalize(W.material.getName())]</u>"))
-			boutput(user, SPAN_NOTICE("[W.material.getDesc()]"))
+		user.visible_message(SPAN_ALERT("[user] scans \the [target] with \the [src]."))
+		var/datum/matsci_scan/scan = new(target, user)
+		boutput(user, scan.report)
 
-			if(length(W.material.getMaterialProperties()))
-				boutput(user, SPAN_NOTICE("<u>The material is:</u>"))
-				for(var/datum/material_property/X in W.material.getMaterialProperties())
-					var/value = W.material.getProperty(X.id)
-					boutput(user, SPAN_NOTICE("• [X.getAdjective(W.material)] ([value])"))
-			else
-				boutput(user, SPAN_NOTICE("<u>The material is completely unremarkable.</u>"))
-		if (istype(target, /obj/machinery/atmospherics/pipe))
-			var/obj/machinery/atmospherics/pipe/pipe = target
-			if (pipe.can_rupture)
-				boutput(user, SPAN_NOTICE("<u>This pipe has an estimated fatigue pressure of [round(pipe.effective_fatigue_pressure(), 10)]KPa</u>"))
+
+/datum/matsci_scan
+	var/report
+
+	New(var/atom/target, var/mob/user)
+		. = ..()
+		var/report_mat = analyze_material(target)
+		var/report_effects = analyze_effects(target)
+		src.report = report_mat + report_effects
+
+	proc/analyze_material(var/atom/target)
+		var/datum/material/mat = target.material
+		if(!mat)
+			return SPAN_ALERT("<li>No significant material found in \the [target].</li>")
+		var/report = SPAN_SUCCESS("<li><u>Material</u>: [capitalize(mat.getName())]")
+		report += SPAN_SUBTLE(" ([target.material_amount_total()] units)</li>")
+		if(length(mat.getMaterialProperties()))
+			report += "<ul style='margin-top:0px;margin-bottom:0px;padding-left:20px'>"
+			for(var/datum/material_property/X in mat.getMaterialProperties())
+				var/value = mat.getProperty(X.id)
+				report += "<li style='padding-left:0px'>[X.getAdjective(mat)] ([value][X.value_unit])</li>"
+			report += "</ul>"
+		else
+			report += "<li>The material properties are completely unremarkable.</li>"
+		var/report_trigger = analyze_material_triggers(mat)
+		if(report_trigger)
+			report += "<li>[SPAN_NOTICE("Material Effects:")]</li>" + report_trigger
+		return report
+
+	proc/analyze_material_triggers(var/datum/material/mat)
+		var/list/trigger_desc = list()
+		for(var/X in triggerVars)
+			for(var/datum/materialProc/mat_proc in mat.vars[X])
+				var/desc = mat_proc.get_scan_desc()
+				if(!desc)
+					continue
+				var/desc_match = FALSE
+				for(var/other in trigger_desc)
+					if(desc == other)
+						desc_match = TRUE
+						break
+				if(!desc_match)
+					trigger_desc += desc
+
+		if(length(trigger_desc) == 0)
+			return null
+		var/report = "<ul style='margin-top:0px;margin-bottom:0px;padding-left:20px'>"
+		for(var/desc in trigger_desc)
+			report += "<li style='padding-left:0px'>[desc]</li>"
+		return "[report]</ul>"
+
+	proc/analyze_effects(var/atom/target)
+		var/report = ""
+		var/scan_data = target.on_material_scan()
+		if(islist(scan_data))
+			for(var/data in scan_data)
+				report += "<li style='padding-left:0px'>[data]</li>"
+		else if(scan_data)
+			report = "<li style='padding-left:0px'>[scan_data]</li>"
+		if(report)
+			report = "<li>[SPAN_NOTICE("Additional Notes:")]</li><ul style='margin-top:0px;margin-bottom:0px;padding-left:20px'>[report]</ul>"
+		return report

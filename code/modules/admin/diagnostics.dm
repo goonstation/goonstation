@@ -777,6 +777,83 @@ proc/debug_map_apc_count(delim,zlim)
 				// staging this gradient to scale for 1-5 cameras
 				img.app.color = hsv2rgb(clamp(200 - (length(theTurf.camera_coverage_emitters) * 40), 0, 200), 85, 100)
 
+	managed_positional_sounds
+		name = "managed positional sounds"
+		help = {"Shows managed positional sound emitter fields.<br>
+		Brighter tiles have a stronger blended field.<br>
+		Numbers show blended stored volume. Tooltips show final pan. E# marks emitter turfs."}
+		restricted = 1
+
+		var/datum/controller/process/managed_positional_sounds/sound_process
+		var/query_range = 0
+
+		OnStartRendering(client/C)
+			src.sound_process = global.managed_positional_sound_process
+			src.query_range = src.sound_process?.max_query_range || 0
+
+		OnFinishRendering(client/C)
+			src.sound_process = null
+
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			if (!src.sound_process?.emitter_hashmap || !src.query_range)
+				img.app.alpha = 0
+				return
+
+			var/list/emitters_by_sound = list()
+			var/emitters_on_turf = 0
+			for (var/datum/managed_positional_sound_emitter/emitter as anything in src.sound_process.emitter_hashmap.exact_supremum(theTurf, src.query_range))
+				var/datum/managed_positional_sound/managed_sound = emitter.managed_sound
+				if (!managed_sound?.active)
+					continue
+
+				if (get_turf(emitter.source) == theTurf)
+					emitters_on_turf++
+
+				emitters_by_sound[managed_sound] ||= list()
+				emitters_by_sound[managed_sound] += emitter
+
+			if (!length(emitters_by_sound))
+				img.app.alpha = 0
+				return
+
+			var/list/best_field = null
+			var/list/desc_lines = list()
+			var/field_count = 0
+			for (var/datum/managed_positional_sound/managed_sound as anything in emitters_by_sound)
+				var/list/field = managed_sound.get_debug_blended_field_for_turf(theTurf, emitters_by_sound[managed_sound])
+				if (!field)
+					continue
+
+				field_count++
+				if (!best_field || field["stored_volume"] > best_field["stored_volume"])
+					best_field = field
+
+				if (length(desc_lines) < 8)
+					var/field_volume = round(field["stored_volume"], 0.1)
+					var/field_emitters = field["emitter_count"]
+					var/field_sound_pan = round(field["sound_pan"], 0.1)
+					desc_lines += "\ref[managed_sound] ch[managed_sound.sound_channel] vol [field_volume] emitters [field_emitters] pan [field_sound_pan]"
+
+			if (!best_field)
+				img.app.alpha = 0
+				return
+
+			var/normalized_volume = clamp(best_field["stored_volume"] / best_field["volume_cap"], 0, 1)
+			var/red = round(min(255, normalized_volume * 510))
+			var/green = round(min(255, (1 - normalized_volume) * 510))
+			img.app.color = rgb(red, green, 40)
+			img.app.alpha = round(clamp(40 + (normalized_volume * 160), 40, 200))
+
+			var/best_volume = round(best_field["stored_volume"])
+			if (emitters_on_turf)
+				img.app.overlays = list(src.makeText("E[emitters_on_turf]<br>[best_volume]", RESET_ALPHA | RESET_COLOR))
+			else
+				img.app.overlays = list(src.makeText(best_volume, RESET_ALPHA | RESET_COLOR))
+
+			if (field_count > length(desc_lines))
+				desc_lines += "...[field_count - length(desc_lines)] more managed sound fields"
+			img.app.desc = desc_lines.Join("<br>")
+
 	atmos_pipes
 		name = "atmos pipes"
 		help = {"highlights all atmos machinery<br>pipe color - the pipeline to which it belongs<br>numbers:<br>temperature<br>moles<br>pressure"}

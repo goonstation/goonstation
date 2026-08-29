@@ -23,8 +23,11 @@
 			dead_mob.corpse = null
 			hivemind_observer.corpse = null
 		else if (istype(current_mob, /mob/living/critter/changeling))
+			var/mob/living/critter/changeling/critter = current_mob
 			hivemind_observer.corpse = current_mob
 			current_mob.ghost = hivemind_observer
+			if (critter.original_name)
+				hivemind_observer.real_name = critter.original_name
 
 		src.owner.transfer_to(hivemind_observer)
 

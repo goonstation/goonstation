@@ -24,6 +24,7 @@
 		object.exhaustion += 1
 		if(object.exhaustion > 10)
 			object.cost = round(object.cost*(1+object.exhaustion/50))
+			global.shippingmarket.update_supply_console_data() //Make sure all consoles show the new price
 
 		return S
 
@@ -404,7 +405,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	contains = list(/obj/item/storage/toolbox/electrical/orange_tools = 2,
 					/obj/item/device/multitool/orange = 2,
 					/obj/item/clothing/gloves/yellow = 2)
-	cost = PAY::DOCTORATE*2
+	cost = PAY::EXECUTIVE*2
 	containertype = /obj/storage/crate
 	containername = "Electrical Maintenance Crate"
 

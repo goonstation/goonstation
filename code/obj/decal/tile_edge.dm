@@ -111,7 +111,7 @@
 	red
 		color = "#BC6B72"
 	orange
-		color = "#E7C88C"
+		color = "#C17643"
 	yellow
 		color = "#BC9F6B"
 	green
@@ -139,7 +139,7 @@
 	red
 		color = "#BC6B72"
 	orange
-		color = "#E7C88C"
+		color = "#C17643"
 	yellow
 		color = "#BC9F6B"
 	green
