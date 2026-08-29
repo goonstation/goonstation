@@ -1217,7 +1217,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 
 	var/effect_tick = 5 //! how many process ticks to wait before an expansion wave
 	var/anomaly_strength = 5 //! how strong/wide the anomaly currently is
-	var/halt_strength = 1 //! as an interdictor continues to operate on this, each interdictor cycle will try to shut it more assertively if needed
+	var/max_anomaly_strength = 50 //! how
 
 	var/obj/effect/pale_shroud/shroud = null
 
@@ -1232,6 +1232,34 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 		boutput(C, SPAN_ALERT("A strange tremor [pick("propagates", "shudders", "resonates")] through the air. Something is wrong."))
 		shake_camera(C.mob, 6, 1)
 
+/obj/anomaly/pale/proc/shut_anomaly()
+	playsound(src.loc, 'sound/musical_instruments/artifact/Artifact_Precursor_3.ogg', 60, 0)
+	var/list/parting_messages = list(
+		"« 96 77 97 76 96 66 23 38 17 87 97 38 23 96 27 48 23 96 68 56 27 23 86 96 67 66 58 97 28 48 «",
+		"« 38 28 96 28 56 96 66 96 87 97 48 23 28 58 97 98 23 96 28 56 23 86 96 38 38 96 67 66 «",
+		"« 96 76 56 96 08 23 87 37 23 38 17 87 37 38 23 38 58 28 97 27 76 23 96 27 48 «",
+		"« 87 37 56 17 56 23 27 48 56 96 28 66 23 38 78 56 28 86 23 17 87 97 38 23 28 58 97 «",
+		"« 28 96 27 48 96 17 97 48 23 17 87 37 38 23 38 17 87 97 38 23 28 58 97 23 98 56 77 «",
+	)
+	for_clients_in_range(C, get_turf(src), 6)
+		boutput(C, SPAN_DISARM(pick(parting_messages)))
+		shake_camera(C.mob, 6, 1)
+	src.effect_tick = 999
+	animate(src, alpha = 200, time = 8, easing = BOUNCE_EASING | EASE_IN)
+	SPAWN(1 SECOND)
+		var/turf/nearby_spot = null
+		for(var/D in alldirs)
+			var/turf/proxturf = get_step(src,D)
+			if(!is_blocked_turf(proxturf))
+				nearby_spot = proxturf
+				break
+		if(nearby_spot)
+			showswirl(nearby_spot)
+			new /obj/item/raw_material/starstone(nearby_spot)
+		animate(src, alpha = 0, time = 16, easing = BACK_EASING)
+	SPAWN(3 SECONDS)
+		qdel(src)
+
 /obj/anomaly/pale/disposing()
 	src.vis_contents -= src.shroud
 	qdel(src.shroud)
@@ -1245,24 +1273,23 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 		src.effect_tick--
 		return
 
-	var/interdicted_this_cycle = FALSE
-	for_by_tcl(IX, /obj/machinery/interdictor)
-		var/needed_strength = min(src.anomaly_strength, src.halt_strength)
-		if (!needed_strength) break
-		if (IX.expend_interdict(needed_strength*1000, src))
-			if(!interdicted_this_cycle)
-				interdicted_this_cycle = TRUE
-				if(src.halt_strength == 1) //"fresh batch" of interdiction
-					playsound(IX,'sound/machines/alarm_a.ogg',20,FALSE,5,-1.5)
-					IX.visible_message(SPAN_ALERT("<b>[IX] emits a subsonic anomaly warning!</b>"))
-			src.anomaly_strength = max(src.anomaly_strength - src.halt_strength, 0)
+	//Always gains anomaly strength each cycle, your interdictor(s) will need to overcome it either acutely or in the long haul
+	src.anomaly_strength = min(src.anomaly_strength + rand(1,2), src.max_anomaly_strength)
 
-	if(!interdicted_this_cycle)
-		src.anomaly_strength = min(anomaly_strength + rand(1,2), 50)
-		src.halt_strength = initial(src.halt_strength)
-		playsound(src.loc, "sound/items/pickup_[rand(1,3)].ogg", 50, 0, pitch = 0.2, extrarange = 24)
-	else
-		src.halt_strength = min(src.halt_strength+1, 3)
+	for_by_tcl(IX, /obj/machinery/interdictor)
+		if (src.anomaly_strength <= 1) break
+		///Estimate how strong of an interruption we can apply, based on the amount of charge remaining in the internal capacitor
+		var/target_strength = floor(IX.intcap.charge/3000)
+		///Each interrupt strength costs 2,000 cell units and cuts 1 current and maximum anomaly strength
+		var/interrupt_strength = clamp(target_strength,1,3)
+		if (IX.expend_interdict(interrupt_strength*2000, src))
+			if(src.max_anomaly_strength == 50) //haven't interdicted yet
+				playsound(IX,'sound/machines/alarm_a.ogg',20,FALSE,5,-1.5)
+				IX.visible_message(SPAN_ALERT("<b>[IX] emits an unknown anomaly warning!</b>"))
+			src.max_anomaly_strength = max(src.max_anomaly_strength - interrupt_strength, 1)
+			src.anomaly_strength = max(src.anomaly_strength - interrupt_strength, src.max_anomaly_strength, 1)
+
+	playsound(src.loc, "sound/items/pickup_[rand(1,3)].ogg", 50, 0, pitch = 0.2, extrarange = 24)
 
 	var/kernel_alpha = 66 + (anomaly_strength*2)
 	animate(src, alpha = kernel_alpha, time = 6 SECONDS, easing = LINEAR_EASING)
@@ -1270,6 +1297,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 	var/anom_alpha = min(10 + (anomaly_strength*2), 45)
 	var/anom_scale = 0.17 * anomaly_strength
 	animate(src.shroud, alpha = anom_alpha, time = 6 SECONDS, transform = matrix()*anom_scale, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
+	if(src.anomaly_strength <= 1) src.shut_anomaly()
 
 	src.effect_tick = initial(src.effect_tick) - rand(0,2)
 
