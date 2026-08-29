@@ -2352,6 +2352,8 @@
 		gas.farts = 1.69
 	else
 		gas.farts = 0.69
+	if(iscluwne(src))
+		gas.farts *= 1.1
 	if(src.bioHolder?.HasEffect("radioactive_farts"))
 		gas.radgas = 2
 	gas.temperature = T20C
