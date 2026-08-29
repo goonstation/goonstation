@@ -702,7 +702,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 			message_admins("Menhir gravity event couldn't find enough anomaly sites! This shouldn't happen. Aborting event")
 			return
 
-		playsound_global(world, 'sound/musical_instruments/artifact/Artifact_Precursor_3.ogg', 65, 0, pitch = 0.3)
+		playsound_global(Z_LEVEL_STATION, 'sound/musical_instruments/artifact/Artifact_Precursor_3.ogg', 65, 0, pitch = 0.3)
 		SPAWN(2) //approximately syncs sound
 			for (var/mob/M in mobs)
 				SPAWN(0)
@@ -907,9 +907,9 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 				playsound(focal_nexus, 'sound/items/med_scanner.ogg', chargevolume, 0, pitch = 0.5, extrarange = 48)
 				sleep(1 SECOND)
 
-			playsound_global(world, 'sound/machines/shielddown.ogg', 65, 0)
+			playsound_global(Z_LEVEL_STATION, 'sound/machines/shielddown.ogg', 65, 0)
 			SPAWN(2) //approximately syncs sound
-				playsound_global(world, 'sound/effects/explosionfar.ogg', 65, 0)
+				playsound_global(Z_LEVEL_STATION, 'sound/effects/explosionfar.ogg', 65, 0)
 				for (var/mob/M in mobs)
 					SPAWN(0)
 						if (M.z == Z_LEVEL_STATION && !inafterlife(M) && !isVRghost(M))
@@ -1156,7 +1156,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 	weight = 10
 	announcement_style = MENHIR_EVENT_NOTIFY_GLOBAL
 	centcom_headline = "ARTIFACT CONDITION ALERT"
-	centcom_message = "IONISING RADIATION BUILDUP IN TOREADOR-7I-22408. VACATE SITE IMMEDIATELY. IF UNABLE TO VACATE SITE, MOVE WITHIN TOREADOR-7I-22408 OR AS FAR FROM IT AS POSSIBLE."
+	centcom_message = "VACATE SITE IMMEDIATELY. IONISING RADIATION BUILDUP IN CASING OF TOREADOR-7I-22408. IF UNABLE TO VACATE SITE, MOVE WITHIN TOREADOR-7I-22408 OR AS FAR FROM IT AS POSSIBLE."
 	required_elapsed_round_time = 10 MINUTES
 
 	event_effect()
@@ -1189,35 +1189,51 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 				sleep(12)
 			for(var/i in 1 to 64)
 				playsound(focal_nexus, 'sound/items/med_scanner.ogg', 90, 0, pitch = 0.55, extrarange = i)
-				burst_turfs += range_diamond(focal_nexus,i)
+				burst_turfs += rangefind_diamond(focal_nexus,i)
 				var/fadetime = 10
 				if(i == 64) fadetime = 40 //special finishing flash
-				SPAWN(4)
+				var/volmod = ceil(i * 0.4)
+				SPAWN(1)
 					for (var/turf/T in burst_turfs)
 						irradiate_turf(T,i,fadetime,burst_turfs[T])
-					playsound(focal_nexus, 'sound/weapons/ACgun2.ogg', i+30, 0, extrarange = i+24)
+					playsound_global(Z_LEVEL_STATION, 'sound/weapons/ACgun2.ogg', volmod+3, 0)
 				sleep(12)
 
-	///Fetch a "ring" of turfs in a diamond based on target radius, and index their rad-safety
-	proc/range_diamond(var/turf/T, var/radius = 1)
+	///Fetch a "ring" of turfs in a diamond based on target radius, and index their rad-safety while shattering any present lights
+	proc/rangefind_diamond(var/turf/T, var/radius = 1)
 		. = list()
 		var/turf/seekspot = null
 		for(var/i = -radius, i <= radius, i++)
 			var/bandwidth = radius - abs(i) //example: you're radius 3. this is 0 at Y-peaks, and 3 at Y-center. diamond!
 			if(bandwidth)
 				seekspot = locate(T.x - bandwidth, T.y + i, T.z)
+				if(!seekspot.can_break) //skip blowout check in unbreakable turfs like walls and space
+					for(var/obj/machinery/light/L in seekspot)
+						if (L.type == /obj/machinery/light/emergency) continue
+						L.on = 1
+						L.broken()
 				if(istype(seekspot.loc,/area/station/crown))
 					.[seekspot] = TRUE
 				else
 					.[seekspot] = FALSE
 
 				seekspot = locate(T.x + bandwidth, T.y + i, T.z)
+				if(!seekspot.can_break) //skip blowout check in unbreakable turfs like walls and space
+					for(var/obj/machinery/light/L in seekspot)
+						if (L.type == /obj/machinery/light/emergency) continue
+						L.on = 1
+						L.broken()
 				if(istype(seekspot.loc,/area/station/crown))
 					.[seekspot] = TRUE
 				else
 					.[seekspot] = FALSE
 			else
 				seekspot = locate(T.x, T.y + i, T.z)
+				if(!seekspot.can_break) //skip blowout check in unbreakable turfs like walls and space
+					for(var/obj/machinery/light/L in seekspot)
+						if (L.type == /obj/machinery/light/emergency) continue
+						L.on = 1
+						L.broken()
 				if(istype(seekspot.loc,/area/station/crown))
 					.[seekspot] = TRUE
 				else
@@ -1271,7 +1287,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 				showswirl(T)
 				Artifact_Spawn(T,"precursor")
 
-		playsound_global(world, 'sound/musical_instruments/artifact/Artifact_Precursor_5.ogg', 45, 0, 0.45)
+		playsound_global(Z_LEVEL_STATION, 'sound/musical_instruments/artifact/Artifact_Precursor_5.ogg', 45, 0, 0.45)
 		landmarks[LANDMARK_MENHIR_PASSAGE] = null
 
 		message_delay = rand(5 SECONDS, 8 SECONDS)
@@ -1316,13 +1332,13 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 				SPAWN(rand(0,200))
 					new /mob/living/critter/shade/invader(T)
 
-		playsound_global(world, 'sound/musical_instruments/artifact/Artifact_Void_2.ogg', 70, 0, 0.45)
+		playsound_global(Z_LEVEL_STATION, 'sound/musical_instruments/artifact/Artifact_Void_2.ogg', 70, 0, 0.45)
 		var/remusic = 110 SECONDS
 		SPAWN(remusic)
-			playsound_global(world, 'sound/musical_instruments/artifact/Artifact_Void_2.ogg', 70, 0, 0.45)
+			playsound_global(Z_LEVEL_STATION, 'sound/musical_instruments/artifact/Artifact_Void_2.ogg', 70, 0, 0.45)
 
 		SPAWN(rand(2 SECONDS, 3 SECONDS))
-			playsound_global(world, pick(list('sound/voice/creepywhisper_1.ogg', 'sound/voice/creepywhisper_2.ogg', 'sound/voice/creepywhisper_3.ogg')), 60)
+			playsound_global(Z_LEVEL_STATION, pick(list('sound/voice/creepywhisper_1.ogg', 'sound/voice/creepywhisper_2.ogg', 'sound/voice/creepywhisper_3.ogg')), 60)
 			for (var/obj/machinery/power/apc/apc in machine_registry[MACHINES_POWER])
 				if (!istype(apc.area,/area/station/hallway/primary))
 					continue
