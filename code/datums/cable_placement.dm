@@ -18,7 +18,7 @@
 		src.icon_state = (C.toggle_advanced_placement(the_mob) ? "coil-adv-on" : "coil-adv-off")
 		. = ..()
 
-/// Invisible screen object covering the 3x3 tiles around the user
+/// Invisible screen object covering the map while advanced placement is active.
 /atom/movable/screen/cable_placement_catcher
 	name = ""
 	desc = ""
@@ -26,12 +26,12 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	layer = HUD_LAYER_UNDER_1
 	flags = NOSPLASH | NOFPRINT
-	screen_loc = "CENTER-1,CENTER-1 to CENTER+1,CENTER+1"
+	screen_loc = "SOUTHWEST to NORTHEAST"
 	/// What this catcher feeds mouse events to.
 	var/datum/cable_placement/manager
 
 	clicked(list/params)
-		src.manager?.on_click(params)
+		src.manager?.on_catcher_click(params)
 
 	MouseMove(location, control, params)
 		. = ..()
@@ -125,6 +125,17 @@
 /datum/cable_placement/proc/on_life_tick(mob/living/user, mult)
 	if (src.active && !can_act(user))
 		src.on_end_signal()
+
+/// Handles a caught click, passing clicks outside placement range back to the world after deactivating.
+/datum/cable_placement/proc/on_catcher_click(list/params)
+	if (!src.resolve(params))
+		return
+	if (IN_RANGE(src.user, src.hover_turf, 1))
+		src.on_click(params)
+		return
+	var/turf/clicked_turf = src.hover_turf
+	src.on_end_signal()
+	src.user?.click(clicked_turf, params)
 
 /// Resolves a mouse event's screen-loc into `hover_turf` and `hover_dir`. Returns FALSE if it can't
 /datum/cable_placement/proc/resolve(list/params)
