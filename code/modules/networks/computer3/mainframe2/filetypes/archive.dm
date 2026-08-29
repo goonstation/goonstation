@@ -21,11 +21,7 @@
 	. = ..()
 
 /datum/computer/file/archive/copy_file()
-	var/datum/computer/file/archive/copy = new src.type()
-
-	for (var/variable_name as anything in src.vars)
-		if (issaved(src.vars[variable_name]))
-			copy.vars[variable_name] = src.vars[variable_name]
+	var/datum/computer/file/archive/copy = ..() // Handle the metadata.
 
 	copy.contained_files ||= list()
 	for (var/datum/computer/C as anything in src.contained_files)

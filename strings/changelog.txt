@@ -1,4 +1,85 @@
 
+(t)sat aug 29 26
+(u)nova2053
+(p)27555
+(e)|
+(+)You can now slap cigarettes out of peoples' mouths. Cigarette trajectory is determined by your angle relative to the person you slap and which hand you're using.
+(u)Waffleloffle
+(p)27595
+(e)🎨📨|C-Sprites, A-Logistics
+(+)Added baseball uniforms. Most can be found by hacking a uniform vendor or manufacturer. Hit the big leagues with your department today!
+(u)TDHooligan
+(p)27598
+(e)|
+(+)Musculature Enhancement and Hulk lower felt recoil with firearms. Hulk and Clumsy make you less accurate.
+(t)fri aug 28 26
+(u)Tyrant
+(p)27318
+(e)⚗|A-Chemistry
+(+)Milk Powder now is a little less weird. Super milk is more consistent. In like a normal way.
+(u)ZeWaka, Kapu1178
+(p)27640
+(e)🆕🎨💅💡|C-Feature, C-Sprites, C-QoL, A-Station-Systems
+(*)Added a new placement mode (ability button) for cable coils that lets you place wires with your mouse cursor.
+(t)thu aug 27 26
+(u)LeahTheTech
+(p)27630
+(e)⛔⚗|C-Removal, A-Chemistry
+(+)Fliptonium can no longer be used with smoke powder.
+(u)Kubius
+(p)27626
+(e)🗺|A-Mapping
+(+)Menhir's got a loafer now! And a particular disk drive of potential importance to shifty individuals.
+(u)Skeletonman0
+(p)27536
+(e)🆕🎨💊|C-Feature, C-Sprites, A-Medical
+(+)You can now use canes in your active hand to tap them on the ground and make a noise.
+(u)LorrMaster
+(p)27587
+(e)📦👮|A-Game-Objects, A-Security
+(+)Securitron construction maintains material and forensic data.
+(u)LorrMaster
+(p)27591
+(e)📦🤖|A-Game-Objects, A-Silicons
+(+)Material and forensic data is now maintained for the construction process of various robots
+(u)swinglow20
+(p)27480
+(e)🎨🐁|C-Sprites, A-Critters
+(*)Changed how Fermids' combat works in game and slightly buffs them. Watch out, mining!
+(+)Changed movement speed, health, and abilities for four of the Fermid subtypes: Workers, Drones, Spitters, and Hulks
+(t)wed aug 26 26
+(u)ANNmagedon
+(p)27594
+(e)🗺|A-Mapping
+(+)The hop of menhir, in their infinite greed, has obtained another dog.
+(u)LorrMaster
+(p)27601
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)The duration of a white hole from bursting singularities now depends on the largest size that the singularity has reached
+(u)bamlord
+(p)27550
+(e)🏅|A-Medal
+(+)Added a new medal for winning the lottery. What lottery? THE lottery.
+(u)bamlord
+(p)27611
+(e)⚖|C-Balance
+(+)Syndicate cyborgs are now counted as trained syndicates for the purposes of targeting and item descriptions etc.
+(u)Muzcl
+(p)27609
+(e)🎨|C-Sprites
+(+)A new fish has spawned in the clown's shoes and central command ballpit.
+(t)tue aug 25 26
+(u)TDHooligan
+(p)27600
+(e)🪲🧛|C-Bug, A-Gamemodes
+(+)Fix: Gangs should now only take 3 seconds to spray a tag in an unoccupied space, instead of 15/12/9 seconds.
+(+)Fix: Gangs can no longer hand in foam dart guns.
+(+)Tagging over rival tags now takes slightly longer.
+(t)mon aug 24 26
+(u)ANNmagedon
+(p)27603
+(e)🗺|A-Mapping
+(+)A familiar pair of plushies previously lost with the end of donut 2 has appeared on donut 3.
 (t)sun aug 23 26
 (u)ANNmagedon + ZeWaka
 (p)26916
