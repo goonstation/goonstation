@@ -282,8 +282,8 @@
 		src.message_user("tar: Cannot handle file [current_path][to_copy]")
 		return
 
-	// avoid copying files we don't have permission for
-	// this can happen if you copy /, which you can see, which contains /proc, which you need superuser for
+	// Avoid copying files we don't have permission for.
+	// This can happen if you copy / (ALLACCESS) which contains /proc (NONE).
 	if (!src.check_read_permission(to_copy, src.useracc))
 		return
 

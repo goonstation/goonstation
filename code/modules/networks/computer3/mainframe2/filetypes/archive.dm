@@ -21,7 +21,7 @@
 	. = ..()
 
 /datum/computer/file/archive/copy_file()
-	var/datum/computer/file/archive/copy = ..() // handle our metadata
+	var/datum/computer/file/archive/copy = ..() // Handle the metadata.
 
 	copy.contained_files ||= list()
 	for (var/datum/computer/C as anything in src.contained_files)
