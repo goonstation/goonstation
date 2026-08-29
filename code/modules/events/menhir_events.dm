@@ -89,8 +89,8 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 		if(length(eligible_sites))
 			. = pick(eligible_sites)
 
-	///For events localized to a particular site, update the message to direct people towards the site, more or less.
-	proc/localize_reading(var/atom/target)
+	///For events localized to a particular site, update the message to direct people towards the site. Somewhat fuzzy unless accuracy is guaranteed.
+	proc/localize_reading(var/atom/target,var/always_accurate = FALSE)
 		///Text given to orientate the announcement.
 		var/sumtext = "spinal"
 		///X-axis report text (may remain null).
@@ -110,19 +110,19 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 		var/y_negative_clamped = max(0,-y_main) * 2
 
 		//Y string first (directional convention)
-		if(prob(10)) //10% chance for localization on the axis to fail
+		if(prob(10) && !always_accurate) //10% chance for localization on the axis to fail
 			y_string = null
-		else if(prob(y_positive_clamped))
+		else if(prob(y_positive_clamped) || (y_positive_clamped && always_accurate))
 			y_string = "north"
-		else if(prob(y_negative_clamped))
+		else if(prob(y_negative_clamped) || (y_negative_clamped && always_accurate))
 			y_string = "south"
 
 		//X string after
-		if(prob(10)) //10% chance for localization on the axis to fail
+		if(prob(10) && !always_accurate) //10% chance for localization on the axis to fail
 			x_string = null
-		else if(prob(x_positive_clamped))
+		else if(prob(x_positive_clamped) || (x_positive_clamped && always_accurate))
 			x_string = "east"
-		else if(prob(x_negative_clamped))
+		else if(prob(x_negative_clamped) || (x_negative_clamped && always_accurate))
 			x_string = "west"
 
 		//pull them all together
@@ -132,7 +132,8 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 			if(x_string) sumtext += x_string
 
 		src.centcom_message = "A spike in electromagnetic activity from TOREADOR-7I-22408 was recently recorded, with notable projection on the [sumtext] axis."
-		src.centcom_message += " Structural alteration is probable, and may not be confined to the artifact itself."
+		if(!always_accurate)
+			src.centcom_message += " Structural alteration is probable, and may not be confined to the artifact itself."
 
 //some little fellas!
 /datum/random_event/menhir/probes
@@ -1160,8 +1161,10 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 		var/turf/nodelandmark
 		///Tag for the node the event is occurring in
 		var/node_tag = null
-		///List of walls associated with the node (we'll be installing doors onto these)
-		var/list/walls_to_door = list()
+		///List of eligible walls in node mode; divided by relative position.
+		var/list/eligible_walls = list("S" = list(), "N" = list(), "E" = list(), "W" = list())
+		///When we've populated a direction with at least one wall from each facing, we're good to go
+		var/list/eligibility_flags = 0
 
 		if(!landmarks[LANDMARK_MENHIR_NODE] || length(landmarks[LANDMARK_MENHIR_NODE]) < 1) //fallback mode: pick a curated station tile instead
 			logTheThing(LOG_DEBUG, null, "Menhir schism event couldn't find a fallback turf after all nodes expended; aborting event.")
@@ -1173,28 +1176,44 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 
 		for (var/turf/T in landmarks[LANDMARK_MENHIR_DOOR])
 			if (landmarks[LANDMARK_MENHIR_DOOR][T] == node_tag)
-				walls_to_door += T
+				//categorize nodes based on positional block (set up this way to allow east/west entrance sides to be more than 1 door)
+				if(T.x > nodelandmark.x)
+					eligible_walls["E"] += T
+					eligibility_flags |= EAST
+				else if(T.x < nodelandmark.x)
+					eligible_walls["W"] += T
+					eligibility_flags |= WEST
+				else
+					if(T.y > nodelandmark.y)
+						eligible_walls["N"] += T
+						eligibility_flags |= NORTH
+					else
+						eligible_walls["S"] += T
+						eligibility_flags |= SOUTH
 
-		if (length(walls_to_door) < 4)
-			logTheThing(LOG_DEBUG, null, "Menhir schism event couldn't find expected door count! This shouldn't happen.")
-			message_admins("Menhir schism event couldn't find expected door count! This shouldn't happen. Aborting event")
+		if (eligibility_flags < (NORTH|SOUTH|EAST|WEST))
+			logTheThing(LOG_DEBUG, null, "Menhir gift event didn't find all directions for the [node_tag] node! This shouldn't happen.")
+			message_admins("Menhir gift event didn't find all directions for the [node_tag] node! This shouldn't happen. Aborting event")
 			return
 
 		landmarks[LANDMARK_MENHIR_NODE].Remove(nodelandmark) //"expend" the node in node spawns, so future events won't select it again
 
 		new /obj/anomaly/pale(nodelandmark)
 
-		playsound(nodelandmark, 'sound/ambience/industrial/Precursor_Drone3.ogg', 65, 0, extrarange = 24)
+		playsound(nodelandmark, 'sound/ambience/industrial/Precursor_Drone3.ogg', 65, 0, extrarange = 30)
 
-		for(var/turf/wallturf in walls_to_door)
+		var/facing_dir = pick("S","N","E","W")
+
+		for(var/turf/wallturf in eligible_walls[facing_dir])
 			var/save_dir = wallturf.icon_state
 			var/obj/newdoor = new /obj/machinery/door/unpowered/blue(wallturf)
 			if (save_dir == "interior-3") //vertical wall detection
 				newdoor.dir = 4
 
-		src.localize_reading(nodelandmark)
+		src.localize_reading(nodelandmark,TRUE)
+		src.centcom_message += " All signal capture, including non-anomalous, has dropped precipitously since event detection; immediate investigation is advised."
 
-		message_delay = rand(1 MINUTE, 2 MINUTES)
+		message_delay = rand(15 SECONDS, 35 SECONDS)
 		..() //don't send out the message until we have confirmed we can do the event
 
 		logTheThing(LOG_STATION, null, "Menhir schism event at [node_tag] arm - [log_loc(nodelandmark)]")
@@ -1217,7 +1236,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 
 	var/effect_tick = 5 //! how many process ticks to wait before an expansion wave
 	var/anomaly_strength = 5 //! how strong/wide the anomaly currently is (signals within radius equal to strength are jammed)
-	var/max_anomaly_strength = 30 //! how strong/wide the anomaly can get, at maximum
+	var/max_anomaly_strength = 30 //! how strong/wide the anomaly can get, at maximum (interdictors can whittle away at this)
 
 	var/obj/effect/pale_shroud/shroud = null
 
