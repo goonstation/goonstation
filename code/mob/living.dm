@@ -1794,13 +1794,14 @@ TYPEINFO(/mob/living)
 			return AM
 	return picked_item
 
-/mob/living/clamp_act()
+/mob/living/clamp_act(mob/clamper, obj/item/clamp)
 	if (isintangible(src))
 		return FALSE
 	src.TakeDamage("All", 10)
 	src.setStatusMin("slowed", 2 SECONDS, 15)
 	src.emote("scream", FALSE)
 	playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_1.ogg', 40, 1)
+	logTheThing(LOG_COMBAT, clamper, "CLAMPS [key_name(src)] with [clamp] at [log_loc(src)]")
 	return TRUE
 
 /mob/living/HealBleeding(amt)

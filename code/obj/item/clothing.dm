@@ -133,6 +133,14 @@ ABSTRACT_TYPE(/obj/item/clothing)
 		if (src.vision_modifier)
 			user.remove_vision(src.vision_modifier, src)
 
+	// throw_at() but it also automatically unequips the item. adding this for cigarette slapping, putting it here because it might be useful for other stuff in the future
+	proc/throw_worn_item(var/target, var/range, var/speed)
+		if(ismob(src.loc))
+			var/mob/owner = src.loc
+			owner.drop_item(src)
+			src.set_loc(owner.loc)
+			src.dropped(owner)
+		src.throw_at(target, range, speed)
 
 /obj/item/clothing/material_trigger_on_mob_attacked(var/mob/attacker, var/mob/attacked, var/atom/weapon, var/situation_modifier)
 	// if someone wearing this gets attacked, only trigger this if the corresponding zone is hit
