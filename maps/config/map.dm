@@ -48,9 +48,6 @@
 #elif defined(MAP_OVERRIDE_DECARABIA)
 #include "decarabia.dm"
 
-#elif defined(MAP_OVERRIDE_DONUT2)
-#include "donut2.dm"
-
 #elif defined(MAP_OVERRIDE_DONUT3)
 #include "donut3.dm"
 
@@ -59,6 +56,9 @@
 
 #elif defined(MAP_OVERRIDE_CLARION)
 #include "clarion.dm"
+
+#elif defined(MAP_OVERRIDE_MENHIR)
+#include "menhir.dm"
 
 #elif defined(MAP_OVERRIDE_OSHAN)
 #include "oshan.dm"

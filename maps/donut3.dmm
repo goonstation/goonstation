@@ -2772,6 +2772,9 @@
 /area/station/hallway/primary/west)
 "aOO" = (
 /obj/decal/cleanable/dirt,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/sanitary/blue,
 /area/station/medical/asylum/bathroom)
 "aOP" = (
@@ -2993,7 +2996,7 @@
 	},
 /area/station/security/checkpoint/podbay)
 "aSk" = (
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/stairs/wide/other,
 /area/station/hallway/primary/southeast)
 "aSm" = (
@@ -12524,7 +12527,6 @@
 /area/station/crew_quarters/fitness)
 "dQn" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -15240,6 +15242,7 @@
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
+/obj/item/toy/plush/small/possum/md,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
 "eJM" = (
@@ -15411,7 +15414,9 @@
 	},
 /area/station/crew_quarters/cafeteria)
 "eNT" = (
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
 /obj/decal/stripe_delivery,
 /obj/cable{
 	icon_state = "4-8"
@@ -19468,6 +19473,9 @@
 	dir = 8;
 	name = "the other best seat in the house"
 	},
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/black/grime,
 /area/station/medical/asylum/bathroom)
 "gag" = (
@@ -19934,11 +19942,7 @@
 /area/station/medical/cdc)
 "giZ" = (
 /obj/table/wood/round/auto,
-/obj/item/reagent_containers/food/snacks/beefood{
-	desc = "A little birthday cupcake for Heisenbee.  May not taste good to non-bees.";
-	icon = 'icons/obj/foodNdrink/food_dessert.dmi';
-	icon_state = "cupcake";
-	name = "Heisenbee's birthday cupcake";
+/obj/item/reagent_containers/food/snacks/beefood/heisenbee{
 	pixel_x = 5;
 	pixel_y = 8
 	},
@@ -23516,6 +23520,10 @@
 	pixel_x = -5;
 	pixel_y = 13
 	},
+/obj/machinery/recharger{
+	pixel_x = 6;
+	pixel_y = 5
+	},
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 5
 	},
@@ -24084,6 +24092,9 @@
 /turf/simulated/floor/carpet,
 /area/station/security/detectives_office)
 "hvv" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/wall/false_wall{
 	color = "#87befd";
 	icon = 'icons/turf/walls/jen.dmi';
@@ -25954,6 +25965,14 @@
 /obj/machinery/light/traffic_light/trader_left/delay3,
 /turf/space,
 /area/space)
+"idy" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4;
+	name = "kitchen freezer pipe"
+	},
+/obj/machinery/power/data_terminal,
+/turf/space,
+/area/station/turret_protected/AIbaseoutside)
 "idR" = (
 /turf/simulated/floor/caution/corner{
 	dir = 1
@@ -30292,7 +30311,6 @@
 /area/station/hallway/secondary/construction2)
 "jxa" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -31923,6 +31941,15 @@
 	dir = 4
 	},
 /area/station/hydroponics/bay)
+"jVo" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/sanitary/blue,
+/area/station/medical/asylum/bathroom)
 "jVp" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -34304,7 +34331,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
 /turf/simulated/floor/blackwhite/whitegrime/other{
 	dir = 10
 	},
@@ -34598,7 +34627,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro,
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/stairs/wide,
 /area/station/hallway/primary/southeast)
@@ -36639,6 +36668,10 @@
 /obj/item/reagent_containers/hypospray{
 	pixel_x = 9;
 	pixel_y = 4
+	},
+/obj/item/stamp/md{
+	pixel_x = -4;
+	pixel_y = -7
 	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_east,
 /area/station/medical/head)
@@ -40520,7 +40553,7 @@
 	pixel_x = 8;
 	pixel_y = 2
 	},
-/obj/item/reagent_containers/food/snacks/spaghetti/spicy{
+/obj/item/reagent_containers/food/snacks/spaghetti/spicy/security{
 	pixel_x = -6;
 	pixel_y = 2
 	},
@@ -45178,7 +45211,7 @@
 /area/station/maintenance/outer/ne)
 "ofU" = (
 /obj/table/reinforced/auto,
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/escape)
 "ogg" = (
@@ -49356,6 +49389,10 @@
 	pixel_x = -8;
 	pixel_y = 15
 	},
+/obj/item/stamp/hos{
+	pixel_x = 5;
+	pixel_y = 10
+	},
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 1
 	},
@@ -52593,7 +52630,6 @@
 /area/station/ai_monitored/armory)
 "qsQ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/security/equipment)
 "qsX" = (
@@ -58971,6 +59007,7 @@
 /area/station/engine/engineering)
 "srQ" = (
 /obj/table/wood/auto,
+/obj/machinery/recharger,
 /turf/simulated/floor/carpet/purple/fancy/junction/nw_e,
 /area/station/crew_quarters/hor)
 "srY" = (
@@ -60934,6 +60971,10 @@
 /area/station/hallway/primary/west)
 "sWR" = (
 /obj/table/wood/auto,
+/obj/item/stamp/hop{
+	pixel_x = -6;
+	pixel_y = 9
+	},
 /obj/item/reagent_containers/food/drinks/rum_spaced,
 /obj/item/pen/fancy{
 	pixel_x = 7;
@@ -64140,6 +64181,11 @@
 "tVx" = (
 /obj/machinery/camera/directional/north{
 	pixel_x = -10
+	},
+/obj/machinery/networked/nuclear_charge,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/black/grime,
 /area/station/medical/asylum/bathroom)
@@ -68378,6 +68424,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/recharger/wall/sticky{
+	dir = 8;
+	pixel_x = -23
+	},
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fblue2"
@@ -69812,6 +69862,7 @@
 	dir = 8
 	},
 /obj/item/clothing/suit/bedsheet/black,
+/obj/item/toy/plush/small/bee/rd,
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_west,
 /area/station/medical/head)
 "vFi" = (
@@ -73342,6 +73393,9 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload_foyer)
 "wGD" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/black/grime,
 /area/station/medical/asylum/bathroom)
 "wGE" = (
@@ -77686,6 +77740,10 @@
 /obj/item/card/id/gold/captains_spare{
 	pixel_x = -13
 	},
+/obj/item/stamp/cap{
+	pixel_x = 7;
+	pixel_y = 8
+	},
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fblue3"
@@ -78977,9 +79035,9 @@
 /obj/item/device/audio_log{
 	pixel_x = -5
 	},
-/obj/item/stamp{
-	pixel_x = -6;
-	pixel_y = 10
+/obj/item/stamp/rd{
+	pixel_x = 12;
+	pixel_y = 7
 	},
 /turf/simulated/floor/carpet/purple/fancy/innercorner{
 	dir = 4
@@ -120566,7 +120624,7 @@ nuJ
 llA
 nSh
 nSh
-vVA
+idy
 xms
 nsJ
 qPC
@@ -120868,7 +120926,7 @@ rdj
 rwP
 nSh
 nSh
-vVA
+idy
 xms
 nsJ
 fnD
@@ -148853,7 +148911,7 @@ jPH
 knx
 uyx
 bpb
-aXw
+tAZ
 wwE
 wwE
 wwE
@@ -149754,7 +149812,7 @@ lSP
 bku
 hID
 nWS
-nWS
+jVo
 cVZ
 gjj
 blC

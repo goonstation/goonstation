@@ -2113,7 +2113,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "standard-frame"
 	density = 1
-	material_amt = 0.3
+	material_amt = MATERIAL::AMOUNT::SHEET * 3
 	var/wrenched = FALSE
 	var/glassed = FALSE
 	var/boardinstalled = FALSE
@@ -2981,6 +2981,7 @@ TYPEINFO(/obj/machinery/vending/hydroponics/mean_solarium_bullshit)
 		product_list += new/datum/data/vending_product(/obj/item/storage/box/fruit_wedges, 1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/applicator/condiment/shaker/salt, 1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cocktailshaker, 1)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/milkfrother, 1)
 
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/hobo_wine, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff, 1, hidden=1)

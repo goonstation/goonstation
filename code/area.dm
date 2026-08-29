@@ -2673,6 +2673,10 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 		name = "The Rusty Krab"
 		icon_state = "kitchen"
 
+/area/station/crew_quarters/kitchen/backroom
+	name = "Kitchen Back Room"
+	icon_state = "red"
+
 /area/station/crew_quarters/clown
 	name = "Clown Hole"
 	icon_state = "storage"
@@ -3913,6 +3917,25 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	minimaps_to_render_on = null
 	icon_state = "red"
 
+/area/research_outpost/limpet
+	name = "The Limpet"
+	minimaps_to_render_on = null
+	do_not_irradiate = FALSE
+
+/area/research_outpost/limpet/hangar
+	name = "Limpet Hangar"
+	icon_state = "hangar"
+	do_not_irradiate = TRUE
+
+/area/research_outpost/limpet/maint
+	name = "Limpet Equipment Room"
+	icon_state = "purple"
+	do_not_irradiate = TRUE
+
+/area/research_outpost/limpet/personnel
+	name = "Limpet Personnel Wing"
+	icon_state = "pink"
+
 // end station areas //
 
 TYPEINFO(/area/salvager)
@@ -4148,6 +4171,11 @@ TYPEINFO(/area/station/turret_protected/AIbaseoutside)
 	name = "AI Upload Foyer Starboard"
 	sound_environment = 12
 	icon_state = "ai_foyer"
+
+/area/station/turret_protected/incursion
+	name = "Incursion Staging Area"
+	icon_state = "purple"
+	sound_environment = 12
 
 /area/station/turret_protected/armory_outside
 	name = "Armory Outer Perimeter"

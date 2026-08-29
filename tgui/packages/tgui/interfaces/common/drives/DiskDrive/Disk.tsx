@@ -9,7 +9,7 @@
 import { PropsWithChildren, useContext } from 'react';
 import { Box, Button } from 'tgui-core/components';
 
-import { DriveContext } from '../Drive';
+import { DriveContext } from '../context';
 
 interface DiskProps {
   color: string;
