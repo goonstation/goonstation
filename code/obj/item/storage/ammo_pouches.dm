@@ -231,7 +231,6 @@
 		desc = "A specialized pouch for various high capacity injectors; in reality just a repurposed ammo pouch due to cost cutting initiatives."
 		icon_state = "ammopouch_ntsc_medic"
 
-		can_hold = list(/obj/item/reagent_containers/emergency_injector, /obj/item/reagent_containers/hypospray, /obj/item/reagent_containers/syringe)
 		spawn_contents = list(/obj/item/reagent_containers/emergency_injector/high_capacity/lifesupport,
 			/obj/item/reagent_containers/emergency_injector/high_capacity/cardiac,
 			/obj/item/reagent_containers/emergency_injector/high_capacity/atropine,
