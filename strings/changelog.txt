@@ -1,4 +1,9 @@
 
+(t)sat aug 29 26
+(u)TDHooligan
+(p)27598
+(e)|
+(+)Musculature Enhancement and Hulk lower felt recoil with firearms. Hulk and Clumsy make you less accurate.
 (t)fri aug 28 26
 (u)Tyrant
 (p)27318
