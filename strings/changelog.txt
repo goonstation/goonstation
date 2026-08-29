@@ -1,4 +1,17 @@
 
+(t)sat aug 29 26
+(u)nova2053
+(p)27555
+(e)|
+(+)You can now slap cigarettes out of peoples' mouths. Cigarette trajectory is determined by your angle relative to the person you slap and which hand you're using.
+(u)Waffleloffle
+(p)27595
+(e)🎨📨|C-Sprites, A-Logistics
+(+)Added baseball uniforms. Most can be found by hacking a uniform vendor or manufacturer. Hit the big leagues with your department today!
+(u)TDHooligan
+(p)27598
+(e)|
+(+)Musculature Enhancement and Hulk lower felt recoil with firearms. Hulk and Clumsy make you less accurate.
 (t)fri aug 28 26
 (u)Tyrant
 (p)27318
