@@ -114,6 +114,8 @@
 /datum/cable_placement/proc/on_end_signal()
 	if (src.active && src.user)
 		boutput(src.user, SPAN_NOTICE("Advanced cable placement disabled."))
+	for (var/obj/ability_button/cable_advanced_placement/button in src.coil?.ability_buttons)
+		button.icon_state = "coil-adv-off"
 	qdel(src)
 
 /datum/cable_placement/proc/on_user_moved()
