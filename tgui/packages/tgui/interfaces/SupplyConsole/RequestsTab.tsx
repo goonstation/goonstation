@@ -10,7 +10,13 @@ import { Button, Section, Table } from 'tgui-core/components';
 import { useBackend } from '../../backend';
 import { SupplyConsoleData } from './type';
 
-export const SupplyConsoleRequestsTab = (props) => {
+interface SupplyConsoleRequestsTabProps {
+  can_accept_orders: boolean;
+}
+
+export const SupplyConsoleRequestsTab = (
+  props: SupplyConsoleRequestsTabProps,
+) => {
   const { data, act } = useBackend<SupplyConsoleData>();
   const { can_accept_orders } = props;
   return (

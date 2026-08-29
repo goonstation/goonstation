@@ -30,31 +30,33 @@ import {
   SupplyConsoleTabKeysToTitles,
 } from './type';
 
+const shown_tabs = [
+  SupplyConsoleTabKeys.Requests,
+  SupplyConsoleTabKeys.Supplies,
+  SupplyConsoleTabKeys.History,
+  SupplyConsoleTabKeys.Market,
+  SupplyConsoleTabKeys.Traders,
+  SupplyConsoleTabKeys.Requisitions,
+];
+
 export const SupplyConsole = () => {
   return (
-    <ConsoleMenu
+    <SupplyConsoleMenu
       see_rockbox
       see_account={false}
       can_accept_orders
-      shown_tabs={[
-        SupplyConsoleTabKeys.Requests,
-        SupplyConsoleTabKeys.Supplies,
-        SupplyConsoleTabKeys.History,
-        SupplyConsoleTabKeys.Market,
-        SupplyConsoleTabKeys.Traders,
-        SupplyConsoleTabKeys.Requisitions,
-      ]}
+      shown_tabs={shown_tabs}
     />
   );
 };
 
-interface SupplyConsoleProps {
+interface SupplyConsoleMenuProps {
   see_rockbox: boolean;
   see_account: boolean;
-  shown_tabs: number[];
+  shown_tabs: SupplyConsoleTabKeys[];
   can_accept_orders: boolean;
 }
-export const ConsoleMenu = (props: SupplyConsoleProps) => {
+export const SupplyConsoleMenu = (props: SupplyConsoleMenuProps) => {
   const { data, act } = useBackend<SupplyConsoleData>();
   const [viewing_tab, setTab] = useSharedState(
     'viewtab',

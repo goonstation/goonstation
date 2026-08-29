@@ -4,19 +4,21 @@
  * @author JORJ949 (https://github.com/JORJ949)
  * @license MIT
  */
-import { ConsoleMenu } from './SupplyConsole/index';
+import { SupplyConsoleMenu } from './SupplyConsole/index';
 import { SupplyConsoleTabKeys } from './SupplyConsole/type';
+
+const shown_tabs = [
+  SupplyConsoleTabKeys.Requests,
+  SupplyConsoleTabKeys.Supplies,
+];
 
 export const SupplyRequestConsole = () => {
   return (
-    <ConsoleMenu
+    <SupplyConsoleMenu
       see_rockbox={false}
       see_account
       can_accept_orders={false}
-      shown_tabs={[
-        SupplyConsoleTabKeys.Requests,
-        SupplyConsoleTabKeys.Supplies,
-      ]}
+      shown_tabs={shown_tabs}
     />
   );
 };
