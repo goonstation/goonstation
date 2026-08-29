@@ -8,11 +8,9 @@
 
 import { Button } from 'tgui-core/components';
 
-interface DiskSlotProps {
-  onClick?: () => void;
-}
+import { type DriveSlotProps } from '../type';
 
-export function DiskSlot(props: DiskSlotProps) {
+export function DriveSlot(props: DriveSlotProps) {
   const { onClick } = props;
   return (
     <Button

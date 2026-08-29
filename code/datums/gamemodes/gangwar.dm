@@ -1218,6 +1218,7 @@
 	var/datum/gang/gang
 	/// when our next spray sound can beplayed
 	var/next_spray = 0 DECI SECONDS
+	var/tagging_over = FALSE
 
 	New(var/turf/target_turf as turf, var/obj/item/spray_paint_gang/can, var/tag_over)
 		src.target_turf = target_turf
@@ -1225,6 +1226,7 @@
 		src.spraycan = can
 		if (tag_over)
 			src.duration = GANG_SPRAYPAINT_TAG_REPLACE_TIME
+			tagging_over = TRUE
 		..()
 
 	onStart()
@@ -1234,17 +1236,17 @@
 			if (ismob(owner))
 				M = owner
 				src.gang = M?.get_gang()
-			if (gang)
+			if (gang && src.tagging_over)
 				icon = 'icons/obj/decals/gang_tags.dmi'
 				icon_state = "gangtag[src.gang.gang_tag]"
 				var/speedup = src.gang.gear_worn(M)
 				switch (speedup)
 					if (1)
-						duration = 13 SECONDS
+						duration *= 0.9
 					if (2)
-						duration = 9 SECONDS
+						duration *= 0.8
 					if (3)
-						duration = 6 SECONDS
+						duration *= 0.7
 			..()
 		catch(var/exception/e)
 			..()
@@ -1962,10 +1964,11 @@
 
 		//gun score
 		else if (istype(item, /obj/item/gun))
-			if(istype(item, /obj/item/gun/kinetic/foamdartgun))
-				boutput(user, SPAN_ALERT("<b>You cant stash toy guns in the locker</b>"))
-
-				return
+			if (istype(item, /obj/item/gun/kinetic))
+				var/obj/item/gun/kinetic/G = item
+				if (G.ammo_cats && (AMMO_FOAMDART in G.ammo_cats))
+					boutput(user, SPAN_ALERT("<b>You cant stash toy guns in the locker</b>"))
+					return
 
 			if(istype(item, /obj/item/gun/kinetic/slamgun) || istype(item, /obj/item/gun/kinetic/zipgun))
 				boutput(user, SPAN_ALERT("<b>This shoddy firearm isn't worth selling.</b>"))
@@ -2270,17 +2273,17 @@
 	attack(mob/O, mob/user)
 		if (istype(O, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = O
-			if (!H.get_gang() && !H.ghost?.get_gang())
-				boutput(user, SPAN_ALERT("They aren't part of a gang! Janktank is <b><i>too cool</i></b> for them."))
-				return
 			if (H == user)
 				boutput(user, SPAN_ALERT("You're not jamming that in yourself!"))
 				return
+			if (!H.get_gang() && !H.ghost?.get_gang())
+				boutput(user, SPAN_ALERT("[he_or_she_dont_or_doesnt(H)] have a gang affiliation! Janktank is <b><i>too cool</i></b> for [him_or_her(H)]."))
+				return
 			if (H.decomp_stage)
-				boutput(user, SPAN_ALERT("It's too late, they're rotten."))
+				boutput(user, SPAN_ALERT("It's too late, [he_or_she(H)] [is_or_are(H)] rotten."))
 				return
 			if (H.mind?.get_player()?.dnr || H.ghost?.mind?.get_player()?.dnr)
-				boutput(user, SPAN_ALERT("Seems they don't want to come back. Huh."))
+				boutput(user, SPAN_ALERT("Seems [he_or_she_dont_or_doesnt(H)] want to come back. Huh."))
 				return
 			if (isdead(H) || H.health < 0)
 				actions.start(new /datum/action/bar/icon/janktanktwo(user, H, src),user)
@@ -2399,19 +2402,23 @@
 		UpdateIcon()
 
 /obj/item/storage/box/gang_equipment
-	name = "gang equipment case"
+	name = /obj/item/storage/briefcase/instruments::name
 	spawn_contents = list(/obj/item/spray_paint_gang = 3, /obj/item/tool/quickhack = 1, /obj/item/switchblade = 1, /obj/item/tool/janktanktwo = 1)
-	desc = "A briefcase full of neat stuff."
+	desc = "A hardshell case for martial implements."
 	icon_state = "briefcase_black"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "sec-case"
+	tooltip_flags = REBUILD_USER
 
 	var/datum/gang/gang = null
 
 	New(turf/newloc, datum/gang/gang)
 		src.gang = gang
-		src.desc = "A briefcase full of equipment for the [gang.gang_name] gang."
 		..()
+
+	get_desc(dist, mob/user)
+		if (src.gang && user?.get_gang()) // only appears for gang users
+			. += " It belongs to [src.gang.gang_name]."
 
 //items purchasable from gangs
 /datum/gang_item

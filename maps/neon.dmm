@@ -2524,7 +2524,7 @@
 /obj/stool/chair{
 	dir = 4
 	},
-/mob/living/critter/small_animal/bat/doctor,
+/obj/critter/bat/doctor,
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/medical/head)
 "bVQ" = (
@@ -4702,6 +4702,10 @@
 	pixel_y = 8
 	},
 /obj/machinery/light/incandescent/cool,
+/obj/item/stamp/hop{
+	pixel_x = 8;
+	pixel_y = 8
+	},
 /turf/simulated/floor/carpet/green/fancy/edge/ne,
 /area/station/crew_quarters/hop)
 "duV" = (
@@ -4848,6 +4852,7 @@
 	id = "capquarters";
 	dir = 2
 	},
+/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "dyT" = (
@@ -6445,11 +6450,7 @@
 "exU" = (
 /obj/table/wood/round/auto,
 /obj/item/plate,
-/obj/item/reagent_containers/food/snacks/beefood{
-	desc = "A little birthday cupcake for Heisenbee.  May not taste good to non-bees.";
-	icon = 'icons/obj/foodNdrink/food_dessert.dmi';
-	icon_state = "cupcake";
-	name = "Heisenbee's birthday cupcake";
+/obj/item/reagent_containers/food/snacks/beefood/heisenbee{
 	pixel_x = -4;
 	pixel_y = 5
 	},
@@ -16227,7 +16228,7 @@
 /area/iss)
 "lbB" = (
 /obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/spaghetti/spicy{
+/obj/item/reagent_containers/food/snacks/spaghetti/spicy/security{
 	pixel_y = 6
 	},
 /obj/item/kitchen/utensil/fork{
@@ -27411,7 +27412,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/light/incandescent/warm,
+/obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "thz" = (
@@ -28511,6 +28512,10 @@
 /obj/item/rocko,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/item/stamp/ce{
+	pixel_x = 5;
+	pixel_y = 12
 	},
 /turf/simulated/floor/carpet/green,
 /area/station/crew_quarters/ce)

@@ -35,6 +35,9 @@
 	STOP_TRACKING
 	. = ..()
 
+/datum/minimap/area_map/proc/refresh_render(datum/callback/on_complete = null)
+	on_complete?.Invoke()
+
 /datum/minimap/area_map/initialise_minimap_render()
 	src.map_icons_by_z_level = global.minimap_renderer.generate_minimap_icons(src.minimap_type)
 	src.dynamic_areas_overlays_by_z_level = global.minimap_renderer.get_minimap_dynamic_area_overlays(src.minimap_type)
@@ -61,7 +64,67 @@
 
 	for (var/atom/target as anything in src.minimap_markers)
 		var/datum/minimap_marker/minimap/minimap_marker = src.minimap_markers[target]
-		src.set_marker_position(minimap_marker, minimap_marker.target.x, minimap_marker.target.y, minimap_marker.target.z)
+		src.update_marker_position(minimap_marker)
+
+/datum/minimap/area_map/admin
+	// Renders at full resolution by default.
+	min_zoom = 1
+
+	initialise_minimap_render()
+		src.z_level ||= Z_LEVEL_STATION
+		if (!global.minimap_renderer)
+			return
+
+		src.map = new()
+		src.map.vis_flags |= VIS_INHERIT_ID
+		src.map.mouse_opacity = 0
+
+		src.minimap_render = new()
+		src.minimap_render.appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
+		src.minimap_render.mouse_opacity = 0
+
+		src.minimap_render.vis_contents += src.map
+		src.minimap_holder.vis_contents += src.minimap_render
+		src.refresh_render()
+
+	update_z_level(z_level)
+		if (!global.minimap_renderer?.valid_area_map_z_level(z_level))
+			return
+
+		src.z_level = z_level
+		src.centre_focus_x = null
+		src.centre_focus_y = null
+		src.centre_scale = null
+		src.find_focal_point()
+
+		for (var/atom/target as anything in src.minimap_markers)
+			var/datum/minimap_marker/minimap/minimap_marker = src.minimap_markers[target]
+			src.update_marker_position(minimap_marker)
+
+		src.refresh_render()
+
+	refresh_render(datum/callback/on_complete = null)
+		var/render_z_level = src.z_level
+		SPAWN(0)
+			if (QDELETED(src) || !src.map || src.z_level != render_z_level || !global.minimap_renderer)
+				on_complete?.Invoke()
+				return
+			src.map.icon = global.minimap_renderer.get_area_map_icon(render_z_level)
+			on_complete?.Invoke()
+
+	get_focal_bounds()
+		return global.minimap_renderer?.get_area_map_focal_bounds(src.z_level)
+
+	centre_on_point(zoom, focus_x, focus_y)
+		. = ..()
+		if (!src.minimap_render)
+			return
+
+		var/raster_size = max(src.x_max, src.y_max) * src.map_scale
+		var/canvas_size = ceil(raster_size / world.icon_size) * world.icon_size
+		var/canvas_offset = (canvas_size - raster_size) / 2
+		src.minimap_render.pixel_x += canvas_offset
+		src.minimap_render.pixel_y += canvas_offset
 
 /// Checks whether a turf is rendered on this minimap type.
 /datum/minimap/area_map/proc/valid_turf(turf/T)
@@ -74,30 +137,44 @@
 
 	return TRUE
 
-/// Locate the focal point of the map by using the furthest valid turf in each direction.
+/// Gets the bounds used to focus this minimap.
+/datum/minimap/area_map/proc/get_focal_bounds()
+	var/max_x = src.x_min
+	var/min_x = src.x_max
+	var/max_y = src.y_min
+	var/min_y = src.y_max
+
+	for (var/turf/T as anything in block(locate(src.x_min, src.y_min, src.z_level), locate(src.x_max, src.y_max, src.z_level)))
+		if (!src.valid_turf(T))
+			continue
+
+		max_x = max(max_x, T.x)
+		min_x = min(min_x, T.x)
+		max_y = max(max_y, T.y)
+		min_y = min(min_y, T.y)
+
+	return list("max_x" = max_x, "min_x" = min_x, "max_y" = max_y, "min_y" = min_y)
+
+/// Locate the focal point of the map using its focal bounds.
 /datum/minimap/area_map/proc/find_focal_point()
 	if (!src.x_max || !src.x_min || !src.y_max || !src.y_min || !src.z_level)
 		return
 
 	if (!src.centre_focus_x || !src.centre_focus_y || !src.centre_scale)
-		var/max_x = src.x_min
-		var/min_x = src.x_max
-		var/max_y = src.y_min
-		var/min_y = src.y_max
+		var/list/focal_bounds = src.get_focal_bounds()
+		if (!focal_bounds)
+			return
 
-		for (var/turf/T as anything in block(locate(src.x_min, src.y_min, src.z_level), locate(src.x_max, src.y_max, src.z_level)))
-			if (!src.valid_turf(T))
-				continue
-
-			max_x = max(max_x, T.x)
-			min_x = min(min_x, T.x)
-			max_y = max(max_y, T.y)
-			min_y = min(min_y, T.y)
+		var/max_x = focal_bounds["max_x"]
+		var/min_x = focal_bounds["min_x"]
+		var/max_y = focal_bounds["max_y"]
+		var/min_y = focal_bounds["min_y"]
 
 		src.centre_focus_x = ((max_x + min_x) - 1) / 2
 		src.centre_focus_y = ((max_y + min_y) - 1) / 2
 
 		src.centre_scale = min(world.maxx / ((max_x - min_x) + src.border_width), world.maxy / ((max_y - min_y) + src.border_width))
+		src.centre_scale = clamp(src.centre_scale, src.min_zoom, src.max_zoom)
 
 	src.centre_on_point(src.centre_scale, src.centre_focus_x, src.centre_focus_y)
 
@@ -124,22 +201,16 @@
 	src.minimap_render.pixel_y += y_offset
 
 	var/max_dim = (max(src.x_max, src.y_max) * zoom * src.map_scale)
-	// Calculate Horizontal Centering Offset
 	var/map_width = src.x_max * zoom * src.map_scale
-	var/horizontal_centering_offset = (max_dim - map_width) / 2
-
-	// Calculate Vertical Centering Offset
 	var/map_height = src.y_max * zoom * src.map_scale
-	var/vertical_centering_offset = (max_dim - map_height) / 2
-
-	src.minimap_render.pixel_x += horizontal_centering_offset
-	src.minimap_render.pixel_y += vertical_centering_offset
+	src.minimap_render.pixel_x += (max_dim - map_width) / 2
+	src.minimap_render.pixel_y += (max_dim - map_height) / 2
 
 	src.zoom_coefficient = zoom
 
 	for (var/atom/target as anything in src.minimap_markers)
 		var/datum/minimap_marker/minimap/minimap_marker = src.minimap_markers[target]
-		src.set_marker_position(minimap_marker, minimap_marker.target.x, minimap_marker.target.y, minimap_marker.target.z)
+		src.update_marker_position(minimap_marker)
 
 /datum/minimap/area_map/transparent
 	initialise_minimap_render()

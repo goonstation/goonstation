@@ -694,15 +694,6 @@
 		result_amount = 1
 		mix_phrase = "The paper chars, seperating into a silky black powder."
 
-	milk
-		name = "Milk"
-		id = "milk"
-		result = "milk"
-		required_reagents = list("milk_powder" = 1, "water" = 1)
-		result_amount = 1
-		max_temperature = T0C + 100
-		mix_phrase = "The powder dissolves, turning the solution milky."
-
 	barbecue_sauce
 		name = "Barbecue Sauce"
 		id = "barbecue_sauce"
@@ -728,13 +719,32 @@
 			smoke.set_up(1, 0, get_turf(src))
 			smoke.start()
 
+	milk_reconstitution
+		name = "Milk"
+		id = "milk"
+		result = "milk"
+		required_reagents = list("milk_powder" = 1, "water" = 1)
+		result_amount = 1
+		max_temperature = T0C + 100
+		mix_phrase = "The powder dissolves, turning the solution milky."
+
 	super_milk
 		name = "Super Milk"
 		id = "super_milk"
 		result = "super_milk"
 		required_reagents = list("milk" = 1, "milk_powder" = 1)
+		inhibitors = list("water")
 		result_amount = 1
 		mix_phrase = "The mixture concentrates."
+
+	milk_dilution
+		name = "Milk"
+		id = "milk"
+		result = "milk"
+		required_reagents = list("super_milk" = 1, "water" = 1)
+		result_amount = 2
+		max_temperature = T0C + 100
+		mix_phrase = "The milk dilutes, becoming less super."
 
 	bilk
 		name = "Bilk"
@@ -5626,5 +5636,40 @@
 		required_reagents = list("sweetcondensedmilk"=1, "espresso"= 1)
 		result_amount = 2
 		mix_phrase = "The mixture slowly separates into two distinct layers."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
+	frothedmilk
+		name = "Frothed Milk"
+		id = "frothedmilk"
+		result = "frothedmilk"
+		required_reagents = list("milk" = 1)
+		result = "frothedmilk"
+		min_temperature = T0C + 65
+		result_amount = 1
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		mix_phrase = "The milk rapidly expands into a smooth, velvety foam."
+		drinkrecipe = TRUE
+
+		does_react(datum/reagents/holder)
+			var/datum/reagent/fooddrink/milk/milk = holder.get_reagent("milk")
+			return milk && milk.was_physically_shocked
+
+	macchiato
+		name = "Macchiato"
+		id = "macchiato"
+		result = "macchiato"
+		required_reagents = list("frothedmilk" = 1, "espresso" = 1)
+		result_amount = 2
+		mix_phrase = "The foam settles gently atop the espresso, leaving a pale mark across its surface."
+    
+	dulcedeleche
+		name = "Dulce de leche"
+		id = "dulcedeleche"
+		result = "dulcedeleche"
+		required_reagents = list("sweetcondensedmilk" = 1, "vanilla" = 1)
+		min_temperature = T0C + 85
+		result_amount = 1
+		mix_phrase = "The mixture slowly thickens into a velvety spread."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
