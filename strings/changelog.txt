@@ -1,5 +1,9 @@
 
 (t)sat aug 29 26
+(u)nova2053
+(p)27555
+(e)|
+(+)You can now slap cigarettes out of peoples' mouths. Cigarette trajectory is determined by your angle relative to the person you slap and which hand you're using.
 (u)Waffleloffle
 (p)27595
 (e)🎨📨|C-Sprites, A-Logistics
