@@ -136,6 +136,7 @@
 #define SPEECH_MODIFIER_MEGAPHONE "megaphone"
 #define SPEECH_MODIFIER_MOB_MODIFIERS "mob_modifiers"
 #define SPEECH_MODIFIER_MONOSPACE_DECORATOR "monospace_decorator"
+#define SPEECH_MODIFIER_MONOSPACE_FORCED "monospace_forced"
 #define SPEECH_MODIFIER_MUTANTRACE_ABOMINATION "mutantrace_abomination"
 #define SPEECH_MODIFIER_MUTANTRACE_AMPHIBIAN "mutantrace_amphibian"
 #define SPEECH_MODIFIER_MUTANTRACE_COW "mutantrace_cow"

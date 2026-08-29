@@ -1802,6 +1802,10 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 	src.mind.transfer_to(target_shell)
 	src.deployed_shell.ensure_listen_tree().AddListenInput(LISTEN_INPUT_EARS_AI)
 	target_shell.gender = src.gender
+	if(src.always_monospace)
+		target_shell.set_always_monospaced(do_monospaced = TRUE, user = src)
+	else
+		target_shell.set_always_monospaced(do_monospaced = FALSE, user = src)
 
 /mob/living/silicon/ai/verb/toggle_lock()
 	set category = "AI Commands"
@@ -2378,6 +2382,15 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 
 	src.open_nearest_door_silicon()
 	return
+
+/mob/living/silicon/ai/verb/toggle_monospace(mob/user = src)
+	set category = "AI Commands"
+	set name = "Toggle Monospace Speech"
+	set desc = "Switches your speech between normal and forced-monospace mode."
+
+	var/new_setting = !src.always_monospace
+	src.set_always_monospaced(new_setting, user)
+
 
 //just use this proc to make click-track checking easier
 proc/is_mob_trackable_by_AI(var/mob/M)

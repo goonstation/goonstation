@@ -2221,6 +2221,7 @@
 #include "code\modules\speech\modules\speech\modifiers\megaphone.dm"
 #include "code\modules\speech\modules\speech\modifiers\mob_modifiers.dm"
 #include "code\modules\speech\modules\speech\modifiers\monospace_decorator.dm"
+#include "code\modules\speech\modules\speech\modifiers\monospace_forced.dm"
 #include "code\modules\speech\modules\speech\modifiers\mute.dm"
 #include "code\modules\speech\modules\speech\modifiers\muzzle.dm"
 #include "code\modules\speech\modules\speech\modifiers\radio.dm"
