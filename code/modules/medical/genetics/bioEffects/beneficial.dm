@@ -362,7 +362,7 @@
 			roundedmult += round(roundedmultremainder)
 			roundedmultremainder = roundedmultremainder % 1
 		for (roundedmult = roundedmult, roundedmult > 0, roundedmult --)
-			if (rand(1, regrow_prob) <= power)
+			if (regrow_prob && rand(1, regrow_prob) <= power)
 				if (ishuman(L))
 					var/mob/living/carbon/human/H = L
 					if (H.limbs)
@@ -1058,12 +1058,12 @@
 		if (probmult(20))
 			src.active = !src.active
 		if (src.active)
-			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src, INVIS_MESON)
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY_CLOAK, src, INVIS_MESON)
 		else
-			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY_CLOAK, src)
 
 	OnRemove()
-		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
+		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY_CLOAK, src)
 		. = ..()
 
 // hair_override gene

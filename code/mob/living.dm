@@ -1565,6 +1565,13 @@ TYPEINFO(/mob/living)
 	return shock_damage
 
 /mob/living/hitby(atom/movable/AM, datum/thrown_thing/thr)
+	if(isitem(AM) && src.juggling() && prob(60))
+		if (prob(src.juggling.len * 5))
+			src.drop_juggle()
+		else
+			SPAWN(0)
+				src.add_juggle(AM)
+		return ..()
 	. = 'sound/impact_sounds/Generic_Hit_2.ogg'
 	actions.interrupt(src, INTERRUPT_ATTACKED)
 	if (src.can_bleed && isitem(AM))
@@ -1576,12 +1583,6 @@ TYPEINFO(/mob/living)
 				src.was_harmed(thr.user, AM)
 	if (AM.throwforce > 5) //number
 		src.changeStatus("staggered", 5 SECONDS)
-	if(isobj(AM) && src.can_juggle)
-		if (src.juggling() && prob(src.juggling.len * 5))
-			src.drop_juggle()
-		else
-			SPAWN(0)
-				src.add_juggle(AM)
 	..()
 
 /mob/living/relaymove(mob/user, direction, delay, running)
@@ -1795,13 +1796,14 @@ TYPEINFO(/mob/living)
 			return AM
 	return picked_item
 
-/mob/living/clamp_act()
+/mob/living/clamp_act(mob/clamper, obj/item/clamp)
 	if (isintangible(src))
 		return FALSE
 	src.TakeDamage("All", 10)
 	src.setStatusMin("slowed", 2 SECONDS, 15)
 	src.emote("scream", FALSE)
 	playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_1.ogg', 40, 1)
+	logTheThing(LOG_COMBAT, clamper, "CLAMPS [key_name(src)] with [clamp] at [log_loc(src)]")
 	return TRUE
 
 /mob/living/HealBleeding(amt)

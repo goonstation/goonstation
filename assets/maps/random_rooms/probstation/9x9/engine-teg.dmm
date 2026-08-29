@@ -164,6 +164,10 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 6
 	},
+/obj/machinery/meter{
+	pixel_x = 9;
+	pixel_y = -8
+	},
 /turf/simulated/floor/engine/glow/blue,
 /area/station/engine/core/thermoelectric)
 "rJ" = (
@@ -214,6 +218,10 @@
 "vU" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 10
+	},
+/obj/machinery/meter{
+	pixel_x = -10;
+	pixel_y = -8
 	},
 /turf/simulated/floor/engine/glow,
 /area/station/engine/core/thermoelectric)

@@ -1063,7 +1063,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			src.name = "[random_spaghetti_name()] arrabbiata"
 
 	heal(mob/M)
-		if (src.secured && !(M.traitHolder && M.traitHolder.hasTrait("training_security")) && !M.reagents.has_reagent("milk"))
+		if (src.secured && !(M.traitHolder && M.traitHolder.hasTrait("training_security")) && !M.reagents.has_any(list("milk", "super_milk")))
 			random_burn_damage(M, rand(30, 40))
 			boutput(M, SPAN_ALERT("You're not trained to resist this level of spice! No wonder they kept [src] locked up!"))
 		else
@@ -3212,3 +3212,15 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 	bites_left = 3
 	food_effects = list("food_energized", "food_refreshed")
 	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
+
+/obj/item/reagent_containers/food/snacks/bowl_of_dulce_de_leche
+	name = "bowl of dulce de leche"
+	desc = "A small bowl of rich, sweet dulce de leche."
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
+	icon_state = "dulce_de_leche"
+	required_utensil = REQUIRED_UTENSIL_SPOON
+	bites_left = 4
+	initial_reagents = list("dulcedeleche" = 50)
+	meal_time_flags = MEAL_TIME_SNACK
+	use_bite_mask = FALSE
+	dropped_item = /obj/item/reagent_containers/food/drinks/bowl

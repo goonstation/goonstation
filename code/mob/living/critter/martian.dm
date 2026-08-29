@@ -140,11 +140,13 @@ TYPEINFO(/mob/living/critter/martian)
 	icon_state_dead = "martianW-dead"
 	health_brute = 100
 	health_burn = 100
+	has_genes = TRUE
 
 	New()
 		..()
 		abilityHolder.addAbility(/datum/targetable/critter/slam)
 		abilityHolder.addAbility(/datum/targetable/critter/tackle)
+		src.bioHolder.AddNewPoolEffect("fitness_buff", scramble=FALSE)
 
 
 	critter_attack(var/mob/target)
@@ -184,7 +186,7 @@ TYPEINFO(/mob/living/critter/martian)
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/hitscan
 		HH.name = "Martian Psychokinetic Blaster"
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "hand_martian"
 		HH.limb_name = "Martian Psychokinetic Blaster"
 		HH.can_hold_items = FALSE
@@ -199,12 +201,16 @@ TYPEINFO(/mob/living/critter/martian)
 	health_brute = 33
 	health_burn = 33
 	ai_type = /datum/aiHolder/ranged
+	has_genes = TRUE
 
 	New()
 		..()
 		abilityHolder.addAbility(/datum/targetable/critter/gibstare)
 		abilityHolder.addAbility(/datum/targetable/critter/telepathy)
 		abilityHolder.addAbility(/datum/targetable/critter/scarylook)
+		src.bioHolder.AddNewPoolEffect("telekinesis_drag", scramble=FALSE)
+		src.bioHolder.AddNewPoolEffect("telepathy", scramble=FALSE)
+		src.bioHolder.AddNewPoolEffect("psy_resist", scramble=FALSE)
 
 	critter_attack(var/mob/target)
 		var/datum/targetable/critter/gibstare/gib = src.abilityHolder.getAbility(/datum/targetable/critter/gibstare)

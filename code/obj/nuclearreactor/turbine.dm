@@ -520,9 +520,18 @@ ABSTRACT_TYPE(/obj/item/turbine_component)
 	icon_state = "turbine"
 	two_handed = TRUE
 
+	on_material_scan()
+		var/list/scan_data = list()
+		scan_data += "Blade mass increases with density"
+		scan_data += "Blade health increases with hardness"
+		return scan_data
+
 /obj/item/turbine_component/stator
 	name = "turbine stator"
 	desc = "a replacement stator the reactor's turbine"
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "stator"
 	two_handed = TRUE
+
+	on_material_scan()
+		return "Power generation increases with electrical conductivity"
