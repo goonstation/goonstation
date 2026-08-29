@@ -1149,6 +1149,103 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 ///////////////////////////////////////////////////////
 //////////////////////////////////////////////
 
+//an intolerable imbalance has developed within. it must be purged.
+/datum/random_event/menhir/radwave
+	name = "A Tide Which Scours"
+	message_delay = 5 SECONDS
+	weight = 10
+	announcement_style = MENHIR_EVENT_NOTIFY_GLOBAL
+	centcom_headline = "ARTIFACT CONDITION ALERT"
+	centcom_message = "IONISING RADIATION BUILDUP IN TOREADOR-7I-22408. VACATE SITE IMMEDIATELY. IF UNABLE TO VACATE SITE, MOVE WITHIN TOREADOR-7I-22408 OR AS FAR FROM IT AS POSSIBLE."
+	required_elapsed_round_time = 10 MINUTES
+
+	event_effect()
+		message_delay = rand(2 SECONDS, 3 SECONDS)
+		..()
+		if (random_events.announce_events)
+			SPAWN(message_delay)
+				playsound_global(world, 'sound/misc/announcement_ominous.ogg', 60, pitch = 1.45)
+			SPAWN(message_delay + 12)
+				playsound_global(world, 'sound/misc/announcement_ominous.ogg', 60, pitch = 1.45)
+			SPAWN(message_delay + 24)
+				playsound_global(world, 'sound/misc/announcement_ominous.ogg', 60, pitch = 1.45)
+			SPAWN(message_delay + 72)
+				playsound_global(world, 'sound/misc/announcement_ominous.ogg', 60, pitch = 1.45)
+			SPAWN(message_delay + 84)
+				playsound_global(world, 'sound/misc/announcement_ominous.ogg', 60, pitch = 1.45)
+			SPAWN(message_delay + 96)
+				playsound_global(world, 'sound/misc/announcement_ominous.ogg', 60, pitch = 1.45)
+
+		logTheThing(LOG_STATION, null, "Menhir radwave event triggered.")
+		message_admins("Menhir radwave event triggered.")
+
+		var/turf/focal_nexus = locate(MENHIR_CORE_X, MENHIR_CORE_Y, Z_LEVEL_STATION)
+		///Key is turf; value is whether it is shielded
+		var/list/burst_turfs = list()
+
+		SPAWN(1)
+			for(var/i in 1 to 9)
+				playsound(focal_nexus, 'sound/items/med_scanner.ogg', i*8, 0, pitch = 0.55, extrarange = 48)
+				sleep(12)
+			for(var/i in 1 to 64)
+				playsound(focal_nexus, 'sound/items/med_scanner.ogg', 90, 0, pitch = 0.55, extrarange = i)
+				burst_turfs += range_diamond(focal_nexus,i)
+				var/fadetime = 10
+				if(i == 64) fadetime = 40 //special finishing flash
+				SPAWN(4)
+					for (var/turf/T in burst_turfs)
+						irradiate_turf(T,i,fadetime,burst_turfs[T])
+					playsound(focal_nexus, 'sound/weapons/ACgun2.ogg', i+30, 0, extrarange = i+24)
+				sleep(12)
+
+	///Fetch a "ring" of turfs in a diamond based on target radius, and index their rad-safety
+	proc/range_diamond(var/turf/T, var/radius = 1)
+		. = list()
+		var/turf/seekspot = null
+		for(var/i = -radius, i <= radius, i++)
+			var/bandwidth = radius - abs(i) //example: you're radius 3. this is 0 at Y-peaks, and 3 at Y-center. diamond!
+			if(bandwidth)
+				seekspot = locate(T.x - bandwidth, T.y + i, T.z)
+				if(istype(seekspot.loc,/area/station/crown))
+					.[seekspot] = TRUE
+				else
+					.[seekspot] = FALSE
+
+				seekspot = locate(T.x + bandwidth, T.y + i, T.z)
+				if(istype(seekspot.loc,/area/station/crown))
+					.[seekspot] = TRUE
+				else
+					.[seekspot] = FALSE
+			else
+				seekspot = locate(T.x, T.y + i, T.z)
+				if(istype(seekspot.loc,/area/station/crown))
+					.[seekspot] = TRUE
+				else
+					.[seekspot] = FALSE
+		return
+
+	proc/irradiate_turf(var/turf/T,var/rad_strength = 1,var/fadetime = 11,var/shielded = FALSE)
+		if (!isturf(T))
+			return
+
+		//does not use flash-fill animate to avoid double anim calls
+		var/color_old = T.color
+		if(shielded)
+			T.color = "#eeff00"
+		else
+			//spatial interdictor: nullify radiation pulses. good luck
+			//consumes 100 units of charge (50,000 joules) per tile protected
+			for_by_tcl(IX, /obj/machinery/interdictor)
+				if (IX.expend_interdict(100,T,1))
+					animate_flash_color_fill_inherit(T,"#FFDD00",1,5)
+					return
+			T.color = "#90ff00"
+		animate(T, color = color_old, time = fadetime, easing = LINEAR_EASING)
+		if(!shielded)
+			for (var/mob/M in T.contents)
+				logTheThing(LOG_STATION, M, "is hit by a radiation burst at [log_loc(M)].")
+				M.take_radiation_dose(rad_strength)
+
 //sometimes, the door just unlocks itself
 /datum/random_event/menhir/road
 	name = "For Parted Are The Gates"
