@@ -1278,11 +1278,11 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 
 	for_by_tcl(IX, /obj/machinery/interdictor)
 		if (src.anomaly_strength <= 1) break
-		///Estimate how strong of an interruption we can apply, based on the amount of charge remaining in the internal capacitor
-		var/target_strength = floor(IX.intcap.charge/3000)
-		///Each interrupt strength costs 2,000 cell units and cuts 1 current and maximum anomaly strength
+		///Estimate how strong of an interruption we can steadily apply, based on the amount of charge remaining in the internal capacitor
+		var/target_strength = floor(IX.intcap.charge/2500)
+		///Each interrupt strength costs 1,500 cell units and cuts 1 current and maximum anomaly strength
 		var/interrupt_strength = clamp(target_strength,1,3)
-		if (IX.expend_interdict(interrupt_strength*2000, src))
+		if (IX.expend_interdict(interrupt_strength*1500, src))
 			if(src.max_anomaly_strength == 50) //haven't interdicted yet
 				playsound(IX,'sound/machines/alarm_a.ogg',20,FALSE,5,-1.5)
 				IX.visible_message(SPAN_ALERT("<b>[IX] emits an unknown anomaly warning!</b>"))
