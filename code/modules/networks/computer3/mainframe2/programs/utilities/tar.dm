@@ -266,21 +266,17 @@
 		src.message_reply_and_user("[current_path][to_extract.name]")
 
 	if (istype(to_extract, /datum/computer/folder))
-		if (!istype(T))
-			if (src.signal_program(1, list("command" = DWAINE::SYSCALL::TSPAWN, "passusr" = TRUE, "path" = "/bin/mkdir", "args" = "[target_path][to_extract.name]")) == DWAINE::ERR::SIG::NOTARGET)
-				src.message_user("mkdir: command not found.")
+		// we don't check istype(T) because we don't directly FWRITE folders, only leaf nodes like files
+		// if that changes, this will have to be adjusted
+		if (src.signal_program(1, list("command" = DWAINE::SYSCALL::TSPAWN, "passusr" = TRUE, "path" = "/bin/mkdir", "args" = "[target_path][to_extract.name]")) == DWAINE::ERR::SIG::NOTARGET)
+			src.message_user("mkdir: command not found.")
 
-			if (!istype(src.signal_program(1, list("command" = DWAINE::SYSCALL::FGET, "path" = "[target_path][to_extract.name]")), /datum/computer/folder))
-				src.message_user("tar: Failed to create directory [to_extract.name]")
+		if (!istype(src.signal_program(1, list("command" = DWAINE::SYSCALL::FGET, "path" = "[target_path][to_extract.name]")), /datum/computer/folder))
+			src.message_user("tar: Failed to create directory [to_extract.name]")
 
-			var/datum/computer/folder/folder = to_extract
-			for (var/datum/computer/C as anything in folder.contents)
-				src.recursive_extract(C, "[target_path][to_extract.name]/", "[current_path][to_extract.name]/", depth + 1)
-
-		else if (src.opt_skip)
-			src.message_user("tar: [target_path][to_extract.name] already exists, skipping.")
-		else
-			src.message_user("tar: [target_path][to_extract.name] already exists, cannot overwrite folder - skipping.")
+		var/datum/computer/folder/folder = to_extract
+		for (var/datum/computer/C as anything in folder.contents)
+			src.recursive_extract(C, "[target_path][to_extract.name]/", "[current_path][to_extract.name]/", depth + 1)
 
 	else if (istype(to_extract, /datum/computer/file))
 		if (!istype(T) || !src.opt_skip)
