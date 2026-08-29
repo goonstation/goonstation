@@ -1208,7 +1208,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 			var/bandwidth = radius - abs(i) //example: you're radius 3. this is 0 at Y-peaks, and 3 at Y-center. diamond!
 			if(bandwidth)
 				seekspot = locate(T.x - bandwidth, T.y + i, T.z)
-				if(!seekspot.can_break) //skip blowout check in unbreakable turfs like walls and space
+				if(seekspot.can_break) //skip blowout check in unbreakable turfs like walls and space
 					for(var/obj/machinery/light/L in seekspot)
 						if (L.type == /obj/machinery/light/emergency) continue
 						L.on = 1
@@ -1219,7 +1219,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 					.[seekspot] = FALSE
 
 				seekspot = locate(T.x + bandwidth, T.y + i, T.z)
-				if(!seekspot.can_break) //skip blowout check in unbreakable turfs like walls and space
+				if(seekspot.can_break) //skip blowout check in unbreakable turfs like walls and space
 					for(var/obj/machinery/light/L in seekspot)
 						if (L.type == /obj/machinery/light/emergency) continue
 						L.on = 1
@@ -1230,7 +1230,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 					.[seekspot] = FALSE
 			else
 				seekspot = locate(T.x, T.y + i, T.z)
-				if(!seekspot.can_break) //skip blowout check in unbreakable turfs like walls and space
+				if(seekspot.can_break) //skip blowout check in unbreakable turfs like walls and space
 					for(var/obj/machinery/light/L in seekspot)
 						if (L.type == /obj/machinery/light/emergency) continue
 						L.on = 1
