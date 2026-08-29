@@ -9,10 +9,8 @@ ABSTRACT_TYPE(/obj/mapping_helper/turf)
 	T = get_turf(src)
 	if (!T)
 		return TRUE
-	if (!src.allow_space)
-		if (istype(T, /turf/space))
-			logTheThing(LOG_DEBUG, src, "[identify_object(src)] which is disallowed from space placed on [identify_object(T)] at [src.x], [src.y], [src.z].")
-			return TRUE
+	if (!src.allow_space && istype(T, /turf/space))
+		return "[CI.format_position(src)] placed on space turf."
 
 /obj/mapping_helper/turf/proc/do_on_turf()
 	return
@@ -35,12 +33,12 @@ ABSTRACT_TYPE(/obj/mapping_helper/turf/floor)
 	layer = DECAL_LAYER
 
 /obj/mapping_helper/turf/floor/setup()
-	if (..())
+	. = ..()
+	if (.)
 		return
-	if (!istype(T, /turf/unsimulated/floor) && !istype(T, /turf/simulated/floor)) // This will throw some false ones for strangely pathed floors that should be floor subtypes
-		logTheThing(LOG_DEBUG, src, "[identify_object(src)] placed on non floor turf [identify_object(T)] at [src.x], [src.y], [src.z].")
-		return
-	src.do_on_turf()
+	if (!istype(T, /turf/unsimulated/floor) && !istype(T, /turf/simulated/floor))
+		return "[CI.format_position(src)] placed on non-floor turf ([T.type])."
+	return src.do_on_turf()
 
 /obj/mapping_helper/turf/floor/burner
 	name = "floor burner"
@@ -49,8 +47,7 @@ ABSTRACT_TYPE(/obj/mapping_helper/turf/floor)
 
 /obj/mapping_helper/turf/floor/burner/do_on_turf()
 	if (!T.can_burn)
-		logTheThing(LOG_DEBUG, src, "[identify_object(src)] placed on unburnable floor [identify_object(T)] at [src.x], [src.y], [src.z].")
-		return
+		return "[CI.format_position(src)] placed on unburnable floor ([T.type])."
 	T.burn_tile()
 
 /obj/mapping_helper/turf/floor/damager
@@ -60,8 +57,7 @@ ABSTRACT_TYPE(/obj/mapping_helper/turf/floor)
 
 /obj/mapping_helper/turf/floor/damager/do_on_turf()
 	if (!T.can_break)
-		logTheThing(LOG_DEBUG, src, "[identify_object(src)] placed on unbreakable floor [identify_object(T)] at [src.x], [src.y], [src.z].")
-		return
+		return "[CI.format_position(src)] placed on unbreakable floor ([T.type])."
 	T.break_tile()
 
 /obj/mapping_helper/turf/floor/darkener

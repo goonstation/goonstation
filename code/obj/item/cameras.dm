@@ -78,6 +78,9 @@ TYPEINFO(/obj/item/camera/large)
 
 		else if (istype(W, /obj/item/parts/robot_parts/arm))
 			var/obj/item/camera_arm_assembly/B = new /obj/item/camera_arm_assembly
+			B.setMaterial(src.material)
+			B.forensic_holder = src.forensic_holder
+			W.forensic_holder.copy_to(B.forensic_holder)
 			B.set_loc(user)
 			user.u_equip(W)
 			user.u_equip(src)
