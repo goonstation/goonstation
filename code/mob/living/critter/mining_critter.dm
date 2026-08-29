@@ -19,15 +19,15 @@
 		if (!target.melee_attack_test(user))
 			return
 		src.custom_msg = SPAN_COMBAT("<b>[user] bites [target] with [his_or_her(user)] [pick(src.bite_adjectives)] mandibles!</b>")
+		..()
 		if (ishuman(target) && tears_off_limbs && prob(20))
 			var/mob/living/carbon/human/limb_loser = target
 			if(limb_loser.limbs)
 				limb_loser.sever_limb(pick(list("l_arm", "r_arm", "l_leg", "r_leg")))
-		..()
 /datum/limb/mouth/fermid/fermid_hulk
 	tears_off_limbs = TRUE
-	dam_low = 5
-	dam_high = 12
+	dam_low = 10
+	dam_high = 22
 
 ///////////////////////////////////////////////
 // FERMID
@@ -243,9 +243,9 @@
 	icon = 'icons/misc/bigcritter.dmi'
 	icon_state = "fermid-queen"
 	icon_state_dead = "fermid-queen-dead"
-	health_brute = 100
+	health_brute = 200
 	health_brute_vuln = 0.6
-	health_burn = 50
+	health_burn = 100
 	health_burn_vuln = 0.1
 	pull_w_class = W_CLASS_BULKY
 	speed = /datum/movement_modifier/big_fermid
@@ -255,8 +255,8 @@
 
 		src.pixel_x -= 16
 		src.add_stam_mod_max("queen", 50)
-		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "queen", 25)
-		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "queen", 25)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "queen", 50)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "queen", 50)
 
 /mob/living/critter/fermid/hulk
 	name = "fermid hulk"
@@ -264,9 +264,9 @@
 	icon = 'icons/misc/bigcritter.dmi'
 	icon_state = "fermid-hulk"
 	icon_state_dead = "fermid-hulk-dead"
-	health_brute = 90
+	health_brute = 150
 	health_brute_vuln = 0.5
-	health_burn = 50
+	health_burn = 75
 	health_burn_vuln = 0.1
 	pull_w_class = W_CLASS_BULKY
 	add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/slam/fermid)
@@ -283,8 +283,8 @@
 		HH.limb = new /datum/limb/mouth/fermid/fermid_hulk
 		src.pixel_x -= 16
 		src.add_stam_mod_max("hulk", 50)
-		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "hulk", 25)
-		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "hulk", 25)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "hulk", 50)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "hulk", 50)
 	purple
 		recolor = "#b90fab"
 		speed = /datum/movement_modifier/big_fermid_fast
