@@ -1143,6 +1143,156 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 		logTheThing(LOG_STATION, null, "Menhir powersink event at [log_loc(eventlandmark)]")
 		message_admins("Menhir powersink event triggered at [log_loc(eventlandmark)]")
 
+//too much, too much. too little, too little. a disharmony grows
+/datum/random_event/menhir/schism
+	name = "A Schism in the Song"
+	message_delay = 1 MINUTE
+	weight = 20
+
+	is_event_available(ignore_time_lock)
+		. = ..()
+		if(.)
+			if (!landmarks[LANDMARK_MENHIR_NODE] || length(landmarks[LANDMARK_MENHIR_NODE]) < 1) //if no eligible nodes remain, do not trigger event
+				. = FALSE
+
+	event_effect()
+		///Site the puzzle room spawns at
+		var/turf/nodelandmark
+		///Tag for the node the event is occurring in
+		var/node_tag = null
+		///List of walls associated with the node (we'll be installing doors onto these)
+		var/list/walls_to_door = list()
+
+		if(!landmarks[LANDMARK_MENHIR_NODE] || length(landmarks[LANDMARK_MENHIR_NODE]) < 1) //fallback mode: pick a curated station tile instead
+			logTheThing(LOG_DEBUG, null, "Menhir schism event couldn't find a fallback turf after all nodes expended; aborting event.")
+			message_admins("Menhir schism event couldn't find a fallback turf after all nodes expended; aborting event.")
+			return
+
+		nodelandmark = pick_landmark(LANDMARK_MENHIR_NODE)
+		node_tag = landmarks[LANDMARK_MENHIR_NODE][nodelandmark]
+
+		for (var/turf/T in landmarks[LANDMARK_MENHIR_DOOR])
+			if (landmarks[LANDMARK_MENHIR_DOOR][T] == node_tag)
+				walls_to_door += T
+
+		if (length(walls_to_door) < 4)
+			logTheThing(LOG_DEBUG, null, "Menhir schism event couldn't find expected door count! This shouldn't happen.")
+			message_admins("Menhir schism event couldn't find expected door count! This shouldn't happen. Aborting event")
+			return
+
+		landmarks[LANDMARK_MENHIR_NODE].Remove(nodelandmark) //"expend" the node in node spawns, so future events won't select it again
+
+		new /obj/anomaly/pale(nodelandmark)
+
+		playsound(nodelandmark, 'sound/ambience/industrial/Precursor_Drone3.ogg', 65, 0, extrarange = 24)
+
+		for(var/turf/wallturf in walls_to_door)
+			var/save_dir = wallturf.icon_state
+			var/obj/newdoor = new /obj/machinery/door/unpowered/blue(wallturf)
+			if (save_dir == "interior-3") //vertical wall detection
+				newdoor.dir = 4
+
+		src.localize_reading(nodelandmark)
+
+		message_delay = rand(1 MINUTE, 2 MINUTES)
+		..() //don't send out the message until we have confirmed we can do the event
+
+		logTheThing(LOG_STATION, null, "Menhir schism event at [node_tag] arm - [log_loc(nodelandmark)]")
+		message_admins("Menhir schism event triggered at [node_tag] arm - [log_loc(nodelandmark)]")
+
+/obj/anomaly/pale
+	name = "pale anomaly"
+	desc = "The air around it shudders as though caught in a spider's web."
+	icon = 'icons/effects/particles.dmi'
+	icon_state = "sparkle"
+	color = "#AAAAAA"
+	alpha = 0
+	plane = PLANE_NOSHADOW_BELOW
+	anchored = ANCHORED_ALWAYS
+	event_handler_flags = IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
+	appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
+	has_processing_loop = TRUE
+	density = FALSE
+	HELP_MESSAGE_OVERRIDE("It seems strangely familiar. Maybe somebody else could take a better guess...")
+
+	var/effect_tick = 5 //! how many process ticks to wait before an expansion wave
+	var/anomaly_strength = 5 //! how strong/wide the anomaly currently is
+	var/halt_strength = 1 //! as an interdictor continues to operate on this, each interdictor cycle will try to shut it more assertively if needed
+
+	var/obj/effect/pale_shroud/shroud = null
+
+/obj/anomaly/pale/New()
+	..()
+	src.shroud = new /obj/effect/pale_shroud(src)
+	src.vis_contents += src.shroud
+	animate(src, alpha = 66, time = 20, easing = LINEAR_EASING)
+	START_TRACKING_CAT(TR_CAT_RADIO_JAMMERS)
+
+	for_clients_in_range(C, get_turf(src), 25)
+		boutput(C, SPAN_ALERT("A strange tremor [pick("propagates", "shudders", "resonates")] through the air. Something is wrong."))
+		shake_camera(C.mob, 6, 1)
+
+/obj/anomaly/pale/disposing()
+	src.vis_contents -= src.shroud
+	qdel(src.shroud)
+	src.shroud = null
+	STOP_TRACKING_CAT(TR_CAT_RADIO_JAMMERS)
+	. = ..()
+
+/obj/anomaly/pale/process()
+	. = ..()
+	if (src.effect_tick > 0)
+		src.effect_tick--
+		return
+
+	var/interdicted_this_cycle = FALSE
+	for_by_tcl(IX, /obj/machinery/interdictor)
+		var/needed_strength = min(src.anomaly_strength, src.halt_strength)
+		if (!needed_strength) break
+		if (IX.expend_interdict(needed_strength*1000, src))
+			if(!interdicted_this_cycle)
+				interdicted_this_cycle = TRUE
+				if(src.halt_strength == 1) //"fresh batch" of interdiction
+					playsound(IX,'sound/machines/alarm_a.ogg',20,FALSE,5,-1.5)
+					IX.visible_message(SPAN_ALERT("<b>[IX] emits a subsonic anomaly warning!</b>"))
+			src.anomaly_strength = max(src.anomaly_strength - src.halt_strength, 0)
+
+	if(!interdicted_this_cycle)
+		src.anomaly_strength = min(anomaly_strength + rand(1,2), 50)
+		src.halt_strength = initial(src.halt_strength)
+		playsound(src.loc, "sound/items/pickup_[rand(1,3)].ogg", 50, 0, pitch = 0.2, extrarange = 24)
+	else
+		src.halt_strength = min(src.halt_strength+1, 3)
+
+	var/kernel_alpha = 66 + (anomaly_strength*2)
+	animate(src, alpha = kernel_alpha, time = 6 SECONDS, easing = LINEAR_EASING)
+
+	var/anom_alpha = min(10 + (anomaly_strength*2), 45)
+	var/anom_scale = 0.17 * anomaly_strength
+	animate(src.shroud, alpha = anom_alpha, time = 6 SECONDS, transform = matrix()*anom_scale, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
+
+	src.effect_tick = initial(src.effect_tick) - rand(0,2)
+
+/obj/anomaly/pale/get_help_message(dist, mob/user)
+	. = ..()
+	if (ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.traitHolder.hasTraitInList(list("training_scientist")))
+			return "There's some sort of field emanating from this. It might be possible to close it with a <b>spatial interdictor</b>."
+		if(H.traitHolder.hasTraitInList(list("training_engineer")))
+			return "The ambient hum of the station is unnervingly dull. Seems like trouble - a <b>spatial interdictor</b> might be warranted."
+
+/obj/effect/pale_shroud
+	icon = 'icons/effects/320x320.dmi'
+	icon_state = "background"
+	pixel_x = -144
+	pixel_y = -144
+	color = "#AAAAAA"
+	blend_mode = BLEND_OVERLAY
+	plane = OVERLAY_EFFECT_LAYER_BASE+2
+	appearance_flags = RESET_COLOR | RESET_ALPHA
+	alpha = 0
+
 //////////////////////////////////////////////
 ///////////////////////////////////////////////////////
 //////Megarare (10 starting weight)////////////////////

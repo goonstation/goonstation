@@ -8,6 +8,9 @@ proc/check_for_radio_jammers(atom/source, datum/signal/signal)
 		if(istype(A, /obj/item/radiojammer))
 			var/obj/item/radiojammer/jammer = A
 			range = jammer.range
+		if(istype(A, /obj/anomaly/pale))
+			var/obj/anomaly/pale/anom = A
+			range = anom.anomaly_strength
 		if (IN_RANGE(source, A, range))
 			SEND_SIGNAL(A, COMSIG_SIGNAL_JAMMED, signal)
 			return TRUE
