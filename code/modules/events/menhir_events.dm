@@ -1193,7 +1193,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 				var/fadetime = 10
 				if(i == 63) fadetime = 40 //special finishing flash
 				var/volmod = ceil(i * 0.4)
-				var/radmod = (51 - abs(i-50)) * SIEVERTS //15 when it first breaches the crown, peaks at 51 late in the wave, comes down to 38 at end
+				var/radmod = (51 - abs(i-50)) SIEVERTS //15 when it first breaches the crown, peaks at 51 late in the wave, comes down to 38 at end
 				SPAWN(1)
 					for (var/turf/T in burst_turfs)
 						irradiate_turf(T,radmod,fadetime,burst_turfs[T])
