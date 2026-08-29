@@ -281,7 +281,6 @@
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/mouth/fermid/fermid_hulk
-		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/big_fermid, src)
 		src.pixel_x -= 16
 		src.add_stam_mod_max("hulk", 50)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "hulk", 25)
