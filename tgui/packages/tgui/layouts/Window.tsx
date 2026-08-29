@@ -69,8 +69,10 @@ export const Window = (props: Props) => {
   const scale = config?.window?.scale;
 
   useEffect(() => {
+    let cancelled = false;
+
     if (!suspended && isReadyToRender) {
-      const updateGeometry = () => {
+      const updateGeometry = async () => {
         const options = {
           ...config?.window,
           size: DEFAULT_SIZE,
@@ -82,7 +84,10 @@ export const Window = (props: Props) => {
         if (config?.window?.key) {
           setWindowKey(config.window.key);
         }
-        recallWindowGeometry(options);
+        await recallWindowGeometry(options);
+        if (cancelled) {
+          return;
+        }
         Byond.winset(Byond.windowId, {
           'is-visible': true,
         });
@@ -98,10 +103,11 @@ export const Window = (props: Props) => {
       updateGeometry();
 
       return () => {
+        cancelled = true;
         logger.log('unmounting');
       };
     }
-  }, [isReadyToRender, width, height, scale]);
+  }, [isReadyToRender, suspended, width, height, scale]);
 
   const fancy = config?.window?.fancy;
   const mode = config?.window?.mode; /* |GOONSTATION-ADD| */
