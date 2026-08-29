@@ -1216,8 +1216,8 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 	HELP_MESSAGE_OVERRIDE("It seems strangely familiar. Maybe somebody else could take a better guess...")
 
 	var/effect_tick = 5 //! how many process ticks to wait before an expansion wave
-	var/anomaly_strength = 5 //! how strong/wide the anomaly currently is
-	var/max_anomaly_strength = 50 //! how
+	var/anomaly_strength = 5 //! how strong/wide the anomaly currently is (signals within radius equal to strength are jammed)
+	var/max_anomaly_strength = 30 //! how strong/wide the anomaly can get, at maximum
 
 	var/obj/effect/pale_shroud/shroud = null
 
@@ -1283,7 +1283,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 		///Each interrupt strength costs 1,500 cell units and cuts 1 current and maximum anomaly strength
 		var/interrupt_strength = clamp(target_strength,1,3)
 		if (IX.expend_interdict(interrupt_strength*1500, src))
-			if(src.max_anomaly_strength == 50) //haven't interdicted yet
+			if(src.max_anomaly_strength == initial(src.max_anomaly_strength)) //haven't interdicted yet
 				playsound(IX,'sound/machines/alarm_a.ogg',20,FALSE,5,-1.5)
 				IX.visible_message(SPAN_ALERT("<b>[IX] emits an unknown anomaly warning!</b>"))
 			src.max_anomaly_strength = max(src.max_anomaly_strength - interrupt_strength, 1)
