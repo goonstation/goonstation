@@ -291,7 +291,8 @@ var/global/game_force_started = FALSE
 		for (var/obj/machinery/power/smes/S in machine_registry[MACHINES_POWER])
 			if (S.z != Z_LEVEL_STATION)
 				continue
-			S.charge = S.capacity
+			S.capacity = INFINITY
+			S.charge = INFINITY
 			S.output = 200000
 			S.online = TRUE
 			S.UpdateIcon()
