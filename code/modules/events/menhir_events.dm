@@ -1187,11 +1187,11 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 			for(var/i in 1 to 9)
 				playsound(focal_nexus, 'sound/items/med_scanner.ogg', i*8, 0, pitch = 0.55, extrarange = 48)
 				sleep(12)
-			for(var/i in 1 to 64)
+			for(var/i in 1 to 63)
 				playsound(focal_nexus, 'sound/items/med_scanner.ogg', 90, 0, pitch = 0.55, extrarange = i)
 				burst_turfs += rangefind_diamond(focal_nexus,i)
 				var/fadetime = 10
-				if(i == 64) fadetime = 40 //special finishing flash
+				if(i == 63) fadetime = 40 //special finishing flash
 				var/volmod = ceil(i * 0.4)
 				SPAWN(1)
 					for (var/turf/T in burst_turfs)
