@@ -1,6 +1,6 @@
 /datum/targetable/vampire/glare
 	name = "Glare"
-	desc = "Stuns one target for a short time. Blocked by eye protection."
+	desc = "Stuns one target for a short time. Eye protection reduces the effect."
 	icon_state = "glare"
 	targeted = 1
 	target_nodamage_check = 1
