@@ -1,4 +1,13 @@
 
+(t)fri aug 28 26
+(u)Tyrant
+(p)27318
+(e)⚗|A-Chemistry
+(+)Milk Powder now is a little less weird. Super milk is more consistent. In like a normal way.
+(u)ZeWaka, Kapu1178
+(p)27640
+(e)🆕🎨💅💡|C-Feature, C-Sprites, C-QoL, A-Station-Systems
+(*)Added a new placement mode (ability button) for cable coils that lets you place wires with your mouse cursor.
 (t)thu aug 27 26
 (u)LeahTheTech
 (p)27630
