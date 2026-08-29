@@ -282,6 +282,11 @@
 		src.message_user("tar: Cannot handle file [current_path][to_copy]")
 		return
 
+	// Avoid copying files we don't have permission for.
+	// This can happen if you copy / (ALLACCESS) which contains /proc (NONE).
+	if (!src.check_read_permission(to_copy, src.useracc))
+		return
+
 	if (istype(to_copy, /datum/computer/folder))
 		var/datum/computer/folder/folder_to_copy = to_copy
 		var/datum/computer/folder/folder_copy = new()
