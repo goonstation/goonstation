@@ -29,8 +29,14 @@
 		CONTENTS_EQ(/obj/item/pinpointer/disk, 1),
 
 		// EVA
-		CONTENTS_EQ(/obj/item/clothing/mask/gas/emergency, 1),
-		CONTENTS_EQ(/obj/item/tank/jetpack, 1),
+		CONTENTS_GT(/obj/item/clothing/mask/gas/emergency, 0),
+		CONTENTS_OR(
+			list(CONTENTS_GT(/obj/item/tank/jetpack, 0)),
+			list(
+				CONTENTS_GT(/obj/item/clothing/shoes/flippers, 0),
+				CONTENTS_GT(/obj/item/tank/mini/oxygen, 0),
+			),
+		),
 		CONTENTS_OR(
 			list(
 				CONTENTS_EQ(/obj/item/clothing/suit/space/captain, 1),
