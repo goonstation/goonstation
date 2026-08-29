@@ -286,11 +286,30 @@
 		puff_ready = 1
 		if(cycle-- <= 0 || src.exploding)
 			cycle = 4  //every fifth cycle.
-			if (ismob(location))
+			if (ismob(location) || istype(location,/obj/item/organ/head))
 				M = location
+
+				// sometimes we want to change smoking conditions
+				var/is_smoking = FALSE
+
+				// wireless smoking, the future is now
+				if (istype(location,/obj/item/organ/head))
+					var/obj/item/organ/head/head = location
+					if (isskeleton(head.linked_human))
+						M = head.linked_human
+						// only condition is we're the mask on it
+						is_smoking = head.wear_mask = src
+
 				if(ishuman(M))
-					var/mob/living/carbon/human/H = M //below//don't smoke unless it's worn or in hand.
-					if(H.traitHolder && H.traitHolder.hasTrait("smoker") || !((src in H.get_equipped_items()) || ((H.l_store==src||H.r_store==src) && !(H.wear_mask && (H.wear_mask.c_flags & BLOCKSMOKE || (H.wear_mask.c_flags & MASKINTERNALS && H.internal))))))
+					var/mob/living/carbon/human/H = M //below
+
+					// start smoking if it's worn or in hand, and we're not already being told we're smoking it
+					if (!is_smoking)
+						if (src in H.get_equipped_items() || (H.l_store==src||H.r_store==src))
+							// check for gas masks, internals blocking smoking
+							is_smoking = !(H.wear_mask && (H.wear_mask.c_flags & BLOCKSMOKE || (H.wear_mask.c_flags & MASKINTERNALS && H.internal)))
+
+					if(H.traitHolder && H.traitHolder.hasTrait("smoker") || !(is_smoking))
 						src.reagents.remove_any(puffrate)
 					else
 						H.changeBodyTemp(1 KELVIN, max_temp = H.base_body_temp)
@@ -306,9 +325,13 @@
 							else
 								if (!H.organHolder.right_lung.robotic)
 									H.organHolder.damage_organ(0, 0, 1, "right_lung")
-				else
+				else if (ismob(M))
 					src.reagents.trans_to(M, puffrate)
 					src.reagents.reaction(M, INGEST, puffrate, paramslist = list("inhaled"))
+
+				else if (src?.reagents) // copy exactly how the lines below handle it.
+					src.reagents.remove_any(puffrate)
+
 			else if (src?.reagents) //ZeWaka: Copied Wire's fix for null.remove_any() below
 				src.reagents.remove_any(puffrate)
 
