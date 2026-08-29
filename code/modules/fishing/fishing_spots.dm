@@ -1108,3 +1108,38 @@ datum/fishing_spot/golden_toilet
 	/obj/item/reagent_containers/food/fish/tetraminnow/lshaped = 5,
 	/obj/item/reagent_containers/food/fish/tetraminnow/jshaped = 5,
 	/obj/item/circuitboard/tetris = 1)
+
+/datum/fishing_spot/robustris_phone
+	fishing_atom_type = /obj/item/toy/cellphone
+	rod_tier_required = 2
+	fish_available = list(/obj/item/coin = 25,
+	/obj/item/currency/spacecash/really_small = 20,
+	/obj/item/cigbutt = 20,
+	/obj/item/cable_coil/cut = 20,
+	/obj/item/paper/folded/ball = 10,
+	/obj/item/currency/buttcoin = 5,
+	/obj/item/reagent_containers/food/fish/tetraminnow/tshaped = 5,
+	/obj/item/reagent_containers/food/fish/tetraminnow/sshaped = 5,
+	/obj/item/reagent_containers/food/fish/tetraminnow/zshaped = 5,
+	/obj/item/reagent_containers/food/fish/tetraminnow/square = 5,
+	/obj/item/reagent_containers/food/fish/tetraminnow/line = 5,
+	/obj/item/reagent_containers/food/fish/tetraminnow/lshaped = 5,
+	/obj/item/reagent_containers/food/fish/tetraminnow/jshaped = 5)
+
+/datum/fishing_spot/robustris_handheld
+	fishing_atom_type = /obj/item/toy/handheld/robustris
+	rod_tier_required = 2
+	fish_available = list(/obj/item/coin = 25,
+	/obj/item/currency/spacecash/really_small = 20,
+	/obj/item/cigbutt = 20,
+	/obj/item/cable_coil/cut = 20,
+	/obj/item/paper/folded/ball = 10,
+	/obj/item/currency/buttcoin = 5,
+	/obj/item/reagent_containers/food/fish/tetraminnow/tshaped = 5,
+	/obj/item/reagent_containers/food/fish/tetraminnow/sshaped = 5,
+	/obj/item/reagent_containers/food/fish/tetraminnow/zshaped = 5,
+	/obj/item/reagent_containers/food/fish/tetraminnow/square = 5,
+	/obj/item/reagent_containers/food/fish/tetraminnow/line = 5,
+	/obj/item/reagent_containers/food/fish/tetraminnow/lshaped = 5,
+	/obj/item/reagent_containers/food/fish/tetraminnow/jshaped = 5,
+	/obj/item/circuitboard/tetris = 1)

@@ -1147,8 +1147,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish/tetraminnow)
 					N.flash(3 SECONDS)
 
 			for (var/obj/item/reagent_containers/food/fish/tetraminnow/fish in to_explode)
+				new /obj/item/currency/spacecash/really_small(get_turf(fish))
 				qdel(fish)
 
+			// now that we're done exploding the other fish...
+			new /obj/item/currency/spacecash/really_small(get_turf(src))
 			qdel(src)
 
 	disposing()
