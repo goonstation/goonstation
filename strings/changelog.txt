@@ -1,5 +1,9 @@
 
 (t)sat aug 29 26
+(u)Waffleloffle
+(p)27595
+(e)🎨📨|C-Sprites, A-Logistics
+(+)Added baseball uniforms. Most can be found by hacking a uniform vendor or manufacturer. Hit the big leagues with your department today!
 (u)TDHooligan
 (p)27598
 (e)|
