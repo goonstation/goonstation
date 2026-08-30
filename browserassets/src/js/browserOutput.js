@@ -1338,7 +1338,26 @@ $(function () {
     setCookie('highlightcolor', opts.highlightColor, 365);
   });
 
-  $('#clearMessages').click(function () {
+  $('#clearMessages').click(function (e) {
+    e.preventDefault();
+    if ($('.popup .clearMessagesPopup').is(':visible')) {
+      return;
+    }
+    var popupContent =
+      '<div class="head">CLEAR ALL MESSAGES?</div>' +
+      '<div class="clearMessagesPopup" id="clearMessagesPopup">' +
+      '<div>This cannot be undone.</div>' +
+      '<form id="clearMessagesForm">' +
+      '<input type="submit" value="CLEAR MESSAGES" />' +
+      '<input type="button" class="cancelClearMessages" value="CANCEL" />' +
+      '</form>' +
+      '</div>';
+    createPopup(popupContent, 250);
+  });
+
+  $('body').on('submit', '#clearMessagesForm', function (e) {
+    e.preventDefault();
+    $('#clearMessagesPopup').closest('.popup').remove();
     $messages.empty();
     opts.messageCount = 0;
   });
