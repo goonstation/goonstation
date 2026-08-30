@@ -161,6 +161,34 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/obj/ability_button/toggle_scope/scope = locate(/obj/ability_button/toggle_scope) in src.ability_buttons
 	scope?.icon_state = "scope_off"
 	..()
+
+/obj/item/gun/proc/calculate_spread(mob/user as mob)
+	var/spread = 0
+	if (ismob(user) )
+		if (user.reagents)
+			var/how_drunk = 0
+			var/amt = user.reagents.get_reagent_amount("ethanol")
+			switch(amt)
+				if (110 to INFINITY)
+					how_drunk = 2
+				if (1 to 110)
+					how_drunk = 1
+			how_drunk = max(0, how_drunk - isalcoholresistant(user))
+			spread += 5 * how_drunk
+
+	spread = max(spread, spread_angle)
+	spread += (recoil/recoil_max) * recoil_inaccuracy_max
+
+	if (ismob(user))
+		if (user.bioHolder.HasEffect("clumsy"))
+			spread += 5
+		if (user.bioHolder.HasEffect("hulk"))
+			spread += 8
+
+	return spread
+
+
+
 /obj/item/gun/pixelaction(atom/target, params, mob/user, reach, continuousFire = 0)
 	if (reach)
 		return 0
@@ -320,21 +348,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			sleep(slowdown_time)
 			user.movement_delay_modifier -= slowdown
 
-	var/spread = 0
-	if (ismob(user) && user.reagents)
-		var/how_drunk = 0
-		var/amt = user.reagents.get_reagent_amount("ethanol")
-		switch(amt)
-			if (110 to INFINITY)
-				how_drunk = 2
-			if (1 to 110)
-				how_drunk = 1
-		how_drunk = max(0, how_drunk - isalcoholresistant(user))
-		spread += 5 * how_drunk
-	spread = max(spread, spread_angle)
-
-	spread += (recoil/recoil_max) * recoil_inaccuracy_max
-
+	var/spread = src.calculate_spread(user)
 	for (var/i = 0; i < current_projectile.shot_number; i++)
 		var/obj/projectile/P = initialize_projectile_pixel_spread(user, current_projectile, target, 0, 0, spread, alter_proj = new/datum/callback(src, PROC_REF(alter_projectile)))
 		if (!P)
@@ -412,20 +426,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 				sleep(slowdown_time)
 				M.movement_delay_modifier -= slowdown
 
-	var/spread = is_dual_wield*10
-	if (user.reagents)
-		var/how_drunk = 0
-		var/amt = user.reagents.get_reagent_amount("ethanol")
-		switch(amt)
-			if (110 to INFINITY)
-				how_drunk = 2
-			if (1 to 110)
-				how_drunk = 1
-		how_drunk = max(0, how_drunk - isalcoholresistant(user))
-		spread += 5 * how_drunk
-	spread = max(spread, spread_angle)
-
-	spread += (recoil/recoil_max) * recoil_inaccuracy_max
+	var/spread = src.calculate_spread(user)
 
 	var/obj/projectile/P = shoot_projectile_ST_pixel_spread(user, current_projectile, target, POX, POY, spread, alter_proj = new/datum/callback(src, PROC_REF(alter_projectile)), called_target = called_target)
 	if (P)
@@ -581,7 +582,18 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		recoil_stacks += 1
 		stacked_recoil = clamp(round(recoil_stacks) - recoil_stacking_safe_stacks,0,recoil_stacking_max_stacks) * recoil_stacking_amount
 
-	recoil += (recoil_strength + stacked_recoil)
+
+	var/recoil_mult = 1
+	if (ismob(user))
+		var/is_strong = user.bioHolder.HasEffect("strong")
+		var/is_hulk = user.bioHolder.HasEffect("hulk")
+
+		if (is_strong)
+			recoil_mult *= 0.6
+		if (is_hulk)
+			recoil_mult *= 0.15 // Basically zero recoil, but flat inaccuracy penalty
+
+	recoil += (recoil_strength + stacked_recoil)*recoil_mult
 	recoil = clamp(recoil, 0, recoil_max)
 	recoil_last_shot = TIME
 	if (camera_recoil_enabled)

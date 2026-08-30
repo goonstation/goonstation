@@ -386,6 +386,8 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 		/datum/manufacture/mining_magnet
 #endif
 		)
+	hidden = list(/datum/manufacture/baseball_mining
+	)
 
 /obj/machinery/manufacturer/hangar
 	name = "ship component fabricator"
@@ -498,7 +500,9 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 		/datum/manufacture/patch,
 		/datum/manufacture/towel,
 		/datum/manufacture/tricolor,
-		/datum/manufacture/hat_ltophat)
+		/datum/manufacture/hat_ltophat,
+		/datum/manufacture/baseball_staffie,
+		/datum/manufacture/baseball_nt)
 
 /// cogwerks - a gas extractor for the engine
 
@@ -545,7 +549,8 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 		/datum/manufacture/radio_upgrade/civilian)
 	hidden = list(/datum/manufacture/id_card_gold,
 		/datum/manufacture/implant_access_infinite,
-		/datum/manufacture/radio_upgrade/command)
+		/datum/manufacture/radio_upgrade/command,
+		/datum/manufacture/baseball_command)
 
 //combine personnel + uniform manufactuer here. this is 'cause destiny doesn't have enough room! arrg!
 /obj/machinery/manufacturer/hop_and_uniform
@@ -608,7 +613,7 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 		/datum/manufacture/crate/secure/syndicate,
 		/datum/manufacture/cart/hotdog,
 		/datum/manufacture/locker/secure/nanotrasen,
-		)
+		/datum/manufacture/baseball_cargo)
 
 /obj/machinery/manufacturer/zombie_survival
 	name = "\improper Uber-Extreme Survival Manufacturer"
