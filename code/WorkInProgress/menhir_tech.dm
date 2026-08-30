@@ -91,7 +91,26 @@ TYPEINFO_NEW(/obj/effects/menhir_fog)
 		var/turf/noisy_turf = pick(get_area_turfs(/area/station/crown))
 		playsound(noisy_turf, weirdnoise, 70, 1)
 
-/area/station/crown/proc/redirect_intruder(var/atom/movable/AM, var/teleport_source)
+/area/station/crown/proc/redirect_intruder(_, var/atom/movable/AM, var/teleport_source)
+	var/do_redirect
+	switch(teleport_source)
+		if("magic")
+			do_redirect = TRUE
+			if(ismob(AM))
+				var/mob/M = AM
+				boutput(M, SPAN_ALERT("You're whisked away to somewhere else entirely!"))
+		if("mechcomp")
+			do_redirect = TRUE
+			if(ismob(AM))
+				var/mob/M = AM
+				boutput(M, SPAN_ALERT("Something redirects your teleportation!"))
+		else
+			do_redirect = FALSE
+	if(do_redirect)
+		SPAWN(1)
+			var/turf/go_turf = pick_landmark(LANDMARK_MENHIR_OUTREACH)
+			AM.set_loc(go_turf)
+			showswirl(go_turf)
 
 #define ARC_NOT_READY 0
 #define ARC_READY 1

@@ -103,6 +103,8 @@
 			junk_to_dump.set_loc(mobloc)
 
 		qdel(holder)
+		var/area/dest_area = get_area(H)
+		SEND_SIGNAL(dest_area, COMSIG_AREA_INDIRECT_ENTRY, H, "magic")
 
 /obj/dummy/spell_invis
 	name = "water"
