@@ -998,3 +998,106 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	setupProperties()
 		..()
 		setProperty("conductivity", 0.75)
+
+/obj/item/clothing/gloves/baseball_mitt
+	name = "baseball mitt"
+	desc = "Catch things with one hand, throw things with the other. Just don't forget which does which."
+	wear_image_icon = 'icons/mob/clothing/hands.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_feethand.dmi'
+	icon_state = "baseball_mitt"
+	item_state = "baseball_mitt"
+	default_material = "synthleather"
+	material_prints = "synthetic leather mitt"
+	which_hands = GLOVE_HAS_LEFT
+
+	equipped(mob/user, slot)
+		. = ..()
+		src.which_hands = GLOVE_HAS_RIGHT
+		user.hand_firm_grip = RIGHT_HAND
+		if(user.hand == LEFT_HAND)
+			src.which_hands = GLOVE_HAS_LEFT
+			user.hand_firm_grip = LEFT_HAND
+		RegisterSignal(user, COMSIG_ATOM_HITBY_THROWN, PROC_REF(mitt_catch))
+		RegisterSignal(user, COMSIG_MOB_PICKUP, PROC_REF(mitt_pickup))
+		RegisterSignal(user, COMSIG_MOB_THROW_ADJUST, PROC_REF(mitt_adjust_throw))
+		if(!ishuman(user))
+			return
+		var/mob/living/carbon/human/H = user
+		if(which_hands == GLOVE_HAS_LEFT)
+			H.hud.hand_type_l = "_mitt"
+		if(which_hands == GLOVE_HAS_RIGHT)
+			H.hud.hand_type_r = "_mitt"
+		H.hud.update_hands()
+
+	unequipped(mob/user)
+		. = ..()
+		user.hand_firm_grip = 0
+		UnregisterSignal(user, COMSIG_ATOM_HITBY_THROWN)
+		UnregisterSignal(user, COMSIG_MOB_PICKUP)
+		UnregisterSignal(user, COMSIG_MOB_THROW_ADJUST)
+		if(!ishuman(user))
+			return
+		var/mob/living/carbon/human/H = user
+		H.hud.hand_type_l = null
+		H.hud.hand_type_r = null
+		H.hud.update_hands()
+
+	get_fiber_mask()
+		return create_glovemask_position() // 1/4 chance of match
+
+	proc/mitt_catch(mob/owner, atom/movable/thing, datum/thrown_thing/thr)
+		if(owner.hand == LEFT_HAND && !HAS_FLAG(src.which_hands, GLOVE_HAS_LEFT))
+			return FALSE
+		if(owner.hand == RIGHT_HAND && !HAS_FLAG(src.which_hands, GLOVE_HAS_RIGHT))
+			return FALSE
+		if(!isitem(thing))
+			return FALSE
+		var/obj/item/I = thing
+		if(owner.restrained())
+			owner.visible_message(SPAN_COMBAT("[owner] gets beaned with \the [I]."))
+			return FALSE
+		if((owner.hand == LEFT_HAND && owner.l_hand != null) || (owner.hand == RIGHT_HAND && owner.r_hand != null))
+			owner.visible_message(SPAN_ALERT("[owner] attempts to catch \the [I], but the [src] already has something inside of it!"))
+			return FALSE
+		if(I.w_class > W_CLASS_POCKET_SIZED)
+			owner.visible_message(SPAN_ALERT("[owner] attempts to catch \the [I] with the [src], but it's too big!"))
+			return FALSE
+		if((prob(50) && owner.bioHolder.HasEffect("clumsy")))
+			owner.visible_message(SPAN_COMBAT("[owner] attempts to catch \the [I], but fumbles the ball!"))
+			owner.changeStatus("stunned", 2 SECONDS)
+			JOB_XP(owner, "Clown", 1)
+			return FALSE
+
+		var/mob/living/carbon/human/H = owner
+		playsound(owner, 'sound/items/bball_bounce.ogg', 150, TRUE)
+		H.visible_message(SPAN_COMBAT("[H] catches \the [I] with \the [src]!"), SPAN_COMBAT("You catch \the [I] with \the [src]!"))
+		thing.Attackhand(H)
+		logTheThing(LOG_COMBAT, H, "catches [I] with \the [src]")
+		#ifdef DATALOGGER
+		game_stats.Increment("catches")
+		#endif
+		return TRUE
+
+	proc/mitt_pickup(mob/user, obj/item/I)
+		if(user.hand == LEFT_HAND && !HAS_FLAG(src.which_hands, GLOVE_HAS_LEFT))
+			return
+		if(user.hand == RIGHT_HAND && !HAS_FLAG(src.which_hands, GLOVE_HAS_RIGHT))
+			return
+		if(I.w_class > W_CLASS_POCKET_SIZED)
+			SPAWN(0.35 SECONDS)
+				user.visible_message(SPAN_ALERT("[user] attempts to grab \the [I] with \the [src], but it falls out!"))
+				user.drop_item(I)
+				playsound(user, 'sound/items/bball_bounce.ogg', 50, TRUE)
+		return
+
+	proc/mitt_adjust_throw(mob/thrower, datum/thrown_thing/thr)
+		if(thrower.hand == LEFT_HAND && !HAS_FLAG(src.which_hands, GLOVE_HAS_LEFT))
+			return
+		if(thrower.hand == RIGHT_HAND && !HAS_FLAG(src.which_hands, GLOVE_HAS_RIGHT))
+			return
+		if(!ishuman(thrower))
+			return
+		var/mob/living/carbon/human/H = thrower
+		thr.speed /= 4
+		thr.momentum /= 2
+		H.visible_message(SPAN_ALERT("\The [src] messes up \the throw!"))

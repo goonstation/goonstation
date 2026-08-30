@@ -71,6 +71,7 @@ TYPEINFO(/mob)
 	var/next_click = 0
 	var/transforming = null
 	var/hand = 0
+	var/hand_firm_grip = 0
 	var/eye_blind = null
 	var/eye_blurry = null
 	var/eye_damage = null
@@ -2568,6 +2569,7 @@ TYPEINFO(/mob)
 	actions.interrupt(src, INTERRUPT_ACT)
 
 /mob/proc/adjust_throw(datum/thrown_thing/thr)
+	SEND_SIGNAL(src, COMSIG_MOB_THROW_ADJUST, thr)
 	return
 
 /mob/throw_impact(atom/hit, datum/thrown_thing/thr)
