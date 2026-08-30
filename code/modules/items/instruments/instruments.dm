@@ -1037,6 +1037,20 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	randomized_pitch = FALSE
 	use_new_interface = TRUE
 
+/obj/item/instrument/ling_recording
+	name = "Human Steve's mixtape"
+	desc = "A recording of the merchent \"Human Steve\" singing... Oh dear."
+	icon = 'icons/obj/radiostation.dmi'
+	icon_state = "audiolog_newSmall"
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	item_state = "radio"
+	sounds_instrument = list('sound/voice/creepyshriek.ogg')
+	volume = 80
+	randomized_pitch = TRUE
+	desc_sound = list("horrible", "terrible", "unpleasent")
+	desc_music = list("screech")
+	note_time = 10 SECONDS
+
 /obj/storage/crate/wooden/instruments
 	name = "instruments box"
 	desc = "A wooden crate labeled to contain instruments."

@@ -1680,7 +1680,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	heal_amt = 0
 	food_color = "#d8eef2"
 	initial_volume = 25
-	food_effects = list("food_cleanse")
+	food_effects = list("food_disease_resist")
 
 	make_reagents()
 		..()
