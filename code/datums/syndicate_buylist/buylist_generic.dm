@@ -408,7 +408,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 
 /datum/syndicate_buylist/traitor/lightbreaker
 	name = "Light Breaker"
-	items = list(/obj/item/lightbreaker)
+	items = list(/obj/item/sound_tape/lightbreaker)
 	cost = 3
 	desc = "A casette player that breaks all lights near you. It also temporarily deafens and staggers all other nearby people. Comes with four charges and has a distinctive sound. Can be rewound with a screwdriver."
 	br_allowed = TRUE

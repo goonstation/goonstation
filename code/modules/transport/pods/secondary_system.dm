@@ -1286,6 +1286,8 @@ ABSTRACT_TYPE(/obj/item/shipcomponent/secondary_system/thrusters)
 		return
 	if (A == ship.pilot)
 		return
+	if (istype(A, /turf/simulated/shuttle) || istype(A, /turf/simulated/floor/shuttle) || istype(A, /turf/unsimulated/floor/shuttle))
+		return
 	walk(src, 0)
 	in_bump = 1
 	crashhits--
