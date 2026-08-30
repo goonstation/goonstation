@@ -2313,7 +2313,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		if (!intact)
 			if(T.amount >= 1)
 				restore_tile(do_hide)
-				src.default_material = src.material
+				src.default_material = src.material?.getID()
 
 				// if we have a special icon state and it doesn't have a material variant
 				// and at the same time the base floor icon state does have a material variant
