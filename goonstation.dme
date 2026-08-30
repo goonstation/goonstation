@@ -347,6 +347,7 @@
 #include "code\datums\DCS\components\obj_projectile_damage.dm"
 #include "code\datums\DCS\components\pitfall.dm"
 #include "code\datums\DCS\components\power_cell.dm"
+#include "code\datums\DCS\components\pressure_vision.dm"
 #include "code\datums\DCS\components\proj_door_breach.dm"
 #include "code\datums\DCS\components\proj_mining.dm"
 #include "code\datums\DCS\components\proximity.dm"

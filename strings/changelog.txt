@@ -1,5 +1,26 @@
 
+(t)sun aug 30 26
+(u)LeahTheTech
+(p)27664
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Vampire glare now partially pierces eye protection, doing 50 stamina damage and 10 seconds of disorient to anyone with full eye protection.
+(u)LorrMaster
+(p)27288
+(e)🎨🛠️📨|C-Sprites, A-Engineering, A-Logistics
+(*)Geological scanner anomaly markers have been updated.
 (t)sat aug 29 26
+(u)Sovexe
+(p)27571
+(e)🆕📄|C-Feature, A-UI
+(*)The Nuclear Reactor's Gas Turbine has a newly enhanced UI.
+(u)Penelope Haze
+(p)27671
+(e)🆕🖥️|C-Feature, A-Computers
+(+)DWAINE tar archives can now contain other archives, at the cost of their uncompressed size rather than compressed size.
+(u)Penelope Haze
+(p)27670
+(e)💅🖥️|C-QoL, A-Computers
+(+)The DWAINE tar program will now extract files in destination folders that already exist, and the -k flag only skips existing files rather than folders.
 (u)nova2053
 (p)27555
 (e)|

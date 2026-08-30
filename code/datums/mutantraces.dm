@@ -2048,7 +2048,14 @@ TYPEINFO(/datum/mutantrace/frog) /// abstract parent for traits shared across am
 		if(!ishuman(src.mob))
 			return
 
-				// Less likely to absorb based on chem protection
+		for (var/atom/movable/container as anything in obj_loc_chain(src.mob))
+			if (container.gas_impermeable)
+				return
+		var/mob/living/carbon/human/H = src.mob
+		if (H.is_sealed())
+			return
+
+		// Less likely to absorb based on chem protection
 		var/chem_prot = clamp(GET_ATOM_PROPERTY(src.mob, PROP_MOB_CHEMPROT), 0, 40)
 		if(chem_prot >= 55)
 			return
