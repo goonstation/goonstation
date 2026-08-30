@@ -51,7 +51,7 @@
 			M.set_loc(T)
 			if (isliving(M))
 				var/mob/living/L = M
-				L.hibernating = 0
+				set_hibernating(L, FALSE)
 				if (isnull(L.bioHolder) || !L.bioHolder.HasEffect("blind"))
 					L.removeOverlayComposition(/datum/overlayComposition/blinded)
 				else
@@ -68,12 +68,18 @@
 
 	meteorhit(obj/meteor)
 		return
+	proc/set_hibernating(var/mob/living/L, var/hibernating)
+		L.hibernating = hibernating
+		if (ishuman(L))
+			var/mob/living/carbon/human/H = L
+			if (hibernating || L.is_npc)
+				H.ai_set_active(!hibernating)
 
 	proc/add_person_to_queue(var/mob/living/person, var/datum/job/job)
 		if (!istype(person) || job?.special_spawn_location)
 			return 0
 
-		person.set_loc(src)
+		set_hibernating(person, TRUE)
 		folks_to_spawn += person
 		their_jobs += job
 
@@ -96,6 +102,7 @@
 		if (!folks_to_spawn.len)
 			var/mob/living/L = locate(/mob/living) in src
 			if (L && !stored_mobs.Find(L))
+				set_hibernating(L, TRUE)
 				folks_to_spawn += L
 				their_jobs += null
 			else
@@ -139,7 +146,7 @@
 			FLICK("cryotron_go_up", src)
 
 			if (thePerson)
-				thePerson.hibernating = 0
+				set_hibernating(thePerson, FALSE)
 				if (thePerson.mind && thePerson.mind.assigned_role && be_loud)
 					for (var/obj/machinery/computer/announcement/A as anything in machine_registry[MACHINES_ANNOUNCEMENTS])
 						if (!A.status && A.announces_arrivals)
@@ -157,8 +164,7 @@
 				return 0
 			else
 				L.set_loc(src)
-				L.hibernating = 1
-				L.handle_cryo()
+				set_hibernating(L, TRUE)
 				if (L.client)
 					L.addOverlayComposition(/datum/overlayComposition/blinded)
 					L.updateOverlaysClient(L.client)
@@ -176,7 +182,7 @@
 		stored_mobs[L] = TIME
 		stored_mobs_volunteered[L] = voluntary // if someone shoved us in here, mark them as not being in here of their own choice (this can only be done with braindead people who have a ckey, so you can't just grief some guy by shoving them in)
 		L.set_loc(src)
-		L.hibernating = 1
+		set_hibernating(L, TRUE)
 		if (L.client)
 			L.addOverlayComposition(/datum/overlayComposition/blinded)
 			L.updateOverlaysClient(L.client)
@@ -333,7 +339,7 @@
 		for (var/mob/living/L in stored_mobs)
 			if (L.loc != src || QDELETED(L))
 				if(!QDELETED(L))
-					L.hibernating = 0
+					set_hibernating(L, FALSE)
 					if (!L.bioHolder.HasEffect("blind"))
 						L.removeOverlayComposition(/datum/overlayComposition/blinded)
 					if(ishuman(L))

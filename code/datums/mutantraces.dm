@@ -2036,15 +2036,7 @@ TYPEINFO(/datum/mutantrace/frog) /// abstract parent for traits shared across am
 		if (isdead(src.mob))
 			return
 		if(src.mob.sims.getValue("Thirst") < 25.0) // dehydration effect
-			if (prob(10))
-				src.mob.visible_message(SPAN_EMOTE(pick("[mob] wrinkles up conspicuously.", "[mob] quietly wheezes.", "[mob]'s third eyelids stick to [his_or_her(src.mob)] eyes for a moment.")))
-		if(src.mob.sims.getValue("Thirst") < 1.0)
-			if (prob(50))
-				src.mob.take_oxygen_deprivation(15)
-			if (prob(10))
-				src.mob.visible_message(SPAN_ALERT(pick("[mob] struggles to breathe!", "[mob] gasps for air!")))
-			if (prob(20))
-				src.mob.emote(pick("choke","gasp"))
+			src.mob.contract_disease(/datum/ailment/disease/dehydration, null, null, 1)
 
 	proc/dermal_absorbtion(var/absorbtion_rate) // it's actually spelled "absorption" but every other absorption proc is misspelled too
 		if(!src.mob)
@@ -2056,7 +2048,14 @@ TYPEINFO(/datum/mutantrace/frog) /// abstract parent for traits shared across am
 		if(!ishuman(src.mob))
 			return
 
-				// Less likely to absorb based on chem protection
+		for (var/atom/movable/container as anything in obj_loc_chain(src.mob))
+			if (container.gas_impermeable)
+				return
+		var/mob/living/carbon/human/H = src.mob
+		if (H.is_sealed())
+			return
+
+		// Less likely to absorb based on chem protection
 		var/chem_prot = clamp(GET_ATOM_PROPERTY(src.mob, PROP_MOB_CHEMPROT), 0, 40)
 		if(chem_prot >= 55)
 			return
