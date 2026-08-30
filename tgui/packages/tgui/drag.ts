@@ -15,12 +15,55 @@ const pixelRatio = window.devicePixelRatio ?? 1;
 let windowKey = Byond.windowId;
 let dragging = false;
 let resizing = false;
-let screenOffset: [number, number] = [0, 0];
-let screenOffsetPromise: Promise<[number, number]>;
-let dragPointOffset: [number, number];
-let resizeMatrix: [number, number];
-let initialSize: [number, number];
-let size: [number, number];
+type Point = [number, number];
+type GeometryPayload = Partial<{
+  pos: string;
+  size: string;
+}>;
+let screenOffset: Point = [0, 0];
+let screenOffsetPromise: Promise<Point>;
+let dragPointOffset: Point;
+let resizeMatrix: Point;
+let initialSize: Point;
+let size: Point;
+
+let winsetRaf: number | undefined;
+let pendingWinset: GeometryPayload = {};
+let lastSentWinset: GeometryPayload = {};
+
+function flushWinset(): void {
+  winsetRaf = undefined;
+
+  const payload: GeometryPayload = {};
+  if (pendingWinset.pos && pendingWinset.pos !== lastSentWinset.pos) {
+    payload.pos = pendingWinset.pos;
+  }
+  if (pendingWinset.size && pendingWinset.size !== lastSentWinset.size) {
+    payload.size = pendingWinset.size;
+  }
+
+  pendingWinset = {};
+
+  if (payload.pos || payload.size) {
+    Byond.winset(Byond.windowId, payload);
+    lastSentWinset = { ...lastSentWinset, ...payload };
+  }
+}
+
+function scheduleWinset(): void {
+  if (winsetRaf !== undefined) {
+    return;
+  }
+  winsetRaf = requestAnimationFrame(flushWinset);
+}
+
+function flushWinsetNow(): void {
+  if (winsetRaf !== undefined) {
+    cancelAnimationFrame(winsetRaf);
+    winsetRaf = undefined;
+  }
+  flushWinset();
+}
 
 // Set the window key
 export const setWindowKey = (key: string): void => {
@@ -40,18 +83,29 @@ export const getWindowSize = (): [number, number] => [
 ];
 
 // Set window position
-const setWindowPosition = (vec: [number, number]) => {
+const setWindowPosition = (vec: Point): void => {
   const byondPos = vecAdd(vec, screenOffset);
-  return Byond.winset(Byond.windowId, {
+  Byond.winset(Byond.windowId, {
     pos: byondPos[0] + ',' + byondPos[1],
   });
 };
 
+const setWindowPositionBatched = (vec: Point): void => {
+  const byondPos = vecAdd(vec, screenOffset);
+  pendingWinset.pos = byondPos[0] + ',' + byondPos[1];
+  scheduleWinset();
+};
+
 // Set window size
-const setWindowSize = (vec: [number, number]) => {
-  return Byond.winset(Byond.windowId, {
+const setWindowSize = (vec: Point): void => {
+  Byond.winset(Byond.windowId, {
     size: vec[0] + 'x' + vec[1],
   });
+};
+
+const setWindowSizeBatched = (vec: Point): void => {
+  pendingWinset.size = vec[0] + 'x' + vec[1];
+  scheduleWinset();
 };
 
 // Get screen position
@@ -232,9 +286,10 @@ export const dragStartHandler = (event) => {
 };
 
 // End dragging the window
-const dragEndHandler = (event) => {
+const dragEndHandler = (event: MouseEvent): void => {
   logger.log('drag end');
   dragMoveHandler(event);
+  flushWinsetNow();
   document.removeEventListener('mousemove', dragMoveHandler);
   document.removeEventListener('mouseup', dragEndHandler);
   dragging = false;
@@ -242,16 +297,16 @@ const dragEndHandler = (event) => {
 };
 
 // Move the window while dragging
-const dragMoveHandler = (event: MouseEvent) => {
+const dragMoveHandler = (event: MouseEvent): void => {
   if (!dragging) {
     return;
   }
   event.preventDefault();
-  setWindowPosition(
+  setWindowPositionBatched(
     vecSubtract(
       [event.screenX * pixelRatio, event.screenY * pixelRatio],
       dragPointOffset,
-    ) as [number, number],
+    ) as Point,
   );
 };
 
@@ -274,9 +329,10 @@ export const resizeStartHandler =
   };
 
 // End resizing the window
-const resizeEndHandler = (event: MouseEvent) => {
+const resizeEndHandler = (event: MouseEvent): void => {
   logger.log('resize end', size);
   resizeMoveHandler(event);
+  flushWinsetNow();
   document.removeEventListener('mousemove', resizeMoveHandler);
   document.removeEventListener('mouseup', resizeEndHandler);
   resizing = false;
@@ -284,7 +340,7 @@ const resizeEndHandler = (event: MouseEvent) => {
 };
 
 // Move the window while resizing
-const resizeMoveHandler = (event: MouseEvent) => {
+const resizeMoveHandler = (event: MouseEvent): void => {
   if (!resizing) {
     return;
   }
@@ -295,12 +351,9 @@ const resizeMoveHandler = (event: MouseEvent) => {
   );
   const delta = vecSubtract(currentOffset, dragPointOffset);
   // Extra 1x1 area is added to ensure the browser can see the cursor
-  size = vecAdd(initialSize, vecMultiply(resizeMatrix, delta), [1, 1]) as [
-    number,
-    number,
-  ];
+  size = vecAdd(initialSize, vecMultiply(resizeMatrix, delta), [1, 1]) as Point;
   // Sane window size values
   size[0] = Math.max(size[0], 150 * pixelRatio);
   size[1] = Math.max(size[1], 50 * pixelRatio);
-  setWindowSize(size);
+  setWindowSizeBatched(size);
 };
