@@ -258,7 +258,9 @@
 
 	else if (istype(to_extract, /datum/computer/file))
 		if (!istype(T) || !src.opt_skip)
-			var/outcome = src.signal_program(1, list("command" = DWAINE::SYSCALL::FWRITE, "path" = "[target_path]", "mkdir" = TRUE, "replace" = TRUE), to_extract)
+			// if we don't copy the file, deleting the archive will delete the copied files
+			// and if it's extracted multiple times, deleting any of the copies will delete all of them, plus the one on the archive
+			var/outcome = src.signal_program(1, list("command" = DWAINE::SYSCALL::FWRITE, "path" = "[target_path]", "mkdir" = TRUE, "replace" = TRUE), to_extract.copy_file())
 			switch (outcome)
 				if (DWAINE::ERR::SIG::NOWRITE)
 					src.message_user("tar: [target_path][to_extract.name]: permission denied.")
