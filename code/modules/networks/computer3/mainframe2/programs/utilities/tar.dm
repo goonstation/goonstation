@@ -7,7 +7,8 @@
 	VAR_PRIVATE/tmp/opt_create = null
 	/// The filepath of the archive to be created, read, or extracted. Mutually exclusive with `opt_temporary`.
 	VAR_PRIVATE/tmp/opt_file = null
-	/// When extracting from an archive, whether `tar` should skip over already existing filepaths or overwrite them with archive contents.
+	/// When extracting from an archive, whether `tar` should skip over already existing files or overwrite them with archive contents.
+	/// Does not apply to folders.
 	VAR_PRIVATE/tmp/opt_skip = null
 	/// Whether `tar` should list the contents of an archive. Mutually exclusive with `opt_create` and `opt_extract`.
 	VAR_PRIVATE/tmp/opt_list = null
@@ -240,21 +241,15 @@
 		src.message_reply_and_user("[current_path][to_extract.name]")
 
 	if (istype(to_extract, /datum/computer/folder))
-		if (!istype(T))
-			if (src.signal_program(1, list("command" = DWAINE::SYSCALL::TSPAWN, "passusr" = TRUE, "path" = "/bin/mkdir", "args" = "[target_path][to_extract.name]")) == DWAINE::ERR::SIG::NOTARGET)
-				src.message_user("mkdir: command not found.")
+		if (src.signal_program(1, list("command" = DWAINE::SYSCALL::TSPAWN, "passusr" = TRUE, "path" = "/bin/mkdir", "args" = "[target_path][to_extract.name]")) == DWAINE::ERR::SIG::NOTARGET)
+			src.message_user("mkdir: command not found.")
 
-			if (!istype(src.signal_program(1, list("command" = DWAINE::SYSCALL::FGET, "path" = "[target_path][to_extract.name]")), /datum/computer/folder))
-				src.message_user("tar: Failed to create directory [to_extract.name]")
+		if (!istype(src.signal_program(1, list("command" = DWAINE::SYSCALL::FGET, "path" = "[target_path][to_extract.name]")), /datum/computer/folder))
+			src.message_user("tar: Failed to create directory [to_extract.name]")
 
-			var/datum/computer/folder/folder = to_extract
-			for (var/datum/computer/C as anything in folder.contents)
-				src.recursive_extract(C, "[target_path][to_extract.name]/", "[current_path][to_extract.name]/", depth + 1)
-
-		else if (src.opt_skip)
-			src.message_user("tar: [target_path][to_extract.name] already exists, skipping.")
-		else
-			src.message_user("tar: [target_path][to_extract.name] already exists, cannot overwrite folder - skipping.")
+		var/datum/computer/folder/folder = to_extract
+		for (var/datum/computer/C as anything in folder.contents)
+			src.recursive_extract(C, "[target_path][to_extract.name]/", "[current_path][to_extract.name]/", depth + 1)
 
 	else if (istype(to_extract, /datum/computer/file))
 		if (!istype(T) || !src.opt_skip)
