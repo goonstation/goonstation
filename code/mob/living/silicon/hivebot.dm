@@ -706,7 +706,9 @@ Frequency:
 	set name = "Toggle Monospace Speech"
 	set desc = "Switches your speech between normal and forced-monospace mode."
 
-	var/new_setting = !src.always_monospace
+	var/new_setting = TRUE
+	if(src.ensure_speech_tree().GetModifierByID(SPEECH_MODIFIER_MONOSPACE_FORCED))
+		new_setting = FALSE
 	src.set_always_monospaced(do_monospaced = new_setting, user = src)
 	if(src.mainframe)
 		src.mainframe.set_always_monospaced(do_monospaced = new_setting)

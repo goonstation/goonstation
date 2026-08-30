@@ -41,7 +41,6 @@ TYPEINFO(/mob/living/silicon)
 	say_language = LANGUAGE_ENGLISH
 	speech_bubble_icon_sing = "noterobot"
 	speech_bubble_icon_sing_bad = "noterobot"
-	var/always_monospace = FALSE
 
 	var/obj/minimap_controller/alertmap_controller = null
 	var/atom/movable/minimap_ui_handler/minimap_controller/general_alert/alert_minimap_ui = null
@@ -722,11 +721,9 @@ var/global/list/module_editors = list()
 	if(!do_monospaced)
 		src.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_MONOSPACE_FORCED)
 		boutput(user, SPAN_NOTICE("No longer forcing all speech to be monospace."))
-		src.always_monospace = FALSE
 	else
 		src.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_MONOSPACE_FORCED)
 		boutput(user, SPAN_NOTICE("Now forcing all speech to be monospace."))
-		src.always_monospace = TRUE
 
 /datum/statusEffect/low_power
 	id = "low_power"
