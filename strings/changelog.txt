@@ -1,5 +1,9 @@
 
 (t)sun aug 30 26
+(u)ANNmagedon
+(p)27642
+(e)📨|A-Logistics
+(*)A new trader has arrived at cargo! Their name is "human steve" and they look weird.
 (u)LeahTheTech
 (p)27664
 (e)⚖🧛|C-Balance, A-Gamemodes
