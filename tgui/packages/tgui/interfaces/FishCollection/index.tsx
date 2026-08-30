@@ -18,12 +18,16 @@ export const FishCollection = (props) => {
   const { fish_data, collected } = data;
 
   let normal_collection: FishData[] = Array();
+  let normal_collected: string[] = Array();
   let secret_collection: FishData[] = Array();
 
   for (let i = 0; i < fish_data.length; i++) {
     switch (fish_data[i]?.collection) {
       case CollectionType.Normal:
         normal_collection.push(fish_data[i]);
+        if (collected?.includes(fish_data[i].name)) {
+          normal_collected.push(fish_data[i].name);
+        }
         break;
       case CollectionType.Secret:
         if (collected?.includes(fish_data[i].name)) {
@@ -37,7 +41,7 @@ export const FishCollection = (props) => {
     <Window title="Fish Collection" theme="ntos" width={472} height={390}>
       <Window.Content scrollable>
         <NormalCollection
-          collected={collected}
+          collected={normal_collected}
           collection={normal_collection}
         />
         {!!secret_collection.length && (
