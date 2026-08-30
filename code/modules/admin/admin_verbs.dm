@@ -2261,6 +2261,15 @@ proc/alert_all_ghosts(atom/target, message)
 	logTheThing(LOG_ADMIN, src, "Ckey [vpnckey] removed from the VPN whitelist.")
 	return TRUE
 
+ADD_TO_NAMESPACE(ADMIN)(proc/lights_out(duration = 120 SECONDS))
+	set waitfor = FALSE
+	var i = 0
+	for_by_tcl(apc, /obj/machinery/power/apc)
+		if(apc.z == 1)
+			if((i++ % 5) == 0)
+				sleep(1 SECOND)
+			apc.setStatus("lightsout", duration)
+
 /client/proc/cmd_lightsout()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Lights Out"
@@ -2274,12 +2283,7 @@ proc/alert_all_ghosts(atom/target, message)
 	var/dur = input(usr, "Input duration (in seconds)", "lightsout duration", 0) as null|num
 
 	if(dur)
-		var i = 0
-		for_by_tcl(apc, /obj/machinery/power/apc)
-			if(apc.z == 1)
-				if((i++ % 5) == 0)
-					sleep(1 SECOND)
-				apc.setStatus("lightsout", dur SECONDS)
+		ADMIN.lights_out(dur SECONDS)
 
 /client/proc/flock_cheat()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)

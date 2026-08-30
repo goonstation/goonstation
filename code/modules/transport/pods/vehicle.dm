@@ -4,6 +4,7 @@
 	icon_state = "podfire"
 	density = 1
 	flags = USEDELAY
+	gas_impermeable = TRUE
 	anchored = ANCHORED
 	provides_grip = TRUE
 	status = REQ_PHYSICAL_ACCESS

@@ -7,7 +7,7 @@
 	can_recycle = 0
 
 	New(var/loc, var/forceartiorigin)
-		..()
+		..(loc)
 		var/datum/artifact/pitcher/AS = new /datum/artifact/pitcher(src)
 		if (forceartiorigin)
 			AS.validtypes = list("[forceartiorigin]")
