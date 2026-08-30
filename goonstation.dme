@@ -2641,6 +2641,7 @@
 #include "code\obj\flock\structure\sentinel.dm"
 #include "code\obj\item\ai_plating_kit.dm"
 #include "code\obj\item\barrier.dm"
+#include "code\obj\item\baseball.dm"
 #include "code\obj\item\basketball.dm"
 #include "code\obj\item\bathbomb.dm"
 #include "code\obj\item\beartrap.dm"
