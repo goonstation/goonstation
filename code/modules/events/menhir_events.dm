@@ -1344,7 +1344,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 	pixel_y = -144
 	color = "#a4aaac"
 	blend_mode = BLEND_OVERLAY
-	plane = OVERLAY_EFFECT_LAYER_BASE+2
+	plane = OVERLAY_EFFECT_LAYER_BASE
 	appearance_flags = RESET_COLOR | RESET_ALPHA
 	alpha = 0
 
