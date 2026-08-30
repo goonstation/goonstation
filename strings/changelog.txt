@@ -1,5 +1,14 @@
 
 (t)sun aug 30 26
+(u)ANNmagedon
+(p)27688
+(e)🎨|C-Sprites
+(+)National Notary finally fixed the centcom & captain stamps using the wrong ink.
+(u)GabbySins
+(p)27623
+(e)🤖|A-Silicons
+(+)Change in how materials/IDs are handled.
+(+)Made arcplater work for cyborg-worn clothing.
 (u)LorrMaster
 (p)27293
 (e)🧱|A-Materials
