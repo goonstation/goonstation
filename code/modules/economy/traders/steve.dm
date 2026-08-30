@@ -123,5 +123,5 @@
 	comname = "Our Mixtape"
 	comtype = /obj/item/soundTape/ling_recording
 	amount = 3
-	price_boundary = list(PAY::DONTBUYIT*0.5,PAY::DONTBUYIT*0.6)
+	price_boundary = list(PAY::DONTBUYIT*1,PAY::DONTBUYIT*2)
 	possible_names = list("The recording of us- me, a human who is a singular person, singing. We feel sheepish about selling this.")
