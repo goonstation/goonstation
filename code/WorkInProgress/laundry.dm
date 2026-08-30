@@ -121,7 +121,7 @@ TYPEINFO(/obj/submachine/laundry_machine)
 				else if (istype(item, /obj/item/organ/brain))
 					var/obj/item/organ/brain = item
 					// prevents re-washing, but IMPORTANTLY DOES NOT BREAK THE LAUNDRY MACHINE BY RETURNING
-					if ("smooth" in brain.icon_state)
+					if (findtext(brain.icon_state,"_smooth"))
 						continue
 					if (!is_valid_icon_state("[brain.icon_state]_smooth", brain.icon))
 						continue
