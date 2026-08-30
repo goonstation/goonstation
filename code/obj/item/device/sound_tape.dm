@@ -1,16 +1,16 @@
-TYPEINFO(/obj/item/lightbreaker)
-	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
-	mats = 15
+// ----------------- abstract sound tape ----------------------------
 
-/obj/item/lightbreaker
-	name = "compact tape"
-	desc = "A casette player loaded with a casette of a vampire's screech."
+ABSTRACT_TYPE(/obj/item/soundTape)
+
+/obj/item/soundTape
+	name = "A tape you shouldn't see!"
+	desc = "DONT USE THIS"
 	icon = 'icons/obj/radiostation.dmi'
 	icon_state = "audiolog_newSmall"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "radio"
 	w_class = W_CLASS_SMALL
-	var/active = 0
+	var/active = FALSE
 	flags = TABLEPASS | CONDUCT
 	throwforce = 5
 	throw_speed = 2
@@ -20,7 +20,8 @@ TYPEINFO(/obj/item/lightbreaker)
 	var/ammo = 4
 	var/ammo_max = 4
 	var/rewind_time = 20 SECONDS
-	HELP_MESSAGE_OVERRIDE({"Use the lightbreaker in hand to shatter all lights around you and deafen/stagger other people without ear protection. Can be rewound with a <b>screwdriver</b>."})
+	var/activation_sound = 'sound/effects/light_breaker.ogg'
+	HELP_MESSAGE_OVERRIDE({"Use the tape to play a sound. Can be rewound with a <b>screwdriver</b>."})
 
 	examine()
 		. = ..()
@@ -31,17 +32,112 @@ TYPEINFO(/obj/item/lightbreaker)
 
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)
-		if(ammo >= 1)
+		if(src.ammo >= 1)
 			if (ON_COOLDOWN(src, "spam_protection", 1 SECOND))
 				return
 			src.activate(user)
-			ammo--
+			src.ammo--
 		else
 			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 			boutput(user, SPAN_ALERT("The tape is worn out!"))
 
 	proc/activate(mob/user as mob)
-		playsound(src.loc, 'sound/effects/light_breaker.ogg', 75, 1, 5)
+		playsound(src.loc, src.activation_sound, 75, 1, 5)
+		return TRUE
+
+	attackby(obj/item/W, mob/user, params)
+		if(isscrewingtool(W))
+			if(src.ammo < ammo_max)
+				actions.start(new /datum/action/bar/icon/soundTape(src, W, "rewind",round(src.rewind_time*(1-ammo/ammo_max))), user)
+			else
+				boutput(user, SPAN_ALERT("It's already fully rewound!"))
+			return
+		return ..()
+
+	proc/rewind()
+		src.ammo = src.ammo_max
+
+
+/datum/action/bar/icon/soundTape
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration = 300
+	icon = 'icons/ui/actions.dmi'
+	icon_state = "working"
+
+	var/obj/item/soundTape/the_tape
+	var/obj/item/the_tool
+	var/interaction = "rewind"
+	/// Rough delta-t system so we can gradually increase the tape's "ammo"
+	var/last_update = 0
+
+	New(var/obj/item/soundTape/tape, var/obj/item/tool, var/interact, var/duration_i)
+		..()
+		if (tape)
+			src.the_tape = tape
+		if (tool)
+			src.the_tool = tool
+			icon = src.the_tool.icon
+			icon_state = src.the_tool.icon_state
+		if (interact)
+			src.interaction = interact
+		if (duration_i)
+			src.duration = duration_i
+
+	onUpdate()
+		..()
+		if (src.the_tape == null || the_tool == null || owner == null || BOUNDS_DIST(owner, src.the_tape) > 0)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		var/mob/source = owner
+		if (istype(source) && the_tool != source.equipped())
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		var/old_ammo = src.the_tape.ammo
+		//ammo per second * delta time
+		src.the_tape.ammo += (src.the_tape.ammo_max / src.the_tape.rewind_time) * (TIME - src.last_update)
+		src.the_tape.ammo = min(src.the_tape.ammo, src.the_tape.ammo_max)
+
+		if (round(old_ammo) != round(src.the_tape.ammo))
+			playsound(get_turf(src.the_tape), 'sound/machines/click.ogg', 50, 1, -3)
+			boutput(source, SPAN_NOTICE("You rewind one full track."))
+
+		if (src.the_tape.ammo == src.the_tape.ammo_max)
+			src.state = ACTIONSTATE_FINISH
+		src.last_update = TIME
+
+	onStart()
+		..()
+		var/verbing = "rewinding"
+		switch (interaction)
+			if ("rewind")
+				verbing = "rewinding"
+		owner.visible_message(SPAN_NOTICE("[owner] begins [verbing] [src.the_tape]."))
+		src.last_update = TIME
+
+	onEnd()
+		..()
+		var/verbens = "rewinds"
+		switch (interaction)
+			if ("rewind")
+				verbens = "rewinds"
+				src.the_tape.rewind()
+		playsound(get_turf(src.the_tape), 'sound/machines/click.ogg', 50, 1, -3)
+		owner.visible_message(SPAN_NOTICE("[owner] [verbens] [src.the_tape]."))
+
+TYPEINFO(/obj/item/soundTape/lightbreaker)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
+	mats = 15
+
+// ----------------- actual sound tapes ----------------------------
+
+/obj/item/soundTape/lightbreaker
+	name = "compact tape"
+	desc = "A casette player loaded with a casette of a vampire's screech."
+	activation_sound = 'sound/effects/light_breaker.ogg'
+	HELP_MESSAGE_OVERRIDE({"Use the lightbreaker in hand to shatter all lights around you and deafen/stagger other people without ear protection. Can be rewound with a <b>screwdriver</b>."})
+
+	activate(mob/user as mob)
+		..()
 		for (var/obj/machinery/light/L in view(7, user))
 			if (L.status == 2 || L.status == 1)
 				continue
@@ -55,86 +151,15 @@ TYPEINFO(/obj/item/lightbreaker)
 			if (HH == user)
 				continue
 			HH.apply_sonic_stun(0, 0, 30, 0, 5, 4, 6)
-		return 1
-
-	attackby(obj/item/W, mob/user, params)
-		if(isscrewingtool(W))
-			if(ammo < ammo_max)
-				actions.start(new /datum/action/bar/icon/rewind_tape(src, W, "rewind",round(src.rewind_time*(1-ammo/ammo_max))), user)
-			else
-				boutput(user, SPAN_ALERT("It's already fully rewound!"))
-			return
-		return ..()
-
-	proc/rewind()
-		ammo = ammo_max
+		return TRUE
 
 
-/datum/action/bar/icon/rewind_tape
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	duration = 300
-	icon = 'icons/ui/actions.dmi'
-	icon_state = "working"
-
-	var/obj/item/lightbreaker/the_breaker
-	var/obj/item/the_tool
-	var/interaction = "rewind"
-	/// Rough delta-t system so we can gradually increase the tape's "ammo"
-	var/last_update = 0
-
-	New(var/obj/item/lightbreaker/brkr, var/obj/item/tool, var/interact, var/duration_i)
-		..()
-		if (brkr)
-			the_breaker = brkr
-		if (tool)
-			the_tool = tool
-			icon = the_tool.icon
-			icon_state = the_tool.icon_state
-		if (interact)
-			interaction = interact
-		if (duration_i)
-			duration = duration_i
-
-	onUpdate()
-		..()
-		if (the_breaker == null || the_tool == null || owner == null || BOUNDS_DIST(owner, the_breaker) > 0)
-			interrupt(INTERRUPT_ALWAYS)
-			return
-		var/mob/source = owner
-		if (istype(source) && the_tool != source.equipped())
-			interrupt(INTERRUPT_ALWAYS)
-			return
-		var/old_ammo = the_breaker.ammo
-		//ammo per second * delta time
-		the_breaker.ammo += (the_breaker.ammo_max / the_breaker.rewind_time) * (TIME - src.last_update)
-		the_breaker.ammo = min(the_breaker.ammo, the_breaker.ammo_max)
-
-		if (round(old_ammo) != round(the_breaker.ammo))
-			playsound(get_turf(the_breaker), 'sound/machines/click.ogg', 50, 1, -3)
-			boutput(source, SPAN_NOTICE("You rewind one full track."))
-
-		if (the_breaker.ammo == the_breaker.ammo_max)
-			src.state = ACTIONSTATE_FINISH
-		src.last_update = TIME
-
-	onStart()
-		..()
-		var/verbing = "rewinding"
-		switch (interaction)
-			if ("rewind")
-				verbing = "rewinding"
-		owner.visible_message(SPAN_NOTICE("[owner] begins [verbing] [the_breaker]."))
-		src.last_update = TIME
-
-	onEnd()
-		..()
-		var/verbens = "rewinds"
-		switch (interaction)
-			if ("rewind")
-				verbens = "rewinds"
-				the_breaker.rewind()
-		playsound(get_turf(the_breaker), 'sound/machines/click.ogg', 50, 1, -3)
-		owner.visible_message(SPAN_NOTICE("[owner] [verbens] [the_breaker]."))
+/obj/item/soundTape/ling_recording
+	name = "Human Steve's mixtape"
+	desc = "A recording of the merchent \"Human Steve\" singing... Oh dear."
+	activation_sound = "sound/voice/creepyshriek.ogg"
+	ammo = 1
+	ammo_max = 1
 
 
 /obj/item/spookbook //Wander Office item, not meant to look like a lightbreaker to the average player
