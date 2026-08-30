@@ -340,7 +340,7 @@ Obsidian Crown
 
 		user.bioHolder?.AddEffect("accent_void")
 
-	unequipped(mob/user) //idk if this can even happen but :iiam:
+	unequipped(mob/user) //courtesy of funni ring
 		user.bioHolder?.RemoveEffect("accent_void")
 		. = ..()
 
