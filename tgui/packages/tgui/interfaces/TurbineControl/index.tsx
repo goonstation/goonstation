@@ -37,7 +37,7 @@ type HistoryMetric =
   | 'pressure'
   | 'outletTemperature'
   | 'outletPressure';
-export type TurbineStatus =
+type TurbineStatus =
   | 'disconnected'
   | 'ruined'
   | 'overspeed'
@@ -48,7 +48,7 @@ export type TurbineStatus =
   | 'idle'
   | 'nominal';
 
-export const getTurbineStatus = (
+const getTurbineStatus = (
   data: Pick<
     TurbineControlData,
     | 'connected'
@@ -89,35 +89,33 @@ export const getTurbineStatus = (
   return 'nominal';
 };
 
-export const loadToExponent = (
-  load: number,
-  minLoad: number,
-  maxLoad: number,
-) =>
+const loadToExponent = (load: number, minLoad: number, maxLoad: number) =>
   Math.min(
     Math.max(Math.log10(Math.max(load, minLoad)), Math.log10(minLoad)),
     Math.log10(maxLoad),
   );
 
-export const exponentToLoad = (
-  exponent: number,
-  minLoad: number,
-  maxLoad: number,
-) => Math.min(Math.max(10 ** exponent, minLoad), maxLoad);
+const exponentToLoad = (exponent: number, minLoad: number, maxLoad: number) =>
+  Math.min(Math.max(10 ** exponent, minLoad), maxLoad);
 
 const formatLoad = (load: number) => `${formatSiUnit(load, 0, 'J')}/revolution`;
 
 const formatTemperature = (temperature: number) =>
   `${Math.round(temperature)} K`;
 
-export const chartData = (values: number[]) => {
+const formatRPM = (rpm: number) => `${Math.round(rpm)} RPM`;
+
+const HISTORY_CHART_STROKE_COLOR = 'rgba(203, 135, 66, 1)';
+const HISTORY_CHART_FILL_COLOR = 'rgba(241, 183, 125, 0.25)';
+
+const chartData = (values: number[]) => {
   if (!values.length) {
     return [[0, 0]];
   }
   return values.map((value, index) => [index, value]);
 };
 
-export const chartMaximum = (values: number[]) => Math.max(1, ...values);
+const chartMaximum = (values: number[]) => Math.max(1, ...values);
 
 const historyValues = (
   history: TurbineHistorySample[],
@@ -212,25 +210,75 @@ const LoadAdjustmentControls = ({
     <Stack.Item>
       <Stack>
         <Stack.Item>
-          <Button onClick={() => onAdjust(0.99)}>-1%</Button>
-        </Stack.Item>
-        <Stack.Item>
           <Button onClick={() => onAdjust(0.9)}>-10%</Button>
         </Stack.Item>
         <Stack.Item>
-          <Button onClick={() => onAdjust(1.1)}>+10%</Button>
+          <Button onClick={() => onAdjust(0.99)}>-1%</Button>
         </Stack.Item>
         <Stack.Item>
           <Button onClick={() => onAdjust(1.01)}>+1%</Button>
+        </Stack.Item>
+        <Stack.Item>
+          <Button onClick={() => onAdjust(1.1)}>+10%</Button>
         </Stack.Item>
       </Stack>
     </Stack.Item>
   </Stack>
 );
 
+type HistoryPanel = {
+  label: string;
+  value: string;
+  chart: {
+    data: number[][];
+    max: number;
+  };
+};
+
+const HistoryGrid = ({
+  panels,
+  hasHistory,
+}: {
+  panels: HistoryPanel[];
+  hasHistory: boolean;
+}) => (
+  <Stack vertical>
+    <Stack.Item>
+      <Stack wrap="wrap" justify="space-around">
+        {panels.map((panel) => (
+          <Stack.Item key={panel.label} grow minWidth={20} maxWidth={25}>
+            <Stack vertical>
+              <Stack.Item>
+                <Box color="label">
+                  {panel.label}: {panel.value}
+                </Box>
+              </Stack.Item>
+              <Stack.Item>
+                <Chart.Line
+                  height="4em"
+                  data={panel.chart.data}
+                  rangeX={[0, Math.max(panel.chart.data.length - 1, 1)]}
+                  rangeY={[0, panel.chart.max]}
+                  strokeColor={HISTORY_CHART_STROKE_COLOR}
+                  fillColor={HISTORY_CHART_FILL_COLOR}
+                />
+              </Stack.Item>
+            </Stack>
+          </Stack.Item>
+        ))}
+      </Stack>
+    </Stack.Item>
+    {!hasHistory && (
+      <Stack.Item>
+        <Box color="label">No samples yet.</Box>
+      </Stack.Item>
+    )}
+  </Stack>
+);
+
 const turbineWindowProps = {
   width: 520,
-  height: 750,
+  height: 770,
   theme: 'retro-dark',
   title: 'Gas Turbine Operator Console',
 };
@@ -339,7 +387,7 @@ export const TurbineControl = () => {
                     minValue={0}
                     maxValue={rpmGaugeMax}
                     alertAfter={data.overspeedRPM}
-                    format={(value) => `${Math.round(value)} RPM`}
+                    format={formatRPM}
                     ranges={{
                       average: [0, data.optimalRPM * 0.75],
                       good: [data.optimalRPM * 0.75, data.overspeedRPM],
@@ -441,33 +489,10 @@ export const TurbineControl = () => {
 
           <Stack.Item>
             <Section title="History">
-              <Stack vertical>
-                {[0, 2, 4].map((row) => (
-                  <Stack.Item key={row}>
-                    <Stack>
-                      {historyPanels.slice(row, row + 2).map((panel) => (
-                        <Stack.Item key={panel.label} grow basis={0}>
-                          <Box color="label">
-                            {panel.label}: {panel.value}
-                          </Box>
-                          <Chart.Line
-                            height="4em"
-                            data={panel.chart.data}
-                            rangeX={[
-                              0,
-                              Math.max(panel.chart.data.length - 1, 1),
-                            ]}
-                            rangeY={[0, panel.chart.max]}
-                            strokeColor="rgba(203, 135, 66, 1)"
-                            fillColor="rgba(241, 183, 125, 0.25)"
-                          />
-                        </Stack.Item>
-                      ))}
-                    </Stack>
-                  </Stack.Item>
-                ))}
-              </Stack>
-              {!data.history.length && <Box color="label">No samples yet.</Box>}
+              <HistoryGrid
+                panels={historyPanels}
+                hasHistory={!!data.history.length}
+              />
             </Section>
           </Stack.Item>
 

@@ -1,3 +1,5 @@
+import type { BooleanLike } from 'tgui-core/react';
+
 export interface TurbineHistorySample {
   rpm: number;
   load: number;
@@ -9,16 +11,16 @@ export interface TurbineHistorySample {
 }
 
 export interface TurbineBladeData {
-  installed: boolean;
+  installed: BooleanLike;
   healthPercent: number;
 }
 
 export interface TurbineStatorData {
-  installed: boolean;
+  installed: BooleanLike;
 }
 
 export interface TurbineControlData {
-  connected: boolean;
+  connected: BooleanLike;
   rpm: number;
   load: number;
   power: number;
@@ -37,11 +39,11 @@ export interface TurbineControlData {
   inletPressure: number;
   outletTemperature: number;
   outletPressure: number;
-  overspeed: boolean;
-  overtemp: boolean;
-  undertemp: boolean;
-  stalling: boolean;
-  ruined: boolean;
+  overspeed: BooleanLike;
+  overtemp: BooleanLike;
+  undertemp: BooleanLike;
+  stalling: BooleanLike;
+  ruined: BooleanLike;
   blade: TurbineBladeData | null;
   stator: TurbineStatorData | null;
 }
