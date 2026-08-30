@@ -1227,127 +1227,6 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 		logTheThing(LOG_STATION, null, "Menhir schism event at [node_tag] arm - [log_loc(nodelandmark)]")
 		message_admins("Menhir schism event triggered at [node_tag] arm - [log_loc(nodelandmark)]")
 
-/obj/anomaly/pale
-	name = "pale anomaly"
-	desc = "The air around it shudders as though caught in a spider's web."
-	icon = 'icons/effects/particles.dmi'
-	icon_state = "sparkle"
-	color = "#a4aaac"
-	alpha = 0
-	plane = PLANE_NOSHADOW_BELOW
-	anchored = ANCHORED_ALWAYS
-	event_handler_flags = IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
-	appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
-	has_processing_loop = TRUE
-	density = FALSE
-	HELP_MESSAGE_OVERRIDE("It seems strangely familiar. Maybe somebody else could take a better guess...")
-
-	var/effect_tick = 5 //! how many process ticks to wait before an expansion wave
-	var/anomaly_strength = 5 //! how strong/wide the anomaly currently is (signals within radius equal to strength are jammed)
-	var/max_anomaly_strength = 30 //! how strong/wide the anomaly can get, at maximum (interdictors can whittle away at this)
-
-	var/obj/effect/pale_shroud/shroud = null
-
-/obj/anomaly/pale/New()
-	..()
-	src.shroud = new /obj/effect/pale_shroud(src)
-	src.vis_contents += src.shroud
-	animate(src, alpha = 66, time = 20, easing = LINEAR_EASING)
-	START_TRACKING_CAT(TR_CAT_RADIO_JAMMERS)
-
-	for_clients_in_range(C, get_turf(src), 25)
-		boutput(C, SPAN_ALERT("A strange tremor [pick("propagates", "shudders", "resonates")] through the air. Something is wrong."))
-		shake_camera(C.mob, 6, 1)
-
-/obj/anomaly/pale/proc/shut_anomaly()
-	playsound(src.loc, 'sound/musical_instruments/artifact/Artifact_Precursor_3.ogg', 60, 0)
-	var/list/parting_messages = list(
-		"« 96 77 97 76 96 66 23 38 17 87 97 38 23 96 27 48 23 96 68 56 27 23 86 96 67 66 58 97 28 48 «",
-		"« 38 28 96 28 56 96 66 96 87 97 48 23 28 58 97 98 23 96 28 56 23 86 96 38 38 96 67 66 «",
-		"« 96 76 56 96 08 23 87 37 23 38 17 87 37 38 23 38 58 28 97 27 76 23 96 27 48 «",
-		"« 87 37 56 17 56 23 27 48 56 96 28 66 23 38 78 56 28 86 23 17 87 97 38 23 28 58 97 «",
-		"« 28 96 27 48 96 17 97 48 23 17 87 37 38 23 38 17 87 97 38 23 28 58 97 23 98 56 77 «",
-	)
-	for_clients_in_range(C, get_turf(src), 6)
-		boutput(C, SPAN_DISARM(pick(parting_messages)))
-		shake_camera(C.mob, 6, 1)
-	src.effect_tick = 999
-	animate(src, alpha = 200, time = 8, easing = BOUNCE_EASING | EASE_IN)
-	SPAWN(1 SECOND)
-		var/turf/nearby_spot = null
-		for(var/D in alldirs)
-			var/turf/proxturf = get_step(src,D)
-			if(!is_blocked_turf(proxturf))
-				nearby_spot = proxturf
-				break
-		if(nearby_spot)
-			showswirl(nearby_spot)
-			new /obj/item/raw_material/starstone(nearby_spot)
-		animate(src, alpha = 0, time = 16, easing = BACK_EASING)
-	SPAWN(3 SECONDS)
-		qdel(src)
-
-/obj/anomaly/pale/disposing()
-	src.vis_contents -= src.shroud
-	qdel(src.shroud)
-	src.shroud = null
-	STOP_TRACKING_CAT(TR_CAT_RADIO_JAMMERS)
-	. = ..()
-
-/obj/anomaly/pale/process()
-	. = ..()
-	if (src.effect_tick > 0)
-		src.effect_tick--
-		return
-
-	//Always gains anomaly strength each cycle, your interdictor(s) will need to overcome it either acutely or in the long haul
-	src.anomaly_strength = min(src.anomaly_strength + rand(1,2), src.max_anomaly_strength)
-
-	for_by_tcl(IX, /obj/machinery/interdictor)
-		if (src.anomaly_strength <= 1) break
-		///Estimate how strong of an interruption we can steadily apply, based on the amount of charge remaining in the internal capacitor
-		var/target_strength = floor(IX.intcap.charge/2500)
-		///Each interrupt strength costs 1,500 cell units and cuts 1 current and maximum anomaly strength
-		var/interrupt_strength = clamp(target_strength,1,3)
-		if (IX.expend_interdict(interrupt_strength*1500, src))
-			if(src.max_anomaly_strength == initial(src.max_anomaly_strength)) //haven't interdicted yet
-				playsound(IX,'sound/machines/alarm_a.ogg',20,FALSE,5,-1.5)
-				IX.visible_message(SPAN_ALERT("<b>[IX] emits an unknown anomaly warning!</b>"))
-			src.max_anomaly_strength = max(src.max_anomaly_strength - interrupt_strength, 1)
-			src.anomaly_strength = max(src.anomaly_strength - interrupt_strength, src.max_anomaly_strength, 1)
-
-	playsound(src.loc, "sound/items/pickup_[rand(1,3)].ogg", 50, 0, pitch = 0.2, extrarange = 24)
-
-	var/kernel_alpha = 66 + (anomaly_strength*2)
-	animate(src, alpha = kernel_alpha, time = 6 SECONDS, easing = LINEAR_EASING)
-
-	var/anom_alpha = min(10 + (anomaly_strength*2), 45)
-	var/anom_scale = 0.17 * anomaly_strength
-	animate(src.shroud, alpha = anom_alpha, time = 6 SECONDS, transform = matrix()*anom_scale, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
-	if(src.anomaly_strength <= 1) src.shut_anomaly()
-
-	src.effect_tick = initial(src.effect_tick) - rand(0,2)
-
-/obj/anomaly/pale/get_help_message(dist, mob/user)
-	. = ..()
-	if (ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.traitHolder.hasTraitInList(list("training_scientist")))
-			return "There's some sort of field emanating from this. It might be possible to close it with a <b>spatial interdictor</b>."
-		if(H.traitHolder.hasTraitInList(list("training_engineer")))
-			return "The ambient hum of the station is unnervingly dull. Seems like trouble - a <b>spatial interdictor</b> might be warranted."
-
-/obj/effect/pale_shroud
-	icon = 'icons/effects/320x320.dmi'
-	icon_state = "background"
-	pixel_x = -144
-	pixel_y = -144
-	color = "#a4aaac"
-	blend_mode = BLEND_OVERLAY
-	plane = OVERLAY_EFFECT_LAYER_BASE
-	appearance_flags = RESET_COLOR | RESET_ALPHA
-	alpha = 0
-
 //an intolerable imbalance has developed within. it must be purged.
 /datum/random_event/menhir/radwave
 	name = "A Tide Which Scours"
@@ -1568,3 +1447,124 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 #undef EVFILTER_NO_MOON
 
 #endif
+
+/obj/anomaly/pale
+	name = "pale anomaly"
+	desc = "The air around it shudders as though caught in a spider's web."
+	icon = 'icons/effects/particles.dmi'
+	icon_state = "sparkle"
+	color = "#a4aaac"
+	alpha = 0
+	plane = PLANE_NOSHADOW_BELOW
+	anchored = ANCHORED_ALWAYS
+	event_handler_flags = IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
+	appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
+	has_processing_loop = TRUE
+	density = FALSE
+	HELP_MESSAGE_OVERRIDE("It seems strangely familiar. Maybe somebody else could take a better guess...")
+
+	var/effect_tick = 5 //! how many process ticks to wait before an expansion wave
+	var/anomaly_strength = 5 //! how strong/wide the anomaly currently is (signals within radius equal to strength are jammed)
+	var/max_anomaly_strength = 30 //! how strong/wide the anomaly can get, at maximum (interdictors can whittle away at this)
+
+	var/obj/effect/pale_shroud/shroud = null
+
+/obj/anomaly/pale/New()
+	..()
+	src.shroud = new /obj/effect/pale_shroud(src)
+	src.vis_contents += src.shroud
+	animate(src, alpha = 66, time = 20, easing = LINEAR_EASING)
+	START_TRACKING_CAT(TR_CAT_RADIO_JAMMERS)
+
+	for_clients_in_range(C, get_turf(src), 25)
+		boutput(C, SPAN_ALERT("A strange tremor [pick("propagates", "shudders", "resonates")] through the air. Something is wrong."))
+		shake_camera(C.mob, 6, 1)
+
+/obj/anomaly/pale/proc/shut_anomaly()
+	playsound(src.loc, 'sound/musical_instruments/artifact/Artifact_Precursor_3.ogg', 60, 0)
+	var/list/parting_messages = list(
+		"« 96 77 97 76 96 66 23 38 17 87 97 38 23 96 27 48 23 96 68 56 27 23 86 96 67 66 58 97 28 48 «",
+		"« 38 28 96 28 56 96 66 96 87 97 48 23 28 58 97 98 23 96 28 56 23 86 96 38 38 96 67 66 «",
+		"« 96 76 56 96 08 23 87 37 23 38 17 87 37 38 23 38 58 28 97 27 76 23 96 27 48 «",
+		"« 87 37 56 17 56 23 27 48 56 96 28 66 23 38 78 56 28 86 23 17 87 97 38 23 28 58 97 «",
+		"« 28 96 27 48 96 17 97 48 23 17 87 37 38 23 38 17 87 97 38 23 28 58 97 23 98 56 77 «",
+	)
+	for_clients_in_range(C, get_turf(src), 6)
+		boutput(C, SPAN_DISARM(pick(parting_messages)))
+		shake_camera(C.mob, 6, 1)
+	src.effect_tick = 999
+	animate(src, alpha = 200, time = 8, easing = BOUNCE_EASING | EASE_IN)
+	SPAWN(1 SECOND)
+		var/turf/nearby_spot = null
+		for(var/D in alldirs)
+			var/turf/proxturf = get_step(src,D)
+			if(!is_blocked_turf(proxturf))
+				nearby_spot = proxturf
+				break
+		if(nearby_spot)
+			showswirl(nearby_spot)
+			new /obj/item/raw_material/starstone(nearby_spot)
+		animate(src, alpha = 0, time = 16, easing = BACK_EASING)
+	SPAWN(3 SECONDS)
+		qdel(src)
+
+/obj/anomaly/pale/disposing()
+	src.vis_contents -= src.shroud
+	qdel(src.shroud)
+	src.shroud = null
+	STOP_TRACKING_CAT(TR_CAT_RADIO_JAMMERS)
+	. = ..()
+
+/obj/anomaly/pale/process()
+	. = ..()
+	if (src.effect_tick > 0)
+		src.effect_tick--
+		return
+
+	//Always gains anomaly strength each cycle, your interdictor(s) will need to overcome it either acutely or in the long haul
+	src.anomaly_strength = min(src.anomaly_strength + rand(1,2), src.max_anomaly_strength)
+
+	for_by_tcl(IX, /obj/machinery/interdictor)
+		if (src.anomaly_strength <= 1) break
+		///Estimate how strong of an interruption we can steadily apply, based on the amount of charge remaining in the internal capacitor
+		var/target_strength = floor(IX.intcap.charge/2500)
+		///Each interrupt strength costs 1,500 cell units and cuts 1 current and maximum anomaly strength
+		var/interrupt_strength = clamp(target_strength,1,3)
+		if (IX.expend_interdict(interrupt_strength*1500, src))
+			if(src.max_anomaly_strength == initial(src.max_anomaly_strength)) //haven't interdicted yet
+				playsound(IX,'sound/machines/alarm_a.ogg',20,FALSE,5,-1.5)
+				IX.visible_message(SPAN_ALERT("<b>[IX] emits an unknown anomaly warning!</b>"))
+			src.max_anomaly_strength = max(src.max_anomaly_strength - interrupt_strength, 1)
+			src.anomaly_strength = max(src.anomaly_strength - interrupt_strength, src.max_anomaly_strength, 1)
+
+	playsound(src.loc, "sound/items/pickup_[rand(1,3)].ogg", 50, 0, pitch = 0.2, extrarange = 24)
+
+	var/kernel_alpha = 66 + (anomaly_strength*2)
+	animate(src, alpha = kernel_alpha, time = 6 SECONDS, easing = LINEAR_EASING)
+
+	var/anom_alpha = min(10 + (anomaly_strength*2), 45)
+	var/anom_scale = 0.17 * anomaly_strength
+	animate(src.shroud, alpha = anom_alpha, time = 6 SECONDS, transform = matrix()*anom_scale, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
+	if(src.anomaly_strength <= 1) src.shut_anomaly()
+
+	src.effect_tick = initial(src.effect_tick) - rand(0,2)
+
+/obj/anomaly/pale/get_help_message(dist, mob/user)
+	. = ..()
+	if (ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.traitHolder.hasTraitInList(list("training_scientist")))
+			return "There's some sort of field emanating from this. It might be possible to close it with a <b>spatial interdictor</b>."
+		if(H.traitHolder.hasTraitInList(list("training_engineer")))
+			return "The ambient hum of the station is unnervingly dull. Seems like trouble - a <b>spatial interdictor</b> might be warranted."
+
+/obj/effect/pale_shroud
+	icon = 'icons/effects/320x320.dmi'
+	icon_state = "background"
+	pixel_x = -144
+	pixel_y = -144
+	color = "#a4aaac"
+	blend_mode = BLEND_OVERLAY
+	plane = OVERLAY_EFFECT_LAYER_BASE
+	appearance_flags = RESET_COLOR | RESET_ALPHA
+	alpha = 0
