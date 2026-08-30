@@ -130,7 +130,7 @@ ABSTRACT_TYPE(/datum/job/special/syndicate/specialist)
 	items_in_backpack = list(/obj/item/gun/kinetic/smg,
 		/obj/item/card/emag,
 		/obj/item/cloaking_device,
-		/obj/item/soundTape/lightbreaker)
+		/obj/item/sound_tape/lightbreaker)
 
 /datum/job/special/syndicate/specialist/medic
 	name = "Syndicate Field Medic"

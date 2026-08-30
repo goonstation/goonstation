@@ -1,8 +1,8 @@
 // ----------------- abstract sound tape ----------------------------
 
-ABSTRACT_TYPE(/obj/item/soundTape)
+ABSTRACT_TYPE(/obj/item/sound_tape)
 
-/obj/item/soundTape
+/obj/item/sound_tape
 	name = "A tape you shouldn't see!"
 	desc = "DONT USE THIS"
 	icon = 'icons/obj/radiostation.dmi'
@@ -48,7 +48,7 @@ ABSTRACT_TYPE(/obj/item/soundTape)
 	attackby(obj/item/W, mob/user, params)
 		if(isscrewingtool(W))
 			if(src.ammo < ammo_max)
-				actions.start(new /datum/action/bar/icon/soundTape(src, W, "rewind",round(src.rewind_time*(1-ammo/ammo_max))), user)
+				actions.start(new /datum/action/bar/icon/sound_tape(src, W, "rewind",round(src.rewind_time*(1-ammo/ammo_max))), user)
 			else
 				boutput(user, SPAN_ALERT("It's already fully rewound!"))
 			return
@@ -58,19 +58,19 @@ ABSTRACT_TYPE(/obj/item/soundTape)
 		src.ammo = src.ammo_max
 
 
-/datum/action/bar/icon/soundTape
+/datum/action/bar/icon/sound_tape
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	duration = 300
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "working"
 
-	var/obj/item/soundTape/the_tape
+	var/obj/item/sound_tape/the_tape
 	var/obj/item/the_tool
 	var/interaction = "rewind"
 	/// Rough delta-t system so we can gradually increase the tape's "ammo"
 	var/last_update = 0
 
-	New(var/obj/item/soundTape/tape, var/obj/item/tool, var/interact, var/duration_i)
+	New(var/obj/item/sound_tape/tape, var/obj/item/tool, var/interact, var/duration_i)
 		..()
 		if (tape)
 			src.the_tape = tape
@@ -124,13 +124,13 @@ ABSTRACT_TYPE(/obj/item/soundTape)
 		playsound(get_turf(src.the_tape), 'sound/machines/click.ogg', 50, 1, -3)
 		owner.visible_message(SPAN_NOTICE("[owner] [verbens] [src.the_tape]."))
 
-TYPEINFO(/obj/item/soundTape/lightbreaker)
+TYPEINFO(/obj/item/sound_tape/lightbreaker)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 15
 
 // ----------------- actual sound tapes ----------------------------
 
-/obj/item/soundTape/lightbreaker
+/obj/item/sound_tape/lightbreaker
 	name = "compact tape"
 	desc = "A casette player loaded with a casette of a vampire's screech."
 	activation_sound = 'sound/effects/light_breaker.ogg'
@@ -154,7 +154,7 @@ TYPEINFO(/obj/item/soundTape/lightbreaker)
 		return TRUE
 
 
-/obj/item/soundTape/ling_recording
+/obj/item/sound_tape/ling_recording
 	name = "Human Steve's mixtape"
 	desc = "A recording of the merchent \"Human Steve\" singing... Oh dear."
 	activation_sound = "sound/voice/creepyshriek.ogg"
