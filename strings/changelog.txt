@@ -1,5 +1,9 @@
 
 (t)sun aug 30 26
+(u)LorrMaster
+(p)27660
+(e)⚖🧱|C-Balance, A-Materials
+(+)Density and reflectivity increases when mixing batiline with radioactive materials is now larger
 (u)ANNmagedon
 (p)27688
 (e)🎨|C-Sprites
