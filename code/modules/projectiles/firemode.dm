@@ -1,4 +1,5 @@
-datum/firemode
+ABSTRACT_TYPE(/datum/firemode)
+/datum/firemode
 	var/name = "single shot" // The name of the firemode
 	var/shot_number = 1         // How many projectiles should be fired, each will cost the full cost
 	var/shot_delay = 0.1 SECONDS // Time between shots in a burst. Pods will use shot_delay for cooldowns
