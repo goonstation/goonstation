@@ -1,5 +1,9 @@
 
 (t)sun aug 30 26
+(u)LeahTheTech
+(p)27664
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Vampire glare now partially pierces eye protection, doing 50 stamina damage and 10 seconds of disorient to anyone with full eye protection.
 (u)LorrMaster
 (p)27288
 (e)🎨🛠️📨|C-Sprites, A-Engineering, A-Logistics
