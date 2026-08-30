@@ -717,9 +717,9 @@ datum/commodity/drugs/sell/poppies
 	price = PAY::DOCTORATE
 
 /datum/commodity/contraband/stealthstorage
-	comname = "Stealth Storage"
-	comtype = /obj/item/storage/box/syndibox
-	desc = "Can take on the appearance of another item. Creates a small dimensional rift in space-time, allowing it to hold multiple items."
+	comname = "Stealth Storage (Small)"
+	comtype = /obj/item/storage/box/syndibox/small
+	desc = "Can take on the appearance of another item. Creates a small dimensional rift in space-time, allowing it to hold multiple items. Holds less items than the usual syndicate stealth storage."
 	price = PAY::DOCTORATE
 
 /datum/commodity/contraband/chamsuit
