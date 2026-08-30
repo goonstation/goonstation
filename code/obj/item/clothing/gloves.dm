@@ -1019,7 +1019,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		if(user.hand == RIGHT_HAND)
 			src.which_hands = GLOVE_HAS_RIGHT
 			user.hand_grip_count_r += 1
-		else if(user.hand == LEFT_HAND)
+		else
 			src.which_hands = GLOVE_HAS_LEFT
 			user.hand_grip_count_l += 1
 		RegisterSignal(user, COMSIG_ATOM_HITBY_THROWN, PROC_REF(mitt_catch))
