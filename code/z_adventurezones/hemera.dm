@@ -320,6 +320,7 @@ Obsidian Crown
 	magical = 1
 	var/processing = 0
 	var/armor_paired = 0
+	var/ring_acquainted = 0
 	var/max_damage = 0
 
 	equipped(var/mob/user, var/slot)
@@ -372,6 +373,47 @@ Obsidian Crown
 		else if (ishuman(host) && istype(host:wear_suit, /obj/item/clothing/suit/armor/ancient))
 			armor_paired = 1
 			hear_voidSpeak("My, my, my, who is this?  A new companion on our pilgrimage?")
+
+		var/ring_guarded = FALSE
+		if (ishuman(host) && istype(host:gloves, /obj/item/clothing/gloves/ring/ominous))
+			ring_guarded = TRUE
+			var/obj/item/clothing/gloves/ring/ominous/thering = host:gloves
+			if(!ring_acquainted)
+				ring_acquainted = 1
+				hear_voidSpeak("A fascinating trinket indeed, and quite talkative.  I am quite certain we'll be the best of companions.")
+			else if(ring_acquainted < 60)
+				ring_acquainted++
+				switch (ring_acquainted) //progression to a clash
+					if (8)
+						host.playsound_local_not_inworld('sound/ambience/industrial/Precursor_Choir.ogg', 30, 0)
+					if (9)
+						boutput(host,SPAN_DISARM("« 38 28 58 97 98 23 48 97 87 23 38 37 23 98 48 37 67 56 48 28 97 77 23 38 37 27 48 «"))
+					if (12)
+						hear_voidSpeak("Insolent thing!  You think yourself the judge of our fellowship?  My Friend shall certainly discard you!")
+					if (13)
+						boutput(host,SPAN_ALERT("<b>[thering] vibrates violently!</b>"))
+						host.playsound_local_not_inworld('sound/effects/brrp.ogg', 40, 1, pitch = 0.5)
+					if (21)
+						hear_voidSpeak("Voices, voices, it heckles, it pesters!  Be rid of it!  We have no need of it!")
+					if (27)
+						host.playsound_local_not_inworld('sound/musical_instruments/artifact/Artifact_Precursor_3.ogg', 30, 0)
+					if (28)
+						boutput(host,SPAN_DISARM("RETURN TO MY HOME"))
+					if (31)
+						hear_voidSpeak("Ah, it deigns to speak in our own tongue, at last!  Pay it no heed.  I will deal with it soon.")
+					if (41)
+						host.playsound_local_not_inworld('sound/ambience/industrial/Precursor_Choir.ogg', 30, 0)
+					if (42)
+						boutput(host,SPAN_DISARM("« 96 76 87 96 67 37 38 23 17 87 97 67 23 96 27 48 23 97 48 23 87 28 58 48 96 28 «"))
+					if (44)
+						hear_voidSpeak("You know not of what you speak!  Come, Friend.  Do not trouble yourself with its faded halls.")
+					if (54)
+						hear_voidSpeak("Your end is near, trinket of the long-dead.  I have you now!")
+					if (55 to 57)
+						boutput(host,SPAN_ALERT("<b>[thering] vibrates violently!</b>"))
+						host.playsound_local_not_inworld('sound/effects/brrp.ogg', 40, 1, pitch = 0.5)
+					if (60)
+						src.crown_clash()
 
 		var/obj/item/storage/toolbox/memetic/that_jerk = locate(/obj/item/storage/toolbox/memetic) in host
 		if (istype(that_jerk)) //We do not like His Grace!!
@@ -443,7 +485,7 @@ Obsidian Crown
 					M.set_loc(pick(randomturfs))
 					logTheThing(LOG_COMBAT, M, "is warped away by [constructTarget(host,"combat")]'s obsidian crown to [log_loc(M)].")
 
-		if (armor_paired != -1 && prob(50) && host.max_health > 10)
+		if (armor_paired != -1 && prob(50) && host.max_health > 10 && !ring_guarded)
 			host.max_health--
 			//Away with ye, all hope of healing.
 			//random_brute_damage(host, 1)
@@ -529,3 +571,43 @@ Obsidian Crown
 		host.vaporize()
 
 		return
+
+	proc/crown_clash()
+		var/mob/living/carbon/human/host = src.loc
+		if (!istype(host))
+			return
+
+		var/obj/item/clothing/gloves/ring/ominous/ring = host.gloves
+		if (!istype(ring))
+			return
+
+		var/in_crown_area = FALSE
+		if (istypes(get_area(host),list(/area/unspace,/area/precursor/menhir,/area/station/crown)))
+			in_crown_area = TRUE
+
+		if (in_crown_area) //ring wins
+			host.playsound_local_not_inworld('sound/ambience/industrial/Precursor_Choir.ogg', 30, 0)
+			processing_items.Remove(src)
+			processing = 0
+
+			SPAWN(8)
+				hear_voidSpeak("NO!  NO!  THIS CANNOT BE!  MY FRIEND, LEND ME YOUR-")
+			SPAWN(13)
+				src.cant_self_remove = 0
+				src.cant_other_remove = 0
+				host.u_equip(src)
+				playsound(host.loc, 'sound/weapons/flashbang.ogg', 30, 1, pitch = 0.7)
+				qdel(src)
+				host.max_health = initial(host.max_health)
+				host.reagents.maximum_volume = initial(host.reagents.maximum_volume)
+
+		else //obsidian crown wins
+			hear_voidSpeak("Begone, vile artifice!  Finally, an end to that confounding blabber.")
+			host.u_equip(ring)
+			if (ring)
+				ring.dropped(host)
+				ring.layer = initial(ring.layer)
+				elecflash(host,power = 3)
+				boutput(host, SPAN_COMBAT("[ring] is warped out of existence!"))
+				playsound(host.loc, 'sound/effects/mag_warp.ogg', 25, 1, -1)
+				qdel(ring)
