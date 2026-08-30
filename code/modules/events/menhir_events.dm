@@ -1201,6 +1201,8 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 		new /obj/anomaly/pale(nodelandmark)
 
 		playsound(nodelandmark, 'sound/ambience/industrial/Precursor_Drone3.ogg', 65, 0, extrarange = 30)
+		SPAWN(7)
+			playsound_global(Z_LEVEL_STATION, 'sound/voice/creepywhisper_3.ogg', 20)
 
 		var/facing_dir = pick("S","N","E","W")
 
@@ -1224,7 +1226,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 	desc = "The air around it shudders as though caught in a spider's web."
 	icon = 'icons/effects/particles.dmi'
 	icon_state = "sparkle"
-	color = "#AAAAAA"
+	color = "#a4aaac"
 	alpha = 0
 	plane = PLANE_NOSHADOW_BELOW
 	anchored = ANCHORED_ALWAYS
@@ -1334,7 +1336,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 	icon_state = "background"
 	pixel_x = -144
 	pixel_y = -144
-	color = "#AAAAAA"
+	color = "#a4aaac"
 	blend_mode = BLEND_OVERLAY
 	plane = OVERLAY_EFFECT_LAYER_BASE+2
 	appearance_flags = RESET_COLOR | RESET_ALPHA
