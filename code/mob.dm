@@ -71,7 +71,8 @@ TYPEINFO(/mob)
 	var/next_click = 0
 	var/transforming = null
 	var/hand = 0
-	var/hand_firm_grip = 0
+	var/hand_grip_count_l = 0 //! If above zero, will avoid dropping items from falling, etc.
+	var/hand_grip_count_r = 0 //! If above zero, will avoid dropping items from falling, etc.
 	var/eye_blind = null
 	var/eye_blurry = null
 	var/eye_damage = null

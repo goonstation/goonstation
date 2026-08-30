@@ -1001,28 +1001,35 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 /obj/item/clothing/gloves/baseball_mitt
 	name = "baseball mitt"
-	desc = "Catch things with one hand, throw things with the other. Just don't forget which does which."
+	desc = "Good at catching things and making sure that they stay caught if you fall. Not so great at using things after you catch them."
 	wear_image_icon = 'icons/mob/clothing/hands.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_feethand.dmi'
 	icon_state = "baseball_mitt"
 	item_state = "baseball_mitt"
-	default_material = "synthleather"
-	material_prints = "synthetic leather mitt"
+	w_class = W_CLASS_NORMAL
+	material_prints = "synthetic leather netting"
 	which_hands = GLOVE_HAS_LEFT
+
+	get_fiber_mask()
+		return FORENSIC_GLOVE_MASK_NONE
 
 	equipped(mob/user, slot)
 		. = ..()
-		src.which_hands = GLOVE_HAS_RIGHT
-		user.hand_firm_grip = RIGHT_HAND
-		if(user.hand == LEFT_HAND)
+		if(user.hand == RIGHT_HAND)
+			src.which_hands = GLOVE_HAS_RIGHT
+			user.hand_grip_count_r += 1
+		else if(user.hand == LEFT_HAND)
 			src.which_hands = GLOVE_HAS_LEFT
-			user.hand_firm_grip = LEFT_HAND
+			user.hand_grip_count_l += 1
 		RegisterSignal(user, COMSIG_ATOM_HITBY_THROWN, PROC_REF(mitt_catch))
 		RegisterSignal(user, COMSIG_MOB_PICKUP, PROC_REF(mitt_pickup))
+		RegisterSignal(user, COMSIG_MOB_DROPPED, PROC_REF(mitt_drop))
 		RegisterSignal(user, COMSIG_MOB_THROW_ADJUST, PROC_REF(mitt_adjust_throw))
+
 		if(!ishuman(user))
 			return
 		var/mob/living/carbon/human/H = user
+		// Need to make it clear on the hud which hand the mitt is on
 		if(which_hands == GLOVE_HAS_LEFT)
 			H.hud.hand_type_l = "_mitt"
 		if(which_hands == GLOVE_HAS_RIGHT)
@@ -1031,10 +1038,13 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 	unequipped(mob/user)
 		. = ..()
-		user.hand_firm_grip = 0
+		user.hand_grip_count_l -= 1
+		user.hand_grip_count_r -= 1
 		UnregisterSignal(user, COMSIG_ATOM_HITBY_THROWN)
 		UnregisterSignal(user, COMSIG_MOB_PICKUP)
+		UnregisterSignal(user, COMSIG_MOB_DROPPED)
 		UnregisterSignal(user, COMSIG_MOB_THROW_ADJUST)
+
 		if(!ishuman(user))
 			return
 		var/mob/living/carbon/human/H = user
@@ -1042,8 +1052,9 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		H.hud.hand_type_r = null
 		H.hud.update_hands()
 
-	get_fiber_mask()
-		return create_glovemask_position() // 1/4 chance of match
+	proc/mitt_attackby_pre(source, atom/target, mob/user)
+		boutput(user, SPAN_ALERT("Can't attack with the [source] while it is inside the [src]!"))
+		return ATTACK_PRE_DONT_ATTACK
 
 	proc/mitt_catch(mob/owner, atom/movable/thing, datum/thrown_thing/thr)
 		if(owner.hand == LEFT_HAND && !HAS_FLAG(src.which_hands, GLOVE_HAS_LEFT))
@@ -1057,47 +1068,54 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 			owner.visible_message(SPAN_COMBAT("[owner] gets beaned with \the [I]."))
 			return FALSE
 		if((owner.hand == LEFT_HAND && owner.l_hand != null) || (owner.hand == RIGHT_HAND && owner.r_hand != null))
-			owner.visible_message(SPAN_ALERT("[owner] attempts to catch \the [I], but the [src] already has something inside of it!"))
+			owner.visible_message(SPAN_ALERT("[owner] attempts to catch \the [I], but \the [src] already has something inside of it!"))
 			return FALSE
 		if(I.w_class > W_CLASS_POCKET_SIZED)
-			owner.visible_message(SPAN_ALERT("[owner] attempts to catch \the [I] with the [src], but it's too big!"))
-			return FALSE
-		if((prob(50) && owner.bioHolder.HasEffect("clumsy")))
-			owner.visible_message(SPAN_COMBAT("[owner] attempts to catch \the [I], but fumbles the ball!"))
-			owner.changeStatus("stunned", 2 SECONDS)
-			JOB_XP(owner, "Clown", 1)
+			owner.visible_message(SPAN_ALERT("[owner] attempts to catch \the [I] with \the [src], but it's too big!"))
 			return FALSE
 
-		var/mob/living/carbon/human/H = owner
 		playsound(owner, 'sound/items/bball_bounce.ogg', 150, TRUE)
-		H.visible_message(SPAN_COMBAT("[H] catches \the [I] with \the [src]!"), SPAN_COMBAT("You catch \the [I] with \the [src]!"))
-		thing.Attackhand(H)
-		logTheThing(LOG_COMBAT, H, "catches [I] with \the [src]")
+		owner.visible_message(SPAN_COMBAT("[owner] catches \the [I] with \the [src]!"), SPAN_SUCCESS("You catch \the [I] with \the [src]!"))
+		thing.Attackhand(owner)
+		logTheThing(LOG_COMBAT, owner, "catches [I] with \the [src]")
 		#ifdef DATALOGGER
 		game_stats.Increment("catches")
 		#endif
+
+		if((prob(50) && owner.bioHolder.HasEffect("clumsy")) || thr.bonus_throwforce > 3)
+			owner.visible_message(SPAN_COMBAT("[owner] stumbles from the catch!"))
+			owner.changeStatus("knockdown", 2 SECONDS)
+			JOB_XP(owner, "Clown", 1)
+
 		return TRUE
 
+	/// If it can't fit in your pocket, it will fall out of the mitt
 	proc/mitt_pickup(mob/user, obj/item/I)
 		if(user.hand == LEFT_HAND && !HAS_FLAG(src.which_hands, GLOVE_HAS_LEFT))
 			return
 		if(user.hand == RIGHT_HAND && !HAS_FLAG(src.which_hands, GLOVE_HAS_RIGHT))
 			return
+		RegisterSignal(I, COMSIG_ITEM_ATTACK_PRE, PROC_REF(mitt_attackby_pre))
 		if(I.w_class > W_CLASS_POCKET_SIZED)
 			SPAWN(0.35 SECONDS)
-				user.visible_message(SPAN_ALERT("[user] attempts to grab \the [I] with \the [src], but it falls out!"))
+				user.visible_message(SPAN_ALERT("The [I] falls out of [user]'s [src]!"))
 				user.drop_item(I)
-				playsound(user, 'sound/items/bball_bounce.ogg', 50, TRUE)
+				playsound(user, 'sound/items/bball_hoop.ogg', 35, TRUE)
 		return
 
+	proc/mitt_drop(mob/user, obj/item/I)
+		if(user.hand == LEFT_HAND && !HAS_FLAG(src.which_hands, GLOVE_HAS_LEFT))
+			return
+		if(user.hand == RIGHT_HAND && !HAS_FLAG(src.which_hands, GLOVE_HAS_RIGHT))
+			return
+		UnregisterSignal(I, COMSIG_ITEM_ATTACK_PRE)
+
+	/// Mitt is bad at throwing things
 	proc/mitt_adjust_throw(mob/thrower, datum/thrown_thing/thr)
 		if(thrower.hand == LEFT_HAND && !HAS_FLAG(src.which_hands, GLOVE_HAS_LEFT))
 			return
 		if(thrower.hand == RIGHT_HAND && !HAS_FLAG(src.which_hands, GLOVE_HAS_RIGHT))
 			return
-		if(!ishuman(thrower))
-			return
-		var/mob/living/carbon/human/H = thrower
-		thr.speed /= 4
+		thr.speed /= 5
 		thr.momentum /= 2
-		H.visible_message(SPAN_ALERT("\The [src] messes up \the throw!"))
+		thrower.visible_message(SPAN_ALERT("\The [src] messes up the throw!"))

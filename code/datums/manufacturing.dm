@@ -3243,6 +3243,14 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	time = 5 SECONDS
 	category = MANUFACTURER::CATEGORY::CLOTHING
 
+/datum/manufacture/baseball_mitt
+	name = "Baseball Mitt"
+	item_requirements = list("fabric" = JUMPSUIT_COST)
+	item_outputs = list(/obj/item/clothing/gloves/baseball_mitt)
+	create = 1
+	time = 3 SECONDS
+	category = MANUFACTURER::CATEGORY::CLOTHING
+
 /datum/manufacture/labcoat
 	name = "Labcoat"
 	item_requirements = list("fabric" = 4)
