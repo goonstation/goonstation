@@ -168,7 +168,7 @@
 			if ("trader_purchase")
 				src.handle_purchase(usr, locate(params["commodity_ref"]) in (src.goods_sell | src.goods_illegal))
 			if ("trader_haggle")
-				var/askingprice = tgui_input_number(usr, "Please enter your asking price.", "Haggle", 0)
+				var/askingprice = tgui_input_number(usr, "Please enter your asking price.", "Haggle", 0, 1000000, 0)
 				if(!isnum_safe(askingprice))
 					return
 				var/datum/commodity/commodity = locate(params["commodity_ref"]) in (src.goods_buy | src.goods_illegal | src.goods_sell)
