@@ -1,4 +1,38 @@
 
+(t)sat aug 29 26
+(u)Sovexe
+(p)27571
+(e)🆕📄|C-Feature, A-UI
+(*)The Nuclear Reactor's Gas Turbine has a newly enhanced UI.
+(u)Penelope Haze
+(p)27671
+(e)🆕🖥️|C-Feature, A-Computers
+(+)DWAINE tar archives can now contain other archives, at the cost of their uncompressed size rather than compressed size.
+(u)Penelope Haze
+(p)27670
+(e)💅🖥️|C-QoL, A-Computers
+(+)The DWAINE tar program will now extract files in destination folders that already exist, and the -k flag only skips existing files rather than folders.
+(u)nova2053
+(p)27555
+(e)|
+(+)You can now slap cigarettes out of peoples' mouths. Cigarette trajectory is determined by your angle relative to the person you slap and which hand you're using.
+(u)Waffleloffle
+(p)27595
+(e)🎨📨|C-Sprites, A-Logistics
+(+)Added baseball uniforms. Most can be found by hacking a uniform vendor or manufacturer. Hit the big leagues with your department today!
+(u)TDHooligan
+(p)27598
+(e)|
+(+)Musculature Enhancement and Hulk lower felt recoil with firearms. Hulk and Clumsy make you less accurate.
+(t)fri aug 28 26
+(u)Tyrant
+(p)27318
+(e)⚗|A-Chemistry
+(+)Milk Powder now is a little less weird. Super milk is more consistent. In like a normal way.
+(u)ZeWaka, Kapu1178
+(p)27640
+(e)🆕🎨💅💡|C-Feature, C-Sprites, C-QoL, A-Station-Systems
+(*)Added a new placement mode (ability button) for cable coils that lets you place wires with your mouse cursor.
 (t)thu aug 27 26
 (u)LeahTheTech
 (p)27630
