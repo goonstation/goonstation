@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2026
+ * @author Sovexe  (https://github.com/Sovexe)
+ * @license MIT
+ */
+
 import type { BooleanLike } from 'tgui-core/react';
 
 export interface TurbineHistorySample {
