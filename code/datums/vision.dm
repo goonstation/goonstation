@@ -97,9 +97,11 @@
 
 /datum/vision/meson/on_apply(mob/user, source)
 	get_image_group(CLIENT_IMAGE_GROUP_MECHCOMP).add_mob(user)
+	get_image_group(CLIENT_IMAGE_GROUP_GEOLOGICAL_ANOMALIES).add_mob(user)
 
 /datum/vision/meson/on_remove(mob/user, source)
 	get_image_group(CLIENT_IMAGE_GROUP_MECHCOMP).remove_mob(user)
+	get_image_group(CLIENT_IMAGE_GROUP_GEOLOGICAL_ANOMALIES).remove_mob(user)
 
 /// Infravision, for some reason this is not the same as byond infravision (see_infrared = 1)
 /datum/vision/infra
