@@ -377,16 +377,14 @@
 			return
 
 	attack_hand(var/mob/user)
-		if (user.mind)
-			if (iswizard(user) || check_target_immunity(user))
-				if (user.mind.key != src.wizard_key && !check_target_immunity(user))
-					boutput(user, SPAN_ALERT("The [src.name] is magically attuned to another wizard! You can use it, but may not summon it magically."))
-				..()
-				return
-			else
-				fling_person(user)
-				return
-		else ..()
+		if(check_target_immunity(user))
+			return ..()
+		if(!iswizard(user))
+			fling_person(user)
+			return
+		if (user.mind?.key != src.wizard_key)
+			boutput(user, SPAN_ALERT("The [src.name] is magically attuned to another wizard! You can use it, but may not summon it magically."))
+		return ..()
 
 	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
 		if (iswizard(usr))
