@@ -1144,11 +1144,17 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 		logTheThing(LOG_STATION, null, "Menhir powersink event at [log_loc(eventlandmark)]")
 		message_admins("Menhir powersink event triggered at [log_loc(eventlandmark)]")
 
+//////////////////////////////////////////////
+///////////////////////////////////////////////////////
+//////Megarare (10 starting weight)////////////////////
+///////////////////////////////////////////////////////
+//////////////////////////////////////////////
+
 //too much, too much. too little, too little. a disharmony grows
 /datum/random_event/menhir/schism
 	name = "A Schism in the Song"
 	message_delay = 1 MINUTE
-	weight = 20
+	weight = 10
 
 	is_event_available(ignore_time_lock)
 		. = ..()
@@ -1341,12 +1347,6 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 	plane = OVERLAY_EFFECT_LAYER_BASE+2
 	appearance_flags = RESET_COLOR | RESET_ALPHA
 	alpha = 0
-
-//////////////////////////////////////////////
-///////////////////////////////////////////////////////
-//////Megarare (10 starting weight)////////////////////
-///////////////////////////////////////////////////////
-//////////////////////////////////////////////
 
 //an intolerable imbalance has developed within. it must be purged.
 /datum/random_event/menhir/radwave
