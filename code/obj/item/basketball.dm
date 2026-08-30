@@ -349,6 +349,10 @@
 	throwforce = 10
 	var/ability_path = /obj/ability_button/chaos_dunk
 
+	New()
+		APPLY_ATOM_PROPERTY(src, PROP_OBJ_GOLFABLE, src)
+		..()
+
 /obj/item/plutonium_core/attack_hand(mob/user)
 	..()
 	if(ishuman(user))

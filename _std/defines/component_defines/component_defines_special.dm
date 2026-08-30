@@ -204,3 +204,10 @@
 
 /// When a wraith tries to curse someone (wraith)
 #define COMSIG_TRY_CURSE "try_curse"
+
+// ---- Golf Signals
+
+///For when the golf ability "strikes" the ball
+#define COMSIG_GOLF_STRIKE "golf_strike"
+///To define the ball between the golf code universally
+#define COMSIG_GOLF_BALL "golf_ball"
