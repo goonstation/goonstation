@@ -2886,15 +2886,16 @@ TYPEINFO(/mob/living/silicon/robot)
 				var/obj/item/clothing/U = src.clothes[x]
 				if (!istype(U))
 					continue
-				var/image/clothed_image = image(U.wear_image_icon, U.wear_state || U.icon_state)
+				var/image/clothed_image = U.wear_image
 				if (!clothed_image)
 					continue
+				if (U.wear_state)
+					clothed_image.icon_state = U.wear_state
+				else
+					clothed_image.icon_state = U.icon_state
 				clothed_image.alpha = U.alpha
 				clothed_image.color = U.color
 				clothed_image.layer = U.wear_layer
-				U.copy_appearance_to_image(clothed_image)
-				if (U.material)
-					clothed_image.apply_material_appearance(U.material)
 				if (U.worn_material_texture_image)
 					U.worn_material_texture_image.layer = clothed_image.layer + 0.1
 					clothed_image.overlays += U.worn_material_texture_image

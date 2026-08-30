@@ -234,7 +234,7 @@ TYPEINFO(/obj/item/rcd)
 		var/turf/simulated/floor/T = A.ReplaceWithFloor()
 		T.inherit_area()
 		T.setMaterial(getMaterial(material_name))
-		T.default_material = material_name
+		T.default_material = getMaterial(material_name)
 		return
 
 	proc/handle_build_wall(turf/A, mob/user)

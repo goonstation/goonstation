@@ -93,14 +93,18 @@ TYPEINFO(/atom)
 
 	New(turf/newLoc)
 		. = ..()
-		// Keep default_material as a material ID string. Any stale datum value should be normalized immediately.
+		// Lets stop having 5 implementations of this that all do it differently
 		if (!src.material && default_material)
-			if (!istext(default_material))
-				var/datum/material/default_mat = default_material
-				if (istype(default_mat))
-					default_material = default_mat.getID()
-			if (default_material)
-				src.setMaterial(getMaterial(default_material))
+			var/datum/material/mat = istext(default_material) ? getMaterial(default_material) : default_material
+			src.setMaterial(mat)
+
+	proc/get_default_material_id()
+		if (istext(src.default_material))
+			return src.default_material
+		var/datum/material/default_mat = src.default_material
+		if (istype(default_mat))
+			return default_mat.getID()
+		return null
 
 	proc/name_prefix(var/text_to_add, var/return_prefixes = 0, var/prepend = 0)
 		if( !name_prefixes ) name_prefixes = list()

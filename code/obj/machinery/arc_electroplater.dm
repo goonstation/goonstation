@@ -124,13 +124,7 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 		if(!W.can_arcplate)
 			boutput(user, SPAN_ALERT("That cannot be plated!"))
 			return
-		var/default_id = null
-		if (istext(W.default_material))
-			default_id = W.default_material
-		else if (istype(W.default_material, /datum/material))
-			var/datum/material/default_mat = W.default_material
-			default_id = default_mat.getID()
-		if(W.material && W.material.getID() != default_id)
+		if(W.material && W.material.getID() != W.get_default_material_id())
 			boutput(user, SPAN_ALERT("You can't plate something that already has a non-standard material!"))
 			return
 
@@ -224,15 +218,8 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 		var/cancel_arcplate = FALSE
 		if(!my_bar?.material || !successful)
 			cancel_arcplate = TRUE
-		else if(target_item.material)
-			var/default_id = null
-			if (istext(target_item.default_material))
-				default_id = target_item.default_material
-			else if (istype(target_item.default_material, /datum/material))
-				var/datum/material/default_mat = target_item.default_material
-				default_id = default_mat.getID()
-			if(target_item.material.getID() != default_id)
-				cancel_arcplate = TRUE
+		else if(target_item.material && target_item.material.getID() != target_item.get_default_material_id())
+			cancel_arcplate = TRUE
 		else if(isitem(target_item))
 			var/obj/item/I = target_item
 			if(!I.can_arcplate)
