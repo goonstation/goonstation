@@ -1377,6 +1377,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 
 		logTheThing(LOG_STATION, null, "Menhir radwave event triggered.")
 		message_admins("Menhir radwave event triggered.")
+		src.weight = 1 //should have the agitation worked out by now... usually.
 
 		var/turf/focal_nexus = locate(MENHIR_CORE_X, MENHIR_CORE_Y, Z_LEVEL_STATION)
 		///Key is turf; value is whether it is shielded
