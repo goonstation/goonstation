@@ -260,16 +260,14 @@
 		if (!istype(T) || !src.opt_skip)
 			// if we don't copy the file, deleting the archive will delete the copied files
 			// and if it's extracted multiple times, deleting any of the copies will delete all of them, plus the one on the archive
-			var/datum/computer/file/output_file = to_extract.copy_file()
-			if(output_file)
-				var/outcome = src.signal_program(1, list("command" = DWAINE::SYSCALL::FWRITE, "path" = "[target_path]", "mkdir" = TRUE, "replace" = TRUE), output_file)
-				switch (outcome)
-					if (DWAINE::ERR::SIG::NOWRITE)
-						src.message_user("tar: [target_path][output_file.name]: permission denied.")
-					if (DWAINE::ERR::SIG::GENERIC)
-						src.message_user("tar: Error extracting [target_path][output_file.name]")
-					if (DWAINE::ERR::SIG::NOTARGET)
-						src.message_user("tar: Bad path: [target_path] for file [output_file.name]")
+			var/outcome = src.signal_program(1, list("command" = DWAINE::SYSCALL::FWRITE, "path" = "[target_path]", "mkdir" = TRUE, "replace" = TRUE), to_extract.copy_file())
+			switch (outcome)
+				if (DWAINE::ERR::SIG::NOWRITE)
+					src.message_user("tar: [target_path][to_extract.name]: permission denied.")
+				if (DWAINE::ERR::SIG::GENERIC)
+					src.message_user("tar: Error extracting [target_path][to_extract.name]")
+				if (DWAINE::ERR::SIG::NOTARGET)
+					src.message_user("tar: Bad path: [target_path] for file [to_extract.name]")
 
 		else
 			src.message_user("[target_path][to_extract.name] already exists, skipping")
