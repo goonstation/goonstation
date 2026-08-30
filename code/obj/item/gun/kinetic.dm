@@ -311,6 +311,11 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		hammer_cocked = FALSE
 		src.UpdateIcon()
 
+	shoot_point_blank(atom/target, mob/user, second_shot = 0)
+		. = ..()
+		hammer_cocked = FALSE
+		src.UpdateIcon()
+
 	attack_self(mob/user as mob)
 		..()	//burst shot has a slight spread.
 		if (hammer_cocked)
@@ -3021,6 +3026,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammobag_magazines = list(/obj/item/ammo/bullets/bullet_9mm/smg)
 	ammobag_restock_cost = 2
 	recoil_strength = 8
+	
+	HELP_MESSAGE_OVERRIDE("Can be held with two hands to reduce recoil and improve accuracy.")
 
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)

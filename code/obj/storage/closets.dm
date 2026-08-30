@@ -15,6 +15,7 @@ TYPEINFO(/obj/storage/closet)
 	volume = 70
 	_max_health = LOCKER_HEALTH_WEAK
 	_health = LOCKER_HEALTH_WEAK
+	material_amt = MATERIAL::AMOUNT::SHEET * 2
 	///Will this locker auto-close when someone is flung into it
 	var/auto_close = TRUE
 
@@ -420,6 +421,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 
 		src.dump_contents()
 		src.open = 1
+		src.gas_impermeable = FALSE
 		src.UpdateIcon()
 		p_class = initial(p_class)
 		playsound(src.loc, 'sound/effects/cargodoor.ogg', 15, 1, -3)
@@ -436,6 +438,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 			return 0
 
 		src.open = 0
+		src.gas_impermeable = TRUE
 
 		for (var/obj/O in get_turf(src))
 			if (src.is_acceptable_content(O))

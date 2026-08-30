@@ -1584,6 +1584,18 @@ datum/commodity/drugs/sell/poppies
 	desc = "Roam as a Gnome with this giant-sized gnome costume."
 	price = PAY::UNTRAINED
 
+/datum/commodity/costume/baseball_clown
+	comname = "Baseball Uniform"
+	comtype = /obj/item/storage/box/costume/baseball_clown
+	desc = "A uniform and cap for the Aintaiya Stinkers. Bat not included."
+	price = PAY::UNTRAINED
+
+/datum/commodity/costume/baseball_mime
+	comname = "Baseball Uniform"
+	comtype = /obj/item/storage/box/costume/baseball_mime
+	desc = "A uniform and cap for... some team you've never heard of before. Bat not included."
+	price = PAY::UNTRAINED
+
 /datum/commodity/backpack/breadpack
 	comname = "Bag-uette"
 	comtype = /obj/item/storage/backpack/breadpack
@@ -1799,6 +1811,12 @@ datum/commodity/drugs/sell/poppies
 	comname = "Flockchair"
 	comtype = /obj/item/furniture_parts/flock_chair
 	desc = "Prior to our mass-energy conversion technology, we used these chambers to charge our drones. Now padded with feather-down cushions for comfort."
+	price = PAY::UNTRAINED
+
+/datum/commodity/flock/tech/stamp
+	comname = "Flockstamp"
+	comtype = /obj/item/stamp/flock
+	desc = "We know your kind assigns meaning to symbols on paper, we learned to show meaning through it by observing. This one means hope." // supposed to symbolize a relay, a hope of survival
 	price = PAY::UNTRAINED
 
 /datum/commodity/flock/tech/gnesis

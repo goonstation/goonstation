@@ -1,5 +1,172 @@
 
+(t)sat aug 29 26
+(u)Penelope Haze
+(p)27671
+(e)🆕🖥️|C-Feature, A-Computers
+(+)DWAINE tar archives can now contain other archives, at the cost of their uncompressed size rather than compressed size.
+(u)Penelope Haze
+(p)27670
+(e)💅🖥️|C-QoL, A-Computers
+(+)The DWAINE tar program will now extract files in destination folders that already exist, and the -k flag only skips existing files rather than folders.
+(u)nova2053
+(p)27555
+(e)|
+(+)You can now slap cigarettes out of peoples' mouths. Cigarette trajectory is determined by your angle relative to the person you slap and which hand you're using.
+(u)Waffleloffle
+(p)27595
+(e)🎨📨|C-Sprites, A-Logistics
+(+)Added baseball uniforms. Most can be found by hacking a uniform vendor or manufacturer. Hit the big leagues with your department today!
+(u)TDHooligan
+(p)27598
+(e)|
+(+)Musculature Enhancement and Hulk lower felt recoil with firearms. Hulk and Clumsy make you less accurate.
+(t)fri aug 28 26
+(u)Tyrant
+(p)27318
+(e)⚗|A-Chemistry
+(+)Milk Powder now is a little less weird. Super milk is more consistent. In like a normal way.
+(u)ZeWaka, Kapu1178
+(p)27640
+(e)🆕🎨💅💡|C-Feature, C-Sprites, C-QoL, A-Station-Systems
+(*)Added a new placement mode (ability button) for cable coils that lets you place wires with your mouse cursor.
+(t)thu aug 27 26
+(u)LeahTheTech
+(p)27630
+(e)⛔⚗|C-Removal, A-Chemistry
+(+)Fliptonium can no longer be used with smoke powder.
+(u)Kubius
+(p)27626
+(e)🗺|A-Mapping
+(+)Menhir's got a loafer now! And a particular disk drive of potential importance to shifty individuals.
+(u)Skeletonman0
+(p)27536
+(e)🆕🎨💊|C-Feature, C-Sprites, A-Medical
+(+)You can now use canes in your active hand to tap them on the ground and make a noise.
+(u)LorrMaster
+(p)27587
+(e)📦👮|A-Game-Objects, A-Security
+(+)Securitron construction maintains material and forensic data.
+(u)LorrMaster
+(p)27591
+(e)📦🤖|A-Game-Objects, A-Silicons
+(+)Material and forensic data is now maintained for the construction process of various robots
+(u)swinglow20
+(p)27480
+(e)🎨🐁|C-Sprites, A-Critters
+(*)Changed how Fermids' combat works in game and slightly buffs them. Watch out, mining!
+(+)Changed movement speed, health, and abilities for four of the Fermid subtypes: Workers, Drones, Spitters, and Hulks
+(t)wed aug 26 26
+(u)ANNmagedon
+(p)27594
+(e)🗺|A-Mapping
+(+)The hop of menhir, in their infinite greed, has obtained another dog.
+(u)LorrMaster
+(p)27601
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)The duration of a white hole from bursting singularities now depends on the largest size that the singularity has reached
+(u)bamlord
+(p)27550
+(e)🏅|A-Medal
+(+)Added a new medal for winning the lottery. What lottery? THE lottery.
+(u)bamlord
+(p)27611
+(e)⚖|C-Balance
+(+)Syndicate cyborgs are now counted as trained syndicates for the purposes of targeting and item descriptions etc.
+(u)Muzcl
+(p)27609
+(e)🎨|C-Sprites
+(+)A new fish has spawned in the clown's shoes and central command ballpit.
+(t)tue aug 25 26
+(u)TDHooligan
+(p)27600
+(e)🪲🧛|C-Bug, A-Gamemodes
+(+)Fix: Gangs should now only take 3 seconds to spray a tag in an unoccupied space, instead of 15/12/9 seconds.
+(+)Fix: Gangs can no longer hand in foam dart guns.
+(+)Tagging over rival tags now takes slightly longer.
+(t)mon aug 24 26
+(u)ANNmagedon
+(p)27603
+(e)🗺|A-Mapping
+(+)A familiar pair of plushies previously lost with the end of donut 2 has appeared on donut 3.
+(t)sun aug 23 26
+(u)ANNmagedon + ZeWaka
+(p)26916
+(e)🎨🧛📨|C-Sprites, A-Gamemodes, A-Logistics
+(+)A new stamp of the flock has been added! its a bit odd and can be created by the flock or bought in deep space.
+(u)ANNmagedon
+(p)27581
+(e)|
+(+)The civilian module for cyborgs now includes a pitcher.
+(u)ANNmagedon
+(p)27552
+(e)🗺|A-Mapping
+(+)The pharmacy at Kondaru has blinds for photophosphide making, just don't stand too close to the door!
+(u)Kubius
+(p)26362
+(f)https://forum.ss13.co/showthread.php?tid=25085
+(e)🗺🎨🔊🧛🚨⏰🍝🌠🐁|A-Mapping, C-Sprites, C-Sound, A-Gamemodes, A-Admin, A-Status-Effects, A-Catering, A-Events, A-Critters
+(*)Added Menhir, a new low to mid pop map built around and into the massive artifact TOREADOR-7I-22408 (colloquially, the Crown), with its own unique event cycle and an interior to explore.
+(t)sat aug 22 26
+(u)LeahTheTech
+(p)27512
+(e)🗺|A-Mapping
+(*)Moved the spare nuclear charge from donut 2 science to donut 3 asylum.
+(u)LeahTheTech
+(p)27492
+(e)🗺⛔🧛|A-Mapping, C-Removal, A-Gamemodes
+(*)Donut 2 has been rotated out in favour of Menhir.
+(u)JORJ949
+(p)27551
+(e)🪲🧛|C-Bug, A-Gamemodes
+(+)The Nuclear Operative "Destroy the station with a nuclear device" objective can now be completed outside of the Nuclear Emergency gamemode (if you have the objective and a station-destroying nuke in any other mode).
+(t)thu aug 20 26
+(u)JORJ949
+(p)27528
+(e)🔎🤖|C-Code-Quality, A-Silicons
+(+)AI tracking should now more consistently kick you out if you can't track someone (e.g. they equipped a syndicate ID or went invisible)
+(+)Teleport components can no longer be anchored inside solid walls.
+(t)wed aug 19 26
+(u)JORJ949
+(p)27499
+(e)🎨💅🤖|C-Sprites, C-QoL, A-Silicons
+(*)AI intercom overrides no longer have a time limit, instead only ending when the AI's eye leave the intercom's range of 5 tiles and each AI can only override one intercom at a time. AI overriden intercoms also show a little AI face on them while overridden.
+(u)LeahTheTech
+(+)Mineral accumulators now work considerably faster and have a toggle for collecting junk in the same way as the ore scoop.
+(u)JORJ949
+(p)27544
+(e)⚖🧛|C-Balance, A-Gamemodes
+(*)Salvager power sink cost increased from 1k > 5k. Purchase limit decreased from 4 > 3
+(u)Gomp and Astarthoc
+(p)27339
+(e)🆕🎨⚗🍝|C-Feature, C-Sprites, A-Chemistry, A-Catering
+(*)Added Milk Frother, a sophisticated machine that allows bartenders to froth milk.
+(*)Added macchiato, decorate your espresso with frothed milk to get a bold and creamy coffee.
+(t)tue aug 18 26
+(u)LorrMaster
+(p)27479
+(e)💅🧱💡📨|C-QoL, A-Materials, A-Station-Systems, A-Logistics
+(*)Material Analyzers now display material trigger effects and how material properties will affect the scanned item.
+(u)LorrMaster
+(p)27530
+(e)💅🧱|C-QoL, A-Materials
+(*)Silver bars can now be created in the Nano-Crucible
+(u)Astarthoc
+(p)27410
+(e)🆕🎨⚗🍝|C-Feature, C-Sprites, A-Chemistry, A-Catering
+(*)Added dulce de leche, a delicious dessert recipe that makes use of sweet condensed milk.
+(u)CelineTheYeen
+(p)27444
+(e)🗺|A-Mapping
+(*)Oshan's cafeteria has been remapped. As part of this the bartender has been kicked out of the kitchen.
+(u)LeahTheTech
+(p)27526
+(e)🎨🍝💡|C-Sprites, A-Catering, A-Station-Systems
+(*)Conveyor belts placed on the same tile as a table will now become smaller "sushi bar" style belts layered on top of the table.
 (t)mon aug 17 26
+(u)LorrMaster
+(p)27527
+(e)🆕📨|C-Feature, A-Logistics
+(*)Quartermasters now have a chance to be able to buy a fossil from Gragg.
 (u)TekoTheTeapot
 (p)27354
 (e)🎨|C-Sprites
