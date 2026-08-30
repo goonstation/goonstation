@@ -1,5 +1,9 @@
 
 (t)sun aug 30 26
+(u)LorrMaster
+(p)27293
+(e)🧱|A-Materials
+(+)Miracle matter appearance now changes depending on its properties.
 (u)swinglow20
 (p)27631
 (e)🐁|A-Critters
