@@ -1,4 +1,98 @@
 
+(t)sun aug 30 26
+(u)LorrMaster
+(p)27660
+(e)⚖🧱|C-Balance, A-Materials
+(+)Density and reflectivity increases when mixing batiline with radioactive materials is now larger
+(u)ANNmagedon
+(p)27688
+(e)🎨|C-Sprites
+(+)National Notary finally fixed the centcom & captain stamps using the wrong ink.
+(u)GabbySins
+(p)27623
+(e)🤖|A-Silicons
+(+)Change in how materials/IDs are handled.
+(+)Made arcplater work for cyborg-worn clothing.
+(u)LorrMaster
+(p)27293
+(e)🧱|A-Materials
+(+)Miracle matter appearance now changes depending on its properties.
+(u)swinglow20
+(p)27631
+(e)🐁|A-Critters
+(+)Made Fermid Hulks and Queens tankier, and made their bite more likely to land.
+(u)ANNmagedon
+(p)27642
+(e)📨|A-Logistics
+(*)A new trader has arrived at cargo! Their name is "human steve" and they look weird.
+(u)LeahTheTech
+(p)27664
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Vampire glare now partially pierces eye protection, doing 50 stamina damage and 10 seconds of disorient to anyone with full eye protection.
+(u)LorrMaster
+(p)27288
+(e)🎨🛠️📨|C-Sprites, A-Engineering, A-Logistics
+(*)Geological scanner anomaly markers have been updated.
+(t)sat aug 29 26
+(u)Sovexe
+(p)27571
+(e)🆕📄|C-Feature, A-UI
+(*)The Nuclear Reactor's Gas Turbine has a newly enhanced UI.
+(u)Penelope Haze
+(p)27671
+(e)🆕🖥️|C-Feature, A-Computers
+(+)DWAINE tar archives can now contain other archives, at the cost of their uncompressed size rather than compressed size.
+(u)Penelope Haze
+(p)27670
+(e)💅🖥️|C-QoL, A-Computers
+(+)The DWAINE tar program will now extract files in destination folders that already exist, and the -k flag only skips existing files rather than folders.
+(u)nova2053
+(p)27555
+(e)|
+(+)You can now slap cigarettes out of peoples' mouths. Cigarette trajectory is determined by your angle relative to the person you slap and which hand you're using.
+(u)Waffleloffle
+(p)27595
+(e)🎨📨|C-Sprites, A-Logistics
+(+)Added baseball uniforms. Most can be found by hacking a uniform vendor or manufacturer. Hit the big leagues with your department today!
+(u)TDHooligan
+(p)27598
+(e)|
+(+)Musculature Enhancement and Hulk lower felt recoil with firearms. Hulk and Clumsy make you less accurate.
+(t)fri aug 28 26
+(u)Tyrant
+(p)27318
+(e)⚗|A-Chemistry
+(+)Milk Powder now is a little less weird. Super milk is more consistent. In like a normal way.
+(u)ZeWaka, Kapu1178
+(p)27640
+(e)🆕🎨💅💡|C-Feature, C-Sprites, C-QoL, A-Station-Systems
+(*)Added a new placement mode (ability button) for cable coils that lets you place wires with your mouse cursor.
+(t)thu aug 27 26
+(u)LeahTheTech
+(p)27630
+(e)⛔⚗|C-Removal, A-Chemistry
+(+)Fliptonium can no longer be used with smoke powder.
+(u)Kubius
+(p)27626
+(e)🗺|A-Mapping
+(+)Menhir's got a loafer now! And a particular disk drive of potential importance to shifty individuals.
+(u)Skeletonman0
+(p)27536
+(e)🆕🎨💊|C-Feature, C-Sprites, A-Medical
+(+)You can now use canes in your active hand to tap them on the ground and make a noise.
+(u)LorrMaster
+(p)27587
+(e)📦👮|A-Game-Objects, A-Security
+(+)Securitron construction maintains material and forensic data.
+(u)LorrMaster
+(p)27591
+(e)📦🤖|A-Game-Objects, A-Silicons
+(+)Material and forensic data is now maintained for the construction process of various robots
+(u)swinglow20
+(p)27480
+(e)🎨🐁|C-Sprites, A-Critters
+(*)Changed how Fermids' combat works in game and slightly buffs them. Watch out, mining!
+(+)Changed movement speed, health, and abilities for four of the Fermid subtypes: Workers, Drones, Spitters, and Hulks
 (t)wed aug 26 26
 (u)ANNmagedon
 (p)27594

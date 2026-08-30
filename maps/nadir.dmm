@@ -5045,6 +5045,10 @@
 	pixel_x = -15
 	},
 /obj/machinery/firealarm/directional/east,
+/obj/item/reagent_containers/food/drinks/rum_spaced{
+	pixel_x = 1;
+	pixel_y = 15
+	},
 /obj/item/pen/crayon/golden{
 	pixel_x = -6;
 	pixel_y = 7
@@ -39596,6 +39600,7 @@
 	pixel_x = 4;
 	pixel_y = -4
 	},
+/obj/item/clothing/mask/gas/emergency,
 /turf/simulated/floor/black,
 /area/station/bridge/captain)
 "rEP" = (
@@ -45185,7 +45190,7 @@
 	pixel_y = 18
 	},
 /obj/machinery/firealarm/directional/west,
-/obj/item/reagent_containers/food/snacks/spaghetti/spicy,
+/obj/item/reagent_containers/food/snacks/spaghetti/spicy/security,
 /obj/item/kitchen/utensil/fork{
 	pixel_x = 9;
 	pixel_y = 3

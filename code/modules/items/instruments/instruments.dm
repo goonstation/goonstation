@@ -554,6 +554,9 @@
 			logTheThing(LOG_STATION, user, "builds an amusing duck at [log_loc(src)]")
 			var/obj/machinery/bot/duckbot/D = new /obj/machinery/bot/duckbot
 			D.eggs = rand(2,5) // LAY EGG IS TRUE!!!
+			D.setMaterial(src.material)
+			D.forensic_holder = src.forensic_holder
+			W.forensic_holder.copy_to(D.forensic_holder)
 			boutput(user, SPAN_NOTICE("You add [W] to [src]."))
 			D.set_loc(get_turf(user))
 			qdel(W)
@@ -606,6 +609,9 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 			return
 		else
 			var/obj/machinery/bot/chefbot/D = new /obj/machinery/bot/chefbot
+			D.setMaterial(src.material)
+			D.forensic_holder = src.forensic_holder
+			W.forensic_holder.copy_to(D.forensic_holder)
 			boutput(user, SPAN_NOTICE("You add [W] to [src]."))
 			D.set_loc(get_turf(user))
 			qdel(W)
@@ -1030,6 +1036,20 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	sounds_instrument = null
 	randomized_pitch = FALSE
 	use_new_interface = TRUE
+
+/obj/item/instrument/ling_recording
+	name = "Human Steve's mixtape"
+	desc = "A recording of the merchent \"Human Steve\" singing... Oh dear."
+	icon = 'icons/obj/radiostation.dmi'
+	icon_state = "audiolog_newSmall"
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	item_state = "radio"
+	sounds_instrument = list('sound/voice/creepyshriek.ogg')
+	volume = 80
+	randomized_pitch = TRUE
+	desc_sound = list("horrible", "terrible", "unpleasent")
+	desc_music = list("screech")
+	note_time = 10 SECONDS
 
 /obj/storage/crate/wooden/instruments
 	name = "instruments box"

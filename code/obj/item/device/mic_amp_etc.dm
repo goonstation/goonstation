@@ -121,6 +121,10 @@ TYPEINFO(/obj/machinery/loudspeaker)
 	for (var/mob/living/M in hearers(5, src))
 		M.do_disorient(50, target_type = DISORIENT_EAR, remove_stamina_below_zero = TRUE)
 
+/obj/machinery/loudspeaker/was_deconstructed_to_frame(mob/user)
+	. = ..()
+	src.set_broken()
+
 /obj/machinery/loudspeaker/ex_act(severity)
 	. = ..()
 	if(QDELETED(src))

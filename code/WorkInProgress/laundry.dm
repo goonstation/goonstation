@@ -121,10 +121,13 @@ TYPEINFO(/obj/submachine/laundry_machine)
 				else if (istype(item, /obj/item/organ/brain))
 					var/obj/item/organ/brain = item
 					// prevents re-washing, but IMPORTANTLY DOES NOT BREAK THE LAUNDRY MACHINE BY RETURNING
-					if (brain.icon_state != "brain2")
+					if (findtext(brain.icon_state,"_smooth"))
 						continue
+					if (!is_valid_icon_state("[brain.icon_state]_smooth", brain.icon))
+						continue
+
 					brain.icon = 'icons/obj/items/organs/brain.dmi'
-					brain.icon_state = "smooth_brain"
+					brain.icon_state = "[brain.icon_state]_smooth"
 					// getting rid of all of those UNSIGHTLY wrinkles heals your brain!
 					brain.heal_damage(brain.brute_dam, brain.burn_dam, brain.tox_dam)
 					brain.changeStatus("freshly_laundered", INFINITE_STATUS)

@@ -6,6 +6,12 @@
 	#define COMSIG_COMPONENT_ADDED "component_added"
 	/// before a component is removed from a datum because of RemoveComponent: (/datum/component)
 	#define COMSIG_COMPONENT_REMOVING "component_removing"
+
+	/// When an element is added to a datum. (/datum/element)
+	#define COMSIG_ELEMENT_ATTACH "element_attached"
+	/// When an element is removed from a datum. (/datum/element)
+	#define COMSIG_ELEMENT_DETACH "element_detached"
+
 	/// just before a datum's disposing()
 	#define COMSIG_PARENT_PRE_DISPOSING "parent_pre_disposing"
 	/// when a variable is changed by admin varedit
