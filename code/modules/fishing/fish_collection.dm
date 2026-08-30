@@ -31,7 +31,8 @@
 			if (fish["collection"] != FISH_COLLECTION_NORMAL)
 				continue
 			if (!user_fish.Find(fish["name"]))
-				player.clear_medal(src.medal_name)
+				SPAWN(0)
+					player.clear_medal(src.medal_name)
 				return
 		player.unlock_medal(src.medal_name, announce)
 
