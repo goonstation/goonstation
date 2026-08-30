@@ -7,7 +7,8 @@
 	VAR_PRIVATE/tmp/opt_create = null
 	/// The filepath of the archive to be created, read, or extracted. Mutually exclusive with `opt_temporary`.
 	VAR_PRIVATE/tmp/opt_file = null
-	/// When extracting from an archive, whether `tar` should skip over already existing filepaths or overwrite them with archive contents.
+	/// When extracting from an archive, whether `tar` should skip over already existing files or overwrite them with archive contents.
+	/// Does not apply to folders.
 	VAR_PRIVATE/tmp/opt_skip = null
 	/// Whether `tar` should list the contents of an archive. Mutually exclusive with `opt_create` and `opt_extract`.
 	VAR_PRIVATE/tmp/opt_list = null
@@ -240,8 +241,6 @@
 		src.message_reply_and_user("[current_path][to_extract.name]")
 
 	if (istype(to_extract, /datum/computer/folder))
-		// we don't check istype(T) because we don't directly FWRITE folders, only leaf nodes like files
-		// if that changes, this will have to be adjusted
 		if (src.signal_program(1, list("command" = DWAINE::SYSCALL::TSPAWN, "passusr" = TRUE, "path" = "/bin/mkdir", "args" = "[target_path][to_extract.name]")) == DWAINE::ERR::SIG::NOTARGET)
 			src.message_user("mkdir: command not found.")
 
