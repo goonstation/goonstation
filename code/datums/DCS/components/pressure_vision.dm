@@ -1,6 +1,6 @@
 TYPEINFO(/datum/component/pressure_vision)
 	initialization_args = list(
-		ARG_INFO("start_active", DATA_INPUT_BOOL, "Does it start immidently or after the first signal")
+		ARG_INFO("start_active", DATA_INPUT_BOOL, "Does it start immediately or after the first signal")
 	)
 
 /datum/component/pressure_vision
