@@ -1,6 +1,10 @@
 
 (t)sat aug 29 26
 (u)Penelope Haze
+(p)27671
+(e)🆕🖥️|C-Feature, A-Computers
+(+)DWAINE tar archives can now contain other archives, at the cost of their uncompressed size rather than compressed size.
+(u)Penelope Haze
 (p)27670
 (e)💅🖥️|C-QoL, A-Computers
 (+)The DWAINE tar program will now extract files in destination folders that already exist, and the -k flag only skips existing files rather than folders.
