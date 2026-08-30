@@ -1,111 +1,100 @@
-# Determines if we search the title (optional). Defaults to true.
-matchTitle: false
-
-# Determines if we search the body (optional). Defaults to true.
-matchBody: true
-
-# Determines if label matching is case sensitive (optional). Defaults to true.
-caseSensitive: false
-
-# Explicit keyword mappings to labels. Form of match:label. Required.
-labelMappings:
 # Priority
-    "[BUG - CRITICAL]": p-critical
-    "[CRITICAL]": p-critical
-    "[BUG - MAJOR]": p-major
-    "[MAJOR]": p-major
-    "[BUG - MINOR]": p-minor
-    "[MINOR]": p-minor
-    "[BUG - TRIVIAL]": p-trivial
-    "[TRIVIAL]": p-trivial
+"[BUG - CRITICAL]": p-critical
+"[CRITICAL]": p-critical
+"[BUG - MAJOR]": p-major
+"[MAJOR]": p-major
+"[BUG - MINOR]": p-minor
+"[MINOR]": p-minor
+"[BUG - TRIVIAL]": p-trivial
+"[TRIVIAL]": p-trivial
 # Category
-    "[BUG]": c-bug
-    "[FIX]": c-bug
-    "[BUGFIX]": c-bug
-    "fixes #": c-bug
-    "[RUNTIME]": c-runtime
-    "[ENHANCEMENT]": c-feature
-    "[FEATURE]": c-feature
-    "[FEAT]": c-feature
-    "[BALANCE]": c-balance
-    "[CLEANLINESS]": c-code-quality
-    "[CODE QUALITY]": c-code-quality
-    "[CLEAN]": c-code-quality
-    "[CHORE]": c-code-quality
-    "[EXPERIMENTAL]": c-experimental
-    "[PERFORMANCE]": c-performance
-    "[PERF]": c-performance
-    "[QOL]": c-QoL
-    "[REMOVAL]": c-removal
-    "[REVERT]": c-revert
-    "[REWORK]": c-rework
+"[BUG]": c-bug
+"[FIX]": c-bug
+"[BUGFIX]": c-bug
+"fixes #": c-bug
+"[RUNTIME]": c-runtime
+"[ENHANCEMENT]": c-feature
+"[FEATURE]": c-feature
+"[FEAT]": c-feature
+"[BALANCE]": c-balance
+"[CLEANLINESS]": c-code-quality
+"[CODE QUALITY]": c-code-quality
+"[CLEAN]": c-code-quality
+"[CHORE]": c-code-quality
+"[EXPERIMENTAL]": c-experimental
+"[PERFORMANCE]": c-performance
+"[PERF]": c-performance
+"[QOL]": c-QoL
+"[REMOVAL]": c-removal
+"[REVERT]": c-revert
+"[REWORK]": c-rework
 # Extra
-    "[INPUT WANTED]": e-input-wanted
-    "[INPUT]": e-input-wanted
-    "[FEEDBACK]": e-input-wanted
-    "[EASY]": e-good-first-issue
-    "[GFI]": e-good-first-issue
-    "[GOOD FIRST ISSUE]": e-good-first-issue
-    "[WIKI]": e-add-to-wiki
-    "[ADD TO WIKI]": e-add-to-wiki
-    "[CONTEST]": e-contest
+"[INPUT WANTED]": e-input-wanted
+"[INPUT]": e-input-wanted
+"[FEEDBACK]": e-input-wanted
+"[EASY]": e-good-first-issue
+"[GFI]": e-good-first-issue
+"[GOOD FIRST ISSUE]": e-good-first-issue
+"[WIKI]": e-add-to-wiki
+"[ADD TO WIKI]": e-add-to-wiki
+"[CONTEST]": e-contest
 # Area
-    "[SECRET]": a-secret
-    "[TGUI]": a-ui
-    "[UI]": a-ui
-    "[TOOLS]": a-tooling
-    "[TOOLING]": a-tooling
-    "[MEDAL]": a-medal
-    "[ADMIN]": a-admin
-    "[AI]": a-ai
-    "[API]": a-api
-    "[ATMOS]": a-atmospherics
-    "[ATMOSPHERICS]": a-atmospherics
-    "[CATERING]": a-catering
-    "[CHEM]": a-chemistry
-    "[CHEMISTRY]": a-chemistry
-    "[CLOTHING]": a-clothing
-    "[COMMAND]": a-command
-    "[CRITTER]": a-critters
-    "[CRITTERS]": a-critters
-    "[MOBS]": a-critters
-    "[ENGINE]": a-engineering
-    "[ENGINEERING]": a-engineering
-    "[GAME OBJECTS]": a-game-objects
-    "[OBJECTS]": a-game-objects
-    "[GAMEMODES]": a-gamemodes
-    "[GAME MODES]": a-gamemodes
-    "[MODES]": a-gamemodes
-    "[HYDRO]": a-hydroponics
-    "[HYDROPONICS]": a-hydroponics
-    "[INTERNAL]": a-internal
-    "[LOGISTICS]": a-logistics
-    "[SUPPLY]": a-logistics
-    "[CARGO]": a-logistics
-    "[MAPPING]": a-mapping
-    "[MATERIALS]": a-materials
-    "[MATSCI]": a-materials
-    "[MEDICAL]": a-medical
-    "[MUTANTRACE]": a-mutantraces
-    "[SPECIES]": a-mutantraces
-    "[PLAYER ACTIONS]": a-player-actions
-    "[ACTIONS]": a-player-actions
-    "[SEC]": a-security
-    "[SECURITY]": a-security
-    "[SCIENCE]": a-science
-    "[SILICONS]": a-silicons
-    "[BORGS]": a-silicons
-    "[STATION SYSTEMS]": a-station-systems
-    "[COMPUTERS]": a-computers
-    "[STATUS EFFECTS]": a-status-effects
-    "[EVENTS]": a-events
-    "[RP]": a-rp
-    "[SPAWN]": a-respawning
-    "[SPAWNING]": a-respawning
-    "[RESPAWN]": a-respawning
-    "[RESPAWNING]": a-respawning
-    "[ROLEPLAY]": a-rp
-    "[VEHICLE]": a-vehicles
-    "[VEHICLES]": a-vehicles
-    "[TRAITS]": a-traits
-    "[TRAIT]": a-traits
+"[SECRET]": a-secret
+"[TGUI]": a-ui
+"[UI]": a-ui
+"[TOOLS]": a-tooling
+"[TOOLING]": a-tooling
+"[MEDAL]": a-medal
+"[ADMIN]": a-admin
+"[AI]": a-ai
+"[API]": a-api
+"[ATMOS]": a-atmospherics
+"[ATMOSPHERICS]": a-atmospherics
+"[CATERING]": a-catering
+"[CHEM]": a-chemistry
+"[CHEMISTRY]": a-chemistry
+"[CLOTHING]": a-clothing
+"[COMMAND]": a-command
+"[CRITTER]": a-critters
+"[CRITTERS]": a-critters
+"[MOBS]": a-critters
+"[ENGINE]": a-engineering
+"[ENGINEERING]": a-engineering
+"[GAME OBJECTS]": a-game-objects
+"[OBJECTS]": a-game-objects
+"[GAMEMODES]": a-gamemodes
+"[GAME MODES]": a-gamemodes
+"[MODES]": a-gamemodes
+"[HYDRO]": a-hydroponics
+"[HYDROPONICS]": a-hydroponics
+"[INTERNAL]": a-internal
+"[LOGISTICS]": a-logistics
+"[SUPPLY]": a-logistics
+"[CARGO]": a-logistics
+"[MAPPING]": a-mapping
+"[MATERIALS]": a-materials
+"[MATSCI]": a-materials
+"[MEDICAL]": a-medical
+"[MUTANTRACE]": a-mutantraces
+"[SPECIES]": a-mutantraces
+"[PLAYER ACTIONS]": a-player-actions
+"[ACTIONS]": a-player-actions
+"[SEC]": a-security
+"[SECURITY]": a-security
+"[SCIENCE]": a-science
+"[SILICONS]": a-silicons
+"[BORGS]": a-silicons
+"[STATION SYSTEMS]": a-station-systems
+"[COMPUTERS]": a-computers
+"[STATUS EFFECTS]": a-status-effects
+"[EVENTS]": a-events
+"[RP]": a-rp
+"[SPAWN]": a-respawning
+"[SPAWNING]": a-respawning
+"[RESPAWN]": a-respawning
+"[RESPAWNING]": a-respawning
+"[ROLEPLAY]": a-rp
+"[VEHICLE]": a-vehicles
+"[VEHICLES]": a-vehicles
+"[TRAITS]": a-traits
+"[TRAIT]": a-traits
