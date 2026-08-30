@@ -122,6 +122,6 @@
 /datum/commodity/trader/steve/ling_recording
 	comname = "Our Mixtape"
 	comtype = /obj/item/sound_tape/ling_recording
-	amount = 3
+	amount = 1
 	price_boundary = list(PAY::DONTBUYIT*1,PAY::DONTBUYIT*2)
 	possible_names = list("The recording of us- me, a human who is a singular person, singing. We feel sheepish about selling this.")
