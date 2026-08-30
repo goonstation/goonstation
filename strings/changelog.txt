@@ -1,5 +1,9 @@
 
 (t)sat aug 29 26
+(u)Sovexe
+(p)27571
+(e)🆕📄|C-Feature, A-UI
+(*)The Nuclear Reactor's Gas Turbine has a newly enhanced UI.
 (u)Penelope Haze
 (p)27671
 (e)🆕🖥️|C-Feature, A-Computers
