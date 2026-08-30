@@ -1,5 +1,9 @@
 
 (t)sun aug 30 26
+(u)swinglow20
+(p)27631
+(e)🐁|A-Critters
+(+)Made Fermid Hulks and Queens tankier, and made their bite more likely to land.
 (u)ANNmagedon
 (p)27642
 (e)📨|A-Logistics
