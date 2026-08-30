@@ -2910,10 +2910,10 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 /mob/living/carbon/human/empty_hands(var/override_grip = TRUE)
 	..()
 	var/h = src.hand
-	if(override_grip || !HAS_FLAG(src.hand_firm_grip, FIRM_GRIP_RIGHT))
+	if(override_grip || !HAS_FLAG(src.hand_firm_grip, RIGHT_HAND))
 		src.hand = RIGHT_HAND
 		drop_item()
-	if(override_grip || !HAS_FLAG(src.hand_firm_grip, FIRM_GRIP_LEFT))
+	if(override_grip || !HAS_FLAG(src.hand_firm_grip, LEFT_HAND))
 		src.hand = LEFT_HAND
 		drop_item()
 	src.hand = h
