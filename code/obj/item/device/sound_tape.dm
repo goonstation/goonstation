@@ -124,11 +124,11 @@ ABSTRACT_TYPE(/obj/item/sound_tape)
 		playsound(get_turf(src.the_tape), 'sound/machines/click.ogg', 50, 1, -3)
 		owner.visible_message(SPAN_NOTICE("[owner] [verbens] [src.the_tape]."))
 
+// ----------------- actual sound tapes ----------------------------
+
 TYPEINFO(/obj/item/sound_tape/lightbreaker)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 15
-
-// ----------------- actual sound tapes ----------------------------
 
 /obj/item/sound_tape/lightbreaker
 	name = "compact tape"
