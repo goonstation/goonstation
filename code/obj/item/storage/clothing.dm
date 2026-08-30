@@ -507,11 +507,13 @@
 	icon_state = "clown"
 	desc = "A box that contains a baseball uniform for the Aintaiya Stinkers."
 	spawn_contents = list(/obj/item/clothing/under/baseball/clown,
-	/obj/item/clothing/head/basecap/red)
+		/obj/item/clothing/head/basecap/red,
+		/obj/item/clothing/gloves/baseball_mitt)
 
 /obj/item/storage/box/costume/baseball_mime
 	name = "baseball uniform set"
 	icon_state = "mime"
 	desc = "A box that contains a baseball uniform for... some team you've never heard of before."
 	spawn_contents = list(/obj/item/clothing/under/baseball/mime,
-	/obj/item/clothing/head/basecap/black)
+		/obj/item/clothing/head/basecap/black,
+		/obj/item/clothing/gloves/baseball_mitt)
