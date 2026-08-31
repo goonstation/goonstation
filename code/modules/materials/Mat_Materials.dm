@@ -2523,8 +2523,8 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		var/rads = new_mat.getProperty("radioactive")
 		var/n_rads = new_mat.getProperty("n_radioactive")
 
-		new_mat.adjustProperty("reflective", rads / 2)
-		new_mat.adjustProperty("density", n_rads / 2)
+		new_mat.adjustProperty("reflective", rads)
+		new_mat.adjustProperty("density", n_rads)
 
 		new_mat.removeProperty("radioactive")
 		new_mat.removeProperty("n_radioactive")
