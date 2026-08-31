@@ -54,7 +54,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, null, FREQ_STATUS_DISPLAY)
 
 		get_self_and_decoys() // links them up
-		AddComponent(/datum/component/minimap_marker/minimap, MAP_SYNDICATE | MAP_ADMIN, "nuclear_bomb")
+		AddComponent(/datum/component/minimap_marker/minimap, MAP_SYNDICATE | MAP_OBSERVER, "nuclear_bomb")
 
 		START_TRACKING
 		..()
