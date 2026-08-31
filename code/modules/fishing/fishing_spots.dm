@@ -1099,15 +1099,11 @@ datum/fishing_spot/golden_toilet
 	/obj/item/reagent_containers/food/snacks/chips = 10,
 	/obj/item/paper/folded/ball = 10,
 	/mob/living/critter/small_animal/cockroach = 10,
-	/obj/item/currency/buttcoin = 5,
-	/obj/item/reagent_containers/food/fish/tetraminnow/tshaped = 5,
-	/obj/item/reagent_containers/food/fish/tetraminnow/sshaped = 5,
-	/obj/item/reagent_containers/food/fish/tetraminnow/zshaped = 5,
-	/obj/item/reagent_containers/food/fish/tetraminnow/square = 5,
-	/obj/item/reagent_containers/food/fish/tetraminnow/line = 5,
-	/obj/item/reagent_containers/food/fish/tetraminnow/lshaped = 5,
-	/obj/item/reagent_containers/food/fish/tetraminnow/jshaped = 5,
-	/obj/item/circuitboard/tetris = 1)
+	/obj/item/currency/buttcoin = 5)
+
+/datum/fishing_spot/robustris/New()
+	..()
+	src.fishing_lootpools += new /datum/fishing_lootpool/robustris_fish(src)
 
 /datum/fishing_spot/robustris_phone
 	fishing_atom_type = /obj/item/toy/cellphone
@@ -1117,14 +1113,11 @@ datum/fishing_spot/golden_toilet
 	/obj/item/cigbutt = 20,
 	/obj/item/cable_coil/cut = 20,
 	/obj/item/paper/folded/ball = 10,
-	/obj/item/currency/buttcoin = 5,
-	/obj/item/reagent_containers/food/fish/tetraminnow/tshaped = 5,
-	/obj/item/reagent_containers/food/fish/tetraminnow/sshaped = 5,
-	/obj/item/reagent_containers/food/fish/tetraminnow/zshaped = 5,
-	/obj/item/reagent_containers/food/fish/tetraminnow/square = 5,
-	/obj/item/reagent_containers/food/fish/tetraminnow/line = 5,
-	/obj/item/reagent_containers/food/fish/tetraminnow/lshaped = 5,
-	/obj/item/reagent_containers/food/fish/tetraminnow/jshaped = 5)
+	/obj/item/currency/buttcoin = 5)
+
+/datum/fishing_spot/robustris_phone/New()
+	..()
+	src.fishing_lootpools += new /datum/fishing_lootpool/robustris_fish(src)
 
 /datum/fishing_spot/robustris_handheld
 	fishing_atom_type = /obj/item/toy/handheld/robustris
@@ -1134,12 +1127,8 @@ datum/fishing_spot/golden_toilet
 	/obj/item/cigbutt = 20,
 	/obj/item/cable_coil/cut = 20,
 	/obj/item/paper/folded/ball = 10,
-	/obj/item/currency/buttcoin = 5,
-	/obj/item/reagent_containers/food/fish/tetraminnow/tshaped = 5,
-	/obj/item/reagent_containers/food/fish/tetraminnow/sshaped = 5,
-	/obj/item/reagent_containers/food/fish/tetraminnow/zshaped = 5,
-	/obj/item/reagent_containers/food/fish/tetraminnow/square = 5,
-	/obj/item/reagent_containers/food/fish/tetraminnow/line = 5,
-	/obj/item/reagent_containers/food/fish/tetraminnow/lshaped = 5,
-	/obj/item/reagent_containers/food/fish/tetraminnow/jshaped = 5,
-	/obj/item/circuitboard/tetris = 1)
+	/obj/item/currency/buttcoin = 5)
+
+/datum/fishing_spot/robustris_handheld/New()
+	..()
+	src.fishing_lootpools += new /datum/fishing_lootpool/robustris_fish(src)

@@ -108,3 +108,41 @@
 /datum/fishing_lootpool/literal_swordfish
 	required_lure = /obj/item/reagent_containers/food/fish/swordfish
 	fish_available = list(/obj/item/reagent_containers/food/fish/literal_swordfish = 25)
+
+
+
+///gimmicky tetris lootpool bullshit, fished out of robustris machines
+/datum/fishing_lootpool/robustris_fish
+	minimum_rod_tier = 2
+	fish_available = list(/obj/item/reagent_containers/food/fish/tetraminnow/tshaped = 5,
+	/obj/item/reagent_containers/food/fish/tetraminnow/sshaped = 5,
+	/obj/item/reagent_containers/food/fish/tetraminnow/zshaped = 5,
+	/obj/item/reagent_containers/food/fish/tetraminnow/square = 5,
+	/obj/item/reagent_containers/food/fish/tetraminnow/line = 3,
+	/obj/item/reagent_containers/food/fish/tetraminnow/lshaped = 5,
+	/obj/item/reagent_containers/food/fish/tetraminnow/jshaped = 5,
+	/obj/item/circuitboard/tetris = 5)
+
+	var/last_fished = null
+
+/// This proc generates a new loottable out of a given current one. This one's based on good old infuriating tetris RNG.
+/datum/fishing_lootpool/robustris_fish/generate_loot(var/list/current_loottable, var/mob/user, var/obj/item/fishing_rod/fishing_rod)
+	var/list/result = list()
+	result += current_loottable
+
+	var/max_fish = length(src.fish_available)
+
+	if (max_fish)
+		// 1-7 is a fish
+		var/roll = rand(1, max_fish)
+		var/fish = src.fish_available[roll]
+
+		// try to reroll if we rolled an 8 or the same thing as last time
+		if (roll == max_fish || (last_fished && last_fished == fish))
+			roll = rand(1, max_fish)
+			fish = src.fish_available[roll]
+			// otherwise, its a tetris board
+
+		result[fish] += src.fish_available[fish]
+	//then we return the list again
+	return result
