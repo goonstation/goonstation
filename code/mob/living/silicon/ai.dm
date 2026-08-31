@@ -2682,7 +2682,7 @@ proc/get_mobs_trackable_by_AI()
 /obj/ai_core_frame/setMaterial(datum/material/mat1, appearance, setname, mutable, use_descriptors)
 	if(mat1.getID() == "mauxite" && src.skinToApply == "default")
 		src.skinToApply = "mauxite"
-		src.UpdateOverlays(image(icon, skinToApply, OBJ_LAYER+0.3), "core")
+		src.UpdateOverlays(image(src.icon, src.skinToApply, OBJ_LAYER+0.3), "core")
 	if(src.skinToApply == "mauxite")
 		src.default_material = "mauxite"
 	. = ..()
