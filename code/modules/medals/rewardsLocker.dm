@@ -1092,7 +1092,7 @@
 		activator.put_in_hand_or_drop(ribbon)
 		return 1
 
-/datum/achievementReward/participantribbon
+/datum/achievementReward/xenoarcheology_hat
 	title = "(Item) Xenoarchaeologist Hat"
 	desc = "Receive a hat that shows your love of space relics."
 	required_medal = "Licensed Archaeologist"
