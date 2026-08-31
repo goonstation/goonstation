@@ -856,10 +856,6 @@
 		hit_type = DAMAGE_STAB
 		force = 5
 
-		New()
-			..()
-			src.setItemSpecial(/datum/item_special/jab)
-
 		on_stamp(obj/item/paper/stamped_paper, mob/user)
 			if(!user || !isliving(user) || issilicon(user))
 				return
