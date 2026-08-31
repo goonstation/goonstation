@@ -28,7 +28,7 @@
 		var/list/user_fish = isnull(collection_data) ? list() : json_decode(collection_data)
 
 		for (var/fish in src.fish_data)
-			if (fish["collection"] != FISH_COLLECTION_NORMAL)
+			if (fish["collection"] != FISH::COLLECTION::NORMAL)
 				continue
 			if (!user_fish.Find(fish["name"]))
 				SPAWN(0)
@@ -48,7 +48,7 @@
 		..()
 		for (var/path in concrete_typesof(/obj/item/reagent_containers/food/fish))
 			var/typeinfo/obj/item/reagent_containers/food/fish/info = get_type_typeinfo(path)
-			if (info.fish_collection_type == FISH_COLLECTION_NEVER)
+			if (info.fish_collection_type == FISH::COLLECTION::NEVER)
 				continue
 
 			var/obj/fish = path
