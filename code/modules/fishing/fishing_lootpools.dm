@@ -144,5 +144,6 @@
 			// otherwise, its a tetris board
 
 		result[fish] += src.fish_available[fish]
+		src.last_fished = fish
 	//then we return the list again
 	return result
