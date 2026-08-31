@@ -26,6 +26,10 @@
 
 			if (!faction_check(M, HH, TRUE))
 				continue
+
+			if (issilicon(HH))
+				HH.apply_flash(30, 8, 0, 0, 0, 0, 0, 0, 100, 70, 30)
+				continue
 			HH.apply_sonic_stun(0, 0, 10, 0, 50, 0, 0)
 		logTheThing(LOG_COMBAT, M, "uses primal screech at [log_loc(M)].")
 		return 0
