@@ -5,7 +5,7 @@
 	icon_state = "screech_fermid"
 	targeted = FALSE
 	cooldown = 60 SECONDS
-
+	var/borg_stun = 30
 	cast(mob/target)
 		if (!holder)
 			return 1
@@ -28,7 +28,7 @@
 				continue
 
 			if (issilicon(HH))
-				HH.do_disorient(0, 30)
+				HH.do_disorient(0, borg_stun)
 				continue
 			HH.apply_sonic_stun(0, 0, 10, 0, 50, 0, 0)
 		logTheThing(LOG_COMBAT, M, "uses primal screech at [log_loc(M)].")
