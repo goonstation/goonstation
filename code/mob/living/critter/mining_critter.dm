@@ -32,6 +32,10 @@
 	dam_high = 35
 	harm_intent_delay = 15
 	miss_prob = 95
+/datum/limb/mouth/fermid/queen
+	dam_low = 10
+	dam_high = 15
+	miss_prob = 85
 ///////////////////////////////////////////////
 // FERMID
 ///////////////////////////////////////////////
@@ -255,7 +259,8 @@
 	add_abilities = list(/datum/targetable/critter/bite/fermid_bite)
 	New()
 		..()
-
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/mouth/fermid/queen
 		src.pixel_x -= 16
 		src.add_stam_mod_max("queen", 50)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "queen", 50)
