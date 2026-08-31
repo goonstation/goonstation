@@ -14,6 +14,10 @@
 		return FORENSIC_GLOVE_MASK_NONE
 
 	equipped(mob/user, slot)
+		if(user.l_hand && user.l_hand != src)
+			src.mitt_pickup(user, user.l_hand)
+		if(user.r_hand && user.l_hand != src)
+			src.mitt_pickup(user, user.r_hand)
 		. = ..()
 		if(user.hand == RIGHT_HAND)
 			src.which_hands = GLOVE_HAS_RIGHT
@@ -37,6 +41,10 @@
 		H.hud.update_hands()
 
 	unequipped(mob/user)
+		if(user.l_hand)
+			src.mitt_drop(user, user.l_hand) // Unregister held items from mitt procs
+		if(user.r_hand)
+			src.mitt_drop(user, user.r_hand)
 		if(HAS_FLAG(src.which_hands, GLOVE_HAS_LEFT))
 			user.hand_grip_count_l -= 1
 		if(HAS_FLAG(src.which_hands, GLOVE_HAS_RIGHT))
@@ -55,13 +63,11 @@
 		H.hud.update_hands()
 
 	proc/mitt_catch(mob/owner, atom/movable/thing, datum/thrown_thing/thr)
-		if(owner.hand == LEFT_HAND && !HAS_FLAG(src.which_hands, GLOVE_HAS_LEFT))
-			return FALSE
-		if(owner.hand == RIGHT_HAND && !HAS_FLAG(src.which_hands, GLOVE_HAS_RIGHT))
-			return FALSE
 		if(!isitem(thing))
 			return FALSE
 		var/obj/item/I = thing
+		if(!item_in_mitt(owner, I))
+			return FALSE
 		if(owner.restrained())
 			return FALSE
 		if((owner.hand == LEFT_HAND && owner.l_hand != null) || (owner.hand == RIGHT_HAND && owner.r_hand != null))
@@ -88,16 +94,14 @@
 
 	/// If it can't fit in your pocket, it will fall out of the mitt
 	proc/mitt_pickup(mob/user, obj/item/I)
-		if(user.hand == LEFT_HAND && !HAS_FLAG(src.which_hands, GLOVE_HAS_LEFT))
-			return
-		if(user.hand == RIGHT_HAND && !HAS_FLAG(src.which_hands, GLOVE_HAS_RIGHT))
-			return
 		RegisterSignal(I, COMSIG_ITEM_ATTACK_PRE, PROC_REF(mitt_attackby_pre))
 		if(istype(I, /obj/item/gun))
 			RegisterSignal(I, COMSIG_GUN_TRY_SHOOT, PROC_REF(mitt_try_shoot))
 			RegisterSignal(I, COMSIG_GUN_TRY_POINTBLANK, PROC_REF(mitt_try_shoot))
-		if(I.w_class > W_CLASS_POCKET_SIZED)
+		if(item_in_mitt(user, I) && I.w_class > W_CLASS_POCKET_SIZED)
 			SPAWN(0.35 SECONDS)
+				if(QDELETED(I) || I.loc != user)
+					return
 				user.visible_message(SPAN_ALERT("The [I] falls out of [user]'s [src]!"))
 				user.drop_item(I)
 				playsound(user, 'sound/items/bball_hoop.ogg', 20, TRUE, pitch = 1.5)
@@ -110,25 +114,46 @@
 
 	/// Mitt is bad at throwing things
 	proc/mitt_adjust_throw(mob/thrower, datum/thrown_thing/thr)
-		if(thrower.hand == LEFT_HAND && !HAS_FLAG(src.which_hands, GLOVE_HAS_LEFT))
-			return
-		if(thrower.hand == RIGHT_HAND && !HAS_FLAG(src.which_hands, GLOVE_HAS_RIGHT))
-			return
+		if(isitem(thr.thing))
+			if(!item_in_mitt(thrower, thr.thing))
+				return
+		else
+			if(thrower.hand == LEFT_HAND && !HAS_FLAG(src.which_hands, GLOVE_HAS_LEFT))
+				return
+			if(thrower.hand == RIGHT_HAND && !HAS_FLAG(src.which_hands, GLOVE_HAS_RIGHT))
+				return
 		thr.speed /= 5
 		thr.momentum /= 2
 		thrower.visible_message(SPAN_ALERT("\The [src] messes up the throw!"))
 
-	proc/mitt_attackby_pre(source, atom/target, mob/user)
+	proc/mitt_attackby_pre(obj/item/source, atom/target, mob/user)
+		if(!item_in_mitt(user, source))
+			return FALSE
 		boutput(user, SPAN_ALERT("Can't attack with the [source] while it is inside the [src]!"))
 		playsound(user, 'sound/items/bball_hoop.ogg', 20, TRUE, pitch = 1.5)
 		return ATTACK_PRE_DONT_ATTACK
 
-	proc/mitt_try_shoot(source, turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target)
+	proc/mitt_try_shoot(obj/item/gun/source, turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target)
+		if(!item_in_mitt(user, source))
+			return FALSE
 		boutput(user, SPAN_ALERT("You can't pull the trigger with the [src] on!"))
 		playsound(user, 'sound/items/bball_hoop.ogg', 20, TRUE, pitch = 1.5)
 		return TRUE
 
-	proc/mitt_try_pointblank(source, turf/target, mob/user, second_shot)
+	proc/mitt_try_pointblank(obj/item/gun/source, turf/target, mob/user, second_shot)
+		if(!item_in_mitt(user, source))
+			return FALSE
 		boutput(user, SPAN_ALERT("You can't pull the trigger with the [src] on!"))
 		playsound(user, 'sound/items/bball_hoop.ogg', 20, TRUE, pitch = 1.5)
 		return TRUE
+
+	/// Does not necessarily check if the item is *currently* in the mitt. It might have already been thrown.
+	/// Just checks if the mitt is selected or if the item is two-handed.
+	proc/item_in_mitt(mob/user, obj/item/I)
+		if(I.two_handed)
+			return TRUE
+		if(user.hand == LEFT_HAND && HAS_FLAG(src.which_hands, GLOVE_HAS_LEFT))
+			return TRUE
+		if(user.hand == RIGHT_HAND && HAS_FLAG(src.which_hands, GLOVE_HAS_RIGHT))
+			return TRUE
+		return FALSE
