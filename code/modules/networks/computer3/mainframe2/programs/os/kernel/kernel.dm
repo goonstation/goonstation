@@ -8,7 +8,7 @@
 	size = 16
 
 	/// A list of cached DWAINE syscall datums, indexed by their ID.
-	var/list/datum/dwaine_syscall/syscalls = null
+	var/tmp/list/datum/dwaine_syscall/syscalls = null
 
 	/// A list of users currently connected to the OS, indexed by their user ID.
 	var/tmp/list/datum/mainframe2_user_data/users = null

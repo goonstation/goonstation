@@ -1355,7 +1355,11 @@
 		/obj/item/clothing/under/misc/mobster,
 		/obj/item/clothing/under/misc/mobster/alt,
 		/obj/item/clothing/under/gimmick/guybrush,
-		/obj/item/clothing/suit/gimmick/nightgown)
+		/obj/item/clothing/suit/gimmick/nightgown,
+		/obj/item/clothing/under/baseball/newmemphis,
+		/obj/item/clothing/under/baseball/senex,
+		/obj/item/clothing/under/baseball/abzu,
+		/obj/item/clothing/under/baseball/off)
 
 	one
 		amt2spawn = 1
