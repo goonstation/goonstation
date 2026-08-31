@@ -1,5 +1,9 @@
 
 (t)mon aug 31 26
+(u)Kubius
+(p)27682
+(e)|
+(*)Menhir's big big artifact now redirects guests who entered by certain unorthodox means.
 (u)Ceres et al.
 (p)27679
 (e)⚖💊|C-Balance, A-Medical
