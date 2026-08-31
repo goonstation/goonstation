@@ -428,6 +428,13 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 		src.camera.c_tag = src.real_name
 		src.camera.network = CAMERA_NETWORK_ROBOTS
 
+/mob/living/silicon/ai/setMaterial(datum/material/mat1, appearance, setname, mutable, use_descriptors)
+	if(mat1.getID() == "mauxite" && src.coreSkin == "default")
+		src.setSkin("mauxite")
+	if(src.coreSkin == "mauxite")
+		src.default_material = "mauxite"
+	. = ..()
+
 /mob/living/silicon/ai/proc/setup_verbs()
 	src.verbs |= /mob/living/silicon/ai/proc/ai_call_shuttle
 	src.verbs |= /mob/living/silicon/ai/proc/show_laws_verb
@@ -2672,6 +2679,15 @@ proc/get_mobs_trackable_by_AI()
 		if(Obj == src.cell)
 			src.cell = null
 
+/obj/ai_core_frame/setMaterial(datum/material/mat1, appearance, setname, mutable, use_descriptors)
+	if(mat1.getID() == "mauxite" && src.skinToApply == "default")
+		src.skinToApply = "mauxite"
+		src.UpdateOverlays(image(icon, skinToApply, OBJ_LAYER+0.3), "core")
+	if(src.skinToApply == "mauxite")
+		src.default_material = "mauxite"
+	. = ..()
+
+
 /obj/ai_core_frame/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/sheet))
 		if (W.material.getMaterialFlags() & MATERIAL_METAL) // metal sheets
@@ -2680,11 +2696,7 @@ proc/get_mobs_trackable_by_AI()
 				var/plating_cost = 10 // Number of sheets needed to plate the AI core
 				if (M.amount >= plating_cost)
 					src.build_step++
-					if (istype(W, /obj/item/sheet/mauxite))
-						skinToApply = "mauxite"
-						src.setMaterial(W.material, FALSE)
-					else
-						src.setMaterial(W.material)
+					src.setMaterial(W.material)
 					boutput(user, "You add plating to [src]!")
 					playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 					src.UpdateOverlays(image(icon, skinToApply, OBJ_LAYER+0.3), "core")
@@ -2814,7 +2826,7 @@ proc/get_mobs_trackable_by_AI()
 			var/mob/living/silicon/ai/A = new /mob/living/silicon/ai(get_turf(src), TRUE, skinToApply) // second parameter causes the core to spawn without a brain
 			A.forensic_holder = src.forensic_holder
 			A.material_face = src.material_face
-			A.setMaterial(src.material)
+			A.setMaterial(src.material, src.material_applied_appearance)
 			if (A.cell && src.cell)
 				qdel(A.cell)
 				A.cell = src.cell
