@@ -490,63 +490,46 @@ TYPEINFO(/obj/item/old_grenade/smoke)
 
 	New()
 		..()
-		src.smoke = new /datum/effects/system/bad_smoke_spread/
-		src.smoke.attach(src)
-		src.smoke.set_up(10, 0, src.loc)
+		src.init_smoke()
 
 	detonate()
 		var/turf/T = ..()
-		if (T)
-			var/obj/item/old_grenade/smoke/mustard/M = null
-			if (istype(src, /obj/item/old_grenade/smoke/mustard))
-				M = src
-			playsound(T, 'sound/effects/smoke.ogg', 50, TRUE, -3)
-
-			SPAWN(0)
-				if (src)
-					if (M?.mustard_gas && istype(M, /obj/item/old_grenade/smoke/mustard))
-						M.mustard_gas.start()
-					else
-						src.smoke.start()
-
-					sleep(1 SECOND)
-					if (M?.mustard_gas && istype(M, /obj/item/old_grenade/smoke/mustard))
-						M.mustard_gas.start()
-					else
-						src.smoke.start()
-
-					sleep(1 SECOND)
-					if (M?.mustard_gas && istype(M, /obj/item/old_grenade/smoke/mustard))
-						M.mustard_gas.start()
-					else
-						src.smoke.start()
-
-					sleep(1 SECOND)
-					if (M?.mustard_gas && istype(M, /obj/item/old_grenade/smoke/mustard))
-						M.mustard_gas.start()
-					else
-						src.smoke.start()
-
-					if (M && istype(M, /obj/item/old_grenade/smoke/mustard))
-						qdel(M)
-					else
-						qdel(src)
-		else
+		if (!T)
 			qdel(src)
-		return
+			return
+		playsound(T, 'sound/effects/smoke.ogg', 50, TRUE, -3)
+
+		SPAWN(0)
+			src.update_smoke()
+			for(var/i in 1 to 3)
+				sleep(1 SECOND)
+				if(QDELETED(src))
+					return
+				src.update_smoke()
+
+	proc/init_smoke()
+		src.smoke = new /datum/effects/system/bad_smoke_spread/
+		src.smoke.attach(src)
+		src.smoke.set_up(10, FALSE, src.loc)
+
+	proc/update_smoke()
+		src.smoke?.start()
 
 /obj/item/old_grenade/smoke/mustard
 	name = "mustard gas grenade"
-	var/datum/effects/system/mustard_gas_spread/mustard_gas
 	icon_state = "mustard"
 	icon_state_armed = "mustard1"
+	/// The different smoke datums appear to not ACTUALLY be subtypes of a datum called "/datum/effects/system"
+	/// They're completely different datums. This should be fixed at some point.
+	var/datum/effects/system/mustard_gas_spread/mustard_gas
 
-	New()
-		..()
-		if (usr?.loc) //Wire: Fix for Cannot read null.loc
-			src.mustard_gas = new /datum/effects/system/mustard_gas_spread/
-			src.mustard_gas.attach(src)
-			src.mustard_gas.set_up(5, 0, usr.loc)
+	init_smoke()
+		src.mustard_gas = new /datum/effects/system/mustard_gas_spread/
+		src.mustard_gas.attach(src)
+		src.mustard_gas.set_up(5, FALSE, src.loc)
+
+	update_smoke()
+		src.mustard_gas?.start()
 
 /obj/item/old_grenade/stinger
 	name = "stinger grenade"
