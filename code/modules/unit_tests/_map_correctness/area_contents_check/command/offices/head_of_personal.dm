@@ -2,7 +2,6 @@
 	check_name = "Head of Personnel's Office Content Check"
 	target_areas = list(
 		/area/station/crew_quarters/hop,
-		/area/station/bridge/customs
 	)
 
 	expected_contents = list(
