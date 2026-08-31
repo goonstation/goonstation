@@ -10,7 +10,7 @@ TYPEINFO(/obj/item/barrier)
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "barrier1"
 	c_flags = EQUIPPED_WHILE_HELD | ONBELT
-	force = 4
+	force = 2
 	throwforce = 6
 	w_class = W_CLASS_SMALL
 	stamina_damage = 20
@@ -149,6 +149,7 @@ TYPEINFO(/obj/item/barrier)
 	stamina_crit_chance = 0
 	hitsound = 'sound/effects/exlow.ogg'
 
+	can_disarm = 1
 	two_handed = 1
 
 	setupProperties()
