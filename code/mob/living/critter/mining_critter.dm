@@ -11,7 +11,9 @@
 	var/list/bite_adjectives = list("vicious","vengeful","violent")
 	sound_attack = 'sound/impact_sounds/Flesh_Tear_1.ogg'
 	can_beat_up_robots = TRUE //angry space ants
-	miss_prob = 95
+	miss_prob = 80
+	dam_low = 8
+	dam_high = 12
 	var/tears_off_limbs = FALSE //Basically checks if the attack should tear off limbs (Only available to Hulk Fermids at this time)
 	harm(mob/target, var/mob/user)
 		if (!user || !target)
@@ -29,6 +31,7 @@
 	dam_low = 15
 	dam_high = 35
 	harm_intent_delay = 15
+	miss_prob = 95
 ///////////////////////////////////////////////
 // FERMID
 ///////////////////////////////////////////////
