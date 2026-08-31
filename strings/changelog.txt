@@ -1,5 +1,9 @@
 
 (t)mon aug 31 26
+(u)LeahTheTech
+(p)27694
+(e)💅🍝|C-QoL, A-Catering
+(+)Reworked all cookie recipes to use sweet dough directly and produce 4x cookies per recipe.
 (u)Kubius
 (p)27682
 (e)|
