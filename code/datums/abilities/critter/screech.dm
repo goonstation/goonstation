@@ -2,7 +2,7 @@
 /datum/targetable/critter/screech
 	name = "Primal Screech"
 	desc = "Disorient your foes!"
-//	icon_state = "placeholder"
+	icon_state = "screech_fermid"
 	targeted = FALSE
 	cooldown = 60 SECONDS
 
