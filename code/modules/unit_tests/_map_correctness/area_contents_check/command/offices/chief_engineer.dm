@@ -23,6 +23,7 @@
 		/datum/map_settings/cogmap,
 		/datum/map_settings/cogmap2,
 		/datum/map_settings/kondaru,
+		/datum/map_settings/menhir,
 	)
 
 	expected_contents = list(
