@@ -420,7 +420,7 @@ ABSTRACT_TYPE(/datum/menhir_room_roll)
 	name = "abyssal byway (depths)"
 	entrance_side = EAST
 	map_path = /datum/mapPrefab/allocated/menhir_room_depths
-	base_weight = 42 //but what's the question
+	base_weight = 21 //this is not, contrary to popular opinion, nine plus ten
 	area_busy_checks = list(/area/station/crew_quarters/pool = 5)
 	stole_from = list("teleporter","LRT system","transception array")
 
