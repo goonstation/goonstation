@@ -143,6 +143,16 @@ ABSTRACT_TYPE(/area/unspace)
 		icon_state = "blue"
 		sound_loop = null
 
+/area/unspace/hangar
+	name = "Fabrication Receptacle"
+	local_facing = WEST
+	seek_tag = "menhir_room_hangar"
+
+/area/unspace/genpop
+	name = "Cold Oubliette"
+	local_facing = WEST
+	seek_tag = "menhir_room_genpop"
+
 /area/unspace/bball
 	name = "Reverberating Arena"
 	local_facing = WEST
@@ -372,6 +382,22 @@ ABSTRACT_TYPE(/datum/menhir_room_roll)
 					playsound(plinth.loc, 'sound/musical_instruments/artifact/Artifact_Precursor_4.ogg', 55, 0)
 					. = TRUE
 					return
+
+/datum/menhir_room_roll/hangar
+	name = "fabrication receptacle (hangar)"
+	entrance_side = WEST
+	map_path = /datum/mapPrefab/allocated/menhir_room_hangar
+	base_weight = 40
+	area_busy_checks = list(/area/station/hangar = 12)
+	stole_from = list("vehicle bay","drop bay","hangar","workshop")
+
+/datum/menhir_room_roll/genpop
+	name = "cold oubliette (genpop)"
+	entrance_side = WEST
+	map_path = /datum/mapPrefab/allocated/menhir_room_genpop
+	base_weight = 30
+	area_busy_checks = list(/area/station/security/brig = 20)
+	stole_from = list("genpop","holding cell","brig")
 
 /datum/menhir_room_roll/bball
 	name = "reverberating arena (bball)"
