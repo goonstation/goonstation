@@ -7,6 +7,9 @@
 	cooldown = 8 SECONDS
 	var/x_offset = 0
 	var/y_offset = 0
+	var/break_glass = TRUE
+	var/break_walls = TRUE
+	var/break_floors_prob = 75
 	var/propagation_percentage = 100
 	var/iteration_depth = 3
 	var/static/list/prev = list("1" = NORTHWEST, "5" = NORTH, "4" = NORTHEAST, "6" = EAST,  "2" = SOUTHEAST, "10" = SOUTH, "8" = SOUTHWEST, "9" = WEST)
@@ -22,12 +25,13 @@
 			for (var/obj/machinery/light/L in T)
 				L.broken()
 			for (var/obj/window/W in T)
-				W.health = 0
-				W.smash()
-			if (istype(T, /turf/simulated/wall))
+				if(break_glass)
+					W.health = 0
+					W.smash()
+			if (istype(T, /turf/simulated/wall) && break_walls)
 				var/turf/simulated/wall/W = T
 				W.dismantle_wall()
-			else if (istype(T, /turf/simulated/floor) && prob(75))
+			else if (istype(T, /turf/simulated/floor) && prob(break_floors_prob))
 				var/turf/simulated/floor/F = T
 				if (prob(50))
 					F.to_plating()
@@ -78,3 +82,16 @@
 				NN = list()
 				sleep(0.3 SECONDS)
 		return 0
+
+
+/datum/targetable/critter/shockwave/fermid_shockwave
+	name = "Ground Slam"
+	desc = "Slam your abdomen against the ground, creating a shockwave that stuns nearby enemies for a short time!"
+	// icon_state = "Placeholder"
+	targeted = FALSE
+	cooldown = 80 SECONDS
+	iteration_depth = 4
+	propagation_percentage = 80
+	break_glass = FALSE
+	break_walls = FALSE
+	break_floors_prob = 25

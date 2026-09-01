@@ -277,16 +277,20 @@
 	health_burn = 75
 	health_burn_vuln = 0.1
 	pull_w_class = W_CLASS_BULKY
-	add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/slam/fermid, /datum/targetable/critter/screech)
+	add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/slam/fermid, /datum/targetable/critter/screech, /datum/targetable/critter/shockwave/fermid_shockwave)
 	speed = /datum/movement_modifier/big_fermid
 	critter_ability_attack(var/mob/target)
 		var/datum/targetable/critter/slam/fermid/slam = src.abilityHolder.getAbility(/datum/targetable/critter/slam/fermid)
 		var/datum/targetable/critter/screech/screech = src.abilityHolder.getAbility(/datum/targetable/critter/screech)
+		var/datum/targetable/critter/shockwave/fermid_shockwave/shockwave = src.abilityHolder.getAbility(/datum/targetable/critter/shockwave/fermid_shockwave)
 		if(!screech.disabled && screech.cooldowncheck())
 			screech.handleCast(target)
 			return TRUE
 		if (!slam.disabled && slam.cooldowncheck())
 			slam.handleCast(target)
+			return TRUE
+		if (!shockwave.disabled && shockwave.cooldowncheck())
+			shockwave.handleCast(target)
 			return TRUE
 		. = ..()
 	New()
