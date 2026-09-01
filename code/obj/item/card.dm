@@ -369,7 +369,7 @@ TYPEINFO(/obj/item/card/emag)
 
 	get_help_message(dist, mob/user)
 		if (istrainedsyndie(user) || isspythief(user))
-			return {"[!src.forged ? "Use the card in your hand to set its name, appearance, job title, and pronouns. " : ""]Use another ID on the agent card (or vice-versa) to stealthily copy the access of that ID to the agent card."}
+			return {"[!src.forged ? "Use the card in your hand to set its name, appearance, job title, and pronouns.<br/>" : ""]Use another ID on the agent card (or vice-versa) to stealthily copy the access of that ID to the agent card."}
 		return null
 
 	ui_interact(mob/user, datum/tgui/ui)
