@@ -680,35 +680,6 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 	desc = "Used for making cakey things."
 	icon_state = "dough-sweet"
 
-	attackby(obj/item/W, mob/user)
-		if (iscuttingtool(W) || issawingtool(W))
-			boutput(user, SPAN_NOTICE("You cut [src] into smaller pieces..."))
-			var/list/cookies = list()
-			for(var/i = 1, i <= 4, i++)
-				cookies.Add(new /obj/item/reagent_containers/food/snacks/ingredient/dough_cookie(get_turf(src)))
-			SEND_SIGNAL(src, COMSIG_ITEM_CONVERTED, cookies, user)
-			qdel(src)
-		if (prob(25))
-			JOB_XP(user, "Chef", 1)
-		else ..()
-
-/obj/item/reagent_containers/food/snacks/ingredient/dough_cookie
-	name = "cookie dough"
-	desc = "Probably shouldn't be eaten raw, not that THAT'S ever stopped anyone."
-	icon_state = "dough-cookie"
-	custom_food = 1
-
-	New()
-		..()
-		src.pixel_x = rand(-6, 6)
-		src.pixel_y = rand(-6, 6)
-
-	heal(var/mob/M)
-		if(prob(15))
-			M.reagents.add_reagent("salmonella",15)
-			boutput(M, SPAN_ALERT("That tasted a little bit...off."))
-		..()
-
 /obj/item/reagent_containers/food/snacks/ingredient/tortilla
 	name = "uncooked tortilla"
 	desc = "An uncooked flour tortilla."
