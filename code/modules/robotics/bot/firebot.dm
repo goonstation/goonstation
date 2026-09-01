@@ -21,7 +21,7 @@
 	health = 20
 	locked = 1
 	access_lookup = "Captain"
-	bot_move_delay = BOT::SPEED::FIREBOT
+	bot_move_delay = ROBOT::SPEED::FIREBOT
 	var/atom/movable/hotspot/target = null
 	var/atom/movable/hotspot/oldtarget = null
 	var/oldloc = null

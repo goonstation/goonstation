@@ -15,7 +15,7 @@ TYPEINFO(/obj/machinery/bot/buttbot)
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "buttbot"
 	layer = 5.0 // Todo layer
-	bot_move_delay = BOT::SPEED::BUTTBOT
+	bot_move_delay = ROBOT::SPEED::BUTTBOT
 	density = 0
 	anchored = UNANCHORED
 	default_material = "butt"

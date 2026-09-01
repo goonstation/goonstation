@@ -14,7 +14,7 @@
 	health = 20
 	locked = 1
 	access_lookup = "Assistant"
-	bot_move_delay = BOT::SPEED::CAMBOT
+	bot_move_delay = ROBOT::SPEED::CAMBOT
 
 	var/atom/target // Current target.
 	var/list/targets_invalid = list() // Targets we weren't able to reach.

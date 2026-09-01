@@ -73,7 +73,7 @@
 	health = 25
 	no_camera = 1
 	access_lookup = "Janitor"
-	bot_move_delay = BOT::SPEED::CLEANBOT
+	bot_move_delay = ROBOT::SPEED::CLEANBOT
 
 	var/atom/target // Current target.
 	var/list/targets_invalid = list() // Targets we weren't able to reach.

@@ -8,7 +8,7 @@
 	layer = 5.0 //TODO LAYER
 	density = 0
 	anchored = UNANCHORED
-	bot_move_delay = BOT::SPEED::BARBOT
+	bot_move_delay = ROBOT::SPEED::BARBOT
 	var/hasDrink = 0
 	var/turf/home // Initialized early. Where the barbuddy should be serving. Barbuddy explodes if taken too far from here.
 	var/list/homeTables = list() // Initialized early. All nearby tables that the barbuddy should be checking for drinks.
