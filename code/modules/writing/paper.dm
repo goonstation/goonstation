@@ -862,7 +862,7 @@
 
 			if(prob(20) && !isvampire(user))
 				bleed(user, 1, 3)
-				boutput(user, SPAN_COMBAT("\The [src]'s wings are too sharp and cut you! why would they put them on the handle!?"))
+				boutput(user, SPAN_COMBAT("\The [src]'s wings are too sharp you cut yourself on them! Why would they put them on the handle!?"))
 				user.emote("scream")
 
 
