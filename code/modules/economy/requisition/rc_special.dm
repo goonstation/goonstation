@@ -182,13 +182,13 @@ ABSTRACT_TYPE(/datum/req_contract/special/chef)
 	weight = 50
 	payout = PAY::DOCTORATE*18*3
 	req_sheet = new /obj/item/paper/requisition/food_order
-	var/mealflag = MEAL_TIME_BREAKFAST
+	var/mealflag = FOOD::MEAL::BREAKFAST
 	var/list/cornucopia = list()
 	var/list/name_of_food = list()
 
 	breakfast_order
 		name = "Breakfast Order"
-		mealflag = MEAL_TIME_BREAKFAST
+		mealflag = FOOD::MEAL::BREAKFAST
 		New()
 			src.build_foodlist()
 			for(var/i in 1 to rand(3,6))
@@ -201,7 +201,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/chef)
 
 	lunch_order
 		name = "Lunch Order"
-		mealflag = MEAL_TIME_LUNCH
+		mealflag = FOOD::MEAL::LUNCH
 		New()
 			src.build_foodlist()
 			for(var/i in 1 to rand(3,6))
@@ -214,7 +214,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/chef)
 
 	dinner_order
 		name = "Dinner Order"
-		mealflag = MEAL_TIME_DINNER
+		mealflag = FOOD::MEAL::DINNER
 		New()
 			src.build_foodlist()
 			for(var/i in 1 to rand(3,6))
@@ -227,7 +227,7 @@ ABSTRACT_TYPE(/datum/req_contract/special/chef)
 
 	snack_order
 		name = "Snack Order"
-		mealflag = MEAL_TIME_SNACK
+		mealflag = FOOD::MEAL::SNACK
 		New()
 			src.build_foodlist()
 			for(var/i in 1 to rand(3,6))
