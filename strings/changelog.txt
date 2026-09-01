@@ -1,4 +1,17 @@
 
+(t)mon aug 31 26
+(u)LeahTheTech
+(p)27694
+(e)💅🍝|C-QoL, A-Catering
+(+)Reworked all cookie recipes to use sweet dough directly and produce 4x cookies per recipe.
+(u)Kubius
+(p)27682
+(e)|
+(*)Menhir's big big artifact now redirects guests who entered by certain unorthodox means.
+(u)Ceres et al.
+(p)27679
+(e)⚖💊|C-Balance, A-Medical
+(+)Being a medicinal chem, acetylsalicylic acid can now be used in hyposprays.
 (t)sun aug 30 26
 (u)LeahTheTech
 (p)27691
