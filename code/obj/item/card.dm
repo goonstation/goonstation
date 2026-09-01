@@ -365,7 +365,7 @@ TYPEINFO(/obj/item/card/emag)
 			return ..()
 
 	proc/sanitize_name(input)
-		return trimtext(strip_html(input, MAX_MESSAGE_LEN, TRUE))
+		return trimtext(strip_html(input, 100, TRUE))
 
 	get_help_message(dist, mob/user)
 		if (istrainedsyndie(user) || isspythief(user))
@@ -424,8 +424,8 @@ TYPEINFO(/obj/item/card/emag)
 				boutput(ui.user, SPAN_ALERT("\The [src] seems to have been forged while you weren't looking! Huh."))
 				return FALSE
 			src.forged = TRUE
-			src.registered = params["cardName"]
-			src.assignment = params["cardAssignment"]
+			src.registered = sanitize_name(params["cardName"])
+			src.assignment = sanitize_name(params["cardAssignment"])
 			var/cardPronouns = params["cardPronouns"]
 			// problem: cardPronouns are tracked as a string in the UI, but pronouns themselves refer to a datum singleton
 			// solution: pass the string, and if there's a chooseable subtype with a matching name, assign the card that singleton
