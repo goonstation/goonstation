@@ -1584,6 +1584,18 @@ datum/commodity/drugs/sell/poppies
 	desc = "Roam as a Gnome with this giant-sized gnome costume."
 	price = PAY::UNTRAINED
 
+/datum/commodity/costume/baseball_clown
+	comname = "Baseball Uniform"
+	comtype = /obj/item/storage/box/costume/baseball_clown
+	desc = "A uniform and cap for the Aintaiya Stinkers. Bat not included."
+	price = PAY::UNTRAINED
+
+/datum/commodity/costume/baseball_mime
+	comname = "Baseball Uniform"
+	comtype = /obj/item/storage/box/costume/baseball_mime
+	desc = "A uniform and cap for... some team you've never heard of before. Bat not included."
+	price = PAY::UNTRAINED
+
 /datum/commodity/backpack/breadpack
 	comname = "Bag-uette"
 	comtype = /obj/item/storage/backpack/breadpack
