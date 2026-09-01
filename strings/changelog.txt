@@ -1,6 +1,10 @@
 
 (t)tue sep 01 26
 (u)ANNmagedon
+(p)27641
+(e)🎨📨|C-Sprites, A-Logistics
+(+)Geoff's vampire custom now comes with a brand new (recalled) promotional toy to hurt yourself with!
+(u)ANNmagedon
 (p)27621
 (e)🎨|C-Sprites
 (+)The medal "Licensed Archaeologist" now has a claimable reward.
