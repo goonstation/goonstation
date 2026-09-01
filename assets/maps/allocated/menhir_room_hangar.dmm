@@ -36,11 +36,6 @@
 /turf/unsimulated/floor/setpieces/bluefloor,
 /area/unspace/hangar)
 "f" = (
-/obj/item/sheet/steel{
-	amount = 3;
-	pixel_y = 5;
-	pixel_x = 3
-	},
 /obj/menhir_room_objs/hidey_helper,
 /turf/unsimulated/floor/setpieces/bluefloor,
 /area/unspace/hangar)
@@ -187,11 +182,6 @@
 	pixel_y = 6
 	},
 /obj/menhir_room_objs/hidey_helper,
-/obj/item/sheet/glass/reinforced{
-	pixel_y = 1;
-	pixel_x = 14;
-	amount = 6
-	},
 /turf/unsimulated/floor/setpieces/bluefloor,
 /area/unspace/hangar)
 "D" = (
