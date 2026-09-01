@@ -159,6 +159,12 @@ ABSTRACT_TYPE(/datum/mapPrefab/allocated)
 	prefabSizeY = 31
 	prefabPath = "assets/maps/allocated/menhir_room_depths.dmm"
 
+/datum/mapPrefab/allocated/menhir_room_enigma
+	name = "menhir_room_enigma"
+	prefabSizeX = 34
+	prefabSizeY = 23
+	prefabPath = "assets/maps/allocated/menhir_room_enigma.dmm"
+
 /datum/mapPrefab/allocated/menhir_room_bball
 	name = "menhir_room_bball"
 	prefabSizeX = 18

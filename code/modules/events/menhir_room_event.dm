@@ -163,6 +163,12 @@ ABSTRACT_TYPE(/area/unspace)
 	local_facing = EAST
 	seek_tag = "menhir_room_depths"
 
+/area/unspace/enigma
+	name = "Enigmatic Promenade"
+	local_facing = WEST
+	seek_tag = "menhir_room_enigma"
+	area_parallax_render_source_group = /datum/parallax_render_source_group/area/observatory
+
 /area/unspace/bball
 	name = "Reverberating Arena"
 	local_facing = WEST
@@ -423,6 +429,13 @@ ABSTRACT_TYPE(/datum/menhir_room_roll)
 	base_weight = 21 //this is not, contrary to popular opinion, nine plus ten
 	area_busy_checks = list(/area/station/crew_quarters/pool = 5)
 	stole_from = list("teleporter","LRT system","transception array")
+
+/datum/menhir_room_roll/enigma
+	name = "enigmatic promenade (enigma)"
+	entrance_side = WEST
+	map_path = /datum/mapPrefab/allocated/menhir_room_enigma
+	base_weight = 10
+	area_busy_checks = list(/area/station/crown = 3)
 
 /datum/menhir_room_roll/bball
 	name = "reverberating arena (bball)"

@@ -1,0 +1,1051 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/unsimulated/floor/void,
+/area/unspace/enigma)
+"b" = (
+/obj/landmark/menhir/room{
+	tag = "menhir_room_enigma"
+	},
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/enigma)
+"c" = (
+/turf/unsimulated/wall/auto/adventure/icemooninterior,
+/area/unspace/enigma)
+"e" = (
+/obj/machinery/door/unpowered/blue,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/enigma)
+"g" = (
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/enigma)
+"h" = (
+/obj/rack/precursor,
+/obj/random_item_spawner/menhir/one,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/enigma)
+"i" = (
+/turf/space/dense,
+/area/unspace/enigma)
+"j" = (
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/unspace/enigma)
+"k" = (
+/obj/precursor_puzzle/innervator{
+	vision_description = "Flickers in the vast dark roar to life, return to nothing. The pillar watches. The pillar waits."
+	},
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/unspace/enigma)
+"m" = (
+/obj/machinery/door/unpowered/blue,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/unspace/enigma)
+"o" = (
+/obj/precursor_puzzle/innervator{
+	pixel_y = -3;
+	pixel_x = -22;
+	vision_description = "The chorus before the chorus, made silent in reverence. A hand clasps around the pillar, and had always clasped it, and will always clasp it."
+	},
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/enigma)
+"p" = (
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/wall/auto/adventure/icemooninterior,
+/area/unspace/enigma)
+"q" = (
+/obj/rack/precursor,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/enigma)
+"s" = (
+/obj/machinery/door/unpowered/blue{
+	dir = 4;
+	friendly_object = /obj/item/orb/void
+	},
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 8
+	},
+/area/unspace/enigma)
+"t" = (
+/turf/unsimulated/floor/void/timewarp,
+/area/unspace/enigma)
+"u" = (
+/obj/map/light/dimred,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/unspace/enigma)
+"v" = (
+/obj/machinery/door/unpowered/blue{
+	dir = 4
+	},
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 8
+	},
+/area/unspace/enigma)
+"w" = (
+/obj/precursor_puzzle/shield,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 8
+	},
+/area/unspace/enigma)
+"y" = (
+/obj/machinery/door/unpowered/blue{
+	dir = 4
+	},
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/enigma)
+"A" = (
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/enigma)
+"B" = (
+/obj/precursor_puzzle/innervator{
+	vision_description = "A hand grasps for something beyond sight, and is severed in the dead of night.";
+	pixel_x = 11;
+	pixel_y = 27
+	},
+/turf/unsimulated/wall/auto/adventure/icemooninterior,
+/area/unspace/enigma)
+"D" = (
+/obj/map/light/cyan/menhir,
+/obj/landmark/spawner/artifact/more_precursor,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/enigma)
+"F" = (
+/obj/precursor_puzzle/shield{
+	name = "rydberg-matter beam"
+	},
+/turf/space,
+/area/unspace/enigma)
+"H" = (
+/obj/map/light/dimred,
+/turf/unsimulated/floor/void,
+/area/unspace/enigma)
+"I" = (
+/mob/living/critter/robotic/probe/arbitor,
+/turf/space,
+/area/unspace/enigma)
+"J" = (
+/turf/space,
+/area/unspace/enigma)
+"K" = (
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/enigma)
+"L" = (
+/obj/map/light/dimred,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/enigma)
+"M" = (
+/obj/precursor_puzzle/innervator{
+	vision_description = "Tapestries stretch above and below, beyond sight, beyond fathom. A single pillar pierces them all. Yet further below, yet further above."
+	},
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/enigma)
+"N" = (
+/obj/precursor_puzzle/shield,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/enigma)
+"O" = (
+/obj/map/light/cyan/menhir,
+/obj/precursor_puzzle/innervator{
+	vision_description = "The names of places, the faces of things, passed up and passed down. You feel no before, nor after."
+	},
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/unspace/enigma)
+"S" = (
+/obj/precursor_puzzle/shield{
+	dir = 4
+	},
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/unspace/enigma)
+"V" = (
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 8
+	},
+/area/unspace/enigma)
+"X" = (
+/mob/living/critter/robotic/probe/arbitor{
+	dir = 8
+	},
+/turf/space,
+/area/unspace/enigma)
+"Y" = (
+/obj/precursor_puzzle/innervator{
+	vision_description = "The door before you contorts and writhes in a deep blue mist. There is nothing beyond, yet there has been, and shall be."
+	},
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/enigma)
+
+(1,1,1) = {"
+a
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+a
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+a
+a
+a
+a
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+a
+a
+a
+a
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+a
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+a
+t
+t
+t
+t
+t
+t
+t
+t
+t
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(8,1,1) = {"
+a
+a
+a
+a
+a
+t
+t
+t
+t
+t
+t
+t
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+a
+a
+t
+t
+t
+t
+t
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(10,1,1) = {"
+a
+a
+a
+a
+a
+a
+c
+t
+t
+t
+c
+H
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+a
+a
+a
+a
+c
+c
+b
+c
+c
+B
+a
+c
+H
+c
+a
+c
+a
+a
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+c
+c
+c
+a
+a
+c
+j
+c
+s
+c
+c
+c
+c
+c
+c
+c
+c
+c
+a
+a
+a
+"}
+(13,1,1) = {"
+a
+c
+c
+D
+c
+c
+c
+c
+K
+c
+Y
+c
+A
+A
+o
+c
+h
+c
+h
+c
+a
+a
+a
+"}
+(14,1,1) = {"
+c
+c
+g
+A
+g
+c
+q
+c
+g
+c
+A
+c
+g
+g
+g
+e
+g
+e
+g
+c
+c
+c
+c
+"}
+(15,1,1) = {"
+c
+O
+j
+V
+j
+j
+V
+g
+K
+g
+V
+m
+j
+u
+j
+c
+c
+c
+c
+c
+g
+L
+c
+"}
+(16,1,1) = {"
+c
+c
+g
+A
+g
+c
+q
+c
+c
+c
+A
+c
+g
+g
+g
+c
+g
+g
+c
+g
+g
+c
+c
+"}
+(17,1,1) = {"
+i
+c
+c
+D
+c
+c
+c
+c
+c
+c
+M
+c
+A
+A
+A
+c
+g
+c
+c
+L
+c
+c
+i
+"}
+(18,1,1) = {"
+i
+F
+c
+c
+c
+g
+g
+c
+g
+c
+v
+c
+c
+c
+c
+c
+g
+g
+c
+c
+c
+F
+i
+"}
+(19,1,1) = {"
+i
+F
+J
+F
+p
+c
+c
+c
+L
+g
+g
+g
+g
+g
+L
+c
+c
+c
+p
+F
+J
+F
+i
+"}
+(20,1,1) = {"
+i
+F
+J
+F
+J
+J
+J
+c
+c
+c
+c
+y
+c
+c
+c
+c
+J
+J
+J
+F
+J
+F
+i
+"}
+(21,1,1) = {"
+i
+F
+J
+F
+J
+J
+J
+w
+j
+j
+c
+k
+c
+j
+j
+w
+J
+J
+J
+F
+J
+F
+i
+"}
+(22,1,1) = {"
+i
+F
+J
+F
+J
+J
+J
+N
+g
+g
+g
+g
+g
+g
+g
+N
+J
+J
+J
+F
+J
+F
+i
+"}
+(23,1,1) = {"
+i
+F
+J
+F
+J
+J
+J
+N
+K
+g
+g
+g
+g
+g
+K
+N
+J
+I
+J
+F
+J
+F
+i
+"}
+(24,1,1) = {"
+c
+c
+J
+F
+J
+J
+J
+c
+S
+S
+S
+S
+S
+S
+S
+c
+J
+J
+J
+F
+J
+c
+c
+"}
+(25,1,1) = {"
+a
+c
+c
+F
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+F
+c
+c
+a
+"}
+(26,1,1) = {"
+a
+a
+c
+F
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+F
+c
+a
+a
+"}
+(27,1,1) = {"
+a
+a
+c
+F
+c
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+c
+F
+c
+a
+a
+"}
+(28,1,1) = {"
+a
+a
+c
+c
+c
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+c
+c
+c
+a
+a
+"}
+(29,1,1) = {"
+a
+a
+c
+J
+c
+J
+J
+J
+J
+J
+X
+J
+J
+J
+J
+J
+J
+J
+c
+J
+c
+a
+a
+"}
+(30,1,1) = {"
+a
+a
+c
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+c
+a
+a
+"}
+(31,1,1) = {"
+a
+a
+c
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+c
+a
+a
+"}
+(32,1,1) = {"
+a
+a
+c
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+c
+a
+a
+"}
+(33,1,1) = {"
+a
+a
+c
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+c
+a
+a
+"}
+(34,1,1) = {"
+a
+a
+c
+i
+i
+i
+i
+i
+i
+i
+i
+i
+i
+i
+i
+i
+i
+i
+i
+i
+c
+a
+a
+"}
