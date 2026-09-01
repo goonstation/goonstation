@@ -298,7 +298,7 @@
 					if (isskeleton(head.linked_human))
 						M = head.linked_human
 						// only condition is we're the mask on it
-						is_smoking = head.wear_mask = src
+						is_smoking = head.wear_mask == src
 
 				if(ishuman(M))
 					var/mob/living/carbon/human/H = M //below
