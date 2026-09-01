@@ -1154,7 +1154,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish/tetraminnow)
 		..()
 
 TYPEINFO(/obj/item/reagent_containers/food/fish/tetraminnow/tshaped)
-	appears_in_fish_collection = TRUE
+	fish_collection_type = FISH::COLLECTION::NORMAL
 /obj/item/reagent_containers/food/fish/tetraminnow/tshaped
 	name = "T-Shaped Tetra Minnow"
 	icon_state = "tetra_t"
@@ -1162,7 +1162,7 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/tetraminnow/tshaped)
 	extra_desc = "This one is roughly T-Shaped."
 
 TYPEINFO(/obj/item/reagent_containers/food/fish/tetraminnow/sshaped)
-	appears_in_fish_collection = TRUE
+	fish_collection_type = FISH::COLLECTION::NORMAL
 /obj/item/reagent_containers/food/fish/tetraminnow/sshaped
 	name = "S-Shaped Tetra Minnow"
 	icon_state = "tetra_s"
@@ -1170,7 +1170,7 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/tetraminnow/sshaped)
 	extra_desc = "This one is roughly S-Shaped."
 
 TYPEINFO(/obj/item/reagent_containers/food/fish/tetraminnow/zshaped)
-	appears_in_fish_collection = TRUE
+	fish_collection_type = FISH::COLLECTION::NORMAL
 /obj/item/reagent_containers/food/fish/tetraminnow/zshaped
 	name = "Z-Shaped Tetra Minnow"
 	icon_state = "tetra_z"
@@ -1178,7 +1178,7 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/tetraminnow/zshaped)
 	extra_desc = "This one is roughly Z-Shaped."
 
 TYPEINFO(/obj/item/reagent_containers/food/fish/tetraminnow/square)
-	appears_in_fish_collection = TRUE
+	fish_collection_type = FISH::COLLECTION::NORMAL
 /obj/item/reagent_containers/food/fish/tetraminnow/square
 	name = "Square-Shaped Tetra Minnow"
 	icon_state = "tetra_square"
@@ -1186,7 +1186,7 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/tetraminnow/square)
 	extra_desc = "This one is roughly Square-Shaped."
 
 TYPEINFO(/obj/item/reagent_containers/food/fish/tetraminnow/line)
-	appears_in_fish_collection = TRUE
+	fish_collection_type = FISH::COLLECTION::NORMAL
 /obj/item/reagent_containers/food/fish/tetraminnow/line
 	name = "Line-Shaped Tetra Minnow"
 	icon_state = "tetra_line"
@@ -1195,7 +1195,7 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/tetraminnow/line)
 	extra_desc = "This one is roughly Line-Shaped."
 
 TYPEINFO(/obj/item/reagent_containers/food/fish/tetraminnow/lshaped)
-	appears_in_fish_collection = TRUE
+	fish_collection_type = FISH::COLLECTION::NORMAL
 /obj/item/reagent_containers/food/fish/tetraminnow/lshaped
 	name = "L-Shaped Tetra Minnow"
 	icon_state = "tetra_l"
@@ -1203,7 +1203,7 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/tetraminnow/lshaped)
 	extra_desc = "This one is roughly L-Shaped."
 
 TYPEINFO(/obj/item/reagent_containers/food/fish/tetraminnow/jshaped)
-	appears_in_fish_collection = TRUE
+	fish_collection_type = FISH::COLLECTION::NORMAL
 /obj/item/reagent_containers/food/fish/tetraminnow/jshaped
 	name = "J-Shaped Tetra Minnow"
 	icon_state = "tetra_j"
