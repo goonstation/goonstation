@@ -87,7 +87,7 @@
 /datum/targetable/critter/shockwave/fermid_shockwave
 	name = "Ground Slam"
 	desc = "Slam your abdomen against the ground, creating a shockwave that stuns nearby enemies for a short time!"
-	// icon_state = "Placeholder"
+	icon_state = "shockwave_fermid"
 	targeted = FALSE
 	cooldown = 40 SECONDS
 	iteration_depth = 4
