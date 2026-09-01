@@ -259,7 +259,7 @@ TYPEINFO(/obj/machinery/bot/secbot)
 		. = ..()
 		if (src.attack_per_step && prob(src.attack_per_step == 2 ? 25 : 75))
 			if (oldloc != NewLoc)
-				if (mode == ROBOT::MODE::SECBOT_AGGRO && target)
+				if (mode == ROBOT::MODE::SECBOT::AGGRO && target)
 					if ((BOUNDS_DIST(src, src.target) == 0))
 						src.baton_attack(src.target, 1)
 
@@ -342,11 +342,11 @@ TYPEINFO(/obj/machinery/bot/secbot)
 				updateUsrDialog()
 			if("guardhere")
 				src.KillPathAndGiveUp(KPAGU_CLEAR_ALL)
-				if(src.mode == ROBOT::MODE::SECBOT_GUARD_START || src.mode == ROBOT::MODE::SECBOT_GUARD)
+				if(src.mode == ROBOT::MODE::SECBOT::GUARD_START || src.mode == ROBOT::MODE::SECBOT::GUARD)
 					src.say("Ten-Four. Guard orders deleted.")
 				else if(isarea(get_area(src)))
 					src.guard_area = get_area(src)
-					src.mode = ROBOT::MODE::SECBOT_GUARD_START
+					src.mode = ROBOT::MODE::SECBOT::GUARD_START
 					src.say("Ten-Four. Guarding curent area.")
 				else
 					src.say("ERROR 99-21: CURRENT AREA IS INVALID.")
@@ -625,59 +625,59 @@ TYPEINFO(/obj/machinery/bot/secbot)
 
 		switch(mode)
 			/// No guard orders, start patrol if allowed, also look for people to heck up
-			if(ROBOT::MODE::SECBOT_IDLE)
+			if(ROBOT::MODE::SECBOT::IDLE)
 				src.doing_something = 0
 				look_for_perp()	// see if any criminals are in range
 				if(auto_patrol)	// still idle, and set to patrol
-					mode = ROBOT::MODE::SECBOT_START_PATROL	// switch to patrol mode
+					mode = ROBOT::MODE::SECBOT::START_PATROL	// switch to patrol mode
 
 			/// No guard orders, engaging target, seeking to arrest them
-			if(ROBOT::MODE::SECBOT_AGGRO, ROBOT::MODE::SECBOT_GUARD_AGGRO)
+			if(ROBOT::MODE::SECBOT::AGGRO, ROBOT::MODE::SECBOT::GUARD_AGGRO)
 				src.doing_something = 1
 				src.assault_target()
 
-			if(ROBOT::MODE::SECBOT_START_PATROL)	// start a patrol
+			if(ROBOT::MODE::SECBOT::START_PATROL)	// start a patrol
 				src.doing_something = 0
 				if(patrol_target)
 					if(!ON_COOLDOWN(global, "[SECBOT_CHATSPAM_COOLDOWN]-patrolstart", src.chatspam_cooldown)) // have a valid path, so go there
 						src.say("Patrol Mode: ENGAGED.")
-					src.mode = ROBOT::MODE::SECBOT_PATROL
+					src.mode = ROBOT::MODE::SECBOT::PATROL
 				else // no patrol target, so need a new one
 					find_patrol_target()
 
-			if(ROBOT::MODE::SECBOT_PATROL)		// patrol mode
+			if(ROBOT::MODE::SECBOT::PATROL)		// patrol mode
 				if(src.target)
-					src.mode = ROBOT::MODE::SECBOT_AGGRO
+					src.mode = ROBOT::MODE::SECBOT::AGGRO
 					src.process()
 				else
 					move_the_bot(move_patrol_step_delay)
 					look_for_perp()
 
-			if(ROBOT::MODE::SECBOT_SUMMON)		// summoned to PDA
+			if(ROBOT::MODE::SECBOT::SUMMON)		// summoned to PDA
 				src.doing_something = 1
 				if(!src.path)
 					src.say("ERROR 99-28: COULD NOT FIND PATH TO SUMMON TARGET. ABORTING.")
 					src.KillPathAndGiveUp(KPAGU_RETURN_TO_PATROL)	// switch back to what we should be
 
 			/// On guard duty, returning from distraction
-			if(ROBOT::MODE::SECBOT_GUARD_IDLE)
+			if(ROBOT::MODE::SECBOT::GUARD_IDLE)
 				src.doing_something = 0
 				if(isarea(src.guard_area))
 					if(get_area(get_turf(src)) == src.guard_area)
-						mode = ROBOT::MODE::SECBOT_GUARD
+						mode = ROBOT::MODE::SECBOT::GUARD
 					else
-						mode = ROBOT::MODE::SECBOT_GUARD_START
+						mode = ROBOT::MODE::SECBOT::GUARD_START
 						src.guard_start_no_announce = 1
 				else
-					mode = ROBOT::MODE::SECBOT_IDLE
+					mode = ROBOT::MODE::SECBOT::IDLE
 				look_for_perp()
 
 			/// On guard duty, check if we're in the place we're supposed to be
-			if(ROBOT::MODE::SECBOT_GUARD_START, ROBOT::MODE::SECBOT_GUARD)
+			if(ROBOT::MODE::SECBOT::GUARD_START, ROBOT::MODE::SECBOT::GUARD)
 				src.doing_something = 1
 				src.guard_target()
 
-			if(ROBOT::MODE::SECBOT_GUARD_AGGRO)
+			if(ROBOT::MODE::SECBOT::GUARD_AGGRO)
 				src.doing_something = 1
 				src.assault_target()
 
@@ -698,14 +698,14 @@ TYPEINFO(/obj/machinery/bot/secbot)
 			return
 
 		if(get_area(get_turf(src)) == src.guard_area) // oh good we're here
-			if(src.mode == ROBOT::MODE::SECBOT_GUARD_START)
+			if(src.mode == ROBOT::MODE::SECBOT::GUARD_START)
 				if(!src.guard_start_no_announce && !ON_COOLDOWN(global, "[SECBOT_CHATSPAM_COOLDOWN]-guardarrived", src.chatspam_cooldown))
 					src.say("Destination reached. Patrolling area.")
-				src.mode = ROBOT::MODE::SECBOT_GUARD
+				src.mode = ROBOT::MODE::SECBOT::GUARD
 
 		if(!moving && !ON_COOLDOWN(src, SECBOT_GUARDMOVE_COOLDOWN, src.guard_mill_cooldown))
 			var/list/T = get_area_turfs(src.guard_area, 1)
-			if(src.mode == ROBOT::MODE::SECBOT_GUARD_START && !src.guard_start_no_announce && !ON_COOLDOWN(global, "[SECBOT_CHATSPAM_COOLDOWN]-guardcalc", src.chatspam_cooldown))
+			if(src.mode == ROBOT::MODE::SECBOT::GUARD_START && !src.guard_start_no_announce && !ON_COOLDOWN(global, "[SECBOT_CHATSPAM_COOLDOWN]-guardcalc", src.chatspam_cooldown))
 				src.say("Calculating path to [src.guard_area]...")
 			if(length(T) >= 1)
 				SPAWN(0)
@@ -713,7 +713,7 @@ TYPEINFO(/obj/machinery/bot/secbot)
 						T = (pick(T))
 						src.navigate_to(T, src.bot_move_delay)
 						if(length(src.path) >= 1)
-							if(src.mode == ROBOT::MODE::SECBOT_GUARD_START && !src.guard_start_no_announce && !ON_COOLDOWN(global, "[SECBOT_CHATSPAM_COOLDOWN]-guardpathOK", src.chatspam_cooldown))
+							if(src.mode == ROBOT::MODE::SECBOT::GUARD_START && !src.guard_start_no_announce && !ON_COOLDOWN(global, "[SECBOT_CHATSPAM_COOLDOWN]-guardpathOK", src.chatspam_cooldown))
 								src.say("Path calculated. Moving out.")
 							break
 						sleep(1 SECOND)
@@ -731,7 +731,7 @@ TYPEINFO(/obj/machinery/bot/secbot)
 		var/kpagu // fun fact, the postalcode for Kpagu is 911101
 		/// Current mode determines what we're supposed to go back to when we're done
 		switch(src.mode)
-			if(ROBOT::MODE::SECBOT_GUARD, ROBOT::MODE::SECBOT_GUARD_START, ROBOT::MODE::SECBOT_GUARD_AGGRO, ROBOT::MODE::SECBOT_GUARD_IDLE)
+			if(ROBOT::MODE::SECBOT::GUARD, ROBOT::MODE::SECBOT::GUARD_START, ROBOT::MODE::SECBOT::GUARD_AGGRO, ROBOT::MODE::SECBOT::GUARD_IDLE)
 				kpagu = KPAGU_RETURN_TO_GUARD
 			else
 				kpagu = KPAGU_RETURN_TO_PATROL
@@ -880,10 +880,10 @@ TYPEINFO(/obj/machinery/bot/secbot)
 		if(!ON_COOLDOWN(global, "[SECBOT_CHATSPAM_COOLDOWN]-yellatthem", src.chatspam_cooldown * 3))
 			src.YellAtPerp()
 		switch(src.mode)
-			if(ROBOT::MODE::SECBOT_IDLE, ROBOT::MODE::SECBOT_START_PATROL, ROBOT::MODE::SECBOT_PATROL, ROBOT::MODE::SECBOT_SUMMON, ROBOT::MODE::SECBOT_AGGRO)
-				src.mode = ROBOT::MODE::SECBOT_AGGRO
+			if(ROBOT::MODE::SECBOT::IDLE, ROBOT::MODE::SECBOT::START_PATROL, ROBOT::MODE::SECBOT::PATROL, ROBOT::MODE::SECBOT::SUMMON, ROBOT::MODE::SECBOT::AGGRO)
+				src.mode = ROBOT::MODE::SECBOT::AGGRO
 			else
-				src.mode = ROBOT::MODE::SECBOT_GUARD_AGGRO
+				src.mode = ROBOT::MODE::SECBOT::GUARD_AGGRO
 		weeoo()
 		process()	// ensure bot quickly responds to a perp
 
@@ -973,14 +973,14 @@ TYPEINFO(/obj/machinery/bot/secbot)
 			src.oldtarget_name = src.target?.name
 			src.target = null
 			ON_COOLDOWN(src, "[SECBOT_LASTTARGET_COOLDOWN]-[src.oldtarget_name]", src.last_target_cooldown)
-			src.mode = ROBOT::MODE::SECBOT_GUARD_IDLE
+			src.mode = ROBOT::MODE::SECBOT::GUARD_IDLE
 		if(give_up == KPAGU_RETURN_TO_PATROL || give_up == KPAGU_CLEAR_ALL)
 			src.oldtarget_name = src.target?.name
 			src.target = null
 			ON_COOLDOWN(src, "[SECBOT_LASTTARGET_COOLDOWN]-[src.oldtarget_name]", src.last_target_cooldown)
 			src.guard_area = null
 			src.guard_area_lockdown = FALSE
-			src.mode = ROBOT::MODE::SECBOT_IDLE
+			src.mode = ROBOT::MODE::SECBOT::IDLE
 
 	/// Sends the bot on to a patrol target. Or Summon target, if that's what patrol_target is set to
 	proc/move_the_bot(var/delay = 3)
@@ -1068,12 +1068,12 @@ TYPEINFO(/obj/machinery/bot/secbot)
 		// process control input
 			switch(signal_command)
 				if("stop")
-					src.mode = ROBOT::MODE::SECBOT_IDLE
+					src.mode = ROBOT::MODE::SECBOT::IDLE
 					src.auto_patrol = 0
 					return
 
 				if("go")
-					src.mode = ROBOT::MODE::SECBOT_IDLE
+					src.mode = ROBOT::MODE::SECBOT::IDLE
 					src.auto_patrol = 1
 					return
 
@@ -1135,7 +1135,7 @@ TYPEINFO(/obj/machinery/bot/secbot)
 		src.guard_area_lockdown = lockdown
 		if(isarea(A))
 			src.guard_area = A
-		src.mode = ROBOT::MODE::SECBOT_GUARD_START
+		src.mode = ROBOT::MODE::SECBOT::GUARD_START
 		if(!ON_COOLDOWN(global, "[SECBOT_CHATSPAM_COOLDOWN]-guardstart", src.chatspam_cooldown))
 			src.say("Ten-Four. Guard orders confirmed.")
 
@@ -1148,7 +1148,7 @@ TYPEINFO(/obj/machinery/bot/secbot)
 		src.next_destination = destination
 		src.destination = null
 		src.awaiting_beacon = 0
-		src.mode = ROBOT::MODE::SECBOT_SUMMON
+		src.mode = ROBOT::MODE::SECBOT::SUMMON
 		if(!ON_COOLDOWN(global, "[SECBOT_CHATSPAM_COOLDOWN]-summonstart", src.chatspam_cooldown))
 			src.say("Responding to summon.")
 		src.move_the_bot(move_summon_step_delay)
@@ -1298,9 +1298,9 @@ TYPEINFO(/obj/machinery/bot/secbot)
 				SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "pda")
 
 			switch(master.mode)
-				if(ROBOT::MODE::SECBOT_AGGRO)
+				if(ROBOT::MODE::SECBOT::AGGRO)
 					master.KillPathAndGiveUp(KPAGU_RETURN_TO_PATROL)
-				if(ROBOT::MODE::SECBOT_GUARD_AGGRO)
+				if(ROBOT::MODE::SECBOT::GUARD_AGGRO)
 					master.KillPathAndGiveUp(KPAGU_RETURN_TO_GUARD)
 				else
 					master.KillPathAndGiveUp(KPAGU_CLEAR_ALL)
