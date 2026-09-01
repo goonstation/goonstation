@@ -153,6 +153,16 @@ ABSTRACT_TYPE(/area/unspace)
 	local_facing = WEST
 	seek_tag = "menhir_room_genpop"
 
+/area/unspace/arcade
+	name = "Peculiar Annex"
+	local_facing = WEST
+	seek_tag = "menhir_room_arcade"
+
+/area/unspace/depths
+	name = "Abyssal Byway"
+	local_facing = EAST
+	seek_tag = "menhir_room_depths"
+
 /area/unspace/bball
 	name = "Reverberating Arena"
 	local_facing = WEST
@@ -353,7 +363,7 @@ ABSTRACT_TYPE(/datum/menhir_room_roll)
 	base_weight = 80
 	area_busy_checks = list(/area/station/crew_quarters = 5,\
 		/area/station/hallway/secondary = 2)
-	stole_from = list("rec room","cafeteria","bar")
+	stole_from = list("rec room","cafeteria","bar") //overlaps a bit with arcade on purpose, ambiguity is fun
 
 /datum/menhir_room_roll/botany
 	name = "damp antechamber (botany)"
@@ -398,6 +408,21 @@ ABSTRACT_TYPE(/datum/menhir_room_roll)
 	base_weight = 30
 	area_busy_checks = list(/area/station/security/brig = 20)
 	stole_from = list("genpop","holding cell","brig")
+
+/datum/menhir_room_roll/arcade
+	name = "peculiar annex (arcade)"
+	entrance_side = WEST
+	map_path = /datum/mapPrefab/allocated/menhir_room_arcade
+	base_weight = 50
+	stole_from = list("arcade","game room","rec room") //overlaps a bit with lounge on purpose, ambiguity is fun
+
+/datum/menhir_room_roll/depths
+	name = "abyssal byway (depths)"
+	entrance_side = EAST
+	map_path = /datum/mapPrefab/allocated/menhir_room_depths
+	base_weight = 42 //but what's the question
+	area_busy_checks = list(/area/station/crew_quarters/pool = 5)
+	stole_from = list("teleporter","LRT system","transception array")
 
 /datum/menhir_room_roll/bball
 	name = "reverberating arena (bball)"
