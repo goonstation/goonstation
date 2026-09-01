@@ -89,7 +89,7 @@
 	desc = "Slam your abdomen against the ground, creating a shockwave that stuns nearby enemies for a short time!"
 	// icon_state = "Placeholder"
 	targeted = FALSE
-	cooldown = 80 SECONDS
+	cooldown = 40 SECONDS
 	iteration_depth = 4
 	propagation_percentage = 80
 	break_glass = FALSE
