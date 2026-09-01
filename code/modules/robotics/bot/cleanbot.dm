@@ -1,5 +1,4 @@
 // WIP bot improvements (Convair880).
-#define CLEANBOT_MOVE_SPEED 10
 #define CLEANBOT_CLEARTARGET_COOLDOWN "cleanbotclearinvalidtargetslist"
 #define CLEANBOT_CLEAN_COOLDOWN "slackbotidle"
 #define CLEANBOT_ACQUIRE_TARGET_COOLDOWN "cleanbotacquiretarget"
@@ -74,7 +73,7 @@
 	health = 25
 	no_camera = 1
 	access_lookup = "Janitor"
-	bot_move_delay = CLEANBOT_MOVE_SPEED
+	bot_move_delay = BOT::SPEED::CLEANBOT
 
 	var/atom/target // Current target.
 	var/list/targets_invalid = list() // Targets we weren't able to reach.
@@ -268,7 +267,7 @@
 
 			// we are not there. how do we get there
 			if (!src.path || !length(src.path))
-				src.navigate_to(get_turf(src.target), CLEANBOT_MOVE_SPEED, max_dist = 20)
+				src.navigate_to(get_turf(src.target), src.bot_move_delay, max_dist = 20)
 				if (!src.path || !length(src.path))
 					// answer: we don't. try to find something else then.
 					src.KillPathAndGiveUp(1)
@@ -461,5 +460,3 @@
 			ON_COOLDOWN(master, CLEANBOT_CLEAN_COOLDOWN, master.idle_delay)
 			master.KillPathAndGiveUp(0)
 		..()
-
-#undef CLEANBOT_MOVE_SPEED

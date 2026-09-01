@@ -3,7 +3,6 @@
 #define BUTT_ROBOT "Bionic"
 #define BUTT_PLANT "Botanical"
 #define BUTT_BROKE "Buggy" // Fallback in case it gets a weird-ass butt
-#define BUTTBOT_MOVE_SPEED 10
 
 TYPEINFO(/obj/machinery/bot/buttbot)
 	start_listen_effects = list(LISTEN_EFFECT_BUTTBOT)
@@ -16,7 +15,7 @@ TYPEINFO(/obj/machinery/bot/buttbot)
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "buttbot"
 	layer = 5.0 // Todo layer
-	bot_move_delay = BUTTBOT_MOVE_SPEED
+	bot_move_delay = BOT::SPEED::BUTTBOT
 	density = 0
 	anchored = UNANCHORED
 	default_material = "butt"
@@ -121,10 +120,10 @@ TYPEINFO(/obj/machinery/bot/buttbot)
 	if(src.emagged)
 		for(var/atom/A as anything in view(5, src))
 			if(!(A.event_handler_flags & IS_FARTABLE) && !(A in src.fart_memory))
-				src.navigate_to(A, BUTTBOT_MOVE_SPEED, 0, 15)
+				src.navigate_to(A, src.bot_move_delay, 0, 15)
 				break
 	else
-		src.navigate_to(get_step_rand(src), BUTTBOT_MOVE_SPEED)
+		src.navigate_to(get_step_rand(src), src.bot_move_delay)
 
 /obj/machinery/bot/buttbot/process(mult)
 	if(src.exploding)
