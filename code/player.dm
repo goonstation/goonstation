@@ -387,7 +387,9 @@ var/global/list/players = list()
 			logTheThing(LOG_DIARY, null, "Medals Error: Error returned in get_all_medals for [src.ckey] ([src.id]): [error.message]", "debug")
 			return null
 
-		for(var/medal_data in medals.ToList())
+		var/medal_resource_list = medals.ToList()
+		var/medals_resource_data = medal_resource_list["data"]
+		for(var/medal_data in medals_resource_data)
 			src.cached_medals |= medal_data["medal"]["title"]
 
 /// returns a reference to a player datum based on the ckey you put into it
