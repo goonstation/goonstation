@@ -323,17 +323,28 @@ TYPEINFO(/obj/item/card/emag)
 	HELP_MESSAGE_OVERRIDE(null)
 	SYNDICATE_STEALTH_DESCRIPTION("There's some extra circuitry soldered to the back.")
 
-	// These variables are each used only for the process of forging; once the card is forged, they are no longer used at all.
-	var/cached_name
-	var/cached_assignment
-	var/cached_appearance
-	var/datum/pronouns/cached_pronouns
-	var/cached_keep_icon = FALSE
-
-	var/forged = FALSE /// If FALSE, this agent card can be forged with new credentials. This value is permanently set to TRUE after that.
+	/// If FALSE, this agent card can be forged with new credentials. This value is permanently set to TRUE after that.
+	var/forged = FALSE
+	/// The possible styles that this card can adopt.
+	/// name: Human-readable name.
+	/// state: Corresponding icon state in card.dmi.
+	/// keepState: (Optional) Maintain existing icon if the job is changed in an ID console.
+	var/list/card_styles = list(
+		list(name = "Plain", state = "id_basic"),
+		list(name = "Civilian", state = "id_civ"),
+		list(name = "Engineering", state = "id_eng"),
+		list(name = "Research", state = "id_res"),
+		list(name = "Medical", state = "id_med"),
+		list(name = "Security", state = "id_sec"),
+		list(name = "Command", state = "id_com"),
+		list(name = "Clown", state = "id_clown", keepState = TRUE),
+		list(name = "Gold", state = "id_gold", keepState = TRUE),
+		list(name = "NanoTrasen", state = "id_nanotrasen", keepState = TRUE),
+		list(name = "Syndicate", state = "id_syndie", keepState = TRUE),
+	)
 
 	attack_self(mob/user)
-		if (src.registered || (!istrainedsyndie(user) && !isspythief(user)))
+		if (src.registered)
 			return ..()
 		src.ui_interact(user)
 
@@ -361,18 +372,6 @@ TYPEINFO(/obj/item/card/emag)
 			return {"[!src.forged ? "Use the card in your hand to set its name, appearance, job title, and pronouns. " : ""]Use another ID on the agent card (or vice-versa) to stealthily copy the access of that ID to the agent card."}
 		return null
 
-	// lifted essentially verbatim from the code used by vending machines and the ID computer for the same purpose. yummy pasta!!!
-	proc/getCardBase64Img(state)
-		var/static/base64_preview_cache = list()
-		. = base64_preview_cache[state]
-		if (isnull(.))
-			var/icon/result_icon = icon('icons/obj/items/card.dmi', state)
-			if(result_icon)
-				. = icon2base64(result_icon)
-			else
-				. = ""
-			base64_preview_cache[state] = .
-
 	ui_interact(mob/user, datum/tgui/ui)
 		if (src.forged)
 			ui?.close(FALSE)
@@ -383,81 +382,71 @@ TYPEINFO(/obj/item/card/emag)
 			ui.open()
 
 	ui_data(mob/user)
+		var/equippedIdData = null
+		var/obj/item/card/id/id
+		// we have to do this instead of user.get_id() because, hilariously,
+		// it will otherwise generally get the agent card itself (due to it being held in the active hand)
+		if (ishuman(user))
+			var/mob/living/carbon/human/H = user
+			id = get_id_card(H.get_slot(SLOT_WEAR_ID))
+		if (id != null)
+			equippedIdData = list("name" = id.registered, "assignment" = id.assignment, "icon" = id.icon_state, "pronouns" = id.pronouns?.name)
 		. = list(
-			"userName" = ishuman(user) ? user.real_name : user.name,
-			"cachedName" = src.cached_name,
-			"cachedAssignment" = src.cached_assignment,
-			"cachedAppearance" = src.cached_appearance,
-			"cachedPronouns" = src.cached_pronouns?.name,
-			"cachedKeepIcon" = src.cached_keep_icon,
-			"canForge" = src.cached_appearance, // name and assignment default to placeholders if not provided, and pronouns are optional
+			"placeholderName" = ishuman(user) ? user.real_name : user.name,
+			"equippedId" = equippedIdData,
 		)
 
 	ui_static_data(mob/user)
+		var/list/styles = card_styles.Copy()
+		for (var/style in styles) // generate icons for each possible style so they can be shown in the UI
+			style["refIcon"] = "\ref['icons/obj/items/card.dmi']?state=[style["state"]]"
+
+		var/list/selectable_pronouns = list()
+		for (var/pn in filtered_concrete_typesof(/datum/pronouns, /proc/pronouns_filter_is_choosable))
+			var/datum/pronouns/P = get_singleton(pn)
+			selectable_pronouns.Add(P.name)
+
 		. = list(
-			"cardAppearances" = list(
-				list(style = "none", name = "Plain", state = "id", icon = getCardBase64Img("id_basic")),
-				list(style = "civilian", name = "Civilian", state = "id_civ", icon = getCardBase64Img("id_civ")),
-				list(style = "engineering", name = "Engineering", state = "id_eng", icon = getCardBase64Img("id_eng")),
-				list(style = "research", name = "Research", state = "id_res", icon = getCardBase64Img("id_res")),
-				list(style = "medical", name = "Medical", state = "id_med", icon = getCardBase64Img("id_med")),
-				list(style = "security", name = "Security", state = "id_sec", icon = getCardBase64Img("id_sec")),
-				list(style = "command", name = "Command", state = "id_com", icon = getCardBase64Img("id_com")),
-				list(style = "clown", name = "Clown", state = "id_clown", icon = getCardBase64Img("id_clown")),
-				list(style = "golden", name = "Gold", state = "id_gold", icon = getCardBase64Img("id_gold")),
-				list(style = "nanotrasen", name = "NanoTrasen", state = "id_nanotrasen", icon = getCardBase64Img("id_nanotrasen")),
-				list(style = "syndicate", name = "Syndicate", state = "id_syndie", icon = getCardBase64Img("id_syndie")),
-			)
+			"placeholderAssignment" = "Staff Assistant",
+			"usablePronouns" = selectable_pronouns,
+			"cardStyles" = styles,
 		)
+
+	proc/getCardRefImg(state)
+		return "\ref['icons/obj/items/card.dmi']?state=[state]"
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 		. = ..()
 		if (.)
 			return
-		if (action == "set_name")
-			src.cached_name = src.sanitize_name(params["name"])
-		if (action == "set_assignment")
-			src.cached_assignment = src.sanitize_name(params["assignment"])
-		if (action == "set_pronouns")
-			if (!src.cached_pronouns)
-				src.cached_pronouns = get_singleton(/datum/pronouns/theyThem)
-			else
-				src.cached_pronouns = src.cached_pronouns.next_pronouns()
-		if (action == "remove_pronouns")
-			src.cached_pronouns = null
-		if (action == "set_appearance")
-			src.cached_appearance = params["appearance"]
-		if (action == "toggle_keep_icon")
-			src.cached_keep_icon = !src.cached_keep_icon
-		if (action == "reset_cached")
-			src.cached_name = null
-			src.cached_assignment = null
-			src.cached_appearance = null
-			src.cached_pronouns = null
-			src.cached_keep_icon = FALSE
-		if (action == "do_forge")
-			if (src.forged)
+		if (action == "forge")
+			if (src.forged) // should never happen, but, sanity check
 				boutput(ui.user, SPAN_ALERT("\The [src] seems to have been forged while you weren't looking! Huh."))
 				return FALSE
-			// intended in case someone changes their mind last second
+			src.forged = TRUE
+			src.registered = params["cardName"]
+			src.assignment = params["cardAssignment"]
+			var/cardPronouns = params["cardPronouns"]
+			// problem: cardPronouns are tracked as a string in the UI, but pronouns themselves refer to a datum singleton
+			// solution: pass the string, and if there's a chooseable subtype with a matching name, assign the card that singleton
+			// that way e.g. "she/her" returns /datum/pronouns/sheHer
+			if (cardPronouns != null)
+				var/list/choosable = filtered_concrete_typesof(/datum/pronouns, /proc/pronouns_filter_is_choosable)
+				for (var/V in choosable)
+					var/datum/pronouns/PN = get_singleton(V)
+					if (PN?.name == cardPronouns)
+						cardPronouns = PN
+						break
+			src.pronouns = cardPronouns
+			var/list/cardStyle = params["cardStyle"]
+			src.icon_state = cardStyle["state"]
+			src.keep_icon = cardStyle["keepState"] || FALSE
+			src.name = "[src.registered]’s ID Card ([src.assignment])"
+			boutput(ui.user, SPAN_NOTICE("You successfully forge the ID card."))
 			ui.user.playsound_local(ui.user, "sound/machines/printer_press.ogg", 35, FALSE)
-			SETUP_GENERIC_PRIVATE_ACTIONBAR(ui.user, src, 2.2 SECONDS, /obj/item/card/id/syndicate/proc/finalize_forge, list(ui.user), src.icon, src.icon_state, null,
-				INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
 			ui.close(FALSE)
 			return
 		. = TRUE
-
-	proc/finalize_forge(mob/user)
-		src.forged = TRUE
-		src.registered = src.cached_name || (ishuman(user) ? user.real_name : user.name)
-		src.assignment = src.cached_assignment || "Staff Assistant"
-		src.icon_state = src.cached_appearance
-		src.keep_icon = src.cached_keep_icon || FALSE
-		if (src.cached_pronouns)
-			src.pronouns = src.cached_pronouns
-		src.name = "[src.registered]’s ID Card ([src.assignment])"
-		boutput(user, SPAN_NOTICE("You successfully forge the ID card."))
-		user.playsound_local(user, 'sound/machines/printer_cargo.ogg', 35, FALSE)
 
 /obj/item/card/id/syndicate/commander
 	name = "commander card"

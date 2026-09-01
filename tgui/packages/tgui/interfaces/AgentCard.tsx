@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Button,
   Image,
@@ -10,100 +11,118 @@ import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 interface AgentCardData {
-  userName: string;
-  cachedName: string;
-  cachedAssignment: string;
-  cachedAppearance: string;
-  cachedPronouns: string;
-  cachedKeepIcon: boolean;
-  cardAppearances: CardAppearance[];
-  canForge: boolean;
+  placeholderName: string;
+  placeholderAssignment: string;
+  equippedId: CardData | null;
+
+  usablePronouns: string[];
+  cardStyles: CardStyle[];
 }
 
-interface CardAppearance {
-  style: string;
+interface CardData {
+  name: string;
+  assignment: string;
+  icon: string;
+  pronouns: string;
+}
+
+interface CardStyle {
   name: string;
   state: string;
-  icon: string;
-  keep_icon_on_job_change: boolean;
+  keepState: boolean;
+  refIcon;
 }
 
 export const AgentCard = () => {
   const { act, data } = useBackend<AgentCardData>();
   const {
-    userName,
-    cachedName,
-    cachedAssignment,
-    cachedAppearance,
-    cachedPronouns,
-    cachedKeepIcon,
-    cardAppearances,
-    canForge,
+    placeholderName,
+    placeholderAssignment,
+    equippedId,
+    usablePronouns,
+    cardStyles,
   } = data;
+  const [cardName, setCardName] = useState<string>();
+  const [cardAssignment, setCardAssignment] = useState<string>();
+  const [cardPronouns, setCardPronouns] = useState<string | null>(null);
+  const [cardStyle, setCardStyle] = useState<CardStyle | null>(null);
 
   return (
-    <Window width={400} height={360} theme="syndicate">
+    <Window width={400} height={365} theme="syndicate">
       <Window.Content>
         <Section
           title="Identity"
           buttons={
-            <Button.Confirm
+            <Button
               icon="undo"
+              tooltip="Sets the appearance of the card to mirror your worn ID."
               color="green"
-              onClick={() => act('reset_cached')}
+              disabled={equippedId === null}
+              onClick={() => {
+                setCardName(equippedId?.name);
+                setCardAssignment(equippedId?.assignment);
+                setCardStyle(
+                  // match sprite if possible, use Plain if not
+                  cardStyles.find((x) => x.state === equippedId?.icon) ||
+                    cardStyles.at(0) ||
+                    null,
+                );
+                setCardPronouns(equippedId ? equippedId.pronouns : null);
+              }}
             >
-              Reset
-            </Button.Confirm>
+              Match My ID
+            </Button>
           }
         >
           <LabeledList>
             <LabeledList.Item label="Name">
               <Input
                 fluid
-                placeholder={userName}
-                value={cachedName}
+                placeholder={placeholderName}
+                value={cardName}
                 maxLength={100}
-                onBlur={(val: string) => act('set_name', { name: val })}
+                onChange={setCardName}
               />
             </LabeledList.Item>
             <LabeledList.Item label="Assignment">
               <Input
                 fluid
-                placeholder="Staff Assistant"
-                value={cachedAssignment}
+                placeholder={placeholderAssignment}
+                value={cardAssignment}
                 maxLength={100}
-                onBlur={(val: string) =>
-                  act('set_assignment', { assignment: val })
-                }
+                onChange={setCardAssignment}
               />
             </LabeledList.Item>
             <LabeledList.Item label="Pronouns">
-              <Button onClick={() => act('set_pronouns')}>
-                {cachedPronouns || 'None'}
+              <Button
+                key={'None'}
+                onClick={() => setCardPronouns(null)}
+                selected={cardPronouns === null}
+              >
+                None
               </Button>
-              {cachedPronouns && (
-                <Button onClick={() => act('remove_pronouns')} icon="trash" />
-              )}
+              {usablePronouns.map((pronoun) => (
+                <Button
+                  key={pronoun}
+                  onClick={() => setCardPronouns(pronoun)}
+                  selected={cardPronouns === pronoun}
+                >
+                  {pronoun}
+                </Button>
+              ))}
             </LabeledList.Item>
           </LabeledList>
         </Section>
-        <Section
-          title="Card Appearance"
-          buttons={
-            <Button.Checkbox
-              checked={cachedKeepIcon}
-              tooltip="Maintains the card's icon if its job is changed in an ID computer."
-              onClick={() => act('toggle_keep_icon')}
-            >
-              Keep icon?
-            </Button.Checkbox>
-          }
-        >
-          {cardAppearances.map((icon) => (
+        <Section title="Card Appearance">
+          {cardStyles.map((style) => (
             <Button
-              key={icon.state}
-              onClick={() => act('set_appearance', { appearance: icon.state })}
-              selected={icon.state === cachedAppearance}
+              key={style.state}
+              onClick={() =>
+                setCardStyle(
+                  cardStyles.find((x) => x.state === style.state) || null,
+                )
+              }
+              selected={style.state === cardStyle?.state}
             >
               <Image
                 verticalAlign="middle"
@@ -111,9 +130,9 @@ export const AgentCard = () => {
                 mr="0.5rem"
                 height="24px"
                 width="24px"
-                src={`data:image/png;base64,${icon.icon}`}
+                src={style.refIcon}
               />
-              {icon.name}
+              {style.name}
             </Button>
           ))}
         </Section>
@@ -122,8 +141,17 @@ export const AgentCard = () => {
             icon="id-card"
             fluid
             tooltip="You can only do this once!"
-            onClick={() => act('do_forge')}
-            disabled={!canForge}
+            onClick={() =>
+              act('forge', {
+                cardName: cardName?.length ? cardName : placeholderName,
+                cardAssignment: cardAssignment?.length
+                  ? cardAssignment
+                  : placeholderAssignment,
+                cardStyle,
+                cardPronouns,
+              })
+            }
+            disabled={cardStyle === null}
           >
             Forge ID
           </Button.Confirm>
