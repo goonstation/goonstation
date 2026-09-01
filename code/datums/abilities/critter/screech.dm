@@ -8,12 +8,12 @@
 	var/borg_stun = 30
 	cast(mob/target)
 		if (!holder)
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 
 		var/mob/living/M = holder.owner
 
 		if (!M)
-			return 1
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
 		. = ..()
 
 		var/obj/itemspecialeffect/screech/screech_effect = new /obj/itemspecialeffect/screech
