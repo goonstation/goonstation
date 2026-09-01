@@ -35,6 +35,7 @@
 /obj/precursor_puzzle/innervator{
 	vision_description = "Flickers in the vast dark roar to life, return to nothing. The pillar watches. The pillar waits."
 	},
+/obj/map/light/cyan/menhir,
 /turf/unsimulated/floor/setpieces/bluefloor{
 	dir = 1
 	},
@@ -78,7 +79,7 @@
 /turf/unsimulated/floor/void/timewarp,
 /area/unspace/enigma)
 "u" = (
-/obj/map/light/dimred,
+/obj/map/light/cyan/menhir,
 /turf/unsimulated/floor/setpieces/bluefloor{
 	dir = 1
 	},
@@ -123,14 +124,8 @@
 	dir = 4
 	},
 /area/unspace/enigma)
-"F" = (
-/obj/precursor_puzzle/shield{
-	name = "rydberg-matter beam"
-	},
-/turf/space,
-/area/unspace/enigma)
 "H" = (
-/obj/map/light/dimred,
+/obj/map/light/cyan/menhir,
 /turf/unsimulated/floor/void,
 /area/unspace/enigma)
 "I" = (
@@ -142,10 +137,6 @@
 /area/unspace/enigma)
 "K" = (
 /obj/map/light/cyan/menhir,
-/turf/unsimulated/floor/setpieces/bluefloor,
-/area/unspace/enigma)
-"L" = (
-/obj/map/light/dimred,
 /turf/unsimulated/floor/setpieces/bluefloor,
 /area/unspace/enigma)
 "M" = (
@@ -571,7 +562,7 @@ c
 c
 c
 g
-L
+K
 c
 "}
 (16,1,1) = {"
@@ -585,7 +576,7 @@ q
 c
 c
 c
-A
+M
 c
 g
 g
@@ -610,7 +601,7 @@ c
 c
 c
 c
-M
+A
 c
 A
 A
@@ -619,14 +610,14 @@ c
 g
 c
 c
-L
+K
 c
 c
 i
 "}
 (18,1,1) = {"
 i
-F
+J
 c
 c
 c
@@ -646,39 +637,39 @@ g
 c
 c
 c
-F
+J
 i
 "}
 (19,1,1) = {"
 i
-F
 J
-F
+J
+J
 p
 c
 c
 c
-L
+K
 g
 g
 g
 g
 g
-L
+K
 c
 c
 c
 p
-F
 J
-F
+J
+J
 i
 "}
 (20,1,1) = {"
 i
-F
 J
-F
+J
+J
 J
 J
 J
@@ -694,16 +685,16 @@ c
 J
 J
 J
-F
 J
-F
+J
+J
 i
 "}
 (21,1,1) = {"
 i
-F
 J
-F
+J
+J
 J
 J
 J
@@ -719,16 +710,16 @@ w
 J
 J
 J
-F
 J
-F
+J
+J
 i
 "}
 (22,1,1) = {"
 i
-F
 J
-F
+J
+J
 J
 J
 J
@@ -744,41 +735,41 @@ N
 J
 J
 J
-F
 J
-F
+J
+J
 i
 "}
 (23,1,1) = {"
 i
-F
 J
-F
+J
+J
 J
 J
 J
 N
-K
 g
 g
 g
 g
 g
-K
+g
+g
 N
 J
 I
 J
-F
 J
-F
+J
+J
 i
 "}
 (24,1,1) = {"
 c
 c
 J
-F
+J
 J
 J
 J
@@ -794,7 +785,7 @@ c
 J
 J
 J
-F
+J
 J
 c
 c
@@ -803,7 +794,6 @@ c
 a
 c
 c
-F
 J
 J
 J
@@ -819,7 +809,8 @@ J
 J
 J
 J
-F
+J
+J
 c
 c
 a
@@ -828,7 +819,6 @@ a
 a
 a
 c
-F
 J
 J
 J
@@ -844,7 +834,8 @@ J
 J
 J
 J
-F
+J
+J
 c
 a
 a
@@ -853,23 +844,23 @@ a
 a
 a
 c
-F
-c
-J
-J
-J
-J
-J
-J
-J
-J
-J
-J
-J
-J
 J
 c
-F
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+J
+c
+J
 c
 a
 a
