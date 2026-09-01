@@ -311,6 +311,11 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		hammer_cocked = FALSE
 		src.UpdateIcon()
 
+	shoot_point_blank(atom/target, mob/user, second_shot = 0)
+		. = ..()
+		hammer_cocked = FALSE
+		src.UpdateIcon()
+
 	attack_self(mob/user as mob)
 		..()	//burst shot has a slight spread.
 		if (hammer_cocked)

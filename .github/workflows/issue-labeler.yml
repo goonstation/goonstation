@@ -1,0 +1,45 @@
+name: Issue Labels
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: read
+  issues: write
+jobs:
+  label:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/github-script@v8
+        with:
+          script: |
+            const fs = require("fs");
+            const keyLabelerConfig = fs.readFileSync(".github/keylabeler.yml", "utf8");
+            const mappings = keyLabelerConfig
+              .split("\n")
+              .map((line) => line.match(/^    (".*"):\s+(\S+)\s*$/))
+              .filter(Boolean)
+              .map(([, keyword, label]) => [JSON.parse(keyword), label]);
+
+            const issueBody = context.payload.issue.body?.toLowerCase() ?? "";
+            const labels = [...new Set(
+              mappings
+                .filter(([keyword]) => issueBody.includes(keyword.toLowerCase()))
+                .map(([, label]) => label),
+            )];
+
+            if (labels.length > 0) {
+              await github.rest.issues.addLabels({
+                ...context.repo,
+                issue_number: context.issue.number,
+                labels,
+              });
+            }
+
+            await github.rest.issues.update({
+              ...context.repo,
+              issue_number: context.issue.number,
+              type: "Bug",
+            });

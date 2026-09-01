@@ -55,6 +55,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define NO_ADMIN_SPEECH_MODULES // Loads the admin speech and listen module trees without any modules.
 //#define NO_PREGAME_HTML // Don't spawn the HTML pregame browser lobby screen
 //#define I_HATE_WAITING_FOR_GENES // Marks nearly all genes as researched, gives chromosomes/materials/autodecryptors, increases gene storage cap, and removes time/cost limitations on the gene console
+//#define ROCK_DOWN_TO_ELECTRIC_AVENUE // Fills up all APCs and SMESes on the station Z when the round starts
 
 //#define STOP_DISTRACTING_ME //All of the below
 
