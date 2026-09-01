@@ -291,7 +291,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A soup of indeterminable type."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "gruel"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	bites_left = 6
 	fill_amt = 3
 	heal_amt = 1
@@ -322,7 +322,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "tomato soup"
 	desc = "A rich and creamy soup made from tomatoes."
 	icon_state = "tomsoup"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	bites_left = 6
 	heal_amt = 2
 	food_effects = list("food_warm","food_refreshed")
@@ -332,7 +332,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "guacamole"
 	desc = "A spiced paste made of smashed avocados."
 	icon_state = "guacamole"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	bites_left = 6
 	heal_amt = 2
 	food_color = "#007B1C"
@@ -343,7 +343,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "mint chutney"
 	desc = "A flavorful paste that smells strongly of mint."
 	icon_state = "mintchutney"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	bites_left = 6
 	heal_amt = 2
 	food_color = "#2DAB1F"
@@ -354,7 +354,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "refried beans"
 	desc = "A dish made of mashed beans cooked with lard. It has bits of bacon in it."
 	icon_state = "refriedbeans"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	bites_left = 6
 	heal_amt = 2
 	food_color = "#AA7777"
@@ -365,7 +365,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "chili con carne"
 	desc = "Meat pieces in a spicy pepper sauce. Delicious."
 	icon_state = "tomsoup"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	bites_left = 6
 	heal_amt = 2
 	initial_reagents = list("capsaicin"=20)
@@ -376,7 +376,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "chili con queso"
 	desc = "Spicy mexican cheese stuff."
 	icon_state = "custard"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	bites_left = 6
 	heal_amt = 2
 	food_color = "#FF8C00"
@@ -387,7 +387,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "chili con flagration"
 	desc = "God damn. This stuff smells strong."
 	icon_state = "tomsoup"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	bites_left = 6
 	heal_amt = 2
 	initial_reagents = list("capsaicin"=50)
@@ -397,7 +397,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "El Diablo"
 	desc = "You feel overheated just looking at this dish."
 	icon_state = "hotchili"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	bites_left = 2
 	heal_amt = 6
 	initial_reagents = list("el_diablo"=90)
@@ -407,7 +407,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "gruel"
 	desc = "Asking if you can have more is probably ill-advised."
 	icon_state = "gruel"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	bites_left = 6
 	heal_amt = 0
 	food_color = "#808080"
@@ -421,7 +421,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "porridge"
 	desc = "Mushy rice. Basically."
 	icon_state = "porridge"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	bites_left = 6
 	heal_amt = 1
 	food_color = "#E1E1E1"
@@ -432,7 +432,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "oatmeal"
 	desc = "Sometimes the station gets the fun kind with the little candy dinosaur eggs. This isn't the fun kind."
 	icon_state = "oatmeal-plain"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	bites_left = 6
 	heal_amt = 2
 	var/randomized = 1
@@ -459,7 +459,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name= "cream of mushroom"
 	desc = "A thick soup that can be made from various mushrooms."
 	icon_state = "gruel"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	bites_left = 6
 	heal_amt = 2
 	initial_reagents = list("cream"=10)
@@ -469,7 +469,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name= "cream of mushroom"
 	desc = "A thick soup that can be made from various mushrooms."
 	icon_state = "gruel"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	bites_left = 6
 	heal_amt = 2
 	initial_reagents = list("amanitin"=30, "cream"=10)
@@ -479,7 +479,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name= "cream of mushroom"
 	desc = "A thick soup that can be made from various mushrooms."
 	icon_state = "gruel"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	bites_left = 6
 	heal_amt = 2
 	initial_reagents = list("psilocybin"=20,"LSD"=20,"space_drugs"=20, "cream"=10)
@@ -490,7 +490,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A meal of mostly plants. Good for healthy eating."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "salad"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::SPOON
 	fill_amt = 2
 	bites_left = 4
 	heal_amt = 2
@@ -730,7 +730,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	fill_amt = 3
 	bites_left = 4
 	heal_amt = 4
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	food_effects = list("food_energized_big")
 	meal_time_flags = MEAL_TIME_BREAKFAST
 
@@ -751,7 +751,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "swedish meatballs"
 	desc = "It's even got a little rice-paper swedish flag in it. How cute."
 	icon_state = "swede_mball"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	fill_amt = 3
 	bites_left = 6
 	heal_amt = 2
@@ -923,7 +923,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "spag-plain"
 	var/random_name = TRUE
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	fill_amt = 3
 	heal_amt = 1
 	bites_left = 3
@@ -976,7 +976,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "boneless spaghetti"
 	desc = "Eh, this isn't very good at all..."
 	icon_state = "spag-dish"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	heal_amt = 1
 	bites_left = 5
 	initial_volume = 60
@@ -995,7 +995,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "spaghetti with tomato sauce"
 	desc = "Eh, the sauce tastes pretty bland..."
 	icon_state = "spag-dish"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	heal_amt = 3
 	bites_left = 5
 	food_effects = list("food_energized","food_brute","food_burn")
@@ -1032,7 +1032,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "Pasta in a creamy, cheesy sauce."
 	icon_state = "spag-alfredo"
 	random_name = FALSE
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	heal_amt = 3
 	bites_left = 5
 	food_effects = list("food_energized","food_brute","food_burn")
@@ -1042,7 +1042,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "spaghetti arrabbiata"
 	desc = "Quite spicy!"
 	icon_state = "spag-dish-spicy"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	heal_amt = 1
 	bites_left = 5
 	initial_volume = 60
@@ -1076,7 +1076,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "spaghetti and meatballs"
 	desc = "That's better!"
 	icon_state = "spag-meatball"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	heal_amt = 2
 	bites_left = 5
 	initial_volume = 10
@@ -1093,7 +1093,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "Spaghetti AND fried chicken? You must be dreaming."
 	icon_state = "spag-chickenparm"
 	random_name = FALSE
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	heal_amt = 2
 	bites_left = 5
 	initial_volume = 10
@@ -1106,7 +1106,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "Fettucine alfredo with grilled chicken on top."
 	icon_state = "spag-c-alfredo"
 	random_name = FALSE
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	heal_amt = 2
 	bites_left = 5
 	initial_volume = 10
@@ -1119,7 +1119,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "Layers of saucy, cheesy goodness."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "lasagna"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	heal_amt = 2
 	bites_left = 5
 	initial_volume = 10
@@ -1131,7 +1131,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "pizza-ghetti"
 	desc = "This is just- It's pizza and spaghetti on a plate? They're not even touching. What gives?"
 	icon_state = "pizzaghetti"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	heal_amt = 1
 	bites_left = 5
 	initial_volume = 50
@@ -2002,7 +2002,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	fill_amt = 3
 	bites_left = 3
 	heal_amt = 4
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	food_color = "#FFCC00"
 	initial_volume = 10
 	initial_reagents = list("cholesterol"=1)
@@ -2053,7 +2053,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	fill_amt = 2
 	bites_left = 5
 	heal_amt = 1
-	required_utensil = REQUIRED_UTENSIL_FORK_OR_SPOON
+	required_utensils = FOOD::UTENSIL::FORK | FOOD::UTENSIL::SPOON
 	food_color = "#FFFFFF"
 	initial_volume = 50
 	initial_reagents = list("mashedpotatoes"=25)
@@ -2067,7 +2067,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	fill_amt = 2
 	bites_left = 5
 	heal_amt = 1
-	required_utensil = REQUIRED_UTENSIL_FORK_OR_SPOON
+	required_utensils = FOOD::UTENSIL::FORK | FOOD::UTENSIL::SPOON
 	food_color = "#FF6699"
 	food_effects = list("food_hp_up_big")
 
@@ -2091,7 +2091,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	fill_amt = 4
 	bites_left = 5
 	heal_amt = 1
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	initial_volume = 50
 	initial_reagents = list("cholesterol"=2)
 	food_effects = list("food_hp_up_big")
@@ -2316,7 +2316,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A meal of mostly egg. Good for eating eggs."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "eggsalad"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	fill_amt = 2
 	bites_left = 4
 	heal_amt = 2
@@ -2328,7 +2328,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "haggis"
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "haggis"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	var/isbutt = 0
 	fill_amt = 4
 	bites_left = 6
@@ -2526,7 +2526,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A filling plate of rice and beans."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "riceandbeans"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	fill_amt = 3
 	bites_left = 6
 	heal_amt = 2
@@ -2537,7 +2537,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A plate of fried rice. There's even an egg!"
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "friedrice"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	fill_amt = 3
 	bites_left = 6
 	heal_amt = 3
@@ -2549,7 +2549,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "The ketchup drawing looks like George."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "omurice"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	fill_amt = 3
 	bites_left = 4
 	heal_amt = 2
@@ -2560,7 +2560,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "Not a sandwich."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "risotto"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	fill_amt = 3
 	bites_left = 6
 	heal_amt = 2
@@ -2788,7 +2788,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "This one wasn't actually cooked in a tandoor, the cylindrical clay oven for which the dish is named. Don't tell."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "tandoorichicken"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	fill_amt = 3
 	heal_amt = 2
 	bites_left = 4
@@ -2801,7 +2801,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A rich Indian curry full of potatoes, carrots, and peas."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "potatocurry"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	fill_amt = 4
 	heal_amt = 2
 	bites_left = 5
@@ -2814,7 +2814,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A creamy Thai curry made with coconut milk, served on a bed of rice."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "coconutcurry"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	fill_amt = 3
 	heal_amt = 2
 	bites_left = 5
@@ -2827,7 +2827,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A sweet-and-spicy curry that expertly balances the tang of pineapple with the heat of the curry powder."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "chickenpapplecurry"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	fill_amt = 4
 	heal_amt = 2
 	bites_left = 5
@@ -2840,7 +2840,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A hearty bowl of real Japanese ramen with a halved boiled egg; not the instant stuff!"
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "ramen"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	fill_amt = 3
 	heal_amt = 2
 	bites_left = 5
@@ -2853,7 +2853,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A bowl of very chewy wheat noodles and fish cake served in a warm, savoury broth."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "udon"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	fill_amt = 3
 	heal_amt = 3
 	bites_left = 5
@@ -2866,7 +2866,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A bowl of very chewy wheat noodles with a halved boiled egg in a fragrant curry broth."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "udon_curry"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	fill_amt = 3
 	heal_amt = 3
 	bites_left = 5
@@ -2879,7 +2879,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A bowl of tender bean curd, onions, and minced meat in a spicy oil suspension."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "mapo_tofu"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	fill_amt = 3
 	heal_amt = 3
 	bites_left = 5
@@ -2892,7 +2892,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A bowl of tender bean curd, onions, and minced synthmeat in a spicy oil suspension."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "mapo_tofu_synth"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	fill_amt = 3
 	heal_amt = 3
 	bites_left = 5
@@ -2937,7 +2937,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "Stewed and caramalized vegetables. Remy not included."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "ratatouille"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	fill_amt = 3
 	heal_amt = 2
 	bites_left = 3
@@ -2948,7 +2948,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "Brain served in gravy. There are some almonds in it, not sure where those came from."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "maghaz"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	fill_amt = 3
 	heal_amt = 3
 	bites_left = 3
@@ -3097,7 +3097,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 	desc = "A bowl of plain cooked rice."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "rice_bowl"
-	required_utensil = REQUIRED_UTENSIL_FORK_OR_SPOON
+	required_utensils = FOOD::UTENSIL::FORK | FOOD::UTENSIL::SPOON
 	food_effects = list("food_energized")
 	bites_left = 5
 	heal_amt = 1
@@ -3107,7 +3107,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 	desc = "A bowl of cooked rice with a raw egg yolk and soy sauce on top. Otherwise known as tamago kake gohan."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "egg_on_rice"
-	required_utensil = REQUIRED_UTENSIL_FORK_OR_SPOON
+	required_utensils = FOOD::UTENSIL::FORK | FOOD::UTENSIL::SPOON
 	food_effects = list("food_energized_big","food_refreshed")
 	bites_left = 5
 	heal_amt = 2
@@ -3118,7 +3118,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 	desc = "A bowl of rice topped with egg and a deep fried meat cutlet. You'll feel like a winner eating this for sure!"
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "katsu_bowl"
-	required_utensil = REQUIRED_UTENSIL_FORK_OR_SPOON
+	required_utensils = FOOD::UTENSIL::FORK | FOOD::UTENSIL::SPOON
 	food_effects = list("food_energized","food_warm","food_brute")
 	bites_left = 5
 	heal_amt = 3
@@ -3128,7 +3128,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 	desc = "A bowl of rice topped with thin slices of sauced meat and onions. This one has an egg yolk on top!"
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "beef_bowl"
-	required_utensil = REQUIRED_UTENSIL_FORK_OR_SPOON
+	required_utensils = FOOD::UTENSIL::FORK | FOOD::UTENSIL::SPOON
 	food_effects = list("food_energized","food_warm","food_brute")
 	bites_left = 5
 	heal_amt = 3
@@ -3138,7 +3138,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 	desc = "Basically just gyūdon but with melted cheese on top of it. Yum!"
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "cheese_beef_bowl"
-	required_utensil = REQUIRED_UTENSIL_FORK_OR_SPOON
+	required_utensils = FOOD::UTENSIL::FORK | FOOD::UTENSIL::SPOON
 	food_effects = list("food_energized_big","food_warm","food_brute")
 	bites_left = 5
 	heal_amt = 3
@@ -3148,7 +3148,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 	desc = "A small bowl of soup made with dashi stock and miso paste."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "miso_soup"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	food_effects = list("food_warm","food_refreshed","food_disease_resist")
 	bites_left = 4
 	heal_amt = 1
@@ -3158,7 +3158,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 	desc = "A Korean dish of rice, grilled meat, vegetables, and gochujang. Served in a hot stone pot!"
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "bibimbap"
-	required_utensil = REQUIRED_UTENSIL_FORK_OR_SPOON
+	required_utensils = FOOD::UTENSIL::FORK | FOOD::UTENSIL::SPOON
 	food_effects = list("food_warm","food_hp_up_big")
 	bites_left = 5
 	heal_amt = 5
@@ -3169,7 +3169,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 	desc = "Japanese curry with rice and a deep fried meat cutlet. A hearty, home-cooked meal."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "katsu_curry"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	food_effects = list("food_warm","food_energized","food_brute")
 	bites_left = 5
 	heal_amt = 3
@@ -3180,7 +3180,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	icon_state = "flan"
 	food_color = "#fac34d"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	bites_left = 3
 	heal_amt = 2
 	initial_reagents = list("sugar" = 10, "vanilla" = 10)
@@ -3218,7 +3218,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dessert_batch)
 	desc = "A small bowl of rich, sweet dulce de leche."
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	icon_state = "dulce_de_leche"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	bites_left = 4
 	initial_reagents = list("dulcedeleche" = 50)
 	meal_time_flags = MEAL_TIME_SNACK
