@@ -1,4 +1,9 @@
 
+(t)tue sep 01 26
+(u)ANNmagedon
+(p)27621
+(e)🎨|C-Sprites
+(+)The medal "Licensed Archaeologist" now has a claimable reward.
 (t)mon aug 31 26
 (u)LeahTheTech
 (p)27694
