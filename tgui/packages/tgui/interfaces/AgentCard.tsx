@@ -17,6 +17,7 @@ interface AgentCardData {
 
   usablePronouns: string[];
   cardStyles: CardStyle[];
+  defaultCardStyle: CardStyle;
 }
 
 interface CardData {
@@ -41,11 +42,14 @@ export const AgentCard = () => {
     equippedId,
     usablePronouns,
     cardStyles,
+    defaultCardStyle,
   } = data;
   const [cardName, setCardName] = useState<string>();
   const [cardAssignment, setCardAssignment] = useState<string>();
   const [cardPronouns, setCardPronouns] = useState<string | null>(null);
-  const [cardStyle, setCardStyle] = useState<CardStyle | null>(null);
+  const [cardStyle, setCardStyle] = useState<CardStyle | null>(
+    defaultCardStyle,
+  );
 
   return (
     <Window width={400} height={365} theme="syndicate">
@@ -54,7 +58,7 @@ export const AgentCard = () => {
           title="Identity"
           buttons={
             <Button
-              icon="undo"
+              icon="id-card"
               tooltip="Sets the appearance of the card to mirror your worn ID."
               color="green"
               disabled={equippedId === null}
@@ -138,7 +142,7 @@ export const AgentCard = () => {
         </Section>
         <Section fontSize="16px" textAlign="center">
           <Button.Confirm
-            icon="id-card"
+            icon="pen"
             fluid
             tooltip="You can only do this once!"
             onClick={() =>

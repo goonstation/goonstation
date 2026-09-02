@@ -344,7 +344,7 @@ TYPEINFO(/obj/item/card/emag)
 	)
 
 	attack_self(mob/user)
-		if (src.registered)
+		if (src.forged)
 			return ..()
 		src.ui_interact(user)
 
@@ -402,18 +402,16 @@ TYPEINFO(/obj/item/card/emag)
 			style["refIcon"] = "\ref['icons/obj/items/card.dmi']?state=[style["state"]]"
 
 		var/list/selectable_pronouns = list()
-		for (var/pn in filtered_concrete_typesof(/datum/pronouns, /proc/pronouns_filter_is_choosable))
-			var/datum/pronouns/P = get_singleton(pn)
-			selectable_pronouns.Add(P.name)
+		for (var/pronoun_type in filtered_concrete_typesof(/datum/pronouns, /proc/pronouns_filter_is_choosable))
+			var/datum/pronouns/pronouns = get_singleton(pronoun_type)
+			selectable_pronouns.Add(pronouns.name)
 
 		. = list(
 			"placeholderAssignment" = "Staff Assistant",
 			"usablePronouns" = selectable_pronouns,
 			"cardStyles" = styles,
+			"defaultCardStyle" = styles[2], // Civilian
 		)
-
-	proc/getCardRefImg(state)
-		return "\ref['icons/obj/items/card.dmi']?state=[state]"
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 		. = ..()
@@ -433,15 +431,15 @@ TYPEINFO(/obj/item/card/emag)
 			if (cardPronouns != null)
 				var/list/choosable = filtered_concrete_typesof(/datum/pronouns, /proc/pronouns_filter_is_choosable)
 				for (var/V in choosable)
-					var/datum/pronouns/PN = get_singleton(V)
-					if (PN?.name == cardPronouns)
-						cardPronouns = PN
+					var/datum/pronouns/pronouns = get_singleton(V)
+					if (pronouns?.name == cardPronouns)
+						cardPronouns = pronouns
 						break
 			src.pronouns = cardPronouns
 			var/list/cardStyle = params["cardStyle"]
 			src.icon_state = cardStyle["state"]
 			src.keep_icon = cardStyle["keepState"] || FALSE
-			src.name = "[src.registered]’s ID Card ([src.assignment])"
+			src.update_name()
 			boutput(ui.user, SPAN_NOTICE("You successfully forge the ID card."))
 			ui.user.playsound_local(ui.user, "sound/machines/printer_press.ogg", 35, FALSE)
 			ui.close(FALSE)
