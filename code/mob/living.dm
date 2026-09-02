@@ -1740,10 +1740,12 @@ TYPEINFO(/mob/living)
 	src.vision.set_scan(1)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_MESONVISION, source)
 	get_image_group(CLIENT_IMAGE_GROUP_MECHCOMP).add_mob(src)
+	get_image_group(CLIENT_IMAGE_GROUP_GEOLOGICAL_ANOMALIES).add_mob(src)
 
 /mob/living/proc/unmeson(atom/source)
 	REMOVE_ATOM_PROPERTY(src, PROP_MOB_MESONVISION, source)
 	get_image_group(CLIENT_IMAGE_GROUP_MECHCOMP).remove_mob(src)
+	get_image_group(CLIENT_IMAGE_GROUP_GEOLOGICAL_ANOMALIES).remove_mob(src)
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if (istype(H.glasses, /obj/item/clothing/glasses/visor))
@@ -1796,13 +1798,14 @@ TYPEINFO(/mob/living)
 			return AM
 	return picked_item
 
-/mob/living/clamp_act()
+/mob/living/clamp_act(mob/clamper, obj/item/clamp)
 	if (isintangible(src))
 		return FALSE
 	src.TakeDamage("All", 10)
 	src.setStatusMin("slowed", 2 SECONDS, 15)
 	src.emote("scream", FALSE)
 	playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_1.ogg', 40, 1)
+	logTheThing(LOG_COMBAT, clamper, "CLAMPS [key_name(src)] with [clamp] at [log_loc(src)]")
 	return TRUE
 
 /mob/living/HealBleeding(amt)

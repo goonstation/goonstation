@@ -16,27 +16,42 @@ This ID is then placed on buttons in your active tile, and doors one tile away i
 	var/do_pair = FALSE
 	color = "#FF9900"
 
-	setup()
-		var/turf/our_spot = get_turf(src)
-		var/pair_id
-		for (var/obj/O in our_spot)
-			if(istype(O,/obj/machinery/door_control) || istype(O,/obj/machinery/r_door_control) || istype(O,/obj/machinery/door/airlock) || istype(O,/obj/machinery/door/poddoor))
-				if(use_area_name)
-					var/area/our_area = get_area(our_spot)
-					O:id = ckey(our_area.name)
-				else if(do_pair)
-					pair_id = "AUTO_[our_spot.x]_[our_spot.y]"
-					O:id = pair_id
-				else
-					O:id = src.id
-			if(istype(O,/obj/machinery/r_door_control)) //refresh identifier
-				O:id_setup()
+	var/list/valid_types = list(
+		/obj/machinery/door_control,
+		/obj/machinery/r_door_control,
+		/obj/machinery/door/airlock,
+		/obj/machinery/door/poddoor,
+	)
 
-		if(do_pair)
-			var/turf/looking_at = get_step(our_spot,src.dir)
-			for(var/obj/O in looking_at)
-				if(istype(O,/obj/machinery/door/airlock) || istype(O,/obj/machinery/door/poddoor))
-					O:id = pair_id
+/obj/mapping_helper/button/setup()
+	var/object_found = FALSE
+	var/turf/T = get_turf(src)
+	var/pair_id = null
+	for (var/obj/O in T)
+		if (!istypes(O, src.valid_types))
+			continue
+
+		if (src.use_area_name)
+			var/area/A = get_area(T)
+			O:id = ckey(A.name)
+
+		else if (src.do_pair)
+			O:id = pair_id = "AUTO_[T.x]_[T.y]"
+
+		else
+			O:id = src.id
+
+		astype(O, /obj/machinery/r_door_control)?.id_setup()
+		object_found = TRUE
+
+	if (src.do_pair)
+		var/turf/looking_at = get_step(T, src.dir)
+		for (var/obj/O in looking_at)
+			if (istype(O, /obj/machinery/door/airlock) || istype(O,/obj/machinery/door/poddoor))
+				O:id = pair_id
+
+	if (!object_found)
+		return "[CI.format_position(src)] could not locate any objects of type [CI.type_list(src.valid_types, " or ")]."
 
 
 /obj/mapping_helper/button/area

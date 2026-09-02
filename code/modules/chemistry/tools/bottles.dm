@@ -27,7 +27,7 @@
 
 	New()
 		. = ..()
-		AddComponent(/datum/component/biodegradable)
+		AddElement(/datum/element/biodegradable)
 
 
 /obj/item/reagent_containers/glass/bottle/epinephrine
@@ -311,7 +311,7 @@
 
 	New()
 		. = ..()
-		AddComponent(/datum/component/biodegradable)
+		AddElement(/datum/element/biodegradable)
 
 /obj/item/reagent_containers/glass/bottle/oil
 	name = "oil bottle"

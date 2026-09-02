@@ -33,11 +33,12 @@
 
 	return src.target.copy_file(depth)
 
-/datum/computer/folder/link/add_file(datum/computer/C)
+/// Add a file to the linked folder and optional driver data
+/datum/computer/folder/link/add_file(datum/computer/C, misc)
 	if (!src.target || (src.target.holder != src.holder))
 		return FALSE
 
-	return src.target.add_file(C)
+	return src.target.add_file(C, misc)
 
 /datum/computer/folder/link/remove_file(datum/computer/C)
 	if (!src.target || (src.target.holder != src.holder))

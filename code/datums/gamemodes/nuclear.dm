@@ -109,17 +109,6 @@ var/global/list/nuke_op_camo_matrix = null
 			"the artifact lab" = list(/area/station/science/artifact),
 			"the robotics lab" = list(/area/station/medical/robotics))
 
-		else if (ismap ("DONUT2"))
-			target_locations = list("the cargo bay (QM)" = list(/area/station/quartermaster/office),
-			"the public market" = list(/area/station/crew_quarters/market),
-			"the stock exchange" = list(/area/station/crew_quarters/stockex),
-			"the chapel" = list(/area/station/chapel/sanctuary),
-			"the bridge" = list(/area/station/bridge),
-			"the crew lounge" = list(/area/station/crew_quarters/quarters),
-			"the main brig area" = list(/area/station/security/brig),
-			"the main station pod bay" = list(/area/station/hangar/main))
-
-
 		else // COG1
 			target_locations = list("the main security room" = list(/area/station/security/main),
 			"the central research sector hub" = list(/area/station/science/lobby),

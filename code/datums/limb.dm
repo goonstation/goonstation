@@ -1075,6 +1075,7 @@
 	var/log_name = "brullbar limbs"
 	var/quality = 0.7
 	var/king = FALSE
+	can_beat_up_robots = TRUE
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
 		if (!holder)
 			return

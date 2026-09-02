@@ -7,39 +7,45 @@
 
 	var/charges = 1
 	var/use_sound = 'sound/machines/chime.ogg'
-	var/atom/movable/the_bomb = null
 
-/obj/item/remote/nuke_summon_remote/attack_self(mob/user as mob)
-	if(charges >= 1)
-		var/turf/T = get_turf(user)
-		if(isnull(the_bomb))
-			try_to_find_the_nuke()
-		if(isnull(the_bomb))
-			boutput(user, SPAN_ALERT("No teleportation target found!"))
-			return
-		if(T.z != Z_LEVEL_STATION)
-			boutput(user, SPAN_ALERT("You cannot summon the bomb here!"))
-			return
-		if(the_bomb.anchored)
-			boutput(user, SPAN_ALERT("\The [the_bomb] is currently secured to the floor and cannot be teleported."))
-			return
-		tele_the_bomb(user)
-	else
+/obj/item/remote/nuke_summon_remote/attack_self(mob/user)
+	if (src.charges < 1)
 		boutput(user, SPAN_ALERT("The [src] is out of charge and can't be used again!"))
+		return
+
+	if (!istrainedsyndie(user))
+		boutput(user, SPAN_ALERT("The [src] beeps angrily!"))
+		return
+
+	var/turf/T = get_turf(user)
+	if (T.z != Z_LEVEL_STATION)
+		boutput(user, SPAN_ALERT("You cannot summon the bomb here!"))
+		return
+
+	var/obj/machinery/nuclearbomb/bomb = src.try_to_find_the_nuke()
+	if (isnull(bomb))
+		boutput(user, SPAN_ALERT("No teleportation target found!"))
+		return
+
+	if (bomb.anchored)
+		boutput(user, SPAN_ALERT("\The [bomb] is currently secured to the floor and cannot be teleported."))
+		return
+
+	src.tele_the_bomb(user, bomb)
 
 /obj/item/remote/nuke_summon_remote/proc/try_to_find_the_nuke()
-	if(ticker.mode.type == /datum/game_mode/nuclear)
-		var/datum/game_mode/nuclear/mode = ticker.mode
-		the_bomb = mode.the_bomb
-	if(isnull(the_bomb))
-		for_by_tcl(nuke, /obj/machinery/nuclearbomb)
-			the_bomb = nuke
-			break
+	var/obj/machinery/nuclearbomb/the_bomb = astype(ticker.mode, /datum/game_mode/nuclear)?.the_bomb
+	if (!isnull(the_bomb))
+		return the_bomb
 
-/obj/item/remote/nuke_summon_remote/proc/tele_the_bomb(mob/user as mob)
-	showswirl(the_bomb)
-	the_bomb.set_loc(get_turf(src))
-	showswirl(src)
-	src.visible_message(SPAN_ALERT("[user] has summoned the [the_bomb]!"))
+	for_by_tcl(bomb, /obj/machinery/nuclearbomb)
+		return bomb
+
+/obj/item/remote/nuke_summon_remote/proc/tele_the_bomb(mob/user, obj/machinery/nuclearbomb/bomb)
+	global.showswirl(bomb)
+	bomb.set_loc(get_turf(src))
+	global.showswirl(src)
+
+	src.visible_message(SPAN_ALERT("[user] has summoned the [bomb]!"))
 	src.charges -= 1
 	playsound(src.loc, use_sound, 70, 1)

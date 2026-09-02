@@ -978,6 +978,11 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	item_state = "caphat"
 	item_function_flags = IMMUNE_TO_ACID
 
+/obj/item/clothing/head/safari/artsci
+	icon_state = "safari-artifact"
+	name = "xenoarchaeologist hat"
+	desc = "This hat won't actually help you a lot given most space ruins are in... space."
+
 /obj/item/clothing/mask/skull
 	name = "skull mask"
 	desc = "A spooky skull mask. You're getting the heebie-jeebies just looking at it!"

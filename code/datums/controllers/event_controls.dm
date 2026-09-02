@@ -18,6 +18,22 @@ var/datum/event_controller/random_events
 	var/minor_events_enabled = TRUE
 	var/minor_event_cycle_count = 0
 
+#ifdef MAP_OVERRIDE_MENHIR
+	var/list/menhir_events = list()
+	var/menhir_events_begin = 8 MINUTES // 8m
+	var/time_between_menhir_events_lower = 7 MINUTES
+	var/time_between_menhir_events_upper = 10 MINUTES
+	var/menhir_events_enabled = TRUE
+	var/menhir_event_cycle_count = 0
+	///Room event has certain possibilities that will guarantee a room's spawn next cycle if an eligible space remains
+	var/list/menhir_special_rooms = list()
+	var/special_room_list_built = FALSE
+	var/datum/random_event/menhir/room/the_room_event = null
+
+	var/menhir_event_timer = 0
+	var/next_menhir_event = 0
+#endif
+
 	var/list/antag_spawn_events = list()
 #ifdef RP_MODE
 	var/alive_antags_threshold = 0.04
@@ -68,6 +84,13 @@ var/datum/event_controller/random_events
 			var/datum/random_event/RE = new X
 			minor_events += RE
 
+#ifdef MAP_OVERRIDE_MENHIR
+		for (var/X in concrete_typesof(/datum/random_event/menhir))
+			var/datum/random_event/RE = new X
+			menhir_events += RE
+			if(istype(RE,/datum/random_event/menhir/room)) the_room_event = RE
+#endif
+
 		for (var/X in concrete_typesof(/datum/random_event/special))
 			var/datum/random_event/RE = new X
 			special_events += RE
@@ -105,6 +128,9 @@ var/datum/event_controller/random_events
 		var/list/weights = list()
 		for (var/datum/random_event/RE in event_bank)
 			if (RE.is_event_available( ignore_time_lock = (source=="spawn_antag") ))
+#ifdef MAP_OVERRIDE_MENHIR
+				if(istype(RE,/datum/random_event/menhir/room)) RE:update_weight()
+#endif
 				eligible += RE
 				weights += RE.weight
 		if (length(eligible) > 0)
@@ -203,7 +229,28 @@ var/datum/event_controller/random_events
 		"nextEvent" = src.next_minor_event,
 		"eventList" = minorEventData
 	))
-
+#ifdef MAP_OVERRIDE_MENHIR
+	var/list/menhirEventData = list()
+	for(RE in src.menhir_events)
+		menhirEventData += list(list(
+			"byondRef" = ref(RE),
+			"name" = RE.name,
+			"description" = "Foo",//RE.description,
+			"customizable" = RE.customization_available,
+			"alwaysCustom" = RE.always_custom,
+			"available" = RE.is_event_available(),
+			"enabled" =  !RE.disabled
+		))
+	.["eventData"] += list(list(
+		"name" = "menhir",
+		"enabled" = src.menhir_events_enabled,
+		"startTime" = src.menhir_events_begin,
+		"delayLow" = src.time_between_menhir_events_lower,
+		"delayHigh" = src.time_between_menhir_events_upper,
+		"nextEvent" = src.next_menhir_event,
+		"eventList" = menhirEventData
+	))
+#endif
 	var/list/specialEventData = list()
 	for(RE in src.special_events)
 		specialEventData += list(list(
@@ -309,6 +356,10 @@ var/datum/event_controller/random_events
 				queue_string = "major"
 			else if(RE in minor_events )
 				queue_string = "minor"
+#ifdef MAP_OVERRIDE_MENHIR
+			else if(RE in menhir_events )
+				queue_string = "menhir"
+#endif
 			else if(RE in special_events )
 				queue_string = "special_events"
 			else if(RE in start_events )
@@ -376,6 +427,23 @@ var/datum/event_controller/random_events
 							src.next_minor_event = params["new_data"]
 						else
 							. = FALSE
+#ifdef MAP_OVERRIDE_MENHIR
+				if("menhir")
+					. = TRUE
+					switch(params["name"])
+						if("toggle_category")
+							src.menhir_events_enabled = !src.menhir_events_enabled
+						if("startTime")
+							src.menhir_events_begin = params["new_data"]
+						if("delayLow")
+							src.time_between_menhir_events_lower = params["new_data"]
+						if("delayHigh")
+							src.time_between_menhir_events_upper = params["new_data"]
+						if("nextEvent")
+							src.next_menhir_event = params["new_data"]
+						else
+							. = FALSE
+#endif
 				else
 					. = FALSE
 

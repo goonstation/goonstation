@@ -22,6 +22,8 @@
 			src.ArtifactSetup()
 
 	disposing()
+		if (istype(src.artifact, /datum/artifact))
+			src.ArtifactDeactivated()
 		artifact_controls.artifacts -= src
 		..()
 

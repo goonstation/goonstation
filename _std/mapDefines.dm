@@ -31,8 +31,6 @@
 #elif defined(MAP_OVERRIDE_COGMAP2)
 #define MAPSIZE_LARGE 1
 
-#elif defined(MAP_OVERRIDE_DONUT2)
-
 #elif defined(MAP_OVERRIDE_DONUT3)
 #define MAPSIZE_LARGE 1
 

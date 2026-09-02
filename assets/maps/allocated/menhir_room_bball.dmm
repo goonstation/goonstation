@@ -1,0 +1,915 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ah" = (
+/turf/unsimulated/floor{
+	icon_state = "0,4"
+	},
+/area/unspace/bball)
+"ax" = (
+/turf/unsimulated/floor{
+	icon_state = "0,6"
+	},
+/area/unspace/bball)
+"bm" = (
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/unspace/bball)
+"bu" = (
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/floor/stairs/wide,
+/area/unspace/bball)
+"dc" = (
+/obj/landmark/menhir/room{
+	tag = "menhir_room_bball"
+	},
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/bball)
+"dr" = (
+/turf/unsimulated/floor,
+/area/unspace/bball)
+"dN" = (
+/turf/unsimulated/floor{
+	icon_state = "2,4"
+	},
+/area/unspace/bball)
+"em" = (
+/obj/decal/stage_edge/alt,
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/floor{
+	icon_state = "0,7"
+	},
+/area/unspace/bball)
+"fB" = (
+/turf/unsimulated/floor{
+	icon_state = "c14"
+	},
+/area/unspace/bball)
+"gx" = (
+/turf/unsimulated/floor{
+	icon_state = "1,0"
+	},
+/area/unspace/bball)
+"gz" = (
+/turf/unsimulated/floor{
+	icon_state = "c9"
+	},
+/area/unspace/bball)
+"id" = (
+/obj/decal/stage_edge/alt,
+/turf/unsimulated/floor{
+	icon_state = "0,6"
+	},
+/area/unspace/bball)
+"iz" = (
+/obj/decal/stage_edge/alt,
+/obj/stool/bench/blue/auto,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/bball)
+"iV" = (
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/floor{
+	icon_state = "c3"
+	},
+/area/unspace/bball)
+"jz" = (
+/turf/unsimulated/floor{
+	dir = 1;
+	icon_state = "c15"
+	},
+/area/unspace/bball)
+"jH" = (
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/floor{
+	icon_state = "c6"
+	},
+/area/unspace/bball)
+"kt" = (
+/turf/unsimulated/floor{
+	icon_state = "3,5"
+	},
+/area/unspace/bball)
+"kG" = (
+/turf/unsimulated/floor/void/timewarp,
+/area/unspace/bball)
+"le" = (
+/turf/unsimulated/floor{
+	icon_state = "1,6"
+	},
+/area/unspace/bball)
+"lQ" = (
+/turf/unsimulated/floor{
+	icon_state = "3,2"
+	},
+/area/unspace/bball)
+"mv" = (
+/turf/unsimulated/floor{
+	icon_state = "c1"
+	},
+/area/unspace/bball)
+"mM" = (
+/turf/unsimulated/floor{
+	icon_state = "c12"
+	},
+/area/unspace/bball)
+"nd" = (
+/turf/unsimulated/floor/stairs/wide/other,
+/area/unspace/bball)
+"nm" = (
+/turf/unsimulated/floor{
+	icon_state = "2,0"
+	},
+/area/unspace/bball)
+"nq" = (
+/turf/unsimulated/floor{
+	icon_state = "1,3"
+	},
+/area/unspace/bball)
+"nr" = (
+/turf/unsimulated/floor{
+	icon_state = "3,4"
+	},
+/area/unspace/bball)
+"ny" = (
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/unspace/bball)
+"oa" = (
+/turf/unsimulated/floor{
+	icon_state = "2,2"
+	},
+/area/unspace/bball)
+"oI" = (
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/bball)
+"pg" = (
+/obj/item/bballbasket/mounted{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "c13"
+	},
+/area/unspace/bball)
+"qn" = (
+/turf/unsimulated/floor{
+	icon_state = "c4"
+	},
+/area/unspace/bball)
+"ro" = (
+/obj/decal/stage_edge/alt,
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/floor{
+	icon_state = "c23"
+	},
+/area/unspace/bball)
+"rq" = (
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/floor{
+	icon_state = "1,2"
+	},
+/area/unspace/bball)
+"sC" = (
+/turf/unsimulated/floor{
+	icon_state = "c5"
+	},
+/area/unspace/bball)
+"sF" = (
+/turf/unsimulated/floor{
+	icon_state = "2,3"
+	},
+/area/unspace/bball)
+"ta" = (
+/turf/unsimulated/floor{
+	icon_state = "c8"
+	},
+/area/unspace/bball)
+"ui" = (
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/floor{
+	icon_state = "0,0"
+	},
+/area/unspace/bball)
+"ur" = (
+/turf/unsimulated/floor{
+	icon_state = "c20"
+	},
+/area/unspace/bball)
+"uS" = (
+/turf/unsimulated/floor/stairs/wide,
+/area/unspace/bball)
+"vi" = (
+/turf/unsimulated/floor{
+	icon_state = "3,3"
+	},
+/area/unspace/bball)
+"yd" = (
+/turf/unsimulated/floor{
+	icon_state = "c18"
+	},
+/area/unspace/bball)
+"zQ" = (
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/bball)
+"Ae" = (
+/turf/unsimulated/floor{
+	icon_state = "c2"
+	},
+/area/unspace/bball)
+"AO" = (
+/turf/unsimulated/wall/auto/adventure/icemooninterior,
+/area/unspace/bball)
+"Bb" = (
+/turf/unsimulated/floor{
+	icon_state = "c16"
+	},
+/area/unspace/bball)
+"Bu" = (
+/obj/decal/stage_edge/alt,
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/floor{
+	icon_state = "0,6"
+	},
+/area/unspace/bball)
+"BL" = (
+/turf/unsimulated/floor{
+	icon_state = "1,4"
+	},
+/area/unspace/bball)
+"Cy" = (
+/obj/rack/precursor,
+/obj/item/basketball{
+	pixel_y = 8
+	},
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/bball)
+"Da" = (
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/floor{
+	icon_state = "0,6"
+	},
+/area/unspace/bball)
+"FN" = (
+/turf/unsimulated/floor{
+	icon_state = "c17"
+	},
+/area/unspace/bball)
+"Gn" = (
+/obj/rack/precursor,
+/obj/item/clothing/under/jersey/random{
+	pixel_y = 8
+	},
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/bball)
+"Jq" = (
+/turf/unsimulated/floor/void,
+/area/unspace/bball)
+"KY" = (
+/obj/stool/bench/auto,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/bball)
+"Mp" = (
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/bball)
+"NF" = (
+/turf/unsimulated/floor{
+	icon_state = "2,1"
+	},
+/area/unspace/bball)
+"Or" = (
+/obj/item/bballbasket/mounted{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon_state = "0,3"
+	},
+/area/unspace/bball)
+"RJ" = (
+/obj/decal/stage_edge/alt,
+/turf/unsimulated/floor{
+	icon_state = "1,7"
+	},
+/area/unspace/bball)
+"Sc" = (
+/turf/unsimulated/floor{
+	icon_state = "0,2"
+	},
+/area/unspace/bball)
+"SL" = (
+/obj/decal/stage_edge/alt,
+/turf/unsimulated/floor{
+	icon_state = "c22"
+	},
+/area/unspace/bball)
+"SN" = (
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/floor{
+	icon_state = "c19"
+	},
+/area/unspace/bball)
+"SY" = (
+/turf/unsimulated/floor{
+	icon_state = "c11"
+	},
+/area/unspace/bball)
+"Tx" = (
+/turf/unsimulated/floor{
+	icon_state = "c21"
+	},
+/area/unspace/bball)
+"Up" = (
+/obj/rack/precursor,
+/obj/item/reagent_containers/food/snacks/cube{
+	pixel_y = 10;
+	pixel_x = 1
+	},
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/bball)
+"VD" = (
+/turf/unsimulated/floor{
+	icon_state = "2,6"
+	},
+/area/unspace/bball)
+"WL" = (
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/bball)
+"ZY" = (
+/turf/unsimulated/floor{
+	icon_state = "2,5"
+	},
+/area/unspace/bball)
+
+(1,1,1) = {"
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+Jq
+Jq
+Jq
+Jq
+AO
+AO
+AO
+AO
+AO
+AO
+AO
+AO
+AO
+Jq
+"}
+(2,1,1) = {"
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+Jq
+AO
+AO
+AO
+AO
+ny
+AO
+ny
+AO
+ny
+AO
+ny
+AO
+AO
+"}
+(3,1,1) = {"
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+Jq
+AO
+KY
+iz
+em
+ax
+ax
+ah
+Or
+Sc
+ax
+ui
+zQ
+AO
+"}
+(4,1,1) = {"
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+Jq
+AO
+KY
+iz
+RJ
+le
+Da
+BL
+nq
+rq
+ax
+gx
+AO
+AO
+"}
+(5,1,1) = {"
+Jq
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+Jq
+Jq
+AO
+KY
+iz
+id
+VD
+ZY
+dN
+sF
+oa
+NF
+nm
+zQ
+AO
+"}
+(6,1,1) = {"
+Jq
+Jq
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+Jq
+Jq
+Jq
+AO
+KY
+iz
+Bu
+ax
+kt
+nr
+vi
+lQ
+ax
+Da
+AO
+AO
+"}
+(7,1,1) = {"
+Jq
+Jq
+Jq
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+Jq
+AO
+AO
+AO
+AO
+KY
+iz
+id
+ax
+Da
+ax
+ax
+Da
+ax
+ax
+zQ
+AO
+"}
+(8,1,1) = {"
+Jq
+Jq
+Jq
+Jq
+kG
+kG
+kG
+kG
+kG
+kG
+kG
+AO
+AO
+AO
+ny
+bm
+AO
+KY
+iz
+id
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+AO
+AO
+"}
+(9,1,1) = {"
+Jq
+Jq
+Jq
+Jq
+Jq
+kG
+kG
+kG
+kG
+kG
+Jq
+AO
+oI
+zQ
+Mp
+dr
+dr
+uS
+uS
+bu
+ax
+ax
+ax
+ax
+ax
+ax
+Da
+Cy
+AO
+"}
+(10,1,1) = {"
+Jq
+Jq
+Jq
+Jq
+Jq
+AO
+kG
+kG
+kG
+AO
+Jq
+AO
+Mp
+zQ
+Mp
+dr
+dr
+nd
+nd
+nd
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+Up
+AO
+"}
+(11,1,1) = {"
+Jq
+Jq
+Jq
+Jq
+Jq
+AO
+AO
+dc
+AO
+AO
+Jq
+AO
+Mp
+AO
+ny
+bm
+AO
+KY
+iz
+id
+ax
+Da
+ax
+ax
+Da
+ax
+ax
+AO
+AO
+"}
+(12,1,1) = {"
+Jq
+Jq
+Jq
+Jq
+Jq
+Jq
+AO
+ny
+AO
+Jq
+AO
+AO
+Mp
+AO
+AO
+AO
+AO
+KY
+iz
+id
+ax
+ax
+ax
+ax
+ax
+ax
+ax
+zQ
+AO
+"}
+(13,1,1) = {"
+Jq
+Jq
+Jq
+Jq
+Jq
+Jq
+AO
+oI
+AO
+Jq
+AO
+Gn
+oI
+Gn
+AO
+Jq
+AO
+KY
+iz
+Bu
+ax
+yd
+fB
+gz
+sC
+ax
+Da
+AO
+AO
+"}
+(14,1,1) = {"
+Jq
+Jq
+Jq
+Jq
+Jq
+Jq
+AO
+Mp
+AO
+AO
+AO
+AO
+Mp
+AO
+AO
+Jq
+AO
+KY
+iz
+id
+ur
+SN
+jz
+SY
+jH
+qn
+mv
+zQ
+AO
+"}
+(15,1,1) = {"
+Jq
+Jq
+Jq
+Jq
+Jq
+Jq
+AO
+oI
+Mp
+zQ
+AO
+Gn
+Mp
+Gn
+AO
+Jq
+AO
+KY
+iz
+SL
+Tx
+ax
+Bb
+mM
+ta
+ax
+Ae
+AO
+AO
+"}
+(16,1,1) = {"
+Jq
+Jq
+Jq
+Jq
+Jq
+Jq
+AO
+AO
+AO
+zQ
+Mp
+WL
+Mp
+AO
+AO
+Jq
+AO
+KY
+iz
+ro
+ax
+ax
+FN
+pg
+ta
+ax
+iV
+zQ
+AO
+"}
+(17,1,1) = {"
+Jq
+Jq
+Jq
+Jq
+Jq
+Jq
+Jq
+Jq
+AO
+AO
+AO
+AO
+AO
+AO
+Jq
+Jq
+AO
+AO
+AO
+AO
+ny
+AO
+ny
+AO
+ny
+AO
+ny
+AO
+AO
+"}
+(18,1,1) = {"
+Jq
+Jq
+Jq
+Jq
+Jq
+Jq
+Jq
+Jq
+Jq
+Jq
+Jq
+Jq
+Jq
+Jq
+Jq
+Jq
+Jq
+Jq
+Jq
+AO
+AO
+AO
+AO
+AO
+AO
+AO
+AO
+AO
+Jq
+"}

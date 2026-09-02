@@ -2228,7 +2228,8 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 						S.shrink()
 						new /obj/effects/magicspark(S.loc)
 			else
-				new /obj/whitehole(S.loc, 0 SECONDS, 30 SECONDS)
+				var/duration = S.radius_largest * 10 SECONDS
+				new /obj/whitehole(S.loc, 0 SECONDS, duration)
 				qdel(S)
 		else
 			new /obj/effects/rendersparks(hit.loc)

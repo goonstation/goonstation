@@ -21,7 +21,7 @@ TYPEINFO_NEW(/obj/table)
 	layer = OBJ_LAYER-0.1
 	provides_grip = TRUE
 	mat_changename = 1
-	material_amt = 0.2
+	material_amt = MATERIAL::AMOUNT::SHEET * 2
 	var/parts_type = /obj/item/furniture_parts/table
 	default_material = null
 	uses_default_material_appearance = FALSE

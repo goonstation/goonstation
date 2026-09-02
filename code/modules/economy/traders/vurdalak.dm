@@ -15,7 +15,6 @@
 	base_goods_buy = alist(
 		TRADER_RARITY_COMMON = list(
 			/datum/commodity/trader/vurdalak/meat,
-			/datum/commodity/trader/vurdalak/brains,
 			/datum/commodity/trader/vurdalak/deathweed,
 			/datum/commodity/trader/vurdalak/toxicvenne,
 			/datum/commodity/trader/vurdalak/amanita,
@@ -80,13 +79,6 @@
 	price_boundary = list(PAY::UNTRAINED/5,PAY::UNTRAINED)
 	possible_names = list("Our stocks of raw meat are running low. The condition is of no concern.",
 	"We wish to purchase raw meat of any kind. Spoilage is not an issue.")
-
-/datum/commodity/trader/vurdalak/brains
-	comname = "Brains"
-	comtype = /obj/item/organ/brain
-	price_boundary = list(PAY::DOCTORATE,PAY::DOCTORATE*2)
-	possible_names = list("Our stocks of brains are running low. We care not for the condition.",
-	"We require the excised brains of living creatures. If you have such an item, sell it to us.")
 
 /datum/commodity/trader/vurdalak/deathweed
 	comname = "Deathweed Cannabis"

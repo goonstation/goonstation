@@ -1355,7 +1355,11 @@
 		/obj/item/clothing/under/misc/mobster,
 		/obj/item/clothing/under/misc/mobster/alt,
 		/obj/item/clothing/under/gimmick/guybrush,
-		/obj/item/clothing/suit/gimmick/nightgown)
+		/obj/item/clothing/suit/gimmick/nightgown,
+		/obj/item/clothing/under/baseball/newmemphis,
+		/obj/item/clothing/under/baseball/senex,
+		/obj/item/clothing/under/baseball/abzu,
+		/obj/item/clothing/under/baseball/off)
 
 	one
 		amt2spawn = 1
@@ -2540,6 +2544,31 @@
 		min_amt2spawn = 1
 		max_amt2spawn = 1
 
+/obj/random_item_spawner/menhir
+	name = "treasures of a forgotten time"
+	min_amt2spawn = 1
+	max_amt2spawn = 1
+
+	items2spawn = list(
+	/obj/item/raw_material/cobryl,
+	/obj/item/raw_material/cobryl,
+	/obj/item/raw_material/cobryl,
+	/obj/item/raw_material/miracle,
+	/obj/item/raw_material/gemstone,
+	/obj/item/raw_material/syreline,
+	/obj/item/raw_material/uqill)
+
+	one_or_zero
+		min_amt2spawn = 0
+		max_amt2spawn = 1
+
+	one
+		min_amt2spawn = 1
+		max_amt2spawn = 1
+
+	a_bunch
+		min_amt2spawn = 3
+		max_amt2spawn = 4
 /obj/random_item_spawner/spacesuit
 	min_amt2spawn = 2
 	max_amt2spawn = 2

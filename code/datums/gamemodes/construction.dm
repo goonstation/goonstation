@@ -388,6 +388,9 @@
 	wagesystem.budgets[BUDGET_CAT_UNION] = 0
 	random_events.events_enabled = 0
 	random_events.minor_events_enabled = 0
+#ifdef MAP_OVERRIDE_MENHIR
+	random_events.menhir_events_enabled = 0
+#endif
 	for (var/tp in childrentypesof(/datum/supply_control))
 		var/datum/supply_control/S = new tp()
 		if (S.current_stock < S.maximum_stock && S.replenishment_time)

@@ -13,6 +13,7 @@ TYPEINFO(/obj/machinery/bot/skullbot)
 	layer = 5.0 //TODO LAYER
 	density = 0
 	anchored = UNANCHORED
+	default_material = "bone"
 	on = 1
 	health = 5
 	no_camera = 1
@@ -73,6 +74,7 @@ TYPEINFO(/obj/machinery/bot/skullbot)
 /obj/machinery/bot/skullbot/omnitraitor
 	name = "crystal skullbot"
 	icon_state = "skullbot_omnitraitor"
+	default_material = "starstone"
 
 /obj/machinery/bot/skullbot/hunter
 	name = "strange skullbot"
@@ -85,6 +87,7 @@ TYPEINFO(/obj/machinery/bot/skullbot)
 /obj/machinery/bot/skullbot/changeling
 	name = "odd skullbot"
 	icon_state = "skullbot_changeling"
+	default_material = "viscerite"
 
 /obj/machinery/bot/skullbot/cluwne
 	name = "faceless skullbot"
@@ -93,6 +96,7 @@ TYPEINFO(/obj/machinery/bot/skullbot)
 /obj/machinery/bot/skullbot/macho
 	name = "golden skullbot"
 	icon_state = "skullbot_macho"
+	default_material = "gold"
 
 /obj/machinery/bot/skullbot/ominous
 	name = "ominous skullbot"

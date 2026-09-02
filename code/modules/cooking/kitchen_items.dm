@@ -485,6 +485,18 @@ TRAYS
 		contained_food_name = "sugar cube"
 		w_class = W_CLASS_SMALL
 
+	candycorn
+		name = "Discount Dan's Candy Corn Cornucopia"
+		desc = "It's a candy corn jar. ...Somebody bought one of these on purpose?"
+		icon_state = "candycorn"
+		count = 9
+		max_count = 9
+		box_type = "candycorn"
+		contained_food = /obj/item/reagent_containers/food/snacks/candy/candy_corn
+		allowed_food = /obj/item/reagent_containers/food/snacks/candy/candy_corn
+		contained_food_name = "candycorn"
+		w_class = W_CLASS_SMALL
+
 	New()
 		..()
 		SPAWN(1 SECOND)

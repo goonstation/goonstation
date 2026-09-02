@@ -1203,7 +1203,13 @@
 			else
 				var/random_direction = get_offset_target_turf(src, rand(5)-rand(5), rand(5)-rand(5))
 				shoot_projectile_ST_pixel_spread(src, thing2shoot, random_direction)
+			return 1
 
+		SPAWN(0)
+			ShootTheGunBurst(target)
+		return 1
+
+	proc/ShootTheGunBurst(var/target as mob|turf)
 		var/burst = shotcount	// TODO: Make rapidfire exist, then work.
 		while(burst > 0 && target)
 			if(istype(budgun, /obj/item/gun/kinetic/pumpweapon))
@@ -5032,6 +5038,17 @@ TYPEINFO(/obj/machinery/bot/guardbot/old)
 	New()
 		..()
 		src.hat.name = "Earle's ship captain hat"
+
+/obj/machinery/bot/guardbot/old/tourguide/menhir
+	name = "Moss"
+	desc = "A PR-4 Robuddy. It looks kinda new, are these still in production? This one has a little name tag on the front labeled 'Moss'."
+	access_lookup = "Staff Assistant"
+	beacon_freq = FREQ_TOUR_NAVBEACON
+	HatToWear = /obj/item/clothing/head/sunhat
+
+	New()
+		..()
+		src.hat.name = "Moss's sunhat"
 
 /obj/machinery/computer/hug_console
 	name = "Hug Console"
