@@ -115,9 +115,10 @@
 
 	// Remove the record from the index for the old value.
 	var/list/datum/db_record/old_records = records_by_value[old_value]
-	old_records -= record
-	if (!length(old_records))
-		records_by_value -= old_value
+	if (old_records)
+		old_records -= record
+		if (!length(old_records))
+			records_by_value -= old_value
 
 	// Add the record to the index for the new value.
 	var/list/datum/db_record/new_records = (records_by_value[new_value] ||= list())
