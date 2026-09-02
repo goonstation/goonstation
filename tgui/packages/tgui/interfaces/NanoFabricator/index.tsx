@@ -20,11 +20,11 @@ export const NanoFabricator = () => {
   const [category, setCategory] = useState('All');
   const { categories = [], recipes = [] } = data;
 
-  const searchText = search.toLowerCase();
+  const searchText = search.toLocaleLowerCase();
   const visibleRecipes = recipes.filter(
     (recipe) =>
       (category === 'All' || recipe.category === category) &&
-      (!searchText || recipe.name.toLowerCase().includes(searchText)),
+      (!searchText || recipe.name.toLocaleLowerCase().includes(searchText)),
   );
 
   return (
