@@ -1,5 +1,9 @@
 
 (t)wed sep 02 26
+(u)Sovexe
+(p)27614
+(e)🆕📄🧱💡|C-Feature, A-UI, A-Materials, A-Station-Systems
+(*)The Nanofabricator crafting panels have been modernized into a responsive TGUI design.
 (u)JORJ949
 (p)27687
 (e)⚖🧛📨|C-Balance, A-Gamemodes, A-Logistics
