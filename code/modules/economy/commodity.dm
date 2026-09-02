@@ -1510,7 +1510,7 @@ datum/commodity/drugs/sell/poppies
 /datum/commodity/costume/vampire
 	comname = "Vampire Costume"
 	comtype = /obj/item/storage/box/costume/vampire
-	desc = "A bunch of clothing that kinda resembles a vampire from some old piece of cinema."
+	desc = "A bunch of clothing that kinda resembles a vampire from some old piece of cinema, along with some old-themed trash I found."
 	price = PAY::TRADESMAN*2
 
 /datum/commodity/costume/abomination
@@ -1582,6 +1582,18 @@ datum/commodity/drugs/sell/poppies
 	comname = "Gnome Chompsky costume"
 	comtype = /obj/item/storage/box/costume/chompskysuit
 	desc = "Roam as a Gnome with this giant-sized gnome costume."
+	price = PAY::UNTRAINED
+
+/datum/commodity/costume/baseball_clown
+	comname = "Baseball Uniform"
+	comtype = /obj/item/storage/box/costume/baseball_clown
+	desc = "A uniform and cap for the Aintaiya Stinkers. Bat not included."
+	price = PAY::UNTRAINED
+
+/datum/commodity/costume/baseball_mime
+	comname = "Baseball Uniform"
+	comtype = /obj/item/storage/box/costume/baseball_mime
+	desc = "A uniform and cap for... some team you've never heard of before. Bat not included."
 	price = PAY::UNTRAINED
 
 /datum/commodity/backpack/breadpack

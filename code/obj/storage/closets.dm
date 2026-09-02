@@ -421,6 +421,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 
 		src.dump_contents()
 		src.open = 1
+		src.gas_impermeable = FALSE
 		src.UpdateIcon()
 		p_class = initial(p_class)
 		playsound(src.loc, 'sound/effects/cargodoor.ogg', 15, 1, -3)
@@ -437,6 +438,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 			return 0
 
 		src.open = 0
+		src.gas_impermeable = TRUE
 
 		for (var/obj/O in get_turf(src))
 			if (src.is_acceptable_content(O))
