@@ -15179,8 +15179,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "ksh" = (
-/turf/simulated/wall/false_wall/reinforced,
-/area/diner/kitchen)
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
+	welded = true
+	},
+/turf/simulated/floor/grime,
+/area/diner/backroom)
 "ksy" = (
 /obj/table/wood/auto,
 /obj/machinery/light/incandescent/warm,
@@ -75534,10 +75538,10 @@ xAt
 xAt
 dEp
 xAt
-oXW
-oXW
+rco
+rco
 ksh
-oXW
+rco
 oXW
 oXW
 qpn
