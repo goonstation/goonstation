@@ -47,9 +47,7 @@ export const AgentCard = () => {
   const [cardName, setCardName] = useState<string>();
   const [cardAssignment, setCardAssignment] = useState<string>();
   const [cardPronouns, setCardPronouns] = useState<string | null>(null);
-  const [cardStyle, setCardStyle] = useState<CardStyle | null>(
-    defaultCardStyle,
-  );
+  const [cardStyle, setCardStyle] = useState<CardStyle>(defaultCardStyle);
 
   return (
     <Window width={400} height={365} theme="syndicate">
@@ -68,8 +66,7 @@ export const AgentCard = () => {
                 setCardStyle(
                   // match sprite if possible, use Plain if not
                   cardStyles.find((x) => x.state === equippedId?.icon) ||
-                    cardStyles.at(0) ||
-                    null,
+                    defaultCardStyle,
                 );
                 setCardPronouns(equippedId ? equippedId.pronouns : null);
               }}
@@ -123,7 +120,8 @@ export const AgentCard = () => {
               key={style.state}
               onClick={() =>
                 setCardStyle(
-                  cardStyles.find((x) => x.state === style.state) || null,
+                  cardStyles.find((x) => x.state === style.state) ||
+                    defaultCardStyle,
                 )
               }
               selected={style.state === cardStyle?.state}
@@ -155,7 +153,6 @@ export const AgentCard = () => {
                 cardPronouns,
               })
             }
-            disabled={cardStyle === null}
           >
             Forge ID
           </Button.Confirm>
