@@ -94,17 +94,8 @@ TYPEINFO(/atom)
 	New(turf/newLoc)
 		. = ..()
 		// Lets stop having 5 implementations of this that all do it differently
-		if (!src.material && default_material)
-			var/datum/material/mat = istext(default_material) ? getMaterial(default_material) : default_material
-			src.setMaterial(mat)
-
-	proc/get_default_material_id()
-		if (istext(src.default_material))
-			return src.default_material
-		var/datum/material/default_mat = src.default_material
-		if (istype(default_mat))
-			return default_mat.getID()
-		return null
+		if (!src.material && src.default_material)
+			src.setMaterial(getMaterial(src.default_material))
 
 	proc/name_prefix(var/text_to_add, var/return_prefixes = 0, var/prepend = 0)
 		if( !name_prefixes ) name_prefixes = list()
