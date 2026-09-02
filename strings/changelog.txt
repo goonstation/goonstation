@@ -1,5 +1,9 @@
 
 (t)wed sep 02 26
+(u)JORJ949
+(p)27687
+(e)⚖🧛📨|C-Balance, A-Gamemodes, A-Logistics
+(*)C.A.R.L's stock is no longer randomized each round. The stealth storages he sells have been reduced to 4 slots to compensate for them always being sold, uplink stealth storages were not changed.
 (u)GabbySins
 (p)27715
 (e)🤖|A-Silicons
