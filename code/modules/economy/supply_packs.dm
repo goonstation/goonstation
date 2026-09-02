@@ -1858,7 +1858,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	name = "Emergency Power Equipment"
 	desc = "x2 Circular Power Treadmill Deployers."
 	category = "Engineering"
-	flatpack_frames = list(/obj/machinery/power/power_wheel/hamster = 2)
+	frames = list(/obj/machinery/power/power_wheel/hamster = 2)
 	cost = PAY::TRADESMAN*10
 	containertype = /obj/storage/crate
 	containername = "Crew Power Generation Kit"
