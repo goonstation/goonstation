@@ -318,6 +318,7 @@
 	name = "Bullet Coating"
 	desc = "Coat bullets in silver."
 	category = "Weapons"
+	blueprint_icon_type = /obj/item/ammo/bullets/rifle_3006
 
 	New()
 		..()
