@@ -15181,7 +15181,7 @@
 "ksh" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	welded = TRUE
+	welded = 1
 	},
 /turf/simulated/floor/grime,
 /area/diner/backroom)
