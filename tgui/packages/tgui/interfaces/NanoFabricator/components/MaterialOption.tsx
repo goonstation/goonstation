@@ -11,6 +11,12 @@ import type { NanoPartOptionData, NanoStorageData } from '../type';
 
 type MaterialOptionData = NanoPartOptionData | NanoStorageData;
 
+const MATERIAL_OPTION_LINE_HEIGHT = '20px';
+
+const isPartOption = (
+  option: MaterialOptionData,
+): option is NanoPartOptionData => 'insufficient' in option;
+
 interface MaterialOptionProps {
   onChoose?: () => void;
   onEject: () => void;
@@ -18,12 +24,16 @@ interface MaterialOptionProps {
   selectingPart: boolean;
 }
 
-export const MaterialOption = (props: MaterialOptionProps) => {
-  const { onChoose, onEject, option, selectingPart } = props;
-  const insufficient = 'insufficient' in option && !!option.insufficient;
-  const materialContent = (
-    <Stack align="center">
-      <Stack.Item>{option.img && <Image src={option.img} />}</Stack.Item>
+const MaterialOptionContent = (props: { option: MaterialOptionData }) => {
+  const { option } = props;
+
+  return (
+    <Stack align="center" lineHeight={MATERIAL_OPTION_LINE_HEIGHT}>
+      {option.img && (
+        <Stack.Item>
+          <Image src={option.img} />
+        </Stack.Item>
+      )}
       <Stack.Item grow minWidth="0px" overflow="hidden">
         <Box
           width="100%"
@@ -37,17 +47,22 @@ export const MaterialOption = (props: MaterialOptionProps) => {
       </Stack.Item>
     </Stack>
   );
+};
+
+export const MaterialOption = (props: MaterialOptionProps) => {
+  const { onChoose, onEject, option, selectingPart } = props;
+  const insufficient = isPartOption(option) && !!option.insufficient;
 
   return (
-    <Stack width="100%" g={0.5}>
+    <Stack width="100%">
       <Stack.Item grow minWidth="0px">
         {selectingPart ? (
           <Button fluid disabled={insufficient} onClick={onChoose}>
-            {materialContent}
+            <MaterialOptionContent option={option} />
           </Button>
         ) : (
-          <Box width="100%" px={1} lineHeight="var(--button-height)">
-            {materialContent}
+          <Box width="100%" px={1}>
+            <MaterialOptionContent option={option} />
           </Box>
         )}
       </Stack.Item>

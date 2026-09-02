@@ -11,8 +11,8 @@ import {
   NoticeBox,
   Section,
   Stack,
-  Tooltip,
 } from 'tgui-core/components';
+import { pluralize } from 'tgui-core/string';
 
 import { ItemButton } from '../../../components/goonstation/ItemButton';
 import type { NanoRecipeData } from '../type';
@@ -70,9 +70,7 @@ const RecipeRequirementsTooltip = (props: { recipe: NanoRecipeData }) => {
               <Stack align="center">
                 {!!part.optional && (
                   <Stack.Item>
-                    <Tooltip content="Optional component">
-                      <Icon name="asterisk" />
-                    </Tooltip>
+                    <Icon name="asterisk" />
                   </Stack.Item>
                 )}
                 <Stack.Item>{part.part_name || 'Component'}</Stack.Item>
@@ -81,7 +79,7 @@ const RecipeRequirementsTooltip = (props: { recipe: NanoRecipeData }) => {
             labelColor={part.optional ? 'label' : undefined}
             textAlign="right"
           >
-            {part.amount} unit{part.amount === 1 ? '' : 's'}
+            {part.amount} {pluralize('unit', part.amount)}
           </LabeledList.Item>
         ))}
       </LabeledList>
