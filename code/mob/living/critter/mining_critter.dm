@@ -275,6 +275,8 @@
 		src.add_stam_mod_max("queen", 50)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "queen", 50)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "queen", 50)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_DISARM_RESIST, "queen", 100)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "queen", 15)
 
 /mob/living/critter/fermid/hulk
 	name = "fermid hulk"
@@ -311,6 +313,8 @@
 		src.add_stam_mod_max("hulk", 50)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "hulk", 50)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "hulk", 50)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_DISARM_RESIST, "hulk", 100)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "hulk", 15)
 	purple
 		recolor = "#b90fab"
 		speed = /datum/movement_modifier/big_fermid_fast
