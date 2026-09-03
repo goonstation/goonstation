@@ -2705,7 +2705,7 @@ proc/get_mobs_trackable_by_AI()
 					M.change_stack_amount(-plating_cost)
 					return
 				else
-					boutput(user, "You need at least ten metal sheets to add plating to [src].")
+					boutput(user, "You need at least [get_english_num(plating_cost)] metal sheets to add plating to [src].")
 					return
 			else
 				boutput(user, "\The [src] already has plating!")
@@ -2784,7 +2784,6 @@ proc/get_mobs_trackable_by_AI()
 	else if (istype(W, /obj/item/device/radio))
 		if (src.build_step >= 2)
 			if (src.has_radios < 3)
-				W.forensic_holder.copy_to(src.forensic_holder)
 				src.build_step++
 				W.forensic_holder.copy_to(src.forensic_holder)
 				boutput(user, "You add \the [W] to [src]!")
