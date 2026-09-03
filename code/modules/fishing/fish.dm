@@ -1102,7 +1102,7 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/hopfish)
 	icon_state = "hopfish"
 	inhand_color = "#398f3d"
 	food_color = "#FFECB7"
-	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet/white
+	slice_product = /obj/item/stamp/angler
 	category = FISH::CATEGORY::FRESHWATER
 	rarity = ITEM_RARITY_UNCOMMON
 
