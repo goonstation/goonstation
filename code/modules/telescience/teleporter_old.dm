@@ -260,17 +260,17 @@ ADMIN_INTERACT_PROCS(/obj/machinery/teleport/portal_generator, proc/engage, proc
 	return 0
 
 // /mob/living/carbon/human/list_ejectables() looked pretty similar to what I wanted, but this doesn't have organs that you need to live
-//drop a non-vital organ or a limb //shamelessly stolen from Harry Potter as is this whole ability
-proc/splinch(var/mob/M as mob, var/probability)
+//drop a non-vital organ or a limb
+proc/organdisplacement(var/mob/M as mob, var/probability)
 	if (prob(probability))
 		if (istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
-			var/part_splinched
+			var/part_displaced
 
-			part_splinched = pick("l_arm", "r_arm", "l_leg", "l_leg","left_eye", "right_eye", "left_lung", "right_lung", "butt", "left_kidney", "right_kidney", "spleen", "pancreas", "appendix", "stomach", "intestines", "tail")
-			if (part_splinched == "l_arm" || part_splinched == "r_arm" || part_splinched == "l_leg" || part_splinched == "l_leg")
-				return H.sever_limb(part_splinched)
+			part_displaced = pick("l_arm", "r_arm", "l_leg", "l_leg","left_eye", "right_eye", "left_lung", "right_lung", "butt", "left_kidney", "right_kidney", "spleen", "pancreas", "appendix", "stomach", "intestines", "tail")
+			if (part_displaced == "l_arm" || part_displaced == "r_arm" || part_displaced == "l_leg" || part_displaced == "l_leg")
+				return H.sever_limb(part_displaced)
 			else
-				return H.organHolder.drop_organ(part_splinched)
+				return H.organHolder.drop_and_throw_organ(part_displaced, showtext = 1)
 
-		// owner.visible_message(SPAN_ALERT("<b>[M]</b> splinches themselves and their [part_splinched] falls off!"))
+		// owner.visible_message(SPAN_ALERT("<b>[M]</b>'s [part_displaced] falls off!"))
