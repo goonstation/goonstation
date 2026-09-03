@@ -19,12 +19,12 @@
 		if(user.r_hand && user.l_hand != src)
 			src.mitt_pickup(user, user.r_hand)
 		. = ..()
-		if(user.hand == RIGHT_HAND)
-			src.which_hands = GLOVE_HAS_RIGHT
-			user.hand_grip_count_r += 1
-		else
+		if(user.hand == LEFT_HAND)
 			src.which_hands = GLOVE_HAS_LEFT
-			user.hand_grip_count_l += 1
+			APPLY_ATOM_PROPERTY(user, PROP_MOB_GRIP_FIRM_LEFT, src)
+		else
+			src.which_hands = GLOVE_HAS_RIGHT
+			APPLY_ATOM_PROPERTY(user, PROP_MOB_GRIP_FIRM_RIGHT, src)
 		RegisterSignal(user, COMSIG_ATOM_HITBY_THROWN, PROC_REF(mitt_catch))
 		RegisterSignal(user, COMSIG_MOB_PICKUP, PROC_REF(mitt_pickup))
 		RegisterSignal(user, COMSIG_MOB_DROPPED, PROC_REF(mitt_drop))
@@ -46,9 +46,9 @@
 		if(user.r_hand)
 			src.mitt_drop(user, user.r_hand)
 		if(HAS_FLAG(src.which_hands, GLOVE_HAS_LEFT))
-			user.hand_grip_count_l -= 1
+			REMOVE_ATOM_PROPERTY(user, PROP_MOB_GRIP_FIRM_LEFT, src)
 		if(HAS_FLAG(src.which_hands, GLOVE_HAS_RIGHT))
-			user.hand_grip_count_r -= 1
+			REMOVE_ATOM_PROPERTY(user, PROP_MOB_GRIP_FIRM_RIGHT, src)
 		. = ..()
 		UnregisterSignal(user, COMSIG_ATOM_HITBY_THROWN)
 		UnregisterSignal(user, COMSIG_MOB_PICKUP)
