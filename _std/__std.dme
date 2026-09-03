@@ -195,7 +195,7 @@
 #include "macros\twitch_sbill.dm"
 #include "macros\vehicles.dm"
 #include "namespaces\admin.dm"
-#include "namespaces\robot.dm"
+#include "namespaces\bot.dm"
 #include "namespaces\chem.dm"
 #include "namespaces\dwaine\_dwaine.dm"
 #include "namespaces\dwaine\errors.dm"

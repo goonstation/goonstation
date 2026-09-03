@@ -14,7 +14,7 @@ TYPEINFO(/obj/machinery/bot/chefbot)
 	no_camera = 1
 	/// Doesn't feel right to have this guy *constantly* flipping its lid like a methed up graytider
 	dynamic_processing = 0
-	bot_move_delay = ROBOT::SPEED::CHEFBOT
+	bot_move_delay = BOT::SPEED::CHEFBOT
 
 /obj/machinery/bot/chefbot/process()
 	. = ..()

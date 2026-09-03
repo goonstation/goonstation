@@ -17,7 +17,7 @@
 	anchored = UNANCHORED
 	on = 1 // ACTION
 	health = 5
-	bot_move_delay = ROBOT::SPEED::DUCKBOT
+	bot_move_delay = BOT::SPEED::DUCKBOT
 	var/eggs = 0
 	/// When it gets to 100, free egg!
 	var/egg_process = 0

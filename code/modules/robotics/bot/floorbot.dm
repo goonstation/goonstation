@@ -35,7 +35,7 @@
 	layer = 5.0 //TODO LAYER
 	density = 0
 	anchored = UNANCHORED
-	bot_move_delay = ROBOT::SPEED::FLOORBOT
+	bot_move_delay = BOT::SPEED::FLOORBOT
 	//weight = 1.0E7
 	var/amount = 50
 	on = 0 // Don't start running around eating everything and puking it all over the cold loop, at least till someone pokes you

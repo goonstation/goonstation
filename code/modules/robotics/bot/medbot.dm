@@ -19,7 +19,7 @@
 	on = 1
 	health = 20
 	locked = 1
-	bot_move_delay = ROBOT::SPEED::MEDBOT
+	bot_move_delay = BOT::SPEED::MEDBOT
 
 	var/obj/item/reagent_containers/glass/reagent_glass = null //Can be set to draw from this for reagents.
 	var/skin = null // options are brute1/2, burn1/2, toxin1/2, brain1/2, O21/2/3/4, berserk1/2/3, and psyche

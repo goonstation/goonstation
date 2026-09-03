@@ -109,9 +109,9 @@
 	on = 1
 	var/idle = 0 //Sleeping on the job??
 	locked = 1 //Behavior Controls and Tool lock
-	bot_move_delay = ROBOT::SPEED::GUARDBOT_SLOW
-	var/move_delay_max = ROBOT::SPEED::GUARDBOT_SLOW
-	var/move_delay_min = ROBOT::SPEED::GUARDBOT_FAST
+	bot_move_delay = BOT::SPEED::GUARDBOT_SLOW
+	var/move_delay_max = BOT::SPEED::GUARDBOT_SLOW
+	var/move_delay_min = BOT::SPEED::GUARDBOT_FAST
 
 	/// The skin icon state that this robuddy should use.
 	var/skin_icon_state
@@ -1895,7 +1895,7 @@
 
 		return
 
-	navigate_to(atom/the_target, var/move_delay = ROBOT::SPEED::GUARDBOT_SLOW, var/adjacent=0, var/clear_frustration=1, max_dist=100)
+	navigate_to(atom/the_target, var/move_delay = BOT::SPEED::GUARDBOT_SLOW, var/adjacent=0, var/clear_frustration=1, max_dist=100)
 		if(src.moving)
 			return 1
 		src.moving = 1
@@ -2447,7 +2447,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 					src.next_target()
 
 				if(!master.moving)
-					master.navigate_to(src.target, master.get_move_delay(ROBOT::SPEED::GUARDBOT_RATE_SLOW))
+					master.navigate_to(src.target, master.get_move_delay(BOT::SPEED::GUARDBOT_RATE_SLOW))
 			else
 				if(!master.last_comm || (world.time >= master.last_comm + 100) )
 					master.post_status(null,"data","[master.cell.charge]","address_tag","recharge")
@@ -2553,7 +2553,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 							if (nav_delay > 0)
 								nav_delay--
 								return
-							master.navigate_to(src.bar_beacon_turf, master.get_move_delay(ROBOT::SPEED::GUARDBOT_RATE_SLOW))
+							master.navigate_to(src.bar_beacon_turf, master.get_move_delay(BOT::SPEED::GUARDBOT_RATE_SLOW))
 							nav_delay = 5
 
 					else
@@ -2587,7 +2587,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 							return
 
 						if(!master.moving)
-							master.navigate_to(src.target, master.get_move_delay(ROBOT::SPEED::GUARDBOT_RATE_ARREST), max_dist=14)
+							master.navigate_to(src.target, master.get_move_delay(BOT::SPEED::GUARDBOT_RATE_ARREST), max_dist=14)
 
 					return
 
@@ -2807,7 +2807,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 							if (master.mover)
 								qdel(master.mover)
 							master.moving = 0
-							master.navigate_to(hug_target, master.get_move_delay(ROBOT::SPEED::GUARDBOT_RATE_ARREST), max_dist=15)
+							master.navigate_to(hug_target, master.get_move_delay(BOT::SPEED::GUARDBOT_RATE_ARREST), max_dist=15)
 							return
 
 
@@ -2860,7 +2860,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						if (master.mover)
 							qdel(master.mover)
 						master.moving = 0
-						master.navigate_to(arrest_target, master.get_move_delay(ROBOT::SPEED::GUARDBOT_RATE_ARREST), 0, 0, max_dist=30)
+						master.navigate_to(arrest_target, master.get_move_delay(BOT::SPEED::GUARDBOT_RATE_ARREST), 0, 0, max_dist=30)
 						//master.current_movepath = "HEH" //Stop any current movement.
 
 		task_input(input)
@@ -3105,7 +3105,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 				if(next_destination)
 					set_destination(next_destination)
 					if(!master.moving && target && (target != master.loc))
-						master.navigate_to(target, master.get_move_delay(ROBOT::SPEED::GUARDBOT_RATE_SLOW), max_dist=80)
+						master.navigate_to(target, master.get_move_delay(BOT::SPEED::GUARDBOT_RATE_SLOW), max_dist=80)
 					return
 				else
 					find_nearest_beacon()
@@ -3121,7 +3121,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 					if(master.task != src) return
 					awaiting_beacon = 0
 					if(nearest_beacon && !master.moving)
-						master.navigate_to(nearest_beacon_loc, master.get_move_delay(ROBOT::SPEED::GUARDBOT_RATE_SLOW), max_dist=30)
+						master.navigate_to(nearest_beacon_loc, master.get_move_delay(BOT::SPEED::GUARDBOT_RATE_SLOW), max_dist=30)
 					else
 						patrol_delay = 8
 						target = null
@@ -3226,7 +3226,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						if (master.mover)
 							qdel(master.mover)
 						master.moving = 0
-						master.navigate_to(hug_target, master.get_move_delay(ROBOT::SPEED::GUARDBOT_RATE_ARREST), max_dist=15)
+						master.navigate_to(hug_target, master.get_move_delay(BOT::SPEED::GUARDBOT_RATE_ARREST), max_dist=15)
 						return
 
 				else
@@ -3331,7 +3331,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 					master.frustration++
 					if (master.mover)
 						qdel(master.mover)
-					master.navigate_to(protected,master.get_move_delay(ROBOT::SPEED::GUARDBOT_RATE_FULL),1,1, max_dist=15)
+					master.navigate_to(protected,master.get_move_delay(BOT::SPEED::GUARDBOT_RATE_FULL),1,1, max_dist=15)
 					return
 				else
 
@@ -3347,7 +3347,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						master.moving = 0
 						if (master.mover)
 							qdel(master.mover)
-						master.navigate_to(protected,master.get_move_delay(ROBOT::SPEED::GUARDBOT_RATE_FULL),1,1, max_dist=15)
+						master.navigate_to(protected,master.get_move_delay(BOT::SPEED::GUARDBOT_RATE_FULL),1,1, max_dist=15)
 
 			return
 
@@ -3662,7 +3662,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 							return
 
 						if (current_beacon_loc != master.loc)
-							master.navigate_to(current_beacon_loc, master.get_move_delay(ROBOT::SPEED::GUARDBOT_RATE_SLOW), max_dist=60)
+							master.navigate_to(current_beacon_loc, master.get_move_delay(BOT::SPEED::GUARDBOT_RATE_SLOW), max_dist=60)
 						else
 							state = STATE_AT_BEACON
 					return
@@ -5080,7 +5080,7 @@ TYPEINFO(/obj/machinery/bot/guardbot/old)
 				var/datum/computer/file/guardbot_task/security/single_use/tohug = new
 				tohug.hug_target = user
 				buddy.add_task(tohug, 1, 0)
-				buddy.navigate_to(get_turf(user), buddy.get_move_delay(ROBOT::SPEED::GUARDBOT_RATE_SLOW))
+				buddy.navigate_to(get_turf(user), buddy.get_move_delay(BOT::SPEED::GUARDBOT_RATE_SLOW))
 
 /obj/item/token/hug_token
 	name = "Hug Token"
