@@ -414,6 +414,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/turretid, proc/toggle_active, proc/toggle_le
 	var/emagged = 0
 	var/turretArea = null
 
+	var/click_count = 0
+	var/last_click_time = -INFINITY
+
 	req_access = list(access_ai_upload)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 
@@ -490,7 +493,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/turretid, proc/toggle_active, proc/toggle_le
 	. = list(
 		"enabled" = src.enabled,
 		"lethal" = src.lethal,
-		"emagged" = src.emagged
+		"emagged" = src.emagged,
+		"lockout_time" = GET_COOLDOWN(src, "spam_lockout"),
 	)
 	if (issilicon(user) || isAI(user))
 		.["locked"] = FALSE
@@ -506,6 +510,23 @@ ADMIN_INTERACT_PROCS(/obj/machinery/turretid, proc/toggle_active, proc/toggle_le
 	)
 
 
+/obj/machinery/turretid/proc/register_click(mob/user)
+	if (TIME - src.last_click_time > 3 SECONDS)
+		src.click_count = 0
+		src.last_click_time = TIME
+		return
+
+	src.click_count++
+	//start timing from the first click of this set, not the actual last click
+	if (src.click_count == 1)
+		src.last_click_time = TIME
+
+	if (src.click_count > 5)
+		logTheThing(LOG_COMBAT, user, "triggers a turret control lockout at [log_loc(src)]")
+		ON_COOLDOWN(src, "spam_lockout", 10 SECONDS)
+		playsound(src, 'sound/machines/buzz-two.ogg', 50, 1)
+		src.click_count = 0
+
 /obj/machinery/turretid/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	if (..())
 		return
@@ -514,6 +535,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/turretid, proc/toggle_active, proc/toggle_le
 		if (!issilicon(usr) && !isAI(usr))
 			boutput(usr, "Control panel is locked!")
 			return
+
+	if (!issilicon(usr) && !isAI(usr))
+		src.register_click(ui.user)
+	if (GET_COOLDOWN(src, "spam_lockout"))
+		return
 
 	switch (action)
 		if ("setEnabled")

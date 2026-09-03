@@ -5,12 +5,14 @@
  * @license MIT
  */
 
-import { Box, Button, Section, Stack } from 'tgui-core/components';
+import { Box, Button, Icon, Modal, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { randInt } from './common/mathUtils';
 import { glitch } from './common/stringUtils';
+import { BooleanLike } from 'common/react';
+import { Color } from 'common/color';
 
 const generate_kill = (number) => {
   let out: string[] = [];
@@ -34,16 +36,17 @@ const generate_kill = (number) => {
 };
 
 interface TurretControlData {
-  enabled;
-  lethal;
-  emagged;
-  area;
-  locked;
+  enabled: BooleanLike;
+  lethal: BooleanLike;
+  emagged: BooleanLike;
+  area: string;
+  locked: BooleanLike;
+  lockout_time: number;
 }
 
 export const TurretControl = () => {
   const { act, data } = useBackend<TurretControlData>();
-  const { enabled, lethal, emagged, area, locked } = data;
+  const { enabled, lethal, emagged, area, locked, lockout_time } = data;
 
   const set_lethal = (value) => {
     act('setLethal', { lethal: value });
@@ -69,6 +72,7 @@ export const TurretControl = () => {
                     fluid
                     selected={enabled}
                     onClick={() => set_enabled(true)}
+                    disabled={!!lockout_time}
                   >
                     Enabled
                   </Button>
@@ -79,6 +83,7 @@ export const TurretControl = () => {
                     fluid
                     selected={!enabled}
                     onClick={() => set_enabled(false)}
+                    disabled={!!lockout_time}
                   >
                     Disabled
                   </Button>
@@ -93,6 +98,7 @@ export const TurretControl = () => {
                     fluid
                     selected={!lethal}
                     onClick={() => set_lethal(false)}
+                    disabled={!!lockout_time}
                   >
                     Stun
                   </Button>
@@ -103,6 +109,7 @@ export const TurretControl = () => {
                     fluid
                     selected={lethal}
                     onClick={() => set_lethal(true)}
+                    disabled={!!lockout_time}
                   >
                     Lethal
                   </Button>
@@ -113,6 +120,16 @@ export const TurretControl = () => {
         )}
         {!emagged && !!locked && (
           <Section>Panel locked, swipe ID card to unlock.</Section>
+        )}
+        {!emagged && !!lockout_time && (
+          <Modal>
+
+            <Section>
+              <Icon name="warning" size={2} />
+              <br />
+              Automatic lockout triggered to prevent damage to interface.
+            </Section>
+          </Modal>
         )}
         {!!emagged && (
           <Box py="20px">
