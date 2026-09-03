@@ -66,7 +66,7 @@
 		if(!isitem(thing))
 			return FALSE
 		var/obj/item/I = thing
-		if(!item_in_mitt(owner, I))
+		if(!src.item_in_mitt(owner, I))
 			return FALSE
 		if(owner.restrained())
 			return FALSE
@@ -98,7 +98,7 @@
 		if(istype(I, /obj/item/gun))
 			RegisterSignal(I, COMSIG_GUN_TRY_SHOOT, PROC_REF(mitt_try_shoot))
 			RegisterSignal(I, COMSIG_GUN_TRY_POINTBLANK, PROC_REF(mitt_try_shoot))
-		if(item_in_mitt(user, I) && I.w_class > W_CLASS_POCKET_SIZED)
+		if(src.item_in_mitt(user, I) && I.w_class > W_CLASS_POCKET_SIZED)
 			SPAWN(0.35 SECONDS)
 				if(QDELETED(I) || I.loc != user)
 					return
@@ -115,7 +115,7 @@
 	/// Mitt is bad at throwing things
 	proc/mitt_adjust_throw(mob/thrower, datum/thrown_thing/thr)
 		if(isitem(thr.thing))
-			if(!item_in_mitt(thrower, thr.thing))
+			if(!src.item_in_mitt(thrower, thr.thing))
 				return
 		else
 			if(thrower.hand == LEFT_HAND && !HAS_FLAG(src.which_hands, GLOVE_HAS_LEFT))
@@ -127,21 +127,21 @@
 		thrower.visible_message(SPAN_ALERT("\The [src] messes up the throw!"))
 
 	proc/mitt_attackby_pre(obj/item/source, atom/target, mob/user)
-		if(!item_in_mitt(user, source))
+		if(!src.item_in_mitt(user, source))
 			return FALSE
 		boutput(user, SPAN_ALERT("Can't attack with the [source] while it is inside the [src]!"))
 		playsound(user, 'sound/items/bball_hoop.ogg', 20, TRUE, pitch = 1.5)
 		return ATTACK_PRE_DONT_ATTACK
 
 	proc/mitt_try_shoot(obj/item/gun/source, turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target)
-		if(!item_in_mitt(user, source))
+		if(!src.item_in_mitt(user, source))
 			return FALSE
 		boutput(user, SPAN_ALERT("You can't pull the trigger with the [src] on!"))
 		playsound(user, 'sound/items/bball_hoop.ogg', 20, TRUE, pitch = 1.5)
 		return TRUE
 
 	proc/mitt_try_pointblank(obj/item/gun/source, turf/target, mob/user, second_shot)
-		if(!item_in_mitt(user, source))
+		if(!src.item_in_mitt(user, source))
 			return FALSE
 		boutput(user, SPAN_ALERT("You can't pull the trigger with the [src] on!"))
 		playsound(user, 'sound/items/bball_hoop.ogg', 20, TRUE, pitch = 1.5)
