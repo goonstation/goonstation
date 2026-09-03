@@ -522,9 +522,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/turretid, proc/toggle_active, proc/toggle_le
 		src.last_click_time = TIME
 
 	if (src.click_count > 5)
-		logTheThing(LOG_COMBAT, user, "triggers a turret control lockout at [log_loc(src)]")
+		logTheThing(LOG_COMBAT, user, "triggers a turret control lockout at [log_loc(src)], enabling turrets automatically")
 		ON_COOLDOWN(src, "spam_lockout", 10 SECONDS)
 		playsound(src, 'sound/machines/buzz-two.ogg', 50, 1)
+		src.enabled = TRUE
+		src.updateTurrets()
 		src.click_count = 0
 
 /obj/machinery/turretid/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
