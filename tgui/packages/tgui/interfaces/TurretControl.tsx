@@ -5,14 +5,13 @@
  * @license MIT
  */
 
+import { BooleanLike } from 'common/react';
 import { Box, Button, Icon, Modal, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { randInt } from './common/mathUtils';
 import { glitch } from './common/stringUtils';
-import { BooleanLike } from 'common/react';
-import { Color } from 'common/color';
 
 const generate_kill = (number) => {
   let out: string[] = [];
@@ -123,7 +122,6 @@ export const TurretControl = () => {
         )}
         {!emagged && !!lockout_time && (
           <Modal>
-
             <Section>
               <Icon name="warning" size={2} />
               <br />
