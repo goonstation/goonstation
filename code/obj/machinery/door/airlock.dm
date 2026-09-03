@@ -39,7 +39,7 @@ var/global/list/cycling_airlocks = list()
 	var/cycle_id = ""	//! Which airlocks this door is connected too.
 	var/cycle_enter_id = ""	//! An ID for double doors sharing a direction in a cycling airlock system.
 
-	var/list/signalers[10]
+	var/list/signalers[11]
 	var/lockdownbyai = 0
 	var/net_id = null
 	var/sound_airlock = 'sound/machines/airlock_swoosh_temp.ogg'
