@@ -1840,11 +1840,11 @@ ABSTRACT_TYPE(/datum/material/organic)
 					0.00, 0.00, 0.80, 0.00,\
 					0.00, 0.00, 0.00, 1.00,\
 					0.00, 0.00, 0.00, 0.00)
-	hsl_color = list(0.00, 0.00, 0.00, 0.00,\
-					0.00, 0.05, 0.00, 0.00,\
-					0.00, 0.00, 1.20, 0.00,\
+	hsl_color = list(0.00, 0.00, 0.20, 0.00,\
+					0.00, 0.05, 0.10, 0.00,\
+					0.00, 0.00, 0.75, 0.00,\
 					0.00, 0.00, 0.00, 1.00,\
-					0.15, 0.20, 0.00, 0.00)
+					0.13, 0.20, 0.05, 0.00)
 	texture = "bamboo"
 	texture_blend = BLEND_DEFAULT
 	artisan_trait_weight = MATERIAL_ARTISAN_COMMON
