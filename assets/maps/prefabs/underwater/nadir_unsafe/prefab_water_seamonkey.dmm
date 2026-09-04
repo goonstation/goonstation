@@ -893,7 +893,7 @@
 "cX" = (
 /obj/pool/perspective{
 	dir = 9;
-	icon_state = "pool";
+	icon_state = "pool_new";
 	tag = "icon-pool (NORTHWEST)"
 	},
 /turf/simulated/floor/grass,
@@ -901,7 +901,7 @@
 "cY" = (
 /obj/pool/perspective{
 	dir = 1;
-	icon_state = "pool";
+	icon_state = "pool_new";
 	tag = "icon-pool (NORTH)"
 	},
 /turf/simulated/floor/grass,
@@ -910,7 +910,7 @@
 /obj/pool/perspective{
 	density = 0;
 	dir = 1;
-	icon_state = "pool";
+	icon_state = "pool_new";
 	tag = "icon-pool (NORTH)"
 	},
 /obj/channel{
@@ -922,7 +922,7 @@
 "da" = (
 /obj/pool/perspective{
 	dir = 5;
-	icon_state = "pool";
+	icon_state = "pool_new";
 	tag = "icon-pool (NORTHEAST)"
 	},
 /turf/simulated/floor/grass,
@@ -934,7 +934,7 @@
 "dc" = (
 /obj/pool/perspective{
 	dir = 8;
-	icon_state = "pool";
+	icon_state = "pool_new";
 	tag = "icon-pool (WEST)"
 	},
 /turf/simulated/floor/grass,
@@ -949,7 +949,7 @@
 "df" = (
 /obj/pool/perspective{
 	dir = 4;
-	icon_state = "pool";
+	icon_state = "pool_new";
 	tag = "icon-pool (EAST)"
 	},
 /turf/simulated/floor/grass,
@@ -957,7 +957,7 @@
 "dh" = (
 /obj/pool/perspective{
 	dir = 8;
-	icon_state = "pool";
+	icon_state = "pool_new";
 	tag = "icon-pool (WEST)"
 	},
 /obj/fakeobject/palmtree,
@@ -980,7 +980,7 @@
 "dl" = (
 /obj/pool/perspective{
 	dir = 4;
-	icon_state = "pool";
+	icon_state = "pool_new";
 	tag = "icon-pool (EAST)"
 	},
 /obj/pool_springboard,
@@ -1004,7 +1004,7 @@
 /obj/pool_springboard,
 /obj/pool/perspective{
 	dir = 4;
-	icon_state = "pool";
+	icon_state = "pool_new";
 	tag = "icon-pool (EAST)"
 	},
 /turf/simulated/floor/grass,
@@ -1034,7 +1034,7 @@
 "du" = (
 /obj/pool/perspective{
 	dir = 10;
-	icon_state = "pool";
+	icon_state = "pool_new";
 	tag = "icon-pool (SOUTHWEST)"
 	},
 /turf/simulated/floor/grass,
@@ -1046,7 +1046,7 @@
 "dw" = (
 /obj/pool/perspective{
 	dir = 6;
-	icon_state = "pool";
+	icon_state = "pool_new";
 	tag = "icon-pool (SOUTHEAST)"
 	},
 /turf/simulated/floor/grass,
