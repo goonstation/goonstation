@@ -30,10 +30,8 @@
 
 		//turf_air already modified by equalize_gases()
 
-	if(istype(ourturf) && !ourturf.processing)
-		if(ourturf.air)
-			if(ourturf.air.check_tile_graphic())
-				ourturf.update_visuals(ourturf.air)
+	if(ourturf.air.check_tile_graphic())
+		ourturf.update_visuals(ourturf.air)
 
 	if(!isnull(src.network))
 		src.network.update = TRUE

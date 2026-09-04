@@ -104,7 +104,7 @@
 				var/turf/T = selected_temp_expose.loc //lollllllllllll
 				var/target_temp = T20C
 				if (istype(T))
-					target_temp = T.temperature
+					target_temp = T.return_air().temperature()
 
 				var/difference = (target_temp - FG.reagents.total_temperature)
 				var/change = difference * 0.3 //absorb 30% of the ambient temperature every update

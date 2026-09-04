@@ -7,11 +7,7 @@
 		var/environment_heat_capacity = HEAT_CAPACITY(environment)
 		var/loc_temp = T0C
 		var/mult = get_multiplier()
-		if (istype(owner.loc, /turf/space))
-			var/turf/space/S = owner.loc
-			environment_heat_capacity = S.heat_capacity
-			loc_temp = S.temperature
-		else if (istype(owner.loc, /obj/machinery/vehicle))
+		if (istype(owner.loc, /obj/machinery/vehicle))
 			var/obj/machinery/vehicle/ship = owner.loc
 			var/obj/item/shipcomponent/life_support/life_support_part = ship.get_part(POD_PART_LIFE_SUPPORT)
 			if (life_support_part)

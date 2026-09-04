@@ -80,10 +80,9 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 
 		SPAWN(2 SECONDS)
 			for(var/turf/simulated/T in maintaining_turfs)
-				if(!T.air && T.density)
+				if(T.gas_cant_pass())
 					continue
 				T.stabilize()
-				LAGCHECK(LAG_LOW)
 
 			working = 0
 			updateComps()

@@ -321,7 +321,7 @@
 			if(!atmos_fail_count)
 				for(var/turf/simulated/T in interior_area)
 					if(T.density) continue
-					if(T.air) T.air.set_temperature(T0C - 100)
+					T.return_air().set_temperature(T0C - 100)
 					T.remove_air(100)
 
 

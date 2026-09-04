@@ -25,30 +25,61 @@
 	var/tmp/pressure_direction = 0
 	/// Current fire object on us.
 	var/tmp/list/atom/movable/hotspot/active_hotspots
-	/// Our gas mixture
+	/// Gas mixture used to access this turf.
 	VAR_PRIVATE/tmp/datum/gas_mixture/turf_tied/air
+	
+	VAR_PRIVATE/tmp/gas_impermeability_count = 0
+	/// Starting heat capacity. Represented in Kilojoules per Kelvin
+	VAR_PROTECTED/heat_capacity = 1
+	/// Starting temperature
+	var/temperature = T20C
+	/// 0 = Normal, 1 = Exposed (To an environment.), 2 = Immutable (Shares to others but never changes itself), 3 = Sealed (perfect wall, doesnt interact with atmos)
+	VAR_PROTECTED/state = 3
+	// Index of environment. Not implemented
+	VAR_PROTECTED/enviro = 0
+	#define _UNSIM_TURF_GAS_DEF(GAS, ...) var/GAS = 0;
+	APPLY_TO_GASES(_UNSIM_TURF_GAS_DEF)
+	#undef _UNSIM_TURF_GAS_DEF
+
+/turf/proc/goonmos_init()
+	#define _GAS_LIST(GAS, ...) src.GAS,
+	return list(
+		APPLY_TO_GASES(_GAS_LIST)
+		src.heat_capacity,
+		src.temperature,
+		src.state,
+		src.enviro,
+		src.gas_impermeable,
+		src.material?.getProperty("thermal") || 1)
+	#undef _GAS_LIST
+
+/turf/proc/gas_cant_pass()
+	return src.gas_impermeable || src.gas_impermeability_count
 
 /turf/New()
 	. = ..()
 	src.active_hotspots = list()
+	src.return_air()
 
 /// Assumes air into the turf. Use this instead of directly adding to air.
 /turf/assume_air(datum/gas_mixture/giver)
-	return FALSE
+	var/datum/gas_mixture/gas = src.return_air()
+	gas.merge(giver)
 
-/// Return new gas mixture with the gas variables we start with.
+/// Return new gas mixture with the gas variables we start with. If direct, always returns write allowed.
 /turf/return_air(direct = FALSE)
 	RETURN_TYPE(/datum/gas_mixture/turf_tied)
-	src.air ||= new /datum/gas_mixture/turf_tied(src.x, src.y, src.z)
-	return src.air
+	src.air ||= new /datum/gas_mixture/turf_tied(src, src.state > 1)
+	. = src.air
+	if (direct)
+		. = new /datum/gas_mixture/turf_tied(src, FALSE)
 
 /// Return a new gas mixture with a specified amount of moles with the composition of our gas vars.
 /turf/remove_air(amount)
-	var/datum/gas_mixture/normal/GM = new /datum/gas_mixture/normal
+	return src.return_air().remove(amount)
 
-	GM.copy_from_goonmos(goonmos_get_tile_info(src))
-
-	return GM
+/turf/remove_ratio(ratio)
+	return src.return_air().remove_ratio(ratio)
 
 /// Checks if gas can pass between two turfs. If anything within the turf does not allow passage, the check fails.
 /// Returns: TRUE if gas can pass, FALSE if not.
@@ -56,10 +87,10 @@
 	if(isnull(target) || target.gas_impermeable || src.gas_impermeable)
 		return FALSE
 	for(var/atom/movable/AM as anything in src)
-		if(AM.gas_impermeable())
+		if(AM.gas_impermeable)
 			return FALSE
 	for(var/atom/movable/AM as anything in target)
-		if(AM.gas_impermeable())
+		if(AM.gas_impermeable)
 			return FALSE
 	return TRUE
 
@@ -128,20 +159,6 @@
 			qdel(gas_icon_overlay)
 			src.gas_icon_overlay = null
 
-/turf/simulated/New()
-	. = ..()
-
-	if(!src.gas_impermeable)
-
-
-	else
-		if(!air_master)
-			return
-		for(var/direction in cardinal)
-			var/turf/simulated/floor/target = get_step(src,direction)
-			if(issimulatedturf(target))
-				air_master.tiles_to_update[target] = null
-
 /turf/simulated/Del()
 	for (var/atom/movable/hotspot/hotspot as anything in src.active_hotspots)
 		qdel(hotspot)
@@ -156,16 +173,6 @@
 
 	src.air = null
 	..()
-
-/// Removes some moles from turf or air group.
-/turf/simulated/remove_air(amount)
-	var/datum/gas_mixture/normal/removed = null
-
-	if(!src.processing)
-		if(src.air.check_tile_graphic())
-			src.update_visuals(air)
-
-	return removed
 
 /// Does a fair amount. Shares with neighbors, updates hotspots, update graphics, checks superconductivity, the whole nine yards.
 /turf/simulated/proc/process_cell()
@@ -202,7 +209,6 @@
 
 	return TRUE
 
-
 /// Tells our neighbors it's time to update.
 /turf/proc/update_nearby_tiles(need_rebuild)
 	src.selftilenotify() //used in fluids.dm for displaced fluid
@@ -214,3 +220,11 @@
 				T.tilenotify(src)
 
 	return TRUE
+
+/turf/simulated/proc/stabilize()
+	var/datum/gas_mixture/turf_tied/air = src.return_air()
+	ZERO_GASES(src.air)
+	src.air.set_oxygen(MOLES_O2STANDARD)
+	src.air.set_nitrogen(MOLES_N2STANDARD)
+	src.air.fuel_burnt = 0
+	src.air.set_temperature(T20C)

@@ -631,8 +631,8 @@ datum
 				if (length(hotspots))
 					if (istype(target, /turf/simulated))
 						var/turf/simulated/T = target
-						if (T.air)
-							var/datum/gas_mixture/lowertemp = T.remove_air( TOTAL_MOLES(T.air) )
+						if (!T.gas_cant_pass())
+							var/datum/gas_mixture/lowertemp = T.return_air().remove_ratio(1)
 							if (lowertemp)
 								lowertemp.set_temperature(FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 200) //T0C - 100
 								lowertemp.set_toxins(max(lowertemp.toxins()-50,0))

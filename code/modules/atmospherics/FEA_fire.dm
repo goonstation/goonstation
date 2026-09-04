@@ -54,9 +54,6 @@
 	if ((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && (air_contents.toxins() > 0.5) && (air_contents.oxygen() > 0.5))
 
 		src.add_hotspot(exposed_temperature, exposed_volume)
-
-		for (var/atom/movable/hotspot/hotspot as anything in src.active_hotspots)
-			hotspot.just_spawned = (current_cycle < air_master.current_cycle)
 		//remove just_spawned protection if no longer processing this cell
 
 		return TRUE

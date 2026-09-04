@@ -902,12 +902,7 @@ proc/debug_map_apc_count(delim,zlim)
 	temperature
 		name = "temperature"
 		GetInfo(turf/theTurf, image/debugoverlay/img)
-			var/temp = null
-			if(issimulatedturf(theTurf))
-				var/turf/simulated/sim = theTurf
-				temp = sim.air.temperature()
-			if(isnull(temp))
-				temp = theTurf.temperature
+			var/temp = theTurf.return_air().temperature()
 			img.app.overlays = list(src.makeText("[temp]", RESET_ALPHA | RESET_COLOR))
 			var/p = clamp(temp / (T0C * 2), 0, 1)
 			img.app.color = rgb(round(p * 255), 0, round((1-p) * 255))

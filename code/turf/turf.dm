@@ -10,21 +10,14 @@
 
 	level = 1
 
-	// Properties for open tiles (/floor)
-	#define _UNSIM_TURF_GAS_DEF(GAS, ...) var/GAS = 0;
-	APPLY_TO_GASES(_UNSIM_TURF_GAS_DEF)
-	#undef _UNSIM_TURF_GAS_DEF
-
 	// Properties for airtight tiles (/wall)
 	var/thermal_conductivity = 0.05
-	var/heat_capacity = 1
 	/// Sum of all unstable atoms on the turf.
 	pass_unstable = TRUE
 	/// Whether this turf is passable. Used in the pathfinding system.
 	var/tmp/passability_cache
 
 	// Properties for both simmed and unsimmed
-	var/temperature = T20C
 	var/icon_old = null
 	var/name_old = null
 	var/path_old = null
@@ -276,7 +269,7 @@
 	fullbright = TRUE
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
-	heat_capacity = 700000
+	heat_capacity = 700
 	pathable = 0
 	mat_changename = 0
 	mat_changedesc = 0

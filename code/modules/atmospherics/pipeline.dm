@@ -154,10 +154,8 @@
 
 	//turf_air already modified by equalize_gases()
 
-	if(istype(target) && !target.processing)
-		if(target.air)
-			if(target.air.check_tile_graphic())
-				target.update_visuals(target.air)
+	if(target.air.check_tile_graphic())
+		target.update_visuals(target.air)
 
 	if(!isnull(src.network))
 		src.network.update = TRUE
@@ -168,12 +166,11 @@
 	if(!thermal_conductivity)
 		return // noop if no transfer of heat possible
 
-	var/total_heat_capacity = HEAT_CAPACITY(src.air)
-	var/partial_heat_capacity = total_heat_capacity*(share_volume/src.air.volume())
-	var/heat = 0
-	var/delta_temperature = 0
+	var/datum/gas_mixture/normal/partial = src.air.remove_ratio(share_volume / src.air.volume())
 
+	var/datum/gas_mixture/turf = target.return_air()
 
+	turf.temperature_share(partial, thermal_conductivity)
 
 	if(!isnull(src.network))
 		src.network.update = TRUE

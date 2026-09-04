@@ -86,7 +86,7 @@ APPLY_TO_GASES(_CREATE_CHANGE_PROCS)
 /// Returns the resulting number of neutrons - 0 means that the reaction consumed the input neutron
 /datum/gas_mixture/proc/neutron_interact()
 
-/// * Merges all air from giver into self. Deletes giver.
+/// * Merges all air from giver into self.
 /// * Returns: TRUE on success (no failure cases yet)
 /datum/gas_mixture/proc/merge(datum/gas_mixture/giver)
 
@@ -401,6 +401,29 @@ APPLY_TO_GASES(_CREATE_CHANGE_PROCS)
 
 	return TRUE
 
+/// Copies variables from goonmos
+/datum/gas_mixture/normal/copy_from_goonmos(list/mix)
+	#define _COPY_GAS(GAS, INDEX, ...) src.gases[INDEX] = mix[INDEX];
+	APPLY_TO_GASES(_COPY_GAS)
+	#undef _COPY_GAS
+
+	src.temperature = mix[INDEX_TEMPERATURE]
+	src.volume = mix[INDEX_VOLUME]
+	src.recalculate = TRUE
+
+	return TRUE
+
+/// Converts self into list form for goonmos
+/datum/gas_mixture/normal/copy_to_goonmos()
+	var/list/L[9]
+	#define _COPY_GAS(GAS, INDEX, ...) L[INDEX] = src.gases[INDEX];
+	APPLY_TO_GASES(_COPY_GAS)
+	#undef _COPY_GAS
+
+	L[INDEX_TEMPERATURE] = src.temperature
+
+	return L
+
 /// * Performs air sharing calculations between two gas_mixtures assuming only 1 boundary length.
 /// * Return: Moles of gas exchanged (+ if sharer received)
 /datum/gas_mixture/normal/share(datum/gas_mixture/sharer)
@@ -472,6 +495,11 @@ APPLY_TO_GASES(_CREATE_CHANGE_PROCS)
 	VAR_PRIVATE/turf/our_turf = null
 	VAR_PRIVATE/read_only = FALSE
 
+/datum/gas_mixture/turf_tied/New(T, read_only)
+	..()
+	src.our_turf = T
+	src.read_only = read_only
+
 #define _CREATE_GET_PROCS(GAS, INDEX, ...) /datum/gas_mixture/turf_tied/##GAS() { return goonmos_get_gas(src.our_turf, INDEX); }
 APPLY_TO_GASES(_CREATE_GET_PROCS)
 #undef _CREATE_GET_PROCS
@@ -490,21 +518,24 @@ APPLY_TO_GASES(_CREATE_CHANGE_PROCS)
 
 /// Sets the temperature to value
 /datum/gas_mixture/turf_tied/set_temperature(value)
+	if (src.read_only) return
 	goonmos_set_temperature(src.our_turf, value)
 
 /// Changes the temperature by value
 /datum/gas_mixture/turf_tied/adjust_temperature(value)
+	if (src.read_only) return
 	goonmos_adjust_temperature(src.our_turf, value)
 
 /// Returns the thermal energy
 /datum/gas_mixture/turf_tied/thermal_energy()
 
-
 /// Sets the thermal energy to value
 /datum/gas_mixture/turf_tied/set_thermal_energy(value)
+	if (src.read_only) return
 
 /// Changes the thermal energy by value
 /datum/gas_mixture/turf_tied/adjust_thermal_energy(value)
+	if (src.read_only) return
 
 /// Returns the volume
 /datum/gas_mixture/turf_tied/volume()
@@ -523,18 +554,56 @@ APPLY_TO_GASES(_CREATE_CHANGE_PROCS)
 
 /// Returns the heat capacity
 /datum/gas_mixture/turf_tied/heat_capacity()
-	return
+	return goonmos_get_heat_capacity(src.our_turf)
+
+/// * Merges all air from giver into self.
+/// * Returns: TRUE on success (no failure cases yet)
+/datum/gas_mixture/turf_tied/merge(datum/gas_mixture/normal/giver)
+	if (src.read_only) return
+	goonmos_assume_air(src.our_turf, giver.copy_to_goonmos())
+	return TRUE
 
 /// Zeros out the gas mixture
 /datum/gas_mixture/turf_tied/zero_out()
+	if (src.read_only) return
+
 
 /// Removes all gases except if in an underwater map, in which case the gas is set to be hot low pressure air.
 /datum/gas_mixture/turf_tied/reset_to_space_gas()
+	if (src.read_only) return
+	src.zero_out()
+
 
 /// Conducts heat between gases.
 /// Conduction_coefficient is a multiplier that determines how well heat equalises, with 0 meaning no heat and 1 meaning perfect equalisation.
 /datum/gas_mixture/turf_tied/temperature_share(datum/gas_mixture/sharer, conduction_coefficient)
 	var/heat = goonmos_mimic_temperature_exchange(src.our_turf, sharer.temperature(), sharer.heat_capacity(), conduction_coefficient)
-	src.adjust_thermal_energy(-heat)
 	sharer.adjust_thermal_energy(heat)
+	if (!src.read_only) src.adjust_thermal_energy(-heat)
 
+/// * Proportionally removes amount of gas from the gas_mixture.
+/// * Returns: gas_mixture with the gases removed.
+/datum/gas_mixture/normal/remove(amount)
+	var/sum = src.moles()
+	amount = min(amount,sum) //Can not take more air than tile has!
+	if(amount <= 0)
+		return
+
+	var/datum/gas_mixture/normal/removed = new /datum/gas_mixture/normal
+
+	#define _REMOVE_GAS(_, INDEX, ...) \
+		removed.gases[INDEX] = min(QUANTIZE((src.gases[INDEX]/sum)*amount), src.gases[INDEX]); \
+		src.gases[INDEX] -= removed.gases[INDEX];
+	APPLY_TO_GASES(_REMOVE_GAS)
+	#undef _REMOVE_GAS
+
+	removed.temperature = src.temperature
+	src.recalculate = TRUE
+
+	return removed
+
+/// * Proportionally removes amount of gas from the gas_mixture.
+/// * Returns: gas_mixture with the gases removed.
+/datum/gas_mixture/normal/remove_ratio(ratio)
+	//no read only here, handled in rust
+	
