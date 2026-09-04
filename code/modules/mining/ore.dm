@@ -30,6 +30,10 @@
 		if (!istype(AST))
 			return 1
 
+	proc/onScanDirect(var/turf/simulated/wall/auto/asteroid/AST, var/mob/user){
+		return "This stone contains [src.name]. Detected [AST.amount] unit of viable ore.<br>"
+	}
+
 /datum/ore/mauxite
 	name = "mauxite"
 	output = /obj/item/raw_material/mauxite

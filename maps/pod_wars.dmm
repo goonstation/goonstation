@@ -3574,11 +3574,7 @@
 	},
 /area/pod_wars/spacejunk/nancy)
 "nf" = (
-/obj/machinery/clonegrinder{
-	desc = "A high efficiency corpse grinder. It even grinds up whatever the corpse has on it! Use with caution!";
-	emagged = 1;
-	name = "Corpse Grinder 5000"
-	},
+/obj/machinery/clonegrinder/podwars,
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/redwhite,
 /area/pod_wars/team2/medbay)
@@ -6510,11 +6506,7 @@
 	},
 /area/pod_wars/spacejunk/uvb67/crew)
 "xS" = (
-/obj/machinery/clonegrinder{
-	desc = "A high efficiency corpse grinder. It even grinds up whatever the corpse has on it! Use with caution!";
-	emagged = 1;
-	name = "Corpse Grinder 5000"
-	},
+/obj/machinery/clonegrinder/podwars,
 /obj/item_dispenser/bandage{
 	pixel_y = 0;
 	pixel_x = -28

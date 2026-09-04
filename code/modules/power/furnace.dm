@@ -208,6 +208,9 @@ TYPEINFO(/obj/machinery/power/furnace)
 			return
 		actions.start(new /datum/action/bar/icon/stuff_mob_into_furnace(user, src, victim), user)
 
+	on_material_scan()
+		return "Filled more quickly by materials with high flammability"
+
 	// this is run after it's checked a person isn't being loaded in with a grab
 	// return value 0 means it can't be put it, 1 is loaded in
 	// original is 1 only if it's the item a person directly puts in, so that putting in a

@@ -13,7 +13,7 @@
 #define in_shuttle_transit(x) (istype(get_area(x), /area/shuttle/escape/transit) || istype(get_area(x), /area/shuttle_transit_space))
 
 #define inrestrictedz(thing) (isnull(get_step(thing, 0)) ? FALSE : isrestrictedz(get_step(thing, 0):z))
-#define inunrestrictedz(thing) (isnull(get_step(thing, 0)) ? FALSE : !isrestrictedz(get_step(thing, 0):z))
+#define inunrestrictedz(thing) (isnull(get_step(thing, 0)) ? FALSE : (!isrestrictedz(get_step(thing, 0):z) || in_menhir_zone(thing)))
 #define inonstationz(thing) (isnull(get_step(thing, 0)) ? FALSE : isonstationz(get_step(thing, 0):z))
 
 /// Returns true if the atom is inside of centcom
@@ -21,6 +21,9 @@
 
 /// Returns true if the atom is on a generated planet
 #define isgenplanet(x) (istype(get_area(x), /area/map_gen/planet))
+
+/// Returns true if the atom is inside one of the interior areas of Menhir's central artifact, TOREADOR-7I-22408 (the Crown)
+#define in_menhir_zone(x) (istype(get_area(x), /area/unspace) || istype(get_area(x), /area/precursor/menhir))
 
 /// areas where we will skip searching for shit like APCs and that do not have innate power
 #define area_space_nopower(x) (x.type == /area/space || x.type == /area/allowGenerate || x.type == /area/allowGenerate/trench || x.type == /area/space/plasma_reef)

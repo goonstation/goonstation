@@ -19,21 +19,25 @@
 /* This comment bypasses grep checks */ /var/__rust_g
 
 /proc/__detect_rust_g()
+	var/arch_suffix = null
+	#ifdef OPENDREAM
+	arch_suffix = "64"
+	#endif
 	if (world.system_type == UNIX)
-		if (fexists("./librust_g.so"))
+		if (fexists("./librust_g[arch_suffix].so"))
 			// No need for LD_LIBRARY_PATH badness.
-			return __rust_g = "./librust_g.so"
-		else if (fexists("./rust_g"))
+			return __rust_g = "./librust_g[arch_suffix].so"
+		else if (fexists("./rust_g[arch_suffix]"))
 			// Old dumb filename.
-			return __rust_g = "./rust_g"
-		else if (fexists("[world.GetConfig("env", "HOME")]/.byond/bin/rust_g"))
+			return __rust_g = "./rust_g[arch_suffix]"
+		else if (fexists("[world.GetConfig("env", "HOME")]/.byond/bin/rust_g[arch_suffix]"))
 			// Old dumb filename in `~/.byond/bin`.
-			return __rust_g = "rust_g"
+			return __rust_g = "rust_g[arch_suffix]"
 		else
 			// It's not in the current directory, so try others
-			return __rust_g = "librust_g.so"
+			return __rust_g = "librust_g[arch_suffix].so"
 	else
-		return __rust_g = "rust_g"
+		return __rust_g = "rust_g[arch_suffix]"
 
 #define RUST_G (__rust_g || __detect_rust_g())
 #endif
@@ -134,6 +138,55 @@
  */
 #define rustg_dmi_icon_states(fname) RUSTG_CALL(RUST_G, "dmi_icon_states")(fname)
 
+/**
+ * The below functions involve dmi metadata represented in the following format:
+ * list(
+ *     "width": number,
+ *     "height": number,
+ *     "states": list([STATE_DATA], ...)
+ * )
+ *
+ * STATE_DATA format:
+ * list(
+ *     "name": string,
+ *     "dirs": 1 | 4 | 8,
+ *     "delays"?: list(number, ...),
+ *     "rewind"?: TRUE | FALSE,
+ *     "movement"?: TRUE | FALSE,
+ *     "loop"?: number
+ * )
+ */
+
+/**
+ * Get the dmi metadata of the file located at `fname`.
+ * Returns a list in the metadata format listed above, or an error message.
+ */
+#define rustg_dmi_read_metadata(fname) json_decode(RUSTG_CALL(RUST_G, "dmi_read_metadata")(fname))
+/**
+ * Inject dmi metadata into a png file located at `path`.
+ * `metadata` must be a json_encode'd list in the metadata format listed above.
+ */
+#define rustg_dmi_inject_metadata(path, metadata) RUSTG_CALL(RUST_G, "dmi_inject_metadata")(path, metadata)
+
+#define rustg_create_qr_code_png(path, data) RUSTG_CALL(RUST_G, "create_qr_code_png")(path, data)
+#define rustg_create_qr_code_svg(data) RUSTG_CALL(RUST_G, "create_qr_code_svg")(data)
+
+/// Generates 32-byte Ed25519 signing key, encoded as standard base64.
+/// Returns raw key bytes. Not PEM or PKCS8.
+#define rustg_ed25519_generate_secret_key(...) RUSTG_CALL(RUST_G, "ed25519_generate_secret_key")()
+
+/// Derives Ed25519 public key from base64-encoded 32-byte `secret_key`.
+/// Returns base64-encoded raw 32-byte public key, or `ERROR: ...`.
+#define rustg_ed25519_derive_public_key(secret_key) RUSTG_CALL(RUST_G, "ed25519_derive_public_key")(secret_key)
+
+/// Signs `message` bytes with `secret_key`.
+/// Returns base64-encoded raw 64-byte signature, or `ERROR: ...`.
+#define rustg_ed25519_sign(secret_key, message) RUSTG_CALL(RUST_G, "ed25519_sign")(secret_key, message)
+
+/// Verifies Ed25519 `signature` over `message` bytes against `public_key`.
+/// Returns `"true"`, `"false"`, or `ERROR: ...`.
+#define rustg_ed25519_verify(public_key, message, signature) RUSTG_CALL(RUST_G, "ed25519_verify")(public_key, message, signature)
+
 #define rustg_file_read(fname) RUSTG_CALL(RUST_G, "file_read")(fname)
 #define rustg_file_exists(fname) (RUSTG_CALL(RUST_G, "file_exists")(fname) == "true")
 #define rustg_file_write(text, fname) RUSTG_CALL(RUST_G, "file_write")(text, fname)
@@ -166,20 +219,69 @@
 
 #define rustg_hash_string(algorithm, text) RUSTG_CALL(RUST_G, "hash_string")(algorithm, text)
 #define rustg_hash_file(algorithm, fname) RUSTG_CALL(RUST_G, "hash_file")(algorithm, fname)
-#define rustg_hash_generate_totp(seed) RUSTG_CALL(RUST_G, "generate_totp")(seed)
-#define rustg_hash_generate_totp_tolerance(seed, tolerance) RUSTG_CALL(RUST_G, "generate_totp_tolerance")(seed, tolerance)
+
+/// Supported algorithms: RUSTG_HASH_SHA1, RUSTG_HASH_SHA256, RUSTG_HASH_SHA512
+/// Seed must be between 10 bytes to 64 bytes (padded or unpadded) of base32. 20 bytes is recommended. Use a CSPRNG.
+/// Refresh rate is fixed at 30sec and digit count is fixed at 6
+#define rustg_hash_generate_totp(algorithm, seed) RUSTG_CALL(RUST_G, "generate_totp")(algorithm, seed)
+/// Supported algorithms: RUSTG_HASH_SHA1, RUSTG_HASH_SHA256, RUSTG_HASH_SHA512
+/// Seed must be between 10 bytes to 64 bytes (padded or unpadded) of base32. 20 bytes is recommended. Use a CSPRNG.
+/// Refresh rate is fixed at 30sec and digit count is fixed at 6
+/// Tolerance is the number of codes +-30sec from the current one that are allowed.
+#define rustg_hash_generate_totp_tolerance(algorithm, seed, tolerance) RUSTG_CALL(RUST_G, "generate_totp_tolerance")(algorithm, seed, tolerance)
+
+/// Creates a cryptographically-secure pseudorandom number generator using the OS-level PRNG as a seed
+/// n_bytes is the number of bytes provided to the RNG, the length of the string output varies by format
+/// The output string length and characters contained in each format is as follows:
+/// RUSTG_RNG_FORMAT_HEX: n_bytes * 2, [a-z0-9]
+/// RUSTG_RNG_FORMAT_ALPHANUMERIC: n_bytes, [A-Za-z0-9]
+/// RUSTG_RNG_FORMAT_BASE32: ceil(n_bytes / 5 * 8) [A-Z2-7]
+/// RUSTG_RNG_FORMAT_BASE32_PADDED: ceil(n_bytes / 5) * 8 [A-Z2-7=]
+/// RUSTG_RNG_FORMAT_BASE64: 4 * ceil(n_bytes/3), [A-Za-z0-9+/=]
+/// Outputs "ERROR: [reason]" if the format string provided is invalid, or n_bytes is not a positive non-zero integer
+#define rustg_csprng_chacha20(format, n_bytes) RUSTG_CALL(RUST_G, "csprng_chacha20")(format, "[n_bytes]")
+
+/// Creates a seeded pseudorandom number generator using the SHA256 hash output bytes of the seed string
+/// Note that this function is NOT suitable for use in cryptography and is intended for high-quality **predictable** RNG
+/// Use rustg_csprng_chacha20 for a cryptographically-secure PRNG.
+/// n_bytes is the number of bytes provided to the RNG, the length of the string output varies by format
+/// The output string length and characters contained in each format is as follows:
+/// RUSTG_RNG_FORMAT_HEX: n_bytes * 2, [a-z0-9]
+/// RUSTG_RNG_FORMAT_ALPHANUMERIC: n_bytes, [A-Za-z0-9]
+/// RUSTG_RNG_FORMAT_BASE32: ceil(n_bytes / 5 * 8) [A-Z2-7]
+/// RUSTG_RNG_FORMAT_BASE32_PADDED: ceil(n_bytes / 5) * 8 [A-Z2-7=]
+/// RUSTG_RNG_FORMAT_BASE64: 4 * ceil(n_bytes/3), [A-Za-z0-9+/=]
+/// Outputs "ERROR: [reason]" if the format string provided is invalid, or n_bytes is not a positive non-zero integer
+#define rustg_prng_chacha20_seeded(format, n_bytes, seed) RUSTG_CALL(RUST_G, "prng_chacha20_seeded")(format, "[n_bytes]", seed)
+
+#define RUSTG_RNG_FORMAT_HEX "hex"
+#define RUSTG_RNG_FORMAT_ALPHANUMERIC "alphanumeric"
+#define RUSTG_RNG_FORMAT_BASE32 "base32_rfc4648"
+#define RUSTG_RNG_FORMAT_BASE32_PADDED "base32_rfc4648_pad"
+#define RUSTG_RNG_FORMAT_BASE64 "base64"
 
 #define RUSTG_HASH_MD5 "md5"
 #define RUSTG_HASH_SHA1 "sha1"
 #define RUSTG_HASH_SHA256 "sha256"
 #define RUSTG_HASH_SHA512 "sha512"
 #define RUSTG_HASH_XXH64 "xxh64"
+#define RUSTG_HASH_BASE32 "base32_rfc4648"
+#define RUSTG_HASH_BASE32_PADDED "base32_rfc4648_pad"
 #define RUSTG_HASH_BASE64 "base64"
 
 /// Encode a given string into base64
 #define rustg_encode_base64(str) rustg_hash_string(RUSTG_HASH_BASE64, str)
-/// Decode a given base64 string
+/// Decode a given base64 string. This expects padding.
+/// Returns a blank string if the string is not valid base64.
 #define rustg_decode_base64(str) RUSTG_CALL(RUST_G, "decode_base64")(str)
+
+/// Encode a given string into base32 (RFC4648)
+/// If padding set to FALSE, will not output padding characters.
+#define rustg_encode_base32(str, padding) rustg_hash_string(padding ? RUSTG_HASH_BASE32_PADDED : RUSTG_HASH_BASE32, str)
+/// Decode a given base32 (RFC4648) string
+/// If padding set to FALSE, decoding will not support padding characters.
+/// Returns a blank string if the string is not valid base32.
+#define rustg_decode_base32(str, padding) RUSTG_CALL(RUST_G, "decode_base32")(str, "[padding ? 1 : 0]")
 
 #ifdef RUSTG_OVERRIDE_BUILTINS
 	#define md5(thing) (isfile(thing) ? rustg_hash_file(RUSTG_HASH_MD5, "[thing]") : rustg_hash_string(RUSTG_HASH_MD5, thing))
@@ -194,13 +296,21 @@
 #define rustg_http_request_blocking(method, url, body, headers, options) RUSTG_CALL(RUST_G, "http_request_blocking")(method, url, body, headers, options)
 #define rustg_http_request_async(method, url, body, headers, options) RUSTG_CALL(RUST_G, "http_request_async")(method, url, body, headers, options)
 #define rustg_http_check_request(req_id) RUSTG_CALL(RUST_G, "http_check_request")(req_id)
+/// This is basically just `rustg_http_request_async` if you don't care about the response.
+/// This will either return "ok" or an error, as this does not create a job.
+#define rustg_http_request_fire_and_forget(method, url, body, headers, options) RUSTG_CALL(RUST_G, "http_request_fire_and_forget")(method, url, body, headers, options)
 
-/// Generates a spritesheet at: [file_path][spritesheet_name]_[size_id].png
+/// Generates a spritesheet at: [file_path][spritesheet_name]_[size_id].[png or dmi]
 /// The resulting spritesheet arranges icons in a random order, with the position being denoted in the "sprites" return value.
 /// All icons have the same y coordinate, and their x coordinate is equal to `icon_width * position`.
 ///
 /// hash_icons is a boolean (0 or 1), and determines if the generator will spend time creating hashes for the output field dmi_hashes.
-/// These hashes can be heplful for 'smart' caching (see rustg_iconforge_cache_valid), but require extra computation.
+/// These hashes can be helpful for 'smart' caching (see rustg_iconforge_cache_valid), but require extra computation.
+///
+/// generate_dmi is a boolean (0 or 1), and determines if the generator will save the sheet as a DMI or stripped PNG file.
+/// DMI files can be used to replace bulk Insert() operations, PNGs are more useful for asset transport or UIs. DMI generation is slower due to more metadata.
+/// flatten is a boolean (0 or 1), and determines if the DMI output will be flattened to a single frame/dir if unscoped (null/0 dir or frame values).
+/// PNGs are always flattened, regardless of argument.
 ///
 /// Spritesheet will contain all sprites listed within "sprites".
 /// "sprites" format:
@@ -216,9 +326,15 @@
 /// )
 /// TRANSFORM_OBJECT format:
 /// list("type" = RUSTG_ICONFORGE_BLEND_COLOR, "color" = "#ff0000", "blend_mode" = ICON_MULTIPLY)
-/// list("type" = RUSTG_ICONFORGE_BLEND_ICON, "icon" = [SPRITE_OBJECT], "blend_mode" = ICON_OVERLAY)
+/// list("type" = RUSTG_ICONFORGE_BLEND_ICON, "icon" = [SPRITE_OBJECT], "blend_mode" = ICON_OVERLAY, "x" = 1, "y" = 1) // offsets optional
 /// list("type" = RUSTG_ICONFORGE_SCALE, "width" = 32, "height" = 32)
 /// list("type" = RUSTG_ICONFORGE_CROP, "x1" = 1, "y1" = 1, "x2" = 32, "y2" = 32) // (BYOND icons index from 1,1 to the upper bound, inclusive)
+/// list("type" = RUSTG_ICONFORGE_MAP_COLORS, "rr" = 0.5, "rg" = 0.5, "rb" = 0.5, "ra" = 1, "gr" = 1, "gg" = 1, "gb" = 1, "ga" = 1, ...) // alpha arguments and rgba0 optional
+/// list("type" = RUSTG_ICONFORGE_FLIP, "dir" = SOUTH)
+/// list("type" = RUSTG_ICONFORGE_TURN, "angle" = 90.0)
+/// list("type" = RUSTG_ICONFORGE_SHIFT, "dir" = EAST, "offset" = 10, "wrap" = FALSE)
+/// list("type" = RUSTG_ICONFORGE_SWAP_COLOR, "src_color" = "#ff0000", "dst_color" = "#00ff00") // alpha bits supported
+/// list("type" = RUSTG_ICONFORGE_DRAW_BOX, "color" = "#ff0000", "x1" = 1, "y1" = 1, "x2" = 32, "y2" = 32) // alpha bits supported. color can be null/omitted for transparency. x2 and y2 will default to x1 and y1 if omitted
 ///
 /// Returns a SpritesheetResult as JSON, containing fields:
 /// list(
@@ -229,9 +345,24 @@
 ///     "error" = "[A string, empty if there were no errors.]"
 /// )
 /// In the case of an unrecoverable panic from within Rust, this function ONLY returns a string containing the error.
-#define rustg_iconforge_generate(file_path, spritesheet_name, sprites, hash_icons) RUSTG_CALL(RUST_G, "iconforge_generate")(file_path, spritesheet_name, sprites, "[hash_icons]")
+#define rustg_iconforge_generate(file_path, spritesheet_name, sprites, hash_icons, generate_dmi, flatten) RUSTG_CALL(RUST_G, "iconforge_generate")(file_path, spritesheet_name, sprites, "[hash_icons]", "[generate_dmi]", "[flatten]")
 /// Returns a job_id for use with rustg_iconforge_check()
-#define rustg_iconforge_generate_async(file_path, spritesheet_name, sprites, hash_icons) RUSTG_CALL(RUST_G, "iconforge_generate_async")(file_path, spritesheet_name, sprites, "[hash_icons]")
+#define rustg_iconforge_generate_async(file_path, spritesheet_name, sprites, hash_icons, generate_dmi, flatten) RUSTG_CALL(RUST_G, "iconforge_generate_async")(file_path, spritesheet_name, sprites, "[hash_icons]", "[generate_dmi]", "[flatten]")
+/// Creates a single DMI or PNG using 'sprites' as a list of icon states / images.
+/// This function is intended for generating icons with only a few states that have little in common with each other, and only one size.
+/// For icons with a large number of states, potentially variable sizes, that re-use sets of transforms more than once, or that benefit from caching, use rustg_iconforge_generate.
+/// sprites - follows the same format as rustg_iconforge_generate.
+/// file_path - the full relative path at which the PNG or DMI will be written. It must be a full filepath such as tmp/my_icon.dmi or my_icon.png
+/// flatten - boolean (0 or 1) determines if the DMI output will be flattened to a single frame/dir if unscoped (null/0 dir or frame values).
+///
+/// Returns a HeadlessResult, decoded to a BYOND list (always, it's not possible for this to panic unless rustg itself has an issue) containing the following fields:
+/// list(
+///     "file_path" = "tmp/my_icon.dmi" // [whatever you input returned back to you, null if there was a fatal error]
+///     "width" = 32 // the width, which is determined by the first entry of 'sprites', null if there was a fatal error
+///     "height" = 32 // the height, which is determined by the first entry of 'sprites', null if there was a fatal error
+///     "error" = "[A string, null if there were no errors.]"
+/// )
+#define rustg_iconforge_generate_headless(file_path, sprites, flatten) json_decode(RUSTG_CALL(RUST_G, "iconforge_generate_headless")(file_path, sprites, "[flatten]"))
 /// Returns the status of an async job_id, or its result if it is completed. See RUSTG_JOB DEFINEs.
 #define rustg_iconforge_check(job_id) RUSTG_CALL(RUST_G, "iconforge_check")("[job_id]")
 /// Clears all cached DMIs and images, freeing up memory.
@@ -252,7 +383,7 @@
 /// Provided a /datum/greyscale_config typepath, JSON string containing the greyscale config, and path to a DMI file containing the base icons,
 /// Loads that config into memory for later use by rustg_iconforge_gags(). The config_path is the unique identifier used later.
 /// JSON Config schema: https://hackmd.io/@tgstation/GAGS-Layer-Types
-/// Unsupported features: color_matrix layer type, 'or' blend_mode. May not have BYOND parity with animated icons or varying dirs between layers.
+/// Adding dirs or frames (via blending larger icons) to icons with more than 1 dir or 1 frame is not supported.
 /// Returns "OK" if successful, otherwise, returns a string containing the error.
 #define rustg_iconforge_load_gags_config(config_path, config_json, config_icon_path) RUSTG_CALL(RUST_G, "iconforge_load_gags_config")("[config_path]", config_json, config_icon_path)
 /// Given a config_path (previously loaded by rustg_iconforge_load_gags_config), and a string of hex colors formatted as "#ff00ff#ffaa00"
@@ -268,6 +399,12 @@
 #define RUSTG_ICONFORGE_BLEND_ICON "BlendIcon"
 #define RUSTG_ICONFORGE_CROP "Crop"
 #define RUSTG_ICONFORGE_SCALE "Scale"
+#define RUSTG_ICONFORGE_MAP_COLORS "MapColors"
+#define RUSTG_ICONFORGE_FLIP "Flip"
+#define RUSTG_ICONFORGE_TURN "Turn"
+#define RUSTG_ICONFORGE_SHIFT "Shift"
+#define RUSTG_ICONFORGE_SWAP_COLOR "SwapColor"
+#define RUSTG_ICONFORGE_DRAW_BOX "DrawBox"
 
 #define RUSTG_JOB_NO_RESULTS_YET "NO RESULTS YET"
 #define RUSTG_JOB_NO_SUCH_JOB "NO SUCH JOB"
@@ -390,6 +527,14 @@
 #define rustg_time_milliseconds(id) text2num(RUSTG_CALL(RUST_G, "time_milliseconds")(id))
 #define rustg_time_reset(id) RUSTG_CALL(RUST_G, "time_reset")(id)
 
+/// Returns the current timestamp (in local time), formatted with the given format string.
+/// See https://docs.rs/chrono/latest/chrono/format/strftime/index.html for documentation on the formatting syntax.
+#define rustg_formatted_timestamp(format) RUSTG_CALL(RUST_G, "formatted_timestamp")(format)
+
+/// Returns the current timestamp (with the given UTC offset in hours), formatted with the given format string.
+/// See https://docs.rs/chrono/latest/chrono/format/strftime/index.html for documentation on the formatting syntax.
+#define rustg_formatted_timestamp_tz(format, offset) RUSTG_CALL(RUST_G, "formatted_timestamp")(format, offset)
+
 /// Returns the timestamp as a string
 /proc/rustg_unix_timestamp()
 	return RUSTG_CALL(RUST_G, "unix_timestamp")()
@@ -401,6 +546,22 @@
 	#define url_encode(text) rustg_url_encode(text)
 	#define url_decode(text) rustg_url_decode(text)
 #endif
+
+/// Generates a version 4 UUID.
+/// See https://www.ietf.org/rfc/rfc9562.html#section-5.4 for specifics on version 4 UUIDs.
+#define rustg_generate_uuid_v4(...) RUSTG_CALL(RUST_G, "uuid_v4")()
+
+/// Generates a version 7 UUID, with the current time.
+/// See https://www.ietf.org/rfc/rfc9562.html#section-5.7 for specifics on version 7 UUIDs.
+#define rustg_generate_uuid_v7(...) RUSTG_CALL(RUST_G, "uuid_v7")()
+
+/// Generates a random version 2 CUID.
+/// See https://github.com/paralleldrive/cuid2 for specifics on version 2 CUIDs.
+#define rustg_generate_cuid2(...) RUSTG_CALL(RUST_G, "cuid2")()
+
+/// Generates a random version 2 CUID with the given length.
+/// See https://github.com/paralleldrive/cuid2 for specifics on version 2 CUIDs.
+#define rustg_generate_cuid2_length(length) RUSTG_CALL(RUST_G, "cuid2_len")("[length]")
 
 /**
  * This proc generates a noise grid using worley noise algorithm

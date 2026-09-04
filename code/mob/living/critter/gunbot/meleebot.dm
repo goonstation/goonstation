@@ -70,7 +70,7 @@
 
 		HH = hands[3]
 		HH.limb = new /datum/limb/small_critter/strong
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "gunbothand"
 		HH.limb_name = "gunbot hands"

@@ -25,6 +25,9 @@
 			maximum_pressure = max((src.material.getProperty("hard") * 4 + src.material.getProperty("density")) * ONE_ATMOSPHERE, ONE_ATMOSPHERE * 2)
 		return
 
+	on_material_scan()
+		return "May contain a maximum pressure of [src.maximum_pressure]KPa"
+
 	New()
 		..()
 

@@ -49,15 +49,21 @@
 	var/list/param_list = params2list(params)
 
 	// Convert from screen (x, y) to map (x, y) coordinates.
-	var/x = round((text2num(param_list["icon-x"]) - src.displayed_minimap.minimap_render.pixel_x) / (src.displayed_minimap.zoom_coefficient * src.displayed_minimap.map_scale))
-	var/y = round((text2num(param_list["icon-y"]) - src.displayed_minimap.minimap_render.pixel_y) / (src.displayed_minimap.zoom_coefficient * src.displayed_minimap.map_scale))
+	var/screen_scale = src.displayed_minimap.zoom_coefficient * src.displayed_minimap.map_scale
+	// Keep these fractional so zooming in and back out around the same cursor position is reversible.
+	var/x = ((text2num(param_list["icon-x"]) - src.displayed_minimap.minimap_render.pixel_x) / screen_scale) + 1
+	var/y = ((text2num(param_list["icon-y"]) - src.displayed_minimap.minimap_render.pixel_y) / screen_scale) + 1
 
-	if (dy > 1)
-		src.displayed_minimap.zoom_on_point(src.displayed_minimap.zoom_coefficient * 1.1, x, y)
-		src.controlled_minimap.map.zoom_on_point(src.displayed_minimap.zoom_coefficient, x, y)
-	else if (dy < 1)
-		src.displayed_minimap.zoom_on_point(src.displayed_minimap.zoom_coefficient * 0.9, x, y)
-		src.controlled_minimap.map.zoom_on_point(src.displayed_minimap.zoom_coefficient, x, y)
+	var/new_zoom
+	if (dy > 0)
+		new_zoom = round(src.displayed_minimap.zoom_coefficient * 1.1, 0.001)
+	else if (dy < 0)
+		new_zoom = round(src.displayed_minimap.zoom_coefficient / 1.1, 0.001)
+	else
+		return
+
+	src.displayed_minimap.zoom_on_point(new_zoom, x, y)
+	src.controlled_minimap.map.zoom_on_point(src.displayed_minimap.zoom_coefficient, x, y)
 
 	src.pan_map(0, 0)
 
@@ -81,8 +87,9 @@
 
 	// Convert from screen (x, y) to map (x, y) coordinates, and save to selected x, y vars.
 	var/list/param_list = params2list(params)
-	src.selected_x = round((text2num(param_list["icon-x"]) - src.displayed_minimap.minimap_render.pixel_x) / (src.displayed_minimap.zoom_coefficient * src.displayed_minimap.map_scale))
-	src.selected_y = round((text2num(param_list["icon-y"]) - src.displayed_minimap.minimap_render.pixel_y) / (src.displayed_minimap.zoom_coefficient * src.displayed_minimap.map_scale))
+	var/screen_scale = src.displayed_minimap.zoom_coefficient * src.displayed_minimap.map_scale
+	src.selected_x = round((text2num(param_list["icon-x"]) - src.displayed_minimap.minimap_render.pixel_x) / screen_scale) + 1
+	src.selected_y = round((text2num(param_list["icon-y"]) - src.displayed_minimap.minimap_render.pixel_y) / screen_scale) + 1
 
 	src.selecting_coordinates = FALSE
 
@@ -92,8 +99,9 @@
 
 	// Convert from screen (x, y) to map (x, y) coordinates.
 	var/list/param_list = params2list(params)
-	var/x = round((text2num(param_list["icon-x"]) - src.displayed_minimap.minimap_render.pixel_x) / (src.displayed_minimap.zoom_coefficient * src.displayed_minimap.map_scale))
-	var/y = round((text2num(param_list["icon-y"]) - src.displayed_minimap.minimap_render.pixel_y) / (src.displayed_minimap.zoom_coefficient * src.displayed_minimap.map_scale))
+	var/screen_scale = src.displayed_minimap.zoom_coefficient * src.displayed_minimap.map_scale
+	var/x = round((text2num(param_list["icon-x"]) - src.displayed_minimap.minimap_render.pixel_x) / screen_scale) + 1
+	var/y = round((text2num(param_list["icon-y"]) - src.displayed_minimap.minimap_render.pixel_y) / screen_scale) + 1
 	var/turf/map_location = locate(x, y, src.displayed_minimap.z_level)
 
 	if (!src.marker_silhouette)
@@ -103,7 +111,7 @@
 		src.marker_silhouette.marker.alpha = 175
 
 	src.marker_silhouette.target = map_location
-	src.displayed_minimap.set_marker_position(src.marker_silhouette, src.marker_silhouette.target.x, src.marker_silhouette.target.y, src.displayed_minimap.z_level)
+	src.displayed_minimap.update_marker_position(src.marker_silhouette)
 
 /// Set up this minimap controller's displayed minimap datum and click overlay.
 /obj/minimap_controller/proc/initialise_minimap_controller()

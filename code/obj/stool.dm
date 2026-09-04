@@ -34,7 +34,7 @@
 	var/securable = 0
 	var/list/scoot_sounds = null
 	var/parts_type = /obj/item/furniture_parts/stool
-	material_amt = 0.1
+	material_amt = MATERIAL::AMOUNT::SHEET
 
 	New()
 		START_TRACKING
@@ -339,7 +339,7 @@ TYPEINFO(/obj/stool/wooden)
 	var/security = 0
 	var/obj/item/clothing/suit/bedsheet/sheet = null
 	parts_type = /obj/item/furniture_parts/bed
-	material_amt = 0.2
+	material_amt = MATERIAL::AMOUNT::SHEET * 2
 
 	brig
 		name = "brig cell bed"
@@ -590,7 +590,7 @@ TYPEINFO(/obj/stool/chair)
 	anchored = ANCHORED
 	scoot_sounds = list( 'sound/misc/chair/normal/scoot1.ogg', 'sound/misc/chair/normal/scoot2.ogg', 'sound/misc/chair/normal/scoot3.ogg', 'sound/misc/chair/normal/scoot4.ogg', 'sound/misc/chair/normal/scoot5.ogg' )
 	parts_type = null
-	material_amt = 0.1
+	material_amt = MATERIAL::AMOUNT::SHEET
 
 	moveable
 		anchored = UNANCHORED
@@ -960,7 +960,7 @@ TYPEINFO(/obj/item/chair/folded)
 	stamina_damage = 45
 	stamina_cost = 21
 	stamina_crit_chance = 10
-	material_amt = 0.1
+	material_amt = MATERIAL::AMOUNT::SHEET
 	hitsound = 'sound/impact_sounds/folding_chair.ogg'
 	var/c_color = null
 	can_arcplate = FALSE

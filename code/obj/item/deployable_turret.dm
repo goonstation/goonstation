@@ -540,6 +540,7 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 	projectile_type = /datum/projectile/bullet/akm
 	icon_tag = "st"
 	associated_deployer = /obj/item/turret_deployer/syndicate
+	burst_size = 4
 
 	New(loc, direction)
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)

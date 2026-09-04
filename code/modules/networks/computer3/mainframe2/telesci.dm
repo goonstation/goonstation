@@ -149,6 +149,8 @@ TYPEINFO(/obj/machinery/networked/telepad)
 				new_signal.data["address_1"] = signal_sender
 				new_signal.data["sender"] = src.net_id
 				new_signal.data["command"] = "ping_reply"
+				new_signal.data["device"] = src.device_tag
+				new_signal.data["netid"] = src.net_id
 				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, new_signal)
 			return
 		//the only

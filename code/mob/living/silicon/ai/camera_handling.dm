@@ -190,7 +190,7 @@
 
 
 		var/failedToTrack = 0
-		if (!can_track(tracking))
+		if (!is_mob_trackable_by_AI(tracking))
 			failedToTrack = 1
 
 		#ifndef UPSCALED_MAP
@@ -211,21 +211,3 @@
 		owner.hud.update_tracking()
 
 		last_track = world.timeofday
-
-	proc/can_track(mob/target as mob)
-		// hiding in bushes stops tracking
-		if (locate(/obj/shrub) in target.loc)
-			return FALSE
-		//Allow tracking of cyborgs & mobcritters, however
-		//Track autofails if:
-		//Target is wearing a syndicate ID
-		//Target is inside a dummy
-		//Target is not at a turf
-		//Target is not on station level
-		return (target.loc?.z == Z_LEVEL_STATION) \
-				&& ((issilicon(target) && istype(target.loc, /turf) ) \
-				|| (ismobcritter(target) && istype(target.loc, /turf) ) \
-				|| !((ishuman(target) \
-				&& istype(get_id_card(target:wear_id), /obj/item/card/id/syndicate)) \
-				|| (hasvar(target, "wear_id") && istype(get_id_card(target:wear_id), /obj/item/card/id/syndicate)) \
-				||  !istype(target.loc, /turf)))

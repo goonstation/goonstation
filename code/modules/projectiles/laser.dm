@@ -223,7 +223,7 @@ toxic - poisons
 
 		on_launch(obj/projectile/O)
 			. = ..()
-			O.AddComponent(/datum/component/proj_mining, 0.2, 5)
+			O.AddComponent(/datum/component/proj_mining, 0.2, 5, MINING_DMG_LASER)
 
 		on_hit(atom/hit)
 			if (istype(hit,/obj/critter)) //MBC : if there was a cleaner way to do this, I couldn't find it.
@@ -643,7 +643,7 @@ toxic - poisons
 
 	on_launch(obj/projectile/O)
 		. = ..()
-		O.AddComponent(/datum/component/proj_mining, 0.2, 2)
+		O.AddComponent(/datum/component/proj_mining, 0.2, 2, MINING_DMG_LASER)
 
 /datum/projectile/laser/drill
 	name = "drill bit"
@@ -666,7 +666,7 @@ toxic - poisons
 	var/hit_human_sound = 'sound/impact_sounds/Slimy_Splat_1.ogg'
 	on_launch(obj/projectile/O)
 		. = ..()
-		O.AddComponent(/datum/component/proj_mining, 0.15, 0)
+		O.AddComponent(/datum/component/proj_mining, 0.15, 0, MINING_DMG_DRILL)
 
 	on_hit(atom/hit)
 		if (ishuman(hit))

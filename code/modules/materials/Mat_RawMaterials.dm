@@ -152,17 +152,18 @@
 			mat_changename = FALSE
 
 			random
-				var/static/list/random_blob_materials = null
+				var/static/list/datum/material/organic/blob/random_blob_materials = null
 				New()
 					. = ..()
 					if (!src.random_blob_materials)
 						src.random_blob_materials = list()
 						var/datum/material/base_mat = getMaterial("blob")
 						for (var/i in 1 to 10)
-							var/datum/material/new_mat = base_mat.getMutable()
-							new_mat.setColor(rgb(rand(1,255), rand(1,255), rand(1,255), 255))
+							var/datum/material/organic/blob/new_mat = base_mat.getMutable()
+							new_mat.match_to_blob_color(rgb(rand(0,255), rand(0,255), rand(0,255)))
 							src.random_blob_materials += new_mat
-					src.setMaterial(pick(src.random_blob_materials))
+					var/datum/material/organic/blob/blob_mat = pick(src.random_blob_materials)
+					src.setMaterial(blob_mat)
 	sphere
 		// energy
 		icon_state = "sphere"
@@ -317,6 +318,7 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 	max_stack = 10
 	uses_default_material_appearance = FALSE
 	mat_changename = FALSE
+	var/is_rotated = FALSE // Logs are rotated after being felled. Need to unrotate them after stacking.
 
 	attackby(obj/item/W, mob/user)
 		if ((istool(W, TOOL_CUTTING | TOOL_SAWING)))
@@ -330,6 +332,10 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 			..()
 
 	_update_stack_appearance()
+		..()
+		if(src.is_rotated)
+			src.Turn(-90)
+			src.is_rotated = FALSE
 		switch(src.amount)
 			if(1)
 				src.icon_state = "log1"
@@ -346,6 +352,7 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 	icon_state = "log_thin1"
 
 	_update_stack_appearance()
+		..()
 		switch(src.amount)
 			if(1)
 				src.icon_state = "log_thin1"

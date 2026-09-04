@@ -2,7 +2,7 @@
 var/global/list/material_cache
 
 /atom/var/datum/material/material = null
-/atom/var/material_amt = 1
+/atom/var/material_amt = MATERIAL::AMOUNT::DEFAULT
 
 /proc/isExploitableObject(var/atom/A)
 	if(istype(A, /obj/item/tile) || istype(A, /obj/item/rods) || istype(A, /obj/item/sheet) || istype(A, /obj/item/cable_coil) || istype(A, /obj/item/raw_material/shard)) return 1
@@ -205,7 +205,6 @@ proc/get_icon_states(icon)
 
 	return /obj/item/material_piece
 
-/// Increases generations on material triggers and handles removal if over the generation cap.
 /proc/handleTriggerGenerations(var/list/toDo)
 	for(var/datum/materialProc/current in toDo)
 		if(current.max_generations != -1 && (toDo[current] + 1) > current.max_generations)
@@ -254,6 +253,9 @@ proc/get_icon_states(icon)
 	if(src.material)
 		return src.material_amt * src.amount
 	return 0
+/// Use to share type-specific material information when scanned.
+/atom/proc/on_material_scan()
+	return null
 
 //custom matsci event procs
 //Use these if you want the stom in general to interact in a special way with the items procs e.g. spears on attack triggering the tip, but on pickup the shafts material

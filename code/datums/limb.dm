@@ -637,6 +637,8 @@
 	var/miss_prob = 80
 	var/stam_damage_mult = 1
 	var/harm_intent_delay = COMBAT_CLICK_DELAY
+	var/crushing = FALSE
+	var/bleed = 0
 
 	attack_hand(atom/target, var/mob/user, var/reach)
 		if (ismob(target))
@@ -666,11 +668,15 @@
 		if (prob(src.miss_prob) || is_incapacitated(target)|| target.restrained())
 
 			var/datum/attackResults/msgs = user.calculate_melee_attack(target, dam_low, dam_high, 0, stam_damage_mult, !isghostcritter(user), can_punch = 0, can_kick = 0)
+			if(src.crushing)
+				msgs.damage_type = DAMAGE_CRUSH
 			user.attack_effects(target, user.zone_sel?.selecting)
 			msgs.base_attack_message = src.custom_msg ? src.custom_msg : SPAN_COMBAT("<b>[user] bites [target]!</b>")
 			msgs.played_sound = src.sound_attack
 			msgs.flush(0)
 			user.HealDamage("All", 2, 0)
+			if(src.bleed)
+				take_bleeding_damage(target, null, bleed, DAMAGE_CUT, bleed-5, get_turf(target))
 		else
 			user.visible_message(SPAN_COMBAT("<b>[user] attempts to bite [target] but misses!</b>"))
 		user.lastattacked = get_weakref(target)
@@ -778,6 +784,26 @@
 /datum/limb/mouth/small/possum
 	dam_low = 0
 	dam_high = 0
+
+/datum/limb/mouth/hippo
+	sound_attack = 'sound/impact_sounds/Flesh_Tear_2.ogg'
+	dam_low = 14
+	dam_high = 28
+	can_beat_up_robots = TRUE
+	miss_prob = 90
+	crushing = TRUE
+	bleed = 20
+
+	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
+		if (issilicon(target))
+			special_attack_silicon(target, user)
+			return
+		. = ..()
+	harm(mob/target, var/mob/user)
+		if (issilicon(target))
+			special_attack_silicon(target, user)
+			return
+		..()
 
 /datum/limb/item
 	can_pickup_item = FALSE
@@ -1049,6 +1075,7 @@
 	var/log_name = "brullbar limbs"
 	var/quality = 0.7
 	var/king = FALSE
+	can_beat_up_robots = TRUE
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
 		if (!holder)
 			return

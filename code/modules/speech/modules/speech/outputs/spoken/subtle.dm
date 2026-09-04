@@ -8,6 +8,9 @@
 	if (message.maptext_variables["alpha"] == 255)
 		message.maptext_variables["alpha"] = 140
 
+	// Don't relay over radios, etc.
+	message.can_relay = FALSE
+
 	// Create a text reference to the speaker's mind, if they have one.
 	var/mind_ref = ""
 	if (ismob(message.speaker))

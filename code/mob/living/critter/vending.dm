@@ -61,7 +61,7 @@ ABSTRACT_TYPE(/mob/living/critter/vending)
 		HH.limb = new src.limb_type
 		HH.name = limb_name
 		HH.limb_name = limb_name
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handzap"
 		HH.can_hold_items = 0
 		HH.can_attack = 0
@@ -69,7 +69,7 @@ ABSTRACT_TYPE(/mob/living/critter/vending)
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/mouth/small
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "mouth"
 		HH.name = "dispenser door"
 		HH.limb_name = "teeth"

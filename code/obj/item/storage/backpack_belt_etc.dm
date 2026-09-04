@@ -140,6 +140,9 @@
 	spawn_contents = list(/obj/item/storage/box/starter)
 	satchel_variant = /obj/item/storage/backpack/satchel/NT
 
+	ERT
+		spawn_contents = list(/obj/item/storage/box/starternt)
+
 /obj/item/storage/backpack/syndie
 	name = "\improper Syndicate backpack"
 	desc = "A stylish red, evil, thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on an operative's back."
@@ -501,6 +504,9 @@
 	icon_state = "NTsatchel"
 	item_state = "NTsatchel"
 	spawn_contents = list(/obj/item/storage/box/starter)
+
+	ERT
+		spawn_contents = list(/obj/item/storage/box/starternt)
 
 /obj/item/storage/backpack/satchel/captain
 	name = "Captain's Satchel"
@@ -916,6 +922,19 @@
 	/obj/item/device/multitool,
 	/obj/item/deconstructor)
 
+/obj/item/storage/belt/utility/atmos
+	name = "atmospheric technican's belt"
+	desc = "A modified utility belt with a holsters for an HPD & a fire extinguisher"
+	can_hold = list(/obj/item/places_pipes, /obj/item/extinguisher)
+
+	spawn_contents = list(/obj/item/crowbar/yellow,
+	/obj/item/weldingtool/yellow,
+	/obj/item/wrench/yellow,
+	/obj/item/device/multitool,
+	/obj/item/places_pipes,
+	/obj/item/device/analyzer/atmospheric/upgraded,
+	/obj/item/extinguisher)
+
 /obj/item/storage/belt/utility/virtual
 	name = "virtual utility belt"
 	desc = "Are these tools DLC?"
@@ -1116,7 +1135,6 @@
 		spawn_contents = list(/obj/item/gun/energy/cornicen3,
 		/obj/item/old_grenade/energy_frag = 2,
 		/obj/item/old_grenade/energy_concussion = 2,
-		/obj/item/tank/pocket/extended/oxygen,
 		/obj/item/reagent_containers/food/snacks/donkpocket/warm)
 
 	baton

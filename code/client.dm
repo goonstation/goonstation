@@ -182,7 +182,7 @@
 			qdel(C, FALSE, TRUE)
 		dc.Cut()
 
-	var/list/lookup = comp_lookup
+	var/list/lookup = signal_listeners
 	if(lookup)
 		for(var/sig in lookup)
 			var/list/comps = lookup[sig]
@@ -192,7 +192,7 @@
 			else
 				var/datum/component/comp = comps
 				comp.UnregisterSignal(src, sig)
-		comp_lookup = lookup = null
+		signal_listeners = lookup = null
 
 	for(var/target in signal_procs)
 		UnregisterSignal(target, signal_procs[target])
@@ -751,7 +751,7 @@ var/global/curr_day = null
 	set category = "Commands"
 
 	var/cant_interact_time = null
-	if (isnewplayer(src.mob) && src.player.get_rounds_participated_rp() <= 10 && !src.player.cloudSaves.getData("bypass_round_reqs"))
+	if (isnewplayer(src.mob) && src.player.get_rounds_participated_rp() <= 10 && !src.player.cloudSaves.getData("bypass_round_reqs") && !isadmin(src))
 		cant_interact_time = 15 SECONDS
 
 	tgui_alert(src, content_window = "rpRules", do_wait = FALSE, cant_interact = cant_interact_time)

@@ -261,7 +261,7 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 
 /obj/item/clothing/suit/armor/death_commando
 	name = "death commando armor"
-	desc = "Armor used by NanoTrasen's top secret purge unit. You're not sure how you know this."
+	desc = "An eerie looking set of modern space combat armor."
 	icon_state = "death"
 	item_state = "death"
 	c_flags = SPACEWEAR

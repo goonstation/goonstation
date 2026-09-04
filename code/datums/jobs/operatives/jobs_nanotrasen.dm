@@ -6,11 +6,12 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	wages = PAY::IMPORTANT
 	//Emergency responders shouldn't be antags
 	can_roll_antag = FALSE
+	put_id_in_pda = TRUE
 	badge = /obj/item/clothing/suit/security_badge/nanotrasen
 	receives_implants = list(/obj/item/implant/health/security/anti_mindhack)
 	access_string = "Nanotrasen Responder" // "All Access" + Centcom
 
-	slot_back = list(/obj/item/storage/backpack/NT)
+	slot_back = list(/obj/item/storage/backpack/NT/ERT)
 	slot_jump = list(/obj/item/clothing/under/misc/turds)
 	slot_foot = list(/obj/item/clothing/shoes/swat)
 	slot_glov = list(/obj/item/clothing/gloves/swat/NT)
@@ -28,10 +29,9 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	slot_eyes = list(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt/special_operative)
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
-	slot_poc1 = list(/obj/item/device/pda2/ntso)
+	slot_poc1 = list(/obj/item/device/pda2/nt/ntso)
 	slot_poc2 = list(/obj/item/storage/ntsc_pouch/ntso)
-	items_in_backpack = list(/obj/item/storage/firstaid/regular,
-							/obj/item/clothing/head/NTberet)
+	items_in_backpack = list(/obj/item/storage/firstaid/regular)
 
 /datum/job/special/nt/commander
 	name = "Nanotrasen Commander"
@@ -48,7 +48,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	slot_eyes = list(/obj/item/clothing/glasses/nt_operative)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt/commander)
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
-	slot_poc1 = list(/obj/item/device/pda2/ntso)
+	slot_poc1 = list(/obj/item/device/pda2/nt/ntso)
 	slot_poc2 = list(/obj/item/storage/ntsc_pouch/ntso)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular)
 
@@ -66,7 +66,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt/engineer)
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
 	slot_poc1 = list(/obj/item/tank/pocket/extended/oxygen)
-	slot_poc2 = list(/obj/item/device/pda2/nt_engineer)
+	slot_poc2 = list(/obj/item/device/pda2/nt/engineer)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular,
 							/obj/item/device/flash,
 							/obj/item/sheet/steel/fullstack,
@@ -95,7 +95,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt/medic)
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
 	slot_poc1 = list(/obj/item/tank/pocket/extended/oxygen)
-	slot_poc2 = list(/obj/item/device/pda2/nt_medical)
+	slot_poc2 = list(/obj/item/device/pda2/nt/medical)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular,
 							/obj/item/device/flash,
 							/obj/item/reagent_containers/glass/bottle/omnizine,
@@ -113,8 +113,10 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	requires_supervisor_job = "Head of Security"
 	counts_as = "Security Officer"
 	receives_miranda = TRUE
+	put_id_in_pda = FALSE
 	rounds_needed_to_play = ROUNDS_MIN_HIGHSEC
 
+	slot_back = list(/obj/item/storage/backpack/NT)
 	slot_belt = list(/obj/item/storage/belt/security/ntsc)
 	slot_suit = list(/obj/item/clothing/suit/space/ntso)
 	slot_head = list(/obj/item/clothing/head/NTberet)
@@ -122,6 +124,6 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt/consultant)
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
 	slot_poc1 = list(/obj/item/storage/ntsc_pouch)
-	slot_poc2 = list(/obj/item/device/pda2/ntso)
+	slot_poc2 = list(/obj/item/device/pda2/nt/ntso)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular)
 	wiki_link = "https://wiki.ss13.co/Nanotrasen_Security_Consultant"

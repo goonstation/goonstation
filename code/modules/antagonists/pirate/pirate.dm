@@ -88,15 +88,15 @@
 		else
 			M.set_loc(pick_landmark(LANDMARK_PIRATE, LANDMARK_LATEJOIN))
 
-	first_mate
-		id = ROLE_PIRATE_FIRST_MATE
-		display_name = "\improper Pirate First Mate"
-		antagonist_icon = "pirate_first_mate"
+/datum/antagonist/pirate/first_mate
+	id = ROLE_PIRATE_FIRST_MATE
+	display_name = "\improper Pirate First Mate"
+	antagonist_icon = "pirate_first_mate"
 
-	captain
-		id = ROLE_PIRATE_CAPTAIN
-		display_name = "\improper Pirate Captain"
-		antagonist_icon = "pirate_captain"
+/datum/antagonist/pirate/captain
+	id = ROLE_PIRATE_CAPTAIN
+	display_name = "\improper Pirate Captain"
+	antagonist_icon = "pirate_captain"
 
 TYPEINFO(/obj/gold_bee)
 	mat_appearances_to_ignore = list("gold")

@@ -36,7 +36,7 @@
 		else if (istype(destfile, /datum/computer/file))
 			return DWAINE::ERR::SIG::GENERIC
 
-	if (!destination.can_add_file(file, user))
+	if (!destination.can_add_file(file))
 		return DWAINE::ERR::SIG::GENERIC
 
 	if (delete_dest && destfile)

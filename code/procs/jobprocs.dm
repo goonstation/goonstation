@@ -230,6 +230,10 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		for (var/X in JOB.items_in_belt)
 			if(ispath(X))
 				H.equip_new_if_possible(X, SLOT_IN_BELT)
+	// Things spawned directly in the mob
+	for(var/type in JOB.items_in_mob)
+		if(ispath(type))
+			new type(H)
 	// Footwear
 	equip_job_item_slot(JOB.slot_foot, H, SLOT_SHOES)
 	// Suit
@@ -827,7 +831,7 @@ Equip items from body traits.
 		if(src.mind)
 			src.mind.originalPDA = PDA
 
-		if(src.client?.preferences?.id_starts_in_pda)
+		if(src.client?.preferences?.id_starts_in_pda || JOB.put_id_in_pda)
 			PDA.insert_id_card(C, src)
 			src.u_equip(PDA)
 			src.equip_if_possible(PDA, SLOT_WEAR_ID)

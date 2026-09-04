@@ -11,7 +11,7 @@
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/gun/kinetic/glitch
 		HH.name = "C&z !!!!!!ERROR!!!!!!!--~$!'S"
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handglitch"
 		HH.limb_name = "C&z !!!!!!ERROR!!!!!!!--~$!'S"
 		HH.can_hold_items = 0

@@ -159,6 +159,8 @@ var/global/obj/fuckyou/flashDummy
 
 	elecflash(target,power = elecflashpower)
 
+/// Modern era note: you probably want `raycast` instead because it's sane and works with things like `get_angle`
+/// Leaving it here because it's still used in a couple of places and I don't want to do trig right now
 proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuff. Takes some sort of bizzaro angles ?! Aahhhhh
 	var/list/crossed = list()
 	var/xPlus=cos(Angle)
@@ -412,17 +414,13 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 /proc/dd_hasPrefix(text, prefix)
 	var/start = 1
 	var/end = length(prefix) + 1
-	. = findtext(text, prefix, start, end) //was findtextEx
+	. = findtextEx(text, prefix, start, end)
 
 /proc/dd_hassuffix(text, suffix)
-	var/start = length(text) - length(suffix)
-	if(start)
-		. = findtext(text, suffix, start, null)
+	. = findtext(text, suffix, -length(suffix), null)
 
 /proc/dd_hasSuffix(text, suffix)
-	var/start = length(text) - length(suffix)
-	if(start)
-		. = findtext(text, suffix, start, null) //was findtextEx
+	. = findtextEx(text, suffix, -length(suffix), null)
 
 /proc/dd_centertext(message, length)
 	. = length(message)
@@ -1596,7 +1594,12 @@ var/list/english_num = list("0" = "zero", "1" = "one", "2" = "two", "3" = "three
 "10" = "ten", "11" = "eleven", "12" = "twelve", "13" = "thirteen", "14" = "fourteen", "15" = "fifteen", "16" = "sixteen", "17" = "seventeen", "18" = "eighteen", "19" = "nineteen",\
 "20" = "twenty", "30" = "thirty", "40" = "forty", "50" = "fifty", "60" = "sixty", "70" = "seventy", "80" = "eighty", "90" = "ninety")
 
-/proc/get_english_num(var/num, var/sep) // can only do up to 999,999 because of scientific notation kicking in after 6 digits
+/**
+ * Converts a numeric/text value from 1 through 999,999 to English words.
+ *
+ * For two-digit values, `sep` replaces the space between the tens and ones words - e.g. `fourty-two`
+ */
+/proc/get_english_num(num, sep)
 	if (!num || !length(english_num))
 		return
 
@@ -1605,55 +1608,48 @@ var/list/english_num = list("0" = "zero", "1" = "one", "2" = "two", "3" = "three
 	if (istext(num))
 		num = text2num(num)
 
-	var/num_return = null
-
 	if (num == 0) // 0
-		num_return = "[english_num["[num]"]]"
+		. = "[english_num["[num]"]]"
 
 	else if ((num >= 1) && (num <= 20)) // 1 to 20
-		num_return = "[english_num["[num]"]]"
+		. = "[english_num["[num]"]]"
 
 	else if ((num > 20) && (num < 100)) // 21 to 99
-		var/tens = text2num(copytext("[num]", 1, 2)) * 10
-		var/ones = text2num(copytext("[num]", 2))
+		var/tens = trunc(num / 10) * 10
+		var/ones = num % 10
 		if (ones <= 0)
-			num_return = "[english_num["[tens]"]]"
+			. = "[english_num["[tens]"]]"
 		else
-			num_return = "[english_num["[tens]"]][sep ? sep : " "][english_num["[ones]"]]"
+			. = "[english_num["[tens]"]][sep ? sep : " "][english_num["[ones]"]]"
 
 	else if ((num >= 100) && (num < 1000)) // 100 to 999
-		var/hundreds = text2num(copytext("[num]", 1, 2))
-		var/tens = text2num(copytext("[num]", 2))
+		var/hundreds = trunc(num / 100)
+		var/tens = num % 100
 		if (tens <= 0)
-			num_return = "[english_num["[hundreds]"]] hundred"
+			. = "[english_num["[hundreds]"]] hundred"
 		else
-			num_return = "[english_num["[hundreds]"]] hundred and [get_english_num(tens)]"
+			. = "[english_num["[hundreds]"]] hundred and [get_english_num(tens)]"
 
 	else if ((num >= 1000) && (num < 1000000)) // 1,000 to 999,999
-		var/thousands = null
-		var/hundreds = null
-
-		switch (num)
-			if (1000 to 9999)
-				thousands = text2num(copytext("[num]", 1, 2))
-				hundreds = text2num(copytext("[num]", 2))
-			if (10000 to 999999)
-				thousands = text2num(copytext("[num]", 1, 3))
-				hundreds = text2num(copytext("[num]", 3))
-			if (100000 to 999999)
-				thousands = text2num(copytext("[num]", 1, 4))
-				hundreds = text2num(copytext("[num]", 4))
+		var/thousands = trunc(num / 1000)
+		var/hundreds = num % 1000
 
 		if (hundreds <= 0)
-			num_return = "[get_english_num(thousands)] thousand"
+			. = "[get_english_num(thousands)] thousand"
 		else if (hundreds < 100)
-			num_return = "[get_english_num(thousands)] thousand and [get_english_num(hundreds)]"
+			. = "[get_english_num(thousands)] thousand and [get_english_num(hundreds)]"
 		else
-			num_return = "[get_english_num(thousands)] thousand, [get_english_num(hundreds)]"
+			. = "[get_english_num(thousands)] thousand, [get_english_num(hundreds)]"
 
-	if (num_return)
-		DEBUG_MESSAGE("<b>get_english_num returns num \"[num_return]\"</b>")
-		return num_return
+	else if (num == 1000000)
+		. = "one million"
+
+	// TODO: We can't really support numbers larger than 2^24 due to float <-> int memes
+	// We could extend this by saying "roughly" before every number. Dunno if we want that.
+
+	if (.)
+		DEBUG_MESSAGE("<b>get_english_num returns num \"[.]\"</b>")
+		return .
 
 /proc/mutual_attach(var/atom/movable/A as obj|mob, var/atom/movable/B as obj|mob)
 	if (!istype(A) || !istype(B))
@@ -2483,14 +2479,16 @@ proc/can_act(var/mob/M, var/include_cuffs = 1)
 
 /// Returns true if the given mob is incapacitated
 proc/is_incapacitated(mob/M)
+	var/datum/statusEffect/lockdown/lockdown_effect = M.hasStatus("lockdown_robot") || M.hasStatus("lockdown_ai")
+	if(!istype(lockdown_effect) || lockdown_effect?.fake)
+		lockdown_effect = null
 	return (M &&(\
 		M.hasStatus("stunned") || \
 		M.hasStatus("knockdown") || \
 		M.hasStatus("unconscious") || \
 		M.hasStatus("paralysis") || \
 		M.hasStatus("pinned") || \
-		M.hasStatus("lockdown_robot") || \
-		M.hasStatus("lockdown_ai") || \
+		lockdown_effect || \
 		M.hasStatus("no_power_robot") || \
 		M.hasStatus("no_cell_robot") || \
 		M.stat)) && !M.client?.holder?.ghost_interaction

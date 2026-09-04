@@ -13,6 +13,7 @@
 
 #define MGT_ROBOTICS "robotics"
 #define MGT_GENETICS "genetics"
+#define MGT_PHARMACY "pharmacy"
 #define MGT_CARGO "cargo"
 #define MGT_MINING "mining"
 #define MGT_CATERING "catering" // chef/bartender
@@ -34,6 +35,7 @@
 #define MGA_SALES "Sales Alert"
 #define MGA_SHIPPING "Shipping Alert"
 #define MGA_CARGOREQUEST "Cargo Request"
+#define MGA_CHEMREQUEST "Chemical Request"
 #define MGA_CRISIS "Crisis Alert"
 #define MGA_RADIO "Radio Alert"
 #define MGA_TRACKING "Tracking Alert"

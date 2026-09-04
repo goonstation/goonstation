@@ -251,13 +251,13 @@
 
 /datum/bioEffect/mutantrace/frog
 	name = "Anuran Genetics"
-	desc = "The subject's genetics are hybridized with an alien Abzunian amphibian.'"
+	desc = "The subject's genetics are hybridized with an alien Abzunian amphibian."
 	id = "frog"
 	mutantrace_option = "Amphibian"
 	mutantrace_path = /datum/mutantrace/frog/amphibian
 	msgGain = "You feel compelled to start constantly ribbiting."
 	msgLose = "A part of your soul has croaked."
-	icon_state  = "frog"
+	icon_state  = "amphibian"
 
 /datum/bioEffect/mutantrace/chicken
 	name = "Experimental Strain Epsilon Gamma Gamma #5"

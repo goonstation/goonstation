@@ -539,6 +539,12 @@ TYPEINFO(/obj/machinery/clonegrinder)
 	grind_level = GRIND_BODIES
 	upgraded = TRUE
 
+/obj/machinery/clonegrinder/podwars
+	desc = "A high efficiency corpse grinder. It even grinds up whatever the corpse has on it! Use with caution!";
+	grind_level = GRIND_GEAR
+	name = "Corpse Grinder 5000"
+	
+
 #undef GRIND_NOTHING
 #undef GRIND_BODIES
 #undef GRIND_GEAR

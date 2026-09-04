@@ -907,6 +907,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	var/default_ore = /obj/item/raw_material/rock
 	var/datum/ore/ore = null
 	var/datum/ore/event/event = null
+	var/image/mining_marker = null
+	var/marker_expiration_time = 0
 	var/list/space_overlays = null
 	var/turf/replace_type = /turf/simulated/floor/plating/airless/asteroid
 
@@ -1175,21 +1177,19 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		else if (istype(W, /obj/item/mining_tools))
 			return // matsci `mining_tools` handle their own digging
 		else if (istype(W, /obj/item/oreprospector))
-			var/message = "----------------------------------<br>"
-			message += "<B>Geological Report:</B><br><br>"
+			var/message = ""
+			message += "<B>Geological Report:</B><br>"
 			var/datum/ore/O = src.ore
 			var/datum/ore/event/E = src.event
-			if (O)
-				message += "This stone contains [O.name].<br>"
-				message += "Analysis suggests [src.amount] units of viable ore are present.<br>"
+			if(O)
+				message += O.onScanDirect(src, user)
 			else
 				message += "This rock contains no known ores.<br>"
 			message += "The rock here has a hardness rating of [src.hardness].<br>"
 			if (src.weakened)
 				message += "The rock here has been weakened.<br>"
-			if (E)
-				if (E.analysis_string)
-					message += "[SPAN_ALERT("[E.analysis_string]")]<br>"
+			if(E)
+				message += E.onScanDirect(src, user)
 			message += "----------------------------------"
 			boutput(user, message)
 		else
@@ -1281,6 +1281,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			src.space_overlays += edge_overlay
 
 	Del()
+		src.clear_marker()
 		for(var/turf/T in orange(src, 1))
 			T.ClearSpecificOverlays("ast_edge_[get_dir(T, src)]")
 		..()
@@ -1367,6 +1368,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		var/image/weather = GetOverlayImage("weather")
 		var/image/ambient = GetOverlayImage("ambient")
 
+		src.clear_marker()
 		var/datum/ore/O = src.ore
 		var/datum/ore/event/E = src.event
 		if (src.invincible)
@@ -1443,6 +1445,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 				E.onGenerate(AST)
 				usable_turfs -= AST
 
+	proc/clear_marker()
+		if(src.mining_marker)
+			get_image_group(CLIENT_IMAGE_GROUP_GEOLOGICAL_ANOMALIES).remove_image(src.mining_marker)
+			qdel(src.mining_marker)
+			src.mining_marker = null
 
 /turf/unsimulated/floor/plating/asteroid
 	name = "asteroid"
@@ -2392,7 +2399,7 @@ TYPEINFO(/obj/item/cargotele)
 	icon_state = "cargotelegreen"
 
 /obj/item/cargotele/traitor
-	SYNDICATE_STEALTH_DESCRIPTION("The targeting system is fluctuating rapidly.", null)
+	SYNDICATE_STEALTH_DESCRIPTION("The targeting system is fluctuating rapidly.")
 	tooltip_flags = REBUILD_USER
 	cost = 15
 	///The account to credit for sales
@@ -2488,6 +2495,16 @@ TYPEINFO(/obj/item/cargotele)
 		text += "<b>Explosive resistance estimate:</b> [geode.break_power] Kiloblasts<br>"
 		boutput(user, text)
 
+	pickup(mob/user)
+		. = ..()
+		if(user)
+			get_image_group(CLIENT_IMAGE_GROUP_GEOLOGICAL_ANOMALIES).add_mob(user)
+
+	dropped(mob/user)
+		. = ..()
+		if(user)
+			get_image_group(CLIENT_IMAGE_GROUP_GEOLOGICAL_ANOMALIES).remove_mob(user)
+
 
 /proc/mining_scan(var/turf/T, var/mob/living/L, var/range)
 	if (!istype(T) || !istype(L))
@@ -2500,10 +2517,6 @@ TYPEINFO(/obj/item/cargotele)
 	var/datum/ore/O
 	var/datum/ore/event/E
 	for (var/turf/simulated/wall/auto/asteroid/AST in range(T,range))
-		//clear out any scanning images if there are any
-		var/datum/client_image_group/cig = get_image_group(T)
-		for(var/image/i in cig.images)
-			cig.remove_image(i)
 		stone++
 		O = AST.ore
 		E = AST.event
@@ -2533,15 +2546,19 @@ TYPEINFO(/obj/item/cargotele)
 	rendered += "----------------------------------"
 	boutput(L, rendered)
 
-/proc/mining_scandecal(var/mob/living/user, var/turf/T, var/decalicon)
-	if(!user || !T || !decalicon) return
-	var/image/O = image('icons/obj/items/mining.dmi',T,decalicon,ASTEROID_MINING_SCAN_DECAL_LAYER)
-	var/datum/client_image_group/cig = get_image_group(T)
-	cig.add_mob(user) //we can add this multiple times so if the user refreshes the scan, it times properly and uses the sub count to handle remove
-	cig.add_image(O)
-
+/proc/mining_scandecal(var/mob/living/user, var/turf/simulated/wall/auto/asteroid/AST, var/decalicon)
+	if(!user || !AST || AST.mining_marker || !decalicon)
+		return
+	var/image/mining_marker = image('icons/effects/mining_anomalies.dmi', AST, decalicon, ASTEROID_MINING_SCAN_DECAL_LAYER)
+	AST.mining_marker = mining_marker
+	AST.marker_expiration_time = TIME + 2 MINUTES
+	mining_marker.appearance_flags = KEEP_APART | RESET_ALPHA | RESET_COLOR | TILE_BOUND
+	mining_marker.plane = PLANE_OVERLAY_EFFECTS
+	mining_marker.alpha = 200
+	get_image_group(CLIENT_IMAGE_GROUP_GEOLOGICAL_ANOMALIES).add_image(mining_marker)
 	SPAWN(2 MINUTES)
-		cig.remove_mob(user)
+		if(AST && AST.marker_expiration_time <= TIME)
+			AST.clear_marker()
 
 ///// MINER TRAITOR ITEM /////
 
@@ -2564,12 +2581,26 @@ TYPEINFO(/obj/item/cargotele)
 	density = 1
 	opacity = 0
 	anchored = UNANCHORED
+	processing_tier = PROCESSING_HALF
 	var/active = FALSE
 	var/obj/item/cell/cell = null
 	var/target = null
 	var/group = null
 	var/image/hatch_image = null //no connected magnet = hatch closed cuz it won't take ore in
 	var/image/powercell_image = null
+	var/collect_junk = FALSE
+	/// Number of items we can move per cycle
+	var/move_limit = 10
+	var/list/allowed_types = list(
+		/obj/item/raw_material,
+		/obj/item/scrap,
+		/obj/decal/cleanable/machine_debris,
+		/obj/decal/cleanable/robot_debris,
+	)
+	var/list/disallowed_types = list(
+		/obj/item/raw_material/rock,
+		/obj/item/raw_material/ice,
+	)
 
 	New()
 		var/obj/item/cell/P = new/obj/item/cell(src)
@@ -2605,19 +2636,27 @@ TYPEINFO(/obj/item/cargotele)
 
 
 	attack_hand(var/mob/user)
-		if (!src.cell) boutput(user, SPAN_ALERT("It won't work without a power cell!"))
-		else
-			var/action = tgui_input_list(user, "What do you want to do?", "Mineral Accumulator", list("Flip the power switch","Change the destination","Remove the power cell"))
-			if (action == "Remove the power cell")
+		if (!src.cell)
+			boutput(user, SPAN_ALERT("It won't work without a power cell!"))
+			return
+		var/list/options = list(
+			"Flip the power switch",
+			"Change the destination",
+			"Remove the power cell",
+			"Toggle collecting junk",
+		)
+		var/action = tgui_input_list(user, "What do you want to do?", "Mineral Accumulator", options)
+		switch(action)
+			if ("Remove the power cell")
 				var/obj/item/cell/PCEL = src.cell
 				boutput(user, "You remove [cell].")
 				if (PCEL) //ZeWaka: fix for null.updateicon
 					PCEL.UpdateIcon()
 				user.put_in_hand_or_drop(PCEL)
 				src.cell = null
-			else if (action == "Change the destination")
+			if ("Change the destination")
 				src.change_dest(user)
-			else if (action == "Flip the power switch")
+			if ("Flip the power switch")
 				if (!src.active)
 					user.visible_message("[user] powers up [src].", "You power up [src].")
 					src.active = TRUE
@@ -2626,9 +2665,12 @@ TYPEINFO(/obj/item/cargotele)
 					user.visible_message("[user] shuts down [src].", "You shut down [src].")
 					src.active = FALSE
 					src.anchored = UNANCHORED
+			if ("Toggle collecting junk")
+				src.collect_junk = !src.collect_junk
+				boutput(user, SPAN_NOTICE("[src.collect_junk ? "Now" : "No longer"] collecting junk."))
 			else
 				user.visible_message("[user] stares at [src] in confusion!", "You're not sure what that did.")
-			UpdateIcon()
+		UpdateIcon()
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/cell/))
@@ -2638,61 +2680,44 @@ TYPEINFO(/obj/item/cargotele)
 				W.set_loc(src)
 				cell = W
 				user.visible_message("[user] inserts [W] into [src].", "You insert [W] into [src].")
-		else ..()
+		else
+			..()
 		UpdateIcon()
 
 	process()
 		var/moved = 0
-		if (src.active)
-			if (!src.cell)
-				src.visible_message(SPAN_ALERT("[src] instantly shuts itself down."))
-				src.active = FALSE
-				src.anchored = UNANCHORED
-				UpdateIcon()
-				return
-			var/obj/item/cell/PCEL = src.cell
-			if (PCEL.charge <= 0)
-				src.visible_message(SPAN_ALERT("[src] runs out of power and shuts down."))
-				src.active = FALSE
-				src.anchored = UNANCHORED
-				UpdateIcon()
-				return
-			PCEL.use(5)
-			if (src.target)
-				for(var/obj/item/raw_material/O in orange(1,src))
-					if (istype(O,/obj/item/raw_material/rock)) continue
-					PCEL.use(2)
+		if (!src.active)
+			return
+		if (!src.cell)
+			src.visible_message(SPAN_ALERT("[src] instantly shuts itself down."))
+			src.active = FALSE
+			src.anchored = UNANCHORED
+			UpdateIcon()
+			return
+		var/obj/item/cell/PCEL = src.cell
+		if (PCEL.charge <= 0)
+			src.visible_message(SPAN_ALERT("[src] runs out of power and shuts down."))
+			src.active = FALSE
+			src.anchored = UNANCHORED
+			UpdateIcon()
+			return
+
+		PCEL.use(5)
+
+		if (src.target)
+			for (var/obj/O in range(1, src))
+				if (src.can_collect(O))
 					O.set_loc(src.target)
-				for(var/obj/item/scrap/S in orange(1,src))
-					PCEL.use(2)
-					S.set_loc(src.target)
-				for(var/obj/decal/cleanable/machine_debris/D in orange(1,src))
-					PCEL.use(2)
-					D.set_loc(src.target)
-				for(var/obj/decal/cleanable/robot_debris/R in orange(1,src))
-					PCEL.use(2)
-					R.set_loc(src.target)
-			for(var/obj/item/raw_material/O in range(6,src))
-				if (moved >= 10)
-					break
-				if (istype(O,/obj/item/raw_material/rock)) continue
+
+		for(var/obj/O in range(6,src))
+			if (moved >= src.move_limit)
+				break
+			if (src.can_collect(O))
 				step_towards(O, src.loc)
 				moved++
-			for(var/obj/item/scrap/S in range(6,src))
-				if (moved >= 10)
-					break
-				step_towards(S, src.loc)
-				moved++
-			for(var/obj/decal/cleanable/machine_debris/D in range(6,src))
-				if (moved >= 10)
-					break
-				step_towards(D, src.loc)
-				moved++
-			for(var/obj/decal/cleanable/robot_debris/R in range(6, src))
-				if (moved >= 10)
-					break
-				step_towards(R, src.loc)
-				moved++
+
+	proc/can_collect(obj/O)
+		return istypes(O, src.allowed_types) && (!istypes(O, src.disallowed_types) || src.collect_junk)
 
 	proc/change_dest(mob/user as mob)
 		if (!length(cargo_pad_manager.pads))

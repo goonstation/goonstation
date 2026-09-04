@@ -177,7 +177,8 @@
 			if (!master.module || !show_items)
 				update_equipment()
 				return
-			if (master.hasStatus("lockdown_robot"))
+			var/datum/statusEffect/lockdown/lockdown_effect = master.hasStatus("lockdown_robot")
+			if (lockdown_effect && !lockdown_effect.fake)
 				boutput(master, SPAN_ALERT("Your equipment is locked down!"))
 				update_equipment()
 				return
