@@ -1854,7 +1854,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	containertype = /obj/storage/crate
 	containername = "Basic Power Kit"
 
-/datum/supply_packs/complex/basic_power_kit/crew
+/datum/supply_packs/complex/emergency_power_equipment
 	name = "Emergency Power Equipment"
 	desc = "x2 Circular Power Treadmill Deployers."
 	category = "Engineering"

@@ -1,4 +1,9 @@
 
+(t)fri sep 04 26
+(u)LeahTheTech
+(p)27728
+(e)⚖🤖|C-Balance, A-Silicons
+(+)Spam clicking AI turret control panels will now lead to a short lockout cooldown.
 (t)wed sep 02 26
 (u)Sovexe
 (p)27614
