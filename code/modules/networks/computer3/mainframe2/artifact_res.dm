@@ -929,7 +929,7 @@
 	device_tag = "PNET_ARTCONSOL"
 	timeout = 10
 	icon = 'icons/obj/networked.dmi'
-	icon_state = "generic0"
+	icon_state = "arconsol0"
 	var/list/entries
 	var/screen_title = "Devices"
 	var/highlightMap = 0
@@ -955,10 +955,10 @@
 
 	power_change()
 		if(powered())
-			icon_state = "generic[src.host_id != null]"
+			icon_state = "artconsol[src.host_id != null]"
 		else
 			SPAWN(rand(0, 15))
-				icon_state = "generic-p"
+				icon_state = "artconsol-p"
 				status |= NOPOWER
 
 	receive_signal(datum/signal/signal)
