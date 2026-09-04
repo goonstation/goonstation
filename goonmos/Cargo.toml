@@ -1,0 +1,12 @@
+[package]
+name = "goonmos"
+version = "0.1.0"
+edition = "2024"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+grid = "1.0.1"
+meowtonin = "0.3.3"
+rayon = "1.12.0"
