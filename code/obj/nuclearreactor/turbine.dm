@@ -184,7 +184,7 @@
 
 		var/input_starting_pressure = MIXTURE_PRESSURE(src.input.air_contents)
 		src.last_input_pressure = input_starting_pressure
-		src.last_input_temperature = src.input.air_contents ? src.input.air_contents.temperature : 0
+		src.last_input_temperature = src.input.air_contents ? src.input.air_contents.temperature() : 0
 
 		//RPM - generate ideal power at 600RPM
 		//Stator load - how much are we trying to slow the RPM
@@ -208,7 +208,7 @@
 				playsound(src.loc, 'sound/misc/klaxon.ogg', 40, pitch=1.1)
 
 			if(air_contents)
-				src.last_output_temperature = air_contents.temperature
+				src.last_output_temperature = air_contents.temperature()
 				src.last_output_pressure = MIXTURE_PRESSURE(air_contents)
 			src.output.air_contents.merge(air_contents)
 			if(air_contents)
@@ -259,7 +259,7 @@
 				playsound(src, pick(src.grump_sound_list), 40, 2*rand())
 				UpdateHealthIndicators(src.blade_health--);
 
-			src.last_output_temperature = air_contents.temperature
+			src.last_output_temperature = air_contents.temperature()
 			src.last_output_pressure = MIXTURE_PRESSURE(air_contents)
 			src.output.air_contents.merge(air_contents)
 			src.terminal.add_avail(src.lastgen, src.processing_tier)
