@@ -522,6 +522,7 @@
 	name = "Catalytic Generation Rod"
 	desc = "A rod with a form factor suitable for usage in a catalytic generator. Material composition affects its performance."
 	category = "Components"
+	blueprint_icon_type = /obj/item/catalytic_rod
 
 	New()
 		required_parts.Add(new/datum/matfab_part/metal {part_name = "Rod"; required_amount = 1} ())

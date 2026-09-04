@@ -62,7 +62,7 @@ TYPEINFO_NEW(/obj/effects/menhir_fog)
 /datum/fishing_spot/biodome_lake/menhir
 	fishing_atom_type = /turf/unsimulated/floor/setpieces/menhir_cavepool
 
-/area/station/crown // stole this code from the void definition
+/area/station/crown
 	name = "The Crown"
 	icon_state = "purple"
 	filler_turf = "/turf/unsimulated/floor/setpieces/bluefloor"
@@ -75,6 +75,7 @@ TYPEINFO_NEW(/obj/effects/menhir_fog)
 /area/station/crown/New()
 	. = ..()
 	START_TRACKING_CAT(TR_CAT_AREA_PROCESS)
+	RegisterSignal(src, COMSIG_AREA_INDIRECT_ENTRY, PROC_REF(redirect_intruder))
 
 /area/station/crown/disposing()
 	STOP_TRACKING_CAT(TR_CAT_AREA_PROCESS)
@@ -89,6 +90,27 @@ TYPEINFO_NEW(/obj/effects/menhir_fog)
 
 		var/turf/noisy_turf = pick(get_area_turfs(/area/station/crown))
 		playsound(noisy_turf, weirdnoise, 70, 1)
+
+/area/station/crown/proc/redirect_intruder(_, var/atom/movable/AM, var/teleport_source)
+	var/do_redirect
+	switch(teleport_source)
+		if("magic")
+			do_redirect = TRUE
+			if(ismob(AM))
+				var/mob/M = AM
+				boutput(M, SPAN_ALERT("You're whisked away to somewhere else entirely!"))
+		if("mechcomp")
+			do_redirect = TRUE
+			if(ismob(AM))
+				var/mob/M = AM
+				boutput(M, SPAN_ALERT("Something redirects your teleportation!"))
+		else
+			do_redirect = FALSE
+	if(do_redirect)
+		SPAWN(1)
+			var/turf/go_turf = pick_landmark(LANDMARK_MENHIR_OUTREACH)
+			AM.set_loc(go_turf)
+			showswirl(go_turf)
 
 #define ARC_NOT_READY 0
 #define ARC_READY 1
