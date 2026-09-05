@@ -723,6 +723,12 @@ datum
 					var/mob/living/carbon/human/H = M
 					if (H.organHolder)
 						H.organHolder.heal_organs(1*mult, 1*mult, 1*mult, target_organs)
+				var/list/return_list = list()
+				SEND_SIGNAL(M, COMSIG_ATOM_DECONTAMINATE_RADS, "internal", 0.05, return_list, FALSE)
+				SEND_SIGNAL(M, COMSIG_ATOM_DECONTAMINATE_RADS, "internal", 0.025, return_list, TRUE)
+				// we've leeched some nasty radioactive isotopes from inside cells, right into the bloodstream!
+				for(var/reagent_id in return_list)
+					M.reagents.add_reagent(reagent_id, return_list[reagent_id])
 				..()
 				return
 
@@ -1334,6 +1340,13 @@ datum
 					var/mob/living/carbon/human/H = M
 					if (H.organHolder)
 						H.organHolder.heal_organs(3*mult, 3*mult, 3*mult, target_organs)
+				var/list/return_list = list()
+				// we work faster than iodide! but that means more nasty isotopes faster. oh well.
+				SEND_SIGNAL(M, COMSIG_ATOM_DECONTAMINATE_RADS, "internal", 0.15, return_list, FALSE)
+				SEND_SIGNAL(M, COMSIG_ATOM_DECONTAMINATE_RADS, "internal", 0.075, return_list, TRUE)
+				// we've leeched some nasty radioactive isotopes from inside cells, right into the bloodstream!
+				for(var/reagent_id in return_list)
+					M.reagents.add_reagent(reagent_id, return_list[reagent_id])
 				..()
 				return
 
