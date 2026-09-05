@@ -65,6 +65,8 @@ var/global/list/players = list()
 	var/datum/tutorial_base/regional/newbee/tutorial = null
 	/// A list of procs to call on the client on next login, used for when you need to guarantee clearing a clientside effect (ie textmode)
 	var/list/login_queue = null
+	/// List of all medal names this player has, use get_all_medals() to fetch or cache if not yet cached
+	VAR_PRIVATE/list/cached_medals = null
 
 	/// starts setup, adds by_type list entry for this datum
 	New(key)
@@ -76,6 +78,8 @@ var/global/list/players = list()
 		src.tag = "player-[src.ckey]"
 		src.last_death_time = world.timeofday
 		src.cloudSaves = new /datum/cloudSaves(src)
+		SPAWN(0)
+			src.fetch_medal_cache()
 
 	/// removes by_type list entry for this datum, clears dangling references
 	disposing()
@@ -322,6 +326,7 @@ var/global/list/players = list()
 		if (length(unlocks))
 			for(var/datum/achievementReward/B in unlocks)
 				boutput(src.client, SPAN_MEDAL("<FONT FACE=Arial SIZE=+1>You've unlocked a Reward : [B.title]!</FONT>"))
+		src.cached_medals += medal_name
 
 		return TRUE
 
@@ -338,30 +343,27 @@ var/global/list/players = list()
 			logTheThing(LOG_DEBUG, null, "<b>Medals Error</b>: Error returned in <b>clear_medal</b> for <b>[medal_name]</b>: [error.message]")
 			logTheThing(LOG_DIARY, null, "Medals Error: Error returned in clear_medal for [medal_name]: [error.message]", "debug")
 			return FALSE
+		src.cached_medals -= medal_name
 
 		return TRUE
 
-	/// Checks if this player has a medal. Will sleep, make sure the proc calling this is in a spawn etc
+	/// Checks if this player has a medal
 	proc/has_medal(medal_name)
 		if (!medal_name) return FALSE
-		var/datum/apiRoute/players/medals/has/hasMedals = new
-		hasMedals.routeParams = list(src.id ? src.id : src.ckey)
-		hasMedals.queryParams = list("medal" = medal_name)
-		var/datum/apiModel/HasMedalResource/hasMedal
+		if(isnull(src.cached_medals))
+			src.fetch_medal_cache()
+		return medal_name in src.cached_medals
 
-		try
-			hasMedal = apiHandler.queryAPI(hasMedals)
-		catch (var/exception/e)
-			var/datum/apiModel/Error/error = e.name
-			logTheThing(LOG_DEBUG, null, "<b>Medals Error</b>: Error returned in <b>has_medal</b> for <b>[medal_name]</b>: [error.message]")
-			logTheThing(LOG_DIARY, null, "Medals Error: Error returned in has_medal for [medal_name]: [error.message]", "debug")
-			return FALSE
-
-		return hasMedal.has_medal
-
-	/// Returns a list of all medals of this player. Will sleep, make sure the proc calling this is in a spawn etc
+	/// Returns a list of all medals of this player.
 	proc/get_all_medals()
 		RETURN_TYPE(/list)
+		if(isnull(src.cached_medals))
+			src.fetch_medal_cache()
+		return src.cached_medals
+
+	/// Rebuilds the player's cached_medals. Will sleep, make sure the proc calling this is in a spawn etc
+	proc/fetch_medal_cache()
+		src.cached_medals = list()
 
 		var/datum/apiRoute/players/medals/get/getMedals = new
 		var/list/filters = list()
@@ -385,7 +387,10 @@ var/global/list/players = list()
 			logTheThing(LOG_DIARY, null, "Medals Error: Error returned in get_all_medals for [src.ckey] ([src.id]): [error.message]", "debug")
 			return null
 
-		return medals.ToList()
+		var/medal_resource_list = medals.ToList()
+		var/medals_resource_data = medal_resource_list["data"]
+		for(var/medal_data in medals_resource_data)
+			src.cached_medals |= medal_data["medal"]["title"]
 
 /// returns a reference to a player datum based on the ckey you put into it
 /proc/find_player(key)
