@@ -3,7 +3,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/flasher, proc/flash)
 /obj/machinery/flasher
 	name = "\improper Mounted Flash"
 	desc = "A wall-mounted flashbulb device."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/flash.dmi'
 	icon_state = "mflash1"
 	var/id = null
 	var/range = 2 //this is roughly the size of brig cell
