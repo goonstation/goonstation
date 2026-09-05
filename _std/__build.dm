@@ -28,13 +28,13 @@ o+`        `-` ``..-:yooos-..----------..`
            `d.                     .d`
 */
 
-//------------ OPTIONS TO GO FAST ------------//
+// #region --------- Options to Go Fast ----------
 
 /// Only include the tiny map Devtest, no other zlevels. Boots way faster.
-//#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1
+//#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW
 
 /// Skips FEA/mining/planet/camera setup, skips changelogs, and auto-readies up.
-//#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1
+//#define IM_REALLY_IN_A_FUCKING_HURRY_HERE
 
 /// Skip setting up atmospheric system.
 //#define SKIP_FEA_SETUP
@@ -46,10 +46,11 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define SKIP_CAMERA_COVERAGE
 /// Skip changelogs.
 //#define IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
-/// Automatically ready up and start the game ASAP. No input required.
+/// Automatically ready up and join the game ASAP.
 //#define I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
 
-//////--- CONVENIENCE OPTIONS FOR TESTING ETC ---//
+// #endregion
+// #region --------- Convenience Options ---------
 
 /// Don't load things defined in _std/__build.local.dm. Use if you have some breaking changes in there or whatnot.
 //#define DISABLE_DEVFILE
@@ -79,6 +80,9 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define I_HATE_WAITING_FOR_GENES
 /// Fills up all APCs and SMESes on the station Z when the round starts.
 //#define ROCK_DOWN_TO_ELECTRIC_AVENUE
+
+// #endregion
+// #region --------- Stop Distractions -----------
 
 /// All of the below: no secbots/guardbuddies/bots, no monkeys, no clone prebake, instant clones, low security, no critters, no random rooms/events, no shuttle calls, hackerman, more runtime checks, quick mob deletion, no wage/mail/ghostdrone messages, unbreakable lights, no antag popups.
 //#define STOP_DISTRACTING_ME
@@ -120,22 +124,21 @@ o+`        `-` ``..-:yooos-..----------..`
 /// Stops antag popups from coming up at the start of every game.
 //#define NO_ANTAG_POPUPS_I_DONT_CARE
 
-/// Enable additional world.log logging.
-//#define Z_LOG_ENABLE 1
-
-//------------- PROFILING OPTIONS -------------//
+// #endregion
+// #region --------- Profiling -------------------
 
 /// Enables the hook for the DM Tracy profiler in world/init(), read the code guide.
 // #define TRACY_PROFILER_HOOK
 
 /// Generate and save profiler data for the entire round.
-//#define SERVER_SIDE_PROFILING_FULL_ROUND 1
+//#define SERVER_SIDE_PROFILING_FULL_ROUND
 /// Generate and save profiler data for pregame work (before "Welcome to pregame lobby").
-//#define SERVER_SIDE_PROFILING_PREGAME 1
+//#define SERVER_SIDE_PROFILING_PREGAME
 /// Generate and save profiler data for post-pregame work.
-//#define SERVER_SIDE_PROFILING_INGAME_ONLY 1
+//#define SERVER_SIDE_PROFILING_INGAME_ONLY
 
-//------------- DEBUGGING TOGGLES -------------//
+// #endregion
+// #region --------- Debugging Toggles -----------
 
 /// This is expensive. Don't turn it on on the server unless you want things to be bad and slow.
 //#define DELETE_QUEUE_DEBUG
@@ -163,7 +166,7 @@ o+`        `-` ``..-:yooos-..----------..`
 /// Makes the code log a warning when an abstract type is instantiated. See _std/types.dm:37 for details.
 // #define ABSTRACT_VIOLATION_WARN
 
-/// Makes the delete queue go through every single datum in the game when a hard del happens. It gets reported to the debug log. This process takes about 4 minutes per hard deletion (during that time the server will be frozen).
+/// Makes the delete queue go through every datum in the game when a hard del happens - reported to the debug log. This takes about 4 minutes per hard deletion (during that time the server will be frozen).
 // #define LOG_HARD_DELETE_REFERENCES
 /// Same as Log hard delete references, electric boogaloo.
 // #define LOG_HARD_DELETE_REFERENCES_2_ELECTRIC_BOOGALOO
@@ -174,7 +177,11 @@ o+`        `-` ``..-:yooos-..----------..`
 /// Toggle this to enable perspective wall icons in .dmm-compatible map editors. By default, icons in the editor will be flat.
 //#define USE_PERSPECTIVE_EDITOR_WALLS
 
-//------------- MAP OVERRIDES -------------//
+/// Enable additional world.log logging.
+//#define Z_LOG_ENABLE
+
+// #endregion
+// #region --------- Map Overrides ---------------
 
 //#define MAP_OVERRIDE_DEVTEST      // Developer Testing map, by cringe
 
@@ -205,7 +212,8 @@ o+`        `-` ``..-:yooos-..----------..`
 /// Generate map screenshots for goonhub map viewer (NOT USED NORMALLY). Use together with a map override above.
 //#define GENERATE_GOONHUB_MAP
 
-//------------ Unit Test Framework ------------//
+// #endregion
+// #region --------- Unit Test Framework ---------
 
 /// Enable the unit test framework.
 //#define UNIT_TESTS
@@ -213,33 +221,34 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define UNIT_TESTS_RUN_TILL_COMPLETION
 /// Only run /datum/unit_test/regression subtypes.
 //#define UNIT_TESTS_REGRESSION_ONLY
-//#define UNIT_TEST_TYPES /datum/unit_test/explosion_test, /datum/unit_test/deletion_regressions // Only run tests of these types - comma separated list of types
+/// Only run tests of these types - comma separated list of types
+//#define UNIT_TEST_TYPES /datum/unit_test/explosion_test, /datum/unit_test/deletion_regressions
 
-#ifdef CI_RUNTIME_CHECKING
-#define CHECK_MORE_RUNTIMES 1
-#endif
-
-//------ HOLIDAYS AND OTHER SUCH TOGGLES ------//
+// #endregion
+// #region --------- Holidays and Such -----------
 
 /// Roleplay mode toggle.
-//#define RP_MODE 1
+//#define RP_MODE
+
+//#define SEASON_WINTER
+//#define SEASON_SPRING
+//#define SEASON_SUMMER
+//#define SEASON_AUTUMN
 
 /// Halloween event toggle.
-//#define HALLOWEEN 1
-//#define SEASON_WINTER 1
-//#define SEASON_SPRING 1
-//#define SEASON_SUMMER 1
-//#define SEASON_AUTUMN 1
+//#define HALLOWEEN
 /// Christmas event toggle.
-//#define XMAS 1
+//#define XMAS
 /// Canada Day event toggle.
-//#define CANADADAY 1
+//#define CANADADAY
 /// Football mode toggle.
-//#define FOOTBALL_MODE 1
+//#define FOOTBALL_MODE
 /// Enables artemis for development.
 //#define ENABLE_ARTEMIS
 /// Midsummer event toggle.
-//#define MIDSUMMER 1
+//#define MIDSUMMER
+
+// #endregion
 
 //----- Testmerge & Revision Information -----//
 
@@ -270,6 +279,10 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define PRELOAD_RSC_URL ""
 
 // -- Internal __build.dm stuff --
+#ifdef CI_RUNTIME_CHECKING
+#define CHECK_MORE_RUNTIMES
+#endif
+
 #ifdef GENERATE_GOONHUB_MAP
 #define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW
 #define IM_REALLY_IN_A_FUCKING_HURRY_HERE
