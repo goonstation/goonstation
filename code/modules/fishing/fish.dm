@@ -1093,3 +1093,18 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/toonclown_fish)
 
 	get_scent_color()
 		return "minty green"
+
+TYPEINFO(/obj/item/reagent_containers/food/fish/hopfish)
+	fish_collection_type = FISH::COLLECTION::NORMAL
+/obj/item/reagent_containers/food/fish/hopfish
+	name = "Head of Piscinel"
+	desc = "This fish subjects other fish to the horror of employment and paperwork as a survival mechanism, mother nature truely is cruel."
+	icon_state = "hopfish"
+	inhand_color = "#398f3d"
+	food_color = "#FFECB7"
+	slice_product = /obj/item/stamp/angler
+	category = FISH::CATEGORY::FRESHWATER
+	rarity = ITEM_RARITY_UNCOMMON
+
+	get_scent_color()
+		return "money green"

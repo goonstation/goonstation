@@ -24,6 +24,7 @@
 	"Void" = "stamp-sprite-void",\
 	"Flock" = "stamp-sprite-flock",\
 	"Vamp" = "stamp-sprite-vamp",\
+	"Angler" = "stamp-sprite-angler",\
 	"Your Name" = "stamp-text-name",\
 	"Current Time" = "stamp-text-time",)
 
@@ -301,6 +302,7 @@
 		"stamp-sprite-gtc" = "[resource("images/tgui/stamp_icons/stamp-gtc.png")]",
 		"stamp-sprite-flock" = "[resource("images/tgui/stamp_icons/stamp-flock.apng")]",
 		"stamp-sprite-vamp" = "[resource("images/tgui/stamp_icons/stamp-vamp.png")]",
+		"stamp-sprite-angler" = "[resource("images/tgui/stamp_icons/stamp-angler.png")]",
 		"stamp-text-time" =  T,
 		"stamp-text-name" = user.name
 	)
@@ -834,6 +836,14 @@
 		special_mode = "Security"
 		is_reassignable = 0
 		assignment = "stamp-law"
+	angler
+		name = "\improper angler's rubber stamp"
+		desc = "The Angler's rubber stamp for stamping whatever important fishing documents they've gotten their hands on. It's the National Notary 'Wye' model in polished yew. Its a little cold and moist."
+		icon_state = "stamp-angler"
+		default_material = "synthrubber_blue"
+		special_mode = "Angler"
+		is_reassignable = 0
+		assignment = "stamp-angler"
 	flock
 		name = "\improper Inky Antenna"
 		desc = "It looks kinda like a National Notary stamp of an unfamilar model. Theres small rods sticking out of it though. You doubt you can use it for whatever important documents you've gotten your hands on"
