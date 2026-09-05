@@ -82,6 +82,12 @@ TYPEINFO(/obj/machinery/sink)
 		qdel(fluid)
 
 		user.visible_message(SPAN_NOTICE("[user] washes [W]."))
+		var/list/reagent_list = list()
+		SEND_SIGNAL(W, COMSIG_ATOM_WASHED, reagent_list, src)
+		if(istype(src, /obj/machinery/sink/piped) && reagent_list.len) // i knowwww this kinda stinks but there isn't a better place for it
+			var/obj/machinery/sink/piped/piped_src = src
+			for(var/reagent_id in reagent_list)
+				piped_src.drainage.add_reagent(reagent_id, reagent_list[reagent_id])
 		W.clean_forensic() // There's a global proc for this stuff now (Convair880).
 		if (istype(W, /obj/item/device/key/skull))
 			W.icon_state = "skull"
@@ -91,6 +97,8 @@ TYPEINFO(/obj/machinery/sink)
 				return
 		if (W.reagents && W.is_open_container())
 			src.drain_fluid(W.reagents, W.reagents.total_volume)
+
+/obj/machinery/sink/proc/onItemWash(obj/item/W, mob/user)
 
 /obj/machinery/sink/MouseDrop_T(obj/item/reagent_containers/W, mob/user)
 	if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user) && isalive(user) && !isintangible(user))

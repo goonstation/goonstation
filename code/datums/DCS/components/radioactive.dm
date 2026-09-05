@@ -15,6 +15,9 @@ TYPEINFO(/datum/component/radioactive)
 	/// How much radStrength will decay over time. It will take ~ 6 * radStrength seconds to decay completely.
 	var/decay_target = 0
 	var/decay_target_neutron = 0
+	/// How much of our decaying radStrength can be reduced through washing
+	var/washable = 0
+	var/washable_neutron = 0
 	/// Internal, do not touch - keeps a record of whether or not we had to add this to the item processing list
 	var/_added_to_items_processing = FALSE
 	/// How wide a range this radiation source affects. Greater than one should be very rarely used, since all atoms in this range will be exposed per tick
@@ -41,16 +44,21 @@ TYPEINFO(/datum/component/radioactive)
 			src.radStrength_neutron = radStrength
 			if(!decays)
 				src.decay_target_neutron = radStrength
+			else // only half of radStrength_neutron can be washed away. semi-arbitrary
+				src.washable_neutron = radStrength * 0.5
 		else
 			src.radStrength = radStrength
 			if(!decays)
 				src.decay_target = radStrength
+			else // only 75% of radStrength can be washed away. semi-arbitrary
+				src.washable = radStrength * 0.75
 		src.effect_range = effectRange
 		if(parent.GetComponent(src.type)) //don't redo the filters and stuff if we're a duplicate
 			return
 
 		RegisterSignal(parent, COMSIG_ATOM_RADIOACTIVITY, PROC_REF(get_radioactivity))
 		RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examined))
+		RegisterSignal(parent, COMSIG_ATOM_WASHED, PROC_REF(washed))
 		RegisterSignals(parent, list(COMSIG_ATOM_CROSSED,
 			COMSIG_ATOM_ENTERED,
 			COMSIG_ATTACKHAND,
@@ -134,6 +142,7 @@ TYPEINFO(/datum/component/radioactive)
 		PA.color = src._backup_color
 		UnregisterSignal(parent, list(COMSIG_ATOM_RADIOACTIVITY))
 		UnregisterSignal(parent, list(COMSIG_ATOM_EXAMINE))
+		UnregisterSignal(parent, list(COMSIG_ATOM_WASHED))
 		UnregisterSignal(parent, list(COMSIG_ATOM_CROSSED,
 			COMSIG_ATOM_ENTERED,
 			COMSIG_ATTACKHAND,
@@ -157,6 +166,8 @@ TYPEINFO(/datum/component/radioactive)
 		src.radStrength_neutron = min(100, src.radStrength_neutron + R.radStrength_neutron)
 		src.decay_target = min(100, src.decay_target + R.decay_target)
 		src.decay_target_neutron = min(100, src.decay_target_neutron + R.decay_target_neutron)
+		src.washable = min(75, src.washable + R.washable)
+		src.washable_neutron = min(50, src.washable_neutron + R.washable_neutron)
 		src.do_filters()
 
 	/// Called every item process tick, handles applying radiation effect to nearby atoms and also decay.
@@ -175,10 +186,14 @@ TYPEINFO(/datum/component/radioactive)
 			src.filterize_color(owner) // If the owner has been given a new color, keep it null so that the radiation outline stays green/blue
 		var/update_filters = FALSE
 		if(src.radStrength > src.decay_target && prob(33))
-			src.radStrength = max(src.decay_target, src.radStrength - (1 * mult))
+			var/decreaseBy = 1 * mult
+			src.radStrength = max(src.decay_target, src.radStrength - decreaseBy)
+			src.washable = (max(0, src.washable - decreaseBy))
 			update_filters = TRUE
 		if(src.radStrength_neutron > src.decay_target_neutron && prob(33))
-			src.radStrength_neutron = max(src.decay_target_neutron, src.radStrength_neutron - (1 * mult))
+			var/decreaseBy = 1 * mult
+			src.radStrength_neutron = max(src.decay_target_neutron, src.radStrength_neutron - decreaseBy)
+			src.washable_neutron = max(0, src.washable_neutron - decreaseBy)
 			update_filters = TRUE
 		if(update_filters)
 			src.do_filters()
@@ -226,3 +241,20 @@ TYPEINFO(/datum/component/radioactive)
 			return_val = list()
 		return_val += src.radStrength
 		return TRUE
+
+	proc/washed(atom/owner, list/return_reagents, sender)
+		var/atom/atom_parent = src.parent
+		if(ON_COOLDOWN(atom_parent, "rad_washing", 2 SECONDS)) return // so spam-clicking sinks doesn't insta-clean
+		// Somewhat arbitrary numbers. We just want diminishing returns.
+		var/washed_off = src.washable * 0.15
+		src.washable -= washed_off
+		src.radStrength = max(src.radStrength - washed_off, src.decay_target)
+		if(return_reagents)
+			return_reagents["radium"] += washed_off
+		washed_off = src.washable_neutron * 0.10
+		src.washable_neutron -= washed_off
+		src.radStrength_neutron = max(src.radStrength_neutron - washed_off, src.decay_target_neutron)
+		if(return_reagents)
+			washed_off *= 2 // n_rad is nastier, giving us more isotopes!
+			return_reagents["radium"] += washed_off
+		src.do_filters()

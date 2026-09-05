@@ -50,6 +50,9 @@
 	#define COMSIG_ATOM_SET_OPACITY "atom_set_opacity"
 	/// get radioactivity level of atom (0 if signal not registered - ie, has no radioactive component) (return_val as a list)
 	#define COMSIG_ATOM_RADIOACTIVITY "atom_get_radioactivity"
+	/// when an atom is washed in some way (likely missing multiple washing methods) (intentionally doesn't count handwashing)
+	/// (reagent_list (optional), caller (optional))
+	#define COMSIG_ATOM_WASHED "atom_washed"
 	/// when an atom say()s anything
 	/// I swear if you use this to modify a message when you should be using a speech_module, I will hurt you - Amylizzle
 	#define COMSIG_ATOM_SAY "atom_say"
