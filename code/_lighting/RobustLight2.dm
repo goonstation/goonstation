@@ -363,9 +363,7 @@ proc/get_moving_lights_stats()
 	var/turf/middle = locate(src.x, src.y, src.z)
 	var/atten
 	for (var/turf/T in view(src.radius, middle))
-		if (T.opacity)
-			continue
-		if (T.opaque_atom_count > 0)
+		if (T.opacity || T.opaque_atom_count)
 			continue
 
 		RL_APPLY_LIGHT_EXPOSED_ATTEN(T, src.x, src.y, src.brightness, height2, r, g, b)
@@ -606,7 +604,7 @@ proc/get_moving_lights_stats()
 	The initial sprite, `no name` in all lighting overlay files, was programmatically generated using Python, from this initial
 	sprite, five sprites were handcrafted and then passed into the `icon-cutter` tool to generate the remaining directional sprites.
 */
-/obj/overlay/tile_effect/lighting
+/atom/movable/light/robust_light
 	icon = 'icons/effects/lighting_overlays/floors.dmi'
 	appearance_flags = TILE_BOUND | PIXEL_SCALE | RESET_ALPHA | RESET_COLOR
 	blend_mode = BLEND_ADD
@@ -614,7 +612,7 @@ proc/get_moving_lights_stats()
 	layer = LIGHTING_LAYER_BASE
 	anchored = ANCHORED_ALWAYS
 
-/obj/overlay/tile_effect/lighting/mul
+/atom/movable/light/robust_light/mul
 	plane = PLANE_LIGHTING
 	layer = LIGHTING_LAYER_ROBUST
 	disposing()
@@ -623,7 +621,7 @@ proc/get_moving_lights_stats()
 			T.RL_MulOverlay = null
 		..()
 
-/obj/overlay/tile_effect/lighting/add
+/atom/movable/light/robust_light/add
 	plane = PLANE_SELFILLUM
 	disposing()
 		var/turf/T = src.loc
@@ -634,8 +632,8 @@ proc/get_moving_lights_stats()
 /turf
 	var/RL_ApplyGeneration = 0
 	var/RL_UpdateGeneration = 0
-	var/obj/overlay/tile_effect/lighting/mul/RL_MulOverlay = null
-	var/obj/overlay/tile_effect/lighting/add/RL_AddOverlay = null
+	var/atom/movable/light/robust_light/mul/RL_MulOverlay = null
+	var/atom/movable/light/robust_light/add/RL_AddOverlay = null
 	var/RL_LumR = 0
 	var/RL_LumG = 0
 	var/RL_LumB = 0
@@ -741,7 +739,7 @@ proc/get_moving_lights_stats()
 /turf/proc/RL_Init()
 	if (!fullbright && !loc:force_fullbright)
 		if(!src.RL_MulOverlay)
-			src.RL_MulOverlay = new /obj/overlay/tile_effect/lighting/mul(src)
+			src.RL_MulOverlay = new /atom/movable/light/robust_light/mul(src)
 			src.RL_MulOverlay.icon = src.RL_OverlayIcon
 			src.RL_MulOverlay.icon_state = src.RL_OverlayState
 		if (RL_Started)
@@ -755,7 +753,7 @@ proc/get_moving_lights_stats()
 			src.RL_AddOverlay = null
 
 /atom
-	var/RL_Attached = null
+	var/list/RL_Attached = null
 	var/old_dir = null //rl only right now
 	var/next_light_dir_update = 0
 
@@ -826,7 +824,7 @@ proc/get_moving_lights_stats()
 				// Detach the light from its holder so that it gets cleaned up right if
 				// needed.
 				attached.detach()
-			src.RL_Attached:len = 0
+			src.RL_Attached.len = 0
 			src.RL_Attached = null
 		if (opacity)
 			set_opacity(0)
