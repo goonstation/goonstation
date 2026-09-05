@@ -92,50 +92,50 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 				return
 		else ..()
 
-	surgery(var/obj/item/tool)
-		var/mob/orig_holder = holder
+	// surgery(var/obj/item/tool)
+	// 	var/mob/orig_holder = holder
 
-		var/wrong_tool = 0
+	// 	var/wrong_tool = 0
 
-		if(remove_stage > 0 && (istype(tool,/obj/item/staple_gun) || istype(tool,/obj/item/suture)) )
-			remove_stage = 0
+	// 	if(remove_stage > 0 && (istype(tool,/obj/item/staple_gun) || istype(tool,/obj/item/suture)) )
+	// 		remove_stage = 0
 
-		else if(remove_stage == 0 || remove_stage == 2)
-			if(iscuttingtool(tool))
-				remove_stage++
-			else
-				wrong_tool = 1
+	// 	else if(remove_stage == 0 || remove_stage == 2)
+	// 		if(iscuttingtool(tool))
+	// 			remove_stage++
+	// 		else
+	// 			wrong_tool = 1
 
-		else if(remove_stage == 1)
-			if(istype(tool, /obj/item/circular_saw) || istype(tool, /obj/item/saw))
-				remove_stage++
-			else
-				wrong_tool = 1
+	// 	else if(remove_stage == 1)
+	// 		if(istype(tool, /obj/item/circular_saw) || istype(tool, /obj/item/saw))
+	// 			remove_stage++
+	// 		else
+	// 			wrong_tool = 1
 
-		if (!wrong_tool && src) //ZeWaka: Fix for null.name
-			switch(remove_stage)
-				if(0)
-					tool.the_mob.visible_message(SPAN_ALERT("[tool.the_mob] secures [holder.name]'s [src.name] to [his_or_her(holder)] stump with [tool]."), SPAN_ALERT("You secure [holder.name]'s [src.name] to [his_or_her(holder)] stump with [tool]."))
-					logTheThing(LOG_COMBAT, tool.the_mob, "secures [constructTarget(holder,"combat")]'s [src.name] back on.")
-				if(1)
-					tool.the_mob.visible_message(SPAN_ALERT("[tool.the_mob] slices through the attachment mesh of [holder.name]'s [src.name] with [tool]."), SPAN_ALERT("You slice through the attachment mesh of [holder.name]'s [src.name] with [tool]."))
-				if(2)
-					tool.the_mob.visible_message(SPAN_ALERT("[tool.the_mob] saws through the base mount of [holder.name]'s [src.name] with [tool]."), SPAN_ALERT("You saw through the base mount of [holder.name]'s [src.name] with [tool]."))
+	// 	if (!wrong_tool && src) //ZeWaka: Fix for null.name
+	// 		switch(remove_stage)
+	// 			if(0)
+	// 				tool.the_mob.visible_message(SPAN_ALERT("[tool.the_mob] secures [holder.name]'s [src.name] to [his_or_her(holder)] stump with [tool]."), SPAN_ALERT("You secure [holder.name]'s [src.name] to [his_or_her(holder)] stump with [tool]."))
+	// 				logTheThing(LOG_COMBAT, tool.the_mob, "secures [constructTarget(holder,"combat")]'s [src.name] back on.")
+	// 			if(1)
+	// 				tool.the_mob.visible_message(SPAN_ALERT("[tool.the_mob] slices through the attachment mesh of [holder.name]'s [src.name] with [tool]."), SPAN_ALERT("You slice through the attachment mesh of [holder.name]'s [src.name] with [tool]."))
+	// 			if(2)
+	// 				tool.the_mob.visible_message(SPAN_ALERT("[tool.the_mob] saws through the base mount of [holder.name]'s [src.name] with [tool]."), SPAN_ALERT("You saw through the base mount of [holder.name]'s [src.name] with [tool]."))
 
-					SPAWN(rand(150,200))
-						if(remove_stage == 2)
-							src.remove(0)
-				if(3)
-					tool.the_mob.visible_message(SPAN_ALERT("[tool.the_mob] cuts through the remaining strips of material holding [holder.name]'s [src.name] on with [tool]."), SPAN_ALERT("You cut through the remaining strips of material holding [holder.name]'s [src.name] on with [tool]."))
-					logTheThing(LOG_COMBAT, tool.the_mob, "removes [constructTarget(holder,"combat")]'s [src.name].")
-					src.remove(0)
+	// 				SPAWN(rand(150,200))
+	// 					if(remove_stage == 2)
+	// 						src.remove(0)
+	// 			if(3)
+	// 				tool.the_mob.visible_message(SPAN_ALERT("[tool.the_mob] cuts through the remaining strips of material holding [holder.name]'s [src.name] on with [tool]."), SPAN_ALERT("You cut through the remaining strips of material holding [holder.name]'s [src.name] on with [tool]."))
+	// 				logTheThing(LOG_COMBAT, tool.the_mob, "removes [constructTarget(holder,"combat")]'s [src.name].")
+	// 				src.remove(0)
 
-			if(orig_holder)
-				if(!isdead(orig_holder))
-					if(prob(40))
-						orig_holder.emote("scream")
-				orig_holder.TakeDamage("chest",20,0)
-				take_bleeding_damage(orig_holder, null, 15, DAMAGE_CUT)
+	// 		if(orig_holder)
+	// 			if(!isdead(orig_holder))
+	// 				if(prob(40))
+	// 					orig_holder.emote("scream")
+	// 			orig_holder.TakeDamage("chest",20,0)
+	// 			take_bleeding_damage(orig_holder, null, 15, DAMAGE_CUT)
 
 	proc/ropart_take_damage(var/bluntdmg = 0,var/burnsdmg = 0)
 		src.dmg_blunt += bluntdmg
