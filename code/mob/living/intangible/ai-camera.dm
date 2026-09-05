@@ -537,6 +537,14 @@ TYPEINFO(/mob/living/intangible/aieye)
 		if(mainframe)
 			mainframe.open_nearest_door_silicon()
 
+	verb/toggle_monospace()
+		set category = "AI Commands"
+		set name = "Toggle Monospace Speech"
+		set desc = "Switches your speech between normal and forced-monospace mode."
+
+		if(mainframe)
+			mainframe.toggle_monospace(src)
+
 	proc/ai_alerts()
 		set category = "AI Commands"
 		set name = "Show Alerts"
