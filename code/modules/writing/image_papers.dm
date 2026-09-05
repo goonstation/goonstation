@@ -88,7 +88,7 @@
 	desc = "A very official-looking sheet full of information you may or may not be able to wrap your head around."
 	icon_state = "postcard-owlery"
 	sizex = 1192
-	sizey = 600
+	sizey = 800
 	scrollbar = FALSE
 	path = "images/pocket_guides/siphonguide.png"
 
