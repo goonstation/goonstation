@@ -92,7 +92,7 @@
 		var/report_title = SPAN_SUCCESS(src.title)
 		if(print_hyperlink)
 			report_title += ": [print_hyperlink]"
-		report = "[report_title]<br>" + report
+		report = "[report_title]<br>[report]"
 		return report
 
 	proc/compile_report_header(var/header, var/compress)
@@ -107,7 +107,7 @@
 		else if(compress && header == FORENSIC_HEADER_FINGERPRINTS && !src.scan.has_effect("effect_silver_nitrate"))
 			return compile_report_compress(header, 2)
 		else
-			var/header_text = "<ul style='margin-top:0px;padding-left:20px'>"
+			var/header_text = "<ul style='margin-top:0px;margin-bottom:0px;padding-left:20px'>"
 			for(var/line in src.report_lines[header])
 				header_text += "<li style='padding-left:0px'>[line]</li>" // Indent line and add a bullet point
 			return "[header_text]</ul>"

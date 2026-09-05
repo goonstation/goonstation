@@ -3300,7 +3300,7 @@ mob/living/carbon/human/has_genetics()
 			if (istype(I, /obj/item/implant/projectile))
 				wound_count++
 		if(wound_count)
-			scan.add_text("Gunshot wounds: [wound_count] fragments detected")
+			scan.add_text("Gunshot wounds: [wound_count] fragments detected") // Seems to double-count for some reason?
 
 /mob/living/carbon/human/proc/get_fingerprint(var/ignore_gloves = FALSE, force_hand = -1)
 	RETURN_TYPE(/datum/forensic_data/fingerprint)

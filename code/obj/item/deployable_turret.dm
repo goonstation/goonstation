@@ -18,15 +18,11 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 	var/associated_turret = null //what kind of turret should this spawn?
 	var/turret_health = 100
 
-	New(newLoc, forensics_id)
+	var/datum/forensic_id/forensic_profile = null // Forensic profile of the gun
+
+	New(newLoc)
 		..()
 		icon_state = "[src.icon_tag]_deployer"
-		if (!src.forensic_ID)
-			if (forensics_id)
-				src.forensic_ID = forensics_id
-			else
-				src.forensic_ID = src.CreateID()
-				forensic_IDs.Add(src.forensic_ID)
 
 	get_desc()
 		. = "<br>[SPAN_NOTICE("It looks [damage_words]")]"
@@ -144,17 +140,17 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 	var/can_toggle_activation = TRUE // whether you can enable or disable the turret with a screwdriver, used for map setpiece turrets
 	var/emagged = FALSE
 
-	New(loc, direction, forensics_id)
+	var/datum/forensic_id/forensic_profile = null // Forensic profile of the gun
+
+	New(loc, direction, var/datum/forensic_id/gun_id)
 		..()
 		src.set_dir(direction || src.dir) // don't set the dir if we weren't passed one
 		src.set_initial_angle()
 
-		if (!src.forensic_ID)
-			if (forensics_id)
-				src.forensic_ID = forensics_id
-			else
-				src.forensic_ID = src.CreateID()
-				forensic_IDs.Add(src.forensic_ID)
+		if (gun_id)
+			src.forensic_profile = gun_id
+		else
+			src.forensic_profile = register_id("=[build_id(FORENSIC_CHARS_BALLISTICS, 9)]=")
 
 		src.icon_state = "[src.icon_tag]_base"
 		src.appearance_flags |= RESET_TRANSFORM
@@ -188,6 +184,11 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 
 	get_desc(dist)
 		. = "<br>[SPAN_NOTICE("It looks [src.damage_words]. It is [src.anchored ? "secured to" : "unsecured from"] the floor and powered [src.active ? "on" : "off"].")]"
+
+	on_forensic_scan(datum/forensic_scan/scan)
+		. = ..()
+		var/datum/forensic_data/basic/gun_profile_data = new(src.forensic_profile, gun_profile_display)
+		scan.add_data(gun_profile_data)
 
 	proc/set_initial_angle()
 		switch(src.dir)
@@ -231,6 +232,8 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 				if (src.current_projectile.casing)
 					picked_turf = pick(casing_turfs)
 					var/obj/item/casing/turret_casing = new src.current_projectile.casing(picked_turf, src)
+					var/datum/forensic_data/basic/gun_profile_data = new(src.forensic_profile, gun_profile_display)
+					turret_casing.add_evidence(gun_profile_data, FORENSIC_GROUP_NOTES)
 					// prevent infinite casing stacks
 					if (length(picked_turf.contents) > 10)
 						SPAWN(30 SECONDS)
@@ -397,11 +400,12 @@ ADMIN_INTERACT_PROCS(/obj/deployable_turret, proc/admincmd_shoot, proc/admincmd_
 		qdel(src)
 
 	proc/spawn_deployer()
-		var/obj/item/turret_deployer/deployer = new src.associated_deployer(src.loc, src.forensic_ID)
+		var/obj/item/turret_deployer/deployer = new src.associated_deployer(src.loc)
 		deployer.turret_health = src.health // NO FREE REPAIRS, ASSHOLES
 		deployer.damage_words = src.damage_words
 		deployer.quick_deploy_fuel = src.quick_deploy_fuel
 		deployer.tooltip_rebuild = TRUE
+		deployer.forensic_profile = src.forensic_profile
 		qdel(src)
 		return deployer
 
