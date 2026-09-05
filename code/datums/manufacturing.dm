@@ -1814,7 +1814,7 @@
 	apply_material = TRUE
 
 /datum/manufacture/robo_leg_r_tread
-	name = "Cyborg Right Tread"
+	name = "Cyborg Tread (Right)"
 	item_requirements = list("metal_dense" = ROBOT_TREAD_METAL_COST*10,
 								"conductive" = 3)
 	item_outputs = list(/obj/item/parts/robot_parts/leg/right/treads)
@@ -1842,7 +1842,7 @@
 	apply_material = TRUE
 
 /datum/manufacture/robo_leg_l_tread
-	name = "Cyborg Left Tread"
+	name = "Cyborg Tread (Left)"
 	item_requirements = list("metal_dense" = ROBOT_TREAD_METAL_COST*10,
 								"conductive" = 3)
 	item_outputs = list(/obj/item/parts/robot_parts/leg/left/treads)
