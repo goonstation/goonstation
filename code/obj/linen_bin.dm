@@ -17,6 +17,13 @@ ABSTRACT_TYPE(/obj/linen_bin)
 		boutput(user, "You place \the [I] into \the [src].")
 		if (old_amount <= 0)
 			src.UpdateIcon()
+	else if (isscrewingtool(I))
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+		user.visible_message(SPAN_NOTICE("<b>[user.name]</b> [src.anchored ? "unscrews" : "screws down"] [src]."))
+		if(src.anchored == ANCHORED)
+			src.anchored = UNANCHORED
+		else
+			src.anchored = ANCHORED
 
 /obj/linen_bin/attack_hand(mob/user)
 	add_fingerprint(user)
