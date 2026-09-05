@@ -483,7 +483,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 /obj/machinery/traymachine/locking/tanning
 	name = "tanning bed"
 	desc = "Now bringing the rays of Space Hawaii to your local spa!"
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/tanbed.dmi'
 	icon_state = "tanbed"
 	var/id = 2 //this gets used when the tanning computer links to the bed
 	powerdraw_use = 1000 //power cost while tanning
@@ -608,7 +608,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 /obj/machine_tray/tanning
 	name = "tanning bed tray"
 	desc = "The perfect place to lay down after a long day indoors."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/tanbed.dmi'
 	icon_state = "tantray_empty"
 
 	var/obj/item/light/tube/tanningtube = null
@@ -617,7 +617,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 
 	proc/generate_overlay_icon(var/tubecolor)
 		if (!trayoverlay)
-			src.trayoverlay = image('icons/obj/stationobjs.dmi', "tantray_overlay")
+			src.trayoverlay = image('icons/obj/tanbed.dmi', "tantray_overlay")
 		UpdateOverlays(null, "tube")
 		if (tanningtube)
 			src.trayoverlay.color = tubecolor
@@ -685,7 +685,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 /obj/machinery/computer/tanning
 	name = "tanning computer"
 	desc = "Used to control a tanning bed."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/tanbed.dmi'
 	//mats = 20
 	id = 2
 	icon_state = "tanconsole"

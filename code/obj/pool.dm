@@ -2,7 +2,7 @@
 	name = "pool"
 	density = 1
 	anchored = ANCHORED
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/poolballpit.dmi'
 	icon_state = "pool"
 	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID | FLUID_DENSE_ALWAYS
 
@@ -17,16 +17,16 @@
 	anchored = ANCHORED
 	density = 0
 	dir = WEST
-	icon = 'icons/obj/fluid.dmi'
-	icon_state = "ladder"
+	icon = 'icons/obj/poolballpit.dmi'
+	icon_state = "pool_ladder"
 
 /obj/pool/perspective
-	name = "pool"
+	name = "pool_new"
 	density = 1
 	anchored = ANCHORED
-	icon = 'icons/obj/fluid.dmi'
+	icon = 'icons/obj/poolballpit.dmi'
 	plane = PLANE_FLOOR
-	icon_state = "pool"
+	icon_state = "pool_new"
 
 /obj/pool/perspective/innercorners
 	name = "pool"
@@ -37,7 +37,7 @@
 	anchored = ANCHORED
 	layer = EFFECTS_LAYER_UNDER_2
 	pixel_x = -16
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/poolballpit.dmi'
 	icon_state = "springboard"
 	var/in_use = 0
 	var/suiciding = 0
