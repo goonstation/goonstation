@@ -70,7 +70,7 @@ TYPEINFO(/obj/item/device/detective_scanner)
 		if (src.loc != holder || !search || user.stat)
 			return
 		search = copytext(sanitize(search), 1, 200)
-		boutput(user, data_core.general.forensic_search(search))
+		boutput(user, global.data_core.forensic_search(search))
 		return
 
 
