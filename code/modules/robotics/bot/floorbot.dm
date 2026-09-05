@@ -1,5 +1,4 @@
 //Floorbot assemblies
-#define FLOORBOT_MOVE_SPEED 7
 #define FLOORBOT_CLEARTARGET_COOLDOWN "clearinvalidfloorbotlist"
 /obj/item/toolbox_tiles
 	desc = "It's a toolbox with tiles sticking out the top"
@@ -36,7 +35,7 @@
 	layer = 5.0 //TODO LAYER
 	density = 0
 	anchored = UNANCHORED
-	bot_move_delay = FLOORBOT_MOVE_SPEED
+	bot_move_delay = BOT::SPEED::FLOORBOT
 	//weight = 1.0E7
 	var/amount = 50
 	on = 0 // Don't start running around eating everything and puking it all over the cold loop, at least till someone pokes you
@@ -321,7 +320,7 @@
 
 		// we are not there. how do we get there
 		if (!src.path || !length(src.path))
-			src.navigate_to(get_turf(src.target), FLOORBOT_MOVE_SPEED, max_dist = 20)
+			src.navigate_to(get_turf(src.target), src.bot_move_delay, max_dist = 20)
 			if (!src.path || !length(src.path))
 				// answer: we don't. try to find something else then.
 				src.targets_invalid |= turf2coordinates(src.target)
