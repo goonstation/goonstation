@@ -989,7 +989,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 			if(candidate_A && candidate_B)
 				SPAWN(1 SECOND)
 					src.perception_swap(candidate_A,candidate_B)
-				return_string += "[key_name(candidate_A)] and [key_name(candidate_A)]"
+				return_string += "[key_name(candidate_A)] and [key_name(candidate_B)]"
 				if(i < swapcount) return_string += " | "
 
 		message_delay = rand(18 SECONDS, 24 SECONDS)
