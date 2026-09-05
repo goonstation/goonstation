@@ -44,6 +44,7 @@
 		if (radio_speaker.chat_class)
 			classes = radio_speaker.chat_class
 
+	message.maptext_css_values["color"] ||= text_colour || RADIO.default_frequency_colour(display_frequency)
 	var/css_style = (text_colour ? "style='color: [text_colour]'" : "")
 
 	// Determine that speaker name that should be displayed.

@@ -229,10 +229,12 @@
 #define LISTEN_MODIFIER_MOB_MODIFIERS "mob_modifiers"
 #define LISTEN_MODIFIER_PHONE "phone_formatting"
 #define LISTEN_MODIFIER_RADIO "radio_formatting"
+#define LISTEN_MODIFIER_SEE_RADIO_MAPTEXT "see_radio_maptext"
 
 
 //------------ Listen Effects ------------//
 #define LISTEN_EFFECT_ARTIFACT_TRIGGER "artifact_trigger"
+#define SPEECH_MODIFIER_AI_INTERCOM_RADIO "ai_intercom_radio"
 #define LISTEN_EFFECT_AUDIO_LOG "audio_log"
 #define LISTEN_EFFECT_BRADBURY "bradbury"
 #define LISTEN_EFFECT_BUTTBOT "buttbot"
