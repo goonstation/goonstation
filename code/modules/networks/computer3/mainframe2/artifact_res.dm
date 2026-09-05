@@ -929,7 +929,7 @@
 	device_tag = "PNET_ARTCONSOL"
 	timeout = 10
 	icon = 'icons/obj/networked.dmi'
-	icon_state = "arconsol0"
+	icon_state = "artconsol0"
 	var/list/entries
 	var/screen_title = "Devices"
 	var/highlightMap = 0
