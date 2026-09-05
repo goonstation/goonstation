@@ -36,7 +36,7 @@
 	/// Current gas mixture to process
 	var/datum/gas_mixture/current_gas = null
 	/// gas that has been processed, primarily used for atmos analyser
-	var/datum/gas_mixture/air_contents = null
+	var/datum/gas_mixture/normal/air_contents = null
 	/// Reactor casing temperature
 	var/temperature = T20C
 	/// Thermal mass. Basically how much energy it takes to heat this up 1Kelvin
@@ -82,7 +82,7 @@
 		for(var/turf/simulated/floor/F in src.locs)
 			F.explosion_immune = TRUE
 
-		src.air_contents = new /datum/gas_mixture()
+		src.air_contents = new /datum/gas_mixture/normal()
 
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Control Rods", PROC_REF(_set_controlrods_mechchomp))
@@ -184,10 +184,10 @@
 		//but we need to express that in moles so,  1/n = RT/PV .. n = PV/RT
 		var/transfer_moles = 0
 		if(input_starting_pressure)
-			transfer_moles = (src.input.air_contents.volume*input_starting_pressure)/(R_IDEAL_GAS_EQUATION*src.input.air_contents.temperature)
+			transfer_moles = (src.input.air_contents.volume()*input_starting_pressure)/(R_IDEAL_GAS_EQUATION*src.input.air_contents.temperature())
 		var/datum/gas_mixture/gas_input = src.input.air_contents.remove(transfer_moles)
-		src.air_contents.volume = src.input.air_contents.volume
-		gas_input?.volume = air_contents.volume
+		src.air_contents.set_volume(src.input.air_contents.volume())
+		gas_input?.set_volume(air_contents.volume())
 		_last_total_coolant_e = gas_input ? THERMAL_ENERGY(gas_input) : 0
 		var/total_thermal_e = 0
 		for(var/x=1 to REACTOR_GRID_WIDTH)
@@ -197,7 +197,7 @@
 					//flow gas through components
 					var/obj/item/reactor_component/comp = src.component_grid[x][y]
 					var/datum/gas_mixture/gas = comp.processGas(gas_input)
-					gas_input?.volume -= comp.gas_volume
+					gas_input?.set_volume(gas_input.volume() - comp.gas_volume)
 					if(gas)
 						src.air_contents.merge(gas)
 
@@ -276,7 +276,7 @@
 
 		src.input.network?.update = TRUE
 		src.output.network?.update = TRUE
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"temp=[temperature]&rads=[tmpRads]&flowrate=[src.air_contents.volume]")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"temp=[temperature]&rads=[tmpRads]&flowrate=[src.air_contents.volume()]")
 		UpdateIcon()
 
 	attackby(obj/item/I, mob/user)
@@ -307,17 +307,17 @@
 				if(src.component_grid[x][y])
 					var/obj/item/reactor_component/comp = src.component_grid[x][y]
 					total_gas_volume += comp.gas_volume
-		src.input.air_contents.volume = total_gas_volume
-		src.air_contents.volume = total_gas_volume
+		src.input.air_contents.set_volume(total_gas_volume)
+		src.air_contents.set_volume(total_gas_volume)
 
 	proc/processCasingGas(var/datum/gas_mixture/inGas)
 		if(src.current_gas)
 			//first, define some helpful vars
 			// temperature differential
-			var/deltaT = src.temperature - src.current_gas.temperature
+			var/deltaT = src.temperature - src.current_gas.temperature()
 			// temp differential for radiative heating
 			//this is equivelant to (src.temperature ** 4) - (src.current_gas.temperature ** 4), but factored so its less likely to hit overflow
-			var/deltaTr = (src.temperature + src.current_gas.temperature)*(src.temperature - src.current_gas.temperature)*((src.temperature**2) + (src.current_gas.temperature**2))
+			var/deltaTr = (src.temperature + src.current_gas.temperature())*(src.temperature - src.current_gas.temperature())*((src.temperature**2) + (src.current_gas.temperature()**2))
 
 			//thermal conductivity
 			var/k = calculateHeatTransferCoefficient(null,src.material)
@@ -336,12 +336,12 @@
 			//also radiative heating given by Steffan-Boltzman constant * area * (T1^4 - T2^4)
 			//since this is a discrete approximation, it breaks down when the temperature diffs are low. As such, we linearise the equation
 			//by clamping between hottest and coldest. It's not pretty, but it works.
-			var/hottest = max(src.current_gas.temperature, src.temperature)
-			var/coldest = min(src.current_gas.temperature, src.temperature)
+			var/hottest = max(src.current_gas.temperature(), src.temperature)
+			var/coldest = min(src.current_gas.temperature(), src.temperature)
 			//max limit on the energy transfered is bounded between the coldest and hottest temperature of the thermal mass, to ensure that the
 			//gas can't suck out more heat from the reactor than exists
 			var/max_delta_e = clamp(((k * A * deltaT) + (5.67037442e-8 * A * deltaTr)), src.temperature*src.thermal_mass - hottest*src.thermal_mass, src.temperature*src.thermal_mass - coldest*src.thermal_mass)
-			src.current_gas.temperature = clamp(src.current_gas.temperature + max_delta_e/HEAT_CAPACITY(src.current_gas), coldest, hottest)
+			src.current_gas.set_temperature(clamp(src.current_gas.temperature() + max_delta_e/HEAT_CAPACITY(src.current_gas), coldest, hottest))
 
 			//after we've transferred heat to the gas, we remove that energy from the gas channel to preserve CoE
 			src.temperature = clamp(src.temperature - (THERMAL_ENERGY(current_gas) - thermal_e)/src.thermal_mass, coldest, hottest)
@@ -350,12 +350,12 @@
 			//var/coe2 = (THERMAL_ENERGY(current_gas) + src.temperature*src.thermal_mass)
 			//if(abs(coe2 - coe_check) > 64)
 			//	CRASH("COE VIOLATION REACTOR")
-			if(src.current_gas.temperature <= 0 || src.temperature <= 0)
+			if(src.current_gas.temperature() <= 0 || src.temperature <= 0)
 				CRASH("TEMP WENT NONPOSITIVE (hottest=[hottest], coldest=[coldest], max_delta_e=[max_delta_e], deltaT=[deltaT], deltaTr=[deltaTr])")
 
 			. = src.current_gas
 		if(inGas && (THERMAL_ENERGY(inGas) > 0))
-			src.current_gas = inGas.remove((src.reactor_vessel_gas_volume*MIXTURE_PRESSURE(inGas))/(R_IDEAL_GAS_EQUATION*inGas.temperature))
+			src.current_gas = inGas.remove((src.reactor_vessel_gas_volume*MIXTURE_PRESSURE(inGas))/(R_IDEAL_GAS_EQUATION*inGas.temperature()))
 			if(src.current_gas && TOTAL_MOLES(src.current_gas) < 1)
 				if(istype(., /datum/gas_mixture))
 					var/datum/gas_mixture/result = .
@@ -412,8 +412,8 @@
 						var/obj/item/reactor_component/gas_channel/gascomp = comp
 						src.current_gas.merge(gascomp.air_contents) //grab all the gas in the channels and put it back in the reactor so it can be vented into engineering
 
-		src.current_gas.radgas += meltdown_badness*15
-		src.current_gas.temperature = max(src.temperature, src.current_gas.temperature)
+		src.current_gas.adjust_radgas(meltdown_badness*15)
+		src.current_gas.set_temperature(max(src.temperature, src.current_gas.temperature()))
 		var/turf/current_loc = get_turf(src)
 		current_loc.assume_air(current_gas)
 

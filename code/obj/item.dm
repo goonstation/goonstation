@@ -1744,7 +1744,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 
 	var/msg = "[thr ? "threw" : "dropped"] firesource ([O]) at [log_loc(T)]."
 
-	if (istype(simulated) && (simulated.air.toxins > 0.25))
+	if (istype(simulated) && (simulated.air.toxins() > 0.25))
 		msg += " Turf contains <b>plasma gas</b>."
 	if (T.active_liquid?.group)
 		msg += " Turf contains <b>fluid</b> [log_reagents(T.active_liquid.group)]."

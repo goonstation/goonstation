@@ -755,16 +755,16 @@ TYPEINFO(/obj/item/clothing/shoes/cowboy/boom)
 
 		var/datum/gas_mixture/G = src.tank.air_contents.remove(num)
 
-		if (G.oxygen >= 0.01)
+		if (G.oxygen() >= 0.01)
 			return 1
-		if (G.toxins > 0.001)
+		if (G.toxins() > 0.001)
 			if (user)
-				var/d = G.toxins / 2
+				var/d = G.toxins() / 2
 				d = min(abs(user.health + 100), d, 25)
 				user.TakeDamage("chest", 0, d)
-			return (G.oxygen >= 0.0075 ? 0.5 : 0)
+			return (G.oxygen() >= 0.0075 ? 0.5 : 0)
 		else
-			if (G.oxygen >= 0.0075)
+			if (G.oxygen() >= 0.0075)
 				return 0.5
 			else
 				return 0

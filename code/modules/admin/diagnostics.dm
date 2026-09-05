@@ -81,81 +81,6 @@ proc/debug_map_apc_count(delim,zlim)
 
 		usr.Browse(output,"window=generalreport")
 
-	air_report()
-		SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-		ADMIN_ONLY
-		SHOW_VERB_DESC
-
-		if(!processScheduler || !air_master)
-			alert(usr,"processScheduler or air_master not found.","Air Report")
-			return 0
-
-		var/active_groups = 0
-		var/inactive_groups = 0
-		var/active_tiles = 0
-		for(var/datum/air_group/group in air_master.air_groups)
-			if(group.group_processing)
-				active_groups++
-			else
-				inactive_groups++
-				active_tiles += length(group.members)
-
-		var/hotspots = 0
-		for(var/atom/movable/hotspot/hotspot in world)
-			hotspots++
-			LAGCHECK(LAG_LOW)
-
-		var/output = {"<B>AIR SYSTEMS REPORT</B><HR>
-<B>General Processing Data</B><BR>
-<B># of Groups:</B> [air_master.air_groups.len]<BR>
----- <I>Active:</I> [active_groups]<BR>
----- <I>Inactive:</I> [inactive_groups]<BR>
--------- <I>Tiles:</I> [active_tiles]<BR>
-<B># of Active Singletons:</B> [air_master.active_singletons.len]<BR>
-<BR>
-<B>Total # of Gas Mixtures In Existence: </B>[total_gas_mixtures]<BR>
-<B>Special Processing Data</B><BR>
-<B>Hotspot Processing:</B> [hotspots]<BR>
-<B>High Temperature Processing:</B> [air_master.active_super_conductivity.len]<BR>
-<B>High Pressure Processing:</B> [air_master.high_pressure_delta.len] (not yet implemented)<BR>
-<BR>
-<B>Geometry Processing Data</B><BR>
-<B>Group Rebuild:</B> [air_master.groups_to_rebuild.len]<BR>
-<B>Tile Update:</B> [air_master.tiles_to_update.len]<BR>
-[air_histogram()]
-"}
-
-		usr.Browse(output,"window=airreport")
-
-	air_histogram()
-
-		var/html = "<pre>"
-		var/list/ghistogram = new
-		var/list/ughistogram = new
-		var/p
-
-		for(var/datum/air_group/g in air_master.air_groups)
-			if (g.group_processing)
-				for(var/turf/simulated/member in g.members)
-					p = round(max(-1, MIXTURE_PRESSURE(member.air)), 10)/10 + 1
-					if (p > ghistogram.len)
-						ghistogram.len = p
-					ghistogram[p]++
-			else
-				for(var/turf/simulated/member in g.members)
-					p = round(max(-1, MIXTURE_PRESSURE(member.air)), 10)/10 + 1
-					if (p > ughistogram.len)
-						ughistogram.len = p
-					ughistogram[p]++
-
-		html += "Group processing tiles pressure histogram data:\n"
-		for(var/i=1,i<=ghistogram.len,i++)
-			html += "[10*(i-1)]\t\t[ghistogram[i]]\n"
-		html += "Non-group processing tiles pressure histogram data:\n"
-		for(var/i=1,i<=ughistogram.len,i++)
-			html += "[10*(i-1)]\t\t[ughistogram[i]]\n"
-		return html
-
 	air_status(turf/target as turf)
 		SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 		set name = "Air Status"
@@ -172,7 +97,7 @@ proc/debug_map_apc_count(delim,zlim)
 			if(length(T.active_hotspots))
 				burning = 1
 
-		boutput(usr, "<span class='notice'>@[target.x],[target.y] ([GM.group_multiplier])<br>[MOLES_REPORT(GM)] t: [GM.temperature]&deg;K ([GM.temperature - T0C]&deg;C), [MIXTURE_PRESSURE(GM)] kPa [(burning)?("<span class='alert'>BURNING</span>"):(null)]</span>")
+		boutput(usr, "<span class='notice'>@[target.x],[target.y] <br>[MOLES_REPORT(GM)] t: [GM.temperature()]&deg;K ([GM.temperature() - T0C]&deg;C), [MIXTURE_PRESSURE(GM)] kPa [(burning)?("<span class='alert'>BURNING</span>"):(null)]</span>")
 
 	fix_next_move()
 		SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
@@ -376,88 +301,6 @@ proc/debug_map_apc_count(delim,zlim)
 		OnStartRendering(client/C)
 			processed_areas = list()
 
-	atmos_air
-		name = "atmos air groups"
-		help = "Tile colors are based on what air group turf belongs to. Hover over a turf to get its atmos readout"
-		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
-			var/turf/simulated/sim = theTurf
-			if(istype(sim, /turf/simulated))//byondood
-				var/datum/air_group/group = sim.parent
-				if(group)
-					img.app.color = debug_color_of(group)
-					img.app.desc = "Group \ref[group]<br>[MOLES_REPORT(group.air)]Temperature=[group.air.temperature]<br/>Spaced=[group.spaced]"
-					if (group.spaced) img.app.overlays += image('icons/misc/debug.dmi', icon_state = "spaced")
-					/*
-					var/list/borders_space = list()
-					for(var/turf/spaceses in group.space_borders)
-						if(GET_DIST(spaceses, theTurf) == 1)
-							var/dir = get_dir(theTurf, spaceses)
-							if((dir & (dir-1)) == 0)
-								if(dir & NORTH) borders_space[++borders_space.len] = "NORTH"
-								if(dir & SOUTH) borders_space[++borders_space.len] = "SOUTH"
-								if(dir & EAST) borders_space[++borders_space.len] = "EAST"
-								if(dir & WEST) borders_space[++borders_space.len] = "WEST"
-								var/image/airrowe = image('icons/misc/debug.dmi', icon_state = "arrow", dir = dir)
-								airrowe.appearance_flags = RESET_COLOR
-								img.app.overlays += airrowe
-					if(borders_space.len)
-						img.app.desc += "<br/>(borders space to the [borders_space.Join(" ")])"
-					*/
-					var/list/borders_individual = list()
-					for(var/turf/ind in group.border_individual)
-						if(GET_DIST(ind, theTurf) == 1)
-							var/dir = get_dir(theTurf, ind)
-							if((dir & (dir-1)) == 0)
-								if(dir & NORTH) borders_individual[++borders_individual.len] = "NORTH"
-								if(dir & SOUTH) borders_individual[++borders_individual.len] = "SOUTH"
-								if(dir & EAST) borders_individual[++borders_individual.len] = "EAST"
-								if(dir & WEST) borders_individual[++borders_individual.len] = "WEST"
-								var/image/airrowe = image('icons/misc/debug.dmi', icon_state = "arrow", dir = dir)
-								airrowe.appearance_flags = RESET_COLOR
-								img.app.overlays += airrowe
-					if(borders_individual.len)
-						img.app.desc += "<br/>(borders individual to the [borders_individual.Join(" ")])"
-					var/list/borders_group = list()
-					for(var/turf/simulated/T in group.enemies)
-						if(GET_DIST(T, theTurf) == 1)
-							var/dir = get_dir(theTurf, T)
-							if((dir & (dir-1)) == 0)
-								if(dir & NORTH) borders_group[++borders_group.len] = "NORTH"
-								if(dir & SOUTH) borders_group[++borders_group.len] = "SOUTH"
-								if(dir & EAST) borders_group[++borders_group.len] = "EAST"
-								if(dir & WEST) borders_group[++borders_group.len] = "WEST"
-								var/image/airrowe = image('icons/misc/debug.dmi', icon_state = "arrow", dir = dir)
-								airrowe.appearance_flags = RESET_COLOR
-								if(T.parent)
-									airrowe.color = debug_color_of(T.parent)
-								img.app.overlays += airrowe
-					if(borders_group.len)
-						img.app.desc += "<br/>(borders groups to the [borders_group.Join(" ")])"
-					if(theTurf in group.borders)
-						var/image/mark = image('icons/misc/debug.dmi', icon_state = "border")
-						mark.appearance_flags = RESET_COLOR
-						img.app.overlays += mark
-					if(theTurf in group.space_borders)
-						var/image/mark = image('icons/misc/debug.dmi', icon_state = "space_border")
-						mark.appearance_flags = RESET_COLOR
-						img.app.overlays += mark
-					if(theTurf in group.self_tile_borders)
-						var/image/mark = image('icons/misc/debug.dmi', icon_state = "individual_border")
-						mark.appearance_flags = RESET_COLOR
-						img.app.overlays += mark
-					if(theTurf in group.self_group_borders)
-						var/image/mark = image('icons/misc/debug.dmi', icon_state = "group_border")
-						mark.appearance_flags = RESET_COLOR
-						img.app.overlays += mark
-				else
-					img.app.color = "#ffffff"
-					img.app.desc = "No Atmos Group<br/>[MOLES_REPORT(sim)]Temperature=[sim.temperature]"
-			else
-				img.app.desc = "-unsimulated-"
-				img.app.color = "#202020"
-
-
-
 	atmos_status
 		name = "atmos status"
 		help = "turf color: black (no air), gray (less than normal), white (normal pressure), red (over normal)<br>top number: o2 pp%. white = breathable, orange = breathable w/ cyberlung, otherwise no good<br>middle number: atmos pressure (kPa)<br>bottom number: air temp (&deg;C)<br>colored square in bottom left:<br>color indicates group membership<br>solid: group mode on<br>outline: group mode off<br>no square: not in a group"
@@ -466,90 +309,58 @@ proc/debug_map_apc_count(delim,zlim)
 			img.app.desc = ""
 			img.app.color = null
 			img.app.maptext = null
-			if (istype(sim, /turf/simulated))
-				img.app.alpha = 200
+			img.app.alpha = 200
 
-				var/datum/air_group/group = sim.parent
-				var/datum/gas_mixture/air = null
-				var/is_group = 0
-				var/is_group_active = 0
-				if (group)
-					is_group = debug_color_of(group)
-					if (sim.parent.group_processing)
-						is_group_active = 1
-						air = sim.parent.air
-					else
-						air = sim.air
-				else if (sim?.air)
-					air = sim.air
+			var/datum/gas_mixture/air = sim.return_air()
 
-				if (!air)
-					img.app.color = "#6666FF"
-					img.app.desc = "no air mix"
+			var/pressure = MIXTURE_PRESSURE(air)
+			img.app.desc = "[MOLES_REPORT(air)]Temperature=[air.temperature()]<br/>"
+
+			var/breath_pressure = ((TOTAL_MOLES(air) * R_IDEAL_GAS_EQUATION * air.temperature()) * BREATH_PERCENTAGE) / BREATH_VOLUME
+			//Partial pressure of the O2 in our breath
+			var/O2_pp = (TOTAL_MOLES(air)) && (air.oxygen() / TOTAL_MOLES(air)) * breath_pressure
+			var/O2_color
+			var/T_color
+			switch (O2_pp)
+				if (17 to INFINITY)
+					O2_color = "#eeeeff"
+				if (9 to 17)
+					O2_color = "#ff8800"
+				if (-INFINITY to 0.01)
+					O2_color = "#888888"
 				else
+					O2_color = "#ff0000"
 
-					var/pressure = MIXTURE_PRESSURE(air)
-					img.app.desc = "Group \ref[group]<br>[MOLES_REPORT(air)]Temperature=[air.temperature]<br/>"
-
-					var/breath_pressure = ((TOTAL_MOLES(air) * R_IDEAL_GAS_EQUATION * air.temperature) * BREATH_PERCENTAGE) / BREATH_VOLUME
-					//Partial pressure of the O2 in our breath
-					var/O2_pp = (TOTAL_MOLES(air)) && (air.oxygen / TOTAL_MOLES(air)) * breath_pressure
-					var/O2_color
-					var/T_color
-					switch (O2_pp)
-						if (17 to INFINITY)
-							O2_color = "#eeeeff"
-						if (9 to 17)
-							O2_color = "#ff8800"
-						if (-INFINITY to 0.01)
-							O2_color = "#888888"
-						else
-							O2_color = "#ff0000"
-
+			T_color = "#ffffff"
+			switch (TO_CELSIUS(air.temperature()))
+				if (100 to INFINITY)
+					T_color = "#ff0000"
+				if (75 to 100)
+					T_color = "#ff8800"
+				if (40 to 65)
+					T_color = "#ffff00"
+				if (15 to 40)
 					T_color = "#ffffff"
-					switch (TO_CELSIUS(air.temperature))
-						if (100 to INFINITY)
-							T_color = "#ff0000"
-						if (75 to 100)
-							T_color = "#ff8800"
-						if (40 to 65)
-							T_color = "#ffff00"
-						if (15 to 40)
-							T_color = "#ffffff"
-						if (-15 to 0)
-							T_color = "#99bbff"
-						if (-40 to -15)
-							T_color = "#5599ff"
-						if (-INFINITY to -40)
-							T_color = "#0000ff"
+				if (-15 to 0)
+					T_color = "#99bbff"
+				if (-40 to -15)
+					T_color = "#5599ff"
+				if (-INFINITY to -40)
+					T_color = "#0000ff"
 
 
-					//mt.maptext = "<span class='pixel r' style='color: white; -dm-text-outline: 1px black;'>[round(TOTAL_MOLES(air), 0.1)]\n[round(pressure, 1)]\n[round(air.temperature - T0C, 1)]</span>"
-					img.app.overlays = null
-
-					if (is_group)
-						var/image/gt = image('icons/Testing/atmos_testing.dmi', "group[is_group_active ? "" : "-paused"]")
-						gt.appearance_flags = RESET_COLOR
-						gt.color = is_group
-						img.app.overlays += gt
-
-					if (group?.spaced) img.app.overlays += image('icons/misc/debug.dmi', icon_state = "spaced")
-
-					img.app.overlays += src.makeText("<span style='color: [O2_color];'>[round(O2_pp, 0.01)]</span>\n[round(pressure, 0.1)]\n<span style='color: [T_color];'>[round(TO_CELSIUS(air.temperature), 1)]</span>")
+			//mt.maptext = "<span class='pixel r' style='color: white; -dm-text-outline: 1px black;'>[round(TOTAL_MOLES(air), 0.1)]\n[round(pressure, 1)]\n[round(air.temperature() - T0C, 1)]</span>"
+			img.app.overlays = null
+			img.app.overlays += src.makeText("<span style='color: [O2_color];'>[round(O2_pp, 0.01)]</span>\n[round(pressure, 0.1)]\n<span style='color: [T_color];'>[round(TO_CELSIUS(air.temperature()), 1)]</span>")
 
 
-					if (pressure > ONE_ATMOSPHERE)
-						var/color1 = 255
-						var/color2 = 255 - clamp(((pressure - ONE_ATMOSPHERE) / (ONE_ATMOSPHERE * 4)) * 255, 0, 255)
-						img.app.color = rgb(color1, color2, color2)
-					else
-						var/color1 = clamp(pressure / ONE_ATMOSPHERE * 255, 0, 255)
-						img.app.color = rgb(color1, color1, color1)
-
-
+			if (pressure > ONE_ATMOSPHERE)
+				var/color1 = 255
+				var/color2 = 255 - clamp(((pressure - ONE_ATMOSPHERE) / (ONE_ATMOSPHERE * 4)) * 255, 0, 255)
+				img.app.color = rgb(color1, color2, color2)
 			else
-				img.app.desc = "" //"unsim"
-				img.app.color = "#0000ff"
+				var/color1 = clamp(pressure / ONE_ATMOSPHERE * 255, 0, 255)
+				img.app.color = rgb(color1, color1, color1)
 
 
 	artists
@@ -879,7 +690,7 @@ proc/debug_map_apc_count(delim,zlim)
 					var/datum/gas_mixture/air = pipe.return_air()
 					if(show_numbers)
 						if(TOTAL_MOLES(air) > ATMOS_EPSILON)
-							pipe_image.maptext = "<span class='pixel r ol'>[round(air.temperature, 0.1)]<br>[round(TOTAL_MOLES(air), 0.1)]<br>[round(MIXTURE_PRESSURE(air), 0.1)]</span>"
+							pipe_image.maptext = "<span class='pixel r ol'>[round(air.temperature(), 0.1)]<br>[round(TOTAL_MOLES(air), 0.1)]<br>[round(MIXTURE_PRESSURE(air), 0.1)]</span>"
 							pipe_image.maptext_x = -3
 							img.app.desc = "[MOLES_REPORT(air)]"
 						else if(TOTAL_MOLES(air) > 0)
@@ -1091,15 +902,7 @@ proc/debug_map_apc_count(delim,zlim)
 	temperature
 		name = "temperature"
 		GetInfo(turf/theTurf, image/debugoverlay/img)
-			var/temp = null
-			if(issimulatedturf(theTurf))
-				var/turf/simulated/sim = theTurf
-				if (sim.parent?.group_processing)
-					temp = sim.parent.air.temperature
-				else if(sim.air)
-					temp = sim.air.temperature
-			if(isnull(temp))
-				temp = theTurf.temperature
+			var/temp = theTurf.return_air().temperature()
 			img.app.overlays = list(src.makeText("[temp]", RESET_ALPHA | RESET_COLOR))
 			var/p = clamp(temp / (T0C * 2), 0, 1)
 			img.app.color = rgb(round(p * 255), 0, round((1-p) * 255))

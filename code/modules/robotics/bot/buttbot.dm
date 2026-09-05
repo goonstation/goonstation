@@ -286,15 +286,15 @@ TYPEINFO(/obj/machinery/bot/buttbot)
 /// cant possibly be a bad idea
 /obj/machinery/bot/buttbot/proc/robo_expel_fart_gas(var/gross)
 	var/turf/T = get_turf(src)
-	var/datum/gas_mixture/gas = new /datum/gas_mixture
+	var/datum/gas_mixture/normal/gas = new /datum/gas_mixture/normal
 	if(gross == 1)
-		gas.farts = 0.5
+		gas.set_farts(0.5)
 	else if(gross == 2)
-		gas.farts = 20
+		gas.set_farts(20)
 	else
-		gas.oxygen = 1
-	gas.temperature = T20C
-	gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
+		gas.set_oxygen(1)
+	gas.set_temperature(T20C)
+	gas.set_volume(R_IDEAL_GAS_EQUATION * T20C / 1000)
 	if(T)
 		T.assume_air(gas)
 

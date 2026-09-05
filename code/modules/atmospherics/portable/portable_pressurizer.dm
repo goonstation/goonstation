@@ -123,14 +123,14 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pressurizer)
 			if(FAN_ON_OUTLET)
 				var/pressure_delta = src.release_pressure - MIXTURE_PRESSURE(environment)
 				var/transfer_moles = 0
-				if(air_contents.temperature > 0)
-					transfer_moles = pressure_delta*environment.volume/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
+				if(air_contents.temperature() > 0)
+					transfer_moles = pressure_delta*environment.volume()/(air_contents.temperature() * R_IDEAL_GAS_EQUATION)
 					removed = air_contents.remove(transfer_moles)
 					loc.assume_air(removed)
 
 			if(FAN_ON_INLET)
 				var/transfer_rate = 200
-				var/transfer_ratio = max(1, transfer_rate/environment.volume)
+				var/transfer_ratio = max(1, transfer_rate/environment.volume())
 
 				if(MIXTURE_PRESSURE(src.air_contents) < src.maximum_pressure)
 					removed = environment.remove_ratio(transfer_ratio)
@@ -138,7 +138,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pressurizer)
 
 	proc/is_air_safe()
 		var/total_moles = max(TOTAL_MOLES(src.air_contents),1)
-		return(((src.air_contents.toxins/total_moles) < 0.01) && ((src.air_contents.carbon_dioxide/total_moles) < 0.05) && (src.air_contents.temperature < FIRE_MINIMUM_TEMPERATURE_TO_SPREAD))
+		return(((src.air_contents.toxins()/total_moles) < 0.01) && ((src.air_contents.carbon_dioxide()/total_moles) < 0.05) && (src.air_contents.temperature() < FIRE_MINIMUM_TEMPERATURE_TO_SPREAD))
 
 	proc/process_raw_materials()
 		if(status & NOPOWER)
@@ -162,18 +162,18 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pressurizer)
 		else if(material_progress < 100)
 			process_materials = PROCESS_ACTIVE
 			var/progress = min(src.process_rate * 5,100-material_progress)
-			var/datum/gas_mixture/GM = new /datum/gas_mixture
-			GM.temperature = T20C
+			var/datum/gas_mixture/normal/GM = new /datum/gas_mixture/normal
+			GM.set_temperature(T20C)
 			if(target_material.material?.getName() in src.whitelist)
 				switch(target_material.material.getName())
 					if("molitz")
-						GM.oxygen += 1500 * progress / 100
+						GM.adjust_oxygen(1500 * progress / 100)
 					if("viscerite")
-						GM.nitrogen += 1500 * progress / 100
+						GM.adjust_nitrogen(1500 * progress / 100)
 					if("char")
-						GM.carbon_dioxide += 500 * progress / 100
+						GM.adjust_carbon_dioxide(500 * progress / 100)
 					if("plasmastone")
-						GM.toxins += 500 * progress / 100
+						GM.adjust_toxins(500 * progress / 100)
 			else
 				playsound(src.loc, 'sound/machines/buzz-two.ogg', 20)
 				process_materials = PROCESS_PAUSED
@@ -274,9 +274,9 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pressurizer)
 
 		var/obj/overlay/poof = new/obj/overlay(get_turf(src))
 		poof.icon = 'icons/obj/atmospherics/atmos.dmi'
-		poof.color=rgb(air_contents.toxins/TOTAL_MOLES(air_contents)*255, 	\
-						air_contents.oxygen/TOTAL_MOLES(air_contents)*255,	\
-						air_contents.oxygen+air_contents.toxins/TOTAL_MOLES(air_contents)*255)
+		poof.color=rgb(air_contents.toxins()/TOTAL_MOLES(air_contents)*255, 	\
+						air_contents.oxygen()/TOTAL_MOLES(air_contents)*255,	\
+						air_contents.oxygen()+air_contents.toxins()/TOTAL_MOLES(air_contents)*255)
 		poof.alpha = clamp(MIXTURE_PRESSURE(src.air_contents)/src.maximum_pressure*180, 90, 220)
 		FLICK("pressurizer-poof", poof)
 		SPAWN(0.8 SECONDS)
@@ -292,23 +292,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pressurizer)
 
 		var/turf/simulated/T = get_turf(src)
 		if(T && istype(T))
-			if(T.air)
-				// Use temporary gas mixture to not dispose air_contents through merge
-				var/datum/gas_mixture/temp = air_contents.remove_ratio(1)
-				if(T.parent?.group_processing)
-					T.parent.air.merge(temp)
-				else
-					var/count = length(T.parent?.members)
-					if(count)
-						if(count>1)
-							temp = temp.remove_ratio(1/count)
-						var/datum/gas_mixture/GM
-						for(var/turf/simulated/MT as anything in T.parent.members)
-							GM = new /datum/gas_mixture
-							GM.copy_from(temp)
-							MT.assume_air(GM)
-					else
-						T.assume_air(temp)
+			T.assume_air(src.air_contents)
 
 			if(pressure > (maximum_pressure * BLAST_EFFECT_RATIO))
 				for(var/mob/living/HH in hearers(8, T))

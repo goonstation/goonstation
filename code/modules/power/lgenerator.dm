@@ -103,7 +103,7 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 /obj/machinery/power/lgenerator/proc/check_tank(var/obj/item/tank/T)
 	if (!src || !T || !T.air_contents)
 		return 0
-	if (T.air_contents.toxins <= 0)
+	if (T.air_contents.toxins() <= 0)
 		return 0
 	return 1
 
@@ -189,7 +189,7 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 					// Don't combust plasma if we don't have to.
 					if (APC_cell.charge < APC_cell.maxcharge)
 						APC_cell.give(src.cellChargeRate)
-						src.internalTank.air_contents.toxins = max(0, (internalTank.air_contents.toxins - src.tankDrainRate))
+						src.internalTank.air_contents.set_toxins(max(0, (internalTank.air_contents.toxins() - src.tankDrainRate)))
 						// Call proc to trigger rigged cell and log entries.
 
 			if (FALSE)
@@ -212,7 +212,7 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 					return
 				if (src.internalCell.charge < src.internalCell.maxcharge)
 					src.internalCell.give(src.cellChargeRate)
-					src.internalTank.air_contents.toxins = max(0, (internalTank.air_contents.toxins - src.tankDrainRate))
+					src.internalTank.air_contents.set_toxins(max(0, (internalTank.air_contents.toxins() - src.tankDrainRate)))
 					// Call proc to trigger rigged cell and log entries.
 
 	src.icon_state = "ggen[src.anchored]"

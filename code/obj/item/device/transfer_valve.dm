@@ -418,10 +418,10 @@ TYPEINFO(/obj/item/device/transfer_valve)
 
 				temp = tank_one.air_contents.remove_ratio(1)
 
-				tank_two.air_contents.volume = tank_one.air_contents.volume
+				tank_two.air_contents.set_volume(tank_one.air_contents.volume())
 				tank_two.air_contents.merge(temp)
 
-				var/transfer_ratio = tank_one.air_contents.volume / (tank_one.air_contents.volume + tank_two.air_contents.volume)
+				var/transfer_ratio = tank_one.air_contents.volume() / (tank_one.air_contents.volume() + tank_two.air_contents.volume())
 				temp = tank_two.air_contents.remove_ratio(transfer_ratio)
 				tank_one.air_contents.merge(temp)
 

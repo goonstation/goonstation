@@ -184,23 +184,23 @@
 
 		var/input_starting_pressure = MIXTURE_PRESSURE(src.input.air_contents)
 		src.last_input_pressure = input_starting_pressure
-		src.last_input_temperature = src.input.air_contents ? src.input.air_contents.temperature : 0
+		src.last_input_temperature = src.input.air_contents ? src.input.air_contents.temperature() : 0
 
 		//RPM - generate ideal power at 600RPM
 		//Stator load - how much are we trying to slow the RPM
 		//Energy generated = stator load * RPM
 		var/transfer_moles = 0
 		if(input_starting_pressure)
-			transfer_moles = (src.input.air_contents.volume*input_starting_pressure)/(R_IDEAL_GAS_EQUATION*src.input.air_contents.temperature)
+			transfer_moles = (src.input.air_contents.volume()*input_starting_pressure)/(R_IDEAL_GAS_EQUATION*src.input.air_contents.temperature())
 		src.air_contents =  src.input.air_contents.remove(transfer_moles)
 
-		src.current_blade?.material_trigger_on_temp(air_contents?.temperature)
+		src.current_blade?.material_trigger_on_temp(air_contents?.temperature())
 
 		src.lastgen = 0
 		src.stalling = FALSE
-		src.overtemp = src.air_contents ? (src.air_contents.temperature > TURBINE_OVERTEMP_WARNING) : FALSE
-		src.undertemp = src.air_contents ? (src.air_contents.temperature < T20C) : FALSE
-		if(src.ruined || (air_contents?.temperature > TURBINE_OVERTEMP_LIMIT))
+		src.overtemp = src.air_contents ? (src.air_contents.temperature() > TURBINE_OVERTEMP_WARNING) : FALSE
+		src.undertemp = src.air_contents ? (src.air_contents.temperature() < T20C) : FALSE
+		if(src.ruined || (air_contents?.temperature() > TURBINE_OVERTEMP_LIMIT))
 			//dump gas
 			src.assume_air(air_contents)
 			if(!src.ruined && !ON_COOLDOWN(src, "turbine_overheat_alarm", 10 SECOND)) //only play the alarm if not ruined
@@ -208,7 +208,7 @@
 				playsound(src.loc, 'sound/misc/klaxon.ogg', 40, pitch=1.1)
 
 			if(air_contents)
-				src.last_output_temperature = air_contents.temperature
+				src.last_output_temperature = air_contents.temperature()
 				src.last_output_pressure = MIXTURE_PRESSURE(air_contents)
 			src.output.air_contents.merge(air_contents)
 			if(air_contents)
@@ -220,8 +220,8 @@
 				input_starting_energy = 1 //runtime protection for weirdly empty gas packets
 			if(input_heat_cap <= 0)
 				input_heat_cap = 1
-			if(air_contents.temperature > T20C) //only operate on the gas if it's above min temp
-				air_contents.temperature = round(max((input_starting_energy - ((input_starting_energy - (input_heat_cap*T20C))*0.8))/input_heat_cap,T20C),0.01) //fucking rounding errors
+			if(air_contents.temperature() > T20C) //only operate on the gas if it's above min temp
+				air_contents.set_temperature(round(max((input_starting_energy - ((input_starting_energy - (input_heat_cap*T20C))*0.8))/input_heat_cap,T20C),0.01)) //fucking rounding errors
 			var/output_starting_energy = THERMAL_ENERGY(air_contents)
 			var/energy_generated = src.stator_load*(src.RPM/60)
 
@@ -259,13 +259,13 @@
 				playsound(src, pick(src.grump_sound_list), 40, 2*rand())
 				UpdateHealthIndicators(src.blade_health--);
 
-			src.last_output_temperature = air_contents.temperature
+			src.last_output_temperature = air_contents.temperature()
 			src.last_output_pressure = MIXTURE_PRESSURE(air_contents)
 			src.output.air_contents.merge(air_contents)
 			src.terminal.add_avail(src.lastgen, src.processing_tier)
 
-		src.input.air_contents?.volume = src.flow_rate
-		src.air_contents?.volume = src.flow_rate
+		src.input.air_contents?.set_volume(src.flow_rate)
+		src.air_contents?.set_volume(src.flow_rate)
 
 		src.input.network?.update = TRUE
 		src.output.network?.update = TRUE
