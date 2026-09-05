@@ -893,6 +893,7 @@ var/list/trinket_safelist = list(
 	/obj/item/clothing/glasses/eyepatch,
 	/obj/item/clothing/glasses/regular,
 	/obj/item/clothing/glasses/sunglasses/tanning,
+	/obj/item/clothing/gloves/baseball_mitt,
 	/obj/item/clothing/gloves/boxing,
 	/obj/item/clothing/mask/horse_mask,
 	/obj/item/clothing/mask/clown_hat,
