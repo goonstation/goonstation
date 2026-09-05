@@ -316,92 +316,140 @@ TYPEINFO(/obj/item/card/emag)
 	src.emagged = 1
 	return TRUE
 
-/*
-/obj/item/card/id/verb/read()
-	set src in usr
 
-	boutput(usr, "[bicon(src)] [src.name]: The current assignment on the card is [src.assignment].")
-	return
-*/
 /obj/item/card/id/syndicate
 	name = "agent card"
 	access = list(access_maint_tunnels, access_syndicate_shuttle)
 	HELP_MESSAGE_OVERRIDE(null)
+	SYNDICATE_STEALTH_DESCRIPTION("There's some extra circuitry soldered to the back.")
 
-/obj/item/card/id/syndicate/attack_self(mob/user as mob)
-	if(!src.registered)
-		var/reg = copytext(src.sanitize_name(input(user, "What name would you like to put on this card?", "Agent card name", ishuman(user) ? user.real_name : user.name)), 1, 100)
-		var/ass = copytext(src.sanitize_name(input(user, "What occupation would you like to put on this card?\n Note: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Staff Assistant"), 1), 1, 100)
-		var/color = input(user, "What department should the ID's band color match?\nClick cancel to abort the forging process.") as null|anything in list("clown","golden","civilian","security","command","research","medical","engineering","nanotrasen","syndicate","No band")
-		var/datum/pronouns/pronouns = choose_pronouns(user, "What pronouns would you like to put on this card?", "Pronouns")
-		src.pronouns = pronouns
-		switch (color)
-			if ("clown")
-				src.icon_state = "id_clown"
-				src.keep_icon = TRUE
-			if ("golden")
-				src.icon_state = "id_gold"
-				src.keep_icon = TRUE
-			if ("No band")
-				src.icon_state = "id_basic"
-			if ("civilian")
-				src.icon_state = "id_civ"
-			if ("security")
-				src.icon_state = "id_sec"
-			if ("command")
-				src.icon_state = "id_com"
-			if ("research")
-				src.icon_state = "id_res"
-			if ("medical")
-				src.icon_state = "id_med"
-			if ("engineering")
-				src.icon_state = "id_eng"
-			if ("nanotrasen")
-				src.icon_state = "id_nanotrasen"
-				src.keep_icon = TRUE
-			if ("syndicate")
-				src.icon_state = "id_syndie"
-				src.keep_icon = TRUE
-			else
-				return // Abort process.
-		src.registered = reg
-		src.assignment = ass
-		src.name = "[src.registered]’s ID Card ([src.assignment])"
-		boutput(user, SPAN_NOTICE("You successfully forge the ID card."))
-	else
-		..()
+	/// If FALSE, this agent card can be forged with new credentials. This value is permanently set to TRUE after that.
+	var/forged = FALSE
+	/// The possible styles that this card can adopt.
+	/// name: Human-readable name.
+	/// state: Corresponding icon state in card.dmi.
+	/// keepState: (Optional) Maintain existing icon if the job is changed in an ID console.
+	var/list/card_styles = list(
+		list(name = "Plain", state = "id_basic"),
+		list(name = "Civilian", state = "id_civ"),
+		list(name = "Engineering", state = "id_eng"),
+		list(name = "Research", state = "id_res"),
+		list(name = "Medical", state = "id_med"),
+		list(name = "Security", state = "id_sec"),
+		list(name = "Command", state = "id_com"),
+		list(name = "Clown", state = "id_clown", keepState = TRUE),
+		list(name = "Gold", state = "id_gold", keepState = TRUE),
+		list(name = "NanoTrasen", state = "id_nanotrasen", keepState = TRUE),
+		list(name = "Syndicate", state = "id_syndie", keepState = TRUE),
+	)
 
-/obj/item/card/id/syndicate/attackby(obj/item/W, mob/user)
-	var/obj/item/card/id/sourceCard = W
-	if (istype(sourceCard))
-		boutput(user, "You copy [sourceCard]'s accesses to [src].")
-		src.access |= sourceCard.access
-	else
-		return ..()
+	attack_self(mob/user)
+		if (src.forged)
+			return ..()
+		src.ui_interact(user)
 
-/obj/item/card/id/syndicate/afterattack(atom/target, mob/user, reach, params)
-	var/obj/item/card/id/sourceCard = target
-	if (istype(sourceCard))
-		boutput(user, "You copy [sourceCard]'s accesses to [src].")
-		src.access |= sourceCard.access
-	else
-		return ..()
+	attackby(obj/item/W, mob/user)
+		var/obj/item/card/id/sourceCard = W
+		if (istype(sourceCard))
+			boutput(user, "You copy [sourceCard]'s accesses to [src].")
+			src.access |= sourceCard.access
+		else
+			return ..()
 
-/obj/item/card/id/syndicate/proc/sanitize_name(var/input, var/strip_bad_stuff_only = 0)
-	input = strip_html(input, MAX_MESSAGE_LEN, 1)
-	if (strip_bad_stuff_only)
-		return input
-	return trimtext(input)
+	afterattack(atom/target, mob/user, reach, params)
+		var/obj/item/card/id/sourceCard = target
+		if (istype(sourceCard))
+			boutput(user, "You copy [sourceCard]'s accesses to [src].")
+			src.access |= sourceCard.access
+		else
+			return ..()
 
-/obj/item/card/id/syndicate/get_help_message(dist, mob/user)
-	if (src.name == "agent card") //It's probably unmodified, should be fine to show the help message
-		return {"Use the card in hand to set it's name, appearance, job title and pronouns. Use another ID on the agent card to add the access of the ID to the agent card."}
-	else
+	proc/sanitize_name(input)
+		return trimtext(strip_html(input, 100, TRUE))
+
+	get_help_message(dist, mob/user)
+		if (istrainedsyndie(user) || isspythief(user))
+			return {"[!src.forged ? "Use the card in your hand to set its name, appearance, job title, and pronouns.<br/>" : ""]Use another ID on the agent card (or vice-versa) to stealthily copy the access of that ID to the agent card."}
 		return null
+
+	ui_interact(mob/user, datum/tgui/ui)
+		if (src.forged)
+			ui?.close(FALSE)
+			return
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if (!ui)
+			ui = new(user, src, "AgentCard", "Agent Card")
+			ui.open()
+
+	ui_data(mob/user)
+		var/equippedIdData = null
+		var/obj/item/card/id/id
+		// we have to do this instead of user.get_id() because, hilariously,
+		// it will otherwise generally get the agent card itself (due to it being held in the active hand)
+		if (ishuman(user))
+			var/mob/living/carbon/human/H = user
+			id = get_id_card(H.get_slot(SLOT_WEAR_ID))
+		if (id != null)
+			equippedIdData = list("name" = id.registered, "assignment" = id.assignment, "icon" = id.icon_state, "pronouns" = id.pronouns?.name)
+		. = list(
+			"placeholderName" = ishuman(user) ? user.real_name : user.name,
+			"equippedId" = equippedIdData,
+		)
+
+	ui_static_data(mob/user)
+		var/list/styles = card_styles.Copy()
+		for (var/style in styles) // generate icons for each possible style so they can be shown in the UI
+			style["refIcon"] = "\ref['icons/obj/items/card.dmi']?state=[style["state"]]"
+
+		var/list/selectable_pronouns = list()
+		for (var/pronoun_type in filtered_concrete_typesof(/datum/pronouns, /proc/pronouns_filter_is_choosable))
+			var/datum/pronouns/pronouns = get_singleton(pronoun_type)
+			selectable_pronouns.Add(pronouns.name)
+
+		. = list(
+			"placeholderAssignment" = "Staff Assistant",
+			"usablePronouns" = selectable_pronouns,
+			"cardStyles" = styles,
+			"defaultCardStyle" = styles[2], // Civilian
+		)
+
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
+		if (.)
+			return
+		if (action == "forge")
+			if (src.forged) // should never happen, but, sanity check
+				boutput(ui.user, SPAN_ALERT("\The [src] seems to have been forged while you weren't looking! Huh."))
+				return FALSE
+			src.forged = TRUE
+			src.registered = sanitize_name(params["cardName"])
+			src.assignment = sanitize_name(params["cardAssignment"])
+			var/cardPronouns = params["cardPronouns"]
+			// problem: cardPronouns are tracked as a string in the UI, but pronouns themselves refer to a datum singleton
+			// solution: pass the string, and if there's a chooseable subtype with a matching name, assign the card that singleton
+			// that way e.g. "she/her" returns /datum/pronouns/sheHer
+			if (cardPronouns != null)
+				var/list/choosable = filtered_concrete_typesof(/datum/pronouns, /proc/pronouns_filter_is_choosable)
+				for (var/V in choosable)
+					var/datum/pronouns/pronouns = get_singleton(V)
+					if (pronouns?.name == cardPronouns)
+						cardPronouns = pronouns
+						break
+			src.pronouns = cardPronouns
+			var/list/cardStyle = params["cardStyle"]
+			src.icon_state = cardStyle["state"]
+			src.keep_icon = cardStyle["keepState"] || FALSE
+			src.update_name()
+			boutput(ui.user, SPAN_NOTICE("You successfully forge the ID card."))
+			ui.user.playsound_local(ui.user, "sound/machines/printer_press.ogg", 35, FALSE)
+			ui.close(FALSE)
+			return
+		. = TRUE
 
 /obj/item/card/id/syndicate/commander
 	name = "commander card"
 	access = list(access_maint_tunnels, access_syndicate_shuttle, access_syndicate_commander)
+
 
 /obj/item/card/id/temporary
 	name = "temporary identification card"
