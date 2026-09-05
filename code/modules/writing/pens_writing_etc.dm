@@ -1102,6 +1102,9 @@
 		src.add_stuff(O, user)
 
 	proc/add_stuff(obj/item/I, mob/user)
+		if(I.cant_drop)
+			return
+			
 		if (istype(I, /obj/item/paper) || istype(I, /obj/item/photo))
 			if (length(src.contents) >= src.max_items)
 				boutput(user, SPAN_NOTICE("[src] can only hold [src.max_items] items!"))
