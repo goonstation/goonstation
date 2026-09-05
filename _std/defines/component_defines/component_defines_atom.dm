@@ -270,6 +270,8 @@
 	#define COMSIG_MOB_ITEM_CONSUMED_PRE "mob_itm_atk_consumed_pre"
 	/// When an item is eaten (feeder,item)
 	#define COMSIG_MOB_ITEM_CONSUMED "mob_itm_atk_consumed"
+	/// When an item's been eaten, but there's still some left (feeder,item)
+	#define COMSIG_MOB_ITEM_CONSUMED_PARTIAL "mob_itm_atk_consumed_partial"
 	/// Sent when a mob throws something (target, params)
 	#define COMSIG_MOB_THROW_ITEM "throw_item"
 	/// Sent when a mob throws something that lands nearby
