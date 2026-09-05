@@ -88,9 +88,10 @@
 	desc = "A very official-looking sheet full of information you may or may not be able to wrap your head around."
 	icon_state = "postcard-owlery"
 	sizex = 1192
-	sizey = 800
+	sizey = 830
 	scrollbar = FALSE
 	path = "images/pocket_guides/siphonguide.png"
+	scale_dir = -1
 
 // cogwerks - creepy picture things
 
