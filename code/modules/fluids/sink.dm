@@ -82,7 +82,7 @@ TYPEINFO(/obj/machinery/sink)
 		qdel(fluid)
 
 		user.visible_message(SPAN_NOTICE("[user] washes [W]."))
-		src.onItemWash()
+		src.onItemWash(W, user)
 		W.clean_forensic() // There's a global proc for this stuff now (Convair880).
 		if (istype(W, /obj/item/device/key/skull))
 			W.icon_state = "skull"
