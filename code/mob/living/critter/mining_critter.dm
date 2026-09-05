@@ -11,7 +11,9 @@
 	var/list/bite_adjectives = list("vicious","vengeful","violent")
 	sound_attack = 'sound/impact_sounds/Flesh_Tear_1.ogg'
 	can_beat_up_robots = TRUE //angry space ants
-	miss_prob = 95
+	miss_prob = 80
+	dam_low = 8
+	dam_high = 12
 	var/tears_off_limbs = FALSE //Basically checks if the attack should tear off limbs (Only available to Hulk Fermids at this time)
 	harm(mob/target, var/mob/user)
 		if (!user || !target)
@@ -26,9 +28,14 @@
 				limb_loser.sever_limb(pick(list("l_arm", "r_arm", "l_leg", "r_leg")))
 /datum/limb/mouth/fermid/fermid_hulk
 	tears_off_limbs = TRUE
+	dam_low = 15
+	dam_high = 35
+	harm_intent_delay = 15
+	miss_prob = 95
+/datum/limb/mouth/fermid/queen
 	dam_low = 10
-	dam_high = 22
-
+	dam_high = 15
+	miss_prob = 85
 ///////////////////////////////////////////////
 // FERMID
 ///////////////////////////////////////////////
@@ -249,14 +256,27 @@
 	health_burn_vuln = 0.1
 	pull_w_class = W_CLASS_BULKY
 	speed = /datum/movement_modifier/big_fermid
-	add_abilities = list(/datum/targetable/critter/bite/fermid_bite)
+	add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/screech, /datum/targetable/critter/shockwave/fermid_shockwave)
+	critter_ability_attack(var/mob/target)
+		var/datum/targetable/critter/screech/screech = src.abilityHolder.getAbility(/datum/targetable/critter/screech)
+		var/datum/targetable/critter/shockwave/fermid_shockwave/shockwave = src.abilityHolder.getAbility(/datum/targetable/critter/shockwave/fermid_shockwave)
+		if(!screech.disabled && screech.cooldowncheck())
+			screech.handleCast(target)
+			return TRUE
+		if (!shockwave.disabled && shockwave.cooldowncheck())
+			shockwave.handleCast(target)
+			return TRUE
+		. = ..()
 	New()
 		..()
-
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/mouth/fermid/queen
 		src.pixel_x -= 16
 		src.add_stam_mod_max("queen", 50)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "queen", 50)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "queen", 50)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_DISARM_RESIST, "queen", 100)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "queen", 15)
 
 /mob/living/critter/fermid/hulk
 	name = "fermid hulk"
@@ -269,12 +289,20 @@
 	health_burn = 75
 	health_burn_vuln = 0.1
 	pull_w_class = W_CLASS_BULKY
-	add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/slam/fermid)
+	add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/slam/fermid, /datum/targetable/critter/screech, /datum/targetable/critter/shockwave/fermid_shockwave)
 	speed = /datum/movement_modifier/big_fermid
 	critter_ability_attack(var/mob/target)
 		var/datum/targetable/critter/slam/fermid/slam = src.abilityHolder.getAbility(/datum/targetable/critter/slam/fermid)
+		var/datum/targetable/critter/screech/screech = src.abilityHolder.getAbility(/datum/targetable/critter/screech)
+		var/datum/targetable/critter/shockwave/fermid_shockwave/shockwave = src.abilityHolder.getAbility(/datum/targetable/critter/shockwave/fermid_shockwave)
+		if(!screech.disabled && screech.cooldowncheck())
+			screech.handleCast(target)
+			return TRUE
 		if (!slam.disabled && slam.cooldowncheck())
 			slam.handleCast(target)
+			return TRUE
+		if (!shockwave.disabled && shockwave.cooldowncheck())
+			shockwave.handleCast(target)
 			return TRUE
 		. = ..()
 	New()
@@ -285,6 +313,8 @@
 		src.add_stam_mod_max("hulk", 50)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "hulk", 50)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "hulk", 50)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_DISARM_RESIST, "hulk", 100)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "hulk", 15)
 	purple
 		recolor = "#b90fab"
 		speed = /datum/movement_modifier/big_fermid_fast
