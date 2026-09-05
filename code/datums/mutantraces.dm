@@ -534,7 +534,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			if ("reset")
 				// And the other way around (Convair880).
 				if (src.r_limb_arm_type_mutantrace)
-					if ((L.limbs.r_arm && !(L.limbs.r_arm.limb_is_transplanted || L.limbs.r_arm.limb_is_unnatural)) || src.ignore_missing_limbs == 1)
+					if (src.ignore_missing_limbs || src.should_reset_limb(L, L.limbs.r_arm))
 						var/obj/item/parts/human_parts/arm/limb = new /obj/item/parts/human_parts/arm/right(L)
 						if (istype(limb))
 							qdel(L.limbs.r_arm)
@@ -544,7 +544,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 							limb.remove_stage = 0
 
 				if (src.l_limb_arm_type_mutantrace)
-					if ((L.limbs.l_arm && !(L.limbs.l_arm.limb_is_transplanted || L.limbs.l_arm.limb_is_unnatural)) || src.ignore_missing_limbs == 1)
+					if (src.ignore_missing_limbs || src.should_reset_limb(L, L.limbs.l_arm))
 						var/obj/item/parts/human_parts/arm/limb = new /obj/item/parts/human_parts/arm/left(L)
 						if (istype(limb))
 							qdel(L.limbs.l_arm)
@@ -555,7 +555,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 				//////////////LEGS//////////////////
 				if (src.r_limb_leg_type_mutantrace)
-					if ((L.limbs.r_leg && !(L.limbs.r_leg.limb_is_transplanted || L.limbs.r_leg.limb_is_unnatural)) || src.ignore_missing_limbs == 1)
+					if (src.ignore_missing_limbs || src.should_reset_limb(L, L.limbs.r_leg))
 						var/obj/item/parts/human_parts/leg/limb = new /obj/item/parts/human_parts/leg/right(L)
 						if (istype(limb))
 							qdel(L.limbs.r_leg)
@@ -565,7 +565,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 							limb.remove_stage = 0
 
 				if (src.l_limb_leg_type_mutantrace)
-					if ((L.limbs.l_leg && !(L.limbs.l_leg.limb_is_transplanted || L.limbs.l_leg.limb_is_unnatural)) || src.ignore_missing_limbs == 1)
+					if (src.ignore_missing_limbs || src.should_reset_limb(L, L.limbs.l_leg))
 						var/obj/item/parts/human_parts/leg/limb = new /obj/item/parts/human_parts/leg/left(L)
 						if (istype(limb))
 							qdel(L.limbs.l_leg)
@@ -575,6 +575,13 @@ ABSTRACT_TYPE(/datum/mutantrace)
 							limb.remove_stage = 0
 				//////////////HEAD//////////////////
 				L.organHolder?.head?.MakeMutantHead(HEAD_HUMAN, 'icons/mob/human_head.dmi', "head")
+
+	proc/should_reset_limb(mob/living/carbon/human/H, obj/item/parts/limb)
+		if (!limb)
+			return TRUE
+		if (limb.limb_is_transplanted || limb.limb_is_unnatural || !(limb in H))
+			return FALSE
+		return TRUE
 
 	proc/organ_mutator(var/mob/living/carbon/human/O, var/mode as text)
 		if(!ishuman(O) || !(O?.organHolder))
@@ -605,7 +612,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			if("reset") // Make everything mutant back into stock-ass human
 				if(!src.mutant_organs.len)
 					return // All done!
-				if (OHM.tail) // mutant to human, drop the tail. Unless you're a changer, then your butt just eats it
+				if (OHM.tail && (OHM.tail in O)) // mutant to human, drop the tail. Unless you're a changer, then your butt just eats it
 					qdel(OHM.tail)
 				else
 					for(var/mutorgan in src.mutant_organs)
@@ -615,8 +622,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 								continue
 						else // everything else is an organ, though
 							var/obj/item/organ/org = OHM.get_organ(mutorgan)
-							if (!org || org.robotic) // No free organs, trade-ins only, keep ur robotic stuff
-								continue
+							if (!org || org.robotic || !(org in O)) // No free organs, trade-ins only, keep ur robotic stuff
+								continue // also don't touch organs not in the body! fixes #26992
 						var/obj/item/organ_get = OHM.organ_type_list[mutorgan] // organ_type_list holds all the default human-ass organs
 						OHM.receive_organ(new organ_get(O, OHM), mutorgan, 0, 1, is_transformation = TRUE)
 					return
