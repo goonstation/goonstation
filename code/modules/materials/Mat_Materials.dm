@@ -617,6 +617,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "rock"
 	name = "stone"
 	desc = "Near useless asteroid rock with some traces of random metals."
+	icon_file = 'icons/obj/items/materials/rocks.dmi'
 	color = list(0.60, 0.60, 0.60, 0.00,\
 				0.35, 0.35, 0.35, 0.00,\
 				0.25, 0.25, 0.25, 0.00,\
@@ -627,6 +628,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 
 	New()
 		..()
+		material_flags |= MATERIAL_ROCK
 		setProperty("density", 2)
 		setProperty("hard", 2)
 		setProperty("electrical", 4)
@@ -638,6 +640,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "electrum"
 	name = "electrum"
 	desc = "Highly conductive alloy of gold and silver."
+	icon_file = 'icons/obj/items/materials/silver.dmi'
 	color = list(0.55, 0.475, 0.275, 0.00,\
 				0.35, 0.325, 0.15, 0.00,\
 				0.45, 0.425, 0.20, 0.00,\
@@ -681,6 +684,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "voltite"
 	name = "voltite"
 	desc = "Energy seems to be flowing around it, chanelled through in an unknown manner."
+	icon_file = 'icons/obj/items/materials/voltite.dmi'
 	color = list(0.55, 0.45, -0.15, 0.00,\
 				0.55, 0.45, -0.10, 0.00,\
 				0.00, 0.35, 1.75, 0.00,\
@@ -707,6 +711,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "steel"
 	name = "steel"
 	desc = "Terrestrial steel from Earth."
+	icon_file = 'icons/obj/items/materials/steel.dmi'
 	color = list(0.522, 0.162, 0.162, 0.00,\
 				0.324, 0.684, 0.324, 0.00,\
 				0.054, 0.054, 0.414, 0.00,\
@@ -724,6 +729,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "copper"
 	name = "copper"
 	desc = "Copper is a terrestrial conductive metal from proto-Dan mines. It is inferior to pharosium."
+	icon_file = 'icons/obj/items/materials/copper.dmi'
 	color = list( 0.80, 0.30, 0.00, 0.00,\
 				0.40, 0.20, 0.10, 0.00,\
 				0.60, 0.20, 0.30, 0.00,\
@@ -903,6 +909,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "silver"
 	name = "silver"
 	desc = "A slightly valuable and conductive metal."
+	icon_file = 'icons/obj/items/materials/silver.dmi'
 	color = list(0.50, 0.50, 0.55, 0.00,\
 				0.30, 0.30, 0.325, 0.00,\
 				0.40, 0.40, 0.40, 0.00,\
@@ -954,6 +961,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "plasmasteel"
 	name = "plasma steel"
 	desc = "A plasmastone/steel alloy. Very dense but quite soft."
+	icon_file = 'icons/obj/items/materials/steel.dmi'
 	color = "#937d99"
 	alpha = 255
 
@@ -996,10 +1004,12 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "slag"
 	name = "slag"
 	desc = "A by-product left over after material has been processed."
+	icon_file = 'icons/obj/items/materials/rocks.dmi'
 	color = "#26170F"
 
 	New()
 		..()
+		material_flags |= MATERIAL_ROCK
 		value = 10
 		setProperty("density", 2) //fucked up values for fucked up material but not silly putty
 		setProperty("hard", 2)
@@ -1010,6 +1020,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "spacelag"
 	name = "spacelag"
 	desc = "*BUFFERING*"
+	icon_file = 'icons/obj/items/materials/misc.dmi'
 	color = list(-0.15, -0.25, -0.15, 0.00,\
 				-0.25, -0.25, -0.25, 0.00,\
 				-0.15, -0.25, -0.15, 0.00,\
@@ -1030,6 +1041,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	name = "iridium alloy"
 	canMix = 0 //Can not be easily modified.
 	desc = "Some sort of advanced iridium alloy."
+	icon_file = 'icons/obj/items/materials/iridium.dmi'
 	color = list(0.45, 0.40, 0.65, 0.00,\
 				0.45, 0.40, 0.65, 0.00,\
 				0.35, 0.35, 0.65, 0.00,\
@@ -1063,6 +1075,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "soulsteel"
 	name = "soulsteel"
 	desc = "A metal imbued with souls. Creepy."
+	icon_file = 'icons/obj/items/materials/ectoplasm.dmi'
 	color = list(0.50, 1.00, 1.00, 0.00,\
 				0.00, 0.00, 0.00, 0.00,\
 				0.50, 0.00, 0.00, 0.00,\
@@ -1243,6 +1256,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	mat_id = "plasmaglass"
 	name = "plasma glass"
 	desc = "Crystallized plasma that has been rendered inert. Very hard and prone to making extremely sharp edges."
+	icon_file = 'icons/obj/items/materials/plasmastone.dmi'
 	color = "#A114FF"
 	alpha = 180
 
@@ -1420,6 +1434,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	mat_id = "gnesis"
 	name = "gnesis"
 	desc = "A rare complex crystalline matrix with a lazily shifting internal structure. Not to be confused with gneiss, a metamorphic rock."
+	icon_file = 'icons/obj/items/materials/gnesis.dmi'
 	color = "#1bdebd"
 	texture = "flock"
 	texture_blend = BLEND_OVERLAY
@@ -1991,6 +2006,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 	mat_id = "coral"
 	name = "coral"
 	desc = "Coral harvested from the sea floor."
+	icon_file = 'icons/obj/items/materials/coral.dmi'
 	color = "#990099"
 	texture = "coral"
 	texture_blend = BLEND_SUBTRACT
@@ -2005,6 +2021,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 	mat_id = "plasmacoral"
 	name = "plasma coral"
 	desc = "Strange coral seemingly infused with plasmastone. Appears naturally."
+	icon_file = 'icons/obj/items/materials/coral.dmi'
 	color = "#A114FF"
 
 	New()
@@ -2054,6 +2071,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 	mat_id = "ectoplasm"
 	name = "ectoplasm"
 	desc = "Ghostly residue. Not terribly useful on it's own."
+	icon_file = 'icons/obj/items/materials/ectoplasm.dmi'
 	color = "#ccffcc"
 
 	New()
