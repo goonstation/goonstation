@@ -1,11 +1,3 @@
-TYPEINFO(/obj/item/phone_handset)
-	start_listen_effects = list(LISTEN_EFFECT_HANDSET)
-	start_listen_modifiers = list(LISTEN_MODIFIER_PHONE)
-	start_listen_inputs = list(LISTEN_INPUT_OUTLOUD_RANGE_0, LISTEN_INPUT_EQUIPPED)
-	start_listen_languages = list(LANGUAGE_ALL)
-	start_speech_modifiers = null
-	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_RADIO)
-
 /obj/item/phone_handset
 	name = "phone handset"
 	icon = 'icons/obj/machines/phones.dmi'
@@ -16,9 +8,8 @@ TYPEINFO(/obj/item/phone_handset)
 
 	var/obj/machinery/phone/parent = null
 	var/icon/handset_icon = null
-	var/last_talk = 0
 
-/obj/item/phone_handset/New(obj/machinery/phone/parent_phone, mob/living/picker_upper)
+/obj/item/phone_handset/New(obj/machinery/phone/parent_phone)
 	if (!parent_phone)
 		return
 
@@ -33,13 +24,18 @@ TYPEINFO(/obj/item/phone_handset)
 	src.UpdateOverlays(stripe_image, "stripe")
 	src.handset_icon = getFlatIcon(src)
 
+	src.AddComponent(/datum/component/phone_microphone, parent_phone)
+	src.AddComponent(/datum/component/phone_speaker, parent_phone)
+
 /obj/item/phone_handset/disposing()
+	src.parent.hang_up()
+	src.RemoveComponentsOfType(/datum/component/phone_microphone)
+	src.RemoveComponentsOfType(/datum/component/phone_speaker)
 	src.handset_icon = null
 	src.parent.handset = null
 	src.parent = null
 	processing_items.Remove(src)
 	. = ..()
-
 
 /obj/item/phone_handset/update_icon()
 	. = ..()

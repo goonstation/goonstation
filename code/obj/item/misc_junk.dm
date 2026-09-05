@@ -393,7 +393,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 			src.reagents.add_reagent("nicotine", 50)
 			qdel(E) //this technically implies that vapes infinitely eat these refills. I say the catriges are made of pure nicotine and are slowly absorbed
 
-	attack_self()
+	attack_self(mob/user)
 		if(world.time - last_used <= 60)
 			usr.show_text("It's still resetting, be patient!", "red")
 			return
@@ -403,21 +403,38 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 		else
 			var/datum/reagents/R = new /datum/reagents(5)
 			var/target_loc = src.loc
-			var/obj/item/phone_handset/PH = null
-			if(istype(usr.l_hand,/obj/item/phone_handset) || istype(usr.r_hand,/obj/item/phone_handset)) // You can vape over the phone now. Why am I doing this.
-				if(istype(usr.l_hand,/obj/item/phone_handset))
-					PH = usr.l_hand
-				else
-					PH = usr.r_hand
-				if(PH.parent.linked && PH.parent.linked.handset && PH.parent.linked.handset.get_holder())
-					target_loc = PH.parent.linked.handset.get_holder().loc
 
+			var/list/vape_list = list("holder" = null)
+			var/valid_phone_in_which_hand = null
+			var/return_signal = null
+			var/accepted = FALSE
+			return_signal = SEND_SIGNAL(user.l_hand, COMSIG_PHONE_ATTEMPT_VAPE, vape_list)
+			if(return_signal)
+				valid_phone_in_which_hand = "left"
+				if(return_signal & PHONE_ACCEPTED)
+					accepted = TRUE
+			if(!return_signal)
+				return_signal = SEND_SIGNAL(user.r_hand, COMSIG_PHONE_ATTEMPT_VAPE, vape_list)
+				if(return_signal)
+					valid_phone_in_which_hand = "right"
+					if(return_signal & PHONE_ACCEPTED)
+						accepted = TRUE
+			var/atom/held_phone = null
+			if(accepted)
+				// We assume the other end has done their homework and that we're safe to go
+				if(valid_phone_in_which_hand == "left")
+					held_phone = user.l_hand
+				else
+					held_phone = user.r_hand
+				target_loc = vape_list["target_loc"]
 
 			R.my_atom = src
 			src.reagents.trans_to(usr, 5)
 			src.reagents.trans_to_direct(R, 5)
-			if(PH?.parent.linked?.handset?.get_holder())
-				smoke_reaction(R, range, get_turf(PH.parent.linked.handset.get_holder()))
+			var/mob/holder = null
+			if(vape_list["holder"])
+				holder = vape_list["holder"]
+				smoke_reaction(R, range, get_turf(holder))
 			else
 				smoke_reaction(R, range, get_turf(usr))
 			particleMaster.SpawnSystem(new /datum/particleSystem/blow_cig_smoke(target_loc, NORTH))
@@ -431,14 +448,14 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 				src.smoke.start()
 				sleep(1 SECOND)
 
-			if(!PH)
+			if(!accepted)
 				usr.visible_message(SPAN_ALERT("<B>[usr] blows a cloud of smoke with their [prob(90) ? "ecig" : "mouth fedora"]! They look [pick("really lame", "like a total dork", "unbelievably silly", "a little ridiculous", "kind of pathetic", "honestly pitiable")]. </B>"),\
 				SPAN_ALERT("You puff on the ecig and let out a cloud of smoke. You feel [pick("really cool", "totally awesome", "completely euphoric", "like the coolest person in the room", "like everybody respects you", "like the latest trend-setter")]."))
 			else
-				usr.visible_message(SPAN_ALERT("<B>[usr] blows a cloud of smoke right into the phone! They look [pick("really lame", "like a total dork", "unbelievably silly", "a little ridiculous", "kind of pathetic", "honestly pitiable")]. </B>"),\
-				SPAN_ALERT("You puff on the ecig and blow a cloud of smoke right into the phone. You feel [pick("really cool", "totally awesome", "completely euphoric", "like the coolest person in the room", "like everybody respects you", "like the latest trend-setter")]."))
-				if(PH.parent.linked && PH.parent.linked.handset && PH.parent.linked.handset.get_holder())
-					boutput(PH.parent.linked.handset.get_holder(),SPAN_ALERT("<B>[usr] blows a cloud of smoke right through the phone! What a total [pick("dork","loser","dweeb","nerd","useless piece of shit","dumbass")]!</B>"))
+				usr.visible_message(SPAN_ALERT("<B>[usr] blows a cloud of smoke right into [held_phone]! They look [pick("really lame", "like a total dork", "unbelievably silly", "a little ridiculous", "kind of pathetic", "honestly pitiable")]. </B>"),\
+				SPAN_ALERT("You puff on the ecig and blow a cloud of smoke right into [held_phone]. You feel [pick("really cool", "totally awesome", "completely euphoric", "like the coolest person in the room", "like everybody respects you", "like the latest trend-setter")]."))
+				if(holder)
+					boutput(holder,SPAN_ALERT("<B>[usr] blows a cloud of smoke right through the phone! What a total [pick("dork","loser","dweeb","nerd","useless piece of shit","dumbass")]!</B>"))
 
 			logTheThing(LOG_COMBAT, usr, "vapes a cloud of [log_reagents(src)] at [log_loc(target_loc)].")
 			last_used = world.time
