@@ -277,7 +277,7 @@ TYPEINFO(/datum/component/radioactive)
 			src.removable_contamination_neutron[category] -= removed
 			if(src.removable_contamination_neutron[category] <= 0)
 				src.removable_contamination_neutron.Remove(category)
-			src.radStrength_neutron = max(src.radStrength_neutron - removed, src.decay_target)
+			src.radStrength_neutron = max(src.radStrength_neutron - removed, src.decay_target_neutron)
 		if(return_reagents && removed)
 			removed *= 2 // n_rad is nastier, giving us more isotopes!
 			return_reagents["radium"] += removed
