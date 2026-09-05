@@ -161,6 +161,11 @@ TYPEINFO(/obj/item/sound_tape/lightbreaker)
 	ammo = 1
 	ammo_max = 1
 
+	activate(mob/user as mob)
+		..()
+		for (var/mob/living/HH in hearers(user, null)) // Works on EVERYONE, bring earmuffs
+			HH.apply_sonic_stun(0, 0, 0, 10, 35, rand(0, 2))
+		return TRUE
 
 /obj/item/spookbook //Wander Office item, not meant to look like a lightbreaker to the average player
 	name = "worn book"
