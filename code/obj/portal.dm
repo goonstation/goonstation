@@ -88,10 +88,9 @@
 				if (prob(failchance)) //oh dear a problem, put em in deep space
 					src.icon_state = "portal1"
 					do_teleport(M, destination, 15)
-					var/part_splinched = splinch(M, 75)
-					if (part_splinched)
-						do_teleport(part_splinched, destination, 8)
-						M.visible_message(SPAN_ALERT("<b>[M]</b> splinches themselves and their [part_splinched] falls off!"))
+					var/part_displaced = organdisplacement(M, 75)
+					if (part_displaced)
+						do_teleport(part_displaced, destination, 8)
 					M.throw_at(destination, 8, 2)
 
 					return
