@@ -3026,7 +3026,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammobag_magazines = list(/obj/item/ammo/bullets/bullet_9mm/smg)
 	ammobag_restock_cost = 2
 	recoil_strength = 8
-	
+
 	HELP_MESSAGE_OVERRIDE("Can be held with two hands to reduce recoil and improve accuracy.")
 
 	New()
@@ -3452,6 +3452,88 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		TO_LOAD.Attackby(nade, user)
 		src.Attackby(TO_LOAD, user)
 
+
+/datum/component/holdertargeting/windup/sniper/on_mousedown(mob/living/user, object, location, control, params) //makes sure early actionbar terminations still respect shooting debounce!
+	var/obj/item/gun/G = parent
+	if(ON_COOLDOWN(G, "shoot_delay", G.shoot_delay))
+		return
+	. = ..()
+
+/datum/component/holdertargeting/windup/sniper/do_windup(mob/living/L)
+	set waitfor = 0
+	var/obj/item/gun/G = parent
+	winder = new/datum/action/bar/icon/sniper(G, duration)
+	actions.start(winder, L)
+
+/datum/action/bar/icon/sniper //theres gotta be some easier way to hide the icon
+	duration = 1 SECOND
+	interrupt_flags = INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	var/obj/item/gun/ownerGun
+	var/mob/user
+	var/pox = 0
+	var/poy = 0
+	var/target
+	var/do_point_blank = FALSE
+	resumable = FALSE
+
+
+	New(_gun,  _time, _do_point_blank = FALSE)
+		ownerGun = _gun
+		duration = _time
+		do_point_blank = _do_point_blank
+		..()
+
+	onEnd()
+		ownerGun.Shoot(get_turf(target), get_turf(ownerGun), owner, pox, poy)
+		..()
+
+	onStart()
+		. = ..()
+		state = ACTIONSTATE_INFINITE
+
+
+/datum/component/holdertargeting/windup/sniper/end_shootloop(mob/living/user, object, location, control, params) //modifed windup that adds recoil based on action bar completion (or lack there of, rather)
+	if(winder)
+		var/obj/item/gun/G = parent
+		G.recoil = 0
+		src.retarget(user, object, location, control, params)
+		if(!interrupt && TIME > winder.started + winder.duration) //if windup has passed full duration
+			if(params)
+				var/list/paramlist = params2list(params) // <----
+				winder.pox = text2num(paramlist["icon-x"]) - 16
+				winder.poy = text2num(paramlist["icon-y"]) - 16
+				if(user.client && src.scoped)
+					if(user.client.pixel_x)
+						winder.pox += user.client.pixel_x % 32 //cosmetic winder UI math for a completed bar
+						if(user.client.pixel_x < 0)
+							winder.pox += 32
+					if(user.client.pixel_y)
+						winder.poy += user.client.pixel_y % 32
+						if(user.client.pixel_y < 0)
+							winder.poy += 32 //             <----
+			winder.target = src.target
+			winder.onEnd()
+		else
+			G.recoil = 10+((winder.started + winder.duration - TIME)*80) //at minimum if the actionbar is not completed: 10 degrees of possible spread, at maximum: 90
+			winder.target = src.target
+			winder.onEnd()
+			winder.interrupt(INTERRUPT_ALWAYS)
+
+		winder = null
+
+	interrupt = FALSE
+
+	UnregisterSignal(user, COMSIG_FULLAUTO_MOUSEDRAG)
+	UnregisterSignal(user, COMSIG_MOB_MOUSEUP)
+	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+	target = null
+
+	//clear aiming squares around center of screen
+	if(aimer && !src.scoped)
+		aimer.screen -= hudCenter
+
+/datum/component/holdertargeting/windup/sniper/try_pointblank(obj/source, atom/target, user, second_shot) // keep direct pointblanks instant by returning 0
+	. = 0
 // sniper
 /obj/item/gun/kinetic/sniper
 	name = "\improper Betelgeuse sniper rifle"
@@ -3479,13 +3561,14 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	ammobag_magazines = list(/obj/item/ammo/bullets/rifle_762_NATO)
 	ammobag_restock_cost = 3
 	recoil_strength = 15
-	recoil_inaccuracy_max = 0 // just to be nice :)
+	recoil_inaccuracy_max = 10 // just to be nice :)
 	abilities = list(/obj/ability_button/toggle_scope)
 	New()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/rifle_762_NATO)
 		AddComponent(/datum/component/holdertargeting/sniper_scope, 12, 3200, /datum/overlayComposition/sniper_scope, 'sound/weapons/scope.ogg')
+		AddComponent(/datum/component/holdertargeting/windup/sniper, 0.5 SECONDS)
 		..()
 
 	disposing()
