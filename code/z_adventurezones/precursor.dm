@@ -822,8 +822,19 @@ ABSTRACT_TYPE(/datum/menhir_puzzle)
 	var/default_state = 0 //0: closed, 1: open
 	var/pitch = 0
 
+	// borrowed from /obj/strip_door
+	var/static/list/connects_to = typecacheof(list(
+		/obj/machinery/door,
+		/obj/window,
+		/turf/simulated/wall/auto,
+		/turf/unsimulated/wall/auto,
+		/obj/precursor_puzzle/glowing_door
+	))
+
 	New()
 		..()
+		src.UpdateIcon()
+		src.update_neighbors()
 		SPAWN(0.5 SECONDS)
 			src.default_state = src.opened
 			active = 0
@@ -930,6 +941,30 @@ ABSTRACT_TYPE(/datum/menhir_puzzle)
 
 			return open()
 
+		// copy how /obj/strip_door does it
+		update_neighbors()
+			for (var/turf/simulated/wall/auto/T in orange(1,src))
+				T.UpdateIcon()
+			for (var/obj/window/auto/O in orange(1,src))
+				O.UpdateIcon()
+			for (var/obj/mesh/M in orange(1,src))
+				M.UpdateIcon()
+
+	update_icon()
+		..()
+		var/connectdir = get_connected_directions_bitflag(connects_to)
+		if ((connectdir & NORTH) && (connectdir & SOUTH))
+			src.dir = EAST
+			return
+		if ((connectdir & EAST) && (connectdir & WEST))
+			src.dir = NORTH
+			return
+		if ((connectdir & NORTH) || (connectdir & SOUTH))
+			src.dir = EAST
+			return
+		if ((connectdir & EAST) || (connectdir & WEST))
+			src.dir = NORTH
+			return
 
 /obj/precursor_puzzle/machine
 	name = "peculiar machine"
