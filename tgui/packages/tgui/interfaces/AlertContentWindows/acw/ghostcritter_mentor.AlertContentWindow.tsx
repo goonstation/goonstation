@@ -4,10 +4,12 @@
  * @author garash2k
  * @license ISC
  */
-import { resource } from '../../../goonstation/cdn';
+import { useResource } from '../../../goonstation/cdn';
 import { AlertContentWindow } from '../types';
 
 const MentorMouseContentWindow = () => {
+  const resource = useResource();
+
   return (
     <div className="ghostcritter">
       <h1 className="center">You have been revived as a mentor mouse!</h1>

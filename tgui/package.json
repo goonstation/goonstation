@@ -12,9 +12,8 @@
     "tgui:build": "rspack build",
     "tgui:dev": "node --experimental-modules packages/tgui-dev-server/index.js",
     "tgui:lint": "eslint packages --ext .js,.cjs,.ts,.tsx",
-    "tgui:lint-fix": "eslint --fix packages --ext .js,.cjs,.ts,.jsx,.tsx",
+    "tgui:format": "eslint --fix packages --ext .js,.cjs,.ts,.jsx,.tsx && prettier --write --list-different .",
     "tgui:prettier": "prettier --check .",
-    "tgui:prettier-fix": "prettier --write .",
     "tgui:test": "vitest",
     "tgui:test-simple": "CI=true vitest",
     "tgui:test-ci": "CI=true vitest",
@@ -22,9 +21,9 @@
     "tgui:normalize-svgs": "node normalize-svgs.mjs"
   },
   "dependencies": {
-    "@rspack/cli": "^2.0.4",
-    "@rspack/core": "^2.0.4",
-    "@rspack/dev-server": "^2.0.1",
+    "@rspack/cli": "^2.2.1",
+    "@rspack/core": "^2.2.1",
+    "@rspack/dev-server": "^2.2.1",
     "@typescript-eslint/parser": "^8.59.4",
     "@typescript-eslint/utils": "^8.59.4",
     "css-loader": "^7.1.4",
@@ -48,6 +47,7 @@
     "@types/node": "^25.9.1",
     "@types/webpack-env": "^1.18.8",
     "@types/wicg-file-system-access": "^2023.10.7",
+    "eslint-plugin-react-hooks": "^7.1.1",
     "globals": "^17.6.0",
     "happy-dom": "^20.9.0",
     "vitest": "^4.1.7"

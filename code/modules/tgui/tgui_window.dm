@@ -31,9 +31,7 @@
 
 	// |GOONSTATION-ADD| Was removed upstream in https://github.com/tgstation/tgstation/pull/90310
 	/**
-	 * Static list used to map in macros that will then emit execute events to the tgui window
-	 * A small disclaimer though I'm no tech wiz: I don't think it's possible to map in right or middle
-	 * clicks in the current state, as they're keywords rather than modifiers.
+	 * Maps skin macros to tgui input events.
 	 */
 	var/static/list/byondToTguiEventMap = list(
 		"MouseDown" = "byond/mousedown",
@@ -458,7 +456,7 @@
 		if("payloadChunk")
 			var/payload_id = payload["id"]
 			append_payload_chunk(payload_id, payload["chunk"])
-			send_message("acknowlegePayloadChunk", list("id" = payload_id))
+			send_message("acknowledgePayloadChunk", list("id" = payload_id))
 
 // |GOONSTATION-ADD| Was removed upstream in https://github.com/tgstation/tgstation/pull/90310
 /datum/tgui_window/proc/set_mouse_macro()

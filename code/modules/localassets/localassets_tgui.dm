@@ -23,20 +23,6 @@
 			"tgui/tgui.bundle.css" = "[resource("tgui/tgui.bundle.css")]"
 		)
 
-/// tgui panel specific assets
-/datum/asset/basic/tgui_panel
-	local_assets = list(
-		"tgui-panel.bundle.js",
-		"tgui-panel.bundle.css"
-	)
-
-	init()
-		. = ..()
-		url_map = list(
-			"tgui/tgui-panel.bundle.js"		= "[resource("tgui/tgui-panel.bundle.js")]",
-			"tgui/tgui-panel.bundle.css"	= "[resource("tgui/tgui-panel.bundle.css")]"
-		)
-
 /// Fontawesome assets
 /datum/asset/basic/fontawesome
 	local_assets = list(

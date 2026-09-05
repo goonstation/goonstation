@@ -4,10 +4,12 @@
  * @author garash2k
  * @license ISC
  */
-import { resource } from '../../../goonstation/cdn';
+import { useResource } from '../../../goonstation/cdn';
 import { AlertContentWindow } from '../types';
 
 const PodwarsContentWindow = () => {
+  const resource = useResource();
+
   return (
     <div className="traitor-tips pod-wars-tips">
       <h1 className="center">You are a pod pilot!</h1>

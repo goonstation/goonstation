@@ -43,20 +43,26 @@ export const FilterDataEntry = (props) => {
     size: 'float',
     color: 'color',
     offset: 'float',
-    radius: 'float',
+    radius: 'int',
     space: 'space',
     falloff: 'float',
     density: 'int',
-    threshold: 'float',
+    threshold: { bloom: 'color', rays: 'float' },
     factor: 'float',
     repeat: 'int',
     transform: 'matrix',
     blend_mode: 'blendmode',
+    alpha: 'int',
   };
+  const inputType = filterEntryMap[name];
+  const filterEntryType =
+    typeof inputType === 'string'
+      ? inputType
+      : inputType?.[props.filterType] || inputType?.default;
 
   return (
     <LabeledList.Item label={name}>
-      {filterEntryTypes[filterEntryMap[name]] || 'Not Found (This is an error)'}
+      {filterEntryTypes[filterEntryType] || 'Not Found (This is an error)'}
       {!hasValue && (
         <>
           {' '}
