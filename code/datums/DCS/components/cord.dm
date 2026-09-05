@@ -34,7 +34,8 @@
 
 	// get the turf of the heandset if it's not on a turf otherwise BOUNDS_DIST is infinity
 	if(BOUNDS_DIST(isturf(src.handset.loc) ? src.handset : get_turf(src.handset), src.parent) > range)
-		SEND_SIGNAL(src.parent, COMSIG_CORD_RETRACT)
+		SPAWN(0)
+			SEND_SIGNAL(src.parent, COMSIG_CORD_RETRACT)
 		return
 	var/list/handset_offsets = src.get_handset_offset()
 

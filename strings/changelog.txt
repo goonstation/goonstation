@@ -1,4 +1,27 @@
 
+(t)sat sep 05 26
+(u)Kubius
+(p)27742
+(e)🗺🎨|A-Mapping, C-Sprites
+(*)Nadir's harmonic siphon brief has gotten an overhaul. Check it out!
+(t)fri sep 04 26
+(u)LeahTheTech
+(p)27728
+(e)⚖🤖|C-Balance, A-Silicons
+(+)Spam clicking AI turret control panels will now lead to a short lockout cooldown.
+(t)wed sep 02 26
+(u)Sovexe
+(p)27614
+(e)🆕📄🧱💡|C-Feature, A-UI, A-Materials, A-Station-Systems
+(*)The Nanofabricator crafting panels have been modernized into a responsive TGUI design.
+(u)JORJ949
+(p)27687
+(e)⚖🧛📨|C-Balance, A-Gamemodes, A-Logistics
+(*)C.A.R.L's stock is no longer randomized each round. The stealth storages he sells have been reduced to 4 slots to compensate for them always being sold, uplink stealth storages were not changed.
+(u)GabbySins
+(p)27715
+(e)🤖|A-Silicons
+(+)Wigs can be worn by borgs again.
 (t)tue sep 01 26
 (u)ANNmagedon
 (p)27641

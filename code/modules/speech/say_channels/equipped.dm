@@ -8,16 +8,20 @@
 		src.PassToListeners(message, listen_modules_by_type)
 		return
 
+	var/turf/centre = get_turf(message.message_origin)
+	if (!centre)
+		return
+
 	listen_modules_by_type = list()
+	for (var/type as anything in src.listeners)
+		listen_modules_by_type[type] = list()
 
-	for (var/type in src.listeners)
-		listen_modules_by_type[type] ||= list()
-		for (var/datum/listen_module/input/input as anything in src.listeners[type])
-			// Determine whether the message can be heard based on a shared loc chain.
-			if (CANNOT_HEAR_MESSAGE_FROM_LOC_CHAIN(input, message))
-				continue
+	for (var/datum/listen_module/input/input as anything in src.hashmap.vistarget_point(centre))
+		// Determine whether the message can be heard based on a shared loc chain.
+		if (CANNOT_HEAR_MESSAGE_FROM_LOC_CHAIN(input, message))
+			continue
 
-			listen_modules_by_type[type] += input
+		listen_modules_by_type[input.type] += input
 
 	src.listener_tick_cache.write_to_cache(message, listen_modules_by_type)
 	src.PassToListeners(message, listen_modules_by_type)
