@@ -77,6 +77,8 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define NO_PREGAME_HTML
 /// Marks nearly all genes as researched, gives chromosomes/materials/autodecryptors, increases gene storage cap, and removes time/cost limitations on the gene console.
 //#define I_HATE_WAITING_FOR_GENES
+/// Fills up all APCs and SMESes on the station Z when the round starts.
+//#define ROCK_DOWN_TO_ELECTRIC_AVENUE
 
 /// All of the below: no secbots/guardbuddies/bots, no monkeys, no clone prebake, instant clones, low security, no critters, no random rooms/events, no shuttle calls, hackerman, more runtime checks, quick mob deletion, no wage/mail/ghostdrone messages, unbreakable lights, no antag popups.
 //#define STOP_DISTRACTING_ME

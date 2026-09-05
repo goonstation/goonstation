@@ -839,7 +839,7 @@ These are additional useful materials and their relative properties.
 	<td align="right" class="unavaib">n/a</td>
 	<td align="right" class="unavaib">n/a</td>
 	</tr>
-	<tr><td align="right">Ectoplasm</td>
+	<tr><td align="right">Erebite</td>
 	<td align="right">6</td>
 	<td align="right">3</td>
 	<td align="right">3</td>
@@ -850,7 +850,7 @@ These are additional useful materials and their relative properties.
 	<td align="right" class="unavaib">n/a</td>
 	<td align="right" class="unavaib">n/a</td>
 	</tr>
-	<tr><td align="right">Erebite</td>
+	<tr><td align="right">Ectoplasm</td>
 	<td align="right">5</td>
 	<td align="right">6</td>
 	<td align="right">2</td>

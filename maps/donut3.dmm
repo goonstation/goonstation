@@ -2996,7 +2996,7 @@
 	},
 /area/station/security/checkpoint/podbay)
 "aSk" = (
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/stairs/wide/other,
 /area/station/hallway/primary/southeast)
 "aSm" = (
@@ -12527,7 +12527,6 @@
 /area/station/crew_quarters/fitness)
 "dQn" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -15415,7 +15414,9 @@
 	},
 /area/station/crew_quarters/cafeteria)
 "eNT" = (
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
 /obj/decal/stripe_delivery,
 /obj/cable{
 	icon_state = "4-8"
@@ -30310,7 +30311,6 @@
 /area/station/hallway/secondary/construction2)
 "jxa" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -34331,7 +34331,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
 /turf/simulated/floor/blackwhite/whitegrime/other{
 	dir = 10
 	},
@@ -34625,7 +34627,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro,
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/stairs/wide,
 /area/station/hallway/primary/southeast)
@@ -45209,7 +45211,7 @@
 /area/station/maintenance/outer/ne)
 "ofU" = (
 /obj/table/reinforced/auto,
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/escape)
 "ogg" = (
@@ -52628,7 +52630,6 @@
 /area/station/ai_monitored/armory)
 "qsQ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/security/equipment)
 "qsX" = (

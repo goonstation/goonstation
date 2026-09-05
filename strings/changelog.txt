@@ -1,4 +1,178 @@
 
+(t)fri sep 04 26
+(u)LeahTheTech
+(p)27728
+(e)⚖🤖|C-Balance, A-Silicons
+(+)Spam clicking AI turret control panels will now lead to a short lockout cooldown.
+(t)wed sep 02 26
+(u)Sovexe
+(p)27614
+(e)🆕📄🧱💡|C-Feature, A-UI, A-Materials, A-Station-Systems
+(*)The Nanofabricator crafting panels have been modernized into a responsive TGUI design.
+(u)JORJ949
+(p)27687
+(e)⚖🧛📨|C-Balance, A-Gamemodes, A-Logistics
+(*)C.A.R.L's stock is no longer randomized each round. The stealth storages he sells have been reduced to 4 slots to compensate for them always being sold, uplink stealth storages were not changed.
+(u)GabbySins
+(p)27715
+(e)🤖|A-Silicons
+(+)Wigs can be worn by borgs again.
+(t)tue sep 01 26
+(u)ANNmagedon
+(p)27641
+(e)🎨📨|C-Sprites, A-Logistics
+(+)Geoff's vampire custom now comes with a brand new (recalled) promotional toy to hurt yourself with!
+(u)ANNmagedon
+(p)27621
+(e)🎨|C-Sprites
+(+)The medal "Licensed Archaeologist" now has a claimable reward.
+(t)mon aug 31 26
+(u)LeahTheTech
+(p)27694
+(e)💅🍝|C-QoL, A-Catering
+(+)Reworked all cookie recipes to use sweet dough directly and produce 4x cookies per recipe.
+(u)Kubius
+(p)27682
+(e)|
+(*)Menhir's big big artifact now redirects guests who entered by certain unorthodox means.
+(u)Ceres et al.
+(p)27679
+(e)⚖💊|C-Balance, A-Medical
+(+)Being a medicinal chem, acetylsalicylic acid can now be used in hyposprays.
+(t)sun aug 30 26
+(u)LeahTheTech
+(p)27691
+(e)⛔🤖🌠|C-Removal, A-Silicons, A-Events
+(+)Removed random accents from AI law corruption event.
+(u)GabbySins
+(p)27696
+(e)🤖|A-Silicons
+(+)Hotfix for Robot Clothes Fix PR
+(u)ANNmagedon
+(p)27690
+(e)🧛|A-Gamemodes
+(+)Steve is too shy about their mixtape so now it jams after each usage (and they also increased the price).
+(u)LorrMaster
+(p)27660
+(e)⚖🧱|C-Balance, A-Materials
+(+)Density and reflectivity increases when mixing batiline with radioactive materials is now larger
+(u)ANNmagedon
+(p)27688
+(e)🎨|C-Sprites
+(+)National Notary finally fixed the centcom & captain stamps using the wrong ink.
+(u)GabbySins
+(p)27623
+(e)🤖|A-Silicons
+(+)Change in how materials/IDs are handled.
+(+)Made arcplater work for cyborg-worn clothing.
+(u)LorrMaster
+(p)27293
+(e)🧱|A-Materials
+(+)Miracle matter appearance now changes depending on its properties.
+(u)swinglow20
+(p)27631
+(e)🐁|A-Critters
+(+)Made Fermid Hulks and Queens tankier, and made their bite more likely to land.
+(u)ANNmagedon
+(p)27642
+(e)📨|A-Logistics
+(*)A new trader has arrived at cargo! Their name is "human steve" and they look weird.
+(u)LeahTheTech
+(p)27664
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Vampire glare now partially pierces eye protection, doing 50 stamina damage and 10 seconds of disorient to anyone with full eye protection.
+(u)LorrMaster
+(p)27288
+(e)🎨🛠️📨|C-Sprites, A-Engineering, A-Logistics
+(*)Geological scanner anomaly markers have been updated.
+(t)sat aug 29 26
+(u)Sovexe
+(p)27571
+(e)🆕📄|C-Feature, A-UI
+(*)The Nuclear Reactor's Gas Turbine has a newly enhanced UI.
+(u)Penelope Haze
+(p)27671
+(e)🆕🖥️|C-Feature, A-Computers
+(+)DWAINE tar archives can now contain other archives, at the cost of their uncompressed size rather than compressed size.
+(u)Penelope Haze
+(p)27670
+(e)💅🖥️|C-QoL, A-Computers
+(+)The DWAINE tar program will now extract files in destination folders that already exist, and the -k flag only skips existing files rather than folders.
+(u)nova2053
+(p)27555
+(e)|
+(+)You can now slap cigarettes out of peoples' mouths. Cigarette trajectory is determined by your angle relative to the person you slap and which hand you're using.
+(u)Waffleloffle
+(p)27595
+(e)🎨📨|C-Sprites, A-Logistics
+(+)Added baseball uniforms. Most can be found by hacking a uniform vendor or manufacturer. Hit the big leagues with your department today!
+(u)TDHooligan
+(p)27598
+(e)|
+(+)Musculature Enhancement and Hulk lower felt recoil with firearms. Hulk and Clumsy make you less accurate.
+(t)fri aug 28 26
+(u)Tyrant
+(p)27318
+(e)⚗|A-Chemistry
+(+)Milk Powder now is a little less weird. Super milk is more consistent. In like a normal way.
+(u)ZeWaka, Kapu1178
+(p)27640
+(e)🆕🎨💅💡|C-Feature, C-Sprites, C-QoL, A-Station-Systems
+(*)Added a new placement mode (ability button) for cable coils that lets you place wires with your mouse cursor.
+(t)thu aug 27 26
+(u)LeahTheTech
+(p)27630
+(e)⛔⚗|C-Removal, A-Chemistry
+(+)Fliptonium can no longer be used with smoke powder.
+(u)Kubius
+(p)27626
+(e)🗺|A-Mapping
+(+)Menhir's got a loafer now! And a particular disk drive of potential importance to shifty individuals.
+(u)Skeletonman0
+(p)27536
+(e)🆕🎨💊|C-Feature, C-Sprites, A-Medical
+(+)You can now use canes in your active hand to tap them on the ground and make a noise.
+(u)LorrMaster
+(p)27587
+(e)📦👮|A-Game-Objects, A-Security
+(+)Securitron construction maintains material and forensic data.
+(u)LorrMaster
+(p)27591
+(e)📦🤖|A-Game-Objects, A-Silicons
+(+)Material and forensic data is now maintained for the construction process of various robots
+(u)swinglow20
+(p)27480
+(e)🎨🐁|C-Sprites, A-Critters
+(*)Changed how Fermids' combat works in game and slightly buffs them. Watch out, mining!
+(+)Changed movement speed, health, and abilities for four of the Fermid subtypes: Workers, Drones, Spitters, and Hulks
+(t)wed aug 26 26
+(u)ANNmagedon
+(p)27594
+(e)🗺|A-Mapping
+(+)The hop of menhir, in their infinite greed, has obtained another dog.
+(u)LorrMaster
+(p)27601
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)The duration of a white hole from bursting singularities now depends on the largest size that the singularity has reached
+(u)bamlord
+(p)27550
+(e)🏅|A-Medal
+(+)Added a new medal for winning the lottery. What lottery? THE lottery.
+(u)bamlord
+(p)27611
+(e)⚖|C-Balance
+(+)Syndicate cyborgs are now counted as trained syndicates for the purposes of targeting and item descriptions etc.
+(u)Muzcl
+(p)27609
+(e)🎨|C-Sprites
+(+)A new fish has spawned in the clown's shoes and central command ballpit.
+(t)tue aug 25 26
+(u)TDHooligan
+(p)27600
+(e)🪲🧛|C-Bug, A-Gamemodes
+(+)Fix: Gangs should now only take 3 seconds to spray a tag in an unoccupied space, instead of 15/12/9 seconds.
+(+)Fix: Gangs can no longer hand in foam dart guns.
+(+)Tagging over rival tags now takes slightly longer.
 (t)mon aug 24 26
 (u)ANNmagedon
 (p)27603

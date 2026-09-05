@@ -19,6 +19,7 @@ TYPEINFO(/obj/machinery/bot/buttbot)
 	bot_move_delay = BUTTBOT_MOVE_SPEED
 	density = 0
 	anchored = UNANCHORED
+	default_material = "butt"
 	on = 1
 	health = 5
 	no_camera = 1
@@ -74,6 +75,7 @@ TYPEINFO(/obj/machinery/bot/buttbot)
 /obj/machinery/bot/buttbot/cyber
 	name = "robuttbot"
 	icon_state = "cyberbuttbot"
+	default_material = "pharosium"
 	default_butt = /obj/item/clothing/head/butt/cyberbutt
 
 /obj/machinery/bot/buttbot/text2speech

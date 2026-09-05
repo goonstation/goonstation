@@ -958,6 +958,7 @@ TYPEINFO(/obj/ability_button)
 
 	//please call back to parent to trigger handle cooldown
 	proc/execute_ability()
+		// todo: SHOULD_CALL_PARENT(TRUE)
 		src.handle_cooldown()
 		return
 

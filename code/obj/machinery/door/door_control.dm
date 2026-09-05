@@ -665,6 +665,9 @@ TYPEINFO(/obj/machinery/door_control)
 	if (ON_COOLDOWN(src, "scan", 2 SECONDS))
 		return
 	playsound(src.loc, 'sound/effects/handscan.ogg', 50, 1)
+	if(issilicon(user) || isrobocritter(user)) //syndie borgs/gunbots have door access when post is online, but cannot use the scanner
+		src.say("No biometric profile detected.")
+		return
 	if (istrainedsyndie(user))
 		var/datum/listening_post/listening_post = get_singleton(/datum/listening_post)
 		var/first_unlock_text

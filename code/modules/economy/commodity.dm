@@ -717,9 +717,9 @@ datum/commodity/drugs/sell/poppies
 	price = PAY::DOCTORATE
 
 /datum/commodity/contraband/stealthstorage
-	comname = "Stealth Storage"
-	comtype = /obj/item/storage/box/syndibox
-	desc = "Can take on the appearance of another item. Creates a small dimensional rift in space-time, allowing it to hold multiple items."
+	comname = "Stealth Storage (Small)"
+	comtype = /obj/item/storage/box/syndibox/small
+	desc = "Can take on the appearance of another item. Creates a small dimensional rift in space-time, allowing it to hold multiple items. Holds fewer items than the usual syndicate stealth storage."
 	price = PAY::DOCTORATE
 
 /datum/commodity/contraband/chamsuit
@@ -1510,7 +1510,7 @@ datum/commodity/drugs/sell/poppies
 /datum/commodity/costume/vampire
 	comname = "Vampire Costume"
 	comtype = /obj/item/storage/box/costume/vampire
-	desc = "A bunch of clothing that kinda resembles a vampire from some old piece of cinema."
+	desc = "A bunch of clothing that kinda resembles a vampire from some old piece of cinema, along with some old-themed trash I found."
 	price = PAY::TRADESMAN*2
 
 /datum/commodity/costume/abomination
@@ -1582,6 +1582,18 @@ datum/commodity/drugs/sell/poppies
 	comname = "Gnome Chompsky costume"
 	comtype = /obj/item/storage/box/costume/chompskysuit
 	desc = "Roam as a Gnome with this giant-sized gnome costume."
+	price = PAY::UNTRAINED
+
+/datum/commodity/costume/baseball_clown
+	comname = "Baseball Uniform"
+	comtype = /obj/item/storage/box/costume/baseball_clown
+	desc = "A uniform and cap for the Aintaiya Stinkers. Bat not included."
+	price = PAY::UNTRAINED
+
+/datum/commodity/costume/baseball_mime
+	comname = "Baseball Uniform"
+	comtype = /obj/item/storage/box/costume/baseball_mime
+	desc = "A uniform and cap for... some team you've never heard of before. Bat not included."
 	price = PAY::UNTRAINED
 
 /datum/commodity/backpack/breadpack
