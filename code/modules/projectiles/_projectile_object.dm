@@ -238,7 +238,7 @@
 			proj_data.on_hit(A, angle_to_dir(src.angle), src)
 
 		//Trigger material on attack.
-		proj_data?.material?.triggerOnAttack(src, src.shooter, A)
+		proj_data?.coating?.triggerOnAttack(src, src.shooter, A)
 
 		if (istype(A,/turf))
 			// if we hit a turf apparently the bullet is magical and hits every single object in the tile, nice shooting tex
@@ -308,15 +308,14 @@
 			src.icon = proj_data.icon
 			src.icon_state = proj_data.icon_state
 			src.invisibility = proj_data.invisibility
-			if (!proj_data.override_color)
+			if (!proj_data.override_color && !proj_data.coating)
 				src.color = proj_data.color_icon
 		else
 			src.icon = 'icons/obj/projectiles.dmi'
 			src.icon_state = null
 			src.invisibility = INVIS_NONE
-			if (!proj_data) return //ZeWaka: Fix for null.override_color
-			if (!proj_data.override_color)
-				src.color = "#ffffff"
+			src.color = "#ffffff"
+
 	proc/get_len()
 		return sqrt(src.xo**2 + src.yo**2)
 	// Awful var names. TODO rename pretty much everything here, or at least document the functions

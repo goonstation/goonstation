@@ -314,6 +314,56 @@
 			newObj.set_loc(getOutputLocation(owner))
 		return
 
+/datum/matfab_recipe/bullets_coated
+	name = "Bullet Coating"
+	desc = "Coat bullets in silver."
+	category = "Weapons"
+	blueprint_icon_type = /obj/item/ammo/bullets/rifle_3006
+
+	New()
+		..()
+		required_parts.Add(new/datum/matfab_part/ammo_container {part_name = "Ammo"; required_amount = 1; auto_consume = FALSE} ())
+		// Currently only limited to silver for balance reasons
+		required_parts.Add(new/datum/matfab_part/silver {part_name = "Coating"; required_amount = 1; auto_consume = FALSE} ())
+
+	getMaxAmount()
+		var/obj/item/ammo/bullets/ammo = getObjectByPartName("Ammo")
+		var/obj/item/source = getObjectByPartName("Coating")
+		return min(floor(source.material_amount_total() / ammo.ammo_type.coating_amount), ammo.amount_left)
+
+	canBuild(var/amount = 1, var/atom/owner)
+		var/obj/item/ammo/bullets/ammo = getObjectByPartName("Ammo")
+		var/obj/item/source = getObjectByPartName("Coating")
+		var/enough_ammo = ammo.amount_left >= amount
+		var/enough_mats = source.material_amount_total() >= (ammo.ammo_type.coating_amount * amount)
+		return enough_ammo && enough_mats
+
+	build(amount, var/obj/machinery/nanofab/owner)
+		var/obj/item/ammo/bullets/ammo = getObjectByPartName("Ammo")
+		var/obj/item/source = getObjectByPartName("Coating")
+
+		var/obj/item/ammo/bullets/ammo_excess = ammo.split(ammo.amount_left - amount)
+		if(ammo_excess)
+			ammo_excess.set_loc(getOutputLocation(owner))
+		var/datum/projectile/new_ammo_type = new ammo.ammo_type.type // Ammo type might be shared somewhere else
+		ammo.ammo_type = new_ammo_type
+		ammo.ammo_type.coating = source.material
+		ammo.tooltip_rebuild = TRUE
+		ammo.set_loc(getOutputLocation(owner))
+
+		var/mat_cost = ammo.ammo_type.coating_amount * amount
+		var/source_cost_amount = round(mat_cost / source.material_amt, 0.01) // if math is so amazing, then why do floats exist?
+		var/source_count_ceil = ceil(source_cost_amount)
+		var/excess_sheet_count = floor((source_count_ceil - source_cost_amount) / 0.1)
+		if(excess_sheet_count)
+			// Output excess material as sheets
+			var/obj/item/sheet/excess_sheets = new()
+			excess_sheets.setMaterial(source.material)
+			excess_sheets.set_stack_amount(excess_sheet_count)
+			excess_sheets.set_loc(getOutputLocation(owner))
+		source.change_stack_amount(-source_count_ceil)
+		return
+
 /datum/matfab_recipe/arrow
 	name = "Arrow"
 	desc = "A simple arrow used as ammunition for bows."
@@ -825,7 +875,7 @@
 	proc/get_assigned_amounts()
 		var/list/required_amounts = list()
 		for (var/datum/matfab_part/P as anything in src.required_parts)
-			if (P.assigned)
+			if (P.assigned && P.auto_consume)
 				required_amounts[P.assigned] += P.required_amount
 		return required_amounts
 
