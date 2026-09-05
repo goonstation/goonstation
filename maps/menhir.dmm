@@ -11236,6 +11236,10 @@
 	pixel_y = 2;
 	pixel_x = 13
 	},
+/obj/item/pinpointer/teg_semi{
+	pixel_x = -6;
+	pixel_y = 4
+	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/shot{
 	pixel_y = 7;
 	pixel_x = 4
