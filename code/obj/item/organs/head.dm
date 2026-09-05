@@ -83,10 +83,8 @@
 		..()
 
 	disposing()
-		if (src.linked_human)
-			if (isskeleton(src.linked_human))
-				var/datum/mutantrace/skeleton/S = src.linked_human.mutantrace
-				S.set_head(null)
+
+		UNLINK_SKELETON_HEAD(src)
 		if (holder)
 			holder.head = null
 		if (donor_original?.eye == src)
@@ -524,9 +522,7 @@
 	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
 		/* Overrides parent function to handle special case for attaching heads. */
 
-		if (isskeleton(src.linked_human) && isskeleton(M))// return the typing indicator to the human only if we're put on a skeleton
-			var/datum/mutantrace/skeleton/S = src.linked_human.mutantrace
-			S.set_head(null)
+		UNLINK_SKELETON_HEAD(src)
 
 		var/mob/living/carbon/human/H = M
 		if (!isskeleton(M) && !src.can_attach_organ(H, user))

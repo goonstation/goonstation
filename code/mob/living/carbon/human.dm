@@ -2067,10 +2067,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		src.organHolder.heart.op_stage = 0
 	if (src.organHolder.brain)
 		src.organHolder.brain.op_stage = 0
-	if (src.organHolder.head && isskeleton(src))
-		var/datum/mutantrace/skeleton/S = src.mutantrace
-		S.set_head(src.organHolder.head)
-		S.head_moved() // update tracking
+	ON_SKELETON_HEAD_MOVE(src.organHolder.head, FALSE)
 
 	if (src.get_stamina() != (STAMINA_MAX + src.get_stam_mod_max()))
 		src.set_stamina(STAMINA_MAX + src.get_stam_mod_max())

@@ -148,7 +148,16 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1, 1)
 
 		if (!(flags & SOUND_IGNORE_DEAF) && !M.hearing_check(FALSE, TRUE))
 			continue
-		Mloc = get_turf(M)
+
+		// gross hacks
+		if (isskeleton(M))
+			var/obj/item/organ/head/head = IS_HEADLESS_SKELETON(M)
+			if (head)
+				Mloc = get_turf(head)
+			else
+				Mloc = get_turf(M)
+		else
+			Mloc = get_turf(M)
 
 		if (!Mloc)
 			continue
@@ -199,9 +208,19 @@ var/global/list/default_channel_volumes = list(1, 1, 1, 0.5, 0.5, 1, 1, 1, 1)
 
 			//potentially expensive, do not use for commonly played sounds
 			if (flags & SOUND_DO_LOS)
-				//we return to dumb Byond builtins
-				if (!(M in hearers(MAX_SOUND_RANGE, source)))
-					continue
+				if (isskeleton(M))
+					// do the range check with the head if it exists
+					var/obj/item/organ/head/head = IS_HEADLESS_SKELETON(M)
+					if (head)
+						if (!(head in hearers(MAX_SOUND_RANGE, source)))
+							continue
+					else
+						if (!(M in hearers(MAX_SOUND_RANGE, source)))
+							continue
+				else
+					//we return to dumb Byond builtins
+					if (!(M in hearers(MAX_SOUND_RANGE, source)))
+						continue
 
 			//sadly, we must generate
 			if (!S) S = generate_sound(source, soundin, vol, vary, extrarange, pitch)
