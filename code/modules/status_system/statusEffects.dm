@@ -2247,6 +2247,163 @@
 	maxDuration = 30 SECONDS
 	effect_quality = STATUS_QUALITY_NEGATIVE
 
+/datum/statusEffect/numb  // Limb specific stuns and weaknesses
+	id = "numb"
+	name = "Numb"
+	icon_state = "muted"
+	desc = "This part is stunned in it's function. You shouldn't see this... except if you are a body part"
+	maxDuration = 120 SECONDS
+	effect_quality = STATUS_QUALITY_NEGATIVE
+	var/affected_zone = null //This proc connects the children status effect to their corresponding zone
+
+	preCheck(var/atom/affected_atom)
+		. = ..()
+		if(ismob(affected_atom) && !ishuman(affected_atom))
+			//humans are the only mobs that can be affected... because they are the only ones who have limbholder to affect
+			return FALSE
+
+	onAdd(var/passed_on)
+		. = ..(passed_on)
+		if(isitem(src.owner))
+			if(istype(src.owner, /obj/item/parts))
+				//we're a limb, we need to listen to being attached to the mob
+				RegisterSignal(src.owner, COMSIG_LIMB_ATTACHED_TO_HUMAN, PROC_REF(on_part_addition))
+			else
+				//we are an item. We need to listen to being inserted into a limb.... limb code is cursed
+				RegisterSignal(src.owner, COMSIG_ITEM_SET_AS_LIMB, PROC_REF(on_item_set_as_limb))
+		if(ishuman(src.owner) && affected_zone)
+			//if we're a numbing effect that targets a specific limb, we need to listen to the person loosing limbs
+			RegisterSignal(src.owner, COMSIG_HUMAN_LOST_LIMB, PROC_REF(on_part_removal))
+		if(!passed_on)
+			src.try_relay_status(src.duration)
+
+	onChange(var/passed_on)
+		if(!passed_on)
+			src.try_relay_status(src.duration)
+
+	onRemove(var/passed_on)
+		. = ..(passed_on)
+		UnregisterSignal(src.owner, COMSIG_HUMAN_LOST_LIMB)
+		UnregisterSignal(src.owner, COMSIG_ITEM_SET_AS_LIMB)
+		UnregisterSignal(src.owner, COMSIG_LIMB_ATTACHED_TO_HUMAN)
+		if(!passed_on)
+			src.try_relay_status(-1) // a duration of 0 is infinite
+
+	proc/on_part_removal(var/mob/living/carbon/human/affected_human, var/obj/item/parts/removed_part)
+		//the human lost an limb. We check if we have a zone we adhere to and, if yes and it's the same the object about to be removed was, we're removing us as well
+		if(src.affected_zone && removed_part.slot == src.affected_zone)
+			SPAWN(0)
+				affected_human.delStatus(src.id, TRUE)
+		//for item arms, we need to check the item to be severed and "stun" that, since we're about to get removed
+		if(removed_part.remove_object)
+			var/obj/item_arm = removed_part.remove_object
+			if(src.duration >= 0)
+				SPAWN(0)
+					item_arm.setStatus("numb", src.duration, TRUE)
+
+	proc/on_item_set_as_limb(var/obj/added_object, var/obj/item/parts/part_inserted_into)
+		//well, we were attached to someone. But we're inserted into a limb.
+		//So stun them and make them relay the numb-status onto the mob
+		if(src.duration >= 0)
+			SPAWN(0)
+				part_inserted_into.setStatus("numb", src.duration)
+
+	proc/on_part_addition(var/obj/added_object, var/mob/living/carbon/human/affected_human)
+		//well, we were attached to someone. Make sure we stay stunned.
+		src.try_relay_status(src.duration)
+
+	proc/try_relay_status(var/duration)
+		//here, we dot he opposite: if the owner had the status added, we need to apply it to the corresponding part as well
+		if (ishuman(src.owner) && affected_zone)
+			var/mob/living/carbon/human/effect_owner = src.owner
+			var/obj/item/affected_part = effect_owner.limbs.get_limb(affected_zone)
+			if(affected_part)
+				SPAWN(0)
+					//we need to set the optional variable to TRUE, else we risk recursion
+					if(duration >= 0)
+						affected_part.setStatus("numb", duration, TRUE)
+					else
+						affected_part.delStatus("numb", TRUE)
+				return TRUE
+		else if (istype(src.owner, /obj/item/parts))
+			var/obj/item/parts/affected_part = src.owner
+			//here, we handle the passing of the buff between the mob and it's part
+			if(affected_part.holder && (affected_part.slot in numb_body_part_list))
+				// once we found the zone, we add the corresponding buff
+				SPAWN(0)
+					//we need to set the optional variable to TRUE, else we risk recursion
+					if(duration >= 0)
+						affected_part.holder.setStatus(numb_body_part_list[affected_part.slot], duration, TRUE)
+					else
+						affected_part.holder.delStatus(numb_body_part_list[affected_part.slot], TRUE)
+				return TRUE
+
+/datum/statusEffect/numb/arm
+	id = "numb_arm"
+	name = "Numb Arm Parent"
+	icon_state = "numb_r_arm"
+	desc = "You should not see this"
+
+	onAdd(var/passed_on)
+		. = ..(passed_on)
+		if (ishuman(src.owner))
+			//need to listen to the person having their arms updated, in case we need to stun them
+			RegisterSignal(src.owner, COMSIG_HUMAN_ARM_IS_HUD_UPDATED, PROC_REF(on_arm_hud_update))
+			var/mob/living/carbon/human/effect_owner = src.owner
+			if(src.affected_zone == "r_arm")
+				effect_owner.drop_from_slot(effect_owner.r_hand)
+			else
+				effect_owner.drop_from_slot(effect_owner.l_hand)
+			SPAWN(0)
+				effect_owner.hud.update_hands()
+
+	onRemove(var/passed_on)
+		. = ..(passed_on)
+		UnregisterSignal(src.owner, COMSIG_HUMAN_ARM_IS_HUD_UPDATED)
+		if (ishuman(src.owner))
+			var/mob/living/carbon/human/effect_owner = src.owner
+			effect_owner.hud.update_hands()
+
+	proc/on_arm_hud_update(var/mob/living/carbon/human/affected_human, var/atom/movable/screen/hud/affected_hud, var/zone)
+		if(zone == src.affected_zone)
+			affected_hud.AddOverlays(image(affected_hud.icon, affected_hud, "hand_stun"), "hand_stun_overlay")
+
+
+/datum/statusEffect/numb/arm/r_arm
+	id = "numb_r_arm"
+	name = "Numb Right Arm"
+	icon_state = "numb_r_arm"
+	desc = "You can't seem to feel or move your right arm!"
+	affected_zone = "r_arm"
+
+/datum/statusEffect/numb/arm/l_arm
+	id = "numb_l_arm"
+	name = "Numb Left Arm"
+	icon_state = "numb_l_arm"
+	desc = "You can't seem to feel or move your left arm!"
+	affected_zone = "l_arm"
+
+/// I am aware that we don't need this parent right now, but for inheritance sake it should be in here
+/datum/statusEffect/numb/leg
+	id = "numb_leg"
+	name = "Numb LEG Parent"
+	icon_state = "numb_r_leg"
+	desc = "You should not see this"
+
+/datum/statusEffect/numb/leg/r_leg
+	id = "numb_r_leg"
+	name = "Numb Right Leg"
+	icon_state = "numb_r_leg"
+	desc = "You can't seem to feel or move your right leg!"
+	affected_zone = "r_leg"
+
+/datum/statusEffect/numb/leg/l_leg
+	id = "numb_l_leg"
+	name = "Numb Left Leg"
+	icon_state = "numb_l_leg"
+	desc = "You can't seem to feel or move your left leg!"
+	affected_zone = "l_leg"
+
 /datum/statusEffect/drowsy
 	maxDuration = 2 MINUTES
 	id = "drowsy"

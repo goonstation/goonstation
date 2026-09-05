@@ -12,3 +12,5 @@
 /// Misc stuff which isn't inherently good or bad
 #define STATUS_QUALITY_NEUTRAL 3
 
+/// This contains of part_strings where a corresponding numb-status effect exists
+var/global/list/numb_body_part_list =  list("r_arm" = "numb_r_arm", "l_arm" = "numb_l_arm", "l_leg" = "numb_l_leg", "r_leg" = "numb_r_leg",)
