@@ -1,4 +1,13 @@
 
+(t)sun sep 06 26
+(u)Kubius
+(p)27762
+(e)🎨💅📨|C-Sprites, C-QoL, A-Logistics
+(+)Siphon resonators have been re-titled for legibility, now primarily using the names Axial Resonator, Shear Moderator and Field Quantizer.
+(u)Cheekybrdy
+(p)27699
+(e)|
+(+)Steve's Mixtape now acts similar to its unrecorded variant.
 (t)sat sep 05 26
 (u)Kubius
 (p)27742
