@@ -2,6 +2,7 @@
 	check_name = "Cloner Contents Check"
 	target_areas = list(
 		/area/station/medical/medbay/cloner,
+		/area/station/medical/research,
 	)
 	expected_contents = list(
 		// Equipment

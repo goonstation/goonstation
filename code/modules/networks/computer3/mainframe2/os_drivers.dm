@@ -141,7 +141,7 @@
 		signal_program(1, list("command"= DWAINE::SYSCALL::MOUNT, "id"=src.name, "link"="term"))
 		return
 
-	add_file(var/datum/computer/file/a_file, var/datum/mainframe2_user_data/user)
+	add_file(datum/computer/file/a_file, datum/mainframe2_user_data/user)
 		if (!initialized || !istype(a_file) || !istype(user) || !user.user_id)
 			return 0
 
@@ -408,11 +408,11 @@
 		R.holding_folder = driver
 		return driver.add_file(R, misc)
 
-	remove_file(datum/computer/R, misc)
+	remove_file(datum/computer/R)
 		if(!driver || driver.holder != src.holder)
 			return 0
 
-		return driver.remove_file(R, misc)
+		return driver.remove_file(R)
 
 /datum/computer/file/mainframe_program/driver/mountable/printer
 	name = "printdevc"
