@@ -3990,7 +3990,7 @@ ABSTRACT_TYPE(/datum/manufacture/locker) //Regular lockers are built using steel
 	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/resonator_type_sm
-	name = "Type-SM Resonator"
+	name = "resonant shear mitigator"
 	item_requirements = list("metal_dense" = 10,
 							 "conductive_high" = 20,
 							 "crystal" = 10,

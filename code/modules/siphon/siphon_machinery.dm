@@ -932,7 +932,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 
 //stabilizing resonator, provides purely reduction to shear based on lowest torque value
 /obj/machinery/siphon/resonator/stabilizer
-	name = "\improper Type-SM siphon resonator"
+	name = "resonant shear mitigator"
 	desc = "Field-emitting device used to mitigate resonant shear in a harmonic siphon."
 	icon_state = "stab-closed"
 	regular_desc = "Field-emitting device used to mitigate resonant shear in a harmonic siphon."

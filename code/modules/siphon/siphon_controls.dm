@@ -443,7 +443,7 @@
 	<h3>RESONATORS AND DISTANCE</h3>
 	When utilizing resonators in conjunction with the<br>
 	Harmonic Siphon, it's important to understand the<br>
-	effect of distance on Type-AX and Type-SM resonators.<br>
+	effect of distance on Type-AX and shear mitigators.<br>
 	<br>
 	<strong>Type-AX resonators</strong> influence lateral and vertical<br>
 	resonances based on distance from the 'pinch points'.<br>
@@ -455,10 +455,10 @@
 	This allows these resonators to be placed far from the<br>
 	Siphon and still significantly influence parameters.<br>
 	<br>
-	<strong>Type-SM resonators</strong>, on the other hand, reduce shear<br>
+	<strong>shear mitigators</strong>, on the other hand, reduce shear<br>
 	simply based on their distance from the Siphon itself;<br>
-	as an example, G2 and D6 would both cause a Type-SM<br>
-	resonator to subtract four shear per intensity.<br>
+	as an example, G2 and D6 would both cause a shear<br>
+	mitigator to subtract four shear per intensity.<br>
 	<br>
 	Type-FQ resonators have a more complex set of<br>
 	behaviors documented below; however, their use<br>
@@ -502,7 +502,7 @@
 	the amount of resonance cancelled.<br>
 	<br>
 	Shear cannot be produced directly, but can be mitigated<br>
-	by use of the Type-SM resonator, mitigating eight to one<br>
+	by use of shear mitigators, mitigating eight to one<br>
 	units of shear per intensity, decreasing with greater<br>
 	distance from the Harmonic Siphon.<br>
 	<br>

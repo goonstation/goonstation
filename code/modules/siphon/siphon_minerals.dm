@@ -57,7 +57,7 @@ ABSTRACT_TYPE(/datum/harmonic_cycle)
 	setup_guide = list(
 		"Type-AX Resonator, Position C4, 3 Intensity<br>",
 		"Type-AX Resonator, Position G4, 3 Intensity<br>",
-		"Type-SM Resonator, Position E3, 3 Intensity<br>"
+		"Shear mitigator, Position E3, 3 Intensity<br>"
 	)
 
 /datum/siphon_mineral/rock

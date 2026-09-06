@@ -108,7 +108,7 @@
 	blueprint = /datum/manufacture/resonator_type_ax
 
 /obj/item/paper/manufacturer_blueprint/resonator_type_sm
-	name = "Type-SM Resonator"
+	name = "Shear Mitigator"
 	blueprint = /datum/manufacture/resonator_type_sm
 
 /obj/item/paper/manufacturer_blueprint/resonator_type_fq
