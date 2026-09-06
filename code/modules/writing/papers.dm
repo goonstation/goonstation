@@ -859,7 +859,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 /obj/item/paper/resonator_type_ax
 	name = "printed card"
 	icon_state = "index_card"
-	info = {"TYPE-AX - AXIAL RESONATOR<br>
+	info = {"AXIAL RESONATOR<br>
 	Provides lateral and vertical resonance, multiplied based on distance from axial pinch points (8x > 4x > 2x > 1x)<br>
 	Maximum 4 intensity"}
 

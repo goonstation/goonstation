@@ -104,7 +104,7 @@
 /******************** Nadir Resonators *******************/
 
 /obj/item/paper/manufacturer_blueprint/resonator_type_ax
-	name = "Type-AX Resonator"
+	name = "Axial Resonator"
 	blueprint = /datum/manufacture/resonator_type_ax
 
 /obj/item/paper/manufacturer_blueprint/resonator_type_sm

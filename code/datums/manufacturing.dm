@@ -3979,7 +3979,7 @@ ABSTRACT_TYPE(/datum/manufacture/locker) //Regular lockers are built using steel
 /************ NADIR RESONATORS ************/
 
 /datum/manufacture/resonator_type_ax
-	name = "Type-AX Resonator"
+	name = "Axial Resonator"
 	item_requirements = list("metal_dense" = 15,
 							 "conductive_high" = 20,
 							 "crystal" = 20,

@@ -665,7 +665,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 #define RESONATOR_CABLE_REPAIR_COST 3
 
 /obj/machinery/siphon/resonator
-	name = "\improper Type-AX siphon resonator"
+	name = "axial resonator"
 	desc = "Field-emitting device used to amplify and direct a harmonic siphon. You know this because it says so on the label."
 	icon = 'icons/obj/machines/neodrill_32x32.dmi'
 	icon_state = "res-closed"

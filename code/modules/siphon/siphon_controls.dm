@@ -443,9 +443,9 @@
 	<h3>RESONATORS AND DISTANCE</h3>
 	When utilizing resonators in conjunction with the<br>
 	Harmonic Siphon, it's important to understand the<br>
-	effect of distance on Type-AX and shear mitigators.<br>
+	effect of distance on axial resonators and shear mitigators.<br>
 	<br>
-	<strong>Type-AX resonators</strong> influence lateral and vertical<br>
+	<strong>Axial resonators</strong> influence lateral and vertical<br>
 	resonances based on distance from the 'pinch points'.<br>
 	<br>
 	As an example of this, a resonator placed in column F<br>
@@ -468,7 +468,7 @@
 	First of three resonant parameters,<br>
 	charted on the letter axis.<br>
 	<br>
-	Type-AX resonators will raise or lower<br>
+	Axial resonators will raise or lower<br>
 	this value by eight units per intensity at 'point-blank'<br>
 	(columns D or F), diminishing by powers of two to a <br>
 	minimum of one unit at max range (columns A or I).<br>
@@ -483,7 +483,7 @@
 	Second of three resonant parameters,<br>
 	charted on the number axis.<br>
 	<br>
-	Type-AX resonators will raise or lower<br>
+	Axial resonators will raise or lower<br>
 	this value by eight units per intensity at 'point-blank'<br>
 	(rows 3 or 5), diminishing by powers of two to a <br>
 	minimum of one unit at max range (rows 0 or 8).<br>
