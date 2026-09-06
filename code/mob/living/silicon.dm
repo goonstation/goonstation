@@ -722,11 +722,11 @@ var/global/list/module_editors = list()
 	if(!do_monospaced)
 		src.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_MONOSPACE_DECORATOR_INVERTED)
 		src.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_MONOSPACE_DECORATOR)
-		boutput(user, SPAN_NOTICE("No longer forcing all speech to be monospace."))
+		boutput(user, SPAN_NOTICE("All speech now regular text by default."))
 	else
 		src.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_MONOSPACE_DECORATOR_INVERTED)
 		src.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_MONOSPACE_DECORATOR)
-		boutput(user, SPAN_NOTICE("Now forcing all speech to be monospace."))
+		boutput(user, SPAN_NOTICE("All speech now monospaced by default."))
 
 /mob/living/silicon/proc/toggle_monospace_mode(mob/user = src)
 	var/new_setting = TRUE
