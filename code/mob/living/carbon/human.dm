@@ -1983,39 +1983,78 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 
 /mob/living/carbon/human/verb/consume(mob/M as mob in oview(0))
 	set hidden = 1
-	var/mob/living/carbon/human/H = M
-	if (!istype(H))
+	var/mob/living/L = M
+	var/mob/living/carbon/human/user = usr
+	if (!istype(L) || issilicon(L) || isrobocritter(x))
 		return
 
-	if (!H.stat)
-		boutput(usr, "You can't eat [H] while [hes_or_shes(H)] conscious!")
+	if (!L.stat)
+		boutput(user, "You can't eat [M] while [hes_or_shes(M)] conscious!")
 		return
 
-	if (H.bioHolder.HasEffect("consumed"))
-		boutput(usr, "There's nothing left to consume!")
+	if (L.bioHolder.HasEffect("consumed"))
+		boutput(user, "There's nothing left to consume!")
 		return
 
 	if(src.emote_check(1, 50, 0))	//spam prevention
-		usr.visible_message(SPAN_ALERT("[usr] starts [pick("taking bites out of","chomping","chewing","biting","eating","gnawing")] [H]. [pick("What a [pick("psychopath","freak","weirdo","lunatic","creep","rude dude","nutter","jerk","nerd")]!","Holy shit!","What the [pick("hell","fuck","christ","shit","heck")]?","Oh [pick("no","dear","god")]!")]"))
+		user.visible_message(SPAN_ALERT("[user] starts [pick("taking bites out of","chomping","chewing","biting","eating","gnawing")] [L]. [pick("What a [pick("psychopath","freak","weirdo","lunatic","creep","rude dude","nutter","jerk","nerd")]!","Holy shit!","What the [pick("hell","fuck","christ","shit","heck")]?","Oh [pick("no","dear","god")]!")]"))
 
-		var/loc = usr.loc
+		var/loc = user.loc
 
-		SPAWN(5 SECONDS)
-			if (usr.loc != loc || H.loc != loc)
-				boutput(usr, SPAN_ALERT("Your consumption of [H] was interrupted!"))
+		// on bite effects (bite 1)
+		playsound(loc, 'sound/items/eatfood.ogg', 30, TRUE)
+		eat_twitch(user)
+		L.TakeDamageAccountArmor("chest", rand(10,20), 0, 0, DAMAGE_STAB)
+		take_bleeding_damage(L, null, rand(5,10), DAMAGE_STAB)
+
+		SPAWN(2.5 SECONDS)
+			if (user.loc != loc || L.loc != loc)
+				boutput(user, SPAN_ALERT("Your consumption of [M] was interrupted!"))
 				return
 
-			usr.visible_message(SPAN_ALERT("[usr] finishes [pick("taking bites out of","chomping","chewing","biting","eating","gnawing")] [H]. That was [pick("gross","horrific","disturbing","weird","horrible","funny","strange","odd","creepy","bloody","gory","shameful","awkward","unusual")]!"))
+			// on bite effects (bite 2)
+			playsound(loc, 'sound/items/eatfood.ogg', 30, TRUE)
+			eat_twitch(user)
+			L.TakeDamageAccountArmor("chest", rand(10,20), 0, 0, DAMAGE_STAB)
+			take_bleeding_damage(L, null, rand(5,10), DAMAGE_STAB)
 
-			if (prob(10) && !istype(H.mutantrace,/datum/mutantrace/ithillid))
-				usr.reagents.add_reagent("prions", 10)
-				SPAWN(rand(20,50)) boutput(usr, SPAN_ALERT("You don't feel so good."))
+			sleep(2.5 SECONDS)
 
-			H.TakeDamageAccountArmor("chest", rand(30,50), 0, 0, DAMAGE_STAB)
-			if (!isdead(H) && prob(50))
-				H.emote("scream")
-			H.bioHolder.AddEffect("consumed")
-			take_bleeding_damage(H, null, rand(15,30), DAMAGE_STAB)
+			if (user.loc != loc || L.loc != loc)
+				boutput(user, SPAN_ALERT("Your consumption of [M] was interrupted!"))
+				return
+
+			// on bite effects (bite 3)
+			playsound(src.loc, 'sound/impact_sounds/Flesh_Crush_1.ogg', 30, TRUE)
+			eat_twitch(user)
+			L.TakeDamageAccountArmor("chest", rand(10,20), 0, 0, DAMAGE_STAB)
+			take_bleeding_damage(L, null, rand(5,10), DAMAGE_STAB)
+
+			user.visible_message(SPAN_ALERT("[user] finishes [pick("taking bites out of","chomping","chewing","biting","eating","gnawing")] [L]. That was [pick("gross","horrific","disturbing","weird","horrible","funny","strange","odd","creepy","bloody","gory","shameful","awkward","unusual")]!"))
+			L.bioHolder.AddEffect("consumed")
+
+			if (user.sims)
+				var/hunger_benefit = 10
+				if(user.sims.getValue("Hunger") <= SIMS_HUNGER_FAMISHED)
+					hunger_benefit = 20
+				user.sims.affectMotive("Hunger", hunger_benefit)
+
+			if (!isdead(M) && prob(50))
+				M.emote("scream")
+			if (prob(20))
+				user.emote("burp")
+
+			if (ishuman(L))
+				var/mob/living/carbon/human/H = L
+				if (prob(10) && !istype(H.mutantrace,/datum/mutantrace/ithillid))
+					user.reagents.add_reagent("prions", 10)
+					SPAWN(rand(20,50)) boutput(user, SPAN_ALERT("You don't feel so good."))
+			else
+				// guaranteed to catch something if you try this on a plaguerat.
+				if (prob(10) || istype(L,/mob/living/critter/wraith/plaguerat))
+					user.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
+					SPAWN(rand(20,50)) boutput(user, SPAN_ALERT("You don't feel so good."))
+
 	else
 		src.show_text("You're not done eating the last piece yet.", "red")
 
