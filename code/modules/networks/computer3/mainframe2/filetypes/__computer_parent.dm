@@ -43,3 +43,6 @@ ABSTRACT_TYPE(/datum/computer)
 /datum/computer/proc/copy_file(depth = 0)
 	RETURN_TYPE(/datum/computer)
 	return
+
+/datum/computer/proc/get_archive_size()
+	return src.size

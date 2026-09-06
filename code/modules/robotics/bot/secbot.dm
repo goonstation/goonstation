@@ -1393,6 +1393,9 @@ TYPEINFO(/obj/machinery/bot/secbot)
 		return
 	else
 		var/obj/item/secbot_assembly/A = new /obj/item/secbot_assembly
+		A.setMaterial(src.material)
+		A.forensic_holder = src.forensic_holder
+		S.forensic_holder.copy_to(A.forensic_holder)
 		user.u_equip(S)
 		user.put_in_hand_or_drop(A)
 		boutput(user, "You add the signaler to the helmet.")
@@ -1408,6 +1411,7 @@ TYPEINFO(/obj/machinery/bot/secbot)
 			boutput(user, "You weld a hole in [src]!")
 
 	else if (istype(W, /obj/item/device/prox_sensor) && src.build_step == 1)
+		W.forensic_holder.copy_to(src.forensic_holder)
 		src.build_step++
 		boutput(user, "You add the prox sensor to [src]!")
 		src.overlays += image('icons/obj/bots/aibots.dmi', "hs_eye")
@@ -1415,6 +1419,7 @@ TYPEINFO(/obj/machinery/bot/secbot)
 		qdel(W)
 
 	else if (istype(W, /obj/item/parts/robot_parts/arm/) && src.build_step == 2)
+		W.forensic_holder.copy_to(src.forensic_holder)
 		src.build_step++
 		boutput(user, "You add the robot arm to [src]!")
 		src.name = "helmet/signaler/prox sensor/robot arm assembly"
@@ -1423,50 +1428,43 @@ TYPEINFO(/obj/machinery/bot/secbot)
 		qdel(W)
 
 	else if (istype(W, /obj/item/baton/) && src.build_step >= 3)
+		var/obj/machinery/bot/secbot/secbot = null
 		if (istype(W, /obj/item/baton/beepsky))	// If we used Beepsky's dropped baton
 			var/obj/item/baton/Y = W
 			if (src.is_dead_beepsky)							// on Beepsky's corpse
 				boutput(user, "You return Officer Beepsky his trusty baton, reassembling the Securitron! Beep boop.")
-				new /obj/machinery/bot/secbot/beepsky(get_turf(src))
-				qdel(src)
-				user.u_equip(W)
-				qdel(W)
+				secbot = new /obj/machinery/bot/secbot/beepsky(get_turf(src))
 			else												// On any other securitron assembly?
 				boutput(user, "You give the [src] [W] and connect a cable in the arm to the baton's parallel port, completing the Securitron! Beep boop.")
-				var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot(get_turf(src))
-				S.beacon_freq = src.beacon_freq
-				get_radio_connection_by_id(S, "beacon").update_frequency(S.beacon_freq)
-				S.hat = src.hat
-				S.name = src.created_name		// We get an upgraded securitron
-				S.loot_baton_type = W.type	// So we can drop it all over again.
+				secbot = new(get_turf(src))
+				secbot.beacon_freq = src.beacon_freq
+				get_radio_connection_by_id(secbot, "beacon").update_frequency(secbot.beacon_freq)
+				secbot.hat = src.hat
+				secbot.name = src.created_name		// We get an upgraded securitron
 				if (Y.beepsky_held_this == 1)
-					S.is_beepsky = IS_NOT_BEEPSKY_BUT_HAS_HIS_SPECIAL_BATON	// So we drop Beepsky's baton, and not just some generic secbot one
+					secbot.is_beepsky = IS_NOT_BEEPSKY_BUT_HAS_HIS_SPECIAL_BATON	// So we drop Beepsky's baton, and not just some generic secbot one
 				else
-					S.is_beepsky = IS_NOT_BEEPSKY_BUT_HAS_A_GENERIC_SPECIAL_BATON // So we drop some generic secboton
-				qdel(src)
-				user.u_equip(W)
-				qdel(W)
+					secbot.is_beepsky = IS_NOT_BEEPSKY_BUT_HAS_A_GENERIC_SPECIAL_BATON // So we drop some generic secboton
 		else												// If we used any old stun baton
 			if (src.is_dead_beepsky)	// On Beepsky's corpse
 				boutput(user, "You give Officer Beepsky a stun baton, reassembling the Securitron! Beep boop.")
-				var/obj/machinery/bot/secbot/beepsky/S = new /obj/machinery/bot/secbot/beepsky(get_turf(src))
-				S.is_beepsky = IS_BEEPSKY_BUT_HAS_SOME_GENERIC_BATON // So Beepsky's corpse is his corpse
-				S.loot_baton_type = W.type	// Our baton isn't special
-				qdel(src)
-				user.u_equip(W)
-				qdel(W)
+				secbot = new /obj/machinery/bot/secbot/beepsky(get_turf(src))
+				secbot.is_beepsky = IS_BEEPSKY_BUT_HAS_SOME_GENERIC_BATON // So Beepsky's corpse is his corpse
 			else											// On any other securitron assembly?
 				boutput(user, "You give the [src] a stun baton, completing the Securitron! Beep boop.")
-				var/obj/machinery/bot/secbot/S = new /obj/machinery/bot/secbot(get_turf(src))
-				S.beacon_freq = src.beacon_freq
-				get_radio_connection_by_id(S, "beacon").update_frequency(S.beacon_freq)
-				S.hat = src.hat
-				S.name = src.created_name
-				S.is_beepsky = IS_NOT_BEEPSKY_AND_HAS_SOME_GENERIC_BATON // You're still not Beepsky
-				S.loot_baton_type = W.type	// Our baton isn't special either
-				qdel(src)
-				user.u_equip(W)
-				qdel(W)
+				secbot = new(get_turf(src))
+				secbot.beacon_freq = src.beacon_freq
+				get_radio_connection_by_id(secbot, "beacon").update_frequency(secbot.beacon_freq)
+				secbot.hat = src.hat
+				secbot.name = src.created_name
+				secbot.is_beepsky = IS_NOT_BEEPSKY_AND_HAS_SOME_GENERIC_BATON // You're still not Beepsky
+		secbot.loot_baton_type = W.type	// Drop the same type of baton
+		secbot.setMaterial(src.material)
+		secbot.forensic_holder = src.forensic_holder
+		W.forensic_holder.copy_to(secbot.forensic_holder)
+		qdel(src)
+		user.u_equip(W)
+		qdel(W)
 
 	else if (istype(W, /obj/item/rods) && src.build_step == 3)
 		var/obj/item/rods/R = W

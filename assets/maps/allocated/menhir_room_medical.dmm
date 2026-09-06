@@ -1,0 +1,654 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/unsimulated/floor/void,
+/area/unspace/medical)
+"b" = (
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/unspace/medical)
+"c" = (
+/turf/unsimulated/wall/auto/adventure/icemooninterior,
+/area/unspace/medical)
+"e" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/firstaid/toxin,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/medical)
+"f" = (
+/obj/stool/chair/blue{
+	dir = 1
+	},
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/carpet/blue{
+	icon_state = "fblue2";
+	dir = 10
+	},
+/area/unspace/medical)
+"g" = (
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/medical)
+"h" = (
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/floor/carpet/blue{
+	icon_state = "fblue2"
+	},
+/area/unspace/medical)
+"j" = (
+/obj/machinery/vending/medical,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/medical)
+"l" = (
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 8
+	},
+/area/unspace/medical)
+"m" = (
+/obj/rack/precursor,
+/obj/item/paper/book/from_file/medical_surgery_guide{
+	pixel_y = 9
+	},
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/unspace/medical)
+"n" = (
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/medical)
+"p" = (
+/turf/unsimulated/floor/carpet/blue{
+	icon_state = "fblue2"
+	},
+/area/unspace/medical)
+"r" = (
+/obj/stool/chair/blue{
+	dir = 8
+	},
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/carpet/blue{
+	icon_state = "fblue2";
+	dir = 1
+	},
+/area/unspace/medical)
+"s" = (
+/obj/machinery/sleeper/compact{
+	dir = 8
+	},
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/medical)
+"t" = (
+/turf/unsimulated/floor/void/timewarp,
+/area/unspace/medical)
+"u" = (
+/obj/stool/chair/blue,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/medical)
+"w" = (
+/obj/storage/secure/closet/medical/anesthetic,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/medical)
+"x" = (
+/turf/unsimulated/floor/carpet/blue{
+	icon_state = "fblue2";
+	dir = 6
+	},
+/area/unspace/medical)
+"z" = (
+/obj/storage/cart/medcart/crash,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/carpet/blue{
+	icon_state = "fblue2"
+	},
+/area/unspace/medical)
+"A" = (
+/obj/iv_stand,
+/obj/item/reagent_containers/iv_drip/saline,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/unspace/medical)
+"B" = (
+/obj/map/light/cyan/menhir,
+/obj/menhir_room_objs/hidey_helper_trigger,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/medical)
+"D" = (
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/medical)
+"E" = (
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/floor/carpet/blue{
+	icon_state = "fblue2";
+	dir = 1
+	},
+/area/unspace/medical)
+"F" = (
+/obj/machinery/drainage{
+	desc = "A drainage pipe embedded in the floor to prevent flooding. Where does the drain go? The Precursors know."
+	},
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/medical)
+"H" = (
+/obj/table/reinforced/auto,
+/obj/item/scalpel,
+/obj/item/circular_saw{
+	pixel_x = 3;
+	pixel_y = 12
+	},
+/obj/item/suture,
+/obj/item/scissors/surgical_scissors,
+/obj/machinery/light/small/floor,
+/obj/machinery/defib_mount,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/medical)
+"I" = (
+/obj/map/light/cyan/menhir,
+/obj/stool/chair/blue{
+	dir = 4
+	},
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/unspace/medical)
+"J" = (
+/obj/stool/bed,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/medical)
+"K" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/box/stma_kit,
+/obj/item/bandage,
+/obj/item/bandage,
+/obj/item/bandage,
+/obj/item/staple_gun,
+/obj/item/device/light/flashlight/penlight,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/medical)
+"L" = (
+/turf/unsimulated/floor/carpet/blue{
+	icon_state = "fblue2";
+	dir = 5
+	},
+/area/unspace/medical)
+"M" = (
+/obj/surgery_tray,
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/mask/surgical{
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/obj/item/clothing/mask/surgical_shield,
+/obj/item/hemostat,
+/obj/item/staple_gun,
+/obj/item/scissors/surgical_scissors,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/unspace/medical)
+"N" = (
+/turf/unsimulated/floor/carpet/blue{
+	icon_state = "fblue2";
+	dir = 1
+	},
+/area/unspace/medical)
+"O" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/firstaid/fire{
+	pixel_y = 6;
+	pixel_x = -3
+	},
+/obj/item/reagent_containers/glass/beaker/large/burn{
+	pixel_x = -12;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/dropper{
+	pixel_y = -4;
+	pixel_x = -3
+	},
+/obj/item/reagent_containers/hypospray{
+	pixel_y = 6;
+	pixel_x = 12
+	},
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/medical)
+"Q" = (
+/obj/machinery/manufacturer/medical,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/unspace/medical)
+"R" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/firstaid/brute{
+	pixel_y = 6;
+	pixel_x = 5
+	},
+/obj/item/reagent_containers/glass/beaker/large/brute{
+	pixel_x = -6;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/dropper{
+	pixel_y = -4;
+	pixel_x = 3
+	},
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/medical)
+"S" = (
+/obj/stool/bed,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/unspace/medical)
+"T" = (
+/obj/machinery/optable{
+	id = "OR1"
+	},
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/medical)
+"U" = (
+/obj/machinery/door/unpowered/blue,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/medical)
+"V" = (
+/obj/table/reinforced/auto,
+/obj/item/kitchen/food_box/donut_box{
+	pixel_y = 5
+	},
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/carpet/blue{
+	icon_state = "fblue2";
+	dir = 9
+	},
+/area/unspace/medical)
+"Y" = (
+/obj/landmark/menhir/room{
+	tag = "menhir_room_medical"
+	},
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/medical)
+"Z" = (
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/unspace/medical)
+
+(1,1,1) = {"
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+"}
+(2,1,1) = {"
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+"}
+(3,1,1) = {"
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+"}
+(4,1,1) = {"
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+"}
+(5,1,1) = {"
+a
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+a
+"}
+(6,1,1) = {"
+a
+a
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+t
+t
+t
+t
+t
+t
+t
+t
+t
+a
+a
+a
+"}
+(8,1,1) = {"
+a
+a
+a
+a
+t
+t
+t
+t
+t
+t
+t
+a
+a
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+a
+t
+t
+t
+t
+t
+a
+a
+a
+a
+a
+"}
+(10,1,1) = {"
+a
+c
+c
+c
+c
+c
+t
+t
+t
+c
+a
+a
+a
+a
+a
+"}
+(11,1,1) = {"
+a
+c
+l
+I
+Z
+c
+c
+Y
+c
+c
+c
+c
+c
+a
+a
+"}
+(12,1,1) = {"
+a
+c
+u
+V
+f
+s
+c
+Z
+c
+m
+A
+M
+c
+c
+a
+"}
+(13,1,1) = {"
+a
+c
+g
+r
+h
+g
+c
+D
+c
+n
+D
+n
+H
+c
+a
+"}
+(14,1,1) = {"
+a
+c
+j
+N
+p
+s
+c
+n
+c
+n
+F
+T
+K
+c
+a
+"}
+(15,1,1) = {"
+a
+c
+R
+N
+p
+g
+n
+B
+n
+n
+D
+n
+w
+c
+a
+"}
+(16,1,1) = {"
+a
+c
+O
+E
+z
+g
+c
+c
+c
+c
+c
+c
+c
+c
+a
+"}
+(17,1,1) = {"
+a
+c
+e
+L
+x
+g
+c
+S
+c
+S
+c
+S
+c
+c
+a
+"}
+(18,1,1) = {"
+a
+c
+c
+Q
+b
+l
+U
+n
+n
+n
+n
+n
+J
+c
+a
+"}
+(19,1,1) = {"
+a
+a
+c
+c
+c
+c
+c
+S
+c
+S
+c
+S
+c
+c
+a
+"}
+(20,1,1) = {"
+a
+a
+a
+a
+a
+a
+c
+c
+c
+c
+c
+c
+c
+a
+a
+"}

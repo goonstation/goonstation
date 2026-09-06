@@ -612,7 +612,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		/obj/item/pinpointer/disk,
 		/obj/item/cloaking_device,
 		/obj/item/card/emag,
-		/obj/item/lightbreaker,
+		/obj/item/sound_tape/lightbreaker,
 		/obj/item/clothing/suit/space/syndicate/specialist/infiltrator,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/infiltrator)
 

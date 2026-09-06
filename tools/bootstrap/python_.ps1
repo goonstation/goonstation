@@ -11,6 +11,8 @@
 # regardless of ExecutionPolicy.
 $host.ui.RawUI.WindowTitle = "starting :: python $args"
 $ErrorActionPreference = "Stop"
+# stupid fucking workaround for powershell 5 vs 7 bullshit. - tgstation#97434
+$Env:PSModulePath = "$Env:ProgramFiles\WindowsPowerShell\Modules;$PSHOME\Modules"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 
@@ -96,7 +98,7 @@ if (!(Test-Path $PythonExe -PathType Leaf)) {
 if (!(Test-Path "$PythonDir/Scripts/pip.exe")) {
 	$host.ui.RawUI.WindowTitle = "Downloading Pip..."
 
-	Invoke-WebRequest "https://bootstrap.pypa.io/pip/3.6/get-pip.py" `
+	Invoke-WebRequest "https://bootstrap.pypa.io/get-pip.py" `
 		-OutFile "$Cache/get-pip.py" `
 		-ErrorAction Stop
 

@@ -3203,6 +3203,46 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	time = 5 SECONDS
 	category = MANUFACTURER::CATEGORY::CLOTHING
 
+/datum/manufacture/baseball_staffie
+	name = "Staff Assistant Baseball Uniform"
+	item_requirements = list("fabric" = JUMPSUIT_COST)
+	item_outputs = list(/obj/item/clothing/under/baseball/staffie)
+	create = 1
+	time = 5 SECONDS
+	category = MANUFACTURER::CATEGORY::CLOTHING
+
+/datum/manufacture/baseball_command
+	name = "Command Baseball Uniform"
+	item_requirements = list("fabric" = JUMPSUIT_COST)
+	item_outputs = list(/obj/item/clothing/under/baseball/command)
+	create = 1
+	time = 5 SECONDS
+	category = MANUFACTURER::CATEGORY::CLOTHING
+
+/datum/manufacture/baseball_nt
+	name = "NanoTrasen Baseball Uniform"
+	item_requirements = list("fabric" = JUMPSUIT_COST)
+	item_outputs = list(/obj/item/clothing/under/baseball/nt)
+	create = 1
+	time = 5 SECONDS
+	category = MANUFACTURER::CATEGORY::CLOTHING
+
+/datum/manufacture/baseball_mining
+	name = "Mining Baseball Uniform"
+	item_requirements = list("fabric" = JUMPSUIT_COST)
+	item_outputs = list(/obj/item/clothing/under/baseball/mining)
+	create = 1
+	time = 5 SECONDS
+	category = MANUFACTURER::CATEGORY::CLOTHING
+
+/datum/manufacture/baseball_cargo
+	name = "Cargo Baseball Uniform"
+	item_requirements = list("fabric" = JUMPSUIT_COST)
+	item_outputs = list(/obj/item/clothing/under/baseball/cargo)
+	create = 1
+	time = 5 SECONDS
+	category = MANUFACTURER::CATEGORY::CLOTHING
+
 /datum/manufacture/labcoat
 	name = "Labcoat"
 	item_requirements = list("fabric" = 4)

@@ -284,6 +284,11 @@
 
 	..()
 
+/obj/machinery/atmospherics/pipe/on_material_scan()
+	. = ..()
+	if(src.can_rupture)
+		return "Estimated fatigue pressure of [round(src.effective_fatigue_pressure(), 10)]KPa"
+
 /// The pipe type you usually see wandering around and are most familiar with.
 /obj/machinery/atmospherics/pipe/simple
 	name = "pipe"
