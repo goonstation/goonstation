@@ -1102,7 +1102,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish/tetraminnow)
 	inhand_color = "#2963b4"
 	rarity = ITEM_RARITY_UNCOMMON
 	/// will immediately cease to exist if this many are within a tile of it
-	var/const/max_allowed = 4
+	var/static/max_allowed = 4
 
 	var/extra_desc = "You shouldn't see this!"
 
@@ -1111,6 +1111,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish/tetraminnow)
 		START_TRACKING
 
 		src.try_implode()
+
+	disposing()
+		STOP_TRACKING
+		..()
 
 	get_desc(dist, mob/user)
 		. = ..()
@@ -1148,10 +1152,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/fish/tetraminnow)
 			// now that we're done exploding the other fish...
 			new /obj/item/currency/spacecash/really_small(get_turf(src))
 			qdel(src)
-
-	disposing()
-		STOP_TRACKING
-		..()
 
 TYPEINFO(/obj/item/reagent_containers/food/fish/tetraminnow/tshaped)
 	fish_collection_type = FISH::COLLECTION::NORMAL

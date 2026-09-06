@@ -114,13 +114,13 @@
 ///gimmicky tetris lootpool bullshit, fished out of robustris machines
 /datum/fishing_lootpool/robustris_fish
 	minimum_rod_tier = 2
-	fish_available = list(/obj/item/reagent_containers/food/fish/tetraminnow/tshaped = 5,
-	/obj/item/reagent_containers/food/fish/tetraminnow/sshaped = 5,
-	/obj/item/reagent_containers/food/fish/tetraminnow/zshaped = 5,
-	/obj/item/reagent_containers/food/fish/tetraminnow/square = 5,
-	/obj/item/reagent_containers/food/fish/tetraminnow/line = 3,
-	/obj/item/reagent_containers/food/fish/tetraminnow/lshaped = 5,
-	/obj/item/reagent_containers/food/fish/tetraminnow/jshaped = 5,
+	fish_available = list(/obj/item/reagent_containers/food/fish/tetraminnow/tshaped = 10,
+	/obj/item/reagent_containers/food/fish/tetraminnow/sshaped = 10,
+	/obj/item/reagent_containers/food/fish/tetraminnow/zshaped = 10,
+	/obj/item/reagent_containers/food/fish/tetraminnow/square = 10,
+	/obj/item/reagent_containers/food/fish/tetraminnow/line = 7,
+	/obj/item/reagent_containers/food/fish/tetraminnow/lshaped = 10,
+	/obj/item/reagent_containers/food/fish/tetraminnow/jshaped = 10,
 	/obj/item/circuitboard/tetris = 5)
 
 	var/last_fished = null
