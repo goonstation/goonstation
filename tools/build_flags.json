@@ -11,6 +11,10 @@
 	],
 	"flags": [
 		{
+			"define": "SKIP_FEA_SETUP",
+			"label": "Skip FEA (atmos) Setup"
+		},
+		{
 			"define": "IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME",
 			"label": "Skip Changelogs"
 		},
