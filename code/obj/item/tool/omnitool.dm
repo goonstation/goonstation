@@ -283,7 +283,7 @@
 	animated_changes = TRUE
 
 /obj/item/tool/omnitool/NT
-	name = "NT Multipen"
+	name = "MultiPen"
 	prefix = "nt-omnitool" //Thank you Swinglow for the sprites
 	desc = "The National Notary 'Agrimensor' model pen, for the engineer with class. Comes with patented TrueBlue(TM) ink!"
 	mode_types = list(

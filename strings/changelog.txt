@@ -1,4 +1,9 @@
 
+(t)sat sep 05 26
+(u)Kubius
+(p)27742
+(e)🗺🎨|A-Mapping, C-Sprites
+(*)Nadir's harmonic siphon brief has gotten an overhaul. Check it out!
 (t)fri sep 04 26
 (u)LeahTheTech
 (p)27728
