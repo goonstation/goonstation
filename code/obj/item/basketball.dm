@@ -356,6 +356,7 @@
 
 	New()
 		APPLY_ATOM_PROPERTY(src, PROP_OBJ_GOLFABLE, src)
+		AddComponent(/datum/component/golfable)
 		..()
 
 /obj/item/plutonium_core/attack_hand(mob/user)

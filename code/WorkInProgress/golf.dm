@@ -95,10 +95,11 @@
 
 		var/obj/item/GB = C.ball
 
-		var/datum/projectile/ballshot
+		var/datum/projectile/special/golfball/ballshot
 		if(istype(GB) && GB.GetComponent(/datum/component/golfable))
-			var/ball = GB.special_data["ball"]
-			ballshot = ball
+			var/datum/component/golfable/GC = GB.GetExactComponent(/datum/component/golfable)
+			var/datum/projectile/special/golfball/GBD = GC.ball_projectile
+			ballshot = GBD
 		else
 			ballshot = new /datum/projectile/special/golfball
 
@@ -141,8 +142,7 @@
 				P.color = C.ball.color
 			C.ball.set_loc(P)
 			if(istype(P.proj_data, /datum/projectile/special/golfball))
-				var/datum/projectile/special/golfball/GBD = P.proj_data
-				GBD.origin_item = C.ball
+				ballshot.origin_item = C.ball
 			P.special_data["debug"] = debug
 
 			P.proj_data.RegisterSignal(P, COMSIG_MOVABLE_MOVED, /datum/projectile/special/golfball/proc/check_newloc)
@@ -320,7 +320,6 @@
 	if(!ball_projectile)
 		ball_projectile = new
 		ball_projectile.origin_item = src.ball
-		src.parent.special_data["ball"] = ball_projectile
 
 /datum/component/golfable/proc/pass_on_attackby(atom/movable/parent, obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/golf_club))
@@ -387,7 +386,7 @@
 		if(!deployed) return
 		if(istype(P.proj_data,/datum/projectile/special/golfball))
 			var/datum/projectile/special/golfball/GBD = P.proj_data
-			var/obj/item/golf_ball/ball = GBD.origin_item
+			var/obj/item/ball = GBD.origin_item
 			if(istype(ball))
 				if( ((P.max_range * 32) - P.travelled) <= 48) // 32?
 					if(length(contents))
@@ -432,8 +431,10 @@
 		bullet_act(var/obj/projectile/P)
 			..()
 			var/obj/item/ball = locate() in src.storage.get_contents()
-			if(ball && ball.GetComponent(/datum/component/golfable) && ball.golf_projectile)
-				var/datum/projectile/special/golfball/ball_projectile = ball.golf_projectile //For projectile calls
+			if(ball && ball.GetComponent(/datum/component/golfable))
+				var/datum/projectile/special/golfball/golf_projectile = null
+				var/datum/component/golfable/GC = ball.GetExactComponent(/datum/component/golfable)
+				golf_projectile = GC.ball_projectile //For projectile calls
 				var/list/nearby_turfs = list()
 				for (var/turf/T in view(2, src))
 					nearby_turfs += T
@@ -445,9 +446,9 @@
 					src.storage.transfer_stored_item(ball, get_turf(src))
 					ball.layer = src.layer
 
-					ball_projectile.max_range = lerp(return_range, rand()*return_range, 0.3)
+					golf_projectile.max_range = lerp(return_range, rand()*return_range, 0.3)
 					var/target = pick(nearby_turfs)
-					var/obj/projectile/Q = shoot_projectile_ST_pixel_spread(src, ball_projectile, target, (rand()-0.5)*32, (rand()-0.5)*32)
+					var/obj/projectile/Q = shoot_projectile_ST_pixel_spread(src, golf_projectile, target, (rand()-0.5)*32, (rand()-0.5)*32)
 					if (Q)
 						Q.targets = list(target)
 						Q.mob_shooter = null
