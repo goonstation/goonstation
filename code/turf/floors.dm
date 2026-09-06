@@ -19,7 +19,7 @@
 	provides_grip = FALSE
 	/// if this floor can be pried up
 	var/pryable = TRUE
-	var/has_material = TRUE
+	var/datum/material/plating_material = null //! Material of the floor when the floor tile is removed
 
 	/// Set to instantiated material datum ([getMaterial()]) for custom material floors
 	var/reinforced = FALSE
@@ -34,6 +34,7 @@
 
 	New()
 		..()
+		src.plating_material = src.material
 		roundstart_icon_state = icon_state
 		roundstart_dir = dir
 		#ifdef XMAS
@@ -2203,9 +2204,10 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	setIntact(FALSE)
 	broken = 0
 	burnt = 0
-	if(default_material)
-		var/datum/material/mat = istext(default_material) ? getMaterial(default_material) : default_material
-		src.setMaterial(mat)
+	if(src.plating_material)
+		src.setMaterial(src.plating_material)
+	else if(src.default_material)
+		src.setMaterial(getMaterial(src.default_material))
 	else
 		src.setMaterial(getMaterial("steel"))
 	levelupdate()
@@ -2313,7 +2315,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		if (!intact)
 			if(T.amount >= 1)
 				restore_tile(do_hide)
-				src.default_material = src.material
+				src.plating_material = src.material
 
 				// if we have a special icon state and it doesn't have a material variant
 				// and at the same time the base floor icon state does have a material variant
