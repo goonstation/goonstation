@@ -717,16 +717,24 @@ var/global/list/module_editors = list()
 	..()
 	src.mainframe?.clear_offline_indicator()
 
-/mob/living/silicon/proc/set_always_monospaced(do_monospaced = TRUE, mob/user = src, invert = FALSE)
+/mob/living/silicon/proc/set_always_monospaced(do_monospaced = TRUE, mob/user = src)
 // we have to only have either the forced or decorator, otherwise they interfere with each other
 	if(!do_monospaced)
-		src.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_MONOSPACE_FORCED)
+		src.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_MONOSPACE_DECORATOR_INVERTED)
 		src.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_MONOSPACE_DECORATOR)
 		boutput(user, SPAN_NOTICE("No longer forcing all speech to be monospace."))
 	else
-		src.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_MONOSPACE_FORCED)
+		src.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_MONOSPACE_DECORATOR_INVERTED)
 		src.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_MONOSPACE_DECORATOR)
 		boutput(user, SPAN_NOTICE("Now forcing all speech to be monospace."))
+
+/mob/living/silicon/proc/toggle_monospace_mode(mob/user = src)
+	var/new_setting = TRUE
+	if(src.ensure_speech_tree().GetModifierByID(SPEECH_MODIFIER_MONOSPACE_DECORATOR_INVERTED))
+		new_setting = FALSE
+	src.set_always_monospaced(new_setting, user)
+	if(src.mainframe)
+		src.mainframe.set_always_monospaced(do_monospaced = new_setting)
 
 /datum/statusEffect/low_power
 	id = "low_power"
