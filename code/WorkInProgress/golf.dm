@@ -97,7 +97,7 @@
 
 		var/datum/projectile/ballshot
 		if(istype(GB) && GB.GetComponent(/datum/component/golfable))
-			var/ball = SEND_SIGNAL(GB, COMSIG_GOLF_BALL)
+			var/ball = GB.special_data["ball"]
 			ballshot = ball
 		else
 			ballshot = new /datum/projectile/special/golfball
@@ -269,6 +269,7 @@
 			if(TIME >= last_sound_time + 1 DECI SECOND)
 				last_sound_time = TIME
 				playsound(T, src.hit_sound, 60, 1)
+				ball.set_loc(get_turf(A))
 		else
 			ball.set_loc(get_turf(A))
 
@@ -306,9 +307,9 @@
 
 /datum/component/golfable
 	var/list/signals = list()
-	var/datum/projectile/special/golfball/ball_projectile
 	var/obj/item/golf_club/club = null
 	var/obj/item/ball = null
+	var/datum/projectile/special/golfball/ball_projectile = null
 
 /datum/component/golfable/Initialize(atom/target)
 	. = ..()
@@ -316,14 +317,10 @@
 		return COMPONENT_INCOMPATIBLE
 	src.ball = target
 	RegisterSignal(parent, COMSIG_ATTACKBY, PROC_REF(pass_on_attackby))
-	RegisterSignal(parent, COMSIG_GOLF_BALL, PROC_REF(get_ball))
 	if(!ball_projectile)
 		ball_projectile = new
 		ball_projectile.origin_item = src.ball
-
-/datum/component/golfable/proc/get_ball()
-	if(src.ball_projectile)
-		return src.ball_projectile
+		src.parent.special_data["ball"] = ball_projectile
 
 /datum/component/golfable/proc/pass_on_attackby(atom/movable/parent, obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/golf_club))
@@ -435,8 +432,8 @@
 		bullet_act(var/obj/projectile/P)
 			..()
 			var/obj/item/ball = locate() in src.storage.get_contents()
-			if(ball && ball.GetComponent(/datum/component/golfable))
-				var/datum/projectile/special/golfball/ball_projectile = SEND_SIGNAL(ball, COMSIG_GOLF_BALL) //For projectile calls
+			if(ball && ball.GetComponent(/datum/component/golfable) && ball.golf_projectile)
+				var/datum/projectile/special/golfball/ball_projectile = ball.golf_projectile //For projectile calls
 				var/list/nearby_turfs = list()
 				for (var/turf/T in view(2, src))
 					nearby_turfs += T
