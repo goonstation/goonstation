@@ -975,6 +975,8 @@
 	item_state = "clipboard0"
 	throwforce = 1
 	w_class = W_CLASS_NORMAL
+	default_material = "wood"
+	material_amt = MATERIAL::AMOUNT::SHEET * 2
 	throw_speed = 3
 	throw_range = 10
 	desc = "You can put paper on it. Ah, technology!"
