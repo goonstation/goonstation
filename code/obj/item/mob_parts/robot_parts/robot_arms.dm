@@ -9,7 +9,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 	accepts_normal_human_overlays = TRUE
 	var/emagged = FALSE //contains: technical debt
 	var/add_to_tools = FALSE
-	var/fits_sleeves = FALSE
+	var/arm_layer = MOB_LIMB_LAYER // Different size arms need to render differently
+	var/hand_layer = MOB_HAND_LAYER1 // Defaults to the same layers human limbs use
 
 	New()
 		..()
@@ -177,7 +178,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 /obj/item/parts/robot_parts/arm/left/standard
 	name = "standard cyborg left arm"
 	breaks_cuffs = FALSE
-	fits_sleeves = TRUE
 
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/sheet))
@@ -195,6 +195,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 	weight = 0.2
 	robot_movement_modifier = /datum/movement_modifier/robot_part/sturdy_arm_left
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY)
+	arm_layer = MOB_HAND_LAYER1
+	hand_layer = MOB_HAND_LAYER2
 
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/sheet))
@@ -211,6 +213,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 	weight = 0.4
 	robot_movement_modifier = /datum/movement_modifier/robot_part/heavy_arm_left
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVIER)
+	arm_layer = MOB_HAND_LAYER1
+	hand_layer = MOB_HAND_LAYER2
 
 /obj/item/parts/robot_parts/arm/left/light
 	name = "light cyborg left arm"
@@ -222,7 +226,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 	robot_movement_modifier = /datum/movement_modifier/robot_part/light_arm_left
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
 	breaks_cuffs = FALSE
-	fits_sleeves = TRUE
 
 ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 /obj/item/parts/robot_parts/arm/right
@@ -237,7 +240,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 /obj/item/parts/robot_parts/arm/right/standard
 	name = "standard cyborg right arm"
 	breaks_cuffs = FALSE
-	fits_sleeves = TRUE
 
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/sheet))
@@ -255,6 +257,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 	weight = 0.2
 	robot_movement_modifier = /datum/movement_modifier/robot_part/sturdy_arm_right
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY)
+	arm_layer = MOB_HAND_LAYER1
+	hand_layer = MOB_HAND_LAYER2
 
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/sheet))
@@ -271,6 +275,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 	weight = 0.4
 	robot_movement_modifier = /datum/movement_modifier/robot_part/heavy_arm_right
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVIER)
+	arm_layer = MOB_HAND_LAYER1
+	hand_layer = MOB_HAND_LAYER2
 
 /obj/item/parts/robot_parts/arm/right/light
 	name = "light cyborg right arm"
@@ -282,7 +288,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 	robot_movement_modifier = /datum/movement_modifier/robot_part/light_arm_right
 	kind_of_limb = (LIMB_ROBOT | LIMB_LIGHT)
 	breaks_cuffs = FALSE
-	fits_sleeves = TRUE
 
 
 // ancient robot stuff
@@ -321,6 +326,8 @@ proc/do_clamp(atom/movable/clamped, mob/clamper, obj/item/clamp)
 	weight = 0.4
 	handlistPart = "armR-sturdy"
 	robot_movement_modifier = /datum/movement_modifier/robot_part/sturdy_arm_right
+	arm_layer = MOB_OVER_TOP_LAYER
+	hand_layer = MOB_OVER_TOP_LAYER
 
 	stonecutter
 		name = "ancient stonecutter arm"
@@ -361,6 +368,8 @@ proc/do_clamp(atom/movable/clamped, mob/clamper, obj/item/clamp)
 	weight = 0.4
 	handlistPart = "armL-sturdy"
 	robot_movement_modifier = /datum/movement_modifier/robot_part/sturdy_arm_left
+	arm_layer = MOB_OVER_TOP_LAYER
+	hand_layer = MOB_OVER_TOP_LAYER
 
 	stonecutter
 		name = "ancient stonecutter arm"
