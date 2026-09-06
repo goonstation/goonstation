@@ -27,6 +27,7 @@
 
 	New(loc, datum/organHolder/nholder)
 		APPLY_ATOM_PROPERTY(src, PROP_OBJ_GOLFABLE, src)
+		AddComponent(/datum/component/golfable)
 		..()
 		SPAWN(0)
 			if (istype(nholder) && nholder.donor)

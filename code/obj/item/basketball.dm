@@ -20,6 +20,11 @@
 	var/spinning_icon_state = "bball_spin"
 	var/auto_catch = TRUE
 
+	New()
+		APPLY_ATOM_PROPERTY(src, PROP_OBJ_GOLFABLE, src)
+		AddComponent(/datum/component/golfable)
+		..()
+
 /obj/item/basketball/attack_hand(mob/user)
 	..()
 	if(user)

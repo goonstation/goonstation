@@ -97,7 +97,8 @@
 
 		var/datum/projectile/ballshot
 		if(istype(GB) && GB.GetComponent(/datum/component/golfable))
-			ballshot = GB.ball_projectile
+			var/ball = SEND_SIGNAL(GB, COMSIG_GOLF_BALL)
+			ballshot = ball
 		else
 			ballshot = new /datum/projectile/special/golfball
 
@@ -247,7 +248,7 @@
 			if(istype(ball))
 				src.icon = ball.icon //for "balls"
 			if(istype(ball))
-				SEND_SIGNAL(origin_item, COMSIG_GOLF_STRIKE, A, src, swing_strength, TRUE)
+				SEND_SIGNAL(origin_item, COMSIG_GOLF_STRIKE, A, src, reflect_power, TRUE)
 			if(QDELETED(ball))
 				return
 
@@ -293,7 +294,7 @@
 				var/datum/projectile/special/golfball/GBD = O.proj_data
 				ball = GBD.origin_item
 		if(!ball)
-			ball = new origin(T)
+			ball = new origin_item(T)
 			ball.color = O.special_data["color"]
 		else
 			if(!QDELETED(ball))
@@ -315,13 +316,14 @@
 		return COMPONENT_INCOMPATIBLE
 	src.ball = target
 	RegisterSignal(parent, COMSIG_ATTACKBY, PROC_REF(pass_on_attackby))
+	RegisterSignal(parent, COMSIG_GOLF_BALL, PROC_REF(get_ball))
 	if(!ball_projectile)
 		ball_projectile = new
-		ball_projectile.origin_item = src
+		ball_projectile.origin_item = src.ball
 
 /datum/component/golfable/proc/get_ball()
-	if(src.parent.origin_item)
-		return src.parent.origin_item
+	if(src.ball_projectile)
+		return src.ball_projectile
 
 /datum/component/golfable/proc/pass_on_attackby(atom/movable/parent, obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/golf_club))
@@ -433,7 +435,8 @@
 		bullet_act(var/obj/projectile/P)
 			..()
 			var/obj/item/ball = locate() in src.storage.get_contents()
-			if(ball)
+			if(ball && ball.GetComponent(/datum/component/golfable))
+				var/datum/projectile/special/golfball/ball_projectile = SEND_SIGNAL(ball, COMSIG_GOLF_BALL) //For projectile calls
 				var/list/nearby_turfs = list()
 				for (var/turf/T in view(2, src))
 					nearby_turfs += T
@@ -445,9 +448,9 @@
 					src.storage.transfer_stored_item(ball, get_turf(src))
 					ball.layer = src.layer
 
-					ball.ball_projectile.max_range = lerp(return_range, rand()*return_range, 0.3)
+					ball_projectile.max_range = lerp(return_range, rand()*return_range, 0.3)
 					var/target = pick(nearby_turfs)
-					var/obj/projectile/Q = shoot_projectile_ST_pixel_spread(src, ball.ball_projectile, target, (rand()-0.5)*32, (rand()-0.5)*32)
+					var/obj/projectile/Q = shoot_projectile_ST_pixel_spread(src, ball_projectile, target, (rand()-0.5)*32, (rand()-0.5)*32)
 					if (Q)
 						Q.targets = list(target)
 						Q.mob_shooter = null
