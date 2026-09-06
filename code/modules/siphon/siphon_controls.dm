@@ -469,7 +469,7 @@
 	First of three resonant parameters,<br>
 	charted on the letter axis.<br>
 	<br>
-	Axial resonators will raise or lower this<br>
+	<strong>Axial resonators</strong> will raise or lower this<br>
 	value by eight units per intensity at 'point-blank'<br>
 	(columns D or F), diminishing by powers of two to a <br>
 	minimum of one unit at max range (columns A or I).<br>
@@ -484,7 +484,7 @@
 	Second of three resonant parameters,<br>
 	charted on the number axis.<br>
 	<br>
-	Axial resonators will raise or lower this<br>
+	<strong>Axial resonators</strong> will raise or lower this<br>
 	value by eight units per intensity at 'point-blank'<br>
 	(rows 3 or 5), diminishing by powers of two to a <br>
 	minimum of one unit at max range (rows 0 or 8).<br>
