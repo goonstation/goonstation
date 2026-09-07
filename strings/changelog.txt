@@ -1,5 +1,9 @@
 
 (t)mon sep 07 26
+(u)JORJ949
+(p)27697
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Nuclear bombs now have a minimap marker for syndicate and admin minimaps.
 (u)LorrMaster
 (p)27764
 (e)🍝🌱|A-Catering, A-Hydroponics
