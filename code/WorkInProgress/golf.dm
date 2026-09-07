@@ -225,8 +225,6 @@
 				if(istype(I,/obj/item/storage/golf_goal))
 					. = FALSE
 				else if(prob((W_CLASS_BUBSIAN - I.w_class) * 10))
-					if(O.special_data["debug"])
-						boutput(O.mob_shooter, "[O] misses [hit].")
 					. = TRUE
 				else
 					O.visible_message("[O] bounces off of [hit].")
@@ -237,8 +235,6 @@
 				if(hit.pixel_x >= 10 || hit.pixel_x <= -10 || hit.pixel_y >= 10 || hit.pixel_y <= -10)
 					if(origin_item)
 						origin_item.loc = O.loc
-					if(O.special_data["debug"])
-						boutput(O.mob_shooter, "[O] ignored [hit].")
 						. = TRUE
 				else
 
@@ -280,20 +276,6 @@
 		else
 			ball.set_loc(get_turf(A))
 
-	on_end(var/obj/projectile/O)
-		if(O.special_data["debug"])
-			var/turf/T = get_turf(O)
-
-			var/atom/A = new /obj/item/golf_ball(T)
-			A.pixel_x = O.pixel_x
-			A.pixel_y = O.pixel_y
-			A.color = O.color
-			A.alpha = 150
-			A.mouse_opacity = 0
-			animate(A, alpha=0, time=10 SECONDS)
-			SPAWN(5 SECONDS)
-				qdel(A)
-
 	on_max_range_die(var/obj/projectile/O)
 		var/obj/item/ball = null
 		var/turf/T = get_turf(O)
@@ -305,7 +287,7 @@
 				qdel()
 		if(!ball)
 			ball = new origin_item(T)
-			ball.color = O.special_data["color"]
+			ball.color = origin_item.color
 		else
 			if(!QDELETED(ball))
 				ball.set_loc(T)
