@@ -152,8 +152,6 @@
 			if(istype(P.proj_data, /datum/projectile/special/golfball))
 				ballshot.origin_item = C.ball
 			P.proj_data.RegisterSignal(P, COMSIG_MOVABLE_MOVED, /datum/projectile/special/golfball/proc/check_newloc)
-
-		animate(the_mob, pixel_x=0, pixel_y=0, 1 SECONDS, easing=CUBIC_EASING)
 		C.ball = null
 
 	proc/get_swing_strength_mod(mob/user, obj/item/golf_club/C)
