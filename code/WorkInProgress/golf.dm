@@ -24,12 +24,6 @@
 			..()
 			color = pick(null,"#f44","#942", "#4f4","#296", "#44f","#429")
 
-	test
-		New(turf/newLoc)
-			..()
-			new /obj/item/golf_ball(newLoc)
-			new /obj/item/storage/golf_goal(newLoc)
-
 	New()
 		AddComponent(/datum/component/holdertargeting/golf_club, list(SLOT_L_HAND, SLOT_R_HAND))
 		..()
@@ -108,7 +102,6 @@
 		else
 			ballshot = new /datum/projectile/special/golfball
 
-		var/debug = istype(C, /obj/item/golf_club/test)
 		var/pox = text2num(params["icon-x"]) - 16
 		var/poy = text2num(params["icon-y"]) - 16
 
@@ -129,8 +122,6 @@
 		var/mod_x = (rand()-0.5) * 5 * swing_strength * golfyness
 		var/mod_y = (rand()-0.5) * 5 * swing_strength * golfyness
 
-		if(debug)
-			boutput(the_mob, "Swing Strength:[swing_strength] RNG [mod_x]x[mod_y] @ [golfyness]")
 
 		ballshot.max_range = swing_strength + ( ((rand()-0.5) * 3) * golfyness )
 
@@ -142,10 +133,7 @@
 			P.icon = C.ball.icon
 			P.icon_state = C.ball.icon_state
 			P.create_storage(/datum/storage/golfball)
-			if(debug)
-				P.color = the_item.color
-			else
-				P.color = C.ball.color
+			P.color = C.ball.color
 			C.ball.set_loc(P)
 			if(!P.proj_data)
 				P.proj_data = C.ball
@@ -266,6 +254,7 @@
 					GBD.origin_item = ball
 				Q.create_storage(/datum/storage/golfball)
 				Q.travelled = projectile.travelled
+				ball.set_loc(get_turf(A))
 			else
 				ball.set_loc(get_turf(A))
 
