@@ -8846,9 +8846,6 @@
 	},
 /area/station/chapel/sanctuary)
 "aMr" = (
-/obj/machinery/light/emergency{
-	dir = 1
-	},
 /obj/item/instrument/large/organ,
 /turf/simulated/floor/carpet{
 	dir = 1;
@@ -63189,9 +63186,6 @@
 /turf/simulated/floor,
 /area/station/maintenance/east)
 "xfn" = (
-/obj/machinery/conveyor_switch{
-	id = "chapel"
-	},
 /obj/machinery/light{
 	dir = 4
 	},
