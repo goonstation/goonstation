@@ -22,7 +22,7 @@
 	random
 		New(turf/newLoc)
 			..()
-			color = pick("#f44","#942", "#4f4","#296", "#44f","#429")
+			color = pick(null,"#f44","#942", "#4f4","#296", "#44f","#429")
 
 	test
 		New(turf/newLoc)
@@ -31,7 +31,7 @@
 			new /obj/item/storage/golf_goal(newLoc)
 
 	New()
-		AddComponent(/datum/component/wearertargeting/golf_club, list(SLOT_L_HAND, SLOT_R_HAND))
+		AddComponent(/datum/component/holdertargeting/golf_club, list(SLOT_L_HAND, SLOT_R_HAND))
 		..()
 
 	afterattack(obj/O as obj, mob/user as mob)
@@ -63,12 +63,14 @@
 		..()
 		putting = TRUE
 
-/datum/component/wearertargeting/golf_club/on_equip(datum/source, mob/equipper, slot)
+/datum/component/holdertargeting/golf_club
+
+/datum/component/holdertargeting/golf_club/on_pickup(datum/source, mob/equipper, slot)
 	var/obj/item/I = parent
 	I.add_item_ability(equipper, /obj/ability_button/golf_swing)
 	. = ..()
 
-/datum/component/wearertargeting/golf_club/on_unequip(datum/source, mob/user)
+/datum/component/holdertargeting/golf_club/on_dropped(datum/source, mob/user)
 	var/obj/item/I = parent
 	I.remove_item_ability(user, /obj/ability_button/golf_swing)
 	. = ..()
@@ -83,6 +85,9 @@
 
 	execute_ability(atom/target, params)
 		var/obj/item/golf_club/C = the_item
+		if(istype(C, /obj/item/golf_ball)) // unique cause only official balls track course performance
+			var/obj/item/golf_ball/GB = C
+			GB.strike_amount++
 		if(GET_DIST(C,C.ball) > 0 || GET_DIST(C,the_mob) > 0 )
 			return
 
@@ -136,15 +141,16 @@
 			P.shooter = the_mob
 			P.icon = C.ball.icon
 			P.icon_state = C.ball.icon_state
+			P.create_storage(/datum/storage/golfball)
 			if(debug)
 				P.color = the_item.color
 			else
 				P.color = C.ball.color
 			C.ball.set_loc(P)
+			if(!P.proj_data)
+				P.proj_data = C.ball
 			if(istype(P.proj_data, /datum/projectile/special/golfball))
 				ballshot.origin_item = C.ball
-			P.special_data["debug"] = debug
-
 			P.proj_data.RegisterSignal(P, COMSIG_MOVABLE_MOVED, /datum/projectile/special/golfball/proc/check_newloc)
 
 		animate(the_mob, pixel_x=0, pixel_y=0, 1 SECONDS, easing=CUBIC_EASING)
@@ -247,9 +253,12 @@
 			var/reflect_power = max(0, projectile.max_range*(1-(projectile.travelled/(projectile.max_range*32))))
 			if(istype(ball))
 				src.icon = ball.icon //for "balls"
+				src.name = ball.name
 			if(istype(ball))
 				SEND_SIGNAL(origin_item, COMSIG_GOLF_STRIKE, A, src, reflect_power, TRUE)
 			if(QDELETED(ball))
+				return
+			if(!A.density)
 				return
 
 			var/obj/projectile/Q = shoot_reflected_bounce(projectile, A, src.max_bounce_count, PROJ_RAPID_HEADON_BOUNCE)
@@ -261,6 +270,7 @@
 				if(istype(Q.proj_data, /datum/projectile/special/golfball))
 					var/datum/projectile/special/golfball/GBD = Q.proj_data
 					GBD.origin_item = ball
+				Q.create_storage(/datum/storage/golfball)
 				Q.travelled = projectile.travelled
 			else
 				ball.set_loc(get_turf(A))
@@ -269,7 +279,6 @@
 			if(TIME >= last_sound_time + 1 DECI SECOND)
 				last_sound_time = TIME
 				playsound(T, src.hit_sound, 60, 1)
-				ball.set_loc(get_turf(A))
 		else
 			ball.set_loc(get_turf(A))
 
@@ -294,6 +303,8 @@
 			if(istype(O.proj_data, /datum/projectile/special/golfball))
 				var/datum/projectile/special/golfball/GBD = O.proj_data
 				ball = GBD.origin_item
+			if(O.storage) // Disposings got this
+				qdel()
 		if(!ball)
 			ball = new origin_item(T)
 			ball.color = O.special_data["color"]
@@ -304,6 +315,9 @@
 		ball.pixel_x = O.pixel_x
 		ball.pixel_y = O.pixel_y
 		return
+
+/datum/storage/golfball // What stores the actual golf ball item in the projectile (obj)
+	slots = 1
 
 /datum/component/golfable
 	var/list/signals = list()
@@ -346,6 +360,8 @@
 	w_class = W_CLASS_TINY
 	var/current_hole = null // Balls are smarter then improvised balls and can work on mechcomp courses
 	var/current_course = null
+	var/strike_amount = null
+	var/owner = null
 
 	New()
 		..()
@@ -353,10 +369,16 @@
 		AddComponent(/datum/component/golfable)
 		AddComponent(/datum/component/mechanics_holder)
 
+	pick_up_by(mob/M)
+		if(ishuman(M))
+			boutput(M, "You feel a slight heat as the golf ball registers itself to your fingerprint.")
+			owner = M.bioHolder.Uid
+
+
 	random
 		New(turf/newLoc)
 			..()
-			color = pick("#f44","#942", "#4f4","#296", "#44f","#429")
+			color = pick(null,"#f44","#942", "#4f4","#296", "#44f","#429")
 
 /obj/item/storage/golf_goal
 	name = "Golf Goal"
@@ -370,7 +392,15 @@
 	max_wclass = W_CLASS_TINY
 	plane = PLANE_NOSHADOW_ABOVE
 	var/deployed = FALSE
+	var/hole_num = null // set hole in a larger set of holes
+	var/course_id = null // actual identifier for the course group itself
 	HELP_MESSAGE_OVERRIDE("Use a wrench to toggle the deployment of the goal.")
+
+	New()
+		..()
+		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Hole Number", PROC_REF(set_hole_num))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Course ID", PROC_REF(set_course_id))
 
 	attackby(var/obj/item/I, var/mob/M)
 		if (iswrenchingtool(I))
@@ -398,9 +428,18 @@
 						P.die()
 						visible_message("[P] makes it into [src]. Nice shot!")
 						hit_twitch(src)
+						if(istype(ball, /obj/item/golf_ball))
+							var/obj/item/golf_ball/GB = ball
+							if(GB.current_course == src.course_id && GB.current_hole == src.hole_num)
+								SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "scored_with=[GB.strike_amount]&hole_num=[GB.current_hole]&course_id=[GB.current_course]&golfer=[data_core.general.forensic_search_subjects(GB.owner)]")
+							else
+								visible_message("The infamous incorrect hole alert goes off.")
+								playsound(src.loc, 'sound/machines/bloop_sad.ogg', 50, 1, 0.3)
+
+							GB.strike_amount = null
 				else
 					src.visible_message("[P] bounces off of [src].")
-					new GBD.origin_item(src.loc)
+					GBD.origin_item.set_loc(src.loc)
 					hit_twitch(src)
 
 	proc/undeploy()
@@ -420,10 +459,24 @@
 		usr.next_click = world.time + 1
 		playsound(src.loc, 'sound/effects/chute_place_1.ogg', 50, 1, 0.3)
 
+	proc/set_hole_num(obj/item/W, mob/user)
+		var/newholenum = tgui_input_number(user, "Please enter hole number:", "Hole Number", 0, 18, 0)
+		if (!newholenum)
+			return
+		src.hole_num = newholenum
+		boutput(user, "Hole number set to:[src.hole_num]")
+
+	proc/set_course_id(obj/item/W, mob/user)
+		var/newcourseid = tgui_input_text(user, "Please enter course ID.", "Course ID", "", 20)
+		if (!newcourseid)
+			return
+		src.course_id = newcourseid
+		boutput(user, "Course ID set to:[src.course_id]")
+
 	random
 		New(turf/newLoc)
 			..()
-			color = pick("#f44","#942", "#4f4","#296", "#44f","#429")
+			color = pick(null,"#f44","#942", "#4f4","#296", "#44f","#429")
 
 	automatic_return
 		var/return_range = 5
@@ -458,6 +511,95 @@
 						if(istype(Q.proj_data,/datum/projectile/special/golfball))
 							var/datum/projectile/special/golfball/GB = Q.proj_data
 							GB.origin_item = ball
+
+/obj/item/storage/golf_tee
+	name = "Golf Tee"
+	desc = "A deployable plastic sphere pedestal, meant to represent the start of a golf course."
+	icon = 'icons/obj/items/golf.dmi'
+	icon_state = "golf_tee"
+	item_state = "golf_tee"
+	rand_pos = TRUE
+	can_hold = list(/obj/item/golf_ball)
+	slots = 1
+	max_wclass = W_CLASS_TINY
+	plane = PLANE_NOSHADOW_ABOVE
+	var/deployed = FALSE
+	var/hole_num = null // set hole in a larger set of holes
+	var/course_id = null // actual identifier for the course group itself
+	HELP_MESSAGE_OVERRIDE("Use a wrench to toggle the deployment of the tee.")
+
+	New()
+		..()
+		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Hole Number", PROC_REF(set_hole_num))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Course ID", PROC_REF(set_course_id))
+
+	proc/set_hole_num(obj/item/W, mob/user)
+		var/newholenum = tgui_input_number(user, "Please enter hole number:", "Hole Number", 0, 18, 0)
+		if (!newholenum)
+			return
+		src.hole_num = newholenum
+		boutput(user, "Hole number set to:[src.hole_num]")
+
+	proc/set_course_id(obj/item/W, mob/user)
+		var/newcourseid = tgui_input_text(user, "Please enter course ID.", "Course ID", "", 20)
+		if (!newcourseid)
+			return
+		src.course_id = newcourseid
+		boutput(user, "Course ID set to:[src.course_id]")
+
+	random
+		New(turf/newLoc)
+			..()
+			color = pick(null,"#f44","#942", "#4f4","#296", "#44f","#429")
+
+	attackby(var/obj/item/I, var/mob/M)
+		if (iswrenchingtool(I))
+			if (deployed)
+				src.undeploy()
+			else
+				if (src in M.contents)
+					src.force_drop()
+				src.deploy()
+		if(I.GetComponent(/datum/component/golfable))
+			if(istype(I, /obj/item/golf_ball))
+				var/obj/item/golf_ball/GB = I
+				if(length(contents))
+					visible_message("[M] presses [GB] against the ball that's clearly already there!")
+				else
+					if(!QDELETED(I))
+						src.storage.add_contents(GB, M)
+						src.icon_state = "golf_tee-dp"
+						GB.current_hole = src.hole_num
+						GB.current_course = src.course_id
+						GB.strike_amount = null
+			else
+				visible_message("[M] tries to put [I] on the golf tee, but the patented grooves inside make it impossible to properly attach!") // Just regular ones for the tee
+		if(istype(I, /obj/item/golf_club))
+			if(!length(contents))
+				visible_message("[M] lines up to swing at nothing! What a dummy.")
+			else
+				for(var/obj/item/O in contents)
+					src.storage.transfer_stored_item(O, src.loc)
+					I.afterattack(O, M)
+					src.icon_state = "golf_tee"
+		..()
+
+
+	proc/undeploy()
+		deployed = 0
+		anchored = 0
+		processing_items -= src
+
+	proc/deploy()
+		processing_items |= src
+		pixel_x = 0
+		pixel_y = 0
+		deployed = 1
+		anchored = 1
+		process()
+		usr.next_click = world.time + 1
+		playsound(src.loc, 'sound/effects/chute_place_1.ogg', 50, 1, 0.3)
 
 /obj/item/storage/toilet
 	bullet_act(var/obj/projectile/P)
