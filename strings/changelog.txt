@@ -1,5 +1,9 @@
 
 (t)mon sep 07 26
+(u)Ceres et al.
+(p)27692
+(e)🆕🔎💅📄📦|C-Feature, C-Code-Quality, C-QoL, A-UI, A-Game-Objects
+(+)Agent cards have received a new UI and should now be a lot more responsive.
 (u)JORJ949
 (p)27697
 (e)🆕📦|C-Feature, A-Game-Objects
