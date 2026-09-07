@@ -2614,6 +2614,7 @@
 #include "code\obj\critter\sword.dm"
 #include "code\obj\decal\cleanable.dm"
 #include "code\obj\decal\flock.dm"
+#include "code\obj\decal\framed_award.dm"
 #include "code\obj\decal\misc.dm"
 #include "code\obj\decal\poster.dm"
 #include "code\obj\decal\tile_edge.dm"

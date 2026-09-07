@@ -663,25 +663,6 @@ var/obj/manta_speed_lever/mantaLever = null
 						S.recharging = 0
 						src.recharging = 0
 				return
-/obj/item/rddiploma
-	name = "RD's diploma"
-	icon = 'icons/obj/items/items.dmi'
-	desc = ".. Upon closer inspection this degree seems to be fake! Who could have guessed!"
-	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
-	icon_state = "rddiploma"
-	item_state = "rddiploma"
-
-/obj/item/mdlicense
-	name = "MD's medical license"
-	icon = 'icons/obj/items/items.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
-	icon_state = "mdlicense"
-	item_state = "mdlicense"
-
-/obj/item/firstbill
-	name = "HoP's first bill"
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "hopbill"
 
 //CONSTRUCTION WORKER STUFF//
 
