@@ -122,6 +122,7 @@
 			AM.set_loc(src)	// move everything in other holder to this one
 		if(other.mail_tag && !src.mail_tag)
 			src.mail_tag = other.mail_tag
+		src.count = max(src.count, other.count)
 		other.merged(src)
 		qdel(other)
 
@@ -1316,7 +1317,7 @@ TYPEINFO(/obj/disposalpipe/loafer)
 			H.set_loc(T)
 			return null
 
-		// Infinite loops are both visible and intentional here. Keep the holder running while going through the loafer.
+		// Infinite loops are visible and intentional here. Keep the disposal holder running while going through the loafer.
 		H.count = initial(H.count)
 		return P
 
@@ -1828,13 +1829,11 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 	transfer(var/obj/disposalholder/H)
 		if (sense_mode == SENSE_TAG)
 			if (cmptext(H.mail_tag, sense_tag_filter))
-				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,ckey(H.mail_tag))
-				FLICK("pipe-mechsense-detect", src)
+				src.on_sense(H, ckey(H.mail_tag))
 
 		else if (sense_mode == SENSE_OBJECT)
 			if (H.contents.len)
-				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"1")
-				FLICK("pipe-mechsense-detect", src)
+				src.on_sense(H, "1")
 
 		else
 			for (var/atom/aThing in H)
@@ -1844,12 +1843,16 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 							var/mob/living/M = aThing
 							if (isdead(M))
 								continue
-
-						SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"1")
-						FLICK("pipe-mechsense-detect", src)
+						src.on_sense(H, "1")
 						break
 
 		return ..()
+
+	proc/on_sense(var/obj/disposalholder/H, var/signal)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, signal)
+		H.count = initial(H.count) // The disposal holder did something, so reset its counter
+		FLICK("pipe-mechsense-detect", src)
+		playsound(src.loc, 'sound/machines/tone_beep.ogg', 15, 1)
 
 	welded()
 		var/obj/disposalconstruct/C = new (src.loc)
