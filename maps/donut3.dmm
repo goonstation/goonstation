@@ -10143,8 +10143,9 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/west)
 "cZU" = (
-/obj/machinery/light/incandescent/warm{
-	dir = 4
+/obj/machinery/light/incandescent/warm,
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/yellowblack{
 	dir = 6
@@ -23348,18 +23349,18 @@
 /turf/simulated/floor/black,
 /area/station/science/lobby)
 "hlf" = (
-/obj/cable{
-	dir = null
+/obj/item/reagent_containers/food/drinks/fueltank/chlorine{
+	pixel_x = 7;
+	pixel_y = -3
 	},
-/obj/cable{
-	icon_state = "0-8"
+/obj/decal/cleanable/rust/jen,
+/obj/item/reagent_containers/glass/bucket{
+	pixel_x = -10;
+	pixel_y = 7
 	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/light/small/floor/warm,
-/turf/simulated/floor/black,
-/area/station/engine/engineering/ce)
+/obj/machinery/light_switch/directional/east,
+/turf/simulated/floor/plating/jen,
+/area/station/engine/engineering/aquarium)
 "hlk" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1
@@ -42487,6 +42488,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/yellowblack,
 /area/station/engine/gravity)
 "nlB" = (
@@ -45556,6 +45560,13 @@
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/lobby)
+"okE" = (
+/obj/decal/cleanable/rust/jen,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/engine/engineering/aquarium)
 "okM" = (
 /obj/table/reinforced/auto,
 /obj/machinery/recharger,
@@ -48692,15 +48703,10 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "phY" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc/autoname_west{
-	areastring = "Chief Engineer's Aquarium";
-	name = "Chief Engineer's Aquarium APC"
-	},
-/turf/simulated/floor/black,
-/area/station/engine/engineering/ce)
+/obj/machinery/door/airlock/pyro/glass,
+/obj/forcefield/energyshield/perma/doorlink,
+/turf/simulated/floor/plating/jen,
+/area/station/engine/engineering/aquarium)
 "pif" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
@@ -61010,6 +61016,15 @@
 	dir = 4
 	},
 /area/station/crew_quarters/hop)
+"sWU" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 4
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/engine/engineering/aquarium)
 "sWV" = (
 /obj/decal/poster/wallsign/fire,
 /turf/simulated/wall/auto/reinforced/jen/yellow,
@@ -70993,6 +71008,10 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/drainage/big,
+/obj/machinery/light/incandescent/blueish{
+	dir = 1
+	},
+/obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/black,
 /area/station/engine/engineering/ce)
 "vWe" = (
@@ -73152,6 +73171,9 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "wCE" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/yellowblack,
 /area/station/engine/gravity)
 "wCF" = (
@@ -74132,6 +74154,14 @@
 	icon_state = "fred2"
 	},
 /area/station/chapel/office)
+"wRH" = (
+/obj/decal/cleanable/rust/jen,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_west,
+/turf/simulated/floor/plating/jen,
+/area/station/engine/engineering/aquarium)
 "wRU" = (
 /obj/machinery/door/airlock/pyro/classic{
 	aiControlDisabled = 1;
@@ -74176,6 +74206,28 @@
 	icon_state = "wooden"
 	},
 /area/station/crew_quarters/sauna)
+"wSx" = (
+/obj/decal/cleanable/rust/jen,
+/obj/storage/secure/closet/immersion/engineering,
+/obj/machinery/light/small/warm{
+	dir = 1
+	},
+/obj/item/tank/mini/oxygen,
+/obj/item/clothing/head/helmet/space/engineer/diving/engineering{
+	pixel_x = -2;
+	pixel_y = 7
+	},
+/obj/item/clothing/suit/space/diving/engineering{
+	pixel_x = 3;
+	pixel_y = -1
+	},
+/obj/item/clothing/shoes/flippers{
+	pixel_x = 1;
+	pixel_y = -7
+	},
+/obj/item/clothing/mask/breath,
+/turf/simulated/floor/plating/jen,
+/area/station/engine/engineering/aquarium)
 "wTd" = (
 /obj/storage/secure/closet/fridge/kitchen,
 /turf/simulated/floor/white/checker2{
@@ -78145,7 +78197,6 @@
 /obj/machinery/light/incandescent/blueish{
 	dir = 1
 	},
-/obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/black,
 /area/station/engine/engineering/ce)
 "xXE" = (
@@ -146039,8 +146090,8 @@ iEX
 wCh
 mfw
 geC
-sxm
-sxm
+geC
+sWU
 sxm
 bGF
 mIw
@@ -146333,16 +146384,16 @@ dXs
 kTR
 jPm
 bmt
-phY
-hlf
+jPm
+nhy
 nyj
 bmt
 tLa
 kTR
 xcQ
-geC
-rdj
-rdj
+phY
+wRH
+okE
 cnm
 ajO
 kYk
@@ -146643,8 +146694,8 @@ aQh
 kTR
 mfw
 geC
-rdj
-rdj
+wSx
+hlf
 cnm
 tsk
 xnx
@@ -146945,8 +146996,8 @@ bwT
 wCh
 jdO
 geC
-rdj
-rdj
+geC
+geC
 cnm
 rKq
 xnx
