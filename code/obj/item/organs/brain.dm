@@ -41,19 +41,26 @@
 	Eat(mob/M, mob/user)
 		if(isghostcritter(M) || isghostcritter(user))
 			return FALSE
+		if(isghostdrone(M) || isghostdrone(user)) // no. just no.
+			return FALSE
+
+		// do_eat now handles range checks and logging, so we only need to worry about the dialog box and any additional safety checks
 		if(M == user)
 			if(tgui_alert(user, "Are you sure you want to eat [src]?", "Eat brain?", list("Yes", "No")) == "Yes")
-				if (!(src in user.equipped_list())) //stop remotely eating people's brains please
-					return TRUE
-				logTheThing(LOG_COMBAT, user, "tries to eat [src] (owner's ckey [owner ? owner.ckey : null]).")
 				return ..()
 		else
 			if(tgui_alert(user, "Are you sure you want to feed [src] to [M]?", "Feed brain?", list("Yes", "No")) == "Yes")
-				if (!(src in user.equipped_list()))
-					return TRUE
-				logTheThing(LOG_COMBAT, user, "tries to feed [src] (owner's ckey [owner ? owner.ckey : null]) to [constructName(M)].")
 				return ..()
+
 		return FALSE
+
+	// make ABSOLUTELY SURE that the brain logging happens
+	do_eat(mob/M, mob/user)
+		if(M == user)
+			logTheThing(LOG_COMBAT, user, "eats [src] (owner's ckey [owner ? owner.ckey : null]).")
+		else
+			logTheThing(LOG_COMBAT, user, "feeds [src] (owner's ckey [owner ? owner.ckey : null]) to [constructName(M)].")
+		..()
 
 	get_desc()
 		if (usr && (usr.traitHolder?.hasTrait("training_medical") || GET_ATOM_PROPERTY(usr,PROP_MOB_EXAMINE_HEALTH)))

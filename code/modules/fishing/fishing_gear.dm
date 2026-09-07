@@ -750,8 +750,8 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 		else
 			return FALSE
 
-	Eat(mob/M, mob/user, by_matter_eater)
-		. = ..()
+	do_eat(mob/M, mob/user)
+		..()
 		M.emote("scream")
 		M.TakeDamage("chest", 25, 0, 0, DAMAGE_CUT)
 		M.visible_message("\The [src] tears a bunch of gore out of [M.name]!")

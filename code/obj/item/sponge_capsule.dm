@@ -61,8 +61,15 @@
 	else
 		return
 
-/obj/item/toy/sponge_capsule/eat_msg(mob/M)
-	M.visible_message(SPAN_NOTICE("[M] stuffs [src] into [his_or_her(M)] mouth and and eats it."))
+/obj/item/toy/sponge_capsule/eat_msg(mob/M, mob/user)
+
+	if (user == M)
+		M.visible_message(SPAN_NOTICE("[M] stuffs [src] into [his_or_her(M)] mouth and and eats it."),\
+			SPAN_NOTICE("You stuff [src] into your mouth and and eat it."))
+	else
+		user.tri_message(M, SPAN_ALERT("<b>[user]</b> stuffs [src] into [M]'s mouth and forces [M] to eat [src]."),\
+			SPAN_ALERT("You stuff [src] into [M]'s mouth and forces [M] to eat [src]."),\
+			SPAN_ALERT("<b>[user]</b> stuffs [src] into your mouth and and forces you to eat it."))
 
 /obj/item/toy/sponge_capsule/proc/add_water()
 	var/turf/T = get_turf(src)

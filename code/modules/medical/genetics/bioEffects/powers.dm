@@ -221,12 +221,18 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			return CAST_ATTEMPT_SUCCESS
 		// Finally, ensure that the item is deleted regardless of what it is
 		var/obj/item/I = the_object
-		if(I.Eat(src.owner, src.owner, TRUE)) //eating can return false to indicate it failed
-			I.storage?.hide_hud(src.owner)
-			// Organs and body parts have special behaviors we need to account for
-			if (!handle_organs(the_object))
-				handle_parts(the_object)
-		else //Eat() handles qdel, visible message and sound playing, so only do that when we don't have Eat()
+		if(istype(I))
+			if (I.Eat(src.owner, src.owner, TRUE)) //eating can return false to indicate it failed
+				I.storage?.hide_hud(src.owner)
+				// Organs and body parts have special behaviors we need to account for
+				if (!handle_organs(the_object))
+					handle_parts(the_object)
+			else
+				// we failed to eat it.
+				src.using = FALSE
+				return CAST_ATTEMPT_FAIL_CAST_FAILURE
+		else
+			//Eat() handles qdel, visible message and sound playing, so only do that when we don't have Eat()
 			src.owner.visible_message(SPAN_ALERT("[src.owner] eats [the_object]."))
 			playsound(src.owner.loc, 'sound/items/eatfood.ogg', 50, FALSE)
 			qdel(the_object)

@@ -469,80 +469,53 @@ ABSTRACT_TYPE(/obj/item)
 	..()
 
 
-/obj/item/proc/eat_msg(mob/M)
-	M.visible_message(SPAN_NOTICE("[M] takes a bite of [src]!"),\
-		SPAN_NOTICE("You take a bite of [src]!"))
+/obj/item/proc/eat_msg(mob/M, mob/user)
+	if (user == M)
+		M.visible_message(SPAN_NOTICE("[M] takes a bite of [src]!"),\
+			SPAN_NOTICE("You take a bite of [src]!"))
+	else
+		user.tri_message(M, SPAN_ALERT("<b>[user]</b> feeds [M] [src]!"),\
+			SPAN_ALERT("You feed [M] [src]!"),\
+			SPAN_ALERT("<b>[user]</b> feeds you [src]!"))
 
-//disgusting proc. merge with foods later. PLEASE
-/obj/item/proc/Eat(var/mob/M as mob, var/mob/user, var/by_matter_eater=FALSE, var/force_edible = FALSE)
+/// determines whether an item is edible
+/obj/item/proc/is_edible(var/mob/M as mob, var/mob/user, var/by_matter_eater=FALSE, var/force_edible = FALSE)
 	if (!iscarbon(M) && !ismobcritter(M))
 		return FALSE
+	// matter eater cooldown
 	if (M?.bioHolder && !M.bioHolder.HasEffect("mattereater"))
 		if(ON_COOLDOWN(M, "eat", EAT_COOLDOWN))
 			return FALSE
+
 	var/edibility_override = SEND_SIGNAL(M, COMSIG_MOB_ITEM_CONSUMED_PRE, user, src) || SEND_SIGNAL(src, COMSIG_ITEM_CONSUMED_PRE, M, user)
 	var/can_matter_eat = by_matter_eater && (M == user) && M.bioHolder.HasEffect("mattereater")
-	var/edible_check = src.edible || (src.material?.getEdible()) || (edibility_override & FORCE_EDIBILITY)
-	if (!edible_check && !can_matter_eat)
+	var/edible_check = src.edible || (src.material?.getEdible()) || (edibility_override & FORCE_EDIBILITY) || can_matter_eat
+	if (!edible_check)
 		return FALSE
 
-	if (M == user)
-		src.eat_msg(M)
-		if (src.material && (src.material.getEdible() || edibility_override))
-			src.material.triggerEat(M, src)
+	return TRUE
 
-		if (src.reagents && src.reagents.total_volume)
-			src.reagents.reaction(M, INGEST)
-			SPAWN(0.5 SECONDS) // Necessary.
-				src.reagents.trans_to(M, src.reagents.total_volume/src.amount)
+/// handles the actual eating of an item
+/obj/item/proc/do_eat(var/mob/M, var/mob/user)
 
-		playsound(M.loc, src.eat_sound, rand(10, 50), 1)
-		eat_twitch(M)
-		SPAWN(0.6 SECOND)
-			if (!src || !M || !user)
-				return
-			SEND_SIGNAL(M, COMSIG_MOB_ITEM_CONSUMED, user, src) //one to the mob
-			SEND_SIGNAL(src, COMSIG_ITEM_CONSUMED, M, src) //one to the item
-			if (src.amount > 1)
-				src.change_stack_amount(-1)
-				return
-			user.u_equip(src)
-			if (!istype(src, /obj/item/reagent_containers/food) && isliving(user))
-				var/mob/living/L = user
-				if (L.organHolder.stomach)
-					L.organHolder.stomach.consume(src)
-					return
-			qdel(src)
-		return TRUE
+	if (M != user)
+		if (BOUNDS_DIST(user, M) > 0)
+			return FALSE
+		logTheThing(LOG_COMBAT, user, "feeds [constructTarget(M,"combat")] [src] [log_reagents(src)]")
 
-	else
-		user.tri_message(M, SPAN_ALERT("<b>[user]</b> tries to feed [M] [src]!"),\
-			SPAN_ALERT("You try to feed [M] [src]!"),\
-			SPAN_ALERT("<b>[user]</b> tries to feed you [src]!"))
-		logTheThing(LOG_COMBAT, user, "attempts to feed [constructTarget(M,"combat")] [src] [log_reagents(src)]")
-
-		SETUP_GENERIC_ACTIONBAR(user, M, 3 SECONDS, /mob/proc/accept_forcefeed, list(src, user, edibility_override), src.icon, src.icon_state, null, INTERRUPT_MOVE | INTERRUPT_STUNNED)
-		return TRUE
-
-/obj/item/proc/forcefeed(mob/M, mob/user, edibility_override)
-	if (BOUNDS_DIST(user, M) > 0)
-		return TRUE
-	user.tri_message(M, SPAN_ALERT("<b>[user]</b> feeds [M] [src]!"),\
-		SPAN_ALERT("You feed [M] [src]!"),\
-		SPAN_ALERT("<b>[user]</b> feeds you [src]!"))
-	logTheThing(LOG_COMBAT, user, "feeds [constructTarget(M,"combat")] [src] [log_reagents(src)]")
-
-	if (src.material && (src.material.getEdible() || edibility_override))
+	src.eat_msg(M, user)
+	if (src.material && (src.material.getEdible()))
 		src.material.triggerEat(M, src)
 
 	if (src.reagents && src.reagents.total_volume)
 		src.reagents.reaction(M, INGEST)
 		SPAWN(0.5 SECONDS) // Necessary.
-			src.reagents.trans_to(M, src.reagents.total_volume)
+			src.reagents.trans_to(M, src.reagents.total_volume/src.amount)
 
 	playsound(M.loc, src.eat_sound, rand(10, 50), 1)
 	eat_twitch(M)
-	SPAWN(1 SECOND)
+
+	SPAWN(0.6 SECOND)
 		if (!src || !M || !user)
 			return
 		SEND_SIGNAL(M, COMSIG_MOB_ITEM_CONSUMED, user, src) //one to the mob
@@ -552,11 +525,96 @@ ABSTRACT_TYPE(/obj/item)
 			return
 		user.u_equip(src)
 		if (!istype(src, /obj/item/reagent_containers/food) && isliving(user))
-			var/mob/living/L = M
+			var/mob/living/L = user
 			if (L.organHolder.stomach)
 				L.organHolder.stomach.consume(src)
 				return
 		qdel(src)
+	return TRUE
+
+// putting this here so its next to where its used.
+/mob/living/carbon/human/can_eat(atom/A)
+
+	var/obj/item/organ/stomach/tummy = src.get_organ("stomach")
+	if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.max_damage) || src.bioHolder?.HasEffect("rot_curse"))
+		src.visible_message(SPAN_NOTICE("[src] tries to take a bite of [A], but can't swallow!"),\
+		SPAN_NOTICE("You try to take a bite of [A], but can't swallow!"))
+		return FALSE
+	if (tummy.calculate_fullness() > tummy.capacity)
+		src.show_message(SPAN_ALERT("You're just too full to take another bite!"))
+		return FALSE
+	if (!src.organHolder?.head)
+		src.visible_message(SPAN_NOTICE("[src] tries to take a bite of [A], but they have no head!"),\
+		SPAN_NOTICE("You try to take a bite of [A], but you have no head to chew with!"))
+		return FALSE
+
+	if (src.traitHolder?.hasTrait("picky_eater"))
+		var/datum/trait/picky_eater/eater_trait = src.traitHolder.getTrait("picky_eater")
+		var/obj/item/reagent_containers/food/snacks/food = A
+		if (length(eater_trait.fav_foods) > 0)
+
+			var/acceptable = FALSE
+			if (istype(food))
+				acceptable = food.check_favorite_food(src)
+
+			if (src.sims)
+				if (!acceptable)
+					if (src.sims.getValue("Hunger") > SIMS_HUNGER_FAMISHED)
+						src.visible_message(SPAN_NOTICE("[src] looks at [food] with a disgusted expression!"),\
+						SPAN_NOTICE("You won't eat [food], it just seems too disgusting to you! You're not hungry or desperate enough to eat that."))
+						return FALSE
+					else
+						boutput(src, SPAN_NOTICE("Famished, starving, you reluctantly take a bite of [food]."))
+
+			else if (!acceptable)
+				src.visible_message(SPAN_NOTICE("[src] looks at [food] with a disgusted expression!"),\
+				SPAN_NOTICE("You won't eat [food], it just seems too disgusting to you!"))
+				return FALSE
+
+	if (!(..(A)))
+		boutput(src, SPAN_ALERT("You can't eat [A]!"))
+		return FALSE
+
+	return TRUE
+
+//disgusting proc. merge with foods later. PLEASE
+/obj/item/proc/Eat(var/mob/M as mob, var/mob/user, var/by_matter_eater=FALSE, var/force_edible = FALSE)
+	// check general edibility
+	var/edible_check = src.is_edible(M, user, by_matter_eater, force_edible)
+	if (!edible_check)
+		return FALSE
+
+	if (M == user)
+		if(!M.can_eat(src))
+			return FALSE
+		src.do_eat(M, user)
+
+		return TRUE
+	else
+		if (check_target_immunity(M))
+			user.visible_message(SPAN_ALERT("[user] tries to feed [M] [src], but fails!"), SPAN_ALERT("You try to feed [M] [src], but fail!"))
+			return FALSE
+		else if(!M.can_eat(src))
+			user.tri_message(M, SPAN_ALERT("<b>[user]</b> tries to feed [M] [src], but they can't eat that!"),\
+				SPAN_ALERT("You try to feed [M] [src], but they can't eat that!"),\
+				SPAN_ALERT("<b>[user]</b> tries to feed you [src], but you can't eat that!"))
+			return FALSE
+		else
+			user.tri_message(M, SPAN_ALERT("<b>[user]</b> tries to feed [M] [src]!"),\
+				SPAN_ALERT("You try to feed [M] [src]!"),\
+				SPAN_ALERT("<b>[user]</b> tries to feed you [src]!"))
+			logTheThing(LOG_COMBAT, user, "attempts to feed [constructTarget(M,"combat")] [src] [log_reagents(src)] at [log_loc(user)].")
+
+		// use the action bar if we can, otherwise fall back gracefully
+		if (istype(src, /obj/item/reagent_containers/food/snacks))
+			actions.start(new/datum/action/bar/icon/forcefeed(M, src, src.icon, src.icon_state), user)
+		else
+			SETUP_GENERIC_ACTIONBAR(user, M, 3 SECONDS, /mob/proc/accept_forcefeed, list(src, user, edible_check), src.icon, src.icon_state, null, INTERRUPT_MOVE | INTERRUPT_STUNNED)
+
+		return TRUE
+
+/obj/item/proc/forcefeed(mob/M, mob/user, edibility_override)
+	src.do_eat(M, user)
 	return TRUE
 
 /obj/item/proc/take_damage(brute, burn, tox, disallow_limb_loss)
