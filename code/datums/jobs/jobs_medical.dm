@@ -99,11 +99,12 @@ ABSTRACT_TYPE(/datum/job/medical)
 	limit = 1 // limited workspace
 	access_string = "Pharmacist"
 	slot_back = list(/obj/item/storage/backpack/pharmacist)
-	slot_belt = list(/obj/item/device/pda2/pharmacist)
+	slot_belt = list(/obj/item/injector_belt)
 	slot_foot = list(/obj/item/clothing/shoes/white)
 	slot_jump = list(/obj/item/clothing/under/rank/pharmacist)
 	slot_suit = list(/obj/item/clothing/suit/labcoat/pharmacist)
 	slot_ears = list(/obj/item/device/radio/headset/pharmacist)
 	slot_eyes = list(/obj/item/clothing/glasses/spectro)
+	slot_poc1 = list(/obj/item/device/pda2/pharmacist)
 	items_in_backpack = list(/obj/item/storage/box/beakerbox, /obj/item/beaker_lid, /obj/item/reagent_containers/injector_filler)
 	wiki_link = "https://wiki.ss13.co/Pharmacist"
