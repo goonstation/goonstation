@@ -1316,6 +1316,8 @@ TYPEINFO(/obj/disposalpipe/loafer)
 			H.set_loc(T)
 			return null
 
+		// Infinite loops are both visible and intentional here. Keep the holder running while going through the loafer.
+		H.count = initial(H.count)
 		return P
 
 	welded()
