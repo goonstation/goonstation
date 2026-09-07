@@ -2077,6 +2077,13 @@ TYPEINFO(/obj/critter/domestic_bee)
 		reagents.add_reagent("cornstarch", 5)
 		reagents.add_reagent("pollen", 20)
 
+/obj/item/reagent_containers/food/snacks/beefood/heisenbee
+	name = "Heisenbee's birthday cupcake"
+	desc = "A little birthday cupcake for Heisenbee. May not taste good to non-bees.";
+	icon = 'icons/obj/foodNdrink/food_dessert.dmi';
+	icon_state = "cupcake";
+
+
 /* -------------------- END -------------------- */
 
 /* -------------------- NOT A BEE -------------------- */

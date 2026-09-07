@@ -13,7 +13,7 @@
 	///State of construction of the frame, see defines above
 	var/state = STATE_UNANCHORED
 	var/obj/item/circuitboard/circuit = null
-	material_amt = 0.5
+	material_amt = MATERIAL::AMOUNT::SHEET * 5
 	HELP_MESSAGE_OVERRIDE("")
 
 	blob_act(var/power)

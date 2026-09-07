@@ -812,6 +812,9 @@ TYPEINFO(/obj/machinery/bot/medbot/terrifying)
 		return
 	else
 		var/obj/item/firstaid_arm_assembly/A = new /obj/item/firstaid_arm_assembly
+		A.setMaterial(src.material)
+		A.forensic_holder = src.forensic_holder
+		S.forensic_holder.copy_to(A.forensic_holder)
 		if (src.icon_state != "firstaid") // fart
 			A.skin = src.icon_state // farto
 /* all of this is kinda needlessly complicated imo
@@ -834,6 +837,7 @@ TYPEINFO(/obj/machinery/bot/medbot/terrifying)
 
 /obj/item/firstaid_arm_assembly/attackby(obj/item/W, mob/user)
 	if ((istype(W, /obj/item/device/analyzer/healthanalyzer)) && (!src.build_step))
+		W.forensic_holder.copy_to(src.forensic_holder)
 		src.build_step++
 		boutput(user, "You add the health sensor to [src]!")
 		src.name = "First aid/robot arm/health analyzer assembly"
@@ -844,6 +848,9 @@ TYPEINFO(/obj/machinery/bot/medbot/terrifying)
 		src.build_step++
 		boutput(user, "You complete the Medibot! Beep boop.")
 		var/obj/machinery/bot/medbot/S = new /obj/machinery/bot/medbot
+		S.setMaterial(src.material)
+		S.forensic_holder = src.forensic_holder
+		W.forensic_holder.copy_to(S.forensic_holder)
 		S.skin = src.skin
 		S.set_loc(get_turf(src))
 		S.name = src.created_name

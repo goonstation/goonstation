@@ -96,30 +96,8 @@ TYPEINFO(/obj/item/device/radio/intercom)
 		if (src.locked_frequency)
 			boutput(user, SPAN_ALERT("You can't override an intercom with a locked frequency!"))
 			return
-
-		var/original_src_frequency = src.frequency
-		var/original_microphone_enabled = src.microphone_enabled
-		var/original_speaker_enabled = src.speaker_enabled
-
-		src.locked_frequency = TRUE // lockdown; saves us from clickspam
-		var/mob/living/intangible/aieye/eye = user
-		src.set_frequency(eye.mainframe.radio2.frequency)
-		src.toggle_microphone(TRUE)
-		src.toggle_speaker(TRUE)
-
-		var/message_params = list(
-			"say_sound" = 'sound/misc/talk/bottalk_3.ogg',
-			"maptext_css_values" = list("color" = "#CC3FCC"),
-			"relay_flags" = SAY_RELAY_RADIO,
-		)
-		src.say("AI override engaged!", message_params = message_params)
-		src.show_speech_bubble(image('icons/mob/mob.dmi', "ai"))
-
-		SPAWN(1 MINUTE)
-			src.locked_frequency = FALSE // safe as long as we can't control locked frequencies in the first place
-			src.set_frequency(original_src_frequency)
-			src.toggle_microphone(original_microphone_enabled)
-			src.toggle_speaker(original_speaker_enabled)
+		user.delStatus("ai_intercom_override")
+		user.setStatus("ai_intercom_override", INFINITE_STATUS, src)
 
 // -------------------- VR --------------------
 /obj/item/device/radio/intercom/virtual
