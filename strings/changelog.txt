@@ -1,4 +1,22 @@
 
+(t)mon sep 07 26
+(u)LorrMaster
+(p)27764
+(e)🍝🌱|A-Catering, A-Hydroponics
+(+)Various objects that should be made of wood now have wood as their default material.
+(u)ANNmagedon
+(p)27744
+(e)|
+(+)PDAs & Clipboard should no longer eat the borg's pens.
+(t)sun sep 06 26
+(u)Kubius
+(p)27762
+(e)🎨💅📨|C-Sprites, C-QoL, A-Logistics
+(+)Siphon resonators have been re-titled for legibility, now primarily using the names Axial Resonator, Shear Moderator and Field Quantizer.
+(u)Cheekybrdy
+(p)27699
+(e)|
+(+)Steve's Mixtape now acts similar to its unrecorded variant.
 (t)sat sep 05 26
 (u)Kubius
 (p)27742
