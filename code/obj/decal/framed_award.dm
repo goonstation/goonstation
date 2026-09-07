@@ -2,7 +2,9 @@
 // AZUNGAR'S HEAD OF DEPARTMENT ITEMS// + FIREBARRAGE HELPED TOO BUT HE SMELLS
 ///////////////////////////////////////
 
-ABSTRACT_TYPE(/obj/decal/poster/wallsign/framed_award)
+#define FRAME_HAS_GLASS_HAS_AWARD 0
+#define FRAME_NO_GLASS_HAS_AWARD 1
+#define FRAME_NO_GLASS_NO_AWARD 2
 
 /obj/decal/poster/wallsign/framed_award
 	name = "A framed award"
@@ -10,7 +12,7 @@ ABSTRACT_TYPE(/obj/decal/poster/wallsign/framed_award)
 	var/award_text = null
 	var/obj/item/award_type = /obj/item/rddiploma
 	var/award_name ="diploma"
-	var/usage_state = 0		// 0 = GLASS, AWARD 1 = GLASS OFF, AWARD IN CASE, 2 = GLASS OFF, AWARD GONE,
+	var/usage_state = FRAME_HAS_GLASS_HAS_AWARD
 	var/owner_job = "Research Director"
 	var/icon_glass = "rddiploma1"
 	var/icon_award = "rddiploma"
@@ -43,9 +45,9 @@ ABSTRACT_TYPE(/obj/decal/poster/wallsign/framed_award)
 			return
 
 		switch (usage_state)
-			if (0)
+			if (FRAME_HAS_GLASS_HAS_AWARD)
 				if (issilicon(user)) return
-				src.usage_state = 1
+				src.usage_state = FRAME_NO_GLASS_HAS_AWARD
 				src.icon_state = icon_glass
 				user.visible_message("[user] takes off the glass frame.", "You take off the glass frame.")
 				var/obj/item/sheet/glass/G = new glass_type()
@@ -53,7 +55,7 @@ ABSTRACT_TYPE(/obj/decal/poster/wallsign/framed_award)
 				src.add_fingerprint(user)
 				user.put_in_hand_or_drop(G)
 
-			if (1)
+			if (FRAME_NO_GLASS_HAS_AWARD)
 				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 				if(istype(src.award_item) && src.award_item.loc == src)
 					src.award_item.desc = src.desc
@@ -61,22 +63,22 @@ ABSTRACT_TYPE(/obj/decal/poster/wallsign/framed_award)
 					user.visible_message("[user] takes the [award_name] from the frame.", "You take the [award_name] out of the frame.")
 					src.icon_state = icon_empty
 					src.add_fingerprint(user)
-					src.usage_state = 2
+					src.usage_state = FRAME_NO_GLASS_NO_AWARD
 
 	attackby(obj/item/W, mob/user)
 		if (user.stat)
 			return
 
-		if (src.usage_state == 2)
+		if (src.usage_state == FRAME_NO_GLASS_NO_AWARD)
 			if (istype(W, src.award_type))
 				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 				user.u_equip(W)
 				W.set_loc(src)
 				user.visible_message("[user] places the [award_name] back in the frame.", "You place the [award_name] back in the frame.")
-				src.usage_state = 1
+				src.usage_state = FRAME_NO_GLASS_HAS_AWARD
 				src.icon_state = icon_glass
 
-		if (src.usage_state == 1)
+		if (src.usage_state == FRAME_NO_GLASS_HAS_AWARD)
 			if (istype(W, /obj/item/sheet/glass))
 				if (W.amount >= 1)
 					src.glass_type = W.type
@@ -84,7 +86,7 @@ ABSTRACT_TYPE(/obj/decal/poster/wallsign/framed_award)
 					user.u_equip(W)
 					qdel(W)
 					user.visible_message("[user] places glass back in the frame.", "You place the glass back in the frame.")
-					src.usage_state = 0
+					src.usage_state = FRAME_HAS_GLASS_HAS_AWARD
 					src.icon_state = icon_award
 
 
@@ -193,6 +195,9 @@ ABSTRACT_TYPE(/obj/decal/poster/wallsign/framed_award)
 			mdname = M.current.client.preferences.name_last
 		. += "It says \ [mdname] has been granted a license as a Physician and Surgeon entitled to practice the profession of medicine in space."
 
+#undef FRAME_HAS_GLASS_HAS_AWARD
+#undef FRAME_NO_GLASS_HAS_AWARD
+#undef FRAME_NO_GLASS_NO_AWARD
 
 ///////////////////////////////////////
 // ACTUAL AWARDS
