@@ -23347,6 +23347,19 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/lobby)
+"hlf" = (
+/obj/cable{
+	dir = null
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor/black,
+/area/station/engine/engineering/ce)
 "hlk" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1
@@ -48678,6 +48691,16 @@
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
+"phY" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_west{
+	areastring = "Chief Engineer's Aquarium";
+	name = "Chief Engineer's Aquarium APC"
+	},
+/turf/simulated/floor/black,
+/area/station/engine/engineering/ce)
 "pif" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
@@ -70969,11 +70992,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/light/incandescent/blueish{
-	dir = 1
-	},
 /obj/machinery/drainage/big,
-/obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/black,
 /area/station/engine/engineering/ce)
 "vWe" = (
@@ -78126,6 +78145,7 @@
 /obj/machinery/light/incandescent/blueish{
 	dir = 1
 	},
+/obj/machinery/firealarm/directional/north,
 /turf/simulated/floor/black,
 /area/station/engine/engineering/ce)
 "xXE" = (
@@ -146313,8 +146333,8 @@ dXs
 kTR
 jPm
 bmt
-jPm
-nhy
+phY
+hlf
 nyj
 bmt
 tLa
