@@ -5985,7 +5985,7 @@
 	delay = 200
 	},
 /turf/simulated/floor/sand,
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/aquarium)
 "bOb" = (
 /obj/machinery/navbeacon{
 	codes_txt = "patrol;next_patrol=btw_fuck_bot_pathing";
@@ -9553,7 +9553,7 @@
 	delay = 200
 	},
 /turf/simulated/floor/sand,
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/aquarium)
 "cPX" = (
 /obj/dartboard{
 	pixel_y = 26
@@ -13068,7 +13068,7 @@
 	delay = 200
 	},
 /turf/simulated/floor/sand,
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/aquarium)
 "dXx" = (
 /obj/machinery/computer3/terminal/zeta{
 	setup_os_string = "ZETA_MAINFRAME"
@@ -15706,7 +15706,7 @@
 	delay = 200
 	},
 /turf/simulated/floor/sand,
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/aquarium)
 "eSf" = (
 /obj/rack,
 /obj/item/clothing/shoes/magnetic,
@@ -19729,6 +19729,9 @@
 	dir = 1
 	},
 /area/station/engine/inner)
+"geC" = (
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
+/area/station/engine/engineering/aquarium)
 "geD" = (
 /obj/machinery/teleport/portal_ring,
 /turf/simulated/floor/black,
@@ -27416,7 +27419,7 @@
 "iDf" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/engine/engineering/aquarium)
 "iDg" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 10;
@@ -29243,7 +29246,7 @@
 	delay = 200
 	},
 /turf/simulated/floor/sand,
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/aquarium)
 "jdU" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -31697,7 +31700,7 @@
 	delay = 200
 	},
 /turf/simulated/floor/sand,
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/aquarium)
 "jQH" = (
 /obj/machinery/camera/ranch/directional/west{
 	pixel_y = -10
@@ -39083,7 +39086,7 @@
 	delay = 200
 	},
 /turf/simulated/floor/sand,
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/aquarium)
 "mfy" = (
 /obj/machinery/light/incandescent/warm{
 	dir = 8
@@ -39216,7 +39219,7 @@
 	delay = 200
 	},
 /turf/simulated/floor/sand,
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/aquarium)
 "miK" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -43246,7 +43249,7 @@
 	delay = 200
 	},
 /turf/simulated/floor/sand,
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/aquarium)
 "nxU" = (
 /obj/stool/pet_bed/jones,
 /mob/living/critter/small_animal/cat/jones{
@@ -53516,7 +53519,7 @@
 	delay = 200
 	},
 /turf/simulated/floor/sand,
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/aquarium)
 "qIa" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/random_item_spawner/junk/one_or_zero,
@@ -71200,7 +71203,7 @@
 	delay = 200
 	},
 /turf/simulated/floor/sand,
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/aquarium)
 "wam" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -72898,7 +72901,7 @@
 	delay = 200
 	},
 /turf/simulated/floor/sand,
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/aquarium)
 "wzE" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "11"
@@ -74938,7 +74941,7 @@
 	delay = 200
 	},
 /turf/simulated/floor/sand,
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/aquarium)
 "xde" = (
 /turf/simulated/shuttle/wall/cockpit{
 	dir = 8
@@ -75095,7 +75098,7 @@
 	delay = 200
 	},
 /turf/simulated/floor/sand,
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/aquarium)
 "xgn" = (
 /obj/table/reinforced/bar/auto,
 /turf/simulated/floor/carpet/green/fancy/innercorner{
@@ -76770,7 +76773,7 @@
 	delay = 200
 	},
 /turf/simulated/floor/sand,
-/area/station/engine/engineering/ce)
+/area/station/engine/engineering/aquarium)
 "xEK" = (
 /obj/machinery/sink/slim{
 	dir = 8
@@ -146003,7 +146006,7 @@ rdj
 rdj
 rdj
 rdj
-wCh
+geC
 mfw
 wCh
 xTd
@@ -146015,7 +146018,7 @@ jJJ
 iEX
 wCh
 mfw
-wCh
+geC
 sxm
 sxm
 sxm
@@ -146305,7 +146308,7 @@ rdj
 rdj
 orw
 rdj
-wCh
+geC
 dXs
 kTR
 jPm
@@ -146317,7 +146320,7 @@ bmt
 tLa
 kTR
 xcQ
-wCh
+geC
 rdj
 rdj
 cnm
@@ -146607,7 +146610,7 @@ rdj
 rdj
 orw
 rdj
-wCh
+geC
 qHX
 kTR
 owJ
@@ -146619,7 +146622,7 @@ jgl
 aQh
 kTR
 mfw
-wCh
+geC
 rdj
 rdj
 cnm
@@ -146909,7 +146912,7 @@ rdj
 rdj
 orw
 rdj
-wCh
+geC
 mfw
 wCh
 xXC
@@ -146921,7 +146924,7 @@ bmt
 bwT
 wCh
 jdO
-wCh
+geC
 rdj
 rdj
 cnm
@@ -147211,7 +147214,7 @@ rdj
 rdj
 orw
 rdj
-kTR
+iDf
 xcQ
 kTR
 kTR
@@ -147223,7 +147226,7 @@ qUc
 kTR
 kTR
 jQF
-kTR
+iDf
 rdj
 rdj
 rIu
@@ -147513,7 +147516,7 @@ rdj
 rdj
 orw
 rdj
-kTR
+iDf
 dXs
 eSe
 kTR
@@ -147525,7 +147528,7 @@ kTR
 kTR
 mfw
 mfw
-kTR
+iDf
 rdj
 rdj
 rIu
@@ -147815,7 +147818,7 @@ rdj
 rdj
 orw
 rdj
-kTR
+iDf
 mfw
 mfw
 waf
@@ -147827,7 +147830,7 @@ miJ
 mfw
 mfw
 nxR
-kTR
+iDf
 rdj
 rdj
 rIu
@@ -148117,7 +148120,7 @@ rdj
 rdj
 orw
 rdj
-kTR
+iDf
 cPU
 mfw
 kTR
@@ -148129,7 +148132,7 @@ kTR
 kTR
 mfw
 mfw
-kTR
+iDf
 rdj
 rdj
 cnm
@@ -148419,7 +148422,7 @@ rdj
 rdj
 orw
 rdj
-kTR
+iDf
 mfw
 jQF
 wCh
@@ -148431,7 +148434,7 @@ qqj
 wCh
 mfw
 mfw
-kTR
+iDf
 rdj
 rdj
 bBD
@@ -148721,7 +148724,7 @@ rdj
 rdj
 orw
 rdj
-kTR
+iDf
 xEJ
 mfw
 kTR
@@ -148733,7 +148736,7 @@ xXy
 kTR
 waf
 mfw
-kTR
+iDf
 rdj
 rdj
 bBD
@@ -149023,7 +149026,7 @@ rdj
 rdj
 orw
 rdj
-wCh
+geC
 mfw
 mfw
 kTR
@@ -149035,7 +149038,7 @@ hFA
 dty
 mfw
 mfw
-wCh
+geC
 rdj
 rdj
 bBD
@@ -149325,8 +149328,8 @@ rdj
 rdj
 orw
 rdj
-wCh
-wCh
+geC
+geC
 mfw
 kTR
 kTR
@@ -149336,8 +149339,8 @@ wKY
 kTR
 kTR
 mfw
-wCh
-wCh
+geC
+geC
 rdj
 rdj
 bBD
@@ -149628,7 +149631,7 @@ rdj
 orw
 rdj
 rdj
-wCh
+geC
 bNV
 mfw
 kTR
@@ -149638,7 +149641,7 @@ kTR
 kTR
 mfw
 mfw
-wCh
+geC
 rdj
 rdj
 rdj
@@ -149930,8 +149933,8 @@ rdj
 orw
 orw
 rdj
-wCh
-kTR
+geC
+iDf
 mfw
 mfw
 jQF
@@ -149939,8 +149942,8 @@ xgk
 wzB
 mfw
 xcQ
-kTR
-wCh
+iDf
+geC
 rdj
 orw
 rdj
