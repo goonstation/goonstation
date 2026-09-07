@@ -533,7 +533,7 @@ ABSTRACT_TYPE(/obj/item)
 	return TRUE
 
 // putting this here so its next to where its used.
-/mob/living/carbon/human/can_eat(atom/A)
+/mob/living/carbon/human/can_eat(atom/A, mob/fed_by)
 
 	var/obj/item/organ/stomach/tummy = src.get_organ("stomach")
 	if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.max_damage) || src.bioHolder?.HasEffect("rot_curse"))
@@ -548,28 +548,29 @@ ABSTRACT_TYPE(/obj/item)
 		SPAN_NOTICE("You try to take a bite of [A], but you have no head to chew with!"))
 		return FALSE
 
-	if (src.traitHolder?.hasTrait("picky_eater"))
-		var/datum/trait/picky_eater/eater_trait = src.traitHolder.getTrait("picky_eater")
-		var/obj/item/reagent_containers/food/snacks/food = A
-		if (length(eater_trait.fav_foods) > 0)
+	if (fed_by == src)
+		if (src.traitHolder?.hasTrait("picky_eater"))
+			var/datum/trait/picky_eater/eater_trait = src.traitHolder.getTrait("picky_eater")
+			var/obj/item/reagent_containers/food/snacks/food = A
+			if (length(eater_trait.fav_foods) > 0)
 
-			var/acceptable = FALSE
-			if (istype(food))
-				acceptable = food.check_favorite_food(src)
+				var/acceptable = FALSE
+				if (istype(food))
+					acceptable = food.check_favorite_food(src)
 
-			if (src.sims)
-				if (!acceptable)
-					if (src.sims.getValue("Hunger") > SIMS_HUNGER_FAMISHED)
-						src.visible_message(SPAN_NOTICE("[src] looks at [food] with a disgusted expression!"),\
-						SPAN_NOTICE("You won't eat [food], it just seems too disgusting to you! You're not hungry or desperate enough to eat that."))
-						return FALSE
-					else
-						boutput(src, SPAN_NOTICE("Famished, starving, you reluctantly take a bite of [food]."))
+				if (src.sims)
+					if (!acceptable)
+						if (src.sims.getValue("Hunger") > SIMS_HUNGER_FAMISHED)
+							src.visible_message(SPAN_NOTICE("[src] looks at [food] with a disgusted expression!"),\
+							SPAN_NOTICE("You won't eat [food], it just seems too disgusting to you! You're not hungry or desperate enough to eat that."))
+							return FALSE
+						else
+							boutput(src, SPAN_NOTICE("Famished, starving, you reluctantly take a bite of [food]."))
 
-			else if (!acceptable)
-				src.visible_message(SPAN_NOTICE("[src] looks at [food] with a disgusted expression!"),\
-				SPAN_NOTICE("You won't eat [food], it just seems too disgusting to you!"))
-				return FALSE
+				else if (!acceptable)
+					src.visible_message(SPAN_NOTICE("[src] looks at [food] with a disgusted expression!"),\
+					SPAN_NOTICE("You won't eat [food], it just seems too disgusting to you!"))
+					return FALSE
 
 	if (!(..(A)))
 		boutput(src, SPAN_ALERT("You can't eat [A]!"))
@@ -585,7 +586,7 @@ ABSTRACT_TYPE(/obj/item)
 		return FALSE
 
 	if (M == user)
-		if(!M.can_eat(src))
+		if(!M.can_eat(src, user))
 			return FALSE
 		src.do_eat(M, user)
 
@@ -594,7 +595,7 @@ ABSTRACT_TYPE(/obj/item)
 		if (check_target_immunity(M))
 			user.visible_message(SPAN_ALERT("[user] tries to feed [M] [src], but fails!"), SPAN_ALERT("You try to feed [M] [src], but fail!"))
 			return FALSE
-		else if(!M.can_eat(src))
+		else if(!M.can_eat(src, user))
 			user.tri_message(M, SPAN_ALERT("<b>[user]</b> tries to feed [M] [src], but they can't eat that!"),\
 				SPAN_ALERT("You try to feed [M] [src], but they can't eat that!"),\
 				SPAN_ALERT("<b>[user]</b> tries to feed you [src], but you can't eat that!"))

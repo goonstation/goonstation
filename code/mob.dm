@@ -3436,7 +3436,7 @@ TYPEINFO(/mob)
 		if (A)
 			src.client?.Click(A, get_turf(A))
 
-/mob/proc/can_eat(var/atom/A)
+/mob/proc/can_eat(var/atom/A, var/mob/fed_by)
 	return 1
 
 /mob/proc/on_eat(var/atom/A)

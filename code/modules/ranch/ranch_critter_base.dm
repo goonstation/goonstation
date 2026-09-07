@@ -304,7 +304,7 @@
 	proc/create_child(var/mob/M)
 		return
 
-	can_eat(var/atom/A)
+	can_eat(var/atom/A, var/mob/fed_by)
 		if(isalive(src))
 			if(istype(A,/obj/item/reagent_containers/food/snacks/ranch_feed_bag))
 				return 1
