@@ -1,5 +1,9 @@
 
 (t)tue sep 08 26
+(u)Kubius
+(p)27756
+(e)🗺|A-Mapping
+(*)Nadir now features a direct cable run from the nuclear reactor to the siphon. Each end doesn't start wired up, but is quick to reconfigure.
 (u)Lithesra
 (p)27789
 (e)🎨🐁|C-Sprites, A-Critters
