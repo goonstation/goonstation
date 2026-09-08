@@ -58,7 +58,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	trait_list = list("training_engineer")
 
 	slot_belt = list(/obj/item/storage/belt/utility/nt_engineer)
-	slot_suit = list(/obj/item/clothing/suit/space/industrial/nt_specialist)
+	slot_suit = list(/obj/item/clothing/suit/space/ntso/engineer)
 	slot_head = list(/obj/item/clothing/head/helmet/space/ntso/engineer)
 	slot_foot = list(/obj/item/clothing/shoes/magnetic)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
