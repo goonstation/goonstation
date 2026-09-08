@@ -84,7 +84,7 @@
 				M.stuttering += rand(1,3)
 				M.changeBodyTemp(rand(5,20) KELVIN)
 		else if (prob(20))
-			do_taste_bloodstream(HH)
+			src.do_taste_bloodstream(HH)
 		//HH.reagents.reaction(M, INGEST, mult)
 		//HH.reagents.trans_to(M, mult)
 		/* Was told it would be too unfair to actually have chemical transfer,
