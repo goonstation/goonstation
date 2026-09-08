@@ -1,5 +1,9 @@
 
 (t)tue sep 08 26
+(u)ANNmagedon + TekoTheTeapot
+(p)27290
+(e)🎨💊|C-Sprites, A-Medical
+(*)NanoTrasen Emergency Paramedics have received more funding, including better medicine, a surgical kit, a casualties kit. Sadly NT R&D ran out of budget before their last unique item was finished, will be added soon(TM)
 (u)ZeWaka, jlsnow301, Smartkar, tigercat2000
 (p)27653
 (e)🚄🔎📄⚙📜|C-Performance, C-Code-Quality, A-UI, A-Internal, C-Documentation
