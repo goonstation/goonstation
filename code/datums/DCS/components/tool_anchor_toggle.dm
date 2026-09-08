@@ -1,4 +1,4 @@
-TYPEINFO(/datum/component/assembly)
+TYPEINFO(/datum/component/tool_anchor_toggle)
 	initialization_args = list(
 		ARG_INFO("tool", DATA_INPUT_BITFIELD, "The tool type needed to (un)anchor the atom. Takes tool bitflags, like TOOL_WELDING", TOOL_SCREWING),
 		ARG_INFO("action_time", DATA_INPUT_NUM, "How much time (un)anchoring the atom should take, if any at all.", 0),
@@ -53,11 +53,15 @@ TYPEINFO(/datum/component/assembly)
 	if(!istool(W, src.tool_type))
 		return
 	. = 1 // we want to stop atom/attackby() to avoid this tool doing anything but toggling anchor
-	if(src.cooldown)
-		if(ON_COOLDOWN(src.parent_atom, "toggle_anchor", src.cooldown))
-			return
+	if(src.cooldown && ON_COOLDOWN(src.parent_atom, "toggle_anchor", src.cooldown))
+		return
 	if(!isturf(src.parent_atom.loc))
 		boutput(user, SPAN_ALERT("[src.parent] needs to be on the ground to do that!"))
+		return
+	if(src.parent_atom.anchored == MAGIC_GLUE_ANCHORED)
+		boutput(user, SPAN_ALERT("[src.parent] is glued in place, you can't just secure or free it with [src.parent]!"))
+		return
+	if(src.parent_atom.anchored => ANCHORED_ALWAYS)
 		return
 	if(isweldingtool(W))
 		if(!W:try_weld(user))
@@ -73,10 +77,8 @@ TYPEINFO(/datum/component/assembly)
 
 /datum/component/tool_anchor_toggle/proc/toggle_anchor(obj/item/W, mob/user)
 	if(src.parent_atom.anchored == ANCHORED)
-		if(user)
-			user.visible_message(SPAN_NOTICE("<b>[user.name]</b> [src.unanchor_prefix] [src.parent] free."))
+		if(user?.visible_message(SPAN_NOTICE("<b>[user.name]</b> [src.unanchor_prefix] [src.parent] free.")))
 		src.parent_atom.anchored = UNANCHORED
 	else
-		if(user)
-			user.visible_message(SPAN_NOTICE("<b>[user.name]</b> [src.anchor_prefix] [src.parent] into place."))
+		if(user?.visible_message(SPAN_NOTICE("<b>[user.name]</b> [src.anchor_prefix] [src.parent] into place.")))
 		src.parent_atom.anchored = ANCHORED
