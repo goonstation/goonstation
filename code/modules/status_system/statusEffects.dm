@@ -3442,6 +3442,10 @@
 				H.TakeDamage("All", burn = 5 * src.get_mult(time_passed), damage_type = DAMAGE_BURN)
 			src.time_passed = 0
 
+		ring
+			id = "art_light_curse_ring"
+			desc = "You have drawn the ire of a sleeping colossus."
+
 /datum/statusEffect/art_fissure_corrosion
 	id = "art_fissure_corrosion"
 	effect_quality = STATUS_QUALITY_NEGATIVE

@@ -1,0 +1,13 @@
+CREATE_NAMESPACE(FISH)
+
+// These catagories are barely used currently.
+CREATE_NAMESPACE(FISH, CATEGORY)
+ADD_TO_NAMESPACE(FISH, CATEGORY)(var/const/FRESHWATER = "freshwater")
+ADD_TO_NAMESPACE(FISH, CATEGORY)(var/const/OCEAN = "ocean")
+ADD_TO_NAMESPACE(FISH, CATEGORY)(var/const/AQUARIUM = "aquarium")
+
+// Determines how the fish appears in the collection
+CREATE_NAMESPACE(FISH, COLLECTION)
+ADD_TO_NAMESPACE(FISH, COLLECTION)(var/const/NEVER = 0)
+ADD_TO_NAMESPACE(FISH, COLLECTION)(var/const/NORMAL = 1)
+ADD_TO_NAMESPACE(FISH, COLLECTION)(var/const/SECRET = 2)

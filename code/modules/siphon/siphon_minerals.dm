@@ -55,9 +55,9 @@ ABSTRACT_TYPE(/datum/harmonic_cycle)
 	shear = 0
 	product = /obj/item/raw_material/miracle
 	setup_guide = list(
-		"Type-AX Resonator, Position C4, 3 Intensity<br>",
-		"Type-AX Resonator, Position G4, 3 Intensity<br>",
-		"Type-SM Resonator, Position E3, 3 Intensity<br>"
+		"Axial Resonator, Position C4, 3 Intensity<br>",
+		"Axial Resonator, Position G4, 3 Intensity<br>",
+		"Shear Moderator, Position E3, 3 Intensity<br>"
 	)
 
 /datum/siphon_mineral/rock
@@ -69,7 +69,7 @@ ABSTRACT_TYPE(/datum/harmonic_cycle)
 	sens_window = 2
 	product = /obj/item/raw_material/rock
 	setup_guide = list(
-		"Type-AX Resonator, Position F4, 2 Intensity<br>"
+		"Axial Resonator, Position F4, 2 Intensity<br>"
 	)
 
 /datum/siphon_mineral/char
@@ -81,9 +81,9 @@ ABSTRACT_TYPE(/datum/harmonic_cycle)
 	sens_window = 5
 	product = /obj/item/raw_material/char
 	setup_guide = list(
-		"Type-AX Resonator, Position B7, 2 Intensity<br>",
-		"Type-AX Resonator, Position G2, 1 Intensity<br>",
-		"Type-AX Resonator, Position D4, 2 Intensity<br>"
+		"Axial Resonator, Position B7, 2 Intensity<br>",
+		"Axial Resonator, Position G2, 1 Intensity<br>",
+		"Axial Resonator, Position D4, 2 Intensity<br>"
 	)
 
 /datum/siphon_mineral/mauxite
@@ -94,10 +94,10 @@ ABSTRACT_TYPE(/datum/harmonic_cycle)
 	sens_window = 7
 	product = /obj/item/raw_material/mauxite
 	setup_guide = list(
-		"Type-AX Resonator, Position F4, 4 Intensity<br>",
-		"Type-AX Resonator, Position G4, 2 Intensity<br>",
-		"Type-AX Resonator, Position E3, 3 Intensity<br>",
-		"Type-AX Resonator, Position F6, 1 Intensity<br>"
+		"Axial Resonator, Position F4, 4 Intensity<br>",
+		"Axial Resonator, Position G4, 2 Intensity<br>",
+		"Axial Resonator, Position E3, 3 Intensity<br>",
+		"Axial Resonator, Position F6, 1 Intensity<br>"
 	)
 
 /datum/siphon_mineral/molitz
@@ -108,9 +108,9 @@ ABSTRACT_TYPE(/datum/harmonic_cycle)
 	sens_window = 7
 	product = /obj/item/raw_material/molitz
 	setup_guide = list(
-		"Type-AX Resonator, Position E3, 4 Intensity<br>",
-		"Type-AX Resonator, Position E2, 4 Intensity<br>",
-		"Type-AX Resonator, Position D7, 2 Intensity<br>"
+		"Axial Resonator, Position E3, 4 Intensity<br>",
+		"Axial Resonator, Position E2, 4 Intensity<br>",
+		"Axial Resonator, Position D7, 2 Intensity<br>"
 	)
 
 /datum/siphon_mineral/pharosium
@@ -121,9 +121,9 @@ ABSTRACT_TYPE(/datum/harmonic_cycle)
 	sens_window = 7
 	product = /obj/item/raw_material/pharosium
 	setup_guide = list(
-		"Type-AX Resonator, Position F6, 1 Intensity<br>",
-		"Type-AX Resonator, Position G5, 2 Intensity<br>",
-		"Type-AX Resonator, Position E3, 3 Intensity<br>"
+		"Axial Resonator, Position F6, 1 Intensity<br>",
+		"Axial Resonator, Position G5, 2 Intensity<br>",
+		"Axial Resonator, Position E3, 3 Intensity<br>"
 	)
 
 /datum/siphon_mineral/martian
@@ -134,10 +134,10 @@ ABSTRACT_TYPE(/datum/harmonic_cycle)
 	sens_window = 3
 	product = /obj/item/raw_material/martian
 	setup_guide = list(
-		"Type-AX Resonator, Position E7, 3 Intensity<br>",
-		"Type-AX Resonator, Position E2, 1 Intensity<br>",
-		"Type-AX Resonator, Position G6, 3 Intensity<br>",
-		"Type-AX Resonator, Position F4, 1 Intensity<br>"
+		"Axial Resonator, Position E7, 3 Intensity<br>",
+		"Axial Resonator, Position E2, 1 Intensity<br>",
+		"Axial Resonator, Position G6, 3 Intensity<br>",
+		"Axial Resonator, Position F4, 1 Intensity<br>"
 	)
 
 /datum/siphon_mineral/claretine
@@ -149,10 +149,10 @@ ABSTRACT_TYPE(/datum/harmonic_cycle)
 	sens_window = 4
 	product = /obj/item/raw_material/claretine
 	setup_guide = list(
-		"Type-AX Resonator, Position C2, 1 Intensity<br>",
-		"Type-AX Resonator, Position E2, 1 Intensity<br>",
-		"Type-AX Resonator, Position F4, 4 Intensity<br>",
-		"Type-AX Resonator, Position G6, 1 Intensity<br>"
+		"Axial Resonator, Position C2, 1 Intensity<br>",
+		"Axial Resonator, Position E2, 1 Intensity<br>",
+		"Axial Resonator, Position F4, 4 Intensity<br>",
+		"Axial Resonator, Position G6, 1 Intensity<br>"
 	)
 
 /datum/siphon_mineral/bohrum
@@ -164,10 +164,10 @@ ABSTRACT_TYPE(/datum/harmonic_cycle)
 	sens_window = 4
 	product = /obj/item/raw_material/bohrum
 	setup_guide = list(
-		"Type-AX Resonator, Position C2, 2 Intensity<br>",
-		"Type-AX Resonator, Position D3, 2 Intensity<br>",
-		"Type-AX Resonator, Position G6, 1 Intensity<br>",
-		"Type-AX Resonator, Position H7, 1 Intensity<br>"
+		"Axial Resonator, Position C2, 2 Intensity<br>",
+		"Axial Resonator, Position D3, 2 Intensity<br>",
+		"Axial Resonator, Position G6, 1 Intensity<br>",
+		"Axial Resonator, Position H7, 1 Intensity<br>"
 	)
 
 /datum/siphon_mineral/batiline
@@ -179,10 +179,10 @@ ABSTRACT_TYPE(/datum/harmonic_cycle)
 	sens_window = 4
 	product = /obj/item/raw_material/batiline
 	setup_guide = list(
-		"Type-AX Resonator, Position C6, 1 Intensity<br>",
-		"Type-AX Resonator, Position G6, 2 Intensity<br>",
-		"Type-AX Resonator, Position G4, 2 Intensity<br>",
-		"Type-AX Resonator, Position G2, 1 Intensity<br>"
+		"Axial Resonator, Position C6, 1 Intensity<br>",
+		"Axial Resonator, Position G6, 2 Intensity<br>",
+		"Axial Resonator, Position G4, 2 Intensity<br>",
+		"Axial Resonator, Position G2, 1 Intensity<br>"
 	)
 
 /datum/siphon_mineral/fibrilith

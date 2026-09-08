@@ -155,7 +155,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	badge = /obj/item/clothing/suit/security_badge/nanotrasen
 	slot_card = /obj/item/card/id/nanotrasen
 	slot_back = list(/obj/item/storage/backpack)
-	slot_belt = list(/obj/item/device/pda2/ntofficial)
+	slot_belt = list(/obj/item/device/pda2/nt)
 	slot_jump = list(/obj/item/clothing/under/misc/lawyer/black) // so they can slam tables
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_ears = list(/obj/item/device/radio/headset/command/inspector)

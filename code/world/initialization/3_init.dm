@@ -109,7 +109,7 @@
 
 	area_table_spawn(/area/station/crew_quarters/kitchen, pick(childrentypesof(/obj/item/paper/recipe)))
 #ifdef SEASON_AUTUMN
-	area_table_spawn(/area/station/crew_quarters/barber_shop, /obj/item/paper/hair_fall)
+	area_table_spawn(/area/station/crew_quarters/barber_shop, /obj/item/paper/image/hair_fall)
 #endif
 
 	//SpyStructures and caches live here

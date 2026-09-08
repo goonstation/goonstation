@@ -232,6 +232,10 @@ TYPEINFO(/obj/submachine/claw_machine)
 	name = "super cute bee plush toy"
 	icon_state = "bee_cute"
 
+/obj/item/toy/plush/small/bee/rd
+	name = "RD's Heisenbee plush"
+	desc = "A very special plush."
+
 /obj/item/toy/plush/small/buddy
 	name = "buddy plush toy"
 	icon_state = "buddy"
@@ -263,6 +267,10 @@ TYPEINFO(/obj/submachine/claw_machine)
 /obj/item/toy/plush/small/possum
 	name = "possum plush toy"
 	icon_state = "possum"
+
+/obj/item/toy/plush/small/possum/md
+	name = "MD's Morty plush"
+	desc = "Part of a matching set."
 
 /obj/item/toy/plush/small/brullbar
 	name = "brullbar plush toy"

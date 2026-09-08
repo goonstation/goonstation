@@ -202,6 +202,10 @@ var/global/area/current_battle_spawn = null
 	for (var/client/C in clients)
 		battlersleft_hud.add_client(C)
 
+#ifdef MAP_OVERRIDE_MENHIR
+	random_events.menhir_events_enabled = 0
+#endif
+
 /datum/game_mode/battle_royale/proc/battle_shuttle_spawn(var/datum/mind/player)
 	bestow_objective(player,/datum/objective/battle_royale/win)
 	boutput(player.current, "<B>Objective</B>: Defeat all other battlers!")

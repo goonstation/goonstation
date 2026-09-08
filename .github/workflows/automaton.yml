@@ -24,9 +24,9 @@ jobs:
             "COGMAP2",
             "CLARION",
             "DONUT3",
-            "DONUT2",
             "OSHAN",
             "KONDARU",
+            "MENHIR",
             "NADIR",
             "NEON",
 # TICONDEROGA CHANGE
@@ -101,9 +101,9 @@ jobs:
             "COGMAP2",
             "CLARION",
             "DONUT3",
-            "DONUT2",
             "OSHAN",
             "KONDARU",
+            "MENHIR",
             "NADIR",
             "NEON",
 # TICONDEROGA CHANGE

@@ -447,6 +447,8 @@
 
 /obj/item/toolbox_arm/attackby(obj/item/W, mob/user)
 	if ((istype(W, /obj/item/extinguisher)) && (!src.extinguisher))
+		src.setMaterial(W.material)
+		W.forensic_holder.copy_to(src.forensic_holder)
 		src.extinguisher = 1
 		boutput(user, "You add the fire extinguisher to [src]!")
 		src.name = "Toolbox/robot arm/fire extinguisher assembly"
@@ -456,6 +458,9 @@
 	else if ((istype(W, /obj/item/device/prox_sensor)) && (src.extinguisher))
 		boutput(user, "You complete the Firebot! Beep boop.")
 		var/obj/machinery/bot/firebot/S = new /obj/machinery/bot/firebot
+		S.setMaterial(src.material)
+		S.forensic_holder = src.forensic_holder
+		W.forensic_holder.copy_to(S.forensic_holder)
 		S.set_loc(get_turf(src))
 		S.name = src.created_name
 		qdel(W)

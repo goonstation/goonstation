@@ -22,7 +22,7 @@ TYPEINFO(/obj/item/light_parts)
 	name = "fixture parts"
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "tube-fixture"
-	material_amt = 0.2
+	material_amt = MATERIAL::AMOUNT::SHEET * 2
 	can_arcplate = FALSE
 
 	var/installed_icon_state = "tube-empty"
@@ -189,7 +189,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	plane = PLANE_NOSHADOW_ABOVE
 	text = ""
 	flags = FLUID_SUBMERGE | USEDELAY
-	material_amt = 0.2
+	material_amt = MATERIAL::AMOUNT::SHEET * 2
 
 	var/on = 0 // 1 if on, 0 if off
 	var/brightness = 1.6 // luminosity when on, also used in power calculation

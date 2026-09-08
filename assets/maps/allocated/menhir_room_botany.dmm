@@ -1,0 +1,501 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/unsimulated/floor/void,
+/area/unspace/botany)
+"c" = (
+/turf/unsimulated/wall/auto/adventure/icemooninterior,
+/area/unspace/botany)
+"d" = (
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/floor/setpieces/rootfloor,
+/area/unspace/botany)
+"e" = (
+/obj/item/bee_egg_carton,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/rootfloor,
+/area/unspace/botany)
+"g" = (
+/obj/machinery/plantpot,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/rootfloor,
+/area/unspace/botany)
+"h" = (
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/botany)
+"p" = (
+/obj/landmark/menhir/room{
+	tag = "menhir_room_botany"
+	},
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/botany)
+"s" = (
+/obj/random_item_spawner/fruits/veggies/few,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/rootfloor,
+/area/unspace/botany)
+"t" = (
+/turf/unsimulated/floor/void/timewarp,
+/area/unspace/botany)
+"u" = (
+/obj/item/parts/human_parts/leg/left/synth,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/rootfloor,
+/area/unspace/botany)
+"v" = (
+/obj/item/reagent_containers/glass/wateringcan{
+	pixel_y = 5
+	},
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/rootfloor,
+/area/unspace/botany)
+"w" = (
+/obj/submachine/seed_manipulator{
+	dir = 4
+	},
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/rootfloor,
+/area/unspace/botany)
+"x" = (
+/obj/machinery/plantpot,
+/obj/map/light/cyan/menhir,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/rootfloor,
+/area/unspace/botany)
+"z" = (
+/turf/unsimulated/floor/setpieces/rootfloor,
+/area/unspace/botany)
+"B" = (
+/obj/machinery/vending/hydroponics,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/rootfloor,
+/area/unspace/botany)
+"D" = (
+/obj/submachine/chem_extractor{
+	dir = 4
+	},
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/rootfloor,
+/area/unspace/botany)
+"F" = (
+/obj/reagent_dispensers/watertank/big,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/rootfloor,
+/area/unspace/botany)
+"H" = (
+/obj/reagent_dispensers/compostbin,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/rootfloor,
+/area/unspace/botany)
+"I" = (
+/obj/table/auto,
+/obj/item/paper_bin{
+	pixel_y = 6
+	},
+/obj/decal/cleanable/desk_clutter,
+/obj/item/hand_labeler{
+	pixel_x = 5
+	},
+/obj/item/plantanalyzer,
+/obj/item/device/reagentscanner{
+	pixel_x = -7
+	},
+/obj/item/pen,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/rootfloor,
+/area/unspace/botany)
+"K" = (
+/obj/item/reagent_containers/glass/water_pipe,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/rootfloor,
+/area/unspace/botany)
+"L" = (
+/obj/item/reagent_containers/food/snacks/sandwich/meat_m,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/rootfloor,
+/area/unspace/botany)
+"M" = (
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/botany)
+"P" = (
+/obj/menhir_room_objs/hidey_helper,
+/obj/stool/chair/green{
+	dir = 8
+	},
+/turf/unsimulated/floor/setpieces/rootfloor,
+/area/unspace/botany)
+"Q" = (
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/unspace/botany)
+"R" = (
+/obj/submachine/seed_vendor,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/rootfloor,
+/area/unspace/botany)
+"S" = (
+/obj/item/wrench,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/rootfloor,
+/area/unspace/botany)
+"T" = (
+/obj/random_item_spawner/fruits/few,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/rootfloor,
+/area/unspace/botany)
+"U" = (
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/wall/auto/adventure/icemooninterior,
+/area/unspace/botany)
+"V" = (
+/obj/item/reagent_containers/glass/bottle/ammonia/large,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/rootfloor,
+/area/unspace/botany)
+"W" = (
+/obj/map/light/cyan/menhir,
+/obj/menhir_room_objs/hidey_helper_trigger,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/botany)
+
+(1,1,1) = {"
+a
+a
+c
+a
+c
+a
+c
+a
+c
+a
+c
+a
+c
+a
+a
+"}
+(2,1,1) = {"
+a
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+a
+"}
+(3,1,1) = {"
+c
+c
+c
+z
+T
+g
+z
+U
+I
+w
+D
+z
+c
+c
+c
+"}
+(4,1,1) = {"
+a
+c
+z
+g
+d
+u
+H
+c
+R
+z
+d
+g
+z
+c
+a
+"}
+(5,1,1) = {"
+c
+c
+g
+B
+v
+z
+c
+c
+c
+g
+V
+g
+z
+c
+c
+"}
+(6,1,1) = {"
+a
+c
+z
+x
+g
+S
+M
+W
+M
+z
+g
+d
+K
+c
+a
+"}
+(7,1,1) = {"
+c
+c
+F
+z
+e
+z
+c
+M
+c
+L
+s
+P
+z
+c
+c
+"}
+(8,1,1) = {"
+a
+c
+c
+d
+g
+z
+c
+h
+c
+z
+g
+d
+c
+c
+a
+"}
+(9,1,1) = {"
+c
+c
+c
+c
+c
+c
+c
+Q
+c
+c
+c
+c
+c
+c
+c
+"}
+(10,1,1) = {"
+a
+c
+a
+c
+a
+c
+c
+p
+c
+c
+a
+c
+a
+c
+a
+"}
+(11,1,1) = {"
+a
+a
+a
+a
+a
+c
+t
+t
+t
+c
+a
+a
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+a
+a
+a
+t
+t
+t
+t
+t
+a
+a
+a
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+a
+a
+t
+t
+t
+t
+t
+t
+t
+a
+a
+a
+a
+"}
+(14,1,1) = {"
+a
+a
+a
+t
+t
+t
+t
+t
+t
+t
+t
+t
+a
+a
+a
+"}
+(15,1,1) = {"
+a
+a
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+a
+a
+"}
+(16,1,1) = {"
+a
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+a
+"}
+(17,1,1) = {"
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+"}
+(18,1,1) = {"
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+"}
+(19,1,1) = {"
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+"}
+(20,1,1) = {"
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+"}
