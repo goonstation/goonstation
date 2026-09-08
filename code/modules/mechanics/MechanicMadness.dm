@@ -501,6 +501,9 @@ TYPEINFO(/obj/item/mechanics)
 		src.set_dir(turn(src.dir, -90))
 
 	proc/check_wrenching_conditions(var/mob/user)
+		if (src.GetComponent(/datum/component/glued))
+			return FALSE // no. just no.
+
 		//We need only to check conditions when the object is non-wrenched. Because else it can always be loosened
 		if(src.level == OVERFLOOR)
 			if(!isturf(src.loc) && !(IN_CABINET)) // allow items to be deployed inside housings, but not in other stuff like toolboxes
