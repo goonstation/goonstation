@@ -348,6 +348,7 @@ TYPEINFO(/mob)
 		src.ghost.corpse = null
 
 	for(var/mob/dead/target_observer/TO in observers)
+		SEND_SIGNAL(src, COMSIG_MOB_OBSERVER_DETACHED, TO)
 		LAZYLISTREMOVE(observers, TO)
 		TO.ghostize()
 

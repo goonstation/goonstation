@@ -600,6 +600,7 @@
 	if (src.ailments) //ZeWaka: Fix for null.ailments
 		src.ailments -= strain
 	strain.master.on_remove(src,strain)
+	SEND_SIGNAL(src, COMSIG_MOB_DISEASE_CURED, strain.master, strain)
 	qdel(strain)
 	return 1
 
@@ -612,6 +613,7 @@
 				src.add_ailment_resistance(strain.master.type, strain.master.type)
 			src.ailments -= strain
 			strain.master.on_remove(src,strain)
+			SEND_SIGNAL(src, COMSIG_MOB_DISEASE_CURED, strain.master, strain)
 			qdel(strain)
 			return 1
 	return 0
