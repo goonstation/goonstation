@@ -1,5 +1,9 @@
 
 (t)tue sep 08 26
+(u)Sord
+(p)27205
+(e)🗺|A-Mapping
+(*)Escape shuttle walls are now opaque. Spooky. New shuttles coming soon.
 (u)Kubius
 (p)27756
 (e)🗺|A-Mapping
