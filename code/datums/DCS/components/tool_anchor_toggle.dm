@@ -45,6 +45,11 @@ TYPEINFO(/datum/component/assembly)
 	// If the tool you need isn't here, you're welcome to add it
 	CRASH("[tool] is not a valid tool for component/tool_anchor_toggle!")
 
+/datum/component/tool_anchor_toggle/UnregisterFromParent()
+	. = ..()
+	src.UnregisterSignal(parent, COMSIG_ATTACKBY)
+	actionbar.stop(actionbar, src.parent_atom)
+
 /datum/component/tool_anchor_toggle/proc/attackby(datum/source, obj/item/W, mob/user)
 	if(!istool(W, src.tool_type))
 		return
