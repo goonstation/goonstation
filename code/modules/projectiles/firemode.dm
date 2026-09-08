@@ -49,6 +49,12 @@ ABSTRACT_TYPE(/datum/firemode)
 		shot_number = 4
 		shot_delay = 0.1 SECONDS
 
+	janitor_wave
+		wave
+			projectile_override = new /datum/projectile/special/shotchem/wave/wide
+		single
+			projectile_override = new /datum/projectile/special/shotchem/wave/single
+
 	grenade_launcher_broadside
 		name = "grenade launcher broadside"
 		shot_number = 2
