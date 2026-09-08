@@ -40,17 +40,17 @@
 	. += "[SPAN_ALERT("<b><i>You</i> definitely aren't supposed to put this on.</b> ")]"
 
 /obj/item/clothing/suit/un_jacket
-	name = "\improper PCN field jacket"
-	desc = "A field jacket issued by the United Nations Peacekeeper Corps Navy. How many owners has this one had?"
+	name = "\improper PCN deck jacket"
+	desc = "A deck jacket issued by the United Nations Peacekeeper Corps Navy. How many owners has this one had?"
 	body_parts_covered = TORSO|ARMS
 	bloodoverlayimage = SUITBLOOD_COAT
 	modularized = TRUE
 
 	icon = 'modular_ticonderoga/icons/obj/clothing/item_suit.dmi'
 	wear_image_icon = 'modular_ticonderoga/icons/mob/clothing/worn_suit.dmi'
-	icon_state = "field_jacket"
-	item_state = "field_jacket"
-	coat_style = "field_jacket"
+	icon_state = "deck_jacket"
+	item_state = "deck_jacket"
+	coat_style = "deck_jacket"
 
 /obj/item/clothing/suit/un_jacket/setupProperties()
 	..()
