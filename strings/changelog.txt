@@ -1,5 +1,9 @@
 
 (t)tue sep 08 26
+(u)Lithesra
+(p)27789
+(e)🎨🐁|C-Sprites, A-Critters
+(+)A few drone types that lacked death sprites now have ones.
 (u)ANNmagedon + TekoTheTeapot
 (p)27290
 (e)🎨💊|C-Sprites, A-Medical
