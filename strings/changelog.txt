@@ -1,4 +1,9 @@
 
+(t)tue sep 08 26
+(u)ZeWaka, jlsnow301, Smartkar, tigercat2000
+(p)27653
+(e)🚄🔎📄⚙📜|C-Performance, C-Code-Quality, A-UI, A-Internal, C-Documentation
+(+)Made some internal improvements to our TGUI game windows. Shouldn't be noticeable.
 (t)mon sep 07 26
 (u)swinglow20
 (p)27702
