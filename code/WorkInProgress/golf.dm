@@ -79,7 +79,7 @@
 
 	execute_ability(atom/target, params)
 		var/obj/item/golf_club/C = the_item
-		if(istype(C, /obj/item/golf_ball)) // unique cause only official balls track course performance
+		if(istype(target, /obj/item/golf_ball)) // unique cause only official balls track course performance
 			var/obj/item/golf_ball/GB = C
 			GB.strike_amount++
 		if(GET_DIST(C,C.ball) > 0 || GET_DIST(C,the_mob) > 0 )
@@ -125,14 +125,15 @@
 
 		ballshot.max_range = swing_strength + ( ((rand()-0.5) * 3) * golfyness )
 
-		var/obj/projectile/P = shoot_projectile_ST_pixel_spread(the_mob, ballshot, target, pox+mod_x, poy+mod_y)
+		var/obj/projectile/golfball/P = shoot_projectile_ST_pixel_spread(the_mob, ballshot, target, pox+mod_x, poy+mod_y)
 		if (P)
 			P.targets = list(target)
 			P.mob_shooter = the_mob
 			P.shooter = the_mob
 			P.icon = C.ball.icon
 			P.icon_state = C.ball.icon_state
-			P.create_storage(/datum/storage/golfball)
+			if(P.storage)
+				P.storage.add_contents(C.ball)
 			P.color = C.ball.color
 			C.ball.set_loc(P)
 			if(!P.proj_data)
@@ -170,6 +171,17 @@
 			if(prob(10))
 				. *= 1.5
 
+/obj/projectile/golfball // Stubby, cause most things use the base /obj/projectile, don't want to fuck the standard to much
+
+	New()
+		AddComponent(/datum/storage/golfball)
+		..()
+
+	disposing()
+		qdel(src.storage)
+		..()
+
+
 /datum/projectile/special/golfball
 	name = "golf ball"
 	sname = "golf ball"
@@ -202,6 +214,12 @@
 				if(A.mouse_opacity)
 					O.collide(A)
 
+	on_launch(obj/projectile/O)
+		O.create_storage(/datum/storage/golfball)
+		if(origin_item)
+			O.storage.add_contents(origin_item)
+		..()
+
 	on_pre_hit(var/atom/hit, var/angle, var/obj/projectile/O)
 		if(ismob(hit) || iscritter(hit))
 			O.visible_message("[O] bounces off of [hit].  Oops...")
@@ -216,8 +234,19 @@
 					. = TRUE
 				else
 					O.visible_message("[O] bounces off of [hit].")
-					if(origin_item)
-						origin_item.loc = O.loc
+					var/obj/projectile/golfball/Q = shoot_reflected_bounce(O, hit, src.max_bounce_count, PROJ_RAPID_HEADON_BOUNCE)
+					if(Q)
+						src.origin_item.set_loc(Q)
+						Q.icon = O.icon
+						Q.icon_state = O.icon_state
+						Q.color = O.color
+						if(istype(Q.proj_data, /datum/projectile/special/golfball))
+							var/datum/projectile/special/golfball/GBD = Q.proj_data
+							GBD.origin_item = src.origin_item
+						if(Q.storage)
+							Q.storage.add_contents(src.origin_item)
+						Q.travelled = O.travelled
+						Q.storage.add_contents(src.origin_item)
 					hit_twitch(hit)
 			else
 				if(hit.pixel_x >= 10 || hit.pixel_x <= -10 || hit.pixel_y >= 10 || hit.pixel_y <= -10)
@@ -225,7 +254,6 @@
 						origin_item.loc = O.loc
 						. = TRUE
 				else
-
 					origin_item.loc = O.loc
 
 	on_hit(atom/A, direction, var/obj/projectile/projectile)
@@ -243,7 +271,7 @@
 			if(!A.density)
 				return
 
-			var/obj/projectile/Q = shoot_reflected_bounce(projectile, A, src.max_bounce_count, PROJ_RAPID_HEADON_BOUNCE)
+			var/obj/projectile/golfball/Q = shoot_reflected_bounce(projectile, A, src.max_bounce_count, PROJ_RAPID_HEADON_BOUNCE)
 			if(Q)
 				ball.set_loc(Q)
 				Q.icon = projectile.icon
@@ -252,9 +280,10 @@
 				if(istype(Q.proj_data, /datum/projectile/special/golfball))
 					var/datum/projectile/special/golfball/GBD = Q.proj_data
 					GBD.origin_item = ball
-				Q.create_storage(/datum/storage/golfball)
+				if(Q.storage)
+					Q.storage.add_contents(ball)
 				Q.travelled = projectile.travelled
-				ball.set_loc(get_turf(A))
+				Q.storage.add_contents(ball)
 			else
 				ball.set_loc(get_turf(A))
 
