@@ -75,20 +75,17 @@
 /// Checks the reagents of a victim for holy water and has a chance of giving them a taste.
 /datum/abilityHolder/vampire/proc/do_check_bloodstream(var/mob/living/carbon/human/HH, var/mult = 1)
 	var/mob/living/carbon/human/M = src.owner
-	if (HH.reagents.total_volume != 0) // There are reagents
-		if (HH.reagents.has_reagent("water_holy"))
-			if (prob(30))
-				M.visible_message(SPAN_ALERT("<b>[M]</b>'s fangs sizzle!"), SPAN_ALERT("There's holy water in their bloodstream! Spicy!"))
-			if (prob(50))
-				M.emote(pick("cough", "spit", "cry", "choke"))
-				M.stuttering += rand(1,3)
-				M.changeBodyTemp(rand(5,20) KELVIN)
-		else if (prob(20))
-			do_taste_bloodstream(HH)
-		//HH.reagents.reaction(M, INGEST, mult)
-		//HH.reagents.trans_to(M, mult)
-		/* Was told it would be too unfair to actually have chemical transfer,
-		but keeping it commented out here incase that changes. */
+	if (HH.reagents.total_volume == 0)
+		return
+	if (HH.reagents.has_reagent("water_holy"))
+		if (prob(30))
+			M.visible_message(SPAN_ALERT("<b>[M]</b>'s fangs sizzle!"), SPAN_ALERT("There's holy water in their bloodstream! Spicy!"))
+		if (prob(50))
+			M.emote(pick("cough", "spit", "cry", "choke"))
+			M.stuttering += rand(1,3)
+			M.changeBodyTemp(rand(5,20) KELVIN)
+	else if (prob(20))
+		do_taste_bloodstream(HH)
 
 /datum/abilityHolder/vampire/proc/do_bite(var/mob/living/carbon/human/HH, var/mult = 1)
 	.= 1
