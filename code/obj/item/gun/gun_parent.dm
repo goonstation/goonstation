@@ -27,7 +27,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 	var/spread_angle = 0
 	var/datum/projectile/current_projectile = null
-	var/list/firemodes // List of projectile:firemode this gun can use
+	var/list/datum/firemode/firemodes // List of projectile:firemode this gun can use
 	/// What firemode is this gun set to use? If null, defaults to the current projectile's default firemode.
 	var/datum/firemode/current_firemode = null
 
@@ -137,20 +137,14 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 /// If a firemode is not passed, it will use the projectile's default firemode.
 /// If a projectile is passed, it will explicitly use that projectile.
 /// If P is null, it will instead respect the currently loaded ammo.
-/obj/item/gun/proc/add_firemode(var/datum/firemode/F, var/datum/projectile/P)
+/obj/item/gun/proc/add_firemode(var/datum/firemode/F)
 	if (!src.firemodes)
 		src.firemodes = list()
-	var/len = length(firemodes)
+	var/len = length(src.firemodes)
 	if (len == 0)
-		src.current_firemode = F ? F : P.default_firemode
-
-	if (len > 0)
-		if (firemodes[len][2] != P)
-			multiple_projectiles = TRUE
-		if (firemodes[len][1] != F)
-			multiple_firemodes = TRUE
+		src.current_firemode = F
 	src.firemodes += null
-	src.firemodes[len+1] = list(F, P)
+	src.firemodes[len+1] = F
 	return
 
 ///OVERRIDE_FIREMODE
@@ -187,8 +181,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if(src.firemodes && length(src.firemodes) > 1)
 		src.current_firemode_num = ((src.current_firemode_num) % src.firemodes.len) + 1
 		src.set_current_firemode(src.firemodes[src.current_firemode_num][1])
-		if (src.firemodes[src.current_firemode_num][2])
-			src.set_current_projectile(src.firemodes[src.current_firemode_num][2])
+		if (src.current_firemode.projectile_override)
+			src.set_current_projectile(src.current_firemode.projectile_override)
 		var/multivariate = multiple_firemodes && multiple_projectiles
 		boutput(user, SPAN_NOTICE("You set the output to [multiple_firemodes ? "[src.current_firemode.name]":""][multivariate ? ", ":""][multiple_projectiles ? "[src.current_projectile.sname]":""]."))
 	return

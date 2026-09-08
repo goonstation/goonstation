@@ -4,6 +4,7 @@ ABSTRACT_TYPE(/datum/firemode)
 	var/shot_number = 1         // How many projectiles should be fired, each will cost the full cost
 	var/shot_delay = 0.1 SECONDS // Time between shots in a burst. Pods will use shot_delay for cooldowns
 	var/full_auto = 0 // If this is fully automatic
+	var/datum/projectile/projectile_override = null // If true, override fired projectile
 
 	donotshoot //! slime does this for w/e reason
 		shot_number = 0
