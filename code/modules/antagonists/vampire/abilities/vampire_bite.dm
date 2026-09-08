@@ -85,7 +85,7 @@
 			M.stuttering += rand(1,3)
 			M.changeBodyTemp(rand(5,20) KELVIN)
 	else if (prob(20))
-		do_taste_bloodstream(HH)
+		src.do_taste_bloodstream(HH)
 
 /datum/abilityHolder/vampire/proc/do_bite(var/mob/living/carbon/human/HH, var/mult = 1)
 	.= 1
