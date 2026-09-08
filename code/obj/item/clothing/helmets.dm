@@ -511,17 +511,18 @@
 
 /// a fancy space helmet that cycles between an off state, mesons vision and pressure vision
 /obj/item/clothing/head/helmet/space/ntso/engineer // Sprite by tekoTheTeapot
-	icon_state = "ntso_engineer-off"
-	item_state = "ntso_engineer-off"
 	name = "NT engineering helmet"
 	desc = "A modified combat helmet for Nanotrasen emergency repair technician. The visor size had to be reduced to fit both meson and atmospheric scanning overlays."
+	icon_state = "ntso_engineer-off"
+	item_state = "ntso_engineer-off"
 	protective_temperature = 1300
+	abilities = list(/obj/ability_button/ntso_engineer_toggle)
 	var/mode = NTSO_ENGIE_OFF
 	var/base_icon_state = "ntso_engineer"
 
 	setupProperties()
 		..()
-		setProperty("heatprot", 50)
+		setProperty("heatprot", 15)
 		setProperty("radprot", 50)
 
 	equipped(mob/user, slot)
@@ -547,7 +548,7 @@
 
 	get_desc(dist, mob/user)
 		. = ..()
-		. + ="The visor is currently set to [src.mode]"
+		. += " The visor is currently set to [src.mode]"
 
 	proc/cycle_state(mob/user)
 		switch(src.mode)
@@ -566,6 +567,7 @@
 				playsound(src, 'sound/machines/tone_beep.ogg', 40, TRUE)
 
 		src.update_icon()
+		user.update_clothing()
 
 	proc/handle_meson(mob/user)
 		var/mob/living/equipped_on = user
@@ -577,6 +579,9 @@
 			equipped_on.meson(src)
 		else
 			equipped_on.unmeson(src)
+
+	proc/should_icon_use_disabled_sprite() // used by the ability button
+		return src.mode == NTSO_ENGIE_OFF
 
 
 #undef NTSO_ENGIE_OFF
