@@ -372,6 +372,7 @@
 #include "code\datums\DCS\components\throw_eat.dm"
 #include "code\datums\DCS\components\toggle_coat.dm"
 #include "code\datums\DCS\components\toggle_hood.dm"
+#include "code\datums\DCS\components\tool_anchor_toggle.dm"
 #include "code\datums\DCS\components\tracker_hud.dm"
 #include "code\datums\DCS\components\train.dm"
 #include "code\datums\DCS\components\transfer_on_attack.dm"

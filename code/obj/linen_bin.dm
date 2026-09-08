@@ -9,6 +9,10 @@ ABSTRACT_TYPE(/obj/linen_bin)
 	var/amount = 23
 	var/obj/item/stored_itempath = null
 
+/obj/linen_bin/New()
+	. = ..()
+	src.AddComponent(/datum/component/tool_anchor_toggle, TOOL_SCREWING)
+
 /obj/linen_bin/attackby(obj/item/I, mob/user)
 	if (istype(I, src.stored_itempath))
 		var/old_amount = src.amount
@@ -17,13 +21,6 @@ ABSTRACT_TYPE(/obj/linen_bin)
 		boutput(user, "You place \the [I] into \the [src].")
 		if (old_amount <= 0)
 			src.UpdateIcon()
-	else if (isscrewingtool(I))
-		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		user.visible_message(SPAN_NOTICE("<b>[user.name]</b> [src.anchored ? "unscrews" : "screws down"] [src]."))
-		if(src.anchored == ANCHORED)
-			src.anchored = UNANCHORED
-		else
-			src.anchored = ANCHORED
 
 /obj/linen_bin/attack_hand(mob/user)
 	add_fingerprint(user)
