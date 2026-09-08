@@ -38,7 +38,7 @@ TYPEINFO(/datum/component/assembly)
 			src.unanchor_prefix = "unwrenches"
 			return
 		if(TOOL_WELDING)
-			src.sound2play = 'sound/items/Welder.ogg'
+			// welders make their own sound from try_weld()
 			src.anchor_prefix = "welds"
 			src.unanchor_prefix = "cuts"
 			return
@@ -59,7 +59,11 @@ TYPEINFO(/datum/component/assembly)
 	if(!isturf(src.parent_atom.loc))
 		boutput(user, SPAN_ALERT("[src.parent] needs to be on the ground to do that!"))
 		return
-	playsound(src.parent_atom.loc, src.sound2play, 50, 1)
+	if(isweldingtool(W))
+		if(!W:try_weld(user))
+			return
+	else //try_weld() already does sound
+		playsound(src.parent_atom.loc, src.sound2play, 50, 1)
 	if(src.actionbar_time)
 		src.actionbar = SETUP_GENERIC_ACTIONBAR(user, src.parent_atom, src.actionbar_time, PROC_REF(toggle_anchor), list(W, user), \
 			W.icon, W.icon_state, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION)
