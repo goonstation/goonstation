@@ -30,11 +30,6 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/list/datum/firemode/firemodes // List of projectile:firemode this gun can use
 	/// What firemode is this gun set to use? If null, defaults to the current projectile's default firemode.
 	var/datum/firemode/current_firemode = null
-
-	/// TRUE if this gun can fire multiple different projectile types. Used to reduce redundant info in firemode cycling.
-	var/multiple_projectiles = FALSE
-	/// TRUE if this gun can use multiple different firemodes. Used to reduce redundant info in firemode cycling.
-	var/multiple_firemodes = FALSE
 	var/current_firemode_num = 1
 	var/silenced = 0
 	///the "out of ammo oh no" click
@@ -143,8 +138,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	var/len = length(src.firemodes)
 	if (len == 0)
 		src.current_firemode = F
-	src.firemodes += null
-	src.firemodes[len+1] = F
+	src.firemodes += F
 	return
 
 ///OVERRIDE_FIREMODE
@@ -180,11 +174,10 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	..()
 	if(src.firemodes && length(src.firemodes) > 1)
 		src.current_firemode_num = ((src.current_firemode_num) % src.firemodes.len) + 1
-		src.set_current_firemode(src.firemodes[src.current_firemode_num][1])
+		src.set_current_firemode(src.firemodes[src.current_firemode_num])
 		if (src.current_firemode.projectile_override)
 			src.set_current_projectile(src.current_firemode.projectile_override)
-		var/multivariate = multiple_firemodes && multiple_projectiles
-		boutput(user, SPAN_NOTICE("You set the output to [multiple_firemodes ? "[src.current_firemode.name]":""][multivariate ? ", ":""][multiple_projectiles ? "[src.current_projectile.sname]":""]."))
+		boutput(user, SPAN_NOTICE("You set the output to [src.current_firemode.name ? src.current_firemode.name : src.current_projectile.sname]."))
 	return
 
 /obj/item/gun/dropped(mob/user as mob)
@@ -337,7 +330,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	else
 		boutput(user, SPAN_ALERT("You silently shoot [user == target ? "yourself" : target] point-blank with [src]!"))
 
-	var/datum/firemode/FM = override_firemode()
+	var/datum/firemode/FM = override_firemode() || current_projectile.firemode
 	if (!process_ammo(user, FM || current_projectile.firemode))
 		return FALSE
 

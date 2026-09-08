@@ -683,7 +683,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		src.default_magazine = barrel.default_magazine
 		src.recoil_strength = barrel.recoil_strength
 		set_current_projectile(new barrel.default_projectile)
-		src.add_firemode(null, current_projectile)
+		src.add_firemode(current_projectile.default_firemode)
 		src.desc = desc = "A semi-automatic rifle, renowned for it's easily convertible caliber, developed by Mabinogi Firearms Company. It's currently fitted with a [src.barrel.name]."
 		src.tooltip_rebuild = TRUE
 
@@ -799,7 +799,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/minigun)
-		add_firemode(new/datum/firemode/automatic, null)
+		add_firemode(new/datum/firemode/automatic)
 		AddComponent(/datum/component/holdertargeting/fullauto/ramping, 2.5, 0.4, 0.9) //you only get full auto, why would you burst fire with a minigun?
 		..()
 
@@ -930,10 +930,10 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 		set_current_projectile(new/datum/projectile/bullet/nine_mm_NATO)
 		if(throw_return)
-			add_firemode(new/datum/firemode/single, null)
+			add_firemode(new/datum/firemode/single)
 		else
-			add_firemode(new/datum/firemode/single, null)
-			add_firemode(new/datum/firemode/automatic, null)
+			add_firemode(new/datum/firemode/single)
+			add_firemode(new/datum/firemode/automatic)
 			AddComponent(/datum/component/holdertargeting/fullauto, 1.2)
 		..()
 
@@ -996,7 +996,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			default_magazine = /obj/item/ammo/bullets/bullet_9mm
 			ammo = new default_magazine
 			set_current_projectile(new/datum/projectile/bullet/bullet_9mm)
-			add_firemode(new/datum/firemode/single, null)
+			add_firemode(new/datum/firemode/single)
 			UpdateIcon()
 
 /obj/item/gun/kinetic/uzi
@@ -1026,8 +1026,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		ammo = new default_magazine
 
 		set_current_projectile(new/datum/projectile/bullet/nine_mm_surplus/burst)
-		add_firemode(new/datum/firemode/automatic, null)
-		add_firemode(new/datum/firemode/three_burst, null)
+		add_firemode(new/datum/firemode/automatic)
+		add_firemode(new/datum/firemode/three_burst)
 		AddComponent(/datum/component/holdertargeting/fullauto, 1.5)
 		..()
 
@@ -1299,7 +1299,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		ammo = new default_magazine
 
 		set_current_projectile(new/datum/projectile/bullet/bullet_22/a180)
-		add_firemode(new/datum/firemode/automatic, null)
+		add_firemode(new/datum/firemode/automatic)
 		AddComponent(/datum/component/holdertargeting/fullauto, 0.6)
 		..()
 
@@ -1348,8 +1348,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/veritate)
-		add_firemode(/datum/firemode/single, /datum/projectile/bullet/veritate)
-		add_firemode(/datum/firemode/three_burst, /datum/projectile/bullet/veritate)
+		add_firemode(new/datum/firemode/kinetic/veritate)
+		add_firemode(new/datum/firemode/kinetic/veritate_burst)
 		..()
 
 	disposing()
@@ -3145,8 +3145,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/assault_rifle)
-		add_firemode(new/datum/firemode/single, null)
-		add_firemode(new/datum/firemode/two_burst, null)
+		add_firemode(new/datum/firemode/single)
+		add_firemode(new/datum/firemode/two_burst)
 		..()
 
 	attack_self(mob/user as mob)
@@ -3189,8 +3189,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/assault_rifle/remington)
-		add_firemode(new/datum/firemode/single, null)
-		add_firemode(new/datum/firemode/two_burst, null)
+		add_firemode(new/datum/firemode/single)
+		add_firemode(new/datum/firemode/two_burst)
 		..()
 
 	alter_projectile(obj/projectile/P)
@@ -3251,8 +3251,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/lmg)
-		add_firemode(new/datum/firemode/lmg, null)
-		add_firemode(new/datum/firemode/automatic, null)
+		add_firemode(new/datum/firemode/lmg/burst)
+		add_firemode(new/datum/firemode/automatic)
 		AddComponent(/datum/component/holdertargeting/fullauto, 1.5 DECI SECONDS)
 		..()
 
