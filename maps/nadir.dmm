@@ -8342,7 +8342,6 @@
 /obj/cable{
 	dir = null
 	},
-/obj/machinery/light/emergency,
 /obj/machinery/chem_heater{
 	pixel_x = -4;
 	dir = 4

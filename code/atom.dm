@@ -94,17 +94,8 @@ TYPEINFO(/atom)
 	New(turf/newLoc)
 		. = ..()
 		// Lets stop having 5 implementations of this that all do it differently
-		if (!src.material && default_material)
-			var/datum/material/mat = istext(default_material) ? getMaterial(default_material) : default_material
-			src.setMaterial(mat)
-
-	proc/get_default_material_id()
-		if (istext(src.default_material))
-			return src.default_material
-		var/datum/material/default_mat = src.default_material
-		if (istype(default_mat))
-			return default_mat.getID()
-		return null
+		if (!src.material && src.default_material)
+			src.setMaterial(getMaterial(src.default_material))
 
 	proc/name_prefix(var/text_to_add, var/return_prefixes = 0, var/prepend = 0)
 		if( !name_prefixes ) name_prefixes = list()
@@ -1046,6 +1037,11 @@ TYPEINFO(/obj/item/disk)
 	SHOULD_CALL_PARENT(TRUE)
 	if(QDELETED(src) && !isnull(newloc))
 		CRASH("Tried to call set_loc on disposed movable [identify_object(src)] to non-null location: [identify_object(newloc)]")
+
+#ifdef CHECK_MORE_RUNTIMES
+	if (HAS_ATOM_PROPERTY(src, PROP_MOVABLE_DO_NOT_SET_LOC))
+		CRASH("Tried to call set_loc on movable with PROP_MOVABLE_DO_NOT_SET_LOC set.")
+#endif
 
 	if (loc == newloc)
 		SEND_SIGNAL(src, COMSIG_MOVABLE_SET_LOC, loc)
