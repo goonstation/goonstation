@@ -907,6 +907,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	var/default_ore = /obj/item/raw_material/rock
 	var/datum/ore/ore = null
 	var/datum/ore/event/event = null
+	var/image/mining_marker = null
+	var/marker_expiration_time = 0
 	var/list/space_overlays = null
 	var/turf/replace_type = /turf/simulated/floor/plating/airless/asteroid
 
@@ -1175,21 +1177,19 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		else if (istype(W, /obj/item/mining_tools))
 			return // matsci `mining_tools` handle their own digging
 		else if (istype(W, /obj/item/oreprospector))
-			var/message = "----------------------------------<br>"
-			message += "<B>Geological Report:</B><br><br>"
+			var/message = ""
+			message += "<B>Geological Report:</B><br>"
 			var/datum/ore/O = src.ore
 			var/datum/ore/event/E = src.event
-			if (O)
-				message += "This stone contains [O.name].<br>"
-				message += "Analysis suggests [src.amount] units of viable ore are present.<br>"
+			if(O)
+				message += O.onScanDirect(src, user)
 			else
 				message += "This rock contains no known ores.<br>"
 			message += "The rock here has a hardness rating of [src.hardness].<br>"
 			if (src.weakened)
 				message += "The rock here has been weakened.<br>"
-			if (E)
-				if (E.analysis_string)
-					message += "[SPAN_ALERT("[E.analysis_string]")]<br>"
+			if(E)
+				message += E.onScanDirect(src, user)
 			message += "----------------------------------"
 			boutput(user, message)
 		else
@@ -1281,6 +1281,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			src.space_overlays += edge_overlay
 
 	Del()
+		src.clear_marker()
 		for(var/turf/T in orange(src, 1))
 			T.ClearSpecificOverlays("ast_edge_[get_dir(T, src)]")
 		..()
@@ -1367,6 +1368,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		var/image/weather = GetOverlayImage("weather")
 		var/image/ambient = GetOverlayImage("ambient")
 
+		src.clear_marker()
 		var/datum/ore/O = src.ore
 		var/datum/ore/event/E = src.event
 		if (src.invincible)
@@ -1443,6 +1445,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 				E.onGenerate(AST)
 				usable_turfs -= AST
 
+	proc/clear_marker()
+		if(src.mining_marker)
+			get_image_group(CLIENT_IMAGE_GROUP_GEOLOGICAL_ANOMALIES).remove_image(src.mining_marker)
+			qdel(src.mining_marker)
+			src.mining_marker = null
 
 /turf/unsimulated/floor/plating/asteroid
 	name = "asteroid"
@@ -2488,6 +2495,16 @@ TYPEINFO(/obj/item/cargotele)
 		text += "<b>Explosive resistance estimate:</b> [geode.break_power] Kiloblasts<br>"
 		boutput(user, text)
 
+	pickup(mob/user)
+		. = ..()
+		if(user)
+			get_image_group(CLIENT_IMAGE_GROUP_GEOLOGICAL_ANOMALIES).add_mob(user)
+
+	dropped(mob/user)
+		. = ..()
+		if(user)
+			get_image_group(CLIENT_IMAGE_GROUP_GEOLOGICAL_ANOMALIES).remove_mob(user)
+
 
 /proc/mining_scan(var/turf/T, var/mob/living/L, var/range)
 	if (!istype(T) || !istype(L))
@@ -2500,10 +2517,6 @@ TYPEINFO(/obj/item/cargotele)
 	var/datum/ore/O
 	var/datum/ore/event/E
 	for (var/turf/simulated/wall/auto/asteroid/AST in range(T,range))
-		//clear out any scanning images if there are any
-		var/datum/client_image_group/cig = get_image_group(T)
-		for(var/image/i in cig.images)
-			cig.remove_image(i)
 		stone++
 		O = AST.ore
 		E = AST.event
@@ -2533,15 +2546,19 @@ TYPEINFO(/obj/item/cargotele)
 	rendered += "----------------------------------"
 	boutput(L, rendered)
 
-/proc/mining_scandecal(var/mob/living/user, var/turf/T, var/decalicon)
-	if(!user || !T || !decalicon) return
-	var/image/O = image('icons/obj/items/mining.dmi',T,decalicon,ASTEROID_MINING_SCAN_DECAL_LAYER)
-	var/datum/client_image_group/cig = get_image_group(T)
-	cig.add_mob(user) //we can add this multiple times so if the user refreshes the scan, it times properly and uses the sub count to handle remove
-	cig.add_image(O)
-
+/proc/mining_scandecal(var/mob/living/user, var/turf/simulated/wall/auto/asteroid/AST, var/decalicon)
+	if(!user || !AST || AST.mining_marker || !decalicon)
+		return
+	var/image/mining_marker = image('icons/effects/mining_anomalies.dmi', AST, decalicon, ASTEROID_MINING_SCAN_DECAL_LAYER)
+	AST.mining_marker = mining_marker
+	AST.marker_expiration_time = TIME + 2 MINUTES
+	mining_marker.appearance_flags = KEEP_APART | RESET_ALPHA | RESET_COLOR | TILE_BOUND
+	mining_marker.plane = PLANE_OVERLAY_EFFECTS
+	mining_marker.alpha = 200
+	get_image_group(CLIENT_IMAGE_GROUP_GEOLOGICAL_ANOMALIES).add_image(mining_marker)
 	SPAWN(2 MINUTES)
-		cig.remove_mob(user)
+		if(AST && AST.marker_expiration_time <= TIME)
+			AST.clear_marker()
 
 ///// MINER TRAITOR ITEM /////
 

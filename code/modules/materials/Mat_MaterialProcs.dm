@@ -491,8 +491,30 @@ triggerOnImage(var/image/target, var/datum/material/source)
 
 
 /datum/materialProc/miracle_add
-	execute(var/location)
-		animate_rainbow_glow(location)
+	execute(var/atom/location)
+		var/added_mat_id = location.material.getID()
+		var/dm_filter/filter = location.get_filter("[added_mat_id]_hsl_color")
+		if(!filter)
+			return
+		if(!islist(filter.color))
+			filter.color = COLOR_MATRIX_IDENTITY
+		filter.color[1] = 0
+		filter.color[17] = 0
+		var/list/color_start = filter.color
+		color_start = color_start.Copy()
+		var/list/color_end = color_start.Copy()
+		color_end[17] = 1
+
+		location.avoid_animating = TRUE
+		var/loop_length = (location.material.getProperty("reflective") - 1) / (location.material.getProperty("reflective", VALUE_MAX) - 1)
+		loop_length = (((1 - loop_length) * 17) + 5) SECONDS
+		animate(filter, color = color_end, time = loop_length, loop = -1, easing = LINEAR_EASING)
+		animate(color = color_start, time = 0, loop = -1, easing = JUMP_EASING)
+		return
+
+/datum/materialProc/miracle_remove
+	execute(var/atom/location)
+		location.avoid_animating = FALSE
 		return
 
 /datum/materialProc/radioactive_add

@@ -922,6 +922,19 @@
 	/obj/item/device/multitool,
 	/obj/item/deconstructor)
 
+/obj/item/storage/belt/utility/atmos
+	name = "atmospheric technican's belt"
+	desc = "A modified utility belt with a holsters for an HPD & a fire extinguisher"
+	can_hold = list(/obj/item/places_pipes, /obj/item/extinguisher)
+
+	spawn_contents = list(/obj/item/crowbar/yellow,
+	/obj/item/weldingtool/yellow,
+	/obj/item/wrench/yellow,
+	/obj/item/device/multitool,
+	/obj/item/places_pipes,
+	/obj/item/device/analyzer/atmospheric/upgraded,
+	/obj/item/extinguisher)
+
 /obj/item/storage/belt/utility/virtual
 	name = "virtual utility belt"
 	desc = "Are these tools DLC?"
@@ -962,6 +975,15 @@
 	/obj/item/reagent_containers/hypospray,
 	/obj/item/device/analyzer/healthanalyzer/upgraded,
 	/obj/item/robodefibrillator)
+
+/obj/item/storage/belt/medical/prepared/NT
+	spawn_contents = list(/obj/item/robodefibrillator,
+	/obj/item/device/analyzer/healthanalyzer/upgraded,
+	/obj/item/reagent_containers/mender/both/high_capacity,
+	/obj/item/reagent_containers/mender_refill_cartridge/both/high_capacity,
+	/obj/item/storage/pill_bottle/mutadone,
+	/obj/item/reagent_containers/hypospray,
+	/obj/item/paper/iou_ntso_medic)
 
 /obj/item/storage/belt/roboticist
 	icon_state = "utilrobotics"

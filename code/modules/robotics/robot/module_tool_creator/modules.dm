@@ -105,6 +105,7 @@
 		/obj/item/device/camera_viewer/public,
 		/obj/item/pen/omni,
 		/obj/item/paper_bin/robot,
+		/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
 	)
 
 // engineer. mechanic.

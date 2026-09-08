@@ -8846,9 +8846,6 @@
 	},
 /area/station/chapel/sanctuary)
 "aMr" = (
-/obj/machinery/light/emergency{
-	dir = 1
-	},
 /obj/item/instrument/large/organ,
 /turf/simulated/floor/carpet{
 	dir = 1;
@@ -54993,7 +54990,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
 /turf/simulated/floor/grime,
 /area/station/hallway/primary/east)
 "rPa" = (
@@ -59394,7 +59393,7 @@
 "uHb" = (
 /obj/strip_door,
 /obj/disposalpipe/segment,
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/plating,
 /area/station/security/beepsky)
 "uHm" = (
@@ -63187,9 +63186,6 @@
 /turf/simulated/floor,
 /area/station/maintenance/east)
 "xfn" = (
-/obj/machinery/conveyor_switch{
-	id = "chapel"
-	},
 /obj/machinery/light{
 	dir = 4
 	},

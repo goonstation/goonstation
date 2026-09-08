@@ -15,6 +15,14 @@ ADD_TO_NAMESPACE(CI)(proc/format_position(atom/A, capitalise = TRUE))
 	else
 		return "\the [A.name] ([A.type]) at ([T.x], [T.y], [T.z]) in [T.loc]"
 
+/// Format a list of types into a list in plain English as a string.
+ADD_TO_NAMESPACE(CI)(proc/type_list(list/area/type_list, and_text = " and "))
+	var/list/text_list = list()
+	for (var/type as anything in type_list)
+		text_list += "([type])"
+
+	return global.english_list(text_list, and_text = and_text)
+
 /// Format a list of area types into a list in plain English as a string.
 ADD_TO_NAMESPACE(CI)(proc/area_list(list/area/area_list, and_text = " and "))
 	var/list/text_list = list()
@@ -32,6 +40,8 @@ CREATE_NAMESPACE(CI, ERRORS)
 ADD_TO_NAMESPACE(CI, ERRORS)(var/list/mail_chutes = CI_LIST)
 /// Misconfigured mail junctions.
 ADD_TO_NAMESPACE(CI, ERRORS)(var/list/mail_junctions = CI_LIST)
+/// Misconfigured mapping helpers.
+ADD_TO_NAMESPACE(CI, ERRORS)(var/list/mapping_helpers = CI_LIST)
 
 
 #undef CI_LIST
