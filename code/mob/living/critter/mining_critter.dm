@@ -11,7 +11,10 @@
 	var/list/bite_adjectives = list("vicious","vengeful","violent")
 	sound_attack = 'sound/impact_sounds/Flesh_Tear_1.ogg'
 	can_beat_up_robots = TRUE //angry space ants
-
+	miss_prob = 80
+	dam_low = 8
+	dam_high = 12
+	var/tears_off_limbs = FALSE //Basically checks if the attack should tear off limbs (Only available to Hulk Fermids at this time)
 	harm(mob/target, var/mob/user)
 		if (!user || !target)
 			return 0
@@ -19,14 +22,27 @@
 			return
 		src.custom_msg = SPAN_COMBAT("<b>[user] bites [target] with [his_or_her(user)] [pick(src.bite_adjectives)] mandibles!</b>")
 		..()
-
+		if (ishuman(target) && tears_off_limbs && prob(20))
+			var/mob/living/carbon/human/limb_loser = target
+			if(limb_loser.limbs)
+				limb_loser.sever_limb(pick(list("l_arm", "r_arm", "l_leg", "r_leg")))
+/datum/limb/mouth/fermid/fermid_hulk
+	tears_off_limbs = TRUE
+	dam_low = 15
+	dam_high = 35
+	harm_intent_delay = 15
+	miss_prob = 95
+/datum/limb/mouth/fermid/queen
+	dam_low = 10
+	dam_high = 15
+	miss_prob = 85
 ///////////////////////////////////////////////
 // FERMID
 ///////////////////////////////////////////////
 
 /mob/living/critter/fermid
 	name = "fermid"
-	desc = "Extremely hostile asteroid-dwelling bugs. Best to avoid them wherever possible."
+	desc = "Extremely hostile asteroid-dwelling bug. Best to avoid them wherever possible."
 	icon_state = "fermid"
 	icon_state_dead = "fermid-dead"
 	speech_verb_say = "clicks"
@@ -41,9 +57,9 @@
 	pull_w_class = W_CLASS_NORMAL
 	hand_count = 3
 	reagent_capacity = 100
-	health_brute = 25
+	health_brute = 30
 	health_brute_vuln = 1
-	health_burn = 25
+	health_burn = 30
 	health_burn_vuln = 0.3
 	is_npc = TRUE
 	ai_type = /datum/aiHolder/aggressive
@@ -53,7 +69,7 @@
 	add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/sting/fermid)
 	no_stamina_stuns = TRUE
 	var/recolor = null
-
+	var/speed = /datum/movement_modifier/fermid //Variable that can be used to modify the speed for variants of fermids. Defined further down for different weight classes.
 	New()
 		..()
 		LAZYLISTADDUNIQUE(src.faction, FACTION_FERMID)
@@ -61,7 +77,7 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 80) // They live in asteroids so they should be resistant
 		if(recolor)
 			color = color_mapping_matrix(inp=list("#cc0303", "#9d9696", "#444142"), out=list(recolor, "#9d9696", "#444142"))
-
+		APPLY_MOVEMENT_MODIFIER(src, speed, src)
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_BUGS)
 		..()
@@ -121,17 +137,12 @@
 	critter_ability_attack(var/mob/target)
 		var/datum/targetable/critter/sting = src.abilityHolder.getAbility(/datum/targetable/critter/sting/fermid)
 		var/datum/targetable/critter/bite = src.abilityHolder.getAbility(/datum/targetable/critter/bite/fermid_bite)
-		if (sting && !sting.disabled && sting.cooldowncheck())
+		if (sting && !sting.disabled && sting.cooldowncheck() && is_incapacitated(target))
 			sting.handleCast(target)
 			return TRUE
 		else if (bite && !bite.disabled && bite.cooldowncheck())
 			bite.handleCast(target)
 			return TRUE
-
-	critter_basic_attack(mob/target)
-		if(prob(30))
-			src.swap_hand()
-		return ..()
 
 	death()
 		src.reagents.add_reagent("atropine", 50, null)
@@ -143,7 +154,7 @@
 			..()
 			AddComponent(/datum/component/radioactive, 20, TRUE, FALSE, 0)
 /mob/living/critter/fermid/polymorph
-	desc = "Extremely hostile asteroid-dwelling bugs. This one looks particularly annoyed about something."
+	desc = "Extremely hostile asteroid-dwelling bug. This one looks particularly annoyed about something."
 	health_brute = 50
 	health_brute_vuln = 1
 	health_burn = 50
@@ -160,25 +171,39 @@
 ///////////////////////////////////////////////
 // FERMID WORKER
 ///////////////////////////////////////////////
+/datum/movement_modifier/small_fermid
+	multiplicative_slowdown = 0.6
+
+/datum/movement_modifier/fermid
+	multiplicative_slowdown = 1
+
+
 /mob/living/critter/fermid/worker
-	desc = "Extremely hostile asteroid-dwelling bugs. Small, numble, and a whole lot of mandible."
+	desc = "Extremely hostile asteroid-dwelling bug. Small, nimble, and a whole lot of mandible."
 	icon_state = "fermid-s"
 	icon_state_dead = "fermid-s-dead"
 	health_brute = 20
 	health_burn = 20
 	flags = TABLEPASS
 	fits_under_table = 1
-
+	speed = /datum/movement_modifier/small_fermid
+	add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/sting/fermid, /datum/targetable/critter/frenzy/fermid)
+	critter_ability_attack(var/mob/target)
+		var/datum/targetable/critter/frenzy/fermid/frenzy = src.abilityHolder.getAbility(/datum/targetable/critter/frenzy/fermid)
+		if(!frenzy.disabled && frenzy.cooldowncheck())
+			frenzy.handleCast(target)
+			return TRUE
+		. = ..()
 	green
 		recolor = "#05da17"
 
 /mob/living/critter/fermid/spitter
-	desc = "Extremely hostile asteroid-dwelling bugs. Best to avoid whatever is in that enlarged gaster."
+	desc = "Extremely hostile asteroid-dwelling bug. Best to avoid whatever is in that enlarged gaster."
 	icon_state = "fermid-r"
 	icon_state_dead = "fermid-r-dead"
-	health_brute = 30
-	health_burn = 30
-	add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/sting/fermid, /datum/targetable/critter/spit)
+	health_brute = 35
+	health_burn = 35
+	add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/spit)
 
 	critter_ability_attack(var/mob/target)
 		var/datum/targetable/critter/spit/spit = src.abilityHolder.getAbility(/datum/targetable/critter/spit)
@@ -189,7 +214,7 @@
 
 	orange
 		recolor = "#ca710a"
-		add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/sting/fermid, /datum/targetable/critter/flamethrower)
+		add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/flamethrower)
 
 		critter_ability_attack(var/mob/target)
 			var/datum/targetable/critter/fire = src.abilityHolder.getAbility(/datum/targetable/critter/flamethrower)
@@ -200,7 +225,7 @@
 
 	blue
 		recolor = "#1156d8"
-		add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/sting/fermid, /datum/targetable/critter/arcflash)
+		add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/arcflash)
 
 		critter_ability_attack(var/mob/target)
 			var/datum/targetable/critter/arc = src.abilityHolder.getAbility(/datum/targetable/critter/arcflash)
@@ -214,7 +239,10 @@
 // FERMID QUEEN
 ///////////////////////////////////////////////
 /datum/movement_modifier/big_fermid
-	additive_slowdown = 2.5
+	additive_slowdown = 2
+
+/datum/movement_modifier/big_fermid_fast
+	multiplicative_slowdown = 0.8
 
 /mob/living/critter/fermid/queen
 	name = "fermid queen"
@@ -222,36 +250,74 @@
 	icon = 'icons/misc/bigcritter.dmi'
 	icon_state = "fermid-queen"
 	icon_state_dead = "fermid-queen-dead"
-	health_brute = 50
+	health_brute = 200
 	health_brute_vuln = 0.6
-	health_burn = 25
+	health_burn = 100
 	health_burn_vuln = 0.1
 	pull_w_class = W_CLASS_BULKY
-
+	speed = /datum/movement_modifier/big_fermid
+	add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/screech, /datum/targetable/critter/shockwave/fermid_shockwave)
+	critter_ability_attack(var/mob/target)
+		var/datum/targetable/critter/screech/screech = src.abilityHolder.getAbility(/datum/targetable/critter/screech)
+		var/datum/targetable/critter/shockwave/fermid_shockwave/shockwave = src.abilityHolder.getAbility(/datum/targetable/critter/shockwave/fermid_shockwave)
+		if(!screech.disabled && screech.cooldowncheck())
+			screech.handleCast(target)
+			return TRUE
+		if (!shockwave.disabled && shockwave.cooldowncheck())
+			shockwave.handleCast(target)
+			return TRUE
+		. = ..()
 	New()
 		..()
-		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/big_fermid, src)
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/mouth/fermid/queen
 		src.pixel_x -= 16
+		src.add_stam_mod_max("queen", 50)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "queen", 50)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "queen", 50)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_DISARM_RESIST, "queen", 100)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "queen", 15)
 
 /mob/living/critter/fermid/hulk
 	name = "fermid hulk"
-	desc = "Extremely hostile asteroid-dwelling mother of bugs. A huge guardian of some riches."
+	desc = "Extremely hostile asteroid-dwelling adult bug. A huge guardian of some riches."
 	icon = 'icons/misc/bigcritter.dmi'
 	icon_state = "fermid-hulk"
 	icon_state_dead = "fermid-hulk-dead"
-	health_brute = 40
+	health_brute = 150
 	health_brute_vuln = 0.5
-	health_burn = 25
+	health_burn = 75
 	health_burn_vuln = 0.1
 	pull_w_class = W_CLASS_BULKY
-
+	add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/slam/fermid, /datum/targetable/critter/screech, /datum/targetable/critter/shockwave/fermid_shockwave)
+	speed = /datum/movement_modifier/big_fermid
+	critter_ability_attack(var/mob/target)
+		var/datum/targetable/critter/slam/fermid/slam = src.abilityHolder.getAbility(/datum/targetable/critter/slam/fermid)
+		var/datum/targetable/critter/screech/screech = src.abilityHolder.getAbility(/datum/targetable/critter/screech)
+		var/datum/targetable/critter/shockwave/fermid_shockwave/shockwave = src.abilityHolder.getAbility(/datum/targetable/critter/shockwave/fermid_shockwave)
+		if(!screech.disabled && screech.cooldowncheck())
+			screech.handleCast(target)
+			return TRUE
+		if (!slam.disabled && slam.cooldowncheck())
+			slam.handleCast(target)
+			return TRUE
+		if (!shockwave.disabled && shockwave.cooldowncheck())
+			shockwave.handleCast(target)
+			return TRUE
+		. = ..()
 	New()
 		..()
-		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/big_fermid, src)
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/mouth/fermid/fermid_hulk
 		src.pixel_x -= 16
+		src.add_stam_mod_max("hulk", 50)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "hulk", 50)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "hulk", 50)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_DISARM_RESIST, "hulk", 100)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "hulk", 15)
 	purple
 		recolor = "#b90fab"
-
+		speed = /datum/movement_modifier/big_fermid_fast
 	radioactive
 		New()
 			..()
@@ -277,10 +343,9 @@
 	health_burn = 15
 	health_burn_vuln = 0.5
 	add_abilities = list(/datum/targetable/critter/bite/fermid_bite)
-
+	speed = /datum/movement_modifier/grub_fermid
 	New()
 		..()
-		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/grub_fermid, src)
 
 ///////////////////////////////////////////////
 // FERMID EGG

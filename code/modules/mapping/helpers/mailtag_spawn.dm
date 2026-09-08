@@ -10,10 +10,12 @@ ABSTRACT_TYPE(/obj/mapping_helper/mailtag)
 	var/message = FALSE
 
 /obj/mapping_helper/mailtag/setup()
+	var/object_found = FALSE
 	for (var/obj/disposalpipe/switch_junction/junction in src.loc)
 		junction.name = "mail junction ([src.name])"
 		junction.mail_tag ||= list()
 		junction.mail_tag += src.mail_tag
+		object_found = TRUE
 		break
 
 	for (var/obj/machinery/disposal/mail/chute in src.loc)
@@ -25,7 +27,12 @@ ABSTRACT_TYPE(/obj/mapping_helper/mailtag)
 		SPAWN(1 SECOND)
 			chute.post_radio_status()
 
+		object_found = TRUE
 		break
+
+	if (!object_found)
+		. ||= list()
+		. += "[CI.format_position(src)] could not locate any objects of type (/obj/disposalpipe/switch_junction) or (/obj/machinery/disposal/mail)."
 
 
 /obj/mapping_helper/mailtag/manual
@@ -33,7 +40,8 @@ ABSTRACT_TYPE(/obj/mapping_helper/mailtag)
 
 /obj/mapping_helper/mailtag/manual/setup()
 	if (!src.mail_tag)
-		CRASH("Unconfigured mailtag spawn!\nCoordinates: [src.x] x, [src.y] y, [src.z] z")
+		. ||= list()
+		. += "[CI.format_position(src)] has no set `mail_tag` value."
 
 	. = ..()
 

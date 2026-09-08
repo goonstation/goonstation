@@ -18,6 +18,7 @@ TRAYS
 	throw_speed = 2
 	throw_range = 7
 	w_class = W_CLASS_NORMAL
+	default_material = "wood"
 	desc = "A wooden tube, used to roll dough flat in order to make various edible objects. It's pretty sturdy."
 	stamina_damage = 40
 	stamina_cost = 15
@@ -338,6 +339,8 @@ TRAYS
 	icon_state = "chop_closed"
 	item_state = "chop"
 	w_class = W_CLASS_TINY
+	default_material = "wood"
+	material_amt = MATERIAL::AMOUNT::ROD * 2
 
 	attack_self(mob/user as mob)
 		if(src.icon_state == "chop_closed")
@@ -364,6 +367,8 @@ TRAYS
 	desc = "cheap disposable chopsticks!"
 	icon_state = "chop_open"
 	item_state = "chop"
+	default_material = "wood"
+	material_amt = MATERIAL::AMOUNT::ROD * 2
 	rotatable = 0
 	tool_flags = 0
 
@@ -483,6 +488,18 @@ TRAYS
 		contained_food = /obj/item/reagent_containers/food/snacks/candy/sugar_cube
 		allowed_food = /obj/item/reagent_containers/food/snacks/candy/sugar_cube
 		contained_food_name = "sugar cube"
+		w_class = W_CLASS_SMALL
+
+	candycorn
+		name = "Discount Dan's Candy Corn Cornucopia"
+		desc = "It's a candy corn jar. ...Somebody bought one of these on purpose?"
+		icon_state = "candycorn"
+		count = 9
+		max_count = 9
+		box_type = "candycorn"
+		contained_food = /obj/item/reagent_containers/food/snacks/candy/candy_corn
+		allowed_food = /obj/item/reagent_containers/food/snacks/candy/candy_corn
+		contained_food_name = "candycorn"
 		w_class = W_CLASS_SMALL
 
 	New()
@@ -1166,6 +1183,8 @@ TYPEINFO(/obj/item/plate/pizza_box)
 	desc = "a bamboo mat for rolling sushi"
 	icon_state = "roller-0"
 	w_class = W_CLASS_SMALL
+	default_material = "bamboo"
+	material_amt = MATERIAL::AMOUNT::SHEET
 
 	var/seaweed //0 or 1, storage variable for checking if there's a seaweed overlay without using resources pulling image files
 	var/rice //same :)
@@ -1319,6 +1338,7 @@ TYPEINFO(/obj/item/plate/pizza_box)
 	desc = "a table! with WHEELS!"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "kitchen_island"
+	default_material = "wood"
 
 /obj/item/tongs
 	name = "tongs"
