@@ -501,9 +501,6 @@ TYPEINFO(/obj/item/mechanics)
 		src.set_dir(turn(src.dir, -90))
 
 	proc/check_wrenching_conditions(var/mob/user)
-		if (src.GetComponent(/datum/component/glued))
-			return FALSE // no. just no.
-
 		//We need only to check conditions when the object is non-wrenched. Because else it can always be loosened
 		if(src.level == OVERFLOOR)
 			if(!isturf(src.loc) && !(IN_CABINET)) // allow items to be deployed inside housings, but not in other stuff like toolboxes
@@ -555,7 +552,7 @@ TYPEINFO(/obj/item/mechanics)
 				logTheThing(LOG_STATION, user, "attaches a <b>[src]</b> to the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"]  at [log_loc(src)].")
 				level = UNDERFLOOR
 				anchored = ANCHORED
-				src.unglue_attached_to()
+				SEND_SIGNAL(src, COMSIG_MOVABLE_DISRUPT_GLUE) // disrupt its connection to whatever its glued to
 				set_owner(user)
 				secure()
 		var/turf/T = src.loc

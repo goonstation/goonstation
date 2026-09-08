@@ -120,6 +120,8 @@
 	#define COMSIG_MOVABLE_CONTRABAND_CHANGED "mov_contraband_changed"
 	/// when an AM is revealed from under a floor tile (turf revealed from)
 	#define COMSIG_MOVABLE_FLOOR_REVEALED "mov_floor_revealed"
+	/// When an AM does something that should intentionally disrupt glue, ex: anchoring items
+	#define COMSIG_MOVABLE_DISRUPT_GLUE "mov_disrupt_glue"
 
 // ---- turf signals ----
 	/// when an atom inside the turfs contents changes opacity (turf, previous_opacity, thing)

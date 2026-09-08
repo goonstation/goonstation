@@ -55,6 +55,7 @@ TYPEINFO(/datum/component/glued)
 	RegisterSignal(parent, COMSIG_MOVABLE_SET_LOC, PROC_REF(on_set_loc))
 	RegisterSignals(parent, list(COMSIG_ATOM_EXPLODE, COMSIG_ATOM_EXPLODE_INSIDE), PROC_REF(on_explode))
 	RegisterSignal(parent, COMSIG_ATOM_HITBY_PROJ, PROC_REF(on_hitby_proj))
+	RegisterSignal(parent, COMSIG_MOVABLE_DISRUPT_GLUE, PROC_REF(on_disrupt))
 	if(isliving(parent))
 		RegisterSignal(parent, COMSIG_MOB_RESIST, PROC_REF(on_resist))
 
@@ -120,6 +121,12 @@ TYPEINFO(/datum/component/glued)
 				T?.visible_message(SPAN_NOTICE("\The [parent] is ripped off from [glued_to]."))
 				qdel(src)
 
+/datum/component/glued/proc/on_disrupt(atom/movable/parent)
+	var/turf/T = get_turf(parent)
+	parent.unglue_attached_to()
+	T?.visible_message(SPAN_NOTICE("\The [parent] is ripped off from [glued_to]."))
+	qdel(src)
+
 /datum/component/glued/proc/on_explode(atom/movable/parent, list/explode_args)
 	// explode_args format: list(atom/source, turf/epicenter, power, brisance = 1, angle = 0, width = 360, turf_safe=FALSE)
 	explode_args[3] /= 3 // reduce explosion size by a factor of 3
@@ -128,7 +135,7 @@ TYPEINFO(/datum/component/glued)
 /datum/component/glued/UnregisterFromParent()
 	var/atom/movable/parent = src.parent
 	UnregisterSignal(parent, list(COMSIG_ATTACKHAND, COMSIG_ATTACKBY, COMSIG_MOVABLE_PRE_MOVE, COMSIG_MOVABLE_SET_LOC, COMSIG_ATOM_EXPLODE,
-		COMSIG_ATOM_EXPLODE_INSIDE, COMSIG_ATOM_HITBY_PROJ, COMSIG_MOB_RESIST))
+		COMSIG_ATOM_EXPLODE_INSIDE, COMSIG_ATOM_HITBY_PROJ, COMSIG_MOB_RESIST, COMSIG_MOVABLE_DISRUPT_GLUE))
 	UnregisterSignal(glued_to, COMSIG_PARENT_PRE_DISPOSING)
 	parent.remove_filter("glued_outline")
 	parent.animate_movement = src.original_animate_movement
