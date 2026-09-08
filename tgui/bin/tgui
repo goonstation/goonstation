@@ -76,15 +76,13 @@ task-lint() {
   echo "tgui: prettier check passed"
 }
 
-## Run a linter through all packages & fix
-task-lint-fix() {
+## Format code
+task-format() {
   cd "${base_dir}"
   yarn run tsc
   echo "tgui: type check passed"
-  yarn run tgui:lint-fix "${@}"
-  echo "tgui: lint check & fix passed"
-  yarn run tgui:prettier-fix "${@}"
-  echo "tgui: prettier check & fix passed"
+  yarn run tgui:format "${@}"
+  echo "tgui: formatting passed"
 }
 
 task-test() {
@@ -273,10 +271,10 @@ if [[ ${1} == '--lint' ]]; then
   exit 0
 fi
 
-if [[ ${1} == '--lint-fix' ]]; then
+if [[ ${1} == '--format' ]]; then
   shift 1
   task-install
-  task-lint-fix "${@}"
+  task-format "${@}"
   exit 0
 fi
 
