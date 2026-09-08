@@ -25,11 +25,31 @@ TYPEINFO(/datum/component/tool_anchor_toggle)
 	src.actionbar_time = action_time
 	src.cooldown = cooldown_time
 	src.parent_atom = parent
-	RegisterSignal(parent, COMSIG_ATTACKBY, PROC_REF(attackby))
+	src.RegisterSignal(parent, COMSIG_ATTACKBY, PROC_REF(attackby))
+	src.RegisterHelpMessageHandler(src.parent_atom, PROC_REF(help_message_handler))
 
 /datum/component/tool_anchor_toggle/UnregisterFromParent()
 	. = ..()
 	src.UnregisterSignal(parent, COMSIG_ATTACKBY)
+	src.UnregisterHelpMessageHandler(atom_parent)
+
+/datum/component/tool_anchor_toggle/proc/help_message_handler(datum/source, mob/user, list/return_list)
+	var/list/tool_list = new
+	if(src.tool_types & TOOL_SCREWING)
+		tool_list += "<b>screwdriver</b>"
+	if(src.tool_types & TOOL_WRENCHING)
+		tool_list += "<b>wrench</b>"
+	if(src.tool_types & TOOL_WELDING)
+		tool_list += "<b>welding tool</b>"
+	var/tool_names = ""
+	if(tool_list.len == 1)
+		tool_names = "a [tool_list[1]]"
+	else
+		var/final_index_before_and_slash_or = tool_list.len - 1
+		for(var/index = 1 to final_index_before_and_slash_or)
+			tool_names += "a [tool_list[index]], "
+		tool_names += "and/or a [tool_list[tool_list.len]]"
+	return_list += "You can (un)anchor [src.parent] using [tool_names]."
 
 /datum/component/tool_anchor_toggle/proc/attackby(datum/source, obj/item/W, mob/user)
 	if(!istool(W, src.tool_types))
