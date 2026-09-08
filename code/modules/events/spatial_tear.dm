@@ -43,7 +43,7 @@
 	density = 1
 	var/stabilized = 0
 	plane = PLANE_ABOVE_LIGHTING
-	event_handler_flags = IMMUNE_OCEAN_PUSH | IMMUNE_TRENCH_WARP | IMMUNE_MINERAL_MAGNET
+	event_handler_flags = IMMUNE_SINGULARITY | IMMUNE_OCEAN_PUSH | IMMUNE_TRENCH_WARP | IMMUNE_MINERAL_MAGNET
 
 	New(var/loc,var/duration)
 		..()
