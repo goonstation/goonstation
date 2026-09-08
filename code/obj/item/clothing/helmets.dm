@@ -529,7 +529,6 @@
 		..()
 		if(slot == SLOT_HEAD)
 			user.AddComponent(/datum/component/pressure_vision, src.mode == NTSO_ENGIE_PRESSURE)
-
 			src.handle_meson(user)
 
 	unequipped(mob/user)
