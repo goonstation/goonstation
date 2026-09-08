@@ -7,12 +7,11 @@ import { useStates } from '../../utils';
 
 export const HeldPieceRenderer = () => {
   const { data } = useBackend<BoardgameData>();
+  const { mouseCoords } = useStates();
+  const { x, y } = mouseCoords;
 
   // Exit early if there is no current user
   if (!data.currentUser) return null;
-
-  const { mouseCoords } = useStates();
-  const { x, y } = mouseCoords;
 
   // Get the piece code
   const code = data.currentUser.palette || data.currentUser.selected;

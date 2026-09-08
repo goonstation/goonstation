@@ -32463,7 +32463,7 @@
 /area/ghostdrone_factory)
 "jiU" = (
 /obj/strip_door,
-/obj/mapping_helper/access/tech_storage,
+/obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor,
 /area/station/storage/tech)
 "jjc" = (
@@ -47310,6 +47310,11 @@
 	},
 /area/station/crew_quarters/hop)
 "uAB" = (
+/obj/machinery/chem_master{
+	dir = 4;
+	pixel_x = -8;
+	pixel_y = 1
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/baroffice)
 "uBa" = (
@@ -47716,7 +47721,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/plating,
 /area/station/security/beepsky)
 "uQH" = (

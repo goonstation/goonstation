@@ -153,7 +153,11 @@ var/static/master_filter_info = list(
 			"y" = 0,
 			"size" = null,
 			"icon" = ICON_NOT_SET,
-			"render_source" = ""
+			"render_source" = "",
+			"flags" = 0
+		),
+		"flags" = list(
+			"FILTER_OVERLAY" = FILTER_OVERLAY
 		)
 	),
 	"drop_shadow" = list(
@@ -177,9 +181,12 @@ var/static/master_filter_info = list(
 			"icon" = ICON_NOT_SET,
 			"render_source" = "",
 			"flags" = FILTER_OVERLAY,
-			"color" = "",
+			"color" = COLOR_WHITE,
 			"transform" = null,
 			"blend_mode" = BLEND_DEFAULT,
+		),
+		"flags" = list(
+			"FILTER_OVERLAY" = FILTER_OVERLAY,
 		),
 		"blend_mode" = list(
 				"BLEND_DEFAULT" = BLEND_DEFAULT,

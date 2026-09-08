@@ -18,7 +18,7 @@ import {
 } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
-import { resource } from '../../goonstation/cdn';
+import { useResource } from '../../goonstation/cdn';
 import { Window } from '../../layouts';
 import { capitalize } from './../common/stringUtils';
 import { CommodityData, TraderData } from './type';
@@ -118,6 +118,7 @@ export const Trader = () => {
 };
 
 const TraderInfo = () => {
+  const resource = useResource();
   const { data, act } = useBackend<TraderData>();
   return (
     <Stack fill>
