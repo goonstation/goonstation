@@ -1194,6 +1194,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 		src.goods_sell += new /datum/commodity/costume/rabbitsuit(src)
 		src.goods_sell += new /datum/commodity/costume/baseball_clown(src)
 		src.goods_sell += new /datum/commodity/costume/baseball_mime(src)
+		src.goods_sell += new /datum/commodity/costume/mouse(src)
 
 
 
