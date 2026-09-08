@@ -1818,7 +1818,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 			..()
 			if (user?.client && isadmin(user))
 				return
-			boutput(user, SPAN_ALERT("The suit disintegrates from your un-[src.icon_state == "glorpsuit" ? "unglorply" : "adminly" ]touch!"))
+			boutput(user, SPAN_ALERT("The suit disintegrates from your un-[src.icon_state == "glorpsuit" ? "glorply" : "adminly" ]touch!"))
 
 			user.u_equip(src)
 			src.set_loc(get_turf(src))
@@ -1830,7 +1830,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 			..()
 			if (user?.client && isadmin(user))
 				return
-			boutput(user, SPAN_ALERT("The suit disintegrates from your un-[src.icon_state == "glorpsuit" ? "unglorply" : "adminly" ]touch!"))
+			boutput(user, SPAN_ALERT("The suit disintegrates from your un-[src.icon_state == "glorpsuit" ? "glorply" : "adminly" ]touch!"))
 
 			user.u_equip(src)
 			src.set_loc(get_turf(src))
