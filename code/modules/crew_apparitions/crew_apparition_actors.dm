@@ -353,6 +353,16 @@
 		phrase = phrase_log.random_phrase("say")
 	if (!length(phrase))
 		return FALSE
+	if (!sound && src.appearance_source)
+		sound = src.appearance_source.voice_sound_override
+		if (!sound)
+			var/voice_type = src.appearance_source.voice_type
+			switch (copytext(phrase, length(phrase)))
+				if ("?")
+					voice_type = "[voice_type]?"
+				if ("!")
+					voice_type = "[voice_type]!"
+			sound = global.sounds_speak["[voice_type]"]
 
 	var/atom/speaking_target = facing_target ? facing_target : src.victim
 	src.face_target(speaking_target)
@@ -360,7 +370,8 @@
 	src.say(phrase, atom_listeners_override = list(src.victim))
 	if (sound)
 		var/atom/origin = src.loc || src
-		src.victim.playsound_local(origin, sound, sound_volume, 1)
+		var/voice_pitch = src.appearance_source?.get_age_pitch_for_talk() || 1
+		src.victim.playsound_local(origin, sound, sound_volume, 1, pitch = voice_pitch)
 	return TRUE
 
 /// Start a timed sequence of phrases for the viewer
