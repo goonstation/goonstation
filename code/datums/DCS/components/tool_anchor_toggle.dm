@@ -1,6 +1,6 @@
 TYPEINFO(/datum/component/tool_anchor_toggle)
 	initialization_args = list(
-		ARG_INFO("tools", DATA_INPUT_BITFIELD, "The tool type(s) needed to (un)anchor the atom. Takes tool bitflags, like TOOL_WELDING", TOOL_SCREWING),
+		ARG_INFO("tool_types", DATA_INPUT_BITFIELD, "The tool type(s) needed to (un)anchor the atom. Takes tool bitflags, like TOOL_WELDING", TOOL_SCREWING),
 		ARG_INFO("action_time", DATA_INPUT_NUM, "How much time (un)anchoring the atom should take, if any at all.", 0),
 		ARG_INFO("cooldown_time", DATA_INPUT_NUM, "How much time must elapse between (un)anchorings, to prevent spam if desired.", 0),
 	)
