@@ -279,7 +279,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@eslint-community/eslint-utils@npm:^4.8.0, @eslint-community/eslint-utils@npm:^4.9.1":
+"@eslint-community/eslint-utils@npm:^4.8.0":
   version: 4.9.1
   resolution: "@eslint-community/eslint-utils@npm:4.9.1"
   dependencies:
@@ -1315,33 +1315,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rspack/dev-middleware@npm:^2.0.3":
-  version: 2.0.3
-  resolution: "@rspack/dev-middleware@npm:2.0.3"
-  peerDependencies:
-    "@rspack/core": ^2.0.0
-  peerDependenciesMeta:
-    "@rspack/core":
-      optional: true
-  checksum: 10c0/603d51113a793235a04cc344c4cc7d82c411f651b067e88024ce16870e61c09cfed59c9b7142506dde43f2168448460a2eb03eb519c15d6e408785e3db0ed41b
-  languageName: node
-  linkType: hard
-
-"@rspack/dev-server@npm:^2.2.1":
-  version: 2.2.1
-  resolution: "@rspack/dev-server@npm:2.2.1"
-  dependencies:
-    "@rspack/dev-middleware": "npm:^2.0.3"
-  peerDependencies:
-    "@rspack/core": ^2.0.0
-    selfsigned: ^5.0.0
-  peerDependenciesMeta:
-    selfsigned:
-      optional: true
-  checksum: 10c0/8ee9d29d0f23d23e6ac8261e36ca4045bfb68317d42a1a7b48b391c2f17bb05a2086460b0966db4522e6b34748c8a46e943f63d7efe143843bf82e2606e5907e
-  languageName: node
-  linkType: hard
-
 "@rspack/resolver-binding-darwin-arm64@npm:0.2.8":
   version: 0.2.8
   resolution: "@rspack/resolver-binding-darwin-arm64@npm:0.2.8"
@@ -1590,13 +1563,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/marked@npm:4.3.2":
-  version: 4.3.2
-  resolution: "@types/marked@npm:4.3.2"
-  checksum: 10c0/6f44d28da5c940a719d6c6aca41e33f49c5fe957f7972939cc1cbb47d045951f4d969f382d655345d0463e47db1994635d2862018716fcef2fa85ceeceb116e7
-  languageName: node
-  linkType: hard
-
 "@types/node@npm:*":
   version: 24.3.0
   resolution: "@types/node@npm:24.3.0"
@@ -1750,21 +1716,6 @@ __metadata:
   peerDependencies:
     typescript: ">=4.8.4 <6.1.0"
   checksum: 10c0/2f427f9ba3ea1c7d1f476883f9769827c7082ff3cefcb189dcdb2dc33b16fa459e40894152d42583df90d0ed1041a1043830ecba5326c0b1de6becb9cf22fcee
-  languageName: node
-  linkType: hard
-
-"@typescript-eslint/utils@npm:^8.59.4":
-  version: 8.59.4
-  resolution: "@typescript-eslint/utils@npm:8.59.4"
-  dependencies:
-    "@eslint-community/eslint-utils": "npm:^4.9.1"
-    "@typescript-eslint/scope-manager": "npm:8.59.4"
-    "@typescript-eslint/types": "npm:8.59.4"
-    "@typescript-eslint/typescript-estree": "npm:8.59.4"
-  peerDependencies:
-    eslint: ^8.57.0 || ^9.0.0 || ^10.0.0
-    typescript: ">=4.8.4 <6.1.0"
-  checksum: 10c0/f2e7f6237defd49e578731762e8736e7316e4873e326d48ec56651dcd0204962367f3e91692939e1636f443a8ded524336b7ee0874b6267940e77f5dc8fce175
   languageName: node
   linkType: hard
 
@@ -2738,13 +2689,6 @@ __metadata:
     es-errors: "npm:^1.3.0"
     is-data-view: "npm:^1.0.1"
   checksum: 10c0/fa7aa40078025b7810dcffc16df02c480573b7b53ef1205aa6a61533011005c1890e5ba17018c692ce7c900212b547262d33279fde801ad9843edc0863bf78c4
-  languageName: node
-  linkType: hard
-
-"dateformat@npm:^5.0.3":
-  version: 5.0.3
-  resolution: "dateformat@npm:5.0.3"
-  checksum: 10c0/ccc7a5351080f7ae00496e246ed4d3afdba770f9a8267348d0d04387e23414ef219d9bb6f273a6d628c0ff5f0255ab75977d668dc7ab066b916a196950bdde9a
   languageName: node
   linkType: hard
 
@@ -6248,7 +6192,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass@npm:1.100.0, sass@npm:^1.100.0":
+"sass@npm:1.100.0":
   version: 1.100.0
   resolution: "sass@npm:1.100.0"
   dependencies:
@@ -6855,40 +6799,26 @@ __metadata:
     "@fastify/static": "npm:^8.3.0"
     "@types/react": "npm:^19.2.15"
     "@types/react-dom": "npm:^19.2.3"
-    common: "workspace:*"
     fastify: "npm:^5.8.5"
     lodash: "npm:^4.18.1"
     platform: "npm:^1.3.6"
     react: "npm:^19.2.6"
     react-dom: "npm:^19.2.6"
     tgui: "workspace:*"
-    tgui-core: "npm:~5.10.0"
+    tgui-core: "npm:~6.1.3"
   languageName: unknown
   linkType: soft
 
-"tgui-core@npm:~5.10.0":
-  version: 5.10.0
-  resolution: "tgui-core@npm:5.10.0"
+"tgui-core@npm:~6.1.3":
+  version: 6.1.3
+  resolution: "tgui-core@npm:6.1.3"
   dependencies:
     "@floating-ui/react": "npm:^0.27.16"
     "@nozbe/microfuzz": "npm:^1.0.0"
   peerDependencies:
     react: ^19.1.0
     react-dom: ^19.1.0
-  checksum: 10c0/e9c22966b714670918dce700f08dc7951d1f00d835b46862538239649d884be5112a574f53e445c4f9c10f5c504935b9ac740b1744464c1c1079c663942cbe83
-  languageName: node
-  linkType: hard
-
-"tgui-core@npm:~6.1.2":
-  version: 6.1.2
-  resolution: "tgui-core@npm:6.1.2"
-  dependencies:
-    "@floating-ui/react": "npm:^0.27.16"
-    "@nozbe/microfuzz": "npm:^1.0.0"
-  peerDependencies:
-    react: ^19.1.0
-    react-dom: ^19.1.0
-  checksum: 10c0/42b42be176b5d06ff5c074fda1fe66f9af4e8cb8b3eaa4821f34a00969ec4ab38916aa2673ba6213baca018c77afade14ec5aa00ff003f0117226de372417428
+  checksum: 10c0/28f85d5cbd0f0a008d42343ec848e972e934364ca9b0a0df0478c3858b7e7602cfdfd8ba3c5eb4b8776d5e67ba211549d0a7788cbc39bfa43171cf4237bd5ae3
   languageName: node
   linkType: hard
 
@@ -6923,12 +6853,10 @@ __metadata:
     "@rsdoctor/rspack-plugin": "npm:^1.5.11"
     "@rspack/cli": "npm:^2.2.1"
     "@rspack/core": "npm:^2.2.1"
-    "@rspack/dev-server": "npm:^2.2.1"
     "@types/node": "npm:^25.9.1"
     "@types/webpack-env": "npm:^1.18.8"
     "@types/wicg-file-system-access": "npm:^2023.10.7"
     "@typescript-eslint/parser": "npm:^8.59.4"
-    "@typescript-eslint/utils": "npm:^8.59.4"
     css-loader: "npm:^7.1.4"
     eslint: "npm:^9.39.4"
     eslint-config-prettier: "npm:^10.1.8"
@@ -6940,7 +6868,6 @@ __metadata:
     globals: "npm:^17.6.0"
     happy-dom: "npm:^20.9.0"
     prettier: "npm:^3.8.3"
-    sass: "npm:^1.100.0"
     sass-embedded: "npm:^1.100.0"
     sass-loader: "npm:^17.0.0"
     typescript: "npm:6.0.3"
@@ -6955,16 +6882,13 @@ __metadata:
   dependencies:
     "@testing-library/dom": "npm:^10.4.0"
     "@testing-library/react": "npm:^16.3.2"
-    "@types/marked": "npm:4.3.2"
     "@types/react": "npm:^19.2.15"
     "@types/react-dom": "npm:^19.2.3"
     common: "workspace:*"
-    dateformat: "npm:^5.0.3"
     dayjs: "npm:1.11.20"
     dompurify: "npm:^3.4.5"
     highlight.js: "npm:^11.11.1"
     jotai: "npm:^2.16.0"
-    js-yaml: "npm:^4.1.1"
     marked: "npm:^15.0.12"
     marked-base-url: "npm:^1.1.9"
     marked-smartypants: "npm:^1.1.12"
@@ -6972,7 +6896,7 @@ __metadata:
     react-dom: "npm:^19.2.6"
     react-json-tree: "npm:^0.20.0"
     remarkable: "npm:^2.0.1"
-    tgui-core: "npm:~6.1.2"
+    tgui-core: "npm:~6.1.3"
     tgui-dev-server: "workspace:*"
     vitest: "npm:^4.1.7"
   languageName: unknown

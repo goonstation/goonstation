@@ -23,9 +23,7 @@
   "dependencies": {
     "@rspack/cli": "^2.2.1",
     "@rspack/core": "^2.2.1",
-    "@rspack/dev-server": "^2.2.1",
     "@typescript-eslint/parser": "^8.59.4",
-    "@typescript-eslint/utils": "^8.59.4",
     "css-loader": "^7.1.4",
     "eslint": "^9.39.4",
     "eslint-config-prettier": "^10.1.8",
@@ -34,7 +32,6 @@
     "eslint-plugin-sonarjs": "^4.0.3",
     "eslint-plugin-unused-imports": "^4.4.1",
     "prettier": "^3.8.3",
-    "sass": "^1.100.0",
     "sass-embedded": "^1.100.0",
     "sass-loader": "^17.0.0",
     "typescript": "6.0.3",
