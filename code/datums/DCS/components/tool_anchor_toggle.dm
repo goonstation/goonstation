@@ -48,7 +48,6 @@ TYPEINFO(/datum/component/assembly)
 /datum/component/tool_anchor_toggle/UnregisterFromParent()
 	. = ..()
 	src.UnregisterSignal(parent, COMSIG_ATTACKBY)
-	actionbar.stop(actionbar, src.parent_atom)
 
 /datum/component/tool_anchor_toggle/proc/attackby(datum/source, obj/item/W, mob/user)
 	if(!istool(W, src.tool_type))
