@@ -466,7 +466,7 @@
 			item_state = "syndie_specialist-bard"
 
 
-/obj/item/clothing/head/helmet/space/ntso //recoloured nuke class suits for ntso vs syndicate specialist
+/obj/item/clothing/head/helmet/space/ntso
 	name = "NT combat helmet"
 	desc = "A modified combat helmet for Nanotrasen security forces."
 	icon_state = "ntso_specialist"
@@ -504,6 +504,84 @@
 			..()
 			setProperty("viralprot", 50)
 			setProperty("chemprot", 30)
+
+#define NTSO_ENGIE_OFF "off"
+#define NTSO_ENGIE_MESON "meson"
+#define NTSO_ENGIE_PRESSURE "pressure"
+
+/// a fancy space helmet that cycles between an off state, mesons vision and pressure vision
+/obj/item/clothing/head/helmet/space/ntso/engineer // Sprite by tekoTheTeapot
+	icon_state = "ntso_engineer-off"
+	item_state = "ntso_engineer-off"
+	name = "NT engineering helmet"
+	desc = "A modified combat helmet for Nanotrasen emergency repair technician. The visor size had to be reduced to fit both meson and atmospheric scanning overlays."
+	protective_temperature = 1300
+	var/mode = NTSO_ENGIE_OFF
+	var/base_icon_state = "ntso_engineer"
+
+	setupProperties()
+		..()
+		setProperty("heatprot", 50)
+		setProperty("radprot", 50)
+
+	equipped(mob/user, slot)
+		..()
+		if(slot == SLOT_HEAD)
+			user.AddComponent(/datum/component/pressure_vision, src.mode == NTSO_ENGIE_PRESSURE)
+
+			src.handle_meson(user)
+
+	unequipped(mob/user)
+		if(src.equipped_in_slot == SLOT_HEAD)
+			user.RemoveComponentsOfType(/datum/component/pressure_vision)
+		. = ..()
+
+	update_icon()
+		. = ..()
+		icon_state = "[src.base_icon_state]-[src.mode]"
+		item_state = "[src.base_icon_state]-[src.mode]"
+
+	attack_self(mob/user)
+		. = ..()
+		src.cycle_state(user)
+
+	get_desc(dist, mob/user)
+		. = ..()
+		. + ="The visor is currently set to [src.mode]"
+
+	proc/cycle_state(mob/user)
+		switch(src.mode)
+			if(NTSO_ENGIE_PRESSURE)
+				src.mode = NTSO_ENGIE_OFF
+				SEND_SIGNAL(user, COMSIG_PRESSURE_VISION, FALSE)
+				playsound(src, 'sound/machines/tone_beep.ogg', 40, TRUE)
+			if(NTSO_ENGIE_OFF)
+				src.mode = NTSO_ENGIE_MESON
+				src.handle_meson(user)
+				playsound(src, 'sound/items/mesonactivate.ogg', 30, TRUE)
+			if(NTSO_ENGIE_MESON)
+				src.mode = NTSO_ENGIE_PRESSURE
+				SEND_SIGNAL(user, COMSIG_PRESSURE_VISION, TRUE)
+				src.handle_meson(user)
+				playsound(src, 'sound/machines/tone_beep.ogg', 40, TRUE)
+
+		src.update_icon()
+
+	proc/handle_meson(mob/user)
+		var/mob/living/equipped_on = user
+
+		if(!istype(equipped_on))
+			return
+
+		if(src.mode == NTSO_ENGIE_MESON && src.equipped_in_slot == SLOT_HEAD)
+			equipped_on.meson(src)
+		else
+			equipped_on.unmeson(src)
+
+
+#undef NTSO_ENGIE_OFF
+#undef NTSO_ENGIE_MESON
+#undef NTSO_ENGIE_PRESSURE
 
 /obj/item/clothing/head/helmet/space/nanotrasen
 	name = "Nanotrasen Heavy Helmet"
