@@ -524,7 +524,6 @@ TYPEINFO(/datum/component/crew_apparitions)
 			if (!src.walk_apparition_to(walker, destination, max_distance = pass_maximum_walk_distance, \
 				step_delay = CREW_APPARITION_WALK_STEP_DELAY))
 				// The destination picker checks visibility and passability from the victim's perspective
-				// The actor's route cap can still reject this distance, so try another pair before giving up
 				if (fallback_walker)
 					src.end(fallback_walker, dissolve_time = 0)
 				fallback_walker = walker
