@@ -59,15 +59,67 @@
 	w_class = W_CLASS_SMALL
 	flags = TABLEPASS | NOSHIELD
 	object_flags = NO_ARM_ATTACH
-	var/wizard_key = "" // The owner of this staff.
-	var/eldritch = 0	//was for robe and wizard hat, now nothing.
+	// The owner of this staff.
+	var/wizard_key = ""
+	//was for robe and wizard hat, now nothing.
+	var/eldritch = 0
 	duration_remove = 10 SECONDS
+	// for staffs that hurt to pick up. Override pick_up_effect for actual effect
+	var/hurts_to_pick_up = FALSE
+	// how many charges staff has left.
+	var/charges = 0
+	// how many charges staff has.
+	var/max_charges = 0
 
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_ALL)
 
-	// Part of the parent for convenience.
+	attack_hand(var/mob/user)
+		if(!src.hurts_to_pick_up)
+			return ..()
+		if(check_target_immunity(user))
+			return ..()
+		if(!iswizard(user))
+			src.pick_up_effect(user)
+			return
+		if (user.mind?.key != src.wizard_key)
+			boutput(user, SPAN_ALERT("The [src.name] is magically attuned to another wizard! You can use it, but may not summon it magically."))
+		return ..()
+
+	pull(mob/user)
+		if(!src.hurts_to_pick_up)
+			return ..()
+
+		if(check_target_immunity(user))
+			return ..()
+
+		if (!istype(user))
+			return
+
+		if (iswizard(user))
+			return ..()
+		else
+			src.pick_up_effect(user)
+
+	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
+		if(!src.hurts_to_pick_up)
+			return ..()
+		if (iswizard(usr))
+			. = ..()
+		else if(isliving(usr))
+			src.pick_up_effect(usr)
+		else
+			return
+
+	attackby(obj/item/W, mob/user, params)
+		if (istype(W, /obj/item/magtractor) && src.hurts_to_pick_up) // for ghost drones
+			src.pick_up_effect(user)
+			user.changeStatus("unconscious", 3 SECONDS)
+			return
+		. = ..()
+
+	// Cthulu staff pickup/attack
 	proc/do_brainmelt(var/mob/affected_mob, var/severity = 2)
 		if (!src || !istype(src) || !affected_mob || !ismob(affected_mob) || check_target_immunity(affected_mob))
 			return
@@ -128,6 +180,15 @@
 			M.show_text("Staff summoned successfully. You can find it in your hand.", "blue")
 
 		return
+	// for staff with charges. recharges the staff.
+	proc/recharge()
+		if(src.charges <= src.max_charges)
+			src.charges = src.max_charges
+		return
+
+	// The actual effect for when a non wizard tries to pick up a staff that hurts. Override this on the staff.
+	proc/pick_up_effect(mob/user)
+		return
 
 /obj/item/staff/crystal // goes with Gannets' purple wizard robes - it looks different, and that's about it  :I  (always b fabulous)
 	name = "crystal wizard's staff"
@@ -141,6 +202,7 @@
 	icon_state = "staffcthulhu"
 	item_state = "staffcthulhu"
 	eldritch = 1
+	hurts_to_pick_up = TRUE
 
 	New()
 		. = ..()
@@ -163,17 +225,6 @@
 		src.hitsound = src::hitsound
 		src.tooltip_rebuild = TRUE
 
-	attack_hand(var/mob/user)
-		if (user.mind)
-			if (iswizard(user) || check_target_immunity(user))
-				if (user.mind.key != src.wizard_key && !check_target_immunity(user))
-					boutput(user, SPAN_ALERT("The [src.name] is magically attuned to another wizard! You can use it, but the staff will refuse your attempts to control or summon it."))
-				..()
-				return
-			else
-				src.do_brainmelt(user, 2)
-				return
-		else ..()
 
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (iswizard(user) && !iswizard(target) && !isdead(target) && !check_target_immunity(target))
@@ -190,39 +241,19 @@
 		..()
 		return
 
-	attackby(obj/item/W, mob/user, params)
-		if (istype(W, /obj/item/magtractor))
-			src.do_brainmelt(user, 2)
-			return
-		. = ..()
-
-	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
-		if (iswizard(usr) || check_target_immunity(usr))
-			. = ..()
-		else if(isliving(usr))
-			src.do_brainmelt(usr, 1)
-		else
-			return
-
-	pull(mob/user)
-		if(check_target_immunity(user))
-			return ..()
-
-		if (!istype(user))
-			return
-
-		if (iswizard(user))
-			return ..()
-		else
-			src.do_brainmelt(user, 2)
-			return
+	pick_up_effect(mob/user)
+		src.do_brainmelt(user, 2)
+		return
 
 /obj/item/staff/thunder
 	name = "staff of thunder"
 	desc = "A staff sparkling with static electricty. Who's afraid of a little thunder?"
 	icon_state = "staffthunder3"
 	item_state = "staffthunder"
-	var/thunder_charges = 3
+	charges = 3
+	max_charges = 3
+	hurts_to_pick_up = TRUE
+
 
 	New()
 		. = ..()
@@ -244,10 +275,10 @@
 		if (A?.sanctuary || istype(A, /area/wizard_station))
 			boutput(user, SPAN_ALERT("You cannot summon lightning in this place!"))
 			return
-		if (thunder_charges <= 0)
+		if (charges <= 0)
 			boutput(user, SPAN_ALERT("[name] is out of charges! Magically recall it to restore it's power."))
 			return
-		thunder_charges -= 1
+		charges -= 1
 		var/turf/T = get_turf(target)
 		var/obj/lightning_target/lightning = new/obj/lightning_target(T)
 		playsound(T, 'sound/effects/electric_shock_short.ogg', 70, TRUE)
@@ -256,65 +287,25 @@
 		FLICK("[icon_state]_fire", src)
 		..()
 
-	attack_hand(var/mob/user)
-		if (user.mind)
-			if (iswizard(user) || check_target_immunity(user))
-				if (user.mind.key != src.wizard_key && !check_target_immunity(user))
-					boutput(user, SPAN_ALERT("The [src.name] is magically attuned to another wizard! You can use it, but may not summon it magically."))
-				..()
-				return
-			else
-				zap_person(user)
-				return
-		else ..()
-
-	attackby(obj/item/W, mob/user, params)
-		if (istype(W, /obj/item/magtractor))
-			src.zap_person(user)
-			user.changeStatus("unconscious", 3 SECONDS) // stop magtractoring it
-			return
-		. = ..()
-
-	pull(mob/user)
-		if(check_target_immunity(user))
-			return ..()
-
-		if (!istype(user))
-			return
-
-		if (iswizard(user))
-			return ..()
-		else
-			zap_person(user)
-			return
-
-	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
-		if (iswizard(usr))
-			. = ..()
-		else if(isliving(usr))
-			zap_person(usr)
-		else
-			return
-
 	update_icon()
-		if(thunder_charges > 3) //var edit only but gets a fun special sprite
+		if(charges > 3) //var edit only but gets a fun special sprite
 			icon_state = "staffthunder_admin"
 		else
-			icon_state = "staffthunder[thunder_charges]"
+			icon_state = "staffthunder[charges]"
 
-	proc/recharge_thunder()
-		if(thunder_charges <= 3) //doesn't ever reduce charge even though three is usually max
-			thunder_charges = 3
+	recharge()
+		..()
 		UpdateIcon()
 		FLICK("[icon_state]_fire", src)
 
-	proc/zap_person(var/mob/target) //purposefully doesn't do any damage, here to offer non-chat feedback when trying to pick up
-		boutput(target, SPAN_ALERT("Static electricity arcs from [name] to your hand when you try and touch it!"))
-		playsound(target.loc, 'sound/effects/sparks4.ogg', 70, 1)
-		if (target.bioHolder?.HasEffect("resist_electric"))
+	pick_up_effect(mob/user)
+		boutput(user, SPAN_ALERT("Static electricity arcs from [name] to your hand when you try and touch it!"))
+		playsound(user.loc, 'sound/effects/sparks4.ogg', 70, 1)
+		if (user.bioHolder?.HasEffect("resist_electric"))
 			return
 		else
-			target.do_disorient(stamina_damage = 0, knockdown = 0, stunned = 0, disorient = 20)
+			user.do_disorient(stamina_damage = 0, knockdown = 0, stunned = 0, disorient = 20)
+		return
 
 /obj/item/staff/monkey_staff
 	name = "staff of monke"
@@ -339,9 +330,13 @@
 	throwforce = 1
 	icon_state = "stafftelekinesis"
 	item_state = "staff_telekinesis"
-	var/throw_charges = 4 // how many times we can throw before recharging
+	hurts_to_pick_up = TRUE
+	charges = 4
+	max_charges = 4
+	// chance for the staff to boomerang back into the wiznerds face when thrown
 	var/prob_clonk = 0
-	var/super_throw_chance = 5 // chance to send victim flying through wall
+	// chance to send victim flying extra hard through walls
+	var/super_throw_chance = 5
 
 	New()
 		. = ..()
@@ -363,44 +358,6 @@
 		. = ..()
 		UnregisterSignal(user, COMSIG_MOB_MOUSEDROP)
 
-	pull(mob/user)
-		if(check_target_immunity(user))
-			return ..()
-
-		if (!istype(user))
-			return
-
-		if (iswizard(user))
-			return ..()
-		else
-			fling_person(user)
-			return
-
-	attack_hand(var/mob/user)
-		if(check_target_immunity(user))
-			return ..()
-		if(!iswizard(user))
-			fling_person(user)
-			return
-		if (user.mind?.key != src.wizard_key)
-			boutput(user, SPAN_ALERT("The [src.name] is magically attuned to another wizard! You can use it, but may not summon it magically."))
-		return ..()
-
-	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
-		if (iswizard(usr))
-			. = ..()
-		else if(isliving(usr))
-			fling_person(usr)
-		else
-			return
-
-	attackby(obj/item/W, mob/user, params)
-		if (istype(W, /obj/item/magtractor)) // for ghost drones
-			src.fling_person(user)
-			user.changeStatus("unconscious", 3 SECONDS)
-			return
-		. = ..()
-
 // you can throw it like a boomerang, doesn't do anything but it's swag.
 	throw_begin(atom/target)
 		playsound(src.loc, "rustle", 50, 1)
@@ -410,7 +367,7 @@
 		if(hit_atom == usr)
 			if(prob(prob_clonk))
 				var/mob/living/carbon/human/user = usr
-				src.fling_person(user) // boastful wiznerds can get flung too
+				src.pick_up_effect(user) // boastful wiznerds can get flung too
 			else
 				src.Attackhand(usr)
 			return
@@ -422,6 +379,7 @@
 
 		return ..(hit_atom)
 
+	// click drag to throw mobs in that direction
 	proc/tk_drag(mob/user, src_object, over_object, turf/src_location, turf/over_location, src_control, over_control, params)
 		. = FALSE
 		if (!istype(src_location) || !istype(over_location))
@@ -439,8 +397,8 @@
 		if (A?.sanctuary || istype(A, /area/wizard_station))
 			boutput(user, SPAN_ALERT("You cannot throw people here!"))
 			return TRUE
-		if (src.throw_charges <= 0)
-			boutput(user, SPAN_ALERT("[src.name] is out of charges! Magically recall it to restore its power."))
+		if (src.charges <= 0)
+			boutput(user, SPAN_ALERT("[src] is out of charges! Magically recall it to restore its power."))
 			return TRUE
 
 		var/list/mob/found_mobs	= list()
@@ -466,7 +424,7 @@
 		if (!length(found_mobs))
 			return
 
-		src.throw_charges -= 1
+		src.charges -= 1
 		playsound(user.loc, 'sound/impact_sounds/Energy_Hit_2.ogg', 50, TRUE)
 		for (var/mob/M as anything in found_mobs)
 			//try to maintain the relative offset of thrown mobs, ie throw them straight instead of at the center tile
@@ -485,18 +443,16 @@
 			M.visible_message(SPAN_ALERT("<B>[M] is thrown by a mysterious force!</B>"))
 		return TRUE
 
-	proc/fling_person(var/mob/target) // the effect when a non wizard fool tries to pick up or move the staff
-		if(!target.anchored)
-			var/turf/T = get_edge_target_turf(target, target.dir)
-			playsound(target.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 50 , 1)
-			target.throw_at(T, 8, 2)
-			target.changeStatus("knockdown", 1 SECOND)
-			target.force_laydown_standup()
-			boutput(target, SPAN_ALERT("A powerful force throws you as you try to touch [name]!"))
+	pick_up_effect(mob/user)
+		if(!user.anchored)
+			var/turf/T = get_edge_target_turf(user, user.dir)
+			playsound(user.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 50 , 1)
+			user.throw_at(T, 8, 2)
+			user.changeStatus("knockdown", 1 SECOND)
+			user.force_laydown_standup()
+			boutput(user, SPAN_ALERT("A powerful force throws you as you try to touch [name]!"))
+		return
 
-	proc/recharge_throws()
-		if(src.throw_charges <= 4)
-			src.throw_charges = 4
 /////////////////////////////////////////////////////////// Magic mirror /////////////////////////////////////////////
 
 /obj/magicmirror
