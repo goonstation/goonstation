@@ -147,6 +147,8 @@
 		// Build a message to show to the player
 		var/message = "[ban.reason]<br>"
 		message += "Banned By: [ban.game_admin.player.ckey]<br>"
+		if (ban.created_at)
+			message += "Banned On: <span class='local-time'>[ban.created_at]</span><br>"
 		message += "This ban applies to [ban.server_id ? "this server only" : "all servers"].<br>"
 		if (ban.expires_at)
 			message += "(This ban will be automatically removed in [ban.duration_human])"
