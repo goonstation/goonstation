@@ -9,6 +9,7 @@
 	stamina_cost = 0
 	flags = TABLEPASS  | ATTACK_SELF_DELAY
 	click_delay = 1 SECOND
+	pass_unstable = TRUE
 	var/emagged = FALSE
 
 	// is the coin in the air
