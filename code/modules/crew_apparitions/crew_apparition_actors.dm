@@ -4,10 +4,12 @@
 #define CREW_APPARITION_ACTOR_MAX_CONVERSATION_DURATION (30 SECONDS)
 /// Maximum number of lines in a client-visible crew apparition actor's conversation
 #define CREW_APPARITION_ACTOR_MAX_CONVERSATION_LINES 8
-/// Maximum route length for a client-visible crew apparition actor walker
-#define CREW_APPARITION_ACTOR_MAX_WALK_DISTANCE 12
+/// Maximum route length for a crew apparition walker
+#define CREW_APPARITION_WALK_DISTANCE 12
 /// Maximum number of route nodes considered for a client-visible crew apparition actor walker
 #define CREW_APPARITION_ACTOR_MAX_WALK_SEEN 128
+/// Maximum distance from the victim for a human appearance source
+#define CREW_APPARITION_HUMAN_SEARCH_RANGE 15
 
 /// Check whether a human can provide an appearance for a client-visible crew apparition actor
 /proc/is_crew_apparition_human_eligible(mob/victim, mob/living/carbon/human/human, range = 7)
@@ -21,12 +23,12 @@
 
 
 /// Pick a nearby, awake human whose appearance is safe to copy for a client-visible crew apparition actor
-/proc/pick_crew_apparition_human(mob/victim, range = 7)
+/proc/pick_crew_apparition_human(mob/victim, range = CREW_APPARITION_HUMAN_SEARCH_RANGE)
 	if (!victim || !victim.client)
 		return
 
 	var/list/mob/living/carbon/human/eligible_humans = list()
-	for (var/mob/living/carbon/human/candidate in view(max(range, 0), victim))
+	for_by_tcl(candidate, /mob/living/carbon/human)
 		if (!is_crew_apparition_human_eligible(victim, candidate, range))
 			continue
 		eligible_humans += candidate
@@ -189,12 +191,9 @@
 	var/blur_effect = src.client_image.filters[length(src.client_image.filters)]
 	animate(blur_effect, size = 0, time = 0, flags = ANIMATION_PARALLEL)
 	animate(blur_effect, size = 2.5, time = time, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
-	// Hold the apparition's silhouette long enough for the distortion to read,
-	// then let it collapse into the final fade
-	var/fade_hold_time = time * 0.35
-	var/fade_out_time = time - fade_hold_time
-	animate(src.client_image, alpha = 128, time = fade_hold_time, easing = SINE_EASING)
-	animate(src.client_image, alpha = 0, time = fade_out_time, easing = SINE_EASING)
+	// Fade from the current silhouette continuously while the distortion expands
+	// This avoids a visible jump when the actor is still finishing its reveal
+	animate(src.client_image, alpha = 0, time = time, easing = SINE_EASING, flags = ANIMATION_END_NOW)
 
 	var/current_generation = src.lifecycle_generation
 	SPAWN(time)
@@ -210,9 +209,11 @@
 		src.client_image.dir = src.dir
 
 /obj/crew_apparition_actor/attack_hand(mob/user)
+	src.dissolve()
 	return
 
 /obj/crew_apparition_actor/attackby(obj/item/item, mob/user, params, is_special = 0, silent = FALSE)
+	src.dissolve()
 	return
 
 /obj/crew_apparition_actor/pull(mob/user)
@@ -282,6 +283,10 @@
 /// Check whether this actor is following a walking route
 /obj/crew_apparition_actor/humanoid/proc/is_walking()
 	return src.walking
+
+/// Return the maximum route length accepted by a crew apparition walker
+/proc/get_crew_apparition_actor_max_walk_distance()
+	return CREW_APPARITION_WALK_DISTANCE
 
 /// Begin a watcher behavior sequence
 /obj/crew_apparition_actor/humanoid/proc/start_watcher_behavior()
@@ -412,7 +417,7 @@
 	return TRUE
 
 /// Walk this actor to a nearby pathable turf
-/obj/crew_apparition_actor/humanoid/proc/walk_apparition_to(atom/target, max_distance = CREW_APPARITION_ACTOR_MAX_WALK_DISTANCE, step_delay = BASE_SPEED + WALK_DELAY_ADD)
+/obj/crew_apparition_actor/humanoid/proc/walk_apparition_to(atom/target, max_distance = CREW_APPARITION_WALK_DISTANCE, step_delay = BASE_SPEED + WALK_DELAY_ADD)
 	if (QDELETED(src) || src.walking || !src.victim?.client || src.remaining_ttl() <= 0 || QDELETED(target))
 		return FALSE
 	if (!isturf(src.loc))
@@ -421,8 +426,8 @@
 	if (!target_turf || target_turf.z != src.z)
 		return FALSE
 	if (!isnum(max_distance))
-		max_distance = CREW_APPARITION_ACTOR_MAX_WALK_DISTANCE
-	max_distance = clamp(max_distance, 1, CREW_APPARITION_ACTOR_MAX_WALK_DISTANCE)
+		max_distance = CREW_APPARITION_WALK_DISTANCE
+	max_distance = clamp(max_distance, 1, CREW_APPARITION_WALK_DISTANCE)
 	if (!isnum(step_delay))
 		step_delay = BASE_SPEED + WALK_DELAY_ADD
 	step_delay = max(step_delay, world.tick_lag)
@@ -480,5 +485,6 @@
 #undef CREW_APPARITION_ACTOR_MAX_TTL
 #undef CREW_APPARITION_ACTOR_MAX_CONVERSATION_DURATION
 #undef CREW_APPARITION_ACTOR_MAX_CONVERSATION_LINES
-#undef CREW_APPARITION_ACTOR_MAX_WALK_DISTANCE
+#undef CREW_APPARITION_WALK_DISTANCE
 #undef CREW_APPARITION_ACTOR_MAX_WALK_SEEN
+#undef CREW_APPARITION_HUMAN_SEARCH_RANGE

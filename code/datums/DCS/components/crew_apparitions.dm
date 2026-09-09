@@ -1,9 +1,9 @@
 /// Number of turf candidates tried when spawning a crew apparition
-#define CREW_APPARITION_LOCATION_ATTEMPTS 12
-/// Maximum distance used when positioning a crew apparition around its victim
-#define CREW_APPARITION_VISIBLE_RANGE 7
+#define CREW_APPARITION_LOCATION_ATTEMPTS 10
+/// Player's maximum visible radius in tiles
+#define CREW_APPARITION_VIEW_RADIUS ((WIDE_TILE_WIDTH - 1) / 2)
 /// Minimum distance for an apparition that begins outside the victim's view
-#define CREW_APPARITION_OFFSCREEN_MIN_DISTANCE (CREW_APPARITION_VISIBLE_RANGE + 1)
+#define CREW_APPARITION_OFFSCREEN_MIN_DISTANCE (CREW_APPARITION_VIEW_RADIUS + 1)
 /// Maximum distance for an apparition that begins outside the victim's view
 #define CREW_APPARITION_OFFSCREEN_MAX_DISTANCE 12
 /// Standard lifetime for crew apparitions
@@ -17,23 +17,25 @@
 /// Number of lines a watcher can deliver during its appearance
 #define CREW_APPARITION_WATCHER_LINES 4
 /// How long a watcher waits for its victim to see it
-#define CREW_APPARITION_WATCHER_VISIBLE_WAIT (10 SECONDS)
+#define CREW_APPARITION_WATCHER_VISIBLE_WAIT (15 SECONDS)
 /// Delay between watcher lines when the victim can see the apparition
 #define CREW_APPARITION_WATCHER_PHRASE_DELAY (15 SECONDS)
 /// Number of lines exchanged by a chatter pair
 #define CREW_APPARITION_CHATTER_LINES 8
 /// Delay between lines in a chatter conversation
-#define CREW_APPARITION_CHATTER_DELAY (2 SECONDS)
+#define CREW_APPARITION_CHATTER_DELAY (3 SECONDS)
 /// How long a chatter pair waits for its victim to see them
 #define CREW_APPARITION_CHATTER_VISIBLE_WAIT (15 SECONDS)
 /// Maximum separation allowed between members of a chatter pair
 #define CREW_APPARITION_CHATTER_MAX_DISTANCE 3
-/// Maximum route length for a walking crew apparition
-#define CREW_APPARITION_WALK_DISTANCE 12
+/// Number of descending travel-distance bands tried for a walker
+#define CREW_APPARITION_WALK_DISTANCE_PASSES 2
 /// Step cadence used to keep walkers close to player movement speed
 #define CREW_APPARITION_WALK_STEP_DELAY (BASE_SPEED + WALK_DELAY_ADD)
 /// How long a walker waits for its victim to see it after arriving
 #define CREW_APPARITION_WALKER_VISIBLE_WAIT (10 SECONDS)
+/// Total number of phrases a walker delivers after reaching its destination
+#define CREW_APPARITION_WALKER_LINES 3
 
 TYPEINFO(/datum/component/crew_apparitions)
 	initialization_args = list(
@@ -190,11 +192,11 @@ TYPEINFO(/datum/component/crew_apparitions)
 	src.image_group?.remove_mob(observer)
 
 /// Create and retain a client-visible crew apparition actor at a world location
-/datum/component/crew_apparitions/proc/create_apparition_actor(atom/location, ttl = CREW_APPARITION_TTL, range = CREW_APPARITION_VISIBLE_RANGE, fallback_to_viewer = FALSE)
+/datum/component/crew_apparitions/proc/create_apparition_actor(atom/location, ttl = CREW_APPARITION_TTL, range = CREW_APPARITION_VIEW_RADIUS, fallback_to_viewer = FALSE)
 	RETURN_TYPE(/obj/crew_apparition_actor/humanoid)
 	if (!src.is_lifecycle_valid() || !src.affected_mob.client || !location)
 		return
-	var/mob/living/carbon/human/appearance_source = pick_crew_apparition_human(src.affected_mob, range)
+	var/mob/living/carbon/human/appearance_source = pick_crew_apparition_human(src.affected_mob)
 	if (!appearance_source && fallback_to_viewer && ishuman(src.affected_mob))
 		var/mob/living/carbon/human/human_viewer = src.affected_mob
 		appearance_source = human_viewer
@@ -331,19 +333,20 @@ TYPEINFO(/datum/component/crew_apparitions)
 		return
 	return apparition.get_watcher_generation()
 
-/// Pick a pathable turf near the affected mob
-/datum/component/crew_apparitions/proc/pick_apparition_location(excluded_turf = null, prefer_outside_view = FALSE)
+/// Pick a pathable turf near the affected mob, optionally requiring it to be off-screen
+/datum/component/crew_apparitions/proc/pick_apparition_location(excluded_turf = null, prefer_outside_view = FALSE, require_outside_view = FALSE)
 	if (!src.is_lifecycle_valid())
 		return
 	var/turf/victim_turf = get_turf(src.affected_mob)
 	if (!victim_turf || isrestrictedz(victim_turf.z))
 		return
 
-	var/search_passes = prefer_outside_view ? 2 : 1
+	var/search_outside_view = prefer_outside_view || require_outside_view
+	var/search_passes = search_outside_view && !require_outside_view ? 2 : 1
 	for (var/search_pass in 1 to search_passes)
 		var/minimum_distance = 1
-		var/maximum_distance = CREW_APPARITION_VISIBLE_RANGE
-		if (prefer_outside_view && search_pass == 1)
+		var/maximum_distance = CREW_APPARITION_VIEW_RADIUS
+		if (search_outside_view && search_pass == 1)
 			minimum_distance = CREW_APPARITION_OFFSCREEN_MIN_DISTANCE
 			maximum_distance = CREW_APPARITION_OFFSCREEN_MAX_DISTANCE
 
@@ -357,6 +360,8 @@ TYPEINFO(/datum/component/crew_apparitions)
 			var/distance = get_dist(candidate, victim_turf)
 			if (distance < minimum_distance || distance > maximum_distance)
 				continue
+			if (search_outside_view && search_pass == 1 && (candidate in view(src.affected_mob.client.view, src.affected_mob)))
+				continue
 			if (is_blocked_turf(candidate) || !candidate.pathable || isrestrictedz(candidate.z))
 				continue
 			if (!jpsTurfPassable(candidate, source = victim_turf, passer = src.affected_mob))
@@ -368,7 +373,7 @@ TYPEINFO(/datum/component/crew_apparitions)
 /datum/component/crew_apparitions/proc/pick_chatter_location(turf/first_location)
 	if (!src.is_lifecycle_valid() || !first_location)
 		return
-	if (!(first_location in view(CREW_APPARITION_VISIBLE_RANGE, src.affected_mob)))
+	if (!(first_location in view(CREW_APPARITION_VIEW_RADIUS, src.affected_mob)))
 		return
 	for (var/attempt in 1 to CREW_APPARITION_LOCATION_ATTEMPTS)
 		var/turf/candidate = locate(
@@ -381,11 +386,11 @@ TYPEINFO(/datum/component/crew_apparitions)
 			continue
 		if (get_dist(candidate, first_location) > CREW_APPARITION_CHATTER_MAX_DISTANCE)
 			continue
-		if (!(candidate in view(CREW_APPARITION_VISIBLE_RANGE, src.affected_mob)))
+		if (!(candidate in view(CREW_APPARITION_VIEW_RADIUS, src.affected_mob)))
 			continue
-		if (!(candidate in view(CREW_APPARITION_VISIBLE_RANGE, first_location)))
+		if (!(candidate in view(CREW_APPARITION_VIEW_RADIUS, first_location)))
 			continue
-		if (!(first_location in view(CREW_APPARITION_VISIBLE_RANGE, candidate)))
+		if (!(first_location in view(CREW_APPARITION_VIEW_RADIUS, candidate)))
 			continue
 		return candidate
 	return
@@ -423,18 +428,36 @@ TYPEINFO(/datum/component/crew_apparitions)
 /datum/component/crew_apparitions/proc/chatter_visibility_wait_aborted(obj/crew_apparition_actor/humanoid/first_chatter, obj/crew_apparition_actor/humanoid/second_chatter)
 	return !src.is_lifecycle_valid() || QDELETED(first_chatter) || QDELETED(second_chatter) || !src.affected_mob.client
 
-/// Pick a destination within the walking distance limit
-/datum/component/crew_apparitions/proc/pick_walker_destination(turf/start_location)
-	if (!src.is_lifecycle_valid() || !start_location)
+/// Pick the farthest visible destination that draws a walker inward
+/datum/component/crew_apparitions/proc/pick_walker_destination(turf/start_location, maximum_walk_distance = null)
+	if (!src.is_lifecycle_valid() || !start_location || !src.affected_mob.client)
 		return
+	var/turf/victim_turf = get_turf(src.affected_mob)
+	if (!victim_turf || start_location.z != victim_turf.z)
+		return
+	if (!isnum(maximum_walk_distance))
+		maximum_walk_distance = get_crew_apparition_actor_max_walk_distance()
+	maximum_walk_distance = min(maximum_walk_distance, get_crew_apparition_actor_max_walk_distance())
+	maximum_walk_distance = max(round(maximum_walk_distance, 1), 1)
+
+	var/start_distance_from_victim = get_dist(start_location, victim_turf)
+	var/turf/best_destination
+	var/best_travel_distance = 0
 	for (var/attempt in 1 to CREW_APPARITION_LOCATION_ATTEMPTS)
 		var/turf/destination = src.pick_apparition_location(start_location, prefer_outside_view = FALSE)
 		if (!destination)
 			continue
-		if (abs(destination.x - start_location.x) + abs(destination.y - start_location.y) > CREW_APPARITION_WALK_DISTANCE)
+		if (!(destination in view(src.affected_mob.client.view, src.affected_mob)))
 			continue
-		return destination
-	return
+		var/travel_distance = abs(destination.x - start_location.x) + abs(destination.y - start_location.y)
+		if (travel_distance < 1 || travel_distance > maximum_walk_distance)
+			continue
+		if (get_dist(destination, victim_turf) >= start_distance_from_victim)
+			continue
+		if (!best_destination || travel_distance > best_travel_distance)
+			best_destination = destination
+			best_travel_distance = travel_distance
+	return best_destination
 
 /// Create a watcher apparition that follows the viewer
 /datum/component/crew_apparitions/proc/create_watcher()
@@ -444,7 +467,7 @@ TYPEINFO(/datum/component/crew_apparitions)
 	if (!watcher_location || !src.is_lifecycle_valid())
 		return FALSE
 	var/obj/crew_apparition_actor/humanoid/watcher = src.create_apparition_actor(watcher_location, \
-		CREW_APPARITION_WATCHER_TTL, CREW_APPARITION_VISIBLE_RANGE, fallback_to_viewer = TRUE)
+		CREW_APPARITION_WATCHER_TTL, CREW_APPARITION_VIEW_RADIUS, fallback_to_viewer = TRUE)
 	if (QDELETED(watcher) || !src.is_lifecycle_valid())
 		return FALSE
 	src.set_viewer_tracking(watcher, TRUE)
@@ -459,17 +482,17 @@ TYPEINFO(/datum/component/crew_apparitions)
 		return src.create_watcher()
 	if (!second_chatter_location)
 		var/obj/crew_apparition_actor/humanoid/fallback_watcher = src.create_apparition_actor(first_chatter_location, \
-			CREW_APPARITION_WATCHER_TTL, CREW_APPARITION_VISIBLE_RANGE, fallback_to_viewer = TRUE)
+		CREW_APPARITION_WATCHER_TTL, CREW_APPARITION_VIEW_RADIUS, fallback_to_viewer = TRUE)
 		if (QDELETED(fallback_watcher))
 			return FALSE
 		return src.fallback_to_watcher(fallback_watcher)
 
 	var/obj/crew_apparition_actor/humanoid/first_chatter = src.create_apparition_actor(first_chatter_location, \
-		CREW_APPARITION_TTL, CREW_APPARITION_VISIBLE_RANGE, fallback_to_viewer = TRUE)
+		CREW_APPARITION_TTL, CREW_APPARITION_VIEW_RADIUS, fallback_to_viewer = TRUE)
 	if (QDELETED(first_chatter))
 		return FALSE
 	var/obj/crew_apparition_actor/humanoid/second_chatter = src.create_apparition_actor(second_chatter_location, \
-		CREW_APPARITION_TTL, CREW_APPARITION_VISIBLE_RANGE, fallback_to_viewer = TRUE)
+		CREW_APPARITION_TTL, CREW_APPARITION_VIEW_RADIUS, fallback_to_viewer = TRUE)
 	if (QDELETED(second_chatter))
 		return src.fallback_to_watcher(first_chatter)
 
@@ -482,25 +505,39 @@ TYPEINFO(/datum/component/crew_apparitions)
 
 /// Create an apparition that walks to a nearby destination
 /datum/component/crew_apparitions/proc/create_walker()
-	for (var/attempt in 1 to CREW_APPARITION_LOCATION_ATTEMPTS)
-		var/turf/start_location = src.pick_apparition_location(prefer_outside_view = TRUE)
-		var/turf/destination = src.pick_walker_destination(start_location)
-		if (!start_location || !destination || !src.is_lifecycle_valid())
-			continue
+	var/maximum_walk_distance = get_crew_apparition_actor_max_walk_distance()
+	var/distance_step = max(round(maximum_walk_distance / CREW_APPARITION_WALK_DISTANCE_PASSES, 1), 1)
+	var/obj/crew_apparition_actor/humanoid/fallback_walker
+	for (var/distance_pass in 1 to CREW_APPARITION_WALK_DISTANCE_PASSES)
+		var/pass_maximum_walk_distance = max(maximum_walk_distance - ((distance_pass - 1) * distance_step), 1)
+		for (var/attempt in 1 to CREW_APPARITION_LOCATION_ATTEMPTS)
+			var/turf/start_location = src.pick_apparition_location(prefer_outside_view = TRUE, require_outside_view = TRUE)
+			var/turf/destination = src.pick_walker_destination(start_location, pass_maximum_walk_distance)
+			if (!start_location || !destination || !src.is_lifecycle_valid())
+				continue
 
-		var/obj/crew_apparition_actor/humanoid/walker = src.create_apparition_actor(start_location, \
-			CREW_APPARITION_TTL, CREW_APPARITION_VISIBLE_RANGE, fallback_to_viewer = TRUE)
-		if (QDELETED(walker))
-			continue
-		src.set_viewer_tracking(walker, FALSE)
-		if (!src.walk_apparition_to(walker, destination, max_distance = CREW_APPARITION_WALK_DISTANCE, \
-			step_delay = CREW_APPARITION_WALK_STEP_DELAY))
-			// The destination picker only checks the candidate from the victim's perspective
-			// The actor's path can still be unavailable, so try another pair before giving up
-			src.end(walker, dissolve_time = 0)
-			continue
-		src.start_walker(walker)
-		return TRUE
+			var/obj/crew_apparition_actor/humanoid/walker = src.create_apparition_actor(start_location, \
+				CREW_APPARITION_TTL, CREW_APPARITION_VIEW_RADIUS, fallback_to_viewer = TRUE)
+			if (QDELETED(walker))
+				continue
+			src.set_viewer_tracking(walker, FALSE)
+			if (!src.walk_apparition_to(walker, destination, max_distance = pass_maximum_walk_distance, \
+				step_delay = CREW_APPARITION_WALK_STEP_DELAY))
+				// The destination picker checks visibility and passability from the victim's perspective
+				// The actor's route cap can still reject this distance, so try another pair before giving up
+				if (fallback_walker)
+					src.end(fallback_walker, dissolve_time = 0)
+				fallback_walker = walker
+				continue
+			if (fallback_walker)
+				src.end(fallback_walker, dissolve_time = 0)
+			fallback_walker = null
+			src.start_walker(walker)
+			return TRUE
+	if (fallback_walker)
+		if (src.fallback_to_watcher(fallback_walker))
+			return TRUE
+		src.end(fallback_walker, dissolve_time = 0)
 	return src.create_watcher()
 
 /// Handle a walker after its route completes or becomes invalid
@@ -523,6 +560,23 @@ TYPEINFO(/datum/component/crew_apparitions)
 		src.face_viewer(walker)
 		if (!src.say_phrase(walker))
 			src.end(walker)
+			return
+		for (var/line_number in 2 to CREW_APPARITION_WALKER_LINES)
+			var/phrase_delay = min(CREW_APPARITION_CHATTER_DELAY, src.remaining_ttl(walker))
+			if (phrase_delay <= 0)
+				return
+			sleep(phrase_delay)
+			if (!src.is_lifecycle_valid(current_generation) || QDELETED(walker) || !src.affected_mob.client)
+				return
+			if (!src.wait_for_visibility(walker, CREW_APPARITION_WALKER_VISIBLE_WAIT))
+				if (!src.is_lifecycle_valid(current_generation) || QDELETED(walker))
+					return
+				src.end(walker)
+				return
+			src.face_viewer(walker)
+			if (!src.say_phrase(walker))
+				src.end(walker)
+				return
 
 /// Convert an apparition into a single watcher
 /datum/component/crew_apparitions/proc/fallback_to_watcher(obj/crew_apparition_actor/humanoid/apparition)
@@ -655,7 +709,7 @@ TYPEINFO(/datum/component/crew_apparitions)
 		src.last_archetype = archetype
 
 #undef CREW_APPARITION_LOCATION_ATTEMPTS
-#undef CREW_APPARITION_VISIBLE_RANGE
+#undef CREW_APPARITION_VIEW_RADIUS
 #undef CREW_APPARITION_OFFSCREEN_MIN_DISTANCE
 #undef CREW_APPARITION_OFFSCREEN_MAX_DISTANCE
 #undef CREW_APPARITION_TTL
@@ -669,6 +723,7 @@ TYPEINFO(/datum/component/crew_apparitions)
 #undef CREW_APPARITION_CHATTER_DELAY
 #undef CREW_APPARITION_CHATTER_VISIBLE_WAIT
 #undef CREW_APPARITION_CHATTER_MAX_DISTANCE
-#undef CREW_APPARITION_WALK_DISTANCE
+#undef CREW_APPARITION_WALK_DISTANCE_PASSES
 #undef CREW_APPARITION_WALK_STEP_DELAY
 #undef CREW_APPARITION_WALKER_VISIBLE_WAIT
+#undef CREW_APPARITION_WALKER_LINES
