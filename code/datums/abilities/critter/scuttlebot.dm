@@ -29,7 +29,7 @@
 		var/mobnumber = 0
 		var/itemnumber = 0
 		for (var/atom/A in the_turf)
-			if (A.invisibility || istype(A, /obj/overlay/tile_effect))
+			if (A.invisibility || istype(A, /atom/movable/light/robust_light))
 				continue
 			var/icon/ic = getFlatIcon(A)
 			if (ic)

@@ -50,7 +50,7 @@
 		var/list/block = block(locate(props.sourceX, props.sourceY, props.sourceZ),locate(props.maxX, props.maxY, props.sourceZ))
 		for(var/turf/T as anything in block)
 			for(var/Y in T)
-				if(isobj(Y) && !istype(Y, /obj/overlay/tile_effect))
+				if(isobj(Y) && !istype(Y, /atom/movable/light/robust_light))
 					qdel(Y)
 					count++
 		logTheThing(LOG_DEBUG, null, "Finished SwapDelete (count: [count]) at [time2text(world.timeofday)]")

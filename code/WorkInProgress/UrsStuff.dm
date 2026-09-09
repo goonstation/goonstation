@@ -53,7 +53,7 @@
 
 /mob/living/critter/robotic/bot/engibot
 
-/obj/overlay/simple_light/disco_lighting
+/atom/movable/light/simple_light/disco_lighting
 	var/randomize_start = 0
 	name = "disco_overlay"
 
@@ -73,7 +73,7 @@
 
 
 
-/obj/overlay/simple_light/disco_lighting/rainbow
+/atom/movable/light/simple_light/disco_lighting/rainbow
 	New()
 		. = ..()
 		if(randomize_start)
@@ -85,7 +85,7 @@
 	random_start
 		randomize_start = 1
 
-/obj/overlay/simple_light/disco_lighting/oscillator
+/atom/movable/light/simple_light/disco_lighting/oscillator
 	var/color_1 = "#FF0000"
 	var/color_2 = "#0000FF"
 
