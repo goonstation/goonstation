@@ -112,7 +112,7 @@
 /obj/item/blackbox
 	name = "flight recorder of NSS Polaris"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
-	icon = 'icons/obj/items/items.dmi'
+	icon = 'icons/obj/adventurezones/blackboxdmi.dmi'
 	icon_state = "blackbox"
 	desc = "A flight recorder is an electronic recording device placed in a spacecraft for the purpose of facilitating the investigation of accidents and incidents. Someone from Nanotrasen would surely want to see this."
 	item_state = "electropack"
