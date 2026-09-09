@@ -153,6 +153,11 @@ var/list/dirty_keystates = list()
 
 		return
 
+	MouseDrop(src_object, over_object, turf/src_location, turf/over_location, src_control, over_control, params)
+		if (src.mob && SEND_SIGNAL(src.mob, COMSIG_MOB_MOUSEDROP, src_object, over_object, src_location, over_location, src_control, over_control, params))
+			return
+		return ..()
+
 	DblClick(atom/target, location, control, params)
 		var/list/paramslist = params2list(params)
 		if (paramslist["button"] == "left")
