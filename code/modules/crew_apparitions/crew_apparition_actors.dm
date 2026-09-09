@@ -459,6 +459,8 @@
 				reached_destination = FALSE
 				break
 			src.set_dir(get_dir(current_turf, next_turf))
+			src.glide_size = world.icon_size / ceil(step_delay / world.tick_lag)
+			src.animate_movement = SLIDE_STEPS
 			src.set_loc(next_turf)
 			if (next_turf != route_to_follow[length(route_to_follow)])
 				sleep(step_delay)
