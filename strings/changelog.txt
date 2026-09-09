@@ -1,5 +1,21 @@
 
 (t)tue sep 08 26
+(u)Sord
+(p)27205
+(e)🗺|A-Mapping
+(*)Escape shuttle walls are now opaque. Spooky. New shuttles coming soon.
+(u)Kubius
+(p)27756
+(e)🗺|A-Mapping
+(*)Nadir now features a direct cable run from the nuclear reactor to the siphon. Each end doesn't start wired up, but is quick to reconfigure.
+(u)Lithesra
+(p)27789
+(e)🎨🐁|C-Sprites, A-Critters
+(+)A few drone types that lacked death sprites now have ones.
+(u)ANNmagedon + TekoTheTeapot
+(p)27290
+(e)🎨💊|C-Sprites, A-Medical
+(*)NanoTrasen Emergency Paramedics have received more funding, including better medicine, a surgical kit, a casualties kit. Sadly NT R&D ran out of budget before their last unique item was finished, will be added soon(TM)
 (u)ZeWaka, jlsnow301, Smartkar, tigercat2000
 (p)27653
 (e)🚄🔎📄⚙📜|C-Performance, C-Code-Quality, A-UI, A-Internal, C-Documentation
