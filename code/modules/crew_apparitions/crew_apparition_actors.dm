@@ -248,6 +248,12 @@
 	var/list/turf/walk_route
 	var/turf/walk_destination
 
+/obj/crew_apparition_actor/humanoid/Crossed(atom/movable/AM)
+	. = ..()
+	if (AM != src.victim)
+		return
+	src.dissolve()
+
 /obj/crew_apparition_actor/humanoid/New(location, mob/viewer, mob/living/carbon/human/appearance_source, ttl = 30 SECONDS, fallback_to_viewer = FALSE, range = 7, appearance_time = 2 SECONDS, datum/client_image_group/image_group = null)
 	var/can_use_viewer_appearance = fallback_to_viewer && appearance_source == viewer && ishuman(viewer)
 	if (!can_use_viewer_appearance && !is_crew_apparition_human_eligible(viewer, appearance_source, range))
