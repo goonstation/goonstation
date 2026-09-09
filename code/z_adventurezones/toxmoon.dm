@@ -546,7 +546,7 @@
 /datum/targetable/critter/aoe/backup_call
 	var/backup_type = null
 	var/type_modifier = rand(1,10)
-	if (type_modifier == 7 || type_modifier == 8)
+	if (type_modifier >= 7 && type_modifier =< 8)
 		backup_type = /mob/living/critter/radthing
 	else if (type_modifier == 9)
 		backup_type = /mob/living/critter/radthing/spitter
