@@ -1550,7 +1550,7 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 	setupProperties()
 		..()
 		setProperty("radprot", 50)
-		setProperty("heatprot", 65)
+		setProperty("heatprot", 45)
 
 /obj/item/clothing/suit/space/ntso/bellona
 	name = "NTSO combat dress"
