@@ -1543,7 +1543,7 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 
 /obj/item/clothing/suit/space/ntso/engineer
 	name = "NT engineering pressure suit"
-	desc = "A specialised Nanotrasen space suit, with an integrated chest rig. The rig has been modified to fit a radiation. The fabric on this model is highly fire resistant and houses batiline plating."
+	desc = "A specialised Nanotrasen space suit, with an integrated chest rig. The rig has been modified to fit an insignia to mark its protection against radiation. The fabric on this model is highly fire resistant and houses batiline plating."
 	icon_state = "ntso_engineer"
 	item_state = "ntso_engineer"
 
