@@ -475,4 +475,5 @@ TYPEINFO(/obj/machinery/vending/jobclothing/syndicate)
 		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/satchel/syndie, 1)
 		product_list += new/datum/data/vending_product(/obj/item/storage/fanny/syndie, 1)
 		product_list += new/datum/data/vending_product(/obj/item/stamp/syndicate, 4)
+		product_list += new/datum/data/vending_product(/obj/item/flag/SYN, 4)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/baseball/syndicate, 5) // get a bunch of mindhacks and hit the major league
