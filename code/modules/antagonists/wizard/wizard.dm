@@ -57,7 +57,7 @@
 		H.equip_if_possible(new /obj/item/staff(H), SLOT_R_HAND)
 
 		if (!src.vr)
-			H.equip_if_possible(new /obj/item/teleportation_scroll(H), SLOT_L_HAND)
+			H.equip_if_possible(new /obj/item/teleportation_scroll(H), SLOT_IN_BACKPACK)
 
 		var/obj/item/SWF_uplink/SB = new /obj/item/SWF_uplink(src, src.vr)
 		SB.wizard_key = src.owner.key
