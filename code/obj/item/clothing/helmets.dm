@@ -512,7 +512,7 @@
 /// a fancy space helmet that cycles between an off state, mesons vision and pressure vision
 /obj/item/clothing/head/helmet/space/ntso/engineer // Sprite by tekoTheTeapot
 	name = "NT engineering helmet"
-	desc = "A modified combat helmet for Nanotrasen emergency repair technician. The visor size had to be reduced to fit both meson and atmospheric scanning overlays."
+	desc = "A modified combat helmet for Nanotrasen emergency repair technicians. The visor size had to be reduced to fit both meson and atmospheric scanning overlays."
 	icon_state = "ntso_engineer-off"
 	item_state = "ntso_engineer-off"
 	protective_temperature = 1300
