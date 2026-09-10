@@ -10,6 +10,7 @@
 	var/altside_flag = null
 	/// Some flags can be converted into capes; clothing items for the suit or back slot. Must be a type path of `/obj/item/clothing/suit/flag`
 	var/associated_cape = null
+	var/needs_logging = TRUE // Does it require logging on suspcious interactions
 
 /obj/item/flag/attack_self(mob/user)
 	if (!ispath(src.altside_flag, /obj/item/flag))
@@ -48,7 +49,8 @@
 	new_flag.flag_item = src
 	user.u_equip(src)
 	src.set_loc(new_flag)
-	logTheThing(LOG_STATION, user, "Hangs up a flag ([new_flag.name]) in [T] at [log_loc(user)].")
+	if(src.needs_logging)
+		logTheThing(LOG_STATION, user, "Hangs up a flag ([new_flag.name]) in [T] at [log_loc(user)].")
 	user.visible_message(SPAN_NOTICE("[user] hangs up a [new_flag.name] in [T]!."), SPAN_NOTICE("You hang up a [new_flag.name] in [T]!"))
 
 /obj/item/flag/ace
@@ -144,6 +146,22 @@
 	associated_flag = /obj/decal/poster/flag/mlmachi
 	altside_flag = /obj/item/flag/mlmvinc
 	associated_cape = /obj/item/clothing/suit/flag/mlmachi
+
+/obj/item/flag/NT
+	name = "nanotrasen flag"
+	icon_state = "nanotrasen"
+	associated_flag = /obj/decal/poster/flag/NT
+	burn_possible = TRUE
+	needs_logging = FALSE
+
+/obj/item/flag/SYN
+	name = "syndicate flag"
+	icon_state = "syndicate"
+	desc = "villainous! It's folded up, ready to deploy."
+	associated_flag = /obj/decal/poster/flag/SYN
+	burn_possible = TRUE
+	needs_logging = FALSE
+
 
 ABSTRACT_TYPE(/obj/item/clothing/suit/flag)
 /obj/item/clothing/suit/flag

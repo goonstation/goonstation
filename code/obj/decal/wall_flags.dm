@@ -6,6 +6,7 @@
 	/// Must by a type path of `/obj/item/flag`.
 	var/starting_flag = /obj/item/flag
 	var/obj/item/flag/flag_item = null
+	var/needs_logging = TRUE // Does it require logging on suspcious interactions
 
 /obj/decal/poster/flag/New()
 	src.flag_item = new src.starting_flag(src)
@@ -26,7 +27,9 @@
 		user.put_in_hand_or_drop(src.flag_item)
 		src.flag_item = null
 	user.visible_message(SPAN_NOTICE("[user] takes down the [src.name] in [src.loc]!"), SPAN_NOTICE("You take down the [src.name] in [src.loc]!"))
-	logTheThing(LOG_STATION, user, "Takes down a flag ([src.name]) in [src.loc] at [log_loc(user)].")
+
+	if(src.needs_logging)
+		logTheThing(LOG_STATION, user, "Takes down a flag ([src.name]) in [src.loc] at [log_loc(user)].")
 	qdel(src)
 
 /obj/decal/poster/flag/ace
@@ -103,3 +106,17 @@
 	name = "\improper Achilean MLM pride flag"
 	icon_state = "mlmachi"
 	starting_flag = /obj/item/flag/mlmachi
+
+/obj/decal/poster/flag/NT
+	name = "nanotrasen flag"
+	icon_state = "nanotrasen"
+	needs_logging = FALSE
+	starting_flag = /obj/item/flag/NT
+
+/obj/decal/poster/flag/SYN
+	name = "syndicate flag"
+	desc = "villainous!"
+	icon_state = "syndicate"
+	needs_logging = FALSE
+	starting_flag = /obj/item/flag/SYN
+
