@@ -29,13 +29,6 @@
 #define RC_REAGENT_OVERLAY_SCALING_LINEAR "linear"
 #define RC_REAGENT_OVERLAY_SCALING_SPHERICAL "spherical"
 
-// Meal Times used to identify when a food product might TYPICALLY be consumed
-#define MEAL_TIME_BREAKFAST (1<<0)
-#define MEAL_TIME_LUNCH	(1<<1)
-#define MEAL_TIME_DINNER (1<<2)
-#define MEAL_TIME_SNACK	(1<<3)
-#define MEAL_TIME_FORBIDDEN_TREAT (1<<4)
-
 //macro for lag-compensated probability - assumes lag-compensation multiplier is always called mult
 #define probmult(x) (prob(percentmult((x), mult)))
 

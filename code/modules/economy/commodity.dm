@@ -1596,6 +1596,12 @@ datum/commodity/drugs/sell/poppies
 	desc = "A uniform and cap for... some team you've never heard of before. Bat not included."
 	price = PAY::UNTRAINED
 
+/datum/commodity/costume/mouse
+	comname = "Space Mouse costume"
+	comtype = /obj/item/storage/box/costume/mouse
+	desc = "A strange costume that is cheesed to meet you. Free cheese included."
+	price = PAY::UNTRAINED
+
 /datum/commodity/backpack/breadpack
 	comname = "Bag-uette"
 	comtype = /obj/item/storage/backpack/breadpack

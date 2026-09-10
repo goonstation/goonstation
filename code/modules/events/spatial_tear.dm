@@ -12,17 +12,25 @@
 		var/picky = rand(75,140)
 		var/btype = rand(1,2)
 		var/count = btype == 1 ? world.maxy : world.maxx // could just set it to our current mapsize (300) but this should help in case that changes again in the future or we go with non-square maps for some reason??  :v
+
+		var/turf/tear_loc = null
 		if (btype == 1)
 			// Vertical
 			while (count > 0)
-				var/obj/forcefield/event/B = new /obj/forcefield/event(locate(pickx,count,1),barrier_duration)
-				B.icon_state = "spat-v"
+				tear_loc = locate(pickx,count,1)
+				// we want to avoid placing on cordons, but still decrement
+				if (tear_loc && !istype(tear_loc, /turf/cordon))
+					var/obj/forcefield/event/B = new /obj/forcefield/event(tear_loc,barrier_duration)
+					B.icon_state = "spat-v"
 				count -= 1
 		else
 			// Horizontal
 			while (count > 0)
-				var/obj/forcefield/event/B = new /obj/forcefield/event(locate(count,picky,1),barrier_duration)
-				B.icon_state = "spat-h"
+				tear_loc = locate(count,picky,1)
+				// we want to avoid placing on cordons, but still decrement
+				if (tear_loc && !istype(tear_loc, /turf/cordon))
+					var/obj/forcefield/event/B = new /obj/forcefield/event(tear_loc,barrier_duration)
+					B.icon_state = "spat-h"
 				count -= 1
 
 /obj/forcefield/event
@@ -30,11 +38,12 @@
 	desc = "A breach in the spatial fabric. Extremely difficult to pass."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "spat-h"
-	anchored = ANCHORED
+	anchored = ANCHORED_ALWAYS
 	opacity = 1
 	density = 1
 	var/stabilized = 0
 	plane = PLANE_ABOVE_LIGHTING
+	event_handler_flags = IMMUNE_SINGULARITY | IMMUNE_OCEAN_PUSH | IMMUNE_TRENCH_WARP | IMMUNE_MINERAL_MAGNET
 
 	New(var/loc,var/duration)
 		..()
