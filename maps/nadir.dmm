@@ -684,6 +684,15 @@
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
+"aoy" = (
+/obj/disposalpipe/segment/vertical,
+/obj/cable/purple{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 4
+	},
+/area/station/hallway/secondary/east)
 "aoA" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -2368,6 +2377,14 @@
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
 	})
+"beo" = (
+/obj/cable/purple{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/caution/misc{
+	dir = 1
+	},
+/area/station/engine/core/nuclear)
 "beq" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4;
@@ -2572,9 +2589,6 @@
 	},
 /area/station/crew_quarters/lounge)
 "biF" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/engine/caution/corner{
 	dir = 1
 	},
@@ -3227,9 +3241,6 @@
 /obj/machinery/door/airlock/pyro/glass/toxins{
 	dir = 4
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/research,
 /obj/mapping_helper/access/engineering_engine,
@@ -3374,9 +3385,6 @@
 "bxX" = (
 /obj/machinery/door/airlock/pyro/glass/toxins{
 	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
 	},
 /obj/mapping_helper/access/research,
 /obj/mapping_helper/access/engineering_engine,
@@ -4579,10 +4587,10 @@
 	},
 /area/station/security/secwing)
 "bZA" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
 /obj/disposalpipe/segment/horizontal,
+/obj/cable/purple{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
@@ -4895,6 +4903,9 @@
 /obj/disposalpipe/segment/mail/vertical,
 /obj/machinery/camera/directional/west{
 	pixel_y = 10
+	},
+/obj/cable/purple{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/yellowblack/corner{
 	dir = 1
@@ -5788,6 +5799,16 @@
 /area/station/maintenance/outer/nw{
 	name = "Northwest Breach Hull"
 	})
+"cDv" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/vertical,
+/obj/cable/purple{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/station/science/hall)
 "cDX" = (
 /obj/machinery/door/airlock/pyro/alt,
 /turf/simulated/floor/carpet/green/standard/narrow/north,
@@ -6668,10 +6689,10 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/courtroom)
 "cWN" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/disposalpipe/segment/horizontal,
+/obj/cable/purple{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/black,
 /area/station/science/hall)
 "cWU" = (
@@ -7506,6 +7527,9 @@
 /obj/machinery/fluid_canister,
 /obj/machinery/camera/directional/south{
 	pixel_x = -10
+	},
+/obj/cable/purple{
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/engine,
 /area/station/science/construction{
@@ -11190,6 +11214,17 @@
 "eZe" = (
 /turf/simulated/floor/black,
 /area/station/bridge/reception)
+"eZl" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable/orange{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine/caution/corner2{
+	dir = 10
+	},
+/area/station/engine/core/nuclear)
 "eZH" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -12144,10 +12179,8 @@
 	},
 /area/abandonedmedicalship/robot_trader)
 "fvu" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
 /obj/machinery/power/apc/autoname_west,
+/obj/cable,
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
@@ -12350,6 +12383,15 @@
 	dir = 8
 	},
 /area/station/medical/medbay/cloner)
+"fAe" = (
+/obj/storage/closet/radiation,
+/obj/cable/purple{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "fAh" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -13172,6 +13214,9 @@
 	},
 /area/station/hallway/primary/southwest)
 "fQF" = (
+/obj/cable/orange{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 10
 	},
@@ -14341,16 +14386,19 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "gtB" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc/autoname_north,
 /obj/machinery/door_control{
 	id = "nadir_exnex";
 	name = "Shielding Control";
 	pixel_x = 23;
 	dir = 4;
 	pixel_y = 1
+	},
+/obj/machinery/firealarm/directional/north{
+	pixel_x = 6;
+	pixel_y = 28
+	},
+/obj/machinery/light_switch/directional/north{
+	pixel_x = -7
 	},
 /turf/simulated/floor/engine,
 /area/station/science/construction{
@@ -15805,6 +15853,12 @@
 	},
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/crew_quarters/fitness)
+"gWl" = (
+/obj/cable/orange{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/caution/misc,
+/area/station/engine/core/nuclear)
 "gXa" = (
 /obj/stool/chair/blue{
 	dir = 8
@@ -16295,6 +16349,9 @@
 "hft" = (
 /obj/landmark/gps_waypoint,
 /obj/disposalpipe/junction/left/east,
+/obj/cable/purple{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/grey/side{
 	dir = 1
 	},
@@ -16309,14 +16366,6 @@
 /obj/decal/stage_edge,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/fitness)
-"hgq" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/purpleblack{
-	dir = 4
-	},
-/area/station/science/hall)
 "hgw" = (
 /obj/disposalpipe/segment/bent/south,
 /obj/item/device/radio/intercom{
@@ -16463,19 +16512,6 @@
 /turf/simulated/floor/plating,
 /area/station/engine/inner{
 	name = "Transception Array Control"
-	})
-"hje" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/caution/misc{
-	dir = 6
-	},
-/area/station/science/construction{
-	name = "Extraction Nexus"
 	})
 "hjq" = (
 /obj/machinery/drainage,
@@ -17125,6 +17161,9 @@
 "hxe" = (
 /obj/machinery/camera/directional/east{
 	pixel_y = 10
+	},
+/obj/cable/purple{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/purpleblack/corner,
 /area/station/science/hall)
@@ -17920,6 +17959,9 @@
 "hQs" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/disposalpipe/segment/horizontal,
+/obj/cable/purple{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/east)
 "hQB" = (
@@ -18271,6 +18313,9 @@
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
+	},
+/obj/cable/purple{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/yellowblack{
 	dir = 8
@@ -19775,6 +19820,13 @@
 	},
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/crew_quarters/fitness)
+"iCY" = (
+/obj/disposalpipe/segment/mail/vertical,
+/obj/cable/purple{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/secondary/east)
 "iDw" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/cable{
@@ -20135,6 +20187,9 @@
 "iNR" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/machinery/alarm/directional/west,
+/obj/cable/purple{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/east)
 "iNU" = (
@@ -21249,6 +21304,21 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
+"jpg" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor/blast/pyro{
+	density = 0;
+	dir = 4;
+	icon_state = "bdoormid0";
+	id = "nadir_nukecore";
+	name = "Reactor Core Shielding";
+	opacity = 0
+	},
+/obj/cable/purple{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "jpo" = (
 /turf/simulated/floor/engine/caution/west,
 /area/station/science/teleporter)
@@ -21736,6 +21806,16 @@
 	},
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/sanctuary)
+"jzM" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/transport,
+/obj/cable/purple{
+	icon_state = "4-9"
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/secondary/east)
 "jAn" = (
 /obj/storage/cart/trash,
 /turf/simulated/floor/plating,
@@ -24861,6 +24941,9 @@
 /obj/cable/orange{
 	icon_state = "1-4"
 	},
+/obj/cable/orange{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/engine/caution/corner2,
 /area/station/engine/core/nuclear)
 "kQn" = (
@@ -25179,6 +25262,15 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
+"kXb" = (
+/obj/disposalpipe/segment/mail/vertical,
+/obj/cable/purple{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/purpleblack{
+	dir = 8
+	},
+/area/station/hallway/secondary/east)
 "kXn" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -25854,6 +25946,13 @@
 	dir = 8
 	},
 /area/station/medical/staff)
+"llW" = (
+/obj/disposalpipe/segment/mail/vertical,
+/obj/cable/purple{
+	icon_state = "1-6"
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/secondary/east)
 "lmc" = (
 /obj/machinery/weapon_stand/taser_rack/recharger/empty,
 /obj/machinery/recharger/wall/sticky{
@@ -26299,9 +26398,6 @@
 /turf/simulated/floor/black,
 /area/station/science/teleporter)
 "lxd" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/engine/caution/south,
 /area/station/science/construction{
@@ -27210,6 +27306,21 @@
 /area/station/engine/inner{
 	name = "Transception Array Control"
 	})
+"lON" = (
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/blast/pyro{
+	density = 0;
+	dir = 4;
+	icon_state = "bdoormid0";
+	id = "nadir_nukecore";
+	name = "Reactor Core Shielding";
+	opacity = 0
+	},
+/obj/cable/purple{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "lOT" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -29073,6 +29184,15 @@
 /area/station/security/checkpoint/sec_foyer{
 	name = "Secure Release Foyer"
 	})
+"mGY" = (
+/obj/disposalpipe/segment/mail/vertical,
+/obj/cable/purple{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 8
+	},
+/area/station/hallway/secondary/east)
 "mHk" = (
 /obj/disposalpipe/segment/ejection{
 	dir = 4;
@@ -29417,9 +29537,6 @@
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai_upload)
 "mPG" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/engine/caution/corner,
 /area/station/science/construction{
 	name = "Extraction Nexus"
@@ -30820,6 +30937,9 @@
 /obj/item/slag_shovel,
 /obj/machinery/light/incandescent/netural{
 	dir = 8
+	},
+/obj/cable{
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/grey/side{
 	dir = 8
@@ -32996,13 +33116,13 @@
 /obj/machinery/door/airlock/pyro/glass/sci{
 	dir = 4
 	},
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/disposalpipe/segment/horizontal,
 /obj/mapping_helper/access/engineering_engine,
 /obj/mapping_helper/access/research_foyer,
+/obj/cable/purple{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black,
 /area/station/science/hall)
 "oxz" = (
@@ -33221,6 +33341,17 @@
 /obj/machinery/vending/capsule,
 /turf/simulated/floor/redblack,
 /area/station/hallway/primary/northeast)
+"oCu" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/science/hall)
 "oCE" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -34501,10 +34632,13 @@
 	name = "The Warrens"
 	})
 "pfr" = (
-/obj/cable{
-	icon_state = "4-8"
+/obj/cable/purple,
+/obj/cable/purple{
+	icon_state = "0-4"
 	},
-/turf/simulated/floor/engine,
+/turf/simulated/floor/caution/misc{
+	dir = 6
+	},
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
@@ -35125,6 +35259,9 @@
 /area/abandonedmedicalship/robot_trader)
 "psN" = (
 /obj/disposalpipe/segment/horizontal,
+/obj/cable/purple{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/grey/side{
 	dir = 1
 	},
@@ -35865,6 +36002,12 @@
 	dir = 1
 	},
 /area/station/turret_protected/Zeta)
+"pMw" = (
+/obj/machinery/drainage,
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "pMA" = (
 /obj/item/clothing/under/gimmick/dolan,
 /turf/simulated/floor/plating,
@@ -37803,18 +37946,20 @@
 /turf/simulated/floor/twotone/darkblue,
 /area/station/crew_quarters/radio/lab)
 "qKz" = (
-/obj/machinery/light_switch/directional/north{
-	pixel_x = -8
-	},
-/obj/machinery/firealarm/directional/north{
-	pixel_x = 6
-	},
 /obj/machinery/door_control{
 	id = "nadir_exnex";
 	name = "Shielding Control";
 	pixel_x = -23;
 	dir = 8;
 	pixel_y = 1
+	},
+/obj/machinery/power/apc/autoname_north,
+/obj/cable/purple{
+	icon_state = "0-2"
+	},
+/obj/item/device/t_scanner{
+	pixel_y = 4;
+	pixel_x = -7
 	},
 /turf/simulated/floor/engine,
 /area/station/science/construction{
@@ -39628,6 +39773,15 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
 /area/station/crew_quarters/quarters_east)
+"rGc" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable/purple{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "rGh" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -41711,16 +41865,6 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
-"sGq" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/disposalpipe/segment/mail/vertical,
-/turf/simulated/floor/black,
-/area/station/science/hall)
 "sGr" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -42211,6 +42355,9 @@
 	},
 /obj/disposalpipe/segment/mineral{
 	dir = 8
+	},
+/obj/cable/purple{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/yellowblack{
 	dir = 8
@@ -48367,6 +48514,9 @@
 /area/station/chapel/sanctuary)
 "vGu" = (
 /obj/disposalpipe/segment/mail/vertical,
+/obj/cable/purple{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/yellowblack/corner{
 	dir = 4
 	},
@@ -50081,6 +50231,14 @@
 	},
 /turf/simulated/floor/blackwhite,
 /area/station/storage/eva)
+"wuL" = (
+/obj/cable/purple{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/purpleblack{
+	dir = 4
+	},
+/area/station/science/hall)
 "wuT" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -50502,9 +50660,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/cable{
-	icon_state = "2-4"
-	},
 /obj/disposalpipe/junction/middle/east,
 /turf/simulated/floor/black,
 /area/station/science/hall)
@@ -50650,6 +50805,9 @@
 /area/station/hydroponics/bay)
 "wJW" = (
 /obj/disposalpipe/segment/horizontal,
+/obj/cable/purple{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
@@ -50936,6 +51094,9 @@
 	dir = 8
 	},
 /obj/disposalpipe/segment/horizontal,
+/obj/cable/purple{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black,
 /area/station/quartermaster/refinery)
 "wSi" = (
@@ -53691,6 +53852,20 @@
 /obj/mapping_helper/access/chemistry,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
+"ygX" = (
+/obj/machinery/door/poddoor/blast/pyro{
+	density = 0;
+	dir = 4;
+	icon_state = "bdoormid0";
+	id = "nadir_nukecore";
+	name = "Reactor Core Shielding";
+	opacity = 0
+	},
+/obj/cable/purple{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
 "ygZ" = (
 /turf/simulated/floor/engine/caution/east,
 /area/station/science/construction{
@@ -96985,7 +97160,7 @@ heh
 heh
 heh
 kYv
-sGq
+xzR
 xzR
 xzR
 eWr
@@ -97287,7 +97462,7 @@ ntK
 smh
 mjx
 smh
-hgq
+fUF
 mpD
 fUF
 cPi
@@ -97891,7 +98066,7 @@ fLt
 koD
 oVA
 drI
-tht
+pMw
 jbf
 agE
 hye
@@ -98193,7 +98368,7 @@ hvP
 lBt
 agE
 gtB
-hje
+drI
 lbc
 agE
 kjV
@@ -98797,7 +98972,7 @@ hQF
 drI
 gzn
 gVT
-pfr
+drI
 dwG
 fNC
 gXP
@@ -99099,7 +99274,7 @@ iVa
 drI
 drI
 drI
-pfr
+drI
 drI
 vsd
 gXP
@@ -100307,7 +100482,7 @@ iVa
 drI
 drI
 drI
-pfr
+drI
 drI
 lmY
 gXP
@@ -100609,7 +100784,7 @@ iVa
 drI
 wWl
 nYa
-pfr
+drI
 dwG
 fNC
 gXP
@@ -101516,7 +101691,7 @@ pIf
 oVA
 drI
 tht
-jbf
+fAe
 agE
 nmI
 hOz
@@ -101818,7 +101993,7 @@ gXP
 agE
 fCJ
 hMO
-fCJ
+rGc
 agE
 hlR
 tRU
@@ -102422,7 +102597,7 @@ wnU
 qAc
 wGE
 buS
-qAc
+cDv
 wnU
 qAc
 haT
@@ -102724,7 +102899,7 @@ eLX
 iIC
 cWN
 hxe
-fUF
+wuL
 uSG
 erF
 qKT
@@ -103022,7 +103197,7 @@ lky
 wRi
 xZH
 tDs
-uvn
+oCu
 iYL
 oxy
 wCN
@@ -104839,12 +105014,12 @@ lxX
 hQs
 vGu
 sQU
-pzd
-xpP
+kXb
+mGY
 cib
-iTi
+iCY
 iNR
-iTi
+llW
 cNU
 iTi
 iTi
@@ -105147,7 +105322,7 @@ fac
 ahx
 fYG
 fYG
-fYG
+jzM
 ahx
 ahx
 xmt
@@ -105449,7 +105624,7 @@ hbd
 unW
 cxr
 unW
-unW
+aoy
 unW
 unW
 cxr
@@ -105751,7 +105926,7 @@ hiz
 uNd
 ibV
 uNd
-uNd
+jpg
 uNd
 ocD
 ocD
@@ -106053,7 +106228,7 @@ eTX
 aZV
 uNd
 aZV
-aZV
+ygX
 aZV
 ocD
 xHz
@@ -106355,7 +106530,7 @@ fPO
 fLQ
 ibV
 fLQ
-fLQ
+lON
 fLQ
 ocD
 eNN
@@ -106657,8 +106832,8 @@ lAF
 gcG
 oDS
 hkU
-hkU
-hkU
+beo
+gWl
 dfm
 lGL
 kYA
@@ -106960,7 +107135,7 @@ gzh
 sKX
 tSU
 jOW
-jOW
+eZl
 eDY
 eSP
 vJR

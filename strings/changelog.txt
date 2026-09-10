@@ -1,5 +1,48 @@
 
+(t)wed sep 09 26
+(u)Skeletonman0
+(p)27788
+(e)🎨📨|C-Sprites, A-Logistics
+(+)Geoff Honkington now sells a space mouse costume.
+(u)bamlord
+(p)27352
+(e)🆕🎨📄🧛⏰|C-Feature, C-Sprites, A-UI, A-Gamemodes, A-Status-Effects
+(*)Added the wizarding staff of telekinesis to wizard spell/equipment options
+(+)Click drag over visible mobs with the staff in active hand to throw them in that direction.
+(t)tue sep 08 26
+(u)Sord
+(p)27205
+(e)🗺|A-Mapping
+(*)Escape shuttle walls are now opaque. Spooky. New shuttles coming soon.
+(u)Kubius
+(p)27756
+(e)🗺|A-Mapping
+(*)Nadir now features a direct cable run from the nuclear reactor to the siphon. Each end doesn't start wired up, but is quick to reconfigure.
+(u)Lithesra
+(p)27789
+(e)🎨🐁|C-Sprites, A-Critters
+(+)A few drone types that lacked death sprites now have ones.
+(u)ANNmagedon + TekoTheTeapot
+(p)27290
+(e)🎨💊|C-Sprites, A-Medical
+(*)NanoTrasen Emergency Paramedics have received more funding, including better medicine, a surgical kit, a casualties kit. Sadly NT R&D ran out of budget before their last unique item was finished, will be added soon(TM)
+(u)ZeWaka, jlsnow301, Smartkar, tigercat2000
+(p)27653
+(e)🚄🔎📄⚙📜|C-Performance, C-Code-Quality, A-UI, A-Internal, C-Documentation
+(+)Made some internal improvements to our TGUI game windows. Shouldn't be noticeable.
 (t)mon sep 07 26
+(u)swinglow20
+(p)27702
+(e)🎨🐁|C-Sprites, A-Critters
+(+)tweaked Fermid stats, and gave the hulk and queen a screech and shockwave ability
+(u)Ceres et al.
+(p)27692
+(e)🆕🔎💅📄📦|C-Feature, C-Code-Quality, C-QoL, A-UI, A-Game-Objects
+(+)Agent cards have received a new UI and should now be a lot more responsive.
+(u)JORJ949
+(p)27697
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Nuclear bombs now have a minimap marker for syndicate and admin minimaps.
 (u)LorrMaster
 (p)27764
 (e)🍝🌱|A-Catering, A-Hydroponics

@@ -109,7 +109,7 @@
 	item_state = "energy"
 	force = 5
 
-/obj/item/blackbox // Not actually *in* polaris but part of the concept of polaris.
+/obj/item/blackbox
 	name = "flight recorder of NSS Polaris"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	icon = 'icons/obj/items/items.dmi'

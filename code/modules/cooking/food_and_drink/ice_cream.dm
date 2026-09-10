@@ -100,7 +100,7 @@
 	desc = "A plain yoghurt."
 	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
 	icon_state = "yoghurt"
-	required_utensil = REQUIRED_UTENSIL_SPOON
+	required_utensils = FOOD::UTENSIL::SPOON
 	bites_left = 4
 	heal_amt = 1
 	initial_volume = 25
