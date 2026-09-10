@@ -1,11 +1,9 @@
 /// Upper bound on the lifetime of a client-visible crew apparition actor
 #define CREW_APPARITION_ACTOR_MAX_TTL (5 MINUTES)
-/// Maximum duration allotted to a client-visible crew apparition actor's conversation
-#define CREW_APPARITION_ACTOR_MAX_CONVERSATION_DURATION (30 SECONDS)
-/// Maximum number of lines in a client-visible crew apparition actor's conversation
-#define CREW_APPARITION_ACTOR_MAX_CONVERSATION_LINES 8
-/// Maximum route length for a crew apparition walker
+/// Maximum direct distance for a crew apparition walker's visible destination
 #define CREW_APPARITION_WALK_DISTANCE 12
+/// Extra route steps allowed when obstacles make a direct path longer
+#define CREW_APPARITION_WALK_ROUTE_SLACK 5
 /// Maximum number of route nodes considered for a client-visible crew apparition actor walker
 #define CREW_APPARITION_ACTOR_MAX_WALK_SEEN 128
 /// Maximum distance from the victim for a human appearance source
@@ -239,8 +237,6 @@
 	name = "hallucinated person"
 	var/mob/victim
 	var/mob/living/carbon/human/appearance_source
-	var/conversation_running = FALSE
-	var/conversation_generation = 0
 	var/watcher_running = FALSE
 	var/watcher_generation = 0
 	var/walking = FALSE
@@ -258,6 +254,8 @@
 	var/can_use_viewer_appearance = fallback_to_viewer && appearance_source == viewer && ishuman(viewer)
 	if (!can_use_viewer_appearance && !is_crew_apparition_human_eligible(viewer, appearance_source, range))
 		appearance_source = pick_crew_apparition_human(viewer, range)
+		if (!appearance_source && fallback_to_viewer && ishuman(viewer))
+			appearance_source = viewer
 	if (!appearance_source)
 		qdel(src)
 		return
@@ -265,6 +263,11 @@
 	. = ..(location, viewer, appearance_source, ttl, appearance_time, image_group)
 	if (QDELETED(src))
 		return
+	// Humanoid apparitions stand upright even when the copied human's appearance is
+	// currently carrying the transform and pixel offsets from animate_rest()
+	src.client_image.pixel_x = 0
+	src.client_image.pixel_y = 0
+	src.client_image.transform = null
 	src.victim = viewer
 	src.appearance_source = appearance_source
 	src.name = appearance_source.name
@@ -294,6 +297,10 @@
 /proc/get_crew_apparition_actor_max_walk_distance()
 	return CREW_APPARITION_WALK_DISTANCE
 
+/// Return the extra route slack accepted by a crew apparition walker
+/proc/get_crew_apparition_actor_walk_route_slack()
+	return CREW_APPARITION_WALK_ROUTE_SLACK
+
 /// Begin a watcher behavior sequence
 /obj/crew_apparition_actor/humanoid/proc/start_watcher_behavior()
 	if (QDELETED(src) || src.watcher_running)
@@ -310,10 +317,8 @@
 /obj/crew_apparition_actor/humanoid/proc/get_watcher_generation()
 	return src.watcher_generation
 
-/// Cancel all running movement and dialogue behavior
+/// Cancel all running movement and watcher behavior
 /obj/crew_apparition_actor/humanoid/proc/cancel_behavior()
-	src.conversation_generation++
-	src.conversation_running = FALSE
 	src.watcher_generation++
 	src.watcher_running = FALSE
 	src.walk_generation++
@@ -385,46 +390,11 @@
 		src.victim.playsound_local(origin, sound, sound_volume, 1, pitch = voice_pitch)
 	return TRUE
 
-/// Start a timed sequence of phrases for the viewer
-/obj/crew_apparition_actor/humanoid/proc/start_conversation(max_lines = 3, line_delay = 2 SECONDS, sound = null, sound_volume = 50)
-	if (!src.is_active() || src.conversation_running)
-		return FALSE
-
-	max_lines = clamp(max_lines, 1, CREW_APPARITION_ACTOR_MAX_CONVERSATION_LINES)
-	var/conversation_duration = min(src.remaining_ttl(), CREW_APPARITION_ACTOR_MAX_CONVERSATION_DURATION)
-	if (conversation_duration <= 0)
-		return FALSE
-
-	src.conversation_running = TRUE
-	src.conversation_generation++
-	var/current_generation = src.conversation_generation
-	SPAWN(0)
-		var/conversation_deadline = world.time + conversation_duration
-		for (var/line_number = 1 to max_lines)
-			if (QDELETED(src) || world.time >= conversation_deadline || !src.victim?.client)
-				break
-			if (src.conversation_generation != current_generation)
-				return
-			if (!src.say_phrase(sound = sound, sound_volume = sound_volume))
-				break
-			if (src.conversation_generation != current_generation)
-				return
-			if (line_number < max_lines)
-				var/time_until_next_line = min(max(line_delay, 1), conversation_deadline - world.time)
-				if (time_until_next_line <= 0)
-					break
-				if (src.conversation_generation != current_generation)
-					return
-				sleep(time_until_next_line)
-				if (QDELETED(src) || src.conversation_generation != current_generation)
-					return
-		if (!QDELETED(src) && src.conversation_generation == current_generation)
-			src.conversation_running = FALSE
-	return TRUE
-
 /// Walk this actor to a nearby pathable turf
 /obj/crew_apparition_actor/humanoid/proc/walk_apparition_to(atom/target, max_distance = CREW_APPARITION_WALK_DISTANCE, step_delay = BASE_SPEED + WALK_DELAY_ADD)
-	if (QDELETED(src) || src.walking || !src.victim?.client || src.remaining_ttl() <= 0 || QDELETED(target))
+	if (QDELETED(src))
+		return FALSE
+	if (src.walking || !src.victim?.client || src.remaining_ttl() <= 0 || QDELETED(target))
 		return FALSE
 	if (!isturf(src.loc))
 		return FALSE
@@ -434,13 +404,17 @@
 	if (!isnum(max_distance))
 		max_distance = CREW_APPARITION_WALK_DISTANCE
 	max_distance = clamp(max_distance, 1, CREW_APPARITION_WALK_DISTANCE)
+	var/route_max_distance = max_distance + CREW_APPARITION_WALK_ROUTE_SLACK
 	if (!isnum(step_delay))
 		step_delay = BASE_SPEED + WALK_DELAY_ADD
 	step_delay = max(step_delay, world.tick_lag)
 
-	var/list/turf/route = get_path_to(src, target_turf, max_distance = max_distance, max_seen = CREW_APPARITION_ACTOR_MAX_WALK_SEEN, \
+	var/list/turf/route = get_path_to(src, target_turf, max_distance = route_max_distance, max_seen = CREW_APPARITION_ACTOR_MAX_WALK_SEEN, \
 		mintargetdist = 0, simulated_only = FALSE, skip_first = TRUE, cardinal_only = TRUE)
 	if (!length(route))
+		return FALSE
+	// Enforce the cap against the cardinal route we will actually follow
+	if (length(route) > route_max_distance)
 		return FALSE
 
 	src.walking = TRUE
@@ -479,20 +453,13 @@
 	return TRUE
 
 /obj/crew_apparition_actor/humanoid/disposing()
-	src.conversation_generation++
-	src.walk_generation++
-	src.watcher_generation++
-	src.watcher_running = FALSE
-	src.walking = FALSE
-	src.walk_route = null
-	src.walk_destination = null
+	src.cancel_behavior()
 	src.victim = null
 	src.appearance_source = null
 	. = ..()
 
 #undef CREW_APPARITION_ACTOR_MAX_TTL
-#undef CREW_APPARITION_ACTOR_MAX_CONVERSATION_DURATION
-#undef CREW_APPARITION_ACTOR_MAX_CONVERSATION_LINES
 #undef CREW_APPARITION_WALK_DISTANCE
+#undef CREW_APPARITION_WALK_ROUTE_SLACK
 #undef CREW_APPARITION_ACTOR_MAX_WALK_SEEN
 #undef CREW_APPARITION_HUMAN_SEARCH_RANGE
