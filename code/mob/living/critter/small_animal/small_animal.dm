@@ -1700,10 +1700,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 /* -------------------- Scorpion --------------------- */
 /* =================================================== */
 
-/datum/component/tameable/scorpion
-	emote_happy = "chitter"
-	emote_angry = "snip"
-
 /mob/living/critter/small_animal/scorpion
 	name = "scorpion"
 	blood_id = "hemolymph"
@@ -1732,7 +1728,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		START_TRACKING_CAT(TR_CAT_BUGS)
 		src.bioHolder.AddNewPoolEffect("scorpion_sting", scramble=TRUE)
-		AddComponent(/datum/component/tameable/scorpion)
+		var/datum/component/tameable/T = AddComponent(/datum/component/tameable)
+		T.emote_happy = "chitter"
+		T.emote_angry = "snip"
+
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_BUGS)
@@ -1802,10 +1801,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 /* ------------------- Rattlesnake ------------------- */
 /* =================================================== */
 
-/datum/component/tameable/rattlesnake
-	emote_happy = "rattle"
-	emote_angry = "hiss"
-
 /mob/living/critter/small_animal/rattlesnake
 	name = "rattlesnake"
 	blood_id = "blood"
@@ -1831,7 +1826,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		src.bioHolder.AddNewPoolEffect("snake_bite", scramble=TRUE)
 		src.bioHolder.AddNewPoolEffect("slither", scramble=TRUE)
-		src.AddComponent(/datum/component/tameable/rattlesnake)
+		var/datum/component/tameable/T = src.AddComponent(/datum/component/tameable)
+		T.emote_happy = "rattle"
+		T.emote_angry = "hiss"
 		src.AddComponent(/datum/component/proximity)
 
 	setup_hands()

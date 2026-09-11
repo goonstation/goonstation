@@ -414,15 +414,6 @@
 // ROCK WORM
 ///////////////////////////////////////////////
 
-/datum/component/tameable/passive/rockworm
-	treat = /obj/item/raw_material
-	food_blacklist = list(\
-	/obj/item/raw_material/shard,
-	/obj/item/raw_material/scrap_metal,
-	/obj/item/raw_material/gemstone,
-	/obj/item/raw_material/uqill,
-	/obj/item/raw_material/fibrilith)
-
 /mob/living/critter/rockworm
 	name = "rock worm"
 	desc = "Tough lithovoric worms."
@@ -451,7 +442,16 @@
 		..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 80) // They live in asteroids so they should be resistant
 		AddComponent(/datum/component/consume/can_eat_raw_materials, FALSE)
-		AddComponent(/datum/component/tameable/passive/rockworm)
+		var/datum/component/tameable/T = AddComponent(/datum/component/tameable)
+		T.passive_mode = TRUE
+		T.tame_chance = 40
+		T.treat = /obj/item/raw_material
+		T.food_blacklist = list(\
+		/obj/item/raw_material/shard,
+		/obj/item/raw_material/scrap_metal,
+		/obj/item/raw_material/gemstone,
+		/obj/item/raw_material/uqill,
+		/obj/item/raw_material/fibrilith)
 		START_TRACKING
 
 	disposing()
@@ -475,7 +475,7 @@
 	seek_food_target(var/range = 5)
 		. = list()
 		for (var/obj/item/raw_material/ore in view(range, get_turf(src)))
-			var/datum/component/tameable/TC = GetExactComponent(/datum/component/tameable/passive/rockworm)
+			var/datum/component/tameable/TC = GetExactComponent(/datum/component/tameable)
 			if (istypes(ore, TC.food_blacklist)) continue
 			if (!(istype(ore, /obj/item/raw_material/rock)) && prob(30)) continue // can eat not rocks with lower chance
 			. += ore

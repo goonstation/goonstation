@@ -7,24 +7,18 @@
 	var/emote_happy = null // live critter reactions
 	var/emote_angry = null
 	var/toggle_behavours = null // for a behaviour that turns on and off on petting
+	var/passive_mode = FALSE
 
 /datum/component/tameable/Initialize(atom/target)
 	. = ..()
 	if(!istype(src.parent, /atom/movable))
 		return COMPONENT_INCOMPATIBLE
 	src.owner = parent
-
-/datum/component/tameable/passive
-	tame_chance = 40
-
-/datum/component/tameable/passive/Initialize(atom/target)
-	. = ..()
 	RegisterSignal(parent, COMSIG_ATTACKBY, PROC_REF(pass_on_attackby))
 	RegisterSignal(parent, COMSIG_ATTACKHAND, PROC_REF(pass_on_attackhand))
 
-
-/datum/component/tameable/passive/proc/pass_on_attackby(atom/movable/parent, obj/item/item, mob/user, params)
-	if(istype(item, treat) && !isdead(owner))
+/datum/component/tameable/proc/pass_on_attackby(atom/movable/parent, obj/item/item, mob/user, params)
+	if(istype(item, treat) && !isdead(owner) && passive_mode)
 		if((istypes(item, food_blacklist)))
 			owner.visible_message("[user] tries to feed [owner] but they won't take it!")
 			return
@@ -41,16 +35,7 @@
 			RW.aftereat()
 		item.Eat(owner, owner)
 		return
-
-/datum/component/tameable/aggressive
-
-/datum/component/tameable/aggressive/Initialize(atom/target)
-	. = ..()
-	RegisterSignal(parent, COMSIG_ATTACKBY, PROC_REF(pass_on_attackby))
-	RegisterSignal(parent, COMSIG_ATTACKHAND, PROC_REF(pass_on_attackhand))
-
-/datum/component/tameable/aggressive/proc/pass_on_attackby(atom/movable/parent, obj/item/item, mob/user, params)
-	if(istype(item, /obj/item/reagent_containers/food/snacks) && ishuman(user) && !isdead(owner))
+	if(istype(item, /obj/item/reagent_containers/food/snacks) && ishuman(user) && !isdead(owner) && !passive_mode)
 		owner.visible_message("[user] feeds \the [owner] some [item].", "[user] feeds you some [item].")
 		for(var/damage_type in owner.healthlist)
 			var/datum/healthHolder/hh = owner.healthlist[damage_type]
