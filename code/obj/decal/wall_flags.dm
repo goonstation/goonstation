@@ -109,13 +109,14 @@
 
 /obj/decal/poster/flag/nanotrasen
 	name = "nanotrasen flag"
+	desc = "The flag of the Nanotrasen corporation, you probably know who they are by now."
 	icon_state = "nanotrasen"
 	needs_logging = FALSE
 	starting_flag = /obj/item/flag/nanotrasen
 
 /obj/decal/poster/flag/syndicate
 	name = "syndicate flag"
-	desc = "villainous!"
+	desc = "The ominous and intimidating flag of the Syndicate, naturally its a <b>red flag</b>, heh."
 	icon_state = "syndicate"
 	needs_logging = FALSE
 	starting_flag = /obj/item/flag/syndicate

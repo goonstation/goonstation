@@ -804,7 +804,7 @@ datum/commodity/drugs/sell/poppies
 
 /datum/commodity/contraband/nt_flag
 	comname = "Surplus NT flags"
-	comtype = /obj/item/flag/NT
+	comtype = /obj/item/flag/nanotrasen
 	desc = "Very blue flags, NT accidentally overproduced these. Thats why it's so easy to get away with a crate of these."
 	price = PAY::TRADESMAN*2
 
