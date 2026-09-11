@@ -2,6 +2,7 @@
 	var/list/signals = list()
 	var/mob/living/critter/owner = null
 	var/obj/item/reagent_containers/food/treat = /obj/item/reagent_containers/food/snacks
+	var/food_blacklist = null // what's in the subtype but doesn't count?
 	var/tame_chance = 20
 	var/emote_happy = null // live critter reactions
 	var/emote_angry = null
@@ -29,7 +30,6 @@
 
 /datum/component/tameable/passive
 	tame_chance = 40
-	food_blacklist = null // what's in the subtype but doesn't count?
 
 /datum/component/tameable/passive/proc/pass_on_attackby(atom/movable/parent, obj/item/item, mob/user, params)
 	if(istype(item, treat) && !isdead(src))
