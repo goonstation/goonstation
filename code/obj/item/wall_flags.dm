@@ -147,18 +147,18 @@
 	altside_flag = /obj/item/flag/mlmvinc
 	associated_cape = /obj/item/clothing/suit/flag/mlmachi
 
-/obj/item/flag/NT
+/obj/item/flag/nanotrasen
 	name = "nanotrasen flag"
 	icon_state = "nanotrasen"
-	associated_flag = /obj/decal/poster/flag/NT
+	associated_flag = /obj/decal/poster/flag/nanotrasen
 	burn_possible = TRUE
 	needs_logging = FALSE
 
-/obj/item/flag/SYN
+/obj/item/flag/syndicate
 	name = "syndicate flag"
 	icon_state = "syndicate"
 	desc = "villainous! It's folded up, ready to deploy."
-	associated_flag = /obj/decal/poster/flag/SYN
+	associated_flag = /obj/decal/poster/flag/syndicate
 	burn_possible = TRUE
 	needs_logging = FALSE
 

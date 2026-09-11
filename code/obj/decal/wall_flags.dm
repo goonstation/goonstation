@@ -107,16 +107,16 @@
 	icon_state = "mlmachi"
 	starting_flag = /obj/item/flag/mlmachi
 
-/obj/decal/poster/flag/NT
+/obj/decal/poster/flag/nanotrasen
 	name = "nanotrasen flag"
 	icon_state = "nanotrasen"
 	needs_logging = FALSE
-	starting_flag = /obj/item/flag/NT
+	starting_flag = /obj/item/flag/nanotrasen
 
-/obj/decal/poster/flag/SYN
+/obj/decal/poster/flag/syndicate
 	name = "syndicate flag"
 	desc = "villainous!"
 	icon_state = "syndicate"
 	needs_logging = FALSE
-	starting_flag = /obj/item/flag/SYN
+	starting_flag = /obj/item/flag/syndicate
 
