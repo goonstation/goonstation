@@ -1337,7 +1337,7 @@ Returns:
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "spear"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
-	item_state = "staff_crystal"
+	item_state = "spear"
 	var/datum/material/shaft = null
 	var/datum/material/head = null
 	var/image/shaftImg = null
