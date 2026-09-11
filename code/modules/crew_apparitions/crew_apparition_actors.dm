@@ -74,8 +74,6 @@
 	var/normalized_ttl = ttl < 0 ? CREW_APPARITION_ACTOR_MAX_TTL : clamp(ttl, 1, CREW_APPARITION_ACTOR_MAX_TTL)
 	src.apparition_expiry = world.time + normalized_ttl
 
-	RegisterSignal(src.viewer, COMSIG_MOVABLE_MOVED, PROC_REF(viewer_moved))
-
 	src.client_image = image(src)
 	src.client_image.appearance = appearance_image.appearance
 	src.client_image.loc = src
@@ -114,7 +112,7 @@
 	src.lifecycle_generation++
 	src.apparition_expiry = world.time
 	if (src.viewer && !QDELETED(src.viewer))
-		UnregisterSignal(src.viewer, COMSIG_MOVABLE_MOVED)
+		src.UnregisterSignal(src.viewer, COMSIG_MOVABLE_MOVED)
 	return TRUE
 
 /// Animate this actor into the viewer's image list
@@ -271,8 +269,7 @@
 	src.victim = viewer
 	src.appearance_source = appearance_source
 	src.name = appearance_source.name
-	src.track_viewer_movement = TRUE
-	src.face_viewer()
+	src.set_viewer_tracking(TRUE)
 
 /// Face the viewer
 /obj/crew_apparition_actor/humanoid/proc/face_viewer()
@@ -280,7 +277,15 @@
 
 /// Enable or disable automatic facing toward the viewer
 /obj/crew_apparition_actor/humanoid/proc/set_viewer_tracking(should_track)
-	src.track_viewer_movement = should_track
+	if (!src.lifecycle_active)
+		return FALSE
+	should_track = !!should_track
+	if (src.track_viewer_movement != should_track)
+		src.track_viewer_movement = should_track
+		if (should_track)
+			src.RegisterSignal(src.viewer, COMSIG_MOVABLE_MOVED, PROC_REF(viewer_moved))
+		else
+			src.UnregisterSignal(src.viewer, COMSIG_MOVABLE_MOVED)
 	if (should_track)
 		src.face_viewer()
 	return TRUE
@@ -344,20 +349,16 @@
 	if (source_turf == target_turf)
 		return TRUE
 
-	var/target_angle = get_angle(src, target)
-	if (isnull(target_angle))
-		return FALSE
-
-	// Humanoid appearance sources use cardinal-facing states, so choose the closest
-	// cardinal direction within a 90-degree cone toward the target
-	var/selected_direction = 0
-	var/smallest_angle_difference = 180
-	for (var/direction in cardinal)
-		var/angle_difference = abs(angledifference(dir_to_angle(direction), target_angle))
-		if (angle_difference < smallest_angle_difference)
-			selected_direction = direction
-			smallest_angle_difference = angle_difference
-	if (selected_direction && smallest_angle_difference <= 90)
+	var/delta_x = target_turf.x - source_turf.x
+	var/delta_y = target_turf.y - source_turf.y
+	// The dominant axis gives the nearest cardinal without trigonometry. Prefer
+	// north/south on diagonal ties, matching the original cardinal iteration order
+	var/selected_direction
+	if (abs(delta_y) >= abs(delta_x))
+		selected_direction = delta_y > 0 ? NORTH : SOUTH
+	else
+		selected_direction = delta_x > 0 ? EAST : WEST
+	if (selected_direction != src.dir)
 		src.set_dir(selected_direction)
 	return TRUE
 
@@ -418,7 +419,7 @@
 		return FALSE
 
 	src.walking = TRUE
-	src.walk_route = route.Copy()
+	src.walk_route = route
 	src.walk_destination = target_turf
 	src.set_viewer_tracking(FALSE)
 	src.walk_generation++

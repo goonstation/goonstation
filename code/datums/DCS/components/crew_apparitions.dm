@@ -396,8 +396,10 @@ TYPEINFO(/datum/component/crew_apparitions)
 /datum/component/crew_apparitions/proc/pick_chatter_location(turf/first_location)
 	if (!src.is_lifecycle_valid() || !first_location)
 		return
-	if (!(first_location in view(CREW_APPARITION_VIEW_RADIUS, src.affected_mob)))
+	var/list/viewer_visible_atoms = view(CREW_APPARITION_VIEW_RADIUS, src.affected_mob)
+	if (!(first_location in viewer_visible_atoms))
 		return
+	var/list/first_chatter_visible_atoms = view(CREW_APPARITION_VIEW_RADIUS, first_location)
 	for (var/attempt in 1 to CREW_APPARITION_LOCATION_ATTEMPTS)
 		var/turf/candidate = locate(
 			first_location.x + rand(-CREW_APPARITION_CHATTER_MAX_DISTANCE, CREW_APPARITION_CHATTER_MAX_DISTANCE), \
@@ -409,9 +411,9 @@ TYPEINFO(/datum/component/crew_apparitions)
 			continue
 		if (get_dist(candidate, first_location) > CREW_APPARITION_CHATTER_MAX_DISTANCE)
 			continue
-		if (!(candidate in view(CREW_APPARITION_VIEW_RADIUS, src.affected_mob)))
+		if (!(candidate in viewer_visible_atoms))
 			continue
-		if (!(candidate in view(CREW_APPARITION_VIEW_RADIUS, first_location)))
+		if (!(candidate in first_chatter_visible_atoms))
 			continue
 		if (!(first_location in view(CREW_APPARITION_VIEW_RADIUS, candidate)))
 			continue
@@ -433,9 +435,10 @@ TYPEINFO(/datum/component/crew_apparitions)
 
 /// Check whether both members of a chatter pair are visible
 /datum/component/crew_apparitions/proc/chatters_are_visible(obj/crew_apparition_actor/humanoid/first_chatter, obj/crew_apparition_actor/humanoid/second_chatter)
-	if (!src.is_lifecycle_valid() || QDELETED(first_chatter) || QDELETED(second_chatter))
+	if (!src.is_lifecycle_valid() || !src.is_active(first_chatter) || !src.is_active(second_chatter))
 		return FALSE
-	return src.is_visible_to_viewer(first_chatter) && src.is_visible_to_viewer(second_chatter)
+	var/list/visible_atoms = view(src.affected_mob.client.view, src.affected_mob)
+	return (first_chatter in visible_atoms) && (second_chatter in visible_atoms)
 
 /// Wait for both members of a chatter pair to enter the affected mob's view
 /datum/component/crew_apparitions/proc/wait_for_chatter_visibility(obj/crew_apparition_actor/humanoid/first_chatter, obj/crew_apparition_actor/humanoid/second_chatter)
@@ -451,8 +454,16 @@ TYPEINFO(/datum/component/crew_apparitions)
 /datum/component/crew_apparitions/proc/chatter_visibility_wait_aborted(obj/crew_apparition_actor/humanoid/first_chatter, obj/crew_apparition_actor/humanoid/second_chatter)
 	return !src.is_lifecycle_valid() || QDELETED(first_chatter) || QDELETED(second_chatter) || !src.affected_mob.client
 
+/// Snapshot sight for synchronous location searches
+/datum/component/crew_apparitions/proc/get_visible_turf_set()
+	var/list/visible_turf_set = list()
+	if (src.affected_mob?.client)
+		for (var/turf/visible_turf in view(src.affected_mob.client.view, src.affected_mob))
+			visible_turf_set[visible_turf] = TRUE
+	return visible_turf_set
+
 /// Flood from visible turfs outward to find bounded walker starts
-/datum/component/crew_apparitions/proc/find_walker_candidate_starts(maximum_walk_distance, list/pass_work)
+/datum/component/crew_apparitions/proc/find_walker_candidate_starts(maximum_walk_distance, list/pass_work, list/visible_turf_set = null)
 	if (!src.is_lifecycle_valid() || !src.affected_mob.client || !isnum(maximum_walk_distance))
 		return
 	var/turf/victim_turf = get_turf(src.affected_mob)
@@ -464,14 +475,14 @@ TYPEINFO(/datum/component/crew_apparitions)
 	var/route_max_distance = maximum_walk_distance + route_slack
 	var/search_radius = CREW_APPARITION_OFFSCREEN_MAX_DISTANCE + route_slack
 	var/list/turf/visible_destinations = list()
-	var/list/visible_turf_set = list()
-	for (var/turf/visible_turf in view(src.affected_mob.client.view, src.affected_mob))
-		visible_turf_set[visible_turf] = TRUE
+	if (isnull(visible_turf_set))
+		visible_turf_set = src.get_visible_turf_set()
+	for (var/turf/visible_turf as anything in visible_turf_set)
 		if (length(visible_destinations) >= CREW_APPARITION_WALK_SEARCH_NODE_CAP)
-			continue
+			break
 		if (visible_turf.z != victim_turf.z)
 			continue
-		if (is_blocked_turf(visible_turf) || !visible_turf.pathable)
+		if (!visible_turf.pathable || is_blocked_turf(visible_turf))
 			continue
 		visible_destinations += visible_turf
 	if (!length(visible_destinations))
@@ -479,13 +490,16 @@ TYPEINFO(/datum/component/crew_apparitions)
 
 	// Seed eligible visible destinations so disconnected rooms can contribute starts
 	// A candidate only needs reverse reachability to some visible seed; the destination flood checks the forward route
-	// Distances also mark queued turfs as visited; zero is a valid seed distance
-	var/list/turf/search_queue = visible_destinations.Copy()
+	// Distances mark visited turfs: zero for seeds, -1 for blocked turfs (never queued)
+	var/list/turf/search_queue = visible_destinations
 	var/list/distance_by_turf = list()
 	for (var/turf/destination as anything in visible_destinations)
 		distance_by_turf[destination] = 0
 
 	var/list/turf/candidate_starts = list()
+	// Preserve traversal order without allocating directions or JPS options for every edge
+	var/static/list/search_directions = list(EAST, WEST, NORTH, SOUTH)
+	var/static/list/path_options = list()
 	for (var/queue_index = 1; queue_index <= length(search_queue); queue_index++)
 		if (queue_index > CREW_APPARITION_WALK_SEARCH_NODE_CAP)
 			break
@@ -494,13 +508,12 @@ TYPEINFO(/datum/component/crew_apparitions)
 		var/turf/current_turf = search_queue[queue_index]
 		var/current_distance = distance_by_turf[current_turf]
 		if (!visible_turf_set[current_turf] && current_turf != victim_turf && \
-			get_dist(current_turf, victim_turf) <= CREW_APPARITION_OFFSCREEN_MAX_DISTANCE && \
-			!is_blocked_turf(current_turf) && current_turf.pathable)
+			get_dist(current_turf, victim_turf) <= CREW_APPARITION_OFFSCREEN_MAX_DISTANCE)
 			candidate_starts += current_turf
 
 		if (current_distance >= route_max_distance)
 			continue
-		for (var/direction in list(EAST, WEST, NORTH, SOUTH))
+		for (var/direction in search_directions)
 			if (pass_work["edges_checked"] >= CREW_APPARITION_WALK_SEARCH_WORK_CAP)
 				break
 			// Charge every attempted edge, including neighbors rejected below
@@ -514,17 +527,19 @@ TYPEINFO(/datum/component/crew_apparitions)
 				continue
 			if (get_dist(next_turf, victim_turf) > search_radius)
 				continue
-			if (is_blocked_turf(next_turf) || !next_turf.pathable)
+			if (!next_turf.pathable || is_blocked_turf(next_turf))
+				// Occupancy is direction-independent and cannot change during this flood
+				distance_by_turf[next_turf] = -1
 				continue
 			// Check the edge in the walker's direction by flooding in reverse
-			if (!jpsTurfPassable(current_turf, source = next_turf, passer = src.affected_mob))
+			if (!jpsTurfPassable(current_turf, source = next_turf, passer = src.affected_mob, options = path_options))
 				continue
 			distance_by_turf[next_turf] = current_distance + 1
 			search_queue += next_turf
 	return candidate_starts
 
 /// Flood from one unseen start inward to find visible destinations
-/datum/component/crew_apparitions/proc/find_walker_destinations(turf/start_location, maximum_walk_distance, list/pass_work)
+/datum/component/crew_apparitions/proc/find_walker_destinations(turf/start_location, maximum_walk_distance, list/pass_work, list/visible_turf_set = null)
 	if (!src.is_lifecycle_valid() || !src.affected_mob.client || !start_location || !isnum(maximum_walk_distance))
 		return
 	var/turf/victim_turf = get_turf(src.affected_mob)
@@ -534,17 +549,18 @@ TYPEINFO(/datum/component/crew_apparitions)
 	var/route_slack = get_crew_apparition_actor_walk_route_slack()
 	var/route_max_distance = maximum_walk_distance + route_slack
 	var/search_radius = CREW_APPARITION_OFFSCREEN_MAX_DISTANCE + route_slack
-	var/list/visible_turf_set = list()
-	for (var/turf/visible_turf in view(src.affected_mob.client.view, src.affected_mob))
-		visible_turf_set[visible_turf] = TRUE
+	if (isnull(visible_turf_set))
+		visible_turf_set = src.get_visible_turf_set()
 
 	var/list/turf/search_queue = list(start_location)
-	// Distances also mark queued turfs as visited; zero is a valid seed distance
+	// Distances mark visited turfs: zero for seeds, -1 for blocked turfs (never queued)
 	var/list/distance_by_turf = list()
 	distance_by_turf[start_location] = 0
 	var/list/turf/destinations = list()
 	var/destination_edges_checked = 0
 	var/start_distance_from_victim = get_dist(start_location, victim_turf)
+	var/static/list/search_directions = list(EAST, WEST, NORTH, SOUTH)
+	var/static/list/path_options = list()
 	for (var/queue_index = 1; queue_index <= length(search_queue); queue_index++)
 		if (queue_index > CREW_APPARITION_WALK_SEARCH_NODE_CAP)
 			break
@@ -552,8 +568,7 @@ TYPEINFO(/datum/component/crew_apparitions)
 		var/current_distance = distance_by_turf[current_turf]
 		if (current_turf != start_location && visible_turf_set[current_turf] && \
 			get_dist(current_turf, victim_turf) < start_distance_from_victim && \
-			abs(current_turf.x - start_location.x) + abs(current_turf.y - start_location.y) <= maximum_walk_distance && \
-			!is_blocked_turf(current_turf) && current_turf.pathable)
+			abs(current_turf.x - start_location.x) + abs(current_turf.y - start_location.y) <= maximum_walk_distance)
 			destinations += current_turf
 
 		if (current_distance >= route_max_distance)
@@ -562,7 +577,7 @@ TYPEINFO(/datum/component/crew_apparitions)
 		if (pass_work["edges_checked"] >= CREW_APPARITION_WALK_SEARCH_WORK_CAP || \
 			destination_edges_checked >= CREW_APPARITION_WALK_DESTINATION_WORK_CAP)
 			continue
-		for (var/direction in list(EAST, WEST, NORTH, SOUTH))
+		for (var/direction in search_directions)
 			if (pass_work["edges_checked"] >= CREW_APPARITION_WALK_SEARCH_WORK_CAP || \
 				destination_edges_checked >= CREW_APPARITION_WALK_DESTINATION_WORK_CAP)
 				break
@@ -578,10 +593,12 @@ TYPEINFO(/datum/component/crew_apparitions)
 				continue
 			if (get_dist(next_turf, victim_turf) > search_radius)
 				continue
-			if (is_blocked_turf(next_turf) || !next_turf.pathable)
+			if (!next_turf.pathable || is_blocked_turf(next_turf))
+				// Only cache turf rejection, not an edge that another direction could cross
+				distance_by_turf[next_turf] = -1
 				continue
 			// Flood in the walker's direction so routes match actor movement
-			if (!jpsTurfPassable(next_turf, source = current_turf, passer = src.affected_mob))
+			if (!jpsTurfPassable(next_turf, source = current_turf, passer = src.affected_mob, options = path_options))
 				continue
 			distance_by_turf[next_turf] = current_distance + 1
 			search_queue += next_turf
@@ -640,7 +657,8 @@ TYPEINFO(/datum/component/crew_apparitions)
 		var/pass_maximum_walk_distance = max(maximum_walk_distance - ((distance_pass - 1) * distance_step), 1)
 		// Share one edge-check budget between both floods in this pass
 		var/list/pass_work = list("edges_checked" = 0)
-		var/list/candidate_starts = src.find_walker_candidate_starts(pass_maximum_walk_distance, pass_work)
+		var/list/visible_turf_set = src.get_visible_turf_set()
+		var/list/candidate_starts = src.find_walker_candidate_starts(pass_maximum_walk_distance, pass_work, visible_turf_set)
 		if (!length(candidate_starts) || !src.is_lifecycle_valid())
 			continue
 		shuffle_list(candidate_starts)
@@ -648,7 +666,7 @@ TYPEINFO(/datum/component/crew_apparitions)
 			if (!src.is_lifecycle_valid() || pass_work["edges_checked"] >= CREW_APPARITION_WALK_SEARCH_WORK_CAP)
 				break
 			var/turf/start_location = candidate_starts[start_attempt]
-			var/list/turf/destinations = src.find_walker_destinations(start_location, pass_maximum_walk_distance, pass_work)
+			var/list/turf/destinations = src.find_walker_destinations(start_location, pass_maximum_walk_distance, pass_work, visible_turf_set)
 			if (!length(destinations))
 				continue
 
@@ -733,18 +751,18 @@ TYPEINFO(/datum/component/crew_apparitions)
 	src.start_watcher(apparition)
 	return TRUE
 
-/// Keep this component's active apparitions within its capacity
+/// Keep this component's active apparitions within its capacity and return the remaining count
 /datum/component/crew_apparitions/proc/prune_apparitions()
 	if (!src.is_lifecycle_valid())
 		return
 	var/list/active_apparitions = src.get_active_apparitions()
 	var/excess_apparitions = length(active_apparitions) - src.max_apparitions
 	if (excess_apparitions <= 0)
-		return
+		return length(active_apparitions)
 	for (var/prune_attempt in 1 to excess_apparitions)
-		var/obj/crew_apparition_actor/humanoid/oldest_apparition = active_apparitions[1]
-		active_apparitions -= oldest_apparition
+		var/obj/crew_apparition_actor/humanoid/oldest_apparition = active_apparitions[prune_attempt]
 		src.end(oldest_apparition)
+	return src.max_apparitions
 
 /// Check whether a watcher still belongs to this lifecycle and behavior sequence
 /datum/component/crew_apparitions/proc/watcher_is_current(obj/crew_apparition_actor/humanoid/watcher, lifecycle_generation, watcher_generation)
@@ -831,8 +849,7 @@ TYPEINFO(/datum/component/crew_apparitions)
 /datum/component/crew_apparitions/proc/create_apparition()
 	if (!src.is_lifecycle_valid())
 		return
-	src.prune_apparitions()
-	var/active_apparition_count = length(src.get_active_apparitions())
+	var/active_apparition_count = src.prune_apparitions()
 	if (active_apparition_count >= src.max_apparitions)
 		return
 
