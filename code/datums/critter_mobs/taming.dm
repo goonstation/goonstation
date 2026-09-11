@@ -16,6 +16,41 @@
 	RegisterSignal(parent, COMSIG_ATTACKHAND, PROC_REF(pass_on_attackhand))
 
 /datum/component/tameable/proc/pass_on_attackby(atom/movable/parent, obj/item/item, mob/user, params)
+	if(istype(I, treat) && !isdead(src))
+		if(prob(tame_chance))
+			owner.tamed = TRUE
+			owner.ai_retaliates = FALSE
+			owner.visible_message("[owner] enjoyed the [item] and seems more docile!")
+			owner.emote("burp")
+		owner.aftereat()
+		I.Eat(owner, owner)
+		return
+
+
+/datum/component/tameable/passive
+	tame_chance = 40
+	food_blacklist = null // what's in the subtype but doesn't count?
+
+/datum/component/tameable/passive/proc/pass_on_attackby(atom/movable/parent, obj/item/item, mob/user, params)
+	if(istype(item, treat) && !isdead(src))
+		if((istypes(item, food_blacklist)))
+			owner.visible_message("[user] tries to feed [src] but they won't take it!")
+			return
+		if (owner.tamed)
+			owner.visible_message("[user] tries to feed [src] but they seem full...")
+			return
+		if(prob(tame_chance))
+			owner.tamed = TRUE
+			owner.ai_retaliates = FALSE
+			owner.visible_message("[owner] enjoyed the [item] and seems more docile!")
+			owner.emote("burp")
+		owner.aftereat()
+		I.Eat(owner, owner)
+		return
+
+/datum/component/tameable/aggressive
+
+/datum/component/tameable/aggressive/proc/pass_on_attackby(atom/movable/parent, obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/reagent_containers/food/snacks) && ishuman(user) && !isdead(owner))
 		owner.visible_message("[user] feeds \the [owner] some [item].", "[user] feeds you some [item].")
 		for(var/damage_type in owner.healthlist)

@@ -414,6 +414,15 @@
 // ROCK WORM
 ///////////////////////////////////////////////
 
+/datum/component/tamable/passive/rockworm
+	treat = /obj/item/raw_material
+	food_blacklist = list(\
+	/obj/item/raw_material/shard,
+	/obj/item/raw_material/scrap_metal,
+	/obj/item/raw_material/gemstone,
+	/obj/item/raw_material/uqill,
+	/obj/item/raw_material/fibrilith)
+
 /mob/living/critter/rockworm
 	name = "rock worm"
 	desc = "Tough lithovoric worms."
@@ -434,14 +443,7 @@
 	ai_retaliate_persistence = RETALIATE_ONCE
 	add_abilities = list(/datum/targetable/critter/vomit_ore)
 	butcherable = BUTCHER_ALLOWED
-	var/tamed = FALSE
 	var/seek_ore = TRUE
-	var/food_blacklist = list(\
-	/obj/item/raw_material/shard,
-	/obj/item/raw_material/scrap_metal,
-	/obj/item/raw_material/gemstone,
-	/obj/item/raw_material/uqill,
-	/obj/item/raw_material/fibrilith)
 	var/eaten = 0
 	var/const/rocks_per_gem = 10
 
@@ -449,6 +451,7 @@
 		..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 80) // They live in asteroids so they should be resistant
 		AddComponent(/datum/component/consume/can_eat_raw_materials, FALSE)
+		AddComponent(/datum/component/tamable/passive/rockworm)
 		START_TRACKING
 
 	disposing()
@@ -468,24 +471,6 @@
 			else
 				src.seek_ore = TRUE
 				src.visible_message(SPAN_NOTICE("[user] shakes [src] to awaken its hunger!"))
-
-	attackby(obj/item/I, mob/M)
-		if(istype(I, /obj/item/raw_material) && !isdead(src))
-			if((istypes(I, food_blacklist)))
-				src.visible_message("[M] tries to feed [src] but they won't take it!")
-				return
-			if (src.tamed)
-				src.visible_message("[M] tries to feed [src] but they seem full...")
-				return
-			if(prob(40))
-				src.tamed = TRUE
-				src.ai_retaliates = FALSE
-				src.visible_message("[src] enjoyed the [I] and seems more docile!")
-				src.emote("burp")
-			src.aftereat()
-			I.Eat(src, src)
-			return
-		..()
 
 	seek_food_target(var/range = 5)
 		. = list()
