@@ -80,7 +80,7 @@
 	execute_ability(atom/target, params)
 		var/obj/item/golf_club/C = the_item
 		if(istype(target, /obj/item/golf_ball)) // unique cause only official balls track course performance
-			var/obj/item/golf_ball/GB = C
+			var/obj/item/golf_ball/GB = C.ball
 			GB.strike_amount++
 		if(GET_DIST(C,C.ball) > 0 || GET_DIST(C,the_mob) > 0 )
 			return
@@ -171,7 +171,7 @@
 			if(prob(10))
 				. *= 1.5
 
-/obj/projectile/golfball // Stubby, cause most things use the base /obj/projectile, don't want to fuck the standard to much
+/obj/projectile/golfball // Stubby, cause most things use the base /obj/projectile, don't want to fuck the standard too much
 
 	New()
 		AddComponent(/datum/storage/golfball)
