@@ -179,8 +179,7 @@
 				goods.price = round(middleground + 1)
 			else
 				goods.price = round(middleground - rand(0,negotiate))
-		var/rand_index = rand(1, src.dialogue_haggle_accept.len - 1)
-		src.current_message = src.dialogue_haggle_accept[rand_index] // last one is only for the warning!
+		src.current_message = pick(src.dialogue_haggle_accept)
 		src.patience--
 		// warn the player if the trader isn't going to take any more haggling
 		if (src.patience == 1)
