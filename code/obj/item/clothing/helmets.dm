@@ -482,6 +482,29 @@
 		cant_self_remove = 1
 		cant_other_remove = 1
 
+	medic // Sprite by tekoTheTeapot
+		icon_state = "ntso_medic"
+		item_state = "ntso_medic"
+		name = "NT paramedic helmet"
+		desc = "A modified combat helmet for Nanotrasen emergency paramedics. Equipped with an integrated ProDoc HUD."
+
+		equipped(var/mob/user, var/slot)
+			..()
+			if (slot == SLOT_HEAD)
+				APPLY_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH,src)
+				get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(user)
+
+		unequipped(var/mob/user)
+			if(src.equipped_in_slot == SLOT_HEAD)
+				REMOVE_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH,src)
+				get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(user)
+			..()
+
+		setupProperties()
+			..()
+			setProperty("viralprot", 50)
+			setProperty("chemprot", 30)
+
 /obj/item/clothing/head/helmet/space/nanotrasen
 	name = "Nanotrasen Heavy Helmet"
 	icon_state = "nthelm2"
