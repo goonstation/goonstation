@@ -175,6 +175,9 @@
 	name = "Dubious Hand Scanner";
 	pixel_x = 25
 	},
+/obj/decal/poster/flag/syndicate{
+	pixel_y = 32
+	},
 /turf/simulated/floor/black,
 /area/listeningpost/vestibule)
 "hK" = (
