@@ -27,6 +27,7 @@
 	name = "Makeshift Nuclear Fuel Rod"
 	desc = "A fuel rod for a nuclear reactor, made out of glowsticks"
 	category = "Nuclear"
+	blueprint_icon_type = /obj/item/reactor_component/fuel_rod/glowsticks
 
 	New()
 		..()
@@ -92,6 +93,7 @@
 	name = "Space Suit Set"
 	desc = "A complete space suit."
 	category = "Clothing"
+	blueprint_icon_type = /obj/item/clothing/suit/space/custom
 
 	New()
 		..()
@@ -118,6 +120,7 @@
 	name = "Tool mod (Concussive)"
 	desc = "A mod for mining tools. Increases area of effect."
 	category = "Mining Tools"
+	blueprint_icon_type = /obj/item/mining_mod/conc
 
 	New()
 		..()
@@ -134,6 +137,7 @@
 	name = "Tool head (Pick)"
 	desc = "A Pick head. Picks have high power but no area of effect."
 	category = "Mining Tools"
+	blueprint_icon_type = /obj/item/mining_head/pick
 
 	New()
 		..()
@@ -154,6 +158,7 @@
 	name = "Tool head (Blaster)"
 	desc = "A Blaster head. Blasters have lower power but very high area of effect."
 	category = "Mining Tools"
+	blueprint_icon_type = /obj/item/mining_head/blaster
 
 	New()
 		..()
@@ -173,6 +178,7 @@
 	name = "Tool head (Hammer)"
 	desc = "A Hammer head. Hammers have a wide area of effect and normal power."
 	category = "Mining Tools"
+	blueprint_icon_type = /obj/item/mining_head/hammer
 
 	New()
 		..()
@@ -192,6 +198,7 @@
 	name = "Tool head (Drill)"
 	desc = "A Drill head. Drills have a long area of effect and normal power."
 	category = "Mining Tools"
+	blueprint_icon_type = /obj/item/mining_head/drill
 
 	New()
 		..()
@@ -211,6 +218,7 @@
 	name = "Mining Tool"
 	desc = "A tool for mining asteroids. Type of tool depends on components used. Optional modifier slot."
 	category = "Mining Tools"
+	blueprint_icon_type = /obj/item/mining_tools
 
 	New()
 		required_parts.Add(new/datum/matfab_part/metal {part_name = "Body"; required_amount = 10} ())
@@ -266,6 +274,7 @@
 	name = "Small coil"
 	desc = "A small coil used in various objects."
 	category = "Components"
+	blueprint_icon_type = /obj/item/coil/small
 
 	New()
 		required_parts.Add(new/datum/matfab_part/metal {part_name = "Coil"; required_amount = 1} ())
@@ -285,6 +294,7 @@
 	name = "Spear"
 	desc = "A simple spear with long reach."
 	category = "Weapons"
+	blueprint_icon_type = /obj/item/experimental/melee/spear
 
 	New()
 		required_parts.Add(new/datum/matfab_part/metalororganic {part_name = "Shaft"; required_amount = 3} ())
@@ -308,6 +318,8 @@
 	name = "Arrow"
 	desc = "A simple arrow used as ammunition for bows."
 	category = "Weapons"
+	blueprint_icon_type = /obj/item/arrow
+	blueprint_icon_state = "arrow"
 
 	New()
 		required_parts.Add(new/datum/matfab_part/metalorcrystalororganic {part_name = "Arrowhead"; required_amount = 1} ())
@@ -332,6 +344,7 @@
 	name = "Bow"
 	desc = "A simple bow."
 	category = "Weapons"
+	blueprint_icon_type = /obj/item/gun/bow
 
 	New()
 		required_parts.Add(new/datum/matfab_part/metalororganic {part_name = "Bow"; required_amount = 3} ())
@@ -351,6 +364,7 @@
 	name = "Quiver"
 	desc = "A quiver for arrows."
 	category = "Weapons"
+	blueprint_icon_type = /obj/item/quiver
 
 	New()
 		required_parts.Add(new/datum/matfab_part/clothorrubber {part_name = "Quiver"; required_amount = 2} ())
@@ -370,6 +384,7 @@
 	name = "Lens"
 	desc = "A lens used as a component in various objects."
 	category = "Components"
+	blueprint_icon_type = /obj/item/lens
 
 	New()
 		required_parts.Add(new/datum/matfab_part/crystal {part_name = "Lens"; required_amount = 1} ())
@@ -389,6 +404,7 @@
 	name = "Tripod"
 	desc = "A tripod for attaching a light to."
 	category = "Components"
+	blueprint_icon_type = /obj/item/tripod
 
 	New()
 		required_parts.Add(new/datum/matfab_part/metal {part_name = "Tripod"; required_amount = 1} ())
@@ -408,6 +424,7 @@
 	name = "Glasses"
 	desc = "A pair of non-corrective glasses."
 	category = "Clothing"
+	blueprint_icon_type = /obj/item/clothing/glasses/crafted
 
 	New()
 		required_parts.Add(new/datum/matfab_part/crystal {part_name = "Glasses"; required_amount = 1} ())
@@ -430,6 +447,7 @@
 	name = "Jumpsuit"
 	desc = "A custom made jumpsuit. Has no special properties."
 	category = "Clothing"
+	blueprint_icon_type = /obj/item/clothing/under/crafted
 
 	New()
 		required_parts.Add(new/datum/matfab_part/clothororganicorrubber {part_name = "Jumpsuit"; required_amount = 3} ())
@@ -449,6 +467,7 @@
 	name = "Insulating gloves"
 	desc = "Custom insulating gloves. Inherits thermally and electrically insulating properties."
 	category = "Clothing"
+	blueprint_icon_type = /obj/item/clothing/gloves/crafted/insulating
 
 	New()
 		required_parts.Add(new/datum/matfab_part/clothororganicorrubber {part_name = "Gloves"; required_amount = 2} ())
@@ -468,6 +487,7 @@
 	name = "Armored gloves"
 	desc = "Custom armored gloves. Inherits physical properties like toughness and hardness."
 	category = "Clothing"
+	blueprint_icon_type = /obj/item/clothing/gloves/crafted/armored
 
 	New()
 		required_parts.Add(new/datum/matfab_part/clothororganicorrubber {part_name = "Gloves"; required_amount = 2} ())
@@ -487,6 +507,7 @@
 	name = "Shoes"
 	desc = "A custom pair of shoes."
 	category = "Clothing"
+	blueprint_icon_type = /obj/item/clothing/shoes/crafted
 
 	New()
 		required_parts.Add(new/datum/matfab_part/clothororganicorrubber {part_name = "Upper"; required_amount = 2} ())
@@ -514,6 +535,7 @@
 	name = "Flashlight"
 	desc = "A simple flashlight. Light color is affected by lens color."
 	category = "Lights"
+	blueprint_icon_type = /obj/item/device/light/flashlight
 
 	New()
 		required_parts.Add(new/datum/matfab_part/metal {part_name = "Casing"; required_amount = 1} ())
@@ -543,6 +565,7 @@
 	name = "Light tube"
 	desc = "A replacement light tube. Lens color affects light color."
 	category = "Lights"
+	blueprint_icon_type = /obj/item/light/tube
 
 	New()
 		required_parts.Add(new/datum/matfab_part/metal {part_name = "Casing"; required_amount = 1} ())
@@ -569,6 +592,7 @@
 	name = "Light bulb"
 	desc = "A replacement light bulb. Lens color affects light color."
 	category = "Lights"
+	blueprint_icon_type = /obj/item/light/bulb
 
 	New()
 		required_parts.Add(new/datum/matfab_part/metal {part_name = "Casing"; required_amount = 1} ())
@@ -595,6 +619,7 @@
 	name = "Tripod bulb"
 	desc = "A replacement tripod light bulb. Lens color affects light color."
 	category = "Lights"
+	blueprint_icon_type = /obj/item/tripod_bulb/light
 
 	New()
 		required_parts.Add(new/datum/matfab_part/metal {part_name = "Casing"; required_amount = 1} ())
@@ -618,6 +643,7 @@
 	name = "Material sheet"
 	desc = "Sheets for construction purposes."
 	category = "Tools"
+	blueprint_icon_type = /obj/item/sheet
 
 	New()
 		required_parts.Add(new/datum/matfab_part/metalorcrystal {part_name = "Sheet"; required_amount = 1} ())
@@ -644,6 +670,7 @@
 	name = "Thermocouple"
 	desc = "For use in a Thermo Electric Generator."
 	category = "Tools"
+	blueprint_icon_type = /obj/item/teg_semiconductor
 
 	New()
 		required_parts.Add(new/datum/matfab_part/metalorcrystal {part_name = "Sheet"; required_amount = 1} ())
@@ -660,6 +687,7 @@
 	name = "Small energy cell"
 	desc = "A small energy cell used in guns and small portable devices."
 	category = "Tools"
+	blueprint_icon_type = /obj/item/ammo/power_cell/self_charging/custom
 
 	New()
 		required_parts.Add(new/datum/matfab_part/conductive {part_name = "Core"; required_amount = 2} ())
@@ -681,6 +709,7 @@
 	name = "Large energy cell"
 	desc = "A large energy cell, often used in APCs or cyborgs."
 	category = "Tools"
+	blueprint_icon_type = /obj/item/cell/custom
 
 	New()
 		required_parts.Add(new/datum/matfab_part/conductive {part_name = "Core"; required_amount = 4} ())
@@ -702,6 +731,7 @@
 	name = "Infusion"
 	desc = "Infuse a stack of provided material with a supplied chemical. Requires a Starstone as catalyst."
 	category = "Refining"
+	blueprint_icon_type = /obj/item/material_piece/wad
 
 	New()
 		required_parts.Add(new/datum/matfab_part/chemical {part_name = "Chemical"; required_amount = 1} ())
@@ -747,15 +777,29 @@
 	var/name = ""
 	/// Short description of the item.
 	var/desc = ""
+	/// Representative type used for the blueprint icon.
+	var/blueprint_icon_type = null
+	/// Optional icon state used for the blueprint icon instead of the output type's default.
+	var/blueprint_icon_state = null
 	/// List of [/datum/matfab_part] that are required for this.
 	var/list/required_parts = list()
 	/// Which group this recipe belongs to.
 	var/category = "Misc"
 
+	/// Gets the representative icon shown for this recipe in the nanofabricator UI.
+	proc/get_recipe_icon()
+		var/blueprint_icon_type = src.blueprint_icon_type
+		if (istype(src, /datum/matfab_recipe/simple))
+			var/datum/matfab_recipe/simple/simple_recipe = src
+			blueprint_icon_type = simple_recipe.result
+		if (!ispath(blueprint_icon_type, /atom))
+			return null
+		return getItemIcon(blueprint_icon_type, src.blueprint_icon_state)
+
 	/// Gets the maximum amount of this recipe we can make with the currently assigned objects.
 	proc/getMaxAmount()
 		var/maxAmt = INFINITY
-		for(var/datum/matfab_part/P in required_parts)
+		for (var/datum/matfab_part/P as anything in src.required_parts)
 			if(!P.assigned)
 				if(!P.optional)
 					maxAmt = 0
@@ -763,26 +807,41 @@
 				else
 					continue
 
-			maxAmt = min(maxAmt, round(P.assigned.amount / P.required_amount))
+		var/list/required_amounts = src.get_assigned_amounts()
+		for (var/obj/item/I as anything in required_amounts)
+			maxAmt = min(maxAmt, round(I.amount / required_amounts[I]))
 
 		return maxAmt
 
+	/// Gets the amount already committed to an assigned item by other component slots.
+	proc/get_assigned_amount(var/obj/item/item, var/datum/matfab_part/excluded_part)
+		var/amount = 0
+		for (var/datum/matfab_part/P as anything in src.required_parts)
+			if (P != excluded_part && P.assigned == item)
+				amount += P.required_amount
+		return amount
+
+	/// Gets the total amount consumed from each assigned item by one build.
+	proc/get_assigned_amounts()
+		var/list/required_amounts = list()
+		for (var/datum/matfab_part/P as anything in src.required_parts)
+			if (P.assigned)
+				required_amounts[P.assigned] += P.required_amount
+		return required_amounts
+
 	/// Can we currently build this?
 	proc/canBuild(var/amount = 1, var/atom/owner)
-		for(var/datum/matfab_part/P in required_parts)
-			if(P.optional)
-				if(P.assigned)
-					if(P.assigned && P.checkMatch(P.assigned) && (P.assigned in owner) && (amount * P.required_amount <= P.assigned.amount))
-						continue
-					else
-						return 0
-				else
-					continue
-			else
-				if(P.assigned && P.checkMatch(P.assigned) && (P.assigned in owner) && (amount * P.required_amount <= P.assigned.amount))
-					continue
-				else
+		for (var/datum/matfab_part/P as anything in src.required_parts)
+			if (!P.assigned)
+				if (!P.optional)
 					return 0
+				continue
+			if (P.checkMatch(P.assigned) != 1 || !(P.assigned in owner))
+				return 0
+		var/list/required_amounts = src.get_assigned_amounts()
+		for (var/obj/item/I as anything in required_amounts)
+			if (amount * required_amounts[I] > I.amount)
+				return 0
 		return 1
 
 	/// Actually create and place the object.

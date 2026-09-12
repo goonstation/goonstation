@@ -29,7 +29,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	slot_eyes = list(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt/special_operative)
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
-	slot_poc1 = list(/obj/item/device/pda2/ntso)
+	slot_poc1 = list(/obj/item/device/pda2/nt/ntso)
 	slot_poc2 = list(/obj/item/storage/ntsc_pouch/ntso)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular)
 
@@ -48,7 +48,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	slot_eyes = list(/obj/item/clothing/glasses/nt_operative)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt/commander)
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
-	slot_poc1 = list(/obj/item/device/pda2/ntso)
+	slot_poc1 = list(/obj/item/device/pda2/nt/ntso)
 	slot_poc2 = list(/obj/item/storage/ntsc_pouch/ntso)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular)
 
@@ -66,7 +66,7 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt/engineer)
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
 	slot_poc1 = list(/obj/item/tank/pocket/extended/oxygen)
-	slot_poc2 = list(/obj/item/device/pda2/nt_engineer)
+	slot_poc2 = list(/obj/item/device/pda2/nt/engineer)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular,
 							/obj/item/device/flash,
 							/obj/item/sheet/steel/fullstack,
@@ -82,24 +82,25 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 			rcd.UpdateIcon()
 
 /datum/job/special/nt/medic
-	name = "Nanotrasen Emergency Medic"
+	name = "Nanotrasen Emergency Paramedic"
 	trait_list = list("training_medical")
 
-	slot_belt = list(/obj/item/storage/belt/medical/prepared)
-	slot_jump = list(/obj/item/clothing/under/rank/medical)
-	slot_suit = list(/obj/item/clothing/suit/hazard/paramedic/armored)
-	slot_head = list(/obj/item/clothing/head/helmet/space/ntso)
-	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_back = list(/obj/item/storage/backpack/satchel/NT/ERT)
+	slot_belt = list(/obj/item/storage/belt/medical/prepared/NT)
+	slot_suit = list(/obj/item/clothing/suit/space/ntso/medic)
+	slot_head = list(/obj/item/clothing/head/helmet/space/ntso/medic)
 	slot_glov = list(/obj/item/clothing/gloves/latex)
-	slot_eyes = list(/obj/item/clothing/glasses/healthgoggles/upgraded)
+	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt/medic)
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
-	slot_poc1 = list(/obj/item/tank/pocket/extended/oxygen)
-	slot_poc2 = list(/obj/item/device/pda2/nt_medical)
-	items_in_backpack = list(/obj/item/storage/firstaid/regular,
-							/obj/item/device/flash,
-							/obj/item/reagent_containers/glass/bottle/omnizine,
-							/obj/item/reagent_containers/glass/bottle/ether)
+	slot_poc1 = list(/obj/item/storage/ntsc_pouch/medic)
+	slot_poc2 = list(/obj/item/tank/pocket/extended/oxygen)
+	/// gets placed within the mob's id slot by put_id_in_pda, required because they need both of their pockets for the oxy (on spawn readiness is required) & pouch ("correct" slot for pouch)
+	items_in_mob = list(/obj/item/device/pda2/nt/medical)
+	items_in_backpack = list(/obj/item/device/flash,
+							/obj/item/storage/firstaid/docbag/field_surgeon/NT,
+							/obj/item/extinguisher,
+							/obj/item/storage/box/casualties)
 
 // Use this one for late respawns to deal with existing antags. they are weaker cause they dont get a laser rifle or frags
 /datum/job/special/nt/security_consultant
@@ -124,6 +125,6 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt/consultant)
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
 	slot_poc1 = list(/obj/item/storage/ntsc_pouch)
-	slot_poc2 = list(/obj/item/device/pda2/ntso)
+	slot_poc2 = list(/obj/item/device/pda2/nt/ntso)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular)
 	wiki_link = "https://wiki.ss13.co/Nanotrasen_Security_Consultant"

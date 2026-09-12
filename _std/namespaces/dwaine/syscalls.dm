@@ -194,6 +194,13 @@ ADD_TO_NAMESPACE(DWAINE, SYSCALL)(var/const/RECVFILE = 24)
 ADD_TO_NAMESPACE(DWAINE, SYSCALL)(var/const/BREAK = 25)
 
 /**
+ *	Get the deepest existing folder in the specified filepath.
+ *	Accepted data fields:
+ *	- `"path"`: The filepath to get a directory for.
+ */
+ADD_TO_NAMESPACE(DWAINE, SYSCALL)(var/const/PGET = 26)
+
+/**
  *	Reply to a request for information.
  *	Has unique data fields for each implementation, depending on the data requested.
  */
