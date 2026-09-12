@@ -974,11 +974,6 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		icon_state = "andrewpieter"
 		ckey = "carton171"
 
-	jebsvs
-		name = "\improper Snart Blast"
-		icon_state = "snartblast"
-		ckey = "jebsvs"
-
 	lazy_shyguy
 		name = "\improper Bjeurn Seuz"
 		icon_state = "bjeurnseuz"

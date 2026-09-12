@@ -586,6 +586,9 @@
 	invisibility = 101;
 	name = "glow - WHITE"
 	},
+/obj/decal/poster/flag/syndicate{
+	pixel_y = 32
+	},
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
