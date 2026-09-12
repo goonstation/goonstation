@@ -1766,27 +1766,30 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 
 		pickup(mob/user)
 			..()
-			if (user?.client && user.client.is_mentor())
+			if (user?.client && user.client.is_mentor()|| isadmin(user))
 				return
-			boutput(user, SPAN_ALERT("The suit disintegrates from your un-mentorly touch!"))
+			SPAWN(0.1)
+				boutput(user, SPAN_ALERT("The suit disintegrates from your un-mentorly touch!"))
 
-			user.u_equip(src)
-			src.set_loc(get_turf(src))
+				user.u_equip(src)
+				src.set_loc(get_turf(src))
 
-			// turn to dust
-			dothepixelthing(src)
+				// turn to dust
+				dothepixelthing(src)
 
 		equipped(mob/user)
 			..()
-			if (user?.client && user.client.is_mentor())
+			if (user?.client && user.client.is_mentor() || isadmin(user))
 				return
-			boutput(user, SPAN_ALERT("The suit disintegrates from your un-mentorly touch!"))
+			SPAWN(0.1)
+				boutput(user, SPAN_ALERT("The suit disintegrates from your un-mentorly touch!"))
 
-			user.u_equip(src)
-			src.set_loc(get_turf(src))
+				user.u_equip(src)
+				src.set_loc(get_turf(src))
 
-			// turn to dust
-			dothepixelthing(src)
+				// turn to dust
+				dothepixelthing(src)
+
 	admin
 		name = "admin mouse suit"
 		desc = "On close inspection, you estimate wearing this suit grants you the proportional strength of ten admin mice."
@@ -1818,25 +1821,27 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 			..()
 			if (user?.client && isadmin(user))
 				return
-			boutput(user, SPAN_ALERT("The suit disintegrates from your un-[src.icon_state == "glorpsuit" ? "glorply" : "adminly" ]touch!"))
+			SPAWN(0.1)
+				boutput(user, SPAN_ALERT("The suit disintegrates from your un-[src.icon_state == "glorpsuit" ? "glorply" : "adminly" ]touch!"))
 
-			user.u_equip(src)
-			src.set_loc(get_turf(src))
+				user.u_equip(src)
+				src.set_loc(get_turf(src))
 
-			// turn to dust
-			dothepixelthing(src)
+				// turn to dust
+				dothepixelthing(src)
 
 		equipped(mob/user)
 			..()
 			if (user?.client && isadmin(user))
 				return
-			boutput(user, SPAN_ALERT("The suit disintegrates from your un-[src.icon_state == "glorpsuit" ? "glorply" : "adminly" ]touch!"))
+			SPAWN(0.1)
+				boutput(user, SPAN_ALERT("The suit disintegrates from your un-[src.icon_state == "glorpsuit" ? "glorply" : "adminly" ]touch!"))
 
-			user.u_equip(src)
-			src.set_loc(get_turf(src))
+				user.u_equip(src)
+				src.set_loc(get_turf(src))
 
-			// turn to dust
-			dothepixelthing(src)
+				// turn to dust
+				dothepixelthing(src)
 
 /obj/item/clothing/suit/gimmick/pickle
 	name = "pickle suit"
