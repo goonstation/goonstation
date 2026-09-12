@@ -1,5 +1,9 @@
 
 (t)sat sep 12 26
+(u)LeahTheTech + Skeletonman0
+(p)27829
+(e)🆕🔨|C-Feature, A-Player-Actions
+(*)Shooting a coin in mid-air will now ricochet the projectile at the nearest mob (within 4 tiles).
 (u)Lithesra
 (p)27810
 (e)🎨|C-Sprites
