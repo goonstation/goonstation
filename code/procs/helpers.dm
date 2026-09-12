@@ -2839,7 +2839,7 @@ proc/get_nearest_mobs_list(atom/clicked_on, list/params, range = 1, always_inclu
 	var/pixel_x = 0
 	var/pixel_y = 0
 	if(params) // params means this came from a click, so we gotta figure out where exactly user clicked relative to tile
-		pixel_x += text2num(params["icon_x"])
+		pixel_x += text2num(params["icon-x"])
 		pixel_y += text2num(params["icon-y"])
 		pixel_x += clicked_on.pixel_x
 		pixel_y += clicked_on.pixel_y
