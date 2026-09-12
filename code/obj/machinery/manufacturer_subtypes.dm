@@ -502,7 +502,8 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 		/datum/manufacture/tricolor,
 		/datum/manufacture/hat_ltophat,
 		/datum/manufacture/baseball_staffie,
-		/datum/manufacture/baseball_nt)
+		/datum/manufacture/baseball_nt,
+		/datum/manufacture/baseball_mitt)
 
 /// cogwerks - a gas extractor for the engine
 
