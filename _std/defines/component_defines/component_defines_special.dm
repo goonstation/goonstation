@@ -32,6 +32,8 @@
 	#define COMSIG_FULLAUTO_MOUSEMOVE "fullauto_mousemove"
 	/// Gun projectile changed while in fullauto mode
 	#define COMSIG_GUN_PROJECTILE_CHANGED "gun_proj_changed"
+	/// Gun firemode changed
+	#define COMSIG_GUN_FIREMODE_CHANGED "gun_firemode_changed"
 	/// before ...gun/shoot() - return truthy to cancel shoot() - (target, start, shooter, POX, POY, is_dual_wield, called_target)
 	#define COMSIG_GUN_TRY_SHOOT "gun_shooty"
 	/// before ...gun/shoot_point_blank() - return truthy to cancel shoot_point_blank() - (target, user, second_shot)

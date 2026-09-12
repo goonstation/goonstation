@@ -16,7 +16,7 @@
 
 	New()
 		set_current_projectile(new /datum/projectile/paintball)
-		projectiles = list(current_projectile)
+		add_firemode(null, current_projectile)
 		src.inventory_counter?.update_number(0)
 		..()
 
@@ -109,7 +109,7 @@
 	dissipation_delay = 0
 	sname = "paintball"
 	shot_sound = 'sound/effects/splort.ogg'
-	shot_number = 1
+	default_firemode = /datum/firemode/single
 
 	damage_type = 0
 	hit_ground_chance = 33

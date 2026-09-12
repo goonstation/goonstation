@@ -38,8 +38,8 @@ ABSTRACT_TYPE(/datum/projectile)
 	var/shot_sound_extrarange = 0 //should the sound have extra range?
 	var/shot_volume = 100		 // How loud the sound plays (thank you mining drills for making this a needed thing)
 	var/shot_pitch = 1
-	var/shot_number = 0          // How many projectiles should be fired, each will cost the full cost
-	var/shot_delay = 0.1 SECONDS          // Time between shots in a burst.
+	var/datum/firemode/firemode
+	var/datum/firemode/default_firemode = /datum/firemode/single //Sets the number of bullets fired & delay
 	var/damage_type = D_KINETIC  // What is our damage type
 	var/hit_type = null          // For blood system damage - DAMAGE_BLUNT, DAMAGE_CUT and DAMAGE_STAB
 	var/hit_ground_chance = 0    // With what % do we hit mobs laying down
@@ -108,6 +108,7 @@ ABSTRACT_TYPE(/datum/projectile)
 
 	New()
 		. = ..()
+		firemode = new default_firemode()
 		generate_stats()
 		var/icon/fuck_you_byond = icon(src.icon)
 		src.x_offset = -(fuck_you_byond.Width() - 32)/2

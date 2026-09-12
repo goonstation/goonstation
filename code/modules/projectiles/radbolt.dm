@@ -17,7 +17,7 @@
 	shot_sound = null // cogwerks edit to make this thing actually vaguely worthwhile
 	//shot_sound = 'sound/weapons/radxbow.ogg'
 //How many projectiles should be fired, each will cost the full cost
-	shot_number = 1
+	default_firemode = /datum/firemode/single
 //What is our damage type
 /*
 kinetic - raw power
