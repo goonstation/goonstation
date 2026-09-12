@@ -587,7 +587,7 @@
 
 /datum/achievementReward/ntso_commander
 	title = "(Skin set) NT-SO Commander Uniform"
-	desc = "Will change the skin of captain hats, captain armor/spacesuits, cap backpacks, captain gloves, sabres and captain uniforms."
+	desc = "Will change the skin of captain hats, captain armor/spacesuits, cap backpacks, captain gloves, captain stamps, sabres and captain uniforms."
 	required_medal = "Icarus"
 	once_per_round = FALSE
 
@@ -754,6 +754,19 @@
 				else
 					boutput(H, SPAN_ALERT("That megaphone is WAY too loud to disguise."))
 
+			if(H.find_type_in_hand(/obj/item/stamp/cap))
+				var/obj/item/stamp/cap/M = H.find_type_in_hand(/obj/item/stamp/cap)
+				M.icon_state = "stamp-cap-blue"
+				M.available_modes -= M.special_mode
+				M.default_material = "synthrubber_blue"
+				M.desc = "The Captain's rubber stamp for stamping important documents. Looks like one of those fancy National Notary 'Continental' models with the kingwood handle."
+				M.special_mode = "Captain (Blue)"
+				M.assignment = "stamp-cap-blue"
+				M.available_modes += M.special_mode
+				M.current_mode = M.special_mode
+				H.update_inhands()
+				succ = TRUE
+
 			if (!succ)
 				boutput(activator, SPAN_ALERT("Unable to redeem... What kind of fake captain are you!?"))
 			return succ
@@ -764,7 +777,7 @@
 //red captain medal, after all this time!
 /datum/achievementReward/centcom_executive
 	title = "(Skin Set) CENTCOM Executive Uniform"
-	desc = "Will change the skin of captain hats, captain armor/spacesuits, cap backpacks, captain gloves, sabres and captain uniforms."
+	desc = "Will change the skin of captain hats, captain armor/spacesuits, cap backpacks, captain gloves, captain stamps, sabres and captain uniforms."
 	required_medal = "Brown Pants" //Red shirt, brown pants.
 	once_per_round = FALSE
 
@@ -927,6 +940,19 @@
 					succ = TRUE
 				else
 					boutput(H, SPAN_ALERT("That megaphone is WAY too loud to disguise."))
+
+			if(H.find_type_in_hand(/obj/item/stamp/cap))
+				var/obj/item/stamp/cap/M = H.find_type_in_hand(/obj/item/stamp/cap)
+				M.icon_state = "stamp-cap-red"
+				M.available_modes -= M.special_mode
+				M.default_material = "synthrubber"
+				M.desc = "The Captain's rubber stamp for stamping important documents. Looks like one of those fancy National Notary 'Bancroft' models with the bloodwood handle."
+				M.special_mode = "Captain (Red)"
+				M.assignment = "stamp-cap-red"
+				M.available_modes += M.special_mode
+				M.current_mode = M.special_mode
+				H.update_inhands()
+				succ = TRUE
 
 
 			if (!succ)

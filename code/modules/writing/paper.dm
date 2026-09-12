@@ -15,6 +15,8 @@
 	"Head of Security" = "stamp-sprite-hos",\
 	"Research Director" = "stamp-sprite-rd",\
 	"Captain" = "stamp-sprite-cap",\
+	"Captain (Blue)" = "stamp-sprite-cap-blue",\
+	"Captain (Red)" = "stamp-sprite-cap-red",\
 	"Quartermaster" = "stamp-sprite-qm",\
 	"Security" = "stamp-sprite-law",\
 	"Chaplain" = "stamp-sprite-chap",\
@@ -286,6 +288,8 @@
 		"stamp-sprite-hos" = "[resource("images/tgui/stamp_icons/stamp-hos.png")]",
 		"stamp-sprite-rd" = "[resource("images/tgui/stamp_icons/stamp-rd.png")]",
 		"stamp-sprite-cap" = "[resource("images/tgui/stamp_icons/stamp-cap.png")]",
+		"stamp-sprite-cap-blue" = "[resource("images/tgui/stamp_icons/stamp-cap-blue.png")]",
+		"stamp-sprite-cap-red" = "[resource("images/tgui/stamp_icons/stamp-cap-red.png")]",
 		"stamp-sprite-qm" = "[resource("images/tgui/stamp_icons/stamp-qm.png")]",
 		"stamp-sprite-law" = "[resource("images/tgui/stamp_icons/stamp-law.png")]",
 		"stamp-sprite-chap" = "[resource("images/tgui/stamp_icons/stamp-chap.png")]",
