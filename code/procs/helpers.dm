@@ -2862,7 +2862,7 @@ proc/get_nearest_mobs_list(atom/clicked_on, list/params, range = 1, always_inclu
 		// we could probably get said mob's pixel_x/y, but we don't care about that nearly as much as we do a user's input coords
 		var/scaled_distance = sqrt(((target_scaled_x - clicked_scaled_x)**2) + ((target_scaled_y - clicked_scaled_y)**2))
 		var/distance = scaled_distance / 32 // back down to each unit being 1 tile instead of 1 pixel
-		if((distance > range) && (!always_include_same_tile || (origin_turf != get_turf(target))))
+		if((distance > range) && (!always_include_same_tile || (clicked_over_turf != get_turf(target))))
 			continue
 		return_list[target] = distance
 	if(return_list.len)
