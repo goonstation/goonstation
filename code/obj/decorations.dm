@@ -65,7 +65,7 @@
 #ifdef SEASON_AUTUMN
 	New()
 		..()
-		if(season_affected)
+		if(src.season_affected)
 			icon_state = pick("tree_red", "tree_yellow", "tree_orange")
 #endif
 
