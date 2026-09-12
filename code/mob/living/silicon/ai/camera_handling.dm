@@ -119,13 +119,18 @@
 	var/list/D = list()
 	var/counter = 1
 	for (var/obj/machinery/camera/C in L)
-		if ((C.network in src.camera_networks) && get_z(C) == Z_LEVEL_STATION)
-			var/T = text("[][]", C.c_tag, (C.camera_status ? null : " (Deactivated)"))
-			if(D[T])
-				D["[T] #[counter++]"] = C
-			else
-				D[T] = C
-				counter = 1
+		if(!C.network in src.camera_networks)
+			continue
+		if(get_z(C) != Z_LEVEL_STATION)
+			continue
+		if(!C.camera_status)
+			continue
+		var/camera_tag = C.c_tag
+		if(D[camera_tag])
+			D["[camera_tag] #[counter++]"] = C
+		else
+			D[camera_tag] = C
+			counter = 1
 
 	var/t = tgui_input_list(user, "Which camera should you change to?", "View Camera", D)
 
