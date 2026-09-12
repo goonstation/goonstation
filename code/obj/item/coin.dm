@@ -13,16 +13,8 @@
 	throw_speed = 0.3
 	var/emagged = FALSE
 	/// Does this coin count as in the air for the purposes of ricochet?
-	var/in_air = FALSE
-
-//debug macro :3
-#ifdef LIVE_SERVER
-#define SET_AIR(value) src.in_air = value;
-#else
-#define SET_AIR(value)\
-	src.in_air = value;\
-	src.color = src.in_air ? "red" : null
-#endif
+	/// This is a counter var but can be treated as a boolean
+	var/in_air = 0
 
 /obj/item/coin/attack_self(mob/user as mob)
 	boutput(user, SPAN_NOTICE("You flip the coin..."))
@@ -42,13 +34,13 @@
 
 	//This looks complicated but works out to the coin counting as in the air after 2 ticks on the first throw and 1 tick on the second
 	SPAWN(2 DECI SECONDS)
-		SET_AIR(TRUE)
+		src.change_air_state(1)
 		sleep(8 DECI SECONDS)
-		SET_AIR(FALSE)
+		src.change_air_state(-1)
 		sleep(3 DECI SECONDS)
-		SET_AIR(TRUE)
+		src.change_air_state(1)
 		sleep(4 DECI SECONDS)
-		SET_AIR(FALSE)
+		src.change_air_state(-1)
 
 	sleep(18 DECI SECOND)
 
@@ -56,14 +48,17 @@
 		playsound(src.loc, 'sound/items/coindrop.ogg', 30, 1)
 		flip()
 
+/obj/item/coin/proc/change_air_state(value)
+	src.in_air += value
+
 /obj/item/coin/throw_begin(atom/target, turf/thrown_from, mob/thrown_by)
 	. = ..()
-	SET_AIR(TRUE)
+	src.change_air_state(1)
 
 /obj/item/coin/throw_end(list/params, turf/thrown_from)
 	. = ..()
 	SPAWN(3 DECI SECONDS)
-		SET_AIR(FALSE)
+		src.change_air_state(-1)
 
 /obj/item/coin/Cross(atom/movable/mover)
 	// we only want to interrupt projectiles if we're being flipped
@@ -138,4 +133,12 @@
 	qdel(src)
 	return 1
 
-#undef SET_AIR
+//debug coin :3
+/obj/item/coin/debug
+
+/obj/item/coin/debug/change_air_state(value)
+	..()
+	if (src.in_air)
+		src.color = "red"
+	else
+		src.color = null
