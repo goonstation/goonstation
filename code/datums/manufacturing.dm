@@ -3987,7 +3987,7 @@ ABSTRACT_TYPE(/datum/manufacture/locker) //Regular lockers are built using steel
 /************ NADIR RESONATORS ************/
 
 /datum/manufacture/resonator_type_ax
-	name = "Type-AX Resonator"
+	name = "Axial Resonator - Type-AX"
 	item_requirements = list("metal_dense" = 15,
 							 "conductive_high" = 20,
 							 "crystal" = 20,
@@ -3998,7 +3998,7 @@ ABSTRACT_TYPE(/datum/manufacture/locker) //Regular lockers are built using steel
 	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/resonator_type_sm
-	name = "Type-SM Resonator"
+	name = "Shear Moderator - Type-SM"
 	item_requirements = list("metal_dense" = 10,
 							 "conductive_high" = 20,
 							 "crystal" = 10,
@@ -4009,7 +4009,7 @@ ABSTRACT_TYPE(/datum/manufacture/locker) //Regular lockers are built using steel
 	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/resonator_type_fq
-	name = "Type-FQ Resonator"
+	name = "Field Quantizer - Type-FQ"
 	item_requirements = list("metal_dense" = 15,
 							 "conductive_high" = 20,
 							 "koshmarite" = 10,

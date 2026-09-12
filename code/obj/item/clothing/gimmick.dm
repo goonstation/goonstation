@@ -978,6 +978,11 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	item_state = "caphat"
 	item_function_flags = IMMUNE_TO_ACID
 
+/obj/item/clothing/head/safari/artsci
+	icon_state = "safari-artifact"
+	name = "xenoarchaeologist hat"
+	desc = "This hat won't actually help you a lot given most space ruins are in... space."
+
 /obj/item/clothing/mask/skull
 	name = "skull mask"
 	desc = "A spooky skull mask. You're getting the heebie-jeebies just looking at it!"
@@ -1744,6 +1749,94 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	hides_from_examine = C_UNIFORM|C_EARS
 	icon_state = "hotdogsuit"
 	c_flags = COVERSHAIR
+
+/obj/item/clothing/suit/gimmick/mouse
+	name = "space mouse suit"
+	desc = "Cheesed to meet you."
+	body_parts_covered = HEAD|TORSO|LEGS|ARMS
+	wear_layer = MOB_FULL_SUIT_LAYER // ?????
+	hides_from_examine = C_UNIFORM|C_EARS
+	icon_state = "mousesuit"
+	c_flags = COVERSHAIR
+
+	mentor
+		name = "mentor mouse suit"
+		desc = "On close inspection, you estimate wearing this suit grants you the proportional strength of ten mentor mice."
+		icon_state = "mentorsuit"
+
+		pickup(mob/user)
+			..()
+			if (user?.client && user.client.is_mentor())
+				return
+			boutput(user, SPAN_ALERT("The suit disintegrates from your un-mentorly touch!"))
+
+			user.u_equip(src)
+			src.set_loc(get_turf(src))
+
+			// turn to dust
+			dothepixelthing(src)
+
+		equipped(mob/user)
+			..()
+			if (user?.client && user.client.is_mentor())
+				return
+			boutput(user, SPAN_ALERT("The suit disintegrates from your un-mentorly touch!"))
+
+			user.u_equip(src)
+			src.set_loc(get_turf(src))
+
+			// turn to dust
+			dothepixelthing(src)
+	admin
+		name = "admin mouse suit"
+		desc = "On close inspection, you estimate wearing this suit grants you the proportional strength of ten admin mice."
+		icon_state = "adminsuit"
+
+		glorp
+			name = "alien mouse suit"
+			desc = "Gleep glorp bzeewop?"
+			icon_state = "glorpsuit"
+
+		attack_self(mob/user)
+			. = ..()
+			if (user?.client && isadmin(user))
+
+				boutput(user, SPAN_ALERT("You [src.icon_state == "glorpsuit" ? "unglorpify" : "glorpify" ] \the [src]"))
+				if (src.icon_state == "glorpsuit")
+					src.icon_state = "adminsuit"
+					src.name = "admin mouse suit"
+					src.desc = "On close inspection, you estimate wearing this suit grants you the proportional strength of ten admin mice."
+					playsound(src.loc,'sound/voice/animal/mouse_squeak.ogg',50,TRUE)
+				else
+					src.icon_state = "glorpsuit"
+					src.name = "alien mouse suit"
+					src.desc = "Gleep glorp bzeewop?"
+					playsound(src.loc,'sound/voice/animal/glorp/glorp1.ogg',50,TRUE)
+
+
+		pickup(mob/user)
+			..()
+			if (user?.client && isadmin(user))
+				return
+			boutput(user, SPAN_ALERT("The suit disintegrates from your un-[src.icon_state == "glorpsuit" ? "glorply" : "adminly" ]touch!"))
+
+			user.u_equip(src)
+			src.set_loc(get_turf(src))
+
+			// turn to dust
+			dothepixelthing(src)
+
+		equipped(mob/user)
+			..()
+			if (user?.client && isadmin(user))
+				return
+			boutput(user, SPAN_ALERT("The suit disintegrates from your un-[src.icon_state == "glorpsuit" ? "glorply" : "adminly" ]touch!"))
+
+			user.u_equip(src)
+			src.set_loc(get_turf(src))
+
+			// turn to dust
+			dothepixelthing(src)
 
 /obj/item/clothing/suit/gimmick/pickle
 	name = "pickle suit"

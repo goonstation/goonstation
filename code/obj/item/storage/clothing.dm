@@ -436,7 +436,8 @@
 	name = "vampire costume set"
 	desc = "Blah blah blah."
 	spawn_contents = list(/obj/item/clothing/under/gimmick/vampire,
-	/obj/item/clothing/suit/gimmick/vampire)
+	/obj/item/clothing/suit/gimmick/vampire,
+	/obj/item/stamp/vampire)
 
 /obj/item/storage/box/costume/abomination
 	name = "abomination costume set"
@@ -517,3 +518,9 @@
 	spawn_contents = list(/obj/item/clothing/under/baseball/mime,
 		/obj/item/clothing/head/basecap/black,
 		/obj/item/clothing/gloves/baseball_mitt)
+
+/obj/item/storage/box/costume/mouse
+	name = "space mouse costume set"
+	desc = "A box that contains a costume that is cheesed to meet you."
+	spawn_contents = list(/obj/item/clothing/suit/gimmick/mouse,
+	/obj/item/reagent_containers/food/snacks/ingredient/cheese)

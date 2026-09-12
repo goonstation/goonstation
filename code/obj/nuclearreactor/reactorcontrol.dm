@@ -11,12 +11,9 @@
 	density = TRUE
 	anchored = ANCHORED
 	var/obj/machinery/reactor_turbine/turbine_handle = null
-	var/list/history
-	var/const/history_max = 50
 
 	New()
 		..()
-		src.history = list()
 
 	process()
 		. = ..()
@@ -24,9 +21,6 @@
 
 		if(QDELETED(turbine_handle))
 			turbine_handle = null
-			if (length(src.history) > src.history_max)
-				src.history.Cut(1, 2) //drop the oldest entry
-			history += list(list(0, 0, 0))
 			var/datum/powernet/powernet = src.get_direct_powernet()
 			if(!powernet) return
 			for(var/obj/machinery/power/terminal/N in powernet.nodes)
@@ -34,16 +28,6 @@
 					src.turbine_handle = N.master
 					break
 			return
-
-		if (length(src.history) > src.history_max)
-			src.history.Cut(1, 2) //drop the oldest entry
-		history += list(
-					list(
-						turbine_handle.RPM,
-						turbine_handle.stator_load,
-						turbine_handle.lastgen
-						)
-					)
 
 		if (status & (NOPOWER|BROKEN))
 			return
@@ -72,16 +56,9 @@
 		)
 
 	ui_data(mob/user)
-		. = list(
-			"rpm" = turbine_handle?.RPM,
-			"load" = turbine_handle?.stator_load,
-			"power" = turbine_handle?.lastgen,
-			"volume" = turbine_handle?.flow_rate,
-			"volume_max" = turbine_handle?.flow_rate_max,
-			"history" = src.history,
-			"overspeed" = turbine_handle?.overspeed,
-			"overtemp" = turbine_handle?.overtemp,
-		)
+		if(QDELETED(src.turbine_handle))
+			src.turbine_handle = null
+		. = src.turbine_handle ? src.turbine_handle.get_tgui_data() : list("connected" = FALSE)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 		. = ..()
