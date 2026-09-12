@@ -81,7 +81,12 @@
 	effect.setup(src.loc)
 	src.visible_message(SPAN_BOLD(SPAN_ALERT("[P] ricochets [pick("crazily", "skillfully", "straight")] off [src]!")))
 
+	var/atom/shooter = P.shooter
 	shoot_reflected_trickshot(P, src, 4)
+	var/turf/coin_target = get_steps(src, get_dir_accurate(shooter, src), src.throw_range)
+	animate(src)
+	src.throwing = FALSE
+	src.throw_at(coin_target, src.throw_range, 2)
 
 /obj/item/coin/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	..()
