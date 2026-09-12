@@ -15,6 +15,8 @@
 	/// Does this coin count as in the air for the purposes of ricochet?
 	/// This is a counter var but can be treated as a boolean
 	var/in_air = 0
+	/// When in the air, who is throwing this?
+	var/mob/thrower = null
 
 /obj/item/coin/attack_self(mob/user as mob)
 	boutput(user, SPAN_NOTICE("You flip the coin..."))
@@ -31,7 +33,7 @@
 	animate(src, time = 12 DECI SECONDS,  flags = ANIMATION_PARALLEL)
 	animate(time= 3 DECI SECONDS, pixel_y = 4, easing = SINE_EASING | EASE_OUT)
 	animate(time = 3 DECI SECONDS, pixel_y = 0, , easing = SINE_EASING | EASE_IN)
-
+	src.thrower = user
 	//This looks complicated but works out to the coin counting as in the air after 2 ticks on the first throw and 1 tick on the second
 	SPAWN(2 DECI SECONDS)
 		src.change_air_state(1)
@@ -44,6 +46,8 @@
 
 	sleep(18 DECI SECOND)
 
+	src.thrower = null
+
 	if(!istype(src.loc, /mob/))	//Hot dog, you caught it midair!
 		playsound(src.loc, 'sound/items/coindrop.ogg', 30, 1)
 		flip()
@@ -53,16 +57,19 @@
 
 /obj/item/coin/throw_begin(atom/target, turf/thrown_from, mob/thrown_by)
 	. = ..()
+	src.thrower = thrown_by
 	src.change_air_state(1)
 
 /obj/item/coin/throw_end(list/params, turf/thrown_from)
 	. = ..()
 	SPAWN(3 DECI SECONDS)
+		src.thrower = null
 		src.change_air_state(-1)
 
-/obj/item/coin/Cross(atom/movable/mover)
+/obj/item/coin/Cross(obj/projectile/mover)
 	// we only want to interrupt projectiles if we're being flipped
-	if(src.in_air && istype(mover, /obj/projectile))
+	// AND if we've been thrown by the shooter, no using coins as budget deflector shields
+	if(src.in_air && istype(mover) && mover.shooter == src.thrower)
 		return FALSE
 	return ..()
 
