@@ -519,14 +519,12 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 	desc = "A warm, pulsing block of weird alien computer crystal stuff."
 	icon_state = "bar"
 	default_material = "gnesis"
-	icon_stack_value = 0
 
 /obj/item/material_piece/gnesisglass
 	name = "wafer"
 	desc = "A shimmering, translucent block of weird alien computer crystal stuff."
-	icon_state = "bar"
+	icon_state = "block"
 	default_material = "gnesisglass"
-	icon_stack_value = 0
 
 /obj/item/material_piece/coral
 	name = "chunk"
