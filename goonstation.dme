@@ -2490,6 +2490,7 @@
 #include "code\obj\airbridge.dm"
 #include "code\obj\blob.dm"
 #include "code\obj\bookcase.dm"
+#include "code\obj\broken_gun.dm"
 #include "code\obj\cement.dm"
 #include "code\obj\cryotron.dm"
 #include "code\obj\deathbutton.dm"
