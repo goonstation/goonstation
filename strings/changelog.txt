@@ -1,5 +1,9 @@
 
 (t)sat sep 12 26
+(u)Lithesra
+(p)27810
+(e)🎨|C-Sprites
+(+)Directional sprites for airbridge computers and the armory control have been added.
 (u)JORJ949
 (p)27633
 (e)🔄📄📨|C-Rework, A-UI, A-Logistics
