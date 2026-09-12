@@ -149,7 +149,7 @@
 
 /obj/item/flag/nanotrasen
 	name = "nanotrasen flag"
-	desc = "The flag of the Nanotrasen corporation. Ironically the insignia looks like the letter \"S\" when folded, ironic."
+	desc = "The flag of the Nanotrasen corporation. Ironically the insignia looks like the letter \"S\" when folded."
 	icon_state = "nanotrasen"
 	associated_flag = /obj/decal/poster/flag/nanotrasen
 	burn_possible = TRUE
@@ -158,7 +158,7 @@
 /obj/item/flag/syndicate
 	name = "syndicate flag"
 	icon_state = "syndicate"
-	desc = "The ominous and intimidating flag of the Syndicate. Ironically the insignia looks like the letter \"N\" when folded, ironic."
+	desc = "The ominous and intimidating flag of the Syndicate. Ironically the insignia looks like the letter \"N\" when folded."
 	SYNDICATE_STEALTH_DESCRIPTION("Fills you with pride in your work.")
 	tooltip_flags = REBUILD_USER
 	associated_flag = /obj/decal/poster/flag/syndicate
