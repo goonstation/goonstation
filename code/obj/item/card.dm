@@ -532,7 +532,7 @@ TYPEINFO(/obj/item/card/emag)
 /obj/item/card/license_to_kill
 	name = "License to Kill"
 	desc = "The bearer of this license is allowed to kill any player they like, but only as long as it is in their inventory. Yes, even if you arent an antag. No, you dont need to ahelp this we already know if you have it. Get to it!"
-	icon_state="fingerprint1"
+	icon_state="license_to_kill"
 	var/mob/owner = null
 	var/is_very_visible = 0
 	var/obj/maptext_junk/indicator = null
@@ -591,3 +591,12 @@ TYPEINFO(/obj/item/card/emag)
 					owner.vis_contents -= indicator
 			owner = user
 		..()
+
+	attack_self(mob/user as mob)
+		if(ON_COOLDOWN(user, "showoff_item", SHOWOFF_COOLDOWN))
+			return
+		var/showing_off = "[bicon(src)] License to Kill"
+		user.visible_message("[user] shows you [his_or_her(user)] [showing_off]!", \
+							"You show off your [showing_off]")
+		playsound(src, 'sound/impact_sounds/Generic_Snap_1.ogg', 40, FALSE, pitch=1.1)
+		actions.start(new /datum/action/show_item(user, src, "id", 5, 3), user)
