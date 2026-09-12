@@ -2,6 +2,7 @@
 	var/title = ""
 	var/desc = ""
 	var/required_medal = null
+	var/claim_text = null //Allows for a custom reason it can be claimed
 	var/once_per_round = 1   //Can only be claimed once per round.
 	var/mobonly = 1 //If the reward can only be redeemed if the player has a /mob/living.
 
@@ -1296,6 +1297,54 @@
 			boutput( usr, SPAN_ALERT("Hmm.. I can't set the scream sound of that!") )
 			return 0
 
+/datum/achievementReward/mentorcostume
+	title = "(Skin) Mentor mouse costume"
+	desc = "Turns the mouse costume into a Mentor mouse costume"
+	claim_text = "being a Mentor"
+	required_medal = TRUE
+
+	rewardActivate(var/mob/activator)
+		if (ishuman(activator))
+			var/mob/living/carbon/human/H = activator
+			if (H.wear_suit && H.wear_suit.type == /obj/item/clothing/suit/gimmick/mouse)
+				var/obj/item/clothing/suit/gimmick/mouse/suit_target = H.wear_suit
+				var/obj/item/clothing/suit/gimmick/mouse/mentor/new_suit = new /obj/item/clothing/suit/gimmick/mouse/mentor(get_turf(H))
+				new_suit.forensic_holder = suit_target.forensic_holder
+				qdel(suit_target)
+				H.equip_if_possible(new_suit, SLOT_WEAR_SUIT)
+				return 1
+			else
+				boutput(activator, SPAN_ALERT("Unable to redeem... You need to be wearing a mouse costume."))
+				return
+		else
+			boutput(activator, SPAN_ALERT("Unable to redeem... You need to be human to redeem this."))
+			return
+
+
+/datum/achievementReward/admincostume
+	title = "(Skin) Admin mouse costume"
+	desc = "Turns the mouse costume into a Admin mouse costume"
+	claim_text = "being an Admin"
+	required_medal = TRUE
+
+	rewardActivate(var/mob/activator)
+		if (ishuman(activator))
+			var/mob/living/carbon/human/H = activator
+			if (H.wear_suit && H.wear_suit.type == /obj/item/clothing/suit/gimmick/mouse)
+				var/obj/item/clothing/suit/gimmick/mouse/suit_target = H.wear_suit
+				var/obj/item/clothing/suit/gimmick/mouse/admin/new_suit = new /obj/item/clothing/suit/gimmick/mouse/admin(get_turf(H))
+				new_suit.forensic_holder = suit_target.forensic_holder
+				qdel(suit_target)
+				H.equip_if_possible(new_suit, SLOT_WEAR_SUIT)
+				return 1
+			else
+				boutput(activator, SPAN_ALERT("Unable to redeem... You need to be wearing a mouse costume."))
+				return
+		else
+			boutput(activator, SPAN_ALERT("Unable to redeem... You need to be human to redeem this."))
+			return
+
+
 /// Keeps track of once-per-round rewards
 /datum/player/var/list/claimed_rewards = list()
 
@@ -1315,8 +1364,12 @@
 		boutput(usr, SPAN_ALERT("Checking your eligibility. There might be a short delay, please wait."))
 		var/list/eligible = list()
 		for(var/A in rewardDB)
+			var/result = null
 			var/datum/achievementReward/D = rewardDB[A]
-			var/result = usr.has_medal(D.required_medal)
+			if(D.required_medal == TRUE)
+				result = 1
+			else
+				result = usr.has_medal(D.required_medal)
 			if(result == 1)
 				if((D.once_per_round && !src.player.claimed_rewards.Find(D.type)) || !D.once_per_round)
 					if( D.mobonly && !istype( src.mob, /mob/living ) ) continue
@@ -1349,8 +1402,11 @@
 		if(S.once_per_round && src.player.claimed_rewards.Find(S.type))
 			boutput(usr, SPAN_ALERT("You already claimed this!"))
 			return
-
-		var/confirm = tgui_alert(usr, S.desc + "\n(Earned through the \"[S.required_medal]\" Medal)", "Claim this Reward?", list("Yes", "No"))
+		var/confirm = null
+		if (S.claim_text)
+			confirm = tgui_alert(usr, S.desc + "\n(Earned through \"[S.claim_text]\")", "Claim this Reward?", list("Yes", "No"))
+		else
+			confirm = tgui_alert(usr, S.desc + "\n(Earned through the \"[S.required_medal]\" Medal)", "Claim this Reward?", list("Yes", "No"))
 		src.verbs += /client/verb/claimreward
 		if(confirm == "Yes")
 			var/worked = S.rewardActivate(src.mob)
