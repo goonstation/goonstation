@@ -1,5 +1,10 @@
 
 (t)sat sep 12 26
+(u)JORJ949
+(p)27633
+(e)🔄📄📨|C-Rework, A-UI, A-Logistics
+(*)The supply request console is now in TGUI
+(+)You can now cancel any cargo request you have made at a supply request console (as determined by visible name).
 (u)ANNmagedon
 (p)27818
 (e)🎨📨|C-Sprites, A-Logistics
