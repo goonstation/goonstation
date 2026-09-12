@@ -1,4 +1,9 @@
 
+(t)sat sep 12 26
+(u)ANNmagedon
+(p)27818
+(e)🎨📨|C-Sprites, A-Logistics
+(+)NanoTrasen flags can now be bought from Sketchy-D & Syndicate flags can now be found at the outpost barracks.
 (t)wed sep 09 26
 (u)Skeletonman0
 (p)27788
