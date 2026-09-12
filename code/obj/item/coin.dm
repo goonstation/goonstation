@@ -7,7 +7,7 @@
 	w_class = W_CLASS_TINY
 	stamina_damage = 0
 	stamina_cost = 0
-	flags = TABLEPASS  | ATTACK_SELF_DELAY
+	flags = TABLEPASS
 	click_delay = 1 SECOND
 	pass_unstable = TRUE
 	throw_speed = 0.3
