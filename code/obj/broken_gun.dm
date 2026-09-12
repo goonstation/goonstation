@@ -1,8 +1,6 @@
-
 // broken guns, mostly for X|G fermid zone & mors crashsite. potentially for a future gun repair system.
 
 ABSTRACT_TYPE(/obj/item/broken_gun)
-
 /obj/item/broken_gun
 	name = "a broken gun part you shouldnt see"
 	desc = "call 1-800-CODER!"
@@ -10,6 +8,7 @@ ABSTRACT_TYPE(/obj/item/broken_gun)
 	w_class = W_CLASS_SMALL
 	inhand_image_icon = null
 
+// -------- XG6 FERMIDZONE --------
 
 ABSTRACT_TYPE(/obj/item/broken_gun/xg_pistol)
 /obj/item/broken_gun/xg_pistol
@@ -65,6 +64,8 @@ ABSTRACT_TYPE(/obj/item/broken_gun/xg_cannon)
 	front
 		desc =  "The busted barrel of a heavy particle blaster from Giesel Radiofabrik, designed for high damage."
 		icon_state = "energy_cannon-front"
+
+// -------- MORS CRASHSITE --------
 
 /obj/item/broken_gun/mars_vega
 	name = "Broken Vega flamethrower"
