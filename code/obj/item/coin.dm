@@ -44,12 +44,14 @@
 		sleep(4 DECI SECONDS)
 		src.change_air_state(-1)
 
+	SPAWN(11 DECI SECONDS)
+		if(!ismob(src.loc))
+			playsound(src.loc, 'sound/items/coindrop.ogg', 30, 1)
+
 	sleep(18 DECI SECOND)
 
 	src.thrower = null
-
-	if(!istype(src.loc, /mob/))	//Hot dog, you caught it midair!
-		playsound(src.loc, 'sound/items/coindrop.ogg', 30, 1)
+	if(!ismob(src.loc))
 		flip()
 
 /obj/item/coin/proc/change_air_state(value)
