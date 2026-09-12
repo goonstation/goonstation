@@ -66,7 +66,7 @@
 	New()
 		..()
 		if(src.season_affected)
-			icon_state = pick("tree_red", "tree_yellow", "tree_orange")
+			src.icon_state = pick("tree_red", "tree_yellow", "tree_orange")
 #endif
 
 	attackby(obj/item/I, mob/user)
