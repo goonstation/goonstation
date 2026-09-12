@@ -1768,7 +1768,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 			..()
 			if (user?.client && user.client.is_mentor()|| isadmin(user))
 				return
-			SPAWN(0.1)
+			SPAWN(0.1) //Delay required to not cause a visual bug
 				boutput(user, SPAN_ALERT("The suit disintegrates from your un-mentorly touch!"))
 
 				user.u_equip(src)
@@ -1781,7 +1781,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 			..()
 			if (user?.client && user.client.is_mentor() || isadmin(user))
 				return
-			SPAWN(0.1)
+			SPAWN(0.1) //Delay required to not cause a visual bug
 				boutput(user, SPAN_ALERT("The suit disintegrates from your un-mentorly touch!"))
 
 				user.u_equip(src)
@@ -1821,7 +1821,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 			..()
 			if (user?.client && isadmin(user))
 				return
-			SPAWN(0.1)
+			SPAWN(0.1) //Delay required to not cause a visual bug
 				boutput(user, SPAN_ALERT("The suit disintegrates from your un-[src.icon_state == "glorpsuit" ? "glorply" : "adminly" ]touch!"))
 
 				user.u_equip(src)
@@ -1834,7 +1834,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 			..()
 			if (user?.client && isadmin(user))
 				return
-			SPAWN(0.1)
+			SPAWN(0.1) //Delay required to not cause a visual bug
 				boutput(user, SPAN_ALERT("The suit disintegrates from your un-[src.icon_state == "glorpsuit" ? "glorply" : "adminly" ]touch!"))
 
 				user.u_equip(src)
