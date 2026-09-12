@@ -282,6 +282,8 @@
 	var/mob/closest = null
 	var/closest_dist = INFINITY
 	for (var/mob/M in view(5, reflector))
+		if (isintangible(M) || isobserver(M))
+			continue
 		var/dist = GET_DIST(reflector, M)
 		if (dist < closest_dist)
 			closest = M
