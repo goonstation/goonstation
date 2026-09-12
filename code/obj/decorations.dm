@@ -60,11 +60,13 @@
 	var/falling = FALSE
 	var/fallen = FALSE
 	var/fall_time = 2 SECONDS
+	var/season_affected = TRUE
 
 #ifdef SEASON_AUTUMN
 	New()
 		..()
-		icon_state = pick("tree_red", "tree_yellow", "tree_orange")
+		if(season_affected)
+			icon_state = pick("tree_red", "tree_yellow", "tree_orange")
 #endif
 
 	attackby(obj/item/I, mob/user)
@@ -113,6 +115,7 @@
 		icon_state = "snowtree"
 		layer = EFFECTS_LAYER_UNDER_1 // match shrubs
 		pixel_x = -32
+		season_affected = FALSE
 		New()
 			. = ..()
 			src.dir = pick(cardinal)
