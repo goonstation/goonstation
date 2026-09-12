@@ -878,6 +878,8 @@
 	var/ignore_sticky_cooldown = FALSE		//! If TRUE, Ability will stick to cursor even if ability goes on cooldown after first cast.
 	var/interrupt_action_bars = TRUE 		//! If TRUE, we will interrupt any action bars running with the INTERRUPT_ACT flag
 	var/cooldown_after_action = FALSE		//! if TRUE, cooldowns will be handled after action bars have ended. Needs action to call afterAction() on end.
+	var/aim_assist_radius = null			//! If we don't click on a mob, how many tiles away do we search to find a mob to target? If null, don't try at all
+	var/aim_assist_ignore_owner = TRUE		//! Should we ignore our owner when searching for nearby mobs with aim assist?
 
 	var/action_key_number = -1 //Number hotkey assigned to this ability. Only used if > 0
 	var/waiting_for_hotkey = FALSE //If TRUE, the next number hotkey pressed will be bound to this.
@@ -923,6 +925,7 @@
 
 	proc
 		handleCast(atom/target, params)
+			target = src.aim_assist_retargeting(target, params)
 			var/result = tryCast(target, params)
 #ifdef NO_COOLDOWNS
 			result = TRUE
@@ -1123,6 +1126,18 @@
 
 		flip_callback()
 			.= 0
+
+		aim_assist_retargeting(atom/target, params)
+			. = target
+			if (isnull(src.aim_assist_radius) || ismob(target))
+				return
+			var/list/mob_list = get_nearest_mobs_list(target, params, aim_assist_radius)
+			if(!mob_list)
+				return
+			for (var/mob/mob_target in mob_list)
+				if((mob_target == src.holder.owner) && src.aim_assist_ignore_owner)
+					continue
+				return mob_target
 
 /atom/movable/screen/pseudo_overlay
 	// this is hack as all get out

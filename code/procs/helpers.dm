@@ -2827,3 +2827,44 @@ proc/area_table_spawn(area_type, spawn_type)
 	if (istype(parent, type))
 		return parent
 	return null
+
+/**
+ * Returns an ordered associative list [mob = distance (euclidean)] (ascending) of all mobs within a target radius.
+ * If given params (from click() procs), it will offset the center of the search area by where the user clicked.
+ * range (also euclidean) should be a positive real number. The search radius can in fact be a 1.337 tile radius, if you so desire.
+ * The center of the turf a mob is occupying must fall within the specified range for it to consider that mob 'in range'.
+ * May behave unexpectedly if clicked_on has significant transformations applied (blame nex for failing to figure out matrix math.)
+ */
+proc/get_nearest_mobs_list(atom/clicked_on, list/params, range = 1, always_include_same_tile = TRUE)
+	var/pixel_x = 0
+	var/pixel_y = 0
+	if(params) // params means this came from a click, so we gotta figure out where exactly user clicked relative to tile
+		pixel_x += text2num(params["icon_x"])
+		pixel_y += text2num(params["icon-y"])
+		pixel_x += clicked_on.pixel_x
+		pixel_y += clicked_on.pixel_y
+	var/step_x = floor(pixel_x / 32)
+	var/step_y = floor(pixel_y / 32)
+	// there's a chance some dork will have 50 million stickers on them (or there's a very large icon somewhere)
+	// and our cursor will subsequently be multiple tiles away from clicked_on.
+	var/turf/clicked_over_turf = locate(clicked_on.x + step_x, clicked_on.y + step_y, clicked_on.z)
+	pixel_x -= 16 // offsets to pretend like 0,0 corresponds to the center of a tile
+	pixel_y -= 16 // instead of the bottom left corner
+	var/clicked_scaled_x = (clicked_on.x * 32) + pixel_x
+	var/clicked_scaled_y = (clicked_on.y * 32) + pixel_y
+	var/list/return_list = list()
+	// we increase search range to make extra sure we catch everything, since we filter out invalid results later anyways
+	for(var/mob/target in range(ceil(range + 1), clicked_over_turf))
+	// nothing is stopping us from searching for any arbitary atom type, the use case is just for mobs right now
+		var/target_scaled_x = target.x * 32
+		var/target_scaled_y = target.y * 32
+		// we calculate the distance from our click to the center of the tile each nearby mob occupies
+		// we could probably get said mob's pixel_x/y, but we don't care about that nearly as much as we do a user's input coords
+		var/scaled_distance = sqrt(((target_scaled_x - clicked_scaled_x)**2) + ((target_scaled_y - clicked_scaled_y)**2))
+		var/distance = scaled_distance / 32 // back down to each unit being 1 tile instead of 1 pixel
+		if((distance > range) && (!always_include_same_tile || (origin_turf != get_turf(target))))
+			continue
+		return_list[target] = distance
+	if(return_list.len)
+		sortList(L = return_list, cmp=/proc/cmp_numeric_asc, associative = TRUE)
+		return return_list
