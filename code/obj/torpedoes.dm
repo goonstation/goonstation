@@ -16,6 +16,7 @@
 				else
 					M.TakeDamage("chest", 15, 0)
 					var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel
+					src.forensic_holder.copy_to(implanted.forensic_holder)
 					implanted.implanted(M, null, 2)
 					boutput(M, SPAN_ALERT("You are struck by shrapnel!"))
 					if (!M.stat)

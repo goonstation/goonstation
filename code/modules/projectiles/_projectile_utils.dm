@@ -127,6 +127,9 @@
 
 	if (DATA.implanted)
 		P.implanted = DATA.implanted
+	if(isatom(P.implanted))
+		var/atom/A = P.implanted
+		A.forensic_holder = P.forensic_holder
 
 	P.called_target = called_target
 	P.called_target_turf = get_turf(called_target)
