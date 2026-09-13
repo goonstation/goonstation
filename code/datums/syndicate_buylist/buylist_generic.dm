@@ -495,3 +495,11 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	items = list(/obj/item/device/disposals_hijacker)
 	cost = 4
 	vr_allowed = FALSE
+
+/datum/syndicate_buylist/traitor/idtracker
+	name = "ID Tracker"
+	items = list(/obj/item/pinpointer/idtracker)
+	cost = 1
+	desc = "Allows you to track registered ID cards of the crew, but only the ID. If they have changed or destroyed it, the pinpointer will not be useful. Cannot be used to track agent cards or any ID offstation."
+	vr_allowed = FALSE
+	can_buy = parent_type::can_buy | UPLINK_HEAD_REV
