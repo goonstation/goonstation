@@ -1301,9 +1301,9 @@
 
 	custom_reward_requirement(var/mob/activator)
 		if (activator?.client && activator.client.is_mentor() || isadmin(activator))
-			return 1
+			return "Success"
 		else
-			return
+			return "Fail"
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
@@ -1330,9 +1330,9 @@
 
 	custom_reward_requirement(var/mob/activator)
 		if (activator?.client && isadmin(activator))
-			return 1
+			return "Success"
 		else
-			return
+			return "Fail"
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
