@@ -53,7 +53,8 @@ ABSTRACT_TYPE(/datum/projectile)
 	var/zone = null              // todo: if fired from a handheld gun, check the targeted zone --- this should be in the goddamn obj
 	var/affected_by_gravity = FALSE	 // If a projectile should go shorter or further based on turf G-forces
 
-	var/datum/material/material = null
+	var/datum/material/coating = null
+	var/coating_amount = 0.1 // How much material is in each bullet
 
 	var/casing = null
 	var/reagent_payload = null
@@ -120,6 +121,10 @@ ABSTRACT_TYPE(/datum/projectile)
 				generate_stats()
 			if("power", "ks_ratio")
 				generate_inverse_stats()
+
+	/// Returns true of the two ammo types are effectively the same.
+	proc/is_same_ammo(datum/projectile/other)
+		return (src.type == other.type) && (src.coating == other.coating)
 
 	proc
 		generate_stats()
