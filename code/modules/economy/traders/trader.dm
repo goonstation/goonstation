@@ -182,8 +182,11 @@
 		src.current_message = pick(src.dialogue_haggle_accept)
 		src.patience--
 		// warn the player if the trader isn't going to take any more haggling
-		if (src.patience == 0)
+		if (src.patience == 1)
 			src.current_message = src.dialogue_haggle_accept[src.dialogue_haggle_accept.len]
+		// dialogue is still visible, may as well tell the player they fucked up
+		else if (src.patience <= 0)
+			src.current_message = "\[ERROR: Connection lost!\]"
 
 	proc/buy_from()
 		src.currently_selling = 1
