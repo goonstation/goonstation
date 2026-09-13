@@ -207,3 +207,8 @@
 
 // ---- pressure vision
 #define COMSIG_PRESSURE_VISION "pressure_vision"
+
+// ---- Golf Signals
+
+///For when the golf ability "strikes" the ball
+#define COMSIG_GOLF_STRIKE "golf_strike"

@@ -192,6 +192,11 @@
 				src.giftpaths = generic_gift_paths
 			..()
 
+		New()
+			APPLY_ATOM_PROPERTY(src, PROP_OBJ_GOLFABLE, src) // god help me
+			AddComponent(/datum/component/golfable)
+			..()
+
 	easter/dangerous
 		attack_self(mob/M as mob)
 			if (!islist(giftpaths) || !length(giftpaths))
