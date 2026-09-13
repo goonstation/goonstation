@@ -172,7 +172,7 @@
 							info += {"
 							<br><br><center><b>Medical Data</b></center><br>
 							<br><br>Current Health: [src.active_medical["h_imp"]]
-							<br>Blood Type: [src.active_medical["bioHolder.bloodType"]]
+							<br>Blood Type: [src.active_medical["blood_type"]]
 							<br><br>Minor Disabilities: [src.active_medical["mi_dis"]]
 							<br><br>Details: [src.active_medical["mi_dis_d"]]
 							<br><br><br>Major Disabilities: [src.active_medical["ma_dis"]]
@@ -231,25 +231,9 @@
 						if (src.active_medical)
 							return
 
-						var/datum/db_record/R = new /datum/db_record(  )
-						R["name"] = src.active_general["name"]
-						R["full_name"] = src.active_general["full_name"]
-						R["id"] = src.active_general["id"]
-						R["bioHolder.bloodType"] = "Unknown"
-						R["mi_dis"] = "None"
-						R["mi_dis_d"] = MEDREC_DISABILITY_MINOR_DEFAULT
-						R["ma_dis"] = "None"
-						R["ma_dis_d"] = MEDREC_DISABILITY_MAJOR_DEFAULT
-						R["alg"] = "None"
-						R["alg_d"] = MEDREC_ALLERGY_DEFAULT
-						R["cdi"] = "None"
-						R["cdi_d"] = MEDREC_DISEASE_DEFAULT
-						R["cl_def"] = "None"
-						R["cl_def_d"] = MEDREC_CLONE_DEFECT_DEFAULT
-						R["notes"] = "No notes."
-						R["h_imp"] = MEDREC_NO_IMPLANT
-						data_core.medical.add_record(R)
-						src.active_medical = R
+						var/datum/db_record/personnel/medical/record = new(src.active_general)
+						global.data_core.medical.add_record(record)
+						src.active_medical = record
 
 						src.log_string += "<br>New medical record created."
 						src.print_active_record()
@@ -355,23 +339,23 @@
 
 						switch (round( max( text2num_safe(command), 0) ))
 							if (1)
-								src.active_medical["bioHolder.bloodType"] = "A+"
+								src.active_medical["blood_type"] = "A+"
 							if (2)
-								src.active_medical["bioHolder.bloodType"] = "A-"
+								src.active_medical["blood_type"] = "A-"
 							if (3)
-								src.active_medical["bioHolder.bloodType"] = "B+"
+								src.active_medical["blood_type"] = "B+"
 							if (4)
-								src.active_medical["bioHolder.bloodType"] = "B-"
+								src.active_medical["blood_type"] = "B-"
 							if (5)
-								src.active_medical["bioHolder.bloodType"] = "AB+"
+								src.active_medical["blood_type"] = "AB+"
 							if (6)
-								src.active_medical["bioHolder.bloodType"] = "AB-"
+								src.active_medical["blood_type"] = "AB-"
 							if (7)
-								src.active_medical["bioHolder.bloodType"] = "O+"
+								src.active_medical["blood_type"] = "O+"
 							if (8)
-								src.active_medical["bioHolder.bloodType"] = "O-"
+								src.active_medical["blood_type"] = "O-"
 							if (9)
-								src.active_medical["bioHolder.bloodType"] = "Zesty Ranch"
+								src.active_medical["blood_type"] = "Zesty Ranch"
 							if (0)
 								src.menu = MENU_IN_RECORD
 								return
@@ -774,7 +758,7 @@
 				view_string += {"<br>\
 					<br><center><b>Medical Data</b></center>\
 					<br>\[__\]<b>Current Health:</b>     [src.active_medical["h_imp"]]\
-					<br>\[[num2text(FIELDNUM_BLOODTYPE, 2, 10)]\]<b>Blood Type:</b>         [src.active_medical["bioHolder.bloodType"]]\
+					<br>\[[num2text(FIELDNUM_BLOODTYPE, 2, 10)]\]<b>Blood Type:</b>         [src.active_medical["blood_type"]]\
 					<br>\[[num2text(FIELDNUM_MINDIS, 2, 10)]\]<b>Minor Disabilities:</b> [src.active_medical["mi_dis"]]\
 					<br>\[[num2text(FIELDNUM_MINDET, 2, 10)]\]<b>Details:</b>            [src.active_medical["mi_dis_d"]]\
 					<br>\[[num2text(FIELDNUM_MAJDIS, 2, 10)]\]<b>Major Disabilities:</b> [src.active_medical["ma_dis"]]\

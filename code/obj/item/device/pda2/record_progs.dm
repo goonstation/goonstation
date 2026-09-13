@@ -138,7 +138,7 @@
 				if (istype(src.active2, /datum/db_record) && data_core.medical.has_record(src.active2))
 					dat += "Current Health: [src.active2["h_imp"]]<br><br>"
 
-					dat += "Blood Type: [src.active2["bioHolder.bloodType"]]<br><br>"
+					dat += "Blood Type: [src.active2["blood_type"]]<br><br>"
 
 					dat += "Minor Disabilities: [src.active2["mi_dis"]]<br>"
 					dat += "Details: [src.active2["mi_dis_d"]]<br><br>"

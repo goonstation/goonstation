@@ -700,35 +700,18 @@
 				src.screen = SECREC_VIEW_RECORD
 
 			if ("new_general_record")
-				var/datum/db_record/G = new /datum/db_record()
-				G["name"] = "New Record"
-				G["id"] = num2hex(rand(1, 0xffffff), 6)
-				G["rank"] = "Unassigned"
-				G["sex"] = "Unknown"
-				G["pronouns"] = "Unknown"
-				G["age"] = "Unknown"
-				G["fingerprint_right"] = "Unknown"
-				G["fingerprint_left"] = "Unknown"
-				G["p_stat"] = "Active"
-				G["m_stat"] = "Stable"
-				data_core.general.add_record(G)
-				src.active_record_general = G
+				var/datum/db_record/personnel/general/record = new()
+				record["id"] = global.data_core.generate_id()
+				global.data_core.general.add_record(record)
+				src.active_record_general = record
 				src.active_record_security = null
 				src.screen = SECREC_VIEW_RECORD
 
 			if ("new_security_record")
 				if ((istype(src.active_record_general, /datum/db_record) && !( istype(src.active_record_security, /datum/db_record) )))
-					var/datum/db_record/R = new /datum/db_record(  )
-					R["name"] = src.active_record_general["name"]
-					R["id"] = src.active_record_general["id"]
-					R["criminal"] = SECURITY::ARREST::STATE::NONE
-					R["mi_crim"] = "None"
-					R["mi_crim_d"] = "No minor crime convictions."
-					R["ma_crim"] = "None"
-					R["ma_crim_d"] = "No major crime convictions."
-					R["notes"] = "No notes."
-					data_core.security.add_record(R)
-					src.active_record_security = R
+					var/datum/db_record/personnel/security/record = new(src.active_record_general)
+					global.data_core.security.add_record(record)
+					src.active_record_security = record
 					src.screen = SECREC_VIEW_RECORD
 
 			if ("add_comment")
