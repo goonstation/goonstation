@@ -830,7 +830,10 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	proc/pokey(mob/target, poke_chance=33)
 		if(prob(poke_chance))
 			if(ON_COOLDOWN(target, "BARB_\ref[src]", src.cooldown_time)) return
-			target.visible_message("[target] gets caught up in [src]", "You get caught up in [src] and notice it has drawn blood.")
+			if(issilicon(target))
+				target.visible_message("[target] gets caught up in [src]", "You get caught up in [src] and it scratches your parts a little bit.")
+			else
+				target.visible_message("[target] gets caught up in [src]", "You get caught up in [src] and notice it has drawn blood.")
 			take_bleeding_damage(target, null, rand(3,7), DAMAGE_STAB)
 			return TRUE
 
