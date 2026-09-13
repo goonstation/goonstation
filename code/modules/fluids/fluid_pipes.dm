@@ -105,7 +105,7 @@ ABSTRACT_TYPE(/obj/fluid_pipe)
 		reagent_overlay_icon = src.icon, \
 		reagent_overlay_icon_state = src.icon_state, \
 		reagent_overlay_states = 1, \
-		queue_updates = FALSE, \
+		queue_updates = TRUE, \
 		target = src.network)
 
 /obj/fluid_pipe/straight/see_fluid/get_desc(dist, mob/user)
@@ -214,7 +214,7 @@ DEFINE_PIPES_WASTE(/obj/fluid_pipe/quad)
 		reagent_overlay_icon = src.icon, \
 		reagent_overlay_icon_state = src.icon_state, \
 		reagent_overlay_states = 8, \
-		queue_updates = FALSE, \
+		queue_updates = TRUE, \
 		target = src.network)
 
 /obj/fluid_pipe/fluid_tank/see_fluid/get_desc(dist, mob/user)
@@ -270,7 +270,7 @@ DEFINE_PIPES_WASTE(/obj/fluid_pipe/quad)
 				reagent_overlay_icon = fluid_pipe.icon, \
 				reagent_overlay_icon_state = fluid_pipe.icon_state, \
 				reagent_overlay_states = states, \
-				queue_updates = FALSE, \
+				queue_updates = TRUE, \
 				target = src)
 		return
 
@@ -302,7 +302,7 @@ DEFINE_PIPES_WASTE(/obj/fluid_pipe/quad)
 				reagent_overlay_icon = pipe.icon, \
 				reagent_overlay_icon_state = pipe.icon_state, \
 				reagent_overlay_states = states, \
-				queue_updates = FALSE, \
+				queue_updates = TRUE, \
 				target = assuming_network)
 	for(var/obj/machinery/fluid_machinery/machine as anything in assumed_network.machines)
 		machine.refresh_network(assuming_network)
