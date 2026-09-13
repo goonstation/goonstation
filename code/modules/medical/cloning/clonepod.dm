@@ -261,7 +261,7 @@ TYPEINFO(/obj/machinery/clonepod)
 		src.locked = 1
 		src.gen_bonus = src.healing_multiplier()
 
-		src.use_power(5000)
+		src.use_power(50000)
 
 		return 1
 
@@ -593,7 +593,7 @@ TYPEINFO(/obj/machinery/clonepod)
 				else // go_out() updates icon too, so vOv
 					src.UpdateIcon()
 
-				power_usage = 7500
+				power_usage = 10000
 				return ..()
 
 			else if (src.get_progress() >= 100)
