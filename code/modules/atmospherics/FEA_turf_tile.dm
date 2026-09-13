@@ -212,6 +212,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 
 		src.air.temperature = src.temperature
 
+	#ifndef SKIP_FEA_SETUP
 		if(air_master)
 			if(explosions.exploding)
 				air_master.tiles_to_rebuild[src] = null
@@ -226,7 +227,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 			var/turf/simulated/floor/target = get_step(src,direction)
 			if(issimulatedturf(target))
 				air_master.tiles_to_update[target] = null
-
+	#endif
 /turf/simulated/Del()
 	if(air_master)
 		if(src.being_superconductive)
