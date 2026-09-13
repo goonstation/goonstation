@@ -802,6 +802,12 @@ datum/commodity/drugs/sell/poppies
 	desc = "Fancy. Possibly salvaged, possibly stolen, what's it to you?"
 	price = PAY::IMPORTANT
 
+/datum/commodity/contraband/nt_flag
+	comname = "Surplus NT flags"
+	comtype = /obj/item/flag/nanotrasen
+	desc = "Very blue flags, NT accidentally overproduced these. Thats why it's so easy to get away with a crate of these."
+	price = PAY::TRADESMAN*2
+
 /datum/commodity/contraband/ntso_vest
 	comname = "Surplus armored vest"
 	comtype = /obj/item/clothing/suit/armor/NT_alt
