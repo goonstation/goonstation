@@ -1766,7 +1766,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 
 		pickup(mob/user)
 			..()
-			if (user?.client && user.client.is_mentor()|| isadmin(user))
+			if (user?.client && user.client.is_mentor() || isadmin(user))
 				return
 			SPAWN(0.1) //Delay required to not cause a visual bug
 				boutput(user, SPAN_ALERT("The suit disintegrates from your un-mentorly touch!"))
