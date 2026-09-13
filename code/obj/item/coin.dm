@@ -87,6 +87,8 @@
 
 	var/atom/shooter = P.shooter
 	shoot_reflected_trickshot(P, src, 4)
+	// skip the projectile's on_hit code so foam darts don't drop on the floor
+	qdel(P)
 	var/turf/coin_target = get_steps(src, get_dir_accurate(shooter, src), src.throw_range)
 	animate(src)
 	src.throwing = FALSE
