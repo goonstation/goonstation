@@ -69,3 +69,6 @@
 				sleep(0.5 SECONDS)
 			qdel(A)
 			qdel(B)
+
+	low_cd
+		cooldown = 3 SECONDS

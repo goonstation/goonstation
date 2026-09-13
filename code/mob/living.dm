@@ -1004,7 +1004,7 @@ TYPEINFO(/mob/living)
 			if (src.parry_or_dodge(M))
 				return
 			var/datum/limb/L = M.equipped_limb()
-			if (!L)
+			if (!L || HAS_ATOM_PROPERTY(src, PROP_MOB_UNGRABBABLE))
 				return
 			L.grab(src, M)
 			message_admin_on_attack(M, "grabs")

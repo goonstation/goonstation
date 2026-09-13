@@ -32,6 +32,8 @@
 #define FACTION_MERCENARY		"mercenary"
 /// Deep Cultists
 #define FACTION_DEEP_CULT		"deepcult"
+/// Tox moon critters
+#define FACTION_TOXMOON			"toxmoon"
 
 /// Returns TRUE if ourguy is enemies with otherguy FALSE otherwise
 proc/faction_check(mob/ourguy, mob/otherguy, attack_neutral)
