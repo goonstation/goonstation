@@ -12,9 +12,9 @@
 	var/filter_id = null
 	var/list/sniffFilters = list()
 	var/last_intercept = 0
-	var/list/packet_stamps = list()
-	var/list/packet_data = list()
-	var/max_logs = 8
+	var/list/packet_logs = list()
+	var/captured_packets = 0
+	var/max_logs = 50
 
 	New()
 		..()
@@ -80,23 +80,37 @@
 
 	ui_data(mob/user)
 		. = list(
-			"packet_stamps" = src.packet_stamps,
-			"packet_data" = src.packet_data,
-			"filter" = src.filter_id
+			"connected" = !!(src.mode && src.link),
+			"packet_logs" = src.packet_logs,
+			"captured_packets" = src.captured_packets,
+			"max_logs" = src.max_logs,
+			"filter" = src.filter_id,
 		)
 
-	ui_act(action, params)
+	ui_act(action, params, datum/tgui/ui)
 		. = ..()
 		if (.)
 			return
 		. = TRUE
 		switch (action)
 			if ("set_filter")
-				src.set_filter()
+				src.set_filter(ui.user)
+			if ("set_filter_direct")
+				var/filter_id = params["filter"]
+				if (istext(filter_id) && length(filter_id) == 8 && \
+					is_hex(filter_id))
+					src.filter_id = filter_id
+			if ("clear_filter")
+				src.filter_id = null
+			if ("clear_logs")
+				src.packet_logs = list()
 
-	proc/set_filter()
-		var/filt_id = tgui_input_text(usr, "Please enter new 8 digit hex value filter net id", src.name, src.filter_id, 8)
-		if(length(filt_id) != 8 || !is_hex(filt_id))
+	proc/set_filter(mob/user)
+		var/filt_id = tgui_input_text(user, "Please enter new 8 digit hex value filter net id", \
+			src.name, src.filter_id, 8)
+		if (isnull(filt_id))
+			return
+		if (length(filt_id) != 8 || !is_hex(filt_id))
 			src.filter_id = null
 			return
 
@@ -125,19 +139,51 @@
 
 		if(!src.last_intercept || src.last_intercept + 40 <= world.time)
 			playsound(src.loc, 'sound/machines/twobeep.ogg', 25, 1)
-		//src.packet_data = signal.data:Copy()
-		src.packet_stamps += "\[[time2text(world.timeofday,"mm:ss")]:[(world.timeofday%10)]\]"
-		var/newdat
+
+		var/list/packet_fields = list()
+		var/payload_length = 0
 		for (var/i in signal.data)
-			newdat += "[strip_html(i)][isnull(signal.data[i]) ? "; " : "=[strip_html(signal.data[i])]; "]"
+			var/field_key = "[i]"
+			var/field_value = isnull(signal.data[i]) ? null : \
+				"[signal.data[i]]"
+			packet_fields += list(list(
+				"key" = field_key,
+				"value" = field_value,
+			))
+			payload_length += length(field_key) + length(field_value)
+
+		var/device_tag = signal.data["device"]
+		if (!device_tag && istype(signal.source, /obj/machinery/networked))
+			var/obj/machinery/networked/network_device = signal.source
+			device_tag = network_device.device_tag
+		else if (!device_tag && istype(signal.source, /obj/item/peripheral/network/powernet_card))
+			device_tag = "PNET_ADAPTER"
+		else if (!device_tag && istype(signal.source, /obj/machinery/manufacturer))
+			var/obj/machinery/manufacturer/manufacturer = signal.source
+			device_tag = manufacturer.device_tag
+		else if (!device_tag && istype(signal.source, /obj/machinery/communications_dish))
+			device_tag = "PNET_COM_ARRAY"
+
+		src.captured_packets++
+		var/list/packet_record = list(
+			"sequence" = src.captured_packets,
+			"stamp" = "\[[time2text(world.timeofday,"mm:ss")]:[(world.timeofday%10)]\]",
+			"device" = device_tag ? "[device_tag]" : null,
+			"fields" = packet_fields,
+			"payload_length" = payload_length,
+		)
 
 		if (signal.data_file)
-			. = signal.data_file.asText()
-			newdat += "<br>Included file ([strip_html(signal.data_file.name)], [strip_html(signal.data_file.extension)]): [. ? . : "Not printable."]"
+			var/file_text = signal.data_file.asText()
+			packet_record["file"] = list(
+				"name" = "[signal.data_file.name]",
+				"extension" = "[signal.data_file.extension]",
+				"content" = isnull(file_text) ? null : "[file_text]",
+				"size" = signal.data_file.size,
+			)
 
-		src.packet_data += newdat
-		if (length(src.packet_data) > src.max_logs)
-			src.packet_stamps.Cut(1, 2)
-			src.packet_data.Cut(1,2)
+		src.packet_logs += list(packet_record)
+		if (length(src.packet_logs) > src.max_logs)
+			src.packet_logs.Cut(1, 2)
 		src.last_intercept = world.time
 		return
