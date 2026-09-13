@@ -50,6 +50,13 @@
 	#define COMSIG_ATOM_SET_OPACITY "atom_set_opacity"
 	/// get radioactivity level of atom (0 if signal not registered - ie, has no radioactive component) (return_val as a list)
 	#define COMSIG_ATOM_RADIOACTIVITY "atom_get_radioactivity"
+	/// tries to remove some % of whatever cleanable radioactivity is present
+	/// args: category, percent_to_remove = 0.1, return_list, doNeutron = FALSE
+	/// arg explanation: "contamination type" (required), % (0-1) of cleanable contamination to try to remove, return_list of washed-off reagents (optional), apply to specifically neutron radiation
+	#define COMSIG_ATOM_DECONTAMINATE_RADS "atom_decontaminate_rads"
+	/// when an atom is washed in some way (likely missing multiple washing methods) (intentionally doesn't count handwashing)
+	/// (reagent_list (optional), caller (optional))
+	#define COMSIG_ATOM_WASHED "atom_washed"
 	/// when an atom say()s anything
 	/// I swear if you use this to modify a message when you should be using a speech_module, I will hurt you - Amylizzle
 	#define COMSIG_ATOM_SAY "atom_say"

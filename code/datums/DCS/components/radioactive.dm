@@ -15,6 +15,14 @@ TYPEINFO(/datum/component/radioactive)
 	/// How much radStrength will decay over time. It will take ~ 6 * radStrength seconds to decay completely.
 	var/decay_target = 0
 	var/decay_target_neutron = 0
+	/* Existing contamination types and removal methods. Use these if applicable and document new ones here
+	"surface" = showering/washing in a sink
+	"internal" = medication
+	*/
+	/// Assoc list of removable decaying radStrength amounts
+	/// "contamination type" = amount_that_can_be_somehow_removed
+	var/list/removable_contamination = list()
+	var/list/removable_contamination_neutron = list()
 	/// Internal, do not touch - keeps a record of whether or not we had to add this to the item processing list
 	var/_added_to_items_processing = FALSE
 	/// How wide a range this radiation source affects. Greater than one should be very rarely used, since all atoms in this range will be exposed per tick
@@ -26,7 +34,7 @@ TYPEINFO(/datum/component/radioactive)
 	/// Internal, reference to light component
 	var/datum/component/loctargeting/simple_light/our_light
 
-	Initialize(radStrength=100, decays=FALSE, neutron=FALSE, effectRange=1)
+	Initialize(radStrength=100, decays=FALSE, neutron=FALSE, effectRange=1, contamination_type, removable_amount)
 		if(!istype(parent,/atom) || parent.type == /turf/space) //exact type check to exclude ocean floors
 			return COMPONENT_INCOMPATIBLE
 		. = ..()
@@ -41,16 +49,22 @@ TYPEINFO(/datum/component/radioactive)
 			src.radStrength_neutron = radStrength
 			if(!decays)
 				src.decay_target_neutron = radStrength
+			if(contamination_type && removable_amount)
+				src.removable_contamination_neutron[contamination_type] += removable_amount
 		else
 			src.radStrength = radStrength
 			if(!decays)
 				src.decay_target = radStrength
+			if(contamination_type && removable_amount)
+				src.removable_contamination[contamination_type] += removable_amount
 		src.effect_range = effectRange
 		if(parent.GetComponent(src.type)) //don't redo the filters and stuff if we're a duplicate
 			return
 
 		RegisterSignal(parent, COMSIG_ATOM_RADIOACTIVITY, PROC_REF(get_radioactivity))
+		RegisterSignal(parent, COMSIG_ATOM_DECONTAMINATE_RADS, PROC_REF(decontaminate))
 		RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examined))
+		RegisterSignal(parent, COMSIG_ATOM_WASHED, PROC_REF(washed))
 		RegisterSignals(parent, list(COMSIG_ATOM_CROSSED,
 			COMSIG_ATOM_ENTERED,
 			COMSIG_ATTACKHAND,
@@ -132,8 +146,11 @@ TYPEINFO(/datum/component/radioactive)
 		PA.remove_filter("radiation_color_\ref[src]")
 		PA.ClearSpecificOverlays("radiation_overlay_\ref[src]")
 		PA.color = src._backup_color
-		UnregisterSignal(parent, list(COMSIG_ATOM_RADIOACTIVITY))
-		UnregisterSignal(parent, list(COMSIG_ATOM_EXAMINE))
+		UnregisterSignals(parent, list(
+			COMSIG_ATOM_RADIOACTIVITY,
+			COMSIG_ATOM_DECONTAMINATE_RADS,
+			COMSIG_ATOM_EXAMINE,
+			COMSIG_ATOM_WASHED))
 		UnregisterSignal(parent, list(COMSIG_ATOM_CROSSED,
 			COMSIG_ATOM_ENTERED,
 			COMSIG_ATTACKHAND,
@@ -157,6 +174,10 @@ TYPEINFO(/datum/component/radioactive)
 		src.radStrength_neutron = min(100, src.radStrength_neutron + R.radStrength_neutron)
 		src.decay_target = min(100, src.decay_target + R.decay_target)
 		src.decay_target_neutron = min(100, src.decay_target_neutron + R.decay_target_neutron)
+		for(var/contam_type in R.removable_contamination)
+			src.removable_contamination[contam_type] += R.removable_contamination[contam_type]
+		for(var/contam_type in R.removable_contamination_neutron)
+			src.removable_contamination_neutron[contam_type] += R.removable_contamination_neutron[contam_type]
 		src.do_filters()
 
 	/// Called every item process tick, handles applying radiation effect to nearby atoms and also decay.
@@ -175,10 +196,20 @@ TYPEINFO(/datum/component/radioactive)
 			src.filterize_color(owner) // If the owner has been given a new color, keep it null so that the radiation outline stays green/blue
 		var/update_filters = FALSE
 		if(src.radStrength > src.decay_target && prob(33))
-			src.radStrength = max(src.decay_target, src.radStrength - (1 * mult))
+			var/decreaseBy = 1 * mult
+			src.radStrength = max(src.decay_target, src.radStrength - decreaseBy)
+			for(var/contam_type in src.removable_contamination)
+				removable_contamination[contam_type] -= decreaseBy
+				if(removable_contamination[contam_type] <= 0)
+					removable_contamination.Remove(contam_type)
 			update_filters = TRUE
 		if(src.radStrength_neutron > src.decay_target_neutron && prob(33))
-			src.radStrength_neutron = max(src.decay_target_neutron, src.radStrength_neutron - (1 * mult))
+			var/decreaseBy = 1 * mult
+			src.radStrength_neutron = max(src.decay_target_neutron, src.radStrength_neutron - decreaseBy)
+			for(var/contam_type in src.removable_contamination_neutron)
+				removable_contamination_neutron[contam_type] -= decreaseBy
+				if(removable_contamination_neutron[contam_type] <= 0)
+					removable_contamination_neutron.Remove(contam_type)
 			update_filters = TRUE
 		if(update_filters)
 			src.do_filters()
@@ -226,3 +257,35 @@ TYPEINFO(/datum/component/radioactive)
 			return_val = list()
 		return_val += src.radStrength
 		return TRUE
+
+	proc/decontaminate(atom/owner, category, percent_to_remove = 0.1, list/return_reagents, doNeutron = FALSE)
+		if(isnull(category))
+			CRASH("Attempted to decontaminate [parent] of radioactivity, but no category was given!")
+		var/removed = 0
+		if(src.removable_contamination[category] && !doNeutron)
+			removed = src.removable_contamination[category] * percent_to_remove
+			src.removable_contamination[category] -= removed
+			if(src.removable_contamination[category] <= 0)
+				src.removable_contamination.Remove(category)
+			src.radStrength = max(src.radStrength - removed, src.decay_target)
+		if(return_reagents && removed)
+		// would be nice to have other radioactive reagents that aren't polonium or uranium
+			return_reagents["radium"] += removed
+		removed = 0
+		if(src.removable_contamination_neutron[category] && doNeutron)
+			removed = src.removable_contamination_neutron[category] * percent_to_remove
+			src.removable_contamination_neutron[category] -= removed
+			if(src.removable_contamination_neutron[category] <= 0)
+				src.removable_contamination_neutron.Remove(category)
+			src.radStrength_neutron = max(src.radStrength_neutron - removed, src.decay_target_neutron)
+		if(return_reagents && removed)
+			removed *= 2 // n_rad is nastier, giving us more isotopes!
+			return_reagents["radium"] += removed
+		src.do_filters()
+
+	proc/washed(atom/owner, list/return_reagents, sender)
+		var/atom/atom_parent = src.parent
+		if(ON_COOLDOWN(atom_parent, "rad_washing", 2 SECONDS)) return // so spam-clicking sinks doesn't insta-clean
+		// Somewhat arbitrary numbers. We just want diminishing returns.
+		SEND_SIGNAL(src.parent, COMSIG_ATOM_DECONTAMINATE_RADS, "surface", 0.15, return_reagents, FALSE)
+		SEND_SIGNAL(src.parent, COMSIG_ATOM_DECONTAMINATE_RADS, "surface", 0.10, return_reagents, TRUE)
