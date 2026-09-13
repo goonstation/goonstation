@@ -47310,6 +47310,11 @@
 	},
 /area/station/crew_quarters/hop)
 "uAB" = (
+/obj/machinery/chem_master{
+	dir = 4;
+	pixel_x = -8;
+	pixel_y = 1
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/baroffice)
 "uBa" = (

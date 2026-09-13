@@ -47,12 +47,6 @@
 
 		src.owner.current.assign_gimmick_skull()
 
-	mind_attach(source, mob/new_mob, mob/old_mob)
-		. = ..()
-		var/datum/abilityHolder/changeling/A = new_mob?.get_ability_holder(/datum/abilityHolder/changeling)
-		if (A)
-			src.ability_holder = A
-
 	remove_equipment()
 		src.ability_holder.removeAbility(/datum/targetable/changeling/abomination)
 		src.ability_holder.removeAbility(/datum/targetable/changeling/absorb)

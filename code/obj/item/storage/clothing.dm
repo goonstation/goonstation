@@ -516,3 +516,9 @@
 	desc = "A box that contains a baseball uniform for... some team you've never heard of before."
 	spawn_contents = list(/obj/item/clothing/under/baseball/mime,
 	/obj/item/clothing/head/basecap/black)
+
+/obj/item/storage/box/costume/mouse
+	name = "space mouse costume set"
+	desc = "A box that contains a costume that is cheesed to meet you."
+	spawn_contents = list(/obj/item/clothing/suit/gimmick/mouse,
+	/obj/item/reagent_containers/food/snacks/ingredient/cheese)
