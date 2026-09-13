@@ -5,8 +5,8 @@
 	var/claim_text = null //Allows for a custom reason it can be claimed
 	var/once_per_round = 1   //Can only be claimed once per round.
 	var/mobonly = 1 //If the reward can only be redeemed if the player has a /mob/living.
-
-
+	proc/custom_reward_requirement(var/mob/activator)
+		return
 	///Called when the reward is claimed from the locker. Spawn item here / give verbs here / do whatever for reward. Return 1 on success or bugs will happen.
 	proc/rewardActivate(var/mob/activator)
 		boutput(activator, "This reward is undefined. Please inform a coder.")
@@ -1318,9 +1318,9 @@
 		for(var/A in rewardDB)
 			var/result = null
 			var/datum/achievementReward/D = rewardDB[A]
-			if(D.required_medal == TRUE)
+			if(!D.required_medal && D.custom_reward_requirement(src.mob))
 				result = 1
-			else
+			else if (D.required_medal)
 				result = usr.has_medal(D.required_medal)
 			if(result == 1)
 				if((D.once_per_round && !src.player.claimed_rewards.Find(D.type)) || !D.once_per_round)
