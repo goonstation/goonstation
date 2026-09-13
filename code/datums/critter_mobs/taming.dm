@@ -1,9 +1,9 @@
-/datum/component/tameable // Parent type, does not work without subtype
+/datum/component/tameable
 	var/list/signals = list()
 	var/mob/living/critter/owner = null
-	var/obj/item/reagent_containers/food/treat = /obj/item/reagent_containers/food/snacks
-	var/food_blacklist = null // what's in the subtype but doesn't count?
-	var/tame_chance = 20
+	var/obj/item/reagent_containers/food/treat = /obj/item/reagent_containers/food/snacks // What people use to tame
+	var/food_blacklist = null // what's in the treat's subtype but doesn't count?
+	var/tame_chance = 20 // prob percentage
 	var/emote_happy = null // live critter reactions
 	var/emote_angry = null
 	var/toggle_behavours = null // for a behaviour that turns on and off on petting
