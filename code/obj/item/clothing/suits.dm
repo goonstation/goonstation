@@ -1541,6 +1541,17 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 		setProperty("viralprot", 50)
 		setProperty("chemprot", 60)
 
+/obj/item/clothing/suit/space/ntso/engineer
+	name = "NT engineering pressure suit"
+	desc = "A specialised Nanotrasen space suit, with an integrated chest rig. The rig has been modified to fit an insignia to mark its protection against radiation. The fabric on this model is highly fire resistant and houses batiline plating."
+	icon_state = "ntso_engineer"
+	item_state = "ntso_engineer"
+
+	setupProperties()
+		..()
+		setProperty("radprot", 50)
+		setProperty("heatprot", 45)
+
 /obj/item/clothing/suit/space/ntso/bellona
 	name = "NTSO combat dress"
 	desc = "A modernized NTSO combat suit, with an integrated energy shield."
