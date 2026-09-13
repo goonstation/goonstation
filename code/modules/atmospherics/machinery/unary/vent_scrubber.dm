@@ -51,19 +51,19 @@
 	if(scrubbing)
 		var/moles = TOTAL_MOLES(environment)
 		if(moles)
-			var/transfer_moles = min(1, volume_rate/environment.volume) * moles
+			var/transfer_moles = min(1, volume_rate/environment.volume()) * moles
 
 			//Take a gas sample
 			var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
 
 			//Filter it
-			var/datum/gas_mixture/filtered_out = new /datum/gas_mixture
-			filtered_out.temperature = removed.temperature
+			var/datum/gas_mixture/normal/filtered_out = new /datum/gas_mixture/normal
+			filtered_out.set_temperature(removed.temperature())
 
 			#define _FILTER_OUT_GAS(GAS, ...) \
 				if(scrub_##GAS) { \
-					filtered_out.GAS = removed.GAS; \
-					removed.GAS = 0; \
+					filtered_out.set_##GAS(removed.GAS()); \
+					removed.set_##GAS(0); \
 				}
 			APPLY_TO_GASES(_FILTER_OUT_GAS)
 			#undef _FILTER_OUT_GAS
@@ -76,7 +76,7 @@
 			network?.update = TRUE
 
 	else //Just siphoning all air
-		var/transfer_moles = TOTAL_MOLES(environment)*(volume_rate/environment.volume)
+		var/transfer_moles = TOTAL_MOLES(environment)*(volume_rate/environment.volume())
 
 		var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
 

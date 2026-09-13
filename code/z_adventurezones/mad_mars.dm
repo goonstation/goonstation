@@ -13,7 +13,7 @@
 	fullbright = 0
 	temperature = 220
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
-	heat_capacity = 700000
+	heat_capacity = 700
 	pathable = 0
 	mat_changename = 0
 	mat_changedesc = 0

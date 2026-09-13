@@ -106,48 +106,31 @@
 /obj/machinery/power/reactor_stats/proc/sample_air(var/datum/gas_mixture/G, var/not_archived)
 	. = list()
 
-	if(not_archived)
-		if(G.oxygen) .["Oxygen|mols"] = G.oxygen
-		if(G.toxins) .["Plasma|mols"] = G.toxins
-		if(G.carbon_dioxide) .["Carbon Dioxide|mols"] = G.carbon_dioxide
-		if(G.nitrogen) .["Nitrogen|mols"] = G.nitrogen
-		if(G.nitrous_oxide) .["Nitrous Oxide|mols"] = G.nitrous_oxide
-		if(G.oxygen_agent_b) .["Oxygen Agent B|mols"] = G.oxygen_agent_b
+	if(G.oxygen()) .["Oxygen|mols"] = G.oxygen()
+	if(G.toxins()) .["Plasma|mols"] = G.toxins()
+	if(G.carbon_dioxide()) .["Carbon Dioxide|mols"] = G.carbon_dioxide()
+	if(G.nitrogen()) .["Nitrogen|mols"] = G.nitrogen()
+	if(G.nitrous_oxide()) .["Nitrous Oxide|mols"] = G.nitrous_oxide()
+	if(G.oxygen_agent_b()) .["Oxygen Agent B|mols"] = G.oxygen_agent_b()
 
-		.["Pressure|Pa"] = MIXTURE_PRESSURE(G) KILO PASCALS
-		.["Temperature|K"] = G.temperature
-		.["Fuel Burnt|units"] = G.fuel_burnt
-		.["Heat Capacity|J/K"] = HEAT_CAPACITY(G)
-		.["Thermal Energy|J"] = THERMAL_ENERGY(G)
-		.["Total Moles|moles"] = TOTAL_MOLES(G)
-
-	else
-		if(G?.ARCHIVED(oxygen)) .["Oxygen|mols"] = G.ARCHIVED(oxygen)
-		if(G?.ARCHIVED(toxins)) .["Plasma|mols"] = G.ARCHIVED(toxins)
-		if(G?.ARCHIVED(carbon_dioxide)) .["Carbon Dioxide|mols"] = G.ARCHIVED(carbon_dioxide)
-		if(G?.ARCHIVED(nitrogen)) .["Nitrogen|mols"] = G.ARCHIVED(nitrogen)
-		if(G?.ARCHIVED(nitrous_oxide)) .["Nitrous Oxide|mols"] = G.ARCHIVED(nitrous_oxide)
-		if(G?.ARCHIVED(oxygen_agent_b)) .["Oxygen Agent B|mols"] = G.ARCHIVED(oxygen_agent_b)
-
-		if (G) //sorry, this was still somehow causing runtimes????
-			.["Pressure|Pa"] = MIXTURE_PRESSURE(G) KILO PASCALS
-			.["Temperature|K"] = G.ARCHIVED(temperature)
-			.["Fuel Burnt|units"] = G.fuel_burnt
-			.["Heat Capacity|J/K"] = HEAT_CAPACITY_ARCHIVED(G)
-			.["Thermal Energy|J"] = THERMAL_ENERGY(G)
-			.["Total Moles|moles"] = TOTAL_MOLES(G)
+	.["Pressure|Pa"] = MIXTURE_PRESSURE(G) KILO PASCALS
+	.["Temperature|K"] = G.temperature()
+	.["Fuel Burnt|units"] = G.fuel_burnt
+	.["Heat Capacity|J/K"] = HEAT_CAPACITY(G)
+	.["Thermal Energy|J"] = THERMAL_ENERGY(G)
+	.["Total Moles|moles"] = TOTAL_MOLES(G)
 
 
 /obj/machinery/power/reactor_stats/proc/sample_teg()
 	. = list()
 
 	.["Output|W"] = teg.lastgen
-	.["Temperature In (Hot)|K"] = teg_hot.air1?.temperature
-	.["Temperature Out (Hot)|K"] = teg_hot.air2?.temperature
+	.["Temperature In (Hot)|K"] = teg_hot.air1?.temperature()
+	.["Temperature Out (Hot)|K"] = teg_hot.air2?.temperature()
 	.["Pressure In (Hot)|Pa"] = teg_hot.air1 ? MIXTURE_PRESSURE(teg_hot.air1) KILO PASCALS : 0
 	.["Pressure Out (Hot)|Pa"] = teg_hot.air2 ? MIXTURE_PRESSURE(teg_hot.air2) KILO PASCALS : 0
-	.["Temperature In (Cold)|K"] = teg_cold.air1?.temperature
-	.["Temperature Out (Cold)|K"] = teg_cold.air2?.temperature
+	.["Temperature In (Cold)|K"] = teg_cold.air1?.temperature()
+	.["Temperature Out (Cold)|K"] = teg_cold.air2?.temperature()
 	.["Pressure In (Cold)|Pa"] = teg_cold.air1 ? MIXTURE_PRESSURE(teg_cold.air1) KILO PASCALS : 0
 	.["Pressure Out (Cold)|Pa"] = teg_cold.air2 ? MIXTURE_PRESSURE(teg_cold.air2) KILO PASCALS : 0
 

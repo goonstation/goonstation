@@ -389,14 +389,12 @@ triggerOnImage(var/image/target, var/datum/material/source)
 				valid_turfs += target
 		if(length(valid_turfs))
 			var/turf/simulated/floor/target = pick(valid_turfs)
-			if(target.parent?.group_processing)
-				target.parent.suspend_group_processing()
 
-			var/datum/gas_mixture/payload = new /datum/gas_mixture
-			payload.toxins = 25 * location.material_amt
+			var/datum/gas_mixture/normal/payload = new /datum/gas_mixture/normal
+			payload.set_toxins(25 * location.material_amt)
 			total_plasma -= 1
-			payload.temperature = T20C
-			payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
+			payload.set_temperature(T20C)
+			payload.set_volume(R_IDEAL_GAS_EQUATION * T20C / 1000)
 			target.air.merge(payload)
 			location.material.setProperty("plasma_offgas", total_plasma)
 
@@ -435,12 +433,12 @@ triggerOnImage(var/image/target, var/datum/material/source)
 		if(!owner.material.isMutable()) //this is a little hacky, but basically ensure it's mutable and then do the trigger
 			owner.material = owner.material.getMutable()
 			return owner.material.triggerTemp(owner, temp)
-		var/datum/gas_mixture/payload = new /datum/gas_mixture
+		var/datum/gas_mixture/normal/payload = new /datum/gas_mixture/normal
 
-		if(agent_b && air.toxins > MINIMUM_REACT_QUANTITY)
-			payload.oxygen_agent_b += 0.5 * owner.material_amt
-			payload.oxygen = 15 * owner.material_amt
-			payload.temperature = T0C //reduced temp is supposeed to represent endothermic reaction
+		if(agent_b && air.toxins() > MINIMUM_REACT_QUANTITY)
+			payload.adjust_oxygen_agent_b(0.5 * owner.material_amt)
+			payload.set_oxygen(15 * owner.material_amt)
+			payload.set_temperature(T0C) //reduced temp is supposeed to represent endothermic reaction
 			air.merge(payload) //add it to the target air
 
 			//sparkles
@@ -449,8 +447,8 @@ triggerOnImage(var/image/target, var/datum/material/source)
 			if(!particleMaster.CheckSystemExists(/datum/particleSystem/sparklesagentb, owner))
 				particleMaster.SpawnSystem(new /datum/particleSystem/sparklesagentb(owner))
 		else //no plasma present, or this is just normal molitz - you get just plain oxygen
-			payload.oxygen = 80 * owner.material_amt
-			payload.temperature = temp
+			payload.set_oxygen(80 * owner.material_amt)
+			payload.set_temperature(temp)
 			air.merge(payload) //add it to the target air
 			//blue sparkles
 			animate_flash_color_fill_inherit(owner,"#0000FF",4, 2 SECONDS)
@@ -483,9 +481,9 @@ triggerOnImage(var/image/target, var/datum/material/source)
 				playsound(owner, 'sound/effects/leakoxygen.ogg', 50, TRUE, 5)
 			if(iterations == 0)
 				playsound(owner, 'sound/effects/molitzcrumble.ogg', 50, TRUE, 5)
-			var/datum/gas_mixture/payload = new /datum/gas_mixture
-			payload.oxygen = 50
-			payload.temperature = T20C
+			var/datum/gas_mixture/normal/payload = new /datum/gas_mixture/normal
+			payload.set_oxygen(50)
+			payload.set_temperature(T20C)
 			target.assume_air(payload)
 			molitz.setProperty("molitz_bubbles", iterations-2)
 
@@ -916,13 +914,11 @@ triggerOnImage(var/image/target, var/datum/material/source)
 			I.material.removeTrigger(TRIGGERS_ON_TEMP, /datum/materialProc/radioactive_temp)
 			return
 		var/datum/gas_mixture/air = T.return_air()
-		if (!air || air.toxins < MINIMUM_REACT_QUANTITY) return
-		if(T.parent?.group_processing)
-			T.parent.suspend_group_processing()
+		if (!air || air.toxins() < MINIMUM_REACT_QUANTITY) return
 		/// Mostly bullshit magic because I don't know how radiation works and plasma isn't real, but is how many moles to convert of existing plasma
-		var/moles_to_convert = min(((I.amount * I.material_amt) * (1 + radioactive) * (1 + n_radioactive) * sqrt(temp) / 1000), air.toxins)
-		air.radgas += moles_to_convert
-		air.toxins -= moles_to_convert
+		var/moles_to_convert = min(((I.amount * I.material_amt) * (1 + radioactive) * (1 + n_radioactive) * sqrt(temp) / 1000), air.toxins())
+		air.adjust_radgas(moles_to_convert)
+		air.adjust_toxins(-moles_to_convert)
 		// Force mutability
 		if (!I.material.isMutable())
 			I.material = I.material.getMutable()

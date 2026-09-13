@@ -148,12 +148,12 @@ A Flamethrower in various states of assembly
 			if(FLAMER_MODE_BACKTANK)
 				rem_ratio = 0.004
 		var/turf/T = get_turf(src)
-		var/datum/gas_mixture/airgas = new /datum/gas_mixture
-		airgas.volume = 1
+		var/datum/gas_mixture/normal/airgas = new /datum/gas_mixture/normal
+		airgas.set_volume(1)
 		airgas.merge(gastank_aircontents.remove_ratio(rem_ratio * 0.9))
 		T.assume_air(gastank_aircontents.remove_ratio(rem_ratio * 0.1))
 		if(src.lit)
-			airgas.temperature = P_special_data["burn_temp"]
+			airgas.set_temperature(P_special_data["burn_temp"])
 		P_special_data["airgas"] = airgas
 
 		P_special_data["temp_pct_loss_atom"] = 0.02 // keep the heat, more or less

@@ -648,15 +648,15 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	icon = 'icons/misc/reactorcomponents.dmi'
 	icon_state = "waste"
 	default_material = "slag"
-	var/datum/gas_mixture/leak_gas = new
+	var/datum/gas_mixture/normal/leak_gas = new
 	can_arcplate = FALSE
 
 	New()
 		. = ..()
 		src.AddComponent(/datum/component/radioactive, 40, FALSE, FALSE, 1)
-		leak_gas.radgas = 100
-		leak_gas.temperature = T20C
-		leak_gas.volume = 200 //I guess??
+		leak_gas.set_radgas(100)
+		leak_gas.set_temperature(T20C)
+		leak_gas.set_volume(200) //I guess??
 
 	return_air(direct = FALSE)
 		return src.leak_gas
@@ -684,10 +684,8 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	ex_act(severity)
 		// we look for the nearest floor because the jerks are probably gonna blow up a hole under the stone or something, rude
 		for(var/turf/simulated/floor/floor in range(3, get_turf(src)))
-			if(floor.parent?.spaced)
-				continue
-			var/datum/gas_mixture/gas = new
-			gas.radgas = 10 * 2 ** (3 - severity)
+			var/datum/gas_mixture/normal/gas = new
+			gas.set_radgas(10 * 2 ** (3 - severity))
 			floor.assume_air(gas)
 			break // only the first floor we found
 

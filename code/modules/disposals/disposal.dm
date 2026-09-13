@@ -164,7 +164,7 @@
 		damage_pipe(5)
 		slowed++
 
-	assume_air(datum/air_group/giver)
+	assume_air(datum/gas_mixture/giver)
 		src.gas.merge(giver)
 
 	remove_air(amount)

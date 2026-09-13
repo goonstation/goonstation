@@ -38,8 +38,8 @@
 	if(!on)
 		return FALSE
 
-	if(air_contents.temperature > 0)
-		var/transfer_moles = (MIXTURE_PRESSURE(air_contents))*volume_rate/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
+	if(air_contents.temperature() > 0)
+		var/transfer_moles = (MIXTURE_PRESSURE(air_contents))*volume_rate/(air_contents.temperature() * R_IDEAL_GAS_EQUATION)
 
 		var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 
@@ -56,8 +56,8 @@
 
 	injecting = TRUE
 
-	if(air_contents.temperature > 0)
-		var/transfer_moles = (MIXTURE_PRESSURE(air_contents))*volume_rate/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
+	if(air_contents.temperature() > 0)
+		var/transfer_moles = (MIXTURE_PRESSURE(air_contents))*volume_rate/(air_contents.temperature() * R_IDEAL_GAS_EQUATION)
 
 		var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 
@@ -107,7 +107,7 @@
 
 		if("set_volume_rate")
 			var/number = text2num_safe(signal.data["parameter"])
-			number = clamp(number, 0, air_contents.volume)
+			number = clamp(number, 0, air_contents.volume())
 
 			src.volume_rate = number
 			. = TRUE
@@ -127,7 +127,7 @@
 									power_off - Turns off injector. \
 									power_toggle - Toggles injector. \
 									inject - Injects gas into environment. \
-									set_volume_rate (parameter: Number) - Sets rate in liters to parameter. Max at [src.air_contents.volume] L."
+									set_volume_rate (parameter: Number) - Sets rate in liters to parameter. Max at [src.air_contents.volume()] L."
 
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, help)
 

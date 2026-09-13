@@ -21,12 +21,12 @@
 	You can click it with a <b>multitool</b> to open the menu and change the temperatures."})
 
 /obj/machinery/atmospherics/binary/thermostatic_gate/proc/check_temperature()
-	if (inverted ? (src.air1.temperature >= src.close_temp) : (src.air1.temperature <= src.close_temp))
+	if (inverted ? (src.air1.temperature() >= src.close_temp) : (src.air1.temperature() <= src.close_temp))
 		open = FALSE
 		src.UpdateIcon()
 		logTheThing(LOG_STATION, null, "[log_object(src)] just closed due to hitting [src.close_temp] Kelvin at [log_loc(src)]")
 
-	else if (inverted ? (src.air1.temperature <= src.open_temp) : (src.air1.temperature >= src.open_temp))
+	else if (inverted ? (src.air1.temperature() <= src.open_temp) : (src.air1.temperature() >= src.open_temp))
 		open = TRUE
 		src.UpdateIcon()
 		logTheThing(LOG_STATION, null, "[log_object(src)] just opened due to hitting [src.open_temp] Kelvin at [log_loc(src)]")

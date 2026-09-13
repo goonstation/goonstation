@@ -495,11 +495,7 @@ TYPEINFO(/area)
 				new /obj/effects/precipitation/snow/grey/tile/light(T)
 
 			// about 24 degrees fahrenheit, chosen based off gameplay
-			T.temperature = T0C - 4
-			if (T.parent?.group_processing)
-				T.parent.air.temperature = T0C - 4
-			else
-				T.air.temperature = T0C - 4
+			T.return_air(TRUE).set_temperature(T0C - 4)
 
 			LAGCHECK(LAG_LOW)
 
@@ -514,7 +510,7 @@ TYPEINFO(/area)
 			var/obj/effects/precipitation/snow/grey/tile/light/snow = locate() in T
 			qdel(snow)
 
-			T.temperature = initial(T.temperature)
+			T.return_air(TRUE).set_temperature(initial(T.temperature))
 
 			LAGCHECK(LAG_LOW)
 

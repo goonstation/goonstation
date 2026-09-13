@@ -60,10 +60,10 @@
 	dat += "<hr>Gas Levels: <br>Gas Pressure: [round(pressure,0.1)] kPa<br><br>"
 
 	if (total_moles)
-		var/o2_level = src.air1.oxygen/total_moles
-		var/n2_level = src.air1.nitrogen/total_moles
-		var/co2_level = src.air1.carbon_dioxide/total_moles
-		var/plasma_level = src.air1.toxins/total_moles
+		var/o2_level = src.air1.oxygen()/total_moles
+		var/n2_level = src.air1.nitrogen()/total_moles
+		var/co2_level = src.air1.carbon_dioxide()/total_moles
+		var/plasma_level = src.air1.toxins()/total_moles
 		var/unknown_level =  1-(o2_level+n2_level+co2_level+plasma_level)
 
 		dat += "Nitrogen: [round(n2_level*100)]%<br>"
@@ -151,37 +151,37 @@
 	var/pressure_delta = src.target_pressure - output_starting_pressure
 	var/transfer_moles = 0
 
-	if(src.air1.temperature)
-		transfer_moles = ((pressure_delta*src.air3.volume)/(src.air1.temperature * R_IDEAL_GAS_EQUATION))
+	if(src.air1.temperature())
+		transfer_moles = ((pressure_delta*src.air3.volume())/(src.air1.temperature() * R_IDEAL_GAS_EQUATION))
 
 	//Actually transfer the gas
 
 	if(transfer_moles > 0)
 		var/datum/gas_mixture/removed = src.air1.remove_ratio(transfer_ratio)
 
-		var/datum/gas_mixture/filtered_out = new /datum/gas_mixture
-		if(src.air1.temperature)
-			filtered_out.temperature = src.air1.temperature
+		var/datum/gas_mixture/normal/filtered_out = new /datum/gas_mixture/normal
+		if(src.air1.temperature())
+			filtered_out.set_temperature(src.air1.temperature())
 
 		//Unlike the regular filter, we can pick and choose the gas to remove!
 		//One might say that a little filter being this advanced is rather unrealistic
 		//However, who gives a fuck.
 		if (src.filter_mode & MODE_PLASMA)
-			if(removed.toxins)
-				filtered_out.toxins = removed.toxins
-				removed.toxins = 0
+			if(removed.toxins())
+				filtered_out.set_toxins(removed.toxins())
+				removed.set_toxins(0)
 		if (src.filter_mode & MODE_OXYGEN)
-			if(removed.oxygen)
-				filtered_out.oxygen = removed.oxygen
-				removed.oxygen = 0
+			if(removed.oxygen())
+				filtered_out.set_oxygen(removed.oxygen())
+				removed.set_oxygen(0)
 		if (src.filter_mode & MODE_NITROGEN)
-			if(removed.nitrogen)
-				filtered_out.nitrogen = removed.nitrogen
-				removed.nitrogen = 0
+			if(removed.nitrogen())
+				filtered_out.set_nitrogen(removed.nitrogen())
+				removed.set_nitrogen(0)
 		if (src.filter_mode & MODE_CO2)
-			if(removed.carbon_dioxide)
-				filtered_out.carbon_dioxide = removed.carbon_dioxide
-				removed.carbon_dioxide = 0
+			if(removed.carbon_dioxide())
+				filtered_out.set_carbon_dioxide(removed.carbon_dioxide())
+				removed.set_carbon_dioxide(0)
 
 		src.air2.merge(filtered_out)
 		src.air3.merge(removed)
