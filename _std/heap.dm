@@ -12,6 +12,7 @@
 	cmp = compare
 
 /datum/heap/disposing()
+	set waitfor = 0
 	for(var/i in L) // because this is before the list helpers are loaded
 		qdel(i)
 	L = null
