@@ -4,8 +4,6 @@
 	var/required_medal = null
 	var/once_per_round = 1   //Can only be claimed once per round.
 	var/mobonly = 1 //If the reward can only be redeemed if the player has a /mob/living.
-
-
 	///Called when the reward is claimed from the locker. Spawn item here / give verbs here / do whatever for reward. Return 1 on success or bugs will happen.
 	proc/rewardActivate(var/mob/activator)
 		boutput(activator, "This reward is undefined. Please inform a coder.")
@@ -1295,6 +1293,64 @@
 		else
 			boutput( usr, SPAN_ALERT("Hmm.. I can't set the scream sound of that!") )
 			return 0
+
+/datum/achievementReward/mentorcostume
+	title = "(Skin) Mentor mouse costume"
+	desc = "Turns the mouse costume into a Mentor mouse costume"
+	claim_text = "being a Mentor"
+
+	custom_reward_requirement(var/mob/activator)
+		if (activator?.client && activator.client.is_mentor() || isadmin(activator))
+			return "Success"
+		else
+			return "Fail"
+
+	rewardActivate(var/mob/activator)
+		if (ishuman(activator))
+			var/mob/living/carbon/human/H = activator
+			if (H.wear_suit && H.wear_suit.type == /obj/item/clothing/suit/gimmick/mouse)
+				var/obj/item/clothing/suit/gimmick/mouse/suit_target = H.wear_suit
+				var/obj/item/clothing/suit/gimmick/mouse/mentor/new_suit = new /obj/item/clothing/suit/gimmick/mouse/mentor(get_turf(H))
+				new_suit.forensic_holder = suit_target.forensic_holder
+				qdel(suit_target)
+				H.equip_if_possible(new_suit, SLOT_WEAR_SUIT)
+				return 1
+			else
+				boutput(activator, SPAN_ALERT("Unable to redeem... You need to be wearing a mouse costume."))
+				return
+		else
+			boutput(activator, SPAN_ALERT("Unable to redeem... You need to be human to redeem this."))
+			return
+
+
+/datum/achievementReward/admincostume
+	title = "(Skin) Admin mouse costume"
+	desc = "Turns the mouse costume into a Admin mouse costume"
+	claim_text = "being an Admin"
+
+	custom_reward_requirement(var/mob/activator)
+		if (activator?.client && isadmin(activator))
+			return "Success"
+		else
+			return "Fail"
+
+	rewardActivate(var/mob/activator)
+		if (ishuman(activator))
+			var/mob/living/carbon/human/H = activator
+			if (H.wear_suit && H.wear_suit.type == /obj/item/clothing/suit/gimmick/mouse)
+				var/obj/item/clothing/suit/gimmick/mouse/suit_target = H.wear_suit
+				var/obj/item/clothing/suit/gimmick/mouse/admin/new_suit = new /obj/item/clothing/suit/gimmick/mouse/admin(get_turf(H))
+				new_suit.forensic_holder = suit_target.forensic_holder
+				qdel(suit_target)
+				H.equip_if_possible(new_suit, SLOT_WEAR_SUIT)
+				return 1
+			else
+				boutput(activator, SPAN_ALERT("Unable to redeem... You need to be wearing a mouse costume."))
+				return
+		else
+			boutput(activator, SPAN_ALERT("Unable to redeem... You need to be human to redeem this."))
+			return
+
 
 /// Keeps track of once-per-round rewards
 /datum/player/var/list/claimed_rewards = list()
