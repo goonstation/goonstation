@@ -759,7 +759,7 @@
 				M.icon_state = "stamp-cap-blue"
 				M.available_modes -= M.special_mode
 				M.default_material = "synthrubber_blue"
-				M.desc = "The Captain's rubber stamp for stamping important documents. Looks like one of those fancy National Notary 'Continental' models with the kingwood handle."
+				M.desc = "The Captain's rubber stamp for stamping important documents. Looks like one of those fancy National Notary 'St. Anne' models with the rosewood handle."
 				M.special_mode = "Captain (Blue)"
 				M.assignment = "stamp-cap-blue"
 				M.available_modes += M.special_mode
