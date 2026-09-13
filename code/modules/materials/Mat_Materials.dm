@@ -2411,7 +2411,13 @@ ABSTRACT_TYPE(/datum/material/rubber)
 	mat_id = "latex"
 	name = "latex"
 	desc = "A type of synthetic rubber. Conducts electricity poorly."
-	color = "#DDDDDD" //"#FF0000" idgaf ok I want red cables back. no haine, this stuff isnt red.
+	hsl_color = list(1.00, 0.00, 0.00, 0.00,\
+					0.00, 0.00, 0.10, 0.20,\
+					0.00, 0.00, 0.70, 0.25,\
+					0.00, 0.00, 0.00, 0.75,\
+					0.00, 0.00, 0.45, 0.00)
+	color = "#EAEAEA" //"#FF0000" idgaf ok I want red cables back. no haine, this stuff isnt red.
+	alpha = 239
 
 	New()
 		..()
@@ -2420,6 +2426,9 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("electrical", 3)
 		setProperty("thermal", 4)
 		setProperty("melting_point", 453 KELVIN) // About the melting point of rubber
+
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/outline_add(src.color, 0.05))
+		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/outline_remove())
 
 /datum/material/rubber/synthrubber
 	mat_id = "synthrubber"
