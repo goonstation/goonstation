@@ -434,14 +434,7 @@
 	ai_retaliate_persistence = RETALIATE_ONCE
 	add_abilities = list(/datum/targetable/critter/vomit_ore)
 	butcherable = BUTCHER_ALLOWED
-	var/tamed = FALSE
 	var/seek_ore = TRUE
-	var/food_blacklist = list(\
-	/obj/item/raw_material/shard,
-	/obj/item/raw_material/scrap_metal,
-	/obj/item/raw_material/gemstone,
-	/obj/item/raw_material/uqill,
-	/obj/item/raw_material/fibrilith)
 	var/eaten = 0
 	var/const/rocks_per_gem = 10
 
@@ -449,6 +442,16 @@
 		..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 80) // They live in asteroids so they should be resistant
 		AddComponent(/datum/component/consume/can_eat_raw_materials, FALSE)
+		var/datum/component/tameable/T = AddComponent(/datum/component/tameable)
+		T.passive_mode = TRUE
+		T.tame_chance = 40
+		T.treat = /obj/item/raw_material
+		T.food_blacklist = list(\
+		/obj/item/raw_material/shard,
+		/obj/item/raw_material/scrap_metal,
+		/obj/item/raw_material/gemstone,
+		/obj/item/raw_material/uqill,
+		/obj/item/raw_material/fibrilith)
 		START_TRACKING
 
 	disposing()
@@ -469,28 +472,11 @@
 				src.seek_ore = TRUE
 				src.visible_message(SPAN_NOTICE("[user] shakes [src] to awaken its hunger!"))
 
-	attackby(obj/item/I, mob/M)
-		if(istype(I, /obj/item/raw_material) && !isdead(src))
-			if((istypes(I, food_blacklist)))
-				src.visible_message("[M] tries to feed [src] but they won't take it!")
-				return
-			if (src.tamed)
-				src.visible_message("[M] tries to feed [src] but they seem full...")
-				return
-			if(prob(40))
-				src.tamed = TRUE
-				src.ai_retaliates = FALSE
-				src.visible_message("[src] enjoyed the [I] and seems more docile!")
-				src.emote("burp")
-			src.aftereat()
-			I.Eat(src, src)
-			return
-		..()
-
 	seek_food_target(var/range = 5)
 		. = list()
 		for (var/obj/item/raw_material/ore in view(range, get_turf(src)))
-			if (istypes(ore, food_blacklist)) continue
+			var/datum/component/tameable/TC = GetExactComponent(/datum/component/tameable)
+			if (istypes(ore, TC.food_blacklist)) continue
 			if (!(istype(ore, /obj/item/raw_material/rock)) && prob(30)) continue // can eat not rocks with lower chance
 			. += ore
 

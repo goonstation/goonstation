@@ -74,7 +74,6 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	has_genes = TRUE
 	p_class = 1
 
-	var/aggressive = FALSE
 	var/random_name = FALSE
 	var/random_look = FALSE
 	var/name_list = "names/pets.txt"
@@ -1729,6 +1728,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		START_TRACKING_CAT(TR_CAT_BUGS)
 		src.bioHolder.AddNewPoolEffect("scorpion_sting", scramble=TRUE)
+		var/datum/component/tameable/T = AddComponent(/datum/component/tameable)
+		T.emote_happy = "chitter"
+		T.emote_angry = "snip"
+
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_BUGS)
@@ -1742,44 +1745,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		HH.icon_state = "pincers"
 		HH.name = "pincers"
 		HH.limb_name = "pincers"
-
-	attackby(obj/item/I, mob/M)
-		if(istype(I, /obj/item/reagent_containers/food/snacks) && ishuman(M) && !isdead(src))
-			src.visible_message("[M] feeds \the [src] some [I].", "[M] feeds you some [I].")
-			for(var/damage_type in src.healthlist)
-				var/datum/healthHolder/hh = src.healthlist[damage_type]
-				hh.HealDamage(5)
-			src.health_brute = min(60, src.health_brute + 6)
-			src.health_burn = min(60, src.health_burn + 6)
-			if(M in src.friends)
-				src.emote("chitter")
-			else
-				if(prob(20))
-					friends += M
-					src.visible_message("[src] chitters happily at the \the [I], and seems a little friendlier with [M].")
-					src.emote("chitter")
-				else
-					src.visible_message(SPAN_NOTICE("[src] hated \the [I] and bit [M]'s hand!"))
-					random_brute_damage(M, rand(6,12),1)
-					src.emote("snip")
-					M.emote("scream")
-			I.Eat(src, src, TRUE)
-			return
-		. = ..()
-
-	attack_hand(mob/M)
-		if ((M.a_intent != INTENT_HARM) && (M in src.friends))
-			if(M.a_intent == INTENT_HELP && src.aggressive)
-				src.visible_message(SPAN_NOTICE("[M] pats [src] on the head in a soothing way. It won't attack anyone now."))
-				src.aggressive = FALSE
-				src.ai_retaliates = FALSE
-				return
-			else if((M.a_intent == INTENT_DISARM) && !src.aggressive)
-				src.visible_message(SPAN_NOTICE("[M] shakes [src] to awaken [his_or_her(src)] killer instincts!"))
-				src.aggressive = TRUE
-				src.ai_retaliates = TRUE
-				return
-		..()
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -1802,6 +1767,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	critter_ability_attack(var/mob/target)
 		var/datum/targetable/critter/wasp_sting/scorpion_sting/sting = src.abilityHolder.getAbility(/datum/targetable/critter/wasp_sting/scorpion_sting)
 		var/datum/targetable/critter/pincer_grab/pincer_grab = src.abilityHolder.getAbility(/datum/targetable/critter/pincer_grab)
+
+		if(target in friends) // Cause it has a very dumb way of being friendly
+			return FALSE
 
 		if (!sting.disabled && sting.cooldowncheck() && prob(50))
 			sting.handleCast(target)
@@ -1858,6 +1826,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		src.bioHolder.AddNewPoolEffect("snake_bite", scramble=TRUE)
 		src.bioHolder.AddNewPoolEffect("slither", scramble=TRUE)
+		var/datum/component/tameable/T = src.AddComponent(/datum/component/tameable)
+		T.emote_happy = "rattle"
+		T.emote_angry = "hiss"
 		src.AddComponent(/datum/component/proximity)
 
 	setup_hands()
@@ -1869,43 +1840,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		HH.name = "mouth"
 		HH.limb_name = "teeth"
 		HH.can_hold_items = 0
-
-	attackby(obj/item/I, mob/M)
-		if(istype(I, /obj/item/reagent_containers/food/snacks) && ishuman(M) && !isdead(src))
-			src.visible_message("[M] feeds \the [src] some [I].", "[M] feeds you some [I].")
-			for(var/damage_type in src.healthlist)
-				var/datum/healthHolder/hh = src.healthlist[damage_type]
-				hh.HealDamage(5)
-			src.health_brute = min(60, src.health_brute + 6)
-			src.health_burn = min(60, src.health_burn + 6)
-			if(M in src.friends)
-				src.emote("rattle")
-			else
-				if(prob(20))
-					friends += M
-					src.visible_message("[src] hisses happily at the \the [I], and seems a little friendlier with [M].")
-				else
-					src.visible_message(SPAN_NOTICE("[src] hated \the [I] and bit [M]'s hand!"))
-					random_brute_damage(M, rand(6,12),1)
-					src.emote("hiss")
-					M.emote("scream")
-			I.Eat(src, src, TRUE)
-			return
-		. = ..()
-
-	attack_hand(mob/M)
-		if ((M.a_intent != INTENT_HARM) && (M in src.friends))
-			if(M.a_intent == INTENT_HELP && src.aggressive)
-				src.visible_message(SPAN_NOTICE("[M] pats [src] on the head in a soothing way. It won't attack anyone now."))
-				src.aggressive = FALSE
-				src.ai_retaliates = FALSE
-				return
-			else if((M.a_intent == INTENT_DISARM) && !src.aggressive)
-				src.visible_message(SPAN_NOTICE("[M] shakes [src] to awaken [his_or_her(src)] killer instincts!"))
-				src.aggressive = TRUE
-				src.ai_retaliates = TRUE
-				return
-		..()
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -1939,11 +1873,12 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		if (ishuman(C) || issilicon(C))    //creating the snake's defensive behavior
 			if(GET_DIST(src, C) <= 3 && GET_DIST(src, C) >= 1) //it will only actually target humans and silicons if in very close proximity
 				if(!ON_COOLDOWN(src, "rattle", 3 SECONDS))      //it will rattle defensively if somewhat close
-					icon_state = "rattlesnake_rattle"
-					playsound(src, 'sound/musical_instruments/tambourine/tambourine_4.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
-					SPAWN(1 SECONDS)
-						icon_state = "rattlesnake"
-					src.visible_message(SPAN_COMBAT("<B>[src]</B> rattles, better not get much closer!"))
+					if(C in !friends)
+						icon_state = "rattlesnake_rattle"
+						playsound(src, 'sound/musical_instruments/tambourine/tambourine_4.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
+						SPAWN(1 SECONDS)
+							icon_state = "rattlesnake"
+						src.visible_message(SPAN_COMBAT("<B>[src]</B> rattles, better not get much closer!"))
 				return FALSE
 			else if(GET_DIST(src, C) > 3) //humans and silicons that are farther than 3 tiles do not interest the snake
 				return FALSE
