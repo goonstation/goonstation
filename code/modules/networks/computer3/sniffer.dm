@@ -14,7 +14,7 @@
 	var/last_intercept = 0
 	var/list/packet_logs = list()
 	var/captured_packets = 0
-	var/max_logs = 8
+	var/max_logs = 50
 
 	New()
 		..()
