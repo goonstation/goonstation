@@ -1303,6 +1303,12 @@
 	claim_text = "being a Mentor"
 	required_medal = TRUE
 
+	custom_reward_requirement(var/mob/activator)
+		if (activator?.client && activator.client.is_mentor() || isadmin(activator))
+			return 1
+		else
+			return
+
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
 			var/mob/living/carbon/human/H = activator
@@ -1326,6 +1332,12 @@
 	desc = "Turns the mouse costume into a Admin mouse costume"
 	claim_text = "being an Admin"
 	required_medal = TRUE
+
+	custom_reward_requirement(var/mob/activator)
+		if (activator?.client && isadmin(activator))
+			return 1
+		else
+			return
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
