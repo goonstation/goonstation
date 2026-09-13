@@ -1214,7 +1214,7 @@
 	return null
 
 /mob/living/check_attack_resistance(var/obj/item/I, var/mob/attacker)
-	var/alc_amt = src.reagents.get_reagent_amount("ethanol")
+	var/alc_amt = src.reagents?.get_reagent_amount("ethanol")
 	//no permanent boost for the alc immune
 	if (!isalcoholresistant(src))
 		alc_amt += GET_ATOM_PROPERTY(src, PROP_MOB_ALCOHOL_RESIST)

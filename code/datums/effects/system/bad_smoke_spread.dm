@@ -11,7 +11,7 @@ proc/ClearBadsmokeRefs(var/atom/A)
 
 /datum/effects/system/bad_smoke_spread
 	var/number = 3
-	var/cardinals = 0
+	var/spread_cardinal = FALSE
 	var/turf/location
 	var/atom/holder
 	var/total_smoke = 0 // To stop it being spammed and lagging!
@@ -22,22 +22,22 @@ proc/ClearBadsmokeRefs(var/atom/A)
 		..()
 		START_TRACKING
 
-/datum/effects/system/bad_smoke_spread/proc/set_up(n = 5, c = 0, loca, direct, color)
-	if(n > 20)
-		n = 20
-	number = n
-	cardinals = c
+/datum/effects/system/bad_smoke_spread/proc/set_up(number = 5, spread_cardinal = FALSE, location, dir, color)
+	if(number > 20)
+		number = 20
+	src.number = number
+	src.spread_cardinal = spread_cardinal
 	src.color = color
-	if(istype(loca, /turf/))
-		location = loca
+	if(isturf(location))
+		src.location = location
 	else
-		location = get_turf(loca)
-	if(direct)
-		direction = direct
+		location = get_turf(location)
+	if(dir)
+		direction = dir
 
 
-/datum/effects/system/bad_smoke_spread/proc/attach(atom/atom)
-	holder = atom
+/datum/effects/system/bad_smoke_spread/proc/attach(atom/A)
+	holder = A
 	holder.temp_flags |= HAS_BAD_SMOKE
 
 /datum/effects/system/bad_smoke_spread/disposing()
@@ -61,7 +61,7 @@ proc/ClearBadsmokeRefs(var/atom/A)
 			src.total_smoke++
 			var/direction = src.direction
 			if(!direction)
-				if(src.cardinals)
+				if(src.spread_cardinal)
 					direction = pick(cardinal)
 				else
 					direction = pick(alldirs)
