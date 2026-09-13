@@ -1320,7 +1320,9 @@
 			var/datum/achievementReward/D = rewardDB[A]
 			if(!D.required_medal && D.custom_reward_requirement(src.mob))
 				result = 1
-			else if (D.required_medal)
+			else if (D.custom_reward_requirement(src.mob))
+				result = usr.has_medal(D.required_medal)
+			else
 				result = usr.has_medal(D.required_medal)
 			if(result == 1)
 				if((D.once_per_round && !src.player.claimed_rewards.Find(D.type)) || !D.once_per_round)
