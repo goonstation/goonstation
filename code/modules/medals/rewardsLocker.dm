@@ -1357,8 +1357,10 @@
 		var/confirm = null
 		if (S.claim_text)
 			confirm = tgui_alert(usr, S.desc + "\n(Earned through [S.claim_text])", "Claim this Reward?", list("Yes", "No"))
-		else
+		else if (S.required_medal)
 			confirm = tgui_alert(usr, S.desc + "\n(Earned through the \"[S.required_medal]\" Medal)", "Claim this Reward?", list("Yes", "No"))
+		else
+			confirm = tgui_alert(usr, S.desc, " Claim this Reward?", list("Yes", "No"))
 		src.verbs += /client/verb/claimreward
 		if(confirm == "Yes")
 			var/worked = S.rewardActivate(src.mob)
