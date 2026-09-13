@@ -2836,18 +2836,14 @@ proc/area_table_spawn(area_type, spawn_type)
  * May behave unexpectedly if clicked_on has significant transformations applied (blame nex for failing to figure out matrix math.)
  */
 proc/get_nearest_mobs_list(atom/clicked_on, list/params, range = 1, always_include_same_tile = TRUE)
-	var/pixel_x = 0
-	var/pixel_y = 0
-	if(params) // params means this came from a click, so we gotta figure out where exactly user clicked relative to tile
-		pixel_x += text2num(params["icon-x"])
-		pixel_y += text2num(params["icon-y"])
-		pixel_x += clicked_on.pixel_x
-		pixel_y += clicked_on.pixel_y
-	var/step_x = floor(pixel_x / 32)
-	var/step_y = floor(pixel_y / 32)
-	// there's a chance some dork will have 50 million stickers on them (or there's a very large icon somewhere)
-	// and our cursor will subsequently be multiple tiles away from clicked_on.
-	var/turf/clicked_over_turf = locate(clicked_on.x + step_x, clicked_on.y + step_y, clicked_on.z)
+	if(range < 0)
+		CRASH("Range ([range]) cannot be a negative number!")
+	if(!params) // we'll just fake it :)
+		params = list("icon-x" = 0, "icon-y" = 0)
+	var/list/real_click_location = get_turf_pixel_clicked_over(clicked_on, params)
+	var/pixel_x = real_click_location["pixel_x"]
+	var/pixel_y = real_click_location["pixel_y"]
+	var/turf/clicked_over_turf = real_click_location["turf"]
 	pixel_x -= 16 // offsets to pretend like 0,0 corresponds to the center of a tile
 	pixel_y -= 16 // instead of the bottom left corner
 	var/clicked_scaled_x = (clicked_on.x * 32) + pixel_x
@@ -2868,3 +2864,23 @@ proc/get_nearest_mobs_list(atom/clicked_on, list/params, range = 1, always_inclu
 	if(return_list.len)
 		sortList(L = return_list, cmp=/proc/cmp_numeric_asc, associative = TRUE)
 		return return_list
+
+// This proc exists to work backwards to get pretty much exactly where a user clicked on their screen
+// If there's a better way to do this, you are encouraged to replace this weird mess with a cleaner method
+/// Returns the turf and pixel_x and pixel_y of said turf a user's cursor was over upon clicking an atom
+/// Returns as list("turf" = turf, "pixel_x" = pixel_x, "pixel_y" = pixel_y)
+/// If clicked_on has any transforms, this will be inaccurate. Blame Nex for not figuring out matrix math.
+proc/get_turf_pixel_clicked_over(atom/clicked_on, list/params)
+	var/pixel_x = 0
+	var/pixel_y = 0
+	pixel_x += text2num(params["icon-x"])
+	pixel_y += text2num(params["icon-y"])
+	pixel_x += clicked_on.pixel_x
+	pixel_y += clicked_on.pixel_y
+	var/step_x = floor(pixel_x / 32)
+	var/step_y = floor(pixel_y / 32)
+	// there's a chance some dork will have 50 million stickers on them (or there's a very large icon somewhere)
+	// and our cursor will subsequently be multiple tiles away from clicked_on's actual turf
+	var/turf/clicked_over_turf = locate(clicked_on.x + step_x, clicked_on.y + step_y, clicked_on.z)
+	return list("turf" = clicked_over_turf, "pixel_x" = pixel_x, "pixel_y" = pixel_y)
+
