@@ -577,24 +577,24 @@
 				if (isnum(amt))
 					P.reagents.add_reagent(current_id, amt)
 
-		var/datum/gas_mixture/airgas = new /datum/gas_mixture
+		var/datum/gas_mixture/normal/airgas = new /datum/gas_mixture/normal
 		for(var/gas in src.initial_gas_mixture)
 			switch(gas)
 				if("oxygen")
-					airgas.oxygen = initial_gas_mixture[gas]
+					airgas.set_oxygen(initial_gas_mixture[gas])
 				if("toxins")
-					airgas.toxins = initial_gas_mixture[gas]
+					airgas.set_toxins(initial_gas_mixture[gas])
 				if("nitrogen")
-					airgas.nitrogen = initial_gas_mixture[gas]
+					airgas.set_nitrogen(initial_gas_mixture[gas])
 
 		P_special_data["proj_color"] = P.reagents.get_average_color()
 		P_special_data["IS_LIT"] = src.lit
 		P_special_data["burn_temp"] = src.base_temperature
 
 
-		airgas.volume = 1
+		airgas.set_volume(1)
 		if(src.lit)
-			airgas.temperature = P_special_data["burn_temp"]
+			airgas.set_temperature(P_special_data["burn_temp"])
 
 		P_special_data["airgas"] = airgas
 		P_special_data["speed_mult"] = 0.6

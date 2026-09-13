@@ -81,3 +81,8 @@ Desktop.ini
 
 # OpenDream compiled bytecode
 goonstation.json
+
+# Goonmos Junk
+/goonmos/Cargo.lock
+/goonmos/target
+/goonmos/.vscode

@@ -20,11 +20,11 @@
 	var/tied = FALSE
 	/// how many breaths should this balloon fill with at a canister
 	var/breaths = 5
-	var/datum/gas_mixture/air = new
+	var/datum/gas_mixture/normal/air = new
 
 	New()
 		..()
-		src.air.volume = 14 //source: I made it the fuck up
+		src.air.set_volume(14) //source: I made it the fuck up
 		if (prob(1) && islist(rare_colors) && length(rare_colors))
 			balloon_color = pick(rare_colors)
 			UpdateIcon()
@@ -181,7 +181,7 @@
 				var/datum/lifeprocess/breath/breathing = H.lifeprocesses?[/datum/lifeprocess/breath]
 				if (breathing && TOTAL_MOLES(src.air) >= BREATH_VOLUME)
 					var/datum/gas_mixture/breath = src.air.remove(BREATH_VOLUME)
-					breath.volume = BREATH_VOLUME
+					breath.set_volume(BREATH_VOLUME)
 					if (breathing.handle_breath(breath))
 						//some extra O2 healing on top of the normal breath so this is even somewhat practical
 						user.take_oxygen_deprivation(-15)

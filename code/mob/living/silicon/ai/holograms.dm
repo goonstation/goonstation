@@ -247,7 +247,7 @@
 				if ("o2")
 					var/turf/simulated/T = get_turf(src)
 					if (istype(T))
-						ZERO_GASES(T.air)
+						ZERO_GASES(T.return_air())
 					qdel(src)
 				if ("beepsky")
 					var/sound/sound = pick('sound/voice/bcriminal.ogg', 'sound/voice/bjustice.ogg', 'sound/voice/bfreeze.ogg', 'sound/machines/siren_police.ogg')

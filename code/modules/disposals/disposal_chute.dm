@@ -130,10 +130,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject, proc/expel
 
 	proc/initair()
 		air_contents = new /datum/gas_mixture
-		air_contents.volume = 255
-		air_contents.nitrogen = 16.5
-		air_contents.oxygen = 4.4
-		air_contents.temperature = 293.15
+		air_contents.set_volume(255)
+		air_contents.set_nitrogen(16.5)
+		air_contents.set_oxygen(4.4)
+		air_contents.set_temperature(293.15)
 
 	proc/fits_in(atom/movable/AM)
 		return TRUE
@@ -532,8 +532,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject, proc/expel
 		src.air_contents ||= new /datum/gas_mixture
 		var/pressure_delta = (3.5 * ONE_ATMOSPHERE) - MIXTURE_PRESSURE(air_contents) // purposefully trying to overshoot the target of 2 atmospheres to make it faster
 
-		if(env.temperature > 0)
-			var/transfer_moles = src.repressure_speed * pressure_delta*air_contents.volume/(env.temperature * R_IDEAL_GAS_EQUATION)
+		if(env.temperature() > 0)
+			var/transfer_moles = src.repressure_speed * pressure_delta*air_contents.volume()/(env.temperature() * R_IDEAL_GAS_EQUATION)
 			//Actually transfer the gas
 			var/datum/gas_mixture/removed = env.remove(transfer_moles)
 			air_contents.merge(removed)

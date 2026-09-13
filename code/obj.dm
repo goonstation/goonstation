@@ -191,11 +191,8 @@
 	proc/can_arm_attach()
 		return !(src.object_flags & NO_ARM_ATTACH )
 
-	assume_air(datum/air_group/giver)
-		if (loc)
-			return loc.assume_air(giver)
-		else
-			return null
+	assume_air(datum/gas_mixture/giver)
+		return loc?.assume_air(giver)
 
 	remove_air(amount)
 		if (loc)

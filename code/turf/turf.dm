@@ -10,21 +10,14 @@
 
 	level = 1
 
-	// Properties for open tiles (/floor)
-	#define _UNSIM_TURF_GAS_DEF(GAS, ...) var/GAS = 0;
-	APPLY_TO_GASES(_UNSIM_TURF_GAS_DEF)
-	#undef _UNSIM_TURF_GAS_DEF
-
 	// Properties for airtight tiles (/wall)
 	var/thermal_conductivity = 0.05
-	var/heat_capacity = 1
 	/// Sum of all unstable atoms on the turf.
 	pass_unstable = TRUE
 	/// Whether this turf is passable. Used in the pathfinding system.
 	var/tmp/passability_cache
 
 	// Properties for both simmed and unsimmed
-	var/temperature = T20C
 	var/icon_old = null
 	var/name_old = null
 	var/path_old = null
@@ -276,7 +269,7 @@
 	fullbright = TRUE
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
-	heat_capacity = 700000
+	heat_capacity = 700
 	pathable = 0
 	mat_changename = 0
 	mat_changedesc = 0
@@ -630,7 +623,6 @@ var/global/in_replace_with = 0
 	src.material?.UnregisterSignal(src, COMSIG_ATOM_CROSSED)
 
 	var/datum/gas_mixture/oldair = null //Set if old turf is simulated and has air on it.
-	var/datum/air_group/oldparent = null //Ditto.
 	var/zero_new_turf_air = istype(src, /turf/space)
 
 	//For unsimulated static air tiles such as ice moon surface.
@@ -643,7 +635,6 @@ var/global/in_replace_with = 0
 			var/turf/simulated/S = src
 			oldair = S.air
 			S.air = null
-			oldparent = S.parent
 
 		else if (istype(src, /turf/unsimulated)) //Apparently unsimulated turfs can have static air as well!
 			#define _OLD_GAS_VAR_ASSIGN(GAS, ...) GAS ## _old = src.GAS;
@@ -847,30 +838,16 @@ var/global/in_replace_with = 0
 
 			#define _OLD_GAS_VAR_NOT_NULL(GAS, ...) GAS ## _old ||
 			if (N.air && (APPLY_TO_GASES(_OLD_GAS_VAR_NOT_NULL) 0)) //Unsimulated tile w/ static atmos -> simulated floor handling
-				#define _OLD_GAS_VAR_RESTORE(GAS, ...) N.air.GAS += GAS ## _old;
+				#define _OLD_GAS_VAR_RESTORE(GAS, ...) N.air.adjust_##GAS(GAS ## _old);
 
 				APPLY_TO_GASES(_OLD_GAS_VAR_RESTORE)
-				if (!N.air.temperature)
-					N.air.temperature = temp_old
+				if (!N.air.temperature())
+					N.air.set_temperature(temp_old)
 
 				#undef _OLD_GAS_VAR_RESTORE
 			#undef _OLD_GAS_VAR_NOT_NULL
 			if(N.air)
 				N.update_visuals(N.air)
-			// tell atmos to update this tile's air settings
-			if (air_master)
-				air_master.tiles_to_update[N] = null
-		else if (air_master)
-			air_master.high_pressure_delta.Remove(src) //lingering references to space turfs kept ending up in atmos lists after simulated turfs got replaced. wack!
-			air_master.active_singletons.Remove(src)
-			air_master.tiles_to_update.Remove(src)
-			air_master.tiles_to_rebuild.Remove(src)
-
-		if (air_master && oldparent) //Handling air parent changes for oldparent for Simulated -> Anything
-			air_master.groups_to_rebuild[oldparent] = null //Puts the oldparent into a queue to update the members.
-			oldparent.members -= src //can we like not have space in these lists pleaseeee :) -cringe
-			oldparent.borders?.Remove(src)
-
 	new_turf.update_nearby_tiles(1)
 
 	#ifdef CHECK_MORE_RUNTIMES

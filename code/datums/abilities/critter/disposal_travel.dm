@@ -196,9 +196,9 @@
 		AM.set_loc(H)
 
 	remove_air(amount as num)
-		var/datum/gas_mixture/Air = new /datum/gas_mixture
-		Air.oxygen = amount
-		Air.temperature = 310
+		var/datum/gas_mixture/normal/Air = new /datum/gas_mixture/normal
+		Air.set_oxygen(amount)
+		Air.set_temperature(310)
 		return Air
 
 	relaymove(mob/user, direction, delay, running)

@@ -42,7 +42,7 @@
 			/*  If we have a hotspot with sufficient gas, we set to the exposed_ args if the hotspot is lower and change our colour if needed.
 				My best guess on why we need this is so mounted igniters and such don't cool down hotspots when used, only heating them up.
 				I don't like how much effort was needed in renaming this var from "soh" and figuring out what it does - cringe */
-			if ((air_contents.toxins > 0.5 MOLES) && (air_contents.oxygen > 0.5 MOLES))
+			if ((air_contents.toxins() > 0.5 MOLES) && (air_contents.oxygen() > 0.5 MOLES))
 				for (var/atom/movable/hotspot/hotspot as anything in src.active_hotspots)
 					if (hotspot.temperature < exposed_temperature)
 						hotspot.temperature = exposed_temperature
@@ -51,14 +51,9 @@
 						hotspot.volume = exposed_volume
 		return TRUE
 
-	if ((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && (air_contents.toxins > 0.5) && (air_contents.oxygen > 0.5))
-		if (parent?.group_processing)
-			parent.suspend_group_processing()
+	if ((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && (air_contents.toxins() > 0.5) && (air_contents.oxygen() > 0.5))
 
 		src.add_hotspot(exposed_temperature, exposed_volume)
-
-		for (var/atom/movable/hotspot/hotspot as anything in src.active_hotspots)
-			hotspot.just_spawned = (current_cycle < air_master.current_cycle)
 		//remove just_spawned protection if no longer processing this cell
 
 		return TRUE
@@ -75,13 +70,6 @@
 	hotspot.temperature = temperature
 	hotspot.volume = volume
 	hotspot.set_real_color()
-	if (issimulatedturf(src))
-		var/turf/simulated/self = src
-		self.processing = TRUE
-		if (!self.parent)
-			air_master.active_singletons[src] = null
-		if(self.parent?.group_processing)
-			self.parent.suspend_group_processing()
 	return hotspot
 
 // ABSTRACT_TYPE(/atom/movable/hotspot) // i dont feel like touching code outside of atmos oh well
@@ -149,43 +137,7 @@
 /// Interact with our turf, performing reactions, scaling volume up, and exposing things on our turf while [/atom/movable/hotspot/var/bypassing] is FALSE,
 /// and simply scaling up while it is set to TRUE.
 /atom/movable/hotspot/proc/perform_exposure()
-	var/turf/simulated/floor/location = loc
-	if(!issimulatedturf(location))
-		return FALSE
-
-	if(src.volume > CELL_VOLUME*0.95)
-		bypassing = TRUE
-		if(!just_spawned)
-			src.volume = location.air.fuel_burnt*FIRE_GROWTH_RATE
-			src.temperature = location.air.temperature
-	else
-		bypassing = FALSE
-		var/affected_volume = src.volume/max((location.air.volume/5),1)
-		affected_volume *= src.atmos_heating_mult
-		var/datum/gas_mixture/affected = location.air.remove_ratio(affected_volume)
-
-		affected.temperature = src.temperature
-		if( affected.react() & CATALYST_ACTIVE)
-			src.catalyst_active = TRUE
-		src.temperature = affected.temperature
-
-		src.volume = affected.fuel_burnt*FIRE_GROWTH_RATE
-
-		//Inhibit hotspot use as turf heats up to resolve abuse of hotspots unless catalyst is present...
-		//Scale volume at 40% of HOTSPOT_MAX_TEMPERATURE to allow for hotspot icon to transition to 2nd state
-		if(src.temperature > ( HOTSPOT_MAX_NOCAT_TEMPERATURE * 0.4 ))
-			// Force volume as heat increases, scale to cell volume with tempurature to trigger hotspot bypass
-			// Limit temperature based scaling to not exceed cell volume so spreading and exposure don't inappropriately scale
-			var/max_temp = src.catalyst_active ? HOTSPOT_MAX_CAT_TEMPERATURE : HOTSPOT_MAX_NOCAT_TEMPERATURE
-			var/temperature_scaled_volume = clamp((src.temperature * CELL_VOLUME / max_temp), 1, CELL_VOLUME)
-			src.volume = max(src.volume, temperature_scaled_volume)
-
-		location.assume_air(affected)
-
-		for(var/atom/movable/AM as anything in location)
-			AM.temperature_expose(null, temperature, src.volume)
-
-	src.set_real_color()
+	return
 
 ///Temperature expose every atom that crosses us, burning living mobs that cross us.
 /atom/movable/hotspot/Crossed(var/atom/A)
@@ -248,8 +200,8 @@
 		location.burn_tile()
 
 		//Possible spread due to radiated heat
-		if(location.air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD)
-			var/radiated_temperature = location.air.temperature*FIRE_SPREAD_RADIOSITY_SCALE
+		if(location.air.temperature() > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD)
+			var/radiated_temperature = location.air.temperature()*FIRE_SPREAD_RADIOSITY_SCALE
 
 			for(var/turf/simulated/possible_target as anything in possible_spread)
 				if(!length(possible_target.active_hotspots))
@@ -272,7 +224,7 @@
 
 /// Checks if the atmosphere on the tile is unsuitable for hotspot survival
 /atom/movable/hotspot/proc/is_atmosphere_unsuitable(turf/simulated/floor/location)
-	return (!location.air || location.air.toxins < 0.5 MOLES || location.air.oxygen < 0.5 MOLES)
+	return (!location.air || location.air.toxins() < 0.5 MOLES || location.air.oxygen() < 0.5 MOLES)
 
 /atom/movable/hotspot/ex_act()
 	return
@@ -504,4 +456,4 @@
 
 // Chemfires don't care about toxins in the atmosphere
 /atom/movable/hotspot/chemfire/is_atmosphere_unsuitable(turf/simulated/floor/location)
-	return (!location.air || location.air.oxygen < 0.5 MOLES)
+	return (!location.air || location.air.oxygen() < 0.5 MOLES)

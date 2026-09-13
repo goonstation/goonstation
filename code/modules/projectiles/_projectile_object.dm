@@ -585,30 +585,30 @@
 
 	return_air(direct)
 		if (src.has_atmosphere)
-			var/datum/gas_mixture/GM = new /datum/gas_mixture
+			var/datum/gas_mixture/normal/GM = new /datum/gas_mixture/normal
 
 			var/oxygen = MOLES_O2STANDARD
 			var/nitrogen = MOLES_N2STANDARD
 			var/sum = oxygen + nitrogen
 
-			GM.oxygen = (oxygen/sum)
-			GM.nitrogen = (nitrogen/sum)
-			GM.temperature = T20C
+			GM.set_oxygen(oxygen/sum)
+			GM.set_nitrogen(nitrogen/sum)
+			GM.set_temperature(T20C)
 
 			return GM
 		..()
 
 	handle_internal_lifeform(mob/lifeform_inside_me, breath_request, mult)
 		if (src.has_atmosphere && breath_request > 0)
-			var/datum/gas_mixture/GM = new /datum/gas_mixture
+			var/datum/gas_mixture/normal/GM = new /datum/gas_mixture/normal
 
 			var/oxygen = MOLES_O2STANDARD
 			var/nitrogen = MOLES_N2STANDARD
 			var/sum = oxygen + nitrogen
 
-			GM.oxygen = (oxygen/sum)*breath_request * mult
-			GM.nitrogen = (nitrogen/sum)*breath_request * mult
-			GM.temperature = T20C
+			GM.set_oxygen((oxygen/sum)*breath_request * mult)
+			GM.set_nitrogen((nitrogen/sum)*breath_request * mult)
+			GM.set_temperature(T20C)
 
 			return GM
 		..()

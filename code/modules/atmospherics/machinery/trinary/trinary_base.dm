@@ -42,9 +42,9 @@
 	src.air2 = new /datum/gas_mixture
 	src.air3 = new /datum/gas_mixture
 
-	src.air1.volume = 200
-	src.air2.volume = 200
-	src.air3.volume = 200
+	src.air1.set_volume(200)
+	src.air2.set_volume(200)
+	src.air3.set_volume(200)
 
 /obj/machinery/atmospherics/trinary/initialize(player_caused_init)
 	var/node1_connect = turn(src.dir, -180)

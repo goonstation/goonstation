@@ -79,10 +79,10 @@ TYPEINFO(/obj/item/clothing/head/butt)
 			var/turf/T = get_turf(src)
 			playsound(T, (src.sound_fart ? src.sound_fart : 'sound/voice/farts/poo2.ogg'), 40, 1, -1)
 			if (issimulatedturf(T))
-				var/datum/gas_mixture/fart_gas = new /datum/gas_mixture
-				fart_gas.farts = 0.17 // A quarter of a normal fart
-				fart_gas.temperature = T20C
-				fart_gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
+				var/datum/gas_mixture/normal/fart_gas = new /datum/gas_mixture/normal
+				fart_gas.set_farts(0.17) // A quarter of a normal fart
+				fart_gas.set_temperature(T20C)
+				fart_gas.set_volume(R_IDEAL_GAS_EQUATION * T20C / 1000)
 				T.assume_air(fart_gas)
 
 	proc/assembly_setup(var/manipulated_bomb, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
@@ -223,10 +223,10 @@ TYPEINFO(/obj/item/clothing/head/butt)
 		playsound(T, 'sound/voice/farts/superfart.ogg', 45, 1)
 		new /obj/effects/explosion(T)
 		if (issimulatedturf(T))
-			var/datum/gas_mixture/fart_gas = new /datum/gas_mixture
-			fart_gas.farts = 3.45 // five times the amount of a normal fart
-			fart_gas.temperature = T20C
-			fart_gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
+			var/datum/gas_mixture/normal/fart_gas = new /datum/gas_mixture/normal
+			fart_gas.set_farts(3.45) // five times the amount of a normal fart
+			fart_gas.set_temperature(T20C)
+			fart_gas.set_volume(R_IDEAL_GAS_EQUATION * T20C / 1000)
 			T.assume_air(fart_gas)
 		qdel(src)
 

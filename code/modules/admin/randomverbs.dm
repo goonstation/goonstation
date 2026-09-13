@@ -521,11 +521,7 @@
 	ADMIN_ONLY
 	SHOW_VERB_DESC
 	SPAWN(0)
-		for(var/turf/simulated/T in view())
-			if(!T.air)
-				continue
-			T.stabilize()
-			LAGCHECK(LAG_LOW)
+		goonmos_initialize_block(usr.x-20, usr.y-14, usr.x+20, usr.y+14, usr.z)
 
 /client/proc/stabilize_station()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
@@ -536,12 +532,7 @@
 	if (alert(usr, "This will reset the air of ALL TURFS IN THE ENTIRE STATION, are you sure you want to continue?", "Cause big lag", "Yes", "No") != "Yes")
 		return
 	SPAWN(0)
-		for (var/turf/simulated/T in world)
-			if (inonstationz(T))
-				if(!T.air)
-					continue
-				T.stabilize()
-				LAGCHECK(LAG_LOW)
+		goonmos_initialize_zlevel(1)
 
 /client/proc/flip_view()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
