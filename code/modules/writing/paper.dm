@@ -24,6 +24,7 @@
 	"Void" = "stamp-sprite-void",\
 	"Flock" = "stamp-sprite-flock",\
 	"Vamp" = "stamp-sprite-vamp",\
+	"Inspector" = "stamp-sprite-inspector",\
 	"Your Name" = "stamp-text-name",\
 	"Current Time" = "stamp-text-time",)
 
@@ -301,6 +302,7 @@
 		"stamp-sprite-gtc" = "[resource("images/tgui/stamp_icons/stamp-gtc.png")]",
 		"stamp-sprite-flock" = "[resource("images/tgui/stamp_icons/stamp-flock.apng")]",
 		"stamp-sprite-vamp" = "[resource("images/tgui/stamp_icons/stamp-vamp.png")]",
+		"stamp-sprite-inspector" = "[resource("images/tgui/stamp_icons/stamp-inspector.png")]",
 		"stamp-text-time" =  T,
 		"stamp-text-name" = user.name
 	)
@@ -796,6 +798,14 @@
 		special_mode = "Centcom"
 		is_reassignable = 0
 		assignment = "stamp-centcom"
+	inspector
+		name = "\improper inspector rubber stamp"
+		desc = "The Inspector's rubber stamp for stamping whatever important documents they've gotten their hands on. It's that National Notary's 'Vice Admiral Simon' model in ebonized ash"
+		icon_state = "stamp-inspector"
+		default_material = "synthrubber_blue"
+		special_mode = "Inspector"
+		is_reassignable = 0
+		assignment = "stamp-inspector"
 	mime
 		name = "\improper mime's rubber stamp"
 		desc = "The Mime's rubber stamp for stamping whatever important documents they've gotten their hands on. It doesn't seem very legit."
