@@ -89,8 +89,8 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 		if(length(eligible_sites))
 			. = pick(eligible_sites)
 
-	///For events localized to a particular site, update the message to direct people towards the site, more or less.
-	proc/localize_reading(var/atom/target)
+	///For events localized to a particular site, update the message to direct people towards the site. Somewhat fuzzy unless accuracy is guaranteed.
+	proc/localize_reading(var/atom/target,var/always_accurate = FALSE)
 		///Text given to orientate the announcement.
 		var/sumtext = "spinal"
 		///X-axis report text (may remain null).
@@ -110,19 +110,19 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 		var/y_negative_clamped = max(0,-y_main) * 2
 
 		//Y string first (directional convention)
-		if(prob(10)) //10% chance for localization on the axis to fail
+		if(prob(10) && !always_accurate) //10% chance for localization on the axis to fail
 			y_string = null
-		else if(prob(y_positive_clamped))
+		else if(prob(y_positive_clamped) || (y_positive_clamped && always_accurate))
 			y_string = "north"
-		else if(prob(y_negative_clamped))
+		else if(prob(y_negative_clamped) || (y_negative_clamped && always_accurate))
 			y_string = "south"
 
 		//X string after
-		if(prob(10)) //10% chance for localization on the axis to fail
+		if(prob(10) && !always_accurate) //10% chance for localization on the axis to fail
 			x_string = null
-		else if(prob(x_positive_clamped))
+		else if(prob(x_positive_clamped) || (x_positive_clamped && always_accurate))
 			x_string = "east"
-		else if(prob(x_negative_clamped))
+		else if(prob(x_negative_clamped) || (x_negative_clamped && always_accurate))
 			x_string = "west"
 
 		//pull them all together
@@ -132,7 +132,8 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 			if(x_string) sumtext += x_string
 
 		src.centcom_message = "A spike in electromagnetic activity from TOREADOR-7I-22408 was recently recorded, with notable projection on the [sumtext] axis."
-		src.centcom_message += " Structural alteration is probable, and may not be confined to the artifact itself."
+		if(!always_accurate)
+			src.centcom_message += " Structural alteration is probable, and may not be confined to the artifact itself."
 
 //some little fellas!
 /datum/random_event/menhir/probes
@@ -702,7 +703,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 			message_admins("Menhir gravity event couldn't find enough anomaly sites! This shouldn't happen. Aborting event")
 			return
 
-		playsound_global(world, 'sound/musical_instruments/artifact/Artifact_Precursor_3.ogg', 65, 0, pitch = 0.3)
+		playsound_global(Z_LEVEL_STATION, 'sound/musical_instruments/artifact/Artifact_Precursor_3.ogg', 65, 0, pitch = 0.3)
 		SPAWN(2) //approximately syncs sound
 			for (var/mob/M in mobs)
 				SPAWN(0)
@@ -907,9 +908,9 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 				playsound(focal_nexus, 'sound/items/med_scanner.ogg', chargevolume, 0, pitch = 0.5, extrarange = 48)
 				sleep(1 SECOND)
 
-			playsound_global(world, 'sound/machines/shielddown.ogg', 65, 0)
+			playsound_global(Z_LEVEL_STATION, 'sound/machines/shielddown.ogg', 65, 0)
 			SPAWN(2) //approximately syncs sound
-				playsound_global(world, 'sound/effects/explosionfar.ogg', 65, 0)
+				playsound_global(Z_LEVEL_STATION, 'sound/effects/explosionfar.ogg', 65, 0)
 				for (var/mob/M in mobs)
 					SPAWN(0)
 						if (M.z == Z_LEVEL_STATION && !inafterlife(M) && !isVRghost(M))
@@ -1149,6 +1150,198 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 ///////////////////////////////////////////////////////
 //////////////////////////////////////////////
 
+//too much, too much. too little, too little. a disharmony grows
+/datum/random_event/menhir/schism
+	name = "A Schism in the Song"
+	message_delay = 1 MINUTE
+	weight = 10
+
+	is_event_available(ignore_time_lock)
+		. = ..()
+		if(.)
+			if (!landmarks[LANDMARK_MENHIR_NODE] || length(landmarks[LANDMARK_MENHIR_NODE]) < 1) //if no eligible nodes remain, do not trigger event
+				. = FALSE
+
+	event_effect()
+		///Site the puzzle room spawns at
+		var/turf/nodelandmark
+		///Tag for the node the event is occurring in
+		var/node_tag = null
+		///List of eligible walls in node mode; divided by relative position.
+		var/list/eligible_walls = list("S" = list(), "N" = list(), "E" = list(), "W" = list())
+		///When we've populated a direction with at least one wall from each facing, we're good to go
+		var/list/eligibility_flags = 0
+
+		if(!landmarks[LANDMARK_MENHIR_NODE] || length(landmarks[LANDMARK_MENHIR_NODE]) < 1) //fallback mode: pick a curated station tile instead
+			logTheThing(LOG_DEBUG, null, "Menhir schism event couldn't find a fallback turf after all nodes expended; aborting event.")
+			message_admins("Menhir schism event couldn't find a fallback turf after all nodes expended; aborting event.")
+			return
+
+		nodelandmark = pick_landmark(LANDMARK_MENHIR_NODE)
+		node_tag = landmarks[LANDMARK_MENHIR_NODE][nodelandmark]
+
+		for (var/turf/T in landmarks[LANDMARK_MENHIR_DOOR])
+			if (landmarks[LANDMARK_MENHIR_DOOR][T] == node_tag)
+				//categorize nodes based on positional block (set up this way to allow east/west entrance sides to be more than 1 door)
+				if(T.x > nodelandmark.x)
+					eligible_walls["E"] += T
+					eligibility_flags |= EAST
+				else if(T.x < nodelandmark.x)
+					eligible_walls["W"] += T
+					eligibility_flags |= WEST
+				else
+					if(T.y > nodelandmark.y)
+						eligible_walls["N"] += T
+						eligibility_flags |= NORTH
+					else
+						eligible_walls["S"] += T
+						eligibility_flags |= SOUTH
+
+		if (eligibility_flags < (NORTH|SOUTH|EAST|WEST))
+			logTheThing(LOG_DEBUG, null, "Menhir gift event didn't find all directions for the [node_tag] node! This shouldn't happen.")
+			message_admins("Menhir gift event didn't find all directions for the [node_tag] node! This shouldn't happen. Aborting event")
+			return
+
+		landmarks[LANDMARK_MENHIR_NODE].Remove(nodelandmark) //"expend" the node in node spawns, so future events won't select it again
+
+		new /obj/anomaly/pale(nodelandmark)
+
+		playsound(nodelandmark, 'sound/ambience/industrial/Precursor_Drone3.ogg', 65, 0, extrarange = 30)
+		SPAWN(7)
+			playsound_global(Z_LEVEL_STATION, 'sound/voice/creepywhisper_3.ogg', 20)
+
+		var/facing_dir = pick("S","N","E","W")
+
+		for(var/turf/wallturf in eligible_walls[facing_dir])
+			var/save_dir = wallturf.icon_state
+			var/obj/newdoor = new /obj/machinery/door/unpowered/blue(wallturf)
+			if (save_dir == "interior-3") //vertical wall detection
+				newdoor.dir = 4
+
+		src.localize_reading(nodelandmark,TRUE)
+		src.centcom_message += " All signal capture, including non-anomalous, has dropped precipitously since event detection; immediate investigation is advised."
+
+		message_delay = rand(15 SECONDS, 35 SECONDS)
+		..() //don't send out the message until we have confirmed we can do the event
+
+		logTheThing(LOG_STATION, null, "Menhir schism event at [node_tag] arm - [log_loc(nodelandmark)]")
+		message_admins("Menhir schism event triggered at [node_tag] arm - [log_loc(nodelandmark)]")
+
+//an intolerable imbalance has developed within. it must be purged.
+/datum/random_event/menhir/radwave
+	name = "A Tide Which Scours"
+	message_delay = 5 SECONDS
+	weight = 10
+	announcement_style = MENHIR_EVENT_NOTIFY_GLOBAL
+	centcom_headline = "ARTIFACT CONDITION ALERT"
+	centcom_message = "VACATE SITE IMMEDIATELY. IONISING RADIATION BUILDUP IN CASING OF TOREADOR-7I-22408. IF UNABLE TO VACATE SITE, MOVE WITHIN TOREADOR-7I-22408 OR AS FAR FROM IT AS POSSIBLE."
+	required_elapsed_round_time = 10 MINUTES
+
+	event_effect()
+		message_delay = rand(2 SECONDS, 3 SECONDS)
+		..()
+		if (random_events.announce_events)
+			SPAWN(message_delay)
+				playsound_global(world, 'sound/misc/announcement_ominous.ogg', 60, pitch = 1.45)
+			SPAWN(message_delay + 12)
+				playsound_global(world, 'sound/misc/announcement_ominous.ogg', 60, pitch = 1.45)
+			SPAWN(message_delay + 24)
+				playsound_global(world, 'sound/misc/announcement_ominous.ogg', 60, pitch = 1.45)
+			SPAWN(message_delay + 72)
+				playsound_global(world, 'sound/misc/announcement_ominous.ogg', 60, pitch = 1.45)
+			SPAWN(message_delay + 84)
+				playsound_global(world, 'sound/misc/announcement_ominous.ogg', 60, pitch = 1.45)
+			SPAWN(message_delay + 96)
+				playsound_global(world, 'sound/misc/announcement_ominous.ogg', 60, pitch = 1.45)
+
+		logTheThing(LOG_STATION, null, "Menhir radwave event triggered.")
+		message_admins("Menhir radwave event triggered.")
+		src.weight = 1 //should have the agitation worked out by now... usually.
+
+		var/turf/focal_nexus = locate(MENHIR_CORE_X, MENHIR_CORE_Y, Z_LEVEL_STATION)
+		///Key is turf; value is whether it is shielded
+		var/list/burst_turfs = list()
+
+		SPAWN(1)
+			for(var/i in 1 to 9)
+				playsound(focal_nexus, 'sound/items/med_scanner.ogg', i*8, 0, pitch = 0.55, extrarange = 48)
+				sleep(12)
+			for(var/i in 1 to 63)
+				playsound(focal_nexus, 'sound/items/med_scanner.ogg', 90, 0, pitch = 0.55, extrarange = i)
+				burst_turfs += rangefind_diamond(focal_nexus,i)
+				var/fadetime = 10
+				if(i == 63) fadetime = 40 //special finishing flash
+				var/volmod = ceil(i * 0.4)
+				var/radmod = (51 - abs(i-50)) SIEVERTS //15 when it first breaches the crown, peaks at 51 late in the wave, comes down to 38 at end
+				SPAWN(1)
+					for (var/turf/T in burst_turfs)
+						irradiate_turf(T,radmod,fadetime,burst_turfs[T])
+					playsound_global(Z_LEVEL_STATION, 'sound/weapons/ACgun2.ogg', volmod+3, 0)
+				sleep(12)
+
+	///Fetch a "ring" of turfs in a diamond based on target radius, and index their rad-safety while shattering any present lights
+	proc/rangefind_diamond(var/turf/T, var/radius = 1)
+		. = list()
+		var/turf/seekspot = null
+		for(var/i = -radius, i <= radius, i++)
+			var/bandwidth = radius - abs(i) //example: you're radius 3. this is 0 at Y-peaks, and 3 at Y-center. diamond!
+			if(bandwidth)
+				seekspot = locate(T.x - bandwidth, T.y + i, T.z)
+				if(seekspot.can_break) //skip blowout check in unbreakable turfs like walls and space
+					for(var/obj/machinery/light/L in seekspot)
+						if (L.type == /obj/machinery/light/emergency) continue
+						L.on = 1
+						L.broken()
+				if(istype(seekspot.loc,/area/station/crown))
+					.[seekspot] = TRUE
+				else
+					.[seekspot] = FALSE
+
+				seekspot = locate(T.x + bandwidth, T.y + i, T.z)
+				if(seekspot.can_break) //skip blowout check in unbreakable turfs like walls and space
+					for(var/obj/machinery/light/L in seekspot)
+						if (L.type == /obj/machinery/light/emergency) continue
+						L.on = 1
+						L.broken()
+				if(istype(seekspot.loc,/area/station/crown))
+					.[seekspot] = TRUE
+				else
+					.[seekspot] = FALSE
+			else
+				seekspot = locate(T.x, T.y + i, T.z)
+				if(seekspot.can_break) //skip blowout check in unbreakable turfs like walls and space
+					for(var/obj/machinery/light/L in seekspot)
+						if (L.type == /obj/machinery/light/emergency) continue
+						L.on = 1
+						L.broken()
+				if(istype(seekspot.loc,/area/station/crown))
+					.[seekspot] = TRUE
+				else
+					.[seekspot] = FALSE
+		return
+
+	proc/irradiate_turf(var/turf/T,var/rad_strength = 1,var/fadetime = 11,var/shielded = FALSE)
+		if (!isturf(T))
+			return
+
+		//does not use flash-fill animate to avoid double anim calls
+		var/color_old = T.color
+		if(shielded)
+			T.color = "#eeff00"
+		else
+			//spatial interdictor: nullify radiation pulses. good luck
+			//consumes 100 units of charge (50,000 joules) per tile protected
+			for_by_tcl(IX, /obj/machinery/interdictor)
+				if (IX.expend_interdict(100,T,1))
+					animate_flash_color_fill_inherit(T,"#FFDD00",1,5)
+					return
+			T.color = "#90ff00"
+		animate(T, color = color_old, time = fadetime, easing = LINEAR_EASING)
+		if(!shielded)
+			for (var/mob/M in T.contents)
+				logTheThing(LOG_STATION, M, "is hit by a radiation burst at [log_loc(M)].")
+				M.take_radiation_dose(rad_strength)
+
 //sometimes, the door just unlocks itself
 /datum/random_event/menhir/road
 	name = "For Parted Are The Gates"
@@ -1174,7 +1367,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 				showswirl(T)
 				Artifact_Spawn(T,"precursor")
 
-		playsound_global(world, 'sound/musical_instruments/artifact/Artifact_Precursor_5.ogg', 45, 0, 0.45)
+		playsound_global(Z_LEVEL_STATION, 'sound/musical_instruments/artifact/Artifact_Precursor_5.ogg', 45, 0, 0.45)
 		landmarks[LANDMARK_MENHIR_PASSAGE] = null
 
 		message_delay = rand(5 SECONDS, 8 SECONDS)
@@ -1219,13 +1412,13 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 				SPAWN(rand(0,200))
 					new /mob/living/critter/shade/invader(T)
 
-		playsound_global(world, 'sound/musical_instruments/artifact/Artifact_Void_2.ogg', 70, 0, 0.45)
+		playsound_global(Z_LEVEL_STATION, 'sound/musical_instruments/artifact/Artifact_Void_2.ogg', 70, 0, 0.45)
 		var/remusic = 110 SECONDS
 		SPAWN(remusic)
-			playsound_global(world, 'sound/musical_instruments/artifact/Artifact_Void_2.ogg', 70, 0, 0.45)
+			playsound_global(Z_LEVEL_STATION, 'sound/musical_instruments/artifact/Artifact_Void_2.ogg', 70, 0, 0.45)
 
 		SPAWN(rand(2 SECONDS, 3 SECONDS))
-			playsound_global(world, pick(list('sound/voice/creepywhisper_1.ogg', 'sound/voice/creepywhisper_2.ogg', 'sound/voice/creepywhisper_3.ogg')), 60)
+			playsound_global(Z_LEVEL_STATION, pick(list('sound/voice/creepywhisper_1.ogg', 'sound/voice/creepywhisper_2.ogg', 'sound/voice/creepywhisper_3.ogg')), 60)
 			for (var/obj/machinery/power/apc/apc in machine_registry[MACHINES_POWER])
 				if (!istype(apc.area,/area/station/hallway/primary))
 					continue
@@ -1254,3 +1447,124 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 #undef EVFILTER_NO_MOON
 
 #endif
+
+/obj/anomaly/pale
+	name = "pale anomaly"
+	desc = "The air around it shudders as though caught in a spider's web."
+	icon = 'icons/effects/particles.dmi'
+	icon_state = "sparkle"
+	color = "#a4aaac"
+	alpha = 0
+	plane = PLANE_NOSHADOW_BELOW
+	anchored = ANCHORED_ALWAYS
+	event_handler_flags = IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
+	appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
+	has_processing_loop = TRUE
+	density = FALSE
+	HELP_MESSAGE_OVERRIDE("It seems strangely familiar. Maybe somebody else could take a better guess...")
+
+	var/effect_tick = 5 //! how many process ticks to wait before an expansion wave
+	var/anomaly_strength = 5 //! how strong/wide the anomaly currently is (signals within radius equal to strength are jammed)
+	var/max_anomaly_strength = 30 //! how strong/wide the anomaly can get, at maximum (interdictors can whittle away at this)
+
+	var/obj/effect/pale_shroud/shroud = null
+
+/obj/anomaly/pale/New()
+	..()
+	src.shroud = new /obj/effect/pale_shroud(src)
+	src.vis_contents += src.shroud
+	animate(src, alpha = 66, time = 20, easing = LINEAR_EASING)
+	START_TRACKING_CAT(TR_CAT_RADIO_JAMMERS)
+
+	for_clients_in_range(C, get_turf(src), 25)
+		boutput(C, SPAN_ALERT("A strange tremor [pick("propagates", "shudders", "resonates")] through the air. Something is wrong."))
+		shake_camera(C.mob, 6, 1)
+
+/obj/anomaly/pale/proc/shut_anomaly()
+	playsound(src.loc, 'sound/musical_instruments/artifact/Artifact_Precursor_3.ogg', 60, 0)
+	var/list/parting_messages = list(
+		"« 96 77 97 76 96 66 23 38 17 87 97 38 23 96 27 48 23 96 68 56 27 23 86 96 67 66 58 97 28 48 «",
+		"« 38 28 96 28 56 96 66 96 87 97 48 23 28 58 97 98 23 96 28 56 23 86 96 38 38 96 67 66 «",
+		"« 96 76 56 96 08 23 87 37 23 38 17 87 37 38 23 38 58 28 97 27 76 23 96 27 48 «",
+		"« 87 37 56 17 56 23 27 48 56 96 28 66 23 38 78 56 28 86 23 17 87 97 38 23 28 58 97 «",
+		"« 28 96 27 48 96 17 97 48 23 17 87 37 38 23 38 17 87 97 38 23 28 58 97 23 98 56 77 «",
+	)
+	for_clients_in_range(C, get_turf(src), 6)
+		boutput(C, SPAN_DISARM(pick(parting_messages)))
+		shake_camera(C.mob, 6, 1)
+	src.effect_tick = 999
+	animate(src, alpha = 200, time = 8, easing = BOUNCE_EASING | EASE_IN)
+	SPAWN(1 SECOND)
+		var/turf/nearby_spot = null
+		for(var/D in alldirs)
+			var/turf/proxturf = get_step(src,D)
+			if(!is_blocked_turf(proxturf))
+				nearby_spot = proxturf
+				break
+		if(nearby_spot)
+			showswirl(nearby_spot)
+			new /obj/item/raw_material/starstone(nearby_spot)
+		animate(src, alpha = 0, time = 16, easing = BACK_EASING)
+	SPAWN(3 SECONDS)
+		qdel(src)
+
+/obj/anomaly/pale/disposing()
+	src.vis_contents -= src.shroud
+	qdel(src.shroud)
+	src.shroud = null
+	STOP_TRACKING_CAT(TR_CAT_RADIO_JAMMERS)
+	. = ..()
+
+/obj/anomaly/pale/process()
+	. = ..()
+	if (src.effect_tick > 0)
+		src.effect_tick--
+		return
+
+	//Always gains anomaly strength each cycle, your interdictor(s) will need to overcome it either acutely or in the long haul
+	src.anomaly_strength = min(src.anomaly_strength + rand(1,2), src.max_anomaly_strength)
+
+	for_by_tcl(IX, /obj/machinery/interdictor)
+		if (src.anomaly_strength <= 1) break
+		///Estimate how strong of an interruption we can steadily apply, based on the amount of charge remaining in the internal capacitor
+		var/target_strength = floor(IX.intcap.charge/2500)
+		///Each interrupt strength costs 1,500 cell units and cuts 1 current and maximum anomaly strength
+		var/interrupt_strength = clamp(target_strength,1,3)
+		if (IX.expend_interdict(interrupt_strength*1500, src))
+			if(src.max_anomaly_strength == initial(src.max_anomaly_strength)) //haven't interdicted yet
+				playsound(IX,'sound/machines/alarm_a.ogg',20,FALSE,5,-1.5)
+				IX.visible_message(SPAN_ALERT("<b>[IX] emits an unknown anomaly warning!</b>"))
+			src.max_anomaly_strength = max(src.max_anomaly_strength - interrupt_strength, 1)
+			src.anomaly_strength = max(src.anomaly_strength - interrupt_strength, src.max_anomaly_strength, 1)
+
+	playsound(src.loc, "sound/items/pickup_[rand(1,3)].ogg", 50, 0, pitch = 0.2, extrarange = 24)
+
+	var/kernel_alpha = 66 + (anomaly_strength*2)
+	animate(src, alpha = kernel_alpha, time = 6 SECONDS, easing = LINEAR_EASING)
+
+	var/anom_alpha = min(10 + (anomaly_strength*2), 45)
+	var/anom_scale = 0.17 * anomaly_strength
+	animate(src.shroud, alpha = anom_alpha, time = 6 SECONDS, transform = matrix()*anom_scale, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
+	if(src.anomaly_strength <= 1) src.shut_anomaly()
+
+	src.effect_tick = initial(src.effect_tick) - rand(0,2)
+
+/obj/anomaly/pale/get_help_message(dist, mob/user)
+	. = ..()
+	if (ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.traitHolder.hasTraitInList(list("training_scientist")))
+			return "There's some sort of field emanating from this. It might be possible to close it with a <b>spatial interdictor</b>."
+		if(H.traitHolder.hasTraitInList(list("training_engineer")))
+			return "The ambient hum of the station is unnervingly dull. Seems like trouble - a <b>spatial interdictor</b> might be warranted."
+
+/obj/effect/pale_shroud
+	icon = 'icons/effects/320x320.dmi'
+	icon_state = "background"
+	pixel_x = -144
+	pixel_y = -144
+	color = "#a4aaac"
+	blend_mode = BLEND_OVERLAY
+	plane = OVERLAY_EFFECT_LAYER_BASE
+	appearance_flags = RESET_COLOR | RESET_ALPHA
+	alpha = 0
