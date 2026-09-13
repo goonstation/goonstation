@@ -68,7 +68,7 @@ export const CaptureStandby = (props: {
         {hasBufferedPackets
           ? 'No buffered frames match this search.'
           : connected
-            ? 'Listening network packets matching the sender mask.'
+            ? 'Listening for network packets matching the sender mask.'
             : 'Attach the sniffer to an exposed data terminal to capture packets.'}
       </Stack.Item>
       <Stack.Item color={connected ? 'good' : 'average'}>
