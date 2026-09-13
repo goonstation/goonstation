@@ -285,19 +285,21 @@ triggerOnImage(var/image/target, var/datum/material/source)
 	execute(var/atom/location)
 		var/datum/component/radioactive/rad_comp = location.GetComponent(/datum/component/radioactive)
 		rad_comp?.RemoveComponent()
+		APPLY_ATOM_PROPERTY(location, PROP_ATOM_NEVER_RADIOACTIVE, "never_radioactive")
 		if(ismob(location))
 			// Have mobs made out of batiline be immune to radiation
 			var/mob/M = location
-			APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, src, 100)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, "never_radioactive", 100)
 		return
 
 /datum/materialProc/radiation_immune_remove
 	execute(var/atom/location)
 		var/datum/component/radioactive/rad_comp = location.GetComponent(/datum/component/radioactive)
 		rad_comp?.RemoveComponent() // Can still get a radiation component after the material is added
+		REMOVE_ATOM_PROPERTY(location, PROP_ATOM_NEVER_RADIOACTIVE, "never_radioactive")
 		if(ismob(location))
 			var/mob/M = location
-			REMOVE_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, src)
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, "never_radioactive")
 		return
 
 /datum/materialProc/telecrystal_entered
