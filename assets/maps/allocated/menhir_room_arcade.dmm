@@ -1,0 +1,574 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/unsimulated/floor/void,
+/area/unspace/arcade)
+"b" = (
+/obj/machinery/sim/vr_bed{
+	dir = 4
+	},
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/arcade)
+"c" = (
+/turf/unsimulated/wall/auto/adventure/icemooninterior,
+/area/unspace/arcade)
+"d" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/arcade)
+"g" = (
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/arcade)
+"h" = (
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/arcade)
+"j" = (
+/obj/submachine/claw_machine/menhir_room,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/unspace/arcade)
+"l" = (
+/obj/map/light/cyan/menhir,
+/obj/stool/chair{
+	dir = 8
+	},
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/arcade)
+"m" = (
+/obj/machinery/vending/cards,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/arcade)
+"o" = (
+/obj/machinery/vending/snack,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 8
+	},
+/area/unspace/arcade)
+"q" = (
+/obj/machinery/door/unpowered/blue,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/unspace/arcade)
+"r" = (
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/wall/auto/adventure/icemooninterior,
+/area/unspace/arcade)
+"s" = (
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/unspace/arcade)
+"t" = (
+/turf/unsimulated/floor/void/timewarp,
+/area/unspace/arcade)
+"u" = (
+/obj/map/light/cyan/menhir,
+/obj/reagent_dispensers/watertank/fountain,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/arcade)
+"v" = (
+/obj/machinery/computer/tetris,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 8
+	},
+/area/unspace/arcade)
+"w" = (
+/obj/machinery/computer/arcade,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/arcade)
+"x" = (
+/obj/table/clothred/auto,
+/obj/item/reagent_containers/food/snacks/cube{
+	pixel_y = 5;
+	pixel_x = 1
+	},
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/arcade)
+"y" = (
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/arcade)
+"z" = (
+/obj/stool/bar,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/arcade)
+"A" = (
+/obj/submachine/claw_machine,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/unspace/arcade)
+"B" = (
+/obj/machinery/door/unpowered/blue,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/arcade)
+"F" = (
+/obj/machinery/door/unpowered/blue,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/arcade)
+"G" = (
+/obj/stool/chair/couch{
+	dir = 4
+	},
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/arcade)
+"I" = (
+/obj/item/device/camera_viewer/public,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/arcade)
+"J" = (
+/obj/landmark/menhir/room{
+	tag = "menhir_room_arcade"
+	},
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/arcade)
+"K" = (
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/arcade)
+"L" = (
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 8
+	},
+/area/unspace/arcade)
+"P" = (
+/obj/stool/bar,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/arcade)
+"Q" = (
+/obj/stool/bar,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/unspace/arcade)
+"R" = (
+/obj/machinery/door/unpowered/blue{
+	dir = 4
+	},
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/arcade)
+"T" = (
+/obj/stool/chair/couch{
+	dir = 8
+	},
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/arcade)
+"U" = (
+/obj/machinery/door/unpowered/blue{
+	dir = 4
+	},
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/arcade)
+"Y" = (
+/obj/machinery/vending/capsule,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/arcade)
+
+(1,1,1) = {"
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+a
+a
+a
+"}
+(2,1,1) = {"
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+a
+a
+a
+"}
+(3,1,1) = {"
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+a
+a
+a
+"}
+(4,1,1) = {"
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+a
+a
+a
+"}
+(5,1,1) = {"
+a
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+a
+a
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+a
+a
+a
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+t
+t
+t
+t
+t
+t
+t
+t
+t
+a
+a
+a
+a
+a
+a
+"}
+(8,1,1) = {"
+a
+a
+a
+a
+t
+t
+t
+t
+t
+t
+t
+a
+c
+c
+c
+c
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+a
+t
+t
+t
+t
+t
+a
+a
+c
+l
+I
+c
+c
+c
+"}
+(10,1,1) = {"
+a
+a
+a
+a
+a
+c
+t
+t
+t
+c
+a
+a
+c
+d
+h
+d
+u
+c
+"}
+(11,1,1) = {"
+c
+c
+c
+c
+c
+c
+c
+J
+c
+c
+c
+c
+c
+c
+R
+c
+c
+c
+"}
+(12,1,1) = {"
+c
+b
+h
+K
+h
+b
+c
+s
+c
+j
+r
+A
+Q
+c
+L
+s
+o
+c
+"}
+(13,1,1) = {"
+c
+c
+c
+U
+c
+c
+c
+K
+c
+z
+g
+g
+g
+B
+h
+g
+P
+c
+"}
+(14,1,1) = {"
+c
+b
+h
+K
+h
+b
+c
+g
+c
+c
+c
+c
+c
+c
+c
+g
+w
+c
+"}
+(15,1,1) = {"
+c
+c
+c
+U
+c
+c
+c
+K
+g
+g
+F
+K
+g
+g
+h
+K
+c
+c
+"}
+(16,1,1) = {"
+c
+b
+h
+K
+h
+b
+c
+c
+c
+c
+c
+v
+z
+x
+T
+g
+P
+c
+"}
+(17,1,1) = {"
+c
+c
+c
+U
+c
+c
+c
+Y
+c
+m
+c
+c
+c
+c
+G
+g
+w
+c
+"}
+(18,1,1) = {"
+c
+b
+h
+K
+h
+s
+q
+L
+s
+L
+s
+s
+s
+q
+y
+s
+c
+c
+"}
+(19,1,1) = {"
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+a
+"}

@@ -1,0 +1,672 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/unsimulated/floor/void,
+/area/unspace/hangar)
+"b" = (
+/obj/machinery/door_control/east,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 8
+	},
+/area/unspace/hangar)
+"c" = (
+/turf/unsimulated/wall/auto/adventure/icemooninterior,
+/area/unspace/hangar)
+"d" = (
+/obj/map/light/cyan/menhir,
+/obj/item/clothing/under/rank/mechanic{
+	pixel_y = -3;
+	pixel_x = 8
+	},
+/obj/item/tank/mini/oxygen{
+	pixel_y = -9
+	},
+/obj/item/clothing/gloves/yellow/unsulated{
+	pixel_y = -6;
+	pixel_x = 4
+	},
+/obj/item/clothing/mask/breath{
+	pixel_y = 6;
+	pixel_x = 9
+	},
+/obj/item/clothing/head/helmet/hardhat{
+	pixel_y = 6
+	},
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/hangar)
+"f" = (
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/hangar)
+"g" = (
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/hangar)
+"h" = (
+/obj/machinery/vending/air_vendor/plasma,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 8
+	},
+/area/unspace/hangar)
+"i" = (
+/obj/machinery/light/runway_light/delay2,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/hangar)
+"j" = (
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/unspace/hangar)
+"k" = (
+/obj/item/wrench,
+/obj/item/storage/toolbox/mechanical/empty{
+	pixel_y = 5;
+	pixel_x = -10
+	},
+/obj/item/clothing/shoes/magnetic{
+	pixel_y = 18;
+	pixel_x = 5
+	},
+/obj/menhir_room_objs/hidey_helper,
+/obj/item/sub/boards{
+	pixel_y = -9;
+	pixel_x = 5
+	},
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/hangar)
+"l" = (
+/obj/menhir_room_objs/hidey_helper,
+/obj/item/podarmor/armor_light{
+	pixel_y = 1;
+	pixel_x = -2
+	},
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/hangar)
+"m" = (
+/obj/storage/closet/welding_supply,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/hangar)
+"n" = (
+/obj/machinery/light/runway_light/delay3,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/hangar)
+"p" = (
+/obj/machinery/portable_reclaimer,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 8
+	},
+/area/unspace/hangar)
+"q" = (
+/obj/item/extinguisher{
+	pixel_y = 9;
+	pixel_x = -4
+	},
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/hangar)
+"s" = (
+/obj/random_item_spawner/tools/one_or_zero,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/hangar)
+"t" = (
+/turf/unsimulated/floor/void/timewarp,
+/area/unspace/hangar)
+"u" = (
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_y = -1;
+	pixel_x = 6
+	},
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/hangar)
+"v" = (
+/obj/map/light/cyan/menhir,
+/obj/machinery/light/runway_light/delay4,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/hangar)
+"x" = (
+/obj/table/reinforced/industrial/auto,
+/obj/menhir_room_objs/hidey_helper,
+/obj/item/reagent_containers/food/snacks/cube{
+	pixel_y = 2;
+	pixel_x = 6
+	},
+/obj/item/device/radio{
+	pixel_y = 4;
+	pixel_x = -6
+	},
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/hangar)
+"y" = (
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/floor/void,
+/area/unspace/hangar)
+"z" = (
+/obj/beaconkit,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/hangar)
+"A" = (
+/obj/reagent_dispensers/foamtank,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/hangar)
+"B" = (
+/obj/menhir_room_objs/hidey_helper_trigger,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/hangar)
+"C" = (
+/obj/item/shipcomponent/secondary_system/lock/pw_id{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/hangar)
+"D" = (
+/obj/structure/vehicleframe/subframe{
+	stage = 3;
+	icon_state = "frame"
+	},
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/hangar)
+"E" = (
+/obj/reagent_dispensers/fueltank,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/hangar)
+"H" = (
+/obj/machinery/portable_atmospherics/canister/air/large,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 8
+	},
+/area/unspace/hangar)
+"J" = (
+/obj/landmark/menhir/room{
+	tag = "menhir_room_hangar"
+	},
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/hangar)
+"K" = (
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/hangar)
+"L" = (
+/obj/menhir_room_objs/hidey_helper,
+/obj/random_item_spawner/tools/one_or_zero,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/hangar)
+"M" = (
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/hangar)
+"N" = (
+/obj/machinery/light/runway_light/delay3,
+/obj/item/crowbar{
+	pixel_y = 10;
+	pixel_x = -8
+	},
+/obj/item/weldingtool/orange{
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/hangar)
+"O" = (
+/obj/item/cable_coil{
+	pixel_x = 1;
+	pixel_y = -3
+	},
+/obj/item/shipcomponent/secondary_system/cargo{
+	pixel_y = 4;
+	pixel_x = -6
+	},
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/hangar)
+"P" = (
+/obj/map/light/cyan/menhir,
+/obj/machinery/light/runway_light,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/hangar)
+"R" = (
+/obj/menhir_room_objs/hidey_helper,
+/obj/item/sub/engine{
+	pixel_y = -5;
+	pixel_x = -8
+	},
+/obj/item/sub/control{
+	pixel_y = -2;
+	pixel_x = 8
+	},
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/hangar)
+"S" = (
+/obj/stool/chair/black{
+	dir = 4
+	},
+/obj/menhir_room_objs/hidey_helper,
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/hangar)
+"T" = (
+/obj/item/shipcomponent/mainweapon/constructor{
+	pixel_y = 2;
+	pixel_x = -4
+	},
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/hangar)
+"U" = (
+/obj/random_item_spawner/tools/one_or_zero,
+/obj/menhir_room_objs/hidey_helper,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/hangar)
+"X" = (
+/obj/machinery/door/unpowered/blue,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/hangar)
+"Y" = (
+/obj/menhir_room_objs/hidey_helper,
+/obj/item/device/gps,
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 4
+	},
+/area/unspace/hangar)
+
+(1,1,1) = {"
+a
+a
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+"}
+(2,1,1) = {"
+a
+a
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+"}
+(3,1,1) = {"
+a
+a
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+"}
+(4,1,1) = {"
+a
+a
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+"}
+(5,1,1) = {"
+a
+a
+a
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+a
+"}
+(6,1,1) = {"
+a
+a
+a
+a
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+t
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+a
+a
+t
+t
+t
+t
+t
+t
+t
+t
+t
+a
+a
+a
+"}
+(8,1,1) = {"
+a
+a
+a
+a
+a
+a
+t
+t
+t
+t
+t
+t
+t
+a
+a
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+t
+t
+t
+t
+t
+a
+a
+a
+a
+a
+"}
+(10,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+c
+t
+t
+t
+c
+a
+a
+a
+a
+a
+"}
+(11,1,1) = {"
+c
+c
+c
+c
+c
+c
+c
+c
+c
+J
+c
+c
+a
+a
+a
+a
+a
+"}
+(12,1,1) = {"
+c
+h
+P
+q
+P
+p
+c
+M
+c
+j
+c
+a
+a
+a
+a
+a
+a
+"}
+(13,1,1) = {"
+c
+U
+R
+E
+L
+z
+c
+Y
+c
+K
+c
+y
+a
+a
+a
+a
+a
+"}
+(14,1,1) = {"
+c
+U
+i
+s
+i
+B
+X
+M
+c
+g
+c
+a
+a
+a
+a
+a
+a
+"}
+(15,1,1) = {"
+c
+A
+d
+k
+K
+l
+c
+M
+g
+K
+c
+a
+a
+a
+a
+a
+a
+"}
+(16,1,1) = {"
+c
+O
+N
+D
+n
+u
+c
+M
+c
+c
+c
+a
+a
+a
+a
+a
+a
+"}
+(17,1,1) = {"
+c
+T
+s
+C
+f
+m
+c
+S
+c
+a
+a
+y
+a
+a
+a
+a
+a
+"}
+(18,1,1) = {"
+c
+b
+v
+g
+v
+H
+c
+x
+c
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(19,1,1) = {"
+c
+c
+c
+c
+c
+c
+c
+c
+c
+a
+a
+a
+a
+a
+a
+a
+a
+"}

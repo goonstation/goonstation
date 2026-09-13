@@ -102,7 +102,7 @@ ABSTRACT_TYPE(/datum/mapPrefab/allocated)
 /datum/mapPrefab/allocated/syndicate_hideout/cafe
 	name = "Syndicafé"
 	prefabPath = "assets/maps/allocated/syndicate_hideouts/syndicafe.dmm"
-  
+
 /datum/mapPrefab/allocated/syndicate_hideout/dojo
 	name = "Dojo"
 	prefabPath = "assets/maps/allocated/syndicate_hideouts/dojo.dmm"
@@ -134,6 +134,36 @@ ABSTRACT_TYPE(/datum/mapPrefab/allocated)
 	prefabSizeX = 20
 	prefabSizeY = 28
 	prefabPath = "assets/maps/allocated/menhir_room_cavern.dmm"
+
+/datum/mapPrefab/allocated/menhir_room_hangar
+	name = "menhir_room_hangar"
+	prefabSizeX = 19
+	prefabSizeY = 17
+	prefabPath = "assets/maps/allocated/menhir_room_hangar.dmm"
+
+/datum/mapPrefab/allocated/menhir_room_genpop
+	name = "menhir_room_genpop"
+	prefabSizeX = 19
+	prefabSizeY = 23
+	prefabPath = "assets/maps/allocated/menhir_room_genpop.dmm"
+
+/datum/mapPrefab/allocated/menhir_room_arcade
+	name = "menhir_room_arcade"
+	prefabSizeX = 19
+	prefabSizeY = 18
+	prefabPath = "assets/maps/allocated/menhir_room_arcade.dmm"
+
+/datum/mapPrefab/allocated/menhir_room_depths
+	name = "menhir_room_depths"
+	prefabSizeX = 32
+	prefabSizeY = 31
+	prefabPath = "assets/maps/allocated/menhir_room_depths.dmm"
+
+/datum/mapPrefab/allocated/menhir_room_enigma
+	name = "menhir_room_enigma"
+	prefabSizeX = 34
+	prefabSizeY = 23
+	prefabPath = "assets/maps/allocated/menhir_room_enigma.dmm"
 
 /datum/mapPrefab/allocated/menhir_room_bball
 	name = "menhir_room_bball"

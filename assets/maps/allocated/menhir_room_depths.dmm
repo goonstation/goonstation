@@ -1,0 +1,1914 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ak" = (
+/obj/decal/cleanable/dirt,
+/obj/shrub/dead,
+/obj/item/reagent_containers/patch/LSD{
+	pixel_x = 5
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"aL" = (
+/obj/table/reinforced/auto,
+/obj/machinery/cell_charger,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"bv" = (
+/obj/rack,
+/obj/item/clothing/head/emerg,
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"bw" = (
+/turf/unsimulated/floor/void/timewarp,
+/area/unspace/depths)
+"bx" = (
+/obj/landmark/menhir/room{
+	tag = "menhir_room_depths"
+	},
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/depths)
+"by" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/space/fluid/noexplosion,
+/area/dank_trench)
+"ct" = (
+/obj/decal/cleanable/dirt,
+/obj/table/wood/auto,
+/obj/item/boardgame/chess,
+/obj/item/decoration/ashtray{
+	butts = 5;
+	name = "grubby old ashtray";
+	pixel_x = -7
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"cD" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"dc" = (
+/obj/decal/cleanable/dirt,
+/obj/item/reagent_containers/glass/bucket,
+/obj/machinery/light/emergency{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"dq" = (
+/obj/item/scissors,
+/obj/item/rubberduck{
+	pixel_x = -7;
+	pixel_y = 8
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/unsimulated/floor/damaged3,
+/area/dank_trench)
+"dB" = (
+/obj/storage/crate/trench_loot/drug,
+/turf/space/fluid/noexplosion/nospawn,
+/area/dank_trench)
+"dV" = (
+/obj/decal/cleanable/dirt,
+/obj/storage/crate,
+/obj/item/bee_egg_carton,
+/obj/item/hand_labeler,
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"dW" = (
+/obj/machinery/plantpot,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"ex" = (
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/depths)
+"eG" = (
+/obj/stool/chair/comfy{
+	dir = 1;
+	icon_state = "chair_comfy"
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"fq" = (
+/obj/machinery/power/furnace,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"fy" = (
+/obj/item/device/light/glowstick{
+	pixel_x = -13;
+	pixel_y = 7
+	},
+/obj/item/plant/herb/catnip,
+/obj/item/paper{
+	pixel_x = -13;
+	pixel_y = -11
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"hn" = (
+/obj/decal/cleanable/dirt,
+/obj/stool/chair/comfy{
+	dir = 1;
+	icon_state = "chair_comfy"
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"hA" = (
+/obj/item/cable_coil,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"hC" = (
+/obj/storage/crate/furnacefuel,
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"ib" = (
+/obj/item/clothing/mask/breath,
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"kc" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/item/item_box/swedish_bag{
+	icon_state = "swedishfisk-open";
+	item_amount = 4;
+	name = "dirty bag of swedish fisk";
+	open = 1
+	},
+/turf/unsimulated/floor/black/grime,
+/area/dank_trench)
+"ky" = (
+/obj/decal/cleanable/dirt,
+/obj/item/mop,
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"kY" = (
+/obj/item/raw_material/rock,
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/machinery/light/emergency{
+	dir = 1;
+	pixel_y = 16
+	},
+/turf/space/fluid/noexplosion,
+/area/dank_trench)
+"ls" = (
+/obj/reagent_dispensers/watertank,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"lW" = (
+/turf/unsimulated/floor/setpieces/bluefloor{
+	dir = 1
+	},
+/area/unspace/depths)
+"lX" = (
+/obj/decoration/toiletholder{
+	pixel_y = 32
+	},
+/obj/machinery/sink/slim{
+	dir = 8;
+	pixel_x = 8
+	},
+/obj/decal/cleanable/greenpuke,
+/obj/item/reagent_containers/ampoule/smelling_salts{
+	pixel_x = -9;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine{
+	pixel_x = 3;
+	pixel_y = -9
+	},
+/turf/unsimulated/floor/sanitary/blue,
+/area/dank_trench)
+"mh" = (
+/obj/item/satchel/hydro,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"mm" = (
+/obj/sea_plant/seaweed,
+/obj/item/crowbar/red,
+/turf/space/fluid/noexplosion/nospawn,
+/area/dank_trench)
+"mo" = (
+/obj/decal/cleanable/dirt,
+/obj/rack,
+/obj/item/tank/air,
+/obj/item/clothing/suit/space/emerg,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"mF" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/stool/chair{
+	dir = 8
+	},
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"mX" = (
+/obj/reagent_dispensers/still,
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"nu" = (
+/obj/decal/cleanable/vomit,
+/obj/item/storage/pill_bottle/cyberpunk{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/turf/unsimulated/floor/sanitary/blue,
+/area/dank_trench)
+"oK" = (
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"oT" = (
+/turf/space/fluid/noexplosion,
+/area/dank_trench)
+"pc" = (
+/obj/machinery/portable_reclaimer,
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"pT" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/black,
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"qb" = (
+/obj/decal/cleanable/fungus,
+/turf/unsimulated/wall/auto/supernorn,
+/area/dank_trench)
+"qu" = (
+/obj/fakeobject/creepytv{
+	desc = "There's a gummy layer of dust over the controls."
+	},
+/obj/map/light/screen,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"qw" = (
+/obj/machinery/power/furnace,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"qS" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"ri" = (
+/turf/unsimulated/wall/trench/side,
+/area/dank_trench)
+"rk" = (
+/turf/space/fluid/noexplosion/nospawn,
+/area/dank_trench)
+"rJ" = (
+/obj/table/auto,
+/obj/item/device/reagentscanner{
+	pixel_x = -6;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/glass/beaker{
+	pixel_x = 8;
+	pixel_y = 18
+	},
+/obj/item/reagent_containers/glass/beaker{
+	pixel_x = 6;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/syringe{
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/applicator/condiment/shaker/salt{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/obj/item/plant/herb/cannabis/white/spawnable{
+	pixel_x = -4;
+	pixel_y = 3
+	},
+/turf/unsimulated/floor/black/grime,
+/area/dank_trench)
+"sp" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"sG" = (
+/obj/rack,
+/obj/item/sheet/steel{
+	amount = 10
+	},
+/obj/item/sheet/glass{
+	amount = 10
+	},
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"sY" = (
+/obj/storage/crate{
+	name = "furnace fuel crate"
+	},
+/obj/item/plant/herb/cannabis/omega/spawnable,
+/obj/item/plant/herb/cannabis/omega/spawnable,
+/obj/item/plant/herb/cannabis/omega/spawnable,
+/obj/item/plant/herb/cannabis/omega/spawnable,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"tO" = (
+/obj/stool/chair/office/green{
+	dir = 8
+	},
+/obj/decal/cleanable/generic{
+	desc = "Smells vaguely of eggs and mint.";
+	name = "weird flakes"
+	},
+/turf/unsimulated/floor/black/grime,
+/area/dank_trench)
+"ui" = (
+/obj/landmark/fall/sea/marj,
+/obj/sea_plant/seaweed,
+/turf/space/fluid/noexplosion/nospawn,
+/area/dank_trench)
+"uC" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"vh" = (
+/turf/unsimulated/floor/void,
+/area/unspace/depths)
+"vj" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/item/plant/herb/cannabis/spawnable,
+/obj/item/reagent_containers/glass/bottle/diethylamine{
+	pixel_x = 6
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"vy" = (
+/turf/unsimulated/wall/auto/adventure/icemooninterior,
+/area/unspace/depths)
+"wA" = (
+/obj/item/raw_material/rock,
+/turf/space/fluid/noexplosion,
+/area/dank_trench)
+"xE" = (
+/obj/item/plant/herb/cannabis/spawnable,
+/obj/decal/cleanable/dirt/jen,
+/obj/item/reagent_containers/glass/wateringcan,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"xJ" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"zb" = (
+/obj/item/reagent_containers/food/snacks/chips,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"zM" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/drainage,
+/turf/unsimulated/floor/sanitary/blue,
+/area/dank_trench)
+"Au" = (
+/obj/decal/cleanable/machine_debris,
+/turf/space/fluid/noexplosion,
+/area/dank_trench)
+"AI" = (
+/obj/table/reinforced/auto,
+/obj/item/paper_bin,
+/obj/item/weldingtool{
+	pixel_x = 15;
+	pixel_y = 4
+	},
+/obj/item/device/light/zippo{
+	pixel_x = -3;
+	pixel_y = 6
+	},
+/obj/machinery/power/apc/autoname_north/nopoweralert{
+	environ = 2;
+	equipment = 2;
+	lighting = 2;
+	locked = 0;
+	operating = 0;
+	start_charge = 23
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Bc" = (
+/obj/decal/cleanable/dirt,
+/turf/unsimulated/floor/black/grime,
+/area/dank_trench)
+"Bj" = (
+/turf/unsimulated/wall/trench,
+/area/dank_trench)
+"Br" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"Bv" = (
+/obj/storage/crate,
+/obj/item/reagent_containers/glass/bottle/ammonia/janitors{
+	pixel_x = 4
+	},
+/obj/item/reagent_containers/glass/bottle/eyedrops{
+	pixel_x = -7
+	},
+/obj/item/reagent_containers/glass/beaker{
+	pixel_x = -6;
+	pixel_y = -4
+	},
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"CL" = (
+/obj/machinery/plantpot,
+/obj/decal/cleanable/dirt/jen,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Dc" = (
+/turf/unsimulated/wall/auto/supernorn,
+/area/dank_trench)
+"Dr" = (
+/obj/decal/cleanable/rust,
+/turf/unsimulated/wall/auto/supernorn,
+/area/dank_trench)
+"Dt" = (
+/obj/table/auto,
+/obj/item/reagent_containers/glass/bottle/ammonia{
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/glass/bottle/topcrop{
+	pixel_x = 8
+	},
+/obj/item/reagent_containers/glass/bottle/powerplant{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/dropper{
+	pixel_x = -2;
+	pixel_y = -10
+	},
+/turf/unsimulated/floor/black/grime,
+/area/dank_trench)
+"DJ" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/manufacturer/general/grody,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"DM" = (
+/obj/stool/chair/comfy,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"DU" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"EU" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/clothing/head/helmet/welding{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"FD" = (
+/obj/decal/cleanable/dirt,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/unsimulated/floor/black/grime,
+/area/dank_trench)
+"FE" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/item/pen,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"FQ" = (
+/obj/decal/cleanable/machine_debris{
+	icon_state = "gib7"
+	},
+/turf/space/fluid/noexplosion,
+/area/dank_trench)
+"FU" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/space/fluid/noexplosion/nospawn,
+/area/dank_trench)
+"GN" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/decal/cleanable/dirt/jen,
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/black,
+/obj/machinery/light_switch/directional/west,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Hd" = (
+/obj/machinery/chem_master,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/unsimulated/floor/black/grime,
+/area/dank_trench)
+"IT" = (
+/obj/machinery/door/unpowered/blue,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/depths)
+"IU" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/item/reagent_containers/food/snacks/cookie{
+	desc = "Covered in a thick layer of dust, yet seems to be perfectly preserved. The finest of food chemistry at work.";
+	name = "very old sugar cookie";
+	pixel_x = 1;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/food/snacks/condiment/hotsauce{
+	pixel_x = -5
+	},
+/obj/item/storage/wall/random{
+	dir = 4;
+	pixel_x = -32;
+	pixel_y = 0
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Js" = (
+/obj/cable{
+	icon_state = "1-9"
+	},
+/obj/item/bluntwrap{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/item/bluntwrap{
+	pixel_y = -3
+	},
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"Jw" = (
+/obj/decal/cleanable/dirt,
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Kq" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt/jen,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"KB" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/vending/standard,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"KW" = (
+/obj/item/storage/toilet{
+	dir = 4
+	},
+/obj/decal/cleanable/fungus,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/unsimulated/floor/sanitary/blue,
+/area/dank_trench)
+"LV" = (
+/obj/item/reagent_containers/food/snacks/chips,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"No" = (
+/obj/machinery/hydro_growlamp,
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"Nr" = (
+/obj/machinery/plantpot,
+/obj/decal/cleanable/dirt/jen,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"NK" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/cable{
+	icon_state = "6-8"
+	},
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/cleanable/paper,
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"Om" = (
+/obj/decal/cleanable/machine_debris{
+	icon_state = "gib7"
+	},
+/turf/space/fluid/noexplosion/nospawn,
+/area/dank_trench)
+"On" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/forcefield/energyshield/perma/doorlink,
+/obj/mapping_helper/airlock/bolter,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"OS" = (
+/obj/sea_plant/seaweed,
+/turf/space/fluid/noexplosion/nospawn,
+/area/dank_trench)
+"OX" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"Pb" = (
+/obj/map/light/cyan/menhir,
+/turf/unsimulated/floor/setpieces/bluefloor,
+/area/unspace/depths)
+"Pd" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"PQ" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/decal/cleanable/dirt/jen,
+/obj/item/furniture_parts/office_chair/green,
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"Qb" = (
+/obj/machinery/drainage,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"QS" = (
+/obj/decal/cleanable/dirt,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"QU" = (
+/obj/storage/crate/bin,
+/obj/item/reagent_containers/food/snacks/pickle/trash{
+	pixel_y = 3
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"QV" = (
+/obj/item/scrap,
+/turf/space/fluid/noexplosion,
+/area/dank_trench)
+"RJ" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/space/fluid/noexplosion,
+/area/dank_trench)
+"RQ" = (
+/obj/machinery/vending/snack{
+	credit = 43
+	},
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Sh" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"St" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/sanitary/blue,
+/area/dank_trench)
+"Tk" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "1-9"
+	},
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"Tz" = (
+/obj/submachine/seed_manipulator{
+	desc = "A seed manipulation machine. It's seen a lot of use.";
+	name = "gummed-up PlantMaster"
+	},
+/obj/decal/poster/wallsign/poster_rand{
+	pixel_y = 28
+	},
+/obj/decal/cleanable/dirt/dirt3,
+/turf/unsimulated/floor/black/grime,
+/area/dank_trench)
+"UB" = (
+/obj/item/scrap,
+/obj/sea_plant/seaweed,
+/turf/space/fluid/noexplosion/nospawn,
+/area/dank_trench)
+"Wn" = (
+/obj/landmark/fall/sea/marj,
+/turf/space/fluid/noexplosion,
+/area/dank_trench)
+"WC" = (
+/obj/decal/cleanable/dirt,
+/obj/stool/chair/office{
+	dir = 8
+	},
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"WY" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Xg" = (
+/obj/submachine/chem_extractor{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/decal/cleanable/dirt/dirt5,
+/turf/unsimulated/floor/black/grime,
+/area/dank_trench)
+"XF" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/mopbucket,
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"Yf" = (
+/obj/item/device/light/flashlight{
+	pixel_x = 4;
+	pixel_y = -8
+	},
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Yp" = (
+/obj/item/paper{
+	info = "rico you remember the marijuana trench back on earth this is just like that. marijuana trench 2. carl";
+	name = "odd note"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/unsimulated/floor/plating,
+/area/dank_trench)
+"Za" = (
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"Zs" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/black/grime,
+/area/dank_trench)
+"Zw" = (
+/obj/item/seed/cannabis,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+"ZR" = (
+/obj/machinery/door/airlock/pyro/classic,
+/turf/unsimulated/floor/grime,
+/area/dank_trench)
+
+(1,1,1) = {"
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+vh
+vh
+vh
+vh
+vh
+"}
+(2,1,1) = {"
+Bj
+ri
+OS
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+ri
+QV
+OS
+Bj
+Bj
+ri
+Om
+Bj
+ri
+UB
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+vh
+vh
+vh
+vh
+vh
+"}
+(3,1,1) = {"
+Bj
+ri
+QV
+Bj
+ri
+oT
+oT
+OS
+FU
+oT
+oT
+RJ
+oT
+Bj
+ri
+UB
+Wn
+oT
+wA
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+vh
+vh
+vh
+vh
+vh
+"}
+(4,1,1) = {"
+Bj
+ri
+oT
+OS
+oT
+wA
+Bj
+ri
+FQ
+OS
+oT
+oT
+OS
+RJ
+oT
+oT
+oT
+OS
+oT
+Wn
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+vh
+vh
+vh
+vh
+vh
+"}
+(5,1,1) = {"
+Bj
+Bj
+ri
+oT
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+ri
+wA
+RJ
+oT
+OS
+oT
+oT
+RJ
+oT
+OS
+wA
+Bj
+Bj
+Bj
+Bj
+Bj
+vh
+vh
+vh
+vh
+vh
+"}
+(6,1,1) = {"
+Bj
+Bj
+ri
+OS
+Bj
+Bj
+Bj
+Dc
+Dc
+Dc
+Dc
+Br
+Br
+Br
+Dc
+Bj
+ri
+oT
+Wn
+oT
+OS
+Bj
+Bj
+Bj
+Bj
+Bj
+vh
+vh
+vh
+vh
+vh
+"}
+(7,1,1) = {"
+Bj
+Bj
+ri
+RJ
+Bj
+Bj
+Bj
+Dc
+KW
+nu
+Dc
+qu
+LV
+hn
+Dc
+Bj
+Bj
+ri
+UB
+oT
+RJ
+oT
+Bj
+Bj
+Bj
+Bj
+vh
+vh
+vh
+vh
+vh
+"}
+(8,1,1) = {"
+Bj
+ri
+OS
+QV
+Dc
+Dc
+Dc
+Dc
+lX
+zM
+Dc
+ak
+fy
+QU
+Dc
+Bj
+Bj
+ri
+Om
+oT
+oT
+oT
+ui
+Bj
+Bj
+Bj
+vh
+vh
+vh
+vh
+vh
+"}
+(9,1,1) = {"
+Bj
+ri
+RJ
+OS
+Br
+CL
+ls
+Dc
+Dc
+St
+Dc
+Dc
+Sh
+Dc
+Dc
+Dc
+Dc
+Dc
+Dc
+kY
+Wn
+OS
+QV
+Bj
+Bj
+Bj
+vh
+vh
+vh
+vh
+vh
+"}
+(10,1,1) = {"
+Bj
+ri
+wA
+oT
+Br
+vj
+Zw
+mX
+Br
+DU
+dc
+IU
+Za
+GN
+pT
+Dc
+bv
+mo
+Dc
+by
+oT
+RJ
+oT
+mm
+Bj
+Bj
+vh
+vh
+vh
+vh
+vh
+"}
+(11,1,1) = {"
+Bj
+ri
+QV
+OS
+Br
+mh
+Pd
+Pd
+ZR
+QS
+Za
+Za
+Za
+Za
+Pd
+sp
+Qb
+Za
+On
+rk
+oT
+oT
+oT
+Au
+Bj
+Bj
+vh
+vh
+vh
+vh
+vh
+"}
+(12,1,1) = {"
+Bj
+ri
+oT
+RJ
+Br
+Zw
+xE
+WY
+Br
+Pd
+DM
+ct
+eG
+Za
+RQ
+Dc
+Yf
+dq
+Dc
+OS
+Bj
+ri
+oT
+oT
+Bj
+Bj
+vh
+vh
+vh
+vh
+vh
+"}
+(13,1,1) = {"
+Bj
+ri
+OS
+oT
+Br
+Nr
+dW
+Dc
+Dc
+Zs
+Dc
+Dc
+Dc
+cD
+Dc
+Dc
+Dc
+Dc
+Dc
+Bj
+Bj
+Bj
+ri
+Wn
+OS
+Bj
+vh
+vh
+vh
+vh
+vh
+"}
+(14,1,1) = {"
+Bj
+Bj
+ri
+oT
+Dc
+Dc
+Dc
+Dc
+Hd
+Bc
+kc
+qb
+DJ
+Za
+Pd
+sY
+aL
+Dc
+Bj
+Bj
+Bj
+Bj
+ri
+oT
+oT
+Bj
+vh
+vh
+vh
+vh
+vh
+"}
+(15,1,1) = {"
+Bj
+Bj
+ri
+RJ
+Bj
+Bj
+Bj
+Dc
+Tz
+tO
+FD
+Dc
+AI
+xJ
+FE
+Tk
+fq
+Dc
+KB
+pc
+Bj
+Bj
+Bj
+ri
+QV
+Bj
+vh
+vh
+vh
+vh
+vh
+"}
+(16,1,1) = {"
+Bj
+Bj
+ri
+OS
+QV
+Bj
+Bj
+Dr
+Dt
+rJ
+Xg
+Dc
+EU
+WC
+hA
+Jw
+qw
+Dc
+NK
+ky
+sG
+Bj
+Bj
+Bj
+Bj
+Bj
+vh
+vh
+vh
+vh
+vh
+"}
+(17,1,1) = {"
+Bj
+Bj
+Bj
+ri
+oT
+dB
+Bj
+Dc
+Dc
+Dc
+Dc
+Dc
+Dc
+Dc
+Dc
+Kq
+Dc
+Dc
+OX
+Js
+Bv
+vy
+vy
+vy
+vy
+vh
+vh
+vh
+vh
+vh
+vh
+"}
+(18,1,1) = {"
+Bj
+Bj
+Bj
+ri
+OS
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+ri
+PQ
+ib
+uC
+qS
+zb
+Yp
+mF
+oK
+IT
+ex
+Pb
+vy
+vh
+vh
+vh
+vh
+vh
+vh
+"}
+(19,1,1) = {"
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+ri
+hC
+XF
+No
+Bj
+Bj
+Bj
+Bj
+ri
+dV
+oK
+vy
+vy
+ex
+vy
+vh
+vh
+vh
+vh
+vh
+vh
+"}
+(20,1,1) = {"
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+vy
+Pb
+vy
+vh
+vh
+vh
+vh
+vh
+vh
+"}
+(21,1,1) = {"
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+vy
+lW
+vy
+vh
+vh
+vh
+vh
+vh
+vh
+"}
+(22,1,1) = {"
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vy
+vy
+bx
+vy
+vy
+vh
+vh
+vh
+vh
+vh
+"}
+(23,1,1) = {"
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vy
+bw
+bw
+bw
+vy
+vh
+vh
+vh
+vh
+vh
+"}
+(24,1,1) = {"
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+bw
+bw
+bw
+bw
+bw
+vh
+vh
+vh
+vh
+vh
+"}
+(25,1,1) = {"
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+vh
+vh
+vh
+vh
+"}
+(26,1,1) = {"
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+vh
+vh
+vh
+"}
+(27,1,1) = {"
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+vh
+vh
+"}
+(28,1,1) = {"
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+vh
+"}
+(29,1,1) = {"
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+"}
+(30,1,1) = {"
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+"}
+(31,1,1) = {"
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+"}
+(32,1,1) = {"
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+vh
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+bw
+"}
