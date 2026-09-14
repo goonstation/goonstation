@@ -19275,6 +19275,18 @@
 "fWj" = (
 /turf/simulated/floor,
 /area/station/hangar/main)
+"fWn" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/obj/machinery/light/emergency{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/escape{
+	dir = 8
+	},
+/area/station/hallway/secondary/exit)
 "fWx" = (
 /obj/cable{
 	icon_state = "1-6"
@@ -23649,13 +23661,6 @@
 	},
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay)
-"hqy" = (
-/obj/machinery/light/small/floor,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 5
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/hallway/secondary/exit)
 "hqM" = (
 /obj/machinery/camera/directional/north{
 	pixel_x = -10
@@ -25127,6 +25132,16 @@
 	},
 /turf/space,
 /area/space)
+"hMN" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
+	},
+/obj/machinery/camera/directional/south{
+	pixel_x = -10
+	},
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/plating/jen,
+/area/station/hallway/secondary/exit)
 "hMP" = (
 /obj/decal/stripe_delivery,
 /obj/machinery/door/airlock/pyro/glass,
@@ -26757,6 +26772,9 @@
 	},
 /obj/machinery/camera/directional/north{
 	pixel_x = 7
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 6
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/hallway/secondary/exit)
@@ -55560,16 +55578,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/east)
-"roN" = (
-/obj/machinery/light/small/floor,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 10
-	},
-/obj/machinery/camera/directional/south{
-	pixel_x = -10
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/hallway/secondary/exit)
 "roR" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/machinery/conveyor/WE{
@@ -59413,6 +59421,9 @@
 	dir = 8
 	},
 /area/station/medical/medbay)
+"sxx" = (
+/turf/simulated/wall/auto/reinforced/jen,
+/area/space)
 "sxT" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/black,
@@ -136354,16 +136365,16 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
+sxx
+sxx
+sxx
+sxx
 etV
 iri
-icu
-icu
-icu
-bDe
+sCX
+sCX
+sCX
+sCX
 sCX
 sCX
 sCX
@@ -136655,10 +136666,6 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
 etV
 etV
 icu
@@ -136666,6 +136673,10 @@ icu
 icu
 bDe
 cib
+qRB
+qRB
+qRB
+qRB
 qRB
 qRB
 qRB
@@ -136957,16 +136968,16 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
 etV
 icu
 icu
 icu
 icu
 fYO
+qRB
+qRB
+qRB
+qRB
 qRB
 qRB
 qRB
@@ -137259,16 +137270,16 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
 sdZ
 icu
 bDe
 sCX
 sCX
 cib
+qRB
+qRB
+qRB
+qRB
 qRB
 qRB
 qRB
@@ -137561,13 +137572,13 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
 sdZ
 jKw
 rss
+qRB
+qRB
+qRB
+qRB
 qRB
 qRB
 qRB
@@ -137863,12 +137874,12 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
 sdZ
 fYO
+qRB
+qRB
+qRB
+qRB
 qRB
 qRB
 qRB
@@ -138165,10 +138176,6 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
 etV
 fYO
 qRB
@@ -138180,6 +138187,10 @@ qRB
 qRB
 qRB
 qRB
+xEI
+xKy
+xKy
+hMN
 qRB
 qRB
 qRB
@@ -138467,10 +138478,6 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
 etV
 fYO
 qRB
@@ -138481,8 +138488,12 @@ qRB
 qRB
 qRB
 qRB
-xEI
-roN
+qRB
+qFI
+icu
+icu
+fYO
+qRB
 qRB
 qRB
 qRB
@@ -138769,10 +138780,6 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
 etV
 heq
 qRB
@@ -138783,8 +138790,12 @@ qRB
 qRB
 qRB
 qRB
-hqy
-rss
+qRB
+qFI
+icu
+icu
+fYO
+qRB
 qRB
 qRB
 qRB
@@ -139071,10 +139082,6 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
 etV
 fYO
 qRB
@@ -139086,6 +139093,10 @@ qRB
 qRB
 qRB
 qRB
+wMo
+sCX
+sCX
+rss
 qRB
 qRB
 qRB
@@ -139373,12 +139384,12 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
 sdZ
 fYO
+qRB
+qRB
+qRB
+qRB
 qRB
 qRB
 qRB
@@ -139675,13 +139686,13 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
 sdZ
 jSv
 mXw
+qRB
+qRB
+qRB
+qRB
 qRB
 qRB
 qRB
@@ -139977,16 +139988,16 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
 sdZ
 icu
 iqj
 maS
 maS
 jjv
+qRB
+qRB
+qRB
+qRB
 qRB
 qRB
 qRB
@@ -140279,16 +140290,16 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
 etV
 icu
 icu
 icu
 icu
 fYO
+qRB
+qRB
+qRB
+qRB
 qRB
 qRB
 qRB
@@ -140581,10 +140592,6 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
 etV
 etV
 kFG
@@ -140592,6 +140599,10 @@ icu
 icu
 iqj
 jjv
+qRB
+qRB
+qRB
+qRB
 qRB
 qRB
 qRB
@@ -140884,10 +140895,6 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
 etV
 twN
 icu
@@ -140897,6 +140904,10 @@ iqj
 xKy
 pGH
 vhQ
+xKy
+xKy
+xKy
+xKy
 xKy
 xKy
 xKy
@@ -141184,10 +141195,6 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
 etV
 akj
 akj
@@ -141198,6 +141205,10 @@ akj
 akj
 etV
 etV
+sdZ
+sdZ
+sdZ
+sdZ
 sdZ
 fdX
 fdX
@@ -141485,10 +141496,6 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
 etV
 etV
 fPJ
@@ -141501,6 +141508,10 @@ aIy
 sTL
 sdZ
 vtO
+fWn
+mFk
+fWn
+mFk
 ovm
 ovm
 vdB
@@ -141787,10 +141798,6 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
 sdZ
 fnh
 gBV
@@ -141804,6 +141811,10 @@ gBV
 cMw
 aeQ
 nlp
+mrI
+mrI
+mrI
+mrI
 mrI
 mrI
 mrI
@@ -142089,10 +142100,6 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
 sdZ
 fnO
 gBV
@@ -142106,6 +142113,10 @@ tpY
 sdZ
 kHS
 wLo
+fyq
+qQq
+fyq
+qQq
 iQK
 qQq
 fyq
@@ -142391,10 +142402,6 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
 etV
 etV
 gMu
@@ -142408,6 +142415,10 @@ etV
 etV
 etV
 etV
+sdZ
+sdZ
+sdZ
+sdZ
 etV
 sdZ
 sdZ
@@ -142694,10 +142705,6 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
 etV
 gQH
 etV
@@ -142707,6 +142714,10 @@ gQH
 etV
 gQH
 etV
+rdj
+rdj
+rdj
+rdj
 rdj
 rdj
 rdj
@@ -142996,10 +143007,6 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
 fKu
 gVg
 fKu
@@ -143009,6 +143016,10 @@ gVg
 fKu
 gVg
 fKu
+rdj
+rdj
+rdj
+rdj
 rdj
 rdj
 rdj
@@ -143298,10 +143309,6 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
 vVp
 rdj
 rdj
@@ -143311,6 +143318,10 @@ rdj
 rdj
 rdj
 vVp
+rdj
+rdj
+rdj
+rdj
 rdj
 rdj
 rdj
@@ -143600,10 +143611,6 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
 qJK
 rdj
 rdj
@@ -143613,6 +143620,10 @@ rdj
 rdj
 rdj
 qJK
+rdj
+rdj
+rdj
+rdj
 rdj
 rdj
 rdj
@@ -143902,10 +143913,6 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
 vVp
 rdj
 rdj
@@ -143915,6 +143922,10 @@ rdj
 rdj
 rdj
 vVp
+rdj
+rdj
+rdj
+rdj
 rdj
 rdj
 rdj
@@ -144204,10 +144215,6 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
 bkV
 rdj
 rdj
@@ -144217,6 +144224,10 @@ rdj
 rdj
 rdj
 bkV
+rdj
+rdj
+rdj
+rdj
 rdj
 rdj
 rdj
@@ -144506,10 +144517,6 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
 vVp
 rdj
 rdj
@@ -144519,6 +144526,10 @@ rdj
 rdj
 rdj
 vVp
+rdj
+rdj
+rdj
+rdj
 rdj
 rdj
 rdj
@@ -144808,10 +144819,6 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
 xcP
 rdj
 rdj
@@ -144821,6 +144828,10 @@ rdj
 rdj
 rdj
 xcP
+rdj
+rdj
+rdj
+rdj
 rdj
 rdj
 rdj
@@ -145110,10 +145121,6 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
 vVp
 rdj
 rdj
@@ -145123,6 +145130,10 @@ rdj
 rdj
 rdj
 vVp
+rdj
+rdj
+rdj
+rdj
 rdj
 rdj
 rdj
@@ -145412,10 +145423,6 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
 dWV
 rdj
 rdj
@@ -145425,6 +145432,10 @@ rdj
 rdj
 rdj
 dWV
+rdj
+rdj
+rdj
+rdj
 rdj
 rdj
 rdj
@@ -145714,10 +145725,6 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
 vVp
 rdj
 rdj
@@ -145727,6 +145734,10 @@ rdj
 rdj
 rdj
 vVp
+rdj
+rdj
+rdj
+rdj
 rdj
 rdj
 rdj
@@ -146016,10 +146027,6 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
 pIt
 rdj
 rdj
@@ -146029,6 +146036,10 @@ rdj
 rdj
 rdj
 pIt
+rdj
+rdj
+rdj
+rdj
 rdj
 rdj
 rdj
@@ -146322,11 +146333,11 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
 vVp
+rdj
+rdj
+rdj
+rdj
 rdj
 rdj
 rdj
@@ -146624,11 +146635,11 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
 xLs
+rdj
+rdj
+rdj
+rdj
 rdj
 rdj
 rdj
@@ -146926,11 +146937,11 @@ rdj
 rdj
 rdj
 rdj
-rdj
-rdj
-rdj
-rdj
 vVp
+rdj
+rdj
+rdj
+rdj
 rdj
 rdj
 rdj
