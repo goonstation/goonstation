@@ -56,7 +56,7 @@
 
 /// regression tests
 #include "regression/reagent_transfer.dm"
-#include "regression/say_message.dm" //TODO convert to regression
+#include "regression/say_message.dm"
 
 #undef TEST_ASSERT
 #undef TEST_ASSERT_EQUAL
