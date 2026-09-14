@@ -294,4 +294,8 @@
 		target = get_step(reflector, pick(alldirs))
 
 	playsound(P, "sound/weapons/ricochet/ricochet-[rand(1, 4)].ogg", 40, TRUE)
-	shoot_projectile_ST_pixel_spread(reflector, P.proj_data, target, play_shot_sound = FALSE)
+	var/obj/projectile/new_projectile = shoot_projectile_ST_pixel_spread(reflector, P.proj_data, target, play_shot_sound = FALSE)
+	new_projectile.special_data = P.special_data
+	if (P.reagents)
+		new_projectile.create_reagents()
+		P.reagents.copy_to(new_projectile.reagents)
