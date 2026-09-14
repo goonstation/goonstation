@@ -35,6 +35,7 @@
 #include "rand.dm"
 #include "deletions.dm"
 #include "explosions.dm"
+#include "string_prefix_suffix.dm"
 #include "monkey_thunderdome.dm"
 #include "reagent_id_typos.dm"
 #include "record_database.dm"

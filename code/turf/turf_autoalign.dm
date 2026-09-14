@@ -1070,9 +1070,14 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/icemoon)
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/icemooninterior)
 TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/icemooninterior)
 	. = ..()
+	connect_overlay = 0
 	connects_to = typecacheof(list(
+		/turf/cordon, // helps obscure how thin the wall is
 		/turf/unsimulated/wall/auto/adventure/icemooninterior,
-		/obj/machinery/door/unpowered/blue
+		/turf/unsimulated/wall/auto/adventure/icemoon,
+		/obj/machinery/door/unpowered/blue,
+		/turf/unsimulated/wall/setpieces/bluewall_glowing,
+		/obj/precursor_puzzle/glowing_door
 	))
 /turf/unsimulated/wall/auto/adventure/icemooninterior
 	name = "blue wall"

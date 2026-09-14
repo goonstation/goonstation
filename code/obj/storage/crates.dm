@@ -475,6 +475,7 @@
 	desc = "A wooden crate."
 	icon = 'icons/obj/storage/crate_wood.dmi'
 	icon_state = "woodencrate1"
+	default_material = "wood"
 	New()
 		var/n = rand(1,9)
 		switch(n)
@@ -612,7 +613,7 @@ TYPEINFO(/obj/storage/crate/chest)
 		/obj/item/pinpointer/disk,
 		/obj/item/cloaking_device,
 		/obj/item/card/emag,
-		/obj/item/lightbreaker,
+		/obj/item/sound_tape/lightbreaker,
 		/obj/item/clothing/suit/space/syndicate/specialist/infiltrator,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/infiltrator)
 

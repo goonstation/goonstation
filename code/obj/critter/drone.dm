@@ -494,7 +494,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		desc = "A heavily-armed Syndicate hunter-killer drone."
 		icon = 'icons/mob/critter/robotic/drone/disruptor.dmi'
 		icon_state = "drone_disruptor"
-		dead_state = "drone_distruptor-dead"
+		dead_state = "drone_disruptor-dead"
 		health = 250
 		maxhealth = 250
 		score = 50
@@ -796,7 +796,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		desc = "A Syndicate drone equipped with a combat laser."
 		icon = 'icons/mob/critter/robotic/drone/laser.dmi'
 		icon_state = "drone_laser"
-		dead_state = "drone_laser"
+		dead_state = "drone_laser-dead"
 		health = 100
 		maxhealth = 100
 		score = 30
@@ -812,7 +812,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		desc = "An industrial mining drone, repurposed by Syndicate engineers for nefarious purposes."
 		icon = 'icons/mob/critter/robotic/drone/cutter.dmi'
 		icon_state = "drone_cutter"
-		dead_state = "drone_cutter"
+		dead_state = "drone_cutter-dead"
 		health = 150
 		maxhealth = 150
 		score = 50

@@ -299,7 +299,6 @@
 	name = "molitz crystal"
 	desc = "An unusual crystal of Molitz."
 	icon = 'icons/obj/items/materials/molitz.dmi'
-	icon_state = "ore$$molitz_b"
 	material_name = "Molitz Beta"
 	default_material = "molitz_b"
 	crystal = 1
