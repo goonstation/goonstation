@@ -21,7 +21,7 @@
 
 	var/datum/weakref/say_message_ref = src.say_to_listener_and_release_message(speaker, listener)
 
-	TEST_ASSERT(isnull(say_message_ref.deref()), "say_message did not GC because listener retained its flush registration")
+	TEST_ASSERT(isnull(say_message_ref.deref()), "say_message with listeners did not GC")
 
 /datum/unit_test/say_message_flush_registration_cleanup/proc/say_to_listener_and_release_message(obj/speaker, obj/listener)
 	RETURN_TYPE(/datum/weakref)
