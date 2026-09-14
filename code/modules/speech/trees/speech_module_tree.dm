@@ -192,6 +192,9 @@
 		break
 
 	SEND_SIGNAL(message, COMSIG_FLUSH_MESSAGE_BUFFER)
+	// clear self-reference to allow for garbage collection
+	if (message.signal_recipient == message)
+		message.signal_recipient = null
 
 /// Attempt to locate an applicable prefix module from the provided prefix module cache, and apply its affects to a say message.
 /datum/speech_module_tree/proc/process_prefix(datum/say_message/message, list/datum/speech_module/prefix/module_cache)
