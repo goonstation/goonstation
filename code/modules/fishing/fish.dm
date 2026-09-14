@@ -718,7 +718,7 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/swordfish)
 TYPEINFO(/obj/item/reagent_containers/food/fish/literal_swordfish)
 	fish_collection_type = FISH::COLLECTION::NORMAL
 /obj/item/reagent_containers/food/fish/literal_swordfish
-	name = " literal swordfish"
+	name = "literal swordfish"
 	desc = "Reforged through fire and flounder, the swordfish now resembles its namesake."
 	icon = 'icons/obj/foodNdrink/food_fish_48x32.dmi'
 	icon_state = "literal_swordfish"

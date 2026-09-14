@@ -76,7 +76,7 @@
 		name = "ring of cthulhu"
 		desc = "Looking at this ring makes your head hurt."
 		icon_state = "staff"
-		ability_path = /datum/targetable/spell/summon_staff
+		ability_path = /datum/targetable/spell/summon_staff/cthulhu
 		var/obj/item/staff/cthulhu/created_staff
 
 		equipped(var/mob/user, var/slot)
@@ -99,7 +99,7 @@
 		name = "ring of thunder"
 		desc = "Little arcs of electricity run along the outside of this ring."
 		icon_state = "stave_of_thunder"
-		ability_path = /datum/targetable/spell/summon_thunder_staff
+		ability_path = /datum/targetable/spell/summon_staff/thunder
 		var/obj/item/staff/thunder/created_staff
 
 		equipped(var/mob/user, var/slot)
