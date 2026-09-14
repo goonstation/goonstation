@@ -9,6 +9,14 @@
 /// Maximum distance from the victim for a human appearance source
 #define CREW_APPARITION_HUMAN_SEARCH_RANGE 15
 
+/// Dissolve an apparition when its lifetime expires without retaining a ref in a spawn
+/proc/expire_crew_apparition_actor(datum/weakref/apparition_ref, expiry_generation, delay)
+	set waitfor = FALSE
+	sleep(delay)
+	var/obj/crew_apparition_actor/apparition = apparition_ref?.deref()
+	if (apparition?.lifecycle_generation == expiry_generation)
+		apparition.dissolve()
+
 /// Check whether a human can provide an appearance for a client-visible crew apparition actor
 /proc/is_crew_apparition_human_eligible(mob/victim, mob/living/carbon/human/human, range = 7)
 	if (!victim?.client || !human || QDELETED(human) || human == victim)
@@ -85,10 +93,7 @@
 	src.set_dir(appearance_image.dir)
 	src.appear(appearance_time)
 
-	var/expiry_generation = src.lifecycle_generation
-	SPAWN(src.apparition_expiry - world.time)
-		if (!QDELETED(src) && src.lifecycle_generation == expiry_generation)
-			src.dissolve()
+	expire_crew_apparition_actor(get_weakref(src), src.lifecycle_generation, src.apparition_expiry - world.time)
 
 /obj/crew_apparition_actor/proc/viewer_moved(mob/moved_viewer, atom/previous_loc, movement_dir)
 	if (moved_viewer != src.viewer)
@@ -244,9 +249,8 @@
 
 /obj/crew_apparition_actor/humanoid/Crossed(atom/movable/AM)
 	. = ..()
-	if (AM != src.victim)
-		return
-	src.dissolve()
+	if (!istype(AM, /obj/crew_apparition_actor))
+		dissolve()
 
 /obj/crew_apparition_actor/humanoid/New(location, mob/viewer, mob/living/carbon/human/appearance_source, ttl = 30 SECONDS, fallback_to_viewer = FALSE, range = 7, appearance_time = 2 SECONDS, datum/client_image_group/image_group = null)
 	var/can_use_viewer_appearance = fallback_to_viewer && appearance_source == viewer && ishuman(viewer)
