@@ -39,35 +39,35 @@ dmm_suite/read_map(dmm_text as text, coordX as num, coordY as num, coordZ as num
 	props.sourceZ = coordZ
 	props.info = tag
 	// Split Key/Model list into lines
-	var key_len
+	var/key_len
 	var/list/grid_models[0]
-	var startGridPos = findtext(dmm_text, "\n\n(1,1,") // Safe because \n not allowed in strings in dmm
-	var startData = findtext(dmm_text, "\"")
-	var linesText = copytext(dmm_text, startData + 1, startGridPos)
+	var/startGridPos = findtext(dmm_text, "\n\n(1,1,") // Safe because \n not allowed in strings in dmm
+	var/startData = findtext(dmm_text, "\"")
+	var/linesText = copytext(dmm_text, startData + 1, startGridPos)
 	var/list/modelLines = splittext(linesText, regex("\n\""))
 	for(var/modelLine in modelLines) // "aa" = (/path{key = value; key = value},/path,/path)
-		var endQuote = findtext(modelLine, quote, 2, 0)
+		var/endQuote = findtext(modelLine, quote, 2, 0)
 		if(endQuote <= 1)
 			continue
-		var modelKey = copytext(modelLine, 1, endQuote)
+		var/modelKey = copytext(modelLine, 1, endQuote)
 		if(isnull(key_len))
 			key_len = length(modelKey)
-		var modelsStart = findtextEx(modelLine, "/") // Skip key and first three characters: "aa" = (
-		var modelContents = copytext(modelLine, modelsStart, length(modelLine)) // Skip last character: )
+		var/modelsStart = findtextEx(modelLine, "/") // Skip key and first three characters: "aa" = (
+		var/modelContents = copytext(modelLine, modelsStart, length(modelLine)) // Skip last character: )
 		grid_models[modelKey] = modelContents
 		LAGCHECK_IF_LIVE(LAG_HIGH)
 	// Retrieve Comments, Determine map position (if not specified)
-	var commentModel = modelLines[1] // The comment key will always be first.
-	var bracketPos = findtextEx(commentModel, "}")
+	var/commentModel = modelLines[1] // The comment key will always be first.
+	var/bracketPos = findtextEx(commentModel, "}")
 	commentModel = copytext(commentModel, findtextEx(commentModel, "=")+3, bracketPos) // Skip opening bracket
-	var commentPathText = "[/obj/dmm_suite/comment]"
+	var/commentPathText = "[/obj/dmm_suite/comment]"
 	if(copytext(commentModel, 1, length(commentPathText)+1) == commentPathText)
-		var attributesText = copytext(commentModel, length(commentPathText)+2, -1) // Skip closing bracket
+		var/attributesText = copytext(commentModel, length(commentPathText)+2, -1) // Skip closing bracket
 		var/list/paddedAttributes = splittext(attributesText, semicolon_delim) // "Key = Value"
 		for(var/paddedAttribute in paddedAttributes)
-			var equalPos = findtextEx(paddedAttribute, "=")
-			var attributeKey = copytext(paddedAttribute, 1, equalPos-1)
-			var attributeValue = copytext(paddedAttribute, equalPos+3, -1) // Skip quotes
+			var/equalPos = findtextEx(paddedAttribute, "=")
+			var/attributeKey = copytext(paddedAttribute, 1, equalPos-1)
+			var/attributeValue = copytext(paddedAttribute, equalPos+3, -1) // Skip quotes
 			switch(attributeKey)
 				if("coordinates")
 					var/list/coords = splittext(attributeValue, comma_delim)
@@ -82,10 +82,10 @@ dmm_suite/read_map(dmm_text as text, coordX as num, coordY as num, coordZ as num
 	for(var/modelKey in grid_models)
 		parsed_models[modelKey] = parse_model(grid_models[modelKey])
 		LAGCHECK_IF_LIVE(LAG_HIGH)
-	var gridText = copytext(dmm_text, startGridPos)
+	var/gridText = copytext(dmm_text, startGridPos)
 	var/list/gridYLines = list()
 	var/list/coordShifts = list()
-	var maxZFound = 1
+	var/maxZFound = 1
 	var/regex/grid = regex(@{"\(([0-9]*),([0-9]*),([0-9]*)\) = \{"\n((?:\l*\n)*)"\}"}, "g")
 	while(grid.Find(gridText))
 		var/list/yReversed = text2list(copytext(grid.group[4], 1, -1), "\n")
@@ -103,12 +103,12 @@ dmm_suite/read_map(dmm_text as text, coordX as num, coordY as num, coordZ as num
 		var/gridCoordX = coordShifts[posZ][1] + coordX - 1
 		var/gridCoordY = coordShifts[posZ][2] + coordY - 1
 		var/gridCoordZ = coordShifts[posZ][3] + coordZ - 1
-		var yMax = yLines.len+gridCoordY-1
+		var/yMax = yLines.len+gridCoordY-1
 		if(world.maxy < yMax)
 			world.maxy = yMax
 			logTheThing(LOG_DEBUG, null, "[tag] caused map resize (Y) during prefab placement")
-		var exampleLine = yLines[1]
-		var xMax = length(exampleLine)/key_len+gridCoordX-1
+		var/exampleLine = yLines[1]
+		var/xMax = length(exampleLine)/key_len+gridCoordX-1
 		if(world.maxx < xMax)
 			world.maxx = xMax
 			logTheThing(LOG_DEBUG, null, "[tag] caused map resize (X) during prefab placement")
@@ -124,7 +124,7 @@ dmm_suite/read_map(dmm_text as text, coordX as num, coordY as num, coordZ as num
 				var/igridCoordZ = coordShifts[internalPosZ][3] + coordZ - 1
 				var/list/internalYLines = gridYLines[internalPosZ]
 				for(var/posY = 1 to internalYLines.len)
-					var yLine = internalYLines[posY]
+					var/yLine = internalYLines[posY]
 					for(var/posX = 1 to length(yLine)/key_len)
 						var/turf/T = locate(posX + igridCoordX - 1, posY+igridCoordY - 1, igridCoordZ)
 						for(var/x in T)
@@ -135,10 +135,10 @@ dmm_suite/read_map(dmm_text as text, coordX as num, coordY as num, coordZ as num
 							LAGCHECK(LAG_MED)
 
 		for(var/posY = 1 to yLines.len)
-			var yLine = yLines[posY]
+			var/yLine = yLines[posY]
 			for(var/posX = 1 to length(yLine)/key_len)
-				var keyPos = ((posX-1)*key_len)+1
-				var modelKey = copytext(yLine, keyPos, keyPos+key_len)
+				var/keyPos = ((posX-1)*key_len)+1
+				var/modelKey = copytext(yLine, keyPos, keyPos+key_len)
 				parse_grid(parsed_models[modelKey], posX + gridCoordX - 1, posY + gridCoordY - 1, gridCoordZ)
 			LAGCHECK_IF_LIVE(LAG_HIGH)
 		LAGCHECK_IF_LIVE(LAG_HIGH)
@@ -156,9 +156,9 @@ dmm_suite/proc/parse_model(models as text)
 	do
 		found = noStrings.Find(models, noStrings.next)
 		if(found)
-			var indexText = {""[stringIndex]""}
+			var/indexText = {""[stringIndex]""}
 			stringIndex++
-			var match = copytext(noStrings.match, 2, -1) // Strip quotes
+			var/match = copytext(noStrings.match, 2, -1) // Strip quotes
 			models = noStrings.Replace(models, indexText, found)
 			originalStrings[indexText] = match
 	while(found)
@@ -166,14 +166,14 @@ dmm_suite/proc/parse_model(models as text)
 	var/list/objects = list()
 	var/list/turfs = list()
 	for(var/atomModel in splittext(models, comma_delim))
-		var bracketPos = findtext(atomModel, "{")
-		var atomPath = text2path(copytext(atomModel, 1, bracketPos))
+		var/bracketPos = findtext(atomModel, "{")
+		var/atomPath = text2path(copytext(atomModel, 1, bracketPos))
 		if(!atomPath)
 			stack_trace("Attempted to load invalid type [copytext(atomModel, 1, bracketPos)]!")
 		var/list/attributes
 		if(bracketPos)
 			attributes = list()
-			var attributesText = copytext(atomModel, bracketPos+1, -1)
+			var/attributesText = copytext(atomModel, bracketPos+1, -1)
 			var/list/paddedAttributes = splittext(attributesText, semicolon_delim)
 			for(var/paddedAttribute in paddedAttributes)
 				key_value_regex.Find(paddedAttribute)
@@ -268,7 +268,7 @@ dmm_suite/proc/loadAttribute(value, list/strings)
 	if(copytext(value, 1, 2) == "\"")
 		return strings[value]
 	//Check for number
-	var num = text2num(value)
+	var/num = text2num(value)
 	if(isnum(num))
 		return num
 	//Check for file
