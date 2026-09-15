@@ -206,6 +206,9 @@
 /area/mining/magnet)
 "N" = (
 /mob/living/critter/human/syndicate/knife,
+/obj/decal/poster/flag/syndicate{
+	pixel_y = 32
+	},
 /turf/simulated/floor/shuttle/red,
 /area/mining/magnet)
 "O" = (

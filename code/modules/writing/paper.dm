@@ -22,6 +22,8 @@
 	"Centcom" = "stamp-sprite-centcom",\
 	"Syndicate" = "stamp-sprite-syndicate",\
 	"Void" = "stamp-sprite-void",\
+	"Flock" = "stamp-sprite-flock",\
+	"Vamp" = "stamp-sprite-vamp",\
 	"Your Name" = "stamp-text-name",\
 	"Current Time" = "stamp-text-time",)
 
@@ -218,6 +220,7 @@
 				update_static_data(usr, ui)
 				boutput(usr, SPAN_NOTICE("[ui.user] stamps [src] with \the [stamp.name]!"))
 				playsound(usr.loc, 'sound/misc/stamp_paper.ogg', 50, 0.5)
+				stamp.on_stamp(src, ui.user)
 			else
 				boutput(usr, "There is no where else you can stamp!")
 			. = TRUE
@@ -296,6 +299,8 @@
 		"stamp-sprite-stain-2" = "[resource("images/tgui/stamp_icons/stamp-stain-2.png")]",
 		"stamp-sprite-stain-3" = "[resource("images/tgui/stamp_icons/stamp-stain-3.png")]",
 		"stamp-sprite-gtc" = "[resource("images/tgui/stamp_icons/stamp-gtc.png")]",
+		"stamp-sprite-flock" = "[resource("images/tgui/stamp_icons/stamp-flock.apng")]",
+		"stamp-sprite-vamp" = "[resource("images/tgui/stamp_icons/stamp-vamp.png")]",
 		"stamp-text-time" =  T,
 		"stamp-text-name" = user.name
 	)
@@ -723,6 +728,9 @@
 	user.TakeDamage("head", 250, 0)
 	return 1
 
+/// Optional side effect to trigger when successfully stamping a piece of paper
+/obj/item/stamp/proc/on_stamp(obj/item/paper/stamped_paper, mob/user)
+	return
 
 /obj/item/stamp // static staff stamps
 	cap
@@ -826,6 +834,38 @@
 		special_mode = "Security"
 		is_reassignable = 0
 		assignment = "stamp-law"
+	flock
+		name = "\improper Inky Antenna"
+		desc = "It looks kinda like a National Notary stamp of an unfamilar model. Theres small rods sticking out of it though. You doubt you can use it for whatever important documents you've gotten your hands on"
+		icon_state = "stamp-flock"
+		special_mode = "Flock"
+		is_reassignable = 0
+		assignment = "stamp-flock"
+		mat_changename = FALSE
+		mat_changedesc = FALSE
+		default_material = "gnesis"
+	vampire
+		name = "\improper vampiric stamp"
+		desc = "a unique vampirism-themed stamp for whatever <b>spooky</b> documents you may have gotten your hands on.\
+		It is a Natonal Notary 'ac-count-ant' model with the ebony handle. \
+		It was made as promotional halloween toy by National Notary to get kids excited about paperwork, \
+		sadly it was discontinued due to the users cutting themslves on the sharp bat wings."
+		special_mode = "Vamp"
+		icon_state = "stamp-vamp"
+		assignment = "stamp-vamp"
+		hit_type = DAMAGE_STAB
+		force = 5
+
+		on_stamp(obj/item/paper/stamped_paper, mob/user)
+			if(!user || !isliving(user) || issilicon(user))
+				return
+
+			if(prob(20) && !isvampire(user))
+				bleed(user, 1, 3)
+				boutput(user, SPAN_COMBAT("\The [src]'s wings are too sharp you cut yourself on them! Why would they put them on the handle!?"))
+				user.emote("scream")
+
+
 
 /obj/item/paper/folded
 	name = "folded paper"

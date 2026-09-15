@@ -6,7 +6,7 @@
 		icon_state = "girder"
 		anchored = ANCHORED
 		density = 1
-		material_amt = 0.2
+		material_amt = MATERIAL::AMOUNT::SHEET * 2
 		var/state = 0
 		projectile_passthrough_chance = 50
 		desc = "A metal support for an incomplete wall."
@@ -122,6 +122,10 @@ obj/structure/ex_act(severity)
 			return
 		actions.start(new /datum/action/bar/icon/girder_tool_interact(src, W, GIRDER_SECURE, null, user), user)
 	else if (istype(W, /obj/item/sheet))
+		if (istype(src.loc, /turf/simulated/floor/shuttle/menhir_arm))
+			boutput(user, SPAN_ALERT("You can't get the sheets to stay in one place. Something is vibrating them heavily."))
+			return
+
 		var/obj/item/sheet/S = W
 		if (S.amount < 2)
 			boutput(user, SPAN_ALERT("You need at least two sheets on the stack to do this."))
@@ -353,7 +357,7 @@ TYPEINFO(/obj/structure/woodwall)
 	anchored = ANCHORED
 	density = 1
 	opacity = 1
-	material_amt = 0.5
+	material_amt = MATERIAL::AMOUNT::SHEET * 5
 	projectile_passthrough_chance = 30
 	_health = 30
 	_max_health = 30

@@ -10,7 +10,7 @@ import { addScrollableNode, removeScrollableNode } from 'tgui-core/events';
 import { classes } from 'tgui-core/react';
 import { computeBoxClassName, computeBoxProps } from 'tgui-core/ui';
 
-import { WindowMode } from '../backend'; // |GOONSTATION-ADD|
+import type { WindowMode } from '../events/types'; // |GOONSTATION-ADD|
 
 type BoxProps = React.ComponentProps<typeof Box>;
 

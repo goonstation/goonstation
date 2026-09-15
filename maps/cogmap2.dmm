@@ -19159,6 +19159,10 @@
 /obj/blind_switch/directional/west{
 	pixel_y = 5
 	},
+/obj/item/stamp/hos{
+	pixel_x = 6;
+	pixel_y = -6
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "bkI" = (
@@ -37311,7 +37315,9 @@
 	},
 /area/station/hallway/secondary/exit)
 "csX" = (
-/obj/machinery/light,
+/obj/stool/chair{
+	dir = 1
+	},
 /turf/simulated/floor/arrival,
 /area/station/hallway/secondary/exit)
 "csY" = (
@@ -49991,7 +49997,7 @@
 	},
 /area/station/engine/coldloop)
 "dyj" = (
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro,
 /obj/strip_door{
 	layer = 3
 	},
@@ -50902,7 +50908,7 @@
 "eoc" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
@@ -51533,7 +51539,6 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
@@ -52195,7 +52200,7 @@
 "fzA" = (
 /obj/table/wood/auto,
 /obj/random_item_spawner/desk_stuff,
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quartersA)
 "fBa" = (
@@ -52395,7 +52400,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "fJH" = (
-/obj/mapping_helper/firedoor_spawn,
 /obj/machinery/atmospherics/pipe/manifold{
 	level = 2
 	},
@@ -54425,7 +54429,6 @@
 /turf/simulated/floor/plating,
 /area/research_outpost)
 "htW" = (
-/obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
@@ -56300,7 +56303,7 @@
 /area/station/hallway/primary/east)
 "iMz" = (
 /obj/table/wood/auto,
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quartersA)
 "iMH" = (
@@ -58066,7 +58069,7 @@
 /area/station/crew_quarters/captain)
 "kdz" = (
 /obj/table/reinforced/auto,
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "red2"
@@ -58685,7 +58688,7 @@
 /area/station/crew_quarters/arcade/dungeon)
 "kCF" = (
 /obj/table/reinforced/auto,
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro,
 /obj/item/device/matanalyzer,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
@@ -58786,7 +58789,7 @@
 "kKC" = (
 /obj/table/reinforced/auto,
 /obj/disposalpipe/segment/mineral,
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro,
 /obj/item/wrapping_paper,
 /obj/item/wrapping_paper,
 /obj/item/wrapping_paper,
@@ -58947,7 +58950,6 @@
 	icon_state = "4-8"
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	dir = 4;
@@ -59617,7 +59619,9 @@
 "lnJ" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
 /turf/simulated/floor/black,
 /area/station/hangar/main)
 "lnX" = (
@@ -60089,7 +60093,7 @@
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/quartersB)
 "lKG" = (
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "lKK" = (
@@ -63624,7 +63628,9 @@
 /area/station/maintenance/inner/central)
 "oFp" = (
 /obj/table/reinforced/auto,
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -66175,7 +66181,9 @@
 /area/space)
 "qEc" = (
 /obj/table/reinforced/auto,
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -67744,7 +67752,9 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
@@ -68575,7 +68585,6 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
 	},
-/obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
@@ -68637,7 +68646,7 @@
 "sEJ" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/carpet{
 	icon_state = "fred1"
 	},
@@ -69110,6 +69119,11 @@
 	},
 /turf/simulated/floor/sanitary/blue,
 /area/station/medical/morgue)
+"tam" = (
+/turf/simulated/floor/arrival{
+	dir = 1
+	},
+/area/station/hallway/secondary/exit)
 "taw" = (
 /obj/machinery/light_switch/directional/west,
 /turf/simulated/floor/carpet/grime,
@@ -69548,7 +69562,7 @@
 "tqP" = (
 /obj/table/reinforced/auto,
 /obj/item/plate,
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro,
 /obj/machinery/camera/directional/west{
 	pixel_y = 10
 	},
@@ -70007,12 +70021,7 @@
 /obj/table/wood/auto,
 /obj/item/paper/book/from_file/dwainedummies,
 /obj/item/disk/data/tape/master/readonly,
-/obj/item/reagent_containers/food/snacks/beefood{
-	desc = "A little birthday cupcake for Heisenbee.  May not taste good to non-bees.";
-	icon = 'icons/obj/foodNdrink/food_dessert.dmi';
-	icon_state = "cupcake";
-	name = "Heisenbee's birthday cupcake"
-	},
+/obj/item/reagent_containers/food/snacks/beefood/heisenbee,
 /obj/machinery/light_switch/directional/east,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
@@ -71048,7 +71057,7 @@
 /area/station/solar/south)
 "uIP" = (
 /obj/table/reinforced/auto,
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "red2"
@@ -71646,7 +71655,6 @@
 /area/station/science/lab)
 "vla" = (
 /obj/disposalpipe/segment,
-/obj/mapping_helper/firedoor_spawn,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
@@ -71895,6 +71903,13 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
+"vya" = (
+/obj/machinery/light,
+/obj/stool/chair{
+	dir = 1
+	},
+/turf/simulated/floor/arrival,
+/area/station/hallway/secondary/exit)
 "vyj" = (
 /obj/table/auto,
 /obj/item/plate,
@@ -72677,7 +72692,9 @@
 	},
 /area/station/hallway/primary/east)
 "wdo" = (
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/science/lab)
@@ -74940,7 +74957,6 @@
 	dir = 1;
 	level = 2
 	},
-/obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
@@ -139693,14 +139709,14 @@ aaa
 aaa
 aaa
 aaa
-ckG
-cmq
+cie
+tam
 cnY
 cpF
 cmk
 cHK
 izF
-arR
+aaa
 qaU
 qaU
 qaU
@@ -139995,14 +140011,14 @@ aaa
 aaa
 aaa
 aaa
-ckG
-cmr
-cnZ
-cpL
-crA
-csX
 cie
-cxk
+tam
+cnY
+cpF
+cmk
+csX
+izF
+aaa
 qaU
 qaU
 qaU
@@ -140017,11 +140033,11 @@ qaU
 qaU
 qaU
 qaU
-cLV
-jio
-cQf
+aaa
+xHu
 dqF
-cTp
+dqF
+dqF
 xHu
 aaI
 aaa
@@ -140298,13 +140314,13 @@ aaa
 aaa
 aaa
 ckG
-cms
-coa
-cpM
-crB
-csY
-cvC
-cxl
+cmq
+cnY
+cpF
+cmk
+csX
+izF
+arR
 qaU
 qaU
 qaU
@@ -140319,14 +140335,14 @@ qaU
 qaU
 qaU
 qaU
-eYj
-suu
+aaa
+xHu
 dqF
-cRV
-jio
-jio
-jio
-jio
+dqF
+dqF
+xHu
+aaI
+aaa
 aaa
 aaa
 aaa
@@ -140599,14 +140615,14 @@ aaa
 aaa
 aaa
 aaa
+ckG
+cmr
+cnZ
+cpL
+crA
+vya
 cie
-cmt
-coa
-cpN
-crB
-csY
-cmk
-izF
+cxk
 qaU
 qaU
 qaU
@@ -140621,17 +140637,17 @@ qaU
 qaU
 qaU
 qaU
-nye
+cLV
+jio
+cQf
 dqF
-dqF
-cRW
-cTq
-cTq
-cWa
-cXo
-aeP
-adw
-dbt
+cTp
+xHu
+aaI
+aaa
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -140902,13 +140918,13 @@ aaa
 aaa
 aaa
 ckG
-cmu
+cms
 coa
-cpO
+cpM
 crB
 csY
-cmk
-izF
+cvC
+cxl
 qaU
 qaU
 qaU
@@ -140923,15 +140939,15 @@ qaU
 qaU
 qaU
 qaU
-nye
+eYj
+suu
 dqF
-dqF
-cRW
-cTq
-cTq
-cTq
-cXp
-aaI
+cRV
+jio
+jio
+jio
+jio
+aaa
 aaa
 aaa
 aaa
@@ -141203,14 +141219,14 @@ aaa
 aaa
 aaa
 aaa
-ckG
-cmv
-cob
-cpP
-crC
-csZ
-cvC
-cxl
+cie
+cmt
+coa
+cpN
+crB
+csY
+cmk
+izF
 qaU
 qaU
 qaU
@@ -141225,17 +141241,17 @@ qaU
 qaU
 qaU
 qaU
-eYj
-suu
+nye
 dqF
-cRX
+dqF
+cRW
 cTq
 cTq
-cTq
-cXp
-aaI
-aaa
-aaa
+cWa
+cXo
+aeP
+adw
+dbt
 aaa
 aaa
 aaa
@@ -141505,14 +141521,14 @@ aaa
 aaa
 aaa
 aaa
-ckH
-cmw
-qEc
-cpQ
-lcx
-cmw
-cie
-cxk
+ckG
+cmu
+coa
+cpO
+crB
+csY
+cmk
+izF
 qaU
 qaU
 qaU
@@ -141527,17 +141543,17 @@ qaU
 qaU
 qaU
 qaU
-cLV
-jio
-cQf
+nye
+dqF
+dqF
 cRW
 cTq
 cTq
-cWa
-ftQ
-aeQ
-adw
-dbt
+cTq
+cXp
+aaI
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -141807,14 +141823,14 @@ aaa
 aaa
 aaa
 aaa
-aam
-cmw
-cod
-cpR
-crE
-cmw
-aaF
-arR
+ckG
+cmv
+cob
+cpP
+crC
+csZ
+cvC
+cxl
 qaU
 qaU
 qaU
@@ -141829,15 +141845,15 @@ qaU
 qaU
 qaU
 qaU
-aag
-jio
-uPV
-tuo
-cTr
-cTr
-jio
-jio
-aaa
+eYj
+suu
+dqF
+cRX
+cTq
+cTq
+cTq
+cXp
+aaI
 aaa
 aaa
 aaa
@@ -142109,15 +142125,14 @@ aaa
 aaa
 aaa
 aaa
-aam
+ckH
 cmw
-dyr
-cpS
-crF
+qEc
+cpQ
+lcx
 cmw
-aaI
-aaa
-aaa
+cie
+cxk
 qaU
 qaU
 qaU
@@ -142130,18 +142145,19 @@ qaU
 qaU
 qaU
 qaU
-aaa
-aaa
+qaU
+qaU
+cLV
 jio
-jio
-cRY
+cQf
+cRW
+cTq
+cTq
+cWa
 ftQ
-cRY
-jio
-aaI
-aaa
-aaa
-aaa
+aeQ
+adw
+dbt
 aaa
 aaa
 aaa
@@ -142411,17 +142427,14 @@ aaa
 aaa
 aaa
 aaa
-arP
-cmx
-cof
-cpT
-crG
-cmx
-aAF
-aaa
-aaa
-aaa
-aaa
+aam
+cmw
+cod
+cpR
+crE
+cmw
+aaF
+arR
 qaU
 qaU
 qaU
@@ -142430,17 +142443,20 @@ qaU
 qaU
 qaU
 qaU
-aaa
-aaa
-aaa
-aaa
-arP
+qaU
+qaU
+qaU
+qaU
+qaU
+qaU
+aag
 jio
-cRZ
+uPV
+tuo
+cTr
+cTr
 jio
-cRZ
 jio
-aAF
 aaa
 aaa
 aaa
@@ -142714,33 +142730,33 @@ aaa
 aaa
 aaa
 aam
-ckH
-cmx
-cmx
-cmx
-ckH
+cmw
+dyr
+cpS
+crF
+cmw
 aaI
 aaa
+qaU
+qaU
+qaU
+qaU
+qaU
+qaU
+qaU
+qaU
+qaU
+qaU
+qaU
+qaU
+qaU
+qaU
 aaa
-aaa
-aaa
-qaU
-qaU
-qaU
-qaU
-qaU
-qaU
-qaU
-qaU
-aaa
-aaa
-aaa
-aaa
-aam
 jio
-cSa
 jio
-cSa
+cRY
+ftQ
+cRY
 jio
 aaI
 aaa
@@ -143015,16 +143031,13 @@ aaa
 aaa
 aaa
 aaa
-arQ
-aaa
-aao
-aaa
-aao
-aaa
-arQ
-aaa
-aaa
-aaa
+arP
+cmx
+cof
+cpT
+crG
+cmx
+aAF
 aaa
 qaU
 qaU
@@ -143034,17 +143047,20 @@ qaU
 qaU
 qaU
 qaU
+qaU
+qaU
+qaU
+qaU
+qaU
+qaU
 aaa
-aaa
-aaa
-aaa
-arQ
-aaa
-aaa
-arQ
-aaa
-aaa
-arQ
+arP
+jio
+cRZ
+jio
+cRZ
+jio
+aAF
 aaa
 aaa
 aaa
@@ -143317,18 +143333,21 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 aam
-aaS
+ckH
+cmx
+cmx
+cmx
+ckH
 aaI
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+qaU
+qaU
+qaU
+qaU
+qaU
+qaU
 qaU
 qaU
 qaU
@@ -143337,16 +143356,13 @@ qaU
 qaU
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aam
+jio
+cSa
+jio
+cSa
+jio
+aaI
 aaa
 aaa
 aaa
@@ -143619,36 +143635,36 @@ aaa
 aaa
 aaa
 aaa
+arQ
 aaa
+aao
 aaa
-aam
-aan
-aaI
+aao
 aaa
-aaa
-aaa
-aaa
-aaa
+arQ
 aaa
 aaa
 aaa
 aaa
+qaU
+qaU
+qaU
+qaU
+qaU
+qaU
+qaU
+qaU
 aaa
 aaa
 aaa
 aaa
+arQ
 aaa
 aaa
+arQ
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+arQ
 aaa
 aaa
 aaa
@@ -143924,7 +143940,7 @@ aaa
 aaa
 aaa
 aam
-aaB
+aaS
 aaI
 aaa
 aaa
@@ -143932,14 +143948,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+qaU
+qaU
+qaU
+qaU
+qaU
+qaU
+qaU
+qaU
 aaa
 aaa
 aaa
@@ -144225,23 +144241,23 @@ aaa
 aaa
 aaa
 aaa
-aWc
-aaa
-aWc
-aaa
-aaa
+aam
+aan
+aaI
 aaa
 aaa
 aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+qaU
+qaU
+qaU
+qaU
+qaU
+qaU
+qaU
+qaU
 aaa
 aaa
 aaa
@@ -144527,6 +144543,9 @@ aaa
 aaa
 aaa
 aaa
+aam
+aaB
+aaI
 aaa
 aaa
 aaa
@@ -144534,15 +144553,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+qaU
+qaU
+qaU
+qaU
+qaU
+qaU
 aaa
 aaa
 aaa
@@ -144829,9 +144845,9 @@ aaa
 aaa
 aaa
 aaa
+aWc
 aaa
-aaa
-aaa
+aWc
 aaa
 aaa
 aaa

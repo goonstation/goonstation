@@ -61,6 +61,7 @@
 	var/fade_out_icon_state = null
 	var/fade_in_icon_state = null
 	var/fade_anim_length = 3
+	var/fade_alpha = 64
 	var/linger_time = 30
 	var/datum/action/invisibility/last_action
 	cooldown = 300
@@ -81,11 +82,11 @@
 			FLICK(fade_out_icon_state, holder.owner)
 			wait = fade_anim_length
 		else
-			animate(holder.owner, alpha=64, time=5)
+			animate(holder.owner, alpha=fade_alpha, time=5)
 		SPAWN(wait)
 			if(holder?.owner)
 				APPLY_ATOM_PROPERTY(holder.owner, PROP_MOB_INVISIBILITY_CLOAK, src, inv_level)
-				holder.owner.alpha = 64
+				holder.owner.alpha = fade_alpha
 				actions.start(I, holder.owner)
 		return 0
 
@@ -100,7 +101,7 @@
 					FLICK(fade_in_icon_state, holder.owner)
 					holder.owner.alpha = 255
 				else
-					holder.owner.alpha = 64
+					holder.owner.alpha = fade_alpha
 					animate(holder.owner, alpha=255, time=5)
 
 	brullbar
@@ -108,3 +109,7 @@
 		fade_out_icon_state = "brullbar_melt"
 		fade_anim_length = 12
 		linger_time = 5
+
+	probe
+		fade_alpha = 0
+		icon_state = "probe_cloak"
