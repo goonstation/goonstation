@@ -32,6 +32,7 @@ Dirt
 	icon_state = "tree1"
 	bound_height = 32
 	bound_width = 64
+	season_affected = FALSE
 /obj/tree/carcosa/one
 	icon_state = "tree1"
 /obj/tree/carcosa/two
