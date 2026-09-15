@@ -839,7 +839,10 @@
 					T.AddComponent(/datum/component/radioactive, 50, TRUE, FALSE, 1)
 				return FALSE
 			//finally, moderation
-			hit.AddComponent(/datum/component/radioactive, min(O.power, density*multiplier), TRUE, FALSE, 1) //make it all glowy
+			var/radStrength = min(O.power, density*multiplier)
+			var/removable_contamination = 0.75 * radStrength // let's say people can remove 75% of the radStrength, with meds or something
+			hit.AddComponent(/datum/component/radioactive, radStrength * 0.8, TRUE, FALSE, 1, "internal", removable_contamination * 0.8) //make it all glowy
+			hit.AddComponent(/datum/component/radioactive, radStrength * 0.2, TRUE, FALSE, 1, "surface", removable_contamination * 0.2)
 			O.power -= density*multiplier
 			var/datum/gas_mixture/gasmix = hit.return_air()
 			if(O.power < 1)
