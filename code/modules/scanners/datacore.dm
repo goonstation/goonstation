@@ -33,8 +33,8 @@
 	if(!R)
 		return
 
-	R["bioHolder.bloodType"] = M.bioHolder.bloodType
-	R["cdi"] = english_list(M.ailments, MEDREC_DISEASE_DEFAULT)
+	R["blood_type"] = M.bioHolder.bloodType
+	R["cdi"] = english_list(M.ailments, "No diseases have been diagnosed at the moment.")
 	if (M.ailments.len)
 		R["cdi_d"] = "Diseases detected at [time2text(world.realtime,"hh:mm")]."
 	else

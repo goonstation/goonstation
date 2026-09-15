@@ -46,8 +46,8 @@
 	// Message Information Variables:
 	/// The non-unique ID of this message. A listener may only hear one message of a specific ID at any time.
 	var/id = ""
-	/// The datum that should act as a signal recipient for every copy of this message.
-	var/datum/signal_recipient = null
+	/// The signal holder shared by every copy of this message.
+	var/datum/signal_holder/signal_recipient = null
 	/// The original contents of this message, uneditied, unsanitised. Do not read from this directly, lest you permit HTML injection.
 	var/original_content = ""
 	/// Message flags. See `_std/defines/speech_defines/sayflags.dm`.
