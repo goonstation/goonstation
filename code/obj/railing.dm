@@ -20,7 +20,7 @@
 	var/can_reinforce = TRUE
 
 	proc/layerify()
-		if (dir == SOUTH)
+		if (dir == SOUTH || dir == SOUTHWEST || dir == SOUTHEAST)
 			layer = MOB_LAYER + 0.1
 		else
 			layer = OBJ_LAYER
