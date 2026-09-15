@@ -1,11 +1,12 @@
 import { useBackend } from 'tgui/backend';
-import { resource } from 'tgui/goonstation/cdn';
+import { useResource } from 'tgui/goonstation/cdn';
 import { Window } from 'tgui/layouts';
 import { Image } from 'tgui-core/components';
 
 import { ResourceImageProps } from './type';
 
 export const ResourceImage = () => {
+  const resource = useResource();
   const { data } = useBackend<ResourceImageProps>();
   const { title, fixed_size, path, scale_dir } = data;
   const scale_style = scale_dir ? { width: '100%', height: 'auto' } : {};

@@ -1586,3 +1586,12 @@ Only trained personnel should operate station systems. Follow all procedures car
 	it understands you<br>
 	don't let it go<br>
 	"}
+
+/obj/item/paper/iou_ntso_medic
+	name = "I.O.U Specialized Tool"
+	desc = "This looks written hastily."
+	info = {"
+	<b>SORRY!</b> We ran out of research budget and did not finish the shrapnel vacuum we promised..<br>
+	We will supply it once our budget is renewed.<br>
+	"}
+
