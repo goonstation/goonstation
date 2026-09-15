@@ -1,4 +1,9 @@
 
+(t)tue sep 15 26
+(u)JORJ949
+(p)27837
+(e)⚖🤖💡👮|C-Balance, A-Silicons, A-Station-Systems, A-Security
+(*)Camera lists will no longer include deactivated cameras.
 (t)mon sep 14 26
 (u)Sord
 (p)27855
