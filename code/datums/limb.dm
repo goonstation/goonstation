@@ -81,7 +81,7 @@
 		user.do_help(target)
 
 	proc/disarm(mob/living/target, var/mob/living/user)
-		if (special_next)
+		if (special_next && !HAS_ATOM_PROPERTY(target, PROB_MOB_UNSHOVEABLE))
 			src.shove(target,user)
 			special_next = 0
 		else
@@ -92,7 +92,7 @@
 		if(target == user)
 			user.grab_self()
 			return
-		if (issilicon(target))
+		if (issilicon(target) || HAS_ATOM_PROPERTY(target, PROP_MOB_UNGRABBABLE))
 			return
 		user.grab_other(target)
 		ON_COOLDOWN(src, "limb_cooldown", COMBAT_CLICK_DELAY)
@@ -449,6 +449,13 @@
 		current_shots = 8
 		cooldown = 1 SECOND
 		reload_time = 20 SECONDS
+
+	spit //idk where else to put this one
+		proj = new/datum/projectile/special/acidspit
+		shots = 1
+		current_shots = 4
+		cooldown = 1 SECOND
+		reload_time = 5 SECONDS
 
 /datum/limb/gun/energy
 	phaser
