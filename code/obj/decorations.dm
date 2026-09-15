@@ -3,7 +3,7 @@
 	name = "water"
 	density = 0
 	anchored = ANCHORED
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/poolballpit.dmi'
 	icon_state = "poolwater"
 	layer = EFFECTS_LAYER_UNDER_3
 	mouse_opacity = 0
