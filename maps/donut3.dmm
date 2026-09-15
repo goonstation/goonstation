@@ -380,11 +380,11 @@
 	pixel_y = 7
 	},
 /obj/machinery/door_control{
+	dir = 8;
 	id = "artlab";
 	name = "Artifact Lab Blast Doors";
 	pixel_x = -24;
-	pixel_y = -16;
-	dir = 8
+	pixel_y = -16
 	},
 /obj/mapping_helper/access/artlab,
 /obj/cable{
@@ -1186,8 +1186,8 @@
 /area/station/maintenance/inner/sw)
 "apN" = (
 /obj/machinery/door_control/south{
-	name = "Medbay Entrance Door Control";
-	id = "medbay_entrance"
+	id = "medbay_entrance";
+	name = "Medbay Entrance Door Control"
 	},
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk{
@@ -2847,8 +2847,8 @@
 "aQi" = (
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
-	req_access = null;
-	id = "quarters_hop"
+	id = "quarters_hop";
+	req_access = null
 	},
 /obj/mapping_helper/access/head_of_personnel,
 /obj/mapping_helper/firedoor_spawn,
@@ -5883,11 +5883,11 @@
 /obj/disposalpipe/segment/ejection,
 /obj/stool/chair/office/red,
 /obj/machinery/door_control{
+	dir = 4;
 	id = "armory";
 	name = "Armory Window";
 	pixel_x = 24;
-	pixel_y = 0;
-	dir = 4
+	pixel_y = 0
 	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
@@ -6080,8 +6080,8 @@
 /area/station/engine/engineering/ce)
 "bPZ" = (
 /obj/machinery/door/airlock/pyro/command{
-	req_access = null;
-	id = "quarters_rd"
+	id = "quarters_rd";
+	req_access = null
 	},
 /obj/decal/stripe_delivery,
 /obj/mapping_helper/firedoor_spawn,
@@ -7109,11 +7109,11 @@
 	level = -1
 	},
 /obj/machinery/door_control{
+	dir = 4;
 	id = "qm_tohall_shutter";
 	name = "QM Shutter Control";
 	pixel_x = 23;
-	pixel_y = 5;
-	dir = 4
+	pixel_y = 5
 	},
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor,
@@ -7410,8 +7410,8 @@
 	pixel_y = 5
 	},
 /obj/blind_switch/directional/east{
-	pixel_y = -4;
-	id = "mining"
+	id = "mining";
+	pixel_y = -4
 	},
 /obj/decal/tile_edge/line/yellow{
 	dir = 4;
@@ -8769,10 +8769,10 @@
 /area/station/maintenance/outer/sw)
 "cCv" = (
 /obj/machinery/door_control{
+	dir = 1;
 	id = "crusher1";
 	pixel_x = -2;
-	pixel_y = -22;
-	dir = 1
+	pixel_y = -22
 	},
 /obj/disposalpipe/segment{
 	dir = 4
@@ -8912,8 +8912,8 @@
 	pixel_x = 10
 	},
 /obj/machinery/disposal/morgue{
-	name = "kitchen chute";
-	desc = "Fucked up beyond belief. But...you are a bit hungry."
+	desc = "Fucked up beyond belief. But...you are a bit hungry.";
+	name = "kitchen chute"
 	},
 /obj/disposalpipe/trunk/morgue{
 	dir = 1;
@@ -14048,8 +14048,8 @@
 /obj/decal/stripe_delivery,
 /obj/machinery/door/airlock/pyro/glass/command{
 	dir = 8;
-	req_access = null;
-	id = "quarters_ce"
+	id = "quarters_ce";
+	req_access = null
 	},
 /obj/mapping_helper/access/engineering_chief,
 /obj/mapping_helper/firedoor_spawn,
@@ -14600,8 +14600,8 @@
 	},
 /obj/rack,
 /obj/item/reagent_containers/food/snacks/pie/cream{
-	pixel_y = 1;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 1
 	},
 /turf/simulated/floor/redblack{
 	dir = 1
@@ -16894,16 +16894,16 @@
 	pixel_y = 19
 	},
 /obj/item/folder{
-	pixel_y = -1;
-	pixel_x = 3
+	pixel_x = 3;
+	pixel_y = -1
 	},
 /obj/item/folder{
-	pixel_y = -1;
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = -1
 	},
 /obj/item/item_box/postit{
-	pixel_y = 4;
-	pixel_x = 9
+	pixel_x = 9;
+	pixel_y = 4
 	},
 /obj/item/clothing/gloves/latex{
 	pixel_y = -3
@@ -17244,10 +17244,10 @@
 /area/station/maintenance/inner/sw)
 "fpx" = (
 /obj/machinery/door_control{
+	dir = 8;
 	id = "engi";
 	name = "Engine Room Shield Control";
-	pixel_x = -24;
-	dir = 8
+	pixel_x = -24
 	},
 /obj/machinery/atmospherics/binary/valve{
 	name = "mixing valve"
@@ -17880,16 +17880,16 @@
 	pixel_y = 9
 	},
 /obj/item/clothing/shoes/magnetic{
-	pixel_y = 2;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 2
 	},
 /obj/item/clothing/shoes/magnetic{
-	pixel_y = -5;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = -5
 	},
 /obj/item/paper/book/from_file/gravity_tether{
-	pixel_y = 5;
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = 5
 	},
 /turf/simulated/floor/yellowblack{
 	dir = 10
@@ -19083,11 +19083,11 @@
 	icon_state = "line1"
 	},
 /obj/machinery/door_timer/minibrig2{
+	dir = 1;
 	name = "Not Guilty";
 	pixel_x = -1;
-	time = 0;
-	dir = 1;
-	pixel_y = 3
+	pixel_y = 3;
+	time = 0
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/courtroom)
@@ -21983,8 +21983,8 @@
 	pixel_x = 8
 	},
 /obj/machinery/door_control/bolter/new_walls/south{
-	id = "n_bathroom1";
 	dir = 1;
+	id = "n_bathroom1";
 	pixel_x = -1;
 	pixel_y = -22
 	},
@@ -22216,8 +22216,8 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/decoration/clock{
-	pixel_y = 32;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = 32
 	},
 /obj/cable{
 	icon_state = "2-8"
@@ -25525,10 +25525,10 @@
 	dir = 1
 	},
 /obj/machinery/door_control{
+	dir = 4;
 	id = "engi";
 	name = "Engine Room Shield Control";
-	pixel_x = 24;
-	dir = 4
+	pixel_x = 24
 	},
 /turf/simulated/floor/yellowblack{
 	dir = 4
@@ -28171,9 +28171,9 @@
 /area/station/ranch)
 "iOS" = (
 /obj/machinery/door_control/west{
-	pixel_y = -24;
+	id = "medbay_entrance";
 	name = "Medbay Entrance Door Control";
-	id = "medbay_entrance"
+	pixel_y = -24
 	},
 /obj/cable{
 	icon_state = "2-8"
@@ -29510,10 +29510,10 @@
 	},
 /obj/disposalpipe/segment/mail,
 /obj/machinery/door_control{
+	dir = 8;
 	id = "cloning_exit";
 	name = "Cloning Exit Door Control";
-	pixel_x = -24;
-	dir = 8
+	pixel_x = -24
 	},
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/cloner)
@@ -30342,8 +30342,8 @@
 "jxd" = (
 /obj/airbridge_controller{
 	id = "medical_pathology";
-	tunnel_width = 2;
-	primary_controller = 1
+	primary_controller = 1;
+	tunnel_width = 2
 	},
 /turf/space,
 /area/space)
@@ -33802,9 +33802,9 @@
 /area/station/chapel/funeral_parlor)
 "kyV" = (
 /obj/machinery/door_control/podbay/qm{
-	pixel_y = 10;
 	dir = 1;
-	pixel_x = -1
+	pixel_x = -1;
+	pixel_y = 10
 	},
 /turf/simulated/wall/auto/reinforced/jen/yellow,
 /area/station/hangar/qm)
@@ -37619,8 +37619,8 @@
 /obj/landmark/bill_spawn,
 /obj/landmark/pest,
 /obj/machinery/door_control/bolter/new_walls/south{
-	id = "s_bathroom1";
 	dir = 1;
+	id = "s_bathroom1";
 	pixel_x = -1;
 	pixel_y = -20
 	},
@@ -40256,18 +40256,18 @@
 	icon_state = "line2"
 	},
 /obj/machinery/door_timer/minibrig3{
+	dir = 1;
 	name = "Mostly Guilty";
 	pixel_x = -16;
-	time = 0;
-	dir = 1;
-	pixel_y = 3
+	pixel_y = 3;
+	time = 0
 	},
 /obj/machinery/door_timer/minibrig{
+	dir = 1;
 	name = "Extra Guilty";
 	pixel_x = 0;
-	time = 0;
-	dir = 1;
-	pixel_y = 3
+	pixel_y = 3;
+	time = 0
 	},
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/black,
@@ -40329,10 +40329,10 @@
 	icon_state = "check1"
 	},
 /obj/machinery/door_control{
+	dir = 4;
 	id = "kitchen_shutter";
 	name = "Kitchen Shutter Control";
 	pixel_x = 24;
-	dir = 4;
 	pixel_y = 0
 	},
 /turf/simulated/floor/white/checker2{
@@ -41018,8 +41018,8 @@
 	pixel_x = 8
 	},
 /obj/machinery/door_control/bolter/new_walls/north{
-	id = "n_bathroom2";
 	dir = 2;
+	id = "n_bathroom2";
 	pixel_x = 0;
 	pixel_y = 22
 	},
@@ -41387,13 +41387,13 @@
 	},
 /obj/machinery/light/emergency{
 	dir = 1;
-	pixel_y = 24;
-	pixel_x = 2
+	pixel_x = 2;
+	pixel_y = 24
 	},
 /obj/filing_cabinet,
 /obj/machinery/phone/wall{
-	pixel_y = 32;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 32
 	},
 /turf/simulated/floor/blueblack{
 	dir = 1
@@ -41494,8 +41494,8 @@
 	dir = 8
 	},
 /obj/machinery/door_control/bolter/new_walls/south{
-	id = "s_bathroom3";
 	dir = 1;
+	id = "s_bathroom3";
 	pixel_x = -1;
 	pixel_y = -20
 	},
@@ -41861,8 +41861,8 @@
 /area/station/hallway/primary/south)
 "ncb" = (
 /obj/machinery/door_control/podbay/mainpod2{
-	pixel_y = -5;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = -5
 	},
 /turf/simulated/wall/auto/jen,
 /area/station/hangar/main)
@@ -43108,11 +43108,11 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
+	dir = 1;
 	icon_state = "pdoor0";
 	id = "mining_shutters";
 	name = "Mining Blast Shutters";
-	opacity = 0;
-	dir = 1
+	opacity = 0
 	},
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
@@ -45144,8 +45144,8 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medical,
 /obj/machinery/door/airlock/pyro/maintenance{
-	req_access = null;
-	id = "op1"
+	id = "op1";
+	req_access = null
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/medical/medbay/treatment1)
@@ -45253,8 +45253,8 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4;
-	name = "Reading Room 2";
-	id = "readroom2"
+	id = "readroom2";
+	name = "Reading Room 2"
 	},
 /turf/simulated/floor/wood/six,
 /area/station/library/reading2)
@@ -45485,8 +45485,8 @@
 	pixel_x = -32
 	},
 /obj/machinery/turretid/ai_chamber{
-	pixel_y = 24;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 24
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
@@ -45745,11 +45745,11 @@
 	dir = 4
 	},
 /obj/machinery/door_control{
+	dir = 8;
 	id = "tox_vent1";
 	name = "Chamber 1 Exhaust";
 	pixel_x = -24;
-	pixel_y = 10;
-	dir = 8
+	pixel_y = 10
 	},
 /turf/simulated/floor/grime{
 	dir = 8
@@ -47989,17 +47989,17 @@
 /area/space)
 "oWX" = (
 /obj/machinery/door_timer/genpop_n{
+	dir = 4;
 	name = "North Side";
 	pixel_x = 23;
-	pixel_y = -8;
-	dir = 4
+	pixel_y = -8
 	},
 /obj/machinery/door_control{
+	dir = 4;
 	id = "brig_divide";
 	name = "Brig Divider Control";
 	pixel_x = 23;
-	pixel_y = 7;
-	dir = 4
+	pixel_y = 7
 	},
 /obj/disposalpipe/segment/ejection{
 	dir = 1;
@@ -49819,8 +49819,8 @@
 "pzB" = (
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
-	req_access = null;
-	id = "quarters_cap"
+	id = "quarters_cap";
+	req_access = null
 	},
 /obj/mapping_helper/access/captain,
 /obj/mapping_helper/firedoor_spawn,
@@ -50215,11 +50215,11 @@
 	dir = 1
 	},
 /obj/machinery/door_control{
+	dir = 4;
 	id = "hangar_research";
 	name = "Science Hangar Door Control";
 	pixel_x = 24;
-	pixel_y = -8;
-	dir = 4
+	pixel_y = -8
 	},
 /turf/simulated/floor,
 /area/station/hangar/science)
@@ -51528,8 +51528,8 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/medical,
 /obj/machinery/door/airlock/pyro/maintenance{
-	req_access = null;
-	id = "op2"
+	id = "op2";
+	req_access = null
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/medical/medbay/treatment2)
@@ -52098,8 +52098,8 @@
 "qiE" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4;
-	req_access = null;
-	id = "testchamber"
+	id = "testchamber";
+	req_access = null
 	},
 /obj/mapping_helper/access/medical,
 /obj/cable{
@@ -53145,8 +53145,8 @@
 "qAl" = (
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4;
-	name = "Reading Room 1";
-	id = "readroom1"
+	id = "readroom1";
+	name = "Reading Room 1"
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -57280,8 +57280,8 @@
 	dir = 8
 	},
 /obj/machinery/shredder{
-	pixel_y = 10;
-	pixel_x = 3
+	pixel_x = 3;
+	pixel_y = 10
 	},
 /turf/simulated/floor/black,
 /area/station/bridge/customs)
@@ -57761,8 +57761,8 @@
 /obj/noticeboard/persistent/security/directional/north,
 /obj/rack,
 /obj/item/storage/box/evidence{
-	pixel_y = 3;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 3
 	},
 /turf/simulated/floor/redblack{
 	dir = 1
@@ -60073,8 +60073,8 @@
 /area/station/medical/medbay)
 "sJk" = (
 /obj/machinery/meter{
-	pixel_y = -9;
-	pixel_x = 10
+	pixel_x = 10;
+	pixel_y = -9
 	},
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1;
@@ -61590,8 +61590,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door_control/bolter/new_walls/north{
-	id = "testchamber";
 	dir = 2;
+	id = "testchamber";
 	pixel_x = 0;
 	pixel_y = 25
 	},
@@ -61663,8 +61663,8 @@
 /obj/landmark/bill_spawn,
 /obj/landmark/pest,
 /obj/machinery/door_control/bolter/new_walls/south{
-	id = "s_bathroom2";
 	dir = 1;
+	id = "s_bathroom2";
 	pixel_x = -1;
 	pixel_y = -20
 	},
@@ -61938,8 +61938,8 @@
 /area/station/crew_quarters/captain)
 "tlf" = (
 /obj/machinery/crema_switch{
-	pixel_x = 24;
 	dir = 4;
+	pixel_x = 24;
 	pixel_y = 0
 	},
 /obj/disposalpipe/segment/food,
@@ -62397,10 +62397,10 @@
 "ttM" = (
 /obj/random_item_spawner/junk/maybe_few,
 /obj/machinery/door_control{
+	dir = 4;
 	id = "hangar_bubsruss";
 	name = "Bubs Russ' Pod Paintjobs Hangar Door Control";
 	pixel_x = 24;
-	dir = 4;
 	pixel_y = 0
 	},
 /turf/simulated/floor/plating/jen,
@@ -63343,6 +63343,10 @@
 	icon_state = "pipe-c";
 	name = "kitchen freezer pipe"
 	},
+/obj/disposalpipe/segment/transport{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/wall/auto/reinforced/jen/red,
 /area/station/turret_protected/AIbaseoutside)
 "tHG" = (
@@ -63369,9 +63373,9 @@
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
 /obj/health_scanner/wall{
+	dir = 4;
 	find_in_range = 0;
 	id = "medbaylobby";
-	dir = 4;
 	pixel_x = 8
 	},
 /obj/cable,
@@ -65707,9 +65711,9 @@
 /area/station/medical/robotics)
 "uvB" = (
 /obj/machinery/door_control/east{
-	pixel_y = -24;
 	id = "medbay_entrance";
-	name = "Medbay Entrance Door Control"
+	name = "Medbay Entrance Door Control";
+	pixel_y = -24
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 8;
@@ -66005,8 +66009,8 @@
 /obj/decal/stripe_caution,
 /obj/table/reinforced/industrial/auto,
 /obj/item/reagent_containers/food/snacks/donut/custom/cinnamon{
-	pixel_y = 4;
-	name = "station blueprints"
+	name = "station blueprints";
+	pixel_y = 4
 	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
@@ -66414,11 +66418,11 @@
 	dir = 4
 	},
 /obj/machinery/door_control{
+	dir = 8;
 	id = "tox_vent2";
 	name = "Chamber 2 Exhaust";
 	pixel_x = -24;
-	pixel_y = -9;
-	dir = 8
+	pixel_y = -9
 	},
 /turf/simulated/floor/grime{
 	dir = 8
@@ -66445,9 +66449,9 @@
 "uGj" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/computer/airbr/medical_pathology{
-	pixel_y = 33;
+	density = 0;
 	id = "medical_pathology";
-	density = 0
+	pixel_y = 33
 	},
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
@@ -68720,8 +68724,8 @@
 "vol" = (
 /obj/decal/stripe_delivery,
 /obj/machinery/door/airlock/pyro/maintenance{
-	req_access = null;
-	id = "mnt_bathroom"
+	id = "mnt_bathroom";
+	req_access = null
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
@@ -69370,10 +69374,10 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/door_control{
+	dir = 8;
 	id = "tox_mix";
 	name = "Mixing Vent Control";
-	pixel_x = -24;
-	dir = 8
+	pixel_x = -24
 	},
 /turf/simulated/floor/grime{
 	dir = 8
@@ -69866,8 +69870,8 @@
 	})
 "vEp" = (
 /obj/machinery/door_control/bolter/new_walls/south{
-	id = "mnt_bathroom";
 	dir = 1;
+	id = "mnt_bathroom";
 	pixel_x = -1;
 	pixel_y = -22
 	},
@@ -70540,10 +70544,7 @@
 	icon_state = "securearea";
 	name = "WARNING - SECURE AREA"
 	},
-/obj/disposalpipe/segment/transport{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
+/obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/reinforced/jen/red,
 /area/station/turret_protected/AIbaseoutside)
 "vOT" = (
@@ -71780,17 +71781,17 @@
 	icon_state = "line1"
 	},
 /obj/machinery/door_control{
+	dir = 4;
 	id = "brig_divide";
 	name = "Brig Divider Control";
 	pixel_x = 23;
-	pixel_y = 8;
-	dir = 4
+	pixel_y = 8
 	},
 /obj/machinery/door_timer/genpop_s{
+	dir = 4;
 	name = "South Side";
 	pixel_x = 23;
-	pixel_y = -7;
-	dir = 4
+	pixel_y = -7
 	},
 /turf/simulated/floor/redwhite{
 	dir = 5
@@ -72212,9 +72213,9 @@
 /area/station/maintenance/inner/nw)
 "wpa" = (
 /obj/machinery/door_control{
+	dir = 8;
 	id = "market_stall";
 	pixel_x = -24;
-	dir = 8;
 	pixel_y = 0
 	},
 /obj/cable{
@@ -77181,8 +77182,8 @@
 /obj/machinery/light/incandescent/cool,
 /obj/table/auto,
 /obj/item/hand_labeler{
-	pixel_y = -4;
-	pixel_x = 2
+	pixel_x = 2;
+	pixel_y = -4
 	},
 /obj/machinery/firealarm/directional/south{
 	pixel_x = -4
@@ -77448,8 +77449,8 @@
 	},
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4;
-	req_access = null;
-	id = "testchamber"
+	id = "testchamber";
+	req_access = null
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
