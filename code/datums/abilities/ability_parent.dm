@@ -846,6 +846,11 @@
 		owner.holder.abilities.Swap(index_source,index_target)
 		owner.holder.updateButtons()
 
+#define AIM_ASSIST_NONE null
+#define AIM_ASSIST_SAME_TILE 0
+// The following radius(es) have expanded targeting reticules to indicate aim assist
+#define AIM_ASSIST_1_TILE 1
+
 /datum/targetable
 
 	var/name = null
@@ -878,7 +883,7 @@
 	var/ignore_sticky_cooldown = FALSE		//! If TRUE, Ability will stick to cursor even if ability goes on cooldown after first cast.
 	var/interrupt_action_bars = TRUE 		//! If TRUE, we will interrupt any action bars running with the INTERRUPT_ACT flag
 	var/cooldown_after_action = FALSE		//! if TRUE, cooldowns will be handled after action bars have ended. Needs action to call afterAction() on end.
-	var/aim_assist_radius = null			//! If we don't click on a mob, how many tiles away do we search to find a mob to target? If null, don't try at all
+	var/aim_assist_radius = AIM_ASSIST_NONE	//! If we don't click on a mob, how many tiles away do we search to find a mob to target? Use defines when possible
 	var/aim_assist_ignore_owner = TRUE		//! Should we ignore our owner when searching for nearby mobs with aim assist?
 
 	var/action_key_number = -1 //Number hotkey assigned to this ability. Only used if > 0
@@ -1138,6 +1143,22 @@
 				if((mob_target == src.holder.owner) && src.aim_assist_ignore_owner)
 					continue
 				return mob_target
+
+		/// Returns the cursor .dmi we should use, based on user prefs and aim_assist_radius
+		get_ability_cursor()
+			var/client/client = src.holder.owner.client
+			if(!client)
+				return
+			var/file = cursors_selection[client.preferences.target_cursor]
+			if(!src.aim_assist_radius)
+				return file
+			// we wanna make sure we actually *have* a valid cursor file for our size
+			if(!(src.aim_assist_radius == AIM_ASSIST_RADIUS_1))
+			var/file_name = "[file]"
+			var/filename_suffix = "-range_[num2text(src.aim_assist_radius)]"
+			var/list/split_file_name = splittext(file_name, ".")
+			file_name = split_file_name[1] + filename_suffix + ".dmi"
+			return file(file_name)
 
 /atom/movable/screen/pseudo_overlay
 	// this is hack as all get out

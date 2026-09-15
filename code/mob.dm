@@ -899,7 +899,11 @@ TYPEINFO(/mob)
 /mob/proc/update_cursor()
 	if (client)
 		if (src.targeting_ability)
-			src.set_cursor(cursors_selection[client.preferences.target_cursor])
+			if(!istype(src.targeting_ability, /datum/targetable))
+				src.set_cursor(cursors_selection[client.preferences.target_cursor])
+			else
+				var/datum/targetable/targetable_ability = src.targeting_ability
+				src.set_cursor(targetable_ability.get_ability_cursor())
 			return
 		if (src.client.admin_intent)
 			src.set_cursor('icons/cursors/admin.dmi')
