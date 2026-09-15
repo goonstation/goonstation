@@ -243,7 +243,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.limb = new /datum/limb/sword
 		HH.name = "left hand"
 		HH.suffix = "-L"
@@ -267,7 +267,7 @@ ABSTRACT_TYPE(/mob/living/critter/human/mercenary)
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.limb = new /datum/limb/gun/kinetic/draco
 		HH.name = "rifle"
 		HH.suffix = "-LR"
@@ -690,7 +690,7 @@ TYPEINFO(/obj/item/reagent_containers/injector_filler)
 	var/image/fluid_image
 	var/list/whitelist = list()
 	var/safe = 1
-	var/additional_whitelist = list("atropine", "calomel", "filgrastim", "heparin", "morphine", "proconvertin", "ephedrine", "acetylsalicylic_acid")
+	var/additional_whitelist = list("atropine", "calomel", "filgrastim", "heparin", "morphine", "proconvertin", "ephedrine")
 
 
 	New()

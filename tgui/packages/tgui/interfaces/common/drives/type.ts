@@ -5,6 +5,10 @@
  * @license MIT
  */
 
+export interface DriveContextType {
+  onContentClick?: () => void;
+}
+
 export interface DriveSlotProps {
   onClick?: () => void;
 }

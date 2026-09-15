@@ -42,6 +42,8 @@ var/global/datum/phrase_log/phrase_log = new
 	var/api_cache_size = 40
 	var/static/regex/non_freeform_laws
 	var/static/regex/name_regex = new(@"\b[A-Z][a-z]* [A-Z][a-z]*\b", "g")
+	var/static/regex/menhir_pun_regex = new(@"men here", "i")
+	var/menhir_pun_found = FALSE
 	var/PANIC = FALSE
 
 	New()
@@ -174,7 +176,7 @@ var/global/datum/phrase_log/phrase_log = new
 			return random_phrase(category, include_old, include_new)
 
 	/// Logs a phrase to a selected category duh
-	proc/log_phrase(category, phrase, no_duplicates=FALSE, mob/user = null, strip_html=FALSE)
+	proc/log_phrase(category, phrase, no_duplicates=FALSE, mob/user = null, strip_html=TRUE)
 		if (!user)
 			user = usr
 		if(strip_html)
@@ -185,6 +187,11 @@ var/global/datum/phrase_log/phrase_log = new
 		#ifdef RP_MODE
 		if(category != "ooc" && category != "looc" && !(category == "deadsay" || (user && inafterlife(user))) && is_ic_sussy(phrase))
 			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_SUSSY_PHRASE, SPAN_ADMIN("Low RP word - [key_name(user)] [category]: \"[phrase]\""))
+		#endif
+		#ifdef MAP_OVERRIDE_MENHIR
+		if(!src.menhir_pun_found && category != "ooc" && category != "looc" && !(category == "deadsay" || (user && inafterlife(user))) && possible_menhir_pun(phrase))
+			src.menhir_pun_found = TRUE //the men are already here stop checking
+			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_MEN_HERE)
 		#endif
 		var/pos = is_uncool(phrase)
 		if(pos)
@@ -227,6 +234,11 @@ var/global/datum/phrase_log/phrase_log = new
 		if(isnull(src.ic_sussy_words))
 			return FALSE
 		return !!(findtext(phrase, src.ic_sussy_words))
+
+	proc/possible_menhir_pun(phrase)
+		if (isnull(src.menhir_pun_regex))
+			return FALSE
+		return (findtext(phrase, src.menhir_pun_regex))
 
 	proc/upload_uncool_words()
 		var/new_uncool = input("Upload a json list of uncool words.", "Uncool words", null) as null|file

@@ -25,6 +25,12 @@
 /// A wrapper for _LoadComponent that allows us to pretend we're using normal named arguments
 #define LoadComponent(arguments...) _LoadComponent(list(##arguments))
 
+/// A wrapper for _AddElement that allows us to pretend we're using normal named arguments.
+#define AddElement(arguments...) _AddElement(list(##arguments))
+
+/// A wrapper for _RemoveElement that allows us to pretend we're using normal named arguments.
+#define RemoveElement(arguments...) _RemoveElement(list(##arguments))
+
 /// Checks if a signal is "complex", i.e. it is handled by adding a special component and registering may have side effects and overhead
 #define IS_COMPLEX_SIGNAL(x) ispath(x, /datum/xsig)
 

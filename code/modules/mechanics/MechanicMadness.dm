@@ -2846,6 +2846,14 @@ TYPEINFO(/obj/item/mechanics)
 		STOP_TRACKING
 		return ..()
 
+	check_wrenching_conditions(mob/user)
+		if(isturf(src.loc))
+			var/turf/T = src.loc
+			if(T.density)
+				boutput(user, SPAN_ALERT("[src] cannot be placed in a solid wall!"))
+				return FALSE
+		return ..()
+
 	proc/setID(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter ID:","ID setting",teleID) as text
 		if(!in_interact_range(src, user) || user.stat)

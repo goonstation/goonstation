@@ -13,5 +13,7 @@
 			continue
 		if (istype(T.loc, /area/station/crewquarters/cryotron))
 			continue
+		if (istype(T.loc, /area/station/crown))
+			continue
 
 		. += CI.format_position(T)

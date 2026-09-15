@@ -5958,10 +5958,6 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/bathroom)
-"cFa" = (
-/obj/machinery/vending/cards,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/quarters_south)
 "cFs" = (
 /obj/item/storage/toilet,
 /obj/machinery/light/small/blueish,
@@ -6302,6 +6298,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"cPy" = (
+/obj/machinery/vending/capsule,
+/turf/simulated/floor,
+/area/station/crew_quarters/quarters_south)
 "cPC" = (
 /obj/table/auto,
 /obj/item/paper/book/from_file/matsci_guide,
@@ -9391,14 +9391,6 @@
 /area/station/science/restroom{
 	name = "Research Locker Room"
 	})
-"ehQ" = (
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/apc/autoname_north,
-/obj/machinery/vending/capsule,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/quarters_south)
 "ehT" = (
 /obj/landmark/start/job/assistant,
 /turf/simulated/floor/pool/no_animate,
@@ -19309,6 +19301,20 @@
 	},
 /turf/simulated/floor/blueblack,
 /area/station/bridge)
+"iMc" = (
+/obj/decal/glow{
+	brightness = 3;
+	color_b = 0.35;
+	color_r = 0.35;
+	invisibility = 101;
+	name = "glow - WHITE"
+	},
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/station/crew_quarters/quarters_south)
 "iMJ" = (
 /obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/plating,
@@ -23627,6 +23633,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
+"kDr" = (
+/obj/machinery/vending/cards,
+/turf/simulated/floor,
+/area/station/crew_quarters/quarters_south)
 "kDx" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/power)
@@ -29305,12 +29315,7 @@
 /turf/simulated/floor/specialroom/gym,
 /area/station/chapel/sanctuary)
 "njv" = (
-/obj/item/reagent_containers/food/snacks/beefood{
-	desc = "A little birthday cupcake for Heisenbee.  May not taste good to non-bees.";
-	icon = 'icons/obj/foodNdrink/food_dessert.dmi';
-	icon_state = "cupcake";
-	name = "Heisenbee's birthday cupcake"
-	},
+/obj/item/reagent_containers/food/snacks/beefood/heisenbee,
 /obj/item/storage/secure/ssafe{
 	pixel_y = -24
 	},
@@ -32115,9 +32120,6 @@
 /turf/simulated/floor/black,
 /area/station/engine/power)
 "opY" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
 /obj/cable{
 	icon_state = "2-8"
 	},
@@ -47232,6 +47234,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters_south)
 "vwU" = (
@@ -113339,7 +113342,7 @@ sVM
 iRN
 foS
 dsk
-qaP
+cPy
 tPB
 ylI
 jRv
@@ -113641,7 +113644,7 @@ nUJ
 iRN
 feM
 gtE
-qaP
+kDr
 qle
 ylI
 lyC
@@ -114540,8 +114543,8 @@ kYa
 kYa
 kYa
 uCc
-ehQ
-cFa
+koE
+koE
 koE
 koE
 koE
@@ -114839,10 +114842,8 @@ yaT
 uDh
 ltu
 ltu
-ltu
-ltu
-swQ
-swQ
+iMc
+iMc
 koE
 koE
 tkY
@@ -114852,6 +114853,8 @@ hDx
 gUL
 rpv
 cCB
+rpv
+rpv
 rpv
 rpv
 rpv
@@ -115142,8 +115145,6 @@ vnX
 vnX
 vnX
 vnX
-vnX
-vnX
 mma
 koE
 tfb
@@ -115153,6 +115154,8 @@ koE
 khc
 dqg
 tFj
+dqg
+dqg
 dqg
 tFj
 dqg
@@ -115444,8 +115447,6 @@ vnX
 vnX
 vnX
 vnX
-vnX
-vnX
 mma
 koE
 koE
@@ -115456,6 +115457,8 @@ uLU
 eEI
 tFj
 dxL
+dqg
+dqg
 cwz
 lje
 iHK
@@ -115746,8 +115749,6 @@ vnX
 vnX
 vnX
 vnX
-vnX
-vnX
 mma
 hlq
 kKU
@@ -115757,6 +115758,8 @@ yiM
 vsW
 dqg
 tFj
+dqg
+dqg
 dqg
 tFj
 wIN
@@ -116048,8 +116051,6 @@ vnX
 vnX
 vnX
 vnX
-vnX
-vnX
 mma
 hlq
 hlq
@@ -116060,6 +116061,8 @@ lgk
 hOy
 pJI
 qcl
+hOy
+hOy
 hOy
 hOy
 efr
@@ -116349,8 +116352,6 @@ vnX
 vnX
 vnX
 vnX
-vnX
-vnX
 cRV
 uhQ
 eil
@@ -116362,6 +116363,8 @@ bcs
 uRN
 hlq
 mLr
+hlq
+hlq
 hlq
 hlq
 bcs
@@ -116653,8 +116656,6 @@ vnX
 vnX
 vnX
 vnX
-vnX
-vnX
 hGG
 mma
 vnX
@@ -116664,6 +116665,8 @@ vnX
 bWq
 vnX
 vnX
+hGG
+hGG
 opa
 hGG
 pWc
@@ -116956,9 +116959,9 @@ vnX
 vnX
 vnX
 vnX
-vnX
-vnX
 say
+vnX
+vnX
 vnX
 vnX
 vnX
@@ -117255,12 +117258,12 @@ vnX
 vnX
 awJ
 cVp
-pyz
-pyz
 bve
 pyz
 pyz
 vZx
+vnX
+vnX
 vnX
 vnX
 vnX
@@ -117560,14 +117563,14 @@ vnX
 vnX
 vnX
 vnX
-vnX
-vnX
 vIA
 vnX
 ptz
 vnX
 vnX
 lok
+vnX
+vnX
 vnX
 vnX
 vIA
@@ -117860,10 +117863,10 @@ vnX
 vnX
 vnX
 vnX
-vnX
-vnX
-vnX
-vnX
+nEk
+nEk
+nEk
+nEk
 nEk
 nEk
 nEk
@@ -118161,10 +118164,10 @@ vnX
 vnX
 vnX
 vnX
-vnX
-vnX
-vnX
-vnX
+nEk
+nEk
+nEk
+nEk
 nEk
 nEk
 nEk
@@ -118463,10 +118466,10 @@ vnX
 vnX
 vnX
 vnX
-vnX
-vnX
-vnX
-vnX
+nEk
+nEk
+nEk
+nEk
 nEk
 nEk
 nEk
@@ -118762,10 +118765,10 @@ vnX
 vnX
 vnX
 vnX
-vnX
-vnX
-vnX
-vnX
+nEk
+nEk
+nEk
+nEk
 nEk
 nEk
 nEk
@@ -119063,10 +119066,10 @@ vnX
 vnX
 vnX
 vnX
-vnX
-vnX
-vnX
-vnX
+nEk
+nEk
+nEk
+nEk
 nEk
 nEk
 nEk
@@ -119365,10 +119368,10 @@ vnX
 vnX
 vnX
 vnX
-vnX
-vnX
-vnX
-vnX
+nEk
+nEk
+nEk
+nEk
 nEk
 nEk
 nEk
@@ -119667,29 +119670,29 @@ vnX
 vnX
 vnX
 vnX
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
 vnX
-vnX
-vnX
-vnX
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-lXt
 vnX
 eEY
 sUb
@@ -119969,10 +119972,6 @@ vnX
 vnX
 vnX
 vnX
-vnX
-vnX
-vnX
-vnX
 nEk
 nEk
 nEk
@@ -119991,7 +119990,11 @@ nEk
 nEk
 nEk
 nEk
-vnX
+nEk
+nEk
+nEk
+nEk
+lXt
 vnX
 eEY
 bZq
@@ -120271,10 +120274,10 @@ vnX
 vnX
 vnX
 vnX
-vnX
-vnX
-vnX
-vnX
+nEk
+nEk
+nEk
+nEk
 nEk
 nEk
 nEk
@@ -120573,10 +120576,10 @@ vnX
 vnX
 vnX
 vnX
-vnX
-vnX
-vnX
-vnX
+nEk
+nEk
+nEk
+nEk
 nEk
 nEk
 nEk
@@ -120876,10 +120879,10 @@ vnX
 vnX
 vnX
 vnX
-vnX
-vnX
-vnX
-vnX
+nEk
+nEk
+nEk
+nEk
 nEk
 nEk
 nEk
@@ -121181,10 +121184,10 @@ vnX
 vnX
 vnX
 vnX
-vnX
-vnX
-vnX
-vnX
+nEk
+nEk
+nEk
+nEk
 nEk
 nEk
 nEk
@@ -121483,10 +121486,10 @@ vnX
 vnX
 vnX
 vnX
-vnX
-vnX
-vnX
-vnX
+nEk
+nEk
+nEk
+nEk
 nEk
 nEk
 nEk
@@ -121786,25 +121789,25 @@ vnX
 vnX
 vnX
 vnX
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
+nEk
 vnX
-vnX
-vnX
-vnX
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-nEk
-bIW
 eTI
 uYR
 eTI

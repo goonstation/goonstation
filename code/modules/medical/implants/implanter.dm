@@ -214,7 +214,7 @@
 	HELP_MESSAGE_OVERRIDE({"When someone dies while implanted with this, they will explode into a cloud of angry wasps. Suiciding will cause no cloud of wasps to appear. This implant will also make wasps friendly to the user."})
 
 	New()
-		src.imp = new /obj/item/implant/revenge/wasp(src)
+		src.imp = new /obj/item/implant/revenge/spawner/wasp(src)
 		..()
 
 /obj/item/implanter/clownspider
@@ -224,7 +224,7 @@
 	HELP_MESSAGE_OVERRIDE({"When someone dies while implanted with this, they will explode into a cloud of angry clownspiders. Suiciding will cause no cloud of wasps to appear. This implant will also make clownspiders friendly to the user."})
 
 	New()
-		src.imp = new /obj/item/implant/revenge/wasp/clownspider(src)
+		src.imp = new /obj/item/implant/revenge/spawner/clownspider(src)
 		..()
 
 /obj/item/implanter/marionette

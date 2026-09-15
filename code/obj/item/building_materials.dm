@@ -55,7 +55,7 @@ MATERIAL
 	stamina_damage = 42
 	stamina_cost = 23
 	stamina_crit_chance = 10
-	material_amt = 0.1
+	material_amt = MATERIAL::AMOUNT::SHEET
 	var/datum/material/reinforcement = null
 	rand_pos = 1
 	inventory_counter_enabled = 1
@@ -422,7 +422,7 @@ MATERIAL
 						a_type = map_settings ? map_settings.rwindows_thin : /obj/window/reinforced
 					else
 						a_type = map_settings ? map_settings.windows_thin : /obj/window
-					currentRecipe = /datum/sheet_crafting_recipe/unreinforced/glass/smallwindow
+					currentRecipe = /datum/sheet_crafting_recipe/glass/smallwindow
 					a_callback = /proc/window_reinforce_callback
 
 				if("bigwindow")
@@ -434,7 +434,7 @@ MATERIAL
 						a_type = map_settings ? map_settings.rwindows : /obj/window/reinforced
 					else
 						a_type = map_settings ? map_settings.windows : /obj/window
-					currentRecipe = /datum/sheet_crafting_recipe/unreinforced/glass/bigwindow
+					currentRecipe = /datum/sheet_crafting_recipe/glass/bigwindow
 					a_callback = /proc/window_reinforce_full_callback
 
 				if("remetal")
@@ -611,7 +611,7 @@ MATERIAL
 	stamina_crit_chance = 30
 	rand_pos = 1
 	inventory_counter_enabled = 1
-	material_amt = 0.05
+	material_amt = MATERIAL::AMOUNT::ROD
 	uses_default_material_appearance = TRUE
 	can_arcplate = FALSE
 
@@ -987,7 +987,7 @@ MATERIAL
 	stamina_crit_chance = 15
 	tooltip_flags = REBUILD_DIST
 	inventory_counter_enabled = 1
-	material_amt = 0.025
+	material_amt = MATERIAL::AMOUNT::TILE
 	can_arcplate = FALSE
 
 	New(make_amount = 0)
@@ -1162,9 +1162,9 @@ MATERIAL
 
 
 ABSTRACT_TYPE(/datum/sheet_crafting_recipe)
+ABSTRACT_TYPE(/datum/sheet_crafting_recipe/glass)
 ABSTRACT_TYPE(/datum/sheet_crafting_recipe/unreinforced)
 ABSTRACT_TYPE(/datum/sheet_crafting_recipe/unreinforced/metal)
-ABSTRACT_TYPE(/datum/sheet_crafting_recipe/unreinforced/glass)
 ABSTRACT_TYPE(/datum/sheet_crafting_recipe/unreinforced/wood)
 ABSTRACT_TYPE(/datum/sheet_crafting_recipe/reinforced)
 /datum/sheet_crafting_recipe
@@ -1346,7 +1346,7 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/reinforced)
 		icon = 'icons/obj/items/scrapweapons.dmi'
 		icon_state = "shaft"
 
-/datum/sheet_crafting_recipe/unreinforced/glass
+/datum/sheet_crafting_recipe/glass
 	required_mat_flags = MATERIAL_CRYSTAL
 
 	smallwindow

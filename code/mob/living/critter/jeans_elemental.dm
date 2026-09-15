@@ -40,7 +40,7 @@
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "left_pant"
 		HH.name = "left jean"
 		HH.limb_name = "left jean"
@@ -48,7 +48,7 @@
 
 		HH = hands[2]
 		HH.limb = new /datum/limb
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "right_pant"
 		HH.name = "right jean"
 		HH.limb_name = "right jean"

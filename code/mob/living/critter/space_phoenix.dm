@@ -111,7 +111,7 @@ TYPEINFO(/mob)
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter/space_phoenix
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "talons"
 		HH.limb_name = "talons"
@@ -120,7 +120,7 @@ TYPEINFO(/mob)
 		HH.name = "ice feather"
 		HH.limb = new /datum/limb/gun/kinetic/space_phoenix
 		HH.icon_state = "feather"
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.limb_name = "ice feather"
 		HH.can_hold_items = FALSE
 		HH.can_range_attack = TRUE

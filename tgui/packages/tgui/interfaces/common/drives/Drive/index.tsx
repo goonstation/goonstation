@@ -9,8 +9,8 @@
 import { PropsWithChildren, useMemo } from 'react';
 import { Button, Stack } from 'tgui-core/components';
 
+import { DriveContext } from '../context';
 import type { DriveBaseProps, DriveSlotProps } from '../type';
-import { DriveContext } from './context';
 import { DriveSlot } from './DriveSlot';
 
 const DRIVE_HEIGHT = 2;
