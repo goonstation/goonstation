@@ -119,7 +119,7 @@
 	var/list/D = list()
 	var/counter = 1
 	for (var/obj/machinery/camera/C in L)
-		if(!C.network in src.camera_networks)
+		if(!(C.network in src.camera_networks))
 			continue
 		if(get_z(C) != Z_LEVEL_STATION)
 			continue
