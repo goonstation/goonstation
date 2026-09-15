@@ -1131,7 +1131,7 @@
 			. = target
 			if (isnull(src.aim_assist_radius) || ismob(target))
 				return
-			var/list/mob_list = get_nearest_mobs_list(target, params, aim_assist_radius)
+			var/list/mob_list = get_nearest_mobs_list(user = src.holder.owner, params = params, range = aim_assist_radius)
 			if(!mob_list)
 				return
 			for (var/mob/mob_target in mob_list)
