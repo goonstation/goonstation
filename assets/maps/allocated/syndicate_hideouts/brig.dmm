@@ -40,6 +40,12 @@
 	dir = 1
 	},
 /area/syndicate_station/hideout)
+"f" = (
+/obj/machinery/vending/snack,
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/syndicate_station/hideout)
 "g" = (
 /obj/table/syndicate/auto,
 /obj/machinery/phone/unlisted{
@@ -167,12 +173,6 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/wood/two,
 /area/syndicate_station/hideout)
-"F" = (
-/obj/stool/chair/black{
-	dir = 8
-	},
-/turf/simulated/floor/wood/five,
-/area/syndicate_station/hideout)
 "G" = (
 /obj/item/instrument/harmonica,
 /obj/table/reinforced/auto,
@@ -186,6 +186,12 @@
 	dir = 4
 	},
 /turf/simulated/floor/sanitary,
+/area/syndicate_station/hideout)
+"J" = (
+/obj/stool/chair/black{
+	dir = 8
+	},
+/turf/simulated/floor/wood/five,
 /area/syndicate_station/hideout)
 "L" = (
 /turf/simulated/floor/redblack{
@@ -211,7 +217,7 @@
 /turf/simulated/floor/sanitary,
 /area/syndicate_station/hideout)
 "Q" = (
-/obj/item/device/light/floodlight/starts_on{
+/obj/item/device/light/floodlight/starts_on/fixed{
 	dir = 4
 	},
 /turf/simulated/floor/wood/five,
@@ -222,12 +228,6 @@
 /area/syndicate_station/hideout)
 "S" = (
 /turf/simulated/floor/black,
-/area/syndicate_station/hideout)
-"V" = (
-/obj/machinery/vending/snack,
-/turf/simulated/floor/redblack{
-	dir = 1
-	},
 /area/syndicate_station/hideout)
 "X" = (
 /obj/stool/chair/office/syndie{
@@ -370,7 +370,7 @@ H
 H
 H
 H
-V
+f
 S
 j
 H
@@ -411,7 +411,7 @@ a
 a
 H
 k
-F
+J
 O
 H
 v
