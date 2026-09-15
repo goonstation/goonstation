@@ -1813,6 +1813,16 @@
 	category = MANUFACTURER::CATEGORY::CYBORG_PARTS
 	apply_material = TRUE
 
+/datum/manufacture/robo_leg_r_tread
+	name = "Cyborg Tread (Right)"
+	item_requirements = list("metal_dense" = ROBOT_TREAD_METAL_COST*10,
+								"conductive" = 3)
+	item_outputs = list(/obj/item/parts/robot_parts/leg/right/treads)
+	create = 1
+	time = 15 SECONDS
+	category = MANUFACTURER::CATEGORY::CYBORG_PARTS
+	apply_material = TRUE
+
 /datum/manufacture/robo_leg_l
 	name = "Cyborg Leg (Left)"
 	item_requirements = list("metal_dense" = ROBOT_LIMB_COST*10)
@@ -1831,11 +1841,11 @@
 	category = MANUFACTURER::CATEGORY::CYBORG_PARTS
 	apply_material = TRUE
 
-/datum/manufacture/robo_leg_treads
-	name = "Cyborg Treads"
-	item_requirements = list("metal_dense" = ROBOT_TREAD_METAL_COST*2*10,
-							 "conductive" = 6)
-	item_outputs = list(/obj/item/parts/robot_parts/leg/left/treads, /obj/item/parts/robot_parts/leg/right/treads)
+/datum/manufacture/robo_leg_l_tread
+	name = "Cyborg Tread (Left)"
+	item_requirements = list("metal_dense" = ROBOT_TREAD_METAL_COST*10,
+								"conductive" = 3)
+	item_outputs = list(/obj/item/parts/robot_parts/leg/left/treads)
 	create = 1
 	time = 15 SECONDS
 	category = MANUFACTURER::CATEGORY::CYBORG_PARTS
