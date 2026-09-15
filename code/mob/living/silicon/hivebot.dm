@@ -701,6 +701,13 @@ Frequency:
 	src.open_nearest_door_silicon()
 	return
 
+/mob/living/silicon/hivebot/verb/toggle_monospace()
+	set category = "Robot Commands"
+	set name = "Toggle Monospace Speech"
+	set desc = "Switches your speech between normal and forced-monospace mode."
+
+	src.toggle_monospace_mode(src)
+
 /mob/living/silicon/hivebot/verb/cmd_return_mainframe()
 	set category = "Robot Commands"
 	set name = "Recall to Mainframe"

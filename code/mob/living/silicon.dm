@@ -717,6 +717,27 @@ var/global/list/module_editors = list()
 	..()
 	src.mainframe?.clear_offline_indicator()
 
+/mob/living/silicon/proc/set_always_monospaced(do_monospaced = TRUE, mob/user = src)
+// we have to only have either the forced or decorator, otherwise they interfere with each other
+	if(!do_monospaced)
+		src.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_MONOSPACE_DECORATOR_INVERTED)
+		src.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_MONOSPACE_DECORATOR)
+		boutput(user, SPAN_NOTICE("All speech now regular text by default."))
+		if(src.mainframe && !isAI(src)) // safety check to prevent possible infinite loop if mainframe is ever set on an ai
+			src.mainframe.set_always_monospaced(do_monospaced = FALSE)
+	else
+		src.ensure_speech_tree().AddSpeechModifier(SPEECH_MODIFIER_MONOSPACE_DECORATOR_INVERTED)
+		src.ensure_speech_tree().RemoveSpeechModifier(SPEECH_MODIFIER_MONOSPACE_DECORATOR)
+		if(src.mainframe && !isAI(src))
+			src.mainframe.set_always_monospaced(do_monospaced = TRUE)
+		boutput(user, SPAN_NOTICE("All speech now monospaced by default."))
+
+/mob/living/silicon/proc/toggle_monospace_mode(mob/user = src)
+	var/new_setting = TRUE
+	if(src.ensure_speech_tree().GetModifierByID(SPEECH_MODIFIER_MONOSPACE_DECORATOR_INVERTED))
+		new_setting = FALSE
+	src.set_always_monospaced(new_setting, user)
+
 /datum/statusEffect/low_power
 	id = "low_power"
 	name = "Low Power"
