@@ -2868,6 +2868,7 @@ proc/get_nearest_mobs_list(turf/target_turf, mob/user, list/params, range = 1, a
 /// Returns as list("turf" = turf, "pixel_x" = pixel_x, "pixel_y" = pixel_y)
 /// Code shamelessly stolen from Zewaka. Like, the whole thing.
 proc/get_turf_pixel_clicked_over(mob/user, list/params)
+	RETURN_TYPE(/list)
 	var/client/C = user?.client
 	if (!C)
 		return FALSE
