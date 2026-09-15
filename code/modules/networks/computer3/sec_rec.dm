@@ -200,22 +200,12 @@
 			if (MENU_INDEX)
 
 				if (lowertext(command) == FIELDNUM_NEWREC)
-					var/datum/db_record/G = new /datum/db_record(  )
-					G["name"] = "New Record"
-					G["full_name"] = "New Record"
-					G["id"] = "[num2hex(rand(1, 0xffffff), 6)]"
-					G["rank"] = "Unassigned"
-					G["sex"] = "Other"
-					G["pronouns"] = "Unknown"
-					G["age"] = "Unknown"
-					G["fingerprint_right"] = "Unknown"
-					G["fingerprint_left"] = "Unknown"
-					G["p_stat"] = "Active"
-					G["m_stat"] = "Stable"
-					data_core.general.add_record(G)
-					src.active_general = G
+					var/datum/db_record/personnel/general/record = new()
+					record["id"] = global.data_core.generate_id()
+					global.data_core.general.add_record(record)
+					src.active_general = record
 					src.active_secure = null
-					src.log_string += "<br>Log created: [G["id"]]"
+					src.log_string += "<br>Log created: [record["id"]]"
 
 					if (src.print_active_record())
 						src.menu = MENU_IN_RECORD
@@ -277,19 +267,9 @@
 						if (src.active_secure)
 							return
 
-						var/datum/db_record/R = new /datum/db_record(  )
-						R["name"] = src.active_general["name"]
-						R["full_name"] = src.active_general["full_name"]
-						R["id"] = src.active_general["id"]
-						R["criminal"] = SECURITY::ARREST::STATE::NONE
-						R["sec_flag"] = "None"
-						R["mi_crim"] = "None"
-						R["mi_crim_d"] = "No minor crime convictions."
-						R["ma_crim"] = "None"
-						R["ma_crim_d"] = "No major crime convictions."
-						R["notes"] = "No notes."
-						data_core.security.add_record(R)
-						src.active_secure = R
+						var/datum/db_record/personnel/security/record = new(src.active_general)
+						global.data_core.security.add_record(record)
+						src.active_secure = record
 
 						src.print_active_record()
 						src.menu = MENU_IN_RECORD

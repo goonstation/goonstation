@@ -513,7 +513,7 @@ ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 	var/datum/cloner_defect_holder/defect_holder = H.cloner_defects
 	if(!length(defect_holder.active_cloner_defects))
 		medrec["cl_def"] = "None"
-		medrec["cl_def_d"] = MEDREC_CLONE_DEFECT_DEFAULT
+		medrec["cl_def_d"] = "No cloner defects have been recorded."
 		return
 
 	var/list/defect_names = list()
