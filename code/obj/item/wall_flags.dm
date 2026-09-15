@@ -155,6 +155,17 @@
 	burn_possible = TRUE
 	needs_logging = FALSE
 
+	emag_act(mob/user, obj/item/card/emag/E)
+		. = ..()
+		boutput(user, SPAN_NOTICE("The [E]'s red wiring rubs off on the [src], painting it sinister red!"))
+
+		src.icon_state = /obj/item/flag/syndicate::icon_state
+		src.name = /obj/item/flag/syndicate::name
+		src.desc = /obj/item/flag/syndicate::desc
+		src.associated_flag = /obj/item/flag/syndicate::associated_flag
+		src.contraband = /obj/item/flag/syndicate::contraband
+
+
 /obj/item/flag/syndicate
 	name = "syndicate flag"
 	icon_state = "syndicate"
@@ -164,6 +175,7 @@
 	associated_flag = /obj/decal/poster/flag/syndicate
 	burn_possible = TRUE
 	needs_logging = FALSE
+	contraband = 2
 
 
 ABSTRACT_TYPE(/obj/item/clothing/suit/flag)
