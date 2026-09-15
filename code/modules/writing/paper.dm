@@ -314,6 +314,12 @@
 			var/obj/item/portable_typewriter/typewriter = src.loc
 			if(istype(typewriter.pen, /obj/item/pen))
 				O = typewriter.pen
+	if(istype(O, /obj/item/tool/omnitool))
+		var/obj/item/tool/omnitool/OMNI = O
+		if(istype(OMNI.mode, /datum/omnimode/pen))
+			var/datum/omnimode/pen/PEN_MODE = OMNI.mode
+			O = PEN_MODE.omnimode_pen
+
 	if(istype(O, /obj/item/pen) && in_interact_range(src, user))
 		var/obj/item/pen/PEN = O
 		. += list(

@@ -31,7 +31,7 @@
 		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(pre_attackby))
 
 		for(var/omnimode_type in src.mode_types)
-			var/datum/omnimode/omnimode = new omnimode_type()
+			var/datum/omnimode/omnimode = new omnimode_type(src)
 			if(!omnimode)
 				CRASH("Wrong Omnimode Type: [omnimode_type] | [src]")
 			src.list_modes += omnimode
@@ -282,6 +282,23 @@
 	desc = "A set of tools on telescopic arms. It's the robotic future!"
 	animated_changes = TRUE
 
+/obj/item/tool/omnitool/NT
+	name = "MultiPen"
+	prefix = "nt-omnitool" //Thank you Swinglow for the sprites
+	desc = "The National Notary 'Agrimensor' model pen, for the engineer with class. Comes with patented TrueBlue(TM) ink!"
+	mode_types = list(
+		/datum/omnimode/pen,
+		/datum/omnimode/crowbar,
+		/datum/omnimode/screwdriver,
+		/datum/omnimode/multitool,
+		/datum/omnimode/wrench,
+		/datum/omnimode/wirecutters
+	)
+
+	change_mode(datum/omnimode/mode_new, mob/holder)
+		. = ..()
+		playsound(holder, 'sound/items/penclick.ogg', 50, TRUE)
+
 TYPEINFO(/obj/item/tool/omnitool/dualconstruction_device)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("dense_property_ultra" = 10,
@@ -290,7 +307,7 @@ TYPEINFO(/obj/item/tool/omnitool/dualconstruction_device)
 	name = "dualconstruction device"
 	icon_state = "salvager-dual-deconstruction"
 	prefix = "salvager-dual"
-	desc = "A handy part of a salvager's toolkit that can swap between the functionality of a deconstruction device or a soldering iron."
+	desc = "A handy part of a salvager's toolkit that can swap between the functionality of a deconstruction device or a soldering iron. The paint and markings on it have been scraped off."
 	w_class = W_CLASS_NORMAL
 	animated_delay = TRUE
 	mode_types = list(/datum/omnimode/deconstruct, /datum/omnimode/solder)
@@ -300,6 +317,12 @@ TYPEINFO(/obj/item/tool/omnitool/dualconstruction_device)
 		..()
 		src.AddComponent(/datum/component/soldering, 1.5 SECONDS)
 		src.AddComponent(/datum/component/deconstructing, 0.5 SECONDS, 1)
+
+	NT
+		name = "NT dualconstruction device"
+		icon_state = "nt-dual-deconstruction"
+		prefix = "nt-dual"
+		desc = "A handy part of an engineer's toolkit that can swap between the functionality of a deconstruction device or a soldering iron."
 
 // ===========================================================================
 // ========================= Omnitool Mode Datums =========================
@@ -456,6 +479,38 @@ ABSTRACT_TYPE(/datum/omnimode)
 		mode_id = OMNITOOL::MODE_BOTTLE_OPENER
 		context_icon = "bottleopener"
 		item_type = /obj/item/kitchen/utensil
+	pen
+		mode_name = "pen"
+		mode_id = OMNITOOL::MODE_PEN
+		context_icon = "pen"
+		item_type = /obj/item/pen
+		var/obj/item/pen/omnimode_pen = null
+
+		New(var/obj/item/tool/omnitool/omni, font = "Georgia", font_color = "#0047ab") // Allow other tools to use alt styles
+			. = ..()
+			src.omnimode_pen = new(omni)
+
+			if(font)
+				src.omnimode_pen.font = font
+			if(font_color)
+				src.omnimode_pen.color = font_color
+				src.omnimode_pen.font_color = font_color
+
+			// By all means this item does not exist -ANNmagedon
+
+			src.omnimode_pen.cant_drop = TRUE
+			src.omnimode_pen.hide_attack = ATTACK_FULLY_HIDDEN
+			src.omnimode_pen.force = 0
+			ADD_FLAG(src.omnimode_pen.flags, SUPPRESSATTACK)
+
+			src.omnimode_pen.name = "Super secret internal pen"
+			src.omnimode_pen.desc = "You should not see this secret internal pen, it voids the warranty on your omnitool! Call 1-800-IMCODER"
+
+		on_attack_after(obj/item/tool/omnitool/omni, atom/target, mob/user)
+			. = ..()
+			target.Attackby(src.omnimode_pen, user, silent = TRUE)
+			// This is what you need to add to allow pen dipping, caused some problems with chat logs & consistency, uncomment if its deemed crucial later
+			// src.omnimode_pen.AfterAttack(target, user)
 
 // ===========================================================================
 // ========================= Omnitool Context Actions =========================
