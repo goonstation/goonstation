@@ -55,7 +55,7 @@
 /area/syndicate_station/hideout)
 "i" = (
 /obj/machinery/door/airlock/pyro/glass,
-/turf/simulated/floor/black,
+/turf/simulated/floor/wood/five,
 /area/syndicate_station/hideout)
 "j" = (
 /turf/simulated/floor/redblack{
@@ -63,22 +63,20 @@
 	},
 /area/syndicate_station/hideout)
 "k" = (
-/obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/drinks/water,
-/turf/simulated/floor/black,
+/obj/table/syndicate/auto,
+/obj/item/reagent_containers/syringe,
+/turf/simulated/floor/wood/five,
 /area/syndicate_station/hideout)
 "l" = (
 /obj/machinery/light/incandescent,
+/obj/machinery/vending/cola/red,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
 /area/syndicate_station/hideout)
 "m" = (
-/obj/decal/tile_edge/line/black{
-	dir = 8;
-	icon_state = "line1"
-	},
-/turf/simulated/floor/black,
+/obj/machinery/drainage,
+/turf/simulated/floor/wood/five,
 /area/syndicate_station/hideout)
 "n" = (
 /turf/simulated/floor/redblack{
@@ -150,16 +148,16 @@
 /turf/simulated/floor/sanitary,
 /area/syndicate_station/hideout)
 "z" = (
-/obj/item/storage/toilet,
-/turf/simulated/floor/sanitary,
+/obj/table/syndicate/auto,
+/obj/item/kitchen/utensil/knife,
+/turf/simulated/floor/wood/five,
 /area/syndicate_station/hideout)
 "A" = (
-/obj/machinery/drainage,
-/obj/machinery/shower{
-	dir = 8;
+/obj/machinery/sink/slim{
+	dir = 4;
 	pixel_x = -8
 	},
-/turf/simulated/floor/sanitary,
+/turf/simulated/floor/wood/five,
 /area/syndicate_station/hideout)
 "C" = (
 /obj/fitness/stacklifter,
@@ -168,6 +166,12 @@
 "E" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/wood/two,
+/area/syndicate_station/hideout)
+"F" = (
+/obj/stool/chair/black{
+	dir = 8
+	},
+/turf/simulated/floor/wood/five,
 /area/syndicate_station/hideout)
 "G" = (
 /obj/item/instrument/harmonica,
@@ -195,32 +199,22 @@
 	},
 /area/syndicate_station/hideout)
 "N" = (
-/obj/machinery/light/incandescent,
-/obj/table/reinforced/auto,
-/obj/item/paper_bin,
-/obj/item/pen/pencil{
-	pixel_x = 14
-	},
-/obj/decal/tile_edge/line/black{
-	dir = 8;
-	icon_state = "line1"
-	},
-/turf/simulated/floor/black,
+/obj/item/device/radio/intercom,
+/obj/table/syndicate/auto,
+/obj/item/wirecutters,
+/turf/simulated/floor/wood/five,
 /area/syndicate_station/hideout)
 "O" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
-/turf/simulated/floor/black,
+/turf/simulated/floor/wood/five,
 /area/syndicate_station/hideout)
 "P" = (
 /turf/simulated/floor/sanitary,
 /area/syndicate_station/hideout)
 "Q" = (
-/obj/machinery/sink/slim{
-	dir = 4;
-	pixel_x = -8
+/obj/item/device/light/floodlight/starts_on{
+	dir = 4
 	},
-/turf/simulated/floor/sanitary,
+/turf/simulated/floor/wood/five,
 /area/syndicate_station/hideout)
 "R" = (
 /obj/machinery/door/airlock/pyro/glass,
@@ -229,7 +223,16 @@
 "S" = (
 /turf/simulated/floor/black,
 /area/syndicate_station/hideout)
+"V" = (
+/obj/machinery/vending/snack,
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/syndicate_station/hideout)
 "X" = (
+/obj/stool/chair/office/syndie{
+	dir = 1
+	},
 /turf/simulated/floor/redblack/corner{
 	dir = 1
 	},
@@ -367,7 +370,7 @@ H
 H
 H
 H
-e
+V
 S
 j
 H
@@ -394,7 +397,7 @@ a
 H
 N
 m
-m
+O
 i
 e
 S
@@ -408,7 +411,7 @@ a
 a
 H
 k
-S
+F
 O
 H
 v
