@@ -228,6 +228,23 @@
 	},
 /turf/simulated/floor,
 /area/station/devzone)
+"eA" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/decal/tile_edge/stripe{
+	dir = 6
+	},
+/obj/decal/tile_edge/stripe{
+	dir = 9
+	},
+/obj/item/device/net_sniffer,
+/turf/simulated/floor/plating/jen,
+/area/station/devzone)
 "eE" = (
 /obj/machinery/atmospherics/trinary/mixer/flipped{
 	frequency = 1225;
@@ -4520,7 +4537,7 @@ Yx
 Yx
 Yx
 ng
-kV
+eA
 RY
 FD
 TZ
