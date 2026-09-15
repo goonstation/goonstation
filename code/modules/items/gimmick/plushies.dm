@@ -173,10 +173,46 @@ TYPEINFO(/obj/submachine/claw_machine)
 	var/obj/item/P = pick(prize_pool)
 	if(ispath(P))
 		P = new P(get_turf(src.M))
-		P.desc = "Your new best friend, rescued from a cold and lonely claw machine."
+		if(istype(P,/obj/item/toy))
+			P.desc = "Your new best friend, rescued from a cold and lonely claw machine."
 	else
 		P.set_loc(get_turf(src.M))
 	P.throw_at(M, 16, 3)
+
+/obj/submachine/claw_machine/menhir_room
+	desc = "You get the distinct impression that this wasn't stocked conventionally."
+	default_material = "cobryl"
+	uses_default_material_appearance = TRUE
+
+	prizes = list(/obj/item/reagent_containers/food/snacks/cube,\
+	/obj/item/reagent_containers/food/snacks/cube,\
+	/obj/item/raw_material/cobryl,\
+	/obj/item/raw_material/rock,\
+	/obj/item/toy/plush/small/bee,\
+	/obj/item/toy/plush/small/monkey,\
+	/obj/item/toy/plush/small/brullbar)
+	prizes_rare = list(/obj/item/wrench/grey,\
+	/obj/item/reagent_containers/food/snacks/sandwich/cheese,\
+	/obj/item/device/light/glowstick/white,\
+	/obj/item/item_box/assorted/stickers,\
+	/obj/item/toy/plush/small/stress_ball,\
+	/obj/item/toy/plush/small/bee/cute,\
+	/obj/item/toy/plush/small/monkey/assistant,\
+	/obj/item/toy/plush/small/shelterfrog)
+	prizes_ultra_rare = list(/obj/item/toy/plush/small/orca,\
+	/obj/item/toy/plush/small/tuba,\
+	/obj/item/toy/plush/small/chris,\
+	/obj/item/toy/plush/small/fancyflippers,\
+	/obj/item/toy/plush/small/billy,\
+	/obj/item/toy/plush/small/arthur,\
+	/obj/item/toy/plush/small/deneb,\
+	/obj/item/toy/plush/small/singuloose,\
+	/obj/item/device/multitool,\
+	/obj/item/parts/artifact_parts/arm/precursor/left,\
+	/obj/item/parts/artifact_parts/arm/precursor/right,\
+	/obj/item/parts/artifact_parts/leg/precursor/left,\
+	/obj/item/parts/artifact_parts/leg/precursor/right)
+
 
 /obj/item/toy/plush
 	name = "plush toy"
