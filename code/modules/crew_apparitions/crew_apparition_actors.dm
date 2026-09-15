@@ -9,14 +9,6 @@
 /// Maximum distance from the victim for a human appearance source
 #define CREW_APPARITION_HUMAN_SEARCH_RANGE 15
 
-/// Dissolve an apparition when its lifetime expires without retaining a ref in a spawn
-/proc/expire_crew_apparition_actor(datum/weakref/apparition_ref, expiry_generation, delay)
-	set waitfor = FALSE
-	sleep(delay)
-	var/obj/crew_apparition_actor/apparition = apparition_ref?.deref()
-	if (apparition?.lifecycle_generation == expiry_generation)
-		apparition.dissolve()
-
 /// Check whether a human can provide an appearance for a client-visible crew apparition actor
 /proc/is_crew_apparition_human_eligible(mob/victim, mob/living/carbon/human/human, range = 7)
 	if (!victim?.client || !human || QDELETED(human) || human == victim)
@@ -93,7 +85,13 @@
 	src.set_dir(appearance_image.dir)
 	src.appear(appearance_time)
 
-	expire_crew_apparition_actor(get_weakref(src), src.lifecycle_generation, src.apparition_expiry - world.time)
+	// Keep only a weak reference in the delayed callback so deleted actors can be collected
+	var/datum/weakref/apparition_ref = get_weakref(src)
+	var/expiry_generation = src.lifecycle_generation
+	SPAWN(src.apparition_expiry - world.time)
+		var/obj/crew_apparition_actor/apparition = apparition_ref?.deref()
+		if (apparition?.lifecycle_generation == expiry_generation)
+			apparition.dissolve()
 
 /obj/crew_apparition_actor/proc/viewer_moved(mob/moved_viewer, atom/previous_loc, movement_dir)
 	if (moved_viewer != src.viewer)
@@ -246,6 +244,7 @@
 	var/walk_generation = 0
 	var/list/turf/walk_route
 	var/turf/walk_destination
+	var/has_typing_indicator = FALSE
 
 /obj/crew_apparition_actor/humanoid/Crossed(atom/movable/AM)
 	. = ..()
@@ -265,6 +264,9 @@
 	. = ..(location, viewer, appearance_source, ttl, appearance_time, image_group)
 	if (QDELETED(src))
 		return
+	// Typing belongs to the apparition's dialogue, never the copied player's input window
+	src.client_image.overlays -= global.living_typing_bubble
+	src.client_image.overlays -= global.living_emote_typing_bubble
 	// Humanoid apparitions stand upright even when the copied human's appearance is
 	// currently carrying the transform and pixel offsets from animate_rest()
 	src.client_image.pixel_x = 0
@@ -328,6 +330,7 @@
 
 /// Cancel all running movement and watcher behavior
 /obj/crew_apparition_actor/humanoid/proc/cancel_behavior()
+	src.remove_typing_indicator()
 	src.watcher_generation++
 	src.watcher_running = FALSE
 	src.walk_generation++
@@ -366,8 +369,28 @@
 		src.set_dir(selected_direction)
 	return TRUE
 
+/// Show the normal player typing bubble only on the apparition's private image
+/obj/crew_apparition_actor/humanoid/proc/create_typing_indicator()
+	if (!src.is_visible_to_viewer() || !src.client_image)
+		return FALSE
+	if (!src.has_typing_indicator)
+		src.client_image.overlays += global.living_typing_bubble
+		src.has_typing_indicator = TRUE
+	return TRUE
+
+/// Remove typing when dialogue finishes or its behavior is cancelled
+/obj/crew_apparition_actor/humanoid/proc/remove_typing_indicator()
+	if (src.has_typing_indicator && src.client_image)
+		src.client_image.overlays -= global.living_typing_bubble
+	src.has_typing_indicator = FALSE
+
+/obj/crew_apparition_actor/humanoid/invalidate()
+	src.remove_typing_indicator()
+	return ..()
+
 /// Say a phrase directly to the viewer
 /obj/crew_apparition_actor/humanoid/proc/say_phrase(phrase = null, sound = null, sound_volume = 50, atom/facing_target = null)
+	src.remove_typing_indicator()
 	if (!src.is_visible_to_viewer())
 		return FALSE
 	if (isnull(phrase))
@@ -428,34 +451,51 @@
 	src.set_viewer_tracking(FALSE)
 	src.walk_generation++
 	var/walk_generation = src.walk_generation
+	var/datum/weakref/apparition_ref = get_weakref(src)
 	SPAWN(0)
-		var/reached_destination = TRUE
-		var/list/turf/route_to_follow = src.walk_route
-		var/turf/destination_to_reach = src.walk_destination
-		for (var/turf/next_turf as anything in route_to_follow)
-			if (QDELETED(src) || src.walk_generation != walk_generation || !src.is_active())
-				reached_destination = FALSE
-				break
-			if (!destination_to_reach || !isturf(src.loc) || src.z != destination_to_reach.z)
-				reached_destination = FALSE
-				break
-			var/turf/current_turf = get_turf(src)
-			if (!next_turf || !current_turf || !jpsTurfPassable(next_turf, source = current_turf, passer = src))
-				reached_destination = FALSE
-				break
-			src.set_dir(get_dir(current_turf, next_turf))
-			src.glide_size = world.icon_size / ceil(step_delay / world.tick_lag)
-			src.animate_movement = SLIDE_STEPS
-			src.set_loc(next_turf)
-			if (next_turf != route_to_follow[length(route_to_follow)])
-				sleep(step_delay)
-		if (!QDELETED(src) && src.walk_generation == walk_generation)
-			src.walking = FALSE
-			src.walk_route = null
-			src.walk_destination = null
-			if (reached_destination)
-				src.set_viewer_tracking(TRUE)
+		var/obj/crew_apparition_actor/humanoid/apparition = apparition_ref?.deref()
+		if (apparition)
+			apparition.process_apparition_walk(walk_generation, step_delay, apparition_ref)
 	return TRUE
+
+/// Advance one step of a walking route and schedule the next step without holding a sleeping proc
+/obj/crew_apparition_actor/humanoid/proc/process_apparition_walk(walk_generation, step_delay, datum/weakref/apparition_ref, route_index = 1)
+	if (QDELETED(src) || src.walk_generation != walk_generation)
+		return
+	var/list/turf/route_to_follow = src.walk_route
+	var/turf/destination_to_reach = src.walk_destination
+	if (!length(route_to_follow) || route_index > length(route_to_follow))
+		src.finish_apparition_walk(walk_generation, TRUE)
+		return
+	if (!src.is_active() || !destination_to_reach || !isturf(src.loc) || src.z != destination_to_reach.z)
+		src.finish_apparition_walk(walk_generation, FALSE)
+		return
+	var/turf/next_turf = route_to_follow[route_index]
+	var/turf/current_turf = get_turf(src)
+	if (!next_turf || !current_turf || !jpsTurfPassable(next_turf, source = current_turf, passer = src))
+		src.finish_apparition_walk(walk_generation, FALSE)
+		return
+	src.set_dir(get_dir(current_turf, next_turf))
+	src.glide_size = world.icon_size / ceil(step_delay / world.tick_lag)
+	src.animate_movement = SLIDE_STEPS
+	src.set_loc(next_turf)
+	if (route_index >= length(route_to_follow))
+		src.finish_apparition_walk(walk_generation, TRUE)
+		return
+	SPAWN(step_delay)
+		var/obj/crew_apparition_actor/humanoid/apparition = apparition_ref?.deref()
+		if (apparition)
+			apparition.process_apparition_walk(walk_generation, step_delay, apparition_ref, route_index + 1)
+
+/// Finish a walking route if it still belongs to the current movement generation
+/obj/crew_apparition_actor/humanoid/proc/finish_apparition_walk(walk_generation, reached_destination)
+	if (QDELETED(src) || src.walk_generation != walk_generation)
+		return
+	src.walking = FALSE
+	src.walk_route = null
+	src.walk_destination = null
+	if (reached_destination)
+		src.set_viewer_tracking(TRUE)
 
 /obj/crew_apparition_actor/humanoid/disposing()
 	src.cancel_behavior()

@@ -45,6 +45,13 @@
 #define CREW_APPARITION_WALKER_VISIBLE_WAIT (10 SECONDS)
 /// Total number of phrases a walker delivers after reaching its destination
 #define CREW_APPARITION_WALKER_LINES 3
+/// Delay between one-shot behavior checks
+#define CREW_APPARITION_BEHAVIOR_POLL_DELAY (5 DECI SECONDS)
+/// Range of pauses spent typing a line
+#define CREW_APPARITION_TYPING_MIN_DELAY (0.5 SECONDS)
+#define CREW_APPARITION_TYPING_MAX_DELAY (1.5 SECONDS)
+/// returned when typing should remain visible until the apparition expires
+#define CREW_APPARITION_TYPING_EXPIRES -1
 
 TYPEINFO(/datum/component/crew_apparitions)
 	initialization_args = list(
@@ -312,6 +319,19 @@ TYPEINFO(/datum/component/crew_apparitions)
 		return FALSE
 	return apparition.say_phrase(phrase, sound, sound_volume, facing_target)
 
+/// Begin typing and return the delay before the behavior should try speaking
+/// Returns zero when no bubble could be shown, or CREW_APPARITION_TYPING_EXPIRES
+/// when the apparition should dissolve while still typing.
+/datum/component/crew_apparitions/proc/begin_phrase_typing(obj/crew_apparition_actor/humanoid/apparition)
+	if (!src.is_tracked_apparition(apparition))
+		return 0
+	var/typing_delay = rand(CREW_APPARITION_TYPING_MIN_DELAY, CREW_APPARITION_TYPING_MAX_DELAY)
+	if (!apparition.create_typing_indicator())
+		return 0
+	if (apparition.remaining_ttl() <= typing_delay)
+		return CREW_APPARITION_TYPING_EXPIRES
+	return typing_delay
+
 /// Check whether one apparition follows its viewer
 /datum/component/crew_apparitions/proc/is_viewer_tracking(obj/crew_apparition_actor/humanoid/apparition)
 	if (!src.is_tracked_apparition(apparition))
@@ -420,39 +440,12 @@ TYPEINFO(/datum/component/crew_apparitions)
 		return candidate
 	return
 
-/// Wait for an apparition to enter the affected mob's view
-/datum/component/crew_apparitions/proc/wait_for_visibility(obj/crew_apparition_actor/humanoid/apparition, wait_time)
-	if (src.visibility_wait_aborted(apparition))
-		return FALSE
-	UNTIL(src.visibility_wait_aborted(apparition) || src.is_visible_to_viewer(apparition), wait_time)
-	if (src.visibility_wait_aborted(apparition))
-		return FALSE
-	return src.is_visible_to_viewer(apparition)
-
-/// Check whether waiting for an apparition's visibility should stop without success
-/datum/component/crew_apparitions/proc/visibility_wait_aborted(obj/crew_apparition_actor/humanoid/apparition)
-	return !src.is_lifecycle_valid() || QDELETED(apparition) || !src.affected_mob.client
-
 /// Check whether both members of a chatter pair are visible
 /datum/component/crew_apparitions/proc/chatters_are_visible(obj/crew_apparition_actor/humanoid/first_chatter, obj/crew_apparition_actor/humanoid/second_chatter)
 	if (!src.is_lifecycle_valid() || !src.is_active(first_chatter) || !src.is_active(second_chatter))
 		return FALSE
 	var/list/visible_atoms = view(src.affected_mob.client.view, src.affected_mob)
 	return (first_chatter in visible_atoms) && (second_chatter in visible_atoms)
-
-/// Wait for both members of a chatter pair to enter the affected mob's view
-/datum/component/crew_apparitions/proc/wait_for_chatter_visibility(obj/crew_apparition_actor/humanoid/first_chatter, obj/crew_apparition_actor/humanoid/second_chatter)
-	if (src.chatter_visibility_wait_aborted(first_chatter, second_chatter))
-		return FALSE
-	UNTIL(src.chatter_visibility_wait_aborted(first_chatter, second_chatter) || \
-		src.chatters_are_visible(first_chatter, second_chatter), CREW_APPARITION_CHATTER_VISIBLE_WAIT)
-	if (src.chatter_visibility_wait_aborted(first_chatter, second_chatter))
-		return FALSE
-	return src.chatters_are_visible(first_chatter, second_chatter)
-
-/// Check whether waiting for a chatter pair's visibility should stop without success
-/datum/component/crew_apparitions/proc/chatter_visibility_wait_aborted(obj/crew_apparition_actor/humanoid/first_chatter, obj/crew_apparition_actor/humanoid/second_chatter)
-	return !src.is_lifecycle_valid() || QDELETED(first_chatter) || QDELETED(second_chatter) || !src.affected_mob.client
 
 /// Snapshot sight for synchronous location searches
 /datum/component/crew_apparitions/proc/get_visible_turf_set()
@@ -705,41 +698,12 @@ TYPEINFO(/datum/component/crew_apparitions)
 
 /// Handle a walker after its route completes or becomes invalid
 /datum/component/crew_apparitions/proc/start_walker(obj/crew_apparition_actor/humanoid/walker)
+	if (!src.is_lifecycle_valid() || QDELETED(walker))
+		return
 	var/current_generation = src.lifecycle_generation
+	var/datum/weakref/walker_ref = get_weakref(walker)
 	SPAWN(0)
-		if (!src.is_lifecycle_valid(current_generation) || QDELETED(walker))
-			return
-		UNTIL(!src.is_lifecycle_valid(current_generation) || QDELETED(walker) || !src.is_walking(walker), 0)
-		if (!src.is_lifecycle_valid(current_generation) || QDELETED(walker) || !src.affected_mob.client)
-			if (!QDELETED(walker))
-				src.end(walker)
-			return
-		if (!src.is_viewer_tracking(walker))
-			src.fallback_to_watcher(walker)
-			return
-		if (!src.wait_for_visibility(walker, CREW_APPARITION_WALKER_VISIBLE_WAIT))
-			src.end(walker)
-			return
-		src.face_viewer(walker)
-		if (!src.say_phrase(walker))
-			src.end(walker)
-			return
-		for (var/line_number in 2 to CREW_APPARITION_WALKER_LINES)
-			var/phrase_delay = min(CREW_APPARITION_CHATTER_DELAY, src.remaining_ttl(walker))
-			if (phrase_delay <= 0)
-				return
-			sleep(phrase_delay)
-			if (!src.is_lifecycle_valid(current_generation) || QDELETED(walker) || !src.affected_mob.client)
-				return
-			if (!src.wait_for_visibility(walker, CREW_APPARITION_WALKER_VISIBLE_WAIT))
-				if (!src.is_lifecycle_valid(current_generation) || QDELETED(walker))
-					return
-				src.end(walker)
-				return
-			src.face_viewer(walker)
-			if (!src.say_phrase(walker))
-				src.end(walker)
-				return
+		src.process_walker_movement(walker_ref, current_generation)
 
 /// Convert an apparition into a single watcher
 /datum/component/crew_apparitions/proc/fallback_to_watcher(obj/crew_apparition_actor/humanoid/apparition)
@@ -784,31 +748,9 @@ TYPEINFO(/datum/component/crew_apparitions)
 		return
 	var/current_generation = src.get_watcher_generation(watcher)
 	var/lifecycle_generation = src.lifecycle_generation
+	var/datum/weakref/watcher_ref = get_weakref(watcher)
 	SPAWN(0)
-		for (var/line_number in 1 to CREW_APPARITION_WATCHER_LINES)
-			if (!src.watcher_is_current(watcher, lifecycle_generation, current_generation))
-				return
-			if (!src.watcher_is_ready(watcher, current_generation))
-				src.end(watcher)
-				return
-			if (!src.wait_for_visibility(watcher, CREW_APPARITION_WATCHER_VISIBLE_WAIT))
-				if (!src.watcher_is_current(watcher, lifecycle_generation, current_generation))
-					return
-				if (src.watcher_is_ready(watcher, current_generation))
-					continue
-				src.end(watcher)
-				return
-			if (!src.watcher_is_ready(watcher, current_generation))
-				src.end(watcher)
-				return
-			src.face_viewer(watcher)
-			if (!src.say_phrase(watcher))
-				src.end(watcher)
-				return
-			if (line_number < CREW_APPARITION_WATCHER_LINES)
-				var/phrase_delay = min(CREW_APPARITION_WATCHER_PHRASE_DELAY, src.remaining_ttl(watcher))
-				if (phrase_delay > 0)
-					sleep(phrase_delay)
+		src.process_watcher_visibility(watcher_ref, lifecycle_generation, current_generation, TIME + CREW_APPARITION_WATCHER_VISIBLE_WAIT)
 
 /// End both members of a chatter pair
 /datum/component/crew_apparitions/proc/end_chatter_pair(obj/crew_apparition_actor/humanoid/first_chatter, obj/crew_apparition_actor/humanoid/second_chatter)
@@ -820,22 +762,160 @@ TYPEINFO(/datum/component/crew_apparitions)
 /// Deliver an alternating conversation between two apparitions
 /datum/component/crew_apparitions/proc/start_alternating_chatter(obj/crew_apparition_actor/humanoid/first_chatter, obj/crew_apparition_actor/humanoid/second_chatter)
 	var/lifecycle_generation = src.lifecycle_generation
+	var/datum/weakref/first_chatter_ref = get_weakref(first_chatter)
+	var/datum/weakref/second_chatter_ref = get_weakref(second_chatter)
 	SPAWN(0)
-		if (!src.is_lifecycle_valid(lifecycle_generation) || !src.wait_for_chatter_visibility(first_chatter, second_chatter))
+		src.process_chatter_visibility(first_chatter_ref, second_chatter_ref, lifecycle_generation, 1, TIME + CREW_APPARITION_CHATTER_VISIBLE_WAIT)
+
+/// Check whether a walker has finished moving, then begin its visibility wait
+/datum/component/crew_apparitions/proc/process_walker_movement(datum/weakref/walker_ref, lifecycle_generation)
+	var/obj/crew_apparition_actor/humanoid/walker = walker_ref?.deref()
+	if (!src.is_lifecycle_valid(lifecycle_generation) || QDELETED(walker))
+		return
+	if (src.is_walking(walker))
+		SPAWN(CREW_APPARITION_BEHAVIOR_POLL_DELAY)
+			src.process_walker_movement(walker_ref, lifecycle_generation)
+		return
+	if (!src.affected_mob.client)
+		src.end(walker)
+		return
+	if (!src.is_viewer_tracking(walker))
+		src.fallback_to_watcher(walker)
+		return
+	src.process_walker_visibility(walker_ref, lifecycle_generation, 1, TIME + CREW_APPARITION_WALKER_VISIBLE_WAIT)
+
+/// Wait for a walker to enter view, deliver one phrase, then schedule its next phrase
+/datum/component/crew_apparitions/proc/process_walker_visibility(datum/weakref/walker_ref, lifecycle_generation, line_number, visibility_deadline, finished_typing = FALSE)
+	var/obj/crew_apparition_actor/humanoid/walker = walker_ref?.deref()
+	if (!src.is_lifecycle_valid(lifecycle_generation) || QDELETED(walker))
+		return
+	if (finished_typing)
+		walker.remove_typing_indicator()
+	if (!src.affected_mob.client)
+		src.end(walker)
+		return
+	if (!src.is_visible_to_viewer(walker))
+		if (TIME >= visibility_deadline)
+			src.end(walker)
+			return
+		SPAWN(CREW_APPARITION_BEHAVIOR_POLL_DELAY)
+			src.process_walker_visibility(walker_ref, lifecycle_generation, line_number, visibility_deadline)
+		return
+	src.face_viewer(walker)
+	if (!finished_typing)
+		var/typing_delay = src.begin_phrase_typing(walker)
+		if (typing_delay == CREW_APPARITION_TYPING_EXPIRES)
+			return
+		if (typing_delay > 0)
+			// The delayed continuation needs only the weakref, not a retained actor
+			walker = null
+			SPAWN(typing_delay)
+				src.process_walker_visibility(walker_ref, lifecycle_generation, line_number, visibility_deadline, finished_typing = TRUE)
+			return
+	if (!src.say_phrase(walker))
+		src.end(walker)
+		return
+	if (line_number >= CREW_APPARITION_WALKER_LINES)
+		return
+	var/phrase_delay = min(CREW_APPARITION_CHATTER_DELAY, src.remaining_ttl(walker))
+	if (phrase_delay <= 0)
+		return
+	SPAWN(phrase_delay)
+		if (!src.is_lifecycle_valid(lifecycle_generation) || !src.affected_mob.client)
+			return
+		src.process_walker_visibility(walker_ref, lifecycle_generation, line_number + 1, TIME + CREW_APPARITION_WALKER_VISIBLE_WAIT)
+
+/// Wait for a watcher to enter view, deliver one phrase, then schedule its next phrase
+/datum/component/crew_apparitions/proc/process_watcher_visibility(datum/weakref/watcher_ref, lifecycle_generation, watcher_generation, visibility_deadline, line_number = 1, check_ready = TRUE, finished_typing = FALSE)
+	var/obj/crew_apparition_actor/humanoid/watcher = watcher_ref?.deref()
+	if (!src.watcher_is_current(watcher, lifecycle_generation, watcher_generation))
+		return
+	if (finished_typing)
+		watcher.remove_typing_indicator()
+	if (check_ready && !src.watcher_is_ready(watcher, watcher_generation))
+		src.end(watcher)
+		return
+	if (!src.affected_mob.client)
+		src.end(watcher)
+		return
+	if (!src.is_visible_to_viewer(watcher))
+		var/check_ready_next = FALSE
+		if (TIME >= visibility_deadline)
+			if (!src.watcher_is_ready(watcher, watcher_generation))
+				src.end(watcher)
+				return
+			if (line_number >= CREW_APPARITION_WATCHER_LINES)
+				return
+			line_number++
+			visibility_deadline = TIME + CREW_APPARITION_WATCHER_VISIBLE_WAIT
+			check_ready_next = TRUE
+		SPAWN(CREW_APPARITION_BEHAVIOR_POLL_DELAY)
+			src.process_watcher_visibility(watcher_ref, lifecycle_generation, watcher_generation, visibility_deadline, line_number, check_ready = check_ready_next)
+		return
+	if (!src.watcher_is_ready(watcher, watcher_generation))
+		src.end(watcher)
+		return
+	src.face_viewer(watcher)
+	if (!finished_typing)
+		var/typing_delay = src.begin_phrase_typing(watcher)
+		if (typing_delay == CREW_APPARITION_TYPING_EXPIRES)
+			return
+		if (typing_delay > 0)
+			watcher = null
+			SPAWN(typing_delay)
+				src.process_watcher_visibility(watcher_ref, lifecycle_generation, watcher_generation, visibility_deadline, line_number, finished_typing = TRUE)
+			return
+	if (!src.say_phrase(watcher))
+		src.end(watcher)
+		return
+	if (line_number >= CREW_APPARITION_WATCHER_LINES)
+		return
+	var/phrase_delay = min(CREW_APPARITION_WATCHER_PHRASE_DELAY, src.remaining_ttl(watcher))
+	if (phrase_delay <= 0)
+		return
+	SPAWN(phrase_delay)
+		if (!src.is_lifecycle_valid(lifecycle_generation))
+			return
+		src.process_watcher_visibility(watcher_ref, lifecycle_generation, watcher_generation, TIME + CREW_APPARITION_WATCHER_VISIBLE_WAIT, line_number + 1)
+
+/// Wait for both chatters to enter view, deliver one phrase, then schedule the next line
+/datum/component/crew_apparitions/proc/process_chatter_visibility(datum/weakref/first_chatter_ref, datum/weakref/second_chatter_ref, lifecycle_generation, line_number, visibility_deadline, finished_typing = FALSE)
+	var/obj/crew_apparition_actor/humanoid/first_chatter = first_chatter_ref?.deref()
+	var/obj/crew_apparition_actor/humanoid/second_chatter = second_chatter_ref?.deref()
+	if (!src.is_lifecycle_valid(lifecycle_generation) || QDELETED(first_chatter) || QDELETED(second_chatter) || !src.affected_mob.client)
+		src.end_chatter_pair(first_chatter, second_chatter)
+		return
+	var/obj/crew_apparition_actor/humanoid/speaker = line_number % 2 ? first_chatter : second_chatter
+	var/obj/crew_apparition_actor/humanoid/listener = line_number % 2 ? second_chatter : first_chatter
+	if (finished_typing)
+		speaker.remove_typing_indicator()
+	if (!src.chatters_are_visible(first_chatter, second_chatter))
+		if (TIME >= visibility_deadline)
 			src.end_chatter_pair(first_chatter, second_chatter)
 			return
+		SPAWN(CREW_APPARITION_BEHAVIOR_POLL_DELAY)
+			src.process_chatter_visibility(first_chatter_ref, second_chatter_ref, lifecycle_generation, line_number, visibility_deadline)
+		return
+	if (!finished_typing)
+		var/typing_delay = src.begin_phrase_typing(speaker)
+		if (typing_delay == CREW_APPARITION_TYPING_EXPIRES)
+			return
+		if (typing_delay > 0)
+			first_chatter = null
+			second_chatter = null
+			speaker = null
+			listener = null
+			SPAWN(typing_delay)
+				src.process_chatter_visibility(first_chatter_ref, second_chatter_ref, lifecycle_generation, line_number, visibility_deadline, finished_typing = TRUE)
+			return
+	if (!src.say_phrase(speaker, facing_target = listener))
+		src.end_chatter_pair(first_chatter, second_chatter)
+		return
+	if (line_number >= CREW_APPARITION_CHATTER_LINES)
+		return
+	SPAWN(CREW_APPARITION_CHATTER_DELAY)
+		src.process_chatter_visibility(first_chatter_ref, second_chatter_ref, lifecycle_generation, line_number + 1, TIME + CREW_APPARITION_CHATTER_VISIBLE_WAIT)
 
-		for (var/line_number in 1 to CREW_APPARITION_CHATTER_LINES)
-			var/obj/crew_apparition_actor/humanoid/speaker = line_number % 2 ? first_chatter : second_chatter
-			var/obj/crew_apparition_actor/humanoid/listener = line_number % 2 ? second_chatter : first_chatter
-			if (!src.is_lifecycle_valid(lifecycle_generation) || !src.wait_for_chatter_visibility(first_chatter, second_chatter))
-				src.end_chatter_pair(first_chatter, second_chatter)
-				return
-			if (!src.say_phrase(speaker, facing_target = listener))
-				src.end_chatter_pair(first_chatter, second_chatter)
-				return
-			if (line_number < CREW_APPARITION_CHATTER_LINES)
-				sleep(CREW_APPARITION_CHATTER_DELAY)
 
 /// Try to create a crew apparition autonomously on a mob life tick
 /datum/component/crew_apparitions/proc/on_life_tick(mob/living/living_mob, mult = 1)
@@ -901,3 +981,7 @@ TYPEINFO(/datum/component/crew_apparitions)
 #undef CREW_APPARITION_WALK_STEP_DELAY
 #undef CREW_APPARITION_WALKER_VISIBLE_WAIT
 #undef CREW_APPARITION_WALKER_LINES
+#undef CREW_APPARITION_BEHAVIOR_POLL_DELAY
+#undef CREW_APPARITION_TYPING_MIN_DELAY
+#undef CREW_APPARITION_TYPING_MAX_DELAY
+#undef CREW_APPARITION_TYPING_EXPIRES
