@@ -26082,6 +26082,11 @@
 	dir = 1
 	},
 /area/station/crew_quarters/radio/news_office)
+"cwO" = (
+/obj/stool/bench/blue/auto,
+/obj/machinery/light,
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "cxa" = (
 /obj/decal/cleanable/dirt,
 /obj/random_item_spawner/junk/one_or_zero,
@@ -31931,6 +31936,10 @@
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/sw,
 /area/station/crew_quarters/courtroom)
+"goT" = (
+/obj/machinery/light,
+/turf/simulated/floor/grey,
+/area/station/hallway/secondary/exit)
 "goW" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/primary/east)
@@ -34949,7 +34958,6 @@
 	},
 /area/station/maintenance/inner/east)
 "iut" = (
-/obj/machinery/light,
 /obj/machinery/status_display{
 	pixel_y = -30
 	},
@@ -51488,6 +51496,14 @@
 	},
 /turf/space,
 /area/station/mining/magnet)
+"tOH" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "tOS" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -131929,7 +131945,7 @@ dwL
 gcx
 aaa
 aaa
-aaa
+aci
 aaa
 aaa
 aaa
@@ -132198,7 +132214,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aci
 aaa
 aaa
 gcx
@@ -132231,7 +132247,7 @@ dwL
 gcx
 aaa
 aaa
-aaa
+aci
 aaa
 aaa
 aaa
@@ -132500,7 +132516,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aci
 aaa
 aaa
 gcx
@@ -132808,7 +132824,7 @@ aaa
 gcx
 dwL
 aPf
-aQf
+goT
 gcx
 aaa
 aaa
@@ -132831,7 +132847,7 @@ aaa
 gcx
 aQf
 bik
-dwL
+cwO
 gcx
 aaa
 aaa
@@ -133712,7 +133728,7 @@ aci
 aaa
 aaa
 gcx
-bri
+tOH
 aPf
 aQf
 lJY
