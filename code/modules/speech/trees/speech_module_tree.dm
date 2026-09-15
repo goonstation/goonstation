@@ -166,6 +166,8 @@
 	if (message.flags & SAYFLAG_DO_NOT_OUTPUT)
 		return
 
+	message.signal_recipient ||= new /datum/signal_holder
+
 	// Apply the effects of any applicable postmodifier speech prefix.
 	if (message.prefix && !(message.flags & SAYFLAG_PREFIX_PROCESSED))
 		message = src.process_prefix(message, src.postmodifier_speech_prefixes_by_prefix_id)

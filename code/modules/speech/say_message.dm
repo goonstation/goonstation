@@ -162,8 +162,6 @@
 
 		src.vars[variable_name] = message_params[variable_name]
 
-	src.signal_recipient = new /datum/signal_holder
-
 	// Attempt to assign a language.
 	if (!istype(src.language))
 		src.language = global.SpeechManager.GetLanguageInstance(src.speaker.say_language)
