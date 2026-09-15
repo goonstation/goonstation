@@ -545,10 +545,6 @@ ABSTRACT_TYPE(/datum/material)
 			src.vars[triggername] = getFusedTriggers(mat1.vars[triggername], mat2.vars[triggername], src)
 			handleTriggerGenerations(src.vars[triggername])
 
-		//Make sure the newly merged properties are informed about the fact that they just changed. Has to happen after triggers.
-		for(var/datum/material_property/nProp in src.properties)
-			nProp.onValueChanged(src, src.properties[nProp])
-
 		//Texture merging. SUPER DUPER UGLY AAAAH
 		if(mat2.texture && !mat1.texture)
 			src.texture = mat2.texture
@@ -572,6 +568,21 @@ ABSTRACT_TYPE(/datum/material)
 		src.parent_materials.Add(mat2)
 
 		triggerOnMix(src, mat1, mat2, bias)
+		// A quirk of how mix effects work. They are triggered by the resulting material, not the source materials.
+		// If this is the last generation of a mix effect, then it will not be passed on to trigger on future generations.
+		// Remove it now, since it is effectively gone.
+		for(var/datum/materialProc/current in src.triggersOnMix)
+			if(current.max_generations != -1 && src.triggersOnMix[current] == current.max_generations)
+				src.triggersOnMix.Remove(current)
+
+		for(var/datum/material_property/nProp in src.properties)
+			// Only round after the properties have all been adjusted
+			var/prop_val = round(src.properties[nProp])
+			src.properties[nProp] = clamp(prop_val, nProp.min_value, nProp.max_value)
+
+		//Make sure the newly merged properties are informed about the fact that they just changed. Has to happen after triggers.
+		for(var/datum/material_property/nProp in src.properties)
+			nProp.onValueChanged(src, src.properties[nProp])
 
 		//RUN VALUE CHANGED ON ALL PROPERTIES TO TRIGGER PROPERS EVENTS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
