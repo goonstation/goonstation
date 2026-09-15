@@ -17,23 +17,23 @@ steam.start() -- spawns the effect
 
 /datum/effects/system/steam_spread
 	var/number = 3
-	var/cardinals = 0
+	var/spread_cardinal = FALSE
 	var/turf/location
 	var/atom/holder
 	var/color = null
 	var/plane = null
 
-/datum/effects/system/steam_spread/proc/set_up(n = 3, c = 0, turf/loc, color=null, plane=null)
-	if(n > 10)
-		n = 10
-	src.number = n
-	src.cardinals = c
+/datum/effects/system/steam_spread/proc/set_up(number = 3, spread_cardinal = FALSE, turf/loc, color=null, plane=null)
+	if(number > 10)
+		number = 10
+	src.number = number
+	src.spread_cardinal = spread_cardinal
 	src.location = loc
 	src.color = color
 	src.plane = plane
 
-/datum/effects/system/steam_spread/proc/attach(atom/atom)
-	holder = atom
+/datum/effects/system/steam_spread/proc/attach(atom/A)
+	holder = A
 
 /datum/effects/system/steam_spread/proc/start(var/clear_holder = 0)
 	if (clear_holder)
@@ -50,7 +50,7 @@ steam.start() -- spawns the effect
 				steam.plane = src.plane
 			steam.set_loc(src.location)
 			var/direction
-			if(src.cardinals)
+			if(src.spread_cardinal)
 				direction = pick(cardinal)
 			else
 				direction = pick(alldirs)
