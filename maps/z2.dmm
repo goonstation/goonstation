@@ -14592,6 +14592,9 @@
 /area/owlery/owleryhall)
 "bjb" = (
 /obj/storage/closet/syndicate,
+/obj/decal/poster/flag/syndicate{
+	pixel_y = 32
+	},
 /turf/unsimulated/floor/carpet/grime,
 /area/drone/crew_quarters)
 "bjc" = (
@@ -22082,6 +22085,9 @@
 /obj/item/paper_bin,
 /obj/item/pen/sleepypen,
 /obj/item/stamp/syndicate,
+/obj/decal/poster/flag/syndicate{
+	pixel_y = 32
+	},
 /turf/unsimulated/floor/carpet/red/fancy/edge/nw,
 /area/syndicate_station/battlecruiser)
 "bLd" = (
@@ -44634,6 +44640,9 @@
 	bcolor = "red";
 	icon_state = "bedsheet-red";
 	name = "syndicate bedsheet"
+	},
+/obj/decal/poster/flag/syndicate{
+	pixel_y = 32
 	},
 /turf/unsimulated/floor/redblack{
 	dir = 1
