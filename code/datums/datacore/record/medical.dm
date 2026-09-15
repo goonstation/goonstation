@@ -1,27 +1,27 @@
 /datum/db_record/personnel/medical
-	fields = list(
-		"id"			= null,
-		"name"			= null,
-		"h_imp"			= "No health implant detected.",
-		"blood_type"	= "Unknown",
-		"mi_dis"		= "None",
-		"mi_dis_d"		= "No minor disabilities have been declared.",
-		"ma_dis"		= "None",
-		"ma_dis_d"		= "No major disabilities have been diagnosed.",
-		"alg"			= "None",
-		"alg_d"			= "No allergies have been detected in this patient.",
-		"cdi"			= "None",
-		"cdi_d"			= "No diseases have been diagnosed at the moment.",
-		"cl_def"		= "None",
-		"cl_def_d"		= "No cloner defects have been recorded.",
-		"dnasample"		= null,
-		"notes"			= "No notes.",
+	fields = alist(
+		"id"			= new /datum/record_field/string("ID", "000000", @"[a-f0-9]{6}"),
+		"name"			= new /datum/record_field/string("Name", "New Record"),
+		"h_imp"			= new /datum/record_field/string("Current Health", "No health implant detected."),
+		"blood_type"	= new /datum/record_field/choice("Blood Type", "Unknown", list("A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-", "Zesty Ranch", "Unknown")),
+		"mi_dis"		= new /datum/record_field/string("Minor Disabilities", "None"),
+		"mi_dis_d"		= new /datum/record_field/string("Details", "No minor disabilities have been declared."),
+		"ma_dis"		= new /datum/record_field/string("Major Disabilities", "None"),
+		"ma_dis_d"		= new /datum/record_field/string("Details", "No major disabilities have been diagnosed."),
+		"alg"			= new /datum/record_field/string("Allergies", "None"),
+		"alg_d"			= new /datum/record_field/string("Details", "No allergies have been detected in this patient."),
+		"cdi"			= new /datum/record_field/string("Current Diseases", "None"),
+		"cdi_d"			= new /datum/record_field/string("Details", "No diseases have been diagnosed at the moment."),
+		"cl_def"		= new /datum/record_field/string("Cloner Defects", "None"),
+		"cl_def_d"		= new /datum/record_field/string("Details", "No cloner defects have been recorded."),
+		"dnasample"		= new /datum/record_field/object("DNA Sample", null, /datum/computer/file/genetics_scan),
+		"notes"			= new /datum/record_field/string("Important Notes", "No notes."),
 	)
 
 /datum/db_record/personnel/medical/init_from_human(mob/living/carbon/human/H)
 	src["id"] = H.datacore_id
 	src["name"] = H.real_name
-	src["blood_type"] = "[H.bioHolder.bloodType]"
+	src["blood_type"] = H.bioHolder.bloodType
 	src["dnasample"] = global.create_new_dna_sample_file(H)
 
 	if (H.client?.preferences?.medical_note)

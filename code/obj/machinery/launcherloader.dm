@@ -400,7 +400,7 @@
 				"name" = scan.registered,
 				"role" = scan.assignment,
 				"icon" = icon_src,
-				"balance" = account?.get_field("current_money"),
+				"balance" = account?["current_money"],
 			)
 		else
 			.["card"] = null

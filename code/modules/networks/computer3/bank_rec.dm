@@ -462,7 +462,7 @@
 
 			var/list/datum/db_record/results = list()
 			for(var/datum/db_record/R as anything in data_core.general.records)
-				var/haystack = jointext(list(ckey(R["name"]), ckey(R["dna"]), ckey(R["id"]), ckey(R["fingerprint_right"]), ckey(R["fingerprint_left"]), ckey(R["rank"])), " ")
+				var/haystack = jointext(list(ckey(R["name"]), ckey(R["dna"]), ckey(R["id"]), ckey(R["fprint_r"]), ckey(R["fprint_l"]), ckey(R["rank"])), " ")
 				if(findtext(haystack, searchText))
 					results += R
 
@@ -883,10 +883,10 @@
 	<br>\[04]<b>Pronouns:</b> [src.active_general["pronouns"]]\
 	<br>\[05]<b>Age:</b> [src.active_general["age"]]\
 	<br>\[06]<b>Rank:</b> [src.active_general["rank"]]\
-	<br>\[__]<b>Fingerprint (R):</b> [src.active_general["fingerprint_right"]]\
-	<br>\[__]<b>Fingerprint (L):</b> [src.active_general["fingerprint_left"]]\
+	<br>\[__]<b>Fingerprint (R):</b> [src.active_general["fprint_r"]]\
+	<br>\[__]<b>Fingerprint (L):</b> [src.active_general["fprint_l"]]\
 	<br>\[__]<b>DNA:</b> [src.active_general["dna"]]\
-	<br>\[__]Photo: [istype(src.active_general["file_photo"], /datum/computer/file/image) ? "On File" : "None"]\
+	<br>\[__]Photo: [istype(src.active_general["photo"], /datum/computer/file/image) ? "On File" : "None"]\
 	<br>\[__]Physical Status: [src.active_general["p_stat"]]\
 	<br>\[__]Mental Status: [src.active_general["m_stat"]]"}
 
@@ -976,10 +976,10 @@
 		<br><br>Pronouns: [src.active_general["pronouns"]]
 		<br><br>Age: [src.active_general["age"]]
 		<br><br>Rank: [src.active_general["rank"]]
-		<br><br>Fingerprint (R): [src.active_general["fingerprint_right"]]
-		<br><br>Fingerprint (L): [src.active_general["fingerprint_left"]]
+		<br><br>Fingerprint (R): [src.active_general["fprint_r"]]
+		<br><br>Fingerprint (L): [src.active_general["fprint_l"]]
 		<br><br>DNA: [src.active_general["dna"]]
-		<br><br>Photo: [istype(src.active_general["file_photo"], /datum/computer/file/image) ? "On File" : "None"]
+		<br><br>Photo: [istype(src.active_general["photo"], /datum/computer/file/image) ? "On File" : "None"]
 		<br><br>Physical Status: [src.active_general["p_stat"]]
 		<br><br>Mental Status: [src.active_general["m_stat"]]"}
 	else
@@ -1015,10 +1015,10 @@
 		printRecord.fields += "Pronouns: [src.active_general["pronouns"]]"
 		printRecord.fields += "Age: [src.active_general["age"]]"
 		printRecord.fields += "Rank: [src.active_general["rank"]]"
-		printRecord.fields += "Fingerprint (R): [src.active_general["fingerprint_right"]]"
-		printRecord.fields += "Fingerprint (L): [src.active_general["fingerprint_left"]]"
+		printRecord.fields += "Fingerprint (R): [src.active_general["fprint_r"]]"
+		printRecord.fields += "Fingerprint (L): [src.active_general["fprint_l"]]"
 		printRecord.fields += "DNA: [src.active_general["dna"]]"
-		printRecord.fields += "Photo: [istype(src.active_general["file_photo"], /datum/computer/file/image) ? "On File" : "None"]"
+		printRecord.fields += "Photo: [istype(src.active_general["photo"], /datum/computer/file/image) ? "On File" : "None"]"
 		printRecord.fields += "Physical Status: [src.active_general["p_stat"]]"
 		printRecord.fields += "Mental Status: [src.active_general["m_stat"]]"
 	else

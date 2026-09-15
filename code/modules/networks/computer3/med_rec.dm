@@ -160,10 +160,10 @@
 							<br><br>Pronouns: [src.active_general["pronouns"]]
 							<br><br>Age: [src.active_general["age"]]
 							<br><br>Rank: [src.active_general["rank"]]
-							<br><br>Fingerprint (R): [src.active_general["fingerprint_right"]]
-							<br><br>Fingerprint (L): [src.active_general["fingerprint_left"]]
+							<br><br>Fingerprint (R): [src.active_general["fprint_r"]]
+							<br><br>Fingerprint (L): [src.active_general["fprint_l"]]
 							<br><br>DNA: [src.active_general["dna"]]
-							<br><br>Photo: [istype(src.active_general["file_photo"], /datum/computer/file/image) ? "On File" : "None"]
+							<br><br>Photo: [istype(src.active_general["photo"], /datum/computer/file/image) ? "On File" : "None"]
 							<br><br>Physical Status: [src.active_general["p_stat"]]
 							<br><br>Mental Status: [src.active_general["m_stat"]]"}
 						else
@@ -314,13 +314,13 @@
 
 					if (FIELDNUM_PRINT_R)
 						if (ckey(inputText))
-							src.active_general["fingerprint_right"] = copytext(inputText, 1, 33)
+							src.active_general["fprint_r"] = copytext(inputText, 1, 33)
 						else
 							return
 
 					if (FIELDNUM_PRINT_L)
 						if (ckey(inputText))
-							src.active_general["fingerprint_left"] = copytext(inputText, 1, 33)
+							src.active_general["fprint_l"] = copytext(inputText, 1, 33)
 						else
 							return
 
@@ -537,7 +537,7 @@
 
 				var/list/datum/db_record/results = list()
 				for(var/datum/db_record/R as anything in data_core.general.records)
-					var/haystack = jointext(list(ckey(R["name"]), ckey(R["dna"]), ckey(R["id"]), ckey(R["fingerprint_right"]), ckey(R["fingerprint_left"]), ckey(R["rank"])), " ")
+					var/haystack = jointext(list(ckey(R["name"]), ckey(R["dna"]), ckey(R["id"]), ckey(R["fprint_r"]), ckey(R["fprint_l"]), ckey(R["rank"])), " ")
 					if(findtext(haystack, searchText))
 						results += R
 
@@ -746,10 +746,10 @@
 				<br>\[[num2text(FIELDNUM_PRONOUNS, 2, 10)]\]<b>Pronouns:</b>    [src.active_general["pronouns"]]\
 				<br>\[[num2text(FIELDNUM_AGE, 2, 10)]\]<b>Age:</b>         [src.active_general["age"]]\
 				<br>\[__\]<b>Rank:</b>        [src.active_general["rank"]]\
-				<br>\[[num2text(FIELDNUM_PRINT_R, 2, 10)]\]<b>Fingerprint (R):</b> [src.active_general["fingerprint_right"]]\
-				<br>\[[num2text(FIELDNUM_PRINT_L, 2, 10)]\]<b>Fingerprint (L):</b> [src.active_general["fingerprint_left"]]\
+				<br>\[[num2text(FIELDNUM_PRINT_R, 2, 10)]\]<b>Fingerprint (R):</b> [src.active_general["fprint_r"]]\
+				<br>\[[num2text(FIELDNUM_PRINT_L, 2, 10)]\]<b>Fingerprint (L):</b> [src.active_general["fprint_l"]]\
 				<br>\[[num2text(FIELDNUM_DNA, 2, 10)]\]<b>DNA:</b>         [src.active_general["dna"]]\
-				<br>\[__\]<b>Photo</b>:       [istype(src.active_general["file_photo"], /datum/computer/file/image) ? "On File" : "None"]\
+				<br>\[__\]<b>Photo</b>:       [istype(src.active_general["photo"], /datum/computer/file/image) ? "On File" : "None"]\
 				<br>\[[num2text(FIELDNUM_PSTAT, 2, 10)]\]<b>Phys Status</b>: [src.active_general["p_stat"]]\
 				<br>\[[num2text(FIELDNUM_MSTAT, 2, 10)]\]<b>Ment Status</b>: [src.active_general["m_stat"]]\
 			"}

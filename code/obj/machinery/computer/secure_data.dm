@@ -96,7 +96,7 @@
 					if (src.active_record_general)
 						var/photo_filename = null
 						try
-							var/datum/computer/file/image/img_record = src.active_record_general["file_photo"]
+							var/datum/computer/file/image/img_record = src.active_record_general["photo"]
 							var/icon/photo = img_record.ourIcon
 							if (!photo)
 								photo = wanted_poster_unknown
@@ -135,11 +135,11 @@
 		</tr>
 		<tr>
 			<th>Fingerprint (R)</th>
-			<td><a href="javascript:goBYOND('action=field;field=fingerprint_right');">[src.active_record_general["fingerprint_right"]]</a></td>
+			<td><a href="javascript:goBYOND('action=field;field=fprint_r');">[src.active_record_general["fprint_r"]]</a></td>
 		</tr>
 		<tr>
 			<th>Fingerprint (L)</th>
-			<td><a href="javascript:goBYOND('action=field;field=fingerprint_left');">[src.active_record_general["fingerprint_left"]]</a></td>
+			<td><a href="javascript:goBYOND('action=field;field=fprint_l');">[src.active_record_general["fprint_l"]]</a></td>
 		</tr>
 		<tr>
 			<th>DNA</th>
@@ -472,20 +472,20 @@
 							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
 								return
 							src.active_record_general["id"] = t1
-					if ("fingerprint_right")
+					if ("fprint_r")
 						if (istype(src.active_record_general, /datum/db_record))
-							var/t1 = input("Please input right fingerprint id:", "Security Records", src.active_record_general["fingerprint_right"], null) as text
+							var/t1 = input("Please input right fingerprint id:", "Security Records", src.active_record_general["fprint_r"], null) as text
 							t1 = adminscrub(t1)
 							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
 								return
-							src.active_record_general["fingerprint_right"] = t1
-					if ("fingerprint_left")
+							src.active_record_general["fprint_r"] = t1
+					if ("fprint_l")
 						if (istype(src.active_record_general, /datum/db_record))
-							var/t1 = input("Please input left fingerprint id:", "Security Records", src.active_record_general["fingerprint_left"], null) as text
+							var/t1 = input("Please input left fingerprint id:", "Security Records", src.active_record_general["fprint_l"], null) as text
 							t1 = adminscrub(t1)
 							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
 								return
-							src.active_record_general["fingerprint_left"] = t1
+							src.active_record_general["fprint_l"] = t1
 					if ("sex")
 						if (istype(src.active_record_general, /datum/db_record))
 							switch(src.active_record_general["sex"])
@@ -754,9 +754,9 @@
 				src.active_record_security = null
 				t1 = lowertext(t1)
 				for (var/datum/db_record/R as anything in data_core.general.records)
-					if (lowertext(R["fingerprint_right"]) == t1)
+					if (lowertext(R["fprint_r"]) == t1)
 						src.active_record_general = R
-					else if (lowertext(R["fingerprint_left"]) == t1)
+					else if (lowertext(R["fprint_l"]) == t1)
 						src.active_record_general = R
 				if (!src.active_record_general)
 					src.temp = "Could not locate record matching '[t1]''."
@@ -803,10 +803,10 @@
 						<br>
 						<br>Age: [src.active_record_general["age"]]
 						<br>
-						<br>Fingerprint (R): [src.active_record_general["fingerprint_right"]]
+						<br>Fingerprint (R): [src.active_record_general["fprint_r"]]
 						<br>
 						<br>
-						<br>Fingerprint (L): [src.active_record_general["fingerprint_left"]]
+						<br>Fingerprint (L): [src.active_record_general["fprint_l"]]
 						<br>
 						<br>Physical Status: [src.active_record_general["p_stat"]]
 						<br>
