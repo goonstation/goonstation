@@ -166,8 +166,6 @@
 	if (message.flags & SAYFLAG_DO_NOT_OUTPUT)
 		return
 
-	message.signal_recipient = message
-
 	// Apply the effects of any applicable postmodifier speech prefix.
 	if (message.prefix && !(message.flags & SAYFLAG_PREFIX_PROCESSED))
 		message = src.process_prefix(message, src.postmodifier_speech_prefixes_by_prefix_id)
@@ -191,10 +189,7 @@
 
 		break
 
-	SEND_SIGNAL(message, COMSIG_FLUSH_MESSAGE_BUFFER)
-	// clear self-reference to allow for garbage collection
-	if (message.signal_recipient == message)
-		message.signal_recipient = null
+	SEND_SIGNAL(message.signal_recipient, COMSIG_FLUSH_MESSAGE_BUFFER)
 
 /// Attempt to locate an applicable prefix module from the provided prefix module cache, and apply its affects to a say message.
 /datum/speech_module_tree/proc/process_prefix(datum/say_message/message, list/datum/speech_module/prefix/module_cache)

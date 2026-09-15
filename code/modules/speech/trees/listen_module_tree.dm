@@ -204,16 +204,13 @@
 		var/message_id = src.message_buffer[1]
 		var/datum/say_message/message = src.message_buffer[message_id]
 		src.message_buffer -= message_id
-		// some effects may relay the message through another speech tree and change its signal recipient...
-		// e.g. hacky stuff like the tutorial radio... but we need the proper signal_recipient for our cleanup so just shove it in a var
-		var/datum/signal_recipient = message.signal_recipient
 
 		for (var/effect_id in src.listen_effects_by_id)
 			src.listen_effects_by_id[effect_id].process(message)
 
-		if (src.signal_recipients[signal_recipient])
-			src.UnregisterSignal(signal_recipient, COMSIG_FLUSH_MESSAGE_BUFFER)
-			src.signal_recipients -= signal_recipient
+		if (src.signal_recipients[message.signal_recipient])
+			src.UnregisterSignal(message.signal_recipient, COMSIG_FLUSH_MESSAGE_BUFFER)
+			src.signal_recipients -= message.signal_recipient
 
 /// Enable this listen module tree, allowing it's modules to receive messages.
 /datum/listen_module_tree/proc/enable()
