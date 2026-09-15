@@ -2900,6 +2900,10 @@ ABSTRACT_TYPE(/area/station/engine)
 	icon_state = "engine_power"
 	sound_environment = 5
 
+/area/station/engine/engineering/aquarium
+	name = "Chief Engineer's Aquarium"
+	icon_state = "yellow"
+
 TYPEINFO(/area/station/engine/power/transmission)
 	valid_bounty_area = FALSE
 /area/station/engine/power/transmission

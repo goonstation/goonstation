@@ -81,7 +81,7 @@ export const FilterColorEntry = (props: FilterColorEntryProps) => {
                       {`${prefixes[row]}${prefixes[col]}:`}
                     </Box>
                     <NumberInput
-                      value={colmatrix[row * 4 + col]}
+                      value={colmatrix[row * 4 + col] || 0}
                       step={0.01}
                       width="50px"
                       format={(v) => toFixed(v, 2)}

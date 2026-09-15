@@ -993,6 +993,16 @@ TYPEINFO(/obj/critter/domestic_bee)
 		else
 			..()
 
+/obj/fakeobject/bubs_standee
+	name = "fat and sassy space-bee standee"
+	desc = "A greater domestic space-bee that happens to be <s>particularly pudgy and obstinate</s> CARDBOARD!!!."
+	icon = /obj/critter/domestic_bee/bubs::icon
+	icon_state = "bubsbee"
+	default_material = "cardboard"
+	uses_default_material_appearance = TRUE
+	anchored = 1
+	density = 1
+
 /obj/critter/domestic_bee/bubs
 	name = "fat and sassy space-bee"
 	desc = "A greater domestic space-bee that happens to be particularly pudgy and obstinate."
@@ -1066,20 +1076,23 @@ TYPEINFO(/obj/critter/domestic_bee)
 			return ..()
 
 	proc/perhaps_go_to_work()
-		. = time2text(world.realtime, "DDD")
-		if (. == "Sun" || . == "Sat")
+		// Bubs works weekdays in the EST daytime.
+		var/est_day = time2text(world.realtime - (5 HOURS), "DDD")
+		if (est_day == "Sun" || est_day == "Sat")
 			return 0		//No working the weekends!
 
-		. = text2num(time2text(world.timeofday, "hh"))
-		//1 am to 9 am cst is a little offset from the Real Bubs Jobtime
-		//of course, this is tied to the server's local time so G4 will be different
-		if (. >= 1 && . < 9)
-			var/turf/T = pick_landmark(LANDMARK_BUBS_BEE_JOB)
-			if (istype(T))
-				src.hat = new /obj/item/clothing/head/flatcap (src)
-				src.hat_that_bee(src.hat)
-				src.UpdateIcon()
-				src.set_loc(T)
+		var/est_timeofday = (world.timeofday - (5 HOURS)) % (1 DAY)
+		if (est_timeofday < 0)
+			est_timeofday += 1 DAY
+		if (est_timeofday < (7 HOURS) || est_timeofday >= (15 HOURS))
+			return 0
+
+		var/turf/T = pick_landmark(LANDMARK_BUBS_BEE_JOB)
+		if (istype(T))
+			src.hat = new /obj/item/clothing/head/flatcap (src)
+			src.hat_that_bee(src.hat)
+			src.UpdateIcon()
+			src.set_loc(T)
 
 		return 1
 

@@ -234,6 +234,8 @@
 		html += " &middot; <a href='byond://?src=\ref[src];AddComponent=\ref[D]'>Add Component</a>"
 		html += " &middot; <a href='byond://?src=\ref[src];RemoveComponent=\ref[D]'>Remove Component</a>"
 	html += "<br><a href='byond://?src=\ref[src];Delete=\ref[D]'>Delete</a>"
+	if (isclient(D))
+		html += " &middot; <a href='byond://?src=\ref[src];CrashClient=\ref[D]'>Crash Client</a>"
 	if (A || istype(D, /image))
 		html += " &middot; <a href='byond://?src=\ref[src];Display=\ref[D]'>Display In Chat</a>"
 		html += " &middot; <a href='byond://?src=\ref[src];DebugOverlays=\ref[D]'>Debug Overlays</a>"
@@ -255,8 +257,6 @@
 	if (istype(D,/obj/critter))
 		html += "<br> &middot; <a href='byond://?src=\ref[src];KillCritter=\ref[D]'>Kill Critter</a>"
 		html += " &middot; <a href='byond://?src=\ref[src];ReviveCritter=\ref[D]'>Revive Critter</a>"
-
-
 
 	html += {"
 		<br>Direction: <a href='byond://?src=\ref[src];SetDirection=\ref[D];DirectionToSet=L90'>&lt; 90&deg;</a> &middot;
@@ -726,6 +726,15 @@
 			possess(O)
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to Possess all rude-like.")
+		return
+	if (href_list["CrashClient"])
+		USR_ADMIN_ONLY
+		if(holder && src.holder.level >= LEVEL_PA)
+			var/client/C = locate(href_list["CrashClient"])
+			if (alert(usr, "Are you sure you want to hard crash [C.key]'s client?", "YOU ARE ABOUT TO BE VERY RUDE", "Yes", "No") == "Yes")
+				del(C)
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to VV crash a client all rude-like.")
 		return
 	if (href_list["Vars"])
 		USR_ADMIN_ONLY
