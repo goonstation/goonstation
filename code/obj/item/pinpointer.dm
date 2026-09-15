@@ -292,8 +292,10 @@ TYPEINFO(/obj/item/pinpointer/idtracker)
 				continue // Don't include botcards
 			if(istype(I, /obj/item/card/id/syndicate))
 				continue // No tracking nukies or anyone spending TC to not get tracked
-			if(get_z(I) != Z_LEVEL_STATION)
-				continue // Don't include offstation IDs
+			if(isrestrictedz(get_z(I)))
+				continue // No offstation IDs
+			if(get_z(I) != get_z(src))
+				continue // No IDs on another Z-Level
 			targets += I
 			LAGCHECK(LAG_LOW)
 		target = tgui_input_list(user, "Which ID do you wish to track?", "Target Locator", targets)
