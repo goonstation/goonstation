@@ -142,6 +142,8 @@
 	src.hover_turf = null
 	src.hover_dir = 0
 	var/list/click_location = get_turf_pixel_clicked_over(user, params)
+	if(!click_location)
+		return FALSE
 	var/turf/T = click_location["turf"]
 	var/pixel_x = click_location["pixel_x"]
 	var/pixel_y = click_location["pixel_y"]
