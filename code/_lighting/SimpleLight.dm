@@ -444,20 +444,18 @@
 			continue
 		var/turf/reached_turf = getlineopaqueblocked(src,target_turf)
 
-		var/list/turf/turfs = list() //build a list of the three lines of turfs in this direction to check for light sources
-		for (var/i in -1 to 1)
+		for (var/i in -1 to 1) //the three lines of turfs in this direction that could hold a light source
 			var/turf/start_turf = get_steps(src, turn(scan_dir, 90), i)
 			if (start_turf?.opacity)
 				continue
-			turfs += block(start_turf, reached_turf)
-
-		for (var/turf/T in turfs)
-			for (var/atom/movable/thing in T.contents) //find something with a directional light
-				for (var/obj/overlay/simple_light/medium/directional/light in thing.mdir_lights)
-					if (light.invisibility != INVIS_NONE)
-						continue
-					//this assumes that lights always point in the same direction as their parent object, but lights don't seem to store dir so :iiam:
-					var/turf/light_target = locate(T.x + round((light.pixel_x + 32)/32), T.y + round((light.pixel_y + 32)/32), T.z)
-					var/dist = GET_DIST(src, light_target)
-					if (dist <= 1)
-						return TRUE
+			//scanned line by line
+			for (var/turf/T in block(start_turf, reached_turf))
+				for (var/atom/movable/thing in T.contents) //find something with a directional light
+					for (var/obj/overlay/simple_light/medium/directional/light in thing.mdir_lights)
+						if (light.invisibility != INVIS_NONE)
+							continue
+						//this assumes that lights always point in the same direction as their parent object, but lights don't seem to store dir so :iiam:
+						var/turf/light_target = locate(T.x + round((light.pixel_x + 32)/32), T.y + round((light.pixel_y + 32)/32), T.z)
+						var/dist = GET_DIST(src, light_target)
+						if (dist <= 1)
+							return TRUE
