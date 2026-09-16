@@ -70,6 +70,7 @@
 	name = "\improper head of security's rubber stamp"
 	desc = "The Head of Security's rubber stamp for stamping important documents. Looks like one of those fancy National Notary 'Bancroft' models with the bloodwood handle."
 	icon_state = "stamp-hos"
+	special_mode = "Head of Security"
 
 /obj/item/stamp/ce
 	name = "\improper chief engineer's rubber stamp"
