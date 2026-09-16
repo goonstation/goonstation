@@ -104,17 +104,7 @@
 	c_tag = "science mobile"
 	network = CAMERA_NETWORK_TELESCI
 
-/obj/machinery/camera/television/mobile/syndicate
-	name = "mobile television - demonstration"
-	c_tag = "live dissection"
-
 #undef SECURED_STATE_UNSECURED
 #undef SECURED_STATE_BOLTED
 #undef SECURED_STATE_SCREWED
 #undef SECURED_STATE_UNCHANGABLE
-
-/obj/item/electronics/frame/flatpack/bigcamera
-	name = "Flatpacked TV Camera"
-	store_type = /obj/machinery/camera/television/mobile/syndicate
-	viewstat = 2
-	secured = 2
