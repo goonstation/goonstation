@@ -72,6 +72,7 @@
 	pixel_y = 10
 	},
 /obj/machinery/light/incandescent/warm,
+/obj/item/device/camera_viewer/public,
 /turf/simulated/floor/black,
 /area/syndicate_station/hideout)
 "y" = (
