@@ -47046,8 +47046,7 @@
 "dwj" = (
 /obj/table/wood/auto/desk,
 /obj/item/stamp{
-	assignment = "Chief Chimp";
-	is_reassignable = 0
+	name = "chief chimp's rubber stamp"
 	},
 /turf/unsimulated/floor/engine/caution/south,
 /area/centcom/offices/mordent)
