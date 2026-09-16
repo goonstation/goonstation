@@ -6,9 +6,6 @@
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 4
 	},
-/obj/decal/cleanable/blood/tracks{
-	dir = 4
-	},
 /turf/simulated/floor/sanitary,
 /area/syndicate_station/hideout)
 "d" = (
@@ -20,11 +17,15 @@
 /area/syndicate_station/hideout)
 "g" = (
 /obj/machinery/light/incandescent/warm,
+/obj/decal/cleanable/dirt/dirt2,
 /turf/simulated/floor/sanitary,
 /area/syndicate_station/hideout)
-"k" = (
-/obj/decal/cleanable/blood/gibs,
-/turf/simulated/floor/sanitary,
+"h" = (
+/obj/machinery/light/incandescent/warm,
+/obj/shrub/dead{
+	pixel_y = 5
+	},
+/turf/simulated/floor/black,
 /area/syndicate_station/hideout)
 "l" = (
 /obj/machinery/disposal/extradimensional/exit{
@@ -35,8 +36,11 @@
 /area/syndicate_station/hideout)
 "m" = (
 /obj/machinery/light/incandescent/warm,
-/obj/decal/cleanable/blood/drip/high,
-/obj/item/clothing/mask/skull,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/sanitary,
+/area/syndicate_station/hideout)
+"n" = (
+/obj/decal/cleanable/dirt/dirt5,
 /turf/simulated/floor/sanitary,
 /area/syndicate_station/hideout)
 "o" = (
@@ -59,6 +63,7 @@
 /obj/stool/chair/black{
 	dir = 1
 	},
+/obj/decal/cleanable/dirt/dirt2,
 /turf/simulated/floor/black,
 /area/syndicate_station/hideout)
 "w" = (
@@ -72,7 +77,9 @@
 	pixel_y = 10
 	},
 /obj/machinery/light/incandescent/warm,
-/obj/item/device/camera_viewer/public,
+/obj/machinery/computer/television/small{
+	pixel_y = 25
+	},
 /turf/simulated/floor/black,
 /area/syndicate_station/hideout)
 "y" = (
@@ -124,7 +131,11 @@
 /turf/simulated/floor/black,
 /area/syndicate_station/hideout)
 "H" = (
-/obj/item/electronics/frame/flatpack/bigcamera,
+/obj/item/electronics/frame/flatpack/broadcast_camera/unidentified,
+/obj/machinery/shower{
+	dir = 8;
+	pixel_x = -8
+	},
 /turf/simulated/floor/sanitary,
 /area/syndicate_station/hideout)
 "J" = (
@@ -134,13 +145,19 @@
 "K" = (
 /obj/table/monodesk/auto,
 /obj/machinery/phone/unlisted,
+/obj/item/kitchen/food_box/lollipop{
+	pixel_x = 9;
+	pixel_y = 4
+	},
 /turf/simulated/floor/black,
 /area/syndicate_station/hideout)
 "L" = (
 /turf/simulated/floor/sanitary,
 /area/syndicate_station/hideout)
 "M" = (
-/obj/machinery/optable,
+/obj/decal/cleanable/dirt/dirt3,
+/obj/table/reinforced,
+/obj/machinery/drainage,
 /turf/simulated/floor/sanitary,
 /area/syndicate_station/hideout)
 "N" = (
@@ -165,20 +182,8 @@
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/black,
 /area/syndicate_station/hideout)
-"U" = (
-/obj/decal/cleanable/blood/tracks{
-	dir = 4
-	},
-/turf/simulated/floor/black,
-/area/syndicate_station/hideout)
 "V" = (
-/obj/decal/cleanable/blood/tracks{
-	dir = 4
-	},
-/turf/simulated/floor/sanitary,
-/area/syndicate_station/hideout)
-"Z" = (
-/obj/decal/cleanable/blood/splatter/extra,
+/obj/decal/cleanable/dirt/dirt3,
 /turf/simulated/floor/sanitary,
 /area/syndicate_station/hideout)
 
@@ -247,7 +252,7 @@ N
 d
 P
 M
-Z
+L
 d
 F
 o
@@ -260,9 +265,9 @@ N
 (6,1,1) = {"
 N
 d
+n
 L
-V
-k
+L
 d
 F
 u
@@ -305,8 +310,8 @@ N
 (9,1,1) = {"
 N
 a
+u
 O
-U
 t
 O
 E
@@ -327,7 +332,7 @@ O
 O
 u
 O
-R
+h
 a
 N
 N
