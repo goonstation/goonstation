@@ -2494,6 +2494,7 @@
 #include "code\modules\writing\paper.dm"
 #include "code\modules\writing\papers.dm"
 #include "code\modules\writing\pens_writing_etc.dm"
+#include "code\modules\writing\stamps.dm"
 #include "code\obj\airbridge.dm"
 #include "code\obj\blob.dm"
 #include "code\obj\bookcase.dm"
