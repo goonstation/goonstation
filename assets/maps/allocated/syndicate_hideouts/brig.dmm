@@ -136,12 +136,12 @@
 "w" = (
 /obj/machinery/light/incandescent,
 /obj/table/syndicate/auto,
-/obj/item/electronics/frame/flatpack/broadcast_camera{
-	pixel_y = 6;
-	pixel_x = 5
-	},
 /obj/item/handcuffs/guardbot{
 	pixel_y = -8
+	},
+/obj/item/electronics/frame/flatpack/broadcast_camera/unidentified{
+	pixel_x = 4;
+	pixel_y = 9
 	},
 /turf/simulated/floor/redblack{
 	dir = 4
