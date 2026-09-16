@@ -13,7 +13,7 @@
 /area/syndicate_station/hideout)
 "f" = (
 /obj/reagent_dispensers/watertank/fountain,
-/turf/simulated/floor/black,
+/turf/simulated/floor/carpet/grime,
 /area/syndicate_station/hideout)
 "g" = (
 /obj/machinery/light/incandescent/warm,
@@ -25,14 +25,14 @@
 /obj/shrub/dead{
 	pixel_y = 5
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/carpet/grime,
 /area/syndicate_station/hideout)
 "l" = (
 /obj/machinery/disposal/extradimensional/exit{
 	pixel_y = 3
 	},
 /obj/machinery/light/incandescent/warm,
-/turf/simulated/floor/black,
+/turf/simulated/floor/carpet/grime,
 /area/syndicate_station/hideout)
 "m" = (
 /obj/machinery/light/incandescent/warm,
@@ -45,11 +45,18 @@
 /area/syndicate_station/hideout)
 "o" = (
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/black,
+/turf/simulated/floor/carpet/grime,
+/area/syndicate_station/hideout)
+"p" = (
+/turf/simulated/floor/carpet/grime,
 /area/syndicate_station/hideout)
 "q" = (
 /obj/decal/cleanable/dirt/dirt5,
-/turf/simulated/floor/black,
+/turf/simulated/floor/carpet/grime,
+/area/syndicate_station/hideout)
+"r" = (
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/carpet/grime,
 /area/syndicate_station/hideout)
 "t" = (
 /obj/decal/cleanable/dirt/jen,
@@ -64,7 +71,7 @@
 	dir = 1
 	},
 /obj/decal/cleanable/dirt/dirt2,
-/turf/simulated/floor/black,
+/turf/simulated/floor/carpet/grime,
 /area/syndicate_station/hideout)
 "w" = (
 /obj/table/monodesk/auto,
@@ -80,14 +87,14 @@
 /obj/machinery/computer/television/small{
 	pixel_y = 25
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/carpet/grime,
 /area/syndicate_station/hideout)
 "y" = (
 /obj/stool/chair/black{
 	dir = 1
 	},
 /obj/decal/cleanable/dirt/jen,
-/turf/simulated/floor/black,
+/turf/simulated/floor/carpet/grime,
 /area/syndicate_station/hideout)
 "z" = (
 /obj/machinery/light/incandescent/warm,
@@ -98,6 +105,10 @@
 /obj/item/clothing/mask/medical/anesthetic,
 /obj/item/sponge,
 /turf/simulated/floor/sanitary,
+/area/syndicate_station/hideout)
+"B" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/carpet/grime,
 /area/syndicate_station/hideout)
 "C" = (
 /obj/table/wood,
@@ -111,7 +122,7 @@
 	pixel_x = 9
 	},
 /obj/machinery/light/incandescent/warm,
-/turf/simulated/floor/black,
+/turf/simulated/floor/carpet/grime,
 /area/syndicate_station/hideout)
 "D" = (
 /obj/machinery/sink/slim{
@@ -124,11 +135,11 @@
 /obj/stool/chair/office/blue{
 	dir = 8
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/carpet/grime,
 /area/syndicate_station/hideout)
 "F" = (
 /obj/stool/chair/black,
-/turf/simulated/floor/black,
+/turf/simulated/floor/carpet/grime,
 /area/syndicate_station/hideout)
 "H" = (
 /obj/item/electronics/frame/flatpack/broadcast_camera/unidentified,
@@ -140,7 +151,7 @@
 /area/syndicate_station/hideout)
 "J" = (
 /obj/decal/cleanable/dirt/dirt2,
-/turf/simulated/floor/black,
+/turf/simulated/floor/carpet/grime,
 /area/syndicate_station/hideout)
 "K" = (
 /obj/table/monodesk/auto,
@@ -149,7 +160,7 @@
 	pixel_x = 9;
 	pixel_y = 4
 	},
-/turf/simulated/floor/black,
+/turf/simulated/floor/carpet/grime,
 /area/syndicate_station/hideout)
 "L" = (
 /turf/simulated/floor/sanitary,
@@ -240,8 +251,8 @@ H
 g
 d
 C
-O
-O
+p
+p
 l
 a
 N
@@ -270,8 +281,8 @@ L
 L
 d
 F
-u
-O
+r
+p
 y
 a
 N
@@ -285,8 +296,8 @@ V
 z
 d
 o
-O
-O
+p
+p
 f
 a
 N
@@ -302,7 +313,7 @@ d
 w
 K
 q
-O
+p
 a
 N
 N
@@ -315,9 +326,9 @@ O
 t
 O
 E
-O
-O
-t
+p
+p
+B
 a
 N
 N
@@ -329,9 +340,9 @@ R
 u
 O
 O
-O
-u
-O
+p
+r
+p
 h
 a
 N
