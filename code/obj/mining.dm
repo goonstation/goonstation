@@ -2030,6 +2030,8 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 	icon_state = "hedron-W"
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "gun"
+
+	var/welding = FALSE
 	powered_item_state = "gun"
 	powered_mining_sound = 'sound/items/Welder.ogg'
 	c_flags = ONBELT
@@ -2048,11 +2050,13 @@ TYPEINFO(/obj/item/mining_tool/powered/hedron_beam)
 
 	power_up(var/mob/user)
 		src.set_icon_state("hedron-M")
+		src.welding = FALSE
 		FLICK("hedron-WtoM", src)
 		..()
 
 	power_down(var/mob/user)
 		src.set_icon_state("hedron-W")
+		src.welding = TRUE
 		FLICK("hedron-MtoW", src)
 		..()
 
