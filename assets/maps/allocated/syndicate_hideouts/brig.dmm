@@ -113,8 +113,11 @@
 /turf/simulated/floor/wood/two,
 /area/syndicate_station/hideout)
 "u" = (
-/obj/item/clothing/gloves/black,
 /obj/table/syndicate/auto,
+/obj/item/material_piece/cloth,
+/obj/item/clothing/gloves/black{
+	pixel_y = 13
+	},
 /turf/simulated/floor/redblack{
 	dir = 6
 	},
@@ -133,9 +136,12 @@
 "w" = (
 /obj/machinery/light/incandescent,
 /obj/table/syndicate/auto,
-/obj/item/material_piece/cloth,
+/obj/item/electronics/frame/flatpack/broadcast_camera{
+	pixel_y = 6;
+	pixel_x = 5
+	},
 /obj/item/handcuffs/guardbot{
-	pixel_y = -18
+	pixel_y = -8
 	},
 /turf/simulated/floor/redblack{
 	dir = 4
@@ -174,8 +180,11 @@
 /turf/simulated/floor/wood/two,
 /area/syndicate_station/hideout)
 "G" = (
-/obj/item/instrument/harmonica,
 /obj/table/reinforced/auto,
+/obj/machinery/computer/television/small{
+	pixel_y = 12
+	},
+/obj/item/instrument/harmonica,
 /turf/simulated/floor/wood/two,
 /area/syndicate_station/hideout)
 "H" = (
