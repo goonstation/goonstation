@@ -14,8 +14,6 @@
 	rand_pos = 1
 	default_material = "synthrubber"
 	var/special_mode = null
-	var/is_reassignable = 1
-	var/assignment = null
 	var/available_modes = list("Granted", "Denied", "Void", "Current Time", "Your Name");
 	var/current_mode = "Granted"
 	var/current_state = null
@@ -25,32 +23,6 @@
 	if(special_mode)
 		available_modes += special_mode
 		current_mode = special_mode
-
-/obj/item/stamp/proc/set_assignment(A)
-	if (istext(A))
-		src.assignment = A
-		src.desc = "A rubber stamp for stamping important documents. It is assigned to: \"[A]\"."
-		return
-	else
-		src.assignment = null
-		src.desc = "A rubber stamp for stamping important documents."
-		return
-
-/obj/item/stamp/attackby(obj/item/C, mob/user)// assignment with ID
-	if (istype(C, /obj/item/card/id))
-		var/obj/item/card/id/ID = C
-		if (!src.is_reassignable)
-			boutput(user, SPAN_ALERT("This rubber stamp cannot be reassigned!"))
-			return
-		if (!isnull(src.assignment))
-			boutput(user, SPAN_ALERT("This rubber stamp has already been assigned!"))
-			return
-		else if (!ID.assignment)
-			boutput(user, SPAN_ALERT("This ID isn't assigned to a job!"))
-			return
-		src.set_assignment(ID.assignment)
-		boutput(user, SPAN_NOTICE("You update the assignment of the rubber stamp."))
-		return
 
 /obj/item/stamp/attack_self() // change current mode
 	var/NM = input(usr, "Configure \the [src]?", "[src.name]", src.current_mode) in src.available_modes
@@ -63,18 +35,6 @@
 /obj/item/stamp/get_desc()
 	. = ..()
 	. += "It is set to '[current_mode]' mode."
-
-/obj/item/stamp/reagent_act(reagent_id, volume)
-	if (..())
-		return
-	switch(reagent_id)
-		if ("acetone") // allow reassigning with acetone
-			if (isnull(src.assignment) || !src.is_reassignable)
-				return
-			var/turf/T = get_turf(src)
-			T.visible_message("<span>The acetone eats away at the rubber stamp's structure; it is now unassigned.</span>")
-			src.set_assignment(null)
-	return
 
 // Suicide options
 /obj/item/stamp/custom_suicide = 1
@@ -98,8 +58,6 @@
 	icon_state = "stamp-cap"
 	default_material = "synthrubber_green"
 	special_mode = "Captain"
-	is_reassignable = 0
-	assignment = "stamp-cap"
 
 /obj/item/stamp/hop
 	name = "\improper head of personnel's rubber stamp"
@@ -107,16 +65,11 @@
 	icon_state = "stamp-hop"
 	default_material = "synthrubber_blue"
 	special_mode = "Head of Personnel"
-	is_reassignable = 0
-	assignment = "stamp-hop"
 
 /obj/item/stamp/hos
 	name = "\improper head of security's rubber stamp"
 	desc = "The Head of Security's rubber stamp for stamping important documents. Looks like one of those fancy National Notary 'Bancroft' models with the bloodwood handle."
 	icon_state = "stamp-hos"
-	special_mode = "Head of Security"
-	is_reassignable = 0
-	assignment = "stamp-hos"
 
 /obj/item/stamp/ce
 	name = "\improper chief engineer's rubber stamp"
@@ -124,8 +77,6 @@
 	icon_state = "stamp-ce"
 	default_material = "synthrubber_yellow"
 	special_mode = "Chief Engineer"
-	is_reassignable = 0
-	assignment = "stamp-ce"
 
 /obj/item/stamp/md
 	name = "\improper medical director's rubber stamp"
@@ -133,8 +84,6 @@
 	icon_state = "stamp-md"
 	default_material = "synthrubber_blue"
 	special_mode = "Medical Director"
-	is_reassignable = 0
-	assignment = "stamp-md"
 
 /obj/item/stamp/rd
 	name = "\improper research director's rubber stamp"
@@ -142,8 +91,6 @@
 	icon_state = "stamp-rd"
 	default_material = "synthrubber_purple"
 	special_mode = "Research Director"
-	is_reassignable = 0
-	assignment = "stamp-rd"
 
 /obj/item/stamp/clown
 	name = "\improper clown's rubber stamp"
@@ -151,8 +98,6 @@
 	icon_state = "stamp-honk"
 	default_material = "synthrubber_hotpink"
 	special_mode = "Clown"
-	is_reassignable = 0
-	assignment = "stamp-honk"
 
 /obj/item/stamp/centcom
 	name = "\improper centcom executive rubber stamp"
@@ -160,8 +105,6 @@
 	icon_state = "stamp-centcom"
 	default_material = "synthrubber_blue"
 	special_mode = "Centcom"
-	is_reassignable = 0
-	assignment = "stamp-centcom"
 
 /obj/item/stamp/mime
 	name = "\improper mime's rubber stamp"
@@ -169,8 +112,6 @@
 	icon_state = "stamp-mime"
 	default_material = "synthrubber_white"
 	special_mode = "Mime"
-	is_reassignable = 0
-	assignment = "stamp-mime"
 
 /obj/item/stamp/chap
 	name = "\improper chaplain's rubber stamp"
@@ -178,8 +119,6 @@
 	icon_state = "stamp-chap"
 	default_material = "synthrubber_black"
 	special_mode = "Chaplain"
-	is_reassignable = 0
-	assignment = "stamp-chap"
 
 /obj/item/stamp/qm
 	name = "\improper quartermaster's rubber stamp"
@@ -187,24 +126,18 @@
 	icon_state = "stamp-qm"
 	default_material = "synthrubber_yellow"
 	special_mode = "Quartermaster"
-	is_reassignable = 0
-	assignment = "stamp-qm"
 
 /obj/item/stamp/syndicate
 	name = "\improper syndicate rubber stamp"
 	desc = "Syndicate rubber stamp for stamping whatever important documents they've gotten their hands on. Surprisingly, it's also a National Notary 'Continental'. Not many choices out here."
 	icon_state = "stamp-syndicate"
 	special_mode = "Syndicate"
-	is_reassignable = 0
-	assignment = "stamp-syndicate"
 
 /obj/item/stamp/law
 	name = "\improper security's rubber stamp"
 	desc = "Security's rubber stamp for stamping whatever important documents they've gotten their hands on. It's the rugged National Notary 'Severn' model with the rock maple handle."
 	icon_state = "stamp-law"
 	special_mode = "Security"
-	is_reassignable = 0
-	assignment = "stamp-law"
 
 /obj/item/stamp/angler
 	name = "\improper angler's rubber stamp"
@@ -212,16 +145,12 @@
 	icon_state = "stamp-angler"
 	default_material = "synthrubber_blue"
 	special_mode = "Angler"
-	is_reassignable = 0
-	assignment = "stamp-angler"
 
 /obj/item/stamp/flock
 	name = "\improper Inky Antenna"
 	desc = "It looks kinda like a National Notary stamp of an unfamilar model. Theres small rods sticking out of it though. You doubt you can use it for whatever important documents you've gotten your hands on"
 	icon_state = "stamp-flock"
 	special_mode = "Flock"
-	is_reassignable = 0
-	assignment = "stamp-flock"
 	mat_changename = FALSE
 	mat_changedesc = FALSE
 	default_material = "gnesis"
@@ -234,7 +163,6 @@
 	sadly it was discontinued due to the users cutting themslves on the sharp bat wings."
 	special_mode = "Vamp"
 	icon_state = "stamp-vamp"
-	assignment = "stamp-vamp"
 	hit_type = DAMAGE_STAB
 	force = 5
 
