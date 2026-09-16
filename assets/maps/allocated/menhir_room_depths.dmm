@@ -353,11 +353,6 @@
 	},
 /turf/unsimulated/floor/black/grime,
 /area/dank_trench)
-"ui" = (
-/obj/landmark/fall/sea/marj,
-/obj/sea_plant/seaweed,
-/turf/space/fluid/noexplosion/nospawn,
-/area/dank_trench)
 "uC" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -781,10 +776,6 @@
 /obj/sea_plant/seaweed,
 /turf/space/fluid/noexplosion/nospawn,
 /area/dank_trench)
-"Wn" = (
-/obj/landmark/fall/sea/marj,
-/turf/space/fluid/noexplosion,
-/area/dank_trench)
 "WC" = (
 /obj/decal/cleanable/dirt,
 /obj/stool/chair/office{
@@ -939,7 +930,7 @@ oT
 Bj
 ri
 UB
-Wn
+oT
 oT
 wA
 Bj
@@ -975,7 +966,7 @@ oT
 oT
 OS
 oT
-Wn
+oT
 Bj
 Bj
 Bj
@@ -1040,7 +1031,7 @@ Dc
 Bj
 ri
 oT
-Wn
+oT
 oT
 OS
 Bj
@@ -1110,7 +1101,7 @@ Om
 oT
 oT
 oT
-ui
+OS
 Bj
 Bj
 Bj
@@ -1141,7 +1132,7 @@ Dc
 Dc
 Dc
 kY
-Wn
+oT
 OS
 QV
 Bj
@@ -1276,7 +1267,7 @@ Bj
 Bj
 Bj
 ri
-Wn
+oT
 OS
 Bj
 vh
