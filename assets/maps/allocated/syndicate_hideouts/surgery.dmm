@@ -1,0 +1,378 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/unsimulated/wall/auto/lead/gray,
+/area/syndicate_station/hideout)
+"c" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
+/obj/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/simulated/floor/sanitary,
+/area/syndicate_station/hideout)
+"d" = (
+/turf/unsimulated/wall/auto/lead/white,
+/area/syndicate_station/hideout)
+"f" = (
+/obj/reagent_dispensers/watertank/fountain,
+/turf/simulated/floor/black,
+/area/syndicate_station/hideout)
+"g" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/sanitary,
+/area/syndicate_station/hideout)
+"k" = (
+/obj/decal/cleanable/blood/gibs,
+/turf/simulated/floor/sanitary,
+/area/syndicate_station/hideout)
+"l" = (
+/obj/machinery/disposal/extradimensional/exit{
+	pixel_y = 3
+	},
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/black,
+/area/syndicate_station/hideout)
+"m" = (
+/obj/machinery/light/incandescent/warm,
+/obj/decal/cleanable/blood/drip/high,
+/obj/item/clothing/mask/skull,
+/turf/simulated/floor/sanitary,
+/area/syndicate_station/hideout)
+"o" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/black,
+/area/syndicate_station/hideout)
+"q" = (
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/black,
+/area/syndicate_station/hideout)
+"t" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/black,
+/area/syndicate_station/hideout)
+"u" = (
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/black,
+/area/syndicate_station/hideout)
+"v" = (
+/obj/stool/chair/black{
+	dir = 1
+	},
+/turf/simulated/floor/black,
+/area/syndicate_station/hideout)
+"w" = (
+/obj/table/monodesk/auto,
+/obj/item/paper_bin{
+	pixel_y = 5;
+	pixel_x = 5
+	},
+/obj/item/stamp{
+	pixel_x = -5;
+	pixel_y = 10
+	},
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/black,
+/area/syndicate_station/hideout)
+"y" = (
+/obj/stool/chair/black{
+	dir = 1
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/black,
+/area/syndicate_station/hideout)
+"z" = (
+/obj/machinery/light/incandescent/warm,
+/obj/storage/secure/closet/medical/anesthetic{
+	req_access = null
+	},
+/obj/item/tank/mini/anesthetic,
+/obj/item/clothing/mask/medical/anesthetic,
+/obj/item/sponge,
+/turf/simulated/floor/sanitary,
+/area/syndicate_station/hideout)
+"C" = (
+/obj/table/wood,
+/obj/item/paper/newspaper/rolled,
+/obj/item/paper/book/from_file/deep_blue_sea{
+	pixel_x = -11;
+	pixel_y = 6
+	},
+/obj/item/toy/plush{
+	pixel_y = 24;
+	pixel_x = 9
+	},
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/black,
+/area/syndicate_station/hideout)
+"D" = (
+/obj/machinery/sink/slim{
+	pixel_y = 15
+	},
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/sanitary,
+/area/syndicate_station/hideout)
+"E" = (
+/obj/stool/chair/office/blue{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/syndicate_station/hideout)
+"F" = (
+/obj/stool/chair/black,
+/turf/simulated/floor/black,
+/area/syndicate_station/hideout)
+"H" = (
+/obj/item/electronics/frame/flatpack/bigcamera,
+/turf/simulated/floor/sanitary,
+/area/syndicate_station/hideout)
+"J" = (
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/black,
+/area/syndicate_station/hideout)
+"K" = (
+/obj/table/monodesk/auto,
+/obj/machinery/phone/unlisted,
+/turf/simulated/floor/black,
+/area/syndicate_station/hideout)
+"L" = (
+/turf/simulated/floor/sanitary,
+/area/syndicate_station/hideout)
+"M" = (
+/obj/machinery/optable,
+/turf/simulated/floor/sanitary,
+/area/syndicate_station/hideout)
+"N" = (
+/turf/cordon,
+/area/cordon/dark)
+"O" = (
+/turf/simulated/floor/black,
+/area/syndicate_station/hideout)
+"P" = (
+/obj/surgery_tray,
+/obj/item/scalpel{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/surgical_spoon,
+/obj/item/kitchen/utensil/knife/pizza_cutter,
+/obj/item/scissors,
+/obj/item/kitchen/utensil/knife,
+/turf/simulated/floor/sanitary,
+/area/syndicate_station/hideout)
+"R" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/black,
+/area/syndicate_station/hideout)
+"U" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/syndicate_station/hideout)
+"V" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/simulated/floor/sanitary,
+/area/syndicate_station/hideout)
+"Z" = (
+/obj/decal/cleanable/blood/splatter/extra,
+/turf/simulated/floor/sanitary,
+/area/syndicate_station/hideout)
+
+(1,1,1) = {"
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+"}
+(2,1,1) = {"
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+"}
+(3,1,1) = {"
+N
+d
+d
+d
+d
+d
+a
+a
+a
+a
+a
+N
+N
+"}
+(4,1,1) = {"
+N
+d
+m
+H
+g
+d
+C
+O
+O
+l
+a
+N
+N
+"}
+(5,1,1) = {"
+N
+d
+P
+M
+Z
+d
+F
+o
+J
+v
+a
+N
+N
+"}
+(6,1,1) = {"
+N
+d
+L
+V
+k
+d
+F
+u
+O
+y
+a
+N
+N
+"}
+(7,1,1) = {"
+N
+d
+D
+V
+z
+d
+o
+O
+O
+f
+a
+N
+N
+"}
+(8,1,1) = {"
+N
+d
+d
+c
+d
+d
+w
+K
+q
+O
+a
+N
+N
+"}
+(9,1,1) = {"
+N
+a
+O
+U
+t
+O
+E
+O
+O
+t
+a
+N
+N
+"}
+(10,1,1) = {"
+N
+a
+R
+u
+O
+O
+O
+u
+O
+R
+a
+N
+N
+"}
+(11,1,1) = {"
+N
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+N
+N
+"}
+(12,1,1) = {"
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+"}
+(13,1,1) = {"
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+"}

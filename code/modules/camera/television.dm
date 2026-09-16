@@ -108,3 +108,9 @@
 #undef SECURED_STATE_BOLTED
 #undef SECURED_STATE_SCREWED
 #undef SECURED_STATE_UNCHANGABLE
+
+/obj/item/electronics/frame/flatpack/bigcamera
+	name = "Flatpacked TV Camera"
+	store_type = /obj/machinery/camera/television/mobile
+	viewstat = 2
+	secured = 2

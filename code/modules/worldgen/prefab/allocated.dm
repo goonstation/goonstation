@@ -102,7 +102,7 @@ ABSTRACT_TYPE(/datum/mapPrefab/allocated)
 /datum/mapPrefab/allocated/syndicate_hideout/cafe
 	name = "Syndicafé"
 	prefabPath = "assets/maps/allocated/syndicate_hideouts/syndicafe.dmm"
-  
+
 /datum/mapPrefab/allocated/syndicate_hideout/dojo
 	name = "Dojo"
 	prefabPath = "assets/maps/allocated/syndicate_hideouts/dojo.dmm"
@@ -110,6 +110,10 @@ ABSTRACT_TYPE(/datum/mapPrefab/allocated)
 /datum/mapPrefab/allocated/syndicate_hideout/retreat
 	name = "Retreat"
 	prefabPath = "assets/maps/allocated/syndicate_hideouts/retreat.dmm"
+
+/datum/mapPrefab/allocated/syndicate_hideout/surgery
+	name = "Cynical Operating Theatre"
+	prefabPath = "assets/maps/allocated/syndicate_hideouts/surgery.dmm"
 
 /datum/mapPrefab/allocated/menhir_room_medical
 	name = "menhir_room_medical"
