@@ -115,6 +115,10 @@ ABSTRACT_TYPE(/datum/mapPrefab/allocated)
 	name = "Cynical Operating Theatre"
 	prefabPath = "assets/maps/allocated/syndicate_hideouts/surgery.dmm"
 
+/datum/mapPrefab/allocated/syndicate_hideout/brig
+	name = "Brig"
+	prefabPath = "assets/maps/allocated/syndicate_hideouts/brig.dmm"
+
 /datum/mapPrefab/allocated/menhir_room_medical
 	name = "menhir_room_medical"
 	prefabSizeX = 20

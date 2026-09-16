@@ -407,6 +407,9 @@
 /obj/machinery/door_control/antagscanner{
 	pixel_x = 32
 	},
+/obj/decal/poster/flag/syndicate{
+	pixel_y = 32
+	},
 /turf/simulated/floor/stairs/wide/other,
 /area/listeningpost/vestibule)
 "EO" = (
