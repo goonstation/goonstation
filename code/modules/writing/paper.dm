@@ -20,6 +20,7 @@
 	"Chaplain" = "stamp-sprite-chap",\
 	"Mime" = "stamp-sprite-mime",\
 	"Centcom" = "stamp-sprite-centcom",\
+	"Classified" = "stamp-sprite-classified",\
 	"Syndicate" = "stamp-sprite-syndicate",\
 	"Void" = "stamp-sprite-void",\
 	"Flock" = "stamp-sprite-flock",\
