@@ -1,5 +1,9 @@
 
 (t)wed sep 16 26
+(u)JORJ949 & Callipygian0
+(p)27876
+(e)🗺💡|A-Mapping, A-Station-Systems
+(*)Added a new "Brig" option to the syndicate hideout styles. Perfect for all your hostage-taking needs!
 (u)ANNmagedon
 (p)27735
 (e)🎨📦|C-Sprites, A-Game-Objects
