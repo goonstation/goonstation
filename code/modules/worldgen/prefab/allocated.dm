@@ -112,7 +112,7 @@ ABSTRACT_TYPE(/datum/mapPrefab/allocated)
 	prefabPath = "assets/maps/allocated/syndicate_hideouts/retreat.dmm"
 
 /datum/mapPrefab/allocated/syndicate_hideout/surgery
-	name = "Cynical Operating Theatre"
+	name = "Shady Clinic"
 	prefabPath = "assets/maps/allocated/syndicate_hideouts/surgery.dmm"
 
 /datum/mapPrefab/allocated/syndicate_hideout/brig
