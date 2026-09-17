@@ -1363,7 +1363,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 			. += C
 
 /mob/living/critter/proc/valid_target(var/mob/living/C)
-	if(!SEND_SIGNAL(src,COMSIG_MOB_VALIDATE_TARGET,C))
+	if(SEND_SIGNAL(src,COMSIG_MOB_VALIDATE_TARGET,C))
 		return FALSE
 	if (isintangible(C)) return FALSE
 	if (isdead(C)) return FALSE

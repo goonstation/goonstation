@@ -442,7 +442,7 @@
 		..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 80) // They live in asteroids so they should be resistant
 		AddComponent(/datum/component/consume/can_eat_raw_materials, FALSE)
-		AddComponent(/datum/component/tameable, /obj/item/raw_material, list(\
+		AddComponent(/datum/component/tameable, list(/obj/item/raw_material), list(\
 		/obj/item/raw_material/shard,
 		/obj/item/raw_material/scrap_metal,
 		/obj/item/raw_material/gemstone,
