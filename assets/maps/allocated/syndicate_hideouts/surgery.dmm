@@ -186,11 +186,18 @@
 /obj/item/surgical_spoon,
 /obj/item/kitchen/utensil/knife/pizza_cutter,
 /obj/item/scissors,
-/obj/item/kitchen/utensil/knife,
+/obj/item/kitchen/utensil/knife{
+	dir = 8;
+	pixel_y = -2
+	},
+/obj/item/kitchen/utensil/spoon{
+	dir = 8
+	},
 /turf/simulated/floor/sanitary,
 /area/syndicate_station/hideout)
 "R" = (
 /obj/machinery/light/incandescent/warm,
+/obj/machinery/vending/medical_public,
 /turf/simulated/floor/black,
 /area/syndicate_station/hideout)
 "V" = (
