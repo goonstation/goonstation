@@ -312,6 +312,8 @@
 	#define COMSIG_MOB_LAYDOWN_STANDUP "mob_laydown"
 	/// Sent to cancel a mob viewing a camera
 	#define COMSIG_MOB_CANCEL_CAMERA "mob_cancel_camera"
+	/// Sent when a mob's AI tries to validate a target
+	#define COMSIG_MOB_VALIDATE_TARGET "mob_validate_target"
 
 	// ---- cloaking device signal ----
 

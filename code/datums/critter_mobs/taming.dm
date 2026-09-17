@@ -1,17 +1,19 @@
-/// If a thing is to be radioactive, slap this component on it. Only call mob.take_radiation_dose directly as a last resort.
+/// If a creature is to be tameable, slap this component on it.
 TYPEINFO(/datum/component/tameable)
 	initialization_args = list(
 		ARG_INFO("taming_foods", DATA_INPUT_LIST_VAR, "Type of food to tame this critter", list(/obj/item/reagent_containers/food/snacks)),
 		ARG_INFO("food_blacklist", DATA_INPUT_LIST_VAR, "What food types in taming_foods should NOT work?", null),
 		ARG_INFO("tame_chance", DATA_INPUT_NUM, "Prob chance for the tame to be successful \[0-100\]", 20),
-		ARG_INFO("passive_mode", DATA_INPUT_BOOL, "Is this for a aggressive creature?", FALSE)
+		ARG_INFO("passive_mode", DATA_INPUT_BOOL, "Is this for a aggressive creature?", FALSE),
+		ARG_INFO("emote_happy", DATA_INPUT_TEXT, "What emote does this creature do when happy?", "flip"),
+		ARG_INFO("emote_angry", DATA_INPUT_TEXT, "What emote does this creature do when angry?", "scream")
 	)
 
 
 /datum/component/tameable
 	var/list/signals = list()
 	var/mob/living/critter/owner = null
-	var/list/obj/item/reagent_containers/food/taming_foods = list(/obj/item/reagent_containers/food/snacks) // What people use to tame
+	var/list/obj/item/taming_foods = list(/obj/item/reagent_containers/food/snacks) // What people use to tame
 	var/food_blacklist = null // what's in the treat's subtype but doesn't count?
 	var/tame_chance = 20 // prob percentage
 	var/emote_happy = null // live critter reactions
@@ -26,11 +28,12 @@ TYPEINFO(/datum/component/tameable)
 	src.owner = parent
 	RegisterSignal(parent, COMSIG_ATTACKBY, PROC_REF(pass_on_attackby))
 	RegisterSignal(parent, COMSIG_ATTACKHAND, PROC_REF(pass_on_attackhand))
+	RegisterSignal(parent, COMSIG_MOB_VALIDATE_TARGET, PROC_REF(pass_on_validtarget))
 
 /datum/component/tameable/proc/pass_on_attackby(atom/movable/parent, obj/item/item, mob/user, params)
 	if(!isdead(owner) && passive_mode)
 		return
-	if(istype(item, taming_foods))
+	if(istypes(item, taming_foods))
 		if((istypes(item, food_blacklist)))
 			owner.visible_message("[user] tries to feed [owner] but they won't take it!")
 			return
@@ -47,7 +50,7 @@ TYPEINFO(/datum/component/tameable)
 			RW.aftereat()
 		item.Eat(owner, owner)
 		return
-	if(istype(item, taming_foods) && ishuman(user) && !isdead(owner) && !passive_mode)
+	if(istypes(item, taming_foods) && ishuman(user) && !isdead(owner) && !passive_mode)
 		owner.visible_message("[user] feeds \the [owner] some [item].", "[user] feeds you some [item].")
 		for(var/damage_type in owner.healthlist)
 			var/datum/healthHolder/hh = owner.healthlist[damage_type]
@@ -58,7 +61,7 @@ TYPEINFO(/datum/component/tameable)
 		if(user in owner.friends)
 			owner.emote(emote_happy)
 		else
-			if(prob(tame_chance) && istype(item, taming_foods))
+			if(prob(tame_chance) && istypes(item, taming_foods))
 				owner.friends += user
 				owner.tamed = TRUE
 				owner.visible_message("[owner] with a [emote_happy] happily eats up the \the [item], and seems a little friendlier with [user].")
@@ -84,3 +87,8 @@ TYPEINFO(/datum/component/tameable)
 			owner.aggressive = TRUE
 			owner.ai_retaliates = TRUE
 			return
+
+/datum/component/tameable/proc/pass_on_validtarget(mob/M)
+	if(!passive_mode)
+		if(M in owner.friends)
+			return FALSE
