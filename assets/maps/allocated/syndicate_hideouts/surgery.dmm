@@ -64,6 +64,7 @@
 /area/syndicate_station/hideout)
 "u" = (
 /obj/decal/cleanable/dirt/dirt3,
+/obj/stool/bench/wooden,
 /turf/simulated/floor/black,
 /area/syndicate_station/hideout)
 "v" = (
