@@ -442,16 +442,12 @@
 		..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 80) // They live in asteroids so they should be resistant
 		AddComponent(/datum/component/consume/can_eat_raw_materials, FALSE)
-		var/datum/component/tameable/T = AddComponent(/datum/component/tameable)
-		T.passive_mode = TRUE
-		T.tame_chance = 40
-		T.treat = /obj/item/raw_material
-		T.food_blacklist = list(\
+		var/datum/component/tameable/T = AddComponent(/datum/component/tameable, /obj/item/raw_material, list(\
 		/obj/item/raw_material/shard,
 		/obj/item/raw_material/scrap_metal,
 		/obj/item/raw_material/gemstone,
 		/obj/item/raw_material/uqill,
-		/obj/item/raw_material/fibrilith)
+		/obj/item/raw_material/fibrilith), 40, TRUE)
 		START_TRACKING
 
 	disposing()

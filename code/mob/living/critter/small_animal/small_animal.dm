@@ -1873,7 +1873,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		if (ishuman(C) || issilicon(C))    //creating the snake's defensive behavior
 			if(GET_DIST(src, C) <= 3 && GET_DIST(src, C) >= 1) //it will only actually target humans and silicons if in very close proximity
 				if(!ON_COOLDOWN(src, "rattle", 3 SECONDS))      //it will rattle defensively if somewhat close
-					if(C in !friends)
+					if(!(C in friends))
 						icon_state = "rattlesnake_rattle"
 						playsound(src, 'sound/musical_instruments/tambourine/tambourine_4.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 						SPAWN(1 SECONDS)

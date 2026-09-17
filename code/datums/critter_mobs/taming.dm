@@ -1,7 +1,17 @@
+/// If a thing is to be radioactive, slap this component on it. Only call mob.take_radiation_dose directly as a last resort.
+TYPEINFO(/datum/component/tameable)
+	initialization_args = list(
+		ARG_INFO("taming_foods", DATA_INPUT_LIST_VAR, "Type of food to tame this critter", list(/obj/item/reagent_containers/food/snacks)),
+		ARG_INFO("food_blacklist", DATA_INPUT_LIST_VAR, "What food types in taming_foods should NOT work?", null),
+		ARG_INFO("tame_chance", DATA_INPUT_NUM, "Prob chance for the tame to be successful \[0-100\]", 20),
+		ARG_INFO("passive_mode", DATA_INPUT_BOOL, "Is this for a aggressive creature?", FALSE)
+	)
+
+
 /datum/component/tameable
 	var/list/signals = list()
 	var/mob/living/critter/owner = null
-	var/obj/item/reagent_containers/food/treat = /obj/item/reagent_containers/food/snacks // What people use to tame
+	var/list/obj/item/reagent_containers/food/taming_foods = list(/obj/item/reagent_containers/food/snacks) // What people use to tame
 	var/food_blacklist = null // what's in the treat's subtype but doesn't count?
 	var/tame_chance = 20 // prob percentage
 	var/emote_happy = null // live critter reactions
@@ -18,7 +28,9 @@
 	RegisterSignal(parent, COMSIG_ATTACKHAND, PROC_REF(pass_on_attackhand))
 
 /datum/component/tameable/proc/pass_on_attackby(atom/movable/parent, obj/item/item, mob/user, params)
-	if(istype(item, treat) && !isdead(owner) && passive_mode)
+	if(!isdead(owner) && passive_mode)
+		return
+	if(istype(item, taming_foods))
 		if((istypes(item, food_blacklist)))
 			owner.visible_message("[user] tries to feed [owner] but they won't take it!")
 			return
@@ -35,7 +47,7 @@
 			RW.aftereat()
 		item.Eat(owner, owner)
 		return
-	if(istype(item, /obj/item/reagent_containers/food/snacks) && ishuman(user) && !isdead(owner) && !passive_mode)
+	if(istype(item, taming_foods) && ishuman(user) && !isdead(owner) && !passive_mode)
 		owner.visible_message("[user] feeds \the [owner] some [item].", "[user] feeds you some [item].")
 		for(var/damage_type in owner.healthlist)
 			var/datum/healthHolder/hh = owner.healthlist[damage_type]
@@ -46,7 +58,7 @@
 		if(user in owner.friends)
 			owner.emote(emote_happy)
 		else
-			if(prob(tame_chance) && istype(item, treat))
+			if(prob(tame_chance) && istype(item, taming_foods))
 				owner.friends += user
 				owner.tamed = TRUE
 				owner.visible_message("[owner] with a [emote_happy] happily eats up the \the [item], and seems a little friendlier with [user].")
@@ -59,7 +71,9 @@
 		return
 
 /datum/component/tameable/proc/pass_on_attackhand(atom/source, mob/M)
-	if ((M.a_intent != INTENT_HARM) && (M in owner.friends))
+	if ((M.a_intent = INTENT_HARM) && !(M in owner.friends))
+		return
+	if(!passive_mode)
 		if(M.a_intent == INTENT_HELP && owner.aggressive)
 			owner.visible_message(SPAN_NOTICE("[M] pats [owner] on the head in a soothing way. It won't attack anyone now."))
 			owner.aggressive = FALSE
