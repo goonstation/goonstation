@@ -2,7 +2,7 @@
 	fields = alist(
 		"id"		= new /datum/record_field/string("ID", "000000", @"[a-f0-9]{6}"),
 		"name"		= new /datum/record_field/string("Name", "New Record"),
-		"criminal"	= new /datum/record_field/choice("Criminal Status", SECURITY::ARREST::STATE::NONE, list(SECURITY::ARREST::STATE::ARREST, SECURITY::ARREST::STATE::DETAIN, SECURITY::ARREST::STATE::NONE, SECURITY::ARREST::STATE::SUSPECT, SECURITY::ARREST::STATE::INCARCERATED, SECURITY::ARREST::STATE::PAROLE, SECURITY::ARREST::STATE::RELEASED)),
+		"criminal"	= new /datum/record_field/choice("Criminal Status", SECURITY::ARREST::STATE::NONE, list(SECURITY::ARREST::STATE::ARREST, SECURITY::ARREST::STATE::DETAIN, SECURITY::ARREST::STATE::NONE, SECURITY::ARREST::STATE::SUSPECT, SECURITY::ARREST::STATE::INCARCERATED, SECURITY::ARREST::STATE::PAROLE, SECURITY::ARREST::STATE::RELEASED, SECURITY::ARREST::STATE::CLOWN)),
 		"sec_flag"	= new /datum/record_field/string("SecHUD Flag", "None", @".{0,10}"),
 		"mi_crim"	= new /datum/record_field/string("Minor Crimes", "None"),
 		"mi_crim_d"	= new /datum/record_field/string("Details", "No minor crime convictions."),
