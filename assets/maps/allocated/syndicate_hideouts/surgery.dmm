@@ -197,7 +197,21 @@
 /area/syndicate_station/hideout)
 "R" = (
 /obj/machinery/light/incandescent/warm,
-/obj/machinery/vending/medical_public,
+/obj/table/wood,
+/obj/item/bandage{
+	desc = "A length of gauze that will help stop bleeding. It seems to have been used to clean up coffee spills."
+	},
+/obj/machinery/coffeemaker{
+	pixel_y = 14
+	},
+/obj/item/reagent_containers/food/drinks/mug{
+	pixel_y = 5;
+	pixel_x = 14
+	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -6;
+	pixel_y = 12
+	},
 /turf/simulated/floor/black,
 /area/syndicate_station/hideout)
 "V" = (
