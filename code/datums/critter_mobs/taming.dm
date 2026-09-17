@@ -20,11 +20,17 @@ TYPEINFO(/datum/component/tameable)
 	var/toggle_behavours = null // for a behaviour that turns on and off on petting
 	var/passive_mode = FALSE
 
-/datum/component/tameable/Initialize(atom/target)
+/datum/component/tameable/Initialize(var/list/taming_foods, var/list/food_blacklist, var/tame_chance, var/passive_mode, var/emote_happy, var/emote_angry)
 	. = ..()
 	if(!istype(src.parent, /atom/movable))
 		return COMPONENT_INCOMPATIBLE
 	src.owner = parent
+	src.taming_foods = taming_foods
+	src.food_blacklist = food_blacklist
+	src.tame_chance = tame_chance
+	src.passive_mode = passive_mode
+	src.emote_happy = emote_happy
+	src.emote_angry = emote_angry
 	RegisterSignal(parent, COMSIG_ATTACKBY, PROC_REF(pass_on_attackby))
 	RegisterSignal(parent, COMSIG_ATTACKHAND, PROC_REF(pass_on_attackhand))
 	RegisterSignal(parent, COMSIG_MOB_VALIDATE_TARGET, PROC_REF(pass_on_validtarget))

@@ -447,7 +447,7 @@
 		/obj/item/raw_material/scrap_metal,
 		/obj/item/raw_material/gemstone,
 		/obj/item/raw_material/uqill,
-		/obj/item/raw_material/fibrilith), 40, TRUE)
+		/obj/item/raw_material/fibrilith), tame_chance=40, passive_mode=TRUE)
 		START_TRACKING
 
 	disposing()
