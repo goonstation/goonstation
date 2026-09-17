@@ -1835,8 +1835,18 @@ ABSTRACT_TYPE(/datum/material/organic)
 	mat_id = "bamboo"
 	name = "bamboo"
 	desc = "Bamboo is a giant woody grass."
-	color = "#544c24"
-	texture_blend = BLEND_ADD
+	color =	list(1.10, 0.00, 0.00, 0.00,\
+					0.00, 1.00, 0.00, 0.00,\
+					0.00, 0.00, 0.80, 0.00,\
+					0.00, 0.00, 0.00, 1.00,\
+					0.00, 0.00, 0.00, 0.00)
+	hsl_color = list(0.00, 0.00, 0.05, 0.00,\
+					0.00, 0.05, 0.05, 0.00,\
+					0.00, 0.00, 0.90, 0.00,\
+					0.00, 0.00, 0.00, 1.00,\
+					0.13, 0.20, 0.00, 0.00)
+	texture = "bamboo"
+	texture_blend = BLEND_DEFAULT
 	artisan_trait_weight = MATERIAL_ARTISAN_COMMON
 
 	New()
@@ -2411,7 +2421,13 @@ ABSTRACT_TYPE(/datum/material/rubber)
 	mat_id = "latex"
 	name = "latex"
 	desc = "A type of synthetic rubber. Conducts electricity poorly."
+	hsl_color = list(1.00, 0.00, 0.20, -0.20,\
+					0.00, 0.00, 0.00, -0.20,\
+					0.00, 0.00, 0.80, 0.00,\
+					0.00, 0.00, 0.00, 1.10,\
+					0.00, 0.00, 0.20, 0.00)
 	color = "#DDDDDD" //"#FF0000" idgaf ok I want red cables back. no haine, this stuff isnt red.
+	alpha = 239
 
 	New()
 		..()
