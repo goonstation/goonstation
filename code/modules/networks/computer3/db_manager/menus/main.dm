@@ -38,8 +38,8 @@ ABSTRACT_TYPE(/datum/db_manager_menu/main)
 /datum/db_manager_menu/main/secmate
 	name = "SecMate 7"
 	submenus = list(
-		"View security records." = "record_list",
-		"Search for a record." = "search_input",
+		"View security records." = "security_list",
+		"Search for a record." = "security_search",
 		"Adjust settings." = "settings",
 	)
 
@@ -55,8 +55,8 @@ ABSTRACT_TYPE(/datum/db_manager_menu/main)
 /datum/db_manager_menu/main/medtrak
 	name = "MedTrak 5.1"
 	submenus = list(
-		"View medical records." = "record_list",
-		"Search for a record." = "search_input",
+		"View medical records." = "medical_list",
+		"Search for a record." = "medical_search",
 		"View viral database." = "disease_list",
 		"Adjust settings." = "settings",
 	)
@@ -72,8 +72,8 @@ ABSTRACT_TYPE(/datum/db_manager_menu/main)
 /datum/db_manager_menu/main/bankboss
 	name = "BankBoss 2.1"
 	submenus = list(
-		"View bank records." = "record_list",
-		"Search for a record." = "search_input",
+		"View bank records." = "bank_list",
+		"Search for a record." = "bank_search",
 		"View station budget." = "station_budget",
 		"Adjust settings." = "settings",
 	)

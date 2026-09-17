@@ -21,9 +21,9 @@
 	var/datum/db_record_group/security/record_group = new()
 
 	. = ..() + alist(
-		"main"			= new /datum/db_manager_menu/main/secmate(src),
-		"record_list"	= new /datum/db_manager_menu/record_list(src, record_group),
-		"search_input"	= new /datum/db_manager_menu/search_input(src, record_group),
+		"main"				= new /datum/db_manager_menu/main/secmate(src),
+		"security_list"		= new /datum/db_manager_menu/relay(src, record_group, "record_list"),
+		"security_search"	= new /datum/db_manager_menu/relay(src, record_group, "search_input"),
 	)
 
 /datum/computer/file/terminal_program/db_manager/secmate/on_field_update(datum/db_record/record, key, old_value, new_value)

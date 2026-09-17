@@ -18,7 +18,7 @@
 
 	switch (index_number)
 		if (0)
-			src.parent.switch_to_previous_menu()
+			src.parent.switch_menu_to("main")
 
 		if (1)
 			if (src.parent.connected)

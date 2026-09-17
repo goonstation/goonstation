@@ -1874,6 +1874,7 @@
 #include "code\modules\networks\computer3\db_manager\menus\record_list.dm"
 #include "code\modules\networks\computer3\db_manager\menus\record_new.dm"
 #include "code\modules\networks\computer3\db_manager\menus\record_view.dm"
+#include "code\modules\networks\computer3\db_manager\menus\relay.dm"
 #include "code\modules\networks\computer3\db_manager\menus\search_input.dm"
 #include "code\modules\networks\computer3\db_manager\menus\search_results.dm"
 #include "code\modules\networks\computer3\db_manager\menus\settings.dm"

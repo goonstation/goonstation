@@ -53,4 +53,4 @@
 	if (count)
 		src.parent.switch_menu_to("record_delete", src.current_id)
 	else
-		src.parent.switch_to_previous_menu(2)
+		src.parent.switch_menu_to("record_list")

@@ -11,7 +11,6 @@ ABSTRACT_TYPE(/datum/computer/file/terminal_program/db_manager)
 
 	VAR_PRIVATE/tmp/alist/menus = null
 	VAR_PRIVATE/tmp/datum/db_manager_menu/current_menu = null
-	VAR_PRIVATE/tmp/list/menu_journey_map = null
 	var/tmp/datum/db_record_group/current_record_group = null
 
 /datum/computer/file/terminal_program/db_manager/New()
@@ -21,7 +20,6 @@ ABSTRACT_TYPE(/datum/computer/file/terminal_program/db_manager)
 /datum/computer/file/terminal_program/db_manager/disposing()
 	src.current_menu?.unload()
 	src.current_menu = null
-	src.menu_journey_map = null
 
 	for (var/datum/db_manager_menu/menu as anything in src.menus)
 		qdel(menu)
@@ -33,7 +31,6 @@ ABSTRACT_TYPE(/datum/computer/file/terminal_program/db_manager)
 	if (..())
 		return TRUE
 
-	src.menu_journey_map = list()
 	src.switch_menu_to("main")
 
 /datum/computer/file/terminal_program/db_manager/input_text(text)
@@ -113,10 +110,12 @@ ABSTRACT_TYPE(/datum/computer/file/terminal_program/db_manager)
 /datum/computer/file/terminal_program/db_manager/proc/get_menus()
 	RETURN_TYPE(/alist)
 	return alist(
+		"record_list"		= new /datum/db_manager_menu/record_list(src),
 		"record_view"		= new /datum/db_manager_menu/record_view(src),
 		"record_new"		= new /datum/db_manager_menu/record_new(src),
 		"record_delete"		= new /datum/db_manager_menu/record_delete(src),
 		"field_input"		= new /datum/db_manager_menu/field_input(src),
+		"search_input"		= new /datum/db_manager_menu/search_input(src),
 		"search_results"	= new /datum/db_manager_menu/search_results(src),
 		"settings"			= new /datum/db_manager_menu/settings(src),
 		"printer_list"		= new /datum/db_manager_menu/printer_list(src),
@@ -131,24 +130,10 @@ ABSTRACT_TYPE(/datum/computer/file/terminal_program/db_manager)
 	src.current_menu?.unload()
 	src.master.temp = null
 
-	var/i = src.menu_journey_map.Find(menu_id)
-	if (i)
-		src.menu_journey_map.Cut(i + 1)
-	else
-		src.menu_journey_map += menu_id
-
 	var/list/arguments = args.Copy(2)
 	src.current_menu = src.menus[menu_id]
 	src.current_menu.accept_commands = TRUE
 	src.current_menu.load(arglist(arguments))
-
-/datum/computer/file/terminal_program/db_manager/proc/switch_to_previous_menu(steps = 1)
-	var/journey_length = length(src.menu_journey_map)
-	if (!journey_length)
-		return
-
-	var/i = max(1, journey_length - steps)
-	src.switch_menu_to(src.menu_journey_map[i])
 
 /datum/computer/file/terminal_program/db_manager/proc/connect_server(address)
 	SHOULD_NOT_OVERRIDE(TRUE)

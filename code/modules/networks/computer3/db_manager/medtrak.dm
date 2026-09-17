@@ -7,8 +7,8 @@
 	var/datum/db_record_group/medical/record_group = new()
 
 	. = ..() + alist(
-		"main"			= new /datum/db_manager_menu/main/medtrak(src),
-		"record_list"	= new /datum/db_manager_menu/record_list(src, record_group),
-		"search_input"	= new /datum/db_manager_menu/search_input(src, record_group),
-		"disease_list"	= new /datum/db_manager_menu/record_list(src, new /datum/db_record_group/disease),
+		"main"				= new /datum/db_manager_menu/main/medtrak(src),
+		"medical_list"		= new /datum/db_manager_menu/relay(src, record_group, "record_list"),
+		"medical_search"	= new /datum/db_manager_menu/relay(src, record_group, "search_input"),
+		"disease_list"		= new /datum/db_manager_menu/relay(src, new /datum/db_record_group/disease, "record_list"),
 	)

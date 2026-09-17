@@ -35,7 +35,7 @@
 
 	var/index_number = round(max(global.text2num_safe(command), 0))
 	if (index_number == 0)
-		src.parent.switch_to_previous_menu()
+		src.parent.switch_menu_to("record_list")
 		return
 
 	if (index_number > length(src.parent.current_record_group.writable_fields))

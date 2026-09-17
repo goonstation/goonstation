@@ -42,7 +42,7 @@
 
 	switch (index_number)
 		if (0)
-			src.parent.switch_to_previous_menu()
+			src.parent.switch_menu_to("main")
 
 		if (1)
 			if (ON_COOLDOWN(global, "payroll_status_change", 10 SECONDS))
