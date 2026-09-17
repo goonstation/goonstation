@@ -1,4 +1,3 @@
-/// If a creature is to be tameable, slap this component on it.
 TYPEINFO(/datum/component/tameable)
 	initialization_args = list(
 		ARG_INFO("taming_foods", DATA_INPUT_LIST_VAR, "Type of food to tame this critter", list(/obj/item/reagent_containers/food/snacks)),
@@ -13,8 +12,8 @@ TYPEINFO(/datum/component/tameable)
 /datum/component/tameable
 	var/list/signals = list()
 	var/mob/living/critter/owner = null
-	var/list/obj/item/taming_foods = list(/obj/item/reagent_containers/food/snacks) // What people use to tame
-	var/food_blacklist = null // what's in the treat's subtype but doesn't count?
+	var/list/taming_foods = list(/obj/item/reagent_containers/food/snacks) // What people use to tame
+	var/list/food_blacklist = null // what's in the treat's subtype but doesn't count?
 	var/tame_chance = 20 // prob percentage
 	var/emote_happy = null // live critter reactions
 	var/emote_angry = null

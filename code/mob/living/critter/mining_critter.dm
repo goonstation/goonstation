@@ -442,7 +442,7 @@
 		..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 80) // They live in asteroids so they should be resistant
 		AddComponent(/datum/component/consume/can_eat_raw_materials, FALSE)
-		AddComponent(/datum/component/tameable, list(/obj/item/raw_material), list(\
+		AddComponent(/datum/component/tameable, taming_foods=list(/obj/item/raw_material), food_blacklist=list(\
 		/obj/item/raw_material/shard,
 		/obj/item/raw_material/scrap_metal,
 		/obj/item/raw_material/gemstone,
@@ -473,7 +473,7 @@
 		for (var/obj/item/raw_material/ore in view(range, get_turf(src)))
 			var/datum/component/tameable/TC = GetExactComponent(/datum/component/tameable)
 			if (istypes(ore, TC.food_blacklist)) continue
-			if (!(istype(ore, /obj/item/raw_material/rock)) && prob(30)) continue // can eat not rocks with lower chance
+			if (!(istype(ore, TC.taming_foods)) && prob(30)) continue // can eat not rocks with lower chance
 			. += ore
 
 	setup_healths()
