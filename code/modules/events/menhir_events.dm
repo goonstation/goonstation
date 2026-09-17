@@ -138,6 +138,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 //some little fellas!
 /datum/random_event/menhir/probes
 	name = "Emissaries of the Crown"
+	desc = "Several probes are deployed to investigate the Enclave. They may tamper with machinery, and leave a gift if undisturbed."
 	weight = 300
 	var/list/deployed_probes = list()
 
@@ -200,6 +201,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 //pulled one out of cold storage for ya
 /datum/random_event/menhir/gift
 	name = "A Gift from the Crown"
+	desc = "Spawns a Precursor artifact. First use places it in a node if possible, second+ place it at an outreach point."
 	message_delay = 3 MINUTES
 	weight = 150
 	var/has_noded = FALSE
@@ -288,6 +290,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 //pick somebody out and see how they respond
 /datum/random_event/menhir/analysis
 	name = "The Crown Inquires"
+	desc = "Absconds with several people (up to one per open Crown node, pop dependent) to test their response to stimuli."
 	weight = 150
 	///Increase the minimum required candidates each time the event goes off, to a cap.
 	var/required_candidates = 1
@@ -461,6 +464,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 //it appears you may need a top up! let's help with that
 /datum/random_event/menhir/supercharge
 	name = "One Flame Begets Another"
+	desc = "Summons several spheres to supercharge APCs, preferring depleted ones in actively used spaces."
 	message_delay = 1 MINUTE
 	weight = 150
 
@@ -515,6 +519,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 //the crown could just use a minute ok
 /datum/random_event/menhir/closure
 	name = "The Crown Reclusive"
+	desc = "The entrance to the Crown momentarily vanishes. Can occur once per round."
 	message_delay = 1 MINUTE
 	announcement_style = MENHIR_EVENT_NOTIFY_NONE
 
@@ -557,6 +562,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 //you like rooms, right?
 /datum/random_event/menhir/extrusion
 	name = "A Place of Paths Not Taken"
+	desc = "A regular random room of any type appears at one of a few preselected locations along the edge of the station."
 	message_delay = 3 MINUTES
 
 	is_event_available(ignore_time_lock)
@@ -686,6 +692,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 ///please pardon the inconvenience, shedding some extra gravitons
 /datum/random_event/menhir/gravity
 	name = "A Shift in the Sands"
+	desc = "The Crown sheds excess gravitons, causing variable gravitational disruption stationwide and creating minor local anomalies."
 	message_delay = 1 MINUTE
 	announcement_style = MENHIR_EVENT_NOTIFY_GLOBAL
 
@@ -745,6 +752,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 //there are wisps of consciousness around. let's see if we can entice one
 /datum/random_event/menhir/dreamcatcher
 	name = "Thoughts Which Fall Like Rain"
+	desc = "Summons a 'dreamcatcher' capable of capturing one ghost and ensouling it into a Precursor probe with its own unique rules."
 	announcement_style = MENHIR_EVENT_NOTIFY_NONE
 
 	is_event_available(ignore_time_lock)
@@ -832,6 +840,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 //reaching farther, farther, for voice, for memory
 /datum/random_event/menhir/tractorbeam
 	name = "A Hand Outstretched In Yearning"
+	desc = "Pulls a random yet-to-be-used space prefab onto station Z at one of a few preselected sites. Unavailable once sites are expended."
 	message_delay = 5 SECONDS
 	weight = 70
 	announcement_style = MENHIR_EVENT_NOTIFY_GLOBAL
@@ -957,6 +966,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 //it's time to share your perspective.
 /datum/random_event/menhir/resight
 	name = "Through Another's Eyes"
+	desc = "Swaps the eye position of a few people around the station in close proximity to each other (no UI reveal). Less effective in lowpop."
 	weight = 70
 
 	event_effect()
@@ -1013,6 +1023,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 //untangle the snare, untangle a prize
 /datum/random_event/menhir/knot
 	name = "A Receptacle of Reflection"
+	desc = "Summons a puzzle into one of the Crown's outer nodes. When untangled, a pedestal becomes available that duplicates a whitelisted item."
 	message_delay = 3 MINUTES
 	weight = 70
 
@@ -1101,6 +1112,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 //the crown tries out one of its more novel machines
 /datum/random_event/menhir/powersink
 	name = "A Spire of Synthesis"
+	desc = "Summons and activates a Synthesizer artifact at an outreach point, draining power to produce valuable minerals."
 	message_delay = 1 MINUTE
 	weight = 40
 	announcement_style = MENHIR_EVENT_NOTIFY_GLOBAL
@@ -1153,6 +1165,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 //too much, too much. too little, too little. a disharmony grows
 /datum/random_event/menhir/schism
 	name = "A Schism in the Song"
+	desc = "Opens a pale anomaly in a Crown node, which creates an expanding field of radio suppression. It must be closed by interdiction."
 	message_delay = 1 MINUTE
 	weight = 10
 
@@ -1230,6 +1243,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 //an intolerable imbalance has developed within. it must be purged.
 /datum/random_event/menhir/radwave
 	name = "A Tide Which Scours"
+	desc = "After a brief delay, expanding waves of radiation emanate from the Crown, pushing crew to the edges of the station."
 	message_delay = 5 SECONDS
 	weight = 10
 	announcement_style = MENHIR_EVENT_NOTIFY_GLOBAL
@@ -1345,6 +1359,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 //sometimes, the door just unlocks itself
 /datum/random_event/menhir/road
 	name = "For Parted Are The Gates"
+	desc = "Opens doors at the east, west and south sides of the Crown, allowing free passage through its main hallways."
 	message_delay = 30 SECONDS
 	weight = 10
 	announcement_style = MENHIR_EVENT_NOTIFY_GLOBAL
@@ -1382,6 +1397,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 //the ancient ones remembered in the deep of the Crown have noticed your presence. and SHIT IS GOIN DOWN
 /datum/random_event/menhir/shadow
 	name = "Of Memory Is Borne Lament"
+	desc = "Shadows remembered in the Crown seize control of it for a moment, causing a local lighting blowout and flooding the Crown with enemies."
 	message_delay = 30 SECONDS
 	required_elapsed_round_time = 22 MINUTES
 	announcement_style = MENHIR_EVENT_NOTIFY_GLOBAL
