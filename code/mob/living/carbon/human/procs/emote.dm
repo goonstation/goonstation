@@ -2232,7 +2232,7 @@
 				var/obj/item/I = get_id_card(src.wear_id)
 				if(H && (!H.limbs.l_arm || !H.limbs.r_arm || H.restrained()))
 					src.show_text("You can't do that without free arms!")
-				else if((src.mind && (src.mind.assigned_role in list("Clown", "Staff Assistant", "Captain"))) || istraitor(H) || isconspirator(H) || isnukeop(H) || isnukeopgunbot(H) || istype(src.head, /obj/item/clothing/head/bighat/syndicate/) || istype(I, /obj/item/card/id/dabbing_license) || (src.reagents && src.reagents.has_reagent("puredabs")) || (src.reagents && src.reagents.has_reagent("extremedabs"))) //only clowns and the useless know the true art of dabbing
+				else if(src.check_dab_eligibility(I))
 					var/obj/item/card/id/dabbing_license/dab_id = null
 					if(istype(I, /obj/item/card/id/dabbing_license)) // if we are using a dabbing license, save it so we can increment stats
 						dab_id = I
@@ -2343,6 +2343,21 @@
 
 	if (maptext_out && !ON_COOLDOWN(src, "emote maptext", 0.5 SECONDS))
 		DISPLAY_MAPTEXT(src, recipients, MAPTEXT_MOB_RECIPIENTS_WITH_OBSERVERS, /image/maptext/emote, maptext_out)
+
+/mob/living/carbon/human/proc/check_dab_eligibility(obj/item/I) //only clowns and the useless know the true art of dabbing
+	. = FALSE
+	if(src.mind?.assigned_role in list("Clown", "Staff Assistant", "Captain"))
+		return TRUE
+	if(istraitor(src) || isconspirator(src) || isnukeop(src) || isnukeopgunbot(src))
+		return TRUE
+	if(istype(src.head, /obj/item/clothing/head/bighat/syndicate/))
+		return TRUE
+	if(istype(I, /obj/item/card/id/dabbing_license))
+		return TRUE
+	if((src.reagents && src.reagents.has_reagent("puredabs")) || (src.reagents && src.reagents.has_reagent("extremedabs")))
+		return TRUE
+	if(src.get_brain_damage() > BRAIN_DAMAGE_MAJOR)
+		return TRUE
 
 /mob/living/carbon/human/proc/expel_fart_gas(var/oxyplasmafart)
 	var/turf/T = get_turf(src)
