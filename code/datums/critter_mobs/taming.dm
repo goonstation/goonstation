@@ -36,9 +36,11 @@ TYPEINFO(/datum/component/tameable)
 	RegisterSignal(parent, COMSIG_MOB_VALIDATE_TARGET, PROC_REF(pass_on_validtarget))
 
 /datum/component/tameable/proc/pass_on_attackby(atom/movable/parent, obj/item/item, mob/user, params)
-	if(!isdead(owner) && passive_mode)
+	if(isdead(owner))
 		return
-	if(istypes(item, taming_foods))
+	if(!ishuman(user))
+		return
+	if(istypes(item, taming_foods) && passive_mode)
 		if((istypes(item, food_blacklist)))
 			owner.visible_message("[user] tries to feed [owner] but they won't take it!")
 			return
@@ -55,7 +57,7 @@ TYPEINFO(/datum/component/tameable)
 			RW.aftereat()
 		item.Eat(owner, owner)
 		return
-	if(istypes(item, taming_foods) && ishuman(user) && !isdead(owner) && !passive_mode)
+	if(istypes(item, taming_foods) && !passive_mode)
 		owner.visible_message("[user] feeds \the [owner] some [item].", "[user] feeds you some [item].")
 		for(var/damage_type in owner.healthlist)
 			var/datum/healthHolder/hh = owner.healthlist[damage_type]
