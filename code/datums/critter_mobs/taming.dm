@@ -74,7 +74,7 @@ TYPEINFO(/datum/component/tameable)
 		return
 
 /datum/component/tameable/proc/pass_on_attackhand(atom/source, mob/M)
-	if ((M.a_intent = INTENT_HARM) && !(M in owner.friends))
+	if ((M.a_intent == INTENT_HARM) && !(M in owner.friends))
 		return
 	if(!passive_mode)
 		if(M.a_intent == INTENT_HELP && owner.aggressive)
