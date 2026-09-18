@@ -385,6 +385,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 		src.radio1.name = "Primary Radio"
 		src.radio1.icon_tooltip = "Artificial Intelligence"
 		src.radio1.toggle_microphone(FALSE)
+		src.radio1.toggle_speaker(TRUE)
 		src.radio2.name = "AI Intercom Monitor"
 		src.radio2.icon_tooltip = "Artificial Intelligence"
 		src.radio2.device_color = "#7F7FE2"
