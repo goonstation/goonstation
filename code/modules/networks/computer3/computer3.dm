@@ -73,7 +73,7 @@
 				/obj/item/peripheral/drive,
 				/obj/item/peripheral/network/powernet_card,
 				/obj/item/peripheral/printer)
-			setup_starting_program = /datum/computer/file/terminal_program/medical_records
+			setup_starting_program = /datum/computer/file/terminal_program/db_manager/medtrak
 
 
 
@@ -98,7 +98,7 @@
 				/obj/item/peripheral/drive,
 				/obj/item/peripheral/network/powernet_card,
 				/obj/item/peripheral/network/radio/locked/pda/transmit_only)
-			setup_starting_program = /datum/computer/file/terminal_program/secure_records
+			setup_starting_program = /datum/computer/file/terminal_program/db_manager/secmate
 
 			console_upper
 				icon = 'icons/obj/computerpanel.dmi'
@@ -118,7 +118,7 @@
 				/obj/item/peripheral/drive,
 				/obj/item/peripheral/network/powernet_card,
 				/obj/item/peripheral/printer)
-			setup_starting_program = /datum/computer/file/terminal_program/bank_records
+			setup_starting_program = /datum/computer/file/terminal_program/db_manager/bankboss
 
 			console_upper
 				icon = 'icons/obj/computerpanel.dmi'
@@ -140,8 +140,8 @@
 				/obj/item/peripheral/network/powernet_card,
 				/obj/item/peripheral/network/radio/locked/pda/transmit_only)
 			setup_starting_program = list(
-				/datum/computer/file/terminal_program/bank_records,
-				/datum/computer/file/terminal_program/secure_records,
+				/datum/computer/file/terminal_program/db_manager/bankboss,
+				/datum/computer/file/terminal_program/db_manager/secmate,
 				/datum/computer/file/terminal_program/job_controls,
 			)
 
