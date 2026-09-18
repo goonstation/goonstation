@@ -39,8 +39,12 @@ export const PacketFields = (
             </Stack.Item>
             <Stack.Item grow={2} basis={0} minWidth={0}>
               <PacketText>
-                {['sender', 'address_1', 'address_2', 'netid'].includes(key) ? (
-                  <AddressFilter address={value} {...filterProps} />
+                {['sender', 'address_1', 'netid'].includes(key) ? (
+                  <AddressFilter
+                    address={value}
+                    destination={key === 'address_1'}
+                    {...filterProps}
+                  />
                 ) : (
                   displayValue(value)
                 )}

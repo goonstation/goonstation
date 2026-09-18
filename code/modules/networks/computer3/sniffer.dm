@@ -10,6 +10,7 @@
 	var/mode = 0
 	var/obj/machinery/power/data_terminal/link = null
 	var/filter_id = null
+	var/destination_filter_id = null
 	var/list/sniffFilters = list()
 	var/last_intercept = 0
 	var/list/packet_logs = list()
@@ -85,6 +86,7 @@
 			"captured_packets" = src.captured_packets,
 			"max_logs" = src.max_logs,
 			"filter" = src.filter_id,
+			"destination_filter" = src.destination_filter_id,
 		)
 
 	ui_act(action, params, datum/tgui/ui)
@@ -102,6 +104,13 @@
 					src.filter_id = filter_id
 			if ("clear_filter")
 				src.filter_id = null
+			if ("set_destination_filter_direct")
+				var/filter_id = params["filter"]
+				if (istext(filter_id) && \
+					((length(filter_id) == 8 && is_hex(filter_id)) || cmptext(filter_id, "ping")))
+					src.destination_filter_id = filter_id
+			if ("clear_destination_filter")
+				src.destination_filter_id = null
 			if ("clear_logs")
 				src.packet_logs = list()
 
@@ -126,7 +135,9 @@
 			return
 
 		var/target = signal.data["sender"]
-		if(src.filter_id && src.filter_id != target)
+		if(src.filter_id && !cmptext(src.filter_id, target))
+			return
+		if (src.destination_filter_id && !cmptext(src.destination_filter_id, signal.data["address_1"]))
 			return
 
 		var/badcheck = 0

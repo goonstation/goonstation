@@ -31,7 +31,7 @@ export const CaptureBuffer = (props: CaptureBufferProps) => {
     onPurge,
     ...filterProps
   } = props;
-  const { filter } = filterProps;
+  const { filter, destinationFilter } = filterProps;
 
   return (
     <Section
@@ -71,6 +71,7 @@ export const CaptureBuffer = (props: CaptureBufferProps) => {
               <CaptureStandby
                 connected={connected}
                 filter={filter}
+                destinationFilter={destinationFilter}
                 hasBufferedPackets={!!packetCount}
               />
             )}

@@ -53,7 +53,7 @@ export const PacketRouteTrace = (
               <PacketText>{getPacketSignature(packet)}</PacketText>
             </Stack.Item>
             <Stack.Item color="label">
-              <Icon name="long-arrow-alt-right" />
+              <Icon name="angle-right" />
             </Stack.Item>
           </Stack>
         </Stack.Item>
@@ -62,7 +62,11 @@ export const PacketRouteTrace = (
             <Stack.Item color="label">[DST] address_1</Stack.Item>
             <Stack.Item>
               <PacketText>
-                <AddressFilter address={destination} {...filterProps} />
+                <AddressFilter
+                  address={destination}
+                  destination
+                  {...filterProps}
+                />
               </PacketText>
             </Stack.Item>
             <Stack.Item>

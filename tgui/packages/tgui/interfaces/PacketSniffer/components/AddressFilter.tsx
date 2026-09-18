@@ -13,11 +13,17 @@ import { displayValue, isNetId } from '../utils';
 export const AddressFilter = (
   props: FilterProps & {
     address: string | null | undefined;
+    destination?: boolean;
   },
 ) => {
-  const { address, filter, onFilter } = props;
-  const selected = address === filter;
-  if (!isNetId(address)) {
+  const { address, destination = false } = props;
+  const filter = destination ? props.destinationFilter : props.filter;
+  const onFilter = destination ? props.onDestinationFilter : props.onFilter;
+  const selected = address?.toLowerCase() === filter?.toLowerCase();
+  if (
+    !(destination && address?.toLowerCase() === 'ping') &&
+    !isNetId(address)
+  ) {
     return <>{displayValue(address)}</>;
   }
 
@@ -27,7 +33,13 @@ export const AddressFilter = (
       color={selected ? 'default' : 'transparent'}
       textColor={selected ? undefined : 'white'}
       selected={selected}
-      tooltip={selected ? 'Clear sender mask' : 'Capture from ' + address}
+      tooltip={
+        selected
+          ? destination
+            ? 'Clear destination mask'
+            : 'Clear sender mask'
+          : (destination ? 'Capture to ' : 'Capture from ') + address
+      }
       onClick={() => onFilter(address)}
     >
       {address}

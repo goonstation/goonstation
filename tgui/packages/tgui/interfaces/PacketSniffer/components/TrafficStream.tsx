@@ -9,7 +9,7 @@ import type { ReactNode } from 'react';
 import { Box, Button, Icon, Stack } from 'tgui-core/components';
 
 import type { FilterProps, PacketLog } from '../type';
-import { displayValue, getPacketField } from '../utils';
+import { displayValue, getPacketField, getPacketSignature } from '../utils';
 import { AddressFilter } from './AddressFilter';
 import { PacketText } from './PacketText';
 
@@ -26,18 +26,18 @@ export const TrafficStream = (
     <Stack vertical>
       <Stack.Item bold color="label">
         <PacketColumns
-          frame="FRAME"
+          frame="[FRAME]"
           route={
             <Stack align="center">
-              <Stack.Item>SOURCE</Stack.Item>
+              <Stack.Item>[SRC]</Stack.Item>
               <Stack.Item>
-                <Icon name="long-arrow-alt-right" />
+                <Icon name="angle-right" />
               </Stack.Item>
-              <Stack.Item>DESTINATION</Stack.Item>
+              <Stack.Item>[DST]</Stack.Item>
             </Stack>
           }
-          command="COMMAND / DEVICE"
-          payload="PAYLOAD / OTHER FIELDS"
+          command="[CMD] / [DEVC]"
+          payload="[DATA] // FIELD DECODE"
         />
       </Stack.Item>
       <Stack.Item>
@@ -49,6 +49,7 @@ export const TrafficStream = (
                   <Stack vertical>
                     <Stack.Item>
                       <Button
+                        icon="hashtag"
                         color={
                           packet.sequence === inspectedSequence
                             ? 'default'
@@ -63,7 +64,7 @@ export const TrafficStream = (
                         tooltip={'Inspect frame ' + packet.sequence}
                         onClick={() => onInspect(packet)}
                       >
-                        #{packet.sequence}
+                        {String(packet.sequence).padStart(4, '0')}
                       </Button>
                     </Stack.Item>
                     <Stack.Item>
@@ -75,9 +76,16 @@ export const TrafficStream = (
                 command={
                   <Stack vertical>
                     <Stack.Item>
-                      <PacketText>
-                        {displayValue(getPacketField(packet, 'command'))}
-                      </PacketText>
+                      <Stack align="center">
+                        <Stack.Item color="good">
+                          <Icon name="angle-right" />
+                        </Stack.Item>
+                        <Stack.Item grow minWidth={0} bold>
+                          <PacketText>
+                            {displayValue(getPacketField(packet, 'command'))}
+                          </PacketText>
+                        </Stack.Item>
+                      </Stack>
                     </Stack.Item>
                     {packet.device && (
                       <Stack.Item>
@@ -131,12 +139,13 @@ const PacketRoute = (props: FilterProps & { packet: PacketLog }) => {
         </PacketText>
       </Stack.Item>
       <Stack.Item color="label">
-        <Icon name="long-arrow-alt-right" />
+        <Icon name="angle-right" />
       </Stack.Item>
       <Stack.Item minWidth={0}>
         <PacketText>
           <AddressFilter
             address={getPacketField(packet, 'address_1')}
+            destination
             {...filterProps}
           />
         </PacketText>
@@ -147,6 +156,7 @@ const PacketRoute = (props: FilterProps & { packet: PacketLog }) => {
 
 const PacketPayload = (props: { packet: PacketLog }) => {
   const { packet } = props;
+  const signature = getPacketSignature(packet);
   const payload = packet.fields.filter(
     ({ key }) => !['sender', 'address_1', 'command', 'device'].includes(key),
   );
@@ -169,7 +179,11 @@ const PacketPayload = (props: { packet: PacketLog }) => {
         </Stack.Item>
       )}
       {!payload.length && !packet.file && (
-        <Stack.Item color="label">-</Stack.Item>
+        <Stack.Item color="label">
+          <PacketText>
+            {signature === 'UNCLASSIFIED' ? 'NO EXTRA FIELDS' : signature}
+          </PacketText>
+        </Stack.Item>
       )}
       {packet.file && (
         <Stack.Item color="average">

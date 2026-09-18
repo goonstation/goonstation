@@ -32,9 +32,12 @@ export interface PacketInfo {
   captured_packets: number;
   max_logs: number;
   filter: string | null;
+  destination_filter: string | null;
 }
 
 export type FilterProps = {
   filter: string | null;
+  destinationFilter: string | null;
   onFilter: (address: string) => void;
+  onDestinationFilter: (address: string) => void;
 };

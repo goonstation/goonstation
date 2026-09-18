@@ -12,9 +12,9 @@ import { Stack } from 'tgui-core/components';
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { CaptureBuffer } from './components/CaptureBuffer';
+import { CaptureFilters } from './components/CaptureFilters';
 import { CaptureStatus } from './components/CaptureStatus';
 import { PacketInspector } from './components/PacketInspector';
-import { SenderMask } from './components/SenderMask';
 import type { FilterProps, PacketInfo, PacketLog } from './type';
 import { formatPacketText } from './utils';
 
@@ -29,6 +29,7 @@ export const PacketSniffer = () => {
     captured_packets,
     max_logs,
     filter,
+    destination_filter,
   } = data;
   const query = search.trim().toLowerCase();
   const packets = packet_logs
@@ -43,10 +44,15 @@ export const PacketSniffer = () => {
     .reverse();
   const filterProps: FilterProps = {
     filter,
+    destinationFilter: destination_filter,
     onFilter: (address) =>
-      address === filter
+      address.toLowerCase() === filter?.toLowerCase()
         ? act('clear_filter')
         : act('set_filter_direct', { filter: address }),
+    onDestinationFilter: (address) =>
+      address.toLowerCase() === destination_filter?.toLowerCase()
+        ? act('clear_destination_filter')
+        : act('set_destination_filter_direct', { filter: address }),
   };
 
   return (
@@ -64,12 +70,13 @@ export const PacketSniffer = () => {
               buffered={packet_logs.length}
               captured={captured_packets}
               capacity={max_logs}
-              filtered={!!filter}
+              filtered={!!filter || !!destination_filter}
             />
           </Stack.Item>
           <Stack.Item>
-            <SenderMask
+            <CaptureFilters
               filter={filter}
+              destinationFilter={destination_filter}
               search={search}
               onSetFilter={(address) =>
                 address
@@ -77,6 +84,12 @@ export const PacketSniffer = () => {
                   : act('clear_filter')
               }
               onClearFilter={() => act('clear_filter')}
+              onSetDestinationFilter={(address) =>
+                address
+                  ? act('set_destination_filter_direct', { filter: address })
+                  : act('clear_destination_filter')
+              }
+              onClearDestinationFilter={() => act('clear_destination_filter')}
               onSearch={setSearch}
             />
           </Stack.Item>

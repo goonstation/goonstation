@@ -11,9 +11,10 @@ import type { BooleanLike } from 'tgui-core/react';
 export const CaptureStandby = (props: {
   connected: BooleanLike;
   filter: string | null;
+  destinationFilter: string | null;
   hasBufferedPackets: boolean;
 }) => {
-  const { connected, filter, hasBufferedPackets } = props;
+  const { connected, filter, destinationFilter, hasBufferedPackets } = props;
 
   return (
     <Stack fill vertical align="center" justify="center">
@@ -55,6 +56,10 @@ export const CaptureStandby = (props: {
           <Stack.Item color={filter ? 'average' : 'label'}>
             [MASK] SENDER .......... {filter || '******** / ALL SENDERS'}
           </Stack.Item>
+          <Stack.Item color={destinationFilter ? 'average' : 'label'}>
+            [MASK] DESTINATION .....{' '}
+            {destinationFilter || '******** / ALL DESTINATIONS'}
+          </Stack.Item>
           <Stack.Item color="label">
             {hasBufferedPackets
               ? '[FIND] BUFFER QUERY .... NO MATCHING FRAMES'
@@ -68,7 +73,7 @@ export const CaptureStandby = (props: {
         {hasBufferedPackets
           ? 'No buffered frames match this search.'
           : connected
-            ? 'Listening for network packets matching the sender mask.'
+            ? 'Listening for network packets matching both address masks.'
             : 'Attach the sniffer to an exposed data terminal to capture packets.'}
       </Stack.Item>
       <Stack.Item color={connected ? 'good' : 'average'}>
