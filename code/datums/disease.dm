@@ -259,7 +259,7 @@
 			src.suppression_until = TIME + src.master.suppression_linger_duration
 		return src.master.suppression_linger_duration > 0 && TIME < src.suppression_until
 
-	/// Medical scan status, without changing the state used by ailment progression
+	/// Medical scan status
 	proc/get_scan_state()
 		if (src.is_suppressed())
 			return "Suppressed"

@@ -1,6 +1,6 @@
 /datum/random_event/minor/third_shift_syndrome
 	name = "Third Shift Syndrome"
-	weight = 30
+	weight = 10
 
 	event_effect()
 		..()
