@@ -718,19 +718,20 @@ var/global/list/module_editors = list()
 	src.mainframe?.clear_offline_indicator()
 
 /mob/living/silicon/proc/set_always_monospaced(do_monospaced = TRUE, mob/user = src)
-// we have to only have either the forced or decorator, otherwise they interfere with each other
+	var/datum/speech_module/modifier/monospace_decorator/decorator = src.ensure_speech_tree().GetModifierByID(SPEECH_MODIFIER_MONOSPACE_DECORATOR)
 	if(!do_monospaced)
-		src.ensure_speech_tree().GetModifierByID(SPEECH_MODIFIER_MONOSPACE_DECORATOR):inverted = FALSE
+		decorator.inverted = FALSE
 		boutput(user, SPAN_NOTICE("All speech now regular text by default."))
 	else
-		src.ensure_speech_tree().GetModifierByID(SPEECH_MODIFIER_MONOSPACE_DECORATOR):inverted = TRUE
+		decorator.inverted = TRUE
 		boutput(user, SPAN_NOTICE("All speech now monospaced by default."))
 	if(src.mainframe && !isAI(src)) // safety check to prevent possible infinite loop if mainframe is ever accidentally set on an ai
 		src.mainframe.set_always_monospaced(do_monospaced = do_monospaced)
 
 /mob/living/silicon/proc/toggle_monospace_mode(mob/user = src)
 	var/new_setting = TRUE
-	if(src.ensure_speech_tree().GetModifierByID(SPEECH_MODIFIER_MONOSPACE_DECORATOR):inverted)
+	var/datum/speech_module/modifier/monospace_decorator/decorator = src.ensure_speech_tree().GetModifierByID(SPEECH_MODIFIER_MONOSPACE_DECORATOR)
+	if(decorator.inverted)
 		new_setting = FALSE
 	src.set_always_monospaced(new_setting, user)
 
