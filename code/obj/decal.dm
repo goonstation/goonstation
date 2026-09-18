@@ -402,7 +402,7 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 		icon_state = "hazard_delivery"
 
 /obj/decal/ballpit
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/poolballpit.dmi'
 	icon_state = "ballpitwater"
 	name = "ball pit"
 	real_name = "ball pit"
