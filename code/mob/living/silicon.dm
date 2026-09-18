@@ -729,11 +729,8 @@ var/global/list/module_editors = list()
 		src.mainframe.set_always_monospaced(do_monospaced = do_monospaced)
 
 /mob/living/silicon/proc/toggle_monospace_mode(mob/user = src)
-	var/new_setting = TRUE
 	var/datum/speech_module/modifier/monospace_decorator/decorator = src.ensure_speech_tree().GetModifierByID(SPEECH_MODIFIER_MONOSPACE_DECORATOR)
-	if(decorator.inverted)
-		new_setting = FALSE
-	src.set_always_monospaced(new_setting, user)
+	src.set_always_monospaced(!decorator.inverted, user)
 
 /mob/living/silicon/verb/toggle_monospace()
 	set category = "Robot Commands"
