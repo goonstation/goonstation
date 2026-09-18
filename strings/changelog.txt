@@ -1,4 +1,9 @@
 
+(t)fri sep 18 26
+(u)ANNmagedon
+(p)27854
+(e)🎨|C-Sprites
+(+)Added an inspector stamp, changed added stripes to the centcom stamp for distinguishability
 (t)thu sep 17 26
 (u)TekoTheTeapot + Annmagedon + swinglow20 + LorrMaster
 (p)27761
