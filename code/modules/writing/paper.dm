@@ -25,6 +25,7 @@
 	"Void" = "stamp-sprite-void",\
 	"Flock" = "stamp-sprite-flock",\
 	"Vamp" = "stamp-sprite-vamp",\
+	"Inspector" = "stamp-sprite-inspector",\
 	"Angler" = "stamp-sprite-angler",\
 	"Your Name" = "stamp-text-name",\
 	"Current Time" = "stamp-text-time",)
@@ -303,6 +304,7 @@
 		"stamp-sprite-gtc" = "[resource("images/tgui/stamp_icons/stamp-gtc.png")]",
 		"stamp-sprite-flock" = "[resource("images/tgui/stamp_icons/stamp-flock.apng")]",
 		"stamp-sprite-vamp" = "[resource("images/tgui/stamp_icons/stamp-vamp.png")]",
+		"stamp-sprite-inspector" = "[resource("images/tgui/stamp_icons/stamp-inspector.png")]",
 		"stamp-sprite-angler" = "[resource("images/tgui/stamp_icons/stamp-angler.png")]",
 		"stamp-text-time" =  T,
 		"stamp-text-name" = user.name
