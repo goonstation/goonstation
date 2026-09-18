@@ -1001,7 +1001,7 @@
 		if (user)
 			user.u_equip(ID)
 		ID.set_loc(src)
-		src.registered = isAI(user) ? user.real_name : ID.registered
+		src.registered = ID.registered
 		src.assignment = ID.assignment
 		src.access = ID.access
 		src.accessed_record = data_core.bank.find_record("name", ID.registered)
