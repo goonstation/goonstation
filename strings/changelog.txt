@@ -1,4 +1,23 @@
 
+(t)fri sep 18 26
+(u)ANNmagedon
+(p)27854
+(e)🎨|C-Sprites
+(+)Added an inspector stamp, changed added stripes to the centcom stamp for distinguishability
+(t)thu sep 17 26
+(u)TekoTheTeapot + Annmagedon + swinglow20 + LorrMaster
+(p)27761
+(e)🎨🔬|C-Sprites, A-Science
+(*)Added two new omnitools to the NT Engineer: A reflavored dualconstruction device and the all new NT Multipen, detailed in the PR
+(t)wed sep 16 26
+(u)JORJ949 & Callipygian0
+(p)27876
+(e)🗺💡|A-Mapping, A-Station-Systems
+(*)Added a new "Brig" option to the syndicate hideout styles. Perfect for all your hostage-taking needs!
+(u)ANNmagedon
+(p)27735
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)You can now fish in the ID computer! Comes with a brand new fish that can be cut into a unique reward!
 (t)tue sep 15 26
 (u)JORJ949
 (p)27837
