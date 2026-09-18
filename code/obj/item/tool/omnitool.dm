@@ -283,7 +283,7 @@
 	animated_changes = TRUE
 
 /obj/item/tool/omnitool/NT
-	name = "MultiPen"
+	name = "\improper MultiPen"
 	prefix = "nt-omnitool" //Thank you Swinglow for the sprites
 	desc = "The National Notary 'Agrimensor' model pen, for the engineer with class. Comes with patented TrueBlue(TM) ink!"
 	mode_types = list(
@@ -319,7 +319,7 @@ TYPEINFO(/obj/item/tool/omnitool/dualconstruction_device)
 		src.AddComponent(/datum/component/deconstructing, 0.5 SECONDS, 1)
 
 	NT
-		name = "NT dualconstruction device"
+		name = "\improper NT dualconstruction device"
 		icon_state = "nt-dual-deconstruction"
 		prefix = "nt-dual"
 		desc = "A handy part of an engineer's toolkit that can swap between the functionality of a deconstruction device or a soldering iron."
