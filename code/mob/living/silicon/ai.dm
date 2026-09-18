@@ -1803,7 +1803,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 	src.deployed_shell.ensure_listen_tree().AddListenInput(LISTEN_INPUT_EARS_AI)
 	target_shell.gender = src.gender
 	var/new_setting = FALSE
-	if(src.ensure_speech_tree().GetModifierByID(SPEECH_MODIFIER_MONOSPACE_DECORATOR_INVERTED))
+	if(src.ensure_speech_tree().GetModifierByID(SPEECH_MODIFIER_MONOSPACE_DECORATOR):inverted)
 		new_setting = TRUE
 	target_shell.set_always_monospaced(do_monospaced = new_setting, user = src)
 
@@ -2383,13 +2383,12 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 	src.open_nearest_door_silicon()
 	return
 
-/mob/living/silicon/ai/verb/toggle_monospace(mob/user = src)
-	set category = "AI Commands"
+/mob/living/silicon/ai/toggle_monospace(mob/user = src)
+	set category = "Robot Commands"
 	set name = "Toggle Monospace Speech"
 	set desc = "Switches your speech between normal and forced-monospace mode."
 
-	src.toggle_monospace_mode(user)
-
+	src.toggle_monospace_mode(src)
 
 //just use this proc to make click-track checking easier
 proc/is_mob_trackable_by_AI(var/mob/M)
