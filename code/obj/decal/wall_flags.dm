@@ -6,6 +6,7 @@
 	/// Must by a type path of `/obj/item/flag`.
 	var/starting_flag = /obj/item/flag
 	var/obj/item/flag/flag_item = null
+	var/needs_logging = TRUE // Does it require logging on suspcious interactions
 
 /obj/decal/poster/flag/New()
 	src.flag_item = new src.starting_flag(src)
@@ -26,7 +27,9 @@
 		user.put_in_hand_or_drop(src.flag_item)
 		src.flag_item = null
 	user.visible_message(SPAN_NOTICE("[user] takes down the [src.name] in [src.loc]!"), SPAN_NOTICE("You take down the [src.name] in [src.loc]!"))
-	logTheThing(LOG_STATION, user, "Takes down a flag ([src.name]) in [src.loc] at [log_loc(user)].")
+
+	if(src.needs_logging)
+		logTheThing(LOG_STATION, user, "Takes down a flag ([src.name]) in [src.loc] at [log_loc(user)].")
 	qdel(src)
 
 /obj/decal/poster/flag/ace
@@ -103,3 +106,18 @@
 	name = "\improper Achilean MLM pride flag"
 	icon_state = "mlmachi"
 	starting_flag = /obj/item/flag/mlmachi
+
+/obj/decal/poster/flag/nanotrasen
+	name = "nanotrasen flag"
+	desc = "The flag of the Nanotrasen corporation, you probably know who they are by now."
+	icon_state = "nanotrasen"
+	needs_logging = FALSE
+	starting_flag = /obj/item/flag/nanotrasen
+
+/obj/decal/poster/flag/syndicate
+	name = "syndicate flag"
+	desc = "The ominous and intimidating flag of the Syndicate, naturally its a <b>red flag</b>, heh."
+	icon_state = "syndicate"
+	needs_logging = FALSE
+	starting_flag = /obj/item/flag/syndicate
+
