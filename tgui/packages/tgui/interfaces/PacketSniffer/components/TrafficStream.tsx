@@ -8,7 +8,7 @@
 import type { ReactNode } from 'react';
 import { Box, Button, Icon, Stack } from 'tgui-core/components';
 
-import type { FilterProps, PacketLog } from '../type';
+import type { FilterProps, PacketField, PacketLog } from '../type';
 import { displayValue, getPacketField, getPacketSignature } from '../utils';
 import { AddressFilter } from './AddressFilter';
 import { PacketText } from './PacketText';
@@ -166,14 +166,8 @@ const PacketPayload = (props: { packet: PacketLog }) => {
       {!!payload.length && (
         <Stack.Item>
           <PacketText>
-            {payload.map(({ key, value }, index) => (
-              <Box as="span" key={index}>
-                <Box as="span" color="label">
-                  {key}=
-                </Box>
-                {displayValue(value)}
-                {'; '}
-              </Box>
+            {payload.map((field) => (
+              <PacketPayloadField key={field.key} field={field} />
             ))}
           </PacketText>
         </Stack.Item>
@@ -201,5 +195,19 @@ const PacketPayload = (props: { packet: PacketLog }) => {
         </Stack.Item>
       )}
     </Stack>
+  );
+};
+
+const PacketPayloadField = (props: { field: PacketField }) => {
+  const { key, value } = props.field;
+
+  return (
+    <>
+      <Box inline color="label">
+        {key + '='}
+      </Box>
+      {displayValue(value)}
+      {'; '}
+    </>
   );
 };
