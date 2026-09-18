@@ -1802,11 +1802,8 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 	src.mind.transfer_to(target_shell)
 	src.deployed_shell.ensure_listen_tree().AddListenInput(LISTEN_INPUT_EARS_AI)
 	target_shell.gender = src.gender
-	var/new_setting = FALSE
 	var/datum/speech_module/modifier/monospace_decorator/decorator = src.ensure_speech_tree().GetModifierByID(SPEECH_MODIFIER_MONOSPACE_DECORATOR)
-	if(decorator.inverted)
-		new_setting = TRUE
-	target_shell.set_always_monospaced(do_monospaced = new_setting, user = src)
+	target_shell.set_always_monospaced(do_monospaced = decorator.inverted, user = src)
 
 /mob/living/silicon/ai/verb/toggle_lock()
 	set category = "AI Commands"
