@@ -1,3 +1,6 @@
+/// Minimum caffeine amount that lets progression rolls reduce Third Shift Syndrome's stage
+#define THIRD_SHIFT_SYNDROME_CAFFEINE_THRESHOLD 1
+
 /datum/ailment/disease/third_shift_syndrome
 	name = "Third Shift Syndrome"
 	scantype = "Psychological Condition"
@@ -6,6 +9,8 @@
 	cure_flags = CURE_CUSTOM
 	cure_desc = "Haloperidol"
 	reagentcure = list("haloperidol")
+	reagent_suppressants = list("caffeine" = THIRD_SHIFT_SYNDROME_CAFFEINE_THRESHOLD)
+	suppression_linger_duration = 5 MINUTES
 	associated_reagent = "phantom_payroll"
 	affected_species = list("Human")
 
@@ -15,6 +20,10 @@
 
 	var/previous_stage = D.strain_data["third_shift_syndrome_stage"]
 	if (D.stage < 4)
+		if (D.stage != previous_stage)
+			if (previous_stage >= 4)
+				affected_mob.RemoveComponentsOfType(/datum/component/crew_apparitions)
+			D.strain_data["third_shift_syndrome_stage"] = D.stage
 		return
 
 	if (D.stage == previous_stage)
@@ -28,3 +37,5 @@
 /datum/ailment/disease/third_shift_syndrome/on_remove(mob/living/affected_mob, datum/ailment_data/disease/D)
 	affected_mob?.RemoveComponentsOfType(/datum/component/crew_apparitions)
 	..()
+
+#undef THIRD_SHIFT_SYNDROME_CAFFEINE_THRESHOLD

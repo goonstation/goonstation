@@ -49,8 +49,9 @@
 #define CREW_APPARITION_BEHAVIOR_POLL_DELAY (5 DECI SECONDS)
 /// Range of pauses spent typing a line
 #define CREW_APPARITION_TYPING_MIN_DELAY (0.5 SECONDS)
+/// Maximum pause spent typing a line
 #define CREW_APPARITION_TYPING_MAX_DELAY (1.5 SECONDS)
-/// returned when typing should remain visible until the apparition expires
+/// Returned when typing should remain visible until the apparition expires
 #define CREW_APPARITION_TYPING_EXPIRES -1
 
 TYPEINFO(/datum/component/crew_apparitions)
