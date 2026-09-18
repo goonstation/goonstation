@@ -385,7 +385,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 		src.radio1.name = "Primary Radio"
 		src.radio1.icon_tooltip = "Artificial Intelligence"
 		src.radio1.toggle_microphone(FALSE)
-		src.radio1.toggle_speaker(FALSE)
+		src.radio1.toggle_speaker(TRUE)
 		src.radio2.name = "AI Intercom Monitor"
 		src.radio2.icon_tooltip = "Artificial Intelligence"
 		src.radio2.device_color = "#7F7FE2"
@@ -395,6 +395,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 		src.radio3.name = "Secure Channels Monitor"
 		src.radio3.icon_tooltip = "Artificial Intelligence"
 		src.radio3.toggle_microphone(FALSE)
+		src.radio3.toggle_speaker(FALSE)
 		//Spawn the PDA here after the client is already in the AI.
 		src.internal_pda = new /obj/item/device/pda2/ai(src)
 		src.internal_pda.name = "AI's Internal PDA Unit"
