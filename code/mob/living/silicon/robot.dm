@@ -118,6 +118,7 @@ TYPEINFO(/mob/living/silicon/robot)
 			src.internal_pda = new /obj/item/device/pda2/cyborg(src)
 			src.internal_pda.name = "[src]’s Internal PDA Unit"
 			src.internal_pda.owner = "[src]"
+			src.internal_pda.insert_id_card(src.botcard, src)
 		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_part/robot_base, "robot_health_slow_immunity")
 		if (frame)
 			src.freemodule = frame.freemodule
@@ -813,6 +814,8 @@ TYPEINFO(/mob/living/silicon/robot)
 			src.real_name = "SHELL/[src.mainframe.name]"
 			src.UpdateName()
 			src.update_name_tag()
+			src.internal_pda?.name = "[src.name]’s Internal PDA Unit"
+			src.internal_pda?.owner = "[src]"
 
 		update_clothing()
 		update_appearance()

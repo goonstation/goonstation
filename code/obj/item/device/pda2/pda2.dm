@@ -978,7 +978,7 @@
 		return
 
 	proc/eject_id_card(var/mob/user as mob)
-		if (src.ID_card)
+		if (src.ID_card && src.type != /obj/item/device/pda2/cyborg)
 			src.registered = null
 			src.assignment = null
 			src.access = null
@@ -1001,7 +1001,7 @@
 		if (user)
 			user.u_equip(ID)
 		ID.set_loc(src)
-		src.registered = ID.registered
+		src.registered = isAI(user) ? user.real_name : ID.registered
 		src.assignment = ID.assignment
 		src.access = ID.access
 		src.accessed_record = data_core.bank.find_record("name", ID.registered)
