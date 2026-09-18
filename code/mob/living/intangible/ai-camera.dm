@@ -542,8 +542,7 @@ TYPEINFO(/mob/living/intangible/aieye)
 		set name = "Toggle Monospace Speech"
 		set desc = "Switches your speech between normal and forced-monospace mode."
 
-		if(mainframe)
-			mainframe.toggle_monospace(src)
+		src.mainframe?.toggle_monospace(src)
 
 	proc/ai_alerts()
 		set category = "AI Commands"
