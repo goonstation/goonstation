@@ -1030,7 +1030,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 		var/dat = src.return_text_header()
 
 		if(!message)
-			if (!src.master.ID_card && !src.master.type == /obj/item/device/pda2/cyborg)
+			if (!src.master.ID_card)
 				dat += "<br><br>You must insert an ID to use this program.<br><br>"
 				return dat
 			switch(mode)
