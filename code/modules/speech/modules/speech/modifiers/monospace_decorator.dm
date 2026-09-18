@@ -10,6 +10,5 @@
 	if(src.inverted)
 		message.content = src.monospace_regex.Replace(message.content, src.monospace_replacement)
 		message.content = SPAN_MONOSPACE(message.content)
-		// We don't do format_content_style_prefix or suffix because it doesn't play nicely with our weird inverted spans
 	else
 		message.content = src.monospace_regex.Replace(message.content, src.normal_replacement)
