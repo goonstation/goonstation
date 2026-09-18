@@ -978,7 +978,7 @@
 		return
 
 	proc/eject_id_card(var/mob/user as mob)
-		if (src.ID_card)
+		if (src.ID_card && src.type != /obj/item/device/pda2/cyborg)
 			src.registered = null
 			src.assignment = null
 			src.access = null
