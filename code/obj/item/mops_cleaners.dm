@@ -420,6 +420,7 @@ TRASH BAG
 		for(var/obj/item/I as anything in items_to_push)
 			I.set_loc(pushed_to)
 
+		playsound(src, 'sound/items/towel.ogg', 60, TRUE)
 
 // SPONGES? idk
 
