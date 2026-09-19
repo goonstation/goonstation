@@ -1191,7 +1191,8 @@
 	proc/display_message(var/message)
 		if (ismob(loc))
 			var/mob/M = loc
-			M.show_message(message)
+			if(M.literate && M.sight_check(1))
+				M.show_message(message)
 
 	proc/run_program(datum/computer/file/pda_program/program)
 		if((!program) || (!program.holder))
