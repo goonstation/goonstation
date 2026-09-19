@@ -360,67 +360,68 @@ TRASH BAG
 	stamina_damage = 40
 	stamina_cost = 15
 	stamina_crit_chance = 10
-	var/max_item_size = W_CLASS_NORMAL //! Maximum size (inclusive) of the items you can push
 
-	New()
-		..()
-		src.setItemSpecial(/datum/item_special/rangestab)
-		BLOCK_SETUP(BLOCK_ROD)
+/obj/item/broom/New()
+	..()
+	src.setItemSpecial(/datum/item_special/rangestab)
+	BLOCK_SETUP(BLOCK_ROD)
 
-	attack(mob/target, mob/user, def_zone, is_special, params)
-		if(user.a_intent == INTENT_HELP)
-			return
+/obj/item/broom/attack(mob/target, mob/user, def_zone, is_special, params)
+	if(user.a_intent == INTENT_HELP)
+		return
+	return ..()
+
+/obj/item/broom/afterattack(atom/target, mob/user, reach, params)
+	if(user.a_intent != INTENT_HELP || BOUNDS_DIST(user, target))
 		return ..()
 
-	afterattack(atom/target, mob/user, reach, params)
-		if(user.a_intent != INTENT_HELP || BOUNDS_DIST(user, target))
-			return ..()
+	var/fail_messege = src.push(user, target)
 
-		var/fail_messege = push(user, target)
+	if(fail_messege)
+		boutput(user, SPAN_ALERT(fail_messege))
 
-		if(fail_messege)
-			boutput(user, SPAN_NOTICE(fail_messege))
+	return
 
-		return
-
-	should_suppress_attack(object, mob/user, params)
-		if(user.a_intent == INTENT_HELP)
-			return TRUE
-		. = ..()
+/obj/item/broom/should_suppress_attack(object, mob/user, params)
+	if(user.a_intent == INTENT_HELP)
+		return TRUE
+	. = ..()
 
 	/// Attempts to push all the items at the loc of the target "foward" (based on user dir), returns the fail messege the user should see when failing.
-	proc/push(mob/user, atom/target)
-		var/turf/target_location = isturf(target) ? target : target.loc
-		var/turf/pushed_to = get_step(target_location, user.dir)
+/obj/item/broom/proc/push(mob/user, atom/target)
+	var/turf/target_location = isturf(target) ? target : target.loc
+	var/turf/pushed_to = get_step(target_location, user.dir)
 
-		// can't push through walls (duh)
-		if(iswall(pushed_to) || iswall(target_location))
-			return "You can not push through a wall!"
+	// can't push through walls (duh)
+	if(iswall(pushed_to) || iswall(target_location))
+		return "You can not push through a wall!"
 
-		// can't push through anything you can't walk through
-		for(var/obj/O in target_location)
-			if(O.density)
-				return "[O] blocks your way!"
+	// can't push through anything you can't walk through
+	for(var/obj/O in target_location)
+		if(O.density)
+			return "[O] blocks your way!"
 
-		for(var/obj/O in pushed_to)
-			if(O.density)
-				return "[O] blocks your way!"
+	for(var/obj/O in pushed_to)
+		if(O.density)
+			return "[O] blocks your way!"
 
-		var/list/obj/item/items_to_push = list()
-		for(var/obj/item/I in target_location)
-			if(I.w_class > max_item_size) // can't push through an item thats too big
-				return "[I] is too big for you to push!"
-			else if(I.anchored) // can't push through an item thats bolted
-				return "[I] is bolted to the floor!"
+	var/list/obj/item/items_to_push = list()
+	for(var/obj/item/I in target_location)
+		if(I.w_class > W_CLASS_NORMAL) // can't push through an item thats too big
+			return "[I] is too big for you to push!"
+		if(I.anchored) // can't push through an item thats bolted and is too big, can push through smaller item
+			if(I.w_class >= W_CLASS_BULKY)
+				return "The [src] got caught on [I]!"
+		else
 			items_to_push += I
 
-		if(!length(items_to_push))
-			return
+	if(!length(items_to_push))
+		return
 
-		for(var/obj/item/I as anything in items_to_push)
-			I.set_loc(pushed_to)
+	for(var/obj/item/I as anything in items_to_push)
+		I.set_loc(pushed_to)
 
-		playsound(src, 'sound/items/towel.ogg', 60, TRUE)
+	playsound(src, 'sound/items/towel.ogg', 60, TRUE)
 
 // SPONGES? idk
 
