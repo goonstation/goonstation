@@ -360,24 +360,33 @@ TRASH BAG
 	stamina_damage = 40
 	stamina_cost = 15
 	stamina_crit_chance = 10
-
-	/// Maximum size (inclusive) of the items you can push
-	var/max_item_size = W_CLASS_NORMAL
+	var/max_item_size = W_CLASS_NORMAL //! Maximum size (inclusive) of the items you can push
 
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/rangestab)
 		BLOCK_SETUP(BLOCK_ROD)
 
+	attack(mob/target, mob/user, def_zone, is_special, params)
+		if(user.a_intent == INTENT_HELP)
+			return
+		return ..()
+
 	afterattack(atom/target, mob/user, reach, params)
-		if(!BOUNDS_DIST(user, target))
-			. = ..()
+		if(user.a_intent != INTENT_HELP || BOUNDS_DIST(user, target))
+			return ..()
 
 		var/fail_messege = push(user, target)
 
 		if(fail_messege)
 			boutput(user, SPAN_NOTICE(fail_messege))
-			. = ..()
+
+		return
+
+	should_suppress_attack(object, mob/user, params)
+		if(user.a_intent == INTENT_HELP)
+			return TRUE
+		. = ..()
 
 	/// Attempts to push all the items at the loc of the target "foward" (based on user dir), returns the fail messege the user should see when failing.
 	proc/push(mob/user, atom/target)
