@@ -520,68 +520,67 @@
 	var/mode = NTSO_ENGIE_OFF
 	var/base_icon_state = "ntso_engineer"
 
-	setupProperties()
-		..()
-		setProperty("heatprot", 15)
-		setProperty("radprot", 50)
+/obj/item/clothing/head/helmet/space/ntso/engineer/setupProperties()
+	..()
+	src.setProperty("heatprot", 15)
+	src.setProperty("radprot", 50)
 
-	equipped(mob/user, slot)
-		..()
-		if(slot == SLOT_HEAD)
-			user.AddComponent(/datum/component/pressure_vision, src.mode == NTSO_ENGIE_PRESSURE)
+/obj/item/clothing/head/helmet/space/ntso/engineer/equipped(mob/user, slot)
+	..()
+	if(slot == SLOT_HEAD)
+		user.AddComponent(/datum/component/pressure_vision, src.mode == NTSO_ENGIE_PRESSURE)
+		src.handle_meson(user)
+
+/obj/item/clothing/head/helmet/space/ntso/engineer/unequipped(mob/user)
+	if(src.equipped_in_slot == SLOT_HEAD)
+		user.RemoveComponentsOfType(/datum/component/pressure_vision)
+	. = ..()
+
+/obj/item/clothing/head/helmet/space/ntso/engineer/update_icon()
+	. = ..()
+	icon_state = "[src.base_icon_state]-[src.mode]"
+	item_state = "[src.base_icon_state]-[src.mode]"
+
+/obj/item/clothing/head/helmet/space/ntso/engineer/attack_self(mob/user)
+	. = ..()
+	src.cycle_state(user)
+
+/obj/item/clothing/head/helmet/space/ntso/engineer/get_desc(dist, mob/user)
+	. = ..()
+	. += " The visor is currently set to [src.mode]"
+
+/obj/item/clothing/head/helmet/space/ntso/engineer/proc/cycle_state(mob/user)
+	switch(src.mode)
+		if(NTSO_ENGIE_PRESSURE)
+			src.mode = NTSO_ENGIE_OFF
+			SEND_SIGNAL(user, COMSIG_PRESSURE_VISION, FALSE)
+			playsound(src, 'sound/machines/tone_beep.ogg', 40, TRUE)
+		if(NTSO_ENGIE_OFF)
+			src.mode = NTSO_ENGIE_MESON
 			src.handle_meson(user)
+			playsound(src, 'sound/items/mesonactivate.ogg', 30, TRUE)
+		if(NTSO_ENGIE_MESON)
+			src.mode = NTSO_ENGIE_PRESSURE
+			SEND_SIGNAL(user, COMSIG_PRESSURE_VISION, TRUE)
+			src.handle_meson(user)
+			playsound(src, 'sound/machines/tone_beep.ogg', 40, TRUE)
 
-	unequipped(mob/user)
-		if(src.equipped_in_slot == SLOT_HEAD)
-			user.RemoveComponentsOfType(/datum/component/pressure_vision)
-		. = ..()
+	src.update_icon()
+	user.update_clothing()
 
-	update_icon()
-		. = ..()
-		icon_state = "[src.base_icon_state]-[src.mode]"
-		item_state = "[src.base_icon_state]-[src.mode]"
+/obj/item/clothing/head/helmet/space/ntso/engineer/proc/handle_meson(mob/user)
+	var/mob/living/equipped_on = user
 
-	attack_self(mob/user)
-		. = ..()
-		src.cycle_state(user)
+	if(!istype(equipped_on))
+		return
 
-	get_desc(dist, mob/user)
-		. = ..()
-		. += " The visor is currently set to [src.mode]"
+	if(src.mode == NTSO_ENGIE_MESON && src.equipped_in_slot == SLOT_HEAD)
+		equipped_on.meson(src)
+	else
+		equipped_on.unmeson(src)
 
-	proc/cycle_state(mob/user)
-		switch(src.mode)
-			if(NTSO_ENGIE_PRESSURE)
-				src.mode = NTSO_ENGIE_OFF
-				SEND_SIGNAL(user, COMSIG_PRESSURE_VISION, FALSE)
-				playsound(src, 'sound/machines/tone_beep.ogg', 40, TRUE)
-			if(NTSO_ENGIE_OFF)
-				src.mode = NTSO_ENGIE_MESON
-				src.handle_meson(user)
-				playsound(src, 'sound/items/mesonactivate.ogg', 30, TRUE)
-			if(NTSO_ENGIE_MESON)
-				src.mode = NTSO_ENGIE_PRESSURE
-				SEND_SIGNAL(user, COMSIG_PRESSURE_VISION, TRUE)
-				src.handle_meson(user)
-				playsound(src, 'sound/machines/tone_beep.ogg', 40, TRUE)
-
-		src.update_icon()
-		user.update_clothing()
-
-	proc/handle_meson(mob/user)
-		var/mob/living/equipped_on = user
-
-		if(!istype(equipped_on))
-			return
-
-		if(src.mode == NTSO_ENGIE_MESON && src.equipped_in_slot == SLOT_HEAD)
-			equipped_on.meson(src)
-		else
-			equipped_on.unmeson(src)
-
-	proc/should_icon_use_disabled_sprite() // used by the ability button
-		return src.mode == NTSO_ENGIE_OFF
-
+/obj/item/clothing/head/helmet/space/ntso/engineer/proc/should_icon_use_disabled_sprite() // used by the ability button
+	return src.mode == NTSO_ENGIE_OFF
 
 #undef NTSO_ENGIE_OFF
 #undef NTSO_ENGIE_MESON

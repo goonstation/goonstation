@@ -1547,10 +1547,10 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 	icon_state = "ntso_engineer"
 	item_state = "ntso_engineer"
 
-	setupProperties()
+/obj/item/clothing/suit/space/ntso/engineer/setupProperties()
 		..()
-		setProperty("radprot", 50)
-		setProperty("heatprot", 45)
+		src.setProperty("radprot", 50)
+		src.setProperty("heatprot", 45)
 
 /obj/item/clothing/suit/space/ntso/bellona
 	name = "NTSO combat dress"
