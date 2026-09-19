@@ -96,37 +96,45 @@ client/proc/open_dj_panel()
 	switch (action)
 		if ("stop-music")
 			src.stop_music()
-			return TRUE
+			. = TRUE
 		if ("stop-all")
 			src.stop_music(stop_playback = FALSE)
 			for (var/client/C in clients)
 				C.stop_the_music()
-			return TRUE
+			. = TRUE
 		if ("stop-radio")
-			var/sound/stop = sound(null, channel = SOUNDCHANNEL_RADIO)
-			for (var/client/C in clients)
-				C << stop
-			return TRUE
+			SPAWN(0)
+				var/sound/stopsound = sound(null, wait = 0, channel = SOUNDCHANNEL_RADIO)
+				for (var/client/C in clients)
+					C << stopsound
+					LAGCHECK(LAG_MED)
 		if ("remove-sound")
 			if (!named_sound)
 				return FALSE
 			if (src.loaded_sound == named_sound.file)
 				src.loaded_sound = null
 			src.sound_library.Remove(name)
-			return TRUE
+			. = TRUE
 		if ("toggle-announce")
+			if (!actor)
+				return TRUE
 			actor.djmode = !actor.djmode
-			boutput(user, SPAN_NOTICE("DJ mode now [actor.djmode ? "On" : "Off"]."))
-			logTheThing(LOG_ADMIN, actor, "set their DJ mode to [actor.djmode ? "On" : "Off"]")
-			logTheThing(LOG_DIARY, actor, "set their DJ mode to [actor.djmode ? "On" : "Off"]", "admin")
-			message_admins("[key_name(actor)] set their DJ mode to [actor.djmode ? "On" : "Off"]")
-			return TRUE
+			boutput(user, SPAN_NOTICE("DJ mode now [(actor.djmode ? "On" : "Off")]."))
+
+			logTheThing(LOG_ADMIN, user, "set their DJ mode to [(actor.djmode ? "On" : "Off")]")
+			logTheThing(LOG_DIARY, user, "set their DJ mode to [(actor.djmode ? "On" : "Off")]", "admin")
+			message_admins("[key_name(user)] set their DJ mode to [(actor.djmode ? "On" : "Off")]")
+			. = TRUE
 		if ("toggle-player-dj")
 			if (isadmin(actor))
-				var/client/target = input(user, "Choose a client:", "DJ access") as null|anything in clients
-				if (target && isadmin(actor))
-					src.toggledj(target, actor)
-			return TRUE
+				var/client/target = input(user, "Choose a client:", "Choose a client:", null) as null|anything in clients
+				if (!target) return FALSE
+				src.toggledj(target, actor)
+			else
+				boutput(user, "You must be an admin to use this command.")
+
+	if (.)
+		return
 
 	if (!config.allow_admin_sounds)
 		return FALSE
@@ -135,30 +143,41 @@ client/proc/open_dj_panel()
 
 		if("set-file")
 			var/foundsound = input(user, "Upload a file:", "File Uploader - Do not use for full songs, use ]remotemusic in discord instead!!!", null) as null|sound
+			src.loaded_sound = foundsound
 			if(foundsound)
-				src.loaded_sound = foundsound
 				src.sound_library["[foundsound]"] = new /datum/dj_library_sound(foundsound)
+			. = TRUE
 
 		if("set-volume")
-			var/value = params["volume"]
-			var/new_volume = value == "reset" ? initial(src.sound_volume) : text2num_safe(value)
-			if(isnum(new_volume))
-				src.sound_volume = clamp(new_volume, 0, ADMIN_SOUND_MAX_VOLUME)
+			var/new_volume = params["volume"]
+			if(new_volume == "reset")
+				src.sound_volume = initial(src.sound_volume)
+				. = TRUE
+			else if(text2num_safe(new_volume) != null)
+				src.sound_volume = clamp(text2num_safe(new_volume), 0, ADMIN_SOUND_MAX_VOLUME)
+				. = TRUE
+			if (.)
 				src.update_music()
 
 		if("set-freq")
-			var/value = params["frequency"]
-			var/new_frequency = value == "reset" ? initial(src.sound_frequency) : text2num_safe(value)
-			if(isnum(new_frequency))
-				src.sound_frequency = clamp(new_frequency || 1, -DJ_MAX_FREQUENCY, DJ_MAX_FREQUENCY)
+			var/new_freq = params["frequency"]
+			if(new_freq == "reset")
+				src.sound_frequency = initial(src.sound_frequency)
+				. = TRUE
+			else if(text2num_safe(new_freq) != null)
+				src.sound_frequency = clamp(text2num_safe(new_freq) || 1, -DJ_MAX_FREQUENCY, DJ_MAX_FREQUENCY)
+				. = TRUE
+			if (.)
 				src.update_music()
 
 		if("play-sound")
-			actor.play_sound_real(src.loaded_sound, src.sound_volume, src.sound_frequency)
+			actor?.play_sound_real(src.loaded_sound, src.sound_volume, src.sound_frequency)
+			. = TRUE
 
 		if("play-music")
 			if(src.loaded_sound)
 				src.start_music(src.sound_library["[src.loaded_sound]"], actor)
+			. = TRUE
 
 		if("play-ambience")
 			logTheThing(LOG_ADMIN, user, "played ambient sound [src.loaded_sound]")
@@ -167,34 +186,33 @@ client/proc/open_dj_panel()
 			playsound(user, src.loaded_sound, src.sound_volume, vary = FALSE, pitch = src.sound_frequency)
 
 		if("play-remote")
-			actor.play_youtube_audio()
+			actor?.play_youtube_audio()
 
 		if("play-player")
 			var/client/C = input(user, "Choose a client:", "Choose a client:", user) as null|anything in clients
-			if(!C)
-				return FALSE
+			if (!C) return FALSE
 			logTheThing(LOG_ADMIN, user, "played sound [src.loaded_sound] to [C]")
 			logTheThing(LOG_DIARY, user, "played sound [src.loaded_sound] to [C]", "admin")
 			message_admins("[admin_key(actor)] played sound [src.loaded_sound] to [C]")
 			playsound(C.mob, src.loaded_sound, src.sound_volume, vary = FALSE, pitch = src.sound_frequency)
 
 		if("preload-sound")
-			return src.request_preload(named_sound, actor)
+			. = src.request_preload(named_sound, actor)
 
 		if("load-sound")
 			if(!named_sound)
 				return FALSE
 			src.loaded_sound = named_sound.file
+			. = TRUE
 
 		if("toggle-pause")
 			src.update_music(toggle_pause = TRUE)
+			. = TRUE
 
 		if("toggle-loop")
 			src.looping = !src.looping
 			src.update_music()
-		else
-			return FALSE
-	return TRUE
+			. = TRUE
 
 /**
  * Moves the global admin sound channel up or down one
