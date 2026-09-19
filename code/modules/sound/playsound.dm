@@ -54,7 +54,7 @@ proc/is_music_playing()
 				boutput(C, "[SPAN_MEDAL("<b>[admin_key] played:</b>")][SPAN_NOTICE(" [S]")]")
 		dj_panel.move_admin_sound_channel()
 
-/// The optional panel supplies live playback controls; other callers play a standalone sound.
+/// Pass a DJ panel to enable live playback controls.
 /client/proc/play_music_real(S as sound, var/freq as num, datum/dj_panel/panel)
 	if (!config.allow_admin_sounds)
 		alert("Admin sounds disabled")

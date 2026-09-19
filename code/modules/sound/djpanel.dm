@@ -6,7 +6,7 @@
 
 client/proc/open_dj_panel()
 	set name = "DJ Panel"
-	set desc = "Get your groove on!" //"funny function names???? first you use the WRONG INDENT STYLE and now this????" --that fuckhead on the forums
+	set desc = "Get your groove on!"
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	SHOW_VERB_DESC
 	if (!isadmin(src) && !src.non_admin_dj)
@@ -24,7 +24,6 @@ client/proc/open_dj_panel()
 	var/loaded_sound = null // holds current song file
 	var/sound_volume = 50
 	var/sound_frequency = 1
-	/// Sounds uploaded during this round, available to every DJ panel user
 	var/list/datum/dj_library_sound/sound_library = list()
 	var/datum/dj_music_track/active_music
 	var/looping = FALSE
@@ -251,7 +250,6 @@ client/proc/open_dj_panel()
 	message_admins("[key_name(actor)] has [C.non_admin_dj ? "given" : "removed"] the ability for [key_name(C)] to DJ and use dectalk.")
 	boutput(C, SPAN_ALERT("<b>You [C.non_admin_dj ? "can now" : "no longer can"] DJ with the 'DJ Panel' and use text2speech with 'Dectalk' commands under 'Special Verbs'.</b>"))
 
-/// Send a file without playing it
 /datum/dj_panel/proc/request_preload(datum/dj_library_sound/upload, client/actor)
 	if (!upload)
 		return FALSE
@@ -274,7 +272,7 @@ client/proc/open_dj_panel()
 	track.updated_at = TIME
 	return actor.play_music_real(track.file, track.frequency, src)
 
-/// Fileless updates preserve playback position and cannot restart a listener's stopped track.
+/// Fileless updates preserve each client's playback position.
 /datum/dj_panel/proc/music_packet(client/listener, update = TRUE)
 	var/datum/dj_music_track/track = src.active_music
 	var/sound/packet = sound(update ? null : track.file, channel = track.channel)
@@ -315,7 +313,6 @@ client/proc/open_dj_panel()
 			C.sound_playing[track.channel][1] = 0
 	qdel(track)
 
-/// Timing changes replace this one-shot end timer; no process is needed.
 /datum/dj_panel/proc/schedule_completion()
 	var/datum/dj_music_track/track = src.active_music
 	var/timer_id = ++track.end_timer_id
@@ -327,12 +324,12 @@ client/proc/open_dj_panel()
 			return
 		var/remaining = track.completion_delay()
 		if (!isnull(remaining) && remaining <= 0)
-			// Downloads can delay playback, so do not send a stop packet here.
+			// Do not cut off clients whose downloads delayed playback.
 			src.stop_music(stop_playback = FALSE)
 
 #undef DJ_MAX_FREQUENCY
 
-/// An uploaded file and its playback clock. Positions are seconds at the original sample rate.
+/// Playback position and duration are seconds at the original sample rate.
 /datum/dj_music_track
 	var/file
 	var/channel
@@ -342,7 +339,7 @@ client/proc/open_dj_panel()
 	var/position = 0
 	var/duration = 0
 	var/updated_at = 0
-	/// Only the newest end timer is allowed to stop this track.
+	/// Invalidates callbacks after playback timing changes.
 	var/end_timer_id = 0
 
 /datum/dj_music_track/New(file, duration = 0)
@@ -380,7 +377,6 @@ client/proc/open_dj_panel()
 	var/remaining = src.frequency < 0 ? src.get_position(at_time) : src.duration - src.get_position(at_time)
 	return max(0, remaining / abs(src.frequency) * (1 SECOND))
 
-/// One upload owns its metadata and preload state, independent of the currently playing track.
 /datum/dj_library_sound
 	var/file
 	var/size_bytes
