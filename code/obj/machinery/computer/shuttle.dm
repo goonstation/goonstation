@@ -93,7 +93,15 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 
 /obj/machinery/computer/transit_shuttle/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
+	if(ui && (!user.sight_check(1) || !user.literate))
+		ui.close()
 	if(!ui)
+		if (!user.sight_check(1))
+			boutput(user, SPAN_ALERT("You can't see anything, operating a computer isn't going to work!"))
+			return
+		if (!user.literate)
+			boutput(user, SPAN_ALERT("You don't know how to read or write, operating a computer isn't going to work!"))
+			return
 		ui = new(user, src, "TransitShuttle")
 		ui.open()
 
