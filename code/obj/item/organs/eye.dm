@@ -22,6 +22,8 @@
 
 	New()
 		..()
+		APPLY_ATOM_PROPERTY(src, PROP_OBJ_GOLFABLE, src)
+		AddComponent(/datum/component/golfable)
 		SPAWN(0)
 			src.UpdateIcon()
 
