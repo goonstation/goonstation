@@ -202,9 +202,7 @@ const Event = (props: EventData) => {
       </Stack.Item>
       <Stack.Item>{props.name}</Stack.Item>
       <Stack.Item grow opacity={0.3} />
-      <Stack.Item>
-        {getDescInfoBubble(props.description)}
-      </Stack.Item>
+      <Stack.Item>{getDescInfoBubble(props.description)}</Stack.Item>
       <Stack.Item>
         <Button
           icon="gun"
