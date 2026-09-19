@@ -2,6 +2,7 @@
 CONTAINS:
 SPACE CLEANER
 MOP
+BROOM
 SPONGES??
 WET FLOOR SIGN
 HANDHELD VACUUM
@@ -343,6 +344,64 @@ TRASH BAG
 				if (src?.reagents)
 					src.reagents.clear_reagents()
 					mopcount = 0
+
+// Broom
+/obj/item/broom
+	desc = "The humble push broom, lets you sweep items around into a neat pile. Well, as long as nothing stands in your way."
+	name = "push broom"
+	icon = 'icons/obj/janitor.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	icon_state = "mop_old"
+	force = 3
+	throwforce = 10
+	throw_speed = 5
+	throw_range = 10
+	w_class = W_CLASS_NORMAL
+	stamina_damage = 40
+	stamina_cost = 15
+	stamina_crit_chance = 10
+
+	/// Maximum size (inclusive) of the items you can push
+	var/max_item_size = W_CLASS_NORMAL
+
+	afterattack(atom/target, mob/user, reach, params)
+		if(!BOUNDS_DIST(user, target))
+			. = ..()
+
+		var/fail_messege = push(user, target)
+
+		if(fail_messege)
+			boutput(user, SPAN_NOTICE(fail_messege))
+			. = ..()
+
+	/// Attempts to push all the items at the loc of the target "foward" (based on user dir), returns the fail messege the user should see when failing.
+	proc/push(mob/user, atom/target)
+		var/turf/target_location = isturf(target) ? target : target.loc
+		var/turf/pushed_to = get_step(target_location, user.dir)
+
+		if(iswall(pushed_to) || iswall(target_location))
+			return "You can not push through a wall!"
+
+		var/list/obj/item/items_to_push = list()
+
+		for(var/obj/O in items_to_push)
+			if(O.density)
+				return "[O] blocks your way!"
+
+
+		for(var/obj/item/I in target_location)
+			if(I.w_class > max_item_size)
+				return "[I] is too big for you to push!"
+			else if(I.anchored)
+				return "[I] is bolted to the floor!"
+			items_to_push += I
+
+		if(!length(items_to_push))
+			return
+
+		for(var/obj/item/I as anything in items_to_push)
+			I.set_loc(pushed_to)
+
 
 // SPONGES? idk
 
