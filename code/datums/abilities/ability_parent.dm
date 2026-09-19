@@ -925,7 +925,7 @@
 
 	proc
 		handleCast(atom/target, params)
-			if (!isnull(src.aim_assist_radius) || !ismob(target))
+			if (!isnull(src.aim_assist_radius) && !ismob(target))
 				target = src.aim_assist_retargeting(target, params)
 			var/result = tryCast(target, params)
 #ifdef NO_COOLDOWNS
