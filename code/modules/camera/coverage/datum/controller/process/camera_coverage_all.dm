@@ -5,4 +5,4 @@
 	schedule_interval = CAM_PROCESS_ALL_INTERVAL
 
 /datum/controller/process/camera_coverage_all/doWork()
-	camera_coverage_controller.update_all_emitters()
+	camera_coverage_controller.update_all_emitters(src)

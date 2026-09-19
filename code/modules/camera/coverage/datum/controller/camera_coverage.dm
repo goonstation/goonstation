@@ -52,8 +52,8 @@ var/global/datum/controller/camera_coverage/camera_coverage_controller
 /**
  * Updates all emitters
  */
-/datum/controller/camera_coverage/proc/update_all_emitters()
-	src.update_emitters(by_type[/datum/component/camera_coverage_emitter])
+/datum/controller/camera_coverage/proc/update_all_emitters(datum/controller/process/parent_controller)
+	src.update_emitters(by_type[/datum/component/camera_coverage_emitter]?.Copy(), parent_controller)
 
 /**
  * Given a list of turfs, updates their respective attached aiImage based on camera coverage
@@ -117,8 +117,9 @@ var/global/datum/controller/camera_coverage/camera_coverage_controller
 
 /**
  * Updates the camera coverage of multiple emitters
+ * `parent_controller` is only passed by the periodic full sweep
  */
-/datum/controller/camera_coverage/proc/update_emitters(list/datum/component/camera_coverage_emitter/emitters)
+/datum/controller/camera_coverage/proc/update_emitters(list/datum/component/camera_coverage_emitter/emitters, datum/controller/process/parent_controller)
 	if (!length(emitters))
 		return
 
@@ -126,9 +127,12 @@ var/global/datum/controller/camera_coverage/camera_coverage_controller
 
 	LAZYLISTINIT(src.emitter_update_queue)
 	for (var/datum/component/camera_coverage_emitter/emitter as anything in emitters)
+		if (QDELETED(emitter))
+			continue
 		if (global.explosions.exploding || ON_COOLDOWN(emitter, "camera_coverage_update", CAM_UPDATE_COOLDOWN))
 			src.emitter_update_queue |= emitter
 			continue
 		turfs_to_update |= src.update_emitter_internal(emitter)
+		parent_controller?.scheck() // no-op unless the tick is already over budget
 
 	src.update_turfs(turfs_to_update)
