@@ -414,6 +414,7 @@ ABSTRACT_TYPE(/datum/menhir_room_roll)
 
 /datum/random_event/menhir/room
 	name = "The Crown Holds Court"
+	description = "Creates a special allocated zone 'inside' a Crown node, connected with a vismirrored entrance."
 	message_delay = 1 MINUTE
 	weight = 20
 	customization_available = 1
