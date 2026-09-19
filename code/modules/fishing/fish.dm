@@ -705,6 +705,7 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/swordfish)
 	category = FISH::CATEGORY::OCEAN
 	rarity = ITEM_RARITY_RARE
 	force = 6
+	throwforce = 10
 	hit_type = DAMAGE_STAB
 
 	New()
@@ -726,6 +727,7 @@ TYPEINFO(/obj/item/reagent_containers/food/fish/literal_swordfish)
 	attack_verbs = "stabs"
 	rarity = ITEM_RARITY_LEGENDARY
 	force = 13
+	throwforce = 15
 	hit_type = DAMAGE_CUT
 	contraband = 3
 	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
