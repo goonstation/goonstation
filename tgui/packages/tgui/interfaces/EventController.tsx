@@ -132,6 +132,7 @@ const RoundStartSection = (props: RoundStartProps) => {
 interface EventData {
   byondRef: string;
   name: string;
+  description: string;
   customizable: BooleanLike;
   alwaysCustom: BooleanLike;
   available: BooleanLike;
@@ -165,6 +166,18 @@ const getEventIconToolTip = (enabled: BooleanLike, active: BooleanLike) => {
   );
 };
 
+const getDescInfoBubble = (desc: string) => {
+  if (desc) {
+    return (
+      <Tooltip content={desc}>
+        <Icon name="circle-question" size='1.2' lineHeight='1.4'/>
+      </Tooltip>
+    );
+  } else {
+    return '';
+  }
+};
+
 const Event = (props: EventData) => {
   const { act } = useBackend();
   return (
@@ -189,6 +202,9 @@ const Event = (props: EventData) => {
       </Stack.Item>
       <Stack.Item>{props.name}</Stack.Item>
       <Stack.Item grow opacity={0.3} />
+      <Stack.Item>
+        {getDescInfoBubble(props.description)}
+      </Stack.Item>
       <Stack.Item>
         <Button
           icon="gun"
