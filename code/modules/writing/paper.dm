@@ -184,6 +184,9 @@
 		ui.open()
 
 /obj/item/paper/ui_status(mob/user,/datum/ui_state/state)
+	if(!user.sight_check(1))
+		boutput(user, SPAN_ALERT("You can't read while unable to see."))
+		return UI_CLOSE
 	if(!user.literate)
 		boutput(user, SPAN_ALERT("You don't know how to read."))
 		return UI_CLOSE

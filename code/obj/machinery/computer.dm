@@ -31,6 +31,9 @@
 
 	attack_hand(var/mob/user)
 		. = ..()
+		if (!user.sight_check(1))
+			boutput(user, SPAN_ALERT("You can't see anything, operating a computer isn't going to work!"))
+			return 1
 		if (!user.literate)
 			boutput(user, SPAN_ALERT("You don't know how to read or write, operating a computer isn't going to work!"))
 			return 1

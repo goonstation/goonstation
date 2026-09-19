@@ -12,6 +12,9 @@
 		return " [chem_name] is carefully written on the outside of the scroll in fancy writing."
 
 	attack_self(var/mob/U)
+		if(!U.sight_check(1))
+			boutput(U,"You can't see the scroll to read it.")
+			return
 		if(has_been_read)
 			boutput(U,"The writing is all smudged up. You cant read anything on this scroll.")
 			return
