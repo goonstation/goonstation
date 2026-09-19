@@ -45,6 +45,9 @@
 #elif defined(MAP_OVERRIDE_COGMAP2)
 #include "cogmap2.dm"
 
+#elif defined(MAP_OVERRIDE_DECARABIA)
+#include "decarabia.dm"
+
 #elif defined(MAP_OVERRIDE_DONUT3)
 #include "donut3.dm"
 
