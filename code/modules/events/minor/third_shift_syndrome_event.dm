@@ -23,4 +23,5 @@
 		for (var/i in 1 to target_count)
 			var/mob/living/carbon/human/patient = pick(potential_victims)
 			potential_victims -= patient
-			patient.contract_disease(/datum/ailment/disease/third_shift_syndrome, null, null, TRUE)
+			if (patient.contract_disease(/datum/ailment/disease/third_shift_syndrome, null, null, TRUE))
+				logTheThing(LOG_ADMIN, patient, "was infected with Third Shift Syndrome by a random event at [log_loc(patient)].")
