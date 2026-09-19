@@ -347,11 +347,11 @@ TRASH BAG
 
 // Broom
 /obj/item/broom
-	desc = "The humble push broom, lets you sweep items around into a neat pile. Well, as long as nothing stands in your way."
+	desc = "The humble push broom let you sweep items around into a neat pile as long as nothing stands in your way."
 	name = "push broom"
 	icon = 'icons/obj/janitor.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	icon_state = "mop_old"
+	icon_state = "broom" // Sprites by RubiCubie
 	force = 3
 	throwforce = 10
 	throw_speed = 5
