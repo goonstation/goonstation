@@ -364,6 +364,11 @@ TRASH BAG
 	/// Maximum size (inclusive) of the items you can push
 	var/max_item_size = W_CLASS_NORMAL
 
+	New()
+		..()
+		src.setItemSpecial(/datum/item_special/rangestab)
+		BLOCK_SETUP(BLOCK_ROD)
+
 	afterattack(atom/target, mob/user, reach, params)
 		if(!BOUNDS_DIST(user, target))
 			. = ..()
