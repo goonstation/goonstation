@@ -51,6 +51,8 @@ TYPEINFO(/mob/living/critter/wraith/plaguerat)
 		START_TRACKING
 		SPAWN(0)
 			src.bioHolder.AddEffect("nightvision", 0, 0, 0, 1)
+			if(src.is_npc)
+				return
 			if(M != null)
 				src.master = M
 
@@ -109,6 +111,14 @@ TYPEINFO(/mob/living/critter/wraith/plaguerat)
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/farts/poo2.ogg', 40, TRUE, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
 					return SPAN_EMOTE("<b>[src]</b> toots disgustingly!")
+
+	critter_ability_attack(mob/target)
+		var/datum/targetable/critter/plague_rat/rat_bite/bite = src.abilityHolder.getAbility(/datum/targetable/critter/plague_rat/rat_bite)
+		if (bite && !bite.disabled && bite.cooldowncheck())
+			bite.handleCast(target)
+			return TRUE
+		if(!ON_COOLDOWN(src, "rat_bite", 5 SECONDS))
+			venom_bite(target)
 
 	specific_emote_type(var/act)
 		switch (act)
@@ -194,6 +204,18 @@ TYPEINFO(/mob/living/critter/wraith/plaguerat)
 		HH.limb_name = "teeth"
 		HH.can_hold_items = 0
 
+	npc
+		is_npc = TRUE
+		ai_type = /datum/aiHolder/aggressive
+		ai_retaliates = TRUE
+		ai_retaliate_patience = 0
+		ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
+		faction = list(FACTION_TOXMOON)
+
+		New()
+			APPLY_ATOM_PROPERTY(src, PROP_MOB_GOOPIMMUNE, src.type)
+			..()
+
 /mob/living/critter/wraith/plaguerat/medium
 	name = "plague-ridden rat"
 	real_name = "plague ridden rat"
@@ -233,6 +255,18 @@ TYPEINFO(/mob/living/critter/wraith/plaguerat)
 		HH.limb_name = "teeth"
 		HH.can_hold_items = 0
 
+	npc
+		is_npc = TRUE
+		ai_type = /datum/aiHolder/aggressive
+		ai_retaliates = TRUE
+		ai_retaliate_patience = 0
+		ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
+		faction = list(FACTION_TOXMOON)
+
+		New()
+			APPLY_ATOM_PROPERTY(src, PROP_MOB_GOOPIMMUNE, src.type)
+			..()
+
 /mob/living/critter/wraith/plaguerat/adult
 	name = "bloated rat mass"
 	real_name = "bloated rat mass"
@@ -253,6 +287,18 @@ TYPEINFO(/mob/living/critter/wraith/plaguerat)
 						/datum/targetable/critter/plague_rat/spawn_rat_den,
 						/datum/targetable/critter/slam/rat)
 
+	critter_ability_attack(mob/target)
+		var/datum/targetable/critter/plague_rat/rat_bite/bite = src.abilityHolder.getAbility(/datum/targetable/critter/plague_rat/rat_bite)
+		var/datum/targetable/critter/slam/rat/slam = src.abilityHolder.getAbility(/datum/targetable/critter/slam/rat)
+		if (bite && !bite.disabled && bite.cooldowncheck() && prob(30))
+			bite.handleCast(target)
+			return TRUE
+		if (slam && !slam.disabled && slam.cooldowncheck() && prob(20))
+			slam.handleCast(target)
+			return TRUE
+		if(!ON_COOLDOWN(src, "rat_bite", 5 SECONDS))
+			venom_bite(target)
+
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
@@ -269,3 +315,15 @@ TYPEINFO(/mob/living/critter/wraith/plaguerat)
 		HH.name = "mouth"
 		HH.limb_name = "teeth"
 		HH.can_hold_items = 0
+
+	npc
+		is_npc = TRUE
+		ai_type = /datum/aiHolder/aggressive
+		ai_retaliates = TRUE
+		ai_retaliate_patience = 0
+		ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
+		faction = list(FACTION_TOXMOON)
+
+		New()
+			APPLY_ATOM_PROPERTY(src, PROP_MOB_GOOPIMMUNE, src.type)
+			..()
