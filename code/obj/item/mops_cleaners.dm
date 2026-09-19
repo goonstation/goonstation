@@ -379,20 +379,24 @@ TRASH BAG
 		var/turf/target_location = isturf(target) ? target : target.loc
 		var/turf/pushed_to = get_step(target_location, user.dir)
 
+		// can't push through walls (duh)
 		if(iswall(pushed_to) || iswall(target_location))
 			return "You can not push through a wall!"
 
-		var/list/obj/item/items_to_push = list()
-
-		for(var/obj/O in items_to_push)
+		// can't push through anything you can't walk through
+		for(var/obj/O in target_location)
 			if(O.density)
 				return "[O] blocks your way!"
 
+		for(var/obj/O in pushed_to)
+			if(O.density)
+				return "[O] blocks your way!"
 
+		var/list/obj/item/items_to_push = list()
 		for(var/obj/item/I in target_location)
-			if(I.w_class > max_item_size)
+			if(I.w_class > max_item_size) // can't push through an item thats too big
 				return "[I] is too big for you to push!"
-			else if(I.anchored)
+			else if(I.anchored) // can't push through an item thats bolted
 				return "[I] is bolted to the floor!"
 			items_to_push += I
 
