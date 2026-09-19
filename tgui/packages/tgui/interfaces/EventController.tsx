@@ -170,7 +170,7 @@ const getDescInfoBubble = (desc: string) => {
   if (desc) {
     return (
       <Tooltip content={desc}>
-        <Icon name="circle-question" size={1.2} lineHeight={1.4}/>
+        <Icon name="circle-question" size={1.2} lineHeight={1.4} />
       </Tooltip>
     );
   } else {
