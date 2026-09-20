@@ -40,6 +40,7 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 	desc = "A computer that controls the movement of the imcoder."
 	flags = TGUI_INTERACTIVE
 	machine_registry_idx = MACHINES_SHUTTLECOMPS
+	ui_type = "TransitShuttle"
 
 	var/active =  FALSE
 	var/shuttlename = "imcoder"
@@ -90,20 +91,6 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 			src.UpdateOverlays(screen_image, "screen_image")
 	else
 		. = ..()
-
-/obj/machinery/computer/transit_shuttle/ui_interact(mob/user, datum/tgui/ui)
-	ui = tgui_process.try_update_ui(user, src, ui)
-	if(ui && (!user.sight_check(1) || !user.literate))
-		ui.close()
-	if(!ui)
-		if (!user.sight_check(1))
-			boutput(user, SPAN_ALERT("You can't see anything, operating a computer isn't going to work!"))
-			return
-		if (!user.literate)
-			boutput(user, SPAN_ALERT("You don't know how to read or write, operating a computer isn't going to work!"))
-			return
-		ui = new(user, src, "TransitShuttle")
-		ui.open()
 
 /obj/machinery/computer/transit_shuttle/attack_hand(mob/user)
 	if(..())
@@ -546,6 +533,7 @@ ABSTRACT_TYPE(/obj/machinery/computer/elevator)
 /obj/machinery/computer/elevator
 	name = "Elevator Control"
 	icon_state = "shuttle"
+	ui_type = "Elevator"
 	var/active = 0
 	var/location = 1 // 0 for bottom, 1 for top
 
@@ -599,15 +587,6 @@ ABSTRACT_TYPE(/obj/machinery/computer/elevator)
 	desc = "a not at all suspicious toilet paper holder.";
 	icon = 'icons/obj/decoration.dmi';
 	icon_state = "toiletholder";
-
-/obj/machinery/computer/elevator/ui_interact(mob/user, datum/tgui/ui)
-	if (adminOnly && !isadmin(user))
-		return
-
-	ui = tgui_process.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "Elevator", name)
-		ui.open()
 
 /obj/machinery/computer/elevator/ui_data(mob/user)
 	. = list()
