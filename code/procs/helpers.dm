@@ -2829,22 +2829,15 @@ proc/area_table_spawn(area_type, spawn_type)
 	return null
 
 /**
- * Returns an ordered associative list [mob = distance (euclidean)] (ascending) of all mobs within a target radius.
- * Must take EITHER target_turf, OR, user AND params (from click() procs). You can feed both safely, but target_turf will be overwritten.
+ * Returns an ordered associative list [mob = distance (euclidean)] (ascending) of all mobs within a target radius from a provided center.
+ * Will effectively search from the center of target_turf unless pixel_x/y are specified.
  * range (also euclidean) should be a positive real number. The search radius can in fact be a 1.337 tile radius, if you so desire.
  * The center of the turf a mob is occupying must fall within the specified range for it to consider that mob 'in range'.
  */
-proc/get_nearest_mobs_list(turf/target_turf, mob/user, list/params, range = 1, always_include_same_tile = TRUE)
+proc/get_nearest_mobs_list(turf/target_turf, range = 1, pixel_x = 1, pixel_y = 1)
 	if(range < 0)
 		CRASH("Range ([range]) cannot be a negative number!")
-	var/pixel_x = 1
-	var/pixel_y = 1
-	if(params && user)
-		var/list/real_click_location = get_turf_pixel_clicked_over(user, params)
-		pixel_x = real_click_location["pixel_x"]
-		pixel_y = real_click_location["pixel_y"]
-		target_turf = real_click_location["turf"]
-	pixel_x -= 16 // offsets to pretend like 0,0 corresponds to the center of a tile
+	pixel_x -= 16 // offsets to pretend like 1,1 corresponds to the center of a tile
 	pixel_y -= 16 // instead of the bottom left corner
 	var/clicked_scaled_x = (target_turf.x * 32) + pixel_x
 	var/clicked_scaled_y = (target_turf.y * 32) + pixel_y
@@ -2857,10 +2850,10 @@ proc/get_nearest_mobs_list(turf/target_turf, mob/user, list/params, range = 1, a
 		// calculating distance to center of the mob's tile is good enough tbh
 		var/scaled_distance = sqrt(((target_scaled_x - clicked_scaled_x)**2) + ((target_scaled_y - clicked_scaled_y)**2))
 		var/distance = scaled_distance / 32 // back down to each unit being 1 tile instead of 1 pixel
-		if((distance > range) && (!always_include_same_tile || (target_turf != get_turf(target))))
+		if(distance > range)
 			continue
 		return_list[target] = distance
-	if(return_list.len)
+	if(length(return_list))
 		sortList(L = return_list, cmp=/proc/cmp_numeric_asc, associative = TRUE)
 		return return_list
 

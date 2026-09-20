@@ -930,7 +930,8 @@
 
 	proc
 		handleCast(atom/target, params)
-			target = src.aim_assist_retargeting(target, params)
+			if (!isnull(src.aim_assist_radius) && !ismob(target))
+				target = src.aim_assist_retargeting(target, params)
 			var/result = tryCast(target, params)
 #ifdef NO_COOLDOWNS
 			result = TRUE
@@ -1134,11 +1135,15 @@
 
 		aim_assist_retargeting(atom/target, params)
 			. = target
-			if (isnull(src.aim_assist_radius) || ismob(target))
+			var/list/mob_list = list()
+			var/list/click_location = get_turf_pixel_clicked_over(src.holder.owner, params)
+			if(!click_location)
 				return
-			var/list/mob_list = get_nearest_mobs_list(user = src.holder.owner, params = params, range = aim_assist_radius)
-			if(!mob_list)
-				return
+			if(src.aim_assist_radius > 0)
+				mob_list = get_nearest_mobs_list(click_location["turf"], src.aim_assist_radius, click_location["pixel_x"], click_location["pixel_y"])
+			else
+				for(var/mob/in_turf_target in click_location["turf"])
+					mob_list[in_turf_target] += 0 // either we dont change an existing entry's range, or add a new entry with a range 0 to the end of the list
 			for (var/mob/mob_target in mob_list)
 				if((mob_target == src.holder.owner) && src.aim_assist_ignore_owner)
 					continue
