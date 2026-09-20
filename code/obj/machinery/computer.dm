@@ -14,6 +14,7 @@
 	var/frequency = null
 	var/base_icon_state = null
 	var/emagged = FALSE //! the emag behaviour is done in the corresponding computer frame, but we need to carry over the effect onto the curcuit board.
+	var/ui_type = null //so each computer doesn't need to define which UI to use in its own ui_interact proc
 
 	/// does it have a glow in the dark screen? see computer_screens.dmi
 	var/glow_in_dark_screen = TRUE
@@ -205,6 +206,20 @@
 	. = ..()
 	if(status & NOPOWER)
 		return
+
+/obj/machinery/computer/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(ui && (!user.sight_check(1) || !user.literate))
+		ui.close()
+	if(!ui && ui_type)
+		if (!user.sight_check(1))
+			boutput(user, SPAN_ALERT("You can't see anything, operating a computer isn't going to work!"))
+			return
+		if (!user.literate)
+			boutput(user, SPAN_ALERT("You don't know how to read or write, operating a computer isn't going to work!"))
+			return
+		ui = new(user, src, ui_type, src.name)
+		ui.open()
 
 /obj/machinery/computer/update_icon()
 	if(src.glow_in_dark_screen)

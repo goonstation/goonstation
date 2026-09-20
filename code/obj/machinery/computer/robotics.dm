@@ -11,6 +11,7 @@
 	desc = "A computer that allows an authorized user to have an overview and control of the cyborgs on the station."
 	power_usage = 500
 	circuit_type = /obj/item/circuitboard/robotics
+	ui_type = "RoboticsControl"
 	var/perma = 0
 	var/can_lockdown = TRUE
 	var/can_killswitch = TRUE
@@ -53,20 +54,6 @@
 			src.req_access = initial(src.req_access)
 			src.can_lockdown = initial(src.can_lockdown)
 			src.can_killswitch = initial(src.can_killswitch)
-
-	ui_interact(mob/user, datum/tgui/ui)
-		ui = tgui_process.try_update_ui(user, src, ui)
-		if(ui && (!user.sight_check(1) || !user.literate))
-			ui.close()
-		if(!ui)
-			if (!user.sight_check(1))
-				boutput(user, SPAN_ALERT("You can't see anything, operating a computer isn't going to work!"))
-				return
-			if (!user.literate)
-				boutput(user, SPAN_ALERT("You don't know how to read or write, operating a computer isn't going to work!"))
-				return
-			ui = new(user, src, "RoboticsControl")
-			ui.open()
 
 	ui_data(mob/user)
 		var/list/silicons = src.update_silicon_statuses()

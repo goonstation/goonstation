@@ -15,6 +15,7 @@
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	can_reconnect = TRUE
 	circuit_type = /obj/item/circuitboard/genetics
+	ui_type = "GeneTek"
 	/// Linked scanner. For scanning.
 	var/obj/machinery/genetics_scanner/scanner = null
 	var/list/equipment = alist(
