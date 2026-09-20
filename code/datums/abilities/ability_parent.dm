@@ -1149,6 +1149,23 @@
 					continue
 				return mob_target
 
+		/// Returns the cursor .dmi we should use, based on user prefs and aim_assist_radius
+		get_ability_cursor()
+			var/client/client = src.holder.owner.client
+			if(!client)
+				return
+			var/file = cursors_selection[client.preferences.target_cursor]
+			if(!src.aim_assist_radius)
+				return file
+			if(!(src.aim_assist_radius >= AIM_ASSIST_1_TILE))
+				return // we only have 1-tile-radius cursors right now, but we should account for
+				// bigger ones when we get them
+			var/file_name = "[file]"
+			var/filename_suffix = "-range_[num2text(src.aim_assist_radius)]"
+			var/list/split_file_name = splittext(file_name, ".")
+			file_name = split_file_name[1] + filename_suffix + ".dmi"
+			return file(file_name)
+
 /atom/movable/screen/pseudo_overlay
 	// this is hack as all get out
 	// but since i cant directly alter the pixel offset of a screen overlay it'll have to do
