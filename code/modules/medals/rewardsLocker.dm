@@ -761,7 +761,6 @@
 				M.default_material = "synthrubber_blue"
 				M.desc = "The Captain's rubber stamp for stamping important documents. Looks like one of those fancy National Notary 'St. Anne' models with the rosewood handle."
 				M.special_mode = "Captain (Blue)"
-				M.assignment = "stamp-cap-blue"
 				M.available_modes += M.special_mode
 				M.current_mode = M.special_mode
 				H.update_inhands()
@@ -948,7 +947,6 @@
 				M.default_material = "synthrubber"
 				M.desc = "The Captain's rubber stamp for stamping important documents. Looks like one of those fancy National Notary 'Bancroft' models with the bloodwood handle."
 				M.special_mode = "Captain (Red)"
-				M.assignment = "stamp-cap-red"
 				M.available_modes += M.special_mode
 				M.current_mode = M.special_mode
 				H.update_inhands()
