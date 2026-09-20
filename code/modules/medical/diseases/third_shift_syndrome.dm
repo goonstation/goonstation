@@ -17,16 +17,29 @@
 /datum/ailment/disease/third_shift_syndrome/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/disease/D, mult)
 	if (..())
 		return
-
 	var/previous_stage = D.strain_data["third_shift_syndrome_stage"]
-	if (D.stage < 4)
-		if (D.stage != previous_stage)
-			if (previous_stage >= 4)
-				affected_mob.RemoveComponentsOfType(/datum/component/crew_apparitions)
-			D.strain_data["third_shift_syndrome_stage"] = D.stage
+	if (D.stage != previous_stage)
+		src.update_apparition_effect(affected_mob, D, previous_stage)
+
+/datum/ailment/disease/third_shift_syndrome/on_infection(mob/living/affected_mob, datum/ailment_data/disease/D)
+	..()
+	src.update_apparition_effect(affected_mob, D)
+
+/datum/ailment/disease/third_shift_syndrome/on_stage_change(mob/living/affected_mob, datum/ailment_data/disease/D, previous_stage)
+	..()
+	src.update_apparition_effect(affected_mob, D, previous_stage)
+
+/// Reconcile the apparition component with the syndrome's current stage
+/datum/ailment/disease/third_shift_syndrome/proc/update_apparition_effect(mob/living/affected_mob, datum/ailment_data/disease/D, previous_stage)
+	if (D.state == "Asymptomatic" || D.state == "Dormant")
+		if (previous_stage >= 4)
+			affected_mob.RemoveComponentsOfType(/datum/component/crew_apparitions)
 		return
 
-	if (D.stage == previous_stage)
+	if (D.stage < 4)
+		if (previous_stage >= 4)
+			affected_mob.RemoveComponentsOfType(/datum/component/crew_apparitions)
+		D.strain_data["third_shift_syndrome_stage"] = D.stage
 		return
 
 	var/encounter_chance = D.stage >= 5 ? 25 : 10

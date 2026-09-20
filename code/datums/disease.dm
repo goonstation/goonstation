@@ -50,6 +50,10 @@
 	proc/on_infection(var/mob/living/affected_mob,var/datum/ailment_data/D)
 		return
 
+	/// Respond to progression changing an ailment's stage
+	proc/on_stage_change(var/mob/living/affected_mob, var/datum/ailment_data/D, previous_stage)
+		return
+
 	// This is still subject to serious change. For now it's mostly a mockup.
 	// Determines things that may happen during a surgery for different ailments
 	// requiring a surgeon's intervention. Currently used for the parasites.
@@ -189,12 +193,14 @@
 	/// Apply a successful progression roll, returning TRUE only when the stage advances
 	/// Callers refresh suppression before rolling so treatment history also updates on failed rolls
 	proc/advance_stage(is_suppressed)
+		var/previous_stage = src.stage
 		if (is_suppressed)
 			src.stage = max(1, src.stage - 1)
 		else if (src.stage < src.master.max_stages)
 			src.stage++
-			return TRUE
-		return FALSE
+		if (src.stage != previous_stage)
+			src.master.on_stage_change(src.affected_mob, src, previous_stage)
+		return src.stage > previous_stage
 
 
 	proc/scan_info()
@@ -262,6 +268,8 @@
 	/// Medical scan status
 	proc/get_scan_state()
 		if (src.is_suppressed())
+			if (src.state == "Remissive")
+				return "Remissive (Suppressed)"
 			return "Suppressed"
 		return src.state
 
@@ -335,9 +343,12 @@
 
 		if (probmult(advance_prob))
 			if (state == "Remissive")
-				stage--
-				if (stage < 1)
+				var/previous_stage = src.stage
+				src.stage--
+				if (src.stage < 1)
 					affected_mob.cure_disease(src)
+				else
+					src.master.on_stage_change(src.affected_mob, src, previous_stage)
 				return 1
 			else
 				src.advance_stage(is_suppressed)

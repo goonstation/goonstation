@@ -41,9 +41,12 @@
 
 		if (probmult(advance_prob))
 			if (state == "Remissive")
-				stage--
-				if (stage < 1)
+				var/previous_stage = src.stage
+				src.stage--
+				if (src.stage < 1)
 					affected_mob.cure_disease(src)
+				else
+					src.master.on_stage_change(src.affected_mob, src, previous_stage)
 				return 1
 			else if (is_suppressed || master.tickcount >= master.min_advance_ticks)
 				// The minimum delay limits worsening, while suppression can regress on any successful roll
