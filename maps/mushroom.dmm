@@ -26545,9 +26545,9 @@
 "pKV" = (
 /obj/pool{
 	density = 0;
-	icon = 'icons/obj/fluid.dmi';
-	icon_state = "ladder";
-	name = "ladder";
+	icon = 'icons/obj/poolballpit.dmi';
+	icon_state = "pool_ladder";
+	name = "pool ladder";
 	pixel_y = -9;
 	dir = 1
 	},

@@ -1756,9 +1756,9 @@
 /obj/pool{
 	density = 0;
 	dir = 8;
-	icon = 'icons/obj/fluid.dmi';
-	icon_state = "ladder";
-	name = "ladder"
+	icon = 'icons/obj/poolballpit.dmi';
+	icon_state = "pool_ladder";
+	name = "pool_ladder"
 	},
 /turf/unsimulated/floor/pool/bluewhite,
 /area/syndicate_station{
