@@ -105,7 +105,7 @@
 			else
 				horror_path = pick(
 				/obj/critter/killertomato,
-				/obj/critter/spore,
+				/mob/living/critter/plasmaspore,
 				/mob/living/critter/small_animal/rattlesnake,
 				/mob/living/critter/martian/warrior,
 				/obj/machinery/bot/firebot/emagged,

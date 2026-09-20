@@ -1,35 +1,3 @@
-/obj/critter/spore
-	name = "plasma spore"
-	desc = "A barely intelligent colony of organisms. Very volatile."
-	icon_state = "spore"
-	death_text = "%src% ruptures and explodes!"
-	density = 1
-	health = 1
-	aggressive = 0
-	defensive = 0
-	wanderer = 1
-	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
-	atkcarbon = 0
-	atksilicon = 0
-	firevuln = 2
-	brutevuln = 2
-	flying = 1
-
-	CritterDeath()
-		..()
-		var/turf/T = get_turf(src.loc)
-		if(T)
-			T.hotspot_expose(700,125)
-			explosion(src, T, -1, -1, 2, 3)
-		qdel (src)
-
-	ex_act(severity)
-		CritterDeath()
-
-	bullet_act(flag, A as obj)
-		CritterDeath()
-
-
 /obj/critter/spirit
 	name = "spirit"
 	desc = null
