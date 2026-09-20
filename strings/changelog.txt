@@ -1,4 +1,9 @@
 
+(t)sat sep 19 26
+(u)Nexusuxen
+(p)27841
+(e)|
+(*)Arcfiend's Arcflash ability now comes with aim assist, and will target mobs within roughly half a tile of where you click if you fail to directly click on someone. More abilities may get this feature in the future!
 (t)fri sep 18 26
 (u)Nexusuxen
 (p)27673
