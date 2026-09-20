@@ -8,7 +8,7 @@
 /datum/speech_module/modifier/monospace_decorator/process(datum/say_message/message)
 	. = message
 	if(src.inverted)
-		message.content = src.monospace_regex.Replace(message.content, src.monospace_replacement)
+		message.content = src.monospace_regex.Replace(message.content, src.normal_replacement)
 		message.content = SPAN_MONOSPACE(message.content)
 	else
-		message.content = src.monospace_regex.Replace(message.content, src.normal_replacement)
+		message.content = src.monospace_regex.Replace(message.content, src.monospace_replacement)
