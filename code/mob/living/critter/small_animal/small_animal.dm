@@ -1728,9 +1728,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		START_TRACKING_CAT(TR_CAT_BUGS)
 		src.bioHolder.AddNewPoolEffect("scorpion_sting", scramble=TRUE)
-		var/datum/component/tameable/T = AddComponent(/datum/component/tameable)
-		T.emote_happy = "chitter"
-		T.emote_angry = "snip"
+		src.AddComponent(/datum/component/tameable, taming_foods=list(/obj/item/reagent_containers/food/snacks), food_blacklist=null,\
+		tame_chance = 20, passive_mode = FALSE, emote_happy = "chitter", emote_angry = "snip")
 
 
 	disposing()
@@ -1826,9 +1825,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		src.bioHolder.AddNewPoolEffect("snake_bite", scramble=TRUE)
 		src.bioHolder.AddNewPoolEffect("slither", scramble=TRUE)
-		var/datum/component/tameable/T = src.AddComponent(/datum/component/tameable)
-		T.emote_happy = "rattle"
-		T.emote_angry = "hiss"
+		src.AddComponent(/datum/component/tameable, taming_foods=list(/obj/item/reagent_containers/food/snacks), food_blacklist=null,\
+		tame_chance = 20, passive_mode = FALSE, emote_happy = "rattle", emote_angry = "hiss")
 		src.AddComponent(/datum/component/proximity)
 
 	setup_hands()

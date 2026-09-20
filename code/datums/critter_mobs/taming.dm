@@ -42,10 +42,10 @@ TYPEINFO(/datum/component/tameable)
 		return
 	if(istypes(item, taming_foods) && passive_mode)
 		if((istypes(item, food_blacklist)))
-			owner.visible_message("[user] tries to feed [owner] but they won't take it!")
+			owner.visible_message("[user] tries to feed [owner] [item] but they won't take it!")
 			return
 		if (owner.tamed)
-			owner.visible_message("[user] tries to feed [owner] but they seem full...")
+			owner.visible_message("[user] tries to feed [owner] [item] but they seem full...")
 			return
 		if(prob(tame_chance))
 			owner.tamed = TRUE
