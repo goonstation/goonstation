@@ -3,7 +3,7 @@ TYPEINFO(/datum/component/tameable)
 		ARG_INFO("taming_foods", DATA_INPUT_LIST_VAR, "Type of food to tame this critter", list(/obj/item/reagent_containers/food/snacks)),
 		ARG_INFO("food_blacklist", DATA_INPUT_LIST_VAR, "What food types in taming_foods should NOT work?", null),
 		ARG_INFO("tame_chance", DATA_INPUT_NUM, "Prob chance for the tame to be successful \[0-100\]", 20),
-		ARG_INFO("passive_mode", DATA_INPUT_BOOL, "Is this for a aggressive creature?", FALSE),
+		ARG_INFO("aggro_mode", DATA_INPUT_BOOL, "Is this for a aggressive creature?", FALSE),
 		ARG_INFO("emote_happy", DATA_INPUT_TEXT, "What emote does this creature do when happy?", "flip"),
 		ARG_INFO("emote_angry", DATA_INPUT_TEXT, "What emote does this creature do when angry?", "scream")
 	)
@@ -18,9 +18,9 @@ TYPEINFO(/datum/component/tameable)
 	var/emote_happy = null // live critter reactions
 	var/emote_angry = null
 	var/toggle_behavours = null // for a behaviour that turns on and off on petting
-	var/passive_mode = FALSE
+	var/aggro_mode = FALSE
 
-/datum/component/tameable/Initialize(var/list/taming_foods, var/list/food_blacklist, var/tame_chance, var/passive_mode, var/emote_happy, var/emote_angry)
+/datum/component/tameable/Initialize(var/list/taming_foods, var/list/food_blacklist, var/tame_chance, var/aggro_mode, var/emote_happy, var/emote_angry)
 	. = ..()
 	if(!istype(src.parent, /atom/movable))
 		return COMPONENT_INCOMPATIBLE
@@ -28,22 +28,30 @@ TYPEINFO(/datum/component/tameable)
 	src.taming_foods = taming_foods
 	src.food_blacklist = food_blacklist
 	src.tame_chance = tame_chance
-	src.passive_mode = passive_mode
+	src.aggro_mode = aggro_mode
 	src.emote_happy = emote_happy
 	src.emote_angry = emote_angry
 	RegisterSignal(parent, COMSIG_ATTACKBY, PROC_REF(pass_on_attackby))
 	RegisterSignal(parent, COMSIG_ATTACKHAND, PROC_REF(pass_on_attackhand))
 	RegisterSignal(parent, COMSIG_MOB_VALIDATE_TARGET, PROC_REF(pass_on_validtarget))
 
+/datum/component/tameable/proc/is_valid_food(obj/item/F)
+	if(istypes(item, taming_foods))
+		if(!istypes(item, food_blacklist))
+			return TRUE
+	return FALSE
+
 /datum/component/tameable/proc/pass_on_attackby(atom/movable/parent, obj/item/item, mob/user, params)
 	if(isdead(owner))
 		return
 	if(!ishuman(user))
 		return
-	if(istypes(item, taming_foods) && passive_mode)
-		if((istypes(item, food_blacklist)))
-			owner.visible_message("[user] tries to feed [owner] [item] but they won't take it!")
-			return
+	if (M.a_intent == INTENT_HARM)
+		return
+	if(!is_valid_food(item))
+		owner.visible_message("[user] tries to feed [owner] [item] but they won't take it!")
+		return
+	if(!aggro_mode)
 		if (owner.tamed)
 			owner.visible_message("[user] tries to feed [owner] [item] but they seem full...")
 			return
@@ -57,7 +65,7 @@ TYPEINFO(/datum/component/tameable)
 			RW.aftereat()
 		item.Eat(owner, owner)
 		return
-	if(istypes(item, taming_foods) && !passive_mode)
+	else
 		owner.visible_message("[user] feeds \the [owner] some [item].", "[user] feeds you some [item].")
 		for(var/damage_type in owner.healthlist)
 			var/datum/healthHolder/hh = owner.healthlist[damage_type]
@@ -83,19 +91,21 @@ TYPEINFO(/datum/component/tameable)
 /datum/component/tameable/proc/pass_on_attackhand(atom/source, mob/M)
 	if ((M.a_intent == INTENT_HARM) || !(M in owner.friends))
 		return
-	if(!passive_mode)
-		if(M.a_intent == INTENT_HELP && owner.aggressive)
-			owner.visible_message(SPAN_NOTICE("[M] pats [owner] on the head in a soothing way. It won't attack anyone now."))
-			owner.aggressive = FALSE
-			owner.ai_retaliates = FALSE
-			return
-		else if((M.a_intent == INTENT_DISARM) && !owner.aggressive)
-			owner.visible_message(SPAN_NOTICE("[M] shakes [owner] to awaken [his_or_her(owner)] killer instincts!"))
-			owner.aggressive = TRUE
-			owner.ai_retaliates = TRUE
-			return
+	if(aggro_mode)
+		return
+	if(M.a_intent == INTENT_HELP && owner.aggressive)
+		owner.visible_message(SPAN_NOTICE("[M] pats [owner] on the head in a soothing way. It won't attack anyone now."))
+		owner.aggressive = FALSE
+		owner.ai_retaliates = FALSE
+		return
+	else if((M.a_intent == INTENT_DISARM) && !owner.aggressive)
+		owner.visible_message(SPAN_NOTICE("[M] shakes [owner] to awaken [his_or_her(owner)] killer instincts!"))
+		owner.aggressive = TRUE
+		owner.ai_retaliates = TRUE
+		return
 
 /datum/component/tameable/proc/pass_on_validtarget(mob/M)
-	if(!passive_mode)
-		if(M in owner.friends)
-			return FALSE
+	if(!aggro_mode)
+		return
+	if(M in owner.friends)
+		return FALSE
