@@ -17,10 +17,8 @@ ABSTRACT_TYPE(/datum/db_manager_menu/main)
 	var/command = global.text2num_safe(src.parent.parse_string(text)[1])
 	var/index_number = round(max(command, 0))
 	if (index_number == 0)
-		src.parent.print_text("Quitting...")
-		src.wait(2 SECONDS)
 		src.parent.master.temp = null
-		src.parent.master.temp_add = "Screen cleared.<br>"
+		src.parent.master.temp_add = "[src.name] closed.<br>"
 		src.parent.master.updateUsrDialog()
 		src.parent.master.unload_program(src.parent)
 		return

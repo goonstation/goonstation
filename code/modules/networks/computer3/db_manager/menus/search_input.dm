@@ -8,6 +8,10 @@
 	if (!search_text)
 		return
 
+	if (search_text == "0")
+		src.parent.switch_menu_to("main")
+		return
+
 	var/datum/record_database/main_database = src.parent.current_record_group.get_main_database()
 	var/alist/databases = src.parent.current_record_group.get_all_databases()
 
@@ -30,8 +34,6 @@
 	switch (length(results))
 		if (0)
 			src.parent.print_text("No results found.")
-			src.wait(2 SECONDS)
-			src.parent.switch_menu_to("main")
 		if (1)
 			src.parent.switch_menu_to("record_view", results[1]["id"])
 		else
