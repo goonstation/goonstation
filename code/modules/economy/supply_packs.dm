@@ -405,7 +405,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	contains = list(/obj/item/storage/toolbox/electrical/orange_tools = 2,
 					/obj/item/device/multitool/orange = 2,
 					/obj/item/clothing/gloves/yellow = 2)
-	cost = PAY::DOCTORATE*2
+	cost = PAY::EXECUTIVE*2
 	containertype = /obj/storage/crate
 	containername = "Electrical Maintenance Crate"
 
@@ -1854,7 +1854,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	containertype = /obj/storage/crate
 	containername = "Basic Power Kit"
 
-/datum/supply_packs/complex/basic_power_kit/crew
+/datum/supply_packs/complex/emergency_power_equipment
 	name = "Emergency Power Equipment"
 	desc = "x2 Circular Power Treadmill Deployers."
 	category = "Engineering"

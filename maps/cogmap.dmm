@@ -2470,7 +2470,8 @@
 	},
 /area/station/security/checkpoint/arrivals)
 "ale" = (
-/obj/machinery/disposal/mail/autoname/checkpoint/arrivals,
+/obj/mapping_helper/mailtag/checkpoint/arrivals,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail,
 /obj/item/device/radio/intercom{
 	dir = 8
@@ -4064,7 +4065,8 @@
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
 "atU" = (
-/obj/machinery/disposal/mail/small/autoname/ranch,
+/obj/mapping_helper/mailtag/ranch,
+/obj/machinery/disposal/mail/small,
 /obj/disposalpipe/trunk/mail{
 	dir = 1
 	},
@@ -5266,6 +5268,15 @@
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
+"ayK" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fred1"
+	},
+/area/station/crew_quarters/captain)
 "ayM" = (
 /obj/stool/bar,
 /turf/simulated/floor/carpet{
@@ -5494,19 +5505,17 @@
 /area/station/security/brig)
 "azQ" = (
 /obj/stool,
+/obj/mapping_helper/mailtag/security/brig,
 /obj/disposalpipe/switch_junction{
-	dir = 4;
-	mail_tag = "brig";
-	name = "brig mail router"
+	dir = 4
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "azR" = (
 /obj/stool,
+/obj/mapping_helper/mailtag/security/foyer,
 /obj/disposalpipe/switch_junction{
-	dir = 4;
-	mail_tag = "sec foyer";
-	name = "sec foyer mail router"
+	dir = 4
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
@@ -5576,11 +5585,10 @@
 	},
 /area/station/crew_quarters/barber_shop)
 "aAe" = (
+/obj/mapping_helper/mailtag/public/crew,
 /obj/disposalpipe/switch_junction{
 	dir = 4;
-	icon_state = "pipe-sj2";
-	mail_tag = "crew";
-	name = "crew quarters mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor/neutral/side{
 	dir = 8
@@ -6942,11 +6950,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/mailtag/ranch,
 /obj/disposalpipe/switch_junction{
 	dir = 4;
-	icon_state = "pipe-sj2";
-	mail_tag = "ranch";
-	name = "ranch mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
@@ -7466,10 +7473,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/mailtag/security/detective,
 /obj/disposalpipe/switch_junction{
-	dir = 4;
-	mail_tag = "detective";
-	name = "detective mail router"
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
@@ -7632,7 +7638,8 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
-/obj/machinery/disposal/mail/autoname/security/foyer,
+/obj/mapping_helper/mailtag/security/foyer,
+/obj/machinery/disposal/mail,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -8839,9 +8846,6 @@
 	},
 /area/station/chapel/sanctuary)
 "aMr" = (
-/obj/machinery/light/emergency{
-	dir = 1
-	},
 /obj/item/instrument/large/organ,
 /turf/simulated/floor/carpet{
 	dir = 1;
@@ -15095,7 +15099,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "bhZ" = (
-/obj/machinery/disposal/mail/autoname/security,
+/obj/mapping_helper/mailtag/security,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
@@ -21258,12 +21263,10 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/mapping_helper/mailtag/qm,
 /obj/disposalpipe/switch_junction{
-	desc = "An underfloor mail pipe.";
 	dir = 2;
-	icon_state = "pipe-sj2";
-	mail_tag = "cargo";
-	name = "quartermasters mail router"
+	icon_state = "pipe-sj2"
 	},
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 9
@@ -21357,12 +21360,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/reagent_containers/food/snacks/beefood{
-	desc = "A little birthday cupcake for Heisenbee.  May not taste good to non-bees.";
-	icon = 'icons/obj/foodNdrink/food_dessert.dmi';
-	icon_state = "cupcake";
-	name = "Heisenbee's birthday cupcake"
-	},
+/obj/item/reagent_containers/food/snacks/beefood/heisenbee,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
 "bMN" = (
@@ -22631,12 +22629,10 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lobby)
 "bRl" = (
+/obj/mapping_helper/mailtag/research/testchamber,
 /obj/disposalpipe/switch_junction{
-	desc = "An underfloor mail pipe.";
 	dir = 1;
-	icon_state = "pipe-sj2";
-	mail_tag = "testchamber";
-	name = "test chamber mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor/purple/side{
 	dir = 4
@@ -23079,12 +23075,10 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "bSQ" = (
+/obj/mapping_helper/mailtag/research/chemistry,
 /obj/disposalpipe/switch_junction{
-	desc = "An underfloor mail pipe.";
 	dir = 1;
-	icon_state = "pipe-sj2";
-	mail_tag = "chemistry";
-	name = "chemistry mail router"
+	icon_state = "pipe-sj2"
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -23142,12 +23136,10 @@
 /turf/space,
 /area/space)
 "bSZ" = (
+/obj/mapping_helper/mailtag/research,
 /obj/disposalpipe/switch_junction{
-	desc = "An underfloor mail pipe.";
 	dir = 1;
-	icon_state = "pipe-sj2";
-	mail_tag = "research";
-	name = "research mail router"
+	icon_state = "pipe-sj2"
 	},
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
@@ -23747,12 +23739,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/mailtag/medbay,
 /obj/disposalpipe/switch_junction{
-	desc = "An underfloor mail pipe.";
 	dir = 8;
-	icon_state = "pipe-sj2";
-	mail_tag = "medbay";
-	name = "medbay mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor/purple/side{
 	dir = 1
@@ -23820,12 +23810,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/mailtag/medbay/robotics,
 /obj/disposalpipe/switch_junction{
-	desc = "An underfloor mail pipe.";
 	dir = 8;
-	icon_state = "pipe-sj2";
-	mail_tag = "robotics";
-	name = "robotics mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
@@ -24545,11 +24533,9 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/south)
 "bYx" = (
+/obj/mapping_helper/mailtag/mechanics,
 /obj/disposalpipe/switch_junction{
-	desc = "An underfloor mail pipe.";
-	dir = 8;
-	mail_tag = "mechanics";
-	name = "mechanics mail router"
+	dir = 8
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/hallway/primary/south)
@@ -24728,10 +24714,9 @@
 /turf/simulated/floor/yellow/side,
 /area/station/hallway/primary/south)
 "bZo" = (
+/obj/mapping_helper/mailtag/engineering,
 /obj/disposalpipe/switch_junction{
-	dir = 8;
-	mail_tag = "engineering";
-	name = "engineering mail router"
+	dir = 8
 	},
 /turf/simulated/floor/yellow/corner,
 /area/station/hallway/primary/south)
@@ -32261,10 +32246,9 @@
 	operating = 1
 	},
 /obj/strip_door,
+/obj/mapping_helper/mailtag/sorting_room,
 /obj/disposalpipe/switch_junction{
-	dir = 4;
-	mail_tag = "sortingroom";
-	name = "sorting room router"
+	dir = 4
 	},
 /obj/machinery/door/firedoor/pyro{
 	layer = 29.1
@@ -34513,7 +34497,8 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/machinery/disposal/mail/autoname/engineering,
+/obj/mapping_helper/mailtag/engineering,
+/obj/machinery/disposal/mail,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
 	dir = 4
@@ -36524,7 +36509,7 @@
 /area/station/maintenance/central)
 "ftg" = (
 /obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/spaghetti/spicy{
+/obj/item/reagent_containers/food/snacks/spaghetti/spicy/security{
 	pixel_x = -2;
 	pixel_y = 4
 	},
@@ -36970,7 +36955,8 @@
 /turf/simulated/floor/plating,
 /area/station/hydroponics/lobby)
 "fHj" = (
-/obj/machinery/disposal/mail/autoname/security/brig,
+/obj/mapping_helper/mailtag/security/brig,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
@@ -37215,8 +37201,6 @@
 	dir = 8;
 	tag = ""
 	},
-/obj/shrub/captainshrub,
-/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fred2"
@@ -37632,7 +37616,8 @@
 	},
 /area/station/mining/magnet)
 "geG" = (
-/obj/machinery/disposal/mail/autoname/public/crew,
+/obj/mapping_helper/mailtag/public/crew,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
@@ -38251,7 +38236,8 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 1
 	},
-/obj/machinery/disposal/mail/autoname/checkpoint/customs,
+/obj/mapping_helper/mailtag/checkpoint/customs,
+/obj/machinery/disposal/mail,
 /obj/machinery/light{
 	dir = 8;
 	tag = ""
@@ -38875,6 +38861,14 @@
 	dir = 1
 	},
 /area/station/hallway/primary/central)
+"gVg" = (
+/obj/shrub/captainshrub,
+/obj/item/reagent_containers/food/drinks/bottle/thegoodstuff,
+/turf/simulated/floor/carpet{
+	dir = 8;
+	icon_state = "fred2"
+	},
+/area/station/crew_quarters/captain)
 "gVk" = (
 /obj/mesh/catwalk{
 	dir = 4
@@ -40529,11 +40523,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/mailtag/checkpoint/arrivals,
 /obj/disposalpipe/switch_junction{
 	dir = 4;
-	icon_state = "pipe-sj2";
-	mail_tag = "arrivals checkpoint";
-	name = "arrivals checkpoint mail router"
+	icon_state = "pipe-sj2"
 	},
 /obj/machinery/light/small/floor/warm,
 /obj/railing,
@@ -41457,11 +41450,10 @@
 /obj/item/device/radio/intercom/medical{
 	dir = 1
 	},
+/obj/mapping_helper/mailtag/kitchen,
 /obj/disposalpipe/switch_junction{
 	dir = 4;
-	icon_state = "pipe-sj2";
-	mail_tag = "kitchen";
-	name = "kitchen mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
@@ -43700,11 +43692,7 @@
 /turf/simulated/floor/bluewhite,
 /area/station/medical/staff)
 "keI" = (
-/obj/machinery/disposal/mail/qm/autoname{
-	mail_tag = "cargo";
-	message = "1";
-	name = "mail chute-'Cargo'"
-	},
+/obj/machinery/disposal/mail/qm,
 /obj/disposalpipe/trunk/mail{
 	dir = 1
 	},
@@ -44251,9 +44239,9 @@
 	name = "Mail Sorting Room"
 	},
 /obj/mapping_helper/access/maint,
+/obj/mapping_helper/mailtag/undeliverable,
 /obj/disposalpipe/switch_junction{
-	dir = 2;
-	name = "undeliverable mail router"
+	dir = 2
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -45438,7 +45426,8 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "lvz" = (
-/obj/machinery/disposal/mail/autoname/medbay/genetics,
+/obj/mapping_helper/mailtag/medbay/genetics,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail{
 	dir = 1
 	},
@@ -45579,6 +45568,15 @@
 /obj/landmark/pest,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
+"lBf" = (
+/obj/machinery/computer/announcement/station/captain{
+	dir = 8
+	},
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "fred6"
+	},
+/area/station/crew_quarters/captain)
 "lBr" = (
 /obj/machinery/firealarm/directional/south,
 /turf/simulated/floor/auto/glassblock/indigo,
@@ -46985,7 +46983,8 @@
 /turf/space,
 /area/space)
 "mvw" = (
-/obj/machinery/disposal/mail/autoname/security/detective,
+/obj/mapping_helper/mailtag/security/detective,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail{
 	dir = 1
 	},
@@ -47124,7 +47123,8 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/catering)
 "mAp" = (
-/obj/machinery/disposal/mail/autoname/public/market,
+/obj/mapping_helper/mailtag/public/market,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail{
 	dir = 4
 	},
@@ -47945,7 +47945,8 @@
 /turf/simulated/floor,
 /area/station/engine/elect)
 "ndu" = (
-/obj/machinery/disposal/mail/autoname/kitchen,
+/obj/mapping_helper/mailtag/kitchen,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -48724,8 +48725,8 @@
 	pixel_y = 2
 	},
 /turf/simulated/floor/carpet{
-	dir = 6;
-	icon_state = "fred6"
+	dir = 4;
+	icon_state = "fred2"
 	},
 /area/station/crew_quarters/captain)
 "nEP" = (
@@ -49286,11 +49287,10 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/atmos/hookups/east)
 "nYR" = (
+/obj/mapping_helper/mailtag/bridge,
 /obj/disposalpipe/switch_junction{
 	dir = 1;
-	icon_state = "pipe-sj2";
-	mail_tag = "bridge";
-	name = "bridge mail router"
+	icon_state = "pipe-sj2"
 	},
 /obj/item/device/radio/intercom/AI,
 /turf/simulated/floor,
@@ -49941,11 +49941,8 @@
 	},
 /area/station/crew_quarters/market)
 "otx" = (
-/obj/disposalpipe/switch_junction{
-	desc = "An underfloor mail pipe.";
-	mail_tag = "chapel";
-	name = "chapel mail router"
-	},
+/obj/mapping_helper/mailtag/chapel,
+/obj/disposalpipe/switch_junction,
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/sanctuary)
 "otM" = (
@@ -50004,7 +50001,8 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 1
 	},
-/obj/machinery/disposal/mail/autoname/research,
+/obj/mapping_helper/mailtag/research,
+/obj/machinery/disposal/mail,
 /turf/simulated/floor/purple/side,
 /area/station/science/lobby)
 "ouQ" = (
@@ -51246,7 +51244,8 @@
 /area/space)
 "piB" = (
 /obj/disposalpipe/trunk/mail,
-/obj/machinery/disposal/mail/autoname/chapel,
+/obj/mapping_helper/mailtag/chapel,
+/obj/machinery/disposal/mail,
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
@@ -51354,7 +51353,8 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "pkH" = (
-/obj/machinery/disposal/mail/small/autoname/mechanics/south,
+/obj/mapping_helper/mailtag/mechanics,
+/obj/machinery/disposal/mail/small/south,
 /obj/disposalpipe/trunk/mail{
 	dir = 4
 	},
@@ -51584,12 +51584,10 @@
 /turf/simulated/floor/grime,
 /area/station/storage/hydroponics)
 "pwv" = (
+/obj/mapping_helper/mailtag/public/market,
 /obj/disposalpipe/switch_junction{
-	desc = "An underfloor mail pipe.";
 	dir = 1;
-	icon_state = "pipe-sj2";
-	mail_tag = "market";
-	name = "market mail router"
+	icon_state = "pipe-sj2"
 	},
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -54992,7 +54990,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
 /turf/simulated/floor/grime,
 /area/station/hallway/primary/east)
 "rPa" = (
@@ -55403,7 +55403,8 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/locker)
 "scG" = (
-/obj/machinery/disposal/mail/autoname/hydroponics,
+/obj/mapping_helper/mailtag/hydroponics,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
@@ -56211,7 +56212,8 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 1
 	},
-/obj/machinery/disposal/mail/autoname/sorting_room,
+/obj/mapping_helper/mailtag/sorting_room,
+/obj/machinery/disposal/mail,
 /turf/simulated/floor,
 /area/station/routing/sortingRoom)
 "sFY" = (
@@ -57156,10 +57158,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/mapping_helper/mailtag/security,
 /obj/disposalpipe/switch_junction{
-	dir = 4;
-	mail_tag = "security";
-	name = "security mail router"
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "1-4"
@@ -58333,12 +58334,10 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/firealarm/directional/north,
+/obj/mapping_helper/mailtag/medbay/genetics,
 /obj/disposalpipe/switch_junction{
-	desc = "An underfloor mail pipe.";
 	dir = 8;
-	icon_state = "pipe-sj2";
-	mail_tag = "genetics";
-	name = "genetics mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor/purple/side{
 	dir = 1
@@ -58482,7 +58481,8 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 1
 	},
-/obj/machinery/disposal/mail/autoname/medbay,
+/obj/mapping_helper/mailtag/medbay,
+/obj/machinery/disposal/mail,
 /obj/machinery/door_control{
 	id = "medbay_front";
 	name = "Medbay Door Control";
@@ -58647,7 +58647,8 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/machinery/disposal/mail/autoname/research/testchamber,
+/obj/mapping_helper/mailtag/research/testchamber,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail{
 	dir = 1
 	},
@@ -58725,7 +58726,8 @@
 	dir = 10;
 	icon_state = "xtra_bigstripe-corner2"
 	},
-/obj/machinery/disposal/mail/autoname/medbay/robotics,
+/obj/mapping_helper/mailtag/medbay/robotics,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
@@ -58928,7 +58930,8 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
-/obj/machinery/disposal/mail/autoname/research/chemistry,
+/obj/mapping_helper/mailtag/research/chemistry,
+/obj/machinery/disposal/mail,
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
@@ -59390,7 +59393,7 @@
 "uHb" = (
 /obj/strip_door,
 /obj/disposalpipe/segment,
-/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/plating,
 /area/station/security/beepsky)
 "uHm" = (
@@ -59524,6 +59527,25 @@
 "uMC" = (
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hop)
+"uNB" = (
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "lockdown";
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/captain)
 "uNH" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 10
@@ -60878,12 +60900,10 @@
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "vJx" = (
+/obj/mapping_helper/mailtag/checkpoint/customs,
 /obj/disposalpipe/switch_junction{
-	desc = "An underfloor mail pipe.";
 	dir = 8;
-	icon_state = "pipe-sj2";
-	mail_tag = "customs checkpoint";
-	name = "customs checkpoint mail router"
+	icon_state = "pipe-sj2"
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -62853,11 +62873,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/mapping_helper/mailtag/hydroponics,
 /obj/disposalpipe/switch_junction{
 	dir = 4;
-	icon_state = "pipe-sj2";
-	mail_tag = "hydroponics";
-	name = "hydroponics mail router"
+	icon_state = "pipe-sj2"
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
@@ -63167,9 +63186,6 @@
 /turf/simulated/floor,
 /area/station/maintenance/east)
 "xfn" = (
-/obj/machinery/conveyor_switch{
-	id = "chapel"
-	},
 /obj/machinery/light{
 	dir = 4
 	},
@@ -63272,7 +63288,8 @@
 	pixel_x = -10
 	},
 /obj/machinery/atmospherics/pipe/simple,
-/obj/machinery/disposal/mail/autoname/bridge,
+/obj/mapping_helper/mailtag/bridge,
+/obj/machinery/disposal/mail,
 /obj/disposalpipe/trunk/mail{
 	dir = 4
 	},
@@ -89329,7 +89346,7 @@ moc
 mXQ
 adC
 adC
-adC
+aal
 adC
 adC
 adC
@@ -89629,9 +89646,9 @@ bbP
 uNH
 nHW
 bbP
+bbP
 waj
 bbP
-aal
 adC
 adC
 adC
@@ -89931,13 +89948,13 @@ bbP
 cTJ
 pwx
 fRS
+gVg
 frQ
 bbP
 bbP
 bbP
 iRs
 wJq
-adC
 adC
 adC
 adC
@@ -90233,13 +90250,13 @@ bbP
 gbf
 bdR
 beL
+beL
 bfI
 ikX
 aqA
 bhp
 biv
 ifi
-adC
 adC
 adC
 adC
@@ -90535,13 +90552,13 @@ jOM
 bcT
 foB
 oiu
+ayK
 dwR
 fAA
 lFi
 bhq
 eJk
 mQu
-adC
 adC
 adC
 adC
@@ -90837,13 +90854,13 @@ bbP
 tuC
 bdT
 beN
+beL
 bKt
 qCO
 aqA
 bhr
 bix
 dfe
-adC
 adC
 adC
 adC
@@ -91140,12 +91157,12 @@ bcV
 vuo
 beO
 nED
+lBf
 bbP
 bbP
 bbP
 gqO
 mPo
-adC
 adC
 adC
 adC
@@ -91441,9 +91458,9 @@ bbP
 uVp
 gKO
 luE
+uNB
 eFX
 bbP
-aah
 adC
 adC
 adC
@@ -109636,8 +109653,8 @@ uLB
 uLB
 uLB
 uLB
-adC
-adC
+uLB
+uLB
 adC
 adC
 adC
@@ -109930,6 +109947,8 @@ cdw
 woV
 cdw
 cpY
+cdw
+cdw
 crb
 jje
 htJ
@@ -109938,8 +109957,6 @@ uzt
 uzt
 oav
 dOf
-adC
-adC
 adC
 adC
 adC
@@ -110232,6 +110249,8 @@ cqe
 cqe
 cqe
 cqe
+cqe
+cqe
 hpX
 vIN
 htJ
@@ -110240,8 +110259,6 @@ yht
 yht
 cuA
 uLB
-adC
-adC
 adC
 adC
 adC
@@ -110537,13 +110554,13 @@ uLB
 uLB
 uLB
 uLB
-lKY
 uLB
 uLB
 lKY
 uLB
-adC
-adC
+uLB
+lKY
+uLB
 adC
 adC
 adC
@@ -110845,10 +110862,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 adC
 adC
@@ -111148,10 +111165,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 adC
 adC
@@ -111450,10 +111467,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 adC
 adC
@@ -111755,10 +111772,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 adC
 aah
@@ -112058,10 +112075,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 aah
 adC
@@ -112360,10 +112377,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 aah
 adC
@@ -112662,10 +112679,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 aah
 adC
@@ -112964,10 +112981,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 aah
 adC
@@ -113266,10 +113283,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 aah
 adC
@@ -113568,10 +113585,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 aah
 adC
@@ -113869,10 +113886,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 adC
 aah
@@ -114168,10 +114185,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 adC
 adC
@@ -114470,10 +114487,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 adC
 adC
@@ -114771,10 +114788,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 adC
 adC
@@ -115067,13 +115084,13 @@ uLB
 uLB
 uLB
 uLB
-lvn
 uLB
 uLB
 lvn
 uLB
-adC
-adC
+uLB
+lvn
+uLB
 adC
 adC
 adC
@@ -115366,6 +115383,8 @@ cqf
 cqf
 cqf
 cqf
+cdw
+cdw
 rHg
 jje
 mPB
@@ -115374,8 +115393,6 @@ uzt
 uzt
 cuC
 uLB
-adC
-adC
 adC
 adC
 adC
@@ -115668,6 +115685,8 @@ cdw
 iMi
 cdw
 cpZ
+cqe
+cqe
 cre
 vIN
 mPB
@@ -115676,8 +115695,6 @@ yht
 yht
 lpQ
 rWQ
-adC
-adC
 adC
 adC
 adC
@@ -115978,8 +115995,8 @@ uLB
 uLB
 uLB
 uLB
-adC
-adC
+uLB
+uLB
 adC
 adC
 adC

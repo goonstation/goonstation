@@ -1595,71 +1595,31 @@
 	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty)
 	create = 1
 	time = 3 SECONDS
-	category = MANUFACTURER::CATEGORY::TOOL
+	category = MANUFACTURER::CATEGORY::MEDICINE
 
 /datum/manufacture/empty_autoinjector/orange
-	name = "Empty Auto-Injector"
-	item_requirements = list("metal" = 1)
 	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/orange)
-	create = 1
-	time = 3 SECONDS
-	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/empty_autoinjector/red
-	name = "Empty Auto-Injector"
-	item_requirements = list("metal" = 1)
 	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/red)
-	create = 1
-	time = 3 SECONDS
-	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/empty_autoinjector/blue
-	name = "Empty Auto-Injector"
-	item_requirements = list("metal" = 1)
 	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/blue)
-	create = 1
-	time = 3 SECONDS
-	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/empty_autoinjector/green
-	name = "Empty Auto-Injector"
-	item_requirements = list("metal" = 1)
 	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/green)
-	create = 1
-	time = 3 SECONDS
-	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/empty_autoinjector/yellow
-	name = "Empty Auto-Injector"
-	item_requirements = list("metal" = 1)
 	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/yellow)
-	create = 1
-	time = 3 SECONDS
-	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/empty_autoinjector/purple
-	name = "Empty Auto-Injector"
-	item_requirements = list("metal" = 1)
 	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/purple)
-	create = 1
-	time = 3 SECONDS
-	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/empty_autoinjector/black
-	name = "Empty Auto-Injector"
-	item_requirements = list("metal" = 1)
 	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/black)
-	create = 1
-	time = 3 SECONDS
-	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/empty_autoinjector/white
-	name = "Empty Auto-Injector"
-	item_requirements = list("metal" = 1)
 	item_outputs = list(/obj/item/reagent_containers/emergency_injector/empty/white)
-	create = 1
-	time = 3 SECONDS
-	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/gene_booth_frame
 	name = "Genetics Booth Deployer"
@@ -2294,15 +2254,6 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	time = 90 SECONDS
 	category = MANUFACTURER::CATEGORY::CYBORG_UPGRADES
 
-/datum/manufacture/robup_visualizer
-	name = "Construction Visualizer"
-	item_requirements = list("crystal" = 4,
-							 "conductive" = 6)
-	item_outputs = list(/obj/item/roboupgrade/visualizer)
-	create = 1
-	time = 90 SECONDS
-	category = MANUFACTURER::CATEGORY::CYBORG_UPGRADES
-
 /datum/manufacture/scream_synth
 	name = "Scream Synthesizer"
 	item_requirements = list("conductive" = 2, "metal" = 2, "insulated" = 2)
@@ -2645,7 +2596,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/reagent_containers/mender)
 	create = 2
 	time = 30 SECONDS
-	category = MANUFACTURER::CATEGORY::RESOURCE
+	category = MANUFACTURER::CATEGORY::TOOL
 
 /datum/manufacture/mender_refill_cartridge
 	name = "Mender Refill Cartridge"
@@ -2654,7 +2605,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	item_outputs = list(/obj/item/reagent_containers/mender_refill_cartridge)
 	create = 1
 	time = 3 SECONDS
-	category = MANUFACTURER::CATEGORY::RESOURCE
+	category = MANUFACTURER::CATEGORY::MEDICINE
 
 /datum/manufacture/penlight
 	name = "Penlight"
@@ -3239,6 +3190,46 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	name = "Fancy Black Dress"
 	item_requirements = list("fabric" = JUMPSUIT_COST)
 	item_outputs = list(/obj/item/clothing/under/suit/black/dress)
+	create = 1
+	time = 5 SECONDS
+	category = MANUFACTURER::CATEGORY::CLOTHING
+
+/datum/manufacture/baseball_staffie
+	name = "Staff Assistant Baseball Uniform"
+	item_requirements = list("fabric" = JUMPSUIT_COST)
+	item_outputs = list(/obj/item/clothing/under/baseball/staffie)
+	create = 1
+	time = 5 SECONDS
+	category = MANUFACTURER::CATEGORY::CLOTHING
+
+/datum/manufacture/baseball_command
+	name = "Command Baseball Uniform"
+	item_requirements = list("fabric" = JUMPSUIT_COST)
+	item_outputs = list(/obj/item/clothing/under/baseball/command)
+	create = 1
+	time = 5 SECONDS
+	category = MANUFACTURER::CATEGORY::CLOTHING
+
+/datum/manufacture/baseball_nt
+	name = "NanoTrasen Baseball Uniform"
+	item_requirements = list("fabric" = JUMPSUIT_COST)
+	item_outputs = list(/obj/item/clothing/under/baseball/nt)
+	create = 1
+	time = 5 SECONDS
+	category = MANUFACTURER::CATEGORY::CLOTHING
+
+/datum/manufacture/baseball_mining
+	name = "Mining Baseball Uniform"
+	item_requirements = list("fabric" = JUMPSUIT_COST)
+	item_outputs = list(/obj/item/clothing/under/baseball/mining)
+	create = 1
+	time = 5 SECONDS
+	category = MANUFACTURER::CATEGORY::CLOTHING
+
+/datum/manufacture/baseball_cargo
+	name = "Cargo Baseball Uniform"
+	item_requirements = list("fabric" = JUMPSUIT_COST)
+	item_outputs = list(/obj/item/clothing/under/baseball/cargo)
 	create = 1
 	time = 5 SECONDS
 	category = MANUFACTURER::CATEGORY::CLOTHING
@@ -3979,7 +3970,7 @@ ABSTRACT_TYPE(/datum/manufacture/locker) //Regular lockers are built using steel
 /************ NADIR RESONATORS ************/
 
 /datum/manufacture/resonator_type_ax
-	name = "Type-AX Resonator"
+	name = "Axial Resonator - Type-AX"
 	item_requirements = list("metal_dense" = 15,
 							 "conductive_high" = 20,
 							 "crystal" = 20,
@@ -3990,7 +3981,7 @@ ABSTRACT_TYPE(/datum/manufacture/locker) //Regular lockers are built using steel
 	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/resonator_type_sm
-	name = "Type-SM Resonator"
+	name = "Shear Moderator - Type-SM"
 	item_requirements = list("metal_dense" = 10,
 							 "conductive_high" = 20,
 							 "crystal" = 10,
@@ -4001,7 +3992,7 @@ ABSTRACT_TYPE(/datum/manufacture/locker) //Regular lockers are built using steel
 	category = MANUFACTURER::CATEGORY::MACHINERY
 
 /datum/manufacture/resonator_type_fq
-	name = "Type-FQ Resonator"
+	name = "Field Quantizer - Type-FQ"
 	item_requirements = list("metal_dense" = 15,
 							 "conductive_high" = 20,
 							 "koshmarite" = 10,

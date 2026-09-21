@@ -1,8 +1,8 @@
 /obj/decal/poster/wallsign/accident_sign
-	name = "nuclear meltdown tracking sign"
+	name = "nuclear overload tracking sign"
 	icon = 'icons/obj/decals/countdown_sign.dmi'
 	icon_state = "base"
-	desc = "It has been X shifts since the last nuclear meltdown"
+	desc = "It has been X shifts since the last nuclear overload"
 	var/shift_count = 0
 
 	New()
@@ -11,7 +11,7 @@
 		world.save_intra_round_value("nuclear_accident_count_[map_settings.name]", src.shift_count+1)
 		src.UpdateOverlays(image(src.icon, "[round(shift_count/10)]_"), "number10s")
 		src.UpdateOverlays(image(src.icon, "_[round(shift_count%10)]"), "number1s")
-		src.desc = "It has been [shift_count] shift\s since the last nuclear meltdown."
+		src.desc = "It has been [shift_count] shift\s since the last nuclear overload."
 		switch(src.shift_count)
 			if(0)
 				src.desc += " Oh no."

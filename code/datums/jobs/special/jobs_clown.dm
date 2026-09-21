@@ -20,6 +20,7 @@ ABSTRACT_TYPE(/datum/job/special/clown)
 	slot_belt = list(/obj/item/storage/fanny/funny)
 	slot_poc1 = list(/obj/item/device/pda2/clown)
 	slot_lhan = list(/obj/item/instrument/bikehorn)
+	items_in_mob = /datum/job/civilian/clown::items_in_mob
 	change_name_on_spawn = TRUE
 	wiki_link = "https://wiki.ss13.co/Clown"
 	faction = list(FACTION_CLOWN)

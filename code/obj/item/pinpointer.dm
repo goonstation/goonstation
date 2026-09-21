@@ -83,12 +83,14 @@ TYPEINFO(/obj/item/pinpointer)
 	proc/work()
 		set waitfor = FALSE
 		while(active)
+			if (QDELETED(src.target))
+				src.target = null
 			if(!target)
 				if (target_ref)
 					target = locate(target_ref)
 				else if (target_criteria)
 					target = locate(target_criteria)
-				if(!target || target.qdeled)
+				if(!target)
 					src.turn_off()
 					return
 				var/mob/user = src.loc

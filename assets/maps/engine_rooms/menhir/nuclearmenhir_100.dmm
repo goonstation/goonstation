@@ -1,0 +1,2353 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"av" = (
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/emergency_injector/anti_rad{
+	pixel_x = 2
+	},
+/obj/item/reagent_containers/emergency_injector/anti_rad{
+	pixel_x = 6;
+	pixel_y = -2
+	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/item/paper/emergencycooler{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/turf/simulated/floor/black/grime,
+/area/station/engine/coldloop{
+	name = "Volatiles Handling"
+	})
+"ax" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/engine/power)
+"aK" = (
+/obj/machinery/light_switch/directional/north,
+/obj/machinery/atmospherics/pipe/simple/insulated/underfloor{
+	dir = 4
+	},
+/turf/simulated/floor/stairs{
+	dir = 4
+	},
+/area/station/engine/core/nuclear)
+"ba" = (
+/obj/cable{
+	icon_state = "0-6"
+	},
+/obj/machinery/camera/directional/north,
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/terminal/zeta{
+	setup_os_string = "ZETA_MAINFRAME";
+	dir = 4
+	},
+/turf/simulated/floor/yellow,
+/area/station/engine/monitoring)
+"bd" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/engine/monitoring)
+"bR" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"bS" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/engine/core/nuclear)
+"ce" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/engine/monitoring)
+"cj" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 9
+	},
+/turf/simulated/floor/black/grime,
+/area/station/engine/coldloop{
+	name = "Volatiles Handling"
+	})
+"cv" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "cold loop gas supply valve"
+	},
+/turf/simulated/floor/engine/caution/south,
+/area/station/engine/coldloop{
+	name = "Volatiles Handling"
+	})
+"cS" = (
+/obj/machinery/door/airlock/pyro/glass/engineering,
+/obj/mapping_helper/access/engineering_engine,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/black/grime,
+/area/station/engine/coldloop{
+	name = "Volatiles Handling"
+	})
+"cT" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 5
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
+"dn" = (
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
+"dR" = (
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/blast/pyro{
+	density = 0;
+	icon_state = "bdoormid0";
+	id = "menhir_nukecore";
+	name = "Reactor Core Shielding";
+	opacity = 0;
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/monitoring)
+"es" = (
+/obj/machinery/atmospherics/unary/vent{
+	dir = 4
+	},
+/turf/space,
+/area/space)
+"eO" = (
+/obj/cable/orange{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/engine/caution/south,
+/area/station/engine/core/nuclear)
+"fp" = (
+/obj/table/reinforced/auto,
+/obj/machinery/phone,
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 4
+	},
+/area/station/engine/monitoring)
+"fA" = (
+/obj/rack,
+/obj/item/clothing/suit/hazard/fire/heavy,
+/obj/item/clothing/mask/gas{
+	pixel_x = -6;
+	pixel_y = -1
+	},
+/obj/item/chem_grenade/firefighting{
+	pixel_x = 7;
+	pixel_y = -2
+	},
+/obj/item/clothing/head/helmet/welding{
+	pixel_x = -1
+	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
+/area/station/engine/monitoring)
+"fE" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 6;
+	can_rupture = 0
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
+"fT" = (
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/obj/table/reinforced/auto,
+/obj/item/storage/firstaid/fire{
+	pixel_x = -4
+	},
+/obj/item/storage/firstaid/toxin{
+	pixel_x = 4
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 4
+	},
+/area/station/engine/monitoring)
+"gp" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/underfloor,
+/turf/simulated/floor/yellowblack/corner{
+	dir = 4
+	},
+/area/station/engine/monitoring)
+"gt" = (
+/obj/table/reinforced/auto,
+/obj/item/sheet/steel/fullstack,
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
+/area/station/engine/power)
+"gv" = (
+/obj/machinery/atmospherics/binary/pump/active{
+	dir = 8;
+	frequency = 1225;
+	id = "Reactor Gas Supply 2";
+	name = "reactor gas supply pump 2";
+	target_pressure = 1000
+	},
+/turf/simulated/floor/engine/caution/south,
+/area/station/engine/coldloop{
+	name = "Volatiles Handling"
+	})
+"gF" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/engine/power)
+"gJ" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
+/area/station/engine/power)
+"gT" = (
+/obj/stool/chair/office/yellow{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "4-9"
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated/underfloor,
+/turf/simulated/floor/black/grime,
+/area/station/engine/monitoring)
+"he" = (
+/obj/reagent_dispensers/foamtank,
+/turf/simulated/floor/yellow,
+/area/station/engine/monitoring)
+"hz" = (
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/blast/pyro{
+	density = 0;
+	icon_state = "bdoormid0";
+	id = "menhir_nukecore";
+	name = "Reactor Core Shielding";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/power)
+"hB" = (
+/obj/cable{
+	icon_state = "4-10"
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated/underfloor,
+/turf/simulated/floor/black/grime,
+/area/station/engine/monitoring)
+"hC" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/engine/coldloop{
+	name = "Volatiles Handling"
+	})
+"hH" = (
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
+"hK" = (
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/machinery/meter{
+	pixel_x = 10
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
+"hQ" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/station/engine/core/nuclear)
+"iM" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/firealarm/directional/east,
+/turf/simulated/floor/black/grime,
+/area/station/engine/monitoring)
+"jv" = (
+/obj/rack,
+/obj/item/clothing/suit/hazard/fire/heavy,
+/obj/item/clothing/mask/gas{
+	pixel_x = -6;
+	pixel_y = -1
+	},
+/obj/item/chem_grenade/firefighting{
+	pixel_x = 7;
+	pixel_y = -2
+	},
+/obj/item/clothing/head/helmet/welding{
+	pixel_x = -1
+	},
+/obj/machinery/light_switch/directional/north,
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
+/area/station/engine/monitoring)
+"jS" = (
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
+/obj/cable/orange{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/engine/caution/east,
+/area/station/engine/core/nuclear)
+"kB" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/core/nuclear)
+"kT" = (
+/obj/machinery/atmospherics/unary/cold_sink/freezer/emergency{
+	dir = 8
+	},
+/turf/simulated/floor/engine/caution/east,
+/area/station/engine/core/nuclear)
+"lj" = (
+/obj/machinery/centrifuge_nuclear,
+/obj/machinery/light,
+/turf/simulated/floor/yellowblack,
+/area/station/engine/coldloop{
+	name = "Volatiles Handling"
+	})
+"lE" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
+/area/station/engine/power)
+"lH" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/science/storage)
+"mC" = (
+/obj/item/storage/wall/fire{
+	dir = 4;
+	pixel_x = -32
+	},
+/turf/simulated/floor/engine/caution/west,
+/area/station/engine/core/nuclear)
+"mM" = (
+/turf/simulated/floor/engine/caution/west,
+/area/station/engine/core/nuclear)
+"mO" = (
+/obj/machinery/power/smes{
+	charge = 1e+006;
+	chargelevel = 15000;
+	output = 10000
+	},
+/obj/cable,
+/turf/simulated/floor/engine/caution/misc{
+	dir = 4
+	},
+/area/station/engine/power)
+"mT" = (
+/obj/cable{
+	icon_state = "0-5"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer/atmosphere/pumpcontrol{
+	dir = 4
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 8
+	},
+/area/station/engine/monitoring)
+"na" = (
+/obj/storage/secure/closet/engineering/engineer,
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
+/area/station/engine/power)
+"nd" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/underfloor,
+/turf/simulated/floor/yellowblack{
+	dir = 8
+	},
+/area/station/engine/monitoring)
+"nj" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/power)
+"nk" = (
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 8
+	},
+/obj/machinery/meter{
+	pixel_y = 11;
+	pixel_x = 10
+	},
+/obj/cable/orange{
+	icon_state = "2-5"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
+"nQ" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
+/turf/simulated/floor/engine/caution/north,
+/area/station/engine/core/nuclear)
+"nZ" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 6
+	},
+/turf/simulated/floor/engine/caution/corner{
+	dir = 8
+	},
+/area/station/engine/coldloop{
+	name = "Volatiles Handling"
+	})
+"oa" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/engine/monitoring)
+"oj" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/engine/power)
+"ol" = (
+/obj/rack,
+/obj/item/clothing/suit/space/engineer,
+/obj/item/tank/air,
+/obj/item/device/light/flashlight{
+	pixel_x = 5
+	},
+/obj/machinery/light_switch/directional/east,
+/obj/machinery/camera/directional/north,
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
+/area/station/engine/power)
+"oA" = (
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/turf/simulated/floor/engine/caution/corner2{
+	dir = 9
+	},
+/area/station/engine/core/nuclear)
+"oX" = (
+/obj/decal/tile_edge/line/yellow{
+	dir = 4;
+	icon_state = "tile1"
+	},
+/obj/machinery/firealarm/directional/east,
+/obj/machinery/light_switch/directional/north,
+/obj/machinery/nanofab/nuclear,
+/turf/simulated/floor/black,
+/area/station/engine/coldloop{
+	name = "Volatiles Handling"
+	})
+"pg" = (
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	dir = 4
+	},
+/obj/mapping_helper/access/engineering_engine,
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/atmospherics/pipe/simple/insulated/underfloor{
+	dir = 4
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 4
+	},
+/area/station/engine/monitoring)
+"pv" = (
+/obj/machinery/atmospherics/binary/volume_pump/active{
+	dir = 8;
+	transfer_rate = 1000
+	},
+/turf/simulated/floor/engine/caution/east,
+/area/station/engine/core/nuclear)
+"pw" = (
+/obj/rack,
+/obj/item/clothing/suit/hazard/fire{
+	pixel_x = -3
+	},
+/obj/item/clothing/mask/gas/emergency,
+/obj/item/clothing/head/helmet/firefighter{
+	pixel_x = 3
+	},
+/obj/item/tank/air,
+/obj/item/chem_grenade/firefighting{
+	pixel_x = -7;
+	pixel_y = -4
+	},
+/obj/item/chem_grenade/firefighting{
+	pixel_x = -4;
+	pixel_y = -4
+	},
+/turf/simulated/floor/black/grime,
+/area/station/engine/power)
+"pJ" = (
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/blast/pyro{
+	density = 0;
+	icon_state = "bdoormid0";
+	id = "menhir_nukecore";
+	name = "Reactor Core Shielding";
+	opacity = 0;
+	dir = 4
+	},
+/obj/cable/orange{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/monitoring)
+"qy" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/engine/power)
+"qB" = (
+/obj/cable/orange{
+	icon_state = "6-9"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/engine/coldloop{
+	name = "Volatiles Handling"
+	})
+"qG" = (
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	dir = 4
+	},
+/obj/mapping_helper/access/engineering_engine,
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/atmospherics/pipe/simple/insulated/underfloor{
+	dir = 4
+	},
+/turf/simulated/floor/black/grime,
+/area/station/engine/monitoring)
+"rf" = (
+/obj/cable{
+	icon_state = "1-6"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/engine/coldloop{
+	name = "Volatiles Handling"
+	})
+"rB" = (
+/obj/table/reinforced/auto,
+/obj/machinery/phone,
+/obj/machinery/firealarm/directional/north,
+/obj/item/device/radio/intercom/engineering{
+	dir = 4
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
+/area/station/engine/power)
+"sh" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door_control{
+	id = "menhir_nukecore";
+	name = "Reactor Core Shielding";
+	dir = 8;
+	pixel_x = -24
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated/underfloor,
+/turf/simulated/floor/yellowblack{
+	dir = 8
+	},
+/area/station/engine/monitoring)
+"sk" = (
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
+"sm" = (
+/obj/machinery/reactor_turbine,
+/obj/cable/orange{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
+"so" = (
+/obj/cable/orange{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine/caution/south,
+/area/station/engine/core/nuclear)
+"sr" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 10
+	},
+/obj/cable/orange{
+	icon_state = "1-6"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
+"sv" = (
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/obj/cable/orange{
+	icon_state = "0-4"
+	},
+/obj/cable/orange{
+	icon_state = "0-8"
+	},
+/obj/machinery/door/poddoor/blast/pyro{
+	density = 0;
+	icon_state = "bdoormid0";
+	id = "menhir_nukecore";
+	name = "Reactor Core Shielding";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/power)
+"sK" = (
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 1
+	},
+/turf/simulated/floor/engine/caution/north,
+/area/station/engine/core/nuclear)
+"sZ" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "freezer interface valve"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
+"tg" = (
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
+"tJ" = (
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
+/obj/cable/orange{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/engine/caution/east,
+/area/station/engine/core/nuclear)
+"tL" = (
+/turf/simulated/floor/black/grime,
+/area/station/engine/core/nuclear)
+"tV" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/engine/caution/north,
+/area/station/engine/core/nuclear)
+"um" = (
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 8
+	},
+/obj/machinery/camera/directional/north,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 4
+	},
+/area/station/engine/coldloop{
+	name = "Volatiles Handling"
+	})
+"ux" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/toolbox/emergency{
+	pixel_y = 11
+	},
+/obj/item/storage/belt/utility{
+	pixel_y = -12
+	},
+/obj/item/storage/toolbox/mechanical,
+/obj/machinery/alarm/directional/east,
+/turf/simulated/floor/yellowblack{
+	dir = 4
+	},
+/area/station/engine/monitoring)
+"uF" = (
+/obj/machinery/firealarm/directional/north,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 8
+	},
+/area/station/engine/core/nuclear)
+"uN" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"vH" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hangar/engine)
+"wk" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/core/nuclear)
+"wG" = (
+/obj/cable/orange{
+	icon_state = "1-10"
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
+/turf/simulated/floor/engine/caution/east,
+/area/station/engine/core/nuclear)
+"xo" = (
+/obj/rack,
+/obj/item/clothing/suit/hazard/fire/heavy,
+/obj/item/clothing/mask/gas{
+	pixel_x = -6;
+	pixel_y = -1
+	},
+/obj/item/chem_grenade/firefighting{
+	pixel_x = 7;
+	pixel_y = -2
+	},
+/obj/item/clothing/head/helmet/welding{
+	pixel_x = -1
+	},
+/obj/machinery/firealarm/directional/north,
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
+/area/station/engine/monitoring)
+"xt" = (
+/obj/cable/orange{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine/caution/northsouth,
+/area/station/engine/power)
+"xy" = (
+/obj/machinery/door/airlock/pyro/glass/engineering,
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/engineering_engine,
+/obj/machinery/door/poddoor/blast/pyro{
+	density = 0;
+	icon_state = "bdoormid0";
+	id = "menhir_nukecore";
+	name = "Reactor Core Shielding";
+	opacity = 0
+	},
+/obj/cable{
+	icon_state = "1-6"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/engine/power)
+"xA" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/space)
+"xD" = (
+/obj/table/reinforced/auto,
+/obj/item/wrench{
+	pixel_y = 3
+	},
+/obj/item/storage/pill_bottle/antirad{
+	pixel_y = 10;
+	pixel_x = -5
+	},
+/turf/simulated/floor/yellowblack,
+/area/station/engine/monitoring)
+"yf" = (
+/obj/machinery/power/smes{
+	charge = 1e+006;
+	chargelevel = 15000;
+	output = 10000
+	},
+/obj/cable,
+/turf/simulated/floor/engine/caution/misc{
+	dir = 8
+	},
+/area/station/engine/power)
+"yq" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 5
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
+"yu" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 6
+	},
+/turf/simulated/floor/engine/caution/corner{
+	dir = 8
+	},
+/area/station/engine/core/nuclear)
+"yx" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/black/grime,
+/area/station/engine/monitoring)
+"yC" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "cold loop gas supply valve"
+	},
+/obj/cable/orange{
+	icon_state = "6-9"
+	},
+/turf/simulated/floor/engine/caution/north,
+/area/station/engine/coldloop{
+	name = "Volatiles Handling"
+	})
+"yU" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"yZ" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/monitoring)
+"zb" = (
+/turf/simulated/floor/black/grime,
+/area/station/engine/coldloop{
+	name = "Volatiles Handling"
+	})
+"zG" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/coldloop{
+	name = "Volatiles Handling"
+	})
+"zK" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "gas supply valve"
+	},
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
+"zM" = (
+/obj/machinery/alarm/directional/west,
+/turf/simulated/floor/engine/caution/west,
+/area/station/engine/core/nuclear)
+"zQ" = (
+/obj/machinery/camera/directional/south,
+/turf/simulated/floor/engine/caution/corner,
+/area/station/engine/core/nuclear)
+"Ab" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/engine/caution/west,
+/area/station/engine/core/nuclear)
+"Am" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = 6;
+	pixel_x = 3
+	},
+/obj/item/sheet/steel/reinforced/fullstack{
+	pixel_x = -13
+	},
+/obj/machinery/camera/directional/west{
+	pixel_y = 10
+	},
+/obj/machinery/light_switch/directional/west,
+/turf/simulated/floor/black/grime,
+/area/station/engine/power)
+"AA" = (
+/obj/cable/orange{
+	icon_state = "2-9"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/engine/power)
+"AS" = (
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 8;
+	level = 2
+	},
+/obj/machinery/meter{
+	pixel_y = 11;
+	pixel_x = 10
+	},
+/turf/simulated/floor/engine/caution/corner,
+/area/station/engine/coldloop{
+	name = "Volatiles Handling"
+	})
+"Bs" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/space)
+"BH" = (
+/turf/simulated/floor/stairs/dark/wide,
+/area/station/engine/core/nuclear)
+"BT" = (
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine/caution/east,
+/area/station/engine/core/nuclear)
+"Co" = (
+/obj/stool/chair/office/yellow{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/engine/power)
+"Ct" = (
+/obj/machinery/computer/power_monitor{
+	name = "Station Power Grid Monitoring"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
+/area/station/engine/power)
+"Cu" = (
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "0-9"
+	},
+/obj/decal/tile_edge/line/yellow{
+	dir = 4;
+	icon_state = "tile1"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/portable_reclaimer,
+/turf/simulated/floor/black,
+/area/station/engine/coldloop{
+	name = "Volatiles Handling"
+	})
+"Cw" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-9"
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
+/turf/simulated/floor/engine/caution/north,
+/area/station/engine/core/nuclear)
+"CG" = (
+/obj/machinery/atmospherics/binary/pump/active{
+	dir = 8;
+	frequency = 1225;
+	id = "Reactor Gas Supply 1";
+	name = "reactor gas supply pump 1";
+	target_pressure = 1000
+	},
+/turf/simulated/floor/engine/caution/north,
+/area/station/engine/coldloop{
+	name = "Volatiles Handling"
+	})
+"CW" = (
+/obj/table/reinforced/auto,
+/obj/item/paper/book/from_file/nuclear_engineering{
+	pixel_y = 3;
+	pixel_x = 5
+	},
+/obj/item/extinguisher{
+	pixel_y = 5;
+	pixel_x = -7
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 8
+	},
+/area/station/engine/monitoring)
+"CX" = (
+/obj/decal/tile_edge/line/yellow{
+	dir = 4;
+	icon_state = "tile1"
+	},
+/obj/cable/orange{
+	icon_state = "4-9"
+	},
+/turf/simulated/floor/yellowblack,
+/area/station/engine/coldloop{
+	name = "Volatiles Handling"
+	})
+"Db" = (
+/turf/simulated/floor/black/grime,
+/area/station/engine/power)
+"Do" = (
+/obj/machinery/light,
+/obj/cable/orange{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine/caution/south,
+/area/station/engine/core/nuclear)
+"Dv" = (
+/obj/storage/closet/radiation,
+/turf/simulated/floor/yellowblack,
+/area/station/engine/coldloop{
+	name = "Volatiles Handling"
+	})
+"Dx" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "bleed valve"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
+"DD" = (
+/obj/machinery/door/airlock/pyro/glass/engineering,
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/engineering_engine,
+/obj/machinery/door/poddoor/blast/pyro{
+	density = 0;
+	icon_state = "bdoormid0";
+	id = "menhir_nukecore";
+	name = "Reactor Core Shielding";
+	opacity = 0
+	},
+/turf/simulated/floor/black/grime,
+/area/station/engine/power)
+"DL" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/engine/monitoring)
+"Ek" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"En" = (
+/obj/cable/orange{
+	icon_state = "6-8"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/engine/coldloop{
+	name = "Volatiles Handling"
+	})
+"EL" = (
+/obj/table/reinforced/auto,
+/obj/item/device/analyzer/atmospheric{
+	pixel_y = 4;
+	pixel_x = 6
+	},
+/obj/item/device/analyzer/atmosanalyzer_upgrade{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/item/device/radio/intercom/engineering{
+	dir = 8
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 4
+	},
+/area/station/engine/monitoring)
+"EY" = (
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	dir = 4
+	},
+/obj/mapping_helper/access/engineering_engine,
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 4
+	},
+/turf/simulated/floor/black/grime,
+/area/station/engine/coldloop{
+	name = "Volatiles Handling"
+	})
+"EZ" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/underfloor{
+	dir = 4
+	},
+/turf/simulated/floor/black/grime,
+/area/station/engine/monitoring)
+"Fh" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"Fi" = (
+/obj/machinery/computer/power_monitor/smes{
+	dir = 8;
+	name = "Engine Output Monitoring"
+	},
+/obj/cable/orange{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
+"FF" = (
+/obj/machinery/nuclear_reactor/prefilled/normal,
+/obj/cable/orange{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
+"FH" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/obj/machinery/meter{
+	pixel_x = -10
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
+"FJ" = (
+/obj/machinery/atmospherics/binary/pump/active{
+	id = "Hot Loop Sauna Pump";
+	target_pressure = 2000
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
+"GY" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "sauna purge valve"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
+"He" = (
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine/caution/corner{
+	dir = 4
+	},
+/area/station/engine/core/nuclear)
+"Hs" = (
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 4
+	},
+/obj/mapping_helper/access/engineering_engine,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/science/storage)
+"HF" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 4
+	},
+/turf/space,
+/area/space)
+"HY" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/underfloor{
+	dir = 9
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 8
+	},
+/area/station/engine/monitoring)
+"Ii" = (
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine/caution/east,
+/area/station/engine/core/nuclear)
+"IH" = (
+/obj/machinery/centrifuge_nuclear,
+/turf/simulated/floor/yellowblack,
+/area/station/engine/coldloop{
+	name = "Volatiles Handling"
+	})
+"Jj" = (
+/turf/simulated/floor/stairs/dark/wide{
+	dir = 6
+	},
+/area/station/engine/core/nuclear)
+"JQ" = (
+/obj/lattice,
+/turf/space,
+/area/space)
+"KP" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/cable/orange{
+	icon_state = "0-4"
+	},
+/obj/cable/orange{
+	icon_state = "0-2"
+	},
+/obj/cable/orange,
+/turf/simulated/floor/engine/caution/corner2,
+/area/station/engine/power)
+"LL" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 5
+	},
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
+"LQ" = (
+/obj/storage/secure/closet/engineering/electrical,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
+/area/station/engine/power)
+"Mg" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/obj/machinery/meter{
+	pixel_x = 10
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
+"Mp" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/power/nuclear/reactor_control{
+	dir = 4
+	},
+/obj/cable/orange{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 8
+	},
+/area/station/engine/monitoring)
+"Ms" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/underfloor,
+/turf/simulated/floor/yellowblack/corner{
+	dir = 1
+	},
+/area/station/engine/monitoring)
+"Mx" = (
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/obj/cable/orange{
+	icon_state = "0-4"
+	},
+/obj/machinery/door/poddoor/blast/pyro{
+	density = 0;
+	icon_state = "bdoormid0";
+	id = "menhir_nukecore";
+	name = "Reactor Core Shielding";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/power)
+"MD" = (
+/obj/cable/orange{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/turf/simulated/floor/engine/caution/northsouth,
+/area/station/engine/power)
+"Nj" = (
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	dir = 4
+	},
+/obj/mapping_helper/access/engineering_power,
+/obj/mapping_helper/access/engineering_engine,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/black/grime,
+/area/station/engine/power)
+"Ny" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light_switch/directional/east,
+/turf/simulated/floor/black/grime,
+/area/station/engine/monitoring)
+"NF" = (
+/obj/cable/orange{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/engine/caution/south,
+/area/station/engine/core/nuclear)
+"NK" = (
+/turf/simulated/floor/yellowblack,
+/area/station/engine/coldloop{
+	name = "Volatiles Handling"
+	})
+"NX" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "purge valve";
+	dir = 4
+	},
+/turf/simulated/floor/engine/caution/misc{
+	dir = 6
+	},
+/area/station/engine/core/nuclear)
+"Or" = (
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/storage/closet/radiation,
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
+/area/station/engine/power)
+"Oz" = (
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/turf/simulated/floor/engine/caution/west,
+/area/station/engine/core/nuclear)
+"OC" = (
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/obj/decal/tile_edge/line/yellow{
+	dir = 4;
+	icon_state = "tile1"
+	},
+/obj/cable{
+	icon_state = "1-6"
+	},
+/obj/storage/secure/crate/eng/nuclearfuel,
+/turf/simulated/floor/black,
+/area/station/engine/coldloop{
+	name = "Volatiles Handling"
+	})
+"OI" = (
+/turf/simulated/floor/engine/caution/south,
+/area/station/engine/core/nuclear)
+"Pj" = (
+/obj/cable/orange{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine/caution/corner{
+	dir = 1
+	},
+/area/station/engine/core/nuclear)
+"Ps" = (
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 1
+	},
+/area/station/engine/core/nuclear)
+"Qr" = (
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/engine/caution/east,
+/area/station/engine/core/nuclear)
+"QQ" = (
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 8
+	},
+/obj/cable/orange{
+	icon_state = "4-9"
+	},
+/turf/simulated/floor/engine/caution/corner{
+	dir = 1
+	},
+/area/station/engine/coldloop{
+	name = "Volatiles Handling"
+	})
+"QT" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/engine/monitoring)
+"QV" = (
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/obj/cable/orange{
+	icon_state = "0-4"
+	},
+/obj/cable/orange{
+	icon_state = "0-8"
+	},
+/obj/cable/orange,
+/obj/machinery/door/poddoor/blast/pyro{
+	density = 0;
+	icon_state = "bdoormid0";
+	id = "menhir_nukecore";
+	name = "Reactor Core Shielding";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/power)
+"Rp" = (
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/obj/cable/orange{
+	icon_state = "0-8"
+	},
+/obj/machinery/door/poddoor/blast/pyro{
+	density = 0;
+	icon_state = "bdoormid0";
+	id = "menhir_nukecore";
+	name = "Reactor Core Shielding";
+	opacity = 0
+	},
+/obj/cable/orange{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/power)
+"Rq" = (
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 1
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
+"RG" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
+"SH" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/power/nuclear/turbine_control{
+	dir = 4
+	},
+/obj/cable/orange{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 8
+	},
+/area/station/engine/monitoring)
+"SS" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 4
+	},
+/obj/machinery/light{
+	layer = 3;
+	name = "floor-mounted light fixture";
+	pixel_x = -1;
+	desc = "A lighting fixture haphazardly bolted to the side of a turbine. Absolutely nothing is wrong with this."
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
+"SW" = (
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 1
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
+"Th" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/black/grime,
+/area/station/engine/core/nuclear)
+"Tq" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 10
+	},
+/turf/simulated/floor/engine/caution/north,
+/area/station/engine/core/nuclear)
+"Tu" = (
+/obj/storage/closet/radiation,
+/turf/simulated/floor/black/grime,
+/area/station/engine/power)
+"Tw" = (
+/obj/cable{
+	icon_state = "2-9"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/engine/monitoring)
+"TR" = (
+/obj/rack,
+/obj/item/clothing/suit/space/engineer,
+/obj/item/clothing/shoes/magnetic,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/head/helmet/space/engineer,
+/obj/item/tank/air,
+/obj/item/device/light/flashlight,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/belt/utility,
+/turf/simulated/floor/black/grime,
+/area/station/engine/power)
+"Uz" = (
+/obj/cable/orange{
+	icon_state = "4-8"
+	},
+/obj/cable/orange{
+	icon_state = "6-8"
+	},
+/obj/cable/orange{
+	icon_state = "5-8"
+	},
+/turf/simulated/floor/engine/caution/south,
+/area/station/engine/core/nuclear)
+"UB" = (
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/machinery/meter{
+	pixel_x = -10
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core/nuclear)
+"UP" = (
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/blast/pyro{
+	density = 0;
+	icon_state = "bdoormid0";
+	id = "menhir_nukecore";
+	name = "Reactor Core Shielding";
+	opacity = 0;
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/coldloop{
+	name = "Volatiles Handling"
+	})
+"UV" = (
+/turf/space,
+/area/space)
+"Vb" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/engine/monitoring)
+"Wt" = (
+/obj/cable{
+	icon_state = "6-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated/underfloor{
+	dir = 6
+	},
+/turf/simulated/floor/black/grime,
+/area/station/engine/monitoring)
+"WG" = (
+/obj/machinery/camera/directional/east{
+	pixel_y = 10
+	},
+/obj/cable{
+	icon_state = "6-9"
+	},
+/obj/machinery/portable_atmospherics/scrubber,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/redblack,
+/area/station/engine/core/nuclear)
+"WR" = (
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	dir = 4
+	},
+/obj/mapping_helper/access/engineering_engine,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/black/grime,
+/area/station/engine/power)
+"WU" = (
+/obj/machinery/computer/power_monitor/smes{
+	dir = 4;
+	name = "Engine Output Monitoring"
+	},
+/obj/cable/orange{
+	icon_state = "0-6"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/engine/power)
+"Xx" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/underfloor,
+/turf/simulated/floor/black/grime,
+/area/station/engine/monitoring)
+"XG" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/engine/power)
+"Yk" = (
+/obj/reagent_dispensers/foamtank,
+/turf/simulated/floor/redblack,
+/area/station/engine/core/nuclear)
+"YO" = (
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/blast/pyro{
+	density = 0;
+	icon_state = "bdoormid0";
+	id = "menhir_nukecore";
+	name = "Reactor Core Shielding";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/coldloop{
+	name = "Volatiles Handling"
+	})
+"YU" = (
+/obj/cable/orange{
+	icon_state = "6-9"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/obj/machinery/door/poddoor/blast/pyro{
+	density = 0;
+	icon_state = "bdoormid0";
+	id = "menhir_nukecore";
+	name = "Reactor Core Shielding";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/coldloop{
+	name = "Volatiles Handling"
+	})
+"Zs" = (
+/obj/mesh/catwalk,
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/space)
+"ZP" = (
+/obj/cable/orange{
+	icon_state = "4-9"
+	},
+/obj/cable/orange{
+	icon_state = "4-10"
+	},
+/turf/simulated/floor/engine/caution/corner2{
+	dir = 6
+	},
+/area/station/engine/core/nuclear)
+
+(1,1,1) = {"
+vH
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+"}
+(2,1,1) = {"
+vH
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+"}
+(3,1,1) = {"
+vH
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+"}
+(4,1,1) = {"
+JQ
+uN
+Ek
+Ek
+Ek
+Ek
+Ek
+Ek
+Ek
+xA
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+"}
+(5,1,1) = {"
+yU
+UV
+bR
+Zs
+Zs
+Zs
+Zs
+Zs
+yU
+es
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+"}
+(6,1,1) = {"
+JQ
+uN
+JQ
+wk
+bS
+hQ
+wk
+Zs
+yU
+HF
+Fh
+UV
+UV
+UV
+Fh
+UV
+UV
+UV
+Fh
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+"}
+(7,1,1) = {"
+yU
+UV
+bR
+bS
+Th
+tL
+bS
+bS
+bS
+kB
+wk
+bS
+bS
+bS
+wk
+bS
+bS
+bS
+wk
+xA
+UV
+UV
+UV
+UV
+UV
+UV
+"}
+(8,1,1) = {"
+gF
+gF
+gF
+nj
+bS
+hQ
+wk
+uF
+Ab
+NX
+zM
+mM
+Ab
+mM
+mC
+mM
+Ab
+zQ
+wk
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+"}
+(9,1,1) = {"
+gt
+Am
+pw
+hz
+Yk
+yu
+Oz
+oA
+sk
+tg
+sk
+sk
+sk
+UB
+sk
+yq
+dn
+OI
+bS
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+"}
+(10,1,1) = {"
+lE
+qy
+oj
+DD
+BH
+sK
+Dx
+hK
+Rq
+dn
+dn
+dn
+dn
+dn
+dn
+dn
+dn
+OI
+bS
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+"}
+(11,1,1) = {"
+gJ
+Db
+ax
+xy
+Jj
+nQ
+dn
+dn
+dn
+fE
+FH
+cT
+dn
+dn
+dn
+sm
+hH
+eO
+bS
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+"}
+(12,1,1) = {"
+Or
+Tu
+XG
+hz
+WG
+nQ
+dn
+dn
+dn
+dn
+dn
+SS
+dn
+dn
+dn
+dn
+dn
+Do
+wk
+xA
+UV
+UV
+UV
+UV
+UV
+UV
+"}
+(13,1,1) = {"
+nj
+gF
+Nj
+nj
+nj
+Cw
+dn
+dn
+dn
+dn
+dn
+SW
+RG
+RG
+Mg
+tg
+cT
+so
+bS
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+"}
+(14,1,1) = {"
+rB
+WU
+ax
+yf
+Mx
+nQ
+dn
+dn
+FF
+hH
+hH
+sr
+sZ
+nk
+LL
+hH
+zK
+NF
+bS
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+"}
+(15,1,1) = {"
+Ct
+Co
+AA
+KP
+QV
+nQ
+dn
+dn
+dn
+dn
+dn
+dn
+ZP
+kT
+kT
+Qr
+pv
+Ps
+bS
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+"}
+(16,1,1) = {"
+LQ
+Db
+XG
+xt
+sv
+tV
+dn
+dn
+dn
+dn
+dn
+dn
+Do
+zG
+UP
+UP
+EY
+UP
+zG
+xA
+UV
+UV
+UV
+UV
+UV
+UV
+"}
+(17,1,1) = {"
+na
+Db
+XG
+MD
+sv
+Tq
+hK
+tg
+GY
+FJ
+sk
+yq
+Uz
+YO
+nZ
+AS
+cj
+IH
+hC
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+"}
+(18,1,1) = {"
+ol
+TR
+ax
+mO
+Rp
+He
+jS
+tJ
+Ii
+BT
+BT
+wG
+Pj
+YU
+CG
+gv
+zb
+IH
+hC
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+"}
+(19,1,1) = {"
+nj
+gF
+WR
+gF
+nj
+dR
+pJ
+pJ
+dR
+dR
+yZ
+aK
+Fi
+YO
+yC
+cv
+zb
+lj
+hC
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+"}
+(20,1,1) = {"
+yZ
+fA
+ce
+xD
+yZ
+ba
+Mp
+SH
+mT
+he
+yZ
+pg
+yZ
+zG
+um
+QQ
+zb
+IH
+zG
+xA
+UV
+UV
+UV
+UV
+UV
+UV
+"}
+(21,1,1) = {"
+yZ
+xo
+Wt
+gp
+nd
+Ms
+gT
+hB
+Xx
+gp
+sh
+HY
+CW
+hC
+av
+En
+zb
+Dv
+hC
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+"}
+(22,1,1) = {"
+yZ
+jv
+EZ
+Tw
+bd
+bd
+QT
+oa
+bd
+yx
+Ny
+Vb
+iM
+cS
+rf
+zb
+qB
+NK
+hC
+UV
+UV
+UV
+UV
+UV
+UV
+UV
+"}
+(23,1,1) = {"
+yZ
+DL
+qG
+DL
+yZ
+fT
+fp
+ux
+EL
+lH
+lH
+Hs
+lH
+lH
+oX
+Cu
+OC
+CX
+hC
+Ek
+Bs
+UV
+UV
+UV
+UV
+UV
+"}

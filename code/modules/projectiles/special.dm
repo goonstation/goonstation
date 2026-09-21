@@ -840,8 +840,11 @@ ABSTRACT_TYPE(/datum/projectile/special)
 				P.die()
 
 	on_end(obj/projectile/P)
+		var/turf/dumpturf = get_turf(P)
+		var/area/dumparea = get_area(dumpturf)
 		for (var/atom/movable/AM in P.contents)
-			AM.set_loc(get_turf(P))
+			AM.set_loc(dumpturf)
+			SEND_SIGNAL(dumparea, COMSIG_AREA_INDIRECT_ENTRY, AM, "mechcomp")
 		qdel(src.eye_glider)
 		src.eye_glider = null
 		..()

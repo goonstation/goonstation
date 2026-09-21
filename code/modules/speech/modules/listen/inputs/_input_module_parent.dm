@@ -22,6 +22,8 @@ ABSTRACT_TYPE(/datum/listen_module/input)
 		src.enabled = TRUE
 
 	src.say_channel = global.SpeechManager.GetSayChannelInstance(src.channel)
+	src.RegisterSignal(src.parent_tree, COMSIG_LISTENER_ORIGIN_UPDATED, PROC_REF(update_listener_origin_passthrough))
+
 	if (src.enabled)
 		src.say_channel.RegisterInput(src)
 
@@ -29,6 +31,7 @@ ABSTRACT_TYPE(/datum/listen_module/input)
 	if (src.enabled)
 		src.say_channel.UnregisterInput(src)
 
+	src.UnregisterSignal(src.parent_tree, COMSIG_LISTENER_ORIGIN_UPDATED)
 	src.say_channel = null
 
 	. = ..()
@@ -52,6 +55,10 @@ ABSTRACT_TYPE(/datum/listen_module/input)
 
 	src.enabled = FALSE
 	src.say_channel.UnregisterInput(src)
+
+/// Allows the `COMSIG_LISTENER_ORIGIN_UPDATED` to distribute through a listen tree's listen input modules.
+/datum/listen_module/input/proc/update_listener_origin_passthrough(tree, atom/old_origin, atom/new_origin)
+	SEND_SIGNAL(src, COMSIG_LISTENER_ORIGIN_UPDATED, old_origin, new_origin)
 
 
 ABSTRACT_TYPE(/datum/listen_module/input/bundled)

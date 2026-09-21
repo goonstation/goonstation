@@ -1624,6 +1624,10 @@ ABSTRACT_TYPE(/area/prefab)
 	name = "Frontier Outpost 8"
 	icon_state = "red"
 
+/area/prefab/fancy_restaurant
+	name = "The Hidden Gem"
+	icon_state = "green"
+
 // Sealab trench areas //
 
 /area/shuttle/sea_elevator_room
@@ -1873,11 +1877,16 @@ ABSTRACT_TYPE(/area/sim/gunsim)
 		return global.station_areas
 	// We need to update
 	. = list()
-	for_by_tcl(poss_area, /area/station)
-		for(var/turf/T in poss_area)
-			if(!isfloor(T) || is_blocked_turf(T) || T.z != Z_LEVEL_STATION)
-				continue
-			.[poss_area.name] = poss_area
+	// Walking the station z once is several times cheaper than reading every station area's contents
+	var/list/area/checked_areas = list()
+	for(var/turf/T as anything in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
+		var/area/station/A = T.loc
+		if(!istype(A) || checked_areas[A]) // one accessible turf per area is all we need
+			continue
+		if(!isfloor(T) || is_blocked_turf(T))
+			continue
+		checked_areas[A] = TRUE
+		.[A.name] = A
 	global.area_list_is_up_to_date = TRUE
 	global.station_areas = .
 
@@ -2647,6 +2656,10 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 		name = "The Rusty Krab"
 		icon_state = "kitchen"
 
+/area/station/crew_quarters/kitchen/backroom
+	name = "Kitchen Back Room"
+	icon_state = "red"
+
 /area/station/crew_quarters/clown
 	name = "Clown Hole"
 	icon_state = "storage"
@@ -2891,6 +2904,10 @@ ABSTRACT_TYPE(/area/station/engine)
 	name = "Engineering Power Room"
 	icon_state = "engine_power"
 	sound_environment = 5
+
+/area/station/engine/engineering/aquarium
+	name = "Chief Engineer's Aquarium"
+	icon_state = "yellow"
 
 TYPEINFO(/area/station/engine/power/transmission)
 	valid_bounty_area = FALSE
@@ -3836,6 +3853,25 @@ ABSTRACT_TYPE(/area/station/catwalk)
 		name = "Research Outpost Pathology"
 		icon_state = "pink"
 
+/area/research_outpost/limpet
+	name = "The Limpet"
+	minimaps_to_render_on = null
+	do_not_irradiate = FALSE
+
+/area/research_outpost/limpet/hangar
+	name = "Limpet Hangar"
+	icon_state = "hangar"
+	do_not_irradiate = TRUE
+
+/area/research_outpost/limpet/maint
+	name = "Limpet Equipment Room"
+	icon_state = "purple"
+	do_not_irradiate = TRUE
+
+/area/research_outpost/limpet/personnel
+	name = "Limpet Personnel Wing"
+	icon_state = "pink"
+
 // end station areas //
 
 TYPEINFO(/area/salvager)
@@ -3971,65 +4007,6 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 	icon_state = "storage"
 	sound_environment = 12
 
-/area/station/ai_monitored/armory
-	name = "Armory"
-	icon_state = "armory"
-	sound_environment = 2
-	teleport_blocked = AREA_TELEPORT_BLOCKED
-	spy_secure_area = TRUE
-	station_map_colour = MAPC_ARMOURY
-	var/static/list/entered_ckeys = list()
-	var/armory_auth = FALSE
-
-	proc/authorize()
-		armory_auth = TRUE
-
-	proc/unauthorize()
-		armory_auth = FALSE
-
-	New()
-		..()
-		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_ARMORY_AUTH, PROC_REF(authorize))
-		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_ARMORY_UNAUTH, PROC_REF(unauthorize))
-		SPAWN(5 SECONDS) // This delay should allow for armory items to be created and log component for every pickup to be added to guns
-			var/area/A = locate(/area/station/ai_monitored/armory)
-			for(var/obj/item/O in A)
-				O.AddComponent(/datum/component/log_item_pickup, first_time_only=TRUE, authorized_job=null, message_admins_too=FALSE)
-
-	Entered(atom/movable/A, atom/oldloc)
-		. = ..()
-		if (current_state == GAME_STATE_PLAYING) //Don't worry about this in setup.
-			var/obj/O = A
-			if (istype(O))
-				if(access_armory in O.req_access) // Auto update access for armory stuff when it enters armory if it mismatches current auth status
-					if(src.armory_auth && !(access_security in O.req_access))
-						O.req_access += access_security
-						O.visible_message(SPAN_NOTICE("[O]'s access is automatically updated!"))
-						playsound(O, 'sound/machines/chime.ogg', 50)
-					else if (!src.armory_auth && (access_security in O.req_access))
-						O.req_access = list(access_armory)
-						O.visible_message(SPAN_NOTICE("[O]'s access is automatically reset!"))
-						playsound(O, 'sound/machines/chime.ogg', 50)
-		if (current_state < GAME_STATE_FINISHED)
-			if(istype(A, /mob/living) && !istype(A, /mob/living/intangible))
-				var/mob/living/M = A
-				if(!M.client)
-					return
-				if(M.client.holder)
-					return
-				if(M.client.ckey in entered_ckeys)
-					return
-				var/ckey = M.client.ckey
-				entered_ckeys += ckey
-				SPAWN(120 SECONDS)
-					entered_ckeys -= ckey
-				logTheThing(LOG_STATION, M, "entered the Armory [log_loc(M)].[armory_auth ? "" : " - Armory unauthorized."]")
-				if(!src.armory_auth && (IS_IT_SATURDAY))
-					var/ircmsg[] = new()
-					ircmsg["key"] = (usr?.client) ? usr.client.key : "NULL"
-					ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
-					ircmsg["msg"] = "entered the armory while it's unauthorized."
-					ircbot.export_async("admin", ircmsg)
 // // // // // //
 
 /// Turret protected areas, will activate AI turrets to pop up when entered, and vice-versa when exited.
@@ -4130,6 +4107,11 @@ TYPEINFO(/area/station/turret_protected/AIbaseoutside)
 	name = "AI Upload Foyer Starboard"
 	sound_environment = 12
 	icon_state = "ai_foyer"
+
+/area/station/turret_protected/incursion
+	name = "Incursion Staging Area"
+	icon_state = "purple"
+	sound_environment = 12
 
 /area/station/turret_protected/armory_outside
 	name = "Armory Outer Perimeter"
