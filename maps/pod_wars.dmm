@@ -287,6 +287,23 @@
 	dir = 4
 	},
 /area/pod_wars/team1/medbay)
+"bb" = (
+/obj/stool/bed{
+	name = "bunk bed"
+	},
+/obj/stool/bed{
+	name = "bunk bed";
+	pixel_y = 14
+	},
+/obj/item/clothing/suit/bedsheet/random,
+/obj/item/clothing/suit/bedsheet/random{
+	pixel_y = 14
+	},
+/obj/decal/poster/flag/syndicate{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor/black,
+/area/pod_wars/team2/crewlounge)
 "bd" = (
 /obj/shrub,
 /turf/simulated/floor/purple/side{
@@ -821,6 +838,14 @@
 "cV" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/pod_wars/spacejunk/reliant)
+"cW" = (
+/obj/decal/poster/flag/nanotrasen{
+	pixel_z = 32
+	},
+/turf/unsimulated/floor/blue/side{
+	dir = 5
+	},
+/area/pod_wars/team1/bridge)
 "da" = (
 /turf/unsimulated/floor/airless/plating,
 /area/pod_wars/team1/bridge)
@@ -2635,6 +2660,10 @@
 	dir = 10
 	},
 /area/pod_wars/spacejunk/reliant/landingpads)
+"jF" = (
+/obj/decal/poster/flag/nanotrasen,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/pod_wars/team1/equipmentroom)
 "jG" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -4881,6 +4910,12 @@
 "rJ" = (
 /turf/unsimulated/floor/redblack,
 /area/pod_wars/team2/equipmentroom)
+"rK" = (
+/obj/decal/poster/flag/syndicate{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/pod_wars/team2/hangar)
 "rL" = (
 /turf/simulated/wall/auto/asteroid/pod_wars,
 /area/pod_wars/asteroid/major/maj_7)
@@ -5400,6 +5435,14 @@
 	},
 /turf/simulated/floor/airless/plating,
 /area/pod_wars/spacejunk/restaurant/landingpads)
+"tO" = (
+/obj/decal/poster/flag/nanotrasen{
+	pixel_z = 32
+	},
+/turf/unsimulated/floor/yellow/side{
+	dir = 1
+	},
+/area/pod_wars/team1/porthall)
 "tP" = (
 /obj/machinery/vending/cola/blue,
 /turf/simulated/floor,
@@ -5468,6 +5511,12 @@
 "ub" = (
 /turf/simulated/wall/auto/asteroid/pod_wars,
 /area/pod_wars/asteroid/major/maj_19)
+"uc" = (
+/obj/decal/poster/flag/nanotrasen{
+	pixel_z = 32
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/pod_wars/team1/hangar)
 "ud" = (
 /obj/stool/chair/comfy/red,
 /obj/landmark/start/job/podwars/syndie,
@@ -6208,6 +6257,10 @@
 	},
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/restaurant)
+"wM" = (
+/obj/decal/poster/flag/nanotrasen,
+/turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/pod_wars/team1/medbay)
 "wN" = (
 /turf/unsimulated/floor/redblack/corner{
 	dir = 4
@@ -6235,6 +6288,31 @@
 	dir = 4
 	},
 /area/pod_wars/spacejunk/fstation)
+"wR" = (
+/obj/surgery_tray,
+/obj/item/scalpel,
+/obj/item/scalpel,
+/obj/item/circular_saw{
+	pixel_x = 3;
+	pixel_y = 12
+	},
+/obj/item/circular_saw{
+	pixel_x = 3;
+	pixel_y = 12
+	},
+/obj/item/suture,
+/obj/item/suture,
+/obj/item/scissors/surgical_scissors,
+/obj/item/scissors/surgical_scissors,
+/obj/item/surgical_spoon,
+/obj/item/surgical_spoon,
+/obj/decal/poster/flag/nanotrasen{
+	pixel_z = 32
+	},
+/turf/unsimulated/floor/bluewhite{
+	dir = 1
+	},
+/area/pod_wars/team1/medbay)
 "wS" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/plating,
@@ -6647,6 +6725,17 @@
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/shuttlebay,
 /area/pod_wars/team1/hangar)
+"yw" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/decal/poster/flag/syndicate{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor/red/side{
+	dir = 1
+	},
+/area/pod_wars/team2/foreprimaryhall)
 "yx" = (
 /obj/machinery/mass_driver{
 	dir = 4;
@@ -8593,6 +8682,12 @@
 	icon_state = "floor"
 	},
 /area/pod_wars/team2/storageB)
+"EZ" = (
+/obj/decal/poster/flag/syndicate{
+	pixel_y = 32
+	},
+/turf/simulated/floor/engine,
+/area/pod_wars/team2/power)
 "Fa" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/pod_wars/team2/bar)
@@ -8852,6 +8947,12 @@
 	dir = 5
 	},
 /area/pod_wars/team1/medbay)
+"FR" = (
+/obj/decal/poster/flag/syndicate{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor/red,
+/area/pod_wars/team2/bridge)
 "FS" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -10534,6 +10635,14 @@
 	},
 /turf/simulated/floor/yellow/side,
 /area/pod_wars/spacejunk/fstation/maintdock)
+"Ma" = (
+/obj/decal/poster/flag/nanotrasen{
+	pixel_z = 32
+	},
+/turf/unsimulated/floor/blue/side{
+	dir = 9
+	},
+/area/pod_wars/team1/bridge)
 "Md" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/random,
@@ -12008,6 +12117,9 @@
 	icon_state = "xtra_bigstripe-edge2"
 	},
 /obj/deployable_turret/pod_wars/nt/activated/south,
+/obj/decal/poster/flag/nanotrasen{
+	pixel_z = 32
+	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -12194,8 +12306,17 @@
 	icon_state = "hazard_delivery"
 	},
 /obj/table/nanotrasen/auto,
+/obj/decal/poster/flag/nanotrasen{
+	pixel_z = 32
+	},
 /turf/unsimulated/floor/black,
 /area/pod_wars/team1/equipmentroom)
+"So" = (
+/obj/decal/poster/flag/nanotrasen{
+	pixel_z = 32
+	},
+/turf/simulated/floor/airless/circuit,
+/area/pod_wars/spacejunk/memorial_stats)
 "Sp" = (
 /turf/unsimulated/floor/red/side{
 	dir = 6
@@ -13293,6 +13414,12 @@
 	dir = 10
 	},
 /area/pod_wars/spacejunk/fstation/mess)
+"Wn" = (
+/obj/decal/poster/flag/syndicate{
+	pixel_y = 32
+	},
+/turf/simulated/floor/airless/circuit,
+/area/pod_wars/spacejunk/memorial_stats)
 "Wp" = (
 /obj/machinery/sink{
 	density = 0;
@@ -13800,6 +13927,14 @@
 	},
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team1/bar)
+"XS" = (
+/obj/decal/poster/flag/syndicate{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor/yellow/side{
+	dir = 1
+	},
+/area/pod_wars/team2/aftprimaryhall)
 "XT" = (
 /obj/machinery/door/airlock/pyro/glass/med,
 /obj/cable{
@@ -25816,7 +25951,7 @@ br
 br
 br
 br
-FK
+tO
 Fk
 WX
 XU
@@ -26028,7 +26163,7 @@ hD
 rr
 hD
 yO
-Ci
+uc
 Ci
 Ci
 Ci
@@ -26413,7 +26548,7 @@ lB
 Tt
 lB
 br
-ey
+wR
 NL
 LG
 LG
@@ -27015,7 +27150,7 @@ eC
 eC
 eC
 lB
-Lx
+Ma
 ns
 ns
 bZ
@@ -27633,7 +27768,7 @@ Km
 iH
 Km
 Km
-br
+wM
 Pp
 gb
 Pp
@@ -28643,7 +28778,7 @@ su
 Ai
 su
 su
-gs
+jF
 pf
 It
 pf
@@ -29237,7 +29372,7 @@ eC
 eC
 eC
 lB
-uh
+cW
 VK
 VK
 Ld
@@ -30270,7 +30405,7 @@ fB
 xO
 dW
 yO
-Ci
+uc
 Ci
 Ci
 Ci
@@ -72888,7 +73023,7 @@ po
 po
 po
 Nb
-Vj
+Wn
 Dv
 et
 et
@@ -73494,7 +73629,7 @@ po
 po
 po
 Nb
-Vj
+So
 rZ
 et
 et
@@ -113076,7 +113211,7 @@ RT
 CC
 CC
 CC
-QH
+FR
 pI
 vH
 Ic
@@ -115695,7 +115830,7 @@ eC
 eC
 eC
 Ex
-vU
+bb
 nk
 Et
 DO
@@ -116705,7 +116840,7 @@ eC
 eC
 eC
 Ex
-vU
+bb
 nk
 Et
 fP
@@ -116915,7 +117050,7 @@ Ko
 Ko
 Ko
 QB
-Tn
+yw
 el
 Jw
 ed
@@ -119954,7 +120089,7 @@ Ch
 Ch
 Ch
 Cn
-Ch
+rK
 Ch
 Ch
 wX
@@ -120338,7 +120473,7 @@ eC
 eC
 eC
 Cn
-Ch
+rK
 Ch
 Ch
 Ch
@@ -120560,7 +120695,7 @@ Ch
 Ch
 Ch
 Cn
-Ch
+rK
 Ch
 Ch
 wX
@@ -124388,7 +124523,7 @@ PW
 nV
 ge
 gq
-kz
+XS
 Ar
 gS
 tA
@@ -126003,7 +126138,7 @@ gq
 jj
 gq
 gq
-xg
+EZ
 xg
 xg
 xg
