@@ -869,7 +869,8 @@
 	spawn_contents = list(
 		/obj/item/rcd/construction,
 		/obj/item/rcd_ammo/medium,
-		/obj/item/tool/omnitool,
+		/obj/item/tool/omnitool/NT,
+		/obj/item/tool/omnitool/dualconstruction_device/NT,
 		/obj/item/device/analyzer/atmospheric/upgraded
 	)
 
@@ -975,6 +976,15 @@
 	/obj/item/reagent_containers/hypospray,
 	/obj/item/device/analyzer/healthanalyzer/upgraded,
 	/obj/item/robodefibrillator)
+
+/obj/item/storage/belt/medical/prepared/NT
+	spawn_contents = list(/obj/item/robodefibrillator,
+	/obj/item/device/analyzer/healthanalyzer/upgraded,
+	/obj/item/reagent_containers/mender/both/high_capacity,
+	/obj/item/reagent_containers/mender_refill_cartridge/both/high_capacity,
+	/obj/item/storage/pill_bottle/mutadone,
+	/obj/item/reagent_containers/hypospray,
+	/obj/item/paper/iou_ntso_medic)
 
 /obj/item/storage/belt/roboticist
 	icon_state = "utilrobotics"

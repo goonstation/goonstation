@@ -82,6 +82,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	items = list(/obj/item/storage/tactical_grenade_pouch)
 	cost = 2
 	desc = "A pouch of assorted special-ops grenades."
+	vr_allowed = FALSE //hello I'm here after someone crashed the server with these
 	br_allowed = TRUE
 	category = UPLINK::CATEGORY::EXPLOSIVE
 
