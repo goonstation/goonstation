@@ -15431,11 +15431,11 @@
 	},
 /area/station/hallway/primary/southwest)
 "hUj" = (
-/obj/machinery/computer/secure_data,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/computer3/generic/secure_data,
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
