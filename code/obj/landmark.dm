@@ -362,6 +362,44 @@ var/global/list/job_start_locations = list()
 /obj/landmark/shuttle_transit
 	name = LANDMARK_SHUTTLE_TRANSIT
 
+/obj/landmark/menhir/doorway
+	name = LANDMARK_MENHIR_DOOR
+
+/obj/landmark/menhir/extrusion
+	name = LANDMARK_MENHIR_EXTRUSION
+
+/obj/landmark/menhir/node
+	name = LANDMARK_MENHIR_NODE
+
+/obj/landmark/menhir/outreach
+	name = LANDMARK_MENHIR_OUTREACH
+
+/obj/landmark/menhir/penance
+	name = LANDMARK_MENHIR_PENANCE
+
+/obj/landmark/menhir/coalesce
+	name = LANDMARK_MENHIR_COALESCE
+
+/obj/landmark/menhir/beyond
+	name = LANDMARK_MENHIR_BEYOND
+
+/obj/landmark/menhir/passage
+	name = LANDMARK_MENHIR_PASSAGE
+	icon_state = "x3"
+
+/obj/landmark/menhir/dark
+	name = LANDMARK_MENHIR_DARK
+	icon_state = "x"
+
+/obj/landmark/menhir/stuckscan
+	name = LANDMARK_MENHIR_STUCKSCAN
+	icon_state = "x4"
+
+/obj/landmark/menhir/room
+	name = "room vismirror landmark (tag me)"
+	deleted_on_start = FALSE
+	add_to_landmarks = FALSE
+
 ///emergency shuttle launch sound origin
 /obj/landmark/shuttle_subwoofer
 	name = LANDMARK_SHUTTLE_SOUND
@@ -513,6 +551,16 @@ var/global/list/job_start_locations = list()
 	name = "Artifact Spawn (10%)"
 	icon_state = "artifact_10"
 	spawnchance = 10
+
+/obj/landmark/spawner/artifact/more_precursor
+	name = "Artifact Spawn (More Often Precursor)"
+
+	spawn_the_thing()
+		if(prob(40))
+			Artifact_Spawn(get_turf(src),"precursor")
+		else
+			Artifact_Spawn(get_turf(src))
+		qdel(src)
 
 /* ===== LRT Landmarks ===== */
 

@@ -61,7 +61,7 @@
 		HH.limb_name = "left arm"
 
 		HH = hands[2]
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.limb = new /datum/limb/halberd
 		HH.name = "halberd"
 		HH.suffix = "-R"

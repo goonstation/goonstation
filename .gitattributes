@@ -44,6 +44,7 @@
 
 # Other binary stuff
 *.png	binary
+*.apng	binary
 *.jpg	binary
 *.jpeg	binary
 *.gif	binary

@@ -561,6 +561,7 @@ TYPEINFO(/obj/item/clothing/shoes/cowboy/boom)
 	name = "chef's clogs"
 	desc = "Sturdy shoes that minimize injury from falling objects or knives."
 	icon_state = "chef"
+	default_material = "wood"
 	kick_bonus = 1
 	step_sound = "step_wood"
 	step_priority = STEP_PRIORITY_LOW
@@ -576,7 +577,6 @@ TYPEINFO(/obj/item/clothing/shoes/cowboy/boom)
 	protective_temperature = 1250
 	step_sound = "step_military"
 	step_priority = STEP_PRIORITY_LOW
-	step_lots = 1
 	kick_bonus = 2
 
 	setupProperties()
@@ -629,6 +629,7 @@ TYPEINFO(/obj/item/clothing/shoes/cowboy/boom)
 
 	emag_act(mob/user, obj/item/card/emag/E)
 		if(src.step_sound != "clownstep")
+			src.step_lots = 1
 			src.step_sound = "clownstep"
 			src.step_priority = /obj/item/clothing/shoes/clown_shoes::step_priority
 			boutput(user, SPAN_NOTICE("You scramble the speakers installed in [src]"))

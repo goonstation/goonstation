@@ -154,6 +154,8 @@ var/global/area/current_battle_spawn = null
 				qdel(machine)
 			if (/obj/machinery/computer/transit_shuttle/mining)
 				qdel(machine)
+			if (/obj/machinery/computer/shuttle)
+				qdel(machine)
 
 	for_by_tcl(circuitboard, /obj/item/circuitboard)
 		qdel(circuitboard)
@@ -199,6 +201,10 @@ var/global/area/current_battle_spawn = null
 
 	for (var/client/C in clients)
 		battlersleft_hud.add_client(C)
+
+#ifdef MAP_OVERRIDE_MENHIR
+	random_events.menhir_events_enabled = 0
+#endif
 
 /datum/game_mode/battle_royale/proc/battle_shuttle_spawn(var/datum/mind/player)
 	bestow_objective(player,/datum/objective/battle_royale/win)

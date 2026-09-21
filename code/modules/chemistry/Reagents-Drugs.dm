@@ -304,6 +304,7 @@ datum
 				new /image('icons/mob/monkey.dmi', "fire3"),
 				new /image('icons/mob/monkey.dmi', "skeleton"),
 				new /image('icons/mob/monkey.dmi', "seamonkey"),
+				new /image('icons/misc/critter.dmi', "gorilla")
 			)
 			var/static/list/critter_image_list = list(
 				new /image('icons/effects/hallucinations.dmi', "spider"),
@@ -1292,9 +1293,12 @@ datum
 				var/mob/living/H = M
 				var/check = rand(0,100)
 				if (istype(H))
-					if (M.reagents.has_reagent("milk"))
+					if (M.reagents.has_any(list("milk", "super_milk")))
 						boutput(M, SPAN_NOTICE("The milk stops the burning. Ahhh."))
-						M.reagents.del_reagent("milk")
+						if(M.reagents.has_reagent("milk"))
+							M.reagents.del_reagent("milk")
+						else if(M.reagents.has_reagent("super_milk"))
+							M.reagents.del_reagent("super_milk")
 						M.reagents.del_reagent("hellshroom_extract")
 					if (check < 20)
 						src.breathefire(M)

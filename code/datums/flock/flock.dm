@@ -994,6 +994,7 @@ proc/get_default_flock()
 	/obj/reagent_dispensers/heliumtank = /obj/flock_structure/fabricator,
 	/obj/reagent_dispensers/compostbin = /obj/flock_structure/fabricator,
 	/obj/reagent_dispensers/beerkeg = /obj/flock_structure/fabricator,
+	/obj/item/stamp = /obj/item/stamp/flock,
 	/obj/spacevine = null
 	)
 

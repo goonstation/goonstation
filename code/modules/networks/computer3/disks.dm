@@ -75,7 +75,7 @@
 		D.title = src.title
 		D.file_amount = src.file_amount
 		if (src.root)
-			D.root = src.root.copy_folder()
+			D.root = src.root.copy_file()
 			D.root.holder = D
 
 		return D
@@ -90,6 +90,8 @@
 			src.root = new /datum/computer/folder
 			src.root.holder = src
 			src.root.name = "root"
+			src.name_suffixes = list()
+			src.UpdateName()
 		else
 			user.visible_message(SPAN_ALERT("<b>[user] is zapped as the multitool sparks off [src]'s write-protect tab! The [src.name] seems unphased.</b>"))
 			elecflash(user,0, power=2, exclude_center = 0)

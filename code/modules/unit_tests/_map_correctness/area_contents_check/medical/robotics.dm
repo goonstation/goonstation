@@ -11,6 +11,7 @@
 		CONTENTS_GT(/obj/machinery/sink, 0),
 		// Robotics Equipment
 		CONTENTS_GT(/obj/machinery/computer/robot_module_rewriter, 0),
+		CONTENTS_GT(/obj/machinery/computer/robotics/lab, 0),
 		CONTENTS_GT(/obj/machinery/manufacturer/robotics, 0),
 		CONTENTS_GT(/obj/machinery/portable_reclaimer, 0),
 		CONTENTS_EQ(/obj/submachine/cargopad/robotics, 1),

@@ -52,21 +52,6 @@ var/list/planet_parallax_render_source_groups = list()
 
 /// Realigns the parallax layer so that the centremost tessellated tile occupies the position of the tessellated tile closest to the player.
 #define UPDATE_TESSELLATION_ALIGNMENT(parallax_layer) if (parallax_layer.parallax_render_source.tessellate) { \
-	var/pixel_x_offset = 0; \
-	var/pixel_y_offset = 0; \
-	if (parallax_layer.transform.c + parallax_layer.animation_pixel_x_offset > 0) { \
-		pixel_x_offset -= parallax_layer.parallax_render_source.icon_width; \
-	} \
-	else if (parallax_layer.transform.c + parallax_layer.animation_pixel_x_offset < -(parallax_layer.parallax_render_source.icon_width)) { \
-		pixel_x_offset += parallax_layer.parallax_render_source.icon_width; \
-	} \
-	if (parallax_layer.transform.f + parallax_layer.animation_pixel_y_offset > 0) { \
-		pixel_y_offset -= parallax_layer.parallax_render_source.icon_height; \
-	} \
-	else if (parallax_layer.transform.f + parallax_layer.animation_pixel_y_offset < -(parallax_layer.parallax_render_source.icon_height)) { \
-		pixel_y_offset += parallax_layer.parallax_render_source.icon_height; \
-	} \
-	if (pixel_x_offset || pixel_y_offset) { \
-		parallax_layer.transform = parallax_layer.transform.Translate(pixel_x_offset, pixel_y_offset); \
-	} \
+	parallax_layer.pixel_w = ((parallax_layer.pixel_w % parallax_layer.parallax_render_source.icon_width) + parallax_layer.parallax_render_source.icon_width) % parallax_layer.parallax_render_source.icon_width; \
+	parallax_layer.pixel_z = ((parallax_layer.pixel_z % parallax_layer.parallax_render_source.icon_height) + parallax_layer.parallax_render_source.icon_height) % parallax_layer.parallax_render_source.icon_height; \
 }

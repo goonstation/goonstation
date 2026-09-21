@@ -1,0 +1,1 @@
+/obj/item/lightbreaker : /obj/item/sound_tape/lightbreaker{@OLD}

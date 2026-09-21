@@ -82,6 +82,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	items = list(/obj/item/storage/tactical_grenade_pouch)
 	cost = 2
 	desc = "A pouch of assorted special-ops grenades."
+	vr_allowed = FALSE //hello I'm here after someone crashed the server with these
 	br_allowed = TRUE
 	category = UPLINK::CATEGORY::EXPLOSIVE
 
@@ -241,7 +242,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP
 
 	run_on_spawn(obj/item/sword/stabby, mob/living/owner, in_surplus_crate=FALSE) //Nukies get red ones
-		if (isnukeop(owner) || isnukeopgunbot(owner))
+		if (isnukeop(owner) || isnukeopgunbot(owner) || issyndicateagent(owner))
 			stabby.light_c.set_color(255, 0, 0)
 			stabby.bladecolor = "R"
 		..()
@@ -408,7 +409,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 
 /datum/syndicate_buylist/traitor/lightbreaker
 	name = "Light Breaker"
-	items = list(/obj/item/lightbreaker)
+	items = list(/obj/item/sound_tape/lightbreaker)
 	cost = 3
 	desc = "A casette player that breaks all lights near you. It also temporarily deafens and staggers all other nearby people. Comes with four charges and has a distinctive sound. Can be rewound with a screwdriver."
 	br_allowed = TRUE

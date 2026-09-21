@@ -737,6 +737,14 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 				boutput(user, SPAN_NOTICE("You scribble on the mask until it's filled in."))
 				src.color = P.font_color
 
+/obj/item/clothing/mask/sunflowermask
+	name = "Sunflower Mask"
+	desc = "Looking  at it makes you happy. Be careful wearing it around bees, though."
+	icon_state = "sunflower_mask"
+	item_state = "sunflower_mask"
+	see_face = FALSE
+	c_flags = COVERSMOUTH
+
 /obj/item/clothing/mask/melons
 	name = "flimsy 'George Melons' mask"
 	desc = "Haven't seen that fellow in a while."
@@ -783,7 +791,7 @@ TYPEINFO(/obj/item/clothing/mask/wrestling)
 	see_face = FALSE
 	allow_staple = 0
 	var/low_visibility = TRUE
-	material_amt = 0.5
+	material_amt = MATERIAL::AMOUNT::SHEET * 5
 
 	attackby(obj/item/W, mob/user) // Allows the mask be modified, if one only wants the fashion
 		if (isweldingtool(W) && low_visibility)

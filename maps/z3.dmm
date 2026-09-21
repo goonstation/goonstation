@@ -2786,10 +2786,7 @@
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/snacks/slimjim,
 /obj/item/device/radio,
-/obj/placeholder{
-	name = "Fartnasium Recruitment Flyer";
-	spawn_path = "/obj/item/paper/grillnasium/fartnasium_recruitment/flyer"
-	},
+/obj/item/paper/image/grillnasium/fartnasium_recruitment/flyer,
 /turf/simulated/floor/industrial,
 /area/space)
 "amZ" = (

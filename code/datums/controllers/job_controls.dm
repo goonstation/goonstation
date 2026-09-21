@@ -243,6 +243,8 @@ var/datum/job_controller/job_controls
 				dat += "<A href='byond://?src=\ref[src];EditBpItem=[i]'>Starting Backpack Item [i]:</A> [length(src.job_creator.items_in_backpack) >= i ? src.job_creator.items_in_backpack[i] : null]<br>"
 			for(var/i in 1 to 7)
 				dat += "<A href='byond://?src=\ref[src];EditBeltItem=[i]'>Starting Belt Item [i]:</A> [length(src.job_creator.items_in_belt) >= i ? src.job_creator.items_in_belt[i] : null]<br>"
+			for(var/i in 1 to (length(src.job_creator.items_in_mob) + 1))
+				dat += "<A href='byond://?src=\ref[src];EditMobItem=[i]'>Starting inside mob Item [i]:</A> [length(src.job_creator.items_in_mob) >= i ? src.job_creator.items_in_mob[i] : null]<br>"
 			dat += "<A href='byond://?src=\ref[src];GetAccess=1'>Set Access Permissions </A>"
 			if (length(src.job_creator.access) > 1)
 				dat += " "
@@ -866,6 +868,26 @@ var/datum/job_controller/job_controls
 			src.job_creator()
 
 
+		if(href_list["EditMobItem"])
+			var/slot_num = text2num(href_list["EditMobItem"])
+			switch(alert("Clear or reselect slotted item?","Job Creator","Clear","Reselect"))
+				if("Clear")
+					if(length(src.job_creator.items_in_mob) >= slot_num)
+						src.job_creator.items_in_mob[slot_num] = null
+
+				if("Reselect")
+					var/search_for = input(usr, "Search for item (or leave blank for complete list)", "Select item to spawn in mob [slot_num]") as null|text
+					if(!search_for)
+						return
+					var/chosen = get_one_match(search_for)
+					if(!chosen || !ispath(chosen, /atom/movable))
+						boutput(usr, "You must pick a movable atom.")
+						return
+					while(length(src.job_creator.items_in_mob) < slot_num)
+						src.job_creator.items_in_mob += null
+					src.job_creator.items_in_mob[slot_num] = chosen
+			src.job_creator()
+
 		if(href_list["EditBeltItem"])
 			var/slot_num = text2num(href_list["EditBeltItem"])
 			switch(alert("Clear or reselect slotted item?","Job Creator","Clear","Reselect"))
@@ -1054,6 +1076,7 @@ var/datum/job_controller/job_controls
 	JOB.receives_implants = src.job_creator.receives_implants
 	JOB.items_in_backpack = src.job_creator.items_in_backpack
 	JOB.items_in_belt = src.job_creator.items_in_belt
+	JOB.items_in_mob = src.job_creator.items_in_mob
 	JOB.spawn_id = src.job_creator.spawn_id
 	JOB.starting_mutantrace = src.job_creator.starting_mutantrace
 	message_admins("Admin [key_name(usr)] created special job [JOB.name]")

@@ -10,7 +10,7 @@
 		if (locate(/obj/machinery/power/data_terminal) in networked.loc)
 			continue
 
-		. += src.format_position(networked)
+		. += CI.format_position(networked)
 
 	for (var/turf/T in global.job_start_locations["AI"])
 		if (locate(/obj/machinery/power/data_terminal) in T)

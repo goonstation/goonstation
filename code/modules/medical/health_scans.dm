@@ -86,7 +86,7 @@
 		.["cloner_defect_count"] = null
 
 	if (include_reagents)
-		.["reagent_container"] = global.ui_describe_reagents(src)
+		.["reagent_container"] = global.ui_describe_reagents(src, show_overdose=TRUE)
 	else
 		.["reagent_container"] = null
 

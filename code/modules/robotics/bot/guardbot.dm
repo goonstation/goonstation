@@ -109,6 +109,9 @@
 	on = 1
 	var/idle = 0 //Sleeping on the job??
 	locked = 1 //Behavior Controls and Tool lock
+	bot_move_delay = BOT::SPEED::GUARDBOT_SLOW
+	var/move_delay_max = BOT::SPEED::GUARDBOT_SLOW
+	var/move_delay_min = BOT::SPEED::GUARDBOT_FAST
 
 	/// The skin icon state that this robuddy should use.
 	var/skin_icon_state
@@ -227,6 +230,12 @@
 		if (model_task)
 			model_task.dispose()
 		..()
+
+	//! Takes a value between 1 and 0. One is move at full speed, zero is move at minimum speed.
+	proc/get_move_delay(var/move_rate)
+		move_rate = clamp(move_rate, 0, 1)
+		var/move_delay = ((src.move_delay_min - src.move_delay_max) * move_rate) + src.move_delay_max
+		return move_delay
 
 	ranger
 #ifndef HALLOWEEN
@@ -1203,7 +1212,13 @@
 			else
 				var/random_direction = get_offset_target_turf(src, rand(5)-rand(5), rand(5)-rand(5))
 				shoot_projectile_ST_pixel_spread(src, thing2shoot, random_direction)
+			return 1
 
+		SPAWN(0)
+			ShootTheGunBurst(target)
+		return 1
+
+	proc/ShootTheGunBurst(var/target as mob|turf)
 		var/burst = shotcount	// TODO: Make rapidfire exist, then work.
 		while(burst > 0 && target)
 			if(istype(budgun, /obj/item/gun/kinetic/pumpweapon))
@@ -1880,7 +1895,7 @@
 
 		return
 
-	navigate_to(atom/the_target,var/move_delay=3,var/adjacent=0,var/clear_frustration=1, max_dist=100)
+	navigate_to(atom/the_target, var/move_delay = BOT::SPEED::GUARDBOT_SLOW, var/adjacent=0, var/clear_frustration=1, max_dist=100)
 		if(src.moving)
 			return 1
 		src.moving = 1
@@ -1892,7 +1907,7 @@
 		src.mover = new /datum/guardbot_mover(src)
 		src.mover.max_dist = max_dist
 
-		src.mover.delay = clamp(move_delay, 2, 5)
+		src.mover.delay = clamp(move_delay, src.move_delay_min, src.move_delay_max)
 		src.mover.master_move(the_target,adjacent)
 
 		return 0
@@ -2432,7 +2447,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 					src.next_target()
 
 				if(!master.moving)
-					master.navigate_to(src.target)
+					master.navigate_to(src.target, master.get_move_delay(BOT::SPEED::GUARDBOT_RATE_SLOW))
 			else
 				if(!master.last_comm || (world.time >= master.last_comm + 100) )
 					master.post_status(null,"data","[master.cell.charge]","address_tag","recharge")
@@ -2538,7 +2553,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 							if (nav_delay > 0)
 								nav_delay--
 								return
-							master.navigate_to(src.bar_beacon_turf)
+							master.navigate_to(src.bar_beacon_turf, master.get_move_delay(BOT::SPEED::GUARDBOT_RATE_SLOW))
 							nav_delay = 5
 
 					else
@@ -2572,7 +2587,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 							return
 
 						if(!master.moving)
-							master.navigate_to(src.target, 2.5, max_dist=14)
+							master.navigate_to(src.target, master.get_move_delay(BOT::SPEED::GUARDBOT_RATE_ARREST), max_dist=14)
 
 					return
 
@@ -2792,7 +2807,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 							if (master.mover)
 								qdel(master.mover)
 							master.moving = 0
-							master.navigate_to(hug_target,ARREST_DELAY, max_dist=15)
+							master.navigate_to(hug_target, master.get_move_delay(BOT::SPEED::GUARDBOT_RATE_ARREST), max_dist=15)
 							return
 
 
@@ -2845,7 +2860,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						if (master.mover)
 							qdel(master.mover)
 						master.moving = 0
-						master.navigate_to(arrest_target,ARREST_DELAY, 0, 0, max_dist=30)
+						master.navigate_to(arrest_target, master.get_move_delay(BOT::SPEED::GUARDBOT_RATE_ARREST), 0, 0, max_dist=30)
 						//master.current_movepath = "HEH" //Stop any current movement.
 
 		task_input(input)
@@ -3090,7 +3105,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 				if(next_destination)
 					set_destination(next_destination)
 					if(!master.moving && target && (target != master.loc))
-						master.navigate_to(target, max_dist=80)
+						master.navigate_to(target, master.get_move_delay(BOT::SPEED::GUARDBOT_RATE_SLOW), max_dist=80)
 					return
 				else
 					find_nearest_beacon()
@@ -3106,7 +3121,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 					if(master.task != src) return
 					awaiting_beacon = 0
 					if(nearest_beacon && !master.moving)
-						master.navigate_to(nearest_beacon_loc, max_dist=30)
+						master.navigate_to(nearest_beacon_loc, master.get_move_delay(BOT::SPEED::GUARDBOT_RATE_SLOW), max_dist=30)
 					else
 						patrol_delay = 8
 						target = null
@@ -3211,7 +3226,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						if (master.mover)
 							qdel(master.mover)
 						master.moving = 0
-						master.navigate_to(hug_target,ARREST_DELAY, max_dist=15)
+						master.navigate_to(hug_target, master.get_move_delay(BOT::SPEED::GUARDBOT_RATE_ARREST), max_dist=15)
 						return
 
 				else
@@ -3316,7 +3331,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 					master.frustration++
 					if (master.mover)
 						qdel(master.mover)
-					master.navigate_to(protected,2,1,1, max_dist=15)
+					master.navigate_to(protected,master.get_move_delay(BOT::SPEED::GUARDBOT_RATE_FULL),1,1, max_dist=15)
 					return
 				else
 
@@ -3332,7 +3347,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						master.moving = 0
 						if (master.mover)
 							qdel(master.mover)
-						master.navigate_to(protected,2,1,1, max_dist=15)
+						master.navigate_to(protected,master.get_move_delay(BOT::SPEED::GUARDBOT_RATE_FULL),1,1, max_dist=15)
 
 			return
 
@@ -3647,7 +3662,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 							return
 
 						if (current_beacon_loc != master.loc)
-							master.navigate_to(current_beacon_loc, max_dist=60)
+							master.navigate_to(current_beacon_loc, master.get_move_delay(BOT::SPEED::GUARDBOT_RATE_SLOW), max_dist=60)
 						else
 							state = STATE_AT_BEACON
 					return
@@ -5033,6 +5048,17 @@ TYPEINFO(/obj/machinery/bot/guardbot/old)
 		..()
 		src.hat.name = "Earle's ship captain hat"
 
+/obj/machinery/bot/guardbot/old/tourguide/menhir
+	name = "Moss"
+	desc = "A PR-4 Robuddy. It looks kinda new, are these still in production? This one has a little name tag on the front labeled 'Moss'."
+	access_lookup = "Staff Assistant"
+	beacon_freq = FREQ_TOUR_NAVBEACON
+	HatToWear = /obj/item/clothing/head/sunhat
+
+	New()
+		..()
+		src.hat.name = "Moss's sunhat"
+
 /obj/machinery/computer/hug_console
 	name = "Hug Console"
 	desc = "A hug console? It has a small opening on the top."
@@ -5054,7 +5080,7 @@ TYPEINFO(/obj/machinery/bot/guardbot/old)
 				var/datum/computer/file/guardbot_task/security/single_use/tohug = new
 				tohug.hug_target = user
 				buddy.add_task(tohug, 1, 0)
-				buddy.navigate_to(get_turf(user))
+				buddy.navigate_to(get_turf(user), buddy.get_move_delay(BOT::SPEED::GUARDBOT_RATE_SLOW))
 
 /obj/item/token/hug_token
 	name = "Hug Token"

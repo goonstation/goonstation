@@ -53,7 +53,7 @@
 
 /obj/item/electronics/scanner/syndicate
 	scannable_tags = DEVICE_ANALYZER_ALLOWED_TAGS | ANALYSER_SYNDIE_ONLY //We allow anything we can scan including syndie items
-	SYNDICATE_STEALTH_DESCRIPTION("The internal circuitry has been jailbroken.", null)
+	SYNDICATE_STEALTH_DESCRIPTION("The internal circuitry has been jailbroken.")
 	tooltip_flags = REBUILD_USER
 
 

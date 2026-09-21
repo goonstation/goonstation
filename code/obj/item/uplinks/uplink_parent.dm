@@ -5,11 +5,7 @@
 	stamina_crit_chance = 0
 
 	var/uses = 12 // Amount of telecrystals.
-	var/list/datum/syndicate_buylist/items_general = list() // See setup() and validate_spawn().
-	var/list/datum/syndicate_buylist/items_job = list()
-	var/list/datum/syndicate_buylist/items_objective = list()
-	var/list/datum/syndicate_buylist/items_telecrystal = list()
-	var/list/datum/syndicate_buylist/items_ammo = list()
+	var/list/datum/syndicate_buylist/buylist_entries = list() // See setup() and validate_spawn().
 	var/is_VR_uplink = 0
 	var/lock_code = null
 	var/lock_code_autogenerate = 0
@@ -41,7 +37,7 @@
 		if (istype(get_area(src), /area/sim/gunsim))
 			src.is_VR_uplink = TRUE
 		SPAWN(1 SECOND)
-			if (src && istype(src) && (!length(src.items_general) && !length(src.items_job) && !length(src.items_objective) && !length(src.items_telecrystal) && !length(src.items_ammo)))
+			if (src && istype(src) && !length(src.buylist_entries))
 				src.setup()
 
 	disposing()
@@ -62,27 +58,14 @@
 
 		src.owner_ckey = ownermind?.ckey
 
-		if (!islist(src.items_general))
-			src.items_general = list()
-		if (!islist(src.items_job))
-			src.items_job = list()
-		if (!islist(src.items_objective))
-			src.items_objective = list()
-		if (!islist(src.items_telecrystal))
-			src.items_telecrystal = list()
-		if (!islist(src.items_ammo))
-			src.items_ammo = list()
+		if (!islist(src.buylist_entries))
+			src.buylist_entries = list()
 
 		for (var/datum/syndicate_buylist/S in syndi_buylist_cache)
 			if (src.is_VR_uplink)
 				if (!S.vr_allowed)
 					continue
-				if (S.objective)
-					src.items_objective.Add(S)
-				else if (S.job)
-					src.items_job.Add(S)
-				else
-					src.items_general.Add(S)
+				src.buylist_entries.Add(S)
 
 			else
 
@@ -92,21 +75,13 @@
 				if (istype(S, /datum/syndicate_buylist/surplus))
 					continue
 
-				if (istype(S, /datum/syndicate_buylist/generic) && !src.items_general.Find(S))
-					if (S.telecrystal)
-						src.items_telecrystal.Add(S)
-						src.items_general.Remove(S)
-					else
-						src.items_general.Add(S)
+				if (istype(S, /datum/syndicate_buylist/generic) && !src.buylist_entries.Find(S))
+					src.buylist_entries.Add(S)
 
 				if (ownermind || istype(ownermind))
 					if (!isnukeop(ownermind.current) && istype(S, /datum/syndicate_buylist/traitor))
-						if (!S.objective && !S.job && !src.items_general.Find(S))
-							src.items_general.Add(S)
-						if (S.ammo)
-							src.items_ammo.Add(S)
-							src.items_general.Remove(S)
-
+						if (!S.objective && !S.job && !src.buylist_entries.Find(S))
+							src.buylist_entries.Add(S)
 
 					if (S.objective)
 						if (ownermind.objectives)
@@ -114,23 +89,23 @@
 							for (var/datum/objective/O in ownermind.objectives)
 								if (istype(O, S.objective))
 									has_objective = 1
-							if (has_objective && !src.items_objective.Find(S))
-								src.items_objective.Add(S)
+							if (has_objective && !src.buylist_entries.Find(S))
+								src.buylist_entries.Add(S)
 
 					if (S.job)
 						for (var/allowedjob in S.job)
-							if (ownermind.assigned_role && ownermind.assigned_role == allowedjob && !src.items_job.Find(S))
-								src.items_job.Add(S)
+							if (ownermind.assigned_role && ownermind.assigned_role == allowedjob && !src.buylist_entries.Find(S))
+								src.buylist_entries.Add(S)
 
 		// Sort alphabetically by item name.
 		var/list/names = list()
 		var/list/namecounts = list()
 
-		if (length(src.items_general))
+		if (length(src.buylist_entries))
 			var/list/sort1 = list()
 
-			for (var/datum/syndicate_buylist/S1 in src.items_general)
-				var/name = S1.name
+			for (var/datum/syndicate_buylist/S in src.buylist_entries)
+				var/name = S.name
 				if (name in names) // Should never, ever happen, but better safe than sorry.
 					namecounts[name]++
 					name = text("[] ([])", name, namecounts[name])
@@ -138,74 +113,9 @@
 					names.Add(name)
 					namecounts[name] = 1
 
-				sort1[name] = S1
+				sort1[name] = S
 
-			src.items_general = sortList(sort1, /proc/cmp_text_asc)
-
-		if (length(src.items_job))
-			var/list/sort2 = list()
-
-			for (var/datum/syndicate_buylist/S2 in src.items_job)
-				var/name = S2.name
-				if (name in names)
-					namecounts[name]++
-					name = text("[] ([])", name, namecounts[name])
-				else
-					names.Add(name)
-					namecounts[name] = 1
-
-				sort2[name] = S2
-
-			src.items_job = sortList(sort2, /proc/cmp_text_asc)
-
-		if (length(src.items_objective))
-			var/list/sort3 = list()
-
-			for (var/datum/syndicate_buylist/S3 in src.items_objective)
-				var/name = S3.name
-				if (name in names)
-					namecounts[name]++
-					name = text("[] ([])", name, namecounts[name])
-				else
-					names.Add(name)
-					namecounts[name] = 1
-
-				sort3[name] = S3
-
-			src.items_objective = sortList(sort3, /proc/cmp_text_asc)
-
-		if (length(src.items_ammo))
-			var/list/sort4 = list()
-
-			for (var/datum/syndicate_buylist/S4 in src.items_ammo)
-				var/name = S4.name
-				if (name in names)
-					namecounts[name]++
-					name = text("[] ([])", name, namecounts[name])
-				else
-					names.Add(name)
-					namecounts[name] = 1
-
-				sort4[name] = S4
-
-			src.items_ammo = sortList(sort4, /proc/cmp_text_asc)
-
-		if (length(src.items_telecrystal))
-			var/list/sort5 = list()
-
-			for (var/datum/syndicate_buylist/S5 in src.items_telecrystal)
-				var/name = S5.name
-				if (name in names)
-					namecounts[name]++
-					name = text("[] ([])", name, namecounts[name])
-				else
-					names.Add(name)
-					namecounts[name] = 1
-
-				sort5[name] = S5
-
-			src.items_telecrystal = sortList(sort5, /proc/cmp_text_asc)
-
+			src.buylist_entries = sortList(sort1, /proc/cmp_text_asc)
 		src.update_static_data_for_all_viewers() //In case someone pulls up the UI in the second before New() calls setup()
 		return
 
@@ -265,27 +175,9 @@
 
 	// Validates that the user is not trying to spawn something they should not
 	proc/validate_spawn(var/datum/syndicate_buylist/SB)
-
-		for(var/S in items_general)
-			if(SB == items_general[S])
+		for(var/S in src.buylist_entries)
+			if(SB == src.buylist_entries[S])
 				return 1
-
-		for(var/S in items_job)
-			if(SB == items_job[S])
-				return 1
-
-		for(var/S in items_objective)
-			if(SB == items_objective[S])
-				return 1
-
-		for(var/S in items_telecrystal)
-			if(SB == items_telecrystal[S])
-				return 1
-
-		for(var/S in items_ammo)
-			if (SB == items_ammo[S])
-				return 1
-
 		return 0
 
 	proc/try_buy(var/datum/syndicate_buylist/I)
@@ -393,12 +285,11 @@
 		)
 
 	proc/get_categorised_item_data()
-		var/list/all_items = src.items_general + src.items_job + src.items_objective + src.items_telecrystal + src.items_ammo
 		var/list/categorised_data = list()
 		for(var/category in UPLINK.CATEGORY._get_namespace_constants())
 			categorised_data[category] = list()
-		for(var/buylist_name in all_items)
-			var/datum/syndicate_buylist/buylist_entry = all_items[buylist_name]
+		for(var/buylist_name in src.buylist_entries)
+			var/datum/syndicate_buylist/buylist_entry = src.buylist_entries[buylist_name]
 			categorised_data[buylist_entry.get_category()] += src.get_item_data(buylist_entry)
 		for(var/category in categorised_data)
 			if(!length(categorised_data[category]))

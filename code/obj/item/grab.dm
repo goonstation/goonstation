@@ -533,6 +533,8 @@
 		if (G.state < GRAB_AGGRESSIVE)
 			duration += 25 //takes longer if you dont have a good gripp
 
+		duration = max(0.1, duration)
+
 		..()
 
 	onUpdate()

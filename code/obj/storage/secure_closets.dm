@@ -166,20 +166,22 @@
 /obj/storage/secure/closet/command/captain
 	name = "\improper Captain's locker"
 	req_access = list(access_captain)
-	spawn_contents = list(/obj/item/gun/energy/egun/captain,
-	/obj/item/storage/box/id_kit,
-	/obj/item/storage/box/clothing/captain,
-	/obj/item/clothing/suit/armor/capcoat,
-	/obj/item/clothing/shoes/brown,
-	/obj/item/clothing/suit/armor/vest,
-	/obj/item/clothing/head/helmet/captain,
-	/obj/item/clothing/glasses/sunglasses,
-	/obj/item/stamp/cap,
-	/obj/item/device/radio/headset/command/captain,
-	/obj/item/megaphone,
-	/obj/item/pet_carrier,
-	/obj/item/device/pda2/captain,
-	/obj/item/circuitboard/announcement/bridge) //This one makes the arrivals announcement and this is the ONLY spare for it
+	spawn_contents = list(
+		/obj/item/pet_carrier,
+		/obj/item/gun/energy/egun/captain,
+		/obj/item/storage/box/id_kit,
+		/obj/item/storage/box/clothing/captain,
+		/obj/item/clothing/suit/armor/capcoat,
+		/obj/item/clothing/shoes/brown,
+		/obj/item/clothing/suit/armor/vest,
+		/obj/item/clothing/head/helmet/captain,
+		/obj/item/clothing/glasses/sunglasses,
+		/obj/item/stamp/cap,
+		/obj/item/device/radio/headset/command/captain,
+		/obj/item/megaphone,
+		/obj/item/device/pda2/captain,
+		/obj/item/circuitboard/announcement/bridge, //This one makes the arrivals announcement and this is the ONLY spare for it
+	)
 
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
@@ -200,71 +202,79 @@
 	name = "\improper Head of Security's locker"
 	reinforced = TRUE
 	req_access = list(access_maxsec)
-	spawn_contents = list(/obj/item/storage/box/id_kit,
-	/obj/item/handcuffs,
-	/obj/item/device/flash,
-	/obj/item/storage/box/clothing/hos,
-	/obj/item/clothing/suit/det_suit/hos,
-	/obj/item/clothing/suit/armor/hoscape,
-	/obj/item/clothing/shoes/brown,
-	/obj/item/clothing/suit/armor/vest,
-	/obj/item/clothing/head/helmet/hardhat/security/hos,
-	/obj/item/clothing/glasses/sunglasses/sechud,
-	/obj/item/gun/energy/egun/head_of_security,
-	/obj/item/device/radio/headset/security,
-	/obj/item/clothing/glasses/thermal,
-	/obj/item/stamp/hos,
-	/obj/item/device/radio/headset/command/hos,
-	/obj/item/clothing/shoes/swat/heavy,
-	/obj/item/barrier/collapsible/security,
-	/obj/item/device/pda2/hos,
-	/obj/item/circuitboard/card/security,
-	/obj/item/circuitboard/announcement/security)
+	spawn_contents = list(
+		/obj/item/pet_carrier,
+		/obj/item/storage/box/id_kit,
+		/obj/item/handcuffs,
+		/obj/item/device/flash,
+		/obj/item/storage/box/clothing/hos,
+		/obj/item/clothing/suit/det_suit/hos,
+		/obj/item/clothing/suit/armor/hoscape,
+		/obj/item/clothing/shoes/brown,
+		/obj/item/clothing/suit/armor/vest,
+		/obj/item/clothing/head/helmet/hardhat/security/hos,
+		/obj/item/clothing/glasses/sunglasses/sechud,
+		/obj/item/gun/energy/egun/head_of_security,
+		/obj/item/device/radio/headset/security,
+		/obj/item/clothing/glasses/thermal,
+		/obj/item/stamp/hos,
+		/obj/item/device/radio/headset/command/hos,
+		/obj/item/clothing/shoes/swat/heavy,
+		/obj/item/barrier/collapsible/security,
+		/obj/item/device/pda2/hos,
+		/obj/item/circuitboard/card/security,
+		/obj/item/circuitboard/announcement/security,
+	)
 
 /obj/storage/secure/closet/command/hop
 	name = "\improper Head of Personnel's locker"
 	req_access = list(access_head_of_personnel)
-	spawn_contents = list(/obj/item/device/flash,
-	/obj/item/storage/box/id_kit,
-	/obj/item/cash_briefcase,
-	/obj/item/storage/box/clothing/hop,
-	/obj/item/clothing/shoes/brown,
-	/obj/item/clothing/suit/armor/vest,
-	/obj/item/stamp/hop,
-	/obj/item/device/radio/headset/command/hop,
-	/obj/item/device/accessgun,
-	/obj/item/clipboard,
-	/obj/item/clothing/suit/hopjacket,
-	/obj/item/pet_carrier,
-	/obj/item/device/pda2/hop,
-	/obj/item/device/panicbutton/medicalalert/hop,
-	/obj/item/circuitboard/card)
+	spawn_contents = list(
+		/obj/item/pet_carrier,
+		/obj/item/device/flash,
+		/obj/item/storage/box/id_kit,
+		/obj/item/cash_briefcase,
+		/obj/item/storage/box/clothing/hop,
+		/obj/item/clothing/shoes/brown,
+		/obj/item/clothing/suit/armor/vest,
+		/obj/item/stamp/hop,
+		/obj/item/device/radio/headset/command/hop,
+		/obj/item/device/accessgun,
+		/obj/item/clipboard,
+		/obj/item/clothing/suit/hopjacket,
+		/obj/item/device/pda2/hop,
+		/obj/item/device/panicbutton/medicalalert/hop,
+		/obj/item/circuitboard/card,
+	)
 
 /obj/storage/secure/closet/command/research_director
 	name = "\improper Research Director's locker"
 	req_access = list(access_research_director)
-	spawn_contents = list(/obj/item/plant/herb/cannabis/spawnable,
-	/obj/item/disk/data/floppy/manudrive/aiLaws,
-	/obj/item/device/light/zippo,
-	/obj/item/storage/box/clothing/research_director,
-	/obj/item/clothing/shoes/brown,
-	/obj/item/hand_tele,
-	/obj/item/clothing/glasses/packetvision,
-	/obj/item/storage/box/zeta_boot_kit,
-	/obj/item/device/radio/electropack,
-	/obj/item/clothing/mask/gas,
-	/obj/item/device/flash,
-	/obj/item/stamp/rd,
-	/obj/item/clothing/suit/labcoat,
-	/obj/item/device/radio/headset/command/rd,
-	/obj/item/pet_carrier,
-	/obj/item/device/pda2/research_director,
-	/obj/item/places_pipes/research,
-	/obj/item/rcd_ammo/big,
-	/obj/item/circuitboard/card/research,
-	/obj/item/circuitboard/announcement/research,
-	/obj/item/clothing/suit/hazard/bio_suit/rd,
-	/obj/item/clothing/head/bio_hood/rd)
+	spawn_contents = list(
+		/obj/item/pet_carrier,
+		/obj/item/plant/herb/cannabis/spawnable,
+		/obj/item/disk/data/floppy/manudrive/aiLaws,
+		/obj/item/device/light/zippo,
+		/obj/item/storage/box/clothing/research_director,
+		/obj/item/clothing/shoes/brown,
+		/obj/item/hand_tele,
+		/obj/item/clothing/glasses/packetvision,
+		/obj/item/storage/box/zeta_boot_kit,
+		/obj/item/device/radio/electropack,
+		/obj/item/clothing/mask/gas,
+		/obj/item/device/flash,
+		/obj/item/stamp/rd,
+		/obj/item/clothing/suit/labcoat,
+		/obj/item/device/radio/headset/command/rd,
+		/obj/item/device/pda2/research_director,
+		/obj/item/places_pipes/research,
+		/obj/item/rcd_ammo/big,
+		/obj/item/circuitboard/card/research,
+		/obj/item/circuitboard/announcement/research,
+		/obj/item/clothing/suit/hazard/bio_suit/rd,
+		/obj/item/clothing/head/bio_hood/rd,
+		/obj/item/device/chemicompiler,
+		)
 
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
@@ -275,27 +285,29 @@
 /obj/storage/secure/closet/command/medical_director
 	name = "\improper Medical Director's locker"
 	req_access = list(access_medical_director)
-	spawn_contents = list(/obj/item/disk/data/floppy/manudrive/ai,
-	/obj/item/disk/data/floppy/manudrive/gene_booth,
-	/obj/item/storage/box/clothing/medical_director,
-	/obj/item/clothing/shoes/brown,
-	/obj/item/gun/implanter,
-	/obj/item/gun/reagent/syringe/NT,
-	/obj/item/reagent_containers/mender/both,
-	/obj/item/gun/kinetic/dart_rifle,
-	/obj/item/ammo/bullets/tranq_darts,
-	/obj/item/ammo/bullets/tranq_darts/anti_mutant,
-	/obj/item/robodefibrillator,
-	/obj/item/storage/firstaid/docbag,
-	/obj/item/reagent_containers/hypospray,
-	/obj/item/device/flash,
-	/obj/item/stamp/md,
-	/obj/item/device/radio/headset/command/md,
-	/obj/item/pet_carrier,
-	/obj/item/device/pda2/medical_director,
-	/obj/item/circuitboard/card/medical,
-	/obj/item/circuitboard/announcement/medical,
-	/obj/item/reagent_containers/injector_filler)
+	spawn_contents = list(
+		/obj/item/pet_carrier,
+		/obj/item/disk/data/floppy/manudrive/ai,
+		/obj/item/disk/data/floppy/manudrive/gene_booth,
+		/obj/item/storage/box/clothing/medical_director,
+		/obj/item/clothing/shoes/brown,
+		/obj/item/gun/implanter,
+		/obj/item/gun/reagent/syringe/NT,
+		/obj/item/reagent_containers/mender/both,
+		/obj/item/gun/kinetic/dart_rifle,
+		/obj/item/ammo/bullets/tranq_darts,
+		/obj/item/ammo/bullets/tranq_darts/anti_mutant,
+		/obj/item/robodefibrillator,
+		/obj/item/storage/firstaid/docbag,
+		/obj/item/reagent_containers/hypospray,
+		/obj/item/device/flash,
+		/obj/item/stamp/md,
+		/obj/item/device/radio/headset/command/md,
+		/obj/item/device/pda2/medical_director,
+		/obj/item/circuitboard/card/medical,
+		/obj/item/circuitboard/announcement/medical,
+		/obj/item/reagent_containers/injector_filler,
+	)
 
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
@@ -308,6 +320,7 @@
 	name = "\improper Chief Engineer's locker"
 	req_access = list(access_engineering_chief)
 	spawn_contents = list(
+		/obj/item/pet_carrier,
 		/obj/item/disk/data/floppy/manudrive/law_rack,
 		/obj/item/disk/data/floppy/manudrive/gravity_tether/singleuse,
 		/obj/item/storage/box/clothing/chief_engineer,
@@ -323,7 +336,6 @@
 		/obj/item/storage/toolbox/mechanical/yellow_tools,
 		/obj/item/storage/box/misctools,
 		/obj/item/extinguisher,
-		/obj/item/pet_carrier,
 		/obj/item/device/pda2/chiefengineer,
 		/obj/item/circuitboard/card/engineering,
 		/obj/item/circuitboard/announcement/engineering,
@@ -429,6 +441,23 @@
 	/obj/item/camera_film,
 	/obj/item/storage/box/luminol_grenade_kit,
 	/obj/item/clipboard)
+
+/obj/storage/secure/closet/iron_safe
+	name = "\improper cast iron safe"
+	desc = "An inordinately heavy and durable safe, no doubt containing something important."
+	req_access = list(access_maxsec)
+	icon_state = "iron_safe"
+	icon_closed = "iron_safe"
+	icon_opened = "iron_safe-open"
+	icon_greenlight = "iron_safe-greenlight"
+	icon_redlight = "iron_safe-redlight"
+	open_sound = 'sound/misc/safe_open.ogg'
+	close_sound = 'sound/misc/safe_close.ogg'
+	_max_health = LOCKER_HEALTH_STRONG
+	_health = LOCKER_HEALTH_STRONG
+	reinforced = TRUE
+	bolted = TRUE
+	radiation_protection = 20
 
 /obj/storage/secure/closet/brig
 	name = "\improper Confiscated Items safe"

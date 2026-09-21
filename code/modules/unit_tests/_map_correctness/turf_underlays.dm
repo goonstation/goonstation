@@ -13,4 +13,4 @@
 		if (!length(T.underlays) || istypes(T, whitelist_types))
 			continue
 
-		. += "[src.format_position(T)] has underlays, likely due to duplicate turfs on the map."
+		. += "[CI.format_position(T)] has underlays, likely due to duplicate turfs on the map."

@@ -147,7 +147,8 @@ TYPEINFO(/mob/new_player)
 		..()
 		close_spawn_windows()
 		if(!spawning)
-			qdel(src)
+			SPAWN(0)
+				qdel(src)
 
 		// Given below call, not much reason to do this if pregameHTML wasn't set
 		// explanation for isnull(src.key) from the reference: In the case of a player switching to another mob, by the time Logout() is called, the original mob's key will be null,
@@ -743,7 +744,7 @@ TYPEINFO(/mob/new_player)
 			observer.client.loadResources()
 
 		respawn_controller.unsubscribeRespawnee(observer?.client?.ckey)
-
+		observer.mind.get_player()?.dnr = observer.client?.preferences?.observer_dnr
 		qdel(src)
 
 #ifdef TWITCH_BOT_ALLOWED

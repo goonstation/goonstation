@@ -75,8 +75,8 @@
 
 		if(swapSouls && H.mind)
 			clone.is_npc = FALSE
-			H.mind.transfer_to(clone)
 			H.is_npc = TRUE
+			H.mind.transfer_to(clone)
 		APPLY_ATOM_PROPERTY(clone, PROP_MOB_SUPPRESS_LAYDOWN_SOUND, "cloner art")
 		clone.changeStatus("unconscious", imprison_time) // so they don't ruin the surprise
 		O.ArtifactFaultUsed(H)

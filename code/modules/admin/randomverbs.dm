@@ -2451,7 +2451,8 @@ var/global/night_mode_enabled = 0
 		old_key = input("Enter old account ckey", "Old account ckey", null) as null|text
 	if (!new_key)
 		new_key = input("Enter new account ckey", "New account ckey", null) as null|text
-
+	old_key = ckey(old_key)
+	new_key = ckey(new_key)
 	try
 		var/datum/apiRoute/players/medals/transfer/transferMedals = new
 		transferMedals.buildBody(old_key, new_key)

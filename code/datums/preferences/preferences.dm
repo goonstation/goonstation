@@ -112,6 +112,8 @@ var/list/removed_jobs = list(
 
 	var/font_size = null
 
+	var/observer_dnr = FALSE //Automatically set DNR when spawn as observer?
+
 	///An associative list of slots to part IDs, see part_customization.dm
 	var/list/custom_parts = null
 
@@ -321,6 +323,7 @@ var/list/removed_jobs = list(
 			"useWasd" = src.use_wasd,
 			"useAzerty" = src.use_azerty,
 			"preferredMap" = src.preferred_map,
+			"observerDnr" = src.observer_dnr,
 			"traitsAvailable" = traits,
 			"traitsMax" = src.traitPreferences.max_traits,
 			"traitsPointsTotal" = src.traitPreferences.calcTotal(src.traitPreferences.traits_selected, src.custom_parts),
@@ -1050,6 +1053,11 @@ var/list/removed_jobs = list(
 
 			if ("update-preferredMap")
 				src.preferred_map = mapSwitcher.clientSelectMap(usr.client, pickable=TRUE)
+				src.profile_modified = TRUE
+				return TRUE
+
+			if ("update-observerDnr")
+				src.observer_dnr = !src.observer_dnr
 				src.profile_modified = TRUE
 				return TRUE
 
