@@ -231,7 +231,7 @@
 		src.update_friendlist(M,remove = 1)
 
 		for(var/mob/living/critter/small_animal/ranch_base/C in view(src.shit_list_distance, src))
-			if(istype(C,src.species_type))
+			if(istype(C,src.species_type) || M.faction == C.faction)
 				C.update_shitlist(M)
 
 	proc/grow_old()

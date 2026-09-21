@@ -700,7 +700,7 @@ TYPEINFO(/obj/item/old_grenade/chicken)
 					chicken.update_friendlist(C, FALSE)
 				C.hyperaggressive = TRUE
 				C.xp = 10001
-				C.species_type = /mob/living/critter/small_animal/ranch_base/chicken // Broader handling of infighting
+				// C.species_type = /mob/living/critter/small_animal/ranch_base/chicken // Broader handling of infighting
 				C.faction = list(FACTION_SYNDICATE)
 				C.ai.interrupt()
 				spawned_chickens += C

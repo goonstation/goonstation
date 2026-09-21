@@ -123,18 +123,18 @@
 				if(!holder.target)
 					return ..() // try again next tick
 
+			if(!messaged)
+				if(prob(10))
+					var/mob/living/critter/small_animal/ranch_base/C = owncritter
+					if(istype(C))
+						C.visible_message(SPAN_ALERT("[C] cries out in fear!"))
+						C.gossip(M)
+						messaged = 1
+
 		var/dist = get_dist(owncritter, holder.target)
 		if (dist > target_range)
 			holder.target = null
 			return ..()
-
-		if(!messaged)
-			if(prob(10))
-				var/mob/living/critter/small_animal/ranch_base/C = owncritter
-				if(istype(C))
-					C.visible_message(SPAN_ALERT("[C] cries out in fear!"))
-					C.gossip()
-					messaged = 1
 
 		holder.move_away(holder.target,target_range)
 		var/mob/living/critter/small_animal/ranch_base/C = owncritter
@@ -207,7 +207,7 @@
 			for(var/mob/M in view(target_range,C))
 				if(!isdead(M))
 					if(!(M in C.my_friends))
-						if(!istype(M,C.species_type))
+						if(!istype(M,C.species_type) || M.faction != C.faction)
 							return precondition() * FIGHT_PRIORITY
 		for(var/mob/M in C.shit_list)
 			if(IN_RANGE(M,C,target_range))
@@ -245,7 +245,7 @@
 				var/mob/living/critter/small_animal/ranch_base/C = owncritter
 				if(istype(C))
 					C.visible_message(SPAN_ALERT("[C] cries out in anger!"))
-					C.gossip()
+					C.gossip(M)
 					messaged = 1
 
 		var/dist = get_dist(owncritter, M)
@@ -298,7 +298,7 @@
 			for(var/mob/M in view(target_range,C))
 				if(!isdead(M))
 					if(!(M in C.my_friends))
-						if(!istype(M,C.species_type))
+						if(!istype(M,C.species_type) || M.faction != C.faction)
 							. += M
 			return
 		for(var/mob/M in C.shit_list)
