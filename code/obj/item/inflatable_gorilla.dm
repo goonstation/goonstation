@@ -11,7 +11,7 @@
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
 
 /obj/item/inflatable_mob/proc/assembly_setup(var/manipulated_gorilla, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
-	parent_assembly.target_item_prefix = "gorilla"
+	parent_assembly.target_item_prefix = src.mob_name
 
 /obj/item/inflatable_mob/attackby(obj/item/tank/tank, mob/user, params)
 	if (!istype(tank))
@@ -23,8 +23,7 @@
 
 /obj/item/inflatable_mob/proc/apply_tank(obj/item/tank/tank, mob/user = null)
 	if (!src.can_inflate(tank))
-		if (user)
-			boutput(user, SPAN_ALERT("[tank] doesn't have enough pressure to inflate a [src.mob_name]!"))
+		boutput(user, SPAN_ALERT("[tank] doesn't have enough pressure to inflate a [src.mob_name]!"))
 		return FALSE
 	tank.air_contents.share(src.air_contents)
 	user?.u_equip(tank)
