@@ -62,9 +62,6 @@ All other chickens in this file are non-secret. Please be respectful.
 
 	var/chicken_id = "white"
 
-	///Born through chicken grenade
-	var/syndchickate = FALSE
-
 	egg_type = /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/white
 
 	species_type = /mob/living/critter/small_animal/ranch_base/chicken
@@ -132,13 +129,6 @@ All other chickens in this file are non-secret. Please be respectful.
 					playsound(get_turf(src), critter_scream_sound , 50, 1, pitch = critter_scream_pitch, channel = VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> boks!"
 		return null
-
-	valid_target(mob/living/C)
-		if(istype(C, /mob/living/critter/small_animal/ranch_base/chicken)) // So multiple breeds of chicken can be in a chicken nade
-			var/mob/living/critter/small_animal/ranch_base/chicken/SC = C  // and not kill eachother.
-			if(SC.syndchickate && src.syndchickate)
-				return FALSE
-		..()
 
 	on_pet(mob/user)
 		if(isdead(src))

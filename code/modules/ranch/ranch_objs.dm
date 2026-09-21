@@ -672,6 +672,7 @@ TYPEINFO(/obj/item/old_grenade/chicken)
 	var/spawn_radius = 2
 	/// list of already spawned chickens, for friendlyness handling
 	var/list/spawned_chickens = list()
+	HELP_MESSAGE_OVERRIDE({"Use a <b>wrench</b> on the grenade to empty its egg storage."})
 
 	get_desc()
 		. += "Features advanced egg care technology to keep up to [max_eggs] eggs safely cradled and warm. This device is capable of hatching mature roosters that will fiercely defend their master, dispatching any nearby threats or bystanders to the best of their abilities."
@@ -700,7 +701,7 @@ TYPEINFO(/obj/item/old_grenade/chicken)
 				C.hyperaggressive = TRUE
 				C.xp = 10001
 				C.species_type = /mob/living/critter/small_animal/ranch_base/chicken // Broader handling of infighting
-				C.syndchickate = TRUE
+				C.faction = list(FACTION_SYNDICATE)
 				C.ai.interrupt()
 				spawned_chickens += C
 				loaded_eggs -= E
