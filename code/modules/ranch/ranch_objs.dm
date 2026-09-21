@@ -694,13 +694,14 @@ TYPEINFO(/obj/item/old_grenade/chicken)
 				var/mob/living/critter/small_animal/ranch_base/chicken/C = new E.chicken_egg_props.rooster_type(dest_turf)
 				C.grow_up()
 				C.update_friendlist(user, FALSE)
-				for(var/mob/living/critter/small_animal/ranch_base/chicken in spawned_chickens) // So you can mix breeds without infighting
+				for(var/mob/living/critter/small_animal/ranch_base/chicken in spawned_chickens) // So you can mix breeds without infighting, done from spawn to prevent early kill on same tile.
 					C.update_friendlist(chicken, FALSE)
 					chicken.update_friendlist(C, FALSE)
 				C.hyperaggressive = TRUE
 				C.xp = 10001
-				C.ai.interrupt()
+				C.species_type = /mob/living/critter/small_animal/ranch_base/chicken // Broader handling of infighting
 				C.syndchickate = TRUE
+				C.ai.interrupt()
 				spawned_chickens += C
 				loaded_eggs -= E
 				qdel(E)

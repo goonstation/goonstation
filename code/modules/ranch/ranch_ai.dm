@@ -206,10 +206,6 @@
 		if(C.hyperaggressive)
 			for(var/mob/M in view(target_range,C))
 				if(!isdead(M))
-					if(istype(M, /mob/living/critter/small_animal/ranch_base/chicken)) //anti cannibalism for chicken nades
-						var/mob/living/critter/small_animal/ranch_base/chicken/CM = M
-						if(CM.syndchickate)
-							CM.gossip(M)
 					if(!(M in C.my_friends))
 						if(!istype(M,C.species_type))
 							return precondition() * FIGHT_PRIORITY
