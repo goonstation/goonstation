@@ -1946,7 +1946,9 @@
 /area/pod_wars/spacejunk/restaurant)
 "gX" = (
 /obj/decal/tile_edge/stripe/extra_big{
-	dir = 6
+	dir = 6;
+	pixel_x = -10;
+	pixel_y = 10
 	},
 /turf/unsimulated/floor/blue,
 /area/pod_wars/team1/bridge)
