@@ -231,7 +231,7 @@
 		src.update_friendlist(M,remove = 1)
 
 		for(var/mob/living/critter/small_animal/ranch_base/C in view(src.shit_list_distance, src))
-			if(istype(C,src.species_type) || M.faction == C.faction)
+			if(istype(C,src.species_type))
 				C.update_shitlist(M)
 
 	proc/grow_old()
@@ -276,7 +276,7 @@
 						RegisterSignal(M, COMSIG_MOB_DEATH, PROC_REF(cleanup_lists))
 						src.ai.stop_move()
 						src.ai.interrupt()
-						if(src.forgiving || (src.forgive_species && istype(M,src.species_type)))
+						if(src.forgiving || (src.forgive_species && istype(M,src.species_type) || !faction_check(src, M)))
 							SPAWN(forgive_timer SECONDS)
 								src.update_shitlist(M,TRUE)
 
