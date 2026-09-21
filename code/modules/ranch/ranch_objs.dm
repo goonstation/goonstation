@@ -670,6 +670,8 @@ TYPEINFO(/obj/item/old_grenade/chicken)
 	var/max_eggs = 5
 	/// distance to spawn chickens in from center
 	var/spawn_radius = 2
+	/// list of already spawned chickens, for friendlyness handling
+	var/list/spawned_chickens = list()
 
 	get_desc()
 		. += "Features advanced egg care technology to keep up to [max_eggs] eggs safely cradled and warm. This device is capable of hatching mature roosters that will fiercely defend their master, dispatching any nearby threats or bystanders to the best of their abilities."
@@ -692,9 +694,14 @@ TYPEINFO(/obj/item/old_grenade/chicken)
 				var/mob/living/critter/small_animal/ranch_base/chicken/C = new E.chicken_egg_props.rooster_type(dest_turf)
 				C.grow_up()
 				C.update_friendlist(user, FALSE)
+				for(var/mob/living/critter/small_animal/ranch_base/chicken in spawned_chickens) // So you can mix breeds without infighting
+					C.update_friendlist(chicken, FALSE)
+					chicken.update_friendlist(C, FALSE)
 				C.hyperaggressive = TRUE
 				C.xp = 10001
 				C.ai.interrupt()
+				C.syndchickate = TRUE
+				spawned_chickens += C
 				loaded_eggs -= E
 				qdel(E)
 		qdel(src)

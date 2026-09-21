@@ -233,6 +233,12 @@
 		for(var/mob/living/critter/small_animal/ranch_base/C in view(src.shit_list_distance, src))
 			if(istype(C,src.species_type))
 				C.update_shitlist(M)
+			if(istype(C, /mob/living/critter/small_animal/ranch_base/chicken) && istype(M,/mob/living/critter/small_animal/ranch_base/chicken)) // Chicken grenate cannibalism prevention
+				var/mob/living/critter/small_animal/ranch_base/chicken/SC = C
+				var/mob/living/critter/small_animal/ranch_base/chicken/SM = M
+				if(SC.syndchickate && SM.syndchickate)
+					SC.update_friendlist(M, FALSE)
+					SM.update_friendlist(src, FALSE)
 
 	proc/grow_old()
 		stage = RANCH_STAGE_SENIOR
