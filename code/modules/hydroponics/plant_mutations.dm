@@ -183,7 +183,7 @@ ABSTRACT_TYPE(/datum/plantmutation)
 	name_prefix = "Sickly "
 	crop = /obj/item/reagent_containers/food/snacks/plant/pear/sickly
 	iconmod = "PearSick"
-	assoc_reagents = list("e.coli")
+	assoc_reagents = list("mucus")
 	ENrange = list(null,10)
 	chance = 5
 

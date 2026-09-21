@@ -1154,7 +1154,7 @@
 				user.get_burn_damage(20)
 				user.changeBodyTemp(-15 KELVIN, T0C + 30)
 				var/turf/TT = target.loc
-				TT.hotspot_expose(T0C + 500, 500)
+				TT.hotspot_expose(T0C + 1200, 1200)
 				user.visible_message(SPAN_ALERT("[user] messes up with thier [src] and superheats the [target] "), SPAN_ALERT("You mess up and superheat [target]!"))
 				playsound(user, 'sound/impact_sounds/burn_sizzle.ogg', 100, 1)
 				// Old item destruction stuff
@@ -1179,7 +1179,7 @@
 			user.get_burn_damage(20)
 			user.changeBodyTemp(30 KELVIN)
 			var/turf/TT = target.loc
-			TT.hotspot_expose(T0C + 500, 500)
+			TT.hotspot_expose(T0C + 1200, 1200)
 			logTheThing(LOG_COMBAT, user, "accidentally harms [constructTarget(target,"combat")] with hot hands at [log_loc(user)].")
 			user.visible_message(SPAN_COMBAT("<b>[user] accidentally melts [target] while trying to [user.a_intent] them!</b>"), SPAN_COMBAT("<b>You accidentally melt [target] while trying to [user.a_intent] them!</b>"))
 			harm(target, user, 1)
@@ -1219,7 +1219,6 @@
 		msgs.flush(SUPPRESS_LOGS)
 		user.lastattacked = get_weakref(target)
 		..()
-
 
 // A replacement for the awful custom_attack() overrides in mutantraces.dm, which consisted of two
 // entire copies of pre-stamina melee attack code (Convair880).
