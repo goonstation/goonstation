@@ -906,7 +906,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	heal(var/mob/M)
 		..()
 		M:emote("twitch")
-		var/datum/plantgenes/DNA = src.plantgenes
 		boutput(M, SPAN_ALERT("Guh, its so HAIRY!"))
 
 
