@@ -1157,7 +1157,7 @@
 			var/file = cursors_selection[client.preferences.target_cursor]
 			if(!src.aim_assist_radius)
 				return file
-			if(!(src.aim_assist_radius >= AIM_ASSIST_1_TILE))
+			if(!(src.aim_assist_radius == AIM_ASSIST_1_TILE))
 				return // we only have 1-tile-radius cursors right now, but we should account for
 				// bigger ones when we get them
 			var/file_name = "[file]"
