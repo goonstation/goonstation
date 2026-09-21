@@ -1156,6 +1156,7 @@
 				var/turf/TT = target.loc
 				TT.hotspot_expose(T0C + 500, 500)
 				user.visible_message(SPAN_ALERT("[user] messes up with thier [src] and superheats the [target] "), SPAN_ALERT("You mess up and superheat [target]!"))
+				playsound(user, 'sound/impact_sounds/burn_sizzle.ogg', 100, 1)
 				// Old item destruction stuff
 				// var/obj/item/I = target
 				// if(I.anchored)
@@ -1206,17 +1207,18 @@
 	harm(mob/target, var/mob/living/user, var/no_logs = 0)
 		if(check_target_immunity( target ))
 			return 0
-		// if (!no_logs)
-		// 	logTheThing(LOG_COMBAT, user, "melts [constructTarget(target,"combat")] with hot hands at [log_loc(user)].")
+		if (!no_logs)
+			logTheThing(LOG_COMBAT, user, "melts [constructTarget(target,"combat")] with hot hands at [log_loc(user)].")
 
-		// var/datum/attackResults/msgs = user.calculate_melee_attack(target, 1, 3, 1, 0, 0, can_punch = 0, can_kick = 0)
-		// user.attack_effects(target, user.zone_sel?.selecting)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 1, 3, 1, 0, 0, can_punch = 0, can_kick = 0)
+		user.attack_effects(target, user.zone_sel?.selecting)
 
-		// msgs.base_attack_message = SPAN_COMBAT("<b>[user] melts [target] with their clutch!</b>")
-		// msgs.played_sound = 'sound/impact_sounds/burn_sizzle.ogg'
-		// msgs.damage_type = DAMAGE_BURN
-		// msgs.flush(SUPPRESS_LOGS)
-		// user.lastattacked = get_weakref(target)
+		msgs.base_attack_message = SPAN_COMBAT("<b>[user] melts [target] with their clutch!</b>")
+		msgs.played_sound = 'sound/impact_sounds/burn_sizzle.ogg'
+		msgs.damage_type = DAMAGE_BURN
+		msgs.flush(SUPPRESS_LOGS)
+		user.lastattacked = get_weakref(target)
+		..()
 
 
 // A replacement for the awful custom_attack() overrides in mutantraces.dm, which consisted of two
