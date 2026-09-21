@@ -14592,6 +14592,9 @@
 /area/owlery/owleryhall)
 "bjb" = (
 /obj/storage/closet/syndicate,
+/obj/decal/poster/flag/syndicate{
+	pixel_y = 32
+	},
 /turf/unsimulated/floor/carpet/grime,
 /area/drone/crew_quarters)
 "bjc" = (
@@ -22082,6 +22085,9 @@
 /obj/item/paper_bin,
 /obj/item/pen/sleepypen,
 /obj/item/stamp/syndicate,
+/obj/decal/poster/flag/syndicate{
+	pixel_y = 32
+	},
 /turf/unsimulated/floor/carpet/red/fancy/edge/nw,
 /area/syndicate_station/battlecruiser)
 "bLd" = (
@@ -44635,6 +44641,9 @@
 	icon_state = "bedsheet-red";
 	name = "syndicate bedsheet"
 	},
+/obj/decal/poster/flag/syndicate{
+	pixel_y = 32
+	},
 /turf/unsimulated/floor/redblack{
 	dir = 1
 	},
@@ -47037,8 +47046,7 @@
 "dwj" = (
 /obj/table/wood/auto/desk,
 /obj/item/stamp{
-	assignment = "Chief Chimp";
-	is_reassignable = 0
+	name = "chief chimp's rubber stamp"
 	},
 /turf/unsimulated/floor/engine/caution/south,
 /area/centcom/offices/mordent)

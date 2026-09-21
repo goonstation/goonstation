@@ -1092,6 +1092,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 			EH.drop(1)
 
 /mob/living/critter/emote(var/act, var/voluntary = 0)
+	set waitfor = 0
 	..()
 	var/param = null
 	if (src.hasStatus("paralysis"))
