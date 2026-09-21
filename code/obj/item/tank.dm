@@ -59,6 +59,7 @@ ABSTRACT_TYPE(/obj/item/tank)
 		src.create_inventory_counter()
 		BLOCK_SETUP(BLOCK_TANK)
 		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
 		return
 
 	disposing()
@@ -70,17 +71,21 @@ ABSTRACT_TYPE(/obj/item/tank)
 		..()
 
 	proc/assembly_application(var/manipulated_tank, var/obj/item/assembly/parent_assembly, var/obj/assembly_target)
+		playsound(parent_assembly, 'sound/effects/valve_creak.ogg', 50, 1)
 		if (!assembly_target)
-			playsound(parent_assembly, 'sound/effects/valve_creak.ogg', 50, 1)
-			var/turf/simulated/T = get_turf(parent_assembly)
-			if (!T)
-				return
-			if (istype(T) && T.parent?.group_processing)
-				T.parent.suspend_group_processing()
-			src.air_contents.release_to(T, src.distribute_pressure)
-			if (MIXTURE_PRESSURE(src.air_contents) < ATMOS_EPSILON)
-				T.return_air().remove()
+			return
+		if (istype(assembly_target, /obj/item/inflatable_mob))
+			var/obj/item/inflatable_mob/inflatable = assembly_target
+			if (inflatable.can_inflate(src))
+				parent_assembly.tear_apart()
+				inflatable.apply_tank(src)
 
+	proc/assembly_setup(var/manipulated_tank, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
+		if(parent_assembly.applier == src)
+			parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/inflatable_mob), TYPE_PROC_REF(/obj/item/assembly, add_target_item), TRUE)
+
+	assembly_get_admin_log_message(var/mob/user, var/obj/item/assembly/parent_assembly)
+		return " [log_atmos(src)]"
 
 	blob_act(var/power)
 		if(prob(25 * power / 20))
@@ -373,8 +378,6 @@ ABSTRACT_TYPE(/obj/item/tank)
 	New()
 		..()
 		src.air_contents.toxins = (3 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C)
-		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
-		return
 
 	disposing()
 		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
@@ -382,10 +385,8 @@ ABSTRACT_TYPE(/obj/item/tank)
 
 	/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
 
-	assembly_get_admin_log_message(var/mob/user, var/obj/item/assembly/parent_assembly)
-		return " [log_atmos(src)]"
-
-	proc/assembly_setup(var/manipulated_bomb, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
+	assembly_setup(var/manipulated_bomb, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
+		..()
 		//lets make them contraband 4, like pipebombs
 		var/singletank_bomb_contraband_level = 4
 		//we need to add the new icon for the plasma tank
