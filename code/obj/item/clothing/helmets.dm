@@ -482,6 +482,29 @@
 		cant_self_remove = 1
 		cant_other_remove = 1
 
+	medic // Sprite by tekoTheTeapot
+		icon_state = "ntso_medic"
+		item_state = "ntso_medic"
+		name = "NT paramedic helmet"
+		desc = "A modified combat helmet for Nanotrasen emergency paramedics. Equipped with an integrated ProDoc HUD."
+
+		equipped(var/mob/user, var/slot)
+			..()
+			if (slot == SLOT_HEAD)
+				APPLY_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH,src)
+				get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(user)
+
+		unequipped(var/mob/user)
+			if(src.equipped_in_slot == SLOT_HEAD)
+				REMOVE_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH,src)
+				get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(user)
+			..()
+
+		setupProperties()
+			..()
+			setProperty("viralprot", 50)
+			setProperty("chemprot", 30)
+
 /obj/item/clothing/head/helmet/space/nanotrasen
 	name = "Nanotrasen Heavy Helmet"
 	icon_state = "nthelm2"
@@ -569,7 +592,10 @@
 	attackby(var/obj/item/T, mob/user as mob)
 		if(istype(T, /obj/item/device/prox_sensor) && src.type == /obj/item/clothing/head/helmet/hardhat) //No derivatives
 			boutput(user,  "You attach the proximity sensor to the hard hat. Now you need to add a robot arm.")
-			new /obj/item/digbotassembly(get_turf(src))
+			var/obj/item/digbotassembly/digbot = new(get_turf(src))
+			digbot.setMaterial(src.material)
+			digbot.forensic_holder = src.forensic_holder
+			T.forensic_holder.copy_to(digbot.forensic_holder)
 			qdel(T)
 			qdel(src)
 			return

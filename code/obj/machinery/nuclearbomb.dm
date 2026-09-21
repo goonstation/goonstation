@@ -3,7 +3,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 /obj/machinery/nuclearbomb
 	name = "nuclear bomb"
 	desc = "An extremely powerful bomb capable of levelling the whole station."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/nuclearbomb.dmi'
 	icon_state = "nuclearbomb"//1"
 	density = 1
 	anchored = UNANCHORED
@@ -54,6 +54,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, null, FREQ_STATUS_DISPLAY)
 
 		get_self_and_decoys() // links them up
+		AddComponent(/datum/component/minimap_marker/minimap, MAP_SYNDICATE | MAP_ADMIN, "nuclear_bomb")
 
 		START_TRACKING
 		..()
@@ -466,6 +467,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 
 		var/datum/hud/cinematic/all_clients/nuclear_bomb/cinematic = new
 		cinematic.play()
+		for_by_tcl(objective, /datum/objective/specialist/nuclear)
+			objective.detonation_successful = TRUE //Confirm objectives before ending the round
+			break
 		if(istype(gamemode))
 			gamemode.nuke_detonated = 1
 			gamemode.check_win()
@@ -567,7 +571,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 /obj/bomb_decoy
 	name = "nuclear bomb"
 	desc = ""
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/nuclearbomb.dmi'
 	icon_state = "nuclearbomb"
 	density = 1
 	anchored = UNANCHORED

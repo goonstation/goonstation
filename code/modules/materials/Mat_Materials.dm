@@ -117,7 +117,7 @@ ABSTRACT_TYPE(/datum/material)
 	New()
 		. = ..()
 		for(var/datum/material_property/propPath as anything in concrete_typesof(/datum/material_property))
-			if(initial(propPath.default_value) > 0)
+			if(initial(propPath.default_value) > 0 && initial(propPath.default_value) != INFINITY)
 				src.setProperty(initial(propPath.id), initial(propPath.default_value))
 		if(src.hsl_color)
 			addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/add_color_hsl())
@@ -201,6 +201,11 @@ ABSTRACT_TYPE(/datum/material)
 		if(!src.mutable)
 			CRASH("Attempted to mutate an immutatble material!")
 		src.color = color
+
+	proc/setColorHSL(var/hsl_color)
+		if(!src.mutable)
+			CRASH("Attempted to mutate an immutatble material!")
+		src.hsl_color = hsl_color
 
 	proc/setCanMix(var/mix)
 		if(!src.mutable)
@@ -437,7 +442,7 @@ ABSTRACT_TYPE(/datum/material)
 			X.execute(location)
 		return
 
-	proc/triggerChem(var/location, var/datum/reagent/chem, var/amount)
+	proc/triggerChem(var/atom/location, var/datum/reagent/chem, var/amount)
 		for(var/datum/materialProc/X in triggersChem)
 			X.execute(location, chem, amount)
 		return
@@ -1198,11 +1203,12 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("electrical", 6)
 		setProperty("radioactive", 8)
 
-		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/erebite_temp())
-		addTrigger(TRIGGERS_ON_EXPLOSION, new /datum/materialProc/erebite_exp())
-		addTrigger(TRIGGERS_ON_ATTACK, new /datum/materialProc/generic_explode_attack(33))
-		addTrigger(TRIGGERS_ON_ATTACKED, new /datum/materialProc/generic_explode_attack(33))
-		addTrigger(TRIGGERS_ON_HIT, new /datum/materialProc/generic_explode_attack(33))
+		// Explodes if you look at it funny
+		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/explosion/heated())
+		addTrigger(TRIGGERS_ON_EXPLOSION, new /datum/materialProc/explosion/exp())
+		addTrigger(TRIGGERS_ON_ATTACK, new /datum/materialProc/explosion/generic())
+		addTrigger(TRIGGERS_ON_ATTACKED, new /datum/materialProc/explosion/generic())
+		addTrigger(TRIGGERS_ON_HIT, new /datum/materialProc/explosion/impact())
 
 
 /datum/material/crystal/plasmastone
@@ -1466,10 +1472,14 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	desc = "Miraclium is a bizarre substance that can have a wide variety of effects."
 	icon_file = 'icons/obj/items/materials/miracle.dmi'
 	color = "#FFFFFF"
+	hsl_color =	list(0.00, 0.00, 0.00, 0.00,\
+					0.00, 0.60, 0.00, 0.00,\
+					0.00, 0.00, 1.00, 0.00,\
+					0.00, 0.00, 0.00, 1.00,\
+					0.00, 0.40, 0.00, 0.00)
 
 	New()
 		..()
-		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/miracle_add())
 		alpha = rand(20, 255)
 		setProperty("density", rand(1, 8))
 		setProperty("hard", rand(1, 8))
@@ -1478,6 +1488,13 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		var/rand_val = rand()
 		var/melting_point = (3500 KELVIN * (rand_val * rand_val)) + 500 KELVIN
 		setProperty("melting_point", melting_point)
+
+		src.hsl_color[18] = ((getProperty("density") - 1) / (8 - 1)) * 0.8 // Total saturation
+		src.hsl_color[6] = ((getProperty("hard") - 1) / (8 - 1)) - src.hsl_color[18] + 0.2 // Color saturation
+		src.hsl_color[11] = (((getProperty("chemical") - 1) / (8 - 1)) * 0.5) + 0.75 // Luminosity
+
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/miracle_add())
+		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/miracle_remove())
 		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/temp_miraclium())
 
 
@@ -1604,6 +1621,8 @@ ABSTRACT_TYPE(/datum/material/organic)
 
 	edible_exact = 0.6 //Just barely edible
 	edible = 1
+	/// The reference to the blob overmind is used for the ID. Make sure it stays in memory.
+	var/mob/living/intangible/blob_overmind/blob_source = null
 
 	New()
 		..()
@@ -1618,6 +1637,33 @@ ABSTRACT_TYPE(/datum/material/organic)
 		addTrigger(TRIGGERS_ON_IMAGE, new /datum/materialProc/honey_image())
 		addTrigger(TRIGGERS_ON_EAT, new /datum/materialProc/oneat_blob())
 
+	proc/match_to_blob(var/mob/living/intangible/blob_overmind/blob)
+		if(!src.mutable)
+			CRASH("Attempted to mutate an immutatble material!")
+		src.blob_source = blob
+		src.setID("blob_\ref[blob]")
+		src.match_to_blob_color(blob.organ_color)
+
+	proc/match_to_blob_color(var/blob_color)
+		if(!src.mutable)
+			CRASH("Attempted to mutate an immutatble material!")
+
+		if(isnull(src.blob_source))
+			src.setID("blob_[blob_color]")
+
+		var/list/color_hsl = rgb2hsl(GetRedPart(blob_color), GetGreenPart(blob_color), GetBluePart(blob_color))
+		var/h = color_hsl[1] / 360
+		var/s = color_hsl[2] / 100
+		var/l = color_hsl[3] / 100
+
+		src.setColor(COLOR_MATRIX_IDENTITY)
+		var/list/hsl_temp
+		hsl_temp = list(0.00, 0.00, 0.00, 0.00,\
+						0.00, 0.3 * s, 0.00, 0.00,\
+						0.00, 0.00, (0.6 * l) + 0.35, 0.00,\
+						0.00, 0.00, 0.00, 1.00,\
+						h, 0.7 * s, 0.00, 0.00)
+		src.setColorHSL(hsl_temp)
 
 
 /datum/material/organic/flesh
@@ -2365,7 +2411,13 @@ ABSTRACT_TYPE(/datum/material/rubber)
 	mat_id = "latex"
 	name = "latex"
 	desc = "A type of synthetic rubber. Conducts electricity poorly."
-	color = "#DDDDDD" //"#FF0000" idgaf ok I want red cables back. no haine, this stuff isnt red.
+	hsl_color = list(1.00, 0.00, 0.00, 0.00,\
+					0.00, 0.00, 0.10, 0.20,\
+					0.00, 0.00, 0.70, 0.25,\
+					0.00, 0.00, 0.00, 0.75,\
+					0.00, 0.00, 0.45, 0.00)
+	color = "#EAEAEA" //"#FF0000" idgaf ok I want red cables back. no haine, this stuff isnt red.
+	alpha = 239
 
 	New()
 		..()
@@ -2374,6 +2426,9 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("electrical", 3)
 		setProperty("thermal", 4)
 		setProperty("melting_point", 453 KELVIN) // About the melting point of rubber
+
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/outline_add(src.color, 0.05))
+		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/outline_remove())
 
 /datum/material/rubber/synthrubber
 	mat_id = "synthrubber"
@@ -2502,12 +2557,17 @@ ABSTRACT_TYPE(/datum/material/rubber)
 
 // Placed here because it needs to have /datum/material defined already to work
 /datum/materialProc/batiline_mix
+	desc_scan = "Radioactivity removed when combined with other materials\
+	<ul style='margin-top:0px;margin-bottom:0px;padding-left:20px'>\
+    	<li style='padding-left:0px'>Lost radioactivity converted into density and/or reflectivity</li>\
+    </ul>"
+
 	execute(var/datum/material/new_mat, var/datum/material/old_matA, var/datum/material/old_matB, var/bias)
 		var/rads = new_mat.getProperty("radioactive")
 		var/n_rads = new_mat.getProperty("n_radioactive")
 
-		new_mat.adjustProperty("reflective", rads / 2)
-		new_mat.adjustProperty("density", n_rads / 2)
+		new_mat.adjustProperty("reflective", rads)
+		new_mat.adjustProperty("density", n_rads)
 
 		new_mat.removeProperty("radioactive")
 		new_mat.removeProperty("n_radioactive")
@@ -2516,6 +2576,8 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		return
 
 /datum/materialProc/mycelium_mix
+	desc_scan = "Removes ingestion effects when combined with edible materials"
+
 	execute(var/datum/material/new_mat, var/datum/material/old_matA, var/datum/material/old_matB, var/bias)
 		if(old_matA.getEdible() && old_matB.getEdible())
 			new_mat.overwriteTrigger(TRIGGERS_ON_EAT, list())

@@ -6,9 +6,9 @@
  * @license ISC
  */
 
-import { Section } from 'tgui-core/components';
+import { Button, Input, Section, Stack } from 'tgui-core/components';
 
-import { useBackend } from '../../backend';
+import { useBackend, useSharedState } from '../../backend';
 import { Window } from '../../layouts';
 import { AIStatuses } from './AiStatuses';
 import { CyborgStatuses } from './CyborgStatuses';
@@ -16,7 +16,11 @@ import { GhostdroneStatuses } from './GhostdroneStatuses';
 import type { RoboticsControlData } from './type';
 
 export const RoboticsControl = () => {
-  const { data } = useBackend<RoboticsControlData>();
+  const { data, act } = useBackend<RoboticsControlData>();
+  const [broadcast_message, setBroadcastMessage] = useSharedState(
+    'broadcast_message',
+    '',
+  );
   const {
     user_is_ai,
     user_is_cyborg,
@@ -40,6 +44,31 @@ export const RoboticsControl = () => {
               Swipe a valid ID to activate/cancel lockdown or killswitch.
             </Section>
           )}
+
+        <Section title="Silicon Broadcast">
+          <Stack>
+            <Stack.Item>
+              <Button
+                icon="bullhorn"
+                color="green"
+                onClick={() =>
+                  act('silicon_broadcast', {
+                    message: broadcast_message,
+                  })
+                }
+              >
+                Broadcast
+              </Button>
+            </Stack.Item>
+            <Stack.Item grow>
+              <Input
+                fluid
+                onChange={setBroadcastMessage}
+                placeholder="Enter message"
+              />
+            </Stack.Item>
+          </Stack>
+        </Section>
 
         <Section fill scrollable>
           <Section title="Located AI Units">

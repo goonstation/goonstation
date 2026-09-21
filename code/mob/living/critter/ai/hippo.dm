@@ -8,6 +8,7 @@
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/critter/attack, list(src.holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/critter/find_water, list(src.holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/timed/wander/critter/aggressive/melee, list(src.holder, src))
+	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/critter/eat, list(src.holder, src))
 
 /datum/aiTask/sequence/goalbased/critter/find_water
 	weight = -10

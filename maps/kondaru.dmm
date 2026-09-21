@@ -8349,14 +8349,19 @@
 /obj/storage/secure/closet/command/medical_director,
 /obj/item/storage/box/beakerbox,
 /obj/item/reagent_containers/glass/beaker/large,
-/obj/machinery/firealarm/directional/east{
-	pixel_y = 4
-	},
 /obj/item/clipboard,
 /obj/item/pen,
-/obj/item/mdlicense,
-/obj/machinery/light_switch/directional/east{
-	pixel_y = -7
+/obj/machinery/firealarm/directional/south{
+	pixel_x = 4;
+	pixel_y = -22
+	},
+/obj/machinery/light_switch/directional/south{
+	pixel_x = -6;
+	pixel_y = -24
+	},
+/obj/decal/poster/wallsign/framed_award/mdlicense{
+	pixel_x = 32;
+	pixel_y = -2
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/md)
@@ -11566,6 +11571,9 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/window_blinds/cog2/right{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/pharmacy)
 "aZw" = (
@@ -11587,7 +11595,8 @@
 "aZx" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/machinery/firealarm/directional/north{
-	pixel_x = 6
+	pixel_x = 9;
+	pixel_y = 30
 	},
 /obj/machinery/glass_recycler{
 	pixel_y = 4
@@ -11595,6 +11604,7 @@
 /obj/machinery/light_switch/directional/north{
 	pixel_x = -8
 	},
+/obj/blind_switch/directional/north,
 /turf/simulated/floor/blueblack,
 /area/station/medical/medbay/pharmacy)
 "aZy" = (
@@ -15977,6 +15987,9 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/window_blinds/cog2/middle{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/pharmacy)
 "bxp" = (
@@ -15985,6 +15998,9 @@
 	icon_state = "0-2"
 	},
 /obj/cable,
+/obj/window_blinds/cog2/middle{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/pharmacy)
 "bxr" = (
@@ -16693,6 +16709,9 @@
 /obj/cable,
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/window_blinds/cog2/middle{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/pharmacy)
@@ -21189,7 +21208,7 @@
 "bSc" = (
 /obj/table/reinforced/auto,
 /obj/machinery/recharger,
-/obj/item/reagent_containers/food/snacks/spaghetti/spicy,
+/obj/item/reagent_containers/food/snacks/spaghetti/spicy/security,
 /obj/item/kitchen/utensil/fork{
 	pixel_x = 9;
 	pixel_y = 3
@@ -25780,6 +25799,9 @@
 "cqb" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
+/obj/window_blinds/cog2/right{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/pharmacy)
 "cqf" = (
@@ -25793,6 +25815,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/window_blinds/cog2/middle,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/pharmacy)
 "cqj" = (
@@ -25800,6 +25823,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/window_blinds/cog2/right,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/pharmacy)
 "cqk" = (
@@ -26058,6 +26082,11 @@
 	dir = 1
 	},
 /area/station/crew_quarters/radio/news_office)
+"cwO" = (
+/obj/stool/bench/blue/auto,
+/obj/machinery/light,
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "cxa" = (
 /obj/decal/cleanable/dirt,
 /obj/random_item_spawner/junk/one_or_zero,
@@ -30249,6 +30278,14 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"fiy" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable,
+/obj/window_blinds/cog2/left{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/pharmacy)
 "fiz" = (
 /obj/table/auto,
 /obj/machinery/computer3/generic/personal,
@@ -31899,6 +31936,10 @@
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/sw,
 /area/station/crew_quarters/courtroom)
+"goT" = (
+/obj/machinery/light,
+/turf/simulated/floor/grey,
+/area/station/hallway/secondary/exit)
 "goW" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/primary/east)
@@ -33912,6 +33953,10 @@
 /obj/table/wood/auto,
 /obj/machinery/phone,
 /obj/item/pen/crayon/golden,
+/obj/item/reagent_containers/food/drinks/rum_spaced{
+	pixel_x = -17;
+	pixel_y = 6
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hop)
 "hCO" = (
@@ -34913,7 +34958,6 @@
 	},
 /area/station/maintenance/inner/east)
 "iut" = (
-/obj/machinery/light,
 /obj/machinery/status_display{
 	pixel_y = -30
 	},
@@ -41707,6 +41751,7 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
+/obj/window_blinds/cog2/left,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/pharmacy)
 "mSD" = (
@@ -42297,7 +42342,10 @@
 	icon_state = "bedsheet-captain";
 	name = "special bedsheet"
 	},
-/obj/blind_switch/directional/north,
+/obj/item/storage/secure/ssafe{
+	pixel_x = 0;
+	pixel_y = 25
+	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/bridge/captain)
 "noI" = (
@@ -46675,6 +46723,9 @@
 /obj/item/kitchen/food_box/lollipop{
 	pixel_y = 5
 	},
+/obj/window_blinds/cog2/left{
+	dir = 8
+	},
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/pharmacy)
 "qxl" = (
@@ -49112,6 +49163,16 @@
 	},
 /turf/simulated/floor/white/checker,
 /area/station/crew_quarters/pool)
+"shM" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/pharmacy)
 "shR" = (
 /obj/decal/tile_edge/line/green{
 	dir = 8;
@@ -51435,6 +51496,14 @@
 	},
 /turf/space,
 /area/station/mining/magnet)
+"tOH" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "tOS" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -52550,12 +52619,7 @@
 	},
 /obj/item/remote/porter/port_a_sci,
 /obj/item/reagent_containers/hypospray,
-/obj/item/reagent_containers/food/snacks/beefood{
-	desc = "A little birthday cupcake for Heisenbee.  May not taste good to non-bees.";
-	icon = 'icons/obj/foodNdrink/food_dessert.dmi';
-	icon_state = "cupcake";
-	name = "Heisenbee's birthday cupcake"
-	},
+/obj/item/reagent_containers/food/snacks/beefood/heisenbee,
 /obj/item/stamp/rd,
 /obj/item/device/radio/intercom/science{
 	pixel_x = 3;
@@ -56953,7 +57017,12 @@
 /obj/item/clothing/mask/gas/emergency,
 /obj/item/clothing/head/helmet/space/captain,
 /obj/item/tank/jetpack,
-/obj/machinery/light_switch/directional/east,
+/obj/machinery/light_switch/directional/east{
+	pixel_y = -6
+	},
+/obj/blind_switch/directional/east{
+	pixel_y = 8
+	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/bridge/captain)
 "xtW" = (
@@ -97733,11 +97802,11 @@ aTC
 jPs
 kTp
 aTC
-bxo
+shM
 bxp
 bAG
 bxp
-cqb
+fiy
 bfa
 bgj
 bhz
@@ -132455,7 +132524,7 @@ dwL
 aPf
 aQf
 gcx
-afw
+aaa
 aaa
 wzw
 wzw
@@ -132472,13 +132541,13 @@ wzw
 wzw
 wzw
 aaa
-acb
+aaa
 gcx
 aQf
 bik
 dwL
 gcx
-afw
+aaa
 aaa
 aci
 aaa
@@ -132753,34 +132822,34 @@ aci
 aaa
 aaa
 gcx
-bri
-aPf
-iut
-lXB
-gcx
-qKY
-wzw
-wzw
-wzw
-wzw
-wzw
-wzw
-wzw
-wzw
-wzw
-wzw
-wzw
-wzw
-wzw
-wzw
-qKY
-gcx
-lXB
-wFY
-bik
 dwL
+aPf
+goT
 gcx
-acO
+aaa
+aaa
+wzw
+wzw
+wzw
+wzw
+wzw
+wzw
+wzw
+wzw
+wzw
+wzw
+wzw
+wzw
+wzw
+wzw
+aaa
+aaa
+gcx
+aQf
+bik
+cwO
+gcx
+aaa
 aaa
 aci
 aaa
@@ -133055,12 +133124,12 @@ aci
 aaa
 aaa
 gcx
-bri
+dwL
 aPf
 aQf
-lJY
-aQf
-njG
+gcx
+afw
+aaa
 wzw
 wzw
 wzw
@@ -133075,14 +133144,14 @@ wzw
 wzw
 wzw
 wzw
-njG
-aQf
-lJY
+aaa
+acb
+gcx
 aQf
 bik
-roh
+dwL
 gcx
-acO
+afw
 aaa
 aci
 aaa
@@ -133353,40 +133422,40 @@ aaa
 aaa
 aaa
 aaa
+aci
+aaa
+aaa
+gcx
+bri
+aPf
+iut
 lXB
 gcx
+qKY
+wzw
+wzw
+wzw
+wzw
+wzw
+wzw
+wzw
+wzw
+wzw
+wzw
+wzw
+wzw
+wzw
+wzw
+qKY
 gcx
 lXB
-lXB
-ftt
-uMH
-gcx
-aQf
-rEQ
-wzw
-wzw
-wzw
-wzw
-wzw
-wzw
-wzw
-wzw
-wzw
-wzw
-wzw
-wzw
-wzw
-wzw
-gcx
-aQf
-gcx
-huD
+wFY
 bik
-lXB
-lXB
-lXB
-lXB
-lXB
+dwL
+gcx
+acO
+aaa
+aci
 aaa
 aaa
 aaa
@@ -133655,16 +133724,16 @@ aaa
 aaa
 aaa
 aaa
+aci
+aaa
+aaa
 gcx
-bLq
-bTq
-bTq
-ujW
+tOH
 aPf
-lJO
-gcx
-wWo
-gcx
+aQf
+lJY
+aQf
+njG
 wzw
 wzw
 wzw
@@ -133679,16 +133748,16 @@ wzw
 wzw
 wzw
 wzw
-gcx
-uiH
-gcx
-vIN
+njG
+aQf
+lJY
+aQf
 bik
-ujW
-bTq
-bTq
-pJp
+roh
 gcx
+acO
+aaa
+aci
 aaa
 aaa
 aaa
@@ -133957,16 +134026,16 @@ aaa
 aaa
 aaa
 aaa
+lXB
 gcx
-bMg
-bTs
-bMg
 gcx
-igw
-iDR
-lJY
+lXB
+lXB
+ftt
+uMH
+gcx
 aQf
-njG
+rEQ
 wzw
 wzw
 wzw
@@ -133981,16 +134050,16 @@ wzw
 wzw
 wzw
 wzw
-njG
+gcx
 aQf
-lJY
-iDR
-tGb
 gcx
-qBn
-opG
-qBn
-gcx
+huD
+bik
+lXB
+lXB
+lXB
+lXB
+lXB
 aaa
 aaa
 aaa
@@ -134259,16 +134328,16 @@ aaa
 aaa
 aaa
 aaa
-lXB
-bMz
-lXB
-bMz
-lXB
 gcx
+bLq
+bTq
+bTq
+ujW
+aPf
+lJO
 gcx
-lXB
+wWo
 gcx
-qKY
 wzw
 wzw
 wzw
@@ -134283,16 +134352,16 @@ wzw
 wzw
 wzw
 wzw
-qKY
 gcx
-lXB
+uiH
 gcx
+vIN
+bik
+ujW
+bTq
+bTq
+pJp
 gcx
-lXB
-bMz
-lXB
-bMz
-lXB
 aaa
 aaa
 aaa
@@ -134561,16 +134630,16 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aci
-aaa
-aaa
-aaa
-aaa
-aci
-aaa
-aaa
+gcx
+bMg
+bTs
+bMg
+gcx
+igw
+iDR
+lJY
+aQf
+njG
 wzw
 wzw
 wzw
@@ -134585,16 +134654,16 @@ wzw
 wzw
 wzw
 wzw
-aaa
-aaa
-aci
-aaa
-aaa
-aaa
-aaa
-aci
-aaa
-aaa
+njG
+aQf
+lJY
+iDR
+tGb
+gcx
+qBn
+opG
+qBn
+gcx
 aaa
 aaa
 aaa
@@ -134863,17 +134932,16 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aOv
-aaa
-aaa
-aaa
-aaa
-aci
-aaa
-aaa
-aaa
+lXB
+bMz
+lXB
+bMz
+lXB
+gcx
+gcx
+lXB
+gcx
+qKY
 wzw
 wzw
 wzw
@@ -134886,17 +134954,18 @@ wzw
 wzw
 wzw
 wzw
-aaa
-aaa
-aaa
-aci
-aaa
-aaa
-aaa
-aaa
-aOv
-aaa
-aaa
+wzw
+wzw
+qKY
+gcx
+lXB
+gcx
+gcx
+lXB
+bMz
+lXB
+bMz
+lXB
 aaa
 aaa
 aaa
@@ -135167,15 +135236,12 @@ aaa
 aaa
 aaa
 aaa
+aci
 aaa
 aaa
 aaa
 aaa
-aaa
-aRo
-aaa
-aaa
-aaa
+aci
 aaa
 aaa
 wzw
@@ -135186,17 +135252,20 @@ wzw
 wzw
 wzw
 wzw
+wzw
+wzw
+wzw
+wzw
+wzw
+wzw
+aaa
+aaa
+aci
 aaa
 aaa
 aaa
 aaa
-aaa
-aRo
-aaa
-aaa
-aaa
-aaa
-aaa
+aci
 aaa
 aaa
 aaa
@@ -135469,15 +135538,12 @@ aaa
 aaa
 aaa
 aaa
+aOv
 aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aci
 aaa
 aaa
 wzw
@@ -135488,17 +135554,20 @@ wzw
 wzw
 wzw
 wzw
+wzw
+wzw
+wzw
+wzw
+wzw
+wzw
+aaa
+aaa
+aci
 aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+aOv
 aaa
 aaa
 aaa
@@ -135776,10 +135845,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
+aRo
 aaa
 aaa
 wzw
@@ -135790,12 +135856,15 @@ wzw
 wzw
 wzw
 wzw
+wzw
+wzw
+wzw
+wzw
+wzw
+wzw
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
+aRo
 aaa
 aaa
 aaa
@@ -136082,18 +136151,18 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
 wzw
 wzw
 wzw
 wzw
 wzw
 wzw
-aaa
-aaa
-aaa
+wzw
+wzw
+wzw
+wzw
+wzw
+wzw
 aaa
 aaa
 aaa
@@ -136386,14 +136455,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+wzw
+wzw
+wzw
+wzw
+wzw
+wzw
+wzw
+wzw
 aaa
 aaa
 aaa
@@ -136688,14 +136757,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+wzw
+wzw
+wzw
+wzw
+wzw
+wzw
+wzw
+wzw
 aaa
 aaa
 aaa
@@ -136990,14 +137059,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+wzw
+wzw
+wzw
+wzw
+wzw
+wzw
+wzw
+wzw
 aaa
 aaa
 aaa
@@ -137293,12 +137362,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+wzw
+wzw
+wzw
+wzw
+wzw
+wzw
 aaa
 aaa
 aaa

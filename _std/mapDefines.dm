@@ -1,9 +1,13 @@
+// special modes
+#if defined(MAP_OVERRIDE_DEVTEST)
 
-#if defined(MAP_OVERRIDE_CONSTRUCTION)
+#elif defined(MAP_OVERRIDE_CONSTRUCTION)
 
-//#elif defined(MAP_OVERRIDE_POD_WARS)
+#elif defined(MAP_OVERRIDE_POD_WARS)
 
-//#elif defined(MAP_OVERRIDE_EVENT)
+#elif defined(MAP_OVERRIDE_EVENT)
+
+#elif defined(MAP_OVERRIDE_WRESTLEMAP)
 
 #elif defined(SPACE_PREFAB_RUNTIME_CHECKING)
 #define CI_RUNTIME_CHECKING 1
@@ -21,26 +25,18 @@
 #define CHECK_MORE_RUNTIMES 1
 #define RANDOM_ROOM_CHECKING 1
 
-#elif defined(MAP_OVERRIDE_PAMGOC)
-
-#define REVERSED_MAP
-
-//#elif defined(MAP_OVERRIDE_WRESTLEMAP)
-
-// rotation
+// rotation maps
 #elif defined(MAP_OVERRIDE_COGMAP)
 
 #elif defined(MAP_OVERRIDE_COGMAP2)
-
-#elif defined(MAP_OVERRIDE_DONUT2)
+#define MAPSIZE_LARGE 1
 
 #elif defined(MAP_OVERRIDE_DONUT3)
+#define MAPSIZE_LARGE 1
 
-// #elif defined(MAP_OVERRIDE_KONDARU)
+#elif defined(MAP_OVERRIDE_KONDARU)
 
 #elif defined(MAP_OVERRIDE_CLARION)
-
-#elif defined(MAP_OVERRIDE_ATLAS)
 
 #elif defined(MAP_OVERRIDE_OSHAN)
 #define UNDERWATER_MAP 1
@@ -52,25 +48,21 @@
 #elif defined(MAP_OVERRIDE_NEON)
 #define UNDERWATER_MAP 1
 #define HOTSPOTS_ENABLED 1
+#define MAPSIZE_SMALL 1
 
-// Non rotation
-#elif defined(MAP_OVERRIDE_DESTINY)
+// non rotation maps
+#elif defined(MAP_OVERRIDE_ATLAS)
+#define MAPSIZE_SMALL 1
 
-#elif defined(MAP_OVERRIDE_HORIZON)
-
-//#elif defined(MAP_OVERRIDE_CRASH)
+#elif defined(MAP_OVERRIDE_CRASH)
 
 #elif defined(MAP_OVERRIDE_MUSHROOM)
 
-#elif defined(MAP_OVERRIDE_TRUNKMAP)
+#elif defined(MAP_OVERRIDE_DENSITY2)
+#define MAPSIZE_SMALL 1
 
-/*#elif defined(MAP_OVERRIDE_DENSITY)
-
-#elif defined(MAP_OVERRIDE_OZYMANDIAS)
-
-#elif defined(MAP_OVERRIDE_FLEET)*/
+#elif defined(MAP_OVERRIDE_PROBSTATION)
 
 #else // the "default" map
-//#define UNDERWATER_MAP 1
 
 #endif

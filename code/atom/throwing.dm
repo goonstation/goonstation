@@ -54,6 +54,7 @@
 	if(AR?.sanctuary)
 		return TRUE
 	src.material_on_attack_use(thr?.user, hit_atom)
+	src.material_trigger_when_attacked(src, thr?.user, 2)
 	hit_atom.material_trigger_when_attacked(src, thr?.user, 2)
 	if(ismob(hit_atom))
 		var/mob/hit_mob = hit_atom

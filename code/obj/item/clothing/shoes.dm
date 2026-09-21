@@ -561,6 +561,7 @@ TYPEINFO(/obj/item/clothing/shoes/cowboy/boom)
 	name = "chef's clogs"
 	desc = "Sturdy shoes that minimize injury from falling objects or knives."
 	icon_state = "chef"
+	default_material = "wood"
 	kick_bonus = 1
 	step_sound = "step_wood"
 	step_priority = STEP_PRIORITY_LOW

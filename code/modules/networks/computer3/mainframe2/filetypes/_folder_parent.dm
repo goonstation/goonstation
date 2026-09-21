@@ -14,11 +14,12 @@
 	src.linkers = list()
 
 /datum/computer/folder/disposing()
-	for (var/datum/computer/C as anything in src.contents)
-		C.dispose()
-
 	for (var/datum/computer/folder/link/L as anything in src.linkers)
 		L.contents.Cut()
+		L.target = null
+
+	for (var/datum/computer/C as anything in src.contents)
+		C.dispose()
 
 	src.contents = null
 	src.linkers = null
@@ -31,6 +32,12 @@
 	var/datum/computer/folder/copy = new src.type()
 	copy.name = src.name
 	copy.holder = src.holder
+
+	copy.metadata ||= list()
+	if (src.metadata)
+		copy.metadata["owner"] = src.metadata["owner"]
+		copy.metadata["permission"] = src.metadata["permission"]
+		copy.metadata["group"] = src.metadata["group"]
 
 	depth += 1
 	for (var/datum/computer/C as anything in src.contents)
@@ -48,6 +55,7 @@
 	C.holding_folder = src
 
 	if (src.gen)
+		C.metadata ||= list()
 		if (isnull(C.metadata["owner"]))
 			C.metadata["owner"] = src.metadata["owner"]
 		if (isnull(C.metadata["group"]))

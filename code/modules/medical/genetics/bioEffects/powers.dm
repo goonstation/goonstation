@@ -563,10 +563,10 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 
 	///Returns true if a turf blocks xray vision in some way
 	proc/blocks_xray(turf/T)
-		if (T.density && T.material?.hasTrigger(TRIGGERS_ON_ADD, /datum/materialProc/radiation_immune_add))
+		if (T.density && HAS_ATOM_PROPERTY(T, PROP_ATOM_NEVER_RADIOACTIVE))
 			return TRUE
 		for (var/obj/O in T)
-			if (O.density && O.material?.hasTrigger(TRIGGERS_ON_ADD, /datum/materialProc/radiation_immune_add))
+			if (O.density && HAS_ATOM_PROPERTY(O, PROP_ATOM_NEVER_RADIOACTIVE))
 				return TRUE
 		return FALSE
 
@@ -2094,10 +2094,10 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 
 		var/mob/living/L = owner
 		if (which_way == 1)
-			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src, INVIS_MESON)
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY_CLOAK, src, INVIS_MESON)
 			L.UpdateOverlays(overlay_image, id)
 		else
-			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY_CLOAK, src)
 			L.UpdateOverlays(null, id)
 
 	OnAdd()
@@ -2189,7 +2189,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		if (isliving(owner))
 			var/mob/living/L = owner
 			L.UpdateOverlays(null, id)
-			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY_CLOAK, src)
 		if (src.active)
 			src.UnregisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_ATTACKED_PRE))
 		return
@@ -2201,14 +2201,14 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			var/mob/living/L = owner
 			if (TIME - last_moved >= 3 SECONDS && can_act(owner))
 				L.UpdateOverlays(overlay_image, id)
-				APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src, INVIS_MESON)
+				APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY_CLOAK, src, INVIS_MESON)
 
 	proc/decloak()
 		if(isliving(owner))
 			var/mob/living/L = owner
 			last_moved = TIME
 			L.UpdateOverlays(null, id)
-			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY, src)
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_INVISIBILITY_CLOAK, src)
 
 /datum/targetable/geneticsAbility/chameleon
 	name = "Chameleon"
