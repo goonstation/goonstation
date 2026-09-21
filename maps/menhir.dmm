@@ -11236,6 +11236,10 @@
 	pixel_y = 2;
 	pixel_x = 13
 	},
+/obj/item/pinpointer/teg_semi{
+	pixel_x = -6;
+	pixel_y = 4
+	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/shot{
 	pixel_y = 7;
 	pixel_x = 4
@@ -33661,6 +33665,12 @@
 	},
 /turf/simulated/floor/caution/east,
 /area/station/turret_protected/incursion)
+"rbo" = (
+/obj/reagent_dispensers/watertank/fountain,
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit{
+	name = "Primary Docking Wing"
+	})
 "rbz" = (
 /obj/rack/organized/techstorage_med,
 /obj/machinery/power/apc/autoname_east,
@@ -94737,8 +94747,6 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
 jVY
 sEf
 gRU
@@ -94754,6 +94762,8 @@ lwd
 sEf
 sEf
 lkY
+nFe
+nFe
 gjI
 uma
 rny
@@ -95039,8 +95049,6 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
 fUa
 fUa
 fUa
@@ -95056,6 +95064,8 @@ fMa
 plw
 plw
 plw
+bMn
+bMn
 rny
 xpq
 jBr
@@ -95339,8 +95349,6 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
 klD
 fUa
 fUa
@@ -95358,6 +95366,8 @@ ovv
 thx
 wPy
 sql
+bMn
+rbo
 gjI
 bCu
 rny
@@ -95642,8 +95652,6 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
 fUa
 kdl
 kdl
@@ -95667,6 +95675,8 @@ nbe
 nbe
 fbn
 wGc
+nbe
+nbe
 nbe
 nbe
 nbe
@@ -95944,8 +95954,6 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
 fUa
 kdl
 oGt
@@ -95969,6 +95977,8 @@ sPA
 sPA
 sPA
 gOB
+sPA
+sPA
 sPA
 noI
 sPA
@@ -96246,8 +96256,6 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
 fUa
 aBC
 kdl
@@ -96271,6 +96279,8 @@ sXb
 dXv
 dbH
 wDk
+dXv
+dXv
 dXv
 dXv
 dXv
@@ -96547,8 +96557,6 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
 klD
 fUa
 fUa
@@ -96573,6 +96581,8 @@ plw
 oha
 bMn
 sjk
+efb
+efb
 efb
 wzb
 efb
@@ -96851,8 +96861,6 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
 fUa
 fUa
 fUa
@@ -96873,6 +96881,8 @@ utv
 hzO
 uwK
 utv
+plw
+plw
 plw
 plw
 plw
@@ -97153,8 +97163,6 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
 jSY
 sEf
 uvL
@@ -97177,6 +97185,8 @@ plw
 tdn
 bMn
 bXb
+sEf
+sEf
 sEf
 sEf
 fMD
@@ -97461,10 +97471,10 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
-sEf
-sEf
+eOz
+eOz
+eOz
+eOz
 eOz
 eOz
 eOz
@@ -97763,10 +97773,10 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
-sEf
-sEf
+eOz
+eOz
+eOz
+eOz
 eOz
 eOz
 eOz
@@ -98064,10 +98074,10 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
-sEf
-sEf
+eOz
+eOz
+eOz
+eOz
 eOz
 eOz
 eOz
@@ -98366,10 +98376,10 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
-sEf
-sEf
+eOz
+eOz
+eOz
+eOz
 eOz
 eOz
 eOz
@@ -98668,10 +98678,10 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
-sEf
-sEf
+eOz
+eOz
+eOz
+eOz
 eOz
 eOz
 eOz
@@ -98971,10 +98981,10 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
-sEf
-sEf
+eOz
+eOz
+eOz
+eOz
 eOz
 eOz
 eOz
@@ -99273,11 +99283,11 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
-sEf
-sEf
 yjF
+eOz
+eOz
+eOz
+eOz
 eOz
 eOz
 eOz
@@ -99576,10 +99586,10 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
-sEf
-sEf
+eOz
+eOz
+eOz
+eOz
 eOz
 eOz
 eOz
@@ -99877,10 +99887,10 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
-sEf
-sEf
+eOz
+eOz
+eOz
+eOz
 eOz
 eOz
 eOz
@@ -100178,10 +100188,10 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
-sEf
-sEf
+eOz
+eOz
+eOz
+eOz
 eOz
 eOz
 eOz
@@ -100480,10 +100490,10 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
-sEf
-sEf
+eOz
+eOz
+eOz
+eOz
 eOz
 eOz
 eOz
@@ -100782,10 +100792,10 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
-sEf
-sEf
+eOz
+eOz
+eOz
+eOz
 eOz
 eOz
 eOz
@@ -101085,10 +101095,10 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
-sEf
-sEf
+eOz
+eOz
+eOz
+eOz
 eOz
 eOz
 eOz
@@ -101387,10 +101397,10 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
-sEf
-sEf
+eOz
+eOz
+eOz
+eOz
 eOz
 eOz
 eOz
@@ -101695,8 +101705,6 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
 vtP
 sPW
 sPW
@@ -101707,6 +101715,8 @@ cpG
 pIt
 sPW
 nFe
+sEf
+sEf
 nFe
 nFe
 nFe
@@ -101998,8 +102008,6 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
 iQe
 xyg
 git
@@ -102007,6 +102015,8 @@ cql
 cql
 cql
 cql
+sPW
+sPW
 sPW
 sPW
 cpG
@@ -102300,8 +102310,6 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
 cpG
 cpG
 sPW
@@ -102310,6 +102318,8 @@ mta
 cql
 hSE
 nXj
+cql
+cql
 cql
 cql
 cql
@@ -102602,8 +102612,6 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
 iQe
 cwR
 git
@@ -102612,6 +102620,8 @@ fxc
 cql
 cql
 nXj
+vCf
+cql
 cql
 vCf
 cql
@@ -102903,8 +102913,6 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
 vtP
 sPW
 sPW
@@ -102913,6 +102921,8 @@ pIt
 cpG
 cpG
 pIt
+sPW
+sPW
 sPW
 sPW
 cpG
@@ -103206,8 +103216,6 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
 tvx
 sEf
 sEf
@@ -103215,6 +103223,8 @@ tvx
 sEf
 sEf
 tvx
+sEf
+sEf
 sEf
 sEf
 sEf
