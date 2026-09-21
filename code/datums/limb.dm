@@ -1151,9 +1151,11 @@
 
 		if (isitem(target))
 			if(prob(15) && user.bodytemperature >= T0C + 37)
-				user.get_burn_damage(5)
+				user.get_burn_damage(20)
 				user.changeBodyTemp(-15 KELVIN, T0C + 30)
-				target.loc.hotspot_expose(T0C + 500, 500)
+				var/turf/TT = target.loc
+				TT.hotspot_expose(T0C + 500, 500)
+				user.visible_message(SPAN_ALERT("[user] messes up with thier [src] and superheats the [target] "), SPAN_ALERT("You mess up and superheat [target]!"))
 				// Old item destruction stuff
 				// var/obj/item/I = target
 				// if(I.anchored)
@@ -1173,9 +1175,10 @@
 		if(check_target_immunity( target ))
 			return 0
 		if (prob(15))
-			user.get_burn_damage(5)
+			user.get_burn_damage(20)
 			user.changeBodyTemp(30 KELVIN)
-			target.loc.hotspot_expose(T0C + 500, 500)
+			var/turf/TT = target.loc
+			TT.hotspot_expose(T0C + 500, 500)
 			logTheThing(LOG_COMBAT, user, "accidentally harms [constructTarget(target,"combat")] with hot hands at [log_loc(user)].")
 			user.visible_message(SPAN_COMBAT("<b>[user] accidentally melts [target] while trying to [user.a_intent] them!</b>"), SPAN_COMBAT("<b>You accidentally melt [target] while trying to [user.a_intent] them!</b>"))
 			harm(target, user, 1)
