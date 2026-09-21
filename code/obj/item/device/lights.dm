@@ -530,7 +530,7 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/candle, proc/light, proc/put_out)
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message(SPAN_BOLD("[user] breaks the lava lamp and drinks the forbidden lava lamp juice."))
+		user.visible_message(SPAN_ALERT(SPAN_BOLD("[user] breaks the lava lamp and drinks the forbidden lava lamp juice.")))
 		playsound(src, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
 		sleep(0.3 SECONDS)
 		playsound(user,'sound/items/drink.ogg', 100)
