@@ -207,17 +207,25 @@
 	if(status & NOPOWER)
 		return
 
+/obj/machinery/computer/ui_status(mob/user, datum/ui_state/state)
+	if(src.status & REQ_PHYSICAL_ACCESS)
+		. = min(tgui_broken_state.can_use_topic(src, user),
+						tgui_physical_state.can_use_topic(src, user),
+						tgui_not_incapacitated_state.can_use_topic(src, user),
+						tgui_can_see_state.can_use_topic(src, user),
+						tgui_literate_state.can_use_topic(src, user)
+		)
+	else
+		. = min(state.can_use_topic(src, user),
+						tgui_broken_state.can_use_topic(src, user),
+						tgui_not_incapacitated_state.can_use_topic(src, user),
+						tgui_can_see_state.can_use_topic(src, user),
+						tgui_literate_state.can_use_topic(src, user)
+		)
+
 /obj/machinery/computer/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
-	if(ui && (!user.sight_check(1) || !user.literate))
-		ui.close()
 	if(!ui && ui_type)
-		if (!user.sight_check(1))
-			boutput(user, SPAN_ALERT("You can't see anything, operating a computer isn't going to work!"))
-			return
-		if (!user.literate)
-			boutput(user, SPAN_ALERT("You don't know how to read or write, operating a computer isn't going to work!"))
-			return
 		ui = new(user, src, ui_type, src.name)
 		ui.open()
 
