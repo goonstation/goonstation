@@ -62,11 +62,11 @@ var/datum/respawn_controls/respawn_controller
 				// They are eligible for respawn
 				R.notifyAndGrantVerb()
 			if(RESPAWNEE_STATE_ALIVE)
-				// They were somehow revived
+				// They were revived or chose to observe
 				unsubscribeRespawnee(R.ckey)
 
 	proc/subscribeNewRespawnee(var/ckey)
-		if(ckey && !respawnees.Find(ckey))
+		if(ckey && !find_player(ckey)?.joined_observer && !respawnees.Find(ckey))
 
 			var/datum/respawnee/R = new
 			R.initialize(ckey, src)
@@ -143,6 +143,8 @@ var/datum/respawn_controls/respawn_controller
 	proc/checkValid()
 		if (!src.master.respawns_enabled)
 			return RESPAWNEE_STATE_WAITING
+		if (src.player?.joined_observer)
+			return RESPAWNEE_STATE_ALIVE
 
 		// Time check (short-circuit saves some steps)
 		if(due_for_respawn || src.died_time + master.respawn_time * respawn_time_modifier <= TIME)
