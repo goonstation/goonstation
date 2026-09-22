@@ -375,10 +375,7 @@ TRASH BAG
 	if(user.a_intent != INTENT_HELP || BOUNDS_DIST(user, target))
 		return ..()
 
-	var/fail_messege = src.push(user, target)
-
-	if(fail_messege)
-		boutput(user, SPAN_ALERT(fail_messege))
+	src.push(user, target)
 
 	return
 
@@ -387,41 +384,44 @@ TRASH BAG
 		return TRUE
 	. = ..()
 
-	/// Attempts to push all the items at the loc of the target "foward" (based on user dir), returns the fail messege the user should see when failing.
+/// Attempts to push all the items at the loc of the target "foward" (based on user dir).
 /obj/item/broom/proc/push(mob/user, atom/target)
 	var/turf/target_location = isturf(target) ? target : target.loc
 	var/turf/pushed_to = get_step(target_location, user.dir)
 
 	// can't push through walls (duh)
 	if(iswall(pushed_to) || iswall(target_location))
-		return "You can not push through a wall!"
+		return FALSE
 
 	// can't push through anything you can't walk through
 	for(var/obj/O in target_location)
 		if(O.density)
-			return "[O] blocks your way!"
+			boutput(user, SPAN_ALERT("[O] blocks your way!"))
+			return FALSE
 
 	for(var/obj/O in pushed_to)
 		if(O.density)
-			return "[O] blocks your way!"
+			boutput(user, SPAN_ALERT("[O] blocks your way!"))
+			return FALSE
 
 	var/list/obj/item/items_to_push = list()
 	for(var/obj/item/I in target_location)
 		if(I.w_class > W_CLASS_NORMAL) // can't push through an item thats too big
-			return "[I] is too big for you to push!"
+			boutput(user, SPAN_ALERT("[I] is too big for you to push!"))
+			return FALSE
 		if(I.anchored) // can't push through an item thats bolted and is too big, can push through smaller item
 			if(I.w_class >= W_CLASS_BULKY)
-				return "The [src] got caught on [I]!"
+				boutput(user, SPAN_ALERT("The [src] got caught on [I]!"))
+				return FALSE
 		else
 			items_to_push += I
 
-	if(!length(items_to_push))
-		return
+	playsound(src, 'sound/items/towel.ogg', 75, TRUE)
 
 	for(var/obj/item/I as anything in items_to_push)
 		I.set_loc(pushed_to)
 
-	playsound(src, 'sound/items/towel.ogg', 60, TRUE)
+	return TRUE
 
 // SPONGES? idk
 
