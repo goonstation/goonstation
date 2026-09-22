@@ -60,7 +60,6 @@ var/global/list/players = list()
 	/// real_names this person has joined as
 	var/joined_names = list()
 	/// whether this player is currently choosing a new character after using timed respawn
-	/// stored here so reconnecting or replacing their lobby mob cannot clear it
 	var/timed_respawn_in_progress = FALSE
 	/// Antag tokens this person has, null until it's fetched
 	var/antag_tokens = null
