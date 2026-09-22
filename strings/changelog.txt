@@ -1,4 +1,11 @@
 
+(t)tue sep 22 26
+(u)JORJ949
+(p)27763
+(f)https://forum.ss13.co/showthread.php?tid=25397
+(e)⚖🧛🌠|C-Balance, A-Gamemodes, A-Events
+(*)The salvager gamemode has been disabled.
+(*)The rarity of the salvager midroll event has been decreased and the time limits on it have been expanded, making it much more common. The minimum amount of ghosts responding to this event to spawn salvagers has been reduced from 3 > 1.
 (t)mon sep 21 26
 (u)Astarthoc
 (p)27874
