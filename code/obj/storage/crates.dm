@@ -475,6 +475,7 @@
 	desc = "A wooden crate."
 	icon = 'icons/obj/storage/crate_wood.dmi'
 	icon_state = "woodencrate1"
+	default_material = "wood"
 	New()
 		var/n = rand(1,9)
 		switch(n)

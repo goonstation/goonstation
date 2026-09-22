@@ -1635,7 +1635,8 @@ ABSTRACT_TYPE(/datum/recipe/sandwich)
 	recipe_instructions = list(/datum/recipe_instructions/cooking/oven/cereal_box)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
-	/obj/item/reagent_containers/food/snacks/condiment/chocchips = 1)
+	/obj/item/reagent_containers/food/snacks/condiment/chocchips = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
 	output = /obj/item/reagent_containers/food/snacks/cereal_box
 
 /datum/recipe/cereal_honey
