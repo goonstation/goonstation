@@ -61,8 +61,8 @@ var/datum/respawn_controls/respawn_controller
 			if(RESPAWNEE_STATE_ELIGIBLE)
 				// They are eligible for respawn
 				R.notifyAndGrantVerb()
-			if(RESPAWNEE_STATE_ALIVE)
-				// They were revived or chose to observe
+			if(RESPAWNEE_STATE_UNSUBSCRIBE)
+				// They are no longer allowed to respawn
 				unsubscribeRespawnee(R.ckey)
 
 	proc/subscribeNewRespawnee(var/ckey)
@@ -144,7 +144,7 @@ var/datum/respawn_controls/respawn_controller
 		if (!src.master.respawns_enabled)
 			return RESPAWNEE_STATE_WAITING
 		if (src.player?.joined_observer)
-			return RESPAWNEE_STATE_ALIVE
+			return RESPAWNEE_STATE_UNSUBSCRIBE
 
 		// Time check (short-circuit saves some steps)
 		if(due_for_respawn || src.died_time + master.respawn_time * respawn_time_modifier <= TIME)
