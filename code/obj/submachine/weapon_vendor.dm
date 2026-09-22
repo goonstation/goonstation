@@ -722,7 +722,7 @@
 	name = "A stamp of a true angler"
 	path = /obj/item/stamp/angler
 	description = "A tool to show your authority on fishing related manners, brought to you by National Notary"
-	cost = 40
+	cost = 25
 
 /datum/materiel/fishing_gear/fish_box
 	name = "Portable aquarium"
