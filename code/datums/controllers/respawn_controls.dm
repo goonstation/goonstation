@@ -102,7 +102,6 @@ var/datum/respawn_controls/respawn_controller
 
 
 	disposing()
-		the_client?.verbs -= /client/proc/respawn_via_controller
 		master = null
 		..()
 
@@ -174,7 +173,6 @@ var/datum/respawn_controls/respawn_controller
 			if(master.rp_alert)
 				boutput(the_client.mob, SPAN_ALERT("Remember that you <B>must spawn as a <u>new character</u></B> and <B>have no memory of your past life!</B>"))
 
-			the_client.verbs |= /client/proc/respawn_via_controller
 			client_processed = 1
 
 	proc/doRespawn()
@@ -215,7 +213,7 @@ var/datum/respawn_controls/respawn_controller
 			boutput(M, SPAN_ALERT("Remember that you <B>must spawn as a <u>new character</u></B> and <B>have no memory of your past life!</B>"))
 		master.unsubscribeRespawnee(src.ckey)
 
-/client/proc/respawn_via_controller()
+/client/verb/respawn_via_controller()
 	set name = "Respawn As New Character"
 	set desc = "When you're tired of being dead."
 

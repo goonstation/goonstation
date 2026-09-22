@@ -125,7 +125,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/shuttle)
 	icon_state = "mapwall"
 #endif
 	light_mod = "wall-"
-	opacity = 0
+	//opacity = 0 //lets try opaque shuttle walls
 	flags = FLUID_DENSE | IS_PERSPECTIVE_FLUID
 
 	attackby()

@@ -4,10 +4,12 @@
  * @author garash2k
  * @license ISC
  */
-import { resource } from '../../../goonstation/cdn';
+import { useResource } from '../../../goonstation/cdn';
 import { AlertContentWindow } from '../types';
 
 const WizardContentWindow = () => {
+  const resource = useResource();
+
   return (
     <div className="traitor-tips">
       <h1 className="center">You are a Wizard!</h1>
@@ -40,7 +42,7 @@ const WizardContentWindow = () => {
       <p>
         4. To teleport back to the wizard shuttle,
         <br />
-        use the <em>teleportation scroll</em> you start with in your pocket.
+        use the <em>teleportation scroll</em> you start with in your bag.
         <img
           src={resource('images/antagTips/teleportscroll.png')}
           className="right"

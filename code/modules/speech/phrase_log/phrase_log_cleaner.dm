@@ -22,3 +22,7 @@ ABSTRACT_TYPE(/datum/phrase_log_cleaner/clean)
 		. = ..()
 		regex = regex(@{"\<(\/)?(im)?mutable\>"}, "g")
 
+//https://stackoverflow.com/a/1732454
+/datum/phrase_log_cleaner/html
+	clean(phrase)
+		return strip_html_tags(phrase)

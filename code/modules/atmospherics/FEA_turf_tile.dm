@@ -100,15 +100,9 @@ var/global/list/turf/hotly_processed_turfs = list()
 /turf/simulated
 	pass_unstable = FALSE
 	var/static/list/mutable_appearance/gas_overlays = list(
-			#ifdef ALPHA_GAS_OVERLAYS
 			mutable_appearance('icons/effects/tile_effects.dmi', "plasma-alpha", FLY_LAYER, PLANE_NOSHADOW_ABOVE),
 			mutable_appearance('icons/effects/tile_effects.dmi', "sleeping_agent-alpha", FLY_LAYER, PLANE_NOSHADOW_ABOVE),
 			mutable_appearance('icons/effects/tile_effects.dmi', "rad_particles-alpha", FLY_LAYER, PLANE_NOSHADOW_ABOVE)
-			#else
-			mutable_appearance('icons/effects/tile_effects.dmi', "plasma", FLY_LAYER, PLANE_NOSHADOW_ABOVE),
-			mutable_appearance('icons/effects/tile_effects.dmi', "sleeping_agent", FLY_LAYER, PLANE_NOSHADOW_ABOVE),
-			mutable_appearance('icons/effects/tile_effects.dmi', "rad_particles", FLY_LAYER, PLANE_NOSHADOW_ABOVE)
-			#endif
 		)
 
 	/// Our distance to the nearest space border.
@@ -191,9 +185,9 @@ var/global/list/turf/hotly_processed_turfs = list()
 				src.gas_icon_overlay.overlays.len = 0
 
 			src.visuals_state = model.graphic
-			UPDATE_TILE_GAS_OVERLAY(visuals_state, gas_icon_overlay, GAS_IMG_PLASMA)
-			UPDATE_TILE_GAS_OVERLAY(visuals_state, gas_icon_overlay, GAS_IMG_N2O)
-			UPDATE_TILE_GAS_OVERLAY(visuals_state, gas_icon_overlay, GAS_IMG_RAD)
+			#define _ADD_TILE_GAS_OVERLAY(GAS, OVERLAY_ID, ...) UPDATE_TILE_GAS_OVERLAY(visuals_state, gas_icon_overlay, OVERLAY_ID);
+			APPLY_TO_GRAPHIC_GASES(_ADD_TILE_GAS_OVERLAY)
+			#undef _ADD_TILE_GAS_OVERLAY
 			src.gas_icon_overlay.dir = pick(cardinal)
 	else
 		if (src.gas_icon_overlay)
@@ -212,6 +206,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 
 		src.air.temperature = src.temperature
 
+	#ifndef SKIP_FEA_SETUP
 		if(air_master)
 			if(explosions.exploding)
 				air_master.tiles_to_rebuild[src] = null
@@ -226,7 +221,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 			var/turf/simulated/floor/target = get_step(src,direction)
 			if(issimulatedturf(target))
 				air_master.tiles_to_update[target] = null
-
+	#endif
 /turf/simulated/Del()
 	if(air_master)
 		if(src.being_superconductive)
@@ -272,7 +267,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 		src.air.merge(giver)
 
 		if(!src.processing)
-			if(src.air.check_tile_graphic())
+			if(GAS_MIXTURE_MAY_BE_VISIBLE(src.air) && src.air.check_tile_graphic())
 				src.update_visuals(air)
 
 	return TRUE
@@ -303,7 +298,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 		removed = src.air.remove(amount)
 
 		if(!src.processing)
-			if(src.air.check_tile_graphic())
+			if(GAS_MIXTURE_MAY_BE_VISIBLE(src.air) && src.air.check_tile_graphic())
 				src.update_visuals(air)
 
 	return removed
@@ -433,7 +428,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 	if(src.air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION)
 		src.consider_superconductivity(starting = 1)
 
-	if(src.air.check_tile_graphic())
+	if(GAS_MIXTURE_MAY_BE_VISIBLE(src.air) && src.air.check_tile_graphic())
 		src.update_visuals(air)
 
 	if(src.air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)

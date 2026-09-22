@@ -24,6 +24,7 @@ TYPEINFO(/obj/submachine/chicken_incubator)
 	icon_state = "incubator"
 	density = 1
 	anchored = ANCHORED
+	default_material = "wood"
 	var/obj/item/reagent_containers/food/snacks/ingredient/egg/my_egg = null
 	var/incubate_count = 0
 	var/image/egg_overlay = null
@@ -163,6 +164,7 @@ TYPEINFO(/obj/submachine/chicken_incubator)
 	name = "incubator parts"
 	icon = 'icons/obj/ranch/ranch_obj.dmi'
 	icon_state = "incubator_parts"
+	default_material = "wood"
 	w_class = W_CLASS_NORMAL
 
 // Ranch Feed Proxy
@@ -618,6 +620,7 @@ TYPEINFO(/obj/chicken_nesting_box)
 	density = 0
 	anchored = UNANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER
+	default_material = "wood"
 
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/incubator_parts))

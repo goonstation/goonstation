@@ -127,17 +127,20 @@ var/global/datum/controller/processScheduler/processScheduler
 					message_admins("Process '[p.name]' is hung and will be restarted.")
 
 /datum/controller/processScheduler/proc/queueProcesses()
+	var/now = TimeOfHour
 	for (var/datum/controller/process/p as anything in processes)
 		// Don't double-queue, don't queue running processes
 		if (p.disabled || p.running || p.queued || !p.idle)
 			continue
 
 		// If world.timeofday has rolled over, then we need to adjust.
-		if (TimeOfHour < last_start[p])
-			last_start[p] -= 36000
+		var/started = last_start[p]
+		if (now < started)
+			started -= 36000
+			last_start[p] = started
 
 		// If the process should be running by now, go ahead and queue it
-		if (TimeOfHour > last_start[p] + p.schedule_interval + p.schedule_jitter)
+		if (now > started + p.schedule_interval + p.schedule_jitter)
 			setQueuedProcessState(p)
 
 /datum/controller/processScheduler/proc/runQueuedProcesses()

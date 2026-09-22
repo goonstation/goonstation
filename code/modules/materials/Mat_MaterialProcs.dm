@@ -76,6 +76,34 @@ triggerOnImage(var/image/target, var/datum/material/source)
 		owner.set_density(0)
 		return
 
+/datum/materialProc/outline_add
+	max_generations = 0
+	var/outline_color = null
+	var/outline_size = 1
+
+	New(var/outline_color, var/outline_size = 1)
+		. = ..()
+		src.outline_color = outline_color
+		src.outline_size = outline_size
+
+	execute(var/atom/location)
+		if(isturf(location))
+			return
+		var/mat_id = location.material.getID()
+		if(!location.uses_default_material_appearance && location.default_material == "[mat_id]")
+			return
+		if(endswith(location.icon_state, "$$[mat_id]") || ("[mat_id]" in location.get_typeinfo().mat_appearances_to_ignore))
+			return
+		var/outline_filter = outline_filter(src.outline_size, src.outline_color)
+		location.add_filter("[mat_id]_outline", 4, outline_filter)
+		return
+
+/datum/materialProc/outline_remove
+	execute(var/atom/location)
+		var/mat_id = location.material.getID()
+		location.remove_filter("[mat_id]_outline")
+		return
+
 /datum/materialProc/ffart_add
 	desc = "It's very hard to move around."
 	max_generations = 1
@@ -285,19 +313,21 @@ triggerOnImage(var/image/target, var/datum/material/source)
 	execute(var/atom/location)
 		var/datum/component/radioactive/rad_comp = location.GetComponent(/datum/component/radioactive)
 		rad_comp?.RemoveComponent()
+		APPLY_ATOM_PROPERTY(location, PROP_ATOM_NEVER_RADIOACTIVE, "never_radioactive")
 		if(ismob(location))
 			// Have mobs made out of batiline be immune to radiation
 			var/mob/M = location
-			APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, src, 100)
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, "never_radioactive", 100)
 		return
 
 /datum/materialProc/radiation_immune_remove
 	execute(var/atom/location)
 		var/datum/component/radioactive/rad_comp = location.GetComponent(/datum/component/radioactive)
 		rad_comp?.RemoveComponent() // Can still get a radiation component after the material is added
+		REMOVE_ATOM_PROPERTY(location, PROP_ATOM_NEVER_RADIOACTIVE, "never_radioactive")
 		if(ismob(location))
 			var/mob/M = location
-			REMOVE_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, src)
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_RADPROT_INT, "never_radioactive")
 		return
 
 /datum/materialProc/telecrystal_entered
@@ -491,8 +521,30 @@ triggerOnImage(var/image/target, var/datum/material/source)
 
 
 /datum/materialProc/miracle_add
-	execute(var/location)
-		animate_rainbow_glow(location)
+	execute(var/atom/location)
+		var/added_mat_id = location.material.getID()
+		var/dm_filter/filter = location.get_filter("[added_mat_id]_hsl_color")
+		if(!filter)
+			return
+		if(!islist(filter.color))
+			filter.color = COLOR_MATRIX_IDENTITY
+		filter.color[1] = 0
+		filter.color[17] = 0
+		var/list/color_start = filter.color
+		color_start = color_start.Copy()
+		var/list/color_end = color_start.Copy()
+		color_end[17] = 1
+
+		location.avoid_animating = TRUE
+		var/loop_length = (location.material.getProperty("reflective") - 1) / (location.material.getProperty("reflective", VALUE_MAX) - 1)
+		loop_length = (((1 - loop_length) * 17) + 5) SECONDS
+		animate(filter, color = color_end, time = loop_length, loop = -1, easing = LINEAR_EASING)
+		animate(color = color_start, time = 0, loop = -1, easing = JUMP_EASING)
+		return
+
+/datum/materialProc/miracle_remove
+	execute(var/atom/location)
+		location.avoid_animating = FALSE
 		return
 
 /datum/materialProc/radioactive_add

@@ -6,6 +6,12 @@
 	#define COMSIG_COMPONENT_ADDED "component_added"
 	/// before a component is removed from a datum because of RemoveComponent: (/datum/component)
 	#define COMSIG_COMPONENT_REMOVING "component_removing"
+
+	/// When an element is added to a datum. (/datum/element)
+	#define COMSIG_ELEMENT_ATTACH "element_attached"
+	/// When an element is removed from a datum. (/datum/element)
+	#define COMSIG_ELEMENT_DETACH "element_detached"
+
 	/// just before a datum's disposing()
 	#define COMSIG_PARENT_PRE_DISPOSING "parent_pre_disposing"
 	/// when a variable is changed by admin varedit
@@ -32,6 +38,8 @@
 	#define COMSIG_AREA_ENTERED_BY_MOB "mob_entered_area"
 	/// whenever a mob exits an area (exited mob)
 	#define COMSIG_AREA_EXITED_BY_MOB "mob_exited_area"
+	/// whenever an atom enters the area indirectly (i.e. through teleportation or phase shift)
+	#define COMSIG_AREA_INDIRECT_ENTRY "atom_indirect_entry"
 
 // ---- TGUI signals ----
 	/// A TGUI window was opened by a user (receives tgui datum)

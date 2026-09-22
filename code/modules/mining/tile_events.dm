@@ -18,6 +18,13 @@
 				return 1
 		return 0
 
+	onScanDirect(var/turf/simulated/wall/auto/asteroid/AST, var/mob/user){
+		var/message
+		if (src.analysis_string)
+			message += "[SPAN_ALERT("[src.analysis_string]")]<br>"
+		return message
+	}
+
 /datum/ore/event/gem
 	analysis_string = "Small extraneous mineral deposit detected."
 	excavation_string = "Something shiny tumbles out of the collapsing rock!"
@@ -89,6 +96,12 @@
 			return
 		var/obj/item/fossil/I = new fossil_type
 		I.set_loc(AST)
+
+	onScanDirect(var/turf/simulated/wall/auto/asteroid/AST, var/mob/user){
+		. = ..()
+		if(AST.mining_marker)
+			AST.mining_marker.icon_state = "scan-fossil"
+	}
 
 /datum/ore/event/rare_metal
 	analysis_string = "Unusual metal deposit detected."
