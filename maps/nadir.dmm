@@ -15176,6 +15176,15 @@
 /obj/item/device/radio/intercom/botany,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"gHe" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/wood/two,
+/area/station/security/detectives_office)
 "gHg" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -23255,8 +23264,8 @@
 	},
 /area/station/crew_quarters/market)
 "khL" = (
-/obj/machinery/computer/secure_data/detective_computer,
 /obj/machinery/light/small,
+/obj/machinery/computer/television,
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
 "kiz" = (
@@ -41491,7 +41500,11 @@
 /obj/blind_switch/directional/north{
 	pixel_x = -11
 	},
-/obj/machinery/computer/television,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/computer3/generic/secure_data,
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
 "syB" = (
@@ -87245,7 +87258,7 @@ lZN
 lZN
 lZN
 sym
-glZ
+gHe
 vBe
 iBZ
 mKo
