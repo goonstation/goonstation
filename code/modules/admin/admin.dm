@@ -3616,12 +3616,6 @@ var/global/noir = 0
 			else
 				usr.client.cmd_admin_show_player_compids()
 
-		if ("lightweight_doors")
-			if (src.level < LEVEL_PA)
-				return tgui_alert(usr,"You must be at least a Primary Admin to do this.")
-
-			usr.client.lightweight_doors()
-
 		if ("lightweight_mobs")
 			if (src.level < LEVEL_PA)
 				return tgui_alert(usr,"You must be at least a Primary Admin to do this.")
