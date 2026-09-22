@@ -1,5 +1,9 @@
 
 (t)tue sep 22 26
+(u)Sovexe
+(p)27800
+(e)⚗⚙|A-Chemistry, A-Internal
+(*)Added Third Shift Syndrome, a new hallucination-causing condition. It can be suppressed, reversing its progression toward stage 1 and reducing its effects without curing it. Suppressed ailments may also be easier to cure.
 (u)JORJ949
 (p)27698
 (e)🔎🏅|C-Code-Quality, A-Medal
