@@ -1,4 +1,9 @@
 
+(t)mon sep 21 26
+(u)Astarthoc
+(p)27874
+(e)|
+(+)Added a lava lamp custom suicide interaction. We are finally able to drink the forbidden lava lamp juice!
 (t)sat sep 19 26
 (u)Nexusuxen
 (p)27841
