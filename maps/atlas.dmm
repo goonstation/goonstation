@@ -327,6 +327,9 @@
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "abM" = (
@@ -7734,6 +7737,9 @@
 /area/station/science/artifact)
 "aYO" = (
 /obj/landmark/gps_waypoint,
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aYR" = (
@@ -10073,7 +10079,6 @@
 /turf/space,
 /area/space)
 "evY" = (
-/obj/machinery/computer/secure_data/detective_computer,
 /obj/machinery/camera/directional/north{
 	pixel_x = 10
 	},
@@ -10083,6 +10088,13 @@
 	pixel_x = 10
 	},
 /obj/machinery/firealarm/directional/north,
+/obj/machinery/computer3/generic/secure_data{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/blueblack,
 /area/station/bridge/customs)
 "exg" = (
@@ -13440,6 +13452,9 @@
 	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/blueblack,
 /area/station/bridge/customs)
@@ -19312,8 +19327,14 @@
 /turf/simulated/floor/engine,
 /area/station/mining/refinery)
 "szn" = (
-/obj/machinery/computer/secure_data/detective_computer,
 /obj/noticeboard/persistent/detectives_office/directional/east,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/secure_data{
+	dir = 8
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "szE" = (
@@ -74395,16 +74416,16 @@ aaa
 aaa
 aaa
 aaa
+avh
+avh
+avh
 aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+avh
+avh
+avh
 aaa
 aaa
 aaa
@@ -74695,20 +74716,20 @@ aaa
 aaa
 aaa
 aaa
+avh
+avh
+avh
+avh
+avh
+avh
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+ayX
+avh
+avh
+avh
+avh
+avh
+avh
 aaa
 aaa
 aaa
@@ -74997,20 +75018,20 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 avh
 avh
 avh
-aaa
-aaa
-aaa
-aaa
 avh
 avh
 avh
-aaa
-aaa
+avh
+avh
+avh
+avh
+avh
+avh
+avh
+avh
 aaa
 aaa
 aaa
@@ -75305,8 +75326,8 @@ avh
 avh
 avh
 avh
-aaa
-ayX
+avh
+avh
 avh
 avh
 avh
@@ -79527,7 +79548,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 avh
 avh
 avh
@@ -79540,7 +79560,8 @@ avh
 avh
 avh
 avh
-aaa
+avh
+avh
 aaa
 aaa
 aaa
@@ -79829,9 +79850,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
 avh
 avh
 avh
@@ -79840,9 +79858,12 @@ avh
 avh
 avh
 avh
-aaa
-aaa
-aaa
+avh
+avh
+avh
+avh
+avh
+avh
 aaa
 aaa
 aaa
@@ -80132,8 +80153,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 avh
 avh
 avh
@@ -80142,8 +80161,10 @@ avh
 avh
 avh
 avh
-aaa
-aaa
+avh
+avh
+avh
+avh
 aaa
 aaa
 aaa
@@ -80738,14 +80759,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
 avh
 avh
 avh
 avh
 avh
 avh
-aaa
+avh
+avh
 aaa
 aaa
 aaa
@@ -81040,14 +81061,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+avh
+avh
+avh
+avh
+avh
+avh
+avh
+avh
 aaa
 aaa
 aaa
@@ -81343,12 +81364,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+avh
+avh
+avh
+avh
+avh
+avh
 aaa
 aaa
 aaa
