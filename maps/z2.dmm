@@ -47685,7 +47685,7 @@
 	pixel_x = 10;
 	pixel_y = 18
 	},
-/obj/machinery/computer/secure_data/detective_computer,
+/obj/filing_cabinet,
 /obj/item/paper{
 	icon_state = "paper_stamped";
 	info = "<br><span style='font-family: Georgia; font-style: normal; font-weight: normal; font-size: 16px; color: red;'><b>\[</b>REJECTED<b>]</b></span><br>";
