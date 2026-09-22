@@ -1,1 +1,0 @@
-/obj/pool : /obj/pool/ladder

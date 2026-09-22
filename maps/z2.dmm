@@ -50537,7 +50537,12 @@
 	},
 /area/centcom/lounge)
 "dJm" = (
-/obj/pool/ladder,
+/obj/pool{
+	density = 0;
+	dir = 8;
+	icon_state = "ballpit";
+	name = "ball pit"
+	},
 /turf/unsimulated/floor,
 /area/centcom/lounge)
 "dJn" = (
@@ -50610,6 +50615,15 @@
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "track_2"
 	},
+/area/centcom/lounge)
+"dJz" = (
+/obj/pool{
+	density = 0;
+	dir = 9;
+	icon_state = "ballpit_in_misc";
+	name = "ball pit"
+	},
+/turf/unsimulated/floor,
 /area/centcom/lounge)
 "dJA" = (
 /obj/table/reinforced/bar/auto,
@@ -156837,7 +156851,7 @@ dHB
 wLo
 dIX
 dJm
-dJm
+dJz
 wLo
 dnY
 dnY

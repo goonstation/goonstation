@@ -1753,7 +1753,13 @@
 	dir = 1;
 	tag = "icon-pool (NORTH)"
 	},
-/obj/pool/ladder,
+/obj/pool{
+	density = 0;
+	dir = 8;
+	icon = 'icons/obj/poolballpit.dmi';
+	icon_state = "pool_ladder";
+	name = "pool_ladder"
+	},
 /turf/unsimulated/floor/pool/bluewhite,
 /area/syndicate_station{
 	name = "Decirprevo Tanker";
