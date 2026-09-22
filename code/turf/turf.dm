@@ -515,9 +515,7 @@ proc/generate_space_color()
 /turf/Exited(atom/movable/Obj, atom/newloc)
 	SHOULD_CALL_PARENT(TRUE)
 	if (Obj.opacity)
-		src.opaque_atom_count--
-		if (!src.opacity && !src.opaque_atom_count)
-			src.on_set_opacity()
+		src.recount_opaque_atoms()
 
 	if (global_sims_mode)
 		var/area/Ar = loc
@@ -532,10 +530,7 @@ proc/generate_space_color()
 /turf/Entered(atom/movable/M as mob|obj, atom/OldLoc)
 	// Above return_if_overlay_or_effect on purpose, smoke is an /obj/effects
 	if (M.opacity)
-		var/turf_was_clear = !src.opacity && !src.opaque_atom_count
-		src.opaque_atom_count++
-		if (turf_was_clear)
-			src.on_set_opacity()
+		src.recount_opaque_atoms()
 	M.set_gravity(src)
 	///////////////////////////////////////////////////////////////////////////////////
 	..()

@@ -93,7 +93,13 @@ TYPEINFO(/atom)
 
 	New(turf/newLoc)
 		. = ..()
-		// Lets stop having 5 implementations of this that all do it differently
+		// Movables apply their mats at the tail of /atom/movable/New() instead
+		// (Material setup can change opacity)
+		if (!ismovable(src))
+			src.apply_default_material()
+
+	/// Lets stop having 5 implementations of this that all do it differently
+	proc/apply_default_material()
 		if (!src.material && src.default_material)
 			src.setMaterial(getMaterial(src.default_material))
 
@@ -556,6 +562,8 @@ TYPEINFO(/obj/item/disk)
 			for(var/atom/A in src.loc)
 				if(A != src)
 					A.Crossed(src)
+	// Last, so anything material setup changes about us (opacity) is reported to our turf
+	src.apply_default_material()
 
 
 /atom/movable/disposing()
@@ -1123,6 +1131,41 @@ TYPEINFO(/obj/item/disk)
 		loc.passability_cache = null
 		SEND_SIGNAL(loc, COMSIG_TURF_CONTENTS_SET_DENSITY, old_density, src)
 
+/**
+ * Recomputes how many opaque movables are on this turf.
+ *
+ * Two separate events: Entered/Exited, and set_opacity
+ * An increment needs each of those to know whether the other already accounted for the atom,
+ * and during New() the order is not fixed, since a subtype decides where it calls ..()
+ *
+ * In theory this shouldn't be neded anymore, but we don't have guards against it besides regression tests.
+ * It'll also only fire for like opaque smoke stepping off a turf.
+ *
+ * TODO: We can remove this entirely once we have a proper Initalize()
+ */
+/turf/proc/recount_opaque_atoms()
+	var/count = 0
+	for (var/atom/movable/AM as anything in src)
+		if (AM.opacity)
+			count++
+	if (count == src.opaque_atom_count)
+		return
+
+	var/was_blocking = src.opacity || src.opaque_atom_count
+	src.opaque_atom_count = count
+	if (!was_blocking != !(src.opacity || count))
+		src.on_set_opacity()
+
+/**
+ * Sets our opacity without `set_opacity()` lighting rebuild.
+ * For code that rewrites a whole region in one pass and handles lighting itself.
+ */
+/turf/proc/set_opacity_no_lighting(new_opacity)
+	if (src.opacity == new_opacity)
+		return
+	UNLINT(src.opacity = new_opacity)
+	src.on_set_opacity()
+
 /atom/proc/set_opacity(var/newopacity)
 	SHOULD_CALL_PARENT(TRUE)
 
@@ -1134,7 +1177,7 @@ TYPEINFO(/obj/item/disk)
 	var/oldopacity = src.opacity
 
 	if(!on_turf)
-		src.opacity = newopacity
+		UNLINT(src.opacity = newopacity)
 		SEND_SIGNAL(src, COMSIG_ATOM_SET_OPACITY, oldopacity)
 		return
 
@@ -1155,9 +1198,9 @@ TYPEINFO(/obj/item/disk)
 			if (light.enabled)
 				affected |= light.strip(++RL_Generation)
 
-		if (src != our_turf)
-			our_turf.opaque_atom_count += newopacity ? 1 : -1
-		src.opacity = newopacity
+		UNLINT(src.opacity = newopacity)
+		if (src != our_turf) // /turf/set_opacity notifies for ==
+			our_turf.recount_opaque_atoms()
 
 		for (var/datum/light/light as anything in lights)
 			if (light.enabled)
@@ -1166,8 +1209,9 @@ TYPEINFO(/obj/item/disk)
 			for (var/turf/T as anything in affected)
 				RL_UPDATE_LIGHT(T)
 	else
-		our_turf.opaque_atom_count += newopacity ? 1 : -1
-		src.opacity = newopacity
+		UNLINT(src.opacity = newopacity)
+		if (src != our_turf)
+			our_turf.recount_opaque_atoms()
 
 	SEND_SIGNAL(src, COMSIG_ATOM_SET_OPACITY, oldopacity)
 
@@ -1347,7 +1391,7 @@ TYPEINFO(/obj/item/disk)
 	. = ..()
 	switch(variable)
 		if("opacity")
-			src.opacity = oldval
+			UNLINT(src.opacity = oldval)
 			src.set_opacity(newval)
 		if("density")
 			src.density = oldval
