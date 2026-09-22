@@ -1,5 +1,9 @@
 
 (t)tue sep 22 26
+(u)JORJ949
+(p)27852
+(e)⚖🧛📦|C-Balance, A-Gamemodes, A-Game-Objects
+(*)The ID pinpointer no longer requires you to have the "Assassinate" objective to purchase it. It can now track any registered, non-syndicate, on-station ID card (that isn't a silicon/bot's internal ID).
 (u)IncendiaryCrocs
 (p)27506
 (e)|
