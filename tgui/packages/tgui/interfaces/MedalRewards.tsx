@@ -9,8 +9,10 @@ import { useState } from 'react';
 import {
   BlockQuote,
   Button,
+  Dimmer,
   Image,
   Input,
+  Modal,
   Section,
   Stack,
   Table,
@@ -19,11 +21,14 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { filter } from 'common/collections';
 
 interface MedalRewardsData {
   rewards: RewardData[];
   categories: string[];
   eligible_rewards: string[];
+  ineligible_rewards: Record<string, string>;
+  user_medals: string[];
 }
 
 interface RewardData {
@@ -38,17 +43,25 @@ interface RewardData {
 export const MedalRewards = () => {
   const { data } = useBackend<MedalRewardsData>();
   const [searchQuery, setSearchQuery] = useState('');
+  const [filterAvailable, setFilterAvailable] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const filteredRewards = data.rewards
+    // Never show medals they have not earned
+    .filter((reward) =>
+      data.user_medals.find((medal) => reward.medal === medal),
+    )
+    // User selected filters
     .filter(
       (reward) =>
         selectedCategory === 'All' || reward.category === selectedCategory,
     )
-    .filter((reward) =>
-      data.eligible_rewards.find((type) => reward.type === type),
+    .filter(
+      (reward) =>
+        !filterAvailable ||
+        data.eligible_rewards.find((type) => reward.type === type),
     )
     .filter((reward) =>
-      (reward.title + reward.desc)
+      (reward.title + reward.desc + reward.medal)
         .toLocaleLowerCase()
         .includes(searchQuery.toLocaleLowerCase()),
     );
@@ -57,12 +70,26 @@ export const MedalRewards = () => {
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
-            <Input
-              fluid
-              value={searchQuery}
-              onChange={setSearchQuery}
-              placeholder="Filter Rewards"
-            />
+            <Stack fill>
+              <Stack.Item grow>
+                <Input
+                  fluid
+                  value={searchQuery}
+                  onChange={setSearchQuery}
+                  placeholder="Filter Rewards"
+                />
+              </Stack.Item>
+              <Stack.Item>
+                <Button.Checkbox
+                  checked={filterAvailable}
+                  onClick={() => {
+                    setFilterAvailable(!filterAvailable);
+                  }}
+                >
+                  Filter Available
+                </Button.Checkbox>
+              </Stack.Item>
+            </Stack>
           </Stack.Item>
           <Stack.Item>
             <Tabs>
@@ -110,27 +137,32 @@ const Reward = (props: RewardProps) => {
   const { reward } = props;
   return (
     <Table.Row className="candystripe">
-      <Stack py="5px" align="center">
-        <Stack.Item>
-          <Image width={ICON_SIZE} height={ICON_SIZE} src={reward.icon} />
-        </Stack.Item>
-        <Stack.Item grow>
-          <b>{reward.title}</b>
-          <br />
-          <BlockQuote>
-            {'Earned from medal "'}
-            {reward.medal}
-            {'"'}
+      <Section>
+        {!data.eligible_rewards.find((type) => reward.type === type) && (
+          <Modal>{data.ineligible_rewards[reward.type]}</Modal>
+        )}
+        <Stack py="5px" align="center">
+          <Stack.Item>
+            <Image width={ICON_SIZE} height={ICON_SIZE} src={reward.icon} />
+          </Stack.Item>
+          <Stack.Item grow>
+            <b>{reward.title}</b>
             <br />
-            {reward.desc}
-          </BlockQuote>
-        </Stack.Item>
-        <Stack.Item>
-          <Button onClick={() => act('redeem', { reward_type: reward.type })}>
-            Redeem
-          </Button>
-        </Stack.Item>
-      </Stack>
+            <BlockQuote>
+              {'Earned from medal "'}
+              {reward.medal}
+              {'"'}
+              <br />
+              {reward.desc}
+            </BlockQuote>
+          </Stack.Item>
+          <Stack.Item>
+            <Button onClick={() => act('redeem', { reward_type: reward.type })}>
+              Redeem
+            </Button>
+          </Stack.Item>
+        </Stack>
+      </Section>
     </Table.Row>
   );
 };
