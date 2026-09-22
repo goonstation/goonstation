@@ -1561,7 +1561,9 @@
 	dir = 8
 	},
 /obj/machinery/portable_reclaimer,
-/turf/unsimulated/floor/glassblock/transparent_cyan,
+/turf/unsimulated/floor/glassblock/transparent_cyan{
+	icon_state = "glasstr_large_cyan"
+	},
 /area/pod_wars/team1/hangar)
 "fB" = (
 /obj/disposalpipe/segment{
@@ -1578,7 +1580,9 @@
 /area/pod_wars/spacejunk/fstation/medbay)
 "fD" = (
 /obj/reagent_dispensers/fueltank/pod_wars/anchored,
-/turf/unsimulated/floor/glassblock/transparent_red,
+/turf/unsimulated/floor/glassblock/transparent_red{
+	icon_state = "glasstr_large_red"
+	},
 /area/pod_wars/team2/hangar)
 "fF" = (
 /obj/reagent_dispensers/fueltank,
@@ -2719,7 +2723,9 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/unsimulated/floor/glassblock/transparent_red,
+/turf/unsimulated/floor/glassblock/transparent_red{
+	icon_state = "glasstr_large_red"
+	},
 /area/pod_wars/team2/hangar)
 "jW" = (
 /obj/machinery/power/terminal{
@@ -3473,7 +3479,9 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation/crewquarters)
 "mD" = (
-/turf/unsimulated/floor/glassblock/transparent_cyan,
+/turf/unsimulated/floor/glassblock/transparent_cyan{
+	icon_state = "glasstr_large_cyan"
+	},
 /area/pod_wars/team1/hangar)
 "mE" = (
 /turf/simulated/floor/green/corner{
@@ -3579,7 +3587,9 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/turf/unsimulated/floor/glassblock/transparent_cyan,
+/turf/unsimulated/floor/glassblock/transparent_cyan{
+	icon_state = "glasstr_large_cyan"
+	},
 /area/pod_wars/team1/hangar)
 "nc" = (
 /obj/cable{
@@ -4169,7 +4179,9 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
-/turf/unsimulated/floor/glassblock/transparent_cyan,
+/turf/unsimulated/floor/glassblock/transparent_cyan{
+	icon_state = "glasstr_large_cyan"
+	},
 /area/pod_wars/team1/hangar)
 "pc" = (
 /obj/machinery/door/airlock/pyro/external{
@@ -5330,7 +5342,9 @@
 /area/pod_wars/team2/bridge)
 "tu" = (
 /obj/decal/tile_edge/stripe/extra_big,
-/turf/unsimulated/floor/glassblock/transparent_cyan,
+/turf/unsimulated/floor/glassblock/transparent_cyan{
+	icon_state = "glasstr_large_cyan"
+	},
 /area/pod_wars/team1/hangar)
 "tv" = (
 /obj/cable,
@@ -6035,7 +6049,9 @@
 "we" = (
 /obj/reagent_dispensers/fueltank/pod_wars/anchored,
 /obj/decal/tile_edge/stripe/extra_big,
-/turf/unsimulated/floor/glassblock/transparent_cyan,
+/turf/unsimulated/floor/glassblock/transparent_cyan{
+	icon_state = "glasstr_large_cyan"
+	},
 /area/pod_wars/team1/hangar)
 "wf" = (
 /turf/unsimulated/floor/red/corner,
@@ -6512,7 +6528,12 @@
 /obj/machinery/manufacturer/pod_wars/syndicate{
 	share_id = "synd"
 	},
-/turf/unsimulated/floor/glassblock/transparent_red,
+/obj/decal/tile_edge{
+	icon_state = "hazard_delivery"
+	},
+/turf/unsimulated/floor/glassblock/transparent_red{
+	icon_state = "glasstr_large_red"
+	},
 /area/pod_wars/team2/hangar)
 "xI" = (
 /obj/computerframe{
@@ -6675,7 +6696,9 @@
 /area/pod_wars/team1/medbay)
 "yp" = (
 /obj/machinery/light/incandescent/netural,
-/turf/unsimulated/floor/glassblock/transparent_red,
+/turf/unsimulated/floor/glassblock/transparent_red{
+	icon_state = "glasstr_large_red"
+	},
 /area/pod_wars/team2/hangar)
 "yq" = (
 /obj/table/reinforced/auto,
@@ -7172,7 +7195,9 @@
 /area/pod_wars/spacejunk/snackstand)
 "Aa" = (
 /obj/machinery/portable_atmospherics/canister/toxins/pod_wars/anchored,
-/turf/unsimulated/floor/glassblock/transparent_red,
+/turf/unsimulated/floor/glassblock/transparent_red{
+	icon_state = "glasstr_large_red"
+	},
 /area/pod_wars/team2/hangar)
 "Ab" = (
 /obj/machinery/sink/slim{
@@ -7199,7 +7224,9 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/unsimulated/floor/glassblock/transparent_red,
+/turf/unsimulated/floor/glassblock/transparent_red{
+	icon_state = "glasstr_large_red"
+	},
 /area/pod_wars/team2/hangar)
 "Ae" = (
 /turf/simulated/floor/black,
@@ -7581,7 +7608,9 @@
 	dir = 4
 	},
 /obj/storage/closet/welding_supply,
-/turf/unsimulated/floor/glassblock/transparent_cyan,
+/turf/unsimulated/floor/glassblock/transparent_cyan{
+	icon_state = "glasstr_large_cyan"
+	},
 /area/pod_wars/team1/hangar)
 "Bl" = (
 /obj/machinery/r_door_control/podbay/t2d1/new_walls/south,
@@ -9486,7 +9515,9 @@
 /obj/decal/tile_edge{
 	icon_state = "hazard_delivery"
 	},
-/turf/unsimulated/floor/glassblock/transparent_cyan,
+/turf/unsimulated/floor/glassblock/transparent_cyan{
+	icon_state = "glasstr_large_cyan"
+	},
 /area/pod_wars/team1/hangar)
 "Ig" = (
 /turf/unsimulated/floor/blue/corner{
@@ -10051,7 +10082,9 @@
 "Kc" = (
 /obj/machinery/portable_atmospherics/canister/toxins/pod_wars/anchored,
 /obj/decal/tile_edge/stripe/extra_big,
-/turf/unsimulated/floor/glassblock/transparent_cyan,
+/turf/unsimulated/floor/glassblock/transparent_cyan{
+	icon_state = "glasstr_large_cyan"
+	},
 /area/pod_wars/team1/hangar)
 "Kd" = (
 /turf/simulated/floor,
@@ -12539,7 +12572,9 @@
 	},
 /area/pod_wars/team2/bridge)
 "Te" = (
-/turf/unsimulated/floor/glassblock/transparent_red,
+/turf/unsimulated/floor/glassblock/transparent_red{
+	icon_state = "glasstr_large_red"
+	},
 /area/pod_wars/team2/hangar)
 "Tf" = (
 /obj/disposalpipe/segment{
@@ -12937,7 +12972,9 @@
 	dir = 8
 	},
 /obj/storage/closet/welding_supply,
-/turf/unsimulated/floor/glassblock/transparent_cyan,
+/turf/unsimulated/floor/glassblock/transparent_cyan{
+	icon_state = "glasstr_large_cyan"
+	},
 /area/pod_wars/team1/hangar)
 "Ux" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -13505,7 +13542,9 @@
 	dir = 4
 	},
 /obj/machinery/portable_reclaimer,
-/turf/unsimulated/floor/glassblock/transparent_cyan,
+/turf/unsimulated/floor/glassblock/transparent_cyan{
+	icon_state = "glasstr_large_cyan"
+	},
 /area/pod_wars/team1/hangar)
 "WI" = (
 /obj/stool/chair/dining{
@@ -13612,7 +13651,9 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/unsimulated/floor/glassblock/transparent_red,
+/turf/unsimulated/floor/glassblock/transparent_red{
+	icon_state = "glasstr_large_red"
+	},
 /area/pod_wars/team2/hangar)
 "Xc" = (
 /obj/cable{
