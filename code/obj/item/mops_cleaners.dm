@@ -406,11 +406,11 @@ TRASH BAG
 
 	var/list/obj/item/items_to_push = list()
 	for(var/obj/item/I in target_location)
-		if(I.w_class > W_CLASS_NORMAL) // can't push through an item thats too big
+		if(I.w_class > W_CLASS_BULKY) // can't push through an item thats too big
 			boutput(user, SPAN_ALERT("[I] is too big for you to push!"))
 			return FALSE
 		if(I.anchored) // can't push through an item thats bolted and is too big, can push through smaller item
-			if(I.w_class >= W_CLASS_BULKY)
+			if(I.w_class >= W_CLASS_GIGANTIC)
 				boutput(user, SPAN_ALERT("The [src] got caught on [I]!"))
 				return FALSE
 		else
