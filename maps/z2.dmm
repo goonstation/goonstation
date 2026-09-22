@@ -54165,8 +54165,7 @@
 	desc = " It is made of wood.";
 	explosion_protection = 1;
 	explosion_resistance = 1;
-	name = "wood floor";
-	opaque_atom_count = 1
+	name = "wood floor"
 	},
 /area/centcom/offices/sord)
 "edL" = (
