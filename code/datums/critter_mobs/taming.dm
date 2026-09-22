@@ -60,6 +60,7 @@ TYPEINFO(/datum/component/tameable)
 			owner.ai_retaliates = FALSE
 			owner.visible_message("[owner] enjoyed the [item] and seems more docile!")
 			owner.emote("burp")
+			owner.ai.interrupt()
 		if(istype(owner, /mob/living/critter/rockworm))
 			var/mob/living/critter/rockworm/RW = owner
 			RW.aftereat()
@@ -81,6 +82,7 @@ TYPEINFO(/datum/component/tameable)
 				owner.tamed = TRUE
 				owner.visible_message("[owner] with a [emote_happy] happily eats up the \the [item], and seems a little friendlier with [user].")
 				owner.emote(emote_happy)
+				owner.ai.interrupt()
 			else
 				owner.visible_message(SPAN_NOTICE("[owner] hated \the [item] and bit [user]'s hand!"))
 				random_brute_damage(user, rand(6,12),1)
@@ -91,7 +93,7 @@ TYPEINFO(/datum/component/tameable)
 /datum/component/tameable/proc/pass_on_attackhand(atom/source, mob/M)
 	if ((M.a_intent == INTENT_HARM) || !(M in owner.friends))
 		return
-	if(aggro_mode)
+	if(!aggro_mode)
 		return
 	if(M.a_intent == INTENT_HELP && owner.aggressive)
 		owner.visible_message(SPAN_NOTICE("[M] pats [owner] on the head in a soothing way. It won't attack anyone now."))
