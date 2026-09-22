@@ -1166,7 +1166,6 @@
 #include "code\modules\camera\television.dm"
 #include "code\modules\camera\coverage\datum\component\camera_coverage_emitter.dm"
 #include "code\modules\camera\coverage\datum\controller\camera_coverage.dm"
-#include "code\modules\camera\coverage\datum\controller\process\camera_coverage_all.dm"
 #include "code\modules\camera\coverage\datum\controller\process\camera_coverage_emitter_queue.dm"
 #include "code\modules\camera\coverage\datum\controller\process\camera_coverage_turf_queue.dm"
 #include "code\modules\chemistry\Chemistry-Dispenser.dm"

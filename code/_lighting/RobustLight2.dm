@@ -767,14 +767,6 @@ proc/get_moving_lights_stats()
 		if (src.loc != old_loc && src.RL_Attached)
 			for (var/datum/light/light as anything in src.RL_Attached)
 				light.move(src.x + light.attach_x, src.y + light.attach_y, src.z, src.dir)
-		// commented out for optimization purposes, let's hope it doesn't matter too much
-		/*
-		if(src.opacity)
-			var/turf/OL = old_loc
-			if(istype(OL)) --OL.opaque_atom_count
-			var/turf/NL = src.loc
-			if(istype(NL)) ++NL.opaque_atom_count
-		*/
 
 	proc/update_directional_lights()
 		if (src.dir != old_dir && src.RL_Attached && TIME > next_light_dir_update)
@@ -795,13 +787,6 @@ proc/get_moving_lights_stats()
 			for (var/datum/light/light as anything in lights)
 				if (light.enabled)
 					affected |= light.strip(++global.RL_Generation)
-
-			var/turf/OL = src.loc
-			if (istype(OL))
-				--OL.opaque_atom_count
-			var/turf/NL = target
-			if (istype(NL))
-				++NL.opaque_atom_count
 
 			. = ..()
 

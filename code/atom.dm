@@ -542,9 +542,6 @@ TYPEINFO(/obj/item/disk)
 	if(istype(src, /atom/movable/hotspot)) //hotspots arent really tangible things
 		return
 	if (isturf(src.loc))
-		var/turf/T = src.loc
-		if(src.opacity)
-			T.opaque_atom_count++
 		if(src.pass_unstable || src.density)
 			for(var/turf/covered_turf as anything in src.locs)
 				covered_turf.pass_unstable += src.pass_unstable
