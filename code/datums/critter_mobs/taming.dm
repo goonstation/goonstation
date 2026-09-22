@@ -36,8 +36,8 @@ TYPEINFO(/datum/component/tameable)
 	RegisterSignal(parent, COMSIG_MOB_VALIDATE_TARGET, PROC_REF(pass_on_validtarget))
 
 /datum/component/tameable/proc/is_valid_food(obj/item/F)
-	if(istypes(item, taming_foods))
-		if(!istypes(item, food_blacklist))
+	if(istypes(F, taming_foods))
+		if(!istypes(F, food_blacklist))
 			return TRUE
 	return FALSE
 
@@ -46,7 +46,7 @@ TYPEINFO(/datum/component/tameable)
 		return
 	if(!ishuman(user))
 		return
-	if (M.a_intent == INTENT_HARM)
+	if (user.a_intent == INTENT_HARM)
 		return
 	if(!is_valid_food(item))
 		owner.visible_message("[user] tries to feed [owner] [item] but they won't take it!")
