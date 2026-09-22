@@ -83,7 +83,7 @@
 		new /obj/art_fissure_objs/mirror_update_dummy(fissure_entr, entrance, entrance_dir)
 		entrance.icon = 'icons/turf/floors.dmi'
 		entrance.icon_state = "darkvoid"
-		entrance.opacity = TRUE
+		entrance.set_opacity(TRUE)
 		entrance.name = "Thick void mist"
 		entrance.desc = "Void mist thick enough that you can't see through it.. How did this get here?"
 		RL_UPDATE_LIGHT(entrance)
