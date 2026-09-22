@@ -21,16 +21,14 @@ export const PlaybackControls = () => {
       <Stack.Item grow>
         <Button
           fluid
-          bold
           textAlign="center"
           lineHeight={PLAYBACK_BUTTON_LINE_HEIGHT}
-          color="blue"
           icon="play"
           disabled={!soundsEnabled || !loadedSound}
           tooltip="Replace current music"
           onClick={() => act('play-music')}
         >
-          Play music
+          Start Playing
         </Button>
       </Stack.Item>
       <Stack.Item grow>

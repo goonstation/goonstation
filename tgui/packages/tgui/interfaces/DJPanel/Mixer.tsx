@@ -32,7 +32,7 @@ export const Mixer = () => {
   const { volume, frequency, soundsEnabled } = data;
   return (
     <LabeledList>
-      <MixerControl
+      <MixerControlItem
         label="Volume"
         value={volume}
         minValue={VOLUME_MIN}
@@ -42,9 +42,9 @@ export const Mixer = () => {
         disabled={!soundsEnabled}
         resetTooltip={`Reset volume to ${DEFAULT_VOLUME}%`}
         onChange={(value) => act('set-volume', { volume: value })}
-        onReset={() => act('set-volume', { volume: 'reset' })}
+        onReset={() => act('reset-volume')}
       />
-      <MixerControl
+      <MixerControlItem
         label="Pitch"
         value={frequency}
         defaultValue={DEFAULT_FREQUENCY}
@@ -55,7 +55,7 @@ export const Mixer = () => {
         disabled={!soundsEnabled}
         resetTooltip={`Reset pitch to ${DEFAULT_FREQUENCY}x`}
         onChange={(value) => act('set-freq', { frequency: value })}
-        onReset={() => act('set-freq', { frequency: 'reset' })}
+        onReset={() => act('reset-freq')}
       />
     </LabeledList>
   );
@@ -75,7 +75,7 @@ interface MixerControlProps {
   onReset: () => void;
 }
 
-const MixerControl = (props: MixerControlProps) => {
+const MixerControlItem = (props: MixerControlProps) => {
   const {
     label,
     defaultValue,
@@ -86,9 +86,9 @@ const MixerControl = (props: MixerControlProps) => {
     ...inputProps
   } = props;
   const formatValue = (value: number) =>
-    String(round(value, numberOfDecimalDigits(inputProps.step)));
+    `${round(value, numberOfDecimalDigits(inputProps.step))}`;
   return (
-    <LabeledList.Item label={label}>
+    <LabeledList.Item label={label} verticalAlign="middle">
       <Stack align="center">
         <Stack.Item grow>
           <Slider
@@ -97,9 +97,7 @@ const MixerControl = (props: MixerControlProps) => {
             format={formatValue}
             unit={unit}
             onChange={(_event, value) => onChange(value)}
-          >
-            {null}
-          </Slider>
+          />
         </Stack.Item>
         <Stack.Item>
           <NumberInput

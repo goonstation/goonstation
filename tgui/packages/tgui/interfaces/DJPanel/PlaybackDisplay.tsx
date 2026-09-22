@@ -13,40 +13,47 @@ import { formatTime } from '../../format';
 import type { DJPanelData, PlayingTrack } from './types';
 
 const DECISECONDS_PER_SECOND = 10;
-const STATE_ICONS = {
-  playing: 'play',
-  paused: 'pause',
-  stopped: 'stop',
-  offline: 'volume-mute',
+enum PlaybackState {
+  Playing = 'playing',
+  Paused = 'paused',
+  Stopped = 'stopped',
+  Offline = 'offline',
+}
+
+const STATE_ICONS: Record<PlaybackState, string> = {
+  [PlaybackState.Playing]: 'play',
+  [PlaybackState.Paused]: 'pause',
+  [PlaybackState.Stopped]: 'stop',
+  [PlaybackState.Offline]: 'volume-mute',
 };
 
 export const PlaybackDisplay = () => {
   const { data } = useBackend<DJPanelData>();
   const { nowPlaying, loadedSound, soundsEnabled } = data;
   const playbackState = !soundsEnabled
-    ? 'offline'
+    ? PlaybackState.Offline
     : nowPlaying
       ? nowPlaying.paused
-        ? 'paused'
-        : 'playing'
-      : 'stopped';
+        ? PlaybackState.Paused
+        : PlaybackState.Playing
+      : PlaybackState.Stopped;
   const stateColor =
-    playbackState === 'playing'
+    playbackState === PlaybackState.Playing
       ? 'blue'
-      : playbackState === 'paused'
+      : playbackState === PlaybackState.Paused
         ? 'orange'
         : 'label';
   const trackName = nowPlaying?.name || loadedSound || 'No sound selected';
   return (
     <Stack vertical>
       <Stack.Item>
-        <Stack align="center" backgroundColor="black" color="white" p={1}>
+        <Stack align="center" p={1}>
           <Stack.Item>
             <Icon
               name="compact-disc"
               size={4}
               color={nowPlaying ? stateColor : 'label'}
-              spin={playbackState === 'playing'}
+              spin={playbackState === PlaybackState.Playing}
             />
           </Stack.Item>
           <Stack.Item grow minWidth={0}>

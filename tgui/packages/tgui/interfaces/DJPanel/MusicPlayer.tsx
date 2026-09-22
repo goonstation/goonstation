@@ -15,7 +15,7 @@ import { PlaybackDisplay } from './PlaybackDisplay';
 import type { DJPanelData } from './types';
 
 export const MusicPlayer = () => (
-  <Section title="Music deck" buttons={<DeckSettings />}>
+  <Section title="Music Deck" buttons={<DeckSettings />}>
     <Stack vertical>
       <Stack.Item>
         <PlaybackDisplay />
@@ -40,7 +40,7 @@ const DeckSettings = () => {
         tooltip="Show who is playing audio"
         onClick={() => act('toggle-announce')}
       >
-        Announce playback
+        Announce Playback
       </Button>
       {!!data.isAdmin && (
         <Button

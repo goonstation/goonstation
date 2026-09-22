@@ -23,7 +23,7 @@ const preloadLabels: Record<
   },
   requested: {
     icon: 'check',
-    label: 'Preload sent',
+    label: 'Preload Sent',
     tooltip: 'Downloads requested. Click to resend.',
   },
 };

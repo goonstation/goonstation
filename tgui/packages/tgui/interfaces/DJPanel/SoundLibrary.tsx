@@ -17,8 +17,9 @@ export const SoundLibrary = () => {
   const { act, data } = useBackend<DJPanelData>();
   const { sounds, soundsEnabled } = data;
   const [search, setSearch] = useState('');
+  const searchTerm = search.trim().toLocaleLowerCase();
   const matchingSounds = sounds.filter(({ name }) =>
-    name.toLowerCase().includes(search.trim().toLowerCase()),
+    name.toLocaleLowerCase().includes(searchTerm),
   );
   return (
     <Section fill title="Sound Library">
@@ -27,14 +28,12 @@ export const SoundLibrary = () => {
           <Stack align="center">
             <Stack.Item>
               <Button
-                bold
                 icon="upload"
-                color="blue"
                 disabled={!soundsEnabled}
                 tooltip="Add to the shared library"
                 onClick={() => act('set-file')}
               >
-                Upload sound
+                Upload Sound
               </Button>
             </Stack.Item>
             <Stack.Item grow>

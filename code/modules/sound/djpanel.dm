@@ -148,26 +148,28 @@ client/proc/open_dj_panel()
 			. = TRUE
 
 		if("set-volume")
-			var/new_volume = params["volume"]
-			if(new_volume == "reset")
-				src.sound_volume = initial(src.sound_volume)
-				. = TRUE
-			else if(text2num_safe(new_volume) != null)
-				src.sound_volume = clamp(text2num_safe(new_volume), 0, ADMIN_SOUND_MAX_VOLUME)
-				. = TRUE
-			if (.)
+			var/new_volume = text2num_safe(params["volume"])
+			if(new_volume != null)
+				src.sound_volume = clamp(new_volume, 0, ADMIN_SOUND_MAX_VOLUME)
 				src.update_music()
+				. = TRUE
+
+		if("reset-volume")
+			src.sound_volume = initial(src.sound_volume)
+			src.update_music()
+			. = TRUE
 
 		if("set-freq")
-			var/new_freq = params["frequency"]
-			if(new_freq == "reset")
-				src.sound_frequency = initial(src.sound_frequency)
-				. = TRUE
-			else if(text2num_safe(new_freq) != null)
-				src.sound_frequency = clamp(text2num_safe(new_freq) || 1, -DJ_MAX_FREQUENCY, DJ_MAX_FREQUENCY)
-				. = TRUE
-			if (.)
+			var/new_freq = text2num_safe(params["frequency"])
+			if(new_freq != null)
+				src.sound_frequency = clamp(new_freq || 1, -DJ_MAX_FREQUENCY, DJ_MAX_FREQUENCY)
 				src.update_music()
+				. = TRUE
+
+		if("reset-freq")
+			src.sound_frequency = initial(src.sound_frequency)
+			src.update_music()
+			. = TRUE
 
 		if("play-sound")
 			actor?.play_sound_real(src.loaded_sound, src.sound_volume, src.sound_frequency)
