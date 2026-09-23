@@ -23,6 +23,8 @@ export interface PacketLog {
   sequence: number;
   stamp: string;
   device: string | null;
+  source_name: string | null;
+  source_address: string | null;
   fields: Array<PacketField>;
   payload_length: number;
   file?: PacketFile;

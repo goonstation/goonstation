@@ -37,7 +37,7 @@ export const CaptureFilters = (props: CaptureFiltersProps) => {
           <AddressMask
             label="SRC"
             filter={filter}
-            tooltip="Sender address (8 hex digits)"
+            tooltip="Source address (8 hex digits)"
             onSetFilter={onSetFilter}
             onClearFilter={onClearFilter}
           />
@@ -46,7 +46,7 @@ export const CaptureFilters = (props: CaptureFiltersProps) => {
           <AddressMask
             label="DST"
             filter={destinationFilter}
-            tooltip="Destination address (8 hex digits or ping)"
+            tooltip="Destination address (8 hex digits)"
             onSetFilter={onSetDestinationFilter}
             onClearFilter={onClearDestinationFilter}
           />

@@ -7,15 +7,12 @@
 
 import { Stack } from 'tgui-core/components';
 
-import type { FilterProps, PacketField } from '../type';
+import type { PacketField } from '../type';
 import { displayValue } from '../utils';
-import { AddressFilter } from './AddressFilter';
 import { PacketText } from './PacketText';
 
-export const PacketFields = (
-  props: FilterProps & { fields: Array<PacketField> },
-) => {
-  const { fields, ...filterProps } = props;
+export const PacketFields = (props: { fields: Array<PacketField> }) => {
+  const { fields } = props;
 
   return (
     <Stack vertical>
@@ -38,17 +35,7 @@ export const PacketFields = (
               <PacketText>{'$' + name}</PacketText>
             </Stack.Item>
             <Stack.Item grow={2} basis={0} minWidth={0}>
-              <PacketText>
-                {['sender', 'address_1', 'netid'].includes(name) ? (
-                  <AddressFilter
-                    address={value}
-                    destination={name === 'address_1'}
-                    {...filterProps}
-                  />
-                ) : (
-                  displayValue(value)
-                )}
-              </PacketText>
+              <PacketText>{displayValue(value)}</PacketText>
             </Stack.Item>
           </Stack>
         </Stack.Item>

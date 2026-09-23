@@ -19,7 +19,6 @@ export const PacketRouteTrace = (
   },
 ) => {
   const { packet, onCopy, ...filterProps } = props;
-  const source = getPacketField(packet, 'sender');
   const destination = getPacketField(packet, 'address_1');
 
   return (
@@ -27,19 +26,24 @@ export const PacketRouteTrace = (
       <Stack align="center">
         <Stack.Item grow basis={0} minWidth={0}>
           <Stack vertical>
-            <Stack.Item color="label">[SRC] sender</Stack.Item>
+            <Stack.Item color="label">
+              [SRC] {packet.source_name || 'source'}
+            </Stack.Item>
             <Stack.Item>
               <PacketText>
-                <AddressFilter address={source} {...filterProps} />
+                <AddressFilter
+                  address={packet.source_address ?? undefined}
+                  {...filterProps}
+                />
               </PacketText>
             </Stack.Item>
             <Stack.Item>
               <Button
                 icon="copy"
                 color="transparent"
-                disabled={!source}
-                tooltip="Copy sender address"
-                onClick={() => onCopy(source)}
+                disabled={!packet.source_address}
+                tooltip="Copy source address"
+                onClick={() => onCopy(packet.source_address)}
               >
                 COPY SRC
               </Button>

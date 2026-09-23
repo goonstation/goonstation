@@ -143,7 +143,7 @@ const PacketRoute = (props: FilterProps & { packet: PacketLog }) => {
       <Stack.Item minWidth={0}>
         <PacketText>
           <AddressFilter
-            address={getPacketField(packet, 'sender')}
+            address={packet.source_address ?? undefined}
             {...filterProps}
           />
         </PacketText>
@@ -168,7 +168,9 @@ const PacketPayload = (props: { packet: PacketLog }) => {
   const { packet } = props;
   const signature = getPacketSignature(packet);
   const payload = packet.fields.filter(
-    ({ name }) => !['sender', 'address_1', 'command', 'device'].includes(name),
+    ({ name }) =>
+      name !== packet.source_name &&
+      !['address_1', 'command', 'device'].includes(name),
   );
 
   return (

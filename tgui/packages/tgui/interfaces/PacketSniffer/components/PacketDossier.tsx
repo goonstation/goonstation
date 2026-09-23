@@ -25,7 +25,7 @@ export const PacketDossier = (
 ) => {
   const { packet, connected, inBuffer, onCopy, ...filterProps } = props;
   const decodedFields = packet.fields.filter(
-    ({ name }) => name !== 'sender' && name !== 'address_1',
+    ({ name }) => name !== packet.source_name && name !== 'address_1',
   );
   const frameText = formatPacketText({ ...packet, file: undefined });
 
@@ -45,7 +45,7 @@ export const PacketDossier = (
           </Stack.Item>
           <Stack.Item grow basis={0} minWidth={0}>
             <Section title={'FIELD DECODE // ' + decodedFields.length}>
-              <PacketFields fields={decodedFields} {...filterProps} />
+              <PacketFields fields={decodedFields} />
             </Section>
           </Stack.Item>
         </Stack>

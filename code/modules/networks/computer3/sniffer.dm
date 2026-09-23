@@ -107,7 +107,7 @@
 				. = TRUE
 			if ("set_destination_filter_direct")
 				var/filter_id = params["filter"]
-				if (istext(filter_id) && ((length(filter_id) == 8 && is_hex(filter_id)) || cmptext(filter_id, "ping")))
+				if (istext(filter_id) && length(filter_id) == 8 && is_hex(filter_id))
 					src.destination_filter_id = filter_id
 					. = TRUE
 			if ("clear_destination_filter")
@@ -137,8 +137,21 @@
 		if(signal.transmission_method != TRANSMISSION_WIRE) //No radio for us thanks
 			return
 
-		var/target = signal.data["sender"]
-		if(src.filter_id && !cmptext(src.filter_id, target))
+		// Source candidates also determine the field shown first in the route trace.
+		var/static/list/source_fields = list("sender", "netid")
+		var/source_field = null
+		var/source_address = null
+		var/source_filter_matched = !src.filter_id
+		for (var/field_name as anything in source_fields)
+			var/address = signal.data[field_name]
+			if (!address)
+				continue
+			if (!source_field)
+				source_field = field_name
+				source_address = address
+			if (cmptext(src.filter_id, address))
+				source_filter_matched = TRUE
+		if (!source_filter_matched)
 			return
 		if (src.destination_filter_id && !cmptext(src.destination_filter_id, signal.data["address_1"]))
 			return
@@ -183,6 +196,8 @@
 			"sequence" = src.captured_packets,
 			"stamp" = "\[[time2text(world.timeofday,"mm:ss")]:[(world.timeofday%10)]\]",
 			"device" = device_tag ? "[device_tag]" : null,
+			"source_name" = source_field,
+			"source_address" = source_address ? "[source_address]" : null,
 			"fields" = packet_fields,
 			"payload_length" = payload_length,
 		)

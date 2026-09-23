@@ -27,10 +27,7 @@ export const AddressFilter = ({
   const selected =
     normalizedAddress?.toLocaleLowerCase() ===
     activeFilter?.trim().toLocaleLowerCase();
-  if (
-    !(destination && normalizedAddress?.toLocaleLowerCase() === 'ping') &&
-    !isNetId(normalizedAddress)
-  ) {
+  if (!isNetId(normalizedAddress)) {
     return <>{displayValue(address)}</>;
   }
 
@@ -44,7 +41,7 @@ export const AddressFilter = ({
         selected
           ? destination
             ? 'Clear destination mask'
-            : 'Clear sender mask'
+            : 'Clear source mask'
           : (destination ? 'Capture to ' : 'Capture from ') + normalizedAddress
       }
       onClick={() => onFilterChange(normalizedAddress)}

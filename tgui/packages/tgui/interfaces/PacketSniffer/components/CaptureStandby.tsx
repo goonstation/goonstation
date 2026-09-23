@@ -54,7 +54,7 @@ export const CaptureStandby = (props: {
               : '[FAIL] DATA TAP ........ TERMINAL NOT FOUND'}
           </Stack.Item>
           <Stack.Item color={filter ? 'average' : 'label'}>
-            [MASK] SENDER .......... {filter || '******** / ALL SENDERS'}
+            [MASK] SOURCE .......... {filter || '******** / ALL SOURCES'}
           </Stack.Item>
           <Stack.Item color={destinationFilter ? 'average' : 'label'}>
             [MASK] DESTINATION .....{' '}
