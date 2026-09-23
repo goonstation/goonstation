@@ -354,6 +354,12 @@
 /datum/movement_modifier/gravity
 	ask_proc = TRUE
 
+/datum/movement_modifier/dark_affinity_off
+	additive_slowdown = 5
+
+/datum/movement_modifier/dark_affinity_on
+	additive_slowdown = -0.4
+
 // high gforce adds multiplicative slowdown
 /datum/movement_modifier/gravity/modifiers(mob/user, turf/move_target, running)
 	var/gforce = user.gforce

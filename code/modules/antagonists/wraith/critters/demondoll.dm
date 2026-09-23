@@ -1,0 +1,200 @@
+
+TYPEINFO(/mob/living/critter/wraith/demon_doll)
+	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN, SPEECH_OUTPUT_EQUIPPED)
+
+/mob/living/critter/wraith/demon_doll
+	name = "demon doll"
+	desc = "It kind of hurts to look at, let alone hear."
+	density = 1
+	icon = 'icons/mob/wraith_critters.dmi'
+	icon_state = "demon_doll"
+	icon_state_dead = "dead_demon_doll"
+	hand_count = 2
+	health_brute = 40
+	health_brute_vuln = 0.7
+	health_burn = 40
+	health_burn_vuln = 1
+	faction = list(FACTION_WRAITH)
+	can_use_say = FALSE
+	can_juggle = TRUE
+	name_generator_path = /datum/wraith_name_generator/wraith_summon/doll
+	var/mob/living/intangible/wraith/master = null
+	var/traps_laid = 0
+
+	New(var/turf/T, var/mob/living/intangible/wraith/M = null)
+		..(T)
+		if(M != null)
+			src.master = M
+
+			if (isnull(M.summons))
+				M.summons = list()
+			M.summons += src
+		src.see_invisible = INVIS_SPOOKY
+		src.addAbility(/datum/targetable/critter/demon_doll/devious_song)
+		src.addAbility(/datum/targetable/critter/demon_doll/shrieking_song)
+		src.addAbility(/datum/targetable/critter/demon_doll/bouncy_song)
+		src.addAbility(/datum/targetable/critter/demon_doll/juggle_song)
+		src.addAbility(/datum/targetable/critter/demon_doll/gravity_song)
+		src.addAbility(/datum/targetable/critter/ouija_speak/demon_doll)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_THERMALVISION, src)
+		src.setStatus("dark_affinity")
+
+	say_verb()
+		..()
+		if (!ON_COOLDOWN(src, "playsound", 10 SECONDS))
+			playsound(src, 'sound/voice/wraith/doll_laugh.ogg', 60, 1)
+			src.emote("giggle", TRUE)
+		return
+
+	setup_healths()
+		add_hh_flesh(src.health_brute, src.health_brute_vuln)
+		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/small_critter
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handn"
+		HH.name = "paw"
+		HH.limb_name = "claws"
+
+		HH = hands[2]
+		HH.limb = new /datum/limb/mouth/demon_doll
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "mouth"
+		HH.name = "mouth"
+		HH.limb_name = "teeth"
+		HH.can_hold_items = 0
+
+	death(var/gibbed)
+		if (src.master)
+			src.master.summons -= src
+		src.master = null
+		playsound(src, 'sound/voice/wraith/revleave.ogg', 50)
+		if (gibbed)
+			return ..()
+
+		animate(src, 3 SECONDS, pixel_y = 40)
+		SPAWN(3 SECONDS)
+			src.gib()
+		return ..()
+
+	gib()
+		var/turf/T = get_turf(src)
+		if (T)
+			new/obj/item/clothing/gloves/ring/gold/spooky(T)
+			playsound(T, 'sound/items/coindrop.ogg', 30, 1)
+		return ..()
+
+/datum/statusEffect/dark_affinity
+	id = "dark_affinity"
+	name = "Dark Affinity"
+	desc = "Darkness restores your form and grants you haste."
+	icon_state = "eye"
+	duration = INFINITE_STATUS
+	maxDuration = null
+	unique = 1
+	var/last_check = TRUE // TRUE = lights on
+	var/cursed = FALSE // gives you hallucinations in the dark and doesn't give you the speed buff
+	var/counter = 0
+
+	onAdd()
+		if (ishuman(owner)) // Dolls' dropped rings give this status, best not give the speed changes to humans
+			src.desc = "Darkness restores your form."
+			src.cursed = TRUE
+		light_check(TRUE)
+		..()
+
+	onUpdate(timePassed)
+		counter += timePassed
+		if (counter >= 20)
+			light_check()
+		. = ..(timePassed)
+
+	proc/light_check(var/check_bypass=FALSE)
+		var/current_check
+		var/turf/T = src.owner.loc
+		if (T?.is_lit())
+			current_check = TRUE
+		else
+			current_check = FALSE
+		if (check_bypass || (current_check != src.last_check)) // only toggle effects when you need to, or when telling it to
+			src.last_check = current_check
+			toggle_status(current_check)
+
+	proc/toggle_status(var/light)
+		var/mob/living/living_owner = owner
+		if (light)
+			src.icon_state = "eye_closed"
+			living_owner.bioHolder.RemoveEffect("regenerator")
+			if (!src.cursed)
+				src.desc = "Darkness will restore your form and grant you haste."
+				living_owner.alpha = 255
+				REMOVE_MOVEMENT_MODIFIER(living_owner, /datum/movement_modifier/dark_affinity_on, src.type)
+				APPLY_MOVEMENT_MODIFIER(living_owner, /datum/movement_modifier/dark_affinity_off, src.type)
+			else
+				src.desc = "Darkness will restore your form."
+				living_owner.setStatus("terror", INFINITE_STATUS)
+		else
+			src.icon_state = "eye"
+			living_owner.bioHolder.AddEffect("regenerator", magical = 1)
+			if (!src.cursed)
+				src.desc = "Darkness is restoring your form and granting you haste."
+				living_owner.alpha = 160
+				REMOVE_MOVEMENT_MODIFIER(living_owner, /datum/movement_modifier/dark_affinity_off, src.type)
+				APPLY_MOVEMENT_MODIFIER(living_owner, /datum/movement_modifier/dark_affinity_on, src.type)
+			else
+				src.desc = "Darkness is restoring your form."
+				living_owner.delStatus("terror")
+
+/datum/statusEffect/gravity_song
+	id = "gravity_song"
+	name = "Gravity Song"
+	desc = "Your singing is flinging anything you juggle!"
+	icon_state = "sugar_rush"
+	duration = INFINITE_STATUS
+	maxDuration = null
+	unique = 1
+	var/counter = 0
+
+	onUpdate(timePassed)
+		counter += timePassed
+		if (counter >= 30)
+			var/mob/living/juggler = src.owner
+			counter = 0
+			if (length(juggler.juggling))
+				var/atom/movable/juggled = pick(juggler.juggling)
+				throw_thing(juggler, juggled)
+		. = ..(timePassed)
+
+	proc/throw_thing(var/mob/living/juggler, var/atom/movable/picked_thing)
+		if (!picked_thing)
+			return
+
+		var/list/humans = list()
+		for (var/mob/living/carbon/human/H in view(6, juggler))
+			if (isalive(H) && H.client && !H.nodamage && (H.invisibility <= INVIS_NONE))
+				humans += H
+
+		if (!humans)
+			return
+
+		var/mob/living/carbon/human/closest
+		for (var/mob/living/carbon/human/victim in humans)
+			if (!closest || GET_DIST(juggler, victim) < GET_DIST(juggler, closest))
+				closest = victim
+
+		if (closest && picked_thing)
+			juggler.remove_juggle(picked_thing, FALSE)
+			picked_thing.set_loc(juggler.loc)
+			picked_thing.throw_at(closest.loc, 10, 2, bonus_throwforce = 3)
+
+
+
+
+
+
+
+

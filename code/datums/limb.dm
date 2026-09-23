@@ -682,7 +682,12 @@
 		user.lastattacked = get_weakref(target)
 		ON_COOLDOWN(src, "limb_cooldown", harm_intent_delay)
 
-
+/datum/limb/mouth/demon_doll
+	dam_low = 4
+	dam_high = 9
+	miss_prob = 60
+	can_gun_grab = FALSE
+	can_beat_up_robots = TRUE
 
 /datum/limb/mouth/maneater
 	sound_attack = 'sound/impact_sounds/Flesh_Tear_2.ogg'

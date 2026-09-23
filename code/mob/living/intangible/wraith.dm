@@ -585,7 +585,7 @@ TYPEINFO(/mob/living/intangible/wraith)
 		src.addAbility(/datum/targetable/wraithAbility/fake_sound)
 		src.addAbility(/datum/targetable/wraithAbility/lay_trap)
 		src.addAbility(/datum/targetable/wraithAbility/possess)
-		src.addAbility(/datum/targetable/wraithAbility/make_poltergeist)
+		src.addAbility(/datum/targetable/wraithAbility/make_demon_doll)
 
 	Life(parent)
 		if (..(parent))
