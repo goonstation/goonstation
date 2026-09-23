@@ -8,6 +8,8 @@
 import { Icon, Stack } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 
+import { TerminalReadout } from '../../../components/goonstation/TerminalReadout';
+
 export const CaptureStandby = (props: {
   connected: BooleanLike;
   filter: string | null;
@@ -49,23 +51,40 @@ export const CaptureStandby = (props: {
       <Stack.Item>
         <Stack vertical>
           <Stack.Item color={connected ? 'good' : 'average'}>
-            {connected
-              ? '[ OK ] DATA TAP ........ LINK ESTABLISHED'
-              : '[FAIL] DATA TAP ........ TERMINAL NOT FOUND'}
+            <TerminalReadout
+              tag={connected ? '[ OK ]' : '[FAIL]'}
+              label="DATA TAP"
+              value={connected ? 'LINK ESTABLISHED' : 'TERMINAL NOT FOUND'}
+            />
           </Stack.Item>
           <Stack.Item color={filter ? 'average' : 'label'}>
-            [MASK] SOURCE .......... {filter || '******** / ALL SOURCES'}
+            <TerminalReadout
+              tag="[MASK]"
+              label="SOURCE"
+              value={filter || '******** / ALL SOURCES'}
+            />
           </Stack.Item>
           <Stack.Item color={destinationFilter ? 'average' : 'label'}>
-            [MASK] DESTINATION .....{' '}
-            {destinationFilter || '******** / ALL DESTINATIONS'}
+            <TerminalReadout
+              tag="[MASK]"
+              label="DESTINATION"
+              value={destinationFilter || '******** / ALL DESTINATIONS'}
+            />
           </Stack.Item>
           <Stack.Item color="label">
-            {hasBufferedPackets
-              ? '[FIND] BUFFER QUERY .... NO MATCHING FRAMES'
-              : connected
-                ? '[WAIT] CAPTURE ENGINE .. LISTENER ARMED'
-                : '[HOLD] CAPTURE ENGINE .. AWAITING UPLINK'}
+            <TerminalReadout
+              tag={
+                hasBufferedPackets ? '[FIND]' : connected ? '[WAIT]' : '[HOLD]'
+              }
+              label={hasBufferedPackets ? 'BUFFER QUERY' : 'CAPTURE ENGINE'}
+              value={
+                hasBufferedPackets
+                  ? 'NO MATCHING FRAMES'
+                  : connected
+                    ? 'LISTENER ARMED'
+                    : 'AWAITING UPLINK'
+              }
+            />
           </Stack.Item>
         </Stack>
       </Stack.Item>
