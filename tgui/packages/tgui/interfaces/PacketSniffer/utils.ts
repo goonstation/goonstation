@@ -7,15 +7,25 @@
 
 import type { PacketLog } from './type';
 
-export const getPacketField = (packet: PacketLog, key: string) =>
-  packet.fields.find((field) => field.key === key)?.value;
+export const getPacketField = (packet: PacketLog, name: string) =>
+  packet.fields.find((field) => field.name === name)?.value;
 
 export const isNetId = (
   address: string | null | undefined,
 ): address is string => !!address && /^[0-9a-f]{8}$/i.test(address);
 
-export const displayValue = (value: string | null | undefined) =>
-  value === undefined ? '-' : value === '' ? '""' : (value ?? '<NULL>');
+export const displayValue = (value: string | null | undefined) => {
+  if (value === undefined) {
+    return '-';
+  }
+  if (value === null) {
+    return '<NULL>';
+  }
+  if (value === '') {
+    return '""';
+  }
+  return value;
+};
 
 export const getPacketSignature = (packet: PacketLog) => {
   if (getPacketField(packet, 'address_1') === 'ping') {
@@ -43,7 +53,7 @@ export const getPacketSignature = (packet: PacketLog) => {
 // This is a text rendering of captured fields, not a serialized wire protocol.
 export const formatPacketText = (packet: PacketLog) => {
   const fields = packet.fields
-    .map(({ key, value }) => key + '=' + displayValue(value) + ';')
+    .map(({ name, value }) => `${name}=${displayValue(value)};`)
     .join(' ');
 
   if (!packet.file) {
@@ -51,13 +61,5 @@ export const formatPacketText = (packet: PacketLog) => {
   }
 
   const { name, extension, content } = packet.file;
-  return (
-    fields +
-    '\n[ATTACHMENT: ' +
-    name +
-    '.' +
-    extension +
-    ']\n' +
-    (content ?? '[NOT PRINTABLE]')
-  );
+  return `${fields}\n[ATTACHMENT: ${name}.${extension}]\n${content ?? '[NOT PRINTABLE]'}`;
 };

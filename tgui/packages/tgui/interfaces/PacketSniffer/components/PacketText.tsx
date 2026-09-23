@@ -5,11 +5,11 @@
  * @license ISC
  */
 
-import type { ReactNode } from 'react';
+import type { PropsWithChildren } from 'react';
 import { Box } from 'tgui-core/components';
 
 // Unbroken payloads must wrap inside their flex column.
-export const PacketText = (props: { children: ReactNode }) => (
+export const PacketText = (props: PropsWithChildren) => (
   <Box preserveWhitespace style={{ overflowWrap: 'anywhere' }}>
     {props.children}
   </Box>

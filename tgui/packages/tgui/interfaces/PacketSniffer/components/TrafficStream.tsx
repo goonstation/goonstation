@@ -5,7 +5,7 @@
  * @license ISC
  */
 
-import type { ReactNode } from 'react';
+import type { PropsWithChildren } from 'react';
 import { Box, Button, Icon, Stack } from 'tgui-core/components';
 
 import type { FilterProps, PacketField, PacketLog } from '../type';
@@ -25,9 +25,9 @@ export const TrafficStream = (
   return (
     <Stack vertical>
       <Stack.Item bold color="label">
-        <PacketColumns
-          frame="[FRAME]"
-          route={
+        <PacketColumns>
+          <PacketColumns.Frame>[FRAME]</PacketColumns.Frame>
+          <PacketColumns.Route>
             <Stack align="center">
               <Stack.Item>[SRC]</Stack.Item>
               <Stack.Item>
@@ -35,17 +35,17 @@ export const TrafficStream = (
               </Stack.Item>
               <Stack.Item>[DST]</Stack.Item>
             </Stack>
-          }
-          command="[CMD] / [DEVC]"
-          payload="[DATA] // FIELD DECODE"
-        />
+          </PacketColumns.Route>
+          <PacketColumns.Command>[CMD] / [DEVC]</PacketColumns.Command>
+          <PacketColumns.Payload>[DATA] // FIELD DECODE</PacketColumns.Payload>
+        </PacketColumns>
       </Stack.Item>
       <Stack.Item>
-        <Stack vertical zebra>
+        <Stack vertical reverse zebra>
           {packets.map((packet) => (
             <Stack.Item key={packet.sequence}>
-              <PacketColumns
-                frame={
+              <PacketColumns>
+                <PacketColumns.Frame>
                   <Stack vertical>
                     <Stack.Item>
                       <Button
@@ -64,16 +64,18 @@ export const TrafficStream = (
                         tooltip={'Inspect frame ' + packet.sequence}
                         onClick={() => onInspect(packet)}
                       >
-                        {String(packet.sequence).padStart(4, '0')}
+                        {`${packet.sequence}`.padStart(4, '0')}
                       </Button>
                     </Stack.Item>
                     <Stack.Item>
                       <PacketText>{packet.stamp}</PacketText>
                     </Stack.Item>
                   </Stack>
-                }
-                route={<PacketRoute packet={packet} {...filterProps} />}
-                command={
+                </PacketColumns.Frame>
+                <PacketColumns.Route>
+                  <PacketRoute packet={packet} {...filterProps} />
+                </PacketColumns.Route>
+                <PacketColumns.Command>
                   <Stack vertical>
                     <Stack.Item>
                       <Stack align="center">
@@ -93,9 +95,11 @@ export const TrafficStream = (
                       </Stack.Item>
                     )}
                   </Stack>
-                }
-                payload={<PacketPayload packet={packet} />}
-              />
+                </PacketColumns.Command>
+                <PacketColumns.Payload>
+                  <PacketPayload packet={packet} />
+                </PacketColumns.Payload>
+              </PacketColumns>
             </Stack.Item>
           ))}
         </Stack>
@@ -104,26 +108,32 @@ export const TrafficStream = (
   );
 };
 
-const PacketColumns = (props: {
-  frame: ReactNode;
-  route: ReactNode;
-  command: ReactNode;
-  payload: ReactNode;
-}) => (
-  <Stack align="center">
-    <Stack.Item grow basis={0} minWidth={0}>
-      {props.frame}
-    </Stack.Item>
-    <Stack.Item grow={3} basis={0} minWidth={0}>
-      {props.route}
-    </Stack.Item>
-    <Stack.Item grow={2} basis={0} minWidth={0}>
-      {props.command}
-    </Stack.Item>
-    <Stack.Item grow={3} basis={0} minWidth={0}>
-      {props.payload}
-    </Stack.Item>
-  </Stack>
+const PacketColumns = (props: PropsWithChildren) => (
+  <Stack align="center">{props.children}</Stack>
+);
+
+PacketColumns.Frame = (props: PropsWithChildren) => (
+  <Stack.Item grow basis={0} minWidth={0}>
+    {props.children}
+  </Stack.Item>
+);
+
+PacketColumns.Route = (props: PropsWithChildren) => (
+  <Stack.Item grow={3} basis={0} minWidth={0}>
+    {props.children}
+  </Stack.Item>
+);
+
+PacketColumns.Command = (props: PropsWithChildren) => (
+  <Stack.Item grow={2} basis={0} minWidth={0}>
+    {props.children}
+  </Stack.Item>
+);
+
+PacketColumns.Payload = (props: PropsWithChildren) => (
+  <Stack.Item grow={3} basis={0} minWidth={0}>
+    {props.children}
+  </Stack.Item>
 );
 
 const PacketRoute = (props: FilterProps & { packet: PacketLog }) => {
@@ -158,7 +168,7 @@ const PacketPayload = (props: { packet: PacketLog }) => {
   const { packet } = props;
   const signature = getPacketSignature(packet);
   const payload = packet.fields.filter(
-    ({ key }) => !['sender', 'address_1', 'command', 'device'].includes(key),
+    ({ name }) => !['sender', 'address_1', 'command', 'device'].includes(name),
   );
 
   return (
@@ -167,7 +177,7 @@ const PacketPayload = (props: { packet: PacketLog }) => {
         <Stack.Item>
           <PacketText>
             {payload.map((field) => (
-              <PacketPayloadField key={field.key} field={field} />
+              <PacketPayloadField key={field.name} field={field} />
             ))}
           </PacketText>
         </Stack.Item>
@@ -199,12 +209,12 @@ const PacketPayload = (props: { packet: PacketLog }) => {
 };
 
 const PacketPayloadField = (props: { field: PacketField }) => {
-  const { key, value } = props.field;
+  const { name, value } = props.field;
 
   return (
     <>
       <Box inline color="label">
-        {key + '='}
+        {`${name}=`}
       </Box>
       {displayValue(value)}
       {'; '}

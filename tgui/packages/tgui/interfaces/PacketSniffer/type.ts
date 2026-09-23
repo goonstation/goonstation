@@ -8,8 +8,15 @@
 import type { BooleanLike } from 'tgui-core/react';
 
 export interface PacketField {
-  key: string;
+  name: string;
   value: string | null;
+}
+
+export interface PacketFile {
+  name: string;
+  extension: string;
+  content: string | null;
+  size: number;
 }
 
 export interface PacketLog {
@@ -18,12 +25,7 @@ export interface PacketLog {
   device: string | null;
   fields: Array<PacketField>;
   payload_length: number;
-  file?: {
-    name: string;
-    extension: string;
-    content: string | null;
-    size: number;
-  };
+  file?: PacketFile;
 }
 
 export interface PacketInfo {

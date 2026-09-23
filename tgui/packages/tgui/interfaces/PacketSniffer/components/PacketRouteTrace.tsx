@@ -37,7 +37,7 @@ export const PacketRouteTrace = (
               <Button
                 icon="copy"
                 color="transparent"
-                disabled={source === null || source === undefined}
+                disabled={!source}
                 tooltip="Copy sender address"
                 onClick={() => onCopy(source)}
               >
@@ -73,7 +73,7 @@ export const PacketRouteTrace = (
               <Button
                 icon="copy"
                 color="transparent"
-                disabled={destination === null || destination === undefined}
+                disabled={!destination}
                 tooltip="Copy destination address"
                 onClick={() => onCopy(destination)}
               >

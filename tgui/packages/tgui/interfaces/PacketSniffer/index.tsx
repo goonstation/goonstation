@@ -31,26 +31,25 @@ export const PacketSniffer = () => {
     filter,
     destination_filter,
   } = data;
-  const query = search.trim().toLowerCase();
-  const packets = packet_logs
-    .filter(
-      (packet) =>
-        !query ||
-        [packet.device, formatPacketText(packet)]
-          .join(' ')
-          .toLowerCase()
-          .includes(query),
-    )
-    .reverse();
+  const query = search.trim().toLocaleLowerCase();
+  const packets = packet_logs.filter((packet) => {
+    if (!query) {
+      return true;
+    }
+    const searchableFields = [packet.device, formatPacketText(packet)].map(
+      (value) => value?.toLocaleLowerCase() ?? '',
+    );
+    return searchableFields.some((value) => value.includes(query));
+  });
   const filterProps: FilterProps = {
     filter,
     destinationFilter: destination_filter,
     onFilter: (address) =>
-      address.toLowerCase() === filter?.toLowerCase()
+      address.toLocaleLowerCase() === filter?.toLocaleLowerCase()
         ? act('clear_filter')
         : act('set_filter_direct', { filter: address }),
     onDestinationFilter: (address) =>
-      address.toLowerCase() === destination_filter?.toLowerCase()
+      address.toLocaleLowerCase() === destination_filter?.toLocaleLowerCase()
         ? act('clear_destination_filter')
         : act('set_destination_filter_direct', { filter: address }),
   };

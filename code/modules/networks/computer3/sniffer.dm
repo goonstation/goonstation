@@ -93,26 +93,29 @@
 		. = ..()
 		if (.)
 			return
-		. = TRUE
 		switch (action)
 			if ("set_filter")
 				src.set_filter(ui.user)
+				. = TRUE
 			if ("set_filter_direct")
 				var/filter_id = params["filter"]
-				if (istext(filter_id) && length(filter_id) == 8 && \
-					is_hex(filter_id))
+				if (istext(filter_id) && length(filter_id) == 8 && is_hex(filter_id))
 					src.filter_id = filter_id
+					. = TRUE
 			if ("clear_filter")
 				src.filter_id = null
+				. = TRUE
 			if ("set_destination_filter_direct")
 				var/filter_id = params["filter"]
-				if (istext(filter_id) && \
-					((length(filter_id) == 8 && is_hex(filter_id)) || cmptext(filter_id, "ping")))
+				if (istext(filter_id) && ((length(filter_id) == 8 && is_hex(filter_id)) || cmptext(filter_id, "ping")))
 					src.destination_filter_id = filter_id
+					. = TRUE
 			if ("clear_destination_filter")
 				src.destination_filter_id = null
+				. = TRUE
 			if ("clear_logs")
 				src.packet_logs = list()
+				. = TRUE
 
 	proc/set_filter(mob/user)
 		var/filt_id = tgui_input_text(user, "Please enter new 8 digit hex value filter net id", \
@@ -154,14 +157,14 @@
 		var/list/packet_fields = list()
 		var/payload_length = 0
 		for (var/i in signal.data)
-			var/field_key = "[i]"
+			var/field_name = "[i]"
 			var/field_value = isnull(signal.data[i]) ? null : \
 				"[signal.data[i]]"
 			packet_fields += list(list(
-				"key" = field_key,
+				"name" = field_name,
 				"value" = field_value,
 			))
-			payload_length += length(field_key) + length(field_value)
+			payload_length += length(field_name) + length(field_value)
 
 		var/device_tag = signal.data["device"]
 		if (!device_tag && istype(signal.source, /obj/machinery/networked))

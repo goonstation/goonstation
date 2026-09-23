@@ -31,18 +31,18 @@ export const PacketFields = (
           </Stack>
         </Stack.Item>
       )}
-      {fields.map(({ key, value }, index) => (
-        <Stack.Item key={index}>
+      {fields.map(({ name, value }) => (
+        <Stack.Item key={name}>
           <Stack>
             <Stack.Item grow basis={0} minWidth={0} color="label">
-              <PacketText>{'$' + key}</PacketText>
+              <PacketText>{'$' + name}</PacketText>
             </Stack.Item>
             <Stack.Item grow={2} basis={0} minWidth={0}>
               <PacketText>
-                {['sender', 'address_1', 'netid'].includes(key) ? (
+                {['sender', 'address_1', 'netid'].includes(name) ? (
                   <AddressFilter
                     address={value}
-                    destination={key === 'address_1'}
+                    destination={name === 'address_1'}
                     {...filterProps}
                   />
                 ) : (

@@ -10,19 +10,26 @@ import { Button } from 'tgui-core/components';
 import type { FilterProps } from '../type';
 import { displayValue, isNetId } from '../utils';
 
-export const AddressFilter = (
-  props: FilterProps & {
-    address: string | null | undefined;
-    destination?: boolean;
-  },
-) => {
-  const { address, destination = false } = props;
-  const filter = destination ? props.destinationFilter : props.filter;
-  const onFilter = destination ? props.onDestinationFilter : props.onFilter;
-  const selected = address?.toLowerCase() === filter?.toLowerCase();
+export const AddressFilter = ({
+  address,
+  destination = false,
+  filter,
+  destinationFilter,
+  onFilter,
+  onDestinationFilter,
+}: FilterProps & {
+  address: string | null | undefined;
+  destination?: boolean;
+}) => {
+  const normalizedAddress = address?.trim() ?? address;
+  const activeFilter = destination ? destinationFilter : filter;
+  const onFilterChange = destination ? onDestinationFilter : onFilter;
+  const selected =
+    normalizedAddress?.toLocaleLowerCase() ===
+    activeFilter?.trim().toLocaleLowerCase();
   if (
-    !(destination && address?.toLowerCase() === 'ping') &&
-    !isNetId(address)
+    !(destination && normalizedAddress?.toLocaleLowerCase() === 'ping') &&
+    !isNetId(normalizedAddress)
   ) {
     return <>{displayValue(address)}</>;
   }
@@ -38,11 +45,11 @@ export const AddressFilter = (
           ? destination
             ? 'Clear destination mask'
             : 'Clear sender mask'
-          : (destination ? 'Capture to ' : 'Capture from ') + address
+          : (destination ? 'Capture to ' : 'Capture from ') + normalizedAddress
       }
-      onClick={() => onFilter(address)}
+      onClick={() => onFilterChange(normalizedAddress)}
     >
-      {address}
+      {normalizedAddress}
     </Button>
   );
 };

@@ -25,7 +25,7 @@ export const PacketDossier = (
 ) => {
   const { packet, connected, inBuffer, onCopy, ...filterProps } = props;
   const decodedFields = packet.fields.filter(
-    ({ key }) => key !== 'sender' && key !== 'address_1',
+    ({ name }) => name !== 'sender' && name !== 'address_1',
   );
   const frameText = formatPacketText({ ...packet, file: undefined });
 
