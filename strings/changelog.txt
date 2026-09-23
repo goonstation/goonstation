@@ -1,5 +1,9 @@
 
 (t)wed sep 23 26
+(u)ANNmagedon + TekoTheTeapot
+(p)27799
+(e)🎨|C-Sprites
+(+)The NT Emergency Repair Technicians have received a brand new armor to help them better fulfill their role.
 (u)ANNmagedon
 (p)27878
 (e)🆕📦|C-Feature, A-Game-Objects
