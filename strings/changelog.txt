@@ -1,4 +1,9 @@
 
+(t)wed sep 23 26
+(u)LeahTheTech
+(p)27917
+(e)🆕🎨💨📦|C-Feature, C-Sprites, A-Atmospherics, A-Game-Objects
+(*)Added gorilla assemblies, made by attaching a trigger to a gas tank and then sticking an inflatable gorilla on the end.
 (t)tue sep 22 26
 (u)Sovexe
 (p)27800
