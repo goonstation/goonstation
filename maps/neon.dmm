@@ -8640,6 +8640,9 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "fVV" = (
@@ -14577,7 +14580,13 @@
 /obj/item/device/radio/intercom/brig{
 	dir = 4
 	},
-/obj/machinery/computer/secure_data/detective_computer,
+/obj/machinery/computer3/generic/secure_data{
+	dir = 4
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "jTx" = (

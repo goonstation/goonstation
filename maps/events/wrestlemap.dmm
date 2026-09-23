@@ -13121,7 +13121,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crewquarters/cryotron)
 "fSb" = (
-/obj/machinery/computer/secure_data/detective_computer,
+/obj/filing_cabinet,
 /obj/decal/cleanable/dirt,
 /obj/machinery/camera/directional/north{
 	pixel_x = -10
@@ -18175,17 +18175,23 @@
 	name = "Crashed Limo"
 	})
 "imY" = (
-/obj/machinery/computer/secure_data/detective_computer,
 /obj/machinery/light/incandescent/warm/very{
 	dir = 8;
 	pixel_x = -10
 	},
-/obj/cable{
-	icon_state = "2-4"
-	},
 /obj/decoration/clock{
 	pixel_y = 30
 	},
+/obj/machinery/computer3/generic/secure_data{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
 /area/station/security/hos)
 "imZ" = (
