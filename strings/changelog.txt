@@ -1,5 +1,43 @@
 
+(t)tue sep 22 26
+(u)Sovexe
+(p)27800
+(e)⚗⚙|A-Chemistry, A-Internal
+(*)Added Third Shift Syndrome, a new hallucination-causing condition. It can be suppressed, reversing its progression toward stage 1 and reducing its effects without curing it. Suppressed ailments may also be easier to cure.
+(u)JORJ949
+(p)27698
+(e)🔎🏅|C-Code-Quality, A-Medal
+(*)Player medals are now cached when you connect. This should result in loading the medal reward menu much faster.
+(u)JORJ949
+(p)27852
+(e)⚖🧛📦|C-Balance, A-Gamemodes, A-Game-Objects
+(*)The ID pinpointer no longer requires you to have the "Assassinate" objective to purchase it. It can now track any registered, non-syndicate, on-station ID card (that isn't a silicon/bot's internal ID).
+(u)IncendiaryCrocs
+(p)27506
+(e)|
+(+)Vampires can taste chemicals in their victim's blood. Those with bartending training have become blood connoisseurs.
+(+)Vampires feasting on victims that have recently ingested Holy Water will find them spicy! An acquired taste!
+(u)JORJ949
+(p)27763
+(f)https://forum.ss13.co/showthread.php?tid=25397
+(e)⚖🧛🌠|C-Balance, A-Gamemodes, A-Events
+(*)The salvager gamemode has been disabled.
+(*)The rarity of the salvager midroll event has been decreased and the time limits on it have been expanded, making it much more common. The minimum amount of ghosts responding to this event to spawn salvagers has been reduced from 3 > 1.
+(t)mon sep 21 26
+(u)Astarthoc
+(p)27874
+(e)|
+(+)Added a lava lamp custom suicide interaction. We are finally able to drink the forbidden lava lamp juice!
+(t)sat sep 19 26
+(u)Nexusuxen
+(p)27841
+(e)|
+(*)Arcfiend's Arcflash ability now comes with aim assist, and will target mobs within roughly half a tile of where you click if you fail to directly click on someone. More abilities may get this feature in the future!
 (t)fri sep 18 26
+(u)Nexusuxen
+(p)27673
+(e)🧛🤖|A-Gamemodes, A-Silicons
+(+)Silicons can now force their speech to be always monospaced.
 (u)ANNmagedon
 (p)27854
 (e)🎨|C-Sprites
