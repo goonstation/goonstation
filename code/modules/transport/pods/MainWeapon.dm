@@ -41,8 +41,10 @@
 	ship_install()
 		..()
 		if(src.ship.uses_weapon_overlays && src.appearanceString)
-			var/image/weap_image = image('icons/effects/64x64.dmi', "[src.appearanceString]")
+			var/image/weap_image = image('icons/obj/pod_component128.dmi', "[src.appearanceString]")
 			weap_image.appearance_flags = KEEP_APART | RESET_COLOR | RESET_ALPHA
+			weap_image.pixel_y -=32
+			weap_image.pixel_x -=32
 			src.copy_appearance_to_image(weap_image)
 			src.ship.UpdateOverlays(weap_image, "mainweapon")
 
@@ -130,6 +132,7 @@
 	name = "Class-AX Light Long-range Phaser"
 	desc = "A phaser designed for scout vehicles. Features a more focused energy discharge, leading to an increased range."
 	current_projectile = new/datum/projectile/laser/light/longrange
+	appearanceString = "pod_weapon_ltlaser"
 	icon_state = "class-a"
 	muzzle_flash = "muzzle_flash_phaser"
 
@@ -139,7 +142,7 @@
 	power_used = 80
 	weapon_score = 0.7
 	current_projectile = new/datum/projectile/laser/mining
-	appearanceString = "pod_weapon_cutter_on"
+	appearanceString = "pod_weapon_mining_cutter"
 	firerate = 12
 	icon_state = "plasma-cutter"
 
@@ -148,7 +151,7 @@
 	desc = "A weak, short-range phaser that can cut through solid rock. Weak damage, but more effective against critters."
 	power_used = 10
 	current_projectile = new/datum/projectile/laser/light/mining
-	appearanceString = "pod_weapon_ltlaser"
+	appearanceString = "pod_weapon_mining_phaser"
 	firerate = 7
 	icon_state = "mining-phaser"
 
@@ -178,6 +181,7 @@
 	firerate = 2.4 SECONDS
 	shots_to_fire = 3
 	current_projectile = new/datum/projectile/laser/light/pod/burst
+	appearanceString = "pod_weapon_ltlaser_burst"
 	icon_state = "class-a-burst"
 
 /obj/item/shipcomponent/mainweapon/phaser/short
@@ -234,6 +238,7 @@
 	desc = "A projectile-based weapon used to disable vehicles."
 	weapon_score = 0.6
 	current_projectile = new/datum/projectile/disruptor
+	appearanceString = "pod_weapon_disrupter"
 	icon_state = "disruptor-l"
 	muzzle_flash = "muzzle_flash_plaser"
 
@@ -260,7 +265,7 @@
 	weapon_score = 1.25
 	power_used = 30
 	current_projectile = new/datum/projectile/bullet/a12/weak
-	appearanceString = "pod_weapon_gun_off"
+	appearanceString = "pod_weapon_gun_spes"
 	firerate = 10
 	icon_state = "spes"
 	muzzle_flash = "muzzle_flash"
@@ -275,7 +280,7 @@
 	weapon_score = 1.25
 	firerate = 0.25 SECONDS
 	spread = 25
-	appearanceString = "pod_weapon_gun_off"
+	appearanceString = "pod_weapon_minigun"
 	current_projectile = new/datum/projectile/bullet/akm/pod
 	icon_state = "minigun"
 	muzzle_flash = "muzzle_flash"
@@ -287,7 +292,7 @@
 	weapon_score = 1.25
 	power_used = 30
 	current_projectile = new/datum/projectile/bullet/bullet_9mm
-	appearanceString = "pod_weapon_gun_off"
+	appearanceString = "pod_weapon_gun_9mm"
 	firerate = 10
 	icon_state = "spes"
 	muzzle_flash = "muzzle_flash"
@@ -306,7 +311,7 @@
 	weapon_score = 1.25
 	power_used = 30
 	current_projectile = new/datum/projectile/bullet/bullet_22
-	appearanceString = "pod_weapon_gun_off"
+	appearanceString = "pod_weapon_gun_9mm"
 	firerate = 10
 	icon_state = "spes"
 	muzzle_flash = "muzzle_flash"
@@ -340,7 +345,7 @@
 	firerate = 35
 	appearanceString = "pod_weapon_emitter"
 	current_projectile = new/datum/projectile/laser/asslaser
-	icon_state = "assult-laser"
+	icon_state = "pod_weapon_assaultlaser"
 	muzzle_flash = "muzzle_flash_laser"
 
 /obj/item/shipcomponent/mainweapon/hammer_railgun
@@ -350,7 +355,7 @@
 	power_used = 100
 	current_projectile = new/datum/projectile/bullet/hammer_railgun
 	weapon_score = 1.5
-	appearanceString = "pod_weapon_hammer_railgun"
+	appearanceString = "pod_weapon_railgun"
 	icon_state = "hammer-railgun"
 	muzzle_flash = "muzzle_flash_launch"
 	contraband = 8
@@ -371,7 +376,7 @@
 	power_used = 180
 	weapon_score = 1.25
 	current_projectile = new/datum/projectile/disruptor/high
-	appearanceString = "pod_weapon_cbeam_off"
+	appearanceString = "pod_weapon_h_disrupter"
 	firerate = 25
 	icon_state = "disruptor-h"
 
@@ -384,7 +389,7 @@
 	remaining_ammunition = 14
 
 	weapon_score = 1.5
-	appearanceString = "pod_weapon_bfg"
+	appearanceString = "pod_weapon_grenadelauncher"
 	firerate = 100
 	icon_state = "grenade-launcher"
 	muzzle_flash = "muzzle_flash_launch"
@@ -448,6 +453,7 @@
 	name = "Industrial Utility Arms"
 	desc = "A pair of robotic arms equipped with metalfoam nozzles and cutter blades."
 	current_projectile = new/datum/projectile/laser/drill/cutter
+	appearanceString = "pod_weapon_utilarms"
 	firerate = 60
 	var/mode = 0
 	icon_state = "util-arms"
