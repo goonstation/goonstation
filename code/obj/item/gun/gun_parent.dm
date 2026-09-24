@@ -129,16 +129,13 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 
 ///ADD_FIREMODE
 /// Add a firemode to the gun.
-/// If a firemode is not passed, it will use the projectile's default firemode.
-/// If a projectile is passed, it will explicitly use that projectile.
-/// If P is null, it will instead respect the currently loaded ammo.
-/obj/item/gun/proc/add_firemode(var/datum/firemode/F)
+/obj/item/gun/proc/add_firemode(var/datum/firemode/firemode)
 	if (!src.firemodes)
 		src.firemodes = list()
 	var/len = length(src.firemodes)
 	if (len == 0)
-		src.current_firemode = F
-	src.firemodes += F
+		src.current_firemode = firemode
+	src.firemodes += firemode
 	return
 
 ///OVERRIDE_FIREMODE
