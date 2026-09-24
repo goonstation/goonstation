@@ -168,3 +168,75 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 	New()
 		..()
 		reagents.add_reagent("cholesterol", 20)
+
+/obj/item/reagent_containers/food/snacks/condiment/cherryjam
+	name = "cherry jam"
+	desc = ""
+	icon_state = "cherry-jam"
+	food_color = "#8D1422"
+
+/obj/item/reagent_containers/food/snacks/condiment/grapejam
+	name = "grape jam"
+	desc = ""
+	icon_state = "grape-jam"
+	food_color = "#5A1D8A"
+
+/obj/item/reagent_containers/food/snacks/condiment/strawberryjam
+	name = "strawberry jam"
+	desc = ""
+	icon_state = "strawberry-jam"
+	food_color = "#8D1422"
+
+/obj/item/reagent_containers/food/snacks/condiment/applejam
+	name = "apple jam"
+	desc = ""
+	icon_state = "apple-jam"
+	food_color = "#D3CB21"
+
+/obj/item/reagent_containers/food/snacks/condiment/blueberryjam
+	name = "blueberry jam"
+	desc = ""
+	icon_state = "blueberry-jam"
+	food_color = "#3021C8"
+
+/obj/item/reagent_containers/food/snacks/condiment/pearjam
+	name = "pear jam"
+	desc = ""
+	icon_state = "pear-jam"
+	food_color = "#D3CB21"
+
+/obj/item/reagent_containers/food/snacks/condiment/peachjam
+	name = "peach jam"
+	desc = ""
+	icon_state = "peach-jam"
+	food_color = "#D37610"
+
+/obj/item/reagent_containers/food/snacks/condiment/orangejam
+	name = "orange jam"
+	desc = ""
+	icon_state = "orange-jam"
+	food_color = "#D37610"
+
+/obj/item/reagent_containers/food/snacks/condiment/raspberryjam
+	name = "raspberry jam"
+	desc = ""
+	icon_state = "raspberry-jam"
+	food_color = "#A30325"
+
+/obj/item/reagent_containers/food/snacks/condiment/signaljam
+	name = "signal jam"
+	desc = ""
+	icon_state = "signal-jam"
+	food_color = "#359702"
+
+/obj/item/reagent_containers/food/snacks/condiment/mintjam
+	name = "mint jam"
+	desc = ""
+	icon_state = "mint-jam"
+	food_color = "#308F5D"
+
+/obj/item/reagent_containers/food/snacks/condiment/spacejam
+	name = "space jam"
+	desc = ""
+	icon_state = "space-jam"
+	food_color = "#1E173D"
