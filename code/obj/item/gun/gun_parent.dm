@@ -358,8 +358,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	else
 		boutput(user, SPAN_ALERT("You silently shoot [user == target ? "yourself" : target] point-blank with [src]!"))
 
-	var/datum/firemode/FM = override_firemode() || current_projectile.firemode
-	if (!process_ammo(user, FM || current_projectile.firemode))
+	var/datum/firemode/firemode = override_firemode() || current_projectile.firemode
+	if (!process_ammo(user, firemode || current_projectile.firemode))
 		return FALSE
 
 	if (src.muzzle_flash)
@@ -374,8 +374,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			user.movement_delay_modifier -= slowdown
 
 	var/spread = src.calculate_spread(user)
-	for (var/i = 0; i < FM.shot_number; i++)
-		var/obj/projectile/P = initialize_projectile_pixel_spread(user, current_projectile, target, 0, 0, spread, alter_proj = new/datum/callback(src, PROC_REF(alter_projectile)), firemode = FM)
+	for (var/i = 0; i < firemode.shot_number; i++)
+		var/obj/projectile/P = initialize_projectile_pixel_spread(user, current_projectile, target, 0, 0, spread, alter_proj = new/datum/callback(src, PROC_REF(alter_projectile)), firemode = firemode)
 		if (!P)
 			return FALSE
 		if (user == target)
@@ -398,7 +398,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 				L.lastgasp()
 			L.set_clothing_icon_dirty()
 		src.UpdateIcon()
-		sleep(FM.shot_delay)
+		sleep(firemode.shot_delay)
 
 /obj/item/gun/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 	src.add_fingerprint(user)
