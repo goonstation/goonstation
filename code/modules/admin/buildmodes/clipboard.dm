@@ -14,12 +14,11 @@ Right Mouse Button                     = Select object to copy<br>
 		if (isobj(cloned))
 			var/obj/O = cloned:clone()
 			O.set_loc(T)
-			O.set_opacity(cloned.opacity) // appearance copy doesn't hook into lighting
 			O.appearance = cloned.appearance
 			O.set_dir(cloned.dir)
 		else if (isturf(cloned))
-			var/turf/t = new cloned.type(T)
-			t.set_opacity(cloned.opacity)
+			var/turf/t = T.ReplaceWith(cloned.type, FALSE, TRUE, FALSE, TRUE)
+			t.set_opacity(cloned.opacity) // appearance copy doesn't hook into lighting
 			t.appearance = cloned.appearance
 		blink(T)
 
