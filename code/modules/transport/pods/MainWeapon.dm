@@ -41,7 +41,7 @@
 	ship_install()
 		..()
 		if(src.ship.uses_weapon_overlays && src.appearanceString)
-			var/image/weap_image = image('icons/obj/pod_component128.dmi', "[src.appearanceString]")
+			var/image/weap_image = image('icons/obj/pod_component128x128.dmi', "[src.appearanceString]")
 			weap_image.appearance_flags = KEEP_APART | RESET_COLOR | RESET_ALPHA
 			weap_image.pixel_y -=32
 			weap_image.pixel_x -=32
@@ -248,7 +248,7 @@
 	weapon_score = 0.6
 	firerate = 25
 	current_projectile = new/datum/projectile/energy_bolt/stasis
-	icon_state = "assult-laser"
+	icon_state = "assault-laser"
 	muzzle_flash = "muzzle_flash_plaser"
 
 /obj/item/shipcomponent/mainweapon/precursor
