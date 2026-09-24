@@ -14779,7 +14779,7 @@
 	ambient_light = "#441111"
 	})
 "aXD" = (
-/obj/machinery/computer/secure_data/detective_computer{
+/obj/filing_cabinet{
 	name = "Personnel Records";
 	pixel_y = 16
 	},

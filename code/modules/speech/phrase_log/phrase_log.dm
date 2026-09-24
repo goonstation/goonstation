@@ -149,7 +149,7 @@ var/global/datum/phrase_log/phrase_log = new
 			for (var/phrase in src.phrases[category])
 				for (var/datum/phrase_log_cleaner/cleaner in cleaners)
 					src.phrases[category] -= phrase
-					var/result = cleaner.clean(phrase)
+					var/result = cleaner.clean(phrase, category)
 					//only add it back if the result wasn't null
 					if (!isnull(result) && length(result))
 						src.phrases[category] += result

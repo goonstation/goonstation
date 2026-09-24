@@ -45,7 +45,7 @@ TYPEINFO(/obj/item/makeshift_signaller_frame)
 			desc = "A remote signaller frame with a handmade circuit board port slotted loosely into it, connected with wires."
 			tooltip_rebuild = TRUE
 			return
-		else if (istype(W,/obj/item/circuitboard/secure_data) && build_stage == 2)	//Step 3 of construction: Circuit Board.
+		else if (istype(W,/obj/item/circuitboard) && build_stage == 2)	//Step 3 of construction: Circuit Board.
 			qdel(W)
 			build_stage = 3
 			user.show_message(SPAN_NOTICE("You put the circuit board in the port!"), 1)
