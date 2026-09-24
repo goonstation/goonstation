@@ -94,6 +94,9 @@
 /obj/storage/crate{
 	open = 1
 	},
+/obj/decal/poster/flag/syndicate{
+	pixel_y = 32
+	},
 /turf/simulated/floor/redblack{
 	dir = 5
 	},

@@ -3466,6 +3466,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/testchamber)
+"bMJ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "bMT" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/research_horizontal/vertical,
 /obj/forcefield/energyshield/perma/doorlink{
@@ -4456,6 +4462,9 @@
 	dir = 4
 	},
 /obj/mapping_helper/access/security,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/red,
 /area/station/security/interrogation)
 "clt" = (
@@ -11236,6 +11245,10 @@
 	pixel_y = 2;
 	pixel_x = 13
 	},
+/obj/item/pinpointer/teg_semi{
+	pixel_x = -6;
+	pixel_y = 4
+	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/shot{
 	pixel_y = 7;
 	pixel_x = 4
@@ -12681,6 +12694,9 @@
 /obj/stool/chair{
 	dir = 1
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black/grime,
 /area/station/security/interrogation)
 "gDy" = (
@@ -13413,6 +13429,9 @@
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/black/grime,
 /area/station/security/interrogation)
@@ -15427,11 +15446,11 @@
 	},
 /area/station/hallway/primary/southwest)
 "hUj" = (
-/obj/machinery/computer/secure_data,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/machinery/computer3/generic/secure_data,
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -18126,6 +18145,9 @@
 "jnM" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -26218,6 +26240,9 @@
 	})
 "noN" = (
 /obj/machinery/light_switch/directional/east,
+/obj/cable{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/black/grime,
 /area/station/security/interrogation)
 "noX" = (
@@ -32482,19 +32507,23 @@
 /area/station/maintenance/outer/nw)
 "qsu" = (
 /obj/landmark/gps_waypoint,
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/black/grime,
 /area/station/security/interrogation)
 "qsG" = (
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
 	},
+/obj/item/paper/menhir_advisory{
+	pixel_x = 14;
+	pixel_y = 8
+	},
+/obj/machinery/shipalert,
 /obj/item/device/light/zippo{
 	pixel_x = -9;
 	pixel_y = 4
-	},
-/obj/item/paper/menhir_advisory{
-	pixel_x = 8;
-	pixel_y = 3
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -33661,6 +33690,12 @@
 	},
 /turf/simulated/floor/caution/east,
 /area/station/turret_protected/incursion)
+"rbo" = (
+/obj/reagent_dispensers/watertank/fountain,
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit{
+	name = "Primary Docking Wing"
+	})
 "rbz" = (
 /obj/rack/organized/techstorage_med,
 /obj/machinery/power/apc/autoname_east,
@@ -34398,6 +34433,9 @@
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/storage/tech)
 "rto" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -35367,6 +35405,9 @@
 "rTx" = (
 /obj/cable{
 	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -37656,6 +37697,15 @@
 	dir = 8
 	},
 /area/station/medical/medbay/surgery)
+"sZf" = (
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "sZG" = (
 /obj/random_item_spawner/gross_with_junk/one_or_zero,
 /obj/machinery/drone_recharger,
@@ -38232,7 +38282,6 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/obj/machinery/computer/secure_data/detective_computer,
 /obj/blind_switch/directional/east{
 	pixel_y = 5
 	},
@@ -38243,6 +38292,11 @@
 /obj/machinery/light_switch/directional/north{
 	pixel_x = 10
 	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/computer3/generic/secure_data,
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "tlQ" = (
@@ -44075,6 +44129,15 @@
 /obj/disposalpipe/junction/middle/west,
 /turf/simulated/floor/white,
 /area/station/science/hall)
+"wjb" = (
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "wjh" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/green/corner{
@@ -45146,6 +45209,9 @@
 /obj/disposalpipe/segment/brig{
 	dir = 1;
 	icon_state = "pipe-c"
+	},
+/obj/cable{
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/industrial,
 /area/station/security/secwing)
@@ -47973,7 +48039,13 @@
 /turf/space,
 /area/mining/magnet)
 "xYE" = (
-/obj/machinery/computer/secure_data/detective_computer,
+/obj/machinery/computer3/generic/secure_data{
+	dir = 4
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/black/grime,
 /area/station/security/interrogation)
 "xYN" = (
@@ -94737,8 +94809,6 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
 jVY
 sEf
 gRU
@@ -94754,6 +94824,8 @@ lwd
 sEf
 sEf
 lkY
+nFe
+nFe
 gjI
 uma
 rny
@@ -95039,8 +95111,6 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
 fUa
 fUa
 fUa
@@ -95056,6 +95126,8 @@ fMa
 plw
 plw
 plw
+bMn
+bMn
 rny
 xpq
 jBr
@@ -95339,8 +95411,6 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
 klD
 fUa
 fUa
@@ -95358,6 +95428,8 @@ ovv
 thx
 wPy
 sql
+bMn
+rbo
 gjI
 bCu
 rny
@@ -95642,8 +95714,6 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
 fUa
 kdl
 kdl
@@ -95667,6 +95737,8 @@ nbe
 nbe
 fbn
 wGc
+nbe
+nbe
 nbe
 nbe
 nbe
@@ -95944,8 +96016,6 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
 fUa
 kdl
 oGt
@@ -95969,6 +96039,8 @@ sPA
 sPA
 sPA
 gOB
+sPA
+sPA
 sPA
 noI
 sPA
@@ -96246,8 +96318,6 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
 fUa
 aBC
 kdl
@@ -96271,6 +96341,8 @@ sXb
 dXv
 dbH
 wDk
+dXv
+dXv
 dXv
 dXv
 dXv
@@ -96547,8 +96619,6 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
 klD
 fUa
 fUa
@@ -96573,6 +96643,8 @@ plw
 oha
 bMn
 sjk
+efb
+efb
 efb
 wzb
 efb
@@ -96851,8 +96923,6 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
 fUa
 fUa
 fUa
@@ -96873,6 +96943,8 @@ utv
 hzO
 uwK
 utv
+plw
+plw
 plw
 plw
 plw
@@ -97153,8 +97225,6 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
 jSY
 sEf
 uvL
@@ -97177,6 +97247,8 @@ plw
 tdn
 bMn
 bXb
+sEf
+sEf
 sEf
 sEf
 fMD
@@ -97461,10 +97533,10 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
-sEf
-sEf
+eOz
+eOz
+eOz
+eOz
 eOz
 eOz
 eOz
@@ -97763,10 +97835,10 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
-sEf
-sEf
+eOz
+eOz
+eOz
+eOz
 eOz
 eOz
 eOz
@@ -98064,10 +98136,10 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
-sEf
-sEf
+eOz
+eOz
+eOz
+eOz
 eOz
 eOz
 eOz
@@ -98366,10 +98438,10 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
-sEf
-sEf
+eOz
+eOz
+eOz
+eOz
 eOz
 eOz
 eOz
@@ -98668,10 +98740,10 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
-sEf
-sEf
+eOz
+eOz
+eOz
+eOz
 eOz
 eOz
 eOz
@@ -98971,10 +99043,10 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
-sEf
-sEf
+eOz
+eOz
+eOz
+eOz
 eOz
 eOz
 eOz
@@ -99273,11 +99345,11 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
-sEf
-sEf
 yjF
+eOz
+eOz
+eOz
+eOz
 eOz
 eOz
 eOz
@@ -99576,10 +99648,10 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
-sEf
-sEf
+eOz
+eOz
+eOz
+eOz
 eOz
 eOz
 eOz
@@ -99877,10 +99949,10 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
-sEf
-sEf
+eOz
+eOz
+eOz
+eOz
 eOz
 eOz
 eOz
@@ -100178,10 +100250,10 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
-sEf
-sEf
+eOz
+eOz
+eOz
+eOz
 eOz
 eOz
 eOz
@@ -100480,10 +100552,10 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
-sEf
-sEf
+eOz
+eOz
+eOz
+eOz
 eOz
 eOz
 eOz
@@ -100515,8 +100587,8 @@ plw
 nFe
 wln
 tlO
-tyX
-seM
+bMJ
+wjb
 uDf
 wln
 ody
@@ -100782,10 +100854,10 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
-sEf
-sEf
+eOz
+eOz
+eOz
+eOz
 eOz
 eOz
 eOz
@@ -100818,7 +100890,7 @@ fLc
 wln
 wln
 bBy
-seM
+sZf
 tfg
 wln
 cCY
@@ -101085,10 +101157,10 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
-sEf
-sEf
+eOz
+eOz
+eOz
+eOz
 eOz
 eOz
 eOz
@@ -101387,10 +101459,10 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
-sEf
-sEf
+eOz
+eOz
+eOz
+eOz
 eOz
 eOz
 eOz
@@ -101695,8 +101767,6 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
 vtP
 sPW
 sPW
@@ -101707,6 +101777,8 @@ cpG
 pIt
 sPW
 nFe
+sEf
+sEf
 nFe
 nFe
 nFe
@@ -101998,8 +102070,6 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
 iQe
 xyg
 git
@@ -102007,6 +102077,8 @@ cql
 cql
 cql
 cql
+sPW
+sPW
 sPW
 sPW
 cpG
@@ -102300,8 +102372,6 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
 cpG
 cpG
 sPW
@@ -102310,6 +102380,8 @@ mta
 cql
 hSE
 nXj
+cql
+cql
 cql
 cql
 cql
@@ -102602,8 +102674,6 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
 iQe
 cwR
 git
@@ -102612,6 +102682,8 @@ fxc
 cql
 cql
 nXj
+vCf
+cql
 cql
 vCf
 cql
@@ -102903,8 +102975,6 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
 vtP
 sPW
 sPW
@@ -102913,6 +102983,8 @@ pIt
 cpG
 cpG
 pIt
+sPW
+sPW
 sPW
 sPW
 cpG
@@ -103206,8 +103278,6 @@ sEf
 sEf
 sEf
 sEf
-sEf
-sEf
 tvx
 sEf
 sEf
@@ -103215,6 +103285,8 @@ tvx
 sEf
 sEf
 tvx
+sEf
+sEf
 sEf
 sEf
 sEf

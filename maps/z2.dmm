@@ -14592,6 +14592,9 @@
 /area/owlery/owleryhall)
 "bjb" = (
 /obj/storage/closet/syndicate,
+/obj/decal/poster/flag/syndicate{
+	pixel_y = 32
+	},
 /turf/unsimulated/floor/carpet/grime,
 /area/drone/crew_quarters)
 "bjc" = (
@@ -22082,6 +22085,9 @@
 /obj/item/paper_bin,
 /obj/item/pen/sleepypen,
 /obj/item/stamp/syndicate,
+/obj/decal/poster/flag/syndicate{
+	pixel_y = 32
+	},
 /turf/unsimulated/floor/carpet/red/fancy/edge/nw,
 /area/syndicate_station/battlecruiser)
 "bLd" = (
@@ -28419,9 +28425,7 @@
 /turf/unsimulated/floor,
 /area/crunch)
 "ciY" = (
-/obj/critter/domestic_bee/bubs{
-	desc = "A greater domestic space-bee that happens to be <s>particularly pudgy and obstinate</s> KIDNAPPED!!!"
-	},
+/obj/fakeobject/bubs_standee,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/bubs)
 "cja" = (
@@ -28656,12 +28660,7 @@
 	},
 /area/sim/racing_track)
 "cjH" = (
-/obj/machinery/computer/secure_data/detective_computer{
-	authenticated = "VR Office";
-	desc = "The VR representation of a security software package.";
-	require_login = 0;
-	screen = 1
-	},
+/obj/machinery/computer3/generic/secure_data/detnet,
 /turf/unsimulated/floor{
 	icon = 'icons/misc/beach.dmi';
 	icon_state = "sand";
@@ -44637,6 +44636,9 @@
 	icon_state = "bedsheet-red";
 	name = "syndicate bedsheet"
 	},
+/obj/decal/poster/flag/syndicate{
+	pixel_y = 32
+	},
 /turf/unsimulated/floor/redblack{
 	dir = 1
 	},
@@ -47039,8 +47041,7 @@
 "dwj" = (
 /obj/table/wood/auto/desk,
 /obj/item/stamp{
-	assignment = "Chief Chimp";
-	is_reassignable = 0
+	name = "chief chimp's rubber stamp"
 	},
 /turf/unsimulated/floor/engine/caution/south,
 /area/centcom/offices/mordent)
@@ -47679,7 +47680,7 @@
 	pixel_x = 10;
 	pixel_y = 18
 	},
-/obj/machinery/computer/secure_data/detective_computer,
+/obj/filing_cabinet,
 /obj/item/paper{
 	icon_state = "paper_stamped";
 	info = "<br><span style='font-family: Georgia; font-style: normal; font-weight: normal; font-size: 16px; color: red;'><b>\[</b>REJECTED<b>]</b></span><br>";

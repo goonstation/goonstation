@@ -29,8 +29,8 @@ What are the archived variables for?
 	/// Using this lets us scale all kinds of variables so we can always act like one big tile.
 	var/group_multiplier = 1
 	/// Bitfield representing gas graphics on our tile.
-	var/graphic
-	var/tmp/graphic_archived // intentionally NOT using ARCHIVED() because graphic archiving is actually important and shouldn't be turned off
+	var/graphic = 0
+	var/tmp/graphic_archived = 0 // intentionally NOT using ARCHIVED() because graphic archiving is actually important and shouldn't be turned off
 	/// Rough representation of oxygen and plasma used. Actual usage of plasma is currectly divided by 3 for balance.
 	var/tmp/fuel_burnt = 0
 
@@ -60,9 +60,11 @@ What are the archived variables for?
 	//returns TRUE if graphic changed
 	graphic = 0
 
-	UPDATE_GAS_MIXTURE_GRAPHIC(graphic, GAS_IMG_PLASMA, toxins)
-	UPDATE_GAS_MIXTURE_GRAPHIC(graphic, GAS_IMG_RAD, radgas)
-	UPDATE_GAS_MIXTURE_GRAPHIC(graphic, GAS_IMG_N2O, nitrous_oxide)
+	#define _UPDATE_GRAPHIC_FOR_GAS(GAS, OVERLAY_ID, VISIBLE_ABOVE, ALPHA_BASE, ALPHA_DIV, ALPHA_MUL, ...) \
+		UPDATE_GAS_MIXTURE_GRAPHIC(graphic, OVERLAY_ID, GAS, VISIBLE_ABOVE, ALPHA_BASE, ALPHA_DIV, ALPHA_MUL);
+
+	APPLY_TO_GRAPHIC_GASES(_UPDATE_GRAPHIC_FOR_GAS)
+	#undef _UPDATE_GRAPHIC_FOR_GAS
 
 	. = graphic != graphic_archived
 	graphic_archived = graphic
@@ -417,8 +419,9 @@ What are the archived variables for?
 	var/moved_moles = 0 MOLES
 
 	#define _MIMIC_GAS(GAS, ...) \
-		src.GAS = QUANTIZE(src.GAS - delta_##GAS); \
-		moved_moles += delta_##GAS;
+		if(delta_##GAS) { \
+			src.GAS = QUANTIZE(src.GAS - delta_##GAS); \
+			moved_moles += delta_##GAS; }
 	APPLY_TO_GASES(_MIMIC_GAS)
 	#undef _MIMIC_GAS
 
