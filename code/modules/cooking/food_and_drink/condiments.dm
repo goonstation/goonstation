@@ -177,7 +177,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 
 /obj/item/reagent_containers/food/snacks/condiment/grapejam
 	name = "grape jam"
-	desc = ""
+	desc = "Somehow more purple than the grapes."
 	icon_state = "grape-jam"
 	food_color = "#5A1D8A"
 
@@ -189,7 +189,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 
 /obj/item/reagent_containers/food/snacks/condiment/applejam
 	name = "apple jam"
-	desc = ""
+	desc = "Sweet and crisp with a hint of tartness."
 	icon_state = "apple-jam"
 	food_color = "#D3CB21"
 
@@ -225,7 +225,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 
 /obj/item/reagent_containers/food/snacks/condiment/signaljam
 	name = "signal jam"
-	desc = ""
+	desc = "Pump up the jam."
 	icon_state = "signal-jam"
 	food_color = "#359702"
 
@@ -237,6 +237,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 
 /obj/item/reagent_containers/food/snacks/condiment/spacejam
 	name = "space jam"
-	desc = ""
+	desc = "Come on and slam, and welcome to the jam."
 	icon_state = "space-jam"
 	food_color = "#1E173D"
+
+/obj/item/reagent_containers/food/snacks/condiment/paperjam
+	name = "paper jam"
+	desc = "Nemesis of printers everywhere."
+	icon_state = "space-jam"
+	food_color = "#FFFFFF"
