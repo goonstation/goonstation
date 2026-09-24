@@ -9331,6 +9331,12 @@
 	dir = 4
 	},
 /area/station/mining/magnet)
+"dAW" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "dBi" = (
 /obj/cable/blue{
 	icon_state = "0-2"
@@ -15010,6 +15016,10 @@
 	dir = 1
 	},
 /area/station/hydroponics/bay)
+"hCU" = (
+/obj/landmark/shuttle_subwoofer,
+/turf/space,
+/area/space)
 "hDh" = (
 /obj/lattice{
 	dir = 10;
@@ -15496,6 +15506,9 @@
 /obj/stool/chair,
 /obj/landmark/start/job/detective,
 /obj/landmark/gps_waypoint,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/carpet{
 	icon_state = "carpetN"
 	},
@@ -16032,6 +16045,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/autoname_south,
+/obj/cable,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "ivG" = (
@@ -21675,6 +21689,9 @@
 /obj/disposalpipe/segment,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/command,
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "mFu" = (
@@ -22583,6 +22600,16 @@
 	dir = 10
 	},
 /area/station/mining/staff_room)
+"nkx" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2{
+	id = "HOS"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/hos)
 "nlt" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 9
@@ -26355,9 +26382,12 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "pFY" = (
-/obj/machinery/computer/secure_data/detective_computer,
 /obj/cable{
-	icon_state = "1-8"
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/secure_data{
+	dir = 8
 	},
 /turf/simulated/floor/red,
 /area/station/security/hos)
@@ -29414,8 +29444,12 @@
 /turf/simulated/floor/yellow/side,
 /area/station/hallway/primary/central)
 "rzl" = (
-/obj/machinery/computer/secure_data/detective_computer,
 /obj/item/device/radio/intercom/detnet/security,
+/obj/machinery/computer3/generic/secure_data,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "rzv" = (
@@ -34087,6 +34121,9 @@
 /obj/table/wood/auto,
 /obj/item/cigpacket,
 /obj/item/clothing/glasses/thermal,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},
@@ -85675,7 +85712,7 @@ iNk
 iNk
 iNk
 aaa
-aaa
+hCU
 iNk
 iNk
 iNk
@@ -86114,7 +86151,7 @@ swD
 wCX
 mYU
 nCn
-acA
+nkx
 pFY
 jeR
 snH
@@ -87595,7 +87632,7 @@ mpb
 igW
 vJu
 rzl
-wgG
+dAW
 hZb
 usi
 ivk
@@ -87796,14 +87833,14 @@ iNk
 iNk
 iNk
 iNk
-aaZ
+aaa
+aaa
+aaa
+aaa
 fEr
-fEr
-fEr
-aaY
-fVV
+abo
 adh
-jlE
+adh
 fEr
 adA
 adA
@@ -88098,15 +88135,15 @@ iNk
 iNk
 iNk
 iNk
-xzw
-moy
-qgp
-fgx
-oRn
-abS
-adh
-oLB
+aaa
+aaa
+aaa
+aaa
 fEr
+abo
+adh
+adh
+aaY
 kCj
 cxa
 cxa
@@ -88400,15 +88437,15 @@ iNk
 iNk
 iNk
 iNk
+aaZ
 fEr
-xit
-abv
-abv
 fEr
-jIe
-adh
-adh
+fEr
 aaY
+fVV
+adh
+jlE
+fEr
 aaa
 aaa
 aaa
@@ -88702,15 +88739,15 @@ iNk
 iNk
 iNk
 iNk
-fEr
-jMG
-abv
-abv
-fEr
-abv
+xzw
+moy
+qgp
+fgx
+oRn
+abS
 adh
-equ
-aaY
+oLB
+fEr
 aaa
 aaa
 aaa
@@ -89004,12 +89041,12 @@ iNk
 iNk
 iNk
 iNk
-xzw
-dYn
-vTl
-cvu
-gJU
-abU
+fEr
+xit
+abv
+abv
+fEr
+jIe
 adh
 adh
 aaY
@@ -89306,15 +89343,15 @@ iNk
 iNk
 iNk
 iNk
-aaZ
-fjU
 fEr
-fjU
-aaY
-cmL
-acb
+jMG
+abv
+abv
+fEr
+abv
 adh
-fEr
+equ
+aaY
 aaa
 aaa
 aaa
@@ -89608,15 +89645,15 @@ iNk
 iNk
 iNk
 iNk
-wxj
-pen
-qgc
-pen
+xzw
+dYn
+vTl
+cvu
+gJU
+abU
+adh
+adh
 aaY
-aaY
-acj
-acK
-fEr
 aaa
 aaa
 jXp
@@ -89896,7 +89933,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
 iNk
 iNk
 iNk
@@ -89909,14 +89945,15 @@ iNk
 iNk
 iNk
 iNk
-aaa
-wxj
-bzj
-qgc
-bzj
+iNk
+iNk
+aaZ
+fjU
 fEr
-rkh
-abS
+fjU
+aaY
+cmL
+acb
 adh
 fEr
 aaa
@@ -90198,9 +90235,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
 iNk
 iNk
 iNk
@@ -90209,17 +90243,20 @@ iNk
 iNk
 iNk
 iNk
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-fEr
-abo
-adh
-equ
+iNk
+iNk
+iNk
+iNk
+iNk
+iNk
+wxj
+pen
+qgc
+pen
+aaY
+aaY
+acj
+acK
 fEr
 aaa
 aaa
@@ -90500,9 +90537,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
 iNk
 iNk
 iNk
@@ -90511,16 +90545,19 @@ iNk
 iNk
 iNk
 iNk
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+iNk
+iNk
+iNk
+iNk
+iNk
+iNk
+wxj
+bzj
+qgc
+bzj
 fEr
-nfZ
-acb
+rkh
+abS
 adh
 fEr
 aaa
@@ -90802,9 +90839,6 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
 iNk
 iNk
 iNk
@@ -90813,18 +90847,21 @@ iNk
 iNk
 iNk
 iNk
+iNk
+iNk
+iNk
+iNk
+iNk
+iNk
 aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaY
-aaY
-acm
-acM
-aaY
+fEr
+abo
+adh
+equ
+fEr
 aaa
 aaa
 aaa
@@ -91105,9 +91142,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
+iNk
+iNk
+iNk
+iNk
+iNk
+iNk
 iNk
 iNk
 iNk
@@ -91119,15 +91159,12 @@ aaa
 aaa
 aaa
 aaa
+fEr
+nfZ
+acb
+adh
+fEr
 aaa
-aaa
-aaa
-adG
-adG
-adG
-adG
-adG
-adG
 aaa
 aaa
 aaa
@@ -91409,6 +91446,14 @@ aaa
 aaa
 aaa
 aaa
+iNk
+iNk
+iNk
+iNk
+iNk
+iNk
+iNk
+iNk
 aaa
 aaa
 aaa
@@ -91416,21 +91461,13 @@ aaa
 aaa
 aaa
 aaa
+aaY
+aaY
+acm
+acM
+aaY
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-adG
-adG
-adG
-adG
-adG
-adG
-adG
 aaa
 aaa
 aaa
@@ -91711,14 +91748,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+iNk
+iNk
+iNk
+iNk
+iNk
+iNk
+iNk
+iNk
 aaa
 aaa
 aaa
@@ -91732,8 +91769,8 @@ adG
 adG
 adG
 adG
-adG
-adG
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -92013,14 +92050,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+iNk
+iNk
+iNk
+iNk
+iNk
+iNk
+iNk
+iNk
 aaa
 aaa
 aaa
@@ -92035,7 +92072,7 @@ adG
 adG
 adG
 adG
-adG
+aaa
 aaa
 aaa
 aaa
@@ -92316,12 +92353,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+iNk
+iNk
+iNk
+iNk
+iNk
+iNk
 aaa
 aaa
 aaa
@@ -92639,7 +92676,7 @@ adG
 adG
 adG
 adG
-aaa
+adG
 aaa
 aaa
 aaa
@@ -92940,8 +92977,8 @@ adG
 adG
 adG
 adG
-aaa
-aaa
+adG
+adG
 aaa
 aaa
 aaa
@@ -93236,13 +93273,13 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+adG
+adG
+adG
+adG
+adG
+adG
+adG
 aaa
 aaa
 aaa
@@ -93538,12 +93575,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+adG
+adG
+adG
+adG
+adG
+adG
 aaa
 aaa
 aaa

@@ -522,9 +522,7 @@
 							if (critters_left[name])
 								stat(null, "- [critters_left[name]] [name][critters_left[name] > 1 ? "s" : null]")
 					else if (current_level < 100)
-						var/sum = 0
-						for (var/name in critters_left)
-							sum += critters_left[name]
+						var/sum = values_sum(critters_left)
 						stat(null, "- [sum] critter[sum > 1 ? "" : null]")
 					else
 						stat(null, "No information")
