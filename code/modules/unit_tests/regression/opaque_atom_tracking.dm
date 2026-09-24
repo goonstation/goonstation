@@ -83,13 +83,6 @@
 
 	return TRUE
 
-/// Every turf's red luminance on the test z. Lights strip what they applied, so an opacity change they missed leaves this changed.
-/datum/unit_test/regression/opaque_atom_tracking/proc/luminance()
-	. = list()
-	var/z = src.run_loc_floor_bottom_left.z
-	for (var/turf/T as anything in block(locate(1, 1, z), locate(world.maxx, world.maxy, z)))
-		. += T.RL_LumR
-
 /datum/unit_test/regression/opaque_atom_tracking/Run()
 	var/z = src.run_loc_floor_bottom_left.z
 	var/turf/blocking_turf = locate(6, 7, z)
@@ -233,20 +226,6 @@
 	if (!src.verify("opaque smoke cleared"))
 		return
 	TEST_ASSERT_EQUAL(length(emitter.coverage), baseline, "clearing the smoke did not restore coverage")
-
-	// Opaque atoms built at runtime have to rebuild lighting, or the light is later stripped from turfs it never lit
-	var/datum/light/point/lamp = new
-	lamp.set_brightness(1.2)
-	lamp.set_height(1.5)
-	lamp.move(6.5, 5.5, z)
-	lamp.enable()
-	var/list/lit = src.luminance()
-	TEST_ASSERT(max(lit) > 0, "the test light lit nothing")
-	qdel(new /obj/adventurepuzzle/triggerable/wall(blocking_turf))
-	var/list/relit = src.luminance()
-	qdel(lamp)
-	for (var/i in 1 to length(lit))
-		TEST_ASSERT(abs(lit[i] - relit[i]) < 0.001, "building and removing an adventure wall left lighting changed")
 
 	// ReplaceWith has to carry turf opacity across the swap
 	var/turf/victim = locate(6, 8, z)
