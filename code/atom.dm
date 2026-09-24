@@ -562,7 +562,14 @@ TYPEINFO(/obj/item/disk)
 			for(var/atom/A in src.loc)
 				if(A != src)
 					A.Crossed(src)
-	// Last, so anything material setup changes about us (opacity) is reported to our turf
+	// Clear, then set_opacity() so lights are stripped without us and reapplied with us
+	// hopefully no longer necessary one day with new initalize
+	if (initial(src.opacity) && src.opacity && global.RL_Started && isturf(src.loc))
+		var/turf/T = src.loc
+		UNLINT(src.opacity = FALSE)
+		T.recount_opaque_atoms()
+		src.set_opacity(TRUE)
+	// After relighting, so material opacity changes start from consistent lighting
 	src.apply_default_material()
 
 
@@ -1172,6 +1179,8 @@ TYPEINFO(/obj/item/disk)
 	if (newopacity == src.opacity)
 		return // Why even bother
 
+	// zewaka todo: a turf's loc is its area, so turfs never relight here
+	// fixing it needs explosions to pause relights and rebuild once
 	var/on_turf = isturf(src.loc)
 
 	var/oldopacity = src.opacity
