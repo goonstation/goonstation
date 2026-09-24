@@ -1,4 +1,17 @@
 
+(t)wed sep 23 26
+(u)ANNmagedon + TekoTheTeapot
+(p)27799
+(e)🎨|C-Sprites
+(+)The NT Emergency Repair Technicians have received a brand new armor to help them better fulfill their role.
+(u)ANNmagedon
+(p)27878
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The syndicate flag has finally been recognized as a contraband by NT's systems
+(u)LeahTheTech
+(p)27917
+(e)🆕🎨💨📦|C-Feature, C-Sprites, A-Atmospherics, A-Game-Objects
+(*)Added gorilla assemblies, made by attaching a trigger to a gas tank and then sticking an inflatable gorilla on the end.
 (t)tue sep 22 26
 (u)Sovexe
 (p)27800

@@ -32516,13 +32516,14 @@
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
 	},
+/obj/item/paper/menhir_advisory{
+	pixel_x = 14;
+	pixel_y = 8
+	},
+/obj/machinery/shipalert,
 /obj/item/device/light/zippo{
 	pixel_x = -9;
 	pixel_y = 4
-	},
-/obj/item/paper/menhir_advisory{
-	pixel_x = 8;
-	pixel_y = 3
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)

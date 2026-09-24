@@ -2090,6 +2090,8 @@ TYPEINFO(/obj/disposaloutlet)
 	var/frequency = FREQ_PDA
 	var/flusher_id = null
 	throw_speed = 1
+	/// Items thrown per tick when expelling
+	var/eject_batch_size = 15
 
 
 	ex_act(var/severity)
@@ -2189,7 +2191,14 @@ TYPEINFO(/obj/disposaloutlet)
 		var/turf/expel_loc = get_turf(src)
 		while(locate(src.type) in get_step(expel_loc, src.dir))
 			expel_loc = get_step(expel_loc, src.dir)
+		var/ejected = 0
 		for(var/atom/movable/AM in H)
+			if (ejected >= src.eject_batch_size && !global.instant_pipe_network)
+				ejected = 0
+				sleep(1 TICK)
+			if (AM.loc != H) // may have left or been deleted while we slept :(
+				continue
+			ejected++
 			ON_COOLDOWN(AM, "PipeEject", 2 SECONDS)
 			AM.set_loc(expel_loc)
 			AM.pipe_eject(dir)
