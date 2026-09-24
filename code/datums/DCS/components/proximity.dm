@@ -47,18 +47,20 @@ TYPEINFO(/datum/component/proximity)
 /// Update if our parent move into or out of a movable or onto a turf.
 /datum/component/proximity/proc/parent_moved()
 	var/atom/A = src.parent
-	for(var/turf/T as anything in src.listening_to)
-		UnregisterSignal(T, COMSIG_ATOM_ENTERED)
-	src.listening_to?.len = 0
-
 	var/turf/center = get_turf(A)
-	if(isnull(center))
-		return //we got kabloowied or something
-	if(src.turfonly && !isturf(istype(A.loc, /obj/item/assembly) ? A.loc.loc : A.loc)) //assemblies are very mean and stuff
-		return
-	src.listening_to = block(center.x-range, center.y-range, center.z, center.x+range, center.y+range, center.z)
-	for(var/turf/T as anything in src.listening_to)
-		RegisterSignal(T, COMSIG_ATOM_ENTERED, PROC_REF(Detect))
+	var/list/turf/was_listening_to = src.listening_to
+	if(isnull(center) || (src.turfonly && !isturf(istype(A.loc, /obj/item/assembly) ? A.loc.loc : A.loc))) //assemblies are very mean and stuff
+		src.listening_to = null //we got kabloowied, or moved into something we don't listen from
+	else
+		src.listening_to = block(center.x-range, center.y-range, center.z, center.x+range, center.y+range, center.z)
+
+	// most moves are one tile, calc diff to avoid signal churn
+	if(was_listening_to)
+		for(var/turf/T as anything in was_listening_to - src.listening_to)
+			UnregisterSignal(T, COMSIG_ATOM_ENTERED)
+	if(src.listening_to)
+		for(var/turf/T as anything in src.listening_to - was_listening_to)
+			RegisterSignal(T, COMSIG_ATOM_ENTERED, PROC_REF(Detect))
 
 /// Sets whether or not we are detecting.
 /datum/component/proximity/proc/set_detection(state)

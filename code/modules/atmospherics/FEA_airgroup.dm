@@ -271,7 +271,7 @@
 		if(abort_group)
 			src.suspend_group_processing()
 		else
-			if(air?.check_tile_graphic())
+			if(src.air && GAS_MIXTURE_MAY_BE_VISIBLE(src.air) && src.air.check_tile_graphic())
 				for(var/turf/simulated/member as anything in members)
 					ATMOS_TILE_OPERATION_DEBUG(member)
 					member.update_visuals(air)

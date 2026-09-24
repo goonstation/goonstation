@@ -83,12 +83,14 @@ TYPEINFO(/obj/item/pinpointer)
 	proc/work()
 		set waitfor = FALSE
 		while(active)
+			if (QDELETED(src.target))
+				src.target = null
 			if(!target)
 				if (target_ref)
 					target = locate(target_ref)
 				else if (target_criteria)
 					target = locate(target_criteria)
-				if(!target || target.qdeled)
+				if(!target)
 					src.turn_off()
 					return
 				var/mob/user = src.loc
@@ -276,34 +278,37 @@ TYPEINFO(/obj/item/pinpointer/idtracker)
 /obj/item/pinpointer/idtracker
 	name = "ID pinpointer"
 	icon_state = "id_pinoff"
-	var/mob/owner = null
 	hudarrow_color = "#ffffff"
-	desc = "This little bad-boy has been pre-programmed to display the general direction of any assassination target you choose."
+	desc = "This little bad-boy has been pre-programmed to display the general direction of any target you choose."
 
 	attack_self(mob/user)
-		if(!active)
-			if (!src.owner || !src.owner.mind)
-				boutput(user, SPAN_ALERT("\The [src] emits a sorrowful ping!"))
-				return
-			var/list/targets = list()
-			for_by_tcl(I, /obj/item/card/id)
-				if(!I)
-					continue // the ID can get deleted in the lagcheck
-				for(var/datum/objective/regular/assassinate/A in src.owner.mind.objectives)
-					if(I.registered == null) continue
-					if(ckey(I.registered) == ckey(A.targetname))
-						targets[I] = I
-				LAGCHECK(LAG_LOW)
-			target = tgui_input_list(user, "Which ID do you wish to track?", "Target Locator", targets)
-			if(!target)
-				boutput(user, SPAN_NOTICE("You activate the target locator. No available targets!"))
-			else
-				boutput(user, SPAN_NOTICE("You activate the target locator. Tracking [target]"))
-				src.turn_on()
+		if(src.active)
+			return ..()
+		var/list/targets = list()
+		for_by_tcl(I, /obj/item/card/id)
+			if(QDELETED(I))
+				continue // The ID can get deleted in the lagcheck
+			if(!I.registered)
+				continue // Don't include accessless and nameless IDs. Notably the captain's spare is registered to "Captain".
+			if(issilicon(I.loc) || istype(I.loc, /obj/machinery/bot))
+				continue // Don't include botcards
+			if(istype(I, /obj/item/card/id/syndicate))
+				continue // No tracking nukies or anyone spending TC to not get tracked
+			if(isrestrictedz(get_z(I)))
+				continue // No offstation IDs
+			if(get_z(I) != get_z(src))
+				continue // No IDs on another Z-Level
+			targets += I
+			LAGCHECK(LAG_LOW)
+		target = tgui_input_list(user, "Which ID do you wish to track?", "Target Locator", targets)
+		if(!target)
+			boutput(user, SPAN_NOTICE("You activate the target locator. No available targets!"))
 		else
-			..()
+			boutput(user, SPAN_NOTICE("You activate the target locator. Tracking [target]"))
+			src.turn_on()
 
 /obj/item/pinpointer/idtracker/spy
+	var/mob/owner = null
 	attack_hand(mob/user)
 		..(user)
 		if (!user.mind || user.mind.special_role != ROLE_SPY_THIEF)

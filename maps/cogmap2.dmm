@@ -2535,8 +2535,12 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "ajd" = (
-/obj/machinery/computer/secure_data/detective_computer,
+/obj/machinery/computer3/generic/secure_data,
 /obj/disposalpipe/segment/mail/bent/south,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aje" = (
@@ -2765,6 +2769,9 @@
 "akb" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/blind_switch/directional/east,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "akc" = (
@@ -3159,6 +3166,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "alj" = (
@@ -3225,7 +3235,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/crematorium)
 "alz" = (
-/obj/machinery/computer/secure_data/detective_computer,
+/obj/filing_cabinet,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/crematorium)
 "alA" = (
@@ -5286,7 +5296,7 @@
 	},
 /area/station/security/detectives_office)
 "asj" = (
-/obj/machinery/computer/secure_data/detective_computer,
+/obj/filing_cabinet,
 /turf/simulated/floor/carpet{
 	icon_state = "carpetS"
 	},

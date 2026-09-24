@@ -107,6 +107,13 @@
 	default_material = "synthrubber_blue"
 	special_mode = "Centcom"
 
+/obj/item/stamp/inspector
+	name = "\improper inspector rubber stamp"
+	desc = "The Inspector's rubber stamp for stamping whatever important documents they've gotten their hands on. It's that National Notary's 'Vice Admiral Simon' model in ebonized ash."
+	icon_state = "stamp-inspector"
+	default_material = "synthrubber_blue"
+	special_mode = "Inspector"
+
 /obj/item/stamp/mime
 	name = "\improper mime's rubber stamp"
 	desc = "The Mime's rubber stamp for stamping whatever important documents they've gotten their hands on. It doesn't seem very legit."

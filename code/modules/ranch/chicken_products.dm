@@ -110,6 +110,11 @@
 		egg_props_path = /datum/chicken_egg_props/sea
 	dream
 		egg_props_path = /datum/chicken_egg_props/dream
+
+		br // Cause apparently people don't like accidentally taking naps in firefights
+			New()
+				desc += "The soothing purple sheen makes you feel sleepy."
+				..()
 	snow
 		egg_props_path = /datum/chicken_egg_props/snow
 	popsicle
