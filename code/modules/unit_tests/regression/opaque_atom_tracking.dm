@@ -83,6 +83,13 @@
 
 	return TRUE
 
+/// Every turf's red luminance on the test z. Lights strip what they applied, so an opacity change they missed leaves this changed.
+/datum/unit_test/regression/opaque_atom_tracking/proc/luminance()
+	. = list()
+	var/z = src.run_loc_floor_bottom_left.z
+	for (var/turf/T as anything in block(locate(1, 1, z), locate(world.maxx, world.maxy, z)))
+		. += T.RL_LumR
+
 /datum/unit_test/regression/opaque_atom_tracking/Run()
 	var/z = src.run_loc_floor_bottom_left.z
 	var/turf/blocking_turf = locate(6, 7, z)
@@ -211,6 +218,35 @@
 	if (!src.verify("last blocker removed"))
 		return
 	TEST_ASSERT_EQUAL(length(emitter.coverage), baseline, "removing the last blocker did not restore coverage")
+
+	// Spread smoke tiles get their opacity from the group update loop, not /obj/fluid/airborne/update_icon()
+	var/turf/smoke_origin = locate(6, 9, z)
+	smoke_origin.fluid_react_single("toxic_fart", 60, airborne = TRUE)
+	var/datum/fluid_group/smoke_group = smoke_origin.active_airborne_liquid?.group
+	TEST_ASSERT(smoke_group, "no airborne fluid group was created")
+	smoke_group.update_once(4) // spread
+	smoke_group.update_once() // member loop
+	TEST_ASSERT(length(smoke_group.members) > 1, "the smoke did not spread")
+	if (!src.verify("opaque smoke spread"))
+		return
+	smoke_group.evaporate()
+	if (!src.verify("opaque smoke cleared"))
+		return
+	TEST_ASSERT_EQUAL(length(emitter.coverage), baseline, "clearing the smoke did not restore coverage")
+
+	// Opaque atoms built at runtime have to rebuild lighting, or the light is later stripped from turfs it never lit
+	var/datum/light/point/lamp = new
+	lamp.set_brightness(1.2)
+	lamp.set_height(1.5)
+	lamp.move(6.5, 5.5, z)
+	lamp.enable()
+	var/list/lit = src.luminance()
+	TEST_ASSERT(max(lit) > 0, "the test light lit nothing")
+	qdel(new /obj/adventurepuzzle/triggerable/wall(blocking_turf))
+	var/list/relit = src.luminance()
+	qdel(lamp)
+	for (var/i in 1 to length(lit))
+		TEST_ASSERT(abs(lit[i] - relit[i]) < 0.001, "building and removing an adventure wall left lighting changed")
 
 	// ReplaceWith has to carry turf opacity across the swap
 	var/turf/victim = locate(6, 8, z)
