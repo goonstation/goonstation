@@ -249,3 +249,13 @@
 				. += "<br>[SPAN_NOTICE("Frequency: [P.alert_frequency]")]"
 				. += "<br>[SPAN_NOTICE("Network address: [P.net_id]")]"
 				. += "<br>[SPAN_NOTICE("Passkey: [P.passkey]")]"
+
+/obj/item/implanter/kudzu
+	name = "kudzu implanter"
+	icon_state = "implanter1-g"
+	sneaky = TRUE
+	HELP_MESSAGE_OVERRIDE({"When someone dies while implanted with this, they will create a large growth of kudzu and be revived as part of the growth."})
+
+	New()
+		src.imp = new /obj/item/implant/revenge/kudzu(src)
+		..()
