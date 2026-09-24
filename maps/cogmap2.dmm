@@ -28962,7 +28962,7 @@
 /turf/simulated/floor/caution/northsouth{
 	dir = 1
 	},
-/area)
+/area/station/engine/inner)
 "bQA" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
