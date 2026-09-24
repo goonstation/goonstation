@@ -12,15 +12,9 @@
 	var/datum/gas_mixture/air_contents = null
 	///legally distinct from the turf version because this needs to be on a lower plane to work with filters
 	var/static/list/mutable_appearance/gas_overlays = list(
-		#ifdef ALPHA_GAS_OVERLAYS
 		mutable_appearance('icons/effects/tile_effects.dmi', "plasma-alpha", OBJ_LAYER - 0.1),
 		mutable_appearance('icons/effects/tile_effects.dmi', "sleeping_agent-alpha", OBJ_LAYER - 0.1),
 		mutable_appearance('icons/effects/tile_effects.dmi', "rad_particles-alpha", OBJ_LAYER - 0.1)
-		#else
-		mutable_appearance('icons/effects/tile_effects.dmi', "plasma", OBJ_LAYER - 0.1),
-		mutable_appearance('icons/effects/tile_effects.dmi', "sleeping_agent", OBJ_LAYER - 0.1),
-		mutable_appearance('icons/effects/tile_effects.dmi', "rad_particles", OBJ_LAYER - 0.1)
-		#endif
 	)
 
 	New(loc, datum/gas_mixture/gas)

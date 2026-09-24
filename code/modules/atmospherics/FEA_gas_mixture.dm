@@ -419,8 +419,9 @@ What are the archived variables for?
 	var/moved_moles = 0 MOLES
 
 	#define _MIMIC_GAS(GAS, ...) \
-		src.GAS = QUANTIZE(src.GAS - delta_##GAS); \
-		moved_moles += delta_##GAS;
+		if(delta_##GAS) { \
+			src.GAS = QUANTIZE(src.GAS - delta_##GAS); \
+			moved_moles += delta_##GAS; }
 	APPLY_TO_GASES(_MIMIC_GAS)
 	#undef _MIMIC_GAS
 

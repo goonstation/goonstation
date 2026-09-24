@@ -1167,7 +1167,7 @@
 /turf/simulated/floor/wood/two,
 /area/research_outpost/protest)
 "awE" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer3/generic/secure_data{
 	dir = 8
 	},
 /obj/machinery/power/apc/autoname_east,
@@ -1177,6 +1177,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -8058,7 +8059,7 @@
 /turf/space,
 /area/supply/spawn_point)
 "dCT" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer3/generic/secure_data{
 	dir = 8
 	},
 /obj/decal/tile_edge/stripe{
@@ -13120,7 +13121,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crewquarters/cryotron)
 "fSb" = (
-/obj/machinery/computer/secure_data/detective_computer,
+/obj/filing_cabinet,
 /obj/decal/cleanable/dirt,
 /obj/machinery/camera/directional/north{
 	pixel_x = -10
@@ -13809,7 +13810,7 @@
 /turf/simulated/floor/airless/caution,
 /area/station/engine/eva)
 "giA" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer3/generic/secure_data,
 /obj/decal/tile_edge/stripe{
 	dir = 6;
 	icon_state = "bot2"
@@ -13820,6 +13821,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
 /area/station/security/secwing{
 	name = "Security Lobby"
@@ -18173,17 +18175,23 @@
 	name = "Crashed Limo"
 	})
 "imY" = (
-/obj/machinery/computer/secure_data/detective_computer,
 /obj/machinery/light/incandescent/warm/very{
 	dir = 8;
 	pixel_x = -10
 	},
-/obj/cable{
-	icon_state = "2-4"
-	},
 /obj/decoration/clock{
 	pixel_y = 30
 	},
+/obj/machinery/computer3/generic/secure_data{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
 /area/station/security/hos)
 "imZ" = (
@@ -24294,7 +24302,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/jazz)
 "kUg" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer3/generic/secure_data{
 	dir = 8
 	},
 /obj/decal/cleanable/dirt/dirt5,
@@ -30673,7 +30681,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "nPc" = (
-/obj/machinery/computer/secure_data{
+/obj/machinery/computer3/generic/secure_data{
 	dir = 4
 	},
 /obj/machinery/light_switch/directional/south,
@@ -47047,7 +47055,7 @@
 /turf/simulated/floor/caution,
 /area/station/engine/engineering)
 "vtB" = (
-/obj/machinery/computer/secure_data,
+/obj/machinery/computer3/generic/secure_data,
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
