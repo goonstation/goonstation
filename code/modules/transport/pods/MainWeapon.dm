@@ -343,9 +343,9 @@
 	weapon_score = 1.25
 	power_used = 300
 	firerate = 35
-	appearanceString = "pod_weapon_emitter"
+	appearanceString = "pod_weapon_assaultlaser"
 	current_projectile = new/datum/projectile/laser/asslaser
-	icon_state = "pod_weapon_assaultlaser"
+	icon_state = "assault-laser"
 	muzzle_flash = "muzzle_flash_laser"
 
 /obj/item/shipcomponent/mainweapon/hammer_railgun
