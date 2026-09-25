@@ -160,7 +160,7 @@
 
 /obj/item/storage/firstaid/docbag/field_surgeon/NT
 	icon_state = "docbag_nt" // Sprite by TekoTheTeapot
-	item_state = "docbag3"
+	item_state = "docbag_nt"
 	kit_styles = null
 
 /* -------------------- First Aid Kits - VR -------------------- */
