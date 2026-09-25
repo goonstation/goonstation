@@ -406,7 +406,6 @@ TRASH BAG
 			boutput(user, SPAN_ALERT("[O] blocks your way!"))
 			return FALSE
 
-	var/list/obj/item/items_to_push = list()
 	var/pushed_item_count = 0
 
 	for(var/obj/item/I in target_location)
