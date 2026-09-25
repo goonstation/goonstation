@@ -183,7 +183,7 @@
 
 
 /proc/omega_hairgrownium_grow_hair(var/mob/living/carbon/human/H, var/all_hairs)
-	var/list/possible_hairstyles = get_available_custom_style_types(H.client, no_gimmick_hair=!all_hairs) // if all_hairs is TRUE, character setup mode is FALSE, vice versa
+	var/list/possible_hairstyles = get_available_custom_style_types(H.client, no_gimmick=!all_hairs) // if all_hairs is TRUE, character setup mode is FALSE, vice versa
 	var/hair_type = pick(possible_hairstyles)
 	H.bioHolder.mobAppearance.customizations["hair_bottom"].style = new hair_type
 	H.bioHolder.mobAppearance.customizations["hair_bottom"].color = random_saturated_hex_color()

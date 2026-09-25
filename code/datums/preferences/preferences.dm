@@ -805,7 +805,7 @@ var/list/removed_jobs = list(
 				var/new_style
 				switch (params["id"])
 					if ("custom1", "custom2", "custom3")
-						new_style = select_custom_style(usr, no_gimmick_hair=TRUE)
+						new_style = select_custom_style(usr, no_gimmick=TRUE)
 					if ("underwear")
 						new_style = tgui_input_list(usr, "Select an underwear style", "Character Generation", underwear_styles)
 				if (new_style)
@@ -843,7 +843,7 @@ var/list/removed_jobs = list(
 
 				switch (params["id"])
 					if ("custom1", "custom2", "custom3")
-						style_list = get_available_custom_style_types(usr.client, no_gimmick_hair=TRUE)
+						style_list = get_available_custom_style_types(usr.client, no_gimmick=TRUE)
 					if ("underwear")
 						style_list = underwear_styles
 

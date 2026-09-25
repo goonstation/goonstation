@@ -91,7 +91,7 @@ ABSTRACT_TYPE(/datum/component/barber)
 
 TYPEINFO(/datum/component/barber/haircut)
 TYPEINFO_NEW(/datum/component/barber/haircut)
-	all_hair_types = get_available_custom_style_types(filter_type=/datum/customization_style/hair)
+	all_hair_types = get_available_custom_style_types(style_type = CUSTOMIZATION::TYPE::HAIR)
 	. = ..()
 
 /datum/component/barber/haircut
@@ -106,10 +106,10 @@ TYPEINFO_NEW(/datum/component/barber/haircut)
 
 TYPEINFO(/datum/component/barber/shave)
 TYPEINFO_NEW(/datum/component/barber/shave)
-	all_hair_types = get_available_custom_style_types(filter_type=/datum/customization_style/beard) \
-					+ get_available_custom_style_types(filter_type=/datum/customization_style/moustache) \
-					+ get_available_custom_style_types(filter_type=/datum/customization_style/sideburns) \
-					+ get_available_custom_style_types(filter_type=/datum/customization_style/eyebrows)
+	all_hair_types = get_available_custom_style_types(style_type = CUSTOMIZATION::TYPE::BEARD) \
+					+ get_available_custom_style_types(style_type = CUSTOMIZATION::TYPE::MOUSTACHE) \
+					+ get_available_custom_style_types(style_type = CUSTOMIZATION::TYPE::SIDEBURNS) \
+					+ get_available_custom_style_types(style_type = CUSTOMIZATION::TYPE::EYEBROWS)
 	. = ..()
 
 /datum/component/barber/shave
@@ -796,7 +796,7 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 	cutting = "cutting"
 
 	getHairStyles()
-		return get_available_custom_style_types(filter_type=/datum/customization_style/hair)
+		return get_available_custom_style_types(style_type = CUSTOMIZATION::TYPE::HAIR)
 
 /datum/action/bar/barber/shave
 	cut = "shave"
@@ -804,10 +804,10 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 	cutting = "shaving"
 
 	getHairStyles()
-		return get_available_custom_style_types(filter_type=/datum/customization_style/beard) \
-					+ get_available_custom_style_types(filter_type=/datum/customization_style/moustache) \
-					+ get_available_custom_style_types(filter_type=/datum/customization_style/sideburns) \
-					+ get_available_custom_style_types(filter_type=/datum/customization_style/eyebrows)
+		return get_available_custom_style_types(style_type = CUSTOMIZATION::TYPE::BEARD) \
+					+ get_available_custom_style_types(style_type = CUSTOMIZATION::TYPE::MOUSTACHE) \
+					+ get_available_custom_style_types(style_type = CUSTOMIZATION::TYPE::SIDEBURNS) \
+					+ get_available_custom_style_types(style_type = CUSTOMIZATION::TYPE::EYEBROWS)
 
 #undef HAIRCUT
 #undef SHAVE

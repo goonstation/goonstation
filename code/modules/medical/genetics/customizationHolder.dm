@@ -11,9 +11,11 @@
 	/// The Y offset to display this image
 	var/offset_y = 0
 
-	first
-		style =  new /datum/customization_style/hair/short/short
-	second
-		style =  new /datum/customization_style/none
-	third
-		style =  new /datum/customization_style/none
+/datum/customizationHolder/hair/bottom
+	style =  new /datum/customization_style/hair/short/short
+
+/datum/customizationHolder/hair/second
+	style =  new /datum/customization_style/none
+
+/datum/customizationHolder/hair/third
+	style =  new /datum/customization_style/none

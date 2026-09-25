@@ -343,7 +343,7 @@ datum
 
 				if (probmult(10) && ishuman(M))
 					var/mob/living/carbon/human/H = M
-					var/list/hair_styles = pick(get_available_custom_style_types(M.client, no_gimmick_hair=TRUE))
+					var/list/hair_styles = pick(get_available_custom_style_types(M.client, no_gimmick=TRUE))
 					var/hair_type = pick(hair_styles)
 					H.bioHolder.mobAppearance.customizations["hair_bottom"].style =  new hair_type
 					hair_type = pick(hair_styles)

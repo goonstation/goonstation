@@ -47,10 +47,10 @@
 	)
 
 proc/isfem(datum/customization_style/style)
-	return !!(initial(style.gender) & FEMININE)
+	return !!(initial(style.gender) & CUSTOMIZATION::GENDER::FEMININE)
 
 proc/ismasc(datum/customization_style/style)
-	return !!(initial(style.gender) & MASCULINE)
+	return !!(initial(style.gender) & CUSTOMIZATION::GENDER::MASCULINE)
 
 // this is weird but basically: a list of hairstyles and their appropriate detail styles, aka hair_details["80s"] would return the Hairmetal: Faded style
 // further on in the randomize_look() proc we'll see if we've got one of the styles in here and if so, we have a chance to add the detailing
@@ -198,24 +198,24 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 	var/type_first
 	if (AH.gender == MALE)
 		if (prob(5)) // small chance to have a hairstyle more geared to the other gender
-			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=FEMININE, for_random=TRUE))
+			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick=TRUE, filter_gender=CUSTOMIZATION::GENDER::FEMININE, for_random=TRUE))
 			customization_first.style = new type_first
 		else // otherwise just use one standard to the current gender
-			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=MASCULINE, for_random=TRUE))
+			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick=TRUE, filter_gender=CUSTOMIZATION::GENDER::MASCULINE, for_random=TRUE))
 			customization_first.style = new type_first
 
 		if (prob(33)) // since we're a guy, a chance for facial hair
-			var/type_second = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_type=/datum/customization_style/beard) \
-								+ get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_type=/datum/customization_style/moustache))
+			var/type_second = pick(get_available_custom_style_types(H?.client, no_gimmick=TRUE, filter_type=/datum/customization_style/beard) \
+								+ get_available_custom_style_types(H?.client, no_gimmick=TRUE, filter_type=/datum/customization_style/moustache))
 			customization_second = new type_second
 			has_second = TRUE // so the detail check doesn't do anything - we already got a secondary thing!!
 
 	else // if FEMALE
 		if (prob(8)) // same as above for guys, just reversed and with a slightly higher chance since it's ~more appropriate~ for ladies to have guy haircuts than vice versa  :I
-			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=MASCULINE, for_random=TRUE))
+			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick=TRUE, filter_gender=CUSTOMIZATION::GENDER::MASCULINE, for_random=TRUE))
 			customization_first.style = new type_first
 		else // ss13 is coded with gender stereotypes IN ITS VERY CORE
-			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=FEMININE, for_random=TRUE))
+			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick=TRUE, filter_gender=CUSTOMIZATION::GENDER::FEMININE, for_random=TRUE))
 			customization_first.style = new type_first
 
 	if (!has_second)

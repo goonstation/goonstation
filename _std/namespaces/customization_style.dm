@@ -1,0 +1,18 @@
+CREATE_NAMESPACE(CUSTOMIZATION)
+
+/// Customization style types.
+CREATE_NAMESPACE(CUSTOMIZATION, TYPE)
+ADD_TO_NAMESPACE(CUSTOMIZATION, TYPE)(var/const/HAIR = "hair")
+ADD_TO_NAMESPACE(CUSTOMIZATION, TYPE)(var/const/BEARD = "beard")
+ADD_TO_NAMESPACE(CUSTOMIZATION, TYPE)(var/const/MOUSTACHE = "moustache")
+ADD_TO_NAMESPACE(CUSTOMIZATION, TYPE)(var/const/SIDEBURNS = "sideburns")
+ADD_TO_NAMESPACE(CUSTOMIZATION, TYPE)(var/const/EYEBROWS = "eyebrows")
+ADD_TO_NAMESPACE(CUSTOMIZATION, TYPE)(var/const/MAKEUP = "makeup")
+ADD_TO_NAMESPACE(CUSTOMIZATION, TYPE)(var/const/BIOLOGICAL = "biological")
+
+/// The gender which is TYPICALLY assigned to this customization style.
+/// Primarily for character appearance randomization.
+CREATE_NAMESPACE(CUSTOMIZATION, GENDER)
+ADD_TO_NAMESPACE(CUSTOMIZATION, GENDER)(var/const/NEUTER = (~0)) 			//! Assign to all genders.
+ADD_TO_NAMESPACE(CUSTOMIZATION, GENDER)(var/const/MASCULINE = (1 << 0))
+ADD_TO_NAMESPACE(CUSTOMIZATION, GENDER)(var/const/FEMININE = (1 << 1))
