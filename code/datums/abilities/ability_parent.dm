@@ -878,6 +878,8 @@
 	var/ignore_sticky_cooldown = FALSE		//! If TRUE, Ability will stick to cursor even if ability goes on cooldown after first cast.
 	var/interrupt_action_bars = TRUE 		//! If TRUE, we will interrupt any action bars running with the INTERRUPT_ACT flag
 	var/cooldown_after_action = FALSE		//! if TRUE, cooldowns will be handled after action bars have ended. Needs action to call afterAction() on end.
+	var/aim_assist_radius = null			//! If we don't click on a mob, how many tiles away do we search to find a mob to target? If null, don't try at all
+	var/aim_assist_ignore_owner = TRUE		//! Should we ignore our owner when searching for nearby mobs with aim assist?
 
 	var/action_key_number = -1 //Number hotkey assigned to this ability. Only used if > 0
 	var/waiting_for_hotkey = FALSE //If TRUE, the next number hotkey pressed will be bound to this.
@@ -923,6 +925,8 @@
 
 	proc
 		handleCast(atom/target, params)
+			if (!isnull(src.aim_assist_radius) && !ismob(target))
+				target = src.aim_assist_retargeting(target, params)
 			var/result = tryCast(target, params)
 #ifdef NO_COOLDOWNS
 			result = TRUE
@@ -1123,6 +1127,22 @@
 
 		flip_callback()
 			.= 0
+
+		aim_assist_retargeting(atom/target, params)
+			. = target
+			var/list/mob_list = list()
+			var/list/click_location = get_turf_pixel_clicked_over(src.holder.owner, params)
+			if(!click_location)
+				return
+			if(src.aim_assist_radius > 0)
+				mob_list = get_nearest_mobs_list(click_location["turf"], src.aim_assist_radius, click_location["pixel_x"], click_location["pixel_y"])
+			else
+				for(var/mob/in_turf_target in click_location["turf"])
+					mob_list[in_turf_target] += 0 // either we dont change an existing entry's range, or add a new entry with a range 0 to the end of the list
+			for (var/mob/mob_target in mob_list)
+				if((mob_target == src.holder.owner) && src.aim_assist_ignore_owner)
+					continue
+				return mob_target
 
 /atom/movable/screen/pseudo_overlay
 	// this is hack as all get out

@@ -99,6 +99,19 @@
       document.onclick = function () {
         location = 'byond://winset?id=mapwindow.map&focus=true';
       };
+      // Stop walking history
+      document.addEventListener('mouseup', (e) => {
+        if (e.button === 3 || e.button === 4) e.preventDefault();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (
+          e.key === 'BrowserBack' ||
+          e.key === 'BrowserForward' ||
+          (e.altKey && (e.key === 'ArrowLeft' || e.key === 'ArrowRight'))
+        ) {
+          e.preventDefault();
+        }
+      });
       function set_area(id, text) {
         var el = document.getElementById(id);
         el.innerHTML = text || '';

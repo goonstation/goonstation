@@ -28660,12 +28660,7 @@
 	},
 /area/sim/racing_track)
 "cjH" = (
-/obj/machinery/computer/secure_data/detective_computer{
-	authenticated = "VR Office";
-	desc = "The VR representation of a security software package.";
-	require_login = 0;
-	screen = 1
-	},
+/obj/machinery/computer3/generic/secure_data/detnet,
 /turf/unsimulated/floor{
 	icon = 'icons/misc/beach.dmi';
 	icon_state = "sand";
@@ -47685,7 +47680,7 @@
 	pixel_x = 10;
 	pixel_y = 18
 	},
-/obj/machinery/computer/secure_data/detective_computer,
+/obj/filing_cabinet,
 /obj/item/paper{
 	icon_state = "paper_stamped";
 	info = "<br><span style='font-family: Georgia; font-style: normal; font-weight: normal; font-size: 16px; color: red;'><b>\[</b>REJECTED<b>]</b></span><br>";
@@ -50445,7 +50440,7 @@
 "dIY" = (
 /turf/unsimulated/floor{
 	dir = 1;
-	icon = 'icons/obj/stationobjs.dmi';
+	icon = 'icons/obj/poolballpit.dmi';
 	icon_state = "ballpitfloor";
 	name = "ball pit"
 	},
@@ -50547,7 +50542,7 @@
 /area/centcom/lounge)
 "dJn" = (
 /turf/unsimulated/floor{
-	icon = 'icons/obj/stationobjs.dmi';
+	icon = 'icons/obj/poolballpit.dmi';
 	icon_state = "ballpitfloor";
 	name = "ball pit"
 	},
@@ -50557,7 +50552,7 @@
 	dir = 4
 	},
 /turf/unsimulated/floor{
-	icon = 'icons/obj/stationobjs.dmi';
+	icon = 'icons/obj/poolballpit.dmi';
 	icon_state = "ballpitfloor";
 	name = "ball pit"
 	},

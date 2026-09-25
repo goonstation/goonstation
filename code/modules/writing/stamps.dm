@@ -70,6 +70,7 @@
 	name = "\improper head of security's rubber stamp"
 	desc = "The Head of Security's rubber stamp for stamping important documents. Looks like one of those fancy National Notary 'Bancroft' models with the bloodwood handle."
 	icon_state = "stamp-hos"
+	special_mode = "Head of Security"
 
 /obj/item/stamp/ce
 	name = "\improper chief engineer's rubber stamp"
@@ -105,6 +106,13 @@
 	icon_state = "stamp-centcom"
 	default_material = "synthrubber_blue"
 	special_mode = "Centcom"
+
+/obj/item/stamp/inspector
+	name = "\improper inspector rubber stamp"
+	desc = "The Inspector's rubber stamp for stamping whatever important documents they've gotten their hands on. It's that National Notary's 'Vice Admiral Simon' model in ebonized ash."
+	icon_state = "stamp-inspector"
+	default_material = "synthrubber_blue"
+	special_mode = "Inspector"
 
 /obj/item/stamp/mime
 	name = "\improper mime's rubber stamp"
