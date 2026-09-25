@@ -83,21 +83,6 @@
 	///Can this organ be inserted on either side? (literally just kidneys, wegh)
 	var/either_side = FALSE
 
-	/*
-	attack(var/mob/living/carbon/M, var/mob/user)
-		if (!ismob(M))
-			return
-
-		src.add_fingerprint(user)
-
-		var/attach_result = src.attach_organ(M, user)
-		if (attach_result == 1) // success
-			return
-		else if (isnull(attach_result)) // failure but don't attack
-			return
-		else // failure and attack them with the organ
-			return ..()*/
-
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/analyzer/healthanalyzer))
 			var/obj/item/device/analyzer/healthanalyzer/HA = W
