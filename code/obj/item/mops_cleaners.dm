@@ -9,6 +9,8 @@ HANDHELD VACUUM
 TRASH BAG
 
 */
+#define MAX_CAN_PUSH 50
+
 /obj/item/spraybottle
 	desc = "An unlabeled spray bottle."
 	icon = 'icons/obj/janitor.dmi'
@@ -405,7 +407,11 @@ TRASH BAG
 			return FALSE
 
 	var/list/obj/item/items_to_push = list()
+	var/pushed_item_count = 0
+
 	for(var/obj/item/I in target_location)
+		if(pushed_item_count > MAX_CAN_PUSH)
+			break
 		if(I.w_class > W_CLASS_BULKY) // can't push through an item thats too big
 			boutput(user, SPAN_ALERT("[I] is too big for you to push!"))
 			return FALSE
@@ -414,12 +420,10 @@ TRASH BAG
 				boutput(user, SPAN_ALERT("The [src] got caught on [I]!"))
 				return FALSE
 		else
-			items_to_push += I
+			I.set_loc(pushed_to) // step(AM, dir)
+			pushed_item_count++
 
 	playsound(src, 'sound/items/towel.ogg', 75, TRUE)
-
-	for(var/obj/item/I as anything in items_to_push)
-		I.set_loc(pushed_to)
 
 	return TRUE
 
@@ -1507,7 +1511,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 			if (!AM.anchored)
 				step(AM, dir)
 			count++
-			if (count > 50) //panic clause for TOO MUCH STUFF
+			if (count > MAX_CAN_PUSH) //panic clause for TOO MUCH STUFF
 				return
 
 	on_launch(obj/projectile/O)
@@ -1589,3 +1593,5 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 			projectile.create_reagents(100)
 		src.reagents.trans_to_direct(projectile.reagents, 100)
 		playsound(src.loc, 'sound/effects/bigwave.ogg', 50, 1)
+
+#undef MAX_CAN_PUSH
