@@ -43,7 +43,7 @@
 	RETURN_TYPE(/list/datum/db_record)
 
 	if (src.indices[key])
-		return src.indices[key][value]
+		return src.indices[key][value] || list()
 
 	. = list()
 	for (var/datum/db_record/record as anything in src.records)

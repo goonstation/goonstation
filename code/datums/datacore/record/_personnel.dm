@@ -23,3 +23,7 @@
 /datum/db_record/personnel/proc/init_from_record(datum/db_record/personnel/general/G)
 	src["id"] = G["id"]
 	src["name"] = G["name"]
+
+/// Update the values of this personnel record's fields from a scan of a human.
+/datum/db_record/personnel/proc/update_from_scan(mob/living/carbon/human/H)
+	src["name"] = H.real_name

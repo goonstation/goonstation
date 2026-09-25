@@ -32,3 +32,7 @@
 		global.wagesystem.union_stipend += extra
 
 	global.wagesystem.payroll_stipend += src["wage"] * 1.1
+
+/datum/db_record/personnel/bank/update_from_scan(mob/living/carbon/human/H)
+	. = ..()
+	src["pda_net_id"] = astype(H.wear_id, /obj/item/device/pda2)?.net_id

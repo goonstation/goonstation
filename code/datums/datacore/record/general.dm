@@ -53,3 +53,18 @@
 		IMG.img_name = "photo of [H.real_name]"
 		IMG.img_desc = "You can see [H.real_name] in the photo."
 		src["photo"] = IMG
+
+/datum/db_record/personnel/general/update_from_scan(mob/living/carbon/human/H)
+	. = ..()
+
+	src["sex"] = (H.gender == FEMALE) ? "Female" : "Male"
+	src["pronouns"] = H.get_pronouns().name
+	src["age"] = H.bioHolder.age
+
+	if (!H.gloves?.print_mask)
+		src["fprint_r"] = H.limbs?.r_arm?.limb_print.id
+		src["fprint_l"] = H.limbs?.l_arm?.limb_print.id
+
+	src["dna"] = H.bioHolder.Uid
+	src["p_stat"] = "Active"
+	src["m_stat"] = "Stable"

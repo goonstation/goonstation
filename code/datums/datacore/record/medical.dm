@@ -27,37 +27,47 @@
 	if (H.client?.preferences?.medical_note)
 		src["notes"] = H.client?.preferences?.medical_note
 
-	if (H.traitHolder)
-		var/list/allergies = list()
-		var/list/minor_disabilities = list()
-		var/list/minor_disability_desc = list()
-		var/list/major_disabilities = list()
-		var/list/major_disability_desc = list()
+	src.get_traits(H)
 
-		for (var/id as anything in H.traitHolder.traits)
-			var/datum/trait/trait = H.traitHolder.traits[id]
+/datum/db_record/personnel/medical/update_from_scan(mob/living/carbon/human/H)
+	. = ..()
+	src["blood_type"] = H.bioHolder.bloodType
+	src.get_traits(H)
 
-			if (istype(trait, /datum/trait/random_allergy))
-				var/datum/trait/random_allergy/allergy = trait
-				allergies += global.reagent_id_to_name(allergy.allergen)
-				continue
+/datum/db_record/personnel/medical/proc/get_traits(mob/living/carbon/human/H)
+	if (!H.traitHolder)
+		return
 
-			switch (trait.disability_type)
-				if (TRAIT_DISABILITY_MINOR)
-					minor_disabilities += trait.disability_name
-					minor_disability_desc += trait.disability_desc
-				if (TRAIT_DISABILITY_MAJOR)
-					major_disabilities += trait.disability_name
-					major_disability_desc += trait.disability_desc
+	var/list/allergies = list()
+	var/list/minor_disabilities = list()
+	var/list/minor_disability_desc = list()
+	var/list/major_disabilities = list()
+	var/list/major_disability_desc = list()
 
-		if (length(allergies))
-			src["alg"] = jointext(allergies, ", ")
-			src["alg_d"] = "Allergy information imported from CentCom database."
+	for (var/id as anything in H.traitHolder.traits)
+		var/datum/trait/trait = H.traitHolder.traits[id]
 
-		if (length(minor_disabilities))
-			src["mi_dis"] = jointext(minor_disabilities, ", ")
-			src["mi_dis_d"] = jointext(minor_disability_desc, ". ")
+		if (istype(trait, /datum/trait/random_allergy))
+			var/datum/trait/random_allergy/allergy = trait
+			allergies += global.reagent_id_to_name(allergy.allergen)
+			continue
 
-		if (length(major_disabilities))
-			src["ma_dis"] = jointext(major_disabilities, ", ")
-			src["ma_dis_d"] = jointext(major_disability_desc, ". ")
+		switch (trait.disability_type)
+			if (TRAIT_DISABILITY_MINOR)
+				minor_disabilities += trait.disability_name
+				minor_disability_desc += trait.disability_desc
+			if (TRAIT_DISABILITY_MAJOR)
+				major_disabilities += trait.disability_name
+				major_disability_desc += trait.disability_desc
+
+	if (length(allergies))
+		src["alg"] = jointext(allergies, ", ")
+		src["alg_d"] = "Allergy information imported from CentCom database."
+
+	if (length(minor_disabilities))
+		src["mi_dis"] = jointext(minor_disabilities, ", ")
+		src["mi_dis_d"] = jointext(minor_disability_desc, ". ")
+
+	if (length(major_disabilities))
+		src["ma_dis"] = jointext(major_disabilities, ", ")
+		src["ma_dis_d"] = jointext(major_disability_desc, ". ")
