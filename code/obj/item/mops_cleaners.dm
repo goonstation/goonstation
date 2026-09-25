@@ -420,7 +420,7 @@ TRASH BAG
 				boutput(user, SPAN_ALERT("The [src] got caught on [I]!"))
 				return FALSE
 		else
-			I.set_loc(pushed_to) // step(AM, dir)
+			I.set_loc(pushed_to)
 			pushed_item_count++
 
 	playsound(src, 'sound/items/towel.ogg', 75, TRUE)
