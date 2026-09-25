@@ -1,5 +1,4 @@
 ABSTRACT_TYPE(/datum/customization_style/hair/long)
-
 /datum/customization_style/hair/long/chub2_s
 	name = "Bang: Left"
 	id = "chub2_s"

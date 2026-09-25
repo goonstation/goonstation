@@ -1,7 +1,6 @@
-ABSTRACT_TYPE(/datum/customization_style/hair/facial)
 TYPEINFO(/datum/customization_style/hair/facial)
 	style_type = CUSTOMIZATION::HAIR::FACIAL
-
+ABSTRACT_TYPE(/datum/customization_style/hair/facial)
 /datum/customization_style/hair/facial
 	default_layer = MOB_HAIR_LAYER1
 

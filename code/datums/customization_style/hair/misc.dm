@@ -10,9 +10,9 @@ ABSTRACT_TYPE(/datum/customization_style/hair/eyebrows)
 	name = "Huge Eyebrows"
 	id  = "thufir"
 
-ABSTRACT_TYPE(/datum/customization_style/hair/makeup)
 TYPEINFO(/datum/customization_style/hair/makeup)
 	style_type = CUSTOMIZATION::HAIR::MAKEUP
+ABSTRACT_TYPE(/datum/customization_style/hair/makeup)
 /datum/customization_style/hair/makeup
 	default_layer = MOB_HAIR_LAYER1
 
@@ -24,9 +24,9 @@ TYPEINFO(/datum/customization_style/hair/makeup)
 	name = "Lipstick"
 	id = "lipstick"
 
-ABSTRACT_TYPE(/datum/customization_style/hair/biological)
 TYPEINFO(/datum/customization_style/hair/biological)
 	style_type = CUSTOMIZATION::HAIR::BIOLOGICAL
+ABSTRACT_TYPE(/datum/customization_style/hair/biological)
 /datum/customization_style/hair/biological
 	default_layer = MOB_HAIR_LAYER1
 

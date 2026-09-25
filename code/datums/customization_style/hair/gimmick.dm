@@ -1,7 +1,6 @@
-ABSTRACT_TYPE(/datum/customization_style/hair/gimmick)
 TYPEINFO(/datum/customization_style/hair/gimmick)
 	gimmick = TRUE
-
+ABSTRACT_TYPE(/datum/customization_style/hair/gimmick)
 /datum/customization_style/hair/gimmick/afroHA
 	name = "Afro: Alternating Halves"
 	id = "afroHA"

@@ -1,5 +1,4 @@
 ABSTRACT_TYPE(/datum/customization_style/hair/hairup)
-
 /datum/customization_style/hair/hairup/bun
 	name = "Bun"
 	id = "bun"
