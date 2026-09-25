@@ -106,6 +106,7 @@
 				return SPAN_ALERT("Messaging must be enabled to communicate with engineering kit.")
 
 			var/mob/user = usr
+			A.ensure_analyzable_component()
 			var/datum/computer/file/electronics_scan/theScan = new
 			var/scan_result = SEND_SIGNAL(A, COMSIG_ATOM_ANALYZE, src.master, user, DEVICE_ANALYZER_ALLOWED_TAGS, list(), theScan)
 
