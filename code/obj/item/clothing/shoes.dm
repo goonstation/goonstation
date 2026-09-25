@@ -776,7 +776,7 @@ TYPEINFO(/obj/item/clothing/shoes/cowboy/boom)
 
 /obj/item/clothing/shoes/jetpack/NT
 	name = "NT S.M.B.s"
-	desc = "A pair of Nanotrasen Spatial Mobility Boots, which provide propulsion capabilities and magnetic anchoring to the wearer. Created by Tradecraft Seneca to assist in mid-voyage hull repairs, they provide perfect mobility in 0g environments."
+	desc = "A pair of Nanotrasen Spatial Mobility Boots, which provide propulsion capabilities and magnetic anchoring to the wearer. Created by Tradecraft Seneca to assist in mid-voyage hull repairs, they provide perfect mobility in 0G environments."
 	icon_state = "ntjet"
 	magnetic = 1
 	compatible_species = list("cow", "human")
