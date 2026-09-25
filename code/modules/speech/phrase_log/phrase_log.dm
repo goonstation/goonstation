@@ -149,7 +149,7 @@ var/global/datum/phrase_log/phrase_log = new
 			for (var/phrase in src.phrases[category])
 				for (var/datum/phrase_log_cleaner/cleaner in cleaners)
 					src.phrases[category] -= phrase
-					var/result = cleaner.clean(phrase)
+					var/result = cleaner.clean(phrase, category)
 					//only add it back if the result wasn't null
 					if (!isnull(result) && length(result))
 						src.phrases[category] += result
@@ -176,7 +176,7 @@ var/global/datum/phrase_log/phrase_log = new
 			return random_phrase(category, include_old, include_new)
 
 	/// Logs a phrase to a selected category duh
-	proc/log_phrase(category, phrase, no_duplicates=FALSE, mob/user = null, strip_html=FALSE)
+	proc/log_phrase(category, phrase, no_duplicates=FALSE, mob/user = null, strip_html=TRUE)
 		if (!user)
 			user = usr
 		if(strip_html)

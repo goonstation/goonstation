@@ -14,8 +14,6 @@
     "paths": {
       "tgui": ["./packages/tgui"],
       "tgui/*": ["./packages/tgui/*"],
-      // "tgui-panel": ["./packages/tgui-panel"], // |GOONSTATION-CHANGE|
-      // "tgui-panel/*": ["./packages/tgui-panel/*"], // |GOONSTATION-CHANGE|
       // "tgui-say": ["./packages/tgui-say"], // |GOONSTATION-CHANGE|
       // "tgui-say/*": ["./packages/tgui-say/*"], // |GOONSTATION-CHANGE|
       "tgui-dev-server": ["./packages/tgui-dev-server"],

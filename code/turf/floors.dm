@@ -19,7 +19,7 @@
 	provides_grip = FALSE
 	/// if this floor can be pried up
 	var/pryable = TRUE
-	var/has_material = TRUE
+	var/datum/material/plating_material = null //! Material of the floor when the floor tile is removed
 
 	/// Set to instantiated material datum ([getMaterial()]) for custom material floors
 	var/reinforced = FALSE
@@ -34,6 +34,7 @@
 
 	New()
 		..()
+		src.plating_material = src.material
 		roundstart_icon_state = icon_state
 		roundstart_dir = dir
 		#ifdef XMAS
@@ -2203,9 +2204,10 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	setIntact(FALSE)
 	broken = 0
 	burnt = 0
-	if(default_material)
-		var/datum/material/mat = istext(default_material) ? getMaterial(default_material) : default_material
-		src.setMaterial(mat)
+	if(src.plating_material)
+		src.setMaterial(src.plating_material)
+	else if(src.default_material)
+		src.setMaterial(getMaterial(src.default_material))
 	else
 		src.setMaterial(getMaterial("steel"))
 	levelupdate()
@@ -2313,7 +2315,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		if (!intact)
 			if(T.amount >= 1)
 				restore_tile(do_hide)
-				src.default_material = src.material
+				src.plating_material = src.material
 
 				// if we have a special icon state and it doesn't have a material variant
 				// and at the same time the base floor icon state does have a material variant
@@ -2618,8 +2620,40 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 		name = "glowing wall"
 		desc = "It seems to be humming slightly. Huh."
 		luminosity = 2
-		icon_state = "bluewall_glow"
+		icon = 'icons/misc/worlds.dmi'
+		icon_state = "bluedoor_1"
 		can_replace_with_stuff = 1
+
+		// borrowed from /obj/strip_door to make this easier
+		// i dont know why this is a wall, and i dont think i want to know.
+		var/static/list/connects_to = typecacheof(list(
+			/obj/machinery/door,
+			/obj/window,
+			/turf/simulated/wall/auto,
+			/turf/unsimulated/wall/auto,
+			/obj/precursor_puzzle/glowing_door
+		))
+
+		New()
+			..()
+			src.UpdateIcon()
+			// we shouldnt have to update neighbors because nobody's building these
+
+		update_icon()
+			..()
+			var/connectdir = get_connected_directions_bitflag(connects_to)
+			if ((connectdir & NORTH) && (connectdir & SOUTH))
+				src.dir = EAST
+				return
+			if ((connectdir & EAST) && (connectdir & WEST))
+				src.dir = NORTH
+				return
+			if ((connectdir & NORTH) || (connectdir & SOUTH))
+				src.dir = EAST
+				return
+			if ((connectdir & EAST) || (connectdir & WEST))
+				src.dir = NORTH
+				return
 
 		attackby(obj/item/W, mob/user)
 			if (istype(W, /obj/item/device/key/generic/coldsteel))

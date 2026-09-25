@@ -234,7 +234,7 @@ TYPEINFO(/obj/item/rcd)
 		var/turf/simulated/floor/T = A.ReplaceWithFloor()
 		T.inherit_area()
 		T.setMaterial(getMaterial(material_name))
-		T.default_material = getMaterial(material_name)
+		T.plating_material = material_name
 		return
 
 	proc/handle_build_wall(turf/A, mob/user)
@@ -344,8 +344,7 @@ TYPEINFO(/obj/item/rcd)
 		if (istype(A, /turf/simulated/floor) || istype(A, /turf/simulated/space_phoenix_ice_tunnel))
 			var/turf/simulated/floor/T = A
 			if(istype(T) && T.intact)
-				var/datum/material/mat = istext(T.default_material) ? getMaterial(T.default_material) : T.default_material
-				if(length(restricted_materials) && !(mat?.getID() in restricted_materials))
+				if(length(restricted_materials) && !(T.default_material in restricted_materials))
 					boutput(user, "Target object is not made of a material this RCD can deconstruct.")
 					return
 			src.do_rcd_action(user, A, "removing \the [A]", matter_remove_floor, time_remove_floor, PROC_REF(do_delete_floor), src)

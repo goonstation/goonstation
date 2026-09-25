@@ -299,7 +299,6 @@
 	name = "molitz crystal"
 	desc = "An unusual crystal of Molitz."
 	icon = 'icons/obj/items/materials/molitz.dmi'
-	icon_state = "ore$$molitz_b"
 	material_name = "Molitz Beta"
 	default_material = "molitz_b"
 	crystal = 1
@@ -735,7 +734,7 @@
 	stamina_crit_chance = 35
 	burn_possible = FALSE
 	event_handler_flags = USE_FLUID_ENTER
-	material_amt = 0.1
+	material_amt = MATERIAL::AMOUNT::SHEET
 	material_name = "Glass"
 	default_material = "glass"
 	mat_changename = TRUE

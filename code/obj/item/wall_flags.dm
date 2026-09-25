@@ -10,6 +10,7 @@
 	var/altside_flag = null
 	/// Some flags can be converted into capes; clothing items for the suit or back slot. Must be a type path of `/obj/item/clothing/suit/flag`
 	var/associated_cape = null
+	var/needs_logging = TRUE // Does it require logging on suspcious interactions
 
 /obj/item/flag/attack_self(mob/user)
 	if (!ispath(src.altside_flag, /obj/item/flag))
@@ -48,7 +49,8 @@
 	new_flag.flag_item = src
 	user.u_equip(src)
 	src.set_loc(new_flag)
-	logTheThing(LOG_STATION, user, "Hangs up a flag ([new_flag.name]) in [T] at [log_loc(user)].")
+	if(src.needs_logging)
+		logTheThing(LOG_STATION, user, "Hangs up a flag ([new_flag.name]) in [T] at [log_loc(user)].")
 	user.visible_message(SPAN_NOTICE("[user] hangs up a [new_flag.name] in [T]!."), SPAN_NOTICE("You hang up a [new_flag.name] in [T]!"))
 
 /obj/item/flag/ace
@@ -144,6 +146,37 @@
 	associated_flag = /obj/decal/poster/flag/mlmachi
 	altside_flag = /obj/item/flag/mlmvinc
 	associated_cape = /obj/item/clothing/suit/flag/mlmachi
+
+/obj/item/flag/nanotrasen
+	name = "nanotrasen flag"
+	desc = "The flag of the Nanotrasen corporation. Ironically the insignia looks like the letter \"S\" when folded."
+	icon_state = "nanotrasen"
+	associated_flag = /obj/decal/poster/flag/nanotrasen
+	burn_possible = TRUE
+	needs_logging = FALSE
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		. = ..()
+		boutput(user, SPAN_NOTICE("The [E]'s red wiring rubs off on the [src], painting it sinister red!"))
+
+		src.icon_state = /obj/item/flag/syndicate::icon_state
+		src.name = /obj/item/flag/syndicate::name
+		src.desc = /obj/item/flag/syndicate::desc
+		src.associated_flag = /obj/item/flag/syndicate::associated_flag
+		src.contraband = /obj/item/flag/syndicate::contraband
+
+
+/obj/item/flag/syndicate
+	name = "syndicate flag"
+	icon_state = "syndicate"
+	desc = "The ominous and intimidating flag of the Syndicate. Ironically the insignia looks like the letter \"N\" when folded."
+	SYNDICATE_STEALTH_DESCRIPTION("Fills you with pride in your work.")
+	tooltip_flags = REBUILD_USER
+	associated_flag = /obj/decal/poster/flag/syndicate
+	burn_possible = TRUE
+	needs_logging = FALSE
+	contraband = 2
+
 
 ABSTRACT_TYPE(/obj/item/clothing/suit/flag)
 /obj/item/clothing/suit/flag

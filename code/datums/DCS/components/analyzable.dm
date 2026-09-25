@@ -12,6 +12,20 @@ TYPEINFO(/datum/component/analyzable)
 		ARG_INFO("type_override", DATA_INPUT_TYPE, "the typepath that scanning this object will provide")
 	)
 
+/// Attaches the analyzable component, if this atom's typeinfo opts into being scanned.
+/// Scanners call this right before emitting COMSIG_ATOM_ANALYZE.
+/atom/proc/ensure_analyzable_component()
+	if (!ismovable(src) || src.GetComponent(/datum/component/analyzable))
+		return
+	var/typeinfo/atom/movable/typeinfo = src.get_typeinfo()
+	var/override_type = src.type
+	while(!isnull(typeinfo.manufactured_type) && override_type != typeinfo.manufactured_type) //Recursively go up the list of manufacture overrides.
+		override_type = typeinfo.manufactured_type
+		typeinfo = get_type_typeinfo(override_type)
+
+	if (typeinfo.analyser_flags & (ANALYSER_ALLOWED | ANALYSER_SKIP_IF_FAIL | ANALYSER_FAILFEEDBACK))
+		src.AddComponent(/datum/component/analyzable, override_type)
+
 /datum/component/analyzable/Initialize(type_override)
 	. = ..()
 	if (ismovable(parent))
@@ -57,7 +71,7 @@ TYPEINFO(/datum/component/analyzable)
 			playsound(I.loc, 'sound/machines/buzz-sigh.ogg', 10, FALSE)
 			scan_output = SPAN_ALERT("The scanner makes a disgruntled beep informing you that would be illegal.")
 		if (MECHANICS_ANALYSIS_SUCCESS)
-			scan_output = SPAN_NOTICE("[scanned_item] scanned successful.")
+			scan_output = SPAN_NOTICE("[scanned_item] scanned successfully.")
 			playsound(I.loc, 'sound/machines/tone_beep.ogg', 30, FALSE)
 		if (MECHANICS_ANALYSIS_ALREADY_SCANNED)
 			scan_output = SPAN_ALERT("You have already scanned \an [scanned_item].")
@@ -91,6 +105,6 @@ TYPEINFO(/datum/component/analyzable)
 	)
 	animate_scanning(target, "#FFFF00")
 
-/datum/component/analyzer/UnregisterFromParent()
+/datum/component/analyzable/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ATOM_ANALYZE)
 	. = ..()

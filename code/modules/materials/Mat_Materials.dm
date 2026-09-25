@@ -202,6 +202,11 @@ ABSTRACT_TYPE(/datum/material)
 			CRASH("Attempted to mutate an immutatble material!")
 		src.color = color
 
+	proc/setColorHSL(var/hsl_color)
+		if(!src.mutable)
+			CRASH("Attempted to mutate an immutatble material!")
+		src.hsl_color = hsl_color
+
 	proc/setCanMix(var/mix)
 		if(!src.mutable)
 			CRASH("Attempted to mutate an immutatble material!")
@@ -540,10 +545,6 @@ ABSTRACT_TYPE(/datum/material)
 			src.vars[triggername] = getFusedTriggers(mat1.vars[triggername], mat2.vars[triggername], src)
 			handleTriggerGenerations(src.vars[triggername])
 
-		//Make sure the newly merged properties are informed about the fact that they just changed. Has to happen after triggers.
-		for(var/datum/material_property/nProp in src.properties)
-			nProp.onValueChanged(src, src.properties[nProp])
-
 		//Texture merging. SUPER DUPER UGLY AAAAH
 		if(mat2.texture && !mat1.texture)
 			src.texture = mat2.texture
@@ -567,6 +568,21 @@ ABSTRACT_TYPE(/datum/material)
 		src.parent_materials.Add(mat2)
 
 		triggerOnMix(src, mat1, mat2, bias)
+		// A quirk of how mix effects work. They are triggered by the resulting material, not the source materials.
+		// If this is the last generation of a mix effect, then it will not be passed on to trigger on future generations.
+		// Remove it now, since it is effectively gone.
+		for(var/datum/materialProc/current in src.triggersOnMix)
+			if(current.max_generations != -1 && src.triggersOnMix[current] == current.max_generations)
+				src.triggersOnMix.Remove(current)
+
+		for(var/datum/material_property/nProp in src.properties)
+			// Only round after the properties have all been adjusted
+			var/prop_val = round(src.properties[nProp])
+			src.properties[nProp] = clamp(prop_val, nProp.min_value, nProp.max_value)
+
+		//Make sure the newly merged properties are informed about the fact that they just changed. Has to happen after triggers.
+		for(var/datum/material_property/nProp in src.properties)
+			nProp.onValueChanged(src, src.properties[nProp])
 
 		//RUN VALUE CHANGED ON ALL PROPERTIES TO TRIGGER PROPERS EVENTS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -1467,10 +1483,14 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	desc = "Miraclium is a bizarre substance that can have a wide variety of effects."
 	icon_file = 'icons/obj/items/materials/miracle.dmi'
 	color = "#FFFFFF"
+	hsl_color =	list(0.00, 0.00, 0.00, 0.00,\
+					0.00, 0.60, 0.00, 0.00,\
+					0.00, 0.00, 1.00, 0.00,\
+					0.00, 0.00, 0.00, 1.00,\
+					0.00, 0.40, 0.00, 0.00)
 
 	New()
 		..()
-		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/miracle_add())
 		alpha = rand(20, 255)
 		setProperty("density", rand(1, 8))
 		setProperty("hard", rand(1, 8))
@@ -1479,6 +1499,13 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		var/rand_val = rand()
 		var/melting_point = (3500 KELVIN * (rand_val * rand_val)) + 500 KELVIN
 		setProperty("melting_point", melting_point)
+
+		src.hsl_color[18] = ((getProperty("density") - 1) / (8 - 1)) * 0.8 // Total saturation
+		src.hsl_color[6] = ((getProperty("hard") - 1) / (8 - 1)) - src.hsl_color[18] + 0.2 // Color saturation
+		src.hsl_color[11] = (((getProperty("chemical") - 1) / (8 - 1)) * 0.5) + 0.75 // Luminosity
+
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/miracle_add())
+		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/miracle_remove())
 		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/temp_miraclium())
 
 
@@ -1605,6 +1632,8 @@ ABSTRACT_TYPE(/datum/material/organic)
 
 	edible_exact = 0.6 //Just barely edible
 	edible = 1
+	/// The reference to the blob overmind is used for the ID. Make sure it stays in memory.
+	var/mob/living/intangible/blob_overmind/blob_source = null
 
 	New()
 		..()
@@ -1619,6 +1648,33 @@ ABSTRACT_TYPE(/datum/material/organic)
 		addTrigger(TRIGGERS_ON_IMAGE, new /datum/materialProc/honey_image())
 		addTrigger(TRIGGERS_ON_EAT, new /datum/materialProc/oneat_blob())
 
+	proc/match_to_blob(var/mob/living/intangible/blob_overmind/blob)
+		if(!src.mutable)
+			CRASH("Attempted to mutate an immutatble material!")
+		src.blob_source = blob
+		src.setID("blob_\ref[blob]")
+		src.match_to_blob_color(blob.organ_color)
+
+	proc/match_to_blob_color(var/blob_color)
+		if(!src.mutable)
+			CRASH("Attempted to mutate an immutatble material!")
+
+		if(isnull(src.blob_source))
+			src.setID("blob_[blob_color]")
+
+		var/list/color_hsl = rgb2hsl(GetRedPart(blob_color), GetGreenPart(blob_color), GetBluePart(blob_color))
+		var/h = color_hsl[1] / 360
+		var/s = color_hsl[2] / 100
+		var/l = color_hsl[3] / 100
+
+		src.setColor(COLOR_MATRIX_IDENTITY)
+		var/list/hsl_temp
+		hsl_temp = list(0.00, 0.00, 0.00, 0.00,\
+						0.00, 0.3 * s, 0.00, 0.00,\
+						0.00, 0.00, (0.6 * l) + 0.35, 0.00,\
+						0.00, 0.00, 0.00, 1.00,\
+						h, 0.7 * s, 0.00, 0.00)
+		src.setColorHSL(hsl_temp)
 
 
 /datum/material/organic/flesh
@@ -1790,8 +1846,18 @@ ABSTRACT_TYPE(/datum/material/organic)
 	mat_id = "bamboo"
 	name = "bamboo"
 	desc = "Bamboo is a giant woody grass."
-	color = "#544c24"
-	texture_blend = BLEND_ADD
+	color =	list(1.10, 0.00, 0.00, 0.00,\
+					0.00, 1.00, 0.00, 0.00,\
+					0.00, 0.00, 0.80, 0.00,\
+					0.00, 0.00, 0.00, 1.00,\
+					0.00, 0.00, 0.00, 0.00)
+	hsl_color = list(0.00, 0.00, 0.05, 0.00,\
+					0.00, 0.05, 0.05, 0.00,\
+					0.00, 0.00, 0.90, 0.00,\
+					0.00, 0.00, 0.00, 1.00,\
+					0.13, 0.20, 0.00, 0.00)
+	texture = "bamboo"
+	texture_blend = BLEND_DEFAULT
 	artisan_trait_weight = MATERIAL_ARTISAN_COMMON
 
 	New()
@@ -2366,7 +2432,13 @@ ABSTRACT_TYPE(/datum/material/rubber)
 	mat_id = "latex"
 	name = "latex"
 	desc = "A type of synthetic rubber. Conducts electricity poorly."
-	color = "#DDDDDD" //"#FF0000" idgaf ok I want red cables back. no haine, this stuff isnt red.
+	hsl_color = list(1.00, 0.00, 0.00, 0.00,\
+					0.00, 0.00, 0.10, 0.20,\
+					0.00, 0.00, 0.70, 0.25,\
+					0.00, 0.00, 0.00, 0.75,\
+					0.00, 0.00, 0.45, 0.00)
+	color = "#EAEAEA" //"#FF0000" idgaf ok I want red cables back. no haine, this stuff isnt red.
+	alpha = 239
 
 	New()
 		..()
@@ -2375,6 +2447,9 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("electrical", 3)
 		setProperty("thermal", 4)
 		setProperty("melting_point", 453 KELVIN) // About the melting point of rubber
+
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/outline_add(src.color, 0.05))
+		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/outline_remove())
 
 /datum/material/rubber/synthrubber
 	mat_id = "synthrubber"
@@ -2512,8 +2587,8 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		var/rads = new_mat.getProperty("radioactive")
 		var/n_rads = new_mat.getProperty("n_radioactive")
 
-		new_mat.adjustProperty("reflective", rads / 2)
-		new_mat.adjustProperty("density", n_rads / 2)
+		new_mat.adjustProperty("reflective", rads)
+		new_mat.adjustProperty("density", n_rads)
 
 		new_mat.removeProperty("radioactive")
 		new_mat.removeProperty("n_radioactive")

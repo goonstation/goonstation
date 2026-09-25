@@ -6,7 +6,7 @@
 		icon_state = "girder"
 		anchored = ANCHORED
 		density = 1
-		material_amt = 0.2
+		material_amt = MATERIAL::AMOUNT::SHEET * 2
 		var/state = 0
 		projectile_passthrough_chance = 50
 		desc = "A metal support for an incomplete wall."
@@ -357,7 +357,7 @@ TYPEINFO(/obj/structure/woodwall)
 	anchored = ANCHORED
 	density = 1
 	opacity = 1
-	material_amt = 0.5
+	material_amt = MATERIAL::AMOUNT::SHEET * 5
 	projectile_passthrough_chance = 30
 	_health = 30
 	_max_health = 30
