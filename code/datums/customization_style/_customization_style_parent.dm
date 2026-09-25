@@ -78,9 +78,6 @@ ABSTRACT_TYPE(/datum/customization_style)
 		locked_styles = list()
 		for (var/datum/customization_style/styletype as anything in concrete_typesof(/datum/customization_style))
 			var/typeinfo/datum/customization_style/typeinfo = get_type_typeinfo(styletype)
-			if (style_filter && typeinfo.style_type)
-				if ((style_filter != typeinfo.style_type) && (style_filter != CUSTOMIZATION.type_to_slot[typeinfo.style_type]))
-					continue
 			if (!typeinfo.special_criteria)
 				if (!typeinfo.gimmick)
 					always_available += styletype
@@ -100,6 +97,12 @@ ABSTRACT_TYPE(/datum/customization_style)
 				available += style
 
 	for (var/datum/customization_style/style as anything in available)
+		var/typeinfo/datum/customization_style/typeinfo = get_type_typeinfo(style)
+		if (style_filter && typeinfo.style_type)
+			if ((style_filter != typeinfo.style_type) && (style_filter != CUSTOMIZATION.type_to_slot[typeinfo.style_type]))
+				available -= style
+				continue
+
 		var/style_gender = initial(style.gender)
 		if (gender && style_gender && !(style_gender & gender))
 			available -= style
