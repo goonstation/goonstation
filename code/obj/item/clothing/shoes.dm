@@ -774,25 +774,25 @@ TYPEINFO(/obj/item/clothing/shoes/cowboy/boom)
 		if (dist <= 1)
 			. += "<br>They're currently [src.on ? "on" : "off"].<br>[src.tank ? "The tank's current air pressure reads [MIXTURE_PRESSURE(src.tank.air_contents)]." : SPAN_ALERT("They have no tank attached!")]"
 
-	NT
-		name = "NT S.M.B.s"
-		desc = "A pair of Nanotrasen Spatial Mobility Boots, which provide propulsion capabilities and magnetic anchoring to the wearer. Created by Tradecraft Seneca to assist in mid-voyage hull repairs, they provide perfect mobility in 0g environments."
-		icon_state = "ntjet"
-		magnetic = 1
-		compatible_species = list("cow", "human")
-		kick_bonus = 2
+/obj/item/clothing/shoes/jetpack/NT
+	name = "NT S.M.B.s"
+	desc = "A pair of Nanotrasen Spatial Mobility Boots, which provide propulsion capabilities and magnetic anchoring to the wearer. Created by Tradecraft Seneca to assist in mid-voyage hull repairs, they provide perfect mobility in 0g environments."
+	icon_state = "ntjet"
+	magnetic = 1
+	compatible_species = list("cow", "human")
+	kick_bonus = 2
 
-		New()
-			..()
-			src.tank = new /obj/item/tank/mini/ntjet(src)
+	New()
+		..()
+		src.tank = new /obj/item/tank/mini/ntjet(src)
 
-		setupProperties()
-			..()
-			setProperty("coldprot", 10)
-			setProperty("heatprot", 10)
-			setProperty("chemprot", 7)
-			setProperty("meleeprot", 1)
-			setProperty("movespeed", 0)
+	setupProperties()
+		..()
+		setProperty("coldprot", 10)
+		setProperty("heatprot", 10)
+		setProperty("chemprot", 7)
+		setProperty("meleeprot", 1)
+		setProperty("movespeed", 0)
 
 /obj/item/clothing/shoes/jetpack/abilities = list(/obj/ability_button/jetboot_toggle)
 
