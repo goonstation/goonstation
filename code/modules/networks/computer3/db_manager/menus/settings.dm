@@ -22,7 +22,7 @@
 
 		if (1)
 			if (src.parent.connected)
-				src.disconnect_from_printserver()
+				src.parent.disconnect_server()
 			else
 				src.connect_to_printserver()
 				src.wait(2 SECONDS)
@@ -56,7 +56,3 @@
 		src.parent.print_text("Connection established to \[[src.parent.server_netid]\].")
 	else
 		src.parent.print_text("Connection failed.")
-
-/datum/db_manager_menu/settings/proc/disconnect_from_printserver()
-	src.parent.disconnect_server()
-	src.parent.connected = FALSE

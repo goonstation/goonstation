@@ -3,14 +3,22 @@ ABSTRACT_TYPE(/datum/computer/file/terminal_program/db_manager)
 	name = "DBMan"
 	size = 12
 
+	/// Whether this database manager is connected to a mainframe computer.
 	var/tmp/connected = FALSE
+	/// The net ID of the mainframe computer that this database manager is connected to.
 	var/tmp/server_netid = null
+	/// The net ID of a candidate mainframe computer that this database manager is awaiting a handshake from.
 	var/tmp/potential_server_netid = null
+	/// A list of the names of all network printers known to this database manager.
 	var/tmp/list/known_printers = null
+	/// The name of the network printer that this database manager should print records from.
 	var/tmp/selected_printer = null
 
+	/// An associative list of database manager menu datums, indexed by a menu ID string.
 	VAR_PRIVATE/tmp/alist/menus = null
+	/// The current database manager menu being displayed.
 	VAR_PRIVATE/tmp/datum/db_manager_menu/current_menu = null
+	/// The current record group being used by this database manager to access records.
 	var/tmp/datum/db_record_group/current_record_group = null
 
 /datum/computer/file/terminal_program/db_manager/New()
@@ -107,6 +115,7 @@ ABSTRACT_TYPE(/datum/computer/file/terminal_program/db_manager)
 
 			src.peripheral_command("transmit", reply, ref(src.find_peripheral("NET_ADAPTER")))
 
+/// Initialises the menu datums that should be used by this database manager.
 /datum/computer/file/terminal_program/db_manager/proc/get_menus()
 	RETURN_TYPE(/alist)
 	return alist(
@@ -121,6 +130,7 @@ ABSTRACT_TYPE(/datum/computer/file/terminal_program/db_manager)
 		"printer_list"		= new /datum/db_manager_menu/printer_list(src),
 	)
 
+/// Switch this database manager to the menu corresponding to the passed menu ID.
 /datum/computer/file/terminal_program/db_manager/proc/switch_menu_to(menu_id)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
@@ -135,6 +145,7 @@ ABSTRACT_TYPE(/datum/computer/file/terminal_program/db_manager)
 	src.current_menu.accept_commands = TRUE
 	src.current_menu.load(arglist(arguments))
 
+/// Attempt to locate and connect to a mainframe computer at a specified address.
 /datum/computer/file/terminal_program/db_manager/proc/connect_server(address)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if (src.connected)
@@ -165,6 +176,7 @@ ABSTRACT_TYPE(/datum/computer/file/terminal_program/db_manager)
 	src.peripheral_command("transmit", signal, ref(net_card))
 	return FALSE
 
+/// Disconnect from the current mainframe computer.
 /datum/computer/file/terminal_program/db_manager/proc/disconnect_server()
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if (!src.server_netid)
@@ -179,8 +191,10 @@ ABSTRACT_TYPE(/datum/computer/file/terminal_program/db_manager)
 	signal.data["command"] = "term_disconnect"
 
 	src.peripheral_command("transmit", signal, ref(net_card))
+	src.connected = FALSE
 	return FALSE
 
+/// Ping the network for potential mainframe computers.
 /datum/computer/file/terminal_program/db_manager/proc/ping_server()
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if (src.connected)
@@ -194,6 +208,7 @@ ABSTRACT_TYPE(/datum/computer/file/terminal_program/db_manager)
 	src.peripheral_command("ping", null, ref(net_card))
 	return FALSE
 
+/// Transmit a message to the connected mainframe computer.
 /datum/computer/file/terminal_program/db_manager/proc/message_server(message, datum/computer/file/to_send)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if (!src.connected || !src.server_netid || !message)
@@ -213,6 +228,7 @@ ABSTRACT_TYPE(/datum/computer/file/terminal_program/db_manager)
 	src.peripheral_command("transmit", signal, ref(net_card))
 	return FALSE
 
+/// Attempt to print a specified record from the selected network printer.
 /datum/computer/file/terminal_program/db_manager/proc/network_print(record_id)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if (!src.connected || !src.selected_printer || !src.server_netid)
@@ -225,6 +241,7 @@ ABSTRACT_TYPE(/datum/computer/file/terminal_program/db_manager)
 	src.message_server("command=print&args=print [src.selected_printer]", print_record)
 	return FALSE
 
+/// Attempt to print a specified photo from the selected network printer.
 /datum/computer/file/terminal_program/db_manager/proc/network_print_photo(datum/computer/file/image/IMG)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if (!src.connected || !src.selected_printer || !src.server_netid || !IMG)
@@ -239,6 +256,7 @@ ABSTRACT_TYPE(/datum/computer/file/terminal_program/db_manager)
 	src.message_server("command=print&args=print [src.selected_printer]", print_record)
 	return FALSE
 
+/// Attempt to print a specified record from a local printer.
 /datum/computer/file/terminal_program/db_manager/proc/local_print(record_id)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	var/obj/item/peripheral/printer = src.find_peripheral("LAR_PRINTER")
@@ -251,5 +269,6 @@ ABSTRACT_TYPE(/datum/computer/file/terminal_program/db_manager)
 	src.peripheral_command("print", signal, ref(printer))
 	return FALSE
 
+/// Called when this database manager is used to update a record field.
 /datum/computer/file/terminal_program/db_manager/proc/on_field_update(datum/db_record/record, key, old_value, new_value)
 	return
