@@ -91,7 +91,10 @@ ABSTRACT_TYPE(/datum/component/barber)
 
 TYPEINFO(/datum/component/barber/haircut)
 TYPEINFO_NEW(/datum/component/barber/haircut)
-	all_hair_types = get_available_custom_style_types(style_filter = CUSTOMIZATION::HAIR::HAIRHEAD)
+	all_hair_types = get_available_custom_style_types(style_filter = CUSTOMIZATION::HAIR::SHORT) \
+					+ get_available_custom_style_types(style_filter = CUSTOMIZATION::HAIR::LONG) \
+					+ get_available_custom_style_types(style_filter = CUSTOMIZATION::HAIR::HAIRUP) \
+					+ get_available_custom_style_types(style_filter = CUSTOMIZATION::HAIR::GIMMICK)
 	. = ..()
 
 /datum/component/barber/haircut
@@ -794,7 +797,10 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 	cutting = "cutting"
 
 	getHairStyles()
-		return get_available_custom_style_types(style_filter = CUSTOMIZATION::HAIR::HAIRHEAD)
+		return get_available_custom_style_types(style_filter = CUSTOMIZATION::HAIR::SHORT) \
+			+ get_available_custom_style_types(style_filter = CUSTOMIZATION::HAIR::LONG) \
+			+ get_available_custom_style_types(style_filter = CUSTOMIZATION::HAIR::HAIRUP) \
+			+ get_available_custom_style_types(style_filter = CUSTOMIZATION::HAIR::GIMMICK)
 
 /datum/action/bar/barber/shave
 	cut = "shave"

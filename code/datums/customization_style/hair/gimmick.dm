@@ -1,4 +1,5 @@
 TYPEINFO(/datum/customization_style/hair/gimmick)
+	style_type = CUSTOMIZATION::HAIR::GIMMICK
 	gimmick = TRUE
 ABSTRACT_TYPE(/datum/customization_style/hair/gimmick)
 /datum/customization_style/hair/gimmick/afroHA

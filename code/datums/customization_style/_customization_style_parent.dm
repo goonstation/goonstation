@@ -1,16 +1,3 @@
-var/global/list/customization_style_order = list(
-	/datum/customization_style/none,
-
-	/datum/customization_style/hair/short,
-	/datum/customization_style/hair/long,
-	/datum/customization_style/hair/hairup,
-	/datum/customization_style/hair/gimmick,
-	/datum/customization_style/hair/facial,
-	/datum/customization_style/hair/eyebrows,
-	/datum/customization_style/hair/makeup,
-	/datum/customization_style/hair/biological,
-)
-
 TYPEINFO(/datum/customization_style)
 	/// For filtering out different types.
 	var/style_type = null
@@ -32,8 +19,6 @@ ABSTRACT_TYPE(/datum/customization_style)
 	var/icon = 'icons/mob/human_hair.dmi'
 	/// For blacklisting the weird partial hairstyles that just look broken on random characters.
 	var/random_allowed = TRUE
-	/// Affects sort order when displayed as part of a list.
-	var/weight = 0
 
 /// Only used if typeinfo.special_criteria is TRUE.
 /datum/customization_style/proc/check_available(client/C)
@@ -66,21 +51,18 @@ ABSTRACT_TYPE(/datum/customization_style)
 	stack_trace("Couldn't find a customization_style with the id \"[target_id]\".")
 	return new /datum/customization_style/none
 
-/proc/build_customization_style_list()
-	var/customization_style_list_buffer = list()
+/// For sorting `/datum/customization_style`s when displayed as a list.
+/proc/cmp_customization_style(datum/customization_style/a, datum/customization_style/b)
+	var/typeinfo/datum/customization_style/typeinfo_a = get_type_typeinfo(a)
+	var/typeinfo/datum/customization_style/typeinfo_b = get_type_typeinfo(b)
 
-	for (var/customization_style_path in global.customization_style_order)
-		if (!ispath(customization_style_path, /datum/customization_style))
-			continue
-		customization_style_list_buffer += concrete_typesof(customization_style_path)
-
-	. = customization_style_list_buffer
+	return cmp_numeric_asc(CUSTOMIZATION.type_weights[typeinfo_a.style_type], CUSTOMIZATION.type_weights[typeinfo_b.style_type])
 
 /// Gets all the customization_styles which are available to a given client. Can be filtered by slot, type, and gender. Can exclude gimmick and
 /// non-random types.
 ///
 /// `style_filter` can be within the `CUSTOMIZATION::SLOT` namespace, or any customization style type namespace.
-proc/get_available_custom_style_types(client/C, style_filter = CUSTOMIZATION::SLOT::HAIR, gender = null, no_gimmick = FALSE, random_only = FALSE)
+/proc/get_available_custom_style_types(client/C, style_filter = CUSTOMIZATION::SLOT::HAIR, gender = null, no_gimmick = FALSE, random_only = FALSE)
 	// Defining static vars with no value doesn't overwrite them with null if we call the proc multiple times
 	// Styles with no restriction
 	var/static/list/always_available
@@ -94,10 +76,10 @@ proc/get_available_custom_style_types(client/C, style_filter = CUSTOMIZATION::SL
 		always_available = list()
 		gimmick_styles = list()
 		locked_styles = list()
-		for (var/datum/customization_style/styletype as anything in build_customization_style_list())
+		for (var/datum/customization_style/styletype as anything in concrete_typesof(/datum/customization_style))
 			var/typeinfo/datum/customization_style/typeinfo = get_type_typeinfo(styletype)
 			if (style_filter && typeinfo.style_type)
-				if ((style_filter != typeinfo.style_type) && (style_filter != CUSTOMIZATION.types_to_slot[typeinfo.style_type]))
+				if ((style_filter != typeinfo.style_type) && (style_filter != CUSTOMIZATION.type_to_slot[typeinfo.style_type]))
 					continue
 			if (!typeinfo.special_criteria)
 				if (!typeinfo.gimmick)
@@ -126,4 +108,4 @@ proc/get_available_custom_style_types(client/C, style_filter = CUSTOMIZATION::SL
 			available -= style
 			continue
 
-	return available
+	return sortListCopy(available, /proc/cmp_customization_style)

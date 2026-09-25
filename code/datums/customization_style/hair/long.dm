@@ -1,3 +1,5 @@
+TYPEINFO(/datum/customization_style/hair/long)
+	style_type = CUSTOMIZATION::HAIR::LONG
 ABSTRACT_TYPE(/datum/customization_style/hair/long)
 /datum/customization_style/hair/long/chub2_s
 	name = "Bang: Left"

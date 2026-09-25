@@ -1,3 +1,5 @@
+TYPEINFO(/datum/customization_style/hair/short)
+	style_type = CUSTOMIZATION::HAIR::SHORT
 ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/afro
 	name = "Afro"
