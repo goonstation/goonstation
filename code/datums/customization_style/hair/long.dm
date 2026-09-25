@@ -58,12 +58,10 @@ ABSTRACT_TYPE(/datum/customization_style/hair/long)
 /datum/customization_style/hair/long/bedhead
 	name = "Bedhead"
 	id = "bedhead"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/long/breezy
 	name = "Breezy"
 	id = "breezy"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/long/breezy_fade
 	name = "Breezy: Faded"
@@ -96,7 +94,6 @@ ABSTRACT_TYPE(/datum/customization_style/hair/long)
 /datum/customization_style/hair/long/long_dreads
 	name = "Long Dreadlocks"
 	id = "long_dreads"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/long/long_dreads_fade
 	name = "Long Dreadlocks: Faded"
@@ -133,7 +130,6 @@ ABSTRACT_TYPE(/datum/customization_style/hair/long)
 /datum/customization_style/hair/long/halfshavedR
 	name = "Half-Shaved: Left"
 	id = "halfshavedR"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/long/halfshaved_s
 	name = "Half-Shaved: Long"
@@ -143,7 +139,6 @@ ABSTRACT_TYPE(/datum/customization_style/hair/long)
 /datum/customization_style/hair/long/halfshavedL
 	name = "Half-Shaved: Right"
 	id = "halfshavedL"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/long/streakbangR
 	name = "Bang: Streak Right"
@@ -318,7 +313,6 @@ ABSTRACT_TYPE(/datum/customization_style/hair/long)
 /datum/customization_style/hair/long/midb
 	name = "Mid-Back Length"
 	id = "midb"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/long/bluntbangs_s
 	name = "Mid-Length Curl"
@@ -347,7 +341,6 @@ ABSTRACT_TYPE(/datum/customization_style/hair/long)
 /datum/customization_style/hair/long/willow
 	name = "Willow"
 	id = "willow"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/long/willow_fade
 	name = "Willow: Faded"
@@ -361,27 +354,22 @@ ABSTRACT_TYPE(/datum/customization_style/hair/long)
 /datum/customization_style/hair/long/wild_bedhead
 	name = "Wild Bedhead"
 	id = "wild_bedhead"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/long/straight_long
 	name = "Long Straight"
 	id = "straight_long"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/long/choppy_long
 	name = "Choppy Long"
 	id = "choppy_long"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/long/sway
 	name = "Sway"
 	id = "sway"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/long/poofy_long
 	name = "Long Poofy"
 	id = "poofy_long"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/long/royal_curls
 	name = "Royal Curls"
@@ -391,7 +379,6 @@ ABSTRACT_TYPE(/datum/customization_style/hair/long)
 /datum/customization_style/hair/long/med_curly
 	name = "Med Curls"
 	id = "med_Curly"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/long/poofy_wave
 	name = "Poofy Wave"
@@ -401,12 +388,10 @@ ABSTRACT_TYPE(/datum/customization_style/hair/long)
 /datum/customization_style/hair/long/longer_curls
 	name = "Longer Curls"
 	id = "longer_curls"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/long/wild_waves
 	name = "Wild Wave"
 	id = "wild_waves"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/long/curly_twists
 	name = "Curly Twists"
@@ -416,12 +401,10 @@ ABSTRACT_TYPE(/datum/customization_style/hair/long)
 /datum/customization_style/hair/long/straightened_long
 	name = "Straightened shoulder-length"
 	id = "straightened_long"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/long/symm_bob
 	name = "Symmetrical Bob"
 	id = "symm_bob"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/long/ringlets
 	name = "Ringlets"

@@ -2,7 +2,7 @@ ABSTRACT_TYPE(/datum/customization_style)
 
 TYPEINFO(/datum/customization_style)
 	/// For filtering out different types.
-	var/style_type = CUSTOMIZATION::TYPE::HAIR
+	var/style_type = CUSTOMIZATION::HAIR::HAIRHEAD
 	/// Does this style have some special unlock condition? (medal, rank, etc.)
 	var/special_criteria = FALSE
 	/// Is this a gimmick style? Exclude it from Character Prefs.
@@ -13,7 +13,7 @@ TYPEINFO(/datum/customization_style)
 /datum/customization_style
 	var/name = null
 	var/id = null
-	var/gender = CUSTOMIZATION::GENDER::NEUTER
+	var/gender = null
 	/// Which mob icon layer this should go on (under or over glasses).
 	/// Under by default, more direct subtypes where that makes sense.
 	var/default_layer = MOB_HAIR_LAYER1
@@ -30,32 +30,34 @@ TYPEINFO(/datum/customization_style)
 	name = "None"
 	id = "none"
 
-proc/select_custom_style(mob/living/carbon/human/user, style_type = null, no_gimmick = FALSE)
+proc/select_custom_style(mob/living/carbon/human/user, style_filter = CUSTOMIZATION::SLOT::HAIR, no_gimmick = FALSE)
 	var/list/datum/customization_style/options = list()
-	for (var/datum/customization_style/styletype as anything in get_available_custom_style_types(user.client, style_type, no_gimmick = no_gimmick))
+	for (var/datum/customization_style/styletype as anything in get_available_custom_style_types(user.client, style_filter, no_gimmick = no_gimmick))
 		options[initial(styletype.name)] = styletype
 	var/new_style = tgui_input_list(user, "Please select style", "Style", options)
 	var/selected_type = options[new_style]
 	if (selected_type)
 		return new selected_type
 
-proc/find_style_by_name(var/target_name, client/C, style_type = null, no_gimmick = FALSE)
-	for (var/datum/customization_style/styletype as anything in get_available_custom_style_types(C, style_type, no_gimmick = no_gimmick))
+proc/find_style_by_name(var/target_name, client/C, style_filter = CUSTOMIZATION::SLOT::HAIR, no_gimmick = FALSE)
+	for (var/datum/customization_style/styletype as anything in get_available_custom_style_types(C, style_filter, no_gimmick = no_gimmick))
 		if(cmptext(initial(styletype.name), target_name))
 			return new styletype
 	stack_trace("Couldn't find a customization_style with the name \"[target_name]\".")
 	return new /datum/customization_style/none
 
-proc/find_style_by_id(var/target_id, client/C, style_type = null, no_gimmick = FALSE)
-	for (var/datum/customization_style/styletype as anything in get_available_custom_style_types(C, style_type, no_gimmick = no_gimmick))
+proc/find_style_by_id(var/target_id, client/C, style_filter = CUSTOMIZATION::SLOT::HAIR, no_gimmick = FALSE)
+	for (var/datum/customization_style/styletype as anything in get_available_custom_style_types(C, style_filter, no_gimmick = no_gimmick))
 		if(initial(styletype.id) == target_id)
 			return new styletype
 	stack_trace("Couldn't find a customization_style with the id \"[target_id]\".")
 	return new /datum/customization_style/none
 
-/// Gets all the customization_styles which are available to a given client.
-/// Can be filtered by style_type and gender, and can exclude gimmick and non-random types.
-proc/get_available_custom_style_types(client/C, style_type = null, gender = null, no_gimmick = FALSE, random_only = FALSE)
+/// Gets all the customization_styles which are available to a given client. Can be filtered by slot, type, and gender. Can exclude gimmick and
+/// non-random types.
+///
+/// `style_filter` can be within the `CUSTOMIZATION::SLOT` namespace, or any customization style type namespace.
+proc/get_available_custom_style_types(client/C, style_filter = CUSTOMIZATION::SLOT::HAIR, gender = null, no_gimmick = FALSE, random_only = FALSE)
 	// Defining static vars with no value doesn't overwrite them with null if we call the proc multiple times
 	// Styles with no restriction
 	var/static/list/always_available
@@ -71,8 +73,9 @@ proc/get_available_custom_style_types(client/C, style_type = null, gender = null
 		locked_styles = list()
 		for (var/datum/customization_style/styletype as anything in concrete_typesof(/datum/customization_style))
 			var/typeinfo/datum/customization_style/typeinfo = get_type_typeinfo(styletype)
-			if (style_type && (typeinfo.style_type != style_type))
-				continue
+			if (style_filter)
+				if ((style_filter != typeinfo.style_type) && (style_filter != CUSTOMIZATION.types_to_slot[typeinfo.style_type]))
+					continue
 			if (!typeinfo.special_criteria)
 				if (!typeinfo.gimmick)
 					always_available += styletype
@@ -92,7 +95,8 @@ proc/get_available_custom_style_types(client/C, style_type = null, gender = null
 				available += style
 
 	for (var/datum/customization_style/style as anything in available)
-		if (gender && !(initial(style.gender) & gender))
+		var/style_gender = initial(style.gender)
+		if (gender && style_gender && !(style_gender & gender))
 			available -= style
 			continue
 		if (random_only && !(initial(style.random_allowed)))

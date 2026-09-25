@@ -1,5 +1,4 @@
 ABSTRACT_TYPE(/datum/customization_style/hair/gimmick)
-
 TYPEINFO(/datum/customization_style/hair/gimmick)
 	gimmick = TRUE
 

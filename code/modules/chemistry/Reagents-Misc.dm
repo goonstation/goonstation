@@ -377,7 +377,7 @@ datum
 						H.bioHolder.mobAppearance.customizations["hair_bottom"].style =  new /datum/customization_style/hair/long/eighties
 						somethingchanged = 1
 					if (H.gender == MALE && H.bioHolder.mobAppearance.customizations["hair_middle"].style.id != "longbeard")
-						H.bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/beard/longbeard
+						H.bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/hair/facial/longbeard
 						somethingchanged = 1
 					if (!(H.wear_mask && istype(H.wear_mask, /obj/item/clothing/mask/moustache)) && volume >= 3)
 						somethingchanged = 1

@@ -1007,7 +1007,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	initializeBioholder()
 		. = ..()
 		bioHolder.age = 49
-		bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/beard/fullbeard
+		bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/hair/facial/fullbeard
 		bioHolder.mobAppearance.customizations["hair_bottom"].color = "#555555"
 		bioHolder.mobAppearance.gender = "male"
 		bioHolder.mobAppearance.underwear = "boxers"

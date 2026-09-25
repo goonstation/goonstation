@@ -805,7 +805,7 @@ var/list/removed_jobs = list(
 				var/new_style
 				switch (params["id"])
 					if ("custom1", "custom2", "custom3")
-						new_style = select_custom_style(usr, no_gimmick=TRUE)
+						new_style = select_custom_style(usr, CUSTOMIZATION::SLOT::HAIR, TRUE)
 					if ("underwear")
 						new_style = tgui_input_list(usr, "Select an underwear style", "Character Generation", underwear_styles)
 				if (new_style)

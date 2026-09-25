@@ -90,17 +90,14 @@ ABSTRACT_TYPE(/datum/customization_style/hair/hairup)
 /datum/customization_style/hair/hairup/spikyponytail
 	name = "Spiky Ponytail"
 	id = "spikyponytail"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/hairup/messyponytail
 	name = "Messy Ponytail"
 	id = "messyponytail"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/hairup/untidyponytail
 	name = "Untidy Ponytail"
 	id = "untidyponytail"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/hairup/lowpig
 	name = "Low Pigtails"
@@ -115,7 +112,6 @@ ABSTRACT_TYPE(/datum/customization_style/hair/hairup)
 /datum/customization_style/hair/hairup/minipig
 	name = "Mini Pigtails"
 	id = "minipig"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/hairup/pig
 	name = "Pigtails"
@@ -135,7 +131,6 @@ ABSTRACT_TYPE(/datum/customization_style/hair/hairup)
 /datum/customization_style/hair/hairup/ponytail
 	name = "Ponytail"
 	id = "ponytail"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/hairup/geisha_s
 	name = "Shimada"

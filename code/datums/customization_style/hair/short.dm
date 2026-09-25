@@ -3,7 +3,6 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/afro
 	name = "Afro"
 	id = "afro"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/afro_fade
 	name = "Afro: Faded"
@@ -105,12 +104,10 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/bieb
 	name = "Bieber"
 	id = "bieb"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/bloom
 	name = "Bloom"
 	id = "bloom"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/bobcut
 	name = "Bobcut"
@@ -164,7 +161,6 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/chop_short
 	name = "Choppy Short"
 	id = "chop_short"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/einstein
 	name = "Einstein"
@@ -178,7 +174,6 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/emo
 	name = "Emo"
 	id = "emo"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/emoH
 	name = "Emo: Highlight"
@@ -192,7 +187,6 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/flick
 	name = "Flick"
 	id = "flick"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/flick_fade
 	name = "Flick: Faded"
@@ -224,7 +218,6 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/mohawk
 	name = "Mohawk"
 	id= "mohawk"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/mohawkFT
 	name = "Mohawk: Fade from End"
@@ -241,7 +234,6 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/puff_mohawk
 	name = "Puff Mohawk"
 	id = "puff_mohawk"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/puff_mohawk_alternating
 	name = "Puff Mohawk: Alternating"
@@ -259,22 +251,18 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/long
 	name = "Mullet"
 	id = "long"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/suave
 	name = "Suave Mullet"
 	id = "suave_mullet"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/part
 	name = "Parted Hair"
 	id = "part"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/pomp
 	name = "Pompadour"
 	id = "pomp"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/pompS
 	name = "Pompadour: Greaser Shine"
@@ -284,7 +272,6 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/scruffy
 	name = "Scruffy"
 	id = "scruffy"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/shavedhead
 	name = "Shaved Head"
@@ -293,12 +280,10 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/shortflip
 	name = "Punky Flip"
 	id = "shortflip"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/sparks
 	name = "Sparks"
 	id = "sparks"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/spiky
 	name = "Spiky"
@@ -328,7 +313,6 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/tulip
 	name = "Tulip"
 	id = "tulip"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/visual
 	name = "Visual"
@@ -365,47 +349,38 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/salty
 	name = "Salty"
 	id = "salty"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/wolfcut
 	name = "Wolfcut"
 	id = "wolfcut"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/brushed
 	name = "Brushed"
 	id = "brushed"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/walnut
 	name = "Walnut"
 	id = "walnut"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/mop
 	name = "Mop"
 	id = "mop"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/acorn
 	name = "Acorn"
 	id = "acorn"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/curtain
 	name = "Curtain"
 	id = "curtain"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/scott
 	name = "Scott"
 	id = "scott"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/curly_bob
 	name = "Curly Bob"
 	id = "curly_bob"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/curly_bob_fade
 	name = "Curly Bob: Faded"
@@ -415,12 +390,10 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/charming
 	name = "Charming"
 	id = "charming"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/spoon
 	name = "Spoon"
 	id = "spoon"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/spoonbangs
 	name = "Bangs: Spoon"
@@ -430,7 +403,6 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/messy_waves
 	name = "Messy Waves"
 	id = "messy_waves"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/messy_waves_half
 	name = "Messy Waves: Split"
@@ -440,7 +412,6 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/messy_wicks
 	name = "Messy Wicks"
 	id = "messy_wicks"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/messy_wicks_fade
 	name = "Messy Wicks: Faded"
@@ -454,7 +425,6 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/neat_wicks
 	name = "Neat Wicks"
 	id = "neat_wicks"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/neat_wicks_fade
 	name = "Neat Wicks: Faded"
@@ -468,87 +438,70 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/blunt_bob
 	name = "Blunt Bob"
 	id = "blunt_bob"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/jelly
 	name = "Jelly"
 	id = "jelly"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/cockatiel
 	name = "Cockatiel"
 	id = "cockatiel"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/combed_fringe
 	name = "Combed Fringe"
 	id = "combed_fringe"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/slicked_back
 	name = "Slicked Back"
 	id = "slicked_back"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/asym_bob
 	name = "Asymmetrical Bob"
 	id = "asym_bob"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/side_curls
 	name = "Side-Part Curls"
 	id = "side_curls"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/messy_fringe
 	name = "Messy Fringe"
 	id = "messy_fringe"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/aristocrat
 	name = "Aristocrat"
 	id = "aristocrat"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/brushed_bob
 	name = "Brushed Bob"
 	id = "brushed_bob"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/short_shag
 	name = "Short Shag"
 	id = "short_shag"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/luxury_bob
 	name = "Luxurious Bob"
 	id = "luxury_bob"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/wavy_front
 	name = "Wavy Front"
 	id = "wavy_front"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/poofy_bob
 	name = "Poofy Bob"
 	id = "poofy_bob"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/short_dreads
 	name = "Short Dreads"
 	id = "short_dreads"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/shaggy
 	name = "Shaggy"
 	id = "shaggy"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/blunt_pomp
 	name = "Blunt Pompadour"
 	id = "blunt_pomp"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/blunt_pomp_fade
 	name = "Blunt Pompadour: Faded"
@@ -573,7 +526,6 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/pageboy
 	name = "Pageboy"
 	id = "pageboy"
-	gender = CUSTOMIZATION::GENDER::NEUTER
 
 /datum/customization_style/hair/short/pageboy_fade
 	name = "Pageboy: Faded"

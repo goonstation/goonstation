@@ -91,7 +91,7 @@ ABSTRACT_TYPE(/datum/component/barber)
 
 TYPEINFO(/datum/component/barber/haircut)
 TYPEINFO_NEW(/datum/component/barber/haircut)
-	all_hair_types = get_available_custom_style_types(style_type = CUSTOMIZATION::TYPE::HAIR)
+	all_hair_types = get_available_custom_style_types(style_filter = CUSTOMIZATION::HAIR::HAIRHEAD)
 	. = ..()
 
 /datum/component/barber/haircut
@@ -106,10 +106,8 @@ TYPEINFO_NEW(/datum/component/barber/haircut)
 
 TYPEINFO(/datum/component/barber/shave)
 TYPEINFO_NEW(/datum/component/barber/shave)
-	all_hair_types = get_available_custom_style_types(style_type = CUSTOMIZATION::TYPE::BEARD) \
-					+ get_available_custom_style_types(style_type = CUSTOMIZATION::TYPE::MOUSTACHE) \
-					+ get_available_custom_style_types(style_type = CUSTOMIZATION::TYPE::SIDEBURNS) \
-					+ get_available_custom_style_types(style_type = CUSTOMIZATION::TYPE::EYEBROWS)
+	all_hair_types = get_available_custom_style_types(style_filter = CUSTOMIZATION::HAIR::FACIAL) \
+					+ get_available_custom_style_types(style_filter = CUSTOMIZATION::HAIR::EYEBROWS)
 	. = ..()
 
 /datum/component/barber/shave
@@ -796,7 +794,7 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 	cutting = "cutting"
 
 	getHairStyles()
-		return get_available_custom_style_types(style_type = CUSTOMIZATION::TYPE::HAIR)
+		return get_available_custom_style_types(style_filter = CUSTOMIZATION::HAIR::HAIRHEAD)
 
 /datum/action/bar/barber/shave
 	cut = "shave"
@@ -804,10 +802,8 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 	cutting = "shaving"
 
 	getHairStyles()
-		return get_available_custom_style_types(style_type = CUSTOMIZATION::TYPE::BEARD) \
-					+ get_available_custom_style_types(style_type = CUSTOMIZATION::TYPE::MOUSTACHE) \
-					+ get_available_custom_style_types(style_type = CUSTOMIZATION::TYPE::SIDEBURNS) \
-					+ get_available_custom_style_types(style_type = CUSTOMIZATION::TYPE::EYEBROWS)
+		return get_available_custom_style_types(style_filter = CUSTOMIZATION::HAIR::FACIAL) \
+					+ get_available_custom_style_types(style_filter = CUSTOMIZATION::HAIR::EYEBROWS)
 
 #undef HAIRCUT
 #undef SHAVE

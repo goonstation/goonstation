@@ -14,8 +14,8 @@
 /datum/customizationHolder/hair/bottom
 	style =  new /datum/customization_style/hair/short/short
 
-/datum/customizationHolder/hair/second
+/datum/customizationHolder/hair/middle
 	style =  new /datum/customization_style/none
 
-/datum/customizationHolder/hair/third
+/datum/customizationHolder/hair/top
 	style =  new /datum/customization_style/none
