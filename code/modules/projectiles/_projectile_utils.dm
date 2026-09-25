@@ -1,13 +1,13 @@
 //Global procs for firing, reflecting projectiles
 
 // THIS IS INTENDED FOR POINTBLANKING.
-/proc/hit_with_projectile(var/S, var/datum/projectile/DATA, var/atom/T, var/datum/firemode/provided_firemode = null)
+/proc/hit_with_projectile(var/S, var/datum/projectile/DATA, var/atom/T, var/datum/firemode/firemode = null)
 	if (!S || !T)
 		return
-	var/datum/firemode/firemode = provided_firemode || DATA.firemode
-	var/times = max(1, firemode.shot_number)
+	var/datum/firemode/chosen_firemode = firemode || DATA.firemode
+	var/times = max(1, chosen_firemode.shot_number)
 	for (var/i = 1, i <= times, i++)
-		var/obj/projectile/P = initialize_projectile_pixel_spread(S, DATA, T, firemode = firemode)
+		var/obj/projectile/P = initialize_projectile_pixel_spread(S, DATA, T, firemode = chosen_firemode)
 		if (S == T)
 			P.shooter = null
 			P.mob_shooter = S
@@ -37,18 +37,18 @@
 		return shoot_projectile_ST_pixel_spread(S, DATA, T, alter_proj = alter_proj, called_target = called_target, remote_sound_source = remote_sound_source, firemode = firemode)
 	return null
 
-/proc/shoot_projectile_ST_pixel_spread(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/pox, var/poy, var/spread_angle, var/datum/callback/alter_proj = null, var/atom/called_target = null, var/atom/movable/remote_sound_source = null, var/play_shot_sound = TRUE, var/datum/firemode/provided_firemode = null)
+/proc/shoot_projectile_ST_pixel_spread(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/pox, var/poy, var/spread_angle, var/datum/callback/alter_proj = null, var/atom/called_target = null, var/atom/movable/remote_sound_source = null, var/play_shot_sound = TRUE, var/datum/firemode/firemode = null)
 	if (!S)
 		return
 	if (!isturf(S) && !isturf(S.loc))
 		return null
-	var/obj/projectile/Q = shoot_projectile_relay_pixel_spread(S, DATA, T, pox, poy, spread_angle, alter_proj = alter_proj, called_target = called_target, remote_sound_source = remote_sound_source, play_shot_sound = play_shot_sound, firemode = firemode)
-	var/datum/firemode/firemode = provided_firemode || DATA.firemode
-	if (firemode.shot_number > 1)
+	var/datum/firemode/chosen_firemode = firemode || DATA.firemode
+	var/obj/projectile/Q = shoot_projectile_relay_pixel_spread(S, DATA, T, pox, poy, spread_angle, alter_proj = alter_proj, called_target = called_target, remote_sound_source = remote_sound_source, play_shot_sound = play_shot_sound, firemode = chosen_firemode)
+	if (chosen_firemode.shot_number > 1)
 		SPAWN(-1)
-			for (var/i = 2, i <= firemode.shot_number, i++)
-				sleep(firemode.shot_delay)
-				shoot_projectile_relay_pixel_spread(S, DATA, T, pox, poy, spread_angle, alter_proj = alter_proj, called_target = called_target, remote_sound_source = remote_sound_source, play_shot_sound = play_shot_sound, firemode = firemode)
+			for (var/i = 2, i <= chosen_firemode.shot_number, i++)
+				sleep(chosen_firemode.shot_delay)
+				shoot_projectile_relay_pixel_spread(S, DATA, T, pox, poy, spread_angle, alter_proj = alter_proj, called_target = called_target, remote_sound_source = remote_sound_source, play_shot_sound = play_shot_sound, firemode = chosen_firemode)
 	return Q
 
 /proc/shoot_projectile_relay_pixel_spread(var/atom/movable/S, var/datum/projectile/DATA, var/T, var/pox, var/poy, var/spread_angle, var/datum/callback/alter_proj = null, var/atom/called_target = null, var/atom/movable/remote_sound_source = null, var/play_shot_sound = TRUE, var/datum/firemode/firemode = null)
@@ -78,18 +78,18 @@
 		P.rotateDirection(prob(50) ? spread : -spread)
 	return P
 
-/proc/shoot_projectile_XY(var/atom/movable/S, var/datum/projectile/DATA, var/xo, var/yo, var/datum/callback/alter_proj = null, var/atom/called_target = null, var/atom/movable/remote_sound_source = null, var/datum/firemode/provided_firemode = null)
+/proc/shoot_projectile_XY(var/atom/movable/S, var/datum/projectile/DATA, var/xo, var/yo, var/datum/callback/alter_proj = null, var/atom/called_target = null, var/atom/movable/remote_sound_source = null, var/datum/firemode/firemode = null)
 	if (!S)
 		return
 	if (!isturf(S) && !isturf(S.loc))
 		return
 	var/obj/projectile/Q = shoot_projectile_XY_relay(S, DATA, xo, yo, alter_proj = alter_proj, called_target = called_target, remote_sound_source = remote_sound_source, firemode = firemode)
-	var/datum/firemode/firemode = provided_firemode || DATA.firemode
-	if (firemode.shot_number > 1)
+	var/datum/firemode/chosen_firemode = firemode || DATA.firemode
+	if (chosen_firemode.shot_number > 1)
 		SPAWN(-1)
-			for (var/i = 2, i <= firemode.shot_number, i++)
-				sleep(firemode.shot_delay)
-				shoot_projectile_XY_relay(S, DATA, xo, yo, alter_proj = alter_proj, called_target = called_target, remote_sound_source = remote_sound_source, firemode = firemode)
+			for (var/i = 2, i <= chosen_firemode.shot_number, i++)
+				sleep(chosen_firemode.shot_delay)
+				shoot_projectile_XY_relay(S, DATA, xo, yo, alter_proj = alter_proj, called_target = called_target, remote_sound_source = remote_sound_source, firemode = chosen_firemode)
 	return Q
 
 /proc/shoot_projectile_XY_relay(var/atom/movable/S, var/datum/projectile/DATA, var/xo, var/yo, var/datum/callback/alter_proj = null, var/atom/called_target = null, var/atom/movable/remote_sound_source = null, var/datum/firemode/firemode = null)
