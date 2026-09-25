@@ -1575,6 +1575,9 @@
 	ADMIN_ONLY
 	SHOW_VERB_DESC
 
+	if(!tgui_confirm(usr, "Are you sure you would like to replace every segway with a rideable cat and spawn a bunch of cats?"))
+		return
+
 	var/catcounter = 0
 	for(var/obj/vehicle/segway/S in by_type[/obj/vehicle])
 		new /obj/vehicle/cat(S.loc)

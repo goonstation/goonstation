@@ -2,7 +2,7 @@ ABSTRACT_TYPE(/datum/phrase_log_cleaner)
 /datum/phrase_log_cleaner
 	var/regex/regex
 	// Returns the new cleaned phrase or null if the phrase should be removed
-	proc/clean(phrase)
+	proc/clean(phrase, category)
 		return phrase
 
 ABSTRACT_TYPE(/datum/phrase_log_cleaner/purge)
@@ -24,5 +24,9 @@ ABSTRACT_TYPE(/datum/phrase_log_cleaner/clean)
 
 //https://stackoverflow.com/a/1732454
 /datum/phrase_log_cleaner/html
-	clean(phrase)
+	var/static/list/exempt_categories = list("paper")
+	clean(phrase, category)
+		//TODO: store this somewhere sensible
+		if (category in src.exempt_categories)
+			return phrase
 		return strip_html_tags(phrase)
