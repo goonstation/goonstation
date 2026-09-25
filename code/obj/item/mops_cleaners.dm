@@ -386,6 +386,8 @@ TRASH BAG
 		return TRUE
 	. = ..()
 
+#define PUSH_BATCH_SIZE 15
+
 /// Attempts to push all the items at the loc of the target "foward" (based on user dir).
 /obj/item/broom/proc/push(mob/user, atom/target)
 	var/turf/target_location = isturf(target) ? target : target.loc
@@ -406,11 +408,8 @@ TRASH BAG
 			boutput(user, SPAN_ALERT("[O] blocks your way!"))
 			return FALSE
 
-	var/pushed_item_count = 0
-
+	var/list/obj/item/items_to_push = list()
 	for(var/obj/item/I in target_location)
-		if(pushed_item_count > MAX_CAN_PUSH)
-			break
 		if(I.w_class > W_CLASS_BULKY) // can't push through an item thats too big
 			boutput(user, SPAN_ALERT("[I] is too big for you to push!"))
 			return FALSE
@@ -419,12 +418,25 @@ TRASH BAG
 				boutput(user, SPAN_ALERT("The [src] got caught on [I]!"))
 				return FALSE
 		else
-			I.set_loc(pushed_to)
-			pushed_item_count++
+			items_to_push += I
+
+	var/pushed_item_count = 0
+
+	for(var/obj/item/I in items_to_push)
+		if(pushed_item_count > MAX_CAN_PUSH)
+			break
+		if(pushed_item_count > 0 && pushed_item_count % PUSH_BATCH_SIZE == 0) // every 15th iterations ignoring first.
+			sleep(1 TICK)
+
+		I.set_loc(pushed_to)
+		pushed_item_count++
+
 
 	playsound(src, 'sound/items/towel.ogg', 75, TRUE)
 
 	return TRUE
+
+#undef PUSH_BATCH_SIZE
 
 // SPONGES? idk
 
