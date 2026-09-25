@@ -26,7 +26,7 @@ TYPEINFO(/obj/machinery/mixer)
 	var/image/blender_working
 	var/static/list/recipes = null
 	var/static/datum/recipe_instructions/cooking/mixer/default_instructions
-	var/allowed = list(/obj/item/reagent_containers/food/, /obj/item/parts/robot_parts/head, /obj/item/clothing/head/butt, /obj/item/organ/brain, /obj/item/paper, /obj/item/radio)
+	var/allowed = list(/obj/item/reagent_containers/food/, /obj/item/parts/robot_parts/head, /obj/item/clothing/head/butt, /obj/item/organ/brain, /obj/item/paper, /obj/item/device/radio)
 	var/working = 0
 	var/timeMixEnd = 0
 
