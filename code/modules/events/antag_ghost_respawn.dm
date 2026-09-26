@@ -252,7 +252,7 @@
 						failed = 1
 
 				if ("Wizard")
-					var/mob/living/L = M3.humanize()
+					var/mob/living/L = M3.humanize(equip_rank = FALSE) // no job/manifest entry or arrival announcement
 					if (istype(L))
 						M3 = L
 						send_to = 2
