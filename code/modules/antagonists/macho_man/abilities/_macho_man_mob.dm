@@ -69,7 +69,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 
 	initializeBioholder()
 		src.bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/hair/long/dreads
-		src.bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/beard/fullbeard
+		src.bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/hair/facial/fullbeard
 		. = ..()
 
 	Life(datum/controller/process/mobs/parent)

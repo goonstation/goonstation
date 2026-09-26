@@ -47,10 +47,10 @@
 	)
 
 proc/isfem(datum/customization_style/style)
-	return !!(initial(style.gender) & FEMININE)
+	return !!(initial(style.gender) & CUSTOMIZATION::GENDER::FEMININE)
 
 proc/ismasc(datum/customization_style/style)
-	return !!(initial(style.gender) & MASCULINE)
+	return !!(initial(style.gender) & CUSTOMIZATION::GENDER::MASCULINE)
 
 // this is weird but basically: a list of hairstyles and their appropriate detail styles, aka hair_details["80s"] would return the Hairmetal: Faded style
 // further on in the randomize_look() proc we'll see if we've got one of the styles in here and if so, we have a chance to add the detailing
@@ -69,7 +69,7 @@ var/global/list/hair_details = list("einstein" = /datum/customization_style/hair
 	"flick" = list(/datum/customization_style/hair/short/flick_fade, /datum/customization_style/hair/short/flick_half),\
 	"mermaid" = /datum/customization_style/hair/long/mermaidfade,\
 	"smoothwave" = list(/datum/customization_style/hair/long/smoothwave_fade, /datum/customization_style/hair/long/smoothwave_half),\
-	"longbeard" = /datum/customization_style/beard/longbeardfade,\
+	"longbeard" = /datum/customization_style/hair/facial/longbeardfade,\
 	"pomp" = /datum/customization_style/hair/short/pompS,\
 	"mohawk" = list(/datum/customization_style/hair/short/mohawkFT, /datum/customization_style/hair/short/mohawkFB, /datum/customization_style/hair/short/mohawkS),\
 	"emo" = /datum/customization_style/hair/short/emoH,\
@@ -198,24 +198,23 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 	var/type_first
 	if (AH.gender == MALE)
 		if (prob(5)) // small chance to have a hairstyle more geared to the other gender
-			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=FEMININE, for_random=TRUE))
+			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick=TRUE, gender=CUSTOMIZATION::GENDER::FEMININE, random_only=TRUE))
 			customization_first.style = new type_first
 		else // otherwise just use one standard to the current gender
-			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=MASCULINE, for_random=TRUE))
+			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick=TRUE, gender=CUSTOMIZATION::GENDER::MASCULINE, random_only=TRUE))
 			customization_first.style = new type_first
 
 		if (prob(33)) // since we're a guy, a chance for facial hair
-			var/type_second = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_type=/datum/customization_style/beard) \
-								+ get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_type=/datum/customization_style/moustache))
+			var/type_second = pick(get_available_custom_style_types(H?.client, no_gimmick=TRUE, style_filter=CUSTOMIZATION::HAIR::FACIAL))
 			customization_second = new type_second
 			has_second = TRUE // so the detail check doesn't do anything - we already got a secondary thing!!
 
 	else // if FEMALE
 		if (prob(8)) // same as above for guys, just reversed and with a slightly higher chance since it's ~more appropriate~ for ladies to have guy haircuts than vice versa  :I
-			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=MASCULINE, for_random=TRUE))
+			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick=TRUE, gender=CUSTOMIZATION::GENDER::MASCULINE, random_only=TRUE))
 			customization_first.style = new type_first
 		else // ss13 is coded with gender stereotypes IN ITS VERY CORE
-			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=FEMININE, for_random=TRUE))
+			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick=TRUE, gender=CUSTOMIZATION::GENDER::FEMININE, random_only=TRUE))
 			customization_first.style = new type_first
 
 	if (!has_second)
@@ -241,7 +240,7 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 				customization_second.color = randomize_hair_color(pick(hair_colors)) // but have a chance to be a normal hair color
 
 		else if (prob(5)) // chance for a special eye color
-			var/type_second = pick(/datum/customization_style/biological/hetcroL, /datum/customization_style/biological/hetcroR)
+			var/type_second = pick(/datum/customization_style/hair/biological/hetcroL, /datum/customization_style/hair/biological/hetcroR)
 			customization_second.style = new type_second
 			if (prob(75))
 				customization_second.color = random_saturated_hex_color()

@@ -272,17 +272,17 @@
 			F["[profileNum]_underwear_color"] >> AH.u_color
 
 			if(!istype(src.AH.customizations["hair_bottom"].style, /datum/customization_style))
-				src.AH.customizations["hair_bottom"].style = find_style_by_name(src.AH.customizations["hair_bottom"].style, no_gimmick_hair=TRUE)
+				src.AH.customizations["hair_bottom"].style = find_style_by_name(src.AH.customizations["hair_bottom"].style, no_gimmick=TRUE)
 			if(!istype(src.AH.customizations["hair_middle"].style, /datum/customization_style))
-				src.AH.customizations["hair_middle"].style = find_style_by_name(src.AH.customizations["hair_middle"].style, no_gimmick_hair=TRUE)
+				src.AH.customizations["hair_middle"].style = find_style_by_name(src.AH.customizations["hair_middle"].style, no_gimmick=TRUE)
 			if(!istype(src.AH.customizations["hair_top"].style, /datum/customization_style))
-				src.AH.customizations["hair_top"].style = find_style_by_name(src.AH.customizations["hair_top"].style, no_gimmick_hair=TRUE)
+				src.AH.customizations["hair_top"].style = find_style_by_name(src.AH.customizations["hair_top"].style, no_gimmick=TRUE)
 			if(!istype(src.AH.customizations["hair_bottom"].style_original, /datum/customization_style))
-				src.AH.customizations["hair_bottom"].style_original = find_style_by_name(src.AH.customizations["hair_bottom"].style_original, no_gimmick_hair=TRUE)
+				src.AH.customizations["hair_bottom"].style_original = find_style_by_name(src.AH.customizations["hair_bottom"].style_original, no_gimmick=TRUE)
 			if(!istype(src.AH.customizations["hair_middle"].style_original, /datum/customization_style))
-				src.AH.customizations["hair_middle"].style_original = find_style_by_name(src.AH.customizations["hair_middle"].style_original, no_gimmick_hair=TRUE)
+				src.AH.customizations["hair_middle"].style_original = find_style_by_name(src.AH.customizations["hair_middle"].style_original, no_gimmick=TRUE)
 			if(!istype(src.AH.customizations["hair_top"].style_original, /datum/customization_style))
-				src.AH.customizations["hair_top"].style_original = find_style_by_name(src.AH.customizations["hair_top"].style_original, no_gimmick_hair=TRUE)
+				src.AH.customizations["hair_top"].style_original = find_style_by_name(src.AH.customizations["hair_top"].style_original, no_gimmick=TRUE)
 
 		// Job prefs
 		F["[profileNum]_job_prefs_1"] >> src.job_favorite

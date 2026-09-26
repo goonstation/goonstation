@@ -637,7 +637,7 @@ datum
 
 				if (probmult(8) && (M.gender == "male"))
 					if (M.bioHolder.mobAppearance.customizations["hair_middle"].style.id != "gt" && M.bioHolder.mobAppearance.customizations["hair_middle"].style.id != "neckbeard" && M.bioHolder.mobAppearance.customizations["hair_middle"].style.id != "fullbeard" && M.bioHolder.mobAppearance.customizations["hair_middle"].style.id != "longbeard")
-						var/second_type = pick(/datum/customization_style/beard/gt,/datum/customization_style/beard/neckbeard,/datum/customization_style/beard/fullbeard,/datum/customization_style/beard/longbeard)
+						var/second_type = pick(/datum/customization_style/hair/facial/gt,/datum/customization_style/hair/facial/neckbeard,/datum/customization_style/hair/facial/fullbeard,/datum/customization_style/hair/facial/longbeard)
 						M.bioHolder.mobAppearance.customizations["hair_middle"].style =  new second_type
 						M.set_face_icon_dirty()
 						boutput(M, SPAN_NOTICE("You feel manly!"))
@@ -832,7 +832,7 @@ datum
 					if(H.bioHolder.mobAppearance.customizations["hair_bottom"].style.id != "dreads" || H.bioHolder.mobAppearance.customizations["hair_middle"].style.id != "fullbeard")
 						boutput(H, "<b>You feel more piratey! Arr!</b>")
 						H.bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/hair/long/dreads
-						H.bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/beard/fullbeard
+						H.bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/hair/facial/fullbeard
 						H.real_name = "Captain [H.real_name]"
 						M.bioHolder.AddEffect("accent_pirate")
 
@@ -5098,7 +5098,7 @@ datum
 			taste = list("bold", "creamy")
 			thirst_value = 1
 			caffeine_content = 0.8
-      
+
 		fooddrink/dulcedeleche
 			name = "dulce de leche"
 			id = "dulcedeleche"

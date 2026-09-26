@@ -21,9 +21,9 @@
 
 	// It's probably smarter to have customizations in an associative list for later - Glamurio
 	var/list/datum/customizationHolder/customizations = list(
-		"hair_bottom" = new /datum/customizationHolder/first,
-		"hair_middle" = new /datum/customizationHolder/second,
-		"hair_top" = new /datum/customizationHolder/third,
+		"hair_bottom" = new /datum/customizationHolder/hair/bottom,
+		"hair_middle" = new /datum/customizationHolder/hair/middle,
+		"hair_top" = new /datum/customizationHolder/hair/top,
 	)
 
 	/// Currently changes which sprite sheet is used
