@@ -3337,6 +3337,12 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/security,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/red,
 /area/station/security/interrogation)
 "ane" = (
@@ -7281,6 +7287,9 @@
 "aEX" = (
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -33997,6 +34006,9 @@
 	name = "Research Router"
 	})
 "hDZ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -35248,6 +35260,9 @@
 /obj/item/device/radio/intercom/security{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/redblack{
 	dir = 10
 	},
@@ -35803,8 +35818,7 @@
 /area/station/security/evidence)
 "iQX" = (
 /obj/machinery/computer3/generic/secure_data{
-	dir = 4;
-	tag = ""
+	dir = 4
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -38637,7 +38651,13 @@
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "kMh" = (
-/obj/machinery/computer/secure_data/detective_computer,
+/obj/machinery/computer3/generic/secure_data{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "kMi" = (
@@ -40415,7 +40435,7 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2,
 /obj/cable{
-	icon_state = "0-2"
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/security/interrogation)
@@ -50541,11 +50561,15 @@
 	},
 /area/station/hallway/secondary/exit)
 "tfE" = (
-/obj/machinery/computer/secure_data/detective_computer,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
 	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/secure_data,
 /turf/simulated/floor/redblack{
 	dir = 9
 	},
@@ -56962,25 +56986,6 @@
 "xrb" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/cafeteria)
-"xrD" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
-	},
-/obj/disposalpipe/segment/brig{
-	dir = 8
-	},
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/red/side{
-	dir = 1
-	},
-/area/station/security/secwing)
 "xrF" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/cable{
@@ -114753,8 +114758,8 @@ tfE
 hDZ
 iAa
 and
-wVg
-qVZ
+tjJ
+gWH
 iee
 dPq
 kJA
@@ -115055,8 +115060,8 @@ kzH
 kzN
 thw
 lTv
-xrD
-gWH
+tcg
+qVZ
 eqj
 vTU
 uEv

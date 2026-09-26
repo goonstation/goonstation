@@ -126,6 +126,8 @@ var/global/datum/controller/camera_coverage/camera_coverage_controller
 
 	LAZYLISTINIT(src.emitter_update_queue)
 	for (var/datum/component/camera_coverage_emitter/emitter as anything in emitters)
+		if (QDELETED(emitter))
+			continue
 		if (global.explosions.exploding || ON_COOLDOWN(emitter, "camera_coverage_update", CAM_UPDATE_COOLDOWN))
 			src.emitter_update_queue |= emitter
 			continue

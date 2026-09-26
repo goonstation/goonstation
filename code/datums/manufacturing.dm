@@ -2254,15 +2254,6 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	time = 90 SECONDS
 	category = MANUFACTURER::CATEGORY::CYBORG_UPGRADES
 
-/datum/manufacture/robup_visualizer
-	name = "Construction Visualizer"
-	item_requirements = list("crystal" = 4,
-							 "conductive" = 6)
-	item_outputs = list(/obj/item/roboupgrade/visualizer)
-	create = 1
-	time = 90 SECONDS
-	category = MANUFACTURER::CATEGORY::CYBORG_UPGRADES
-
 /datum/manufacture/scream_synth
 	name = "Scream Synthesizer"
 	item_requirements = list("conductive" = 2, "metal" = 2, "insulated" = 2)
