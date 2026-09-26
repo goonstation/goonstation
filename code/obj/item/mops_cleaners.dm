@@ -2,12 +2,15 @@
 CONTAINS:
 SPACE CLEANER
 MOP
+BROOM
 SPONGES??
 WET FLOOR SIGN
 HANDHELD VACUUM
 TRASH BAG
 
 */
+#define MAX_CAN_PUSH 50
+
 /obj/item/spraybottle
 	desc = "An unlabeled spray bottle."
 	icon = 'icons/obj/janitor.dmi'
@@ -343,6 +346,101 @@ TRASH BAG
 				if (src?.reagents)
 					src.reagents.clear_reagents()
 					mopcount = 0
+
+// Broom
+/obj/item/broom
+	desc = "The humble push broom let you sweep items around into a neat pile as long as nothing stands in your way."
+	name = "push broom"
+	icon = 'icons/obj/janitor.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	icon_state = "broom" // Sprites by RubiCubie
+	force = 3
+	throwforce = 10
+	throw_speed = 5
+	throw_range = 10
+	w_class = W_CLASS_NORMAL
+	stamina_damage = 40
+	stamina_cost = 15
+	stamina_crit_chance = 10
+
+/obj/item/broom/New()
+	..()
+	src.setItemSpecial(/datum/item_special/rangestab)
+	BLOCK_SETUP(BLOCK_ROD)
+
+/obj/item/broom/attack(mob/target, mob/user, def_zone, is_special, params)
+	if(user.a_intent == INTENT_HELP)
+		return
+	return ..()
+
+/obj/item/broom/afterattack(atom/target, mob/user, reach, params)
+	if(user.a_intent != INTENT_HELP || BOUNDS_DIST(user, target))
+		return ..()
+
+	src.push(user, target)
+
+	return
+
+/obj/item/broom/should_suppress_attack(object, mob/user, params)
+	if(user.a_intent == INTENT_HELP)
+		return TRUE
+	. = ..()
+
+#define PUSH_BATCH_SIZE 15
+
+/// Attempts to push all the items at the loc of the target "foward" (based on user dir).
+/obj/item/broom/proc/push(mob/user, atom/target)
+	var/turf/target_location = isturf(target) ? target : target.loc
+	var/turf/pushed_to = get_step(target_location, user.dir)
+
+	// can't push through walls (duh)
+	if(iswall(pushed_to) || iswall(target_location))
+		return FALSE
+
+	// can't push through anything you can't walk through
+	for(var/obj/O in target_location)
+		if(O.density)
+			boutput(user, SPAN_ALERT("[O] blocks your way!"))
+			return FALSE
+
+	for(var/obj/O in pushed_to)
+		if(O.density)
+			boutput(user, SPAN_ALERT("[O] blocks your way!"))
+			return FALSE
+
+	var/list/obj/item/items_to_push = list()
+	for(var/obj/item/I in target_location)
+		if(I.w_class > W_CLASS_BULKY) // can't push through an item thats too big
+			boutput(user, SPAN_ALERT("[I] is too big for you to push!"))
+			return FALSE
+		if(I.anchored) // can't push through an item thats bolted and is too big, can push through smaller item
+			if(I.w_class >= W_CLASS_GIGANTIC)
+				boutput(user, SPAN_ALERT("The [src] got caught on [I]!"))
+				return FALSE
+		else
+			items_to_push += I
+
+	var/pushed_item_count = 0
+
+	for(var/obj/item/I in items_to_push)
+		if(pushed_item_count > MAX_CAN_PUSH)
+			break
+		if(pushed_item_count > 0 && pushed_item_count % PUSH_BATCH_SIZE == 0) // every 15th iterations ignoring first.
+			sleep(1 TICK)
+
+		var/original_glide = I.glide_size
+		I.glide_size = 0
+		I.set_loc(pushed_to)
+		I.glide_size = original_glide
+		
+		pushed_item_count++
+
+
+	playsound(src, 'sound/items/towel.ogg', 75, TRUE)
+
+	return TRUE
+
+#undef PUSH_BATCH_SIZE
 
 // SPONGES? idk
 
@@ -1428,7 +1526,7 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 			if (!AM.anchored)
 				step(AM, dir)
 			count++
-			if (count > 50) //panic clause for TOO MUCH STUFF
+			if (count > MAX_CAN_PUSH) //panic clause for TOO MUCH STUFF
 				return
 
 	on_launch(obj/projectile/O)
@@ -1510,3 +1608,5 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 			projectile.create_reagents(100)
 		src.reagents.trans_to_direct(projectile.reagents, 100)
 		playsound(src.loc, 'sound/effects/bigwave.ogg', 50, 1)
+
+#undef MAX_CAN_PUSH

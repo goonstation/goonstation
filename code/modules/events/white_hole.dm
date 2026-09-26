@@ -772,6 +772,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/item/reagent_containers/glass/bottle/cleaner = 3,
 			/obj/item/reagent_containers/glass/bottle/acetone/janitors = 3,
 			"body_bag" = 2,
+			/obj/item/broom = 5,
 			/obj/item/mop = 5,
 			/obj/item/sponge = 5,
 			/datum/reagent/water = 10,
