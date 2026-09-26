@@ -9,6 +9,10 @@ ABSTRACT_TYPE(/obj/linen_bin)
 	var/amount = 23
 	var/obj/item/stored_itempath = null
 
+/obj/linen_bin/New()
+	. = ..()
+	src.AddComponent(/datum/component/tool_anchor_toggle, TOOL_SCREWING)
+
 /obj/linen_bin/attackby(obj/item/I, mob/user)
 	if (istype(I, src.stored_itempath))
 		var/old_amount = src.amount
