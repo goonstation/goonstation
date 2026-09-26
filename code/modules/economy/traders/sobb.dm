@@ -42,13 +42,13 @@
 	"Pleasure doing busuness with all of your cells.")
 	dialogue_haggle_accept = list("This is acooptable.",
 	"Faur enough. Is ut a deul?",
-	"*bubbly noises*.",
+	"*bubbly noises*",
 	"...okuy.",
 	"Do deul now?")
 	dialogue_haggle_reject = list("That os too much.",
-	"That os out of my pruce runge.",
-	"Too much for me.",
-	"NO. NO. NO.",
+	"I connot do that.",
+	"*bubbly noises*",
+	"Too much of a shuft in pruce for me.",
 	"I'd loke to do deul now.")
 	dialogue_wrong_haggle_accept = list("If that's what you wunt.")
 	dialogue_wrong_haggle_reject = list("Allow me to clurify the prusing.")
@@ -100,7 +100,7 @@
 	price_boundary = list(PAY::TRADESMAN, PAY::TRADESMAN * 3)
 	possible_names = list("Sellung some excess me. Organelles not oncludod.",
 	"Cytoplasm avaoloble for purchose. Strong and savory.",
-	"Need to lose weight. Contact if you aru lookung to buy it.")
+	"Need to lose weught. Contact uf you aru lookung to buy ut.")
 
 /datum/commodity/trader/sobb/remains
 	comname = "Undugested Remauns"
@@ -108,7 +108,7 @@
 	amount = 25
 	price_boundary = list(PAY::UNTRAINED * 2, PAY::UNTRAINED * 3)
 	possible_names = list("Loftover junk from dunner.",
-	"Lookung to get rud of stuff that dudn't dissolve well.")
+	"Lookung to get rud of stuff that dudn't dussolve well.")
 
 /obj/sobb_remains_spawner
 	var/list/spawns_random = list(
@@ -177,7 +177,7 @@
 	"Buyung dulicious bee blob. Good for cytoplasm.")
 
 /datum/commodity/trader/sobb/digestion
-	comname = "Dugestive Organ"
+	comname = "Humon Dugestive Organelle"
 	comtype = null
 	possible_alt_types = list(
 		/obj/item/organ/stomach,
