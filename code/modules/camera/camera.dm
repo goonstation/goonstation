@@ -1,6 +1,7 @@
 TYPEINFO(/obj/machinery/camera)
-	mats = list("steel" = 1,
-				"glass" = 1)
+	mats = list("crystal_dense" = 5,
+				"electrum" = 5,
+				"soulsteel" = 10)
 
 /obj/machinery/camera
 	var/auto_name = FALSE
