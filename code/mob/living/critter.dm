@@ -93,6 +93,10 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 
 	var/list/friends = list()
 
+	var/aggressive = FALSE // Moved from small critter cause I think the concept of anger is a bit broad
+
+	var/tamed = FALSE
+
 	var/pull_w_class = W_CLASS_SMALL
 
 	///Whether or not we attack mobs with the neutral faction flag
@@ -1360,6 +1364,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 			. += C
 
 /mob/living/critter/proc/valid_target(var/mob/living/C)
+	if(SEND_SIGNAL(src,COMSIG_MOB_VALIDATE_TARGET,C))
+		return FALSE
 	if (isintangible(C)) return FALSE
 	if (isdead(C)) return FALSE
 	if (istype(C, src.type)) return FALSE

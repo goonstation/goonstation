@@ -1,0 +1,113 @@
+TYPEINFO(/datum/component/tameable)
+	initialization_args = list(
+		ARG_INFO("taming_foods", DATA_INPUT_LIST_VAR, "Type of food to tame this critter", list(/obj/item/reagent_containers/food/snacks)),
+		ARG_INFO("food_blacklist", DATA_INPUT_LIST_VAR, "What food types in taming_foods should NOT work?", null),
+		ARG_INFO("tame_chance", DATA_INPUT_NUM, "Prob chance for the tame to be successful \[0-100\]", 20),
+		ARG_INFO("aggro_mode", DATA_INPUT_BOOL, "Is this for a aggressive creature?", FALSE),
+		ARG_INFO("emote_happy", DATA_INPUT_TEXT, "What emote does this creature do when happy?", "flip"),
+		ARG_INFO("emote_angry", DATA_INPUT_TEXT, "What emote does this creature do when angry?", "scream")
+	)
+
+
+/datum/component/tameable
+	var/list/signals = list()
+	var/mob/living/critter/owner = null
+	var/list/taming_foods = list(/obj/item/reagent_containers/food/snacks) // What people use to tame
+	var/list/food_blacklist = null // what's in the treat's subtype but doesn't count?
+	var/tame_chance = 20 // prob percentage
+	var/emote_happy = null // live critter reactions
+	var/emote_angry = null
+	var/toggle_behavours = null // for a behaviour that turns on and off on petting
+	var/aggro_mode = FALSE
+
+/datum/component/tameable/Initialize(var/list/taming_foods, var/list/food_blacklist, var/tame_chance, var/aggro_mode, var/emote_happy, var/emote_angry)
+	. = ..()
+	if(!istype(src.parent, /atom/movable))
+		return COMPONENT_INCOMPATIBLE
+	src.owner = parent
+	src.taming_foods = taming_foods
+	src.food_blacklist = food_blacklist
+	src.tame_chance = tame_chance
+	src.aggro_mode = aggro_mode
+	src.emote_happy = emote_happy
+	src.emote_angry = emote_angry
+	RegisterSignal(parent, COMSIG_ATTACKBY, PROC_REF(pass_on_attackby))
+	RegisterSignal(parent, COMSIG_ATTACKHAND, PROC_REF(pass_on_attackhand))
+	RegisterSignal(parent, COMSIG_MOB_VALIDATE_TARGET, PROC_REF(pass_on_validtarget))
+
+/datum/component/tameable/proc/is_valid_food(obj/item/F)
+	if(istypes(F, taming_foods))
+		if(!istypes(F, food_blacklist))
+			return TRUE
+	return FALSE
+
+/datum/component/tameable/proc/pass_on_attackby(atom/movable/parent, obj/item/item, mob/user, params)
+	if(isdead(owner))
+		return
+	if(!ishuman(user))
+		return
+	if (user.a_intent == INTENT_HARM)
+		return
+	if(!is_valid_food(item))
+		owner.visible_message("[user] tries to feed [owner] [item] but they won't take it!")
+		return
+	if(!aggro_mode)
+		if (owner.tamed)
+			owner.visible_message("[user] tries to feed [owner] [item] but they seem full...")
+			return
+		if(prob(tame_chance))
+			owner.tamed = TRUE
+			owner.ai_retaliates = FALSE
+			owner.visible_message("[owner] enjoyed the [item] and seems more docile!")
+			owner.emote("burp")
+			owner.ai.interrupt()
+		if(istype(owner, /mob/living/critter/rockworm))
+			var/mob/living/critter/rockworm/RW = owner
+			RW.aftereat()
+		item.Eat(owner, owner)
+		return
+	else
+		owner.visible_message("[user] feeds \the [owner] some [item].", "[user] feeds you some [item].")
+		for(var/damage_type in owner.healthlist)
+			var/datum/healthHolder/hh = owner.healthlist[damage_type]
+			hh.HealDamage(5)
+		owner.health_brute = min(60, owner.health_brute + 6)
+		owner.health_burn = min(60, owner.health_burn + 6)
+		item.Eat(owner, owner, TRUE)
+		if(user in owner.friends)
+			owner.emote(emote_happy)
+		else
+			if(prob(tame_chance) && istypes(item, taming_foods))
+				owner.friends += user
+				owner.tamed = TRUE
+				owner.visible_message("[owner] with a [emote_happy] happily eats up the \the [item], and seems a little friendlier with [user].")
+				owner.emote(emote_happy)
+				owner.ai.interrupt()
+			else
+				owner.visible_message(SPAN_NOTICE("[owner] hated \the [item] and bit [user]'s hand!"))
+				random_brute_damage(user, rand(6,12),1)
+				owner.emote(emote_angry)
+				user.emote("scream")
+		return
+
+/datum/component/tameable/proc/pass_on_attackhand(atom/source, mob/M)
+	if ((M.a_intent == INTENT_HARM) || !(M in owner.friends))
+		return
+	if(!aggro_mode)
+		return
+	if(M.a_intent == INTENT_HELP && owner.aggressive)
+		owner.visible_message(SPAN_NOTICE("[M] pats [owner] on the head in a soothing way. It won't attack anyone now."))
+		owner.aggressive = FALSE
+		owner.ai_retaliates = FALSE
+		return
+	else if((M.a_intent == INTENT_DISARM) && !owner.aggressive)
+		owner.visible_message(SPAN_NOTICE("[M] shakes [owner] to awaken [his_or_her(owner)] killer instincts!"))
+		owner.aggressive = TRUE
+		owner.ai_retaliates = TRUE
+		return
+
+/datum/component/tameable/proc/pass_on_validtarget(mob/M)
+	if(!aggro_mode)
+		return
+	if(M in owner.friends)
+		return FALSE

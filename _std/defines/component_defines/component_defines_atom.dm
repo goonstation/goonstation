@@ -316,6 +316,8 @@
 	#define COMSIG_MOB_LAYDOWN_STANDUP "mob_laydown"
 	/// Sent to cancel a mob viewing a camera
 	#define COMSIG_MOB_CANCEL_CAMERA "mob_cancel_camera"
+	/// Sent when a mob's AI tries to validate a target
+	#define COMSIG_MOB_VALIDATE_TARGET "mob_validate_target"
 	/// Sent when a disease is cured from a mob (cured disease master, cured strain)
 	#define COMSIG_MOB_DISEASE_CURED "mob_disease_cured"
 
