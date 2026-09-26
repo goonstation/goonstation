@@ -1634,6 +1634,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 	edible = 1
 	/// The reference to the blob overmind is used for the ID. Make sure it stays in memory.
 	var/mob/living/intangible/blob_overmind/blob_source = null
+	var/color_rgb = null
 
 	New()
 		..()
@@ -1662,6 +1663,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		if(isnull(src.blob_source))
 			src.setID("blob_[blob_color]")
 
+		src.color_rgb = blob_color
 		var/list/color_hsl = rgb2hsl(GetRedPart(blob_color), GetGreenPart(blob_color), GetBluePart(blob_color))
 		var/h = color_hsl[1] / 360
 		var/s = color_hsl[2] / 100
@@ -1675,6 +1677,15 @@ ABSTRACT_TYPE(/datum/material/organic)
 						0.00, 0.00, 0.00, 1.00,\
 						h, 0.7 * s, 0.00, 0.00)
 		src.setColorHSL(hsl_temp)
+
+	// Blob color used for the trader Sobb
+	sobb
+		mat_id = "blob_sobb"
+		artisan_trait_weight = 0
+		New()
+			. = ..()
+			src.match_to_blob_color(rgb(rand(0,255), rand(0,255), rand(0,255)))
+			src.setID("blob_sobb") // match_to_blob_color() changes the ID.
 
 
 /datum/material/organic/flesh

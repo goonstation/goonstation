@@ -164,6 +164,11 @@
 							src.random_blob_materials += new_mat
 					var/datum/material/organic/blob/blob_mat = pick(src.random_blob_materials)
 					src.setMaterial(blob_mat)
+
+			sobb
+				New()
+					. = ..()
+					src.setMaterial(getMaterial("blob_sobb"))
 	sphere
 		// energy
 		icon_state = "sphere"
