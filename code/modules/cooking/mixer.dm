@@ -26,7 +26,7 @@ TYPEINFO(/obj/machinery/mixer)
 	var/image/blender_working
 	var/static/list/recipes = null
 	var/static/datum/recipe_instructions/cooking/mixer/default_instructions
-	var/allowed = list(/obj/item/reagent_containers/food/, /obj/item/parts/robot_parts/head, /obj/item/clothing/head/butt, /obj/item/organ/brain)
+	var/allowed = list(/obj/item/reagent_containers/food/, /obj/item/parts/robot_parts/head, /obj/item/clothing/head/butt, /obj/item/organ/brain, /obj/item/paper, /obj/item/device/radio)
 	var/working = 0
 	var/timeMixEnd = 0
 
@@ -51,6 +51,19 @@ TYPEINFO(/obj/machinery/mixer)
 			mixer_recipes += new /datum/recipe/butters()
 			mixer_recipes += new /datum/recipe/soysauce()
 			mixer_recipes += new /datum/recipe/gravy()
+			mixer_recipes += new /datum/recipe/cherryjam()
+			mixer_recipes += new /datum/recipe/grapejam()
+			mixer_recipes += new /datum/recipe/strawberryjam()
+			mixer_recipes += new /datum/recipe/applejam()
+			mixer_recipes += new /datum/recipe/bluebrryjam()
+			mixer_recipes += new /datum/recipe/pearjam()
+			mixer_recipes += new /datum/recipe/peachjam()
+			mixer_recipes += new /datum/recipe/orangejam()
+			mixer_recipes += new /datum/recipe/raspberryjam()
+			mixer_recipes += new /datum/recipe/signaljam()
+			mixer_recipes += new /datum/recipe/mintjam()
+			mixer_recipes += new /datum/recipe/spacejam()
+			mixer_recipes += new /datum/recipe/paperjam()
 
 		src.recipes = mixer_recipes
 		src.blender_off = image(src.icon, "blender_off")
