@@ -26569,13 +26569,8 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "pKV" = (
-/obj/pool{
-	density = 0;
-	icon = 'icons/obj/fluid.dmi';
-	icon_state = "ladder";
-	name = "ladder";
-	pixel_y = -9;
-	dir = 1
+/obj/pool/ladder{
+	pixel_y = -9
 	},
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
