@@ -2,7 +2,7 @@
 	// Mostly-friendly neighborhood blob.
 	// Interested in medical stuff and food. Honest and laid-back, but tends to not be very clear about what it has/wants.
 	name = "Sobb"
-	picture = "Sobb/sobb_green.png"
+	picture = "sobb/sobb_green.png"
 	crate_tag = "Sobb"
 	hiketolerance = 40
 	base_patience = list(20,35)
@@ -68,28 +68,28 @@
 		var/luminosity = color_hsl[3] // 0 to 100
 		if(saturation < 20)
 			if(luminosity < 33)
-				src.picture = "Sobb/sobb_black.png"
+				src.picture = "sobb/sobb_black.png"
 			else if(luminosity > 66)
-				src.picture = "Sobb/sobb_white.png"
+				src.picture = "sobb/sobb_white.png"
 			else
-				src.picture = "Sobb/sobb_gray.png"
+				src.picture = "sobb/sobb_gray.png"
 		else
 			if(hue < 0.05)
-				src.picture = "Sobb/sobb_red.png"
+				src.picture = "sobb/sobb_red.png"
 			else if(hue < 0.14)
-				src.picture = "Sobb/sobb_orange.png"
+				src.picture = "sobb/sobb_orange.png"
 			else if(hue < 0.25)
-				src.picture = "Sobb/sobb_yellow.png"
+				src.picture = "sobb/sobb_yellow.png"
 			else if(hue < 0.37)
-				src.picture = "Sobb/sobb_green.png"
+				src.picture = "sobb/sobb_green.png"
 			else if(hue < 0.55)
-				src.picture = "Sobb/sobb_cyan.png"
+				src.picture = "sobb/sobb_cyan.png"
 			else if(hue < 0.68)
-				src.picture = "Sobb/sobb_blue.png"
+				src.picture = "sobb/sobb_blue.png"
 			else if(hue < 0.87)
-				src.picture = "Sobb/sobb_purple.png"
+				src.picture = "sobb/sobb_purple.png"
 			else
-				src.picture = "Sobb/sobb_red.png"
+				src.picture = "sobb/sobb_red.png"
 
 // Sobb is selling these things
 
