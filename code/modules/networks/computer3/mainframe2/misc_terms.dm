@@ -1802,7 +1802,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 			return
 
 		else if (istype(W, /obj/item/reagent_containers/food/snacks/condiment/paperjam)) //Jam the printer with jam!
-			jam()
+			src.jam()
 			playsound(src.loc, 'sound/machines/printer_press.ogg', 50, 1)
 			user.visible_message(SPAN_NOTICE("[user] jams the printer with the jam."), SPAN_NOTICE("You jam the printer with the jam."))
 			src.updateUsrDialog()
