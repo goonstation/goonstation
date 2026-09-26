@@ -1,4 +1,9 @@
+TYPEINFO(/obj/machinery/camera)
+	mats = list("steel" = 1,
+				"glass" = 1)
+
 /obj/machinery/camera
+	var/auto_name = FALSE
 	name = "autoname - SS13"
 	desc = "A small, high quality camera equipped with face and ID recognition. It is tied into a computer system, allowing AI and those with access to watch what occurs through it."
 	icon = 'icons/obj/camera.dmi'
@@ -79,7 +84,7 @@
 	if (src.network in /obj/machinery/computer/camera_viewer::camera_networks)
 		src.minimap_types |= MAP_CAMERA_STATION
 
-	if (dd_hasprefix(src.name, "autoname"))
+	if (src.auto_name || dd_hasprefix(src.name, "autoname"))
 		var/name_build_string = ""
 		if (src.prefix)
 			name_build_string += "[src.prefix] "
@@ -262,6 +267,10 @@
 	camera_coverage_controller.update_emitter(emitter)
 
 /obj/machinery/camera/proc/addToNetwork()
+	if (isnull(src.c_tag) || dd_hasprefix(src.c_tag, "autotag"))
+		assign_camera_tag(src)
+	if (!src.GetComponent(/datum/component/minimap_marker/minimap))
+		src.add_to_minimap()
 
 	if(camnets[network])
 		var/list/net = camnets[network]
@@ -335,6 +344,13 @@
 /obj/machinery/camera/proc/add_to_minimap()
 	src.AddComponent(/datum/component/minimap_marker/minimap, src.minimap_types, "camera", name=src.c_tag)
 
+TYPEINFO(/obj/machinery/camera/directional)
+	manufactured_type = /obj/machinery/camera/directional
+
+/obj/machinery/camera/directional
+	name = "Security Camera"
+	auto_name = TRUE
+
 SET_UP_DIRECTIONALS(/obj/machinery/camera, OFFSETS_CAMERA)
 
 /obj/machinery/camera/cargo
@@ -386,6 +402,9 @@ SET_UP_DIRECTIONALS(/obj/machinery/camera/watchful_eye, OFFSETS_CAMERA)
 	color = "#9999cc"
 	network = CAMERA_NETWORK_AI_ONLY
 	prefix = "AI"
+
+TYPEINFO(/obj/machinery/camera/AI/directional)
+	manufactured_type = /obj/machinery/camera/AI/directional
 
 SET_UP_DIRECTIONALS(/obj/machinery/camera/AI, OFFSETS_CAMERA)
 
