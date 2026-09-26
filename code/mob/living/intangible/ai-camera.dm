@@ -224,7 +224,7 @@ TYPEINFO(/mob/living/intangible/aieye)
 			return
 		if (ismob(target))
 			var/mob/target_mob = target
-			if (src.client && target_mob.camera_emag_mask_viewers && src.client in target_mob.camera_emag_mask_viewers)
+			if (src.client && target_mob.camera_emag_mask_viewers && (src.client in target_mob.camera_emag_mask_viewers))
 				return
 
 		var/in_ai_range = (get_z(mainframe) == get_z(target)) || (inunrestrictedz(target) && inonstationz(mainframe))
