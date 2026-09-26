@@ -598,7 +598,7 @@
 	dissipation_rate = 1
 	shot_sound = 'sound/vox/wonk.ogg'
 	sname = "Wonkonize"
-	shot_number = 1
+	default_firemode = /datum/firemode/single
 	window_pass = 1
 	icon = 'icons/effects/hallucinations.dmi'
 	icon_state = "yee"
@@ -639,7 +639,7 @@
 
 	New()
 		set_current_projectile(new/datum/projectile/wonk)
-		projectiles = list(current_projectile)
+		add_firemode(null, current_projectile)
 		..()
 
 //FUCKABLE MOBS

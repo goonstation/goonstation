@@ -14,7 +14,7 @@
 //file location for the sound you want it to play
 	shot_sound = 'sound/weapons/wavegun.ogg'
 //How many projectiles should be fired, each will cost the full cost
-	shot_number = 1
+	default_firemode = /datum/firemode/single
 	damage_type = D_ENERGY
 	//With what % do we hit mobs laying down
 	hit_ground_chance = 0
@@ -35,7 +35,7 @@
 
 
 /datum/projectile/wavegun/transverse //expensive taser shots that go through /everything
-	shot_number = 1
+	default_firemode = /datum/firemode/single
 	stun = 10 //half the power of a taser at range 1-3, delivers a nasty punch at the 4-tile sweetspot
 	max_range = 5 //super short. about 4 tile max range
 	projectile_speed = 36

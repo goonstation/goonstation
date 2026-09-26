@@ -15,7 +15,7 @@
 //file location for the sound you want it to play
 	shot_sound = 'sound/weapons/gauss40mm.ogg'
 //How many projectiles should be fired, each will cost the full cost
-	shot_number = 1
+	default_firemode = /datum/firemode/single
 //What is our damage type
 /*
 kinetic - raw power

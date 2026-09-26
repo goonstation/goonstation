@@ -96,7 +96,7 @@
 
 	New()
 		set_current_projectile(new/datum/projectile/energy_bolt/dazzler)
-		projectiles = list(current_projectile)
+		add_firemode(null, current_projectile)
 		..()
 
 
@@ -112,7 +112,7 @@
 	sname = "dazzle"
 	shot_sound = 'sound/weapons/Taser.ogg'
 	shot_sound_extrarange = 5
-	shot_number = 1
+	default_firemode = /datum/firemode/single
 	damage_type = D_ENERGY
 	color_red = 0
 	color_green = 0
@@ -137,7 +137,6 @@
 
 	New()
 		set_current_projectile(new/datum/projectile/energy_bolt/stasis)
-		projectiles = list(current_projectile)
 		AddComponent(/datum/component/holdertargeting/windup, 1.5 SECONDS)
 		..()
 
@@ -150,7 +149,7 @@
 	dissipation_rate = 2
 	dissipation_delay = 8
 	shot_sound = 'sound/weapons/laser_e.ogg'
-	shot_number = 1
+	default_firemode = /datum/firemode/single
 	damage_type = D_ENERGY
 	hit_ground_chance = 0
 	brightness = 0.8
