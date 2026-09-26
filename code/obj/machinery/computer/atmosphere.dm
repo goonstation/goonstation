@@ -29,6 +29,7 @@ Mixer Control
 	req_access = list(access_engineering_engine, access_tox_storage)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	//circuit_type = /obj/item/circuitboard/air_management <This board didn't even lead here what the fuck
+	ui_type = "GasMixer"
 	var/last_change = 0
 	var/message_delay = 600
 
@@ -73,12 +74,6 @@ Mixer Control
 		mixer_information = signal.data
 
 		tgui_process.update_uis(src)
-
-	ui_interact(mob/user, datum/tgui/ui)
-		ui = tgui_process.try_update_ui(user, src, ui)
-		if (!ui)
-			ui = new(user, src, "GasMixer")
-			ui.open()
 
 	ui_data(mob/user)
 		. = ..()

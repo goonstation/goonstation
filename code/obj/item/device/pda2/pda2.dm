@@ -542,6 +542,9 @@
 /obj/item/device/pda2/attack_self(mob/user as mob)
 	if(!user.client)
 		return
+	if(!user.sight_check(1))
+		boutput(user, SPAN_ALERT("You can't see the screen."))
+		return
 	if(!user.literate)
 		boutput(user, SPAN_ALERT("You don't know how to read, the screen is meaningless to you."))
 		return
@@ -1188,7 +1191,8 @@
 	proc/display_message(var/message)
 		if (ismob(loc))
 			var/mob/M = loc
-			M.show_message(message)
+			if(M.literate && M.sight_check(1))
+				M.show_message(message)
 
 	proc/run_program(datum/computer/file/pda_program/program)
 		if((!program) || (!program.holder))

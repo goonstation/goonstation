@@ -7,6 +7,7 @@
 	icon_state = "power2"
 	power_usage = 250
 	circuit_type = /obj/item/circuitboard/powermonitor
+	ui_type = "PowerMonitor"
 	var/window_tag = "powcomp"
 	var/list/history
 	var/const/history_max = 50
@@ -14,12 +15,6 @@
 /obj/machinery/computer/power_monitor/New()
 	..()
 	history = list()
-
-/obj/machinery/computer/power_monitor/ui_interact(mob/user, datum/tgui/ui)
-	ui = tgui_process.try_update_ui(user, src, ui)
-	if (!ui)
-		ui = new(user, src, "PowerMonitor", src.name)
-		ui.open()
 
 /obj/machinery/computer/power_monitor/ui_static_data(mob/user)
 	var/datum/powernet/powernet = src.get_direct_powernet()
