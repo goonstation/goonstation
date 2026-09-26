@@ -1,0 +1,417 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/unsimulated/wall/auto/lead/gray,
+/area/syndicate_station/hideout)
+"c" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
+/turf/simulated/floor/sanitary,
+/area/syndicate_station/hideout)
+"d" = (
+/turf/unsimulated/wall/auto/lead/white,
+/area/syndicate_station/hideout)
+"f" = (
+/obj/reagent_dispensers/watertank/fountain,
+/turf/simulated/floor/carpet/grime,
+/area/syndicate_station/hideout)
+"g" = (
+/obj/machinery/light/incandescent/warm,
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/sanitary,
+/area/syndicate_station/hideout)
+"h" = (
+/obj/machinery/light/incandescent/warm,
+/obj/shrub/dead{
+	pixel_y = 5
+	},
+/turf/simulated/floor/carpet/grime,
+/area/syndicate_station/hideout)
+"l" = (
+/obj/machinery/disposal/extradimensional/exit{
+	pixel_y = 3
+	},
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/carpet/grime,
+/area/syndicate_station/hideout)
+"m" = (
+/obj/machinery/light/incandescent/warm,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/sanitary,
+/area/syndicate_station/hideout)
+"n" = (
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/sanitary,
+/area/syndicate_station/hideout)
+"o" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/carpet/grime,
+/area/syndicate_station/hideout)
+"p" = (
+/turf/simulated/floor/carpet/grime,
+/area/syndicate_station/hideout)
+"q" = (
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/carpet/grime,
+/area/syndicate_station/hideout)
+"r" = (
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/carpet/grime,
+/area/syndicate_station/hideout)
+"t" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/black,
+/area/syndicate_station/hideout)
+"u" = (
+/obj/decal/cleanable/dirt/dirt3,
+/obj/stool/bench/wooden,
+/turf/simulated/floor/black,
+/area/syndicate_station/hideout)
+"v" = (
+/obj/stool/chair/black{
+	dir = 1
+	},
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/carpet/grime,
+/area/syndicate_station/hideout)
+"w" = (
+/obj/table/monodesk/auto,
+/obj/item/paper_bin{
+	pixel_y = 5;
+	pixel_x = 5
+	},
+/obj/item/stamp{
+	pixel_x = -5;
+	pixel_y = 10
+	},
+/obj/machinery/light/incandescent/warm,
+/obj/machinery/computer/television/small{
+	pixel_y = 25
+	},
+/turf/simulated/floor/carpet/grime,
+/area/syndicate_station/hideout)
+"y" = (
+/obj/stool/chair/black{
+	dir = 1
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/carpet/grime,
+/area/syndicate_station/hideout)
+"z" = (
+/obj/machinery/light/incandescent/warm,
+/obj/storage/secure/closet/medical/anesthetic{
+	req_access = null
+	},
+/obj/item/tank/mini/anesthetic,
+/obj/item/clothing/mask/medical/anesthetic,
+/obj/item/sponge,
+/turf/simulated/floor/sanitary,
+/area/syndicate_station/hideout)
+"B" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/carpet/grime,
+/area/syndicate_station/hideout)
+"C" = (
+/obj/table/wood,
+/obj/item/paper/newspaper/rolled,
+/obj/item/paper/book/from_file/deep_blue_sea{
+	pixel_x = -11;
+	pixel_y = 6
+	},
+/obj/item/toy/plush{
+	pixel_y = 24;
+	pixel_x = 9
+	},
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/carpet/grime,
+/area/syndicate_station/hideout)
+"D" = (
+/obj/machinery/sink/slim{
+	pixel_y = 15
+	},
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/sanitary,
+/area/syndicate_station/hideout)
+"E" = (
+/obj/stool/chair/office/blue{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/grime,
+/area/syndicate_station/hideout)
+"F" = (
+/obj/stool/chair/black,
+/turf/simulated/floor/carpet/grime,
+/area/syndicate_station/hideout)
+"H" = (
+/obj/item/electronics/frame/flatpack/broadcast_camera/unidentified,
+/obj/machinery/shower{
+	dir = 8;
+	pixel_x = -8
+	},
+/turf/simulated/floor/sanitary,
+/area/syndicate_station/hideout)
+"J" = (
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/carpet/grime,
+/area/syndicate_station/hideout)
+"K" = (
+/obj/table/monodesk/auto,
+/obj/machinery/phone/unlisted,
+/obj/item/kitchen/food_box/lollipop{
+	pixel_x = 9;
+	pixel_y = 4
+	},
+/turf/simulated/floor/carpet/grime,
+/area/syndicate_station/hideout)
+"L" = (
+/turf/simulated/floor/sanitary,
+/area/syndicate_station/hideout)
+"M" = (
+/obj/decal/cleanable/dirt/dirt3,
+/obj/table/reinforced,
+/obj/machinery/drainage,
+/turf/simulated/floor/sanitary,
+/area/syndicate_station/hideout)
+"N" = (
+/turf/cordon,
+/area/cordon/dark)
+"O" = (
+/turf/simulated/floor/black,
+/area/syndicate_station/hideout)
+"P" = (
+/obj/surgery_tray,
+/obj/item/scalpel{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/surgical_spoon,
+/obj/item/kitchen/utensil/knife/pizza_cutter,
+/obj/item/scissors,
+/obj/item/kitchen/utensil/knife{
+	dir = 8;
+	pixel_y = -2
+	},
+/obj/item/kitchen/utensil/spoon{
+	dir = 8
+	},
+/turf/simulated/floor/sanitary,
+/area/syndicate_station/hideout)
+"R" = (
+/obj/machinery/light/incandescent/warm,
+/obj/table/wood,
+/obj/item/bandage{
+	desc = "A length of gauze that will help stop bleeding. It seems to have been used to clean up coffee spills."
+	},
+/obj/machinery/coffeemaker{
+	pixel_y = 14
+	},
+/obj/item/reagent_containers/food/drinks/mug{
+	pixel_y = 5;
+	pixel_x = 14
+	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -6;
+	pixel_y = 12
+	},
+/turf/simulated/floor/black,
+/area/syndicate_station/hideout)
+"V" = (
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/sanitary,
+/area/syndicate_station/hideout)
+
+(1,1,1) = {"
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+"}
+(2,1,1) = {"
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+"}
+(3,1,1) = {"
+N
+d
+d
+d
+d
+d
+a
+a
+a
+a
+a
+N
+N
+"}
+(4,1,1) = {"
+N
+d
+m
+H
+g
+d
+C
+p
+p
+l
+a
+N
+N
+"}
+(5,1,1) = {"
+N
+d
+P
+M
+L
+d
+F
+o
+J
+v
+a
+N
+N
+"}
+(6,1,1) = {"
+N
+d
+n
+L
+L
+d
+F
+r
+p
+y
+a
+N
+N
+"}
+(7,1,1) = {"
+N
+d
+D
+V
+z
+d
+o
+p
+p
+f
+a
+N
+N
+"}
+(8,1,1) = {"
+N
+d
+d
+c
+d
+d
+w
+K
+q
+p
+a
+N
+N
+"}
+(9,1,1) = {"
+N
+a
+u
+O
+t
+O
+E
+p
+p
+B
+a
+N
+N
+"}
+(10,1,1) = {"
+N
+a
+R
+u
+O
+O
+p
+r
+p
+h
+a
+N
+N
+"}
+(11,1,1) = {"
+N
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+N
+N
+"}
+(12,1,1) = {"
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+"}
+(13,1,1) = {"
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+N
+"}

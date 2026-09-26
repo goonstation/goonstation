@@ -111,6 +111,10 @@ ABSTRACT_TYPE(/datum/mapPrefab/allocated)
 	name = "Retreat"
 	prefabPath = "assets/maps/allocated/syndicate_hideouts/retreat.dmm"
 
+/datum/mapPrefab/allocated/syndicate_hideout/surgery
+	name = "Shady Clinic"
+	prefabPath = "assets/maps/allocated/syndicate_hideouts/surgery.dmm"
+
 /datum/mapPrefab/allocated/syndicate_hideout/brig
 	name = "Brig"
 	prefabPath = "assets/maps/allocated/syndicate_hideouts/brig.dmm"
