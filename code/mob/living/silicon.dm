@@ -471,6 +471,7 @@ var/global/list/module_editors = list()
 /mob/living/silicon/UpdateName()
 	..()
 	src.botcard.registered = src.name
+	src.botcard.assignment = src.dependent ? "AI Shell" : "Cyborg"
 
 /mob/living/silicon/robot/choose_name(var/retries = 3, var/what_you_are = null, var/default_name = null, var/force_instead = 0)
 	. = ..()
