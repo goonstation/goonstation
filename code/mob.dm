@@ -26,6 +26,10 @@ TYPEINFO(/mob)
 	default_speech_output_channel = SAY_CHANNEL_OUTLOUD
 
 	var/tmp/datum/mind/mind
+	var/tmp/image/camera_emag_mask
+	var/tmp/list/client/camera_emag_mask_viewers
+	var/tmp/mob/camera_popup_menu_target
+	var/tmp/camera_popup_menu_was_enabled = FALSE
 
 	var/datacore_id = null
 
@@ -333,6 +337,13 @@ TYPEINFO(/mob)
 
 /mob/disposing()
 	STOP_TRACKING
+	if (src.camera_emag_mask)
+		for (var/client/viewer as anything in src.camera_emag_mask_viewers)
+			if (viewer)
+				viewer.images -= src.camera_emag_mask
+		qdel(src.camera_emag_mask)
+		src.camera_emag_mask = null
+		src.camera_emag_mask_viewers = null
 
 	qdel(src.name_tag)
 	src.name_tag = null
@@ -3454,6 +3465,16 @@ TYPEINFO(/mob)
 /mob/MouseEntered(location, control, params)
 	var/mob/M = usr
 	M.atom_hovered_over = src
+	var/should_suppress_popup = is_camera_emagger_in_view(M, src)
+	if (!should_suppress_popup && M.client && src.camera_emag_mask_viewers)
+		should_suppress_popup = src.camera_emag_mask_viewers.Find(M.client)
+	if (M.client && should_suppress_popup)
+		if (M.camera_popup_menu_target != src)
+			if (M.camera_popup_menu_target)
+				M.client.show_popup_menus = M.camera_popup_menu_was_enabled
+			M.camera_popup_menu_was_enabled = M.client.show_popup_menus
+			M.camera_popup_menu_target = src
+		M.client.show_popup_menus = FALSE
 	if(M.client.check_key(KEY_EXAMINE) && (HAS_ATOM_PROPERTY(M, PROP_MOB_EXAMINE_ALL_NAMES) || GET_DIST(src, M) <= MAX_NAMETAG_RANGE))
 		var/atom/movable/name_tag/hover_tag = src.get_examine_tag(M)
 		hover_tag?.show_images(M.client, FALSE, TRUE)
@@ -3461,6 +3482,9 @@ TYPEINFO(/mob)
 /mob/MouseExited(location, control, params)
 	var/mob/M = usr
 	M.atom_hovered_over = null
+	if (M.camera_popup_menu_target == src)
+		M.client.show_popup_menus = M.camera_popup_menu_was_enabled
+		M.camera_popup_menu_target = null
 	var/atom/movable/name_tag/hover_tag = src.get_examine_tag(M)
 	hover_tag?.show_images(M.client, M.client.check_key(KEY_EXAMINE) && HAS_ATOM_PROPERTY(M, PROP_MOB_EXAMINE_ALL_NAMES) ? TRUE : FALSE, FALSE)
 

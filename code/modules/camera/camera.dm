@@ -22,6 +22,10 @@
 	var/c_tag_order = 999
 	/// Whether the camera is on or off (bad var name)
 	var/camera_status = TRUE
+	/// Ckeys ignored by this camera for camera visibility checks
+	var/list/emagged_by_ckeys = list()
+	/// Bodies whose movement updates their camera-visibility mask
+	var/list/mob/emagged_users = list()
 	anchored = ANCHORED
 	/// Can't be destroyed by explosions
 	var/invuln = FALSE
@@ -108,6 +112,10 @@
 
 	if (length(src.viewers))
 		src.disconnect_viewers()
+	for (var/mob/user as anything in src.emagged_users)
+		UnregisterSignal(user, list(XSIG_MOVABLE_TURF_CHANGED, COMSIG_PARENT_PRE_DISPOSING))
+		if (!QDELETED(user))
+			update_camera_emag_visibility(user)
 
 	if (global.camnets && global.camnets[network])
 		global.camnets[network].Remove(src)
@@ -192,6 +200,31 @@
 				paper.ui_interact(guy)
 				logTheThing(LOG_STATION, user, "holds up a paper to a camera at [log_loc(src)], forcing [constructTarget(guy, "station")] to read it. <b>Title:</b> [paper.name]. <b>Text:</b> [adminscrub(paper.info)]")
 
+/obj/machinery/camera/emag_act(mob/user, obj/item/card/emag/E)
+	if (!(src.network in list(CAMERA_NETWORK_STATION, CAMERA_NETWORK_AI_ONLY)) || !user?.ckey)
+		return FALSE
+
+	if (!(user.ckey in src.emagged_by_ckeys))
+		src.emagged_by_ckeys += user.ckey
+	if (!(user in src.emagged_users))
+		src.emagged_users += user
+		RegisterSignal(user, XSIG_MOVABLE_TURF_CHANGED, PROC_REF(update_emagged_user_visibility))
+		RegisterSignal(user, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(remove_emagged_user))
+
+	update_camera_emag_visibility(user)
+	user.show_text("You discreetly rewire [src] to ignore you.", "blue")
+	logTheThing(LOG_STATION, user, "emagged a security camera to ignore them at [log_loc(src)]")
+	return TRUE
+
+
+/obj/machinery/camera/proc/update_emagged_user_visibility(datum/component/complexsignal/outermost_movable/component, turf/old_turf, turf/new_turf)
+	var/mob/user = component?.parent
+	update_camera_emag_visibility(user)
+
+/obj/machinery/camera/proc/remove_emagged_user(mob/user)
+	UnregisterSignal(user, list(XSIG_MOVABLE_TURF_CHANGED, COMSIG_PARENT_PRE_DISPOSING))
+	src.emagged_users -= user
+
 /obj/machinery/camera/ex_act(severity)
 	if (src.invuln)
 		return
@@ -255,6 +288,8 @@
 		emitter.set_active(src.camera_status)
 	else
 		src.AddComponent(/datum/component/camera_coverage_emitter)
+	for (var/mob/user as anything in src.emagged_users)
+		update_camera_emag_visibility(user)
 
 /obj/machinery/camera/proc/update_coverage()
 	PRIVATE_PROC(TRUE)
@@ -282,6 +317,8 @@
 		var/datum/component/camera_coverage_emitter/emitter = src.GetComponent(/datum/component/camera_coverage_emitter)
 		emitter.register_user(viewer)
 		viewer.set_eye(src)
+		for (var/mob/user as anything in src.emagged_users)
+			update_camera_emag_visibility(user)
 		return TRUE
 
 /// Disconnect a viewer from this camera
@@ -292,6 +329,8 @@
 	LAZYLISTREMOVE(src.viewers, viewer)
 	var/datum/component/camera_coverage_emitter/emitter = src.GetComponent(/datum/component/camera_coverage_emitter)
 	emitter?.unregister_user(viewer)
+	for (var/mob/user as anything in src.emagged_users)
+		update_camera_emag_visibility(user)
 	if (!QDELETED(viewer))
 		viewer.set_eye(null)
 
