@@ -15031,7 +15031,6 @@
 	},
 /obj/machinery/light_switch/directional/east,
 /obj/table/auto,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
 /obj/item/storage/firstaid/brain{
 	pixel_x = 4;
 	pixel_y = 8
