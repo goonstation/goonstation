@@ -174,6 +174,15 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	density = 1
 */
 
+/obj/decal/grass_edge
+	name = "grass edge"
+	desc = "A falloff for... something"
+	icon = 'icons/turf/forest.dmi'
+	icon_state = "grassedge"
+
+	corner
+		icon_state = "grassedge_corner"
+
 /obj/decal/nav_danger
 	anchored = ANCHORED
 	name = "DANGER"

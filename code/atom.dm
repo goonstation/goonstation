@@ -996,6 +996,8 @@ TYPEINFO(/obj/item/disk)
 		for(var/atom/other in get_turf(src))
 			if((other.flags & ON_BORDER) && !other.CheckExit(src, get_turf(A)))
 				return
+	if(HAS_ATOM_PROPERTY(A, PROP_MOB_UNBUMPABLE))
+		return
 	bump(A)
 	if (!QDELETED(A))
 		A.Bumped(src)

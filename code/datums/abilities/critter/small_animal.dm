@@ -121,6 +121,9 @@
 			SPAN_COMBAT("You charge at [MT]!"))
 			return 0
 
+	long_cd
+		cooldown = 30 SECONDS
+
 /datum/targetable/critter/pounce
 	name = "Pounce"
 	desc = "Pounce on a mob, causing a short stun."
