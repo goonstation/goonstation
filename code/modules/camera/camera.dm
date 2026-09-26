@@ -24,6 +24,7 @@
 	var/camera_status = TRUE
 	/// Ckeys ignored by this camera for camera visibility checks
 	var/list/emagged_by_ckeys = list()
+	var/tmp/emag_spark_loop_active = FALSE
 	/// Bodies whose movement updates their camera-visibility mask
 	var/list/mob/emagged_users = list()
 	anchored = ANCHORED
@@ -212,9 +213,23 @@
 		RegisterSignal(user, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(remove_emagged_user))
 
 	update_camera_emag_visibility(user)
+	src.start_emag_sparking()
 	user.show_text("You discreetly rewire [src] to ignore you.", "blue")
 	logTheThing(LOG_STATION, user, "emagged a security camera to ignore them at [log_loc(src)]")
 	return TRUE
+
+/obj/machinery/camera/proc/start_emag_sparking()
+	if (src.emag_spark_loop_active)
+		return
+	src.emag_spark_loop_active = TRUE
+	SPAWN(0)
+		while (src && !QDELETED(src))
+			sleep(rand(30 SECONDS, 90 SECONDS))
+			if (!src || QDELETED(src))
+				return
+			var/datum/effects/system/spark_spread/sparks = new
+			sparks.set_up(2, TRUE, src)
+			sparks.start()
 
 
 /obj/machinery/camera/proc/update_emagged_user_visibility(datum/component/complexsignal/outermost_movable/component, turf/old_turf, turf/new_turf)
