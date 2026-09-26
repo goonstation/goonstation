@@ -21,7 +21,6 @@ TYPEINFO(/obj/item/barrier)
 	hitsound = 0
 	var/toggleable = 0
 
-	can_disarm = 0
 	two_handed = 0
 
 	/// Potentially could be used for subtypes; set it to 1 so that the object occupies two hands when activated.
@@ -124,7 +123,6 @@ TYPEINFO(/obj/item/barrier)
 
 			destroy_deployed_barrier(user)
 
-			can_disarm = src.status
 
 			src.UpdateIcon()
 			user?.update_inhands()
@@ -151,7 +149,7 @@ TYPEINFO(/obj/item/barrier)
 	stamina_crit_chance = 0
 	hitsound = 'sound/effects/exlow.ogg'
 
-	can_disarm = 0
+	can_disarm = 1
 	two_handed = 1
 
 	setupProperties()
