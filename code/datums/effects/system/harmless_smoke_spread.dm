@@ -6,30 +6,30 @@
 
 /datum/effects/system/harmless_smoke_spread
 	var/number = 3
-	var/cardinals = 0
+	var/spread_cardinal = 0
 	var/turf/location
 	var/atom/holder
 	var/total_smoke = 0 // To stop it being spammed and lagging!
 	var/direction
 	var/color
 
-/datum/effects/system/harmless_smoke_spread/proc/set_up(n = 5, c = 0, loca, direct, color)
-	if(n > 10)
-		n = 10
-	number = n
-	cardinals = c
-	if(istype(loca, /turf/))
-		location = loca
+/datum/effects/system/harmless_smoke_spread/proc/set_up(number = 5, spread_cardinal = FALSE, location, dir, color)
+	if(number > 10)
+		number = 10
+	src.number = number
+	src.spread_cardinal = spread_cardinal
+	if(isturf(location))
+		src.location = location
 	else
-		location = get_turf(loca)
-	if(direct)
-		direction = direct
+		src.location = get_turf(location)
+	if(dir)
+		src.direction = dir
 	if(color)
 		src.color = color
 
 
-/datum/effects/system/harmless_smoke_spread/proc/attach(atom/atom)
-	holder = atom
+/datum/effects/system/harmless_smoke_spread/proc/attach(atom/A)
+	holder = A
 
 /datum/effects/system/harmless_smoke_spread/proc/start()
 	var/i = 0
@@ -46,7 +46,7 @@
 			src.total_smoke++
 			var/direction = src.direction
 			if(!direction)
-				if(src.cardinals)
+				if(src.spread_cardinal)
 					direction = pick(cardinal)
 				else
 					direction = pick(alldirs)
