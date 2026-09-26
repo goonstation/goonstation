@@ -428,7 +428,11 @@ TRASH BAG
 		if(pushed_item_count > 0 && pushed_item_count % PUSH_BATCH_SIZE == 0) // every 15th iterations ignoring first.
 			sleep(1 TICK)
 
+		var/original_glide = I.glide_size
+		I.glide_size = 0
 		I.set_loc(pushed_to)
+		I.glide_size = original_glide
+		
 		pushed_item_count++
 
 
