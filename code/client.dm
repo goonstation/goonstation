@@ -226,6 +226,11 @@
 	src.player = make_player(src.key, client=src)
 
 	src.loadResources()
+#ifdef LIVE_SERVER
+	winset(src, null, list("browser-options" = "find,refresh,byondstorage,zoom"))
+#else
+	winset(src, null, list("browser-options" = "find,refresh,byondstorage,zoom,devtools"))
+#endif
 	src.initSizeHelpers()
 	src.tooltips = new /datum/tooltips(src)
 	src.initialize_interface()
@@ -466,8 +471,11 @@
 
 	winset(src, null, "rpanewindow.left=infowindow")
 
-	if (byond_version >= 516)
-		winset(src, null, list("browser-options" = "find,refresh,byondstorage,zoom,devtools"))
+/client/verb/enable_browser_devtools()
+	set name = "browser-devtools"
+	set hidden = TRUE
+	winset(src, null, list("browser-options" = "find,refresh,byondstorage,zoom,devtools"))
+	boutput(src, "Enabled browser devtools")
 
 /client/proc/ip_cid_conflict_check(log_it=TRUE, alert_them=TRUE, only_if_first=FALSE, message_who=null)
 	var/static/list/list/ip_to_ckeys = list()
