@@ -28948,10 +28948,16 @@
 	dir = 4
 	},
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "0-4"
 	},
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	dir = null
 	},
 /turf/simulated/floor/caution/northsouth{
 	dir = 1
