@@ -1,4 +1,9 @@
 
+(t)sat sep 26 26
+(u)ANNmagedon
+(p)27884
+(e)|
+(+)The angler stamp is now in the fishing supplies vendor for 40 points
 (t)wed sep 23 26
 (u)ANNmagedon + TekoTheTeapot
 (p)27799
