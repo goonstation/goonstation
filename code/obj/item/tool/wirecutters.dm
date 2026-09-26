@@ -29,7 +29,7 @@
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if (is_special)
 			return ..()
-		if (!src.remove_bandage(target, user) && !snip_surgery(target, user))
+		if (!src.remove_bandage(target, user))
 			return ..()
 
 	attack_self(mob/user as mob)

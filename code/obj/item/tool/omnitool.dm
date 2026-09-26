@@ -361,10 +361,6 @@ ABSTRACT_TYPE(/datum/omnimode)
 		item_type = /obj/item/crowbar
 		item_special_type = /datum/item_special/tile_fling
 
-		on_attack(var/obj/item/tool/omnitool/omni, mob/target, mob/user, def_zone, is_special, params)
-			if (is_special || !omni.pry_surgery(target, user))
-				return TRUE
-			return FALSE
 
 	screwdriver
 		mode_name = "screwdriver"
@@ -416,14 +412,7 @@ ABSTRACT_TYPE(/datum/omnimode)
 		on_attack(var/obj/item/tool/omnitool/omni, mob/target, mob/user, def_zone, is_special, params)
 			if (is_special)
 				return TRUE
-			if (omni.welding && ishuman(target) && (user.a_intent != INTENT_HARM))
-				var/mob/living/carbon/human/H = target
-				if (H.bleeding || (H.organHolder?.back_op_stage > BACK_SURGERY_OPENED && user.zone_sel.selecting == "chest"))
-					if (!omni.cautery_surgery(H, user, omni, omni.welding))
-						return TRUE
-			else
-				return TRUE
-			return FALSE
+
 		on_attack_after(obj/item/tool/omnitool/omni, atom/target, mob/user, reach, params)
 			. = ..()
 			if(omni.welding && !(omni.get_fuel() > 0))
