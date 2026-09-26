@@ -74,7 +74,7 @@
 
 
 		var/list/unique_traders = list(/datum/trader/gragg,/datum/trader/josh,/datum/trader/pianzi_hundan,
-		/datum/trader/vurdalak,/datum/trader/buford, /datum/trader/steve)
+		/datum/trader/vurdalak,/datum/trader/buford, /datum/trader/steve, /datum/trader/sobb)
 
 		var/total_unique_traders = 5
 		while(total_unique_traders > 0)
