@@ -214,7 +214,7 @@
 
 	update_camera_emag_visibility(user)
 	src.start_emag_sparking()
-	user.show_text("You discreetly rewire [src] to ignore you.", "blue")
+	user.show_text("You discreetly slap [src] with your emag, the camera sparks in response.", "red")
 	logTheThing(LOG_STATION, user, "emagged a security camera to ignore them at [log_loc(src)]")
 	return TRUE
 
