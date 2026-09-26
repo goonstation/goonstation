@@ -45,8 +45,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 
 	var/next_timeofday_opened = 0 //high tier jank
 
-	var/ignore_light_or_cam_opacity = FALSE
-
 	var/obj/forcefield/energyshield/linked_forcefield = null
 
 	/// Set before calling open() for handling COMSIG_DOOR_OPENED. Can be null. This gets immediately set to null after the signal calls.
@@ -188,9 +186,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 
 /obj/machinery/door/disposing()
 		src.update_nearby_tiles()
-		if(ignore_light_or_cam_opacity)
-				ignore_light_or_cam_opacity = FALSE
-				src.set_opacity(0)
 		STOP_TRACKING
 		..()
 
@@ -712,12 +707,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		if(!istype(D, /obj/machinery/door/window) && D.density)
 			return 0
 	return 1
-
-/obj/machinery/door/set_opacity(newopacity)
-	if(ignore_light_or_cam_opacity)
-		src.opacity = newopacity
-	else
-		. = ..()
 
 /turf/simulated/wall/proc/checkForMultipleDoors()
 	if(!src.loc)

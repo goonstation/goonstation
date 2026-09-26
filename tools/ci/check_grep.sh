@@ -48,6 +48,11 @@ if grep -P 'plane\s*=\s*[0-9]+|plane\s*=\s*[A-Z_]+\s*[+\-*]\s*' */**/*.dm;	then
     st=1
 fi;
 
+if grep -P '^(?!.*UNLINT).*\.opacity\s*=(?!=)' code/**/*.dm _std/**/*.dm;	then
+    echo "ERROR: don't assign .opacity directly, call set_opacity(), or set_opacity_no_lighting() when rewriting a region."
+    st=1
+fi;
+
 if grep -P 'rand\([^)]*[0-9]\.' */**/*.dm;	then
     echo "ERROR: rand() does not support floating point numbers, use randfloat() instead."
     st=1

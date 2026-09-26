@@ -763,18 +763,16 @@ proc/get_moving_lights_stats()
 
 	Move(atom/target)
 		var/old_loc = src.loc
-		. = ..()
+		// Opaque movers relight around both ends, nested moves see us as transparent and skip it
+		if (src.opacity && RL_Started)
+			src.set_opacity(FALSE)
+			. = ..()
+			src.set_opacity(TRUE)
+		else
+			. = ..()
 		if (src.loc != old_loc && src.RL_Attached)
 			for (var/datum/light/light as anything in src.RL_Attached)
 				light.move(src.x + light.attach_x, src.y + light.attach_y, src.z, src.dir)
-		// commented out for optimization purposes, let's hope it doesn't matter too much
-		/*
-		if(src.opacity)
-			var/turf/OL = old_loc
-			if(istype(OL)) --OL.opaque_atom_count
-			var/turf/NL = src.loc
-			if(istype(NL)) ++NL.opaque_atom_count
-		*/
 
 	proc/update_directional_lights()
 		if (src.dir != old_dir && src.RL_Attached && TIME > next_light_dir_update)
@@ -785,32 +783,11 @@ proc/get_moving_lights_stats()
 
 
 	set_loc(atom/target)
-		if (opacity)
-			var/list/datum/light/lights = list()
-			for (var/turf/T in view(RL_MaxRadius, get_turf(src)))
-				if (T.RL_Lights)
-					lights |= T.RL_Lights
-
-			var/list/affected = list()
-			for (var/datum/light/light as anything in lights)
-				if (light.enabled)
-					affected |= light.strip(++global.RL_Generation)
-
-			var/turf/OL = src.loc
-			if (istype(OL))
-				--OL.opaque_atom_count
-			var/turf/NL = target
-			if (istype(NL))
-				++NL.opaque_atom_count
-
+		// Same as Move()
+		if (src.opacity && RL_Started)
+			src.set_opacity(FALSE)
 			. = ..()
-
-			for (var/datum/light/light as anything in lights)
-				if (light.enabled)
-					affected |= light.apply()
-			if (RL_Started)
-				for (var/turf/T as anything in affected)
-					RL_UPDATE_LIGHT(T)
+			src.set_opacity(TRUE)
 		else
 			. = ..()
 
