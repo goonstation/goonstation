@@ -124,6 +124,60 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			src.owner?.elecgib()
 		. = ..()
 
+/obj/item/implant/revenge/kudzu
+	name = "kudzu implant"
+	big_message = " Bursts"
+	small_message = " looks greener than before"
+	power = 7
+	//var/initial_size = 1 // now a function of power
+	var/growth_size = 15 // maximum growth size
+	var/animation_time = 50
+
+	implanted(mob/target, mob/user)
+		..()
+		if (istype(user))
+			if (user.hasStatus("kudzuwalk")) //dont give effect if they have it
+				return
+			else
+				user.setStatus("kudzuwalk")
+
+	do_effect(power)
+		var/turf/T = get_turf(loc)
+		if (istype(T, /turf/space)) //can't have kudzu in space
+			animate(src.owner, color = "#619261", time = src.animation_time)
+			return
+
+		if (src.owner.pulled_by) //an attempt to not have them not immedietly pulled of the kudzu
+			boutput(pulled_by, SPAN_ALERT("[src.owner] Shakes free from your grip!"))
+			src.owner.pulled_by.remove_pulling()
+
+		if (src.owner.grabbed_by)
+			for (var/obj/item/grab/G in src.owner.grabbed_by)
+				boutput(G.assailant, SPAN_ALERT("[src.owner] Shakes free from your grip!"))
+				qdel(G)
+
+		src.owner.visible_message(SPAN_ALERT("<b>[src.owner] has a large vine erupting from their body!</b>")) //original big message wasn't FLASHY enough for my sickening greed
+		var/oldcolor = src.owner.color
+		src.owner.make_jittery(500) //to show the vine is infact erupting out of them
+		animate(src.owner, color = "#619261", time = src.animation_time)
+		sleep(src.animation_time) // let it be dramatic
+		gibs(get_turf(src.owner), null, src.owner.bioHolder.Uid, src.owner.bioHolder.bloodType, 0)
+		if (ishuman(src.owner) || istype(src.owner.loc, /obj/icecube/kudzu))
+			animate(src.owner, color = oldcolor, time = 1) //revert human back to old color (they'll be taken by the vines so its sort of like the vine restored them or something idk it looks weird)
+		src.owner.jitteriness = 0 //it's OVER
+
+		T = get_turf(loc)
+		for (var/turf/more_kudzu in oview(power / 7, T)) // increases the radius by 1 for every implant
+			if (istype(more_kudzu, /turf/simulated/floor)) // please dont place in walls
+				var/obj/spacevine/L = new /obj/spacevine/living(more_kudzu) //makes kudzu centered on player
+				L.to_spread = growth_size
+				L.waittime = 20
+
+		var/obj/spacevine/center_L = new /obj/spacevine/living(T) //then it fills the center, oops
+		center_L.to_spread = growth_size
+
+		. = ..()
+
 ABSTRACT_TYPE(/obj/item/implant/revenge/spawner)
 /// Abstract type for implants that spawn mobs when you die. Power = number of things spawned.
 /obj/item/implant/revenge/spawner
