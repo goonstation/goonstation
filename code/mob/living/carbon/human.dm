@@ -2243,7 +2243,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 			src.last_resist = world.time + 100
 			var/calcTime
 			if (src.handcuffs.material)
-				calcTime = clamp((src.handcuffs.material.getProperty("hard") + src.handcuffs.material.getProperty("density"))*5 SECONDS, 20 SECONDS, 50 SECONDS)
+				calcTime = clamp((src.handcuffs.material.getProperty(MATERIAL::PROPERTY::HARDNESS) + src.handcuffs.material.getProperty(MATERIAL::PROPERTY::DENSITY))*5 SECONDS, 20 SECONDS, 50 SECONDS)
 			else
 				calcTime = istype(src.handcuffs, /obj/item/handcuffs/guardbot) ? rand(15 SECONDS, 18 SECONDS) : rand(40 SECONDS, 50 SECONDS)
 			if (!src.canmove)

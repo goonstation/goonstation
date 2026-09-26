@@ -1466,12 +1466,12 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 			..()
 		else
 			var/electrical_conductivity = 50
-			if(src.material.hasProperty("electrical"))
-				electrical_conductivity = src.material.getProperty("electrical") * 10
+			if(src.material.hasProperty(MATERIAL::PROPERTY::ELECTRIC_COND))
+				electrical_conductivity = src.material.getProperty(MATERIAL::PROPERTY::ELECTRIC_COND) * 10
 
 			var/thermal_conductivity = 50
-			if(src.material.hasProperty("thermal"))
-				thermal_conductivity =  src.material.getProperty("thermal") * 10
+			if(src.material.hasProperty(MATERIAL::PROPERTY::THERMAL_COND))
+				thermal_conductivity =  src.material.getProperty(MATERIAL::PROPERTY::THERMAL_COND) * 10
 
 			/*    2σ / κ = zT    - Offset 				Result 	*/
 			/*  2*75 / 25 = 6    - 2 = 4  		 	 Great! 	*/

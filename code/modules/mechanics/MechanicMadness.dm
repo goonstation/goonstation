@@ -575,12 +575,12 @@ TYPEINFO(/obj/item/mechanics)
 					boutput(user, "You must unsecure the [src] in order to rotate it.")
 			return TRUE
 		else if(iswrenchingtool(W))
-			if(src.material && src.material.getProperty("density") > 0)
+			if(src.material && src.material.getProperty(MATERIAL::PROPERTY::DENSITY) > 0)
 				if(!src.check_wrenching_conditions(user))
 					//we need to check the wrenching conditions manually here, else you get an action bar even though the action actually doesn't work
 					return TRUE
 				//work time calculation, 0.8 seconds per density, half when you have training, half for wrenching in, double for crystal material since loosening it breaks it.
-				var/work_time = src.material.getProperty("density") * 0.8 SECONDS
+				var/work_time = src.material.getProperty(MATERIAL::PROPERTY::DENSITY) * 0.8 SECONDS
 				if(src.level == OVERFLOOR)
 					work_time *= 0.5
 				if(src.material.getMaterialFlags() & MATERIAL_CRYSTAL)

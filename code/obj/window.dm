@@ -134,13 +134,13 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 		if (istype(src.material))
 
-			health_max = round(material.getProperty("density") * 15)
+			health_max = round(material.getProperty(MATERIAL::PROPERTY::DENSITY) * 15)
 			health = health_max
 
-			cut_resist 		= material.getProperty("hard") * 10
-			blunt_resist 	= material.getProperty("density") * 5
-			stab_resist 	= material.getProperty("hard") * 10
-			corrode_resist 	= material.getProperty("chemical") * 10
+			cut_resist 		= material.getProperty(MATERIAL::PROPERTY::HARDNESS) * 10
+			blunt_resist 	= material.getProperty(MATERIAL::PROPERTY::DENSITY) * 5
+			stab_resist 	= material.getProperty(MATERIAL::PROPERTY::HARDNESS) * 10
+			corrode_resist 	= material.getProperty(MATERIAL::PROPERTY::CHEM_RESIST) * 10
 
 			if (material.getAlpha() > 220)
 				set_opacity(1) // useless opaque window)
@@ -152,13 +152,13 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 		if (istype(reinforcement))
 
-			health_max += round(reinforcement.getProperty("density") * 5)
+			health_max += round(reinforcement.getProperty(MATERIAL::PROPERTY::DENSITY) * 5)
 			health = health_max
 
-			cut_resist 		+= round(reinforcement.getProperty("hard") * 5)
-			blunt_resist 	+= round(reinforcement.getProperty("density") * 5)
-			stab_resist 	+= round(reinforcement.getProperty("hard") * 5)
-			corrode_resist 	+= round(reinforcement.getProperty("chemical") * 5)
+			cut_resist 		+= round(reinforcement.getProperty(MATERIAL::PROPERTY::HARDNESS) * 5)
+			blunt_resist 	+= round(reinforcement.getProperty(MATERIAL::PROPERTY::DENSITY) * 5)
+			stab_resist 	+= round(reinforcement.getProperty(MATERIAL::PROPERTY::HARDNESS) * 5)
+			corrode_resist 	+= round(reinforcement.getProperty(MATERIAL::PROPERTY::CHEM_RESIST) * 5)
 
 			name = "[reinforcement.getName()]-reinforced " + name
 

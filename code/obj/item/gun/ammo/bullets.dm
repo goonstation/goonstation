@@ -308,9 +308,9 @@
 		ammo_type.material = src.material
 
 		if(src.material)
-			ammo_type.power = round(material.getProperty("density") * 2 + material.getProperty("hard"))
+			ammo_type.power = round(material.getProperty(MATERIAL::PROPERTY::DENSITY) * 2 + material.getProperty(MATERIAL::PROPERTY::HARDNESS))
 			ammo_type.generate_inverse_stats()
-			ammo_type.dissipation_delay = round(material.getProperty("density") / 2)
+			ammo_type.dissipation_delay = round(material.getProperty(MATERIAL::PROPERTY::DENSITY) / 2)
 
 			if((src.material.getMaterialFlags() & MATERIAL_CRYSTAL))
 				ammo_type.damage_type = D_PIERCING

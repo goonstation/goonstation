@@ -780,12 +780,12 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 
 	onMaterialChanged()
 		if (src.material)
-			src.speedmod /= (1 / (1 - (src.material.getProperty("electrical") - 5) / 15))
+			src.speedmod /= (1 / (1 - (src.material.getProperty(MATERIAL::PROPERTY::ELECTRIC_COND) - 5) / 15))
 		..()
 		if(istype(src.material))
-			src.maxhealth = max(75, src.material.getProperty("density") * 40)
+			src.maxhealth = max(75, src.material.getProperty(MATERIAL::PROPERTY::DENSITY) * 40)
 			src.health = maxhealth
-			src.speedmod *= (1 / 1 - (src.material.getProperty("electrical") - 5) / 15)
+			src.speedmod *= (1 / 1 - (src.material.getProperty(MATERIAL::PROPERTY::ELECTRIC_COND) - 5) / 15)
 		return
 
 	attackby(obj/item/W, mob/living/user)
