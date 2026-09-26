@@ -267,6 +267,8 @@ TYPEINFO(/obj/machinery/camera)
 	camera_coverage_controller.update_emitter(emitter)
 
 /obj/machinery/camera/proc/addToNetwork()
+	if (QDELETED(src))
+		return
 	if (isnull(src.c_tag) || dd_hasprefix(src.c_tag, "autotag"))
 		assign_camera_tag(src)
 	if (!src.GetComponent(/datum/component/minimap_marker/minimap))
@@ -342,6 +344,8 @@ TYPEINFO(/obj/machinery/camera)
 
 /// Adds the minimap component for the camera
 /obj/machinery/camera/proc/add_to_minimap()
+	if (QDELETED(src))
+		return
 	src.AddComponent(/datum/component/minimap_marker/minimap, src.minimap_types, "camera", name=src.c_tag)
 
 TYPEINFO(/obj/machinery/camera/directional)
