@@ -80,6 +80,7 @@
 				turf_list += T
 
 			for (var/turf/T as anything in turf_list)
+				var/list/return_reagents = list()
 				src.reagents.reaction(T, 1, 40)
 				for(var/atom/movable/AM as anything in T)
 					// Added. We don't care about unmodified shower heads, though (Convair880).
@@ -90,6 +91,13 @@
 								logTheThing(LOG_CHEMISTRY, M, "is hit by chemicals [log_reagents(src)] from a shower head at [log_loc(M)].")
 
 					src.reagents.reaction(AM, 1, 40) // why the FUCK was this ingest ?? ?? ? ?? ? ?? ? ?? ? ???
+					SEND_SIGNAL(AM, COMSIG_ATOM_WASHED, return_reagents, src)
+				if(return_reagents.len)
+					var/datum/reagents/washed_off_reagents = new
+					for(var/reagent_id in return_reagents)
+						washed_off_reagents.add_reagent(reagent_id, return_reagents[reagent_id])
+					washed_off_reagents.reaction(T)
+
 			src.reagents.remove_any(40 * length(turf_list))
 
 		src.use_power(50)
@@ -228,6 +236,7 @@ TYPEINFO(/obj/machinery/shower/piped)
 					if(prob(1))
 						random_brute_damage(M, 1)
 					cleaned_a_nerd = TRUE
+			SEND_SIGNAL(A, COMSIG_ATOM_WASHED, null, src)
 
 		if(cleaned_a_nerd)
 			playsound(src.loc, 'sound/effects/radio_sweep5.ogg', 50, 0, 0, 0.7)
