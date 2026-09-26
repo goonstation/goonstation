@@ -301,6 +301,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 			announce_heads_of_staff()
 	boutput(src, "<B>You are the [JOB.name].</B>")
 	src.job = JOB.name
+	src.real_job = JOB
 	src.mind.assigned_role = JOB.name
 
 	if (!joined_late)
@@ -504,6 +505,8 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 				for (var/obj/machinery/computer/announcement/A as anything in machine_registry[MACHINES_ANNOUNCEMENTS])
 					if (!A.status && A.announces_arrivals)
 						if (src.mind.assigned_role == "MODE") //ZeWaka: Fix for alien invasion dudes. Possibly not needed now.
+							return
+						else if (src?.real_job?.change_name_on_spawn) // fix for jobs with choosable names announcing your arrival twice
 							return
 						else
 							A.announce_arrival(src)
