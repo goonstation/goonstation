@@ -696,8 +696,7 @@ TYPEINFO(/obj/item/reagent_containers/injector_filler)
 	New()
 		..()
 		if (src.safe && islist(chem_whitelist) && length(chem_whitelist))
-			src.whitelist = chem_whitelist
-			src.whitelist += src.additional_whitelist
+			src.whitelist = chem_whitelist + src.additional_whitelist
 
 	update_icon()
 		if (src.reagents.total_volume)

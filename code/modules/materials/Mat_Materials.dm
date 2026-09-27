@@ -545,10 +545,6 @@ ABSTRACT_TYPE(/datum/material)
 			src.vars[triggername] = getFusedTriggers(mat1.vars[triggername], mat2.vars[triggername], src)
 			handleTriggerGenerations(src.vars[triggername])
 
-		//Make sure the newly merged properties are informed about the fact that they just changed. Has to happen after triggers.
-		for(var/datum/material_property/nProp in src.properties)
-			nProp.onValueChanged(src, src.properties[nProp])
-
 		//Texture merging. SUPER DUPER UGLY AAAAH
 		if(mat2.texture && !mat1.texture)
 			src.texture = mat2.texture
@@ -572,6 +568,21 @@ ABSTRACT_TYPE(/datum/material)
 		src.parent_materials.Add(mat2)
 
 		triggerOnMix(src, mat1, mat2, bias)
+		// A quirk of how mix effects work. They are triggered by the resulting material, not the source materials.
+		// If this is the last generation of a mix effect, then it will not be passed on to trigger on future generations.
+		// Remove it now, since it is effectively gone.
+		for(var/datum/materialProc/current in src.triggersOnMix)
+			if(current.max_generations != -1 && src.triggersOnMix[current] == current.max_generations)
+				src.triggersOnMix.Remove(current)
+
+		for(var/datum/material_property/nProp in src.properties)
+			// Only round after the properties have all been adjusted
+			var/prop_val = round(src.properties[nProp])
+			src.properties[nProp] = clamp(prop_val, nProp.min_value, nProp.max_value)
+
+		//Make sure the newly merged properties are informed about the fact that they just changed. Has to happen after triggers.
+		for(var/datum/material_property/nProp in src.properties)
+			nProp.onValueChanged(src, src.properties[nProp])
 
 		//RUN VALUE CHANGED ON ALL PROPERTIES TO TRIGGER PROPERS EVENTS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -1835,8 +1846,18 @@ ABSTRACT_TYPE(/datum/material/organic)
 	mat_id = "bamboo"
 	name = "bamboo"
 	desc = "Bamboo is a giant woody grass."
-	color = "#544c24"
-	texture_blend = BLEND_ADD
+	color =	list(1.10, 0.00, 0.00, 0.00,\
+					0.00, 1.00, 0.00, 0.00,\
+					0.00, 0.00, 0.80, 0.00,\
+					0.00, 0.00, 0.00, 1.00,\
+					0.00, 0.00, 0.00, 0.00)
+	hsl_color = list(0.00, 0.00, 0.05, 0.00,\
+					0.00, 0.05, 0.05, 0.00,\
+					0.00, 0.00, 0.90, 0.00,\
+					0.00, 0.00, 0.00, 1.00,\
+					0.13, 0.20, 0.00, 0.00)
+	texture = "bamboo"
+	texture_blend = BLEND_DEFAULT
 	artisan_trait_weight = MATERIAL_ARTISAN_COMMON
 
 	New()
@@ -2411,7 +2432,13 @@ ABSTRACT_TYPE(/datum/material/rubber)
 	mat_id = "latex"
 	name = "latex"
 	desc = "A type of synthetic rubber. Conducts electricity poorly."
-	color = "#DDDDDD" //"#FF0000" idgaf ok I want red cables back. no haine, this stuff isnt red.
+	hsl_color = list(1.00, 0.00, 0.00, 0.00,\
+					0.00, 0.00, 0.10, 0.20,\
+					0.00, 0.00, 0.70, 0.25,\
+					0.00, 0.00, 0.00, 0.75,\
+					0.00, 0.00, 0.45, 0.00)
+	color = "#EAEAEA" //"#FF0000" idgaf ok I want red cables back. no haine, this stuff isnt red.
+	alpha = 239
 
 	New()
 		..()
@@ -2420,6 +2447,9 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("electrical", 3)
 		setProperty("thermal", 4)
 		setProperty("melting_point", 453 KELVIN) // About the melting point of rubber
+
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/outline_add(src.color, 0.05))
+		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/outline_remove())
 
 /datum/material/rubber/synthrubber
 	mat_id = "synthrubber"

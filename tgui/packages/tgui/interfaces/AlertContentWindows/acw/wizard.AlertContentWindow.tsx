@@ -42,7 +42,7 @@ const WizardContentWindow = () => {
       <p>
         4. To teleport back to the wizard shuttle,
         <br />
-        use the <em>teleportation scroll</em> you start with in your pocket.
+        use the <em>teleportation scroll</em> you start with in your bag.
         <img
           src={resource('images/antagTips/teleportscroll.png')}
           className="right"

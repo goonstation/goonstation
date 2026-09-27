@@ -108,6 +108,13 @@
 				icon = 'icons/obj/computerpanel.dmi'
 				icon_state = "securitycomputer2"
 				base_icon_state = "securitycomputer2"
+			detnet
+				name = "virtual security computer"
+				desc = "The VR representation of a security software package."
+				setup_starting_peripherals = list(
+					/obj/item/peripheral/card_scanner/detnet,
+					/obj/item/peripheral/network/radio/locked/pda/transmit_only,
+				)
 
 		bank_data
 			name = "Bank computer"

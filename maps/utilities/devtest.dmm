@@ -228,6 +228,23 @@
 	},
 /turf/simulated/floor,
 /area/station/devzone)
+"eA" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/decal/tile_edge/stripe{
+	dir = 6
+	},
+/obj/decal/tile_edge/stripe{
+	dir = 9
+	},
+/obj/item/device/net_sniffer,
+/turf/simulated/floor/plating/jen,
+/area/station/devzone)
 "eE" = (
 /obj/machinery/atmospherics/trinary/mixer/flipped{
 	frequency = 1225;
@@ -439,10 +456,6 @@
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
-/turf/simulated/floor,
-/area/station/devzone)
-"id" = (
-/obj/machinery/computer/secure_data/detective_computer,
 /turf/simulated/floor,
 /area/station/devzone)
 "ii" = (
@@ -4520,7 +4533,7 @@ Yx
 Yx
 Yx
 ng
-kV
+eA
 RY
 FD
 TZ
@@ -4785,7 +4798,7 @@ Yx
 Yx
 Yx
 ng
-id
+Yx
 PF
 Cq
 ng
