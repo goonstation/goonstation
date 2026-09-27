@@ -131,7 +131,6 @@
 		/obj/item/wirecutters = 5,
 		/obj/item/screwdriver = 5,
 		/obj/item/knife = 5,
-		/obj/item/tool/omnitool = 1,
 		/obj/item/device/radio/headset/multifreq = 5,
 		/obj/item/device/radio/headset/deaf = 5,
 		/obj/item/device/speech_pro = 5,
