@@ -503,7 +503,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	access_string = "Atmospheric Technician"
 	slot_back = list(/obj/item/storage/backpack/engineering)
 	slot_belt = list(/obj/item/storage/belt/utility/atmos)
-	slot_eyes = list(/obj/item/clothing/glasses/toggleable/atmos)
+	slot_eyes = list(/obj/item/clothing/glasses/toggleable/atmos/starts_off)
 	slot_jump = list(/obj/item/clothing/under/misc/atmospheric_technician)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_glov = list(/obj/item/clothing/gloves/black)
@@ -512,4 +512,4 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	items_in_backpack = list(/obj/item/clothing/mask/gas/emergency, /obj/item/rcd_ammo/big)
 	wiki_link = "https://wiki.ss13.co/Atmospheric_Technician"
 	email_group = MGD_ENGINEER
-	alt_names = list("Atmospherish Technician")
+	alt_names = list("Atmospheric Technician", "Atmospherish Technician")
