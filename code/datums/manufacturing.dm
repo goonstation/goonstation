@@ -4209,6 +4209,8 @@ ABSTRACT_TYPE(/datum/manufacture/locker) //Regular lockers are built using steel
 	item_outputs = list(/obj/item/storage/firstaid/oxygen/empty)
 /datum/manufacture/empty_kit/brain
 	item_outputs = list(/obj/item/storage/firstaid/brain/empty)
+/datum/manufacture/empty_kit/mental
+	item_outputs = list(/obj/item/storage/firstaid/mental/empty)
 /datum/manufacture/empty_docbag
 	name = "Empty Doctor's Bag"
 	item_requirements = list("metal" = 2, "fabric" = 2)

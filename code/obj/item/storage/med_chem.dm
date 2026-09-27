@@ -146,6 +146,9 @@
 	/obj/item/reagent_containers/syringe/haloperidol,\
 	/obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical)
 
+/obj/item/storage/firstaid/mental/empty
+	spawn_contents = list()
+
 // Medkit filled with old crud for shady QM merchants (Convair880).
 /obj/item/storage/firstaid/old
 	name = "dusty first aid kit"
