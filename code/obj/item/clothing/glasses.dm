@@ -993,7 +993,6 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/atmos)
 /obj/item/clothing/glasses/toggleable/atmos/starts_off //! Used on atmos tech to prevent immident information spam
 	on = FALSE
 
-
 /obj/item/clothing/glasses/eyestrain
 	name = "blue-light filtering glasses"
 	desc = "A pair of glasses that reduce eye-strain from staring a computer screen all shift."
