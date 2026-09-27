@@ -1,5 +1,6 @@
 /datum/random_event/major/magnetic
 	name = "Bio-Magnetic Field"
+	description = "Human mobs on the station Z-level receive a bio-magnetic field that reacts violently to other fields, especially of opposite polarity."
 	centcom_headline = "Bio-Magnetic Field"
 	centcom_message = {"Strong bio-magnetic fields have been detected manifesting on the station. Personnel are advised to avoid anybody charged with the opposite magnetic charge. The fields should dissipate within a few minutes."}
 	centcom_origin = ALERT_ANOMALY
