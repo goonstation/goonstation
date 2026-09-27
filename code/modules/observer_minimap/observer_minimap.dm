@@ -16,7 +16,7 @@
 	set name = "View Minimap"
 	set category = "Ghost"
 
-	if (isadmin(src))
+	if (isadmin(src) && !src.client.player_mode)
 		src.client.admin_minimap()
 		return
 

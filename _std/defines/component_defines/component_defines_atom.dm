@@ -256,6 +256,10 @@
 	#define COMSIG_MOB_LOGIN "mob_login"
 	/// When a client logs out of a mob
 	#define COMSIG_MOB_LOGOUT "mob_logout"
+	/// When a target observer starts observing this mob
+	#define COMSIG_MOB_OBSERVER_ATTACHED "mob_observer_attached"
+	/// When a target observer stops observing this mob
+	#define COMSIG_MOB_OBSERVER_DETACHED "mob_observer_detached"
 	/// At the beginning of when an attackresults datum is being set up
 	#define COMSIG_MOB_ATTACKED_PRE "attacked_pre"
 	/// When a mob dies (gibbed bool)
@@ -284,6 +288,8 @@
 	#define COMSIG_MOB_SHOCKED_DEFIB "mob_shocked"
 	/// Sent to mob when client lifts the mouse button
 	#define COMSIG_MOB_MOUSEUP "mob_mouseup"
+	/// sent when a mob's client click drags
+	#define COMSIG_MOB_MOUSEDROP "mob_mousedrop"
 	/// Sent when a mob is grabbed by another mob, and when the grab is upgraded (grab object)
 	#define COMSIG_MOB_GRABBED "mob_grabbed"
 	/// Sent when a mob emotes (emote, voluntary, emote target)
@@ -310,6 +316,8 @@
 	#define COMSIG_MOB_LAYDOWN_STANDUP "mob_laydown"
 	/// Sent to cancel a mob viewing a camera
 	#define COMSIG_MOB_CANCEL_CAMERA "mob_cancel_camera"
+	/// Sent when a disease is cured from a mob (cured disease master, cured strain)
+	#define COMSIG_MOB_DISEASE_CURED "mob_disease_cured"
 
 	// ---- cloaking device signal ----
 

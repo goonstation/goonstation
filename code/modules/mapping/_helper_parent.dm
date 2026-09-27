@@ -12,6 +12,7 @@ ABSTRACT_TYPE(/obj/mapping_helper)
 	anchored = ANCHORED_ALWAYS
 	invisibility = INVIS_ALWAYS
 	layer = OBJ_LAYER + 1 // yeah let's consistently be above doors
+	var/initialised = FALSE
 #ifdef CI_RUNTIME_CHECKING
 	var/deleted_on_start = FALSE
 #else
@@ -21,14 +22,23 @@ ABSTRACT_TYPE(/obj/mapping_helper)
 /obj/mapping_helper/New()
 	. = ..()
 	if (global.current_state >= GAME_STATE_WORLD_INIT)
-		src.initialize()
+		SPAWN(0)
+			src.initialize()
 
 /obj/mapping_helper/initialize()
 	. = ..()
-	if (QDELETED(src))
+	if (QDELETED(src) || src.initialised)
 		return
 
+#ifdef CI_RUNTIME_CHECKING
+	var/error = src.setup()
+	if (length(error)) // Admits text and lists.
+		CI.ERRORS.mapping_helpers += error
+#else
 	src.setup()
+#endif
+
+	src.initialised = TRUE
 	if (src.deleted_on_start)
 		qdel(src)
 

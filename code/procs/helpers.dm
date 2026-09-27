@@ -414,17 +414,13 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 /proc/dd_hasPrefix(text, prefix)
 	var/start = 1
 	var/end = length(prefix) + 1
-	. = findtext(text, prefix, start, end) //was findtextEx
+	. = findtextEx(text, prefix, start, end)
 
 /proc/dd_hassuffix(text, suffix)
-	var/start = length(text) - length(suffix)
-	if(start)
-		. = findtext(text, suffix, start, null)
+	. = findtext(text, suffix, -length(suffix), null)
 
 /proc/dd_hasSuffix(text, suffix)
-	var/start = length(text) - length(suffix)
-	if(start)
-		. = findtext(text, suffix, start, null) //was findtextEx
+	. = findtextEx(text, suffix, -length(suffix), null)
 
 /proc/dd_centertext(message, length)
 	. = length(message)
@@ -1598,7 +1594,12 @@ var/list/english_num = list("0" = "zero", "1" = "one", "2" = "two", "3" = "three
 "10" = "ten", "11" = "eleven", "12" = "twelve", "13" = "thirteen", "14" = "fourteen", "15" = "fifteen", "16" = "sixteen", "17" = "seventeen", "18" = "eighteen", "19" = "nineteen",\
 "20" = "twenty", "30" = "thirty", "40" = "forty", "50" = "fifty", "60" = "sixty", "70" = "seventy", "80" = "eighty", "90" = "ninety")
 
-/proc/get_english_num(var/num, var/sep) // can only do up to 999,999 because of scientific notation kicking in after 6 digits
+/**
+ * Converts a numeric/text value from 1 through 999,999 to English words.
+ *
+ * For two-digit values, `sep` replaces the space between the tens and ones words - e.g. `fourty-two`
+ */
+/proc/get_english_num(num, sep)
 	if (!num || !length(english_num))
 		return
 
@@ -1607,55 +1608,48 @@ var/list/english_num = list("0" = "zero", "1" = "one", "2" = "two", "3" = "three
 	if (istext(num))
 		num = text2num(num)
 
-	var/num_return = null
-
 	if (num == 0) // 0
-		num_return = "[english_num["[num]"]]"
+		. = "[english_num["[num]"]]"
 
 	else if ((num >= 1) && (num <= 20)) // 1 to 20
-		num_return = "[english_num["[num]"]]"
+		. = "[english_num["[num]"]]"
 
 	else if ((num > 20) && (num < 100)) // 21 to 99
-		var/tens = text2num(copytext("[num]", 1, 2)) * 10
-		var/ones = text2num(copytext("[num]", 2))
+		var/tens = trunc(num / 10) * 10
+		var/ones = num % 10
 		if (ones <= 0)
-			num_return = "[english_num["[tens]"]]"
+			. = "[english_num["[tens]"]]"
 		else
-			num_return = "[english_num["[tens]"]][sep ? sep : " "][english_num["[ones]"]]"
+			. = "[english_num["[tens]"]][sep ? sep : " "][english_num["[ones]"]]"
 
 	else if ((num >= 100) && (num < 1000)) // 100 to 999
-		var/hundreds = text2num(copytext("[num]", 1, 2))
-		var/tens = text2num(copytext("[num]", 2))
+		var/hundreds = trunc(num / 100)
+		var/tens = num % 100
 		if (tens <= 0)
-			num_return = "[english_num["[hundreds]"]] hundred"
+			. = "[english_num["[hundreds]"]] hundred"
 		else
-			num_return = "[english_num["[hundreds]"]] hundred and [get_english_num(tens)]"
+			. = "[english_num["[hundreds]"]] hundred and [get_english_num(tens)]"
 
 	else if ((num >= 1000) && (num < 1000000)) // 1,000 to 999,999
-		var/thousands = null
-		var/hundreds = null
-
-		switch (num)
-			if (1000 to 9999)
-				thousands = text2num(copytext("[num]", 1, 2))
-				hundreds = text2num(copytext("[num]", 2))
-			if (10000 to 999999)
-				thousands = text2num(copytext("[num]", 1, 3))
-				hundreds = text2num(copytext("[num]", 3))
-			if (100000 to 999999)
-				thousands = text2num(copytext("[num]", 1, 4))
-				hundreds = text2num(copytext("[num]", 4))
+		var/thousands = trunc(num / 1000)
+		var/hundreds = num % 1000
 
 		if (hundreds <= 0)
-			num_return = "[get_english_num(thousands)] thousand"
+			. = "[get_english_num(thousands)] thousand"
 		else if (hundreds < 100)
-			num_return = "[get_english_num(thousands)] thousand and [get_english_num(hundreds)]"
+			. = "[get_english_num(thousands)] thousand and [get_english_num(hundreds)]"
 		else
-			num_return = "[get_english_num(thousands)] thousand, [get_english_num(hundreds)]"
+			. = "[get_english_num(thousands)] thousand, [get_english_num(hundreds)]"
 
-	if (num_return)
-		DEBUG_MESSAGE("<b>get_english_num returns num \"[num_return]\"</b>")
-		return num_return
+	else if (num == 1000000)
+		. = "one million"
+
+	// TODO: We can't really support numbers larger than 2^24 due to float <-> int memes
+	// We could extend this by saying "roughly" before every number. Dunno if we want that.
+
+	if (.)
+		DEBUG_MESSAGE("<b>get_english_num returns num \"[.]\"</b>")
+		return .
 
 /proc/mutual_attach(var/atom/movable/A as obj|mob, var/atom/movable/B as obj|mob)
 	if (!istype(A) || !istype(B))
@@ -2833,3 +2827,58 @@ proc/area_table_spawn(area_type, spawn_type)
 	if (istype(parent, type))
 		return parent
 	return null
+
+/**
+ * Returns an ordered associative list [mob = distance (euclidean)] (ascending) of all mobs within a target radius from a provided center.
+ * Will effectively search from the center of target_turf unless pixel_x/y are specified.
+ * range (also euclidean) should be a positive real number. The search radius can in fact be a 1.337 tile radius, if you so desire.
+ * The center of the turf a mob is occupying must fall within the specified range for it to consider that mob 'in range'.
+ */
+proc/get_nearest_mobs_list(turf/target_turf, range = 1, pixel_x = 1, pixel_y = 1)
+	if(range < 0)
+		CRASH("Range ([range]) cannot be a negative number!")
+	pixel_x -= 16 // offsets to pretend like 1,1 corresponds to the center of a tile
+	pixel_y -= 16 // instead of the bottom left corner
+	var/clicked_scaled_x = (target_turf.x * 32) + pixel_x
+	var/clicked_scaled_y = (target_turf.y * 32) + pixel_y
+	var/list/return_list = list()
+	// we increase search range to make extra sure we catch everything, since we filter out invalid results later anyways
+	for(var/mob/target in range(ceil(range + 1), target_turf))
+	// nothing is stopping us from searching for any arbitary atom type, the use case is just for mobs right now
+		var/target_scaled_x = target.x * 32
+		var/target_scaled_y = target.y * 32
+		// calculating distance to center of the mob's tile is good enough tbh
+		var/scaled_distance = sqrt(((target_scaled_x - clicked_scaled_x)**2) + ((target_scaled_y - clicked_scaled_y)**2))
+		var/distance = scaled_distance / 32 // back down to each unit being 1 tile instead of 1 pixel
+		if(distance > range)
+			continue
+		return_list[target] = distance
+	if(length(return_list))
+		sortList(L = return_list, cmp=/proc/cmp_numeric_asc, associative = TRUE)
+		return return_list
+
+/// Returns the turf and pixel_x and pixel_y of said turf a user's cursor was over when they clicked
+/// Returns as list("turf" = turf, "pixel_x" = pixel_x, "pixel_y" = pixel_y)
+/// Code shamelessly stolen from Zewaka. Like, the whole thing.
+proc/get_turf_pixel_clicked_over(mob/user, list/params)
+	RETURN_TYPE(/list)
+	var/client/C = user?.client
+	if (!C)
+		return FALSE
+	var/static/regex/screen_loc_parser = regex(@"^(\d+):(\d*),(\d+):(\d*)$")
+	if (!screen_loc_parser.Find(params["screen-loc"]))
+		return FALSE
+	var/turf/eye = get_turf(C.virtual_eye)
+	if (!eye)
+		return FALSE
+	var/tile_x = text2num(screen_loc_parser.group[1])
+	var/pixel_x = text2num(screen_loc_parser.group[2])
+	var/tile_y = text2num(screen_loc_parser.group[3])
+	var/pixel_y = text2num(screen_loc_parser.group[4])
+	// screen-loc columns are viewport tiles, so the centre column depends on how wide the viewport is:
+	// client.view is the text "21x15" while widescreen is on, and a plain number otherwise.
+	var/view_width = istext(C.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH
+	var/turf/T = locate(eye.x + (C.pixel_x / world.icon_size) + (tile_x - 1 - (view_width - 1) / 2),\
+		eye.y + (C.pixel_y / world.icon_size) + (tile_y - 1 - (TILE_HEIGHT - 1) / 2),\
+		eye.z)
+	return list("turf" = T, "pixel_x" = pixel_x, "pixel_y" = pixel_y)

@@ -12,7 +12,7 @@
 	projectile_speed = 32
 	dissipation_rate = 1
 	shot_sound = null
-
+	var/knockback = FALSE
 
 	on_launch(var/obj/projectile/O)
 		if (!("owner" in O.special_data))
@@ -53,6 +53,7 @@
 			qdel(dummy)
 
 	on_hit(atom/hit, angle, var/obj/projectile/O)
+		..()
 		O.special_data["valid_loc"] = get_turf(hit)
 		var/mob/charger = O.special_data["charger"]
 		if (isturf(hit))
@@ -84,6 +85,8 @@
 			boutput(M, SPAN_ALERT("<b>[charger] slams into you!</b>"))
 			logTheThing(LOG_COMBAT, charger, "slams [constructTarget(M,"combat")].")
 			var/kbdir = angle_to_dir(angle)
+			if(knockback)
+				M.throw_at(get_edge_target_turf(M, get_dir_accurate(O.shooter, M)), 5, 1) //adds knockback to the slam. (I did not make these values adjustable)
 			step(M, kbdir, 2)
 			M.changeStatus("knockdown", 4 SECONDS)
 
@@ -99,6 +102,9 @@
 		if (!charger.loc)
 			charger.set_loc(O.special_data["valid_loc"])
 
+/datum/projectile/slam/fermid
+	knockback = TRUE
+
 /datum/targetable/critter/slam
 	name = "Slam"
 	desc = "Charge over a short distance, until you hit a mob or an object. Knocks down mobs."
@@ -106,10 +112,9 @@
 	cooldown = 10 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
-	var/datum/projectile/slam/proj
+	var/proj = new /datum/projectile/slam()
 
 	cast(atom/target)
-		proj = new /datum/projectile/slam()
 		if (..())
 			return TRUE
 		var/turf/T = get_turf(target)
@@ -124,3 +129,12 @@
 
 	polymorph
 		icon_state = "slam_polymorph"
+
+/datum/targetable/critter/slam/fermid
+	name = "Slam"
+	desc = "Throw yourself at your target to knock them back."
+	icon_state = "slam_fermid"
+	cooldown = 20 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
+	proj = new /datum/projectile/slam/fermid

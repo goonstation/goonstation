@@ -437,7 +437,7 @@
 	desc = "A self-heating TV dinner. You should probably use a fork."
 	icon = 'icons/obj/foodNdrink/food_discountdans.dmi'
 	icon_state = "tvdinnert"
-	required_utensil = REQUIRED_UTENSIL_FORK
+	required_utensils = FOOD::UTENSIL::FORK
 	bites_left = 2
 	heal_amt = 2
 	fill_amt = 4 //it's a whole dinner!

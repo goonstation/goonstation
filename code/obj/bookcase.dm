@@ -191,3 +191,4 @@ TYPEINFO(/obj/item/furniture_parts/bookshelf)
 	icon_state = "bookshelf_parts"
 	furniture_type = /obj/bookshelf
 	furniture_name = "bookshelf"
+	default_material = "wood"

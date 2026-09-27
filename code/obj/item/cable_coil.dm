@@ -2,7 +2,7 @@
 
 // Contains reinforced and red (default) cables, the other colours of cable are generated through weird-but-cool #define bullshit in cablecolors.dm
 
-obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
+obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle, /obj/ability_button/cable_advanced_placement)
 
 #define STARTCOIL 30 //base type starting coil amt
 /obj/item/cable_coil
@@ -41,6 +41,8 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 
 	var/cable_obj_type = /obj/cable
 	var/currently_laying = FALSE
+	/// Advanced placement mode handler, non-null while the mode is on.
+	var/datum/cable_placement/placement_manager = null
 
 	// will use getMaterial() to apply these at spawn
 	var/spawn_insulator_name = "synthrubber"
@@ -61,6 +63,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL, PROC_REF(assembly_removal))
 
 	disposing()
+		QDEL_NULL(src.placement_manager)
 		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_OVERLAY_ADDITIONS)
 		. = ..()
 
@@ -296,6 +299,21 @@ obj/item/cable_coil/dropped(mob/user)
 		. += "It is insulated with [insulator]."
 	if (conductor)
 		. += "Its conductive layer is made out of [conductor]."
+
+/// Turns advanced placement on or off. Returns the new state.
+/obj/item/cable_coil/proc/toggle_advanced_placement(mob/user)
+	if (!user?.client)
+		return FALSE
+	if (user.equipped() != src)
+		boutput(user, SPAN_ALERT("You need to be holding [src] in your active hand."))
+		return FALSE
+	if (isnull(src.placement_manager))
+		src.placement_manager = new /datum/cable_placement(src, user)
+	. = src.placement_manager.set_active(!src.placement_manager.active)
+	if (.)
+		boutput(user, SPAN_NOTICE("Advanced cable placement enabled. Click an edge or corner of a nearby tile to pick one end, then click another to lay it."))
+	else
+		boutput(user, SPAN_NOTICE("Advanced cable placement disabled."))
 
 obj/item/cable_coil/attackby(obj/item/W, mob/user)
 	if (check_valid_stack(W))

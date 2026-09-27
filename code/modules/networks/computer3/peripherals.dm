@@ -1169,6 +1169,20 @@ TYPEINFO(/obj/item/peripheral)
 		src.host.updateUsrDialog()
 		return
 
+/obj/item/peripheral/card_scanner/detnet
+	setup_has_badge = FALSE
+
+/obj/item/peripheral/card_scanner/detnet/New()
+	src.authid = new /obj/item/card/id(src)
+	src.authid.access = global.get_access("Detective")
+	src.authid.registered = "DETNET"
+	src.authid.assignment = "DETNET"
+	. = ..()
+
+/obj/item/peripheral/card_scanner/detnet/eject_card()
+	return
+
+
 TYPEINFO(/obj/item/peripheral/sound_card)
 	start_speech_modifiers = null
 	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SOUND_CARD)

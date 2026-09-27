@@ -155,7 +155,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	badge = /obj/item/clothing/suit/security_badge/nanotrasen
 	slot_card = /obj/item/card/id/nanotrasen
 	slot_back = list(/obj/item/storage/backpack)
-	slot_belt = list(/obj/item/device/pda2/ntofficial)
+	slot_belt = list(/obj/item/device/pda2/nt)
 	slot_jump = list(/obj/item/clothing/under/misc/lawyer/black) // so they can slam tables
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_ears = list(/obj/item/device/radio/headset/command/inspector)
@@ -179,6 +179,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase)
 		if (B && istype(B))
 			B.storage.add_contents(new /obj/item/instrument/whistle(B))
+			B.storage.add_contents(new /obj/item/stamp/inspector(B))
 			var/obj/item/clipboard/with_pen/inspector/clipboard = new /obj/item/clipboard/with_pen/inspector(B)
 			B.storage.add_contents(clipboard)
 			clipboard.set_owner(M)

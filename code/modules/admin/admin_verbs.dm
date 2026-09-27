@@ -2277,12 +2277,7 @@ proc/alert_all_ghosts(atom/target, message)
 	var/dur = input(usr, "Input duration (in seconds)", "lightsout duration", 0) as null|num
 
 	if(dur)
-		var i = 0
-		for_by_tcl(apc, /obj/machinery/power/apc)
-			if(apc.z == 1)
-				if((i++ % 5) == 0)
-					sleep(1 SECOND)
-				apc.setStatus("lightsout", dur SECONDS)
+		ADMIN.lights_out(dur SECONDS)
 
 /client/proc/flock_cheat()
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)

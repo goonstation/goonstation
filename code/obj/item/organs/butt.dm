@@ -200,6 +200,9 @@ TYPEINFO(/obj/item/clothing/head/butt)
 				B.name = "mutagenic buttbot"
 			else if (src.donor || src.donor_name)
 				B.name = "[src.donor_name ? "[src.donor_name]" : "[src.donor.real_name]"] buttbot"
+			B.setMaterial(src.material)
+			B.forensic_holder = src.forensic_holder
+			W.forensic_holder.copy_to(B.forensic_holder)
 			user.show_text("You add [W] to [src]. Fantastic.", "blue")
 			B.set_loc(get_turf(src))
 			src.set_loc(B)
@@ -314,6 +317,9 @@ TYPEINFO(/obj/item/clothing/head/butt/cyberbutt)
 			var/obj/machinery/bot/buttbot/cyber/B = new /obj/machinery/bot/buttbot/cyber(src, W)
 			if (src.donor || src.donor_name)
 				B.name = "[src.donor_name ? "[src.donor_name]" : "[src.donor.real_name]"] robuttbot"
+			B.setMaterial(src.material)
+			B.forensic_holder = src.forensic_holder
+			W.forensic_holder.copy_to(B.forensic_holder)
 			user.show_text("You add [W] to [src]. Fantastic.", "blue")
 			B.set_loc(get_turf(src))
 			src.set_loc(B)

@@ -342,6 +342,26 @@ strong {
 .highlightPopup input.highlightTermSubmit {
   margin-top: 5px;
 }
+.clearMessagesPopup {
+  padding: 10px;
+  text-align: center;
+}
+.clearMessagesPopup form {
+  margin-top: 10px;
+}
+.clearMessagesPopup input[type='button'] {
+  margin-left: 5px;
+  background: #999;
+  color: #ddd;
+  font-size: 0.9em;
+  font-weight: bold;
+}
+.clearMessagesPopup input[type='button']:hover,
+.clearMessagesPopup input[type='button']:focus,
+.clearMessagesPopup input[type='button']:active {
+  background: #aaa;
+  cursor: pointer;
+}
 
 /* ADMIN CONTEXT MENU */
 .contextMenu {

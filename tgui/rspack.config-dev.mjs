@@ -132,7 +132,7 @@ export default (env = {}, argv) => {
     },
     plugins: [
       new rspack.EnvironmentPlugin({
-        NODE_ENV: 'development',
+        // |GOONSTATION-CHANGE| NODE_ENV comes from the base config.
         WEBPACK_HMR_ENABLED: env.WEBPACK_HMR_ENABLED || argv.hot || false,
         DEV_SERVER_IP: env.DEV_SERVER_IP || null,
       }),

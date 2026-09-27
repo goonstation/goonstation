@@ -204,3 +204,6 @@
 
 /// When a wraith tries to curse someone (wraith)
 #define COMSIG_TRY_CURSE "try_curse"
+
+// ---- pressure vision
+#define COMSIG_PRESSURE_VISION "pressure_vision"

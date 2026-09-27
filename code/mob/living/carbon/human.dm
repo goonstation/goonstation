@@ -1025,8 +1025,6 @@
 
 		SEND_SIGNAL(src, COMSIG_MOB_TRIGGER_THREAT)
 
-		src.next_click = world.time + src.combat_click_delay
-
 /mob/living/carbon/human/click(atom/target, list/params)
 	if (src.client)
 		if (src.client.experimental_intents)
