@@ -4199,7 +4199,18 @@ ABSTRACT_TYPE(/datum/manufacture/locker) //Regular lockers are built using steel
 	create = 1
 	time = 4 SECONDS
 	category = MANUFACTURER::CATEGORY::MEDICINE
-/datum/manufacture/spacecillin	//
+/datum/manufacture/empty_kit/brute
+	item_outputs = list(/obj/item/storage/firstaid/brute/empty)
+/datum/manufacture/empty_kit/fire
+	item_outputs = list(/obj/item/storage/firstaid/fire/empty)
+/datum/manufacture/empty_kit/toxin
+	item_outputs = list(/obj/item/storage/firstaid/toxin/empty)
+/datum/manufacture/empty_kit/oxygen
+	item_outputs = list(/obj/item/storage/firstaid/oxygen/empty)
+/datum/manufacture/empty_kit/brain
+	item_outputs = list(/obj/item/storage/firstaid/brain/empty)
+
+/datum/manufacture/spacecillin
 	name = "Spacecillin"
 	item_requirements = list("metal" = 3,
 							 "conductive" = 3)

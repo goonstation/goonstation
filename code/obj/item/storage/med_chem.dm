@@ -40,8 +40,8 @@
 		/obj/item/reagent_containers/emergency_injector/atropine)
 
 
-	empty
-		spawn_contents = list()
+/obj/item/storage/firstaid/regular/empty
+	spawn_contents = list()
 
 
 /obj/item/storage/firstaid/brute
@@ -57,6 +57,9 @@
 	/obj/item/reagent_containers/emergency_injector/saline,\
 	/obj/item/bandage/medicated)
 
+/obj/item/storage/firstaid/brute/empty
+	spawn_contents = list()
+
 /obj/item/storage/firstaid/fire
 	name = "fire first aid"
 	icon_state = "burn1"
@@ -70,6 +73,9 @@
 	/obj/item/reagent_containers/emergency_injector/epinephrine,\
 	/obj/item/bandage/medicated)
 
+/obj/item/storage/firstaid/fire/empty
+	spawn_contents = list()
+
 /obj/item/storage/firstaid/toxin
 	name = "toxin first aid"
 	icon_state = "toxin1"
@@ -82,6 +88,9 @@
 	/obj/item/reagent_containers/pill/antirad = 2,\
 	/obj/item/reagent_containers/pill/antitox = 2)
 
+/obj/item/storage/firstaid/toxin/empty
+	spawn_contents = list()
+
 /obj/item/storage/firstaid/oxygen
 	name = "oxygen deprivation first aid"
 	icon_state = "O21"
@@ -93,6 +102,9 @@
 	/obj/item/reagent_containers/emergency_injector/epinephrine,\
 	/obj/item/medicaldiagnosis/stethoscope)
 
+/obj/item/storage/firstaid/oxygen/empty
+	spawn_contents = list()
+
 /obj/item/storage/firstaid/brain
 	name = "neurological damage first aid"
 	icon_state = "brain1"
@@ -103,6 +115,9 @@
 	/obj/item/reagent_containers/emergency_injector/mannitol = 2,\
 	/obj/item/reagent_containers/emergency_injector/epinephrine,\
 	/obj/item/device/light/flashlight/penlight)
+
+/obj/item/storage/firstaid/brain/empty
+	spawn_contents = list()
 
 /obj/item/storage/firstaid/crit
 	name = "emergency critical-condition first aid"
