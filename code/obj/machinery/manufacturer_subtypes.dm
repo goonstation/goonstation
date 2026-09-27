@@ -266,6 +266,7 @@ TYPEINFO(/obj/machinery/manufacturer/general/grody)
 		/datum/manufacture/empty_kit/toxin,
 		/datum/manufacture/empty_kit/oxygen,
 		/datum/manufacture/empty_kit/brain,
+		/datum/manufacture/empty_docbag,
 		/datum/manufacture/chembarrel,
 		/datum/manufacture/chembarrel/yellow,
 		/datum/manufacture/chembarrel/red,
