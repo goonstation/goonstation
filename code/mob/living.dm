@@ -117,8 +117,7 @@ TYPEINFO(/mob/living)
 	var/stamina_max = STAMINA_MAX
 	var/stamina_regen = STAMINA_REGEN
 	var/stamina_crit_chance = STAMINA_CRIT_CHANCE
-	var/list/stamina_mods_regen = list()
-	var/list/stamina_mods_max = list()
+	var/alist/stamina_mods_max = alist()
 
 	var/last_sleep = 0 //used for sleep_bubble
 

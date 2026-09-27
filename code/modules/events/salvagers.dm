@@ -1,16 +1,16 @@
 /datum/random_event/major/antag/salvagers
 	name = "Salvagers"
-	required_elapsed_round_time = 12.8 MINUTES
-	wont_occur_past_this_time = 35 MINUTES
+	required_elapsed_round_time = 15 MINUTES
+	wont_occur_past_this_time = 70 MINUTES
 	customization_available = 1
 	announce_to_admins = 0 // Doing it manually.
-	weight = 20
+	weight = 80
 
 	var/antag_count = 0
 	var/lock = 0
 	var/admin_override = 0
 	var/ghost_confirmation_delay = 2 MINUTES // time to acknowledge or deny respawn offer.
-	var/minimum_count = 3
+	var/minimum_count = 1
 
 	is_event_available(var/ignore_time_lock = 0)
 		if( emergency_shuttle.online )

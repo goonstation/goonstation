@@ -14,6 +14,15 @@
 	pixel_y = -32
 	text = ""
 
+/atom/disposing()
+	..()
+	if (src.simple_light)
+		destroy_simple_light()
+	if (src.medium_lights)
+		destroy_medium_light()
+	if (src.mdir_lights)
+		destroy_mdir_light()
+
 /atom/var/list/simple_light_rgbas = null
 /atom/var/obj/overlay/simple_light/simple_light = null
 
@@ -89,11 +98,6 @@
 	simple_light_rgbas = null
 	qdel(simple_light)
 	simple_light = null
-
-/atom/disposing()
-	..()
-	if (simple_light)
-		destroy_simple_light()
 
 
 /obj/overlay/simple_light/medium
@@ -203,11 +207,6 @@
 	medium_light_rgbas = null
 	src.medium_lights = null
 
-/atom/disposing()
-	..()
-	if (src.medium_lights)
-		destroy_medium_light()
-
 /atom/proc/update_medium_light_visibility()
 	if(src.medium_lights[1].invisibility == 101) // toggled off
 		return
@@ -215,11 +214,12 @@
 		for (var/obj/overlay/simple_light/medium/light as anything in src.medium_lights)
 			src:vis_contents -= light
 		return
+	var/turf/origin = get_turf(src)
 	for (var/obj/overlay/simple_light/medium/light as anything in src.medium_lights)
 		if(light.icon_state == "medium_center")
 			src:vis_contents += light
 			continue
-		var/turf/T = get_step(get_turf(src), light.dir)
+		var/turf/T = get_step(origin, light.dir)
 		if(T?.opacity || T?.opaque_atom_count)
 			src:vis_contents -= light
 		else
@@ -324,11 +324,6 @@
 		qdel(light)
 	mdir_light_rgbas = null
 	src.mdir_lights = null
-
-/atom/disposing()
-	..()
-	if (src.mdir_lights)
-		destroy_mdir_light()
 
 /atom/proc/update_mdir_light_visibility(direct)
 	if(!length(src.mdir_lights) || src.mdir_lights[1].invisibility == 101) // toggled off
@@ -444,23 +439,23 @@
 			return TRUE
 	//finally we check in compass directions for directional lights shining on us
 	for (var/scan_dir in alldirs)
-		var/list/turf/turfs = list() //build a list of the three lines of turfs in this direction to check for light sources
-		for (var/i in -1 to 1)
+		var/turf/target_turf = get_steps(src, scan_dir, 5) //apparently all directional lights are exactly 5 tiles long??
+		if (!target_turf)
+			continue
+		var/turf/reached_turf = getlineopaqueblocked(src,target_turf)
+
+		for (var/i in -1 to 1) //the three lines of turfs in this direction that could hold a light source
 			var/turf/start_turf = get_steps(src, turn(scan_dir, 90), i)
 			if (start_turf?.opacity)
 				continue
-			var/turf/target_turf = get_steps(src, scan_dir, 5) //apparently all directional lights are exactly 5 tiles long??
-			if(target_turf)
-				var/turf/reached_turf = getlineopaqueblocked(src,target_turf)
-				turfs += block(start_turf, reached_turf)
-
-		for (var/turf/T in turfs)
-			for (var/atom/movable/thing in T.contents) //find something with a directional light
-				for (var/obj/overlay/simple_light/medium/directional/light in thing.mdir_lights)
-					if (light.invisibility != INVIS_NONE)
-						continue
-					//this assumes that lights always point in the same direction as their parent object, but lights don't seem to store dir so :iiam:
-					var/turf/light_target = locate(T.x + round((light.pixel_x + 32)/32), T.y + round((light.pixel_y + 32)/32), T.z)
-					var/dist = GET_DIST(src, light_target)
-					if (dist <= 1)
-						return TRUE
+			//scanned line by line
+			for (var/turf/T in block(start_turf, reached_turf))
+				for (var/atom/movable/thing in T.contents) //find something with a directional light
+					for (var/obj/overlay/simple_light/medium/directional/light in thing.mdir_lights)
+						if (light.invisibility != INVIS_NONE)
+							continue
+						//this assumes that lights always point in the same direction as their parent object, but lights don't seem to store dir so :iiam:
+						var/turf/light_target = locate(T.x + round((light.pixel_x + 32)/32), T.y + round((light.pixel_y + 32)/32), T.z)
+						var/dist = GET_DIST(src, light_target)
+						if (dist <= 1)
+							return TRUE

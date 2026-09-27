@@ -128,7 +128,7 @@
 		. = ..()
 		if (.)
 			return
-		if (!usr.find_type_in_hand(/obj/item/pen))
+		if (!src.hasWritingItem(usr.equipped()))
 			boutput(usr, "You can't write without a pen!")
 			return FALSE
 
@@ -199,3 +199,11 @@
 			var/obj/O = src.attached
 			O.remove_suffixes("\[[src.artifactType]\]")
 			O.UpdateName()
+
+	proc/hasWritingItem(obj/item/I)
+		if(istype(I, /obj/item/pen))
+			return TRUE
+		if(istype(I, /obj/item/tool/omnitool))
+			var/obj/item/tool/omnitool/TOOL = I
+
+			return TOOL.mode?.mode_id ==  OMNITOOL::MODE_PEN

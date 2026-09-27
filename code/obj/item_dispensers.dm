@@ -5,7 +5,7 @@
 /obj/item_dispenser
 	name = "item dispenser"
 	desc = "A storage container that easily dispenses items."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/dispenser.dmi'
 	icon_state = "dispenser_handcuffs"
 	pixel_y = 28
 	anchored = ANCHORED
