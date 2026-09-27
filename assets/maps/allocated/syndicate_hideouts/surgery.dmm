@@ -27,6 +27,12 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/syndicate_station/hideout)
+"j" = (
+/obj/machinery/computer/television/small{
+	pixel_y = -5
+	},
+/turf/unsimulated/wall/auto/lead/white,
+/area/syndicate_station/hideout)
 "l" = (
 /obj/machinery/disposal/extradimensional/exit{
 	pixel_y = 3
@@ -85,9 +91,7 @@
 	pixel_y = 10
 	},
 /obj/machinery/light/incandescent/warm,
-/obj/machinery/computer/television/small{
-	pixel_y = 25
-	},
+/obj/item/pen,
 /turf/simulated/floor/carpet/grime,
 /area/syndicate_station/hideout)
 "y" = (
@@ -331,7 +335,7 @@ d
 d
 c
 d
-d
+j
 w
 K
 q
