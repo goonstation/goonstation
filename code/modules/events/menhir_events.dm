@@ -1466,7 +1466,7 @@ ABSTRACT_TYPE(/datum/random_event/menhir)
 
 /obj/anomaly/pale
 	name = "pale anomaly"
-	description = "The air around it shudders as though caught in a spider's web."
+	desc = "The air around it shudders as though caught in a spider's web."
 	icon = 'icons/effects/particles.dmi'
 	icon_state = "sparkle"
 	color = "#a4aaac"
