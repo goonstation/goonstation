@@ -79993,6 +79993,17 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital)
+"ury" = (
+/obj/decal/grass_edge{
+	dir = 8
+	},
+/obj/decal/grass_edge{
+	dir = 1
+	},
+/obj/item/nuclear_waste,
+/obj/decal/grass_edge/corner,
+/turf/unsimulated/floor/setpieces/toxmoon/radpool,
+/area/toxmoon/cave)
 "urH" = (
 /obj/lattice{
 	dir = 10;
@@ -148198,7 +148209,7 @@ uIq
 twk
 twk
 qyz
-pzM
+ury
 twk
 twk
 uIq

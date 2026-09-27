@@ -403,8 +403,8 @@
 				return
 			boutput(M, SPAN_ALERT("Oh shit."))
 			if(wait_area)
-				for(var/WA in get_area_turfs(wait_area, TRUE)) //we can have the previous area checked for players before we trigger shit,
-					for(var/mob/TM in get_turf(WA))			   //so it lessens the chance of a group getting split in and out a arena
+				for(var/turf/WA in get_area_turfs(wait_area, TRUE)) //we can have the previous area checked for players before we trigger shit,
+					for(var/mob/TM in WA)			   //so it lessens the chance of a group getting split in and out a arena
 						if(TM.mind)
 							return
 			for(var/obj/boss_spawn_trigger/T in world)
@@ -488,6 +488,7 @@
 	event_handler_flags = IMMUNE_TRENCH_WARP
 	anchored = TRUE
 	ai_type = /datum/aiHolder/noxia
+	hand_count = 1
 	var/entrance_id = "toxmoon_boss"
 	var/exit_id = "toxmoon_loot"
 	add_abilities = list(/datum/targetable/critter/spit/low_cd)
@@ -531,30 +532,38 @@
 		HH.limb = new /datum/limb/gun/kinetic/spit
 		HH.icon_state = "gun"
 		HH.limb_name = "spitter arm"
+		HH.name = "spitter"
 
 
 /datum/targetable/critter/aoe
+	var/summoned_thing = null
+	var/drop_prob = null
+	var/radius = 14
+
 	cast(atom/target)
 		area_attack()
 		..()
 
-/datum/targetable/critter/aoe/area_attack(var/mob/summoned_thing, var/drop_prob, var/radius=14)
+/datum/targetable/critter/aoe/proc/area_attack(var/summoned_thing, var/drop_prob, var/radius=14)
 	for(var/turf/T in range(radius))
-		if(!holder.composite_owner.loc && !rand(0,drop_prob))
+		if(!holder.owner.loc && !rand(0,drop_prob))
 			new summoned_thing(T.loc)
 
 /datum/targetable/critter/aoe/backup_call
-	var/backup_type = null
-	var/type_modifier = rand(1,10)
-	if (type_modifier >= 7 && type_modifier =< 8)
-		backup_type = /mob/living/critter/radthing
-	else if (type_modifier == 9)
-		backup_type = /mob/living/critter/radthing/spitter
-	else if (type_modifier == 10)
-		backup_type = /mob/living/critter/radthing/neutron
-	else
-		backup_type = /mob/living/critter/zombie
-	area_attack(backup_type, 98)
+
+	cast(atom/target)
+		var/backup_type = null
+		var/type_modifier = rand(1,10)
+		if (type_modifier >= 7 && type_modifier <= 8)
+			backup_type = /mob/living/critter/radthing
+		else if (type_modifier == 9)
+			backup_type = /mob/living/critter/radthing/spitter
+		else if (type_modifier == 10)
+			backup_type = /mob/living/critter/radthing/neutron
+		else
+			backup_type = /mob/living/critter/zombie
+		area_attack(backup_type, 98)
+		..()
 
 /datum/targetable/critter/aoe/acid
 	cast(atom/target)
@@ -576,4 +585,9 @@
 	New()
 		..()
 
-/obj/acid_splash
+/obj/decal/acid_splash
+	name = "fallen acid"
+	desc = "A nasty puddle of acid that's fallen down, not my kind of puddle."
+	icon = 'icons/obj/decoration.dmi'
+	icon_state = "lead_rubble"
+	var/break_timer = 30 SECONDS
