@@ -105,6 +105,7 @@ ABSTRACT_TYPE(/datum/job)
 		if (isnull(src.upper_limit))
 			src.upper_limit = src.limit
 
+	proc/acquire_access() // Done at runtime for skeleton crewing
 		if (src.access_string)
 			src.access = get_access(src.access_string)
 

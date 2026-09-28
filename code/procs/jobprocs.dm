@@ -63,6 +63,8 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 	var/inital_ready = length(unassigned) // Doing this here cause other job allocations take away
 	if(inital_ready <= skeleton_crew_threshold)
 		skeleton_crew = TRUE
+	for(var/datum/job/job in get_all_jobs())
+		job.acquire_access()
 	var/percent_readied_up = length(clients) ? (length(unassigned)/length(clients)) * 100 : 0
 	logTheThing(LOG_DEBUG, null, "<b>Aloe</b>: roughly [percent_readied_up]% of players were readied up at roundstart (blobs and wraiths don't count).")
 
