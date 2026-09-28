@@ -268,10 +268,10 @@ var/list/removed_jobs = list(
 			"customStyle2" = src.AH.customizations["hair_middle"].style.name,
 			"customColor3" = src.AH.customizations["hair_top"].color,
 			"customStyle3" = src.AH.customizations["hair_top"].style.name,
-			"undiesTopColor" = src.AH.customizations["undies_top"].color,
-			"undiesTopStyle" = src.AH.customizations["undies_top"].style.name,
 			"undiesBottomColor" = src.AH.customizations["undies_bottom"].color,
 			"undiesBottomStyle" = src.AH.customizations["undies_bottom"].style.name,
+			"undiesTopColor" = src.AH.customizations["undies_top"].color,
+			"undiesTopStyle" = src.AH.customizations["undies_top"].style.name,
 			"randomAppearance" = src.be_random_look,
 
 			"jobFavourite" = src.job_favorite,
@@ -812,8 +812,10 @@ var/list/removed_jobs = list(
 				switch (params["id"])
 					if ("custom1", "custom2", "custom3")
 						new_style = select_custom_style(usr, CUSTOMIZATION::SLOT::HAIR, TRUE)
-					if ("undiesBottom", "undiesTop")
-						new_style = select_custom_style(usr, CUSTOMIZATION::SLOT::UNDIES, TRUE)
+					if ("undiesBottom")
+						new_style = select_custom_style(usr, CUSTOMIZATION::UNDIES::BOTTOM, TRUE)
+					if ("undiesTop")
+						new_style = select_custom_style(usr, CUSTOMIZATION::UNDIES::TOP, TRUE)
 				if (new_style)
 					switch (params["id"])
 						if ("custom1")
@@ -854,8 +856,10 @@ var/list/removed_jobs = list(
 				switch (params["id"])
 					if ("custom1", "custom2", "custom3")
 						style_list = get_available_custom_style_types(usr.client, CUSTOMIZATION::SLOT::HAIR, no_gimmick=TRUE)
-					if ("undiesBottom", "undiesTop")
-						style_list = get_available_custom_style_types(usr.client, CUSTOMIZATION::SLOT::UNDIES, no_gimmick=TRUE)
+					if ("undiesBottom")
+						style_list = get_available_custom_style_types(usr.client, CUSTOMIZATION::UNDIES::BOTTOM, no_gimmick=TRUE)
+					if ("undiesTop")
+						style_list = get_available_custom_style_types(usr.client, CUSTOMIZATION::UNDIES::TOP, no_gimmick=TRUE)
 
 				if (isnull(style_list))
 					return

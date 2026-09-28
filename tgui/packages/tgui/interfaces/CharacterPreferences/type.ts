@@ -50,8 +50,10 @@ export interface CharacterPreferencesData {
   customStyle2: string;
   customColor3: string;
   customStyle3: string;
-  underwearColor: string;
-  underwearStyle: string;
+  undiesBottomColor: string;
+  undiesBottomStyle: string;
+  undiesTopColor: string;
+  undiesTopStyle: string;
   randomAppearance: BooleanLike;
 
   jobStaticData: Record<string, JobStaticData>;

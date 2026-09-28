@@ -134,11 +134,18 @@ export const CharacterTab = () => {
             </Button>
           </LabeledList.Item>
           <LabeledList.Divider />
-          <LabeledList.Item label="Underwear">
+          <LabeledList.Item label="Underwear Top">
             <CustomDetail
-              id="underwear"
-              color={data.underwearColor}
-              style={data.underwearStyle}
+              id="undiesTop"
+              color={data.undiesTopColor}
+              style={data.undiesTopStyle}
+            />
+          </LabeledList.Item>
+          <LabeledList.Item label="Underwear Bottom">
+            <CustomDetail
+              id="undiesBottom"
+              color={data.undiesBottomColor}
+              style={data.undiesBottomStyle}
             />
           </LabeledList.Item>
           <LabeledList.Divider />

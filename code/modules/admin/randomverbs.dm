@@ -865,6 +865,7 @@
 		dat += "Update ID/PDA/Manifest: <a href='byond://?src=\ref[src];updateid=1'>[src.update_wearid ? "YES" : "NO"]</a><br>"
 		dat += "</td><td><b>Preview</b><br><img src=polymorphicon.png height=64 width=64></td></tr></table>"
 
+		// TODO: UNDIES
 		dat += "<hr><b>Bottom Detail</b><br>"
 		dat += "<a href='byond://?src=\ref[src];hair=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[src.tf_holder.mobAppearance.customizations["hair_bottom"].color]\"><table bgcolor=\"[src.tf_holder.mobAppearance.customizations["hair_bottom"].color]\"><tr><td>C1</td></tr></table></font>"
 		dat += "Style: <a href='byond://?src=\ref[src];customization_first=input'>[src.tf_holder.mobAppearance.customizations["hair_bottom"].style.name]</a>"
@@ -988,6 +989,7 @@
 			sleep(2 SECONDS)
 		return
 
+	// TODO: UNDIES
 	proc/update_preview_icon()
 		src.preview_icon = null
 
