@@ -179,8 +179,8 @@
 	src.image_cust_three = image('icons/mob/human_hair.dmi', layer = MOB_HAIR_LAYER2)
 
 	src.image_undies_bottom = image('icons/mob/human_underwear.dmi', layer = MOB_UNDIES_BOTTOM_LAYER)
-	src.image_undies_feet = image('icons/mob/human_underwear.dmi', layer = MOB_UNDIES_FEET_LAYER1)
-	src.image_undies_top = image('icons/mob/human_underwear.dmi', layer = MOB_UNDIES_TOP_LAYER1)
+	src.image_undies_feet = image('icons/mob/human_underwear.dmi', layer = MOB_UNDIES_FEET_LAYER)
+	src.image_undies_top = image('icons/mob/human_underwear.dmi', layer = MOB_UNDIES_TOP_LAYER)
 
 	src.create_reagents(330)
 

@@ -2,7 +2,7 @@ TYPEINFO(/datum/customization_style/undies/top)
 	style_type = CUSTOMIZATION::UNDIES::TOP
 ABSTRACT_TYPE(/datum/customization_style/undies/top)
 /datum/customization_style/undies/top
-	default_layer = MOB_UNDIES_TOP_LAYER1
+	default_layer = MOB_UNDIES_TOP_LAYER
 
 /datum/customization_style/undies/top/bra
 	name = "Bra"

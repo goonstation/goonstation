@@ -550,8 +550,8 @@
 
 /mob/living/carbon/human/proc/update_undies(body_offset)
 	src.image_undies_bottom = SafeGetOverlayImage("undies_bottom", 'icons/mob/human_underwear.dmi', "blank", MOB_UNDIES_BOTTOM_LAYER)
-	src.image_undies_top = SafeGetOverlayImage("undies_top", 'icons/mob/human_underwear.dmi', "blank", MOB_UNDIES_TOP_LAYER1)
-	src.image_undies_feet = SafeGetOverlayImage("undies_feet", 'icons/mob/human_underwear.dmi', "blank", MOB_UNDIES_FEET_LAYER1)
+	src.image_undies_top = SafeGetOverlayImage("undies_top", 'icons/mob/human_underwear.dmi', "blank", MOB_UNDIES_TOP_LAYER)
+	src.image_undies_feet = SafeGetOverlayImage("undies_feet", 'icons/mob/human_underwear.dmi', "blank", MOB_UNDIES_FEET_LAYER)
 	src.image_undies_feet.overlays.len = 0
 
 	var/datum/appearanceHolder/appearance_holder = src?.bioHolder?.mobAppearance || null
@@ -846,8 +846,8 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 		src.detail_standing_oversuit.overlays.len = 0
 
 		src.image_undies_bottom = SafeGetOverlayImage("undies_bottom", 'icons/mob/human_underwear.dmi', "blank", MOB_UNDIES_BOTTOM_LAYER)
-		src.image_undies_feet = SafeGetOverlayImage("undies_feet", 'icons/mob/human_underwear.dmi', "blank", MOB_UNDIES_FEET_LAYER1)
-		src.image_undies_top = SafeGetOverlayImage("undies_top", 'icons/mob/human_underwear.dmi', "blank", MOB_UNDIES_TOP_LAYER1)
+		src.image_undies_feet = SafeGetOverlayImage("undies_feet", 'icons/mob/human_underwear.dmi', "blank", MOB_UNDIES_FEET_LAYER)
+		src.image_undies_top = SafeGetOverlayImage("undies_top", 'icons/mob/human_underwear.dmi', "blank", MOB_UNDIES_TOP_LAYER)
 
 		var/eye_offset = AHOLD.e_offset_y // Monkey need human eyes to see good
 		var/body_offset = AHOLD.mob_body_offset // Monkey need human arms to hug good

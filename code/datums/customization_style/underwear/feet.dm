@@ -2,7 +2,7 @@ TYPEINFO(/datum/customization_style/undies/feet)
 	style_type = CUSTOMIZATION::UNDIES::FEET
 ABSTRACT_TYPE(/datum/customization_style/undies/feet)
 /datum/customization_style/undies/feet
-	default_layer = MOB_UNDIES_FEET_LAYER1
+	default_layer = MOB_UNDIES_FEET_LAYER
 
 /datum/customization_style/undies/feet/sock
 	name = "Socks: Ankle"
