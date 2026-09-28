@@ -171,9 +171,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 
 ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment/jam)
 /obj/item/reagent_containers/food/snacks/condiment/jam
-	var/initial_volume = 50
-	var/initial_reagents = "sugar"//Contains zero percent juice
-	var/tasty=1
+	initial_reagents = list("sugar" = 50)//Contains zero percent juice
+	tasty=1
 
 /obj/item/reagent_containers/food/snacks/condiment/jam/cherryjam
 	name = "cherry jam"
