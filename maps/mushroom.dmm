@@ -26570,6 +26570,7 @@
 /area/station/engine/elect)
 "pKV" = (
 /obj/pool/ladder{
+	icon_state = "ladder"
 	pixel_y = -9
 	},
 /turf/simulated/floor/pool/no_animate,
