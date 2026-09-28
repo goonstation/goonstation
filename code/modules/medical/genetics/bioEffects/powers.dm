@@ -1534,7 +1534,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		if(new_robotic)
 			boutput(src.owner, SPAN_ALERT("You can't absorb cybernetics!"))
 			return TRUE
-		if(old_robotic && !src.linked_power.safety)
+		if(old_robotic)
 			boutput(src.owner, SPAN_ALERT("You try to absorb \the [I], but you can't get rid of your cybernetics!"))
 			return TRUE
 		if(misfire)
