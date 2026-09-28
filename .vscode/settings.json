@@ -77,6 +77,5 @@
 	"ss13BuildFlags.baseTask": "dm: build - goonstation.dme",
 	"ss13BuildFlags.injectionMode": "write-file",
 	"ss13BuildFlags.localDefinesPath": "_std/__build.local.dm",
-	"ss13BuildFlags.definesDocPath": "_std/__build.dm",
-	"js/ts.tsdk.path": "./tgui/.yarn/sdks/typescript/lib"
+	"ss13BuildFlags.definesDocPath": "_std/__build.dm"
 }
