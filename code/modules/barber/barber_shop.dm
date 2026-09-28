@@ -2,15 +2,15 @@
 #define SHAVE 2
 
 // hairea options
-#define HAIR_BOTTOM 1
-#define HAIR_MIDDLE 2
-#define HAIR_TOP 3
-#define HAIR_ALL 4
+#define HAIR_AREA_BOTTOM 1
+#define HAIR_AREA_MIDDLE 2
+#define HAIR_AREA_TOP 3
+#define HAIR_AREA_ALL 4
 #define EYES 5
 
-#define HAIR_BOTTOM_FUCKED 1
-#define HAIR_MIDDLE_FUCKED 2
-#define HAIR_TOP_FUCKED 4
+#define HAIR_AREA_BOTTOM_FUCKED 1
+#define HAIR_AREA_MIDDLE_FUCKED 2
+#define HAIR_AREA_TOP_FUCKED 4
 #define EYES_FUCKED 8
 
 /obj/item/clothing/head/wig
@@ -42,19 +42,19 @@
 /obj/item/clothing/head/wig/spawnable
 	icon = 'icons/mob/human_hair.dmi'
 	icon_state = "bald"
-	var/first_id = "none"
-	var/first_color = "#101010"
-	var/second_id = "none"
-	var/second_color = "#101010"
-	var/third_id = "none"
-	var/third_color = "#101010"
+	var/hair_bottom_id = "none"
+	var/hair_bottom_color = "#101010"
+	var/hair_middle_id = "none"
+	var/hair_middle_color = "#101010"
+	var/hair_top_id = "none"
+	var/hair_top_color = "#101010"
 
 	New()
 		..()
 		var/hair_list = list()
-		hair_list[first_id] = first_color
-		hair_list[second_id] = second_color
-		hair_list[third_id] = third_color
+		hair_list[hair_bottom_id] = hair_bottom_color
+		hair_list[hair_middle_id] = hair_middle_color
+		hair_list[hair_top_id] = hair_top_color
 		src.setup_wig(hair_list)
 
 ///Randomized wig for the cargo crate
@@ -72,12 +72,12 @@
 		var/datum/customization_style/hair_type
 		var/picked_color = rgb(rand(0,255),rand(0,255),rand(0,255))
 		hair_type = pick(possible_hairstyles)
-		first_id = initial(hair_type.id)
-		first_color = picked_color
+		hair_bottom_id = initial(hair_type.id)
+		hair_bottom_color = picked_color
 		if (prob(33))
 			hair_type = pick(possible_hairstyles)
-			second_id = initial(hair_type.id)
-			second_color = picked_color
+			hair_middle_id = initial(hair_type.id)
+			hair_middle_color = picked_color
 		..()
 
 /// Wig that automatically attaches to humans
@@ -94,14 +94,14 @@
 
 			var/list/splut = splittext(cool_style, ",")
 			if (length(splut) >= 1)
-				src.first_id = splut[1]
-				src.first_color = cool_color
+				src.hair_bottom_id = splut[1]
+				src.hair_bottom_color = cool_color
 			if (length(splut) >= 2)
-				src.second_id = splut[2]
-				src.second_color = cool_color
+				src.hair_middle_id = splut[2]
+				src.hair_middle_color = cool_color
 			if (length(splut) >= 3)
-				src.third_id = splut[3]
-				src.third_color = cool_color
+				src.hair_top_id = splut[3]
+				src.hair_top_color = cool_color
 
 		. = ..()
 
@@ -290,7 +290,7 @@
 	//Default Colors
 	var/customization_first_color = "#FFFFFF"
 	var/uses_left
-	var/hair_group = HAIR_ALL
+	var/hair_group = HAIR_AREA_ALL
 	var/image/dye_image
 
 	New()
@@ -308,13 +308,13 @@
 		src.hair_group = hair_group >= 5 ? 1 : hair_group + 1
 		var/which_part
 		switch (hair_group)
-			if (HAIR_BOTTOM)
+			if (HAIR_AREA_BOTTOM)
 				which_part = "bottom group of hair"
-			if (HAIR_MIDDLE)
+			if (HAIR_AREA_MIDDLE)
 				which_part = "middle group of hair"
-			if (HAIR_TOP)
+			if (HAIR_AREA_TOP)
 				which_part = "top group of hair"
-			if (HAIR_ALL)
+			if (HAIR_AREA_ALL)
 				which_part = "entire coiffure"
 			if (EYES)
 				which_part = "eyes"
@@ -391,11 +391,11 @@
 			var/mob/living/carbon/human/famtofuckup = null
 			passed_dye_roll = 0
 			if(prob(33))
-				recolor_these_hair_layers_instead |= HAIR_BOTTOM_FUCKED
+				recolor_these_hair_layers_instead |= HAIR_AREA_BOTTOM_FUCKED
 			if(prob(33))
-				recolor_these_hair_layers_instead |= HAIR_MIDDLE_FUCKED
+				recolor_these_hair_layers_instead |= HAIR_AREA_MIDDLE_FUCKED
 			if(prob(33))
-				recolor_these_hair_layers_instead |= HAIR_TOP_FUCKED
+				recolor_these_hair_layers_instead |= HAIR_AREA_TOP_FUCKED
 			if(prob(33))
 				recolor_these_hair_layers_instead |= EYES_FUCKED
 			if (ishuman(user) && prob(50)) // dye your own hair, idiot
@@ -404,11 +404,11 @@
 			else // dye their hair, idiot
 				user.visible_message("[user] slips and dumps the [src] all over [M]'s head!")
 				famtofuckup = M
-			if (recolor_these_hair_layers_instead & HAIR_BOTTOM_FUCKED)
+			if (recolor_these_hair_layers_instead & HAIR_AREA_BOTTOM_FUCKED)
 				famtofuckup.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color = bottle.customization_first_color
-			if (recolor_these_hair_layers_instead & HAIR_MIDDLE_FUCKED)
+			if (recolor_these_hair_layers_instead & HAIR_AREA_MIDDLE_FUCKED)
 				famtofuckup.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color = bottle.customization_first_color
-			if (recolor_these_hair_layers_instead & HAIR_TOP_FUCKED)
+			if (recolor_these_hair_layers_instead & HAIR_AREA_TOP_FUCKED)
 				famtofuckup.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color = bottle.customization_first_color
 			if (recolor_these_hair_layers_instead & EYES_FUCKED)
 				famtofuckup.bioHolder.mobAppearance.e_color = bottle.customization_first_color
@@ -419,18 +419,18 @@
 
 		if(passed_dye_roll)
 			switch(bottle.hair_group)
-				if(HAIR_BOTTOM, HAIR_MIDDLE, HAIR_TOP)
+				if(HAIR_AREA_BOTTOM, HAIR_AREA_MIDDLE, HAIR_AREA_TOP)
 					if(!is_barber && prob(25))
 						boutput(M, "[SPAN_ALERT("Oh no, you dyed the wrong thing!")] Maybe they won't notice?")
-						bottle.hair_group = pick(list(HAIR_BOTTOM, HAIR_MIDDLE, HAIR_TOP) - bottle.hair_group)
+						bottle.hair_group = pick(list(HAIR_AREA_BOTTOM, HAIR_AREA_MIDDLE, HAIR_AREA_TOP) - bottle.hair_group)
 					switch(bottle.hair_group)
-						if(HAIR_BOTTOM)
+						if(HAIR_AREA_BOTTOM)
 							M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color = bottle.customization_first_color
-						if(HAIR_MIDDLE)
+						if(HAIR_AREA_MIDDLE)
 							M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color = bottle.customization_first_color
-						if(HAIR_TOP)
+						if(HAIR_AREA_TOP)
 							M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color = bottle.customization_first_color
-				if(HAIR_ALL)
+				if(HAIR_AREA_ALL)
 					if(src.uses_left < 3)
 						boutput(M, SPAN_NOTICE("This dyejob's going to need a full bottle!"))
 						return
@@ -453,10 +453,10 @@
 			user.tri_message(M, result_msg1,\
 												result_msg2,\
 												result_msg3)
-			if (bottle.hair_group == HAIR_ALL)
+			if (bottle.hair_group == HAIR_AREA_ALL)
 				boutput(user, "That was a big dyejob! It used the whole bottle!")
 				src.use_dye(TRUE)
-			else if(src.uses_left > 1 && is_barber && bottle.hair_group != HAIR_ALL)
+			else if(src.uses_left > 1 && is_barber && bottle.hair_group != HAIR_AREA_ALL)
 				src.use_dye()
 				boutput(user, "Hey, there's still some dye left in the bottle! Looks about [get_english_num(src.uses_left)] third\s full!")
 			else
@@ -587,14 +587,14 @@ TYPEINFO(/obj/machinery/hair_dye_dispenser)
 
 // Barber stuff
 
-#undef HAIR_BOTTOM
-#undef HAIR_MIDDLE
-#undef HAIR_TOP
-#undef HAIR_ALL
+#undef HAIR_AREA_BOTTOM
+#undef HAIR_AREA_MIDDLE
+#undef HAIR_AREA_TOP
+#undef HAIR_AREA_ALL
 #undef EYES
-#undef HAIR_BOTTOM_FUCKED
-#undef HAIR_MIDDLE_FUCKED
-#undef HAIR_TOP_FUCKED
+#undef HAIR_AREA_BOTTOM_FUCKED
+#undef HAIR_AREA_MIDDLE_FUCKED
+#undef HAIR_AREA_TOP_FUCKED
 #undef EYES_FUCKED
 #undef HAIRCUT
 #undef SHAVE
