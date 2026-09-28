@@ -886,6 +886,12 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc)
 	icon_state = "nt"
 	item_state = "nt"
 
+/obj/item/clothing/under/misc/NT/inspector
+	name = "inspector suit"
+	desc = "A very inspectable piece of clothing."
+	icon_state = "ntinspector"
+	item_state = "nt"	
+
 /obj/item/clothing/under/misc/chaplain
 	name = "priest's robe"
 	desc = "A catholic robe."

@@ -154,16 +154,16 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY)
 	badge = /obj/item/clothing/suit/security_badge/nanotrasen
 	slot_card = /obj/item/card/id/nanotrasen
-	slot_back = list(/obj/item/storage/backpack)
-	slot_belt = list(/obj/item/device/pda2/nt)
-	slot_jump = list(/obj/item/clothing/under/misc/lawyer/black) // so they can slam tables
-	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_back = list(/obj/item/storage/backpack/NT)
+	slot_belt = list(/obj/item/device/pda2/nt/important)
+	slot_jump = list(/obj/item/clothing/under/misc/NT/inspector) // so they can slam tables
+	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_ears = list(/obj/item/device/radio/headset/command/inspector)
 	slot_head = list(/obj/item/clothing/head/NTberet)
 	slot_suit = list(/obj/item/clothing/suit/armor/NT)
 	slot_eyes = list(/obj/item/clothing/glasses/regular)
-	slot_lhan = list(/obj/item/storage/briefcase)
-	slot_rhan = list(/obj/item/device/ticket_writer)
+	slot_lhan = list(/obj/item/storage/briefcase/NT)
+	slot_rhan = list(/obj/item/device/ticket_writer/NT)
 	items_in_backpack = list(/obj/item/device/flash)
 	wiki_link = "https://wiki.ss13.co/Inspector"
 	email_group = MGD_COMMAND
@@ -176,10 +176,8 @@ ABSTRACT_TYPE(/datum/job/special/random)
 		if (!M)
 			return
 
-		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase)
+		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase/NT)
 		if (B && istype(B))
-			B.storage.add_contents(new /obj/item/instrument/whistle(B))
-			B.storage.add_contents(new /obj/item/stamp/inspector(B))
 			var/obj/item/clipboard/with_pen/inspector/clipboard = new /obj/item/clipboard/with_pen/inspector(B)
 			B.storage.add_contents(clipboard)
 			clipboard.set_owner(M)

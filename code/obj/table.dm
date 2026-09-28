@@ -312,7 +312,7 @@ TYPEINFO_NEW(/obj/table)
 
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if (istype(H.w_uniform, /obj/item/clothing/under/misc/lawyer) && !H.equipped())
+			if (istype(H.w_uniform, /obj/item/clothing/under/misc/lawyer) || istype(H.w_uniform, /obj/item/clothing/under/misc/NT/inspector) && !H.equipped())
 				slaps += 1
 				src.visible_message(SPAN_ALERT("<b>[H] slams [his_or_her(H)] palms against [src]!</b>"))
 				if (slaps > 10 && prob(1)) //owned
@@ -589,7 +589,7 @@ TYPEINFO_NEW(/obj/table/mauxite)
 			deconstruct()
 		else if (ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if (istype(H.w_uniform, /obj/item/clothing/under/misc/lawyer))
+			if (istype(H.w_uniform, /obj/item/clothing/under/misc/lawyer) || istype(H.w_uniform, /obj/item/clothing/under/misc/NT/inspector))
 				slaps += 1
 				src.visible_message(SPAN_ALERT("<b>[H] slams [his_or_her(H)] palms against [src]!</b>"))
 				if (slaps > 2 && prob(50))
@@ -1101,7 +1101,7 @@ TYPEINFO(/obj/table/glass)
 		var/smashprob = 1
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if (istype(H.w_uniform, /obj/item/clothing/under/misc/lawyer))
+			if (istype(H.w_uniform, /obj/item/clothing/under/misc/lawyer) || istype(H.w_uniform, /obj/item/clothing/under/misc/NT/inspector))
 				..()
 				if (!src || !src.loc)
 					return

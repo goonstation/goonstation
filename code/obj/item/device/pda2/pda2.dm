@@ -210,6 +210,10 @@
 			mailgroups = list(MGD_ENGINEER, MGD_SUPPLY, MGD_COMMAND, MGD_PARTY)
 			alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS, MGA_RKIT)
 
+		important
+			icon_state = "pda-nt_important"
+			setup_default_pen = /obj/item/pen/NT
+
 	// Security
 
 	security

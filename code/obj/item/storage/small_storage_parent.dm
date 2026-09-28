@@ -306,3 +306,11 @@
 		I.throw_at(target, 8, 2, bonus_throwforce=8)
 
 		playsound(src, 'sound/effects/singsuck.ogg', 40, TRUE)
+
+/obj/item/storage/briefcase/NT
+	name = "nanoTrasen briefcase"
+	icon_state = "briefcase_nt"
+	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+	item_state = "briefcase_nt"
+	desc = "A very official looking briefcase emblazoned with the NT logo. Fancy."
+	spawn_contents = list(/obj/item/paper = 2, /obj/item/stamp/inspector, /obj/item/instrument/whistle)

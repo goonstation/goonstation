@@ -64,3 +64,8 @@
 	name = "crusty old security TicketWriter 1000"
 	desc = "An old TicketWriter model held together by hopes and dreams alone."
 	paper_icon_state = "paper_burned"
+
+/obj/item/device/ticket_writer/NT
+	name = "inspector TicketWriter 4000"
+	desc = "A device used by NanoTrasen inspectors to issue tickets to poorly performing crew. The wear on the keys paints a bad picture as to how often that happens..."
+	icon_state = "ticketwriter_nt"
