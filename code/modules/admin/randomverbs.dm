@@ -966,18 +966,6 @@
 			hair_top.color = "#101010"
 		if (hair_top.style == null)
 			hair_top.style = new /datum/customization_style/none
-		if (customization_first.color == null)
-			customization_first.color = "#101010"
-		if (customization_first.style == null)
-			customization_first.style = new /datum/customization_style/none
-		if (customization_second.color == null)
-			customization_second.color = "#101010"
-		if (customization_second.style == null)
-			customization_second.style = new /datum/customization_style/none
-		if (customization_third.color == null)
-			customization_third.color = "#101010"
-		if (customization_third.style == null)
-			customization_third.style = new /datum/customization_style/none
 		if (AH.e_color == null)
 			AH.e_color = "#101010"
 		if (AH.u_color == null)
