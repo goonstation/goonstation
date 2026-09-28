@@ -8156,7 +8156,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/stockex)
 "cuc" = (
-/obj/machinery/computer/secure_data/detective_computer,
+/obj/machinery/computer3/generic/secure_data,
 /obj/cable,
 /obj/machinery/power/data_terminal,
 /obj/machinery/light/incandescent/netural,
@@ -17896,7 +17896,7 @@
 	},
 /area/station/engine/gravity)
 "fAO" = (
-/obj/machinery/computer/secure_data/detective_computer,
+/obj/machinery/computer3/generic/secure_data,
 /obj/cable{
 	icon_state = "0-2"
 	},
