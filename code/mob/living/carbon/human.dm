@@ -49,12 +49,12 @@
 
 	var/image/image_eyes_L = null
 	var/image/image_eyes_R = null
-	var/image/image_cust_one = null
-	var/image/image_cust_two = null
-	var/image/image_cust_three = null
-	var/image/image_special_one = null
-	var/image/image_special_two = null
-	var/image/image_special_three = null
+	var/image/image_hair_bottom = null
+	var/image/image_hair_middle = null
+	var/image/image_hair_top = null
+	var/image/image_hair_bottom_special = null
+	var/image/image_hair_middle_special = null
+	var/image/image_hair_top_special = null
 
 	var/image/phoenix_temperature_indicator/phoenix_temp_overlay = null
 
@@ -172,9 +172,9 @@
 
 	image_eyes_L = image('icons/mob/human_hair.dmi', layer = MOB_FACE_LAYER)
 	image_eyes_R = image('icons/mob/human_hair.dmi', layer = MOB_FACE_LAYER)
-	image_cust_one = image('icons/mob/human_hair.dmi', layer = MOB_HAIR_LAYER2)
-	image_cust_two = image('icons/mob/human_hair.dmi', layer = MOB_HAIR_LAYER2)
-	image_cust_three = image('icons/mob/human_hair.dmi', layer = MOB_HAIR_LAYER2)
+	image_hair_bottom = image('icons/mob/human_hair.dmi', layer = MOB_HAIR_LAYER2)
+	image_hair_middle = image('icons/mob/human_hair.dmi', layer = MOB_HAIR_LAYER2)
+	image_hair_top = image('icons/mob/human_hair.dmi', layer = MOB_HAIR_LAYER2)
 
 	src.create_reagents(330)
 

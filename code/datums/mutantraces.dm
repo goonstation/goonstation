@@ -162,37 +162,37 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	/// Special Hair is anything additional that's supposed to be stuck to the mob's head
 	/// Can be anything, honestly. Used for lizard head things and cow horns
 	/// Will only show up if the mob's appearance flag includes HAS_SPECIAL_HAIR
-	var/special_hair_1_icon
+	var/special_hair_bottom_icon
 	/// The "_f" vars are applied for female variants, if the appearance flags don't have NOT_DIMORPHIC
-	var/special_hair_1_icon_f
+	var/special_hair_bottom_icon_f
 	/// State to be used. Human hairstyles must be defined by their icon state, not hairstyle name!
-	var/special_hair_1_state
-	var/special_hair_1_state_f
+	var/special_hair_bottom_state
+	var/special_hair_bottom_state_f
 	/// Which preference entry to colorize this from.
-	/// CUST_1 to use the appearanceholder's custom_first_color, and so on. Make null for just "#FFFFFF"
-	var/special_hair_1_color = CUST_1
-	var/special_hair_1_color_f
+	/// HAIR_BOTTOM_COLOR to use the appearanceholder's custom_first_color, and so on. Make null for just "#FFFFFF"
+	var/special_hair_bottom_color = HAIR_BOTTOM_COLOR
+	var/special_hair_bottom_color_f
 	/// Which layer should this hair appear? Defaults to the normal hair-layer
-	var/special_hair_1_layer = MOB_HAIR_LAYER2
-	var/special_hair_1_layer_f = MOB_HAIR_LAYER2
-	/// The image to be inserted into the mob's appearanceholder's customization_second
-	var/special_hair_2_icon
-	var/special_hair_2_icon_f
-	var/special_hair_2_state
-	var/special_hair_2_state_f
-	var/special_hair_2_color = CUST_2
-	var/special_hair_2_color_f
-	var/special_hair_2_layer = MOB_HAIR_LAYER2
-	var/special_hair_2_layer_f = MOB_HAIR_LAYER2
-	/// The image to be inserted into the mob's appearanceholder's customization_third
-	var/special_hair_3_icon
-	var/special_hair_3_icon_f
-	var/special_hair_3_state
-	var/special_hair_3_state_f
-	var/special_hair_3_color = CUST_3
-	var/special_hair_3_color_f
-	var/special_hair_3_layer = MOB_HAIR_LAYER2
-	var/special_hair_3_layer_f = MOB_HAIR_LAYER2
+	var/special_hair_bottom_layer = MOB_HAIR_LAYER2
+	var/special_hair_bottom_layer_f = MOB_HAIR_LAYER2
+	/// The image to be inserted into the mob's appearanceholder's hair_middle
+	var/special_hair_middle_icon
+	var/special_hair_middle_icon_f
+	var/special_hair_middle_state
+	var/special_hair_middle_state_f
+	var/special_hair_middle_color = HAIR_MIDDLE_COLOR
+	var/special_hair_middle_color_f
+	var/special_hair_middle_layer = MOB_HAIR_LAYER2
+	var/special_hair_middle_layer_f = MOB_HAIR_LAYER2
+	/// The image to be inserted into the mob's appearanceholder's hair_top
+	var/special_hair_top_icon
+	var/special_hair_top_icon_f
+	var/special_hair_top_state
+	var/special_hair_top_state_f
+	var/special_hair_top_color = HAIR_TOP_COLOR
+	var/special_hair_top_color_f
+	var/special_hair_top_layer = MOB_HAIR_LAYER2
+	var/special_hair_top_layer_f = MOB_HAIR_LAYER2
 
 	/// These details will show up layered just in front of the mob's skin
 	/// The image to be inserted into the mob's appearanceholder's mob_detail_1
@@ -200,7 +200,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	var/detail_1_icon_f
 	var/detail_1_state
 	var/detail_1_state_f
-	var/detail_1_color = CUST_1
+	var/detail_1_color = HAIR_BOTTOM_COLOR
 	var/detail_1_color_f
 
 	/// dead mob icon state this mutantrace uses
@@ -213,7 +213,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	var/detail_oversuit_1_icon_f
 	var/detail_oversuit_1_state
 	var/detail_oversuit_1_state_f
-	var/detail_oversuit_1_color = CUST_1
+	var/detail_oversuit_1_color = HAIR_BOTTOM_COLOR
 	var/detail_oversuit_1_color_f
 
 	var/datum/movement_modifier/movement_modifier
@@ -445,23 +445,23 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.special_style = AH.special_style
 			src.mutant_folder = typeinfo.special_styles[AH.special_style]
 
-		AH.special_hair_1_icon = src.special_hair_1_icon
-		AH.special_hair_1_state = src.special_hair_1_state
-		AH.special_hair_1_color_ref = src.special_hair_1_color
-		AH.special_hair_1_layer = src.special_hair_1_layer
-		AH.special_hair_1_offset_y = src.head_offset
+		AH.special_hair_bottom_icon = src.special_hair_bottom_icon
+		AH.special_hair_bottom_state = src.special_hair_bottom_state
+		AH.special_hair_bottom_color_ref = src.special_hair_bottom_color
+		AH.special_hair_bottom_layer = src.special_hair_bottom_layer
+		AH.special_hair_bottom_offset_y = src.head_offset
 
-		AH.special_hair_2_icon = src.special_hair_2_icon
-		AH.special_hair_2_state = src.special_hair_2_state
-		AH.special_hair_2_color_ref = src.special_hair_2_color
-		AH.special_hair_2_layer = src.special_hair_2_layer
-		AH.special_hair_2_offset_y = src.head_offset
+		AH.special_hair_middle_icon = src.special_hair_middle_icon
+		AH.special_hair_middle_state = src.special_hair_middle_state
+		AH.special_hair_middle_color_ref = src.special_hair_middle_color
+		AH.special_hair_middle_layer = src.special_hair_middle_layer
+		AH.special_hair_middle_offset_y = src.head_offset
 
-		AH.special_hair_3_icon = src.special_hair_3_icon
-		AH.special_hair_3_state = src.special_hair_3_state
-		AH.special_hair_3_color_ref = src.special_hair_3_color
-		AH.special_hair_3_layer = src.special_hair_1_layer
-		AH.special_hair_3_offset_y = src.head_offset
+		AH.special_hair_top_icon = src.special_hair_top_icon
+		AH.special_hair_top_state = src.special_hair_top_state
+		AH.special_hair_top_color_ref = src.special_hair_top_color
+		AH.special_hair_top_layer = src.special_hair_bottom_layer
+		AH.special_hair_top_offset_y = src.head_offset
 
 		AH.mob_detail_1_icon = src.detail_1_icon
 		AH.mob_detail_1_state = src.detail_1_state
@@ -650,32 +650,32 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			if(src.l_limb_leg_type_mutantrace_f)
 				src.l_limb_leg_type_mutantrace = src.l_limb_leg_type_mutantrace_f
 
-			if(src.special_hair_1_icon_f)
-				src.special_hair_1_icon = src.special_hair_1_icon_f
-			if(src.special_hair_1_state_f)
-				src.special_hair_1_state = src.special_hair_1_state_f
-			if(src.special_hair_1_color_f)
-				src.special_hair_1_color = src.special_hair_1_color_f
-			if(src.special_hair_1_layer_f)
-				src.special_hair_1_layer = src.special_hair_1_layer_f
+			if(src.special_hair_bottom_icon_f)
+				src.special_hair_bottom_icon = src.special_hair_bottom_icon_f
+			if(src.special_hair_bottom_state_f)
+				src.special_hair_bottom_state = src.special_hair_bottom_state_f
+			if(src.special_hair_bottom_color_f)
+				src.special_hair_bottom_color = src.special_hair_bottom_color_f
+			if(src.special_hair_bottom_layer_f)
+				src.special_hair_bottom_layer = src.special_hair_bottom_layer_f
 
-			if(src.special_hair_2_icon_f)
-				src.special_hair_2_icon = src.special_hair_2_icon_f
-			if(src.special_hair_2_state_f)
-				src.special_hair_2_state = src.special_hair_2_state_f
-			if(src.special_hair_2_color_f)
-				src.special_hair_2_color = src.special_hair_2_color_f
-			if(src.special_hair_2_layer_f)
-				src.special_hair_2_layer = src.special_hair_2_layer_f
+			if(src.special_hair_middle_icon_f)
+				src.special_hair_middle_icon = src.special_hair_middle_icon_f
+			if(src.special_hair_middle_state_f)
+				src.special_hair_middle_state = src.special_hair_middle_state_f
+			if(src.special_hair_middle_color_f)
+				src.special_hair_middle_color = src.special_hair_middle_color_f
+			if(src.special_hair_middle_layer_f)
+				src.special_hair_middle_layer = src.special_hair_middle_layer_f
 
-			if(src.special_hair_3_icon_f)
-				src.special_hair_3_icon = src.special_hair_3_icon_f
-			if(src.special_hair_3_state_f)
-				src.special_hair_3_state = src.special_hair_3_state_f
-			if(src.special_hair_3_color_f)
-				src.special_hair_3_color = src.special_hair_3_color_f
-			if(src.special_hair_3_layer_f)
-				src.special_hair_3_layer = src.special_hair_3_layer_f
+			if(src.special_hair_top_icon_f)
+				src.special_hair_top_icon = src.special_hair_top_icon_f
+			if(src.special_hair_top_state_f)
+				src.special_hair_top_state = src.special_hair_top_state_f
+			if(src.special_hair_top_color_f)
+				src.special_hair_top_color = src.special_hair_top_color_f
+			if(src.special_hair_top_layer_f)
+				src.special_hair_top_layer = src.special_hair_top_layer_f
 
 			if(src.detail_1_icon_f)
 				src.detail_1_icon = src.detail_1_icon_f
@@ -857,14 +857,14 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 	"left_eye" = /obj/item/organ/eye/lizard,
 	"right_eye" = /obj/item/organ/eye/lizard)
 	mutant_folder = 'icons/mob/lizard.dmi'
-	special_hair_1_icon = 'icons/mob/lizard.dmi'
-	special_hair_1_state = "head-detail_1"
-	special_hair_1_color = CUST_3
-	special_hair_1_layer = MOB_HAIR_LAYER1
-	special_hair_1_layer_f = MOB_HAIR_LAYER1
+	special_hair_bottom_icon = 'icons/mob/lizard.dmi'
+	special_hair_bottom_state = "head-detail_1"
+	special_hair_bottom_color = HAIR_TOP_COLOR
+	special_hair_bottom_layer = MOB_HAIR_LAYER1
+	special_hair_bottom_layer_f = MOB_HAIR_LAYER1
 	detail_1_icon = 'icons/mob/lizard.dmi'
 	detail_1_state = "lizard_detail-1"
-	detail_1_color = CUST_2
+	detail_1_color = HAIR_MIDDLE_COLOR
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/lizard/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/lizard/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/lizard/right
@@ -1544,11 +1544,11 @@ TYPEINFO(/datum/mutantrace/ithillid)
 	voice_override = "blub"
 	mutant_folder = 'icons/mob/ithillid.dmi'
 	special_head = HEAD_ITHILLID
-	special_hair_1_icon = 'icons/mob/ithillid.dmi'
-	special_hair_1_state = "head_detail_1"
-	special_hair_1_color = null
-	special_hair_1_layer = MOB_HAIR_LAYER1
-	special_hair_1_layer_f = MOB_HAIR_LAYER1
+	special_hair_bottom_icon = 'icons/mob/ithillid.dmi'
+	special_hair_bottom_state = "head_detail_1"
+	special_hair_bottom_color = null
+	special_hair_bottom_layer = MOB_HAIR_LAYER1
+	special_hair_bottom_layer_f = MOB_HAIR_LAYER1
 	race_mutation = /datum/bioEffect/mutantrace/ithillid
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/ithillid/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/ithillid/left
@@ -2319,9 +2319,9 @@ TYPEINFO(/datum/mutantrace/kudzu)
 		"spleen"=/obj/item/organ/spleen/synth,\
 		"stomach"=/obj/item/organ/stomach/synth,\
 		"butt"=/obj/item/clothing/head/butt/synth) //dont be mean to the kudzupeople
-	special_hair_1_icon = 'icons/mob/kudzu.dmi'
-	special_hair_1_state = "kudzu_hair"
-	special_hair_1_color = null
+	special_hair_bottom_icon = 'icons/mob/kudzu.dmi'
+	special_hair_bottom_state = "kudzu_hair"
+	special_hair_bottom_color = null
 	detail_1_icon = 'icons/mob/kudzu.dmi'
 	detail_1_state = "kudzu_torso"
 	detail_1_color = null
@@ -2466,13 +2466,13 @@ TYPEINFO(/datum/mutantrace/cow)
 	"right_eye" = /obj/item/organ/eye/cow)
 	mutant_folder = 'icons/mob/cow.dmi'
 	special_head = HEAD_COW
-	special_hair_1_icon = 'icons/mob/cow.dmi'
-	special_hair_1_state = "head-detail1"
-	special_hair_1_color = CUST_1
-	special_hair_2_icon = 'icons/mob/cow.dmi'
-	special_hair_2_state = "cow_over_suit"
-	special_hair_2_color = null
-	special_hair_2_layer = MOB_OVERMASK_LAYER
+	special_hair_bottom_icon = 'icons/mob/cow.dmi'
+	special_hair_bottom_state = "head-detail1"
+	special_hair_bottom_color = HAIR_BOTTOM_COLOR
+	special_hair_middle_icon = 'icons/mob/cow.dmi'
+	special_hair_middle_state = "cow_over_suit"
+	special_hair_middle_color = null
+	special_hair_middle_layer = MOB_OVERMASK_LAYER
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cow/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/cow/left
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cow/right
@@ -2797,15 +2797,15 @@ TYPEINFO(/datum/mutantrace/pug)
 		"spleen"=/obj/item/organ/spleen/cyber,\
 		"stomach"=/obj/item/organ/stomach/cyber,\
 		"butt"=/obj/item/clothing/head/butt/cyberbutt)
-	special_hair_1_icon = 'icons/mob/human_hair.dmi'
-	special_hair_1_state = "bald"
-	special_hair_1_color = null
-	special_hair_2_icon = 'icons/mob/human_hair.dmi'
-	special_hair_2_state = "bald"
-	special_hair_2_color = null
-	special_hair_3_icon = 'icons/mob/human_hair.dmi'
-	special_hair_3_state = "bald"
-	special_hair_3_color = null
+	special_hair_bottom_icon = 'icons/mob/human_hair.dmi'
+	special_hair_bottom_state = "bald"
+	special_hair_bottom_color = null
+	special_hair_middle_icon = 'icons/mob/human_hair.dmi'
+	special_hair_middle_state = "bald"
+	special_hair_middle_color = null
+	special_hair_top_icon = 'icons/mob/human_hair.dmi'
+	special_hair_top_state = "bald"
+	special_hair_top_color = null
 	override_hair = 1
 	override_beard = 1
 	override_detail = 1

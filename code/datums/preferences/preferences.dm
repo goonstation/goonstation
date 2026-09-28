@@ -262,12 +262,12 @@ var/list/removed_jobs = list(
 			"skinTone" = src.AH.s_tone_original,
 			"specialStyle" = src.AH.special_style,
 			"eyeColor" = src.AH.e_color,
-			"customColor1" = src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color,
-			"customStyle1" = src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style.name,
-			"customColor2" = src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color,
-			"customStyle2" = src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style.name,
-			"customColor3" = src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color,
-			"customStyle3" = src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style.name,
+			"hairBottomColor" = src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color,
+			"hairBottomStyle" = src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style.name,
+			"hairMiddleColor" = src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color,
+			"hairMiddleStyle" = src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style.name,
+			"hairTopColor" = src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color,
+			"hairTopStyle" = src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style.name,
 			"underwearColor" = src.AH.u_color,
 			"underwearStyle" = src.AH.underwear,
 			"randomAppearance" = src.be_random_look,
@@ -778,22 +778,22 @@ var/list/removed_jobs = list(
 			if ("update-detail-color")
 				var/current_color
 				switch (params["id"])
-					if ("custom1")
+					if ("hairBottom")
 						current_color = src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color
-					if ("custom2")
+					if ("hairMiddle")
 						current_color = src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color
-					if ("custom3")
+					if ("hairTop")
 						current_color = src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color
 					if ("underwear")
 						current_color = src.AH.u_color
 				var/new_color = tgui_color_picker(usr, "Please select a color.", "Character Generation", current_color)
 				if (new_color)
 					switch (params["id"])
-						if ("custom1")
+						if ("hairBottom")
 							src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color = new_color
-						if ("custom2")
+						if ("hairMiddle")
 							src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color = new_color
-						if ("custom3")
+						if ("hairTop")
 							src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color = new_color
 						if ("underwear")
 							src.AH.u_color = new_color
@@ -804,17 +804,17 @@ var/list/removed_jobs = list(
 			if ("update-detail-style")
 				var/new_style
 				switch (params["id"])
-					if ("custom1", "custom2", "custom3")
+					if ("hairBottom", "hairMiddle", "hairTop")
 						new_style = select_custom_style(usr, CUSTOMIZATION::SLOT::HAIR, TRUE)
 					if ("underwear")
 						new_style = tgui_input_list(usr, "Select an underwear style", "Character Generation", underwear_styles)
 				if (new_style)
 					switch (params["id"])
-						if ("custom1")
+						if ("hairBottom")
 							src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style = new_style
-						if ("custom2")
+						if ("hairMiddle")
 							src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style = new_style
-						if ("custom3")
+						if ("hairTop")
 							src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style = new_style
 						if ("underwear")
 							src.AH.underwear = new_style
@@ -829,11 +829,11 @@ var/list/removed_jobs = list(
 				var/list/style_list
 
 				switch (params["id"])
-					if ("custom1")
+					if ("hairBottom")
 						current_style = src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style.type
-					if ("custom2")
+					if ("hairMiddle")
 						current_style = src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style.type
-					if ("custom3")
+					if ("hairTop")
 						current_style = src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style.type
 					if ("underwear")
 						current_style = src.AH.underwear
@@ -842,7 +842,7 @@ var/list/removed_jobs = list(
 					return
 
 				switch (params["id"])
-					if ("custom1", "custom2", "custom3")
+					if ("hairBottom", "hairMiddle", "hairTop")
 						style_list = get_available_custom_style_types(usr.client, no_gimmick=TRUE)
 					if ("underwear")
 						style_list = underwear_styles
@@ -858,11 +858,11 @@ var/list/removed_jobs = list(
 
 				if (new_style)
 					switch (params["id"])
-						if ("custom1")
+						if ("hairBottom")
 							src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style = new new_style
-						if ("custom2")
+						if ("hairMiddle")
 							src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style = new new_style
-						if ("custom3")
+						if ("hairTop")
 							src.AH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style = new new_style
 						if ("underwear")
 							src.AH.underwear = new_style

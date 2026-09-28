@@ -1089,10 +1089,10 @@
 			if (M.AH_we_spawned_with)
 				M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color 	= M.AH_we_spawned_with.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color
 				M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color 	= M.AH_we_spawned_with.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color
-				M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color 	= M.AH_we_spawned_with.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color
-				M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style 			= M.AH_we_spawned_with.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style
-				M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style 			= M.AH_we_spawned_with.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style
-				M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style 			= M.AH_we_spawned_with.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style
+				M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color 		= M.AH_we_spawned_with.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color
+				M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style 	= M.AH_we_spawned_with.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style
+				M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style 	= M.AH_we_spawned_with.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style
+				M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style		= M.AH_we_spawned_with.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style
 
 			M.hair_override = 1
 			M.bioHolder.mobAppearance.UpdateMob()

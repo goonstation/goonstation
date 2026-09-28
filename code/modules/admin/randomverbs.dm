@@ -712,21 +712,21 @@
 				new_text = copytext(new_text, 1, FLAVOR_CHAR_LIMIT+1)
 			src.tf_holder.mobAppearance.flavor_text = new_text
 
-		else if (href_list["customization_first"])
+		else if (href_list["hair_bottom"])
 			var/new_style = select_custom_style(usr)
 
 			if (new_style)
 				src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style = new_style
 				src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style_original = new_style
 
-		else if (href_list["customization_second"])
+		else if (href_list["hair_middle"])
 			var/new_style = select_custom_style(usr)
 
 			if (new_style)
 				src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style = new_style
 				src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style_original = new_style
 
-		else if (href_list["customization_third"])
+		else if (href_list["hair_top"])
 			var/new_style = select_custom_style(usr)
 
 			if (new_style)
@@ -867,13 +867,13 @@
 
 		dat += "<hr><b>Bottom Detail</b><br>"
 		dat += "<a href='byond://?src=\ref[src];hair=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color]\"><table bgcolor=\"[src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color]\"><tr><td>C1</td></tr></table></font>"
-		dat += "Style: <a href='byond://?src=\ref[src];customization_first=input'>[src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style.name]</a>"
+		dat += "Style: <a href='byond://?src=\ref[src];hair_bottom=input'>[src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style.name]</a>"
 		dat += "<hr><b>Mid Detail</b><br>"
 		dat += "<a href='byond://?src=\ref[src];facial=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color]\"><table bgcolor=\"[src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color]\"><tr><td>C2</td></tr></table></font>"
-		dat += "Style: <a href='byond://?src=\ref[src];customization_second=input'>[src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style.name]</a>"
+		dat += "Style: <a href='byond://?src=\ref[src];hair_middle=input'>[src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style.name]</a>"
 		dat += "<hr><b>Top Detail</b><br>"
 		dat += "<a href='byond://?src=\ref[src];detail=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color]\"><table bgcolor=\"[src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color]\"><tr><td>C3</td></tr></table></font>"
-		dat += "Style: <a href='byond://?src=\ref[src];customization_third=input'>[src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style.name]</a>"
+		dat += "Style: <a href='byond://?src=\ref[src];hair_top=input'>[src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style.name]</a>"
 
 		dat += "<hr><b>Eyes</b><br>"
 		dat += "<a href='byond://?src=\ref[src];eyes=input'>Change Color</a> <font face=\"fixedsys\" size=\"3\" color=\"[src.tf_holder.mobAppearance.e_color]\"><table bgcolor=\"[src.tf_holder.mobAppearance.e_color]\"><tr><td>EC</td></tr></table></font>"

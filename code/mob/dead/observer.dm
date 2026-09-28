@@ -115,11 +115,11 @@ TYPEINFO(/mob/dead/observer)
 			is_mutantrace = TRUE
 			break
 
-	var/cust_one_state = P.AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style.id
-	var/cust_two_state = P.AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style.id
-	var/cust_three_state = P.AH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style.id
+	var/hair_bottom_state = P.AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style.id
+	var/hair_middle_state = P.AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style.id
+	var/hair_top_state = P.AH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style.id
 
-	var/image/hair = image(P.AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style.icon, cust_one_state)
+	var/image/hair = image(P.AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style.icon, hair_bottom_state)
 	hair.color = P.AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color
 	hair.alpha = GHOST_HAIR_ALPHA
 
@@ -133,17 +133,17 @@ TYPEINFO(/mob/dead/observer)
 	if (!is_mutantrace || force_hair || (is_mutantrace && ("bald" in P.traitPreferences.traits_selected)))
 		src.AddOverlays(hair, "hair")
 
-		var/image/beard = image(P.AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style.icon, cust_two_state)
+		var/image/beard = image(P.AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style.icon, hair_middle_state)
 		beard.color = P.AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color
 		beard.alpha = GHOST_HAIR_ALPHA
 		src.AddOverlays(beard, "beard")
 
-		var/image/detail = image(P.AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style.icon, cust_three_state)
+		var/image/detail = image(P.AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style.icon, hair_top_state)
 		detail.color = P.AH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color
 		detail.alpha = GHOST_HAIR_ALPHA
 		src.AddOverlays(detail, "detail")
 
-	if(cust_one_state && cust_one_state != "none")
+	if(hair_bottom_state && hair_bottom_state != "none")
 		wig = new
 		wig.mat_changename = 0
 		var/datum/material/wigmat = getMaterial("ectofibre")
@@ -152,7 +152,7 @@ TYPEINFO(/mob/dead/observer)
 		wig.setMaterial(wigmat)
 		wig.name = "ectofibre [name]'s hair"
 		wig.icon = 'icons/mob/human_hair.dmi'
-		wig.icon_state = cust_one_state
+		wig.icon_state = hair_bottom_state
 		wig.color = P.AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color
 		wig.wear_image_icon = 'icons/mob/human_hair.dmi'
 		wig.wear_image = image(wig.wear_image_icon, wig.icon_state)
@@ -468,8 +468,8 @@ TYPEINFO(/mob/dead/observer)
 		detail.alpha = GHOST_HAIR_ALPHA
 		O.AddOverlays(detail, "detail")
 
-		var/cust_one = src.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style.id
-		if(cust_one && cust_one != "none")
+		var/hair_bottom = src.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style.id
+		if(hair_bottom && hair_bottom != "none")
 			O.wig = new
 			O.wig.mat_changename = 0
 			var/datum/material/wigmat = getMaterial("ectofibre")
@@ -478,7 +478,7 @@ TYPEINFO(/mob/dead/observer)
 			O.wig.setMaterial(wigmat)
 			O.wig.name = "[O.name]’s hair"
 			O.wig.icon = 'icons/mob/human_hair.dmi'
-			O.wig.icon_state = cust_one
+			O.wig.icon_state = hair_bottom
 			O.wig.color = src.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color
 			O.wig.wear_image_icon = 'icons/mob/human_hair.dmi'
 			O.wig.wear_image = image(O.wig.wear_image_icon, O.wig.icon_state)
