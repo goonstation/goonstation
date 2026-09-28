@@ -169,89 +169,78 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 		..()
 		reagents.add_reagent("cholesterol", 20)
 
-/obj/item/reagent_containers/food/snacks/condiment/cherryjam
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment/jam)
+/obj/item/reagent_containers/food/snacks/condiment/jam
+	var/initial_volume = 50
+	var/initial_reagents = "sugar"//Contains zero percent juice
+	var/tasty=1
+
+/obj/item/reagent_containers/food/snacks/condiment/jam/cherryjam
 	name = "cherry jam"
 	desc = "The favored condiment of truth-telling founding fathers."
 	icon_state = "cherry-jam"
 	food_color = "#8D1422"
-	initial_volume = 50
 	initial_reagents = list("sugar"=25,"juice_cherry"=25)
-	tasty=1
 
-/obj/item/reagent_containers/food/snacks/condiment/grapejam
+/obj/item/reagent_containers/food/snacks/condiment/jam/grapejam
 	name = "grape jam"
 	desc = "Now with extra purple!"
 	icon_state = "grape-jam"
 	food_color = "#5A1D8A"
-	tasty=1
 
-/obj/item/reagent_containers/food/snacks/condiment/strawberryjam
+/obj/item/reagent_containers/food/snacks/condiment/jam/strawberryjam
 	name = "strawberry jam"
 	desc = "Now with 50% less straw."
 	icon_state = "strawberry-jam"
 	food_color = "#8D1422"
-	initial_volume = 50
 	initial_reagents = list("sugar"=25,"juice_strawberry"=25)
-	tasty=1
 
-/obj/item/reagent_containers/food/snacks/condiment/applejam
+/obj/item/reagent_containers/food/snacks/condiment/jam/applejam
 	name = "apple jam"
 	desc = "Sweet and crisp, with a hint of tartness."
 	icon_state = "apple-jam"
 	food_color = "#D3CB21"
-	initial_volume = 50
 	initial_reagents = list("sugar"=25,"juice_apple"=25)
-	tasty = 1
 
-/obj/item/reagent_containers/food/snacks/condiment/blueberryjam
+/obj/item/reagent_containers/food/snacks/condiment/jam/blueberryjam
 	name = "blueberry jam"
 	desc = "Dark and smooth, with a nostalgic aroma."
 	icon_state = "blueberry-jam"
 	food_color = "#3021C8"
-	tasty = 1
 
-/obj/item/reagent_containers/food/snacks/condiment/pearjam
+/obj/item/reagent_containers/food/snacks/condiment/jam/pearjam
 	name = "pear jam"
 	desc = "No relation to any grunge bands."
 	icon_state = "pear-jam"
 	food_color = "#D3CB21"
-	tasty = 1
 
-/obj/item/reagent_containers/food/snacks/condiment/peachjam
+/obj/item/reagent_containers/food/snacks/condiment/jam/peachjam
 	name = "peach jam"
 	desc = "Peachy and jammy."
 	icon_state = "peach-jam"
 	food_color = "#D37610"
-	initial_volume = 50
 	initial_reagents = list("sugar"=25,"juice_peach"=25)
-	tasty = 1
 
-/obj/item/reagent_containers/food/snacks/condiment/orangejam
+/obj/item/reagent_containers/food/snacks/condiment/jam/orangejam
 	name = "orange jam"
 	desc = "Zesty and juicy."
 	icon_state = "orange-jam"
 	food_color = "#D37610"
-	initial_volume = 50
 	initial_reagents = list("sugar"=25,"juice_orange"=25)
-	tasty = 1
 
-/obj/item/reagent_containers/food/snacks/condiment/raspberryjam
+/obj/item/reagent_containers/food/snacks/condiment/jam/raspberryjam
 	name = "raspberry jam"
 	desc = "Tangy and sweet with a floral aroma."
 	icon_state = "raspberry-jam"
 	food_color = "#A30325"
-	initial_volume = 50
 	initial_reagents = list("sugar"=25,"juice_raspberry"=25)
-	tasty = 1
 
-/obj/item/reagent_containers/food/snacks/condiment/signaljam
+/obj/item/reagent_containers/food/snacks/condiment/jam/signaljam
 	name = "signal jam"
 	desc = "May contain trace amounts of noise."
 	icon_state = "signal-jam"
 	food_color = "#359702"
-	initial_volume = 50
 	initial_reagents = list("sugar"=25,"silicon"=20,"copper"=5)
-	tasty = 1
 
 	afterattack(atom/target, mob/user, flag)
 		if (istype(target, /obj/item/device/radio/headset/))
@@ -260,29 +249,23 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 			qdel (src)
 		else return
 
-/obj/item/reagent_containers/food/snacks/condiment/mintjam
+/obj/item/reagent_containers/food/snacks/condiment/jam/mintjam
 	name = "mint jam"
 	desc = "Tastes a little like toothpaste."
 	icon_state = "mint-jam"
 	food_color = "#308F5D"
-	initial_volume = 50
 	initial_reagents = list("sugar"=25,"mint"=25)
-	tasty = 1
 
-/obj/item/reagent_containers/food/snacks/condiment/spacejam
+/obj/item/reagent_containers/food/snacks/condiment/jam/spacejam
 	name = "space jam"
 	desc = "Widely regarded as a slam dunk."
 	icon_state = "space-jam"
 	food_color = "#1E173D"
-	initial_volume = 50
 	initial_reagents = list("sugar"=25,"luminol"=25)
-	tasty = 1
 
-/obj/item/reagent_containers/food/snacks/condiment/paperjam
+/obj/item/reagent_containers/food/snacks/condiment/jam/paperjam
 	name = "paper jam"
 	desc = "Nemesis of printers everywhere."
 	icon_state = "paper-jam"
 	food_color = "#FFFFFF"
-	initial_volume = 50
 	initial_reagents = list("sugar"=25,"paper"=25)
-	tasty = 1
