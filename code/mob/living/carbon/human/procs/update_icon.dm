@@ -548,6 +548,32 @@
 	src.AddOverlays(src.tail_standing_oversuit, "tail_oversuit", TRUE)
 	src.AddOverlays(src.detail_standing_oversuit, "detail_oversuit", TRUE)
 
+/mob/living/carbon/human/proc/update_undies(body_offset)
+	src.image_undies_bottom = SafeGetOverlayImage("undies_bottom", 'icons/mob/human_underwear.dmi', "blank", MOB_UNDIES_BOTTOM_LAYER)
+	src.image_undies_top = SafeGetOverlayImage("undies_top", 'icons/mob/human_underwear.dmi', "blank", MOB_UNDIES_TOP_LAYER1)
+
+	var/datum/appearanceHolder/appearance_holder = src?.bioHolder?.mobAppearance || null
+	if (!istype(appearance_holder, /datum/appearanceHolder))
+		return
+
+	src.image_undies_bottom = image(icon = appearance_holder.customizations["undies_bottom"].style.icon, \
+		icon_state = appearance_holder.customizations["undies_bottom"].style.id, layer = appearance_holder.customizations["undies_bottom"].style.default_layer)
+	src.image_undies_top = image(icon = appearance_holder.customizations["undies_top"].style.icon, \
+		icon_state = appearance_holder.customizations["undies_top"].style.id, layer = appearance_holder.customizations["undies_top"].style.default_layer)
+
+	if (src.image_undies_bottom?.icon_state && src.image_undies_bottom.icon_state != "none")
+		src.image_undies_bottom.color = appearance_holder.customizations["undies_bottom"].color
+		src.image_undies_bottom.pixel_y = body_offset
+		src.body_standing.overlays += src.image_undies_bottom
+
+	if (src.image_undies_top?.icon_state && src.image_undies_top.icon_state != "none")
+		src.image_undies_top.color = appearance_holder.customizations["undies_top"].color
+		src.image_undies_top.pixel_y = body_offset
+		src.body_standing.overlays += src.image_undies_top
+
+	src.AddOverlays(src.image_undies_bottom, "undies_bottom", TRUE)
+	src.AddOverlays(src.image_undies_top, "undies_top", TRUE)
+
 /mob/living/carbon/human/update_face()
 	..()
 	if (!src.bioHolder)
@@ -1118,20 +1144,9 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 
 			if (src.decomp_stage < DECOMP_STAGE_HIGHLY_DECAYED && !(src.w_uniform?.hide_underwear) && \
 				((AHOLD.mob_appearance_flags & WEARS_UNDERPANTS) || src.underpants_override)) // no more bikini werewolves
-				src.image_undies_bottom = image(icon = AHOLD.customizations["undies_bottom"].style.icon, \
-					icon_state = AHOLD.customizations["undies_bottom"].style.id, layer = AHOLD.customizations["undies_bottom"].style.default_layer)
-				src.image_undies_top = image(icon = AHOLD.customizations["undies_top"].style.icon, \
-					icon_state = AHOLD.customizations["undies_top"].style.id, layer = AHOLD.customizations["undies_top"].style.default_layer)
-
-				if (src.image_undies_bottom?.icon_state && src.image_undies_bottom.icon_state != "none")
-					src.image_undies_bottom.color = AHOLD.customizations["undies_bottom"].color
-					src.image_undies_bottom.pixel_y = body_offset
-					src.body_standing.overlays += image_undies_bottom
-
-				if (src.image_undies_top?.icon_state && src.image_undies_top.icon_state != "none")
-					src.image_undies_top.color = AHOLD.customizations["undies_top"].color
-					src.image_undies_top.pixel_y = body_offset
-					src.body_standing.overlays += image_undies_top
+				src.update_undies(body_offset)
+			else
+				ClearSpecificOverlays("undies_bottom", "undies_top")
 
 			if (length(src.bandaged) > 0)
 				for (var/part in src.bandaged)
