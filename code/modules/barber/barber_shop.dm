@@ -288,7 +288,7 @@
 	flags = TABLEPASS
 	default_material = "plastic"
 	//Default Colors
-	var/customization_first_color = "#FFFFFF"
+	var/dye_color = "#FFFFFF"
 	var/uses_left
 	var/hair_group = HAIR_AREA_ALL
 	var/image/dye_image
@@ -405,13 +405,13 @@
 				user.visible_message("[user] slips and dumps the [src] all over [M]'s head!")
 				famtofuckup = M
 			if (recolor_these_hair_layers_instead & HAIR_AREA_BOTTOM_FUCKED)
-				famtofuckup.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color = bottle.customization_first_color
+				famtofuckup.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color = bottle.dye_color
 			if (recolor_these_hair_layers_instead & HAIR_AREA_MIDDLE_FUCKED)
-				famtofuckup.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color = bottle.customization_first_color
+				famtofuckup.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color = bottle.dye_color
 			if (recolor_these_hair_layers_instead & HAIR_AREA_TOP_FUCKED)
-				famtofuckup.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color = bottle.customization_first_color
+				famtofuckup.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color = bottle.dye_color
 			if (recolor_these_hair_layers_instead & EYES_FUCKED)
-				famtofuckup.bioHolder.mobAppearance.e_color = bottle.customization_first_color
+				famtofuckup.bioHolder.mobAppearance.e_color = bottle.dye_color
 				famtofuckup.emote("scream")
 			boutput(user, "And now you're out of dye. Well done.")
 			src.uses_left = 0
@@ -425,22 +425,22 @@
 						bottle.hair_group = pick(list(HAIR_AREA_BOTTOM, HAIR_AREA_MIDDLE, HAIR_AREA_TOP) - bottle.hair_group)
 					switch(bottle.hair_group)
 						if(HAIR_AREA_BOTTOM)
-							M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color = bottle.customization_first_color
+							M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color = bottle.dye_color
 						if(HAIR_AREA_MIDDLE)
-							M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color = bottle.customization_first_color
+							M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color = bottle.dye_color
 						if(HAIR_AREA_TOP)
-							M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color = bottle.customization_first_color
+							M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color = bottle.dye_color
 				if(HAIR_AREA_ALL)
 					if(src.uses_left < 3)
 						boutput(M, SPAN_NOTICE("This dyejob's going to need a full bottle!"))
 						return
 					else
-						M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color = bottle.customization_first_color
-						M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color = bottle.customization_first_color
-						M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color = bottle.customization_first_color
+						M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color = bottle.dye_color
+						M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color = bottle.dye_color
+						M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color = bottle.dye_color
 
 				if(EYES)
-					M.bioHolder.mobAppearance.e_color = bottle.customization_first_color
+					M.bioHolder.mobAppearance.e_color = bottle.dye_color
 					result_msg1 ="[user] dumps the [src] into [M]'s eyes!"
 					result_msg2 =SPAN_NOTICE("You dump the [src] in [M]'s eyes.")
 					result_msg3 =SPAN_ALERT("[user] dumps the [src] into your eyes!")
@@ -521,7 +521,7 @@ TYPEINFO(/obj/machinery/hair_dye_dispenser)
 		. = list()
 		.["bottle"] = !!src.bottle
 		.["uses_left"] = src.bottle?.uses_left
-		.["bottle_color"] = src.bottle?.customization_first_color
+		.["bottle_color"] = src.bottle?.dye_color
 
 	attack_hand(mob/user)
 		if(status & BROKEN)
@@ -566,15 +566,15 @@ TYPEINFO(/obj/machinery/hair_dye_dispenser)
 
 				if("fillb")
 					if(src.bottle)
-						bottle.customization_first_color = params["selectedColor"]
+						bottle.dye_color = params["selectedColor"]
 						bottle.uses_left = 3
-						bottle.dye_image.color = bottle.customization_first_color
+						bottle.dye_image.color = bottle.dye_color
 						bottle.UpdateOverlays(bottle.dye_image, "dye_color")
 
 				if("emptyb")
 					if(src.bottle)
 						bottle.uses_left = 0
-						bottle.customization_first_color = initial(bottle.customization_first_color)
+						bottle.dye_color = initial(bottle.dye_color)
 						bottle.ClearSpecificOverlays("dye_color")
 
 				if("insertb")

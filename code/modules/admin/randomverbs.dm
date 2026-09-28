@@ -984,9 +984,9 @@
 	proc/update_preview_icon()
 		src.preview_icon = null
 
-		var/customization_first_r = null
-		var/customization_second_r = null
-		var/customization_third_r = null
+		var/hair_bottom_r = null
+		var/hair_middle_r = null
+		var/hair_top_r = null
 
 		src.preview_icon = new /icon(src.mutantrace.get_typeinfo().icon, src.mutantrace.icon_state) //todo: #14465
 
@@ -1002,26 +1002,26 @@
 			src.preview_icon.Blend(eyes_s, ICON_OVERLAY)
 
 		if(!src.mutantrace?.override_hair)
-			customization_first_r = src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style.id
-			if(!customization_first_r)
-				customization_first_r = "none"
-			var/icon/hair_s = new/icon("icon" =  src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style.icon, "icon_state" = customization_first_r)
+			hair_bottom_r = src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style.id
+			if(!hair_bottom_r)
+				hair_bottom_r = "none"
+			var/icon/hair_s = new/icon("icon" =  src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style.icon, "icon_state" = hair_bottom_r)
 			hair_s.Blend(src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color, ICON_MULTIPLY)
 			eyes_s.Blend(hair_s, ICON_OVERLAY)
 
 		if(!src.mutantrace?.override_beard)
-			customization_second_r = src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style.id
-			if(!customization_second_r)
-				customization_second_r = "none"
-			var/icon/facial_s = new/icon("icon" = src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style.icon, "icon_state" = customization_second_r)
+			hair_middle_r = src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style.id
+			if(!hair_middle_r)
+				hair_middle_r = "none"
+			var/icon/facial_s = new/icon("icon" = src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style.icon, "icon_state" = hair_middle_r)
 			facial_s.Blend(src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color, ICON_MULTIPLY)
 			eyes_s.Blend(facial_s, ICON_OVERLAY)
 
 		if(!src.mutantrace?.override_detail)
-			customization_third_r = src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style.id
-			if(!customization_third_r)
-				customization_third_r = "none"
-			var/icon/detail_s = new/icon("icon" = src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style.icon, "icon_state" = customization_third_r)
+			hair_top_r = src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style.id
+			if(!hair_top_r)
+				hair_top_r = "none"
+			var/icon/detail_s = new/icon("icon" = src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style.icon, "icon_state" = hair_top_r)
 			detail_s.Blend(src.tf_holder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color, ICON_MULTIPLY)
 			eyes_s.Blend(detail_s, ICON_OVERLAY)
 

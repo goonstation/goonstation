@@ -950,7 +950,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 		if (istype(W) && W.uses_left)
 			W.use_dye()
 			for (var/color in src.copyrighted_colors)
-				if (color_dist(color, W.customization_first_color) < 5000) //arbitrary threshold
+				if (color_dist(color, W.dye_color) < 5000) //arbitrary threshold
 					boutput(user, SPAN_NOTICE("Patent infringement attempt detected! This color infringes NT beret patent #[src.copyrighted_colors[color]]."))
 					boutput(user, SPAN_ALERT("[src] burns your fingers as its anti patent infringement fabric boils off the dye!"))
 					if (src in user.contents)
@@ -959,7 +959,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 					playsound(user.loc, 'sound/impact_sounds/burn_sizzle.ogg', 40, 1)
 					user.add_karma(-2)
 					return
-			src.color = W.customization_first_color
+			src.color = W.dye_color
 			src.UpdateIcon()
 			var/mob/wearer = src.loc
 			if (istype(wearer))
