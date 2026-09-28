@@ -1485,6 +1485,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			return TRUE
 		var/obj/item/I = owner.equipped()
 		if(!I)
+			boutput(owner, SPAN_ALERT("You need to be holding an organ to absorb it!"))
 			return TRUE
 		return absorb_organ_setup(I, (linked_power.power > 1), misfire)
 
