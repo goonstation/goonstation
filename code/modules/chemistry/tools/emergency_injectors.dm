@@ -206,7 +206,7 @@
 /obj/item/reagent_containers/emergency_injector/pentetic_acid
 	name = "emergency auto-injector (pentetic acid)"
 	initial_reagents = list("penteticacid"=5)
-	label = "blue"
+	label = "green"
 	desc = "An auto-injector containing pentetic acid, an experimental and aggressive chelation agent."
 
 /obj/item/reagent_containers/emergency_injector/omnizine
@@ -236,7 +236,7 @@
 /obj/item/reagent_containers/emergency_injector/acetylsalicylic_acid
 	name = "emergency auto-injector (acetylsalicylic acid)"
 	initial_reagents = "acetylsalicylic_acid"
-	label = "purple"
+	label = "white"
 	desc = "An auto-injector containing acetylsalicylic acid, used as a painkiller, anticoagulant, and fever reducer."
 
 /obj/item/reagent_containers/emergency_injector/spaceacillin
@@ -395,7 +395,7 @@
 /obj/item/reagent_containers/emergency_injector/high_capacity/mannitol
 	name = "high-capacity auto-injector (mannitol)"
 	initial_reagents = "mannitol"
-	label = "green"
+	label = "red"
 	desc = "A high-capacity auto-injector containing mannitol, a medicine used to treat severe concussions."
 
 /obj/item/reagent_containers/emergency_injector/high_capacity/filgrastim
