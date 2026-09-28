@@ -470,6 +470,11 @@ menu "menu"
 		category = "&Audio"
 		saved-params = "is-checked"
 	elem
+		name = "&Adjust Fart Volume"
+		command ="change-volume farts"
+		category = "&Audio"
+		saved-params = "is-checked"
+	elem
 		name = ""
 		command = ""
 		category = "&Audio"

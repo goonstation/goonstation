@@ -145,7 +145,7 @@ TYPEINFO(/obj/machinery/drone_recharger)
 
 
 TYPEINFO(/obj/machinery/drone_recharger/factory)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/machinery/drone_recharger/factory
 	var/id = "ghostdrone"

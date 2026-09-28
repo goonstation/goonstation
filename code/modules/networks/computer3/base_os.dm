@@ -768,13 +768,11 @@
 			var/drive_num = 0
 			if(src.master.hd)
 				drives["hd0"] = src.master.hd
-			if(src.master.diskette)
-				drives["fd0"] = src.master.diskette
 
 			for(var/obj/item/disk/data/drive in src.master.contents)
-				if(drive == src.master.hd || drive == src.master.diskette)
+				if(drive == src.master.hd)
 					continue
-				drives["sd[drive_num]"] = drive
+				drives["fd[drive_num]"] = drive
 				drive_num++
 
 			return drives

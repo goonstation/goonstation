@@ -196,7 +196,18 @@
 
 	New()
 		..()
+		AddComponent(/datum/component/mechanics_holder)
 		BLOCK_SETUP(BLOCK_ALL)
+
+	pickup(mob/user)
+		if (!src.mounted)
+			SEND_SIGNAL(src, COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
+		return ..()
+
+	dropped(mob/user)
+		if (!src.mounted)
+			SEND_SIGNAL(src, COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
+		return ..()
 
 	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W) && mounted)
@@ -205,6 +216,7 @@
 			src.pixel_x = 0
 			src.anchored = UNANCHORED
 			src.mounted = 0
+			SEND_SIGNAL(src, COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
 		else if (src.mounted && !istype(W, /obj/item/bballbasket))
 			if (W.cant_drop) return
 			src.visible_message(SPAN_NOTICE("<b>[user]</b> jumps up and tries to dunk [W] into [src]!"))
@@ -303,6 +315,7 @@
 		SPAWN(2.3 SECONDS)
 			A.invisibility = INVIS_NONE
 			src.active = 0
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "scored_with=[A.name]")
 
 /obj/item/bballbasket/mounted
 	anchored = ANCHORED

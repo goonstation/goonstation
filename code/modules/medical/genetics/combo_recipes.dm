@@ -15,7 +15,7 @@ ABSTRACT_TYPE(/datum/geneticsrecipe)
 
 /datum/geneticsrecipe/xray // Discovered
 	required_effects = list("eyebeams","blind")
-	result = /datum/bioEffect/xray
+	result = /datum/bioEffect/power/xray
 
 /datum/geneticsrecipe/regenerator // Discovered
 	required_effects = list("adrenaline","healing_touch")

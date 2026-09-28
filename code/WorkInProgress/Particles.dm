@@ -140,7 +140,7 @@ var/datum/particleMaster/particleMaster = new
 			if (particleSprite)
 				p.override_state = particleSprite
 			if (target)
-				p.target = get_turf(target)
+				p.target = target
 			pType.Apply(p)
 
 			return p
@@ -1553,3 +1553,39 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 	New(var/atom/location = null, var/glasses_color)
 		..(location, "glasses_sparkle", 9.9, glasses_color)
 		SpawnParticle()
+
+/datum/particleType/shredded
+	name = "shredded"
+	icon = 'icons/effects/particles.dmi'
+	icon_state = "2x2square"
+
+	MatrixInit()
+		first = matrix()
+		second = matrix()
+
+	Apply(obj/particle/par)
+		if (!..())
+			return
+		par.pixel_x = rand(-8,8)
+		animate(par, time = 0.5 SECOND, pixel_x = rand(-16, 16), pixel_y = rand(16, 32))
+		animate(delay = rand(2,3), flags = ANIMATION_PARALLEL, time = 1 SECOND, pixel_y = -16)
+
+/datum/particleSystem/shredded
+	var/icon/shredding
+	New(atom/location, particleTypeName, particleTime, particleColor, atom/target, particleSprite)
+		src.shredding = getFlatIcon(target)
+		..(location, "shredded", 10, null, target)
+
+	SpawnParticle()
+		var/obj/particle/par = ..()
+		if (src.shredding)
+			par.color = src.shredding.RandomPixelColor()
+
+	Run() //this is kind of particle system abuse but I need more consistent particle spawns than waiting for the loop to come back around
+		set waitfor = FALSE
+		if (..())
+			for(var/i=0, i<40, i++)
+				sleep(1)
+				SpawnParticle()
+			Die()
+

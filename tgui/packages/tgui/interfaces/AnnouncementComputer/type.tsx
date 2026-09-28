@@ -15,4 +15,6 @@ export interface AnnouncementCompData {
   status_message: string;
   time: number;
   max_length: number;
+  can_change_anonymous: BooleanLike;
+  is_anonymous: BooleanLike;
 }

@@ -124,6 +124,7 @@ ABSTRACT_TYPE(/obj/item/clothing/glasses/toggleable)
 		toggler.update_clothing()
 
 TYPEINFO(/obj/item/clothing/glasses/toggleable/meson)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 /obj/item/clothing/glasses/toggleable/meson
 	name = "meson goggles"
@@ -241,6 +242,7 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/meson)
 	return
 
 TYPEINFO(/obj/item/clothing/glasses/sunglasses/tanning)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 4
 
 /obj/item/clothing/glasses/sunglasses/tanning
@@ -345,6 +347,7 @@ TYPEINFO(/obj/item/clothing/glasses/sunglasses/tanning)
 		setProperty("disorient_resist_eye", 100)
 
 TYPEINFO(/obj/item/clothing/glasses/thermal)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 8
 
 /obj/item/clothing/glasses/thermal
@@ -394,13 +397,14 @@ TYPEINFO(/obj/item/clothing/glasses/thermal)
 							APPLY_ATOM_PROPERTY(H, PROP_MOB_THERMALVISION, src)
 		return
 
+TYPEINFO(/obj/item/clothing/glasses/thermal/traitor)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/clothing/glasses/thermal/traitor //sees people through walls
 	desc = "High-tech glasses that can see through cloaking technology. Also helps you see further in the dark. They sort of hurt your eyes to look through."
 	color_r = 1
 	color_g = 0.75 // slightly more red?
 	color_b = 0.75
 	upgraded = TRUE
-	is_syndicate = TRUE
 
 /obj/item/clothing/glasses/thermal/orange
 	name = "orange-tinted glasses"
@@ -411,6 +415,7 @@ TYPEINFO(/obj/item/clothing/glasses/thermal)
 	color_b = 0.8
 
 TYPEINFO(/obj/item/clothing/glasses/visor)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 4
 
 /obj/item/clothing/glasses/visor
@@ -640,6 +645,7 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 	network = LANDMARK_VR_BOMBTEST
 
 TYPEINFO(/obj/item/clothing/glasses/healthgoggles)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 8
 
 /obj/item/clothing/glasses/healthgoggles
@@ -706,6 +712,7 @@ TYPEINFO(/obj/item/clothing/glasses/healthgoggles)
 
 // Glasses that allow the wearer to get a full reagent report for containers
 TYPEINFO(/obj/item/clothing/glasses/spectro)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/clothing/glasses/spectro
@@ -739,6 +746,7 @@ TYPEINFO(/obj/item/clothing/glasses/spectro)
 
 // Glasses that allow the wearer to scan plants & seeds
 TYPEINFO(/obj/item/clothing/glasses/phyto)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/clothing/glasses/phyto
@@ -807,6 +815,7 @@ TYPEINFO(/obj/item/clothing/glasses/phyto)
 			active = FALSE
 
 TYPEINFO(/obj/item/clothing/glasses/noir)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 4
 
 /obj/item/clothing/glasses/noir
@@ -827,12 +836,15 @@ TYPEINFO(/obj/item/clothing/glasses/noir)
 				animate_fade_from_grayscale(H.client, 5)
 
 TYPEINFO(/obj/item/clothing/glasses/nightvision)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 8
 
 TYPEINFO(/obj/item/clothing/glasses/nightvision/sechud)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 12
 
 TYPEINFO(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 25 //expensive if someone scans them because I can do what I want
 
 /obj/item/clothing/glasses/nightvision
@@ -951,6 +963,7 @@ TYPEINFO(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
 		..()
 
 TYPEINFO(/obj/item/clothing/glasses/toggleable/atmos)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 /obj/item/clothing/glasses/toggleable/atmos
 	name = "pressure visualization goggles"
@@ -960,58 +973,22 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/atmos)
 	flash_state = "goggle_flash"
 	flash_compatible = TRUE
 	abilities = list(/obj/ability_button/atmos_goggle_toggle)
-	var/list/image/atmos_overlays = list()
-	//this is literally just a 32x32 white square, someone please tell me if there's a less dumb way to do this
-	var/icon/overlay_icon = 'icons/effects/effects.dmi'
-	var/overlay_state = "atmos_overlay"
 
 	toggle(var/mob/toggler)
 		..()
 		toggler.playsound_local(src, 'sound/machines/tone_beep.ogg', 40, TRUE)
-		if (src.equipped_in_slot == SLOT_GLASSES && src.on)
-			processing_items |= src
-		else
-			processing_items -= src
+		if (src.equipped_in_slot == SLOT_GLASSES)
+			SEND_SIGNAL(toggler, COMSIG_PRESSURE_VISION, src.on)
 
 	equipped(mob/user, slot)
 		..()
-		if (slot == SLOT_GLASSES && src.on)
-			processing_items |= src
+		if(slot == SLOT_GLASSES)
+			user.AddComponent(/datum/component/pressure_vision, src.on)
 
 	unequipped(mob/user)
 		if(src.equipped_in_slot == SLOT_GLASSES)
-			processing_items -= src
+			user.RemoveComponentsOfType(/datum/component/pressure_vision)
 		..()
-
-	proc/clear_overlays(mob/M)
-		if (!M.client)
-			return
-		for (var/image/image as anything in src.atmos_overlays)
-			M.client.images -= image
-		src.atmos_overlays = list()
-
-	proc/generate_overlays(mob/M)
-		if (!M.client)
-			return
-		for (var/turf/simulated/T in view(M, M.client.view))
-			if (!T.air)
-				continue
-			var/image/new_overlay = image(src.overlay_icon, T, src.overlay_state)
-			var/relative_pressure = MIXTURE_PRESSURE(T.air)/ONE_ATMOSPHERE
-			//make more orange if over one atmosphere
-			new_overlay.color = rgb(91 * (max(1,relative_pressure)), 103, 231 / (max(1,relative_pressure)))
-			new_overlay.alpha = 0
-			animate(new_overlay, alpha=min(200, 200 * relative_pressure), time=2 DECI SECONDS)
-			animate(alpha=0, time=2 SECONDS)
-			src.atmos_overlays += new_overlay
-			M.client.images += new_overlay
-
-	process()
-		var/mob/M = src.loc
-		if (!istype(M) || !M.client)
-			return
-		src.clear_overlays(M)
-		src.generate_overlays(M)
 
 /obj/item/clothing/glasses/eyestrain
 	name = "blue-light filtering glasses"

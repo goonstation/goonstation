@@ -1,7 +1,6 @@
 // Contains:
 //
 // - Chainsaw
-// - Plant analyzer
 // - Portable seed fabricator
 // - Watering can
 // - Compost bag
@@ -11,6 +10,7 @@
 //////////////////////////////////////////////// Chainsaw ////////////////////////////////////
 
 TYPEINFO(/obj/item/saw)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 12
 
 /obj/item/saw
@@ -135,6 +135,7 @@ TYPEINFO(/obj/item/saw)
 /obj/item/saw/abilities = list(/obj/ability_button/saw_toggle)
 
 TYPEINFO(/obj/item/saw/syndie)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal_dense" = 25,
 				"conductive" = 5,
 				"energy_high" = 5)
@@ -153,7 +154,6 @@ TYPEINFO(/obj/item/saw/syndie)
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_BULKY
-	is_syndicate = 1
 	desc = "A gas powered antique. This one is the real deal. Time for a space chainsaw massacre."
 	contraband = 10 //scary
 	sawnoise = 'sound/machines/chainsaw_red.ogg'
@@ -177,20 +177,26 @@ TYPEINFO(/obj/item/saw/syndie)
 		else
 			playsound(src, 'sound/machines/chainsaw_red_stop.ogg', 90, FALSE)
 
+	proc/butcher(mob/user, mob/living/carbon/C)
+		logTheThing(LOG_COMBAT, user, "butchers [C]'s corpse with the [src.name] at [log_loc(C)].")
+		take_bleeding_damage(C, user, 50)
+		playsound(C.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
+		for (var/i=0, i<3, i++)
+			new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(get_turf(C),C)
+		if (C.mind)
+			C.ghostize()
+		qdel(C)
+
 	attack(mob/target, mob/user, def_zone, is_special = FALSE, params = null)
 		if(!active)
 			return ..()
 		if (iscarbon(target))
 			var/mob/living/carbon/C = target
 			if (isdead(C))
-				logTheThing(LOG_COMBAT, user, "butchers [C]'s corpse with the [src.name] at [log_loc(C)].")
-				for (var/i=0, i<3, i++)
-					new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(get_turf(C),C)
-				if (C.mind)
-					C.ghostize()
-					qdel(C)
-				else
-					qdel(C)
+				playsound(src, 'sound/machines/chainsaw_red.ogg', 50, TRUE)
+				actions.start(new /datum/action/bar/private/icon/callback(
+					user, target, 3 SECONDS, PROC_REF(butcher), list(user, target), null, null, SPAN_ALERT("[user] skillfully butchers [C]'s corpse into a pile of meat!"), null, src
+				), user)
 				return
 
 		if (check_target_immunity(target=target, ignore_everything_but_nodamage=FALSE, source=user))
@@ -339,6 +345,7 @@ TYPEINFO(/obj/item/saw/syndie)
 	icon = 'icons/effects/VR.dmi'
 
 TYPEINFO(/obj/item/saw/elimbinator)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 12
 
 /obj/item/saw/elimbinator
@@ -388,37 +395,6 @@ TYPEINFO(/obj/item/saw/elimbinator)
 			bleed(H, 3, 5)
 		return ..()
 
-////////////////////////////////////// Plant analyzer //////////////////////////////////////
-
-TYPEINFO(/obj/item/plantanalyzer)
-	mats = 4
-
-/obj/item/plantanalyzer
-	name = "plant analyzer"
-	desc = "A device which examines the genes of plant seeds."
-	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
-	icon_state = "plantanalyzer"
-	w_class = W_CLASS_TINY
-	c_flags = ONBELT
-
-	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
-		if (BOUNDS_DIST(A, user) > 0)
-			return
-
-		boutput(user, scan_plant(A, user, visible = 1)) // Replaced with global proc (Convair880).
-		src.add_fingerprint(user)
-		return
-
-// This is the best place for this thing
-/obj/item/device/analyzer/phytoscopic_upgrade
-	name = "phytoscopic analyzer upgrade"
-	desc = "A small upgrade card that allows phytoscopic goggles to detect gene strains present in a plant."
-	icon_state = "phyto_upgr"
-	flags = TABLEPASS | CONDUCT
-	throwforce = 0
-	w_class = W_CLASS_TINY
-	throw_speed = 5
-	throw_range = 10
 
 /////////////////////////////////////////// Seed fabricator ///////////////////////////////
 

@@ -90,6 +90,7 @@
 		src.icon_state = pick("plant_appendix", "plant_appendix_bloom")
 
 TYPEINFO(/obj/item/organ/kidney/cyber)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/organ/kidney/cyber

@@ -57,6 +57,11 @@
 		. = alert.choice
 		qdel(alert)
 
+// |GOONSTATION-ADD| TGUI confirmation window proc to simplify alerts to confirm actions
+/proc/tgui_confirm(mob/user, message)
+	var/input = tgui_alert(user, message, "Confirm Action",list("Yes", "No"))
+	return (input == "Yes")
+
 /**
  * # tgui_modal
  *
@@ -142,7 +147,6 @@
 		// |GOONSTATION-ADD| all below
 		"content_window" = content_window,
 		"theme" = theme,
-		"cdn" = cdn,
 		"cant_interact" = cant_interact
 	)
 

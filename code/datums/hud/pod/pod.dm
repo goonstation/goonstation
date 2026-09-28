@@ -74,7 +74,7 @@
 	. = ..()
 
 /datum/hud/pod/proc/check_clients()
-	for (var/client/C as anything in src.clients)
+	for (var/client/C in src.clients)
 		if (C.mob.loc != src.master)
 			src.remove_client(C)
 

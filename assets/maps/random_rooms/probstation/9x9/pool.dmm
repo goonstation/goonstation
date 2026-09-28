@@ -1,0 +1,374 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/crew_quarters/pool)
+"b" = (
+/obj/table/round/auto,
+/obj/linen_bin/towel,
+/turf/simulated/floor/white,
+/area/station/crew_quarters/pool)
+"c" = (
+/obj/stool/chair/pool,
+/obj/landmark/start/job/assistant,
+/obj/machinery/firealarm/directional/north,
+/turf/simulated/floor/white,
+/area/station/crew_quarters/pool)
+"e" = (
+/obj/pool/perspective{
+	dir = 6;
+	tag = "icon-pool (SOUTHEAST)"
+	},
+/turf/simulated/floor/white/checker,
+/area/station/crew_quarters/pool)
+"f" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/white/checker,
+/area/station/crew_quarters/pool)
+"h" = (
+/obj/pool/perspective{
+	dir = 10;
+	tag = "icon-pool (SOUTHWEST)"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/camera/directional/south,
+/turf/simulated/floor/white/checker,
+/area/station/crew_quarters/pool)
+"i" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/white/checker,
+/area/station/crew_quarters/pool)
+"j" = (
+/obj/pool/perspective{
+	dir = 5;
+	tag = "icon-pool (NORTHEAST)"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/white/checker,
+/area/station/crew_quarters/pool)
+"k" = (
+/obj/stool/chair/pool,
+/obj/landmark/start/job/assistant,
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/white,
+/area/station/crew_quarters/pool)
+"l" = (
+/obj/pool/perspective{
+	dir = 4;
+	tag = "icon-pool (EAST)"
+	},
+/obj/pool_springboard,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/white/checker,
+/area/station/crew_quarters/pool)
+"m" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/white/checker,
+/area/station/crew_quarters/pool)
+"q" = (
+/obj/pool/perspective,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/light,
+/turf/simulated/floor/white/checker,
+/area/station/crew_quarters/pool)
+"u" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/pool/no_animate,
+/area/station/crew_quarters/pool)
+"w" = (
+/obj/fluid_spawner{
+	amount = 3000
+	},
+/turf/simulated/floor/pool/no_animate,
+/area/station/crew_quarters/pool)
+"x" = (
+/obj/pool/perspective,
+/turf/simulated/floor/white/checker,
+/area/station/crew_quarters/pool)
+"y" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/glass,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/white,
+/area/station/crew_quarters/pool)
+"A" = (
+/turf/simulated/floor/pool/no_animate,
+/area/station/crew_quarters/pool)
+"C" = (
+/obj/cable{
+	icon_state = "5-8"
+	},
+/turf/simulated/floor/white/checker,
+/area/station/crew_quarters/pool)
+"D" = (
+/obj/pool/perspective{
+	dir = 8;
+	tag = "icon-pool (WEST)"
+	},
+/obj/pool_springboard{
+	dir = 4;
+	pixel_x = 16
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/white/checker,
+/area/station/crew_quarters/pool)
+"E" = (
+/obj/pool/perspective{
+	dir = 9;
+	tag = "icon-pool (NORTHWEST)"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/white/checker,
+/area/station/crew_quarters/pool)
+"F" = (
+/obj/table/round/auto,
+/obj/item/inner_tube/random,
+/obj/item/clothing/gloves/water_wings,
+/obj/machinery/light,
+/turf/simulated/floor/white,
+/area/station/crew_quarters/pool)
+"G" = (
+/obj/pool/perspective{
+	dir = 8;
+	tag = "icon-pool (WEST)"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/white/checker,
+/area/station/crew_quarters/pool)
+"H" = (
+/obj/cable{
+	icon_state = "4-9"
+	},
+/turf/simulated/floor/white/checker,
+/area/station/crew_quarters/pool)
+"J" = (
+/obj/pool/perspective,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/white/checker,
+/area/station/crew_quarters/pool)
+"L" = (
+/obj/submachine/laundry_machine,
+/obj/machinery/light,
+/obj/machinery/camera/directional/north,
+/turf/simulated/floor/white,
+/area/station/crew_quarters/pool)
+"M" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/white,
+/area/station/crew_quarters/pool)
+"N" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 8
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/white,
+/area/station/crew_quarters/pool)
+"O" = (
+/mob/living/critter/small_animal/seal,
+/turf/simulated/floor/pool/no_animate,
+/area/station/crew_quarters/pool)
+"Q" = (
+/obj/machinery/traymachine/locking/tanning,
+/obj/machinery/computer/tanning{
+	pixel_y = 32
+	},
+/turf/simulated/floor/white,
+/area/station/crew_quarters/pool)
+"R" = (
+/obj/pool/perspective{
+	dir = 4;
+	tag = "icon-pool (EAST)"
+	},
+/turf/simulated/floor/white/checker,
+/area/station/crew_quarters/pool)
+"S" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/crew_quarters/pool)
+"T" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/light_switch/directional/east,
+/turf/simulated/floor/white/checker,
+/area/station/crew_quarters/pool)
+"V" = (
+/obj/pool/perspective{
+	dir = 1;
+	tag = "icon-pool (NORTH)"
+	},
+/turf/simulated/floor/white/checker,
+/area/station/crew_quarters/pool)
+"X" = (
+/obj/pool/perspective{
+	density = 0;
+	dir = 1;
+	tag = "icon-pool (NORTH)"
+	},
+/obj/pool{
+	density = 0;
+	dir = 8;
+	icon = 'icons/obj/fluid.dmi';
+	icon_state = "ladder";
+	name = "ladder"
+	},
+/obj/channel{
+	required_to_pass = 210
+	},
+/turf/simulated/floor/white/checker,
+/area/station/crew_quarters/pool)
+"Y" = (
+/turf/simulated/floor/white/checker,
+/area/station/crew_quarters/pool)
+"Z" = (
+/obj/cable{
+	icon_state = "1-6"
+	},
+/obj/cable{
+	icon_state = "1-10"
+	},
+/turf/simulated/floor/white,
+/area/station/crew_quarters/pool)
+
+(1,1,1) = {"
+a
+a
+a
+a
+M
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+Q
+i
+E
+D
+G
+G
+h
+a
+"}
+(3,1,1) = {"
+a
+F
+f
+V
+A
+u
+A
+J
+a
+"}
+(4,1,1) = {"
+a
+c
+C
+V
+A
+A
+A
+J
+a
+"}
+(5,1,1) = {"
+y
+Z
+Y
+X
+A
+w
+A
+q
+S
+"}
+(6,1,1) = {"
+a
+b
+H
+V
+A
+O
+A
+x
+a
+"}
+(7,1,1) = {"
+a
+k
+m
+V
+A
+u
+A
+x
+a
+"}
+(8,1,1) = {"
+a
+L
+T
+j
+l
+R
+R
+e
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+N
+a
+a
+a
+a
+"}

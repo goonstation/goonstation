@@ -66,6 +66,12 @@ TYPEINFO(/obj/machinery/shitty_grill)
 		if (src.grilltemp <= (200 + T0C))
 			boutput(user, SPAN_ALERT("You gotta get them coals hot before you can grill anything. What are you, a nerd?"))
 			return
+		if (istype(W, /obj/item/phone_handset)) // to prevent handset duping
+			var/obj/item/phone_handset/H = W
+			user.visible_message(SPAN_COMBAT("<b>[user] attempts to put [H] on [src] but [he_or_she(user)] accidentally touched one of the burning coals. Ouch!</b>"))
+			H.parent.hang_up()
+			user.TakeDamage("All", burn = 5)
+			return
 		if (istype(W, /obj/item/relic))
 			src.visible_message(SPAN_NOTICE("[user] places [W] directly onto the hot, unyielding steel of [src]."))
 			if (user.mind.karma >= 50)

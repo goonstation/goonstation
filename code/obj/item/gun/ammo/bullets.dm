@@ -708,6 +708,18 @@
 	icon_short = "38S"
 	icon_empty = "speedloader_empty"
 
+/obj/item/ammo/bullets/a38/stun_ricochet
+	sname = ".38 Spc Stun Ricochet"
+	name = ".38 Stun Ricochet speedloader"
+	desc = "A speedloader of .38 special ricocheting stun bullets."
+	icon_state = "38RS-7"
+	amount_left = 7
+	max_amount = 7
+	ammo_type = new/datum/projectile/bullet/revolver_38/stun_ricochet
+	icon_dynamic = 1
+	icon_short = "38RS"
+	icon_empty = "speedloader_empty"
+
 //0.393
 /obj/item/ammo/bullets/foamdarts
 	sname = "foam darts"
@@ -752,10 +764,10 @@
 		ammo_type = new/datum/projectile/bullet/blow_dart/ls_bee
 		color = "yellow"
 
-	ketamine
+	thio
 		name = "sleep blowdarts"
-		desc = "These darts are loaded with a heavy dose of horse-tranquilizer."
-		ammo_type = new/datum/projectile/bullet/blow_dart/ketamine
+		desc = "These darts are loaded with a heavy dose of fast-acting tranquilizer."
+		ammo_type = new/datum/projectile/bullet/blow_dart/thio
 		color = "#00c5e7"
 
 		single //I hate this
@@ -974,7 +986,19 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	icon_empty = "bg-0"
 	sound_load = 'sound/weapons/gunload_click.ogg'
 
-/obj/item/ammo/bullets/abg/two //spawns in the break action
+/obj/item/ammo/bullets/abg/punchy
+	sname = "10ga heavy rubber slug"
+	name = "10ga heavy rubber slugs"
+	desc = "A box of big, heavy rubber slugs. These ones really pack a punch."
+	icon_state = "bg-punchy"
+	icon_empty = "bg-punchy-0"
+	amount_left = 6
+	max_amount = 6
+	//big shells, don't fit in auto-shotties
+	ammo_cat = AMMO_SHOTGUN_PIPE
+	ammo_type = new/datum/projectile/bullet/abg/punchy
+
+/obj/item/ammo/bullets/abg/punchy/two //spawns in the break action
 	amount_left = 2
 	max_amount = 2
 

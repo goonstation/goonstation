@@ -49,6 +49,24 @@
 	START_TRACKING
 	SPAWN(0.5 SECONDS)
 		connection_scan()
+	#ifdef I_HATE_WAITING_FOR_GENES
+		var/list/chromosome_types = list(
+			/datum/dna_chromosome/, //stabilizer
+			/datum/dna_chromosome/anti_mutadone,
+			/datum/dna_chromosome/reclaimer,
+			/datum/dna_chromosome/stealth,
+			/datum/dna_chromosome/power_enhancer,
+			/datum/dna_chromosome/cooldown_reducer,
+			/datum/dna_chromosome/safety
+		)
+		var/how_many_chromosomes = 20
+		for (var/chrom_path in chromosome_types)
+			for (var/i, i<how_many_chromosomes, i++)
+				var/datum/dna_chromosome/C = new chrom_path(src)
+				src.saved_chromosomes += C
+		genResearch.lock_breakers = 999
+		genResearch.researchMaterial = 999
+	#endif
 
 /obj/machinery/computer/genetics/connection_scan()
 	src.scanner = locate(/obj/machinery/genetics_scanner, orange(1,src))
@@ -351,11 +369,11 @@
 			amount = min(
 				round(amount),
 				genResearch.max_material - genResearch.researchMaterial,
-				round(wagesystem.research_budget / 50),
+				round(wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL] / 50),
 			)
 			if (amount > 0)
 				var/cost = amount * 50
-				wagesystem.research_budget -= cost
+				wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL] -= cost
 				genResearch.researchMaterial += amount
 				on_ui_interacted(ui.user)
 		if("research")
@@ -419,7 +437,7 @@
 			var/obj/item/genetics_injector/dna_injector/I = new /obj/item/genetics_injector/dna_injector(src.loc)
 			I.name = "dna injector - [E.name]"
 			var/datum/bioEffect/NEW = new E.type(I)
-			copy_datum_vars(E, NEW, blacklist=list("owner", "holder", "dnaBlocks"))
+			copy_datum_vars(E, NEW)
 			I.BE = NEW
 			on_ui_interacted(ui.user)
 			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
@@ -672,7 +690,7 @@
 						break
 				if (!already_has)
 					var/datum/bioEffect/NEW = new E.type(GB)
-					copy_datum_vars(E, NEW, blacklist=list("owner", "holder", "dnaBlocks"))
+					copy_datum_vars(E, NEW)
 					GB.offered_genes += new /datum/geneboothproduct(NEW,booth_effect_desc,booth_effect_cost,registered_id)
 					if (length(GB.offered_genes) == 1)
 						GB.select_product(GB.offered_genes[1])
@@ -975,7 +993,7 @@
 		"materialCur" = genResearch.researchMaterial,
 		"mutationsResearched" = genResearch.mutations_researched,
 		"autoDecryptors" = genResearch.lock_breakers,
-		"budget" = wagesystem.research_budget,
+		"budget" = wagesystem.budgets[BUDGET_CAT_DEPT_MEDICAL],
 		"costPerMaterial" = 50,
 		"researchCost" = mut_research_cost,
 		"toSplice" = src.to_splice?.name,

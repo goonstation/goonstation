@@ -82,6 +82,9 @@
 /datum/movement_modifier/reagent/salicylic_acid
 	health_deficiency_adjustment = -25
 
+/datum/movement_modifier/reagent/acetylsalicylic_acid
+	health_deficiency_adjustment = -40
+
 /datum/movement_modifier/reagent/epinepherine
 	health_deficiency_adjustment = -15
 

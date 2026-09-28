@@ -257,7 +257,7 @@ datum
 		combustible/propellant
 			name = "aerosol propellant"
 			id = "propellant"
-			description = "Produces a aerosol spray when heated."
+			description = "Produces an aerosol spray when heated."
 			reagent_state = SOLID
 			fluid_r = 200
 			fluid_g = 200

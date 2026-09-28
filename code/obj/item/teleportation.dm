@@ -7,13 +7,15 @@ HAND_TELE
 /// HAND TELE
 
 TYPEINFO(/obj/item/hand_tele)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 8
 
 /obj/item/hand_tele
 	name = "hand tele"
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "hand_tele"
-	item_state = "electronic"
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	item_state = "accessgun"
 	throwforce = 5
 	health = 5
 	w_class = W_CLASS_SMALL

@@ -67,7 +67,7 @@ TYPEINFO(/obj/item/device/transfer_valve)
 			src.attach_tank(user)
 		else if(istype(item, /obj/item/device/radio/signaler) || istype(item, /obj/item/device/timer) || istype(item, /obj/item/device/prox_sensor))
 			if(attached_device)
-				boutput(user, SPAN_ALERT("There is already an device attached to the valve, remove it first!"))
+				boutput(user, SPAN_ALERT("There is already a device attached to the valve, remove it first!"))
 				return
 
 			attached_device = item

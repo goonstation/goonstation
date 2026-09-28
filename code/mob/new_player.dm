@@ -17,7 +17,6 @@ TYPEINFO(/mob/new_player)
 	var/spawning = 0
 	var/keyd
 	var/adminspawned = 0
-	var/is_respawned_player = 0
 	var/pregameBrowserLoaded = FALSE
 	var/antag_fallthrough = FALSE
 	/// indicates if a player is currently barred from joining the game
@@ -43,7 +42,9 @@ TYPEINFO(/mob/new_player)
 		START_TRACKING
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_ALWAYS)
 	#ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
+		#ifndef GENERATE_GOONHUB_MAP
 		src.ready_play = TRUE
+		#endif
 	#endif
 
 	// How could this even happen? Regardless, no log entries for unaffected mobs (Convair880).
@@ -122,8 +123,10 @@ TYPEINFO(/mob/new_player)
 
 			else
 				if (src.client.authenticated) spawned_in_keys += "[src.ckey]"
-				for (var/sound in global.dj_panel.preloaded_sounds)
-					src.client << load_resource(sound, -1)
+				for (var/name in global.dj_panel.sound_library)
+					var/datum/dj_library_sound/upload = global.dj_panel.sound_library[name]
+					if (upload.preloaded)
+						src.client << load_resource(upload.file, -1)
 
 #ifdef TWITCH_BOT_ALLOWED
 		if (current_state == GAME_STATE_PLAYING)
@@ -145,7 +148,8 @@ TYPEINFO(/mob/new_player)
 		..()
 		close_spawn_windows()
 		if(!spawning)
-			qdel(src)
+			SPAWN(0)
+				qdel(src)
 
 		// Given below call, not much reason to do this if pregameHTML wasn't set
 		// explanation for isnull(src.key) from the reference: In the case of a player switching to another mob, by the time Logout() is called, the original mob's key will be null,
@@ -187,7 +191,7 @@ TYPEINFO(/mob/new_player)
 	proc/AttemptLateSpawn(var/datum/job/JOB, force=0)
 		if (!JOB)
 			return
-		if (src.is_respawned_player && (src.client.preferences.real_name in src.client.player.joined_names) && !src.client.preferences.be_random_name)
+		if (src.client?.player?.timed_respawn_in_progress && (src.client.preferences.real_name in src.client.player.joined_names) && !src.client.preferences.be_random_name)
 			tgui_alert(src, "Please pick a different character to respawn as, you've already joined this round as [src.client.preferences.real_name]. You can select \"random appearance\" in character setup if you don't want to make a new character.")
 			return
 		global.latespawning.lock()
@@ -227,7 +231,9 @@ TYPEINFO(/mob/new_player)
 			else if(istype(ticker.mode, /datum/game_mode/battle_royale))
 				var/datum/game_mode/battle_royale/battlemode = ticker.mode
 				if (current_state < GAME_STATE_FINISHED)
-					battlemode.battlersleft_hud.add_client(character.client)
+					var/datum/player/player = make_player(character.key, character.client)
+					if (!player?.tutorial)
+						battlemode.battlersleft_hud.add_client(character.client)
 				if(ticker.round_elapsed_ticks > 3000) // no new people after 5 minutes
 					boutput(character.mind.current,"<h3 class='notice'>You've arrived on a station with a battle royale in progress! Feel free to spectate!</h3>")
 					character.ghostize()
@@ -400,6 +406,8 @@ TYPEINFO(/mob/new_player)
 		if (!S)
 			return
 
+		src.spawning = 1
+
 		latejoin.activated = TRUE
 		latejoin.name_prefix("activated")
 		latejoin.UpdateName()
@@ -411,7 +419,7 @@ TYPEINFO(/mob/new_player)
 			logTheThing(LOG_STATION, src, "[key_name(S)] late-joins as an emagged cyborg.")
 			S.mind?.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
 		else if (S.syndicate)
-			logTheThing(LOG_STATION, src, "[key_name(S)] late-joins as an syndicate cyborg.")
+			logTheThing(LOG_STATION, src, "[key_name(S)] late-joins as a syndicate cyborg.")
 			S.mind?.add_antagonist(ROLE_SYNDICATE_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
 
 		if (isAI(S))
@@ -520,7 +528,7 @@ TYPEINFO(/mob/new_player)
 			new_character.mind.late_special_role = 1
 			logTheThing(LOG_DEBUG, new_character, "<b>Late join</b>: assigned antagonist role: [bad_type].")
 		else
-			if (ishuman(new_character) && allow_late_antagonist && current_state == GAME_STATE_PLAYING && ticker.round_elapsed_ticks >= 6000 && emergency_shuttle.timeleft() >= 300 && !src.is_respawned_player) // no new evils for the first 10 minutes or last 5 before shuttle
+			if (ishuman(new_character) && allow_late_antagonist && current_state == GAME_STATE_PLAYING && ticker.round_elapsed_ticks >= 6000 && emergency_shuttle.timeleft() >= 300 && new_character.client?.player && !new_character.client.player.timed_respawn_in_progress) // no new evils for the first 10 minutes or last 5 before shuttle
 				if (late_traitors && ticker.mode.latejoin_antag_compatible && !(jobban_isbanned(new_character, "Syndicate")))
 					var/livingtraitor = 0
 
@@ -562,6 +570,7 @@ TYPEINFO(/mob/new_player)
 
 		new_character.temporary_attack_alert(1200) //Messages admins if this new character attacks someone within 2 minutes of signing up. Might help detect grief, who knows?
 		new_character.temporary_suicide_alert(1500) //Messages admins if this new character commits suicide within 2 1/2 minutes. probably a bit much but whatever
+		new_character.client?.player.timed_respawn_in_progress = FALSE
 
 		return new_character
 
@@ -697,40 +706,48 @@ TYPEINFO(/mob/new_player)
 		if (src.client.has_login_notice_pending(TRUE))
 			return
 
-		if(tgui_alert(src, "Join the round as an observer? You will be unable to respawn for the duration of the round.", "Player Setup", list("Yes", "No"), 30 SECONDS) == "Yes")
-			if(!src.client) return
-			var/mob/dead/observer/observer = new(src)
-			if (src.client && src.client.using_antag_token) //ZeWaka: Fix for null.using_antag_token
-				src.client.using_antag_token = 0
-				src.show_text("Token refunded, your new total is [src.client.antag_tokens].", "red")
-			src.spawning = 1
+		#ifndef GENERATE_GOONHUB_MAP
+		if(tgui_alert(src, "Join the round as an observer? You will be unable to respawn for the duration of the round.", "Player Setup", list("Yes", "No"), 30 SECONDS) != "Yes")
+			return
+		#endif
 
-			close_spawn_windows()
-			boutput(src, SPAN_NOTICE("Now teleporting."))
-			logTheThing(LOG_DEBUG, src, "observes.")
-			var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
-			if (ASLoc)
-				observer.set_loc(ASLoc)
+		if(!src.client) return
+		var/mob/dead/observer/observer = new(src)
+		if (src.client && src.client.using_antag_token) //ZeWaka: Fix for null.using_antag_token
+			src.client.using_antag_token = 0
+			src.show_text("Token refunded, your new total is [src.client.antag_tokens].", "red")
+		src.spawning = 1
 
-			observer.observe_round = 1
-			if(client.preferences && client.preferences.be_random_name) //Wire: fix for Cannot read null.be_random_name (preferences &&)
-				client.preferences.randomize_name()
-			observer.real_name = client.preferences.real_name
-			observer.bioHolder.mobAppearance.CopyOther(client.preferences.AH)
-			observer.gender = observer.bioHolder.mobAppearance.gender
-			observer.UpdateName()
-			observer.apply_looks_of(client)
+		close_spawn_windows()
+		boutput(src, SPAN_NOTICE("Now teleporting."))
+		logTheThing(LOG_DEBUG, src, "observes.")
+#ifndef NIGHTSHADE
+		if(global.player_capa)
+			message_admins("[key_name(src)] chooses to observe with the player cap enabled.")
+#endif
+		var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
+		if (ASLoc)
+			observer.set_loc(ASLoc)
 
-			if(!src.mind) src.mind = new(src)
-			ticker.minds |= src.mind
-			src.mind.get_player()?.joined_observer = TRUE
-			src.mind.transfer_to(observer)
-			if(observer?.client)
-				observer.client.loadResources()
+		observer.observe_round = 1
+		if(client.preferences && client.preferences.be_random_name) //Wire: fix for Cannot read null.be_random_name (preferences &&)
+			client.preferences.randomize_name()
+		observer.real_name = client.preferences.real_name
+		observer.bioHolder.mobAppearance.CopyOther(client.preferences.AH)
+		observer.gender = observer.bioHolder.mobAppearance.gender
+		observer.UpdateName()
+		observer.apply_looks_of(client)
 
-			respawn_controller.unsubscribeRespawnee(observer?.client?.ckey)
+		if(!src.mind) src.mind = new(src)
+		ticker.minds |= src.mind
+		src.mind.get_player()?.joined_observer = TRUE
+		src.mind.transfer_to(observer)
+		if(observer?.client)
+			observer.client.loadResources()
 
-			qdel(src)
+		respawn_controller.unsubscribeRespawnee(observer?.client?.ckey)
+		observer.mind.get_player()?.dnr = observer.client?.preferences?.observer_dnr
+		qdel(src)
 
 #ifdef TWITCH_BOT_ALLOWED
 	proc/try_force_into_bill() //try to put the twitch mob into shittbill

@@ -8,7 +8,7 @@ var/global/shipAlertState = SHIP_ALERT_GOOD
 var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_quiet.ogg')
 
 TYPEINFO(/obj/machinery/shipalert)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 #define COMPLETE 0
 #define HAMMER_TAKEN 1

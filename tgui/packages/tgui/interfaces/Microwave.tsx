@@ -6,7 +6,7 @@
  */
 
 import { BooleanLike } from 'common/react';
-import { Button, LabeledList, Modal, Section } from 'tgui-core/components';
+import { Button, Image, Modal, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -15,80 +15,113 @@ interface MicrowaveData {
   broken: BooleanLike;
   operating: BooleanLike;
   dirty: BooleanLike;
-  eggs: number;
-  flour: number;
-  monkey_meat: number;
-  synth_meat: number;
-  donk_pockets: number;
-  other_meat: number;
-  unclassified_item: string;
+  maxItems: number;
+  items: Item[];
+}
+
+interface Item {
+  name: string;
+  iconData: string;
+  index: number;
 }
 
 export const Microwave = () => {
   const { act, data } = useBackend<MicrowaveData>();
-  const {
-    broken,
-    operating,
-    dirty,
-    eggs,
-    flour,
-    monkey_meat,
-    synth_meat,
-    donk_pockets,
-    other_meat,
-    unclassified_item,
-  } = data;
+  const { broken, operating, maxItems, items } = data;
 
   return (
-    <Window title="Microwave Controls" width={250} height={310}>
+    <Window title="Microwave Controls" width={290} height={310}>
       <Window.Content>
-        <Section title="Contents" fill>
-          <LabeledList>
-            <LabeledList.Item label="Eggs">{eggs}</LabeledList.Item>
-            <LabeledList.Item label="Flour">{flour}</LabeledList.Item>
-            <LabeledList.Item label="Monkey Meat">
-              {monkey_meat}
-            </LabeledList.Item>
-            <LabeledList.Item label="Synth-Meat">{synth_meat}</LabeledList.Item>
-            <LabeledList.Item label="Meat Turnovers">
-              {donk_pockets}
-            </LabeledList.Item>
-            <LabeledList.Item label="Other Meat">{other_meat}</LabeledList.Item>
-            {unclassified_item && (
-              <LabeledList.Item label="???">
-                {unclassified_item}
-              </LabeledList.Item>
-            )}
-          </LabeledList>
-          <Button onClick={() => act('start_microwave')} mt={1}>
-            Start!
-          </Button>
-          <Button onClick={() => act('eject_contents')} mt={1}>
-            Eject contents
-          </Button>
-        </Section>
-        {!!broken && (
-          <Modal>
-            <Section>
-              This microwave is broken! Repair required, with a screwdriver and
-              wrench.
+        <Stack vertical fill>
+          <Stack.Item grow>
+            <Section
+              fill
+              scrollable
+              title={`Contents: (${items.length}/${maxItems})`}
+            >
+              {items.length > 0
+                ? items.map((item) => (
+                    <MicrowaveItem
+                      key={item.index}
+                      item={item}
+                      operating={operating}
+                    />
+                  ))
+                : 'No contents in microwave'}
             </Section>
-          </Modal>
-        )}
-        {!!dirty && (
-          <Modal>
-            <Section>
-              This microwave is dirty! Please clean before use with a sponge or
-              cleaner bottle.
-            </Section>
-          </Modal>
-        )}
-        {!!operating && (
-          <Modal>
-            <Section>Microwaving in progress! Please wait...</Section>
-          </Modal>
-        )}
+          </Stack.Item>
+          <Stack.Item>
+            <Stack m=".25rem">
+              <Stack.Item grow={10}>
+                <Button
+                  fluid
+                  textAlign="center"
+                  onClick={() => act('start_microwave')}
+                  disabled={operating || broken || items.length === 0}
+                >
+                  Start!
+                </Button>
+              </Stack.Item>
+              <Stack.Item grow>
+                <Button
+                  fluid
+                  backgroundColor="blue"
+                  icon="eject"
+                  tooltip="Eject All"
+                  textAlign="center"
+                  disabled={items.length === 0}
+                  onClick={() => act('eject_contents', {})}
+                >
+                  Eject All
+                </Button>
+              </Stack.Item>
+            </Stack>
+          </Stack.Item>
+        </Stack>
       </Window.Content>
+      {!!operating && (
+        <Modal textAlign="center">
+          <Section>Cooking! Please wait...</Section>
+        </Modal>
+      )}
     </Window>
+  );
+};
+
+export const MicrowaveItem = (props: {
+  item: Item;
+  operating: BooleanLike;
+}) => {
+  const { act } = useBackend();
+
+  const { item, operating } = props;
+
+  return (
+    <Stack align="center">
+      <Image
+        verticalAlign="middle"
+        height="30px"
+        width="30px"
+        src={`data:image/png;base64,${item.iconData}`}
+      />
+      <div
+        style={{
+          flex: '1',
+          minWidth: 0,
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        {item.name}
+      </div>
+      <Button
+        icon="eject"
+        color="blue"
+        tooltip={`Eject ${item.name}`}
+        disabled={operating}
+        onClick={() => act('eject_single', { index: item.index })}
+      />
+    </Stack>
   );
 };

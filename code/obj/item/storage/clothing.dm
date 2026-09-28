@@ -68,7 +68,7 @@
 	name = "\improper Janitor's equipment"
 	spawn_contents = list(/obj/item/clothing/under/rank/janitor,\
 	/obj/item/clothing/shoes/brown,\
-	/obj/item/device/radio/headset/civilian,\
+	/obj/item/device/radio/headset/civilian/janitor,\
 	/obj/item/device/pda2/janitor,\
 #ifdef SEASON_WINTER
 	/obj/item/clothing/suit/puffer/janitor)
@@ -80,7 +80,7 @@
 	name = "\improper Botanist's equipment"
 	spawn_contents = list(/obj/item/clothing/under/rank/hydroponics,\
 	/obj/item/clothing/shoes/brown,\
-	/obj/item/device/radio/headset/civilian,\
+	/obj/item/device/radio/headset/civilian/hydroponics,\
 	/obj/item/device/pda2/botanist,\
 	/obj/item/clothing/gloves/black,\
 #ifdef SEASON_WINTER
@@ -93,7 +93,7 @@
 	name = "\improper Rancher's equipment"
 	spawn_contents = list(/obj/item/clothing/under/rank/rancher,\
 	/obj/item/clothing/shoes/westboot/brown/rancher,\
-	/obj/item/device/radio/headset/civilian,\
+	/obj/item/device/radio/headset/civilian/hydroponics,\
 	/obj/item/device/pda2/botanist,\
 	/obj/item/clothing/gloves/black,\
 #ifdef SEASON_WINTER
@@ -108,7 +108,7 @@
 	/obj/item/clothing/shoes/chef,\
 	/obj/item/clothing/head/chefhat,\
 	/obj/item/clothing/suit/chef,\
-	/obj/item/device/radio/headset/civilian,\
+	/obj/item/device/radio/headset/civilian/catering,\
 	/obj/item/device/pda2/chef)
 
 /obj/item/storage/box/clothing/souschef
@@ -117,14 +117,14 @@
 	/obj/item/clothing/shoes/chef,\
 	/obj/item/clothing/head/souschefhat,\
 	/obj/item/clothing/suit/apron,\
-	/obj/item/device/radio/headset/civilian,\
+	/obj/item/device/radio/headset/civilian/catering,\
 	/obj/item/device/pda2/chef)
 
 /obj/item/storage/box/clothing/bartender
 	name = "\improper Bartender's equipment"
 	spawn_contents = list(/obj/item/clothing/under/rank/bartender,\
 	/obj/item/clothing/shoes/black,\
-	/obj/item/device/radio/headset/civilian,\
+	/obj/item/device/radio/headset/civilian/catering,\
 	/obj/item/device/pda2/bartender)
 
 /obj/item/storage/box/clothing/waiter
@@ -132,14 +132,14 @@
 	spawn_contents = list(/obj/item/clothing/under/rank/bartender,\
 	/obj/item/clothing/shoes/black,\
 	/obj/item/clothing/suit/wcoat,\
-	/obj/item/device/radio/headset/civilian,\
+	/obj/item/device/radio/headset/civilian/catering,\
 	/obj/item/device/pda2/bartender)
 
 /obj/item/storage/box/clothing/chaplain
 	name = "\improper Chaplain's equipment"
 	spawn_contents = list(/obj/item/clothing/under/rank/chaplain,\
 	/obj/item/clothing/shoes/black,\
-	/obj/item/device/radio/headset/civilian,\
+	/obj/item/device/radio/headset/civilian/chaplain,\
 	/obj/item/device/pda2/chaplain)
 
 // Security Equipment
@@ -187,7 +187,7 @@
 	/obj/item/clothing/suit/labcoat/robotics,\
 	/obj/item/clothing/suit/wintercoat/robotics,\
 	/obj/item/device/radio/headset/medical,\
-	/obj/item/device/pda2/medical/robotics,\
+	/obj/item/device/pda2/robotics,\
 	/obj/item/clothing/gloves/latex)
 
 // Research Equipment
@@ -436,7 +436,8 @@
 	name = "vampire costume set"
 	desc = "Blah blah blah."
 	spawn_contents = list(/obj/item/clothing/under/gimmick/vampire,
-	/obj/item/clothing/suit/gimmick/vampire)
+	/obj/item/clothing/suit/gimmick/vampire,
+	/obj/item/stamp/vampire)
 
 /obj/item/storage/box/costume/abomination
 	name = "abomination costume set"
@@ -501,3 +502,23 @@
 	desc = "Be desired by Staff Assistants, and thrown in the trash by everyone else."
 	spawn_contents = list(/obj/item/clothing/head/chompskyhat,
 	/obj/item/clothing/suit/chompskysuit)
+
+/obj/item/storage/box/costume/baseball_clown
+	name = "baseball uniform set"
+	icon_state = "clown"
+	desc = "A box that contains a baseball uniform for the Aintaiya Stinkers."
+	spawn_contents = list(/obj/item/clothing/under/baseball/clown,
+	/obj/item/clothing/head/basecap/red)
+
+/obj/item/storage/box/costume/baseball_mime
+	name = "baseball uniform set"
+	icon_state = "mime"
+	desc = "A box that contains a baseball uniform for... some team you've never heard of before."
+	spawn_contents = list(/obj/item/clothing/under/baseball/mime,
+	/obj/item/clothing/head/basecap/black)
+
+/obj/item/storage/box/costume/mouse
+	name = "space mouse costume set"
+	desc = "A box that contains a costume that is cheesed to meet you."
+	spawn_contents = list(/obj/item/clothing/suit/gimmick/mouse,
+	/obj/item/reagent_containers/food/snacks/ingredient/cheese)

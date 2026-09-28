@@ -1,6 +1,5 @@
 // Barbuddy [my beloved] -- currently used in the Space Casino prefab
 
-#define BARBUDDY_MOVE_SPEED 7
 /obj/machinery/bot/barbuddy
 	name = "BarBuddy"
 	desc = "A little bartending robot!"
@@ -9,7 +8,7 @@
 	layer = 5.0 //TODO LAYER
 	density = 0
 	anchored = UNANCHORED
-	bot_move_delay = BARBUDDY_MOVE_SPEED
+	bot_move_delay = BOT::SPEED::BARBOT
 	var/hasDrink = 0
 	var/turf/home // Initialized early. Where the barbuddy should be serving. Barbuddy explodes if taken too far from here.
 	var/list/homeTables = list() // Initialized early. All nearby tables that the barbuddy should be checking for drinks.
@@ -88,7 +87,7 @@
 			get_empty_tables()
 			if (!length(targets)) // No work to be done, let's go home.
 				if (get_turf(src) == home) return
-				src.navigate_to(home, BARBUDDY_MOVE_SPEED, max_dist = 60)
+				src.navigate_to(home, src.bot_move_delay, max_dist = 60)
 				if (!length(src.path))
 					KillPathAndGiveUp(1)
 				return
@@ -117,7 +116,7 @@
 			return
 
 		if (!length(src.path))
-			src.navigate_to(get_turf(moveTowards), BARBUDDY_MOVE_SPEED, max_dist = 60)
+			src.navigate_to(get_turf(moveTowards), src.bot_move_delay, max_dist = 60)
 			if (!length(src.path))
 				KillPathAndGiveUp(1)
 				return

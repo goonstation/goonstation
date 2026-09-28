@@ -15,7 +15,7 @@
 
 	var/setup_logdump_name = "englog"
 	var/setup_mail_freq = FREQ_PDA //Which freq do we report to?
-	var/setup_mailgroup = MGO_ENGINEER //The PDA mailgroup used when alerting engineer pdas.
+	var/setup_mailgroup = MGD_ENGINEER //The PDA mailgroup used when alerting engineer pdas.
 
 
 	initialize()

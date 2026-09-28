@@ -86,9 +86,9 @@
 #define TGS_EVENT_REPO_MERGE_PULL_REQUEST 3
 /// Before the repository makes a sychronize operation. Parameters: Absolute repostiory path.
 #define TGS_EVENT_REPO_PRE_SYNCHRONIZE 4
-/// Before a engine install operation begins. Parameters: Version string of the installing engine.
+/// Before an engine install operation begins. Parameters: Version string of the installing engine.
 #define TGS_EVENT_ENGINE_INSTALL_START 5
-/// When a engine install operation fails. Parameters: Error message
+/// When an engine install operation fails. Parameters: Error message
 #define TGS_EVENT_ENGINE_INSTALL_FAIL 6
 /// When the active engine version changes. Parameters: (Nullable) Version string of the current engine, version string of the new engine.
 #define TGS_EVENT_ENGINE_ACTIVE_VERSION_CHANGE 7

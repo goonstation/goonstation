@@ -683,7 +683,7 @@
 /obj/dispenser
 	name = "handcuff dispenser"
 	desc = "A handy dispenser for handcuffs."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/dispenser.dmi'
 	icon_state = "dispenser_handcuffs"
 	var/amount = 3
 
@@ -992,6 +992,7 @@
 		qdel(src)
 
 TYPEINFO(/obj/item/rpcargotele)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 4
 
 /obj/item/rpcargotele

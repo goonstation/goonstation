@@ -921,7 +921,10 @@ proc/random_accent()
 		"that's too bad" = "schade",
 		"thats too bad" = "schade",
 		"too bad" = "schade",
-		"no problem" = "kein problem"
+		"no problem" = "kein problem",
+		"pig in a blanket" = "pig in a sleeping gown",
+		"pigs in a blanket" = "pig in a sleeping gown"
+
 	) //this list is seperate from the text document, as the current accent system does not support multi word phrases. This could use reworking.
 
 	var/substitute = null

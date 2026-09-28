@@ -116,6 +116,7 @@
 	return FALSE
 
 /// emag effects:
+/// * set maximum gravity cap to 4G
 /// * disables access requirements
 /// * makes gravity change announcement optional
 /// * burns out wires (greater chance to trigger random faults)
@@ -128,6 +129,7 @@
 	boutput(user, SPAN_ALERT("You slide [E] across [src]'s ID reader, breaking the g-force limiter."))
 	src.locked = FALSE
 	src.emagged = TRUE
+	src.maximum_intensity = GFORCE_EARTH_GRAVITY * 4
 	if (src.wire_state == TETHER_WIRES_INTACT)
 		src.wire_state = TETHER_WIRES_BURNED
 		src.update_ma_wires()
@@ -136,3 +138,4 @@
 /obj/machinery/gravity_tether/demag(mob/user)
 	. = ..()
 	src.emagged = FALSE
+	src.maximum_intensity = initial(src.maximum_intensity)

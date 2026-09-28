@@ -37,10 +37,13 @@ const ItemButtonSideButton = (props: ItemButtonSideButtonProps) => {
       height={
         ItemButtonStyle.Height / 2 - ItemButtonMiniButtonStyle.Spacing / 4
       }
-      py={ItemButtonMiniButtonStyle.IconSize / 4}
+      pt={ItemButtonMiniButtonStyle.IconSize / 4}
       mb={ItemButtonMiniButtonStyle.Spacing}
-      align="center"
-      style={{ display: 'block' }}
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
       onClick={onClick}
       color={color}
       disabled={disabled}
@@ -48,7 +51,7 @@ const ItemButtonSideButton = (props: ItemButtonSideButtonProps) => {
     >
       <Icon
         name={icon}
-        py={
+        pt={
           ItemButtonMiniButtonStyle.IconSize +
           ItemButtonMiniButtonStyle.Spacing / 2
         }

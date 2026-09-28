@@ -106,6 +106,9 @@
 	disposing()
 		for (var/mob/M in src.mobs)
 			M.detach_hud(src)
+		for (var/client/C in src.clients)
+			src.remove_client(C)
+
 		for (var/atom/movable/Obj in src.objects)
 			Obj.plane = initial(Obj.plane)
 			if(istype(Obj, /atom/movable/screen/hud))
@@ -117,9 +120,6 @@
 		for (var/datum/hud_zone/zone in src.hud_zones)
 			qdel(zone)
 		src.hud_zones = null
-
-		for (var/client/C in src.clients)
-			remove_client(C)
 
 		src.clear_master()
 		..()

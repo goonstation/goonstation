@@ -58,6 +58,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary)
 				src.network = target.network
 				src.network.machines += src
 			break
+	SEND_SIGNAL(src, COMSIG_FLUID_PIPE_ON_INIT)
 
 /obj/machinery/fluid_machinery/unary/refresh_network(datum/flow_network/network)
 	src.network?.machines -= src
@@ -84,10 +85,36 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary)
 	flags = NOSPLASH | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
 	HELP_MESSAGE_OVERRIDE("You can connect glass plumbing to this machine. Can pull 100 units from a screwed barrel per cycle.")
 	var/obj/reagent_dispensers/chemicalbarrel/connectedcontainer = null
+	var/turf/scanned_turf = null //! this stores the turf this machine scans for COMSIG_TURF_FLUID_PORT_PING
+
+/obj/machinery/fluid_machinery/unary/input/New()
+	. = ..()
+	SPAWN(0)
+		src.scanned_turf = get_turf(src)
+		RegisterSignal(src.scanned_turf, COMSIG_TURF_FLUID_PORT_PING, PROC_REF(on_turf_ping))
+		SEND_SIGNAL(src.scanned_turf, COMSIG_TURF_FLUID_PORT_CREATED, src)
 
 /obj/machinery/fluid_machinery/unary/input/initialize()
 	..()
 	src.reagents = src.network?.reagents || new(0)
+
+
+/obj/machinery/fluid_machinery/unary/input/disposing()
+	if(src.scanned_turf)
+		UnregisterSignal(src.scanned_turf, COMSIG_TURF_FLUID_PORT_PING)
+		src.scanned_turf = null
+	if(istype(src.reagents, /datum/reagents/flow_network))
+		// we need to specifically check for the flow network subtype here, because we ports and these nodes share the same datum
+		// if we don't drop the reference, we delete the whole fluid networks reagent datum
+		src.reagents = null
+	..()
+
+/obj/machinery/fluid_machinery/unary/input/proc/on_turf_ping(var/turf/pinged_turf, var/list/return_list)
+	if(!src.qdeled && !src.disposed && return_list)
+		//we put ourself in the list to return and return TRUE
+		//we have to do it this way because returning anything else than Booleans with signals doesn't work well
+		return_list += src
+		return TRUE
 
 /obj/machinery/fluid_machinery/unary/input/process()
 	src.connectedcontainer?.reagents.trans_to(src, 100)
@@ -343,7 +370,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary/drain)
 	name = "dispenser"
 	icon_state = "dispenser"
 	desc = "Fills itself with fluid and dispenses patches, pills, and vials when reaching the set amount or when prompted to."
-	HELP_MESSAGE_OVERRIDE("FYou can use a <b>multitool</b> to modify its settings.")
+	HELP_MESSAGE_OVERRIDE("You can use a <b>multitool</b> to modify its settings.")
 	var/automatic = TRUE
 	var/max = 50
 	var/min = 1
@@ -423,6 +450,103 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary/drain)
 		return
 	src.dispense()
 
+/obj/machinery/fluid_machinery/unary/sensor
+	name = "float sensor"
+	icon_state = "sensor"
+	desc = "Will send an alert once the network's capacity is greater then the set threshold of the sensor."
+	HELP_MESSAGE_OVERRIDE("You can use a <b>multitool</b> to modify its trigger threshold or radio frequency.")
+	var/Threshold_Min = 0
+	var/Threshold_Max = 100000
+	var/signal_threshold = 1000
+	var/check_timer = 5 SECONDS
+	var/triggered = null //To stop PDA spam
+	//For PDA/signal alert stuff
+	var/pda_mode = TRUE
+	var/list/mailgroups = list(MGT_JANITOR, MGA_PLUMBING)
+	var/alert_frequency = FREQ_PDA
+	var/filtration = null // used to give a unique message for roundstart sewage sensors
+
+/obj/machinery/fluid_machinery/unary/sensor/New()
+	..()
+	AddComponent(/datum/component/mechanics_holder)
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Threshold", PROC_REF(set_threshold_manual))
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Frequency", PROC_REF(set_frequency_manual))
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Message Alerts", PROC_REF(toggle_alerts))
+
+// Robbed from implant code
+/obj/machinery/fluid_machinery/unary/sensor/proc/send_message(message, alertgroup, sender_name)
+	DEBUG_MESSAGE("sending message: [message]")
+	var/datum/component/packet_connected/radio/radio_connection = MAKE_SENDER_RADIO_PACKET_COMPONENT(null, null, alert_frequency)
+	var/datum/signal/newsignal = get_free_signal()
+	var/net_id = generate_net_id(src)
+	if (message)
+		newsignal.source = src
+		newsignal.data["command"] = "text_message"
+		newsignal.data["sender_name"] = sender_name
+		newsignal.data["message"] = message
+
+		newsignal.data["address_1"] = "00000000"
+		newsignal.data["group"] = mailgroups
+		newsignal.data["sender"] = net_id
+
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
+		qdel(radio_connection)
+
+/obj/machinery/fluid_machinery/unary/sensor/process()
+	if(GET_COOLDOWN(src, "sensor_check")) return
+	if (!src.network) return
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "[src.network.reagents.total_volume]")
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "[src.network.reagents.reagent_list]")
+	if(triggered && src.network.reagents.total_volume < signal_threshold) // Has it gone below the threshold to reset the PDA alerts?
+		triggered = 0
+	if (src.network.reagents.total_volume >= signal_threshold && pda_mode && !triggered)
+		FLICK("sensor0",src)
+		var/myarea = get_area(src)
+		var/message = null //not 4 long
+		if(!filtration)
+			message = "PLUMBING NETWORK BACKUP ALERT: [src] in [myarea]."
+		else
+			message = "SEWAGE BACKUP ALERT: [src] in [myarea]."
+		src.send_message(message, mailgroups, "PLUMBING-MAILBOT")
+		triggered = 1
+	ON_COOLDOWN(src, "sensor_check", check_timer)
+
+/obj/machinery/fluid_machinery/unary/sensor/proc/set_threshold(var/datum/mechanicsMessage/input)
+	var/newthreshold = text2num_safe(input.signal)
+	if (!newthreshold)
+		return
+	src.signal_threshold = round(clamp(newthreshold, 0, src.network.reagents.total_volume), QUANTIZATION_UNITS)
+	logTheThing(LOG_STATION, null, "set a fluid sensor set to trigger at [src.signal_threshold] units through MechComp at [log_loc(src)].")
+
+
+/obj/machinery/fluid_machinery/unary/sensor/proc/set_threshold_manual(obj/item/W, mob/user)
+	var/inp = tgui_input_number(user, "Please enter sensor threshold (Will round to [QUANTIZATION_UNITS]):", "Dispense Amount", 0, src.Threshold_Max, src.Threshold_Min)
+	if (!inp) return
+	src.signal_threshold = round(inp, QUANTIZATION_UNITS)
+	boutput(user, "Threshold set to [src.signal_threshold] units.")
+	logTheThing(LOG_STATION, user, "set a fluid sensor set to trigger at [src.signal_threshold] units at [log_loc(src)].")
+
+/obj/machinery/fluid_machinery/unary/sensor/proc/set_frequency(var/datum/mechanicsMessage/input)
+	var/newfrequency = text2num_safe(input.signal)
+	if (!newfrequency)
+		return
+	src.signal_threshold = round(clamp(newfrequency, RADIO::FREQ::MINIMUM, RADIO::FREQ::MAXIMUM), QUANTIZATION_UNITS)
+	logTheThing(LOG_STATION, null, "set a fluid sensor set to trigger at [src.alert_frequency] units through MechComp at [log_loc(src)].")
+
+/obj/machinery/fluid_machinery/unary/sensor/proc/set_frequency_manual(obj/item/W, mob/user)
+	var/inp = tgui_input_number(user, "Please enter frequency :", "Frequency", src.alert_frequency, RADIO::FREQ::MAXIMUM, RADIO::FREQ::MINIMUM)
+	if (!inp) return
+	logTheThing(LOG_STATION, user, "set a fluid sensor set to send at [src.alert_frequency] at [log_loc(src)].")
+
+/obj/machinery/fluid_machinery/unary/sensor/proc/toggle_alerts(obj/item/W, mob/user)
+	src.pda_mode = !src.pda_mode
+	boutput(user, "Alert creation is currently [src.pda_mode].")
+
+/obj/machinery/fluid_machinery/unary/sensor/filtration
+	signal_threshold = 20000
+	filtration = 1
+
+
 /obj/machinery/fluid_machinery/unary/node
 	name = "node"
 	desc = "Used for connecting non-fluid machinery to fluid pipes, AKA, YOU SHOULDNT SEE THIS."
@@ -466,6 +590,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/binary)
 				src.network2 = target.network
 				src.network2.machines += src
 			break
+	SEND_SIGNAL(src, COMSIG_FLUID_PIPE_ON_INIT)
 
 /obj/machinery/fluid_machinery/binary/refresh_network(datum/flow_network/network)
 	src.network1?.machines -= src
@@ -625,6 +750,7 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/trinary)
 				src.network3 = target.network
 				src.network3.machines += src
 			break
+	SEND_SIGNAL(src, COMSIG_FLUID_PIPE_ON_INIT)
 
 /obj/machinery/fluid_machinery/trinary/refresh_network(datum/flow_network/network)
 	src.network1?.machines -= src

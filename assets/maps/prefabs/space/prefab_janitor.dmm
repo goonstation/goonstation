@@ -212,7 +212,7 @@
 /turf/simulated/floor,
 /area/janitor_setpiece)
 "aI" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1;
 	icon_state = "sink"
 	},
@@ -343,7 +343,7 @@
 /turf/simulated/floor,
 /area/janitor_setpiece)
 "bb" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	desc = "A water-filled unit intended for cleaning purposes.";
 	dir = 4;
 	name = "utility sink"

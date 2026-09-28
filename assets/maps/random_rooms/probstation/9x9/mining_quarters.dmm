@@ -1,0 +1,569 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/wall/auto/supernorn/colored/orange,
+/area/station/mining/staff_room)
+"b" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable,
+/obj/window_blinds/cog2/left{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/mining/staff_room)
+"c" = (
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	dir = 4
+	},
+/obj/mapping_helper/access/mining,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/mining/staff_room)
+"d" = (
+/obj/machinery/recharge_station,
+/obj/machinery/firealarm/directional/east,
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/station/mining/staff_room)
+"e" = (
+/obj/storage/secure/closet/engineering/mining,
+/obj/item/device/matanalyzer,
+/turf/simulated/floor/yellow/side,
+/area/station/mining/staff_room)
+"f" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 9
+	},
+/area/station/mining/staff_room)
+"g" = (
+/obj/disposalpipe/segment/bent/south,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/yellow/side,
+/area/station/mining/staff_room)
+"h" = (
+/obj/table/auto,
+/obj/machinery/recharger,
+/obj/item/cargotele,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor,
+/area/station/mining/staff_room)
+"i" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/station/mining/staff_room)
+"j" = (
+/obj/storage/secure/closet/engineering/mining,
+/obj/item/device/matanalyzer,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/yellow/side,
+/area/station/mining/staff_room)
+"k" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 9
+	},
+/area/station/mining/staff_room)
+"l" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor,
+/area/station/mining/staff_room)
+"m" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/yellowblack{
+	dir = 5
+	},
+/area/station/mining/staff_room)
+"n" = (
+/obj/machinery/door/airlock/pyro/engineering/alt,
+/obj/mapping_helper/access/mining,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/mining/staff_room)
+"o" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/window_blinds/cog2/middle{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/mining/staff_room)
+"p" = (
+/turf/simulated/floor,
+/area/station/mining/staff_room)
+"q" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 8
+	},
+/area/station/mining/staff_room)
+"r" = (
+/obj/landmark/start/job/miner,
+/turf/simulated/floor,
+/area/station/mining/staff_room)
+"s" = (
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk/east,
+/obj/machinery/firealarm/directional/south,
+/turf/simulated/floor/yellow/side,
+/area/station/mining/staff_room)
+"t" = (
+/obj/machinery/light_switch/directional/east,
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/station/mining/staff_room)
+"u" = (
+/obj/submachine/cargopad{
+	name = "Mining Cargo Pad"
+	},
+/turf/simulated/floor/yellow/checker{
+	dir = 4
+	},
+/area/station/mining/staff_room)
+"v" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/plating,
+/area/station/mining/staff_room)
+"w" = (
+/obj/landmark/gps_waypoint,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/mining/staff_room)
+"x" = (
+/obj/machinery/light_switch/directional/south,
+/turf/simulated/floor/yellow/side,
+/area/station/mining/staff_room)
+"y" = (
+/obj/table/auto,
+/obj/machinery/coffeemaker/engineering{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8;
+	pixel_y = 12
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/mining/staff_room)
+"z" = (
+/obj/machinery/ore_cloud_storage_container,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/mining/staff_room)
+"A" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 6
+	},
+/area/station/mining/staff_room)
+"B" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/mining/staff_room)
+"C" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/window_blinds/cog2/left,
+/turf/simulated/floor/plating,
+/area/station/mining/staff_room)
+"D" = (
+/obj/machinery/door/airlock/pyro/engineering/alt,
+/obj/mapping_helper/access/mining,
+/obj/mapping_helper/firedoor_spawn,
+/obj/disposalpipe/segment/vertical,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/station/mining/staff_room)
+"E" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/mining/staff_room)
+"F" = (
+/obj/storage/secure/closet/engineering/mining,
+/obj/item/device/matanalyzer,
+/turf/simulated/floor/yellow/side{
+	dir = 6
+	},
+/area/station/mining/staff_room)
+"G" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 10
+	},
+/area/station/mining/staff_room)
+"H" = (
+/obj/drink_rack/mug{
+	pixel_y = 28
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/mining/staff_room)
+"I" = (
+/obj/table/auto,
+/obj/item/storage/firstaid/regular,
+/obj/machinery/camera/directional/east,
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/station/mining/staff_room)
+"J" = (
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/station/mining/staff_room)
+"K" = (
+/obj/stool/chair/yellow{
+	dir = 8
+	},
+/obj/landmark/start/job/miner,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 1
+	},
+/area/station/mining/staff_room)
+"L" = (
+/obj/machinery/nanofab/mining,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor,
+/area/station/mining/staff_room)
+"M" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/autoname_north,
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/mining/staff_room)
+"N" = (
+/obj/rack,
+/obj/item/tank/jetpack/micro{
+	pixel_x = -4
+	},
+/obj/item/clothing/suit/space/engineer{
+	pixel_x = 7;
+	pixel_y = -1
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/obj/item/clothing/head/helmet/space/engineer{
+	pixel_x = 4;
+	pixel_y = 10
+	},
+/obj/machinery/camera/directional/south,
+/turf/simulated/floor/yellow/side{
+	dir = 10
+	},
+/area/station/mining/staff_room)
+"O" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/mining/staff_room)
+"P" = (
+/turf/simulated/floor/yellowblack{
+	dir = 4
+	},
+/area/station/mining/staff_room)
+"Q" = (
+/obj/machinery/portable_reclaimer,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor,
+/area/station/mining/staff_room)
+"R" = (
+/obj/machinery/computer/telescope{
+	dir = 4
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 9
+	},
+/area/station/mining/staff_room)
+"S" = (
+/turf/simulated/floor/yellowblack,
+/area/station/mining/staff_room)
+"T" = (
+/obj/machinery/dispenser,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/yellow/side{
+	dir = 5
+	},
+/area/station/mining/staff_room)
+"U" = (
+/obj/rack,
+/obj/item/tank/jetpack/micro{
+	pixel_x = -4
+	},
+/obj/item/clothing/suit/space/engineer{
+	pixel_x = 7;
+	pixel_y = -1
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/obj/item/clothing/head/helmet/space/engineer{
+	pixel_x = 4;
+	pixel_y = 10
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/mining/staff_room)
+"V" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/station/mining/staff_room)
+"W" = (
+/obj/machinery/manufacturer/mining,
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor,
+/area/station/mining/staff_room)
+"X" = (
+/obj/rack,
+/obj/item/tank/jetpack/micro{
+	pixel_x = -4
+	},
+/obj/item/clothing/suit/space/engineer{
+	pixel_x = 7;
+	pixel_y = -1
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/obj/item/clothing/head/helmet/space/engineer{
+	pixel_x = 4;
+	pixel_y = 10
+	},
+/obj/blind_switch/directional/west,
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/mining/staff_room)
+"Y" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/mining/staff_room)
+"Z" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/window_blinds/cog2/right,
+/turf/simulated/floor/plating,
+/area/station/mining/staff_room)
+
+(1,1,1) = {"
+a
+O
+o
+b
+c
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+C
+R
+q
+G
+f
+X
+U
+N
+a
+"}
+(3,1,1) = {"
+v
+K
+u
+S
+V
+p
+r
+x
+a
+"}
+(4,1,1) = {"
+Z
+m
+P
+A
+z
+h
+p
+s
+a
+"}
+(5,1,1) = {"
+n
+k
+w
+y
+Y
+l
+B
+g
+D
+"}
+(6,1,1) = {"
+a
+H
+p
+Q
+W
+L
+p
+e
+a
+"}
+(7,1,1) = {"
+a
+M
+r
+p
+E
+p
+r
+j
+a
+"}
+(8,1,1) = {"
+a
+T
+I
+d
+i
+t
+J
+F
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+a
+c
+a
+a
+a
+a
+"}

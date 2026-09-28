@@ -178,7 +178,10 @@
 			body += debug_variable(V, global.vars[V], D, 0, 10)
 	else
 		for (var/V in names)
-			body += debug_variable(V, D.vars[V], D, 0)
+			try
+				body += debug_variable(V, D.vars[V], D, 0)
+			catch(var/exception/e)
+				body += debug_variable_read_error(V, e)
 		//body += debug_variable_link(V, D, (istype(D.vars[V], /datum) && src.holder.level >= LEVEL_CODER) ? 1 : 0)
 
 	body += "</tbody></table>"
@@ -226,9 +229,13 @@
 			if (ismob(D))
 				html += " &middot; <a href='byond://?src=\ref[src];PlayerOptions=\ref[D]'>Player Options</a>"
 	if (istype(D, /datum))
+		html += " &middot; <a href='byond://?src=\ref[src];AddElement=\ref[D]'>Add Element</a>"
+		html += " &middot; <a href='byond://?src=\ref[src];RemoveElement=\ref[D]'>Remove Element</a>"
 		html += " &middot; <a href='byond://?src=\ref[src];AddComponent=\ref[D]'>Add Component</a>"
 		html += " &middot; <a href='byond://?src=\ref[src];RemoveComponent=\ref[D]'>Remove Component</a>"
 	html += "<br><a href='byond://?src=\ref[src];Delete=\ref[D]'>Delete</a>"
+	if (isclient(D))
+		html += " &middot; <a href='byond://?src=\ref[src];CrashClient=\ref[D]'>Crash Client</a>"
 	if (A || istype(D, /image))
 		html += " &middot; <a href='byond://?src=\ref[src];Display=\ref[D]'>Display In Chat</a>"
 		html += " &middot; <a href='byond://?src=\ref[src];DebugOverlays=\ref[D]'>Debug Overlays</a>"
@@ -250,8 +257,6 @@
 	if (istype(D,/obj/critter))
 		html += "<br> &middot; <a href='byond://?src=\ref[src];KillCritter=\ref[D]'>Kill Critter</a>"
 		html += " &middot; <a href='byond://?src=\ref[src];ReviveCritter=\ref[D]'>Revive Critter</a>"
-
-
 
 	html += {"
 		<br>Direction: <a href='byond://?src=\ref[src];SetDirection=\ref[D];DirectionToSet=L90'>&lt; 90&deg;</a> &middot;
@@ -289,6 +294,15 @@
 			<a href='byond://?src=\ref[src];Vars=\ref[D];varToEdit=[V]'>Edit</a> &middot;
 		</div>
 		"}
+
+/client/proc/debug_variable_read_error(name, var/exception/e)
+	return {"
+	<tr>
+		<td></td>
+		<th>\[[name]\]</th>
+		<td><em class='value'>Error: [html_encode(e?.name || "unknown error")]</em></td>
+	</tr>
+	"}
 	//Really, move this out to a .css file or something, too lazy and don't know how offhand
 /proc/Make_view_variabls_style()
 	return {"	<style>
@@ -423,7 +437,7 @@
 
 			html += "<table><thead><tr><th>Idx</th><th>Value</th></tr></thead><tbody>"
 			var/assoc = 0
-			if(name != "contents" && name != "images" && name != "screen" && name != "vis_contents" && name != "vis_locs")
+			if(name != "contents" && name != "images" && name != "screen" && name != "vis_contents" && name != "vis_locs" && name != "filters")
 				try
 					assoc = !isnum(L[1]) && !isnull(L[L[1]])
 				catch
@@ -459,6 +473,8 @@
 	return html
 
 /client/Topic(href, href_list, hsrc)
+	if (!usr || isnull(usr.client) || usr.client != src)
+		return
 	if (href_list["Pause"])
 		USR_ADMIN_ONLY
 		src.refresh_varedit_onchange = !src.refresh_varedit_onchange
@@ -555,6 +571,20 @@
 				usr.Browse("<title>DM dump of [target] \ref[target]</title><pre>[dump]</pre>", "window=dm_dump_\ref[target];size=500x700")
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to DM dump something all rude-like.")
+		return
+	if (href_list["AddElement"])
+		USR_ADMIN_ONLY
+		if (src.holder && (src.holder.level >= LEVEL_PA))
+			src.debugAddElement(locate(href_list["AddElement"]))
+		else
+			src.audit(AUDIT_ACCESS_DENIED, "tried to add a element to something all rude-like.")
+		return
+	if (href_list["RemoveElement"])
+		USR_ADMIN_ONLY
+		if (src.holder && (src.holder.level >= LEVEL_PA))
+			src.debugRemoveElement(locate(href_list["RemoveElement"]))
+		else
+			src.audit(AUDIT_ACCESS_DENIED, "tried to remove a element from something all rude-like.")
 		return
 	if (href_list["AddComponent"])
 		USR_ADMIN_ONLY
@@ -697,6 +727,15 @@
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to Possess all rude-like.")
 		return
+	if (href_list["CrashClient"])
+		USR_ADMIN_ONLY
+		if(holder && src.holder.level >= LEVEL_PA)
+			var/client/C = locate(href_list["CrashClient"])
+			if (alert(usr, "Are you sure you want to hard crash [C.key]'s client?", "YOU ARE ABOUT TO BE VERY RUDE", "Yes", "No") == "Yes")
+				del(C)
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to VV crash a client all rude-like.")
+		return
 	if (href_list["Vars"])
 		USR_ADMIN_ONLY
 		if (href_list["varToEdit"])
@@ -780,7 +819,7 @@
 	//Let's prevent people from promoting themselves, yes?
 	#ifndef I_AM_HACKERMAN
 	var/list/locked_type = list(/datum/admins) //Short list - might be good if there are more objects that oughta be paws-off
-	if(D != "GLOB" && (D.type == /datum/configuration || (!(src.holder.rank in list("Host", "Coder")) && (D.type in locked_type) )))
+	if(D != "GLOB" && istype(D, /datum) && (D.type == /datum/configuration || (!(src.holder.rank in list("Host", "Coder")) && (D.type in locked_type) )))
 		boutput(usr, SPAN_ALERT("You're not allowed to edit [D.type] for security reasons!"))
 		logTheThing(LOG_ADMIN, usr, "tried to varedit [D.type] but was denied!")
 		logTheThing(LOG_DIARY, usr, "tried to varedit [D.type] but was denied!", "admin")

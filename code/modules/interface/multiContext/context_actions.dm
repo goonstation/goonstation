@@ -414,7 +414,6 @@
 			return FALSE
 		if (GBP && GB && (BOUNDS_DIST(target, user) == 0 && isliving(user)) && !GB?.occupant)
 			. = TRUE
-			GB.show_admin_panel(user)
 
 	buildBackgroundIcon(atom/target, mob/user)
 		var/image/background = image('icons/ui/context32x32.dmi', src, "[getBackground(target, user)]0")
@@ -453,7 +452,6 @@
 	desc = "You shouldn't be reading this, bug."
 	icon_state = "wrench"
 	var/omni_mode
-	var/omni_path
 	var/success_text
 	var/success_sound
 
@@ -463,9 +461,9 @@
 			playsound(target, success_sound, 50, TRUE)
 
 	proc/omnitool_swap(atom/target, mob/user, obj/item/tool/omnitool/omni)
-		if (!(omni_mode in omni.modes))
+		if (!omni.has_mode(src.omni_mode))
 			return FALSE
-		omni.change_mode(omni_mode, user, omni_path)
+		omni.change_mode_id(omni_mode, user)
 		user.show_text("You flip [omni] to [name] mode.", "blue")
 		sleep(OMNI_TOOL_WAIT_TIME)
 		return TRUE
@@ -497,8 +495,7 @@
 		name = "Wrench"
 		desc = "Wrenching required to deconstruct."
 		icon_state = "wrench"
-		omni_mode = OMNI_MODE_WRENCHING
-		omni_path = /obj/item/wrench
+		omni_mode = OMNITOOL::MODE_WRENCH
 		success_text = "You wrench %target%'s bolts."
 		success_sound = 'sound/items/Ratchet.ogg'
 
@@ -514,8 +511,7 @@
 		name = "Cut"
 		desc = "Cutting required to deconstruct."
 		icon_state = "cut"
-		omni_mode = OMNI_MODE_SNIPPING
-		omni_path = /obj/item/wirecutters
+		omni_mode = OMNITOOL::MODE_WIRECUTTER
 		success_text = "You cut some vestigial wires from %target%."
 		success_sound = 'sound/items/Wirecutter.ogg'
 
@@ -530,8 +526,7 @@
 		name = "Weld"
 		desc = "Welding required to deconstruct."
 		icon_state = "weld"
-		omni_mode = OMNI_MODE_WELDING
-		omni_path = /obj/item/weldingtool
+		omni_mode = OMNITOOL::MODE_WELDER
 		success_text = "You weld %target% carefully."
 		success_sound = null // sound handled in try_weld
 
@@ -550,8 +545,7 @@
 		name = "Pry"
 		desc = "Prying required to deconstruct. Try a crowbar."
 		icon_state = "bar"
-		omni_mode = OMNI_MODE_PRYING
-		omni_path = /obj/item/crowbar
+		omni_mode = OMNITOOL::MODE_CROWBAR
 		success_text = "You pry on %target% without remorse."
 		success_sound = 'sound/items/Crowbar.ogg'
 
@@ -566,8 +560,7 @@
 		name = "Screw"
 		desc = "Screwing required to deconstruct."
 		icon_state = "screw"
-		omni_mode = OMNI_MODE_SCREWING
-		omni_path = /obj/item/screwdriver
+		omni_mode = OMNITOOL::MODE_SCREWDRIVER
 		success_text = "You unscrew some of the screws on %target%."
 		success_sound = 'sound/items/Screwdriver.ogg'
 
@@ -583,8 +576,7 @@
 		name = "Pulse"
 		desc = "Pulsing required to deconstruct. Try a multitool."
 		icon_state = "pulse"
-		omni_mode = OMNI_MODE_PULSING
-		omni_path = /obj/item/device/multitool
+		omni_mode = OMNITOOL::MODE_MULTITOOL
 		success_text = "You pulse %target%. In a general sense."
 		success_sound = 'sound/items/penclick.ogg'
 
@@ -1362,7 +1354,7 @@
 	close_clicked = TRUE
 	desc = ""
 	icon_state = "wrench"
-	var/mode = RCD_MODE_FLOORSWALLS
+	var/mode = RCD_MODE::FLOORSWALLS
 
 	execute(var/obj/item/rcd/rcd, var/mob/user)
 		if (!istype(rcd))
@@ -1377,27 +1369,27 @@
 	deconstruct
 		name = "Deconstruct"
 		icon_state = "close"
-		mode = RCD_MODE_DECONSTRUCT
+		mode = RCD_MODE::DECONSTRUCT
 	airlock
 		name = "Airlocks"
 		icon_state = "door"
-		mode = RCD_MODE_AIRLOCK
+		mode = RCD_MODE::AIRLOCK
 	floorswalls
 		name = "Floors/walls"
 		icon_state = "wall"
-		mode = RCD_MODE_FLOORSWALLS
+		mode = RCD_MODE::FLOORSWALLS
 	lighttubes
 		name = "Light tubes"
 		icon_state = "tube"
-		mode = RCD_MODE_LIGHTTUBES
+		mode = RCD_MODE::LIGHTTUBES
 	lightbulbs
 		name = "Lightbulbs"
 		icon_state = "bulb"
-		mode = RCD_MODE_LIGHTBULBS
+		mode = RCD_MODE::LIGHTBULBS
 	windows
 		name = "Windows"
 		icon_state = "window"
-		mode = RCD_MODE_WINDOWS
+		mode = RCD_MODE::WINDOWS
 
 /datum/contextAction/reagent
 	icon_background = "whitebg"
@@ -2514,3 +2506,9 @@
 		desc = "Patient is deceased and cannot be cloned."
 		background_color = "#ab00e3"
 		level = TRIAGE_UNREVIVABLE
+	cloned
+		name = "Cloned"
+		icon_state = "letter_c"
+		desc = "Patient is deceased, but has been cloned and can safely be disposed of."
+		background_color = "#3dB8ff"
+		level = TRIAGE_CLONED

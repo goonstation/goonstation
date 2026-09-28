@@ -5,7 +5,7 @@ TYPEINFO(/obj/item/device/camera_viewer)
 	name = "camera monitor"
 	desc = "A portable video monitor, connected to a security camera network."
 	icon_state = "monitor"
-	item_state = "electronic"
+	item_state = "accessgun"
 	w_class = W_CLASS_SMALL
 	abilities = list(/obj/ability_button/reset_view)
 	var/list/camera_networks = list(CAMERA_NETWORK_STATION)
@@ -55,8 +55,10 @@ TYPEINFO(/obj/item/device/camera_viewer)
 		var/list/displayed_cameras = list()
 
 		for (var/obj/machinery/camera/camera as anything in cameras)
+			if(!camera.camera_status)
+				continue
 			if (camera.network in src.camera_networks)
-				displayed_cameras[text("[][]", camera.c_tag, (camera.camera_status ? null : " (Deactivated)"))] = camera
+				displayed_cameras[camera.c_tag] = camera
 
 		var/selected_camera = tgui_input_list(user, "Which camera should you change to?", "Camera Selection", sortList(displayed_cameras, /proc/cmp_text_asc))
 

@@ -34,7 +34,7 @@
 	var/securable = 0
 	var/list/scoot_sounds = null
 	var/parts_type = /obj/item/furniture_parts/stool
-	material_amt = 0.1
+	material_amt = MATERIAL::AMOUNT::SHEET
 
 	New()
 		START_TRACKING
@@ -339,7 +339,7 @@ TYPEINFO(/obj/stool/wooden)
 	var/security = 0
 	var/obj/item/clothing/suit/bedsheet/sheet = null
 	parts_type = /obj/item/furniture_parts/bed
-	material_amt = 0.2
+	material_amt = MATERIAL::AMOUNT::SHEET * 2
 
 	brig
 		name = "brig cell bed"
@@ -469,7 +469,7 @@ TYPEINFO(/obj/stool/wooden)
 			newsheet.bed = src
 			user.u_equip(newsheet)
 			newsheet.set_loc(src.loc)
-			LAZYLISTADDUNIQUE(src.attached_objs, newsheet)
+			mutual_attach(src, newsheet)
 
 			var/mob/somebody
 			if (src.buckled_guy)
@@ -590,7 +590,7 @@ TYPEINFO(/obj/stool/chair)
 	anchored = ANCHORED
 	scoot_sounds = list( 'sound/misc/chair/normal/scoot1.ogg', 'sound/misc/chair/normal/scoot2.ogg', 'sound/misc/chair/normal/scoot3.ogg', 'sound/misc/chair/normal/scoot4.ogg', 'sound/misc/chair/normal/scoot5.ogg' )
 	parts_type = null
-	material_amt = 0.1
+	material_amt = MATERIAL::AMOUNT::SHEET
 
 	moveable
 		anchored = UNANCHORED
@@ -960,7 +960,7 @@ TYPEINFO(/obj/item/chair/folded)
 	stamina_damage = 45
 	stamina_cost = 21
 	stamina_crit_chance = 10
-	material_amt = 0.1
+	material_amt = MATERIAL::AMOUNT::SHEET
 	hitsound = 'sound/impact_sounds/folding_chair.ogg'
 	var/c_color = null
 	can_arcplate = FALSE
@@ -1051,7 +1051,13 @@ TYPEINFO(/obj/item/chair/folded)
 			if ((src.dir == WEST || src.dir == EAST) && !src.arm_image)
 				src.arm_image = image(src.icon, src.arm_icon_state)
 				src.arm_image.layer = FLY_LAYER+1
+				if(src.material && src.material_applied_appearance)
+					src.arm_image.apply_material_appearance(src.material)
 				src.UpdateOverlays(src.arm_image, "arm")
+
+	setMaterialAppearance(datum/material/mat1)
+		. = ..()
+		src.arm_image?.apply_material_appearance(mat1)
 
 	blue
 		name = "comfy blue chair"
@@ -1103,6 +1109,16 @@ TYPEINFO(/obj/item/chair/folded)
 	deconstructable = 1
 	parts_type = /obj/item/furniture_parts/sleekchair
 
+/obj/stool/chair/comfy/wood_regal
+	name = "fancy wooden chair"
+	desc = "Much more comfortable than the average chair, and much more expensive."
+	icon_state = "wooden_regalchair"
+	arm_icon_state = "wooden_regalchair-arm"
+	comfort_value = 7
+	anchored= UNANCHORED
+	deconstructable = TRUE
+	parts_type = /obj/item/furniture_parts/wood_regalchair
+
 /* ======================================================== */
 /* -------------------- Shuttle Chairs -------------------- */
 /* ======================================================== */
@@ -1135,6 +1151,7 @@ TYPEINFO(/obj/item/chair/folded)
 /* ===================================================== */
 
 TYPEINFO(/obj/stool/chair/comfy/wheelchair)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = 15
 	mat_appearances_to_ignore = list("steel")
 /obj/stool/chair/comfy/wheelchair

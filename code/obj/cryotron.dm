@@ -51,7 +51,7 @@
 			M.set_loc(T)
 			if (isliving(M))
 				var/mob/living/L = M
-				L.hibernating = 0
+				set_hibernating(L, FALSE)
 				if (isnull(L.bioHolder) || !L.bioHolder.HasEffect("blind"))
 					L.removeOverlayComposition(/datum/overlayComposition/blinded)
 				else
@@ -68,12 +68,19 @@
 
 	meteorhit(obj/meteor)
 		return
+	proc/set_hibernating(var/mob/living/L, var/hibernating)
+		L.hibernating = hibernating
+		if (ishuman(L))
+			var/mob/living/carbon/human/H = L
+			if (hibernating || L.is_npc)
+				H.ai_set_active(!hibernating)
 
 	proc/add_person_to_queue(var/mob/living/person, var/datum/job/job)
 		if (!istype(person) || job?.special_spawn_location)
 			return 0
 
 		person.set_loc(src)
+		set_hibernating(person, TRUE)
 		folks_to_spawn += person
 		their_jobs += job
 
@@ -96,6 +103,7 @@
 		if (!folks_to_spawn.len)
 			var/mob/living/L = locate(/mob/living) in src
 			if (L && !stored_mobs.Find(L))
+				set_hibernating(L, TRUE)
 				folks_to_spawn += L
 				their_jobs += null
 			else
@@ -108,7 +116,7 @@
 		folks_to_spawn.Cut(1,2)
 		var/datum/job/job = their_jobs[1]
 		their_jobs.Cut(1,2)
-		var/be_loud = job ? job.radio_announcement : 1
+		var/be_loud = job ? (job.radio_announcement && !job.change_name_on_spawn) : TRUE
 		if (!istype(thePerson) || thePerson.loc != src)
 			busy = 0
 			return (folks_to_spawn.len != 0)
@@ -139,7 +147,7 @@
 			FLICK("cryotron_go_up", src)
 
 			if (thePerson)
-				thePerson.hibernating = 0
+				set_hibernating(thePerson, FALSE)
 				if (thePerson.mind && thePerson.mind.assigned_role && be_loud)
 					for (var/obj/machinery/computer/announcement/A as anything in machine_registry[MACHINES_ANNOUNCEMENTS])
 						if (!A.status && A.announces_arrivals)
@@ -157,7 +165,7 @@
 				return 0
 			else
 				L.set_loc(src)
-				L.hibernating = 1
+				set_hibernating(L, TRUE)
 				if (L.client)
 					L.addOverlayComposition(/datum/overlayComposition/blinded)
 					L.updateOverlaysClient(L.client)
@@ -167,15 +175,15 @@
 				logTheThing(LOG_STATION, L, "entered cryogenic storage at [log_loc(src)].")
 				return 1
 
-		for(var/datum/antagonist/antagonist as anything in L.mind?.antagonists)
-			antagonist.handle_cryo()
+		L.handle_cryo()
+
 		stored_mobs += L
 		stored_mobs_volunteered += L
 		stored_crew_names += L.real_name
 		stored_mobs[L] = TIME
 		stored_mobs_volunteered[L] = voluntary // if someone shoved us in here, mark them as not being in here of their own choice (this can only be done with braindead people who have a ckey, so you can't just grief some guy by shoving them in)
 		L.set_loc(src)
-		L.hibernating = 1
+		set_hibernating(L, TRUE)
 		if (L.client)
 			L.addOverlayComposition(/datum/overlayComposition/blinded)
 			L.updateOverlaysClient(L.client)
@@ -219,8 +227,7 @@
 						if (mob_can_enter_storage(user))
 							add_person_to_storage(user)
 							respawn_controller.subscribeNewRespawnee(user.ckey)
-							for(var/datum/antagonist/antagonist as anything in user.mind?.antagonists)
-								antagonist.handle_perma_cryo()
+							user.handle_perma_cryo()
 							user.mind?.get_player()?.dnr = TRUE
 							var/mob/dead/observer/ghost = user.ghostize()
 							//hopefully that's all the links?
@@ -333,7 +340,7 @@
 		for (var/mob/living/L in stored_mobs)
 			if (L.loc != src || QDELETED(L))
 				if(!QDELETED(L))
-					L.hibernating = 0
+					set_hibernating(L, FALSE)
 					if (!L.bioHolder.HasEffect("blind"))
 						L.removeOverlayComposition(/datum/overlayComposition/blinded)
 					if(ishuman(L))

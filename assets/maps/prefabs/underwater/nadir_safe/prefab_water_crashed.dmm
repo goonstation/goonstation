@@ -716,7 +716,7 @@
 /turf/simulated/floor/neutral,
 /area/station/turret_protected/sea_crashed)
 "cK" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for hand-washing purposes.";
 	dir = 4;
 	pixel_x = -2

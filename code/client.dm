@@ -9,7 +9,7 @@
 	var/datum/admins/holder = null
 	var/datum/preferences/preferences = null
 	var/deadchat = 0
-	var/changes = 0
+	var/changes = FALSE
 	var/area = null
 	var/stealth = 0
 	var/stealth_hide_fakekey = 0
@@ -182,7 +182,7 @@
 			qdel(C, FALSE, TRUE)
 		dc.Cut()
 
-	var/list/lookup = comp_lookup
+	var/list/lookup = signal_listeners
 	if(lookup)
 		for(var/sig in lookup)
 			var/list/comps = lookup[sig]
@@ -192,7 +192,7 @@
 			else
 				var/datum/component/comp = comps
 				comp.UnregisterSignal(src, sig)
-		comp_lookup = lookup = null
+		signal_listeners = lookup = null
 
 	for(var/target in signal_procs)
 		UnregisterSignal(target, signal_procs[target])
@@ -226,6 +226,11 @@
 	src.player = make_player(src.key, client=src)
 
 	src.loadResources()
+#ifdef LIVE_SERVER
+	winset(src, null, list("browser-options" = "find,refresh,byondstorage,zoom"))
+#else
+	winset(src, null, list("browser-options" = "find,refresh,byondstorage,zoom,devtools"))
+#endif
 	src.initSizeHelpers()
 	src.tooltips = new /datum/tooltips(src)
 	src.initialize_interface()
@@ -345,10 +350,11 @@
 
 			#ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
 			if (!changes && preferences.view_changelog && !is_newbie)
-				changes()
-
-			if (isadmin(src) && rank_to_level(src.holder.rank) >= LEVEL_MOD) // No admin changelog for goat farts (Convair880).
-				admin_changes()
+				if (global.tgui_process)
+					src.changes()
+				else
+					SPAWN(3 SECONDS)
+						src.changes()
 			#endif
 		else
 			if (noir)
@@ -389,7 +395,6 @@
 
 	// Put stuff that sleeps here
 	SPAWN(0)
-		if (global.browse_item_initial_done) sendItemIcons(src)
 		ircbot.event("login", src.key)
 		src.has_contestwinner_medal = src.player.has_medal("Too Cool")
 		src.setJoinDate()
@@ -466,8 +471,11 @@
 
 	winset(src, null, "rpanewindow.left=infowindow")
 
-	if (byond_version >= 516)
-		winset(src, null, list("browser-options" = "find,refresh,byondstorage,zoom,devtools"))
+/client/verb/enable_browser_devtools()
+	set name = "browser-devtools"
+	set hidden = TRUE
+	winset(src, null, list("browser-options" = "find,refresh,byondstorage,zoom,devtools"))
+	boutput(src, "Enabled browser devtools")
 
 /client/proc/ip_cid_conflict_check(log_it=TRUE, alert_them=TRUE, only_if_first=FALSE, message_who=null)
 	var/static/list/list/ip_to_ckeys = list()
@@ -518,7 +526,10 @@
 
 
 /client/proc/init_admin()
-	if (IsLocalClient(src)) admins[src.ckey] = "Host"
+#ifndef DONT_ADMIN_MEE
+	if (IsLocalClient(src))
+		admins[src.ckey] = "Host"
+#endif
 	if (admins.Find(src.ckey) && !src.holder)
 		src.make_admin()
 		return 1
@@ -748,7 +759,7 @@ var/global/curr_day = null
 	set category = "Commands"
 
 	var/cant_interact_time = null
-	if (isnewplayer(src.mob) && src.player.get_rounds_participated_rp() <= 10 && !src.player.cloudSaves.getData("bypass_round_reqs"))
+	if (isnewplayer(src.mob) && src.player.get_rounds_participated_rp() <= 10 && !src.player.cloudSaves.getData("bypass_round_reqs") && !isadmin(src))
 		cant_interact_time = 15 SECONDS
 
 	tgui_alert(src, content_window = "rpRules", do_wait = FALSE, cant_interact = cant_interact_time)
@@ -818,7 +829,7 @@ var/global/curr_day = null
 		sleep(0.1 SECONDS)
 
 /client/Topic(href, href_list)
-	if (!usr || isnull(usr.client))
+	if (!usr || isnull(usr.client) || usr.client != src)
 		return
 
 	// Tgui Topic middleware
@@ -1019,7 +1030,7 @@ var/global/curr_day = null
 	if (!forced_desussification)
 		return
 
-	if (!phrase_log.is_sussy(message.original_content))
+	if (!phrase_log.is_sussy(message.get_original_content_parsable()))
 		return
 
 	arcFlash(message.speaker, message.speaker, forced_desussification)

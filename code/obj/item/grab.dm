@@ -14,6 +14,7 @@
 	var/prob_mod = 1
 	var/assailant_stam_drain = 30
 	var/affecting_stam_drain = 20
+	var/muffle_affecting = FALSE
 	var/resist_count = 0
 	var/item_grab_overlay_state = "grab_small"
 	var/transfering_chemicals = FALSE
@@ -531,6 +532,8 @@
 
 		if (G.state < GRAB_AGGRESSIVE)
 			duration += 25 //takes longer if you dont have a good gripp
+
+		duration = max(0.1, duration)
 
 		..()
 

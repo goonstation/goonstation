@@ -6,7 +6,7 @@ Essentially, you will stream this tracy Data to a file, and then read this file 
 
 You'll need several things:
 * A copy of [Tracy](https://github.com/wolfpld/tracy) on a client computer to view traces.
-* A `prof.dll/.so` produced by [para-byond-tracy](https://github.com/ParadiseSS13/byond-tracy) in the game directory.
+* A `prof.dll/.so` produced by [byond-tracy-writer](https://github.com/goonstation/byond-tracy-writer) in the game directory.
 * A compiled version of [RTracy](https://github.com/Dimach/rtracy), to stream the huge `.utracy` files.
 
 ## How 2 Do It

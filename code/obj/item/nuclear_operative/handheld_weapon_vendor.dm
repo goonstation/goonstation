@@ -8,7 +8,7 @@
 	icon = 'icons/obj/items/device.dmi'
 	desc = "A modified uplink which allows you to buy a loadout on the go. Nifty!"
 	icon_state = "uplink" //replace later
-	item_state = "electronic"
+	item_state = "accessgun"
 	w_class = W_CLASS_SMALL
 
 	var/sound_token = 'sound/machines/capsulebuy.ogg'
@@ -86,7 +86,7 @@
 	icon = 'icons/obj/items/device.dmi'
 	desc = "A modified uplink which allows you to buy a loadout on the go. Nifty!"
 	icon_state = "uplink" //replace later
-	item_state = "electronic"
+	item_state = "accessgun"
 	token_accepted = /obj/item/requisition_token/syndicate
 	log_purchase = TRUE
 

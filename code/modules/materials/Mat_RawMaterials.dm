@@ -57,7 +57,7 @@
 			..(user)
 
 	attackby(obj/item/W, mob/user)
-		if(W.type == src.type)
+		if(W.stack_type == src.stack_type)
 			stack_item(W)
 			if(!user.is_in_hands(src))
 				user.put_in_hand(src)
@@ -152,17 +152,18 @@
 			mat_changename = FALSE
 
 			random
-				var/static/list/random_blob_materials = null
+				var/static/list/datum/material/organic/blob/random_blob_materials = null
 				New()
 					. = ..()
 					if (!src.random_blob_materials)
 						src.random_blob_materials = list()
 						var/datum/material/base_mat = getMaterial("blob")
 						for (var/i in 1 to 10)
-							var/datum/material/new_mat = base_mat.getMutable()
-							new_mat.setColor(rgb(rand(1,255), rand(1,255), rand(1,255), 255))
+							var/datum/material/organic/blob/new_mat = base_mat.getMutable()
+							new_mat.match_to_blob_color(rgb(rand(0,255), rand(0,255), rand(0,255)))
 							src.random_blob_materials += new_mat
-					src.setMaterial(pick(src.random_blob_materials))
+					var/datum/material/organic/blob/blob_mat = pick(src.random_blob_materials)
+					src.setMaterial(blob_mat)
 	sphere
 		// energy
 		icon_state = "sphere"
@@ -249,6 +250,7 @@
 	default_material = "iridiumalloy"
 	uses_default_material_appearance = TRUE
 	amount = 5
+	stack_type = /obj/item/material_piece/iridiumalloy
 
 	New()
 		..()
@@ -310,10 +312,13 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 /obj/item/material_piece/organic/wood
 	name = "wooden log"
 	desc = "Years of genetic engineering mean timber always comes in mostly perfectly shaped cylindrical logs."
-	icon_state = "log"
+	icon = 'icons/obj/items/materials/wood.dmi'
+	icon_state = "log1"
 	default_material = "wood"
+	max_stack = 10
 	uses_default_material_appearance = FALSE
 	mat_changename = FALSE
+	var/is_rotated = FALSE // Logs are rotated after being felled. Need to unrotate them after stacking.
 
 	attackby(obj/item/W, mob/user)
 		if ((istool(W, TOOL_CUTTING | TOOL_SAWING)))
@@ -325,6 +330,44 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 				qdel (src)
 		else
 			..()
+
+	_update_stack_appearance()
+		..()
+		if(src.is_rotated)
+			src.Turn(-90)
+			src.is_rotated = FALSE
+		switch(src.amount)
+			if(1)
+				src.icon_state = "log1"
+			if(2 to 4)
+				src.icon_state = "log2"
+			if(5 to 7)
+				src.icon_state = "log3"
+			if(8 to 9)
+				src.icon_state = "log4"
+			else
+				src.icon_state = "log5"
+
+/obj/item/material_piece/organic/wood/thin
+	icon_state = "log_thin1"
+
+	_update_stack_appearance()
+		..()
+		switch(src.amount)
+			if(1)
+				src.icon_state = "log_thin1"
+			if(2)
+				src.icon_state = "log_thin2"
+			if(3 to 4)
+				src.icon_state = "log_thin3"
+			if(5 to 6)
+				src.icon_state = "log_thin4"
+			if(7 to 8)
+				src.icon_state = "log_thin5"
+			if(9)
+				src.icon_state = "log_thin6"
+			else
+				src.icon_state = "log_thin7"
 
 /obj/item/material_piece/organic/bamboo
 	name = "stalk"

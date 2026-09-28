@@ -276,7 +276,7 @@ ABSTRACT_TYPE(/datum/plant/fruit)
 	endurance = 5
 	genome = 19
 	nectarlevel = 10
-	commuts = list(/datum/plant_gene_strain/quality)
+	commuts = list(/datum/plant_gene_strain/quality, /datum/plant_gene_strain/commutblocker)
 
 
 /*

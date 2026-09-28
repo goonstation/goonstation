@@ -64,7 +64,8 @@
 /datum/fishing_lootpool/clown_shoes_loot
 	fish_available = list(/obj/item/bananapeel = 40, \
 	/obj/item/instrument/bikehorn = 20, \
-	/obj/item/instrument/bikehorn/dramatic = 5)
+	/obj/item/instrument/bikehorn/dramatic = 5, \
+	/obj/item/reagent_containers/food/fish/toonclown_fish = 60)
 
 /datum/fishing_lootpool/clown_shoes_loot/check_conditionals(mob/user, obj/item/fishing_rod/fishing_rod)
 	. = ..()
@@ -102,3 +103,8 @@
 /datum/fishing_lootpool/igneous_fish
 	minimum_rod_tier = 2
 	fish_available = list(/obj/item/reagent_containers/food/fish/igneous_fish = 10)
+
+///gotta put the "fake" one in to get the real one
+/datum/fishing_lootpool/literal_swordfish
+	required_lure = /obj/item/reagent_containers/food/fish/swordfish
+	fish_available = list(/obj/item/reagent_containers/food/fish/literal_swordfish = 25)

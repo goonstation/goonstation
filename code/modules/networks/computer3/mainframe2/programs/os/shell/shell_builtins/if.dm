@@ -3,11 +3,11 @@
 
 /datum/dwaine_shell_builtin/_if/execute(list/command_list, list/piped_list)
 	if (!length(command_list))
-		return BUILTIN_BREAK
+		return DWAINE::ERR::SHELL::BUILTIN::BREAK
 
 	switch (src.shell.script_evaluate(command_list, TRUE))
 		if (TRUE)
-			src.shell.scriptstat |= SCRIPT_IF_TRUE
+			src.shell.scriptstat |= DWAINE::SHELL::SCRIPT::IF_TRUE
 			src.shell.pipetemp = null
 
 			var/else_position = piped_list.Find("else")
@@ -15,10 +15,10 @@
 				piped_list.Cut(else_position)
 				src.shell.piping = length(piped_list)
 
-			return BUILTIN_SUCCESS
+			return DWAINE::ERR::SHELL::BUILTIN::SUCCESS
 
 		if (FALSE)
-			src.shell.scriptstat &= ~SCRIPT_IF_TRUE
+			src.shell.scriptstat &= ~DWAINE::SHELL::SCRIPT::IF_TRUE
 
 			var/else_position = piped_list.Find("else")
 			if (else_position)
@@ -26,9 +26,9 @@
 				src.shell.piping = length(piped_list)
 				src.shell.pipetemp = null
 
-				return BUILTIN_SUCCESS
+				return DWAINE::ERR::SHELL::BUILTIN::SUCCESS
 
-			return BUILTIN_CONTINUE
+			return DWAINE::ERR::SHELL::BUILTIN::CONTINUE
 
 		else
-			return BUILTIN_BREAK
+			return DWAINE::ERR::SHELL::BUILTIN::BREAK

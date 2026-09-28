@@ -7,26 +7,26 @@
 
 	if (length(command_list) < 2)
 		src.shell.message_user("Error: Insufficient arguments for Talk (Requires Target ID and Message).")
-		return BUILTIN_BREAK
+		return DWAINE::ERR::SHELL::BUILTIN::BREAK
 
 	var/target_user = lowertext(command_list[1])
 	command_list.Cut(1, 2)
-	switch (src.shell.signal_program(1, list("command" = DWAINE_COMMAND_UMSG, "term" = target_user, data = jointext(command_list, " "))))
-		if (ESIG_SUCCESS)
-			return BUILTIN_SUCCESS
+	switch (src.shell.signal_program(1, list("command" = DWAINE::SYSCALL::UMSG, "term" = target_user, data = jointext(command_list, " "))))
+		if (DWAINE::ERR::SIG::SUCCESS)
+			return DWAINE::ERR::SHELL::BUILTIN::SUCCESS
 
-		if (ESIG_NOTARGET)
+		if (DWAINE::ERR::SIG::NOTARGET)
 			src.shell.message_user("Error: Invalid Target ID.")
-			return BUILTIN_BREAK
+			return DWAINE::ERR::SHELL::BUILTIN::BREAK
 
-		if (ESIG_IOERR)
+		if (DWAINE::ERR::SIG::IOERR)
 			if (src.shell.piping)
 				src.shell.pipetemp = "Error: Message refused by Target."
 			else
 				src.shell.message_user("Error: Message refused by Target.")
 
-			return BUILTIN_SUCCESS
+			return DWAINE::ERR::SHELL::BUILTIN::SUCCESS
 
 		else
 			src.shell.message_user("Error: Unexpected response from kernel.")
-			return BUILTIN_BREAK
+			return DWAINE::ERR::SHELL::BUILTIN::BREAK

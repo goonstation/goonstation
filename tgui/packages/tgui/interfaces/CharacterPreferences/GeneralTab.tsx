@@ -216,6 +216,14 @@ export const GeneralTab = () => {
               {data.preferredUplink}
             </Button>
           </LabeledList.Item>
+          <LabeledList.Item label="Spawn ID in PDA">
+            <Button.Checkbox
+              checked={data.idStartsInPda}
+              onClick={() => act('toggle-id-in-pda')}
+            >
+              Y/N
+            </Button.Checkbox>
+          </LabeledList.Item>
         </LabeledList>
       </Section>
     </>

@@ -126,9 +126,8 @@
 		user.put_in_hand_or_drop(new /obj/item/clothing/head/party)
 		qdel(src)
 
-TYPEINFO(/obj/item/disk)
-	mats = 8
 
+////TYPEINFO: THIS HAS A TYPEINFO ALREADY IN ATOM.DM, GO READ THERE FOR WHY
 /obj/item/disk
 	name = "disk"
 	icon = 'icons/obj/items/items.dmi'
@@ -169,7 +168,7 @@ TYPEINFO(/obj/item/disk)
 	icon_state = "std_module"
 	w_class = W_CLASS_SMALL
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	item_state = "electronic"
+	item_state = "electronics"
 	flags = TABLEPASS|CONDUCT
 	var/mtype = 1						// 1=electronic 2=hardware
 
@@ -319,6 +318,7 @@ TYPEINFO(/obj/item/disk)
 
 
 TYPEINFO(/obj/item/reagent_containers/vape)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/reagent_containers/vape //yeet
@@ -334,7 +334,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	c_flags = ONBELT
 	var/emagged = 0
 	var/last_used = 0
-	var/list/safe_smokables = list("nicotine", "THC", "CBD")
+	var/list/safe_smokables = list("nicotine", "THC", "CBD", "beff", "fizzy_banana", "beer", "menthol", "synaptizine", "cryostylane", "barbecue_sauce", "strawberry_milk")
 	var/datum/effects/system/bad_smoke_spread/smoke
 	var/range = 1
 
@@ -475,6 +475,17 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	item_state = "ecigrefill"
 	icon_state = "ecigrefill"
 	flags = TABLEPASS
+
+	flavored
+		name = "flavored E-cigarette refill pack"
+		desc = "A small black box full of flavors fun for the whole family"
+		var/list/flavors = list("beff", "fizzy_banana", "beer", "menthol", "synaptizine", "cryostylane", "barbecue_sauce", "strawberry_milk") // when changing make sure you adjust safe_whitelist on vapes
+		initial_reagents = null
+
+		New()
+			..()
+			src.reagents.add_reagent("nicotine", 25)
+			src.reagents.add_reagent(pick(flavors), 25)
 
 /obj/item/trophy
 	name = "trophy"

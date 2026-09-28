@@ -80,7 +80,7 @@
 	for(var/mob/O in hearers(src, null))
 		O.show_message(SPAN_NOTICE("Locked In"), 2)
 	playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
-	return
+	logTheThing(LOG_STATION, src, "Teleporter console at [log_loc(src)] set to [log_loc(src.locked)] by [key_name(usr)]")
 
 // Called by the telegun etc (Convair880).
 /obj/machinery/computer/teleporter/proc/check_teleporter()

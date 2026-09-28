@@ -64,6 +64,16 @@ TYPEINFO(/obj/machinery/status_display)
 
 	var/image/crt_image = null
 
+	new_walls
+		north
+			pixel_y = 30
+		south
+			pixel_y = -30
+		east
+			pixel_x = 30
+		west
+			pixel_x = -30
+
 	// new display
 	// register for radio system
 	New()
@@ -413,6 +423,16 @@ TYPEINFO(/obj/machinery/ai_status_display)
 	var/face_color = null
 
 	var/datum/light/screen_glow
+
+	new_walls
+		north
+			pixel_y = 30
+		south
+			pixel_y = -30
+		east
+			pixel_x = 30
+		west
+			pixel_x = -30
 
 	New()
 		..()

@@ -88,15 +88,15 @@
 		else
 			M.set_loc(pick_landmark(LANDMARK_PIRATE, LANDMARK_LATEJOIN))
 
-	first_mate
-		id = ROLE_PIRATE_FIRST_MATE
-		display_name = "\improper Pirate First Mate"
-		antagonist_icon = "pirate_first_mate"
+/datum/antagonist/pirate/first_mate
+	id = ROLE_PIRATE_FIRST_MATE
+	display_name = "\improper Pirate First Mate"
+	antagonist_icon = "pirate_first_mate"
 
-	captain
-		id = ROLE_PIRATE_CAPTAIN
-		display_name = "\improper Pirate Captain"
-		antagonist_icon = "pirate_captain"
+/datum/antagonist/pirate/captain
+	id = ROLE_PIRATE_CAPTAIN
+	display_name = "\improper Pirate Captain"
+	antagonist_icon = "pirate_captain"
 
 TYPEINFO(/obj/gold_bee)
 	mat_appearances_to_ignore = list("gold")
@@ -197,6 +197,7 @@ TYPEINFO(/obj/gold_bee)
 	access_type = list(POD_ACCESS_PIRATE)
 
 TYPEINFO(/obj/item/salvager_hand_tele)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal" = 5,
 				"energy" = 5,
 				"conductive_high" = 5,
@@ -206,7 +207,8 @@ TYPEINFO(/obj/item/salvager_hand_tele)
 	icon = 'icons/obj/items/device.dmi'
 	desc = "A questionable portable teleportation device that is coupled to a specific location."
 	icon_state = "hand_tele"
-	item_state = "electronic"
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	item_state = "accessgun"
 	throwforce = 5
 	health = 5
 	w_class = W_CLASS_SMALL

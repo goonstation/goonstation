@@ -16,7 +16,8 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 	desc = "this is a parent item you shouldn't see!!"
 	flags = NOSPLASH | FLUID_SUBMERGE
 	event_handler_flags = USE_FLUID_ENTER  | NO_MOUSEDROP_QOL
-	icon = 'icons/obj/large_storage.dmi'
+	gas_impermeable = TRUE
+	icon = 'icons/obj/storage/large_storage.dmi'
 	icon_state = "closed"
 	density = 1
 	throwforce = 10
@@ -66,12 +67,14 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 	var/made_stuff
 
 	var/grab_stuff_on_spawn = TRUE
+	var/radiation_protection = 0 // Amount of rad protection while inside in Ohms. Materials can add additional shielding.
 
 	///Controls items that are 'inside' the crate, even when it's open. These will be dragged around with the crate until removed.
 	var/datum/vis_storage_controller/vis_controller
 
 	New()
 		..()
+		src.gas_impermeable = !src.open
 		START_TRACKING
 		weld_image = image(src.icon, src.icon_welded)
 		weld_image.pixel_x = weld_image_offset_X
@@ -90,6 +93,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 			src.vis_controller = null
 		STOP_TRACKING
 		..()
+
 
 	proc/make_my_stuff() // use this rather than overriding the container's New()
 		. = 1
@@ -166,10 +170,22 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 		else
 			. = list(start,stop)
 
-	Entered(atom/movable/Obj, OldLoc)
+	Entered(atom/movable/AM, OldLoc)
 		. = ..()
 		if(src.open || length(contents) > src.max_capacity)
-			Obj.set_loc(get_turf(src))
+			AM.set_loc(get_turf(src))
+		if(src.radiation_protection)
+			// I'm ignoring artifacts for now. Not sure if there is a generalized way to handle protecting objs.
+			if(ismob(AM))
+				var/mob/M = AM
+				M.setStatus("radiation_protection", INFINITE_STATUS, src)
+
+	Exited(atom/movable/AM, OldLoc)
+		. = ..()
+		if(src.radiation_protection)
+			if(ismob(AM))
+				var/mob/M = AM
+				M.delStatus("radiation_protection")
 
 	update_icon()
 
@@ -403,15 +419,32 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 	onMaterialChanged()
 		. = ..()
 		if(isnull(src.material))
+			src.set_radiation_protection(initial(src.radiation_protection))
 			return
 		if(contains_negative_matter(src))
 			src.AddComponent(/datum/component/extradimensional_storage/storage)
+		if(!src.material.hasProperty("radiation") && !src.material.hasProperty("n_radiation"))
+			var/mat_rad_prot = src.material.calc_radiation_prot() * src.material_amount_total()
+			mat_rad_prot = round(mat_rad_prot, 5)
+			src.set_radiation_protection(initial(src.radiation_protection) + mat_rad_prot)
+		else
+			src.set_radiation_protection(0)
+
+	proc/set_radiation_protection(var/new_amount)
+		src.radiation_protection = new_amount
+		if(src.radiation_protection)
+			for(var/mob/M in src.contents)
+				M.setStatus("radiation_protection", INFINITE_STATUS, src)
+		else
+			for(var/mob/M in src.contents)
+				M.delStatus("radiation_protection")
 
 	proc/pry_open(var/mob/user)
 		playsound(src, 'sound/items/Crowbar.ogg', 60, 1)
 		src.pried_open = TRUE
 		src.locked = FALSE
 		src.open = TRUE
+		src.gas_impermeable = FALSE
 		src.dump_direct_contents(user)
 		src.UpdateIcon()
 		p_class = initial(p_class)
@@ -466,7 +499,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		var/turf/T = get_turf(src)
-		if (!in_interact_range(user, src) || !in_interact_range(user, O) || user.restrained() || user.getStatusDuration("unconscious") || user.sleeping || user.stat || user.lying || isAI(user))
+		if (!in_interact_range_tri(src, user, O) || !can_act(user) || user.sleeping || user.lying)
 			return
 
 		if (!src.is_acceptable_content(O))
@@ -501,6 +534,10 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 				user.show_text("You scoot around [src].")
 				user.set_loc(T)
 				return
+
+		if (istype(O,/obj/item/sticker/barcode) && !src.open) //only do it on closed storages, so you can bring barcodes somewhere if you need to
+			O:AfterAttack(src,user,1)
+			return
 
 		if (src.locked)
 			user.show_text("You'll have to unlock [src] first.", "red")
@@ -658,6 +695,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 		if (!is_short)
 			src.set_density(0)
 		src.open = 1
+		src.gas_impermeable = FALSE
 		src.UpdateIcon()
 		p_class = initial(p_class)
 		playsound(src.loc, src.open_sound, volume, 1, -3)
@@ -686,6 +724,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close, proc/break_open)
 		if (!is_short)
 			src.set_density(1)
 		src.open = 0
+		src.gas_impermeable = TRUE
 
 		for (var/obj/O in get_turf(src))
 			if (src.is_acceptable_content(O))

@@ -106,13 +106,12 @@ As you might be able to tell, there are a lot of pull requests pending at any gi
 ### Labels
 There are many labels that people can use to attach to their PR or to issue reports. These are handy for organisation, as sometimes a developer will go through all the PRs that have a certain label (`Size-XXS`, or `A-Chemistry` for instance) and use that to pick what to review. It's therefore good practise to put labels on your pull requests, and there's a couple ways to add labels:
 
-- The KeywordLabeler bot assigns labels to pull requests based on certain key words in the pull request's description. For instance, putting \[BUG\] or \[FIX\] in the top line of a PR's ddescription will add the `C-bug` label to it. The full list of what key word matches what label can be found in the `.github/keylabeler.yml` file. These are handy for adding labels which start with the prefix `A-`.
-- Contributors with [triage permissions](#Triage-Team) can simply add and remove labels from their own PRs, as well as issue reports and other people's PRs.
+- Our bots assigns labels to pull requests based on what file paths they touch. For example, if you're touching a chemistry reagents file, it'll get the `A-Chemistry` tag automatically.
+- Contributors with [triage permissions](#Triage-Team) can simply add and remove labels from PRs as well as issue reports via the GitHub interface.
 
 Some labels are automatically assigned as well, and do certain things:
 
 - Size labels are automatically assigned based on the amount of lines changed.
-- Labels like `C-Sprites`, `C-Sound`, and `C-Documentation` are automatically added based on changes to `.dmi` files, `.ogg` files, and `.md` files respectively.
 - The `S-Merge-Conflict` label gets applied when your branch is no longer able to be merged with the master branch. Note that this doesn't update instantly, so the better way to check is to see the line of text at the bottom of the PR that reads "This branch has conflicts that must be resolved", listing the conflicting files. You must resolve merge conflicts, otherwise it can't be merged. For TGUI PRs, conflicts with the `.bundle.js` are less urgent to resolve.
 - The `S-Stale` label gets added when there has been no activity on a PR for 2 weeks. To get rid of it, simply update the branch with a new commit or post a comment on the PR. The dev-only label `E-Certified-Organic` prevents a PR from going stale.
 - The `E-Input-Wanted` label automatically opens a forum thread in the [ideas forum](https://forum.ss13.co/forumdisplay.php?fid=8), so that people can discuss the change.

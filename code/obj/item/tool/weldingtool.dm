@@ -138,7 +138,7 @@
 				location.hotspot_expose(700, 50, 1)
 			if (istype(O, /turf))
 				var/turf/target_turf = O
-				target_turf.hotspot_expose(700, 50, 1)
+				target_turf.hotspot_expose(4000, 50, 1)
 			if (O && !ismob(O) && O.reagents)
 				boutput(user, SPAN_NOTICE("You heat \the [O.name]."))
 				O.reagents.temperature_reagents(4000,50, 100, 100, 1)

@@ -21,7 +21,7 @@
 	stamina_damage = 5
 	stamina_cost = 5
 	edible = 1	// currently overridden by material settings
-	material_amt = 0.3
+	material_amt = MATERIAL::AMOUNT::SHEET * 3
 	uses_default_material_appearance = FALSE
 	uses_default_material_name = FALSE
 	var/mob/living/carbon/human/donor = null // if I can't use "owner" I can at least use this
@@ -140,10 +140,8 @@
 				src.donor_AH = src.donor.bioHolder.mobAppearance
 			if (src.donor.real_name)
 				src.donor_name = src.donor.real_name
-				src.name = "[src.donor_name]’s [initial(src.name)]"
 			else if (src.donor.name)
 				src.donor_name = src.donor.name
-				src.name = "[src.donor_name]’s [initial(src.name)]"
 			src.donor_DNA = src.donor.bioHolder ? src.donor.bioHolder.Uid : null
 			src.blood_DNA = src.donor_DNA
 			src.blood_type = src.donor.bioHolder?.bloodType
@@ -493,3 +491,17 @@
 
 			.+= length(surgery_contexts)
 
+	/// Get TGUI ui_data list for this organ's health
+	proc/ui_organ_data()
+		var/special = ""
+		if (src.robotic)
+			special = "Cybernetic"
+		if (src.synthetic)
+			special = "Synthetic"
+		if (src.unusual)
+			special = "Unusual"
+		return list(
+			"health" = src.get_damage(),
+			"max_health" = src.max_damage,
+			"special" = special
+		)

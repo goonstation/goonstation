@@ -19,7 +19,7 @@
 	provides_grip = FALSE
 	/// if this floor can be pried up
 	var/pryable = TRUE
-	var/has_material = TRUE
+	var/datum/material/plating_material = null //! Material of the floor when the floor tile is removed
 
 	/// Set to instantiated material datum ([getMaterial()]) for custom material floors
 	var/reinforced = FALSE
@@ -34,6 +34,7 @@
 
 	New()
 		..()
+		src.plating_material = src.material
 		roundstart_icon_state = icon_state
 		roundstart_dir = dir
 		#ifdef XMAS
@@ -181,6 +182,9 @@
 	step_priority = STEP_PRIORITY_MED
 
 /turf/simulated/floor/plating/random
+#ifdef IN_MAP_EDITOR
+	icon_state = "plating_random"
+#endif
 	New()
 		..()
 		if (prob(20))
@@ -353,6 +357,83 @@
 
 /////////////////////////////////////////
 
+/turf/simulated/floor/color_coded_hall
+	icon_state = "whitehall" //Default for mapping purposes
+	var/is_corner = FALSE
+	///Associated list of icon states into color name
+	var/static/list/turf_edge_options = list("blue" = "Blue",
+											"arrival" = "Blue and White",
+											"escape" = "Red and White",
+											"blugreen" = "Blue and Green",
+											"dblue" = "Dark Blue",
+											"dpurple" = "Dark Purple",
+											"green" = "Green",
+											"orange" = "Orange",
+											"caution" = "Yellow and Black",
+											"purple" = "Purple",
+											"red" = "Red",
+											"yellow" = "Yellow",
+											"whitehall" = "White")
+	///Floor icons which don't have the usual [color]corner name
+	var/static/list/corner_icon_overrides = list("whitehall" = "whitecorner")
+	///These are super evil and have their outer corners in the corner sprite unlike the rest
+	var/static/list/inverted_corners = list("dblue", "dpurple")
+	///Associated list of area name = color
+	var/static/list/hallway_to_color = list()
+
+	New()
+		. = ..()
+		var/area/room = get_area(src)
+		if(!(room.name in src.hallway_to_color))
+			var/chosen_colour = pick(src.turf_edge_options)
+			//Probstation halls get their name from their color instead of their compass directions
+#ifdef MAP_OVERRIDE_PROBSTATION
+			if(istype(room, /area/station/hallway) && room.name == initial(room.name))
+				room.name = "[src.turf_edge_options[chosen_colour]] Hallway"
+#endif
+			src.turf_edge_options -= chosen_colour
+			src.hallway_to_color |= list(room.name = chosen_colour)
+		src.icon_state = src.hallway_to_color[room.name]
+		//Some icon states are evil and fucked up
+		if(src.icon_state in src.inverted_corners)
+			if(src.is_corner)
+				src.is_corner = FALSE
+				var/dir_to_set = src.dir
+				switch(src.dir)
+					if(NORTH)
+						dir_to_set = NORTHWEST
+					if(SOUTH)
+						dir_to_set = SOUTHWEST
+					if(EAST)
+						dir_to_set = NORTHEAST
+					if(WEST)
+						dir_to_set = SOUTHEAST
+				src.dir = dir_to_set
+			else if(!is_cardinal(src.dir))
+				src.is_corner = TRUE
+				var/dir_to_set = src.dir
+				switch(src.dir)
+					if(NORTHWEST)
+						dir_to_set = SOUTH
+					if(NORTHEAST)
+						dir_to_set = EAST
+					if(SOUTHWEST)
+						dir_to_set = WEST
+					if(SOUTHEAST)
+						dir_to_set = NORTH
+				src.dir = dir_to_set
+		//Not all corner sprites use the naming convention
+		if(src.is_corner)
+			src.icon_state = src.corner_icon_overrides[src.icon_state] || "[src.icon_state]corner"
+		//WAAAAAAAAAAAGH
+		if(src.icon_state == "purplecorner" && (src.dir in list(EAST, WEST)))
+			src.dir = turn(src.dir, 180)
+
+/turf/simulated/floor/color_coded_hall/corner
+	icon_state = "whitecorner" //Default for mapping purposes
+	is_corner = TRUE
+
+/////////////////////////////////////////
 /turf/simulated/floor/neutral
 	icon_state = "fullneutral"
 
@@ -503,19 +584,13 @@
 /turf/simulated/floor/darkblue
 	icon_state = "fulldblue"
 
-/turf/simulated/floor/darkblue/checker
-	icon_state = "blue-dblue"
-
-/turf/simulated/floor/darkblue/checker/other
-	icon_state = "blue-dblue2"
-
 /turf/simulated/floor/darkblue/side
 	icon_state = "dblue"
 
 /turf/simulated/floor/darkblue/corner
 	icon_state = "dbluecorner"
 
-/turf/simulated/floor/darkblue/checker/white
+/turf/simulated/floor/darkblue/checker
 	icon_state = "dbluechecker"
 
 /turf/simulated/floor/darkblueblack
@@ -654,6 +729,23 @@
 /turf/simulated/floor/yellowblack/corner
 	icon_state = "yellowblackcorner"
 
+/turf/simulated/floor/yellowwhite
+	icon_state = "yellowwhite"
+
+/turf/simulated/floor/yellowwhite/corner
+	icon_state = "yellowwhitecorner"
+
+/////////////////////////////////////////
+
+/turf/simulated/floor/lightyellow
+	icon_state = "fulllyellow"
+
+/turf/simulated/floor/lightyellow/side
+	icon_state = "lyellow"
+
+/turf/simulated/floor/lightyellow/corner
+	icon_state = "lyellowcorner"
+
 /////////////////////////////////////////
 
 /turf/simulated/floor/orange
@@ -665,20 +757,38 @@
 /turf/simulated/floor/orange/corner
 	icon_state = "orangecorner"
 
+/turf/simulated/floor/orange/checker
+	icon_state = "orangechecker"
+
 
 /turf/simulated/floor/orangeblack
-	icon_state = "fullcaution"
-
-/turf/simulated/floor/orangeblack/side
-	icon_state = "caution"
-
-/turf/simulated/floor/orangeblack/side/white
-	icon_state = "cautionwhite"
+	icon_state = "orangeblack"
 
 /turf/simulated/floor/orangeblack/corner
+	icon_state = "orangeblackcorner"
+
+
+/turf/simulated/floor/orangewhite
+	icon_state = "orangewhite"
+
+/turf/simulated/floor/orangewhite/corner
+	icon_state = "orangewhitecorner"
+
+/////////////////////////////////////////
+
+/turf/simulated/floor/caution
+	icon_state = "fullcaution"
+
+/turf/simulated/floor/caution/side
+	icon_state = "caution"
+
+/turf/simulated/floor/caution/white
+	icon_state = "cautionwhite"
+
+/turf/simulated/floor/caution/corner
 	icon_state = "cautioncorner"
 
-/turf/simulated/floor/orangeblack/corner/white
+/turf/simulated/floor/caution/corner/white
 	icon_state = "cautionwhitecorner"
 
 /////////////////////////////////////////
@@ -872,11 +982,20 @@ DEFINE_FLOORS(twotone/blue,
 DEFINE_FLOORS(twotone/yellow,
 	icon_state = "twotone_yellow")
 
+DEFINE_FLOORS(twotone/orange,
+	icon_state = "twotone_orange")
+
 DEFINE_FLOORS(twotone/white,
 	icon_state = "twotone_white")
 
 DEFINE_FLOORS(twotone/black,
 	icon_state = "twotone_black")
+
+DEFINE_FLOORS(twotone/darkblue,
+	icon_state = "twotone_dblue")
+
+DEFINE_FLOORS(twotone/darkpurple,
+	icon_state = "twotone_dpurple")
 
 /////////////////////////////////////////
 
@@ -2085,9 +2204,10 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	setIntact(FALSE)
 	broken = 0
 	burnt = 0
-	if(default_material)
-		var/datum/material/mat = istext(default_material) ? getMaterial(default_material) : default_material
-		src.setMaterial(mat)
+	if(src.plating_material)
+		src.setMaterial(src.plating_material)
+	else if(src.default_material)
+		src.setMaterial(getMaterial(src.default_material))
 	else
 		src.setMaterial(getMaterial("steel"))
 	levelupdate()
@@ -2195,7 +2315,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		if (!intact)
 			if(T.amount >= 1)
 				restore_tile(do_hide)
-				src.default_material = src.material
+				src.plating_material = src.material
 
 				// if we have a special icon state and it doesn't have a material variant
 				// and at the same time the base floor icon state does have a material variant
@@ -2387,7 +2507,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 
 /turf/simulated/floor/restore_tile(do_hide = TRUE)
 	..()
-	if (!do_hide)
+	if (!do_hide || (locate(/obj/table) in src))
 		return
 	for (var/obj/item/item in src.contents)
 		if (item.w_class <= W_CLASS_TINY && !item.anchored) //I wonder if this will cause problems
@@ -2500,8 +2620,40 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 		name = "glowing wall"
 		desc = "It seems to be humming slightly. Huh."
 		luminosity = 2
-		icon_state = "bluewall_glow"
+		icon = 'icons/misc/worlds.dmi'
+		icon_state = "bluedoor_1"
 		can_replace_with_stuff = 1
+
+		// borrowed from /obj/strip_door to make this easier
+		// i dont know why this is a wall, and i dont think i want to know.
+		var/static/list/connects_to = typecacheof(list(
+			/obj/machinery/door,
+			/obj/window,
+			/turf/simulated/wall/auto,
+			/turf/unsimulated/wall/auto,
+			/obj/precursor_puzzle/glowing_door
+		))
+
+		New()
+			..()
+			src.UpdateIcon()
+			// we shouldnt have to update neighbors because nobody's building these
+
+		update_icon()
+			..()
+			var/connectdir = get_connected_directions_bitflag(connects_to)
+			if ((connectdir & NORTH) && (connectdir & SOUTH))
+				src.dir = EAST
+				return
+			if ((connectdir & EAST) && (connectdir & WEST))
+				src.dir = NORTH
+				return
+			if ((connectdir & NORTH) || (connectdir & SOUTH))
+				src.dir = EAST
+				return
+			if ((connectdir & EAST) || (connectdir & WEST))
+				src.dir = NORTH
+				return
 
 		attackby(obj/item/W, mob/user)
 			if (istype(W, /obj/item/device/key/generic/coldsteel))

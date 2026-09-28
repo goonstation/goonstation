@@ -11,7 +11,7 @@ import { Stack } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
-import { DiskDrive } from '../common/DiskDrive';
+import { DiskDrive } from '../common/drives';
 import { Led } from './LED';
 import type { DiskRackData } from './types';
 

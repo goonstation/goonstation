@@ -3,6 +3,7 @@
 */
 
 TYPEINFO(/obj/item/rcd/construction)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal_superdense" = 100,
 				"crystal_dense" = 50,
 				"conductive_high" = 50,
@@ -33,7 +34,7 @@ TYPEINFO(/obj/item/rcd/construction)
 		var/idn = src.hangar_id_number
 		src.hangar_id_number++
 		src.hangar_id = "rcd_built_[idn]"
-		src.mode = RCD_MODE_PODDOOR
+		src.mode = RCD_MODE::PODDOOR
 
 		var/obj/machinery/r_door_control/R = new /obj/machinery/r_door_control(A)
 		R.id="[hangar_id]"
@@ -57,7 +58,7 @@ TYPEINFO(/obj/item/rcd/construction)
 
 	afterattack(atom/A, mob/user as mob)
 		..()
-		if (mode == RCD_MODE_DECONSTRUCT)
+		if (mode == RCD_MODE::DECONSTRUCT)
 			if (istype(A, /obj/machinery/door/poddoor/blast))
 				var /obj/machinery/door/poddoor/blast/B = A
 				if (findtext(B.id, "rcd_built") != 0)
@@ -72,19 +73,19 @@ TYPEINFO(/obj/item/rcd/construction)
 				else
 					boutput(user, SPAN_ALERT("You cannot deconstruct that!"))
 					return
-		else if (mode == RCD_MODE_PODDOORCONTROL)
+		else if (mode == RCD_MODE::PODDOORCONTROL)
 			if (istype(A, /obj/machinery/r_door_control))
 				var/obj/machinery/r_door_control/R = A
 				if (findtext(R.id, "rcd_built") != 0)
 					boutput(user, SPAN_NOTICE("Selected."))
 					hangar_id = R.id
-					mode = RCD_MODE_PODDOOR
+					mode = RCD_MODE::PODDOOR
 				else
 					boutput(user, SPAN_ALERT("You cannot modify that!"))
 			else if (istype(A, /turf/simulated/wall))
 				src.do_rcd_action(user, A, "Creating Door Control", matter_create_door, 5 SECONDS, PROC_REF(do_build_door_control), src)
 
-		else if (mode == RCD_MODE_PODDOOR)
+		else if (mode == RCD_MODE::PODDOOR)
 			if (istype(A, /turf/simulated/floor) && ammo_check(user, matter_create_door, 500))
 				boutput(user, "Creating Pod Bay Door ([matter_create_door])")
 				src.do_rcd_action(user, A, "Creating Pod Bay Door", matter_create_door, 5 SECONDS, PROC_REF(do_build_blast_door), src)
@@ -136,10 +137,8 @@ TYPEINFO(/obj/item/rcd/construction)
 	T.name = door_name
 	if (door_access)
 		T.req_access = list(door_access)
-		T.req_access_txt = "[door_access]"
 	else
 		T.req_access = null
-		T.req_access_txt = null
 
 	for (var/obj/window/auto/O in orange(1,T))
 		O.UpdateIcon()

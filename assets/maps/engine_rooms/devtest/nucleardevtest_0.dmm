@@ -39,7 +39,7 @@
 /turf/simulated/floor/engine,
 /area/station/devzone)
 "bp" = (
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/station/devzone)
 "bR" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -68,7 +68,7 @@
 /obj/cable/brown{
 	icon_state = "2-8"
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/station/devzone)
 "fM" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
@@ -130,7 +130,7 @@
 /obj/cable/brown{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/station/devzone)
 "mT" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
@@ -234,7 +234,7 @@
 /area/station/devzone)
 "xu" = (
 /obj/window/crystal/reinforced/east,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/station/devzone)
 "yI" = (
 /turf/simulated/floor/engine{
@@ -323,7 +323,7 @@
 /obj/cable/brown{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/station/devzone)
 "JT" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
@@ -363,7 +363,7 @@
 /area/station/devzone)
 "Mp" = (
 /obj/window/crystal/reinforced/south,
-/turf/simulated/floor/orangeblack,
+/turf/simulated/floor/caution,
 /area/station/devzone)
 "Nt" = (
 /obj/machinery/atmospherics/unary/portables_connector{

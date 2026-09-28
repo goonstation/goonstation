@@ -26,7 +26,14 @@ type Status = {
 
 export const ManualAnnouncement = (_props) => {
   const { act, data } = useBackend<AnnouncementCompData>();
-  const { card_name, status_message, time, max_length } = data;
+  const {
+    can_change_anonymous,
+    is_anonymous,
+    card_name,
+    status_message,
+    time,
+    max_length,
+  } = data;
 
   const [input, setInput] = useSharedState('input', '');
   const [oldInput, setOldInput] = useSharedState('oldInput', '');
@@ -63,6 +70,18 @@ export const ManualAnnouncement = (_props) => {
             {card_name || 'Insert card'}
           </Button>
         </Stack.Item>
+        {!!can_change_anonymous && (
+          <Stack.Item>
+            <Button.Checkbox
+              key="anon"
+              checked={!!is_anonymous}
+              onClick={() => act('toggleAnonymous')}
+              tooltipPosition="bottom"
+            >
+              Anonymous Message
+            </Button.Checkbox>
+          </Stack.Item>
+        )}
         <Stack.Item>
           <AnimatedNumber value={time} format={formatTime} />
         </Stack.Item>

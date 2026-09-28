@@ -29,13 +29,14 @@
 	if (lawbringer.loc != message.original_speaker)
 		return
 
+	var/searchable_content = message.get_content_parsable()
 	if (!ishuman(message.original_speaker))
-		lawbringer.are_you_the_law(message.original_speaker, message.content)
+		lawbringer.are_you_the_law(message.original_speaker, searchable_content)
 		return
 
 	var/mob/living/carbon/human/H = message.original_speaker
 	if (!lawbringer.fingerprints_can_shoot(H))
-		lawbringer.are_you_the_law(H, message.content)
+		lawbringer.are_you_the_law(H, searchable_content)
 		return
 
 	if (!length(lawbringer.projectiles))
@@ -46,7 +47,7 @@
 		lawbringer.UpdateIcon()
 		return
 
-	var/text = lawbringer.sanitize_talk(message.content)
+	var/text = lawbringer.sanitize_talk(searchable_content)
 
 	for(var/valid_mode in valid_modes)
 		if(!findtext(text, valid_mode))

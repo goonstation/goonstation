@@ -246,12 +246,15 @@ var/datum/explosion_controller/explosions
 				next_open = list()
 				index_open = 1
 			var/turf/T = open[index_open++]
-			var/value = nodes[T] - 1 - T.explosion_resistance
-			var/value2 = nodes[T] - 1.4 - T.explosion_resistance
-			for (var/atom/A as anything in T)
-				if (A.density/* && !A.Cross(null, target)*/) // nothing actually used the Cross check
-					value -= A.explosion_resistance
-					value2 -= A.explosion_resistance
+			var/value = nodes[T] - 1
+			var/value2 = nodes[T] - 1.4
+			if (T != epicenter) //explosion resist is cool, but we don't want barriers to be able to perfect parry torpedoes
+				value -= T.explosion_resistance
+				value2 -= T.explosion_resistance
+				for (var/atom/A as anything in T)
+					if (A.density/* && !A.Cross(null, target)*/) // nothing actually used the Cross check
+						value -= A.explosion_resistance
+						value2 -= A.explosion_resistance
 			if (value < 0)
 				continue
 			for (var/dir in alldirs)

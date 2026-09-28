@@ -60,7 +60,7 @@ TYPEINFO(/mob/living/silicon/ghostdrone)
 		if (rand(1, 1000) == 69 && ticker?.mode) //heh
 			//Nuke op radio freq
 			if (istype(ticker.mode, /datum/game_mode/nuclear))
-				name = "Drone [R_FREQ_SYNDICATE]"
+				name = "Drone [RADIO::FREQ::SYNDICATE]"
 			else if (length(flocks))
 				name = "Flockdrone"
 			else
@@ -923,6 +923,13 @@ TYPEINFO(/mob/living/silicon/ghostdrone)
 
 		src.show_laws_drone()
 		return
+
+	toggle_monospace()
+		set category = "Drone Commands"
+		set name = "Toggle Monospace Speech"
+		set desc = "Switches your speech between normal and forced-monospace mode."
+
+		src.toggle_monospace_mode(src)
 
 	bullet_act(var/obj/projectile/P)
 		var/dmgtype = 0 // 0 for brute, 1 for burn

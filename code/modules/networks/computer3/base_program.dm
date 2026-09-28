@@ -286,21 +286,15 @@
 						else
 							return null
 
-					if ("fd0")
-						if (master.diskette)
-							current = master.diskette.root
-						else
-							return null
-
 					else
-						if (cmptext(copytext(., 1, 3), "sd"))
+						if (cmptext(copytext(., 1, 3), "fd"))
 							. = text2num_safe(copytext(., 3))
 							if (!isnum(.))
 								return null
 
 							.++
 							for (var/obj/item/disk/data/drive in master.contents)
-								if (drive == master.hd || drive == master.diskette)
+								if (drive == master.hd)
 									continue
 
 								if (--. < 1)
@@ -362,21 +356,15 @@
 						else
 							return null
 
-					if ("fd0")
-						if (master.diskette)
-							current = master.diskette.root
-						else
-							return null
-
 					else
-						if (cmptext(copytext(., 1, 3), "sd"))
+						if (cmptext(copytext(., 1, 3), "fd"))
 							. = text2num_safe(copytext(., 3))
 							if (!isnum(.))
 								return null
 
 							.++
 							for (var/obj/item/disk/data/drive in master.contents)
-								if (drive == master.hd || drive == master.diskette)
+								if (drive == master.hd)
 									continue
 
 								if (--. < 1)

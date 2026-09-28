@@ -3,7 +3,6 @@
 	icon = 'icons/obj/items/device.dmi'
 	desc = "A handheld beacon that allows you to call a Syndicate gunbot to the user's current location."
 	icon_state = "beacon" //replace later
-	item_state = "electronic"
 	density = FALSE
 	anchored = UNANCHORED
 	w_class = W_CLASS_SMALL

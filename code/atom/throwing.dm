@@ -54,6 +54,7 @@
 	if(AR?.sanctuary)
 		return TRUE
 	src.material_on_attack_use(thr?.user, hit_atom)
+	src.material_trigger_when_attacked(src, thr?.user, 2)
 	hit_atom.material_trigger_when_attacked(src, thr?.user, 2)
 	if(ismob(hit_atom))
 		var/mob/hit_mob = hit_atom
@@ -118,8 +119,8 @@
 	src.throwforce += bonus_throwforce
 
 	var/matrix/transform_original = src.transform
-	if (src.throw_spin && !(throwing & THROW_SLIP) && !(throwing & THROW_PEEL_SLIP))
-		animate(src, transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = -1)
+	if (src.throw_spin && !(throwing & THROW_SLIP) && !(throwing & THROW_PEEL_SLIP) && !src.avoid_animating)
+		animate(src, transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = -1, flags = ANIMATION_PARALLEL)
 		animate(transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = -1)
 		animate(transform = matrix(transform_original, 120, MATRIX_ROTATE | MATRIX_MODIFY), time = 8/3, loop = -1)
 

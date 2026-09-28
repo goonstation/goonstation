@@ -72,7 +72,7 @@ TYPEINFO(/obj/item/device/radio/intercom/ship)
 
 	wizard
 		name = "MagicaTech Communication Array"
-		desc = "A expensive magical-looking shipboard communicator. Often used by those who shoot fireballs!"
+		desc = "An expensive magical-looking shipboard communicator. Often used by those who shoot fireballs!"
 		color = "#E62DE6"
 		access_type = list(POD_ACCESS_WIZARDS)
 
@@ -99,7 +99,7 @@ TYPEINFO(/obj/item/device/radio/intercom/ship)
 		return
 
 	proc/External()
-		var/broadcast = copytext(html_encode(input(usr, "Please enter what you want to say over the external speaker.", "[src.name]")), 1, MAX_MESSAGE_LEN)
+		var/broadcast = tgui_input_text(usr, "Please enter what you want to say over the external speaker:", "External Speaker", null, MAX_MESSAGE_LEN, TRUE)
 		if(!broadcast || usr.loc != src.ship) // need to check if something wasn't entered or if user isn't in a vehicle
 			return
 		logTheThing(LOG_DIARY, usr, "(POD) : [broadcast]", "say")

@@ -15,9 +15,7 @@
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
 "aq" = (
-/obj/machinery/light_switch/auto{
-	pixel_x = 20
-	},
+/obj/machinery/light_switch/directional/east,
 /turf/unsimulated/floor,
 /area/cult_base/acolyte/bedrooms)
 "at" = (
@@ -398,10 +396,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
-/obj/machinery/light_switch/auto{
-	last_throw_y = 0;
-	pixel_y = -24
-	},
+/obj/machinery/light_switch/directional/south,
 /turf/simulated/floor/carpet{
 	dir = 2;
 	icon_state = "fblue2"
@@ -439,10 +434,7 @@
 /obj/stool/chair/comfy/blue{
 	dir = 8
 	},
-/obj/machinery/light_switch/auto{
-	last_throw_y = 0;
-	pixel_y = -24
-	},
+/obj/machinery/light_switch/directional/south,
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris)
 "cj" = (
@@ -462,10 +454,7 @@
 "cm" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/captain,
-/obj/machinery/light_switch/auto{
-	last_throw_y = 0;
-	pixel_y = -24
-	},
+/obj/machinery/light_switch/directional/south,
 /turf/unsimulated/floor/carpet/arcade,
 /area/wrecknsspolaris)
 "cn" = (
@@ -496,7 +485,7 @@
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
 "cq" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 8
 	},
@@ -2297,7 +2286,7 @@
 /obj/decoration/toiletholder{
 	pixel_y = 32
 	},
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 8
 	},
@@ -2422,7 +2411,7 @@
 /obj/item/reagent_containers/syringe{
 	pixel_y = -3
 	},
-/obj/item/shaker/salt{
+/obj/item/reagent_containers/applicator/condiment/shaker/salt{
 	pixel_x = 8;
 	pixel_y = 5
 	},
@@ -2634,7 +2623,7 @@
 /obj/decal/cleanable/dirt/jen,
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/black,
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/directional/west,
 /turf/unsimulated/floor/grime,
 /area/dank_trench)
 "hI" = (
@@ -3489,6 +3478,7 @@
 /area/cult_base/leader)
 "qL" = (
 /obj/machinery/chem_dispenser/alcohol,
+/obj/mapping_helper/glassware_spawn,
 /turf/unsimulated/floor,
 /area/cult_base/leader)
 "qR" = (
@@ -3669,9 +3659,7 @@
 /turf/unsimulated/floor/carpet/darkcarpet,
 /area/cult_base/leader)
 "uz" = (
-/obj/machinery/light_switch/auto{
-	pixel_y = 22
-	},
+/obj/machinery/light_switch/directional/north,
 /turf/unsimulated/floor,
 /area/cult_base/acolyte)
 "uC" = (
@@ -3823,8 +3811,7 @@
 /area/cult_base/leader)
 "xX" = (
 /obj/machinery/door/airlock/pyro/classic{
-	dir = 4;
-	req_access_txt = "12"
+	dir = 4
 	},
 /obj/mapping_helper/airlock/welder,
 /obj/mapping_helper/airlock/bolter,
@@ -4076,7 +4063,7 @@
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "CA" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 1
 	},
 /turf/unsimulated/floor/grime,
@@ -4138,9 +4125,7 @@
 "DW" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/hop,
-/obj/machinery/light_switch/auto{
-	pixel_y = 22
-	},
+/obj/machinery/light_switch/directional/north,
 /turf/unsimulated/floor,
 /area/cult_base/leader)
 "Eb" = (
@@ -4152,7 +4137,7 @@
 /turf/space/fluid/noexplosion,
 /area/cult_base)
 "Ef" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	pixel_y = 10
 	},
 /turf/unsimulated/floor/grime,
@@ -4300,8 +4285,7 @@
 /area/cult_base/leader)
 "Hf" = (
 /obj/machinery/door/airlock/pyro/classic{
-	dir = 4;
-	req_access_txt = "12"
+	dir = 4
 	},
 /obj/mapping_helper/airlock/welder,
 /turf/unsimulated/floor/grime,
@@ -4476,7 +4460,7 @@
 /turf/unsimulated/floor,
 /area/cult_base/leader)
 "Lr" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 8
 	},
@@ -4996,7 +4980,7 @@
 /area/cult_base/leader)
 "Xr" = (
 /obj/decal/cleanable/ripped_poster,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "A water-filled unit intended for custodial purposes.";
 	dir = 8;
 	name = "custodial sink";
@@ -5053,9 +5037,7 @@
 /turf/space/fluid/noexplosion,
 /area/cult_base/leader/outdoors)
 "Yl" = (
-/obj/machinery/light_switch/auto{
-	pixel_y = 22
-	},
+/obj/machinery/light_switch/directional/north,
 /turf/unsimulated/floor/grime,
 /area/cult_base/initate)
 "Yn" = (

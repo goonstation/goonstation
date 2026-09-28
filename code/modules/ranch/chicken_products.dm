@@ -110,6 +110,11 @@
 		egg_props_path = /datum/chicken_egg_props/sea
 	dream
 		egg_props_path = /datum/chicken_egg_props/dream
+
+		br // Cause apparently people don't like accidentally taking naps in firefights
+			New()
+				desc += "The soothing purple sheen makes you feel sleepy."
+				..()
 	snow
 		egg_props_path = /datum/chicken_egg_props/snow
 	popsicle
@@ -611,10 +616,7 @@ ABSTRACT_TYPE(/datum/chicken_egg_props)
 		var/mob/M = owner
 		if(istype(M))
 			boutput(M, SPAN_ALERT("<B>You feel as if you are one with everything.</B>"))
-			if(M.bioHolder.HasEffect("xray"))
-				already_had_xray = TRUE
-			else
-				M.bioHolder.AddEffect("xray")
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_XRAYVISION, src)
 
 	onUpdate(var/timePassed)
 		. = ..()
@@ -625,8 +627,7 @@ ABSTRACT_TYPE(/datum/chicken_egg_props)
 	onRemove()
 		. = ..()
 		var/mob/M = owner
-		if (M?.bioHolder && !already_had_xray)
-			M.bioHolder.RemoveEffect("xray")
+		REMOVE_ATOM_PROPERTY(M, PROP_MOB_XRAYVISION, src)
 
 /datum/statusEffect/chicken_power/lesser
 	id = "c_power_lesser"

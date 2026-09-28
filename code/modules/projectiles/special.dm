@@ -840,8 +840,11 @@ ABSTRACT_TYPE(/datum/projectile/special)
 				P.die()
 
 	on_end(obj/projectile/P)
+		var/turf/dumpturf = get_turf(P)
+		var/area/dumparea = get_area(dumpturf)
 		for (var/atom/movable/AM in P.contents)
-			AM.set_loc(get_turf(P))
+			AM.set_loc(dumpturf)
+			SEND_SIGNAL(dumparea, COMSIG_AREA_INDIRECT_ENTRY, AM, "mechcomp")
 		qdel(src.eye_glider)
 		src.eye_glider = null
 		..()
@@ -1353,7 +1356,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	max_range = 30
 	cost = 0
 	shot_sound = 'sound/weapons/rocket.ogg'
-	icon = 'icons/obj/large_storage.dmi'
+	icon = 'icons/obj/storage/crate.dmi'
 	icon_state = "attachecase"
 	typetospawn = /obj/lootbox
 	var/explosion_power = 15
@@ -1406,13 +1409,11 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 		var/datum/reagents/copied = new/datum/reagents(amt_to_emit)
 		copied = chemR.copy_to(copied, amt_to_emit/chemR.total_volume, copy_temperature = 1)
-
-		if(!T.reagents) // first get the turf
-			T.create_reagents(100)
-		copied.copy_to(T.reagents, 1, copy_temperature = 1)
+		//now we create a temporary chemistry holder so we don't need to inject chems into turfs but still can handle delayed reactions
+		T.AddComponent(/datum/component/temp_reagent_holder, copied)
 		copied.reaction(T, TOUCH, 0, src.can_spawn_fluid)
 		if(special_data["IS_LIT"]) // Heat if needed
-			T.reagents?.set_reagent_temp(special_data["burn_temp"], TRUE)
+			copied.set_reagent_temp(special_data["burn_temp"], TRUE)
 		for(var/atom/A in T.contents) // then all the stuff in the turf
 			if(istype(A, /obj/overlay) || istype(A, /obj/projectile))
 				continue

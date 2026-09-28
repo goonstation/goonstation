@@ -79,7 +79,8 @@
 		src.ability_holder.removeAbility(/datum/targetable/gang/set_gang_base)
 		src.owner.current.remove_ability_holder(/datum/abilityHolder/gang)
 
-		src.headset?.remove_radio_upgrade()
+		if (src.headset && !QDELETED(src.headset))
+			src.headset?.remove_radio_upgrade()
 
 	add_to_image_groups()
 		. = ..()

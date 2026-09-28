@@ -117,7 +117,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 
 		src.add_fingerprint(user)
 		src.connected?.updateUsrDialog()
-
+		logTheThing(LOG_COMBAT, user, "moves [M] into [src].")
 		playsound(src.loc, 'sound/machines/sleeper_close.ogg', 50, 1)
 
 	attack_hand(mob/user)

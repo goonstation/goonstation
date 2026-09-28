@@ -1586,36 +1586,6 @@ Returns:
 				M.set_dir(direction)
 				M.color = color_new
 
-/obj/floorpillstatue
-	name = "Statue of Dr.Floorpills"
-	desc = "A statue of the most radioactive man alive. Technically alive. Sort of."
-	var/broken = 0
-	icon ='icons/obj/objects.dmi'
-	icon_state = "statuefloorpills"
-	density = 1
-	default_material = "slag"
-
-	New()
-		..()
-		AddComponent(/datum/component/radioactive,20,FALSE,FALSE)
-		name = "Statue of Dr.Floorpills"
-
-	attack_hand(mob/user)
-		boutput(user, "[src] feels oddly warm...")
-		return
-
-	attackby(obj/item/W, mob/user)
-		if(prob(8) && (!broken))
-			for(var/i=0, i<5, i++)
-				new/obj/item/material_piece/slag(src.loc)
-
-			src.visible_message(SPAN_ALERT("<B>[src] breaks into pieces!</B>"))
-			icon_state = "statuefloorpills0"
-
-			broken = 1
-
-		return ..()
-
 /proc/mass_proc_arg()
 	var/type = text2path(input(usr,"Type", "", "/obj"))
 	var/procpath = text2path(input(usr,"ProcPath", "", "/proc"))
@@ -2831,6 +2801,8 @@ Returns:
 
 	New()
 		..()
+		RegisterSignal(src, COMSIG_LASER_CONNECTED, PROC_REF(on_laser_incident))
+		RegisterSignal(src, COMSIG_LASER_DISCONNECTED, PROC_REF(on_laser_exident))
 		light = new /datum/light/point
 		light.set_color(0.3, 0.6, 0.8)
 		light.set_brightness(1)
@@ -2840,19 +2812,15 @@ Returns:
 			if (target_tag)
 				target = locate(target_tag)
 
-	incident(obj/linked_laser/laser)
-		if (src.in_laser) //no infinite loops allowed
-			return FALSE
-		src.in_laser = laser
+	proc/on_laser_incident(datum/source, obj/linked_laser/laser)
 		src.out_laser = laser.copy_laser(get_turf(target), laser.dir)
+		src.out_laser.previous = laser
 		laser.next = src.out_laser
 		src.out_laser.try_propagate()
-		return TRUE
 
-	exident(obj/linked_laser/laser)
+	proc/on_laser_exident(datum/source, obj/linked_laser/laser)
 		qdel(src.out_laser)
 		src.out_laser = null
-		..()
 
 	Bumped(atom/movable/AM)
 		if(target && istype(target))

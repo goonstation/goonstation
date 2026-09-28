@@ -147,6 +147,9 @@
 		boutput(user, SPAN_ALERT("You can't put [W] into itself!"))
 		return
 
+	if (src.linked_item.GetComponent(/datum/component/glued)) //stop glued backpacks eating batons
+		return
+
 	// locked storage check
 	if (istype(W, /obj/item/storage/secure))
 		var/obj/item/storage/secure/S = W

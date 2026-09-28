@@ -107,10 +107,10 @@ ABSTRACT_TYPE(/datum/clothingbooth_grouping)
 	// Instantiate all the constituent `clothingbooth_item` types in `src.item_paths`, append them to `src.clothingbooth_items`
 	var/last_item_slot // For checking if all the slots are the same.
 	for (var/clothingbooth_item_type in src.item_paths)
-		var/datum/clothingbooth_item/current_item = new clothingbooth_item_type
 		// Concrete types only.
-		if (IS_ABSTRACT(current_item))
+		if (IS_ABSTRACT(clothingbooth_item_type))
 			continue
+		var/datum/clothingbooth_item/current_item = new clothingbooth_item_type
 		// Scream if something goes wrong.
 		if (src.clothingbooth_items[current_item.name])
 			CRASH("A clothingbooth_item with name [current_item.name] already exists within grouping [src.name]!")
@@ -119,9 +119,9 @@ ABSTRACT_TYPE(/datum/clothingbooth_grouping)
 		last_item_slot = current_item.slot
 		src.clothingbooth_items[current_item.name] = current_item
 	for (var/clothingbooth_grouping_tag in src.grouping_tags)
-		var/datum/clothingbooth_grouping_tag/current_tag = new clothingbooth_grouping_tag
-		if (IS_ABSTRACT(current_tag))
+		if (IS_ABSTRACT(clothingbooth_grouping_tag))
 			continue
+		var/datum/clothingbooth_grouping_tag/current_tag = new clothingbooth_grouping_tag
 		if (src.clothingbooth_grouping_tags[current_tag.name])
 			CRASH("A clothingbooth_grouping_tag with name [current_tag.name] already exists within grouping [src.name]!")
 		src.clothingbooth_grouping_tags[current_tag.name] = current_tag

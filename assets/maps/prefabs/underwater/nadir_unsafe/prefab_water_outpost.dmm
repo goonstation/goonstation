@@ -58,7 +58,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/prefab/deserted_outpost)
 "m" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	desc = "It seems a bit busted.";
 	dir = 4;
 	name = "leaky sink";
@@ -167,7 +167,7 @@
 /turf/simulated/floor/grey/whitegrime,
 /area/prefab/deserted_outpost)
 "G" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	layer = 3;
 	pixel_y = 8
 	},

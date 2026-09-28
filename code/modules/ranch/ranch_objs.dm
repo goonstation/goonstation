@@ -14,6 +14,7 @@ TODO:
 // Incubator
 
 TYPEINFO(/obj/submachine/chicken_incubator)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 8
 
 /obj/submachine/chicken_incubator
@@ -23,6 +24,7 @@ TYPEINFO(/obj/submachine/chicken_incubator)
 	icon_state = "incubator"
 	density = 1
 	anchored = ANCHORED
+	default_material = "wood"
 	var/obj/item/reagent_containers/food/snacks/ingredient/egg/my_egg = null
 	var/incubate_count = 0
 	var/image/egg_overlay = null
@@ -117,15 +119,17 @@ TYPEINFO(/obj/submachine/chicken_incubator)
 					if(chicken_egg.chicken_egg_props.is_secret)
 #ifdef SECRETS_ENABLED
 						egg_overlay_secret.icon_state = "incubator-egg-[chicken_egg.chicken_egg_props.chicken_id]"
+						UpdateOverlays(egg_overlay_secret, "egg_overlay_secret")
 #else
 						egg_overlay.icon_state = "incubator-egg-[chicken_egg.chicken_egg_props.chicken_id]"
+						UpdateOverlays(egg_overlay, "egg_overlay")
 #endif
 					else
 						egg_overlay.icon_state = "incubator-egg-[chicken_egg.chicken_egg_props.chicken_id]"
+						UpdateOverlays(egg_overlay, "egg_overlay")
 				else
 					egg_overlay.icon_state = "incubator-egg-white"
-				UpdateOverlays(egg_overlay, "egg_overlay")
-				UpdateOverlays(egg_overlay_secret, "egg_overlay_secret")
+					UpdateOverlays(egg_overlay, "egg_overlay")
 				incubate_count = 0
 		else if(istype(W,/obj/item/space_thing))
 			boutput(user, SPAN_ALERT("<b>[W] opens to reveal some sort of egg!</b>"))
@@ -140,9 +144,7 @@ TYPEINFO(/obj/submachine/chicken_incubator)
 				E = new /obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/space(src)
 			my_egg = E
 			egg_overlay.icon_state = "incubator-egg-[E.chicken_egg_props.chicken_id]"
-
 			UpdateOverlays(egg_overlay, "egg_overlay")
-			UpdateOverlays(egg_overlay_secret, "egg_overlay_secret")
 			incubate_count = 0
 
 		else
@@ -162,6 +164,7 @@ TYPEINFO(/obj/submachine/chicken_incubator)
 	name = "incubator parts"
 	icon = 'icons/obj/ranch/ranch_obj.dmi'
 	icon_state = "incubator_parts"
+	default_material = "wood"
 	w_class = W_CLASS_NORMAL
 
 // Ranch Feed Proxy
@@ -175,6 +178,7 @@ TYPEINFO(/obj/submachine/chicken_incubator)
 // Feed Grinder
 
 TYPEINFO(/obj/submachine/ranch_feed_grinder)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 8
 
 /obj/submachine/ranch_feed_grinder
@@ -605,6 +609,7 @@ TYPEINFO(/obj/submachine/ranch_feed_grinder)
 // Chicken Nesting Box
 
 TYPEINFO(/obj/chicken_nesting_box)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 4
 
 /obj/chicken_nesting_box
@@ -615,6 +620,7 @@ TYPEINFO(/obj/chicken_nesting_box)
 	density = 0
 	anchored = UNANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER
+	default_material = "wood"
 
 	attackby(obj/item/W, mob/user)
 		if(istype(W,/obj/item/incubator_parts))
@@ -645,6 +651,8 @@ TYPEINFO(/obj/chicken_nesting_box)
 
 		. = ..()
 
+TYPEINFO(/obj/item/old_grenade/chicken)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/old_grenade/chicken
 	name = "Chicken Grenade"
 	desc = "It is set to detonate in 3 seconds."
@@ -653,7 +661,6 @@ TYPEINFO(/obj/chicken_nesting_box)
 	det_time = 3 SECONDS
 	org_det_time = 3 SECONDS
 	alt_det_time = 6 SECONDS
-	is_syndicate = 1
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	tooltip_flags = REBUILD_ALWAYS
 	is_dangerous = TRUE

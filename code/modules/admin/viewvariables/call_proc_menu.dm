@@ -15,6 +15,9 @@ proc/list_procs(datum/target) // null for global
 
 	if (isnull(target))
 		.[null] = proc_ownership_cache.procs_by_type[null]
+		for (var/datum/namespace/namespace as anything in global.global_namespaces)
+			.[null] += namespace._get_namespace_procs(TRUE)
+
 		return
 
 	var/type = target.type

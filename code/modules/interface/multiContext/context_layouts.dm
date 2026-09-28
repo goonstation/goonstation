@@ -130,6 +130,8 @@ var/list/datum/contextAction/globalContextActions = null
 
 /datum/contextLayout/experimentalcircle
 	var/dist
+	var/start_angle = 90
+	var/total_angle = 360
 	///If true the first button in the list will be rendered in the center of the circle
 	var/center = FALSE
 
@@ -149,7 +151,12 @@ var/list/datum/contextAction/globalContextActions = null
 			screenX = (screenCenter.x - target.x) * -1 * 32
 			screenY = (screenCenter.y - target.y) * -1 * 32
 
-		var/anglePer = round(360 / (length(buttons) - (center ? 1 : 0)))
+		var/anglePer
+		if(total_angle < 360 && length(buttons) > 2)
+			// Use the entire availible circle segment
+			anglePer = total_angle / (length(buttons) - (center ? 1 : 0) - 1)
+		else
+			anglePer = total_angle / (length(buttons) - (center ? 1 : 0))
 
 		var/count = 0
 
@@ -163,7 +170,7 @@ var/list/datum/contextAction/globalContextActions = null
 			var/sizeX = Icon.Width()
 			var/sizeY = Icon.Height()
 
-			var/angle = 90 - anglePer * count
+			var/angle = start_angle - anglePer * count
 			var/offX = round(dist * cos(angle)) + round(sizeX / 2)
 			var/offY = round(dist * sin(angle)) + round(sizeY / 2)
 			if (center && count == 0)

@@ -5,6 +5,7 @@
 #define PLANE_UNDERFLOOR -115
 #define PLANE_FLOOR -110
 #define PLANE_WALL -105
+#define PLANE_OVERFLOOR -103
 #define PLANE_NOSHADOW_BELOW -102
 #define PLANE_DEFAULT -101
 #define PLANE_DEFAULT_NOWARP -100 //for objects which should not be affected by gravitational lensing

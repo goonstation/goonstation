@@ -1,0 +1,4 @@
+
+/obj/item/disk/data/fixed_disk/techcomputer3 : /obj/item/disk/data/fixed_disk/hd128/techcomputer3{@OLD}
+/obj/item/disk/data/fixed_disk/computer3 : /obj/item/disk/data/fixed_disk/hd64/computer3{@OLD}
+/obj/item/disk/data/fixed_disk : /obj/item/disk/data/fixed_disk/hd64{@OLD}

@@ -367,7 +367,7 @@ proc/HYPCheckCommut(var/datum/plantgenes/DNA,var/searchtype)
 proc/HYPnewcommutcheck(var/datum/plant/P,var/datum/plantgenes/DNA, var/frequencymult = 1)
 	// This is the proc for checking if a new random gene strain will appear in the plant.
 	if(!P || !DNA) return
-	if(HYPCheckCommut(DNA,/datum/plant_gene_strain/stabilizer))
+	if(HYPCheckCommut(DNA,/datum/plant_gene_strain/stabilizer) || HYPCheckCommut(DNA,/datum/plant_gene_strain/commutblocker))
 		return
 	if(length(P.commuts) > 0)
 		var/datum/plant_gene_strain/MUT = null
@@ -388,7 +388,7 @@ proc/HYPnewcommutcheck(var/datum/plant/P,var/datum/plantgenes/DNA, var/frequency
 			//now, if the gene strain needs to do anything, we do it now
 			MUT.on_addition(DNA)
 
-proc/HYPaddCommut(var/datum/plantgenes/DNA, var/commut)
+proc/HYPaddCommut(var/datum/plantgenes/DNA, var/commut, var/always_add = FALSE) //always_add overrides the effects of commutblocker
 	// And this one is for forcibly adding specific strains.
 	if(!DNA || !commut) return
 	if(!ispath(commut)) return
@@ -399,13 +399,13 @@ proc/HYPaddCommut(var/datum/plantgenes/DNA, var/commut)
 	var/datum/plant_gene_strain/added_commut = HY_get_strain_from_path(commut)
 	// create a new list here (i.e. do not use +=) so as to not affect related seeds/plants
 	if(added_commut)
-		if(DNA.commuts)
-			DNA.commuts = DNA.commuts + added_commut
-		else
-			DNA.commuts = list(added_commut)
-		//now, if the gene strain needs to do anything, we do it now
-		added_commut.on_addition(DNA)
-
+		if (always_add || !HYPCheckCommut(DNA,/datum/plant_gene_strain/commutblocker))
+			if(DNA.commuts)
+				DNA.commuts = DNA.commuts + added_commut
+			else
+				DNA.commuts = list(added_commut)
+			//now, if the gene strain needs to do anything, we do it now
+			added_commut.on_addition(DNA)
 
 proc/HYPremoveCommut(var/datum/plantgenes/DNA, var/commut)
 	// And this one is for forcibly removing specific strains.
@@ -417,8 +417,6 @@ proc/HYPremoveCommut(var/datum/plantgenes/DNA, var/commut)
 	if(removed_commut)
 		DNA.commuts = DNA.commuts - removed_commut
 		removed_commut.on_removal(DNA)
-
-
 
 proc/HYPmutateDNA(var/datum/plantgenes/DNA,var/severity = 1)
 	// This proc jumbles up the variables in a plant's genes. It's fundamental to breeding.

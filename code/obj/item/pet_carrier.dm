@@ -227,7 +227,7 @@
 		src.add_mob(thing_to_trap)
 		user.update_inhands()
 
-	/// Called when a given mob/user releases an mob after an actionbar.
+	/// Called when a given mob/user releases a mob after an actionbar.
 	proc/release_mob(atom/movable/thing_to_release, mob/user)
 		if (thing_to_release)
 			src.eject_mob(thing_to_release)

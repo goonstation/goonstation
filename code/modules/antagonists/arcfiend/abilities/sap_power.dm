@@ -56,7 +56,7 @@
 	proc/is_valid_target(atom/target, mob/user)
 		if (ismob(target))
 			var/mob/M = target
-			if (isnpc(M))
+			if (isnpc(M) || isghostcritter(M) || isghostdrone(M))
 				boutput(user, SPAN_ALERT("[M] lacks sufficient energy to consume."))
 				return FALSE
 			else if (isdead(M))

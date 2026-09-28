@@ -573,7 +573,7 @@ ABSTRACT_TYPE(/datum/plantmutation)
 	special_proc_override = TRUE
 
 	HYPon_mutation_general(var/datum/plant/parent_plant, var/datum/plantgenes/passed_genes)
-		HYPaddCommut(passed_genes, /datum/plant_gene_strain/inert)
+		HYPaddCommut(passed_genes, /datum/plant_gene_strain/inert) // Allowing this to be blocked by commutblocker, because it'd be funny/practical.
 		return
 
 	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)

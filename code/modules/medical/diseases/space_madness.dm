@@ -25,7 +25,7 @@
 			if (probmult(8))
 				for (var/mob/living/M in view(7,affected_mob))
 					if(M!= affected_mob)
-						boutput(affected_mob, "<b>[M.name]</b> says, \"[pick("I'm going to kill you!","I'm the the traitor.", "TRAITOR!")]\"")
+						boutput(affected_mob, "<b>[M.name]</b> says, \"[pick("I'm going to kill you!","I'm the traitor.", "TRAITOR!")]\"")
 						break
 			if (probmult(9))
 				boutput(affected_mob, pick(SPAN_ALERT("<i><b><font face =Tempus Sans ITC>Kill them all!!!!!</b></i></FONT>"), SPAN_ALERT("<i><b><font face = Tempus Sans ITC>They are out to get you!</b></FONT></i>"), SPAN_ALERT("<i><b><font face = Tempus Sans ITC>They know what you did!!!!</b></FONT></i>"), SPAN_ALERT("<i><b><font face = Tempus Sans ITC>They are watching you!!!</b></i></FONT>")))
@@ -66,7 +66,7 @@
 			if (probmult(8))
 				for (var/mob/living/M in view(7,affected_mob))
 					if(M!= affected_mob)
-						boutput(affected_mob, "<b>[M.name]</b> says, \"[pick("I'm going to kill you!","I'm the the traitor.", "You are a loser!")]\"")
+						boutput(affected_mob, "<b>[M.name]</b> says, \"[pick("I'm going to kill you!","I'm the traitor.", "You are a loser!")]\"")
 						break
 
 		if(5)
@@ -105,7 +105,7 @@
 			if (probmult(8))
 				for (var/mob/living/M in view(7,affected_mob))
 					if(M!= affected_mob)
-						boutput(affected_mob, "<b>[M.name]</b> says, \"[pick("I'm going to kill you!","I'm the the traitor.", "You are a loser!")]\"")
+						boutput(affected_mob, "<b>[M.name]</b> says, \"[pick("I'm going to kill you!","I'm the traitor.", "You are a loser!")]\"")
 						break
 
 /datum/ailment/disease/space_madness/on_remove(var/mob/living/affected_mob, var/datum/ailment_data/D)

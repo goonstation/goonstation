@@ -32,7 +32,8 @@
 				for(var/turf/T in block(A, B))
 					var/atom/at = T
 					T.ReplaceWith(walltype, keep_old_material=0, force=1)
-					at.set_dir(holder.dir)
+					if(src.holder.dir)
+						at.set_dir(holder.dir)
 					blink(get_turf(at))
 					new /area/adventure(at)
 					reset_lum(at)
@@ -197,7 +198,8 @@
 				for(var/turf/T in block(Q, B))
 					C = T
 					C.ReplaceWith(floortype, keep_old_material=0, force=1)
-					C.set_dir(holder.dir)
+					if(src.holder.dir)
+						C.set_dir(holder.dir)
 					blink(C)
 					new /area/adventure(C)
 					reset_lum(C)

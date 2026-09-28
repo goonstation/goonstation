@@ -195,7 +195,7 @@ this is already used where it needs to be used, you can probably ignore it.
 
 
 	if (H.reagents)
-		var/anticoag_amt = H.reagents.get_reagent_amount("heparin")
+		var/anticoag_amt = H.reagents.get_reagent_amount("heparin") + H.reagents.get_reagent_amount("acetylsalicylic_acid")/2
 		if (anticoag_amt > 20) //you blood fall out
 			bleed_level += 3
 		else if (anticoag_amt > 10)
@@ -288,7 +288,7 @@ this is already used where it needs to be used, you can probably ignore it.
 
 	if (repair_chance < 100) // if it's already 100 we don't need to go through all the crap down here
 		if (H.reagents)
-			var/anticoag_amt = H.reagents.get_reagent_amount("heparin")
+			var/anticoag_amt = H.reagents.get_reagent_amount("heparin") + H.reagents.get_reagent_amount("acetylsalicylic_acid")/2
 			if (anticoag_amt)
 				repair_chance -= clamp(anticoag_amt, 0, 10)
 

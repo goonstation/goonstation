@@ -705,6 +705,7 @@
 	icon = 'icons/obj/items/cigarettes.dmi'
 	icon_state = "cigarbox"
 	item_state = "cigarbox"
+	default_material = "wood"
 	w_class = W_CLASS_TINY
 	throwforce = 2
 	var/cigcount = 5
@@ -1354,6 +1355,8 @@
 /obj/item/device/light/zippo/borg
 	infinite_fuel = 1
 
+TYPEINFO(/obj/item/device/light/zippo/syndicate)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/device/light/zippo/syndicate
 	desc = "A sleek black lighter with a red stripe and an incredibly hot flame."
 	icon_state = "syndie_zippo"
@@ -1365,7 +1368,6 @@
 	col_r = 0.298
 	col_g = 0.658
 	col_b = 0
-	is_syndicate = 1
 	reagent_expose_temp = 20000
 	enviromental_expose_temp = 3500
 

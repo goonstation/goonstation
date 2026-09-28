@@ -237,6 +237,56 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 		. -= entry
 
 /**
+ *	Returns the contents of the cell that contains the `(T.x, T.y)` point on the `T.z` layer of the hashmap.
+ */
+/datum/spatial_hashmap/proc/point(turf/T)
+	RETURN_TYPE(/alist)
+	. = alist()
+
+	if (!T?.z || (T.z > src.z_order))
+		return
+
+	// Return the cell corresponding to the `(T.x, T.y, T.z)` point.
+	// A new alist is created so that the hashmap isn't exposed by directly returning the cell alist.
+	var/grid_x = ceil(T.x / src.cell_size)
+	var/grid_y = ceil(T.y / src.cell_size)
+	. += src.hashmap[T.z][grid_y][grid_x]
+
+/**
+ *	Returns the contents of the cell that contains the `(T.x, T.y)` point on the `T.z` layer of the hashmap.
+ *
+ *	If present, takes into consideration the vistarget of the turf as a second point.
+ */
+/datum/spatial_hashmap/proc/vistarget_point(turf/T)
+	RETURN_TYPE(/alist)
+	. = alist()
+
+	if (!T)
+		return
+
+	if (!T.vistarget)
+		return src.point(T)
+
+	var/alist/cells = alist()
+
+	// Add the cell corresponding to the `(T.x, T.y, T.z)` point.
+	if (T.z && (T.z <= src.z_order))
+		var/grid_x = ceil(T.x / src.cell_size)
+		var/grid_y = ceil(T.y / src.cell_size)
+		cells[src.hashmap[T.z][grid_y][grid_x]] = null
+
+	// Add the cell corresponding to the `(T.vistarget.x, T.vistarget.y, T.vistarget.z)` point.
+	T = T.vistarget
+	if (T.z && (T.z <= src.z_order))
+		var/grid_x = ceil(T.x / src.cell_size)
+		var/grid_y = ceil(T.y / src.cell_size)
+		cells[src.hashmap[T.z][grid_y][grid_x]] = null
+
+	// Concatenate the contents of each cell into a single list.
+	for (var/alist/cell as anything in cells)
+		. += cell
+
+/**
  *	Adds an entry to the hashmap using a tracked atom representing the entry's physical position.
  *	If `entry` is an atom and no `tracked_atom` is passed, `entry` will be used in its place.
  */
@@ -251,9 +301,14 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 	// Increment a tracked atom's signal subscription count.
 	if (!src.tracked_atoms_with_subcount[tracked_atom])
 		src.tracked_atoms_with_subcount[tracked_atom] = 1
-		src.RegisterSignal(tracked_atom, XSIG_MOVABLE_TURF_CHANGED, PROC_REF(update_entry))
+		src.RegisterSignal(tracked_atom, XSIG_MOVABLE_TURF_CHANGED_SAFE, PROC_REF(update_entry))
+		src.RegisterSignal(tracked_atom, XSIG_MOVABLE_TURF_TO_NULLSPACE, PROC_REF(remove_entry))
+		src.RegisterSignal(tracked_atom, XSIG_MOVABLE_NULLSPACE_TO_TURF, PROC_REF(add_entry))
 	else
 		src.tracked_atoms_with_subcount[tracked_atom] += 1
+
+	// Get the turf of the tracked atom directly from the XSIG component.
+	var/turf/T = tracked_atom.GetComponent(/datum/component/complexsignal/outermost_movable).previous_turf
 
 	// Associate the hashmap entry with the tracked atom and vice versa.
 	src.atoms_by_entry[entry] = tracked_atom
@@ -261,13 +316,10 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 	src.entries_by_atom[tracked_atom] += entry
 
 	// Provided the tracked atom isn't in nullspace, add it to the hashmap data structure.
-	var/turf/T = get_turf(tracked_atom)
-	if (T)
+	if (T?.z && (T.z <= src.z_order))
 		var/x = ceil(T.x / src.cell_size)
 		var/y = ceil(T.y / src.cell_size)
-		var/z = T.z
-		if (z && (z <= src.z_order))
-			src.hashmap[z][y][x] += entry
+		src.hashmap[T.z][y][x] += entry
 
 /**
  *	Removes an entry from the hashmap.
@@ -277,11 +329,17 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 	if (!istype(tracked_atom))
 		return
 
+	// Get the turf of the tracked atom directly from the XSIG component.
+	// This ensures that the entry is removed from the correct cell in cases where it is removed after its loc is updated but before the hashmap is.
+	var/turf/T = tracked_atom.GetComponent(/datum/component/complexsignal/outermost_movable).previous_turf
+
 	// Decrement a tracked atom's signal subscription count.
 	src.tracked_atoms_with_subcount[tracked_atom] -= 1
 	if (!src.tracked_atoms_with_subcount[tracked_atom])
 		src.tracked_atoms_with_subcount -= tracked_atom
-		src.UnregisterSignal(tracked_atom, XSIG_MOVABLE_TURF_CHANGED)
+		src.UnregisterSignal(tracked_atom, XSIG_MOVABLE_TURF_CHANGED_SAFE)
+		src.UnregisterSignal(tracked_atom, XSIG_MOVABLE_TURF_TO_NULLSPACE)
+		src.UnregisterSignal(tracked_atom, XSIG_MOVABLE_NULLSPACE_TO_TURF)
 
 	// Dissociate the hashmap entry with the tracked atom and vice versa.
 	src.atoms_by_entry -= entry
@@ -290,13 +348,10 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 		src.entries_by_atom -= tracked_atom
 
 	// Provided the tracked atom isn't in nullspace, remove it from the hashmap data structure.
-	var/turf/T = get_turf(tracked_atom)
-	if (T)
+	if (T?.z && (T.z <= src.z_order))
 		var/x = ceil(T.x / src.cell_size)
 		var/y = ceil(T.y / src.cell_size)
-		var/z = T.z
-		if (z && (z <= src.z_order))
-			src.hashmap[z][y][x] -= entry
+		src.hashmap[T.z][y][x] -= entry
 
 /**
  *	Updates the tracked atom being used to represent the physical position of a hashmap entry.
@@ -310,35 +365,52 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
  *	Internal use only.
  */
 /datum/spatial_hashmap/proc/update_entry(datum/component/complexsignal/outermost_movable/component, turf/old_turf, turf/new_turf)
-	if (old_turf && new_turf)
-		var/old_x = ceil(old_turf.x / src.cell_size)
-		var/new_x = ceil(new_turf.x / src.cell_size)
-		var/old_y = ceil(old_turf.y / src.cell_size)
-		var/new_y = ceil(new_turf.y / src.cell_size)
+	PRIVATE_PROC(TRUE)
+	var/old_x = ceil(old_turf.x / src.cell_size)
+	var/new_x = ceil(new_turf.x / src.cell_size)
+	var/old_y = ceil(old_turf.y / src.cell_size)
+	var/new_y = ceil(new_turf.y / src.cell_size)
 
-		if ((old_x == new_x) && (old_y == new_y) && (old_turf.z == new_turf.z))
-			return
+	if ((old_x == new_x) && (old_y == new_y) && (old_turf.z == new_turf.z))
+		return
 
-		if (old_turf.z && (old_turf.z <= src.z_order))
-			src.hashmap[old_turf.z][old_y][old_x] -= src.entries_by_atom[component.parent]
-		if (new_turf.z && (new_turf.z <= src.z_order))
-			src.hashmap[new_turf.z][new_y][new_x] += src.entries_by_atom[component.parent]
-
-	else if (old_turf?.z && (old_turf.z <= src.z_order))
-		var/old_x = ceil(old_turf.x / src.cell_size)
-		var/old_y = ceil(old_turf.y / src.cell_size)
+	if (old_turf.z && (old_turf.z <= src.z_order))
 		src.hashmap[old_turf.z][old_y][old_x] -= src.entries_by_atom[component.parent]
-
-	else if (new_turf?.z && (new_turf.z <= src.z_order))
-		var/new_x = ceil(new_turf.x / src.cell_size)
-		var/new_y = ceil(new_turf.y / src.cell_size)
+	if (new_turf.z && (new_turf.z <= src.z_order))
 		src.hashmap[new_turf.z][new_y][new_x] += src.entries_by_atom[component.parent]
+
+/**
+ *	Removes a hashmap entry, as if the entry's position was updated to nullspace.
+ *	Internal use only.
+ */
+/datum/spatial_hashmap/proc/remove_entry(datum/component/complexsignal/outermost_movable/component, turf/old_turf)
+	PRIVATE_PROC(TRUE)
+	if (!old_turf.z || (old_turf.z > src.z_order))
+		return
+
+	var/old_x = ceil(old_turf.x / src.cell_size)
+	var/old_y = ceil(old_turf.y / src.cell_size)
+	src.hashmap[old_turf.z][old_y][old_x] -= src.entries_by_atom[component.parent]
+
+/**
+ *	Adds a hashmap entry, as if the entry's position was updated from nullspace.
+ *	Internal use only.
+ */
+/datum/spatial_hashmap/proc/add_entry(datum/component/complexsignal/outermost_movable/component, turf/new_turf)
+	PRIVATE_PROC(TRUE)
+	if (!new_turf.z || (new_turf.z > src.z_order))
+		return
+
+	var/new_x = ceil(new_turf.x / src.cell_size)
+	var/new_y = ceil(new_turf.y / src.cell_size)
+	src.hashmap[new_turf.z][new_y][new_x] += src.entries_by_atom[component.parent]
 
 /**
  *	Updates the z-order of the hashmap.
  *	Internal use only.
  */
 /datum/spatial_hashmap/proc/update_z_order(source, new_z_order)
+	PRIVATE_PROC(TRUE)
 	if (new_z_order <= src.z_order)
 		return
 

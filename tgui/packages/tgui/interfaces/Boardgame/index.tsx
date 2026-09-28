@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useEffect } from 'react';
 import { Box, Dimmer, Icon } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
@@ -6,33 +6,30 @@ import { Window } from '../../layouts';
 import { BoardgameContents } from './Components/common/BoardgameContents';
 import { HeldPieceRenderer } from './Components/common/HeldPieceRenderer';
 import { TitleBar } from './Components/common/TitleBar';
-import { BoardgameData, useStates } from './utils';
+import { BoardgameData, useActions, useStates } from './utils';
 import { adjustSizes, handleEvents } from './utils/window';
 
-export class Boardgame extends Component<BoardgameData, any> {
-  constructor(props) {
-    super(props);
-  }
+export const Boardgame = () => {
+  const { act, data } = useBackend<BoardgameData>();
+  const { paletteClear, pieceDeselect } = useActions(act);
+  const { setTileSizeType, tileSize } = useStates();
+  const name = data?.boardInfo?.name || 'Boardgame';
 
-  componentDidUpdate() {
-    handleEvents();
-    adjustSizes();
-  }
+  // Keep class component timing.
+  useEffect(() => {
+    handleEvents(data?.currentUser, paletteClear, pieceDeselect);
+    adjustSizes(data?.boardInfo, tileSize, setTileSizeType);
+  });
 
-  render() {
-    const { data } = useBackend<BoardgameData>();
-    const name = data?.boardInfo?.name || 'Boardgame';
-
-    return (
-      <Window title={name} width={580} height={512}>
-        <HelpModal />
-        <TitleBar />
-        <HeldPieceRenderer />
-        <BoardgameContents />
-      </Window>
-    );
-  }
-}
+  return (
+    <Window title={name} width={580} height={512}>
+      <HelpModal />
+      <TitleBar />
+      <HeldPieceRenderer />
+      <BoardgameContents />
+    </Window>
+  );
+};
 
 const HelpModal = () => {
   const { helpModalClose, isHelpModalOpen } = useStates();

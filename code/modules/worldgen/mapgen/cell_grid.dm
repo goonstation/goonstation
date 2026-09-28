@@ -218,9 +218,12 @@
 				if(src.grid[x][y])
 					to_visit = list(list(x,y))
 					current_group = list()
-					while(length(to_visit))
-						var/cell_x = to_visit[1][1]
-						var/cell_y = to_visit[1][2]
+					var/visit_idx = 1
+					while(visit_idx <= length(to_visit))
+						var/list/cell = to_visit[visit_idx]
+						visit_idx++
+						var/cell_x = cell[1]
+						var/cell_y = cell[2]
 						if(!visited[cell_x][cell_y] && src.grid[cell_x][cell_y])
 							if((cell_x-1 >= 1) && !visited[cell_x-1][cell_y] ) //WEST
 								to_visit += list(list(cell_x-1,cell_y))
@@ -231,9 +234,8 @@
 							if((cell_y-1 >= 1) && !visited[cell_x][cell_y-1])  //SOUTH
 								to_visit += list(list(cell_x, cell_y-1))
 
-							current_group += list(list(to_visit[1][1],to_visit[1][2]))
+							current_group += list(list(cell_x, cell_y))
 						visited[cell_x][cell_y] = TRUE
-						to_visit.Cut(1,2)
 					connected_cells["[group_id++]"] += current_group
 				else
 					visited[x][y] = TRUE

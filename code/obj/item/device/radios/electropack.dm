@@ -22,8 +22,8 @@ TYPEINFO(/obj/item/device/radio/electropack)
 	cant_self_remove = TRUE
 
 	var/baseline_arc_power = -2000 //! the amount of Wattage the electropack does provides or drains baseline
-	var/required_arc_power = 1500 //! The total of power needed to cause an electric arc with the assembly. This will make a elecflash power of 2.
-	var/maximum_arc_power = 15000 //! the power the electropack will drain for a max-capacity arc flash. This will make a elecflash power of 6.
+	var/required_arc_power = 1500 //! The total of power needed to cause an electric arc with the assembly. This will make an elecflash power of 2.
+	var/maximum_arc_power = 15000 //! the power the electropack will drain for a max-capacity arc flash. This will make an elecflash power of 6.
 	var/code = 2
 	var/on = FALSE
 

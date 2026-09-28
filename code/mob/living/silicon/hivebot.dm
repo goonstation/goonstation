@@ -1021,9 +1021,6 @@ Frequency:
 		available_ai_shells -= src
 		..()
 
-	on_close_viewport(datum/viewport/vp)
-		src.mainframe?.on_close_viewport(vp)
-
 /mob/living/silicon/hivebot/proc/admin_add_tool()
 	set name = "Add Module Tool"
 	if(!src.module)
@@ -1123,6 +1120,7 @@ Frequency:
 	else if (istype(W, /obj/item/device/radio))
 		if (src.build_step >= 2)
 			if (!src.has_radio)
+				W.forensic_holder.copy_to(src.forensic_holder)
 				src.build_step++
 				boutput(user, "You add \the [W] to [src]!")
 				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
@@ -1140,6 +1138,7 @@ Frequency:
 	else if (istype(W, /obj/item/ai_interface))
 		if (src.build_step >= 2)
 			if (!src.has_interface)
+				W.forensic_holder.copy_to(src.forensic_holder)
 				src.build_step++
 				boutput(user, "You add the [W] to [src]!")
 				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
@@ -1159,6 +1158,8 @@ Frequency:
 			boutput(user, "You activate the shell!  Beep bop!")
 			var/mob/living/silicon/hivebot/eyebot/S = new /mob/living/silicon/hivebot/eyebot(get_turf(src))
 			S.cell = src.cell
+			S.setMaterial(src.material)
+			S.forensic_holder = src.forensic_holder
 			src.cell.set_loc(S)
 			src.cell = null
 			qdel(src)

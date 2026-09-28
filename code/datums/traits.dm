@@ -370,28 +370,7 @@
 			created_organ.donor = owner
 			owner.organHolder.receive_organ(created_organ, created_organ.organ_holder_name)
 
-/datum/trait/stinky
-	name = "Stinky"
-	desc = "Your body has exceedingly sensitive sweat glands that overproduce, causing you to become stinky unless frequently showered."
-	id = "stinky"
-	icon_state = "stinky"
-	category = list("body")
-	points = 1
 
-	onAdd(var/mob/owner)
-		if(ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if (!H.sims)
-				H.sims = new /datum/simsHolder(H)
-			H.sims.addMotive(/datum/simsMotive/hygiene)
-			H.sims.add_hud() // ensure hud has hygiene motive
-
-	onRemove(var/mob/owner)
-		if(ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if (!H.sims)
-				H.sims = new /datum/simsHolder(H)
-			H.sims.removeMotive("Hygiene")
 
 // LANGUAGE - Yellow Border
 /datum/trait/swedish
@@ -685,6 +664,45 @@
 	category = list("trinkets")
 	points = 0
 
+/datum/trait/cane
+	name = "Cane"
+	desc = "After an awful accident, you were given a cane. You weren't injured, just an old guy in said accident. Free stick though!"
+	id = "cane"
+	icon_state = "cane"
+	category = list("trinkets")
+	points = 0
+
+/datum/trait/artisan
+	name = "Artisan"
+	desc = "Your trinket is made from a random material."
+	id = "artisan"
+	icon_state = "artisan"
+	category = list()
+	points = -1
+
+	proc/apply_trinket_material(var/mob/user, var/atom/trinket)
+		var/atom/artisan_target = trinket
+		if(prob(10) && istype(trinket, /obj/item/pet_carrier)) // Small chance to give the material to the pet instead
+			var/obj/item/pet_carrier/carrier = trinket
+			if(length(carrier.carrier_occupants) > 0)
+				artisan_target = carrier.carrier_occupants[1]
+				artisan_target.mat_changedesc = TRUE // Make sure people can tell what the pet is made out of.
+
+		var/datum/material/artisan_material = src.choose_trinket_material(artisan_target.default_material)
+		artisan_target.setMaterial(artisan_material)
+
+	proc/choose_trinket_material(var/datum/material/default_material)
+		RETURN_TYPE(/datum/material)
+		var/list/potential_mats = list()
+		for(var/mat_id in material_cache)
+			var/datum/material/trinket_material = getMaterial(mat_id)
+			if(trinket_material.artisan_trait_weight > 0)
+				potential_mats[mat_id] = trinket_material.artisan_trait_weight
+		if(default_material)
+			potential_mats[default_material] = 0
+		return getMaterial(weighted_pick(potential_mats))
+
+
 // Skill - White Border
 
 /datum/trait/smoothtalker
@@ -745,8 +763,14 @@
 
 	proc/defend_personal_space(mob/owner, mob/target)
 		if(owner != target && can_act(owner) && target.a_intent == INTENT_HELP)
-			owner.disarm(target, is_special = TRUE)
-			playsound(owner, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, TRUE)
+			if(!owner.lying) // Please stop shoving people when you're lying down, that's illegal
+				owner.disarm(target, is_special = TRUE)
+				playsound(owner, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, TRUE)
+			else
+				if(prob(80))
+					owner.emote(pick("flinch","twitch","twitch_v","shudder"))
+				else
+					owner.emote("scream")
 
 /* Hey dudes, I moved these over from the old bioEffect/Genetics system so they work on clone */
 
@@ -797,7 +821,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 
 /datum/trait/job/scientist
 	name = "Scientist Training."
-	desc = "Subject is a experienced researcher."
+	desc = "Subject is an experienced researcher."
 	id = "training_scientist"
 
 /datum/trait/job/headsurgeon
@@ -814,6 +838,11 @@ ABSTRACT_TYPE(/datum/trait/job)
 	name = "Security Training"
 	desc = "Subject is trained in generalized robustness and asskicking."
 	id = "training_security"
+
+/datum/trait/job/forensic
+	name = "Forensic Training"
+	desc = "Subject is trained in analysing forensic evidence."
+	id = "training_forensic"
 
 /datum/trait/job/quartermaster
 	name = "Quartermaster Training"
@@ -836,6 +865,12 @@ ABSTRACT_TYPE(/datum/trait/job)
 	desc = "Sometimes you drink on the job, sometimes drinking is the job."
 	id = "training_drinker"
 
+	onAdd(mob/owner)
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_ALCOHOL_RESIST, src, 100)
+
+	onRemove(mob/owner)
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_ALCOHOL_RESIST, src)
+
 /datum/trait/job/clown
 	name = "Clown Training"
 	desc = "Subject is trained at being a clumsy buffoon."
@@ -845,6 +880,14 @@ ABSTRACT_TYPE(/datum/trait/job)
 		owner.AddComponent(/datum/component/death_confetti)
 		owner.bioHolder?.AddEffect("accent_comic", innate = TRUE)
 		owner.bioHolder?.AddEffect("clumsy", innate = TRUE)
+		if (isliving(owner))
+			var/mob/living/carbon/human/H = owner
+			H.can_juggle = TRUE
+
+	onRemove(var/mob/owner)
+		if (isliving(owner))
+			var/mob/living/carbon/human/H = owner
+			H.can_juggle = FALSE
 
 /datum/trait/job/mime
 	name = "Mime Training"
@@ -854,6 +897,14 @@ ABSTRACT_TYPE(/datum/trait/job)
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("mute", innate = TRUE)
 		owner.bioHolder?.AddEffect("blankman", innate = TRUE)
+		if (isliving(owner))
+			var/mob/living/carbon/human/H = owner
+			H.can_juggle = TRUE
+
+	onRemove(var/mob/owner)
+		if (isliving(owner))
+			var/mob/living/carbon/human/H = owner
+			H.can_juggle = FALSE
 
 /datum/trait/job/miner
 	name = "Miner Training"
@@ -995,7 +1046,7 @@ TYPEINFO(/datum/trait/partyanimal)
 
 /datum/trait/slowmetabolism
 	name = "Slow Metabolism"
-	desc = "Any chemicals in you body deplete much more slowly."
+	desc = "Any chemicals in your body deplete much more slowly."
 	id = "slowmetabolism"
 	icon_state = "slowm"
 	points = 0
@@ -1029,7 +1080,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	"salbutamol","perfluorodecalin","mannitol","charcoal","antihol","ethanol","iron","mercury","oxygen","plasma","sugar","radium","water","bathsalts","crank",\
 	"LSD","space_drugs","THC","nicotine","krokodil","catdrugs","triplemeth","methamphetamine","mutagen","neurotoxin","saxitoxin","smokepowder","infernite","phlogiston","fuel",\
 	"anti_fart","lube","ectoplasm","cryostylane","oil","sewage","ants","spiders","poo","love","hugs","fartonium","blood","bloodc","vomit","capsaicin","cheese",\
-	"coffee","chocolate","chickensoup","salt","grease","badgrease","msg","egg")
+	"coffee","chocolate","chickensoup","salt","grease","badgrease","msg","egg","acetylsalicylic_acid")
 
 	New()
 		..()
@@ -1053,7 +1104,7 @@ TYPEINFO(/datum/trait/partyanimal)
 
 	allergen_id_list = list("spaceacillin","morphine","teporone","salicylic_acid","calomel","synthflesh","omnizine","saline","anti_rad","smelling_salt",\
 	"haloperidol","epinephrine","insulin","silver_sulfadiazine","mutadone","ephedrine","penteticacid","antihistamine","styptic_powder","cryoxadone","atropine",\
-	"salbutamol","perfluorodecalin","mannitol","charcoal","antihol")
+	"salbutamol","perfluorodecalin","mannitol","charcoal","antihol","acetylsalicylic_acid")
 
 /datum/trait/addict
 	name = "Addict"
@@ -1149,16 +1200,9 @@ TYPEINFO(/datum/trait/partyanimal)
 
 /datum/trait/unionized
 	name = "Unionized"
-	desc = "You start with a higher paycheck than normal."
+	desc = "You start with a higher paycheck than normal, provided you're not management."
 	id = "unionized"
 	icon_state = "handshake"
-	points = -1
-
-/datum/trait/jailbird
-	name = "Jailbird"
-	desc = "You have a criminal record and are currently on the run!"
-	id = "jailbird"
-	icon_state = "jail"
 	points = -1
 
 /datum/trait/clericalerror
@@ -1294,27 +1338,101 @@ TYPEINFO(/datum/trait/partyanimal)
 
 /datum/trait/kleptomaniac
 	name = "Kleptomaniac"
-	desc = "You will sometimes randomly pick up nearby items."
+	desc = "You will sometimes randomly steal nearby items and pickpocket people."
 	id = "kleptomaniac"
 	icon_state = "klepto"
 	points = 1
 	afterlife_blacklisted = TRUE
+	///Where we pickpocket from
+	var/static/slots_to_steal = list(SLOT_L_STORE, SLOT_R_STORE)
+	///Where we stash our loot
+	var/static/slots_to_stash = list(SLOT_BACK, SLOT_BELT, SLOT_L_STORE, SLOT_R_STORE)
 
 	onLife(var/mob/owner, var/mult)
-		if(!owner.stat && !owner.lying && can_act(owner) && !owner.equipped() && probmult(6))
-			if(istype(owner, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = owner
-				if (H.hand == LEFT_HAND)
-					if (H.limbs?.l_arm && !H.limbs.l_arm.can_hold_items)
-						return
-				else
-					if (H.limbs?.r_arm && !H.limbs.r_arm.can_hold_items)
-						return
-			for(var/obj/item/I in oview(1, owner))
-				if(!I.anchored && !I.cant_drop && isturf(I.loc) && can_reach(owner, I) && !HAS_ATOM_PROPERTY(I, PROP_MOVABLE_KLEPTO_IGNORE))
-					I.Attackhand(owner)
-					owner.emote(pick("grin", "smirk", "chuckle", "smug"))
-					break
+		if(owner.stat || owner.lying || !can_act(owner) || owner.equipped())
+			return
+
+		if(istype(owner, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = owner
+			if (H.hand == LEFT_HAND)
+				if (H.limbs?.l_arm && !H.limbs.l_arm.can_hold_items)
+					return
+			else
+				if (H.limbs?.r_arm && !H.limbs.r_arm.can_hold_items)
+					return
+
+		if (probmult(6))
+			if(!src.grab_a_thing(owner) && probmult(2))
+				src.pickpocket(owner)
+
+	///Returns TRUE on a successful yoink
+	proc/grab_a_thing(mob/owner)
+		var/obj/item/loot = null
+		for(var/obj/item/I in oview(1, owner))
+			if(!I.anchored && !I.cant_drop && isturf(I.loc) && can_reach(owner, I) && !HAS_ATOM_PROPERTY(I, PROP_MOVABLE_KLEPTO_IGNORE))
+				loot = I
+				break
+		if (!loot)
+			return FALSE
+
+		//critters just grab it
+		if (!ishuman(owner))
+			loot.Attackhand(owner)
+			src.smug(owner)
+			return TRUE
+
+		//humans stash it
+		for (var/slot as anything in src.slots_to_stash)
+			var/mob/living/carbon/human/H = owner
+			var/obj/item/storage_item = H.get_slot(slot)
+			//if it fits in pockets then great
+			if (!storage_item && (slot == SLOT_L_STORE || slot == SLOT_R_STORE) && H.can_equip(loot, slot))
+				loot.Attackhand(owner)
+				loot = H.equipped()
+				//we failed to pick anything up for some reason
+				if (!loot)
+					return FALSE
+				owner.u_equip(loot)
+				H.force_equip(loot, slot)
+				src.smug(owner)
+				return TRUE
+			if (!storage_item?.storage)
+				continue
+			//otherwise it might fit in our bag or belt
+			if (length(storage_item.storage.stored_items) < storage_item.storage.slots && storage_item.storage.check_can_hold(loot))
+				loot.Attackhand(owner)
+				loot = H.equipped()
+				//we failed to pick anything up for some reason
+				if (!loot)
+					return FALSE
+				storage_item.Attackby(loot, owner)
+				src.smug(owner)
+				return TRUE
+		return FALSE
+
+	///Returns TRUE on a successful yoink
+	proc/pickpocket(mob/owner)
+		for (var/mob/living/carbon/human/victim in hearers(1, owner))
+			if (victim == owner)
+				continue
+			for (var/slot in src.slots_to_steal)
+				var/obj/item/loot = victim.get_slot(slot)
+				if (!loot)
+					continue
+				actions.start(new/datum/action/bar/icon/otherItem(
+					owner,
+					victim,
+					null,
+					slot,
+					0,
+					TRUE
+				), owner)
+				return TRUE
+		return FALSE
+
+
+	proc/smug(mob/owner)
+		owner.emote(pick("grin", "smirk", "chuckle", "smug"))
 
 /datum/trait/clutz
 	name = "Clutz"
@@ -1430,7 +1548,7 @@ TYPEINFO(/datum/trait/partyanimal)
 	desc = "Compress all of your skin and flesh into your bones, making you resemble a skeleton. Not as uncomfortable as it sounds."
 	id = "skeleton"
 	points = -1
-	category = list("species", "cloner_stuff", "nohair")
+	category = list("species", "cloner_stuff")
 	mutantRace = /datum/mutantrace/skeleton
 
 /datum/trait/roach
@@ -1451,13 +1569,22 @@ TYPEINFO(/datum/trait/partyanimal)
 	category = list("species", "nopug", "nohair")
 	mutantRace = /datum/mutantrace/pug
 
+/datum/trait/amphibian
+	name = "Amphibian"
+	icon_state = "amphibianT"
+	desc = "It's not easy being green. ...Or yellow, or blue, or vaguely reddish."
+	id = "frog"
+	points = -3
+	category = list("species")
+	mutantRace = /datum/mutantrace/frog/amphibian
+
 /datum/trait/random_species
 	name = "Random Species"
 	icon_state = "randomspecies"
 	desc = "You feel like something's different today, but you can't quite put your finger/tail/hoof/antennae on it."
 	id = "random_species"
 	points = -1
-	category = list("species", "infrared", "cloner_stuff", "nohair", "hemophilia")
+	category = list("species", "infrared", "cloner_stuff", "hemophilia")
 
 	onAdd(mob/owner)
 		if (ishuman(owner))
@@ -1538,6 +1665,28 @@ TYPEINFO(/datum/trait/partyanimal)
 	onRemove(mob/owner)
 		owner.bioHolder.RemoveEffect("hair_growth")
 
+// Move Stinky Trait
+/datum/trait/stinky
+	name = "Stinky"
+	desc = "Your body has exceedingly sensitive sweat glands that overproduce, causing you to become stinky unless frequently showered."
+	id = "stinky"
+	icon_state = "stinky"
+	points = 1
+
+	onAdd(var/mob/owner)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (!H.sims)
+				H.sims = new /datum/simsHolder(H)
+			H.sims.addMotive(/datum/simsMotive/hygiene)
+			H.sims.add_hud() // ensure hud has hygiene motive
+
+	onRemove(var/mob/owner)
+		if(ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (!H.sims)
+				H.sims = new /datum/simsHolder(H)
+			H.sims.removeMotive("Hygiene")
 //Infernal Contract Traits
 /datum/trait/hair
 	name = "Wickedly Good Hair"

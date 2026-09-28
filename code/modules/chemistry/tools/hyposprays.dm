@@ -1,7 +1,7 @@
 var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "insulin", "mutadone", "teporone",\
 "silver_sulfadiazine", "salbutamol", "perfluorodecalin", "omnizine", "synaptizine", "anti_rad",\
 "oculine", "mannitol", "penteticacid", "styptic_powder", "methamphetamine", "spaceacillin", "saline",\
-"salicylic_acid", "cryoxadone", "blood", "bloodc", "synthflesh",\
+"salicylic_acid", "acetylsalicylic_acid", "cryoxadone", "blood", "bloodc", "synthflesh",\
 "menthol", "cold_medicine", "antihistamine", "ipecac",\
 "booster_enzyme", "anti_fart", "goodnanites", "smelling_salt", "CBD", "promethazine")
 
@@ -10,6 +10,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 /* =================================================== */
 
 TYPEINFO(/obj/item/reagent_containers/hypospray)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 6
 
 /obj/item/reagent_containers/hypospray

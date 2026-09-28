@@ -92,7 +92,7 @@
 	desc = "Converts matter into energy and back. Needs to be used while standing on a cable."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "voltron"
-	item_state = "electronic"
+	item_state = "analyzer"
 	var/active = 0
 	var/mob/target = null
 	var/obj/dummy/voltron/D = null

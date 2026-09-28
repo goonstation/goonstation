@@ -1,0 +1,312 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"b" = (
+/obj/machinery/light/small/floor/purpleish,
+/obj/ladder{
+	id = "clowntainment"
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/carpet/clowncarpet,
+/area/station/crew_quarters/clown/entryway)
+"c" = (
+/obj/machinery/camera/directional/east,
+/turf/space,
+/area/station/crew_quarters/clown/entryway)
+"d" = (
+/obj/machinery/camera/directional/west,
+/turf/space,
+/area/station/crew_quarters/clown/entryway)
+"h" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/station/crew_quarters/clown/entryway)
+"j" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/station/crew_quarters/clown/entryway)
+"l" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/forcefield/energyshield/perma/doorlink,
+/obj/mapping_helper/button/area,
+/turf/simulated/floor/carpet/clowncarpet/border,
+/area/station/crew_quarters/clown/entryway)
+"p" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/station/crew_quarters/clown/entryway)
+"r" = (
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/crew_quarters/clown/entryway)
+"t" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/external,
+/obj/forcefield/energyshield/perma/doorlink,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/clown/entryway)
+"v" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/station/crew_quarters/clown/entryway)
+"w" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 8
+	},
+/obj/mapping_helper/button/area,
+/turf/simulated/floor/carpet/clowncarpet/border{
+	dir = 4
+	},
+/area/station/crew_quarters/clown/entryway)
+"z" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/station/crew_quarters/clown/entryway)
+"A" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/station/crew_quarters/clown/entryway)
+"B" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/station/crew_quarters/clown/entryway)
+"H" = (
+/obj/machinery/door_control/bolter/new_walls/north{
+	dir = 2
+	},
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/mapping_helper/button/area,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/station/crew_quarters/clown/entryway)
+"J" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/clown/entryway)
+"L" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/station/crew_quarters/clown/entryway)
+"M" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/station/crew_quarters/clown/entryway)
+"O" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/forcefield/energyshield/perma/doorlink,
+/obj/mapping_helper/button/area,
+/turf/simulated/floor/carpet/clowncarpet/border{
+	dir = 1
+	},
+/area/station/crew_quarters/clown/entryway)
+"P" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/station/crew_quarters/clown/entryway)
+"Q" = (
+/turf/space,
+/area/station/crew_quarters/clown/entryway)
+"T" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 8
+	},
+/obj/mapping_helper/button/area,
+/turf/simulated/floor/carpet/clowncarpet/border{
+	dir = 8
+	},
+/area/station/crew_quarters/clown/entryway)
+"U" = (
+/turf/simulated/wall/auto/supernorn/colored/purple,
+/area/station/crew_quarters/clown/entryway)
+"Y" = (
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/station/crew_quarters/clown/entryway)
+
+(1,1,1) = {"
+r
+r
+r
+r
+J
+r
+r
+r
+r
+"}
+(2,1,1) = {"
+r
+Q
+Q
+Q
+L
+Q
+Q
+d
+r
+"}
+(3,1,1) = {"
+r
+Q
+z
+h
+P
+h
+B
+Q
+r
+"}
+(4,1,1) = {"
+r
+Q
+L
+U
+T
+U
+M
+Q
+r
+"}
+(5,1,1) = {"
+t
+h
+v
+O
+b
+l
+Y
+h
+t
+"}
+(6,1,1) = {"
+r
+Q
+L
+U
+w
+U
+H
+Q
+r
+"}
+(7,1,1) = {"
+r
+Q
+p
+h
+j
+h
+A
+Q
+r
+"}
+(8,1,1) = {"
+r
+c
+Q
+Q
+L
+Q
+Q
+Q
+r
+"}
+(9,1,1) = {"
+r
+r
+r
+r
+J
+r
+r
+r
+r
+"}

@@ -8,7 +8,7 @@ TYPEINFO(/obj/item/device/igniter)
 	flags = TABLEPASS | CONDUCT | USEDELAY
 	c_flags = ONBELT
 	tool_flags = TOOL_ASSEMBLY_APPLIER
-	item_state = "electronic"
+	item_state = "assembly"
 	m_amt = 100
 	throwforce = 5
 	w_class = W_CLASS_TINY
@@ -25,6 +25,7 @@ TYPEINFO(/obj/item/device/igniter)
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
 	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_OVERLAY_ADDITIONS, PROC_REF(assembly_overlay_addition))
+	RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_REMOVAL, PROC_REF(assembly_removal))
 
 /obj/item/device/igniter/disposing()
 	UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY)
@@ -34,6 +35,9 @@ TYPEINFO(/obj/item/device/igniter)
 
 /// ----------- Trigger/Applier-Assembly-Related Procs -----------
 
+/obj/item/device/igniter/proc/assembly_removal(var/manipulated_igniter, var/obj/item/assembly/parent_assembly, overlay_offset)
+	if(src in parent_assembly.additional_components)
+		parent_assembly.ClearSpecificOverlays("igniter_canbomb")
 
 /obj/item/device/igniter/assembly_get_part_help_message(var/dist, var/mob/shown_user, var/obj/item/assembly/parent_assembly)
 	if(!parent_assembly.target)
@@ -81,7 +85,7 @@ TYPEINFO(/obj/item/device/igniter)
 /obj/item/device/igniter/proc/assembly_overlay_addition(var/manipulated_igniter, var/obj/item/assembly/parent_assembly, var/passed_overlay_offset)
 	if(parent_assembly.special_construction_identifier == "canbomb")
 		var/image/temp_image = image('icons/obj/items/assemblies.dmi', parent_assembly, "igniter_canbomb")
-		parent_assembly.overlays += temp_image
+		parent_assembly.AddOverlays(temp_image, "igniter_canbomb")
 /// ----------------------------------------------
 
 
@@ -106,10 +110,14 @@ TYPEINFO(/obj/item/device/igniter)
 	return (world.time >= last_ignite + src.combat_click_delay/2)
 
 /obj/item/device/igniter/afterattack(atom/target, mob/user as mob)
-	if (!ismob(target) && target.reagents && can_ignite())
+	if (!ismob(target) && can_ignite())
 		FLICK("igniter_light", src)
 		boutput(user, SPAN_NOTICE("You heat \the [target.name]."))
-		target.reagents.temperature_reagents(4000,400)
+		if (isturf(target))
+			var/turf/T = target
+			T.hotspot_expose(4000, 50)
+		else
+			target.reagents?.temperature_reagents(4000,400)
 		last_ignite = world.time
 
 /obj/item/device/igniter/proc/ignite()

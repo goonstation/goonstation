@@ -37,8 +37,11 @@ class RspackCompiler {
     const configModule = await requireFromRoot('./rspack.config.mjs');
     const devConfigModule = await requireFromRoot('./rspack.config-dev.mjs');
 
-    const config = configModule.default({}, options);
-    const devConfig = devConfigModule.default({}, options);
+    // |GOONSTATION-CHANGE| Base config needs the development mode too.
+    const argv = { ...options, mode: 'development' };
+
+    const config = configModule.default({}, argv);
+    const devConfig = devConfigModule.default({}, argv);
 
     const mergedConfig = { ...config, ...devConfig };
 
@@ -85,7 +88,7 @@ class RspackCompiler {
         return;
       }
       stats
-        ?.toString(this.config.devServer.stats)
+        ?.toString(this.config.stats)
         .split('\n')
         .forEach((line) => logger.log(line));
     });

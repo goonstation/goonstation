@@ -43,6 +43,7 @@
 /obj/machinery/espresso_machine{
 	pixel_y = 4
 	},
+/obj/mapping_helper/glassware_spawn,
 /turf/simulated/floor/black,
 /area/dmm_suite/clear_area)
 

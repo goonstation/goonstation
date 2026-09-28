@@ -1,3 +1,6 @@
+#define CRYO_ATMOS_INTERACTION_TRESHOLD 1 MOLES
+#define CRYO_MOB_HEAL_TRESHOLD 5 MOLES
+
 TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 	mats = list("cobryl" = 100,
 				"crystal" = 50,
@@ -16,16 +19,14 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 	var/on = FALSE //! Whether the cell is turned on or not
 	var/datum/light/light
 	var/ARCHIVED(temperature)
-	var/mob/occupant = null //! Mob inside the tube being healed
-	var/obj/item/beaker = null //! The beaker containing chems which are applied to the occupant. May or may not be present.
-	var/show_beaker_contents = FALSE
+	var/mob/living/carbon/human/occupant = null //! Mob inside the tube being healed
+	var/obj/item/reagent_containers/glass/beaker = null //! The beaker containing chems which are applied to the occupant. May or may not be present.
+	var/obj/item/robodefibrillator/defib //! The attached defibrillator, if there is one
+	var/show_beaker_contents = FALSE //! Toggle for showing internal beaker contents in TGUI
 	var/current_heat_capacity = 50
 	var/occupied_power_use = 500 WATTS //! Additional power usage when the pod is occupied (and on)
 	var/eject_full_health_occupant = TRUE //! Does this pod eject occupants when they reach full health
 
-	var/reagent_scan_enabled = FALSE
-	var/reagent_scan_active = FALSE
-	var/obj/item/robodefibrillator/defib
 
 /obj/machinery/atmospherics/unary/cryo_cell/New()
 	..()
@@ -63,6 +64,9 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 		src.use_power(src.occupied_power_use, EQUIP)
 
 	if(src.air_contents)
+		if(src.beaker && TOTAL_MOLES(src.air_contents) >= CRYO_ATMOS_INTERACTION_TRESHOLD)
+			// cryotubes cool people and the chemicals they keep in them
+			src.beaker.reagents.temperature_reagents(src.air_contents.temperature, exposed_volume = (600 + src.beaker.reagents.total_volume * 7.5), change_cap = 30)
 		src.ARCHIVED(temperature) = src.air_contents.temperature
 		src.heat_gas_contents()
 		src.expel_gas()
@@ -115,9 +119,6 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 	.["status"] = src.on
 	.["ejectFullHealthOccupant"] = src.eject_full_health_occupant
 
-	.["showBeakerContents"] = src.show_beaker_contents
-	.["reagentScanEnabled"] = src.reagent_scan_enabled
-	.["reagentScanActive"] = src.reagent_scan_active
 	.["containerData"] = src.beaker ? get_reagents_data(src.beaker.reagents, src.beaker.name) : null
 
 	.["hasDefib"] = src.defib
@@ -136,10 +137,6 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 			src.beaker:set_loc(src.loc)
 			usr.put_in_hand_or_eject(beaker) // try to eject it into the users hand, if we can
 			src.beaker = null
-		if("show_beaker_contents")
-			src.show_beaker_contents = !src.show_beaker_contents
-		if ("reagent_scan_active")
-			src.reagent_scan_active = !src.reagent_scan_active
 		if ("defib")
 			var/area/A = get_area(src)
 			if (!A.powered(EQUIP))
@@ -170,55 +167,9 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 /obj/machinery/atmospherics/unary/cryo_cell/proc/get_occupant_data()
 	if (!src.occupant)
 		return null
-
-	. = list(
-		"occupied" = TRUE,
-		"occupantStat" = src.occupant.stat,
-		"health" = src.occupant.health / src.occupant.max_health,
-		"oxyDamage" = src.occupant.get_oxygen_deprivation(),
-		"toxDamage" = src.occupant.get_toxin_damage(),
-		"burnDamage" = src.occupant.get_burn_damage(),
-		"bruteDamage" = src.occupant.get_brute_damage()
-	)
-	if (isliving(src.occupant))
-		var/mob/living/L = src.occupant
-		var/mob/living/carbon/human/H = L
-
-		var/death_state = L.stat
-		if (L.bioHolder && L.bioHolder.HasEffect("dead_scan"))
-			death_state = 2
-
-		var/datum/statusEffect/simpledot/radiation/R = L.hasStatus("radiation")
-
-		var/list/brain_damage = call(/obj/machinery/computer/operating/proc/calc_brain_damage_severity)(L)
-
-		. += list(
-			"patient_status" = death_state,
-			"blood_pressure_rendered" = L.blood_pressure["rendered"],
-			"blood_pressure_status" = L.blood_pressure["status"],
-
-			"body_temp" = L.bodytemperature,
-			"optimal_temp" = L.base_body_temp,
-			"embedded_objects" = call(/obj/machinery/computer/operating/proc/check_embedded_objects)(L),
-
-			"rad_stage" = R?.stage ? R.stage : 0,
-			"rad_dose" = R?.stage ? L.radiation_dose : 0,
-
-			"brain_damage" = list (
-				"value" = L.get_brain_damage(),
-				"desc" = brain_damage[1],
-				"color" = brain_damage[2],
-			),
-		)
-
-		if (reagent_scan_active)
-			. += list(
-				"blood_volume" = L.blood_pressure["total"],
-				"reagents" = get_reagents_data(L.reagents, null)
-			)
-
-		if (istype(H))
-			. += list("hasRoboticOrgans" = H.robotic_organs > 0)
+	. = list()
+	.["occupied"] = TRUE
+	. += src.occupant.ui_health_data(include_organs=TRUE, include_reagents=TRUE)
 
 /obj/machinery/atmospherics/unary/cryo_cell/proc/get_reagents_data(var/datum/reagents/R, var/container_name)
 	. = list(
@@ -271,17 +222,6 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 		src.visible_message(SPAN_ALERT("<B>[user] injects [transferred] units into [src]'s beaker.</B>"))
 		src.beaker.on_reagent_change()
 		return
-	else if (istype(I, /obj/item/device/analyzer/healthanalyzer_upgrade))
-		if (src.reagent_scan_enabled)
-			boutput(user, SPAN_ALERT("This Cryo Cell already has a reagent scan upgrade!"))
-			return
-		else
-			src.reagent_scan_enabled = TRUE
-			boutput(user, SPAN_NOTICE("Reagent scan upgrade installed."))
-			playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
-			user.u_equip(I)
-			qdel(I)
-			return
 	else if (istype(I, /obj/item/robodefibrillator))
 		if (src.defib)
 			boutput(user, SPAN_ALERT("[src] already has a defibrillator installed."))
@@ -374,7 +314,7 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 		src.UpdateOverlays(null, "defib")
 
 /obj/machinery/atmospherics/unary/cryo_cell/proc/process_occupant()
-	if(TOTAL_MOLES(src.air_contents) < 10 MOLES)
+	if(TOTAL_MOLES(src.air_contents) < CRYO_MOB_HEAL_TRESHOLD)
 		return
 	if(ishuman(src.occupant))
 		if(isdead(src.occupant))
@@ -382,6 +322,36 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 		var/temp_change = 50*(src.air_contents.temperature - src.occupant.bodytemperature)*src.current_heat_capacity/(src.current_heat_capacity + HEAT_CAPACITY(src.air_contents))
 		src.occupant.changeBodyTemp(temp_change, src.air_contents.temperature, src.air_contents.temperature)
 		src.occupant.changeStatus("burning", -10 SECONDS)
+		// we burn them alive in the cryotube if we run it over 100 °C
+
+		if(src.air_contents.temperature > T100C)
+			//let's cook the person, depending on how hot we make our cryotube
+			var/burn_damage = rand(4,6)
+			var/output_message = "The heat is quite uncomfortable!"
+			switch(src.air_contents.temperature)
+				if((500) to (1500))
+					burn_damage = rand(6,9)
+					output_message = "It burns!"
+				if((1500) to (5000))
+					burn_damage = rand(7,11)
+					output_message = "Oh god! That burns!"
+				if((5000) to (50000))
+					burn_damage = rand(10,14)
+					output_message = "Why?! This is torment!!"
+				if((50000) to (3000000))
+					burn_damage = rand(12,17)
+					output_message = "Why?! This is torment!!"
+				if((3000000) to (INFINITY)) //yes, that's 3 million. You got to get 5 mol into that tube somehow. The tube expels gas and cools down over time. Engineers, you know what to do
+					burn_damage = 20
+					output_message = "This is fine..."
+					if(rand(15))
+						var/mob/mob_to_gib = src.occupant
+						src.go_out()
+						mob_to_gib.firegib(TRUE)
+						return
+			src.occupant.TakeDamage("All", 0, burn_damage, 0, DAMAGE_BURN)
+			if(!ON_COOLDOWN(src.occupant, "cryotube_burning", 10 SECONDS))
+				boutput(src.occupant, SPAN_ALERT("[output_message]"))
 		var/mob/living/carbon/human/H = null
 		if (ishuman(occupant))
 			H = occupant
@@ -398,11 +368,11 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 		return
 	if(src.beaker)
 		src.beaker.reagents.trans_to(occupant, 0.1, 10)
-		src.beaker.reagents.reaction(occupant, TOUCH, 5, paramslist = list("nopenetrate")) //1/10th of small beaker - matches old rate for default beakers, give or take
+		src.beaker.reagents.reaction(occupant, TOUCH, 5, can_burn = FALSE, paramslist = list("nopenetrate")) //1/10th of small beaker - matches old rate for default beakers, give or take
 
 /// Slowly heats air_contents to 20C
 /obj/machinery/atmospherics/unary/cryo_cell/proc/heat_gas_contents()
-	if(TOTAL_MOLES(air_contents) < 1 MOLE)
+	if(TOTAL_MOLES(air_contents) < CRYO_ATMOS_INTERACTION_TRESHOLD)
 		return
 	var/air_heat_capacity = HEAT_CAPACITY(src.air_contents)
 	var/combined_heat_capacity = src.current_heat_capacity + air_heat_capacity
@@ -412,7 +382,7 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 
 /// Leaks some gas out.
 /obj/machinery/atmospherics/unary/cryo_cell/proc/expel_gas()
-	if(TOTAL_MOLES(src.air_contents) < 1)
+	if(TOTAL_MOLES(src.air_contents) < CRYO_ATMOS_INTERACTION_TRESHOLD)
 		return
 	var/remove_amount = TOTAL_MOLES(src.air_contents)/100
 	var/datum/gas_mixture/expel_gas = air_contents.remove(remove_amount)
@@ -497,3 +467,6 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 	icon = 'icons/obj/Cryogenic2.dmi'
 	layer = 3
 	icon_state = "defib-shock"
+
+#undef CRYO_ATMOS_INTERACTION_TRESHOLD
+#undef CRYO_MOB_HEAL_TRESHOLD

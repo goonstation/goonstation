@@ -456,6 +456,19 @@
 
 ////////////////////////////////////////////////////////////
 
+/obj/ability_button/ntso_engineer_toggle
+	name = "Cycle Helmet Scanner"
+	icon_state = "meson0"
+
+	execute_ability()
+		var/obj/item/clothing/head/helmet/space/ntso/engineer/J = the_item
+		J.AttackSelf(the_mob)
+		if(!J.should_icon_use_disabled_sprite()) icon_state = "meson1"
+		else  icon_state = "meson0"
+		..()
+
+////////////////////////////////////////////////////////////
+
 /obj/ability_button/atmos_goggle_toggle //goggle toggle
 	name = "Toggle Atmos Goggles"
 	icon_state = "meson1"
@@ -871,6 +884,8 @@
 		the_mob.item_abilities = list()
 
 //HEY this should be moved over to use /atom/movable/screen/ability_button but it breaks a few paths and needs different procs and its outta my depth tbh
+TYPEINFO(/obj/ability_button)
+	analyser_flags = ANALYSER_BLACKLIST
 /obj/ability_button
 	name = "baseButton"
 	desc = ""
@@ -880,7 +895,6 @@
 	plane = PLANE_HUD
 	anchored = ANCHORED
 	flags = NOSPLASH
-	mechanics_interaction = MECHANICS_INTERACTION_BLACKLISTED
 
 	var/cooldown = 0
 	var/last_use_time = 0
@@ -957,6 +971,7 @@
 
 	//please call back to parent to trigger handle cooldown
 	proc/execute_ability()
+		// todo: SHOULD_CALL_PARENT(TRUE)
 		src.handle_cooldown()
 		return
 

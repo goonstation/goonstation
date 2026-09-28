@@ -1,0 +1,1 @@
+/obj/mapping_helper/airlock/cycler : /obj/mapping_helper/airlock/cycler/manual{@OLD}

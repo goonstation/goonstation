@@ -34,8 +34,8 @@
 		<li><b>Nanofabrictors</b> - makes special gear out of refined minerals, like metal sheets and lightbulbs.</li></ul><hr>
 		<h3>MATERIALS</h3>
 		Now, a basic rundown of what you'll find out there:
-		<ul><li><b>Mauxite</b> - standard <i>Metal</i>, easily mined with even a unpowered pickaxe</li>
-		<li><b>Pharosium</b> - standard <i>Conductor</i>, easily mined with even a unpowered pickaxe</li>
+		<ul><li><b>Mauxite</b> - standard <i>Metal</i>, easily mined with even an unpowered pickaxe</li>
+		<li><b>Pharosium</b> - standard <i>Conductor</i>, easily mined with even an unpowered pickaxe</li>
 		<li><b>Molitz</b> - standard <i>Crystal</i>, easily mined; a rare version, <b>Molitz Beta</b> may be found in deposits and will release a special gas at a high temperature</li></ul>
 		Other useful materials:
 		<ul><li><b>Borhum</b> - sturdy <i>Metal</i>, useful and easy to mine; required to make improved gear and pod armor</li>

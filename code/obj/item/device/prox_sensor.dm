@@ -12,7 +12,7 @@ TYPEINFO(/obj/item/device/prox_sensor)
 	var/const/min_time = 0
 	flags = TABLEPASS | CONDUCT
 	w_class = W_CLASS_SMALL
-	item_state = "electronic"
+	item_state = "assembly"
 	m_amt = 300
 	desc = "A device which transmits a signal when it detects movement nearby."
 

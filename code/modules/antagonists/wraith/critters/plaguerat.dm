@@ -28,7 +28,6 @@ TYPEINFO(/mob/living/critter/wraith/plaguerat)
 	health_brute_vuln = 0.45
 	health_burn = 50
 	health_burn_vuln = 0.65
-	var/obj/machinery/wraith/rat_den/linked_den = null
 	reagent_capacity = 100
 	var/mob/living/intangible/wraith/master = null
 
@@ -66,14 +65,14 @@ TYPEINFO(/mob/living/critter/wraith/plaguerat)
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "paw"
 		HH.limb_name = "claws"
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/mouth/small
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "mouth"
 		HH.name = "mouth"
 		HH.limb_name = "teeth"
@@ -182,14 +181,14 @@ TYPEINFO(/mob/living/critter/wraith/plaguerat)
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "paw"
 		HH.limb_name = "claws"
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/mouth/small
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "mouth"
 		HH.name = "mouth"
 		HH.limb_name = "teeth"
@@ -221,14 +220,14 @@ TYPEINFO(/mob/living/critter/wraith/plaguerat)
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/small_critter/med
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "paw"
 		HH.limb_name = "claws"
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/mouth/small
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "mouth"
 		HH.name = "mouth"
 		HH.limb_name = "teeth"
@@ -258,14 +257,14 @@ TYPEINFO(/mob/living/critter/wraith/plaguerat)
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "handn"
 		HH.name = "paw"
 		HH.limb_name = "claws"
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/mouth/small
-		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon = 'icons/mob/critter_hands.dmi'
 		HH.icon_state = "mouth"
 		HH.name = "mouth"
 		HH.limb_name = "teeth"

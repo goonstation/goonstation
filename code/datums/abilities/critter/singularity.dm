@@ -64,6 +64,8 @@
 		LAGCHECK(LAG_LOW)
 		if (prob(70))
 			continue
+		if (T.material?.getProperty("density") >= 7)
+			continue
 		if (T && !istype(T, /turf/space))
 			if (istype(T,/turf/simulated/floor) && !istype(T,/turf/simulated/floor/plating))
 				var/turf/simulated/floor/F = T

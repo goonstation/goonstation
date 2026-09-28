@@ -62,12 +62,11 @@
 		qdel(src)
 		return
 	A.artitype = AO
-	A.scramblechance = AO.scramblechance
 	// Refers to the artifact datum's list of origins it's allowed to be from and selects one at random. This way we can avoid
 	// stuff that doesn't make sense like ancient robot plant seeds or eldritch healing devices
 
 	var/datum/artifact_origin/appearance = artifact_controls.get_origin_from_string(AO.name)
-	if (prob(A.scramblechance))
+	if (prob(AO.scramblechance))
 		appearance = null
 	// rare-ish chance of an artifact appearing to be a different origin, just to throw things off
 
@@ -121,11 +120,10 @@
 	A.fault_types |= AO.fault_types - A.fault_blacklist
 	A.internal_name = AO.generate_name()
 	A.used_names[AO.type_name] = A.internal_name
-	A.nofx = AO.nofx
 
 	ArtifactDevelopFault(10)
 
-	if (A.automatic_activation)
+	if(A.automatic_activation)
 		src.ArtifactActivated()
 
 	var/list/valid_triggers = A.validtriggers
@@ -160,7 +158,7 @@
 		var/turf/T = get_turf(src)
 		if (T) T.visible_message("<b>[src] [A.activ_text]</b>") //ZeWaka: Fix for null.visible_message()
 	A.activated = 1
-	if (A.nofx)
+	if (A.artitype.nofx)
 		src.icon_state = src.icon_state + "fx"
 	else
 		A.show_fx(src)
@@ -188,7 +186,7 @@
 		var/turf/T = get_turf(src)
 		T.visible_message("<b>[src] [A.deact_text]</b>")
 	A.activated = 0
-	if (A.nofx)
+	if (A.artitype.nofx)
 		src.icon_state = src.icon_state - "fx"
 	else
 		A.hide_fx(src)
@@ -565,6 +563,7 @@
 	src.remove_artifact_forms()
 
 	src.ArtifactDeactivated()
+	src.artifact.pre_destroyed(src)
 
 	ArtifactLogs(usr, null, src, "destroyed", null, 0)
 
@@ -573,7 +572,7 @@
 	qdel(src)
 	return
 
-/obj/proc/ArtifactDevelopFault(var/faultprob)
+/obj/proc/ArtifactDevelopFault(var/faultprob, var/messageprob = 5)
 	// This proc is used for randomly giving an artifact a fault. It's usually used in the New() proc of an artifact so that
 	// newly spawned artifacts have a chance of being faulty by default, though this can also be called whenever an artifact is
 	// damaged or otherwise poorly handled, so you could potentially turn a good artifact into a dangerous piece of shit if you
@@ -594,6 +593,10 @@
 		var/new_fault = weighted_pick(A.fault_types)
 		if (ispath(new_fault))
 			var/datum/artifact_fault/F = new new_fault(A)
+			if (A.activated && prob(messageprob))
+				var/turf/T = get_turf(src)
+				if (T)
+					T.visible_message(SPAN_NOTICE("The [src.name] [F.add_message]"))
 			F.holder = A
 			A.faults += F
 

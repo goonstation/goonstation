@@ -41,27 +41,29 @@ TYPEINFO(/obj/machinery/phone)
 	var/area/location = get_area(src)
 
 	// Give the phone an appropriate departmental color. Jesus christ thats fancy.
-	if (isnull(src.stripe_color)) // maps can override it now
-		if (istype(location,/area/station/security))
-			src.stripe_color = "#ff0000"
-			src.phone_category = "security"
-		else if (istype(location,/area/station/bridge))
-			src.stripe_color = "#00ff00"
-			src.phone_category = "bridge"
-		else if (istype(location, /area/station/engine) || istype(location, /area/station/quartermaster) || istype(location, /area/station/mining))
-			src.stripe_color = "#ffff00"
-			src.phone_category = "engineering"
-		else if (istype(location, /area/station/science))
-			src.stripe_color = "#8409ff"
-			src.phone_category = "research"
-		else if (istype(location, /area/station/medical))
-			src.stripe_color = "#3838ff"
-			src.phone_category = "medical"
-		else
-			src.stripe_color = "#b65f08"
-			src.phone_category = "uncategorized"
-	else
-		src.phone_category = "uncategorized"
+	var/area_color = "#b65f08"
+	var/area_category = "uncategorized"
+	switch(location.station_map_colour)
+		if (MAPC_SECURITY, MAPC_ARMOURY, MAPC_BRIG)
+			area_color = "#ff0000"
+			area_category = "security"
+		if (MAPC_COMMAND)
+			area_color = "#00ff00"
+			area_category = "bridge"
+		if (MAPC_ENGINEERING, MAPC_MECHLAB, MAPC_QUARTERMASTER, MAPC_MINING)
+			area_color = "#ffff00"
+			area_category = "engineering"
+		if (MAPC_RESEARCH, MAPC_CHEMISTRY, MAPC_TOXINS, MAPC_TELESCI, MAPC_ARTLAB)
+			area_color = "#8409ff"
+			area_category = "research"
+		if (MAPC_MEDICAL, MAPC_MEDLOBBY, MAPC_ROBOTICS, MAPC_MORGUE, MAPC_MEDRESEARCH, MAPC_PATHOLOGY)
+			area_color = "#3838ff"
+			area_category = "medical"
+	//Allow maps to override either
+	if(isnull(src.stripe_color))
+		src.stripe_color = area_color
+	if(isnull(src.phone_category))
+		src.phone_category = area_category
 
 	src.UpdateOverlays(image('icons/obj/machines/phones.dmi',"[src.dialicon]"), "dial")
 	var/image/stripe_image = image('icons/obj/machines/phones.dmi',"[src.icon_state]-stripe")

@@ -9,7 +9,7 @@ Contains:
 - Extended Pocket Tanks
 	- Oxygen, Plasma, Air, Empty subtypes
 - Mini Tanks
-	- Oxygen, Plasma, Air, Empty subtypes
+	- Oxygen, Plasma, Air, Empty, Anesthetic subtypes
 */
 
 #define TANK_VOLUME 70 LITERS //! The volume of a normal tank in litres
@@ -23,6 +23,7 @@ ABSTRACT_TYPE(/obj/item/tank)
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	flags = TABLEPASS | CONDUCT | TGUI_INTERACTIVE
 	c_flags = ONBACK
+	tool_flags = parent_type::tool_flags | TOOL_ASSEMBLY_APPLIER
 
 	pressure_resistance = ONE_ATMOSPHERE * 5
 
@@ -57,14 +58,34 @@ ABSTRACT_TYPE(/obj/item/tank)
 		processing_items |= src
 		src.create_inventory_counter()
 		BLOCK_SETUP(BLOCK_TANK)
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY, PROC_REF(assembly_application))
+		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
 		return
 
 	disposing()
 		if(air_contents)
 			qdel(air_contents)
 			air_contents = null
+		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_APPLY)
 		processing_items.Remove(src)
 		..()
+
+	proc/assembly_application(var/manipulated_tank, var/obj/item/assembly/parent_assembly, var/obj/assembly_target)
+		playsound(parent_assembly, 'sound/effects/valve_creak.ogg', 50, 1)
+		if (!assembly_target)
+			return
+		if (istype(assembly_target, /obj/item/inflatable_mob))
+			var/obj/item/inflatable_mob/inflatable = assembly_target
+			if (inflatable.can_inflate(src))
+				parent_assembly.tear_apart()
+				inflatable.apply_tank(src)
+
+	proc/assembly_setup(var/manipulated_tank, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
+		if(parent_assembly.applier == src)
+			parent_assembly.AddComponent(/datum/component/assembly, list(/obj/item/inflatable_mob), TYPE_PROC_REF(/obj/item/assembly, add_target_item), TRUE)
+
+	assembly_get_admin_log_message(var/mob/user, var/obj/item/assembly/parent_assembly)
+		return " [log_atmos(src)]"
 
 	blob_act(var/power)
 		if(prob(25 * power / 20))
@@ -94,8 +115,12 @@ ABSTRACT_TYPE(/obj/item/tank)
 		return TRUE
 
 	proc/using_internal()
+		var/mob/living/carbon/location
 		if (iscarbon(src.loc))
-			var/mob/living/carbon/location = loc
+			location = loc
+		else if (istype(src.loc, /obj/item/clothing/mask))
+			location = src.loc.loc
+		if (istype(location))
 			return location.internal == src
 		return FALSE
 
@@ -103,38 +128,41 @@ ABSTRACT_TYPE(/obj/item/tank)
 		distribute_pressure = clamp(pressure, 1, TANK_MAX_RELEASE_PRESSURE)
 
 	proc/toggle_valve()
+		var/mob/living/carbon/location
 		if (iscarbon(src.loc))
-			var/mob/living/carbon/location = loc
-			if (!location)
-				return
-			playsound(src.loc, 'sound/effects/valve_creak.ogg', 50, TRUE)
-			if(location.internal == src)
+			location = loc
+		else if (istype(src.loc, /obj/item/clothing/mask))
+			location = src.loc.loc
+		if (!istype(location))
+			return
+		playsound(src.loc, 'sound/effects/valve_creak.ogg', 50, TRUE)
+		if(location.internal == src)
+			for (var/obj/ability_button/tank_valve_toggle/T in location.internal.ability_buttons)
+				if(T.the_item == src)
+					T.icon_state = "airoff"
+			location.internal = null
+			if (location.internals)
+				location.internals.icon_state = "internal0"
+			boutput(location, SPAN_NOTICE("You close the tank release valve."))
+			return FALSE
+		else
+			if(location.wear_mask && (location.wear_mask.c_flags & MASKINTERNALS))
+				if(!isnull(location.internal)) //you're already using a tank and it's not this one
+					location.internal.toggle_valve()
+					boutput(location, SPAN_NOTICE("After closing the valve on your other tank, you switch to this one."))
+				location.internal = src
+
 				for (var/obj/ability_button/tank_valve_toggle/T in location.internal.ability_buttons)
 					if(T.the_item == src)
-						T.icon_state = "airoff"
-				location.internal = null
+						T.icon_state = "airon"
 				if (location.internals)
-					location.internals.icon_state = "internal0"
-				boutput(location, SPAN_NOTICE("You close the tank release valve."))
-				return FALSE
+					location.internals.icon_state = "internal1"
+				boutput(location, SPAN_NOTICE("You open the tank release valve."))
+				return TRUE
 			else
-				if(location.wear_mask && (location.wear_mask.c_flags & MASKINTERNALS))
-					if(!isnull(location.internal)) //you're already using a tank and it's not this one
-						location.internal.toggle_valve()
-						boutput(location, SPAN_NOTICE("After closing the valve on your other tank, you switch to this one."))
-					location.internal = src
-
-					for (var/obj/ability_button/tank_valve_toggle/T in location.internal.ability_buttons)
-						if(T.the_item == src)
-							T.icon_state = "airon"
-					if (location.internals)
-						location.internals.icon_state = "internal1"
-					boutput(location, SPAN_NOTICE("You open the tank release valve."))
-					return TRUE
-				else
-					boutput(location, SPAN_ALERT("The valve immediately closes! You need to put on a mask first."))
-					playsound(src.loc, 'sound/items/penclick.ogg', 50, TRUE)
-					return FALSE
+				boutput(location, SPAN_ALERT("The valve immediately closes! You need to put on a mask first."))
+				playsound(src.loc, 'sound/items/penclick.ogg', 50, TRUE)
+				return FALSE
 
 	proc/remove_air_volume(volume_to_return)
 		if(!air_contents)
@@ -350,8 +378,6 @@ ABSTRACT_TYPE(/obj/item/tank)
 	New()
 		..()
 		src.air_contents.toxins = (3 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C)
-		RegisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP, PROC_REF(assembly_setup))
-		return
 
 	disposing()
 		UnregisterSignal(src, COMSIG_ITEM_ASSEMBLY_ITEM_SETUP)
@@ -359,10 +385,8 @@ ABSTRACT_TYPE(/obj/item/tank)
 
 	/// ----------- Trigger/Applier/Target-Assembly-Related Procs -----------
 
-	assembly_get_admin_log_message(var/mob/user, var/obj/item/assembly/parent_assembly)
-		return " [log_atmos(src)]"
-
-	proc/assembly_setup(var/manipulated_bomb, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
+	assembly_setup(var/manipulated_bomb, var/obj/item/assembly/parent_assembly, var/mob/user, var/is_build_in)
+		..()
 		//lets make them contraband 4, like pipebombs
 		var/singletank_bomb_contraband_level = 4
 		//we need to add the new icon for the plasma tank
@@ -449,16 +473,17 @@ ABSTRACT_TYPE(/obj/item/tank)
 	name = "gas tank (sleeping agent)"
 	icon_state = "anesthetic"
 	extra_desc = "It's labeled as containing an anesthetic capable of keeping somebody unconscious while they breathe it."
-	distribute_pressure = 81
+	distribute_pressure = 34
 
 	New()
 		..()
-		src.air_contents.oxygen = (3 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD
-		src.air_contents.nitrous_oxide = (3 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
+		src.air_contents.oxygen = (3 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * 0.5
+		src.air_contents.nitrous_oxide = (3 * ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * 0.5
 
 // ==== JETPACKS ====
 
 TYPEINFO(/obj/item/tank/jetpack)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 16
 /obj/item/tank/jetpack
 	name = "jetpack (oxygen)"
@@ -744,6 +769,17 @@ ABSTRACT_TYPE(/obj/item/tank/mini)
 		src.air_contents.oxygen = (ONE_ATMOSPHERE / 2) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD
 		src.air_contents.nitrogen = (ONE_ATMOSPHERE / 2) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
 
+/obj/item/tank/mini/anesthetic
+	name = "mini tank (anesthetic)"
+	icon_state = "mini_anesthetic"
+	item_state = "mini_anesthetic"
+	extra_desc = "It's labeled as containing an anesthetic capable of keeping somebody unconscious while they breathe it."
+	distribute_pressure = 34
+
+	New()
+		..()
+		src.air_contents.oxygen = (ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * 0.5
+		src.air_contents.nitrous_oxide = (ONE_ATMOSPHERE) * TANK_VOLUME / (R_IDEAL_GAS_EQUATION * T20C) * 0.5
 
 /obj/item/tank/mini/empty
 	icon_state = "mini_empty"

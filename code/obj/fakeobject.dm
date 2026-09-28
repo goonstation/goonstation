@@ -205,7 +205,7 @@
 	name = "broken air monitor"
 	desc = "Something has broken this air monitor."
 	icon = 'icons/obj/monitors.dmi'
-	icon_state = "alarmx"
+	icon_state = "alarm_broken"
 	anchored = ANCHORED
 
 /obj/fakeobject/shuttlethruster

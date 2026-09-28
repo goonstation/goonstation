@@ -25,12 +25,16 @@
 		else
 			abilities += target_mob.abilityHolder?.abilities
 		for (var/datum/targetable/ability as anything in abilities)
+			var/datum/bioEffect/power/linked_gene
+			if(istype(ability, /datum/targetable/geneticsAbility))
+				var/datum/targetable/geneticsAbility/gene_ability = ability
+				linked_gene = gene_ability.linked_power
 			ability_props += list(list(
 				"abilityRef" = ref(ability),
 				"name" = ability,
 				"subtype" = strip_prefix(ability.type, "/datum/targetable/"),
 				"pointCost" = ability.pointCost,
-				"cooldown" = ability.cooldown))
+				"cooldown" = linked_gene?.cooldown || ability.cooldown))
 	. = list(
 		"target_name" = target_mob,
 		"abilities" = ability_props
@@ -63,6 +67,11 @@
 		if ("updateCooldown")
 			var/new_cooldown = round(text2num(params["value"]))
 			T.cooldown = isnull(new_cooldown) ? 0 : max(new_cooldown, 0)
+			if(istype(T, /datum/targetable/geneticsAbility))
+				var/datum/targetable/geneticsAbility/gene_power = T
+				var/datum/bioEffect/power/linked_gene = gene_power.linked_power
+				if(linked_gene?.cooldown != T.cooldown)
+					linked_gene.cooldown = T.cooldown
 			. = TRUE
 		if ("resetCooldown")
 			T.last_cast = 0

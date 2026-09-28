@@ -1,0 +1,4 @@
+/turf/simulated/wall/auto/reinforced/supernorn/blackred : /turf/simulated/wall/auto/reinforced/supernorn/colored/red{@OLD}
+/turf/simulated/wall/auto/reinforced/supernorn/yellow/sturdy : /turf/simulated/wall/auto/reinforced/supernorn/colored/yellow/plasmasteel{@OLD}
+/turf/simulated/wall/auto/reinforced/supernorn/yellow : /turf/simulated/wall/auto/reinforced/supernorn/colored/yellow{@OLD}
+/turf/simulated/wall/auto/reinforced/supernorn/orange : /turf/simulated/wall/auto/reinforced/supernorn/colored/orange{@OLD}

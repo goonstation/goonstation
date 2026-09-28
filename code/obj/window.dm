@@ -37,7 +37,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	gas_impermeable = TRUE
 	anchored = ANCHORED
-	material_amt = 0.1
+	material_amt = MATERIAL::AMOUNT::SHEET
 	HELP_MESSAGE_OVERRIDE(null)
 
 	the_tuff_stuff
@@ -123,9 +123,9 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	set_dir(new_dir)
 		. = ..()
 		if(new_dir in cardinal)
-			src.material_amt = 0.1
+			src.material_amt = MATERIAL::AMOUNT::SHEET
 		else
-			src.material_amt = 0.2
+			src.material_amt = MATERIAL::AMOUNT::SHEET * 2
 
 	onMaterialChanged()
 		..()
@@ -787,9 +787,6 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		/turf/simulated/wall/auto/shuttle,
 		/obj/indestructible/shuttle_corner,
 
-		/turf/simulated/wall/auto/reinforced/supernorn/yellow,
-		/turf/simulated/wall/auto/reinforced/supernorn/blackred,
-		/turf/simulated/wall/auto/reinforced/supernorn/orange,
 		/turf/simulated/wall/auto/reinforced/paper,
 		/turf/simulated/wall/auto/jen,
 		/turf/simulated/wall/auto/reinforced/jen,

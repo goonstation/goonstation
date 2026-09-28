@@ -117,7 +117,7 @@
 					boutput(src.owner, SPAN_ALERT("Your entire being strains against the immense gravity. <b>Staying here is not safe!</b>"), "grav_gib_warning")
 					src.gib_counter += 0.69
 					return // slow people down from dying a lil bit so they gib >:o)
-			if (probmult(gforce * 4)) // ~9% minimum
+			if (probmult(gforce/GFORCE_EARTH_GRAVITY * 4)) // ~9% minimum
 				var/damage = max(rand(GFORCE_MOB_EXTREME_THRESHOLD, gforce), GFORCE_MOB_GREYOUT_THRESHOLD)/GFORCE_EARTH_GRAVITY
 				if (human_owner)
 					switch(rand(1, 3))

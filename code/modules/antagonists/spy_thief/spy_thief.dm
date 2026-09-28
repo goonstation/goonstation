@@ -86,7 +86,7 @@
 			var/obj/item/uplink/integrated/pda/spy/uplink = new /obj/item/uplink/integrated/pda/spy(PDA)
 			uplink.setup(H.mind, PDA)
 
-			boutput(H, "The Syndicate have cunningly disguised a spy thief uplink as your [uplink_source.name] [loc_string]. Simply enter the the code <b>\"[uplink.lock_code]\"</b> as the ringtone in its Messenger app to unlock its hidden features.")
+			boutput(H, "The Syndicate have cunningly disguised a spy thief uplink as your [uplink_source.name] [loc_string]. Simply enter the code <b>\"[uplink.lock_code]\"</b> as the ringtone in its Messenger app to unlock its hidden features.")
 			logTheThing(LOG_DEBUG, H, "Spy Thief PDA uplink created: [uplink_source.name]. Location given: [loc_string]. Code: [uplink.lock_code]")
 			src.owner.store_memory("<b>Uplink password:</b> [uplink.lock_code].")
 

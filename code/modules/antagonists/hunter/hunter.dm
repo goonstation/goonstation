@@ -128,7 +128,7 @@
 									skull_desc = "A meaningless trophy from a lab monkey. You feel disgusted to even look at it."
 								if (isfrog(H))
 									skull_type = /obj/item/skull/frog
-									skull_value = 2
+									skull_value = 1
 									skull_desc = "A trophy taken from an amphibian. A meaningless oddity at best."
 
 						// Everything's still default, so check for assigned_role. Could be a lizard captain or whatever.

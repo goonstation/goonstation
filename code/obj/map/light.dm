@@ -19,8 +19,8 @@
 			light.attach(src)
 			light.set_color(src.color_r, src.color_g, src.color_b)
 			light.set_brightness(src.brightness / 5)
-			light.enable()
-
+			SPAWN(1 DECI SECOND) //Needed so the light properly enables when placed at runtime (e.g. random rooms)
+				light.enable()
 	disposing()
 		qdel(src.light)
 		src.light = null
@@ -160,3 +160,19 @@
 		color_r = 0.7
 		color_g = 0.4
 		color_b = 0.9
+
+/obj/map/light/cyan/menhir
+	name = "glow - menhir reactive"
+	brightness = 7
+
+	New()
+		..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		..()
+
+	proc/alterlight(var/newR,var/newG,var/newB,var/newbrightness)
+		src.light.set_color(newR,newG,newB)
+		if(newbrightness) src.light.set_brightness(newbrightness / 5)

@@ -1,0 +1,338 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/shrub{
+	dir = 1
+	},
+/obj/item/reagent_containers/food/snacks/plant/banana,
+/obj/machinery/camera/directional/north,
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
+"b" = (
+/obj/fakeobject/palmtree,
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
+"c" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
+"d" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/obj/item/clothing/suit/monkey,
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
+"e" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/medical/dome)
+"f" = (
+/obj/item/bananapeel,
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
+"g" = (
+/obj/machinery/door/airlock/pyro/glass,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/access/medlab,
+/obj/mapping_helper/access/research,
+/turf/simulated/floor/black,
+/area/station/medical/dome)
+"i" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
+"j" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
+"n" = (
+/obj/cable{
+	icon_state = "2-9"
+	},
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
+"o" = (
+/obj/shrub,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
+"p" = (
+/mob/living/carbon/human/npc/monkey,
+/obj/cable{
+	icon_state = "1-6"
+	},
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
+"r" = (
+/obj/shrub{
+	dir = 8
+	},
+/obj/item/reagent_containers/food/snacks/plant/banana,
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
+"s" = (
+/obj/item/reagent_containers/food/snacks/plant/banana,
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
+"u" = (
+/obj/machinery/light/small/floor/warm,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
+"v" = (
+/obj/critter/parrot/random,
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
+"w" = (
+/obj/storage/secure/closet/animal,
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
+"x" = (
+/mob/living/carbon/human/npc/monkey,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
+"z" = (
+/mob/living/carbon/human/npc/monkey,
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
+"B" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/stairs/medical{
+	dir = 8
+	},
+/area/station/medical/dome)
+"D" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/medlab,
+/obj/mapping_helper/access/research,
+/turf/simulated/floor/black,
+/area/station/medical/dome)
+"E" = (
+/obj/shrub{
+	dir = 6
+	},
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
+"F" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
+"H" = (
+/obj/machinery/light/small/floor/warm,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
+"I" = (
+/obj/fakeobject/palmtree,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
+"J" = (
+/turf/simulated/floor/stairs/medical{
+	dir = 1
+	},
+/area/station/medical/dome)
+"L" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
+"M" = (
+/obj/fakeobject/palmtree,
+/obj/machinery/light_switch/directional/east,
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
+"N" = (
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
+"O" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/medlab,
+/obj/mapping_helper/access/research,
+/turf/simulated/floor/black,
+/area/station/medical/dome)
+"Q" = (
+/obj/shrub{
+	dir = 4
+	},
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
+"R" = (
+/obj/machinery/power/apc/autoname_east,
+/obj/cable,
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
+"S" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/stairs/medical{
+	dir = 4
+	},
+/area/station/medical/dome)
+"U" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/vending/monkey/research,
+/obj/mapping_helper/access/medlab,
+/turf/simulated/floor/white,
+/area/station/medical/dome)
+"W" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
+"X" = (
+/obj/cable{
+	icon_state = "1-10"
+	},
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
+"Y" = (
+/turf/simulated/floor/stairs/medical,
+/area/station/medical/dome)
+"Z" = (
+/obj/cable{
+	icon_state = "2-5"
+	},
+/turf/simulated/floor/grass,
+/area/station/medical/dome)
+
+(1,1,1) = {"
+e
+e
+e
+e
+D
+e
+e
+e
+e
+"}
+(2,1,1) = {"
+e
+a
+N
+b
+L
+d
+N
+b
+e
+"}
+(3,1,1) = {"
+e
+x
+N
+v
+u
+z
+Q
+i
+e
+"}
+(4,1,1) = {"
+e
+b
+N
+E
+S
+N
+b
+s
+e
+"}
+(5,1,1) = {"
+g
+j
+N
+J
+U
+Y
+z
+c
+g
+"}
+(6,1,1) = {"
+e
+o
+p
+N
+B
+v
+Z
+F
+e
+"}
+(7,1,1) = {"
+e
+I
+f
+n
+H
+X
+b
+i
+e
+"}
+(8,1,1) = {"
+e
+w
+N
+M
+W
+R
+z
+r
+e
+"}
+(9,1,1) = {"
+e
+e
+e
+e
+O
+e
+e
+e
+e
+"}

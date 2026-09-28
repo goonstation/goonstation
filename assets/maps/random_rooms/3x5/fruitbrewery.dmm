@@ -16,7 +16,7 @@
 /turf/simulated/floor/wood/five,
 /area/dmm_suite/clear_area)
 "p" = (
-/obj/submachine/chef_sink{
+/obj/machinery/sink{
 	dir = 8
 	},
 /turf/simulated/floor/wood/seven,

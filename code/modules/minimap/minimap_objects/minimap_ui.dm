@@ -251,4 +251,4 @@
 
 /atom/movable/minimap_ui_handler/minimap_controller/camera_viewer/ui_close(mob/user)
 	. = ..()
-	user.set_eye(null)
+	SEND_SIGNAL(user, COMSIG_MOB_CANCEL_CAMERA)

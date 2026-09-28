@@ -125,26 +125,43 @@
 	desc = "A custom built helmet with a fancy visor!"
 	icon_state = "spacemat"
 	blocked_from_petasusaphilic = TRUE
+	inhand_image_icon = null
+	var/datum/material/material_fabric
+	var/datum/material/material_renf
+	var/datum/material/material_visor
+	var/wear_mutantrace_type = null // Used to know when to update wear images for different mutant races
 
-	var/image/fabrItemImg = null
-	var/image/fabrWornImg = null
-	var/image/visrItemImg = null
-	var/image/visrWornImg = null
+	update_wear_image(mob/living/carbon/human/H, override)
+		if(istype_exact(H.mutantrace, src.wear_mutantrace_type))
+			return
+		src.wear_mutantrace_type = H.mutantrace?.type
+		var/typeinfo/datum/mutantrace/typeinfo = H.mutantrace?.get_typeinfo()
+		if("spacemat" in typeinfo?.clothing_icon_states["head"])
+			src.wear_image_icon = typeinfo.clothing_icons["head"]
+		else
+			src.wear_image_icon = initial(src.wear_image_icon)
 
-	New()
-		..()
-		// Prep the item overlays
-		fabrItemImg = SafeGetOverlayImage("item-helmet", src.icon, "spacemat")
-		visrItemImg = SafeGetOverlayImage("item-visor", src.icon, "spacemat-vis")
-		// Prep the worn overlays
-		fabrWornImg = SafeGetOverlayImage("worn-helmet", src.wear_image_icon, "spacemat")
-		visrWornImg = SafeGetOverlayImage("worn-visor", src.wear_image_icon, "spacemat-vis")
+		src.wear_image.overlays = null
+		add_part_overlay(src.wear_image, image(src.wear_image_icon, "spacemat"), src.material_fabric)
+		add_part_overlay(src.wear_image, image(src.wear_image_icon, "spacemat-highlight"), src.material_renf)
+		add_part_overlay(src.wear_image, image(src.wear_image_icon, "spacemat-vis"), src.material_visor)
 
-	proc/set_custom_mats(datum/material/helmMat, datum/material/visrMat)
-		src.setMaterial(
-			helmMat,
-			FALSE, // We want to purely rely on the overlay colours
-		)
+	update_inhand(hand, hand_offset)
+		. = ..()
+		src.inhand_image.overlays = null
+		var/icon/inhand_file = 'icons/mob/inhand/hand_headgear.dmi'
+		var/image/inhand_fabric = image(inhand_file, "spacemat-[hand]", pixel_y = hand_offset)
+		var/image/inhand_renf = image(inhand_file, "spacemat-highlight-[hand]", pixel_y = hand_offset)
+		var/image/inhand_visor = image(inhand_file, "spacemat-visor-[hand]", pixel_y = hand_offset)
+		add_part_overlay(src.inhand_image, inhand_fabric, src.material_fabric)
+		add_part_overlay(src.inhand_image, inhand_renf, src.material_renf)
+		add_part_overlay(src.inhand_image, inhand_visor, src.material_visor)
+
+	proc/set_custom_mats(datum/material/helmMat, datum/material/visrMat, datum/material/renfMat)
+		src.material_fabric = helmMat
+		src.material_renf = renfMat
+		src.material_visor = visrMat
+		src.setMaterial(helmMat, FALSE) // We want to purely rely on the overlay colours
 		name = "[visrMat]-visored [helmMat] helmet"
 
 		// Setup the clothing stats based on material properties
@@ -158,19 +175,19 @@
 		prot = max(0, visrMat.getProperty("density") - 3) / 2
 		setProperty("meleeprot_head", 3 + prot)
 
-		// Setup item overlays
-		fabrItemImg.color = helmMat.getColor()
-		visrItemImg.color = visrMat.getColor()
-		UpdateOverlays(visrItemImg, "item-visor")
-		UpdateOverlays(fabrItemImg, "item-helmet")
-		// Setup worn overlays
-		fabrWornImg.color = helmMat.getColor()
-		visrWornImg.color = visrMat.getColor()
-		src.wear_image.overlays += fabrWornImg
-		src.wear_image.overlays += visrWornImg
-		// Add back the helmet texture since we overide the material apparance
-		if (helmMat.getTexture())
-			src.setTexture(helmMat.getTexture(), helmMat.getTextureBlendMode(), "material")
+		var/image/image_item_fabric = image(src.icon, "spacemat")
+		var/image/image_item_renf = image(src.icon, "spacemat-highlight")
+		var/image/image_item_visor = image(src.icon, "spacemat-vis")
+		image_item_fabric.apply_material_appearance(helmMat)
+		image_item_renf.apply_material_appearance(renfMat)
+		image_item_visor.apply_material_appearance(visrMat)
+		UpdateOverlays(image_item_fabric, "item-helmet")
+		UpdateOverlays(image_item_renf, "item-helmet-highlight")
+		UpdateOverlays(image_item_visor, "item-visor")
+
+	proc/add_part_overlay(var/image/main_image, var/image/part_image, var/datum/material/part_mat)
+		part_image.apply_material_appearance(part_mat)
+		main_image.overlays += part_image
 
 /obj/item/clothing/head/helmet/space/custom/prototype
 	New()
@@ -449,7 +466,7 @@
 			item_state = "syndie_specialist-bard"
 
 
-/obj/item/clothing/head/helmet/space/ntso //recoloured nuke class suits for ntso vs syndicate specialist
+/obj/item/clothing/head/helmet/space/ntso
 	name = "NT combat helmet"
 	desc = "A modified combat helmet for Nanotrasen security forces."
 	icon_state = "ntso_specialist"
@@ -464,6 +481,110 @@
 	unremovable
 		cant_self_remove = 1
 		cant_other_remove = 1
+
+	medic // Sprite by tekoTheTeapot
+		icon_state = "ntso_medic"
+		item_state = "ntso_medic"
+		name = "NT paramedic helmet"
+		desc = "A modified combat helmet for Nanotrasen emergency paramedics. Equipped with an integrated ProDoc HUD."
+
+		equipped(var/mob/user, var/slot)
+			..()
+			if (slot == SLOT_HEAD)
+				APPLY_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH,src)
+				get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(user)
+
+		unequipped(var/mob/user)
+			if(src.equipped_in_slot == SLOT_HEAD)
+				REMOVE_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH,src)
+				get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(user)
+			..()
+
+		setupProperties()
+			..()
+			setProperty("viralprot", 50)
+			setProperty("chemprot", 30)
+
+#define NTSO_ENGIE_OFF "off"
+#define NTSO_ENGIE_MESON "meson"
+#define NTSO_ENGIE_PRESSURE "pressure"
+
+/// a fancy space helmet that cycles between an off state, mesons vision and pressure vision
+/obj/item/clothing/head/helmet/space/ntso/engineer // Sprite by tekoTheTeapot
+	name = "NT engineering helmet"
+	desc = "A modified combat helmet for Nanotrasen emergency repair technicians. The visor size had to be reduced to fit both meson and atmospheric scanning overlays."
+	icon_state = "ntso_engineer-off"
+	item_state = "ntso_engineer-off"
+	protective_temperature = 1300
+	abilities = list(/obj/ability_button/ntso_engineer_toggle)
+	var/mode = NTSO_ENGIE_OFF
+	var/base_icon_state = "ntso_engineer"
+
+/obj/item/clothing/head/helmet/space/ntso/engineer/setupProperties()
+	..()
+	src.setProperty("heatprot", 15)
+	src.setProperty("radprot", 50)
+
+/obj/item/clothing/head/helmet/space/ntso/engineer/equipped(mob/user, slot)
+	..()
+	if(slot == SLOT_HEAD)
+		user.AddComponent(/datum/component/pressure_vision, src.mode == NTSO_ENGIE_PRESSURE)
+		src.handle_meson(user)
+
+/obj/item/clothing/head/helmet/space/ntso/engineer/unequipped(mob/user)
+	if(src.equipped_in_slot == SLOT_HEAD)
+		user.RemoveComponentsOfType(/datum/component/pressure_vision)
+	. = ..()
+
+/obj/item/clothing/head/helmet/space/ntso/engineer/update_icon()
+	. = ..()
+	icon_state = "[src.base_icon_state]-[src.mode]"
+	item_state = "[src.base_icon_state]-[src.mode]"
+
+/obj/item/clothing/head/helmet/space/ntso/engineer/attack_self(mob/user)
+	. = ..()
+	src.cycle_state(user)
+
+/obj/item/clothing/head/helmet/space/ntso/engineer/get_desc(dist, mob/user)
+	. = ..()
+	. += " The visor is currently set to [src.mode]"
+
+/obj/item/clothing/head/helmet/space/ntso/engineer/proc/cycle_state(mob/user)
+	switch(src.mode)
+		if(NTSO_ENGIE_PRESSURE)
+			src.mode = NTSO_ENGIE_OFF
+			SEND_SIGNAL(user, COMSIG_PRESSURE_VISION, FALSE)
+			playsound(src, 'sound/machines/tone_beep.ogg', 40, TRUE)
+		if(NTSO_ENGIE_OFF)
+			src.mode = NTSO_ENGIE_MESON
+			src.handle_meson(user)
+			playsound(src, 'sound/items/mesonactivate.ogg', 30, TRUE)
+		if(NTSO_ENGIE_MESON)
+			src.mode = NTSO_ENGIE_PRESSURE
+			SEND_SIGNAL(user, COMSIG_PRESSURE_VISION, TRUE)
+			src.handle_meson(user)
+			playsound(src, 'sound/machines/tone_beep.ogg', 40, TRUE)
+
+	src.update_icon()
+	user.update_clothing()
+
+/obj/item/clothing/head/helmet/space/ntso/engineer/proc/handle_meson(mob/user)
+	var/mob/living/equipped_on = user
+
+	if(!istype(equipped_on))
+		return
+
+	if(src.mode == NTSO_ENGIE_MESON && src.equipped_in_slot == SLOT_HEAD)
+		equipped_on.meson(src)
+	else
+		equipped_on.unmeson(src)
+
+/obj/item/clothing/head/helmet/space/ntso/engineer/proc/should_icon_use_disabled_sprite() // used by the ability button
+	return src.mode == NTSO_ENGIE_OFF
+
+#undef NTSO_ENGIE_OFF
+#undef NTSO_ENGIE_MESON
+#undef NTSO_ENGIE_PRESSURE
 
 /obj/item/clothing/head/helmet/space/nanotrasen
 	name = "Nanotrasen Heavy Helmet"
@@ -552,7 +673,10 @@
 	attackby(var/obj/item/T, mob/user as mob)
 		if(istype(T, /obj/item/device/prox_sensor) && src.type == /obj/item/clothing/head/helmet/hardhat) //No derivatives
 			boutput(user,  "You attach the proximity sensor to the hard hat. Now you need to add a robot arm.")
-			new /obj/item/digbotassembly(get_turf(src))
+			var/obj/item/digbotassembly/digbot = new(get_turf(src))
+			digbot.setMaterial(src.material)
+			digbot.forensic_holder = src.forensic_holder
+			T.forensic_holder.copy_to(digbot.forensic_holder)
 			qdel(T)
 			qdel(src)
 			return
@@ -650,6 +774,7 @@ obj/item/clothing/head/helmet/hardhat/security/hos
 /obj/item/clothing/head/helmet/hardhat/abilities = list(/obj/ability_button/flashlight_hardhat)
 
 TYPEINFO(/obj/item/clothing/head/helmet/camera)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal" = 4,
 				"crystal" = 2,
 				"conductive" = 2)
@@ -826,6 +951,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 		setProperty("movespeed", 0.15)
 
 TYPEINFO(/obj/item/clothing/head/helmet/siren)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 8
 
 /obj/item/clothing/head/helmet/siren
@@ -918,6 +1044,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/siren)
 		setProperty("disorient_resist_eye", 15)
 
 TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = 7
 
 /obj/item/clothing/head/helmet/space/industrial
@@ -1017,6 +1144,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
 		src.remove_visor(user)
 
 TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/syndicate)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = list("metal_superdense" = 5,
 				"conductive_high" = 5,
 				"crystal_dense" = 5)
@@ -1025,7 +1153,6 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/syndicate)
 	desc = "Ooh, fancy."
 	icon_state = "indusred"
 	item_state = "indusred"
-	is_syndicate = 1
 	blocked_from_petasusaphilic = TRUE
 
 	setupProperties()
@@ -1042,6 +1169,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/syndicate)
 		..()
 
 TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/salvager)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = list("metal_superdense" = 20,
 				"uqill" = 10,
 				"conductive_high" = 10,
@@ -1066,6 +1194,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/salvager)
 		setProperty("space_movespeed", 0)
 
 TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_OTHER
 	mats = 10
 
 /obj/item/clothing/head/helmet/space/mining_combat
@@ -1175,7 +1304,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 
 /obj/item/clothing/head/helmet/captain
 	name = "captain's helmet"
-	desc = "Somewhat protects an important person's head from being bashed in. Comes in a intriguing shade of green befitting of a captain"
+	desc = "Somewhat protects an important person's head from being bashed in. Comes in an intriguing shade of green befitting of a captain"
 	c_flags = COVERSEYES | BLOCKCHOKE
 	icon_state = "helmet-captain"
 	item_state = "helmet-captain"

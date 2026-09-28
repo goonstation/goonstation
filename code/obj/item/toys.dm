@@ -215,6 +215,7 @@ TYPEINFO(/obj/item/toy/cellphone)
 	desc = "You shouldn't see this, I exist for typechecks"
 
 TYPEINFO(/obj/item/toy/handheld)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 2
 	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
 
@@ -338,6 +339,7 @@ ADMIN_INTERACT_PROCS(/obj/item/ghostboard, proc/admin_command_speak)
 	icon_state = "lboard"
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "ouijaboard"
+	default_material = "wood"
 	w_class = W_CLASS_NORMAL
 	var/emoji_prob = 30
 	var/emoji_min = 1
@@ -376,7 +378,7 @@ ADMIN_INTERACT_PROCS(/obj/item/ghostboard, proc/admin_command_speak)
 			var/selected
 			do
 				var/list/words = list("*REFRESH*") + src.generate_words()
-				selected = tgui_input_list(usr, "Select a word:", src.name, words, allowIllegal=TRUE)
+				selected = tgui_input_list(usr, "Select a word:", src.name, words, allowIllegal=TRUE, timeout=10 SECONDS)
 			while(selected == "*REFRESH*")
 
 			if(!selected)

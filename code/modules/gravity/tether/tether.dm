@@ -13,6 +13,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	layer = EFFECTS_LAYER_BASE - 1 // covers people who walk behind it but not over other effects
 	status = REQ_PHYSICAL_ACCESS
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
+	power_channel = ENVIRON
 
 	speech_verb_say = "drones"
 	voice_sound_override = 'sound/misc/talk/bottalk_3.ogg'
@@ -35,9 +36,9 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	/// **Do not change directly!** Intensity of the generated gravity, in G.
 	///
 	///  Use `proc/change_intensity(new_intensity)` to change values.
-	var/gforce_intensity = 0
+	VAR_PROTECTED/gforce_intensity = 0
 	var/target_intensity = GFORCE_EARTH_GRAVITY //! Current intensity setting (used when changing intensities)
-	var/maximum_intensity = GFORCE_EARTH_GRAVITY * 2 //! Maxmimum intensity of this tether
+	var/maximum_intensity = GFORCE_EARTH_GRAVITY * 2 //! Maxmimum intensity of this tether, changed by emag
 
 	var/last_charge_amount = 0 //! Last cell charge level, used for tracking charging/draining battery status
 	var/charging_state = TETHER_CHARGE_IDLE //! State of the internal cell charger
@@ -230,7 +231,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 	if (src.cell)
 		charge_avail += src.cell.charge
 	var/area/A = get_area(src)
-	if (A.powered(EQUIP))
+	if (A.powered(src.power_channel))
 		var/obj/machinery/power/apc/area_apc = A.area_apc
 		if (istype(area_apc) && area_apc.cell)
 			charge_avail += area_apc.cell.charge
@@ -239,7 +240,7 @@ ABSTRACT_TYPE(/obj/machinery/gravity_tether)
 		if(src.calculate_fault_chance(0))
 			src.random_fault()
 
-		src.use_power(cost, EQUIP)
+		src.use_power(cost, src.power_channel)
 		src.begin_gravity_change(new_intensity)
 	else
 		src.say("Not enough power to complete change.")

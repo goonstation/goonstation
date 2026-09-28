@@ -18,7 +18,7 @@
 
 /datum/aiTask/prioritizer/critter/clown_spider_queen/New()
 	..()
-	transition_tasks += holder.get_instance(/datum/aiTask/timed/wander/critter/aggressive, list(holder, src))
+	transition_tasks += holder.get_instance(/datum/aiTask/timed/wander/critter/aggressive/melee, list(holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/critter/attack, list(holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/critter/scavenge, list(holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/critter/vomit_egg, list(holder, src))
@@ -91,6 +91,6 @@
 
 /datum/aiTask/prioritizer/critter/tutorial_clown_spider_queen/New()
 	..()
-	transition_tasks += holder.get_instance(/datum/aiTask/timed/wander/critter/aggressive, list(holder, src))
+	transition_tasks += holder.get_instance(/datum/aiTask/timed/wander/critter/aggressive/melee, list(holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/critter/attack, list(holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/critter/scavenge, list(holder, src))

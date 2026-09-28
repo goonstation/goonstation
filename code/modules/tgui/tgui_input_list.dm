@@ -21,9 +21,10 @@
  * * start_with_search - Whether to start with the search bar open ("auto" for automatic, TRUE for yes, FALSE for no).
  * * capitalize - Whether to capitalize the first letter of each item.
  * * theme - The TGUI theme used for the window.
+ * * banned_chars - An optional list of characters to block from being typed in the search bar. |GOONSTATION-ADD|
  */
 /proc/tgui_input_list(mob/user, message, title = "Select", list/items, default, timeout = 0, autofocus = TRUE, allowIllegal = FALSE,
-		start_with_search = "auto", capitalize = TRUE, theme = null)
+		start_with_search = "auto", capitalize = TRUE, theme = null, banned_chars = null)
 	if (!user)
 		user = usr
 	if(!length(items))
@@ -34,7 +35,7 @@
 			user = client.mob
 	if (!user?.client) // No NPCs or they hang Mob AI process
 		return
-	var/datum/tgui_modal/list_input/input = new(user, message, title, items, default, timeout, autofocus, allowIllegal, start_with_search, capitalize, theme)
+	var/datum/tgui_modal/list_input/input = new(user, message, title, items, default, timeout, autofocus, allowIllegal, start_with_search, capitalize, theme, banned_chars)
 	input.ui_interact(user)
 	input.wait()
 	if (input)
@@ -58,9 +59,10 @@
  * * start_with_search - Whether to start with the search bar open ("auto" for automatic, TRUE for yes, FALSE for no).
  * * capitalize - Whether to capitalize the first letter of each item.
  * * theme - The TGUI theme used for the window.
+ * * banned_chars - An optional list of characters to block from being typed in the search bar. |GOONSTATION-ADD|
  */
 /proc/tgui_input_list_async(mob/user, message, title = "Select", list/items, default, datum/callback/callback, timeout = 60 SECONDS, autofocus = TRUE,
-		allowIllegal = FALSE, start_with_search = "auto", capitalize = TRUE, theme = null)
+		allowIllegal = FALSE, start_with_search = "auto", capitalize = TRUE, theme = null, banned_chars = null)
 	if (!user)
 		user = usr
 	if(!length(items))
@@ -72,7 +74,7 @@
 		else
 			return
 	var/datum/tgui_modal/list_input/async/input = new(user, message, title, items, default, callback, timeout, autofocus, allowIllegal,
-		start_with_search, capitalize, theme)
+		start_with_search, capitalize, theme, banned_chars)
 	input.ui_interact(user)
 
 /**
@@ -90,15 +92,18 @@
 	var/start_with_search
 	/// Whether to capitalize the first letter of each item
 	var/capitalize
+	/// Optional list of characters to block from being typed in the search bar
+	var/list/banned_chars
 
 /datum/tgui_modal/list_input/New(mob/user, message, title, list/items, default, timeout, autofocus = TRUE, allowIllegal = FALSE,
-		start_with_search = "auto", capitalize = TRUE, theme)
+		start_with_search = "auto", capitalize = TRUE, theme, banned_chars = null)
 	. = ..(user, message, title, items, timeout, autofocus, null, theme)
 	src.items = list()
 	src.items_map = list()
 	src.default = default
 	src.start_with_search = start_with_search == "auto" ? length(items) > 10 : start_with_search
 	src.capitalize = capitalize
+	src.banned_chars = banned_chars
 
 	for(var/i in items)
 		var/string_key = allowIllegal ? i : strip_illegal_characters(i)
@@ -118,6 +123,7 @@
 	.["init_value"] = default || items[1]
 	.["start_with_search"] = start_with_search
 	.["capitalize"] = capitalize
+	.["banned_chars"] = banned_chars
 
 /datum/tgui_modal/list_input/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	SHOULD_CALL_PARENT(FALSE)
@@ -147,8 +153,8 @@
 	var/datum/callback/callback
 
 /datum/tgui_modal/list_input/async/New(mob/user, message, title, list/items, default, callback, timeout, autofocus = TRUE, allowIllegal = FALSE,
-		start_with_search = "auto", capitalize = TRUE, theme = null)
-	..(user, message, title, items, default, timeout, autofocus, allowIllegal, start_with_search, capitalize, theme)
+		start_with_search = "auto", capitalize = TRUE, theme = null, banned_chars = null)
+	..(user, message, title, items, default, timeout, autofocus, allowIllegal, start_with_search, capitalize, theme, banned_chars)
 	src.callback = callback
 
 /datum/tgui_modal/list_input/async/disposing(force, ...)

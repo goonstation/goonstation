@@ -154,6 +154,8 @@ var/global/area/current_battle_spawn = null
 				qdel(machine)
 			if (/obj/machinery/computer/transit_shuttle/mining)
 				qdel(machine)
+			if (/obj/machinery/computer/shuttle)
+				qdel(machine)
 
 	for_by_tcl(circuitboard, /obj/item/circuitboard)
 		qdel(circuitboard)
@@ -199,6 +201,10 @@ var/global/area/current_battle_spawn = null
 
 	for (var/client/C in clients)
 		battlersleft_hud.add_client(C)
+
+#ifdef MAP_OVERRIDE_MENHIR
+	random_events.menhir_events_enabled = 0
+#endif
 
 /datum/game_mode/battle_royale/proc/battle_shuttle_spawn(var/datum/mind/player)
 	bestow_objective(player,/datum/objective/battle_royale/win)
@@ -248,9 +254,11 @@ var/global/area/current_battle_spawn = null
 	for (var/client/C in clients)
 		battlersleft_hud.remove_client(C)
 	boutput(world,"<h2>BATTLE COMPLETE</h2>")
-	if(length(living_battlers) == 1)
-		boutput(world,"<h2 class='alert'>[living_battlers[1].current.name] (played by [living_battlers[1].current.ckey]) has won!</h2>")
-		boutput(living_battlers[1].current,"<h1 class='notice'>Holy shit you won!!!</h1>")
+	if(length(living_battlers) == 1 && ishuman(living_battlers[1].current))
+		var/mob/living/carbon/human/winner = living_battlers[1].current
+		boutput(world,"<h2 class='alert'>[winner.name] (played by [winner.ckey]) has won!</h2>")
+		boutput(winner,"<h1 class='notice'>Holy shit you won!!!</h1>")
+		winner.unlock_medal("#1 Victory Royale", TRUE)
 	else
 		boutput(world,"<h2 class='alert'>Literally everyone died. wow.</h2>")
 
@@ -345,6 +353,17 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	weapon_supplies.Add(/obj/item/gun/kinetic/grenade_launcher)
 	weapon_supplies.Add(/obj/item/gun/kinetic/gyrojet)
 	weapon_supplies.Add(/obj/item/gun/kinetic/makarov)
+	weapon_supplies.Add(/obj/item/gun/kinetic/webley)
+	weapon_supplies.Add(/obj/item/gun/kinetic/american180)
+	weapon_supplies.Add(/obj/item/gun/kinetic/draco)
+	weapon_supplies.Add(/obj/item/gun/kinetic/greasegun)
+	weapon_supplies.Add(/obj/item/gun/kinetic/uzi)
+	weapon_supplies.Add(/obj/item/gun/kinetic/striker)
+	weapon_supplies.Add(/obj/item/gun/kinetic/pumpweapon/ks23)
+	weapon_supplies.Add(/obj/item/gun/kinetic/m16)
+	weapon_supplies.Add(/obj/item/gun/energy/lasergat)
+	weapon_supplies.Add(/obj/item/storage/backpack/satchel/flintlock_pistol_satchel)
+	weapon_supplies.Add(/obj/item/gun/energy/lasershotgun)
 	weapon_supplies.Add(/obj/item/gun/energy/phaser_small)
 	weapon_supplies.Add(/obj/item/gun/energy/phaser_huge)
 	weapon_supplies.Add(/obj/item/gun/energy/phaser_gun)
@@ -354,6 +373,7 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	weapon_supplies.Add(/obj/item/bat)
 	weapon_supplies.Add(/obj/item/ratstick)
 	weapon_supplies.Add(/obj/item/saw)
+	weapon_supplies.Add(/obj/item/baton/windup)
 	weapon_supplies.Add(/obj/item/sword/discount)
 	weapon_supplies.Add(/obj/item/nunchucks)
 	weapon_supplies.Add(/obj/item/quarterstaff)
@@ -400,6 +420,7 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	armor_supplies.Add(/obj/item/clothing/head/helmet/viking)
 	armor_supplies.Add(/obj/item/clothing/head/helmet/football)
 	armor_supplies.Add(/obj/item/clothing/head/helmet/batman)
+	armor_supplies.Add(/obj/item/clothing/head/flatcap/razor)
 
 	var/list/utility_supplies = list()
 	utility_supplies.Add(/obj/item/barrier/collapsible/security)
@@ -420,7 +441,7 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	utility_supplies.Add(/obj/item/kitchen/egg_box/rancher/mime)
 	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/robot)
 	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/candy) // Keeping this a one off cause I know someone will kill themselves and be salty
-	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dream)
+	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dream/br)
 #ifdef SECRETS_ENABLED
 	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/dragon)
 	utility_supplies.Add(/obj/item/reagent_containers/food/snacks/ingredient/egg/chicken/phoenix)

@@ -4,7 +4,7 @@
 	desc = "A pretty nice flower... you shouldn't see this, though."
 	icon_state = "flower_gard"
 	item_state = "flower_gard"
-	flags = SUPPRESSATTACK
+	flags = TABLEPASS | SUPPRESSATTACK
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
 	var/datum/forensic_id/scent_A = null
 	var/datum/forensic_id/scent_B = null
@@ -230,6 +230,10 @@
 	var/trick = FALSE
 	flags = 0
 	hide_attack = ATTACK_VISIBLE
+	SYNDICATE_STEALTH_DESCRIPTION("It smells faintly of death.")
+	tooltip_flags = REBUILD_USER
+	blocked_from_petasusaphilic = TRUE
+
 	attack(mob/M, mob/user, def_zone)
 		if (!..() || is_incapacitated(M) || src.trick)
 			return

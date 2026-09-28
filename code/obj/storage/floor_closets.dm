@@ -31,7 +31,7 @@
 		. = ..()
 		if (src.open)
 			src.name = "closet"
-			src.icon = 'icons/obj/large_storage.dmi'
+			src.icon = 'icons/obj/storage/locker.dmi'
 			src.plane = initial(src.plane)
 			src.desc = initial(src.desc)
 			src.set_icon_state(src.icon_opened)
@@ -47,7 +47,7 @@
 				src.set_dir(T.dir)
 			else
 				src.name = "steel floor"
-				src.icon = 'icons/obj/large_storage.dmi'
+				src.icon = 'icons/obj/storage/locker.dmi'
 				src.icon_closed = "closedf"
 				src.desc = "This is a floor.<br>It is made of steel. It looks odd."
 				src.set_icon_state(src.icon_closed)
@@ -79,6 +79,6 @@
 			src.name = T.name
 			src.plane = T.plane
 		else
-			src.icon = 'icons/obj/large_storage.dmi'
+			src.icon = 'icons/obj/storage/locker.dmi'
 			src.icon_closed = "closedf"
 

@@ -5,7 +5,12 @@ on:
 
 jobs:
   merge-upstream:
-    if: ${{ github.event.issue.pull_request && contains(github.event.comment.body, '!merge_upstream') }}
+    if: |
+      ${{ github.event.issue.pull_request && (
+        contains(github.event.comment.body, '!merge_upstream') ||
+        contains(github.event.comment.body, '!conflict') ||
+        contains(github.event.comment.body, '!mergeconflict')
+      ) }}
     runs-on: ubuntu-latest
     steps:
       - name: PR Data
@@ -14,13 +19,13 @@ jobs:
           echo "PR_REPO=`jq -r '.head.repo.full_name' < pr.json`" >> $GITHUB_ENV
           echo "PR_BRANCH=`jq -r '.head.ref' < pr.json`" >> $GITHUB_ENV
 
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           repository: ${{ env.PR_REPO }}
           ref: ${{ env.PR_BRANCH }}
           fetch-depth: 0
 
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: yarn

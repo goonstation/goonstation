@@ -21,13 +21,18 @@
 	var/O_limit
 	var/atom/target = get_edge_target_turf(src, src.dir)
 	for(var/atom/movable/O in src.loc)
-		if(O.anchored || HAS_ATOM_PROPERTY(O, PROP_ATOM_FLOATING)) continue
-		O_limit++
-		if(O_limit >= 20)
-			src.visible_message(SPAN_NOTICE("The mass driver lets out a screech, it mustn't be able to handle any more items."))
-			break
-		use_power(500)
+		if(O.anchored || HAS_ATOM_PROPERTY(O, PROP_ATOM_FLOATING))
+			continue
+
+		if (!global.instant_pipe_network)
+			O_limit++
+			if(O_limit >= 20)
+				src.visible_message(SPAN_NOTICE("The mass driver lets out a screech, it mustn't be able to handle any more items."))
+				break
+			use_power(500)
+
 		O.throw_at(target, src.get_throw_range(), src.power, throw_type=src.throw_type, params=src.throw_params)
+
 	FLICK("mass_driver1", src)
 	return
 

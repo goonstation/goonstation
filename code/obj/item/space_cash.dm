@@ -130,6 +130,10 @@
 			else // 1mil bby
 				src.icon_state = "cashrbow"
 
+	one
+		default_min_amount = 1
+		default_max_amount = 1
+
 	five
 		default_min_amount = 5
 		default_max_amount = 5
@@ -174,8 +178,8 @@
 
 // That's what tourists spawn with.
 	tourist
-		default_min_amount = PAY_TRADESMAN
-		default_max_amount = PAY_EXECUTIVE
+		default_min_amount = PAY::TRADESMAN
+		default_max_amount = PAY::EXECUTIVE
 
 // for couches
 	small

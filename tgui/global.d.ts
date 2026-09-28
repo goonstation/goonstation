@@ -21,6 +21,8 @@ declare module '*.svg' {
   export default content;
 }
 
+declare module '*.scss' {}
+
 namespace JSX {
   interface IntrinsicElements {
     marquee: any;
@@ -184,7 +186,7 @@ type ByondType = {
   /**
    * Maps icons to their ref
    */
-  iconRefMap: Record<string, string>;
+  iconRefMap: Record<string, string | undefined>;
 
   /**
    * Downloads a blob, platform-agnostic
@@ -200,12 +202,7 @@ const Byond: ByondType;
 
 interface Window {
   Byond: ByondType;
-  __store__: Store<unknown, AnyAction>;
-  __augmentStack__: (store: Store) => StackAugmentor;
-
-  // IE IndexedDB stuff.
-  msIndexedDB: IDBFactory;
-  msIDBTransaction: IDBTransaction;
+  __augmentStack__: (stack: string, error?: Error) => string;
 
   // 516 byondstorage API.
   hubStorage: Storage;

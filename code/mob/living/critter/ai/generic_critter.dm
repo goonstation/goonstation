@@ -34,15 +34,35 @@
 ///This is standard wander behaviour with frequent checks for nearby enemies, which will interrupt the wandering.
 /datum/aiTask/timed/wander/critter/aggressive
 	name = "aggressive wander"
+	var/check_reachability = FALSE //! if set to TRUE, this will only interrupt if they can actually reach the target
+	var/distance_search = 5 //! the amount of tiles the mob picks up targets while wandering
 
 /datum/aiTask/timed/wander/critter/aggressive/on_tick()
 	if(length(holder.owner.grabbed_by))
 		holder.owner.resist()
 	var/mob/living/critter/C = holder.owner
-	if(istype(holder.owner) && length(C.seek_target()))
-		src.holder.owner.ai.interrupt()
-	else
+	var/potential_targets = C.seek_target(src.distance_search)
+	var/to_interrupt = FALSE
+	if(istype(holder.owner) && length(potential_targets))
+		to_interrupt = TRUE
+		if(check_reachability)
+			// we check here if we even can reach our targets
+			var/simulated_only = !src.move_through_space
+			#ifdef UNDERWATER_MAP
+			simulated_only = FALSE
+			#endif
+			var/list/atom/paths_found = get_path_to(holder.owner, potential_targets, max_distance=src.distance_search + 2, mintargetdist= 1, simulated_only=simulated_only, required_goals=1)
+			if(length(paths_found) == 0)
+				to_interrupt = FALSE
+		if(to_interrupt)
+			src.holder.owner.ai.interrupt()
+	if(!to_interrupt)
 		..()
+
+/// This is the same behaviour but more chill so we don't interrupt the wandering if we can't reach anything
+/datum/aiTask/timed/wander/critter/aggressive/melee
+	name = "aggressive wander"
+	check_reachability = TRUE
 
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------//
@@ -316,10 +336,9 @@
 
 /datum/aiTask/succeedable/critter/eat/failed()
 	var/mob/living/critter/C = holder.owner
-	var/obj/item/reagent_containers/food/snacks/T = holder.target
 	if(!has_started && !C.can_critter_eat()) //if we haven't started and can't eat, task fail.
 		return TRUE
-	if(!C || !T || BOUNDS_DIST(T, C) > 0) //the tasks fails and is re-evaluated if the target is not in range
+	if(!C || !holder.target || BOUNDS_DIST(holder.target, C) > 0) //the tasks fails and is re-evaluated if the target is not in range
 		return TRUE
 
 /datum/aiTask/succeedable/critter/eat/succeeded()
@@ -329,10 +348,9 @@
 /datum/aiTask/succeedable/critter/eat/on_tick()
 	if(!has_started)
 		var/mob/living/critter/C = holder.owner
-		var/obj/item/reagent_containers/food/snacks/T = holder.target
-		if(C && T && BOUNDS_DIST(holder.owner, holder.target) == 0)
+		if(C && holder.target && BOUNDS_DIST(holder.owner, holder.target) == 0)
 			holder.owner.set_dir(get_dir(holder.owner, holder.target))
-			C.critter_eat(T)
+			C.critter_eat(holder.target)
 			has_started = TRUE
 
 /datum/aiTask/succeedable/critter/eat/on_reset()
@@ -430,6 +448,26 @@
 	if(C)
 		C.set_a_intent(INTENT_HARM)	//we an angry critter
 		src.persistence = C.ai_retaliate_persistence
+
+/datum/aiTask/sequence/goalbased/critter/go_home
+	name = "going home"
+	weight = 0.1
+	distance_from_target = 0
+	max_dist = 50
+
+	precondition()
+		if (prob(80)) //we only go home *sometimes*
+			return
+		var/mob/living/critter/C = holder.owner
+		return !istype(get_area(holder.owner), C.home_area())
+
+	get_targets()
+		var/mob/living/critter/C = holder.owner
+		var/area/A = locate(C.home_area())
+		return list(get_turf(pick(A.contents)))
+
+	get_best_target(list/atom/targets)
+		return targets[1]
 
 // Don't worry about this, we need to enable unsimulated turf pathing for the critter gauntlet
 /datum/aiTask/sequence/goalbased/critter

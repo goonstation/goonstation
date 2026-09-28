@@ -182,6 +182,8 @@ ABSTRACT_TYPE(/datum/game_mode)
 	var/list/unpicked_candidate_minds = list()
 
 	for(var/client/C)
+		if ((C.ckey in job_controls.forced_assignments))
+			continue
 		if (istype(C.mob, /mob/new_player))
 			var/mob/new_player/new_player = C.mob
 			if (!new_player.ready_play)

@@ -10,11 +10,18 @@
 /datum/wage_system
 
 	// Stations budget
-	var/station_budget = 0
-	var/shipping_budget = 0
-	var/research_budget = 0
+	var/list/budgets = list(
+		BUDGET_CAT_PAYROLL = 0,
+		BUDGET_CAT_DEPT_MEDICAL = 0,
+		// BUDGET_CAT_DEPT_RESEARCH = 0,
+		BUDGET_CAT_DEPT_SUPPLY = 0,
+		// BUDGET_CAT_DEPT_SERVICE = 0,
+		BUDGET_CAT_UNION = 0,
+	)
+
 	var/payroll_stipend = 0
 	var/total_stipend = 0
+	var/union_stipend = 0 //! How much union dosh is added to the union budget per paycycle
 
 	var/pay_active = 1
 	var/lottery_active = 0		// inactive until someone actually buys a ticket
@@ -41,10 +48,14 @@
 		time_between_paydays = 5 MINUTES
 		time_between_lotto = 8 MINUTES
 
-		station_budget = PAY_IMPORTANT
-		shipping_budget = PAY_EXECUTIVE*5
-		research_budget = PAY_EXECUTIVE*10
-		total_stipend = station_budget + shipping_budget + research_budget
+		src.budgets[BUDGET_CAT_PAYROLL] = PAY::IMPORTANT
+		src.budgets[BUDGET_CAT_UNION] = 0
+		src.budgets[BUDGET_CAT_DEPT_SUPPLY] = PAY::EXECUTIVE*5
+		src.budgets[BUDGET_CAT_DEPT_MEDICAL] = PAY::EXECUTIVE*10
+
+
+		for (var/budget in src.budgets)
+			total_stipend += src.budgets[budget]
 
 		// This is gonna throw up some crazy errors if it isn't done right!
 		// cogwerks - raising all of the paychecks, oh god
@@ -82,23 +93,24 @@
 		return
 
 	proc/payday()
-		// Every payday cycle, the station budget is awarded its stipend
+		// Every payday cycle, the payroll budget is awarded its stipend
 		// Even if payday is off, which lets heads disable payday for
 		// saving up funds or whatever.
 		// This also means that payday stopping is strictly a result of
 		// someone tampering it and not just having 80 assistants in 20 minutes
-		station_budget += payroll_stipend
-		total_stipend += payroll_stipend
+		src.budgets[BUDGET_CAT_PAYROLL] += payroll_stipend
+		src.budgets[BUDGET_CAT_UNION] += union_stipend
+		total_stipend += payroll_stipend + union_stipend
 
 		// Everyone gets paid into their bank accounts
 		if (!wagesystem.pay_active) return // some greedy prick suspended the payroll!
-		// if (station_budget < 1) return // we don't have any money so don't bother!
+		// if (src.budgets[BUDGET_CAT_PAYROLL] < 1) return // we don't have any money so don't bother!
 		// technically this can be 0 now with payday stipends
 
 		for(var/datum/db_record/t as anything in data_core.bank.records)
-			if(station_budget >= t["wage"])
+			if(src.budgets[BUDGET_CAT_PAYROLL] >= t["wage"])
 				t["current_money"] += t["wage"]
-				station_budget -= t["wage"]
+				src.budgets[BUDGET_CAT_PAYROLL] -= t["wage"]
 #ifndef SHUT_UP_ABOUT_MY_PAY
 				if (t["pda_net_id"])
 					var/datum/signal/signal = get_free_signal()
@@ -179,6 +191,7 @@
 						wagesystem.lotteryJackpot -= I:winner
 					else
 						wagesystem.lotteryJackpot = 0
+					user.unlock_medal("Guess who won the lottery!", TRUE)
 				else
 					boutput(user, SPAN_ALERT("This ticket isn't a winner. Better luck next time!"))
 				qdel(I)
@@ -193,13 +206,6 @@
 			user.client.add_to_bank(SB.amount)
 			boutput(user, SPAN_ALERT("You deposit [SB.amount] spacebux into your account!"))
 			qdel(SB)
-		else if(istype(I, /obj/item/currency/spacecash/))
-			if (src.accessed_record)
-				boutput(user, SPAN_NOTICE("You insert the cash into the ATM."))
-				src.accessed_record["current_money"] += I.amount
-				I.amount = 0
-				qdel(I)
-			else boutput(user, SPAN_ALERT("You need to log in before depositing cash!"))
 		else if(istype(I, /obj/item/currency/buttcoin/))
 			if (src.accessed_record)
 				boutput(user, SPAN_NOTICE("You force the cash into the ATM."))
@@ -207,23 +213,6 @@
 				I.amount = 0
 				qdel(I)
 			else boutput(user, SPAN_ALERT("You need to log in before depositing cash!"))
-		else if(istype(I, /obj/item/lotteryTicket))
-			if (src.accessed_record)
-				boutput(user, SPAN_NOTICE("You insert the lottery ticket into the ATM."))
-				if(I:winner)
-					boutput(user, SPAN_NOTICE("Congratulations, this ticket is a winner netting you [I:winner] credits"))
-					src.accessed_record["current_money"] += I:winner
-
-					if(wagesystem.lotteryJackpot > I:winner)
-						wagesystem.lotteryJackpot -= I:winner
-					else
-						wagesystem.lotteryJackpot = 0
-
-
-				else
-					boutput(user, SPAN_ALERT("This ticket isn't a winner. Better luck next time!"))
-				qdel(I)
-			else boutput(user, SPAN_ALERT("You need to log in before inserting a ticket!"))
 		else
 			..()
 		return
@@ -482,6 +471,7 @@
 						wagesystem.lotteryJackpot -= I:winner
 					else
 						wagesystem.lotteryJackpot = 0
+					user.unlock_medal("Guess who won the lottery!", TRUE)
 					src.Attackhand(user)
 				else
 					boutput(user, SPAN_ALERT("This ticket isn't a winner. Better luck next time!"))

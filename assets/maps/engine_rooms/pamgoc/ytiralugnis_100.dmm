@@ -436,15 +436,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
-"aR" = (
-/obj/machinery/light/emergency{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/engine/inner)
 "aS" = (
 /obj/machinery/light/small/floor,
 /obj/cable{
@@ -550,6 +541,15 @@
 /area/station/engine/inner)
 "bf" = (
 /turf/simulated/floor/engine,
+/area/station/engine/inner)
+"SA" = (
+/obj/machinery/light/emergency{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 
 (1,1,1) = {"
@@ -686,9 +686,9 @@ aj
 aU
 be
 ao
-aR
+SA
 ai
-aR
+SA
 ai
 al
 ai

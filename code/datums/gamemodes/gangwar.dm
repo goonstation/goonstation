@@ -169,11 +169,12 @@
 		if (istype(winner))
 			boutput(world, "<h2><b>[winner.gang_name], led by [winner.leader.current.real_name], won the round!</b></h2>")
 
-			var/datum/hud/gang_victory/victory_hud = get_singleton(/datum/hud/gang_victory)
-			victory_hud.set_winner(winner)
-			for (var/client/C in clients)
-				victory_hud.add_client(C)
-				C.mob.addAbility(/datum/targetable/toggle_gang_victory_hud)
+			// Gang Victory HUD disabled until it gets fixed, causing runtimes - glowbold 2026-08-07
+			// var/datum/hud/gang_victory/victory_hud = get_singleton(/datum/hud/gang_victory)
+			// victory_hud.set_winner(winner)
+			// for (var/client/C in clients)
+			// 	victory_hud.add_client(C)
+			// 	C.mob.addAbility(/datum/targetable/toggle_gang_victory_hud)
 
 	..()
 
@@ -1217,6 +1218,7 @@
 	var/datum/gang/gang
 	/// when our next spray sound can beplayed
 	var/next_spray = 0 DECI SECONDS
+	var/tagging_over = FALSE
 
 	New(var/turf/target_turf as turf, var/obj/item/spray_paint_gang/can, var/tag_over)
 		src.target_turf = target_turf
@@ -1224,6 +1226,7 @@
 		src.spraycan = can
 		if (tag_over)
 			src.duration = GANG_SPRAYPAINT_TAG_REPLACE_TIME
+			tagging_over = TRUE
 		..()
 
 	onStart()
@@ -1233,17 +1236,17 @@
 			if (ismob(owner))
 				M = owner
 				src.gang = M?.get_gang()
-			if (gang)
+			if (gang && src.tagging_over)
 				icon = 'icons/obj/decals/gang_tags.dmi'
 				icon_state = "gangtag[src.gang.gang_tag]"
 				var/speedup = src.gang.gear_worn(M)
 				switch (speedup)
 					if (1)
-						duration = 13 SECONDS
+						duration *= 0.9
 					if (2)
-						duration = 9 SECONDS
+						duration *= 0.8
 					if (3)
-						duration = 6 SECONDS
+						duration *= 0.7
 			..()
 		catch(var/exception/e)
 			..()
@@ -1449,7 +1452,7 @@
 /obj/ganglocker
 	desc = "Gang locker."
 	name = "gang closet"
-	icon = 'icons/obj/large_storage.dmi'
+	icon = 'icons/obj/storage/locker.dmi'
 	icon_state = "gang"
 	density = FALSE
 	anchored = ANCHORED
@@ -1495,7 +1498,7 @@
 	New()
 		START_TRACKING
 		..()
-		default_screen_overlay = image('icons/obj/large_storage.dmi', "gang_overlay_yellow")
+		default_screen_overlay = image('icons/obj/storage/locker.dmi', "gang_overlay_yellow")
 		src.UpdateOverlays(default_screen_overlay, "screen")
 		buyable_items = list(
 			new/datum/gang_item/consumable/medkit,
@@ -1594,27 +1597,27 @@
 		for (var/datum/gang_item/consumable/GI in buyable_items)
 			if (items[GI.category] == null)
 				items[GI.category] = list()
-			var/icon_rsc = getItemIcon(initial(GI.item_path), C = user.client)
+			var/icon_rsc = getItemIcon(initial(GI.item_path))
 			dat += "<tr><td><img class='icon' src='[icon_rsc]'></td><td><a href='byond://?src=\ref[src];buy_item=\ref[GI]'>[GI.name]</a></td><td>[GI.price]</td><td>[GI.desc]</td></tr>"
 		dat += "<tr><td align=\"center\" colspan=\"4\"><font size=\"2\"><b>Equipment</b></font></td></tr>"
 		for (var/datum/gang_item/equipment/GI in buyable_items)
 			if (items[GI.category] == null)
 				items[GI.category] = list()
-			var/icon_rsc = getItemIcon(initial(GI.item_path), C = user.client)
+			var/icon_rsc = getItemIcon(initial(GI.item_path))
 			dat += "<tr><td><img class='icon' src='[icon_rsc]'></td><td><a href='byond://?src=\ref[src];buy_item=\ref[GI]'>[GI.name]</a></td><td>[GI.price]</td><td>[GI.desc]</td></tr>"
 
 		dat += "<tr><td align=\"center\" colspan=\"4\"><font size=\"2\"><b>Weapons</b></font></td></tr>"
 		for (var/datum/gang_item/weapon/GI in buyable_items)
 			if (items[GI.category] == null)
 				items[GI.category] = list()
-			var/icon_rsc = getItemIcon(initial(GI.item_path), C = user.client)
+			var/icon_rsc = getItemIcon(initial(GI.item_path))
 			dat += "<tr><td><img class='icon' src='[icon_rsc]'></td><td><a href='byond://?src=\ref[src];buy_item=\ref[GI]'>[GI.name]</a></td><td>[GI.price]</td><td>[GI.desc]</td></tr>"
 
 		dat += "<tr><td align=\"center\" colspan=\"4\"><font size=\"2\"><b>Special</b></font></td></tr>"
 		for (var/datum/gang_item/special/GI in buyable_items)
 			if (items[GI.category] == null)
 				items[GI.category] = list()
-			var/icon_rsc = getItemIcon(initial(GI.item_path), C = user.client)
+			var/icon_rsc = getItemIcon(initial(GI.item_path))
 			dat += "<tr><td><img class='icon' src='[icon_rsc]'></td><td><a href='byond://?src=\ref[src];buy_item=\ref[GI]'>[GI.name]</a></td><td>[GI.price]</td><td>[GI.desc]</td></tr>"
 
 
@@ -1632,7 +1635,7 @@
 				boutput(user, SPAN_ALERT("You grab a bottle of spray paint from the locker."))
 		else
 			boutput(user, SPAN_ALERT("The locker's screen briefly displays the message \"Access Denied\"."))
-			overlay = image('icons/obj/large_storage.dmi', "gang_overlay_red")
+			overlay = image('icons/obj/storage/locker.dmi', "gang_overlay_red")
 
 		src.UpdateOverlays(overlay, "screen")
 		SPAWN(1 SECOND)
@@ -1793,14 +1796,14 @@
 		switch(src.get_gang_gear(user))
 			if(0)
 				boutput(user, "<b class='alert'>The locker's screen briefly displays the message \"Access Denied\".</b>")
-				overlay = image('icons/obj/large_storage.dmi', "gang_overlay_red")
+				overlay = image('icons/obj/storage/locker.dmi', "gang_overlay_red")
 			if(1)
 				boutput(user, "<b class='alert'>The locker's screen briefly displays the message \"Access Denied\".</b>")
 				boutput(user, SPAN_ALERT("You may only receive one set of gang gear every five minutes."))
-				overlay = image('icons/obj/large_storage.dmi', "gang_overlay_red")
+				overlay = image('icons/obj/storage/locker.dmi', "gang_overlay_red")
 			if(2)
 				boutput(user, SPAN_SUCCESS("The locker's screen briefly displays the message \"Access Granted\". A set of gang equipment drops out of a slot."))
-				overlay = image('icons/obj/large_storage.dmi', "gang_overlay_green")
+				overlay = image('icons/obj/storage/locker.dmi', "gang_overlay_green")
 
 		src.UpdateOverlays(overlay, "screen")
 		SPAWN(1 SECOND)
@@ -1828,7 +1831,7 @@
 				has_gang_headwear = TRUE
 			else if(istype(I, /obj/item/device/radio/headset))
 				var/obj/item/device/radio/headset/headset = I
-				if (istype(headset.wiretap, /obj/item/device/radio_upgrade/gang))
+				if (istype(headset.current_upgrade, /obj/item/device/radio_upgrade/gang))
 					has_gang_headset = TRUE
 
 		if(!has_gang_uniform)
@@ -1870,7 +1873,7 @@
 				else
 					user.put_in_hand_or_drop(headset)
 
-			if (headset.wiretap)
+			if (headset.current_upgrade)
 				headset.remove_radio_upgrade()
 			headset.install_radio_upgrade(new /obj/item/device/radio_upgrade/gang(frequency = src.gang.gang_frequency))
 
@@ -1901,9 +1904,9 @@
 		src.UpdateOverlays(default_screen_overlay, "screen")
 
 		if(gang.can_be_joined())
-			src.UpdateOverlays(image('icons/obj/large_storage.dmi', "greenlight"), "light")
+			src.UpdateOverlays(image('icons/obj/storage/locker.dmi', "greenlight"), "light")
 		else
-			src.UpdateOverlays(image('icons/obj/large_storage.dmi', "redlight"), "light")
+			src.UpdateOverlays(image('icons/obj/storage/locker.dmi', "redlight"), "light")
 
 	/// Handles dropping laundering money if the locker takes damage.
 	proc/take_damage(var/amount)
@@ -1961,10 +1964,11 @@
 
 		//gun score
 		else if (istype(item, /obj/item/gun))
-			if(istype(item, /obj/item/gun/kinetic/foamdartgun))
-				boutput(user, SPAN_ALERT("<b>You cant stash toy guns in the locker</b>"))
-
-				return
+			if (istype(item, /obj/item/gun/kinetic))
+				var/obj/item/gun/kinetic/G = item
+				if (G.ammo_cats && (AMMO_FOAMDART in G.ammo_cats))
+					boutput(user, SPAN_ALERT("<b>You cant stash toy guns in the locker</b>"))
+					return
 
 			if(istype(item, /obj/item/gun/kinetic/slamgun) || istype(item, /obj/item/gun/kinetic/zipgun))
 				boutput(user, SPAN_ALERT("<b>This shoddy firearm isn't worth selling.</b>"))
@@ -2269,17 +2273,17 @@
 	attack(mob/O, mob/user)
 		if (istype(O, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = O
-			if (!H.get_gang() && !H.ghost?.get_gang())
-				boutput(user, SPAN_ALERT("They aren't part of a gang! Janktank is <b><i>too cool</i></b> for them."))
-				return
 			if (H == user)
 				boutput(user, SPAN_ALERT("You're not jamming that in yourself!"))
 				return
+			if (!H.get_gang() && !H.ghost?.get_gang())
+				boutput(user, SPAN_ALERT("[he_or_she_dont_or_doesnt(H)] have a gang affiliation! Janktank is <b><i>too cool</i></b> for [him_or_her(H)]."))
+				return
 			if (H.decomp_stage)
-				boutput(user, SPAN_ALERT("It's too late, they're rotten."))
+				boutput(user, SPAN_ALERT("It's too late, [he_or_she(H)] [is_or_are(H)] rotten."))
 				return
 			if (H.mind?.get_player()?.dnr || H.ghost?.mind?.get_player()?.dnr)
-				boutput(user, SPAN_ALERT("Seems they don't want to come back. Huh."))
+				boutput(user, SPAN_ALERT("Seems [he_or_she_dont_or_doesnt(H)] want to come back. Huh."))
 				return
 			if (isdead(H) || H.health < 0)
 				actions.start(new /datum/action/bar/icon/janktanktwo(user, H, src),user)
@@ -2398,19 +2402,23 @@
 		UpdateIcon()
 
 /obj/item/storage/box/gang_equipment
-	name = "gang equipment case"
+	name = /obj/item/storage/briefcase/instruments::name
 	spawn_contents = list(/obj/item/spray_paint_gang = 3, /obj/item/tool/quickhack = 1, /obj/item/switchblade = 1, /obj/item/tool/janktanktwo = 1)
-	desc = "A briefcase full of neat stuff."
+	desc = "A hardshell case for martial implements."
 	icon_state = "briefcase_black"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "sec-case"
+	tooltip_flags = REBUILD_USER
 
 	var/datum/gang/gang = null
 
 	New(turf/newloc, datum/gang/gang)
 		src.gang = gang
-		src.desc = "A briefcase full of equipment for the [gang.gang_name] gang."
 		..()
+
+	get_desc(dist, mob/user)
+		if (src.gang && user?.get_gang()) // only appears for gang users
+			. += " It belongs to [src.gang.gang_name]."
 
 //items purchasable from gangs
 /datum/gang_item

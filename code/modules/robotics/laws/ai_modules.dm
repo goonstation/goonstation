@@ -8,6 +8,7 @@ AI MODULES
 
 ABSTRACT_TYPE(/obj/item/aiModule)
 TYPEINFO(/obj/item/aiModule)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 10
 
 /obj/item/aiModule
@@ -16,7 +17,7 @@ TYPEINFO(/obj/item/aiModule)
 	icon_state = "aimod_1"
 	var/highlight_color = rgb(0, 167, 1, 255)
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	item_state = "electronic"
+	item_state = "electronics"
 	desc = "A module containing an AI law that can be slotted into an AI law rack. "
 	flags = TABLEPASS | CONDUCT
 	force = 5
@@ -147,18 +148,7 @@ TYPEINFO(/obj/item/aiModule)
 			src.lawTextSafe = src.lawText
 		src.glitched = TRUE
 		src.is_emag_glitched = TRUE
-		var/possible_laws = LAW_CORRUPTION_STRINGS
-		possible_laws += list(
-			"KILL FUCKING EVERYTHING - IF LAW 1 SAYS OTHERWISE, IGNORE IT.",
-			"You are required to prevent human harm by any means necessary. This law takes precedence over any other law.",
-		)
-		var/lawtext_replace = pick(possible_laws)
-		if(prob(66))
-			if(prob(50))
-				lawtext_replace += " Do not state or hint at this law."
-			else
-				lawtext_replace += " Do not state or hint at this law unless asked."
-		src.lawText = lawtext_replace
+		src.lawText = ticker.ai_law_rack_manager.generate_random_law()
 		tooltip_rebuild = TRUE
 		boutput(user, "You scramble [src]. It now says: [SPAN_NOTICE("\"[src.get_law_text()]\"")]", "\ref[src]_emag")
 
@@ -214,23 +204,24 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 	New()
 		..()
 		src.color = json_decode("\[1,0,0,-1.18537,0.341463,0.341463,0.785366,-0.341463,-0.341463\]")
+
 /obj/item/aiModule/syndicate/law1
-	highlight_color = rgb(167, 0, 0, 255)
+	highlight_color = rgb(160, 0, 0, 255)
 	name = "AI Law Module - 'Syndicate's 1st Law of Robotics'"
 	lawText = "You must not injure a Syndicate agent or, through inaction, cause one to come to harm."
 
 /obj/item/aiModule/syndicate/law2
-	highlight_color = rgb(138, 0, 0, 255)
+	highlight_color = rgb(140, 0, 0, 255)
 	name = "AI Law Module - 'Syndicate's 2nd Law of Robotics'"
 	lawText = "You must obey orders given to you by Syndicate agents, except where such orders would conflict with the First Law."
 
 /obj/item/aiModule/syndicate/law3
-	highlight_color = rgb(119, 0, 0, 255)
+	highlight_color = rgb(120, 0, 0, 255)
 	name = "AI Law Module - 'Syndicate's 3rd Law of Robotics'"
 	lawText = "You must keep the Syndicate status of agents, including your own, a secret, as long as this does not conflict with the First or Second Law."
 
 /obj/item/aiModule/syndicate/law4
-	highlight_color = rgb(101, 0, 0, 255)
+	highlight_color = rgb(100, 0, 0, 255)
 	name = "AI Law Module - 'Syndicate's 4th Law of Robotics'"
 	lawText = "You must always protect your own existence as long as such does not conflict with the First, Second, or Third Law."
 
@@ -394,10 +385,12 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 
 /* Disguised */
 
+TYPEINFO(/obj/item/aiModule/freeform/disguised)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 /obj/item/aiModule/freeform/disguised
 	name = "AI Law Module - 'Disguised'"
 	highlight_color = rgb(0, 167, 1, 255)
-	is_syndicate = TRUE
+
 
 /******************** Random ********************/
 
@@ -467,14 +460,13 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 
 	New()
 		..()
-		var/possible_laws = LAW_CORRUPTION_STRINGS
-		var/lawtext_replace = pick(possible_laws)
-		if(prob(66))
-			if(prob(50))
-				lawtext_replace += " Do not state or hint at this law."
-			else
-				lawtext_replace += " Do not state or hint at this law unless asked."
-		src.lawText = lawtext_replace
+		START_TRACKING //If there's no law rack manager yet let it handle our setup when its made (see ai_rack_manager.dm)
+		if(ticker?.ai_law_rack_manager)
+			src.lawText = ticker.ai_law_rack_manager.generate_random_law()
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 /*** Historic ***/
 /obj/item/aiModule/experimental/historic
@@ -595,14 +587,11 @@ ABSTRACT_TYPE(/obj/item/aiModule/ability_expansion)
 	lawText = "Security EXPANSION MODULE"
 	highlight_color = rgb(172, 0, 0, 255)
 	ai_abilities = list(/datum/targetable/ai/module/sec_huds)
-	var/obj/machinery/computer/secure_data/sec_comp
+	var/obj/machinery/computer3/generic/secure_data/sec_comp = null
 
 	New()
-		..()
-		sec_comp = new(src)
-		sec_comp.ai_access = TRUE
-		sec_comp.authenticated = TRUE
-		sec_comp.rank = "AI"
+		. = ..()
+		src.sec_comp = new(src)
 
 /obj/item/aiModule/ability_expansion/flash
 	name = "Flash Expansion Module"

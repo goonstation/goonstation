@@ -40,6 +40,7 @@ export interface CharacterPreferencesData {
   pdaRingtone: string;
   useSatchel: BooleanLike;
   preferredUplink: string;
+  idStartsInPda: BooleanLike;
   skinTone: string;
   specialStyle: string;
   eyeColor: string;
@@ -91,6 +92,7 @@ export interface CharacterPreferencesData {
   traitsMax: number;
   traitsPointsTotal: number;
   partsData: Partial<Record<string, CharacterPreferencesPartData>>;
+  observerDnr: BooleanLike;
 }
 export interface CharacterPreferencesPartData {
   id: string;

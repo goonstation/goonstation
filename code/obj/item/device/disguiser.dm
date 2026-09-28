@@ -1,4 +1,5 @@
 TYPEINFO(/obj/item/device/disguiser)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_SYNDIE_ONLY
 	mats = 8
 
 /obj/item/device/disguiser
@@ -7,12 +8,11 @@ TYPEINFO(/obj/item/device/disguiser)
 	desc = "Experimental device that projects a hologram of a randomly generated appearance onto the user, hiding their real identity."
 	flags = TABLEPASS | CONDUCT | EXTRADELAY
 	c_flags = ONBELT
-	item_state = "electronic"
+	item_state = "accessgun"
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL
-	is_syndicate = 1
 	var/datum/appearanceHolder/oldAH = new
 	var/anti_spam = 1 // In relation to world time.
 	var/active = 0

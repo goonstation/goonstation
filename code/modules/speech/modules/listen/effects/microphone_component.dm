@@ -11,14 +11,10 @@
 		if (isnull(message.speaker_to_display))
 			message.speaker_to_display = message.real_ident || message.face_ident
 
-		content = "name=[message.speaker_to_display]&message=[message.content]"
+		content = "name=[message.speaker_to_display]&message=[message.get_content_parsable()]"
 
 	else
-		content = message.content
-
-	//we're sending it to in-game components now, so strip our internal mutability handling tags
-	content = STRIP_MUTABLE_CONTENT_TAGS(content)
-	content = strip_html_tags(content)
+		content = message.get_content_parsable()
 
 	SPAWN(0)
 		microphone.light_up_housing()

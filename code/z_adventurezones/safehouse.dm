@@ -296,7 +296,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	icon_state = "beaconbroken"
 	anchored = ANCHORED
 
-/obj/item/disk/data/fixed_disk/safehouse_rdrive
+/obj/item/disk/data/fixed_disk/hd64/safehouse_rdrive
 	New()
 		..()
 		//First off, create the directory for logging stuff
@@ -322,8 +322,11 @@ obj/item/reagent_containers/iv_drip/dead_exec
 
 /obj/machinery/computer3/generic/personal/safehouse
 	name = "Computer Console"
-	setup_drive_type = /obj/item/disk/data/fixed_disk/safehouse_rdrive
-	setup_starting_peripheral1 = /obj/item/peripheral/network/powernet_card
+	setup_drive_type = /obj/item/disk/data/fixed_disk/hd64/safehouse_rdrive
+	setup_starting_peripherals = list(
+			/obj/item/peripheral/card_scanner,
+			/obj/item/peripheral/drive,
+			/obj/item/peripheral/network/powernet_card)
 
 /obj/item/storage/briefcase/safehouse
 	name = "suspicious briefcase"

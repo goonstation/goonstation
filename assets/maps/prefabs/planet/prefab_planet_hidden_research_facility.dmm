@@ -239,7 +239,7 @@
 /area/noGenerate)
 "CQ" = (
 /obj/machinery/shower,
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 4;
 	pixel_x = -6
 	},
@@ -340,7 +340,7 @@
 /turf/simulated/floor/white,
 /area/noGenerate)
 "Op" = (
-/obj/submachine/chef_sink/chem_sink{
+/obj/machinery/sink/slim{
 	dir = 8;
 	pixel_x = 6
 	},

@@ -8,7 +8,7 @@
 	var/maxConspirators = 6
 	var/agent_radiofreq = 1401
 	/// How many other antags to mix in with the conspiracy
-	var/num_other_antags = 1
+	var/num_other_antags = 0
 	var/other_antag_roles = list(ROLE_TRAITOR = 1, ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1, ROLE_ARCFIEND = 1)
 	var/list/datum/mind/other_antags
 
@@ -76,7 +76,7 @@
 
 /datum/game_mode/conspiracy/proc/random_radio_frequency()
 	var/list/blacklisted = list(0, 1451, 1457)
-	blacklisted.Add(R_FREQ_BLACKLIST)
+	blacklisted.Add(RADIO.FREQ._get_namespace_constants())
 
 	do
 		. = rand(1352, 1439)

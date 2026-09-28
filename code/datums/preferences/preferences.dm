@@ -76,6 +76,7 @@ var/list/removed_jobs = list(
 	var/PDAcolor = "#6F7961"
 	var/use_satchel //Automatically convert backpack to satchel?
 	var/preferred_uplink = PREFERRED_UPLINK_PDA //Which uplink to prioritise spawning for Traitors and Headrevs (spiefs are forced to have PDA uplinks)
+	var/id_starts_in_pda = FALSE //Try to automatically equip IDs in PDAs and PDAs in ID slots?
 
 	var/job_favorite = null
 	var/list/jobs_med_priority = list()
@@ -110,6 +111,8 @@ var/list/removed_jobs = list(
 	var/preferred_map = ""
 
 	var/font_size = null
+
+	var/observer_dnr = FALSE //Automatically set DNR when spawn as observer?
 
 	///An associative list of slots to part IDs, see part_customization.dm
 	var/list/custom_parts = null
@@ -255,6 +258,7 @@ var/list/removed_jobs = list(
 			"pdaRingtone" = src.pda_ringtone_index,
 			"useSatchel" = src.use_satchel,
 			"preferredUplink" = src.preferred_uplink,
+			"idStartsInPda" = src.id_starts_in_pda,
 			"skinTone" = src.AH.s_tone_original,
 			"specialStyle" = src.AH.special_style,
 			"eyeColor" = src.AH.e_color,
@@ -319,6 +323,7 @@ var/list/removed_jobs = list(
 			"useWasd" = src.use_wasd,
 			"useAzerty" = src.use_azerty,
 			"preferredMap" = src.preferred_map,
+			"observerDnr" = src.observer_dnr,
 			"traitsAvailable" = traits,
 			"traitsMax" = src.traitPreferences.max_traits,
 			"traitsPointsTotal" = src.traitPreferences.calcTotal(src.traitPreferences.traits_selected, src.custom_parts),
@@ -547,6 +552,11 @@ var/list/removed_jobs = list(
 				src.profile_modified = TRUE
 				return TRUE
 
+			if ("toggle-id-in-pda")
+				src.id_starts_in_pda = !src.id_starts_in_pda
+				src.profile_modified = TRUE
+				return TRUE
+
 			if ("update-uplink")
 				if (isnull(src.preferred_uplink) || src.preferred_uplink == PREFERRED_UPLINK_STANDALONE)
 					src.preferred_uplink = PREFERRED_UPLINK_PDA
@@ -598,9 +608,9 @@ var/list/removed_jobs = list(
 				return TRUE
 
 			if ("update-age")
-				var/new_age = tgui_input_number(usr, "Please select type in age: 20-80", "Character Generation", src.age, 80, 20)
+				var/new_age = tgui_input_number(usr, "Please select type in age: 20-100", "Character Generation", src.age, 100, 20)
 				if (new_age)
-					src.age = clamp(round(text2num(new_age)), 20, 80)
+					src.age = clamp(round(text2num(new_age)), 20, 100)
 					src.profile_modified = TRUE
 					return TRUE
 
@@ -1046,6 +1056,11 @@ var/list/removed_jobs = list(
 				src.profile_modified = TRUE
 				return TRUE
 
+			if ("update-observerDnr")
+				src.observer_dnr = !src.observer_dnr
+				src.profile_modified = TRUE
+				return TRUE
+
 			if ("select-trait")
 				src.profile_modified = src.traitPreferences.selectTrait(params["id"], src.custom_parts)
 				return TRUE
@@ -1134,10 +1149,12 @@ var/list/removed_jobs = list(
 				src.be_wizard = FALSE
 				src.be_werewolf = FALSE
 				src.be_vampire = FALSE
+				src.be_arcfiend = FALSE
 				src.be_wraith = FALSE
 				src.be_blob = FALSE
 				src.be_conspirator = FALSE
 				src.be_flock = FALSE
+				src.be_salvager = FALSE
 				src.be_misc = FALSE
 				src.tooltip_option = TOOLTIP_ALWAYS
 				src.scrollwheel_limb_targeting = SCROLL_TARGET_ALWAYS
@@ -1442,8 +1459,10 @@ var/list/removed_jobs = list(
 					reason_tooltip = "You have been banned from playing this job."
 				else if (job_datum.needs_college && !user.has_medal("Unlike the director, I went to college"))
 					reason_tooltip = "This job requires the <i>\"Unlike the director, I went to college\"</i> medal, which you do not possess."
-				else if (job_datum.requires_whitelist && !user.client.can_play_whitelisted_roles())
-					reason_tooltip = "This job requires being on the Head of Security whitelist. Mentors may also play this job on Fridays."
+				else if (job_datum.requires_whitelist == REQUIRES_WHITELIST_ALWAYS && !user.client.can_play_whitelisted_roles())
+					reason_tooltip = "This job requires being on the Head of Security whitelist. Mentors may play this job on Fridays."
+				else if (job_datum.requires_whitelist == REQUIRES_WHITELIST_USUALLY && !user.client.can_play_whitelisted_roles() && (!IS_IT_SATURDAY))
+					reason_tooltip = "This job requires being on the Head of Security whitelist. Mentors may play this job on Fridays. Anyone may play this job on Saturdays."
 				else if (!job_datum.has_rounds_needed(user.client?.player))
 					var/played_rounds = user.client.player.get_rounds_participated()
 					var/needed_rounds = job_datum.rounds_needed_to_play

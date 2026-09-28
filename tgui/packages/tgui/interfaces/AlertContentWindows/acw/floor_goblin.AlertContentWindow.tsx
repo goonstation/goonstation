@@ -6,10 +6,12 @@
  */
 import { Box, Image } from 'tgui-core/components';
 
-import { resource } from '../../../goonstation/cdn';
+import { useResource } from '../../../goonstation/cdn';
 import { AlertContentWindow } from '../types';
 
 const FloorGoblinContentWindow = () => {
+  const resource = useResource();
+
   return (
     <>
       <Box as="h1" textAlign="center" fontSize={2.5}>

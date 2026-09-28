@@ -59,6 +59,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "shinai"
 	item_state = "shinai-light"
+	default_material = "bamboo"
 
 	w_class = W_CLASS_BULKY
 	two_handed = 1

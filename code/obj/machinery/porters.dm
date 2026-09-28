@@ -8,8 +8,14 @@
 
 ///////////////////////////// Remote parent ///////////////////////////////////
 
+ABSTRACT_TYPE(/obj/item/remote)
+/obj/item/remote
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	item_state = "accessgun"
+
 // Adapted from the PDA program in portable_machinery_control.dm (Convair880).
 TYPEINFO(/obj/item/remote/porter)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = 4
 
 /obj/item/remote/porter
@@ -17,7 +23,6 @@ TYPEINFO(/obj/item/remote/porter)
 	icon = 'icons/obj/items/device.dmi'
 	desc = "You shouldn't be able to see this!"
 	icon_state = "locator"
-	item_state = "electronic"
 	density = 0
 	anchored = UNANCHORED
 	w_class = W_CLASS_SMALL
@@ -27,6 +32,18 @@ TYPEINFO(/obj/item/remote/porter)
 
 	proc/get_machinery()
 		return
+
+	///Used for get_machinery polling; returns TRUE when passed a turf that exists and isn't in a restricted Z (with some special exemptions for Menhir if pertinent)
+	proc/loc_eval(var/turf/T)
+		. = FALSE
+		if(!T || !isturf(T)) return
+		if(isrestrictedz(T.z))
+#ifdef MAP_OVERRIDE_MENHIR
+			if (in_menhir_zone(T))
+				. = TRUE
+#endif
+			return
+		return TRUE
 
 	// As to avoid a separate lookup for every remote.
 	proc/teleport_sanity_check(var/obj/machinery/test_machinery, var/mob/test_mob, var/turf/test_turf, var/no_zlevel_check = 0)
@@ -64,7 +81,8 @@ TYPEINFO(/obj/item/remote/porter)
 		if (test_turf)
 			if (test_turf.loc:teleport_blocked == 2) return 0
 			if (!no_zlevel_check && (isrestrictedz(test_turf.z) || isrestrictedz(our_loc.z))) // Somebody will find a way to abuse it if I don't put this here.
-				return 0
+				if (!in_menhir_zone(our_loc)) //Special Exemption
+					return 0
 			if (test_turf.density)
 				return 5
 			for (var/obj/thing in view(0, test_turf))
@@ -79,7 +97,8 @@ TYPEINFO(/obj/item/remote/porter)
 			if (!our_loc || !isturf(our_loc))
 				return 0
 			if (!no_zlevel_check && isrestrictedz(our_loc.z)) // Somebody will find a way to abuse it if I don't put this here.
-				return 0
+				if (!in_menhir_zone(our_loc)) //Special Exemption
+					return 0
 			if (our_loc.density)
 				return 4
 			for (var/obj/thing2 in view(0, our_loc))
@@ -194,17 +213,20 @@ TYPEINFO(/obj/item/remote/porter)
 
 		for (var/obj/machinery/port_a_brig/M in by_cat[TR_CAT_PORTABLE_MACHINERY])
 			var/turf/M_loc = get_turf(M)
-			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
+			if (M && !src.loc_eval(M_loc)) // Don't show stuff in "somewhere", okay.
 				continue
 			if (!(M in src.machinerylist))
-				src.machinerylist["[src.machinery_name] #[src.machinerylist.len + 1] at [get_area(M)]"] += M // Don't remove the #[number] part here.
+				var/area_string = "Off-[global.station_or_ship()] Location"  // Don't show stuff in "somewhere", okay.
+				var/area/A = get_area(M)
+				if (istype(A, /area/station))
+					area_string = A.name
+				src.machinerylist["[src.machinery_name] #[src.machinerylist.len + 1] at [area_string]"] += M // Don't remove the #[number] part here.
 		return
 
 /obj/item/remote/porter/port_a_medbay
 	name = "Port-A-Medbay Remote"
 	icon = 'icons/obj/porters.dmi'
 	icon_state = "remote"
-	item_state = "electronic"
 	desc = "A remote that summons a Port-A-Medbay."
 	machinery_name = "Port-a-Medbay"
 
@@ -214,14 +236,19 @@ TYPEINFO(/obj/item/remote/porter)
 
 		for (var/obj/machinery/sleeper/port_a_medbay/M in by_cat[TR_CAT_PORTABLE_MACHINERY])
 			var/turf/M_loc = get_turf(M)
-			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
+			if (M && !src.loc_eval(M_loc)) // Don't show stuff in "somewhere", okay.
 				continue
 			if (!(M in src.machinerylist))
-				src.machinerylist["[src.machinery_name] #[src.machinerylist.len + 1] at [get_area(M)]"] += M // Don't remove the #[number] part here.
+				var/area_string = "Off-[global.station_or_ship()] Location"  // Don't show stuff in "somewhere", okay.
+				var/area/A = get_area(M)
+				if (istype(A, /area/station))
+					area_string = A.name
+				src.machinerylist["[src.machinery_name] #[src.machinerylist.len + 1] at [area_string]"] += M // Don't remove the #[number] part here.
 		return
 
 // I suppose this device would be sorta useless with tele-block checks?
 TYPEINFO(/obj/item/remote/porter/port_a_sci)
+	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
 	mats = list("metal" = 5,
 				"conductive" = 5,
 				"telecrystal" = 10)
@@ -229,7 +256,6 @@ TYPEINFO(/obj/item/remote/porter/port_a_sci)
 	name = "Port-A-Sci Remote"
 	icon = 'icons/obj/porters.dmi'
 	icon_state = "remote"
-	item_state = "electronic"
 	desc = "A remote that summons a Port-A-Sci."
 	machinery_name = "Port-a-Sci"
 
@@ -238,18 +264,18 @@ TYPEINFO(/obj/item/remote/porter/port_a_sci)
 			return
 
 		for (var/obj/storage/closet/port_a_sci/M in by_cat[TR_CAT_PORTABLE_MACHINERY])
-			/*var/turf/M_loc = get_turf(M)
-			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
-				continue*/
 			if (!(M in src.machinerylist))
-				src.machinerylist["[src.machinery_name] #[src.machinerylist.len + 1] at [get_area(M)]"] += M // Don't remove the #[number] part here.
+				var/area_string = "Off-[global.station_or_ship()] Location"  // Don't show stuff in "somewhere", okay.
+				var/area/A = get_area(M)
+				if (istype(A, /area/station))
+					area_string = A.name
+				src.machinerylist["[src.machinery_name] #[src.machinerylist.len + 1] at [area_string]"] += M // Don't remove the #[number] part here.
 		return
 
 /obj/item/remote/porter/port_a_nanomed
 	name = "Port-A-NanoMed Remote"
 	icon = 'icons/obj/porters.dmi'
 	icon_state = "remote"
-	item_state = "electronic"
 	desc = "A remote that summons a Port-A-NanoMed."
 	machinery_name = "Port-a-NanoMed"
 
@@ -259,17 +285,20 @@ TYPEINFO(/obj/item/remote/porter/port_a_sci)
 
 		for (var/obj/machinery/vending/port_a_nanomed/M in by_cat[TR_CAT_PORTABLE_MACHINERY])
 			var/turf/M_loc = get_turf(M)
-			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
+			if (M && !src.loc_eval(M_loc)) // Don't show stuff in "somewhere", okay.
 				continue
 			if (!(M in src.machinerylist))
-				src.machinerylist["[src.machinery_name] #[src.machinerylist.len + 1] at [get_area(M)]"] += M // Don't remove the #[number] part here.
+				var/area_string = "Off-[global.station_or_ship()] Location"  // Don't show stuff in "somewhere", okay.
+				var/area/A = get_area(M)
+				if (istype(A, /area/station))
+					area_string = A.name
+				src.machinerylist["[src.machinery_name] #[src.machinerylist.len + 1] at [area_string]"] += M // Don't remove the #[number] part here.
 		return
 
 /obj/item/remote/porter/port_a_gene
 	name = "Port-A-Gene Remote"
 	icon = 'icons/obj/porters.dmi'
 	icon_state = "remote"
-	item_state = "electronic"
 	desc = "A remote that summons a Port-A-Gene."
 	machinery_name = "Port-a-Gene"
 
@@ -279,17 +308,20 @@ TYPEINFO(/obj/item/remote/porter/port_a_sci)
 
 		for (var/obj/machinery/computer/genetics/portable/M in by_cat[TR_CAT_PORTABLE_MACHINERY])
 			var/turf/M_loc = get_turf(M)
-			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
+			if (M && !src.loc_eval(M_loc)) // Don't show stuff in "somewhere", okay.
 				continue
 			if (!(M in src.machinerylist))
-				src.machinerylist["[src.machinery_name] #[src.machinerylist.len + 1] at [get_area(M)]"] += M // Don't remove the #[number] part here.
+				var/area_string = "Off-[global.station_or_ship()] Location"  // Don't show stuff in "somewhere", okay.
+				var/area/A = get_area(M)
+				if (istype(A, /area/station))
+					area_string = A.name
+				src.machinerylist["[src.machinery_name] #[src.machinerylist.len + 1] at [area_string]"] += M // Don't remove the #[number] part here.
 		return
 
 /obj/item/remote/porter/port_a_laundry
 	name = "Port-A-Laundry Remote"
 	icon = 'icons/obj/porters.dmi'
 	icon_state = "remote"
-	item_state = "electronic"
 	desc = "A remote that summons a Port-A-Laundry."
 	machinery_name = "Port-a-Laundry"
 
@@ -298,11 +330,12 @@ TYPEINFO(/obj/item/remote/porter/port_a_sci)
 			return
 
 		for (var/obj/submachine/laundry_machine/portable/LP in by_cat[TR_CAT_PORTABLE_MACHINERY])
-			var/turf/T = get_turf(LP)
-			if (isrestrictedz(T?.z)) // Don't show stuff in "somewhere", okay.
-				continue
 			if (!(LP in src.machinerylist))
-				src.machinerylist["[src.machinery_name] #[src.machinerylist.len + 1] at [get_area(LP)]"] += LP // Don't remove the #[number] part here.
+				var/area_string = "Off-[global.station_or_ship()] Location"  // Don't show stuff in "somewhere", okay.
+				var/area/A = get_area(LP)
+				if (istype(A, /area/station))
+					area_string = A.name
+				src.machinerylist["[src.machinery_name] #[src.machinerylist.len + 1] at [area_string]"] += LP // Don't remove the #[number] part here.
 		return
 
 /obj/item/remote/busted
@@ -346,7 +379,11 @@ TYPEINFO(/obj/machinery/port_a_brig)
 
 	examine()
 		. = ..()
-		. += "Home turf: [get_area(src.homeloc)]. The interface is [src.locked ? "locked" : "unlocked"]."
+		var/area_string = "Off-[global.station_or_ship()] Location"  // Don't show stuff in "somewhere", okay.
+		var/area/A = get_area(src.homeloc)
+		if (istype(A, /area/station))
+			area_string = A.name
+		. += "Home turf: [area_string]. The interface is [src.locked ? "locked" : "unlocked"]."
 
 	SubscribeToProcess()
 		..()
@@ -548,7 +585,7 @@ TYPEINFO(/obj/machinery/port_a_brig)
 	Congratulations, your station has purchased the A-97 Port-A-Brig Security device!<br>
 	Using the A-97 is as simple as beating a criminal to death! Simply Summon the A-97 with the remote, put the criminal inside, lock the door with your ID and send it back!<br>
 	<b>That's all there is to it!</b><br>
-	<i>Notice, the Port-A-Brig teleporter system may fail if you are not in a open space.</i><br>
+	<i>Notice, the Port-A-Brig teleporter system may fail if you are not in an open space.</i><br>
 	<font size=1>This technology produced under license from  Quantum Movement Inc, LTD.</font>"}
 
 /////////////////////////////////////// Port-a-Sci ///////////////////////////////////////////
@@ -588,7 +625,11 @@ TYPEINFO(/obj/machinery/port_a_brig)
 
 	examine()
 		. = ..()
-		. += "Home turf: [get_area(src.homeloc)]."
+		var/area_string = "Off-[global.station_or_ship()] Location"  // Don't show stuff in "somewhere", okay.
+		var/area/A = get_area(src.homeloc)
+		if (istype(A, /area/station))
+			area_string = A.name
+		. += "Home turf: [area_string]."
 
 	// This thing isn't z-level-restricted except for the homeloc.
 	// Somebody WILL find an exploit otherwise (Convair880).
@@ -712,7 +753,7 @@ TYPEINFO(/obj/machinery/port_a_brig)
 //////////////////////////////////////// Port-a-NanoMed ///////////////////////////////////////////
 
 TYPEINFO(/obj/machinery/vending/port_a_nanomed)
-	mats = null
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/machinery/vending/port_a_nanomed
 	name = "Port-A-NanoMed"
@@ -775,7 +816,11 @@ TYPEINFO(/obj/machinery/vending/port_a_nanomed)
 
 	examine()
 		. = ..()
-		. += "Home turf: [get_area(src.homeloc)]."
+		var/area_string = "Off-[global.station_or_ship()] Location"  // Don't show stuff in "somewhere", okay.
+		var/area/A = get_area(src.homeloc)
+		if (istype(A, /area/station))
+			area_string = A.name
+		. += "Home turf: [area_string]."
 
 	// Could be useful (Convair880).
 	mouse_drop(over_object, src_location, over_location)
@@ -817,7 +862,7 @@ TYPEINFO(/obj/machinery/vending/port_a_nanomed)
 
 //DIRTY DIRTY PLAYERS
 TYPEINFO(/obj/submachine/laundry_machine/portable)
-	mats = 0
+	analyser_flags = ANALYSER_BLACKLIST
 
 /obj/submachine/laundry_machine/portable
 	name = "Port-A-Laundry"
