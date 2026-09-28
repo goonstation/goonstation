@@ -49,6 +49,7 @@
 	 * By default, this adjusts the interval by either adding or subtracting anywhere in the jitter range.
 	 * For example, a jitter of `2 SECONDS` for an interval of `10 SECONDS` would give times from `8 SECONDS` to `12 SECONDS`.
 	 *
+	 * Set this at type level.
 	 * For more complex behavior, override [/datum/controller/processScheduler/proc/setQueuedProcessState]. Necessary for runtime jitter range change.
 	 */
 	var/tmp/schedule_jitter = PROCESS_DEFAULT_SCHEDULE_JITTER
