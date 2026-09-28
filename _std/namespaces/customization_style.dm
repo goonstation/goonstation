@@ -1,11 +1,5 @@
 CREATE_NAMESPACE(CUSTOMIZATION)
 
-/// The gender which is TYPICALLY assigned to this customization style.
-/// Primarily for character appearance randomization.
-CREATE_NAMESPACE(CUSTOMIZATION, GENDER)
-ADD_TO_NAMESPACE(CUSTOMIZATION, GENDER)(var/const/MASCULINE = (1 << 0))
-ADD_TO_NAMESPACE(CUSTOMIZATION, GENDER)(var/const/FEMININE = (1 << 1))
-
 /// Customization style slots.
 CREATE_NAMESPACE(CUSTOMIZATION, SLOT)
 ADD_TO_NAMESPACE(CUSTOMIZATION, SLOT)(var/const/HAIR = "hair")

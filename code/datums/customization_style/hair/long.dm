@@ -71,7 +71,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/long)
 /datum/customization_style/hair/long/disheveled
 	name = "Disheveled"
 	id = "disheveled"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/long/doublepart
 	name = "Double-Part"
@@ -80,12 +80,12 @@ ABSTRACT_TYPE(/datum/customization_style/hair/long)
 /datum/customization_style/hair/long/shoulders
 	name = "Draped"
 	id = "shoulders"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/long/dreads
 	name = "Dreadlocks"
 	id = "dreads"
-	gender = CUSTOMIZATION::GENDER::MASCULINE
+	gender = MALE
 
 /datum/customization_style/hair/long/dreadsA
 	name = "Dreadlocks: Alternating"
@@ -108,12 +108,12 @@ ABSTRACT_TYPE(/datum/customization_style/hair/long)
 /datum/customization_style/hair/long/fabio
 	name = "Fabio"
 	id = "fabio"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/long/glammetal
 	name = "Glammetal"
 	id = "glammetal"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/long/glammetalO
 	name = "Glammetal: Faded"
@@ -122,7 +122,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/long)
 /datum/customization_style/hair/long/eighties
 	name = "Hairmetal"
 	id = "80s"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/long/eightiesfade
 	name = "Hairmetal: Faded"
@@ -135,7 +135,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/long)
 /datum/customization_style/hair/long/halfshaved_s
 	name = "Half-Shaved: Long"
 	id = "halfshaved_s"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/long/halfshavedL
 	name = "Half-Shaved: Right"
@@ -154,17 +154,17 @@ ABSTRACT_TYPE(/datum/customization_style/hair/long)
 /datum/customization_style/hair/long/kingofrockandroll
 	name = "Kingmetal"
 	id = "king-of-rock-and-roll"
-	gender = CUSTOMIZATION::GENDER::MASCULINE
+	gender = MALE
 
 /datum/customization_style/hair/long/froofy_long
 	name = "Long and Froofy"
 	id = "froofy_long"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/long/lionsmane
 	name = "Lionsmane"
 	id = "lionsmane"
-	gender = CUSTOMIZATION::GENDER::MASCULINE
+	gender = MALE
 
 /datum/customization_style/hair/long/lionsmane_fade
 	name = "Lionsmane: Faded"
@@ -173,32 +173,32 @@ ABSTRACT_TYPE(/datum/customization_style/hair/long)
 /datum/customization_style/hair/long/pinion
 	name = "Pinion"
 	id = "pinion"
-	gender = CUSTOMIZATION::GENDER::MASCULINE
+	gender = MALE
 
 /datum/customization_style/hair/long/longbraid
 	name = "Long Braid"
 	id = "longbraid"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/long/looselongbraid
 	name = "Loose Long Braid"
 	id = "looselongbraid"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/long/looselongbraidtwincolor
 	name = "Loose Long Braid: Twin Color"
 	id = "looselongbraidfaded"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/long/looselongbraidshoulder
 	name = "Loose Long Braid Over Shoulder"
 	id = "looselongbraidshoulder"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/long/box_braids
 	name = "Box Braids"
 	id = "box_braids"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/long/box_braids_beads
 	name = "Box Braids: Beads"
@@ -233,12 +233,12 @@ ABSTRACT_TYPE(/datum/customization_style/hair/long)
 /datum/customization_style/hair/long/longsidepart_s
 	name = "Long Flip"
 	id = "longsidepart_s"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/long/longwaves
 	name = "Waves"
 	id = "longwaves"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/long/longwaves_fade
 	name = "Waves: Faded"
@@ -252,12 +252,12 @@ ABSTRACT_TYPE(/datum/customization_style/hair/long)
 /datum/customization_style/hair/long/pulledb
 	name = "Pulled Back"
 	id = "pulledb"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/long/ripley
 	name = "Ripley"
 	id = "ripley"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/long/ripley_fade
 	name = "Ripley: Faded"
@@ -266,32 +266,32 @@ ABSTRACT_TYPE(/datum/customization_style/hair/long)
 /datum/customization_style/hair/long/sage
 	name = "Sage"
 	id = "sage"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/long/scraggly
 	name = "Scraggly"
 	id = "scraggly"
-	gender = CUSTOMIZATION::GENDER::MASCULINE
+	gender = MALE
 
 /datum/customization_style/hair/long/pulledf
 	name = "Shoulder Drape"
 	id = "pulledf"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/long/shoulderl
 	name = "Shoulder-Length"
 	id = "shoulderl"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/long/slightlymess_s
 	name = "Shoulder-Length Mess"
 	id = "slightlymessy_s"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/long/smoothwave
 	name = "Smooth Waves"
 	id = "smoothwave"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/long/smoothwave_fade
 	name = "Smooth Waves: Faded"
@@ -305,7 +305,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/long)
 /datum/customization_style/hair/long/mermaid
 	name = "Mermaid"
 	id = "mermaid"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/long/mermaidfade
 	name = "Mermaid: Faded"
@@ -318,17 +318,17 @@ ABSTRACT_TYPE(/datum/customization_style/hair/long)
 /datum/customization_style/hair/long/bluntbangs_s
 	name = "Mid-Length Curl"
 	id = "bluntbangs_s"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/long/vlong
 	name = "Very Long"
 	id = "vlong"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/long/violet
 	name = "Violet"
 	id = "violet"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/long/violet_fade
 	name = "Violet: Faded"
@@ -350,7 +350,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/long)
 /datum/customization_style/hair/long/hime
 	name = "Himecut"
 	id = "hime"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/long/wild_bedhead
 	name = "Wild Bedhead"
@@ -375,7 +375,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/long)
 /datum/customization_style/hair/long/royal_curls
 	name = "Royal Curls"
 	id = "royal_curls"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/long/med_curly
 	name = "Med Curls"
@@ -384,7 +384,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/long)
 /datum/customization_style/hair/long/poofy_wave
 	name = "Poofy Wave"
 	id = "poofy_wave"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/long/longer_curls
 	name = "Longer Curls"
@@ -397,7 +397,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/long)
 /datum/customization_style/hair/long/curly_twists
 	name = "Curly Twists"
 	id = "curly_twists"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/long/straightened_long
 	name = "Straightened shoulder-length"
@@ -410,12 +410,12 @@ ABSTRACT_TYPE(/datum/customization_style/hair/long)
 /datum/customization_style/hair/long/ringlets
 	name = "Ringlets"
 	id = "ringlet"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/long/ringlets_short //yeah, I know, it's so it shows up next to the normal ringlet hairstyle
 	name = "Short Ringlets"
 	id = "ringlet_short"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/long/ringlets_fade
 	name = "Ringlets: Faded"

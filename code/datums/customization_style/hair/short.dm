@@ -95,12 +95,12 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/balding
 	name = "Balding"
 	id = "balding"
-	gender = CUSTOMIZATION::GENDER::MASCULINE
+	gender = MALE
 
 /datum/customization_style/hair/short/bangs
 	name = "Bangs"
 	id = "bangs"
-	gender = CUSTOMIZATION::GENDER::MASCULINE
+	gender = MALE
 
 /datum/customization_style/hair/short/bieb
 	name = "Bieber"
@@ -113,22 +113,22 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/bobcut
 	name = "Bobcut"
 	id = "bobcut"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/short/baum_s
 	name = "Bobcut Alt"
 	id = "baum_s"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/short/bowl
 	name = "Bowl Cut"
 	id = "bowl"
-	gender = CUSTOMIZATION::GENDER::MASCULINE
+	gender = MALE
 
 /datum/customization_style/hair/short/cut
 	name = "Buzzcut"
 	id = "cut"
-	gender = CUSTOMIZATION::GENDER::MASCULINE
+	gender = MALE
 
 /datum/customization_style/hair/short/clown
 	name = "Clown"
@@ -152,12 +152,12 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/combed_s
 	name = "Combed"
 	id = "combed_s"
-	gender = CUSTOMIZATION::GENDER::MASCULINE
+	gender = MALE
 
 /datum/customization_style/hair/short/combedbob_s
 	name = "Combed Bob"
 	id = "combedbob_s"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/short/chop_short
 	name = "Choppy Short"
@@ -166,7 +166,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/einstein
 	name = "Einstein"
 	id = "einstein"
-	gender = CUSTOMIZATION::GENDER::MASCULINE
+	gender = MALE
 
 /datum/customization_style/hair/short/einalt
 	name = "Einstein: Alternating"
@@ -183,7 +183,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/flattop
 	name = "Flat Top"
 	id = "flattop"
-	gender = CUSTOMIZATION::GENDER::MASCULINE
+	gender = MALE
 
 /datum/customization_style/hair/short/flick
 	name = "Flick"
@@ -201,12 +201,12 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/floof
 	name = "Floof"
 	id = "floof"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/short/ignite
 	name = "Ignite"
 	id = "ignite"
-	gender = CUSTOMIZATION::GENDER::MASCULINE
+	gender = MALE
 
 /datum/customization_style/hair/short/igniteshaved
 	name = "Ignite: Shaved"
@@ -247,7 +247,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/mysterious
 	name = "Mysterious"
 	id = "mysterious"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/short/long
 	name = "Mullet"
@@ -289,27 +289,27 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/spiky
 	name = "Spiky"
 	id = "spiky"
-	gender = CUSTOMIZATION::GENDER::MASCULINE
+	gender = MALE
 
 /datum/customization_style/hair/short/subtlespiky
 	name = "Subtle Spiky"
 	id = "subtlespiky"
-	gender = CUSTOMIZATION::GENDER::MASCULINE
+	gender = MALE
 
 /datum/customization_style/hair/short/temsik
 	name = "Temsik"
 	id = "temsik"
-	gender = CUSTOMIZATION::GENDER::MASCULINE
+	gender = MALE
 
 /datum/customization_style/hair/short/tonsure
 	name = "Tonsure"
 	id = "tonsure"
-	gender = CUSTOMIZATION::GENDER::MASCULINE
+	gender = MALE
 
 /datum/customization_style/hair/short/short
 	name = "Trimmed"
 	id = "short"
-	gender = CUSTOMIZATION::GENDER::MASCULINE
+	gender = MALE
 
 /datum/customization_style/hair/short/tulip
 	name = "Tulip"
@@ -318,7 +318,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/visual
 	name = "Visual"
 	id = "visual"
-	gender = CUSTOMIZATION::GENDER::MASCULINE
+	gender = MALE
 
 /datum/customization_style/hair/short/combedfront
 	name = "Combed Front"
@@ -512,7 +512,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/big_pomp
 	name = "Big Pompadour"
 	id = "big_pomp"
-	gender = CUSTOMIZATION::GENDER::MASCULINE
+	gender = MALE
 
 /datum/customization_style/hair/short/big_pomp_fade
 	name = "Big Pompadour: Faded"
@@ -522,7 +522,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/short)
 /datum/customization_style/hair/short/duck_ass
 	name = "Ducktail"
 	id = "duck_ass"
-	gender = CUSTOMIZATION::GENDER::MASCULINE
+	gender = MALE
 
 /datum/customization_style/hair/short/pageboy
 	name = "Pageboy"

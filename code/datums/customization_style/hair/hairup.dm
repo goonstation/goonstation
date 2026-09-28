@@ -5,32 +5,32 @@ ABSTRACT_TYPE(/datum/customization_style/hair/hairup)
 /datum/customization_style/hair/hairup/bun
 	name = "Bun"
 	id = "bun"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/hairup/bundercut
 	name = "Bun Undercut"
 	id = "bundercut"
-	gender = CUSTOMIZATION::GENDER::MASCULINE
+	gender = MALE
 
 /datum/customization_style/hair/hairup/sakura
 	name = "Captor"
 	id = "sakura"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/hairup/croft
 	name = "Croft"
 	id = "croft"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/hairup/indian
 	name = "Double Braids"
 	id = "indian"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/hairup/doublebun
 	name = "Double Buns"
 	id = "doublebun"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/hairup/drill
 	name = "Drill"
@@ -39,27 +39,27 @@ ABSTRACT_TYPE(/datum/customization_style/hair/hairup)
 /datum/customization_style/hair/hairup/fun_bun
 	name = "Fun Bun"
 	id = "fun_bun"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/hairup/charioteers
 	name = "High Flat Top"
 	id = "charioteers"
-	gender = CUSTOMIZATION::GENDER::MASCULINE
+	gender = MALE
 
 /datum/customization_style/hair/hairup/spud
 	name = "High Ponytail"
 	id = "spud"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/hairup/longtailed
 	name = "Long Mini Tail"
 	id = "longtailed"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/hairup/longtwintail
 	name = "Long Twin Tails"
 	id = "longtwintail"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/hairup/longtwintail_half
 	name = "Long Twin Tails: Split"
@@ -78,7 +78,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/hairup)
 /datum/customization_style/hair/hairup/rockponytail
 	name = "Rock Ponytail"
 	id = "rockponytail"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/hairup/rockponytail_fade
 	name = "Rock Ponytail: Faded"
@@ -104,12 +104,12 @@ ABSTRACT_TYPE(/datum/customization_style/hair/hairup)
 /datum/customization_style/hair/hairup/lowpig
 	name = "Low Pigtails"
 	id = "lowpig"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/hairup/band
 	name = "Low Ponytail"
 	id = "band"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/hairup/minipig
 	name = "Mini Pigtails"
@@ -118,7 +118,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/hairup)
 /datum/customization_style/hair/hairup/pig
 	name = "Pigtails"
 	id = "pig"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/hairup/pig_half
 	name = "Pigtails: Split"
@@ -128,7 +128,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/hairup)
 /datum/customization_style/hair/hairup/pompompigtail
 	name = "Pompom Pigtails"
 	id = "pompompigtail"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/hairup/ponytail
 	name = "Ponytail"
@@ -137,17 +137,17 @@ ABSTRACT_TYPE(/datum/customization_style/hair/hairup)
 /datum/customization_style/hair/hairup/geisha_s
 	name = "Shimada"
 	id = "geisha_s"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/hairup/twotail
 	name = "Split-Tails"
 	id = "twotail"
-	gender = CUSTOMIZATION::GENDER::MASCULINE
+	gender = MALE
 
 /datum/customization_style/hair/hairup/wavy_tail
 	name = "Wavy Ponytail"
 	id = "wavy_tail"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/hairup/wavy_tail_half
 	name = "Wavy Ponytail: Split"
@@ -170,17 +170,17 @@ ABSTRACT_TYPE(/datum/customization_style/hair/hairup)
 /datum/customization_style/hair/hairup/crown_braid
 	name = "Crown Braid"
 	id = "crown_braid"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/hairup/high_bun
 	name = "High Bun"
 	id = "high_bun"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/hairup/massive_braids
 	name = "Massive Braids"
 	id = "mega_braids"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/hairup/massive_braids_split
 	name = "Massive Braids: Split"
@@ -190,12 +190,12 @@ ABSTRACT_TYPE(/datum/customization_style/hair/hairup)
 /datum/customization_style/hair/hairup/chignon
 	name = "Chignon"
 	id = "chignon"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/hairup/french_twist
 	name = "French Twist"
 	id = "french_twist"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/hairup/hairpart_highpony
 	name = "Hair Parts: High Ponytail"
@@ -240,7 +240,7 @@ ABSTRACT_TYPE(/datum/customization_style/hair/hairup)
 /datum/customization_style/hair/hairup/scorpion_braid
 	name = "Scorpion Braid"
 	id = "scorpion_braid"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/hairup/scorpion_braid_alternating
 	name = "Scorpion Braid: Alternating"
@@ -250,12 +250,12 @@ ABSTRACT_TYPE(/datum/customization_style/hair/hairup)
 /datum/customization_style/hair/hairup/Side_Pigtails
 	name = "Side Pigtails"
 	id = "side_pigtails"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/hairup/Long_Top_Bun
 	name = "Long Top Bun"
 	id = "long_top_bun"
-	gender = CUSTOMIZATION::GENDER::FEMININE
+	gender = FEMALE
 
 /datum/customization_style/hair/hairup/low_bun
 	name = "Low Bun"

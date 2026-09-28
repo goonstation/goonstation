@@ -104,7 +104,7 @@ ABSTRACT_TYPE(/datum/customization_style)
 				continue
 
 		var/style_gender = initial(style.gender)
-		if (gender && style_gender && !(style_gender & gender))
+		if (gender && style_gender && (style_gender != gender))
 			available -= style
 			continue
 		if (random_only && !(initial(style.random_allowed)))

@@ -47,10 +47,10 @@
 	)
 
 proc/isfem(datum/customization_style/style)
-	return !!(initial(style.gender) & CUSTOMIZATION::GENDER::FEMININE)
+	return !!(initial(style.gender) == FEMALE)
 
 proc/ismasc(datum/customization_style/style)
-	return !!(initial(style.gender) & CUSTOMIZATION::GENDER::MASCULINE)
+	return !!(initial(style.gender) == MALE)
 
 // this is weird but basically: a list of hairstyles and their appropriate detail styles, aka hair_details["80s"] would return the Hairmetal: Faded style
 // further on in the randomize_look() proc we'll see if we've got one of the styles in here and if so, we have a chance to add the detailing
@@ -198,10 +198,10 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 	var/type_first
 	if (AH.gender == MALE)
 		if (prob(5)) // small chance to have a hairstyle more geared to the other gender
-			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick=TRUE, gender=CUSTOMIZATION::GENDER::FEMININE, random_only=TRUE))
+			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick=TRUE, gender=FEMALE, random_only=TRUE))
 			customization_first.style = new type_first
 		else // otherwise just use one standard to the current gender
-			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick=TRUE, gender=CUSTOMIZATION::GENDER::MASCULINE, random_only=TRUE))
+			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick=TRUE, gender=MALE, random_only=TRUE))
 			customization_first.style = new type_first
 
 		if (prob(33)) // since we're a guy, a chance for facial hair
@@ -211,10 +211,10 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 
 	else // if FEMALE
 		if (prob(8)) // same as above for guys, just reversed and with a slightly higher chance since it's ~more appropriate~ for ladies to have guy haircuts than vice versa  :I
-			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick=TRUE, gender=CUSTOMIZATION::GENDER::MASCULINE, random_only=TRUE))
+			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick=TRUE, gender=MALE, random_only=TRUE))
 			customization_first.style = new type_first
 		else // ss13 is coded with gender stereotypes IN ITS VERY CORE
-			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick=TRUE, gender=CUSTOMIZATION::GENDER::FEMININE, random_only=TRUE))
+			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick=TRUE, gender=FEMALE, random_only=TRUE))
 			customization_first.style = new type_first
 
 	if (!has_second)
