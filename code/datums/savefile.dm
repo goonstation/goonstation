@@ -9,6 +9,24 @@
 // rn some are client skin checkboxes, some are here,
 // some are stored in ~the butt~
 
+// For importing underwear predating savefile v.10.
+var/global/alist/undies_bottom_alias = alist(
+	"Boxers" = /datum/customization_style/undies/bottom/boxers,
+	"Boyshorts" = /datum/customization_style/undies/bottom/panties,
+	"Bra and Boyshorts" = /datum/customization_style/undies/bottom/boyshorts,
+	"Bra and Panties" = /datum/customization_style/undies/bottom/panties,
+	"Briefs" = /datum/customization_style/undies/bottom/briefs,
+	"Panties" = /datum/customization_style/undies/bottom/panties,
+	"Tanktop and Boyshorts" = /datum/customization_style/undies/bottom/boyshorts,
+	"Tanktop and Panties" = /datum/customization_style/undies/bottom/panties,
+	)
+var/global/alist/undies_top_alias = alist(
+	"Bra and Boyshorts" = /datum/customization_style/undies/top/bra,
+	"Bra and Panties" = /datum/customization_style/undies/top/bra,
+	"Tanktop and Boyshorts" =  /datum/customization_style/undies/top/tank,
+	"Tanktop and Panties" =  /datum/customization_style/undies/top/tank,
+)
+
 /datum/preferences/proc
 
 	savefile_path(var/key)
