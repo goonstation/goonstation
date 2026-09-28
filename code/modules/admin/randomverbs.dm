@@ -945,15 +945,27 @@
 	proc/sanitize_null_values(var/mob/living/carbon/human/target_mob)
 		if (!target_mob || !target_mob.bioHolder || !target_mob.bioHolder.mobAppearance) return
 		var/datum/appearanceHolder/AH = target_mob.bioHolder.mobAppearance
-		var/datum/customizationHolder/customization_first = AH.customizations["hair_bottom"]
-		var/datum/customizationHolder/customization_second = AH.customizations["hair_middle"]
-		var/datum/customizationHolder/customization_third = AH.customizations["hair_top"]
+		var/datum/customizationHolder/hair_bottom = AH.customizations["hair_bottom"]
+		var/datum/customizationHolder/hair_middle = AH.customizations["hair_middle"]
+		var/datum/customizationHolder/hair_top = AH.customizations["hair_top"]
 		if (!src.tf_holder.mobAppearance.gender || !(src.tf_holder.mobAppearance.gender == MALE || src.tf_holder.mobAppearance.gender == FEMALE))
 			src.tf_holder.mobAppearance.gender = MALE
 		if (!AH)
 			AH = new
 		if (AH.gender != src.tf_holder.mobAppearance.gender)
 			AH.gender = src.tf_holder.mobAppearance.gender
+		if (hair_bottom.color == null)
+			hair_bottom.color = "#101010"
+		if (hair_bottom.style == null)
+			hair_bottom.style = new /datum/customization_style/none
+		if (hair_middle.color == null)
+			hair_middle.color = "#101010"
+		if (hair_middle.style == null)
+			hair_middle.style = new /datum/customization_style/none
+		if (hair_top.color == null)
+			hair_top.color = "#101010"
+		if (hair_top.style == null)
+			hair_top.style = new /datum/customization_style/none
 		if (customization_first.color == null)
 			customization_first.color = "#101010"
 		if (customization_first.style == null)
