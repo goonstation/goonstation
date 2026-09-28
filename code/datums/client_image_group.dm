@@ -27,6 +27,8 @@ var/global/list/datum/client_image_group/client_image_groups
 
 	/// Checks whether an image is elligible to be attached to be displayed to a client.
 	proc/image_condition(image/image, mob/mob)
+		if (image.loc == mob && isAIeye(mob))
+			return FALSE
 		if (image.loc == mob)
 			var/datum/mind_mob_overlay/overlay = src.minds_with_associated_mob_image[mob.mind]
 			if (overlay && !overlay.see_own_overlay)

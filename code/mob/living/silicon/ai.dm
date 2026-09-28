@@ -1487,8 +1487,6 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 	..()
 	update_clothing()
 	src.updateOverlaysClient(src.client) //ov1
-	for (var/mob/M in mobs)
-		update_camera_emag_visibility(M)
 	if (!isdead(src))
 		for (var/obj/machinery/ai_status_display/O in machine_registry[MACHINES_STATUSDISPLAYS]) //change status
 			if (O.owner && O.owner != src)
@@ -2109,7 +2107,6 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 /mob/living/silicon/ai/proc/switchCamera(var/obj/machinery/camera/C)
 	if (!C)
 		SEND_SIGNAL(src, COMSIG_MOB_CANCEL_CAMERA)
-		update_camera_emag_visibility_for_all()
 		return 0
 	if (isdead(src) || !(C.network in src.camera_networks) || get_z(C) != Z_LEVEL_STATION)
 		return 0
@@ -2126,7 +2123,6 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/ai, proc/give_feet)
 	if (!src.deployed_to_eyecam)
 		src.eye_view()
 	src.eyecam.set_loc(get_turf(C))
-	update_camera_emag_visibility_for_all()
 	//src:current = C
 	//src.set_eye(C)
 	return 1

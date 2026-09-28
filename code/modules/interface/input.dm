@@ -51,6 +51,14 @@ var/list/dirty_keystates = list()
 				src.mob.hotkey(action)
 
 		else
+			if ((action & KEY_EXAMINE) && isAIeye(src.mob))
+				var/datum/statusEffect/camera_awareness/awareness = src.mob.hasStatus("camera_awareness")
+				for (var/datum/component/camera_coverage_emitter/emitter as anything in awareness?.current_emitters)
+					if (!emitter || QDELETED(emitter) || !emitter.active)
+						continue
+					var/obj/machinery/camera/camera = emitter.parent
+					if (camera?.emagged)
+						return
 			src.key_state |= action
 			src.mob.hotkey(key)
 			if (!src.keys_dirty)
