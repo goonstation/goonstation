@@ -945,33 +945,40 @@
 	proc/sanitize_null_values(var/mob/living/carbon/human/target_mob)
 		if (!target_mob || !target_mob.bioHolder || !target_mob.bioHolder.mobAppearance) return
 		var/datum/appearanceHolder/AH = target_mob.bioHolder.mobAppearance
-		var/datum/customizationHolder/customization_first = AH.customizations["hair_bottom"]
-		var/datum/customizationHolder/customization_second = AH.customizations["hair_middle"]
-		var/datum/customizationHolder/customization_third = AH.customizations["hair_top"]
+		var/datum/customizationHolder/hair_bottom = AH.customizations["hair_bottom"]
+		var/datum/customizationHolder/hair_middle = AH.customizations["hair_middle"]
+		var/datum/customizationHolder/hair_top = AH.customizations["hair_top"]
+		var/datum/customizationHolder/undies_bottom = AH.customizations["undies_bottom"]
+		var/datum/customizationHolder/undies_top = AH.customizations["undies_top"]
 		if (!src.tf_holder.mobAppearance.gender || !(src.tf_holder.mobAppearance.gender == MALE || src.tf_holder.mobAppearance.gender == FEMALE))
 			src.tf_holder.mobAppearance.gender = MALE
 		if (!AH)
 			AH = new
 		if (AH.gender != src.tf_holder.mobAppearance.gender)
 			AH.gender = src.tf_holder.mobAppearance.gender
-		if (customization_first.color == null)
-			customization_first.color = "#101010"
-		if (customization_first.style == null)
-			customization_first.style = new /datum/customization_style/none
-		if (customization_second.color == null)
-			customization_second.color = "#101010"
-		if (customization_second.style == null)
-			customization_second.style = new /datum/customization_style/none
-		if (customization_third.color == null)
-			customization_third.color = "#101010"
-		if (customization_third.style == null)
-			customization_third.style = new /datum/customization_style/none
+		if (hair_bottom.color == null)
+			hair_bottom.color = "#101010"
+		if (hair_bottom.style == null)
+			hair_bottom.style = new /datum/customization_style/none
+		if (hair_middle.color == null)
+			hair_middle.color = "#101010"
+		if (hair_middle.style == null)
+			hair_middle.style = new /datum/customization_style/none
+		if (hair_top.color == null)
+			hair_top.color = "#101010"
+		if (hair_top.style == null)
+			hair_top.style = new /datum/customization_style/none
+		if (undies_bottom.color == null)
+			undies_bottom.color = "#FEFEFE"
+		if (undies_bottom.style == null)
+			undies_bottom.style = new /datum/customization_style/none
+		if (undies_top.color == null)
+			undies_top.color = "#FEFEFE"
+		if (undies_top.style == null)
+			undies_top.style = new /datum/customization_style/none
 		if (AH.e_color == null)
 			AH.e_color = "#101010"
-		if (AH.u_color == null)
-			AH.u_color = "#FEFEFE"
 		return
-
 
 	proc/process() //Oh no what if we get orphaned!! (Also don't garbage collect us as soon as we spawn you fuk)
 		while(!disposed)

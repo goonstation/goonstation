@@ -73,16 +73,20 @@
 		if (src.AH)
 			F["[profileNum]_pronouns"] << (isnull(AH.pronouns) ? "" : AH.pronouns.name)
 			F["[profileNum]_eye_color"] << AH.e_color
+			F["[profileNum]_skin_tone"] << AH.s_tone
+			F["[profileNum]_special_style"] << AH.special_style
+
 			F["[profileNum]_hair_color"] << AH.customizations["hair_bottom"].color
 			F["[profileNum]_facial_color"] << AH.customizations["hair_middle"].color
 			F["[profileNum]_detail_color"] << AH.customizations["hair_top"].color
-			F["[profileNum]_skin_tone"] << AH.s_tone
-			F["[profileNum]_special_style"] << AH.special_style
+			F["[profileNum]_undies_bottom_color"] << AH.customizations["undies_bottom"].color
+			F["[profileNum]_undies_top_color"] << AH.customizations["undies_top"].color
+
 			F["[profileNum]_hair_style_name"] << AH.customizations["hair_bottom"].style
 			F["[profileNum]_facial_style_name"] << AH.customizations["hair_middle"].style
 			F["[profileNum]_detail_style_name"] << AH.customizations["hair_top"].style
-			F["[profileNum]_underwear_style_name"] << AH.underwear
-			F["[profileNum]_underwear_color"] << AH.u_color
+			F["[profileNum]_undies_bottom_name"] << AH.customizations["undies_bottom"].style
+			F["[profileNum]_undies_top_name"] << AH.customizations["undies_top"].style
 
 		// Job prefs
 		F["[profileNum]_job_prefs_1"] << src.job_favorite
@@ -212,10 +216,16 @@
 			F["clickbuffer"] << F["[profileNum]_clickbuffer"]
 
 		if (version <= 9)
-			// Underwear rework.
-			F["[profileNum]_undies_bottom_name"] << global.underwear_bottom_alias[F["[profileNum]_underwear_style_name"]]
+			// undies rework.
+			var/datum/customization_style/undies_bottom = global.undies_bottom_alias[F["[profileNum]_underwear_style_name"]]
+			if (find_style_by_name(undies_bottom::name, no_gimmick=TRUE))
+				F["[profileNum]_undies_bottom_name"] << undies_bottom
+
+			var/datum/customization_style/undies_top = global.undies_top_alias[F["[profileNum]_underwear_style_name"]]
+			if (find_style_by_name(undies_top::name, no_gimmick=TRUE))
+				F["[profileNum]_undies_bottom_name"] << undies_top
+
 			F["[profileNum]_undies_bottom_color"] << F["[profileNum]_underwear_color"]
-			F["[profileNum]_undies_top_name"] << global.underwear_top_alias[F["[profileNum]_underwear_style_name"]]
 			F["[profileNum]_undies_top_color"] << F["[profileNum]_underwear_color"]
 
 		// Character details

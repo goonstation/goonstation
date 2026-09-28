@@ -123,17 +123,17 @@ var/global
 	"Mithril" = 'icons/mob/hud_human_quilty.dmi',
 	"Vaporized" = 'icons/mob/hud_human_vapor.dmi')
 
-	alist/underwear_bottom_alias = alist("Boxers" = /datum/customization_style/undies/bottom/boxers,
+	alist/undies_bottom_alias = alist("Boxers" = /datum/customization_style/undies/bottom/boxers,
 	"Boyshorts" = /datum/customization_style/undies/bottom/panties,
-	"Bra and Boyshorts" = /datum/customization_style/undies/bottom/boyshort,
+	"Bra and Boyshorts" = /datum/customization_style/undies/bottom/boyshorts,
 	"Bra and Panties" = /datum/customization_style/undies/bottom/panties,
 	"Briefs" = /datum/customization_style/undies/bottom/briefs,
 	"Panties" = /datum/customization_style/undies/bottom/panties,
-	"Tanktop and Boyshorts" = /datum/customization_style/undies/bottom/boyshort,
+	"Tanktop and Boyshorts" = /datum/customization_style/undies/bottom/boyshorts,
 	"Tanktop and Panties" = /datum/customization_style/undies/bottom/panties,
 	)
 
-	alist/underwear_top_alias = alist("Bra and Boyshorts" = /datum/customization_style/undies/top/bra,
+	alist/undies_top_alias = alist("Bra and Boyshorts" = /datum/customization_style/undies/top/bra,
 	"Bra and Panties" = /datum/customization_style/undies/top/bra,
 	"Tanktop and Boyshorts" =  /datum/customization_style/undies/top/tank,
 	"Tanktop and Panties" =  /datum/customization_style/undies/top/tank,

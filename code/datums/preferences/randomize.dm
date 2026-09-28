@@ -242,6 +242,7 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 			customization_third.style = new /datum/customization_style/none
 
 	if (change_underwear)
+		// Maintains parity. This choice predates open-source. - @DisturbHerb
 		if (AH.gender == MALE)
 			if (prob(1))
 				undies_top.style = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION::UNDIES::TOP, CUSTOMIZATION::GENDER::FEMININE, TRUE))
@@ -256,9 +257,9 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 			else
 				undies_top.style = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION::UNDIES::TOP, CUSTOMIZATION::GENDER::FEMININE, TRUE))
 				undies_bottom.style = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION::UNDIES::BOTTOM, CUSTOMIZATION::GENDER::FEMININE, TRUE))
-		var/underwear_color = random_saturated_hex_color()
-		undies_bottom.color = underwear_color
-		undies_top.color =  underwear_color
+		var/undies_color = random_saturated_hex_color()
+		undies_bottom.color = undies_color
+		undies_top.color =  undies_color
 
 	if (H && change_blood)
 		H.bioHolder.bloodType = random_blood_type(1)

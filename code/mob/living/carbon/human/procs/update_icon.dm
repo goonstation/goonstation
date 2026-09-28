@@ -801,6 +801,9 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 		src.detail_standing_oversuit = SafeGetOverlayImage("detail_oversuit", 'icons/mob/human.dmi', "blank", MOB_OVERSUIT_LAYER2)
 		src.detail_standing_oversuit.overlays.len = 0
 
+		src.image_undies_bottom = SafeGetOverlayImage("undies_bottom", 'icons/mob/human_underwear.dmi', "blank", MOB_UNDIES_BOTTOM_LAYER)
+		src.image_undies_top = SafeGetOverlayImage("undies_top", 'icons/mob/human_underwear.dmi', "blank", MOB_UNDIES_TOP_LAYER1)
+
 		var/eye_offset = AHOLD.e_offset_y // Monkey need human eyes to see good
 		var/body_offset = AHOLD.mob_body_offset // Monkey need human arms to hug good
 		var/leg_offset = AHOLD.mob_leg_offset
@@ -1113,11 +1116,22 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 					heart_image.pixel_y = body_offset
 					src.body_standing.overlays += heart_image
 
-			if (src.decomp_stage < DECOMP_STAGE_HIGHLY_DECAYED && !(src.w_uniform?.hide_underwear) && ((AHOLD.underwear && AHOLD.mob_appearance_flags & WEARS_UNDERPANTS) || src.underpants_override)) // no more bikini werewolves
-				undies_image.icon_state = underwear_styles[AHOLD.underwear]
-				undies_image.color = AHOLD.u_color
-				undies_image.pixel_y = body_offset
-				src.body_standing.overlays += undies_image
+			if (src.decomp_stage < DECOMP_STAGE_HIGHLY_DECAYED && !(src.w_uniform?.hide_underwear) && \
+				((AHOLD.mob_appearance_flags & WEARS_UNDERPANTS) || src.underpants_override)) // no more bikini werewolves
+				src.image_undies_bottom = image(icon = AHOLD.customizations["undies_bottom"].style.icon, \
+					icon_state = AHOLD.customizations["undies_bottom"].style.id, layer = AHOLD.customizations["undies_bottom"].style.default_layer)
+				src.image_undies_top = image(icon = AHOLD.customizations["undies_top"].style.icon, \
+					icon_state = AHOLD.customizations["undies_top"].style.id, layer = AHOLD.customizations["undies_top"].style.default_layer)
+
+				if (src.image_undies_bottom?.icon_state && src.image_undies_bottom.icon_state != "none")
+					src.image_undies_bottom.color = AHOLD.customizations["undies_bottom"].color
+					src.image_undies_bottom.pixel_y = body_offset
+					src.body_standing.overlays += image_undies_bottom
+
+				if (src.image_undies_top?.icon_state && src.image_undies_top.icon_state != "none")
+					src.image_undies_top.color = AHOLD.customizations["undies_top"].color
+					src.image_undies_top.pixel_y = body_offset
+					src.body_standing.overlays += image_undies_top
 
 			if (length(src.bandaged) > 0)
 				for (var/part in src.bandaged)

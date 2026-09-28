@@ -22,7 +22,7 @@ ADD_TO_NAMESPACE(CUSTOMIZATION, HAIR)(var/const/EYEBROWS = "hair_eyebrows")
 ADD_TO_NAMESPACE(CUSTOMIZATION, HAIR)(var/const/MAKEUP = "hair_makeup")
 ADD_TO_NAMESPACE(CUSTOMIZATION, HAIR)(var/const/BIOLOGICAL = "hair_biological")
 
-/// Underwear customization style types.
+/// Undies customization style types.
 CREATE_NAMESPACE(CUSTOMIZATION, UNDIES)
 ADD_TO_NAMESPACE(CUSTOMIZATION, UNDIES)(var/const/TOP = "undies_top")
 ADD_TO_NAMESPACE(CUSTOMIZATION, UNDIES)(var/const/BOTTOM = "undies_bottom")

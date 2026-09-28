@@ -118,8 +118,8 @@
 		bioHolder.age = 400
 		bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/hair/short/pomp
 		bioHolder.mobAppearance.customizations["hair_bottom"].color = "#000000"
+		bioHolder.mobAppearance.customizations["undies_bottom"].style = new /datum/customization_style/undies/bottom/boxers
 		bioHolder.mobAppearance.gender = "male"
-		bioHolder.mobAppearance.underwear = "boxers"
 		. = ..()
 
 /mob/living/carbon/human/jester
@@ -417,10 +417,10 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		bioHolder.mobAppearance.customizations["hair_middle"].color = "#292929"
 		bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/hair/gimmick/shitty_hair
 		bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/hair/gimmick/shitty_beard
+		bioHolder.mobAppearance.customizations["undies_bottom"].style = new /datum/customization_style/undies/bottom/briefs
 		bioHolder.age = 62
 		bioHolder.bloodType = "A-"
 		bioHolder.mobAppearance.gender = "male"
-		bioHolder.mobAppearance.underwear = "briefs"
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_SHITTYBILLS)
@@ -842,8 +842,8 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		bioHolder.bloodType = "Worchestershire"
 		bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/hair/short/pomp
 		bioHolder.mobAppearance.customizations["hair_bottom"].color = "#F6D646"
+		bioHolder.mobAppearance.customizations["undies_bottom"].style = new /datum/customization_style/undies/bottom/boxers
 		bioHolder.mobAppearance.gender = "male"
-		bioHolder.mobAppearance.underwear = "boxers"
 
 	attackby(obj/item/W, mob/M)
 		if (istype(W, /obj/item/paper/postcard/owlery))
@@ -1009,8 +1009,8 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		bioHolder.age = 49
 		bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/hair/facial/fullbeard
 		bioHolder.mobAppearance.customizations["hair_bottom"].color = "#555555"
+		bioHolder.mobAppearance.customizations["undies_bottom"].style = new /datum/customization_style/undies/bottom/boxers
 		bioHolder.mobAppearance.gender = "male"
-		bioHolder.mobAppearance.underwear = "boxers"
 		real_name = "[pick("Chut","Brendt","Franko","Steephe","Geames","Whitney","Thom","Cheddar")] \"Big Yank\" Whitney"
 
 
@@ -1060,8 +1060,8 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		bioHolder.age = 52
 		bioHolder.mobAppearance.customizations["hair_top"].style = new /datum/customization_style/hair/short/balding
 		bioHolder.mobAppearance.customizations["hair_top"].color = "#555555"
+		bioHolder.mobAppearance.customizations["undies_bottom"].style = new /datum/customization_style/undies/bottom/boxers
 		bioHolder.mobAppearance.gender = "male"
-		bioHolder.mobAppearance.underwear = "boxers"
 
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))

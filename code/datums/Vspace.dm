@@ -266,10 +266,14 @@ datum/v_space
 			AH.customizations["hair_top"].color = "#101010"
 		if (AH.customizations["hair_top"].style == null)
 			AH.customizations["hair_top"].style =  new /datum/customization_style/none
+		if (AH.customizations["undies_bottom"].style == null)
+			AH.customizations["undies_bottom"].style = new /datum/customization_style/none
+			AH.customizations["undies_bottom"].color = "#FEFEFE"
+		if (AH.customizations["undies_top"].style == null)
+			AH.customizations["undies_top"].style = new /datum/customization_style/none
+			AH.customizations["undies_top"].color = "#FEFEFE"
 		if (AH.e_color == null)
 			AH.e_color = "#101010"
-		if (AH.u_color == null)
-			AH.u_color = "#FEFEFE"
 		if (AH.s_tone == null  || AH.s_tone == "#ffffff")
 			AH.s_tone = "#FEFEFE"
 		return

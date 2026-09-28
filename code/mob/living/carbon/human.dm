@@ -55,6 +55,8 @@
 	var/image/image_special_one = null
 	var/image/image_special_two = null
 	var/image/image_special_three = null
+	var/image/image_undies_bottom = null
+	var/image/image_undies_top = null
 
 	var/image/phoenix_temperature_indicator/phoenix_temp_overlay = null
 
@@ -169,11 +171,14 @@
 /mob/living/carbon/human/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE, role_for_traits)
 	. = ..()
 
-	image_eyes_L = image('icons/mob/human_hair.dmi', layer = MOB_FACE_LAYER)
-	image_eyes_R = image('icons/mob/human_hair.dmi', layer = MOB_FACE_LAYER)
-	image_cust_one = image('icons/mob/human_hair.dmi', layer = MOB_HAIR_LAYER2)
-	image_cust_two = image('icons/mob/human_hair.dmi', layer = MOB_HAIR_LAYER2)
-	image_cust_three = image('icons/mob/human_hair.dmi', layer = MOB_HAIR_LAYER2)
+	src.image_eyes_L = image('icons/mob/human_hair.dmi', layer = MOB_FACE_LAYER)
+	src.image_eyes_R = image('icons/mob/human_hair.dmi', layer = MOB_FACE_LAYER)
+	src.image_cust_one = image('icons/mob/human_hair.dmi', layer = MOB_HAIR_LAYER2)
+	src.image_cust_two = image('icons/mob/human_hair.dmi', layer = MOB_HAIR_LAYER2)
+	src.image_cust_three = image('icons/mob/human_hair.dmi', layer = MOB_HAIR_LAYER2)
+
+	src.image_undies_bottom = image('icons/mob/human_underwear.dmi', layer = MOB_UNDIES_BOTTOM_LAYER)
+	src.image_undies_top = image('icons/mob/human_underwear.dmi', layer = MOB_UNDIES_TOP_LAYER1)
 
 	src.create_reagents(330)
 
