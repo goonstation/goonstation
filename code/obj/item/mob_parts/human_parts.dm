@@ -243,11 +243,11 @@
 			if(istype(AH_piece, /datum/appearanceHolder))
 				switch(src.severed_overlay_1_color)
 					if(CUST_1)
-						colorheck = AH_piece.customizations["hair_bottom"].color
+						colorheck = AH_piece.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color
 					if(CUST_2)
-						colorheck = AH_piece.customizations["hair_middle"].color
+						colorheck = AH_piece.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color
 					if(CUST_3)
-						colorheck = AH_piece.customizations["hair_top"].color
+						colorheck = AH_piece.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color
 					if (SKIN_TONE)
 						colorheck = src.skin_tone
 					else
@@ -271,11 +271,11 @@
 		if(istype(AH_overlimb, /datum/appearanceHolder))
 			switch(src.limb_overlay_1_color)
 				if(CUST_1)
-					colorlimb_heck = AH_overlimb.customizations["hair_bottom"].color
+					colorlimb_heck = AH_overlimb.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color
 				if(CUST_2)
-					colorlimb_heck = AH_overlimb.customizations["hair_middle"].color
+					colorlimb_heck = AH_overlimb.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color
 				if(CUST_3)
-					colorlimb_heck = AH_overlimb.customizations["hair_top"].color
+					colorlimb_heck = AH_overlimb.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color
 				if (SKIN_TONE)
 					colorlimb_heck = src.skin_tone
 				else
@@ -284,11 +284,11 @@
 		if(istype(AH_overlimb, /datum/appearanceHolder))
 			switch(src.handfoot_overlay_1_color)
 				if(CUST_1)
-					colorhandfoot_heck = AH_overlimb.customizations["hair_bottom"].color
+					colorhandfoot_heck = AH_overlimb.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color
 				if(CUST_2)
-					colorhandfoot_heck = AH_overlimb.customizations["hair_middle"].color
+					colorhandfoot_heck = AH_overlimb.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color
 				if(CUST_3)
-					colorhandfoot_heck = AH_overlimb.customizations["hair_top"].color
+					colorhandfoot_heck = AH_overlimb.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color
 				if (SKIN_TONE)
 					colorhandfoot_heck = src.skin_tone
 				else

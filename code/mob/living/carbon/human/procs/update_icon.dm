@@ -563,7 +563,7 @@
 	if (src?.organHolder?.head)
 		var/datum/appearanceHolder/AHH = src.bioHolder?.mobAppearance
 		my_head = src.organHolder.head
-		var/y_to_offset = AHH.customizations["hair_bottom"].offset_y
+		var/y_to_offset = AHH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].offset_y
 
 		if(my_head.head_image_nose)
 			AddOverlays(my_head.head_image_nose, "nose", TRUE)
@@ -740,9 +740,9 @@
 		src.image_cust_two?.layer = MOB_HAIR_LAYER1
 		src.image_cust_three?.layer = MOB_HAIR_LAYER1
 	else
-		src.image_cust_one?.layer = src.bioHolder.mobAppearance.customizations["hair_bottom"].style.default_layer
-		src.image_cust_two?.layer = src.bioHolder.mobAppearance.customizations["hair_middle"].style.default_layer
-		src.image_cust_three?.layer = src.bioHolder.mobAppearance.customizations["hair_top"].style.default_layer
+		src.image_cust_one?.layer = src.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style.default_layer
+		src.image_cust_two?.layer = src.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style.default_layer
+		src.image_cust_three?.layer = src.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style.default_layer
 
 
 var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_leg_left", "r_arm" = "stump_arm_right", "l_arm" = "stump_arm_left")
@@ -751,11 +751,11 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 /mob/living/carbon/human/proc/get_body_custom_color(slot)
 	switch(slot)
 		if(CUST_1)
-			. = src.bioHolder.mobAppearance.customizations["hair_bottom"].color
+			. = src.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color
 		if(CUST_2)
-			. = src.bioHolder.mobAppearance.customizations["hair_middle"].color
+			. = src.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color
 		if(CUST_3)
-			. = src.bioHolder.mobAppearance.customizations["hair_top"].color
+			. = src.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color
 		else
 			return "#FFFFFF"
 	if (src.mutantrace?.mutant_appearance_flags & FIX_COLORS)

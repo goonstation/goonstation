@@ -248,9 +248,9 @@
 						yoinked = TRUE
 					else if(!victim.is_bald())
 						//they have hair to yoink
-						spawn_hair_clipping(victim, victim.bioHolder.mobAppearance.customizations["hair_bottom"].color, victim.bioHolder.mobAppearance.customizations["hair_bottom"].style)
-						spawn_hair_clipping(victim, victim.bioHolder.mobAppearance.customizations["hair_middle"].color, victim.bioHolder.mobAppearance.customizations["hair_middle"].style)
-						spawn_hair_clipping(victim, victim.bioHolder.mobAppearance.customizations["hair_top"].color, victim.bioHolder.mobAppearance.customizations["hair_top"].style)
+						spawn_hair_clipping(victim, victim.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color, victim.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style)
+						spawn_hair_clipping(victim, victim.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color, victim.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style)
+						spawn_hair_clipping(victim, victim.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color, victim.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style)
 						stolen_hair = victim.create_wig()
 						boutput(victim, SPAN_ALERT("the [src] takes your hair clean off!"))
 						yoinked = TRUE
@@ -405,11 +405,11 @@
 				user.visible_message("[user] slips and dumps the [src] all over [M]'s head!")
 				famtofuckup = M
 			if (recolor_these_hair_layers_instead & HAIR_1_FUCKED)
-				famtofuckup.bioHolder.mobAppearance.customizations["hair_bottom"].color = bottle.customization_first_color
+				famtofuckup.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color = bottle.customization_first_color
 			if (recolor_these_hair_layers_instead & HAIR_2_FUCKED)
-				famtofuckup.bioHolder.mobAppearance.customizations["hair_middle"].color = bottle.customization_first_color
+				famtofuckup.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color = bottle.customization_first_color
 			if (recolor_these_hair_layers_instead & HAIR_3_FUCKED)
-				famtofuckup.bioHolder.mobAppearance.customizations["hair_top"].color = bottle.customization_first_color
+				famtofuckup.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color = bottle.customization_first_color
 			if (recolor_these_hair_layers_instead & EYES_FUCKED)
 				famtofuckup.bioHolder.mobAppearance.e_color = bottle.customization_first_color
 				famtofuckup.emote("scream")
@@ -425,19 +425,19 @@
 						bottle.hair_group = pick(list(BOTTOM_DETAIL, MIDDLE_DETAIL, TOP_DETAIL) - bottle.hair_group)
 					switch(bottle.hair_group)
 						if(BOTTOM_DETAIL)
-							M.bioHolder.mobAppearance.customizations["hair_bottom"].color = bottle.customization_first_color
+							M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color = bottle.customization_first_color
 						if(MIDDLE_DETAIL)
-							M.bioHolder.mobAppearance.customizations["hair_middle"].color = bottle.customization_first_color
+							M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color = bottle.customization_first_color
 						if(TOP_DETAIL)
-							M.bioHolder.mobAppearance.customizations["hair_top"].color = bottle.customization_first_color
+							M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color = bottle.customization_first_color
 				if(ALL_HAIR)
 					if(src.uses_left < 3)
 						boutput(M, SPAN_NOTICE("This dyejob's going to need a full bottle!"))
 						return
 					else
-						M.bioHolder.mobAppearance.customizations["hair_bottom"].color = bottle.customization_first_color
-						M.bioHolder.mobAppearance.customizations["hair_middle"].color = bottle.customization_first_color
-						M.bioHolder.mobAppearance.customizations["hair_top"].color = bottle.customization_first_color
+						M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color = bottle.customization_first_color
+						M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color = bottle.customization_first_color
+						M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color = bottle.customization_first_color
 
 				if(EYES)
 					M.bioHolder.mobAppearance.e_color = bottle.customization_first_color

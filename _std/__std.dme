@@ -197,6 +197,7 @@
 #include "namespaces\bot.dm"
 #include "namespaces\chem.dm"
 #include "namespaces\customization_holder\_customization_holder.dm"
+#include "namespaces\customization_holder\customization_layers.dm"
 #include "namespaces\customization_holder\customization_style.dm"
 #include "namespaces\dwaine\_dwaine.dm"
 #include "namespaces\dwaine\errors.dm"

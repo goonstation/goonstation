@@ -636,9 +636,9 @@ datum
 					return
 
 				if (probmult(8) && (M.gender == "male"))
-					if (M.bioHolder.mobAppearance.customizations["hair_middle"].style.id != "gt" && M.bioHolder.mobAppearance.customizations["hair_middle"].style.id != "neckbeard" && M.bioHolder.mobAppearance.customizations["hair_middle"].style.id != "fullbeard" && M.bioHolder.mobAppearance.customizations["hair_middle"].style.id != "longbeard")
+					if (M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style.id != "gt" && M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style.id != "neckbeard" && M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style.id != "fullbeard" && M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style.id != "longbeard")
 						var/second_type = pick(/datum/customization_style/hair/facial/gt,/datum/customization_style/hair/facial/neckbeard,/datum/customization_style/hair/facial/fullbeard,/datum/customization_style/hair/facial/longbeard)
-						M.bioHolder.mobAppearance.customizations["hair_middle"].style =  new second_type
+						M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style =  new second_type
 						M.set_face_icon_dirty()
 						boutput(M, SPAN_NOTICE("You feel manly!"))
 
@@ -829,10 +829,10 @@ datum
 						logTheThing(LOG_COMBAT, H, "was gibbed by the reagent [name].")
 						H.gib()
 						return
-					if(H.bioHolder.mobAppearance.customizations["hair_bottom"].style.id != "dreads" || H.bioHolder.mobAppearance.customizations["hair_middle"].style.id != "fullbeard")
+					if(H.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style.id != "dreads" || H.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style.id != "fullbeard")
 						boutput(H, "<b>You feel more piratey! Arr!</b>")
-						H.bioHolder.mobAppearance.customizations["hair_bottom"].style = new /datum/customization_style/hair/long/dreads
-						H.bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/hair/facial/fullbeard
+						H.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style = new /datum/customization_style/hair/long/dreads
+						H.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style =  new /datum/customization_style/hair/facial/fullbeard
 						H.real_name = "Captain [H.real_name]"
 						M.bioHolder.AddEffect("accent_pirate")
 

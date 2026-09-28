@@ -100,14 +100,14 @@
 		if (L?.bioHolder?.mobAppearance)
 			var/datum/appearanceHolder/AHs = L.bioHolder.mobAppearance
 
-			var/col1 = AHs.customizations["hair_bottom"].color
-			var/col2 = AHs.customizations["hair_middle"].color
-			var/col3 = AHs.customizations["hair_top"].color
+			var/col1 = AHs.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color
+			var/col2 = AHs.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color
+			var/col3 = AHs.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color
 
-			AHs.customizations["hair_bottom"].color = col3
-			AHs.customizations["hair_middle"].color = col1
-			AHs.customizations["hair_top"].color = col2
-			AHs.s_tone = fix_colors(AHs.customizations["hair_bottom"].color)
+			AHs.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color = col3
+			AHs.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color = col1
+			AHs.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color = col2
+			AHs.s_tone = fix_colors(AHs.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color)
 
 			L.visible_message(SPAN_NOTICE("<b>[L.name]</b> changes colors!"))
 			L.update_lizard_parts()
@@ -172,14 +172,14 @@
 		var/spot
 		switch(region)
 			if (1)
-				AHliz.customizations["hair_bottom"].color = color
+				AHliz.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color = color
 				AHliz.s_tone = fix_colors(color)
 				spot = "skin"
 			if (2)
-				AHliz.customizations["hair_middle"].color = color
+				AHliz.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color = color
 				spot = "belly splotch"
 			if (3)
-				AHliz.customizations["hair_top"].color = color
+				AHliz.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color = color
 				spot = "head thing"
 		L.visible_message("[L]'s [spot] changes color!", SPAN_NOTICE("Your [region_name] changes color!"))
 		L.update_lizard_parts()

@@ -655,16 +655,16 @@
 			var/mob/living/carbon/human/H = owner
 			if(H?.bioHolder?.mobAppearance)
 				var/datum/appearanceHolder/HAH = H.bioHolder.mobAppearance
-				HAH.customizations["hair_bottom"].color_original = HAH.customizations["hair_bottom"].color
-				HAH.customizations["hair_middle"].color_original = HAH.customizations["hair_middle"].color
-				HAH.customizations["hair_top"].color_original = HAH.customizations["hair_top"].color
+				HAH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color_original = HAH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color
+				HAH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color_original = HAH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color
+				HAH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color_original = HAH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color
 				HAH.s_tone_original = HAH.s_tone
 				if(prob(1)) // just the classics
 					var/gray_af = rand(60, 150) // as consistent as the classics too
 					hulk_skin = rgb(gray_af, gray_af, gray_af)
-				HAH.customizations["hair_bottom"].color = "#4F7942" // a pleasant fern green
-				HAH.customizations["hair_middle"].color = "#3F704D" // a bold hunter green
-				HAH.customizations["hair_top"].color = "#0B6623" // a vibrant forest green
+				HAH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color = "#4F7942" // a pleasant fern green
+				HAH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color = "#3F704D" // a bold hunter green
+				HAH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color = "#0B6623" // a vibrant forest green
 				HAH.s_tone = hulk_skin
 			H.update_colorful_parts()
 			H.set_body_icon_dirty()
@@ -677,9 +677,9 @@
 			var/mob/living/carbon/human/H = owner
 			if(H?.bioHolder?.mobAppearance) // colorize, but backwards
 				var/datum/appearanceHolder/HAH = H.bioHolder.mobAppearance
-				HAH.customizations["hair_bottom"].color = HAH.customizations["hair_bottom"].color_original
-				HAH.customizations["hair_middle"].color = HAH.customizations["hair_middle"].color_original
-				HAH.customizations["hair_top"].color = HAH.customizations["hair_top"].color_original
+				HAH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color = HAH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color_original
+				HAH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color = HAH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color_original
+				HAH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color = HAH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color_original
 				HAH.s_tone = HAH.s_tone_original
 			H.update_colorful_parts()
 			H.set_body_icon_dirty()
@@ -691,9 +691,9 @@
 		if (ishuman(owner) && src.visible && prob(33)) //whatever
 			if(H?.bioHolder?.mobAppearance)
 				var/datum/appearanceHolder/HAH = H.bioHolder.mobAppearance
-				HAH.customizations["hair_bottom"].color = "#4F7942" // a pleasant fern green
-				HAH.customizations["hair_middle"].color = "#3F704D" // a bold hunter green
-				HAH.customizations["hair_top"].color = "#0B6623" // a vibrant forest green
+				HAH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color = "#4F7942" // a pleasant fern green
+				HAH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color = "#3F704D" // a bold hunter green
+				HAH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color = "#0B6623" // a vibrant forest green
 				HAH.s_tone = hulk_skin
 				HAH.UpdateMob()
 
@@ -1087,12 +1087,12 @@
 		if (ishuman(owner))
 			var/mob/living/carbon/human/M = owner
 			if (M.AH_we_spawned_with)
-				M.bioHolder.mobAppearance.customizations["hair_bottom"].color 	= M.AH_we_spawned_with.customizations["hair_bottom"].color
-				M.bioHolder.mobAppearance.customizations["hair_middle"].color 	= M.AH_we_spawned_with.customizations["hair_middle"].color
-				M.bioHolder.mobAppearance.customizations["hair_top"].color 	= M.AH_we_spawned_with.customizations["hair_top"].color
-				M.bioHolder.mobAppearance.customizations["hair_bottom"].style 			= M.AH_we_spawned_with.customizations["hair_bottom"].style
-				M.bioHolder.mobAppearance.customizations["hair_middle"].style 			= M.AH_we_spawned_with.customizations["hair_middle"].style
-				M.bioHolder.mobAppearance.customizations["hair_top"].style 			= M.AH_we_spawned_with.customizations["hair_top"].style
+				M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color 	= M.AH_we_spawned_with.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color
+				M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color 	= M.AH_we_spawned_with.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color
+				M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color 	= M.AH_we_spawned_with.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color
+				M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style 			= M.AH_we_spawned_with.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style
+				M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style 			= M.AH_we_spawned_with.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style
+				M.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style 			= M.AH_we_spawned_with.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style
 
 			M.hair_override = 1
 			M.bioHolder.mobAppearance.UpdateMob()

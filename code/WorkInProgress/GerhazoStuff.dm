@@ -37,12 +37,12 @@
 		abilityHolder.updateButtons()
 
 	initializeBioholder()
-		bioHolder.mobAppearance.customizations["hair_bottom"].style =  new /datum/customization_style/hair/short/short
-		bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/hair/facial/fullbeard
-		bioHolder.mobAppearance.customizations["hair_top"].style =  new /datum/customization_style/hair/eyebrows/regular
-		bioHolder.mobAppearance.customizations["hair_bottom"].color = "#555555"
-		bioHolder.mobAppearance.customizations["hair_middle"].color = "#555555"
-		bioHolder.mobAppearance.customizations["hair_top"].color = "#555555"
+		bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style =  new /datum/customization_style/hair/short/short
+		bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style =  new /datum/customization_style/hair/facial/fullbeard
+		bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style =  new /datum/customization_style/hair/eyebrows/regular
+		bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color = "#555555"
+		bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color = "#555555"
+		bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color = "#555555"
 		. = ..()
 
 	bullet_act(obj/projectile/P, mob/meatshield) // deflect energy projectiles, cut bullets

@@ -782,13 +782,13 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		if (H.bioHolder?.mobAppearance)
 			var/datum/appearanceHolder/AHs = H.bioHolder.mobAppearance
 
-			var/col1 = AHs.customizations["hair_bottom"].color
-			var/col2 = AHs.customizations["hair_middle"].color
-			var/col3 = AHs.customizations["hair_top"].color
+			var/col1 = AHs.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color
+			var/col2 = AHs.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color
+			var/col3 = AHs.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color
 
-			AHs.customizations["hair_bottom"].color = col3
-			AHs.customizations["hair_middle"].color = col1
-			AHs.customizations["hair_top"].color = col2
+			AHs.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color = col3
+			AHs.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color = col1
+			AHs.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color = col2
 
 			H.visible_message(SPAN_NOTICE("<b>[H.name]</b>'s hair changes colors!"))
 			H.update_colorful_parts()
