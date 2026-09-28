@@ -148,6 +148,13 @@ export const CharacterTab = () => {
               style={data.undiesBottomStyle}
             />
           </LabeledList.Item>
+          <LabeledList.Item label="Socks">
+            <CustomDetail
+              id="undiesFeet"
+              color={data.undiesFeetColor}
+              style={data.undiesFeetStyle}
+            />
+          </LabeledList.Item>
           <LabeledList.Divider />
           <LabeledList.Item label="Bionics">
             <CustomPart slot_id="r_arm" />

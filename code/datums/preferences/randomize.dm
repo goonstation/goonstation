@@ -147,6 +147,7 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 	var/datum/customizationHolder/customization_first = AH.customizations["hair_bottom"]
 	var/datum/customizationHolder/customization_second = AH.customizations["hair_middle"]
 	var/datum/customizationHolder/customization_third = AH.customizations["hair_top"]
+	var/datum/customizationHolder/undies_feet = AH.customizations["undies_feet"]
 	var/datum/customizationHolder/undies_bottom = AH.customizations["undies_bottom"]
 	var/datum/customizationHolder/undies_top = AH.customizations["undies_top"]
 
@@ -245,19 +246,25 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 		// Maintains parity. This choice predates open-source. - @DisturbHerb
 		if (AH.gender == MALE)
 			if (prob(1))
+				undies_feet.style = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION::UNDIES::FEET, CUSTOMIZATION::GENDER::FEMININE, TRUE))
 				undies_top.style = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION::UNDIES::TOP, CUSTOMIZATION::GENDER::FEMININE, TRUE))
 				undies_bottom.style = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION::UNDIES::BOTTOM, CUSTOMIZATION::GENDER::FEMININE, TRUE))
 			else
+				undies_feet.style = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION::UNDIES::FEET, CUSTOMIZATION::GENDER::MASCULINE, TRUE))
 				undies_top.style = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION::UNDIES::TOP, CUSTOMIZATION::GENDER::MASCULINE, TRUE))
 				undies_bottom.style = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION::UNDIES::BOTTOM, CUSTOMIZATION::GENDER::MASCULINE, TRUE))
 		else
 			if (prob(5))
+				undies_feet.style = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION::UNDIES::FEET, CUSTOMIZATION::GENDER::MASCULINE, TRUE))
 				undies_top.style = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION::UNDIES::TOP, CUSTOMIZATION::GENDER::MASCULINE, TRUE))
 				undies_bottom.style = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION::UNDIES::BOTTOM, CUSTOMIZATION::GENDER::MASCULINE, TRUE))
 			else
+				undies_feet.style = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION::UNDIES::FEET, CUSTOMIZATION::GENDER::FEMININE, TRUE))
 				undies_top.style = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION::UNDIES::TOP, CUSTOMIZATION::GENDER::FEMININE, TRUE))
 				undies_bottom.style = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION::UNDIES::BOTTOM, CUSTOMIZATION::GENDER::FEMININE, TRUE))
+		var/sock_color = random_saturated_hex_color() // I didn't think they should all match. Sue me.
 		var/undies_color = random_saturated_hex_color()
+		undies_feet.color = sock_color
 		undies_bottom.color = undies_color
 		undies_top.color =  undies_color
 

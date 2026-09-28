@@ -291,6 +291,7 @@
 #include "code\datums\customization_style\hair\short.dm"
 #include "code\datums\customization_style\underwear\_underwear_parent.dm"
 #include "code\datums\customization_style\underwear\bottom.dm"
+#include "code\datums\customization_style\underwear\feet.dm"
 #include "code\datums\customization_style\underwear\top.dm"
 #include "code\datums\datacore\datacore.dm"
 #include "code\datums\datacore\record_database.dm"

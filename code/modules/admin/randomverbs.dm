@@ -949,6 +949,7 @@
 		var/datum/customizationHolder/hair_bottom = AH.customizations["hair_bottom"]
 		var/datum/customizationHolder/hair_middle = AH.customizations["hair_middle"]
 		var/datum/customizationHolder/hair_top = AH.customizations["hair_top"]
+		var/datum/customizationHolder/undies_feet = AH.customizations["undies_feet"]
 		var/datum/customizationHolder/undies_bottom = AH.customizations["undies_bottom"]
 		var/datum/customizationHolder/undies_top = AH.customizations["undies_top"]
 		if (!src.tf_holder.mobAppearance.gender || !(src.tf_holder.mobAppearance.gender == MALE || src.tf_holder.mobAppearance.gender == FEMALE))
@@ -973,6 +974,10 @@
 			undies_bottom.color = "#FEFEFE"
 		if (undies_bottom.style == null)
 			undies_bottom.style = new /datum/customization_style/none
+		if (undies_feet.color == null)
+			undies_feet.color = "#FEFEFE"
+		if (undies_feet.style == null)
+			undies_feet.style = new /datum/customization_style/none
 		if (undies_top.color == null)
 			undies_top.color = "#FEFEFE"
 		if (undies_top.style == null)

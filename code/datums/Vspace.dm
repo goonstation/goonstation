@@ -233,6 +233,7 @@ datum/v_space
 		character.bioHolder.mobAppearance.customizations["hair_bottom"].color = user.bioHolder.mobAppearance.customizations["hair_bottom"].color
 		character.bioHolder.mobAppearance.customizations["hair_middle"].color = user.bioHolder.mobAppearance.customizations["hair_middle"].color
 		character.bioHolder.mobAppearance.customizations["hair_top"].color = user.bioHolder.mobAppearance.customizations["hair_top"].color
+		character.bioHolder.mobAppearance.customizations["undies_feet"].color = user.bioHolder.mobAppearance.customizations["undies_feet"].color
 		character.bioHolder.mobAppearance.customizations["undies_bottom"].color = user.bioHolder.mobAppearance.customizations["undies_bottom"].color
 		character.bioHolder.mobAppearance.customizations["undies_top"].color = user.bioHolder.mobAppearance.customizations["undies_top"].color
 		character.bioHolder.mobAppearance.s_tone = user.bioHolder.mobAppearance.s_tone
@@ -240,8 +241,8 @@ datum/v_space
 		character.bioHolder.mobAppearance.customizations["hair_middle"].style =  user.bioHolder.mobAppearance.customizations["hair_middle"].style
 		character.bioHolder.mobAppearance.customizations["hair_top"].style =  user.bioHolder.mobAppearance.customizations["hair_top"].style
 		character.bioHolder.mobAppearance.customizations["undies_bottom"].style = user.bioHolder.mobAppearance.customizations["undies_bottom"].style
+		character.bioHolder.mobAppearance.customizations["undies_feet"].style = user.bioHolder.mobAppearance.customizations["undies_feet"].style
 		character.bioHolder.mobAppearance.customizations["undies_top"].style = user.bioHolder.mobAppearance.customizations["undies_top"].style
-
 		character.bioHolder.mobAppearance.pronouns = user.bioHolder.mobAppearance.pronouns
 
 		sanitize_null_values(character)
@@ -266,6 +267,9 @@ datum/v_space
 			AH.customizations["hair_top"].color = "#101010"
 		if (AH.customizations["hair_top"].style == null)
 			AH.customizations["hair_top"].style =  new /datum/customization_style/none
+		if (AH.customizations["undies_feet"].style == null)
+			AH.customizations["undies_feet"].style = new /datum/customization_style/none
+			AH.customizations["undies_feet"].color = "#FEFEFE"
 		if (AH.customizations["undies_bottom"].style == null)
 			AH.customizations["undies_bottom"].style = new /datum/customization_style/none
 			AH.customizations["undies_bottom"].color = "#FEFEFE"

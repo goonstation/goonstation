@@ -56,6 +56,7 @@
 	var/image/image_special_two = null
 	var/image/image_special_three = null
 	var/image/image_undies_bottom = null
+	var/image/image_undies_feet = null
 	var/image/image_undies_top = null
 
 	var/image/phoenix_temperature_indicator/phoenix_temp_overlay = null
@@ -178,6 +179,7 @@
 	src.image_cust_three = image('icons/mob/human_hair.dmi', layer = MOB_HAIR_LAYER2)
 
 	src.image_undies_bottom = image('icons/mob/human_underwear.dmi', layer = MOB_UNDIES_BOTTOM_LAYER)
+	src.image_undies_feet = image('icons/mob/human_underwear.dmi', layer = MOB_UNDIES_FEET_LAYER1)
 	src.image_undies_top = image('icons/mob/human_underwear.dmi', layer = MOB_UNDIES_TOP_LAYER1)
 
 	src.create_reagents(330)

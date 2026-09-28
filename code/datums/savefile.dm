@@ -79,12 +79,14 @@
 			F["[profileNum]_hair_color"] << AH.customizations["hair_bottom"].color
 			F["[profileNum]_facial_color"] << AH.customizations["hair_middle"].color
 			F["[profileNum]_detail_color"] << AH.customizations["hair_top"].color
+			F["[profileNum]_undies_feet_color"] << AH.customizations["undies_feet"].color
 			F["[profileNum]_undies_bottom_color"] << AH.customizations["undies_bottom"].color
 			F["[profileNum]_undies_top_color"] << AH.customizations["undies_top"].color
 
 			F["[profileNum]_hair_style_name"] << AH.customizations["hair_bottom"].style
 			F["[profileNum]_facial_style_name"] << AH.customizations["hair_middle"].style
 			F["[profileNum]_detail_style_name"] << AH.customizations["hair_top"].style
+			F["[profileNum]_undies_feet_name"] << AH.customizations["undies_feet"].style
 			F["[profileNum]_undies_bottom_name"] << AH.customizations["undies_bottom"].style
 			F["[profileNum]_undies_top_name"] << AH.customizations["undies_top"].style
 
@@ -227,6 +229,7 @@
 
 			F["[profileNum]_undies_bottom_color"] << F["[profileNum]_underwear_color"]
 			F["[profileNum]_undies_top_color"] << F["[profileNum]_underwear_color"]
+			F["[profileNum]_undies_feet_color"] << F["[profileNum]_underwear_color"]
 
 		// Character details
 		F["[profileNum]_profile_name"] >> src.profile_name
@@ -289,11 +292,15 @@
 			F["[profileNum]_detail_style_name"] >> AH.customizations["hair_top"].style
 			F["[profileNum]_detail_style_name"] >> AH.customizations["hair_top"].style_original
 
+			F["[profileNum]_undies_feet_color"] >> AH.customizations["undies_feet"].color
+			F["[profileNum]_undies_feet_color"] >> AH.customizations["undies_feet"].color_original
 			F["[profileNum]_undies_bottom_color"] >> AH.customizations["undies_bottom"].color
 			F["[profileNum]_undies_bottom_color"] >> AH.customizations["undies_bottom"].color_original
 			F["[profileNum]_undies_top_color"] >> AH.customizations["undies_top"].color
 			F["[profileNum]_undies_top_color"] >> AH.customizations["undies_top"].color_original
 
+			F["[profileNum]_undies_feet_name"] >> AH.customizations["undies_feet"].style
+			F["[profileNum]_undies_feet_name"] >> AH.customizations["undies_feet"].style_original
 			F["[profileNum]_undies_bottom_name"] >> AH.customizations["undies_bottom"].style
 			F["[profileNum]_undies_bottom_name"] >> AH.customizations["undies_bottom"].style_original
 			F["[profileNum]_undies_top_name"] >> AH.customizations["undies_top"].style
@@ -308,6 +315,9 @@
 			if(!istype(src.AH.customizations["hair_top"].style, /datum/customization_style))
 				src.AH.customizations["hair_top"].style = find_style_by_name(src.AH.customizations["hair_top"].style, \
 				style_filter = CUSTOMIZATION::SLOT::HAIR, no_gimmick = TRUE)
+			if(!istype(src.AH.customizations["undies_feet"].style, /datum/customization_style))
+				src.AH.customizations["undies_feet"].style = find_style_by_name(src.AH.customizations["undies_feet"].style, \
+				style_filter = CUSTOMIZATION::SLOT::UNDIES, no_gimmick = TRUE)
 			if(!istype(src.AH.customizations["undies_bottom"].style, /datum/customization_style))
 				src.AH.customizations["undies_bottom"].style = find_style_by_name(src.AH.customizations["undies_bottom"].style, \
 				style_filter = CUSTOMIZATION::SLOT::UNDIES, no_gimmick = TRUE)
@@ -324,6 +334,9 @@
 			if(!istype(src.AH.customizations["hair_top"].style_original, /datum/customization_style))
 				src.AH.customizations["hair_top"].style_original = find_style_by_name(src.AH.customizations["hair_top"].style_original, \
 				style_filter = CUSTOMIZATION::SLOT::HAIR, no_gimmick = TRUE)
+			if(!istype(src.AH.customizations["undies_feet"].style_original, /datum/customization_style))
+				src.AH.customizations["undies_feet"].style_original = find_style_by_name(src.AH.customizations["undies_feet"].style_original, \
+				style_filter = CUSTOMIZATION::SLOT::UNDIES, no_gimmick = TRUE)
 			if(!istype(src.AH.customizations["undies_bottom"].style_original, /datum/customization_style))
 				src.AH.customizations["undies_bottom"].style_original = find_style_by_name(src.AH.customizations["undies_bottom"].style_original, \
 				style_filter = CUSTOMIZATION::SLOT::UNDIES, no_gimmick = TRUE)
