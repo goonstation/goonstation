@@ -293,6 +293,7 @@
 				access_researchfoyer, access_telesci, access_artlab, access_robotdepot, access_money, access_pharmacy)
 #endif
 
+// Lists used here are in the department's respective job file
 /proc/get_skeleton_accesses(job)
 	var/skeleton_list = null
 	for(var/list/l in station_jobs)
