@@ -48,7 +48,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 	set background = 1
 
 	var/list/unassigned = list()
-	var/skeleton_crew_threshold = 15 //when do we give extra access to keep the station functioning on lower populations?
+	var/skeleton_crew_threshold = 20 //when do we give extra access to keep the station functioning on lower populations?
 
 	for (var/client/C)
 		var/mob/new_player/player = C.mob
@@ -62,7 +62,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 			unassigned += player
 	var/inital_ready = length(unassigned) // Doing this here cause other job allocations take away
 	if(inital_ready <= skeleton_crew_threshold)
-		skeleton_crew = 1
+		skeleton_crew = TRUE
 	var/percent_readied_up = length(clients) ? (length(unassigned)/length(clients)) * 100 : 0
 	logTheThing(LOG_DEBUG, null, "<b>Aloe</b>: roughly [percent_readied_up]% of players were readied up at roundstart (blobs and wraiths don't count).")
 
@@ -815,7 +815,10 @@ Equip items from body traits.
 		C.registered = realName
 		C.assignment = JOB.name
 		C.name = "[C.registered]’s ID Card ([C.assignment])"
-		C.access = JOB.access.Copy()
+		if(skeleton_crew)
+			C.access = JOB.access.Copy()
+		else
+			C.access = JOB.alt_access.Copy()
 		C.pronouns = src.get_pronouns()
 
 		if(!src.equip_if_possible(C, SLOT_WEAR_ID))

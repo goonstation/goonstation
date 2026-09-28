@@ -119,11 +119,11 @@
 
 
 /// Global lookup proc for access levels based on a job string (e.g. "Captain")
-/proc/get_access(job, var/skele_called = 0)
+/proc/get_access(job, var/skele_called = FALSE)
 
-	if(skeleton_crew && skele_called == 0)
-		skele_called = 1
-		return get_access(job, 1) + get_skeleton_accesses(job)
+	if(skeleton_crew && skele_called == FALSE)
+		skele_called = TRUE // AKA bypass this next time to grab default access
+		return get_access(job, TRUE) + get_skeleton_accesses(job)
 
 	switch(job)
 		if("Nanotrasen Responder")
@@ -293,28 +293,14 @@
 				access_researchfoyer, access_telesci, access_artlab, access_robotdepot, access_money, access_pharmacy)
 #endif
 
-var/list/skele_access_security_jobs = list(access_security, access_brig, access_forensics_lockers, access_ticket, access_fine_small, access_morgue, access_securitylockers, access_carrypermit,
-									   access_contrabandpermit, access_crematorium)
-
-var/list/skele_access_service_jobs = list(access_kitchen, access_bar, access_janitor, access_hydro, access_ranch)
-
-var/list/skele_access_medical_jobs =  list(access_medical, access_medlab, access_morgue, access_medical_lockers, access_pharmacy, access_pathology, access_robotics)
-
-var/list/skele_access_science_jobs = list(access_research, access_researchfoyer, access_telesci, access_artlab, access_robotdepot, access_tox, access_tox_storage, access_chemistry)
-
-var/list/skele_access_engineering_jobs = list(access_engineering, access_engineering_storage, access_engineering_power, access_engineering_engine, access_engineering_control, access_engineering_mechanic,
-										access_mining, access_mining_outpost, access_cargo, access_supply_console)
-
-var/list/skele_access_command_jobs = list(null)
-
 /proc/get_skeleton_accesses(job)
 	var/skeleton_list = null
 	for(var/list/l in station_jobs)
-		for(var/j in l)
-			if (job == j)
-				skeleton_list = "skele_access_" + l
-				break
+		for(var/datum/job/j in l)
+			if (job == j.access_string)
+				skeleton_list = j.alt_access
 	return skeleton_list
+
 // Generated at round start.
 var/list/access_name_lookup = null
 var/list/access_all_actually = null

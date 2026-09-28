@@ -6,6 +6,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_card = /obj/item/card/id/command
 	map_can_autooverride = FALSE
 	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY, ROLE_GANG_MEMBER, ROLE_GANG_LEADER, ROLE_SPY_THIEF, ROLE_CONSPIRATOR)
+	alt_access = ACCESS::SKELETON::DEPARTMENT::COMMAND
 	job_category = JOB_COMMAND
 	unique = TRUE
 	world_announce_priority = ANNOUNCE_ORDER_HEADS

@@ -94,6 +94,9 @@ var/global
 	/// Areas built anew belong to a single unconnected zone, which gives its turfs over to other expandable areas when contacting them
 	area/unconnected_zone/unconnected_zone = new
 
+	/// Lower pop mode setting
+	skeleton_crew = FALSE
+
 	/// Contains objects in ID-based switched object groups, such as blinds and their switches
 	list/switched_objs = list()
 
@@ -391,8 +394,6 @@ var/global
 	halloween_mode = 0
 
 	literal_disarm = 0
-
-	skeleton_crew = 0
 
 #ifdef RP_MODE
 	global_sims_mode = 1 // SET THIS TO 0 TO DISABLE SIMS MODE

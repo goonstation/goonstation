@@ -4,6 +4,7 @@ ABSTRACT_TYPE(/datum/job/security)
 /datum/job/security
 	ui_colour = TGUI_COLOUR_RED
 	slot_card = /obj/item/card/id/security
+	alt_access = ACCESS::SKELETON::DEPARTMENT::SECURITY
 	receives_miranda = TRUE
 	job_category = JOB_SECURITY
 	email_group = MGD_SECURITY
@@ -82,6 +83,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	wages = PAY::TRADESMAN
 	trait_list = list("training_drinker", "training_forensic")
 	access_string = "Detective"
+	alt_access = list(access_fuck_all) // lowpop det is enough of a menace already, thanks
 	badge = /obj/item/clothing/suit/security_badge
 	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY, ROLE_GANG_LEADER, ROLE_GANG_MEMBER, ROLE_CONSPIRATOR)
 	allow_antag_fallthrough = FALSE

@@ -68,6 +68,7 @@ ABSTRACT_TYPE(/datum/job)
 	var/put_id_in_pda = FALSE //! Job will automatically have their ID in their PDA on spawn. Overrides player preference; use sparingly.
 	var/access_string = null // used to quickly grab access via string, i.e. "Chief Engineer", completely overrides var/list/access if non-null !!!
 	var/list/access = list(access_fuck_all) // Please define in global get_access() proc (access.dm), so it can also be used by bots etc.
+	var/list/alt_access = list(access_fuck_all) // Used for skeleton crew rounds
 	var/mob/living/mob_type = /mob/living/carbon/human
 	var/datum/mutantrace/starting_mutantrace = null
 	var/change_name_on_spawn = FALSE

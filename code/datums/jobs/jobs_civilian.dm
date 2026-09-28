@@ -4,6 +4,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/civilian
 	ui_colour = TGUI_COLOUR_BLUE
 	slot_card = /obj/item/card/id/civilian
+	alt_access = ACCESS::SKELETON::DEPARTMENT::CIVILIAN
 	job_category = JOB_CIVILIAN
 
 /datum/job/civilian/chef
@@ -106,6 +107,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	name = "Staff Assistant"
 	wages = PAY::UNTRAINED
 	access_string = "Staff Assistant"
+	alt_access = list(access_fuck_all)
 	no_jobban_from_this_job = TRUE
 	low_priority_job = TRUE
 	cant_allocate_unwanted = TRUE
@@ -126,6 +128,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	alias_names = "Mailman"
 	wages = PAY::TRADESMAN
 	access_string = "Mail Courier"
+	alt_access = list(access_fuck_all)
 	limit = 1
 	slot_jump = list(/obj/item/clothing/under/misc/mail/syndicate)
 	slot_head = list(/obj/item/clothing/head/mailcap)
@@ -146,6 +149,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	request_cost = PAY::TRADESMAN*4
 	trait_list = list("training_clown")
 	access_string = "Clown"
+	alt_access = list(access_fuck_all)
 	ui_colour = TGUI_COLOUR_PINK
 	slot_back = list()
 	slot_belt = list(/obj/item/storage/fanny/funny)
@@ -173,6 +177,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	no_late_join = TRUE
 	high_priority_job = TRUE
 	can_roll_antag = FALSE
+	alt_access = list(access_fuck_all)
 	slot_ears = list()
 	slot_card = null
 	slot_back = list()
@@ -197,6 +202,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	limit = 8
 	no_late_join = TRUE
 	can_roll_antag = FALSE
+	alt_access = list(access_fuck_all)
 	slot_ears = list()
 	slot_card = null
 	slot_back = list()
