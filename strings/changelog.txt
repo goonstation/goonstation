@@ -1,4 +1,9 @@
 
+(t)tue sep 29 26
+(u)ANNmagedon
+(p)27970
+(e)|
+(+)You can now print empty variant of the brute, burn, toxin, oxygen, brain & mental medkits along an empty doctor's bag in the medical fabricator.
 (t)sat sep 26 26
 (u)Sovexe
 (p)27843
