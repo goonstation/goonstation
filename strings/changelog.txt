@@ -1,5 +1,9 @@
 
 (t)tue sep 29 26
+(u)Mr. Moriarty
+(p)27879
+(e)🔎💅⚙🖥️|C-Code-Quality, C-QoL, A-Internal, A-Computers
+(*)SecMate, MedTrak, and BankBoss have been reworked. Please report any bugs.
 (u)ANNmagedon
 (p)27970
 (e)|
