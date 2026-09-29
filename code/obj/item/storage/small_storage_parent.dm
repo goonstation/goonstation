@@ -308,7 +308,7 @@
 		playsound(src, 'sound/effects/singsuck.ogg', 40, TRUE)
 
 /obj/item/storage/briefcase/NT
-	name = "nanoTrasen briefcase"
+	name = "\improper NanoTrasen Briefcase"
 	icon_state = "briefcase_nt"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "briefcase_nt"
