@@ -310,7 +310,6 @@
 /obj/item/storage/briefcase/NT
 	name = "\improper NanoTrasen Briefcase"
 	icon_state = "briefcase_nt"
-	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "briefcase_nt"
 	desc = "A very official looking briefcase emblazoned with the NanoTrasen logo. Fancy."
 	spawn_contents = list(/obj/item/paper = 2, /obj/item/pen/NT)
