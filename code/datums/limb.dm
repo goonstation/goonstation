@@ -1207,7 +1207,9 @@
 			user.changeBodyTemp(30 KELVIN)
 			var/turf/TT = target.loc
 			TT.hotspot_expose(T0C + 5000, 125)
-			target.set_burning(5 SECONDS)
+			if(isliving(target))
+				var/mob/living/T = target
+				T.set_burning(5 SECONDS)
 			logTheThing(LOG_COMBAT, user, "accidentally harms [constructTarget(target,"combat")] with hot hands at [log_loc(user)].")
 			user.visible_message(SPAN_COMBAT("<b>[user] accidentally melts [target] while trying to [user.a_intent] them!</b>"), SPAN_COMBAT("<b>You accidentally melt [target] while trying to [user.a_intent] them!</b>"))
 			harm(target, user, 1)
