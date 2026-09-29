@@ -4,7 +4,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 /datum/job/engineering
 	ui_colour = TGUI_COLOUR_ORANGE
 	slot_card = /obj/item/card/id/engineering
-	alt_access = list(access_engineering, access_engineering_storage, access_engineering_power, access_engineering_engine, access_engineering_control, access_mining, access_cargo, access_supply_console)
+	alt_access = ACCESS.SKELETON.DEPARTMENT.ENGINEERING
 	job_category = JOB_ENGINEERING
 	email_group = MGD_ENGINEER
 

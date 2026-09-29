@@ -6,7 +6,7 @@ CREATE_NAMESPACE(ACCESS)
 /// Skeleton Crewing
 CREATE_NAMESPACE(ACCESS, SKELETON)
 
-/// Different stages of chemical requests
+/// Different Departments
 CREATE_NAMESPACE(ACCESS, SKELETON, DEPARTMENT)
 
 ADD_TO_NAMESPACE(ACCESS, SKELETON, DEPARTMENT)(var/const/list/SECURITY = list(access_security, access_brig, access_forensics_lockers, access_ticket, access_morgue, access_securitylockers, access_carrypermit,
@@ -15,4 +15,4 @@ ADD_TO_NAMESPACE(ACCESS, SKELETON, DEPARTMENT)(var/const/list/CIVILIAN = list(ac
 ADD_TO_NAMESPACE(ACCESS, SKELETON, DEPARTMENT)(var/const/list/MEDICAL =  list(access_medical, access_medlab, access_morgue, access_medical_lockers, access_pharmacy, access_robotics))
 ADD_TO_NAMESPACE(ACCESS, SKELETON, DEPARTMENT)(var/const/list/ENGINEERING = list(access_engineering, access_engineering_storage, access_engineering_power, access_engineering_engine, access_engineering_control, access_mining, access_cargo, access_supply_console))
 ADD_TO_NAMESPACE(ACCESS, SKELETON, DEPARTMENT)(var/const/list/RESEARCH = list(access_research, access_researchfoyer, access_telesci, access_artlab, access_chemistry))
-ADD_TO_NAMESPACE(ACCESS, SKELETON, DEPARTMENT)(var/const/list/COMMAND = list(access_fuck_all))
+ADD_TO_NAMESPACE(ACCESS, SKELETON, DEPARTMENT)(var/const/list/COMMAND = list(access_heads))

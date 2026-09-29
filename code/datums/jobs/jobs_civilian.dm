@@ -4,7 +4,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/civilian
 	ui_colour = TGUI_COLOUR_BLUE
 	slot_card = /obj/item/card/id/civilian
-	alt_access = list(access_kitchen, access_bar, access_janitor, access_hydro, access_ranch)
+	alt_access = ACCESS.SKELETON.DEPARTMENT.CIVILIAN
 	job_category = JOB_CIVILIAN
 
 /datum/job/civilian/chef

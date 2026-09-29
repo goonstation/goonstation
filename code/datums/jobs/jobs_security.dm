@@ -4,8 +4,7 @@ ABSTRACT_TYPE(/datum/job/security)
 /datum/job/security
 	ui_colour = TGUI_COLOUR_RED
 	slot_card = /obj/item/card/id/security
-	alt_access = list(access_security, access_brig, access_forensics_lockers, access_ticket, access_morgue, access_securitylockers, access_carrypermit,
-					access_contrabandpermit, access_crematorium,  access_medical_lockers, access_engineering_engine) // Bigger cause confirmed not antag, actually going to benefit crew with it
+	alt_access = ACCESS.SKELETON.DEPARTMENT.SECURITY
 	receives_miranda = TRUE
 	job_category = JOB_SECURITY
 	email_group = MGD_SECURITY

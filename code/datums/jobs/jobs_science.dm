@@ -4,7 +4,7 @@ ABSTRACT_TYPE(/datum/job/research)
 /datum/job/research
 	ui_colour = TGUI_COLOUR_VIOLET
 	slot_card = /obj/item/card/id/research
-	alt_access = list(access_research, access_researchfoyer, access_telesci, access_artlab, access_chemistry)
+	alt_access = ACCESS.SKELETON.DEPARTMENT.RESEARCH
 	job_category = JOB_RESEARCH
 	email_group = MGD_RESEARCH
 
