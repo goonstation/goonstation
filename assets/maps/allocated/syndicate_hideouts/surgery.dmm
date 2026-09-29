@@ -2,6 +2,11 @@
 "a" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/syndicate_station/hideout)
+"b" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/carpet/grime,
+/area/syndicate_station/hideout)
 "c" = (
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 4
@@ -26,12 +31,6 @@
 	pixel_y = 5
 	},
 /turf/simulated/floor/carpet/grime,
-/area/syndicate_station/hideout)
-"j" = (
-/obj/machinery/computer/television/small{
-	pixel_y = -5
-	},
-/turf/unsimulated/wall/auto/lead/white,
 /area/syndicate_station/hideout)
 "l" = (
 /obj/machinery/disposal/extradimensional/exit{
@@ -90,8 +89,10 @@
 	pixel_x = -5;
 	pixel_y = 10
 	},
-/obj/machinery/light/incandescent/warm,
 /obj/item/pen,
+/obj/machinery/computer/television/small{
+	pixel_y = 29
+	},
 /turf/simulated/floor/carpet/grime,
 /area/syndicate_station/hideout)
 "y" = (
@@ -321,7 +322,7 @@ D
 V
 z
 d
-o
+b
 p
 p
 f
@@ -335,7 +336,7 @@ d
 d
 c
 d
-j
+d
 w
 K
 q
