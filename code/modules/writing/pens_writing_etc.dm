@@ -226,11 +226,10 @@
 
 /obj/item/pen/NT
 	name = "nanoTrasen pen"
-	desc = "The National Notary 'Magistratus' model pen, with patented TrueBlue(TM) ink."
+	desc = "The National Notary 'Magistratus' model pen, with a cobryl alloy nib, high-grade polymer barrel and patented TrueBlue(TM) ink."
 	icon_state = "pen_nt"
 	item_state = "pen_nt"
 	font_color = "#0047ab"
-
 /obj/item/pen/odd
 	name = "odd pen"
 	desc = "There's something strange about this pen. Inscriptions indicate it is a National Notary 'Francis Scott' model with an electrum nib and lignum vitae barrel. Huh."
