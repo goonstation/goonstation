@@ -6,18 +6,19 @@
 	crate_tag = "Sobb"
 	hiketolerance = 40
 	base_patience = list(20,35)
-	chance_leave = 20
+	chance_leave = 10
 	chance_arrive = 20
 	chance_restock = 25
 
 	base_goods_buy = alist(
 		TRADER_RARITY_COMMON = list(
-			/datum/commodity/trader/sobb/honey
+			/datum/commodity/trader/sobb/honey,
+			/datum/commodity/trader/sobb/critters,
+			/datum/commodity/trader/sobb/monkey
 		),
 		TRADER_RARITY_UNCOMMON = list(
 			/datum/commodity/trader/sobb/digestion,
-			/datum/commodity/trader/sobb/bot,
-			/datum/commodity/trader/sobb/monkey
+			/datum/commodity/trader/sobb/bot
 		),
 		TRADER_RARITY_RARE = list(
 			/datum/commodity/trader/sobb/chickens/white,
@@ -227,8 +228,15 @@
 	comname = "Monkoys"
 	comtype = /mob/living/carbon/human // Sobb can't tell the difference. Players don't seem to be included.
 	price_boundary = list(PAY::UNTRAINED * 2, PAY::UNTRAINED * 3)
-	possible_names = list("I try to dossolve large creutures very slowly. Better for lysozymes.",
+	possible_names = list("Better for lysozymes if they dossolve slower.",
 	"Wont to dossolve creuture wuth two arms and two legs. Prefur if scream less.")
+
+/datum/commodity/trader/sobb/critters
+	comname = "Smoll Crutters"
+	comtype = /mob/living/critter
+	price_boundary = list(PAY::UNTRAINED, PAY::UNTRAINED * 2)
+	possible_names = list("Alwoys hoppy to pay for smoll snocks.",
+	"Snocks wanted for bolonced diet. Okay if squrm a little.")
 
 /datum/commodity/trader/sobb/chickens
 	comname = "Chickuns"
@@ -250,7 +258,7 @@
 		comname = "Sulkie Chickuns"
 		comtype = /mob/living/critter/small_animal/ranch_base/chicken/silkie
 		price_boundary = list(PAY::TRADESMAN, PAY::TRADESMAN * 2)
-		possible_names = list("Need sulkie chickuns with smooth foathers. Good for snock.")
+		possible_names = list("Need sulkie chickuns with smooth loght foathers.")
 	void
 		comname = "Voud Chickuns"
 		comtype = /mob/living/critter/small_animal/ranch_base/chicken/purple
