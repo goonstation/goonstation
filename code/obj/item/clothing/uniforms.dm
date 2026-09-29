@@ -835,6 +835,12 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc)
 		icon_state = "lawyerR"
 		item_state = "lawyerR"
 
+/obj/item/clothing/under/misc/lawyer/inspector
+	name = "inspector suit"
+	desc = "A very inspectable piece of clothing."
+	icon_state = "ntinspector"
+	item_state = "ntinspector"
+
 /obj/item/clothing/under/misc/lawyer/red/demonic
 	item_function_flags = IMMUNE_TO_ACID
 	setupProperties()
@@ -884,12 +890,6 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc)
 	name = "nanotrasen jumpsuit"
 	desc = "Corporate higher-ups get some pretty comfy jumpsuits."
 	icon_state = "nt"
-	item_state = "nt"
-
-/obj/item/clothing/under/misc/NT/inspector
-	name = "inspector suit"
-	desc = "A very inspectable piece of clothing."
-	icon_state = "ntinspector"
 	item_state = "nt"	
 
 /obj/item/clothing/under/misc/chaplain
