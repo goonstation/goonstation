@@ -1462,7 +1462,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/bioEffect/power/phagocytosis
-	name = "Eucaryotic Phagocytosis"
+	name = "Eukaryotic Phagocytosis"
 	desc = "Allows the subject to absorb biological organs into their body."
 	icon_state = "phagocytosis"
 	id = "phagocytosis"
@@ -1473,7 +1473,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 	ability_path = /datum/targetable/geneticsAbility/phagocytosis
 
 /datum/targetable/geneticsAbility/phagocytosis
-	name = "Eucaryotic Phagocytosis"
+	name = "Eukaryotic Phagocytosis"
 	desc = "Replace an organic organ by absorbing a new one."
 	icon_state = "phagocytosis"
 	targeted = FALSE
@@ -1538,7 +1538,7 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			var/accept = tgui_alert(src.owner, "Are you sure that you want to replace your brain with [I]?", "Replace brain?", list("Yes", "No")) == "Yes" && src.owner.equipped() == I
 			if(!accept)
 				return TRUE
-			logTheThing(LOG_COMBAT, src.owner, "replaces their brain with [I] using their Eucaryotic Phagocytosis ability.")
+			logTheThing(LOG_COMBAT, src.owner, "replaces their brain with [I] using their Eukaryotic Phagocytosis ability.")
 		if(misfire)
 			var/obj/item/dropped_organ = src.owner.organHolder.drop_organ(slot)
 			if(isitem(dropped_organ) && !src.linked_power.safety)
