@@ -156,7 +156,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_card = /obj/item/card/id/nanotrasen
 	slot_back = list(/obj/item/storage/backpack/NT)
 	slot_belt = list(/obj/item/device/pda2/nt/important)
-	slot_jump = list(/obj/item/clothing/under/misc/NT/inspector) // so they can slam tables
+	slot_jump = list(/obj/item/clothing/under/misc/lawyer/inspector) // so they can slam tables
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_ears = list(/obj/item/device/radio/headset/command/inspector)
 	slot_head = list(/obj/item/clothing/head/NTberet)
