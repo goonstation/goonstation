@@ -347,6 +347,12 @@
 /area/supply/spawn_point)
 "gQ" = (
 /obj/landmark/start/job/head_of_personnel,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor,
 /area/station/devzone)
 "hc" = (
@@ -705,6 +711,9 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor,
 /area/station/devzone)
 "nd" = (
@@ -872,6 +881,10 @@
 /area/station/devzone)
 "pb" = (
 /obj/machinery/computer3/generic/communications,
+/obj/cable{
+	dir = null
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor,
 /area/station/devzone)
 "pc" = (
@@ -1281,6 +1294,16 @@
 /turf/simulated/floor,
 /area/station/devzone)
 "wn" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
 /obj/landmark/start/job/captain,
 /turf/simulated/floor,
 /area/station/devzone)
@@ -1477,6 +1500,10 @@
 /area/station/devzone)
 "zw" = (
 /obj/machinery/computer3/generic/bank_data,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	dir = null
+	},
 /turf/simulated/floor,
 /area/station/devzone)
 "zF" = (
@@ -1689,6 +1716,10 @@
 /area/station/devzone)
 "Cq" = (
 /obj/machinery/computer3/generic/personnel_management,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	dir = null
+	},
 /turf/simulated/floor,
 /area/station/devzone)
 "Ct" = (
@@ -2239,6 +2270,18 @@
 	},
 /turf/simulated/floor,
 /area/station/devzone)
+"LE" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/devzone)
 "LJ" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -2274,6 +2317,10 @@
 /area/station/devzone)
 "Mp" = (
 /obj/machinery/computer3/generic/med_data,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	dir = null
+	},
 /turf/simulated/floor,
 /area/station/devzone)
 "MA" = (
@@ -2496,7 +2543,16 @@
 /turf/simulated/floor/plating/jen,
 /area/station/devzone)
 "PF" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
 /obj/landmark/start/job/clown,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor,
 /area/station/devzone)
 "PH" = (
@@ -3094,6 +3150,10 @@
 /area/station/devzone)
 "YV" = (
 /obj/machinery/computer3/generic/secure_data,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor,
 /area/station/devzone)
 "Zd" = (
@@ -4667,7 +4727,7 @@ Yx
 ng
 ng
 ng
-ng
+DP
 ng
 ng
 Id
@@ -4711,7 +4771,7 @@ Yx
 Yx
 ng
 bE
-Yx
+LE
 zw
 ng
 Yx
