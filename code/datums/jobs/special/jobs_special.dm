@@ -84,7 +84,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	limit = 0
 	wages = PAY::TRADESMAN
 	access_string = "Vice Officer"
-	alt_access = ACCESS.SKELETON.DEPARTMENT.SECURITY
+	alt_access = ACCESS:SKELETON:DEPARTMENT:SECURITY
 	can_roll_antag = FALSE
 	badge = /obj/item/clothing/suit/security_badge
 	receives_miranda = TRUE
@@ -105,7 +105,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	wages = PAY::TRADESMAN
 	trait_list = list("training_forensic")
 	access_string = "Forensic Technician"
-	alt_access = ACCESS.SKELETON.DEPARTMENT.SECURITY
+	alt_access = ACCESS:SKELETON:DEPARTMENT:SECURITY
 	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY)
 	slot_belt = list(/obj/item/device/pda2/security)
 	slot_jump = list(/obj/item/clothing/under/color/darkred)
@@ -123,7 +123,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	wages = PAY::DOCTORATE
 	trait_list = list("training_scientist")
 	access_string = "Toxins Researcher"
-	alt_access = ACCESS.SKELETON.DEPARTMENT.RESEARCH
+	alt_access = ACCESS:SKELETON:DEPARTMENT:RESEARCH
 	slot_belt = list(/obj/item/device/pda2/toxins)
 	slot_jump = list(/obj/item/clothing/under/rank/scientist)
 	slot_foot = list(/obj/item/clothing/shoes/white)
@@ -139,7 +139,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	wages = PAY::DOCTORATE
 	trait_list = "training_scientist"
 	access_string = "Chemist"
-	alt_access = ACCESS.SKELETON.DEPARTMENT.RESEARCH
+	alt_access = ACCESS:SKELETON:DEPARTMENT:RESEARCH
 	slot_belt = list(/obj/item/device/pda2/toxins)
 	slot_jump = list(/obj/item/clothing/under/rank/scientist)
 	slot_foot = list(/obj/item/clothing/shoes/white)
@@ -154,7 +154,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	limit = 0
 	wages = PAY::TRADESMAN
 	access_string = "Atmospheric Technician"
-	alt_access = ACCESS.SKELETON.DEPARTMENT.ENGINEERING
+	alt_access = ACCESS:SKELETON:DEPARTMENT:ENGINEERING
 	slot_back = list(/obj/item/storage/backpack/engineering)
 	slot_belt = list(/obj/item/storage/belt/utility/atmos)
 	slot_eyes = list(/obj/item/clothing/glasses/toggleable/atmos)
@@ -172,7 +172,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	limit = 0
 	wages = PAY::IMPORTANT
 	access_string = "Communications Officer"
-	alt_access = ACCESS.SKELETON.DEPARTMENT.COMMAND
+	alt_access = ACCESS:SKELETON:DEPARTMENT:COMMAND
 	world_announce_priority = ANNOUNCE_ORDER_LAST
 	wiki_link = "https://wiki.ss13.co/Communications_Officer"
 
@@ -207,7 +207,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	trait_list = list("training_miner")
 	access_string = "Head of Mining"
 	ui_colour = /datum/job/command::ui_colour
-	alt_access = ACCESS.SKELETON.DEPARTMENT.COMMAND
+	alt_access = ACCESS:SKELETON:DEPARTMENT:COMMAND
 	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY, ROLE_GANG_MEMBER, ROLE_GANG_LEADER, ROLE_SPY_THIEF, ROLE_CONSPIRATOR)
 	slot_card = /obj/item/card/id/command
 	slot_belt = list(/obj/item/device/pda2/mining)
@@ -326,7 +326,7 @@ ABSTRACT_TYPE(/datum/job/special)
 	limit = 0
 	wages = PAY::DOCTORATE
 	access_string = "Medical Doctor"
-	alt_access = ACCESS.SKELETON.DEPARTMENT.MEDICAL
+	alt_access = ACCESS:SKELETON:DEPARTMENT:MEDICAL
 	slot_belt = list(/obj/item/device/pda2/genetics)
 	slot_jump = list(/obj/item/clothing/under/rank/pathologist)
 	slot_foot = list(/obj/item/clothing/shoes/white)

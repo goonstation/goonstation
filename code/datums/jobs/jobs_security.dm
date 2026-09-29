@@ -4,7 +4,7 @@ ABSTRACT_TYPE(/datum/job/security)
 /datum/job/security
 	ui_colour = TGUI_COLOUR_RED
 	slot_card = /obj/item/card/id/security
-	alt_access = ACCESS.SKELETON.DEPARTMENT.SECURITY
+	alt_access = ACCESS:SKELETON:DEPARTMENT:SECURITY
 	receives_miranda = TRUE
 	job_category = JOB_SECURITY
 	email_group = MGD_SECURITY
