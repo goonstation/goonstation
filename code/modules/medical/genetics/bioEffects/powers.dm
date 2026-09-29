@@ -1534,6 +1534,11 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 		if(current_organ && linked_power.power <= 1)
 			boutput(owner, SPAN_ALERT("You already have that organ!"))
 			return TRUE
+		if(slot == "brain")
+			var/accept = tgui_alert(src.owner, "Are you sure that you want to replace your brain with [I]?", "Replace brain?", list("Yes", "No")) == "Yes" && src.owner.equipped() == I
+			if(!accept)
+				return TRUE
+			logTheThing(LOG_COMBAT, src.owner, "replaces their brain with [I] using their Eucaryotic Phagocytosis ability.")
 		if(misfire)
 			var/obj/item/dropped_organ = src.owner.organHolder.drop_organ(slot)
 			if(isitem(dropped_organ) && !src.linked_power.safety)
