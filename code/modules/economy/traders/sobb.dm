@@ -7,7 +7,7 @@
 	hiketolerance = 40
 	base_patience = list(20,35)
 	chance_leave = 20
-	chance_arrive = 10
+	chance_arrive = 20
 	chance_restock = 25
 
 	base_goods_buy = alist(
@@ -16,9 +16,17 @@
 		),
 		TRADER_RARITY_UNCOMMON = list(
 			/datum/commodity/trader/sobb/digestion,
-			/datum/commodity/trader/sobb/bot
+			/datum/commodity/trader/sobb/bot,
+			/datum/commodity/trader/sobb/monkey
 		),
-		TRADER_RARITY_RARE = list()
+		TRADER_RARITY_RARE = list(
+			/datum/commodity/trader/sobb/chickens/white,
+			/datum/commodity/trader/sobb/chickens/brown,
+			/datum/commodity/trader/sobb/chickens/silkie,
+			/datum/commodity/trader/sobb/chickens/void,
+			/datum/commodity/trader/sobb/chickens/spicy,
+			/datum/commodity/trader/sobb/chickens/plant
+		)
 	)
 
 	base_goods_sell = alist(
@@ -80,7 +88,7 @@
 				src.picture = "sobb/sobb_orange.png"
 			else if(hue < 0.25)
 				src.picture = "sobb/sobb_yellow.png"
-			else if(hue < 0.37)
+			else if(hue < 0.42)
 				src.picture = "sobb/sobb_green.png"
 			else if(hue < 0.55)
 				src.picture = "sobb/sobb_cyan.png"
@@ -112,7 +120,7 @@
 
 /obj/sobb_remains_spawner
 	var/list/spawns_random = list(
-		/obj/item/material_piece/bone = 350,
+		/obj/item/material_piece/bone = 400,
 		/obj/item/skull = 70,
 		/obj/item/raw_material/chitin = 50,
 		/obj/item/mining_tool/powered/drill = 5,
@@ -199,7 +207,8 @@
 	)
 	alt_type_chance = 100
 	price_boundary = list(PAY::TRADESMAN, PAY::TRADESMAN * 2)
-	possible_names = list("The organelle humons use for dugesting food.")
+	possible_names = list("That organelle humons use for gotting food.")
+	subtype_valid = FALSE
 
 /datum/commodity/trader/sobb/bot
 	comname = "Bot-thingie"
@@ -213,3 +222,47 @@
 	price_boundary = list(PAY::TRADESMAN, PAY::DOCTORATE * 2)
 	possible_names = list("Need that bot-thung that does stuff for you. Know whuch one?",
 	"Lookung for that bot-thung, the one that I sow before.")
+
+/datum/commodity/trader/sobb/monkey
+	comname = "Monkoys"
+	comtype = /mob/living/carbon/human // Sobb can't tell the difference
+	price_boundary = list(PAY::UNTRAINED * 2, PAY::UNTRAINED * 3)
+	possible_names = list("I try to dossolve large creutures very slowly. Better for lysozymes.",
+	"Wont to dossolve creuture wuth two arms and two legs. Prefur if scream less.")
+
+/datum/commodity/trader/sobb/chickens
+	comname = "Chickuns"
+	comtype = /mob/living/critter/small_animal/ranch_base/chicken
+	price_boundary = list(PAY::UNTRAINED, PAY::UNTRAINED * 3)
+	onmarket = FALSE
+
+	white
+		comname = "Whute Chickuns"
+		comtype = /mob/living/critter/small_animal/ranch_base/chicken/white
+		price_boundary = list(PAY::UNTRAINED, PAY::UNTRAINED * 2)
+		possible_names = list("Need plain chickuns with whute foathers for tommorows lunch.")
+	brown
+		comname = "Brown Chickuns"
+		comtype = /mob/living/critter/small_animal/ranch_base/chicken/brown
+		price_boundary = list(PAY::TRADESMAN, PAY::TRADESMAN * 2)
+		possible_names = list("Need yummy brown chickuns with brown foathers.")
+	silkie
+		comname = "Sulkie Chickuns"
+		comtype = /mob/living/critter/small_animal/ranch_base/chicken/silkie
+		price_boundary = list(PAY::TRADESMAN, PAY::TRADESMAN * 2)
+		possible_names = list("Need sulkie chickuns with smooth foathers. Good for snock.")
+	void
+		comname = "Voud Chickuns"
+		comtype = /mob/living/critter/small_animal/ranch_base/chicken/purple
+		price_boundary = list(PAY::TRADESMAN, PAY::TRADESMAN * 2)
+		possible_names = list("Need voud chickuns with purplo foathers. Good noghttome snock.")
+	spicy
+		comname = "Spucy Chickuns"
+		comtype = /mob/living/critter/small_animal/ranch_base/chicken/spicy
+		price_boundary = list(PAY::DOCTORATE, PAY::DOCTORATE * 2)
+		possible_names = list("Need spucy chickuns with hot toste. Make good chickun souce.")
+	plant
+		comname = "Plont Chickuns"
+		comtype = /mob/living/critter/small_animal/ranch_base/chicken/plant
+		price_boundary = list(PAY::TRADESMAN * 2, PAY::TRADESMAN * 3)
+		possible_names = list("Need plont chickuns with greun foathers for new plont-bosed diet.")
