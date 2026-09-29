@@ -17,16 +17,20 @@
 			/datum/commodity/trader/sobb/monkey
 		),
 		TRADER_RARITY_UNCOMMON = list(
-			/datum/commodity/trader/sobb/digestion,
-			/datum/commodity/trader/sobb/bot
-		),
-		TRADER_RARITY_RARE = list(
 			/datum/commodity/trader/sobb/chickens/white,
 			/datum/commodity/trader/sobb/chickens/brown,
 			/datum/commodity/trader/sobb/chickens/silkie,
 			/datum/commodity/trader/sobb/chickens/void,
 			/datum/commodity/trader/sobb/chickens/spicy,
-			/datum/commodity/trader/sobb/chickens/plant
+			/datum/commodity/trader/sobb/chickens/plant,
+			/datum/commodity/trader/sobb/chickens/onagadori,
+			/datum/commodity/trader/sobb/chickens/knight,
+			/datum/commodity/trader/sobb/chickens/pigeon,
+			/datum/commodity/trader/sobb/chickens/raptor
+		),
+		TRADER_RARITY_RARE = list(
+			/datum/commodity/trader/sobb/digestion,
+			/datum/commodity/trader/sobb/bot
 		)
 	)
 
@@ -264,6 +268,11 @@
 		comtype = /mob/living/critter/small_animal/ranch_base/chicken/purple
 		price_boundary = list(PAY::TRADESMAN, PAY::TRADESMAN * 2)
 		possible_names = list("Need voud chickuns with purplo foathers. Good noghttome snock.")
+	onagadori
+		comname = "Onagadoru Chickuns"
+		comtype = /mob/living/critter/small_animal/ranch_base/chicken/onagadori
+		price_boundary = list(PAY::TRADESMAN, PAY::TRADESMAN * 2)
+		possible_names = list("Want whute chickuns with long blue foathers. Look prutty while dossolving.")
 	spicy
 		comname = "Spucy Chickuns"
 		comtype = /mob/living/critter/small_animal/ranch_base/chicken/spicy
@@ -272,5 +281,20 @@
 	plant
 		comname = "Plont Chickuns"
 		comtype = /mob/living/critter/small_animal/ranch_base/chicken/plant
-		price_boundary = list(PAY::TRADESMAN * 2, PAY::TRADESMAN * 3)
+		price_boundary = list(PAY::DOCTORATE, PAY::DOCTORATE * 2)
 		possible_names = list("Need plont chickuns with greun foathers for new plont-bosed diet.")
+	knight
+		comname = "Ormored Chickuns"
+		comtype = /mob/living/critter/small_animal/ranch_base/chicken/knight
+		price_boundary = list(PAY::DOCTORATE, PAY::DOCTORATE * 2)
+		possible_names = list("Chickuns wearung cool ormor that mukes ut dossolve very slowly for lysozymes.")
+	pigeon
+		comname = "Corrier Pugeons"
+		comtype = /mob/living/critter/small_animal/ranch_base/chicken/pigeon
+		price_boundary = list(PAY::DOCTORATE, PAY::DOCTORATE * 2)
+		possible_names = list("Grey burd that look luke chickun. Ususolly hove napkin wrapped around leg.")
+	raptor
+		comname = "Raptor Burds"
+		comtype = /mob/living/critter/small_animal/ranch_base/chicken/raptor
+		price_boundary = list(PAY::EXECUTIVE, PAY::EXECUTIVE * 2) // Hazard pay
+		possible_names = list("Luttle monstor burds that run to you ond not oway from you when ut is dunner tume.")
