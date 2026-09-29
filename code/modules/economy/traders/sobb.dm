@@ -225,7 +225,7 @@
 
 /datum/commodity/trader/sobb/monkey
 	comname = "Monkoys"
-	comtype = /mob/living/carbon/human // Sobb can't tell the difference
+	comtype = /mob/living/carbon/human // Sobb can't tell the difference. Players don't seem to be included.
 	price_boundary = list(PAY::UNTRAINED * 2, PAY::UNTRAINED * 3)
 	possible_names = list("I try to dossolve large creutures very slowly. Better for lysozymes.",
 	"Wont to dossolve creuture wuth two arms and two legs. Prefur if scream less.")
