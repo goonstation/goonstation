@@ -178,6 +178,8 @@ ABSTRACT_TYPE(/datum/job/special/random)
 
 		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase/NT)
 		if (B && istype(B))
+			B.storage.add_contents(new /obj/item/instrument/whistle(B))
+			B.storage.add_contents(new /obj/item/stamp/inspector(B))
 			var/obj/item/clipboard/with_pen/inspector/clipboard = new /obj/item/clipboard/with_pen/inspector(B)
 			B.storage.add_contents(clipboard)
 			clipboard.set_owner(M)
