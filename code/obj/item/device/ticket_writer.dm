@@ -69,3 +69,4 @@
 	name = "inspector TicketWriter 4000"
 	desc = "A device used by NanoTrasen inspectors to issue tickets to poorly performing crew. The wear on the keys paints a bad picture as to how often that happens..."
 	icon_state = "ticketwriter_nt"
+	ticket_text = "[ticket_target] has been officially [pick("cautioned","warned","told off","yelled at","berated","sneered at")] by Nanotrasen Internal Affairs for [ticket_reason] on [time2text(world.realtime, "DD/MM/53")].<br>Issued by: [issuer] - [issuer_job]<br>"
