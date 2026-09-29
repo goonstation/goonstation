@@ -163,7 +163,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	slot_suit = list(/obj/item/clothing/suit/armor/NT)
 	slot_eyes = list(/obj/item/clothing/glasses/regular)
 	slot_lhan = list(/obj/item/storage/briefcase/NT)
-	slot_rhan = list(/obj/item/device/ticket_writer/NT)
+	slot_poc1 = list(/obj/item/device/ticket_writer/NT)
 	items_in_backpack = list(/obj/item/device/flash)
 	wiki_link = "https://wiki.ss13.co/Inspector"
 	email_group = MGD_COMMAND
