@@ -81,7 +81,7 @@
 			else if(luminosity > 66)
 				src.picture = "sobb/sobb_white.png"
 			else
-				src.picture = "sobb/sobb_gray.png"
+				src.picture = "sobb/sobb_grey.png"
 		else
 			if(hue < 0.05)
 				src.picture = "sobb/sobb_red.png"
