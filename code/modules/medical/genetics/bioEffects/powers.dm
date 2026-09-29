@@ -1489,18 +1489,16 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			return TRUE
 		return absorb_organ_setup(I, (linked_power.power > 1), misfire)
 
-	logCast(atom/target)
-		return
-
 	proc/absorb_organ_setup(var/obj/item/I, var/eject_old, var/misfire = FALSE)
-		if(!owner.organHolder.head)
-			boutput(owner, SPAN_ALERT("You need a head to do that!"))
+		if(!src.owner.organHolder)
+			return TRUE
+		if(iscritter(src.owner) && !istype(I, /obj/item/organ/brain))
+			// Critters only use brains currently
+			boutput(src.owner, SPAN_ALERT("You're not sure what to do with this organ."))
 			return TRUE
 
 		var/obj/item/current_organ = null
 		var/slot
-		var/old_robotic = FALSE
-		var/new_robotic = FALSE
 		if(istype(I, /obj/item/organ))
 			var/obj/item/organ/organ_new = I
 			slot = organ_new.organ_holder_name
@@ -1511,8 +1509,12 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 					slot = "left_eye"
 			var/obj/item/organ/organ_old = owner.organHolder.get_organ(slot)
 			current_organ = organ_old
-			old_robotic = organ_old?.robotic
-			new_robotic = organ_new.robotic
+			if(organ_new.robotic)
+				boutput(src.owner, SPAN_ALERT("You can't absorb cybernetics!"))
+				return TRUE
+			if(organ_old?.robotic)
+				boutput(src.owner, SPAN_ALERT("You try to absorb \the [I], but you can't get rid of your cybernetics!"))
+				return TRUE
 			if(slot == "head")
 				boutput(owner, SPAN_ALERT("You can't replace your own head like that!"))
 				return TRUE
@@ -1531,12 +1533,6 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 
 		if(current_organ && linked_power.power <= 1)
 			boutput(owner, SPAN_ALERT("You already have that organ!"))
-			return TRUE
-		if(new_robotic)
-			boutput(src.owner, SPAN_ALERT("You can't absorb cybernetics!"))
-			return TRUE
-		if(old_robotic)
-			boutput(src.owner, SPAN_ALERT("You try to absorb \the [I], but you can't get rid of your cybernetics!"))
 			return TRUE
 		if(misfire)
 			var/obj/item/dropped_organ = src.owner.organHolder.drop_organ(slot)
