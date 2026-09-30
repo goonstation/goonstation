@@ -36,6 +36,7 @@
 	var/immortal = 0
 	/// ageless = extends lifespan beyond normal limits
 	var/ageless = 0
+	var/eat_dead_mobs = FALSE //! Does this creature eat dead bodies?
 
 	///is happiness allowed to go negative?
 	var/negative_happiness = FALSE
@@ -351,24 +352,8 @@
 			src.happiness = max(src.happiness,0)
 		return
 
-	proc/on_eat_feed(var/obj/decal/cleanable/ranch_feed/F)
+	proc/ranch_eating(var/atom/target, var/happiness_amt, var/hunger_amt, var/favorite)
 		var/status = null
-		var/favorite = 0
-		var/happiness_amt = F.happiness_mod + 5
-		var/hunger_amt = 20 + F.hunger_mod
-
-		for(var/flag in F.feed_flags)
-			// update our feed counts for the given flag
-			update_feed_count(flag)
-			// do some special stuff based on the flag too
-			var/list/adj = null
-			adj = special_feed_behavior(flag, happiness_amt, hunger_amt)
-			happiness_amt = adj[1]
-			hunger_amt = adj[2]
-
-			if(flag == src.favorite_flag)
-				favorite = 1
-
 		if(favorite)
 			status = "love"
 		else if(happiness_amt >= 5)
@@ -381,14 +366,10 @@
 			status = "sad"
 		else
 			status = "neutral"
-#ifdef SECRETS_ENABLED
+			#ifdef SECRETS_ENABLED
 			if (rand(1,1000) == 1)
 				status = src.do_a_secret_thing()
-#endif
-
-		if(favorite)
-			happiness_amt = abs(happiness_amt) + 5
-			hunger_amt = abs(hunger_amt) + 5
+			#endif
 
 		if(hunger < -50)
 			status = "sick"
@@ -403,6 +384,28 @@
 			src.show_status(status)
 		src.change_happiness(happiness_amt)
 		src.hunger -= hunger_amt
+
+	proc/on_eat_feed(var/obj/decal/cleanable/ranch_feed/F)
+		var/favorite = 0
+		var/happiness_amt = F.happiness_mod + 5
+		var/hunger_amt = 20 + F.hunger_mod
+
+		for(var/flag in F.feed_flags)
+			// update our feed counts for the given flag
+			update_feed_count(flag)
+			// do some special stuff based on the flag too
+			var/list/adj = null
+			adj = special_feed_behavior(flag, happiness_amt, hunger_amt)
+			happiness_amt = adj[1]
+			hunger_amt = adj[2]
+			if(flag == src.favorite_flag)
+				favorite = 1
+
+		if(favorite)
+			happiness_amt = abs(happiness_amt) + 5
+			hunger_amt = abs(hunger_amt) + 5
+
+		src.ranch_eating(F, happiness_amt, hunger_amt, favorite)
 
 	proc/special_feed_behavior(var/flag, var/happiness_amt, var/hunger_amt)
 		return list(happiness_amt, hunger_amt)

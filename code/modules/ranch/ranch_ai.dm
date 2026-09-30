@@ -8,9 +8,12 @@
 	name = "eat"
 	weight = HUNGER_PRIORITY
 	max_dist = 10
+	var/eat_bodies = FALSE
 
 /datum/aiTask/sequence/goalbased/eat/New(parentHolder, transTask)
 	..(parentHolder, transTask)
+	var/mob/living/critter/small_animal/ranch_base/C = holder.owner
+	src.eat_bodies = C.eat_dead_mobs
 	add_task(holder.get_instance(/datum/aiTask/succeedable/eat, list(holder)))
 
 /datum/aiTask/sequence/goalbased/eat/precondition()
@@ -23,25 +26,58 @@
 
 /datum/aiTask/sequence/goalbased/eat/evaluate()
 	. = 0
+	var/mob/living/critter/small_animal/ranch_base/C = holder.owner
 	if(src.precondition())
 		if(get_best_target(get_targets()))
-			return HUNGER_PRIORITY
+			// Don't starve to death chasing after things
+			return (C.hunger > RANCH_HUNGER_STARVING) ? STARVING_PRIORITY : HUNGER_PRIORITY
 
 /datum/aiTask/sequence/goalbased/eat/get_targets()
 	. = list()
 	for(var/obj/decal/cleanable/ranch_feed/F in view(max_dist, holder.owner))
 		. += F
+	if(!src.eat_bodies)
+		return
+	var/mob/living/critter/small_animal/ranch_base/C = holder.owner
+	if(C.stage == RANCH_STAGE_CHILD)
+		return
+	for(var/mob/living/L in view(max_dist, holder.owner))
+		if(!isdead(L))
+			continue
+		if(ishuman(L))
+			var/mob/living/carbon/human/H = L
+			if(H.decomp_stage == DECOMP_STAGE_SKELETONIZED)
+				continue
+		if(istype(L, C.species_type)) // Cannibalism prevention
+			continue
+		. += L
 
 /datum/aiTask/succeedable/eat
 	max_fails = 3
+	var/eat_bodies = FALSE
+
+	New(parentHolder)
+		. = ..()
+		var/mob/living/critter/small_animal/ranch_base/C = holder.owner
+		src.eat_bodies = C.eat_dead_mobs
+
+	failed()
+		if(src.eat_bodies && actions.hasAction(holder.owner, /datum/action/bar/chicken_eat_bodies))
+			return FALSE
+		return ..()
 
 	succeeded()
 		. = 0
+		if(src.eat_bodies && actions.hasAction(holder.owner, /datum/action/bar/chicken_eat_bodies))
+			return FALSE
 		if (holder.owner.abilityHolder && !holder.owner.equipped())
 			var/datum/targetable/critter/eat_feed/EF = holder.owner.abilityHolder.getAbility(/datum/targetable/critter/eat_feed)
-			if (EF)
-				. = EF.cast(holder.target)
-				. = !.
+			if(EF)
+				. = !EF.cast(holder.target)
+			if(!. && src.eat_bodies)
+				var/datum/targetable/critter/eat_bodies/ED = holder.owner.abilityHolder.getAbility(/datum/targetable/critter/eat_bodies)
+				if(ED)
+					. = !ED.cast(holder.target)
 
 /datum/aiTask/sequence/goalbased/eat/on_reset()
 	..()
@@ -441,3 +477,119 @@
 	..()
 	holder.target = null
 	holder.stop_move()
+
+/datum/targetable/critter/eat_bodies
+	name = "Eat Dead"
+	desc = "Eat dead bodies"
+	cooldown = 5 SECONDS
+	start_on_cooldown = 0
+	icon_state = "template"
+	targeted = 1
+	target_anything = 1
+	var/is_eating = FALSE
+
+	cast(atom/target)
+		if (..())
+			return 1
+		if(src.is_eating)
+			if(!actions.hasAction(holder.owner, /datum/action/bar/chicken_eat_bodies))
+				src.is_eating = FALSE
+				return 0
+			return 1
+
+		var/mob/living/critter/small_animal/ranch_base/C = holder.owner
+		if(!istype(C))
+			return 1
+		var/turf/T = get_turf(target)
+		if(get_dist(T,C) < 2)
+			var/mob/living/L = locate(/mob/living) in T
+			if(isdead(L) && !GET_COOLDOWN(L, "chicken_eat_bodies"))
+				var/duration = 6 SECONDS
+				if(ishuman(L))
+					duration = 4 SECONDS // Humans have limbs and organs that take a while to eat
+				if(C.hunger > RANCH_HUNGER_STARVING)
+					duration /= 2
+				actions.start(new/datum/action/bar/chicken_eat_bodies(L, duration), C)
+				src.is_eating = TRUE
+				return 1
+		. = 1
+
+/datum/action/bar/chicken_eat_bodies
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration = 8 SECONDS
+	var/mob/living/target = null
+
+	New(var/mob/living/target, var/duration_i)
+		..()
+		if (duration_i)
+			duration = duration_i
+		src.target = target
+		OVERRIDE_COOLDOWN(target, "chicken_eat_bodies", src.duration) // Prevent multiple raptors from going after the same body
+
+	onUpdate()
+		..()
+		var/mob/living/critter/small_animal/ranch_base/chicken/chicken = src.owner
+		if(QDELETED(src.target) || !IN_RANGE(chicken, src.target, 1))
+			chicken.canmove = TRUE
+			OVERRIDE_COOLDOWN(target, "chicken_eat_bodies", 0)
+			interrupt(INTERRUPT_ALWAYS)
+
+	onStart()
+		..()
+		var/mob/living/critter/small_animal/ranch_base/chicken/chicken = src.owner
+		chicken.canmove = FALSE
+		chicken.visible_message(SPAN_ALERT("[src.owner] starts eating \the [src.target]!"), SPAN_NOTICE("You start eating the [src.target]!"))
+
+	onEnd()
+		..()
+		var/mob/living/critter/small_animal/ranch_base/chicken/chicken = src.owner
+		if(chicken && src.target)
+			chicken.canmove = TRUE
+			playsound(chicken.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
+			eat_target(chicken)
+			chicken.ranch_eating(src.target, 5, 30, FALSE)
+
+	proc/eat_target(var/mob/living/critter/small_animal/ranch_base/chicken/chicken)
+		if(!ishuman(target))
+			chicken.visible_message(SPAN_ALERT("[src.owner] ate \the [src.target]!"), SPAN_NOTICE("You ate \the [src.target]."))
+			src.target.unequip_all()
+			qdel(src.target)
+			return
+		var/mob/living/carbon/human/H = src.target
+		if(H.limbs)
+			// Eat limbs first.
+			var/list/obj/item/parts/limb_list = H.limbs.get_limbs_all()
+			while(length(limb_list) > 0)
+				var/obj/item/parts/limb = pick(limb_list)
+				limb_list -= limb
+				if(!isrobolimb(limb))
+					chicken.visible_message(SPAN_ALERT("[src.owner] ate [src.target]'s [limb]!"), SPAN_NOTICE("You ate [src.target]'s [limb]."))
+					limb.delete()
+					return
+
+		if(H.organHolder)
+			// Now eat their organs.
+			var/list/organ_list = H.organHolder.get_organs_all()
+			while(length(organ_list) > 0)
+				var/organ = pick(organ_list)
+				organ_list -= organ
+				if(istype(organ, /obj/item/organ))
+					var/obj/item/organ/O = organ
+					if(O.organ_holder_name == "chest" || O.organ_holder_name == "head")
+						continue
+					if(!O.robotic)
+						chicken.visible_message(SPAN_ALERT("[src.owner] ate [src.target]'s [O]!"), SPAN_NOTICE("You ate [src.target]'s [O]."))
+						H.organHolder.drop_organ(O, H.loc)
+						qdel(O)
+						return
+				else if(istype(organ, /obj/item/clothing/head/butt))
+					var/obj/item/clothing/head/butt/butt = organ
+					if(!butt.is_robotic)
+						chicken.visible_message(SPAN_ALERT("[src.owner] ate [src.target]'s [butt]!"), SPAN_NOTICE("You ate [src.target]'s [butt]."))
+						H.organHolder.drop_organ(butt, H.loc)
+						qdel(butt)
+						return
+
+		H.unequip_all()
+		chicken.visible_message(SPAN_ALERT("[src.owner] finished eating \the [H]!"), SPAN_NOTICE("You finished eating \the [H]."))
+		qdel(H)
