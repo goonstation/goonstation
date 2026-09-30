@@ -1036,7 +1036,8 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 					var/alist/ticket_data_by_recipient = alist()
 					for (var/datum/db_record/citation/ticket/ticket as anything in global.data_core.citation.find_records("type", "TICKET"))
 						var/recipient = ticket["target"]
-						(ticket_data_by_recipient[recipient] ||= "<b>[recipient]</b><br><br>") += "[ticket["text"]]<br>"
+						ticket_data_by_recipient[recipient] ||= "<b>[recipient]</b><br><br>"
+						ticket_data_by_recipient[recipient] += "[ticket["text"]]<br>"
 
 					for (var/_, ticket_data in ticket_data_by_recipient)
 						dat += ticket_data

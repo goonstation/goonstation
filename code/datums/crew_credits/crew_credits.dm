@@ -542,7 +542,9 @@
 /datum/crewCredits/proc/generate_citation_data()
 	var/alist/ticket_data_by_recipient = alist()
 	for (var/datum/db_record/citation/ticket/ticket as anything in global.data_core.citation.find_records("type", "TICKET"))
-		(ticket_data_by_recipient[ticket["target"]] ||= list()) += list(list(
+		var/recipient = ticket["target"]
+		ticket_data_by_recipient[recipient] ||= list()
+		ticket_data_by_recipient[recipient] += list(list(
 			"reason" = ticket["reason"],
 			"issuer" = ticket["issuer"],
 			"issuer_job" = ticket["issuer_job"],
@@ -556,10 +558,12 @@
 
 	var/alist/fine_data_by_recipient = alist()
 	for (var/datum/db_record/citation/fine/fine as anything in global.data_core.citation.find_records("type", "FINE"))
+		var/recipient = fine["target"]
 		var/approved = (fine["status"] != "PENDING")
 		var/paid = (fine["status"] == "PAID")
 
-		(fine_data_by_recipient[fine["target"]] ||= list()) += list(list(
+		fine_data_by_recipient[recipient] ||= list()
+		fine_data_by_recipient[recipient] += list(list(
 			"reason" = fine["reason"],
 			"issuer" = fine["issuer"],
 			"issuer_job" = fine["issuer_job"],
