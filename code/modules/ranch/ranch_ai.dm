@@ -44,6 +44,8 @@
 	for(var/mob/living/L in view(max_dist, holder.owner))
 		if(isalive(L))
 			continue
+		if(GET_COOLDOWN(L, "chicken_eat_bodies"))
+			continue
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L
 			if(H.decomp_stage == DECOMP_STAGE_SKELETONIZED)
@@ -551,7 +553,7 @@
 			chicken.canmove = TRUE
 			playsound(chicken.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 			eat_target(chicken)
-			chicken.ranch_eating(src.target, 5, 30, FALSE)
+			chicken.ranch_eating(src.target, 5, 40, FALSE)
 
 	proc/eat_target(var/mob/living/critter/small_animal/ranch_base/chicken/chicken)
 		if(!ishuman(target))
@@ -579,7 +581,7 @@
 				organ_list -= organ
 				if(istype(organ, /obj/item/organ))
 					var/obj/item/organ/O = organ
-					if(O.organ_holder_name == "chest" || O.organ_holder_name == "head")
+					if(O.organ_holder_name == "chest" || O.organ_holder_name == "head" || O.organ_holder_name == "brain")
 						continue
 					if(!O.robotic)
 						chicken.visible_message(SPAN_ALERT("[src.owner] ate [src.target]'s [O]!"), SPAN_NOTICE("You ate [src.target]'s [O]."))
