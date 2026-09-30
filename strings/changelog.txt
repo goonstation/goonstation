@@ -1,5 +1,9 @@
 
 (t)wed sep 30 26
+(u)TekoTheTeapot
+(p)27960
+(e)🎨|C-Sprites
+(+)Fixed a few things relating to sprites and inventory of the NT Paramedic.
 (u)Whele
 (p)27959
 (e)🎨🍝📨|C-Sprites, A-Catering, A-Logistics
