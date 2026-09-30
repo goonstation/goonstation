@@ -44,15 +44,15 @@
 	else
 		return "<br>(R) Redraw <br>(P) Print Record<br>(C) Print Citation<br>(0) Return to index."
 
-/datum/db_record_group/citation/input_command(datum/db_manager_menu/record_view/menu, record_id, command)
+/datum/db_record_group/citation/input_command(datum/db_manager_menu/record_view/menu, datum/db_record/citation/citation, command)
 	switch (command)
 		if ("r")
-			menu.parent.switch_menu_to("record_view", record_id)
+			menu.parent.switch_menu_to("record_view", citation)
 
 		if ("p")
 			var/datum/computer/file/record/print_record = new()
-			print_record.fields += "title=Citation [record_id]"
-			print_record.fields += src.get_record(record_id, TRUE)
+			print_record.fields += "title=Citation [citation["id"]]"
+			print_record.fields += src.get_record(citation, TRUE)
 
 			if (menu.parent.print_file(print_record))
 				menu.parent.print_text("Print instruction sent.")
@@ -60,8 +60,6 @@
 				menu.parent.print_text("<b>Error:</b> No printer detected.")
 
 		if ("c")
-			var/datum/db_record/citation/citation = global.data_core.citation.find_record("id", record_id)
-
 			if (astype(citation, /datum/db_record/citation/fine)?["status"] == "PENDING")
 				menu.parent.print_text("<b>Error:</b> Cannot print unapproved fines.")
 				return TRUE
@@ -76,7 +74,7 @@
 				menu.parent.print_text("<b>Error:</b> No printer detected.")
 
 		if ("a")
-			var/datum/db_record/citation/fine/fine = global.data_core.citation.find_record("id", record_id)
+			var/datum/db_record/citation/fine/fine = citation
 			if (!istype(fine) || (fine["status"] != "PENDING"))
 				return
 
@@ -86,7 +84,7 @@
 				if (SECURITY::TICKET::ERR::FINE_SMALL)
 					menu.parent.print_text("<b>Error:</b> Insufficient access to approve small fines.")
 				if (SECURITY::TICKET::ERR::SUCCESS)
-					menu.parent.switch_menu_to("record_view", record_id)
+					menu.parent.switch_menu_to("record_view", fine)
 
 		else
 			return FALSE

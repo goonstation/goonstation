@@ -1,14 +1,17 @@
 /datum/db_manager_menu/record_view
-	VAR_PRIVATE/current_id = null
+	VAR_PRIVATE/datum/db_record/record = null
 
-/datum/db_manager_menu/record_view/load(record_id)
-	src.current_id = record_id
-	src.parent.print_text(src.parent.current_record_group.get_record(src.current_id).Join())
+/datum/db_manager_menu/record_view/load(datum/db_record/record)
+	src.record = record
+	src.parent.print_text(src.parent.current_record_group.get_record(src.record).Join())
+
+/datum/db_manager_menu/record_view/unload()
+	src.record = null
 
 /datum/db_manager_menu/record_view/input_text(text)
 	var/command = lowertext(src.parent.parse_string(text)[1])
 
-	if (src.parent.current_record_group.input_command(src, src.current_id, command))
+	if (src.parent.current_record_group.input_command(src, src.record, command))
 		return
 
 	var/index_number = round(max(global.text2num_safe(command), 0))
@@ -26,14 +29,14 @@
 		src.parent.print_text("<b>Error:</b> Invalid database.")
 		return
 
-	var/datum/db_record/record = database.find_record("id", src.current_id)
-	if (!istype(record))
+	var/datum/db_record/db_record = database.find_record("id", src.record["id"])
+	if (!istype(db_record))
 		src.parent.print_text("<b>Error:</b> Invalid record.")
 		return
 
-	var/datum/record_field/field = record.get_field_datum(field_data["key"])
+	var/datum/record_field/field = db_record.get_field_datum(field_data["key"])
 	if (!istype(field))
 		src.parent.print_text("<b>Error:</b> Invalid field.")
 		return
 
-	src.parent.switch_menu_to("field_input", record, field_data["key"])
+	src.parent.switch_menu_to("field_input", db_record, field_data["key"])

@@ -35,7 +35,7 @@
 			var/datum/record_database/database = src.parent.current_record_group.get_main_database()
 			var/datum/db_record/record = new database.record_type()
 			database.add_record(record)
-			src.parent.switch_menu_to("record_view", record["id"])
+			src.parent.switch_menu_to("record_view", record)
 
 		return
 
@@ -54,4 +54,4 @@
 		src.parent.print_text("<b>Error:</b> Record data invalid.")
 		return
 
-	src.parent.switch_menu_to("record_view", record["id"])
+	src.parent.switch_menu_to("record_view", record)

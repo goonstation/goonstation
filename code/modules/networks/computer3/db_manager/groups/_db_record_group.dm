@@ -60,17 +60,18 @@ ABSTRACT_TYPE(/datum/db_record_group)
 	return
 
 /// Render a record for output. Returned as a list of lines.
-/datum/db_record_group/proc/get_record(record_id, for_print = FALSE)
+/datum/db_record_group/proc/get_record(datum/db_record/record, for_print = FALSE)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	RETURN_TYPE(/list)
+	var/record_id = record["id"]
 	var/alist/databases = src.get_all_databases()
 
 	var/list/fields = list()
 	var/i = 0
 	for (var/db_id as anything in databases)
 		var/datum/record_database/db = databases[db_id]
-		var/datum/db_record/record = db.find_record("id", record_id)
-		if (!istype(record))
+		var/datum/db_record/db_record = db.find_record("id", record_id)
+		if (!istype(db_record))
 			var/text = "<br><b>[db.name] Record Lost!</b><br>"
 			if (src.can_add_and_remove_records && !for_print)
 				text += "\[new\] Create New [db.name] Record.<br>"
@@ -79,7 +80,7 @@ ABSTRACT_TYPE(/datum/db_record_group)
 			i += src.writable_field_count_by_db[db_id]
 			continue
 
-		var/padding = src.get_padding(db_id, record)
+		var/padding = src.get_padding(db_id, db_record)
 		if (for_print)
 			padding += 3
 
@@ -89,7 +90,7 @@ ABSTRACT_TYPE(/datum/db_record_group)
 				i++
 
 			var/key = data["key"]
-			var/datum/record_field/field = record.get_field_datum(key)
+			var/datum/record_field/field = db_record.get_field_datum(key)
 			if (!field)
 				continue
 
@@ -131,19 +132,19 @@ ABSTRACT_TYPE(/datum/db_record_group)
 	else
 		return "<br>(R) Redraw <br>(P) Print <br>(0) Return to index."
 
-/datum/db_record_group/proc/input_command(datum/db_manager_menu/record_view/menu, record_id, command)
+/datum/db_record_group/proc/input_command(datum/db_manager_menu/record_view/menu, datum/db_record/record, command)
 	switch (command)
 		if ("r")
-			menu.parent.switch_menu_to("record_view", record_id)
+			menu.parent.switch_menu_to("record_view", record)
 
 		if ("d")
 			if (src.can_add_and_remove_records)
-				menu.parent.switch_menu_to("record_delete", record_id)
+				menu.parent.switch_menu_to("record_delete", record)
 
 		if ("p")
 			var/datum/computer/file/record/print_record = new()
-			print_record.fields += "title=Record [record_id]"
-			print_record.fields += src.get_record(record_id, TRUE)
+			print_record.fields += "title=Record [record["id"]]"
+			print_record.fields += src.get_record(record, TRUE)
 
 			if (menu.parent.print_file(print_record))
 				menu.parent.print_text("Print instruction sent.")
@@ -152,7 +153,7 @@ ABSTRACT_TYPE(/datum/db_record_group)
 
 		if ("new")
 			if (src.can_add_and_remove_records)
-				menu.parent.switch_menu_to("record_new", record_id)
+				menu.parent.switch_menu_to("record_new", record)
 
 		else
 			return FALSE

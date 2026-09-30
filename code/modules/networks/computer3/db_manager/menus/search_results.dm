@@ -38,4 +38,4 @@
 		src.parent.print_text("<b>Error:</b> Record data invalid.")
 		return
 
-	src.parent.switch_menu_to("record_view", record["id"])
+	src.parent.switch_menu_to("record_view", record)

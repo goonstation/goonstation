@@ -50,4 +50,4 @@
 		)
 		global.data_core.citation.add_record(ticket)
 
-		src.parent.switch_menu_to("record_view", ticket["id"])
+		src.parent.switch_menu_to("record_view", ticket)

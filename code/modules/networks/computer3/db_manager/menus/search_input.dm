@@ -35,6 +35,6 @@
 		if (0)
 			src.parent.print_text("No results found.")
 		if (1)
-			src.parent.switch_menu_to("record_view", results[1]["id"])
+			src.parent.switch_menu_to("record_view", results[1])
 		else
 			src.parent.switch_menu_to("search_results", text, results)
