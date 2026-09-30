@@ -315,7 +315,7 @@
 		if(istype(A,/obj/item/reagent_containers/food/snacks/ranch_feed_bag))
 			var/obj/item/reagent_containers/food/snacks/ranch_feed_bag/B = A
 			var/obj/decal/cleanable/ranch_feed/F = B.make_feed(B)
-			src.on_eat_feed(F)
+			src.ranch_eating(F)
 			qdel(F)
 
 			if(src.befriend_with_feed && feeder)
@@ -352,7 +352,27 @@
 			src.happiness = max(src.happiness,0)
 		return
 
-	proc/ranch_eating(var/atom/target, var/happiness_amt, var/hunger_amt, var/favorite)
+
+	proc/ranch_eating(var/atom/target, var/happiness_amt = 5, var/hunger_amt = 20, var/favorite = FALSE)
+		if(istype(target, /obj/decal/cleanable/ranch_feed))
+			var/obj/decal/cleanable/ranch_feed/feed = target
+			happiness_amt += feed.happiness_mod
+			hunger_amt += feed.hunger_mod
+			for(var/flag in feed.feed_flags)
+				// update our feed counts for the given flag
+				update_feed_count(flag)
+				// do some special stuff based on the flag too
+				var/list/adj = null
+				adj = special_feed_behavior(flag, happiness_amt, hunger_amt)
+				happiness_amt = adj[1]
+				hunger_amt = adj[2]
+				if(flag == src.favorite_flag)
+					favorite = 1
+
+		if(favorite)
+			happiness_amt = abs(happiness_amt) + 5
+			hunger_amt = abs(hunger_amt) + 5
+
 		var/status = null
 		if(favorite)
 			status = "love"
@@ -384,28 +404,6 @@
 			src.show_status(status)
 		src.change_happiness(happiness_amt)
 		src.hunger -= hunger_amt
-
-	proc/on_eat_feed(var/obj/decal/cleanable/ranch_feed/F)
-		var/favorite = 0
-		var/happiness_amt = F.happiness_mod + 5
-		var/hunger_amt = 20 + F.hunger_mod
-
-		for(var/flag in F.feed_flags)
-			// update our feed counts for the given flag
-			update_feed_count(flag)
-			// do some special stuff based on the flag too
-			var/list/adj = null
-			adj = special_feed_behavior(flag, happiness_amt, hunger_amt)
-			happiness_amt = adj[1]
-			hunger_amt = adj[2]
-			if(flag == src.favorite_flag)
-				favorite = 1
-
-		if(favorite)
-			happiness_amt = abs(happiness_amt) + 5
-			hunger_amt = abs(hunger_amt) + 5
-
-		src.ranch_eating(F, happiness_amt, hunger_amt, favorite)
 
 	proc/special_feed_behavior(var/flag, var/happiness_amt, var/hunger_amt)
 		return list(happiness_amt, hunger_amt)

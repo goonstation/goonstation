@@ -107,7 +107,7 @@
 		if(F)
 			playsound(C.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 			C.visible_message(SPAN_NOTICE("[C] eats [F]!"))
-			C.on_eat_feed(F)
+			C.ranch_eating(F)
 			qdel(F)
 			return 0
 	. = 1
