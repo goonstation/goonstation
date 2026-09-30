@@ -162,8 +162,22 @@ ABSTRACT_TYPE(/datum/db_record_group)
 				menu.parent.print_text("<b>Error:</b> No printer detected.")
 
 		if ("new")
-			if (src.can_add_and_remove_records)
-				menu.parent.switch_menu_to("record_new", record)
+			if (!src.can_add_and_remove_records)
+				return TRUE
+
+			var/record_to_be_created = FALSE
+			var/list/datum/db_record/linked_records = menu.parent.current_record_group.get_linked_records(record)
+			for (var/db_id as anything in linked_records)
+				if (istype(linked_records[db_id], /datum/db_record))
+					continue
+
+				record_to_be_created = TRUE
+				break
+
+			if (!record_to_be_created)
+				return TRUE
+
+			menu.parent.switch_menu_to("record_new", record)
 
 		else
 			return FALSE

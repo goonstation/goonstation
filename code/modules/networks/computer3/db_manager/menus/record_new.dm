@@ -8,8 +8,7 @@
 
 	var/list/datum/db_record/linked_records = src.parent.current_record_group.get_linked_records(src.record)
 	var/leading_zero_count = length("[length(linked_records)]")
-	var/record_id = record["id"]
-	var/text = "Please select a section of \[[record_id]\] to create:"
+	var/text = "Please select a section of <b>[src.record.to_display_string()]</b> to create:"
 
 	var/i = 1
 	for (var/db_id as anything in linked_records)
