@@ -6,17 +6,19 @@
 	var/datum/record_database/security = null
 	var/datum/record_database/bank = null
 	var/datum/record_database/disease = null
-	var/datum/record_database/citation = null
+	var/datum/record_database/tickets = null
+	var/datum/record_database/fines = null
 
 /datum/datacore/New()
 	. = ..()
 
-	src.general = new(list("name", "id"), /datum/db_record/personnel/general)
-	src.medical = new(list("name", "id"), /datum/db_record/personnel/medical)
-	src.security = new(list("name", "id"), /datum/db_record/personnel/security)
-	src.bank = new(list("name", "id"), /datum/db_record/personnel/bank)
-	src.disease = new(list("name", "id"), /datum/db_record/disease)
-	src.citation = new(list("name", "type", "status"), /datum/db_record/citation)
+	src.general = new(list("id", "name"), /datum/db_record/personnel/general)
+	src.medical = new(list("id", "name"), /datum/db_record/personnel/medical)
+	src.security = new(list("id", "name"), /datum/db_record/personnel/security)
+	src.bank = new(list("id", "name"), /datum/db_record/personnel/bank)
+	src.disease = new(list("id", "name"), /datum/db_record/disease)
+	src.tickets = new(list("id", "name"), /datum/db_record/citation/ticket)
+	src.fines = new(list("id", "name", "status"), /datum/db_record/citation/fine)
 	src.populate_disease_database()
 
 /datum/datacore/proc/addManifest(mob/living/carbon/human/H, sec_note = "", med_note = "", pda_net_id = null, synd_int_note = "")

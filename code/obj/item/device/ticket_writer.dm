@@ -43,7 +43,7 @@
 			issuer_job = issuer_job,
 			reason = ticket_reason,
 		)
-		global.data_core.citation.add_record(ticket)
+		global.data_core.tickets.add_record(ticket)
 
 		playsound(src, 'sound/machines/printer_thermal.ogg', 50, TRUE)
 		SPAWN(3 SECONDS)

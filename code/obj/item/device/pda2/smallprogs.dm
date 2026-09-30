@@ -1034,7 +1034,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 					dat += "<h4>Ticket List</h4>"
 
 					var/alist/ticket_data_by_recipient = alist()
-					for (var/datum/db_record/citation/ticket/ticket as anything in global.data_core.citation.find_records("type", "TICKET"))
+					for (var/datum/db_record/citation/ticket/ticket as anything in global.data_core.tickets.records)
 						var/recipient = ticket["target"]
 						ticket_data_by_recipient[recipient] ||= "<b>[recipient]</b><br><br>"
 						ticket_data_by_recipient[recipient] += "[ticket["text"]]<br>"
@@ -1047,7 +1047,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 
 					dat += "<h4>Fine Request List</h4>"
 
-					for (var/datum/db_record/citation/fine/fine as anything in global.data_core.citation.find_records("status", "PENDING"))
+					for (var/datum/db_record/citation/fine/fine as anything in global.data_core.fines.find_records("status", "PENDING"))
 						dat += "[fine["target"]]: [fine["amount"]] credits<br>"
 						dat += "Reason: [fine["reason"]]<br>"
 						dat += "Requested by: [fine["issuer"]] - [fine["issuer_job"]]<br>"
@@ -1062,7 +1062,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 
 					dat += "<h4>Unpaid Fine List</h4>"
 
-					for (var/datum/db_record/citation/fine/fine as anything in global.data_core.citation.find_records("status", "UNPAID"))
+					for (var/datum/db_record/citation/fine/fine as anything in global.data_core.fines.find_records("status", "UNPAID"))
 						dat += "[fine["target"]]: [fine["amount"]] credits<br>"
 						dat += "Reason: [fine["reason"]]<br>"
 
@@ -1079,7 +1079,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 
 					dat += "<h4>Paid Fine List</h4>"
 
-					for (var/datum/db_record/citation/fine/fine as anything in global.data_core.citation.find_records("status", "PAID"))
+					for (var/datum/db_record/citation/fine/fine as anything in global.data_core.fines.find_records("status", "PAID"))
 						dat += "[fine["target"]]: [fine["amount"]] credits<br>"
 						dat += "Reason: [fine["reason"]]<br>"
 
@@ -1120,7 +1120,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 				issuer_job = PDAownerjob,
 				reason = ticket_reason,
 			)
-			global.data_core.citation.add_record(ticket)
+			global.data_core.tickets.add_record(ticket)
 
 			playsound(src.master, 'sound/machines/printer_thermal.ogg', 50, 1)
 			SPAWN(3 SECONDS)
@@ -1157,7 +1157,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 				issuer_job = PDAownerjob,
 				reason = ticket_reason,
 			)
-			global.data_core.citation.add_record(fine)
+			global.data_core.fines.add_record(fine)
 
 			switch (fine.attempt_approve(PDAowner, PDAownerjob, src.master.ID_card.access))
 				if (SECURITY::TICKET::ERR::FINE_LARGE)

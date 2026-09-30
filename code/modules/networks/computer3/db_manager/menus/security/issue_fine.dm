@@ -82,7 +82,7 @@
 			issuer_job = src.parent.account.assignment,
 			reason = text,
 		)
-		global.data_core.citation.add_record(fine)
+		global.data_core.fines.add_record(fine)
 
 		fine.attempt_approve(src.parent.authenticated, src.parent.account.assignment, src.parent.account.access)
 		src.parent.switch_menu_to("record_view", fine)

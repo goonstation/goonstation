@@ -16,8 +16,10 @@ ABSTRACT_TYPE(/datum/db_record_group)
 	/// This record group's writable fields. Generated from `field_data` during instantiation.
 	var/list/alist/writable_fields = null
 
-	/// The number of writable fields within each database.
+	/// The number of writable fields within each database, indexed by the database ID string.
 	VAR_PRIVATE/alist/writable_field_count_by_db = null
+	/// The padding for field names within this record group, indexed by the database ID string.
+	VAR_PRIVATE/alist/padding_by_db = null
 	/// The leading zero count to use for field indices within this record group. Generated during instantiation.
 	VAR_PRIVATE/leading_zero_count = null
 	/// The index to use for read-only fields. Generated during instantiation.
@@ -41,6 +43,7 @@ ABSTRACT_TYPE(/datum/db_record_group)
 			if (data["search"])
 				src.keys_to_search_by_db[db] += data["key"]
 
+	src.padding_by_db = alist()
 	src.leading_zero_count = length("[length(src.writable_fields)]")
 	src.read_only_index = @"[" + global.pad_leading(null, src.leading_zero_count, "_") + @"]"
 
@@ -90,7 +93,7 @@ ABSTRACT_TYPE(/datum/db_record_group)
 			i += src.writable_field_count_by_db[db_id]
 			continue
 
-		var/padding = src.get_padding(db_id, db_record)
+		var/padding = (src.padding_by_db[db_id] ||= src.get_padding(db_id, db_record))
 		if (for_print)
 			padding += 3
 
@@ -128,11 +131,8 @@ ABSTRACT_TYPE(/datum/db_record_group)
 	PRIVATE_PROC(TRUE)
 	var/padding = 0
 	for (var/alist/data as anything in src.field_data[db_id])
-		var/datum/record_field/field = record.get_field_datum(data["key"])
-		if (!field)
-			continue
-
-		padding = max(padding, length(field.name))
+		var/name = record.get_field_datum(data["key"]).name
+		padding = max(padding, length(name))
 
 	return padding + 9
 

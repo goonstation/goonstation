@@ -541,7 +541,7 @@
 /// Tickets/Fines
 /datum/crewCredits/proc/generate_citation_data()
 	var/alist/ticket_data_by_recipient = alist()
-	for (var/datum/db_record/citation/ticket/ticket as anything in global.data_core.citation.find_records("type", "TICKET"))
+	for (var/datum/db_record/citation/ticket/ticket as anything in global.data_core.tickets.records)
 		var/recipient = ticket["target"]
 		ticket_data_by_recipient[recipient] ||= list()
 		ticket_data_by_recipient[recipient] += list(list(
@@ -557,7 +557,7 @@
 		))
 
 	var/alist/fine_data_by_recipient = alist()
-	for (var/datum/db_record/citation/fine/fine as anything in global.data_core.citation.find_records("type", "FINE"))
+	for (var/datum/db_record/citation/fine/fine as anything in global.data_core.fines.records)
 		var/recipient = fine["target"]
 		var/approved = (fine["status"] != "PENDING")
 		var/paid = (fine["status"] == "PAID")
