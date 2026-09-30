@@ -12,7 +12,7 @@ ABSTRACT_TYPE(/datum/db_record_group)
 	/// Whether new records can be created or existing ones deleted when managing records within this group.
 	var/can_add_and_remove_records = TRUE
 	/// The field data that this record group should display, indexed by the database ID string. Each field entry contains the field key, write permissions, and search permissions.
-	var/alist/field_data = null
+	var/list/list/alist/field_data = null
 	/// This record group's writable fields. Generated from `field_data` during instantiation.
 	var/list/alist/writable_fields = null
 
@@ -49,6 +49,18 @@ ABSTRACT_TYPE(/datum/db_record_group)
 	RETURN_TYPE(/list/datum/db_record)
 	return src.get_main_database()?.records
 
+/// Given a record, returns an alist of records linked to that record, indexed by the database ID string.
+/datum/db_record_group/proc/get_linked_records(datum/db_record/record)
+	RETURN_TYPE(/list/datum/db_record)
+	. = list()
+
+	var/record_id = record["id"]
+	var/list/datum/record_database/databases = src.get_all_databases()
+
+	for (var/db_id as anything in databases)
+		var/datum/record_database/db = databases[db_id]
+		.[db_id] = db.find_record("id", record_id)
+
 /// Return this record group's main database. This is the database used to iterate over records, with records in other databases within the group linked through their ID field.
 /datum/db_record_group/proc/get_main_database()
 	RETURN_TYPE(/datum/record_database)
@@ -56,25 +68,23 @@ ABSTRACT_TYPE(/datum/db_record_group)
 
 /// Return all databases within this record group, indexed by the database ID string.
 /datum/db_record_group/proc/get_all_databases()
-	RETURN_TYPE(/alist)
+	RETURN_TYPE(/list/datum/record_database)
 	return
 
 /// Render a record for output. Returned as a list of lines.
 /datum/db_record_group/proc/get_record(datum/db_record/record, for_print = FALSE)
 	SHOULD_NOT_OVERRIDE(TRUE)
 	RETURN_TYPE(/list)
-	var/record_id = record["id"]
-	var/alist/databases = src.get_all_databases()
+	var/list/datum/db_record/linked_records = src.get_linked_records(record)
 
 	var/list/fields = list()
 	var/i = 0
-	for (var/db_id as anything in databases)
-		var/datum/record_database/db = databases[db_id]
-		var/datum/db_record/db_record = db.find_record("id", record_id)
+	for (var/db_id as anything in linked_records)
+		var/datum/db_record/db_record = linked_records[db_id]
 		if (!istype(db_record))
-			var/text = "<br><b>[db.name] Record Lost!</b><br>"
+			var/text = "<br><b>[db_id] Record Lost!</b><br>"
 			if (src.can_add_and_remove_records && !for_print)
-				text += "\[new\] Create New [db.name] Record.<br>"
+				text += "\[new\] Create New [db_id] Record.<br>"
 
 			fields += text
 			i += src.writable_field_count_by_db[db_id]
@@ -84,7 +94,7 @@ ABSTRACT_TYPE(/datum/db_record_group)
 		if (for_print)
 			padding += 3
 
-		fields += "<br><center><b>[db.name] Record Data</b></center><br>"
+		fields += "<br><center><b>[db_id] Record Data</b></center><br>"
 		for (var/alist/data as anything in src.field_data[db_id])
 			if (data["write"])
 				i++
@@ -109,7 +119,7 @@ ABSTRACT_TYPE(/datum/db_record_group)
 		fields.Insert(1, "<font face='Consolas'>")
 		fields += "</font>"
 	else
-		fields += "<br>Enter field number to edit a field." + src.get_commands(record_id)
+		fields += "<br>Enter field number to edit a field." + src.get_commands(record)
 
 	return fields
 
@@ -126,7 +136,7 @@ ABSTRACT_TYPE(/datum/db_record_group)
 
 	return padding + 9
 
-/datum/db_record_group/proc/get_commands(record_id)
+/datum/db_record_group/proc/get_commands(datum/db_record/record)
 	if (src.can_add_and_remove_records)
 		return "<br>(R) Redraw <br>(D) Delete <br>(P) Print <br>(0) Return to index."
 	else

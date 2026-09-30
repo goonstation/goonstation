@@ -1,7 +1,4 @@
 /datum/record_database
-	/// The display name of this database.
-	var/name = null
-
 	/**
 	 *	A list of records index by their keys and values. Used for quick lookups. \
 	 *	Type structure: `/alist<key, /alist<value, /list/datum/db_record>>`
@@ -13,9 +10,8 @@
 	/// A list of all records contained within this database.
 	var/list/datum/db_record/records = null
 
-/datum/record_database/New(name, record_type, list/index_keys)
+/datum/record_database/New(list/index_keys, record_type)
 	. = ..()
-	src.name = name
 	src.record_type = record_type
 	src.records = list()
 

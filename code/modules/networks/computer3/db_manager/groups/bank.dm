@@ -1,7 +1,7 @@
 /datum/db_record_group/bank
 	search_input_prompt = "Please enter target name, ID, DNA, rank, or fingerprint:"
-	field_data = alist(
-		"gen" = list(
+	field_data = list(
+		"General" = list(
 			alist(key = "name",			write = TRUE,	search = TRUE),
 			alist(key = "id",			write = FALSE,	search = TRUE),
 			alist(key = "full_name",	write = TRUE,	search = FALSE),
@@ -16,7 +16,7 @@
 			alist(key = "p_stat",		write = FALSE,	search = FALSE),
 			alist(key = "m_stat",		write = FALSE,	search = FALSE),
 		),
-		"bnk" = list(
+		"Bank" = list(
 			alist(key = "wage",				write = TRUE,	search = FALSE),
 			alist(key = "current_money",	write = TRUE,	search = FALSE),
 			alist(key = "unionized",		write = FALSE,	search = FALSE),
@@ -28,7 +28,7 @@
 	return global.data_core.general
 
 /datum/db_record_group/bank/get_all_databases()
-	return alist(
-		"gen" = global.data_core.general,
-		"bnk" = global.data_core.bank,
+	return list(
+		"General" = global.data_core.general,
+		"Bank" = global.data_core.bank,
 	)

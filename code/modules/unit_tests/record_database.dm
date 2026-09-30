@@ -2,7 +2,7 @@
 	var/datum/record_database/db
 
 /datum/unit_test/record_database/Run()
-	db = new(null, /datum/db_record, list("test_id", "test_index"))
+	db = new(list("test_id", "test_index"), /datum/db_record)
 
 	TEST_ASSERT("test_id" in db.indices, "Index test_id not created.")
 	TEST_ASSERT("test_index" in db.indices, "Index test_index not created.")

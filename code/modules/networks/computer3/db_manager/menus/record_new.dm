@@ -6,19 +6,19 @@
 	src.record = record
 	src.database_ids = list()
 
-	var/alist/databases = src.parent.current_record_group.get_all_databases()
-	var/leading_zero_count = length("[length(databases)]")
+	var/list/datum/db_record/linked_records = src.parent.current_record_group.get_linked_records(src.record)
+	var/leading_zero_count = length("[length(linked_records)]")
 	var/record_id = record["id"]
 	var/text = "Please select a section of \[[record_id]\] to create:"
 
 	var/i = 1
-	for (var/db_id as anything in databases)
-		var/datum/record_database/db = databases[db_id]
-		if (istype(db.find_record("id", record_id), /datum/db_record))
+	for (var/db_id as anything in linked_records)
+		var/datum/db_record/db_record = linked_records[db_id]
+		if (istype(db_record))
 			continue
 
 		src.database_ids += db_id
-		text += "<br><b>\[[global.add_zero(i++, leading_zero_count)]\]</b> " + db.name
+		text += "<br><b>\[[global.add_zero(i++, leading_zero_count)]\]</b> " + db_id
 
 	text += "<br><br>Enter a section number to create, or 0 to return."
 	src.parent.print_text(text)
@@ -37,20 +37,17 @@
 		src.parent.print_text("<b>Error:</b> Invalid choice.")
 		return
 
-	var/record_id = src.record["id"]
+	var/list/datum/db_record/linked_records = src.parent.current_record_group.get_linked_records(src.record)
 	var/database_id = src.database_ids[index_number]
-	var/alist/databases = src.parent.current_record_group.get_all_databases()
-	var/datum/record_database/database = databases[database_id]
-	var/datum/db_record/main_record = src.parent.current_record_group.get_main_database().find_record("id", record_id)
+	var/datum/record_database/database = src.parent.current_record_group.get_all_databases()[database_id]
 
-	var/datum/db_record/new_record = new database.record_type(main_record)
-	new_record["id"] = record_id
+	var/datum/db_record/new_record = new database.record_type(src.record)
+	new_record["id"] = src.record["id"]
 	database.add_record(new_record)
 
-	var/count = 0
-	for (var/db_id as anything in databases)
-		var/datum/record_database/db = databases[db_id]
-		if (!istype(db.find_record("id", record_id), /datum/db_record))
+	var/count = -1 // Take into account the new record.
+	for (var/db_id as anything in linked_records)
+		if (!istype(linked_records[db_id], /datum/db_record))
 			count++
 
 	if (count)

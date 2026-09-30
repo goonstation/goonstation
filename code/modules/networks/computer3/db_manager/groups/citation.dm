@@ -4,7 +4,7 @@
 	search_input_prompt = "Please enter ID, citation type, status, target name, or issuer name:"
 	can_add_and_remove_records = FALSE
 	field_data = alist(
-		"cit" = list(
+		"Citation" = list(
 			alist(key = "id",			write = FALSE,	search = TRUE),
 			alist(key = "time",			write = FALSE,	search = FALSE),
 			alist(key = "type",			write = FALSE,	search = TRUE),
@@ -34,8 +34,8 @@
 	return global.data_core.citation
 
 /datum/db_record_group/citation/get_all_databases()
-	return alist(
-		"cit" = global.data_core.citation,
+	return list(
+		"Citation" = global.data_core.citation,
 	)
 
 /datum/db_record_group/citation/get_commands(record_id)

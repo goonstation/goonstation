@@ -23,13 +23,9 @@
 		src.parent.print_text("<b>Error:</b> Invalid field.")
 		return
 
+	var/list/datum/db_record/linked_records = src.parent.current_record_group.get_linked_records(src.record)
 	var/alist/field_data = src.parent.current_record_group.writable_fields[index_number]
-	var/datum/record_database/database = src.parent.current_record_group.get_all_databases()[field_data["db"]]
-	if (!istype(database))
-		src.parent.print_text("<b>Error:</b> Invalid database.")
-		return
-
-	var/datum/db_record/db_record = database.find_record("id", src.record["id"])
+	var/datum/db_record/db_record = linked_records[field_data["db"]]
 	if (!istype(db_record))
 		src.parent.print_text("<b>Error:</b> Invalid record.")
 		return

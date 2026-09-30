@@ -11,12 +11,12 @@
 /datum/datacore/New()
 	. = ..()
 
-	src.general = new("General", /datum/db_record/personnel/general, list("name", "id"))
-	src.medical = new("Medical", /datum/db_record/personnel/medical, list("name", "id"))
-	src.security = new("Security", /datum/db_record/personnel/security, list("name", "id"))
-	src.bank = new("Bank", /datum/db_record/personnel/bank, list("name", "id"))
-	src.disease = new("Disease", /datum/db_record/disease, list("name", "id"))
-	src.citation = new("Citation", /datum/db_record/citation, list("name", "type", "status"))
+	src.general = new(list("name", "id"), /datum/db_record/personnel/general)
+	src.medical = new(list("name", "id"), /datum/db_record/personnel/medical)
+	src.security = new(list("name", "id"), /datum/db_record/personnel/security)
+	src.bank = new(list("name", "id"), /datum/db_record/personnel/bank)
+	src.disease = new(list("name", "id"), /datum/db_record/disease)
+	src.citation = new(list("name", "type", "status"), /datum/db_record/citation)
 	src.populate_disease_database()
 
 /datum/datacore/proc/addManifest(mob/living/carbon/human/H, sec_note = "", med_note = "", pda_net_id = null, synd_int_note = "")
