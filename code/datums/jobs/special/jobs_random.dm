@@ -155,15 +155,15 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	badge = /obj/item/clothing/suit/security_badge/nanotrasen
 	slot_card = /obj/item/card/id/nanotrasen
 	slot_back = list(/obj/item/storage/backpack/NT)
-	slot_belt = list(/obj/item/device/pda2/nt/important)
-	slot_jump = list(/obj/item/clothing/under/misc/lawyer/inspector) // so they can slam tables
+	slot_belt = list(/obj/item/device/pda2/nt)
+	slot_jump = list(/obj/item/clothing/under/misc/lawyer/inspector) // weird path, but it's so they can still slam tables
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_ears = list(/obj/item/device/radio/headset/command/inspector)
 	slot_head = list(/obj/item/clothing/head/NTberet)
 	slot_suit = list(/obj/item/clothing/suit/armor/NT)
 	slot_eyes = list(/obj/item/clothing/glasses/regular)
-	slot_lhan = list(/obj/item/storage/briefcase/NT)
-	slot_poc1 = list(/obj/item/device/ticket_writer/NT)
+	slot_lhan = list(/obj/item/storage/briefcase/nanotrasen)
+	slot_poc1 = list(/obj/item/device/ticket_writer/nanotrasen)
 	items_in_backpack = list(/obj/item/device/flash)
 	wiki_link = "https://wiki.ss13.co/Inspector"
 	email_group = MGD_COMMAND
@@ -176,7 +176,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 		if (!M)
 			return
 
-		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase/NT)
+		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase/nanotrasen)
 		if (B && istype(B))
 			B.storage.add_contents(new /obj/item/instrument/whistle(B))
 			B.storage.add_contents(new /obj/item/stamp/inspector(B))
