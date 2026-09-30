@@ -36,7 +36,7 @@
 	var/immortal = 0
 	/// ageless = extends lifespan beyond normal limits
 	var/ageless = 0
-	var/eat_dead_mobs = FALSE //! Does this creature eat dead bodies?
+	var/eat_dead_mobs = FALSE //! The creature will eat dead and dying mobs if true
 
 	///is happiness allowed to go negative?
 	var/negative_happiness = FALSE
