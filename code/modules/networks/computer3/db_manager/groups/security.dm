@@ -19,6 +19,7 @@
 		"sec" = list(
 			alist(key = "criminal",		write = TRUE,	search = TRUE),
 			alist(key = "sec_flag",		write = TRUE,	search = FALSE),
+			alist(key = "citations",	write = TRUE,	search = FALSE),
 			alist(key = "mi_crim",		write = TRUE,	search = FALSE),
 			alist(key = "mi_crim_d",	write = TRUE,	search = FALSE),
 			alist(key = "ma_crim",		write = TRUE,	search = FALSE),

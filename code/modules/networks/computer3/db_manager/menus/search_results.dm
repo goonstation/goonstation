@@ -12,7 +12,7 @@
 
 		var/datum/db_record/R = src.results[i]
 		if (istype(R))
-			text += R.to_display_string()
+			text += R.to_list_display_string()
 		else
 			text += "<font color=red>ERR: CORRUPTED</font>"
 
@@ -26,7 +26,7 @@
 	var/command = global.text2num_safe(src.parent.parse_string(text)[1])
 	var/index_number = round(max(command, 0))
 	if (index_number == 0)
-		src.parent.switch_menu_to("main")
+		src.parent.switch_menu_to(src.parent.current_record_group.main_menu)
 		return
 
 	if (index_number > length(src.results))

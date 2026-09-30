@@ -24,6 +24,9 @@
 		"main"				= new /datum/db_manager_menu/main/secmate(src),
 		"security_list"		= new /datum/db_manager_menu/relay(src, record_group, "record_list"),
 		"security_search"	= new /datum/db_manager_menu/relay(src, record_group, "search_input"),
+		"manage_citations"	= new /datum/db_manager_menu/manage_citations(src),
+		"issue_ticket"		= new /datum/db_manager_menu/issue_ticket(src),
+		"issue_fine"		= new /datum/db_manager_menu/issue_fine(src),
 	)
 
 /datum/computer/file/terminal_program/db_manager/secmate/on_field_update(datum/db_record/record, key, old_value, new_value)

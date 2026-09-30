@@ -1985,7 +1985,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 
 						var/buffer_add = null
 						if (istype(signal.data_file, /datum/computer/file/image)) // pic-a-ture
-							buffer_add = signal.data_file:data
+							buffer_add = signal.data_file
 							if (!buffer_add)
 								src.post_status(target,"command","term_message","data","command=status&status=badfile")
 								return

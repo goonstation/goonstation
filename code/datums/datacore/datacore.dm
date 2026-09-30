@@ -6,8 +6,7 @@
 	var/datum/record_database/security = null
 	var/datum/record_database/bank = null
 	var/datum/record_database/disease = null
-	var/list/datum/fine/fines = null
-	var/list/datum/ticket/tickets = null
+	var/datum/record_database/citation = null
 
 /datum/datacore/New()
 	. = ..()
@@ -17,11 +16,10 @@
 	src.security = new("Security", /datum/db_record/personnel/security, list("name", "id"))
 	src.bank = new("Bank", /datum/db_record/personnel/bank, list("name", "id"))
 	src.disease = new("Disease", /datum/db_record/disease, list("name", "id"))
-	src.fines = list()
-	src.tickets = list()
+	src.citation = new("Citation", /datum/db_record/citation, list("name", "type", "status"))
 	src.populate_disease_database()
 
-/datum/datacore/proc/addManifest(mob/living/carbon/human/H as mob, sec_note = "", med_note = "", pda_net_id = null, synd_int_note = "")
+/datum/datacore/proc/addManifest(mob/living/carbon/human/H, sec_note = "", med_note = "", pda_net_id = null, synd_int_note = "")
 	if (!H?.mind)
 		return
 
@@ -318,97 +316,3 @@
 	if (include_cryo && length(section_cryo))
 		. += "<br><b>In Cryogenic Storage:</b><hr>"
 		. += section_cryo.Join()
-
-
-
-
-
-/datum/ticket
-	var/name = "ticket"
-	var/target = null
-	var/reason = null
-	var/issuer = null
-	var/issuer_job = null
-	var/text = null
-	var/target_byond_key = null
-	var/issuer_byond_key = null
-
-/datum/ticket/New()
-	. = ..()
-	SPAWN(1 SECOND)
-		var/datum/eventRecord/Ticket/ticketEvent = new()
-		ticketEvent.buildAndSend(src, usr)
-
-
-/datum/fine
-	var/ID = null
-	var/name = "fine"
-	var/target = null
-	var/reason = null
-	var/amount = 0
-	var/issuer = null
-	var/issuer_job = null
-	var/approver = null
-	var/approver_job = null
-	var/paid_amount = 0
-	var/paid = 0
-	var/datum/db_record/bank_record = null
-	var/target_byond_key = null
-	var/issuer_byond_key = null
-	var/approver_byond_key = null
-
-/datum/fine/New()
-	. = ..()
-	src.generate_ID()
-	SPAWN(1 SECOND)
-		src.bank_record = global.data_core.bank.find_record("name", src.target)
-		if (!src.bank_record)
-			qdel(src)
-
-		var/datum/eventRecord/Fine/fineEvent = new()
-		fineEvent.buildAndSend(src, usr)
-
-/datum/fine/proc/approve(approved_by, their_job, ticket_level)
-	if (src.approver || src.paid)
-		return
-
-	if ((src.amount > SECURITY::TICKET::MAX_FINE_NO_APPROVAL) && (ticket_level < SECURITY::TICKET::LEVEL::FINE_LARGE))
-		return
-
-	if (ticket_level < SECURITY::TICKET::LEVEL::FINE_SMALL)
-		return
-
-	src.approver = approved_by
-	src.approver_job = their_job
-	src.approver_byond_key = global.get_byond_key(src.approver)
-	logTheThing(LOG_ADMIN, usr, "approved a fine using [src.approver]([their_job])'s PDA. It is a [src.amount] credit fine on <b>[src.target]</b> with the reason: [src.reason].")
-
-	if (src.bank_record["pda_net_id"])
-		var/datum/signal/signal = global.get_free_signal()
-		signal.data["address_1"] = src.bank_record["pda_net_id"]
-		signal.data["command"] = "text_message"
-		signal.data["sender_name"] = "FINE-MAILBOT"
-		signal.data["sender"] = "00000000"
-		signal.data["message"] = "Notification: You have been fined [src.amount] credits by [src.issuer] for [src.reason]."
-		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(signal)
-
-	src.process_payment()
-
-/datum/fine/proc/process_payment()
-	var/to_pay = src.amount - src.paid_amount
-	if (src.bank_record["current_money"] >= to_pay)
-		src.bank_record["current_money"] -= to_pay
-		global.wagesystem.budgets[BUDGET_CAT_PAYROLL] += to_pay
-		src.paid = TRUE
-		src.paid_amount = src.amount
-
-	else
-		src.paid_amount += src.bank_record["current_money"]
-		global.wagesystem.budgets[BUDGET_CAT_PAYROLL] += src.bank_record["current_money"]
-		src.bank_record["current_money"] = 0
-
-		SPAWN(30 SECONDS)
-			src.process_payment()
-
-/datum/fine/proc/generate_ID()
-	src.ID ||= (length(global.data_core.fines) + 1)
