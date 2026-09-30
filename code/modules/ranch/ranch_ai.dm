@@ -42,12 +42,14 @@
 	if(C.stage == RANCH_STAGE_CHILD)
 		return
 	for(var/mob/living/L in view(max_dist, holder.owner))
-		if(!isdead(L))
+		if(isalive(L))
 			continue
 		if(ishuman(L))
 			var/mob/living/carbon/human/H = L
 			if(H.decomp_stage == DECOMP_STAGE_SKELETONIZED)
 				continue
+		else if(isunconscious(L)) // Kill critters before eating them
+			continue
 		if(istype(L, C.species_type)) // Cannibalism prevention
 			continue
 		. += L
@@ -231,7 +233,7 @@
 
 	if (ismob(holder.target))
 		var/mob/M = holder.target
-		. = !(holder.target && !isdead(M))
+		. = !(holder.target && isalive(M))
 	else
 		. = !(holder.target)
 
@@ -241,14 +243,14 @@
 	if(istype(C))
 		if(C.hyperaggressive)
 			for(var/mob/M in view(target_range,C))
-				if(!isdead(M))
+				if(isalive(M))
 					if(!(M in C.my_friends))
 						if(!istype(M,C.species_type))
 							return precondition() * FIGHT_PRIORITY
 		for(var/mob/M in C.shit_list)
 			if(IN_RANGE(M,C,target_range))
 				if(M in view(target_range,C))
-					if(!isdead(M))
+					if(isalive(M))
 						return precondition() * FIGHT_PRIORITY
 	. = 0
 
@@ -332,10 +334,12 @@
 	if(istype(C))
 		if(C.hyperaggressive)
 			for(var/mob/M in view(target_range,C))
-				if(!isdead(M))
-					if(!(M in C.my_friends))
-						if(!istype(M,C.species_type))
-							. += M
+				if(!isalive(M))
+					continue
+				if(M in C.my_friends)
+					continue
+				if(!istype(M,C.species_type))
+					. += M
 			return
 		for(var/mob/M in C.shit_list)
 			if(IN_RANGE(M,C,target_range))
@@ -503,7 +507,7 @@
 		var/turf/T = get_turf(target)
 		if(get_dist(T,C) < 2)
 			var/mob/living/L = locate(/mob/living) in T
-			if(isdead(L) && !GET_COOLDOWN(L, "chicken_eat_bodies"))
+			if(!isalive(L) && !GET_COOLDOWN(L, "chicken_eat_bodies"))
 				var/duration = 6 SECONDS
 				if(ishuman(L))
 					duration = 4 SECONDS // Humans have limbs and organs that take a while to eat
