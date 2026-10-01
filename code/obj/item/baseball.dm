@@ -6,6 +6,7 @@
 	icon_state = "baseball_mitt"
 	item_state = "baseball_mitt"
 	w_class = W_CLASS_NORMAL
+	default_material = "synthleather"
 	material_prints = "synthetic leather netting"
 	which_hands = GLOVE_HAS_LEFT
 	hitsound = 'sound/items/bball_bounce.ogg'
