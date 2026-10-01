@@ -69,7 +69,7 @@
 
 /obj/item/device/ticket_writer/nanotrasen
 	name = "inspector TicketWriter 4000"
-	desc = "A device used by NanoTrasen inspectors to issue tickets to poorly performing crew. The keys are rather worn down"
+	desc = "A device used by NanoTrasen inspectors to issue tickets to poorly performing crew. The keys on it are rather worn down."
 	icon_state = "ticketwriter_nt"
 	corporate_rank = "Nanotrasen Internal Affairs"
 
