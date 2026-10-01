@@ -597,12 +597,12 @@ ABSTRACT_TYPE(/obj/npc/trader/random)
 				icon_state = pick(special_parrot_species)
 				P = special_parrot_species[icon_state]
 				if (ispath(P))
-					icon = initial(P.icon)
+					icon = get_initial_icon(P)
 			else if (islist(parrot_species))
 				icon_state = pick(parrot_species)
 				P = parrot_species[icon_state]
 				if (ispath(P))
-					icon = initial(P.icon)
+					icon = get_initial_icon(P)
 
 		var/pickprename = pick("Honest","Fair","Merchant","Trader","Kosher","Real Deal","Dealer", "Old", "Ol'", "Zesty", "Sassy", "Bargain", "Discount", "Uncle", "Big", "Little")
 		//var/pickfirstname = pick(first_names)

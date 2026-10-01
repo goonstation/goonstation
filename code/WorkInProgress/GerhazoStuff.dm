@@ -955,11 +955,17 @@
 #define MOVING_LEFT 3
 #define MOVING_DOWN 4
 
+TYPEINFO(/mob/living/critter/peppino)
+	icon = "+secret/icons/mob/peppino.dmi"
 /mob/living/critter/peppino
 	name = "extremely anxious looking chef"
 	real_name = "extremely anxious looking chef"
 	desc = "He looks like he's having a REALLY bad day."
+#ifdef IN_MAP_EDITOR
 	icon = '+secret/icons/mob/peppino.dmi'
+#else
+	icon = null
+#endif
 	icon_state = "walk"
 	icon_state_dead = "dead"
 	density = 1
@@ -1080,11 +1086,11 @@
 		steps++
 		if(momentum > machrun_animation_min_momentum)
 			if(steps >= 6)
-				playsound(src.loc, '+secret/sound/misc/peppino_mach4.ogg', 45)
+				playsound(src.loc, "+secret/sound/misc/peppino_mach4.ogg", 45)
 				steps = 0
 		else
 			if(steps >= 3)
-				playsound(src.loc, '+secret/sound/misc/peppino_step.ogg', 75)
+				playsound(src.loc, "+secret/sound/misc/peppino_step.ogg", 75)
 				steps = 0
 
 		if (world.time > src.next_move + 0.5 SECONDS)
@@ -1174,12 +1180,12 @@
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					FLICK("scream", src)
-					playsound(src.loc, '+secret/sound/misc/peppino_scream.ogg', 90, 1)
+					playsound(src.loc, "+secret/sound/misc/peppino_scream.ogg", 90, 1)
 					return SPAN_ALERT("<b>[src] screams!</b>")
 			if ("dance")
 				if (src.emote_check(voluntary, 50))
 					FLICK("breakdance", src)
-					playsound(src.loc, '+secret/sound/misc/peppino_breakdance.ogg', 75)
+					playsound(src.loc, "+secret/sound/misc/peppino_breakdance.ogg", 75)
 					return SPAN_ALERT("<b>[src] breaks out some sick moves!</b>")
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
@@ -1188,7 +1194,7 @@
 					else
 						animate_buff_in(src)
 					FLICK("taunt_[rand(1,10)]", src)
-					playsound(src.loc, '+secret/sound/misc/peppino_taunt.ogg', 75)
+					playsound(src.loc, "+secret/sound/misc/peppino_taunt.ogg", 75)
 					return null
 		return null
 

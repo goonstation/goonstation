@@ -30,6 +30,11 @@ var/global/datum/controller/process/tgui/tgui_process
 
 	global.tgui_process = src
 
+	for (var/datum/asset/asset_type as anything in concrete_typesof(/datum/asset))
+		if (!initial(asset_type.early))
+			continue
+		get_assets(asset_type)
+
 /datum/controller/process/tgui/proc/getBaseHTML()
 	. = grabResource("tgui/tgui.html")
 

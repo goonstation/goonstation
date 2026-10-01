@@ -1314,7 +1314,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health, proc/admincmd_atta
 /mob/living/critter/ghostize()
 	var/ghost_icon = src.icon
 	if (isnull(src.icon))
-		ghost_icon = initial(src.icon)
+		ghost_icon = get_initial_icon(src)
 	var/ghost_icon_state
 	if (src.icon_state_ghost)
 		ghost_icon_state = src.icon_state_ghost

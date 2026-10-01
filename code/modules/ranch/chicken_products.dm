@@ -190,7 +190,7 @@ ABSTRACT_TYPE(/datum/chicken_egg_props)
 		src.owner = owning_egg
 #ifdef SECRETS_ENABLED
 		if(src.is_secret)
-			src.owner.icon = '+secret/icons/obj/chickens_secret.dmi'
+			src.owner.icon = "+secret/icons/obj/chickens_secret.dmi"
 #endif
 
 	/// do things before the mob is created
