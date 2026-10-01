@@ -20,6 +20,6 @@
 		if (icon_metadata.icon)
 			return get_runtime_icon(icon_metadata.icon)
 
-/// String-valued icon defaults belong to shared type metadata, not atom instances.
+/// String-valued icon defaults belong to shared type metadata
 /typeinfo/atom
 	var/icon = null
