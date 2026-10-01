@@ -43,6 +43,7 @@
 			return
 
 		var/datum/db_record/citation/ticket/ticket = new(
+			authority = "Nanotrasen Corporate Security",
 			target = src.target,
 			issuer = src.parent.authenticated,
 			issuer_job = src.parent.account.assignment,

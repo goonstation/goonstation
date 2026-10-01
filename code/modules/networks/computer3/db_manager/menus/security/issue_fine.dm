@@ -76,6 +76,7 @@
 			return
 
 		var/datum/db_record/citation/fine/fine = new(
+			authority = "Nanotrasen Corporate Security",
 			target = src.target,
 			amount = src.amount,
 			issuer = src.parent.authenticated,

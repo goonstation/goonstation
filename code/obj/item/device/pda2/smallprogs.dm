@@ -1115,6 +1115,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			ticket_reason = copytext(sanitize(html_encode(ticket_reason)), 1, MAX_MESSAGE_LEN)
 
 			var/datum/db_record/citation/ticket/ticket = new(
+				authority = "Nanotrasen Corporate Security",
 				target = ticket_target,
 				issuer = PDAowner,
 				issuer_job = PDAownerjob,
@@ -1151,6 +1152,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			fine_amount = max(fine_amount,1)
 
 			var/datum/db_record/citation/fine/fine = new(
+				authority = "Nanotrasen Corporate Security",
 				target = ticket_target,
 				amount = fine_amount,
 				issuer = PDAowner,

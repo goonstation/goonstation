@@ -7,6 +7,7 @@
 		"Ticket" = list(
 			alist(key = "id",			write = FALSE,	search = TRUE),
 			alist(key = "time",			write = FALSE,	search = FALSE),
+			alist(key = "authority",	write = FALSE,	search = FALSE),
 			alist(key = "type",			write = FALSE,	search = TRUE),
 			alist(key = "target",		write = FALSE,	search = TRUE),
 			alist(key = "issuer",		write = FALSE,	search = TRUE),
@@ -16,6 +17,7 @@
 		"Fine" = list(
 			alist(key = "id",			write = FALSE,	search = TRUE),
 			alist(key = "time",			write = FALSE,	search = FALSE),
+			alist(key = "authority",	write = FALSE,	search = FALSE),
 			alist(key = "type",			write = FALSE,	search = TRUE),
 			alist(key = "target",		write = FALSE,	search = TRUE),
 			alist(key = "status",		write = FALSE,	search = TRUE),

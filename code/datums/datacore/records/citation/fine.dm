@@ -2,6 +2,7 @@
 	fields = alist(
 		"id" 			= new /datum/record_field/string("ID", "000000", @"[a-f0-9]{6}"),
 		"time"			= new /datum/record_field/string("Time Issued", "00:00:00"),
+		"authority"		= new /datum/record_field/string("Authority", "Nanotrasen Corporate Security"),
 		"type"			= new /datum/record_field/choice("Type", "FINE", list("TICKET", "FINE")),
 		"target"		= new /datum/record_field/string("Recipient", "Unknown"),
 		"status"		= new /datum/record_field/choice("Status", "PENDING", list("PENDING", "UNPAID", "PAID")),
@@ -16,10 +17,11 @@
 		"text"			= new /datum/record_field/string("Text", "Unknown"),
 	)
 
-/datum/db_record/citation/fine/New(target, amount, issuer, issuer_job, reason)
+/datum/db_record/citation/fine/New(authority, target, amount, issuer, issuer_job, reason)
 	. = ..()
 
 	src["time"] = global.toIso8601InCharacter(world.timeofday)
+	src["authority"] = authority
 	src["target"] = target
 	src["amount"] = amount
 	src["issuer"] = issuer
@@ -68,7 +70,7 @@
 	src["approver"] = approver
 	src["approver_job"] = approver_job
 
-	var/fine_text = "[src["target"]] has been fined [src["amount"]] credits by Nanotrasen Corporate Security for [src["reason"]] on [time2text(world.realtime, "DD/MM/53")].<br>"
+	var/fine_text = "[src["target"]] has been fined [src["amount"]] credits by [src["authority"]] for [src["reason"]] on [time2text(world.realtime, "DD/MM/53")].<br>"
 	if (src["issuer"] == approver)
 		fine_text += "Issued and approved by: [approver] - [approver_job]<br>"
 	else

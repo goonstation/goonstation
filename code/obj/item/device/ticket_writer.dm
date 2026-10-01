@@ -8,6 +8,8 @@
 	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	var/paper_icon_state = "paper_caution"
+	/// What corperate entity warned the crimer
+	var/corporate_rank = "Nanotrasen Corporate Security"
 
 	attack_self(mob/user)
 		src.ticket(user)
@@ -38,6 +40,7 @@
 			return
 
 		var/datum/db_record/citation/ticket/ticket = new(
+			authority = src.corporate_rank,
 			target = ticket_target,
 			issuer = issuer,
 			issuer_job = issuer_job,
@@ -57,3 +60,10 @@
 	name = "crusty old security TicketWriter 1000"
 	desc = "An old TicketWriter model held together by hopes and dreams alone."
 	paper_icon_state = "paper_burned"
+
+/obj/item/device/ticket_writer/nanotrasen
+	name = "inspector TicketWriter 4000"
+	desc = "A device used by NanoTrasen inspectors to issue tickets to poorly performing crew. The keys on it are rather worn down."
+	icon_state = "ticketwriter_nt"
+	corporate_rank = "Nanotrasen Internal Affairs"
+

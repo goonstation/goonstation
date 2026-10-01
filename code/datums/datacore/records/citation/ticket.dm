@@ -2,6 +2,7 @@
 	fields = alist(
 		"id" 			= new /datum/record_field/string("ID", "000000", @"[a-f0-9]{6}"),
 		"time"			= new /datum/record_field/string("Time Issued", "2053-01-01T00:00:00Z"),
+		"authority"		= new /datum/record_field/string("Authority", "Nanotrasen Corporate Security"),
 		"type"			= new /datum/record_field/choice("Type", "TICKET", list("TICKET", "FINE")),
 		"target"		= new /datum/record_field/string("Recipient", "Unknown"),
 		"issuer"		= new /datum/record_field/string("Issuer", "Unknown"),
@@ -11,16 +12,17 @@
 		"text"			= new /datum/record_field/string("Text", "Unknown"),
 	)
 
-/datum/db_record/citation/ticket/New(target, issuer, issuer_job, reason)
+/datum/db_record/citation/ticket/New(authority, target, issuer, issuer_job, reason)
 	. = ..()
 
 	src["time"] = global.toIso8601InCharacter(world.timeofday)
+	src["authority"] = authority
 	src["target"] = target
 	src["issuer"] = issuer
 	src["issuer_job"] = issuer_job
 	src["reason"] = reason
 	src["title"] = "Official Caution - [target]"
-	src["text"] = "[target] has been officially [pick("cautioned","warned","told off","yelled at","berated","sneered at")] by Nanotrasen Corporate Security for [reason] on [time2text(world.realtime, "DD/MM/53")].<br>Issued by: [issuer] - [issuer_job]<br>"
+	src["text"] = "[target] has been officially [pick("cautioned","warned","told off","yelled at","berated","sneered at")] by [authority] for [reason] on [time2text(world.realtime, "DD/MM/53")].<br>Issued by: [issuer] - [issuer_job]<br>"
 
 	logTheThing(LOG_ADMIN, usr, "issues a ticket using [issuer] ([issuer_job])'s ID. It is a ticket on <b>[target]</b> with the reason: [reason].")
 

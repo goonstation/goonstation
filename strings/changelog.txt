@@ -1,4 +1,18 @@
 
+(t)thu oct 01 26
+(u)TekoTheTeapot + ANNmagedon
+(p)27988
+(e)🎨|C-Sprites
+(*)Central Command has allocated more funds to station inspections, and as such the Inspector has gained a suite of new items.
+(t)wed sep 30 26
+(u)TekoTheTeapot
+(p)27960
+(e)🎨|C-Sprites
+(+)Fixed a few things relating to sprites and inventory of the NT Paramedic.
+(u)Whele
+(p)27959
+(e)🎨🍝📨|C-Sprites, A-Catering, A-Logistics
+(*)Added 13 types of jam, made with sugar and fruit in the KitchenHelper.
 (t)tue sep 29 26
 (u)Mr. Moriarty
 (p)27879

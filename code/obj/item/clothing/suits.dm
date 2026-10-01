@@ -539,8 +539,8 @@ TYPEINFO(/obj/item/clothing/suit/hazard/paramedic/armored)
 /obj/item/clothing/suit/det_suit/beepsky
 	name = "worn jacket"
 	desc = "This tattered jacket has seen better days."
-	icon_state = "ntjacket_o"
-	coat_style = "ntjacket"
+	icon_state = "wornjacket_o"
+	coat_style = "wornjacket"
 
 	setupProperties()
 		..()
