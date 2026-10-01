@@ -1,4 +1,22 @@
 
+(t)wed sep 30 26
+(u)TekoTheTeapot
+(p)27960
+(e)🎨|C-Sprites
+(+)Fixed a few things relating to sprites and inventory of the NT Paramedic.
+(u)Whele
+(p)27959
+(e)🎨🍝📨|C-Sprites, A-Catering, A-Logistics
+(*)Added 13 types of jam, made with sugar and fruit in the KitchenHelper.
+(t)tue sep 29 26
+(u)Mr. Moriarty
+(p)27879
+(e)🔎💅⚙🖥️|C-Code-Quality, C-QoL, A-Internal, A-Computers
+(*)SecMate, MedTrak, and BankBoss have been reworked. Please report any bugs.
+(u)ANNmagedon
+(p)27970
+(e)|
+(+)You can now print empty variant of the brute, burn, toxin, oxygen, brain & mental medkits along an empty doctor's bag in the medical fabricator.
 (t)sat sep 26 26
 (u)Sovexe
 (p)27843
