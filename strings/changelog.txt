@@ -1,5 +1,9 @@
 
 (t)thu oct 01 26
+(u)Kubius
+(p)27709
+(e)🗺🌠|A-Mapping, A-Events
+(+)A particular event on Menhir now has additional permutations to encounter.
 (u)TekoTheTeapot + ANNmagedon
 (p)27988
 (e)🎨|C-Sprites
