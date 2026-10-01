@@ -76,6 +76,8 @@
 	icon_state = "blindfold"
 	item_state = "blindfold"
 	desc = "A strip of cloth painstakingly designed to wear around your eyes so you cannot see."
+	default_material = "cotton"
+	material_amt = 0.4 // Matches manufacturing recipe
 	block_vision = 1
 	nudge_compatible = FALSE
 	var/pinhole = FALSE
@@ -454,6 +456,8 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 	desc = "Only the coolest eye-wear around."
 	icon_state = "eyepatch-R"
 	item_state = "headset"
+	default_material = "cotton"
+	material_amt = 0.5 // Matches manufacturing recipe
 	block_eye = "R"
 	nudge_compatible = FALSE
 	var/pinhole = FALSE
