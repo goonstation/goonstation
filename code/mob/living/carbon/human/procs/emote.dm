@@ -2232,7 +2232,7 @@
 				var/obj/item/I = get_id_card(src.wear_id)
 				if(H && (!H.limbs.l_arm || !H.limbs.r_arm || H.restrained()))
 					src.show_text("You can't do that without free arms!")
-				else if(src.can_dab)
+				else if(can_dab(src))
 					var/obj/item/card/id/dabbing_license/dab_id = null
 					if(istype(I, /obj/item/card/id/dabbing_license)) // if we are using a dabbing license, save it so we can increment stats
 						dab_id = I
