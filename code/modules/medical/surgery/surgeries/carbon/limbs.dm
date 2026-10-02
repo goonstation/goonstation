@@ -42,7 +42,7 @@
 		add_next_step(new/datum/surgery_step/limb/saw(src, limb_var_name)) // Makes the organ unsecure
 		add_next_step(new/datum/surgery_step/limb/remove(src, limb_var_name)) // Removes the organ
 
-	infer_surgery_stage()
+	check_surgery_stage()
 		var/mob/living/carbon/human/C = patient
 		var/obj/item/parts/limb = C.limbs.vars[limb_var_name]
 		surgery_steps[1].finished = (!limb || limb?.remove_stage >= 1)
@@ -55,14 +55,15 @@
 		var/obj/item/parts/limb = C.limbs.vars[limb_var_name]
 		return (limb && limb.remove_stage != 0)
 
-	on_cancel(mob/surgeon, obj/item/tool, quiet)
+	on_cancel(mob/surgeon, obj/item/tool, quiet, forced = FALSE)
 		var/mob/living/carbon/human/C = patient
 		var/obj/item/parts/limb = C.limbs.vars[limb_var_name]
 		if (limb && limb.remove_stage != 0)
-			limb.remove_stage = 0
-			surgeon.visible_message(SPAN_ALERT("[surgeon] attaches [C.name]'s [limb.name] securely with [tool]."), SPAN_ALERT("You attach [C.name]'s [limb.name] securely with [tool]."))
-			logTheThing(LOG_COMBAT, surgeon, "staples [constructTarget(holder,"combat")]'s [patient.name] back on.")
-			logTheThing(LOG_DIARY, surgeon, "staples [constructTarget(holder,"diary")]'s [patient.name] back on.", "combat")
+			limb.remove_stage = LIMB_REMOVE_STAGE_SECURE
+			if (!quiet)
+				surgeon.visible_message(SPAN_ALERT("[surgeon] attaches [C.name]'s [limb.name] securely with [tool]."), SPAN_ALERT("You attach [C.name]'s [limb.name] securely with [tool]."))
+				logTheThing(LOG_COMBAT, surgeon, "staples [constructTarget(holder,"combat")]'s [patient.name] back on.")
+				logTheThing(LOG_DIARY, surgeon, "staples [constructTarget(holder,"diary")]'s [patient.name] back on.", "combat")
 
 
 
@@ -70,7 +71,7 @@
 		generate_surgery_steps(mob/living/surgeon, mob/user)
 			..()
 			add_next_step( new/datum/surgery_step/limb/attach_arm(src,limb_var_name))
-		infer_surgery_stage()
+		check_surgery_stage()
 			var/mob/living/carbon/human/C = patient
 			var/obj/item/parts/limb = C.limbs.vars[limb_var_name]
 			surgery_steps[4].finished = (limb != null)
@@ -94,7 +95,7 @@
 			..()
 			add_next_step( new/datum/surgery_step/limb/attach_leg(src,limb_var_name))
 
-		infer_surgery_stage()
+		check_surgery_stage()
 			var/mob/living/carbon/human/C = patient
 			var/obj/item/parts/limb = C.limbs.vars[limb_var_name]
 			surgery_steps[4].finished = (limb != null)

@@ -2062,7 +2062,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 
 	src.organHolder.create_organs()
 	if (src.surgeryHolder)
-		src.surgeryHolder.cancel_all()
+		src.surgeryHolder.cancel_all(forced = TRUE, quiet = TRUE)
 	else
 		src.surgeryHolder = new(src)
 	if (src.organHolder.head && isskeleton(src))
@@ -2110,7 +2110,7 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		src.organHolder.unbreak_all_organs()
 
 	if (src.surgeryHolder)
-		src.surgeryHolder.cancel_all()
+		src.surgeryHolder.cancel_all(forced = TRUE, quiet = TRUE)
 	if (!src.organHolder)
 		src.organHolder = new(src)
 	src.organHolder.heal_organs(INFINITY, INFINITY, INFINITY, src.organHolder.organ_list)

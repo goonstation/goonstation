@@ -77,7 +77,7 @@
 	name = "Head Removal (Skeleton)"
 	desc = "Remove the patients' head."
 	organ_var_name = "head"
-	infer_surgery_stage()
+	check_surgery_stage()
 		var/mob/living/carbon/human/C = patient
 		var/no_head = !C.organHolder.get_organ("head")
 		surgery_steps[3].finished = no_head
@@ -108,7 +108,7 @@
 	icon_state = "tail"
 	organ_var_name = "tail"
 	can_cancel = FALSE
-	infer_surgery_stage()
+	check_surgery_stage()
 		var/mob/living/carbon/human/C = patient
 		var/organ = C.organHolder.get_organ(organ_var_name)
 		surgery_steps[1].finished = (organ == null)

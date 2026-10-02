@@ -17,7 +17,7 @@
 	generate_surgery_steps(mob/living/surgeon, mob/user)
 		add_next_step(new/datum/surgery_step/fluff/cut(src))
 
-	infer_surgery_stage()
+	check_surgery_stage()
 		var/mob/living/carbon/human/C = patient
 		surgery_steps[1].finished = (length(C.implant) == 0)
 		..()

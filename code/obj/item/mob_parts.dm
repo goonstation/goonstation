@@ -23,7 +23,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 	/// used for streak direction
 	var/side = "left"
 	/// 2 will fall off, 3 is removed. This should use defines honestly but eh.
-	var/remove_stage = 0
+	var/remove_stage = LIMB_REMOVE_STAGE_SECURE
 	///if the only icon is above the clothes layer ie. in the handlistPart list
 	var/no_icon = FALSE
 	/// is this affected by human skin tones? Also if the severed limb uses a separate bloody-stump icon layered on top

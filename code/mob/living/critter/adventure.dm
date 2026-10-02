@@ -724,12 +724,12 @@ TYPEINFO(/mob/living/critter/robotic/repairbot)
 			random_brute_damage(H, 5)
 			switch (missing_arm)
 				if ("r_arm")
-					var/obj/item/parts/human_parts/arm/meat_mutant/part = new /obj/item/parts/human_parts/arm/meat_mutant/right {remove_stage = 2;} (H)
+					var/obj/item/parts/human_parts/arm/meat_mutant/part = new /obj/item/parts/human_parts/arm/meat_mutant/right {remove_stage = LIMB_REMOVE_STAGE_LOOSE;} (H)
 					H.limbs.vars["r_arm"] = part
 					part.holder = H
 
 				if ("l_arm")
-					var/obj/item/parts/human_parts/arm/meat_mutant/part = new /obj/item/parts/human_parts/arm/meat_mutant/left {remove_stage = 2;} (H)
+					var/obj/item/parts/human_parts/arm/meat_mutant/part = new /obj/item/parts/human_parts/arm/meat_mutant/left {remove_stage = LIMB_REMOVE_STAGE_LOOSE;} (H)
 					H.limbs.vars["l_arm"] = part
 					part.holder = H
 

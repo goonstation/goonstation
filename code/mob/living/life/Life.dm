@@ -115,7 +115,7 @@
 	src.remove_ailments()
 	src.change_misstep_chance(-INFINITY)
 	if (src.surgeryHolder)
-		src.surgeryHolder.cancel_all()
+		src.surgeryHolder.cancel_all(forced = TRUE, quiet = TRUE)
 	restore_life_processes()
 
 /mob/living/stabilize()
@@ -123,7 +123,7 @@
 	src.remove_ailments()
 	src.change_misstep_chance(-INFINITY)
 	if (src.surgeryHolder)
-		src.surgeryHolder.cancel_all()
+		src.surgeryHolder.cancel_all(forced = TRUE, quiet = TRUE)
 	restore_life_processes()
 
 /mob/living/disposing()

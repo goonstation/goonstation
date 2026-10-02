@@ -46,7 +46,7 @@
 	name = "Tend bleeding"
 	desc = "Mend bleeding wounds with a suture."
 
-	infer_surgery_stage()
+	check_surgery_stage()
 		surgery_steps[1].finished = (patient.bleeding == 0)
 		..()
 
@@ -75,7 +75,7 @@
 		name = "Cauterize - Head"
 		desc = "Undo head surgery with a cautery."
 
-		infer_surgery_stage()
+		check_surgery_stage()
 			surgery_steps[1].finished = (patient.surgeryHolder.get_surgery_progress("brain_surgery") == 0)
 			..()
 
@@ -94,7 +94,7 @@
 	bleeding
 		name = "Cauterize Bleeding"
 		desc = "Remove bleeding with a cautery."
-		infer_surgery_stage()
+		check_surgery_stage()
 			surgery_steps[1].finished = (patient.bleeding == 0)
 			..()
 

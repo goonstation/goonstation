@@ -9,13 +9,13 @@
 		desc = "Cut connective tissues from the limb."
 		icon_state = "scalpel"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		flags_required = TOOL_CUTTING
+		tool_flags_required = TOOL_CUTTING
 		success_damage = 20
 		on_complete(mob/surgeon, obj/item/tool)
 
 			var/mob/living/carbon/human/C = parent_surgery.patient
 			var/obj/item/parts/limb = C.limbs.vars[affected_limb]
-			limb.remove_stage = 1
+			limb.remove_stage = LIMB_REMOVE_STAGE_CUT
 			if(!isdead(C) && prob(40))
 				C.emote("scream")
 			tool.the_mob.visible_message(SPAN_ALERT("[tool.the_mob] slices through the skin and flesh of [C.name]'s [limb.name] with [tool]."), SPAN_ALERT("You slice through the skin and flesh of [C.name]'s [limb.name] with [tool]."))
@@ -26,12 +26,12 @@
 		desc = "Saw through the bone."
 		icon_state = "saw"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		flags_required = TOOL_SAWING
+		tool_flags_required = TOOL_SAWING
 		success_damage = 20
 		on_complete(mob/surgeon, obj/item/tool)
 			var/mob/living/carbon/human/C = parent_surgery.patient
 			var/obj/item/parts/limb = C.limbs.vars[affected_limb]
-			limb.remove_stage = 2
+			limb.remove_stage = LIMB_REMOVE_STAGE_LOOSE
 			if(!isdead(C) && prob(40))
 				C.emote("scream")
 			tool.the_mob.visible_message(SPAN_ALERT("[tool.the_mob] saws through the bone of [C.name]'s [limb] with [tool]."), SPAN_ALERT("You saw through the bone of [C.name]'s [limb.name] with [tool]."))
@@ -44,7 +44,7 @@
 		desc = "Remove the limb."
 		icon_state = "saw"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		flags_required = TOOL_CUTTING
+		tool_flags_required = TOOL_CUTTING
 		on_complete(mob/surgeon, obj/item/tool)
 			var/mob/living/carbon/human/C = parent_surgery.patient
 			var/obj/item/parts/limb = C.limbs.vars[affected_limb]
@@ -87,8 +87,7 @@
 				limb = tool
 			limb.attach(patient, surgeon)
 
-
-		tool_requirement(mob/surgeon, obj/item/tool)
+		tool_suitable(mob/surgeon, obj/item/tool)
 			if (tool.can_arm_attach())
 				return TRUE
 			return FALSE
@@ -113,13 +112,13 @@
 			desc = "Loosen the limb from the socket."
 			icon_state = "wrench"
 			success_sound = 'sound/items/Screwdriver.ogg'
-			flags_required = TOOL_WRENCHING
+			tool_flags_required = TOOL_WRENCHING
 			success_damage = 0
 			on_complete(mob/surgeon, obj/item/tool)
 				var/mob/living/carbon/human/C = parent_surgery.patient
 				var/obj/item/parts/limb = C.limbs.vars[affected_limb]
 				surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> loosens [limb] with [tool]."))
-				limb.remove_stage = 1
+				limb.remove_stage = LIMB_REMOVE_STAGE_CUT
 				logTheThing(LOG_COMBAT, surgeon, "started removing [constructTarget(C,"combat")]'s [limb] with [tool].")
 
 
@@ -128,13 +127,13 @@
 			desc = "Pry the limb from the socket."
 			icon_state = "crowbar"
 			success_sound = 'sound/items/Crowbar.ogg'
-			flags_required = TOOL_PRYING
+			tool_flags_required = TOOL_PRYING
 			success_damage = 0
 			on_complete(mob/surgeon, obj/item/tool)
 				var/mob/living/carbon/human/C = parent_surgery.patient
 				var/obj/item/parts/limb = C.limbs.vars[affected_limb]
 				surgeon.visible_message(SPAN_ALERT("<b>[surgeon]</b> pries [limb] loose with [tool]."))
-				limb.remove_stage = 2
+				limb.remove_stage = LIMB_REMOVE_STAGE_LOOSE
 				logTheThing(LOG_COMBAT, surgeon, "started removing [constructTarget(C,"combat")]'s [limb] with [tool].")
 
 
@@ -143,7 +142,7 @@
 			desc = "Remove the limb."
 			icon_state = "wrench"
 			success_sound = 'sound/items/Ratchet.ogg'
-			flags_required = TOOL_WRENCHING
+			tool_flags_required = TOOL_WRENCHING
 			success_damage = 0
 			on_complete(mob/surgeon, obj/item/tool)
 				var/mob/living/carbon/human/C = parent_surgery.patient

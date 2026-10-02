@@ -6,7 +6,7 @@
 			desc = "Suture the wound."
 			icon_state = "suture"
 			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-			tools_required = list(/obj/item/suture)
+			tool_types_required = list(/obj/item/suture)
 			on_complete(mob/surgeon, obj/item/tool)
 				var/mob/living/carbon/human/patient = parent_surgery.patient
 				surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> sutures [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] wounds with [tool]!"),\
@@ -17,7 +17,7 @@
 			desc = "Snip out some tissue."
 			icon_state = "scissor"
 			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-			flags_required = TOOL_SNIPPING
+			tool_flags_required = TOOL_SNIPPING
 			on_complete(mob/surgeon, obj/item/tool)
 				var/mob/living/carbon/human/patient = parent_surgery.patient
 				surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> makes a cut on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest with [tool]!"),\
@@ -29,7 +29,7 @@
 			desc = "Cut through the flesh."
 			icon_state = "scalpel"
 			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-			flags_required = TOOL_CUTTING
+			tool_flags_required = TOOL_CUTTING
 			on_complete(mob/surgeon, obj/item/tool)
 				var/mob/living/carbon/human/patient = parent_surgery.patient
 				surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> cuts through [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] flesh with [tool]!"),\
@@ -45,7 +45,7 @@
 			desc = "Saw through the bone."
 			icon_state = "saw"
 			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-			flags_required = TOOL_SAWING
+			tool_flags_required = TOOL_SAWING
 			on_complete(mob/surgeon, obj/item/tool)
 				var/mob/living/carbon/human/C = parent_surgery.patient
 				surgeon.tri_message(C, SPAN_ALERT("<b>[surgeon]</b> saws through [C == surgeon ? "[his_or_her(C)]" : "[C]'s"] bone with [tool]!"),\
@@ -56,7 +56,7 @@
 			desc = "Bandage the wound."
 			icon_state = "bandage"
 			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-			tools_required = list(/obj/item/bandage)
+			tool_types_required = list(/obj/item/bandage)
 			on_complete(mob/surgeon, obj/item/tool)
 				var/mob/living/carbon/human/C = parent_surgery.patient
 				surgeon.tri_message(C, SPAN_ALERT("<b>[surgeon]</b> bandages [C == surgeon ? "[his_or_her(C)]" : "[C]'s"] wounds with [tool]!"),\
@@ -68,7 +68,7 @@
 			desc = "Cut through the lower back."
 			icon_state = "scalpel"
 			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-			flags_required = TOOL_CUTTING
+			tool_flags_required = TOOL_CUTTING
 			on_complete(mob/surgeon, obj/item/tool)
 				var/mob/living/carbon/human/patient = parent_surgery.patient
 				surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> cuts [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] lower back open with [tool]!"),\
@@ -93,7 +93,7 @@
 			desc = "Saw through the butt."
 			icon_state = "saw"
 			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-			flags_required = TOOL_SAWING
+			tool_flags_required = TOOL_SAWING
 			on_complete(mob/surgeon, obj/item/tool)
 				var/mob/living/carbon/human/patient = parent_surgery.patient
 				surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> saws open [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] back with [tool]!"),\

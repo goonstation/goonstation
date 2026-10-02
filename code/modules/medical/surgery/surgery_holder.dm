@@ -21,7 +21,7 @@
 		add_surgeries()
 		populate_child_surgeries()
 
-	/// Returns TRUE if the surgery holder will perform a surgery with the given tools.
+	/// Returns TRUE if the surgeon can perform this surgery when using the given tool.
 	proc/will_perform_surgery(var/mob/living/surgeon, var/obj/item/tool)
 		if (get_implicit_step(surgeon,tool))
 			return TRUE
@@ -29,26 +29,30 @@
 			return TRUE
 		return FALSE
 
+	// TODO: kill this. suturing isn't a special case
 	proc/is_suture_tool(var/obj/item/tool)
 		if (istype(tool, /obj/item/suture))
 			return TRUE
 		return FALSE
 
-	/// Attempt to perform surgery with the given tool. Returns TRUE if surgery was performed, and attacking shouldn't continue.
-	proc/perform_surgery(var/mob/living/surgeon, var/obj/item/tool)
-		if (do_implicit_step(surgeon,tool))
-			tool.add_fingerprint(surgeon)
-			return TRUE
+	/// Attempt to perform surgery with the given tool. Returns TRUE if surgery was performed, and attacking/whatever triggered this shouldn't continue.
+	/// 'allow_implicit' determines whether implicit steps should be attempted. If FALSE, this will only open the context menu.
+	proc/perform_surgery(var/mob/living/surgeon, var/obj/item/tool, var/allow_implicit = TRUE)
+		if (allow_implicit)
+			var/datum/surgery_step/step = get_implicit_step(surgeon, tool)
+			if (step)
+				tool.add_fingerprint(surgeon)
+				return step.perform_step(surgeon, tool)
 
 		if (tool_relevant(surgeon,tool))
 			if (tool)
 				tool.add_fingerprint(surgeon)
-			if (start_surgery(surgeon,tool))
+			if (show_contexts(surgeon, tool))
 				return TRUE
 			else // if the tool is relevant but has no relevant surgery, mess up the patient.
 				if (tool && surgery_conditions_met(surgeon, tool))
 					if (is_suture_tool(tool) && surgeon.a_intent != INTENT_HARM)
-						boutput(surgeon, SPAN_ALERT("[patient] has no wounds or incisions to close!"))
+						boutput(surgeon, SPAN_ALERT("[patient == surgeon ? "You have" : "[patient] has"] no wounds or incisions on [patient == surgeon ? "your" : his_or_her(patient)] [zone_sel2name[surgeon.zone_sel]]  to close!"))
 						return TRUE
 					else
 						generic_mess_up(surgeon, tool)
@@ -73,16 +77,12 @@
 			desc += surgery.get_desc()
 		return desc
 
-	/// Enter the top level context menu for this surgery holder. Returns TRUE if a context menu was shown.
-	proc/start_surgery(mob/surgeon, obj/tool)
-		return show_contexts(surgeon, tool)
-
 	proc/do_life(var/mult)
 		return
 
 	/// Get's a surgery's progress by ID.
 	proc/get_surgery_progress(var/surgery_id)
-		all_surgeries[surgery_id].infer_surgery_stage()
+		all_surgeries[surgery_id].check_surgery_stage()
 		return all_surgeries[surgery_id].get_surgery_progress()
 
 	proc/is_surgery_complete(var/surgery_id)
@@ -113,45 +113,40 @@
 			return FALSE
 		return surgery.surgery_clicked(surgeon, I)
 
-	/// Returns TRUE if the given tool generally relevant to surgery.
+	/// Returns TRUE if the mob's given tool is used in a surgery step.
 	proc/tool_relevant(mob/user, obj/item/tool)
 		for (var/datum/surgery/surgery in base_surgeries)
-			if (surgery.tool_relevant(user, tool))
+			if (surgery.tool_suitable(user, tool))
 				return TRUE
 		return FALSE
 
 	/// Cancel all surgeries.
-	proc/cancel_all()
+	proc/cancel_all(var/forced = FALSE, quiet = TRUE)
 		for(var/datum/surgery/surgery in base_surgeries)
-			surgery.cancel_surgery(null, null)
+			surgery.cancel(null, null, forced=forced, quiet = quiet)
 
 	/// Cancel surgeries in a specific zone.
 	proc/cancel_all_in_zone(var/zone, mob/living/surgeon, obj/item/item, quiet = FALSE)
 		for(var/datum/surgery/surgery in base_surgeries)
 			if (surgery.affected_zone == zone)
-				surgery.cancel_surgery(surgeon, item, quiet=quiet)
-	/// Cancel a surgery through the context menu. This will generally re-open the context action menu.
-	proc/cancel_surgery_context(datum/surgery/surgery, mob/living/surgeon, obj/item/I, quiet = FALSE)
-		if (!surgery)
-			return
-		surgery.cancel_surgery(surgeon, I, quiet=quiet)
+				surgery.cancel(surgeon, item, quiet=quiet)
 
 	/// Cancel a surgery.
 	proc/cancel_surgery_by_id(id, mob/living/surgeon, obj/item/I, quiet = FALSE)
 		if (!id)
 			return
-		all_surgeries[id].cancel_surgery(surgeon, I, quiet=quiet)
+		all_surgeries[id].cancel(surgeon, I, quiet=quiet)
 
 	/// Get the top-level surgery context icons for this holder.
 	proc/get_contexts(var/surgeon, var/obj/item/tool)
 		var/list/datum/contextAction/surgery/contexts = list()
 		for (var/datum/surgery/surgery in base_surgeries)
-			surgery.infer_surgery_stage()
+			surgery.check_surgery_stage()
 			if (surgery.surgery_conditions_met(surgeon, tool) && surgery.surgery_possible(surgeon) && surgery.visible)
 				contexts += surgery.get_context()
 		return contexts
 
-	/// Show the context action ring to the surgeon. Returns TRUE if a context menu was shown.
+	/// Show the context actions to the surgeon. Returns TRUE if a context menu was shown.
 	proc/show_contexts(mob/surgeon, obj/tool)
 		var/list/datum/contextAction/surgery/contexts = get_contexts(surgeon, tool)
 		if (!length(contexts))
@@ -162,35 +157,18 @@
 			surgeon.showContextActions(contexts, patient, new /datum/contextLayout/experimentalcircle)
 		return TRUE
 
-
-	// 'implicit_steps' are for implicit surgeries that don't use a context menu. For example. Cramming an organ inside someone's chest.
-	/// Performs an implicit step, if possible. Returns TRUE if an implicit step was performed.
-	proc/do_implicit_step(mob/surgeon, obj/item/tool)
-		var/datum/surgery_step/step = get_implicit_step(surgeon, tool)
-		if (step)
-			step.perform_step(surgeon, tool)
-			return TRUE
-		return FALSE
 	/// Get the surgery step that will be performed. Returns FALSE if no surgery step is possible.
 	proc/get_implicit_step(mob/surgeon, obj/item/tool)
 		for (var/datum/surgery/surgery in base_surgeries)
-			surgery.infer_surgery_stage()
+			surgery.check_surgery_stage()
 		for (var/datum/surgery/surgery in base_surgeries)
 			var/result = surgery.get_implicit_step(surgeon, tool)
 			if (result)
 				return result
 		return FALSE
 
-	/// called when wanting to 'go up' a level
-	proc/exit_surgery(datum/surgery/surgery, mob/living/surgeon, obj/item/I)
-		if (!surgery)
-			return
-		if (surgery.super_surgery)
-			surgery.super_surgery.enter_surgery(surgeon)
-		else
-			//go back to the start if we've no more supersurgeries
-			src.start_surgery(surgeon, I)
-	/// Called when a surgery is reasonably expected to be performed. for missteps.
+	/// Are the conditions right for this patient to undergo surgery?
+	/// If FALSE, this will usually stab/beat/murder the patient instead of performing surgery.
 	proc/surgery_conditions_met(mob/surgeon, obj/item/tool)
 		if (!ishuman(patient)) // is the patient not a human?
 			return FALSE
@@ -205,7 +183,8 @@
 		else if (patient.reagents && (patient.reagents.get_reagent_amount("ethanol") > 40 || patient.reagents.get_reagent_amount("morphine") > 5) && (patient == surgeon || (locate(/obj/stool/bed, patient.loc) && patient.lying)))
 			return TRUE
 		return FALSE
-	/// Called when a relevant tool is used, but is not part of any surgeries.
+
+	/// Called when a tool is marked to do surgery, but is not part of any surgeries. Like using a sawblade when no surgery requires it.
 	proc/generic_mess_up(var/mob/living/surgeon, var/obj/item/tool)
 		var/target_area = zone_sel2name[surgeon.zone_sel.selecting]
 		var/damage = rand(20,30)
@@ -231,7 +210,8 @@
 				SPAN_ALERT("You [fluff][fluff2] at [patient]'s [target_area] with [tool]."),\
 				SPAN_ALERT("<b>[surgeon]</b> [fluff][fluff2]s at your [target_area] with [tool].[fluff3]"))
 			return
-	/// Setup top-level surgeries. If you want to add more after this is created, you'll need a new proc that updates all_surgeries.
+
+	/// Setup top-level surgeries on creation.
 	proc/add_surgeries()
 
 

@@ -2,7 +2,7 @@
 	name = "Suture"
 	icon_state = "suture"
 	success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-	tools_required = list(/obj/item/suture)
+	tool_types_required = list(/obj/item/suture)
 	repeatable = TRUE
 	var/loc = ""
 	success_damage = 0
@@ -11,7 +11,7 @@
 		var/list/datum/surgery/surgeries = parent_surgery.holder.get_surgeries_by_zone(loc)
 		for (var/datum/surgery/surgery in surgeries)
 			if (surgery.cancel_possible())
-				surgery.cancel_surgery(surgeon, tool, quiet = FALSE)
+				surgery.cancel(surgeon, tool, quiet = FALSE)
 				if (patient.bleeding)
 					repair_bleeding_damage(patient, 50, rand(1,3))
 				return TRUE

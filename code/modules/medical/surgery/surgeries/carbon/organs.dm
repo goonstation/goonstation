@@ -15,10 +15,11 @@
 		if (surgeon.a_intent == INTENT_GRAB) // we're doing tail/butt surgery
 			return FALSE
 		return ..()
-	on_cancel(mob/surgeon, obj/item/tool, quiet)
-		surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> sews the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest closed with [tool]."),\
-			SPAN_NOTICE("You sew the incision on [surgeon == patient ? "your" : "[patient]'s"] chest closed with [tool]."),\
-			SPAN_NOTICE("[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision on your chest closed with [tool]."))
+	on_cancel(mob/surgeon, obj/item/tool, quiet, forced = FALSE)
+		if (!quiet)
+			surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> sews the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest closed with [tool]."),\
+				SPAN_NOTICE("You sew the incision on [surgeon == patient ? "your" : "[patient]'s"] chest closed with [tool]."),\
+				SPAN_NOTICE("[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision on your chest closed with [tool]."))
 	get_desc(show_vague)
 		var/t_his = his_or_her(patient)
 		var/Noun = capitalize(t_his)
@@ -67,14 +68,14 @@
 	visible = FALSE
 	implicit = TRUE
 	affected_zone = "head"
-	on_cancel(mob/surgeon, obj/item/tool, quiet)
+	on_cancel(mob/surgeon, obj/item/tool, quiet, forced = FALSE)
 		if (!quiet)
 			surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> sews the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] head closed with [tool]."),\
 				SPAN_NOTICE("You sew the incision on [surgeon == patient ? "your" : "[patient]'s"] head closed with [tool]."),\
 				SPAN_NOTICE("[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision on your head closed with [tool]."))
 
 
-	sub_surgery_possible(mob/living/surgeon)
+	sub_surgeries_accessible(mob/living/surgeon)
 		if (!headSurgeryCheck(patient))
 			surgeon.show_text("You're going to need to remove that mask/helmet/glasses first.", "blue")
 			return FALSE
@@ -154,22 +155,23 @@
 			return FALSE
 		return ..()
 
-	on_cancel(mob/surgeon, obj/item/tool, quiet)
-		surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> sews the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] lower back closed with [tool]."),\
-			SPAN_NOTICE("You sew the incision on [surgeon == patient ? "your" : "[patient]'s"] lower back closed with [tool]."),\
-			SPAN_NOTICE("[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision on your lower back closed with [tool]."))
+	on_cancel(mob/surgeon, obj/item/tool, quiet, forced = FALSE)
+		if (!quiet)
+			surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> sews the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] lower back closed with [tool]."),\
+				SPAN_NOTICE("You sew the incision on [surgeon == patient ? "your" : "[patient]'s"] lower back closed with [tool]."),\
+				SPAN_NOTICE("[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision on your lower back closed with [tool]."))
 
-	// Show a context menu, even when implicit_step
-	// todo: this should be default behaviour when implicit -> non-implicit
-	do_implicit_step(mob/surgeon, obj/item/I)
-		var/result = ..()
-		if (result)
-			return result
-		else
-			var/contexts = get_surgery_contexts(surgeon, I, FALSE)
-			if (length(contexts) > 0)
-				enter_surgery(surgeon)
-				return TRUE
+	// // Show a context menu, even when implicit_step
+	// // todo: this should be default behaviour when an implicit surgery transitions to a non-implicit surgery
+	// attempt_implicit_step(mob/surgeon, obj/item/I)
+	// 	var/result = ..()
+	// 	if (result)
+	// 		return result
+	// 	else
+	// 		var/contexts = get_surgery_contexts(surgeon, I, FALSE)
+	// 		if (length(contexts) > 0)
+	// 			open_context(surgeon)
+	// 			return TRUE
 
 	get_desc()
 		var/steps_complete = src.get_surgery_progress()
@@ -209,7 +211,7 @@
 			return TRUE
 		return FALSE
 
-	on_cancel(mob/living/surgeon, obj/item/tool, quiet)
+	on_cancel(mob/living/surgeon, obj/item/tool, quiet, forced = FALSE)
 		var/obj/O = patient.organHolder.vars[organ_var_name]
 
 		var/organ_name = organ_pretty_name? organ_pretty_name : organ_var_name
@@ -230,7 +232,7 @@
 				var/datum/contextAction/surgery/surgeryAction = C.action
 				if (surgeryAction.surgery.super_surgery == src.super_surgery)
 					surgeon.closeContextActions()
-					src.super_surgery.enter_surgery(surgeon, I)
+					src.super_surgery.show_contexts(surgeon, I)
 
 
 
@@ -333,7 +335,7 @@
 				if (surgeon.find_in_hand(I) != surgeon.l_hand)
 					return FALSE
 				return ..()
-			on_cancel(mob/living/surgeon, obj/item/tool, quiet)
+			on_cancel(mob/living/surgeon, obj/item/tool, quiet, forced = FALSE)
 				if (!quiet)
 					surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> sews the incision in [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] left eye socket closed with [tool]."),\
 						SPAN_NOTICE("You sew the incision in [surgeon == patient ? "your" : "[patient]'s"] left eye socket closed with [tool]."),\
@@ -349,7 +351,7 @@
 				if (surgeon.find_in_hand(I) != surgeon.r_hand)
 					return FALSE
 				return ..()
-			on_cancel(mob/living/surgeon, obj/item/tool, quiet)
+			on_cancel(mob/living/surgeon, obj/item/tool, quiet, forced = FALSE)
 				if (!quiet)
 					surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> sews the incision in [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] right eye socket closed with [tool]."),\
 						SPAN_NOTICE("You sew the incision in [surgeon == patient ? "your" : "[patient]'s"] right eye socket closed with [tool]."),\
@@ -366,7 +368,7 @@
 
 		cancel_possible()
 			return FALSE
-		infer_surgery_stage()
+		check_surgery_stage()
 			var/mob/living/carbon/human/C = patient
 			var/organ = C.organHolder.get_organ(organ_var_name)
 			surgery_steps[1].finished = (organ == null)
@@ -386,7 +388,7 @@
 		implicit = TRUE
 		affected_zone = "head"
 
-		infer_surgery_stage()
+		check_surgery_stage()
 			var/mob/living/carbon/human/C = patient
 			var/organ = C.organHolder.get_organ(organ_var_name)
 			if (organ)
@@ -398,10 +400,11 @@
 			if (surgeon.a_intent == INTENT_HARM) // head removal
 				return FALSE
 			return TRUE
-		on_cancel(mob/surgeon, obj/item/tool, quiet)
-			surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> sews the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] neck closed with [tool]."),\
-					SPAN_NOTICE("You sew the incision on [surgeon == patient ? "your" : "[patient]'s"] neck closed with [tool]."),\
-					SPAN_NOTICE("[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision on your neck closed with [tool]."))
+		on_cancel(mob/surgeon, obj/item/tool, quiet, forced = FALSE)
+			if (!quiet)
+				surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> sews the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] neck closed with [tool]."),\
+						SPAN_NOTICE("You sew the incision on [surgeon == patient ? "your" : "[patient]'s"] neck closed with [tool]."),\
+						SPAN_NOTICE("[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision on your neck closed with [tool]."))
 
 		generate_surgery_steps()
 			add_next_step(new /datum/surgery_step/skull/cut(src))
@@ -418,7 +421,7 @@
 		organ_var_name = "tail"
 		exit_when_finished = TRUE
 		implicit = TRUE
-		infer_surgery_stage()
+		check_surgery_stage()
 			var/mob/living/carbon/human/C = patient
 			var/organ = C.organHolder.get_organ(organ_var_name)
 			surgery_steps[1].finished = (organ == null)
@@ -439,7 +442,7 @@
 		organ_var_name = "brain"
 		implicit = TRUE
 		default_sub_surgeries = list(/datum/surgery/carbon/organ/skull, /datum/surgery/carbon/organ/replace/skull)
-		infer_surgery_stage()
+		check_surgery_stage()
 			var/mob/living/carbon/human/C = patient
 			if (C.organHolder.brain)
 				surgery_steps[4].finished = FALSE
@@ -452,10 +455,11 @@
 			add_next_step(new /datum/surgery_step/organ/brain/cut2(src, organ_var_name))
 			add_next_step(new /datum/surgery_step/organ/brain/remove(src, organ_var_name))
 
-		on_cancel(mob/surgeon, obj/item/tool, quiet)
-			surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> sews the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] head closed with [tool]."),\
-				SPAN_NOTICE("You sew the incision on [surgeon == patient ? "your" : "[patient]'s"] head closed with [tool]."),\
-				SPAN_NOTICE("[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision on your head closed with [tool]."))
+		on_cancel(mob/surgeon, obj/item/tool, quiet, forced = FALSE)
+			if (!quiet)
+				surgeon.tri_message(patient, SPAN_NOTICE("<b>[surgeon]</b> sews the incision on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] head closed with [tool]."),\
+					SPAN_NOTICE("You sew the incision on [surgeon == patient ? "your" : "[patient]'s"] head closed with [tool]."),\
+					SPAN_NOTICE("[patient == surgeon ? "You sew" : "<b>[surgeon]</b> sews"] the incision on your head closed with [tool]."))
 		surgery_possible(mob/living/surgeon)
 			if (surgeon.zone_sel.selecting != "head")
 				return FALSE
@@ -491,7 +495,7 @@
 		affected_zone = "head"
 		organ_var_name = "head"
 		implicit = TRUE
-		infer_surgery_stage()
+		check_surgery_stage()
 			var/mob/living/carbon/human/C = patient
 			var/no_head = !C.organHolder.get_organ(organ_var_name)
 			surgery_steps[4].finished = no_head
@@ -524,10 +528,10 @@
 	id = "organ_addition"
 	name = "Organ Addition"
 	desc = "Replace the patients' organs."
-	visible = TRUE
+	visible = FALSE
 	implicit = TRUE
 	exit_when_finished = TRUE
-	infer_surgery_stage()
+	check_surgery_stage()
 		var/mob/living/carbon/human/C = patient
 		var/organ = C.organHolder.get_organ(organ_var_name)
 		surgery_steps[1].finished = (organ != null)

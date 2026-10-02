@@ -5,7 +5,7 @@
 		desc = "Insert the item."
 		icon_state = "in"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		tool_requirement(mob/surgeon, obj/item/tool)
+		tool_suitable(mob/surgeon, obj/item/tool)
 			if(tool.w_class > W_CLASS_NORMAL && !(tool.type in global.chestitem_whitelist))
 				boutput(surgeon, SPAN_ALERT("[tool] is too big to fit into [parent_surgery.patient]'s chest cavity."))
 				return FALSE
@@ -35,7 +35,7 @@
 		desc = "Secure the item."
 		icon_state = "suture"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		tools_required = list(/obj/item/suture)
+		tool_types_required = list(/obj/item/suture)
 		optional = TRUE
 		on_complete(mob/surgeon, obj/item/tool)
 			var/mob/living/carbon/human/patient = parent_surgery.patient
@@ -48,7 +48,7 @@
 		desc = "Remove the item."
 		icon_state = "out"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		flags_required = TOOL_CUTTING
+		tool_flags_required = TOOL_CUTTING
 		optional = TRUE
 		on_complete(mob/surgeon, obj/item/tool)
 			var/mob/living/carbon/human/patient = parent_surgery.patient
@@ -63,7 +63,7 @@
 	desc = "Remove the parasite."
 	icon_state = "scalpel"
 	success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-	flags_required = TOOL_CUTTING
+	tool_flags_required = TOOL_CUTTING
 	optional = TRUE
 
 	on_complete(mob/surgeon, obj/item/tool)

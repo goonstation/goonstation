@@ -1461,7 +1461,7 @@
 		..()
 		user.closeContextActions()
 		var/obj/item/I = user.equipped()
-		holder.cancel_surgery_context(surgery,user,I)
+		surgery.cancel(user,I, from_context_menu=TRUE, quiet=FALSE)
 /datum/contextAction/surgery/step_up
 	name = "Back"
 	desc = "Go up a level."
@@ -1475,7 +1475,7 @@
 		..()
 		user.closeContextActions()
 		var/obj/item/I = user.equipped()
-		holder.exit_surgery(surgery,user,I)
+		surgery.step_up(user,I)
 
 
 #define BUNSEN_OFF "off"

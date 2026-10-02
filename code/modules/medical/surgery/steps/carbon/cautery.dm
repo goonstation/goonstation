@@ -30,7 +30,7 @@
 		desc = "Cauterize the head shut."
 		icon_state = "cauterize"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		flags_required = TOOL_CAUTERY
+		tool_flags_required = TOOL_CAUTERY
 
 		do_surgery_step(mob/living/surgeon, obj/item/tool)
 			var/mob/living/carbon/human/patient = parent_surgery.patient
@@ -77,7 +77,7 @@
 		desc = "Cauterize bleeding."
 		icon_state = "cauterize"
 		success_sound = null
-		flags_required = TOOL_CAUTERY | TOOL_WELDING
+		tool_flags_required = TOOL_CAUTERY | TOOL_WELDING
 
 		do_surgery_step(mob/living/surgeon, obj/item/tool)
 			var/mob/living/carbon/human/patient = parent_surgery.patient

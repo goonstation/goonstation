@@ -16,7 +16,7 @@
 		add_next_step(new/datum/surgery_step/item/insert(src))
 		add_next_step(new/datum/surgery_step/item/secure(src))
 		add_simultaneous_step(new/datum/surgery_step/item/remove(src))
-	infer_surgery_stage()
+	check_surgery_stage()
 		var/mob/living/carbon/human/C = patient
 		var/item_present = (C.chest_item != null)
 		surgery_steps[1].finished = item_present

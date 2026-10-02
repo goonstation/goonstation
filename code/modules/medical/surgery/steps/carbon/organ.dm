@@ -8,7 +8,7 @@
 		desc = "Cut through the neck."
 		icon_state = "scalpel"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		flags_required = TOOL_CUTTING
+		tool_flags_required = TOOL_CUTTING
 		on_complete(mob/surgeon, obj/item/tool)
 			var/mob/living/carbon/human/patient = parent_surgery.patient
 			surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> cuts the skin of [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] neck open with [tool]!"),\
@@ -20,7 +20,7 @@
 		desc = "Cut through the remaining tissues."
 		icon_state = "scalpel"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		flags_required = TOOL_CUTTING
+		tool_flags_required = TOOL_CUTTING
 		fail_damage = 20
 		on_complete(mob/surgeon, obj/item/tool)
 			var/mob/living/carbon/human/patient = parent_surgery.patient
@@ -33,7 +33,7 @@
 		desc = "Saw through the neck."
 		icon_state = "saw"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		flags_required = TOOL_SAWING
+		tool_flags_required = TOOL_SAWING
 		on_complete(mob/surgeon, obj/item/tool)
 			var/mob/living/carbon/human/patient = parent_surgery.patient
 			surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> severs most of [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] neck with [tool]!"),\
@@ -45,7 +45,7 @@
 		desc = "Remove the head."
 		icon_state = "saw"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		flags_required = TOOL_SAWING
+		tool_flags_required = TOOL_SAWING
 		fail_damage = 20
 		on_complete(mob/surgeon, obj/item/tool)
 			var/mob/living/carbon/human/patient = parent_surgery.patient
@@ -64,7 +64,7 @@
 			desc = "Loosen the head from the neck."
 			icon_state = "wrench"
 			success_sound = 'sound/items/Screwdriver.ogg'
-			flags_required = TOOL_WRENCHING
+			tool_flags_required = TOOL_WRENCHING
 			success_damage = 0
 			on_complete(mob/surgeon, obj/item/tool)
 				var/mob/living/carbon/human/C = parent_surgery.patient
@@ -78,7 +78,7 @@
 			desc = "Pry the head loose."
 			icon_state = "crowbar"
 			success_sound = 'sound/items/Screwdriver.ogg'
-			flags_required = TOOL_PRYING
+			tool_flags_required = TOOL_PRYING
 			success_damage = 0
 			on_complete(mob/surgeon, obj/item/tool)
 				var/mob/living/carbon/human/C = parent_surgery.patient
@@ -92,7 +92,7 @@
 			desc = "Remove the head."
 			icon_state = "wrench"
 			success_sound = 'sound/items/Ratchet.ogg'
-			flags_required = TOOL_WRENCHING
+			tool_flags_required = TOOL_WRENCHING
 			success_damage = 0
 			on_complete(mob/surgeon, obj/item/tool)
 				var/mob/living/carbon/human/C = parent_surgery.patient
@@ -109,7 +109,7 @@
 		desc = "Cut through the flesh."
 		icon_state = "scalpel"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		flags_required = TOOL_CUTTING
+		tool_flags_required = TOOL_CUTTING
 		on_complete(mob/surgeon, obj/item/tool)
 			var/mob/living/carbon/human/patient = parent_surgery.patient
 			surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> cuts through [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] flesh with [tool]!"),\
@@ -125,7 +125,7 @@
 		visible = FALSE
 		repeatable = TRUE
 		success_damage = 0
-		tools_required = list(/obj/item/hemostat)
+		tool_types_required = list(/obj/item/hemostat)
 		on_complete(mob/surgeon, obj/item/tool)
 			var/mob/living/carbon/human/patient = parent_surgery.patient
 			surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> begins clamping the bleeders in [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] incision with [src]."),\
@@ -157,7 +157,7 @@
 		desc = "Disconnect the organ."
 		icon_state = "scissor"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		flags_required = TOOL_SNIPPING
+		tool_flags_required = TOOL_SNIPPING
 		on_complete(mob/surgeon, obj/item/tool)
 			var/obj/item/organ/O = parent_surgery.patient.organHolder.vars[affected_organ]
 			var/mob/living/carbon/human/C = parent_surgery.patient
@@ -170,7 +170,7 @@
 		desc = "Cut connective tissues from the organ."
 		icon_state = "scalpel"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		flags_required = TOOL_CUTTING
+		tool_flags_required = TOOL_CUTTING
 		on_complete(mob/surgeon, obj/item/tool)
 			var/obj/item/organ/O = parent_surgery.patient.organHolder.vars[affected_organ]
 			var/mob/living/carbon/human/C = parent_surgery.patient
@@ -183,7 +183,7 @@
 		desc = "Remove the organ."
 		icon_state = "scalpel"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		flags_required = TOOL_CUTTING
+		tool_flags_required = TOOL_CUTTING
 		on_complete(mob/surgeon, obj/item/tool)
 			var/patient = parent_surgery.patient
 			var/obj/item/organ/O = parent_surgery.patient.organHolder.vars[affected_organ]
@@ -193,14 +193,14 @@
 			logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(patient,"combat")]'s [affected_organ].")
 			parent_surgery.patient.organHolder.drop_organ(affected_organ)
 		saw
-			flags_required = TOOL_SAWING
+			tool_flags_required = TOOL_SAWING
 			icon_state = "saw"
 	saw
 		name = "Saw"
 		desc = "Saw through the organ."
 		icon_state = "saw"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		flags_required = TOOL_SAWING
+		tool_flags_required = TOOL_SAWING
 		on_complete(mob/surgeon, obj/item/tool)
 			var/obj/item/organ/O = parent_surgery.patient.organHolder.vars[affected_organ]
 			var/mob/living/carbon/human/C = parent_surgery.patient
@@ -237,7 +237,7 @@
 			desc = "Dislodge the eye."
 			icon_state = "scalpel"
 			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-			flags_required = TOOL_SPOONING
+			tool_flags_required = TOOL_SPOONING
 			on_complete(mob/surgeon, obj/item/tool)
 				var/patient = parent_surgery.patient
 				surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> inserts [tool] into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] [target_side] eye socket!"),\
@@ -249,7 +249,7 @@
 			desc = "Cut the optic nerve."
 			icon_state = "scalpel"
 			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-			flags_required = TOOL_CUTTING
+			tool_flags_required = TOOL_CUTTING
 			on_complete(mob/surgeon, obj/item/tool)
 				var/patient = parent_surgery.patient
 				surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> cuts away the flesh holding [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] right eye in with [tool]!"),\
@@ -262,7 +262,7 @@
 			icon_state = "scalpel"
 			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
 			fail_damage = 20
-			flags_required = TOOL_SPOONING
+			tool_flags_required = TOOL_SPOONING
 			on_complete(mob/surgeon, obj/item/tool)
 				var/mob/living/patient = parent_surgery.patient
 				surgeon.tri_message(patient, SPAN_ALERT("<b>[surgeon]</b> removes [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] [target_side] eye with [tool]!"),\
@@ -277,7 +277,7 @@
 			desc = "Cut around the scalp."
 			icon_state = "scalpel"
 			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-			flags_required = TOOL_CUTTING
+			tool_flags_required = TOOL_CUTTING
 			on_complete(mob/surgeon, obj/item/tool)
 				var/mob/living/carbon/human/C = parent_surgery.patient
 				surgeon.tri_message(C, SPAN_ALERT("<b>[surgeon]</b> cuts [C == surgeon ? "[his_or_her(C)]" : "[C]'s"] head open with [tool]!"),\
@@ -290,7 +290,7 @@
 			icon_state = "scalpel"
 			desc = "Disconnect the brain."
 			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-			flags_required = TOOL_CUTTING
+			tool_flags_required = TOOL_CUTTING
 			on_complete(mob/surgeon, obj/item/tool)
 				var/mob/living/carbon/human/C = parent_surgery.patient
 				if (C.organHolder.brain)
@@ -307,7 +307,7 @@
 			desc = "Saw through the skull."
 			icon_state = "saw"
 			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-			flags_required = TOOL_SAWING
+			tool_flags_required = TOOL_SAWING
 			on_complete(mob/surgeon, obj/item/tool)
 				var/mob/living/carbon/human/C = parent_surgery.patient
 				var/missing_fluff = ""
@@ -322,7 +322,7 @@
 			desc = "Remove the brain, or open the cavity."
 			icon_state = "saw"
 			success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-			flags_required = TOOL_SAWING
+			tool_flags_required = TOOL_SAWING
 			on_complete(mob/surgeon, obj/item/tool)
 				var/mob/living/carbon/human/C = parent_surgery.patient
 				if (C.organHolder.brain)
@@ -349,7 +349,7 @@
 	on_complete(mob/surgeon, obj/item/tool)
 		var/obj/item/organ/O = tool
 		O.attach_organ(parent_surgery.patient, surgeon)
-	tool_requirement(mob/surgeon, obj/item/tool)
+	tool_suitable(mob/surgeon, obj/item/tool)
 		if (istype(tool, /obj/item/organ))
 			var/obj/item/organ/O = tool
 			if (O.organ_holder_name == affected_organ)
@@ -363,17 +363,17 @@
 
 	eye
 
-		tool_requirement(mob/surgeon, obj/item/tool)
+		tool_suitable(mob/surgeon, obj/item/tool)
 			var/obj/item/organ/O = tool
 			if (O.can_attach_organ(parent_surgery.patient, surgeon))
 				return TRUE
-		tools_required = list(/obj/item/organ/eye)
+		tool_types_required = list(/obj/item/organ/eye)
 	skull
-		tool_requirement(mob/surgeon, obj/item/tool)
+		tool_suitable(mob/surgeon, obj/item/tool)
 			var/obj/item/organ/O = tool
 			if (O.can_attach_organ(parent_surgery.patient, surgeon))
 				return TRUE
-		tools_required = list(/obj/item/skull)
+		tool_types_required = list(/obj/item/skull)
 
 
 /datum/surgery_step/organ/skeleton_tail
@@ -382,7 +382,7 @@
 		desc = "Remove the tail."
 		icon_state = "crowbar"
 		success_sound = 'sound/items/Crowbar.ogg'
-		flags_required = TOOL_PRYING
+		tool_flags_required = TOOL_PRYING
 		success_damage = 0
 		can_fail = FALSE
 		on_complete(mob/surgeon, obj/item/tool)
@@ -404,7 +404,7 @@
 		desc = "Cut the skull from the flesh."
 		icon_state = "scalpel"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		flags_required = TOOL_CUTTING
+		tool_flags_required = TOOL_CUTTING
 		on_complete(mob/surgeon, obj/item/tool)
 			var/mob/living/carbon/human/patient = parent_surgery.patient
 			if (patient.organHolder.skull)
@@ -422,7 +422,7 @@
 		desc = "Remove the skull."
 		icon_state = "saw"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		flags_required = TOOL_SAWING
+		tool_flags_required = TOOL_SAWING
 		on_complete(mob/surgeon, obj/item/tool)
 			var/mob/living/carbon/human/patient = parent_surgery.patient
 			if (patient.organHolder.skull)
