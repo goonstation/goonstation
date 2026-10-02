@@ -110,4 +110,4 @@ TYPEINFO(/datum/component/tameable)
 	if(!aggro_mode)
 		return
 	if(M in owner.friends)
-		return FALSE
+		return TRUE
