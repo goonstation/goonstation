@@ -571,7 +571,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 	name = "HAPPY CHEF Dispense-o-tronic"
 	desc = "It's covered in a thin layer of acrid-smelling dust. The contents probably taste more like preservatives than whatever they're supposed to be."
 	dispensable_reagents = list("ketchup","mustard","salt","pepper","gravy","chocolate","chocolate_milk","strawberry_milk","milk")
-	icon_state = "ched_dispenser"
+	icon_state = "chef_dispenser"
 	icon_base = "chef_dispenser"
 	glass_path = /obj/item/reagent_containers/food/drinks
 	glass_name = "bottle"
