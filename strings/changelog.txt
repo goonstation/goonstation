@@ -1,5 +1,9 @@
 
 (t)fri oct 02 26
+(u)LorrMaster
+(p)27995
+(e)🧱|A-Materials
+(+)Cotton has been set as the default material for various objects.
 (u)Erinexx & Temthrush
 (p)27938
 (e)🎨❗🚗|C-Sprites, E-FUCK, A-Vehicles
