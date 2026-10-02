@@ -575,7 +575,7 @@
 	c_flags = EQUIPPED_WHILE_HELD
 	force = MELEE_DMG_RIFLE
 	contraband = 5
-	ammo_cats = list(AMMO_SHOTGUN_AUTOMATIC)
+	ammo_cats = list(AMMO_SHOTGUN_ALL)
 	max_ammo_capacity = 4
 	auto_eject = FALSE
 	can_dual_wield = TRUE
@@ -589,7 +589,6 @@
 	has_fire_anim_state = TRUE
 	fire_animation = TRUE
 	fire_anim_state = "reclaimshotty_fire"
-	ammo_cats = list(AMMO_SHOTGUN_ALL)
 	HELP_MESSAGE_OVERRIDE({"Unlike other pump-action shotguns, this may be loaded with improvised ammunition."})
 
 	update_icon()
