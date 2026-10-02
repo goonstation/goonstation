@@ -1,5 +1,9 @@
 
 (t)fri oct 02 26
+(u)Cheekybrdy
+(p)27882
+(e)🗺💡|A-Mapping, A-Station-Systems
+(+)Syndicate hideouts can now be tailored for the whims of a mad doctor.
 (u)LorrMaster
 (p)27602
 (e)🆕🎨🧱🤖|C-Feature, C-Sprites, A-Materials, A-Silicons
