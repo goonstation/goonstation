@@ -1,5 +1,9 @@
 
 (t)fri oct 02 26
+(u)ANNmagedon
+(p)27972
+(e)|
+(*)The atmospheric technician has been rehired! (as a gimmick job)
 (u)LorrMaster
 (p)27548
 (e)🎨🧱|C-Sprites, A-Materials
