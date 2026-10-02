@@ -1,0 +1,1 @@
+/obj/pool{icon_state="pool_ladder"} : /obj/pool/ladder{@OLD;density=@SKIP;dir=@SKIP;icon=@SKIP;icon_state=@SKIP;name=@SKIP}
