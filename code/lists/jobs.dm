@@ -67,6 +67,15 @@ var/list/page_teams = list(
 	all_jobs += "Staff Assistant"
 	return all_jobs
 
+var/list/station_jobs = list(
+	command_jobs,
+	security_jobs,
+	engineering_jobs,
+	medical_jobs,
+	science_jobs,
+	service_jobs
+)
+
 var/list/command_jobs = list(
 	"Captain",
 	"Medical Director",

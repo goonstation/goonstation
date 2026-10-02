@@ -119,7 +119,12 @@
 
 
 /// Global lookup proc for access levels based on a job string (e.g. "Captain")
-/proc/get_access(job)
+/proc/get_access(job, var/skele_called = FALSE)
+
+	if(skeleton_crew && skele_called == FALSE)
+		skele_called = TRUE // AKA bypass this next time to grab default access
+		return get_access(job, TRUE) + get_skeleton_accesses(job)
+
 	switch(job)
 		if("Nanotrasen Responder")
 			return get_all_accesses() + list(access_centcom)
@@ -268,6 +273,7 @@
 		else
 			return list()
 
+
 /proc/get_all_accesses()  // not adding the special stuff to this
 #if defined(I_MEAN_ALL_ACCESS)
 	return access_all_actually
@@ -286,6 +292,15 @@
 				access_research, access_research_director, access_sysadmin, access_engineering_atmos, access_medical_director,
 				access_researchfoyer, access_telesci, access_artlab, access_robotdepot, access_money, access_pharmacy)
 #endif
+
+// Lists used here are in the department's respective job file
+/proc/get_skeleton_accesses(job)
+	var/skeleton_list = null
+	for(var/list/l in station_jobs)
+		for(var/datum/job/j in l)
+			if (job == j.access_string)
+				skeleton_list = j.alt_access
+	return skeleton_list
 
 // Generated at round start.
 var/list/access_name_lookup = null

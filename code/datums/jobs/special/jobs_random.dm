@@ -48,6 +48,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	wages = PAY::UNTRAINED
 	trait_list = list("training_chef")
 	access_string = "Sous-Chef"
+	alt_access = ACCESS.SKELETON:DEPARTMENT:CIVILIAN
 	requires_supervisor_job = "Chef"
 	slot_belt = list(/obj/item/device/pda2/chef)
 	slot_jump = list(/obj/item/clothing/under/misc/souschef)
@@ -62,6 +63,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	name = "Hall Monitor"
 	wages = PAY::UNTRAINED
 	access_string = "Hall Monitor"
+	alt_access = ACCESS:SKELETON:DEPARTMENT:SECURITY
 	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY)
 	badge = /obj/item/clothing/suit/security_badge/paper
 	slot_belt = list(/obj/item/device/pda2)
@@ -86,6 +88,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	wages = PAY::IMPORTANT
 	trait_list = list("training_medical", "training_partysurgeon")
 	access_string = "Medical Specialist"
+	alt_access = ACCESS:SKELETON:DEPARTMENT:MEDICAL
 	slot_card = /obj/item/card/id/medical
 	slot_belt = list(/obj/item/storage/belt/medical/prepared)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
@@ -123,6 +126,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	name = "VIP"
 	wages = PAY::EXECUTIVE
 	access_string = "VIP"
+	alt_access = ACCESS:SKELETON:DEPARTMENT:COMMAND
 	ui_colour = TGUI_COLOUR_RED
 	request_cost = PAY::EMBEZZLED * 4 // they're on the take
 	slot_jump = list(/obj/item/clothing/under/suit/black)
@@ -150,6 +154,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	ui_colour = /datum/job/special/nt::ui_colour
 	request_cost = PAY::EXECUTIVE * 4
 	access_string = "Inspector"
+	alt_access = ACCESS:SKELETON:DEPARTMENT:COMMAND
 	receives_miranda = TRUE
 	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY)
 	badge = /obj/item/clothing/suit/security_badge/nanotrasen
@@ -323,6 +328,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	name = "Apiculturist"
 	wages = PAY::TRADESMAN
 	access_string = "Apiculturist"
+	alt_access = ACCESS:SKELETON:DEPARTMENT:CIVILIAN
 	slot_jump = list(/obj/item/clothing/under/rank/beekeeper)
 	slot_suit = list(/obj/item/clothing/suit/hazard/beekeeper)
 	slot_head = list(/obj/item/clothing/head/bio_hood/beekeeper)
@@ -358,6 +364,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	name = "Angler"
 	wages = PAY::TRADESMAN
 	access_string = "Rancher"
+	alt_access = ACCESS:SKELETON:DEPARTMENT:CIVILIAN
 	slot_jump = list(/obj/item/clothing/under/rank/angler)
 	slot_head = list(/obj/item/clothing/head/black)
 	slot_foot = list(/obj/item/clothing/shoes/galoshes/waders)
@@ -374,6 +381,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	request_limit = 1 // limited workspace
 	trait_list = list("training_therapy")
 	access_string = "Psychiatrist"
+	alt_access = ACCESS:SKELETON:DEPARTMENT:MEDICAL
 	slot_eyes = list(/obj/item/clothing/glasses/regular)
 	slot_card = /obj/item/card/id/medical
 	slot_belt = list(/obj/item/device/pda2/medical)
@@ -414,6 +422,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 /datum/job/special/random/pestcontrol
 	name = "Pest Control Specialist"
 	wages = PAY::UNTRAINED
+	alt_access = ACCESS:SKELETON:DEPARTMENT:CIVILIAN // Get some mousetraps from janitor
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_jump = list(/obj/item/clothing/under/gimmick/safari)
 	slot_head = list(/obj/item/clothing/head/safari)
@@ -431,6 +440,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	name = "Pod Mechanic"
 	#endif
 	wages = PAY::TRADESMAN
+	alt_access = ACCESS:SKELETON:DEPARTMENT:ENGINEERING
 	trait_list = list("training_engineer")
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_jump = list(/obj/item/clothing/under/rank/mechanic)

@@ -2,6 +2,7 @@ ABSTRACT_TYPE(/datum/job/medical)
 /datum/job/medical
 	ui_colour = TGUI_COLOUR_PINK
 	slot_card = /obj/item/card/id/medical
+	alt_access = ACCESS:SKELETON:DEPARTMENT:MEDICAL
 	job_category = JOB_MEDICAL
 	email_group = MGD_MEDICAL
 

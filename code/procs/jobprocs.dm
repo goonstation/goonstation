@@ -48,6 +48,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 	set background = 1
 
 	var/list/unassigned = list()
+	var/skeleton_crew_threshold = 20 //when do we give extra access to keep the station functioning on lower populations?
 
 	for (var/client/C)
 		var/mob/new_player/player = C.mob
@@ -60,6 +61,11 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		if (player.ready_play && !player.mind.assigned_role)
 			unassigned += player
 	var/inital_ready = length(unassigned) // Doing this here cause other job allocations take away
+	if(inital_ready <= skeleton_crew_threshold)
+		skeleton_crew = TRUE
+	var/job_list = get_all_jobs()
+	for(var/datum/job/job in job_list)
+		job.acquire_access()
 	var/percent_readied_up = length(clients) ? (length(unassigned)/length(clients)) * 100 : 0
 	logTheThing(LOG_DEBUG, null, "<b>Aloe</b>: roughly [percent_readied_up]% of players were readied up at roundstart (blobs and wraiths don't count).")
 
@@ -300,6 +306,8 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 		SPAWN(1 SECOND)
 			announce_heads_of_staff()
 	boutput(src, "<B>You are the [JOB.name].</B>")
+	if(skeleton_crew)
+		boutput(src, "<B>The station is currently being staffed by a skeleton crew, your ID may have additional access within your department.</B>")
 	src.job = JOB.name
 	src.mind.assigned_role = JOB.name
 
@@ -810,7 +818,10 @@ Equip items from body traits.
 		C.registered = realName
 		C.assignment = JOB.name
 		C.name = "[C.registered]’s ID Card ([C.assignment])"
-		C.access = JOB.access.Copy()
+		if(skeleton_crew)
+			C.access = JOB.access.Copy()
+		else
+			C.access = JOB.alt_access.Copy()
 		C.pronouns = src.get_pronouns()
 
 		if(!src.equip_if_possible(C, SLOT_WEAR_ID))

@@ -55,6 +55,7 @@ ABSTRACT_TYPE(/datum/job/daily)
 	name = "Waiter"
 	wages = PAY::UNTRAINED
 	access_string = "Waiter"
+	alt_access = ACCESS:SKELETON:DEPARTMENT:CIVILIAN
 	slot_belt = list(/obj/item/device/pda2/chef)
 	slot_jump = list(/obj/item/clothing/under/rank/bartender)
 	slot_suit = list(/obj/item/clothing/suit/wcoat)

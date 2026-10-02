@@ -94,6 +94,9 @@ var/global
 	/// Areas built anew belong to a single unconnected zone, which gives its turfs over to other expandable areas when contacting them
 	area/unconnected_zone/unconnected_zone = new
 
+	/// Lower pop mode setting
+	skeleton_crew = FALSE
+
 	/// Contains objects in ID-based switched object groups, such as blinds and their switches
 	list/switched_objs = list()
 
