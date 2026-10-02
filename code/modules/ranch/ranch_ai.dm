@@ -123,18 +123,18 @@
 				if(!holder.target)
 					return ..() // try again next tick
 
-			if(!messaged)
-				if(prob(10))
-					var/mob/living/critter/small_animal/ranch_base/C = owncritter
-					if(istype(C))
-						C.visible_message(SPAN_ALERT("[C] cries out in fear!"))
-						C.gossip(M)
-						messaged = 1
-
 		var/dist = get_dist(owncritter, holder.target)
 		if (dist > target_range)
 			holder.target = null
 			return ..()
+
+		if(!messaged)
+			if(prob(10))
+				var/mob/living/critter/small_animal/ranch_base/C = owncritter
+				if(istype(C))
+					C.visible_message(SPAN_ALERT("[C] cries out in fear!"))
+					C.gossip()
+					messaged = 1
 
 		holder.move_away(holder.target,target_range)
 		var/mob/living/critter/small_animal/ranch_base/C = owncritter
@@ -245,7 +245,7 @@
 				var/mob/living/critter/small_animal/ranch_base/C = owncritter
 				if(istype(C))
 					C.visible_message(SPAN_ALERT("[C] cries out in anger!"))
-					C.gossip(M)
+					C.gossip()
 					messaged = 1
 
 		var/dist = get_dist(owncritter, M)
