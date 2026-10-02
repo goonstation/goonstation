@@ -33823,6 +33823,7 @@
 	dir = 1;
 	status = 2
 	},
+/obj/item/toy/gooncode,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "ukZ" = (

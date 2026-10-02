@@ -569,7 +569,7 @@ TYPEINFO(/obj/submachine/poster_creator)
 			if (!istype(R))
 				boutput(usr, SPAN_ALERT("No record found for \"[ptext]\"."))
 				return
-			var/datum/computer/file/image/IMG = R["file_photo"]
+			var/datum/computer/file/image/IMG = R["photo"]
 			if (!istype(IMG) || !IMG.ourIcon)
 				boutput(usr, SPAN_ALERT("No photo exists on file for \"[ptext]\"."))
 				return
