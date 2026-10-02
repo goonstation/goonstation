@@ -144,7 +144,7 @@
 
 		src.check_power()
 
-	set_face(var/emotion)
+	set_face(var/emotion, var/key, var/apply_glass_material = FALSE)
 		src.overlays.len = 0
 		if(src.stat || src.malf)
 			if(isdead(src))
