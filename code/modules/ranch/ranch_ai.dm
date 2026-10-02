@@ -207,7 +207,7 @@
 			for(var/mob/M in view(target_range,C))
 				if(!isdead(M))
 					if(!(M in C.my_friends))
-						if(C.faction && M.faction)
+						if(C.faction)
 							if(!faction_check(C, M))
 								return FALSE
 						if(!istype(M,C.species_type))
@@ -301,7 +301,7 @@
 			for(var/mob/M in view(target_range,C))
 				if(!isdead(M))
 					if(!(M in C.my_friends))
-						if(C.faction && M.faction)
+						if(C.faction)
 							if(!faction_check(C, M))
 								return
 						if(!istype(M,C.species_type))
