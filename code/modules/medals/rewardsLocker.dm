@@ -1166,6 +1166,7 @@ ABSTRACT_TYPE(/datum/achievementReward)
 	desc = "Receive a hat that shows your love of space relics."
 	required_medal = "Licensed Archaeologist"
 	once_per_round = TRUE
+	COPY_ATOM_ICON(/obj/item/clothing/head/safari/artsci)
 
 	rewardActivate(var/mob/activator)
 		var/hat = new/obj/item/clothing/head/safari/artsci(get_turf(activator))
