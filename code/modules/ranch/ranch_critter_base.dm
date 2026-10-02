@@ -276,7 +276,10 @@
 						RegisterSignal(M, COMSIG_MOB_DEATH, PROC_REF(cleanup_lists))
 						src.ai.stop_move()
 						src.ai.interrupt()
-						if(src.forgiving || (src.forgive_species && istype(M,src.species_type) && !faction_check(src, M)))
+						if(src.faction)
+							if(!faction_check(src, M))
+								return
+						if(src.forgiving || (src.forgive_species && istype(M,src.species_type)))
 							SPAWN(forgive_timer SECONDS)
 								src.update_shitlist(M,TRUE)
 
