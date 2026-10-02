@@ -29,8 +29,8 @@ ABSTRACT_TYPE(/datum/computer/file/terminal_program/db_manager)
 	src.current_menu?.unload()
 	src.current_menu = null
 
-	for (var/datum/db_manager_menu/menu as anything in src.menus)
-		qdel(menu)
+	for (var/menu_id as anything in src.menus)
+		qdel(src.menus[menu_id])
 
 	src.menus = null
 	. = ..()

@@ -21,6 +21,8 @@
 		var/list/datum/db_record/linked_records = src.parent.current_record_group.get_linked_records(record)
 		for (var/db_id as anything in linked_records)
 			var/datum/db_record/db_record = linked_records[db_id]
+			if (!istype(db_record))
+				continue
 
 			for (var/key as anything in src.parent.current_record_group.keys_to_search_by_db[db_id])
 				haystack += ckey("[db_record[key]]") + " "
