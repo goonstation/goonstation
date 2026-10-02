@@ -2149,7 +2149,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 			if (istype(checked_item, /obj/item/raw_material/shard))
 				var/obj/item/raw_material/shard/S = checked_item // fix for duplication glitch because someone may have forgot to assign M to S, whoops!
 				src.bleed += 1
-				if (S && (S.material.hasProperty("hard") || istype(S, /obj/item/raw_material/shard/plasmacrystal)))
+				if (S && (S.material.hasProperty(MATERIAL::PROPERTY::HARDNESS) || istype(S, /obj/item/raw_material/shard/plasmacrystal)))
 					src.bleed += 1
 			if (istype(checked_item, /obj/item/raw_material/telecrystal))
 				src.tele += 2

@@ -355,9 +355,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		//if (istype(A, /obj/item/graviton_grenade))
 			//src.warp = 100
 		if (istype(A.material))
-			gain += A.material.getProperty("density") * 3 * A.material_amt
-			gain += A.material.getProperty("radioactive") * 4 * A.material_amt
-			gain += A.material.getProperty("n_radioactive") * 6 * A.material_amt
+			gain += A.material.getProperty(MATERIAL::PROPERTY::DENSITY) * 3 * A.material_amt
+			gain += A.material.getProperty(MATERIAL::PROPERTY::RADS) * 4 * A.material_amt
+			gain += A.material.getProperty(MATERIAL::PROPERTY::RADS_NEUTRON) * 6 * A.material_amt
 			if(isitem(A))
 				var/obj/item/I = A
 				gain *= min(I.amount, INFINITY)
@@ -482,7 +482,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	for (var/turf/T in orange(radius+EVENT_GROWTH+0.5, sing_center))
 		if (prob(70))
 			continue
-		if (T.material?.getProperty("density") >= 7)
+		if (T.material?.getProperty(MATERIAL::PROPERTY::DENSITY) >= 7)
 			continue
 		if (T && !istype(T, /turf/space) && (IN_EUCLIDEAN_RANGE(sing_center, T, radius+EVENT_GROWTH+0.5)))
 			if (issimulatedturf(T))

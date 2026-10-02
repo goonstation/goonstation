@@ -304,7 +304,7 @@ ABSTRACT_TYPE(/obj/item)
 		..()
 		tooltip_rebuild = TRUE
 		if (istype(src.material))
-			burn_possible = src.material.getProperty("flammable") > 1 ? TRUE : FALSE
+			burn_possible = src.material.getProperty(MATERIAL::PROPERTY::FLAMMABLE) > 1 ? TRUE : FALSE
 			if (src.material.getMaterialFlags() & (MATERIAL_METAL | MATERIAL_CRYSTAL | MATERIAL_RUBBER))
 				burn_remains = BURN_REMAINS_MELT
 			else
