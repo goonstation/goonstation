@@ -9,10 +9,8 @@ import { useState } from 'react';
 import {
   BlockQuote,
   Button,
-  Dimmer,
   Image,
   Input,
-  Modal,
   Section,
   Stack,
   Table,
@@ -21,14 +19,16 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { filter } from 'common/collections';
 
 interface MedalRewardsData {
   rewards: RewardData[];
   categories: string[];
-  eligible_rewards: string[];
-  ineligible_rewards: Record<string, string>;
+  ineligible_rewards: UnavailableRewardData[];
   user_medals: string[];
+}
+interface UnavailableRewardData {
+  type: string;
+  reason: string;
 }
 
 interface RewardData {
@@ -58,7 +58,9 @@ export const MedalRewards = () => {
     .filter(
       (reward) =>
         !filterAvailable ||
-        data.eligible_rewards.find((type) => reward.type === type),
+        !data.ineligible_rewards.find(
+          (ineligible_reward) => ineligible_reward.type === reward.type,
+        ),
     )
     .filter((reward) =>
       (reward.title + reward.desc + reward.medal)
@@ -135,12 +137,12 @@ const ICON_SIZE = '48px';
 const Reward = (props: RewardProps) => {
   const { act, data } = useBackend<MedalRewardsData>();
   const { reward } = props;
+  const ineligible_reason = data.ineligible_rewards.find(
+    (ineligible_reward) => ineligible_reward.type === reward.type,
+  )?.reason;
   return (
     <Table.Row className="candystripe">
       <Section>
-        {!data.eligible_rewards.find((type) => reward.type === type) && (
-          <Modal>{data.ineligible_rewards[reward.type]}</Modal>
-        )}
         <Stack py="5px" align="center">
           <Stack.Item>
             <Image width={ICON_SIZE} height={ICON_SIZE} src={reward.icon} />
@@ -156,8 +158,13 @@ const Reward = (props: RewardProps) => {
               {reward.desc}
             </BlockQuote>
           </Stack.Item>
-          <Stack.Item>
-            <Button onClick={() => act('redeem', { reward_type: reward.type })}>
+          <Stack.Item pr="5px">
+            <Button
+              color={ineligible_reason ? 'grey' : 'green'}
+              disabled={!!ineligible_reason}
+              tooltip={ineligible_reason}
+              onClick={() => act('redeem', { reward_type: reward.type })}
+            >
               Redeem
             </Button>
           </Stack.Item>

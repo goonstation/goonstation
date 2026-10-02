@@ -47,14 +47,17 @@
 		if(!ineligible_reason)
 			eligible_rewards += reward_type
 			continue
-		ineligible_reasons += list(list(reward.type = ineligible_reason))
+		ineligible_reasons += list(list(
+			"type" = reward.type,
+			"reason" = ineligible_reason
+			))
 	.["eligible_rewards"] = eligible_rewards
 	.["ineligible_rewards"] = ineligible_reasons
 	.["user_medals"] = user.mind.get_player().get_all_medals()
 
 /datum/medal_rewards/proc/user_ineligible_for(var/mob/user, var/datum/achievementReward/reward)
 	if(!user?.ckey || !istype(reward)) return "You don't have a ckey or that's not a reward!"
-	if(!user.has_medal(reward.required_medal)) return "You do not have the medal required for that reward!" //Handles our lagcheck. //TODO: Check if not SPAWNing this breaks everything
+	if(!user.has_medal(reward.required_medal)) return "You do not have the medal required for that reward!" // Should never show, the UI filters them.
 	if(reward.once_per_round && user.mind.get_player().claimed_rewards.Find(reward.type)) return "You can only claim that reward once per round!"
 	if(reward.mobonly && !isliving(user)) return "You must be alive to claim that reward!"
 	return FALSE
@@ -67,14 +70,14 @@
 			return src.try_redeem_reward(ui.user, text2path(params["reward_type"]))
 
 /datum/medal_rewards/proc/try_redeem_reward(var/mob/user, var/reward_type)
-	var/datum/achievementReward/reward = global.rewardDB[reward_type] //TODO: reward_type being a string here breaks this
+	var/datum/achievementReward/reward = global.rewardDB[reward_type]
 	if(!istype(user) || !istype(reward))
 		return FALSE
 	var/error_text = src.user_ineligible_for(user, reward)
 	if(error_text)
 		boutput(user, SPAN_ALERT(error_text))
 		return FALSE
-	if(!tgui_confirm(user, "Redeem [reward.title]? \n(Earned through the \"[reward.required_medal]\" Medal)"))
+	if(!tgui_confirm(user, "Redeem [reward.title]? (Earned through the \"[reward.required_medal]\" Medal)"))
 		return FALSE
 	if (reward.rewardActivate(user))
 		boutput(user, SPAN_ALERT("Successfully claimed \"[reward.title]\"."))
