@@ -1915,7 +1915,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	/// The path to the sound played when the shotgun is pushed forwards, if is_heavy
 	var/pushsound = FALSE
 	/// The delay between racking this gun
-	var/rack_delay = 0.
+	var/rack_delay = 0
 	/// The racking icon
 	var/rack_state = null
 
