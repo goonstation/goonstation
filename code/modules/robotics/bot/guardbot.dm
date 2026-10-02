@@ -632,10 +632,10 @@
 		if (prints.owner_prints && !loose)
 			var/search = lowertext(prints.owner_prints)
 			for (var/datum/db_record/R as anything in data_core.general.records)
-				if (search == lowertext(R["fingerprint_right"]))
+				if (search == lowertext(R["fprint_r"]))
 					law_prints = R["name"]
 					break
-				else if (search == lowertext(R["fingerprint_left"]))
+				else if (search == lowertext(R["fprint_l"]))
 					law_prints = R["name"]
 					break
 				else if (lowertext(R["rank"]))

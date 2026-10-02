@@ -1,5 +1,83 @@
 
+(t)fri oct 02 26
+(u)ANNmagedon
+(p)27972
+(e)|
+(*)The atmospheric technician has been rehired! (as a gimmick job)
+(u)LorrMaster
+(p)27548
+(e)🎨🧱|C-Sprites, A-Materials
+(+)New sprites for processed materials at different stack sizes.
+(u)Cheekybrdy
+(p)27882
+(e)🗺💡|A-Mapping, A-Station-Systems
+(+)Syndicate hideouts can now be tailored for the whims of a mad doctor.
+(u)LorrMaster
+(p)27602
+(e)🆕🎨🧱🤖|C-Feature, C-Sprites, A-Materials, A-Silicons
+(+)AI core construction maintains material and forensic data.
+(u)LorrMaster
+(p)27995
+(e)🧱|A-Materials
+(+)Cotton has been set as the default material for various objects.
+(u)Erinexx & Temthrush
+(p)27938
+(e)🎨❗🚗|C-Sprites, E-FUCK, A-Vehicles
+(*)Pods and pod components have been resprited.
+(t)thu oct 01 26
+(u)Kubius
+(p)27709
+(e)🗺🌠|A-Mapping, A-Events
+(+)A particular event on Menhir now has additional permutations to encounter.
+(u)TekoTheTeapot + ANNmagedon
+(p)27988
+(e)🎨|C-Sprites
+(*)Central Command has allocated more funds to station inspections, and as such the Inspector has gained a suite of new items.
+(t)wed sep 30 26
+(u)TekoTheTeapot
+(p)27960
+(e)🎨|C-Sprites
+(+)Fixed a few things relating to sprites and inventory of the NT Paramedic.
+(u)Whele
+(p)27959
+(e)🎨🍝📨|C-Sprites, A-Catering, A-Logistics
+(*)Added 13 types of jam, made with sugar and fruit in the KitchenHelper.
+(t)tue sep 29 26
+(u)Mr. Moriarty
+(p)27879
+(e)🔎💅⚙🖥️|C-Code-Quality, C-QoL, A-Internal, A-Computers
+(*)SecMate, MedTrak, and BankBoss have been reworked. Please report any bugs.
+(u)ANNmagedon
+(p)27970
+(e)|
+(+)You can now print empty variant of the brute, burn, toxin, oxygen, brain & mental medkits along an empty doctor's bag in the medical fabricator.
+(t)sat sep 26 26
+(u)Sovexe
+(p)27843
+(e)🗺📄|A-Mapping, A-UI
+(*)The packet sniffer UI has been given a needlessly elaborate hackerman redesign.
+(u)ANNmagedon
+(p)27884
+(e)|
+(+)The angler stamp is now in the fishing supplies vendor for 40 points
+(t)wed sep 23 26
+(u)ANNmagedon + TekoTheTeapot
+(p)27799
+(e)🎨|C-Sprites
+(+)The NT Emergency Repair Technicians have received a brand new armor to help them better fulfill their role.
+(u)ANNmagedon
+(p)27878
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The syndicate flag has finally been recognized as a contraband by NT's systems
+(u)LeahTheTech
+(p)27917
+(e)🆕🎨💨📦|C-Feature, C-Sprites, A-Atmospherics, A-Game-Objects
+(*)Added gorilla assemblies, made by attaching a trigger to a gas tank and then sticking an inflatable gorilla on the end.
 (t)tue sep 22 26
+(u)Sovexe
+(p)27800
+(e)⚗⚙|A-Chemistry, A-Internal
+(*)Added Third Shift Syndrome, a new hallucination-causing condition. It can be suppressed, reversing its progression toward stage 1 and reducing its effects without curing it. Suppressed ailments may also be easier to cure.
 (u)JORJ949
 (p)27698
 (e)🔎🏅|C-Code-Quality, A-Medal
