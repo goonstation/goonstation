@@ -122,8 +122,11 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 	var/grow_duration = 0
 	var/active_duration = 0
 	var/activity_modifier = 1.0 // multiplies how many objects spawn each "tick"
-	var/interdiction_hp = 50 // it's possible to fully suppress them - but not easy
 	var/datum/light/light = null
+	//Interdiction properties
+	var/interdiction_hp = 50 ///How many cycles of successful interdiction are necessary
+	var/itdr_cost_base = 200 ///How many cell units an interdictor must expend to suppress a white hole, at baseline
+	var/itdr_cost_mult = 25 ///How many additional cell units are required for EACH missing interdiction HP
 
 	var/static/list/spawn_probs = list(
 		"artlab" = list(
@@ -970,14 +973,14 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 
 		if(triggered_by_event)
 			//spatial interdictor: attempt to suppress white hole uncollapse, with great difficulty.
-			//50 operational cycles will entirely inhibit uncollapse; base cost of 200 cell units a cycle, +25 per stabilization (up to ~1400 at max)
-			//approx 41k cell units consumed overall
-			var/interdict_cost = 200
+			//current tuning is that 50 operational cycles will entirely inhibit uncollapse; base cost of 200 cell units a cycle,
+			//+25 per stabilization (up to ~1400 units a cycle at max). approx 41k cell units consumed overall
+			var/interdict_cost = src.itdr_cost_base
 			for_by_tcl(IX, /obj/machinery/interdictor)
-				interdict_cost = 200 + ((50 - src.interdiction_hp) * 25)
+				interdict_cost = src.itdr_cost_base + ((initial(src.interdiction_hp) - src.interdiction_hp) * src.itdr_cost_mult)
 				if (IX.expend_interdict(interdict_cost, src))
 					interdicted_this_cycle = TRUE
-					if(src.interdiction_hp >= 50)
+					if(src.interdiction_hp >= initial(src.interdiction_hp))
 						playsound(IX,'sound/machines/alarm_a.ogg',20,FALSE,5,-1.5)
 						IX.visible_message(SPAN_ALERT("<b>[IX] emits an anti-gravitational anomaly warning!</b>"))
 					if(src.state != "active")
