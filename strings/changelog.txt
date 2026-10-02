@@ -1,5 +1,9 @@
 
 (t)fri oct 02 26
+(u)LorrMaster
+(p)27548
+(e)🎨🧱|C-Sprites, A-Materials
+(+)New sprites for processed materials at different stack sizes.
 (u)Cheekybrdy
 (p)27882
 (e)🗺💡|A-Mapping, A-Station-Systems
