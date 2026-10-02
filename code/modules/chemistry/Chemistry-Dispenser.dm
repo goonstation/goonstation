@@ -518,6 +518,8 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 								"coconut_milk", "cola", "juice_cran", "gin", "ginger_ale", "grenadine", "juice_lemon", \
 								"juice_lime", "juice_orange", "juice_pineapple",  "rum", "sugar", \
 								"tea", "tequila", "juice_tomato", "tonic", "vanilla", "vermouth", "vodka", "water", "wine")
+	icon_state = "combined_dispenser"
+	icon_base = "combined_dispenser"
 
 // Dispenses any drink you want. Designed for the afterlife bar
 /obj/machinery/chem_dispenser/alcohol/ultra
@@ -557,8 +559,8 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 	dispensable_reagents = list("cola", "ginger_ale", "juice_lime", "juice_lemon", "juice_orange", \
 								"juice_cran", "juice_cherry", "juice_pineapple", "juice_tomato", \
 								"coconut_milk", "sugar", "water", "vanilla", "tea", "grenadine")
-	icon_state = "alc_dispenser"
-	icon_base = "alc_dispenser"
+	icon_state = "soda_dispenser"
+	icon_base = "soda_dispenser"
 	glass_path = /obj/item/reagent_containers/food/drinks
 	glass_name = "bottle"
 	dispenser_name = "Soda"
@@ -569,8 +571,8 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 	name = "HAPPY CHEF Dispense-o-tronic"
 	desc = "It's covered in a thin layer of acrid-smelling dust. The contents probably taste more like preservatives than whatever they're supposed to be."
 	dispensable_reagents = list("ketchup","mustard","salt","pepper","gravy","chocolate","chocolate_milk","strawberry_milk","milk")
-	icon_state = "alc_dispenser"
-	icon_base = "alc_dispenser"
+	icon_state = "ched_dispenser"
+	icon_base = "chef_dispenser"
 	glass_path = /obj/item/reagent_containers/food/drinks
 	glass_name = "bottle"
 	dispenser_name = "Soda"
