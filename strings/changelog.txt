@@ -1,4 +1,13 @@
 
+(t)thu oct 01 26
+(u)Kubius
+(p)27709
+(e)🗺🌠|A-Mapping, A-Events
+(+)A particular event on Menhir now has additional permutations to encounter.
+(u)TekoTheTeapot + ANNmagedon
+(p)27988
+(e)🎨|C-Sprites
+(*)Central Command has allocated more funds to station inspections, and as such the Inspector has gained a suite of new items.
 (t)wed sep 30 26
 (u)TekoTheTeapot
 (p)27960
