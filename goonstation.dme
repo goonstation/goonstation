@@ -1727,6 +1727,7 @@
 #include "code\modules\mechanics\MechanicsNetworkCon.dm"
 #include "code\modules\mechanics\MechanicsTextToMusicCom.dm"
 #include "code\modules\medals\rewardsAI.dm"
+#include "code\modules\medals\rewardsInterface.dm"
 #include "code\modules\medals\rewardsLocker.dm"
 #include "code\modules\medical\blood_system.dm"
 #include "code\modules\medical\bone_system.dm"
