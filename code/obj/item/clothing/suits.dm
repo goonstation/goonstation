@@ -820,6 +820,8 @@ TYPEINFO(/obj/item/clothing/suit/hazard/paramedic/armored)
 	icon_state = "bedsheet"
 	item_state = "bedsheet"
 	layer = MOB_LAYER
+	default_material = "cotton"
+	material_amt = 3 // Matches materials produced when torn
 	throwforce = 1
 	w_class = W_CLASS_TINY
 	throw_speed = 2
@@ -854,7 +856,6 @@ TYPEINFO(/obj/item/clothing/suit/hazard/paramedic/armored)
 	New()
 		..()
 		src.UpdateIcon()
-		src.setMaterial(getMaterial("cotton"), appearance = FALSE, setname = FALSE)
 
 	attack_hand(mob/user)
 		if (src.bed)

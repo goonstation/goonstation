@@ -220,6 +220,7 @@ TYPEINFO(/obj/submachine/claw_machine)
 	inhand_image_icon = 'icons/mob/inhand/hand_plushie.dmi'
 	icon_state = "bear"
 	desc = "A cute and cuddly plush toy!"
+	default_material = "cotton"
 	throwforce = 3
 	w_class = W_CLASS_BULKY
 	throw_speed = 2
@@ -263,6 +264,7 @@ TYPEINFO(/obj/submachine/claw_machine)
 /obj/item/toy/plush/small/bee
 	name = "bee plush toy"
 	icon_state = "bee"
+	default_material = "beewool"
 
 /obj/item/toy/plush/small/bee/cute
 	name = "super cute bee plush toy"
