@@ -560,16 +560,57 @@
 	stamina_damage = 60
 	stamina_cost = 25
 
-/obj/item/gun/kinetic/pumpweapon/riotgun/salvager
-	name = "reclaimed shotgun"
-	desc = "A pump action shotgun."
-	gildable = FALSE
+/obj/item/gun/kinetic/pumpweapon/salvager
+
+	name = "Reclaimed shotgun"
+	desc = "A mishmash of tool handles, hammered scrap metal & pressure-rated pipes, jury-rigged into a surprisingly capable shotgun."
+	icon = 'icons/obj/items/guns/kinetic.dmi'
+	icon_state = "reclaimshotty_collapsed"
+	item_state = "shotty"
+	wear_state = "shotty" // prevent empty state from breaking the worn image
+	base_icon_state = "reclaimshotty_collapsed"
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	rack_state = "reclaimshotty_pump"
+	flags =  TABLEPASS | CONDUCT | USEDELAY
+	c_flags = EQUIPPED_WHILE_HELD
+	force = MELEE_DMG_RIFLE
+	contraband = 5
+	ammo_cats = list(AMMO_SHOTGUN_ALL)
 	max_ammo_capacity = 4
-	color = list(1.47114,0.473684,-0.473684,-1.4581,-0.473684,1.47368,0.983451,1,5.43476e-007)
+	auto_eject = FALSE
+	can_dual_wield = TRUE
+	two_handed = FALSE
+	has_empty_state = FALSE
+	gildable = FALSE
+	default_magazine = /obj/item/ammo/bullets/abg
+	recoil_strength = 14
+	recoil_inaccuracy_max = 20
+	recoil_max = 40
+	has_fire_anim_state = TRUE
+	fire_animation = TRUE
+	fire_anim_state = "reclaimshotty_fire"
+	HELP_MESSAGE_OVERRIDE({"Unlike other pump-action shotguns, this may be loaded with improvised ammunition."})
+
+	update_icon()
+		..()
+		if (src.equipped_in_slot == SLOT_L_HAND | src.equipped_in_slot == SLOT_R_HAND)
+			icon_state = "reclaimshotty"
+		else
+			icon_state = "reclaimshotty_collapsed"
+
+	equipped(mob/user)
+		..()
+		if (src.equipped_in_slot == SLOT_L_HAND | src.equipped_in_slot == SLOT_R_HAND)
+			icon_state = "reclaimshotty"
+	unequipped(mob/user)
+		..()
+		icon_state = "reclaimshotty_collapsed"
 
 	New()
-		..()
+		ammo = new default_magazine
 		ammo.amount_left = 0
+		set_current_projectile(new/datum/projectile/bullet/abg)
+		..()
 
 
 /obj/item/gun/energy/makeshift/basic_salvager // for salvagers
