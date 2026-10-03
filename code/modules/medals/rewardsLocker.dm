@@ -2,10 +2,11 @@
 	var/title = ""
 	var/desc = ""
 	var/required_medal = null
+	var/claim_text = null //Allows for a custom reason it can be claimed
 	var/once_per_round = 1   //Can only be claimed once per round.
 	var/mobonly = 1 //If the reward can only be redeemed if the player has a /mob/living.
-
-
+	proc/custom_reward_requirement(var/mob/activator)
+		return
 	///Called when the reward is claimed from the locker. Spawn item here / give verbs here / do whatever for reward. Return 1 on success or bugs will happen.
 	proc/rewardActivate(var/mob/activator)
 		boutput(activator, "This reward is undefined. Please inform a coder.")
@@ -1315,8 +1316,14 @@
 		boutput(usr, SPAN_ALERT("Checking your eligibility. There might be a short delay, please wait."))
 		var/list/eligible = list()
 		for(var/A in rewardDB)
+			var/result = null
 			var/datum/achievementReward/D = rewardDB[A]
-			var/result = usr.has_medal(D.required_medal)
+			if(!D.required_medal && D.custom_reward_requirement(src.mob) == "Success")
+				result = 1
+			else if (D.custom_reward_requirement(src.mob) == "Success")
+				result = usr.has_medal(D.required_medal)
+			else if (!D.custom_reward_requirement(src.mob))
+				result = usr.has_medal(D.required_medal)
 			if(result == 1)
 				if((D.once_per_round && !src.player.claimed_rewards.Find(D.type)) || !D.once_per_round)
 					if( D.mobonly && !istype( src.mob, /mob/living ) ) continue
@@ -1349,8 +1356,13 @@
 		if(S.once_per_round && src.player.claimed_rewards.Find(S.type))
 			boutput(usr, SPAN_ALERT("You already claimed this!"))
 			return
-
-		var/confirm = tgui_alert(usr, S.desc + "\n(Earned through the \"[S.required_medal]\" Medal)", "Claim this Reward?", list("Yes", "No"))
+		var/confirm = null
+		if (S.claim_text)
+			confirm = tgui_alert(usr, S.desc + "\n(Earned through [S.claim_text])", "Claim this Reward?", list("Yes", "No"))
+		else if (S.required_medal)
+			confirm = tgui_alert(usr, S.desc + "\n(Earned through the \"[S.required_medal]\" Medal)", "Claim this Reward?", list("Yes", "No"))
+		else
+			confirm = tgui_alert(usr, S.desc, " Claim this Reward?", list("Yes", "No"))
 		src.verbs += /client/verb/claimreward
 		if(confirm == "Yes")
 			var/worked = S.rewardActivate(src.mob)
