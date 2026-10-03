@@ -18,4 +18,4 @@
 	New()
 		. = ..()
 		JobEquipSpawned("Staff Assistant")
-		src.bioHolder.mobAppearance.customizations["hair_bottom"] =  new /datum/customization_style/none
+		src.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM] =  new /datum/customization_style/none

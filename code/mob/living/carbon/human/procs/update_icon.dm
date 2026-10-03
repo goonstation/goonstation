@@ -563,7 +563,7 @@
 	if (src?.organHolder?.head)
 		var/datum/appearanceHolder/AHH = src.bioHolder?.mobAppearance
 		my_head = src.organHolder.head
-		var/y_to_offset = AHH.customizations["hair_bottom"].offset_y
+		var/y_to_offset = AHH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].offset_y
 
 		if(my_head.head_image_nose)
 			AddOverlays(my_head.head_image_nose, "nose", TRUE)
@@ -597,58 +597,58 @@
 
 		//Previously we shoved all the hair images into the overlays of two images (one for normal hair and one for special) 'cause of identical vars
 		//But now we need hairstyle-specific layering so RIP to that approach and time to do things manually
-		src.image_cust_one = my_head.head_image_cust_one
-		src.image_cust_one?.pixel_y = y_to_offset
-		src.image_cust_one.filters = my_head.filters.Copy()
-		src.image_cust_two = my_head.head_image_cust_two
-		src.image_cust_two?.pixel_y = y_to_offset
-		src.image_cust_two.filters = my_head.filters.Copy()
-		src.image_cust_three = my_head.head_image_cust_three
-		src.image_cust_three?.pixel_y = y_to_offset
-		src.image_cust_three.filters = my_head.filters.Copy()
+		src.image_hair_bottom = my_head.head_image_hair_bottom
+		src.image_hair_bottom?.pixel_y = y_to_offset
+		src.image_hair_bottom.filters = my_head.filters.Copy()
+		src.image_hair_middle = my_head.head_image_hair_middle
+		src.image_hair_middle?.pixel_y = y_to_offset
+		src.image_hair_middle.filters = my_head.filters.Copy()
+		src.image_hair_top = my_head.head_image_hair_top
+		src.image_hair_top?.pixel_y = y_to_offset
+		src.image_hair_top.filters = my_head.filters.Copy()
 
-		src.image_special_one = my_head.head_image_special_one
-		src.image_special_one?.pixel_y = y_to_offset
-		src.image_special_one.filters = my_head.filters.Copy()
-		src.image_special_two = my_head.head_image_special_two
-		src.image_special_two?.pixel_y = y_to_offset
-		src.image_special_two.filters = my_head.filters.Copy()
-		src.image_special_three = my_head.head_image_special_three
-		src.image_special_three?.pixel_y = y_to_offset
-		src.image_special_three.filters = my_head.filters.Copy()
+		src.image_hair_bottom_special = my_head.head_image_hair_bottom_special
+		src.image_hair_bottom_special?.pixel_y = y_to_offset
+		src.image_hair_bottom_special.filters = my_head.filters.Copy()
+		src.image_hair_middle_special = my_head.head_image_hair_middle_special
+		src.image_hair_middle_special?.pixel_y = y_to_offset
+		src.image_hair_middle_special.filters = my_head.filters.Copy()
+		src.image_hair_top_special = my_head.head_image_hair_top_special
+		src.image_hair_top_special?.pixel_y = y_to_offset
+		src.image_hair_top_special.filters = my_head.filters.Copy()
 
 		if(!seal_hair)
 			if (AHH.mob_appearance_flags & HAS_HUMAN_HAIR || src.hair_override)
-				if(image_cust_one?.icon_state && image_cust_one.icon_state != "none")
-					AddOverlays(image_cust_one, "hair_one", TRUE)
+				if(image_hair_bottom?.icon_state && image_hair_bottom.icon_state != "none")
+					AddOverlays(image_hair_bottom, "hair_one", TRUE)
 				else
 					ClearSpecificOverlays(TRUE, "hair_one")
 
-				if(image_cust_two?.icon_state && image_cust_two.icon_state != "none")
-					AddOverlays(image_cust_two, "hair_two", TRUE)
+				if(image_hair_middle?.icon_state && image_hair_middle.icon_state != "none")
+					AddOverlays(image_hair_middle, "hair_two", TRUE)
 				else
 					ClearSpecificOverlays(TRUE, "hair_two")
 
-				if(image_cust_three?.icon_state && image_cust_three.icon_state != "none")
-					AddOverlays(image_cust_three, "hair_three", TRUE)
+				if(image_hair_top?.icon_state && image_hair_top.icon_state != "none")
+					AddOverlays(image_hair_top, "hair_three", TRUE)
 				else
 					ClearSpecificOverlays(TRUE, "hair_three")
 			else
 				ClearSpecificOverlays(TRUE, "hair_one", "hair_two", "hair_three")
 
 			if (AHH.mob_appearance_flags & HAS_SPECIAL_HAIR || src.special_hair_override)
-				if(image_special_one?.icon_state && image_special_one.icon_state != "none")
-					AddOverlays(image_special_one, "hair_special_one", TRUE)
+				if(image_hair_bottom_special?.icon_state && image_hair_bottom_special.icon_state != "none")
+					AddOverlays(image_hair_bottom_special, "hair_special_one", TRUE)
 				else
 					ClearSpecificOverlays(TRUE, "hair_special_one")
 
-				if(image_special_two?.icon_state && image_special_two.icon_state != "none")
-					AddOverlays(image_special_two, "hair_special_two", TRUE)
+				if(image_hair_middle_special?.icon_state && image_hair_middle_special.icon_state != "none")
+					AddOverlays(image_hair_middle_special, "hair_special_two", TRUE)
 				else
 					ClearSpecificOverlays(TRUE, "hair_special_two")
 
-				if(image_special_three?.icon_state && image_special_three.icon_state != "none")
-					AddOverlays(image_special_three, "hair_special_three", TRUE)
+				if(image_hair_top_special?.icon_state && image_hair_top_special.icon_state != "none")
+					AddOverlays(image_hair_top_special, "hair_special_three", TRUE)
 				else
 					ClearSpecificOverlays(TRUE, "hair_special_three")
 			else
@@ -736,26 +736,26 @@
 
 /mob/living/carbon/human/proc/update_hair_layer()
 	if ((src.wear_suit && src.wear_suit.c_flags & COVERSHAIR) || (src.head && src.head.c_flags & COVERSHAIR))
-		src.image_cust_one?.layer = MOB_HAIR_LAYER1
-		src.image_cust_two?.layer = MOB_HAIR_LAYER1
-		src.image_cust_three?.layer = MOB_HAIR_LAYER1
+		src.image_hair_bottom?.layer = MOB_HAIR_LAYER1
+		src.image_hair_middle?.layer = MOB_HAIR_LAYER1
+		src.image_hair_top?.layer = MOB_HAIR_LAYER1
 	else
-		src.image_cust_one?.layer = src.bioHolder.mobAppearance.customizations["hair_bottom"].style.default_layer
-		src.image_cust_two?.layer = src.bioHolder.mobAppearance.customizations["hair_middle"].style.default_layer
-		src.image_cust_three?.layer = src.bioHolder.mobAppearance.customizations["hair_top"].style.default_layer
+		src.image_hair_bottom?.layer = src.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style.default_layer
+		src.image_hair_middle?.layer = src.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style.default_layer
+		src.image_hair_top?.layer = src.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style.default_layer
 
 
 var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_leg_left", "r_arm" = "stump_arm_right", "l_arm" = "stump_arm_left")
 
-/// takes one of CUST_1, CUST_2, CUST_3 and returns the corrected colour for that part
+/// takes one of HAIR_BOTTOM_COLOR, HAIR_MIDDLE_COLOR, HAIR_TOP_COLOR and returns the corrected colour for that part
 /mob/living/carbon/human/proc/get_body_custom_color(slot)
 	switch(slot)
-		if(CUST_1)
-			. = src.bioHolder.mobAppearance.customizations["hair_bottom"].color
-		if(CUST_2)
-			. = src.bioHolder.mobAppearance.customizations["hair_middle"].color
-		if(CUST_3)
-			. = src.bioHolder.mobAppearance.customizations["hair_top"].color
+		if(HAIR_BOTTOM_COLOR)
+			. = src.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color
+		if(HAIR_MIDDLE_COLOR)
+			. = src.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color
+		if(HAIR_TOP_COLOR)
+			. = src.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color
 		else
 			return "#FFFFFF"
 	if (src.mutantrace?.mutant_appearance_flags & FIX_COLORS)

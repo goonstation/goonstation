@@ -62,7 +62,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter/small_animal/mouse, proc/glorp)
 	setup_overlays()
 		if (src.use_custom_color)
 			if (src.client)
-				fur_color = src.client.preferences.AH.customizations["hair_bottom"].color
+				fur_color = src.client.preferences.AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color
 				eye_color = src.client.preferences.AH.e_color
 			var/image/overlay = image(src.icon, "mouse_colorkey")
 			overlay.color = fur_color

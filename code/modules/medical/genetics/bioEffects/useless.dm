@@ -152,16 +152,16 @@
 					H.bioHolder.RemoveEffect(ID)
 			var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
 			AH.e_color_original = AH.e_color
-			AH.customizations["hair_bottom"].color_original = AH.customizations["hair_bottom"].color
-			AH.customizations["hair_middle"].color_original = AH.customizations["hair_middle"].color
-			AH.customizations["hair_top"].color_original = AH.customizations["hair_top"].color
+			AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color_original = AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color
+			AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color_original = AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color
+			AH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color_original = AH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color
 			AH.s_tone_original = AH.s_tone
 
 			AH.e_color = eye_color_to_use
 			AH.s_tone = skintone_to_use
-			AH.customizations["hair_bottom"].color = color_to_use
-			AH.customizations["hair_middle"].color = color_to_use
-			AH.customizations["hair_top"].color = color_to_use
+			AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color = color_to_use
+			AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color = color_to_use
+			AH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color = color_to_use
 			H.update_colorful_parts()
 
 	OnRemove()
@@ -175,9 +175,9 @@
 			var/datum/appearanceHolder/AH = H.bioHolder.mobAppearance
 			AH.e_color = AH.e_color_original
 			AH.s_tone = AH.s_tone_original
-			AH.customizations["hair_bottom"].color = AH.customizations["hair_bottom"].color_original
-			AH.customizations["hair_middle"].color = AH.customizations["hair_middle"].color_original
-			AH.customizations["hair_top"].color = AH.customizations["hair_top"].color_original
+			AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color = AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color_original
+			AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color = AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color_original
+			AH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color = AH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color_original
 			H.update_colorful_parts()
 
 /datum/bioEffect/color_changer/black
