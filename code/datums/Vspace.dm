@@ -233,14 +233,16 @@ datum/v_space
 		character.bioHolder.mobAppearance.customizations["hair_bottom"].color = user.bioHolder.mobAppearance.customizations["hair_bottom"].color
 		character.bioHolder.mobAppearance.customizations["hair_middle"].color = user.bioHolder.mobAppearance.customizations["hair_middle"].color
 		character.bioHolder.mobAppearance.customizations["hair_top"].color = user.bioHolder.mobAppearance.customizations["hair_top"].color
+		character.bioHolder.mobAppearance.customizations["undies_feet"].color = user.bioHolder.mobAppearance.customizations["undies_feet"].color
+		character.bioHolder.mobAppearance.customizations["undies_bottom"].color = user.bioHolder.mobAppearance.customizations["undies_bottom"].color
+		character.bioHolder.mobAppearance.customizations["undies_top"].color = user.bioHolder.mobAppearance.customizations["undies_top"].color
 		character.bioHolder.mobAppearance.s_tone = user.bioHolder.mobAppearance.s_tone
 		character.bioHolder.mobAppearance.customizations["hair_bottom"].style =  user.bioHolder.mobAppearance.customizations["hair_bottom"].style
 		character.bioHolder.mobAppearance.customizations["hair_middle"].style =  user.bioHolder.mobAppearance.customizations["hair_middle"].style
 		character.bioHolder.mobAppearance.customizations["hair_top"].style =  user.bioHolder.mobAppearance.customizations["hair_top"].style
-
-		character.bioHolder.mobAppearance.underwear = user.bioHolder.mobAppearance.underwear
-		character.bioHolder.mobAppearance.u_color = user.bioHolder.mobAppearance.u_color
-
+		character.bioHolder.mobAppearance.customizations["undies_bottom"].style = user.bioHolder.mobAppearance.customizations["undies_bottom"].style
+		character.bioHolder.mobAppearance.customizations["undies_feet"].style = user.bioHolder.mobAppearance.customizations["undies_feet"].style
+		character.bioHolder.mobAppearance.customizations["undies_top"].style = user.bioHolder.mobAppearance.customizations["undies_top"].style
 		character.bioHolder.mobAppearance.pronouns = user.bioHolder.mobAppearance.pronouns
 
 		sanitize_null_values(character)
@@ -265,10 +267,17 @@ datum/v_space
 			AH.customizations["hair_top"].color = "#101010"
 		if (AH.customizations["hair_top"].style == null)
 			AH.customizations["hair_top"].style =  new /datum/customization_style/none
+		if (AH.customizations["undies_feet"].style == null)
+			AH.customizations["undies_feet"].style = new /datum/customization_style/none
+			AH.customizations["undies_feet"].color = "#FEFEFE"
+		if (AH.customizations["undies_bottom"].style == null)
+			AH.customizations["undies_bottom"].style = new /datum/customization_style/none
+			AH.customizations["undies_bottom"].color = "#FEFEFE"
+		if (AH.customizations["undies_top"].style == null)
+			AH.customizations["undies_top"].style = new /datum/customization_style/none
+			AH.customizations["undies_top"].color = "#FEFEFE"
 		if (AH.e_color == null)
 			AH.e_color = "#101010"
-		if (AH.u_color == null)
-			AH.u_color = "#FEFEFE"
 		if (AH.s_tone == null  || AH.s_tone == "#ffffff")
 			AH.s_tone = "#FEFEFE"
 		return

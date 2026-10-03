@@ -437,6 +437,9 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		AH.customizations["hair_bottom"].offset_y = src.head_offset
 		AH.customizations["hair_middle"].offset_y = src.head_offset
 		AH.customizations["hair_top"].offset_y = src.head_offset
+		AH.customizations["undies_feet"].offset_y = src.body_offset
+		AH.customizations["undies_bottom"].offset_y = src.body_offset
+		AH.customizations["undies_top"].offset_y = src.body_offset
 
 		var/typeinfo/datum/mutantrace/typeinfo = src.get_typeinfo()
 		if(typeinfo.special_styles)

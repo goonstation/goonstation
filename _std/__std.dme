@@ -204,6 +204,7 @@
 #include "namespaces\dwaine\shell.dm"
 #include "namespaces\dwaine\syscalls.dm"
 #include "namespaces\ci.dm"
+#include "namespaces\customization_style.dm"
 #include "namespaces\dcs.dm"
 #include "namespaces\fish.dm"
 #include "namespaces\food.dm"

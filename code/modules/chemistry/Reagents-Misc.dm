@@ -343,7 +343,7 @@ datum
 
 				if (probmult(10) && ishuman(M))
 					var/mob/living/carbon/human/H = M
-					var/list/hair_styles = pick(get_available_custom_style_types(M.client, no_gimmick_hair=TRUE))
+					var/list/hair_styles = pick(get_available_custom_style_types(M.client, no_gimmick=TRUE))
 					var/hair_type = pick(hair_styles)
 					H.bioHolder.mobAppearance.customizations["hair_bottom"].style =  new hair_type
 					hair_type = pick(hair_styles)
@@ -377,7 +377,7 @@ datum
 						H.bioHolder.mobAppearance.customizations["hair_bottom"].style =  new /datum/customization_style/hair/long/eighties
 						somethingchanged = 1
 					if (H.gender == MALE && H.bioHolder.mobAppearance.customizations["hair_middle"].style.id != "longbeard")
-						H.bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/beard/longbeard
+						H.bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/hair/facial/longbeard
 						somethingchanged = 1
 					if (!(H.wear_mask && istype(H.wear_mask, /obj/item/clothing/mask/moustache)) && volume >= 3)
 						somethingchanged = 1

@@ -21,9 +21,12 @@
 
 	// It's probably smarter to have customizations in an associative list for later - Glamurio
 	var/list/datum/customizationHolder/customizations = list(
-		"hair_bottom" = new /datum/customizationHolder/first,
-		"hair_middle" = new /datum/customizationHolder/second,
-		"hair_top" = new /datum/customizationHolder/third,
+		"hair_bottom" = new /datum/customizationHolder/hair/bottom,
+		"hair_middle" = new /datum/customizationHolder/hair/middle,
+		"hair_top" = new /datum/customizationHolder/hair/top,
+		"undies_feet" = new /datum/customizationHolder/undies/feet,
+		"undies_bottom" = new /datum/customizationHolder/undies/bottom,
+		"undies_top" = new /datum/customizationHolder/undies/top,
 	)
 
 	/// Currently changes which sprite sheet is used
@@ -99,9 +102,6 @@
 	// 158202 - Hulk
 	// C5CFA9 - Zombie
 	// B0AC96 - Drained Husk
-
-	var/underwear = "No Underwear"
-	var/u_color = "#FFFFFF"
 
 	var/mob/owner = null
 	var/datum/bioHolder/parentHolder = null
@@ -183,9 +183,6 @@
 		s_tone_original = toCopy.s_tone_original
 
 		special_style = toCopy.special_style
-
-		underwear = toCopy.underwear
-		u_color = toCopy.u_color
 
 		mob_head_offset = toCopy.mob_head_offset
 		mob_hand_offset = toCopy.mob_hand_offset

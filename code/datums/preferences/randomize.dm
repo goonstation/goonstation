@@ -47,10 +47,10 @@
 	)
 
 proc/isfem(datum/customization_style/style)
-	return !!(initial(style.gender) & FEMININE)
+	return !!(initial(style.gender) & CUSTOMIZATION::GENDER::FEMININE)
 
 proc/ismasc(datum/customization_style/style)
-	return !!(initial(style.gender) & MASCULINE)
+	return !!(initial(style.gender) & CUSTOMIZATION::GENDER::MASCULINE)
 
 // this is weird but basically: a list of hairstyles and their appropriate detail styles, aka hair_details["80s"] would return the Hairmetal: Faded style
 // further on in the randomize_look() proc we'll see if we've got one of the styles in here and if so, we have a chance to add the detailing
@@ -69,7 +69,7 @@ var/global/list/hair_details = list("einstein" = /datum/customization_style/hair
 	"flick" = list(/datum/customization_style/hair/short/flick_fade, /datum/customization_style/hair/short/flick_half),\
 	"mermaid" = /datum/customization_style/hair/long/mermaidfade,\
 	"smoothwave" = list(/datum/customization_style/hair/long/smoothwave_fade, /datum/customization_style/hair/long/smoothwave_half),\
-	"longbeard" = /datum/customization_style/beard/longbeardfade,\
+	"longbeard" = /datum/customization_style/hair/facial/longbeardfade,\
 	"pomp" = /datum/customization_style/hair/short/pompS,\
 	"mohawk" = list(/datum/customization_style/hair/short/mohawkFT, /datum/customization_style/hair/short/mohawkFB, /datum/customization_style/hair/short/mohawkS),\
 	"emo" = /datum/customization_style/hair/short/emoH,\
@@ -89,19 +89,6 @@ var/global/list/hair_details = list("einstein" = /datum/customization_style/hair
 	"pig" = /datum/customization_style/hair/hairup/pig_half,\
 	"wavy_tail" = /datum/customization_style/hair/hairup/wavy_tail_half\
 	)
-
-// all these icon state names are ridiculous
-var/global/list/feminine_ustyles = list("No Underwear" = "none",\
-	"Bra and Panties" = "brapan",\
-	"Tanktop and Panties" = "tankpan",\
-	"Bra and Boyshorts" = "braboy",\
-	"Tanktop and Boyshorts" = "tankboy",\
-	"Panties" = "panties",\
-	"Boyshorts" = "boyshort")
-var/global/list/masculine_ustyles = list("No Underwear" = "none",\
-	"Briefs" = "briefs",\
-	"Boxers" = "boxers",\
-	"Boyshorts" = "boyshort")
 
 var/global/list/male_screams = list("male", "malescream4", "malescream5", "malescream6", "malescream7")
 var/global/list/female_screams = list("female", "femalescream1", "femalescream2", "femalescream3", "femalescream4")
@@ -160,6 +147,9 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 	var/datum/customizationHolder/customization_first = AH.customizations["hair_bottom"]
 	var/datum/customizationHolder/customization_second = AH.customizations["hair_middle"]
 	var/datum/customizationHolder/customization_third = AH.customizations["hair_top"]
+	var/datum/customizationHolder/undies_feet = AH.customizations["undies_feet"]
+	var/datum/customizationHolder/undies_bottom = AH.customizations["undies_bottom"]
+	var/datum/customizationHolder/undies_top = AH.customizations["undies_top"]
 
 	var/list/hair_colors = list("#101010", "#924D28", "#61301B", "#E0721D", "#D7A83D",\
 	"#D8C078", "#E3CC88", "#F2DA91", "#664F3C", "#8C684A", "#EE2A22", "#B89778", "#3B3024", "#A56b46")
@@ -198,24 +188,23 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 	var/type_first
 	if (AH.gender == MALE)
 		if (prob(5)) // small chance to have a hairstyle more geared to the other gender
-			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=FEMININE, for_random=TRUE))
+			type_first = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION::SLOT::HAIR, TRUE, CUSTOMIZATION::GENDER::FEMININE, TRUE))
 			customization_first.style = new type_first
 		else // otherwise just use one standard to the current gender
-			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=MASCULINE, for_random=TRUE))
+			type_first = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION::SLOT::HAIR, TRUE, CUSTOMIZATION::GENDER::MASCULINE, TRUE))
 			customization_first.style = new type_first
 
 		if (prob(33)) // since we're a guy, a chance for facial hair
-			var/type_second = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_type=/datum/customization_style/beard) \
-								+ get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_type=/datum/customization_style/moustache))
+			var/type_second = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION::HAIR::FACIAL, no_gimmick=TRUE))
 			customization_second = new type_second
 			has_second = TRUE // so the detail check doesn't do anything - we already got a secondary thing!!
 
 	else // if FEMALE
 		if (prob(8)) // same as above for guys, just reversed and with a slightly higher chance since it's ~more appropriate~ for ladies to have guy haircuts than vice versa  :I
-			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=MASCULINE, for_random=TRUE))
+			type_first = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION::SLOT::HAIR, TRUE, CUSTOMIZATION::GENDER::MASCULINE, TRUE))
 			customization_first.style = new type_first
 		else // ss13 is coded with gender stereotypes IN ITS VERY CORE
-			type_first = pick(get_available_custom_style_types(H?.client, no_gimmick_hair=TRUE, filter_gender=FEMININE, for_random=TRUE))
+			type_first = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION::SLOT::HAIR, TRUE, CUSTOMIZATION::GENDER::FEMININE, TRUE))
 			customization_first.style = new type_first
 
 	if (!has_second)
@@ -241,7 +230,7 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 				customization_second.color = randomize_hair_color(pick(hair_colors)) // but have a chance to be a normal hair color
 
 		else if (prob(5)) // chance for a special eye color
-			var/type_second = pick(/datum/customization_style/biological/hetcroL, /datum/customization_style/biological/hetcroR)
+			var/type_second = pick(/datum/customization_style/hair/biological/hetcroL, /datum/customization_style/hair/biological/hetcroR)
 			customization_second.style = new type_second
 			if (prob(75))
 				customization_second.color = random_saturated_hex_color()
@@ -254,17 +243,30 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 			customization_third.style = new /datum/customization_style/none
 
 	if (change_underwear)
+		// Maintains parity. This choice predates open-source. - @DisturbHerb
 		if (AH.gender == MALE)
 			if (prob(1))
-				AH.underwear = pick(feminine_ustyles)
+				undies_feet.style = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION::UNDIES::FEET, CUSTOMIZATION::GENDER::FEMININE, TRUE))
+				undies_top.style = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION::UNDIES::TOP, CUSTOMIZATION::GENDER::FEMININE, TRUE))
+				undies_bottom.style = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION::UNDIES::BOTTOM, CUSTOMIZATION::GENDER::FEMININE, TRUE))
 			else
-				AH.underwear = pick(masculine_ustyles)
+				undies_feet.style = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION::UNDIES::FEET, CUSTOMIZATION::GENDER::MASCULINE, TRUE))
+				undies_top.style = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION::UNDIES::TOP, CUSTOMIZATION::GENDER::MASCULINE, TRUE))
+				undies_bottom.style = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION::UNDIES::BOTTOM, CUSTOMIZATION::GENDER::MASCULINE, TRUE))
 		else
 			if (prob(5))
-				AH.underwear = pick(masculine_ustyles)
+				undies_feet.style = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION::UNDIES::FEET, CUSTOMIZATION::GENDER::MASCULINE, TRUE))
+				undies_top.style = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION::UNDIES::TOP, CUSTOMIZATION::GENDER::MASCULINE, TRUE))
+				undies_bottom.style = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION::UNDIES::BOTTOM, CUSTOMIZATION::GENDER::MASCULINE, TRUE))
 			else
-				AH.underwear = pick(feminine_ustyles)
-		AH.u_color = random_saturated_hex_color()
+				undies_feet.style = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION::UNDIES::FEET, CUSTOMIZATION::GENDER::FEMININE, TRUE))
+				undies_top.style = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION::UNDIES::TOP, CUSTOMIZATION::GENDER::FEMININE, TRUE))
+				undies_bottom.style = pick(get_available_custom_style_types(H?.client, CUSTOMIZATION::UNDIES::BOTTOM, CUSTOMIZATION::GENDER::FEMININE, TRUE))
+		var/sock_color = random_saturated_hex_color() // I didn't think they should all match. Sue me.
+		var/undies_color = random_saturated_hex_color()
+		undies_feet.color = sock_color
+		undies_bottom.color = undies_color
+		undies_top.color =  undies_color
 
 	if (H && change_blood)
 		H.bioHolder.bloodType = random_blood_type(1)

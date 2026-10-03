@@ -32,7 +32,7 @@
 	else
 		I.Blend(rgb(- src.lumens,  -src.lumens,  -src.lumens), ICON_SUBTRACT)
 
-	I.Blend(new /icon('icons/mob/human_underwear.dmi', "briefs_b"), ICON_OVERLAY)
+	I.Blend(new /icon('icons/mob/human_underwear.dmi', "briefs"), ICON_OVERLAY)
 
 	var/icon/U = new /icon('icons/mob/human_hair.dmi', "short")
 	U.Blend(rgb(src.h_r, src.h_g, src.h_b), ICON_ADD)
