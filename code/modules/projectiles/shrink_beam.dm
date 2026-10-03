@@ -16,7 +16,7 @@
 //file location for the sound you want it to play
 	shot_sound = 'sound/effects/warp1.ogg'
 //How many projectiles should be fired, each will cost the full cost
-	shot_number = 1
+	default_firemode = /datum/firemode/single
 //What is our damage type
 	damage_type = 0
 	//With what % do we hit mobs laying down
