@@ -31,10 +31,10 @@ o+`        `-` ``..-:yooos-..----------..`
 // #region --------- Options to Go Fast ----------
 
 /// Only include the tiny map Devtest, no other zlevels. Boots way faster.
-//#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW
+#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW
 
 /// Skips FEA/mining/planet/camera setup, skips changelogs, and auto-readies up.
-//#define IM_REALLY_IN_A_FUCKING_HURRY_HERE
+#define IM_REALLY_IN_A_FUCKING_HURRY_HERE
 
 /// Skip setting up atmospheric system.
 //#define SKIP_FEA_SETUP
@@ -85,7 +85,7 @@ o+`        `-` ``..-:yooos-..----------..`
 // #region --------- Stop Distractions -----------
 
 /// All of the below: no secbots/guardbuddies/bots, no monkeys, no clone prebake, instant clones, low security, no critters, no random rooms/events, no shuttle calls, hackerman, more runtime checks, quick mob deletion, no wage/mail/ghostdrone messages, unbreakable lights, no antag popups.
-//#define STOP_DISTRACTING_ME
+#define STOP_DISTRACTING_ME
 
 /// Prevents all secbots and guardbuddies from spawning, useful for gun testing.
 //#define I_AM_ABOVE_THE_LAW
