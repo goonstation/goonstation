@@ -505,6 +505,8 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 					if (!A.status && A.announces_arrivals)
 						if (src.mind.assigned_role == "MODE") //ZeWaka: Fix for alien invasion dudes. Possibly not needed now.
 							return
+						else if (JOB.change_name_on_spawn) // Announced later after they've chosen their name so they dont get announced twice
+							return
 						else
 							A.announce_arrival(src)
 

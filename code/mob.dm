@@ -143,7 +143,7 @@ TYPEINFO(/mob)
 	var/deathhunted = null
 
 	var/job = null
-
+	
 	/// For assigning mobs various factions, see factions.dm for definitions
 	var/faction = list()
 
