@@ -384,7 +384,7 @@ var/datum/action_controller/actions
 		..()
 		if (icon && owner)
 			if (istext(src.icon))
-				src.icon = get_runtime_icon(src.icon)
+				src.icon = file(src.icon)
 			if(icon_state)
 				icon_image = image(icon, border, icon_state, 10)
 			else

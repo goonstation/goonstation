@@ -903,7 +903,7 @@
 		..()
 		src.holder = holder
 		if (istext(src.icon))
-			src.icon = get_runtime_icon(src.icon)
+			src.icon = file(src.icon)
 		if (src.icon && src.icon_state)
 			var/atom/movable/screen/ability/topBar/button = new /atom/movable/screen/ability/topBar()
 			button.icon = src.icon

@@ -104,7 +104,7 @@ TYPEINFO(/atom)
 		if (!src.icon && !initial(src.icon))
 			var/typeinfo/atom/icon_metadata = src.get_typeinfo()
 			if (icon_metadata.icon)
-				src.icon = get_runtime_icon(icon_metadata.icon)
+				src.icon = file(icon_metadata.icon)
 
 	proc/name_prefix(var/text_to_add, var/return_prefixes = 0, var/prepend = 0)
 		if( !name_prefixes ) name_prefixes = list()
