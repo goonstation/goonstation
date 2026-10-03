@@ -7,6 +7,7 @@
 	name = "identification computer"
 	icon_state = "id"
 	circuit_type = /obj/item/circuitboard/card
+	ui_type = "IDComputer"
 	var/obj/item/card/id/scan = null
 	var/obj/item/card/id/modify = null
 	var/obj/item/eject = null //Overrides modify slot set_loc. sometimes we want to eject something that's not a card. like an implant!
@@ -127,12 +128,6 @@
 
 
 /obj/machinery/computer/card
-
-	ui_interact(mob/user, datum/tgui/ui)
-		ui = tgui_process.try_update_ui(user, src, ui)
-		if(!ui)
-			ui = new(user, src, "IDComputer", name)
-			ui.open()
 
 	ui_static_data()
 		. = list()

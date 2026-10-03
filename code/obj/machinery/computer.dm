@@ -14,6 +14,7 @@
 	var/frequency = null
 	var/base_icon_state = null
 	var/emagged = FALSE //! the emag behaviour is done in the corresponding computer frame, but we need to carry over the effect onto the curcuit board.
+	var/ui_type = null //so each computer doesn't need to define which UI to use in its own ui_interact proc
 
 	/// does it have a glow in the dark screen? see computer_screens.dmi
 	var/glow_in_dark_screen = TRUE
@@ -30,11 +31,14 @@
 		playsound(src.loc, 'sound/machines/keypress.ogg', 30, 1, -15)
 
 	attack_hand(var/mob/user)
-		. = ..()
+		if (!user.sight_check(1))
+			boutput(user, SPAN_ALERT("You can't see anything, operating a computer isn't going to work!"))
+			return 1
 		if (!user.literate)
 			boutput(user, SPAN_ALERT("You don't know how to read or write, operating a computer isn't going to work!"))
 			return 1
 		interact_particle(user,src)
+		. = ..()
 
 	attack_ai(mob/user as mob)
 		src.Attackhand(user)
@@ -202,6 +206,28 @@
 	. = ..()
 	if(status & NOPOWER)
 		return
+
+/obj/machinery/computer/ui_status(mob/user, datum/ui_state/state)
+	if(src.status & REQ_PHYSICAL_ACCESS)
+		. = min(tgui_broken_state.can_use_topic(src, user),
+						tgui_physical_state.can_use_topic(src, user),
+						tgui_not_incapacitated_state.can_use_topic(src, user),
+						tgui_can_see_state.can_use_topic(src, user),
+						tgui_literate_state.can_use_topic(src, user)
+		)
+	else
+		. = min(state.can_use_topic(src, user),
+						tgui_broken_state.can_use_topic(src, user),
+						tgui_not_incapacitated_state.can_use_topic(src, user),
+						tgui_can_see_state.can_use_topic(src, user),
+						tgui_literate_state.can_use_topic(src, user)
+		)
+
+/obj/machinery/computer/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui && ui_type)
+		ui = new(user, src, ui_type, src.name)
+		ui.open()
 
 /obj/machinery/computer/update_icon()
 	if(src.glow_in_dark_screen)

@@ -28,6 +28,7 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_MULTITOOL
 	circuit_type = /obj/item/circuitboard/qmsupply
+	ui_type = "SupplyConsole"
 	var/temp = null
 	var/last_cdc_message = null
 	var/hacked = 0
@@ -74,12 +75,6 @@ var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 	if(!istype(I,/obj/item/card/emag))
 		//I guess you'll wanna put the emag away now instead of getting a massive popup
 		..()
-
-/obj/machinery/computer/supplycomp/ui_interact(mob/user, datum/tgui/ui)
-	ui = tgui_process.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "SupplyConsole", src.name)
-		ui.open()
 
 /obj/machinery/computer/supplycomp/ui_static_data(mob/user)
 	. = list()

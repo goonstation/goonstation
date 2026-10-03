@@ -15,6 +15,7 @@
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	can_reconnect = TRUE
 	circuit_type = /obj/item/circuitboard/genetics
+	ui_type = "GeneTek"
 	/// Linked scanner. For scanning.
 	var/obj/machinery/genetics_scanner/scanner = null
 	var/list/equipment = alist(
@@ -1206,13 +1207,6 @@
 				"name" = R.name,
 				"desc" = R.desc
 				)
-
-
-/obj/machinery/computer/genetics/ui_interact(mob/user, datum/tgui/ui)
-	ui = tgui_process.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "GeneTek", "GeneTek Console v2.02")
-		ui.open()
 
 /obj/machinery/computer/genetics/ui_close(mob/user)
 	. = ..()
