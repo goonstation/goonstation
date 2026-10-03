@@ -175,6 +175,16 @@ ABSTRACT_TYPE(/obj/item/device/key)
 	desc = "A dazzling key made of some multicolored metal."
 	icon_state = "key_niobium"
 
+/obj/item/device/key/irradiated
+	name = "poisoned key"
+	desc = "A key covered in radioactive goop. It seems the metal its made of is somehow poisoned."
+	icon_state = "key_toxic"
+
+	New()
+		..()
+		src.add_simple_light("rad", list(0, 0.8 * 255, 0.3 * 255, 0.8 * 255))
+		src.AddComponent(/datum/component/radioactive, 1, FALSE, FALSE, 1) //boar vessel amounts
+
 //Something for the solarium nerds to obsess over for a month
 /obj/item/device/key/filing_cabinet
 	name = "tubular key"

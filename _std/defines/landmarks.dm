@@ -145,6 +145,9 @@
 #define LANDMARK_FALL_GREEK "greekfall" // locations for people to fall into the greek pit area
 #define LANDMARK_FALL_ICE_ELE "iceelefall" // locations for people to fall if they enter the ice moon elevator shaft
 #define LANDMARK_FALL_BIO_ELE "bioelefall" // biodome elevator shaft
+#define LANDMARK_FALL_TOX_REACTOR "toxreacfall" //the drop in toxmoon
+#define LANDMARK_FALL_TOX_SEWER "toxsewerfall" //the top of the sewage slide
+#define LANDMARK_FALL_TOX_LAKE "toxlakefall" //the sewage slide end in toxmoon
 #define LANDMARK_FALL_MOON_HEMERA "moonfall_hemera" // Hemera lunar office elevator shaft
 #define LANDMARK_FALL_MOON_MUSEUM "moonfall_museum" // Lunar museum elevator shaft
 #define LANDMARK_FALL_SEA "seafall" // Oshan trench elevator

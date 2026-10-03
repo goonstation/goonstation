@@ -146,6 +146,14 @@ TYPEINFO(/datum/component/pitfall/target_landmark)
 		if (..())
 			src.fall_to(pick_landmark(src.TargetLandmark), AM, src.BruteDamageMax)
 
+	enter_triggering
+
+		try_fall(signalsender, atom/movable/AM)
+			..()
+			for(var/atom/A in get_turf(src))
+				A.Entered(AM)
+
+
 TYPEINFO(/datum/component/pitfall/target_area)
 	initialization_args = list(
 		ARG_INFO("BruteDamageMax", DATA_INPUT_NUM, "The maximum amount of random brute damage applied by the fall.", 0),

@@ -425,6 +425,19 @@ TYPEINFO_NEW(/turf/simulated/floor/auto/elevator_shaft)
 			bioele_accident()
 		..()
 
+/turf/simulated/floor/auto/elevator_shaft/toxmoon
+	radgas = 100
+	nitrogen = 0
+	oxygen = 0
+
+	New()
+		..()
+		src.AddComponent(/datum/component/pitfall/target_landmark,\
+			BruteDamageMax = 50,\
+			FallTime = 0 SECONDS,\
+			TargetLandmark = LANDMARK_FALL_TOX_REACTOR)
+		var/image/fallout_overlay = image('icons/effects/tile_effects.dmi', "rad_particles")
+		AddOverlays(fallout_overlay, "fallout")
 
 /turf/space/fluid/acid
 	name = "acid sea floor"
