@@ -608,17 +608,18 @@ toxic - poisons
 	on_hit(atom/hit, direction, obj/projectile/P)
 		..()
 		var/turf/T = istype(hit, /mob) ? get_turf(hit) : get_turf(P) // drop on same tile if mob, drop 1 tile away otherwise
-		drop_as_ammo(get_turf(T))
+		drop_as_ammo(get_turf(T), P)
 		qdel(P) // we dropped, don't keep going
 
 	on_max_range_die(obj/projectile/P)
 		..()
-		drop_as_ammo(get_turf(P))
+		drop_as_ammo(get_turf(P), P)
 
-	proc/drop_as_ammo(turf/T)
+	proc/drop_as_ammo(turf/T, obj/projectile/P)
 		if(T)
-			var/obj/item/ammo/bullets/foamdarts/ammo_dropped = new /obj/item/ammo/bullets/foamdarts (T)
+			var/obj/item/ammo/bullets/foamdarts/ammo_dropped = new /obj/item/ammo/bullets/foamdarts(T)
 			ammo_dropped.amount_left = 1
+			ammo_dropped.forensic_holder = P.forensic_holder
 			ammo_dropped.UpdateIcon()
 			ammo_dropped.pixel_x += rand(-12,12)
 			ammo_dropped.pixel_y += rand(-12,12)
@@ -1985,6 +1986,7 @@ datum/projectile/bullet/autocannon
 				else
 					var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel
 					implanted.implanted(M, null, 2)
+					hit.forensic_holder.copy_to(implanted.forensic_holder)
 					boutput(M, SPAN_ALERT("You are struck by shrapnel!"))
 
 			T.hotspot_expose(700,125)
@@ -2099,6 +2101,7 @@ ABSTRACT_TYPE(/datum/projectile/bullet/homing/rocket)
 				else
 					var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel
 					implanted.implanted(M, null, 2)
+					hit.forensic_holder.copy_to(implanted.forensic_holder)
 					boutput(M, SPAN_ALERT("You are struck by shrapnel!"))
 
 			T.hotspot_expose(700,125)
