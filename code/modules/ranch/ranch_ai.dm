@@ -207,6 +207,9 @@
 			for(var/mob/M in view(target_range,C))
 				if(!isdead(M))
 					if(!(M in C.my_friends))
+						if(C.faction)
+							if(!faction_check(C, M))
+								return FALSE
 						if(!istype(M,C.species_type))
 							return precondition() * FIGHT_PRIORITY
 		for(var/mob/M in C.shit_list)
@@ -298,6 +301,9 @@
 			for(var/mob/M in view(target_range,C))
 				if(!isdead(M))
 					if(!(M in C.my_friends))
+						if(C.faction)
+							if(!faction_check(C, M))
+								return
 						if(!istype(M,C.species_type))
 							. += M
 			return
