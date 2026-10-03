@@ -25,7 +25,7 @@ TYPEINFO(/obj/machinery/clonegrinder)
 	var/max_meat = 11 //To be honest, I added the meat reclamation thing in part because I wanted a "max_meat" var. 11 so you can fit all the organs of a person inside.
 	var/grind_level = GRIND_NOTHING
 	var/upgraded = 0 // upgrade card makes the reclaimer more efficient
-	HELP_MESSAGE_OVERRIDE("Add organs and limbs to process by <b>clicking</b> with the <b>item</b> in-hand.<br>Turn the reclaimer on by <b>clicking</b> with an <b>open hand</b>.")
+	HELP_MESSAGE_OVERRIDE("Add organs, limbs, and human meat to process by <b>clicking</b> with the <b>item</b> in-hand.<br>Turn the reclaimer on by <b>clicking</b> with an <b>open hand</b>.")
 
 	New()
 		..()
@@ -315,7 +315,8 @@ TYPEINFO(/obj/machinery/clonegrinder)
 		if (src.process_timer > 0)
 			boutput(user, SPAN_ALERT("The [src.name] is still running, hold your horses!"))
 			return
-		if (istypes(I, list(/obj/item/parts/human_parts, /obj/item/clothing/head/butt, /obj/item/organ, /obj/item/raw_material/martian)))
+		if (istypes(I, list(/obj/item/parts/human_parts, /obj/item/clothing/head/butt, /obj/item/organ, \
+						/obj/item/raw_material/martian, /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat)))
 			if (length(src.meats) >= src.max_meat)
 				boutput(user, SPAN_ALERT("There is already enough meat in there! You should not exceed the maximum safe meat level!"))
 				return
@@ -543,7 +544,7 @@ TYPEINFO(/obj/machinery/clonegrinder)
 	desc = "A high efficiency corpse grinder. It even grinds up whatever the corpse has on it! Use with caution!";
 	grind_level = GRIND_GEAR
 	name = "Corpse Grinder 5000"
-	
+
 
 #undef GRIND_NOTHING
 #undef GRIND_BODIES
