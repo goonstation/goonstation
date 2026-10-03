@@ -4,12 +4,19 @@
 		"name"		= new /datum/record_field/string("Name", "New Record"),
 		"criminal"	= new /datum/record_field/choice("Criminal Status", SECURITY::ARREST::STATE::NONE, list(SECURITY::ARREST::STATE::ARREST, SECURITY::ARREST::STATE::DETAIN, SECURITY::ARREST::STATE::NONE, SECURITY::ARREST::STATE::SUSPECT, SECURITY::ARREST::STATE::INCARCERATED, SECURITY::ARREST::STATE::PAROLE, SECURITY::ARREST::STATE::RELEASED, SECURITY::ARREST::STATE::CLOWN)),
 		"sec_flag"	= new /datum/record_field/string("SecHUD Flag", "None", @".{0,10}"),
+		"citations"	= new /datum/record_field/record_list("Citations"),
 		"mi_crim"	= new /datum/record_field/string("Minor Crimes", "None"),
 		"mi_crim_d"	= new /datum/record_field/string("Details", "No minor crime convictions."),
 		"ma_crim"	= new /datum/record_field/string("Major Crimes", "None"),
 		"ma_crim_d"	= new /datum/record_field/string("Details", "No major crime convictions."),
 		"notes"		= new /datum/record_field/string("Important Notes", "No notes."),
 	)
+
+/datum/db_record/personnel/security/New(source)
+	. = ..()
+
+	var/datum/record_field/record_list/citations = src.get_field_datum("citations")
+	citations.record_group = new /datum/db_record_group/citation/record(src)
 
 /datum/db_record/personnel/security/init_from_human(mob/living/carbon/human/H)
 	src["id"] = H.datacore_id

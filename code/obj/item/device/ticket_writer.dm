@@ -39,28 +39,22 @@
 		if (!ticket_reason || !user.find_in_hand(src))
 			return
 
-		var/ticket_text = "[ticket_target] has been officially [pick("cautioned","warned","told off","yelled at","berated","sneered at")] by [src.corporate_rank] for [ticket_reason] on [time2text(world.realtime, "DD/MM/53")].<br>Issued by: [issuer] - [issuer_job]<br>"
+		var/datum/db_record/citation/ticket/ticket = new(
+			authority = src.corporate_rank,
+			target = ticket_target,
+			issuer = issuer,
+			issuer_job = issuer_job,
+			reason = ticket_reason,
+		)
+		global.data_core.tickets.add_record(ticket)
 
-		var/datum/ticket/T = new /datum/ticket()
-		T.target = ticket_target
-		T.reason = ticket_reason
-		T.issuer = issuer
-		T.issuer_job = issuer_job
-		T.text = ticket_text
-		T.target_byond_key = get_byond_key(T.target)
-		T.issuer_byond_key = user.key
-		data_core.tickets += T
-
-		logTheThing(LOG_ADMIN, user, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")
 		playsound(src, 'sound/machines/printer_thermal.ogg', 50, TRUE)
 		SPAWN(3 SECONDS)
-			var/obj/item/paper/p = new /obj/item/paper
-			user.put_in_hand_or_drop(p)
-			p.name = "Official Caution - [ticket_target]"
-			p.info = ticket_text
-			p.icon_state = src.paper_icon_state
-
-		return T.target_byond_key
+			var/obj/item/paper/paper = new()
+			user.put_in_hand_or_drop(paper)
+			paper.name = ticket["title"]
+			paper.info = ticket["text"]
+			paper.icon_state = src.paper_icon_state
 
 /obj/item/device/ticket_writer/crust
 	name = "crusty old security TicketWriter 1000"
