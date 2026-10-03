@@ -63,10 +63,18 @@ TYPEINFO(/datum/component/camera_coverage_emitter)
 
 /datum/component/camera_coverage_emitter/proc/register_user(mob/user)
 	LAZYLISTADD(src.viewers, user)
+	if (istype(src.parent, /obj/machinery/camera))
+		var/obj/machinery/camera/camera = src.parent
+		if (camera.emagged)
+			get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).add_mob(user)
 	if (length(src.viewers) == 1)
 		SEND_SIGNAL(src.parent, COMSIG_CAMERA_ACTIVE)
 
 /datum/component/camera_coverage_emitter/proc/unregister_user(mob/user)
 	LAZYLISTREMOVE(src.viewers, user)
+	if (istype(src.parent, /obj/machinery/camera))
+		var/obj/machinery/camera/camera = src.parent
+		if (camera.emagged)
+			get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).remove_mob(user)
 	if (length(src.viewers) == 0)
 		SEND_SIGNAL(src.parent, COMSIG_CAMERA_DEACTIVE)

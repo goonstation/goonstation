@@ -22,6 +22,12 @@
 	var/c_tag_order = 999
 	/// Whether the camera is on or off (bad var name)
 	var/camera_status = TRUE
+	var/emagged = FALSE
+	var/emag_panel_open = FALSE
+	var/emag_wire_cut = FALSE
+	var/emag_wires_repaired = FALSE
+	var/emag_camera_reconnected = FALSE
+	var/tmp/emag_spark_loop_active = FALSE
 	anchored = ANCHORED
 	/// Can't be destroyed by explosions
 	var/invuln = FALSE
@@ -162,7 +168,44 @@
 		user.visible_message(SPAN_ALERT("[user] wipes [src] with the bloody end of [W.name]. What the fuck?"), SPAN_ALERT("You wipe [src] with the bloody end of [W.name]. What the fuck?"))
 		return
 
-	if (issnippingtool(W))
+	if (src.emagged && isscrewingtool(W))
+		if (!src.emag_panel_open)
+			src.emag_panel_open = TRUE
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			user.visible_message(SPAN_ALERT("[user] opens [src]'s camera service panel."))
+		else if (src.emag_camera_reconnected)
+			src.finish_emagged_camera_repair(user)
+		else
+			boutput(user, SPAN_ALERT("Finish repairing and reconnecting [src] before closing its service panel."))
+		return
+	else if (src.emagged && src.emag_panel_open && issnippingtool(W))
+		if (src.emag_wire_cut)
+			boutput(user, SPAN_ALERT("The wires on [src] are already cut."))
+			return
+		SETUP_GENERIC_ACTIONBAR(user, src, 0.5 SECOND, PROC_REF(cut_emag_bypass), list(user), W.icon, W.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
+		return
+	else if (src.emagged && src.emag_panel_open && istype(W, /obj/item/device/multitool))
+		if (!src.emag_wires_repaired)
+			boutput(user, SPAN_ALERT("Repair the damaged wires with a cable coil before reconnecting [src]."))
+			return
+		if (src.emag_camera_reconnected)
+			boutput(user, SPAN_ALERT("[src] is already reconnected. Close and lock the service panel with a screwdriver."))
+			return
+		SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, PROC_REF(reconnect_emagged_camera), list(user), W.icon, W.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
+		return
+	else if (src.emagged && istype(W, /obj/item/cable_coil))
+		if (!src.emag_panel_open)
+			boutput(user, SPAN_ALERT("Open [src]'s service panel with a screwdriver first."))
+			return
+		if (!src.emag_wire_cut)
+			boutput(user, SPAN_ALERT("Cut the damaged wires with a snipping tool first."))
+			return
+		if (src.emag_wires_repaired)
+			boutput(user, SPAN_ALERT("The wires on [src] are already repaired. Use a multitool to reconnect the camera."))
+			return
+		SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, PROC_REF(repair_emagged_camera), list(user, W), W.icon, W.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
+		return
+	else if (issnippingtool(W))
 		if (src.reinforced)
 			boutput(user, SPAN_ALERT("[src] is too reinforced to disable!"))
 			return
@@ -191,6 +234,99 @@
 			for (var/guy as anything in src.viewers)
 				paper.ui_interact(guy)
 				logTheThing(LOG_STATION, user, "holds up a paper to a camera at [log_loc(src)], forcing [constructTarget(guy, "station")] to read it. <b>Title:</b> [paper.name]. <b>Text:</b> [adminscrub(paper.info)]")
+
+/obj/machinery/camera/get_help_message(dist, mob/user)
+	if (!src.emagged)
+		return ..()
+	if (!src.emag_panel_open)
+		return "The camera is damaged. Use a <b>screwdriver</b> to open its service panel to start the repair."
+	if (!src.emag_wire_cut)
+		return "The service panel is open. Use <b>wire cutters</b> to cut the damaged wires out."
+	if (!src.emag_wires_repaired)
+		return "The damaged wires are removed. Use <b>cable coil</b> to repair them."
+	if (!src.emag_camera_reconnected)
+		return "The wires are repaired. Use a <b>multitool</b> to reconnect the camera."
+	return "The camera is reconnected. Use a <b>screwdriver</b> to close and lock its service panel."
+
+/obj/machinery/camera/emag_act(mob/user, obj/item/card/emag/E)
+	if (!(src.network in list(CAMERA_NETWORK_STATION, CAMERA_NETWORK_AI_ONLY)) || !user?.ckey)
+		return FALSE
+
+	if (src.emagged)
+		boutput(user, SPAN_ALERT("[src] is already emagged."))
+		return FALSE
+
+	src.emagged = TRUE
+	src.emag_panel_open = FALSE
+	src.emag_wire_cut = FALSE
+	src.emag_wires_repaired = FALSE
+	src.emag_camera_reconnected = FALSE
+	var/datum/component/camera_coverage_emitter/emitter = src.GetComponent(/datum/component/camera_coverage_emitter)
+	for (var/mob/viewer as anything in emitter?.viewers)
+		get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).add_mob(viewer)
+
+	src.start_emag_sparking()
+	user.show_text("You discreetly slap [src] with your emag, scrambling its recognition wiring.", "blue")
+	return TRUE
+
+/obj/machinery/camera/proc/start_emag_sparking()
+	if (src.emag_spark_loop_active)
+		return
+	src.emag_spark_loop_active = TRUE
+	SPAWN(0)
+		while (src && !QDELETED(src) && src.emagged)
+			sleep(rand(30 SECONDS, 90 SECONDS))
+			if (!src || QDELETED(src))
+				return
+			if (!src.emagged)
+				src.emag_spark_loop_active = FALSE
+				return
+			var/datum/effects/system/spark_spread/sparks = new
+			sparks.set_up(2, TRUE, src)
+			sparks.start()
+		src.emag_spark_loop_active = FALSE
+
+/obj/machinery/camera/proc/repair_emagged_camera(mob/user, obj/item/cable_coil/cables)
+	if (!src.emagged || !src.emag_panel_open || !src.emag_wire_cut || !cables?.use(5))
+		return
+	src.emag_wires_repaired = TRUE
+	playsound(src.loc, 'sound/items/Deconstruct.ogg', 70, 1)
+	if (user)
+		user.visible_message(SPAN_NOTICE("[user] repairs the damaged wiring in [src]."))
+		add_fingerprint(user)
+
+/obj/machinery/camera/proc/reconnect_emagged_camera(mob/user)
+	if (!src.emagged || !src.emag_panel_open || !src.emag_wires_repaired || src.emag_camera_reconnected)
+		return
+	src.emag_camera_reconnected = TRUE
+	playsound(src.loc, 'sound/items/Deconstruct.ogg', 70, 1)
+	if (user)
+		user.visible_message(SPAN_NOTICE("[user] reconnects [src]'s camera circuitry with a multitool."))
+		add_fingerprint(user)
+
+/obj/machinery/camera/proc/finish_emagged_camera_repair(mob/user)
+	if (!src.emagged || !src.emag_panel_open || !src.emag_camera_reconnected)
+		return
+	var/datum/component/camera_coverage_emitter/emitter = src.GetComponent(/datum/component/camera_coverage_emitter)
+	for (var/mob/viewer as anything in emitter?.viewers)
+		get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).remove_mob(viewer)
+	src.emagged = FALSE
+	src.emag_panel_open = FALSE
+	src.emag_wire_cut = FALSE
+	src.emag_wires_repaired = FALSE
+	src.emag_camera_reconnected = FALSE
+	playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+	if (user)
+		user.visible_message(SPAN_NOTICE("[user] closes and locks [src]'s service panel."))
+		add_fingerprint(user)
+
+/obj/machinery/camera/proc/cut_emag_bypass(mob/user)
+	if (!src.emagged || !src.emag_panel_open || src.emag_wire_cut)
+		return
+	src.emag_wire_cut = TRUE
+	playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
+	user.visible_message(SPAN_ALERT("[user] cuts [src]'s damaged wires out."))
+
 
 /obj/machinery/camera/ex_act(severity)
 	if (src.invuln)
