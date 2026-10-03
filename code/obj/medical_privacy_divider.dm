@@ -77,12 +77,8 @@ TYPEINFO_NEW(/obj/medical_privacy_divider)
 	src.open = !src.open
 	if (ismob(user))
 		src.visible_message(SPAN_NOTICE("[user] [src.open ? "opens" : "closes"] [src]."))
-	if (src.open)
-		src.opacity = FALSE
-		src.density = FALSE
-	else
-		src.opacity = TRUE
-		src.density = TRUE
+	src.set_opacity(!src.open)
+	src.set_density(!src.open)
 	src.UpdateIcon()
 
 /obj/medical_privacy_divider/proc/update_neighbours()

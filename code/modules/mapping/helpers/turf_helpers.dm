@@ -65,6 +65,6 @@ ABSTRACT_TYPE(/obj/mapping_helper/turf/floor)
 	icon_state = "darkener"
 
 /obj/mapping_helper/turf/floor/darkener/do_on_turf()
-	T.opacity = TRUE
+	T.set_opacity(TRUE)
 	var/mutable_appearance/overlay = image('icons/effects/mapeditor.dmi', "darkener", dir=src.dir)
 	T.AddOverlays(overlay, "darkener")

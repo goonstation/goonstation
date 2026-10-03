@@ -28659,14 +28659,6 @@
 	icon_state = "track_1"
 	},
 /area/sim/racing_track)
-"cjH" = (
-/obj/machinery/computer3/generic/secure_data/detnet,
-/turf/unsimulated/floor{
-	icon = 'icons/misc/beach.dmi';
-	icon_state = "sand";
-	name = "sand"
-	},
-/area/sim/area2)
 "cjI" = (
 /obj/machinery/computer/arcade{
 	desc = "The VR representation of a popular computer game."
@@ -47673,32 +47665,6 @@
 /obj/item/dice/d100/satan,
 /turf/unsimulated/floor/carpet/office,
 /area/centcom/offices/gerhazo)
-"dyf" = (
-/obj/item/clothing/suit/cardboard_box{
-	icon_state = "c_box-HS";
-	name = "cardboard box - 'S.P.A.R.K.'";
-	pixel_x = 10;
-	pixel_y = 18
-	},
-/obj/filing_cabinet,
-/obj/item/paper{
-	icon_state = "paper_stamped";
-	info = "<br><span style='font-family: Georgia; font-style: normal; font-weight: normal; font-size: 16px; color: red;'><b>\[</b>REJECTED<b>]</b></span><br>";
-	layer = 2;
-	name = "holiday request";
-	pixel_x = 7;
-	pixel_y = -6
-	},
-/obj/item/clothing/suit/cardboard_box{
-	name = "cardboard box - 'S.P.A.R.K.'";
-	pixel_x = 16;
-	pixel_y = -3
-	},
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/unsimulated/floor/carpet/office,
-/area/centcom/offices/gerhazo)
 "dyg" = (
 /obj/blind_switch/directional/north,
 /turf/unsimulated/floor/wood/two,
@@ -54150,20 +54116,6 @@
 	dir = 4
 	},
 /area/owlery/Owlopen)
-"edr" = (
-/obj/machinery/door/unpowered/wood{
-	dir = 8;
-	icon = 'icons/obj/doors/door_office.dmi';
-	lock_dir = 4
-	},
-/turf/unsimulated/floor/wood/two{
-	desc = " It is made of wood.";
-	explosion_protection = 1;
-	explosion_resistance = 1;
-	name = "wood floor";
-	opaque_atom_count = 1
-	},
-/area/centcom/offices/sord)
 "edL" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-44"
@@ -58112,6 +58064,32 @@
 	opacity = 0
 	},
 /area/centcom/lounge)
+"gZl" = (
+/obj/item/clothing/suit/cardboard_box{
+	icon_state = "c_box-HS";
+	name = "cardboard box - 'S.P.A.R.K.'";
+	pixel_x = 10;
+	pixel_y = 18
+	},
+/obj/filing_cabinet,
+/obj/item/paper{
+	icon_state = "paper_stamped";
+	info = "<br><span style='font-family: Georgia; font-style: normal; font-weight: normal; font-size: 16px; color: red;'><b>\[</b>REJECTED<b>]</b></span><br>";
+	layer = 2;
+	name = "holiday request";
+	pixel_x = 7;
+	pixel_y = -6
+	},
+/obj/item/clothing/suit/cardboard_box{
+	name = "cardboard box - 'S.P.A.R.K.'";
+	pixel_x = 16;
+	pixel_y = -3
+	},
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/unsimulated/floor/carpet/office,
+/area/centcom/offices/gerhazo)
 "gZQ" = (
 /turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
@@ -65814,6 +65792,19 @@
 	icon_state = "ancient-12"
 	},
 /area/crater/cave)
+"mNY" = (
+/obj/machinery/door/unpowered/wood{
+	dir = 8;
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 4
+	},
+/turf/unsimulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor"
+	},
+/area/centcom/offices/sord)
 "mOs" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/syndicate_horizontal,
 /turf/unsimulated/floor/shuttlebay,
@@ -70613,6 +70604,14 @@
 /obj/decal/cleanable/blood,
 /turf/unsimulated/floor/green/checker,
 /area/owlery/owleryhall)
+"qpF" = (
+/obj/machinery/computer3/generic/secure_data/detnet,
+/turf/unsimulated/floor{
+	icon = 'icons/misc/beach.dmi';
+	icon_state = "sand";
+	name = "sand"
+	},
+/area/sim/area2)
 "qpG" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -127171,7 +127170,7 @@ bUm
 kEJ
 sQB
 cjh
-cjH
+qpF
 cjh
 ckx
 qQj
@@ -162957,7 +162956,7 @@ iBW
 wel
 wel
 wel
-edr
+mNY
 wel
 wel
 aES
@@ -164144,7 +164143,7 @@ pfF
 rAC
 rou
 wel
-dyf
+gZl
 dyu
 dyF
 wel

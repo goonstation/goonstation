@@ -12,8 +12,6 @@
 #define CAM_PROCESS_QUEUE_INTERVAL 2 SECONDS
 ///Every X seconds that the turf queue will be processed
 #define CAM_PROCESS_QUEUE_TURF_INTERVAL 2 SECONDS
-///Every X seconds all the cameras will be forced to update
-#define CAM_PROCESS_ALL_INTERVAL 20 SECONDS
 
 // camera networks
 
