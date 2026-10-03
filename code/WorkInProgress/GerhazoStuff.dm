@@ -961,11 +961,7 @@ TYPEINFO(/mob/living/critter/peppino)
 	name = "extremely anxious looking chef"
 	real_name = "extremely anxious looking chef"
 	desc = "He looks like he's having a REALLY bad day."
-#ifdef IN_MAP_EDITOR
-	icon = '+secret/icons/mob/peppino.dmi'
-#else
-	icon = null
-#endif
+	icon = MAP_EDITOR_ICON('+secret/icons/mob/peppino.dmi', null)
 	icon_state = "walk"
 	icon_state_dead = "dead"
 	density = 1
