@@ -4,6 +4,7 @@
 #ifdef MAP_OVERRIDE_NADIR
 	/datum/matfab_recipe/catarod,
 #endif
+	/datum/matfab_recipe/bullets_coated,
 	/datum/matfab_recipe/spear,
 	/datum/matfab_recipe/arrow,
 	/datum/matfab_recipe/bow,
