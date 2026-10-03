@@ -172,7 +172,7 @@ var/global/datum/controller/throwing/throwing_controller = new
 			thing.throw_end(thr.params, thrown_from=thr.thrown_from)
 			SEND_SIGNAL(thing, COMSIG_MOVABLE_THROW_END, thr)
 
-			var/list/atom/slip_objects = thr.params["slip_objs"]
+			var/list/atom/slip_objects = thr.params?["slip_objs"]
 			if (length(slip_objects))
 				for (var/atom/slip_obj as anything in slip_objects)
 					SEND_SIGNAL(slip_obj, COMSIG_ATOM_SLIP_END, thing)
