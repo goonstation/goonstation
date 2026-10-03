@@ -7,7 +7,8 @@
 	hand_count = 0
 	can_throw = 0
 	blood_id = "plasma"
-
+	ai_type = /datum/aiHolder/wanderer
+	is_npc = TRUE
 	faction = list(FACTION_BOTANY)
 
 	death(var/gibbed)

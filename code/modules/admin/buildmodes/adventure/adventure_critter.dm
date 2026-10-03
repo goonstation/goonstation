@@ -52,7 +52,7 @@
 		"Meat Thing" = /mob/living/critter/blobman/meat,
 		"Micro Man" = /mob/living/critter/microman,
 		"Mimic" = /mob/living/critter/mimic,
-		"Plasma Spore" = /obj/critter/spore,
+		"Plasma Spore" = /mob/living/critter/plasmaspore,
 		"Skeleton" = /mob/living/critter/skeleton,
 		"Space Wasp" = /mob/living/critter/small_animal/wasp,
 		"Spider" = /mob/living/critter/spider/spacerachnid,

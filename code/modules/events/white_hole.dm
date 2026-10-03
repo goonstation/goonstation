@@ -385,7 +385,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 		),
 		"plasma" = list(
 			"plasma" = 100,
-			/obj/critter/spore = 3,
+			/mob/living/critter/plasmaspore = 3,
 			/obj/item/raw_material/shard/plasmacrystal = 1,
 			/obj/item/raw_material/plasmastone = 1,
 		),
