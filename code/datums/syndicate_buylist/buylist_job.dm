@@ -138,6 +138,15 @@
 	job = list("Botanist", "Staff Assistant")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
+/datum/syndicate_buylist/traitor/kudzu_implanter
+	name = "Kudzu Implanter"
+	items = list(/obj/item/implanter/kudzu)
+	cost = 3
+	desc = "A weaker kudzu seed in implant form, sprouts a bursting vine on the (un)fortunate target upon death! Multiple implants increases the initial size of the growth. What a concept."
+	vr_allowed = FALSE
+	job = list("Botanist")
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
+
 /datum/syndicate_buylist/traitor/maneater
 	name = "Maneater Seed"
 	items = list(/obj/item/seed/maneater)
