@@ -10,6 +10,7 @@ export function handleLoadAssets(payload: Record<string, string>): void {
 
   if (
     'icon_ref_map.json' in payload &&
+    Byond.iconRefMap &&
     Object.keys(Byond.iconRefMap).length === 0
   ) {
     fetchRetry(payload['icon_ref_map.json'])

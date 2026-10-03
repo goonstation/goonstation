@@ -1740,7 +1740,7 @@ Returns:
 
 	dropped(mob/user)
 		. = ..()
-		src.icon = initial(icon)
+		src.icon = get_initial_icon(src)
 
 /obj/item/craftedmelee/spear
 	name = "spear"

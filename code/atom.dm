@@ -92,10 +92,19 @@ TYPEINFO(/atom)
 	var/impact_icon_state = null
 
 	New(turf/newLoc)
+		// Secret artwork is loaded on demand, rather than included in the compiled RSC.
+		src.load_runtime_icon()
 		. = ..()
 		// Lets stop having 5 implementations of this that all do it differently
 		if (!src.material && src.default_material)
 			src.setMaterial(getMaterial(src.default_material))
+
+	/// May be called before parent New() when a subtype initializes its appearance first.
+	proc/load_runtime_icon()
+		if (!src.icon && !initial(src.icon))
+			var/typeinfo/atom/icon_metadata = src.get_typeinfo()
+			if (icon_metadata.icon)
+				src.icon = get_runtime_icon(icon_metadata.icon)
 
 	proc/name_prefix(var/text_to_add, var/return_prefixes = 0, var/prepend = 0)
 		if( !name_prefixes ) name_prefixes = list()

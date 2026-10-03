@@ -334,6 +334,10 @@ ABSTRACT_TYPE(/obj/item)
 		return
 
 /obj/item/New()
+	if (istext(src.wear_image_icon))
+		src.wear_image_icon = get_runtime_icon(src.wear_image_icon)
+	if (istext(src.inhand_image_icon))
+		src.inhand_image_icon = get_runtime_icon(src.inhand_image_icon)
 	// this is dumb but it won't let me initialize vars to image() for some reason
 	wear_image = image(wear_image_icon)
 	wear_image.icon_state = icon_state //Why was this null until someone actually wore it? Made manipulation impossible.

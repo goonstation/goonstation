@@ -219,7 +219,7 @@
 			icon = c_icon
 			icon_state = c_icon_state
 		else
-			icon = initial(otype.icon)
+			icon = get_initial_icon(otype)
 			icon_state = initial(otype.icon_state)
 
 	/// Return TRUE if both sheets are there and valid, else false

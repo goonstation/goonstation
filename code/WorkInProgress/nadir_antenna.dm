@@ -583,7 +583,7 @@ TYPEINFO(/obj/machinery/communications_dish/transception)
 			"failsafeStat" = transception_array.primed ? "OPERATIONAL" : "FAILSAFE HALT",
 			"drawRateTarget" = transception_array.intcap_draw_rate,
 			"surplusThreshold" = transception_array.grid_surplus_threshold,
-			"arrayImage" = icon2base64(icon(initial(transception_array.icon), initial(transception_array.icon_state))),
+			"arrayImage" = icon2base64(icon(get_initial_icon(transception_array), initial(transception_array.icon_state))),
 			"arrayHealth" = arrayborked
 		)
 

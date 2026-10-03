@@ -389,7 +389,7 @@
 			boutput(user, SPAN_NOTICE("Installing a wall [dispensing_fitting == /obj/machinery/light/small ? "bulb" : "tube"]..."))
 			playsound(user, 'sound/machines/click.ogg', 50, TRUE)
 			var/obj/machinery/light/dispensed_dummy = dispensing_fitting
-			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/add_wall_light, list(A, B, user), initial(dispensed_dummy.icon), initial(dispensed_dummy.icon_state), null, null)
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/add_wall_light, list(A, B, user), get_initial_icon(dispensed_dummy), initial(dispensed_dummy.icon_state), null, null)
 
 
 /obj/item/lamp_manufacturer/attackby(obj/item/W, mob/user)

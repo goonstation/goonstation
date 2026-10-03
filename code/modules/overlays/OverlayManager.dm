@@ -484,7 +484,7 @@
 	New()
 		var/datum/overlayDefinition/warp = new()
 #if defined(HALLOWEEN) && defined(SECRETS_ENABLED)
-		warp.d_icon = '+secret/icons/effects/overlays/warp.dmi'
+		warp.d_icon = get_runtime_icon("+secret/icons/effects/overlays/warp.dmi")
 #else
 		warp.d_icon = 'icons/effects/overlays/warp.dmi'
 #endif

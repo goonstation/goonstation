@@ -369,7 +369,7 @@
 /datum/tgui_window/proc/send_asset(datum/asset/asset)
 	if(!client || !asset)
 		return
-	sent_assets += list(asset)
+	sent_assets |= list(asset)
 	. = asset.deliver(client)
 	// |GOONSTATION-CHANGE| We have not implemented separate spritesheet assets yet
 	/*
