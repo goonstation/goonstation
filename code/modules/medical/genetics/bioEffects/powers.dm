@@ -1461,6 +1461,106 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/datum/bioEffect/power/phagocytosis
+	name = "Eukaryotic Phagocytosis"
+	desc = "Allows the subject to absorb biological organs into their body."
+	icon_state = "phagocytosis"
+	id = "phagocytosis"
+	msgGain = "You feel your organs wobbling inside you."
+	msgLose = "Your organs no longer wobble when you move."
+	cooldown = 100
+	stability_loss = 5
+	ability_path = /datum/targetable/geneticsAbility/phagocytosis
+
+/datum/targetable/geneticsAbility/phagocytosis
+	name = "Eukaryotic Phagocytosis"
+	desc = "Replace an organic organ by absorbing a new one."
+	icon_state = "phagocytosis"
+	targeted = FALSE
+
+	cast_genetics(atom/target, misfire)
+		if(..())
+			return TRUE
+		if(!owner.organHolder)
+			return TRUE
+		var/obj/item/I = owner.equipped()
+		if(!I)
+			boutput(owner, SPAN_ALERT("You need to be holding an organ to absorb it!"))
+			return TRUE
+		return absorb_organ_setup(I, (linked_power.power > 1), misfire)
+
+	proc/absorb_organ_setup(var/obj/item/I, var/eject_old, var/misfire = FALSE)
+		if(!src.owner.organHolder)
+			return TRUE
+		if(iscritter(src.owner) && !istype(I, /obj/item/organ/brain))
+			// Critters only use brains currently
+			boutput(src.owner, SPAN_ALERT("You're not sure what to do with this organ."))
+			return TRUE
+
+		var/obj/item/current_organ = null
+		var/slot
+		if(istype(I, /obj/item/organ))
+			var/obj/item/organ/organ_new = I
+			slot = organ_new.organ_holder_name
+			if(istype(I, /obj/item/organ/eye))
+				if(I == src.owner.r_hand)
+					slot = "right_eye"
+				else
+					slot = "left_eye"
+			var/obj/item/organ/organ_old = owner.organHolder.get_organ(slot)
+			current_organ = organ_old
+			if(organ_new.robotic)
+				boutput(src.owner, SPAN_ALERT("You can't absorb cybernetics!"))
+				return TRUE
+			if(organ_old?.robotic)
+				boutput(src.owner, SPAN_ALERT("You try to absorb \the [I], but you can't get rid of your cybernetics!"))
+				return TRUE
+			if(slot == "head")
+				boutput(owner, SPAN_ALERT("You can't replace your own head like that!"))
+				return TRUE
+			if(slot == "tail")
+				boutput(owner, SPAN_ALERT("You can't replace your own tail like that!"))
+				return TRUE
+		else if(istype(I, /obj/item/clothing/head/butt))
+			boutput(owner, SPAN_ALERT("You can't replace your own butt like that!"))
+			return TRUE
+		else if(istype(I, /obj/item/skull))
+			slot = "skull"
+			current_organ = owner.organHolder.get_organ("skull")
+		else
+			boutput(owner, SPAN_ALERT("You can't absorb that!"))
+			return TRUE
+
+		if(current_organ && linked_power.power <= 1)
+			boutput(owner, SPAN_ALERT("You already have that organ!"))
+			return TRUE
+		if(slot == "brain")
+			var/accept = tgui_alert(src.owner, "Are you sure that you want to replace your brain with [I]?", "Replace brain?", list("Yes", "No")) == "Yes" && src.owner.equipped() == I
+			if(!accept)
+				return TRUE
+			logTheThing(LOG_COMBAT, src.owner, "replaces their brain with [I] using their Eukaryotic Phagocytosis ability.")
+		if(misfire)
+			var/obj/item/dropped_organ = src.owner.organHolder.drop_organ(slot)
+			if(isitem(dropped_organ) && !src.linked_power.safety)
+				src.owner.visible_message("[src.owner] tried to absorb the [I], but \the [dropped_organ] just falls out instead!")
+			else
+				boutput(src.owner, SPAN_ALERT("Your organs vibrate uncomfortably!"))
+			return
+		absorb_organ(I, slot)
+
+	proc/absorb_organ(var/obj/item/I, var/slot)
+		var/dropped_organ = src.owner.organHolder.drop_organ(slot)
+		if(isitem(dropped_organ))
+			src.owner.visible_message("\The [dropped_organ] falls out of [src.owner] and \the [I] is absorbed!")
+		else
+			src.owner.visible_message("\The [I] is absorbed into [src.owner]'s body!")
+		src.owner.u_equip(I)
+		src.owner.organHolder.receive_organ(I, slot)
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /datum/bioEffect/power/midas
 	name = "Midas Touch"
 	desc = "Allows the subject to transmute materials at will."
