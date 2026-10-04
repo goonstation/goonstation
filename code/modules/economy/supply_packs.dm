@@ -1434,15 +1434,15 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "Necessities Vending Machine Restocking Pack"
 
 /datum/supply_packs/catering_vending_restock
-	name = "Catering Vending Machine Restocking Pack"
-	desc = "x1 Kitchen Restock Cartridge, x1 Alcohol Restock Cartridge, x1 Hydroponics Restock Cartridge."
+	name = "Catering and Hydroponics Vending Machine Restocking Pack"
+	desc = "x1 Hydroponics Restock Cartridge, x1 Kitchen Restock Cartridge, x1 Alcohol Restock Cartridge."
 	category = "Crew Service"
-	contains = list(/obj/item/vending/restock_cartridge/kitchen,
-					/obj/item/vending/restock_cartridge/alcohol,
-					/obj/item/vending/restock_cartridge/hydroponics)
+	contains = list(/obj/item/vending/restock_cartridge/hydroponics,
+					/obj/item/vending/restock_cartridge/kitchen,
+					/obj/item/vending/restock_cartridge/alcohol)
 	cost = PAY::TRADESMAN*2
 	containertype = /obj/storage/crate
-	containername = "Catering Vending Machine Restocking Pack"
+	containername = "Catering and Hydroponics Vending Machine Restocking Pack"
 
 /datum/supply_packs/civilian_vending_restock
 	name = "Civilian Vending Machine Restocking Pack"
