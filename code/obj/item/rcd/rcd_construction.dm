@@ -174,3 +174,19 @@ TYPEINFO(/obj/item/rcd/construction/chiefEngineer)
 	matter_remove_wall = 6
 	matter_remove_girder = 6
 	matter_remove_window = 6
+
+/obj/item/rcd/construction/NT
+	name = "Emergency rapid construction device"
+	desc = "Also known as an RCD, this is capable of rapidly constructing walls, flooring, windows, and doors. This device was customized for NanoTrasen Emergency Response Teams to have an enhanced feature set, higher capacity and work more efficiently."
+	icon_state = "base_NT"
+
+	max_matter = 100
+	matter_create_wall = 1
+	matter_create_door = 4
+	matter_create_window = 1
+	matter_create_light_fixture = 1
+	matter_remove_door = 10
+	matter_remove_floor = 6
+	matter_remove_lattice = 6
+	matter_remove_wall = 6
+	matter_remove_girder = 6
