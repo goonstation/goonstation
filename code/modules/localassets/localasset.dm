@@ -29,9 +29,9 @@ ABSTRACT_TYPE(/datum/asset)
 /// Basic assets
 ABSTRACT_TYPE(/datum/asset/basic)
 /datum/asset/basic
-	/// Resource filenames for local delivery.
+	/// List of entries with form "filename" (gets shit into cache)
 	var/local_assets = list()
-	/// Browser asset path -> URL.
+	/// List of entries with form
 	var/url_map = list()
 
 	deliver(client)
