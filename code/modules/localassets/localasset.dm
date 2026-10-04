@@ -31,7 +31,7 @@ ABSTRACT_TYPE(/datum/asset/basic)
 /datum/asset/basic
 	/// List of entries with form "filename" (gets shit into cache)
 	var/local_assets = list()
-	/// List of entries with form
+	/// List of entries with form "browserasset-path" = "url"
 	var/url_map = list()
 
 	deliver(client)
