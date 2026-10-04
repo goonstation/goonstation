@@ -1,5 +1,6 @@
 import { loadMappings } from 'common/assets';
 import { fetchRetry } from 'tgui-core/http';
+
 import { loadedMappings } from '../../assets';
 import { gameDataAtom, store } from '../store'; // |GOONSTATION-ADD|
 
