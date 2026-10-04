@@ -1,28 +1,83 @@
-/// Public DMI paths mapped to BYOND resource references for tgui-core's DmIcon.
+/// TGUI's UUID-to-resource lookup.
 /datum/asset/json/icon_ref_map
 	name = "icon_ref_map"
 	early = TRUE
+	/// UUID -> BYOND resource reference.
+	var/list/icon_refs = list()
+	/// DMI path -> UUID, stable for this world.
+	var/list/icon_keys = list()
+	/// Next unscanned resource ID.
+	var/next_resource_id = 0
+	var/revision = 0
+	/// Version token used to reject stale JSON during delivery.
+	var/version
+	var/dirty = FALSE
 
-	/// Scan cached DMI files, including those loaded during world initialization.
-	/// Generated icons have no stable path for server-side lookup.
+	init()
+		src.revision++
+		src.version = "[rustg_unix_timestamp()]-[src.revision]"
+		. = ..()
+		src.dirty = FALSE
+
+	deliver(client/C)
+		src.refresh()
+		return ..()
+
+	get_associated_urls()
+		// Reload without creating additional client files.
+		return list("icon_ref_map.json" = "icon_ref_map.json?v=[src.version]")
+
 	generate()
-		var/list/icon_refs = list()
-		var/resource_id = -1
+		src.scan_resources()
+		return list("version" = src.version, "icons" = src.icon_refs.Copy())
+
+	proc/refresh()
+		src.scan_resources()
+		if (!src.dirty)
+			return FALSE
+		src.init()
+		return TRUE
+
+	proc/scan_resources()
 		while (TRUE)
-			resource_id++
-			var/resource_ref = "\[0xc[num2text(resource_id, 6, 16)]\]"
+			var/resource_ref = "\[0xc[num2text(src.next_resource_id, 6, 16)]\]"
 			var/resource = locate(resource_ref)
 			if (isnull(resource))
 				break
+			src.next_resource_id++
 			if (!isfile(resource) || !isicon(resource))
 				continue
 			var/icon_path = "[resource]"
-			// Runtime-loaded secret DMIs must not be republished by this scan.
-			if (is_public_tgui_icon_path(icon_path))
-				icon_refs[icon_path] = resource_ref
-		return icon_refs
+			if (!is_public_tgui_icon_path(icon_path))
+				continue
+			src.register_icon(resource)
 
-/// Exclude runtime-loaded secret DMIs from the public icon map.
+	/// Returns a stable UUID for a cached DMI.
+	proc/register_icon(icon_resource)
+		if (!isfile(icon_resource) || !isicon(icon_resource))
+			return null
+		var/icon_path = "[icon_resource]"
+		if (lowertext(copytext(icon_path, -4)) != ".dmi")
+			return null
+		var/icon_key = src.icon_keys[icon_path]
+		if (!icon_key)
+			icon_key = rustg_generate_uuid_v4()
+			src.icon_keys[icon_path] = icon_key
+		var/resource_ref = "\ref[icon_resource]"
+		if (src.icon_refs[icon_key] != resource_ref)
+			src.icon_refs[icon_key] = resource_ref
+			src.dirty = TRUE
+		return icon_key
+
+/// Returns a DMI's TGUI key. Paths must be server-controlled.
+/proc/get_tgui_icon(icon_source)
+	if (!icon_source)
+		return null
+	var/icon_resource = fcopy_rsc(icon_source)
+	var/datum/asset/json/icon_ref_map/icon_map = get_assets(/datum/asset/json/icon_ref_map)
+	return icon_map.register_icon(icon_resource)
+
+/// Secret DMIs require explicit registration.
 /proc/is_public_tgui_icon_path(icon_path)
 	if (!is_valid_dmi_file(icon_path))
 		return FALSE

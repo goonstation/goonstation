@@ -11,7 +11,7 @@ var/global/list/global_asset_datum_list = list()
 /// Base asset type
 ABSTRACT_TYPE(/datum/asset)
 /datum/asset
-	/// Generate this asset during TGUI setup rather than waiting for the first request.
+	/// Initialize during TGUI setup.
 	var/early = FALSE
 
 /datum/asset/proc/init()
@@ -26,12 +26,12 @@ ABSTRACT_TYPE(/datum/asset)
 	global_asset_datum_list[src.type] = src
 	init()
 
-/// Basic assets
+/// Static assets and their browser URLs.
 ABSTRACT_TYPE(/datum/asset/basic)
 /datum/asset/basic
-	/// List of entries with form "filename" (gets shit into cache)
+	/// Resource filenames for local delivery.
 	var/local_assets = list()
-	/// List of entries with form "browserasset-path" = "url"
+	/// Browser asset path -> URL.
 	var/url_map = list()
 
 	deliver(client)
@@ -40,7 +40,7 @@ ABSTRACT_TYPE(/datum/asset/basic)
 	get_associated_urls()
 		. = url_map
 
-/// For grouping multiple assets together
+/// Asset bundle.
 ABSTRACT_TYPE(/datum/asset/group)
 /datum/asset/group
 	var/list/subassets = list()
@@ -60,12 +60,11 @@ ABSTRACT_TYPE(/datum/asset/group)
 			var/datum/asset/A = get_assets(asset)
 			. += A.get_associated_urls()
 
-/// Reusable generated JSON asset. Subtypes supply a name and generate() implementation.
+/// Generated JSON delivered locally, even with the CDN enabled.
 ABSTRACT_TYPE(/datum/asset/json)
 /datum/asset/json
 	/// Filename without the .json suffix.
 	var/name
-	/// Resource-cache copy shared by all clients after the temporary file is removed.
 	var/json_resource
 
 	init()
@@ -89,15 +88,15 @@ ABSTRACT_TYPE(/datum/asset/json)
 	get_associated_urls()
 		return list("[src.name].json" = "[src.name].json")
 
-	/// Return the data to serialize into the JSON asset.
+	/// JSON-serializable asset data.
 	proc/generate()
 		CRASH("Missing generate() implementation for JSON asset [src.type]")
 
-/// Returns either the already-created asset or creates a new one and returns it
+/// Asset singleton for the requested type.
 /proc/get_assets(asset)
 	. = global_asset_datum_list[asset] || new asset()
 
-/// Sends the list of asset files to client if they're needed
+/// Local delivery for static assets; requires the CDN to be disabled.
 /proc/send_assets(client/C, list/assetlist)
 	if (cdn)
 		message_coders("ZeWaka/Assets: I made a huge fuckup somewhere and assets are being sent with cdn enabled!!")

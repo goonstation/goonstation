@@ -71,6 +71,14 @@ var/global/datum/controller/process/tgui/tgui_process
 			ui.close(FALSE)
 		scheck()
 
+	// ui_data() may have loaded new icons while processing the interfaces above.
+	if (length(src.all_uis))
+		var/datum/asset/json/icon_ref_map/icon_map = get_assets(/datum/asset/json/icon_ref_map)
+		icon_map.refresh()
+		for (var/datum/tgui/ui as anything in src.all_uis)
+			if (ui.window && ui.window.icon_ref_map_revision != icon_map.revision)
+				ui.window.send_asset(icon_map)
+
 /datum/controller/process/tgui/onKill()
 	close_all_uis()
 
