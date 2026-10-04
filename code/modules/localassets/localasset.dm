@@ -26,7 +26,7 @@ ABSTRACT_TYPE(/datum/asset)
 	global_asset_datum_list[src.type] = src
 	init()
 
-/// Static assets and their browser URLs.
+/// Basic assets
 ABSTRACT_TYPE(/datum/asset/basic)
 /datum/asset/basic
 	/// Resource filenames for local delivery.
@@ -40,7 +40,7 @@ ABSTRACT_TYPE(/datum/asset/basic)
 	get_associated_urls()
 		. = url_map
 
-/// Asset bundle.
+/// For grouping multiple assets together
 ABSTRACT_TYPE(/datum/asset/group)
 /datum/asset/group
 	var/list/subassets = list()
@@ -60,7 +60,7 @@ ABSTRACT_TYPE(/datum/asset/group)
 			var/datum/asset/A = get_assets(asset)
 			. += A.get_associated_urls()
 
-/// Generated JSON delivered locally, even with the CDN enabled.
+/// Generated JSON delivered locally
 ABSTRACT_TYPE(/datum/asset/json)
 /datum/asset/json
 	/// Filename without the .json suffix.
@@ -96,7 +96,7 @@ ABSTRACT_TYPE(/datum/asset/json)
 /proc/get_assets(asset)
 	. = global_asset_datum_list[asset] || new asset()
 
-/// Local delivery for static assets; requires the CDN to be disabled.
+/// Sends the list of asset files to client if they're needed
 /proc/send_assets(client/C, list/assetlist)
 	if (cdn)
 		message_coders("ZeWaka/Assets: I made a huge fuckup somewhere and assets are being sent with cdn enabled!!")
