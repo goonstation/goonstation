@@ -69,7 +69,7 @@
 			src.dirty = TRUE
 		return icon_key
 
-/// Returns a DMI's TGUI key. Paths must be server-controlled.
+/// Returns a DMI's TGUI key.
 /proc/get_tgui_icon(icon_source)
 	if (!icon_source)
 		return null
