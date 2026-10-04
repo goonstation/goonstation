@@ -1,8 +1,27 @@
 import { loadMappings } from 'common/assets';
 import { fetchRetry } from 'tgui-core/http';
-
 import { loadedMappings } from '../../assets';
-import { gameDataAtom, store } from '../store';
+import { gameDataAtom, store } from '../store'; // |GOONSTATION-ADD|
+
+// --------- Handlers ------------------------------------------------------///
+
+export function handleLoadAssets(payload: Record<string, string>): void {
+  loadMappings(payload, loadedMappings);
+
+  // |GOONSTATION-CHANGE| Versioned icon map loading.
+  if ('icon_ref_map.json' in payload) {
+    updateIconRefMap(payload['icon_ref_map.json']);
+  }
+}
+
+// --------- Helpers -------------------------------------------------------///
+
+// https://biomejs.dev/linter/rules/no-assign-in-expressions/
+function setIconRefMap(map: Record<string, string>): void {
+  Byond.iconRefMap = map;
+}
+
+// |GOONSTATION-ADD| Versioned icon map loading.
 
 let iconRefMapUrl: string | undefined;
 let iconRefMapRequest: Promise<void> | undefined;
@@ -13,37 +32,30 @@ const iconRefMapRetryDelay = 200;
 
 type IconRefMapResponse = {
   version: string;
-  icons: typeof Byond.iconRefMap;
+  icons: Record<string, string>;
 };
 
-// --------- Handlers ------------------------------------------------------///
-
-export function handleLoadAssets(payload: Record<string, string>): void {
-  loadMappings(payload, loadedMappings);
-
-  const nextIconRefMapUrl = payload['icon_ref_map.json'];
-  if (!nextIconRefMapUrl) {
+function updateIconRefMap(url: string | undefined): void {
+  if (!url) {
     return;
   }
 
   if (
-    nextIconRefMapUrl === iconRefMapUrl &&
-    (iconRefMapRequest || loadedIconRefMapUrl === nextIconRefMapUrl)
+    url === iconRefMapUrl &&
+    (iconRefMapRequest || loadedIconRefMapUrl === url)
   ) {
     return;
   }
 
-  iconRefMapUrl = nextIconRefMapUrl;
+  iconRefMapUrl = url;
   const requestId = ++iconRefMapRequestId;
-  const request = loadIconRefMap(nextIconRefMapUrl, requestId).finally(() => {
+  const request = loadIconRefMap(url, requestId).finally(() => {
     if (requestId === iconRefMapRequestId) {
       iconRefMapRequest = undefined;
     }
   });
   iconRefMapRequest = request;
 }
-
-// --------- Helpers -------------------------------------------------------///
 
 async function loadIconRefMap(url: string, requestId: number): Promise<void> {
   try {
@@ -59,6 +71,7 @@ async function loadIconRefMap(url: string, requestId: number): Promise<void> {
       if (map.version === expectedVersion) {
         loadedIconRefMapUrl = url;
         setIconRefMap(map.icons);
+        store.set(gameDataAtom, (previous) => ({ ...previous }));
         return;
       }
       await new Promise((resolve) => setTimeout(resolve, iconRefMapRetryDelay));
@@ -68,9 +81,4 @@ async function loadIconRefMap(url: string, requestId: number): Promise<void> {
       console.error(error);
     }
   }
-}
-
-function setIconRefMap(map: typeof Byond.iconRefMap): void {
-  Byond.iconRefMap = map;
-  store.set(gameDataAtom, (previous) => ({ ...previous }));
 }
