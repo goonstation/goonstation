@@ -1431,7 +1431,7 @@
 	execute(atom/target, mob/user)
 		..()
 		var/obj/item/I = user.equipped()
-		surgery.perform_step(step, user,I)
+		step.attempt_surgery_step(user,I)
 
 /// surgery context menu - starts/continues a surgery
 /datum/contextAction/surgery
