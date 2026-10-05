@@ -1999,10 +1999,10 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 					playsound(user.loc, pumpsound, 50, 1)
 
 					ejectcasings()
-					if(rack_state)
-						FLICK(rack_state, src)
+					if(src.rack_state)
+						FLICK(src.rack_state+"[src.gilded ? "-golden" : ""]", src)
 					else if (src.icon_state == base_icon_state+"[src.gilded ? "-golden" : ""]") //"animated" racking
-						animate(icon_state = base_icon_state+"[gilded ? "-golden" : ""]")
+						animate(icon_state = base_icon_state+"[src.gilded ? "-golden" : ""]")
 					else
 						UpdateIcon() // Slide already open? Just close the slide
 				boutput(mob_user, SPAN_NOTICE("You rack the slide of the shotgun!"))

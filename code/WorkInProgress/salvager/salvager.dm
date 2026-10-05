@@ -573,11 +573,10 @@
 	rack_state = "reclaimshotty_pump"
 	flags =  TABLEPASS | CONDUCT | USEDELAY
 	c_flags = EQUIPPED_WHILE_HELD
-	force = MELEE_DMG_RIFLE
+	force = MELEE_DMG_PISTOL
 	contraband = 5
 	ammo_cats = list(AMMO_SHOTGUN_ALL)
 	max_ammo_capacity = 4
-	auto_eject = FALSE
 	can_dual_wield = TRUE
 	two_handed = FALSE
 	has_empty_state = FALSE
