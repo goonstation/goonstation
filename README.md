@@ -4,7 +4,7 @@
 
 # SETUP
 
-[<img src=".github/assets/setup.png" alt="Setup" width="150" align="left">](https://hackmd.io/@goonstation/docs/%2F%40goonstation%2Fdev)
+[<img src=".github/assets/setup.png" alt="Setup" width="150" align="left">](https://docs.goonhub.com/getting-started/development-guide.html)
 
 Want to get the code up and running to test changes or play around? This guide is the place to go. 
 <br>***Be sure to follow it exactly!*** If you need help, visit the `#imcoder` channel on our Discord.
@@ -26,23 +26,23 @@ Goonhub is the premier place for locating statistics, data about rounds (like fu
 
 ## CONTRIBUTING
 
-[<img src=".github/assets/readme.png" alt="Contributing Guidelines" width="150" align="left">](https://hackmd.io/@goonstation/docs/%2F%40goonstation%2Fcontribute)
+[<img src=".github/assets/readme.png" alt="Contributing Guidelines" width="150" align="left">](https://docs.goonhub.com/getting-started/contributor-guidelines.html)
 Before opening a PR to this codebase, please read our contributor guidelines. It details the requirements of our PR format, and explains our changelog methodology.
 
-[<img src=".github/assets/code.png" alt="Code Documentation" width="150" align="left">](https://hackmd.io/@goonstation/docs/%2F%40goonstation%2Fcode)
+[<img src=".github/assets/code.png" alt="Code Documentation" width="150" align="left">](https://docs.goonhub.com/guidelines/code.html)
 To contribute code to the game, please read our code guide. It details specific DM syntax we encourage, useful things, and some performance-oriented technical discussion.
 
-[<img src=".github/assets/sprites.png" alt="Spriting Guidelines" width="150" align="left">](https://hackmd.io/@goonstation/docs/%2F%40goonstation%2Fsprites)
+[<img src=".github/assets/sprites.png" alt="Spriting Guidelines" width="150" align="left">](https://docs.goonhub.com/guidelines/sprites.html)
 To contribute sprites to the game, please follow our spriting guidelines! It details the various things we try to keep consistent in our sprites, such as perspective and outlining.
 
-[<img src=".github/assets/audio.png" alt="Audio Guidelines" width="150" align="left">](https://hackmd.io/@goonstation/docs/%2F%40goonstation%2Faudio)
+[<img src=".github/assets/audio.png" alt="Audio Guidelines" width="150" align="left">](https://docs.goonhub.com/guidelines/audio.html)
 To contribute audio to the game, please follow our audio guidelines! It details what types of sounds we want to include, things to keep in mind, and the sound cache.
 
-[<img src=".github/assets/maps.png" alt="Mapping Guidelines" width="150" align="left">](https://hackmd.io/@goonstation/docs/%2F%40goonstation%2Fmaps)
+[<img src=".github/assets/maps.png" alt="Mapping Guidelines" width="150" align="left">](https://docs.goonhub.com/guidelines/mapping.html)
 To contribute maps to the game, please follow our mapping guidelines! It details the **required** pieces for a map submission. There's also guides on how to create a map.
 
-[<img src=".github/assets/docs.png" alt="Code Documentation" width="150" align="left">](https://docs.goonhub.com/)
-For auto-generated code documentation, visit our code docs! There's some good guides for portions of our codebase, and you can familiarize yourself with our various helpers.
+[<img src=".github/assets/docs.png" alt="Development Docs" width="150" align="left">](https://docs.goonhub.com/)
+For everything else, visit our development docs! Tooling tips, debugging, design docs, and more. Found something missing? Every page has an edit button.
 
 ## LICENSE
 [![license-badge](https://shields.io/badge/license-CC--BY--NC--SA-lightgrey?style=for-the-badge)](https://creativecommons.org/licenses/by-nc-sa/3.0/)
