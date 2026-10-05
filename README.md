@@ -41,9 +41,6 @@ To contribute audio to the game, please follow our audio guidelines! It details 
 [<img src=".github/assets/maps.png" alt="Mapping Guidelines" width="150" align="left">](https://goonhub.com/r/maps)
 To contribute maps to the game, please follow our mapping guidelines! It details the **required** pieces for a map submission. There's also guides on how to create a map.
 
-[<img src=".github/assets/docs.png" alt="Development Docs" width="150" align="left">](https://docs.goonhub.com/)
-For everything else, visit our development docs! Tooling tips, debugging, design docs, and more. Found something missing? Every page has an edit button.
-
 ## LICENSE
 [![license-badge](https://shields.io/badge/license-CC--BY--NC--SA-lightgrey?style=for-the-badge)](https://creativecommons.org/licenses/by-nc-sa/3.0/)
 
