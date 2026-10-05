@@ -9,7 +9,7 @@
 	use_stunned_icon = FALSE
 	var/being_seen = FALSE
 	var/mob/last_witness
-	var/icon_states_with_supported_eyes = list("bee", "buddy", "kitten", "monkey", "possum", "brullbar", "bunny", "penguin")
+	var/icon_states_with_supported_eyes = list("bee", "buddy", "kitten", "monkey", "possum", "brullbar", "bunny", "penguin", "buddy_future", "bunny_mask", "kitten_wizard", "monkey_assistant", "shelterfrog", "bear", "tuba", "monkey_george")
 	var/image/eye_light
 	var/glowing_eye_color = "#c40000ff"
 	var/glowing_eyes_enabled_alpha = 190
@@ -39,6 +39,38 @@
 		pick_random_icon_state = 0
 	penguin
 		icon_state = "penguin"
+		pick_random_icon_state = 0
+
+	buddy_future
+		icon_state = "buddy_future"
+		pick_random_icon_state = 0
+
+	bunny_mask
+		icon_state = "bunny_mask"
+		pick_random_icon_state = 0
+
+	kitten_wizard
+		icon_state = "kitten_wizard"
+		pick_random_icon_state = 0
+
+	monkey_assistant
+		icon_state = "monkey_assistant"
+		pick_random_icon_state = 0
+
+	shelterfrog
+		icon_state = "shelterfrog"
+		pick_random_icon_state = 0
+
+	bear
+		icon_state = "bear"
+		pick_random_icon_state = 0
+
+	tuba
+		icon_state = "tuba"
+		pick_random_icon_state = 0
+
+	monkey_george
+		icon_state = "monkey_george"
 		pick_random_icon_state = 0
 
 	New()
