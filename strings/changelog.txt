@@ -1,4 +1,9 @@
 
+(t)mon oct 05 26
+(u)Kubius
+(p)28008
+(e)|
+(+)The new harmonic siphon brief now uses zero-indexed vertical coordinates to match the floor decals.
 (t)sun oct 04 26
 (u)Driftered
 (p)28026
