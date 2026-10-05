@@ -1,5 +1,9 @@
 
 (t)sun oct 04 26
+(u)Driftered
+(p)28026
+(e)🎨🐁|C-Sprites, A-Critters
+(+)Adds eight new Haunted Plush Toy variants to spawn as.
 (u)Prism55
 (p)27999
 (e)|
