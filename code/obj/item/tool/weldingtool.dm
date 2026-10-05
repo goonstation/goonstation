@@ -343,7 +343,7 @@
 	name = "high-capacity weldingtool"
 	fuel_capacity = 100
 
-/obj/item/weldingtool/high_cap/NT
+/obj/item/weldingtool/high_cap/blue
 	desc = "A tool that, when turned on, uses fuel to emit a concentrated flame, welding metal together or slicing it apart. This one boasts an extended capacity and a stylish blue handle."
-	icon_state = "weldingtool-off-nt"
-	icon_state_variant_suffix = "-nt"
+	icon_state = "weldingtool-off-blue"
+	icon_state_variant_suffix = "-blue"

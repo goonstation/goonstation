@@ -132,7 +132,6 @@
 	name = "emergency dowsing kit"
 	desc = "A small box full of tools meant for the moving and pinning of hotspots."
 	icon_state = "hotspot_nt"
-	slots = 3
 	spawn_contents = list(
 		/obj/item/heat_dowsing,
 		/obj/item/clothing/shoes/stomp_boots,

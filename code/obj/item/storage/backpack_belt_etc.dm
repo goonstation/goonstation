@@ -871,7 +871,7 @@
 		/obj/item/rcd/construction/NT,
 		/obj/item/rcd_ammo/medium,
 		/obj/item/tool/omnitool/NT,
-		/obj/item/weldingtool/high_cap/NT,
+		/obj/item/weldingtool/high_cap/blue,
 		/obj/item/tool/omnitool/dualconstruction_device/NT,
 		/obj/item/device/analyzer/atmospheric/upgraded,
 		/obj/item/extinguisher/large

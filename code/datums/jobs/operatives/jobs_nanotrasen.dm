@@ -69,11 +69,14 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	items_in_mob = list(/obj/item/device/pda2/nt/engineer)
 	/// gets placed within the mob's id slot by put_id_in_pda, required because they need both of their pockets for the oxy (on spawn readiness is required) & pouch ("correct" slot for pouch)
 
+	items_in_backpack = list(/obj/item/device/flash,
+	/obj/item/storage/box/elecrepair,
 #ifdef HOTSPOTS_ENABLED
-	items_in_backpack = list(/obj/item/device/flash, /obj/item/storage/box/elecrepair, /obj/item/storage/box/hotspots, /obj/item/sheet/steel/fullstack, /obj/item/sheet/glass/reinforced/fullstack)
-#else
-	items_in_backpack = list(/obj/item/device/flash, /obj/item/storage/box/elecrepair, /obj/item/sheet/steel/fullstack, /obj/item/sheet/glass/reinforced/fullstack)
+	/obj/item/storage/box/hotspots,
 #endif
+	/obj/item/sheet/steel/fullstack,
+	/obj/item/sheet/glass/reinforced/fullstack
+)
 
 /datum/job/special/nt/medic
 	name = "Nanotrasen Emergency Paramedic"
