@@ -62,12 +62,11 @@
 		qdel(src)
 		return
 	A.artitype = AO
-	A.scramblechance = AO.scramblechance
 	// Refers to the artifact datum's list of origins it's allowed to be from and selects one at random. This way we can avoid
 	// stuff that doesn't make sense like ancient robot plant seeds or eldritch healing devices
 
 	var/datum/artifact_origin/appearance = artifact_controls.get_origin_from_string(AO.name)
-	if (prob(A.scramblechance))
+	if (prob(AO.scramblechance))
 		appearance = null
 	// rare-ish chance of an artifact appearing to be a different origin, just to throw things off
 
@@ -121,13 +120,10 @@
 	A.fault_types |= AO.fault_types - A.fault_blacklist
 	A.internal_name = AO.generate_name()
 	A.used_names[AO.type_name] = A.internal_name
-	A.nofx = AO.nofx
 
 	ArtifactDevelopFault(10)
 
-	if(A.artitype.chapel_block)
-		src.RegisterSignal(src, XSIG_MOVABLE_AREA_CHANGED, PROC_REF(Artifact_chapel_block))
-	if (A.automatic_activation)
+	if(A.automatic_activation)
 		src.ArtifactActivated()
 
 	var/list/valid_triggers = A.validtriggers
@@ -156,20 +152,13 @@
 		return 1 // can't activate these ones at all by design
 	if (!A.may_activate(src))
 		return 1
-	if(A.artitype.chapel_block)
-		var/is_chapel = istype(get_area(src), /area/station/chapel)
-		if(is_chapel)
-			playsound(src.loc, 'sound/effects/bamf.ogg', 50, 1, pitch = 1.25)
-			var/turf/T = get_turf(src)
-			T.visible_message(SPAN_ALERT("<b>[src] attempts to activate but fails!</b>"))
-			return 1
 	if (A.activ_sound)
 		playsound(src.loc, A.activ_sound, 100, 1)
 	if (A.activ_text)
 		var/turf/T = get_turf(src)
 		if (T) T.visible_message("<b>[src] [A.activ_text]</b>") //ZeWaka: Fix for null.visible_message()
 	A.activated = 1
-	if (A.nofx)
+	if (A.artitype.nofx)
 		src.icon_state = src.icon_state + "fx"
 	else
 		A.show_fx(src)
@@ -197,7 +186,7 @@
 		var/turf/T = get_turf(src)
 		T.visible_message("<b>[src] [A.deact_text]</b>")
 	A.activated = 0
-	if (A.nofx)
+	if (A.artitype.nofx)
 		src.icon_state = src.icon_state - "fx"
 	else
 		A.hide_fx(src)
@@ -390,14 +379,6 @@
 	src.ArtifactHitWith(W, user)
 	return 1
 
-/obj/proc/Artifact_chapel_block(var/thing, var/area/old_area, var/area/new_area)
-	var/is_chapel = istype(new_area, /area/station/chapel)
-	if(is_chapel && src.artifact.activated)
-		playsound(src.loc, 'sound/effects/bamf.ogg', 50, 1, pitch = 1.25)
-		src.ArtifactDeactivated()
-	if(!is_chapel && !src.artifact.activated && src.artifact.automatic_activation)
-		src.ArtifactActivated()
-
 #define FAULT_RESULT_INVALID 2 // artifact can't do faults
 #define FAULT_RESULT_STOP	1		 // we gotta stop, artifact was destroyed or deactivated
 #define FAULT_RESULT_SUCCESS 0 // everything's cool!
@@ -582,8 +563,7 @@
 	src.remove_artifact_forms()
 
 	src.ArtifactDeactivated()
-	if(src.artifact.artitype.chapel_block)
-		UnregisterSignal(src, XSIG_MOVABLE_AREA_CHANGED)
+	src.artifact.pre_destroyed(src)
 
 	ArtifactLogs(usr, null, src, "destroyed", null, 0)
 

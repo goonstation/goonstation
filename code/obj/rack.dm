@@ -10,7 +10,7 @@ TYPEINFO(/obj/rack)
 	anchored = ANCHORED
 	desc = "A metal frame used to hold objects. Can be wrenched and made portable."
 	event_handler_flags = USE_FLUID_ENTER
-	material_amt = 0.1
+	material_amt = MATERIAL::AMOUNT::SHEET
 
 	proc/rackbreak()
 		src.icon_state = initial(src.icon_state) + "-broken"
@@ -251,6 +251,7 @@ TYPEINFO(/obj/rack)
 		/obj/item/circuitboard/cloning,
 		/obj/item/circuitboard/genetics,
 		/obj/item/circuitboard/robot_module_rewriter,
+		/obj/item/circuitboard/robotics_lab,
 		/obj/item/circuitboard/chem_request,
 		/obj/item/circuitboard/chem_request_receiver,
 	)

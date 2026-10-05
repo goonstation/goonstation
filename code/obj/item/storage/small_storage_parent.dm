@@ -88,6 +88,17 @@
 	make_my_stuff()
 		..(TRUE)
 
+/obj/item/storage/box/starternt
+	name = "nanotrasen emergency kit"
+	icon_state = "ntebox"
+	desc = "A specialized NT emergency kit, containing all you should need to survive during a crisis. Even includes a mandatory ceremonial beret! How optimistic."
+	spawn_contents = list(/obj/item/clothing/mask/breath, /obj/item/tank/pocket/extended/oxygen, /obj/item/clothing/head/NTberet, /obj/item/crowbar)
+
+#ifdef MAP_OVERRIDE_NADIR //guarantee protective gear
+	make_my_stuff()
+		src.storage.add_contents(new /obj/item/clothing/head/emerg(src))
+		src.storage.add_contents(new /obj/item/emergencysuitfolded(src))
+#endif
 /obj/item/storage/pill_bottle
 	name = "pill bottle"
 	icon_state = "pill_canister"
@@ -260,7 +271,6 @@
 	icon_state = "briefcase_rd"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "rd-case"
-	max_wclass = W_CLASS_BULKY// parity with secure briefcase
 	desc = "A large briefcase for experimental toxins research."
 	spawn_contents = list(/obj/item/raw_material/molitz_beta = 2, /obj/item/paper/hellburn)
 
@@ -296,3 +306,10 @@
 		I.throw_at(target, 8, 2, bonus_throwforce=8)
 
 		playsound(src, 'sound/effects/singsuck.ogg', 40, TRUE)
+
+/obj/item/storage/briefcase/nanotrasen
+	name = "\improper NanoTrasen Briefcase"
+	icon_state = "briefcase_nt"
+	item_state = "briefcase_nt"
+	desc = "A very official looking briefcase emblazoned with the NanoTrasen logo. Fancy."
+	spawn_contents = list(/obj/item/paper = 2, /obj/item/pen/NT)

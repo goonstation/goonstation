@@ -37,11 +37,14 @@ so you'll want your single-digit days to have 0s in front
 	 *	Group 1 for the PR author, e.g.:
 	 *	> (u)CodeDude
 	 *
-	 *	Group 2 for the changes, e.g.:
+	 *	Group 2 for the feedback thread, e.g.:
+	 *	> (f)https://forum.ss13.co/
+	 *
+	 *	Group 3 for the changes, e.g.:
 	 *	> (*)Added soft soft pizza to the game - a tasty drink found in soda machines! \
 	 *	> (+)Drinking any kind of soda will cause you to burp violently.
 	 */
-	var/static/regex/changelog_regex = regex(@"```changelog\n(\(u\)\s*.*?):?$\n([\s\S\n]*)(\n)```", "m")
+	var/static/regex/changelog_regex = regex(@"```changelog\n(\(u\)\s*.*?):?$(?:\n(\(f\)\s*.*?)$)?\n([\s\S\n]*)\n```", "m")
 
 	/// Matches all carriage return characters.
 	var/static/regex/carriage_return_regex = regex(@"\r", "g")
@@ -75,7 +78,7 @@ so you'll want your single-digit days to have 0s in front
 /datum/changelog/New()
 	. = ..()
 	#ifdef TESTMERGE_PRS
-	src.testmerge_changes = list("(t)Testmerge")
+	src.testmerge_changes = list()
 
 	for (var/pr_num as anything in TESTMERGE_PRS) // list(123, 456)
 		var/log = src.get_testmerge_changelog(pr_num)
@@ -129,10 +132,12 @@ so you'll want your single-digit days to have 0s in front
 	. += src.changelog_regex.group[1] || "(u)[json["user"]["login"]]"
 	// The PR number.
 	. += "(p)[json["number"]]"
+	// The feedback thread.
+	. += src.changelog_regex.group[2]
 	// The testmerge tag.
 	. += "(e)🧪|Testmerge"
 	// The changelog changes, prefixed by (*) for major changes, or (+) for minor changes.
-	. += splittext(src.changelog_regex.group[2], "\n")
+	. += splittext(src.changelog_regex.group[3], "\n")
 
 /// Parses auto-generated changelog strings into TGUI inputs.
 /datum/changelog/proc/create_changelog_entries(changelog_string, show_testmerges = FALSE)
@@ -147,43 +152,50 @@ so you'll want your single-digit days to have 0s in front
 	var/current_date = ""		// (t)
 	var/author = null			// (u)
 	var/pr_num = null			// (p)
+	var/feedback = null			// (f)
 	var/emojis = null			// (e)
 	var/emoji_tooltips = null	// (e)
 	var/change_entry = null		// (*) (+)
 
 	var/list/lines = splittext(changelog_string, "\n")
-	if (show_testmerges && src.testmerge_changes)
-		lines.Insert(1, testmerge_changes)
+	if (show_testmerges && length(src.testmerge_changes))
+		lines.Insert(1, "(t)Testmerge", src.testmerge_changes)
 
-	for(var/line as anything in lines)
+	for (var/line as anything in lines)
 		if (!line || (copytext(line, 1, 2) == "#"))
 			continue
 
-		switch(copytext(line, 1, 4))
-			if("(t)")
+		switch (copytext(line, 1, 4))
+			if ("(t)")
 				current_date = src.changelog_date_parse(line)
 				entry_dates += current_date
 				major_entries[current_date] = list()
 				minor_entries[current_date] = list()
 
-			if("(u)")
+			if ("(u)")
 				author = copytext(line, 4, 0)
 				pr_num = null
+				feedback = null
 				emojis = null
 				emoji_tooltips = null
 				change_entry = null
 
-			if("(p)")
+			if ("(p)")
 				pr_num = copytext(line, 4, 0)
 
-			if("(e)")
+			if ("(f)")
+				var/link = trimtext(copytext(line, 4, 0))
+				if (copytext(link, 1, 23) == "https://forum.ss13.co/")
+					feedback = link
+
+			if ("(e)")
 				var/emoji_line = copytext(line, 4, 0)
 				var/list/emoji_parts = splittext(emoji_line, "|")
 				if (length(emoji_parts))
 					emojis = emoji_parts[1]
 					emoji_tooltips = emoji_parts[2]
 
-			if("(*)")
+			if ("(*)")
 				change_entry = copytext(line, 4, 0)
 
 				var/pr_found = FALSE
@@ -197,6 +209,7 @@ so you'll want your single-digit days to have 0s in front
 					major_entries[current_date] += list(list(
 						"author" = author,
 						"pr_num" = pr_num,
+						"feedback" = feedback,
 						"emojis" = emojis,
 						"emoji_tooltips" = emoji_tooltips,
 						"changes" = list(change_entry),
@@ -216,6 +229,7 @@ so you'll want your single-digit days to have 0s in front
 					minor_entries[current_date] += list(list(
 						"author" = author,
 						"pr_num" = pr_num,
+						"feedback" = feedback,
 						"emojis" = emojis,
 						"emoji_tooltips" = emoji_tooltips,
 						"changes" = list(change_entry),

@@ -7,6 +7,8 @@
 	var/wizard_key = ""
 	var/uses = 6
 	var/list/spells = list()
+	/// Associative list, where keys are /datum/SWFuplinkspell types and values are the number of purchases.
+	var/list/purchased_spells = list()
 	flags = TABLEPASS | TGUI_INTERACTIVE
 	c_flags = ONBELT
 	throwforce = 5
@@ -40,7 +42,8 @@
 
 	ui_data(mob/user)
 		. = list(
-			"currency_amount" = src.uses
+			"currency_amount" = src.uses,
+			"purchased_items" = src.purchased_spells,
 		)
 
 	ui_static_data(mob/user)
@@ -55,16 +58,19 @@
 				var/datum/targetable/spell/spell_ability_datum = spell.assoc_spell
 				// convert deciseconds to seconds
 				cooldown_contents = initial(spell_ability_datum.cooldown) / 10
-				spell_icon = icon2base64(icon(initial(spell_ability_datum.icon), initial(spell_ability_datum.icon_state), frame=6))
+				spell_icon = "\ref[spell_ability_datum.icon]?state=[spell_ability_datum.icon_state]&frame=6"
 			else if (spell.icon && spell.icon_state)
-				spell_icon = icon2base64(icon(initial(spell.icon), initial(spell.icon_state), frame=1))
+				spell_icon = "\ref[spell.icon]?state=[spell.icon_state]"
 			spellbook_contents[spell.eqtype] += list(list(
-				cooldown = cooldown_contents,
-				cost = spell.cost,
-				desc = spell.desc,
-				name = spell.name,
-				icon = spell_icon,
-				vr_allowed = spell.vr_allowed,
+				"cooldown" = cooldown_contents,
+				"cost" = spell.cost,
+				"desc" = spell.desc,
+				"name" = spell.name,
+				"icon" = spell_icon,
+				"vr_allowed" = spell.vr_allowed,
+				"ref" = ref(spell),
+				"type" = spell.type,
+				"purchase_limit" = 1,
 			))
 		. = list(
 			"title" = "[src.wizard_name]'s Spellbook",
@@ -88,13 +94,15 @@
 			return
 		switch (action)
 			if ("purchase")
-				var/datum/SWFuplinkspell/chosen_spell = params["item"]
-				for (var/datum/SWFuplinkspell/spell in src.spells)
-					if (spell.name == chosen_spell)
-						chosen_spell = spell
-						break
+				var/datum/SWFuplinkspell/chosen_spell = locate(params["item_ref"]) in src.spells
+				if(!chosen_spell || !istype(chosen_spell))
+					boutput(usr, SPAN_ALERT("Oops, couldn't find that spell, call an Archmage Coder!"))
+					return
 				if (chosen_spell.SWFspell_CheckRequirements(usr,src))
+					src.purchased_spells[chosen_spell.type] ||= 0
+					src.purchased_spells[chosen_spell.type] += 1
 					chosen_spell.SWFspell_Purchased(usr,src)
+					tgui_process.update_uis(src) //Force an update to prevent spam purchases
 
 ///////////////////////////////////////// Wizard's spells ///////////////////////////////////////////////////
 ABSTRACT_TYPE(/datum/SWFuplinkspell)
@@ -116,6 +124,8 @@ ABSTRACT_TYPE(/datum/SWFuplinkspell)
 			return FALSE // unknown error
 		if (book.vr && !src.vr_allowed)
 			return FALSE // Unavailable in VR
+		if (src.type in book.purchased_spells)
+			return FALSE // Already purchased
 		if (src.assoc_spell)
 			if (book.antag_datum.ability_holder.getAbility(assoc_spell))
 				return FALSE // Already have this spell
@@ -151,14 +161,14 @@ ABSTRACT_TYPE(/datum/SWFuplinkspell)
 
 	SWFspell_Purchased(var/mob/living/carbon/human/user,var/obj/item/SWF_uplink/book)
 		..()
-		user.spell_soulguard = SOULGUARD_SPELL
+		user.spell_soulguard = SOULGUARD::SPELL
 
 //------------ EQUIPMENT SPELLS ------------//
 /datum/SWFuplinkspell/staffofcthulhu
 	name = "Staff of Cthulhu"
 	eqtype = "Equipment"
 	desc = "The crew will normally steal your staff and run off with it to cripple your casting abilities, but that doesn't work so well with this version. Any non-wizard dumb enough to touch or pull the Staff of Cthulhu takes massive brain damage and is knocked down for quite a while, and hiding the staff in a closet or somewhere else is similarly ineffective given that you can summon it to your active hand at will. It also makes a much better bludgeoning weapon than the regular staff, hitting harder and occasionally inflicting brain damage."
-	assoc_spell = /datum/targetable/spell/summon_staff
+	assoc_spell = /datum/targetable/spell/summon_staff/cthulhu
 	assoc_item = /obj/item/staff/cthulhu
 	cost = 2
 
@@ -166,10 +176,17 @@ ABSTRACT_TYPE(/datum/SWFuplinkspell)
 	name = "Staff of Thunder"
 	eqtype = "Equipment"
 	desc = "A special staff attuned to electical energies. Able to conjure three lightning bolts to strike down foes before being recharged. Capable of being summoned magically, which recharges the wand. Take care, as you're not immune to your own thunder!"
-	assoc_spell = /datum/targetable/spell/summon_thunder_staff
+	assoc_spell = /datum/targetable/spell/summon_staff/thunder
 	assoc_item = /obj/item/staff/thunder
 	cost = 2
 
+/datum/SWFuplinkspell/staffoftelekinesis
+	name = "Staff of Telekinesis"
+	eqtype = "Equipment"
+	desc = "A powerful staff charged with telekinetic power. Click drag over any unfortunate target to send them flying in that direction. Can be used four times before needing to be recharged. Can be summoned magically."
+	assoc_spell = /datum/targetable/spell/summon_staff/telekinetic
+	assoc_item = /obj/item/staff/telekinesis
+	cost = 2
 //------------ OFFENSIVE SPELLS ------------//
 /datum/SWFuplinkspell/bull
 	name = "Bull's Charge"

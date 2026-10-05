@@ -19,16 +19,14 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 	var/on = FALSE //! Whether the cell is turned on or not
 	var/datum/light/light
 	var/ARCHIVED(temperature)
-	var/mob/occupant = null //! Mob inside the tube being healed
+	var/mob/living/carbon/human/occupant = null //! Mob inside the tube being healed
 	var/obj/item/reagent_containers/glass/beaker = null //! The beaker containing chems which are applied to the occupant. May or may not be present.
-	var/show_beaker_contents = FALSE
+	var/obj/item/robodefibrillator/defib //! The attached defibrillator, if there is one
+	var/show_beaker_contents = FALSE //! Toggle for showing internal beaker contents in TGUI
 	var/current_heat_capacity = 50
 	var/occupied_power_use = 500 WATTS //! Additional power usage when the pod is occupied (and on)
 	var/eject_full_health_occupant = TRUE //! Does this pod eject occupants when they reach full health
 
-	var/reagent_scan_enabled = FALSE
-	var/reagent_scan_active = FALSE
-	var/obj/item/robodefibrillator/defib
 
 /obj/machinery/atmospherics/unary/cryo_cell/New()
 	..()
@@ -121,9 +119,6 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 	.["status"] = src.on
 	.["ejectFullHealthOccupant"] = src.eject_full_health_occupant
 
-	.["showBeakerContents"] = src.show_beaker_contents
-	.["reagentScanEnabled"] = src.reagent_scan_enabled
-	.["reagentScanActive"] = src.reagent_scan_active
 	.["containerData"] = src.beaker ? get_reagents_data(src.beaker.reagents, src.beaker.name) : null
 
 	.["hasDefib"] = src.defib
@@ -142,10 +137,6 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 			src.beaker:set_loc(src.loc)
 			usr.put_in_hand_or_eject(beaker) // try to eject it into the users hand, if we can
 			src.beaker = null
-		if("show_beaker_contents")
-			src.show_beaker_contents = !src.show_beaker_contents
-		if ("reagent_scan_active")
-			src.reagent_scan_active = !src.reagent_scan_active
 		if ("defib")
 			var/area/A = get_area(src)
 			if (!A.powered(EQUIP))
@@ -176,55 +167,9 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 /obj/machinery/atmospherics/unary/cryo_cell/proc/get_occupant_data()
 	if (!src.occupant)
 		return null
-
-	. = list(
-		"occupied" = TRUE,
-		"occupantStat" = src.occupant.stat,
-		"health" = src.occupant.health / src.occupant.max_health,
-		"oxyDamage" = src.occupant.get_oxygen_deprivation(),
-		"toxDamage" = src.occupant.get_toxin_damage(),
-		"burnDamage" = src.occupant.get_burn_damage(),
-		"bruteDamage" = src.occupant.get_brute_damage()
-	)
-	if (isliving(src.occupant))
-		var/mob/living/L = src.occupant
-		var/mob/living/carbon/human/H = L
-
-		var/death_state = L.stat
-		if (L.bioHolder && L.bioHolder.HasEffect("dead_scan"))
-			death_state = 2
-
-		var/datum/statusEffect/simpledot/radiation/R = L.hasStatus("radiation")
-
-		var/list/brain_damage = call(/obj/machinery/computer/operating/proc/calc_brain_damage_severity)(L)
-
-		. += list(
-			"patient_status" = death_state,
-			"blood_pressure_rendered" = L.blood_pressure["rendered"],
-			"blood_pressure_status" = L.blood_pressure["status"],
-
-			"body_temp" = L.bodytemperature,
-			"optimal_temp" = L.base_body_temp,
-			"embedded_objects" = call(/obj/machinery/computer/operating/proc/check_embedded_objects)(L),
-
-			"rad_stage" = R?.stage ? R.stage : 0,
-			"rad_dose" = R?.stage ? L.radiation_dose : 0,
-
-			"brain_damage" = list (
-				"value" = L.get_brain_damage(),
-				"desc" = brain_damage[1],
-				"color" = brain_damage[2],
-			),
-		)
-
-		if (reagent_scan_active)
-			. += list(
-				"blood_volume" = L.blood_pressure["total"],
-				"reagents" = get_reagents_data(L.reagents, null)
-			)
-
-		if (istype(H))
-			. += list("hasRoboticOrgans" = H.robotic_organs > 0)
+	. = list()
+	.["occupied"] = TRUE
+	. += src.occupant.ui_health_data(include_organs=TRUE, include_reagents=TRUE)
 
 /obj/machinery/atmospherics/unary/cryo_cell/proc/get_reagents_data(var/datum/reagents/R, var/container_name)
 	. = list(
@@ -277,17 +222,6 @@ TYPEINFO(/obj/machinery/atmospherics/unary/cryo_cell)
 		src.visible_message(SPAN_ALERT("<B>[user] injects [transferred] units into [src]'s beaker.</B>"))
 		src.beaker.on_reagent_change()
 		return
-	else if (istype(I, /obj/item/device/analyzer/healthanalyzer_upgrade))
-		if (src.reagent_scan_enabled)
-			boutput(user, SPAN_ALERT("This Cryo Cell already has a reagent scan upgrade!"))
-			return
-		else
-			src.reagent_scan_enabled = TRUE
-			boutput(user, SPAN_NOTICE("Reagent scan upgrade installed."))
-			playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
-			user.u_equip(I)
-			qdel(I)
-			return
 	else if (istype(I, /obj/item/robodefibrillator))
 		if (src.defib)
 			boutput(user, SPAN_ALERT("[src] already has a defibrillator installed."))

@@ -209,8 +209,8 @@
 
 		// --------------------------- Engineering
 		if("Atmospheric Technician")
-			return list(access_maint_tunnels, access_engineering_control,
-						access_eva, access_engineering, access_engineering_storage, access_engineering_atmos)
+			return list(access_maint_tunnels, access_engineering_control, access_engineering_engine,
+						access_engineering_power, access_engineering, access_engineering_storage, access_engineering_atmos)
 		if("Engineer", "Technical Trainee")
 			return list(access_engineering, access_maint_tunnels, access_engineering_control,
 						access_engineering_storage, access_engineering_atmos, access_engineering_engine, access_engineering_power,
@@ -303,7 +303,7 @@ var/list/access_all_actually = null
 		return
 
 	access_name_lookup = list()
-	var/list/accesses = get_all_accesses()
+	var/list/accesses = get_all_accesses() | access_armory | access_maxsec
 	for (var/accessNum in accesses)
 		access_name_lookup += "[get_access_desc(accessNum)]"
 

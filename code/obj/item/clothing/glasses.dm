@@ -76,6 +76,8 @@
 	icon_state = "blindfold"
 	item_state = "blindfold"
 	desc = "A strip of cloth painstakingly designed to wear around your eyes so you cannot see."
+	default_material = "cotton"
+	material_amt = 0.4 // Matches manufacturing recipe
 	block_vision = 1
 	nudge_compatible = FALSE
 	var/pinhole = FALSE
@@ -454,6 +456,8 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 	desc = "Only the coolest eye-wear around."
 	icon_state = "eyepatch-R"
 	item_state = "headset"
+	default_material = "cotton"
+	material_amt = 0.5 // Matches manufacturing recipe
 	block_eye = "R"
 	nudge_compatible = FALSE
 	var/pinhole = FALSE
@@ -973,58 +977,25 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/atmos)
 	flash_state = "goggle_flash"
 	flash_compatible = TRUE
 	abilities = list(/obj/ability_button/atmos_goggle_toggle)
-	var/list/image/atmos_overlays = list()
-	//this is literally just a 32x32 white square, someone please tell me if there's a less dumb way to do this
-	var/icon/overlay_icon = 'icons/effects/effects.dmi'
-	var/overlay_state = "atmos_overlay"
 
 	toggle(var/mob/toggler)
 		..()
 		toggler.playsound_local(src, 'sound/machines/tone_beep.ogg', 40, TRUE)
-		if (src.equipped_in_slot == SLOT_GLASSES && src.on)
-			processing_items |= src
-		else
-			processing_items -= src
+		if (src.equipped_in_slot == SLOT_GLASSES)
+			SEND_SIGNAL(toggler, COMSIG_PRESSURE_VISION, src.on)
 
 	equipped(mob/user, slot)
 		..()
-		if (slot == SLOT_GLASSES && src.on)
-			processing_items |= src
+		if(slot == SLOT_GLASSES)
+			user.AddComponent(/datum/component/pressure_vision, src.on)
 
 	unequipped(mob/user)
 		if(src.equipped_in_slot == SLOT_GLASSES)
-			processing_items -= src
+			user.RemoveComponentsOfType(/datum/component/pressure_vision)
 		..()
 
-	proc/clear_overlays(mob/M)
-		if (!M.client)
-			return
-		for (var/image/image as anything in src.atmos_overlays)
-			M.client.images -= image
-		src.atmos_overlays = list()
-
-	proc/generate_overlays(mob/M)
-		if (!M.client)
-			return
-		for (var/turf/simulated/T in view(M, M.client.view))
-			if (!T.air)
-				continue
-			var/image/new_overlay = image(src.overlay_icon, T, src.overlay_state)
-			var/relative_pressure = MIXTURE_PRESSURE(T.air)/ONE_ATMOSPHERE
-			//make more orange if over one atmosphere
-			new_overlay.color = rgb(91 * (max(1,relative_pressure)), 103, 231 / (max(1,relative_pressure)))
-			new_overlay.alpha = 0
-			animate(new_overlay, alpha=min(200, 200 * relative_pressure), time=2 DECI SECONDS)
-			animate(alpha=0, time=2 SECONDS)
-			src.atmos_overlays += new_overlay
-			M.client.images += new_overlay
-
-	process()
-		var/mob/M = src.loc
-		if (!istype(M) || !M.client)
-			return
-		src.clear_overlays(M)
-		src.generate_overlays(M)
+/obj/item/clothing/glasses/toggleable/atmos/starts_off //! Used on atmos tech to prevent immident information spam
+	on = FALSE
 
 /obj/item/clothing/glasses/eyestrain
 	name = "blue-light filtering glasses"

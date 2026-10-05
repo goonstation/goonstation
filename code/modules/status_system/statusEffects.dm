@@ -2642,7 +2642,11 @@
 	var/mob/living/carbon/human/H
 
 	getTooltip()
-		. = "You are in very bad shape. Max stamina reduced by 100 and stamina regen reduced by 5."
+		. = "You are in very bad shape. Max stamina reduced by 100 and stamina regen reduced by 5. Click to succumb to your wounds and die."
+
+	clicked(list/params)
+		if (H && H.health < 0 && tgui_confirm(H, "Succumb to your injuries? You will die."))
+			H.succumb()
 
 	onAdd(optional=null)
 		. = ..()
@@ -3147,11 +3151,16 @@
 		if (!ishuman(A))
 			return FALSE
 
-	onAdd(optional)
+	onAdd(datum/artifact/curser/optional)
 		..()
 		if (src.outputs_desc)
 			boutput(src.owner, SPAN_ALERT(src.desc))
-		src.linked_curser = optional
+		if (istype(optional))
+			src.linked_curser = optional
+		if (isliving(src.owner))
+			var/mob/living/M = src.owner
+			if (M.bioHolder)
+				M.bioHolder.cursed = TRUE
 
 	onRemove()
 		if (QDELETED(src.owner))
@@ -3161,8 +3170,8 @@
 			boutput(L, SPAN_NOTICE(src.removal_msg))
 		if(id != "art_curser_displaced_soul")
 			src.linked_curser.active_cursees -= L
-		if(!length(src.linked_curser.active_cursees))
-			src.linked_curser.curse_cleanup()
+			if(!length(src.linked_curser.active_cursees))
+				src.linked_curser.curse_cleanup()
 		src.linked_curser = null
 		..()
 
@@ -3353,7 +3362,7 @@
 
 		onAdd()
 			..()
-			src.soul = new src.soul(get_turf(src.owner), src.owner)
+			src.soul = new(get_turf(src.owner), src.owner)
 			var/mob/living/carbon/human/H = src.owner
 			H.mind.transfer_to(soul)
 			src.original_body = H
@@ -3432,6 +3441,10 @@
 				var/mob/living/carbon/human/H = src.owner
 				H.TakeDamage("All", burn = 5 * src.get_mult(time_passed), damage_type = DAMAGE_BURN)
 			src.time_passed = 0
+
+		ring
+			id = "art_light_curse_ring"
+			desc = "You have drawn the ire of a sleeping colossus."
 
 /datum/statusEffect/art_fissure_corrosion
 	id = "art_fissure_corrosion"
@@ -4061,3 +4074,22 @@
 			if (!(emitter in src.current_emitters))
 				emitter.register_user(src.owner)
 				src.current_emitters += emitter
+
+
+/datum/statusEffect/grasped // visual indicator that a wiznerd is throwing you with telekinetic staff
+
+	id = "telekinetic_grasp"
+	name = "Telekinetic Grasp"
+	desc = "You are being telekinetically grasped by a wizard!"
+	icon_state = "empulsar"
+	maxDuration = 5 SECONDS
+	effect_quality = STATUS_QUALITY_NEUTRAL
+
+	onAdd(optional=null)
+		owner.add_filter("protection", 1, outline_filter(color="#00f7d6c2"))
+		..()
+
+	onRemove()
+		owner.remove_filter("protection")
+		..()
+

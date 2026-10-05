@@ -90,7 +90,7 @@ ABSTRACT_TYPE(/datum/part_customization/human/limb)
 						limb_type = human.mutantrace.r_limb_arm_type_mutantrace_f || limb_type
 					if (!limb_type)
 						limb_type = src.part_type
-					if(!human.limbs.r_arm?.type == limb_type)
+					if(human.limbs.r_arm?.type != limb_type)
 						human.limbs.replace_with(src.slot, limb_type, null, FALSE, TRUE)
 
 		leg
@@ -149,14 +149,12 @@ ABSTRACT_TYPE(/datum/part_customization/human/limb)
 				slot = "l_arm"
 				part_type = /obj/item/parts/robot_parts/arm/left/standard
 				trait_cost = 1
-				incompatible_parts = list("arm_robo_standard_right")
 
 			robo_standard_right
 				id = "arm_robo_standard_right"
 				slot = "r_arm"
 				part_type = /obj/item/parts/robot_parts/arm/right/standard
 				trait_cost = 1
-				incompatible_parts = list("arm_robo_standard_left")
 
 			plant_left
 				id = "arm_plant_left"

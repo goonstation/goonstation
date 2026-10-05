@@ -1,0 +1,31 @@
+# Reminder:
+#	1: NORTH	2: SOUTH	4: EAST		8: WEST
+
+# Remove old directional subtypes.
+/obj/sign_switch/@SUBTYPES/north		: /obj/sign_switch/@SUBTYPES_1{@OLD; dir = 1}
+/obj/sign_switch/@SUBTYPES/south		: /obj/sign_switch/@SUBTYPES_1{@OLD; dir = 2}
+/obj/sign_switch/@SUBTYPES/east			: /obj/sign_switch/@SUBTYPES_1{@OLD; dir = 4}
+/obj/sign_switch/@SUBTYPES/west			: /obj/sign_switch/@SUBTYPES_1{@OLD; dir = 8}
+/obj/sign_switch/@SUBTYPES/directional	: /obj/sign_switch/@SUBTYPES_1{@OLD}
+
+# Name to direction.
+/obj/sign_switch/@SUBTYPES{name = "sign switch"}	: /obj/sign_switch/@SUBTYPES_1{@OLD; name = @SKIP}
+/obj/sign_switch/@SUBTYPES{name = "N sign switch"}	: /obj/sign_switch/@SUBTYPES_1{@OLD; name = @SKIP; dir = 1}
+/obj/sign_switch/@SUBTYPES{name = "S sign switch"}	: /obj/sign_switch/@SUBTYPES_1{@OLD; name = @SKIP; dir = 2}
+/obj/sign_switch/@SUBTYPES{name = "E sign switch"}	: /obj/sign_switch/@SUBTYPES_1{@OLD; name = @SKIP; dir = 4}
+/obj/sign_switch/@SUBTYPES{name = "W sign switch"}	: /obj/sign_switch/@SUBTYPES_1{@OLD; name = @SKIP; dir = 8}
+
+# Repath and clean up pixel offsets. Uses a temporary repath to avoid repathing the same paths multiple times.
+# NORTH
+/obj/sign_switch/@SUBTYPES{dir = @UNSET}	: /temporary_sign_switch_repath/@SUBTYPES/directional/north{@OLD; dir = @SKIP; pixel_y = @SKIP}
+/obj/sign_switch/@SUBTYPES{dir = 1}			: /temporary_sign_switch_repath/@SUBTYPES/directional/north{@OLD; dir = @SKIP; pixel_y = @SKIP}
+# SOUTH
+/obj/sign_switch/@SUBTYPES{dir = 0}			: /temporary_sign_switch_repath/@SUBTYPES/directional/south{@OLD; dir = @SKIP; pixel_y = @SKIP}
+/obj/sign_switch/@SUBTYPES{dir = 2}			: /temporary_sign_switch_repath/@SUBTYPES/directional/south{@OLD; dir = @SKIP; pixel_y = @SKIP}
+# EAST
+/obj/sign_switch/@SUBTYPES{dir = 4}			: /temporary_sign_switch_repath/@SUBTYPES/directional/east{@OLD; dir = @SKIP; pixel_x = @SKIP}
+# WEST
+/obj/sign_switch/@SUBTYPES{dir = 8}			: /temporary_sign_switch_repath/@SUBTYPES/directional/west{@OLD; dir = @SKIP; pixel_x = @SKIP}
+
+# Revert the temporary repath.
+/temporary_sign_switch_repath/@SUBTYPES : /obj/sign_switch/@SUBTYPES{@OLD}

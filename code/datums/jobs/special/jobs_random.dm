@@ -154,16 +154,16 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	invalid_antagonist_roles = list(ROLE_HEAD_REVOLUTIONARY)
 	badge = /obj/item/clothing/suit/security_badge/nanotrasen
 	slot_card = /obj/item/card/id/nanotrasen
-	slot_back = list(/obj/item/storage/backpack)
-	slot_belt = list(/obj/item/device/pda2/ntofficial)
-	slot_jump = list(/obj/item/clothing/under/misc/lawyer/black) // so they can slam tables
-	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_back = list(/obj/item/storage/backpack/NT)
+	slot_belt = list(/obj/item/device/pda2/nt)
+	slot_jump = list(/obj/item/clothing/under/misc/lawyer/inspector) // weird path, but it's so they can still slam tables
+	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_ears = list(/obj/item/device/radio/headset/command/inspector)
 	slot_head = list(/obj/item/clothing/head/NTberet)
 	slot_suit = list(/obj/item/clothing/suit/armor/NT)
 	slot_eyes = list(/obj/item/clothing/glasses/regular)
-	slot_lhan = list(/obj/item/storage/briefcase)
-	slot_rhan = list(/obj/item/device/ticket_writer)
+	slot_lhan = list(/obj/item/storage/briefcase/nanotrasen)
+	slot_poc1 = list(/obj/item/device/ticket_writer/nanotrasen)
 	items_in_backpack = list(/obj/item/device/flash)
 	wiki_link = "https://wiki.ss13.co/Inspector"
 	email_group = MGD_COMMAND
@@ -176,9 +176,10 @@ ABSTRACT_TYPE(/datum/job/special/random)
 		if (!M)
 			return
 
-		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase)
+		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase/nanotrasen)
 		if (B && istype(B))
 			B.storage.add_contents(new /obj/item/instrument/whistle(B))
+			B.storage.add_contents(new /obj/item/stamp/inspector(B))
 			var/obj/item/clipboard/with_pen/inspector/clipboard = new /obj/item/clipboard/with_pen/inspector(B)
 			B.storage.add_contents(clipboard)
 			clipboard.set_owner(M)
@@ -206,7 +207,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 									/datum/mutantrace/skeleton::name  = /datum/mutantrace/skeleton,
 									/datum/mutantrace/ithillid::name = /datum/mutantrace/ithillid,
 									/datum/mutantrace/martian::name = /datum/mutantrace/martian,
-									/datum/mutantrace/amphibian::name = /datum/mutantrace/amphibian,
+									/datum/mutantrace/frog/abzunian::name = /datum/mutantrace/frog/abzunian,
 									/datum/mutantrace/blob::name  = /datum/mutantrace/blob,
 									/datum/mutantrace/cow::name = /datum/mutantrace/cow)
 
@@ -270,7 +271,7 @@ ABSTRACT_TYPE(/datum/job/special/random)
 			return
 
 		if(prob(33))
-			var/morph = pick(/datum/mutantrace/lizard,/datum/mutantrace/skeleton,/datum/mutantrace/ithillid,/datum/mutantrace/martian,/datum/mutantrace/amphibian)
+			var/morph = pick(/datum/mutantrace/lizard,/datum/mutantrace/skeleton,/datum/mutantrace/ithillid,/datum/mutantrace/martian,/datum/mutantrace/frog/abzunian)
 			M.set_mutantrace(morph)
 
 		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase)
@@ -493,3 +494,22 @@ ABSTRACT_TYPE(/datum/job/special/random)
 	alt_names = list("Cybersecurity Expert", \
 					"IT Specialist", \
 					"Network Technician")
+
+/datum/job/special/random/atmospheric_technician
+	name = "Atmospheric Technician"
+	ui_colour = /datum/job/engineering::ui_colour
+	slot_card = /datum/job/engineering::slot_card
+	wages = PAY::TRADESMAN
+	access_string = "Atmospheric Technician"
+	slot_back = list(/obj/item/storage/backpack/engineering)
+	slot_belt = list(/obj/item/storage/belt/utility/atmos)
+	slot_eyes = list(/obj/item/clothing/glasses/toggleable/atmos/starts_off)
+	slot_jump = list(/obj/item/clothing/under/misc/atmospheric_technician)
+	slot_foot = list(/obj/item/clothing/shoes/black)
+	slot_glov = list(/obj/item/clothing/gloves/black)
+	slot_poc1 = list(/obj/item/device/pda2/atmos)
+	slot_ears = list(/obj/item/device/radio/headset/engineer)
+	items_in_backpack = list(/obj/item/clothing/mask/gas/emergency, /obj/item/rcd_ammo/big)
+	wiki_link = "https://wiki.ss13.co/Atmospheric_Technician"
+	email_group = MGD_ENGINEER
+	alt_names = list("Atmospheric Technician", "Atmospherish Technician")

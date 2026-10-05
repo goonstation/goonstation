@@ -76,7 +76,7 @@
 		name = "ring of cthulhu"
 		desc = "Looking at this ring makes your head hurt."
 		icon_state = "staff"
-		ability_path = /datum/targetable/spell/summon_staff
+		ability_path = /datum/targetable/spell/summon_staff/cthulhu
 		var/obj/item/staff/cthulhu/created_staff
 
 		equipped(var/mob/user, var/slot)
@@ -99,7 +99,7 @@
 		name = "ring of thunder"
 		desc = "Little arcs of electricity run along the outside of this ring."
 		icon_state = "stave_of_thunder"
-		ability_path = /datum/targetable/spell/summon_thunder_staff
+		ability_path = /datum/targetable/spell/summon_staff/thunder
 		var/obj/item/staff/thunder/created_staff
 
 		equipped(var/mob/user, var/slot)
@@ -259,13 +259,13 @@
 			..()
 			if (isliving(user))
 				var/mob/living/L = user
-				L.spell_soulguard = SOULGUARD_RING
+				L.spell_soulguard = SOULGUARD::RING
 
 		unequipped(var/mob/user)
 			..()
 			if (isliving(user))
 				var/mob/living/L = user
-				L.spell_soulguard = SOULGUARD_INACTIVE
+				L.spell_soulguard = SOULGUARD::INACTIVE
 
 //random rings
 /obj/wizard_ring_generator

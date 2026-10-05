@@ -76,7 +76,7 @@
 
 /datum/game_mode/conspiracy/proc/random_radio_frequency()
 	var/list/blacklisted = list(0, 1451, 1457)
-	blacklisted.Add(R_FREQ_BLACKLIST)
+	blacklisted.Add(RADIO.FREQ._get_namespace_constants())
 
 	do
 		. = rand(1352, 1439)

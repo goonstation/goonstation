@@ -327,13 +327,15 @@ toxic - poisons
 
 
 	var/strong = FALSE
+	var/throw_rotation = 0
 
 	on_pointblank(var/obj/projectile/P, var/mob/living/M)
-		M.throw_at(get_edge_target_turf(M, get_dir_accurate(P, M)),7,1, throw_type = THROW_GUNIMPACT)
+		var/dir_to_throw = turn(get_dir_accurate(P, M), src.throw_rotation)
+		M.throw_at(get_edge_target_turf(M, dir_to_throw),7,1, throw_type = THROW_GUNIMPACT)
 
 	//When it hits a mob or such should anything special happen
 	on_hit(atom/hit, angle, var/obj/projectile/O)
-		var/dir = get_dir_accurate(O.shooter, hit)
+		var/dir = turn(get_dir_accurate(O.shooter, hit), src.throw_rotation)
 		var/pow = O.power
 		if (isliving(hit))
 			O.die()
@@ -346,6 +348,10 @@ toxic - poisons
 	impact_image_effect(var/type, atom/hit, angle, var/obj/projectile/O)
 		return
 
+/datum/projectile/energy_bolt/pulse/pull
+	name = "pullse"
+	sname = "kinetic pullse"
+	throw_rotation = 180
 
 /datum/projectile/energy_bolt/electromagnetic_pulse
 	name = "pulse"

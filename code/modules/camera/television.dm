@@ -99,10 +99,22 @@
 	reinforced = FALSE
 	secured_state = SECURED_STATE_UNCHANGABLE
 
+/obj/item/electronics/frame/flatpack/broadcast_camera
+	name = "flatpacked television broadcast camera"
+	store_type = /obj/machinery/camera/television/mobile
+	viewstat = 2
+	secured = 2
+
 /obj/machinery/camera/television/mobile/science
 	name = "mobile television - science"
 	c_tag = "science mobile"
 	network = CAMERA_NETWORK_TELESCI
+
+/obj/machinery/camera/television/mobile/unidentified
+	c_tag = "unidentified broadcast"
+
+/obj/item/electronics/frame/flatpack/broadcast_camera/unidentified
+	store_type = /obj/machinery/camera/television/mobile/unidentified
 
 #undef SECURED_STATE_UNSECURED
 #undef SECURED_STATE_BOLTED

@@ -10,7 +10,7 @@
 
 		var/turf/T = window.loc
 		if (istype(T, /turf/space) || T.density)
-			. += src.format_position(window)
+			. += CI.format_position(window)
 
 
 SET_UP_CI_TRACKING(/obj/window)

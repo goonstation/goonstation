@@ -30,7 +30,8 @@
 			/datum/commodity/trader/pianzi/cameraviewers,
 			/datum/commodity/trader/pianzi/scanners,
 			/datum/commodity/trader/pianzi/concgloves,
-			/datum/commodity/trader/pianzi/seeds
+			/datum/commodity/trader/pianzi/seeds,
+			/datum/commodity/trader/pianzi/cane,
 		),
 		TRADER_RARITY_UNCOMMON = list(
 			/datum/commodity/trader/pianzi/medicine,
@@ -137,6 +138,21 @@
 	alt_type_chance = 50
 	possible_names = list("Cause to celebrate? This deal certainly is! Vintage drink of the best quality!",
 	"I've come across some very prized vintage drink! Excellent for parties!")
+
+/datum/commodity/trader/pianzi/cane
+	comname = "Earthly Canes"
+	comtype = /obj/item/reagent_containers/food/snacks/candy/candy_cane
+	amount = 50
+	price_boundary = list(PAY::UNTRAINED,PAY::DOCTORATE)
+	possible_alt_types = list(
+		/obj/item/cane/wooden,
+		/obj/item/cane/wooden/wooden2,
+		/obj/item/cane/wooden/wooden3,
+		/obj/item/cane/wooden/black
+	)
+	alt_type_chance = 75
+	possible_names = list("I stock many canes! A bargin price for a crunchy snack!",
+	"Yes, canes! with stripes! I have those!")
 
 /datum/commodity/trader/pianzi/recdrugs
 	comname = "Addiction Aid Patches"

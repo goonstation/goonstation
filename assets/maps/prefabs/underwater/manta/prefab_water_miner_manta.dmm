@@ -314,7 +314,7 @@
 /obj/submachine/cargopad{
 	name = "Mining Outpost Teleport Pad"
 	},
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/prefab/sea_mining)
 "bl" = (
 /obj/decal/tile_edge/stripe/extra_big{

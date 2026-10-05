@@ -77,7 +77,7 @@
 		if (current_demand_level > 0)
 			current_demand_level--
 		var/profit = price_multiplier * C.baseprice
-		wagesystem.budgets[BUDGET_CAT_SHIPPING] += profit
+		wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] += profit
 		adjust_price_multiplier()
 		return profit
 
@@ -154,6 +154,14 @@
 	maximum_demand_level = 25
 	base_price_multiplier = 0.5
 
+/datum/demand_control/fossils
+	commodities = list(/datum/commodity/fossil)
+	high_demand_level = 20
+	static_growth = 0
+	current_demand_level = 20
+	maximum_demand_level = 25
+	base_price_multiplier = 0.5
+
 /datum/demand_control/common_ores
 	commodities = list(/datum/commodity/ore/mauxite, /datum/commodity/ore/pharosium, /datum/commodity/ore/molitz, /datum/commodity/ore/char)
 	high_demand_level = 100
@@ -199,6 +207,14 @@
 
 /datum/demand_control/rare_crystals
 	commodities = list(/datum/commodity/ore/erebite, /datum/commodity/ore/telecrystal, /datum/commodity/ore/uqill)
+	high_demand_level = 20
+	static_growth = 1
+	fluctuates = 0
+	current_demand_level = 30
+	maximum_demand_level = 50
+
+/datum/demand_control/fossils
+	commodities = list(/datum/commodity/fossil)
 	high_demand_level = 20
 	static_growth = 1
 	fluctuates = 0
@@ -692,10 +708,10 @@ TYPEINFO(/obj/supply_pad/outgoing)
 					var/datum/supply_packs/P = locate(href_list["purchase"])
 					var/datum/supply_control/C = locate(href_list["control"])
 					if (C.is_available(workstation_grade))
-						if (P.cost <= wagesystem.budgets[BUDGET_CAT_SHIPPING])
+						if (P.cost <= wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY])
 							in_target.used()
 							C.consume()
-							wagesystem.budgets[BUDGET_CAT_SHIPPING] -= P.cost
+							wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY] -= P.cost
 							P.create(T)
 							showswirl(T)
 							message = "<span class='good'>Purchase complete. Cost: [P.cost] credits.</span>"
@@ -794,7 +810,7 @@ h2 {
 			interface += "<span class='bad'><b>Warning:</b> workstation operating off battery power.<br><br>"
 		if (message)
 			interface += "[message]<br><br>"
-		interface += "<strong>Expedition budget:</strong> [wagesystem.budgets[BUDGET_CAT_SHIPPING]] credits<br>"
+		interface += "<strong>Expedition budget:</strong> [wagesystem.budgets[BUDGET_CAT_DEPT_SUPPLY]] credits<br>"
 		if (!in_target)
 			interface += "<span class='bad'>Incoming supply pad not detected. <a href='byond://?src=\ref[src];recheck=1'>Re-check</a></span><br>"
 		else

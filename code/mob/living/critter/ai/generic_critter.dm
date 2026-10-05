@@ -449,6 +449,26 @@
 		C.set_a_intent(INTENT_HARM)	//we an angry critter
 		src.persistence = C.ai_retaliate_persistence
 
+/datum/aiTask/sequence/goalbased/critter/go_home
+	name = "going home"
+	weight = 0.1
+	distance_from_target = 0
+	max_dist = 50
+
+	precondition()
+		if (prob(80)) //we only go home *sometimes*
+			return
+		var/mob/living/critter/C = holder.owner
+		return !istype(get_area(holder.owner), C.home_area())
+
+	get_targets()
+		var/mob/living/critter/C = holder.owner
+		var/area/A = locate(C.home_area())
+		return list(get_turf(pick(A.contents)))
+
+	get_best_target(list/atom/targets)
+		return targets[1]
+
 // Don't worry about this, we need to enable unsimulated turf pathing for the critter gauntlet
 /datum/aiTask/sequence/goalbased/critter
 	move_through_space = TRUE

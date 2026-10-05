@@ -1,0 +1,627 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/station/engine/gravity)
+"b" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
+/area/station/crew_quarters/ce)
+"c" = (
+/obj/landmark/gps_waypoint,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/grey,
+/area/station/engine/gravity)
+"d" = (
+/obj/machinery/light/emergency{
+	dir = 8;
+	pixel_x = -10
+	},
+/obj/table/wood/auto,
+/obj/machinery/networked/printer{
+	name = "Printer - CE";
+	pixel_y = 5;
+	print_id = "CE"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 10
+	},
+/area/station/engine/gravity)
+"e" = (
+/turf/simulated/floor/grey,
+/area/station/engine/gravity)
+"f" = (
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/disposalpipe/segment/bent/south,
+/turf/simulated/floor/wood/five,
+/area/station/crew_quarters/ce)
+"g" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor,
+/area/station/engine/gravity)
+"h" = (
+/obj/disposalpipe/trunk/east,
+/obj/machinery/disposal,
+/obj/item/device/radio/intercom/engineering{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/green/fancy/edge/sw,
+/area/station/crew_quarters/ce)
+"i" = (
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
+/area/station/crew_quarters/ce)
+"j" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/engine/gravity)
+"k" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/firealarm/directional/east,
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/station/engine/gravity)
+"l" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/light_switch/directional/north{
+	pixel_x = -4
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer/announcement/station/engineering{
+	dir = 8
+	},
+/obj/blind_switch/directional/north{
+	pixel_x = 5
+	},
+/turf/simulated/floor/wood/five,
+/area/station/crew_quarters/ce)
+"m" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
+/area/station/engine/gravity)
+"n" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_west,
+/turf/simulated/floor/grey,
+/area/station/engine/gravity)
+"o" = (
+/obj/table/wood/auto,
+/obj/machinery/phone{
+	pixel_y = 3;
+	pixel_x = 5
+	},
+/obj/item/stamp/ce{
+	pixel_x = -8;
+	pixel_y = 2
+	},
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/wood/five,
+/area/station/crew_quarters/ce)
+"p" = (
+/obj/landmark/gps_waypoint,
+/obj/stool/chair/office/yellow{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/green/fancy/edge/east,
+/area/station/crew_quarters/ce)
+"q" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "yellow";
+	icon_state = "bedsheet-yellow"
+	},
+/obj/stool/bed,
+/turf/simulated/floor/carpet/green/fancy/edge/north,
+/area/station/crew_quarters/ce)
+"r" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/station/engine/gravity)
+"s" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/camera/directional/north,
+/obj/machinery/computer/power_monitor,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/yellow/side{
+	dir = 9
+	},
+/area/station/engine/gravity)
+"t" = (
+/obj/machinery/light/emergency{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/engine/gravity)
+"u" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/ce)
+"v" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/storage/crate/rcd/CE,
+/turf/simulated/floor/carpet/green/fancy/edge/ne,
+/area/station/crew_quarters/ce)
+"w" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/alarm/directional/east,
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/station/engine/gravity)
+"x" = (
+/obj/storage/secure/closet/command/chief_engineer,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/emergency{
+	dir = 1;
+	pixel_y = 16
+	},
+/obj/machinery/firealarm/directional/west,
+/turf/simulated/floor/carpet/green/fancy/edge/nw,
+/area/station/crew_quarters/ce)
+"y" = (
+/obj/table/wood/auto,
+/obj/machinery/computer3/generic/personal,
+/obj/cable,
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 6
+	},
+/area/station/engine/gravity)
+"z" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/carpet/green/fancy/edge/west,
+/area/station/crew_quarters/ce)
+"A" = (
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
+	name = "Chief Engineer's Quarters";
+	req_access = null;
+	id = "quarters_ce"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/button/area,
+/obj/mapping_helper/access/engineering_chief,
+/turf/simulated/floor/grey,
+/area/station/crew_quarters/ce)
+"B" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/ce)
+"C" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	dir = 4
+	},
+/obj/mapping_helper/access/engineering,
+/turf/simulated/floor/grey,
+/area/station/engine/gravity)
+"D" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/ce)
+"E" = (
+/obj/machinery/manufacturer/mechanic,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/wood/five,
+/area/station/crew_quarters/ce)
+"F" = (
+/obj/table/reinforced/auto,
+/obj/machinery/light/lamp/green{
+	pixel_x = 6;
+	pixel_y = 6;
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/item/rocko{
+	pixel_x = -6;
+	pixel_y = 1
+	},
+/obj/machinery/door_control/bolter/new_walls/east,
+/obj/machinery/camera/directional/south,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/mapping_helper/button/area,
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor/wood/five,
+/area/station/crew_quarters/ce)
+"G" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 4;
+	req_access = null
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/engineering,
+/turf/simulated/floor/grey,
+/area/station/engine/gravity)
+"H" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/computer3/terminal/zeta{
+	dir = 1;
+	setup_os_string = "ZETA_MAINFRAME"
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 5
+	},
+/area/station/engine/gravity)
+"I" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/ce)
+"K" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer/card/department/engineering{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/wood/five,
+/area/station/crew_quarters/ce)
+"L" = (
+/obj/window_blinds/cog2/left,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/ce)
+"M" = (
+/obj/machinery/rkit,
+/obj/item/deconstructor{
+	pixel_y = 3
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/wood/five,
+/area/station/crew_quarters/ce)
+"N" = (
+/turf/simulated/wall/auto/supernorn/colored/yellow,
+/area/station/engine/gravity)
+"O" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/grey,
+/area/station/engine/gravity)
+"P" = (
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
+/area/station/engine/gravity)
+"Q" = (
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/engine/gravity)
+"R" = (
+/obj/table/reinforced/auto,
+/obj/item/paper/book/from_file/gravity_tether{
+	pixel_y = 5;
+	pixel_x = 7
+	},
+/obj/item/device/analyzer/gravity_scanner{
+	pixel_y = 1;
+	pixel_x = -8
+	},
+/obj/item/device/analyzer/gravity_scanner{
+	pixel_y = 8;
+	pixel_x = -8
+	},
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/machinery/firealarm/directional/north,
+/turf/simulated/floor/grey,
+/area/station/engine/gravity)
+"S" = (
+/turf/simulated/floor/carpet/green/fancy,
+/area/station/crew_quarters/ce)
+"T" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/camera/directional/south,
+/turf/simulated/floor/grey,
+/area/station/engine/gravity)
+"U" = (
+/obj/window_blinds/cog2/right,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/ce)
+"V" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/wall/auto/reinforced/supernorn/colored/yellow,
+/area/station/crew_quarters/ce)
+"W" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/table/reinforced/auto,
+/obj/item/clothing/shoes/magnetic{
+	pixel_x = -6;
+	pixel_y = 9
+	},
+/obj/item/clothing/shoes/magnetic{
+	pixel_y = 2;
+	pixel_x = -6
+	},
+/obj/item/clothing/shoes/magnetic{
+	pixel_y = -5;
+	pixel_x = -6
+	},
+/obj/item/paper/book/from_file/gravity_tether{
+	pixel_y = 5;
+	pixel_x = 7
+	},
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/obj/machinery/light/emergency{
+	dir = 1;
+	pixel_y = 16
+	},
+/turf/simulated/floor/grey,
+/area/station/engine/gravity)
+"X" = (
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor/carpet/green/fancy/edge/se,
+/area/station/crew_quarters/ce)
+"Y" = (
+/obj/machinery/gravity_tether/station,
+/turf/simulated/floor/grey,
+/area/station/engine/gravity)
+"Z" = (
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor/carpet/green/fancy/edge/south,
+/area/station/crew_quarters/ce)
+
+(1,1,1) = {"
+P
+P
+P
+i
+b
+i
+i
+i
+i
+"}
+(2,1,1) = {"
+P
+R
+n
+i
+x
+z
+h
+o
+i
+"}
+(3,1,1) = {"
+P
+Y
+O
+D
+q
+S
+Z
+E
+L
+"}
+(4,1,1) = {"
+P
+e
+c
+u
+v
+p
+X
+M
+U
+"}
+(5,1,1) = {"
+m
+W
+T
+i
+l
+K
+f
+F
+V
+"}
+(6,1,1) = {"
+P
+P
+G
+i
+I
+B
+A
+i
+i
+"}
+(7,1,1) = {"
+N
+s
+j
+t
+Q
+Q
+j
+d
+N
+"}
+(8,1,1) = {"
+N
+H
+r
+w
+g
+k
+a
+y
+N
+"}
+(9,1,1) = {"
+N
+N
+N
+N
+C
+N
+N
+N
+N
+"}

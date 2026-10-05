@@ -843,7 +843,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 					if (count)
 						var/o2_per = GM.oxygen / count
 						var/co2_per = GM.carbon_dioxide / count
-						for (var/turf/simulated/MT as() in T.parent.members)
+						for (var/turf/simulated/MT as anything in T.parent.members)
 							if (GM.disposed)
 								GM = new /datum/gas_mixture
 							GM.temperature = T20C + 15
@@ -1864,7 +1864,7 @@ ADMIN_INTERACT_PROCS(/obj/item/gimmickbomb, proc/arm, proc/detonate)
 	desc = "Two small pipes joined together with grooves cut into the side."
 	icon_state = "Pipe_Frame"
 	burn_possible = FALSE
-	material_amt = 0.3
+	material_amt = MATERIAL::AMOUNT::SHEET * 3
 	HELP_MESSAGE_OVERRIDE("") // so there's the verb and stuff, actual message provided below
 	var/state = 1
 	var/strength = 5

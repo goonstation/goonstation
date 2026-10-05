@@ -7,7 +7,7 @@
 /area/dmm_suite/clear_area)
 "c" = (
 /obj/item/clothing/under/towel,
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/dmm_suite/clear_area)
 "f" = (
 /obj/stool/chair{
@@ -32,7 +32,7 @@
 	},
 /area/dmm_suite/clear_area)
 "P" = (
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/dmm_suite/clear_area)
 "R" = (
 /obj/machinery/drainage,
@@ -61,7 +61,7 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/dmm_suite/clear_area)
 
 (1,1,1) = {"

@@ -540,7 +540,7 @@
 	staminaCost = 10
 	moveDelay = 5
 	moveDelayDuration = 4
-	damageMult = 0.8
+	damageMult = 0.7
 	overrideCrit = 0 // no crits, prevent insane bleeds
 
 	image = "jab"
@@ -553,7 +553,7 @@
 
 	onAdd()
 		if(master)
-			overrideStaminaDamage = master.stamina_damage * 0.4
+			overrideStaminaDamage = master.stamina_damage * 0.1
 		return
 
 	pixelaction(atom/target, params, mob/user, reach)

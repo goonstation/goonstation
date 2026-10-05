@@ -66,3 +66,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/the_singularitygen, proc/activate)
 		return
 	else
 		return ..()
+
+/obj/machinery/the_singularitygen/on_material_scan()
+		return "Feeding the singularity materials with higher density and radioactivity increases mass gain"

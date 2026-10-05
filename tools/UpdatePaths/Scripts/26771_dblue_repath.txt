@@ -1,0 +1,9 @@
+/turf/simulated/floor/airless/darkblue/checker : /turf/simulated/floor/airless/twotone/darkblue{@OLD}
+/turf/simulated/floor/airless/darkblue/checker/other : /turf/simulated/floor/airless/twotone/darkblue{dir=4}
+/turf/unsimulated/floor/darkblue/checker : /turf/unsimulated/floor/twotone/darkblue{@OLD}
+/turf/unsimulated/floor/darkblue/checker/other : /turf/unsimulated/floor/twotone/darkblue{dir=4}
+/turf/simulated/floor/darkblue/checker : /turf/simulated/floor/twotone/darkblue{@OLD}
+/turf/simulated/floor/darkblue/checker/other : /turf/simulated/floor/twotone/darkblue{dir=4}
+/turf/simulated/floor/darkblue/checker/white : /turf/simulated/floor/darkblue/checker{@OLD}
+/turf/simulated/floor/airless/darkblue/checker/white : /turf/simulated/floor/airless/darkblue/checker{@OLD}
+/turf/unsimulated/floor/darkblue/checker/white : /turf/unsimulated/floor/darkblue/checker{@OLD}

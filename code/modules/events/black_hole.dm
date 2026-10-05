@@ -219,8 +219,10 @@
 	proc/shred_terrain(var/turf/simulated/T)
 		if (!T)
 			return
+		if (!issimulatedturf(T))
+			return
 
-		if(istype(T,/turf/simulated/floor))
+		if (istype(T,/turf/simulated/floor))
 			var/turf/simulated/floor/F = T
 			if(!F.broken)
 				if(prob(80))
@@ -236,22 +238,9 @@
 			else
 				F.ReplaceWithSpace()
 
-		else if (istype(T,/turf/simulated/wall))
-			var/atom/A = new /obj/structure/girder/reinforced(T)
-
-			var/atom/movable/B = new /obj/item/raw_material/scrap_metal
-			B.set_loc(T)
-
-			if(T.material)
-				A.setMaterial(T.material)
-				B.setMaterial(T.material)
-			else
-				var/datum/material/M = getMaterial("steel")
-				A.setMaterial(M)
-				B.setMaterial(M)
-
-			T.ReplaceWithFloor()
-
+		else if (istype(T, /turf/simulated/wall))
+			var/turf/simulated/wall/W = T
+			W.dismantle_wall()
 		else
 			return
 

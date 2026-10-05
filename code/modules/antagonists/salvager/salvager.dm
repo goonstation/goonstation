@@ -21,25 +21,31 @@
 		H.bioHolder.mobAppearance.flavor_text = null
 		H.unequip_all(TRUE)
 
-		H.equip_if_possible(new /obj/item/clothing/head/helmet/space/engineer/salvager(H), SLOT_HEAD)
-		H.equip_if_possible(new /obj/item/clothing/suit/space/salvager(H), SLOT_WEAR_SUIT)
-		H.equip_if_possible(new /obj/item/clothing/glasses/salvager(H), SLOT_GLASSES)
-		H.equip_if_possible(new /obj/item/device/radio/headset/salvager, SLOT_EARS)
-		H.equip_if_possible(new /obj/item/clothing/under/color/grey(H), SLOT_W_UNIFORM)
-		H.equip_if_possible(new /obj/item/storage/backpack/salvager(H), SLOT_BACK)
-		H.equip_if_possible(new /obj/item/clothing/mask/breath(H), SLOT_WEAR_MASK)
-		H.equip_if_possible(new /obj/item/tank/pocket/extended/oxygen(H), SLOT_L_STORE)
-		H.equip_if_possible(new /obj/item/ore_scoop/prepared(H), SLOT_R_STORE)
-		H.equip_if_possible(new /obj/item/clothing/shoes/magnetic(H), SLOT_SHOES)
-		H.equip_if_possible(new /obj/item/clothing/gloves/yellow(H), SLOT_GLOVES)
-		H.equip_if_possible(new /obj/item/salvager(H), SLOT_BELT)
-		H.equip_if_possible(new /obj/item/device/pda2/salvager(H), SLOT_WEAR_ID)
+		//Stowaway gear
+		H.equip_new_if_possible(weighted_pick(/datum/job/special/stowaway::slot_head), SLOT_HEAD)
+		H.equip_new_if_possible(weighted_pick(/datum/job/special/stowaway::slot_jump), SLOT_W_UNIFORM)
+		H.equip_new_if_possible(weighted_pick(/datum/job/special/stowaway::slot_suit), SLOT_WEAR_SUIT)
+		H.equip_new_if_possible(/obj/item/clothing/mask/gas/emergency, SLOT_WEAR_MASK)
+
+		//Suspicious gear
+		H.equip_new_if_possible(/obj/item/clothing/gloves/yellow, SLOT_GLOVES)
+		H.equip_new_if_possible(/obj/item/tank/pocket/extended/oxygen, SLOT_R_STORE)
+		H.equip_new_if_possible(/obj/item/clothing/glasses/salvager, SLOT_GLASSES)
+		H.equip_new_if_possible(/obj/item/clothing/shoes/magnetic, SLOT_SHOES)
+		H.equip_new_if_possible(/obj/item/device/pda2/salvager, SLOT_WEAR_ID)
 		var/obj/item/device/pda2/salvager_pda = locate() in H
 		salvager_pda.insert_id_card(new /obj/item/card/id/salvager(H), H)
 
+		//Obvious Salvager-only gear below:
+		H.equip_new_if_possible(/obj/item/device/radio/headset/salvager, SLOT_EARS)
+		H.equip_new_if_possible(/obj/item/salvager_hand_tele, SLOT_L_STORE)
+		H.equip_new_if_possible(/obj/item/storage/backpack/salvager, SLOT_BACK)
 		H.equip_new_if_possible(/obj/item/storage/box/salvager_frame_compartment, SLOT_IN_BACKPACK)
-		H.equip_new_if_possible(/obj/item/salvager_hand_tele, SLOT_IN_BACKPACK)
+		H.equip_new_if_possible(/obj/item/clothing/head/helmet/space/engineer/salvager, SLOT_IN_BACKPACK)
+		H.equip_new_if_possible(/obj/item/clothing/suit/space/salvager, SLOT_IN_BACKPACK)
+		H.equip_new_if_possible(/obj/item/salvager, SLOT_IN_BACKPACK)
 		H.equip_new_if_possible(/obj/item/tool/omnitool/dualconstruction_device, SLOT_IN_BACKPACK)
+		H.equip_new_if_possible(/obj/item/ore_scoop/prepared, SLOT_IN_BACKPACK)
 		H.equip_new_if_possible(/obj/item/tool/omnitool, SLOT_IN_BACKPACK)
 		H.equip_new_if_possible(/obj/item/weldingtool, SLOT_IN_BACKPACK)
 

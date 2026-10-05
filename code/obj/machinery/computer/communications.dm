@@ -13,6 +13,10 @@
 		src.show_text("Your mainframe was unable to relay this command that far away!", "red")
 		return
 
+	if(check_for_radio_jammers(src))
+		src.show_text("Your mainframe's communications array is currently being jammed!", "red")
+		return
+
 	if (emergency_shuttle.online)
 		boutput(usr, SPAN_ALERT("The emergency shuttle is currently in flight!"))
 		return

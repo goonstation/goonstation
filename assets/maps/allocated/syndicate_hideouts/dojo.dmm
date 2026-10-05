@@ -1,0 +1,403 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/cordon,
+/area/cordon/dark)
+"c" = (
+/obj/fakeobject/azarakrocks/rock6,
+/turf/simulated/floor/dojo/sand,
+/area/syndicate_station/hideout)
+"d" = (
+/obj/machinery/door/unpowered/wood,
+/turf/simulated/floor/bamboo,
+/area/syndicate_station/hideout)
+"e" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 4
+	},
+/turf/simulated/floor/bamboo,
+/area/syndicate_station/hideout)
+"f" = (
+/obj/fakeobject/Azarakcandleswall,
+/turf/unsimulated/wall/auto/paper,
+/area/syndicate_station/hideout)
+"g" = (
+/obj/machinery/light/small/floor,
+/obj/tree/sakura_tree{
+	pixel_x = -30;
+	pixel_y = 0
+	},
+/turf/simulated/floor/dirt,
+/area/syndicate_station/hideout)
+"h" = (
+/turf/unsimulated/wall/auto/paper,
+/area/syndicate_station/hideout)
+"j" = (
+/obj/machinery/computer/camera_viewer,
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor/bamboo,
+/area/syndicate_station/hideout)
+"l" = (
+/obj/storage/closet/dresser,
+/obj/item/clothing/suit/armor/sneaking_suit/costume,
+/obj/item/clothing/shoes/sandal,
+/obj/item/clothing/under/gimmick/yukata/plain/random,
+/obj/item/clothing/under/gimmick/hakama/random,
+/obj/item/clothing/mask/kitsune,
+/obj/item/clothing/mask/tengu,
+/turf/simulated/floor/bamboo,
+/area/syndicate_station/hideout)
+"n" = (
+/obj/machinery/light/small/floor,
+/obj/table/wood/auto/desk,
+/obj/machinery/weapon_stand/katana_stand{
+	icon_state = "swordstand0";
+	amount = 0
+	},
+/turf/simulated/floor/bamboo,
+/area/syndicate_station/hideout)
+"o" = (
+/obj/fakeobject/broadcastcomputer,
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor/bamboo,
+/area/syndicate_station/hideout)
+"q" = (
+/obj/machinery/light/small/floor,
+/obj/tree/sakura_tree/tree_2{
+	pixel_x = -32;
+	pixel_y = 1
+	},
+/turf/simulated/floor/dirt,
+/area/syndicate_station/hideout)
+"r" = (
+/turf/simulated/floor/dojo/stone,
+/area/syndicate_station/hideout)
+"s" = (
+/obj/item/device/radio/intercom{
+	dir = 8
+	},
+/turf/simulated/floor/bamboo,
+/area/syndicate_station/hideout)
+"t" = (
+/obj/machinery/disposal/extradimensional/exit,
+/turf/simulated/floor/circuit/red,
+/area/syndicate_station/hideout)
+"u" = (
+/obj/table/wood/auto/desk,
+/turf/simulated/floor/bamboo,
+/area/syndicate_station/hideout)
+"v" = (
+/obj/fakeobject/azarakrocks/rock9,
+/turf/simulated/floor/dojo/sand,
+/area/syndicate_station/hideout)
+"w" = (
+/obj/machinery/shower{
+	dir = 8
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/sanitary/blue,
+/area/syndicate_station/hideout)
+"y" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/dojo/sand,
+/area/syndicate_station/hideout)
+"A" = (
+/turf/simulated/floor/dojo/sand,
+/area/syndicate_station/hideout)
+"B" = (
+/obj/fakeobject/swordrack,
+/turf/unsimulated/wall/auto/paper,
+/area/syndicate_station/hideout)
+"C" = (
+/obj/fakeobject/birdhouse/light,
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/dojo/stone,
+/area/syndicate_station/hideout)
+"D" = (
+/obj/decoration/toiletholder{
+	dir = 1
+	},
+/turf/simulated/floor/sanitary/blue,
+/area/syndicate_station/hideout)
+"E" = (
+/obj/fakeobject/tapedeck,
+/turf/unsimulated/wall/auto/paper,
+/area/syndicate_station/hideout)
+"F" = (
+/obj/machinery/light/small/floor,
+/obj/fakeobject/birdhouse/light,
+/turf/simulated/floor/dojo/stone,
+/area/syndicate_station/hideout)
+"H" = (
+/obj/machinery/light/incandescent/warm,
+/obj/item/storage/toilet{
+	dir = 4
+	},
+/turf/simulated/floor/sanitary/blue,
+/area/syndicate_station/hideout)
+"I" = (
+/turf/simulated/floor/bamboo,
+/area/syndicate_station/hideout)
+"J" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 8
+	},
+/turf/simulated/floor/bamboo,
+/area/syndicate_station/hideout)
+"K" = (
+/obj/machinery/door/unpowered/wood{
+	dir = 4
+	},
+/turf/simulated/floor/sanitary/blue,
+/area/syndicate_station/hideout)
+"L" = (
+/obj/table/wood/auto/desk,
+/obj/item/paper_bin{
+	pixel_x = 6;
+	pixel_y = 0
+	},
+/obj/decoration/paperstack/small{
+	pixel_x = -8;
+	pixel_y = 2;
+	desc = "A small pile of papers. They seem to be observation reports."
+	},
+/obj/item/stamp{
+	pixel_x = 5;
+	pixel_y = 13
+	},
+/turf/simulated/floor/bamboo,
+/area/syndicate_station/hideout)
+"N" = (
+/obj/filing_cabinet,
+/turf/simulated/floor/bamboo,
+/area/syndicate_station/hideout)
+"Q" = (
+/turf/simulated/floor/sanitary/blue,
+/area/syndicate_station/hideout)
+"R" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/red,
+/turf/simulated/floor/bamboo,
+/area/syndicate_station/hideout)
+"S" = (
+/turf/unsimulated/floor/dojo/stone,
+/area/syndicate_station/hideout)
+"T" = (
+/turf/unsimulated/wall/auto/sengoku,
+/area/syndicate_station/hideout)
+"V" = (
+/obj/fakeobject/bigcabinets,
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor/bamboo,
+/area/syndicate_station/hideout)
+"Y" = (
+/obj/table/wood/auto/desk,
+/obj/item/reagent_containers/food/snacks/takeout{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/food/drinks/tea{
+	pixel_x = -9;
+	pixel_y = 6
+	},
+/turf/simulated/floor/bamboo,
+/area/syndicate_station/hideout)
+"Z" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/bamboo,
+/area/syndicate_station/hideout)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+h
+h
+h
+h
+h
+h
+h
+T
+T
+T
+T
+a
+"}
+(3,1,1) = {"
+a
+h
+R
+J
+h
+w
+H
+h
+y
+A
+g
+T
+a
+"}
+(4,1,1) = {"
+a
+h
+l
+I
+h
+Q
+D
+h
+r
+A
+v
+T
+a
+"}
+(5,1,1) = {"
+a
+B
+u
+I
+h
+K
+h
+h
+F
+A
+A
+T
+a
+"}
+(6,1,1) = {"
+a
+f
+n
+I
+I
+I
+I
+h
+r
+S
+A
+T
+a
+"}
+(7,1,1) = {"
+a
+B
+Y
+I
+e
+I
+I
+d
+r
+S
+t
+T
+a
+"}
+(8,1,1) = {"
+a
+h
+h
+h
+h
+h
+I
+h
+r
+S
+A
+T
+a
+"}
+(9,1,1) = {"
+a
+h
+o
+J
+N
+h
+Z
+h
+C
+A
+A
+T
+a
+"}
+(10,1,1) = {"
+a
+E
+j
+I
+L
+h
+I
+h
+r
+A
+c
+T
+a
+"}
+(11,1,1) = {"
+a
+h
+V
+s
+I
+d
+I
+h
+y
+A
+q
+T
+a
+"}
+(12,1,1) = {"
+a
+h
+h
+h
+h
+h
+h
+h
+T
+T
+T
+T
+a
+"}
+(13,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

@@ -384,6 +384,17 @@ datum
 			transparency = 70
 			disease = /datum/ailment/disease/space_madness
 
+		disease/phantom_payroll
+			name = "phantom payroll"
+			id = "phantom_payroll"
+			description = "A muted grey-blue fluid that smells faintly of stale coffee and printer toner."
+			reagent_state = LIQUID
+			fluid_r = 82
+			fluid_g = 96
+			fluid_b = 118
+			transparency = 150
+			disease = /datum/ailment/disease/third_shift_syndrome
+
 		disease/grave_dust // Vampire Plague
 			name = "grave dust"
 			id = "grave dust"
@@ -559,4 +570,15 @@ datum
 			disease = /datum/ailment/disease/exploding_head_syndrome
 			minimum_to_infect = 4
 
-
+		disease/cocktail_quadruplewater
+			name = "Quadruple Water"
+			id = "cocktail_quadruplewater"
+			description = "An even more water dense version of triple water, upon closer analysis its water matrix is highly unstable."
+			reagent_state = LIQUID
+			fluid_r = 10
+			fluid_g = 165
+			fluid_b = 254
+			taste = "like a day worth of hydration in one sip"
+			minimum_to_infect = 25
+			thirst_value = 3.2
+			disease = /datum/ailment/disease/water_poisoning

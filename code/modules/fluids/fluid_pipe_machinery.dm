@@ -530,11 +530,11 @@ ABSTRACT_TYPE(/obj/machinery/fluid_machinery/unary/drain)
 	var/newfrequency = text2num_safe(input.signal)
 	if (!newfrequency)
 		return
-	src.signal_threshold = round(clamp(newfrequency, R_FREQ_MINIMUM, R_FREQ_MAXIMUM), QUANTIZATION_UNITS)
+	src.signal_threshold = round(clamp(newfrequency, RADIO::FREQ::MINIMUM, RADIO::FREQ::MAXIMUM), QUANTIZATION_UNITS)
 	logTheThing(LOG_STATION, null, "set a fluid sensor set to trigger at [src.alert_frequency] units through MechComp at [log_loc(src)].")
 
 /obj/machinery/fluid_machinery/unary/sensor/proc/set_frequency_manual(obj/item/W, mob/user)
-	var/inp = tgui_input_number(user, "Please enter frequency :", "Frequency", src.alert_frequency, R_FREQ_MAXIMUM, R_FREQ_MINIMUM)
+	var/inp = tgui_input_number(user, "Please enter frequency :", "Frequency", src.alert_frequency, RADIO::FREQ::MAXIMUM, RADIO::FREQ::MINIMUM)
 	if (!inp) return
 	logTheThing(LOG_STATION, user, "set a fluid sensor set to send at [src.alert_frequency] at [log_loc(src)].")
 

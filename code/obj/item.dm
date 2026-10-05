@@ -577,6 +577,9 @@ ABSTRACT_TYPE(/obj/item)
 /obj/item/proc/combust(obj/item/W) // cogwerks- flammable items project
 	if(src.burning || (src in by_cat[TR_CAT_BURNING_ITEMS]))
 		return
+	var/area/area = get_area(src)
+	if (!area || area.virtual)
+		return
 	START_TRACKING_CAT(TR_CAT_BURNING_ITEMS)
 	src.burning = TRUE
 	src.firesource = FIRESOURCE_OPEN_FLAME
@@ -770,7 +773,7 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 	if (!src.anchored)
 		click_drag_tk(over_object, src_location, over_location, over_control, params)
 
-	if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("unconscious") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isrobot(usr) || isghostdrone(usr) || isghostcritter(usr) || (over_object && over_object.event_handler_flags & NO_MOUSEDROP_QOL) || isintangible(usr))
+	if (usr.stat || usr.restrained() || !can_reach(usr, src) || usr.getStatusDuration("unconscious") || usr.sleeping || usr.lying || isAIeye(usr) || isAI(usr) || isrobot(usr) || iszombie(usr) || isghostdrone(usr) || isghostcritter(usr) || (over_object && over_object.event_handler_flags & NO_MOUSEDROP_QOL) || isintangible(usr))
 		return
 
 	var/on_turf = isturf(src.loc)
@@ -1061,6 +1064,9 @@ ADMIN_INTERACT_PROCS(/obj/item, proc/admin_set_stack_amount)
 
 /obj/item/proc/moved(mob/user as mob, old_loc as turf)
 	return
+
+/obj/item/proc/can_equip(mob/user, slot)
+	return TRUE
 
 /obj/item/proc/equipped(var/mob/user, var/slot)
 	SHOULD_CALL_PARENT(TRUE)

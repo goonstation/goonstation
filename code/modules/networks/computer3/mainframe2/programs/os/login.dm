@@ -14,7 +14,7 @@
 	if (..())
 		return
 
-	var/datum/computer/file/record/record = src.signal_program(1, list("command" = DWAINE_COMMAND_CONFGET, "fname" = src.setup_filename_motd))
+	var/datum/computer/file/record/record = src.signal_program(1, list("command" = DWAINE::SYSCALL::CONFGET, "fname" = src.setup_filename_motd))
 	if (istype(record))
 		src.motd = jointext(record.fields, "|n")
 		src.motd = copytext(src.motd, 1, 255)
@@ -24,20 +24,20 @@
 	src.message_user("[src.motd]|nPlease enter card and \"term_login\"", "multiline")
 
 /datum/computer/file/mainframe_program/login/receive_progsignal(sendid, list/data, datum/computer/file/record/file)
-	if (..() || (data["command"] != DWAINE_COMMAND_RECVFILE) || !istype(file))
-		return ESIG_GENERIC
+	if (..() || (data["command"] != DWAINE::SYSCALL::RECVFILE) || !istype(file))
+		return DWAINE::ERR::SIG::GENERIC
 
 	if (!src.useracc)
-		return ESIG_NOUSR
+		return DWAINE::ERR::SIG::NOUSR
 
 	if (!file.fields["registered"] || !file.fields["assignment"])
-		return ESIG_GENERIC
+		return DWAINE::ERR::SIG::GENERIC
 
 	if (file.fields["code"] != netpass_login)
-		return ESIG_GENERIC
+		return DWAINE::ERR::SIG::GENERIC
 
-	if (src.signal_program(1, list("command" = DWAINE_COMMAND_ULOGIN, "name" = file.fields["registered"])) != ESIG_SUCCESS)
+	if (src.signal_program(1, list("command" = DWAINE::SYSCALL::ULOGIN, "name" = file.fields["registered"])) != DWAINE::ERR::SIG::SUCCESS)
 		src.message_user("Error: Login failure. Please try again.")
-		return ESIG_GENERIC
+		return DWAINE::ERR::SIG::GENERIC
 
 	mainframe_prog_exit

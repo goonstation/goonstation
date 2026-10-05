@@ -1,5 +1,5 @@
 /datum/dwaine_syscall/dmsg
-	id = DWAINE_COMMAND_DMSG
+	id = DWAINE::SYSCALL::DMSG
 
 /datum/dwaine_syscall/dmsg/execute(sendid, list/data, datum/computer/file/file)
 	var/driver_id = data["target"]
@@ -17,7 +17,7 @@
 		driver = src.kernel.processing_drivers[driver_id]
 
 	if (!istype(driver))
-		return ESIG_NOTARGET
+		return DWAINE::ERR::SIG::NOTARGET
 
 	data["command"] = data["dcommand"]
 	data["target"] = data["dtarget"]

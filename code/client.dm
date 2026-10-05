@@ -182,7 +182,7 @@
 			qdel(C, FALSE, TRUE)
 		dc.Cut()
 
-	var/list/lookup = comp_lookup
+	var/list/lookup = signal_listeners
 	if(lookup)
 		for(var/sig in lookup)
 			var/list/comps = lookup[sig]
@@ -192,7 +192,7 @@
 			else
 				var/datum/component/comp = comps
 				comp.UnregisterSignal(src, sig)
-		comp_lookup = lookup = null
+		signal_listeners = lookup = null
 
 	for(var/target in signal_procs)
 		UnregisterSignal(target, signal_procs[target])
@@ -226,6 +226,11 @@
 	src.player = make_player(src.key, client=src)
 
 	src.loadResources()
+#ifdef LIVE_SERVER
+	winset(src, null, list("browser-options" = "find,refresh,byondstorage,zoom"))
+#else
+	winset(src, null, list("browser-options" = "find,refresh,byondstorage,zoom,devtools"))
+#endif
 	src.initSizeHelpers()
 	src.tooltips = new /datum/tooltips(src)
 	src.initialize_interface()
@@ -466,8 +471,11 @@
 
 	winset(src, null, "rpanewindow.left=infowindow")
 
-	if (byond_version >= 516)
-		winset(src, null, list("browser-options" = "find,refresh,byondstorage,zoom,devtools"))
+/client/verb/enable_browser_devtools()
+	set name = "browser-devtools"
+	set hidden = TRUE
+	winset(src, null, list("browser-options" = "find,refresh,byondstorage,zoom,devtools"))
+	boutput(src, "Enabled browser devtools")
 
 /client/proc/ip_cid_conflict_check(log_it=TRUE, alert_them=TRUE, only_if_first=FALSE, message_who=null)
 	var/static/list/list/ip_to_ckeys = list()
@@ -751,7 +759,7 @@ var/global/curr_day = null
 	set category = "Commands"
 
 	var/cant_interact_time = null
-	if (isnewplayer(src.mob) && src.player.get_rounds_participated_rp() <= 10 && !src.player.cloudSaves.getData("bypass_round_reqs"))
+	if (isnewplayer(src.mob) && src.player.get_rounds_participated_rp() <= 10 && !src.player.cloudSaves.getData("bypass_round_reqs") && !isadmin(src))
 		cant_interact_time = 15 SECONDS
 
 	tgui_alert(src, content_window = "rpRules", do_wait = FALSE, cant_interact = cant_interact_time)

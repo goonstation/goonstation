@@ -532,7 +532,7 @@ var/global
 		/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom)
 
 	///radio frequencies unable to be picked up by (empowered) radio_brain
-	list/protected_frequencies = list(R_FREQ_SYNDICATE, R_FREQ_WIZARD, R_FREQ_SALVAGER)
+	list/protected_frequencies = list(RADIO::FREQ::SYNDICATE, RADIO::FREQ::WIZARD, RADIO::FREQ::SALVAGER)
 	///base movedelay threshold for slipping
 	base_slip_delay = BASE_SPEED_SUSTAINED
 

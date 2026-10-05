@@ -10,4 +10,4 @@
 
 /datum/dwaine_shell_script_operator/stack_depth/execute(list/token_stream)
 	src.shell.stack.Add(length(src.shell.stack))
-	return SCRIPT_SUCCESS
+	return DWAINE::ERR::SHELL::SCRIPT::SUCCESS

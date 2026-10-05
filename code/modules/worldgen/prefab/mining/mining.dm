@@ -277,6 +277,13 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining/space)
 		prefabSizeX = 25
 		prefabSizeY = 25
 
+	fancy_restaurant // CelineTheYeen's top of the line pretentious space restaurant
+		maxNum = 1
+		probability = 20
+		prefabPath = "assets/maps/prefabs/space/prefab_fancy_restaurant.dmm"
+		prefabSizeX = 26
+		prefabSizeY = 23
+
 // Drone Spawners
 	drone_common
 		maxNum = 8

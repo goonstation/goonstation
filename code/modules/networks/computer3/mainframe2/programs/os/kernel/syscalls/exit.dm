@@ -1,17 +1,17 @@
 /datum/dwaine_syscall/exit
-	id = DWAINE_COMMAND_EXIT
+	id = DWAINE::SYSCALL::EXIT
 
 /datum/dwaine_syscall/exit/execute(sendid, list/data, datum/computer/file/file)
 	if (!sendid)
-		return ESIG_GENERIC
+		return DWAINE::ERR::SIG::GENERIC
 
 	var/datum/computer/file/mainframe_program/caller_prog = src.kernel.master.processing[sendid]
 	if (!caller_prog || (caller_prog == src.kernel))
-		return ESIG_GENERIC
+		return DWAINE::ERR::SIG::GENERIC
 
 	if (!caller_prog.useracc)
 		caller_prog.handle_quit()
-		return ESIG_NOUSR
+		return DWAINE::ERR::SIG::NOUSR
 
 	var/datum/mainframe2_user_data/user = caller_prog.useracc
 	var/datum/computer/file/mainframe_program/shellbase = src.kernel.get_file_name(src.kernel.setup_progname_shell, src.kernel.sys_folder)
@@ -24,7 +24,7 @@
 		if (user.current_prog == caller_prog)
 			user.current_prog = quitparent
 		quitparent.useracc = user
-		quitparent.receive_progsignal(1, list("command" = DWAINE_COMMAND_TEXIT, "id" = sendid))
+		quitparent.receive_progsignal(1, list("command" = DWAINE::SYSCALL::TEXIT, "id" = sendid))
 
 	else if (QDELETED(quitparent) && !QDELETED(user.base_shell_instance)) // We can't use quitparent if it is already queued for deletion! Lets hope our shellbase didn't get randomly deleted!
 		if (user.current_prog == caller_prog)
@@ -41,4 +41,4 @@
 	else
 		src.kernel.master.run_program(shellbase, user, (quitparent || src.kernel))
 
-	return ESIG_SUCCESS
+	return DWAINE::ERR::SIG::SUCCESS

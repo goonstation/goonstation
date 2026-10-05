@@ -56,6 +56,8 @@
 				src.iris_color = AH.customizations["hair_top"].color
 			else
 				src.iris_color = AH.e_color
+			if (AH.mutant_race.mutant_appearance_flags & LIGHT_EYES)
+				src.iris_color = light_colors(src.iris_color)
 			var/image/iris_image = image(src.icon, src, "[iris_state_override || icon_state]-iris")
 			iris_image.color = iris_color
 			src.UpdateOverlays(iris_image, "iris")
@@ -561,6 +563,11 @@ TYPEINFO(/obj/item/organ/eye/cyber/monitor)
 /obj/item/organ/eye/pug
 	name = "pug eye"
 	desc = "Poor guy."
+
+/obj/item/organ/eye/amphibian
+	name = "frog eye"
+	desc = "It's eye of newt and toe of frog, not eye of frog!"
+	icon_state = "eye-frog"
 
 /obj/item/organ/eye/shelterfrog
 	name = "shelterfrog eye"

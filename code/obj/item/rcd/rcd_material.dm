@@ -71,7 +71,7 @@ TYPEINFO(/obj/item/rcd/material/cardboard)
 	restricted_materials = list("cardboard")
 	safe_deconstruct = TRUE
 
-	modes = list(RCD_MODE_FLOORSWALLS, RCD_MODE_AIRLOCK, RCD_MODE_DECONSTRUCT, RCD_MODE_WINDOWS)
+	modes = list(RCD_MODE::FLOORSWALLS, RCD_MODE::AIRLOCK, RCD_MODE::DECONSTRUCT, RCD_MODE::WINDOWS)
 
 
 	attackby(obj/item/W, mob/user)
@@ -127,7 +127,7 @@ TYPEINFO(/obj/item/rcd/material/cardboard)
 	matter_remove_girder = -1
 	matter_remove_window = -1
 
-	modes = list(RCD_MODE_FLOORSWALLS, RCD_MODE_DECONSTRUCT, RCD_MODE_WINDOWS)
+	modes = list(RCD_MODE::FLOORSWALLS, RCD_MODE::DECONSTRUCT, RCD_MODE::WINDOWS)
 
 	/// Load the RCD from a stack of items at an (optional) fill ratio
 	proc/reload_from_stack(obj/item/stack, mob/user, fill_ratio = 1)

@@ -29,7 +29,7 @@ import { useBackend, useSharedState } from '../backend';
 import { HealthStat } from '../components/goonstation/HealthStat';
 import { COLORS } from '../constants';
 import { Window } from '../layouts';
-import { DiskDrive } from './common/DiskDrive';
+import { DiskDrive } from './common/drives';
 
 interface CloningConsoleData {
   allowDeadScan: BooleanLike;

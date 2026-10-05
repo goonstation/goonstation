@@ -522,8 +522,8 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	name = "nanotrasen headset"
 	desc = "A radio headset that is also capable of communicating over, this one is tuned into a NanoTrasen frequency"
 	icon_state = "command headset"
-	chat_class = RADIOCL_COMMAND
-	secure_frequencies = list("g" = R_FREQ_NANOTRASEN)
+	chat_class = RADIO::CSS::COMMAND
+	secure_frequencies = list("g" = RADIO::FREQ::NANOTRASEN)
 	icon_override = "nt"
 	icon_tooltip = "NanoTrasen"
 	team = TEAM_NANOTRASEN
@@ -545,9 +545,9 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	name = "syndicate headset"
 	desc = "A radio headset that is also capable of communicating over, this one is tuned into a Syndicate frequency"
 	icon_state = "sec headset"
-	chat_class = RADIOCL_SYNDICATE
-	secure_frequencies = list("g" = R_FREQ_SYNDICATE)
-	secure_classes = list("g" = RADIOCL_NANOTRASEN)
+	chat_class = RADIO::CSS::SYNDICATE
+	secure_frequencies = list("g" = RADIO::FREQ::SYNDICATE)
+	secure_classes = list("g" = RADIO::CSS::NANOTRASEN)
 	protected_radio = TRUE
 	icon_override = "syndie"
 	icon_tooltip = "Syndicate"
@@ -830,7 +830,10 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	proc/pokey(mob/target, poke_chance=33)
 		if(prob(poke_chance))
 			if(ON_COOLDOWN(target, "BARB_\ref[src]", src.cooldown_time)) return
-			target.visible_message("[target] gets caught up in [src]", "You get caught up in [src] and notice it has drawn blood.")
+			if(issilicon(target) || isrobocritter(target))
+				target.visible_message("[target] gets caught up in [src]", "You get caught up in [src] and it scratches your parts a little bit.")
+			else
+				target.visible_message("[target] gets caught up in [src]", "You get caught up in [src] and notice it has drawn blood.")
 			take_bleeding_damage(target, null, rand(3,7), DAMAGE_STAB)
 			return TRUE
 

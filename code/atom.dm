@@ -38,6 +38,7 @@ TYPEINFO(/atom)
 
 	/// Should points thrown at this take into account the click pixel value
 	var/pixel_point = FALSE
+	var/tmp/avoid_animating = FALSE //! Animating this atom will probably break an existing animation. Try to skip them if possible.
 
 	var/interesting = ""
 	/// Atom provides grip to neighboring tiles in zero-G
@@ -93,9 +94,8 @@ TYPEINFO(/atom)
 	New(turf/newLoc)
 		. = ..()
 		// Lets stop having 5 implementations of this that all do it differently
-		if (!src.material && default_material)
-			var/datum/material/mat = istext(default_material) ? getMaterial(default_material) : default_material
-			src.setMaterial(mat)
+		if (!src.material && src.default_material)
+			src.setMaterial(getMaterial(src.default_material))
 
 	proc/name_prefix(var/text_to_add, var/return_prefixes = 0, var/prepend = 0)
 		if( !name_prefixes ) name_prefixes = list()
@@ -537,15 +537,6 @@ TYPEINFO(/obj/item/disk)
 //some more of these event handler flag things are handled in set_loc far below . . .
 /atom/movable/New()
 	..()
-	var/typeinfo/obj/typeinfo = src.get_typeinfo()
-	var/override_type = src.type
-	while(!isnull(typeinfo.manufactured_type) && override_type != typeinfo.manufactured_type) //Recursively go up the list of manufacture overrides.
-		override_type = typeinfo.manufactured_type
-		typeinfo = get_type_typeinfo(override_type)
-
-	if (typeinfo.analyser_flags & (ANALYSER_ALLOWED | ANALYSER_SKIP_IF_FAIL | ANALYSER_FAILFEEDBACK)) // typeinfo.mats &&
-		src.AddComponent(/datum/component/analyzable, override_type)
-
 	src.last_turf = isturf(src.loc) ? src.loc : null
 	//hey this is mbc, there is probably a faster way to do this but i couldnt figure it out yet
 	if(istype(src, /atom/movable/hotspot)) //hotspots arent really tangible things
@@ -667,8 +658,7 @@ TYPEINFO(/obj/item/disk)
 		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, A, direct)
 		src.last_move = get_dir(A, src.loc)
 		if (length(src.attached_objs))
-			for (var/atom/movable/M as anything in attached_objs)
-				M.set_loc(src.loc)
+			src.move_attached_objs()
 		if (islist(src.tracked_blood))
 			src.track_blood()
 		actions.interrupt(src, INTERRUPT_MOVE)
@@ -709,6 +699,12 @@ TYPEINFO(/obj/item/disk)
 	*/
 /atom/movable/proc/OnMove(source = null)
 
+/// Moves attached objects with this atom, keeping their glide_size in sync.
+/atom/movable/proc/move_attached_objs()
+	for (var/atom/movable/M as anything in src.attached_objs)
+		M.glide_size = src.glide_size
+		M.set_loc(src.loc)
+
 /// Base pull proc, returns 1 if the various checks for pulling fail, so that it can be overriden to add extra functionality without rewriting all the conditions.
 /atom/movable/proc/pull(mob/user)
 	if (!(user))
@@ -730,7 +726,7 @@ TYPEINFO(/obj/item/disk)
 	if (isghostcritter(user))
 		var/mob/living/critter/C = user
 		if (!C.can_pull(src))
-			boutput(user,SPAN_ALERT("<b>[src] is too heavy for you pull in your half-spectral state!</b>"))
+			boutput(user, SPAN_ALERT("<b>[src] is too heavy for you to pull in your half-spectral state!</b>"))
 			return 1
 
 	if (iscarbon(user) || issilicon(user))
@@ -1033,6 +1029,11 @@ TYPEINFO(/obj/item/disk)
 	if(QDELETED(src) && !isnull(newloc))
 		CRASH("Tried to call set_loc on disposed movable [identify_object(src)] to non-null location: [identify_object(newloc)]")
 
+#ifdef CHECK_MORE_RUNTIMES
+	if (HAS_ATOM_PROPERTY(src, PROP_MOVABLE_DO_NOT_SET_LOC))
+		CRASH("Tried to call set_loc on movable with PROP_MOVABLE_DO_NOT_SET_LOC set.")
+#endif
+
 	if (loc == newloc)
 		SEND_SIGNAL(src, COMSIG_MOVABLE_SET_LOC, loc)
 		return src
@@ -1081,11 +1082,11 @@ TYPEINFO(/obj/item/disk)
 
 	if(isturf(newloc))
 		if(src.pass_unstable || src.density)
-			for(var/turf/covered_turf as anything in src.locs)
+			for(var/turf/covered_turf in src.locs)
 				covered_turf.pass_unstable += src.pass_unstable
 				covered_turf.passability_cache = null
 		if (src.provides_grip)
-			for(var/turf/covered_turf as anything in src.locs)
+			for(var/turf/covered_turf in src.locs)
 				covered_turf.grip_atom_count += 1
 		for(var/atom/A in newloc)
 			if(A != src)
@@ -1096,8 +1097,7 @@ TYPEINFO(/obj/item/disk)
 		new_area.Entered(src, oldloc)
 
 	if (islist(src.attached_objs) && length(attached_objs))
-		for (var/atom/movable/M in src.attached_objs)
-			M.set_loc(src.loc)
+		src.move_attached_objs()
 	else
 		last_turf = null
 

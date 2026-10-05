@@ -123,3 +123,10 @@
 #define UNDERFLOOR 1
 /// The atom is above the floor tiles.
 #define OVERFLOOR 2
+
+/// The atom never receives mouse events.
+#define MOUSE_OPACITY_TRANSPARENT 0
+/// The atom receives mouse events on the non-transparent pixels of its icon.
+#define MOUSE_OPACITY_ICON 1
+/// The atom receives mouse events anywhere in its bounding box, whatever its icon looks like.
+#define MOUSE_OPACITY_OPAQUE 2

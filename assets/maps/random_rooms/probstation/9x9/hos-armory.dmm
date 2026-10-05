@@ -1,0 +1,555 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/redblack{
+	dir = 3
+	},
+/area/station/ai_monitored/armory)
+"b" = (
+/obj/random_item_spawner/armory_armor_supplies,
+/turf/simulated/floor/redblack{
+	dir = 9
+	},
+/area/station/ai_monitored/armory)
+"c" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/random_item_spawner/armory_breaching_supplies,
+/turf/simulated/floor/redblack{
+	dir = 10
+	},
+/area/station/ai_monitored/armory)
+"d" = (
+/obj/machinery/vending/security_ammo,
+/obj/machinery/light_switch/directional/east,
+/turf/simulated/floor/redblack{
+	dir = 6
+	},
+/area/station/ai_monitored/armory)
+"e" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/storage/secure/crate/gear/armory/equipment,
+/turf/simulated/floor/redblack{
+	dir = 3
+	},
+/area/station/ai_monitored/armory)
+"f" = (
+/obj/machinery/camera/directional/west,
+/obj/machinery/turret{
+	dir = 4;
+	name = "armory turret"
+	},
+/obj/mapping_helper/access/security,
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/station/ai_monitored/armory)
+"g" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/redblack/corner,
+/area/station/ai_monitored/armory)
+"h" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/sw,
+/area/station/security/hos)
+"i" = (
+/obj/storage/secure/closet/command/hos,
+/obj/machinery/firealarm/directional/north,
+/turf/simulated/floor/carpet/red/fancy/edge/nw,
+/area/station/security/hos)
+"j" = (
+/obj/table/reinforced/bar,
+/obj/item/reagent_containers/food/drinks/mug/HoS{
+	pixel_x = -7;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/snacks/spaghetti/spicy/security,
+/obj/item/stamp/hos{
+	pixel_x = 6;
+	pixel_y = 14
+	},
+/obj/item/kitchen/utensil/fork{
+	pixel_x = 8;
+	pixel_y = 4
+	},
+/obj/machinery/camera/directional/west,
+/obj/machinery/phone/wall{
+	pixel_y = 30
+	},
+/turf/simulated/floor/wood/seven,
+/area/station/security/hos)
+"k" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/redblack{
+	dir = 3
+	},
+/area/station/ai_monitored/armory)
+"l" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
+/area/station/ai_monitored/armory)
+"m" = (
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/computer/announcement/station/security{
+	dir = 4
+	},
+/turf/simulated/floor/wood/seven,
+/area/station/security/hos)
+"n" = (
+/obj/machinery/power/data_terminal,
+/obj/cable,
+/obj/machinery/computer3/generic/communications,
+/turf/simulated/floor/red/side{
+	dir = 10
+	},
+/area/station/security/secwing)
+"o" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
+/area/station/ai_monitored/armory)
+"p" = (
+/obj/machinery/door/airlock/pyro/command/alt{
+	dir = 4
+	},
+/obj/mapping_helper/access/hos,
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/button/area,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/wood/seven,
+/area/station/security/hos)
+"q" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/firealarm/directional/west,
+/turf/simulated/floor/red/side{
+	dir = 8
+	},
+/area/station/security/secwing)
+"r" = (
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
+/area/station/security/secwing)
+"s" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/red/side{
+	dir = 8
+	},
+/area/station/security/secwing)
+"t" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/random_item_spawner/armory_phasers,
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/redblack{
+	dir = 6
+	},
+/area/station/ai_monitored/armory)
+"u" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/hos)
+"v" = (
+/turf/simulated/floor/wood/seven,
+/area/station/security/hos)
+"w" = (
+/obj/machinery/computer/card/department/security{
+	dir = 4
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/wood/seven,
+/area/station/security/hos)
+"x" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/wood/seven,
+/area/station/security/hos)
+"y" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/storage/secure/crate/weapon/armory/tranquilizer,
+/turf/simulated/floor/redblack{
+	dir = 3
+	},
+/area/station/ai_monitored/armory)
+"z" = (
+/obj/random_item_spawner/armory_goggle_supplies,
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/station/ai_monitored/armory)
+"A" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/hos)
+"B" = (
+/obj/storage/secure/crate/plasma/armory/anti_biological,
+/obj/machinery/firealarm/directional/north,
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/station/ai_monitored/armory)
+"C" = (
+/mob/living/critter/small_animal/turtle/sylvester/HoS,
+/turf/simulated/floor/carpet/red/fancy/edge/west,
+/area/station/security/hos)
+"D" = (
+/obj/storage/secure/crate/gear/armory/grenades,
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/station/ai_monitored/armory)
+"E" = (
+/obj/table/reinforced/industrial/auto,
+/obj/machinery/recharger{
+	pixel_y = 7;
+	pixel_x = -6
+	},
+/obj/machinery/recharger{
+	pixel_y = 7;
+	pixel_x = 8
+	},
+/obj/machinery/camera/directional/east,
+/turf/simulated/floor/red/side{
+	dir = 6
+	},
+/area/station/security/secwing)
+"F" = (
+/obj/table/reinforced/bar,
+/obj/item/device/prisoner_scanner{
+	pixel_y = 5;
+	pixel_x = -11
+	},
+/obj/item/device/camera_viewer{
+	pixel_y = 7;
+	pixel_x = 5
+	},
+/obj/decal/poster/wallsign/framed_award/hos_medal{
+	pixel_y = 28
+	},
+/turf/simulated/floor/wood/seven,
+/area/station/security/hos)
+"G" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/hos)
+"I" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/junction/right/south,
+/turf/simulated/floor/carpet/red/fancy/edge/east,
+/area/station/security/hos)
+"J" = (
+/obj/machinery/light/incandescent/netural,
+/obj/machinery/disposal/small/west,
+/obj/disposalpipe/trunk,
+/turf/simulated/floor/red/side{
+	dir = 4
+	},
+/area/station/security/secwing)
+"K" = (
+/obj/storage/cart/forensic/bomb_disposal,
+/obj/machinery/light_switch/directional/east{
+	pixel_y = 3
+	},
+/obj/disposalpipe/segment/bent/west,
+/turf/simulated/floor/red/side{
+	dir = 4
+	},
+/area/station/security/secwing)
+"L" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/red/side{
+	dir = 9
+	},
+/area/station/security/secwing)
+"M" = (
+/obj/machinery/door/airlock/pyro/weapons/secure,
+/obj/mapping_helper/access/armory,
+/obj/mapping_helper/airlock/aiDisabler,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/red,
+/area/station/ai_monitored/armory)
+"N" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
+/area/station/ai_monitored/armory)
+"O" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/command/alt,
+/obj/mapping_helper/access/hos,
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/button/area,
+/obj/disposalpipe/segment,
+/turf/simulated/floor/wood/seven,
+/area/station/security/hos)
+"P" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/blind_switch/directional/east{
+	pixel_y = -4
+	},
+/obj/machinery/light_switch/directional/east{
+	pixel_y = 6
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/carpet/red/fancy/edge/se,
+/area/station/security/hos)
+"Q" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/storage/secure/crate/weapon/armory/shotgun,
+/obj/machinery/turretid/armory{
+	pixel_y = 24
+	},
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/station/ai_monitored/armory)
+"R" = (
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
+/area/station/ai_monitored/armory)
+"S" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/computer/riotgear{
+	pixel_y = 28
+	},
+/turf/simulated/floor/red/side{
+	dir = 5
+	},
+/area/station/security/secwing)
+"T" = (
+/obj/machinery/weapon_stand/rifle_rack/recharger,
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/redblack{
+	dir = 5
+	},
+/area/station/ai_monitored/armory)
+"U" = (
+/turf/simulated/wall/auto/reinforced/supernorn/colored/red,
+/area/station/security/hos)
+"V" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/security/alt{
+	dir = 4
+	},
+/obj/mapping_helper/access/security,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/red,
+/area/station/security/secwing)
+"W" = (
+/turf/simulated/floor/black,
+/area/station/ai_monitored/armory)
+"Y" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/red,
+/obj/machinery/door_control/bolter/new_walls/east,
+/obj/mapping_helper/button/area,
+/obj/machinery/light/incandescent/netural{
+	dir = 1;
+	pixel_y = 24
+	},
+/obj/disposalpipe/trunk,
+/obj/machinery/disposal/small/north{
+	pixel_y = 28
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/ne,
+/area/station/security/hos)
+"Z" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north,
+/obj/storage/secure/crate/weapon/armory/pod_weapons,
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/station/ai_monitored/armory)
+
+(1,1,1) = {"
+R
+R
+R
+R
+l
+U
+U
+U
+U
+"}
+(2,1,1) = {"
+R
+b
+f
+c
+N
+j
+w
+m
+u
+"}
+(3,1,1) = {"
+R
+z
+W
+e
+R
+F
+v
+x
+A
+"}
+(4,1,1) = {"
+R
+D
+W
+y
+R
+i
+C
+h
+G
+"}
+(5,1,1) = {"
+o
+Q
+g
+t
+o
+Y
+I
+P
+O
+"}
+(6,1,1) = {"
+R
+B
+k
+R
+R
+U
+p
+U
+U
+"}
+(7,1,1) = {"
+R
+Z
+a
+M
+L
+q
+s
+n
+r
+"}
+(8,1,1) = {"
+R
+T
+d
+R
+S
+J
+K
+E
+r
+"}
+(9,1,1) = {"
+R
+R
+R
+R
+V
+r
+r
+r
+r
+"}

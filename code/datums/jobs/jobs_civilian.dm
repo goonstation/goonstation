@@ -47,7 +47,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_jump = list(/obj/item/clothing/under/rank/hydroponics)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_glov = list(/obj/item/clothing/gloves/black)
-	slot_poc1 = list(/obj/item/paper/botany_guide)
+	slot_poc1 = list(/obj/item/paper/image/botany_guide)
 	slot_poc2 = list(/obj/item/plantanalyzer)
 	slot_ears = list(/obj/item/device/radio/headset/civilian/hydroponics)
 	wiki_link = "https://wiki.ss13.co/Botanist"
@@ -64,7 +64,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_head = list(/obj/item/clothing/head/cowboy)
 	slot_foot = list(/obj/item/clothing/shoes/westboot/brown/rancher)
 	slot_glov = list(/obj/item/clothing/gloves/black)
-	slot_poc1 = list(/obj/item/paper/ranch_guide)
+	slot_poc1 = list(/obj/item/paper/image/ranch_guide)
 	slot_poc2 = list(/obj/item/device/pda2/botanist)
 	slot_ears = list(/obj/item/device/radio/headset/civilian/hydroponics)
 	items_in_backpack = list(/obj/item/device/camera_viewer/ranch,/obj/item/storage/box/knitting)
@@ -118,7 +118,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	special_setup(mob/living/carbon/human/M, no_special_spawn)
 		..()
 		if (prob(20))
-			M.stow_in_available(new /obj/item/paper/businesscard/seneca)
+			M.stow_in_available(new /obj/item/paper/image/businesscard/seneca)
 
 
 /datum/job/civilian/mail_courier
@@ -136,7 +136,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_belt = list(/obj/item/device/pda2/quartermaster)
 	items_in_backpack = list(/obj/item/wrapping_paper, /obj/item/satchel/mail, /obj/item/scissors, /obj/item/stamp)
 	alt_names = list("Head of Deliverying", "Mail Bringer")
-	wiki_link = "https://wiki.ss13.co/Mailman"
+	wiki_link = "https://wiki.ss13.co/Mail_Courier"
 
 /datum/job/civilian/clown
 	name = "Clown"
@@ -158,6 +158,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_card = /obj/item/card/id/clown
 	slot_ears = list(/obj/item/device/radio/headset/clown)
 	items_in_belt = list(/obj/item/cloth/towel/clown)
+	items_in_mob = list(/obj/item/currency/spacecash/one)
 	change_name_on_spawn = TRUE
 	wiki_link = "https://wiki.ss13.co/Clown"
 

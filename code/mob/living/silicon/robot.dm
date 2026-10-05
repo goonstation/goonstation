@@ -1002,6 +1002,9 @@ TYPEINFO(/mob/living/silicon/robot)
 			boutput(user, SPAN_ALERT("You try to swipe your emag along [src]'s interface, but it grows hot in your hand and you almost drop it!"))
 			return FALSE
 
+		src.delStatus("lockdown_robot")
+		src.delStatus("killswitch_robot")
+
 		if (!src.emagged)	// trying to unlock with an emag card
 			if (src.opened && user) boutput(user, "You must close the cover to swipe an ID card.")
 			else if (src.wiresexposed && user) boutput(user, SPAN_ALERT("You need to get the wires out of the way."))
@@ -2886,6 +2889,7 @@ TYPEINFO(/mob/living/silicon/robot)
 				var/image/clothed_image = U.wear_image
 				if (!clothed_image)
 					continue
+				U.copy_appearance_to_image(clothed_image)
 				if (U.wear_state)
 					clothed_image.icon_state = U.wear_state
 				else
@@ -2893,6 +2897,9 @@ TYPEINFO(/mob/living/silicon/robot)
 				clothed_image.alpha = U.alpha
 				clothed_image.color = U.color
 				clothed_image.layer = U.wear_layer
+				if (U.worn_material_texture_image)
+					U.worn_material_texture_image.layer = clothed_image.layer + 0.1
+					clothed_image.overlays += U.worn_material_texture_image
 
 				if (istype(U, /obj/item/clothing/under))
 					src.i_under = clothed_image
@@ -3743,8 +3750,12 @@ TYPEINFO(/mob/living/silicon/robot)
 		. = ..()
 
 	onAdd(optional)
-		. = ..()
 		src.robot = src.owner
+		if(src.robot.syndicate || src.robot.emagged)
+			src.fake = TRUE
+		. = ..()
+		if(src.fake)
+			return
 		src.robot.uneq_all()
 		for (var/obj/item/roboupgrade/R in src.robot.contents)
 			if (R.activated)
@@ -3754,6 +3765,8 @@ TYPEINFO(/mob/living/silicon/robot)
 
 	onUpdate(timePassed)
 		. = ..()
+		if(src.fake)
+			return
 		src.robot.uneq_all()
 		for (var/obj/item/roboupgrade/R in src.robot.contents)
 			if (R.activated)

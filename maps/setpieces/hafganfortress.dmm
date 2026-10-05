@@ -2416,7 +2416,7 @@
 "gY" = (
 /obj/table/syndicate/auto,
 /obj/machinery/light/small/floor/frostedred,
-/obj/item/paper/postcard/mushroom{
+/obj/item/paper/image/postcard/mushroom{
 	name = "Space Station 12 postcard";
 	desc = "A tourism postcard advertising NanoTrasen's Space Station 12. The one that got blown up."
 	},
@@ -4628,11 +4628,11 @@
 	})
 "mJ" = (
 /obj/table/wood/auto/desk,
-/obj/item/paper/businesscard/mabinogi{
+/obj/item/paper/image/businesscard/mabinogi{
 	pixel_y = 7
 	},
-/obj/item/paper/businesscard/mabinogi,
-/obj/item/paper/businesscard/mabinogi{
+/obj/item/paper/image/businesscard/mabinogi,
+/obj/item/paper/image/businesscard/mabinogi{
 	pixel_y = 5
 	},
 /turf/unsimulated/floor/twotone/black,
@@ -6162,7 +6162,7 @@
 "qA" = (
 /obj/table/wood/auto/desk,
 /obj/random_item_spawner/desk_stuff/some,
-/obj/item/paper/businesscard/cans,
+/obj/item/paper/image/businesscard/cans,
 /obj/machinery/light/incandescent/warm{
 	dir = 8;
 	pixel_x = -10
@@ -13267,7 +13267,7 @@
 	})
 "IF" = (
 /obj/table/wood/auto,
-/obj/item/paper/businesscard/skulls,
+/obj/item/paper/image/businesscard/skulls,
 /turf/unsimulated/floor/concrete,
 /area/adventure{
 	name = "Caer Vedwyd";
@@ -13625,7 +13625,7 @@
 	})
 "Jv" = (
 /obj/stool/bench,
-/obj/item/paper/businesscard/banjo,
+/obj/item/paper/image/businesscard/banjo,
 /turf/unsimulated/floor/concrete,
 /area/adventure{
 	name = "Caer Vedwyd";

@@ -63,13 +63,19 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg)
 			if (Skull.donor)
 				B.name = "[Skull.donor.real_name] skullbot"
 
+			B.setMaterial(src.material)
+			B.forensic_holder = src.forensic_holder
+			W.forensic_holder.copy_to(B.forensic_holder)
 			user.show_text("You add [W] to [src]. That's neat.", "blue")
 			qdel(W)
 			qdel(src)
 			return
 
 		else if (istype(W, /obj/item/soulskull))
-			new /obj/machinery/bot/skullbot/ominous(get_turf(user))
+			var/obj/machinery/bot/skullbot/ominous/skullbot = new(get_turf(user))
+			skullbot.setMaterial(src.material)
+			skullbot.forensic_holder = src.forensic_holder
+			W.forensic_holder.copy_to(skullbot.forensic_holder)
 			boutput(user, SPAN_NOTICE("You add [W] to [src]. That's neat."))
 			qdel(W)
 			qdel(src)

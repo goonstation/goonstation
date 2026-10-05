@@ -318,6 +318,7 @@ Contents:
 	desc = "A pretty japanese cherry tree. You don't find a lot of these away from earth."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "sakuratree"
+	season_affected = FALSE
 
 /obj/tree/sakura_tree/tree_2
 	icon_state = "sakuratree2"
@@ -815,6 +816,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/paper)
 	name = "zen garden"
 	icon = 'icons/turf/dojo.dmi'
 	icon_state = "sand"
+	can_dig = TRUE
 
 	horizontal
 		icon_state = "sand_horiz"

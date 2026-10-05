@@ -1,0 +1,423 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/chapel/sanctuary)
+"b" = (
+/obj/table/wood/auto,
+/obj/item/ghostboard,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 8
+	},
+/area/station/chapel/sanctuary)
+"c" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "fpurple2"
+	},
+/area/station/chapel/sanctuary)
+"d" = (
+/obj/stool/chair/pew/fancy/left,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 4
+	},
+/area/station/chapel/sanctuary)
+"e" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/specialroom/chapel{
+	dir = 8
+	},
+/area/station/chapel/sanctuary)
+"f" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/specialroom/chapel{
+	dir = 4
+	},
+/area/station/chapel/sanctuary)
+"h" = (
+/obj/stool/chair/pew/fancy/left,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 8
+	},
+/area/station/chapel/sanctuary)
+"i" = (
+/obj/storage/closet/dresser{
+	anchored = 1;
+	name = "costume dresser"
+	},
+/obj/item/clothing/head/mime_beret,
+/obj/item/clothing/under/misc/mime,
+/obj/item/clothing/suit/suspenders,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 8
+	},
+/area/station/chapel/sanctuary)
+"j" = (
+/turf/simulated/floor/specialroom/chapel{
+	dir = 4
+	},
+/area/station/chapel/sanctuary)
+"k" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 4
+	},
+/area/station/chapel/sanctuary)
+"l" = (
+/obj/table/wood/auto,
+/obj/item/device/light/candle{
+	pixel_x = 1;
+	pixel_y = 12
+	},
+/obj/item/matchbook{
+	pixel_x = -2;
+	pixel_y = -5
+	},
+/turf/simulated/floor/carpet{
+	icon_state = "fpurple2";
+	dir = 1
+	},
+/area/station/chapel/sanctuary)
+"m" = (
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Chapel"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/chapel/sanctuary)
+"n" = (
+/obj/stool/chair/pew/fancy/right,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/specialroom/chapel{
+	dir = 8
+	},
+/area/station/chapel/sanctuary)
+"o" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "fpurple2"
+	},
+/area/station/chapel/sanctuary)
+"q" = (
+/obj/stool/chair/pew/fancy/left,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/specialroom/chapel{
+	dir = 8
+	},
+/area/station/chapel/sanctuary)
+"s" = (
+/obj/machinery/light/incandescent/warm,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/specialroom/chapel{
+	dir = 4
+	},
+/area/station/chapel/sanctuary)
+"t" = (
+/turf/simulated/floor/carpet{
+	icon_state = "fpurple2"
+	},
+/area/station/chapel/sanctuary)
+"u" = (
+/obj/machinery/camera/directional/west,
+/turf/simulated/floor/stairs{
+	icon_state = "Stairs_wide"
+	},
+/area/station/chapel/sanctuary)
+"v" = (
+/obj/stool/chair/pew/fancy/right,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 4
+	},
+/area/station/chapel/sanctuary)
+"w" = (
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Chapel";
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/station/chapel/sanctuary)
+"y" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/chapel/sanctuary)
+"z" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/stairs{
+	icon_state = "stairs_middle"
+	},
+/area/station/chapel/sanctuary)
+"D" = (
+/obj/stool/chair/pew/fancy/left,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/specialroom/chapel{
+	dir = 4
+	},
+/area/station/chapel/sanctuary)
+"E" = (
+/obj/machinery/light/small/floor/warm/very,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/specialroom/chapel{
+	dir = 8
+	},
+/area/station/chapel/sanctuary)
+"F" = (
+/obj/noticeboard/persistent/chapel/directional/north,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 4
+	},
+/area/station/chapel/sanctuary)
+"G" = (
+/obj/table/wood/auto,
+/obj/item/decoration/flower_vase/vase7{
+	icon_state = "vase4";
+	pixel_x = 4
+	},
+/obj/item/reagent_containers/glass/bottle/holywater{
+	pixel_x = -3
+	},
+/turf/simulated/floor/specialroom/chapel{
+	dir = 8
+	},
+/area/station/chapel/sanctuary)
+"H" = (
+/obj/shrub{
+	dir = 1;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant"
+	},
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/specialroom/chapel{
+	dir = 8
+	},
+/area/station/chapel/sanctuary)
+"I" = (
+/turf/simulated/floor/specialroom/chapel{
+	dir = 8
+	},
+/area/station/chapel/sanctuary)
+"J" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/specialroom/chapel{
+	dir = 4
+	},
+/area/station/chapel/sanctuary)
+"K" = (
+/obj/machinery/light_switch/directional/north,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 4
+	},
+/area/station/chapel/sanctuary)
+"L" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/specialroom/chapel{
+	dir = 4
+	},
+/area/station/chapel/sanctuary)
+"M" = (
+/obj/stool/chair/comfy{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/landmark/start/job/chaplain,
+/turf/simulated/floor/carpet{
+	icon_state = "fpurple2"
+	},
+/area/station/chapel/sanctuary)
+"O" = (
+/turf/simulated/floor/carpet{
+	icon_state = "fpurple2";
+	dir = 5
+	},
+/area/station/chapel/sanctuary)
+"R" = (
+/obj/table/wood/auto,
+/obj/item/bible,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet{
+	icon_state = "fpurple2";
+	dir = 1
+	},
+/area/station/chapel/sanctuary)
+"S" = (
+/turf/simulated/floor/stairs{
+	icon_state = "stairs_middle"
+	},
+/area/station/chapel/sanctuary)
+"T" = (
+/obj/stool/chair/pew/fancy/right,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/specialroom/chapel{
+	dir = 4
+	},
+/area/station/chapel/sanctuary)
+"V" = (
+/obj/table/wood/auto,
+/obj/machinery/phone,
+/turf/simulated/floor/carpet{
+	icon_state = "fpurple2";
+	dir = 1
+	},
+/area/station/chapel/sanctuary)
+"X" = (
+/obj/stool/chair/pew/fancy/right,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 8
+	},
+/area/station/chapel/sanctuary)
+"Y" = (
+/turf/simulated/floor/stairs{
+	icon_state = "Stairs2_wide"
+	},
+/area/station/chapel/sanctuary)
+"Z" = (
+/turf/simulated/floor/carpet{
+	icon_state = "fpurple2";
+	dir = 9
+	},
+/area/station/chapel/sanctuary)
+
+(1,1,1) = {"
+a
+a
+y
+y
+w
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+i
+k
+I
+f
+u
+j
+G
+a
+"}
+(3,1,1) = {"
+a
+K
+X
+v
+n
+S
+Z
+o
+a
+"}
+(4,1,1) = {"
+y
+I
+d
+h
+D
+S
+V
+t
+a
+"}
+(5,1,1) = {"
+m
+J
+e
+J
+E
+z
+R
+M
+m
+"}
+(6,1,1) = {"
+y
+I
+v
+X
+T
+S
+l
+t
+a
+"}
+(7,1,1) = {"
+a
+F
+h
+d
+q
+S
+O
+c
+a
+"}
+(8,1,1) = {"
+a
+H
+s
+e
+L
+Y
+j
+b
+a
+"}
+(9,1,1) = {"
+a
+a
+y
+y
+w
+a
+a
+a
+a
+"}

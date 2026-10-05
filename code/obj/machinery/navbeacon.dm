@@ -1303,3 +1303,74 @@ TYPEINFO(/obj/machinery/wirenav)
 		name = "tour beacon - 'Back2base'"
 		location = "tour14"
 		codes_txt = "tour;"
+
+/obj/machinery/navbeacon/tour/menhir
+	tour0
+		name = "tour beacon - 'Arrivals'"
+		location = "tour0"
+		codes_txt = "tour;next_tour=tour1;desc=Welcome to the Menhir Research Enclave. I am the Menhir Orientation Service System, or Moss for short. Follow me to begin your orientation."
+
+	tour1
+		name = "tour beacon - 'Enclave'"
+		location = "tour1"
+		codes_txt = "tour;next_tour=tour2;desc=The Menhir Research Enclave has been built around TOREADOR-7I-22408, a sizable artifact of presumed Precursor origin, to succeed a previous facility, designate 'Limpet'. While this is a purpose-built facility, it is equipped with general amenities, such as the crew lounge to my left and chapel to my right."
+
+	tour2
+		name = "tour beacon - 'Civilian'"
+		location = "tour2"
+		codes_txt = "tour;next_tour=tour3;desc=Should you require food during your stay, this sector of the Enclave is your 'bread and butter', if you'll pardon my parlance. Hydroponics, on my right, is your go-to for fresh produce, and the site's kitchen and bar are to my left."
+
+	tour3
+		name = "tour beacon - 'Crown 1/NW'"
+		location = "tour3"
+		codes_txt = "tour;next_tour=tour4;desc=If you haven't already arrived at this conclusion on your own, the blue floor you're probably standing on is an arm of of TOREADOR-7I-22408 - colloquially, the 'Crown'. Keep an eye on it during your stay, in case it does something neat!"
+
+	tour4
+		name = "tour beacon - 'West Junction'"
+		location = "tour4"
+		codes_txt = "tour;next_tour=tour5;desc=This junction is often a bustling hub of the Enclave. To my north and south, you'll find the medical and engineering sectors, respectively - to my west, you can find the shuttle concourse allocated to mercantile docking, as well as a fitness room."
+
+	tour5
+		name = "tour beacon - 'Research'"
+		location = "tour5"
+		codes_txt = "tour;next_tour=tour6;desc=The station's Research department is situated in the south-central sector of the Enclave in order to be directly attached to the only known entrance to TOREADOR-7I-22408. You can use the little purple chute to get around the 'loop'."
+
+	tour6
+		name = "tour beacon - 'Bar'"
+		location = "tour6"
+		codes_txt = "tour;next_tour=tour7;desc=If you need something to drink, make sure to stop by the bar. Beverages are typically included in the compensation package for Nanotrasen personnel, though you should consult your personnel contract to verify this."
+
+	tour7
+		name = "tour beacon - 'EVA'"
+		location = "tour7"
+		codes_txt = "tour;next_tour=tour8;desc=In the event of a catastrophic event, the EVA chamber to my north is the secure repository for emergency equipment. For those without the necessary authorization, please note that a public counterpart exists in the Arrivals auxiliary arm."
+
+	tour8
+		name = "tour beacon - 'Courtroom'"
+		location = "tour8"
+		codes_txt = "tour;next_tour=tour9;desc=The Courtroom to my left serves as the Enclave's hub for matters of station bureacuracy and legal process. In the event you require reassignment or access escalation, please enqueue here in an orderly fashion."
+
+	tour9
+		name = "tour beacon - 'East Junction'"
+		location = "tour9"
+		codes_txt = "tour;next_tour=tour10;desc=The Bridge and Security sectors are located to my north and south respectively. The hallway to my east leads to the owlery, the public pod bay, and the east shuttle concourse - the lattermost of which is the docking point of the mining shuttle."
+
+	tour10
+		name = "tour beacon - 'Nav Flower'"
+		location = "tour10"
+		codes_txt = "tour;next_tour=tour11;desc=If you're ever a little disoriented and your GPS system isn't working, this handy navigation flower can point you in the right direction. Make sure to keep an eye out for the cyan Escape floor signs around the site, too!"
+
+	tour11
+		name = "tour beacon - 'Escape'"
+		location = "tour11"
+		codes_txt = "tour;next_tour=tour12;desc=In the event of routine shift change or an emergency evacuation, please assemble in this area for departure. You may also board from the Escape Auxiliary Arm to your right, and emergency escape pods are available in both Auxiliary Arms."
+
+	tour12
+		name = "tour beacon - 'Arrivals Wrapup'"
+		location = "tour12"
+		codes_txt = "tour;next_tour=tour13;desc=This concludes your orientation. If you feel inadequately oriented, please feel free to follow me in circles again, or consult local personnel for information."
+
+	tour13
+		name = "tour beacon - Finish"
+		location = "tour13"
+		codes_txt = "tour;"

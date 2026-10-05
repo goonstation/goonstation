@@ -59,7 +59,7 @@ ADD_TO_NAMESPACE(TEST)(proc/example_proc())
 
 // The namespace path for a concatenated namespace name, with a capturing identity macro appended to the terminating forward slash.
 #define _NS_PATH_I(_ARGS...) _NS_PATH_CONCAT(__NS_PATH_I, ##_ARGS, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
-#define __NS_PATH_I(_NAME) /datum/namespace/##_NAME/##IDENTITY
+#define __NS_PATH_I(_NAME) datum/namespace/##_NAME/##IDENTITY
 
 #define _NS_PATH_CONCAT(X, a, b, c, d, e, f, g, h, i, j, ...) _NS_PATH_CONCAT_##j(X, a, b, c, d, e, f, g, h, i)
 #define _NS_PATH_CONCAT_0(X, a, b, c, d, e, f, g, h, i)
@@ -76,11 +76,19 @@ ADD_TO_NAMESPACE(TEST)(proc/example_proc())
 
 /// A list of all global namespaces.
 var/list/datum/namespace/global_namespaces = null
+/// A list of all variable names present on the parent `/datum/namespace` type.
+var/alist/namespace_parent_vars = null
 
 /// Initialise all global namespaces by looping through global variables, determining which are namespaces, then instantiating them.
 /proc/initialise_namespaces()
-	global.global_namespaces = list()
+	global.namespace_parent_vars = alist()
+	var/datum/namespace/blank_namespace = new()
+	for (var/variable_name as anything in blank_namespace.vars)
+		global.namespace_parent_vars[variable_name] = TRUE
 
+	qdel(blank_namespace)
+
+	global.global_namespaces = list()
 	for (var/variable_name as anything in global.vars)
 		var/namespace_path = global.vars[variable_name]
 		if (!ispath(namespace_path, /datum/namespace))
@@ -102,6 +110,8 @@ var/list/datum/namespace/global_namespaces = null
 	var/_namespace_name = null
 	/// An associative list of proc references to procs defined on this namespace and its nested namespaces, indexed by proc name.
 	var/list/_namespace_procs = null
+	/// A list of the values of the constant variables defined on this namespace.
+	var/list/_namespace_constants = null
 	/// A list of this namespace's nested namespaces.
 	var/list/datum/namespace/_nested_namespaces = null
 
@@ -132,7 +142,7 @@ var/list/datum/namespace/global_namespaces = null
 
 	if (!length(src._namespace_procs))
 		src._namespace_procs = global.get_singleton(/datum/proc_ownership_cache).procs_by_type[src.type] || list()
-		src._namespace_procs -= list("(init)", "New", "_get_namespace_procs")
+		src._namespace_procs -= list("(init)", "New", "_get_namespace_procs", "_get_namespace_constants")
 		global.sortList(src._namespace_procs, GLOBAL_PROC_REF(cmp_text_asc))
 
 		for (var/datum/namespace/nested_namespace as anything in src._nested_namespaces)
@@ -146,3 +156,20 @@ var/list/datum/namespace/global_namespaces = null
 		return procs
 
 	return src._namespace_procs
+
+/// Returns a list of the values of the constant variables defined on this namespace and its nested namespaces.
+/datum/namespace/proc/_get_namespace_constants()
+	RETURN_TYPE(/list)
+
+	if (!length(src._namespace_constants))
+		src._namespace_constants = list()
+		for (var/variable_name as anything in src.vars)
+			if (issaved(src.vars[variable_name]) || global.namespace_parent_vars[variable_name])
+				continue
+
+			src._namespace_constants += src.vars[variable_name]
+
+		for (var/datum/namespace/nested_namespace as anything in src._nested_namespaces)
+			src._namespace_constants += nested_namespace._get_namespace_constants()
+
+	return src._namespace_constants

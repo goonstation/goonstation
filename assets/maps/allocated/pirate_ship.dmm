@@ -7,7 +7,7 @@
 /area/pirate_ship_space)
 "ak" = (
 /obj/item/storage/wall/office,
-/turf/simulated/floor/orange/side,
+/turf/simulated/floor/lightyellow/side,
 /area/pirate_ship)
 "at" = (
 /obj/decoration/bullethole{
@@ -128,7 +128,7 @@
 /area/pirate_ship)
 "cI" = (
 /obj/table/reinforced/bar/auto,
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/pirate_ship)
 "cK" = (
 /obj/indestructible/shuttle_corner{
@@ -165,7 +165,7 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 1
 	},
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/pirate_ship)
 "dk" = (
 /obj/machinery/r_door_control/podbay/pirate,
@@ -200,7 +200,7 @@
 	dir = 4
 	},
 /obj/critter/parrot/macaw/pirate,
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/pirate_ship)
 "dN" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -247,11 +247,11 @@
 /obj/machinery/computer/camera_viewer/console_upper{
 	dir = 4
 	},
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/pirate_ship)
 "fh" = (
 /obj/submachine/record_player,
-/turf/simulated/floor/orange/side{
+/turf/simulated/floor/lightyellow/side{
 	dir = 8
 	},
 /area/pirate_ship)
@@ -323,7 +323,7 @@
 /obj/stool/chair/yellow{
 	dir = 4
 	},
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/pirate_ship)
 "hg" = (
 /obj/lattice{
@@ -424,7 +424,7 @@
 	pixel_y = 12
 	},
 /obj/table/endtable_classic,
-/turf/simulated/floor/orange/corner{
+/turf/simulated/floor/lightyellow/corner{
 	dir = 4
 	},
 /area/pirate_ship)
@@ -537,7 +537,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/pirate_ship)
 "mu" = (
 /obj/cable{
@@ -571,7 +571,7 @@
 "mX" = (
 /obj/table/auto,
 /obj/linen_bin/bedsheet,
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/pirate_ship)
 "nu" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
@@ -580,7 +580,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/pirate_ship)
 "nC" = (
 /obj/decal/tile_edge/stripe/extra_big,
@@ -612,7 +612,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/pirate_ship)
 "nZ" = (
 /turf/simulated/floor/blackwhite{
@@ -663,7 +663,7 @@
 /turf/unsimulated/floor/plating/random,
 /area/pirate_ship)
 "ph" = (
-/turf/simulated/floor/orange/side{
+/turf/simulated/floor/lightyellow/side{
 	dir = 4
 	},
 /area/pirate_ship)
@@ -672,7 +672,7 @@
 /obj/item/reagent_containers/food/snacks/lasagna,
 /obj/table/reinforced/bar/auto,
 /obj/machinery/light/incandescent/warm,
-/turf/simulated/floor/orange/corner{
+/turf/simulated/floor/lightyellow/corner{
 	dir = 1
 	},
 /area/pirate_ship)
@@ -748,7 +748,7 @@
 /area/pirate_ship)
 "rI" = (
 /obj/landmark/antagonist/pirate,
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/pirate_ship)
 "sd" = (
 /obj/stool/chair/yellow{
@@ -786,7 +786,7 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 1
 	},
-/turf/simulated/floor/orange/corner,
+/turf/simulated/floor/lightyellow/corner,
 /area/pirate_ship)
 "tH" = (
 /obj/forcefield/energyshield/perma/doorlink{
@@ -814,7 +814,7 @@
 	dir = 8
 	},
 /obj/landmark/antagonist/pirate/first_mate,
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/pirate_ship)
 "tU" = (
 /obj/item/clothing/suit/bedsheet/black,
@@ -846,7 +846,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/pirate_ship)
 "uq" = (
-/turf/simulated/floor/orange/side,
+/turf/simulated/floor/lightyellow/side,
 /area/pirate_ship)
 "us" = (
 /obj/item/reagent_containers/food/snacks/plant/grapefruit{
@@ -961,7 +961,7 @@
 /obj/drink_rack/mug{
 	pixel_y = 28
 	},
-/turf/simulated/floor/orange/side,
+/turf/simulated/floor/lightyellow/side,
 /area/pirate_ship)
 "uN" = (
 /obj/decal/tile_edge/stripe/extra_big,
@@ -994,7 +994,7 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 1
 	},
-/turf/simulated/floor/orange/corner{
+/turf/simulated/floor/lightyellow/corner{
 	dir = 8
 	},
 /area/pirate_ship)
@@ -1162,14 +1162,14 @@
 	name = "leaky sink";
 	pixel_x = -2
 	},
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/pirate_ship)
 "yw" = (
 /obj/item/storage/belt/medical,
 /obj/item/clothing/gloves/latex,
 /obj/item/storage/pill_bottle/mutadone,
 /obj/table/reinforced/auto,
-/turf/simulated/floor/orange/side{
+/turf/simulated/floor/lightyellow/side{
 	dir = 4
 	},
 /area/pirate_ship)
@@ -1189,7 +1189,7 @@
 /area/pirate_ship)
 "yM" = (
 /obj/machinery/optable,
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/pirate_ship)
 "yQ" = (
 /obj/machinery/power/smes/magical,
@@ -1206,7 +1206,7 @@
 /turf/simulated/floor/grey/corner,
 /area/pirate_ship)
 "zp" = (
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/pirate_ship)
 "zs" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
@@ -1247,7 +1247,7 @@
 /obj/stool/chair/office/yellow{
 	dir = 4
 	},
-/turf/simulated/floor/orange/side{
+/turf/simulated/floor/lightyellow/side{
 	dir = 4
 	},
 /area/pirate_ship)
@@ -1271,7 +1271,7 @@
 /turf/simulated/floor/black,
 /area/pirate_ship)
 "AJ" = (
-/turf/simulated/floor/orange/side{
+/turf/simulated/floor/lightyellow/side{
 	dir = 8
 	},
 /area/pirate_ship)
@@ -1433,7 +1433,7 @@
 	},
 /obj/machinery/light/incandescent/warm,
 /obj/table/reinforced/chemistry/auto,
-/turf/simulated/floor/orange/corner{
+/turf/simulated/floor/lightyellow/corner{
 	dir = 4
 	},
 /area/pirate_ship)
@@ -1460,12 +1460,12 @@
 	pixel_y = 9
 	},
 /obj/table/reinforced/chemistry/auto,
-/turf/simulated/floor/orange/side{
+/turf/simulated/floor/lightyellow/side{
 	dir = 1
 	},
 /area/pirate_ship)
 "ED" = (
-/turf/simulated/floor/orange/side{
+/turf/simulated/floor/lightyellow/side{
 	dir = 1
 	},
 /area/pirate_ship)
@@ -1504,7 +1504,7 @@
 /obj/item/storage/firstaid/toxin,
 /obj/item/reagent_containers/mender/burn,
 /obj/item/reagent_containers/mender/brute,
-/turf/simulated/floor/orange/side{
+/turf/simulated/floor/lightyellow/side{
 	dir = 1
 	},
 /area/pirate_ship)
@@ -1520,7 +1520,7 @@
 /obj/item/reagent_containers/mender/burn,
 /obj/item/reagent_containers/mender/brute,
 /obj/machinery/light/incandescent/warm,
-/turf/simulated/floor/orange/corner{
+/turf/simulated/floor/lightyellow/corner{
 	dir = 1
 	},
 /area/pirate_ship)
@@ -1539,7 +1539,7 @@
 /obj/machinery/microwave,
 /obj/item/storage/box/cutlery,
 /obj/table/reinforced/bar/auto,
-/turf/simulated/floor/orange/side{
+/turf/simulated/floor/lightyellow/side{
 	dir = 8
 	},
 /area/pirate_ship)
@@ -1598,7 +1598,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/pirate_ship)
 "ID" = (
 /obj/decoration/frontwalldamage{
@@ -1642,7 +1642,7 @@
 	pixel_x = 5;
 	pixel_y = 8
 	},
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/pirate_ship)
 "Jv" = (
 /obj/cable{
@@ -1652,7 +1652,7 @@
 	name = "prototype receiver pad"
 	},
 /obj/landmark/pirate_tele,
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/pirate_ship)
 "Jy" = (
 /obj/machinery/door/airlock/pyro/glass{
@@ -1677,7 +1677,7 @@
 	dir = 4
 	},
 /obj/mapping_helper/access/pirate_ship,
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/pirate_ship)
 "JI" = (
 /obj/stool/chair/yellow{
@@ -1756,7 +1756,7 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/decoration/bustedmantapc,
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/pirate_ship)
 "Mg" = (
 /obj/decal/tile_edge/stripe{
@@ -1842,14 +1842,14 @@
 /obj/stool/chair/yellow{
 	dir = 8
 	},
-/turf/simulated/floor/orange/side{
+/turf/simulated/floor/lightyellow/side{
 	dir = 8
 	},
 /area/pirate_ship)
 "OK" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/light/small/floor,
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/pirate_ship)
 "ON" = (
 /obj/table/syndicate/auto,
@@ -1857,7 +1857,7 @@
 	pixel_x = -2;
 	pixel_y = 4
 	},
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/pirate_ship)
 "OQ" = (
 /obj/decoration/bullethole{
@@ -1880,7 +1880,7 @@
 /obj/machinery/computer3/terminal{
 	dir = 8
 	},
-/turf/simulated/floor/orange/side{
+/turf/simulated/floor/lightyellow/side{
 	dir = 4
 	},
 /area/pirate_ship)
@@ -1918,7 +1918,7 @@
 	pixel_x = 5;
 	pixel_y = -7
 	},
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/pirate_ship)
 "Pf" = (
 /obj/item/sticker/skull{
@@ -1933,7 +1933,7 @@
 	},
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/access/pirate_ship,
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/pirate_ship)
 "Pt" = (
 /obj/table/nanotrasen/auto,
@@ -1958,7 +1958,7 @@
 "PY" = (
 /obj/stool/chair/comfy/red,
 /obj/landmark/antagonist/pirate/captain,
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/pirate_ship)
 "Qd" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
@@ -1986,7 +1986,7 @@
 	name = "Peregrine Announcement Computer";
 	req_access = null
 	},
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/pirate_ship)
 "Rp" = (
 /turf/simulated/floor/grey/side{
@@ -2003,7 +2003,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/orange/side{
+/turf/simulated/floor/lightyellow/side{
 	dir = 1
 	},
 /area/pirate_ship)
@@ -2079,7 +2079,7 @@
 /obj/decoration/bustedmantapc/bustedmantapc3{
 	dir = 1
 	},
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/pirate_ship)
 "To" = (
 /obj/item/reagent_containers/food/drinks/drinkingglass{
@@ -2095,7 +2095,7 @@
 	pixel_x = -4;
 	pixel_y = 11
 	},
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/pirate_ship)
 "Tt" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -2118,7 +2118,7 @@
 /area/pirate_ship)
 "TL" = (
 /obj/item/storage/toilet,
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/pirate_ship)
 "TY" = (
 /obj/fakeobject/palmtree{
@@ -2139,7 +2139,7 @@
 /obj/item/mop,
 /obj/item/chem_grenade/cleaner,
 /obj/item/sponge,
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/pirate_ship)
 "UX" = (
 /obj/reagent_dispensers/fueltank,
@@ -2211,7 +2211,7 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 8
 	},
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/pirate_ship)
 "VL" = (
 /turf/simulated/floor/grey/side,
@@ -2225,7 +2225,7 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 1
 	},
-/turf/simulated/floor/orange/corner,
+/turf/simulated/floor/lightyellow/corner,
 /area/pirate_ship)
 "Wd" = (
 /obj/decal/tile_edge/stripe/extra_big,
@@ -2245,7 +2245,7 @@
 /area/pirate_ship_space)
 "Wp" = (
 /obj/machinery/vending/snack,
-/turf/simulated/floor/orange/side,
+/turf/simulated/floor/lightyellow/side,
 /area/pirate_ship)
 "WB" = (
 /turf/simulated/floor/stairs/dark{
@@ -2254,13 +2254,13 @@
 /area/pirate_ship)
 "WQ" = (
 /obj/reagent_dispensers/beerkeg/rum,
-/turf/simulated/floor/orange/side{
+/turf/simulated/floor/lightyellow/side{
 	dir = 1
 	},
 /area/pirate_ship)
 "WY" = (
 /obj/machinery/vending/coffee,
-/turf/simulated/floor/orange/side,
+/turf/simulated/floor/lightyellow/side,
 /area/pirate_ship)
 "Xy" = (
 /obj/decal/tile_edge/stripe{
@@ -2301,7 +2301,7 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 4
 	},
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/pirate_ship)
 "YF" = (
 /obj/item/reagent_containers/food/drinks/rum_spaced{
@@ -2319,7 +2319,7 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 1
 	},
-/turf/simulated/floor/orange/corner{
+/turf/simulated/floor/lightyellow/corner{
 	dir = 8
 	},
 /area/pirate_ship)
@@ -2327,7 +2327,7 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 8
 	},
-/turf/simulated/floor/orange,
+/turf/simulated/floor/lightyellow,
 /area/pirate_ship)
 "Zh" = (
 /obj/storage/crate,

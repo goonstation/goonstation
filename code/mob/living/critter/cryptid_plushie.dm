@@ -1,6 +1,3 @@
-TYPEINFO(/mob/living/critter/small_animal/plush/cryptid)
-	start_speech_modifiers = list(SPEECH_MODIFIER_MOB_MODIFIERS, SPEECH_MODIFIER_CRYPTID_PLUSHIE)
-
 /mob/living/critter/small_animal/plush/cryptid
 	hand_count = 0
 	pull_w_class = W_CLASS_TINY
@@ -12,7 +9,7 @@ TYPEINFO(/mob/living/critter/small_animal/plush/cryptid)
 	use_stunned_icon = FALSE
 	var/being_seen = FALSE
 	var/mob/last_witness
-	var/icon_states_with_supported_eyes = list("bee", "buddy", "kitten", "monkey", "possum", "brullbar", "bunny", "penguin")
+	var/icon_states_with_supported_eyes = list("bee", "buddy", "kitten", "monkey", "possum", "brullbar", "bunny", "penguin", "buddy_future", "bunny_mask", "kitten_wizard", "monkey_assistant", "shelterfrog", "bear", "tuba", "monkey_george")
 	var/image/eye_light
 	var/glowing_eye_color = "#c40000ff"
 	var/glowing_eyes_enabled_alpha = 190
@@ -44,6 +41,38 @@ TYPEINFO(/mob/living/critter/small_animal/plush/cryptid)
 		icon_state = "penguin"
 		pick_random_icon_state = 0
 
+	buddy_future
+		icon_state = "buddy_future"
+		pick_random_icon_state = 0
+
+	bunny_mask
+		icon_state = "bunny_mask"
+		pick_random_icon_state = 0
+
+	kitten_wizard
+		icon_state = "kitten_wizard"
+		pick_random_icon_state = 0
+
+	monkey_assistant
+		icon_state = "monkey_assistant"
+		pick_random_icon_state = 0
+
+	shelterfrog
+		icon_state = "shelterfrog"
+		pick_random_icon_state = 0
+
+	bear
+		icon_state = "bear"
+		pick_random_icon_state = 0
+
+	tuba
+		icon_state = "tuba"
+		pick_random_icon_state = 0
+
+	monkey_george
+		icon_state = "monkey_george"
+		pick_random_icon_state = 0
+
 	New()
 		. = ..()
 		if(src.icon_state in icon_states_with_supported_eyes)
@@ -51,7 +80,7 @@ TYPEINFO(/mob/living/critter/small_animal/plush/cryptid)
 			eye_light.plane = PLANE_SELFILLUM
 			set_glowing_eyes(FALSE)
 
-		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/plushie_talk)
+		abilityHolder.addAbility(/datum/targetable/critter/ouija_speak)
 		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/movement_override)
 		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/teleportation/blink)
 		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/teleportation/disappear)
@@ -256,34 +285,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 		if(qdel_itself_if_not_attached_to_plushie)
 			if(!our_plushie)
 				qdel(src)
-
-/datum/targetable/critter/cryptid_plushie/plushie_talk // mostly stolen from ouija board
-	name = "Plushie Talk"
-	desc = "Communicate."
-	icon_state = "corruption"
-	cooldown = 50
-	qdel_itself_if_not_attached_to_plushie = 1
-	var/words_min = 7
-	var/words_max = 10
-
-	cast(atom/target)
-		if (..())
-			return 1
-
-		var/selected
-		do
-			var/list/words = list("*REFRESH*") + get_ouija_word_list(src, words_min, words_max,
-				filename="plush_toy_words.txt", strings_category="plush_toy_words")
-			selected = tgui_input_list(usr, "Select a word:", src.name, words, allowIllegal=FALSE)
-		while(selected == "*REFRESH*")
-		if(!selected)
-			return
-		if(!holder || !holder.owner)
-			return
-		playsound(holder.owner, 'sound/misc/automaton_scratch.ogg', 50, 1)
-		selected = uppertext(selected)
-		our_plushie.say(selected)
-		return 0
 
 /datum/targetable/critter/cryptid_plushie/movement_override
 	name = "Override Sensors"

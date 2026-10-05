@@ -1,0 +1,15 @@
+/turf/simulated/floor/orangeblack : /turf/simulated/floor/caution{@OLD}
+/turf/simulated/floor/airless/orangeblack : /turf/simulated/floor/airless/caution{@OLD}
+/turf/unsimulated/floor/orangeblack : /turf/unsimulated/floor/caution{@OLD}
+/turf/simulated/floor/orangeblack/side : /turf/simulated/floor/caution/side{@OLD}
+/turf/simulated/floor/airless/orangeblack/side : /turf/simulated/floor/airless/caution/side{@OLD}
+/turf/unsimulated/floor/orangeblack/side : /turf/unsimulated/floor/caution/side{@OLD}
+/turf/simulated/floor/orangeblack/side/white : /turf/simulated/floor/caution/white{@OLD}
+/turf/simulated/floor/airless/orangeblack/side/white : /turf/simulated/floor/caution/white{@OLD}
+/turf/unsimulated/floor/orangeblack/side/white : /turf/unsimulated/floor/caution/white{@OLD}
+/turf/simulated/floor/orangeblack/corner : /turf/simulated/floor/caution/corner{@OLD}
+/turf/simulated/floor/airless/orangeblack/corner : /turf/simulated/floor/airless/caution/corner{@OLD}
+/turf/unsimulated/floor/orangeblack/corner : /turf/unsimulated/floor/caution/corner{@OLD}
+/turf/simulated/floor/orangeblack/corner/white : /turf/simulated/floor/caution/corner/white{@OLD}
+/turf/simulated/floor/airless/orangeblack/corner/white : /turf/simulated/floor/airless/caution/corner/white{@OLD}
+/turf/unsimulated/floor/orangeblack/corner/white : /turf/unsimulated/floor/caution/corner/white{@OLD}

@@ -21,4 +21,4 @@
 
 		src.shell.message_user(echo_text, "multiline")
 
-	return BUILTIN_SUCCESS
+	return DWAINE::ERR::SHELL::BUILTIN::SUCCESS

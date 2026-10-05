@@ -1197,6 +1197,7 @@ TYPEINFO(/obj/machinery/door/airlock)
 	if (prob(20) && (src.density && src.cant_emag != 1 && src.isblocked() != 1))
 		src.open()
 		src.operating = -1
+		src.deconstruct_flags |= DECON_NO_ACCESS
 	if(prob(40))
 		if(src.secondsElectrified == 0)
 			src.secondsElectrified = -1

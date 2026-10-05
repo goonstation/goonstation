@@ -283,8 +283,8 @@ TYPEINFO(/obj/item/device/radio/headset/tutorial)
 	locked_frequency = TRUE
 
 	secure_frequencies = list(
-		"e" = R_FREQ_ENGINEERING,
-		"c" = R_FREQ_CIVILIAN)
+		"e" = RADIO::FREQ::ENGINEERING,
+		"c" = RADIO::FREQ::CIVILIAN)
 
 /obj/item/device/radio/headset/tutorial/receive_signal()
 	return

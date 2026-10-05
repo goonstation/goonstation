@@ -15,7 +15,7 @@
 
 TYPEINFO(/obj/machinery/disposal)
 	mats = 20			// whats the point of letting people build trunk pipes if they cant build new disposals?
-ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
+ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject, proc/expel_contents)
 /obj/machinery/disposal
 	name = "disposal unit"
 	desc = "A pressurized trashcan that flushes things you put into it through pipes, usually to disposals."
@@ -520,28 +520,23 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		if(flush && MIXTURE_PRESSURE(air_contents) >= 2*ONE_ATMOSPHERE)	// flush can happen even without power
 			SPAWN(0) //Quit holding up the process you fucker
 				flush()
+		src.absorb_gas()
+		return
 
-		if(status & NOPOWER)			// won't charge if no power
-			return
+	proc/absorb_gas(var/datum/gas_mixture/env)
+		if(!src.loc) return // Nullspaced, no point in trying.
+		if(src.status & NOPOWER) return // Won't charge without power
+		if(src.mode != DISPOSAL_CHUTE_CHARGING)	return // if off or ready, no need to charge
 
-		if (!loc) return
-
-		if(mode != DISPOSAL_CHUTE_CHARGING)		// if off or ready, no need to charge
-			return
-
-		var/atom/L = loc						// recharging from loc turf
-		var/datum/gas_mixture/env = L.return_air()
-		if (!air_contents)
-			air_contents = new /datum/gas_mixture
+		env ||= src.loc.return_air()
+		src.air_contents ||= new /datum/gas_mixture
 		var/pressure_delta = (3.5 * ONE_ATMOSPHERE) - MIXTURE_PRESSURE(air_contents) // purposefully trying to overshoot the target of 2 atmospheres to make it faster
 
 		if(env.temperature > 0)
 			var/transfer_moles = src.repressure_speed * pressure_delta*air_contents.volume/(env.temperature * R_IDEAL_GAS_EQUATION)
-
 			//Actually transfer the gas
 			var/datum/gas_mixture/removed = env.remove(transfer_moles)
 			air_contents.merge(removed)
-
 
 		// if full enough, switch to ready mode
 		if(MIXTURE_PRESSURE(air_contents) >= 2.5*ONE_ATMOSPHERE)
@@ -568,10 +563,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 
 		ZERO_GASES(src.air_contents)
 
-		sleep(1 SECOND)
-		playsound(src, 'sound/machines/disposalflush.ogg', 50, FALSE, 0)
-		sleep(0.5 SECONDS) // wait for animation to finish
-
+		if (!global.instant_pipe_network)
+			sleep(1 SECOND)
+			playsound(src, 'sound/machines/disposalflush.ogg', 50, FALSE, 0)
+			sleep(0.5 SECONDS) // wait for animation to finish
 
 		H.start(src) // start the holder processing movement
 		flushing = 0
@@ -607,6 +602,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 
 		H.vent_gas(loc)
 		qdel(H)
+
+	proc/expel_contents()
+		var/obj/disposalholder/H = new /obj/disposalholder()
+		H.init(src)
+		src.expel(H)
 
 	custom_suicide = 1
 	suicide(var/mob/living/carbon/human/user as mob)
@@ -705,10 +705,38 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	west
 		dir = WEST
 
+/obj/machinery/disposal/ejection
+	name = "ejection chute"
+	desc = "A pneumatic delivery chute for ejecting things from a department."
+
+/obj/machinery/disposal/ejection/small
+	icon = 'icons/obj/disposal_small.dmi'
+	handle_normal_state = "disposal-handle"
+	density = 0
+	provides_grip = FALSE
+
+	north
+		dir = NORTH
+	east
+		dir = EAST
+	south
+		dir = SOUTH
+	west
+		dir = WEST
+
+/obj/machinery/disposal/ejection/space
+	desc = "A pneumatic delivery chute for sending things directly to the cold hard void of space."
+
 /obj/machinery/disposal/morgue
 	name = "morgue chute"
 	icon_state = "morguechute"
 	desc = "A pneumatic delivery chute for sending things directly to the morgue."
+	icon_style = "morgue"
+
+/obj/machinery/disposal/crematorium
+	name = "crematorium chute"
+	icon_state = "morguechute"
+	desc = "A pneumatic delivery chute for sending things directly to the crematorium."
 	icon_style = "morgue"
 
 /obj/machinery/disposal/sci
@@ -717,11 +745,35 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	desc = "A pneumatic delivery chute for sending completed research to the public."
 	icon_style = "sci"
 
+/obj/machinery/disposal/sci/monkey_dome
+	name = "monkey dome chute"
+	desc = "A pneumatic delivery chute for sending things directly to the monkey dome."
+
+/obj/machinery/disposal/sci/test_chamber
+	name = "test chamber chute"
+	desc = "A pneumatic delivery chute for sending things directly to the research test chamber."
+
 /obj/machinery/disposal/botany
 	name = "produce chute"
 	icon_state = "botanchute"
 	desc = "A pneumatic delivery chute for sending produce to the kitchen."
 	icon_style = "botan"
+
+/obj/machinery/disposal/kitchen
+	icon_state = "botanchute"
+	icon_style = "botan"
+
+/obj/machinery/disposal/kitchen/brig
+	name = "brig meal-line chute"
+	desc = "A pneumatic delivery chute for sending food to the brig."
+
+/obj/machinery/disposal/kitchen/cafeteria
+	name = "cafeteria meal-line chute"
+	desc = "A pneumatic delivery chute for sending food to the cafeteria."
+
+/obj/machinery/disposal/kitchen/freezer
+	name = "kitchen freezer chute"
+	desc = "A pneumatic delivery chute for sending \"food\" to the freezer."
 
 /obj/machinery/disposal/ore
 	name = "ore chute"

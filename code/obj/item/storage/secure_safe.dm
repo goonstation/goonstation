@@ -282,10 +282,9 @@ TYPEINFO(/obj/item/storage/secure/sbriefcase)
 	throw_speed = 1
 	throw_range = 4
 	w_class = W_CLASS_BULKY
+	max_wclass = /obj/item/storage/briefcase::max_wclass
 	spawn_contents = list(/obj/item/paper,\
 	/obj/item/pen)
-	check_wclass = STORAGE_CHECK_W_CLASS_INCLUDE
-	can_hold = list(/obj/item/stamped_bullion)
 
 	HELP_MESSAGE_OVERRIDE("Set or enter a code by <b>using in-hand</b>.<br>View contents by <b>click-dragging</b> from the briefcase to your character.")
 

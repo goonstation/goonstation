@@ -731,6 +731,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	icon_state = "balaclava"
 	item_state = "balaclava"
 	see_face = FALSE
+	c_flags = COVERSMOUTH | COVERSHAIR
 
 // Sweet Bro and Hella Jeff
 
@@ -976,6 +977,11 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	icon_state = "safari"
 	item_state = "caphat"
 	item_function_flags = IMMUNE_TO_ACID
+
+/obj/item/clothing/head/safari/artsci
+	icon_state = "safari-artifact"
+	name = "xenoarchaeologist hat"
+	desc = "This hat won't actually help you a lot given most space ruins are in... space."
 
 /obj/item/clothing/mask/skull
 	name = "skull mask"
@@ -1744,6 +1750,99 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	icon_state = "hotdogsuit"
 	c_flags = COVERSHAIR
 
+/obj/item/clothing/suit/gimmick/mouse
+	name = "space mouse suit"
+	desc = "Cheesed to meet you."
+	body_parts_covered = HEAD|TORSO|LEGS|ARMS
+	wear_layer = MOB_FULL_SUIT_LAYER // ?????
+	hides_from_examine = C_UNIFORM|C_EARS
+	icon_state = "mousesuit"
+	c_flags = COVERSHAIR
+
+	mentor
+		name = "mentor mouse suit"
+		desc = "On close inspection, you estimate wearing this suit grants you the proportional strength of ten mentor mice."
+		icon_state = "mentorsuit"
+
+		pickup(mob/user)
+			..()
+			if (user?.client && user.client.is_mentor() || isadmin(user))
+				return
+			SPAWN(0.1) //Delay required to not cause a visual bug
+				boutput(user, SPAN_ALERT("The suit disintegrates from your un-mentorly touch!"))
+
+				user.u_equip(src)
+				src.set_loc(get_turf(src))
+
+				// turn to dust
+				dothepixelthing(src)
+
+		equipped(mob/user)
+			..()
+			if (user?.client && user.client.is_mentor() || isadmin(user))
+				return
+			SPAWN(0.1) //Delay required to not cause a visual bug
+				boutput(user, SPAN_ALERT("The suit disintegrates from your un-mentorly touch!"))
+
+				user.u_equip(src)
+				src.set_loc(get_turf(src))
+
+				// turn to dust
+				dothepixelthing(src)
+
+	admin
+		name = "admin mouse suit"
+		desc = "On close inspection, you estimate wearing this suit grants you the proportional strength of ten admin mice."
+		icon_state = "adminsuit"
+
+		glorp
+			name = "alien mouse suit"
+			desc = "Gleep glorp bzeewop?"
+			icon_state = "glorpsuit"
+
+		attack_self(mob/user)
+			. = ..()
+			if (user?.client && isadmin(user))
+
+				boutput(user, SPAN_ALERT("You [src.icon_state == "glorpsuit" ? "unglorpify" : "glorpify" ] \the [src]"))
+				if (src.icon_state == "glorpsuit")
+					src.icon_state = "adminsuit"
+					src.name = "admin mouse suit"
+					src.desc = "On close inspection, you estimate wearing this suit grants you the proportional strength of ten admin mice."
+					playsound(src.loc,'sound/voice/animal/mouse_squeak.ogg',50,TRUE)
+				else
+					src.icon_state = "glorpsuit"
+					src.name = "alien mouse suit"
+					src.desc = "Gleep glorp bzeewop?"
+					playsound(src.loc,'sound/voice/animal/glorp/glorp1.ogg',50,TRUE)
+
+
+		pickup(mob/user)
+			..()
+			if (user?.client && isadmin(user))
+				return
+			SPAWN(0.1) //Delay required to not cause a visual bug
+				boutput(user, SPAN_ALERT("The suit disintegrates from your un-[src.icon_state == "glorpsuit" ? "glorply" : "adminly" ]touch!"))
+
+				user.u_equip(src)
+				src.set_loc(get_turf(src))
+
+				// turn to dust
+				dothepixelthing(src)
+
+		equipped(mob/user)
+			..()
+			if (user?.client && isadmin(user))
+				return
+			SPAWN(0.1) //Delay required to not cause a visual bug
+				boutput(user, SPAN_ALERT("The suit disintegrates from your un-[src.icon_state == "glorpsuit" ? "glorply" : "adminly" ]touch!"))
+
+				user.u_equip(src)
+				src.set_loc(get_turf(src))
+
+				// turn to dust
+				dothepixelthing(src)
+
 /obj/item/clothing/suit/gimmick/pickle
 	name = "pickle suit"
 	desc = "Smells horribly of vinegar."
@@ -1885,50 +1984,50 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 
 /obj/item/clothing/under/collardressbl
 	name = "collar dress"
-	desc = "a dress made for casual wear"
+	desc = "a dress made for casual wear."
 	icon_state = "collardressbl"
 	item_state = "collardressbl"
 
 /obj/item/clothing/under/collardressr
 	name = "collar dress"
-	desc = "a dress made for casual wear"
+	desc = "a dress made for casual wear."
 	icon_state = "collardressr"
 	item_state = "collardressr"
 
 /obj/item/clothing/under/collardressg
 	name = "collar dress"
-	desc = "a dress made for casual wear"
+	desc = "a dress made for casual wear."
 	icon_state = "collardressg"
 	item_state = "collardressg"
 
 /obj/item/clothing/under/collardressb
 	name = "collar dress"
-	desc = "a dress made for casual wear"
+	desc = "a dress made for casual wear."
 	icon_state = "collardressb"
 	item_state = "collardressb"
 
 /obj/item/clothing/under/redtie
 	name = "collar shirt and red tie"
-	desc = "a pale dress shirt with a nice red tie to go with it"
+	desc = "a pale dress shirt with a nice red tie to go with it."
 	icon_state = "red-tie"
 	item_state = "red-tie"
 
 /obj/item/clothing/suit/loosejacket
 	name = "loose jacket"
-	desc = "a loose and stylish jacket"
+	desc = "a loose and stylish jacket."
 	icon_state = "loose"
 	item_state = "loose"
 	body_parts_covered = TORSO|ARMS
 
 /obj/item/clothing/shoes/floppy
 	name = "floppy boots"
-	desc = "a pair of boots with very floppy design around the ankles"
+	desc = "a pair of boots with very floppy design around the ankles."
 	icon_state = "floppy"
 	item_state = "floppy"
 
 /obj/item/clothing/suit/labcoatlong
 	name = "off-brand lab coat"
-	desc = "a long labcoat from some sort of supermarket"
+	desc = "a long labcoat from some sort of supermarket."
 	icon_state = "labcoat-long"
 	item_state = "labcoat-long"
 	body_parts_covered = TORSO|LEGS|ARMS
@@ -1946,17 +2045,70 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 /obj/item/clothing/suit/gimmick/dinosaur
 	name = "dinosaur pajamas"
 	desc = "It has a little hood you can flip up and down. Rawr!"
-	icon_state = "dinosaur"
-	item_state = "dinosaur"
+	icon_state = "dinosaur-green"
+	item_state = "dinosaur-green"
 	hides_from_examine = C_UNIFORM
+	var/hcolor = "green"
 
 	New()
 		..()
-		src.AddComponent(/datum/component/toggle_hood, hood_style="dinosaur")
+		src.AddComponent(/datum/component/toggle_hood, hood_style="dinosaur[src.hcolor ? "-[hcolor]" : null]",)
+		src.item_state = "dinosaur[src.hcolor ? "-[hcolor]" : null]"
+		src.icon_state = "dinosaur[src.hcolor ? "-[hcolor]" : null]"
+		src.name = "[src.hcolor] dinosaur pajamas"
+		if(src.hcolor == "yellow" && prob(25))
+			src.name = "bananasaur pajamas"
+			src.desc = "It has a little banana-scented hood you can flip up an down. In fact, the whole thing smells like bananas."
+
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 25)
+
+/obj/item/clothing/suit/gimmick/dinosaur/red
+	icon_state = "dinosaur-red"
+	item_state = "dinosaur-red"
+	hcolor = "red"
+
+/obj/item/clothing/suit/gimmick/dinosaur/blue
+	icon_state = "dinosaur-blue"
+	item_state = "dinosaur-blue"
+	hcolor = "blue"
+
+/obj/item/clothing/suit/gimmick/dinosaur/green
+	icon_state = "dinosaur-green"
+	item_state = "dinosaur-green"
+	hcolor = "green"
+
+/obj/item/clothing/suit/gimmick/dinosaur/yellow
+	icon_state = "dinosaur-yellow"
+	item_state = "dinosaur-yellow"
+	hcolor = "yellow"
+
+/obj/item/clothing/suit/gimmick/dinosaur/orange
+	icon_state = "dinosaur-orange"
+	item_state = "dinosaur-orange"
+	hcolor = "orange"
+
+/obj/item/clothing/suit/gimmick/dinosaur/white
+	icon_state = "dinosaur-white"
+	item_state = "dinosaur-white"
+	hcolor = "white"
+
+/obj/item/clothing/suit/gimmick/dinosaur/black
+	icon_state = "dinosaur-black"
+	item_state = "dinosaur-black"
+	hcolor = "black"
+
+/obj/item/clothing/suit/gimmick/dinosaur/purple
+	icon_state = "dinosaur-purple"
+	item_state = "dinosaur-purple"
+	hcolor = "purple"
+
+/obj/item/clothing/suit/gimmick/dinosaur/pink
+	icon_state = "dinosaur-pink"
+	item_state = "dinosaur-pink"
+	hcolor = "pink"
 
 /obj/item/clothing/head/biglizard
 	name = "giant novelty lizard head"

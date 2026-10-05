@@ -6,9 +6,47 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit)
 /datum/clothingbooth_item/wear_suit/baseball_jacket
 	item_path = /obj/item/clothing/suit/jacketsjacket
 
+ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/dinosaur_pajamas)
 /datum/clothingbooth_item/wear_suit/dinosaur_pajamas
 	cost = PAY::TRADESMAN/2
-	item_path = /obj/item/clothing/suit/gimmick/dinosaur
+
+	green
+		name = "Green"
+		swatch_background_color = "#00871a"
+		item_path = /obj/item/clothing/suit/gimmick/dinosaur
+	yellow
+		name = "Yellow"
+		swatch_background_color = "#fde042"
+		item_path = /obj/item/clothing/suit/gimmick/dinosaur/yellow
+	red
+		name = "Red"
+		swatch_background_color = "#d73715"
+		item_path = /obj/item/clothing/suit/gimmick/dinosaur/red
+	blue
+		name = "Blue"
+		swatch_background_color = "#395cc6"
+		item_path = /obj/item/clothing/suit/gimmick/dinosaur/blue
+	orange
+		name = "Orange"
+		swatch_background_color = "#ebb02b"
+		item_path = /obj/item/clothing/suit/gimmick/dinosaur/orange
+	pink
+		name = "Pink"
+		swatch_background_color = "#f8aaaa"
+		item_path = /obj/item/clothing/suit/gimmick/dinosaur/pink
+	purple
+		name = "Purple"
+		swatch_background_color = "#ee59e6"
+		item_path = /obj/item/clothing/suit/gimmick/dinosaur/purple
+	white
+		name = "White"
+		swatch_background_color = "#bfc9ca"
+		item_path = /obj/item/clothing/suit/gimmick/dinosaur/white
+	black
+		name = "Black"
+		swatch_background_color = "#5e7880"
+		item_path = /obj/item/clothing/suit/gimmick/dinosaur/black
+
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/wear_suit/dress)
 /datum/clothingbooth_item/wear_suit/dress

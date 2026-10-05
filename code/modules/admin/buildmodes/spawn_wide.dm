@@ -92,7 +92,7 @@ change the direction of created objects.<br>
 							else
 								A = new objpath(Q)
 
-							if (isobj(A) || ismob(A))
+							if ((isobj(A) || ismob(A)) && src.holder.dir)
 								A.set_dir(holder.dir)
 								A.onVarChanged("dir", SOUTH, A.dir)
 							sleep(0.5 SECONDS)
@@ -126,7 +126,7 @@ change the direction of created objects.<br>
 							else
 								A = new objpath(Q)
 
-							if (isobj(A) || ismob(A))
+							if ((isobj(A) || ismob(A)) && src.holder.dir)
 								A.set_dir(holder.dir)
 								A.onVarChanged("dir", SOUTH, A.dir)
 							sleep(0.5 SECONDS)
@@ -146,7 +146,7 @@ change the direction of created objects.<br>
 						else
 							A = new objpath(Q)
 
-						if (isobj(A) || ismob(A))
+						if ((isobj(A) || ismob(A)) && src.holder.dir)
 							A.set_dir(holder.dir)
 							A.onVarChanged("dir", SOUTH, A.dir)
 							blink(Q)
@@ -173,7 +173,7 @@ change the direction of created objects.<br>
 						else
 							A = new objpath(Q)
 
-						if (isobj(A) || ismob(A))
+						if ((isobj(A) || ismob(A)) && src.holder.dir)
 							A.set_dir(holder.dir)
 							A.onVarChanged("dir", SOUTH, A.dir)
 				cnt++

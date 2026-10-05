@@ -224,6 +224,12 @@
 	webfont = "Dancing Script"
 	uses_handwriting = 1
 
+/obj/item/pen/NT
+	name = "\improper NanoTrasen Pen"
+	desc = "The National Notary 'Magistratus' model pen, with a cobryl alloy nib, high-grade polymer barrel and patented TrueBlue(TM) ink."
+	icon_state = "pen_nt"
+	item_state = "pen_nt"
+	font_color = "#0047ab"
 /obj/item/pen/odd
 	name = "odd pen"
 	desc = "There's something strange about this pen. Inscriptions indicate it is a National Notary 'Francis Scott' model with an electrum nib and lignum vitae barrel. Huh."
@@ -854,6 +860,7 @@
 	desc = "Make things seem more important than they really are with the hand labeler!<br/>Can also name your fancy new area by naming the fancy new APC you created for it."
 	var/label = null
 	var/labels_left = 10
+	w_class = W_CLASS_POCKET_SIZED
 	flags = TABLEPASS | SUPPRESSATTACK
 	c_flags = ONBELT
 	rand_pos = 1
@@ -974,6 +981,8 @@
 	item_state = "clipboard0"
 	throwforce = 1
 	w_class = W_CLASS_NORMAL
+	default_material = "wood"
+	material_amt = MATERIAL::AMOUNT::SHEET * 2
 	throw_speed = 3
 	throw_range = 10
 	desc = "You can put paper on it. Ah, technology!"
@@ -1101,6 +1110,9 @@
 		src.add_stuff(O, user)
 
 	proc/add_stuff(obj/item/I, mob/user)
+		if(istype(I) && I.cant_drop)
+			return
+
 		if (istype(I, /obj/item/paper) || istype(I, /obj/item/photo))
 			if (length(src.contents) >= src.max_items)
 				boutput(user, SPAN_NOTICE("[src] can only hold [src.max_items] items!"))

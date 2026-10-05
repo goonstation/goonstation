@@ -4,6 +4,7 @@
 	icon_state = "podfire"
 	density = 1
 	flags = USEDELAY
+	gas_impermeable = TRUE
 	anchored = ANCHORED
 	provides_grip = TRUE
 	status = REQ_PHYSICAL_ACCESS
@@ -246,6 +247,9 @@
 	/// Remove the part from the ship and drop it. Returns the part.
 	proc/eject_part(var/mob/user, var/slot, var/give_message = TRUE)
 		RETURN_TYPE(/obj/item/shipcomponent)
+		if (src.locked)
+			boutput(usr, SPAN_ALERT("You can't modify parts while [src] is locked."))
+			return null
 		var/obj/item/shipcomponent/part = src.get_part(slot)
 		if(!part)
 			return null
@@ -279,6 +283,9 @@
 	proc/install_part(var/mob/user, var/obj/item/shipcomponent/part, var/slot, var/activate = FALSE, var/eject = TRUE)
 		if(!slot)
 			boutput(usr, "Report dev error! Slot not found.")
+			return FALSE
+		if (src.locked)
+			boutput(usr, SPAN_ALERT("You can't modify parts while [src] is locked."))
 			return FALSE
 		if(src.get_part(slot))
 			if(eject)
@@ -1939,10 +1946,10 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/tank)
 				pilot?.playsound_local_not_inworld('sound/effects/Explosion2.ogg', vol=100)
 				if(ishuman(pilot))
 					var/mob/living/carbon/human/H = pilot
-					for(var/effect in list("sever_left_leg","sever_right_leg","sever_left_arm","sever_right_arm"))
-						if(prob(40))
-							SPAWN(rand(0,5))
-								H.bioHolder.AddEffect(effect)
+					if(prob(40))
+						var/limb = pick(list("l_arm","r_arm","l_leg","r_leg"))
+						SPAWN(rand(0,5))
+							H.sever_limb(limb)
 				src.leave_pod(pilot)
 				src.icon_state = "escape_nowindow"
 				while(src)

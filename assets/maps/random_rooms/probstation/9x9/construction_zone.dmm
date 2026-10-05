@@ -1,0 +1,285 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction)
+"b" = (
+/obj/machinery/light/small/floor,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction)
+"d" = (
+/obj/machinery/camera/directional/east,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction)
+"e" = (
+/obj/cable{
+	icon_state = "2-6"
+	},
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction)
+"h" = (
+/obj/item/clothing/head/constructioncone,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction)
+"j" = (
+/obj/item/clothing/head/constructioncone,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction)
+"k" = (
+/obj/machinery/light_switch/directional/north,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction)
+"l" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction)
+"m" = (
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction)
+"o" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/alt,
+/obj/mapping_helper/firedoor_spawn,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction)
+"r" = (
+/turf/simulated/wall/auto/supernorn/colored,
+/area/station/hallway/secondary/construction)
+"t" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-10"
+	},
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction)
+"w" = (
+/obj/machinery/light/small/sticky,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction)
+"A" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction)
+"C" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction)
+"E" = (
+/obj/blind_switch/directional/east,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction)
+"H" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/obj/window_blinds/cog2/left,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction)
+"I" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-5"
+	},
+/obj/disposalpipe/segment/bent/south,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction)
+"J" = (
+/obj/cable{
+	icon_state = "5-9"
+	},
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction)
+"L" = (
+/obj/cable{
+	icon_state = "4-10"
+	},
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction)
+"M" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/obj/window_blinds/cog2/right,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction)
+"O" = (
+/obj/machinery/door/airlock/pyro/glass{
+	id = "const_zone"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/disposalpipe/segment,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction)
+"P" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction)
+"Q" = (
+/obj/machinery/firealarm/directional/east,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction)
+"R" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction)
+"S" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction)
+"U" = (
+/obj/item/clothing/head/constructioncone,
+/obj/cable{
+	icon_state = "5-10"
+	},
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction)
+"V" = (
+/obj/machinery/light/small/sticky,
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk/east,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction)
+"W" = (
+/obj/item/clothing/head/constructioncone,
+/obj/machinery/firealarm/directional/west,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction)
+"Y" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/construction)
+
+(1,1,1) = {"
+r
+r
+r
+r
+l
+r
+r
+r
+r
+"}
+(2,1,1) = {"
+r
+a
+w
+j
+S
+W
+V
+m
+H
+"}
+(3,1,1) = {"
+r
+k
+a
+e
+R
+a
+C
+S
+A
+"}
+(4,1,1) = {"
+r
+w
+j
+a
+J
+a
+C
+h
+M
+"}
+(5,1,1) = {"
+o
+Y
+Y
+t
+b
+Y
+I
+P
+O
+"}
+(6,1,1) = {"
+r
+w
+a
+a
+a
+U
+a
+j
+H
+"}
+(7,1,1) = {"
+r
+a
+a
+a
+L
+a
+a
+a
+A
+"}
+(8,1,1) = {"
+r
+j
+w
+Q
+S
+d
+w
+E
+M
+"}
+(9,1,1) = {"
+r
+r
+r
+r
+l
+r
+r
+r
+r
+"}

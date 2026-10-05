@@ -1,0 +1,2136 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"an" = (
+/obj/table/round/auto,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/personal{
+	desc = "This workstation appears to be outfitted with non-standard equipment.";
+	name = "modified computer";
+	setup_starting_program = /datum/computer/file/terminal_program/communications
+	},
+/turf/simulated/floor/purpleblack,
+/area/research_outpost/indigo_rye)
+"ao" = (
+/obj/machinery/door/airlock/pyro/medical/alt{
+	dir = 4
+	},
+/turf/simulated/floor/caution/westeast,
+/area/research_outpost/indigo_rye)
+"aB" = (
+/obj/item/storage/toilet,
+/obj/machinery/door/window/southleft,
+/obj/window/cubicle{
+	dir = 8
+	},
+/turf/simulated/floor/sanitary,
+/area/research_outpost/indigo_rye)
+"aO" = (
+/obj/item/device/igniter,
+/turf/simulated/floor/engine/vacuum,
+/area/research_outpost/indigo_rye)
+"aS" = (
+/obj/machinery/door/airlock/pyro/medical/alt{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/caution/westeast,
+/area/research_outpost/indigo_rye)
+"bg" = (
+/obj/table/wood/auto,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/fakeobject{
+	anchored = 1;
+	desc = "There's a ring of dots blinking on and off intermittently. You're not sure what this represents, but it looks cool.";
+	dir = 1;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "mars_status_comp";
+	name = "mysterious computer";
+	pixel_y = 30
+	},
+/obj/item/storage/fanny,
+/turf/simulated/floor/carpet/purple/fancy/edge/nw,
+/area/research_outpost/indigo_rye)
+"bk" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/caution/north,
+/area/research_outpost/indigo_rye)
+"by" = (
+/obj/stool/chair/office{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/research_outpost/indigo_rye)
+"bY" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet/purple/fancy/innercorner/west,
+/area/research_outpost/indigo_rye)
+"cr" = (
+/obj/machinery/communications_dish,
+/obj/machinery/power/data_terminal,
+/obj/cable,
+/turf/simulated/floor/airless/plating,
+/area/research_outpost/indigo_rye)
+"cu" = (
+/turf/simulated/floor/caution/north,
+/area/research_outpost/indigo_rye)
+"cy" = (
+/obj/decal/cleanable/generic,
+/turf/simulated/floor/plating,
+/area/research_outpost/indigo_rye)
+"cG" = (
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/engine,
+/area/research_outpost/indigo_rye)
+"cT" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/purpleblack/corner,
+/area/research_outpost/indigo_rye)
+"dh" = (
+/turf/simulated/floor/airless/plating{
+	icon_state = "platingdmg3"
+	},
+/area/research_outpost/indigo_rye)
+"di" = (
+/obj/table/wood/auto,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/item/device/multitool,
+/obj/machinery/light_switch/directional/north,
+/turf/simulated/floor/carpet/purple/fancy/edge/ne,
+/area/research_outpost/indigo_rye)
+"dx" = (
+/obj/stool/chair/office{
+	dir = 4
+	},
+/turf/simulated/floor/purpleblack,
+/area/research_outpost/indigo_rye)
+"dF" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/terminal/zeta{
+	dir = 8;
+	setup_os_string = "ZETA_MAINFRAME"
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/se,
+/area/research_outpost/indigo_rye)
+"ed" = (
+/obj/machinery/vending/coffee,
+/turf/simulated/floor/purpleblack/corner{
+	dir = 1
+	},
+/area/research_outpost/indigo_rye)
+"eX" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/purpleblack{
+	dir = 1
+	},
+/area/research_outpost/indigo_rye)
+"fj" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/research_outpost/indigo_rye)
+"fk" = (
+/turf/space,
+/area/space)
+"fC" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 1
+	},
+/area/research_outpost/indigo_rye)
+"fQ" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/white,
+/area/research_outpost/indigo_rye)
+"fU" = (
+/turf/simulated/wall/auto/asteroid/dark,
+/area/space)
+"fY" = (
+/obj/machinery/light{
+	dir = 4;
+	icon_state = "tube-broken";
+	layer = 9.1;
+	pixel_x = 10;
+	status = "LIGHT_BROKEN"
+	},
+/obj/item/reagent_containers/dropper,
+/turf/simulated/floor/engine/vacuum,
+/area/research_outpost/indigo_rye)
+"gj" = (
+/obj/structure/girder/displaced,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/research_outpost/indigo_rye)
+"gp" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/atmospherics/pipe/simple{
+	level = 2
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/research_outpost/indigo_rye)
+"gq" = (
+/obj/item/device/radio/beacon,
+/turf/simulated/floor/engine/vacuum,
+/area/research_outpost/indigo_rye)
+"gr" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "test_chamber2";
+	name = "Test Chamber Shield"
+	},
+/turf/simulated/floor/plating,
+/area/research_outpost/indigo_rye)
+"gx" = (
+/obj/stool/chair/office{
+	dir = 8
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 1
+	},
+/area/research_outpost/indigo_rye)
+"gH" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/purpleblack,
+/area/research_outpost/indigo_rye)
+"gO" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/research_outpost/indigo_rye)
+"hp" = (
+/obj/machinery/chemicompiler_stationary,
+/turf/simulated/floor/engine/vacuum,
+/area/research_outpost/indigo_rye)
+"hu" = (
+/obj/machinery/light,
+/obj/decal/cleanable/robot_debris,
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/item/clothing/glasses/blindfold,
+/turf/simulated/floor/engine/vacuum,
+/area/research_outpost/indigo_rye)
+"hJ" = (
+/obj/machinery/door/airlock/pyro/medical/alt{
+	dir = 4
+	},
+/turf/simulated/floor/blackwhite{
+	dir = 8
+	},
+/area/research_outpost/indigo_rye)
+"iB" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 5;
+	level = 2
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 1
+	},
+/area/research_outpost/indigo_rye)
+"jo" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/research_outpost/indigo_rye)
+"jK" = (
+/obj/machinery/shower{
+	dir = 1;
+	pixel_y = 20
+	},
+/turf/simulated/floor/sanitary,
+/area/research_outpost/indigo_rye)
+"kr" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "pink";
+	icon_state = "bedsheet-pink"
+	},
+/turf/simulated/floor/carpet/purple/standard/edge/west,
+/area/research_outpost/indigo_rye)
+"kG" = (
+/obj/machinery/chem_heater,
+/turf/simulated/floor/engine/vacuum,
+/area/research_outpost/indigo_rye)
+"kQ" = (
+/obj/machinery/vending/cigarette,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/purplewhite,
+/area/research_outpost/indigo_rye)
+"kS" = (
+/obj/lattice,
+/turf/space,
+/area/research_outpost/indigo_rye)
+"lt" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/mob/living/carbon/human/npc/monkey/horse,
+/turf/simulated/floor/specialroom/arcade,
+/area/research_outpost/indigo_rye)
+"lC" = (
+/obj/table/round/auto,
+/obj/item/decoration/ashtray{
+	butts = 5;
+	name = "grubby old ashtray"
+	},
+/obj/item/cigpacket{
+	pixel_x = -4;
+	pixel_y = 2;
+	rand_pos = 0
+	},
+/obj/item/matchbook{
+	pixel_x = 3;
+	pixel_y = 6;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/glass/beaker/large{
+	pixel_x = 12;
+	pixel_y = 4
+	},
+/turf/simulated/floor/purpleblack,
+/area/research_outpost/indigo_rye)
+"lM" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/cleanable/dirt,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating,
+/area/research_outpost/indigo_rye)
+"lU" = (
+/turf/space/asteroid,
+/area/space)
+"mb" = (
+/obj/machinery/door/airlock/pyro/medical/alt,
+/turf/simulated/floor/plating,
+/area/research_outpost/indigo_rye)
+"mg" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/white,
+/area/research_outpost/indigo_rye)
+"mJ" = (
+/turf/simulated/floor/engine{
+	allows_vehicles = 0;
+	icon_state = "engine_caution_south"
+	},
+/area/research_outpost/indigo_rye)
+"mO" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/research_outpost/indigo_rye)
+"mX" = (
+/turf/simulated/wall/auto/asteroid/dark,
+/area/research_outpost/indigo_rye)
+"nR" = (
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor/engine,
+/area/research_outpost/indigo_rye)
+"nY" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/submachine/cargopad/researchoutpost,
+/turf/simulated/floor/engine{
+	allows_vehicles = 0;
+	icon_state = "engine_caution_south"
+	},
+/area/research_outpost/indigo_rye)
+"oh" = (
+/obj/decal/cleanable/blood/splatter,
+/obj/item/device/reagentscanner,
+/turf/simulated/floor/engine/vacuum,
+/area/research_outpost/indigo_rye)
+"oV" = (
+/turf/simulated/floor/specialroom/arcade,
+/area/research_outpost/indigo_rye)
+"pm" = (
+/obj/machinery/sink/slim{
+	dir = 1
+	},
+/obj/item/storage/wall{
+	dir = 8;
+	name = "bath cabinet";
+	pixel_x = 32;
+	spawn_contents = list(/obj/item/clothing/under/towel,/obj/item/clothing/under/towel)
+	},
+/turf/simulated/floor/sanitary,
+/area/research_outpost/indigo_rye)
+"pX" = (
+/obj/decal/cleanable/ash,
+/turf/simulated/floor/engine/vacuum,
+/area/research_outpost/indigo_rye)
+"qv" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/storage/crate/furnacefuel,
+/turf/simulated/floor/caution/south,
+/area/research_outpost/indigo_rye)
+"re" = (
+/obj/table/wood/auto,
+/obj/machinery/light/lamp/black,
+/obj/machinery/light/small,
+/obj/item/reagent_containers/food/snacks/snack_cake{
+	pixel_x = 11;
+	pixel_y = 10
+	},
+/turf/simulated/floor/purpleblack,
+/area/research_outpost/indigo_rye)
+"rR" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/research_outpost/indigo_rye)
+"sb" = (
+/turf/simulated/floor/airless/plating{
+	icon_state = "panelscorched"
+	},
+/area/research_outpost/indigo_rye)
+"si" = (
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/research_outpost/indigo_rye)
+"sV" = (
+/turf/simulated/floor/sanitary,
+/area/research_outpost/indigo_rye)
+"tW" = (
+/obj/machinery/power/furnace,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/caution/east,
+/area/research_outpost/indigo_rye)
+"uk" = (
+/obj/reagent_dispensers/foamtank,
+/turf/simulated/floor/caution/corner/misc{
+	dir = 6
+	},
+/area/research_outpost/indigo_rye)
+"us" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/engine,
+/area/research_outpost/indigo_rye)
+"uV" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor/caution/northsouth,
+/area/research_outpost/indigo_rye)
+"vf" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/research_outpost/indigo_rye)
+"vH" = (
+/obj/stool/chair/office{
+	dir = 1
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 1
+	},
+/area/research_outpost/indigo_rye)
+"wo" = (
+/obj/item/storage/toilet,
+/obj/machinery/door/window/southleft,
+/turf/simulated/floor/sanitary,
+/area/research_outpost/indigo_rye)
+"wD" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/purplewhite,
+/area/research_outpost/indigo_rye)
+"wF" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/plating/airless/asteroid/dark,
+/area/research_outpost/indigo_rye)
+"wN" = (
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	id = "ppap"
+	},
+/turf/simulated/floor/shuttlebay{
+	icon_state = "engine_caution_north"
+	},
+/area/research_outpost/indigo_rye)
+"xd" = (
+/obj/machinery/gravity_tether/multi_area/research_outpost,
+/turf/simulated/floor/caution/south,
+/area/research_outpost/indigo_rye)
+"xj" = (
+/turf/simulated/floor/purpleblack{
+	dir = 8
+	},
+/area/research_outpost/indigo_rye)
+"zu" = (
+/turf/simulated/floor/engine,
+/area/research_outpost/indigo_rye)
+"Ah" = (
+/obj/machinery/vending/snack,
+/turf/simulated/floor/purpleblack/corner{
+	dir = 4
+	},
+/area/research_outpost/indigo_rye)
+"AD" = (
+/obj/table/wood/auto,
+/obj/decal/cleanable/desk_clutter,
+/obj/item/paper{
+	info = "delta oblique seneca toreador neptune"
+	},
+/obj/item/pen,
+/turf/simulated/floor/purpleblack,
+/area/research_outpost/indigo_rye)
+"Bs" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/research_outpost/indigo_rye)
+"BQ" = (
+/obj/machinery/drainage,
+/turf/simulated/floor/sanitary,
+/area/research_outpost/indigo_rye)
+"Cv" = (
+/obj/machinery/door/airlock/pyro/medical/alt{
+	dir = 4
+	},
+/turf/simulated/floor/sanitary,
+/area/research_outpost/indigo_rye)
+"CE" = (
+/obj/lattice,
+/turf/space,
+/area/space)
+"CN" = (
+/obj/item/cigbutt,
+/turf/simulated/floor/white,
+/area/research_outpost/indigo_rye)
+"Dd" = (
+/obj/decal/poster/wallsign/stencil/left/five,
+/obj/decal/poster/wallsign/stencil/right/three{
+	pixel_x = 9
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/research_outpost/indigo_rye)
+"Ds" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/table/round/auto,
+/obj/item/clipboard,
+/obj/item/paper_bin,
+/obj/item/pen,
+/turf/simulated/floor/purplewhite,
+/area/research_outpost/indigo_rye)
+"DN" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/furnace,
+/turf/simulated/floor/caution/east,
+/area/research_outpost/indigo_rye)
+"DR" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/sanitary,
+/area/research_outpost/indigo_rye)
+"EN" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet/purple/standard/edge/north,
+/area/research_outpost/indigo_rye)
+"FF" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/purpleblack{
+	dir = 1
+	},
+/area/research_outpost/indigo_rye)
+"Gb" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/stool/chair/purple,
+/turf/simulated/floor/carpet/purple/standard/edge/south,
+/area/research_outpost/indigo_rye)
+"Gw" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/item/device/analyzer/healthanalyzer,
+/turf/simulated/floor/engine/vacuum,
+/area/research_outpost/indigo_rye)
+"Hh" = (
+/obj/machinery/light,
+/turf/simulated/floor/purpleblack{
+	dir = 1
+	},
+/area/research_outpost/indigo_rye)
+"HD" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "pink";
+	icon_state = "bedsheet-pink"
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/item/storage/wall/random{
+	dir = 8;
+	pixel_x = 32;
+	pixel_y = 0
+	},
+/turf/simulated/floor/black,
+/area/research_outpost/indigo_rye)
+"HX" = (
+/obj/item/raw_material/shard/glass,
+/turf/simulated/floor/airless/plating{
+	icon_state = "platingdmg2"
+	},
+/area/research_outpost/indigo_rye)
+"Ij" = (
+/obj/decal/cleanable/robot_debris,
+/turf/simulated/floor/plating/airless/asteroid/dark,
+/area/research_outpost/indigo_rye)
+"IG" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/research_outpost/indigo_rye)
+"II" = (
+/obj/machinery/door/airlock/pyro/medical/alt,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/purpleblack{
+	dir = 1
+	},
+/area/research_outpost/indigo_rye)
+"IU" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating/airless/asteroid/dark,
+/area/research_outpost/indigo_rye)
+"IV" = (
+/obj/item/storage/toolbox/mechanical,
+/obj/item/light_parts,
+/obj/machinery/power/apc/autoname_east/nopoweralert{
+	start_charge = 0
+	},
+/obj/mapping_helper/access/research,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/research_outpost/indigo_rye)
+"Jy" = (
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/machinery/manufacturer/general{
+	free_resources = list(/obj/item/material_piece/steel=1,/obj/item/material_piece/copper=1,/obj/item/material_piece/glass=1)
+	},
+/turf/simulated/floor/plating,
+/area/research_outpost/indigo_rye)
+"JM" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/white,
+/area/research_outpost/indigo_rye)
+"JV" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless/plating,
+/area/research_outpost/indigo_rye)
+"Ke" = (
+/obj/structure/girder,
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/research_outpost/indigo_rye)
+"KC" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/unary/outlet_injector/active{
+	level = 2
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/research_outpost/indigo_rye)
+"Lg" = (
+/obj/stool/chair/office{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/research_outpost/indigo_rye)
+"Lz" = (
+/obj/machinery/chem_master{
+	dir = 8
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/research_outpost/indigo_rye)
+"LS" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/purpleblack{
+	dir = 4
+	},
+/area/research_outpost/indigo_rye)
+"Mt" = (
+/obj/table/round/auto,
+/obj/machinery/door_control{
+	id = "test_chamber2";
+	name = "Test Chamber Shutter Control";
+	pixel_y = -21;
+	dir = 1;
+	pixel_x = -1
+	},
+/obj/item/storage/firstaid/fire,
+/turf/simulated/floor/purplewhite,
+/area/research_outpost/indigo_rye)
+"MM" = (
+/obj/machinery/light_switch/directional/east,
+/obj/machinery/atmospherics/unary/portables_connector{
+	dir = 8
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 1
+	},
+/area/research_outpost/indigo_rye)
+"MN" = (
+/obj/storage/closet/biohazard{
+	spawn_contents = null
+	},
+/turf/simulated/floor/engine{
+	allows_vehicles = 0;
+	icon_state = "engine_caution_north"
+	},
+/area/research_outpost/indigo_rye)
+"Nq" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/research_outpost/indigo_rye)
+"NU" = (
+/obj/machinery/shower{
+	dir = 4;
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/turf/simulated/floor/sanitary,
+/area/research_outpost/indigo_rye)
+"Pn" = (
+/obj/machinery/drainage,
+/obj/mesh/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/white,
+/area/research_outpost/indigo_rye)
+"PB" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/research_outpost/indigo_rye)
+"PX" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/engine/vacuum,
+/area/research_outpost/indigo_rye)
+"Qa" = (
+/obj/decal/cleanable/oil,
+/turf/simulated/floor/engine/vacuum,
+/area/research_outpost/indigo_rye)
+"Qd" = (
+/obj/decal/poster/wallsign/hazard_danger,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/research_outpost/indigo_rye)
+"QK" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "pink";
+	icon_state = "bedsheet-pink"
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/item/storage/wall{
+	pixel_y = 32
+	},
+/turf/simulated/floor/black,
+/area/research_outpost/indigo_rye)
+"Ra" = (
+/turf/simulated/floor/carpet/purple/fancy/innercorner/east,
+/area/research_outpost/indigo_rye)
+"Rs" = (
+/obj/machinery/door/airlock/pyro/medical/alt{
+	icon_state = "research2_locked";
+	locked = 1
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple{
+	level = 2
+	},
+/turf/simulated/floor/engine{
+	icon_state = "engine_caution_ns"
+	},
+/area/research_outpost/indigo_rye)
+"RS" = (
+/obj/machinery/door_control{
+	id = "ppap";
+	name = "Facility Door Control";
+	pixel_x = 23;
+	dir = 4;
+	pixel_y = 1
+	},
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/caution/north,
+/area/research_outpost/indigo_rye)
+"Se" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/plating,
+/area/research_outpost/indigo_rye)
+"Sf" = (
+/obj/decal/poster/wallsign/space,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/research_outpost/indigo_rye)
+"SY" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple{
+	level = 2
+	},
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/engine/vacuum,
+/area/research_outpost/indigo_rye)
+"Td" = (
+/obj/item/storage/wall{
+	pixel_y = 32
+	},
+/turf/simulated/floor/carpet/purple/standard/edge/north,
+/area/research_outpost/indigo_rye)
+"Tt" = (
+/obj/decal/cleanable/robot_debris,
+/obj/iv_stand,
+/turf/simulated/floor/engine/vacuum,
+/area/research_outpost/indigo_rye)
+"TK" = (
+/obj/shrub{
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant";
+	level = 1.9
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/sw,
+/area/research_outpost/indigo_rye)
+"TM" = (
+/obj/item/clothing/glasses/blindfold,
+/turf/simulated/floor/engine/vacuum,
+/area/research_outpost/indigo_rye)
+"TR" = (
+/obj/machinery/light/small,
+/obj/machinery/drainage,
+/turf/simulated/floor/sanitary,
+/area/research_outpost/indigo_rye)
+"Ua" = (
+/obj/machinery/power/furnace,
+/obj/cable,
+/turf/simulated/floor/caution/east,
+/area/research_outpost/indigo_rye)
+"Uk" = (
+/obj/item/raw_material/shard/glass,
+/obj/cable{
+	icon_state = "2-9"
+	},
+/turf/simulated/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/research_outpost/indigo_rye)
+"Ve" = (
+/obj/machinery/door/airlock/pyro/command/alt,
+/obj/mapping_helper/access/research,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/research_outpost/indigo_rye)
+"Vj" = (
+/turf/simulated/floor/carpet/purple/standard/edge/south,
+/area/research_outpost/indigo_rye)
+"Vn" = (
+/obj/machinery/light,
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/engine/vacuum,
+/area/research_outpost/indigo_rye)
+"Vx" = (
+/obj/machinery/r_door_control/podbay{
+	id = "ppap";
+	name = "door control"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/research_outpost/indigo_rye)
+"VB" = (
+/obj/machinery/computer/general_alert{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/carpet/purple/standard/edge/east,
+/area/research_outpost/indigo_rye)
+"VD" = (
+/turf/space,
+/area/research_outpost/indigo_rye)
+"WF" = (
+/obj/stool/chair/office,
+/turf/simulated/floor/purplewhite,
+/area/research_outpost/indigo_rye)
+"WW" = (
+/obj/machinery/door/unpowered/wood/pyro,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/research_outpost/indigo_rye)
+"Xo" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "pink";
+	icon_state = "bedsheet-pink"
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/item/storage/wall/random,
+/turf/simulated/floor/black,
+/area/research_outpost/indigo_rye)
+"XB" = (
+/obj/decal/poster/wallsign/stencil/left/i{
+	pixel_x = 3
+	},
+/obj/decal/poster/wallsign/stencil/right/r,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/research_outpost/indigo_rye)
+"XH" = (
+/turf/simulated/floor/plating/airless/asteroid/dark,
+/area/research_outpost/indigo_rye)
+"XL" = (
+/obj/machinery/plantpot{
+	anchored = 1
+	},
+/turf/simulated/floor/purpleblack{
+	dir = 1
+	},
+/area/research_outpost/indigo_rye)
+"XM" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/purpleblack/corner{
+	dir = 8
+	},
+/area/research_outpost/indigo_rye)
+"XP" = (
+/obj/machinery/vending/pizza,
+/turf/simulated/floor/purpleblack,
+/area/research_outpost/indigo_rye)
+"Ya" = (
+/obj/mesh/grille/steel,
+/turf/space,
+/area/research_outpost/indigo_rye)
+"Yp" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/landmark/spawner/artifact,
+/turf/simulated/floor/engine/vacuum,
+/area/research_outpost/indigo_rye)
+"YG" = (
+/turf/simulated/floor/purpleblack{
+	dir = 1
+	},
+/area/research_outpost/indigo_rye)
+"YH" = (
+/turf/simulated/wall/auto/supernorn,
+/area/research_outpost/indigo_rye)
+"Zu" = (
+/obj/machinery/portable_atmospherics/canister/air/large,
+/turf/simulated/floor/engine,
+/area/research_outpost/indigo_rye)
+"ZH" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating/airless/asteroid/dark,
+/area/research_outpost/indigo_rye)
+
+(1,1,1) = {"
+fk
+fk
+fk
+fk
+CE
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+"}
+(2,1,1) = {"
+fk
+fk
+fk
+fU
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fU
+fk
+fk
+fk
+fk
+fk
+fk
+"}
+(3,1,1) = {"
+fk
+fk
+fU
+fU
+fU
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fU
+fU
+fU
+fU
+fk
+fk
+fk
+fk
+fk
+"}
+(4,1,1) = {"
+fk
+fU
+fU
+fU
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fU
+fU
+fU
+fU
+fk
+fk
+fk
+fk
+"}
+(5,1,1) = {"
+fk
+fU
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+mX
+mX
+mX
+mX
+mX
+mX
+mX
+XH
+mX
+fk
+fk
+fk
+fk
+fk
+fk
+fU
+fU
+fk
+fk
+fk
+fk
+fk
+"}
+(6,1,1) = {"
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+mX
+mX
+mX
+mX
+vf
+vf
+vf
+vf
+vf
+vf
+wF
+mX
+mX
+mX
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+"}
+(7,1,1) = {"
+fk
+fk
+fk
+fk
+fk
+fk
+IU
+XH
+mX
+mX
+mX
+vf
+uk
+DN
+tW
+Ua
+vf
+fj
+XB
+mX
+mX
+mX
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+"}
+(8,1,1) = {"
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+Ij
+IU
+mX
+mX
+vf
+qv
+cy
+rR
+jo
+mb
+IG
+Dd
+mX
+mX
+mX
+mX
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+"}
+(9,1,1) = {"
+fk
+fk
+fk
+fk
+fk
+VD
+VD
+si
+Ke
+Qd
+vf
+vf
+xd
+IV
+lM
+Jy
+YH
+YH
+vf
+Se
+Se
+mX
+mX
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+"}
+(10,1,1) = {"
+fk
+fk
+fk
+fk
+VD
+VD
+kS
+dh
+si
+kG
+Tt
+vf
+vf
+YH
+aS
+YH
+YH
+Xo
+YH
+QK
+Se
+mX
+mX
+mX
+fk
+Ya
+Ya
+Ya
+fk
+fk
+fk
+fk
+"}
+(11,1,1) = {"
+fk
+fk
+fk
+fk
+VD
+kS
+VD
+kS
+dh
+PX
+TM
+Vn
+gr
+vH
+fQ
+Ds
+YH
+PB
+YH
+PB
+vf
+gO
+Bs
+Bs
+JV
+JV
+cr
+Ya
+Ya
+Ya
+fk
+fk
+"}
+(12,1,1) = {"
+fk
+fk
+fk
+fk
+VD
+VD
+VD
+VD
+sb
+si
+pX
+Yp
+gr
+gx
+fQ
+Mt
+YH
+cT
+LS
+XM
+WW
+HD
+vf
+mX
+fk
+fk
+Ya
+Ya
+fk
+fk
+fk
+fk
+"}
+(13,1,1) = {"
+fk
+fk
+fk
+fk
+kS
+kS
+VD
+kS
+Uk
+KC
+SY
+gp
+Rs
+iB
+mg
+wD
+II
+gH
+Nq
+XL
+YH
+YH
+vf
+Se
+Se
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+"}
+(14,1,1) = {"
+fk
+fk
+fk
+fk
+dh
+sb
+kS
+mO
+dh
+gq
+PX
+Gw
+gr
+fC
+CN
+WF
+YH
+dx
+lt
+Hh
+YH
+bg
+kr
+TK
+Se
+Se
+fk
+fk
+fk
+fk
+fk
+fk
+"}
+(15,1,1) = {"
+fk
+fk
+fk
+IU
+si
+dh
+si
+HX
+Qa
+pX
+aO
+hu
+gr
+MM
+JM
+kQ
+YH
+lC
+Lg
+FF
+YH
+Td
+Ra
+Vj
+re
+Se
+fk
+fk
+fk
+fk
+fk
+fk
+"}
+(16,1,1) = {"
+fk
+fk
+fk
+mX
+gj
+Ke
+si
+hp
+fY
+Lz
+oh
+vf
+vf
+vf
+ao
+vf
+vf
+an
+by
+eX
+Ve
+EN
+bY
+Gb
+AD
+Se
+fk
+fk
+fk
+fk
+fk
+fk
+"}
+(17,1,1) = {"
+fk
+fk
+fk
+mX
+mX
+vf
+vf
+vf
+vf
+Qd
+vf
+Sf
+Zu
+nY
+Pn
+MN
+vf
+XP
+oV
+YG
+YH
+di
+VB
+dF
+Se
+Se
+fk
+fk
+fk
+fk
+fk
+fk
+"}
+(18,1,1) = {"
+fk
+fk
+fk
+fk
+mX
+mX
+mX
+mX
+mX
+mX
+ZH
+uV
+zu
+mJ
+Pn
+MN
+vf
+Ah
+xj
+ed
+vf
+vf
+vf
+Se
+Se
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+"}
+(19,1,1) = {"
+fU
+fk
+fk
+fk
+fk
+XH
+mX
+mX
+mX
+XH
+XH
+Vx
+vf
+vf
+ao
+vf
+vf
+YH
+hJ
+vf
+vf
+mX
+mX
+mX
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+"}
+(20,1,1) = {"
+fk
+fk
+fk
+fk
+fk
+XH
+XH
+XH
+XH
+XH
+XH
+wN
+zu
+us
+cu
+vf
+wo
+DR
+BQ
+vf
+mX
+mX
+mX
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+"}
+(21,1,1) = {"
+fk
+fk
+fk
+fk
+fk
+XH
+XH
+XH
+XH
+XH
+XH
+wN
+zu
+zu
+bk
+vf
+aB
+sV
+pm
+vf
+mX
+mX
+mX
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+"}
+(22,1,1) = {"
+fk
+fk
+fk
+fk
+fk
+mX
+mX
+XH
+XH
+XH
+XH
+wN
+zu
+zu
+cu
+vf
+YH
+Cv
+vf
+vf
+mX
+mX
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+"}
+(23,1,1) = {"
+fk
+fk
+fk
+fk
+fk
+mX
+mX
+mX
+mX
+XH
+XH
+wN
+zu
+zu
+cu
+vf
+jK
+TR
+vf
+mX
+mX
+mX
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+"}
+(24,1,1) = {"
+fk
+fk
+fk
+fk
+fk
+fk
+mX
+mX
+mX
+mX
+mX
+XB
+zu
+zu
+RS
+vf
+sV
+NU
+vf
+mX
+mX
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+"}
+(25,1,1) = {"
+fk
+fk
+fk
+fk
+fk
+fk
+mX
+mX
+mX
+mX
+mX
+Dd
+nR
+cG
+vf
+vf
+vf
+vf
+vf
+mX
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+"}
+(26,1,1) = {"
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+mX
+mX
+mX
+mX
+vf
+vf
+vf
+vf
+mX
+mX
+mX
+mX
+mX
+fk
+fk
+fk
+fk
+fk
+fk
+lU
+fk
+fk
+fk
+fk
+fk
+"}
+(27,1,1) = {"
+fk
+fU
+fU
+fk
+fk
+fk
+fk
+fk
+fk
+mX
+mX
+mX
+mX
+mX
+mX
+mX
+mX
+mX
+mX
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+"}
+(28,1,1) = {"
+fk
+fU
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+mX
+mX
+mX
+mX
+mX
+mX
+mX
+mX
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+"}
+(29,1,1) = {"
+fU
+fU
+fU
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+mX
+mX
+mX
+mX
+mX
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fU
+fU
+fk
+fk
+"}
+(30,1,1) = {"
+fk
+fU
+fU
+fU
+fk
+fU
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fU
+fU
+fk
+fk
+fk
+"}
+(31,1,1) = {"
+fk
+fU
+fU
+fU
+fU
+fU
+fk
+fk
+fk
+lU
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fU
+fk
+fk
+fk
+"}
+(32,1,1) = {"
+fk
+fk
+fk
+fU
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+fk
+"}

@@ -486,6 +486,9 @@
 
 TYPEINFO(/obj/item/heat_dowsing)
 	start_speech_outputs = list(SPEECH_OUTPUT_SPOKEN_SUBTLE)
+	mats = list("crystal"=2,
+				"conductive"=3,
+				"metal"=2)
 
 /obj/item/heat_dowsing
 	name = "dowsing rod"
@@ -732,7 +735,9 @@ TYPEINFO(/obj/item/heat_dowsing)
 
 TYPEINFO(/obj/item/vent_capture_unbuilt)
 	analyser_flags = parent_type::analyser_flags | ANALYSER_ELECTRONIC
-	mats = 8
+	mats = list("metal"=3,
+				"conductive"=3,
+				"crystal"=2)
 
 /obj/item/vent_capture_unbuilt
 	name = "unbuilt vent capture unit"

@@ -4,10 +4,12 @@
  * @author garash2k
  * @license ISC
  */
-import { resource } from '../../../goonstation/cdn';
+import { useResource } from '../../../goonstation/cdn';
 import { AlertContentWindow } from '../types';
 
 const GhostdroneContentWindow = () => {
+  const resource = useResource();
+
   return (
     <div className="ghostdrone">
       <h1 className="center">You have become a Ghostdrone!</h1>

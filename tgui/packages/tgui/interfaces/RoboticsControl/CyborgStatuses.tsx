@@ -17,11 +17,14 @@ interface SiliconStatusesProps {
   cyborgs: CyborgData[];
   user_is_ai: BooleanLike;
   user_is_cyborg: BooleanLike;
+  can_killswitch: boolean;
+  can_lockdown: boolean;
 }
 
 export const CyborgStatuses = (props: SiliconStatusesProps) => {
   const { act } = useBackend();
-  const { cyborgs, user_is_ai, user_is_cyborg } = props;
+  const { cyborgs, user_is_ai, user_is_cyborg, can_killswitch, can_lockdown } =
+    props;
 
   return (
     <Table>
@@ -31,8 +34,8 @@ export const CyborgStatuses = (props: SiliconStatusesProps) => {
           Status
         </Table.Cell>
         <Table.Cell header>Module</Table.Cell>
-        <Table.Cell header>Lock Switch</Table.Cell>
-        <Table.Cell header>Kill Switch</Table.Cell>
+        {can_lockdown && <Table.Cell header>Lockdown</Table.Cell>}
+        {can_killswitch && <Table.Cell header>Kill Switch</Table.Cell>}
       </Table.Row>
       {cyborgs.map((item) => (
         <Table.Row key={item.mob_ref}>
@@ -49,13 +52,21 @@ export const CyborgStatuses = (props: SiliconStatusesProps) => {
                 />
               </Stack.Item>
               <Stack.Item grow={1}>
-                {item.missing_brain ? (
+                {item.brain_status === 'missing' && (
                   <TooltipIcon
                     color="bad"
                     icon="triangle-exclamation"
                     tooltip="Intelligence cortex missing"
                   />
-                ) : (
+                )}
+                {item.brain_status === 'disconnected' && (
+                  <TooltipIcon
+                    color="average"
+                    icon="satellite-dish"
+                    tooltip="Intelligence cortex disconnected"
+                  />
+                )}
+                {item.brain_status === 'present' && (
                   <TooltipIcon
                     color="good"
                     icon="brain"
@@ -69,55 +80,60 @@ export const CyborgStatuses = (props: SiliconStatusesProps) => {
             </Stack>
           </Table.Cell>
           <Table.Cell>{item.module || 'None'}</Table.Cell>
-          <Table.Cell>
-            {!item.lock_time ? (
-              <NoticeBox inline>
-                <Button
-                  disabled={!user_is_ai}
-                  onClick={() =>
-                    act('start_silicon_lock', { mob_ref: item.mob_ref })
-                  }
-                >
-                  Lock
-                </Button>
-              </NoticeBox>
-            ) : (
-              <NoticeBox danger inline>
-                <Button
-                  onClick={() =>
-                    act('stop_silicon_lock', { mob_ref: item.mob_ref })
-                  }
-                >
-                  Cancel - {item.lock_time} remaining
-                </Button>
-              </NoticeBox>
-            )}
-          </Table.Cell>
-          <Table.Cell collapsing>
-            {!item.killswitch_time ? (
-              <NoticeBox inline>
-                <Button
-                  disabled={user_is_cyborg || user_is_ai}
-                  onClick={() =>
-                    act('start_silicon_killswitch', { mob_ref: item.mob_ref })
-                  }
-                >
-                  *Swipe ID*
-                </Button>
-              </NoticeBox>
-            ) : (
-              <NoticeBox danger inline>
-                <Button
-                  disabled={user_is_cyborg || user_is_ai}
-                  onClick={() =>
-                    act('stop_silicon_killswitch', { mob_ref: item.mob_ref })
-                  }
-                >
-                  Cancel - {item.killswitch_time} remaining
-                </Button>
-              </NoticeBox>
-            )}
-          </Table.Cell>
+          {can_lockdown && (
+            <Table.Cell>
+              {!item.lock_time ? (
+                <NoticeBox inline>
+                  <Button
+                    disabled={user_is_cyborg}
+                    onClick={() =>
+                      act('start_silicon_lock', { mob_ref: item.mob_ref })
+                    }
+                  >
+                    {user_is_ai ? 'Lockdown' : '*Swipe ID*'}
+                  </Button>
+                </NoticeBox>
+              ) : (
+                <NoticeBox danger inline>
+                  <Button
+                    disabled={user_is_cyborg}
+                    onClick={() =>
+                      act('stop_silicon_lock', { mob_ref: item.mob_ref })
+                    }
+                  >
+                    Cancel - {item.lock_time}s
+                  </Button>
+                </NoticeBox>
+              )}
+            </Table.Cell>
+          )}
+          {can_killswitch && (
+            <Table.Cell collapsing>
+              {!item.killswitch_time ? (
+                <NoticeBox inline>
+                  <Button
+                    disabled={user_is_cyborg || user_is_ai}
+                    onClick={() =>
+                      act('start_silicon_killswitch', { mob_ref: item.mob_ref })
+                    }
+                  >
+                    *Swipe ID*
+                  </Button>
+                </NoticeBox>
+              ) : (
+                <NoticeBox danger inline>
+                  <Button
+                    disabled={user_is_cyborg || user_is_ai}
+                    onClick={() =>
+                      act('stop_silicon_killswitch', { mob_ref: item.mob_ref })
+                    }
+                  >
+                    Cancel - {item.killswitch_time}s
+                  </Button>
+                </NoticeBox>
+              )}
+            </Table.Cell>
+          )}
         </Table.Row>
       ))}
     </Table>

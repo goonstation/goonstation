@@ -1,0 +1,700 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/purpleblack{
+	dir = 1
+	},
+/area/station/teleporter)
+"b" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "eva";
+	name = "E.V.A.";
+	opacity = 0
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/ai_monitored/storage/eva)
+"c" = (
+/turf/simulated/wall/auto/reinforced/supernorn/colored/blue,
+/area/station/teleporter)
+"d" = (
+/obj/machinery/camera/directional/east,
+/turf/simulated/floor/longtile/black,
+/area/station/ai_monitored/storage/eva)
+"e" = (
+/obj/machinery/light/small/floor,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/disposalpipe/segment/bent/east,
+/turf/simulated/floor/darkblueblack{
+	dir = 1
+	},
+/area/station/ai_monitored/storage/eva)
+"g" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "eva";
+	name = "E.V.A.";
+	opacity = 0
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/ai_monitored/storage/eva)
+"h" = (
+/obj/table/auto{
+	icon_state = "1"
+	},
+/obj/item/sheet/steel/reinforced/fullstack{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/sheet/steel/fullstack{
+	pixel_x = -4
+	},
+/obj/item/sheet/glass/reinforced/fullstack{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/sheet/glass/fullstack{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/darkblueblack,
+/area/station/ai_monitored/storage/eva)
+"j" = (
+/obj/rack,
+/obj/item/storage/toolbox/emergency{
+	pixel_x = -4;
+	pixel_y = 6
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -4;
+	pixel_y = -
+	},
+/obj/item/storage/toolbox/electrical{
+	pixel_x = -4;
+	pixel_y = -6
+	},
+/obj/item/device/multitool{
+	pixel_x = -11;
+	pixel_y = 5
+	},
+/obj/item/clothing/suit/space{
+	pixel_x = 6
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = 5;
+	pixel_y = 1
+	},
+/obj/item/clothing/head/helmet/space{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/turf/simulated/floor/darkblueblack{
+	dir = 8
+	},
+/area/station/ai_monitored/storage/eva)
+"k" = (
+/obj/machinery/door/airlock/pyro/glass/command,
+/obj/mapping_helper/access/eva,
+/turf/simulated/floor/longtile/black,
+/area/station/ai_monitored/storage/eva)
+"l" = (
+/obj/rack,
+/obj/item/tank/jetpack/micro{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/tank/jetpack/micro{
+	pixel_x = -6
+	},
+/obj/item/tank/jetpack/micro{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/obj/item/tank/jetpack/micro{
+	pixel_x = 6
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/longtile/black,
+/area/station/ai_monitored/storage/eva)
+"m" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/power/apc/autoname_south,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/darkblueblack,
+/area/station/ai_monitored/storage/eva)
+"n" = (
+/obj/machinery/door/airlock/pyro/glass/command,
+/obj/mapping_helper/access/eva,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor,
+/area/station/ai_monitored/storage/eva)
+"o" = (
+/obj/item/device/radio/beacon,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/black,
+/area/station/teleporter)
+"p" = (
+/obj/machinery/dispenser{
+	pltanks = 0
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/darkblueblack{
+	dir = 10
+	},
+/area/station/ai_monitored/storage/eva)
+"q" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "eva";
+	name = "E.V.A.";
+	opacity = 0
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/ai_monitored/storage/eva)
+"r" = (
+/obj/machinery/firealarm/directional/north,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/darkblueblack{
+	dir = 1
+	},
+/area/station/ai_monitored/storage/eva)
+"s" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "eva";
+	name = "E.V.A.";
+	opacity = 0
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/ai_monitored/storage/eva)
+"t" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "eva";
+	name = "E.V.A.";
+	opacity = 0
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/ai_monitored/storage/eva)
+"u" = (
+/obj/table/auto{
+	icon_state = "1"
+	},
+/obj/machinery/cell_charger{
+	pixel_x = 1;
+	pixel_y = 1
+	},
+/obj/item/cell/supercell{
+	pixel_x = 3
+	},
+/obj/item/cell/supercell{
+	pixel_x = 3
+	},
+/obj/item/storage/belt/utility{
+	pixel_y = 10
+	},
+/obj/item/storage/box/cablesbox{
+	pixel_x = 11;
+	pixel_y = 12
+	},
+/obj/item/chem_grenade/firefighting{
+	pixel_x = -10;
+	pixel_y = 9
+	},
+/obj/item/chem_grenade/firefighting{
+	pixel_x = -10;
+	pixel_y = 5
+	},
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = -9;
+	pixel_y = -2
+	},
+/obj/item/chem_grenade/metalfoam{
+	pixel_x = -9;
+	pixel_y = -6
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/darkblueblack{
+	dir = 6
+	},
+/area/station/ai_monitored/storage/eva)
+"v" = (
+/obj/machinery/door/airlock/pyro/glass/command{
+	dir = 4
+	},
+/obj/mapping_helper/access/eva,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/ai_monitored/storage/eva)
+"w" = (
+/obj/machinery/door/airlock/pyro/command/alt,
+/obj/mapping_helper/access/teleporter,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/teleporter)
+"x" = (
+/obj/rack,
+/obj/item/device/analyzer/atmospheric{
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/obj/item/device/gps{
+	pixel_x = -6
+	},
+/obj/item/disk/data/floppy/read_only/communications{
+	pixel_x = -10;
+	pixel_y = -3
+	},
+/obj/item/clothing/suit/space{
+	pixel_x = 6
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = 5;
+	pixel_y = 1
+	},
+/obj/item/clothing/head/helmet/space{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/darkblueblack,
+/area/station/ai_monitored/storage/eva)
+"y" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/longtile/blue,
+/area/station/ai_monitored/storage/eva)
+"z" = (
+/obj/item/caution{
+	desc = "Caution! Construction Zone!";
+	name = "caution sign";
+	pixel_x = -8;
+	pixel_y = 14
+	},
+/obj/item/caution{
+	desc = "Caution! Construction Zone!";
+	name = "caution sign";
+	pixel_y = 14
+	},
+/obj/item/caution{
+	desc = "Caution! Construction Zone!";
+	name = "caution sign";
+	pixel_x = 8;
+	pixel_y = 14
+	},
+/obj/machinery/light_switch/directional/north,
+/obj/machinery/camera/directional/north{
+	pixel_x = -8
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/darkblueblack{
+	dir = 1
+	},
+/area/station/ai_monitored/storage/eva)
+"A" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "eva";
+	name = "E.V.A.";
+	opacity = 0
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/ai_monitored/storage/eva)
+"B" = (
+/obj/table/glass/reinforced/auto,
+/obj/machinery/recharger,
+/obj/item/device/gps,
+/obj/item/hand_tele,
+/turf/simulated/floor/purpleblack/corner{
+	dir = 8
+	},
+/area/station/teleporter)
+"C" = (
+/obj/rack,
+/obj/item/clothing/suit/space{
+	pixel_x = 6
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = 5;
+	pixel_y = 1
+	},
+/obj/item/clothing/head/helmet/space{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/item/rods/steel{
+	amount = 50;
+	pixel_x = -9;
+	pixel_y = 2
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/darkblueblack,
+/area/station/ai_monitored/storage/eva)
+"D" = (
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/purpleblack/corner{
+	dir = 1
+	},
+/area/station/teleporter)
+"E" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn/colored/blue,
+/area/station/teleporter)
+"F" = (
+/obj/machinery/computer/teleporter,
+/obj/machinery/camera/directional/west,
+/turf/simulated/floor/purpleblack/corner,
+/area/station/teleporter)
+"H" = (
+/obj/item/device/radio/beacon,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/vertical,
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/black,
+/area/station/ai_monitored/storage/eva)
+"J" = (
+/obj/machinery/teleport/portal_generator,
+/obj/machinery/light/incandescent,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/purpleblack,
+/area/station/teleporter)
+"K" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/disposal/small/north{
+	pixel_y = 32
+	},
+/obj/disposalpipe/trunk/west,
+/turf/simulated/floor/darkblueblack{
+	dir = 1
+	},
+/area/station/ai_monitored/storage/eva)
+"L" = (
+/obj/machinery/door_control/north{
+	id = "eva";
+	dir = 2
+	},
+/obj/item/extinguisher{
+	pixel_x = 13;
+	pixel_y = 5
+	},
+/obj/item/extinguisher,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor/darkblueblack{
+	dir = 1
+	},
+/area/station/ai_monitored/storage/eva)
+"M" = (
+/obj/machinery/firealarm/directional/east,
+/turf/simulated/floor/purpleblack{
+	dir = 8
+	},
+/area/station/teleporter)
+"N" = (
+/obj/machinery/teleport/portal_ring,
+/turf/simulated/floor/purpleblack/corner{
+	dir = 4
+	},
+/area/station/teleporter)
+"O" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/darkblueblack{
+	dir = 9
+	},
+/area/station/ai_monitored/storage/eva)
+"P" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/longtile/blue,
+/area/station/ai_monitored/storage/eva)
+"Q" = (
+/obj/rack,
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = -6;
+	pixel_y = -4
+	},
+/obj/item/clothing/suit/space{
+	pixel_x = 6
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = 5;
+	pixel_y = 1
+	},
+/obj/item/clothing/head/helmet/space{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/turf/simulated/floor/darkblueblack{
+	dir = 4
+	},
+/area/station/ai_monitored/storage/eva)
+"R" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/black,
+/area/station/ai_monitored/storage/eva)
+"S" = (
+/turf/simulated/wall/auto/reinforced/supernorn/colored/blue,
+/area/station/ai_monitored/storage/eva)
+"T" = (
+/obj/machinery/camera/directional/west,
+/turf/simulated/floor/longtile/black,
+/area/station/ai_monitored/storage/eva)
+"U" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor/darkblueblack,
+/area/station/ai_monitored/storage/eva)
+"V" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "eva";
+	name = "E.V.A.";
+	opacity = 0
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/ai_monitored/storage/eva)
+"W" = (
+/obj/storage/crate/rcd,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/longtile/black,
+/area/station/ai_monitored/storage/eva)
+"X" = (
+/turf/simulated/floor/black,
+/area/station/ai_monitored/storage/eva)
+"Y" = (
+/obj/machinery/light_switch/directional/west,
+/turf/simulated/floor/purpleblack{
+	dir = 4
+	},
+/area/station/teleporter)
+"Z" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/darkblueblack{
+	dir = 5
+	},
+/area/station/ai_monitored/storage/eva)
+
+(1,1,1) = {"
+S
+S
+S
+S
+v
+S
+V
+t
+S
+"}
+(2,1,1) = {"
+S
+W
+T
+k
+y
+O
+j
+p
+A
+"}
+(3,1,1) = {"
+c
+c
+c
+c
+c
+r
+R
+C
+q
+"}
+(4,1,1) = {"
+c
+F
+Y
+B
+c
+z
+X
+h
+S
+"}
+(5,1,1) = {"
+E
+J
+o
+a
+w
+e
+H
+U
+n
+"}
+(6,1,1) = {"
+c
+N
+M
+D
+c
+L
+X
+m
+S
+"}
+(7,1,1) = {"
+c
+c
+c
+c
+c
+K
+R
+x
+g
+"}
+(8,1,1) = {"
+S
+l
+d
+k
+P
+Z
+Q
+u
+b
+"}
+(9,1,1) = {"
+S
+S
+S
+S
+v
+S
+V
+s
+S
+"}

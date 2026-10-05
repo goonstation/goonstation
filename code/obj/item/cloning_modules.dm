@@ -38,7 +38,7 @@ Modules to do things with cloning modules
 /obj/item/storage/box/mindhack_module_kit
 	name = "Mindhack module kit"
 	icon_state = "box"
-	desc = "A box with a mindhack cloning module and a cloning lab. Yes, a whole cloning lab. In a box. Somehow."
+	desc = "A box with a mindhack cloning module and a cloning lab. Yes, a whole cloning lab. In a box. Somehow. Includes body-grinding reclaimer."
 
 	make_my_stuff()
 		..()
@@ -65,7 +65,7 @@ Modules to do things with cloning modules
 		var/obj/item/electronics/frame/flatpack/F3 = new(src)
 		src.storage.add_contents(F3)
 		F3.name = "Compacted Giant Blender"
-		F3.store_type = /obj/machinery/clonegrinder
+		F3.store_type = /obj/machinery/clonegrinder/mindhack_deluxe
 		F3.viewstat = 2
 		F3.secured = 2
 

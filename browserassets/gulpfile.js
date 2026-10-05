@@ -56,7 +56,7 @@ const sources = {
 const ignoreSources = ['**/*.md'];
 
 // Replace {{resource(path/to/file)}} in files with proper CDN URLs
-const resourceMacroRegex = /\{\{resource\([\"']?(.*?)[\"']?\)\}\}/gi;
+const resourceMacroRegex = /\{\{resource\(["']?(.*?)["']?\)\}\}/gi;
 
 // Replace {{CDN_VERSION}} in files with the current CDN version
 const cdnVersionRegex = /{{.?CDN_VERSION.?}}/gi;
@@ -190,15 +190,15 @@ async function clean(cb) {
   fs.mkdir(dirs.dest, cb);
 }
 
-async function manifest(cb) {
+async function manifest() {
   buildManifest = await generateManifest(sources.all, 'manifest.json');
 }
 
-async function generateTguiManifest(cb) {
+async function generateTguiManifest() {
   await generateManifest(sources.tguiManifest, 'tgui-manifest.json');
 }
 
-function html(cb) {
+function html() {
   return src(sources.html, { nocase: true, ignore: ignoreSources })
     .pipe(macroReplacer())
     .pipe(
@@ -220,7 +220,7 @@ function html(cb) {
     .pipe(dest(dirs.dest + '/html'));
 }
 
-function css(cb) {
+function css() {
   return src(sources.styles, { nocase: true, ignore: ignoreSources })
     .pipe(macroReplacer())
     .pipe(postcss([postcssSimpleVars(), postcssNesting(), autoprefixer()]))
@@ -229,7 +229,7 @@ function css(cb) {
     .pipe(dest(dirs.dest + '/css'));
 }
 
-function javascript(cb) {
+function javascript() {
   return src(sources.scripts, { nocase: true, ignore: ignoreSources })
     .pipe(macroReplacer())
     .pipe(
@@ -244,7 +244,7 @@ function javascript(cb) {
     .pipe(dest(dirs.dest + '/js'));
 }
 
-function copy(cb) {
+function copy() {
   return src(sources.copyable, {
     encoding: false,
     nocase: true,

@@ -8,13 +8,11 @@
 	flags = TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	var/paper_icon_state = "paper_caution"
+	/// What corperate entity warned the crimer
+	var/corporate_rank = "Nanotrasen Corporate Security"
 
 	attack_self(mob/user)
-		var/menuchoice = tgui_alert(user, "What would you like to do?", "Ticket writer", list("Ticket", "Nothing"))
-		if (!menuchoice || menuchoice == "Nothing")
-			return
-		else if (menuchoice == "Ticket")
-			src.ticket(user)
+		src.ticket(user)
 
 	proc/ticket(mob/user)
 		var/obj/item/card/id/I
@@ -32,16 +30,16 @@
 		playsound(src, 'sound/machines/keyboard3.ogg', 30, TRUE)
 		var/issuer = I.registered
 		var/issuer_job = I.assignment
-		var/ticket_target = input(user, "Ticket recipient:", "Recipient", "Ticket Recipient") as text | null
+		var/ticket_target = tgui_input_text(user, "Ticket recipient:", "Ticket Writer")
+		ticket_target = copytext(sanitize(html_encode(ticket_target)), 1, MAX_MESSAGE_LEN)
 		if (!ticket_target)
 			return
-		ticket_target = copytext(sanitize(html_encode(ticket_target)), 1, MAX_MESSAGE_LEN)
-		var/ticket_reason = input(user, "Ticket reason:", "Reason") as text | null
-		if (!ticket_reason)
-			return
+		var/ticket_reason = tgui_input_text(user, "Ticket reason:", "Ticket Writer")
 		ticket_reason = copytext(sanitize(html_encode(ticket_reason)), 1, MAX_MESSAGE_LEN)
+		if (!ticket_reason || !user.find_in_hand(src))
+			return
 
-		var/ticket_text = "[ticket_target] has been officially [pick("cautioned","warned","told off","yelled at","berated","sneered at")] by Nanotrasen Corporate Security for [ticket_reason] on [time2text(world.realtime, "DD/MM/53")].<br>Issued by: [issuer] - [issuer_job]<br>"
+		var/ticket_text = "[ticket_target] has been officially [pick("cautioned","warned","told off","yelled at","berated","sneered at")] by [src.corporate_rank] for [ticket_reason] on [time2text(world.realtime, "DD/MM/53")].<br>Issued by: [issuer] - [issuer_job]<br>"
 
 		var/datum/ticket/T = new /datum/ticket()
 		T.target = ticket_target
@@ -68,3 +66,10 @@
 	name = "crusty old security TicketWriter 1000"
 	desc = "An old TicketWriter model held together by hopes and dreams alone."
 	paper_icon_state = "paper_burned"
+
+/obj/item/device/ticket_writer/nanotrasen
+	name = "inspector TicketWriter 4000"
+	desc = "A device used by NanoTrasen inspectors to issue tickets to poorly performing crew. The keys on it are rather worn down."
+	icon_state = "ticketwriter_nt"
+	corporate_rank = "Nanotrasen Internal Affairs"
+

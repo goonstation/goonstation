@@ -1,0 +1,37 @@
+# Reminder:
+#	1: NORTH	2: SOUTH	4: EAST		8: WEST
+
+# Remove "area" subtypes.
+/obj/blind_switch/area/@SUBTYPES : /obj/blind_switch/@SUBTYPES_1{@OLD}
+
+# Repath "on" subtypes.
+/obj/blind_switch/@SUBTYPES/on : /obj/blind_switch/on/@SUBTYPES_1{@OLD}
+
+# Remove old directional subtypes.
+/obj/blind_switch/@SUBTYPES/north		: /obj/blind_switch/@SUBTYPES_1{@OLD; dir = 1}
+/obj/blind_switch/@SUBTYPES/south		: /obj/blind_switch/@SUBTYPES_1{@OLD; dir = 2}
+/obj/blind_switch/@SUBTYPES/east		: /obj/blind_switch/@SUBTYPES_1{@OLD; dir = 4}
+/obj/blind_switch/@SUBTYPES/west		: /obj/blind_switch/@SUBTYPES_1{@OLD; dir = 8}
+/obj/blind_switch/@SUBTYPES/directional	: /obj/blind_switch/@SUBTYPES_1{@OLD}
+
+# Name to direction.
+/obj/blind_switch/@SUBTYPES{name = "blind switch"}		: /obj/blind_switch/@SUBTYPES_1{@OLD; name = @SKIP}
+/obj/blind_switch/@SUBTYPES{name = "N blind switch"}	: /obj/blind_switch/@SUBTYPES_1{@OLD; name = @SKIP; dir = 1}
+/obj/blind_switch/@SUBTYPES{name = "S blind switch"}	: /obj/blind_switch/@SUBTYPES_1{@OLD; name = @SKIP; dir = 2}
+/obj/blind_switch/@SUBTYPES{name = "E blind switch"}	: /obj/blind_switch/@SUBTYPES_1{@OLD; name = @SKIP; dir = 4}
+/obj/blind_switch/@SUBTYPES{name = "W blind switch"}	: /obj/blind_switch/@SUBTYPES_1{@OLD; name = @SKIP; dir = 8}
+
+# Repath and clean up pixel offsets. Uses a temporary repath to avoid repathing the same paths multiple times.
+# NORTH
+/obj/blind_switch/@SUBTYPES{dir = @UNSET}	: /temporary_blind_switch_repath/@SUBTYPES/directional/north{@OLD; dir = @SKIP; pixel_y = @SKIP}
+/obj/blind_switch/@SUBTYPES{dir = 1}		: /temporary_blind_switch_repath/@SUBTYPES/directional/north{@OLD; dir = @SKIP; pixel_y = @SKIP}
+# SOUTH
+/obj/blind_switch/@SUBTYPES{dir = 0}		: /temporary_blind_switch_repath/@SUBTYPES/directional/south{@OLD; dir = @SKIP; pixel_y = @SKIP}
+/obj/blind_switch/@SUBTYPES{dir = 2}		: /temporary_blind_switch_repath/@SUBTYPES/directional/south{@OLD; dir = @SKIP; pixel_y = @SKIP}
+# EAST
+/obj/blind_switch/@SUBTYPES{dir = 4}		: /temporary_blind_switch_repath/@SUBTYPES/directional/east{@OLD; dir = @SKIP; pixel_x = @SKIP}
+# WEST
+/obj/blind_switch/@SUBTYPES{dir = 8}		: /temporary_blind_switch_repath/@SUBTYPES/directional/west{@OLD; dir = @SKIP; pixel_x = @SKIP}
+
+# Revert the temporary repath.
+/temporary_blind_switch_repath/@SUBTYPES : /obj/blind_switch/@SUBTYPES{@OLD}

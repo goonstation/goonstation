@@ -19,7 +19,7 @@ import {
 } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
-import { resource } from '../../goonstation/cdn';
+import { useResource } from '../../goonstation/cdn';
 import { Window } from '../../layouts';
 import {
   ChangeEntryData,
@@ -134,6 +134,8 @@ export const Changelog = () => {
 };
 
 const Header = (props: HeaderData) => {
+  const resource = useResource();
+
   return (
     <Stack vertical>
       <Stack.Item>
@@ -246,13 +248,19 @@ const ChangeEntry = (props: ChangeEntryData) => {
                   </Tooltip>
                 </Stack.Item>
               )}
+              <Stack.Item grow />
               {!!props.pr_num && (
-                <Stack.Item grow textAlign="right">
+                <Stack.Item>
                   <a
                     href={`https://github.com/goonstation/goonstation/pull/${props.pr_num}`}
                   >
                     {`#${props.pr_num}`}
                   </a>
+                </Stack.Item>
+              )}
+              {!!props.feedback && (
+                <Stack.Item>
+                  <a href={props.feedback}>Feedback</a>
                 </Stack.Item>
               )}
             </Stack>
