@@ -1,4 +1,56 @@
 
+(t)mon oct 05 26
+(u)Kubius
+(p)27227
+(e)🆕⚖🌠|C-Feature, C-Balance, A-Events
+(*)Interdictors can now fully suppress white holes with great difficulty (likely requiring multiple interdictors or an exceptional cell), with their grid draw functionality enhanced to support this.
+(u)Kubius
+(p)28008
+(e)|
+(+)The new harmonic siphon brief now uses zero-indexed vertical coordinates to match the floor decals.
+(t)sun oct 04 26
+(u)Driftered
+(p)28026
+(e)🎨🐁|C-Sprites, A-Critters
+(+)Adds eight new Haunted Plush Toy variants to spawn as.
+(u)Prism55
+(p)27999
+(e)|
+(+)RCD can now deconstruct firedoors
+(t)fri oct 02 26
+(u)ANNmagedon
+(p)27972
+(e)|
+(*)The atmospheric technician has been rehired! (as a gimmick job)
+(u)LorrMaster
+(p)27548
+(e)🎨🧱|C-Sprites, A-Materials
+(+)New sprites for processed materials at different stack sizes.
+(u)Cheekybrdy
+(p)27882
+(e)🗺💡|A-Mapping, A-Station-Systems
+(+)Syndicate hideouts can now be tailored for the whims of a mad doctor.
+(u)LorrMaster
+(p)27602
+(e)🆕🎨🧱🤖|C-Feature, C-Sprites, A-Materials, A-Silicons
+(+)AI core construction maintains material and forensic data.
+(u)LorrMaster
+(p)27995
+(e)🧱|A-Materials
+(+)Cotton has been set as the default material for various objects.
+(u)Erinexx & Temthrush
+(p)27938
+(e)🎨❗🚗|C-Sprites, E-FUCK, A-Vehicles
+(*)Pods and pod components have been resprited.
+(t)thu oct 01 26
+(u)Kubius
+(p)27709
+(e)🗺🌠|A-Mapping, A-Events
+(+)A particular event on Menhir now has additional permutations to encounter.
+(u)TekoTheTeapot + ANNmagedon
+(p)27988
+(e)🎨|C-Sprites
+(*)Central Command has allocated more funds to station inspections, and as such the Inspector has gained a suite of new items.
 (t)wed sep 30 26
 (u)TekoTheTeapot
 (p)27960
