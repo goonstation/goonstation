@@ -1119,7 +1119,11 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 								"Don't make it a habit.",
 								"Your move, creep.",
 								"I AM THE LAW.",
-								"Justice is made.")
+								"Justice is made.",
+								"Unsafe for human consumption.",
+								"Remember to recycle.",
+								"Days without infractions: 0",
+								"Could be your last.")
 
 			var/ticket_text = {"<font face="Monospace" color="453425">
 								<center>
@@ -1213,7 +1217,11 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 								"Don't make it a habit.",
 								"Your move, creep.",
 								"I AM THE LAW.",
-								"Justice is made.")
+								"Justice is made.",
+								"Unsafe for human consumption.",
+								"Remember to recycle.",
+								"Days without infractions: 0",
+								"Could be your last.")
 
 			logTheThing(LOG_ADMIN, usr, "requested a fine using [PDAowner]([PDAownerjob])'s PDA. It is a [fine_amount] credit fine on <b>[ticket_target]</b> with the reason: [ticket_reason].")
 			if((fine_amount <= SECURITY::TICKET::MAX_FINE_NO_APPROVAL && (ticket_level >= SECURITY::TICKET::LEVEL::FINE_SMALL)) || (ticket_level >= SECURITY::TICKET::LEVEL::FINE_LARGE))
@@ -1273,7 +1281,11 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 								"Don't make it a habit.",
 								"Your move, creep.",
 								"I AM THE LAW.",
-								"Justice is made.")
+								"Justice is made.",
+								"Unsafe for human consumption.",
+								"Remember to recycle.",
+								"Days without infractions: 0",
+								"Could be your last.")
 
 			playsound(src.master, 'sound/machines/printer_thermal.ogg', 50, 1)
 			SPAWN(3 SECONDS)

@@ -42,7 +42,11 @@
 								"Don't make it a habit.",
 								"Your move, creep.",
 								"I AM THE LAW.",
-								"Justice is made.")
+								"Justice is made.",
+								"Unsafe for human consumption.",
+								"Remember to recycle.",
+								"Days without infractions: 0",
+								"Could be your last.")
 
 		var/ticket_text = {"<font face="Monospace" color="453425">
 							<center>
