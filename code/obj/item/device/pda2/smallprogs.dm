@@ -1127,7 +1127,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 
 			var/ticket_text = {"<font face="Monospace" color="453425">
 								<center>
-								<font size="4">NANOTRASEN CORPORATE SECURITY</font> <br>
+								<font size="4">[corporate_rank]</font> <br>
 								<font size="3">[station_name], Typhon System</font> <br> <br>
 								</center>
 								<table width="365px">
@@ -1148,7 +1148,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 								<center>
 								<font size="3">[pick(ticket_flavor)]</font>
 								<table height="50px" cellspacing="2px">
-								<tr> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td></tr>
+								<tr>[random_barcode(20,"453425")]</td></tr>
 								</table>
 								</center>"}
 
@@ -1227,7 +1227,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			if((fine_amount <= SECURITY::TICKET::MAX_FINE_NO_APPROVAL && (ticket_level >= SECURITY::TICKET::LEVEL::FINE_SMALL)) || (ticket_level >= SECURITY::TICKET::LEVEL::FINE_LARGE))
 				var/ticket_text = {"<font face="Monospace" color="453425">
 									<center>
-									<font size="4">NANOTRASEN CORPORATE SECURITY</font> <br>
+									<font size="4">[corporate_rank]</font> <br>
 									<font size="3">[station_name], Typhon System</font> <br> <br>
 									</center>
 									<table width="365px">
@@ -1249,7 +1249,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 									<center>
 									<font size="3">[pick(ticket_flavor)]</font>
 									<table height="50px" cellspacing="2px">
-									<tr> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td></tr>
+									<tr> [random_barcode(20,"453425")]</tr>
 									</table>
 									</center>"}
 
@@ -1292,7 +1292,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 				F.approve(PDAowner,PDAownerjob,src.get_ticket_level())
 				var/ticket_text = {"<font face="Monospace" color="453425">
 									<center>
-									<font size="4">NANOTRASEN CORPORATE SECURITY</font> <br>
+									<font size="4">[corporate_rank]</font> <br>
 									<font size="3">[station_name], Typhon System</font> <br> <br>
 									</center>
 									<table width="365px">
@@ -1319,7 +1319,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 									<center>
 									<font size="3">[pick(ticket_flavor)]</font>
 									<table height="50px" cellspacing="2px">
-									<tr> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td></tr>
+									<tr>[random_barcode(20,"453425")]</tr>
 									</table>
 									</center>"}
 

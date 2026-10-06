@@ -3123,6 +3123,7 @@
 #include "code\procs\logging.dm"
 #include "code\procs\loop_debug.dm"
 #include "code\procs\mob_procs.dm"
+#include "code\procs\papers.dm"
 #include "code\procs\resourceManagement.dm"
 #include "code\procs\scorestats.dm"
 #include "code\procs\station_name.dm"
