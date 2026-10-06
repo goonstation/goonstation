@@ -1010,6 +1010,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 	size = 4
 	var/mode = 0
 	var/message = null
+	var/corporate_rank = "Nanotrasen Corporate Security"
 
 	proc/get_ticket_level()
 		. = SECURITY::TICKET::LEVEL::NONE
@@ -1128,7 +1129,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			var/ticket_text = {"<font face="Monospace" color="453425">
 								<center>
 								<font size="4">[corporate_rank]</font> <br>
-								<font size="3">[station_name], Typhon System</font> <br> <br>
+								<font size="3">[station_name]</font> <br> <br>
 								</center>
 								<table width="365px">
 								<tr><td width="200px">DATE OF ISSUE</td> <td>[time2text(world.realtime, "DD/MM/53")]</td></tr>
@@ -1228,7 +1229,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 				var/ticket_text = {"<font face="Monospace" color="453425">
 									<center>
 									<font size="4">[corporate_rank]</font> <br>
-									<font size="3">[station_name], Typhon System</font> <br> <br>
+									<font size="3">[station_name]</font> <br> <br>
 									</center>
 									<table width="365px">
 									<tr><td width="200px">DATE OF ISSUE</td> <td>[time2text(world.realtime, "DD/MM/53")]</td></tr>
@@ -1293,7 +1294,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 				var/ticket_text = {"<font face="Monospace" color="453425">
 									<center>
 									<font size="4">[corporate_rank]</font> <br>
-									<font size="3">[station_name], Typhon System</font> <br> <br>
+									<font size="3">[station_name]</font> <br> <br>
 									</center>
 									<table width="365px">
 									<tr><td width="200px">DATE OF ISSUE</td> <td>[time2text(world.realtime, "DD/MM/53")]</td></tr>
