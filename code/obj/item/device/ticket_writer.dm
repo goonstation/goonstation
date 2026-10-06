@@ -36,8 +36,40 @@
 		ticket_reason = copytext(sanitize(html_encode(ticket_reason)), 1, MAX_MESSAGE_LEN)
 		if (!ticket_reason || !user.find_in_hand(src))
 			return
+		var/ticket_flavor = list("Follow the Law.",
+								"Contact a monkey in a [weighted_pick(list("suit" = 9, "biz suit" = 1))] and a funny hat if required.",
+								"Do not Reoffend.",
+								"Don't make it a habit.",
+								"Your move, creep.",
+								"I AM THE LAW.",
+								"Justice is made.")
 
-		var/ticket_text = "[ticket_target] has been officially [pick("cautioned","warned","told off","yelled at","berated","sneered at")] by Nanotrasen Corporate Security for [ticket_reason] on [time2text(world.realtime, "DD/MM/53")].<br>Issued by: [issuer] - [issuer_job]<br>"
+		var/ticket_text = {"<font face="Monospace" color="453425">
+							<center>
+							<font size="4">NANOTRASEN CORPORATE SECURITY</font> <br>
+							<font size="3">[station_name], Typhon System</font> <br> <br>
+							</center>
+							<table width="365px">
+							<tr><td width="200px">DATE OF ISSUE</td> <td>[time2text(world.realtime, "MM/DD/53 hh:mm")]</td></tr>
+							</table>
+							------------------------------------------------------
+							<table width="365px">
+							<tr><td width="200px">RECIPIENT</td> <td>[ticket_target]</td></tr>
+							<tr></tr>
+							<tr><td width="200px">ISSUER</td> <td>[issuer]</td></tr>
+							<tr><td width="200px">ASSIGNMENT</td> <td>[issuer_job]</td></tr>
+							</table>
+							------------------------------------------------------
+							<table width="365px">
+							<tr><td width="100px">REASON</td> <td>[ticket_reason]</td></tr>
+							</table>
+							------------------------------------------------------
+							<center>
+							<font size="3">[pick(ticket_flavor)]</font>
+							<table height="50px" cellspacing="2px">
+							<tr> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td> <td width="[rand(1,8)]px" bgcolor="453425"></td></tr>
+							</table>
+							</center>"}
 
 		var/datum/ticket/T = new /datum/ticket()
 		T.target = ticket_target
@@ -57,6 +89,7 @@
 			p.name = "Official Caution - [ticket_target]"
 			p.info = ticket_text
 			p.icon_state = src.paper_icon_state
+			p.color = "#FFE9AD"
 
 		return T.target_byond_key
 
