@@ -27,6 +27,10 @@ var/list/minimap_z_levels = list(Z_LEVEL_STATION, Z_LEVEL_DEBRIS, Z_LEVEL_MINING
 	var/list/area_map_focal_bounds_by_z_level
 	/// Whether focal bounds are currently being calculated for each z-level.
 	var/list/area_map_focal_bounds_in_progress_by_z_level
+	/// Cached focal bounds for each minimap type and z-level.
+	var/list/minimap_focal_bounds_by_key
+	/// Whether a minimap focal bound calculation is currently running for each key.
+	var/list/minimap_focal_bounds_in_progress_by_key
 	/// Generated fallback colours for areas without a dedicated minimap colour.
 	var/list/area_colours
 	/// A list of minimap render modifiers, sorted by priority.
@@ -46,6 +50,8 @@ var/list/minimap_z_levels = list(Z_LEVEL_STATION, Z_LEVEL_DEBRIS, Z_LEVEL_MINING
 	src.area_map_renders_in_progress_by_z_level = list()
 	src.area_map_focal_bounds_by_z_level = list()
 	src.area_map_focal_bounds_in_progress_by_z_level = list()
+	src.minimap_focal_bounds_by_key = list()
+	src.minimap_focal_bounds_in_progress_by_key = list()
 	src.area_colours = list()
 
 	src.minimap_modifiers = list()
@@ -277,6 +283,49 @@ var/list/minimap_z_levels = list(Z_LEVEL_STATION, Z_LEVEL_DEBRIS, Z_LEVEL_MINING
 	src.area_map_focal_bounds_in_progress_by_z_level[z_level_key] = FALSE
 	return src.area_map_focal_bounds_by_z_level[z_level_key]
 
+/// Find and cache focal bounds for a minimap type and z-level.
+/datum/minimap_renderer/proc/get_minimap_focal_bounds(z_level, minimap_type, x_min, x_max, y_min, y_max)
+	if (!src.valid_area_map_z_level(z_level))
+		return
+
+	var/cache_key = "[z_level]:[minimap_type]:[x_min]:[x_max]:[y_min]:[y_max]"
+	if (src.minimap_focal_bounds_by_key[cache_key])
+		return src.minimap_focal_bounds_by_key[cache_key]
+
+	if (src.minimap_focal_bounds_in_progress_by_key[cache_key])
+		UNTIL(!src.minimap_focal_bounds_in_progress_by_key[cache_key] || src.minimap_focal_bounds_by_key[cache_key], 0)
+		return src.minimap_focal_bounds_by_key[cache_key]
+
+	src.minimap_focal_bounds_in_progress_by_key[cache_key] = TRUE
+
+	var/max_x_found = x_min
+	var/min_x_found = x_max
+	var/max_y_found = y_min
+	var/min_y_found = y_max
+	for (var/turf/T as anything in block(locate(x_min, y_min, z_level), locate(x_max, y_max, z_level)))
+		// valid_turf check
+		if (!T.loc)
+			continue
+
+		var/area/A = T.loc
+		if (!(minimap_type & A.minimaps_to_render_on))
+			continue
+
+		max_x_found = max(max_x_found, T.x)
+		min_x_found = min(min_x_found, T.x)
+		max_y_found = max(max_y_found, T.y)
+		min_y_found = min(min_y_found, T.y)
+
+	src.minimap_focal_bounds_by_key[cache_key] = list(
+		"max_x" = max_x_found,
+		"min_x" = min_x_found,
+		"max_y" = max_y_found,
+		"min_y" = min_y_found,
+	)
+	src.minimap_focal_bounds_in_progress_by_key[cache_key] = FALSE
+	return src.minimap_focal_bounds_by_key[cache_key]
+
+
 /// Generate and cache a complete full-area map icon for one Z-level.
 /datum/minimap_renderer/proc/get_area_map_icon(z_level)
 	if (!src.valid_area_map_z_level(z_level))
@@ -322,6 +371,7 @@ var/list/minimap_z_levels = list(Z_LEVEL_STATION, Z_LEVEL_DEBRIS, Z_LEVEL_MINING
 
 	src.area_map_renders_by_z_level["[z_level]"] = FALSE
 	src.area_map_focal_bounds_by_z_level["[z_level]"] = FALSE
+	src.minimap_focal_bounds_by_key = list()
 
 /// Generates a list of `/atom/movable` objects for each z-level for a specified minimap type.
 /datum/minimap_renderer/proc/generate_minimap_icons(minimap_type)

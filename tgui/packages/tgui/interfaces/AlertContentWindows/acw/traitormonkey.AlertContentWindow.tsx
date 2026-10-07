@@ -4,10 +4,12 @@
  * @author CalliopeSoups
  * @license ISC
  */
-import { resource } from '../../../goonstation/cdn';
+import { useResource } from '../../../goonstation/cdn';
 import { AlertContentWindow } from '../types';
 
 const SyndicateMonkeyContentWindow = () => {
+  const resource = useResource();
+
   return (
     <div className="traitor-tips">
       <h1 className="center">You are a syndicate monkey agent!</h1>

@@ -2248,10 +2248,6 @@
 /turf/simulated/floor/carpet/red/fancy/narrow/sw,
 /area/station/bridge)
 "nL" = (
-/obj/machinery/computer/secure_data{
-	dir = 8;
-	icon_state = "datasec"
-	},
 /obj/machinery/camera/directional/north{
 	pixel_x = -10
 	},
@@ -2260,6 +2256,13 @@
 	icon_state = "tube1";
 	layer = 9.1;
 	pixel_y = 21
+	},
+/obj/machinery/computer3/generic/secure_data{
+	dir = 8
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
@@ -4370,6 +4373,9 @@
 	},
 /obj/cable{
 	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
@@ -48945,7 +48951,7 @@ lL
 qU
 iz
 nL
-mE
+cg
 iz
 dg
 rC
@@ -49247,7 +49253,7 @@ iz
 mH
 iz
 nN
-mE
+fL
 qB
 mE
 rH

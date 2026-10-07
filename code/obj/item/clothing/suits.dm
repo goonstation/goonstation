@@ -539,8 +539,8 @@ TYPEINFO(/obj/item/clothing/suit/hazard/paramedic/armored)
 /obj/item/clothing/suit/det_suit/beepsky
 	name = "worn jacket"
 	desc = "This tattered jacket has seen better days."
-	icon_state = "ntjacket_o"
-	coat_style = "ntjacket"
+	icon_state = "wornjacket_o"
+	coat_style = "wornjacket"
 
 	setupProperties()
 		..()
@@ -820,6 +820,8 @@ TYPEINFO(/obj/item/clothing/suit/hazard/paramedic/armored)
 	icon_state = "bedsheet"
 	item_state = "bedsheet"
 	layer = MOB_LAYER
+	default_material = "cotton"
+	material_amt = 3 // Matches materials produced when torn
 	throwforce = 1
 	w_class = W_CLASS_TINY
 	throw_speed = 2
@@ -854,7 +856,6 @@ TYPEINFO(/obj/item/clothing/suit/hazard/paramedic/armored)
 	New()
 		..()
 		src.UpdateIcon()
-		src.setMaterial(getMaterial("cotton"), appearance = FALSE, setname = FALSE)
 
 	attack_hand(mob/user)
 		if (src.bed)
@@ -1529,6 +1530,28 @@ TYPEINFO(/obj/item/clothing/suit/hazard/fire/armored)
 	setupProperties()
 		..()
 		setProperty("space_movespeed", 0)  // ntso space suits don't suffer from slowdown
+
+/obj/item/clothing/suit/space/ntso/medic // Human sprites by TekoTheTeapot
+	name = "NT field medic pressure suit"
+	desc = "A specialised Nanotrasen space suit, with an integrated chest rig. The rig has been modified to fit a medical insignia. The fabric on this model is highly chemically and biologically resistant."
+	icon_state = "ntso_medic"
+	item_state = "ntso_medic"
+
+	setupProperties()
+		..()
+		setProperty("viralprot", 50)
+		setProperty("chemprot", 60)
+
+/obj/item/clothing/suit/space/ntso/engineer
+	name = "NT engineering pressure suit"
+	desc = "A specialised Nanotrasen space suit, with an integrated chest rig. The rig has been modified to fit an insignia to mark its protection against radiation. The fabric on this model is highly fire resistant and houses batiline plating."
+	icon_state = "ntso_engineer"
+	item_state = "ntso_engineer"
+
+/obj/item/clothing/suit/space/ntso/engineer/setupProperties()
+		..()
+		src.setProperty("radprot", 50)
+		src.setProperty("heatprot", 45)
 
 /obj/item/clothing/suit/space/ntso/bellona
 	name = "NTSO combat dress"

@@ -136,7 +136,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_belt = list(/obj/item/device/pda2/quartermaster)
 	items_in_backpack = list(/obj/item/wrapping_paper, /obj/item/satchel/mail, /obj/item/scissors, /obj/item/stamp)
 	alt_names = list("Head of Deliverying", "Mail Bringer")
-	wiki_link = "https://wiki.ss13.co/Mailman"
+	wiki_link = "https://wiki.ss13.co/Mail_Courier"
 
 /datum/job/civilian/clown
 	name = "Clown"

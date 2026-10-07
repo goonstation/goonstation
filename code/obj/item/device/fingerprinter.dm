@@ -85,7 +85,7 @@ TYPEINFO(/obj/item/device/fingerprinter)
 		if (src.loc != holder || !search || user.stat)
 			return
 		search = copytext(sanitize(search), 1, 200)
-		boutput(user, data_core.general.forensic_search(search))
+		boutput(user, global.data_core.forensic_search(search))
 		return
 
 	proc/plant_print(mob/user, atom/target)

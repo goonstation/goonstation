@@ -866,7 +866,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 /obj/item/paper/resonator_type_sm
 	name = "printed card"
 	icon_state = "index_card"
-	info = {"TYPE-SM - SHEAR MITIGATOR<br>
+	info = {"TYPE-SM - SHEAR MODERATOR<br>
 	Reduces shear by intensity, based on radial distance from siphon (8x > 4x > 2x > 1x)<br>
 	Maximum 3 intensity"}
 
@@ -1586,3 +1586,12 @@ Only trained personnel should operate station systems. Follow all procedures car
 	it understands you<br>
 	don't let it go<br>
 	"}
+
+/obj/item/paper/iou_ntso_medic
+	name = "I.O.U Specialized Tool"
+	desc = "This looks written hastily."
+	info = {"
+	<b>SORRY!</b> We ran out of research budget and did not finish the shrapnel vacuum we promised..<br>
+	We will supply it once our budget is renewed.<br>
+	"}
+

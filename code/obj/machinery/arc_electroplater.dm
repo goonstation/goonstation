@@ -124,7 +124,7 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 		if(!W.can_arcplate)
 			boutput(user, SPAN_ALERT("That cannot be plated!"))
 			return
-		if(W.material && W.material.getID() != W.get_default_material_id())
+		if(W.material && W.material.getID() != W.default_material)
 			boutput(user, SPAN_ALERT("You can't plate something that already has a non-standard material!"))
 			return
 
@@ -218,13 +218,15 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 		var/cancel_arcplate = FALSE
 		if(!my_bar?.material || !successful)
 			cancel_arcplate = TRUE
-		else if(target_item.material && target_item.material.getID() != target_item.get_default_material_id())
+		else if(target_item.material && target_item.material.getID() != target_item.default_material)
 			cancel_arcplate = TRUE
 		else if(isitem(target_item))
 			var/obj/item/I = target_item
 			if(!I.can_arcplate)
 				cancel_arcplate = TRUE
 		if(!cancel_arcplate)
+			if(target_item.material_amt > 1)
+				target_item.material_amt = 1
 			target_item.setMaterial(my_bar.material)
 			qdel(my_bar)
 			src.my_bar = null

@@ -3603,6 +3603,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	fits_under_table = TRUE
 	hand_count = 2
 	icon = 'icons/obj/plushies.dmi'
+	default_material = "cotton"
 	health_brute = 20
 	health_burn = 20
 	pull_w_class = W_CLASS_NORMAL
@@ -3612,9 +3613,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	has_genes = FALSE
 
 	New()
-		..()
 		if(pick_random_icon_state)
-			icon_state = pick("bee", "buddy", "kitten", "monkey", "possum", "brullbar", "bunny", "penguin")
+			icon_state = pick("bee", "buddy", "kitten", "monkey", "possum", "brullbar", "bunny", "penguin", "buddy_future", "bunny_mask", "kitten_wizard", "monkey_assistant", "shelterfrog", "bear", "tuba", "monkey_george")
+			if(src.icon_state == "bee")
+				src.default_material = "beewool"
+		..()
 		icon_state_alive = src.icon_state
 		icon_state_dead = src.icon_state
 

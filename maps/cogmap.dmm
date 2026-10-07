@@ -8396,13 +8396,7 @@
 	dir = 1;
 	tag = "icon-pool (NORTH)"
 	},
-/obj/pool{
-	density = 0;
-	dir = 8;
-	icon = 'icons/obj/fluid.dmi';
-	icon_state = "ladder";
-	name = "ladder"
-	},
+/obj/pool/ladder,
 /obj/channel{
 	required_to_pass = 210
 	},
@@ -8846,9 +8840,6 @@
 	},
 /area/station/chapel/sanctuary)
 "aMr" = (
-/obj/machinery/light/emergency{
-	dir = 1
-	},
 /obj/item/instrument/large/organ,
 /turf/simulated/floor/carpet{
 	dir = 1;
@@ -9697,6 +9688,9 @@
 "aOR" = (
 /obj/cable{
 	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
@@ -13827,8 +13821,9 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "bcU" = (
-/obj/machinery/computer/secure_data/detective_computer{
-	pixel_x = 6
+/obj/filing_cabinet{
+	pixel_x = 6;
+	pixel_y = 0
 	},
 /obj/disposalpipe/segment/morgue{
 	dir = 2;
@@ -15030,7 +15025,6 @@
 	},
 /obj/machinery/light_switch/directional/east,
 /obj/table/auto,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
 /obj/item/storage/firstaid/brain{
 	pixel_x = 4;
 	pixel_y = 8
@@ -38089,6 +38083,9 @@
 /area/station/crew_quarters/fitness)
 "gtK" = (
 /obj/landmark/pest,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "guT" = (
@@ -51641,7 +51638,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "pxM" = (
-/obj/machinery/computer/secure_data/detective_computer,
+/obj/filing_cabinet,
 /obj/blind_switch/directional/west,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -55725,6 +55722,9 @@
 	},
 /obj/machinery/computer/announcement/station/security{
 	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
@@ -63189,9 +63189,6 @@
 /turf/simulated/floor,
 /area/station/maintenance/east)
 "xfn" = (
-/obj/machinery/conveyor_switch{
-	id = "chapel"
-	},
 /obj/machinery/light{
 	dir = 4
 	},
@@ -63920,8 +63917,12 @@
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedship)
 "xJn" = (
-/obj/machinery/computer/secure_data/detective_computer,
 /obj/machinery/alarm/directional/west,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/secure_data,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "xJE" = (
@@ -109659,8 +109660,8 @@ uLB
 uLB
 uLB
 uLB
-adC
-adC
+uLB
+uLB
 adC
 adC
 adC
@@ -109953,6 +109954,8 @@ cdw
 woV
 cdw
 cpY
+cdw
+cdw
 crb
 jje
 htJ
@@ -109961,8 +109964,6 @@ uzt
 uzt
 oav
 dOf
-adC
-adC
 adC
 adC
 adC
@@ -110255,6 +110256,8 @@ cqe
 cqe
 cqe
 cqe
+cqe
+cqe
 hpX
 vIN
 htJ
@@ -110263,8 +110266,6 @@ yht
 yht
 cuA
 uLB
-adC
-adC
 adC
 adC
 adC
@@ -110560,13 +110561,13 @@ uLB
 uLB
 uLB
 uLB
-lKY
 uLB
 uLB
 lKY
 uLB
-adC
-adC
+uLB
+lKY
+uLB
 adC
 adC
 adC
@@ -110868,10 +110869,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 adC
 adC
@@ -111171,10 +111172,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 adC
 adC
@@ -111473,10 +111474,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 adC
 adC
@@ -111778,10 +111779,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 adC
 aah
@@ -112081,10 +112082,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 aah
 adC
@@ -112383,10 +112384,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 aah
 adC
@@ -112685,10 +112686,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 aah
 adC
@@ -112987,10 +112988,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 aah
 adC
@@ -113289,10 +113290,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 aah
 adC
@@ -113591,10 +113592,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 aah
 adC
@@ -113892,10 +113893,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 adC
 aah
@@ -114191,10 +114192,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 adC
 adC
@@ -114493,10 +114494,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 adC
 adC
@@ -114794,10 +114795,10 @@ kgh
 kgh
 kgh
 kgh
-adC
-adC
-adC
-adC
+kgh
+kgh
+kgh
+kgh
 adC
 adC
 adC
@@ -115090,13 +115091,13 @@ uLB
 uLB
 uLB
 uLB
-lvn
 uLB
 uLB
 lvn
 uLB
-adC
-adC
+uLB
+lvn
+uLB
 adC
 adC
 adC
@@ -115389,6 +115390,8 @@ cqf
 cqf
 cqf
 cqf
+cdw
+cdw
 rHg
 jje
 mPB
@@ -115397,8 +115400,6 @@ uzt
 uzt
 cuC
 uLB
-adC
-adC
 adC
 adC
 adC
@@ -115691,6 +115692,8 @@ cdw
 iMi
 cdw
 cpZ
+cqe
+cqe
 cre
 vIN
 mPB
@@ -115699,8 +115702,6 @@ yht
 yht
 lpQ
 rWQ
-adC
-adC
 adC
 adC
 adC
@@ -116001,8 +116002,8 @@ uLB
 uLB
 uLB
 uLB
-adC
-adC
+uLB
+uLB
 adC
 adC
 adC

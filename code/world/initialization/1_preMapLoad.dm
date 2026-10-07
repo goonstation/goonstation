@@ -24,6 +24,7 @@
 		fdel(TRACY_ENABLE_PATH)
 #endif
 	if (should_init_tracy)
+		logTheThing(LOG_DEBUG, null, "Tracy enabled: [global.tracy_init_reason]")
 		prof_init()
 
 #if defined(SERVER_SIDE_PROFILING) && (defined(SERVER_SIDE_PROFILING_FULL_ROUND) || defined(SERVER_SIDE_PROFILING_PREGAME))

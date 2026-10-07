@@ -5,6 +5,8 @@
 	icon_state = "mousetrap"
 	item_state = "mousetrap"
 	w_class = W_CLASS_TINY
+	default_material = "wood"
+	material_amt = MATERIAL::AMOUNT::SHEET * 2
 	item_function_flags = OBVIOUS_INTERACTION_BAR //no hidden placement of armed mousetraps in other peoples backpacks
 	force = null
 	throwforce = null

@@ -29,6 +29,12 @@ var/global/datum/controller/processScheduler/processScheduler
 	// Process highest run time
 	var/tmp/list/datum/controller/process/highest_run_time = new
 
+	// TimeOfHour of the last full queue scan
+	var/tmp/last_queue_time = 0
+
+	// No idle process is due before this TimeOfHour, so queue scans until then can be skipped
+	var/tmp/next_queue_time = 0
+
 	// Sleep epsilon deciseconds, internally for byond this means to sleep until next tick
 	var/tmp/scheduler_sleep_interval = 0.001
 
@@ -127,18 +133,31 @@ var/global/datum/controller/processScheduler/processScheduler
 					message_admins("Process '[p.name]' is hung and will be restarted.")
 
 /datum/controller/processScheduler/proc/queueProcesses()
+	var/now = TimeOfHour
+	// Nothing can be due yet, so skip the scan. If now went backwards, world.timeofday rolled over and last_start needs rebasing
+	if (now >= last_queue_time && now <= next_queue_time)
+		return
+	last_queue_time = now
+	next_queue_time = INFINITY
+
 	for (var/datum/controller/process/p as anything in processes)
 		// Don't double-queue, don't queue running processes
-		if (p.disabled || p.running || p.queued || !p.idle)
+		if (p.running || p.queued || !p.idle)
 			continue
 
 		// If world.timeofday has rolled over, then we need to adjust.
-		if (TimeOfHour < last_start[p])
-			last_start[p] -= 36000
+		var/started = last_start[p]
+		if (now < started)
+			started -= 36000
+			last_start[p] = started
 
-		// If the process should be running by now, go ahead and queue it
-		if (TimeOfHour > last_start[p] + p.schedule_interval + p.schedule_jitter)
+		// If the process should be running by now, go ahead and queue it.
+		// A disabled process past due holds next_queue_time in the past, so re-enabling it is noticed next tick
+		var/due = started + p.schedule_interval + p.schedule_jitter
+		if (now > due && !p.disabled)
 			setQueuedProcessState(p)
+		else if (due < next_queue_time)
+			next_queue_time = due
 
 /datum/controller/processScheduler/proc/runQueuedProcesses()
 	if (length(queued))
@@ -157,6 +176,7 @@ var/global/datum/controller/processScheduler/processScheduler
 	processes.Add(process)
 	process.idle()
 	idle.Add(process)
+	next_queue_time = 0
 
 	// init recordkeeping vars
 	last_start.Add(process)
@@ -188,6 +208,7 @@ var/global/datum/controller/processScheduler/processScheduler
 	running.Remove(oldProcess)
 	queued.Remove(oldProcess)
 	idle.Add(newProcess)
+	next_queue_time = 0
 
 	last_start.Remove(oldProcess)
 	last_start.Add(newProcess)
@@ -220,7 +241,10 @@ var/global/datum/controller/processScheduler/processScheduler
 
 /datum/controller/processScheduler/proc/processFinished(var/datum/controller/process/process)
 	setIdleProcessState(process)
-	recordEnd(process)
+	recordEnd(process) // recordEnd() rebases last_start on rollover
+	var/due = last_start[process] + process.schedule_interval + process.schedule_jitter
+	if (due < next_queue_time)
+		next_queue_time = due
 
 /datum/controller/processScheduler/proc/setIdleProcessState(var/datum/controller/process/process)
 	running -= process

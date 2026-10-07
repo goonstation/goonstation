@@ -1,7 +1,6 @@
 //MEDBOT
 //MEDBOT PATHFINDING
 //MEDBOT ASSEMBLY
-#define MEDBOT_MOVE_SPEED 6
 #define MEDBOT_LASTPATIENT_COOLDOWN "medbot_anti_patient_clinginess"
 #define MEDBOT_POINT_COOLDOWN "medbot_pointing_antirudeness"
 
@@ -20,7 +19,7 @@
 	on = 1
 	health = 20
 	locked = 1
-	bot_move_delay = MEDBOT_MOVE_SPEED
+	bot_move_delay = BOT::SPEED::MEDBOT
 
 	var/obj/item/reagent_containers/glass/reagent_glass = null //Can be set to draw from this for reagents.
 	var/skin = null // options are brute1/2, burn1/2, toxin1/2, brain1/2, O21/2/3/4, berserk1/2/3, and psyche
@@ -399,7 +398,7 @@
 			return
 		else if(IN_RANGE(src,src.patient,10))
 			src.KillPathAndGiveUp(0)
-			navigate_to(get_turf(src.patient), MEDBOT_MOVE_SPEED, max_dist = 10)
+			navigate_to(get_turf(src.patient), src.bot_move_delay, max_dist = 10)
 		else
 			src.KillPathAndGiveUp(1)
 
@@ -442,7 +441,7 @@
 				return
 			else
 				src.KillPathAndGiveUp(0)
-				navigate_to(get_turf(src.patient), MEDBOT_MOVE_SPEED, max_dist = 10)
+				navigate_to(get_turf(src.patient), src.bot_move_delay, max_dist = 10)
 				return
 		else
 			continue
@@ -646,7 +645,7 @@
 
 		if (master.terrifying)
 			if(!(BOUNDS_DIST(master, master.patient) == 0) && !master.moving)
-				master.navigate_to(get_turf(master.patient), MEDBOT_MOVE_SPEED, 1, 10)
+				master.navigate_to(get_turf(master.patient), master.bot_move_delay, 1, 10)
 			if(!src.did_spooky && prob(10))
 				if (prob(20))
 					var/message = pick("It will be okay.","You're okay.", "Everything will be alright,","Please remain calm.",\
@@ -871,5 +870,3 @@ TYPEINFO(/obj/machinery/bot/medbot/terrifying)
 			return
 
 		src.created_name = t
-
-#undef MEDBOT_MOVE_SPEED

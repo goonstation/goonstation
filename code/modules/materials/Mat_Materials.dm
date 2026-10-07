@@ -202,6 +202,11 @@ ABSTRACT_TYPE(/datum/material)
 			CRASH("Attempted to mutate an immutatble material!")
 		src.color = color
 
+	proc/setColorHSL(var/hsl_color)
+		if(!src.mutable)
+			CRASH("Attempted to mutate an immutatble material!")
+		src.hsl_color = hsl_color
+
 	proc/setCanMix(var/mix)
 		if(!src.mutable)
 			CRASH("Attempted to mutate an immutatble material!")
@@ -540,10 +545,6 @@ ABSTRACT_TYPE(/datum/material)
 			src.vars[triggername] = getFusedTriggers(mat1.vars[triggername], mat2.vars[triggername], src)
 			handleTriggerGenerations(src.vars[triggername])
 
-		//Make sure the newly merged properties are informed about the fact that they just changed. Has to happen after triggers.
-		for(var/datum/material_property/nProp in src.properties)
-			nProp.onValueChanged(src, src.properties[nProp])
-
 		//Texture merging. SUPER DUPER UGLY AAAAH
 		if(mat2.texture && !mat1.texture)
 			src.texture = mat2.texture
@@ -567,6 +568,21 @@ ABSTRACT_TYPE(/datum/material)
 		src.parent_materials.Add(mat2)
 
 		triggerOnMix(src, mat1, mat2, bias)
+		// A quirk of how mix effects work. They are triggered by the resulting material, not the source materials.
+		// If this is the last generation of a mix effect, then it will not be passed on to trigger on future generations.
+		// Remove it now, since it is effectively gone.
+		for(var/datum/materialProc/current in src.triggersOnMix)
+			if(current.max_generations != -1 && src.triggersOnMix[current] == current.max_generations)
+				src.triggersOnMix.Remove(current)
+
+		for(var/datum/material_property/nProp in src.properties)
+			// Only round after the properties have all been adjusted
+			var/prop_val = round(src.properties[nProp])
+			src.properties[nProp] = clamp(prop_val, nProp.min_value, nProp.max_value)
+
+		//Make sure the newly merged properties are informed about the fact that they just changed. Has to happen after triggers.
+		for(var/datum/material_property/nProp in src.properties)
+			nProp.onValueChanged(src, src.properties[nProp])
 
 		//RUN VALUE CHANGED ON ALL PROPERTIES TO TRIGGER PROPERS EVENTS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -612,6 +628,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "rock"
 	name = "stone"
 	desc = "Near useless asteroid rock with some traces of random metals."
+	icon_file = 'icons/obj/items/materials/rocks.dmi'
 	color = list(0.60, 0.60, 0.60, 0.00,\
 				0.35, 0.35, 0.35, 0.00,\
 				0.25, 0.25, 0.25, 0.00,\
@@ -622,6 +639,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 
 	New()
 		..()
+		material_flags |= MATERIAL_ROCK
 		setProperty("density", 2)
 		setProperty("hard", 2)
 		setProperty("electrical", 4)
@@ -633,6 +651,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "electrum"
 	name = "electrum"
 	desc = "Highly conductive alloy of gold and silver."
+	icon_file = 'icons/obj/items/materials/silver.dmi'
 	color = list(0.55, 0.475, 0.275, 0.00,\
 				0.35, 0.325, 0.15, 0.00,\
 				0.45, 0.425, 0.20, 0.00,\
@@ -676,6 +695,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "voltite"
 	name = "voltite"
 	desc = "Energy seems to be flowing around it, chanelled through in an unknown manner."
+	icon_file = 'icons/obj/items/materials/voltite.dmi'
 	color = list(0.55, 0.45, -0.15, 0.00,\
 				0.55, 0.45, -0.10, 0.00,\
 				0.00, 0.35, 1.75, 0.00,\
@@ -702,6 +722,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "steel"
 	name = "steel"
 	desc = "Terrestrial steel from Earth."
+	icon_file = 'icons/obj/items/materials/steel.dmi'
 	color = list(0.522, 0.162, 0.162, 0.00,\
 				0.324, 0.684, 0.324, 0.00,\
 				0.054, 0.054, 0.414, 0.00,\
@@ -719,6 +740,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "copper"
 	name = "copper"
 	desc = "Copper is a terrestrial conductive metal from proto-Dan mines. It is inferior to pharosium."
+	icon_file = 'icons/obj/items/materials/copper.dmi'
 	color = list( 0.80, 0.30, 0.00, 0.00,\
 				0.40, 0.20, 0.10, 0.00,\
 				0.60, 0.20, 0.30, 0.00,\
@@ -898,6 +920,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "silver"
 	name = "silver"
 	desc = "A slightly valuable and conductive metal."
+	icon_file = 'icons/obj/items/materials/silver.dmi'
 	color = list(0.50, 0.50, 0.55, 0.00,\
 				0.30, 0.30, 0.325, 0.00,\
 				0.40, 0.40, 0.40, 0.00,\
@@ -949,6 +972,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "plasmasteel"
 	name = "plasma steel"
 	desc = "A plasmastone/steel alloy. Very dense but quite soft."
+	icon_file = 'icons/obj/items/materials/steel.dmi'
 	color = "#937d99"
 	alpha = 255
 
@@ -991,10 +1015,12 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "slag"
 	name = "slag"
 	desc = "A by-product left over after material has been processed."
+	icon_file = 'icons/obj/items/materials/rocks.dmi'
 	color = "#26170F"
 
 	New()
 		..()
+		material_flags |= MATERIAL_ROCK
 		value = 10
 		setProperty("density", 2) //fucked up values for fucked up material but not silly putty
 		setProperty("hard", 2)
@@ -1005,6 +1031,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "spacelag"
 	name = "spacelag"
 	desc = "*BUFFERING*"
+	icon_file = 'icons/obj/items/materials/misc.dmi'
 	color = list(-0.15, -0.25, -0.15, 0.00,\
 				-0.25, -0.25, -0.25, 0.00,\
 				-0.15, -0.25, -0.15, 0.00,\
@@ -1025,6 +1052,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	name = "iridium alloy"
 	canMix = 0 //Can not be easily modified.
 	desc = "Some sort of advanced iridium alloy."
+	icon_file = 'icons/obj/items/materials/iridium.dmi'
 	color = list(0.45, 0.40, 0.65, 0.00,\
 				0.45, 0.40, 0.65, 0.00,\
 				0.35, 0.35, 0.65, 0.00,\
@@ -1058,6 +1086,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "soulsteel"
 	name = "soulsteel"
 	desc = "A metal imbued with souls. Creepy."
+	icon_file = 'icons/obj/items/materials/ectoplasm.dmi'
 	color = list(0.50, 1.00, 1.00, 0.00,\
 				0.00, 0.00, 0.00, 0.00,\
 				0.50, 0.00, 0.00, 0.00,\
@@ -1238,6 +1267,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	mat_id = "plasmaglass"
 	name = "plasma glass"
 	desc = "Crystallized plasma that has been rendered inert. Very hard and prone to making extremely sharp edges."
+	icon_file = 'icons/obj/items/materials/plasmastone.dmi'
 	color = "#A114FF"
 	alpha = 180
 
@@ -1415,6 +1445,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	mat_id = "gnesis"
 	name = "gnesis"
 	desc = "A rare complex crystalline matrix with a lazily shifting internal structure. Not to be confused with gneiss, a metamorphic rock."
+	icon_file = 'icons/obj/items/materials/gnesis.dmi'
 	color = "#1bdebd"
 	texture = "flock"
 	texture_blend = BLEND_OVERLAY
@@ -1616,6 +1647,8 @@ ABSTRACT_TYPE(/datum/material/organic)
 
 	edible_exact = 0.6 //Just barely edible
 	edible = 1
+	/// The reference to the blob overmind is used for the ID. Make sure it stays in memory.
+	var/mob/living/intangible/blob_overmind/blob_source = null
 
 	New()
 		..()
@@ -1630,6 +1663,33 @@ ABSTRACT_TYPE(/datum/material/organic)
 		addTrigger(TRIGGERS_ON_IMAGE, new /datum/materialProc/honey_image())
 		addTrigger(TRIGGERS_ON_EAT, new /datum/materialProc/oneat_blob())
 
+	proc/match_to_blob(var/mob/living/intangible/blob_overmind/blob)
+		if(!src.mutable)
+			CRASH("Attempted to mutate an immutatble material!")
+		src.blob_source = blob
+		src.setID("blob_\ref[blob]")
+		src.match_to_blob_color(blob.organ_color)
+
+	proc/match_to_blob_color(var/blob_color)
+		if(!src.mutable)
+			CRASH("Attempted to mutate an immutatble material!")
+
+		if(isnull(src.blob_source))
+			src.setID("blob_[blob_color]")
+
+		var/list/color_hsl = rgb2hsl(GetRedPart(blob_color), GetGreenPart(blob_color), GetBluePart(blob_color))
+		var/h = color_hsl[1] / 360
+		var/s = color_hsl[2] / 100
+		var/l = color_hsl[3] / 100
+
+		src.setColor(COLOR_MATRIX_IDENTITY)
+		var/list/hsl_temp
+		hsl_temp = list(0.00, 0.00, 0.00, 0.00,\
+						0.00, 0.3 * s, 0.00, 0.00,\
+						0.00, 0.00, (0.6 * l) + 0.35, 0.00,\
+						0.00, 0.00, 0.00, 1.00,\
+						h, 0.7 * s, 0.00, 0.00)
+		src.setColorHSL(hsl_temp)
 
 
 /datum/material/organic/flesh
@@ -1801,8 +1861,18 @@ ABSTRACT_TYPE(/datum/material/organic)
 	mat_id = "bamboo"
 	name = "bamboo"
 	desc = "Bamboo is a giant woody grass."
-	color = "#544c24"
-	texture_blend = BLEND_ADD
+	color =	list(1.10, 0.00, 0.00, 0.00,\
+					0.00, 1.00, 0.00, 0.00,\
+					0.00, 0.00, 0.80, 0.00,\
+					0.00, 0.00, 0.00, 1.00,\
+					0.00, 0.00, 0.00, 0.00)
+	hsl_color = list(0.00, 0.00, 0.05, 0.00,\
+					0.00, 0.05, 0.05, 0.00,\
+					0.00, 0.00, 0.90, 0.00,\
+					0.00, 0.00, 0.00, 1.00,\
+					0.13, 0.20, 0.00, 0.00)
+	texture = "bamboo"
+	texture_blend = BLEND_DEFAULT
 	artisan_trait_weight = MATERIAL_ARTISAN_COMMON
 
 	New()
@@ -1957,6 +2027,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 	mat_id = "coral"
 	name = "coral"
 	desc = "Coral harvested from the sea floor."
+	icon_file = 'icons/obj/items/materials/coral.dmi'
 	color = "#990099"
 	texture = "coral"
 	texture_blend = BLEND_SUBTRACT
@@ -1971,6 +2042,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 	mat_id = "plasmacoral"
 	name = "plasma coral"
 	desc = "Strange coral seemingly infused with plasmastone. Appears naturally."
+	icon_file = 'icons/obj/items/materials/coral.dmi'
 	color = "#A114FF"
 
 	New()
@@ -2020,6 +2092,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 	mat_id = "ectoplasm"
 	name = "ectoplasm"
 	desc = "Ghostly residue. Not terribly useful on it's own."
+	icon_file = 'icons/obj/items/materials/ectoplasm.dmi'
 	color = "#ccffcc"
 
 	New()
@@ -2377,7 +2450,13 @@ ABSTRACT_TYPE(/datum/material/rubber)
 	mat_id = "latex"
 	name = "latex"
 	desc = "A type of synthetic rubber. Conducts electricity poorly."
-	color = "#DDDDDD" //"#FF0000" idgaf ok I want red cables back. no haine, this stuff isnt red.
+	hsl_color = list(1.00, 0.00, 0.00, 0.00,\
+					0.00, 0.00, 0.10, 0.20,\
+					0.00, 0.00, 0.70, 0.25,\
+					0.00, 0.00, 0.00, 0.75,\
+					0.00, 0.00, 0.45, 0.00)
+	color = "#EAEAEA" //"#FF0000" idgaf ok I want red cables back. no haine, this stuff isnt red.
+	alpha = 239
 
 	New()
 		..()
@@ -2386,6 +2465,9 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("electrical", 3)
 		setProperty("thermal", 4)
 		setProperty("melting_point", 453 KELVIN) // About the melting point of rubber
+
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/outline_add(src.color, 0.05))
+		addTrigger(TRIGGERS_ON_REMOVE, new /datum/materialProc/outline_remove())
 
 /datum/material/rubber/synthrubber
 	mat_id = "synthrubber"
