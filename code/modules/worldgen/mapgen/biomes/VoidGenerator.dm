@@ -82,6 +82,7 @@
 	corridor_density = 1
 
 /datum/map_generator/void_generator
+	requires_full_cargo_launch_range = TRUE
 	///2D list of all biomes based on heat and humidity combos.
 	var/list/possible_biomes = list(
 	BIOME_LOW_HEAT = list(
