@@ -22,5 +22,4 @@ Any variables defined in these env files will override variables in `buildByond.
 - `/pop/ss13` exists on the host machine and contains:
   - `byond/` - Contains BYOND installations named by version, e.g. `byond/516.1666`
   - `rust-g/` - Contains a `librust_g.so` file
-  - `byond-tracy/` - Contains a `libprof.so` file
 - [Monocker](https://github.com/petersem/monocker) is setup on the host machine

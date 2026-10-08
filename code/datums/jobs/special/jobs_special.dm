@@ -143,23 +143,6 @@ ABSTRACT_TYPE(/datum/job/special)
 	wiki_link = "https://wiki.ss13.co/Chemist"
 	email_group = MGD_RESEARCH
 
-/datum/job/special/atmospheric_technician
-	name = "Atmospherish Technician"
-	ui_colour = /datum/job/engineering::ui_colour
-	limit = 0
-	wages = PAY::TRADESMAN
-	access_string = "Atmospheric Technician"
-	slot_belt = list(/obj/item/device/pda2/atmos)
-	slot_eyes = list(/obj/item/clothing/glasses/toggleable/atmos)
-	slot_jump = list(/obj/item/clothing/under/misc/atmospheric_technician)
-	slot_foot = list(/obj/item/clothing/shoes/black)
-	slot_lhan = list(/obj/item/storage/toolbox/mechanical)
-	slot_poc1 = list(/obj/item/device/analyzer/atmospheric)
-	slot_ears = list(/obj/item/device/radio/headset/engineer)
-	items_in_backpack = list(/obj/item/tank/mini/oxygen,/obj/item/crowbar)
-	wiki_link = "https://wiki.ss13.co/Atmospheric_Technician"
-	email_group = MGD_ENGINEER
-
 /datum/job/special/comm_officer
 	name = "Communications Officer"
 	limit = 0

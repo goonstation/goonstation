@@ -20,20 +20,18 @@
 		return
 
 	attack_hand(mob/user)
-		if (!user.stat)
-			//Yaaaaaaaaaaaaaaaay!!
-			user.AddComponent(/datum/component/death_confetti)
+		if (user.stat)
+			return
 
-			user.death()
-			if(!user || isdead(user)) //User gibbed or actually dead.
-				numkills++
-				if (numkills == 100)
-					name = "blue ribbon [src.name]"
-					src.overlays += new /image {icon = 'icons/misc/stickers.dmi'; icon_state = "1st_place"; pixel_x = 3; pixel_y = -2} ()
+		//Yaaaaaaaaaaaaaaaay!!
+		user.AddElement(/datum/element/death_confetti)
 
-			var/datum/component/C = user.GetComponent(/datum/component/death_confetti)
-			C?.RemoveComponent()
-		return
+		user.death()
+		if ((!user || isdead(user)) && ((++numkills) == 100))
+			src.name = "blue ribbon [src.name]"
+			src.overlays += new /image {icon = 'icons/misc/stickers.dmi'; icon_state = "1st_place"; pixel_x = 3; pixel_y = -2} ()
+
+		user.RemoveElement(/datum/element/death_confetti)
 
 
 // ctrl-c, ctrl-v ...

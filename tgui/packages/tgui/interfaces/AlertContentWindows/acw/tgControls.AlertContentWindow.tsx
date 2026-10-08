@@ -6,10 +6,12 @@
  */
 import { Box, Image } from 'tgui-core/components';
 
-import { resource } from '../../../goonstation/cdn';
+import { useResource } from '../../../goonstation/cdn';
 import type { AlertContentWindow } from '../types';
 
 const TGInterfaceContentWindow = () => {
+  const resource = useResource();
+
   return (
     <>
       <Box>

@@ -905,80 +905,80 @@ ABSTRACT_TYPE(/datum/recipe/sandwich)
 /datum/recipe/stroopwafel
 	recipe_instructions = list(/datum/recipe_instructions/cooking/oven/stroopwafel)
 	ingredients = list(\
-	/obj/item/reagent_containers/food/snacks/ingredient/dough_cookie = 2,
+	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/condiment/syrup = 1)
-	output = /obj/item/reagent_containers/food/snacks/stroopwafel
+	output = list(/obj/item/reagent_containers/food/snacks/stroopwafel = 2)
 	category = "Cookies"
 
 /datum/recipe/cookie
 	recipe_instructions = list(/datum/recipe_instructions/cooking/oven/cookie)
-	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/dough_cookie = 1)
-	output = /obj/item/reagent_containers/food/snacks/cookie
+	ingredients = list(/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1)
+	output = list(/obj/item/reagent_containers/food/snacks/cookie = 4)
 	category = "Cookies"
 
 /datum/recipe/cookie_iron
 	recipe_instructions = list(/datum/recipe_instructions/cooking/oven/cookie_iron)
 	ingredients = list(\
-	/obj/item/reagent_containers/food/snacks/ingredient/dough_cookie = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/condiment/ironfilings = 1)
-	output = /obj/item/reagent_containers/food/snacks/cookie/metal
+	output = list(/obj/item/reagent_containers/food/snacks/cookie/metal = 4)
 	category = "Cookies"
 
 /datum/recipe/cookie_chocolate_chip
 	recipe_instructions = list(/datum/recipe_instructions/cooking/oven/cookie_chocolate_chip)
 	ingredients = list(\
-	/obj/item/reagent_containers/food/snacks/ingredient/dough_cookie = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/condiment/chocchips = 1)
-	output = /obj/item/reagent_containers/food/snacks/cookie/chocolate_chip
+	output = list(/obj/item/reagent_containers/food/snacks/cookie/chocolate_chip = 4)
 	category = "Cookies"
 
 /datum/recipe/cookie_oatmeal
 	recipe_instructions = list(/datum/recipe_instructions/cooking/oven/cookie_oatmeal)
 	ingredients = list(\
-	/obj/item/reagent_containers/food/snacks/ingredient/dough_cookie = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/oatmeal = 1)
-	output = /obj/item/reagent_containers/food/snacks/cookie/oatmeal
+	output = list(/obj/item/reagent_containers/food/snacks/cookie/oatmeal = 4)
 	category = "Cookies"
 
 /datum/recipe/cookie_bacon
 	recipe_instructions = list(/datum/recipe_instructions/cooking/oven/cookie_bacon)
 	ingredients = list(\
-	/obj/item/reagent_containers/food/snacks/ingredient/dough_cookie = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon = 1)
-	output = /obj/item/reagent_containers/food/snacks/cookie/bacon
+	output = list(/obj/item/reagent_containers/food/snacks/cookie/bacon = 4)
 	category = "Cookies"
 
 /datum/recipe/cookie_jaffa
 	recipe_instructions = list(/datum/recipe_instructions/cooking/oven/cookie_jaffa)
 	ingredients = list(\
-	/obj/item/reagent_containers/food/snacks/ingredient/dough_cookie = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/plant/orange = 1,
 	/obj/item/reagent_containers/food/snacks/candy/chocolate = 1)
-	output = /obj/item/reagent_containers/food/snacks/cookie/jaffa
+	output = list(/obj/item/reagent_containers/food/snacks/cookie/jaffa = 4)
 	category = "Cookies"
 
 /datum/recipe/cookie_spooky
 	recipe_instructions = list(/datum/recipe_instructions/cooking/oven/cookie_spooky)
 	ingredients = list(\
-	/obj/item/reagent_containers/food/snacks/ingredient/dough_cookie = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/ectoplasm = 1)
-	output = /obj/item/reagent_containers/food/snacks/cookie/spooky
+	output = list(/obj/item/reagent_containers/food/snacks/cookie/spooky = 3) //one of them got eaten by a ghost
 	category = "Cookies"
 
 /datum/recipe/cookie_butter
 	recipe_instructions = list(/datum/recipe_instructions/cooking/oven/cookie_butter)
 	ingredients = list(\
-	/obj/item/reagent_containers/food/snacks/ingredient/dough_cookie = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/butter = 1)
-	output = /obj/item/reagent_containers/food/snacks/cookie/butter
+	output = list(/obj/item/reagent_containers/food/snacks/cookie/butter = 4)
 	category = "Cookies"
 
 /datum/recipe/cookie_peanut
 	recipe_instructions = list(/datum/recipe_instructions/cooking/oven/cookie_peanut)
 	ingredients = list(\
-	/obj/item/reagent_containers/food/snacks/ingredient/dough_cookie = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
 	/obj/item/reagent_containers/food/snacks/ingredient/peanutbutter = 1)
-	output = /obj/item/reagent_containers/food/snacks/cookie/peanut
+	output = list(/obj/item/reagent_containers/food/snacks/cookie/peanut = 4)
 	category = "Cookies"
 
 //Moon pies!
@@ -1635,7 +1635,8 @@ ABSTRACT_TYPE(/datum/recipe/sandwich)
 	recipe_instructions = list(/datum/recipe_instructions/cooking/oven/cereal_box)
 	ingredients = list(\
 	/obj/item/reagent_containers/food/snacks/ingredient/dough_s = 1,
-	/obj/item/reagent_containers/food/snacks/condiment/chocchips = 1)
+	/obj/item/reagent_containers/food/snacks/condiment/chocchips = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
 	output = /obj/item/reagent_containers/food/snacks/cereal_box
 
 /datum/recipe/cereal_honey
@@ -2116,3 +2117,81 @@ ABSTRACT_TYPE(/datum/recipe/sandwich)
 	/obj/item/reagent_containers/food/snacks/ingredient/vanilla_extract = 1,
 	/obj/item/reagent_containers/food/drinks/bowl = 1)
 	output = /obj/item/reagent_containers/food/snacks/bowl_of_dulce_de_leche
+
+/datum/recipe/cherryjam
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/plant/cherry = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
+	output = /obj/item/reagent_containers/food/snacks/condiment/jam/cherryjam
+
+/datum/recipe/grapejam
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/plant/grape = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
+	output = /obj/item/reagent_containers/food/snacks/condiment/jam/grapejam
+
+/datum/recipe/strawberryjam
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/plant/strawberry = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
+	output = /obj/item/reagent_containers/food/snacks/condiment/jam/strawberryjam
+
+/datum/recipe/applejam
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/plant/apple = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
+	output = /obj/item/reagent_containers/food/snacks/condiment/jam/applejam
+
+/datum/recipe/bluebrryjam
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/plant/blueberry = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
+	output = /obj/item/reagent_containers/food/snacks/condiment/jam/blueberryjam
+
+/datum/recipe/pearjam
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/plant/pear = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
+	output = /obj/item/reagent_containers/food/snacks/condiment/jam/pearjam
+
+/datum/recipe/peachjam
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/plant/peach = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
+	output = /obj/item/reagent_containers/food/snacks/condiment/jam/peachjam
+
+/datum/recipe/orangejam
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/plant/orange = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
+	output = /obj/item/reagent_containers/food/snacks/condiment/jam/orangejam
+
+/datum/recipe/raspberryjam
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/plant/raspberry = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
+	output = /obj/item/reagent_containers/food/snacks/condiment/jam/raspberryjam
+
+/datum/recipe/signaljam
+	ingredients = list(\
+	/obj/item/device/radio = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
+	output = /obj/item/reagent_containers/food/snacks/condiment/jam/signaljam
+
+/datum/recipe/mintjam
+	ingredients = list(\
+	/obj/item/plant/herb/mint = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
+	output = /obj/item/reagent_containers/food/snacks/condiment/jam/mintjam
+
+/datum/recipe/spacejam
+	ingredients = list(\
+	/obj/item/reagent_containers/food/snacks/plant/glowfruit = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
+	output = /obj/item/reagent_containers/food/snacks/condiment/jam/spacejam
+
+/datum/recipe/paperjam
+	ingredients = list(\
+	/obj/item/paper = 1,
+	/obj/item/reagent_containers/food/snacks/ingredient/sugar = 1)
+	output = /obj/item/reagent_containers/food/snacks/condiment/jam/paperjam

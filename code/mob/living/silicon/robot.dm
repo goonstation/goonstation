@@ -2889,6 +2889,7 @@ TYPEINFO(/mob/living/silicon/robot)
 				var/image/clothed_image = U.wear_image
 				if (!clothed_image)
 					continue
+				U.copy_appearance_to_image(clothed_image)
 				if (U.wear_state)
 					clothed_image.icon_state = U.wear_state
 				else

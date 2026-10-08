@@ -72,7 +72,7 @@ TYPEINFO(/mob/living/intangible/blob_overmind)
 	var/list/lipids = list()
 	var/list/nuclei = list()
 
-	var/datum/material/my_material = null
+	var/datum/material/organic/blob/my_material = null
 	var/datum/material/initial_material = null
 
 	var/organ_color = "#ffffff"
@@ -109,10 +109,10 @@ TYPEINFO(/mob/living/intangible/blob_overmind)
 		src.add_ability(/datum/blob_ability/tutorial)
 		src.add_ability(/datum/blob_ability/help)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_SPOOKY)
-		src.my_material = getMaterial("blob")
-		src.my_material = src.my_material.getMutable()
-		src.my_material.setColor("#ffffff")
-		initial_material = getMaterial("blob")
+		src.initial_material = getMaterial("blob")
+		src.my_material = src.initial_material.getMutable()
+		src.organ_color = "#ffffff"
+		src.my_material.match_to_blob(src)
 
 		//set start grace-period timestamp
 		src.spawn_time = TIME

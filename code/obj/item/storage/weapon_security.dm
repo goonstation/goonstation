@@ -373,6 +373,9 @@
 			src.cloaked = 0
 			src.add_fingerprint(usr)
 
+/obj/item/storage/box/syndibox/small
+	slots = 4
+
 /obj/item/storage/box/donkpocket_w_kit
 	name = "\improper Donk-Pockets box"
 	desc = "This box feels slightly warm."

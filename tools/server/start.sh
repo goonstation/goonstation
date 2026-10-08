@@ -32,8 +32,8 @@ if [ -e ".env.build" ]; then
 fi
 
 # Update external libraries
+# libprof.so (byond-tracy-writer) ships inside the game build artifact
 cp "/rust-g/$RUSTG_VERSION/librust_g.so" .
-cp "/byond-tracy/libprof.so" .
 
 chmod -R 770 /ss13_server
 
