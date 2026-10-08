@@ -115,7 +115,7 @@ TYPEINFO(/obj/critter/domestic_bee)
 						src.visible_message(SPAN_NOTICE("<b>[src]</b> stares at [maybeOurMom] for a moment, then bumbles happily!"))
 						break
 
-			else if ((beeMom in hearers(src, null)))
+			else if (beeMom && (beeMom in hearers(src, null)))
 				if (isdead(beeMom))
 					beeMom = null //beeMomCkey still set.
 					src.visible_message(SPAN_ALERT("<b>[src]</b> bumbles MOURNFULLY."))

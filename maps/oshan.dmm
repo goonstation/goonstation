@@ -25148,6 +25148,9 @@
 	icon_state = "2-4"
 	},
 /obj/storage/cart/forensic/detective,
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "dyE" = (
@@ -41794,9 +41797,15 @@
 	name = "Net Cafe"
 	})
 "quk" = (
-/obj/machinery/computer/secure_data/detective_computer,
 /obj/machinery/light/incandescent/netural{
 	dir = 8
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/generic/secure_data{
+	name = "Security Records"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)

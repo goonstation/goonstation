@@ -90,7 +90,10 @@ const SupplyEntry = (props) => {
           <Stack.Item>
             <Button
               icon="cart-shopping"
-              disabled={data.shipping_budget < entry.cost}
+              disabled={
+                data.shipping_budget < entry.cost &&
+                (data.account_data?.scanned_credits ?? 0) < entry.cost
+              }
               onClick={() =>
                 act('place_order', {
                   ref: entry.ref,
