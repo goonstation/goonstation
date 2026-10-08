@@ -9,7 +9,7 @@
 
 	New()
 		..()
-		src.apply_vision(/datum/vision/nightvision/weak, src)
+		src.apply_vision(/datum/vision_modifier/nightvision/weak, src)
 		abilityHolder.addAbility(/datum/targetable/critter/shieldproto)
 
 	seek_target(range)

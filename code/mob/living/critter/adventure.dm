@@ -439,7 +439,7 @@ TYPEINFO(/mob/living/critter/robotic/repairbot)
 		src.name = "[pick("strange","weird","odd","bizarre","quirky","antique")] [pick("robot","automaton","machine","gizmo","thingmabob","doodad","widget")]"
 		src.real_name = src.name
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
-		src.apply_vision(/datum/vision/nightvision, src)
+		src.apply_vision(/datum/vision_modifier/nightvision, src)
 
 	death(var/gibbed)
 		elecflash(src, power = 3)

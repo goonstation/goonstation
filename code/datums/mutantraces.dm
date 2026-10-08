@@ -218,7 +218,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 	var/datum/movement_modifier/movement_modifier
 
-	var/datum/vision/vision_modifier
+	var/datum/vision_modifier/vision_modifier
 
 	var/decomposes = TRUE
 
@@ -743,7 +743,7 @@ TYPEINFO(/datum/mutantrace/flubber)
 	voice_override = "bloop"
 
 	movement_modifier = /datum/movement_modifier/flubber
-	vision_modifier = /datum/vision/flubber
+	vision_modifier = /datum/vision_modifier/flubber
 
 	//override_static = 1
 
@@ -826,7 +826,7 @@ TYPEINFO(/datum/mutantrace/virtual)
 	voice_name = "grey"
 	jerk = TRUE
 	blood_color = "#000000"
-	vision_modifier = /datum/vision/grey
+	vision_modifier = /datum/vision_modifier/grey
 
 	emote(act, voluntary)
 		var/message = null
@@ -876,7 +876,7 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 	color_channel_names = list("Episcutus", "Ventral Aberration", "Sagittal Crest")
 	dna_mutagen_banned = FALSE
 	self_click_fluff = "scales"
-	vision_modifier = /datum/vision/lizard
+	vision_modifier = /datum/vision_modifier/lizard
 
 	ghost_icon_state = "ghost-lizard"
 
@@ -925,7 +925,7 @@ TYPEINFO_NEW(/datum/mutantrace/lizard)
 	override_attack = 0
 	needs_oxy = 0
 	movement_modifier = /datum/movement_modifier/zombie
-	vision_modifier = /datum/vision/zombie
+	vision_modifier = /datum/vision_modifier/zombie
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/right/zombie
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/left/zombie
 	persists_on_clone = FALSE
@@ -1394,7 +1394,7 @@ TYPEINFO_NEW(/datum/mutantrace/werewolf)
 	mutant_organs = list("tail" = /obj/item/organ/tail/wolf)
 	self_click_fluff = "fur"
 	can_walk_on_shards = TRUE
-	vision_modifier = /datum/vision/werewolf
+	vision_modifier = /datum/vision_modifier/werewolf
 
 	head_offset = 5
 	hand_offset = 3
@@ -1503,7 +1503,7 @@ TYPEINFO(/datum/mutantrace/hunter)
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/hunter/left
 	ignore_missing_limbs = 0
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
-	vision_modifier = /datum/vision/hunter
+	vision_modifier = /datum/vision_modifier/hunter
 
 	// Gave them a minor stamina boost (Convair880).
 	on_attach(var/mob/living/carbon/human/M)
@@ -1854,7 +1854,7 @@ TYPEINFO(/datum/mutantrace/roach)
 	dna_mutagen_banned = FALSE
 	self_click_fluff = list("thorax", "exoskeleton", "antenna")
 	blood_id = "hemolymph"
-	vision_modifier = /datum/vision/roach
+	vision_modifier = /datum/vision_modifier/roach
 
 	ghost_icon_state = "ghost-roach"
 
@@ -1895,7 +1895,7 @@ TYPEINFO(/datum/mutantrace/cat)
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/cat/left
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS | WEARS_UNDERPANTS)
-	vision_modifier = /datum/vision/cat
+	vision_modifier = /datum/vision_modifier/cat
 
 	on_attach(mob/living/carbon/human/M)
 		. = ..()
@@ -2284,7 +2284,7 @@ TYPEINFO(/datum/mutantrace/kudzu)
 	needs_oxy = 0 //get their nutrients from the kudzu
 	understood_languages = list(LANGUAGE_ENGLISH)
 	movement_modifier = /datum/movement_modifier/kudzu
-	vision_modifier = /datum/vision/xray/kudzu
+	vision_modifier = /datum/vision_modifier/xray/kudzu
 	genetics_removable = FALSE
 	mutant_folder = 'icons/mob/human.dmi' // vOv
 	mutant_organs = list(\

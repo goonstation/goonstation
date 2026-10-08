@@ -1,10 +1,10 @@
-/datum/vision
+/datum/vision_modifier
 	/// relative weight of the vision modifier, affects mostly centerlight icon and color calculations
 	var/weight = 1
 	/// bitfield of SEE_TURFS etc., applies onto mob.sight
 	var/sight = SEE_BLACKNESS
 	/// bitfield of SEE_TURFS etc., applies negatively onto mob.sight
-	var/neg_sight = 0
+	var/negative_sight = 0
 	/// how far the mob can see in the dark, greatest applies onto mob.see_in_dark
 	var/see_in_dark = 0
 	/// a bonus/malus applied onto see_in_dark
@@ -21,230 +21,230 @@
 	var/z_restricted = FALSE
 
 /// When the vision is first applied onto the mob
-/datum/vision/proc/on_apply(mob/user, source)
+/datum/vision_modifier/proc/on_apply(mob/user, source)
 	return
 
 /// When the last source is removed and the vision itself goes away
-/datum/vision/proc/on_remove(mob/user, source)
+/datum/vision_modifier/proc/on_remove(mob/user, source)
 	return
 
 /// X-ray vision, also for dead people
-/datum/vision/xray
+/datum/vision_modifier/xray
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
 	see_in_dark = SEE_DARK_FULL
 	z_restricted = TRUE
 	see_invisible = INVIS_MESON
 
-/datum/vision/xray/on_apply(mob/user, source)
+/datum/vision_modifier/xray/on_apply(mob/user, source)
 	APPLY_ATOM_PROPERTY(user, PROP_MOB_XRAYVISION, source)
 
-/datum/vision/xray/on_remove(mob/user, source)
+/datum/vision_modifier/xray/on_remove(mob/user, source)
 	REMOVE_ATOM_PROPERTY(user, PROP_MOB_XRAYVISION, source)
 
 /// weak X-ray vision
-/datum/vision/xray/weak
+/datum/vision_modifier/xray/weak
 	sight = SEE_TURFS
 	see_invisible = INVIS_NONE
 
 /// Thermalvision
-/datum/vision/thermal
+/datum/vision_modifier/thermal
 	see_in_dark_bonus = 4
 	see_invisible = INVIS_CLOAK
 	centerlight_icon = "thermal"
 	centerlight_color = rgb(0.5 * 255, 0.5 * 255, 0.5 * 255)
 
 /// Mk2 thermalvision, also gives byond infravision (see mobs through walls)
-/datum/vision/thermal/mk2
+/datum/vision_modifier/thermal/mk2
 	see_infrared = 1
 
-/datum/vision/thermal/mk2/on_apply(mob/user, source)
+/datum/vision_modifier/thermal/mk2/on_apply(mob/user, source)
 	get_image_group(CLIENT_IMAGE_GROUP_MOB_OVERLAY).add_mob(user)
 
-/datum/vision/thermal/mk2/on_remove(mob/user, source)
+/datum/vision_modifier/thermal/mk2/on_remove(mob/user, source)
 	get_image_group(CLIENT_IMAGE_GROUP_MOB_OVERLAY).remove_mob(user)
 
-/datum/vision/nightvision
+/datum/vision_modifier/nightvision
 	centerlight_icon = "nightvision"
 	centerlight_color = rgb(0.5 * 255, 0.5 * 255, 0.5 * 255)
 
-/datum/vision/blob_overmind
+/datum/vision_modifier/blob_overmind
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	see_invisible = INVIS_SPOOKY
 	see_in_dark = SEE_DARK_FULL
 	centerlight_icon = "thermal"
 	centerlight_color = rgb(0.5 * 255, 0.5 * 255, 0.5 * 255)
 
-/datum/vision/blob_overmind_tutorial
-	neg_sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
+/datum/vision_modifier/blob_overmind_tutorial
+	negative_sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
 
 
 // Could perhaps be combined with above
-/datum/vision/flock_tutorial
+/datum/vision_modifier/flock_tutorial
 	sight = SEE_SELF | SEE_BLACKNESS
-	neg_sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
+	negative_sight = SEE_TURFS | SEE_MOBS | SEE_OBJS
 
-/datum/vision/nightvision/weak
+/datum/vision_modifier/nightvision/weak
 	centerlight_icon = "thermal"
 
-/datum/vision/meson
+/datum/vision_modifier/meson
 	z_restricted = TRUE
 	sight = SEE_TURFS
-	neg_sight = SEE_BLACKNESS
+	negative_sight = SEE_BLACKNESS
 	see_invisible = INVIS_MESON
 	see_in_dark_bonus = 1
 	centerlight_icon = "nightvision"
 	centerlight_color = rgb(0.5 * 255, 0.5 * 255, 0.5 * 255)
 
-/datum/vision/meson/on_apply(mob/user, source)
+/datum/vision_modifier/meson/on_apply(mob/user, source)
 	get_image_group(CLIENT_IMAGE_GROUP_MECHCOMP).add_mob(user)
 	get_image_group(CLIENT_IMAGE_GROUP_GEOLOGICAL_ANOMALIES).add_mob(user)
 
-/datum/vision/meson/on_remove(mob/user, source)
+/datum/vision_modifier/meson/on_remove(mob/user, source)
 	get_image_group(CLIENT_IMAGE_GROUP_MECHCOMP).remove_mob(user)
 	get_image_group(CLIENT_IMAGE_GROUP_GEOLOGICAL_ANOMALIES).remove_mob(user)
 
 /// Infravision, for some reason this is not the same as byond infravision (see_infrared = 1)
-/datum/vision/infra
+/datum/vision_modifier/infra
 	see_invisible = INVIS_INFRA
 
-/datum/vision/adventure
+/datum/vision_modifier/adventure
 	see_invisible = INVIS_ADVENTURE
 	z_restricted = TRUE
 
-/datum/vision/construction
+/datum/vision_modifier/construction
 	see_invisible = INVIS_CONSTRUCTION
 
-/datum/vision/construction/glasses
+/datum/vision_modifier/construction/glasses
 	see_invisible = INVIS_CONSTRUCTION
 	see_in_dark_bonus = 1
 
-/datum/vision/robot
+/datum/vision_modifier/robot
 	see_invisible = INVIS_CLOAK
-	neg_sight = SEE_OBJS
+	negative_sight = SEE_OBJS
 
 /// Z-restricted component of AI vision
-/datum/vision/ai_zrestricted
+/datum/vision_modifier/ai_zrestricted
 	z_restricted = TRUE
 	sight = SEE_TURFS | SEE_OBJS | SEE_MOBS
 
 /// unrestricted component of AI vision. Mostly always around.
-/datum/vision/ai
+/datum/vision_modifier/ai
 	see_in_dark = SEE_DARK_FULL
 	see_invisible = INVIS_CLOAK
 
 /// AI cameras have a slightly different one
-/datum/vision/ai_camera
+/datum/vision_modifier/ai_camera
 	sight = SEE_SELF
 	see_invisible = INVIS_AI_EYE
 	see_in_dark = SEE_DARK_FULL
 
 /// vision for AI mainframes and hivebots
-/datum/vision/hivebot
+/datum/vision_modifier/hivebot
 	see_invisible = INVIS_CLOAK
 
 /// flock vision
-/datum/vision/flock // /mob/living/critter/flock
+/datum/vision_modifier/flock // /mob/living/critter/flock
 	see_invisible = INVIS_FLOCK
 
-/datum/vision/intangible_flock // /mob/living/intangible/flock
+/datum/vision_modifier/intangible_flock // /mob/living/intangible/flock
 	see_invisible = INVIS_FLOCK
 	see_in_dark = SEE_DARK_FULL
 
 /// flubber mutantrace vision
-/datum/vision/flubber
+/datum/vision_modifier/flubber
 	see_in_dark = SEE_DARK_FULL
 
-/datum/vision/zombie
+/datum/vision_modifier/zombie
 	sight = SEE_MOBS
 	see_in_dark = SEE_DARK_FULL
 	see_invisible = INVIS_NONE
 
-/datum/vision/grey
+/datum/vision_modifier/grey
 	sight = SEE_MOBS
 	see_in_dark = SEE_DARK_FULL
 	see_invisible = INVIS_CLOAK
 
-/datum/vision/werewolf
+/datum/vision_modifier/werewolf
 	sight = SEE_MOBS
 	see_in_dark = SEE_DARK_FULL
 	see_invisible = INVIS_CLOAK
 
-/datum/vision/hunter
+/datum/vision_modifier/hunter
 	see_in_dark = SEE_DARK_FULL
 
-/datum/vision/lizard
+/datum/vision_modifier/lizard
 	see_in_dark = SEE_DARK_HUMAN + 1
 	see_invisible = INVIS_INFRA
 
-/datum/vision/roach
+/datum/vision_modifier/roach
 	see_in_dark = SEE_DARK_HUMAN + 1
 	see_invisible = INVIS_INFRA
 
-/datum/vision/cat
+/datum/vision_modifier/cat
 	see_in_dark = SEE_DARK_HUMAN + 1
 	see_invisible = INVIS_INFRA
 
-/datum/vision/krampus
+/datum/vision_modifier/krampus
 	sight = SEE_MOBS
 	see_in_dark = SEE_DARK_FULL
 	see_invisible = INVIS_INFRA
 
-/datum/vision/hastur // /mob/living/critter/hastur
+/datum/vision_modifier/hastur // /mob/living/critter/hastur
 	sight = SEE_MOBS
 	see_in_dark = SEE_DARK_FULL
 	see_invisible = INVIS_INFRA
 
-/datum/vision/wraith
+/datum/vision_modifier/wraith
 	sight = SEE_SELF
 	see_in_dark = SEE_DARK_FULL
 
-/datum/vision/wraith_incorporeal // Wraiths lose see_invisible when corporeal
+/datum/vision_modifier/wraith_incorporeal // Wraiths lose see_invisible when corporeal
 	see_invisible = INVIS_SPOOKY
 
 /// this is just xray+nightvision
-/datum/vision/xray/kudzu
+/datum/vision_modifier/xray/kudzu
 	centerlight_icon = "nightvision"
 	centerlight_color = rgb(0.5 * 255, 0.5 * 255, 0.5 * 255)
 
-/datum/vision/new_player
+/datum/vision_modifier/new_player
 	sight = SEE_TURFS
 
-/datum/vision/observer
+/datum/vision_modifier/observer
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	see_invisible = INVIS_SPOOKY
 	see_in_dark = SEE_DARK_FULL
 
 /// NOT observer ghost vision. Grants ability to see ghosts.
-/datum/vision/ghost
+/datum/vision_modifier/ghost
 	see_in_dark = 1
 	see_invisible = INVIS_GHOST
 
-/datum/vision/adminview
+/datum/vision_modifier/adminview
 	see_in_dark = 10
 
-/datum/vision/buildmode
+/datum/vision_modifier/buildmode
 	see_in_dark = 10
 	see_invisible = INVIS_ADVENTURE
 
-/datum/vision/ship_sensor
+/datum/vision_modifier/ship_sensor
 	see_in_dark = SEE_DARK_HUMAN + 3
 	see_invisible = INVIS_CLOAK
 
-/datum/vision/ship_sensor/ecto
+/datum/vision_modifier/ship_sensor/ecto
 	see_invisible = INVIS_GHOST
 
-/datum/vision/ship_sensor/mining
+/datum/vision_modifier/ship_sensor/mining
 	sight = SEE_TURFS
-	neg_sight = SEE_BLACKNESS
+	negative_sight = SEE_BLACKNESS
 	centerlight_icon = "thermal"
 	centerlight_color = "#9bdb9b"
 
-/datum/vision/art_curser_displaced_soul // /mob/living/intangible/art_curser_displaced_soul
-	neg_sight = SEE_BLACKNESS
+/datum/vision_modifier/art_curser_displaced_soul // /mob/living/intangible/art_curser_displaced_soul
+	negative_sight = SEE_BLACKNESS
 	see_in_dark = SEE_DARK_HUMAN
 
-/datum/vision/movable_area_controller // /obj/movable_area_controller
+/datum/vision_modifier/movable_area_controller // /obj/movable_area_controller
 	see_in_dark = 12
 
-/datum/vision/ghostdrone_deluxe
+/datum/vision_modifier/ghostdrone_deluxe
 	see_in_dark = SEE_DARK_FULL

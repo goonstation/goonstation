@@ -1057,17 +1057,17 @@
 	if (widescreen)
 		if (src.view == "21x15") //tried using world.view stuff but it was not happy
 			src.view = "28x20"
-			usr.apply_vision(/datum/vision/adminview, src.type)
+			usr.apply_vision(/datum/vision_modifier/adminview, src.type)
 		else
 			src.view = "21x15"
-			usr.remove_vision(/datum/vision/adminview, src.type)
+			usr.remove_vision(/datum/vision_modifier/adminview, src.type)
 	else //not widescreen
 		if (src.view == "15x15")// 15x15 should be default for non-widescreen
 			src.view = "20x20"
-			usr.apply_vision(/datum/vision/adminview, src.type)
+			usr.apply_vision(/datum/vision_modifier/adminview, src.type)
 		else
 			src.view = "15x15"
-			usr.remove_vision(/datum/vision/adminview, src.type)
+			usr.remove_vision(/datum/vision_modifier/adminview, src.type)
 
 
 /client/proc/iddt()
@@ -1100,7 +1100,7 @@
 
 	if (!adventure_view || mob.see_invisible < INVIS_ADVENTURE)
 		adventure_view = 1
-		mob.apply_vision(/datum/vision/adventure, src.type)
+		mob.apply_vision(/datum/vision_modifier/adventure, src.type)
 		get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS).add_client(src)
 		boutput(src, "Adventure View activated.")
 
@@ -1108,7 +1108,7 @@
 		adventure_view = 0
 		get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS).remove_client(src)
 		boutput(src, "Adventure View deactivated.")
-		mob.remove_vision(/datum/vision/adventure, src.type)
+		mob.remove_vision(/datum/vision_modifier/adventure, src.type)
 
 /proc/possess(obj/O as obj in world)
 	set name = "Possess"

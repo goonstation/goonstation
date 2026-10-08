@@ -262,12 +262,12 @@ ABSTRACT_TYPE(/datum/buildmode)
 		src.show_popup_menus = 1
 		if (!usr.client.holder.buildmode_view)
 			usr.client.cmd_admin_aview()
-		usr.remove_vision(/datum/vision/buildmode, "buildmode")
+		usr.remove_vision(/datum/vision_modifier/buildmode, "buildmode")
 	else
 		src.buildmode.activate()
 		if (!usr.client.holder.buildmode_view)
 			usr.client.cmd_admin_aview()
-		usr.apply_vision(/datum/vision/buildmode, "buildmode")
+		usr.apply_vision(/datum/vision_modifier/buildmode, "buildmode")
 		src.show_popup_menus = 0
 
 /atom/movable/screen/buildmode/builddir

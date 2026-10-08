@@ -28,7 +28,7 @@ TYPEINFO(/mob/living/intangible/flock)
 	respect_view_tint_settings = TRUE
 	speech_verb_say = list("sings", "clicks", "whistles", "intones", "transmits", "submits", "uploads")
 
-	innate_vision = /datum/vision/intangible_flock
+	innate_vision = /datum/vision_modifier/intangible_flock
 
 	var/compute = 0
 	var/tmp/datum/flock/flock = null

@@ -1737,10 +1737,10 @@ TYPEINFO(/mob/living)
 	if (!source)
 		CRASH("meson proc called without a source!!")
 	src.vision.set_scan(1)
-	src.apply_vision(/datum/vision/meson, source)
+	src.apply_vision(/datum/vision_modifier/meson, source)
 
 /mob/living/proc/unmeson(atom/source)
-	src.remove_vision(/datum/vision/meson, source)
+	src.remove_vision(/datum/vision_modifier/meson, source)
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if (istype(H.glasses, /obj/item/clothing/glasses/visor))

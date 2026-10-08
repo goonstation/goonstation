@@ -52,7 +52,7 @@ TYPEINFO(/mob/living/critter/aberration)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_EXT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
-		src.apply_vision(/datum/vision/nightvision, src)
+		src.apply_vision(/datum/vision_modifier/nightvision, src)
 
 	death()
 		..()

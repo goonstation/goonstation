@@ -394,7 +394,7 @@ var/reverse_mode = 0
 						if (prob(1))
 							user.bioHolder.AddEffect("telekinesis_drag", 0, 0, 1) //because really
 							user.bioHolder.AddEffect("thermal_resist", 0, 0, 1) //if they're lucky enough to get this
-							user.apply_vision(/datum/vision/xray, "relic")		//they're lucky enough to keep it
+							user.apply_vision(/datum/vision_modifier/xray, "relic")		//they're lucky enough to keep it
 							user.bioHolder.AddEffect("hulk", 0, 0, 1) //probably
 							boutput(user, SPAN_ALERT("The relic crumbles into nothingness..."))
 							src.invisibility = INVIS_ALWAYS

@@ -20,7 +20,7 @@
 	///provides sight for blindness checks
 	var/provides_sight = TRUE
 	/// vision modifier to apply
-	var/datum/vision/vision_modifier
+	var/datum/vision_modifier/vision_modifier
 
 	New()
 		..()
@@ -251,7 +251,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/thermal)
 	color_g = 0.9 // red tint
 	color_b = 0.9
 	iris_color = "#a01f1f"
-	vision_modifier = /datum/vision/thermal
+	vision_modifier = /datum/vision_modifier/thermal
 
 TYPEINFO(/obj/item/organ/eye/cyber/meson)
 	mats = 7
@@ -362,7 +362,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/ecto)
 	color_g = 1
 	color_b = 0.925
 	iris_color = "#65e681"
-	vision_modifier = /datum/vision/ghost
+	vision_modifier = /datum/vision_modifier/ghost
 
 TYPEINFO(/obj/item/organ/eye/cyber/camera)
 	mats = 7
@@ -402,7 +402,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/nightvision)
 	color_g = 1
 	color_b = 0.7
 	iris_color = "#027e17"
-	vision_modifier = /datum/vision/nightvision
+	vision_modifier = /datum/vision_modifier/nightvision
 
 TYPEINFO(/obj/item/organ/eye/cyber/laser)
 	mats = 7

@@ -206,7 +206,7 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 		item_state = "slasher_mask"
 		item_function_flags = IMMUNE_TO_ACID
 		see_face = TRUE
-		vision_modifier = /datum/vision/thermal/mk2
+		vision_modifier = /datum/vision_modifier/thermal/mk2
 		setupProperties()
 			..()
 			setProperty("meleeprot_head", 6)

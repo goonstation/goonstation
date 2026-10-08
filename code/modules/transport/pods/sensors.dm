@@ -16,7 +16,7 @@
 #else
 	var/seekrange = 30
 #endif
-	var/datum/vision/vision_modifier = /datum/vision/ship_sensor
+	var/datum/vision_modifier/vision_modifier = /datum/vision_modifier/ship_sensor
 	var/scanning = 0
 	var/atom/tracking_target = null
 	var/const/SENSOR_REFRESH_RATE = 10
@@ -409,7 +409,7 @@ proc/build_html_gps_form(var/atom/A, var/show_Z=0, var/atom/target)
 /obj/item/shipcomponent/sensor/ecto
 	name = "Ecto-Sensor 900"
 	desc = "The number one choice for reasearchers of the supernatural."
-	vision_modifier = /datum/vision/ship_sensor/ecto
+	vision_modifier = /datum/vision_modifier/ship_sensor/ecto
 	power_used = 40
 	icon_state = "sensor-g"
 
@@ -418,7 +418,7 @@ proc/build_html_gps_form(var/atom/A, var/show_Z=0, var/atom/target)
 	desc = "Advanced geological meson scanners for ships."
 	power_used = 35
 	icon_state = "sensor-y"
-	vision_modifier = /datum/vision/ship_sensor/mining
+	vision_modifier = /datum/vision_modifier/ship_sensor/mining
 
 	scan(mob/user as mob)
 		..()

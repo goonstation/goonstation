@@ -42,7 +42,7 @@
 	src.ai = new /datum/aiHolder/flock/drone(src)
 	..()
 	src.add_ability_holder(/datum/abilityHolder/critter/flockdrone)
-	src.apply_vision(/datum/vision/flock)
+	src.apply_vision(/datum/vision_modifier/flock)
 
 	SPAWN(3 SECONDS)
 		//this is terrible, but diffracting a drone immediately causes a runtime

@@ -125,8 +125,8 @@ TYPEINFO(/mob)
 
 	var/list/movement_modifiers = list()
 
-	var/list/datum/vision/vision_modifiers = list()
-	var/datum/vision/innate_vision
+	var/list/datum/vision_modifier/vision_modifiers = list()
+	var/datum/vision_modifier/innate_vision
 
 	var/misstep_chance = 0
 
@@ -3624,7 +3624,7 @@ TYPEINFO(/mob)
 	return type in src.resistances
 
 
-/mob/proc/apply_vision(var/datum/vision/clue, var/source)
+/mob/proc/apply_vision(var/datum/vision_modifier/clue, var/source)
 	if (ispath(clue))
 		clue = get_singleton(clue)
 	if (src.vision_modifiers[clue]) 			// if the modifier already exists, just add a new source
@@ -3635,7 +3635,7 @@ TYPEINFO(/mob)
 		//No need to meditate for 20-45 minutes, the visions are revealed immediately
 		src.update_vision()
 
-/mob/proc/remove_vision(var/datum/vision/clue, var/source)
+/mob/proc/remove_vision(var/datum/vision_modifier/clue, var/source)
 	if (ispath(clue))
 		clue = get_singleton(clue)
 	if (src.vision_modifiers[clue])
@@ -3659,13 +3659,13 @@ TYPEINFO(/mob)
 	var/restricted_z = T ? isrestrictedz(T.z) : FALSE
 
 	var/see_in_dark_bonus = 0
-	var/neg_sight = 0
+	var/negative_sight = 0
 	var/should_register_signal = FALSE
-	var/datum/vision/weightiest_modifier
+	var/datum/vision_modifier/weightiest_modifier
 	var/new_centerlight_icon
 	var/list/centerlight_colors = list()
 
-	for(var/datum/vision/modifier in src.vision_modifiers)
+	for(var/datum/vision_modifier/modifier in src.vision_modifiers)
 
 		if (modifier.z_restricted)
 			should_register_signal = TRUE
@@ -3674,7 +3674,7 @@ TYPEINFO(/mob)
 				continue
 
 		src.sight |= modifier.sight
-		neg_sight |= modifier.neg_sight
+		negative_sight |= modifier.negative_sight
 
 		if (modifier.see_invisible > see_invisible)
 			see_invisible = modifier.see_invisible
@@ -3713,7 +3713,8 @@ TYPEINFO(/mob)
 	else if (new_centerlight_icon)
 		src.render_special.set_centerlight_icon(new_centerlight_icon)
 
-	sight &= ~neg_sight
+	sight &= ~negative_sight
+	see_in_dark += see_in_dark_bonus
 
 	// hopefully this isn't too spammy, so we can just call the procs and let them return if there's nothing to do
 	if (should_register_signal)

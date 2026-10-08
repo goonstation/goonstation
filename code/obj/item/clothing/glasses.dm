@@ -199,7 +199,7 @@ TYPEINFO(/obj/item/clothing/glasses/toggleable/meson)
 	color_r = 0.89
 	color_g = 1
 	color_b = 0.85
-	vision_modifier = /datum/vision/ghost
+	vision_modifier = /datum/vision_modifier/ghost
 
 	setupProperties()
 		..()
@@ -354,7 +354,7 @@ TYPEINFO(/obj/item/clothing/glasses/thermal)
 	color_r = 1
 	color_g = 0.8 // red tint
 	color_b = 0.8
-	vision_modifier = /datum/vision/thermal
+	vision_modifier = /datum/vision_modifier/thermal
 
 
 	emp_act()
@@ -381,7 +381,7 @@ TYPEINFO(/obj/item/clothing/glasses/thermal/traitor)
 	color_r = 1
 	color_g = 0.75 // slightly more red?
 	color_b = 0.75
-	vision_modifier = /datum/vision/thermal/mk2
+	vision_modifier = /datum/vision_modifier/thermal/mk2
 
 /obj/item/clothing/glasses/thermal/orange
 	name = "orange-tinted glasses"
@@ -835,7 +835,7 @@ TYPEINFO(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
 	color_g = 1
 	color_b = 0.5
 	wear_layer = MOB_GLASSES_LAYER2
-	vision_modifier = /datum/vision/nightvision
+	vision_modifier = /datum/vision_modifier/nightvision
 
 	emp_act()
 		if (ishuman(src.loc))

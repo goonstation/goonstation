@@ -1198,7 +1198,7 @@ TYPEINFO(/mob/living/silicon/ghostdrone/deluxe)
 
 /mob/living/silicon/ghostdrone/deluxe
 	sees_static = FALSE
-	innate_vision = /datum/vision/ghostdrone_deluxe
+	innate_vision = /datum/vision_modifier/ghostdrone_deluxe
 
 	New()
 		..()

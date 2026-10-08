@@ -96,7 +96,7 @@
 
 	New()
 		..()
-		src.apply_vision(/datum/vision/nightvision/weak, src)
+		src.apply_vision(/datum/vision_modifier/nightvision/weak, src)
 		if (src.is_king) // kings are built like tanks
 			src.add_stam_mod_max("brullbar", 100)
 			APPLY_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_BODY, "brullbar", 20)

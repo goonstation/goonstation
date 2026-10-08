@@ -3024,13 +3024,13 @@ datum
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					M.apply_vision(/datum/vision/ghost, src)
+					M.apply_vision(/datum/vision_modifier/ghost, src)
 				..()
 
 			cross_threshold_under()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					M.remove_vision(/datum/vision/ghost, src)
+					M.remove_vision(/datum/vision_modifier/ghost, src)
 				..()
 
 		voltagen

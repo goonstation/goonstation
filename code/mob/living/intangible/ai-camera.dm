@@ -65,8 +65,8 @@ TYPEINFO(/mob/living/intangible/aieye)
 		last_loc = src.loc
 		..()
 
-		apply_vision(/datum/vision/ai_zrestricted, src.type)
-		apply_vision(/datum/vision/ai_camera, src.type)
+		apply_vision(/datum/vision_modifier/ai_zrestricted, src.type)
+		apply_vision(/datum/vision_modifier/ai_camera, src.type)
 
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_AI_EYE)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)

@@ -285,7 +285,7 @@ TYPEINFO(/obj/item/clothing/glasses/construction)
 	icon_state = "construction"
 	item_state = "construction"
 	desc = "The latest technology in viewing live blueprints."
-	vision_modifier = /datum/vision/construction/glasses
+	vision_modifier = /datum/vision_modifier/construction/glasses
 
 /obj/item/lamp_manufacturer/organic
 	icon = 'icons/obj/items/tools/lampman.dmi'

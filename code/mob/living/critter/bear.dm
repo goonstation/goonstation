@@ -93,7 +93,7 @@
 
 	New()
 		..()
-		src.apply_vision(/datum/vision/nightvision/weak, src) // lives in dark places
+		src.apply_vision(/datum/vision_modifier/nightvision/weak, src) // lives in dark places
 		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/spacebear, src) // bit faster than your average critter (meth)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST, "bear", 50) // METH
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STUN_RESIST_MAX, "bear", 50)

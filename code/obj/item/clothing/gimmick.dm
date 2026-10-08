@@ -21,7 +21,7 @@
 	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
 	see_face = FALSE
 	item_function_flags = IMMUNE_TO_ACID
-	vision_modifier = /datum/vision/thermal/mk2
+	vision_modifier = /datum/vision_modifier/thermal/mk2
 
 	New()
 		..()

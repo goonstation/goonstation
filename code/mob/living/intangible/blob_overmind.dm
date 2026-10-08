@@ -19,7 +19,7 @@ TYPEINFO(/mob/living/intangible/blob_overmind)
 	use_stamina = 0
 	speech_verb_say = list("wobbles", "wibbles", "jiggles", "wiggles", "undulates", "fidgets", "joggles", "twitches", "waggles", "trembles", "quivers")
 	default_speech_output_channel = SAY_CHANNEL_BLOB
-	innate_vision = /datum/vision/blob_overmind
+	innate_vision = /datum/vision_modifier/blob_overmind
 
 	var/datum/tutorial_base/regional/blob/tutorial
 	var/attack_power = 1 //! Multiplier value for how much the attack ability hurts

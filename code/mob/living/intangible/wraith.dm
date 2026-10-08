@@ -25,7 +25,7 @@ TYPEINFO(/mob/living/intangible/wraith)
 
 	default_speech_output_channel = SAY_CHANNEL_WRAITH
 	voice_type = null
-	innate_vision = /datum/vision/wraith
+	innate_vision = /datum/vision_modifier/wraith
 
 	var/deaths = 0
 	var/datum/hud/wraith/hud
@@ -81,11 +81,11 @@ TYPEINFO(/mob/living/intangible/wraith)
 		src.poltergeists = list()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_SPOOKY)
 		// Wraiths start off as incorporeal so they should also have the incorporeal component of their vision
-		src.apply_vision(/datum/vision/wraith_incorporeal, "wraith")
+		src.apply_vision(/datum/vision_modifier/wraith_incorporeal, "wraith")
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_AI_UNTRACKABLE, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
-		src.apply_vision(/datum/vision/nightvision/weak, src)
+		src.apply_vision(/datum/vision_modifier/nightvision/weak, src)
 		src.abilityHolder = new /datum/abilityHolder/wraith(src)
 		AH = src.abilityHolder
 		src.abilityHolder.points = 50

@@ -39,7 +39,7 @@ TYPEINFO(/mob/new_player)
 
 	New()
 		. = ..()
-		src.apply_vision(/datum/vision/new_player, "innate")
+		src.apply_vision(/datum/vision_modifier/new_player, "innate")
 		START_TRACKING
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_ALWAYS)
 	#ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO

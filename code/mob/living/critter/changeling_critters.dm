@@ -375,7 +375,7 @@ TYPEINFO(/mob/living/critter/changeling)
 		src.flags ^= TABLEPASS | DOORPASS
 
 		// EYE CAN SEE FOREVERRRR
-		src.apply_vision(/datum/vision/xray, src)
+		src.apply_vision(/datum/vision_modifier/xray, src)
 
 	critter_ability_attack(var/mob/target)
 		for (var/ability_path in list(/datum/targetable/critter/shedtears, /datum/targetable/critter/boilgib))

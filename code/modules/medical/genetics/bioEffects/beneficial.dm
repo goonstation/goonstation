@@ -741,30 +741,30 @@
 		. = ..()
 		if(ismob(owner))
 			if(power == 1)
-				owner.apply_vision(/datum/vision/nightvision/weak, src)
+				owner.apply_vision(/datum/vision_modifier/nightvision/weak, src)
 			else
-				owner.apply_vision(/datum/vision/nightvision, src)
+				owner.apply_vision(/datum/vision_modifier/nightvision, src)
 
 	onPowerChange(oldval, newval)
 		. = ..()
 		if(ismob(owner))
 			if(oldval == 1)
-				owner.remove_vision(/datum/vision/nightvision/weak, src)
+				owner.remove_vision(/datum/vision_modifier/nightvision/weak, src)
 			else
-				owner.remove_vision(/datum/vision/nightvision, src)
+				owner.remove_vision(/datum/vision_modifier/nightvision, src)
 
 			if(newval == 1)
-				owner.apply_vision(/datum/vision/nightvision/weak, src)
+				owner.apply_vision(/datum/vision_modifier/nightvision/weak, src)
 			else
-				owner.apply_vision(/datum/vision/nightvision, src)
+				owner.apply_vision(/datum/vision_modifier/nightvision, src)
 
 	OnRemove()
 		. = ..()
 		if(ismob(owner))
 			if(power == 1)
-				owner.remove_vision(/datum/vision/nightvision/weak, src)
+				owner.remove_vision(/datum/vision_modifier/nightvision/weak, src)
 			else
-				owner.remove_vision(/datum/vision/nightvision, src)
+				owner.remove_vision(/datum/vision_modifier/nightvision, src)
 
 /datum/bioEffect/toxic_farts
 	name = "High Decay Digestion"

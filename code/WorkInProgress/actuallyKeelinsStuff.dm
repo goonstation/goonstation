@@ -2392,7 +2392,7 @@ Returns:
 			return
 
 		usr.client.view = 12
-		usr.apply_vision(/datum/vision/movable_area_controller, src)
+		usr.apply_vision(/datum/vision_modifier/movable_area_controller, src)
 
 		src.overlays += usr
 		usr.set_loc(src)
@@ -2406,7 +2406,7 @@ Returns:
 			return
 
 		usr.client.view = world.view
-		usr.remove_vision(/datum/vision/movable_area_controller, src)
+		usr.remove_vision(/datum/vision_modifier/movable_area_controller, src)
 
 		src.overlays.Cut()
 		usr.set_loc(src.loc)

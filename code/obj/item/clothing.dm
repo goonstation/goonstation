@@ -39,7 +39,7 @@ ABSTRACT_TYPE(/obj/item/clothing)
 	var/can_stain = 1
 	var/list/datum/stain/stains = null
 
-	var/datum/vision/vision_modifier // vision modifier to apply, mostly for glasses and masks
+	var/datum/vision_modifier/vision_modifier // vision modifier to apply, mostly for glasses and masks
 
 	New()
 		..()
@@ -117,7 +117,7 @@ ABSTRACT_TYPE(/obj/item/clothing)
 		qdel(src)
 
 
-	proc/replace_vision_modifier(mob/user, datum/vision/new_vision_modifier)
+	proc/replace_vision_modifier(mob/user, datum/vision_modifier/new_vision_modifier)
 		if (src.equipped_in_slot)
 			user.remove_vision(src.vision_modifier, src)
 			user.apply_vision(new_vision_modifier, src)

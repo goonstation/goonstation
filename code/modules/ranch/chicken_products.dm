@@ -616,7 +616,7 @@ ABSTRACT_TYPE(/datum/chicken_egg_props)
 		var/mob/M = owner
 		if(istype(M))
 			boutput(M, SPAN_ALERT("<B>You feel as if you are one with everything.</B>"))
-			M.apply_vision(/datum/vision/xray, src)
+			M.apply_vision(/datum/vision_modifier/xray, src)
 
 	onUpdate(var/timePassed)
 		. = ..()
@@ -627,7 +627,7 @@ ABSTRACT_TYPE(/datum/chicken_egg_props)
 	onRemove()
 		. = ..()
 		var/mob/M = owner
-		M.remove_vision(/datum/vision/xray, src)
+		M.remove_vision(/datum/vision_modifier/xray, src)
 
 /datum/statusEffect/chicken_power/lesser
 	id = "c_power_lesser"

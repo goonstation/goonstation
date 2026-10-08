@@ -18,7 +18,7 @@ TYPEINFO(/mob/dead/observer)
 	blinded = FALSE
 	anchored = ANCHORED	//  don't get pushed around
 
-	var/datum/vision/observer/observer_vision
+	var/datum/vision_modifier/observer/observer_vision
 	var/doubleghost = FALSE //! When a ghost gets busted they become a ghost of a ghost and this var is true
 	var/observe_round = FALSE
 	var/health_shown = FALSE
@@ -262,7 +262,7 @@ TYPEINFO(/mob/dead/observer)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_SPECTRO, src)
 
 	// This is so we can toggle flags in our own datum instead of swapping singletons in and out
-	src.observer_vision = new /datum/vision/observer()
+	src.observer_vision = new /datum/vision_modifier/observer()
 	src.apply_vision(src.observer_vision, "innate")
 	animate_bumble(src) // floaty ghosts  c:
 	src.verbs += /mob/dead/observer/proc/toggle_tgui_auto_open

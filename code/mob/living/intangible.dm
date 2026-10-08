@@ -13,7 +13,7 @@ TYPEINFO(/mob/living/intangible)
 	event_handler_flags =  IMMUNE_OCEAN_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP | MOVE_NOCLIP
 	canbegrabbed = FALSE
 	can_lie = FALSE
-	innate_vision = /datum/vision/observer
+	innate_vision = /datum/vision_modifier/observer
 
 	New()
 		. = ..()

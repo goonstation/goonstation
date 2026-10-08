@@ -370,7 +370,7 @@ TYPEINFO(/mob/living/intangible/art_curser_displaced_soul)
 /mob/living/intangible/art_curser_displaced_soul
 	var/list/statusUiElements = list()
 	var/colour = "#7b88ff"
-	innate_vision = /datum/vision/art_curser_displaced_soul
+	innate_vision = /datum/vision_modifier/art_curser_displaced_soul
 
 	New(newLoc, mob/living/carbon/human/H)
 		src.name = "soul of [H.name]"

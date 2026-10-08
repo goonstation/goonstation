@@ -803,7 +803,7 @@ proc/compare_ornament_score(list/a, list/b)
 	human_compatible = 0
 	uses_human_clothes = 0
 	jerk = 1
-	vision_modifier = /datum/vision/krampus
+	vision_modifier = /datum/vision_modifier/krampus
 
 /mob/living/carbon/human/krampus
 	New()

@@ -15,7 +15,7 @@ TYPEINFO(/mob/living/critter/hastur)
 	can_grab = 1
 	can_disarm = 1
 	can_help = 1
-	innate_vision = /datum/vision/hastur
+	innate_vision = /datum/vision_modifier/hastur
 	stat = STAT_DEAD
 	stepsound = 'sound/misc/hastur/tentacle_walk.ogg'
 	speech_verb_say = "states"

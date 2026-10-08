@@ -32,7 +32,7 @@
 			if (isnull(M.summons))
 				M.summons = list()
 			M.summons += src
-		src.apply_vision(/datum/vision/nightvision/weak, src)
+		src.apply_vision(/datum/vision_modifier/nightvision/weak, src)
 		abilityHolder.addAbility(/datum/targetable/critter/voidhound/cloak)
 		abilityHolder.addAbility(/datum/targetable/critter/voidhount/rushdown)
 
