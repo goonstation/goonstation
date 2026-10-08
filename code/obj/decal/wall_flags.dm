@@ -114,10 +114,15 @@
 	needs_logging = FALSE
 	starting_flag = /obj/item/flag/nanotrasen
 
+	emag_act(mob/user, obj/item/card/emag/E)
+		. = ..()
+		boutput(user, SPAN_NOTICE("The [E]'s red wiring rubs off on the [src], painting it sinister red!"))
+		new/obj/decal/poster/flag/syndicate(src.loc)
+		qdel(src)
+
 /obj/decal/poster/flag/syndicate
 	name = "syndicate flag"
 	desc = "The ominous and intimidating flag of the Syndicate, naturally its a <b>red flag</b>, heh."
 	icon_state = "syndicate"
 	needs_logging = FALSE
 	starting_flag = /obj/item/flag/syndicate
-

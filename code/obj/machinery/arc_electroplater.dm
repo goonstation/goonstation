@@ -225,6 +225,8 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 			if(!I.can_arcplate)
 				cancel_arcplate = TRUE
 		if(!cancel_arcplate)
+			if(target_item.material_amt > 1)
+				target_item.material_amt = 1
 			target_item.setMaterial(my_bar.material)
 			qdel(my_bar)
 			src.my_bar = null

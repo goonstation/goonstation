@@ -3337,6 +3337,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	create = 1
 	time = 15 SECONDS
 	category = MANUFACTURER::CATEGORY::CLOTHING
+	apply_material = TRUE
 
 /datum/manufacture/blindfold
 	name = "Blindfold"
@@ -3345,6 +3346,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	create = 1
 	time = 5 SECONDS
 	category = MANUFACTURER::CATEGORY::CLOTHING
+	apply_material = TRUE
 
 /datum/manufacture/muzzle
 	name = "Muzzle"
@@ -3375,6 +3377,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	create = 1
 	time = 8 SECONDS
 	category = MANUFACTURER::CATEGORY::RESOURCE
+	apply_material = TRUE
 
 /datum/manufacture/handkerchief
 	name = "Handkerchief"
@@ -3383,6 +3386,7 @@ ABSTRACT_TYPE(/datum/manufacture/aiModule)
 	create = 1
 	time = 4 SECONDS
 	category = MANUFACTURER::CATEGORY::RESOURCE
+	apply_material = TRUE
 
 /////// pod construction components
 
@@ -4199,7 +4203,27 @@ ABSTRACT_TYPE(/datum/manufacture/locker) //Regular lockers are built using steel
 	create = 1
 	time = 4 SECONDS
 	category = MANUFACTURER::CATEGORY::MEDICINE
-/datum/manufacture/spacecillin	//
+/datum/manufacture/empty_kit/brute
+	item_outputs = list(/obj/item/storage/firstaid/brute/empty)
+/datum/manufacture/empty_kit/fire
+	item_outputs = list(/obj/item/storage/firstaid/fire/empty)
+/datum/manufacture/empty_kit/toxin
+	item_outputs = list(/obj/item/storage/firstaid/toxin/empty)
+/datum/manufacture/empty_kit/oxygen
+	item_outputs = list(/obj/item/storage/firstaid/oxygen/empty)
+/datum/manufacture/empty_kit/brain
+	item_outputs = list(/obj/item/storage/firstaid/brain/empty)
+/datum/manufacture/empty_kit/mental
+	item_outputs = list(/obj/item/storage/firstaid/mental/empty)
+/datum/manufacture/empty_docbag
+	name = "Empty Doctor's Bag"
+	item_requirements = list("metal" = 2, "fabric" = 2)
+	item_outputs = list(/obj/item/storage/firstaid/docbag/empty)
+	create = 1
+	time = 4 SECONDS
+	category = MANUFACTURER::CATEGORY::MEDICINE
+
+/datum/manufacture/spacecillin
 	name = "Spacecillin"
 	item_requirements = list("metal" = 3,
 							 "conductive" = 3)

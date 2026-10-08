@@ -3,6 +3,7 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "album"
 	item_state = "briefcase"
+	can_hold = list(/obj/item/photo)
 
 /obj/item/storage/photo_album/attackby(obj/item/W, mob/user)
 	if (!istype(W,/obj/item/photo))
