@@ -1291,6 +1291,7 @@
 
 // cyborgs shouldn't be able to eject ID cards from their PDA
 /obj/item/device/pda2/cyborg/eject_id_card(var/mob/user as mob)
+	boutput(user, "<span class='alert'>The ID card is soldered firmly into [src.name].</span>")
 	return
 
 /*
