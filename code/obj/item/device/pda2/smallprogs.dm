@@ -1017,14 +1017,14 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 		var/obj/item/card/id/ID = src.master.ID_card
 		if(!ID || !istype(ID))
 			return SECURITY::TICKET::LEVEL::NONE
-		if(!can_approve_fines)
-			return SECURITY::TICKET::LEVEL::TICKET
 		if(access_ticket in ID.access)
 			. = SECURITY::TICKET::LEVEL::TICKET
 		if(access_fine_small in ID.access)
 			. = SECURITY::TICKET::LEVEL::FINE_SMALL
 		if(access_fine_large in ID.access)
 			. = SECURITY::TICKET::LEVEL::FINE_LARGE
+		if(!src.can_approve_fines)
+			. = min(SECURITY::TICKET::LEVEL::TICKET, .)
 
 	return_text()
 		if(..())
@@ -1240,7 +1240,8 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 
 // literally only here to prevent cyborgs from fining people
 /datum/computer/file/pda_program/security_ticket/issue_only
-    can_approve_fines = FALSE
+	can_approve_fines = FALSE
+	name = "Ticket Lite"
 
 #define SPAM_DELAY 20
 //cargo request

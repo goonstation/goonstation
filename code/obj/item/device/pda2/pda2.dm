@@ -960,7 +960,7 @@
 		return
 
 	proc/eject_id_card(var/mob/user as mob)
-		if (src.ID_card && src.type != /obj/item/device/pda2/cyborg)
+		if (src.ID_card)
 			src.registered = null
 			src.assignment = null
 			src.access = null
@@ -1288,6 +1288,10 @@
 		if (E.mainframe)
 			return 1
 	return ..(user)
+
+// cyborgs shouldn't be able to eject ID cards from their PDA
+/obj/item/device/pda2/cyborg/eject_id_card(var/mob/user as mob)
+	return
 
 /*
  *	PDA 2 ~help file~
