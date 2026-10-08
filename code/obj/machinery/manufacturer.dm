@@ -1230,7 +1230,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		var/list/bank_info = list()
 		var/list/keys_of_interest = list("name", "current_money")
 		for (var/key in keys_of_interest)
-			bank_info[key] = src.account.get_field(key)
+			bank_info[key] = src.account[key]
 		return bank_info
 
 	mouse_drop(over_object, src_location, over_location)

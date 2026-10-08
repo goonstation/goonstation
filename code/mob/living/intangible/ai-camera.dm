@@ -329,6 +329,12 @@ TYPEINFO(/mob/living/intangible/aieye)
 	resist()
 		return 0 //can't actually resist anything because there's nothing to resist, but maybe the hot key could be used for something?
 
+	clamp_values()
+		. = ..()
+		src.stuttering = 0
+		src.druggy = 0
+		src.jitteriness = 0
+
 	//death stuff that should be passed to mainframe
 	gib(give_medal, include_ejectables) //this should be admin only, I would hope
 		message_admins("something tried to gib the AI Eye - if this wasn't an admin action, something has gone badly wrong")
