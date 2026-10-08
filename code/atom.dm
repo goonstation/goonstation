@@ -726,7 +726,7 @@ TYPEINFO(/obj/item/disk)
 	if (isghostcritter(user))
 		var/mob/living/critter/C = user
 		if (!C.can_pull(src))
-			boutput(user,SPAN_ALERT("<b>[src] is too heavy for you pull in your half-spectral state!</b>"))
+			boutput(user, SPAN_ALERT("<b>[src] is too heavy for you to pull in your half-spectral state!</b>"))
 			return 1
 
 	if (iscarbon(user) || issilicon(user))
