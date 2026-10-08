@@ -592,7 +592,7 @@
 
 	update_icon()
 		..()
-		if (src.equipped_in_slot == SLOT_L_HAND | src.equipped_in_slot == SLOT_R_HAND)
+		if (src.equipped_in_slot == SLOT_L_HAND || src.equipped_in_slot == SLOT_R_HAND)
 			icon_state = "reclaimshotty"
 		else
 			icon_state = "reclaimshotty_collapsed"
