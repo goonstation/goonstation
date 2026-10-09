@@ -210,3 +210,12 @@ jobs:
       - name: Compile
         run: |
           tools/ci/dm.sh -DCIBUILD goonstation.dme
+
+      - name: Check for Compiled Secret Resources
+        run: |
+          if LC_ALL=C grep -aiEq '\+secret[/\\]' goonstation.rsc; then
+            echo "ERROR: Secret resources were compiled into the RSC. Use runtime string paths."
+            exit 1
+          else
+            test "$?" -eq 1
+          fi

@@ -9,6 +9,13 @@
 /// This is relevant to atoms so it goes here!!!! do not @ me
 #define opposite_dir_to(dir) (turn(dir, 180))
 
+/// Use the editor resource in map editors and the default resource in normal builds.
+#ifdef IN_MAP_EDITOR
+#define MAP_EDITOR_ICON(EDITOR_RESOURCE, DEFAULT_RESOURCE) EDITOR_RESOURCE
+#else
+#define MAP_EDITOR_ICON(EDITOR_RESOURCE, DEFAULT_RESOURCE) DEFAULT_RESOURCE
+#endif
+
 
 /**
  * Makes the given procs available for use with the admin interact menu

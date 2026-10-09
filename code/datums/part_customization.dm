@@ -43,7 +43,7 @@ ABSTRACT_TYPE(/datum/part_customization)
 		if (!src.base_64_cache)
 			if (!src.custom_icon)
 				var/obj/item/part_type = pick(src.part_type) //funny initial abuse
-				src.base_64_cache = icon2base64(icon(initial(part_type.icon), initial(part_type.icon_state), dir=SOUTH, frame=1, moving=0))
+				src.base_64_cache = icon2base64(icon(get_initial_icon(part_type), initial(part_type.icon_state), dir=SOUTH, frame=1, moving=0))
 			else
 				src.base_64_cache = icon2base64(icon(src.custom_icon, src.custom_icon_state))
 		return src.base_64_cache

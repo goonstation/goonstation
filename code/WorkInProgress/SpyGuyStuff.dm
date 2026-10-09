@@ -806,7 +806,7 @@ proc/Create_Tommyname()
 	var/turf/T = turf_type
 	src.name = initial(T.name)
 	src.desc = initial(T.desc)
-	src.icon = initial(T.icon)
+	src.icon = get_initial_icon(T)
 	src.icon_state = initial(T.icon_state)
 	src.set_density(initial(T.density))
 	src.set_opacity(initial(T.opacity))
