@@ -7,6 +7,5 @@
 	for_by_tcl(directional, /datum/component/directional)
 		var/atom/A = directional.parent
 		var/typepath = "[A.type]"
-		var/abstract_ending = "/directional"
-		if(findtext(typepath, abstract_ending,(length(typepath)-length(abstract_ending))))
+		if(dd_hassuffix(typepath, "/directional"))
 			. += CI.format_position(A)
