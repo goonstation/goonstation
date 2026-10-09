@@ -502,7 +502,7 @@
 
 	src.destinations["Third Party"] = "REQ-THIRDPARTY"
 	for (var/datum/req_contract/RC in shippingmarket.req_contracts)
-		src.destinations[RC.name] = RC.req_code
+		src.destinations["[RC.name] ([RC.req_code])"] = RC.req_code
 
 /obj/item/portable_barcoder/attack_self(mob/user)
 	src.select_destination(user)

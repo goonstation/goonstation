@@ -1255,7 +1255,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if (!src.use_type_icon)
 			return
 		var/atom/thing = src.typetospawn
-		src.icon = initial(thing.icon)
+		src.icon = get_initial_icon(thing)
 		src.icon_state = initial(thing.icon_state)
 
 	on_hit(atom/hit, direction, obj/projectile/O)
