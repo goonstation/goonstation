@@ -205,21 +205,16 @@
 		traits.Cut()
 
 	proc/removeAllButMutant()
-		var/newTraits = list()
-
 		for (var/id in traits)
 			var/datum/trait/T = traits[id]
+			if(!isnull(T.mutantRace))
+				continue
+
 			if(!isnull(owner))
 				if(T.isMoveTrait)
 					moveTraits.Remove(T.id)
 				T.onRemove(owner)
-			if(!isnull(T.mutantRace))
-				newTraits[id] = T
-
-		traits.Cut()
-
-		for(var/id in newTraits)
-			src.addTrait(id, newTraits[id])
+				traits -= id
 
 	proc/getTrait(id)
 		RETURN_TYPE(/datum/trait)
