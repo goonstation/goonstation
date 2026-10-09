@@ -632,6 +632,8 @@
 			if(owner)
 				T.color = owner.cd_text_color
 				S.color = owner.cd_text_color
+				if(src.owner.border_icon_state)
+					src.UpdateOverlays(image(src.icon, src.owner.border_icon_state), "ability_border")
 
 	disposing()
 		qdel(point_overlay)
@@ -642,6 +644,15 @@
 		cd_secs = null
 		..()
 
+	MouseEntered()
+		. = ..()
+		if(src.owner?.animated_border_state)
+			src.UpdateOverlays(image(src.icon, src.owner.animated_border_state), "ability_border")
+
+	MouseExited()
+		. = ..()
+		if(src.owner?.animated_border_state)
+			src.UpdateOverlays(image(src.icon, src.owner.border_icon_state), "ability_border")
 
 	update_icon()
 		var/mob/M = get_controlling_mob()
@@ -888,6 +899,9 @@
 
 	var/icon = 'icons/mob/spell_buttons.dmi'
 	var/icon_state = "blob-template"
+
+	var/border_icon_state = null // Border icon is separate and overlayed over the button (to avoid having to copy the border to all new abilities)
+	var/animated_border_state = null // Border is animated while hovered over
 
 	var/theme = null // for wire's tooltips, it's about time this got varized
 	var/show_tooltip = TRUE
