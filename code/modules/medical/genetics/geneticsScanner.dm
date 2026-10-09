@@ -269,13 +269,13 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 	var/mob/living/carbon/human/target_mob = null
 	var/direction = SOUTH
 
-	var/datum/customization_style/customization_first_style = new /datum/customization_style/hair/short/short
-	var/datum/customization_style/customization_second_style = new /datum/customization_style/none
-	var/datum/customization_style/customization_third_style = new /datum/customization_style/none
+	var/datum/customization_style/hair_bottom_style = new /datum/customization_style/hair/short/short
+	var/datum/customization_style/hair_middle_style = new /datum/customization_style/none
+	var/datum/customization_style/hair_top_style = new /datum/customization_style/none
 
-	var/customization_first_color = "#FFFFFF"
-	var/customization_second_color = "#FFFFFF"
-	var/customization_third_color = "#FFFFFF"
+	var/hair_bottom_color = "#FFFFFF"
+	var/hair_middle_color = "#FFFFFF"
+	var/hair_top_color = "#FFFFFF"
 	var/e_color = "#FFFFFF"
 
 	var/s_tone = "#FAD7D0"
@@ -310,17 +310,17 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 				if (params["eyes"])
 					src.e_color = sanitize_color(params["eyes"], FALSE)
 				if (params["color1"])
-					src.customization_first_color = sanitize_color(params["color1"], FALSE)
+					src.hair_bottom_color = sanitize_color(params["color1"], FALSE)
 				if (params["color2"])
-					src.customization_second_color = sanitize_color(params["color2"], FALSE)
+					src.hair_middle_color = sanitize_color(params["color2"], FALSE)
 				if (params["color3"])
-					src.customization_third_color = sanitize_color(params["color3"], FALSE)
+					src.hair_top_color = sanitize_color(params["color3"], FALSE)
 				if (params["style1"])
-					src.customization_first_style = find_style_by_name(params["style1"], usr.client)
+					src.hair_bottom_style = find_style_by_name(params["style1"], usr.client)
 				if (params["style2"])
-					src.customization_second_style = find_style_by_name(params["style2"], usr.client)
+					src.hair_middle_style = find_style_by_name(params["style2"], usr.client)
 				if (params["style3"])
-					src.customization_third_style = find_style_by_name(params["style3"], usr.client)
+					src.hair_top_style = find_style_by_name(params["style3"], usr.client)
 				if (params["apply"] || params["cancel"])
 					if (params["apply"])
 						src.copy_to_target()
@@ -349,12 +349,12 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 			"direction" = src.direction,
 			"skin" = src.s_tone,
 			"eyes" = src.e_color,
-			"color1" = src.customization_first_color,
-			"color2" = src.customization_second_color,
-			"color3" = src.customization_third_color,
-			"style1" = src.customization_first_style.name,
-			"style2" = src.customization_second_style.name,
-			"style3" = src.customization_third_style.name,
+			"color1" = src.hair_bottom_color,
+			"color2" = src.hair_middle_color,
+			"color3" = src.hair_top_color,
+			"style1" = src.hair_bottom_style.name,
+			"style2" = src.hair_middle_style.name,
+			"style3" = src.hair_top_style.name,
 			"hasEyes" = hasHumanEyes,
 			"hasSkin" = hasHumanSkintone,
 			"hasHair" = hasHumanHair,
@@ -373,23 +373,23 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 
 			src.s_tone = H.bioHolder.mobAppearance.s_tone
 
-			src.customization_first_style = H.bioHolder.mobAppearance.customizations["hair_bottom"].style
-			src.customization_first_color = H.bioHolder.mobAppearance.customizations["hair_bottom"].color
+			src.hair_bottom_style = H.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style
+			src.hair_bottom_color = H.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color
 
-			src.customization_second_style = H.bioHolder.mobAppearance.customizations["hair_middle"].style
-			src.customization_second_color = H.bioHolder.mobAppearance.customizations["hair_middle"].color
+			src.hair_middle_style = H.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style
+			src.hair_middle_color = H.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color
 
-			src.customization_third_style = H.bioHolder.mobAppearance.customizations["hair_top"].style
-			src.customization_third_color = H.bioHolder.mobAppearance.customizations["hair_top"].color
+			src.hair_top_style = H.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style
+			src.hair_top_color = H.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color
 
-			if(!istype(src.customization_first_style, /datum/customization_style))
-				src.customization_first_style = new /datum/customization_style/none
+			if(!istype(src.hair_bottom_style, /datum/customization_style))
+				src.hair_bottom_style = new /datum/customization_style/none
 
-			if(!istype(src.customization_second_style, /datum/customization_style))
-				src.customization_second_style = new /datum/customization_style/none
+			if(!istype(src.hair_middle_style, /datum/customization_style))
+				src.hair_middle_style = new /datum/customization_style/none
 
-			if(!istype(src.customization_third_style, /datum/customization_style))
-				src.customization_third_style = new /datum/customization_style/none
+			if(!istype(src.hair_top_style, /datum/customization_style))
+				src.hair_top_style = new /datum/customization_style/none
 
 			src.e_color = H.bioHolder.mobAppearance.e_color
 
@@ -402,24 +402,24 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 			sanitize_null_values()
 			target_mob.bioHolder.mobAppearance.e_color = e_color
 			target_mob.bioHolder.mobAppearance.e_color_original = e_color
-			target_mob.bioHolder.mobAppearance.customizations["hair_bottom"].color = customization_first_color
-			target_mob.bioHolder.mobAppearance.customizations["hair_bottom"].color_original = customization_first_color
-			target_mob.bioHolder.mobAppearance.customizations["hair_middle"].color = customization_second_color
-			target_mob.bioHolder.mobAppearance.customizations["hair_middle"].color_original = customization_second_color
-			target_mob.bioHolder.mobAppearance.customizations["hair_top"].color = customization_third_color
-			target_mob.bioHolder.mobAppearance.customizations["hair_top"].color_original = customization_third_color
+			target_mob.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color = hair_bottom_color
+			target_mob.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color_original = hair_bottom_color
+			target_mob.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color = hair_middle_color
+			target_mob.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color_original = hair_middle_color
+			target_mob.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color = hair_top_color
+			target_mob.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color_original = hair_top_color
 
 			target_mob.bioHolder.mobAppearance.s_tone = s_tone
 			target_mob.bioHolder.mobAppearance.s_tone_original = s_tone
 			if (target_mob.limbs)
 				target_mob.limbs.reset_stone()
 
-			target_mob.bioHolder.mobAppearance.customizations["hair_bottom"].style = customization_first_style
-			target_mob.bioHolder.mobAppearance.customizations["hair_bottom"].style_original = customization_first_style
-			target_mob.bioHolder.mobAppearance.customizations["hair_middle"].style = customization_second_style
-			target_mob.bioHolder.mobAppearance.customizations["hair_middle"].style_original = customization_second_style
-			target_mob.bioHolder.mobAppearance.customizations["hair_top"].style = customization_third_style
-			target_mob.bioHolder.mobAppearance.customizations["hair_top"].style_original = customization_third_style
+			target_mob.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style = hair_bottom_style
+			target_mob.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style_original = hair_bottom_style
+			target_mob.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style = hair_middle_style
+			target_mob.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style_original = hair_middle_style
+			target_mob.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style = hair_top_style
+			target_mob.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style_original = hair_top_style
 
 			target_mob.update_colorful_parts()
 			target_mob.set_face_icon_dirty()
@@ -433,18 +433,18 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 				. = rgb(L[1], L[2], L[3])
 
 		sanitize_null_values()
-			if (customization_first_color == null)
-				customization_first_color = "#101010"
-			if (customization_first_style == null)
-				customization_first_style = new /datum/customization_style/none
-			if (customization_second_color == null)
-				customization_second_color = "#101010"
-			if (customization_second_style == null)
-				customization_second_style = new /datum/customization_style/none
-			if (customization_third_color == null)
-				customization_third_color = "#101010"
-			if (customization_third_style == null)
-				customization_third_style = new /datum/customization_style/none
+			if (hair_bottom_color == null)
+				hair_bottom_color = "#101010"
+			if (hair_bottom_style == null)
+				hair_bottom_style = new /datum/customization_style/none
+			if (hair_middle_color == null)
+				hair_middle_color = "#101010"
+			if (hair_middle_style == null)
+				hair_middle_style = new /datum/customization_style/none
+			if (hair_top_color == null)
+				hair_top_color = "#101010"
+			if (hair_top_style == null)
+				hair_top_style = new /datum/customization_style/none
 			if (e_color == null)
 				e_color = "#101010"
 			if (s_tone == null || s_tone == "#ffffff")
@@ -452,26 +452,26 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 
 		update_preview_icon()
 			var/datum/appearanceHolder/AH = new()
-			var/datum/customizationHolder/customization_first = AH.customizations["hair_bottom"]
-			var/datum/customizationHolder/customization_second = AH.customizations["hair_middle"]
-			var/datum/customizationHolder/customization_third = AH.customizations["hair_top"]
+			var/datum/customizationHolder/hair_bottom = AH.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM]
+			var/datum/customizationHolder/hair_middle = AH.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE]
+			var/datum/customizationHolder/hair_top = AH.customizations[CUSTOMIZATION::LAYER::HAIR_TOP]
 
 			AH.CopyOther(src.target_mob.bioHolder.mobAppearance)
 			AH.e_color = src.e_color
 			AH.e_color_original = src.e_color
-			customization_first.color = src.customization_first_color
-			customization_first.color_original = src.customization_first_color
-			customization_second.color = src.customization_second_color
-			customization_second.color_original = src.customization_second_color
-			customization_third.color = src.customization_third_color
-			customization_third.color_original = src.customization_third_color
+			hair_bottom.color = src.hair_bottom_color
+			hair_bottom.color_original = src.hair_bottom_color
+			hair_middle.color = src.hair_middle_color
+			hair_middle.color_original = src.hair_middle_color
+			hair_top.color = src.hair_top_color
+			hair_top.color_original = src.hair_top_color
 			AH.s_tone = src.s_tone
 			AH.s_tone_original = src.s_tone
-			customization_first.style = src.customization_first_style
-			customization_first.style_original = src.customization_first_style
-			customization_second.style = src.customization_second_style
-			customization_second.style_original = src.customization_second_style
-			customization_third.style = src.customization_third_style
-			customization_third.style_original = src.customization_third_style
+			hair_bottom.style = src.hair_bottom_style
+			hair_bottom.style_original = src.hair_bottom_style
+			hair_middle.style = src.hair_middle_style
+			hair_middle.style_original = src.hair_middle_style
+			hair_top.style = src.hair_top_style
+			hair_top.style_original = src.hair_top_style
 
 			src.preview.update_appearance(AH, src.target_mob.mutantrace, src.direction)

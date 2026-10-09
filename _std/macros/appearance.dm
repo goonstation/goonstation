@@ -32,10 +32,10 @@
 #define TAIL_ROACH 8
 #define TAIL_PUG 9
 
-/// appearanceholder color vars. Tells mutant races to stick this color into the specified special hair / limb overlay color slot
-#define CUST_1 1
-#define CUST_2 2
-#define CUST_3 3
+// appearanceholder color vars. Tells mutant races to stick this color into the specified special hair / limb overlay color slot
+#define HAIR_BOTTOM_COLOR 1
+#define HAIR_MIDDLE_COLOR 2
+#define HAIR_TOP_COLOR 3
 #define SKIN_TONE 4
 
 //appearance bitflags cus im tired of tracking down a million different vars that rarely do what they should

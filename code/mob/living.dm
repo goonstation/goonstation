@@ -644,7 +644,7 @@ TYPEINFO(/mob/living)
 
 /// Currently used for the color of pointing at things. Might be useful for other things that should have a color based off a mob.
 /mob/living/proc/get_symbol_color()
-	. = src.bioHolder.mobAppearance.customizations["hair_bottom"].color
+	. = src.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color
 
 /mob/living/proc/set_burning(var/new_value)
 	setStatus("burning", new_value SECONDS)
@@ -1524,7 +1524,7 @@ TYPEINFO(/mob/living)
 			src.apply_flash(60, 0, 10)
 			if (H)
 				var/hair_type = pick(/datum/customization_style/hair/gimmick/xcom,/datum/customization_style/hair/gimmick/bart,/datum/customization_style/hair/gimmick/zapped)
-				H.bioHolder.mobAppearance.customizations["hair_bottom"].style = new hair_type
+				H.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style = new hair_type
 				H.set_face_icon_dirty()
 		if (100 to INFINITY)  // cogwerks - here are the big fuckin murderflashes
 			playsound(src.loc, 'sound/effects/elec_bigzap.ogg', 40, 1)
@@ -1532,7 +1532,7 @@ TYPEINFO(/mob/living)
 			src.flash(60)
 			if (H)
 				var/hair_type = pick(/datum/customization_style/hair/gimmick/xcom,/datum/customization_style/hair/gimmick/bart,/datum/customization_style/hair/gimmick/zapped)
-				H.bioHolder.mobAppearance.customizations["hair_bottom"].style = new hair_type
+				H.bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style = new hair_type
 				H.set_face_icon_dirty()
 
 			var/turf/T = get_turf(src)

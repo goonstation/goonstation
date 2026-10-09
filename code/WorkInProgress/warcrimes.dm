@@ -187,12 +187,12 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 		..()
 
 	initializeBioholder()
-		bioHolder.mobAppearance.customizations["hair_bottom"].style =  new /datum/customization_style/hair/gimmick/shitty_beard
-		bioHolder.mobAppearance.customizations["hair_bottom"].color = "#281400"
-		bioHolder.mobAppearance.customizations["hair_middle"].style =  new /datum/customization_style/hair/short/pomp
-		bioHolder.mobAppearance.customizations["hair_middle"].color = "#241200"
-		bioHolder.mobAppearance.customizations["hair_top"].style =  new /datum/customization_style/hair/gimmick/shitty_beard_stains
-		bioHolder.mobAppearance.customizations["hair_top"].color = "#663300"
+		bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].style =  new /datum/customization_style/hair/gimmick/shitty_beard
+		bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_BOTTOM].color = "#281400"
+		bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].style =  new /datum/customization_style/hair/short/pomp
+		bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_MIDDLE].color = "#241200"
+		bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].style =  new /datum/customization_style/hair/gimmick/shitty_beard_stains
+		bioHolder.mobAppearance.customizations[CUSTOMIZATION::LAYER::HAIR_TOP].color = "#663300"
 		bioHolder.age = 63
 		bioHolder.bloodType = "A+"
 		bioHolder.mobAppearance.gender = "male"
