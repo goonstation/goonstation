@@ -1,5 +1,9 @@
 
 (t)fri oct 09 26
+(u)bladethrower
+(p)27943
+(e)🪲🗺|C-Bug, A-Mapping
+(*)Cogmap 2 Inner Engineering APC is now connected at round start. Engineers rejoice!
 (u)Warwere
 (p)28031
 (e)|
