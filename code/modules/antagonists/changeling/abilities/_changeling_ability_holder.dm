@@ -294,7 +294,7 @@
 
 /datum/targetable/changeling
 	icon = 'icons/ui/ability_icons/changeling.dmi'
-	icon_state = "changeling-template"
+	icon_state = "horror"
 	border_icon_state = "changeling-border"
 	animated_border_state = "changeling-border-animated"
 	cooldown = 0
