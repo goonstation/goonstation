@@ -78,10 +78,6 @@
 	##_PATH/directional/New() { \
 		. = ..(); \
 		src.AddElement(/datum/element/stick_to_walls); \
-	} \
-	##_PATH/directional/was_built_from_frame() { \
-		. = ..(); \
-		src.AddElement(/datum/element/stick_to_walls); \
 	}
 
 
