@@ -149,8 +149,8 @@
 	border_state = "template_tr"
 
 /datum/targetable/vent_move/changeling
-	border_icon = 'icons/mob/spell_buttons.dmi'
-	border_state = "changeling-template"
+	border_icon = 'icons/ui/ability_icons/changeling.dmi'
+	border_state = "changeling-border"
 
 /datum/targetable/vent_move/plaguerat
 	border_icon = 'icons/mob/wraith_ui.dmi'
