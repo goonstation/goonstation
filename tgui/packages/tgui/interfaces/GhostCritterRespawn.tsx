@@ -1,18 +1,26 @@
-import { ImageButton, Section, Stack } from 'tgui-core/components';
+/**
+ * @file
+ * @copyright 2026
+ * @author Sovexe (https://github.com/sovexe)
+ * @license ISC
+ */
+
+import { Button, ImageButton, Section, Stack } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
-const CRITTER_CHOICE_WIDTH = 8;
-const CRITTER_IMAGE_SIZE = 64;
+const CRITTER_IMAGE_SIZE = 96;
 
 interface Critter {
   type: string;
   name: string;
   icon: string | null;
   iconState: string;
+  iconDirection: number;
   isAntagonist: BooleanLike;
+  isPremium: BooleanLike;
 }
 
 interface GhostCritterRespawnData {
@@ -23,31 +31,36 @@ export const GhostCritterRespawn = () => {
   const { act, data } = useBackend<GhostCritterRespawnData>();
 
   return (
-    <Window width={460} height={380}>
+    <Window width={475} height={data.critters.length > 4 ? 320 : 185}>
       <Window.Content>
-        <Section title="Available Critters" fill scrollable>
+        <Section fill scrollable>
           <Stack wrap justify="center">
             {data.critters.map((critter) => (
-              <Stack.Item key={critter.type} width={CRITTER_CHOICE_WIDTH}>
-                <Stack vertical align="center">
-                  <Stack.Item>
-                    <ImageButton
-                      dmIcon={critter.icon}
-                      dmIconState={critter.iconState}
-                      imageSize={CRITTER_IMAGE_SIZE}
-                      tooltip={`Respawn as ${critter.name}`}
-                      onClick={() => act('respawn', { type: critter.type })}
-                    />
-                  </Stack.Item>
-                  <Stack.Item textAlign="center" preserveWhitespace>
-                    <Stack vertical lineHeight={1}>
-                      <Stack.Item>{critter.name}</Stack.Item>
-                      {!!critter.isAntagonist && (
-                        <Stack.Item italic>Antagonist</Stack.Item>
-                      )}
-                    </Stack>
-                  </Stack.Item>
-                </Stack>
+              <Stack.Item key={critter.type}>
+                <ImageButton
+                  dmIcon={critter.icon}
+                  dmIconState={critter.iconState}
+                  dmDirection={critter.iconDirection}
+                  imageSize={CRITTER_IMAGE_SIZE}
+                  buttons={
+                    (!!critter.isAntagonist || !!critter.isPremium) && (
+                      <Button
+                        color={critter.isAntagonist ? 'bad' : 'yellow'}
+                        icon={critter.isAntagonist ? 'a' : 'star'}
+                        tooltip={
+                          critter.isAntagonist
+                            ? 'Antagonist critter'
+                            : 'Unlocked by your Spacebux purchase'
+                        }
+                        tooltipPosition="top"
+                      />
+                    )
+                  }
+                  tooltip={`Respawn as ${critter.name}`}
+                  onClick={() => act('respawn', { type: critter.type })}
+                >
+                  {critter.name}
+                </ImageButton>
               </Stack.Item>
             ))}
             {!data.critters.length && (

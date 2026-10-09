@@ -21,14 +21,30 @@
 			if (ispath(critter_type, /mob/living/critter/small_animal/figure))
 				var/datum/figure_info/figure = /datum/figure_info/assistant
 				preview_state = "fig-[initial(figure.icon_state)]"
+			var/critter_icon = get_initial_icon(critter_type)
 			critters += list(list(
 				"type" = "[critter_type]",
 				"name" = capitalize(initial(critter_type.name)),
-				"icon" = get_tgui_icon(get_initial_icon(critter_type)),
+				"icon" = get_tgui_icon(critter_icon),
 				"iconState" = preview_state,
+				"iconDirection" = src.get_preview_direction(critter_icon, preview_state),
 				"isAntagonist" = (critter_type in antag_respawn_critter_types),
+				"isPremium" = (!(critter_type in respawn_critter_types) && !(critter_type in antag_respawn_critter_types)),
 			))
 		return list("critters" = critters)
+
+	/// Prefer west when the icon state provides it; otherwise use south.
+	proc/get_preview_direction(icon_resource, icon_state)
+		if (!icon_resource)
+			return SOUTH
+		var/static/list/preview_directions = list()
+		var/list/directions = preview_directions[icon_resource]
+		if (isnull(directions))
+			directions = list()
+			preview_directions[icon_resource] = directions
+		if (!(icon_state in directions))
+			directions[icon_state] = length(icon_states(icon(icon_resource, icon_state, WEST, 1, FALSE))) ? WEST : SOUTH
+		return directions[icon_state]
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 		if (..())
