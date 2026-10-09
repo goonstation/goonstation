@@ -1,4 +1,23 @@
 
+(t)fri oct 09 26
+(u)Warwere
+(p)28031
+(e)|
+(+)M4GP13 now speaks properly.
+(t)thu oct 08 26
+(u)cringe
+(p)28033
+(e)|
+(+)Most of the items in the HPD are cheaper by a unit.
+(t)mon oct 05 26
+(u)Kubius
+(p)27227
+(e)🆕⚖🌠|C-Feature, C-Balance, A-Events
+(*)Interdictors can now fully suppress white holes with great difficulty (likely requiring multiple interdictors or an exceptional cell), with their grid draw functionality enhanced to support this.
+(u)Kubius
+(p)28008
+(e)|
+(+)The new harmonic siphon brief now uses zero-indexed vertical coordinates to match the floor decals.
 (t)sun oct 04 26
 (u)Driftered
 (p)28026
