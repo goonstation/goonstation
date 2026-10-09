@@ -123,16 +123,6 @@ var/global
 	"Mithril" = 'icons/mob/hud_human_quilty.dmi',
 	"Vaporized" = 'icons/mob/hud_human_vapor.dmi')
 
-	list/underwear_styles = list("No Underwear" = "none",
-	"Briefs" = "briefs",
-	"Boxers" = "boxers",
-	"Bra and Panties" = "brapan",
-	"Tanktop and Panties" = "tankpan",
-	"Bra and Boyshorts" = "braboy",
-	"Tanktop and Boyshorts" = "tankboy",
-	"Panties" = "panties",
-	"Boyshorts" = "boyshort")
-
 	list/standard_skintones = list("Albino" = "#FAD7D0",
 	"White" = "#FFCC99",
 	"Pink" = "#EDB8A8",

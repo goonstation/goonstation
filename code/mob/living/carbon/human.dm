@@ -55,6 +55,9 @@
 	var/image/image_special_one = null
 	var/image/image_special_two = null
 	var/image/image_special_three = null
+	var/image/image_undies_bottom = null
+	var/image/image_undies_feet = null
+	var/image/image_undies_top = null
 
 	var/image/phoenix_temperature_indicator/phoenix_temp_overlay = null
 
@@ -125,7 +128,6 @@
 	var/static/image/human_untoned_image = image('icons/mob/human.dmi')
 	var/static/image/human_decomp_image = image('icons/mob/human_decomp.dmi')
 	var/static/image/human_untoned_decomp_image = image('icons/mob/human.dmi')
-	var/static/image/undies_image = image('icons/mob/human_underwear.dmi') //, layer = MOB_UNDERWEAR_LAYER)
 	var/static/image/bandage_image = image('icons/obj/surgery.dmi', "layer" = EFFECTS_LAYER_UNDER_1-1)
 	var/static/image/heart_image = image('icons/mob/human.dmi')
 	var/static/image/heart_emagged_image = image('icons/mob/human.dmi', "layer" = EFFECTS_LAYER_UNDER_1-1)
@@ -170,11 +172,15 @@
 /mob/living/carbon/human/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE, role_for_traits)
 	. = ..()
 
-	image_eyes_L = image('icons/mob/human_hair.dmi', layer = MOB_FACE_LAYER)
-	image_eyes_R = image('icons/mob/human_hair.dmi', layer = MOB_FACE_LAYER)
-	image_cust_one = image('icons/mob/human_hair.dmi', layer = MOB_HAIR_LAYER2)
-	image_cust_two = image('icons/mob/human_hair.dmi', layer = MOB_HAIR_LAYER2)
-	image_cust_three = image('icons/mob/human_hair.dmi', layer = MOB_HAIR_LAYER2)
+	src.image_eyes_L = image('icons/mob/human_hair.dmi', layer = MOB_FACE_LAYER)
+	src.image_eyes_R = image('icons/mob/human_hair.dmi', layer = MOB_FACE_LAYER)
+	src.image_cust_one = image('icons/mob/human_hair.dmi', layer = MOB_HAIR_LAYER2)
+	src.image_cust_two = image('icons/mob/human_hair.dmi', layer = MOB_HAIR_LAYER2)
+	src.image_cust_three = image('icons/mob/human_hair.dmi', layer = MOB_HAIR_LAYER2)
+
+	src.image_undies_bottom = image('icons/mob/human_underwear.dmi', layer = MOB_UNDIES_BOTTOM_LAYER)
+	src.image_undies_feet = image('icons/mob/human_underwear.dmi', layer = MOB_UNDIES_FEET_LAYER)
+	src.image_undies_top = image('icons/mob/human_underwear.dmi', layer = MOB_UNDIES_TOP_LAYER)
 
 	src.create_reagents(330)
 
