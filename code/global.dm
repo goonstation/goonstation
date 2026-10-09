@@ -301,7 +301,6 @@ var/global
 	remote_music_announcements = 0
 
 
-	outpost_destroyed = 0
 	signal_loss = 0
 	solar_gen_rate = DEFAULT_SOLARGENRATE
 	fart_attack = 0
