@@ -365,7 +365,7 @@ var/global
 	if (ispath(obj))
 		// avoid creating objects, just get the icon and state
 		var/atom/what = obj
-		icon_f = initial(what.icon)
+		icon_f = get_initial_icon(what)
 		icon_s = initial(what.icon_state)
 	else if (obj)
 		// we got an object so use its icon and state

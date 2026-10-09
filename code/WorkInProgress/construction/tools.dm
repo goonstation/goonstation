@@ -679,11 +679,11 @@ TYPEINFO(/obj/item/room_planner)
 				if (!T.intact)
 					return
 				var/turf/simulated/floor/F = T
-				F.icon = initial(F.icon)
+				F.icon = get_initial_icon(F)
 				F.icon_state = F.roundstart_icon_state
 				F.set_dir(F.roundstart_dir)
 			else if (istype(T, /turf/simulated/wall))
-				T.icon = initial(T.icon)
+				T.icon = get_initial_icon(T)
 				//T.icon_state = initial(T.icon_state)
 				if (istype(T, /turf/simulated/wall/auto))
 					var/turf/simulated/wall/auto/W = T
