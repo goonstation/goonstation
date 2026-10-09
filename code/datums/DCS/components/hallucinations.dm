@@ -105,6 +105,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 
 	do_mob_tick(mob, mult)
 		if(parent_mob.client?.filter_flashing_lights)
+			boutput(src, SPAN_COMBAT("If flashing lights were enabled you would see lots of weird colors right now."))
 			return ..()
 
 		if(parent_mob.client && (current_color_pattern == 0 || probmult(20))) //trippy colours
