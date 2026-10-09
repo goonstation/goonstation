@@ -136,14 +136,6 @@
 				)
 			)
 		),
-		//just some pretty colours
-		"pretty_colours" = list(
-			list(/datum/component/hallucination/trippy_colors,
-				list(
-					timeout=30,
-				)
-			)
-		),
 		// constant fart sounds, sorry everybody (I am not sorry)
 		"farts_4_days" = list(
 			list(/datum/component/hallucination/random_sound,

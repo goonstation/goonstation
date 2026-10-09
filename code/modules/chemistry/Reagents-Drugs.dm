@@ -320,8 +320,6 @@ datum
 				if(!M) M = holder.my_atom
 				//pretty colors
 				src.time_in_bloodstream += mult
-				if (src.time_in_bloodstream > 15)
-					M.AddComponent(/datum/component/hallucination/trippy_colors, timeout=10)
 
 			//get attacked
 				if(prob(60)) //monkey mode

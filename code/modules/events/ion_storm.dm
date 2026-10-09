@@ -25,7 +25,6 @@
 						if(1) //lsd-like
 							var/datum/reagent/drug/LSD/drug_type = /datum/reagent/drug/LSD //it's a path so we can grab the static vars, and not do init
 							logTheThing(LOG_DIARY, null, "[L] gets [drug_type] like effect applied by ion storm")
-							L.AddComponent(/datum/component/hallucination/trippy_colors, timeout=timeout_seconds)
 							if(prob(60)) //monkey mode
 								L.AddComponent(/datum/component/hallucination/fake_attack, timeout=timeout_seconds, image_list=drug_type.monkey_images, name_list=drug_type.monkey_names, attacker_prob=20, max_attackers=3)
 							else
