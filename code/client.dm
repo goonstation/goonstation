@@ -44,6 +44,7 @@
 	var/widescreen = 0
 	var/vert_split = 1
 	var/darkmode = TRUE
+	var/filter_flashing_lights = FALSE
 
 	var/tg_controls = 0
 	var/tg_layout = null
@@ -1078,6 +1079,17 @@ var/global/curr_day = null
 
 	dark_screenflash = !dark_screenflash
 
+/client/verb/toggle_filter_flashing_lights()
+	set hidden = TRUE
+	set name = "toggle-flashing-lights"
+
+	src.filter_flashing_lights = !src.filter_flashing_lights
+
+	boutput(src, "Flashing Lights Filter (Work In Progress) is [src.filter_flashing_lights ? "enabled" : "disabled"]")
+
+	if(src.filter_flashing_lights)
+		boutput(src, SPAN_ALERT("Be warned the filter is manually added to various effects and you may still encounter unintentional / missed flashing lights."))
+
 /client/verb/adjust_saturation()
 	set hidden = TRUE
 	set name = "adjust-saturation"
@@ -1101,6 +1113,7 @@ var/global/curr_day = null
 
 	else
 		src.recoil_controller?.disable()
+
 
 
 

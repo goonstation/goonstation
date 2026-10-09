@@ -287,6 +287,13 @@ menu "menu"
 		command = "adjust-saturation"
 		category = "&Effects"
 		saved-params = "is-checked"
+	elem "flashing_lights_filter"
+		name = "&Flashing Lights Filter"
+		command = "toggle-flashing-lights"
+		is-checked = false
+		can-check = true
+		category = "&Effects"
+		saved-params = "is-checked"
 	elem "set_tint"
 		name = "&View Tint"
 		command = "apply-view-tint"

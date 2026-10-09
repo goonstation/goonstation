@@ -104,6 +104,9 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 	var/pattern2 = list(0,1,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1, 0,0,0,0)
 
 	do_mob_tick(mob, mult)
+		if(parent_mob.client?.filter_flashing_lights)
+			return ..()
+
 		if(parent_mob.client && (current_color_pattern == 0 || probmult(20))) //trippy colours
 			if(src.current_color_pattern == 1)
 				parent_mob.client.animate_color(pattern2, time=40, easing=SINE_EASING)
