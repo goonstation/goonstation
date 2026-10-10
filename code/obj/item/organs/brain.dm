@@ -94,7 +94,9 @@
 
 			if (user.find_in_hand(src))
 				user.u_equip(src)
-			H.organHolder.receive_organ(src, "brain", 3.0)
+			if(H.organHolder.skull)
+				// Moved skull check from "receive_organ()" to here
+				H.organHolder.receive_organ(src, "brain", 3.0)
 			H.organHolder.head.scalp_op_stage = 3
 			return 1
 
@@ -126,6 +128,7 @@
 	desc = "A brain sized pyramid constructed out of silicon and LED lights. It employs complex quantum loopholes to create a consciousness within a decade or less."
 	created_decal = /obj/decal/cleanable/oil
 	default_material = "pharosium"
+	robotic = TRUE
 	var/activated = 0
 
 	get_desc()
@@ -148,6 +151,7 @@
 	item_state = "ai_brain"
 	created_decal = /obj/decal/cleanable/oil
 	default_material = "pharosium"
+	robotic = TRUE
 
 /obj/item/organ/brain/martian
 	name = "squishy lump"
