@@ -1187,7 +1187,7 @@
 		name = "Fluffy Critter"
 		id = "fluffycritter"
 		result = "fluffycritter"
-		required_reagents = list("rum" = 1, "juice_lime" = 1, "lemonade" = 1, "juice_strawberry" = 1)
+		required_reagents = list("planter" = 2, "juice_lime" = 1, "juice_strawberry" = 1)
 		result_amount = 4
 		mix_phrase = "The drink coos. Aww."
 		mix_sound = 'sound/voice/babynoise.ogg'
