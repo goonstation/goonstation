@@ -142,7 +142,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 
 	src.active_hallucinations += (halluc)
 	src.parent_mob.client?.images += halluc
-	message_admins("sending [target] to funkytown")
+
 	animate(halluc, color = chosen_pattern, time = src::color_animation_time, easing = SINE_EASING)
 
 	SPAWN(src::color_animation_time + 10)
