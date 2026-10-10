@@ -2,6 +2,22 @@
 		CAMERA NETWORK STUFF
 ------------------------------------*/
 
+/proc/assign_camera_tag(obj/machinery/camera/camera)
+	var/area/camera_area = get_area(camera)
+	if (!camera_area)
+		return
+
+	var/highest_number = 0
+	for (var/obj/machinery/camera/other_camera as anything in by_type[/obj/machinery/camera])
+		if (other_camera == camera || get_area(other_camera) != camera_area || !other_camera.c_tag)
+			continue
+		if (other_camera.c_tag == camera_area.name)
+			highest_number = max(highest_number, 1)
+		else if (copytext(other_camera.c_tag, 1, length(camera_area.name) + 2) == "[camera_area.name] ")
+			highest_number = max(highest_number, text2num(copytext(other_camera.c_tag, length(camera_area.name) + 2)))
+
+	camera.c_tag = "[camera_area.name] [highest_number + 1]"
+
 /proc/setup_cameras(var/cameras)
 	var/list/counts_by_tag = list()
 	var/list/obj/machinery/camera/first_cam_by_tag = list()
@@ -9,14 +25,13 @@
 		var/tag_we_use = null
 
 		if (isnull(C.c_tag) || dd_hasprefix(C.c_tag, "autotag"))
-			var/area/A = get_area(C)
-			tag_we_use = A.name
+			assign_camera_tag(C)
+			tag_we_use = C.c_tag
 		else
 			tag_we_use = C.c_tag
 
 		if (!counts_by_tag[tag_we_use])
 			counts_by_tag[tag_we_use] = 1
-			C.c_tag = "[tag_we_use]"
 			first_cam_by_tag[tag_we_use] = C
 		else
 			if (counts_by_tag[tag_we_use] == 1)
