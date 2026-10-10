@@ -1011,18 +1011,6 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 	var/mode = 0
 	var/message = null
 
-	proc/get_ticket_level()
-		. = SECURITY::TICKET::LEVEL::NONE
-		var/obj/item/card/id/ID = src.master.ID_card
-		if(!ID || !istype(ID))
-			return SECURITY::TICKET::LEVEL::NONE
-		if(access_ticket in ID.access)
-			. = SECURITY::TICKET::LEVEL::TICKET
-		if(access_fine_small in ID.access)
-			. = SECURITY::TICKET::LEVEL::FINE_SMALL
-		if(access_fine_large in ID.access)
-			. = SECURITY::TICKET::LEVEL::FINE_LARGE
-
 	return_text()
 		if(..())
 			return
@@ -1045,49 +1033,62 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 
 					dat += "<h4>Ticket List</h4>"
 
-					// this is also bad
-					var/list/people_with_tickets = list()
-					for (var/datum/ticket/T in data_core.tickets)
-						people_with_tickets |= T.target
+					var/alist/ticket_data_by_recipient = alist()
+					for (var/datum/db_record/citation/ticket/ticket as anything in global.data_core.tickets.records)
+						var/recipient = ticket["target"]
+						ticket_data_by_recipient[recipient] ||= "<b>[recipient]</b><br><br>"
+						ticket_data_by_recipient[recipient] += "[ticket["text"]]<br>"
 
-					for(var/N in people_with_tickets)
-						dat += "<b>[N]</b><br><br>"
-						for(var/datum/ticket/T in data_core.tickets)
-							if(T.target == N)
-								dat += "[T.text]<br>"
+					for (var/_, ticket_data in ticket_data_by_recipient)
+						dat += ticket_data
 
 				if(2) //requested fines
 					dat += "<br><br><a href='byond://?src=\ref[src];back=1'>Back</a>"
 
 					dat += "<h4>Fine Request List</h4>"
-					var/ticket_level = src.get_ticket_level()
-					if (ticket_level < 2)
-						dat += "<br><br>Please insert an ID with fining access to approve fines.<br><br>"
-						dat += "<br><br>"
 
-					for (var/datum/fine/F in data_core.fines)
-						if(!F.approver)
-							dat += "[F.target]: [F.amount] credits<br>Reason: [F.reason]<br>Requested by: [F.issuer] - [F.issuer_job]"
-							if((ticket_level >= SECURITY::TICKET::LEVEL::FINE_LARGE) || ((ticket_level >= SECURITY::TICKET::LEVEL::FINE_SMALL) && F.amount <= SECURITY::TICKET::MAX_FINE_NO_APPROVAL)) dat += "<br><a href='byond://?src=\ref[src];approve=\ref[F]'>Approve Fine</a>"
-							dat += "<br><br>"
+					for (var/datum/db_record/citation/fine/fine as anything in global.data_core.fines.find_records("status", "PENDING"))
+						dat += "[fine["target"]]: [fine["amount"]] credits<br>"
+						dat += "Reason: [fine["reason"]]<br>"
+						dat += "Requested by: [fine["issuer"]] - [fine["issuer_job"]]<br>"
+
+						if (fine.can_approve(src.master.ID_card.access))
+							dat += "<a href='byond://?src=\ref[src];approve=\ref[fine]'>Approve Fine</a><br>"
+
+						dat += "<br>"
 
 				if(3) //unpaid fines
 					dat += "<br><br><a href='byond://?src=\ref[src];back=1'>Back</a>"
 
 					dat += "<h4>Unpaid Fine List</h4>"
 
-					for (var/datum/fine/F in data_core.fines)
-						if(!F.paid && F.approver)
-							dat += "[F.target]: [F.amount] credits<br>Reason: [F.reason]<br>[F.issuer != F.approver ? "Requested by: [F.issuer] - [F.issuer_job]<br>Approved by: [F.approver] - [F.approver_job]" : "Issued by: [F.approver] - [F.approver_job]"]<br>Paid: [F.paid_amount] credits<br><br>"
+					for (var/datum/db_record/citation/fine/fine as anything in global.data_core.fines.find_records("status", "UNPAID"))
+						dat += "[fine["target"]]: [fine["amount"]] credits<br>"
+						dat += "Reason: [fine["reason"]]<br>"
+
+						if (fine["issuer"] == fine["approver"])
+							dat += "Issued by: [fine["approver"]] - [fine["approver_job"]]<br>"
+						else
+							dat += "Requested by: [fine["issuer"]] - [fine["issuer_job"]]<br>"
+							dat += "Approved by: [fine["approver"]] - [fine["approver_job"]]<br>"
+
+						dat += "Paid: [fine["paid_amount"]] credits<br><br>"
 
 				if(4) //paid fines
 					dat += "<br><br><a href='byond://?src=\ref[src];back=1'>Back</a>"
 
 					dat += "<h4>Paid Fine List</h4>"
 
-					for (var/datum/fine/F in data_core.fines)
-						if(F.paid)
-							dat += "[F.target]: [F.amount] credits<br>Reason: [F.reason]<br>[F.issuer != F.approver ? "Requested by: [F.issuer] - [F.issuer_job]<br>Approved by: [F.approver] - [F.approver_job]" : "Issued by: [F.approver] - [F.approver_job]"]<br><br>"
+					for (var/datum/db_record/citation/fine/fine as anything in global.data_core.fines.find_records("status", "PAID"))
+						dat += "[fine["target"]]: [fine["amount"]] credits<br>"
+						dat += "Reason: [fine["reason"]]<br>"
+
+						if (fine["issuer"] == fine["approver"])
+							dat += "Issued by: [fine["approver"]] - [fine["approver_job"]]<br><br>"
+						else
+							dat += "Requested by: [fine["issuer"]] - [fine["issuer_job"]]<br>"
+							dat += "Approved by: [fine["approver"]] - [fine["approver_job"]]<br><br>"
+
 		else
 			dat += "<br><br>[message]<br><br>"
 			dat += "<a href='byond://?src=\ref[src];ok=1'>Ok</a>"
@@ -1101,7 +1102,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 		if(href_list["ticket"])
 			var/PDAowner = src.master.owner
 			var/PDAownerjob = src.master.ID_card.assignment
-			if(!src.get_ticket_level())
+			if (!(access_ticket in src.master.ID_card.access))
 				message = "Error: You are not authorised to issue tickets."
 				src.master.updateSelfDialog()
 				return
@@ -1113,34 +1114,22 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			if(!ticket_reason) return
 			ticket_reason = copytext(sanitize(html_encode(ticket_reason)), 1, MAX_MESSAGE_LEN)
 
-			var/ticket_text = "[ticket_target] has been officially [pick("cautioned","warned","told off","yelled at","berated","sneered at")] by Nanotrasen Corporate Security for [ticket_reason] on [time2text(world.realtime, "DD/MM/53")].<br>Issued by: [PDAowner] - [PDAownerjob]<br>"
+			var/datum/db_record/citation/ticket/ticket = new(
+				authority = "Nanotrasen Corporate Security",
+				target = ticket_target,
+				issuer = PDAowner,
+				issuer_job = PDAownerjob,
+				reason = ticket_reason,
+			)
+			global.data_core.tickets.add_record(ticket)
 
-			var/datum/ticket/T = new /datum/ticket()
-			T.target = ticket_target
-			T.reason = ticket_reason
-			T.issuer = PDAowner
-			T.issuer_job = PDAownerjob
-			T.text = ticket_text
-			T.target_byond_key = get_byond_key(T.target)
-			T.issuer_byond_key = usr.key
-			data_core.tickets += T
-
-			logTheThing(LOG_ADMIN, usr, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")
 			playsound(src.master, 'sound/machines/printer_thermal.ogg', 50, 1)
 			SPAWN(3 SECONDS)
-				var/obj/item/paper/p = new /obj/item/paper
-				usr.put_in_hand_or_drop(p)
-				p.name = "Official Caution - [ticket_target]"
-				p.info = ticket_text
-				p.icon_state = "paper_caution"
-
-
-/*			for(var/datum/db_record/S as anything in data_core.security.records) //there is probably a better way of doing this too
-				if(S["name"] == ticket_target)
-					if(S["notes"] == "No notes.")
-						S["notes"] = ticket_text
-					else S["notes"] += ticket_text
-					break*/
+				var/obj/item/paper/paper = new()
+				usr.put_in_hand_or_drop(paper)
+				paper.name = ticket["title"]
+				paper.info = ticket["text"]
+				paper.icon_state = "paper_caution"
 
 		else if(href_list["fine"])
 			var/PDAowner = src.master.owner
@@ -1162,49 +1151,33 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			fine_amount = min(fine_amount,10000)
 			fine_amount = max(fine_amount,1)
 
-			var/datum/fine/F = new /datum/fine()
-			F.target = ticket_target
-			F.reason = ticket_reason
-			F.amount = fine_amount
-			F.issuer = PDAowner
-			F.issuer_job = PDAownerjob
-			F.target_byond_key = get_byond_key(F.target)
-			F.issuer_byond_key = usr.key
-			data_core.fines += F
-			var/ticket_level = src.get_ticket_level()
+			var/datum/db_record/citation/fine/fine = new(
+				authority = "Nanotrasen Corporate Security",
+				target = ticket_target,
+				amount = fine_amount,
+				issuer = PDAowner,
+				issuer_job = PDAownerjob,
+				reason = ticket_reason,
+			)
+			global.data_core.fines.add_record(fine)
 
-			logTheThing(LOG_ADMIN, usr, "requested a fine using [PDAowner]([PDAownerjob])'s PDA. It is a [fine_amount] credit fine on <b>[ticket_target]</b> with the reason: [ticket_reason].")
-			if((fine_amount <= SECURITY::TICKET::MAX_FINE_NO_APPROVAL && (ticket_level >= SECURITY::TICKET::LEVEL::FINE_SMALL)) || (ticket_level >= SECURITY::TICKET::LEVEL::FINE_LARGE))
-				var/ticket_text = "[ticket_target] has been fined [fine_amount] credits by Nanotrasen Corporate Security for [ticket_reason] on [time2text(world.realtime, "DD/MM/53")].<br>Issued and approved by: [PDAowner] - [PDAownerjob]<br>"
-				playsound(src.master, 'sound/machines/printer_thermal.ogg', 50, 1)
-				SPAWN(3 SECONDS)
-					F.approve(PDAowner,PDAownerjob,ticket_level)
-					var/obj/item/paper/p = new /obj/item/paper
-					usr.put_in_hand_or_drop(p)
-					p.name = "Official Fine Notification - [ticket_target]"
-					p.info = ticket_text
-					p.icon_state = "paper_caution"
-
-			else if(fine_amount <= SECURITY::TICKET::MAX_FINE_NO_APPROVAL)
-				message = "Fine request created, awaiting approval for a small fine."
-			else
-				message = "Fine request created, awaiting approval for a large fine."
+			switch (fine.attempt_approve(PDAowner, PDAownerjob, src.master.ID_card.access))
+				if (SECURITY::TICKET::ERR::FINE_LARGE)
+					message = "Fine request created, awaiting approval for a large fine."
+				if (SECURITY::TICKET::ERR::FINE_SMALL)
+					message = "Fine request created, awaiting approval for a small fine."
+				if (SECURITY::TICKET::ERR::SUCCESS)
+					src.print_fine(fine)
 
 		else if(href_list["approve"])
-			var/PDAowner = src.master.owner
-			var/PDAownerjob = src.master.ID_card.assignment
+			var/datum/db_record/citation/fine/fine = locate(href_list["approve"])
+			if (!istype(fine))
+				return
 
-			var/datum/fine/F = locate(href_list["approve"])
+			if (fine.attempt_approve(src.master.owner, src.master.ID_card.assignment, src.master.ID_card.access) != SECURITY::TICKET::ERR::SUCCESS)
+				return
 
-			playsound(src.master, 'sound/machines/printer_thermal.ogg', 50, 1)
-			SPAWN(3 SECONDS)
-				F.approve(PDAowner,PDAownerjob,src.get_ticket_level())
-				var/ticket_text = "[F.target] has been fined [F.amount] credits by Nanotrasen Corporate Security for [F.reason] on [time2text(world.realtime, "DD/MM/53")].<br>Requested by: [F.issuer] - [F.issuer_job]<br>Approved by: [PDAowner] - [PDAownerjob]<br>"
-				var/obj/item/paper/p = new /obj/item/paper
-				usr.put_in_hand_or_drop(p)
-				p.name = "Official Fine Notification - [F.target]"
-				p.info = ticket_text
-				p.icon_state = "paper_caution"
+			src.print_fine(fine)
 
 		else if(href_list["back"])
 			mode = 0
@@ -1227,6 +1200,20 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 		src.master.add_fingerprint(usr)
 		src.master.updateSelfDialog()
 		return
+
+	proc/print_fine(datum/db_record/citation/fine/fine)
+		set waitfor = FALSE
+
+		playsound(src.master, 'sound/machines/printer_thermal.ogg', 50, 1)
+		sleep(3 SECONDS)
+		if (QDELETED(fine))
+			return
+
+		var/obj/item/paper/paper = new()
+		usr.put_in_hand_or_drop(paper)
+		paper.name = fine["title"]
+		paper.info = fine["text"]
+		paper.icon_state = "paper_caution"
 
 //made global so fines can use it too, might also be useful for other stuff
 /proc/get_byond_key(var/name)

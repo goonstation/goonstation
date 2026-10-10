@@ -44,10 +44,10 @@
 				menu.parent.print_text("Photo data is corrupt!")
 				return
 
-			if (menu.parent.network_print_photo(IMG))
-				menu.parent.print_text("<b>Error:</b> No printer detected.")
-			else
+			if (menu.parent.print_file(IMG))
 				menu.parent.print_text("Print instruction sent.")
+			else
+				menu.parent.print_text("<b>Error:</b> No printer detected.")
 
 		if (3)
 			src.set_value(null)

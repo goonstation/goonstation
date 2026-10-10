@@ -29,8 +29,8 @@ ABSTRACT_TYPE(/datum/computer/file/terminal_program/db_manager)
 	src.current_menu?.unload()
 	src.current_menu = null
 
-	for (var/datum/db_manager_menu/menu as anything in src.menus)
-		qdel(menu)
+	for (var/menu_id as anything in src.menus)
+		qdel(src.menus[menu_id])
 
 	src.menus = null
 	. = ..()
@@ -228,45 +228,28 @@ ABSTRACT_TYPE(/datum/computer/file/terminal_program/db_manager)
 	src.peripheral_command("transmit", signal, ref(net_card))
 	return FALSE
 
-/// Attempt to print a specified record from the selected network printer.
-/datum/computer/file/terminal_program/db_manager/proc/network_print(record_id)
+/// Attempt to print a file from the network or local printer.
+/datum/computer/file/terminal_program/db_manager/proc/print_file(datum/computer/file/file)
 	SHOULD_NOT_OVERRIDE(TRUE)
-	if (!src.connected || !src.selected_printer || !src.server_netid)
+
+	if (src.connected && src.selected_printer && src.server_netid)
+		src.message_server("command=print&args=print [src.selected_printer]", file)
 		return TRUE
 
-	var/datum/computer/file/record/print_record = new()
-	print_record.fields += "title=Record"
-	print_record.fields += src.current_record_group.get_record(record_id, src.current_record_group.get_all_databases(), TRUE)
-
-	src.message_server("command=print&args=print [src.selected_printer]", print_record)
-	return FALSE
-
-/// Attempt to print a specified photo from the selected network printer.
-/datum/computer/file/terminal_program/db_manager/proc/network_print_photo(datum/computer/file/image/IMG)
-	SHOULD_NOT_OVERRIDE(TRUE)
-	if (!src.connected || !src.selected_printer || !src.server_netid || !IMG)
-		return TRUE
-
-	var/datum/computer/file/record/print_record = new()
-	print_record.fields += "title=File Photo"
-	print_record.fields += "<font face='Consolas'>"
-	print_record.fields += replacetext(IMG.asText(), "|n", "<br>")
-	print_record.fields += "</font>"
-
-	src.message_server("command=print&args=print [src.selected_printer]", print_record)
-	return FALSE
-
-/// Attempt to print a specified record from a local printer.
-/datum/computer/file/terminal_program/db_manager/proc/local_print(record_id)
-	SHOULD_NOT_OVERRIDE(TRUE)
 	var/obj/item/peripheral/printer = src.find_peripheral("LAR_PRINTER")
-	if (!printer)
+	if (istype(printer) && istype(file, /datum/computer/file/record))
+		var/datum/computer/file/record/record = file
+		var/title = "printout"
+		if (dd_hasprefix(record.fields[1], "title="))
+			title = copytext(record.fields[1], 7)
+			record.fields.Cut(1, 2)
+
+		var/datum/signal/signal = global.get_free_signal()
+		signal.data["title"] = title
+		signal.data["data"] = record.fields.Join("<br>")
+		src.peripheral_command("print", signal, ref(printer))
 		return TRUE
 
-	var/datum/signal/signal = global.get_free_signal()
-	signal.data["data"] = src.current_record_group.get_record(record_id, src.current_record_group.get_all_databases(), TRUE).Join()
-	signal.data["title"] = "Record"
-	src.peripheral_command("print", signal, ref(printer))
 	return FALSE
 
 /// Called when this database manager is used to update a record field.
