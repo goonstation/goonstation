@@ -30,6 +30,8 @@
 #define FORENSIC_HEADER_FINGERPRINTS "Fingerprints"
 #define FORENSIC_HEADER_DNA "DNA Samples"
 
+var/static/datum/forensic_display/gun_profile_display = new("Gun Profile: @F")
+
 #define FORENSIC_VALUE_IGNORE 1 // How basic data evidence value is affected when duplicate evidence is added
 #define FORENSIC_VALUE_SUM 2
 #define FORENSIC_VALUE_MULT 3
@@ -39,6 +41,7 @@
 // Chose 16 letters that look distinct and sort of fingerprinty with curves and such
 #define FORENSIC_CHARS_FINGERPRINTS list("a","b","c","d","e","g","n","o","p","q","s","u","v","x","y","z")
 #define FORENSIC_CHARS_HEX list("0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F")
+#define FORENSIC_CHARS_BALLISTICS list("=","=","+","-","#","H","8")
 
 #define FORENSIC_GLOVE_MASK_FINGERLESS "0123-4567-89AB-CDEF"
 #define FORENSIC_GLOVE_MASK_NONE "...???..."
