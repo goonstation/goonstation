@@ -65,6 +65,7 @@ TYPEINFO(/datum/component/glue_ready)
 		|| isgrab(glued_to)\
 		|| istype(thing_glued, /obj/item/dummy)\
 		|| istype(glued_to, /obj/item/dummy)\
+		|| istype(glued_to, /obj/ability_button)\
 		|| istype(thing_glued, /obj/tug_cart)\
 		|| istype(thing_glued, /obj/vehicle)\
 	)
