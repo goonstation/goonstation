@@ -1010,6 +1010,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 	size = 4
 	var/mode = 0
 	var/message = null
+	var/can_approve_fines = TRUE
 
 	proc/get_ticket_level()
 		. = SECURITY::TICKET::LEVEL::NONE
@@ -1022,6 +1023,8 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			. = SECURITY::TICKET::LEVEL::FINE_SMALL
 		if(access_fine_large in ID.access)
 			. = SECURITY::TICKET::LEVEL::FINE_LARGE
+		if(!src.can_approve_fines)
+			. = min(SECURITY::TICKET::LEVEL::TICKET, .)
 
 	return_text()
 		if(..())
@@ -1234,6 +1237,11 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 		if(M.real_name == name && M.key)
 			return M.key
 	return "N/A"
+
+// literally only here to prevent cyborgs from fining people
+/datum/computer/file/pda_program/security_ticket/issue_only
+	can_approve_fines = FALSE
+	name = "Ticket Lite"
 
 #define SPAM_DELAY 20
 //cargo request
