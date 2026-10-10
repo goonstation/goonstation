@@ -233,7 +233,7 @@
 
 
 /mob/living/proc/grab_other(var/mob/living/target, var/suppress_final_message = 0, var/obj/item/grab_item = null)
-	if(!src || !target)
+	if(!src || !target )
 		return 0
 
 	var/mob/living/carbon/human/H = src
@@ -248,7 +248,7 @@
 		target.visible_message(SPAN_COMBAT("<b>[src] tries to grab [target], but can't get a good grip!</B>"))
 		return
 
-	if (!target.canbegrabbed)
+	if (!target.canbegrabbed || HAS_ATOM_PROPERTY(target, PROP_MOB_UNGRABBABLE))
 		if (target.grabresistmessage)
 			target.visible_message(SPAN_COMBAT("<b>[src] tries to grab [target], [target.grabresistmessage]</B>"))
 		return
