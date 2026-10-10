@@ -145,7 +145,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 
 	animate(halluc, color = chosen_pattern, time = src.color_animation_time, easing = SINE_EASING)
 
-	SPAWN(src.color_animation_time)
+	SPAWN(src.color_animation_time + 10)
 		src.fade_hallucination_out(halluc)
 
 	..()
@@ -162,7 +162,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 /datum/component/hallucination/proc/fade_hallucination_out(image/halluc)
 	animate(halluc, color = null, time = src.color_animation_time, easing = SINE_EASING)
 
-	SPAWN(src.color_animation_time)
+	SPAWN(src.color_animation_time + 10)
 		src.active_hallucinations.Remove(halluc)
 		src.parent_mob.client?.images -= halluc
 
