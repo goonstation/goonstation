@@ -597,11 +597,15 @@
 			return
 		C.glide_size = ceil(max(vector_magnitude(tile_dx, tile_dy), vector_magnitude(world.icon_size, world.icon_size)) * \
 			max(C.fps / world.fps, 1))
-		var/step_pixel_x = src.next_wx - start_pixel_x + tile_dx
-		var/step_pixel_y = src.next_wy - start_pixel_y + tile_dy
+		// Round endpoints before subtracting- BYOND truncates fractional relative pixel offsets, if we don't account for that by rounding we accumulate
+		// a small error each tick. Those errors add up which can desync the camera over long distances, causing it to lag behind the player
+		var/step_pixel_x = round(src.next_wx + C.passenger_camera_loc_pixel_x, 1) - \
+			round(start_pixel_x + C.passenger_camera_loc_pixel_x, 1) + tile_dx
+		var/step_pixel_y = round(src.next_wy + C.passenger_camera_loc_pixel_y, 1) - \
+			round(start_pixel_y + C.passenger_camera_loc_pixel_y, 1) + tile_dy
 		// Like parallax movement, overlapping steps must finish rather than replace one another.
-		C.projectile_camera_animation_count++
-		var/animation_tag = "projectile_camera_[C.projectile_camera_animation_count]"
+		C.passenger_camera_animation_count++
+		var/animation_tag = "passenger_camera_[C.passenger_camera_animation_count]"
 		if (!tile_dx && !tile_dy)
 			animate(C, pixel_x = step_pixel_x, pixel_y = step_pixel_y, time = 1 DECI SECOND, \
 				flags = ANIMATION_PARALLEL | ANIMATION_RELATIVE, tag = animation_tag)
