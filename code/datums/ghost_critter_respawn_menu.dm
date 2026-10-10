@@ -6,11 +6,6 @@
 	ui_state(mob/user)
 		return tgui_observer_state
 
-	ui_status(mob/user, datum/ui_state/state)
-		if (!user.client || user.client.mob != user || !user.mind || user.mind.current != user)
-			return UI_CLOSE
-		return tgui_observer_state.can_use_topic(src, user)
-
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if (!ui)
@@ -57,25 +52,25 @@
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 		if (..())
 			return
-		if (action != "respawn")
-			return
-		var/mob/dead/observer/ghost = ui.user
-		if (!istype(ghost) || src.ui_status(ghost, state) != UI_INTERACTIVE)
-			return
-		if (!istext(params["type"]))
-			return
-		var/critter_type = text2path(params["type"])
-		if (!(critter_type in ghost.get_ghost_critter_types()))
-			return
-		if (!ghost.can_respawn_as_ghost_critter())
-			return
+		switch (action)
+			if ("respawn")
+				var/mob/dead/observer/ghost = ui.user
+				if (!isobserver(ghost))
+					return
+				if (!istext(params["type"]))
+					return
+				var/critter_type = text2path(params["type"])
+				if (!(critter_type in ghost.get_ghost_critter_types()))
+					return
+				if (!ghost.can_respawn_as_ghost_critter())
+					return
 
-		var/turf/spawnpoint = pick_landmark(LANDMARK_PESTSTART)
-		if (!spawnpoint)
-			spawnpoint = pick_landmark(LANDMARK_LATEJOIN, get_turf(ghost))
-		ui.close()
-		ghost.make_ghost_critter(spawnpoint, critter_type = critter_type)
-		return TRUE
+				var/turf/spawnpoint = pick_landmark(LANDMARK_PESTSTART)
+				if (!spawnpoint)
+					spawnpoint = pick_landmark(LANDMARK_LATEJOIN, get_turf(ghost))
+				ui.close()
+				ghost.make_ghost_critter(spawnpoint, critter_type = critter_type)
+				return TRUE
 
 #undef GHOST_CRITTER_CATEGORY_NORMAL
 #undef GHOST_CRITTER_CATEGORY_ANTAGONIST
