@@ -106,7 +106,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 	src.active_hallucinations = list()
 
 /datum/component/hallucination/trippy_colors/do_mob_tick(mob, mult)
-	if(!ismob(src.parent_mob) || isclient(parent_mob.client))
+	if(!ismob(src.parent_mob) || !isclient(parent_mob.client))
 		return ..()
 
 	if(!prob(15)) // Only happen sometimes
@@ -142,7 +142,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 
 	src.active_hallucinations += (halluc)
 	src.parent_mob.client?.images += halluc
-
+	message_admins("sending [target] to funkytown")
 	animate(halluc, color = chosen_pattern, time = src::color_animation_time, easing = SINE_EASING)
 
 	SPAWN(src::color_animation_time + 10)
