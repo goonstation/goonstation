@@ -1010,6 +1010,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 	size = 4
 	var/mode = 0
 	var/message = null
+	var/corporate_rank = "Nanotrasen Corporate Security"
 
 	proc/get_ticket_level()
 		. = SECURITY::TICKET::LEVEL::NONE
@@ -1113,7 +1114,44 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			if(!ticket_reason) return
 			ticket_reason = copytext(sanitize(html_encode(ticket_reason)), 1, MAX_MESSAGE_LEN)
 
-			var/ticket_text = "[ticket_target] has been officially [pick("cautioned","warned","told off","yelled at","berated","sneered at")] by Nanotrasen Corporate Security for [ticket_reason] on [time2text(world.realtime, "DD/MM/53")].<br>Issued by: [PDAowner] - [PDAownerjob]<br>"
+			var/ticket_flavor = list("Follow the Law.",
+								"Contact a monkey in a [weighted_pick(list("suit" = 9, "biz suit" = 1))] and a funny hat if required.",
+								"Do not Reoffend.",
+								"Don't make it a habit.",
+								"Your move, creep.",
+								"I AM THE LAW.",
+								"Justice is made.",
+								"Unsafe for human consumption.",
+								"Remember to recycle.",
+								"Days without infractions: 0",
+								"Could be your last.")
+
+			var/ticket_text = {"<font face="Monospace" color="453425">
+								<center>
+								<font size="4">[corporate_rank]</font> <br>
+								<font size="3">[station_name]</font> <br> <br>
+								</center>
+								<table width="365px">
+								<tr><td width="200px">DATE OF ISSUE</td> <td>[time2text(world.realtime, "DD/MM/53")]</td></tr>
+								</table>
+								------------------------------------------------------
+								<table width="365px">
+								<tr><td width="200px">RECIPIENT</td> <td>[ticket_target]</td></tr>
+								<tr></tr>
+								<tr><td width="200px">ISSUER</td> <td>[PDAowner]</td></tr>
+								<tr><td width="200px">ASSIGNMENT</td> <td>[PDAownerjob]</td></tr>
+								</table>
+								------------------------------------------------------
+								<table width="365px">
+								<tr><td width="100px">REASON</td> <td>[ticket_reason]</td></tr>
+								</table>
+								------------------------------------------------------
+								<center>
+								<font size="3">[pick(ticket_flavor)]</font>
+								<table height="50px" cellspacing="2px">
+								<tr>[random_barcode(20,"453425")]</td></tr>
+								</table>
+								</center>"}
 
 			var/datum/ticket/T = new /datum/ticket()
 			T.target = ticket_target
@@ -1133,6 +1171,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 				p.name = "Official Caution - [ticket_target]"
 				p.info = ticket_text
 				p.icon_state = "paper_caution"
+				p.color = "#FFE9AD"
 
 
 /*			for(var/datum/db_record/S as anything in data_core.security.records) //there is probably a better way of doing this too
@@ -1173,9 +1212,49 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			data_core.fines += F
 			var/ticket_level = src.get_ticket_level()
 
+			var/ticket_flavor = list("Follow the Law.",
+								"Contact a monkey in a [weighted_pick(list("suit" = 9, "biz suit" = 1))] and a funny hat if required.",
+								"Do not Reoffend.",
+								"Don't make it a habit.",
+								"Your move, creep.",
+								"I AM THE LAW.",
+								"Justice is made.",
+								"Unsafe for human consumption.",
+								"Remember to recycle.",
+								"Days without infractions: 0",
+								"Could be your last.")
+
 			logTheThing(LOG_ADMIN, usr, "requested a fine using [PDAowner]([PDAownerjob])'s PDA. It is a [fine_amount] credit fine on <b>[ticket_target]</b> with the reason: [ticket_reason].")
 			if((fine_amount <= SECURITY::TICKET::MAX_FINE_NO_APPROVAL && (ticket_level >= SECURITY::TICKET::LEVEL::FINE_SMALL)) || (ticket_level >= SECURITY::TICKET::LEVEL::FINE_LARGE))
-				var/ticket_text = "[ticket_target] has been fined [fine_amount] credits by Nanotrasen Corporate Security for [ticket_reason] on [time2text(world.realtime, "DD/MM/53")].<br>Issued and approved by: [PDAowner] - [PDAownerjob]<br>"
+				var/ticket_text = {"<font face="Monospace" color="453425">
+									<center>
+									<font size="4">[corporate_rank]</font> <br>
+									<font size="3">[station_name]</font> <br> <br>
+									</center>
+									<table width="365px">
+									<tr><td width="200px">DATE OF ISSUE</td> <td>[time2text(world.realtime, "DD/MM/53")]</td></tr>
+									</table>
+									------------------------------------------------------
+									<table width="365px">
+									<tr><td width="200px">RECIPIENT</td> <td>[ticket_target]</td></tr>
+									<tr></tr>
+									<tr><td width="200px">ISSUER</td> <td>[PDAowner]</td></tr>
+									<tr><td width="200px">ASSIGNMENT</td> <td>[PDAownerjob]</td></tr>
+									</table>
+									------------------------------------------------------
+									<table width="365px">
+									<tr><td width="125px" colspan="2">AMOUNT <td>[fine_amount][CREDIT_SIGN]</td></tr>
+									<tr><td width="100px">REASON</td> <td colspan="2">[ticket_reason]</td></tr>
+									</table>
+									------------------------------------------------------
+									<center>
+									<font size="3">[pick(ticket_flavor)]</font>
+									<table height="50px" cellspacing="2px">
+									<tr> [random_barcode(20,"453425")]</tr>
+									</table>
+									</center>"}
+
+
 				playsound(src.master, 'sound/machines/printer_thermal.ogg', 50, 1)
 				SPAWN(3 SECONDS)
 					F.approve(PDAowner,PDAownerjob,ticket_level)
@@ -1184,6 +1263,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 					p.name = "Official Fine Notification - [ticket_target]"
 					p.info = ticket_text
 					p.icon_state = "paper_caution"
+					p.color = "#FFE9AD"
 
 			else if(fine_amount <= SECURITY::TICKET::MAX_FINE_NO_APPROVAL)
 				message = "Fine request created, awaiting approval for a small fine."
@@ -1196,15 +1276,60 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 
 			var/datum/fine/F = locate(href_list["approve"])
 
+			var/ticket_flavor = list("Follow the Law.",
+								"Contact a monkey in a [weighted_pick(list("suit" = 9, "biz suit" = 1))] and a funny hat if required.",
+								"Do not Reoffend.",
+								"Don't make it a habit.",
+								"Your move, creep.",
+								"I AM THE LAW.",
+								"Justice is made.",
+								"Unsafe for human consumption.",
+								"Remember to recycle.",
+								"Days without infractions: 0",
+								"Could be your last.")
+
 			playsound(src.master, 'sound/machines/printer_thermal.ogg', 50, 1)
 			SPAWN(3 SECONDS)
 				F.approve(PDAowner,PDAownerjob,src.get_ticket_level())
-				var/ticket_text = "[F.target] has been fined [F.amount] credits by Nanotrasen Corporate Security for [F.reason] on [time2text(world.realtime, "DD/MM/53")].<br>Requested by: [F.issuer] - [F.issuer_job]<br>Approved by: [PDAowner] - [PDAownerjob]<br>"
+				var/ticket_text = {"<font face="Monospace" color="453425">
+									<center>
+									<font size="4">[corporate_rank]</font> <br>
+									<font size="3">[station_name]</font> <br> <br>
+									</center>
+									<table width="365px">
+									<tr><td width="200px">DATE OF ISSUE</td> <td>[time2text(world.realtime, "DD/MM/53")]</td></tr>
+									</table>
+									------------------------------------------------------
+									<table width="365px">
+									<tr><td width="200px">RECIPIENT</td> <td>[F.target]</td></tr>
+									<tr></tr>
+									<tr><td width="200px">ISSUER</td> <td>[F.issuer]</td></tr>
+									<tr><td width="200px">ASSIGNMENT</td> <td>[F.issuer_job]</td></tr>
+									</table>
+									------------------------------------------------------
+									<table width="365px">
+									<tr><td width="200px">APPROVED BY</td> <td>[PDAowner]</td></tr>
+									<tr><td width="200px">ASSIGNMENT</td> <td>[PDAownerjob]</td></tr>
+									</table>
+									------------------------------------------------------
+									<table width="365px">
+									<tr><td width="125px" colspan="2">AMOUNT <td>[F.amount][CREDIT_SIGN]</td></tr>
+									<tr><td width="100px">REASON</td> <td colspan="2">[F.reason]</td></tr>
+									</table>
+									------------------------------------------------------
+									<center>
+									<font size="3">[pick(ticket_flavor)]</font>
+									<table height="50px" cellspacing="2px">
+									<tr>[random_barcode(20,"453425")]</tr>
+									</table>
+									</center>"}
+
 				var/obj/item/paper/p = new /obj/item/paper
 				usr.put_in_hand_or_drop(p)
 				p.name = "Official Fine Notification - [F.target]"
 				p.info = ticket_text
 				p.icon_state = "paper_caution"
+				p.color = "#FFE9AD"
 
 		else if(href_list["back"])
 			mode = 0
