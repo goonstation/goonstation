@@ -249,10 +249,7 @@ ABSTRACT_TYPE(/datum/grav_fault/minor)
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			boutput(H, SPAN_ALERT("A gravitational anomaly makes you drop everything!"))
-			if (H.l_hand)
-				H.drop_item(H.l_hand)
-			if (H.r_hand)
-				H.drop_item(H.r_hand)
+			H.empty_hands(FALSE)
 		else if (isrobot(M))
 			var/mob/living/silicon/robot/R = M
 			boutput(R, SPAN_ALERT("A gravitational anomaly unquipped one of your tools!"))
@@ -260,7 +257,7 @@ ABSTRACT_TYPE(/datum/grav_fault/minor)
 		else if (ismobcritter(M))
 			var/mob/living/critter/C = M
 			boutput(C, SPAN_ALERT("A gravitational anomaly makes you drop everything!"))
-			C.empty_hands()
+			C.empty_hands(FALSE)
 
 /datum/grav_fault/minor/single_dir_push/effect(turf/origin)
 	. = ..()

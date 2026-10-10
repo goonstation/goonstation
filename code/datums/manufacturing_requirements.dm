@@ -98,6 +98,12 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/match_property)
 	property_id = "thermal"
 	property_threshold = 6
 
+/datum/manufacturing_requirement/match_property/dense_leather
+	name = "Somewhat Dense Matter"
+	id = "dense_leather"
+	property_id = "density"
+	property_threshold = 3 // Density of leather
+
 /datum/manufacturing_requirement/match_property/dense
 	name = "High Density Matter"
 	id = "dense"
@@ -325,6 +331,15 @@ ABSTRACT_TYPE(/datum/manufacturing_requirement/mixed)
 	requirement_ids = list(
 		"metal_flag",
 		"tough_super",
+	)
+
+/// Leather-like fabric
+/datum/manufacturing_requirement/mixed/fabric_tough
+	name = "Dense Fabric"
+	id = "fabric_leather"
+	requirement_ids = list(
+		"fabric",
+		"dense_leather",
 	)
 
 /datum/manufacturing_requirement/mixed/insulated

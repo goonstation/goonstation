@@ -31,6 +31,8 @@
 //hand values
 #define LEFT_HAND 1
 #define RIGHT_HAND 0
+#define FIRM_GRIP_LEFT 1
+#define FIRM_GRIP_RIGHT 0
 
 // ---- mob damage ----
 
