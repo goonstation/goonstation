@@ -34,6 +34,17 @@
 			STOP_TRACKING; \
 			. = ..(); \
 		}
+
+	#define SET_UP_CI_TRACKING_TURF(TYPE) \
+		TYPE/New() { \
+			. = ..(); \
+			START_TRACKING; \
+		} \
+		TYPE/Del() { \
+			STOP_TRACKING; \
+			. = ..(); \
+		}
 #else
 	#define SET_UP_CI_TRACKING(TYPE)
+	#define SET_UP_CI_TRACKING_TURF(TYPE)
 #endif

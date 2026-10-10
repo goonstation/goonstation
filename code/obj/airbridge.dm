@@ -482,20 +482,18 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 /obj/machinery/computer/airbr/emergency_shuttle
 	emergency = 1
 
-/obj/machinery/computer/airbr/trader_left // matching mapping area conventions
-	connected_dock = COMSIG_DOCK_TRADER_WEST
+#define AIRBRIDGE_DEFINE(_PATH, _ID) \
+	/obj/machinery/computer/airbr/_PATH{connected_dock=_ID;id=_ID;density=0}; \
+	/obj/airbridge_controller/_PATH{id=_ID};\
+	/obj/airbridge_controller/_PATH/primary{id=_ID;primary_controller=TRUE};\
 
-/obj/machinery/computer/airbr/trader_right
-	connected_dock = COMSIG_DOCK_TRADER_EAST
-
-/obj/machinery/computer/airbr/medical_medbay
-	connected_dock = COMSIG_DOCK_MEDICAL_MEDBAY
-
-/obj/machinery/computer/airbr/medical_pathology
-	connected_dock = COMSIG_DOCK_MEDICAL_PATHOLOGY
-
-/obj/machinery/computer/airbr/mining_station
-	connected_dock = COMSIG_DOCK_MINING_STATION
+AIRBRIDGE_DEFINE(trader_left, COMSIG_DOCK_TRADER_WEST) // matching mapping area conventions
+AIRBRIDGE_DEFINE(trader_right, COMSIG_DOCK_TRADER_EAST)
+AIRBRIDGE_DEFINE(medical_medbay, COMSIG_DOCK_MEDICAL_MEDBAY) // donut3
+AIRBRIDGE_DEFINE(medical_pathology, COMSIG_DOCK_MEDICAL_PATHOLOGY) // donut3
+AIRBRIDGE_DEFINE(mining_station, COMSIG_DOCK_MINING_STATION) // clarion
+AIRBRIDGE_DEFINE(research_station, COMSIG_DOCK_RESEARCH_STATION) // decarabia
+AIRBRIDGE_DEFINE(research_outpost, COMSIG_DOCK_RESEARCH_OUTPOST) // decarabia
 
 /* -------------------- Button -------------------- */
 /obj/machinery/airbr_test_button
