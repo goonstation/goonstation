@@ -333,7 +333,6 @@ TYPEINFO(/mob)
 
 /mob/disposing()
 	STOP_TRACKING
-
 	qdel(src.name_tag)
 	src.name_tag = null
 

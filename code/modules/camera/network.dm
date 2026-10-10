@@ -42,5 +42,9 @@
 	var/turf/T = atom
 	if(!istype(T))
 		T = get_turf(atom)
-	. = (T.camera_coverage_emitters && length(T.camera_coverage_emitters))
+	if (!T.camera_coverage_emitters)
+		return FALSE
+	for (var/datum/component/camera_coverage_emitter/emitter as anything in T.camera_coverage_emitters)
+		return TRUE
+	return FALSE
 	#endif
