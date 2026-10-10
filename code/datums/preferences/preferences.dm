@@ -221,8 +221,7 @@ var/list/removed_jobs = list(
 				"id" = customization.id,
 				"name" = customization.get_name(),
 				"points" = customization.trait_cost,
-				"img" = customization.get_base64_icon(),
-			)
+			) + customization.get_ui_icon()
 
 		. = list(
 			"isMentor" = client.is_mentor(),

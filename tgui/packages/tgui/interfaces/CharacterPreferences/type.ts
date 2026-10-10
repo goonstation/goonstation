@@ -98,7 +98,9 @@ export interface CharacterPreferencesPartData {
   id: string;
   name: string;
   points: number;
-  img: string;
+  icon: string | null;
+  iconState: string;
+  skintoned: BooleanLike;
 }
 
 export interface JobStaticData {

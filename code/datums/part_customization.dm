@@ -5,7 +5,8 @@ ABSTRACT_TYPE(/datum/part_customization)
 	var/slot = "INVALID"
 	///Can be a type or a list of types to randomly pick from
 	var/part_type = null
-	var/base_64_cache = null
+	/// Part type shown in the UI, picked once so the preview doesn't change between updates
+	var/preview_type = null
 	/// Associated trait ID, if one is needed
 	var/associated_trait_id = null
 	var/trait_cost = 0 //idk let's keep using trait points for now
@@ -38,15 +39,16 @@ ABSTRACT_TYPE(/datum/part_customization)
 				return FALSE
 		return TRUE
 
-	///UI helper proc so we don't have to manage static data caches
-	proc/get_base64_icon()
-		if (!src.base_64_cache)
-			if (!src.custom_icon)
-				var/obj/item/part_type = pick(src.part_type) //funny initial abuse
-				src.base_64_cache = icon2base64(icon(get_initial_icon(part_type), initial(part_type.icon_state), dir=SOUTH, frame=1, moving=0))
-			else
-				src.base_64_cache = icon2base64(icon(src.custom_icon, src.custom_icon_state))
-		return src.base_64_cache
+	proc/get_ui_icon()
+		if (src.custom_icon)
+			return list("icon" = get_tgui_icon(src.custom_icon), "iconState" = src.custom_icon_state, "skintoned" = FALSE)
+		src.preview_type ||= pick(src.part_type)
+		var/obj/item/parts/part_type = src.preview_type //funny initial abuse
+		return list(
+			"icon" = get_tgui_icon(get_initial_icon(part_type)),
+			"iconState" = initial(part_type.icon_state),
+			"skintoned" = ispath(part_type, /obj/item/parts) && initial(part_type.skintoned),
+		)
 
 	///Defaults to just the name of the part type, can be overridden
 	proc/get_name()
