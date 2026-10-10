@@ -1725,6 +1725,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/collar_shirt)
     icon_state = "fancy_vest"
     item_state = "fancy_vest"
 
+
 /obj/item/clothing/under/misc/flame_purple
     name = "purple flame shirt"
     desc = "Basic fire colors are so passé."
@@ -2247,6 +2248,14 @@ ABSTRACT_TYPE(/obj/item/clothing/under/misc/sundress)
 		name = "yellow sundress"
 		icon_state = "sundress-yellow"
 		item_state = "sundress-yellow"
+
+/obj/item/clothing/under/misc/fancyballgown
+	name = "fancy ball gown"
+	desc = "A fancy ball gown for a special occasion,It has a maker's tag:Vask Creations."
+	icon_state = "fancyballgown"
+	item_state = "fancyballgown"
+	hide_underwear = TRUE
+
 
 /obj/item/clothing/under/misc/poetshirt
 	name = "poet shirt"

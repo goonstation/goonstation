@@ -245,6 +245,19 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 		setProperty("meleeprot", 4)
 		setProperty("rangedprot", 0.9)
 
+/obj/item/clothing/suit/armor/artificerscoat
+	name = "artificerscoat"
+	desc = "A luxurious formal coat worn by skilled artificers. It has a makers tag: Vask Creations."
+	icon_state = "artificerscoat"
+	item_state = "artificerscoat"
+	hides_from_examine = 0
+	setupProperties()
+		..()
+		setProperty("coldprot", 35)
+		setProperty("heatprot", 35)
+		setProperty("meleeprot", 4)
+		setProperty("rangedprot", 0.9)
+
 /obj/item/clothing/suit/armor/heavy
 	name = "heavy armor"
 	desc = "A heavily armored suit that protects against moderate damage."
