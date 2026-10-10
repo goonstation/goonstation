@@ -72,6 +72,11 @@
 	var/colorblind_matrix = COLOR_MATRIX_IDENTITY
 
 	perspective = EYE_PERSPECTIVE
+	/// Normal map glide size, saved while a projectile supplies the camera's pixel animation.
+	var/projectile_camera_glide_size = null
+	var/projectile_camera_animation_count = 0
+	var/projectile_camera_loc_pixel_x = 0
+	var/projectile_camera_loc_pixel_y = 0
 	// please ignore this for now thanks in advance - drsingh
 #ifdef PROC_LOGGING
 	var/proc_logging = 0

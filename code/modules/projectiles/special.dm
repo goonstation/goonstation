@@ -802,26 +802,17 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	smashes_glasses = FALSE
 
 	no_hit_message = 1
-	var/obj/effect/eye_glider
 	var/turf/starting_turf
 
 	on_launch(obj/projectile/P)
 		. = ..()
 		src.starting_turf = get_turf(P)
-		src.eye_glider = new(get_turf(P))
-		src.eye_glider.flags |= UNCRUSHABLE
-		src.eye_glider.event_handler_flags |= IMMUNE_MINERAL_MAGNET
 		P.event_handler_flags |= IMMUNE_MINERAL_MAGNET
-		src.eye_glider.anchored = ANCHORED_ALWAYS
 		APPLY_ATOM_PROPERTY(P, PROP_ATOM_FLOATING, src)
 		APPLY_ATOM_PROPERTY(P, PROP_ATOM_GRAVITY_IMMUNE_INSIDE, src)
-		for (var/mob/M in P.contents)
-			if(M.client)
-				M.client.eye = src.eye_glider
 
 	tick(obj/projectile/P)
 		..()
-		src.eye_glider.set_loc(get_turf(P))
 		if (!(P.targets && P.targets.len && P.targets[1] && !(P.targets[1]:disposed)))
 			logTheThing(LOG_STATION, P, "teleport projectile [P] dumped contents at [log_loc(P)] as targeted destination was disposed.")
 			P.die()
@@ -845,16 +836,10 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		for (var/atom/movable/AM in P.contents)
 			AM.set_loc(dumpturf)
 			SEND_SIGNAL(dumparea, COMSIG_AREA_INDIRECT_ENTRY, AM, "mechcomp")
-		qdel(src.eye_glider)
-		src.eye_glider = null
 		..()
 
 	on_exited(obj/projectile/P, atom/movable/AM)
 		AM.delStatus("teleporting")
-		if (istype(AM, /mob))
-			var/mob/M = AM
-			if (M.client)
-				M.client.eye = M
 
 /datum/projectile/special/homing/magicmissile
 	name = "magic missile"
