@@ -564,6 +564,9 @@
 		var/dy = loc.y - orig_turf.y
 		var/pixel_dx = dx * 32
 		var/pixel_dy = dy * 32
+		// Cosmetic animations can change pixel_x/y independently of projectile travel.
+		var/previous_pixel_x = src.next_wx
+		var/previous_pixel_y = src.next_wy
 		src.next_wx = wx - pixel_dx
 		src.next_wy = wy - pixel_dy
 		if (!dx && !dy) 	//smooth movement within a tile
@@ -575,6 +578,42 @@
 				pixel_y += 32 * -(loc.y - curr_turf.y)
 
 			animate(src,pixel_x = src.next_wx, pixel_y = src.next_wy, time = 1 DECI SECOND, flags = ANIMATION_END_NOW) //todo figure out later
+
+		if (!length(src.contents))
+			return
+		var/tile_dx = world.icon_size * (src.x - curr_turf.x)
+		var/tile_dy = world.icon_size * (src.y - curr_turf.y)
+		for (var/mob/M in src.contents)
+			if (M.eye)
+				continue
+			src.animate_passenger_camera(M.client, previous_pixel_x, previous_pixel_y, tile_dx, tile_dy)
+			if (isliving(M))
+				var/mob/living/L = M
+				for (var/mob/dead/target_observer/observer in L.observers)
+					src.animate_passenger_camera(observer.client, previous_pixel_x, previous_pixel_y, tile_dx, tile_dy)
+
+	proc/animate_passenger_camera(client/C, start_pixel_x, start_pixel_y, tile_dx, tile_dy)
+		if (!C || C.eye != src)
+			return
+		// Native scrolling must finish in one frame even when several eye updates arrive together.
+		C.glide_size = ceil(vector_magnitude(world.maxx, world.maxy) * world.icon_size * \
+			max(C.fps / world.fps, 1))
+		// Round endpoints before subtracting- BYOND truncates fractional relative pixel offsets, if we don't account for that by rounding we accumulate
+		// a small error each tick. Those errors add up which can desync the camera over long distances, causing it to lag behind the player
+		var/step_pixel_x = round(src.next_wx + C.passenger_camera_loc_pixel_x, 1) - \
+			round(start_pixel_x + C.passenger_camera_loc_pixel_x, 1) + tile_dx
+		var/step_pixel_y = round(src.next_wy + C.passenger_camera_loc_pixel_y, 1) - \
+			round(start_pixel_y + C.passenger_camera_loc_pixel_y, 1) + tile_dy
+		// Like parallax movement, overlapping steps must finish rather than replace one another.
+		C.passenger_camera_animation_count++
+		var/animation_tag = "passenger_camera_[C.passenger_camera_animation_count]"
+		if (!tile_dx && !tile_dy)
+			animate(C, pixel_x = step_pixel_x, pixel_y = step_pixel_y, time = 1 DECI SECOND, \
+				flags = ANIMATION_PARALLEL | ANIMATION_RELATIVE, tag = animation_tag)
+			return
+		animate(C, pixel_x = -tile_dx, pixel_y = -tile_dy, time = 0, \
+			flags = ANIMATION_PARALLEL | ANIMATION_RELATIVE, tag = animation_tag)
+		animate(pixel_x = step_pixel_x, pixel_y = step_pixel_y, time = 1 DECI SECOND, flags = ANIMATION_RELATIVE)
 
 	track_blood()
 		src.tracked_blood = null
