@@ -1556,17 +1556,17 @@
 		return FALSE
 
 /**
-Attempts to put an item in the hand of a mob, if not possible then stow it, then by default delete the item.
+Attempts to put an item in the hand of a mob, if not possible then stow it, then by default drop the item at the mob's feet.
 
  * @param I The item to put in the hand.
 
  * @param hand The hand to put the item in.
 
- * @param delete_item If TRUE, the item will be deleted if it cannot be put in hand or stowed. If FALSE, the item is dropped at the current location.
+ * @param delete_item If TRUE, the item will be deleted if it cannot be put in hand or stowed. If FALSE (by default), the item is dropped at the current location.
 
  * @return TRUE if the item was successfully put in hand or stowed, FALSE otherwise.
 **/
-/mob/living/carbon/human/proc/put_in_hand_or_stow(obj/item/I, hand, delete_item = TRUE)
+/mob/living/carbon/human/proc/put_in_hand_or_stow(obj/item/I, hand, delete_item = FALSE)
 	if (!src.put_in_hand(I, hand))
 		if(!src.stow_in_available(I, delete_item))
 			return FALSE
@@ -1922,15 +1922,15 @@ Attempts to put an item in the hand of a mob, if not possible then stow it, then
 	return TRUE
 
 /**
-Tries to put an item in an available backpack, belt storage, pocket, or hand slot. Will delete items that cannot be placed by default.
+Tries to put an item in an available backpack, belt storage, pocket, or hand slot. Will drop items that cannot be placed at the mob's feet by default.
 
  * @param I The item to stow.
 
- * @param delete_item If TRUE, the item will be deleted if it cannot be stowed. If FALSE, the item is dropped at the current location.
+ * @param delete_item If TRUE, the item will be deleted if it cannot be stowed, for items being replaced by another. If FALSE (by default), the item is dropped at the current location.
 
  * @return TRUE if the item was stowed, FALSE if it was not.
 **/
-/mob/living/carbon/human/proc/stow_in_available(obj/item/I, delete_item = TRUE)
+/mob/living/carbon/human/proc/stow_in_available(obj/item/I, delete_item = FALSE)
 	if (src.autoequip_slot(I, SLOT_IN_BACKPACK))
 		return TRUE
 	if (src.autoequip_slot(I, SLOT_IN_BELT))
