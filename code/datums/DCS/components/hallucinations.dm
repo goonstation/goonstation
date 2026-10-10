@@ -99,14 +99,14 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 /// Trippy colors - apply an RGB swap to a random object within the edge of the client's vision
 /datum/component/hallucination/trippy_colors
 	var/static/color_animation_time = 4 SECONDS
-	var/list/active_hallucinations
+	var/list/active_hallucinations = null
 
 /datum/component/hallucination/Initialize(timeout)
 	. = ..()
-	active_hallucinations = list()
+	src.active_hallucinations = list()
 
-/datum/component/hallucinationdo_mob_tick(mob, mult)
-	if(!src.parent_mob.client)
+/datum/component/hallucination/do_mob_tick(mob, mult)
+	if(!ismob(src.parent_mob) || isclient(parent_mob.client))
 		return ..()
 
 	if(!prob(15)) // Only happen sometimes
@@ -140,12 +140,12 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 		list(0,1,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1, 0,0,0,0)
 	))
 
-	src.active_hallucinations.Add(halluc)
+	src.active_hallucinations += (halluc)
 	src.parent_mob.client?.images += halluc
 
-	animate(halluc, color = chosen_pattern, time = src.color_animation_time, easing = SINE_EASING)
+	animate(halluc, color = chosen_pattern, time = src::color_animation_time, easing = SINE_EASING)
 
-	SPAWN(src.color_animation_time + 10)
+	SPAWN(src::color_animation_time + 10)
 		src.fade_hallucination_out(halluc)
 
 	..()
@@ -160,10 +160,10 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 		src.active_hallucinations.Cut()
 
 /datum/component/hallucination/proc/fade_hallucination_out(image/halluc)
-	animate(halluc, color = null, time = src.color_animation_time, easing = SINE_EASING)
+	animate(halluc, color = null, time = src::color_animation_time, easing = SINE_EASING)
 
-	SPAWN(src.color_animation_time + 10)
-		src.active_hallucinations.Remove(halluc)
+	SPAWN(src::color_animation_time + 10)
+		src.active_hallucinations -= (halluc)
 		src.parent_mob.client?.images -= halluc
 
 		qdel(halluc)
