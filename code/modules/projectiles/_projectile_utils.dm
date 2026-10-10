@@ -1,3 +1,6 @@
+#define GUN_KINETIC_MATERIAL_RATIO_CASING 0.2
+#define GUN_KINETIC_MATERIAL_RATIO_BULLET 0.8 // 20% less bullet per bullet
+
 //Global procs for firing, reflecting projectiles
 
 // THIS IS INTENDED FOR POINTBLANKING.
@@ -112,8 +115,16 @@
 	P.power = DATA.power
 
 	P.proj_data = DATA
+	if(DATA.coating)
+		// alter_projectile may trigger material procs. Add material first
+		P.material_amt = DATA.coating_amount
+		if(DATA.casing)
+			P.material_amt *= GUN_KINETIC_MATERIAL_RATIO_BULLET // Some of the material goes to the casing instead
+		P.setMaterial(DATA.coating)
 	alter_proj?.Invoke(P)
 
+	if(QDELETED(P))
+		return // projectile got deleted by alter_projectile
 	if(P.proj_data == DATA)
 		P.initial_power = P.power //allows us to set projectile power in callback without needing a new projectile datum
 	else
@@ -122,7 +133,6 @@
 
 	P.set_icon()
 	P.name = DATA.name
-	P.setMaterial(DATA.material)
 
 
 	if (DATA.implanted)

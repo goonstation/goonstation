@@ -788,7 +788,7 @@
 		current_projectile.name = loaded.name
 		loaded.set_loc(A)
 		current_projectile.implanted = A
-		current_projectile.material = loaded.head_material
+		current_projectile.coating = loaded.head_material
 		var/default_damage = 7
 		if(loaded.head_material)
 			if(loaded.head_material.hasProperty("hard"))
