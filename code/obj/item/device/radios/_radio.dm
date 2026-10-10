@@ -254,6 +254,8 @@ TYPEINFO(/obj/item/device/radio)
 			return TRUE
 
 		if ("toggle-microphone")
+			if (!src.has_microphone)
+				return FALSE
 			src.toggle_microphone(!src.microphone_enabled)
 			return TRUE
 
