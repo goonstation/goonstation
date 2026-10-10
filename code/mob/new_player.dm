@@ -530,17 +530,6 @@ TYPEINFO(/mob/new_player)
 		else
 			if (ishuman(new_character) && allow_late_antagonist && current_state == GAME_STATE_PLAYING && ticker.round_elapsed_ticks >= 6000 && emergency_shuttle.timeleft() >= 300 && new_character.client?.player && !new_character.client.player.timed_respawn_in_progress) // no new evils for the first 10 minutes or last 5 before shuttle
 				if (late_traitors && ticker.mode.latejoin_antag_compatible && !(jobban_isbanned(new_character, "Syndicate")))
-					var/livingtraitor = 0
-
-					for(var/datum/mind/brain in ticker.minds)
-						if(brain.current && brain.is_antagonist())
-							if (issilicon(brain.current) || isdead(brain.current) || brain.current.client == null) // if a silicon mob, dead or logged out, skip
-								continue
-
-							livingtraitor = TRUE
-							logTheThing(LOG_DEBUG, null, "<b>Late join</b>: checking [new_character.ckey], found livingtraitor [brain.key].")
-							break
-
 					var/bad_type = null
 					if (islist(ticker.mode.latejoin_antag_roles) && length(ticker.mode.latejoin_antag_roles))
 						//Another one I need input on
@@ -555,7 +544,7 @@ TYPEINFO(/mob/new_player)
 					// get_preference_for_role can't handle antag types under 'misc' like wrestler or wolf, so we need to special case those
 					var/antag_enabled = new_character.client?.preferences.vars[get_preference_for_role(bad_type) || get_preference_for_role(ROLE_MISC)]
 					if (antag_enabled && J.can_be_antag(bad_type))
-						if ((!livingtraitor && prob(40)) || (livingtraitor && !ticker.mode.latejoin_only_if_all_antags_dead && prob(4)))
+						if(random_events.active_storyteller.late_spawn_chance())
 							makebad(new_character, bad_type)
 							new_character.mind.late_special_role = TRUE
 							logTheThing(LOG_DEBUG, new_character, "<b>Late join</b>: assigned antagonist role: [bad_type].")
