@@ -7,6 +7,7 @@
 	desc = "Shows information on a patient laying on an operating table."
 	can_reconnect = TRUE
 	circuit_type = /obj/item/circuitboard/operating
+	ui_type = "OperatingComputer"
 
 	var/mob/living/carbon/human/victim = null
 
@@ -48,10 +49,7 @@
 /obj/machinery/computer/operating/ui_interact(mob/user, datum/tgui/ui)
 	if (src.victim)
 		SEND_SIGNAL(src.victim.reagents, COMSIG_REAGENTS_ANALYZED, user)
-	ui = tgui_process.try_update_ui(user, src, ui)
-	if(!ui)
-		ui = new(user, src, "OperatingComputer")
-		ui.open()
+	..()
 
 /obj/machinery/computer/operating/process()
 	..()
