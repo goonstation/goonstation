@@ -65,20 +65,18 @@ ABSTRACT_TYPE(/datum/job/special/nt)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt/engineer)
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
 	slot_poc1 = list(/obj/item/tank/pocket/extended/oxygen)
-	slot_poc2 = list(/obj/item/device/pda2/nt/engineer)
-	items_in_backpack = list(/obj/item/storage/firstaid/regular,
-							/obj/item/device/flash,
-							/obj/item/sheet/steel/fullstack,
-							/obj/item/sheet/glass/reinforced/fullstack)
+	slot_poc2 = list(/obj/item/storage/ntsc_pouch/engineer)
+	items_in_mob = list(/obj/item/device/pda2/nt/engineer)
+	/// gets placed within the mob's id slot by put_id_in_pda, required because they need both of their pockets for the oxy (on spawn readiness is required) & pouch ("correct" slot for pouch)
 
-	special_setup(var/mob/living/carbon/human/M)
-		..()
-		SPAWN(1)
-			var/obj/item/rcd/rcd = locate() in M.belt.storage.stored_items
-			rcd.matter = 100
-			rcd.max_matter = 100
-			rcd.tooltip_rebuild = TRUE
-			rcd.UpdateIcon()
+	items_in_backpack = list(/obj/item/device/flash,
+	/obj/item/storage/box/elecrepair,
+#ifdef HOTSPOTS_ENABLED
+	/obj/item/storage/box/hotspots,
+#endif
+	/obj/item/sheet/steel/fullstack,
+	/obj/item/sheet/glass/reinforced/fullstack
+)
 
 /datum/job/special/nt/medic
 	name = "Nanotrasen Emergency Paramedic"

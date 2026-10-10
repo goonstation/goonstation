@@ -127,3 +127,14 @@
 		/obj/item/pinpointer/category/apcs/station,
 		/obj/item/ore_scoop/prepared
 	)
+
+/obj/item/storage/box/hotspots
+	name = "emergency dowsing kit"
+	desc = "A small box full of tools meant for the moving and pinning of hotspots."
+	icon_state = "hotspot_nt"
+	spawn_contents = list(
+		/obj/item/heat_dowsing,
+		/obj/item/clothing/shoes/stomp_boots,
+		/obj/item/cable_coil/reinforced
+	)
+
