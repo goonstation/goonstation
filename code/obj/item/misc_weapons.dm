@@ -2013,6 +2013,22 @@ obj/item/whetstone
 		BLOCK_SETUP(BLOCK_ROD)
 		src.setItemSpecial(/datum/item_special/heavy_swing)
 
+//A slow but powerful hammer introduced in manta
+/obj/item/sledgehammer
+	name = "sledgehammer"
+	desc = "A heavy hammer that takes great deal of strenght to wield."
+	icon_state = "sledgehammer"
+	item_state = "sledgehammer"
+	icon = 'icons/obj/items/weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	hitsound = 'sound/impact_sounds/Flesh_Break_1.ogg'
+	two_handed = TRUE
+	click_delay = 30
+	force = 50
+
+	New()
+		..()
+		BLOCK_SETUP(BLOCK_ROD)
 
 //Machete for The Slasher
 /obj/item/slasher_machete
