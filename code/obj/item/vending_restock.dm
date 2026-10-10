@@ -124,6 +124,18 @@
 	desc = "A cartridge that restocks hydroponics vending machines."
 	vendingType = "hydroponics"
 
+/obj/item/vending/restock_cartridge/janitor
+	name = "janitor restock cartridge"
+	icon_state = "janitor"
+	desc = "A cartridge that restocks janitor vending machines."
+	vendingType = "janitor"
+
+/obj/item/vending/restock_cartridge/chapel
+	name = "chapel restock cartridge"
+	icon_state = "chapel"
+	desc = "A cartridge that restocks chapel vending machines."
+	vendingType = "chapel"
+
 /obj/item/vending/restock_cartridge/alcohol
 	name = "alcohol restock cartridge"
 	icon_state = "alcohol"
