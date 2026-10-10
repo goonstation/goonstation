@@ -98,7 +98,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 
 /// Trippy colors - apply an RGB swap to a random object within the edge of the client's vision
 /datum/component/hallucination/trippy_colors
-
+	var/static/color_animation_time = 4 SECONDS
 	var/list/active_hallucinations
 
 	Initialize(timeout)
@@ -109,13 +109,13 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 		if(!src.parent_mob.client)
 			return ..()
 
-		if(!prob(10)) // Only happen sometimes
+		if(!prob(15)) // Only happen sometimes
 			return ..()
 
 		var/list/potential_targets = list()
 
-		for(var/atom/potential_target in (oview(parent_mob, 6) - oview(parent_mob, 4))) // only around the edge of the player's vision (to mess with them / reduce seizure risk)
-			if(potential_target.icon && potential_target.icon_state && !isarea(potential_target))
+		for(var/atom/potential_target in (oview(parent_mob, 7) - oview(parent_mob, 5))) // only around the edge of the player's vision (to mess with them / reduce seizure risk)
+			if(potential_target.icon && potential_target.icon_state && !isarea(potential_target) && potential_target.name)
 				potential_targets += potential_target
 
 		if (!length(potential_targets))
@@ -129,8 +129,8 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 		halluc.icon = target.icon
 		halluc.icon_state = target.icon_state
 		halluc.loc = get_turf(target)
-		halluc.pixel_x = halluc.pixel_x
-		halluc.pixel_y = halluc.pixel_y
+		halluc.pixel_x = target.pixel_x
+		halluc.pixel_y = target.pixel_y
 		halluc.layer = target.layer + 0.01
 		halluc.dir = target.dir
 		halluc.plane = target.plane
@@ -143,14 +143,9 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 		src.active_hallucinations.Add(halluc)
 		src.parent_mob.client?.images += halluc
 
-		animate(halluc, color = chosen_pattern, time = 40, easing = SINE_EASING)
-
-		SPAWN(3 SECONDS)
-			animate(halluc, color = chosen_pattern, time = 40, easing = SINE_EASING)
-
-			src.active_hallucinations.Remove(halluc)
-			src.parent_mob.client?.images -= halluc
-			qdel(halluc)
+		animate(halluc, color = chosen_pattern, time = src.color_animation_time, easing = SINE_EASING)
+		SPAWN(src.color_animation_time)
+			src.fade_hallucination_out(halluc)
 
 		..()
 
@@ -159,9 +154,18 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 		UnregisterSignal(parent, COMSIG_LIVING_LIFE_TICK)
 		if(parent_mob?.client)
 			for(var/image/halluc in src.active_hallucinations)
-				src.parent_mob.client?.images -= halluc
+				src.fade_hallucination_out(halluc)
+
 			src.active_hallucinations.Cut()
 
+	proc/fade_hallucination_out(image/halluc)
+		animate(halluc, color = null, time = src.color_animation_time, easing = SINE_EASING)
+
+		SPAWN(src.color_animation_time)
+			src.active_hallucinations.Remove(halluc)
+			src.parent_mob.client?.images -= halluc
+
+			qdel(halluc)
 
 
 //#########################################################
