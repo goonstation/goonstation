@@ -267,7 +267,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/tr
 	if ((subject.mob_flags & IS_BONEY) && !allow_dead_scanning)
 		show_message("Error: No tissue mass present. Total ossification of subject detected.", "danger")
 		return
-
+	if (!subject.organHolder.brain)
+		show_message("Error: Failed to locate brain matter.", "danger")
+		return
 	var/datum/mind/subjMind = subject.mind
 	if ((!subjMind) || (!subjMind.key))
 		if(subject.ghost?.mind)
