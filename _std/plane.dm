@@ -146,8 +146,6 @@ client
 
 		src.setup_special_screens()
 
-		SPAWN(3 SECONDS)
-			apply_depth_filter()
 		..()
 
 	// yeah whatever lets just define these right here because fucking alphabetical preprocessor
@@ -173,9 +171,7 @@ client
 		src.plane_parents["[plane.plane]"] = plane
 		return plane
 
-	proc/apply_depth_filter()
-		var/shadows_checked = winget( src, "menu.set_shadow", "is-checked" ) == "true"
-		var/distort_checked = winget( src, "menu.set_distort", "is-checked" ) == "true"
+	proc/apply_depth_filter(shadows_checked, distort_checked)
 		for(var/plane_key in src.plane_parents)
 			var/atom/movable/screen/plane_parent/P = src.plane_parents[plane_key]
 			if (shadows_checked && (P.name == "game_plane" || P.name == "game_plane_nowarp" || P.name == "wall_plane"))

@@ -2613,20 +2613,6 @@ Tries to put an item in an available backpack, belt storage, pocket, or hand slo
 		src.update_body()
 		src.update_clothing()
 
-/mob/living/carbon/human/verb/change_hud_style()
-	set name = "Change HUD Style"
-	set desc = "Selects what style HUD you would like to use."
-	set category = "Commands"
-
-	if (!src.hud) // uh?
-		return src.show_text("<b>Somehow you have no HUD! Please alert a coder!</b>", "red")
-
-	var/selection = tgui_input_list(usr, "What style HUD style would you like?", "Selection", hud_style_selection)
-	if (!selection)
-		return
-
-	src.force_hud_style(selection)
-
 /mob/living/carbon/human/proc/force_hud_style(var/selection)
 	if (!selection)
 		return

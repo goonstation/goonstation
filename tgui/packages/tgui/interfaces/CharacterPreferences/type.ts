@@ -71,9 +71,9 @@ export interface CharacterPreferencesData {
   autoCapitalization: BooleanLike;
   localDeadchat: BooleanLike;
   targetingCursor: string;
-  targetingCursorPreview: string;
+  targetingCursorIcon: string;
   hudTheme: string;
-  hudThemePreview: string;
+  hudThemes: { name: string; icon: string | null }[];
   tooltipOption: CharacterPreferencesTooltip;
   scrollWheelTargeting: CharacterPreferencesScrollTarget;
   middleMouseSwap: BooleanLike;
@@ -93,7 +93,40 @@ export interface CharacterPreferencesData {
   traitsPointsTotal: number;
   partsData: Partial<Record<string, CharacterPreferencesPartData>>;
   observerDnr: BooleanLike;
+  clientSettings: ClientSettings;
+  volumeChannels: {
+    name: string;
+    description: string;
+    volume: number;
+    default: number;
+  }[];
+  saturation: number;
 }
+
+export interface ClientSettings {
+  fps: 'velvety' | 'creamy' | 'smooth' | 'chunky';
+  widescreen: BooleanLike;
+  horizontal_split: BooleanLike;
+  icon_size: string;
+  zoom_mode: 'distort' | 'normal';
+  fullscreen: BooleanLike;
+  hide_menu: BooleanLike;
+  dark_mode: BooleanLike;
+  depth_shadow: BooleanLike;
+  distortion: BooleanLike;
+  parallax: BooleanLike;
+  view_tint: BooleanLike;
+  camera_recoil: BooleanLike;
+  dark_screenflashes: BooleanLike;
+  colorblind: 'none' | 'protanopia' | 'deuteranopia' | 'tritanopia';
+  tg_layout: BooleanLike;
+  tg_controls: BooleanLike;
+  hand_ghosts: BooleanLike;
+  mute_all: BooleanLike;
+  mute_speech: BooleanLike;
+  mute_vox: BooleanLike;
+}
+
 export interface CharacterPreferencesPartData {
   id: string;
   name: string;

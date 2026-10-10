@@ -127,6 +127,7 @@ var/list/removed_jobs = list(
 		src.randomize_name()
 		src.randomizeLook()
 		src.profile_names = new/list(SAVEFILE_PROFILES_MAX)
+		src.client_settings = global.client_setting_defaults.Copy()
 		..()
 		if (isnull(src.custom_parts)) //I feel like there should be a better place to init this
 			src.custom_parts = list(
@@ -185,8 +186,15 @@ var/list/removed_jobs = list(
 				"img" = icon2base64(icon(trait.icon, trait.icon_state)),
 				"points" = trait.points,
 			)
+		var/list/hudThemes = list()
+		for (var/name in hud_style_selection)
+			hudThemes += list(list(
+				"name" = name,
+				"icon" = get_tgui_icon(hud_style_selection[name]),
+			))
 		. = list(
 			"traitsData" = traitsData,
+			"hudThemes" = hudThemes,
 		)
 
 		. += src.GetJobStaticData(user)
@@ -222,6 +230,17 @@ var/list/removed_jobs = list(
 				"name" = customization.get_name(),
 				"points" = customization.trait_cost,
 			) + customization.get_ui_icon()
+
+		var/list/volume_channels = list()
+		var/list/volume_names = list("Master") + client.getVolumeNames()
+		var/list/volume_descriptions = client.getVolumeDescriptions()
+		for (var/i in 1 to length(volume_names))
+			volume_channels += list(list(
+				"name" = volume_names[i],
+				"description" = volume_descriptions[i],
+				"volume" = client.volumes[i],
+				"default" = client.getDefaultVolume(i - 1),
+			))
 
 		. = list(
 			"isMentor" = client.is_mentor(),
@@ -306,9 +325,8 @@ var/list/removed_jobs = list(
 			"autoCapitalization" = src.auto_capitalization,
 			"localDeadchat" = src.local_deadchat,
 			"hudTheme" = src.hud_style,
-			"hudThemePreview" = icon2base64(icon(hud_style_selection[src.hud_style], "preview")),
 			"targetingCursor" = src.target_cursor,
-			"targetingCursorPreview" = icon2base64(icon(cursors_selection[src.target_cursor])),
+			"targetingCursorIcon" = get_tgui_icon(cursors_selection[src.target_cursor]),
 			"tooltipOption" = src.tooltip_option,
 			"scrollWheelTargeting" = src.scrollwheel_limb_targeting,
 			"middleMouseSwap" = src.middle_mouse_swap,
@@ -323,6 +341,9 @@ var/list/removed_jobs = list(
 			"useAzerty" = src.use_azerty,
 			"preferredMap" = src.preferred_map,
 			"observerDnr" = src.observer_dnr,
+			"clientSettings" = src.client_settings,
+			"volumeChannels" = volume_channels,
+			"saturation" = text2num(client.player?.cloudSaves.getData("saturation")) || 1,
 			"traitsAvailable" = traits,
 			"traitsMax" = src.traitPreferences.max_traits,
 			"traitsPointsTotal" = src.traitPreferences.calcTotal(src.traitPreferences.traits_selected, src.custom_parts),
@@ -936,15 +957,11 @@ var/list/removed_jobs = list(
 				return TRUE
 
 			if ("update-fontSize")
-				if (params["reset"])
-					src.font_size = initial(src.font_size)
+				var/new_font_size = tgui_input_number(usr, "Desired font size (in percent):", "Font setting", src.font_size || 100, 200, 1)
+				if (!isnull(new_font_size))
+					src.font_size = new_font_size
+					src.profile_modified = TRUE
 					return TRUE
-				else
-					var/new_font_size = tgui_input_number(usr, "Desired font size (in percent):", "Font setting", src.font_size || 100, 200, 1)
-					if (!isnull(new_font_size))
-						src.font_size = new_font_size
-						src.profile_modified = TRUE
-						return TRUE
 
 			if ("update-seeMentorPms")
 				src.see_mentor_pms = !src.see_mentor_pms
@@ -977,10 +994,13 @@ var/list/removed_jobs = list(
 				return TRUE
 
 			if ("update-hudTheme")
-				var/new_hud = tgui_input_list(usr, "Please select a HUD style:", "New", hud_style_selection)
-				if (new_hud)
+				var/new_hud = params["value"]
+				if (new_hud in hud_style_selection)
 					src.hud_style = new_hud
 					src.profile_modified = TRUE
+					var/mob/living/carbon/human/H = usr
+					if (istype(H))
+						H.force_hud_style(new_hud)
 					return TRUE
 
 			if ("update-targetingCursor")
@@ -1058,6 +1078,31 @@ var/list/removed_jobs = list(
 			if ("update-observerDnr")
 				src.observer_dnr = !src.observer_dnr
 				src.profile_modified = TRUE
+				return TRUE
+
+			if ("update-clientSetting")
+				return src.set_client_setting(client, params["setting"], params["value"])
+
+			if ("update-volume")
+				var/channel = params["channel"]
+				if (!isnum(channel) || channel < VOLUME_CHANNEL_MASTER || channel > VOLUME_CHANNEL_FARTS || !isnum(params["value"]))
+					return
+				client.setVolume(channel, params["value"] / 100)
+				return TRUE
+
+			if ("reset-volumes")
+				for (var/channel in VOLUME_CHANNEL_MASTER to VOLUME_CHANNEL_FARTS)
+					client.setVolume(channel, client.getDefaultVolume(channel))
+				return TRUE
+
+			if ("update-saturation")
+				var/current = text2num(client.player?.cloudSaves.getData("saturation")) || 1
+				var/new_saturation = tgui_input_number(usr, "Saturation (in percent):", "Saturation", round(current * 100), 150, 50)
+				if (isnull(new_saturation))
+					return
+				var/saturation = clamp(new_saturation, 50, 150) / 100
+				client.set_saturation(saturation)
+				client.player?.cloudSaves.putDataSoon("saturation", saturation)
 				return TRUE
 
 			if ("select-trait")
@@ -1759,8 +1804,4 @@ var/list/removed_jobs = list(
 			else
 				boutput(C, "<h3 class='alert'>Something went wrong. Maybe the game isn't done loading yet, give it a minute!</h3>")
 				return
-		if (C.preferences.use_wasd)
-			winset(C, "menu.wasd_controls", "is-checked=true")
-		else
-			winset(C, "menu.wasd_controls", "is-checked=false")
 		C.mob.reset_keymap()
