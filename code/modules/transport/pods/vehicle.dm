@@ -852,7 +852,7 @@
 					if(damage_overlays != 2)
 						particleMaster.SpawnSystem(new /datum/particleSystem/areaSmoke("#CCCCCC", 50, src))
 						damage_overlays = 2
-						fire_overlay = image('icons/effects/64x64.dmi', "pod_fire")
+						fire_overlay = image('icons/effects/64x64.dmi', "pod_fire", layer = ABOVE_OBJ_LAYER)
 						src.UpdateOverlays(fire_overlay, "fire")
 						for(var/mob/living/carbon/human/M in src)
 							M.update_burning(35)
@@ -861,7 +861,7 @@
 				if(25 to 50)
 					if(damage_overlays < 1)
 						damage_overlays = 1
-						damage_overlay = image('icons/effects/64x64.dmi', "pod_damage")
+						damage_overlay = image('icons/effects/64x64.dmi', "pod_damage", layer = ABOVE_OBJ_LAYER)
 						src.UpdateOverlays(damage_overlay, "damage")
 				if(50 to INFINITY)
 					if (damage_overlays)
