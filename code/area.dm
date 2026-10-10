@@ -218,6 +218,8 @@ TYPEINFO(/area)
 			//If any mobs are entering, within a thing or otherwise
 			if (length(enteringMobs) > 0)
 				for (var/mob/enteringM in enteringMobs) //each dumb mob
+					if(get_area(enteringM) == src)
+						continue // The mob may be exiting a cart or be inside an item
 					SEND_SIGNAL(src, COMSIG_AREA_ENTERED_BY_MOB, enteringM)
 					if( !(isliving(enteringM) || iswraith(enteringM)) ) continue
 					//Wake up a bunch of lazy darn critters
