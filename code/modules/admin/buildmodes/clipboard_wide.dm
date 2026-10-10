@@ -3,6 +3,7 @@
 	var/rel_y = 0
 	var/turf_type = null
 	var/turf_appearance = null
+	var/turf_opacity = FALSE
 	var/turf_dir = 0
 	var/list/objects = list()
 	//var/list/objectAppearances (TODO)
@@ -48,6 +49,7 @@ Right Mouse Button                     = Select area to copy with two clicks<br>
 			if (!TheOneToReplace)
 				continue
 			var/turf/R = TheOneToReplace.ReplaceWith(CBT.turf_type, FALSE, TRUE, FALSE, TRUE)
+			R.set_opacity(CBT.turf_opacity) // appearance copy doesn't hook into lighting
 			R.appearance = CBT.turf_appearance
 			R.set_dir(CBT.turf_dir)
 			for (var/obj/O in CBT.objects)
@@ -83,6 +85,7 @@ Right Mouse Button                     = Select area to copy with two clicks<br>
 					CBT.rel_y = Q.y - miny
 					CBT.turf_type = Q.type
 					CBT.turf_appearance = Q.appearance
+					CBT.turf_opacity = Q.opacity
 					CBT.turf_dir = Q.dir
 					for (var/obj/O in Q)
 						if (istype(O, /obj/overlay/tile_effect) || (O.loc != Q))

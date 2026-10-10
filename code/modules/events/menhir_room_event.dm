@@ -61,11 +61,7 @@ ABSTRACT_TYPE(/area/unspace)
 
 					T.vis_contents += otherside_turf
 					T.density = otherside_turf.density
-					T.opacity = otherside_turf.opacity
-					for (var/atom/A as anything in otherside_turf)
-						if (A.opacity)
-							T.opacity = TRUE
-							break
+					T.set_opacity_no_lighting(otherside_turf.opacity || otherside_turf.opaque_atom_count)
 					T.name = otherside_turf.name
 					T.desc = otherside_turf.desc
 					T.icon = otherside_turf.icon
@@ -75,7 +71,7 @@ ABSTRACT_TYPE(/area/unspace)
 					T.icon = null
 					T.icon_state = null
 					T.density = TRUE
-					T.opacity = TRUE
+					T.set_opacity_no_lighting(TRUE)
 					T.name = ""
 					T.desc = ""
 				//T.RL_Init()
@@ -106,11 +102,7 @@ ABSTRACT_TYPE(/area/unspace)
 
 					T.vis_contents += otherside_turf
 					T.density = otherside_turf.density
-					T.opacity = otherside_turf.opacity
-					for (var/atom/A as anything in otherside_turf)
-						if (A.opacity)
-							T.opacity = TRUE
-							break
+					T.set_opacity_no_lighting(otherside_turf.opacity || otherside_turf.opaque_atom_count)
 					T.name = otherside_turf.name
 					T.desc = otherside_turf.desc
 					T.icon = otherside_turf.icon
