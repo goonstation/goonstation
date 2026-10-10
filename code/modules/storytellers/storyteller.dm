@@ -288,8 +288,8 @@ ABSTRACT_TYPE(/datum/storyteller)
 				logTheThing(LOG_DEBUG, src, "<b>Late join</b>: Storyteller rolled late join from base chance.")
 				return TRUE // base low random chance
 
-			if(prob(src.want_latejoin_chance) && antag_percentage < src.alive_antags_threshold)
-				logTheThing(LOG_DEBUG, src, "<b>Late join</b>: Storyteller rolled late join as antag percent is below expected threshold.")
+			if(prob(src.want_latejoin_chance) && antag_percentage < random_events.alive_antags_threshold)
+				logTheThing(LOG_DEBUG, src, "<b>Late join</b>: Storyteller rolled late join as antag percentage is below expected threshold.")
 				return TRUE // alive antag percent is below expected threshold
 
 			if(prob(src.want_latejoin_chance) && src.security_death_ball_check())
