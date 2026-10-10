@@ -101,11 +101,11 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 	var/static/color_animation_time = 4 SECONDS
 	var/list/active_hallucinations = null
 
-/datum/component/hallucination/Initialize(timeout)
+/datum/component/hallucination/trippy_colors/Initialize(timeout)
 	. = ..()
 	src.active_hallucinations = list()
 
-/datum/component/hallucination/do_mob_tick(mob, mult)
+/datum/component/hallucination/trippy_colors/do_mob_tick(mob, mult)
 	if(!ismob(src.parent_mob) || isclient(parent_mob.client))
 		return ..()
 
@@ -150,7 +150,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 
 	..()
 
-/datum/component/hallucination/UnregisterFromParent()
+/datum/component/hallucination/trippy_colors/UnregisterFromParent()
 	. = ..()
 	UnregisterSignal(parent, COMSIG_LIVING_LIFE_TICK)
 	if(parent_mob?.client)
@@ -159,7 +159,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 
 		src.active_hallucinations.Cut()
 
-/datum/component/hallucination/proc/fade_hallucination_out(image/halluc)
+/datum/component/hallucination/trippy_colors/proc/fade_hallucination_out(image/halluc)
 	animate(halluc, color = null, time = src::color_animation_time, easing = SINE_EASING)
 
 	SPAWN(src::color_animation_time + 10)
