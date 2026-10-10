@@ -1,3 +1,7 @@
+#define GHOST_CRITTER_CATEGORY_NORMAL "normal"
+#define GHOST_CRITTER_CATEGORY_ANTAGONIST "antagonist"
+#define GHOST_CRITTER_CATEGORY_SPACEBUX "spacebux"
+
 /datum/ghost_critter_respawn_menu
 	ui_state(mob/user)
 		return tgui_observer_state
@@ -16,6 +20,11 @@
 	ui_data(mob/user)
 		var/list/critters = list()
 		for (var/mob/living/critter/critter_type as anything in user.get_ghost_critter_types())
+			var/category = GHOST_CRITTER_CATEGORY_NORMAL
+			if (critter_type in antag_respawn_critter_types)
+				category = GHOST_CRITTER_CATEGORY_ANTAGONIST
+			else if (!(critter_type in respawn_critter_types))
+				category = GHOST_CRITTER_CATEGORY_SPACEBUX
 			var/preview_state = initial(critter_type.icon_state)
 			// Figures choose their actual appearance in New() at random; so we just use a representative figure for the preview.
 			if (ispath(critter_type, /mob/living/critter/small_animal/figure))
@@ -28,8 +37,7 @@
 				"icon" = get_tgui_icon(critter_icon),
 				"iconState" = preview_state,
 				"iconDirection" = src.get_preview_direction(critter_icon, preview_state),
-				"isAntagonist" = (critter_type in antag_respawn_critter_types),
-				"isPremium" = (!(critter_type in respawn_critter_types) && !(critter_type in antag_respawn_critter_types)),
+				"category" = category,
 			))
 		return list("critters" = critters)
 
@@ -68,3 +76,7 @@
 		ui.close()
 		ghost.make_ghost_critter(spawnpoint, critter_type = critter_type)
 		return TRUE
+
+#undef GHOST_CRITTER_CATEGORY_NORMAL
+#undef GHOST_CRITTER_CATEGORY_ANTAGONIST
+#undef GHOST_CRITTER_CATEGORY_SPACEBUX
