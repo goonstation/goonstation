@@ -1085,7 +1085,7 @@ var/global/curr_day = null
 	var/s = input("Enter a saturation % from 50-150. Default is 100.", "Saturation %", 100) as num
 	s = clamp(s, 50, 150) / 100
 	src.set_saturation(s)
-	src.player?.cloudSaves.putData("saturation", s)
+	src.player?.cloudSaves.putDataSoon("saturation", s)
 	boutput(usr, SPAN_NOTICE("You have changed your game saturation to [s * 100]%."))
 
 
