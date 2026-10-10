@@ -1352,8 +1352,7 @@ var/list/fun_images = list()
 
 	var/confirm6 = automated ? "Yes" : tgui_alert(src.mob, "Disable drop shadowing?", "Dropshadows?", list("Yes", "No"))
 	if (confirm6 == "Yes")
-		winset(src, "menu.set_shadow", "is-checked=false")
-		src.apply_depth_filter()
+		src.apply_depth_filter(FALSE, src.preferences.client_settings[CLIENT_SETTING_DISTORTION])
 
 	var/confirm7 = automated ? "Yes" : tgui_alert(src.mob, "Reset client color matrix to identity matrix?", "Reset Color Matrix?", list("Yes", "No"))
 	if (confirm7 == "Yes")

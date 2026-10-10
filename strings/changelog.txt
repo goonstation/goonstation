@@ -1,5 +1,15 @@
 
 (t)fri oct 09 26
+(u)ZeWaka
+(e)🪲🔄📄|C-Bug, C-Rework`, A-UI
+(*)Your display/effects/etc settings will no longer reset when you play on other servers.
+(*)Lots of settings have been moved to Game Settings in Character Setup and improved.
+(+)Removed a few settings from the top menu bar that weren't useful. More may be removed in the future.
+(+)Fixed admin music getting much quieter when changing volumes.
+(u)bladethrower
+(p)27943
+(e)🪲🗺|C-Bug, A-Mapping
+(*)Cogmap 2 Inner Engineering APC is now connected at round start. Engineers rejoice!
 (u)Warwere
 (p)28031
 (e)|

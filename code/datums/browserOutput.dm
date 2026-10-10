@@ -306,7 +306,8 @@ var/global
 
 /datum/chatOutput/proc/playMusic(url, volume, fromTopic = FALSE)
 	if (!url || !volume) return
-	var/data = json_encode(list("playMusic" = url, "volume" = volume / 100, "fromTopic" = fromTopic))
+	// the browser can't play above 100% and ignores larger values
+	var/data = json_encode(list("playMusic" = url, "volume" = min(volume / 100, 1), "fromTopic" = fromTopic))
 	data = url_encode(data)
 
 	ehjax.send(src.owner, "browseroutput", data)
@@ -319,7 +320,7 @@ var/global
 	ehjax.send(src.owner, "browseroutput", data)
 
 /datum/chatOutput/proc/adjustVolumeRaw(volume)
-	var/data = json_encode(list("adjustVolume" = volume))
+	var/data = json_encode(list("adjustVolume" = clamp(volume, 0, 1)))
 	data = url_encode(data)
 
 	ehjax.send(src.owner, "browseroutput", data)

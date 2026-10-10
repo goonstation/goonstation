@@ -956,7 +956,7 @@
 #define MOVING_DOWN 4
 
 TYPEINFO(/mob/living/critter/peppino)
-	icon = "+secret/icons/mob/peppino.dmi"
+	icon = '+secret/icons/mob/peppino.dmi'
 /mob/living/critter/peppino
 	name = "extremely anxious looking chef"
 	real_name = "extremely anxious looking chef"
