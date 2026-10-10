@@ -46,7 +46,7 @@
 		if (owner.getStatusDuration("blinded") || owner.getStatusDuration("teleporting") || src.owner.loc?.getStatusDuration("teleporting"))
 			owner.blinded = 1
 		else
-			if(!(HAS_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION) || HAS_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION_WEAK)))
+			if(!(HAS_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION)))
 				for (var/thing in owner.get_equipped_items())
 					if (!thing) continue
 					var/obj/item/I = thing

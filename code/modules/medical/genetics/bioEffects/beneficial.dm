@@ -741,30 +741,30 @@
 		. = ..()
 		if(ismob(owner))
 			if(power == 1)
-				APPLY_ATOM_PROPERTY(owner, PROP_MOB_NIGHTVISION_WEAK, src)
+				owner.apply_vision(/datum/vision_modifier/nightvision/weak, src)
 			else
-				APPLY_ATOM_PROPERTY(owner, PROP_MOB_NIGHTVISION, src)
+				owner.apply_vision(/datum/vision_modifier/nightvision, src)
 
 	onPowerChange(oldval, newval)
 		. = ..()
 		if(ismob(owner))
 			if(oldval == 1)
-				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_NIGHTVISION_WEAK, src)
+				owner.remove_vision(/datum/vision_modifier/nightvision/weak, src)
 			else
-				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_NIGHTVISION, src)
+				owner.remove_vision(/datum/vision_modifier/nightvision, src)
 
 			if(newval == 1)
-				APPLY_ATOM_PROPERTY(owner, PROP_MOB_NIGHTVISION_WEAK, src)
+				owner.apply_vision(/datum/vision_modifier/nightvision/weak, src)
 			else
-				APPLY_ATOM_PROPERTY(owner, PROP_MOB_NIGHTVISION, src)
+				owner.apply_vision(/datum/vision_modifier/nightvision, src)
 
 	OnRemove()
 		. = ..()
 		if(ismob(owner))
 			if(power == 1)
-				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_NIGHTVISION_WEAK, src)
+				owner.remove_vision(/datum/vision_modifier/nightvision/weak, src)
 			else
-				REMOVE_ATOM_PROPERTY(owner, PROP_MOB_NIGHTVISION, src)
+				owner.remove_vision(/datum/vision_modifier/nightvision, src)
 
 /datum/bioEffect/toxic_farts
 	name = "High Decay Digestion"

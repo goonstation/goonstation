@@ -85,13 +85,6 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon/hivebot, proc/admin_add_tool, proc/admi
 	setdead(src)
 	src.canmove = 0
 
-	vision.set_color_mod("#ffffff") // reset any blindness
-	src.sight |= SEE_TURFS
-	src.sight |= SEE_MOBS
-	src.sight |= SEE_OBJS
-
-	src.see_in_dark = SEE_DARK_FULL
-	src.see_invisible = INVIS_CLOAK
 	src.UpdateIcon()
 /*
 	if(src.client)
@@ -920,6 +913,7 @@ Frequency:
 			if (src.module)
 				qdel(src.module)
 			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/construction))
+				src.apply_vision(/datum/vision_modifier/construction, /datum/game_mode/construction)
 				src.module = new /obj/item/robot_module/construction_ai( src )
 			else
 				src.module = new /obj/item/robot_module/eyebot( src )

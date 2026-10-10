@@ -1057,17 +1057,17 @@
 	if (widescreen)
 		if (src.view == "21x15") //tried using world.view stuff but it was not happy
 			src.view = "28x20"
-			usr.see_in_dark = 10
+			usr.apply_vision(/datum/vision_modifier/adminview, src.type)
 		else
 			src.view = "21x15"
-			usr.see_in_dark = initial(usr.see_in_dark)
+			usr.remove_vision(/datum/vision_modifier/adminview, src.type)
 	else //not widescreen
 		if (src.view == "15x15")// 15x15 should be default for non-widescreen
 			src.view = "20x20"
-			usr.see_in_dark = 10
+			usr.apply_vision(/datum/vision_modifier/adminview, src.type)
 		else
 			src.view = "15x15"
-			usr.see_in_dark = initial(usr.see_in_dark)
+			usr.remove_vision(/datum/vision_modifier/adminview, src.type)
 
 
 /client/proc/iddt()
@@ -1100,7 +1100,7 @@
 
 	if (!adventure_view || mob.see_invisible < INVIS_ADVENTURE)
 		adventure_view = 1
-		mob.see_invisible = INVIS_ADVENTURE
+		mob.apply_vision(/datum/vision_modifier/adventure, src.type)
 		get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS).add_client(src)
 		boutput(src, "Adventure View activated.")
 
@@ -1108,10 +1108,7 @@
 		adventure_view = 0
 		get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS).remove_client(src)
 		boutput(src, "Adventure View deactivated.")
-		if (!isliving(mob))
-			mob.see_invisible = INVIS_SPOOKY // this seems to be quasi-standard for dead and wraith mobs? might fuck up target observers but WHO CARES
-		else
-			mob.see_invisible = INVIS_NONE // it'll sort itself out on the next Life() tick anyway
+		mob.remove_vision(/datum/vision_modifier/adventure, src.type)
 
 /proc/possess(obj/O as obj in world)
 	set name = "Possess"
