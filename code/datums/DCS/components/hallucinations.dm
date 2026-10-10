@@ -101,71 +101,72 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 	var/static/color_animation_time = 4 SECONDS
 	var/list/active_hallucinations
 
-	Initialize(timeout)
-		. = ..()
-		active_hallucinations = list()
+/datum/component/hallucination/Initialize(timeout)
+	. = ..()
+	active_hallucinations = list()
 
-	do_mob_tick(mob, mult)
-		if(!src.parent_mob.client)
-			return ..()
+/datum/component/hallucinationdo_mob_tick(mob, mult)
+	if(!src.parent_mob.client)
+		return ..()
 
-		if(!prob(15)) // Only happen sometimes
-			return ..()
+	if(!prob(15)) // Only happen sometimes
+		return ..()
 
-		var/list/potential_targets = list()
+	var/list/potential_targets = list()
 
-		for(var/atom/potential_target in (oview(parent_mob, 7) - oview(parent_mob, 5))) // only around the edge of the player's vision (to mess with them / reduce seizure risk)
-			if(potential_target.icon && potential_target.icon_state && !isarea(potential_target) && potential_target.name)
-				potential_targets += potential_target
+	for(var/atom/potential_target in (oview(parent_mob, 7) - oview(parent_mob, 5))) // only around the edge of the player's vision (to mess with them / reduce seizure risk)
+		if(potential_target.icon && potential_target.icon_state && !isarea(potential_target) && potential_target.name)
+			potential_targets += potential_target
 
-		if (!length(potential_targets))
-			return ..()
+	if (!length(potential_targets))
+		return ..()
 
-		var/atom/target = pick(potential_targets)
-		if(isnull(target))
-			return ..()
+	var/atom/target = pick(potential_targets)
+	if(isnull(target))
+		return ..()
 
-		var/image/halluc = new() // manually copying only icon & location stuff so it doesn't show in the context manu
-		halluc.icon = target.icon
-		halluc.icon_state = target.icon_state
-		halluc.loc = get_turf(target)
-		halluc.pixel_x = target.pixel_x
-		halluc.pixel_y = target.pixel_y
-		halluc.layer = target.layer + 0.01
-		halluc.dir = target.dir
-		halluc.plane = target.plane
+	var/image/halluc = new() // manually copying only icon & location stuff so it doesn't show in the context manu
+	halluc.icon = target.icon
+	halluc.icon_state = target.icon_state
+	halluc.loc = get_turf(target)
+	halluc.pixel_x = target.pixel_x
+	halluc.pixel_y = target.pixel_y
+	halluc.layer = target.layer + 0.01
+	halluc.dir = target.dir
+	halluc.plane = target.plane
 
-		var/list/chosen_pattern = pick(list(
-			list(0,0,1,0, 1,0,0,0, 0,1,0,0, 0,0,0,1, 0,0,0,0),
-			list(0,1,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1, 0,0,0,0)
-		))
+	var/list/chosen_pattern = pick(list(
+		list(0,0,1,0, 1,0,0,0, 0,1,0,0, 0,0,0,1, 0,0,0,0),
+		list(0,1,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1, 0,0,0,0)
+	))
 
-		src.active_hallucinations.Add(halluc)
-		src.parent_mob.client?.images += halluc
+	src.active_hallucinations.Add(halluc)
+	src.parent_mob.client?.images += halluc
 
-		animate(halluc, color = chosen_pattern, time = src.color_animation_time, easing = SINE_EASING)
-		SPAWN(src.color_animation_time)
+	animate(halluc, color = chosen_pattern, time = src.color_animation_time, easing = SINE_EASING)
+
+	SPAWN(src.color_animation_time)
+		src.fade_hallucination_out(halluc)
+
+	..()
+
+/datum/component/hallucination/UnregisterFromParent()
+	. = ..()
+	UnregisterSignal(parent, COMSIG_LIVING_LIFE_TICK)
+	if(parent_mob?.client)
+		for(var/image/halluc in src.active_hallucinations)
 			src.fade_hallucination_out(halluc)
 
-		..()
+		src.active_hallucinations.Cut()
 
-	UnregisterFromParent()
-		. = ..()
-		UnregisterSignal(parent, COMSIG_LIVING_LIFE_TICK)
-		if(parent_mob?.client)
-			for(var/image/halluc in src.active_hallucinations)
-				src.fade_hallucination_out(halluc)
+/datum/component/hallucination/proc/fade_hallucination_out(image/halluc)
+	animate(halluc, color = null, time = src.color_animation_time, easing = SINE_EASING)
 
-			src.active_hallucinations.Cut()
+	SPAWN(src.color_animation_time)
+		src.active_hallucinations.Remove(halluc)
+		src.parent_mob.client?.images -= halluc
 
-	proc/fade_hallucination_out(image/halluc)
-		animate(halluc, color = null, time = src.color_animation_time, easing = SINE_EASING)
-
-		SPAWN(src.color_animation_time)
-			src.active_hallucinations.Remove(halluc)
-			src.parent_mob.client?.images -= halluc
-
-			qdel(halluc)
+		qdel(halluc)
 
 
 //#########################################################
