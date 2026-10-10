@@ -896,7 +896,7 @@ TYPEINFO(/mob)
 		C.passenger_camera_glide_size = C.glide_size
 		C.passenger_camera_loc_pixel_x = src.loc_pixel_x
 		C.passenger_camera_loc_pixel_y = src.loc_pixel_y
-		C.glide_size = ceil(vector_magnitude(world.icon_size, world.icon_size) * max(C.fps / world.fps, 1))
+		C.glide_size = ceil(vector_magnitude(world.maxx, world.maxy) * world.icon_size * max(C.fps / world.fps, 1))
 		C.eye = P
 		C.pixel_x = round(src.loc_pixel_x + P.next_wx, 1)
 		C.pixel_y = round(src.loc_pixel_y + P.next_wy, 1)

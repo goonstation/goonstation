@@ -595,7 +595,8 @@
 	proc/animate_passenger_camera(client/C, start_pixel_x, start_pixel_y, tile_dx, tile_dy)
 		if (!C || C.eye != src)
 			return
-		C.glide_size = ceil(max(vector_magnitude(tile_dx, tile_dy), vector_magnitude(world.icon_size, world.icon_size)) * \
+		// Native scrolling must finish in one frame even when several eye updates arrive together.
+		C.glide_size = ceil(vector_magnitude(world.maxx, world.maxy) * world.icon_size * \
 			max(C.fps / world.fps, 1))
 		// Round endpoints before subtracting- BYOND truncates fractional relative pixel offsets, if we don't account for that by rounding we accumulate
 		// a small error each tick. Those errors add up which can desync the camera over long distances, causing it to lag behind the player
