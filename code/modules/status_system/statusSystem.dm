@@ -306,8 +306,10 @@ var/global/list/statusGroupLimits = list("Food"=4)
 	* Deletes the given status from the atom.
 	*
 	* {status} can either be a reference to a status effect or a status effect ID.
+	*
+	{optional} will be passed into .onRemove. Useful for custom behaviour.
 	*/
-/atom/proc/delStatus(status)
+/atom/proc/delStatus(status, optional)
 	. = null
 	if(statusEffects == null)
 		return
@@ -317,12 +319,12 @@ var/global/list/statusGroupLimits = list("Food"=4)
 			if(statcurr.id == status)
 				globalStatusInstances -= statcurr
 				statusEffects -= statcurr
-				statcurr.onRemove()
+				statcurr.onRemove(optional)
 	else if(istype(status, /datum/statusEffect)) //Instance was passed in.
 		var/datum/statusEffect/S = status
 		if(S in statusEffects)
 			globalStatusInstances -= S
 			statusEffects -= S
-			S.onRemove()
+			S.onRemove(optional)
 
 	src.updateStatusUi()
