@@ -96,28 +96,77 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 //                    TRIPPY COLORS
 //#########################################################
 
-
-/// Trippy colors - apply an RGB swap to client's vision
+/// Trippy colors - apply an RGB swap to a random object within the edge of the client's vision
 /datum/component/hallucination/trippy_colors
-	var/current_color_pattern = 0
-	var/pattern1 = list(0,0,1,0, 1,0,0,0, 0,1,0,0, 0,0,0,1, 0,0,0,0)
-	var/pattern2 = list(0,1,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1, 0,0,0,0)
+	var/static/color_animation_time = 4 SECONDS
+	var/list/active_hallucinations = null
 
-	do_mob_tick(mob, mult)
-		if(parent_mob.client && (current_color_pattern == 0 || probmult(20))) //trippy colours
-			if(src.current_color_pattern == 1)
-				parent_mob.client.animate_color(pattern2, time=40, easing=SINE_EASING)
-				src.current_color_pattern = 2
-			else
-				parent_mob.client.animate_color(pattern1, time=40, easing=SINE_EASING)
-				src.current_color_pattern = 1
-		..()
+/datum/component/hallucination/trippy_colors/Initialize(timeout)
+	. = ..()
+	src.active_hallucinations = list()
 
-	UnregisterFromParent()
-		. = ..()
-		UnregisterSignal(parent, COMSIG_LIVING_LIFE_TICK)
-		if(parent_mob?.client)
-			animate(parent_mob.client, color = null, time = 2 SECONDS, easing = SINE_EASING)
+/datum/component/hallucination/trippy_colors/do_mob_tick(mob, mult)
+	if(!ismob(src.parent_mob) || !isclient(parent_mob.client))
+		return ..()
+
+	if(!prob(15)) // Only happen sometimes
+		return ..()
+
+	var/list/potential_targets = list()
+
+	for(var/atom/potential_target in (oview(parent_mob, 7) - oview(parent_mob, 5))) // only around the edge of the player's vision (to mess with them / reduce seizure risk)
+		if(potential_target.icon && potential_target.icon_state && !isarea(potential_target) && potential_target.name)
+			potential_targets += potential_target
+
+	if (!length(potential_targets))
+		return ..()
+
+	var/atom/target = pick(potential_targets)
+	if(isnull(target))
+		return ..()
+
+	var/image/halluc = new() // manually copying only icon & location stuff so it doesn't show in the context manu
+	halluc.icon = target.icon
+	halluc.icon_state = target.icon_state
+	halluc.loc = get_turf(target)
+	halluc.pixel_x = target.pixel_x
+	halluc.pixel_y = target.pixel_y
+	halluc.layer = target.layer + 0.01
+	halluc.dir = target.dir
+	halluc.plane = target.plane
+
+	var/list/chosen_pattern = pick(list(
+		list(0,0,1,0, 1,0,0,0, 0,1,0,0, 0,0,0,1, 0,0,0,0),
+		list(0,1,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1, 0,0,0,0)
+	))
+
+	src.active_hallucinations += (halluc)
+	src.parent_mob.client?.images += halluc
+
+	animate(halluc, color = chosen_pattern, time = src::color_animation_time, easing = SINE_EASING)
+
+	SPAWN(src::color_animation_time + 10)
+		src.fade_hallucination_out(halluc)
+
+	..()
+
+/datum/component/hallucination/trippy_colors/UnregisterFromParent()
+	. = ..()
+	UnregisterSignal(parent, COMSIG_LIVING_LIFE_TICK)
+	if(parent_mob?.client)
+		for(var/image/halluc in src.active_hallucinations)
+			src.fade_hallucination_out(halluc)
+
+		src.active_hallucinations.Cut()
+
+/datum/component/hallucination/trippy_colors/proc/fade_hallucination_out(image/halluc)
+	animate(halluc, color = null, time = src::color_animation_time, easing = SINE_EASING)
+
+	SPAWN(src::color_animation_time + 10)
+		src.active_hallucinations -= (halluc)
+		src.parent_mob.client?.images -= halluc
+
+		qdel(halluc)
 
 
 //#########################################################
@@ -486,7 +535,6 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 //#########################################################
 //                    SUPPORTING CAST
 //#########################################################
-
 
 /datum/hallucinated_sound
 	///The sound file to play
