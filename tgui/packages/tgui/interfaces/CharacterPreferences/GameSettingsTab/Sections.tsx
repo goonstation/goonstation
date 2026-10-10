@@ -5,7 +5,6 @@
  * @license MIT
  */
 
-import { type ReactNode, useState } from 'react';
 import {
   Box,
   Button,
@@ -14,116 +13,21 @@ import {
   LabeledList,
   Slider,
   Stack,
-  Tabs,
 } from 'tgui-core/components';
 
-import { useBackend } from '../../backend';
+import { useBackend } from '../../../backend';
 import {
   CharacterPreferencesData,
   CharacterPreferencesScrollTarget,
   CharacterPreferencesTooltip,
-  ClientSettings,
-} from './type';
+} from '../type';
+import {
+  ClientChoice,
+  ClientToggle,
+  useClientSetting,
+} from './ClientSettingControls';
 
-enum GameSettingsSubTab {
-  General = 'General',
-  Interface = 'Interface',
-  Controls = 'Controls',
-  Graphics = 'Graphics',
-  Audio = 'Audio',
-  Accessibility = 'Accessibility',
-}
-
-export const GameSettingsTab = () => {
-  const [subTab, setSubTab] = useState(GameSettingsSubTab.General);
-
-  return (
-    <>
-      <Tabs>
-        {Object.values(GameSettingsSubTab).map((tab) => (
-          <Tabs.Tab
-            key={tab}
-            selected={subTab === tab}
-            onClick={() => setSubTab(tab)}
-          >
-            {tab}
-          </Tabs.Tab>
-        ))}
-      </Tabs>
-      <LabeledList>
-        {subTab === GameSettingsSubTab.General && <GeneralSettings />}
-        {subTab === GameSettingsSubTab.Interface && <InterfaceSettings />}
-        {subTab === GameSettingsSubTab.Controls && <ControlsSettings />}
-        {subTab === GameSettingsSubTab.Graphics && <GraphicsSettings />}
-        {subTab === GameSettingsSubTab.Audio && <AudioSettings />}
-        {subTab === GameSettingsSubTab.Accessibility && (
-          <AccessibilitySettings />
-        )}
-      </LabeledList>
-    </>
-  );
-};
-
-const useClientSetting = () => {
-  const { act, data } = useBackend<CharacterPreferencesData>();
-  const settings = data.clientSettings;
-  const setSetting = <K extends keyof ClientSettings>(
-    setting: K,
-    value: ClientSettings[K],
-  ) => act('update-clientSetting', { setting, value });
-  return { settings, setSetting };
-};
-
-interface ClientToggleProps {
-  setting: keyof ClientSettings;
-  tooltip?: string;
-  children: ReactNode;
-}
-
-const ClientToggle = (props: ClientToggleProps) => {
-  const { settings, setSetting } = useClientSetting();
-  const { setting, tooltip, children } = props;
-  return (
-    <Box mb="5px">
-      <Button.Checkbox
-        checked={!!settings[setting]}
-        onClick={() => setSetting(setting, !settings[setting])}
-        tooltip={tooltip}
-        tooltipPosition="top"
-      >
-        {children}
-      </Button.Checkbox>
-    </Box>
-  );
-};
-
-interface ClientChoiceProps<K extends keyof ClientSettings> {
-  setting: K;
-  options: [ClientSettings[K], string][];
-}
-
-const ClientChoice = <K extends keyof ClientSettings>(
-  props: ClientChoiceProps<K>,
-) => {
-  const { settings, setSetting } = useClientSetting();
-  const { setting, options } = props;
-  return (
-    <>
-      {options.map(([value, label]) => (
-        <Box mb="5px" key={String(value)}>
-          <Button.Checkbox
-            checked={settings[setting] === value}
-            onClick={() => setSetting(setting, value)}
-          >
-            {label}
-          </Button.Checkbox>
-        </Box>
-      ))}
-    </>
-  );
-};
-
-const GeneralSettings = () => {
+export const GeneralSettings = () => {
   const { act, data } = useBackend<CharacterPreferencesData>();
   return (
     <>
@@ -261,7 +165,7 @@ const GeneralSettings = () => {
   );
 };
 
-const InterfaceSettings = () => {
+export const InterfaceSettings = () => {
   const { act, data } = useBackend<CharacterPreferencesData>();
   return (
     <>
@@ -372,7 +276,7 @@ const InterfaceSettings = () => {
   );
 };
 
-const ControlsSettings = () => {
+export const ControlsSettings = () => {
   const { act, data } = useBackend<CharacterPreferencesData>();
   return (
     <>
@@ -485,7 +389,7 @@ const ControlsSettings = () => {
   );
 };
 
-const GraphicsSettings = () => {
+export const GraphicsSettings = () => {
   const { settings, setSetting } = useClientSetting();
   const { act, data } = useBackend<CharacterPreferencesData>();
   return (
@@ -591,7 +495,7 @@ const GraphicsSettings = () => {
   );
 };
 
-const AccessibilitySettings = () => (
+export const AccessibilitySettings = () => (
   <>
     <LabeledList.Item
       label="Colorblind Mode"
@@ -618,7 +522,7 @@ const AccessibilitySettings = () => (
   </>
 );
 
-const AudioSettings = () => {
+export const AudioSettings = () => {
   const { act, data } = useBackend<CharacterPreferencesData>();
   return (
     <>
