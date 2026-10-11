@@ -221,7 +221,11 @@ ABSTRACT_TYPE(/datum/bioEffect/power)
 			return CAST_ATTEMPT_SUCCESS
 		// Finally, ensure that the item is deleted regardless of what it is
 		var/obj/item/I = the_object
-		if(I.Eat(src.owner, src.owner, TRUE)) //eating can return false to indicate it failed
+		var/eaten = I.Eat(src.owner, src.owner, TRUE)
+		if (eaten == EAT_CANCELLED)
+			src.using = FALSE
+			return CAST_ATTEMPT_FAIL_CAST_FAILURE
+		if(eaten) //eating can return false to indicate it failed
 			I.storage?.hide_hud(src.owner)
 			// Organs and body parts have special behaviors we need to account for
 			if (!handle_organs(the_object))
