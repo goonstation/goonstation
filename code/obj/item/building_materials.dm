@@ -474,7 +474,7 @@ MATERIAL
 					a_cost = initial(currentRecipe.sheet_cost)
 				if (!a_callback)
 					a_callback = /proc/sheet_crafting_callback
-				actions.start(new /datum/action/bar/icon/build(a_type, src.loc, a_amount, 3 SECONDS, src, a_cost, null, null, src.material, initial(currentRecipe.icon), initial(currentRecipe.icon_state), a_callback), usr)
+				actions.start(new /datum/action/bar/icon/build(a_type, src.loc, a_amount, 3 SECONDS, src, a_cost, null, null, src.material, get_initial_icon(currentRecipe), initial(currentRecipe.icon_state), a_callback), usr)
 				. = TRUE
 
 		return
@@ -1534,7 +1534,7 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/reinforced)
 		"sheetCost" = initial(typedRecipePath.sheet_cost),
 		"itemYield" = initial(typedRecipePath.yield),
 		"canCraftMultiples" = initial(typedRecipePath.can_craft_multiples),
-		"img" = sheet_crafting_recipe_getBase64Img(initial(typedRecipePath.recipe_id), initial(typedRecipePath.icon), initial(typedRecipePath.icon_state), initial(typedRecipePath.icon_default_mat), sheet)
+		"img" = sheet_crafting_recipe_getBase64Img(initial(typedRecipePath.recipe_id), get_initial_icon(typedRecipePath), initial(typedRecipePath.icon_state), initial(typedRecipePath.icon_default_mat), sheet)
 	))
 
 /proc/sheet_crafting_recipe_getBase64Img(var/recipeID, var/icon, var/icon_state)

@@ -5,26 +5,31 @@
 	var/datum/record_database/medical = null
 	var/datum/record_database/security = null
 	var/datum/record_database/bank = null
+	var/datum/record_database/disease = null
 	var/list/datum/fine/fines = null
 	var/list/datum/ticket/tickets = null
 
 /datum/datacore/New()
 	. = ..()
 
-	src.general = new(list("name", "id"))
-	src.medical = new(list("name", "id"))
-	src.security = new(list("name", "id"))
-	src.bank = new(list("name", "id"))
+	src.general = new("General", /datum/db_record/personnel/general, list("name", "id"))
+	src.medical = new("Medical", /datum/db_record/personnel/medical, list("name", "id"))
+	src.security = new("Security", /datum/db_record/personnel/security, list("name", "id"))
+	src.bank = new("Bank", /datum/db_record/personnel/bank, list("name", "id"))
+	src.disease = new("Disease", /datum/db_record/disease, list("name", "id"))
 	src.fines = list()
 	src.tickets = list()
+	src.populate_disease_database()
 
 /datum/datacore/proc/addManifest(mob/living/carbon/human/H as mob, sec_note = "", med_note = "", pda_net_id = null, synd_int_note = "")
 	if (!H?.mind)
 		return
 
-	H.datacore_id = src.generate_id()
+	var/datum/db_record/personnel/general/G = new()
+	H.datacore_id = G["id"]
+	G.init_from_human(H)
 
-	src.general.add_record(new /datum/db_record/personnel/general(H))
+	src.general.add_record(G)
 	src.medical.add_record(new /datum/db_record/personnel/medical(H))
 	src.security.add_record(new /datum/db_record/personnel/security(H))
 	src.bank.add_record(new /datum/db_record/personnel/bank(H))
@@ -78,8 +83,8 @@
 		for (var/datum/db_record/R as anything in record_matches)
 			result += "<li>[SPAN_NOTICE("Match[match_num]:<b> [R["name"]]</b>")]" + " ([R["rank"]])</li>"
 
-			var/fprint_r = R["fingerprint_right"]
-			var/fprint_l = R["fingerprint_left"]
+			var/fprint_r = R["fprint_r"]
+			var/fprint_l = R["fprint_l"]
 			if (fprint_r == fprint_l)
 				result += "<li style='margin-left:15px;list-style-type:none'><i>Fingerprints:</i> [fprint_r]</li>"
 			else
@@ -99,8 +104,8 @@
 		for (var/datum/db_record/R as anything in record_matches)
 			result += SPAN_NOTICE("<li style='margin-left:15px;list-style-type:none'>["<b>[R["name"]]</b>"]")
 
-			var/fprint_r = R["fingerprint_right"]
-			var/fprint_l = R["fingerprint_left"]
+			var/fprint_r = R["fprint_r"]
+			var/fprint_l = R["fprint_l"]
 			if (fprint_r == fprint_l)
 				result += ": [fprint_r]</li>"
 			else
@@ -112,7 +117,7 @@
 
 /datum/datacore/proc/forensic_search_subjects(search_input)
 	RETURN_TYPE(/list/datum/db_record)
-	return src.general.adv_find_records(list("name", "dna", "fingerprint_left", "fingerprint_right"), regex(REGEX_QUOTE(search_input), "i"))
+	return src.general.adv_find_records(list("name", "dna", "fprint_l", "fprint_r"), regex(REGEX_QUOTE(search_input), "i"))
 
 /datum/datacore/proc/forensic_search_fingerprint_partial(search_input)
 	RETURN_TYPE(/list/datum/db_record)
@@ -128,7 +133,98 @@
 	if (!search_input)
 		return
 
-	return src.general.adv_find_records(list("fingerprint_left", "fingerprint_right"), regex(search_input))
+	return src.general.adv_find_records(list("fprint_l", "fprint_r"), regex(search_input))
+
+/datum/datacore/proc/populate_disease_database()
+	var/datum/db_record/disease/gbs = new()
+	gbs["name"] = "GBS"
+	gbs["stages"] = 5
+	gbs["spread"] = "Airborne Transmission"
+	gbs["cure"] = "Spaceacillin"
+	gbs["affected"] = "Human"
+	gbs["severity"] = "Major"
+	gbs["notes"] = "If left untreated, death will occur."
+	src.disease.add_record(gbs)
+
+	var/datum/db_record/disease/cold = new()
+	cold["name"] = "Common Cold"
+	cold["stages"] = 3
+	cold["spread"] = "Airborne Transmission"
+	cold["cure"] = "Rest"
+	cold["affected"] = "Human"
+	cold["severity"] = "Minor"
+	cold["notes"] = "If left untreated, subject will contract the flu."
+	src.disease.add_record(cold)
+
+	var/datum/db_record/disease/flu = new()
+	flu["name"] = "The Flu"
+	flu["stages"] = 3
+	flu["spread"] = "Airborne Transmission"
+	flu["cure"] = "Rest"
+	flu["affected"] = "Human"
+	flu["severity"] = "Medium"
+	flu["notes"] = "If left untreated, the subject will feel quite unwell."
+	src.disease.add_record(flu)
+
+	var/datum/db_record/disease/monkey = new()
+	monkey["name"] = "Monkey Madness"
+	monkey["stages"] = 1
+	monkey["spread"] = "Airborne Transmission"
+	monkey["cure"] = "None"
+	monkey["affected"] = "Monkey"
+	monkey["severity"] = "Medium"
+	monkey["notes"] = "Monkeys with this disease will bite humans, causing humans to spontaneously to mutate into a monkey."
+	src.disease.add_record(monkey)
+
+	var/datum/db_record/disease/clown = new()
+	clown["name"] = "Clowning Around"
+	clown["stages"] = 4
+	clown["spread"] = "Contact Transmission"
+	clown["cure"] = "Spaceacillin"
+	clown["affected"] = "Human"
+	clown["severity"] = "Laughable"
+	clown["notes"] = "Subjects are affected by rampant honking and a fondness for shenanigans. They may also spontaneously phase through closed airlocks."
+	src.disease.add_record(clown)
+
+	var/datum/db_record/disease/rhinovirus = new()
+	rhinovirus["name"] = "Space Rhinovirus"
+	rhinovirus["stages"] = 4
+	rhinovirus["spread"] = "Airborne Transmission"
+	rhinovirus["cure"] = "Spaceacillin"
+	rhinovirus["affected"] = "Human"
+	rhinovirus["severity"] = "Medium"
+	rhinovirus["notes"] = "This disease transplants the genetic code of the intial vector into new hosts."
+	src.disease.add_record(rhinovirus)
+
+	var/datum/db_record/disease/robot = new()
+	robot["name"] = "Robot Transformation"
+	robot["stages"] = 5
+	robot["spread"] = "Infected Food"
+	robot["cure"] = "Electric Shock"
+	robot["affected"] = "Human"
+	robot["severity"] = "Major"
+	robot["notes"] = "This disease, actually an acute nanomachine infection, converts the victim into a cyborg."
+	src.disease.add_record(robot)
+
+	var/datum/db_record/disease/tele = new()
+	tele["name"] = "Teleportitis"
+	tele["stages"] = 1
+	tele["spread"] = "Unknown"
+	tele["cure"] = "Unknown"
+	tele["affected"] = "Human"
+	tele["severity"] = "Unknown"
+	tele["notes"] = "Means of transmission are currently unknown; may be related to contents of teleporter emissions. Causes violent shifts in physical position of subject. Keep patients away from active engines."
+	src.disease.add_record(tele)
+
+	var/datum/db_record/disease/berserk = new()
+	berserk["name"] = "Berserker"
+	berserk["stages"] = 2
+	berserk["spread"] = "Contact Transmission"
+	berserk["cure"] = "Spaceacillin"
+	berserk["affected"] = "Human"
+	berserk["severity"] = "Major"
+	berserk["notes"] = "This disease causes fits of extreme rage and violence in the victim. Due to its ability to spread, it is considered extremely dangerous. Do not attempt to reason with infected persons."
+	src.disease.add_record(berserk)
 
 
 

@@ -148,7 +148,7 @@
 		for (var/obj/purchased_item as anything in src.gang.items_purchased)
 			purchased_items += list(
 				list(
-					"iconBase64" = "[icon2base64(icon(initial(purchased_item.icon), initial(purchased_item.icon_state), frame = 1, dir = initial(purchased_item.dir)))]",
+					"iconBase64" = "[icon2base64(icon(get_initial_icon(purchased_item), initial(purchased_item.icon_state), frame = 1, dir = initial(purchased_item.dir)))]",
 					"name" = "[initial(purchased_item.name)] x[src.gang.items_purchased[purchased_item]]",
 				)
 			)
