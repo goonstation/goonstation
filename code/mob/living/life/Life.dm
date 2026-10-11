@@ -226,7 +226,7 @@
 	if (src.transforming)
 		return 1
 
-	var/life_time_passed = max(tick_spacing, TIME - last_life_tick)
+	var/life_time_passed = clamp(TIME - last_life_tick, tick_spacing, cap_tick_spacing)
 
 	var/life_mult = life_time_passed / tick_spacing
 
