@@ -253,7 +253,7 @@
 
 	New()
 		. = ..()
-		src.root.add_file( new /datum/computer/file/terminal_program/medical_records(src))
+		src.root.add_file( new /datum/computer/file/terminal_program/db_manager/medtrak(src))
 		src.read_only = 1
 
 /obj/item/disk/data/floppy/read_only/security_progs
@@ -263,7 +263,7 @@
 
 	New()
 		. = ..()
-		src.root.add_file( new /datum/computer/file/terminal_program/secure_records(src))
+		src.root.add_file( new /datum/computer/file/terminal_program/db_manager/secmate(src))
 		src.root.add_file( new /datum/computer/file/terminal_program/manifest(src))
 		src.read_only = 1
 
@@ -274,7 +274,7 @@
 
 	New()
 		. = ..()
-		src.root.add_file( new /datum/computer/file/terminal_program/bank_records(src))
+		src.root.add_file( new /datum/computer/file/terminal_program/db_manager/bankboss(src))
 		src.read_only = 1
 
 /obj/item/disk/data/floppy/read_only/research_progs

@@ -25703,7 +25703,6 @@
 /obj/table/auto,
 /obj/item/storage/firstaid/brain,
 /obj/machinery/firealarm/directional/north,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
 /obj/item/extinguisher,
 /obj/item/storage/box/diskbox{
 	pixel_x = -8;
@@ -26569,13 +26568,9 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "pKV" = (
-/obj/pool{
-	density = 0;
-	icon = 'icons/obj/fluid.dmi';
+/obj/pool/ladder{
 	icon_state = "ladder";
-	name = "ladder";
-	pixel_y = -9;
-	dir = 1
+	pixel_y = -9
 	},
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
@@ -33823,6 +33818,7 @@
 	dir = 1;
 	status = 2
 	},
+/obj/item/toy/gooncode,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "ukZ" = (

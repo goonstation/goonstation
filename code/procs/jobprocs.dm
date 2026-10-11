@@ -212,7 +212,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 			item_path = weighted_pick(items)
 	if (!H.equip_new_if_possible(item_path, slot))
 		var/obj/item/I = new item_path(src)
-		H.stow_in_available(I, TRUE)
+		H.stow_in_available(I)
 
 /// Attempt to equip all job items
 /proc/equip_job_items(var/datum/job/JOB, var/mob/living/carbon/human/H)
@@ -474,7 +474,7 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 				H.force_laydown_standup()
 
 			if (H.head)
-				H.stow_in_available(H.head)
+				H.stow_in_available(H.head, TRUE)
 			H.equip_if_possible(new /obj/item/clothing/head/party/random(H), SLOT_HEAD) // hehehe funny hat
 
 		// This should be here (overriding most other things), probably? - #11215
@@ -523,13 +523,13 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 /mob/living/carbon/human/proc/equip_sensory_items()
 	if (src.traitHolder.hasTrait("blind"))
 		if (src.glasses)
-			src.stow_in_available(src.glasses)
+			src.stow_in_available(src.glasses, TRUE)
 		src.equip_if_possible(new /obj/item/clothing/glasses/visor(src), SLOT_GLASSES)
 	else // if you're blind and have missing eyes, you don't get a cool patch sorry
 		var/missing_left = src.traitHolder.hasTrait("eye_missing_left")
 		var/missing_right =  src.traitHolder.hasTrait("eye_missing_right")
 		if (src.glasses && (missing_left || missing_right))
-			src.stow_in_available(src.glasses)
+			src.stow_in_available(src.glasses, TRUE)
 		if (missing_left && missing_right)
 			src.equip_if_possible(new /obj/item/clothing/glasses/blindfold(src), SLOT_GLASSES)
 		else if (missing_left)
@@ -542,11 +542,11 @@ else if (istype(JOB, /datum/job/security/security_officer))\
 
 	if (src.traitHolder.hasTrait("shortsighted"))
 		if (src.glasses)
-			src.stow_in_available(src.glasses)
+			src.stow_in_available(src.glasses, TRUE)
 		src.equip_if_possible(new /obj/item/clothing/glasses/regular(src), SLOT_GLASSES)
 	if (src.traitHolder.hasTrait("deaf"))
 		if (src.ears)
-			src.stow_in_available(src.ears)
+			src.stow_in_available(src.ears, TRUE)
 		src.equip_if_possible(new /obj/item/device/radio/headset/deaf(src), SLOT_EARS)
 
 /**
@@ -558,7 +558,7 @@ Equip items from body traits.
 /mob/living/carbon/human/proc/equip_body_traits(extended_tank=FALSE)
 	if (src.traitHolder && src.traitHolder.hasTrait("plasmalungs"))
 		if (src.wear_mask && !(src.wear_mask.c_flags & MASKINTERNALS)) //drop non-internals masks
-			src.stow_in_available(src.wear_mask)
+			src.stow_in_available(src.wear_mask, TRUE)
 
 		if(!src.wear_mask)
 			src.equip_if_possible(new /obj/item/clothing/mask/breath(src), SLOT_WEAR_MASK)
@@ -642,7 +642,7 @@ Equip items from body traits.
 		#endif
 
 		if (src.wear_mask && !(src.wear_mask.c_flags & MASKINTERNALS)) //drop non-internals masks
-			src.stow_in_available(src.wear_mask)
+			src.stow_in_available(src.wear_mask, TRUE)
 		if(!src.wear_mask)
 			src.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
 

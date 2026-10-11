@@ -1023,6 +1023,12 @@
 "aBi" = (
 /turf/simulated/floor/purple,
 /area/station/hallway/primary/southwest)
+"aBl" = (
+/obj/machinery/phone/wall{
+	pixel_y = 32
+	},
+/turf/simulated/floor/auto/glassblock/indigo,
+/area/station/crew_quarters/pool)
 "aBy" = (
 /obj/mesh/catwalk,
 /turf/simulated/floor/airless/plating/catwalk/auto,
@@ -10745,6 +10751,9 @@
 /obj/stool/chair/couch{
 	dir = 8
 	},
+/obj/machinery/phone/wall{
+	pixel_y = 32
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "fDY" = (
@@ -13076,6 +13085,13 @@
 /area/station/maintenance/inner/se{
 	name = "Southeast Auxiliary Conduit"
 	})
+"gOw" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/phone/unlisted,
+/turf/simulated/floor/specialroom/bar/edge{
+	dir = 8
+	},
+/area/station/crew_quarters/cafeteria)
 "gOA" = (
 /obj/machinery/plantpot,
 /obj/landmark/pest,
@@ -14998,6 +15014,9 @@
 	},
 /obj/machinery/plantpot{
 	anchored = 1
+	},
+/obj/machinery/phone/wall{
+	pixel_y = 32
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
@@ -16975,6 +16994,9 @@
 "iHJ" = (
 /obj/cable{
 	icon_state = "2-8"
+	},
+/obj/machinery/phone/wall{
+	pixel_y = 32
 	},
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
@@ -22704,8 +22726,10 @@
 	},
 /area/station/crew_quarters/market)
 "lBP" = (
-/obj/machinery/camera/directional/north,
 /obj/machinery/vending/kitchen,
+/obj/machinery/phone/wall{
+	pixel_y = 32
+	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "lCr" = (
@@ -28091,15 +28115,12 @@
 /area/station/crew_quarters/fitness)
 "omG" = (
 /obj/table/reinforced/auto,
-/obj/item/paper/book/from_file/hydroponicsguide{
-	pixel_y = 2;
-	pixel_x = -4
-	},
 /obj/item/hand_labeler{
 	pixel_y = -1;
 	pixel_x = 12
 	},
 /obj/machinery/light,
+/obj/machinery/phone,
 /turf/simulated/floor/green/side{
 	dir = 8
 	},
@@ -38740,6 +38761,9 @@
 	name = "Kitchen Shutter Control";
 	pixel_x = 0;
 	pixel_y = 24
+	},
+/obj/machinery/camera/directional/west{
+	pixel_y = 10
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -94875,7 +94899,7 @@ kJk
 kEz
 sjn
 xro
-lRR
+gOw
 lhk
 iec
 oBU
@@ -96017,7 +96041,7 @@ sEf
 sEf
 sEf
 fUa
-kdl
+aBl
 oGt
 kdl
 gdb

@@ -79,6 +79,7 @@
 		if (!istype(person) || job?.special_spawn_location)
 			return 0
 
+		person.set_loc(src)
 		set_hibernating(person, TRUE)
 		folks_to_spawn += person
 		their_jobs += job

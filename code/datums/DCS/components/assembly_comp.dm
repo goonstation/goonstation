@@ -51,10 +51,15 @@ TYPEINFO(/datum/component/assembly)
 	//! If you set ignore_given_proc in Initialize() to true, this will be called. Override this proc to have assembly behaviour that can be applied to multiple item types.
 	return FALSE
 
-/datum/component/assembly/proc/try_combination(var/atom/checked_atom, var/mob/user)
+/datum/component/assembly/proc/try_combination(atom/checked_atom, mob/user)
 	var/is_combinable = FALSE
 	if(isghostcritter(user)) //just no
 		return FALSE
+	// an attack can reach more than one assembly component (glued items relay attacks)
+	// if an earlier handler already built one of these items into an assembly, don't build a second one
+	for(var/atom/movable/checked in list(src.parent, checked_atom))
+		if(istype(checked.loc, /obj/item/assembly))
+			return FALSE
 	if(isitem(checked_atom))
 		var/obj/item/other_item = checked_atom
 		if (other_item.cant_drop)

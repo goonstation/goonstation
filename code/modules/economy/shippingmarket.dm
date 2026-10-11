@@ -702,7 +702,7 @@
 							if (P && !P.density)
 								P.close()
 
-				if (global.map_currently_underwater || global.is_map_on_ground_terrain)
+				if (global.map_currently_underwater || global.is_map_on_ground_terrain || station_repair.station_generator?.requires_full_cargo_launch_range)
 					shipped_thing.throw_at(target, src.launch_distance, 1)
 				else
 					shipped_thing.throw_at(target, 1, 1)
