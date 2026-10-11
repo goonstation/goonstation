@@ -108,6 +108,8 @@ ABSTRACT_TYPE(/datum/projectile)
 
 	New()
 		. = ..()
+		if (istext(src.icon))
+			src.icon = file(src.icon)
 		generate_stats()
 		var/icon/fuck_you_byond = icon(src.icon)
 		src.x_offset = -(fuck_you_byond.Width() - 32)/2

@@ -315,7 +315,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 
 		var/atom/item_path = possible.get_mascot(src.contents)
 		if (ispath(item_path))
-			src.output_icon = icon2base64(getFlatIcon(image(initial(item_path.icon), initial(item_path.icon_state))), "chef_oven-\ref[src]")
+			src.output_icon = icon2base64(getFlatIcon(image(get_initial_icon(item_path), initial(item_path.icon_state))), "chef_oven-\ref[src]")
 			src.output_name = initial(item_path.name)
 			if (islist(possible.output) && (item_path in possible.output) && possible.output[item_path] > 1)
 				src.output_name += " x[possible.output[item_path]]"

@@ -224,6 +224,12 @@
 	webfont = "Dancing Script"
 	uses_handwriting = 1
 
+/obj/item/pen/NT
+	name = "\improper NanoTrasen Pen"
+	desc = "The National Notary 'Magistratus' model pen, with a cobryl alloy nib, high-grade polymer barrel and patented TrueBlue(TM) ink."
+	icon_state = "pen_nt"
+	item_state = "pen_nt"
+	font_color = "#0047ab"
 /obj/item/pen/odd
 	name = "odd pen"
 	desc = "There's something strange about this pen. Inscriptions indicate it is a National Notary 'Francis Scott' model with an electrum nib and lignum vitae barrel. Huh."
@@ -1106,7 +1112,7 @@
 	proc/add_stuff(obj/item/I, mob/user)
 		if(istype(I) && I.cant_drop)
 			return
-			
+
 		if (istype(I, /obj/item/paper) || istype(I, /obj/item/photo))
 			if (length(src.contents) >= src.max_items)
 				boutput(user, SPAN_NOTICE("[src] can only hold [src.max_items] items!"))

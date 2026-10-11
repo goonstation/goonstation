@@ -14,7 +14,7 @@
 	onAttach(datum/abilityHolder/holder)
 		. = ..()
 		var/obj/disposalpipe/ctype = /obj/disposalpipe
-		var/cicon = initial(ctype.icon)
+		var/cicon = get_initial_icon(ctype)
 
 		pipe_images = new/list(((view_range*2+1)**2)*2)
 		for(var/i in 1 to length(pipe_images))
@@ -149,8 +149,8 @@
 	border_state = "template_tr"
 
 /datum/targetable/vent_move/changeling
-	border_icon = 'icons/mob/spell_buttons.dmi'
-	border_state = "changeling-template"
+	border_icon = 'icons/ui/ability_icons/changeling.dmi'
+	border_state = "changeling-border"
 
 /datum/targetable/vent_move/plaguerat
 	border_icon = 'icons/mob/wraith_ui.dmi'

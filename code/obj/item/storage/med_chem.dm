@@ -40,8 +40,8 @@
 		/obj/item/reagent_containers/emergency_injector/atropine)
 
 
-	empty
-		spawn_contents = list()
+/obj/item/storage/firstaid/regular/empty
+	spawn_contents = list()
 
 
 /obj/item/storage/firstaid/brute
@@ -57,6 +57,9 @@
 	/obj/item/reagent_containers/emergency_injector/saline,\
 	/obj/item/bandage/medicated)
 
+/obj/item/storage/firstaid/brute/empty
+	spawn_contents = list()
+
 /obj/item/storage/firstaid/fire
 	name = "fire first aid"
 	icon_state = "burn1"
@@ -70,6 +73,9 @@
 	/obj/item/reagent_containers/emergency_injector/epinephrine,\
 	/obj/item/bandage/medicated)
 
+/obj/item/storage/firstaid/fire/empty
+	spawn_contents = list()
+
 /obj/item/storage/firstaid/toxin
 	name = "toxin first aid"
 	icon_state = "toxin1"
@@ -82,6 +88,9 @@
 	/obj/item/reagent_containers/pill/antirad = 2,\
 	/obj/item/reagent_containers/pill/antitox = 2)
 
+/obj/item/storage/firstaid/toxin/empty
+	spawn_contents = list()
+
 /obj/item/storage/firstaid/oxygen
 	name = "oxygen deprivation first aid"
 	icon_state = "O21"
@@ -93,6 +102,9 @@
 	/obj/item/reagent_containers/emergency_injector/epinephrine,\
 	/obj/item/medicaldiagnosis/stethoscope)
 
+/obj/item/storage/firstaid/oxygen/empty
+	spawn_contents = list()
+
 /obj/item/storage/firstaid/brain
 	name = "neurological damage first aid"
 	icon_state = "brain1"
@@ -103,6 +115,9 @@
 	/obj/item/reagent_containers/emergency_injector/mannitol = 2,\
 	/obj/item/reagent_containers/emergency_injector/epinephrine,\
 	/obj/item/device/light/flashlight/penlight)
+
+/obj/item/storage/firstaid/brain/empty
+	spawn_contents = list()
 
 /obj/item/storage/firstaid/crit
 	name = "emergency critical-condition first aid"
@@ -131,6 +146,9 @@
 	/obj/item/reagent_containers/syringe/haloperidol,\
 	/obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical)
 
+/obj/item/storage/firstaid/mental/empty
+	spawn_contents = list()
+
 // Medkit filled with old crud for shady QM merchants (Convair880).
 /obj/item/storage/firstaid/old
 	name = "dusty first aid kit"
@@ -152,6 +170,9 @@
 	kit_styles = list("docbag1", "docbag2", "docbag3")
 	spawn_contents = list(/obj/item/circular_saw, /obj/item/scalpel, /obj/item/scissors/surgical_scissors, /obj/item/suture, /obj/item/reagent_containers/syringe, /obj/item/reagent_containers/iv_drip/blood, /obj/item/medicaldiagnosis/stethoscope)
 
+/obj/item/storage/firstaid/docbag/empty
+	spawn_contents = list()
+
 /obj/item/storage/firstaid/docbag/field_surgeon
 	name = "field surgeon's bag"
 	desc = "An old-fashioned doctor's bag designed to carry medical and surgical supplies. This one has been stuffed with what a field surgeon would require, including an anesthetic compartment."
@@ -160,7 +181,7 @@
 
 /obj/item/storage/firstaid/docbag/field_surgeon/NT
 	icon_state = "docbag_nt" // Sprite by TekoTheTeapot
-	item_state = "docbag3"
+	item_state = "docbag_nt"
 	kit_styles = null
 
 /* -------------------- First Aid Kits - VR -------------------- */

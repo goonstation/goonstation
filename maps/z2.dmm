@@ -50440,7 +50440,7 @@
 "dIY" = (
 /turf/unsimulated/floor{
 	dir = 1;
-	icon = 'icons/obj/stationobjs.dmi';
+	icon = 'icons/obj/poolballpit.dmi';
 	icon_state = "ballpitfloor";
 	name = "ball pit"
 	},
@@ -50542,7 +50542,7 @@
 /area/centcom/lounge)
 "dJn" = (
 /turf/unsimulated/floor{
-	icon = 'icons/obj/stationobjs.dmi';
+	icon = 'icons/obj/poolballpit.dmi';
 	icon_state = "ballpitfloor";
 	name = "ball pit"
 	},
@@ -50552,7 +50552,7 @@
 	dir = 4
 	},
 /turf/unsimulated/floor{
-	icon = 'icons/obj/stationobjs.dmi';
+	icon = 'icons/obj/poolballpit.dmi';
 	icon_state = "ballpitfloor";
 	name = "ball pit"
 	},
