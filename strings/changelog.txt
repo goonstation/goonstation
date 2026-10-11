@@ -1,5 +1,9 @@
 
 (t)sun oct 11 26
+(u)ANNmagedon
+(p)28051
+(e)🪲💪|C-Bug, A-Traits
+(+)Salvagers now keep the player decided mutantrace.
 (u)Cheekybrdy
 (p)27803
 (e)💅🐣|C-QoL, A-Respawning
