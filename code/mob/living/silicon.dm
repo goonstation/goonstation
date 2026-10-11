@@ -471,12 +471,15 @@ var/global/list/module_editors = list()
 /mob/living/silicon/UpdateName()
 	..()
 	src.botcard.registered = src.name
-	src.botcard.assignment = src.dependent ? "AI Shell" : "Cyborg"
 
 /mob/living/silicon/robot/choose_name(var/retries = 3, var/what_you_are = null, var/default_name = null, var/force_instead = 0)
 	. = ..()
 	src.internal_pda.name = "[src.name]’s Internal PDA Unit"
 	src.internal_pda.owner = "[src.name]"
+
+/mob/living/silicon/robot/UpdateName()
+	. = ..()
+	src.botcard.assignment = src.dependent ? "AI Shell" : "Cyborg"
 
 /proc/borgify_name(var/start_name = "Robot")
 	if (!start_name) // somehow
