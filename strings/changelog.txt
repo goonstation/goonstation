@@ -1,4 +1,9 @@
 
+(t)sun oct 11 26
+(u)Sovexe
+(p)28062
+(e)🔄📄|C-Rework, A-UI
+(*)Respawn as Animal now allows you to choose the animal from your available options.
 (t)fri oct 09 26
 (u)ZeWaka
 (e)🪲🔄📄|C-Bug, C-Rework`, A-UI
