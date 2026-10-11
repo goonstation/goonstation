@@ -1130,6 +1130,8 @@
 		var/turf/T = get_turf(src.owner)
 		if (!istype(T) || src.owner.traction == TRACTION_NONE)
 			return
+		if (!src.owner.hasStatus("undertable") && (locate(/obj/table) in T)) // skittering is for getting under tables, not across them
+			return
 		if (ON_COOLDOWN(src.owner, "skitter", 7 SECONDS))
 			return
 		src.owner.visible_message(SPAN_ALERT("[src.owner] skitters away!"))

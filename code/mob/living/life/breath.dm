@@ -143,6 +143,14 @@
 				owner.take_oxygen_deprivation(-50 * mult)
 			return
 
+#ifdef UNDERWATER_MAP
+		if (!underwater && human_owner?.mutantrace?.aquatic && isturf(owner.loc))
+			var/turf/aquatic_turf = owner.loc
+			if (aquatic_turf.turf_flags & FLUID_MOVE) // asteroid floors on underwater maps are submerged
+				src.update_breath_hud(status_updates)
+				return
+#endif
+
 		if (underwater)
 			if (human_owner?.mutantrace && human_owner?.mutantrace.aquatic)
 				src.update_breath_hud(status_updates)

@@ -170,7 +170,7 @@
 				src.original_DNA = src.original_holder.bioHolder.Uid
 		return ..()
 
-	sever(mob/user)
+	sever(mob/user, setDir = TRUE)
 		if ((isnull(src.original_DNA)) && ismob(src.original_holder))
 			if (src.original_holder && src.original_holder.bioHolder) //ZeWaka: Fix for null.bioHolder
 				src.original_DNA = src.original_holder.bioHolder.Uid
