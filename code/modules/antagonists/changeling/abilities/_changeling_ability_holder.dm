@@ -26,12 +26,6 @@
 		src.absorbed_dna["[M.name]"] = src.current_ident
 		src.absorbed_dna["Lesser Form"] = new /datum/absorbedIdentity/monkey()
 
-	// deepCopy (cloning) creates a holder with no mob, so it has no identities until it gets an owner
-	transferOwnership(newbody)
-		. = ..()
-		if (!src.current_ident && ishuman(newbody))
-			src.set_up_identities(newbody)
-
 	onAttach(mob/to_whom)
 		. = ..()
 		RegisterSignal(to_whom, COMSIG_MOB_DEATH, PROC_REF(on_death), TRUE)
