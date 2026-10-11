@@ -98,8 +98,9 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 
 /// Trippy colors - apply an RGB swap to a random object within the edge of the client's vision
 /datum/component/hallucination/trippy_colors
-	var/static/color_animation_time = 4 SECONDS
-	var/list/active_hallucinations = null
+	VAR_PRIVATE/static/color_animation_time = 4 SECONDS
+	VAR_PRIVATE/static/hallucination_cap = 10
+	VAR_PRIVATE/list/active_hallucinations = null
 
 /datum/component/hallucination/trippy_colors/Initialize(timeout)
 	. = ..()
@@ -107,6 +108,9 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 
 /datum/component/hallucination/trippy_colors/do_mob_tick(mob, mult)
 	if(!ismob(src.parent_mob) || !isclient(parent_mob.client))
+		return ..()
+
+	if(length(src.active_hallucinations) >= src::hallucination_cap)
 		return ..()
 
 	if(!prob(15)) // Only happen sometimes
