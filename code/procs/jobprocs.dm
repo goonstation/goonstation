@@ -766,6 +766,8 @@ Equip items from body traits.
 				equipped = 1
 			else if (!src.r_store && src.equip_if_possible(I, SLOT_R_STORE))
 				equipped = 1
+			else if (!src.head && src.equip_if_possible(I, SLOT_HEAD))
+				equipped = 1
 			else if (!src.l_hand && src.equip_if_possible(I, SLOT_L_HAND))
 				equipped = 1
 			else if (!src.r_hand && src.equip_if_possible(I, SLOT_R_HAND))
