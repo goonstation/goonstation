@@ -51,6 +51,27 @@ TYPEINFO(/datum/component/tameable)
 	if(!is_valid_food(item))
 		owner.visible_message("[user] tries to feed [owner] [item] but they won't take it!")
 		return
+	var/obj/item/ranch_nametag/tag = item
+	if(owner.tamed)
+		if(istype(tag))
+			if(owner.can_be_named)
+				if(tag.critter_name)
+					if(!owner.named)
+						owner.name = tag.critter_name
+						owner.real_name = tag.critter_name
+						owner.named = tag.critter_name
+						M.visible_message(SPAN_NOTICE("<b>[M]</b> loops the nametag around [owner]'s neck")
+											,SPAN_NOTICE("You loop the nametag around [owner]'s neck"))
+						owner.u_equip(item)
+						item.set_loc(owner)
+						qdel(item)
+					else
+						boutput(M, SPAN_NOTICE("They've already been named!"))
+				else
+					boutput(M, SPAN_NOTICE("That nametag is empty!"))
+			else
+				boutput(M, SPAN_NOTICE("They reject your attempt to name them."))
+			return
 	if(!aggro_mode)
 		if (owner.tamed)
 			owner.visible_message("[user] tries to feed [owner] [item] but they seem full...")
@@ -91,27 +112,6 @@ TYPEINFO(/datum/component/tameable)
 		return
 
 /datum/component/tameable/proc/pass_on_attackhand(atom/source, mob/M)
-	var/obj/item/ranch_nametag/tag = I
-	if(owner.tamed)
-		if(istype(tag))
-			if(owner.can_be_named)
-				if(tag.critter_name)
-					if(!owner.named)
-						owner.name = tag.critter_name
-						owner.real_name = tag.critter_name
-						owner.named = tag.critter_name
-						M.visible_message(SPAN_NOTICE("<b>[M]</b> loops the nametag around [owner]'s neck")
-											,SPAN_NOTICE("You loop the nametag around [owner]'s neck"))
-						owner.u_equip(I)
-						I.set_loc(owner)
-						qdel(I)
-					else
-						boutput(M, SPAN_NOTICE("They've already been named!"))
-				else
-					boutput(M, SPAN_NOTICE("That nametag is empty!"))
-			else
-				boutput(M, SPAN_NOTICE("They reject your attempt to name them."))
-			return
 	if ((M.a_intent == INTENT_HARM) || !(M in owner.friends))
 		return
 	if(!aggro_mode)
